@@ -2,7 +2,6 @@ import { useState, useMemo, useCallback, useEffect } from 'react';
 
 import { Behandling, Aksjonspunkt, Vilkar, Fagsak } from '@k9-sak-web/types';
 
-import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import Rettigheter from '../../types/rettigheterTsType';
 import ProsessStegMenyRad from '../../types/prosessStegMenyRadTsType';
 import {
@@ -45,33 +44,21 @@ const useProsessStegPaneler = (
 
   const harSkriverettigheter = rettigheter.writeAccess.isEnabled && rettigheter.writeAccess.employeeHasAccess;
 
-  const prosessStegPaneler = useMemo(() => {
-    const paneler = utledProsessStegPaneler(
-      prosessStegPanelDefinisjoner,
-      ekstraPanelData,
-      toggleOverstyring,
-      overstyrteAksjonspunktKoder,
-      behandling,
-      aksjonspunkter,
-      vilkar,
-      rettigheter,
-      hasFetchError,
-    );
-
-    return paneler.map((panel, index) => {
-      if (!paneler[index - 1] || index === paneler.length - 1) {
-        return panel;
-      }
-
-      const forrigeStatus = paneler[index - 1].getStatus();
-
-      panel.setStansetAvTidligereAvslag(
-        forrigeStatus === vilkarUtfallType.IKKE_OPPFYLT || forrigeStatus === vilkarUtfallType.IKKE_VURDERT,
-      );
-
-      return panel;
-    });
-  }, [behandling.versjon, harSkriverettigheter, overstyrteAksjonspunktKoder]);
+  const prosessStegPaneler = useMemo(
+    () =>
+      utledProsessStegPaneler(
+        prosessStegPanelDefinisjoner,
+        ekstraPanelData,
+        toggleOverstyring,
+        overstyrteAksjonspunktKoder,
+        behandling,
+        aksjonspunkter,
+        vilkar,
+        rettigheter,
+        hasFetchError,
+      ),
+    [behandling.versjon, harSkriverettigheter, overstyrteAksjonspunktKoder],
+  );
 
   const valgtPanel = useMemo(
     () => finnValgtPanel(prosessStegPaneler, behandling.behandlingHenlagt, valgtProsessSteg, apentFaktaPanelInfo),
@@ -79,11 +66,10 @@ const useProsessStegPaneler = (
   );
 
   const urlCode = valgtPanel ? valgtPanel.getUrlKode() : undefined;
-  const formaterteProsessStegPaneler = useMemo(() => formaterPanelerForProsessmeny(prosessStegPaneler, urlCode), [
-    behandling.versjon,
-    urlCode,
-    overstyrteAksjonspunktKoder,
-  ]);
+  const formaterteProsessStegPaneler = useMemo(
+    () => formaterPanelerForProsessmeny(prosessStegPaneler, urlCode),
+    [behandling.versjon, urlCode, overstyrteAksjonspunktKoder],
+  );
 
   return [prosessStegPaneler, valgtPanel, formaterteProsessStegPaneler];
 };
