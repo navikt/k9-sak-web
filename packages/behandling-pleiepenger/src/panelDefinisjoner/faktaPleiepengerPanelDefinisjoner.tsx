@@ -5,13 +5,13 @@ import BeregningFaktaPanelDef from './faktaPaneler/BeregningFaktaPanelDef';
 import MedisinskVilkarFaktaPanelDef2 from './faktaPaneler/MedisinskVilkarFaktaPanelDef2';
 import OmsorgenForFaktaPanelDef from './faktaPaneler/OmsorgenForFaktaPanelDef';
 import InntektsmeldingFaktaPanelDef from './faktaPaneler/InntektsmeldingFaktaPanelDef';
-import TilsynFaktaPanelDef from './faktaPaneler/TilsynFaktaPanelDef';
+import EtablertTilsynFaktaPanelDef from './faktaPaneler/EtablertTilsynFaktaPanelDef';
 
 const faktaPanelDefinisjoner = [
   new ArbeidsforholdFaktaPanelDef(),
   new OmsorgenForFaktaPanelDef(),
   new MedisinskVilkarFaktaPanelDef2(),
-  new TilsynFaktaPanelDef(),
+  new EtablertTilsynFaktaPanelDef(),
   new MedlemskapsvilkaretFaktaPanelDef(),
   new OpptjeningsvilkaretFaktaPanelDef(),
   new InntektsmeldingFaktaPanelDef(),
