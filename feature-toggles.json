@@ -10,9 +10,5 @@
   {
     "key":  "UNNTAKSBEHANDLING",
     "value": "${UNNTAKSBEHANDLING}"
-  },
-  {
-    "key":  "SAERLIGSMITTEVERNAKSJONSPUNKT",
-    "value": "${SAERLIGSMITTEVERNAKSJONSPUNKT}"
   }
 ]

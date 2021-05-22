@@ -7,6 +7,7 @@ const faktaPanelCodes = {
   FORDELING: 'fordeling',
   FEILUTBETALING: 'feilutbetaling',
   FODSELSVILKARET: 'foedselsvilkaaret',
+  INNTEKTSMELDING: 'inntektsmelding',
   MEDLEMSKAPSVILKARET: 'medlemskapsvilkaaret',
   MEDISINSKVILKAAR: 'medisinskvilkaar',
   MEDISINSKVILKAAR_V2: 'medisinskvilkaar-v2',
