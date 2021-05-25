@@ -2,6 +2,7 @@ import { MicroFrontend } from '@fpsak-frontend/utils';
 import { useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
 import * as React from 'react';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import SimpleEndpoints from '../microfrontend/types/SimpleEndpoints';
 import findEndpointsForMicrofrontend from '../microfrontend/utils/findEndpointsForMicrofrontend';
 import httpErrorHandlerFn from '../microfrontend/utils/httpErrorHandler';
@@ -14,6 +15,8 @@ const initializeEtablertTilsynApp = (
   readOnly,
   lagreBeredskapvurdering,
   lagreNattevåkvurdering,
+  harAksjonspunktForBeredskap,
+  harAksjonspunktForNattevåk,
 ) => {
   (window as any).renderTilsynApp(elementId, {
     httpErrorHandler,
@@ -21,6 +24,8 @@ const initializeEtablertTilsynApp = (
     endpoints,
     lagreBeredskapvurdering,
     lagreNattevåkvurdering,
+    harAksjonspunktForBeredskap,
+    harAksjonspunktForNattevåk,
   });
 };
 
@@ -40,6 +45,8 @@ export default ({ aksjonspunkter, behandling, readOnly, submitCallback }) => {
   const løsNattevåkAksjonspunkt = nattevåkperioder =>
     submitCallback([{ kode: nattevåkAksjonspunktkode, begrunnelse: 'Nattevåk er behandlet', ...nattevåkperioder }]);
 
+  const harUløstAksjonspunktForBeredskap = beredskapAksjonspunkt?.status.kode === aksjonspunktStatus.OPPRETTET;
+  const harUløstAksjonspunktForNattevåk = nattevåkAksjonspunkt?.status.kode === aksjonspunktStatus.OPPRETTET;
   const harAksjonspunkt = !!beredskapAksjonspunktkode || !!nattevåkAksjonspunktkode;
 
   return (
@@ -54,11 +61,13 @@ export default ({ aksjonspunkter, behandling, readOnly, submitCallback }) => {
           etablertTilsynAppId,
           httpErrorHandlerCaller,
           findEndpointsForMicrofrontend(behandling.links, [
-            { rel: 'pleiepenger-sykt-barn-tilsyn', desiredName: 'tilsyn' }, // TODO: Riktig rel
+            { rel: 'pleiepenger-sykt-barn-tilsyn', desiredName: 'tilsyn' },
           ]),
           readOnly || !harAksjonspunkt,
           løsBeredskapAksjonspunkt,
           løsNattevåkAksjonspunkt,
+          harUløstAksjonspunktForBeredskap,
+          harUløstAksjonspunktForNattevåk,
         )
       }
     />
