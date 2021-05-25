@@ -8,8 +8,8 @@ import findEndpointsForMicrofrontend from '../microfrontend/utils/findEndpointsF
 import httpErrorHandlerFn from '../microfrontend/utils/httpErrorHandler';
 import findAksjonspunkt from '../microfrontend/utils/findAksjonspunkt';
 
+const etablertTilsynAppId = 'etablertTilsynApp';
 const initializeEtablertTilsynApp = (
-  elementId,
   httpErrorHandler,
   endpoints: SimpleEndpoints,
   readOnly,
@@ -18,7 +18,7 @@ const initializeEtablertTilsynApp = (
   harAksjonspunktForBeredskap,
   harAksjonspunktForNattevåk,
 ) => {
-  (window as any).renderTilsynApp(elementId, {
+  (window as any).renderTilsynApp(etablertTilsynAppId, {
     httpErrorHandler,
     readOnly,
     endpoints,
@@ -29,7 +29,6 @@ const initializeEtablertTilsynApp = (
   });
 };
 
-const etablertTilsynAppId = 'etablertTilsynApp';
 export default ({ aksjonspunkter, behandling, readOnly, submitCallback }) => {
   const { addErrorMessage } = useRestApiErrorDispatcher();
   const httpErrorHandlerCaller = (status: number, locationHeader?: string) =>
@@ -58,7 +57,6 @@ export default ({ aksjonspunkter, behandling, readOnly, submitCallback }) => {
       stylesheetIntegrity="sha384-RzUF1NUdN2AWwhYrejVO7hutRc8p+hd6b2mE2th1s35IgavkFt6wwgs039LS9V65"
       onReady={() =>
         initializeEtablertTilsynApp(
-          etablertTilsynAppId,
           httpErrorHandlerCaller,
           findEndpointsForMicrofrontend(behandling.links, [
             { rel: 'pleiepenger-sykt-barn-tilsyn', desiredName: 'tilsyn' },
