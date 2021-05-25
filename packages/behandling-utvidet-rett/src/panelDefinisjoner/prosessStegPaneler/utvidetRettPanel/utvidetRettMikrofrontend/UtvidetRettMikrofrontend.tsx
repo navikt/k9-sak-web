@@ -17,7 +17,6 @@ const initializeUtvidetRettVilkar = (
       behandling,
       { aksjonspunkter, isAksjonspunktOpen },
       { vilkar, status },
-      FormState,
     ),
   );
 };
