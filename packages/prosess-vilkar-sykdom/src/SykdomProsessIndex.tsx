@@ -58,7 +58,7 @@ const SykdomProsessIndex = ({ perioder, panelTittelKode }: SykdomProsessIndexPro
   const erVilkarOk = vilkarUtfallType.IKKE_VURDERT !== status ? erOppfylt : undefined;
   const skalBrukeSidemeny = perioder.length > 1;
   const mainContainerClassnames = cx('mainContainer', { 'mainContainer--withSideMenu': skalBrukeSidemeny });
-  let lovReferanse = '§ 9-10 andre ledd';
+  let lovReferanse = '§ 9-10 første og andre ledd, og 9-16 første ledd';
   if (activePeriode.pleietrengendeErOver18år) {
     lovReferanse = '§ 9-10 tredje ledd (over 18 år)';
   }
