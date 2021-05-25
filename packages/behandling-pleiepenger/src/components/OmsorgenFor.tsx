@@ -42,7 +42,7 @@ const OmsorgenFor = ({ behandling: { links }, readOnly, aksjonspunkter, submitCa
 
   const omsorgenForAksjonspunkt = findAksjonspunkt(aksjonspunkter, aksjonspunktCodes.OMSORGEN_FOR_PLEIEPENGER);
   const omsorgenForAksjonspunktkode = omsorgenForAksjonspunkt?.definisjon.kode;
-  const harAksjonspunkt = !!omsorgenForAksjonspunktkode === undefined;
+  const harAksjonspunkt = !!omsorgenForAksjonspunktkode;
 
   const løsAksjonspunkt = omsorgsperioder =>
     submitCallback([{ kode: omsorgenForAksjonspunktkode, begrunnelse: 'Omsorgen for er behandlet', omsorgsperioder }]);
