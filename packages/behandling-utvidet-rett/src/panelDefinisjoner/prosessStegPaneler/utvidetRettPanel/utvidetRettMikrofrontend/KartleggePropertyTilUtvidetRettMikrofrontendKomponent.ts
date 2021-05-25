@@ -68,7 +68,7 @@ const KartleggePropertyTilUtvidetRettMikrofrontendKomponent = (
           soknad,
         });
       default:
-        return {};
+        break;
     }
   }
   return {};
