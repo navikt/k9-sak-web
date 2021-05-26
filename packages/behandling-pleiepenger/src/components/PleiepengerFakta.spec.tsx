@@ -177,6 +177,11 @@ describe('<PleiepengerFakta>', () => {
       {
         erAktiv: false,
         harAksjonspunkt: false,
+        tekst: 'Etablert tilsyn',
+      },
+      {
+        erAktiv: false,
+        harAksjonspunkt: false,
         tekst: 'Inntektsmelding',
       },
     ]);

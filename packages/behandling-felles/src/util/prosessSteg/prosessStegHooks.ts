@@ -88,10 +88,11 @@ const useProsessStegPaneler = (
   );
 
   const urlCode = valgtPanel ? valgtPanel.getUrlKode() : undefined;
-  const formaterteProsessStegPaneler = useMemo(
-    () => formaterPanelerForProsessmeny(prosessStegPaneler, urlCode),
-    [behandling.versjon, urlCode, overstyrteAksjonspunktKoder],
-  );
+  const formaterteProsessStegPaneler = useMemo(() => formaterPanelerForProsessmeny(prosessStegPaneler, urlCode), [
+    behandling.versjon,
+    urlCode,
+    overstyrteAksjonspunktKoder,
+  ]);
 
   return [prosessStegPaneler, valgtPanel, formaterteProsessStegPaneler];
 };
