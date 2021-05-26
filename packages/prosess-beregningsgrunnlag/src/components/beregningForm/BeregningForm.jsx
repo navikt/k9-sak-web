@@ -214,6 +214,7 @@ const sjekkOmOmsorgspengegrunnlagOgSettAvviksvurdering = beregningsgrunnlag => {
  */
 export const BeregningFormImpl = ({
   readOnly,
+  erAktiv,
   beregningsgrunnlag,
   gjeldendeAksjonspunkter,
   relevanteStatuser,
@@ -235,7 +236,7 @@ export const BeregningFormImpl = ({
   const skalViseBeregningsresultat = !harFrisinngrunnlag(beregningsgrunnlag);
   const skalViseAvviksprosent = sjekkOmOmsorgspengegrunnlagOgSettAvviksvurdering(beregningsgrunnlag);
   return (
-    <>
+    <div style={{ display: erAktiv ? 'block' : 'none' }}>
       {gjeldendeAksjonspunkter && (
         <>
           <VerticalSpacer eightPx />
@@ -333,12 +334,13 @@ export const BeregningFormImpl = ({
           )}
         </Column>
       </Row>
-    </>
+    </div>
   );
 };
 
 BeregningFormImpl.propTypes = {
   readOnly: PropTypes.bool.isRequired,
+  erAktiv: PropTypes.bool.isRequired,
   gjeldendeAksjonspunkter: PropTypes.arrayOf(beregningsgrunnlagAksjonspunkterPropType).isRequired,
   relevanteStatuser: PropTypes.shape().isRequired,
   submitCallback: PropTypes.func.isRequired,
