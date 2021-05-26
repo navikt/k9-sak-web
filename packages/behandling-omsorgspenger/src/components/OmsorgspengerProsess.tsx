@@ -97,14 +97,15 @@ const getLagringSideeffekter = (
   );
   const visIverksetterVedtakModal =
     aksjonspunktModels[0].isVedtakSubmission &&
-    [aksjonspunktCodes.VEDTAK_UTEN_TOTRINNSKONTROLL, aksjonspunktCodes.FATTER_VEDTAK].includes(
-      aksjonspunktModels[0].kode,
-    );
+    [
+      aksjonspunktCodes.VEDTAK_UTEN_TOTRINNSKONTROLL,
+      aksjonspunktCodes.FATTER_VEDTAK,
+      aksjonspunktCodes.FORESLA_VEDTAK_MANUELT,
+    ].includes(aksjonspunktModels[0].kode);
   const visFatterVedtakModal =
     aksjonspunktModels[0].isVedtakSubmission && aksjonspunktModels[0].kode === aksjonspunktCodes.FORESLA_VEDTAK;
-  const isVedtakAp = aksjonspunktModels.some(a => a.isVedtakSubmission);
 
-  if (visIverksetterVedtakModal || visFatterVedtakModal || erRevurderingsaksjonspunkt || isVedtakAp) {
+  if (erRevurderingsaksjonspunkt) {
     toggleOppdatereFagsakContext(false);
   }
 
