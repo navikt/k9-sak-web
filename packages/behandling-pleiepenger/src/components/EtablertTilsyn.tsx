@@ -51,10 +51,10 @@ export default ({ aksjonspunkter, behandling, readOnly, submitCallback }) => {
   return (
     <MicroFrontend
       id={etablertTilsynAppId}
-      jsSrc="/k9/microfrontend/psb-etablert-tilsyn/0.0.5/app.js"
-      jsIntegrity="sha384-JmMSzyXcwq8S6oqgwurt7KFOtiV/jnXc87lROU1gIyXwx/zzj6RF5ehOa+jQscKB"
-      stylesheetSrc="/k9/microfrontend/psb-etablert-tilsyn/0.0.5/styles.css"
-      stylesheetIntegrity="sha384-FtTlmn4//HehgFivPqYXpRUCY1gMRjMkHxC3Xpg6ZUQEuKl6I17a0h/+EXLmUflv"
+      jsSrc="/k9/microfrontend/psb-etablert-tilsyn/0.0.6/app.js"
+      jsIntegrity="sha384-7t2Ne0G8rJN9ZUbO7TnvGxs/I2Fs348MtIaZhi6qjLeXV6wgZPr9EGc4xqmrlE/J"
+      stylesheetSrc="/k9/microfrontend/psb-etablert-tilsyn/0.0.6/styles.css"
+      stylesheetIntegrity="sha384-1gdVZObHR8Fu8HgcUHv8qHD/Lo/n1oMPLrm6zalvl30TY9lbWR6JxE8acQS7DLNp"
       onReady={() =>
         initializeEtablertTilsynApp(
           httpErrorHandlerCaller,
