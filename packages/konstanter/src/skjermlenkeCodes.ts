@@ -211,7 +211,7 @@ const skjermlenkeCodes = {
   },
   FAKTA_OM_MEDISINSK: {
     kode: 'FAKTA_OM_MEDISINSK',
-    faktaNavn: faktaPanelCodes.MEDISINSKVILKAAR,
+    faktaNavn: faktaPanelCodes.MEDISINSKVILKAAR_V2,
     punktNavn: prosessStegCodes.MEDISINSK_VILKAR,
   },
   FAKTA_OM_ÅRSKVANTUM: {
