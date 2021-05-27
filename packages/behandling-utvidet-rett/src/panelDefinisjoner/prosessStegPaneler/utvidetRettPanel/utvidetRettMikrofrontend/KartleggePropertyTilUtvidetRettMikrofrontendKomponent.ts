@@ -8,6 +8,7 @@ import {
 } from '../../../../types/utvidetRettMikrofrontend/KartleggePropertyTilMikrofrontendTypes';
 import KroniskSykObjektTilMikrofrontend from './formateringAvDataTilMikrofrontend/KroniskSykObjektTilMikrofrontend';
 import MidlertidigAleneObjektTilMikrofrontend from './formateringAvDataTilMikrofrontend/MidlertidigAleneObjektTilMikrofrontend';
+import AleneOmOmsorgenObjektTilMikrofrontend from './formateringAvDataTilMikrofrontend/AleneOmOmsorgenObjektTilMikrofrontend';
 
 const KartleggePropertyTilUtvidetRettMikrofrontendKomponent = (
   saksInformasjon: SaksinformasjonUtvidetRett,
@@ -56,7 +57,7 @@ const KartleggePropertyTilUtvidetRettMikrofrontendKomponent = (
           soknad,
         });
       case FagsakYtelseType.OMSORGSPENGER_ALENE_OM_OMSORGEN:
-        return MidlertidigAleneObjektTilMikrofrontend({
+        return AleneOmOmsorgenObjektTilMikrofrontend({
           behandlingsID,
           aksjonspunktLost,
           lesemodus,

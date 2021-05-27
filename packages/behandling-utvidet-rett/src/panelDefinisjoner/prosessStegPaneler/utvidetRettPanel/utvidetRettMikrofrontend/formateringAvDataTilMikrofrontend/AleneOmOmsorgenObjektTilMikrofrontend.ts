@@ -51,7 +51,10 @@ const formatereLosAksjonspunktObjekt = (
     kode: aksjonspunktKode,
     begrunnelse,
     erVilkarOk,
-    fraDato,
+    periode: {
+      fom: fraDato,
+      tom: '',
+    },
   };
 
   if (!erVilkarOk) {
@@ -59,7 +62,6 @@ const formatereLosAksjonspunktObjekt = (
       ? AvslagskoderMidlertidigAlene.VARIGHET_UNDER_SEKS_MÅN
       : AvslagskoderMidlertidigAlene.REGNES_IKKE_SOM_Å_HA_ALENEOMSORG;
   }
-
   return losAksjonspunktObjekt;
 };
 
@@ -82,7 +84,7 @@ const AleneOmOmsorgenObjektTilMikrofrontend = ({
     soknadsopplysninger: {
       årsak: 'Årsak',
       beskrivelse: 'Beskrivelse',
-      fraDato: 'fraDato',
+      fraDato: soknad?.søknadsperiode.fom,
       soknadsdato: soknad.soknadsdato,
     } as AleneOmOmsorgenSoknadsopplysninger,
     vedtakFattetVilkarOppfylt: skalVilkarsUtfallVises,
