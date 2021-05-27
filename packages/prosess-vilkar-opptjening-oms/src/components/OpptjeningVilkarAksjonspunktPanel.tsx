@@ -32,6 +32,7 @@ interface OpptjeningVilkarAksjonspunktPanelImplProps {
   behandlingVersjon: number;
   isApOpen: boolean;
   lovReferanse?: string;
+  erOmsorgspenger?: boolean;
   readOnly: boolean;
   readOnlySubmitButton: boolean;
   status: string;
@@ -61,6 +62,7 @@ export const OpptjeningVilkarAksjonspunktPanelImpl: FunctionComponent<
   erVilkarOk,
   isApOpen,
   lovReferanse,
+  erOmsorgspenger,
   originalErVilkarOk,
   readOnly,
   readOnlySubmitButton,
@@ -106,19 +108,32 @@ export const OpptjeningVilkarAksjonspunktPanelImpl: FunctionComponent<
       </Element>
 
       <VerticalSpacer eightPx />
-      <RadioGroupField name="innvilgelseMerknadKode" validate={[required]}>
-        <RadioOption
-          label={{ id: 'OpptjeningVilkarAksjonspunktPanel.MidlertidigInaktivA' }}
-          value={midlertidigInaktiv.TYPE_A}
-        />
+      {!erOmsorgspenger ? (
+        <RadioGroupField name="innvilgelseMerknadKode" validate={[required]}>
+          <RadioOption
+            label={{ id: 'OpptjeningVilkarAksjonspunktPanel.MidlertidigInaktivA' }}
+            value={midlertidigInaktiv.TYPE_A}
+          />
+          <RadioOption
+            label={{ id: 'OpptjeningVilkarAksjonspunktPanel.MidlertidigInaktivB' }}
+            value={midlertidigInaktiv.TYPE_B}
+          />
+        </RadioGroupField>
+      ) : (
         <RadioOption
           label={{ id: 'OpptjeningVilkarAksjonspunktPanel.MidlertidigInaktivB' }}
           value={midlertidigInaktiv.TYPE_B}
+          actualValue={midlertidigInaktiv.TYPE_B}
         />
-      </RadioGroupField>
+      )}
       <VerticalSpacer eightPx />
 
-      <VilkarFields erVilkarOk={erVilkarOk} readOnly={readOnly} fieldPrefix={`vilkarFields[${periodeIndex}]`} />
+      <VilkarFields
+        erOmsorgspenger={erOmsorgspenger}
+        erVilkarOk={erVilkarOk}
+        readOnly={readOnly}
+        fieldPrefix={`vilkarFields[${periodeIndex}]`}
+      />
     </ProsessPanelTemplate>
   );
 };
