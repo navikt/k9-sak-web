@@ -27,21 +27,11 @@ const soknad = {
     startDatoForPermisjon: '2019-01-01',
   },
   oppgittTilknytning: {
-    oppholdNorgeNa: true,
-    oppholdNestePeriode: true,
-    oppholdSistePeriode: true,
-    utlandsoppholdFor: [
+    utlandsopphold: [
       {
         landNavn: 'SVERIGE',
         fom: '2010-01-01',
         tom: '2011-01-01',
-      },
-    ],
-    utlandsoppholdEtter: [
-      {
-        landNavn: 'DANMARK',
-        fom: '2018-01-01',
-        tom: '2019-01-01',
       },
     ],
   },

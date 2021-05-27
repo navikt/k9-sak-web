@@ -10,9 +10,7 @@ import { RadioGroupField, RadioOption, behandlingFormValueSelector } from '@fpsa
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { required } from '@fpsak-frontend/utils';
 import BostedSokerFaktaIndex from '@fpsak-frontend/fakta-bosted-soker';
-import { Image, PeriodLabel, VerticalSpacer, FaktaGruppe } from '@fpsak-frontend/shared-components';
-import checkImage from '@fpsak-frontend/assets/images/check.svg';
-import avslaattImage from '@fpsak-frontend/assets/images/avslaatt.svg';
+import { PeriodLabel, VerticalSpacer, FaktaGruppe } from '@fpsak-frontend/shared-components';
 
 import styles from './oppholdINorgeOgAdresserFaktaPanel.less';
 
@@ -21,48 +19,25 @@ const capitalizeFirstLetter = landNavn => {
   return string.charAt(0).toUpperCase() + string.slice(1);
 };
 
-const sjekkOpphold = (opphold, intl) =>
-  opphold !== undefined && (
-    <Row>
-      <Column xs="1">
-        <Image
-          className={styles.imageWidth}
-          src={opphold === true ? checkImage : avslaattImage}
-          alt={intl.formatMessage({
-            id:
-              opphold === true
-                ? 'OppholdINorgeOgAdresserFaktaPanel.Opphold'
-                : 'OppholdINorgeOgAdresserFaktaPanel.IkkeOpphold',
-          })}
-        />
-      </Column>
-      <Column xs="11">
-        <Normaltekst>
-          <FormattedMessage
-            id={opphold === true ? 'OppholdINorgeOgAdresserFaktaPanel.Yes' : 'OppholdINorgeOgAdresserFaktaPanel.No'}
-          />
-        </Normaltekst>
-      </Column>
-    </Row>
-  );
-
 const lagOppholdIUtland = utlandsOpphold =>
-  utlandsOpphold &&
-  utlandsOpphold.map(u => (
-    <div key={`${u.landNavn}${u.fom}${u.tom}`}>
-      <Row>
-        <Column xs="4">
-          <Normaltekst>{capitalizeFirstLetter(u.landNavn)}</Normaltekst>
-        </Column>
-        <Column xs="8">
-          <Normaltekst>
-            <PeriodLabel showTodayString dateStringFom={u.fom} dateStringTom={u.tom} />
-          </Normaltekst>
-        </Column>
-      </Row>
-    </div>
-  ));
-
+  Array.isArray(utlandsOpphold) && utlandsOpphold.length > 0 ? (
+    utlandsOpphold.map(u => (
+      <div key={`${u.landNavn}${u.fom}${u.tom}`}>
+        <Row>
+          <Column xs="4">
+            <Normaltekst>{capitalizeFirstLetter(u.landNavn)}</Normaltekst>
+          </Column>
+          <Column xs="8">
+            <Normaltekst>
+              <PeriodLabel showTodayString dateStringFom={u.fom} dateStringTom={u.tom} />
+            </Normaltekst>
+          </Column>
+        </Row>
+      </div>
+    ))
+  ) : (
+    <Normaltekst>-</Normaltekst>
+  );
 /**
  * OppholdINorgeOgAdresserFaktaPanel
  *
@@ -70,7 +45,6 @@ const lagOppholdIUtland = utlandsOpphold =>
  * Viser opphold i innland og utland som er relevante for søker. ReadOnly.
  */
 const OppholdINorgeOgAdresserFaktaPanelImpl = ({
-  intl,
   readOnly,
   hasBosattAksjonspunkt,
   isBosattAksjonspunktClosed,
@@ -84,20 +58,10 @@ const OppholdINorgeOgAdresserFaktaPanelImpl = ({
       <Column xs="6">
         <FaktaGruppe withoutBorder titleCode="OppholdINorgeOgAdresserFaktaPanel.OppholdINorge">
           <Undertekst>
-            <FormattedMessage id="OppholdINorgeOgAdresserFaktaPanel.StayingInNorwayLast12" />
+            <FormattedMessage id="OppholdINorgeOgAdresserFaktaPanel.StayingOutsideOfNorway" />
           </Undertekst>
           <VerticalSpacer fourPx />
-          {sjekkOpphold(opphold.oppholdSistePeriode, intl)}
-          <VerticalSpacer eightPx />
-          {lagOppholdIUtland(opphold.utlandsoppholdFor)}
-          <VerticalSpacer sixteenPx />
-          <Undertekst>
-            <FormattedMessage id="OppholdINorgeOgAdresserFaktaPanel.StayingInNorwayNext12" />
-          </Undertekst>
-          <VerticalSpacer fourPx />
-          {sjekkOpphold(opphold.oppholdNestePeriode, intl)}
-          <VerticalSpacer eightPx />
-          {lagOppholdIUtland(opphold.utlandsoppholdEtter)}
+          {lagOppholdIUtland([...(opphold.utlandsoppholdFor || []), ...(opphold.utlandsoppholdEttter || [])])}
         </FaktaGruppe>
       </Column>
       <Column xs="6">
@@ -147,7 +111,6 @@ const OppholdINorgeOgAdresserFaktaPanelImpl = ({
 );
 
 OppholdINorgeOgAdresserFaktaPanelImpl.propTypes = {
-  intl: PropTypes.shape().isRequired,
   readOnly: PropTypes.bool.isRequired,
   hasBosattAksjonspunkt: PropTypes.bool.isRequired,
   isBosattAksjonspunktClosed: PropTypes.bool.isRequired,
@@ -196,11 +159,7 @@ OppholdINorgeOgAdresserFaktaPanel.buildInitialValues = (soknad, periode, aksjons
   if (soknad && soknad.oppgittTilknytning) {
     const { oppgittTilknytning } = soknad;
     opphold = {
-      oppholdNorgeNa: oppgittTilknytning.oppholdNorgeNa,
-      oppholdNestePeriode: oppgittTilknytning.oppholdNestePeriode,
-      oppholdSistePeriode: oppgittTilknytning.oppholdSistePeriode,
-      utlandsoppholdFor: oppgittTilknytning.utlandsoppholdFor,
-      utlandsoppholdEtter: oppgittTilknytning.utlandsoppholdEtter,
+      utlandsopphold: oppgittTilknytning.utlandsopphold,
     };
   }
 

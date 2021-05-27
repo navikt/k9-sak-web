@@ -13,17 +13,13 @@ import shallowWithIntl from '../../../i18n';
 
 describe('<OppholdINorgeOgAdresserFaktaPanel>', () => {
   const opphold = {
-    oppholdNorgeNa: true,
-    oppholdSistePeriode: true,
-    utlandsoppholdFor: [
+    utlandsopphold: [
       {
         landNavn: 'SVERIGE',
         fom: '2017-07-20',
         tom: '2017-07-31',
       },
     ],
-    utlandsoppholdEtter: [],
-    oppholdNestePeriode: false,
   };
 
   const foreldre = [
@@ -279,17 +275,13 @@ describe('<OppholdINorgeOgAdresserFaktaPanel>', () => {
       hasBosattAksjonspunkt: true,
       isBosattAksjonspunktClosed: false,
       opphold: {
-        oppholdNorgeNa: true,
-        oppholdSistePeriode: true,
-        utlandsoppholdFor: [
+        utlandsopphold: [
           {
             landNavn: 'SVERIGE',
             fom: '2017-07-20',
             tom: '2017-07-31',
           },
         ],
-        utlandsoppholdEtter: [],
-        oppholdNestePeriode: false,
       },
     });
   });
