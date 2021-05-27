@@ -63,6 +63,8 @@ spec:
       value: "https://omsorgen-for-frontend.dev.adeo.no/"
     - name: PSB_INNTEKTSMELDING_FRONTEND_URL
       value: "https://psb-inntektsmelding-frontend.dev.adeo.no/"
+    - name: PSB_ETABLERT_TILSYN_FRONTEND_URL
+      value: "https://psb-etablert-tilsyn-frontend.dev.adeo.no/"
 
    # Feature-flag
     - name: VARSELTEKST
