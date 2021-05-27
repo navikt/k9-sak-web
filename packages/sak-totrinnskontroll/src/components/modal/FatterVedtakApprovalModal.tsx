@@ -13,6 +13,7 @@ import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import innvilgetImageUrl from '@fpsak-frontend/assets/images/innvilget_valgt.svg';
 import { Behandling, Kodeverk } from '@k9-sak-web/types';
 
+import erFagytelseTypeUtvidetRett from '@k9-sak-web/behandling-utvidet-rett/src/utils/erFagytelseTypeUtvidetRett';
 import styles from './fatterVedtakApprovalModal.less';
 
 const getInfoTextCode = (
@@ -49,10 +50,7 @@ const getInfoTextCode = (
     if (ytelseType.kode === FagsakYtelseType.FRISINN) {
       return 'FatterVedtakApprovalModal.IkkeInnvilgetFRISINN';
     }
-    if (
-      ytelseType.kode === FagsakYtelseType.OMSORGSPENGER_KRONISK_SYKT_BARN ||
-      ytelseType.kode === FagsakYtelseType.OMSORGSPENGER_MIDLERTIDIG_ALENE
-    ) {
+    if (erFagytelseTypeUtvidetRett(ytelseType.kode)) {
       return 'FatterVedtakApprovalModal.IkkeInnvilgetUtvidetRett';
     }
     return 'FatterVedtakApprovalModal.IkkeInnvilgetOmsorgspenger';
@@ -65,10 +63,7 @@ const getInfoTextCode = (
     if (ytelseType.kode === FagsakYtelseType.FRISINN) {
       return 'FatterVedtakApprovalModal.OpphortFRISINN';
     }
-    if (
-      ytelseType.kode === FagsakYtelseType.OMSORGSPENGER_KRONISK_SYKT_BARN ||
-      ytelseType.kode === FagsakYtelseType.OMSORGSPENGER_MIDLERTIDIG_ALENE
-    ) {
+    if (erFagytelseTypeUtvidetRett(ytelseType.kode)) {
       return 'FatterVedtakApprovalModal.OpphortUtvidetRett';
     }
     return 'FatterVedtakApprovalModal.OpphortOmsorgpenger';
@@ -81,10 +76,7 @@ const getInfoTextCode = (
   if (ytelseType.kode === FagsakYtelseType.PLEIEPENGER) {
     return 'FatterVedtakApprovalModal.InnvilgetPleiepenger';
   }
-  if (
-    ytelseType.kode === FagsakYtelseType.OMSORGSPENGER_KRONISK_SYKT_BARN ||
-    ytelseType.kode === FagsakYtelseType.OMSORGSPENGER_MIDLERTIDIG_ALENE
-  ) {
+  if (erFagytelseTypeUtvidetRett(ytelseType.kode)) {
     return 'FatterVedtakApprovalModal.InnvilgetUtvidetRett';
   }
   return 'FatterVedtakApprovalModal.InnvilgetOmsorgspenger';
@@ -111,10 +103,7 @@ const getModalDescriptionTextCode = (
   if (ytelseType.kode === FagsakYtelseType.PLEIEPENGER) {
     return 'FatterVedtakApprovalModal.ModalDescriptionPleiePengerApproval';
   }
-  if (
-    ytelseType.kode === FagsakYtelseType.OMSORGSPENGER_KRONISK_SYKT_BARN ||
-    ytelseType.kode === FagsakYtelseType.OMSORGSPENGER_MIDLERTIDIG_ALENE
-  ) {
+  if (erFagytelseTypeUtvidetRett(ytelseType.kode)) {
     return 'FatterVedtakApprovalModal.ModalDescriptionUtvidetRettApproval';
   }
   return 'FatterVedtakApprovalModal.ModalDescriptionOMSApproval';

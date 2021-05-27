@@ -18,6 +18,7 @@ import {
   ArbeidsgiverOpplysningerWrapper,
 } from '@k9-sak-web/types';
 
+import erFagytelseTypeUtvidetRett from '@k9-sak-web/behandling-utvidet-rett/src/utils/erFagytelseTypeUtvidetRett';
 import useTrackRouteParam from '../app/useTrackRouteParam';
 import getAccessRights from '../app/util/access';
 import { getProsessStegLocation, getFaktaLocation, getLocationWithDefaultProsessStegAndFakta } from '../app/paths';
@@ -41,30 +42,29 @@ const erTilbakekreving = (behandlingTypeKode: string): boolean =>
 
 const formatName = (bpName = ''): string => replaceNorwegianCharacters(bpName.toLowerCase());
 
-const getOppdaterProsessStegOgFaktaPanelIUrl = (history: History) => (
-  prosessStegId: string,
-  faktaPanelId: string,
-): void => {
-  let newLocation;
-  const { location } = history;
-  if (prosessStegId === 'default') {
-    newLocation = getLocationWithDefaultProsessStegAndFakta(location);
-  } else if (prosessStegId) {
-    newLocation = getProsessStegLocation(location)(formatName(prosessStegId));
-  } else {
-    newLocation = getProsessStegLocation(location)(null);
-  }
+const getOppdaterProsessStegOgFaktaPanelIUrl =
+  (history: History) =>
+  (prosessStegId: string, faktaPanelId: string): void => {
+    let newLocation;
+    const { location } = history;
+    if (prosessStegId === 'default') {
+      newLocation = getLocationWithDefaultProsessStegAndFakta(location);
+    } else if (prosessStegId) {
+      newLocation = getProsessStegLocation(location)(formatName(prosessStegId));
+    } else {
+      newLocation = getProsessStegLocation(location)(null);
+    }
 
-  if (faktaPanelId === 'default') {
-    newLocation = getFaktaLocation(newLocation)('default');
-  } else if (faktaPanelId) {
-    newLocation = getFaktaLocation(newLocation)(formatName(faktaPanelId));
-  } else {
-    newLocation = getFaktaLocation(newLocation)(null);
-  }
+    if (faktaPanelId === 'default') {
+      newLocation = getFaktaLocation(newLocation)('default');
+    } else if (faktaPanelId) {
+      newLocation = getFaktaLocation(newLocation)(formatName(faktaPanelId));
+    } else {
+      newLocation = getFaktaLocation(newLocation)(null);
+    }
 
-  history.push(newLocation);
-};
+    history.push(newLocation);
+  };
 
 interface OwnProps {
   setBehandlingIdOgVersjon: (behandlingId: number, behandlingVersjon: number) => void;
@@ -104,9 +104,10 @@ const BehandlingIndex: FunctionComponent<OwnProps> = ({
 
   const { addErrorMessage } = useRestApiErrorDispatcher();
 
-  const oppdaterBehandlingVersjon = useCallback(versjon => setBehandlingIdOgVersjon(behandlingId, versjon), [
-    behandlingId,
-  ]);
+  const oppdaterBehandlingVersjon = useCallback(
+    versjon => setBehandlingIdOgVersjon(behandlingId, versjon),
+    [behandlingId],
+  );
 
   const kodeverk = restApiHooks.useGlobalStateRestApiData<{ [key: string]: [KodeverkMedNavn] }>(K9sakApiKeys.KODEVERK);
   const klageKodeverk = restApiHooks.useGlobalStateRestApiData<{ [key: string]: [KodeverkMedNavn] }>(
@@ -127,12 +128,10 @@ const BehandlingIndex: FunctionComponent<OwnProps> = ({
   );
 
   const navAnsatt = restApiHooks.useGlobalStateRestApiData<NavAnsatt>(K9sakApiKeys.NAV_ANSATT);
-  const rettigheter = useMemo(() => getAccessRights(navAnsatt, fagsak.status, behandling?.status, behandling?.type), [
-    fagsak.status,
-    behandlingId,
-    behandling?.status,
-    behandling?.type,
-  ]);
+  const rettigheter = useMemo(
+    () => getAccessRights(navAnsatt, fagsak.status, behandling?.status, behandling?.type),
+    [fagsak.status, behandlingId, behandling?.status, behandling?.type],
+  );
 
   const history = useHistory();
   const opneSokeside = useCallback(() => {
@@ -266,10 +265,7 @@ const BehandlingIndex: FunctionComponent<OwnProps> = ({
     );
   }
 
-  if (
-    fagsak.sakstype.kode === FagsakYtelseType.OMSORGSPENGER_MIDLERTIDIG_ALENE ||
-    fagsak.sakstype.kode === FagsakYtelseType.OMSORGSPENGER_KRONISK_SYKT_BARN
-  ) {
+  if (erFagytelseTypeUtvidetRett(fagsak.sakstype.kode)) {
     return (
       <Suspense fallback={<LoadingPanel />}>
         <ErrorBoundary errorMessageCallback={addErrorMessage}>
