@@ -224,6 +224,16 @@ const skjermlenkeCodes = {
     faktaNavn: '',
     punktNavn: prosessStegCodes.UNNTAK,
   },
+  VURDER_BEREDSKAP: {
+    kode: 'VURDER_BEREDSKAP',
+    faktaNavn: faktaPanelCodes.ETABLERT_TILSYN,
+    punktNavn: prosessStegCodes.UTTAK,
+  },
+  VURDER_NATTEVÅK: {
+    kode: 'VURDER_NATTEVÅK',
+    faktaNavn: faktaPanelCodes.ETABLERT_TILSYN,
+    punktNavn: prosessStegCodes.UTTAK,
+  },
 };
 
 export default skjermlenkeCodes;
