@@ -143,13 +143,15 @@ export const BeregningFP = props => {
 
   const mainContainerClassnames = cx('mainContainer', { 'mainContainer--withSideMenu': skalBrukeSidemeny });
   const bgSkalVurderes = erBGTilVurdering(vilkaarBG, aktivtBeregningsgrunnlag);
+  const harAksjonspunkt = aksjonspunkter.length > 0;
+
   return (
     <div className={mainContainerClassnames}>
       {skalBrukeSidemeny && (
         <div className={styles.sideMenuContainer}>
           <SideMenu
             links={kronologiskeGrunnlag.map((currentBeregningsgrunnlag, currentBeregningsgrunnlagIndex) => ({
-              iconSrc: menyProps[currentBeregningsgrunnlagIndex].skalVurderes ? advarselIcon : null,
+              iconSrc: menyProps[currentBeregningsgrunnlagIndex].skalVurderes && harAksjonspunkt ? advarselIcon : null,
               active: aktivtBeregningsgrunnlagIndeks === currentBeregningsgrunnlagIndex,
               label: `${intl.formatMessage({ id: 'Sidemeny.Beregningsgrunnlag' })} ${
                 menyProps[currentBeregningsgrunnlagIndex].stp
@@ -181,7 +183,7 @@ export const BeregningFP = props => {
               bgSkalVurderes,
             }}
           />
-          {aksjonspunkter.length > 0 && (
+          {harAksjonspunkt && (
             <Row>
               <Column xs="12">
                 <ProsessStegSubmitButton
