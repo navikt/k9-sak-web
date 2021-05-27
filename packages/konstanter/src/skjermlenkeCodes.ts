@@ -227,12 +227,12 @@ const skjermlenkeCodes = {
   VURDER_BEREDSKAP: {
     kode: 'VURDER_BEREDSKAP',
     faktaNavn: faktaPanelCodes.ETABLERT_TILSYN,
-    punktNavn: prosessStegCodes.UTTAK,
+    punktNavn: '',
   },
   VURDER_NATTEVÅK: {
     kode: 'VURDER_NATTEVÅK',
     faktaNavn: faktaPanelCodes.ETABLERT_TILSYN,
-    punktNavn: prosessStegCodes.UTTAK,
+    punktNavn: '',
   },
 };
 
