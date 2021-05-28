@@ -7,7 +7,6 @@ import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus'
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import opplysningAdresseType from '@fpsak-frontend/kodeverk/src/opplysningAdresseType';
 import { Normaltekst } from 'nav-frontend-typografi';
-import { FormattedMessage } from 'react-intl';
 import OppholdINorgeOgAdresserFaktaPanel from './OppholdINorgeOgAdresserFaktaPanel';
 import shallowWithIntl from '../../../i18n';
 
@@ -61,10 +60,8 @@ describe('<OppholdINorgeOgAdresserFaktaPanel>', () => {
       />,
     );
     const felter = wrapper.find(Normaltekst);
-    expect(felter).to.have.length(4);
-    expect(felter.first().childAt(0).find(FormattedMessage).prop('id')).to.eql('OppholdINorgeOgAdresserFaktaPanel.Yes');
-    expect(felter.at(1).childAt(0).text()).to.eql('Sverige');
-    expect(felter.at(3).childAt(0).find(FormattedMessage).prop('id')).to.eql('OppholdINorgeOgAdresserFaktaPanel.No');
+    expect(felter).to.have.length(2);
+    expect(felter.first().childAt(0).text()).to.eql('Sverige');
   });
 
   it('skal rendre form som viser bosatt informasjon', () => {

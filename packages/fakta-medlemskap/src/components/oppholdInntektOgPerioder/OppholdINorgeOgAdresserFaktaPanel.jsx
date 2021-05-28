@@ -61,7 +61,7 @@ const OppholdINorgeOgAdresserFaktaPanelImpl = ({
             <FormattedMessage id="OppholdINorgeOgAdresserFaktaPanel.StayingOutsideOfNorway" />
           </Undertekst>
           <VerticalSpacer fourPx />
-          {lagOppholdIUtland([...(opphold.utlandsoppholdFor || []), ...(opphold.utlandsoppholdEttter || [])])}
+          {lagOppholdIUtland(opphold.utlandsopphold)}
         </FaktaGruppe>
       </Column>
       <Column xs="6">
