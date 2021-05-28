@@ -12603,10 +12603,10 @@ nav-frontend-tabs-style@^2.0.1:
   resolved "https://registry.npmjs.org/nav-frontend-tabs-style/-/nav-frontend-tabs-style-2.0.1.tgz"
   integrity sha512-5YGeSdGu/4p3aqZLp3cJMJxYXUEoIZCmJ0r2r84JF2C5OKFcpr5QWlUO6eAVwEjaTwhL1J43R+9enyasEidvIg==
 
-nav-frontend-tabs@^1.1.3:
-  version "1.1.3"
-  resolved "https://registry.npmjs.org/nav-frontend-tabs/-/nav-frontend-tabs-1.1.3.tgz"
-  integrity sha512-Gfg1Xm7KkClGGhEOMl5ehd63wC7fOkiAGoRtunYGCUldQRSZsbKgcwBOVdro1YbQla0Ykwls2iXuwE41MBHK8Q==
+nav-frontend-tabs@^2.0.1:
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/nav-frontend-tabs/-/nav-frontend-tabs-2.0.1.tgz#54b11497734df09fad0a993a65c7779ed648e0bb"
+  integrity sha512-KKbKhmIKT42D3NUzFejqoxmYXsmZkhvYJQiiflIrJyqR6AYJeh5jG4aDA2AhAgrPH5cfxlNUDFC7RXlX+WG0pQ==
 
 nav-frontend-typografi-style@1.1.1, nav-frontend-typografi-style@^1.0.17, nav-frontend-typografi-style@^1.0.18, nav-frontend-typografi-style@^1.0.34:
   version "1.1.1"
