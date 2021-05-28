@@ -12615,20 +12615,15 @@ nav-frontend-typografi-style@1.1.1, nav-frontend-typografi-style@^1.0.17, nav-fr
   dependencies:
     nav-frontend-core "^5.1.1"
 
-nav-frontend-typografi@2.0.37:
-  version "2.0.37"
-  resolved "https://registry.npmjs.org/nav-frontend-typografi/-/nav-frontend-typografi-2.0.37.tgz"
-  integrity sha512-u+oUiAgsf3e0/TZtzksiQKayxtrkU+WNZ/w5OjIx2W1oiKocE8UaJ1SWCoJm1JrVops1ifR+ZMuBQcXCpb8pFQ==
+nav-frontend-typografi@3.1.2, nav-frontend-typografi@^3.0.3:
+  version "3.1.2"
+  resolved "https://registry.yarnpkg.com/nav-frontend-typografi/-/nav-frontend-typografi-3.1.2.tgz#480b18a0fd6be78b11582997166f9c3b97e5e9de"
+  integrity sha512-F8045asErG1zjGHCwT5i+jCv0GQOdIUsH/pZbtME7VaF0V5zkXNaIUTws8iZeGL2hdll0Wk+IAfce9j+K+970g==
 
 nav-frontend-typografi@^2.0.16, nav-frontend-typografi@^2.0.17:
   version "2.0.39"
   resolved "https://registry.npmjs.org/nav-frontend-typografi/-/nav-frontend-typografi-2.0.39.tgz"
   integrity sha512-YJ2e+nB2C1GdpxkONM87W8to+6ij058WWa6s2k1ABdODtfiHKQd0hJEfgmW9WrJT5e2WM6kkal5IeH3qF3lVuw==
-
-nav-frontend-typografi@^3.0.3:
-  version "3.0.4"
-  resolved "https://registry.npmjs.org/nav-frontend-typografi/-/nav-frontend-typografi-3.0.4.tgz"
-  integrity sha512-p/g7WbKd7FZBypTAn4VWBj5/ccdVxV+dla0DH7L4AUcwGfGa8Hbo8INSkGViloo2a3ptYQz10V+tX4hgac/ihA==
 
 nearley@^2.7.10:
   version "2.20.1"
