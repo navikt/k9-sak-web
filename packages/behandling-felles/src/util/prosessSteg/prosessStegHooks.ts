@@ -59,6 +59,8 @@ const useProsessStegPaneler = (
       hasFetchError,
     );
 
+    let stansetAvTidligereAvslag = false;
+
     return paneler.map((panel, index) => {
       const forrigePanel = paneler[index - 1];
       const urlKode = panel.getUrlKode();
@@ -74,9 +76,11 @@ const useProsessStegPaneler = (
 
       const forrigeStatus = forrigePanel.getStatus();
 
-      panel.setStansetAvTidligereAvslag(
-        forrigeStatus === vilkarUtfallType.IKKE_OPPFYLT || forrigeStatus === vilkarUtfallType.IKKE_VURDERT,
-      );
+      if (forrigeStatus === vilkarUtfallType.IKKE_OPPFYLT || forrigeStatus === vilkarUtfallType.IKKE_VURDERT) {
+        stansetAvTidligereAvslag = true;
+      }
+
+      panel.setStansetAvTidligereAvslag(stansetAvTidligereAvslag);
 
       return panel;
     });
