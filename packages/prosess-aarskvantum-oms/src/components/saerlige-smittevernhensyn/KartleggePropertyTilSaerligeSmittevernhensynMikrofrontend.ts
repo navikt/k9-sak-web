@@ -35,13 +35,15 @@ const KartleggePropertyTilSaerligeSmittevernhensynMikrofrontend = (
         informasjonTilLesemodus: {
           begrunnelse: aksjonspunkt.begrunnelse,
           vilkarOppfylt: erFravaerSaerligSmittevern,
+          antallDagerDelvisInnvilget: null,
         },
-        losAksjonspunkt: (fravaerGrunnetSmittevernhensynEllerStengt, begrunnelse) => {
+        losAksjonspunkt: (fravaerGrunnetSmittevernhensynEllerStengt, begrunnelse, antallDagerDelvisInnvilget) => {
           submitCallback([
             {
               kode: aksjonspunkt.definisjon.kode,
               innvilgePeriodene: fravaerGrunnetSmittevernhensynEllerStengt,
               begrunnelse,
+              antallDagerDelvisInnvilget,
               fortsettBehandling: true,
             },
           ]);
