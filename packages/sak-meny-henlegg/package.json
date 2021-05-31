@@ -9,12 +9,12 @@
     "@fpsak-frontend/kodeverk": "1.0.0",
     "@fpsak-frontend/shared-components": "1.0.0",
     "@fpsak-frontend/utils": "1.0.0",
-    "nav-frontend-core": "5.1.1",
-    "nav-frontend-grid": "1.1.2",
+    "nav-frontend-core": "6.0.1",
+    "nav-frontend-grid": "2.0.1",
     "nav-frontend-grid-style": "1.0.2",
-    "nav-frontend-knapper": "2.1.4",
-    "nav-frontend-knapper-style": "1.1.2",
-    "nav-frontend-modal": "1.2.2",
+    "nav-frontend-knapper": "3.0.1",
+    "nav-frontend-knapper-style": "2.0.1",
+    "nav-frontend-modal": "2.0.1",
     "nav-frontend-modal-style": "2.0.1",
     "nav-frontend-skjema": "4.0.1",
     "nav-frontend-skjema-style": "3.0.1",
@@ -30,6 +30,6 @@
   "devDependencies": {
     "@fpsak-frontend/utils-test": "1.0.0",
     "enzyme": "^3.11.0",
-    "sinon": "^10.0.0"
+    "sinon": "^11.1.1"
   }
 }

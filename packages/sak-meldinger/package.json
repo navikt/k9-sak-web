@@ -10,12 +10,12 @@
     "@fpsak-frontend/utils": "1.0.0",
     "@k9-sak-web/types": "1.0.0",
     "classnames": "^2.3.1",
-    "nav-frontend-core": "5.1.1",
-    "nav-frontend-grid": "1.1.2",
+    "nav-frontend-core": "6.0.1",
+    "nav-frontend-grid": "2.0.1",
     "nav-frontend-grid-style": "1.0.2",
-    "nav-frontend-knapper": "2.1.4",
-    "nav-frontend-knapper-style": "1.1.2",
-    "nav-frontend-modal": "1.2.2",
+    "nav-frontend-knapper": "3.0.1",
+    "nav-frontend-knapper-style": "2.0.1",
+    "nav-frontend-modal": "2.0.1",
     "nav-frontend-modal-style": "2.0.1",
     "nav-frontend-typografi": "2.0.37",
     "nav-frontend-typografi-style": "1.1.1",
@@ -28,6 +28,6 @@
   "devDependencies": {
     "@fpsak-frontend/utils-test": "1.0.0",
     "enzyme": "^3.11.0",
-    "sinon": "^10.0.0"
+    "sinon": "^11.1.1"
   }
 }

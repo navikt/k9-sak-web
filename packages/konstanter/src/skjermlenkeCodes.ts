@@ -211,7 +211,7 @@ const skjermlenkeCodes = {
   },
   FAKTA_OM_MEDISINSK: {
     kode: 'FAKTA_OM_MEDISINSK',
-    faktaNavn: faktaPanelCodes.MEDISINSKVILKAAR,
+    faktaNavn: faktaPanelCodes.MEDISINSKVILKAAR_V2,
     punktNavn: prosessStegCodes.MEDISINSK_VILKAR,
   },
   FAKTA_OM_ÅRSKVANTUM: {
@@ -223,6 +223,16 @@ const skjermlenkeCodes = {
     kode: 'PUNKT_FOR_MAN_VILKÅRSVURDERING',
     faktaNavn: '',
     punktNavn: prosessStegCodes.UNNTAK,
+  },
+  VURDER_BEREDSKAP: {
+    kode: 'VURDER_BEREDSKAP',
+    faktaNavn: faktaPanelCodes.ETABLERT_TILSYN,
+    punktNavn: '',
+  },
+  VURDER_NATTEVÅK: {
+    kode: 'VURDER_NATTEVÅK',
+    faktaNavn: faktaPanelCodes.ETABLERT_TILSYN,
+    punktNavn: '',
   },
 };
 

@@ -12,6 +12,7 @@ import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus'
 import tilbakekrevingVidereBehandling from '@fpsak-frontend/kodeverk/src/tilbakekrevingVidereBehandling';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { TIDENES_ENDE, getKodeverknavnFn } from '@fpsak-frontend/utils';
+import erFagytelseTypeUtvidetRett from '@k9-sak-web/behandling-utvidet-rett/src/utils/erFagytelseTypeUtvidetRett';
 
 const tilbakekrevingMedInntrekk = (tilbakekrevingKode, simuleringResultat) =>
   tilbakekrevingKode === tilbakekrevingVidereBehandling.TILBAKEKR_OPPRETT &&
@@ -73,10 +74,7 @@ export const findInnvilgetResultatText = (behandlingResultatTypeKode, ytelseType
     return 'VedtakForm.VilkarStatusInnvilgetFrisinn';
   }
 
-  if (
-    ytelseType === fagsakYtelseType.OMSORGSPENGER_MIDLERTIDIG_ALENE ||
-    ytelseType === fagsakYtelseType.OMSORGSPENGER_KRONISK_SYKT_BARN
-  ) {
+  if (erFagytelseTypeUtvidetRett(ytelseType)) {
     return 'VedtakForm.VilkarStatusInnvilgetUtvidetRett';
   }
 
@@ -95,10 +93,7 @@ export const findAvslagResultatText = (behandlingResultatTypeKode, ytelseType) =
     return 'VedtakForm.OmsorgspengerIkkeInnvilget';
   }
 
-  if (
-    ytelseType === fagsakYtelseType.OMSORGSPENGER_KRONISK_SYKT_BARN ||
-    ytelseType === fagsakYtelseType.OMSORGSPENGER_MIDLERTIDIG_ALENE
-  ) {
+  if (erFagytelseTypeUtvidetRett(ytelseType)) {
     return 'VedtakForm.UtvidetRettIkkeInnvilget';
   }
 
