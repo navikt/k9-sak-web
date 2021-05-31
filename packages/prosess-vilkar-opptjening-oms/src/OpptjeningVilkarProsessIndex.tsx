@@ -58,11 +58,6 @@ const OpptjeningVilkarProsessIndex = ({
   const { behandlingsresultat } = behandling;
   const vilkårsresultat = behandlingsresultat?.vilkårResultat?.OPPTJENINGSVILKÅRET;
 
-  console.log('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@');
-  console.log('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@');
-  console.log('@@@@@@@@@@@@@@@@@@@@@@@@@@ fagsak', fagsak);
-  console.log('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@');
-
   const erOmsorgspenger = fagsak.sakstype.kode === FagsakYtelseType.OMSORGSPENGER;
 
   const mainContainerClassnames = cx('mainContainer', { 'mainContainer--withSideMenu': skalBrukeSidemeny });

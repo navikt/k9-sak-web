@@ -107,7 +107,8 @@ export const OpptjeningVilkarAksjonspunktPanelImpl: FunctionComponent<
         <FormattedMessage id="OpptjeningVilkarAksjonspunktPanel.SokerHarVurdertOpptjentRettTilOmsorgspenger" />
       </Element>
 
-      <VerticalSpacer eightPx />
+      <VerticalSpacer sixteenPx />
+
       {!erOmsorgspenger ? (
         <RadioGroupField name="innvilgelseMerknadKode" validate={[required]}>
           <RadioOption
@@ -119,14 +120,7 @@ export const OpptjeningVilkarAksjonspunktPanelImpl: FunctionComponent<
             value={midlertidigInaktiv.TYPE_B}
           />
         </RadioGroupField>
-      ) : (
-        <RadioOption
-          label={{ id: 'OpptjeningVilkarAksjonspunktPanel.MidlertidigInaktivB' }}
-          value={midlertidigInaktiv.TYPE_B}
-          actualValue={midlertidigInaktiv.TYPE_B}
-        />
-      )}
-      <VerticalSpacer eightPx />
+      ) : null}
 
       <VilkarFields
         erOmsorgspenger={erOmsorgspenger}
@@ -157,13 +151,14 @@ interface Values {
 
 const transformValues = (
   values: Values,
+  erOmsorgspenger: boolean,
   aksjonspunkter: Aksjonspunkt[],
   vilkårPerioder: Vilkarperiode[],
   opptjeninger: Opptjening[],
 ) => ({
   vilkårPeriodeVurderinger: values.vilkarFields.map((vilkarField, index) => ({
     ...vilkarField,
-    innvilgelseMerknadKode: values.innvilgelseMerknadKode,
+    innvilgelseMerknadKode: erOmsorgspenger ? midlertidigInaktiv.TYPE_B : values.innvilgelseMerknadKode,
     periode: Array.isArray(vilkårPerioder) && vilkårPerioder[index] ? vilkårPerioder[index].periode : {},
   })),
   opptjeningPerioder: Array.isArray(opptjeninger)
@@ -176,8 +171,16 @@ const transformValues = (
 });
 
 const mapStateToPropsFactory = (initialState, initialOwnProps: OpptjeningVilkarAksjonspunktPanelImplProps) => {
-  const { aksjonspunkter, submitCallback, periodeIndex, vilkårPerioder, opptjeninger } = initialOwnProps;
-  const onSubmit = values => submitCallback([transformValues(values, aksjonspunkter, vilkårPerioder, opptjeninger)]);
+  const {
+    erOmsorgspenger,
+    aksjonspunkter,
+    submitCallback,
+    periodeIndex,
+    vilkårPerioder,
+    opptjeninger,
+  } = initialOwnProps;
+  const onSubmit = values =>
+    submitCallback([transformValues(values, erOmsorgspenger, aksjonspunkter, vilkårPerioder, opptjeninger)]);
 
   const isOpenAksjonspunkt = initialOwnProps.aksjonspunkter.some(ap => isAksjonspunktOpen(ap.status.kode));
   const erVilkarOk = isOpenAksjonspunkt ? undefined : vilkarUtfallType.OPPFYLT === initialOwnProps.status;
