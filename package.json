@@ -43,7 +43,7 @@
     "@sentry/browser": "^5.30.0",
     "axios": "^0.21.1",
     "core-js": "^3.13.1",
-    "dotenv": "^9.0.0",
+    "dotenv": "^10.0.0",
     "history": "^4.10.1",
     "node-cache": "^5.1.2",
     "react": "^16.14.0",
