@@ -6,7 +6,6 @@ import { Knapp } from 'nav-frontend-knapper';
 import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import { CheckboxField, SelectField } from '@fpsak-frontend/form';
-import { intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import behandlingArsakType from '@fpsak-frontend/kodeverk/src/behandlingArsakType';
 
@@ -16,7 +15,7 @@ import {
   getBehandlingTyper,
   getEnabledBehandlingstyper,
 } from './NyBehandlingModal';
-import shallowWithIntl from '../../i18n/index';
+import shallowWithIntl, { intlMock } from '../../i18n/index';
 
 describe('<NyBehandlingModal>', () => {
   const submitEventCallback = sinon.spy();

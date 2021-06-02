@@ -152,7 +152,7 @@ describe('<GrunnlagForAarsinntektPanelAT>', () => {
     rowNr += 1;
     const mndSum = rows.at(rowNr).find('Normaltekst');
     const aarSum = rows.at(rowNr).find('Element');
-    const ledetextSum = rows.at(rowNr).find('FormattedMessage');
+    const ledetextSum = rows.at(rowNr).find('MemoizedFormattedMessage');
     const beregnetAarsinntekt = andeler.reduce((acc, andel) => acc + andel.beregnetPrAar, 0);
     const beregnetMaanedsinntekt = beregnetAarsinntekt / 12;
     expect(ledetextSum.get(0).props.id).to.equal('Beregningsgrunnlag.AarsinntektPanel.TotaltArbeidsinntekt');

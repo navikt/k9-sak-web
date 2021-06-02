@@ -83,7 +83,7 @@ describe('<PerioderMedMedlemskapFaktaPanel>', () => {
       />,
     );
 
-    const message = wrapper.find('FormattedMessage');
+    const message = wrapper.find('MemoizedFormattedMessage');
     expect(message).to.have.length(1);
     expect(message.prop('id')).to.eql('PerioderMedMedlemskapFaktaPanel.Fodselsdato');
     expect(message.prop('values')).to.eql({ dato: '16.10.2016' });

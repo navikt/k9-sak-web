@@ -1,13 +1,11 @@
 import React from 'react';
 import { expect } from 'chai';
 
-import { intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
-
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import { VedtakAvslagArsakOgBegrunnelsePanel } from './VedtakAvslagArsakOgBegrunnelsePanel';
-import shallowWithIntl from '../../i18n';
+import shallowWithIntl, { intlMock } from '../../i18n';
 
 describe('<VedtakAvslagArsakOgBegrunnelsePanel>', () => {
   it('skal rendre avslagspanel og textArea når en har ikke oppfylt søknadsfristvilkår', () => {

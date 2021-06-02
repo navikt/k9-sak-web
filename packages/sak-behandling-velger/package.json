@@ -17,10 +17,10 @@
     "nav-frontend-grid-style": "1.0.2",
     "nav-frontend-paneler": "3.0.1",
     "nav-frontend-paneler-style": "2.0.1",
-    "nav-frontend-typografi": "2.0.37",
-    "nav-frontend-typografi-style": "1.1.1",
+    "nav-frontend-typografi": "4.0.1",
+    "nav-frontend-typografi-style": "2.0.1",
     "react": "^16.14.0",
-    "react-intl": "^5.10.11",
+    "react-intl": "^5.18.1",
     "react-router-dom": "^5.2.0"
   },
   "devDependencies": {
