@@ -42,26 +42,23 @@ const formatereLosAksjonspunktObjekt = (
   begrunnelse: string,
   erVilkarOk: boolean,
   fraDato: string,
-) => {
-  const losAksjonspunktObjekt = {
-    kode: aksjonspunktKode,
-    begrunnelse,
-    erVilkarOk,
-    periode: {
-      fom: fraDato,
-      tom: '',
-    },
-  };
+) => ({
+  kode: aksjonspunktKode,
+  begrunnelse,
+  erVilkarOk,
+  periode: {
+    fom: fraDato,
+    tom: '',
+  },
+});
 
-  /* Avventer funksjonelle avklaringer.
+/* Avventer funksjonelle avklaringer.
   if (!erVilkarOk) {
     losAksjonspunktObjekt['avslagsårsak'] = avslagsArsakErPeriodeErIkkeOverSeksMån
       ? AvslagskoderMidlertidigAlene.VARIGHET_UNDER_SEKS_MÅN
       : AvslagskoderMidlertidigAlene.REGNES_IKKE_SOM_Å_HA_ALENEOMSORG;
-  } */
-
-  return losAksjonspunktObjekt;
-};
+  }
+  return losAksjonspunktObjekt; */
 
 const AleneOmOmsorgenObjektTilMikrofrontend = ({
   behandlingsID,
