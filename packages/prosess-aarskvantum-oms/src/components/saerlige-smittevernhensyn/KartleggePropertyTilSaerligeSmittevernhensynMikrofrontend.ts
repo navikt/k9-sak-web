@@ -21,7 +21,7 @@ const formatereLosAksjonspunktObjekt = (
   };
 
   if (antallDagerDelvisInnvilget !== null && fravaerGrunnetSmittevernhensynEllerStengt) {
-    losAksjonspunktObjekt.antallDager = antallDagerDelvisInnvilget;
+    losAksjonspunktObjekt['antallDager'] = antallDagerDelvisInnvilget;
   }
 
   return losAksjonspunktObjekt;

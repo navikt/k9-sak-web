@@ -23,6 +23,11 @@ class PanelDef extends ProsessStegPanelDef {
     if (!uttak || (uttak?.perioder && Object.keys(uttak.perioder).length === 0)) {
       return vilkarUtfallType.IKKE_VURDERT;
     }
+    const uttaksperiodeKeys = Object.keys(uttak.perioder);
+
+    if (uttaksperiodeKeys.every(key => uttak.perioder[key].utfall === vilkarUtfallType.IKKE_OPPFYLT)) {
+      return vilkarUtfallType.IKKE_OPPFYLT;
+    }
 
     return vilkarUtfallType.OPPFYLT;
   };
