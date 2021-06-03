@@ -7,6 +7,34 @@ import MikrofrontendKomponenter from './types/MikrofrontendKomponenter';
 import { SaerligSmittevernhensynProps } from './types/SaerligSmittevernhensynProps';
 import Aktivitet from '../../dto/Aktivitet';
 
+interface LosAksjonspunktSaerligSmittevern {
+  kode: string;
+  innvilgePeriodene: boolean;
+  begrunnelse: string;
+  antallDager?: number;
+  fortsettBehandling: boolean;
+}
+
+const formatereLosAksjonspunktObjekt = (
+  aksjonspunktKode: string,
+  fravaerGrunnetSmittevernhensynEllerStengt: boolean,
+  begrunnelse: string,
+  antallDagerDelvisInnvilget: number,
+) => {
+  const losAksjonspunktObjekt = {
+    kode: aksjonspunktKode,
+    innvilgePeriodene: fravaerGrunnetSmittevernhensynEllerStengt,
+    begrunnelse,
+    fortsettBehandling: true,
+  } as LosAksjonspunktSaerligSmittevern;
+
+  if (antallDagerDelvisInnvilget !== null && fravaerGrunnetSmittevernhensynEllerStengt) {
+    losAksjonspunktObjekt.antallDager = antallDagerDelvisInnvilget;
+  }
+
+  return losAksjonspunktObjekt;
+};
+
 const KartleggePropertyTilSaerligeSmittevernhensynMikrofrontend = (
   submitCallback,
   behandling: Behandling,
@@ -35,15 +63,16 @@ const KartleggePropertyTilSaerligeSmittevernhensynMikrofrontend = (
         informasjonTilLesemodus: {
           begrunnelse: aksjonspunkt.begrunnelse,
           vilkarOppfylt: erFravaerSaerligSmittevern,
+          antallDagerDelvisInnvilget: null,
         },
-        losAksjonspunkt: (fravaerGrunnetSmittevernhensynEllerStengt, begrunnelse) => {
+        losAksjonspunkt: (fravaerGrunnetSmittevernhensynEllerStengt, begrunnelse, antallDagerDelvisInnvilget) => {
           submitCallback([
-            {
-              kode: aksjonspunkt.definisjon.kode,
-              innvilgePeriodene: fravaerGrunnetSmittevernhensynEllerStengt,
+            formatereLosAksjonspunktObjekt(
+              aksjonspunkt.definisjon.kode,
+              fravaerGrunnetSmittevernhensynEllerStengt,
               begrunnelse,
-              fortsettBehandling: true,
-            },
+              antallDagerDelvisInnvilget,
+            ),
           ]);
         },
         formState: FormState,
