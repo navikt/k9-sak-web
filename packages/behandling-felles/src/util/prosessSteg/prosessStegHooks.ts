@@ -3,6 +3,7 @@ import { useState, useMemo, useCallback, useEffect } from 'react';
 import { Behandling, Aksjonspunkt, Vilkar, Fagsak } from '@k9-sak-web/types';
 
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
+import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import { prosessStegCodes } from '@k9-sak-web/konstanter';
 import Rettigheter from '../../types/rettigheterTsType';
 import ProsessStegMenyRad from '../../types/prosessStegMenyRadTsType';
@@ -59,6 +60,8 @@ const useProsessStegPaneler = (
       hasFetchError,
     );
 
+    let stansetAvTidligereAvslag = false;
+
     return paneler.map((panel, index) => {
       const forrigePanel = paneler[index - 1];
       const urlKode = panel.getUrlKode();
@@ -67,16 +70,19 @@ const useProsessStegPaneler = (
         !forrigePanel ||
         urlKode === prosessStegCodes.AVREGNING ||
         urlKode === prosessStegCodes.SIMULERING ||
-        urlKode === prosessStegCodes.VEDTAK
+        urlKode === prosessStegCodes.VEDTAK ||
+        (fagsak.sakstype.kode === fagsakYtelseType.PLEIEPENGER && urlKode === prosessStegCodes.UTTAK)
       ) {
         return panel;
       }
 
       const forrigeStatus = forrigePanel.getStatus();
 
-      panel.setStansetAvTidligereAvslag(
-        forrigeStatus === vilkarUtfallType.IKKE_OPPFYLT || forrigeStatus === vilkarUtfallType.IKKE_VURDERT,
-      );
+      if (forrigeStatus === vilkarUtfallType.IKKE_OPPFYLT || forrigeStatus === vilkarUtfallType.IKKE_VURDERT) {
+        stansetAvTidligereAvslag = true;
+      }
+
+      panel.setStansetAvTidligereAvslag(stansetAvTidligereAvslag);
 
       return panel;
     });
@@ -88,11 +94,10 @@ const useProsessStegPaneler = (
   );
 
   const urlCode = valgtPanel ? valgtPanel.getUrlKode() : undefined;
-  const formaterteProsessStegPaneler = useMemo(() => formaterPanelerForProsessmeny(prosessStegPaneler, urlCode), [
-    behandling.versjon,
-    urlCode,
-    overstyrteAksjonspunktKoder,
-  ]);
+  const formaterteProsessStegPaneler = useMemo(
+    () => formaterPanelerForProsessmeny(prosessStegPaneler, urlCode),
+    [behandling.versjon, urlCode, overstyrteAksjonspunktKoder],
+  );
 
   return [prosessStegPaneler, valgtPanel, formaterteProsessStegPaneler];
 };
