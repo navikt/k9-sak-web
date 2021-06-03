@@ -7,6 +7,26 @@ import MikrofrontendKomponenter from './types/MikrofrontendKomponenter';
 import { SaerligSmittevernhensynProps } from './types/SaerligSmittevernhensynProps';
 import Aktivitet from '../../dto/Aktivitet';
 
+const formatereLosAksjonspunktObjekt = (
+  aksjonspunktKode: string,
+  fravaerGrunnetSmittevernhensynEllerStengt: boolean,
+  begrunnelse: string,
+  antallDagerDelvisInnvilget: number,
+) => {
+  const losAksjonspunktObjekt = {
+    kode: aksjonspunktKode,
+    innvilgePeriodene: fravaerGrunnetSmittevernhensynEllerStengt,
+    begrunnelse,
+    fortsettBehandling: true,
+  };
+
+  if (antallDagerDelvisInnvilget !== null && fravaerGrunnetSmittevernhensynEllerStengt) {
+    losAksjonspunktObjekt.antallDager = antallDagerDelvisInnvilget;
+  }
+
+  return losAksjonspunktObjekt;
+};
+
 const KartleggePropertyTilSaerligeSmittevernhensynMikrofrontend = (
   submitCallback,
   behandling: Behandling,
@@ -39,13 +59,12 @@ const KartleggePropertyTilSaerligeSmittevernhensynMikrofrontend = (
         },
         losAksjonspunkt: (fravaerGrunnetSmittevernhensynEllerStengt, begrunnelse, antallDagerDelvisInnvilget) => {
           submitCallback([
-            {
-              kode: aksjonspunkt.definisjon.kode,
-              innvilgePeriodene: fravaerGrunnetSmittevernhensynEllerStengt,
+            formatereLosAksjonspunktObjekt(
+              aksjonspunkt.definisjon.kode,
+              fravaerGrunnetSmittevernhensynEllerStengt,
               begrunnelse,
               antallDagerDelvisInnvilget,
-              fortsettBehandling: true,
-            },
+            ),
           ]);
         },
         formState: FormState,
