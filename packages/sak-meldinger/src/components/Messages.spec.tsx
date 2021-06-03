@@ -1,12 +1,11 @@
 import React from 'react';
 import sinon from 'sinon';
 
-import { intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
 import { KodeverkMedNavn } from '@k9-sak-web/types';
 
 import { MessagesImpl as Messages } from './Messages';
-import shallowWithIntl from '../../i18n/index';
+import shallowWithIntl, { intlMock } from '../../i18n/index';
 
 const mockProps = {
   setRecipient: () => undefined,

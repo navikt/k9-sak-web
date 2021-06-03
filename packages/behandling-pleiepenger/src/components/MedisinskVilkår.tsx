@@ -48,10 +48,10 @@ export default ({ behandling: { links, uuid }, submitCallback, aksjonspunkter, r
   return (
     <MicroFrontend
       id={medisinskVilkårAppID}
-      jsSrc="/k9/microfrontend/medisinsk-vilkar/1.8.7/app.js"
-      jsIntegrity="sha384-wftB/2i2cTtwos0oV+2rq5L9B9Z4Z+Yu+fI8tWM9asiQ+XlOTSme44tK9WDDVTOn"
-      stylesheetSrc="/k9/microfrontend/medisinsk-vilkar/1.8.7/styles.css"
-      stylesheetIntegrity="sha384-cUaJo3dfCRz2jX+7h6YZm6p0GwscbasQfK/2DsSgzXKvDSUk8eWKdF+uwBNR2xJI"
+      jsSrc="/k9/microfrontend/medisinsk-vilkar/1.9.0/app.js"
+      jsIntegrity="sha384-GxmXVr2++q3B9FC+wzZyv3u6Sh5/9Eo2CCpAMHcsLwZ8bp2jjHgOzBI9tzJ0VK7d"
+      stylesheetSrc="/k9/microfrontend/medisinsk-vilkar/1.9.0/styles.css"
+      stylesheetIntegrity="sha384-GmmB4csxol7qFJjJut+ioRMgORT6iIokWkcjrsZjZjhHf8TctvF04/997TJ1CVwz"
       onReady={() =>
         initializeMedisinskVilkår(
           medisinskVilkårAppID,

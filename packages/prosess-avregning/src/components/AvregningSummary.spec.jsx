@@ -12,15 +12,12 @@ describe('<AvregningSummary>', () => {
     inntrekk: 20000,
   };
 
-
   it('skal vise AvregningSummary', () => {
     const props = {
       ...mockProps,
       ingenPerioderMedAvvik: false,
     };
-    const wrapper = shallow(<AvregningSummary
-      {...props}
-    />);
+    const wrapper = shallow(<AvregningSummary {...props} />);
 
     const element = wrapper.find('Element');
     expect(element).to.have.length(1);
@@ -37,11 +34,9 @@ describe('<AvregningSummary>', () => {
       ...mockProps,
       ingenPerioderMedAvvik: true,
     };
-    const wrapper = shallow(<AvregningSummary
-      {...props}
-    />);
+    const wrapper = shallow(<AvregningSummary {...props} />);
 
-    const message = wrapper.find('FormattedMessage');
+    const message = wrapper.find('MemoizedFormattedMessage');
     expect(message.at(0).prop('id')).is.eql('Avregning.bruker');
     expect(message.at(1).prop('id')).is.eql('Avregning.ingenPerioder');
   });

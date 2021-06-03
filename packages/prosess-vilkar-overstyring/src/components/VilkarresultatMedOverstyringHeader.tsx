@@ -5,7 +5,7 @@ import keyImage from '@fpsak-frontend/assets/images/key-1-rotert.svg';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import { FlexColumn, FlexContainer, FlexRow, Image, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { Aksjonspunkt } from '@k9-sak-web/types';
-import { Element, EtikettLiten, Undertittel } from 'nav-frontend-typografi';
+import { Element, Undertekst, Undertittel } from 'nav-frontend-typografi';
 import React, { FunctionComponent, SetStateAction } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
@@ -76,7 +76,7 @@ const VilkarresultatMedOverstyringHeader: FunctionComponent<VilkarresultatMedOve
           </FlexColumn>
           {lovReferanse && (
             <FlexColumn>
-              <EtikettLiten className={styles.vilkar}>{lovReferanse}</EtikettLiten>
+              <Undertekst className={styles.vilkar}>{lovReferanse}</Undertekst>
             </FlexColumn>
           )}
         </FlexRow>

@@ -1,15 +1,13 @@
 import React from 'react';
 import { expect } from 'chai';
 
-import { intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
-
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import VedtakFritekstPanel from './VedtakFritekstPanel';
 import { VedtakAvslagPanelImpl } from './VedtakAvslagPanel';
-import shallowWithIntl from '../../i18n';
+import shallowWithIntl, { intlMock } from '../../i18n';
 
 const pleiepenger = fagsakYtelseType.PLEIEPENGER;
 const omsorgspenger = fagsakYtelseType.OMSORGSPENGER;

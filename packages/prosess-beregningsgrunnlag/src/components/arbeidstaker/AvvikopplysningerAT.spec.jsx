@@ -29,7 +29,7 @@ describe('<AvviksopplysningerAT>', () => {
     );
     const rows = wrapper.find('FlexRow');
     expect(rows).to.have.length(1);
-    const infoText = rows.first().find('FormattedMessage');
+    const infoText = rows.first().find('MemoizedFormattedMessage');
     expect(infoText.first().prop('id')).to.eql('Beregningsgrunnlag.Avikssopplysninger.AT.KobinasjonsStatusATSN');
   });
   it('Skal teste tabellen får korrekte rader med innhold når kombinasjonsstatus=KOMBINERT_AT_FL_SN', () => {
@@ -48,7 +48,7 @@ describe('<AvviksopplysningerAT>', () => {
     );
     const rows = wrapper.find('FlexRow');
     expect(rows).to.have.length(1);
-    const infoText = rows.first().find('FormattedMessage');
+    const infoText = rows.first().find('MemoizedFormattedMessage');
     expect(infoText.first().prop('id')).to.eql('Beregningsgrunnlag.Avikssopplysninger.AT.KobinasjonsStatusATFLSN');
   });
   it('Skal teste at avvikoplysningerATFLSN rendres', () => {

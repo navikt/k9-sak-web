@@ -14,13 +14,11 @@ describe('<CollapseButton>', () => {
       ...mockProps,
       showDetails: true,
     };
-    const wrapper = shallow(<CollapseButton
-      {...props}
-    />);
+    const wrapper = shallow(<CollapseButton {...props} />);
 
     const button = wrapper.find('button');
     expect(button).to.have.length(1);
-    const formattedMessage = wrapper.find('FormattedMessage');
+    const formattedMessage = wrapper.find('MemoizedFormattedMessage');
     expect(formattedMessage).to.have.length(1);
     expect(formattedMessage.prop('id')).is.eql('Avregning.headerText.VisFærreDetaljer');
     const oppChevron = wrapper.find('OppChevron');
@@ -32,13 +30,11 @@ describe('<CollapseButton>', () => {
       ...mockProps,
       showDetails: false,
     };
-    const wrapper = shallow(<CollapseButton
-      {...props}
-    />);
+    const wrapper = shallow(<CollapseButton {...props} />);
 
     const button = wrapper.find('button');
     expect(button).to.have.length(1);
-    const formattedMessage = wrapper.find('FormattedMessage');
+    const formattedMessage = wrapper.find('MemoizedFormattedMessage');
     expect(formattedMessage).to.have.length(1);
     expect(formattedMessage.prop('id')).is.eql('Avregning.headerText.VisFlereDetaljer');
     const nedChevron = wrapper.find('NedChevron');

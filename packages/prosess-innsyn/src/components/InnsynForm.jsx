@@ -252,9 +252,9 @@ const mapStateToPropsFactory = (initialState, initialOwnProps) => {
 const InnsynForm = connect(mapStateToPropsFactory)(
   behandlingForm({
     form: formName,
-  })(injectIntl(InnsynFormImpl)),
+  })(InnsynFormImpl),
 );
 
 InnsynForm.formName = formName;
 
-export default InnsynForm;
+export default injectIntl(InnsynForm);

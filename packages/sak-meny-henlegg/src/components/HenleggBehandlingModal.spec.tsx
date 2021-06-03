@@ -4,12 +4,11 @@ import Modal from 'nav-frontend-modal';
 
 import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
-import { intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import behandlingResultatType from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 
 import { getHenleggArsaker, HenleggBehandlingModalImpl } from './HenleggBehandlingModal';
-import shallowWithIntl from '../../i18n/index';
+import shallowWithIntl, { intlMock } from '../../i18n/index';
 
 describe('<HenleggBehandlingModal>', () => {
   const ytelseType = {
