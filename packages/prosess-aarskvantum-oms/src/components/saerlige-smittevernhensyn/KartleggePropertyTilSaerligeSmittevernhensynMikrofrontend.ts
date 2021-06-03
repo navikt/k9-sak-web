@@ -16,10 +16,10 @@ interface LosAksjonspunktSaerligSmittevern {
 }
 
 const formatereLosAksjonspunktObjekt = (
-  aksjonspunktKode,
-  fravaerGrunnetSmittevernhensynEllerStengt,
-  begrunnelse,
-  antallDagerDelvisInnvilget,
+  aksjonspunktKode: string,
+  fravaerGrunnetSmittevernhensynEllerStengt: boolean,
+  begrunnelse: string,
+  antallDagerDelvisInnvilget: number,
 ) => {
   const losAksjonspunktObjekt = {
     kode: aksjonspunktKode,
