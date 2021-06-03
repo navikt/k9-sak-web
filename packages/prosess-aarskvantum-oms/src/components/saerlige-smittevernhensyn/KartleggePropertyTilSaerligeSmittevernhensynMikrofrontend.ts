@@ -7,21 +7,29 @@ import MikrofrontendKomponenter from './types/MikrofrontendKomponenter';
 import { SaerligSmittevernhensynProps } from './types/SaerligSmittevernhensynProps';
 import Aktivitet from '../../dto/Aktivitet';
 
+interface LosAksjonspunktSaerligSmittevern {
+  kode: string;
+  innvilgePeriodene: boolean;
+  begrunnelse: string;
+  antallDager?: number;
+  fortsettBehandling: boolean;
+}
+
 const formatereLosAksjonspunktObjekt = (
-  aksjonspunktKode: string,
-  fravaerGrunnetSmittevernhensynEllerStengt: boolean,
-  begrunnelse: string,
-  antallDagerDelvisInnvilget: number,
+  aksjonspunktKode,
+  fravaerGrunnetSmittevernhensynEllerStengt,
+  begrunnelse,
+  antallDagerDelvisInnvilget,
 ) => {
   const losAksjonspunktObjekt = {
     kode: aksjonspunktKode,
     innvilgePeriodene: fravaerGrunnetSmittevernhensynEllerStengt,
     begrunnelse,
     fortsettBehandling: true,
-  };
+  } as LosAksjonspunktSaerligSmittevern;
 
   if (antallDagerDelvisInnvilget !== null && fravaerGrunnetSmittevernhensynEllerStengt) {
-    losAksjonspunktObjekt['antallDager'] = antallDagerDelvisInnvilget;
+    losAksjonspunktObjekt.antallDager = antallDagerDelvisInnvilget;
   }
 
   return losAksjonspunktObjekt;
