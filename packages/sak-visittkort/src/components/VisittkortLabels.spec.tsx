@@ -7,10 +7,9 @@ import opplysningAdresseType from '@fpsak-frontend/kodeverk/src/opplysningAdress
 import sivilstandType from '@fpsak-frontend/kodeverk/src/sivilstandType';
 import region from '@fpsak-frontend/kodeverk/src/region';
 import personstatusType from '@fpsak-frontend/kodeverk/src/personstatusType';
-import { intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import { Tooltip } from '@fpsak-frontend/shared-components';
 
-import shallowWithIntl from '../../i18n/index';
+import shallowWithIntl, { intlMock } from '../../i18n/index';
 import VisittkortLabels from './VisittkortLabels';
 
 describe('<VisittkortLabels>', () => {

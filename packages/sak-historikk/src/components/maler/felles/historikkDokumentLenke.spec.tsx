@@ -15,6 +15,6 @@ describe('HistorikkDokumentLenke', () => {
   it('skal vise at dokument er utgått', () => {
     const wrapper = shallowWithIntl(<HistorikkDokumentLenke dokumentLenke={dokumentLenke} saksnummer={saksnummer} />);
 
-    expect(wrapper.find('FormattedMessage').at(0).prop('id')).toEqual('Historikk.Utgått');
+    expect(wrapper.find('MemoizedFormattedMessage').at(0).prop('id')).toEqual('Historikk.Utgått');
   });
 });

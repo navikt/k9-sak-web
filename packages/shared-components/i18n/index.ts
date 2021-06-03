@@ -5,7 +5,7 @@ import {
 
 import messages from './nb_NO.json';
 
-const shallowWithIntl = node => globalShallowWithIntl(node, null, messages);
+const shallowWithIntl = node => globalShallowWithIntl(node, messages);
 
 export const intlMock = intlWithMessages(messages);
 

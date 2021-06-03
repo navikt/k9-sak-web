@@ -24,10 +24,10 @@
     "nav-frontend-paneler": "^3.0.1",
     "nav-frontend-popover": "^2.0.2",
     "nav-frontend-popover-style": "^2.0.1",
-    "nav-frontend-typografi": "2.0.37",
-    "nav-frontend-typografi-style": "1.1.1",
+    "nav-frontend-typografi": "4.0.1",
+    "nav-frontend-typografi-style": "2.0.1",
     "react": "^16.14.0",
-    "react-intl": "^5.10.11",
+    "react-intl": "^5.18.3",
     "redux-form": "^8.3.7",
     "styled-components": "^5.2.3",
     "uuid": "^8.3.2"

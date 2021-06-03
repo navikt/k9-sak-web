@@ -8,7 +8,7 @@ import VerticalSpacer from '@fpsak-frontend/shared-components/src/VerticalSpacer
 import { dateFormat } from '@fpsak-frontend/utils';
 import SideMenu from '@navikt/nap-side-menu';
 import classNames from 'classnames/bind';
-import { Element, EtikettLiten, Undertittel } from 'nav-frontend-typografi';
+import { Element, Undertekst, Undertittel } from 'nav-frontend-typografi';
 import * as React from 'react';
 import { createIntl, createIntlCache, FormattedMessage, RawIntlProvider } from 'react-intl';
 import Vilkarperiode from '../../types/src/vilkarperiode';
@@ -97,7 +97,7 @@ const SykdomProsessIndex = ({ perioder, panelTittelKode }: SykdomProsessIndexPro
                 </Undertittel>
               </FlexColumn>
               <FlexColumn>
-                <EtikettLiten className={styles.vilkar}>{lovReferanse}</EtikettLiten>
+                <Undertekst className={styles.vilkar}>{lovReferanse}</Undertekst>
               </FlexColumn>
             </FlexRow>
             <FlexRow>

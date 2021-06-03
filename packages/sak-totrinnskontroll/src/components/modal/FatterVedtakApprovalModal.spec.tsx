@@ -6,10 +6,9 @@ import Modal from 'nav-frontend-modal';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
-import { intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 
 import FatterVedtakApprovalModal from './FatterVedtakApprovalModal';
-import shallowWithIntl from '../../../i18n/index';
+import shallowWithIntl, { intlMock } from '../../../i18n/index';
 
 describe('<FatterVedtakApprovalModal>', () => {
   const closeEventCallback = sinon.spy();

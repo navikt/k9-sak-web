@@ -67,7 +67,7 @@ describe('<BehandlingPickerItemContent>', () => {
       />,
     );
 
-    const formattedMessages = wrapper.find('FormattedMessage');
+    const formattedMessages = wrapper.find('MemoizedFormattedMessage');
     expect(formattedMessages.first().prop('id')).toEqual('Behandlingspunkt.Årsak.Annet');
   });
 });

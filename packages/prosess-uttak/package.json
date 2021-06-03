@@ -19,10 +19,10 @@
     "nav-frontend-knapper": "3.0.1",
     "nav-frontend-knapper-style": "2.0.1",
     "nav-frontend-modal": "2.0.1",
-    "nav-frontend-typografi": "2.0.37",
+    "nav-frontend-typografi": "4.0.1",
     "prop-types": "^15.7.2",
     "react": "^16.14.0",
-    "react-intl": "^5.10.11"
+    "react-intl": "^5.18.3"
   },
   "devDependencies": {
     "@fpsak-frontend/utils-test": "1.0.0",
