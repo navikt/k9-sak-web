@@ -19,7 +19,8 @@ class OpptjeningPanelDef extends ProsessStegPanelDef {
 
   getEndepunkter = () => [PleiepengerBehandlingApiKeys.OPPTJENING];
 
-  getData = ({ vilkarForSteg }) => ({
+  getData = ({ fagsak, vilkarForSteg }) => ({
+    fagsak,
     lovReferanse: vilkarForSteg[0].lovReferanse,
   });
 
