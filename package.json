@@ -13,12 +13,12 @@
     "node": ">=15 <16"
   },
   "scripts": {
-    "test": "cross-env NODE_ENV=development NODE_ICU_DATA=./node_modules/full-icu jest -o --colors",
-    "test:all": "cross-env NODE_ENV=development NODE_ICU_DATA=./node_modules/full-icu jest --colors",
-    "test:all:testonly": "cross-env NODE_ENV=development NODE_ICU_DATA=./node_modules/full-icu jest --colors --selectProjects test",
-    "test:watch": "cross-env NODE_ENV=development NODE_ICU_DATA=./node_modules/full-icu jest --watch --colors",
-    "test:watch:all": "cross-env NODE_ENV=development NODE_ICU_DATA=./node_modules/full-icu jest --watchAll --colors",
-    "test:coverage": "cross-env NODE_ENV=development NODE_ICU_DATA=./node_modules/full-icu jest --coverage --colors --selectProjects test",
+    "test": "jest -o --colors",
+    "test:all": "jest --colors",
+    "test:all:testonly": "jest --colors --selectProjects test",
+    "test:watch": "jest --watch --colors",
+    "test:watch:all": "jest --watchAll --colors",
+    "test:coverage": "jest --coverage --colors --selectProjects test",
     "ts-check": "tsc  --pretty",
     "lint": "eslint --cache packages --ext .ts,.tsx,.js,.jsx",
     "lint:fix": "eslint --fix --cache packages --ext .ts,.tsx,.js,.jsx",
