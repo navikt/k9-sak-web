@@ -36,7 +36,7 @@ describe('<SkjeringspunktOgStatusPanel>', () => {
       />,
     );
 
-    const messages = wrapper.find('FormattedMessage');
+    const messages = wrapper.find('MemoizedFormattedMessage');
     expect(messages).to.be.lengthOf(1);
     expect(messages.first().props().id).to.equal('Beregningsgrunnlag.Skjeringstidspunkt.SkjeringForBeregning');
     const dato = wrapper.find('DateLabel');

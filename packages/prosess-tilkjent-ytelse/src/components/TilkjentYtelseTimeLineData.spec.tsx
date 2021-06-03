@@ -4,6 +4,7 @@ import { mountWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-h
 import TilkjentYtelseTimeLineData from './TilkjentYtelseTimelineData';
 import { createVisningsnavnForAndel } from './TilkjentYteleseUtils';
 import { PeriodeMedId } from './TilkjentYtelse';
+import messages from '../../i18n/nb_NO.json';
 
 const selectedItemDataFL = {
   andeler: [
@@ -79,7 +80,9 @@ describe('<TilkjentYtelseTimeLineData>', () => {
         alleKodeverk={{}}
         arbeidsgiverOpplysningerPerId={{}}
       />,
+      messages,
     );
+
     expect(wrapper.find('FormattedMessage')).toHaveLength(12);
     expect(wrapper.find('FormattedMessage').at(7).props().id).toBe('TilkjentYtelse.PeriodeData.Aktivitetsstatus');
 

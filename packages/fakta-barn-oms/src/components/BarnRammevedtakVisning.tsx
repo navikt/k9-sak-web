@@ -72,7 +72,7 @@ const BarnRammevedtakVisning: FunctionComponent<BarnInputProps> = ({ barnet }) =
               <Normaltekst>{formaterDato(ks.tom)}</Normaltekst>
             </div>
           ))}
-        {aleneomsorg && <Normaltekst>{formaterDato(aleneomsorg.tom)}</Normaltekst>}
+        {aleneomsorg && !aleneomsorg.tom.includes('9999') && <Normaltekst>{formaterDato(aleneomsorg.tom)}</Normaltekst>}
         {fosterbarn && <Normaltekst>{formaterDato(fosterbarn.tom)}</Normaltekst>}
         {utenlandskBarn && <Normaltekst>{formaterDato(utenlandskBarn.tom)}</Normaltekst>}
         {deltBosted && <Normaltekst>{formaterDato(deltBosted.tom)}</Normaltekst>}

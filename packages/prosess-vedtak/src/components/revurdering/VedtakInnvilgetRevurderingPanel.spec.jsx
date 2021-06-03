@@ -2,10 +2,9 @@ import React from 'react';
 import { expect } from 'chai';
 import { Element, Normaltekst, Undertekst } from 'nav-frontend-typografi';
 
-import { intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import { lagKonsekvensForYtelsenTekst, VedtakInnvilgetRevurderingPanelImpl } from './VedtakInnvilgetRevurderingPanel';
-import shallowWithIntl from '../../../i18n';
+import shallowWithIntl, { intlMock } from '../../../i18n';
 
 const ytelseType = fagsakYtelseType.ENGANGSSTONAD;
 const getKodeverknavn = kodeverk => {

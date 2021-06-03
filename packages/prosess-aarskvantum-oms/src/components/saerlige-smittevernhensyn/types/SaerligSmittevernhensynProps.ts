@@ -7,7 +7,8 @@ export interface SaerligSmittevernhensynProps {
   informasjonTilLesemodus?: {
     begrunnelse: string;
     vilkarOppfylt: boolean;
+    antallDagerDelvisInnvilget: number;
   };
-  losAksjonspunkt: (fravaerGrunnetSmittevernhensynEllerStengt, begrunnelse) => void;
+  losAksjonspunkt: (fravaerGrunnetSmittevernhensynEllerStengt, begrunnelse, antallDagerDelvisInnvilget) => void;
   formState: FormStateType;
 }

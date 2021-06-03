@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { FormattedMessage, injectIntl } from 'react-intl';
 import PropTypes from 'prop-types';
-import { Element, Normaltekst, Undertekst, EtikettLiten } from 'nav-frontend-typografi';
+import { Element, Normaltekst, Undertekst } from 'nav-frontend-typografi';
 
 import { dateFormat, formatCurrencyNoKr, removeSpacesFromNumber, getKodeverknavnFn } from '@fpsak-frontend/utils';
 import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
@@ -136,9 +136,9 @@ const createArbeidsIntektRows = (relevanteAndeler, getKodeverknavn, arbeidsgiver
         )}
         {andel.erTidsbegrensetArbeidsforhold && (
           <FlexColumn>
-            <EtikettLiten>
+            <Undertekst>
               <FormattedMessage id="Beregningsgrunnlag.AarsinntektPanel.Tidsbegrenset" />
-            </EtikettLiten>
+            </Undertekst>
           </FlexColumn>
         )}
       </FlexRow>

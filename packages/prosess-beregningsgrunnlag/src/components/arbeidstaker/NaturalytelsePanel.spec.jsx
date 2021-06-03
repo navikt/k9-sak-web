@@ -199,7 +199,7 @@ describe('<NaturalytelsePanel>', () => {
     );
     const rows = wrapper.find('Row');
     // Header rad
-    const formaterteTekster = rows.at(0).find('FormattedMessage');
+    const formaterteTekster = rows.at(0).find('MemoizedFormattedMessage');
     expect(formaterteTekster.at(0).props().id).to.equal('Beregningsgrunnlag.AarsinntektPanel.Arbeidsinntekt.Maaned');
     expect(formaterteTekster.at(1).props().id).to.equal('Beregningsgrunnlag.AarsinntektPanel.Arbeidsinntekt.Aar');
 
