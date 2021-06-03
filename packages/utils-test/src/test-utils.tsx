@@ -9,12 +9,9 @@ import defaultMessages from '../../../public/sprak/nb_NO.json';
 
 export { default as messages } from '../../../public/sprak/nb_NO.json';
 
-export function renderWithIntl(
-  ui: ReactElement,
-  { locale = 'nb-NO', messages = defaultMessages, ...renderOptions } = {},
-) {
+export function renderWithIntl(ui: ReactElement, { locale, messages, ...renderOptions }: any = {}) {
   const Wrapper: FC = ({ children }) => (
-    <IntlProvider locale={locale} messages={messages}>
+    <IntlProvider locale={locale || 'nb-NO'} messages={messages || defaultMessages}>
       {children}
     </IntlProvider>
   );
@@ -30,13 +27,10 @@ export function renderWithReduxForm(ui: ReactElement, { ...renderOptions } = {})
   return rtlRender(ui, { wrapper: Wrapper, ...renderOptions });
 }
 
-export function renderWithIntlAndReduxForm(
-  ui: ReactElement,
-  { locale = 'nb-NO', messages = defaultMessages, ...renderOptions } = {},
-) {
+export function renderWithIntlAndReduxForm(ui: ReactElement, { locale, messages, ...renderOptions }: any = {}) {
   const Wrapper: FC = ({ children }) => (
     <Provider store={createStore(combineReducers({ form: reducer }))}>
-      <IntlProvider locale={locale} messages={messages}>
+      <IntlProvider locale={locale || 'nb-NO'} messages={messages || defaultMessages}>
         {children}
       </IntlProvider>
     </Provider>

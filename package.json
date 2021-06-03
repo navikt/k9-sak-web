@@ -9,8 +9,11 @@
     "type": "git",
     "url": "git+https://github.com/navikt/k9-sak-web.git"
   },
+  "engines": {
+    "node": ">=15 <16"
+  },
   "scripts": {
-    "test": "jest -i packages/prosess-tilkjent-ytelse/src/components/TilkjentYtelseTimeLineData.spec.tsx -o --colors",
+    "test": "jest -o --colors",
     "test:all": "jest --colors",
     "test:all:testonly": "jest --colors --selectProjects test",
     "test:watch": "jest --watch --colors",
