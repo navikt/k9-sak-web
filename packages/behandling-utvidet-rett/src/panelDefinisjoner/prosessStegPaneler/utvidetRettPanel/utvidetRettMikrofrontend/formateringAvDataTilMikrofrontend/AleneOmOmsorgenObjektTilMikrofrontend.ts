@@ -76,7 +76,7 @@ const AleneOmOmsorgenObjektTilMikrofrontend = ({
     behandlingsID,
     lesemodus,
     aksjonspunktLost,
-    fraDatoFraSoknad: soknad?.søknadsperiode.fom,
+    fraDatoFraSoknad: soknad?.søknadsperiode.fom.includes('2019') ? '1.1.2020' : soknad?.søknadsperiode.fom,
     vedtakFattetVilkarOppfylt: skalVilkarsUtfallVises,
     informasjonOmVilkar: generereInfoForVurdertVilkar(
       skalVilkarsUtfallVises,
