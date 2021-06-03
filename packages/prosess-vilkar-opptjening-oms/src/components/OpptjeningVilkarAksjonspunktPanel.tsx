@@ -122,7 +122,12 @@ export const OpptjeningVilkarAksjonspunktPanelImpl: FunctionComponent<
         </RadioGroupField>
       ) : null}
 
-      <VilkarFields erVilkarOk={erVilkarOk} readOnly={readOnly} fieldPrefix={`vilkarFields[${periodeIndex}]`} />
+      <VilkarFields
+        erOmsorgspenger={erOmsorgspenger}
+        erVilkarOk={erVilkarOk}
+        readOnly={readOnly}
+        fieldPrefix={`vilkarFields[${periodeIndex}]`}
+      />
     </ProsessPanelTemplate>
   );
 };
