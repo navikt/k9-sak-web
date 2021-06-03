@@ -4,10 +4,7 @@ import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import UtvidetRettMikrofrontendVisning from '../../../../../types/MikrofrontendKomponenter';
 import { generereInfoForVurdertVilkar } from '../../../UtvidetRettOmsorgenForMikrofrontendFelles';
 import UtvidetRettSoknad from '../../../../../types/UtvidetRettSoknad';
-import {
-  AleneOmOmsorgenProps,
-  AleneOmOmsorgenSoknadsopplysninger,
-} from '../../../../../types/utvidetRettMikrofrontend/VilkarAleneOmOmsorgenProps';
+import { AleneOmOmsorgenProps } from '../../../../../types/utvidetRettMikrofrontend/VilkarAleneOmOmsorgenProps';
 import AvslagskoderMidlertidigAlene from '../../../../../types/utvidetRettMikrofrontend/AvslagskoderMidlertidigAlene';
 
 interface OwnProps {
@@ -45,25 +42,23 @@ const formatereLosAksjonspunktObjekt = (
   begrunnelse: string,
   erVilkarOk: boolean,
   fraDato: string,
-  avslagsArsakErPeriodeErIkkeOverSeksMån: boolean,
-) => {
-  const losAksjonspunktObjekt = {
-    kode: aksjonspunktKode,
-    begrunnelse,
-    erVilkarOk,
-    periode: {
-      fom: fraDato,
-      tom: '',
-    },
-  };
+) => ({
+  kode: aksjonspunktKode,
+  begrunnelse,
+  erVilkarOk,
+  periode: {
+    fom: fraDato,
+    tom: '',
+  },
+});
 
+/* Avventer funksjonelle avklaringer.
   if (!erVilkarOk) {
     losAksjonspunktObjekt['avslagsårsak'] = avslagsArsakErPeriodeErIkkeOverSeksMån
       ? AvslagskoderMidlertidigAlene.VARIGHET_UNDER_SEKS_MÅN
       : AvslagskoderMidlertidigAlene.REGNES_IKKE_SOM_Å_HA_ALENEOMSORG;
   }
-  return losAksjonspunktObjekt;
-};
+  return losAksjonspunktObjekt; */
 
 const AleneOmOmsorgenObjektTilMikrofrontend = ({
   behandlingsID,
@@ -81,12 +76,7 @@ const AleneOmOmsorgenObjektTilMikrofrontend = ({
     behandlingsID,
     lesemodus,
     aksjonspunktLost,
-    soknadsopplysninger: {
-      årsak: 'Årsak',
-      beskrivelse: 'Beskrivelse',
-      fraDato: soknad?.søknadsperiode.fom,
-      soknadsdato: soknad.soknadsdato,
-    } as AleneOmOmsorgenSoknadsopplysninger,
+    fraDatoFraSoknad: soknad?.søknadsperiode.fom,
     vedtakFattetVilkarOppfylt: skalVilkarsUtfallVises,
     informasjonOmVilkar: generereInfoForVurdertVilkar(
       skalVilkarsUtfallVises,
@@ -95,15 +85,9 @@ const AleneOmOmsorgenObjektTilMikrofrontend = ({
       'Utvidet Rett',
     ),
     informasjonTilLesemodus: formatereLesemodusObjekt(vilkarKnyttetTilAksjonspunkt, aksjonspunkt, status),
-    losAksjonspunkt: ({ begrunnelse, vilkarOppfylt, fraDato, avslagsArsakErPeriodeErIkkeOverSeksMån }) => {
+    losAksjonspunkt: ({ begrunnelse, vilkarOppfylt, fraDato }) => {
       submitCallback([
-        formatereLosAksjonspunktObjekt(
-          aksjonspunkt.definisjon.kode,
-          begrunnelse,
-          vilkarOppfylt,
-          fraDato,
-          avslagsArsakErPeriodeErIkkeOverSeksMån,
-        ),
+        formatereLosAksjonspunktObjekt(aksjonspunkt.definisjon.kode, begrunnelse, vilkarOppfylt, fraDato),
       ]);
     },
     formState: FormState,
