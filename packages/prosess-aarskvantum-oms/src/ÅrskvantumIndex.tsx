@@ -76,7 +76,7 @@ const ÅrskvantumIndex: FunctionComponent<ÅrsakvantumIndexProps> = ({
           behandlingId={behandling.id}
           behandlingVersjon={behandling.versjon}
           submitCallback={submitCallback}
-          aksjonspunkterForSteg={aksjonspunkterForSteg}
+          aksjonspunkterForSteg={aksjonspunkter}
           isAksjonspunktOpen={isAksjonspunktOpen && !visSaerligSmittevernAksjonspunkt}
         />
       )}
