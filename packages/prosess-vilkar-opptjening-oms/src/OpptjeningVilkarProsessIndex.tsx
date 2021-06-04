@@ -98,7 +98,7 @@ const OpptjeningVilkarProsessIndex = ({
             readOnlySubmitButton={readOnlySubmitButton}
             vilkårPerioder={activeVilkår.perioder}
             periodeIndex={activeTab}
-            opptjeninger={opptjening.opptjeninger}
+            opptjeninger={opptjening?.opptjeninger}
           />
         </div>
       </div>
