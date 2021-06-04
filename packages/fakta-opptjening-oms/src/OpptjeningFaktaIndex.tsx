@@ -53,7 +53,7 @@ const OpptjeningFaktaIndex = ({
     <OpptjeningInfoPanel
       behandlingId={behandling.id}
       behandlingVersjon={behandling.versjon}
-      opptjeningList={opptjening.opptjeninger}
+      opptjeningList={opptjening?.opptjeninger}
       dokStatus={utlandDokStatus ? utlandDokStatus.dokStatus : undefined}
       aksjonspunkter={aksjonspunkter}
       submitCallback={submitCallback}
