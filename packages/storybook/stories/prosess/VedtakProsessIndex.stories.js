@@ -44,23 +44,27 @@ const behandling = {
   },
   behandlingPaaVent: false,
   behandlingHenlagt: false,
-  behandlingArsaker: [{
-    behandlingArsakType: {
-      kode: klageBehandlingArsakType.ETTER_KLAGE,
+  behandlingArsaker: [
+    {
+      behandlingArsakType: {
+        kode: klageBehandlingArsakType.ETTER_KLAGE,
+      },
     },
-  }],
+  ],
 };
 
-const vilkar = [{
-  lovReferanse: '§§Dette er en lovreferanse',
-  vilkarType: {
-    kode: vilkarType.FODSELSVILKARET_MOR,
-    kodeverk: kodeverkTyper.VILKAR_TYPE,
+const vilkar = [
+  {
+    lovReferanse: '§§Dette er en lovreferanse',
+    vilkarType: {
+      kode: vilkarType.FODSELSVILKARET_MOR,
+      kodeverk: kodeverkTyper.VILKAR_TYPE,
+    },
+    vilkarStatus: {
+      kode: vilkarUtfallType.OPPFYLT,
+    },
   },
-  vilkarStatus: {
-    kode: vilkarUtfallType.OPPFYLT,
-  },
-}];
+];
 
 const resultatstruktur = {
   antallBarn: 1,
@@ -92,6 +96,34 @@ export const visÅpentAksjonspunktOgInnvilgetForForeldrepenger = () => (
   />
 );
 
+export const visDelvisInnvilgetForOmsorgspenger = () => (
+  <VedtakProsessIndex
+    behandling={{
+      ...behandling,
+      behandlingsresultat: {
+        vedtaksbrev: {
+          kode: 'FRITEKST',
+        },
+        type: {
+          kode: behandlingResultatType.DELVIS_INNVILGET,
+        },
+      },
+    }}
+    vilkar={vilkar}
+    beregningresultatForeldrepenger={resultatstruktur}
+    sendVarselOmRevurdering={boolean('sendVarselOmRevurdering', false)}
+    resultatstrukturOriginalBehandling={resultatstrukturOriginalBehandling}
+    medlemskap={{ fom: '2019-01-01' }}
+    aksjonspunkter={[]}
+    ytelseTypeKode={fagsakYtelseType.OMSORGSPENGER}
+    employeeHasAccess={boolean('employeeHasAccess', false)}
+    isReadOnly={boolean('isReadOnly', false)}
+    previewCallback={action('button-click')}
+    submitCallback={action('button-click')}
+    alleKodeverk={alleKodeverk}
+  />
+);
+
 export const visAvslagForForeldrepenger = () => (
   <VedtakProsessIndex
     behandling={{
@@ -109,12 +141,14 @@ export const visAvslagForForeldrepenger = () => (
         },
       },
     }}
-    vilkar={[{
-      ...vilkar[0],
-      vilkarStatus: {
-        kode: vilkarUtfallType.IKKE_OPPFYLT,
+    vilkar={[
+      {
+        ...vilkar[0],
+        vilkarStatus: {
+          kode: vilkarUtfallType.IKKE_OPPFYLT,
+        },
       },
-    }]}
+    ]}
     beregningresultatForeldrepenger={resultatstruktur}
     sendVarselOmRevurdering={boolean('sendVarselOmRevurdering', false)}
     resultatstrukturOriginalBehandling={resultatstrukturOriginalBehandling}
@@ -137,17 +171,19 @@ export const visÅpentAksjonspunktForSvangerskapspenger = () => (
     sendVarselOmRevurdering={boolean('sendVarselOmRevurdering', false)}
     resultatstrukturOriginalBehandling={resultatstrukturOriginalBehandling}
     medlemskap={{ fom: '2019-01-01' }}
-    aksjonspunkter={[{
-      definisjon: {
-        kode: aksjonspunktCodes.FORESLA_VEDTAK,
+    aksjonspunkter={[
+      {
+        definisjon: {
+          kode: aksjonspunktCodes.FORESLA_VEDTAK,
+        },
+        status: {
+          kode: aksjonspunktStatus.OPPRETTET,
+        },
+        begrunnelse: undefined,
+        kanLoses: true,
+        erAktivt: true,
       },
-      status: {
-        kode: aksjonspunktStatus.OPPRETTET,
-      },
-      begrunnelse: undefined,
-      kanLoses: true,
-      erAktivt: true,
-    }]}
+    ]}
     ytelseType={{ kode: fagsakYtelseType.SVANGERSKAPSPENGER }}
     employeeHasAccess={boolean('employeeHasAccess', false)}
     isReadOnly={boolean('isReadOnly', false)}
@@ -174,27 +210,31 @@ export const visModalForObligatoriskFritekstbrevForSvangerskapspenger = () => (
         },
       },
     }}
-    vilkar={[{
-      ...vilkar[0],
-      vilkarStatus: {
-        kode: vilkarUtfallType.IKKE_OPPFYLT,
+    vilkar={[
+      {
+        ...vilkar[0],
+        vilkarStatus: {
+          kode: vilkarUtfallType.IKKE_OPPFYLT,
+        },
       },
-    }]}
+    ]}
     beregningresultatForeldrepenger={resultatstruktur}
     sendVarselOmRevurdering={boolean('sendVarselOmRevurdering', false)}
     resultatstrukturOriginalBehandling={resultatstrukturOriginalBehandling}
     medlemskap={{ fom: '2019-01-01' }}
-    aksjonspunkter={[{
-      definisjon: {
-        kode: aksjonspunktCodes.FORESLA_VEDTAK,
+    aksjonspunkter={[
+      {
+        definisjon: {
+          kode: aksjonspunktCodes.FORESLA_VEDTAK,
+        },
+        status: {
+          kode: aksjonspunktStatus.OPPRETTET,
+        },
+        begrunnelse: undefined,
+        kanLoses: true,
+        erAktivt: true,
       },
-      status: {
-        kode: aksjonspunktStatus.OPPRETTET,
-      },
-      begrunnelse: undefined,
-      kanLoses: true,
-      erAktivt: true,
-    }]}
+    ]}
     ytelseType={{ kode: fagsakYtelseType.SVANGERSKAPSPENGER }}
     employeeHasAccess={boolean('employeeHasAccess', false)}
     isReadOnly={boolean('isReadOnly', false)}
@@ -212,17 +252,19 @@ export const visÅpentAksjonspunktForEngangsstønad = () => (
     sendVarselOmRevurdering={boolean('sendVarselOmRevurdering', false)}
     resultatstrukturOriginalBehandling={resultatstrukturOriginalBehandling}
     medlemskap={{ fom: '2019-01-01' }}
-    aksjonspunkter={[{
-      definisjon: {
-        kode: aksjonspunktCodes.FORESLA_VEDTAK,
+    aksjonspunkter={[
+      {
+        definisjon: {
+          kode: aksjonspunktCodes.FORESLA_VEDTAK,
+        },
+        status: {
+          kode: aksjonspunktStatus.OPPRETTET,
+        },
+        begrunnelse: undefined,
+        kanLoses: true,
+        erAktivt: true,
       },
-      status: {
-        kode: aksjonspunktStatus.OPPRETTET,
-      },
-      begrunnelse: undefined,
-      kanLoses: true,
-      erAktivt: true,
-    }]}
+    ]}
     ytelseType={{ kode: fagsakYtelseType.ENGANGSSTONAD }}
     employeeHasAccess={boolean('employeeHasAccess', false)}
     isReadOnly={boolean('isReadOnly', false)}
@@ -243,17 +285,19 @@ export const visAtBehandlingErHenlagt = () => (
     sendVarselOmRevurdering={boolean('sendVarselOmRevurdering', false)}
     resultatstrukturOriginalBehandling={resultatstrukturOriginalBehandling}
     medlemskap={{ fom: '2019-01-01' }}
-    aksjonspunkter={[{
-      definisjon: {
-        kode: aksjonspunktCodes.FORESLA_VEDTAK,
+    aksjonspunkter={[
+      {
+        definisjon: {
+          kode: aksjonspunktCodes.FORESLA_VEDTAK,
+        },
+        status: {
+          kode: aksjonspunktStatus.OPPRETTET,
+        },
+        begrunnelse: undefined,
+        kanLoses: true,
+        erAktivt: true,
       },
-      status: {
-        kode: aksjonspunktStatus.OPPRETTET,
-      },
-      begrunnelse: undefined,
-      kanLoses: true,
-      erAktivt: true,
-    }]}
+    ]}
     ytelseType={{ kode: fagsakYtelseType.FORELDREPENGER }}
     employeeHasAccess={boolean('employeeHasAccess', false)}
     isReadOnly={boolean('isReadOnly', false)}
@@ -284,17 +328,19 @@ export const visInnvilgetForForeldrepengerRevurdering = () => (
     sendVarselOmRevurdering={boolean('sendVarselOmRevurdering', false)}
     resultatstrukturOriginalBehandling={resultatstrukturOriginalBehandling}
     medlemskap={{ fom: '2019-01-01' }}
-    aksjonspunkter={[{
-      definisjon: {
-        kode: aksjonspunktCodes.VURDERE_ANNEN_YTELSE,
+    aksjonspunkter={[
+      {
+        definisjon: {
+          kode: aksjonspunktCodes.VURDERE_ANNEN_YTELSE,
+        },
+        status: {
+          kode: aksjonspunktStatus.OPPRETTET,
+        },
+        begrunnelse: undefined,
+        kanLoses: true,
+        erAktivt: true,
       },
-      status: {
-        kode: aksjonspunktStatus.OPPRETTET,
-      },
-      begrunnelse: undefined,
-      kanLoses: true,
-      erAktivt: true,
-    }]}
+    ]}
     tilbakekrevingvalg={{
       videreBehandling: {
         kode: tilbakekrevingVidereBehandling.TILBAKEKR_OPPDATER,
@@ -384,12 +430,14 @@ export const visAvslåttForEngangsstønadRevurdering = () => (
         },
       },
     }}
-    vilkar={[{
-      ...vilkar[0],
-      vilkarStatus: {
-        kode: vilkarUtfallType.IKKE_OPPFYLT,
+    vilkar={[
+      {
+        ...vilkar[0],
+        vilkarStatus: {
+          kode: vilkarUtfallType.IKKE_OPPFYLT,
+        },
       },
-    }]}
+    ]}
     beregningresultatEngangsstonad={resultatstruktur}
     sendVarselOmRevurdering={boolean('sendVarselOmRevurdering', false)}
     resultatstrukturOriginalBehandling={resultatstrukturOriginalBehandling}
