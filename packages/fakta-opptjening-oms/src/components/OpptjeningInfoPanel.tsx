@@ -160,23 +160,25 @@ interface Values {
 
 const transformValues = (values: Values) => {
   const opptjeninger = [];
-  values.opptjeningList.forEach(opptjening => {
-    const opptjeningsperiode = {
-      opptjeningFom: opptjening.fastsattOpptjening.opptjeningFom,
-      opptjeningTom: opptjening.fastsattOpptjening.opptjeningTom,
-      opptjeningAktivitetList: opptjening.opptjeningAktivitetList
-        .map(oa =>
-          transformPeriod(
-            oa,
-            addDay(opptjening.fastsattOpptjening.opptjeningFom),
-            addDay(opptjening.fastsattOpptjening.opptjeningTom),
-          ),
-        )
-        .map(oa => omit(oa, 'id')),
-    };
+  if (Array.isArray(values.opptjeningList)) {
+    values.opptjeningList.forEach(opptjening => {
+      const opptjeningsperiode = {
+        opptjeningFom: opptjening.fastsattOpptjening.opptjeningFom,
+        opptjeningTom: opptjening.fastsattOpptjening.opptjeningTom,
+        opptjeningAktivitetList: opptjening.opptjeningAktivitetList
+          .map(oa =>
+            transformPeriod(
+              oa,
+              addDay(opptjening.fastsattOpptjening.opptjeningFom),
+              addDay(opptjening.fastsattOpptjening.opptjeningTom),
+            ),
+          )
+          .map(oa => omit(oa, 'id')),
+      };
 
-    opptjeninger.push(opptjeningsperiode);
-  });
+      opptjeninger.push(opptjeningsperiode);
+    });
+  }
   return {
     opptjeningListe: opptjeninger,
     kode: values.aksjonspunkter[0].definisjon.kode,
