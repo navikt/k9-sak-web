@@ -54,17 +54,17 @@ spec:
     - name: APP_DIAGNOSEKODER
       value: "http://k9-sak"
     - name: MEDISINSK_VILKAR_FRONTEND_URL
-      value: 'https://medisinsk-vilkar-frontend.intern.nav.no/'
+      value: "https://medisinsk-vilkar-frontend.intern.nav.no/"
     - name: OMSORGSDAGER_FRONTEND_URL
-      value: 'https://omsorgsdager-frontend.intern.nav.no/'
+      value: "https://omsorgsdager-frontend.intern.nav.no/"
     - name: PSB_UTTAK_FRONTEND_URL
-      value: 'https://psb-uttak-frontend.intern.nav.no/'
+      value: "https://psb-uttak-frontend.intern.nav.no/"
     - name: OMSORGEN_FOR_FRONTEND_URL
-      value: 'https://omsorgen-for-frontend.intern.nav.no/'
+      value: "https://omsorgen-for-frontend.intern.nav.no/"
     - name: PSB_INNTEKTSMELDING_FRONTEND_URL
-      value: 'https://psb-inntektsmelding-frontend.intern.nav.no/'
+      value: "https://psb-inntektsmelding-frontend.intern.nav.no/"
     - name: PSB_ETABLERT_TILSYN_FRONTEND_URL
-      value: 'https://psb-etablert-tilsyn-frontend.intern.nav.no/'
+      value: "https://psb-etablert-tilsyn-frontend.intern.nav.no/"
 
     # Feature-flag
     - name: VARSELTEKST
