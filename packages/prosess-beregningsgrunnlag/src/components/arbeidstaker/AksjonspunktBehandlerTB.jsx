@@ -251,7 +251,7 @@ const createRows = (tableData, readOnly, isAksjonspunktClosed, perioder, fieldAr
                     validate={[required]}
                     readOnly={readOnly}
                     parse={parseCurrencyInput}
-                    bredde="XS"
+                    bredde="S"
                   />
                 </div>
               </td>
