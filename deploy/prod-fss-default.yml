@@ -52,7 +52,7 @@ spec:
       value: "http://k9-tilbake"
     # setter denne til å peke på k9-sak, inntil diagnosekode-apiinstansen er oppe i prod
     - name: APP_DIAGNOSEKODER
-      value: "http://k9-sak"
+      value: "http://diagnosekode-api/diagnosekoder/"
     - name: MEDISINSK_VILKAR_FRONTEND_URL
       value: "https://medisinsk-vilkar-frontend.intern.nav.no/"
     - name: OMSORGSDAGER_FRONTEND_URL
