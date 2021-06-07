@@ -105,7 +105,6 @@ export const VurderVarigEndretEllerNyoppstartetSN = ({
                   bredde="S"
                   validate={[required]}
                   parse={parseCurrencyInput}
-                  className={styles['input--xs']}
                   readOnly={readOnly}
                 />
               </div>

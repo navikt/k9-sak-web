@@ -70,10 +70,9 @@ export const FastsettSN = ({
               <div id="readOnlyWrapper" className={readOnly ? styles.inputPadding : undefined}>
                 <InputField
                   name={`${fieldArrayID}.${fastsettInntektFieldname}`}
-                  bredde="XS"
+                  bredde="S"
                   validate={[required]}
                   parse={parseCurrencyInput}
-                  className={styles['input--xs']}
                   readOnly={readOnly}
                 />
               </div>
