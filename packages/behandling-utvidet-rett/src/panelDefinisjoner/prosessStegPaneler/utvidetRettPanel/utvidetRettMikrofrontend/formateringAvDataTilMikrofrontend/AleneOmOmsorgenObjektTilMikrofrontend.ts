@@ -70,33 +70,27 @@ const AleneOmOmsorgenObjektTilMikrofrontend = ({
   skalVilkarsUtfallVises,
   submitCallback,
   soknad,
-}: OwnProps) => {
-  const år = new Date().getFullYear();
-
-  return {
-    visKomponent: UtvidetRettMikrofrontendVisning.VILKAR_ALENE_OM_OMSORGEN,
-    props: {
-      behandlingsID,
-      lesemodus,
-      aksjonspunktLost,
-      fraDatoFraSoknad: soknad?.søknadsperiode.fom.includes((år - 2).toString())
-        ? `1.1.${år - 1}`
-        : soknad?.søknadsperiode.fom,
-      vedtakFattetVilkarOppfylt: skalVilkarsUtfallVises,
-      informasjonOmVilkar: generereInfoForVurdertVilkar(
-        skalVilkarsUtfallVises,
-        vilkarKnyttetTilAksjonspunkt,
-        aksjonspunkt.begrunnelse,
-        'Utvidet Rett',
-      ),
-      informasjonTilLesemodus: formatereLesemodusObjekt(vilkarKnyttetTilAksjonspunkt, aksjonspunkt, status),
-      losAksjonspunkt: ({ begrunnelse, vilkarOppfylt, fraDato }) => {
-        submitCallback([
-          formatereLosAksjonspunktObjekt(aksjonspunkt.definisjon.kode, begrunnelse, vilkarOppfylt, fraDato),
-        ]);
-      },
-      formState: FormState,
-    } as AleneOmOmsorgenProps,
-  };
-};
+}: OwnProps) => ({
+  visKomponent: UtvidetRettMikrofrontendVisning.VILKAR_ALENE_OM_OMSORGEN,
+  props: {
+    behandlingsID,
+    lesemodus,
+    aksjonspunktLost,
+    fraDatoFraSoknad: soknad?.søknadsperiode.fom,
+    vedtakFattetVilkarOppfylt: skalVilkarsUtfallVises,
+    informasjonOmVilkar: generereInfoForVurdertVilkar(
+      skalVilkarsUtfallVises,
+      vilkarKnyttetTilAksjonspunkt,
+      aksjonspunkt.begrunnelse,
+      'Utvidet Rett',
+    ),
+    informasjonTilLesemodus: formatereLesemodusObjekt(vilkarKnyttetTilAksjonspunkt, aksjonspunkt, status),
+    losAksjonspunkt: ({ begrunnelse, vilkarOppfylt, fraDato }) => {
+      submitCallback([
+        formatereLosAksjonspunktObjekt(aksjonspunkt.definisjon.kode, begrunnelse, vilkarOppfylt, fraDato),
+      ]);
+    },
+    formState: FormState,
+  } as AleneOmOmsorgenProps,
+});
 export default AleneOmOmsorgenObjektTilMikrofrontend;

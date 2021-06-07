@@ -52,19 +52,19 @@ spec:
       value: "http://k9-tilbake"
     # setter denne til å peke på k9-sak, inntil diagnosekode-apiinstansen er oppe i prod
     - name: APP_DIAGNOSEKODER
-      value: "http://k9-sak"
+      value: "http://diagnosekode-api/diagnosekoder/"
     - name: MEDISINSK_VILKAR_FRONTEND_URL
-      value: "http://k9-sak"
+      value: "https://medisinsk-vilkar-frontend.intern.nav.no/"
     - name: OMSORGSDAGER_FRONTEND_URL
       value: "https://omsorgsdager-frontend.intern.nav.no/"
     - name: PSB_UTTAK_FRONTEND_URL
-      value: "http://k9-sak"
+      value: "https://psb-uttak-frontend.intern.nav.no/"
     - name: OMSORGEN_FOR_FRONTEND_URL
-      value: "http://k9-sak"
+      value: "https://omsorgen-for-frontend.intern.nav.no/"
     - name: PSB_INNTEKTSMELDING_FRONTEND_URL
-      value: "http://k9-sak"
+      value: "https://psb-inntektsmelding-frontend.intern.nav.no/"
     - name: PSB_ETABLERT_TILSYN_FRONTEND_URL
-      value: "http://k9-sak"
+      value: "https://psb-etablert-tilsyn-frontend.intern.nav.no/"
 
     # Feature-flag
     - name: VARSELTEKST

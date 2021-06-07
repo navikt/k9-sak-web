@@ -22,7 +22,7 @@ const AksjonspunktBehandlerFL = ({ readOnly, fieldArrayID }) => (
           validate={[required]}
           readOnly={readOnly}
           parse={parseCurrencyInput}
-          bredde="XS"
+          bredde="S"
         />
       </div>
     </Column>

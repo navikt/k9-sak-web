@@ -38,7 +38,7 @@ const periodevisning = (periode: string): string => {
   return `${formatDate(fom)} - ${formatDate(tom)}`;
 };
 
-const antallDager = (periode: string): string => {
+export const antallDager = (periode: string): string => {
   const [fom, tom] = periode.split('/');
   return calcDays(fom, tom, false);
 };
@@ -195,9 +195,10 @@ const AktivitetTabell: FunctionComponent<AktivitetTabellProps> = ({
           ) => {
             const erValgt = valgtPeriodeIndex === index;
             const erKoronaperiode = useMemo(() => periodeErIKoronaperioden(periode), [periode]);
-            const sorterteVilkår = useMemo(() => Object.entries(vurderteVilkår.vilkår).sort(arbeidsforholdSist), [
-              vurderteVilkår.vilkår,
-            ]);
+            const sorterteVilkår = useMemo(
+              () => Object.entries(vurderteVilkår.vilkår).sort(arbeidsforholdSist),
+              [vurderteVilkår.vilkår],
+            );
             const utfallIngenUtbetaling = utfallErIngenUtbetaling(delvisFravær);
             const ar = periode.match(/^\d{4}/)[0];
 

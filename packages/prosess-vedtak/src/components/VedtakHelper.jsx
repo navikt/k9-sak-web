@@ -32,6 +32,32 @@ export const findTilbakekrevingText = createSelector(
   },
 );
 
+export const findDelvisInnvilgetResultatText = (behandlingResultatTypeKode, ytelseType) => {
+  if (behandlingResultatTypeKode === behandlingResultatType.KLAGE_YTELSESVEDTAK_STADFESTET) {
+    return 'VedtakForm.ResultatOpprettholdVedtak';
+  }
+  if (behandlingResultatTypeKode === behandlingResultatType.KLAGE_MEDHOLD) {
+    return 'VedtakForm.ResultatKlageMedhold';
+  }
+
+  if (ytelseType === fagsakYtelseType.OMSORGSPENGER) {
+    return 'VedtakForm.VilkarStatusDelvisInnvilgetOmsorgspenger';
+  }
+
+  if (ytelseType === fagsakYtelseType.FRISINN) {
+    return 'VedtakForm.VilkarStatusDelvisInnvilgetFrisinn';
+  }
+
+  if (
+    ytelseType === fagsakYtelseType.OMSORGSPENGER_MIDLERTIDIG_ALENE ||
+    ytelseType === fagsakYtelseType.OMSORGSPENGER_KRONISK_SYKT_BARN
+  ) {
+    return 'VedtakForm.VilkarStatusDelvisInnvilgetUtvidetRett';
+  }
+
+  return 'VedtakForm.VilkarStatusDelvisInnvilgetPleiepenger';
+};
+
 export const findInnvilgetResultatText = (behandlingResultatTypeKode, ytelseType) => {
   if (behandlingResultatTypeKode === behandlingResultatType.KLAGE_YTELSESVEDTAK_STADFESTET) {
     return 'VedtakForm.ResultatOpprettholdVedtak';

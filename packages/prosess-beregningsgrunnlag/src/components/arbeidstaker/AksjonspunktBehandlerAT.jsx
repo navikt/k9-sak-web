@@ -52,7 +52,7 @@ const createRows = (relevanteAndelerAT, getKodeverknavn, arbeidsgiverOpplysninge
             validate={[required]}
             readOnly={readOnly}
             parse={parseCurrencyInput}
-            bredde="XS"
+            bredde="S"
           />
         </div>
       </Column>

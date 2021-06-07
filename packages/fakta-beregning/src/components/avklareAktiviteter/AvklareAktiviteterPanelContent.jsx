@@ -188,6 +188,7 @@ const AvklareAktiviteterPanelContent = props => {
                       isReadOnly={readOnly}
                       hasBegrunnelse={hasBegrunnelse}
                     />
+                    <VerticalSpacer twentyPx />
                     {skalViseSubmitknappInneforBorderBox && (
                       <FaktaSubmitButton
                         buttonText={intl.formatMessage({

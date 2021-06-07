@@ -9,9 +9,6 @@
     "type": "git",
     "url": "git+https://github.com/navikt/k9-sak-web.git"
   },
-  "engines": {
-    "node": ">=15 <16"
-  },
   "scripts": {
     "test": "jest -o --colors",
     "test:all": "jest --colors",
@@ -51,7 +48,7 @@
     "node-cache": "^5.1.2",
     "react": "^16.14.0",
     "react-dom": "^16.14.0",
-    "react-modal": "3.13.1"
+    "react-modal": "3.14.2"
   },
   "devDependencies": {
     "@babel/core": "^7.14.0",

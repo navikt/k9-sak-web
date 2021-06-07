@@ -11,7 +11,7 @@ import { Column, Row } from 'nav-frontend-grid';
 import { kodeverkObjektPropType } from '@fpsak-frontend/prop-types';
 import klageBehandlingArsakType from '@fpsak-frontend/kodeverk/src/behandlingArsakType';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
-import { isAvslag, isInnvilget } from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
+import { isAvslag, isDelvisInnvilget, isInnvilget } from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
 import behandlingStatusCode from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import { behandlingForm, behandlingFormValueSelector, getBehandlingFormPrefix } from '@fpsak-frontend/form';
 
@@ -125,7 +125,7 @@ export class VedtakForm extends Component {
             )
           )}
 
-          {isInnvilget(behandlingresultat.type.kode) && (
+          {(isInnvilget(behandlingresultat.type.kode) || isDelvisInnvilget(behandlingresultat.type.kode)) && (
             <VedtakInnvilgetPanel
               intl={intl}
               antallBarn={antallBarn}
