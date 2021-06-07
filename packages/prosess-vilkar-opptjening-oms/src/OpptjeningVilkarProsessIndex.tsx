@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { Aksjonspunkt, Vilkar, OpptjeningBehandling, Opptjening, SubmitCallback } from '@k9-sak-web/types';
+import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
+import { Fagsak, Aksjonspunkt, Vilkar, OpptjeningBehandling, Opptjening, SubmitCallback } from '@k9-sak-web/types';
+import FagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import SideMenu from '@navikt/nap-side-menu';
 import classNames from 'classnames/bind';
-import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 import messages from '../i18n/nb_NO.json';
 import OpptjeningVilkarForm from './components/OpptjeningVilkarForm';
 import styles from './opptjeningVilkarProsessIndex.less';
@@ -20,6 +21,7 @@ const intl = createIntl(
 );
 
 interface OpptjeningVilkarProsessIndexProps {
+  fagsak: Fagsak;
   behandling: OpptjeningBehandling;
   opptjening: { opptjeninger: Opptjening[] };
   aksjonspunkter: Aksjonspunkt[];
@@ -34,6 +36,7 @@ interface OpptjeningVilkarProsessIndexProps {
 }
 
 const OpptjeningVilkarProsessIndex = ({
+  fagsak,
   behandling,
   opptjening,
   aksjonspunkter,
@@ -54,6 +57,8 @@ const OpptjeningVilkarProsessIndex = ({
 
   const { behandlingsresultat } = behandling;
   const vilkårsresultat = behandlingsresultat?.vilkårResultat?.OPPTJENINGSVILKÅRET;
+
+  const erOmsorgspenger = fagsak.sakstype.kode === FagsakYtelseType.OMSORGSPENGER;
 
   const mainContainerClassnames = cx('mainContainer', { 'mainContainer--withSideMenu': skalBrukeSidemeny });
 
@@ -85,6 +90,7 @@ const OpptjeningVilkarProsessIndex = ({
             vilkårsresultat={vilkårsresultat ? vilkårsresultat[activeTab] : null}
             status={status}
             lovReferanse={lovReferanse}
+            erOmsorgspenger={erOmsorgspenger}
             aksjonspunkter={aksjonspunkter}
             submitCallback={submitCallback}
             readOnly={isReadOnly}
@@ -92,7 +98,7 @@ const OpptjeningVilkarProsessIndex = ({
             readOnlySubmitButton={readOnlySubmitButton}
             vilkårPerioder={activeVilkår.perioder}
             periodeIndex={activeTab}
-            opptjeninger={opptjening.opptjeninger}
+            opptjeninger={opptjening?.opptjeninger}
           />
         </div>
       </div>

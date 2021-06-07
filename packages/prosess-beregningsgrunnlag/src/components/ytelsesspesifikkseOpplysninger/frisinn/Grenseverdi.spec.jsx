@@ -79,11 +79,11 @@ describe('<Grenseverdi>', () => {
     const rows = wrapper.find('Row');
     expect(rows).to.have.length(2);
 
-    const overskrift = rows.at(0).find('FormattedMessage');
+    const overskrift = rows.at(0).find('MemoizedFormattedMessage');
     expect(overskrift.get(0).props.id).to.equal('Beregningsgrunnlag.Frisinn.InntektstakOpplysningerPeriode');
     expect(overskrift.get(0).props.values).is.deep.equal(lagForventetVerdiOverskrift('2020-04-01', '2020-04-30'));
 
-    const regnestykke = rows.at(1).find('FormattedMessage');
+    const regnestykke = rows.at(1).find('MemoizedFormattedMessage');
     expect(regnestykke.get(0).props.id).to.equal('Beregningsgrunnlag.Frisinn.Inntektstak');
     expect(regnestykke.get(0).props.values).is.deep.equal(lagForventetVerdiRegnestykke(seksG, 0));
   });
@@ -102,11 +102,11 @@ describe('<Grenseverdi>', () => {
     const rows = wrapper.find('Row');
     expect(rows).to.have.length(2);
 
-    const overskrift = rows.at(0).find('FormattedMessage');
+    const overskrift = rows.at(0).find('MemoizedFormattedMessage');
     expect(overskrift.get(0).props.id).to.equal('Beregningsgrunnlag.Frisinn.InntektstakOpplysningerPeriode');
     expect(overskrift.get(0).props.values).is.deep.equal(lagForventetVerdiOverskrift('2020-04-01', '2020-04-30'));
 
-    const regnestykke = rows.at(1).find('FormattedMessage');
+    const regnestykke = rows.at(1).find('MemoizedFormattedMessage');
     expect(regnestykke.get(0).props.id).to.equal('Beregningsgrunnlag.Frisinn.Inntektstak');
     expect(regnestykke.get(0).props.values).is.deep.equal(lagForventetVerdiRegnestykke(seksG, 0));
   });
@@ -122,11 +122,11 @@ describe('<Grenseverdi>', () => {
     const rows = wrapper.find('Row');
     expect(rows).to.have.length(2);
 
-    const overskrift = rows.at(0).find('FormattedMessage');
+    const overskrift = rows.at(0).find('MemoizedFormattedMessage');
     expect(overskrift.get(0).props.id).to.equal('Beregningsgrunnlag.Frisinn.InntektstakOpplysningerPeriode');
     expect(overskrift.get(0).props.values).is.deep.equal(lagForventetVerdiOverskrift('2020-04-01', '2020-04-30'));
 
-    const regnestykke = rows.at(1).find('FormattedMessage');
+    const regnestykke = rows.at(1).find('MemoizedFormattedMessage');
     expect(regnestykke.get(0).props.id).to.equal('Beregningsgrunnlag.Frisinn.Inntektstak');
     expect(regnestykke.get(0).props.values).is.deep.equal(lagForventetVerdiRegnestykke(seksG, 300000));
   });
@@ -152,11 +152,11 @@ describe('<Grenseverdi>', () => {
     const rows = wrapper.find('Row');
     expect(rows).to.have.length(2);
 
-    const overskrift = rows.at(0).find('FormattedMessage');
+    const overskrift = rows.at(0).find('MemoizedFormattedMessage');
     expect(overskrift.get(0).props.id).to.equal('Beregningsgrunnlag.Frisinn.InntektstakOpplysningerPeriode');
     expect(overskrift.get(0).props.values).is.deep.equal(lagForventetVerdiOverskrift('2020-04-01', '2020-04-30'));
 
-    const regnestykke = rows.at(1).find('FormattedMessage');
+    const regnestykke = rows.at(1).find('MemoizedFormattedMessage');
     expect(regnestykke.get(0).props.id).to.equal('Beregningsgrunnlag.Frisinn.Inntektstak');
     expect(regnestykke.get(0).props.values).is.deep.equal(lagForventetVerdiRegnestykke(seksG, 300000));
   });
@@ -184,19 +184,19 @@ describe('<Grenseverdi>', () => {
     const rows = wrapper.find('Row');
     expect(rows).to.have.length(4);
 
-    const overskrift = rows.at(0).find('FormattedMessage');
+    const overskrift = rows.at(0).find('MemoizedFormattedMessage');
     expect(overskrift.get(0).props.id).to.equal('Beregningsgrunnlag.Frisinn.InntektstakOpplysningerPeriode');
     expect(overskrift.get(0).props.values).is.deep.equal(lagForventetVerdiOverskrift('2020-04-01', '2020-04-30'));
 
-    const regnestykke = rows.at(1).find('FormattedMessage');
+    const regnestykke = rows.at(1).find('MemoizedFormattedMessage');
     expect(regnestykke.get(0).props.id).to.equal('Beregningsgrunnlag.Frisinn.Inntektstak');
     expect(regnestykke.get(0).props.values).is.deep.equal(lagForventetVerdiRegnestykke(seksG, 300000));
 
-    const overskrift2 = rows.at(2).find('FormattedMessage');
+    const overskrift2 = rows.at(2).find('MemoizedFormattedMessage');
     expect(overskrift2.get(0).props.id).to.equal('Beregningsgrunnlag.Frisinn.InntektstakOpplysningerPeriode');
     expect(overskrift2.get(0).props.values).is.deep.equal(lagForventetVerdiOverskrift('2020-05-01', '2020-05-31'));
 
-    const regnestykke2 = rows.at(3).find('FormattedMessage');
+    const regnestykke2 = rows.at(3).find('MemoizedFormattedMessage');
     expect(regnestykke2.get(0).props.id).to.equal('Beregningsgrunnlag.Frisinn.Inntektstak');
     expect(regnestykke2.get(0).props.values).is.deep.equal(lagForventetVerdiRegnestykke(seksG, 300000));
   });

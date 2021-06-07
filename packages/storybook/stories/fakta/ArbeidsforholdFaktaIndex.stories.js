@@ -17,21 +17,40 @@ const behandling = {
   versjon: 1,
 };
 
+// id?: string;
+// arbeidsforhold?: ArbeidsforholdId;
+// arbeidsgiver?: Arbeidsgiver;
+// yrkestittel?: string;
+// begrunnelse?: string;
+// perioder: Periode[];
+// handlingType: Kodeverk;
+// kilde: Kodeverk[];
+// permisjoner?: {
+//   permisjonFom?: string;
+//   permisjonTom?: string;
+//   permisjonsprosent?: number;
+//   type?: Kodeverk;
+// }[];
+// stillingsprosent?: number;
+// aksjonspunktÅrsaker: Kodeverk[];
+// inntektsmeldinger: Inntektsmelding[];
+
+// arbeidsgiverOrgnr?: string;
+// arbeidsgiverAktørId?: string;
+// organisasjonsnummer?: string;
+// aktørId?: string;
+// navn?: string;
+
 const arbeidsforhold = {
-  navn: 'Vy',
+  id: '1',
   kilde: {
     navn: arbeidsforholdKilder.INNTEKTSMELDING,
   },
-  id: '1',
-  arbeidsgiverIdentifikator: '11212',
-  tilVurdering: false,
-  erEndret: false,
-  mottattDatoInntektsmelding: '2019-01-01',
-  fomDato: '2018-01-01',
-  tomDato: '2019-01-01',
+  arbeidsgiver: { arbeidsgiverOrgnr: '11212', organisasjonsnummer: '11212' },
+  arbeidsforhold: { eksternArbeidsforholdId: '123', internArbeidsforholdId: '11212' },
+  inntektsmeldinger: [{ mottattTidspunkt: '2019-01-01' }],
+  perioder: [{ fom: '2018-01-01', tom: '2019-01-01' }],
   stillingsprosent: 100,
-  arbeidsforholdId: '1234',
-  arbeidsgiverIdentifiktorGUI: '23232',
 };
 
 const merknaderFraBeslutter = {

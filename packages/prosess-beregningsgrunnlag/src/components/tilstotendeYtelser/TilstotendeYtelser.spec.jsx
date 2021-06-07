@@ -42,7 +42,7 @@ describe('<TilstotendeYtelser>', () => {
     const wrapper = shallowWithIntl(
       <TilstotendeYtelser2 alleAndeler={andeler} relevanteStatuser={relevanteStatuser(false, false)} />,
     );
-    const formattedMessage = wrapper.find('FormattedMessage');
+    const formattedMessage = wrapper.find('MemoizedFormattedMessage');
     expect(formattedMessage).to.have.length(4);
     expect(formattedMessage.at(0).prop('id')).to.equal('Beregningsgrunnlag.AarsinntektPanel.Arbeidsinntekt.Maaned');
     expect(formattedMessage.at(1).prop('id')).to.equal('Beregningsgrunnlag.AarsinntektPanel.Arbeidsinntekt.Aar');

@@ -260,7 +260,7 @@ describe('<AksjonspunktBehandlerTidsbegrenset>', () => {
     const sumRows = wrapper.find('#bruttoPrPeriodeRad');
     const sumCols = sumRows.first().find('td');
     expect(sumCols).to.have.length(mockTableData.arbeidsforholdPeriodeMap.arbeidsgiver1.length);
-    expect(sumCols.first().find('FormattedMessage').first().props().id).to.equal(
+    expect(sumCols.first().find('MemoizedFormattedMessage').first().props().id).to.equal(
       'Beregningsgrunnlag.AarsinntektPanel.AksjonspunktBehandlerTB.SumPeriode',
     );
   });

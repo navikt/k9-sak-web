@@ -5,7 +5,6 @@ import VedtakProsessIndex from '@fpsak-frontend/prosess-vedtak';
 import { prosessStegCodes } from '@k9-sak-web/konstanter';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { ProsessStegDef, ProsessStegPanelDef } from '@k9-sak-web/behandling-felles';
-import { FeatureToggles } from '@k9-sak-web/types';
 
 import findStatusForVedtak from '../vedtakStatusUtlederFrisinn';
 import { FrisinnBehandlingApiKeys } from '../../data/frisinnBehandlingApi';
@@ -25,16 +24,12 @@ class PanelDef extends ProsessStegPanelDef {
     aksjonspunktCodes.KONTROLL_AV_MAUNELT_OPPRETTET_REVURDERINGSBEHANDLING,
   ];
 
-  getEndepunkter = (featureToggles: FeatureToggles) =>
-    [
-      FrisinnBehandlingApiKeys.TILBAKEKREVINGVALG,
-      FrisinnBehandlingApiKeys.SEND_VARSEL_OM_REVURDERING,
-      FrisinnBehandlingApiKeys.VEDTAK_VARSEL,
-    ].concat(
-      featureToggles?.DOKUMENTDATA
-        ? [FrisinnBehandlingApiKeys.TILGJENGELIGE_VEDTAKSBREV, FrisinnBehandlingApiKeys.DOKUMENTDATA_HENTE]
-        : [],
-    );
+  getEndepunkter = () => [
+    FrisinnBehandlingApiKeys.TILBAKEKREVINGVALG,
+    FrisinnBehandlingApiKeys.SEND_VARSEL_OM_REVURDERING,
+    FrisinnBehandlingApiKeys.VEDTAK_VARSEL,
+    FrisinnBehandlingApiKeys.TILGJENGELIGE_VEDTAKSBREV,
+  ];
 
   getOverstyrVisningAvKomponent = () => true;
 

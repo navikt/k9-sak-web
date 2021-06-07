@@ -1,5 +1,5 @@
 import { mount } from 'enzyme';
-import { EtikettLiten } from 'nav-frontend-typografi';
+import { Undertekst } from 'nav-frontend-typografi';
 import React from 'react';
 import { FormattedMessage, IntlProvider } from 'react-intl';
 import { Provider } from 'react-redux';
@@ -34,7 +34,7 @@ describe('<VilkarresultatMedOverstyringHeader>', () => {
     expect(melding).toHaveLength(2);
     expect(melding.first().prop('id')).toEqual('Behandlingspunkt.Soknadsfristvilkaret');
 
-    const normaltekst = wrapper.find(EtikettLiten);
+    const normaltekst = wrapper.find(Undertekst);
     expect(normaltekst).toHaveLength(1);
     expect(normaltekst.childAt(0).text()).toEqual('§23');
   });

@@ -8,6 +8,7 @@ import {
   FagsakPerson,
   Fagsak,
   ArbeidsgiverOpplysningerPerId,
+  Dokument,
 } from '@k9-sak-web/types';
 
 import PleiepengerProsess from './PleiepengerProsess';
@@ -32,6 +33,7 @@ interface OwnProps {
   setBehandling: (behandling: Behandling) => void;
   arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysningerPerId;
   featureToggles: FeatureToggles;
+  dokumenter: Dokument[];
 }
 
 interface FaktaPanelInfo {
@@ -57,6 +59,7 @@ const PleiepengerPaneler: FunctionComponent<OwnProps> = ({
   setBehandling,
   arbeidsgiverOpplysningerPerId,
   featureToggles,
+  dokumenter,
 }) => {
   const [apentFaktaPanelInfo, setApentFaktaPanel] = useState<FaktaPanelInfo>();
 
@@ -64,7 +67,7 @@ const PleiepengerPaneler: FunctionComponent<OwnProps> = ({
     <>
       <BehandlingPaVent
         behandling={behandling}
-        aksjonspunkter={fetchedData.aksjonspunkter}
+        aksjonspunkter={fetchedData?.aksjonspunkter}
         kodeverk={alleKodeverk}
         settPaVent={settPaVent}
         hentBehandling={hentBehandling}
@@ -101,6 +104,7 @@ const PleiepengerPaneler: FunctionComponent<OwnProps> = ({
         setApentFaktaPanel={setApentFaktaPanel}
         setBehandling={setBehandling}
         arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
+        dokumenter={dokumenter}
       />
     </>
   );

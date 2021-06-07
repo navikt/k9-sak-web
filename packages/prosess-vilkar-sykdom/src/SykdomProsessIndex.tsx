@@ -8,7 +8,7 @@ import VerticalSpacer from '@fpsak-frontend/shared-components/src/VerticalSpacer
 import { dateFormat } from '@fpsak-frontend/utils';
 import SideMenu from '@navikt/nap-side-menu';
 import classNames from 'classnames/bind';
-import { Element, EtikettLiten, Undertittel } from 'nav-frontend-typografi';
+import { Element, Undertekst, Undertittel } from 'nav-frontend-typografi';
 import * as React from 'react';
 import { createIntl, createIntlCache, FormattedMessage, RawIntlProvider } from 'react-intl';
 import Vilkarperiode from '../../types/src/vilkarperiode';
@@ -58,7 +58,7 @@ const SykdomProsessIndex = ({ perioder, panelTittelKode }: SykdomProsessIndexPro
   const erVilkarOk = vilkarUtfallType.IKKE_VURDERT !== status ? erOppfylt : undefined;
   const skalBrukeSidemeny = perioder.length > 1;
   const mainContainerClassnames = cx('mainContainer', { 'mainContainer--withSideMenu': skalBrukeSidemeny });
-  let lovReferanse = '§ 9-10 andre ledd';
+  let lovReferanse = '§ 9-10 første og andre ledd, og 9-16 første ledd';
   if (activePeriode.pleietrengendeErOver18år) {
     lovReferanse = '§ 9-10 tredje ledd (over 18 år)';
   }
@@ -97,7 +97,7 @@ const SykdomProsessIndex = ({ perioder, panelTittelKode }: SykdomProsessIndexPro
                 </Undertittel>
               </FlexColumn>
               <FlexColumn>
-                <EtikettLiten className={styles.vilkar}>{lovReferanse}</EtikettLiten>
+                <Undertekst className={styles.vilkar}>{lovReferanse}</Undertekst>
               </FlexColumn>
             </FlexRow>
             <FlexRow>

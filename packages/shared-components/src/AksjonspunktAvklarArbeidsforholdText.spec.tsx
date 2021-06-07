@@ -26,7 +26,7 @@ describe('<AksjonspunktAvklarArbeidsforholdText>', () => {
       />,
     );
     const flexContainer = wrapper.find('FlexContainer');
-    const messages = flexContainer.first().find('FormattedMessage');
+    const messages = flexContainer.first().find('MemoizedFormattedMessage');
     expect(messages.at(0).prop('id')).is.eql('HelpText.FinnesIkkeIRegisteret');
     expect(messages.at(1).prop('id')).is.eql('HelpText.TaKontakt');
     const image = flexContainer.first().find('Image');
@@ -49,7 +49,7 @@ describe('<AksjonspunktAvklarArbeidsforholdText>', () => {
       />,
     );
     const flexContainer = wrapper.find('FlexContainer');
-    const messages = flexContainer.first().find('FormattedMessage');
+    const messages = flexContainer.first().find('MemoizedFormattedMessage');
     expect(messages.at(0).prop('id')).is.eql('HelpText.OvergangAbedsforholdsId');
     expect(messages.at(1).prop('id')).is.eql('HelpText.TaKontaktOvergangArbeidsforholdId');
     const image = flexContainer.first().find('Image');

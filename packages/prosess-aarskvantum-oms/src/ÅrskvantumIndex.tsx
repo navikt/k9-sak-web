@@ -6,7 +6,6 @@ import {
   ArbeidsgiverOpplysningerPerId,
   Aksjonspunkt,
   ArbeidsforholdV2,
-  FeatureToggles,
 } from '@k9-sak-web/types';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 
@@ -41,7 +40,6 @@ interface ÅrsakvantumIndexProps {
   aksjonspunkterForSteg?: Aksjonspunkt[];
   arbeidsforhold: ArbeidsforholdV2[];
   arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysningerPerId;
-  featureToggles: FeatureToggles;
 }
 
 const ÅrskvantumIndex: FunctionComponent<ÅrsakvantumIndexProps> = ({
@@ -54,7 +52,6 @@ const ÅrskvantumIndex: FunctionComponent<ÅrsakvantumIndexProps> = ({
   aksjonspunkterForSteg = [],
   arbeidsforhold = [],
   arbeidsgiverOpplysningerPerId,
-  featureToggles,
 }) => {
   const { sisteUttaksplan } = årskvantum;
   const aktivitetsstatuser = alleKodeverk[kodeverkTyper.AKTIVITET_STATUS];
@@ -79,12 +76,12 @@ const ÅrskvantumIndex: FunctionComponent<ÅrsakvantumIndexProps> = ({
           behandlingId={behandling.id}
           behandlingVersjon={behandling.versjon}
           submitCallback={submitCallback}
-          aksjonspunkterForSteg={aksjonspunkterForSteg}
+          aksjonspunkterForSteg={aksjonspunkter}
           isAksjonspunktOpen={isAksjonspunktOpen && !visSaerligSmittevernAksjonspunkt}
         />
       )}
 
-      {featureToggles?.SAERLIGSMITTEVERNAKSJONSPUNKT && visSaerligSmittevernAksjonspunkt && (
+      {visSaerligSmittevernAksjonspunkt && (
         <SaerligeSmittevernhensynMikrofrontend
           {...{
             submitCallback,

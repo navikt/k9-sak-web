@@ -1,10 +1,9 @@
 import React from 'react';
 import { expect } from 'chai';
-import { intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { AksjonspunktHelpTextTemp } from '@fpsak-frontend/shared-components';
 import { VedtakHelpTextPanelImpl } from './VedtakHelpTextPanel';
-import shallowWithIntl from '../../i18n';
+import shallowWithIntl, { intlMock } from '../../i18n';
 
 describe('<VedtakHelpTextPanel>', () => {
   it('skal vise hjelpetekst for vurdering av dokument når en har dette aksjonspunktet', () => {

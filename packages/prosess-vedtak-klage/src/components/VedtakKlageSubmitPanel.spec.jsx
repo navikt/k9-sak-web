@@ -3,10 +3,9 @@ import { expect } from 'chai';
 import sinon from 'sinon';
 
 import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
-import { intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import klageVurdering from '@fpsak-frontend/kodeverk/src/klageVurdering';
 import { isMedholdIKlage, VedtakKlageSubmitPanelImpl } from './VedtakKlageSubmitPanel';
-import shallowWithIntl from '../../i18n';
+import shallowWithIntl, { intlMock } from '../../i18n';
 
 describe('<VedtakKlageSubmitPanel>', () => {
   const forhandsvisVedtaksbrevFunc = sinon.spy();
@@ -42,7 +41,7 @@ describe('<VedtakKlageSubmitPanel>', () => {
     expect(hovedknapp.childAt(0).text()).to.eql('Til godkjenning');
     const a = wrapper.find('a');
     expect(a).to.have.length(1);
-    expect(wrapper.find('FormattedMessage').first().prop('id')).to.eql('VedtakKlageForm.ForhandvisBrev');
+    expect(wrapper.find('MemoizedFormattedMessage').first().prop('id')).to.eql('VedtakKlageForm.ForhandvisBrev');
   });
 
   it('skal rendre submit panel med medhold i klagevurdering', () => {

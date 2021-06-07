@@ -1,7 +1,6 @@
 import React from 'react';
 import { expect } from 'chai';
 
-import { intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { ProsessStegBegrunnelseTextField, ProsessStegSubmitButton } from '@k9-sak-web/prosess-felles';
@@ -11,7 +10,7 @@ import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus'
 import { AksjonspunktHelpTextTemp } from '@fpsak-frontend/shared-components';
 import { RadioOption } from '@fpsak-frontend/form';
 import { buildInitialValues, CheckPersonStatusFormImpl as UnwrappedForm } from './CheckPersonStatusForm';
-import shallowWithIntl from '../../i18n';
+import shallowWithIntl, { intlMock } from '../../i18n';
 
 describe('<CheckPersonStatusForm>', () => {
   const alleKodeverk = {

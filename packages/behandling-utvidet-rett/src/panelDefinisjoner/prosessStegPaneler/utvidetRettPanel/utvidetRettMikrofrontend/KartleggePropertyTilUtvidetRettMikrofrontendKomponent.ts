@@ -1,22 +1,14 @@
 import FagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import { Behandling } from '@k9-sak-web/types';
-import { FormStateType } from '@fpsak-frontend/form/src/types/FormStateType';
-import { VilkarMidlertidigAleneProps } from '../../../../types/utvidetRettMikrofrontend/VilkarMidlertidigAleneProps';
-import UtvidetRettMikrofrontendVisning from '../../../../types/MikrofrontendKomponenter';
-import { generereInfoForVurdertVilkar } from '../../UtvidetRettOmsorgenForMikrofrontendFelles';
-import { VilkarKroniskSyktBarnProps } from '../../../../types/utvidetRettMikrofrontend/VilkarKroniskSyktBarnProps';
 import {
   AksjonspunktInformasjon,
   SaksinformasjonUtvidetRett,
   VilkarInformasjon,
 } from '../../../../types/utvidetRettMikrofrontend/KartleggePropertyTilMikrofrontendTypes';
-import {
-  formatereLesemodusObjektForKroniskSyk,
-  formatereLesemodusObjektForMidlertidigAlene,
-  formatereLosAksjonspunktObjektForKroniskSyk,
-  formatereLosAksjonspunktObjektForMidlertidigAlene,
-} from './FormatereObjektForUtvidetRett';
+import KroniskSykObjektTilMikrofrontend from './formateringAvDataTilMikrofrontend/KroniskSykObjektTilMikrofrontend';
+import MidlertidigAleneObjektTilMikrofrontend from './formateringAvDataTilMikrofrontend/MidlertidigAleneObjektTilMikrofrontend';
+import AleneOmOmsorgenObjektTilMikrofrontend from './formateringAvDataTilMikrofrontend/AleneOmOmsorgenObjektTilMikrofrontend';
 
 const KartleggePropertyTilUtvidetRettMikrofrontendKomponent = (
   saksInformasjon: SaksinformasjonUtvidetRett,
@@ -25,9 +17,7 @@ const KartleggePropertyTilUtvidetRettMikrofrontendKomponent = (
   behandling: Behandling,
   aksjonspunktInformasjon: AksjonspunktInformasjon,
   vilkarInformasjon: VilkarInformasjon,
-  FormState: FormStateType,
 ) => {
-  let objektTilMikrofrontend = {};
   const { soknad, fagsaksType } = saksInformasjon;
   const { aksjonspunkter, isAksjonspunktOpen } = aksjonspunktInformasjon;
   const { vilkar, status } = vilkarInformasjon;
@@ -43,92 +33,46 @@ const KartleggePropertyTilUtvidetRettMikrofrontendKomponent = (
     const behandlingsID = behandling.id.toString();
 
     switch (fagsaksType) {
-      case FagsakYtelseType.OMSORGSPENGER_KRONISK_SYKT_BARN: {
-        objektTilMikrofrontend = {
-          visKomponent: UtvidetRettMikrofrontendVisning.VILKAR_KRONISK_SYKT_BARN,
-          props: {
-            behandlingsID,
-            aksjonspunktLost,
-            lesemodus,
-            informasjonTilLesemodus: formatereLesemodusObjektForKroniskSyk(vilkarKnyttetTilAksjonspunkt, aksjonspunkt),
-            vedtakFattetVilkarOppfylt: skalVilkarsUtfallVises,
-            informasjonOmVilkar: generereInfoForVurdertVilkar(
-              skalVilkarsUtfallVises,
-              vilkarKnyttetTilAksjonspunkt,
-              aksjonspunkt.begrunnelse,
-              'Utvidet Rett',
-            ),
-            losAksjonspunkt: (harDokumentasjonOgFravaerRisiko, begrunnelse, avslagsArsakErIkkeRiskioFraFravaer) => {
-              submitCallback([
-                formatereLosAksjonspunktObjektForKroniskSyk(
-                  aksjonspunkt.definisjon.kode,
-                  begrunnelse,
-                  harDokumentasjonOgFravaerRisiko,
-                  avslagsArsakErIkkeRiskioFraFravaer,
-                ),
-              ]);
-            },
-            formState: FormState,
-          } as VilkarKroniskSyktBarnProps,
-        };
-        break;
-      }
-      case FagsakYtelseType.OMSORGSPENGER_MIDLERTIDIG_ALENE: {
-        const angittForelder = soknad.angittePersoner.filter(person => person.rolle === 'ANPA');
-        objektTilMikrofrontend = {
-          visKomponent: UtvidetRettMikrofrontendVisning.VILKAR_MIDLERTIDIG_ALENE,
-          props: {
-            behandlingsID,
-            aksjonspunktLost,
-            lesemodus,
-            soknadsopplysninger: {
-              årsak: angittForelder[0]?.situasjonKode || '',
-              beskrivelse: angittForelder[0]?.tilleggsopplysninger || '',
-              periode: `${soknad.søknadsperiode.fom} - ${soknad.søknadsperiode.tom}`,
-              soknadsdato: soknad.soknadsdato,
-            },
-            vedtakFattetVilkarOppfylt: skalVilkarsUtfallVises,
-            informasjonOmVilkar: generereInfoForVurdertVilkar(
-              skalVilkarsUtfallVises,
-              vilkarKnyttetTilAksjonspunkt,
-              aksjonspunkt.begrunnelse,
-              'Utvidet Rett',
-            ),
-            informasjonTilLesemodus: formatereLesemodusObjektForMidlertidigAlene(
-              vilkarKnyttetTilAksjonspunkt,
-              aksjonspunkt,
-              status,
-            ),
-            losAksjonspunkt: ({
-              begrunnelse,
-              erSokerenMidlertidigAleneOmOmsorgen,
-              fra,
-              til,
-              avslagsArsakErPeriodeErIkkeOverSeksMån,
-            }) => {
-              submitCallback([
-                formatereLosAksjonspunktObjektForMidlertidigAlene(
-                  aksjonspunkt.definisjon.kode,
-                  begrunnelse,
-                  erSokerenMidlertidigAleneOmOmsorgen,
-                  {
-                    fom: fra,
-                    tom: til,
-                  },
-                  avslagsArsakErPeriodeErIkkeOverSeksMån,
-                ),
-              ]);
-            },
-            formState: FormState,
-          } as VilkarMidlertidigAleneProps,
-        };
-        break;
-      }
+      case FagsakYtelseType.OMSORGSPENGER_KRONISK_SYKT_BARN:
+        return KroniskSykObjektTilMikrofrontend({
+          behandlingsID,
+          aksjonspunktLost,
+          lesemodus,
+          vilkarKnyttetTilAksjonspunkt,
+          aksjonspunkt,
+          skalVilkarsUtfallVises,
+          submitCallback,
+        });
+
+      case FagsakYtelseType.OMSORGSPENGER_MIDLERTIDIG_ALENE:
+        return MidlertidigAleneObjektTilMikrofrontend({
+          behandlingsID,
+          aksjonspunktLost,
+          lesemodus,
+          vilkarKnyttetTilAksjonspunkt,
+          status,
+          aksjonspunkt,
+          skalVilkarsUtfallVises,
+          submitCallback,
+          soknad,
+        });
+      case FagsakYtelseType.OMSORGSPENGER_ALENE_OM_OMSORGEN:
+        return AleneOmOmsorgenObjektTilMikrofrontend({
+          behandlingsID,
+          aksjonspunktLost,
+          lesemodus,
+          vilkarKnyttetTilAksjonspunkt,
+          status,
+          aksjonspunkt,
+          skalVilkarsUtfallVises,
+          submitCallback,
+          soknad,
+        });
       default:
         break;
     }
   }
-  return objektTilMikrofrontend;
+  return {};
 };
 
 export default KartleggePropertyTilUtvidetRettMikrofrontendKomponent;

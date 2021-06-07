@@ -61,6 +61,10 @@ spec:
       value: "https://psb-uttak-frontend.dev.adeo.no/"
     - name: OMSORGEN_FOR_FRONTEND_URL
       value: "https://omsorgen-for-frontend.dev.adeo.no/"
+    - name: PSB_INNTEKTSMELDING_FRONTEND_URL
+      value: "https://psb-inntektsmelding-frontend.dev.adeo.no/"
+    - name: PSB_ETABLERT_TILSYN_FRONTEND_URL
+      value: "https://psb-etablert-tilsyn-frontend.dev.adeo.no/"
 
    # Feature-flag
     - name: VARSELTEKST
@@ -72,7 +76,5 @@ spec:
     - name: KLAGEBEHANDLING
       value: "true"
     - name: TILBAKE
-      value: "true"
-    - name: SAERLIGSMITTEVERNAKSJONSPUNKT
       value: "true"
 

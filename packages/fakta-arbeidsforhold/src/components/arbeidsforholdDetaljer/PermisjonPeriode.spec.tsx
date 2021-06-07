@@ -16,7 +16,7 @@ describe('<PermisjonPeriode>', () => {
         }
       />,
     );
-    expect(wrapper.find('FormattedMessage')).to.have.length(0);
+    expect(wrapper.find('MemoizedFormattedMessage')).to.have.length(0);
     expect(wrapper.find('PeriodLabel')).to.have.length(0);
   });
   it('skal ikke vise permisjon når arbeidsforholdet en tom liste med permisjoner', () => {
@@ -29,7 +29,7 @@ describe('<PermisjonPeriode>', () => {
         }
       />,
     );
-    expect(wrapper.find('FormattedMessage')).to.have.length(0);
+    expect(wrapper.find('MemoizedFormattedMessage')).to.have.length(0);
     expect(wrapper.find('PeriodLabel')).to.have.length(0);
   });
   it('skal vise permisjon når arbeidsforholdet har kun en permisjon', () => {
@@ -48,7 +48,7 @@ describe('<PermisjonPeriode>', () => {
         }
       />,
     );
-    const msg = wrapper.find('FormattedMessage');
+    const msg = wrapper.find('MemoizedFormattedMessage');
     expect(msg).to.have.length(1);
     expect(msg.props().id).to.eql('PersonArbeidsforholdDetailForm.Permisjon');
     const periode = wrapper.find('PeriodLabel');
@@ -79,7 +79,7 @@ describe('<PermisjonPeriode>', () => {
         }
       />,
     );
-    const msg = wrapper.find('FormattedMessage');
+    const msg = wrapper.find('MemoizedFormattedMessage');
     expect(msg).to.have.length(1);
     expect(msg.prop('id')).to.eql('PersonArbeidsforholdDetailForm.Permisjoner');
     const perioder = wrapper.find('PeriodLabel');

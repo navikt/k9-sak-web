@@ -28,6 +28,8 @@ import {
   isBehandlingFormSubmitting,
 } from '@fpsak-frontend/form/src/behandlingForm';
 import { flattenArray } from 'less/lib/less/utils';
+import advarselIcon from '@fpsak-frontend/assets/images/advarsel.svg';
+import { DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils';
 import beregningsgrunnlagAksjonspunkterPropType from '../propTypes/beregningsgrunnlagAksjonspunkterPropType';
 import beregningsgrunnlagBehandlingPropType from '../propTypes/beregningsgrunnlagBehandlingPropType';
 import beregningsgrunnlagPropType from '../propTypes/beregningsgrunnlagPropType';
@@ -89,6 +91,17 @@ const erBGTilVurdering = (bgVilkar, beregningsgrunnlag) => {
   );
 };
 
+const lagMenyProps = (kronologiskeGrunnlag, bgVilkår) => {
+  const menyProps = {};
+  kronologiskeGrunnlag.forEach((gr, index) => {
+    menyProps[index] = {
+      skalVurderes: erBGTilVurdering(bgVilkår, gr),
+      stp: moment(gr.skjæringstidspunkt).format(DDMMYYYY_DATE_FORMAT),
+    };
+  });
+  return menyProps;
+};
+
 /**
  * BeregningFP
  *
@@ -116,25 +129,32 @@ export const BeregningFP = props => {
     intl,
   } = props;
   const skalBrukeSidemeny = beregningsgrunnlag.length > 1;
+  const kronologiskeGrunnlag = beregningsgrunnlag.sort(
+    (a, b) => moment(a.skjæringstidspunkt) - moment(b.skjæringstidspunkt),
+  );
   const [aktivtBeregningsgrunnlagIndeks, setAktivtBeregningsgrunnlagIndeks] = useState(0);
-  const aktivtBeregningsgrunnlag = beregningsgrunnlag[aktivtBeregningsgrunnlagIndeks];
+  const aktivtBeregningsgrunnlag = kronologiskeGrunnlag[aktivtBeregningsgrunnlagIndeks];
   const vilkaarBG = getBGVilkar(vilkar);
   if (!aktivtBeregningsgrunnlag || vilkaarBG === undefined) {
     return visningForManglendeBG();
   }
+  const menyProps = lagMenyProps(kronologiskeGrunnlag, vilkaarBG);
   const relevanteStatuser = getRelevanteStatuser(aktivtBeregningsgrunnlag);
 
   const mainContainerClassnames = cx('mainContainer', { 'mainContainer--withSideMenu': skalBrukeSidemeny });
   const bgSkalVurderes = erBGTilVurdering(vilkaarBG, aktivtBeregningsgrunnlag);
+  const harAksjonspunkt = aksjonspunkter.length > 0;
+
   return (
     <div className={mainContainerClassnames}>
       {skalBrukeSidemeny && (
         <div className={styles.sideMenuContainer}>
           <SideMenu
-            links={beregningsgrunnlag.map((currentBeregningsgrunnlag, currentBeregningsgrunnlagIndex) => ({
+            links={kronologiskeGrunnlag.map((currentBeregningsgrunnlag, currentBeregningsgrunnlagIndex) => ({
+              iconSrc: menyProps[currentBeregningsgrunnlagIndex].skalVurderes && harAksjonspunkt ? advarselIcon : null,
               active: aktivtBeregningsgrunnlagIndeks === currentBeregningsgrunnlagIndex,
               label: `${intl.formatMessage({ id: 'Sidemeny.Beregningsgrunnlag' })} ${
-                currentBeregningsgrunnlagIndex + 1
+                menyProps[currentBeregningsgrunnlagIndex].stp
               }`,
             }))}
             onClick={setAktivtBeregningsgrunnlagIndeks}
@@ -163,7 +183,7 @@ export const BeregningFP = props => {
               bgSkalVurderes,
             }}
           />
-          {aksjonspunkter.length > 0 && (
+          {harAksjonspunkt && (
             <Row>
               <Column xs="12">
                 <ProsessStegSubmitButton
