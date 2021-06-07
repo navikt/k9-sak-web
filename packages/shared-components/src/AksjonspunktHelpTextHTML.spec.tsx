@@ -11,7 +11,7 @@ describe('<AksjonspunktHelpTextHTML>', () => {
       </AksjonspunktHelpTextHTML.WrappedComponent>,
     );
     const flexContainer = wrapper.find('FlexContainer');
-    const messages = flexContainer.first().find('FormattedMessage');
+    const messages = flexContainer.first().find('MemoizedFormattedMessage');
     expect(messages.at(0).prop('id')).toEqual('Beregningsgrunnlag.Helptext.Arbeidstaker2');
     expect(messages.at(0).prop('values')).toEqual({ verdi: 23 });
     const image = flexContainer.first().find('Image');

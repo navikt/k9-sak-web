@@ -6,6 +6,15 @@ import { FormStateType } from '@fpsak-frontend/form/src/types/FormStateType';
 import MikrofrontendKomponenter from './types/MikrofrontendKomponenter';
 import { SaerligSmittevernhensynProps } from './types/SaerligSmittevernhensynProps';
 import Aktivitet from '../../dto/Aktivitet';
+import { antallDager } from '../AktivitetTabell';
+
+interface LosAksjonspunktSaerligSmittevern {
+  kode: string;
+  innvilgePeriodene: boolean;
+  begrunnelse: string;
+  antallDager?: number;
+  fortsettBehandling: boolean;
+}
 
 const formatereLosAksjonspunktObjekt = (
   aksjonspunktKode: string,
@@ -18,10 +27,10 @@ const formatereLosAksjonspunktObjekt = (
     innvilgePeriodene: fravaerGrunnetSmittevernhensynEllerStengt,
     begrunnelse,
     fortsettBehandling: true,
-  };
+  } as LosAksjonspunktSaerligSmittevern;
 
   if (antallDagerDelvisInnvilget !== null && fravaerGrunnetSmittevernhensynEllerStengt) {
-    losAksjonspunktObjekt['antallDager'] = antallDagerDelvisInnvilget;
+    losAksjonspunktObjekt.antallDager = antallDagerDelvisInnvilget;
   }
 
   return losAksjonspunktObjekt;
@@ -35,11 +44,24 @@ const KartleggePropertyTilSaerligeSmittevernhensynMikrofrontend = (
   FormState: FormStateType,
 ) => {
   let objektTilMikrofrontend = {};
-  const smittevernAktiviteter = aktiviteter[0]?.uttaksperioder.filter(
-    period => period.vurderteVilkår.vilkår.SMITTEVERN !== undefined,
+
+  const innvilgetSmittevernPeriode = aktiviteter[0]?.uttaksperioder.filter(
+    period => period.vurderteVilkår.vilkår.SMITTEVERN === UtfallEnum.INNVILGET,
   );
-  const erFravaerSaerligSmittevern =
-    smittevernAktiviteter[0]?.vurderteVilkår.vilkår.SMITTEVERN === UtfallEnum.INNVILGET;
+
+  const avslåttSmittevernPeriode = aktiviteter[0]?.uttaksperioder.filter(
+    period => period.vurderteVilkår.vilkår.SMITTEVERN === UtfallEnum.AVSLÅTT,
+  );
+
+  const eksistererInnvilgetSmittevernPeriode = innvilgetSmittevernPeriode.length > 0;
+  let dagerDelvisInnvilget = 0;
+
+  if (eksistererInnvilgetSmittevernPeriode && avslåttSmittevernPeriode.length > 0) {
+    innvilgetSmittevernPeriode.forEach(period => {
+      dagerDelvisInnvilget += parseInt(antallDager(period.periode), 10);
+    });
+  }
+
   const behandlingsID = behandling.id.toString();
 
   if (typeof aksjonspunkt !== 'undefined' && aksjonspunkt.definisjon.kode === aksjonspunktCodes.VURDER_ÅRSKVANTUM_DOK) {
@@ -54,8 +76,8 @@ const KartleggePropertyTilSaerligeSmittevernhensynMikrofrontend = (
         lesemodus: !isAksjonspunktOpen,
         informasjonTilLesemodus: {
           begrunnelse: aksjonspunkt.begrunnelse,
-          vilkarOppfylt: erFravaerSaerligSmittevern,
-          antallDagerDelvisInnvilget: null,
+          vilkarOppfylt: eksistererInnvilgetSmittevernPeriode,
+          antallDagerDelvisInnvilget: dagerDelvisInnvilget > 0 ? dagerDelvisInnvilget : null,
         },
         losAksjonspunkt: (fravaerGrunnetSmittevernhensynEllerStengt, begrunnelse, antallDagerDelvisInnvilget) => {
           submitCallback([

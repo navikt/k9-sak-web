@@ -75,7 +75,7 @@ describe('<FagsakSearch>', () => {
     expect(wrapper.find(SearchForm)).toHaveLength(1);
     const labelComp = wrapper.find('Normaltekst');
     expect(labelComp).toHaveLength(1);
-    expect(labelComp.find('FormattedMessage').prop('id')).toEqual('FagsakSearch.ZeroSearchResults');
+    expect(labelComp.find('MemoizedFormattedMessage').prop('id')).toEqual('FagsakSearch.ZeroSearchResults');
   });
 
   it('skal vise søkefelt og søketreff der to fagsaker blir vist', () => {

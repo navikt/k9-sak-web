@@ -63,7 +63,7 @@ describe('<AksjonspunktBehandler>', () => {
       />,
     );
     const rows = wrapper.find('Row');
-    expect(rows.first().find('FormattedMessage').first().props().id).to.equal(
+    expect(rows.first().find('MemoizedFormattedMessage').first().props().id).to.equal(
       'Beregningsgrunnlag.AarsinntektPanel.AksjonspunktBehandler',
     );
     expect(rows.at(1).find('TextAreaField').first().props().name).to.equal('dummyId.ATFLVurdering');
@@ -102,7 +102,7 @@ describe('<AksjonspunktBehandler>', () => {
       />,
     );
     const rows = wrapper.find('Row');
-    expect(rows.first().find('FormattedMessage').first().props().id).to.equal(
+    expect(rows.first().find('MemoizedFormattedMessage').first().props().id).to.equal(
       'Beregningsgrunnlag.AarsinntektPanel.AksjonspunktBehandler',
     );
     expect(rows.at(1).find('TextAreaField').first().props().name).to.equal('dummyId.ATFLVurdering');
@@ -140,7 +140,7 @@ describe('<AksjonspunktBehandler>', () => {
       />,
     );
     const rows = wrapper.find('Row');
-    expect(rows.first().find('FormattedMessage').first().props().id).to.equal(
+    expect(rows.first().find('MemoizedFormattedMessage').first().props().id).to.equal(
       'Beregningsgrunnlag.AarsinntektPanel.AksjonspunktBehandler',
     );
     expect(rows.at(1).find('TextAreaField').first().props().name).to.equal('dummyId.ATFLVurdering');
@@ -178,7 +178,7 @@ describe('<AksjonspunktBehandler>', () => {
       />,
     );
     const rows = wrapper.find('Row');
-    expect(rows.first().find('FormattedMessage').first().props().id).to.equal(
+    expect(rows.first().find('MemoizedFormattedMessage').first().props().id).to.equal(
       'Beregningsgrunnlag.AarsinntektPanel.AksjonspunktBehandler',
     );
     expect(rows.at(1).find('TextAreaField').first().props().name).to.equal('dummyId.ATFLVurdering');
@@ -230,7 +230,7 @@ describe('<AksjonspunktBehandler>', () => {
       />,
     );
     const rows = wrapper.find('Row');
-    expect(rows.first().find('FormattedMessage').first().props().id).to.equal(
+    expect(rows.first().find('MemoizedFormattedMessage').first().props().id).to.equal(
       'Beregningsgrunnlag.AarsinntektPanel.AksjonspunktBehandler.NyIArbeidslivet',
     );
     const aksjonspunktBehandlerAT = wrapper.find('AksjonspunktBehandlerAT');

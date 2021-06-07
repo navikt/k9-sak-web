@@ -78,7 +78,7 @@ export const TilbakekrevingVedtakFormImpl: FunctionComponent<OwnProps & Injected
   fritekstOppsummeringPakrevdMenIkkeUtfylt,
   ...formProps
 }) => (
-  <form onSubmit={formProps.handleSubmit}>
+  <form aria-label="form" onSubmit={formProps.handleSubmit}>
     <VerticalSpacer twentyPx />
     <TilbakekrevingEditerVedtaksbrevPanel
       vedtaksbrevAvsnitt={vedtaksbrevAvsnitt}
@@ -221,10 +221,12 @@ const mapStateToPropsFactory = (state: any, ownProps: PureOwnProps) => {
   };
 };
 
+export const TilbakekrevingVedtakFormImplWithIntl = injectIntl(TilbakekrevingVedtakFormImpl);
+
 const TilbakekrevingVedtakForm = connect(mapStateToPropsFactory)(
   behandlingForm({
     form: formName,
-  })(injectIntl(TilbakekrevingVedtakFormImpl)),
+  })(TilbakekrevingVedtakFormImplWithIntl),
 );
 
 export default TilbakekrevingVedtakForm;

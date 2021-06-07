@@ -1,6 +1,7 @@
 const behandlingResultatType = {
   IKKE_FASTSATT: 'IKKE_FASTSATT',
   INNVILGET: 'INNVILGET',
+  DELVIS_INNVILGET: 'DELVIS_INNVILGET',
   INNVILGET_ENDRING: 'INNVILGET_ENDRING',
   AVSLATT: 'AVSLÅTT',
   OPPHOR: 'OPPHØR',
@@ -38,6 +39,9 @@ export const isInnvilget = behandlingResultatTypeKode =>
   innvilgetKlageResultatTyper.includes(behandlingResultatTypeKode) ||
   innvilgetRevurderingResultatTyper.includes(behandlingResultatTypeKode) ||
   behandlingResultatTypeKode === behandlingResultatType.INNVILGET;
+
+export const isDelvisInnvilget = behandlingResultatTypeKode =>
+  behandlingResultatTypeKode === behandlingResultatType.DELVIS_INNVILGET;
 
 export const isAvslag = behandlingResultatTypeKode =>
   behandlingResultatTypeKode === behandlingResultatType.AVSLATT ||

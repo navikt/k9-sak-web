@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Element, Normaltekst, Undertekst, EtikettLiten } from 'nav-frontend-typografi';
+import { Element, Normaltekst, Undertekst } from 'nav-frontend-typografi';
 import { FormattedMessage, injectIntl } from 'react-intl';
 import { FlexColumn, FlexRow, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { Column, Row } from 'nav-frontend-grid';
@@ -122,11 +122,11 @@ export const NaeringsopplysningsPanel = ({ alleAndelerIForstePeriode, intl }) =>
               <Normaltekst className={beregningStyles.semiBoldText}>{finnBedriftsnavn(naring)}</Normaltekst>
             </Column>
             <Column xs="4">
-              <EtikettLiten className={styles.naringsType}>
+              <Undertekst className={styles.naringsType}>
                 <FormattedMessage
                   id={`Beregningsgrunnlag.NaeringsOpplysningsPanel.VirksomhetsType.${finnvirksomhetsTypeKode(naring)}`}
                 />
-              </EtikettLiten>
+              </Undertekst>
             </Column>
             <Column xs="2" className={beregningStyles.colAarText}>
               {søkerHarOppgittInntekt(naring) && (

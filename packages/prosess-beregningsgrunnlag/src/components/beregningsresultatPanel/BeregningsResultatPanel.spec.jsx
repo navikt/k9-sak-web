@@ -45,11 +45,11 @@ describe('BeregningsresultatPanel', () => {
     expect(rows).to.have.length(3);
     const andelRow = rows.first();
     const andelText = andelRow.find('Normaltekst').first().childAt(0).text();
-    const andelVerdi = andelRow.find('FormattedMessage').props().id;
+    const andelVerdi = andelRow.find('MemoizedFormattedMessage').props().id;
     expect(andelText).to.equal(tableData.rowsAndeler[0].ledetekst);
     expect(andelVerdi).to.equal('Beregningsgrunnlag.BeregningTable.MåFastsettes');
     const sumRow = rows.last();
-    const sumText = sumRow.find('FormattedMessage').props().id;
+    const sumText = sumRow.find('MemoizedFormattedMessage').props().id;
     expect(sumText).to.equal('Beregningsgrunnlag.BeregningTable.Dagsats.ikkeFastsatt');
   });
   it('Skal teste om tabellen får korrekt antall rader ved vilkarStatus:OPPFYLT', () => {
@@ -73,8 +73,8 @@ describe('BeregningsresultatPanel', () => {
     expect(andelText).to.equal(tableData.rowsAndeler[0].ledetekst);
     expect(formatCurrencyNoKr(andelVerdi)).to.equal(formatCurrencyNoKr(tableData.rowsAndeler[0].verdi));
     const sumRow = rows.last();
-    const sumText = sumRow.find('FormattedMessage').props().id;
-    const sumTextTall = sumRow.find('FormattedMessage').props().values.dagSats;
+    const sumText = sumRow.find('MemoizedFormattedMessage').props().id;
+    const sumTextTall = sumRow.find('MemoizedFormattedMessage').props().values.dagSats;
     const sumVerdi = sumRow.find('Normaltekst').last().childAt(0).text();
     expect(sumText).to.equal('Beregningsgrunnlag.BeregningTable.DagsatsNy');
     expect(sumTextTall).to.equal(formatCurrencyNoKr(400));

@@ -59,7 +59,7 @@ describe('<ArbeidsforholdInfoPanel>', () => {
         {...reduxFormPropsMock}
       />,
     );
-    const apMsg = wrapper.find('FormattedMessage');
+    const apMsg = wrapper.find('MemoizedFormattedMessage');
     expect(apMsg).has.length(2);
     expect(apMsg.at(0).prop('id')).is.eql('ArbeidsforholdInfoPanel.AvklarArbeidsforhold');
     expect(wrapper.find(PersonArbeidsforholdPanel)).has.length(1);

@@ -1,6 +1,5 @@
 import React from 'react';
 import { expect } from 'chai';
-import { intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 
 import personstatusType from '@fpsak-frontend/kodeverk/src/personstatusType';
 import sivilstandType from '@fpsak-frontend/kodeverk/src/sivilstandType';
@@ -8,7 +7,7 @@ import opplysningAdresseType from '@fpsak-frontend/kodeverk/src/opplysningAdress
 import { Normaltekst } from 'nav-frontend-typografi';
 import EtikettBase from 'nav-frontend-etiketter';
 import { BostedSokerView } from './BostedSokerView';
-import shallowWithIntl from '../../i18n';
+import shallowWithIntl, { intlMock } from '../../i18n';
 
 describe('<BostedsokerView>', () => {
   const soker = {
