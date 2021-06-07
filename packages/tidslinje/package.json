@@ -17,6 +17,6 @@
     "react-dom": "^16.14.0",
     "react-intl": "^5.18.3",
     "react-visjs-timeline": "^1.6.0",
-    "vis-timeline": "7.4.8"
+    "vis-timeline": "7.4.9"
   }
 }
