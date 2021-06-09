@@ -155,7 +155,7 @@ const HeaderWithErrorPanel: FunctionComponent<OwnProps> = ({
               popperProps={{
                 children: popperPropsChildren,
                 placement: 'bottom-start',
-                positionFixed: true,
+                strategy: 'fixed',
               }}
               referenceProps={{
                 children: referencePropsChildren,

@@ -68,7 +68,7 @@ const MenySakIndex: FunctionComponent<OwnProps> = ({ data }) => {
               />
             ),
             placement: 'bottom-start',
-            positionFixed: false,
+            strategy: 'fixed',
           }}
           referenceProps={{
             children: ({ ref }) => (

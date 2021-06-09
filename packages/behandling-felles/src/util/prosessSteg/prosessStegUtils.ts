@@ -76,7 +76,7 @@ export const finnValgtPanel = (
   return prosessStegPaneler.find(i => i.getUrlKode() === valgtProsessStegPanelKode);
 };
 
-const finnProsessmenyType = (status: string, harApentAksjonspunkt: boolean): StepType => {
+const finnProsessmenyType = (status: string, harApentAksjonspunkt: boolean): ProcessMenuStepType => {
   if (harApentAksjonspunkt) {
     return ProcessMenuStepType.warning;
   }

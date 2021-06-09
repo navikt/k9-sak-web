@@ -43,7 +43,7 @@ describe('<MenySakIndex>', () => {
     expect(wrapper.find('button')).toHaveLength(0);
 
     const popover = wrapper.find(Popover);
-    const wrapper2 = shallowWithIntl(popover.prop('popperProps').children());
+    const wrapper2 = shallowWithIntl((popover.prop('popperProps') as any).children());
 
     const button = wrapper2.find('button');
     expect(button).toHaveLength(1);
