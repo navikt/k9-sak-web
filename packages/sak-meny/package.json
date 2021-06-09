@@ -16,7 +16,7 @@
     "nav-frontend-knapper": "3.0.1",
     "nav-frontend-knapper-style": "2.0.1",
     "react": "^16.14.0",
-    "react-intl": "^5.18.3"
+    "react-intl": "^5.20.1"
   },
   "devDependencies": {
     "@fpsak-frontend/utils-test": "1.0.0",
