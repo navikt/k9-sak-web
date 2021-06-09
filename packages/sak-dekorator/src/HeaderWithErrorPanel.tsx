@@ -1,7 +1,6 @@
 import React, { FunctionComponent, useState, useCallback, useEffect, useRef, RefObject } from 'react';
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
-import BoxedListWithLinks from '@navikt/boxed-list-with-links';
-import { Header, Popover, SystemButton, UserPanel } from '@navikt/k9-react-components';
+import { BoxedListWithLinks, Header, Popover, SystemButton, UserPanel } from '@navikt/k9-react-components';
 
 import { AINNTEKT_URL, AAREG_URL, RETTSKILDE_URL, SYSTEMRUTINE_URL } from '@k9-sak-web/konstanter';
 
