@@ -51,6 +51,8 @@ const useOutsideClickEvent = (
 };
 
 const isRunningOnLocalhost = () => window.location.hostname === 'localhost';
+const isInDevelopmentMode = () =>
+  window.location.hostname === 'localhost' || window.location.hostname === 'app-q1.adeo.no';
 const getHeaderTitleHref = getPathToFplos => {
   if (!isRunningOnLocalhost()) {
     return getPathToFplos() || '/k9/web';
@@ -137,7 +139,10 @@ const HeaderWithErrorPanel: FunctionComponent<OwnProps> = ({
   );
 
   return (
-    <header ref={fixedHeaderRef} className={styles.container}>
+    <div
+      ref={fixedHeaderRef}
+      className={[styles.container, isInDevelopmentMode() ? styles.container_dev : ''].join(' ')}
+    >
       <RawIntlProvider value={intl}>
         <div ref={wrapperRef}>
           <Header
@@ -162,7 +167,7 @@ const HeaderWithErrorPanel: FunctionComponent<OwnProps> = ({
         </div>
         <ErrorMessagePanel removeErrorMessage={removeErrorMessage} errorMessages={errorMessages} />
       </RawIntlProvider>
-    </header>
+    </div>
   );
 };
 
