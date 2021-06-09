@@ -14,6 +14,7 @@ jobs:
           node-version: 15.x
           registry-url: https://npm.pkg.github.com/
           scope: '@navikt'
+          always-auth: true
 
       - name: Get yarn cache directory path
         id: yarn-cache-dir-path
