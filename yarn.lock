@@ -2302,26 +2302,36 @@
   resolved "https://registry.yarnpkg.com/@navikt/fnrvalidator/-/fnrvalidator-1.1.4.tgz#22a776ba05a90c1ba5316a4f7567f9a45abcda04"
   integrity sha512-IroYFqa8PpzVxtIk6ifeEQBFzsI2QJX/FSIQyBtJvpp2D8Cb5Z9+hGNFppCILWR+QYbY8Dkk48la7K5fPGXeWQ==
 
-"@navikt/k9-array-utils@file:../k9-frontend-modules/packages/util/array-utils":
+"@navikt/k9-array-utils@^0.0.1":
   version "0.0.1"
+  resolved "https://npm.pkg.github.com/download/@navikt/k9-array-utils/0.0.1/98bc78a50527f6c229ca570b290fa3f05392dcaed647dabda3954f75fef2805e#5f1fd9b78afcc5fe1d73b67d93fc1d5c4377d9d1"
+  integrity sha512-43FAkBgT/LB4MgU5s18pe+4svmxXojKu5ypyNdxIPSCY+4y80ZZ58/yZTgmQw3XZxLACHMePRdP6PRkTrk9j2g==
 
-"@navikt/k9-bem-utils@file:../k9-frontend-modules/packages/util/bem-utils":
+"@navikt/k9-bem-utils@^1.0.1":
   version "1.0.1"
+  resolved "https://npm.pkg.github.com/download/@navikt/k9-bem-utils/1.0.1/1c8b370a7f8e822ffffeff6fa566af9a025692ae3fd258c7a4e4c0d67cd52ea1#451f330cbf3636c6406468c157468ea07dfb3b10"
+  integrity sha512-DRV0rm6NDyAIosWGeMk0RlfUciUNIdD4AxpnGYOpqJCTIoCJHxLtzwRa1Zv15LEX5BHDWbiDYF5ZxDFhfE4yBg==
 
-"@navikt/k9-date-utils@file:../k9-frontend-modules/packages/util/date-utils":
+"@navikt/k9-date-utils@^0.0.5":
   version "0.0.5"
+  resolved "https://npm.pkg.github.com/download/@navikt/k9-date-utils/0.0.5/62215107bf7c1a3b45d5d5a569773bcf94696b98620199aaeb79d11601c047cf#38418e62899fe77647cc4a3ac60ada6ddf0ce3b1"
+  integrity sha512-JkJGDvvIiYnPb5hejxoOOd14xY9NqXP6kuGodQ7zRxo7qmUBHXX8cmZgNIP0uMofMSnN1LIobCI4lmChbKpPnw==
 
-"@navikt/k9-period-utils@file:../k9-frontend-modules/packages/util/period-utils":
+"@navikt/k9-period-utils@^0.0.7":
   version "0.0.7"
+  resolved "https://npm.pkg.github.com/download/@navikt/k9-period-utils/0.0.7/bbc6ad5f5889428870ca476518702c817ad8f37de848660646748aade5410935#6e9c8951bb9b20bb5fc872d590c2f336d3a234ef"
+  integrity sha512-w2OpLtEPCULR2nKy2XxljXkda8BbkELZwc8eFRuexE8dixCbIetqgWexs66skF2MtOIq1xNM4NXh1Rj1TsfFcA==
   dependencies:
-    "@navikt/k9-array-utils" "file:../../../Library/Caches/Yarn/v6/npm-@navikt-k9-period-utils-0.0.7-55894de3-bb0a-410e-b439-f5a9e5e96b2d-1623163387735/node_modules/@navikt/array-utils"
-    "@navikt/k9-date-utils" "file:../../../Library/Caches/Yarn/v6/npm-@navikt-k9-period-utils-0.0.7-55894de3-bb0a-410e-b439-f5a9e5e96b2d-1623163387735/node_modules/@navikt/date-utils"
+    "@navikt/k9-array-utils" "^0.0.1"
+    "@navikt/k9-date-utils" "^0.0.5"
 
-"@navikt/k9-react-components@file:../k9-frontend-modules/packages/ui/react-components":
-  version "0.0.11"
+"@navikt/k9-react-components@^0.0.15":
+  version "0.0.15"
+  resolved "https://npm.pkg.github.com/download/@navikt/k9-react-components/0.0.15/7168883016c13347a300a6ad1ddda8122aee02da2fc78b2311c2521e5624ba52#f87117cdb3ff1f5e39dea1c0a4a983170343fc9f"
+  integrity sha512-uTELcT8XgFCpJJ9cVQXV7GE78ntAXh9QylS13t86hymbzPtJ+uM6DZk7LqoxfjSw1jbqPwwZJ2MxJal0RpoxEA==
   dependencies:
-    "@navikt/k9-bem-utils" "file:../../../Library/Caches/Yarn/v6/npm-@navikt-k9-react-components-0.0.11-e183c9f2-8de5-49c4-ac1c-1b8e302980b9-1623163387739/node_modules/util/bem-utils"
-    "@navikt/k9-period-utils" "file:../../../Library/Caches/Yarn/v6/npm-@navikt-k9-react-components-0.0.11-e183c9f2-8de5-49c4-ac1c-1b8e302980b9-1623163387739/node_modules/util/period-utils"
+    "@navikt/k9-bem-utils" "^1.0.1"
+    "@navikt/k9-period-utils" "^0.0.7"
 
 "@navikt/nap-bem-utils@1.0.1":
   version "1.0.1"
@@ -12434,6 +12444,11 @@ nav-frontend-ikoner-assets@^3.0.1:
   version "3.0.1"
   resolved "https://registry.yarnpkg.com/nav-frontend-ikoner-assets/-/nav-frontend-ikoner-assets-3.0.1.tgz#7531ea6da2a5b2d9cd7071b2b3a495fdf6b309e7"
   integrity sha512-rRzdUl7w02xcX0ZljE3cmkow4haEePNP1gPuWRSvQt5ybL2eiE573l3lgsd4PuPuQp1T4fYFqFlPWjkUwpXVqw==
+
+nav-frontend-ikonknapper@^1.0.32:
+  version "1.1.4"
+  resolved "https://registry.yarnpkg.com/nav-frontend-ikonknapper/-/nav-frontend-ikonknapper-1.1.4.tgz#fe88144f8a76d91f04c24d24eabf681a76969244"
+  integrity sha512-qvrBlpSdsFF3WdiSzt49F9UhBGubHKugIEQeR1rXhDwThGIEbt8EcaxF6hFVa0cClZRg/lbqlZptAAE27741Ow==
 
 nav-frontend-js-utils@1.0.19, nav-frontend-js-utils@^1.0.19:
   version "1.0.19"
