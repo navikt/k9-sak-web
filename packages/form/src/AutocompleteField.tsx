@@ -2,8 +2,7 @@ import React, { FunctionComponent } from 'react';
 import { Element } from 'nav-frontend-typografi';
 import { Field, WrappedFieldInputProps } from 'redux-form';
 // eslint-disable-next-line import/no-named-default
-import { default as NAPAutocomplete } from '@navikt/nap-autocomplete';
-import { Suggestion as NAPSuggestion } from '@navikt/nap-autocomplete/dist/types/Suggestion';
+import { Autocomplete as NAPAutocomplete, Suggestion as NAPSuggestion } from '@navikt/k9-react-components';
 import ReadOnlyField from './ReadOnlyField';
 import styles from './autocompleteField.less';
 

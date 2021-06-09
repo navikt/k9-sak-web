@@ -1,7 +1,7 @@
 import React, { FunctionComponent } from 'react';
 import { FormattedMessage } from 'react-intl';
 import moment from 'moment';
-import { PersonCard, Gender } from '@navikt/nap-person-card';
+import { PersonCard, Gender } from '@navikt/k9-react-components';
 
 import { DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils/src/formats';
 import { FlexColumn, FlexContainer, FlexRow } from '@fpsak-frontend/shared-components';
