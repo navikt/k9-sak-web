@@ -20,7 +20,7 @@ TLDR er å opprette en GitHub PAT med kun `read:packages`-tilgang, enable SSO, o
 //npm.pkg.github.com/:_authToken=<token>
 ```
 
-Merk at dette _ikke_ må sjekkes inn i versjonskontroll.
+Merk at dette _ikke_ skal sjekkes inn i versjonskontroll.
 
 Når dette er gjort kan man kjøre dette på rot av repo'et for å kjøre opp lokalt utviklingsmiljø:
 
