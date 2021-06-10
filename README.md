@@ -12,15 +12,15 @@ Monorepo for Frontend kode for k9-sak.
 
 k9-sak-web har dependencies til pakker publisert fra [k9-frontend-modules](https://github.com/navikt/k9-frontend-modules).
 
-For å få hentet pakker fra GitHub sitt pakkeregistry må man sette opp lokal NPM med autentisering mot GitHub med en Personal Access Token (PAT) i lokalt utviklingsmiljø, før man gjør `yarn install`. GitHub har en guide på hvordan man gjør dette [her](https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-npm-registry#authenticating-to-github-packages). Det skal holde å gi tokenet `read:packages`-tilgang.
+For å få hentet pakker fra GitHub sitt pakkeregistry må man sette opp lokal NPM med autentisering mot GitHub med en Personal Access Token (PAT) i lokalt utviklingsmiljø, før man gjør `yarn install`. GitHub har en guide på hvordan man gjør dette [her](https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-npm-registry#authenticating-to-github-packages).
 
-TLDR er å opprette en egen ~/.npmrc-fil med følgende innhold:
+Det holder å gi tokenet du oppretter `read:packages`-tilgang og enable SSO. TLDR er å opprette en egen ~/.npmrc-fil hvor man legger inn tokenet slik:
 
 ```
 //npm.pkg.github.com/:_authToken=<token>
 ```
 
-(Merk at dette _ikke_ må sjekkes inn i versjonskontroll)
+Merk at dette _ikke_ må sjekkes inn i versjonskontroll.
 
 Når dette er gjort kan man kjøre dette på rot av repo'et for å kjøre opp lokalt utviklingsmiljø:
 
