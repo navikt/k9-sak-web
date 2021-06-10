@@ -24,6 +24,8 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version: 15.x
+          registry-url: https://npm.pkg.github.com/
+          scope: '@navikt'
 
       - name: Get yarn cache directory path and set timestamp
         id: yarn-cache-dir-path
@@ -42,6 +44,8 @@ jobs:
 
       - name: Installere dependencies
         run: yarn install --ignore-optional --no-progress --frozen-lockfile
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Tester, typescript-sjekk og linting
         run: yarn test:all && yarn ts-check && yarn less:lint

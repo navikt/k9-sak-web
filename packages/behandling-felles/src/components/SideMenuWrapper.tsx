@@ -1,6 +1,6 @@
 import React, { FunctionComponent, ReactNode } from 'react';
 import { injectIntl, WrappedComponentProps } from 'react-intl';
-import SideMenu from '@navikt/nap-side-menu';
+import { SideMenu } from '@navikt/k9-react-components';
 
 import { FlexColumn, FlexContainer, FlexRow } from '@fpsak-frontend/shared-components';
 import advarselIkonUrl from '@fpsak-frontend/assets/images/advarsel_ny.svg';

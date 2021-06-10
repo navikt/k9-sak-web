@@ -1,10 +1,6 @@
 import React, { FunctionComponent, useState, useCallback, useEffect, useRef, RefObject } from 'react';
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
-import BoxedListWithLinks from '@navikt/boxed-list-with-links';
-import Header from '@navikt/nap-header';
-import Popover from '@navikt/nap-popover';
-import SystemButton from '@navikt/nap-system-button';
-import UserPanel from '@navikt/nap-user-panel';
+import { BoxedListWithLinks, Header, Popover, SystemButton, UserPanel } from '@navikt/k9-react-components';
 
 import { AINNTEKT_URL, AAREG_URL, RETTSKILDE_URL, SYSTEMRUTINE_URL } from '@k9-sak-web/konstanter';
 
@@ -159,7 +155,7 @@ const HeaderWithErrorPanel: FunctionComponent<OwnProps> = ({
               popperProps={{
                 children: popperPropsChildren,
                 placement: 'bottom-start',
-                positionFixed: true,
+                strategy: 'fixed',
               }}
               referenceProps={{
                 children: referencePropsChildren,

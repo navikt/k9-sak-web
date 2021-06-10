@@ -1,5 +1,5 @@
 import { SetStateAction } from 'react';
-import { StepType } from '@navikt/nap-process-menu/dist/Step';
+import { ProcessMenuStepType } from '@navikt/k9-react-components';
 
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import aksjonspunktType from '@fpsak-frontend/kodeverk/src/aksjonspunktType';
@@ -76,17 +76,17 @@ export const finnValgtPanel = (
   return prosessStegPaneler.find(i => i.getUrlKode() === valgtProsessStegPanelKode);
 };
 
-const finnProsessmenyType = (status: string, harApentAksjonspunkt: boolean): StepType => {
+const finnProsessmenyType = (status: string, harApentAksjonspunkt: boolean): ProcessMenuStepType => {
   if (harApentAksjonspunkt) {
-    return StepType.warning;
+    return ProcessMenuStepType.warning;
   }
   if (status === vilkarUtfallType.OPPFYLT) {
-    return StepType.success;
+    return ProcessMenuStepType.success;
   }
   if (status === vilkarUtfallType.IKKE_OPPFYLT) {
-    return StepType.danger;
+    return ProcessMenuStepType.danger;
   }
-  return StepType.default;
+  return ProcessMenuStepType.default;
 };
 
 export const formaterPanelerForProsessmeny = (
@@ -99,59 +99,61 @@ export const formaterPanelerForProsessmeny = (
       labelId: panel.getTekstKode(),
       isActive: panel.getUrlKode() === valgtProsessStegPanelKode,
       isDisabled: false,
-      isFinished: type === StepType.success,
+      isFinished: type === ProcessMenuStepType.success,
       usePartialStatus: panel.getErStegDelvisBehandlet() || false,
       type,
     };
   });
 
-export const getBekreftAksjonspunktCallback = (
-  lagringSideEffectsCallback: (aksjonspunktModeller: any) => () => void,
-  fagsak: Fagsak,
-  behandling: Behandling,
-  aksjonspunkter: Aksjonspunkt[],
-  lagreAksjonspunkter: (params: any, keepData?: boolean) => Promise<any>,
-  lagreOverstyrteAksjonspunkter?: (params: any, keepData?: boolean) => Promise<any>,
-) => async aksjonspunktModels => {
-  const models = aksjonspunktModels.map(ap => ({
-    '@type': ap.kode,
-    ...ap,
-  }));
+export const getBekreftAksjonspunktCallback =
+  (
+    lagringSideEffectsCallback: (aksjonspunktModeller: any) => () => void,
+    fagsak: Fagsak,
+    behandling: Behandling,
+    aksjonspunkter: Aksjonspunkt[],
+    lagreAksjonspunkter: (params: any, keepData?: boolean) => Promise<any>,
+    lagreOverstyrteAksjonspunkter?: (params: any, keepData?: boolean) => Promise<any>,
+  ) =>
+  async aksjonspunktModels => {
+    const models = aksjonspunktModels.map(ap => ({
+      '@type': ap.kode,
+      ...ap,
+    }));
 
-  const params = {
-    saksnummer: fagsak.saksnummer,
-    behandlingId: behandling.id,
-    behandlingVersjon: behandling.versjon,
-  };
+    const params = {
+      saksnummer: fagsak.saksnummer,
+      behandlingId: behandling.id,
+      behandlingVersjon: behandling.versjon,
+    };
 
-  const etterLagringCallback = await lagringSideEffectsCallback(aksjonspunktModels);
+    const etterLagringCallback = await lagringSideEffectsCallback(aksjonspunktModels);
 
-  if (lagreOverstyrteAksjonspunkter) {
-    const aksjonspunkterTilLagring = aksjonspunkter.filter(ap =>
-      aksjonspunktModels.some(apModel => apModel.kode === ap.definisjon.kode),
-    );
-    const erOverstyringsaksjonspunkter = aksjonspunkterTilLagring.some(
-      ap =>
-        ap.aksjonspunktType.kode === aksjonspunktType.OVERSTYRING ||
-        ap.aksjonspunktType.kode === aksjonspunktType.SAKSBEHANDLEROVERSTYRING,
-    );
+    if (lagreOverstyrteAksjonspunkter) {
+      const aksjonspunkterTilLagring = aksjonspunkter.filter(ap =>
+        aksjonspunktModels.some(apModel => apModel.kode === ap.definisjon.kode),
+      );
+      const erOverstyringsaksjonspunkter = aksjonspunkterTilLagring.some(
+        ap =>
+          ap.aksjonspunktType.kode === aksjonspunktType.OVERSTYRING ||
+          ap.aksjonspunktType.kode === aksjonspunktType.SAKSBEHANDLEROVERSTYRING,
+      );
 
-    if (aksjonspunkterTilLagring.length === 0 || erOverstyringsaksjonspunkter) {
-      return lagreOverstyrteAksjonspunkter(
-        {
-          ...params,
-          overstyrteAksjonspunktDtoer: models,
-        },
-        true,
-      ).then(etterLagringCallback);
+      if (aksjonspunkterTilLagring.length === 0 || erOverstyringsaksjonspunkter) {
+        return lagreOverstyrteAksjonspunkter(
+          {
+            ...params,
+            overstyrteAksjonspunktDtoer: models,
+          },
+          true,
+        ).then(etterLagringCallback);
+      }
     }
-  }
 
-  return lagreAksjonspunkter(
-    {
-      ...params,
-      bekreftedeAksjonspunktDtoer: models,
-    },
-    true,
-  ).then(etterLagringCallback);
-};
+    return lagreAksjonspunkter(
+      {
+        ...params,
+        bekreftedeAksjonspunktDtoer: models,
+      },
+      true,
+    ).then(etterLagringCallback);
+  };
