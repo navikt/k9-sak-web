@@ -19,9 +19,9 @@ const initializeOmsorgenForVilkar = (elementId, { submitCallback, behandling, sa
 
 const hentVersjonInformasjon = () => {
   const produksjonsVersjon = {
-    versjon: '1.5.41',
-    jsIntegrity: 'sha384-0bEAYWfSLpvwz2RRwqwV8e32mlxrq/c/EVyPv+M5HbtXrNlTDrSQOvAS9FuoJKaX',
-    stylesheetIntegrity: 'sha384-okK9YI0I8wq3WER2z/MKqHGClJZTSnKRtir+HmywlWvVwBZZxs5aQ0GaGSwdil6F',
+    versjon: '2.0.2',
+    jsIntegrity: 'sha384-+cZfw4ZGWVST8Ep+Z7bY2u0T8iz/g9lJUyiEyx4fy+cWACvS4qfSyO+fQFf8NQMK',
+    stylesheetIntegrity: 'sha384-6V964A3+pMaG6T3NoiAeFSGsgwxwDKVz1+XjggJ9aL/bqtgwS82TQAA2JH/+AYVN',
   };
   const preprodVersjon = {
     versjon: '2.0.3',
