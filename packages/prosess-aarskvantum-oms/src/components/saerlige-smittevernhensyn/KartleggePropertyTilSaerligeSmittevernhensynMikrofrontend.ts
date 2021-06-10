@@ -75,7 +75,7 @@ const KartleggePropertyTilSaerligeSmittevernhensynMikrofrontend = (
         aksjonspunktLost,
         lesemodus: !isAksjonspunktOpen,
         informasjonTilLesemodus: {
-          begrunnelse: aksjonspunkt.begrunnelse,
+          begrunnelse: aksjonspunkt.begrunnelse ? aksjonspunkt.begrunnelse : '',
           vilkarOppfylt: eksistererInnvilgetSmittevernPeriode,
           antallDagerDelvisInnvilget: dagerDelvisInnvilget > 0 ? dagerDelvisInnvilget : null,
         },

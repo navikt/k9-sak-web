@@ -45,7 +45,6 @@ const KartleggePropertyTilOmsorgenForMikrofrontendKomponent = ({
     const skalVilkarsUtfallVises = behandling.status.kode === behandlingStatus.AVSLUTTET;
     const aksjonspunktLost = behandling.status.kode === behandlingStatus.BEHANDLING_UTREDES && !isAksjonspunktOpen;
     const behandlingsID = behandling.id.toString();
-
     objektTilMikrofrontend = {
       visKomponent: UtvidetRettMikrofrontendVisning.OMSORG,
       props: {
@@ -54,7 +53,7 @@ const KartleggePropertyTilOmsorgenForMikrofrontendKomponent = ({
         aksjonspunktLost,
         lesemodus: isReadOnly || !isAksjonspunktOpen,
         informasjonTilLesemodus: {
-          begrunnelse: aksjonspunkt.begrunnelse,
+          begrunnelse: aksjonspunkt.begrunnelse ? aksjonspunkt.begrunnelse : '',
           vilkarOppfylt: status === vilkarUtfallType.OPPFYLT,
         } as InformasjonTilLesemodus,
         barn: angitteBarn.map(barn => barn.personIdent),
