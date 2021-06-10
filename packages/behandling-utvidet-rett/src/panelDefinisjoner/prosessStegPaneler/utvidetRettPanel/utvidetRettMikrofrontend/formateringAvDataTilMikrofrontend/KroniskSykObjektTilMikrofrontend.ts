@@ -41,7 +41,7 @@ const formatereLosAksjonspunktObjektForKroniskSyk = (
 };
 
 const formatereLesemodusObjektForKroniskSyk = (vilkar: Vilkar, aksjonspunkt: Aksjonspunkt) => {
-  if (vilkar.perioder[0]) {
+  if (vilkar.perioder[0].vilkarStatus.kode !== vilkarUtfallType.IKKE_VURDERT) {
     return {
       begrunnelse: aksjonspunkt.begrunnelse,
       vilkarOppfylt: vilkar.perioder[0].vilkarStatus.kode === vilkarUtfallType.OPPFYLT,

@@ -4,7 +4,10 @@ import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import UtvidetRettMikrofrontendVisning from '../../../../../types/MikrofrontendKomponenter';
 import { generereInfoForVurdertVilkar } from '../../../UtvidetRettOmsorgenForMikrofrontendFelles';
 import UtvidetRettSoknad from '../../../../../types/UtvidetRettSoknad';
-import { AleneOmOmsorgenProps } from '../../../../../types/utvidetRettMikrofrontend/VilkarAleneOmOmsorgenProps';
+import {
+  AleneOmOmsorgenAksjonspunktObjekt,
+  AleneOmOmsorgenProps,
+} from '../../../../../types/utvidetRettMikrofrontend/VilkarAleneOmOmsorgenProps';
 import AvslagskoderMidlertidigAlene from '../../../../../types/utvidetRettMikrofrontend/AvslagskoderMidlertidigAlene';
 
 interface OwnProps {
@@ -20,21 +23,21 @@ interface OwnProps {
 }
 
 const formatereLesemodusObjekt = (vilkar: Vilkar, aksjonspunkt: Aksjonspunkt, status: string) => {
-  if (vilkar.perioder[0]) {
+  if (vilkar.perioder[0].vilkarStatus.kode !== vilkarUtfallType.IKKE_VURDERT) {
     return {
       begrunnelse: aksjonspunkt.begrunnelse,
       vilkarOppfylt: status === vilkarUtfallType.OPPFYLT,
       fraDato: vilkar.perioder[0].periode.fom,
       avslagsArsakErPeriodeErIkkeOverSeksMån:
         vilkar.perioder[0]?.avslagKode === AvslagskoderMidlertidigAlene.VARIGHET_UNDER_SEKS_MÅN,
-    };
+    } as AleneOmOmsorgenAksjonspunktObjekt;
   }
   return {
     begrunnelse: '',
     vilkarOppfylt: false,
     avslagsArsakErIkkeRiskioFraFravaer: false,
     fraDato: '',
-  };
+  } as AleneOmOmsorgenAksjonspunktObjekt;
 };
 
 const formatereLosAksjonspunktObjekt = (
