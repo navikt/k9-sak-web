@@ -24,9 +24,9 @@ const hentVersjonInformasjon = () => {
     stylesheetIntegrity: 'sha384-okK9YI0I8wq3WER2z/MKqHGClJZTSnKRtir+HmywlWvVwBZZxs5aQ0GaGSwdil6F',
   };
   const preprodVersjon = {
-    versjon: '2.0.2',
-    jsIntegrity: 'sha384-+cZfw4ZGWVST8Ep+Z7bY2u0T8iz/g9lJUyiEyx4fy+cWACvS4qfSyO+fQFf8NQMK',
-    stylesheetIntegrity: 'sha384-6V964A3+pMaG6T3NoiAeFSGsgwxwDKVz1+XjggJ9aL/bqtgwS82TQAA2JH/+AYVN',
+    versjon: '2.0.3',
+    jsIntegrity: 'sha384-CGmeSJmx0S1O01lIOT2yZ2lcIvwEUPyud8xxVuUomL7CwUh9JcAjkrym8ZerExsX',
+    stylesheetIntegrity: 'sha384-3iUtet323prriMT769mdhUmWxrtoD2sTbqMwOZV0tKNwjCvRz+tNgmCtOq2Poocv',
   };
   return sjekkHvisErIProduksjon() ? produksjonsVersjon : preprodVersjon;
 };
