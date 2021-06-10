@@ -6,7 +6,7 @@ import FlexRow from '@fpsak-frontend/shared-components/src/flexGrid/FlexRow';
 import Image from '@fpsak-frontend/shared-components/src/Image';
 import VerticalSpacer from '@fpsak-frontend/shared-components/src/VerticalSpacer';
 import { dateFormat } from '@fpsak-frontend/utils';
-import SideMenu from '@navikt/nap-side-menu';
+import { SideMenu } from '@navikt/k9-react-components';
 import classNames from 'classnames/bind';
 import { Element, Undertekst, Undertittel } from 'nav-frontend-typografi';
 import * as React from 'react';

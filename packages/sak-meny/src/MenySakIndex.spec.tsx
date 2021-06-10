@@ -1,5 +1,5 @@
 import React from 'react';
-import Popover from '@navikt/nap-popover';
+import { Popover } from '@navikt/k9-react-components';
 import { Knapp } from 'nav-frontend-knapper';
 
 import shallowWithIntl from '../i18n/index';
@@ -43,7 +43,7 @@ describe('<MenySakIndex>', () => {
     expect(wrapper.find('button')).toHaveLength(0);
 
     const popover = wrapper.find(Popover);
-    const wrapper2 = shallowWithIntl(popover.prop('popperProps').children());
+    const wrapper2 = shallowWithIntl((popover.prop('popperProps') as any).children());
 
     const button = wrapper2.find('button');
     expect(button).toHaveLength(1);

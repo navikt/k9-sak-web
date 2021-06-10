@@ -1,7 +1,7 @@
 import React from 'react';
 import sinon from 'sinon';
 import { shallow } from 'enzyme';
-import { StepType } from '@navikt/nap-process-menu/dist/Step';
+import { ProcessMenuStepType } from '@navikt/k9-react-components';
 
 import { prosessStegCodes } from '@k9-sak-web/konstanter';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
@@ -145,7 +145,7 @@ describe('<prosessStegHooks>', () => {
         isDisabled: false,
         isFinished: false,
         labelId: 'Behandlingspunkt.Opplysningsplikt',
-        type: StepType.warning,
+        type: ProcessMenuStepType.warning,
         usePartialStatus: false,
       },
     ]);

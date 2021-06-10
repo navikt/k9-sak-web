@@ -1,6 +1,6 @@
 import React, { useMemo, FunctionComponent, ReactNode } from 'react';
 import { injectIntl, WrappedComponentProps } from 'react-intl';
-import ProcessMenu from '@navikt/nap-process-menu';
+import { ProcessMenu } from '@navikt/k9-react-components';
 
 import ProsessStegMenyRad from '../types/prosessStegMenyRadTsType';
 
