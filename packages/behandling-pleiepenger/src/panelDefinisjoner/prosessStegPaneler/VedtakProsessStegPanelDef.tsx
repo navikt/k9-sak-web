@@ -53,7 +53,7 @@ class PanelDef extends ProsessStegPanelDef {
     vilkar,
     simuleringResultat,
     beregningsgrunnlag,
-    ytelseTypeKode: fagsakYtelseType.FORELDREPENGER,
+    ytelseTypeKode: fagsakYtelseType.PLEIEPENGER,
     employeeHasAccess: rettigheter.kanOverstyreAccess.isEnabled,
     arbeidsgiverOpplysningerPerId,
   });
