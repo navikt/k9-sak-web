@@ -48,10 +48,7 @@ export const findDelvisInnvilgetResultatText = (behandlingResultatTypeKode, ytel
     return 'VedtakForm.VilkarStatusDelvisInnvilgetFrisinn';
   }
 
-  if (
-    ytelseType === fagsakYtelseType.OMSORGSPENGER_MIDLERTIDIG_ALENE ||
-    ytelseType === fagsakYtelseType.OMSORGSPENGER_KRONISK_SYKT_BARN
-  ) {
+  if (erFagytelseTypeUtvidetRett(ytelseType)) {
     return 'VedtakForm.VilkarStatusDelvisInnvilgetUtvidetRett';
   }
 
@@ -87,6 +84,10 @@ export const findAvslagResultatText = (behandlingResultatTypeKode, ytelseType) =
   }
   if (behandlingResultatTypeKode === behandlingResultatType.KLAGE_AVVIST) {
     return 'VedtakForm.ResultatKlageAvvist';
+  }
+
+  if (ytelseType === fagsakYtelseType.OMSORGSPENGER) {
+    return 'VedtakForm.OmsorgspengerIkkeInnvilget';
   }
 
   if (ytelseType === fagsakYtelseType.OMSORGSPENGER) {
