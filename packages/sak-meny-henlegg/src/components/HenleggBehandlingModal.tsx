@@ -79,12 +79,10 @@ const henleggArsakerPerBehandlingType = {
   [BehandlingType.REVURDERING]: [
     behandlingResultatType.HENLAGT_SOKNAD_TRUKKET,
     behandlingResultatType.HENLAGT_FEILOPPRETTET,
-    behandlingResultatType.HENLAGT_SOKNAD_MANGLER,
   ],
   [BehandlingType.FORSTEGANGSSOKNAD]: [
     behandlingResultatType.HENLAGT_SOKNAD_TRUKKET,
     behandlingResultatType.HENLAGT_FEILOPPRETTET,
-    behandlingResultatType.HENLAGT_SOKNAD_MANGLER,
   ],
 };
 
@@ -99,7 +97,6 @@ export const getHenleggArsaker = (
       type =>
         ytelseType.kode !== fagsakYtelseType.ENGANGSSTONAD ||
         (ytelseType.kode === fagsakYtelseType.ENGANGSSTONAD &&
-          type !== behandlingResultatType.HENLAGT_SOKNAD_MANGLER &&
           type !== behandlingResultatType.MANGLER_BEREGNINGSREGLER),
     )
     .map(type => behandlingResultatTyper.find(brt => brt.kode === type));
