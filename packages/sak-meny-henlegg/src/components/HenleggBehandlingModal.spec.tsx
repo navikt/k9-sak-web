@@ -111,7 +111,7 @@ describe('<HenleggBehandlingModal>', () => {
     expect(selectField).toHaveLength(1);
     expect(selectField.prop('placeholder')).toEqual('Velg årsak til henleggelse');
     const values = selectField.prop('selectValues');
-    expect(values).toHaveLength(3);
+    expect(values).toHaveLength(2);
     expect(values[0].props.value).toEqual(behandlingResultatType.HENLAGT_SOKNAD_TRUKKET);
     expect(values[1].props.value).toEqual(behandlingResultatType.HENLAGT_FEILOPPRETTET);
   });
