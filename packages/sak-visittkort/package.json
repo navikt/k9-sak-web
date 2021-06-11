@@ -14,7 +14,7 @@
     "@navikt/k9-array-utils": "^0.0.1",
     "@navikt/k9-bem-utils": "^1.0.1",
     "@navikt/k9-period-utils": "^0.0.7",
-    "@navikt/k9-react-components": "^0.0.15",
+    "@navikt/k9-react-components": "^0.0.18",
     "moment": "^2.29.1",
     "nav-frontend-etiketter": "3.0.1",
     "nav-frontend-etiketter-style": "2.0.1",
