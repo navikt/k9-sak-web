@@ -47,11 +47,6 @@ describe('<HenleggBehandlingModal>', () => {
       kodeverk: 'BEHANDLING_RESULT_TYPE',
       navn: '',
     },
-    {
-      kode: behandlingResultatType.HENLAGT_SOKNAD_MANGLER,
-      kodeverk: 'BEHANDLING_RESULT_TYPE',
-      navn: '',
-    },
   ];
 
   it('skal rendre åpen modal', () => {
@@ -119,7 +114,6 @@ describe('<HenleggBehandlingModal>', () => {
     expect(values).toHaveLength(3);
     expect(values[0].props.value).toEqual(behandlingResultatType.HENLAGT_SOKNAD_TRUKKET);
     expect(values[1].props.value).toEqual(behandlingResultatType.HENLAGT_FEILOPPRETTET);
-    expect(values[2].props.value).toEqual(behandlingResultatType.HENLAGT_SOKNAD_MANGLER);
   });
 
   it('skal bruke behandlingsresultat-typer for klage', () => {
@@ -161,7 +155,6 @@ describe('<HenleggBehandlingModal>', () => {
     expect(resultat.map(r => r.kode)).toEqual([
       behandlingResultatType.HENLAGT_SOKNAD_TRUKKET,
       behandlingResultatType.HENLAGT_FEILOPPRETTET,
-      behandlingResultatType.HENLAGT_SOKNAD_MANGLER,
     ]);
   });
 
@@ -171,7 +164,6 @@ describe('<HenleggBehandlingModal>', () => {
     expect(resultat.map(r => r.kode)).toEqual([
       behandlingResultatType.HENLAGT_SOKNAD_TRUKKET,
       behandlingResultatType.HENLAGT_FEILOPPRETTET,
-      behandlingResultatType.HENLAGT_SOKNAD_MANGLER,
     ]);
   });
 
