@@ -105,7 +105,7 @@ const VisittkortPanel: FunctionComponent<OwnProps> = ({
                 <OtherPartCard
                   fodselsnummer={relatertFagsak.søkerIdent}
                   name={relatertFagsak.søkerNavn}
-                  url={`/k9/web/fagsak/${relatertFagsak.saksnummer}/behandling`}
+                  url={`/k9/web/fagsak/${relatertFagsak.saksnummer}/`}
                 />
               </FlexColumn>
             ))}
