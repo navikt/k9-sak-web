@@ -26,6 +26,7 @@ import { K9sakApiKeys, restApiHooks } from '../data/k9sakApi';
 import useHentFagsakRettigheter from './useHentFagsakRettigheter';
 import useHentAlleBehandlinger from './useHentAlleBehandlinger';
 import BehandlingRettigheter from '../behandling/behandlingRettigheterTsType';
+import RelatertFagsak from '../../../types/src/relatertFagsak';
 
 const erTilbakekreving = (behandlingType: Kodeverk): boolean =>
   behandlingType &&
@@ -102,10 +103,8 @@ const FagsakIndex: FunctionComponent = () => {
     keepData: true,
   };
 
-  const {
-    data: behandlingPersonopplysninger,
-    state: personopplysningerState,
-  } = restApiHooks.useRestApi<Personopplysninger>(K9sakApiKeys.BEHANDLING_PERSONOPPLYSNINGER, undefined, options);
+  const { data: behandlingPersonopplysninger, state: personopplysningerState } =
+    restApiHooks.useRestApi<Personopplysninger>(K9sakApiKeys.BEHANDLING_PERSONOPPLYSNINGER, undefined, options);
 
   const behandling = alleBehandlinger.find(b => b.id === behandlingId);
 
@@ -122,6 +121,15 @@ const FagsakIndex: FunctionComponent = () => {
     K9sakApiKeys.BEHANDLING_RETTIGHETER,
     { uuid: behandling?.uuid },
     options,
+  );
+
+  const { data: relaterteFagsaker } = restApiHooks.useRestApi<RelatertFagsak>(
+    K9sakApiKeys.FAGSAK_RELATERTE_SAKER,
+    {},
+    {
+      updateTriggers: [!behandling],
+      suspendRequest: !behandling,
+    },
   );
 
   if (!fagsak) {
@@ -208,6 +216,7 @@ const FagsakIndex: FunctionComponent = () => {
               sprakkode={behandling?.sprakkode}
               fagsakPerson={fagsakPerson || fagsak.person}
               harTilbakekrevingVerge={erTilbakekreving(behandling?.type) && harVerge}
+              relaterteFagsaker={relaterteFagsaker}
             />
           );
         }}
