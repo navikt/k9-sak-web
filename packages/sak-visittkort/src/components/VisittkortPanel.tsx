@@ -2,6 +2,7 @@ import React, { FunctionComponent } from 'react';
 import { FormattedMessage } from 'react-intl';
 import moment from 'moment';
 import { PersonCard, Gender, OtherPartCard } from '@navikt/k9-react-components';
+import { pathToFagsak } from '@k9-sak-web/sak-app/src/app/paths';
 
 import { DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils/src/formats';
 import { FlexColumn, FlexContainer, FlexRow } from '@fpsak-frontend/shared-components';
@@ -105,7 +106,7 @@ const VisittkortPanel: FunctionComponent<OwnProps> = ({
                 <OtherPartCard
                   fodselsnummer={relatertFagsak.søkerIdent}
                   name={relatertFagsak.søkerNavn}
-                  url={`/k9/web/fagsak/${relatertFagsak.saksnummer}/`}
+                  url={`/k9/web${pathToFagsak(relatertFagsak.saksnummer)}`}
                 />
               </FlexColumn>
             ))}
