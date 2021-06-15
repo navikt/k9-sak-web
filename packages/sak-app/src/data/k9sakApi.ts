@@ -58,6 +58,7 @@ export enum K9sakApiKeys {
   PREVIEW_MESSAGE_TILBAKEKREVING_HENLEGGELSE = 'PREVIEW_MESSAGE_TILBAKEKREVING_HENLEGGELSE',
   TILGJENGELIGE_VEDTAKSBREV = 'TILGJENGELIGE_VEDTAKSBREV',
   ARBEIDSGIVERE = 'ARBEIDSGIVERE',
+  FAGSAK_RELATERTE_SAKER = 'FAGSAK_RELATERTE_SAKER',
 }
 
 const endpoints = new RestApiConfigBuilder()
@@ -106,6 +107,7 @@ const endpoints = new RestApiConfigBuilder()
   .withRel('brev-bestill', K9sakApiKeys.SUBMIT_MESSAGE)
   .withRel('behandling-rettigheter', K9sakApiKeys.BEHANDLING_RETTIGHETER)
   .withRel('tilgjengelige-vedtaksbrev', K9sakApiKeys.TILGJENGELIGE_VEDTAKSBREV)
+  .withRel('fagsak-relaterte-saker', K9sakApiKeys.FAGSAK_RELATERTE_SAKER)
 
   .withPost('/k9/tilbake/api/brev/forhandsvis', K9sakApiKeys.PREVIEW_MESSAGE_TILBAKEKREVING, { isResponseBlob: true })
   .withPost(

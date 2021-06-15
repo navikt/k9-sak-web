@@ -70,3 +70,4 @@ export {
   ArbeidsgiverOpplysninger,
 } from './src/arbeidsgiverOpplysningerTsType';
 export { default as Brevmaler, Brevmal, Mottaker } from './src/meldingTsType';
+export { default as RelatertFagsak } from './src/relatertFagsak';

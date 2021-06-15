@@ -1,12 +1,13 @@
 import React, { FunctionComponent } from 'react';
 import { FormattedMessage } from 'react-intl';
 import moment from 'moment';
-import { PersonCard, Gender } from '@navikt/k9-react-components';
+import { PersonCard, Gender, OtherPartCard } from '@navikt/k9-react-components';
+import { pathToFagsak } from '@k9-sak-web/sak-app/src/app/paths';
 
 import { DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils/src/formats';
 import { FlexColumn, FlexContainer, FlexRow } from '@fpsak-frontend/shared-components';
 import navBrukerKjonn from '@fpsak-frontend/kodeverk/src/navBrukerKjonn';
-import { Kodeverk, KodeverkMedNavn, Personopplysninger, FagsakPerson } from '@k9-sak-web/types';
+import { Kodeverk, KodeverkMedNavn, Personopplysninger, FagsakPerson, RelatertFagsak } from '@k9-sak-web/types';
 
 import VisittkortDetaljerPopup from './VisittkortDetaljerPopup';
 import VisittkortLabels from './VisittkortLabels';
@@ -26,6 +27,7 @@ interface OwnProps {
   sprakkode?: Kodeverk;
   personopplysninger?: Personopplysninger;
   harTilbakekrevingVerge?: boolean;
+  relaterteFagsaker: RelatertFagsak;
 }
 
 const VisittkortPanel: FunctionComponent<OwnProps> = ({
@@ -34,6 +36,7 @@ const VisittkortPanel: FunctionComponent<OwnProps> = ({
   alleKodeverk,
   sprakkode,
   harTilbakekrevingVerge,
+  relaterteFagsaker,
 }) => {
   if (!personopplysninger && !harTilbakekrevingVerge) {
     return (
@@ -97,6 +100,16 @@ const VisittkortPanel: FunctionComponent<OwnProps> = ({
               />
             </FlexColumn>
           )}
+          {relaterteFagsaker?.relaterteSøkere?.length > 0 &&
+            relaterteFagsaker.relaterteSøkere.map(relatertFagsak => (
+              <FlexColumn key={relatertFagsak.søkerIdent}>
+                <OtherPartCard
+                  fodselsnummer={relatertFagsak.søkerIdent}
+                  name={relatertFagsak.søkerNavn}
+                  url={`/k9/web${pathToFagsak(relatertFagsak.saksnummer)}`}
+                />
+              </FlexColumn>
+            ))}
           {barnSoktFor && (
             <div className={styles.pushRight}>
               {barnSoktFor.map(barn => (
