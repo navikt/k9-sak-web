@@ -11,13 +11,13 @@
   &__nameGenderContainer {
     align-items: center;
     display: flex;
-    padding: 0 1rem;
+    padding: 0 0.75rem;
   }
 
   &__icon {
-    height: 1.5rem;
+    height: 1.1875rem;
     margin-right: 0.5rem;
-    width: 1.5rem;
+    width: 1.1875rem;
   }
 
   &__description {
@@ -49,6 +49,10 @@
     &:hover {
       text-decoration: none;
     }
+
+    &--pushLeft {
+      margin-left: 0.75rem;
+    }
   }
 
   &__name:global(.typo-normal) {
@@ -61,6 +65,20 @@
   &__centeredFlex {
     align-items: center;
     display: flex;
-    padding: 0 0.625rem 0 1rem;
+    padding: 0 0.625rem 0 0.75rem;
+  }
+
+  &__søkerSelect {
+    margin-left: 0.375rem;
+
+    :global .skjemaelement__label {
+      clip: rect(0 0 0 0);
+      clip-path: inset(50%);
+      height: 1px;
+      overflow: hidden;
+      position: absolute;
+      white-space: nowrap;
+      width: 1px;
+    }
   }
 }

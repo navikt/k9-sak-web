@@ -106,16 +106,9 @@ const VisittkortPanel: FunctionComponent<OwnProps> = ({
               />
             </FlexColumn>
           )}
-          {relaterteFagsaker?.relaterteSøkere?.length > 0 &&
-            relaterteFagsaker.relaterteSøkere.map(relatertFagsak => (
-              <FlexColumn key={relatertFagsak.søkerIdent}>
-                <RelatertFagsak
-                  fodselsnummer={relatertFagsak.søkerIdent}
-                  name={relatertFagsak.søkerNavn}
-                  saksnummer={relatertFagsak.saksnummer}
-                />
-              </FlexColumn>
-            ))}
+          <FlexColumn>
+            <RelatertFagsak relaterteFagsaker={relaterteFagsaker} />
+          </FlexColumn>
           {barnSoktFor && (
             <div className={styles.pushRight}>
               {barnSoktFor.map(barn => (
