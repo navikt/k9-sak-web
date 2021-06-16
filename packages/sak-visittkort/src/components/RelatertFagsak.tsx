@@ -16,10 +16,10 @@ const RelatertFagsak = ({ relaterteFagsaker }: RelatertFagsakProps) => {
     return null;
   }
   const { relaterteSøkere } = relaterteFagsaker;
-  const [valgtRelatertSøkerIdent, setValgtRelatertSøker] = React.useState(relaterteSøkere[0].søkerIdent);
-  const valgtRelatertSøker = relaterteSøkere.find(søker => søker.søkerIdent === valgtRelatertSøkerIdent);
+  const [valgtSøkerIdent, setValgtSøkerIdent] = React.useState(relaterteSøkere[0].søkerIdent);
+  const valgtSøker = relaterteSøkere.find(søker => søker.søkerIdent === valgtSøkerIdent);
   const harMerEnnEnRelatertSøker = relaterteSøkere.length > 1;
-  const { saksnummer, søkerNavn, søkerIdent } = valgtRelatertSøker;
+  const { saksnummer, søkerNavn, søkerIdent } = valgtSøker;
 
   const visRelaterteSøkere = () => {
     if (!harMerEnnEnRelatertSøker) {
@@ -34,7 +34,7 @@ const RelatertFagsak = ({ relaterteFagsaker }: RelatertFagsakProps) => {
     return (
       <NavSelect
         label="Velg relatert søker"
-        onChange={e => setValgtRelatertSøker(e.target.value)}
+        onChange={e => setValgtSøkerIdent(e.target.value)}
         className={styles.relatertFagsak__søkerSelect}
       >
         {relaterteSøkere.map(søker => (
