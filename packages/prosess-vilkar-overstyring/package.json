@@ -9,7 +9,7 @@
     "@fpsak-frontend/prop-types": "1.0.0",
     "@fpsak-frontend/shared-components": "1.0.0",
     "@fpsak-frontend/utils": "1.0.0",
-    "@navikt/k9-react-components": "^0.0.21",
+    "@navikt/k9-react-components": "^0.1.2",
     "moment": "^2.29.1",
     "nav-frontend-knapper": "3.0.1",
     "nav-frontend-knapper-style": "2.0.1",
