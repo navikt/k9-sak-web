@@ -1,11 +1,11 @@
 import { pathToFagsak } from '@k9-sak-web/sak-app/src/app/paths';
 import { RelatertFagsak as RelatertFagsakType } from '@k9-sak-web/types';
-import { OnePersonOutlineGray } from '@navikt/k9-react-components';
 import Lenke from 'nav-frontend-lenker';
 import { Select as NavSelect } from 'nav-frontend-skjema';
 import { Normaltekst } from 'nav-frontend-typografi';
 import * as React from 'react';
 import styles from './relatertFagsak.less';
+import RelatertSøkerIcon from './RelatertSøkerIcon';
 
 interface RelatertFagsakProps {
   relaterteFagsaker?: RelatertFagsakType;
@@ -50,13 +50,13 @@ const RelatertFagsak = ({ relaterteFagsaker }: RelatertFagsakProps) => {
     if (harMerEnnEnRelatertSøker) {
       return `Andre parter (${relaterteSøkere.length}):`;
     }
-    return 'Andre parter:';
+    return 'Annen part:';
   };
 
   return (
     <div className={styles.relatertFagsak}>
       <div className={styles.relatertFagsak__nameGenderContainer}>
-        <OnePersonOutlineGray classname={styles.relatertFagsak__icon} />
+        <RelatertSøkerIcon classname={styles.relatertFagsak__icon} />
         <Normaltekst className={styles.relatertFagsak__description}>{andreParterTekst()}</Normaltekst>
         {visRelaterteSøkere()}
       </div>
