@@ -5,10 +5,11 @@ import { VilkarResultPicker } from '@k9-sak-web/prosess-felles';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { KodeverkMedNavn } from '@k9-sak-web/types';
 
-import { CustomVilkarText } from './VilkarresultatMedOverstyringForm';
+import { CustomVilkarText, DokumentStatus } from './SoknadsfristVilkarForm';
 import VilkarBegrunnelse from './VilkarBegrunnelse';
+import VilkarDokument from './VilkarDokument';
 
-interface VilkarresultatMedBegrunnelseProps {
+interface SoknadsfristVilkarBegrunnelseProps {
   erVilkarOk?: boolean;
   readOnly: boolean;
   erMedlemskapsPanel: boolean;
@@ -16,6 +17,7 @@ interface VilkarresultatMedBegrunnelseProps {
   customVilkarIkkeOppfyltText?: CustomVilkarText;
   customVilkarOppfyltText?: CustomVilkarText;
   skalViseBegrunnelse?: boolean;
+  dokument?: DokumentStatus[];
 }
 
 /**
@@ -24,7 +26,7 @@ interface VilkarresultatMedBegrunnelseProps {
  * Presentasjonskomponent. Viser resultat av vilkårskjøring når det ikke finnes tilknyttede aksjonspunkter.
  * Resultatet kan overstyres av Nav-ansatt med overstyr-rettighet.
  */
-export const VilkarresultatMedBegrunnelse = ({
+export const SoknadsfristVilkarBegrunnelse = ({
   erVilkarOk,
   readOnly,
   avslagsarsaker,
@@ -32,19 +34,21 @@ export const VilkarresultatMedBegrunnelse = ({
   skalViseBegrunnelse,
   customVilkarIkkeOppfyltText,
   customVilkarOppfyltText,
-}: VilkarresultatMedBegrunnelseProps) => (
+  dokument,
+}: SoknadsfristVilkarBegrunnelseProps) => (
   <>
+    <VilkarDokument isReadOnly={readOnly} dokument={dokument} />
     {skalViseBegrunnelse && (
       <>
-        <VilkarBegrunnelse isReadOnly={readOnly} />
         <VerticalSpacer eightPx />
+        <VilkarBegrunnelse isReadOnly={readOnly} />
       </>
     )}
     <VilkarResultPicker
       avslagsarsaker={avslagsarsaker}
       customVilkarOppfyltText={
         <FormattedMessage
-          id={customVilkarOppfyltText ? customVilkarOppfyltText.id : 'VilkarresultatMedOverstyringForm.ErOppfylt'}
+          id={customVilkarOppfyltText ? customVilkarOppfyltText.id : 'SoknadsfristVilkarForm.ErOppfylt'}
           values={
             customVilkarOppfyltText
               ? {
@@ -57,11 +61,7 @@ export const VilkarresultatMedBegrunnelse = ({
       }
       customVilkarIkkeOppfyltText={
         <FormattedMessage
-          id={
-            customVilkarIkkeOppfyltText
-              ? customVilkarOppfyltText.id
-              : 'VilkarresultatMedOverstyringForm.VilkarIkkeOppfylt'
-          }
+          id={customVilkarIkkeOppfyltText ? customVilkarOppfyltText.id : 'SoknadsfristVilkarForm.VilkarIkkeOppfylt'}
           values={
             customVilkarIkkeOppfyltText
               ? {
@@ -79,24 +79,33 @@ export const VilkarresultatMedBegrunnelse = ({
   </>
 );
 
-VilkarresultatMedBegrunnelse.defaultProps = {
+SoknadsfristVilkarBegrunnelse.defaultProps = {
   customVilkarIkkeOppfyltText: undefined,
   customVilkarOppfyltText: undefined,
   erVilkarOk: undefined,
   skalViseBegrunnelse: true,
 };
 
-VilkarresultatMedBegrunnelse.buildInitialValues = (avslagKode, aksjonspunkter, status, overstyringApKode, periode) => ({
+SoknadsfristVilkarBegrunnelse.buildInitialValues = (
+  avslagKode,
+  aksjonspunkter,
+  status,
+  overstyringApKode,
+  periode,
+  dokument,
+) => ({
   ...VilkarResultPicker.buildInitialValues(avslagKode, aksjonspunkter, status),
   ...VilkarBegrunnelse.buildInitialValues(periode),
+  ...VilkarDokument.buildInitialValues(dokument),
 });
 
-VilkarresultatMedBegrunnelse.transformValues = values => ({
+SoknadsfristVilkarBegrunnelse.transformValues = values => ({
   begrunnelse: values.begrunnelse,
+  dokument: values.dokument,
 });
 
-VilkarresultatMedBegrunnelse.validate = (
+SoknadsfristVilkarBegrunnelse.validate = (
   values: { erVilkarOk: boolean; avslagCode: string } = { erVilkarOk: false, avslagCode: '' },
 ) => VilkarResultPicker.validate(values.erVilkarOk, values.avslagCode);
 
-export default VilkarresultatMedBegrunnelse;
+export default SoknadsfristVilkarBegrunnelse;

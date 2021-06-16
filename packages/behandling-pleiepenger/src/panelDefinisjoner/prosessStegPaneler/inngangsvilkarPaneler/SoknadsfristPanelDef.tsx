@@ -1,6 +1,7 @@
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { ProsessStegPanelDef, ProsessStegOverstyringPanelDef } from '@k9-sak-web/behandling-felles';
+import { PleiepengerBehandlingApiKeys } from '../../../data/pleiepengerBehandlingApi';
 
 class SoknadsfristPanelDef extends ProsessStegPanelDef {
   overstyringDef = new ProsessStegOverstyringPanelDef(this);
@@ -14,6 +15,8 @@ class SoknadsfristPanelDef extends ProsessStegPanelDef {
   getAksjonspunktKoder = () => [aksjonspunktCodes.OVERSTYR_SOKNADSFRISTVILKAR];
 
   getVilkarKoder = () => [vilkarType.SOKNADSFRISTVILKARET];
+
+  getEndepunkter = () => [PleiepengerBehandlingApiKeys.SOKNADSFRIST_STATUS];
 
   getOverstyrVisningAvKomponent = ({ vilkarForSteg }) => vilkarForSteg.length > 0;
 
