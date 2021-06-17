@@ -118,6 +118,54 @@ describe('<KlageProsess>', () => {
         isActive: false,
         isDisabled: false,
         isFinished: false,
+        labelId: 'Behandlingspunkt.ResultatKlage',
+        type: 'default',
+        usePartialStatus: false,
+      },
+    ]);
+  });
+
+  it('skal vise alle aktuelle prosessSteg i meny (frisinn)', () => {
+    const wrapper = shallow(
+      <KlageProsess
+        data={{ aksjonspunkter, klageVurdering }}
+        fagsak={{ ...fagsak, sakstype: { kode: fagsakYtelseType.FRISINN, kodeverk: 'test' } }}
+        fagsakPerson={fagsakPerson}
+        behandling={behandling as Behandling}
+        alleKodeverk={{}}
+        arbeidsgiverOpplysningerPerId={{}}
+        alleBehandlinger={[]}
+        rettigheter={rettigheter}
+        valgtProsessSteg="default"
+        oppdaterBehandlingVersjon={sinon.spy()}
+        oppdaterProsessStegOgFaktaPanelIUrl={sinon.spy()}
+        opneSokeside={sinon.spy()}
+        setBehandling={sinon.spy()}
+      />,
+    );
+
+    const meny = wrapper.find(ProsessStegContainer);
+    expect(meny.prop('formaterteProsessStegPaneler')).toEqual([
+      {
+        isActive: false,
+        isDisabled: false,
+        isFinished: false,
+        labelId: 'Behandlingspunkt.FormkravKlageNFP',
+        type: 'default',
+        usePartialStatus: false,
+      },
+      {
+        isActive: false,
+        isDisabled: false,
+        isFinished: false,
+        labelId: 'Behandlingspunkt.CheckKlageNFP',
+        type: 'default',
+        usePartialStatus: false,
+      },
+      {
+        isActive: false,
+        isDisabled: false,
+        isFinished: false,
         labelId: 'Behandlingspunkt.FormkravKlageKA',
         type: 'default',
         usePartialStatus: false,
