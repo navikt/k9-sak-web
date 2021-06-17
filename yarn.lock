@@ -3160,10 +3160,10 @@
     "@navikt/k9-array-utils" "^0.0.1"
     "@navikt/k9-date-utils" "^0.0.5"
 
-"@navikt/k9-react-components@^0.0.21":
-  version "0.0.21"
-  resolved "https://npm.pkg.github.com/download/@navikt/k9-react-components/0.0.21/93087187e3b96eae5e6164946d5fe0d754cee645c2713a5ac8c7a055f7002aba#3759d8f9af27407036fd538000d45c9d09e94413"
-  integrity sha512-namCCxlmysyLWzqLWGTTTRUWjz0D5sWLyjly7yfKaLZvWT1zWD/9qfSsGYSyckczi5Ygh1us5UP/7nOo1e0acA==
+"@navikt/k9-react-components@^0.1.2":
+  version "0.1.2"
+  resolved "https://npm.pkg.github.com/download/@navikt/k9-react-components/0.1.2/a3ca96c4ccab7a8538bebdf6431fc005c60e2b7184e8fe725afe725c4e60ae31#df80da7888c75ca567d5ba608d67061dcc041e27"
+  integrity sha512-XDCgWLTir85ZRhKTxJQz8HxLRoJAhXLEimv8SS/ALHLyzjj/fKRRtA9tiLVZ/pDRNlBeL2CVjiWZRMBJMaKTSw==
   dependencies:
     "@navikt/k9-bem-utils" "^1.0.1"
     "@navikt/k9-period-utils" "^0.0.7"
