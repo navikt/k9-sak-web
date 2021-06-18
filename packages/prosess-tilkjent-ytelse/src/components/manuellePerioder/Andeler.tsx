@@ -28,6 +28,7 @@ interface OwnProps {
 
 const headerTextCodes = [
   'TilkjentYtelse.NyPeriode.Arbeidsforhold',
+  'TilkjentYtelse.NyPeriode.TilSoker',
   'TilkjentYtelse.NyPeriode.Refusjon',
   'TilkjentYtelse.NyPeriode.Inntektskategori',
   'TilkjentYtelse.NyPeriode.Ubetalingsgrad',
@@ -57,6 +58,9 @@ const Andeler: FC<OwnProps & WrappedComponentProps> = ({
             <tr>
               <TableColumn>
                 <Normaltekst>{label}</Normaltekst>
+              </TableColumn>
+              <TableColumn>
+                <Normaltekst>{andel.tilSoker}</Normaltekst>
               </TableColumn>
               <TableColumn>
                 <Normaltekst>{andel.refusjon}</Normaltekst>

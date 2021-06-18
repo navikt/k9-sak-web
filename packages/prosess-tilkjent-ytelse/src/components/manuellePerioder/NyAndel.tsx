@@ -85,6 +85,14 @@ export const NyAndel: FC<OwnProps & WrappedComponentProps> = ({
           <FlexRow key={periodeElementFieldId}>
             <FlexColumn>
               <InputField
+                label="Til søker"
+                name={`${periodeElementFieldId}.tilSoker`}
+                validate={[required, minValue0, maxValue3999, hasValidDecimal]}
+                format={value => value}
+              />
+            </FlexColumn>
+            <FlexColumn>
+              <InputField
                 label="Refusjon"
                 name={`${periodeElementFieldId}.refusjon`}
                 validate={[required, minValue0, maxValue3999, hasValidDecimal]}

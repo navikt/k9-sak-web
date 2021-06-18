@@ -11,6 +11,7 @@ import {
   ArbeidsforholdV2,
   ArbeidsgiverOpplysningerPerId,
   KodeverkMedNavn,
+  Periode,
   Vilkar,
 } from '@k9-sak-web/types';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
@@ -29,6 +30,7 @@ interface OwnProps {
   behandlingId: number;
   behandlingVersjon: number;
   alleKodeverk: { [key: string]: KodeverkMedNavn[] };
+  gyldigPeriode: Periode;
   behandlingStatus: Kodeverk;
   arbeidsforhold: ArbeidsforholdV2[];
   arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysningerPerId;
@@ -45,6 +47,7 @@ export const TilkjentYtelseForm: React.FC<OwnProps & InjectedFormProps> = ({
   behandlingId,
   behandlingVersjon,
   alleKodeverk,
+  gyldigPeriode,
   arbeidsforhold,
   arbeidsgiverOpplysningerPerId,
   vilkar,
@@ -75,6 +78,7 @@ export const TilkjentYtelseForm: React.FC<OwnProps & InjectedFormProps> = ({
         behandlingId={behandlingId}
         behandlingVersjon={behandlingVersjon}
         alleKodeverk={alleKodeverk}
+        gyldigPeriode={gyldigPeriode}
         // @ts-ignore
         arbeidsforhold={arbeidsforhold}
         arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
