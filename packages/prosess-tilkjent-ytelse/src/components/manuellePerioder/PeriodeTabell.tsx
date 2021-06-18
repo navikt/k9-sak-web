@@ -38,7 +38,7 @@ interface OwnProps {
   readOnly: boolean;
   behandlingFormPrefix: string;
   perioder?: any[];
-  gyldigPeriode: Periode;
+  gyldigPeriode?: Periode;
   openForms: boolean;
   reduxFormChange: (...args: any[]) => any;
   reduxFormReset: (...args: any[]) => any;

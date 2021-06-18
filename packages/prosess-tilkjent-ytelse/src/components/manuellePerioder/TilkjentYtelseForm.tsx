@@ -30,7 +30,7 @@ interface OwnProps {
   behandlingId: number;
   behandlingVersjon: number;
   alleKodeverk: { [key: string]: KodeverkMedNavn[] };
-  gyldigPeriode: Periode;
+  gyldigPeriode?: Periode;
   behandlingStatus: Kodeverk;
   arbeidsforhold: ArbeidsforholdV2[];
   arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysningerPerId;

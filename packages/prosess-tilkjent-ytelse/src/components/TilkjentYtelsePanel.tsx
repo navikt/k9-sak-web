@@ -51,7 +51,7 @@ interface PureOwnProps {
   personopplysninger: Personopplysninger;
   soknad: Soknad;
   fagsakYtelseTypeKode: string;
-  gyldigPeriode: Periode;
+  gyldigPeriode?: Periode;
   aksjonspunkter: Aksjonspunkt[];
   alleKodeverk: { [key: string]: KodeverkMedNavn[] };
   readOnly: boolean;

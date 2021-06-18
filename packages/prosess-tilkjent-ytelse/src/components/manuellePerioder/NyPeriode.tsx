@@ -17,7 +17,7 @@ interface OwnProps {
   newPeriodeResetCallback: (values: any) => any;
   newArbeidsforholdCallback: (values: any) => void;
   andeler: any[];
-  gyldigPeriode: Periode;
+  gyldigPeriode?: Periode;
   nyPeriode: Periode;
   nyPeriodeDisabledDaysFom: string;
   alleKodeverk: { [key: string]: KodeverkMedNavn[] };
