@@ -42,6 +42,7 @@ const KartleggePropertyTilUtvidetRettMikrofrontendKomponent = (
           aksjonspunkt,
           skalVilkarsUtfallVises,
           submitCallback,
+          soknad,
         });
 
       case FagsakYtelseType.OMSORGSPENGER_MIDLERTIDIG_ALENE:

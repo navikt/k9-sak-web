@@ -28,6 +28,7 @@ const formatereLesemodusObjekt = (vilkar: Vilkar, aksjonspunkt: Aksjonspunkt, st
       begrunnelse: aksjonspunkt.begrunnelse,
       vilkarOppfylt: status === vilkarUtfallType.OPPFYLT,
       fraDato: vilkar.perioder[0].periode.fom,
+      tilDato: vilkar.perioder[0].periode.tom,
       avslagsArsakErPeriodeErIkkeOverSeksMån:
         vilkar.perioder[0]?.avslagKode === AvslagskoderMidlertidigAlene.VARIGHET_UNDER_SEKS_MÅN,
     } as AleneOmOmsorgenAksjonspunktObjekt;
@@ -35,8 +36,9 @@ const formatereLesemodusObjekt = (vilkar: Vilkar, aksjonspunkt: Aksjonspunkt, st
   return {
     begrunnelse: '',
     vilkarOppfylt: false,
-    avslagsArsakErIkkeRiskioFraFravaer: false,
+    avslagsArsakErPeriodeErIkkeOverSeksMån: false,
     fraDato: '',
+    tilDato: '',
   } as AleneOmOmsorgenAksjonspunktObjekt;
 };
 
@@ -45,13 +47,14 @@ const formatereLosAksjonspunktObjekt = (
   begrunnelse: string,
   erVilkarOk: boolean,
   fraDato: string,
+  tilDato: string,
 ) => ({
   kode: aksjonspunktKode,
   begrunnelse,
   erVilkarOk,
   periode: {
     fom: fraDato,
-    tom: '',
+    tom: tilDato,
   },
 });
 
@@ -80,6 +83,7 @@ const AleneOmOmsorgenObjektTilMikrofrontend = ({
     lesemodus,
     aksjonspunktLost,
     fraDatoFraSoknad: soknad?.søknadsperiode.fom,
+    tomDato: '2025-12-31',
     vedtakFattetVilkarOppfylt: skalVilkarsUtfallVises,
     informasjonOmVilkar: generereInfoForVurdertVilkar(
       skalVilkarsUtfallVises,
@@ -88,9 +92,9 @@ const AleneOmOmsorgenObjektTilMikrofrontend = ({
       'Utvidet Rett',
     ),
     informasjonTilLesemodus: formatereLesemodusObjekt(vilkarKnyttetTilAksjonspunkt, aksjonspunkt, status),
-    losAksjonspunkt: ({ begrunnelse, vilkarOppfylt, fraDato }) => {
+    losAksjonspunkt: ({ begrunnelse, vilkarOppfylt, fraDato, tilDato }) => {
       submitCallback([
-        formatereLosAksjonspunktObjekt(aksjonspunkt.definisjon.kode, begrunnelse, vilkarOppfylt, fraDato),
+        formatereLosAksjonspunktObjekt(aksjonspunkt.definisjon.kode, begrunnelse, vilkarOppfylt, fraDato, tilDato),
       ]);
     },
     formState: FormState,
