@@ -23,9 +23,9 @@ const initializeUtvidetRettVilkar = (
 
 const hentVersjonInformasjon = () => {
   const produksjonsVersjon = {
-    versjon: '2.0.0',
-    jsIntegrity: 'sha384-ReIyiqOV9PXxKcq4qrZfXUR6Vo+91Sq91HVN4vgennfoUX9YmP+5fzMl04ARgLZt',
-    stylesheetIntegrity: 'sha384-uHiStnPr4IBhdFpEf302JpS6rkdApNMTNFEeSrdvH6pO6SECF9ftxSm37xftCF7O',
+    versjon: '2.0.3',
+    jsIntegrity: 'sha384-CGmeSJmx0S1O01lIOT2yZ2lcIvwEUPyud8xxVuUomL7CwUh9JcAjkrym8ZerExsX',
+    stylesheetIntegrity: 'sha384-3iUtet323prriMT769mdhUmWxrtoD2sTbqMwOZV0tKNwjCvRz+tNgmCtOq2Poocv',
   };
   const preprodVersjon = {
     versjon: '2.0.3',
