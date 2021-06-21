@@ -19,14 +19,14 @@ const initializeOmsorgenForVilkar = (elementId, { submitCallback, behandling, sa
 
 const hentVersjonInformasjon = () => {
   const produksjonsVersjon = {
-    versjon: '2.0.2',
-    jsIntegrity: 'sha384-+cZfw4ZGWVST8Ep+Z7bY2u0T8iz/g9lJUyiEyx4fy+cWACvS4qfSyO+fQFf8NQMK',
-    stylesheetIntegrity: 'sha384-6V964A3+pMaG6T3NoiAeFSGsgwxwDKVz1+XjggJ9aL/bqtgwS82TQAA2JH/+AYVN',
-  };
-  const preprodVersjon = {
     versjon: '2.0.3',
     jsIntegrity: 'sha384-CGmeSJmx0S1O01lIOT2yZ2lcIvwEUPyud8xxVuUomL7CwUh9JcAjkrym8ZerExsX',
     stylesheetIntegrity: 'sha384-3iUtet323prriMT769mdhUmWxrtoD2sTbqMwOZV0tKNwjCvRz+tNgmCtOq2Poocv',
+  };
+  const preprodVersjon = {
+    versjon: '2.0.4',
+    jsIntegrity: 'sha384-u2n/v/iDKvxXECxSD8n3Z0QeFfu74zEFzsoNGM3egZ4XRGRj9I0gfOY/E6zgPS68',
+    stylesheetIntegrity: 'sha384-zrAzgRd84XQvBESFpgMsjglo0FQbW2KE2+3r0qio1lA6y5G/CHD8JWz938HuirHQ',
   };
   return sjekkHvisErIProduksjon() ? produksjonsVersjon : preprodVersjon;
 };
