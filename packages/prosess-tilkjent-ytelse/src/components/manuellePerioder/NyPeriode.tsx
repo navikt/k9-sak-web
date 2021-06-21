@@ -8,21 +8,17 @@ import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 import { calcDaysAndWeeks, safeJSONParse, guid, hasValidPeriod, required } from '@fpsak-frontend/utils';
 import { DatepickerField, behandlingForm, behandlingFormValueSelector } from '@fpsak-frontend/form';
 import { FlexColumn, FlexContainer, FlexRow, VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { KodeverkMedNavn, ArbeidsforholdV2, ArbeidsgiverOpplysningerPerId, Vilkar } from '@k9-sak-web/types';
+import { KodeverkMedNavn, Periode, ArbeidsforholdV2, ArbeidsgiverOpplysningerPerId, Vilkar } from '@k9-sak-web/types';
 import NyAndel from './NyAndel';
 
 import styles from './periode.less';
-
-type NyPeriodeType = {
-  fom: string;
-  tom: string;
-};
 
 interface OwnProps {
   newPeriodeResetCallback: (values: any) => any;
   newArbeidsforholdCallback: (values: any) => void;
   andeler: any[];
-  nyPeriode: NyPeriodeType;
+  gyldigPeriode?: Periode;
+  nyPeriode: Periode;
   nyPeriodeDisabledDaysFom: string;
   alleKodeverk: { [key: string]: KodeverkMedNavn[] };
   arbeidsforhold: ArbeidsforholdV2[];
@@ -40,6 +36,7 @@ export const TilkjentYtelseNyPeriode: FC<OwnProps & InjectedFormProps> = ({
   readOnly,
   alleKodeverk,
   vilkar,
+  gyldigPeriode,
   behandlingId,
   behandlingVersjon,
   arbeidsforhold,
@@ -68,8 +65,8 @@ export const TilkjentYtelseNyPeriode: FC<OwnProps & InjectedFormProps> = ({
                     name="fom"
                     label={{ id: 'TilkjentYtelse.NyPeriode.Fom' }}
                     disabledDays={{
-                      before: moment(vilkårsPeriode.fom).toDate(),
-                      after: moment(vilkårsPeriode.tom).toDate(),
+                      before: moment((gyldigPeriode || vilkårsPeriode).fom).toDate(),
+                      after: moment((gyldigPeriode || vilkårsPeriode).tom).toDate(),
                     }}
                   />
                 </FlexColumn>
@@ -78,8 +75,8 @@ export const TilkjentYtelseNyPeriode: FC<OwnProps & InjectedFormProps> = ({
                     name="tom"
                     label={{ id: 'TilkjentYtelse.NyPeriode.Tom' }}
                     disabledDays={{
-                      before: moment(vilkårsPeriode.fom).toDate(),
-                      after: moment(vilkårsPeriode.tom).toDate(),
+                      before: moment((gyldigPeriode || vilkårsPeriode).fom).toDate(),
+                      after: moment((gyldigPeriode || vilkårsPeriode).tom).toDate(),
                     }}
                   />
                 </FlexColumn>
@@ -159,7 +156,7 @@ const transformValues = (values: any) => ({
         kodeverk: 'INNTEKTSKATEGORI',
       },
       refusjon: andel.refusjon,
-      tilSoker: null,
+      tilSoker: andel.tilSoker,
       // OPPTJENING_AKTIVITET_TYPE
       arbeidsgiver: arbeidsgiverValues,
       arbeidsgiverOrgnr: arbeidsgiverValues.identifikator,
