@@ -5,7 +5,6 @@ export interface VilkarKroniskSyktBarnProps {
   behandlingsID: string;
   vedtakFattetVilkarOppfylt: boolean;
   soknadsdato: string;
-  tomDato: string;
   aksjonspunktLost: boolean;
   informasjonOmVilkar?: InformasjonOmVurdertVilkar;
   lesemodus: boolean;
