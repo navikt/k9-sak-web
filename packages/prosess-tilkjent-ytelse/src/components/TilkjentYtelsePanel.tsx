@@ -10,6 +10,7 @@ import {
   BeregningsresultatPeriode,
   FamilieHendelse,
   KodeverkMedNavn,
+  Periode,
   Personopplysninger,
   ArbeidsforholdV2,
   ArbeidsgiverOpplysningerPerId,
@@ -50,6 +51,7 @@ interface PureOwnProps {
   personopplysninger: Personopplysninger;
   soknad: Soknad;
   fagsakYtelseTypeKode: string;
+  gyldigPeriode?: Periode;
   aksjonspunkter: Aksjonspunkt[];
   alleKodeverk: { [key: string]: KodeverkMedNavn[] };
   readOnly: boolean;
@@ -71,6 +73,7 @@ export const TilkjentYtelsePanelImpl: FC<PureOwnProps & MappedOwnProps> = ({
   readOnlySubmitButton,
   behandlingId,
   behandlingVersjon,
+  gyldigPeriode,
   aksjonspunkter,
   arbeidsforhold,
   readOnly,
@@ -112,6 +115,7 @@ export const TilkjentYtelsePanelImpl: FC<PureOwnProps & MappedOwnProps> = ({
           arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
           aksjonspunkter={aksjonspunkter}
           alleKodeverk={alleKodeverk}
+          gyldigPeriode={gyldigPeriode}
           readOnly={readOnly}
           submitCallback={submitCallback}
           readOnlySubmitButton={readOnlySubmitButton}
