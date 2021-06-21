@@ -4,11 +4,14 @@ import VedtakKlageProsessIndex from '@fpsak-frontend/prosess-vedtak-klage';
 import { prosessStegCodes } from '@k9-sak-web/konstanter';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { ProsessStegDef, ProsessStegPanelDef } from '@k9-sak-web/behandling-felles';
+import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 
 class PanelDef extends ProsessStegPanelDef {
   getKomponent = props => <VedtakKlageProsessIndex {...props} />;
 
   getOverstyrVisningAvKomponent = () => true;
+
+  getOverstyrtStatus = ({ behandling }) => (behandling.avsluttet ? vilkarUtfallType.OPPFYLT : null);
 
   getAksjonspunktKoder = () => [
     aksjonspunktCodes.FORESLA_VEDTAK,

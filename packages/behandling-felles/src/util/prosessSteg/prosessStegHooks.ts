@@ -71,6 +71,7 @@ const useProsessStegPaneler = (
         urlKode === prosessStegCodes.AVREGNING ||
         urlKode === prosessStegCodes.SIMULERING ||
         urlKode === prosessStegCodes.VEDTAK ||
+        urlKode === prosessStegCodes.KLAGE_RESULTAT ||
         (fagsak.sakstype.kode === fagsakYtelseType.PLEIEPENGER && urlKode === prosessStegCodes.UTTAK)
       ) {
         return panel;
@@ -94,10 +95,11 @@ const useProsessStegPaneler = (
   );
 
   const urlCode = valgtPanel ? valgtPanel.getUrlKode() : undefined;
-  const formaterteProsessStegPaneler = useMemo(
-    () => formaterPanelerForProsessmeny(prosessStegPaneler, urlCode),
-    [behandling.versjon, urlCode, overstyrteAksjonspunktKoder],
-  );
+  const formaterteProsessStegPaneler = useMemo(() => formaterPanelerForProsessmeny(prosessStegPaneler, urlCode), [
+    behandling.versjon,
+    urlCode,
+    overstyrteAksjonspunktKoder,
+  ]);
 
   return [prosessStegPaneler, valgtPanel, formaterteProsessStegPaneler];
 };
