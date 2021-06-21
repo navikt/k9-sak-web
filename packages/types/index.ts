@@ -14,6 +14,7 @@ export { default as UttaksresultatPeriode } from './src/uttaksresultatPeriodeTsT
 export { default as Vilkar } from './src/vilkarTsType';
 export { default as Vilkarperiode } from './src/vilkarperiode';
 export { default as Ytelsefordeling } from './src/ytelsefordelingTsType';
+export { default as Periode } from './src/periodeTsType';
 export { FamilieHendelse, FamilieHendelseSamling } from './src/familieHendelseTsType';
 export { default as Fagsak } from './src/fagsakTsType';
 export { default as SubmitCallback } from './src/submitCallback';
