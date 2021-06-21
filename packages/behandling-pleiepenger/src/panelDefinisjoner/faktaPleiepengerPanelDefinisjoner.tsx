@@ -6,6 +6,7 @@ import MedisinskVilkarFaktaPanelDef2 from './faktaPaneler/MedisinskVilkarFaktaPa
 import OmsorgenForFaktaPanelDef from './faktaPaneler/OmsorgenForFaktaPanelDef';
 import InntektsmeldingFaktaPanelDef from './faktaPaneler/InntektsmeldingFaktaPanelDef';
 import EtablertTilsynFaktaPanelDef from './faktaPaneler/EtablertTilsynFaktaPanelDef';
+import FordelBeregningPanelDef from './faktaPaneler/FordelBeregningPanelDef';
 
 const faktaPanelDefinisjoner = [
   new ArbeidsforholdFaktaPanelDef(),
@@ -16,6 +17,7 @@ const faktaPanelDefinisjoner = [
   new OpptjeningsvilkaretFaktaPanelDef(),
   new InntektsmeldingFaktaPanelDef(),
   new BeregningFaktaPanelDef(),
+  new FordelBeregningPanelDef(),
 ];
 
 export default faktaPanelDefinisjoner;
