@@ -74,34 +74,40 @@ const KroniskSykObjektTilMikrofrontend = ({
   skalVilkarsUtfallVises,
   submitCallback,
   soknad,
-}: OwnProps) => ({
-  visKomponent: UtvidetRettMikrofrontendVisning.VILKAR_KRONISK_SYKT_BARN,
-  props: {
-    behandlingsID,
-    aksjonspunktLost,
-    lesemodus,
-    soknadsdato: soknad.soknadsdato,
-    informasjonTilLesemodus: formatereLesemodusObjektForKroniskSyk(vilkarKnyttetTilAksjonspunkt, aksjonspunkt),
-    vedtakFattetVilkarOppfylt: skalVilkarsUtfallVises,
-    informasjonOmVilkar: generereInfoForVurdertVilkar(
-      skalVilkarsUtfallVises,
-      vilkarKnyttetTilAksjonspunkt,
-      aksjonspunkt.begrunnelse,
-      'Utvidet Rett',
-    ),
-    losAksjonspunkt: (harDokumentasjonOgFravaerRisiko, begrunnelse, avslagsArsakErIkkeRiskioFraFravaer, fraDato) => {
-      submitCallback([
-        formatereLosAksjonspunktObjektForKroniskSyk(
-          aksjonspunkt.definisjon.kode,
-          begrunnelse,
-          harDokumentasjonOgFravaerRisiko,
-          avslagsArsakErIkkeRiskioFraFravaer,
-          fraDato,
-        ),
-      ]);
-    },
-    formState: FormState,
-  } as VilkarKroniskSyktBarnProps,
-});
+}: OwnProps) => {
+  const angittBarn = soknad.angittePersoner.filter(person => person.rolle === 'BARN');
+  const barnetsFodselsdato = new Date(angittBarn[0].fødselsdato);
+  const årBarnetFyller18 = `${barnetsFodselsdato.getFullYear() + 18}-12-31`;
+  return {
+    visKomponent: UtvidetRettMikrofrontendVisning.VILKAR_KRONISK_SYKT_BARN,
+    props: {
+      behandlingsID,
+      aksjonspunktLost,
+      lesemodus,
+      soknadsdato: soknad.soknadsdato,
+      tomDato: årBarnetFyller18,
+      informasjonTilLesemodus: formatereLesemodusObjektForKroniskSyk(vilkarKnyttetTilAksjonspunkt, aksjonspunkt),
+      vedtakFattetVilkarOppfylt: skalVilkarsUtfallVises,
+      informasjonOmVilkar: generereInfoForVurdertVilkar(
+        skalVilkarsUtfallVises,
+        vilkarKnyttetTilAksjonspunkt,
+        aksjonspunkt.begrunnelse,
+        'Utvidet Rett',
+      ),
+      losAksjonspunkt: (harDokumentasjonOgFravaerRisiko, begrunnelse, avslagsArsakErIkkeRiskioFraFravaer, fraDato) => {
+        submitCallback([
+          formatereLosAksjonspunktObjektForKroniskSyk(
+            aksjonspunkt.definisjon.kode,
+            begrunnelse,
+            harDokumentasjonOgFravaerRisiko,
+            avslagsArsakErIkkeRiskioFraFravaer,
+            fraDato,
+          ),
+        ]);
+      },
+      formState: FormState,
+    } as VilkarKroniskSyktBarnProps,
+  };
+};
 
 export default KroniskSykObjektTilMikrofrontend;

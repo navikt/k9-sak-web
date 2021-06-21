@@ -76,28 +76,33 @@ const AleneOmOmsorgenObjektTilMikrofrontend = ({
   skalVilkarsUtfallVises,
   submitCallback,
   soknad,
-}: OwnProps) => ({
-  visKomponent: UtvidetRettMikrofrontendVisning.VILKAR_ALENE_OM_OMSORGEN,
-  props: {
-    behandlingsID,
-    lesemodus,
-    aksjonspunktLost,
-    fraDatoFraSoknad: soknad?.søknadsperiode.fom,
-    tomDato: '2025-12-31',
-    vedtakFattetVilkarOppfylt: skalVilkarsUtfallVises,
-    informasjonOmVilkar: generereInfoForVurdertVilkar(
-      skalVilkarsUtfallVises,
-      vilkarKnyttetTilAksjonspunkt,
-      aksjonspunkt.begrunnelse,
-      'Utvidet Rett',
-    ),
-    informasjonTilLesemodus: formatereLesemodusObjekt(vilkarKnyttetTilAksjonspunkt, aksjonspunkt, status),
-    losAksjonspunkt: ({ begrunnelse, vilkarOppfylt, fraDato, tilDato }) => {
-      submitCallback([
-        formatereLosAksjonspunktObjekt(aksjonspunkt.definisjon.kode, begrunnelse, vilkarOppfylt, fraDato, tilDato),
-      ]);
-    },
-    formState: FormState,
-  } as AleneOmOmsorgenProps,
-});
+}: OwnProps) => {
+  const angittBarn = soknad.angittePersoner.filter(person => person.rolle === 'BARN');
+  const barnetsFodselsdato = new Date(angittBarn[0].fødselsdato);
+  const årBarnetFyller13 = `${barnetsFodselsdato.getFullYear() + 13}-12-31`;
+  return {
+    visKomponent: UtvidetRettMikrofrontendVisning.VILKAR_ALENE_OM_OMSORGEN,
+    props: {
+      behandlingsID,
+      lesemodus,
+      aksjonspunktLost,
+      fraDatoFraSoknad: soknad?.søknadsperiode.fom,
+      tomDato: årBarnetFyller13,
+      vedtakFattetVilkarOppfylt: skalVilkarsUtfallVises,
+      informasjonOmVilkar: generereInfoForVurdertVilkar(
+        skalVilkarsUtfallVises,
+        vilkarKnyttetTilAksjonspunkt,
+        aksjonspunkt.begrunnelse,
+        'Utvidet Rett',
+      ),
+      informasjonTilLesemodus: formatereLesemodusObjekt(vilkarKnyttetTilAksjonspunkt, aksjonspunkt, status),
+      losAksjonspunkt: ({ begrunnelse, vilkarOppfylt, fraDato, tilDato }) => {
+        submitCallback([
+          formatereLosAksjonspunktObjekt(aksjonspunkt.definisjon.kode, begrunnelse, vilkarOppfylt, fraDato, tilDato),
+        ]);
+      },
+      formState: FormState,
+    } as AleneOmOmsorgenProps,
+  };
+};
 export default AleneOmOmsorgenObjektTilMikrofrontend;
