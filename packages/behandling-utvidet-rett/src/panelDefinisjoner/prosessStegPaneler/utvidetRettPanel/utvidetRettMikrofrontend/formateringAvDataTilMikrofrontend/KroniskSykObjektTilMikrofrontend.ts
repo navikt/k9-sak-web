@@ -27,6 +27,7 @@ const formatereLosAksjonspunktObjektForKroniskSyk = (
   erVilkarOk: boolean,
   avslagsArsakErIkkeRiskioFraFravaer: boolean,
   fraDato: string,
+  vilkar: Vilkar,
 ) => {
   const losAksjonspunktObjekt = {
     kode: aksjonspunktKode,
@@ -34,7 +35,10 @@ const formatereLosAksjonspunktObjektForKroniskSyk = (
     erVilkarOk,
     periode: {
       fom: fraDato,
-      tom: '',
+      tom:
+        typeof vilkar.perioder[0]?.periode.tom !== 'undefined' && vilkar.perioder[0]?.periode.tom !== null
+          ? vilkar.perioder[0]?.periode.tom
+          : '',
     },
   };
 
@@ -97,6 +101,7 @@ const KroniskSykObjektTilMikrofrontend = ({
           harDokumentasjonOgFravaerRisiko,
           avslagsArsakErIkkeRiskioFraFravaer,
           fraDato,
+          vilkarKnyttetTilAksjonspunkt,
         ),
       ]);
     },
