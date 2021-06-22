@@ -1,34 +1,27 @@
 import React, { FC } from 'react';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
-import moment from 'moment';
 import { FieldArray, InjectedFormProps } from 'redux-form';
 import { Element } from 'nav-frontend-typografi';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 import { calcDaysAndWeeks, safeJSONParse, guid, hasValidPeriod, required } from '@fpsak-frontend/utils';
 import { DatepickerField, behandlingForm, behandlingFormValueSelector } from '@fpsak-frontend/form';
 import { FlexColumn, FlexContainer, FlexRow, VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { KodeverkMedNavn, ArbeidsforholdV2, ArbeidsgiverOpplysningerPerId, Vilkar } from '@k9-sak-web/types';
+import { KodeverkMedNavn, Periode, ArbeidsforholdV2, ArbeidsgiverOpplysningerPerId } from '@k9-sak-web/types';
 import NyAndel from './NyAndel';
 
 import styles from './periode.less';
-
-type NyPeriodeType = {
-  fom: string;
-  tom: string;
-};
 
 interface OwnProps {
   newPeriodeResetCallback: (values: any) => any;
   newArbeidsforholdCallback: (values: any) => void;
   andeler: any[];
-  nyPeriode: NyPeriodeType;
+  nyPeriode: Periode;
   nyPeriodeDisabledDaysFom: string;
   alleKodeverk: { [key: string]: KodeverkMedNavn[] };
   arbeidsforhold: ArbeidsforholdV2[];
   arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysningerPerId;
   readOnly: boolean;
-  vilkar: Vilkar[];
   behandlingId: number;
   behandlingVersjon: number;
 }
@@ -39,7 +32,6 @@ export const TilkjentYtelseNyPeriode: FC<OwnProps & InjectedFormProps> = ({
   nyPeriode,
   readOnly,
   alleKodeverk,
-  vilkar,
   behandlingId,
   behandlingVersjon,
   arbeidsforhold,
@@ -47,7 +39,6 @@ export const TilkjentYtelseNyPeriode: FC<OwnProps & InjectedFormProps> = ({
   ...formProps
 }) => {
   const numberOfDaysAndWeeks = calcDaysAndWeeks(nyPeriode.fom, nyPeriode.tom);
-  const vilkårsPeriode = vilkar[0].perioder[0].periode;
   return (
     <div className={styles.periodeContainer}>
       <div className={styles.periodeType}>
@@ -64,24 +55,10 @@ export const TilkjentYtelseNyPeriode: FC<OwnProps & InjectedFormProps> = ({
             <FlexColumn>
               <FlexRow>
                 <FlexColumn>
-                  <DatepickerField
-                    name="fom"
-                    label={{ id: 'TilkjentYtelse.NyPeriode.Fom' }}
-                    disabledDays={{
-                      before: moment(vilkårsPeriode.fom).toDate(),
-                      after: moment(vilkårsPeriode.tom).toDate(),
-                    }}
-                  />
+                  <DatepickerField name="fom" label={{ id: 'TilkjentYtelse.NyPeriode.Fom' }} />
                 </FlexColumn>
                 <FlexColumn>
-                  <DatepickerField
-                    name="tom"
-                    label={{ id: 'TilkjentYtelse.NyPeriode.Tom' }}
-                    disabledDays={{
-                      before: moment(vilkårsPeriode.fom).toDate(),
-                      after: moment(vilkårsPeriode.tom).toDate(),
-                    }}
-                  />
+                  <DatepickerField name="tom" label={{ id: 'TilkjentYtelse.NyPeriode.Tom' }} />
                 </FlexColumn>
                 <FlexColumn className={styles.suffix}>
                   <div id="antallDager">
@@ -159,7 +136,7 @@ const transformValues = (values: any) => ({
         kodeverk: 'INNTEKTSKATEGORI',
       },
       refusjon: andel.refusjon,
-      tilSoker: null,
+      tilSoker: andel.tilSoker,
       // OPPTJENING_AKTIVITET_TYPE
       arbeidsgiver: arbeidsgiverValues,
       arbeidsgiverOrgnr: arbeidsgiverValues.identifikator,

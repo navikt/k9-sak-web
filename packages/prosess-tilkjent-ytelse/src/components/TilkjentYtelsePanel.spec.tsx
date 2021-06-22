@@ -56,7 +56,6 @@ describe('<TilkjentYtelsePanelImpl>', () => {
         fagsakYtelseTypeKode=""
         arbeidsforhold={arbeidsforhold}
         arbeidsgiverOpplysningerPerId={{}}
-        vilkar={[]}
       />,
     );
     expect(wrapper.find(Undertittel)).toHaveLength(1);
@@ -83,7 +82,6 @@ describe('<TilkjentYtelsePanelImpl>', () => {
         fagsakYtelseTypeKode=""
         arbeidsforhold={arbeidsforhold}
         arbeidsgiverOpplysningerPerId={{}}
-        vilkar={[]}
       />,
     );
     expect(wrapper.find(Tilbaketrekkpanel)).toHaveLength(1);

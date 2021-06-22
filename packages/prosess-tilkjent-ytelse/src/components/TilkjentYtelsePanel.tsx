@@ -14,7 +14,6 @@ import {
   ArbeidsforholdV2,
   ArbeidsgiverOpplysningerPerId,
   Soknad,
-  Vilkar,
 } from '@k9-sak-web/types';
 import { DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils';
 
@@ -57,7 +56,6 @@ interface PureOwnProps {
   readOnlySubmitButton: boolean;
   arbeidsforhold: ArbeidsforholdV2[];
   arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysningerPerId;
-  vilkar: Vilkar[];
 }
 
 interface MappedOwnProps {
@@ -76,7 +74,6 @@ export const TilkjentYtelsePanelImpl: FC<PureOwnProps & MappedOwnProps> = ({
   readOnly,
   alleKodeverk,
   arbeidsgiverOpplysningerPerId,
-  vilkar,
 }) => {
   const opphoersdato = beregningresultat?.opphoersdato;
 
@@ -115,7 +112,6 @@ export const TilkjentYtelsePanelImpl: FC<PureOwnProps & MappedOwnProps> = ({
           readOnly={readOnly}
           submitCallback={submitCallback}
           readOnlySubmitButton={readOnlySubmitButton}
-          vilkar={vilkar}
         />
       )}
 

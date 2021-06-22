@@ -8,6 +8,7 @@ import {
   VilkarKroniskSyktBarnProps,
 } from '../../../../../types/utvidetRettMikrofrontend/VilkarKroniskSyktBarnProps';
 import AvslagskoderKroniskSyk from '../../../../../types/utvidetRettMikrofrontend/AvslagskoderKroniskSyk';
+import UtvidetRettSoknad from '../../../../../types/UtvidetRettSoknad';
 
 interface OwnProps {
   behandlingsID: string;
@@ -17,6 +18,7 @@ interface OwnProps {
   aksjonspunkt: Aksjonspunkt;
   skalVilkarsUtfallVises: boolean;
   submitCallback;
+  soknad: UtvidetRettSoknad;
 }
 
 const formatereLosAksjonspunktObjektForKroniskSyk = (
@@ -24,11 +26,20 @@ const formatereLosAksjonspunktObjektForKroniskSyk = (
   begrunnelse: string,
   erVilkarOk: boolean,
   avslagsArsakErIkkeRiskioFraFravaer: boolean,
+  fraDato: string,
+  vilkar: Vilkar,
 ) => {
   const losAksjonspunktObjekt = {
     kode: aksjonspunktKode,
     begrunnelse,
     erVilkarOk,
+    periode: {
+      fom: fraDato,
+      tom:
+        typeof vilkar.perioder[0]?.periode.tom !== 'undefined' && vilkar.perioder[0]?.periode.tom !== null
+          ? vilkar.perioder[0]?.periode.tom
+          : '',
+    },
   };
 
   if (!erVilkarOk) {
@@ -47,13 +58,15 @@ const formatereLesemodusObjektForKroniskSyk = (vilkar: Vilkar, aksjonspunkt: Aks
       vilkarOppfylt: vilkar.perioder[0].vilkarStatus.kode === vilkarUtfallType.OPPFYLT,
       avslagsArsakErIkkeRiskioFraFravaer:
         vilkar.perioder[0]?.avslagKode === AvslagskoderKroniskSyk.IKKE_OKT_RISIKO_FRA_FRAVAER,
+      fraDato: vilkar.perioder[0].periode.fom,
     } as InformasjonTilLesemodusKroniskSyk;
   }
   return {
     begrunnelse: '',
     vilkarOppfylt: false,
     avslagsArsakErIkkeRiskioFraFravaer: false,
-  };
+    fraDato: '',
+  } as InformasjonTilLesemodusKroniskSyk;
 };
 
 const KroniskSykObjektTilMikrofrontend = ({
@@ -64,12 +77,14 @@ const KroniskSykObjektTilMikrofrontend = ({
   aksjonspunkt,
   skalVilkarsUtfallVises,
   submitCallback,
+  soknad,
 }: OwnProps) => ({
   visKomponent: UtvidetRettMikrofrontendVisning.VILKAR_KRONISK_SYKT_BARN,
   props: {
     behandlingsID,
     aksjonspunktLost,
     lesemodus,
+    soknadsdato: soknad.soknadsdato,
     informasjonTilLesemodus: formatereLesemodusObjektForKroniskSyk(vilkarKnyttetTilAksjonspunkt, aksjonspunkt),
     vedtakFattetVilkarOppfylt: skalVilkarsUtfallVises,
     informasjonOmVilkar: generereInfoForVurdertVilkar(
@@ -78,13 +93,15 @@ const KroniskSykObjektTilMikrofrontend = ({
       aksjonspunkt.begrunnelse,
       'Utvidet Rett',
     ),
-    losAksjonspunkt: (harDokumentasjonOgFravaerRisiko, begrunnelse, avslagsArsakErIkkeRiskioFraFravaer) => {
+    losAksjonspunkt: (harDokumentasjonOgFravaerRisiko, begrunnelse, avslagsArsakErIkkeRiskioFraFravaer, fraDato) => {
       submitCallback([
         formatereLosAksjonspunktObjektForKroniskSyk(
           aksjonspunkt.definisjon.kode,
           begrunnelse,
           harDokumentasjonOgFravaerRisiko,
           avslagsArsakErIkkeRiskioFraFravaer,
+          fraDato,
+          vilkarKnyttetTilAksjonspunkt,
         ),
       ]);
     },
