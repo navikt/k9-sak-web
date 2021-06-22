@@ -157,9 +157,7 @@ export const BehandlingMenuIndex: FunctionComponent<OwnProps> = ({
   const { startRequest: lagNyBehandlingUnntak } = restApiHooks.useRestApiRunner<boolean>(
     K9sakApiKeys.NEW_BEHANDLING_UNNTAK,
   );
-  const { startRequest: hentParterMedKlagerett } = restApiHooks.useRestApiRunner<KlagePart[]>(
-    K9sakApiKeys.PARTER_MED_KLAGERETT,
-  );
+  const { startRequest: hentMottakere } = restApiHooks.useRestApiRunner<KlagePart[]>(K9sakApiKeys.PARTER_MED_KLAGERETT);
 
   // FIX remove this when unntaksløype er lansert
   const featureTogglesData = restApiHooks.useGlobalStateRestApiData<{ key: string; value: string }[]>(
@@ -253,7 +251,7 @@ export const BehandlingMenuIndex: FunctionComponent<OwnProps> = ({
             gaaTilSokeside={gaaTilSokeside}
             personopplysninger={personopplysninger}
             arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
-            hentParterMedKlagerett={hentParterMedKlagerett}
+            hentMottakere={hentMottakere}
           />
         )),
         new MenyData(behandlingRettigheter?.behandlingKanBytteEnhet, getMenytekst()).medModal(lukkModal => (

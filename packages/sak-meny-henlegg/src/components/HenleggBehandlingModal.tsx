@@ -19,7 +19,7 @@ import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import dokumentMalType from '@fpsak-frontend/kodeverk/src/dokumentMalType';
 import KlagePart from '@k9-sak-web/behandling-klage/src/types/klagePartTsType';
 import styles from './henleggBehandlingModal.less';
-import ParterMedKlagerett from './ParterMedKlagerett';
+import Brevmottakere from './Brevmottakere';
 
 const maxLength1500 = maxLength(1500);
 
@@ -33,7 +33,7 @@ const previewHenleggBehandlingDoc =
     behandlingId: number,
     behandlingUuid?: string,
     behandlingType?: Kodeverk,
-    valgtPartMedKlagerett?: KlagePart,
+    valgtMottaker?: KlagePart,
   ) =>
   (e: React.MouseEvent | React.KeyboardEvent): void => {
     // TODO Hardkoda verdiar. Er dette eit kodeverk?
@@ -48,7 +48,7 @@ const previewHenleggBehandlingDoc =
       : {
           dokumentMal: dokumentMalType.HENLEGG_BEHANDLING_DOK,
           dokumentdata: { fritekst: fritekst || ' ' },
-          overstyrtMottaker: valgtPartMedKlagerett?.identifikasjon,
+          overstyrtMottaker: valgtMottaker?.identifikasjon,
         };
     previewHenleggBehandling(true, data);
     e.preventDefault();
@@ -116,7 +116,7 @@ interface PureOwnProps {
   behandlingId?: number;
   behandlingResultatTyper: KodeverkMedNavn[];
   behandlingType: Kodeverk;
-  hentParterMedKlagerett: () => Promise<KlagePart[]>;
+  hentMottakere: () => Promise<KlagePart[]>;
   personopplysninger?: Personopplysninger;
   arbeidsgiverOpplysningerPerId?: ArbeidsgiverOpplysningerPerId;
 }
@@ -125,7 +125,7 @@ interface MappedOwnProps {
   årsakKode?: string;
   begrunnelse?: string;
   fritekst?: string;
-  valgtPartMedKlagerett?: KlagePart;
+  valgtMottaker?: KlagePart;
   showLink: boolean;
 }
 
@@ -151,10 +151,10 @@ export const HenleggBehandlingModalImpl: FunctionComponent<
   behandlingType,
   behandlingId,
   behandlingResultatTyper,
-  hentParterMedKlagerett,
+  hentMottakere,
   personopplysninger,
   arbeidsgiverOpplysningerPerId,
-  valgtPartMedKlagerett,
+  valgtMottaker,
 }) => {
   const henleggArsaker = useMemo(
     () => getHenleggArsaker(behandlingResultatTyper, behandlingType, ytelseType),
@@ -230,8 +230,8 @@ export const HenleggBehandlingModalImpl: FunctionComponent<
                 {showLink && (
                   <div className={styles.forhandsvis}>
                     {behandlingType.kode === BehandlingType.KLAGE && (
-                      <ParterMedKlagerett
-                        hentParterMedKlagerett={hentParterMedKlagerett}
+                      <Brevmottakere
+                        hentMottakere={hentMottakere}
                         personopplysninger={personopplysninger}
                         arbeidsgiverOpplysninger={arbeidsgiverOpplysningerPerId}
                         intl={intl}
@@ -247,7 +247,7 @@ export const HenleggBehandlingModalImpl: FunctionComponent<
                         behandlingId,
                         behandlingUuid,
                         behandlingType,
-                        valgtPartMedKlagerett,
+                        valgtMottaker,
                       )}
                       onKeyDown={previewHenleggBehandlingDoc(
                         previewHenleggBehandling,
@@ -256,7 +256,7 @@ export const HenleggBehandlingModalImpl: FunctionComponent<
                         behandlingId,
                         behandlingUuid,
                         behandlingType,
-                        valgtPartMedKlagerett,
+                        valgtMottaker,
                       )}
                       className="lenke lenke--frittstaende"
                     >
@@ -299,7 +299,7 @@ const mapStateToProps = (state, ownProps: PureOwnProps): MappedOwnProps => ({
   årsakKode: formValueSelector('HenleggBehandlingModal')(state, 'årsakKode'),
   begrunnelse: formValueSelector('HenleggBehandlingModal')(state, 'begrunnelse'),
   fritekst: formValueSelector('HenleggBehandlingModal')(state, 'fritekst'),
-  valgtPartMedKlagerett: safeJSONParse(formValueSelector('HenleggBehandlingModal')(state, 'valgtPartMedKlagerett')),
+  valgtMottaker: safeJSONParse(formValueSelector('HenleggBehandlingModal')(state, 'valgtMottaker')),
   showLink: getShowLink(state, ownProps),
 });
 

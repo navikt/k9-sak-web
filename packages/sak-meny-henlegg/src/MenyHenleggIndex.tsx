@@ -40,7 +40,7 @@ interface OwnProps {
   lukkModal: () => void;
   personopplysninger?: Personopplysninger;
   arbeidsgiverOpplysningerPerId?: ArbeidsgiverOpplysningerPerId;
-  hentParterMedKlagerett: () => Promise<KlagePart[]>;
+  hentMottakere: () => Promise<KlagePart[]>;
 }
 
 const MenyHenleggIndex: FunctionComponent<OwnProps> = ({
@@ -56,7 +56,7 @@ const MenyHenleggIndex: FunctionComponent<OwnProps> = ({
   lukkModal,
   personopplysninger,
   arbeidsgiverOpplysningerPerId,
-  hentParterMedKlagerett,
+  hentMottakere,
 }) => {
   const [erHenlagt, setHenlagt] = useState(false);
 
@@ -68,7 +68,7 @@ const MenyHenleggIndex: FunctionComponent<OwnProps> = ({
         årsakKode: formValues.årsakKode,
         begrunnelse: formValues.begrunnelse,
         fritekst: formValues.fritekst,
-        valgtKlagePart: safeJSONParse(formValues.valgtPartMedKlagerett),
+        valgtMottaker: safeJSONParse(formValues.valgtMottaker),
       };
       henleggBehandling(henleggBehandlingDto).then(() => {
         setHenlagt(true);
@@ -92,7 +92,7 @@ const MenyHenleggIndex: FunctionComponent<OwnProps> = ({
           behandlingResultatTyper={behandlingResultatTyper}
           personopplysninger={personopplysninger}
           arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
-          hentParterMedKlagerett={hentParterMedKlagerett}
+          hentMottakere={hentMottakere}
         />
       )}
       {erHenlagt && <HenlagtBehandlingModal showModal closeEvent={gaaTilSokeside} />}

@@ -7,12 +7,12 @@ import { SelectField } from '@fpsak-frontend/form/index';
 import { WrappedComponentProps } from 'react-intl';
 
 interface OwnProps {
-  hentParterMedKlagerett: () => Promise<KlagePart[]>;
+  hentMottakere: () => Promise<KlagePart[]>;
   personopplysninger?: Personopplysninger;
   arbeidsgiverOpplysninger?: ArbeidsgiverOpplysningerPerId;
 }
 
-function lagVisningsnavnForKlagepart(
+function lagVisningsnavnForMottakere(
   partId: string,
   personopplysninger?: Personopplysninger,
   arbeidsgiverOpplysningerPerId?: ArbeidsgiverOpplysningerPerId,
@@ -32,28 +32,28 @@ function lagVisningsnavnForKlagepart(
   return partId;
 }
 
-const ParterMedKlagerett: FunctionComponent<OwnProps & WrappedComponentProps> = ({
-  hentParterMedKlagerett,
+const Brevmottakere: FunctionComponent<OwnProps & WrappedComponentProps> = ({
+  hentMottakere,
   personopplysninger,
   arbeidsgiverOpplysninger,
   intl,
 }) => {
-  const [parterMedKlagerett, setParterMedKlagerett] = useState<KlagePart[]>();
+  const [mottakere, setMottakere] = useState<KlagePart[]>();
 
   useEffect(() => {
     (async () => {
-      const parter = await hentParterMedKlagerett();
-      setParterMedKlagerett(parter);
+      const parter = await hentMottakere();
+      setMottakere(parter);
     })();
   }, []);
 
-  return parterMedKlagerett && parterMedKlagerett.length ? (
+  return mottakere && mottakere.length ? (
     <>
       <SelectField
-        name="valgtPartMedKlagerett"
-        selectValues={parterMedKlagerett.map(part => (
+        name="valgtMottaker"
+        selectValues={mottakere.map(part => (
           <option value={JSON.stringify(part)} key={part.identifikasjon.id}>
-            {lagVisningsnavnForKlagepart(part.identifikasjon.id, personopplysninger, arbeidsgiverOpplysninger)}
+            {lagVisningsnavnForMottakere(part.identifikasjon.id, personopplysninger, arbeidsgiverOpplysninger)}
           </option>
         ))}
         label={intl.formatMessage({ id: 'HenleggBehandlingModal.MottakerBrev' })}
@@ -64,4 +64,4 @@ const ParterMedKlagerett: FunctionComponent<OwnProps & WrappedComponentProps> = 
     </>
   ) : null;
 };
-export default ParterMedKlagerett;
+export default Brevmottakere;
