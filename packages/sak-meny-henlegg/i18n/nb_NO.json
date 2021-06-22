@@ -11,6 +11,8 @@
   "HenleggBehandlingModal.Avbryt": "Avbryt",
   "HenleggBehandlingModal.SokerInformeres": "Informer søker",
   "HenleggBehandlingModal.ForhandsvisBrev": "Forhåndsvis brev",
+  "HenleggBehandlingModal.MottakerBrev": "Velg mottaker av henleggelsesbrev",
+
 
   "HenlagtBehandlingModal.ModalDescription": "Behandlingen er henlagt",
   "HenlagtBehandlingModal.Henlagt": "Henlagt",
@@ -22,7 +24,6 @@
   "HENLAGT_FEILOPPRETTET": "Behandlingen er feilaktig opprettet",
   "HENLAGT_FEILOPPRETTET_MED_BREV": "Feilaktig opprettet - med henleggelsesbrev",
   "HENLAGT_FEILOPPRETTET_UTEN_BREV": "Feilaktig opprettet - uten henleggelsesbrev",
-  "HENLAGT_FEILOPPRETTET": "Behandlingen er feilaktig opprettet",
   "HENLAGT_KLAGE_TRUKKET": "Klagen er trukket",
   "HENLAGT_INNSYN_TRUKKET": "Innsynskrav er trukket",
   "HENLAGT_SØKNAD_MANGLER": "Søknad mangler",

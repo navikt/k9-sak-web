@@ -1,12 +1,14 @@
 import React, { FunctionComponent, useCallback, useState } from 'react';
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 
-import { Kodeverk, KodeverkMedNavn } from '@k9-sak-web/types';
+import { ArbeidsgiverOpplysningerPerId, Kodeverk, KodeverkMedNavn, Personopplysninger } from '@k9-sak-web/types';
 
+import KlagePart from '@k9-sak-web/behandling-klage/src/types/klagePartTsType';
 import HenleggBehandlingModal from './components/HenleggBehandlingModal';
 import HenlagtBehandlingModal from './components/HenlagtBehandlingModal';
 
 import messages from '../i18n/nb_NO.json';
+import { safeJSONParse } from '../../utils';
 
 const cache = createIntlCache();
 
@@ -36,6 +38,9 @@ interface OwnProps {
   behandlingResultatTyper: KodeverkMedNavn[];
   gaaTilSokeside: () => void;
   lukkModal: () => void;
+  personopplysninger?: Personopplysninger;
+  arbeidsgiverOpplysningerPerId?: ArbeidsgiverOpplysningerPerId;
+  hentParterMedKlagerett: () => Promise<KlagePart[]>;
 }
 
 const MenyHenleggIndex: FunctionComponent<OwnProps> = ({
@@ -49,6 +54,9 @@ const MenyHenleggIndex: FunctionComponent<OwnProps> = ({
   behandlingResultatTyper,
   gaaTilSokeside,
   lukkModal,
+  personopplysninger,
+  arbeidsgiverOpplysningerPerId,
+  hentParterMedKlagerett,
 }) => {
   const [erHenlagt, setHenlagt] = useState(false);
 
@@ -60,6 +68,7 @@ const MenyHenleggIndex: FunctionComponent<OwnProps> = ({
         årsakKode: formValues.årsakKode,
         begrunnelse: formValues.begrunnelse,
         fritekst: formValues.fritekst,
+        valgtKlagePart: safeJSONParse(formValues.valgtPartMedKlagerett),
       };
       henleggBehandling(henleggBehandlingDto).then(() => {
         setHenlagt(true);
@@ -81,6 +90,9 @@ const MenyHenleggIndex: FunctionComponent<OwnProps> = ({
           behandlingType={behandlingType}
           behandlingUuid={behandlingUuid}
           behandlingResultatTyper={behandlingResultatTyper}
+          personopplysninger={personopplysninger}
+          arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
+          hentParterMedKlagerett={hentParterMedKlagerett}
         />
       )}
       {erHenlagt && <HenlagtBehandlingModal showModal closeEvent={gaaTilSokeside} />}

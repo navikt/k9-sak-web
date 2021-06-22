@@ -32,6 +32,7 @@ describe('<MenyHenleggIndex>', () => {
         behandlingResultatTyper={[]}
         gaaTilSokeside={sinon.spy()}
         lukkModal={lukkModalCallback}
+        hentParterMedKlagerett={sinon.spy()}
       />,
     );
 
@@ -54,6 +55,7 @@ describe('<MenyHenleggIndex>', () => {
       årsakKode: 'test',
       begrunnelse: 'Dette er en begrunnelse',
       fritekst: 'Dette er en fritekst',
+      valgtKlagePart: null,
     });
   });
 });
