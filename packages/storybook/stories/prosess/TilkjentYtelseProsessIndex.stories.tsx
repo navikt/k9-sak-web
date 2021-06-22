@@ -236,7 +236,6 @@ export const visUtenAksjonspunkt = () => (
     readOnlySubmitButton={boolean('readOnly', true)}
     arbeidsforhold={arbeidsforhold}
     arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
-    vilkar={[]}
   />
 );
 
@@ -265,6 +264,5 @@ export const visÅpentAksjonspunkt = () => (
     readOnlySubmitButton={boolean('readOnly', true)}
     arbeidsforhold={arbeidsforhold}
     arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
-    vilkar={[]}
   />
 );

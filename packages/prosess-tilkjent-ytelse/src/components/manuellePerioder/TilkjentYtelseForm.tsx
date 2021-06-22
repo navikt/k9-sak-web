@@ -11,8 +11,6 @@ import {
   ArbeidsforholdV2,
   ArbeidsgiverOpplysningerPerId,
   KodeverkMedNavn,
-  Periode,
-  Vilkar,
 } from '@k9-sak-web/types';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { getBehandlingFormPrefix, behandlingForm } from '@fpsak-frontend/form';
@@ -30,12 +28,10 @@ interface OwnProps {
   behandlingId: number;
   behandlingVersjon: number;
   alleKodeverk: { [key: string]: KodeverkMedNavn[] };
-  gyldigPeriode?: Periode;
   behandlingStatus: Kodeverk;
   arbeidsforhold: ArbeidsforholdV2[];
   arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysningerPerId;
   vilkarForSykdomExists: boolean;
-  vilkar: Vilkar[];
 }
 
 const FORM_NAME = 'TilkjentYtelseForm';
@@ -47,10 +43,8 @@ export const TilkjentYtelseForm: React.FC<OwnProps & InjectedFormProps> = ({
   behandlingId,
   behandlingVersjon,
   alleKodeverk,
-  gyldigPeriode,
   arbeidsforhold,
   arbeidsgiverOpplysningerPerId,
-  vilkar,
   ...formProps
 }) => (
   <>
@@ -78,11 +72,9 @@ export const TilkjentYtelseForm: React.FC<OwnProps & InjectedFormProps> = ({
         behandlingId={behandlingId}
         behandlingVersjon={behandlingVersjon}
         alleKodeverk={alleKodeverk}
-        gyldigPeriode={gyldigPeriode}
         // @ts-ignore
         arbeidsforhold={arbeidsforhold}
         arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
-        vilkar={vilkar}
       />
       {formProps.error && <span>{formProps.error}</span>}
     </form>

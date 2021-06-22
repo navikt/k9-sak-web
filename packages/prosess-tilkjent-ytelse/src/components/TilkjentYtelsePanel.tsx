@@ -10,12 +10,10 @@ import {
   BeregningsresultatPeriode,
   FamilieHendelse,
   KodeverkMedNavn,
-  Periode,
   Personopplysninger,
   ArbeidsforholdV2,
   ArbeidsgiverOpplysningerPerId,
   Soknad,
-  Vilkar,
 } from '@k9-sak-web/types';
 import { DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils';
 
@@ -51,7 +49,6 @@ interface PureOwnProps {
   personopplysninger: Personopplysninger;
   soknad: Soknad;
   fagsakYtelseTypeKode: string;
-  gyldigPeriode?: Periode;
   aksjonspunkter: Aksjonspunkt[];
   alleKodeverk: { [key: string]: KodeverkMedNavn[] };
   readOnly: boolean;
@@ -59,7 +56,6 @@ interface PureOwnProps {
   readOnlySubmitButton: boolean;
   arbeidsforhold: ArbeidsforholdV2[];
   arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysningerPerId;
-  vilkar: Vilkar[];
 }
 
 interface MappedOwnProps {
@@ -73,13 +69,11 @@ export const TilkjentYtelsePanelImpl: FC<PureOwnProps & MappedOwnProps> = ({
   readOnlySubmitButton,
   behandlingId,
   behandlingVersjon,
-  gyldigPeriode,
   aksjonspunkter,
   arbeidsforhold,
   readOnly,
   alleKodeverk,
   arbeidsgiverOpplysningerPerId,
-  vilkar,
 }) => {
   const opphoersdato = beregningresultat?.opphoersdato;
 
@@ -115,11 +109,9 @@ export const TilkjentYtelsePanelImpl: FC<PureOwnProps & MappedOwnProps> = ({
           arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
           aksjonspunkter={aksjonspunkter}
           alleKodeverk={alleKodeverk}
-          gyldigPeriode={gyldigPeriode}
           readOnly={readOnly}
           submitCallback={submitCallback}
           readOnlySubmitButton={readOnlySubmitButton}
-          vilkar={vilkar}
         />
       )}
 
