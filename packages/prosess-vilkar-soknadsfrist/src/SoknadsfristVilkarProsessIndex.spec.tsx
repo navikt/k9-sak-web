@@ -7,6 +7,10 @@ import { Behandling } from '@k9-sak-web/types';
 
 import SoknadsfristVilkarProsessIndex from './SoknadsfristVilkarProsessIndex';
 
+const soknadsfristStatus = {
+  dokumentStatus: [],
+};
+
 describe('<SoknadsfristVilkarForm>', () => {
   it('skal ikke rendre tabs dersom bare en periode', () => {
     const wrapper = shallow(
@@ -59,6 +63,7 @@ describe('<SoknadsfristVilkarForm>', () => {
             },
           },
         ]}
+        soknadsfristStatus={soknadsfristStatus}
         visAllePerioder
       />,
     );
@@ -133,6 +138,7 @@ describe('<SoknadsfristVilkarForm>', () => {
             },
           },
         ]}
+        soknadsfristStatus={soknadsfristStatus}
         visAllePerioder
       />,
     );
