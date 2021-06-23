@@ -4,7 +4,7 @@ import { change as reduxFormChange, FieldArray, getFormInitialValues, reset as r
 import { FormattedMessage } from 'react-intl';
 import { bindActionCreators } from 'redux';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
-import { KodeverkMedNavn, ArbeidsforholdV2, Vilkar, ArbeidsgiverOpplysningerPerId } from '@k9-sak-web/types';
+import { KodeverkMedNavn, ArbeidsforholdV2, ArbeidsgiverOpplysningerPerId } from '@k9-sak-web/types';
 import { getBehandlingFormPrefix, behandlingFormValueSelector } from '@fpsak-frontend/form';
 import uttakPeriodeVurdering from '@fpsak-frontend/kodeverk/src/uttakPeriodeVurdering';
 import { ariaCheck } from '@fpsak-frontend/utils';
@@ -51,7 +51,6 @@ interface OwnProps {
   slettedePerioder?: any[];
   arbeidsforhold?: ArbeidsforholdV2[];
   arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysningerPerId;
-  vilkar: Vilkar[];
 }
 
 interface OwnState {
@@ -257,7 +256,6 @@ export class PeriodeTabell extends PureComponent<OwnProps, OwnState> {
       behandlingId,
       behandlingVersjon,
       alleKodeverk,
-      vilkar,
     } = this.props;
     const { periodeSlett, isNyPeriodeFormOpen, showModalSlettPeriode } = this.state;
 
@@ -312,7 +310,6 @@ export class PeriodeTabell extends PureComponent<OwnProps, OwnState> {
             arbeidsforhold={arbeidsforhold}
             arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
             readOnly={readOnly}
-            vilkar={vilkar}
           />
         )}
 

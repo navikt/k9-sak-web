@@ -172,3 +172,30 @@ export const visVisittkortForAnnenPartDerAktørIdErUkjent = () => (
     sprakkode={{ kode: 'NN', kodeverk: 'SPRAK' }}
   />
 );
+
+export const visVisittkortNårEnHarEnRelatertFagsak = () => (
+  <VisittkortSakIndex
+    fagsakPerson={fagsakPerson}
+    personopplysninger={personopplysningerSoker}
+    alleKodeverk={alleKodeverk as any}
+    sprakkode={{ kode: 'NN', kodeverk: 'SPRAK' }}
+    relaterteFagsaker={{
+      relaterteSøkere: [{ søkerIdent: '17499944012', søkerNavn: 'SJØLØVE ANINE', saksnummer: '5YD0i' }],
+    }}
+  />
+);
+
+export const visVisittkortNårEnHarFlereRelaterteFagsaker = () => (
+  <VisittkortSakIndex
+    fagsakPerson={fagsakPerson}
+    personopplysninger={personopplysningerSoker}
+    alleKodeverk={alleKodeverk as any}
+    sprakkode={{ kode: 'NN', kodeverk: 'SPRAK' }}
+    relaterteFagsaker={{
+      relaterteSøkere: [
+        { søkerIdent: '12345678910', søkerNavn: 'Sjøløve Anine', saksnummer: '5YD0i' },
+        { søkerIdent: '10987654321', søkerNavn: 'Kreps Svein', saksnummer: '5YD1W' },
+      ],
+    }}
+  />
+);
