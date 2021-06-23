@@ -160,6 +160,11 @@ describe('<PleiepengerFakta>', () => {
     const panel = wrapper.find(SideMenuWrapper);
     expect(panel.prop('paneler')).toEqual([
       {
+        erAktiv: false,
+        harAksjonspunkt: false,
+        tekst: 'Om barnet',
+      },
+      {
         erAktiv: true,
         harAksjonspunkt: true,
         tekst: 'Arbeidsforhold',
@@ -225,7 +230,7 @@ describe('<PleiepengerFakta>', () => {
     const { args } = calls[0];
     expect(args).toHaveLength(2);
     expect(args[0]).toEqual('default');
-    expect(args[1]).toEqual('arbeidsforhold');
+    expect(args[1]).toEqual('om-barnet');
   });
 
   it('skal rendre faktapanel korrekt', () => {
