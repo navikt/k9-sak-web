@@ -54,8 +54,8 @@ const OmBarnet = ({ behandling: { links }, readOnly, aksjonspunkter, submitCallb
   return (
     <MicroFrontend
       id={omBarnetAppID}
-      jsSrc="http://localhost:8081/main.js"
-      stylesheetSrc="http://localhost:8081/styles.css"
+      jsSrc="/k9/microfrontend/psb-om-barnet/1/app.js"
+      stylesheetSrc="/k9/microfrontend/psb-om-barnet/1/styles.css"
       noCache
       onReady={() =>
         initializeOmBarnet(
