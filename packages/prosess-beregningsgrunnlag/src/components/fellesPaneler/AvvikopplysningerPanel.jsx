@@ -27,17 +27,17 @@ const andelErIkkeTilkommetEllerLagtTilAvSBH = andel => {
   // Andeler som er lagt til av sbh eller tilkom før stp skal ikke kunne endres på
   return andel.erTilkommetAndel === false && andel.lagtTilAvSaksbehandler === false;
 };
-const finnAndelerSomSkalVises = (andeler, status) => {
+const finnAndelerSomSkalVises = (andeler, statuser) => {
   if (!andeler) {
     return [];
   }
 
   return andeler
-    .filter(andel => andel.aktivitetStatus.kode === status)
+    .filter(andel => statuser.includes(andel.aktivitetStatus.kode))
     .filter(andel => andelErIkkeTilkommetEllerLagtTilAvSBH(andel));
 };
-const beregnAarsintektForAktivitetStatus = (alleAndelerIForstePeriode, status) => {
-  const relevanteAndeler = finnAndelerSomSkalVises(alleAndelerIForstePeriode, status);
+const beregnAarsintektForAktivitetStatus = (alleAndelerIForstePeriode, statuser) => {
+  const relevanteAndeler = finnAndelerSomSkalVises(alleAndelerIForstePeriode, statuser);
   if (relevanteAndeler) {
     return relevanteAndeler.reduce((acc, andel) => acc + andel.beregnetPrAar, 0);
   }
@@ -81,10 +81,10 @@ const lagRelevantePaneler = (
       )}
       {relevanteStatuser.isArbeidstaker && (
         <AvviksopplysningerAT
-          beregnetAarsinntekt={beregnAarsintektForAktivitetStatus(
-            alleAndelerIForstePeriode,
+          beregnetAarsinntekt={beregnAarsintektForAktivitetStatus(alleAndelerIForstePeriode, [
+            aktivitetStatus.FRILANSER,
             aktivitetStatus.ARBEIDSTAKER,
-          )}
+          ])}
           sammenligningsgrunnlagPrStatus={sammenligningsgrunnlagPrStatus}
           relevanteStatuser={relevanteStatuser}
           skalViseAvviksprosent={skalViseAvviksprosent}
@@ -92,7 +92,10 @@ const lagRelevantePaneler = (
       )}
       {relevanteStatuser.isFrilanser && (
         <AvviksopplysningerFL
-          beregnetAarsinntekt={beregnAarsintektForAktivitetStatus(alleAndelerIForstePeriode, aktivitetStatus.FRILANSER)}
+          beregnetAarsinntekt={beregnAarsintektForAktivitetStatus(alleAndelerIForstePeriode, [
+            aktivitetStatus.FRILANSER,
+            aktivitetStatus.ARBEIDSTAKER,
+          ])}
           sammenligningsgrunnlagPrStatus={sammenligningsgrunnlagPrStatus}
           relevanteStatuser={relevanteStatuser}
         />
