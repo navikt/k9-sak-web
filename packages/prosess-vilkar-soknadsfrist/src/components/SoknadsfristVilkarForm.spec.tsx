@@ -24,7 +24,6 @@ describe('<SoknadsfristVilkarForm>', () => {
         hasAksjonspunkt
         overrideReadOnly={false}
         toggleOverstyring={() => undefined}
-        erMedlemskapsPanel={false}
         erOverstyrt
         aksjonspunkter={[]}
         behandlingsresultat={{

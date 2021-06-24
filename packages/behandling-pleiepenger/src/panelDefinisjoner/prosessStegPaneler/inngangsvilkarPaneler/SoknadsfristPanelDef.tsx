@@ -1,5 +1,9 @@
+import React from 'react';
+
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
+import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import SoknadsfristVilkarProsessIndex from '@k9-sak-web/prosess-vilkar-soknadsfrist';
 import { ProsessStegPanelDef, ProsessStegOverstyringPanelDef } from '@k9-sak-web/behandling-felles';
 import { PleiepengerBehandlingApiKeys } from '../../../data/pleiepengerBehandlingApi';
 
@@ -10,7 +14,7 @@ class SoknadsfristPanelDef extends ProsessStegPanelDef {
 
   getTekstKode = () => 'Inngangsvilkar.Soknadsfrist';
 
-  getKomponent = props => this.overstyringDef.getKomponent(props);
+  getKomponent = props => <SoknadsfristVilkarProsessIndex {...props} />;
 
   getAksjonspunktKoder = () => [aksjonspunktCodes.OVERSTYR_SOKNADSFRISTVILKAR];
 
@@ -20,7 +24,24 @@ class SoknadsfristPanelDef extends ProsessStegPanelDef {
 
   getOverstyrVisningAvKomponent = ({ vilkarForSteg }) => vilkarForSteg.length > 0;
 
-  getData = data => this.overstyringDef.getData(data);
+  getData = ({
+    vilkarForSteg,
+    alleKodeverk,
+    overstyrteAksjonspunktKoder,
+    prosessStegTekstKode,
+    overrideReadOnly,
+    kanOverstyreAccess,
+    toggleOverstyring,
+  }): any => ({
+    avslagsarsaker: alleKodeverk[kodeverkTyper.AVSLAGSARSAK][vilkarForSteg[0].vilkarType.kode],
+    erOverstyrt: overstyrteAksjonspunktKoder.some(o => this.getAksjonspunktKoder().some(a => a === o)),
+    overstyringApKode: this.getAksjonspunktKoder()[0],
+    panelTittelKode: this.getTekstKode() ? this.getTekstKode() : prosessStegTekstKode,
+    lovReferanse: vilkarForSteg.length > 0 ? vilkarForSteg[0].lovReferanse : undefined,
+    overrideReadOnly,
+    kanOverstyreAccess,
+    toggleOverstyring,
+  });
 }
 
 export default SoknadsfristPanelDef;

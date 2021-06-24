@@ -38,7 +38,6 @@ interface SoknadsfristVilkarProsessIndexProps {
   erOverstyrt: boolean;
   panelTittelKode: string;
   overstyringApKode: string;
-  erMedlemskapsPanel: boolean;
   vilkar: Vilkar[];
   visAllePerioder: boolean;
   soknadsfristStatus: any;
@@ -57,7 +56,6 @@ const SoknadsfristVilkarProsessIndex = ({
   panelTittelKode,
   overstyringApKode,
   lovReferanse,
-  erMedlemskapsPanel,
   vilkar,
   visAllePerioder,
   soknadsfristStatus,
@@ -76,6 +74,12 @@ const SoknadsfristVilkarProsessIndex = ({
       setActiveTab(0);
     }
   }, [activeTab, visAllePerioder]);
+
+  const dokument = soknadsfristStatus.dokumentStatus.filter(dok =>
+    dok.status.some(
+      status => status.periode.fom >= activePeriode.periode.fom && status.periode.tom <= activePeriode.periode.tom,
+    ),
+  );
 
   return (
     <RawIntlProvider value={intl}>
@@ -123,24 +127,8 @@ const SoknadsfristVilkarProsessIndex = ({
             panelTittelKode={panelTittelKode}
             overstyringApKode={overstyringApKode}
             lovReferanse={activeVilkår.lovReferanse ?? lovReferanse}
-            erMedlemskapsPanel={erMedlemskapsPanel}
             avslagKode={activePeriode.avslagKode}
-            dokument={soknadsfristStatus.dokumentStatus
-              .filter(dokument =>
-                dokument.status.some(
-                  status =>
-                    status.periode.fom === activePeriode.periode.fom &&
-                    status.periode.tom === activePeriode.periode.tom,
-                ),
-              )
-              .map(dokument => ({
-                ...dokument,
-                status: dokument.status.filter(
-                  status =>
-                    status.periode.fom === activePeriode.periode.fom &&
-                    status.periode.tom === activePeriode.periode.tom,
-                ),
-              }))}
+            dokument={dokument}
             periode={activePeriode}
           />
         </div>

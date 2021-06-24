@@ -57,7 +57,6 @@ interface SoknadsfristVilkarFormProps {
   behandlingType: Kodeverk;
   customVilkarIkkeOppfyltText?: CustomVilkarText;
   customVilkarOppfyltText?: CustomVilkarText;
-  erMedlemskapsPanel: boolean;
   erOverstyrt?: boolean;
   erVilkarOk?: boolean;
   hasAksjonspunkt: boolean;
@@ -86,109 +85,106 @@ interface StateProps {
  * Presentasjonskomponent. Viser resultat av vilkårskjøring når det ikke finnes tilknyttede aksjonspunkter.
  * Resultatet kan overstyres av Nav-ansatt med overstyr-rettighet.
  */
-export const SoknadsfristVilkarForm: FunctionComponent<
-  SoknadsfristVilkarFormProps & StateProps & InjectedFormProps
-> = ({
-  erOverstyrt,
-  isReadOnly,
-  overstyringApKode,
-  isSolvable,
-  erVilkarOk,
-  customVilkarIkkeOppfyltText,
-  customVilkarOppfyltText,
-  erMedlemskapsPanel,
-  hasAksjonspunkt,
-  avslagsarsaker,
-  overrideReadOnly,
-  toggleOverstyring,
-  reset,
-  handleSubmit,
-  submitting,
-  pristine,
-  periodeFom,
-  periodeTom,
-  dokument,
-}) => {
-  const toggleAv = () => {
-    reset();
-    toggleOverstyring(oldArray => oldArray.filter(code => code !== overstyringApKode));
-  };
-
-  useEffect(
-    () => () => {
+export const SoknadsfristVilkarForm: FunctionComponent<SoknadsfristVilkarFormProps & StateProps & InjectedFormProps> =
+  ({
+    erOverstyrt,
+    isReadOnly,
+    overstyringApKode,
+    isSolvable,
+    erVilkarOk,
+    customVilkarIkkeOppfyltText,
+    customVilkarOppfyltText,
+    hasAksjonspunkt,
+    avslagsarsaker,
+    overrideReadOnly,
+    toggleOverstyring,
+    reset,
+    handleSubmit,
+    submitting,
+    pristine,
+    periodeFom,
+    periodeTom,
+    dokument,
+  }) => {
+    const toggleAv = () => {
       reset();
-    },
-    [periodeFom, periodeTom],
-  );
+      toggleOverstyring(oldArray => oldArray.filter(code => code !== overstyringApKode));
+    };
 
-  return (
-    <form onSubmit={handleSubmit}>
-      {(erOverstyrt || hasAksjonspunkt) && (
-        <AksjonspunktBox className={styles.aksjonspunktMargin} erAksjonspunktApent={erOverstyrt}>
-          <Element>
-            <FormattedMessage id="SoknadsfristVilkarForm.AutomatiskVurdering" />
-          </Element>
-          <VerticalSpacer eightPx />
-          <SoknadsfristVilkarBegrunnelse
-            skalViseBegrunnelse={erOverstyrt || hasAksjonspunkt}
-            readOnly={isReadOnly || !erOverstyrt}
-            erVilkarOk={erVilkarOk}
-            customVilkarIkkeOppfyltText={customVilkarIkkeOppfyltText}
-            customVilkarOppfyltText={customVilkarOppfyltText}
-            erMedlemskapsPanel={erMedlemskapsPanel}
-            avslagsarsaker={avslagsarsaker}
-            dokument={dokument}
-          />
-          <VerticalSpacer sixteenPx />
-          {!erOverstyrt && erVilkarOk !== undefined && (
-            <>
-              <VerticalSpacer fourPx />
-              <FlexRow>
-                <FlexColumn>
-                  <EditedIcon />
-                </FlexColumn>
-                <FlexColumn>
-                  <Normaltekst>
-                    <FormattedMessage id="SoknadsfristVilkarForm.Endret" />
-                  </Normaltekst>
-                </FlexColumn>
-              </FlexRow>
-            </>
-          )}
-          {erOverstyrt && (
-            <FlexContainer>
-              <FlexRow>
-                <FlexColumn>
-                  <Image src={advarselIkonUrl} />
-                </FlexColumn>
-                <FlexColumn>
-                  <Element>
-                    <FormattedMessage id="SoknadsfristVilkarForm.Unntakstilfeller" />
-                  </Element>
-                </FlexColumn>
-              </FlexRow>
-              <VerticalSpacer sixteenPx />
-              <FlexRow>
-                <FlexColumn>
-                  <OverstyrBekreftKnappPanel
-                    submitting={submitting}
-                    pristine={!isSolvable || pristine}
-                    overrideReadOnly={overrideReadOnly}
-                  />
-                </FlexColumn>
-                <FlexColumn>
-                  <Knapp htmlType="button" spinner={submitting} disabled={submitting} onClick={toggleAv}>
-                    <FormattedMessage id="SoknadsfristVilkarForm.Avbryt" />
-                  </Knapp>
-                </FlexColumn>
-              </FlexRow>
-            </FlexContainer>
-          )}
-        </AksjonspunktBox>
-      )}
-    </form>
-  );
-};
+    useEffect(
+      () => () => {
+        reset();
+      },
+      [periodeFom, periodeTom],
+    );
+
+    return (
+      <form onSubmit={handleSubmit}>
+        {(erOverstyrt || hasAksjonspunkt) && (
+          <AksjonspunktBox className={styles.aksjonspunktMargin} erAksjonspunktApent={erOverstyrt}>
+            <Element>
+              <FormattedMessage id="SoknadsfristVilkarForm.AutomatiskVurdering" />
+            </Element>
+            <VerticalSpacer eightPx />
+            <SoknadsfristVilkarBegrunnelse
+              skalViseBegrunnelse={erOverstyrt || hasAksjonspunkt}
+              readOnly={isReadOnly || !erOverstyrt}
+              erVilkarOk={erVilkarOk}
+              customVilkarIkkeOppfyltText={customVilkarIkkeOppfyltText}
+              customVilkarOppfyltText={customVilkarOppfyltText}
+              avslagsarsaker={avslagsarsaker}
+              dokument={dokument}
+            />
+            <VerticalSpacer sixteenPx />
+            {!erOverstyrt && erVilkarOk !== undefined && (
+              <>
+                <VerticalSpacer fourPx />
+                <FlexRow>
+                  <FlexColumn>
+                    <EditedIcon />
+                  </FlexColumn>
+                  <FlexColumn>
+                    <Normaltekst>
+                      <FormattedMessage id="SoknadsfristVilkarForm.Endret" />
+                    </Normaltekst>
+                  </FlexColumn>
+                </FlexRow>
+              </>
+            )}
+            {erOverstyrt && (
+              <FlexContainer>
+                <FlexRow>
+                  <FlexColumn>
+                    <Image src={advarselIkonUrl} />
+                  </FlexColumn>
+                  <FlexColumn>
+                    <Element>
+                      <FormattedMessage id="SoknadsfristVilkarForm.Unntakstilfeller" />
+                    </Element>
+                  </FlexColumn>
+                </FlexRow>
+                <VerticalSpacer sixteenPx />
+                <FlexRow>
+                  <FlexColumn>
+                    <OverstyrBekreftKnappPanel
+                      submitting={submitting}
+                      pristine={!isSolvable || pristine}
+                      overrideReadOnly={overrideReadOnly}
+                    />
+                  </FlexColumn>
+                  <FlexColumn>
+                    <Knapp htmlType="button" spinner={submitting} disabled={submitting} onClick={toggleAv}>
+                      <FormattedMessage id="SoknadsfristVilkarForm.Avbryt" />
+                    </Knapp>
+                  </FlexColumn>
+                </FlexRow>
+              </FlexContainer>
+            )}
+          </AksjonspunktBox>
+        )}
+      </form>
+    );
+  };
 
 const buildInitialValues = createSelector(
   [
@@ -203,14 +199,7 @@ const buildInitialValues = createSelector(
     const aksjonspunkt = aksjonspunkter.find(ap => ap.definisjon.kode === overstyringApKode);
     return {
       isOverstyrt: aksjonspunkt !== undefined,
-      ...SoknadsfristVilkarBegrunnelse.buildInitialValues(
-        avslagKode,
-        aksjonspunkter,
-        status,
-        overstyringApKode,
-        periode,
-        dokument,
-      ),
+      ...SoknadsfristVilkarBegrunnelse.buildInitialValues(avslagKode, aksjonspunkter, status, periode, dokument),
     };
   },
 );
