@@ -66,6 +66,7 @@ const OmBarnet = ({ behandling: { links }, readOnly, aksjonspunkter, submitCallb
               rel: 'rett-ved-dod',
               desiredName: 'rettVedDod',
             },
+            { rel: 'om-pleietrengende', desiredName: 'omPleietrengende' },
           ]),
           readOnly || !harAksjonspunkt,
           løsAksjonspunkt,
