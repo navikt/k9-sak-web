@@ -69,6 +69,8 @@ spec:
       value: "https://psb-om-barnet-frontend.dev.adeo.no/"
 
    # Feature-flag
+    - name: KLAGE_KABAL
+      value: "true"
     - name: VARSELTEKST
       value: "true"
     - name: DOKUMENTDATA

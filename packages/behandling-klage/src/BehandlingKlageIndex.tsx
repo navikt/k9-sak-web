@@ -8,6 +8,7 @@ import {
   Kodeverk,
   KodeverkMedNavn,
   ArbeidsgiverOpplysningerWrapper,
+  FeatureToggles,
 } from '@k9-sak-web/types';
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
 import { RestApiState, useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
@@ -48,6 +49,7 @@ interface OwnProps {
   }[];
   arbeidsgiverOpplysninger?: ArbeidsgiverOpplysningerWrapper;
   setRequestPendingMessage: (message: string) => void;
+  featureToggles: FeatureToggles;
 }
 
 const BehandlingKlageIndex: FunctionComponent<OwnProps> = ({
@@ -64,6 +66,7 @@ const BehandlingKlageIndex: FunctionComponent<OwnProps> = ({
   alleBehandlinger,
   arbeidsgiverOpplysninger,
   setRequestPendingMessage,
+  featureToggles,
 }) => {
   const [nyOgForrigeBehandling, setBehandlinger] = useState<{ current?: Behandling; previous?: Behandling }>({
     current: undefined,
@@ -151,6 +154,7 @@ const BehandlingKlageIndex: FunctionComponent<OwnProps> = ({
         alleBehandlinger={alleBehandlinger}
         arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysninger ? arbeidsgiverOpplysninger.arbeidsgivere : {}}
         setBehandling={setBehandling}
+        featureToggles={featureToggles}
       />
     </>
   );

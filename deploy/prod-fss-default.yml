@@ -69,6 +69,8 @@ spec:
       value: "http://k9-sak"
 
     # Feature-flag
+    - name: KLAGE_KABAL
+      value: "false"
     - name: VARSELTEKST
       value: "true"
     - name: DOKUMENTDATA
