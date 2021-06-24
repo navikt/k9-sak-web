@@ -13,6 +13,7 @@ export enum OmsorgspengerBehandlingApiKeys {
   STONADSKONTOER_GITT_UTTAKSPERIODER = 'STONADSKONTOER_GITT_UTTAKSPERIODER',
   AKSJONSPUNKTER = 'AKSJONSPUNKTER',
   VILKAR = 'VILKAR',
+  SOKNADSFRIST_STATUS = 'SOKNADSFRIST_STATUS',
   PERSONOPPLYSNINGER = 'PERSONOPPLYSNINGER',
   SIMULERING_RESULTAT = 'SIMULERING_RESULTAT',
   TILBAKEKREVINGVALG = 'TILBAKEKREVINGVALG',
@@ -50,6 +51,7 @@ const endpoints = new RestApiConfigBuilder()
   .withRel('beregningsresultat-utbetalt', OmsorgspengerBehandlingApiKeys.BEREGNINGSRESULTAT_UTBETALING)
   .withRel('aksjonspunkter', OmsorgspengerBehandlingApiKeys.AKSJONSPUNKTER)
   .withRel('vilkar-v3', OmsorgspengerBehandlingApiKeys.VILKAR)
+  .withRel('soknadsfrist-status', OmsorgspengerBehandlingApiKeys.SOKNADSFRIST_STATUS)
   .withRel('soeker-personopplysninger', OmsorgspengerBehandlingApiKeys.PERSONOPPLYSNINGER)
   .withRel('simuleringResultat', OmsorgspengerBehandlingApiKeys.SIMULERING_RESULTAT)
   .withRel('tilbakekrevingvalg', OmsorgspengerBehandlingApiKeys.TILBAKEKREVINGVALG)
