@@ -113,18 +113,25 @@ const VisittkortPanel: FunctionComponent<OwnProps> = ({
             <div className={styles.pushRight}>
               {barnSoktFor.map(barn => (
                 <FlexColumn key={barn.aktoerId}>
-                  <PersonCard
-                    name={barn.navn}
-                    fodselsnummer={barn.fnr}
-                    gender={utledKjonn(barn.navBrukerKjonn)}
-                    isChild
-                    childAge={
-                      <FormattedMessage
-                        id="VisittkortBarnInfoFodselPanel.Fodt"
-                        values={{ dato: moment(barn.fodselsdato).format(DDMMYYYY_DATE_FORMAT) }}
-                      />
-                    }
-                  />
+                  <div className={styles.flexContainer}>
+                    <PersonCard
+                      name={barn.navn}
+                      fodselsnummer={barn.fnr}
+                      gender={utledKjonn(barn.navBrukerKjonn)}
+                      isChild
+                      childAge={
+                        <FormattedMessage
+                          id="VisittkortBarnInfoFodselPanel.Fodt"
+                          values={{ dato: moment(barn.fodselsdato).format(DDMMYYYY_DATE_FORMAT) }}
+                        />
+                      }
+                    />
+                    {barn.dodsdato && (
+                      <p className={styles.dødsdatoLabel}>
+                        {`Død ${moment(barn.dodsdato).format(DDMMYYYY_DATE_FORMAT)}`}
+                      </p>
+                    )}
+                  </div>
                 </FlexColumn>
               ))}
             </div>
