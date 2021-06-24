@@ -25,6 +25,7 @@ const faktaPanelCodes = {
   INNTEKT_OG_YTELSER: 'inntekt-og-ytelser',
   OPPLYSNINGER_FRA_SØKNADEN: 'opplysninger-fra-soknaden',
   ETABLERT_TILSYN: 'etablert-tilsyn',
+  OM_BARNET: 'om-barnet',
 };
 
 export default faktaPanelCodes;

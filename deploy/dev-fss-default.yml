@@ -65,6 +65,8 @@ spec:
       value: "https://psb-inntektsmelding-frontend.dev.adeo.no/"
     - name: PSB_ETABLERT_TILSYN_FRONTEND_URL
       value: "https://psb-etablert-tilsyn-frontend.dev.adeo.no/"
+    - name: PSB_OM_BARNET_FRONTEND_URL
+      value: "https://psb-om-barnet-frontend.dev.adeo.no/"
 
    # Feature-flag
     - name: VARSELTEKST
