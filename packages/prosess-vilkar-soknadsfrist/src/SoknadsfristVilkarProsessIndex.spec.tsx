@@ -36,7 +36,6 @@ describe('<SoknadsfristVilkarForm>', () => {
         lovReferanse=""
         erOverstyrt={false}
         overrideReadOnly={false}
-        erMedlemskapsPanel={false}
         vilkar={[
           {
             perioder: [
@@ -96,7 +95,6 @@ describe('<SoknadsfristVilkarForm>', () => {
         lovReferanse=""
         erOverstyrt={false}
         overrideReadOnly={false}
-        erMedlemskapsPanel={false}
         vilkar={[
           {
             perioder: [
