@@ -68,6 +68,7 @@ describe('<HenleggBehandlingModal>', () => {
           kode: behandlingType.FORSTEGANGSSOKNAD,
           kodeverk: '',
         }}
+        hentMottakere={sinon.spy()}
       />,
     );
 
@@ -104,6 +105,7 @@ describe('<HenleggBehandlingModal>', () => {
           kode: behandlingType.FORSTEGANGSSOKNAD,
           kodeverk: '',
         }}
+        hentMottakere={sinon.spy()}
       />,
     );
 
@@ -196,6 +198,7 @@ describe('<HenleggBehandlingModal>', () => {
           kode: behandlingType.FORSTEGANGSSOKNAD,
           kodeverk: '',
         }}
+        hentMottakere={sinon.spy()}
       />,
     );
 
@@ -220,6 +223,7 @@ describe('<HenleggBehandlingModal>', () => {
           kode: behandlingType.FORSTEGANGSSOKNAD,
           kodeverk: '',
         }}
+        hentMottakere={sinon.spy()}
       />,
     );
 
@@ -247,6 +251,7 @@ describe('<HenleggBehandlingModal>', () => {
           kode: behandlingType.FORSTEGANGSSOKNAD,
           kodeverk: '',
         }}
+        hentMottakere={sinon.spy()}
       />,
     );
 
@@ -279,6 +284,7 @@ describe('<HenleggBehandlingModal>', () => {
           kode: behandlingType.FORSTEGANGSSOKNAD,
           kodeverk: '',
         }}
+        hentMottakere={sinon.spy()}
       />,
     );
 
@@ -310,6 +316,7 @@ describe('<HenleggBehandlingModal>', () => {
           kode: behandlingType.FORSTEGANGSSOKNAD,
           kodeverk: '',
         }}
+        hentMottakere={sinon.spy()}
       />,
     );
 
@@ -343,6 +350,7 @@ describe('<HenleggBehandlingModal>', () => {
           kode: behandlingType.FORSTEGANGSSOKNAD,
           kodeverk: '',
         }}
+        hentMottakere={sinon.spy()}
       />,
     );
 
