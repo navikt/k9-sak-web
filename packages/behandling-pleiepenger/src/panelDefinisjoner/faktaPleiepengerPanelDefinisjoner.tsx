@@ -7,10 +7,8 @@ import OmsorgenForFaktaPanelDef from './faktaPaneler/OmsorgenForFaktaPanelDef';
 import InntektsmeldingFaktaPanelDef from './faktaPaneler/InntektsmeldingFaktaPanelDef';
 import EtablertTilsynFaktaPanelDef from './faktaPaneler/EtablertTilsynFaktaPanelDef';
 import FordelBeregningPanelDef from './faktaPaneler/FordelBeregningPanelDef';
-import OmBarnetFaktaPanelDef from './faktaPaneler/OmBarnetFaktaPanelDef';
 
 const faktaPanelDefinisjoner = [
-  new OmBarnetFaktaPanelDef(),
   new ArbeidsforholdFaktaPanelDef(),
   new OmsorgenForFaktaPanelDef(),
   new MedisinskVilkarFaktaPanelDef2(),
