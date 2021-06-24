@@ -181,6 +181,8 @@ const FagsakIndex: FunctionComponent = () => {
             oppfriskBehandlinger={oppfriskBehandlinger}
             fagsakRettigheter={fagsakRettigheter}
             behandlingRettigheter={behandlingRettigheter}
+            personopplysninger={behandlingPersonopplysninger}
+            arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysninger?.arbeidsgivere ?? {}}
           />
         }
         supportContent={() => {

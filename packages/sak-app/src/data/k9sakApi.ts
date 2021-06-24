@@ -1,5 +1,6 @@
 import { RestApiConfigBuilder, createRequestApi } from '@k9-sak-web/rest-api';
 import { RestApiHooks } from '@k9-sak-web/rest-api-hooks';
+import { KlageBehandlingApiKeys } from '@k9-sak-web/behandling-klage/src/data/klageBehandlingApi';
 
 // NB! ALDRI BRUK DETTE UTENFOR PAKKEN 'SAK-APP'
 
@@ -59,6 +60,7 @@ export enum K9sakApiKeys {
   TILGJENGELIGE_VEDTAKSBREV = 'TILGJENGELIGE_VEDTAKSBREV',
   ARBEIDSGIVERE = 'ARBEIDSGIVERE',
   FAGSAK_RELATERTE_SAKER = 'FAGSAK_RELATERTE_SAKER',
+  PARTER_MED_KLAGERETT = 'PARTER_MED_KLAGERETT',
 }
 
 const endpoints = new RestApiConfigBuilder()
@@ -129,6 +131,8 @@ const endpoints = new RestApiConfigBuilder()
 
   // Kun brukt for søk på localhost
   .withPost('/k9/sak/api/fagsak/sok', K9sakApiKeys.SEARCH_FAGSAK)
+
+  .withRel('parter-klagerett', KlageBehandlingApiKeys.PARTER_MED_KLAGERETT)
 
   .build();
 
