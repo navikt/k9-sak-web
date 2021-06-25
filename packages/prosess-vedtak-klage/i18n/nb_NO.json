@@ -18,6 +18,7 @@
   "VedtakKlageForm.KlageOmgjortUgunst": "Vedtaket er omgjort til ugunst",
   "VedtakKlageForm.KlageOmgjortDelvis": "Vedtaket er delvis omgjort til gunst",
   "VedtakKlageForm.HjemmsendUtenOpphev": "Vedtaket er hjemsendt",
+  "VedtakKlageForm.Trukket": "Klagen er trukket",
   "VedtakKlageForm.Header": "Resultat",
   "VedtakKlageForm.KlageAvvist": "Avvist fordi klagen ikke oppfyller formkravene",
   "VedtakKlageForm.KlageStadfestet": "Vedtaket er stadfestet",
