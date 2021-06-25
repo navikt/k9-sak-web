@@ -5,14 +5,15 @@ import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import { prosessStegCodes } from '@k9-sak-web/konstanter';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { ProsessStegDef, ProsessStegPanelDef } from '@k9-sak-web/behandling-felles';
-import { Fagsak } from '@k9-sak-web/types';
+import { Fagsak, FeatureToggles } from '@k9-sak-web/types';
 
 class PanelDef extends ProsessStegPanelDef {
   getKomponent = props => <KlagevurderingProsessIndex {...props} />;
 
   getAksjonspunktKoder = () => [aksjonspunktCodes.BEHANDLE_KLAGE_NK];
 
-  getOverstyrVisningAvKomponent = ({ fagsak }: { fagsak: Fagsak }) => fagsak.sakstype.kode === fagsakYtelseType.FRISINN;
+  getOverstyrVisningAvKomponent = ({ fagsak, featureToggles }: { fagsak: Fagsak; featureToggles: FeatureToggles }) =>
+    featureToggles?.KLAGE_KABAL ? fagsak.sakstype.kode === fagsakYtelseType.FRISINN : true;
 
   getData = ({ saveKlageText, klageVurdering, previewCallback }) => ({
     saveKlage: saveKlageText,

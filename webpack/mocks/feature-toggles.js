@@ -2,6 +2,10 @@ require('dotenv').config();
 
 const featureToggles = [
   {
+    key: 'KLAGE_KABAL',
+    value: process.env.KLAGE_KABAL,
+  },
+  {
     key: 'VARSELTEKST',
     value: process.env.VARSELTEKST,
   },

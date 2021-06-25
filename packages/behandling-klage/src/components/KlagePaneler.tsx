@@ -8,6 +8,7 @@ import {
   KodeverkMedNavn,
   FagsakPerson,
   ArbeidsgiverOpplysningerPerId,
+  FeatureToggles,
 } from '@k9-sak-web/types';
 
 import KlageProsess from './KlageProsess';
@@ -36,6 +37,7 @@ interface OwnProps {
   }[];
   arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysningerPerId;
   setBehandling: (behandling: Behandling) => void;
+  featureToggles: FeatureToggles;
 }
 
 const KlagePaneler: FunctionComponent<OwnProps> = ({
@@ -54,6 +56,7 @@ const KlagePaneler: FunctionComponent<OwnProps> = ({
   alleBehandlinger,
   arbeidsgiverOpplysningerPerId,
   setBehandling,
+  featureToggles,
 }) => (
   <>
     <BehandlingPaVent
@@ -77,6 +80,7 @@ const KlagePaneler: FunctionComponent<OwnProps> = ({
       alleKodeverk={kodeverk}
       arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
       setBehandling={setBehandling}
+      featureToggles={featureToggles}
     />
   </>
 );
