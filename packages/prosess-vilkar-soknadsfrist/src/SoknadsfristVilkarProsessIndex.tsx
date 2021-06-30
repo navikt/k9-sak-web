@@ -4,6 +4,7 @@ import { Aksjonspunkt, Behandling, KodeverkMedNavn, SubmitCallback, Vilkar } fro
 import { SideMenu } from '@navikt/k9-react-components';
 import classNames from 'classnames/bind';
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import messages from '../i18n/nb_NO.json';
 import SoknadsfristVilkarForm from './components/SoknadsfristVilkarForm';
 import SoknadsfristVilkarHeader from './components/SoknadsfristVilkarHeader';
@@ -37,7 +38,6 @@ interface SoknadsfristVilkarProsessIndexProps {
   lovReferanse?: string;
   erOverstyrt: boolean;
   panelTittelKode: string;
-  overstyringApKode: string;
   vilkar: Vilkar[];
   visAllePerioder: boolean;
   soknadsfristStatus: any;
@@ -54,7 +54,6 @@ const SoknadsfristVilkarProsessIndex = ({
   avslagsarsaker,
   erOverstyrt,
   panelTittelKode,
-  overstyringApKode,
   lovReferanse,
   vilkar,
   visAllePerioder,
@@ -77,7 +76,9 @@ const SoknadsfristVilkarProsessIndex = ({
 
   const dokument = soknadsfristStatus.dokumentStatus.filter(dok =>
     dok.status.some(
-      status => status.periode.fom >= activePeriode.periode.fom && status.periode.tom <= activePeriode.periode.tom,
+      status =>
+        (activePeriode.periode.fom >= status.periode.fom && activePeriode.periode.fom <= status.periode.tom) ||
+        (activePeriode.periode.tom >= status.periode.fom && activePeriode.periode.tom <= status.periode.tom),
     ),
   );
 
@@ -104,7 +105,7 @@ const SoknadsfristVilkarProsessIndex = ({
             kanOverstyreAccess={kanOverstyreAccess}
             lovReferanse={activeVilkår.lovReferanse ?? lovReferanse}
             overrideReadOnly={overrideReadOnly}
-            overstyringApKode={overstyringApKode}
+            overstyringApKode={aksjonspunktCodes.OVERSTYR_SOKNADSFRISTVILKAR}
             panelTittelKode={panelTittelKode}
             status={activePeriode.vilkarStatus.kode}
             toggleOverstyring={toggleOverstyring}
@@ -125,7 +126,6 @@ const SoknadsfristVilkarProsessIndex = ({
             status={activePeriode.vilkarStatus.kode}
             erOverstyrt={erOverstyrt}
             panelTittelKode={panelTittelKode}
-            overstyringApKode={overstyringApKode}
             lovReferanse={activeVilkår.lovReferanse ?? lovReferanse}
             avslagKode={activePeriode.avslagKode}
             dokument={dokument}
