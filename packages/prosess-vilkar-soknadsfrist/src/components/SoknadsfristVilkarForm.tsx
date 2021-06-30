@@ -62,7 +62,7 @@ interface SoknadsfristVilkarFormProps {
   customVilkarOppfyltText?: CustomVilkarText;
   erOverstyrt?: boolean;
   erVilkarOk?: boolean;
-  hasAksjonspunkt: boolean;
+  harAksjonspunkt: boolean;
   isReadOnly: boolean;
   lovReferanse?: string;
   medlemskapFom: string;
@@ -97,7 +97,7 @@ export const SoknadsfristVilkarForm: FunctionComponent<SoknadsfristVilkarFormPro
     erVilkarOk,
     customVilkarIkkeOppfyltText,
     customVilkarOppfyltText,
-    hasAksjonspunkt,
+    harAksjonspunkt,
     avslagsarsaker,
     overrideReadOnly,
     toggleOverstyring,
@@ -123,7 +123,7 @@ export const SoknadsfristVilkarForm: FunctionComponent<SoknadsfristVilkarFormPro
 
     return (
       <form onSubmit={handleSubmit}>
-        {(erOverstyrt || hasAksjonspunkt) && (
+        {(erOverstyrt || harAksjonspunkt) && (
           <AksjonspunktBox
             className={styles.aksjonspunktMargin}
             erAksjonspunktApent={erOverstyrt || harÅpentAksjonspunkt}
@@ -139,7 +139,7 @@ export const SoknadsfristVilkarForm: FunctionComponent<SoknadsfristVilkarFormPro
             )}
             <VerticalSpacer eightPx />
             <SoknadsfristVilkarBegrunnelse
-              skalViseBegrunnelse={erOverstyrt || hasAksjonspunkt}
+              skalViseBegrunnelse={erOverstyrt || harAksjonspunkt}
               readOnly={isReadOnly || (!erOverstyrt && !harÅpentAksjonspunkt)}
               erVilkarOk={erVilkarOk}
               customVilkarIkkeOppfyltText={customVilkarIkkeOppfyltText}
@@ -291,11 +291,11 @@ const mapStateToPropsFactory = (_initialState, initialOwnProps: SoknadsfristVilk
       onSubmit,
       initialValues,
       harÅpentAksjonspunkt,
+      harAksjonspunkt: aksjonspunkt !== undefined,
       customVilkarOppfyltText: getCustomVilkarTextForOppfylt(ownProps),
       customVilkarIkkeOppfyltText: getCustomVilkarTextForIkkeOppfylt(ownProps),
       isSolvable: erOverstyrt || isSolvable,
       isReadOnly: overrideReadOnly,
-      hasAksjonspunkt: aksjonspunkt !== undefined,
       validate: validateFn,
       form: formName,
       periodeFom,
