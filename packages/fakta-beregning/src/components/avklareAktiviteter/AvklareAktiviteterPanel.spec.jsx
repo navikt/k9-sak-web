@@ -579,9 +579,13 @@ describe('<AvklareAktiviteterPanel>', () => {
     values.avklareAktiviteterListe[0][id2] = { skalBrukes: true };
     values.avklareAktiviteterListe[0][id3] = { skalBrukes: true };
     values.avklareAktiviteterListe[0][idAAP] = { skalBrukes: true };
-    const transformed = transformValues(values);
+    const vilkårsperioder = [{ periode: { fom: '2019-02-02', tom: '2019-02-05' } }];
+    const bg = { skjaeringstidspunktBeregning: '2019-02-02' };
+    const transformed = transformValues(values, vilkårsperioder, bg);
     expect(transformed[0].grunnlag.length).to.equal(1);
-    expect(transformed[0].grunnlag[0].oppdragsgiverOrg).to.equal(aktivitet1.arbeidsgiverId);
+    expect(transformed[0].grunnlag[0].beregningsaktivitetLagreDtoList[0].oppdragsgiverOrg).to.equal(
+      aktivitet1.arbeidsgiverId,
+    );
   });
 
   it('skal transform values om for valgt overstyring', () => {
@@ -599,9 +603,13 @@ describe('<AvklareAktiviteterPanel>', () => {
     values.avklareAktiviteterListe[0][idAAP] = { skalBrukes: true };
     values.avklareAktiviteterListe[0][BEGRUNNELSE_AVKLARE_AKTIVITETER_NAME] = 'begrunnelse';
     values.avklareAktiviteterListe[0][MANUELL_OVERSTYRING_FIELD] = true;
-    const transformed = transformValues(values);
+    const vilkårsperioder = [{ periode: { fom: '2019-02-02', tom: '2019-02-05' } }];
+    const bg = { skjaeringstidspunktBeregning: '2019-02-02' };
+    const transformed = transformValues(values, vilkårsperioder, bg);
     expect(transformed[0].grunnlag.length).to.equal(1);
-    expect(transformed[0].grunnlag[0].arbeidsgiverIdentifikator).to.equal(aktivitet3.aktørIdString);
+    expect(transformed[0].grunnlag[0].beregningsaktivitetLagreDtoList[0].arbeidsgiverIdentifikator).to.equal(
+      aktivitet3.aktørIdString,
+    );
     expect(transformed[0].begrunnelse).to.equal('begrunnelse');
     expect(transformed[0].kode).to.equal(OVERSTYRING_AV_BEREGNINGSAKTIVITETER);
   });
