@@ -71,7 +71,7 @@ const VisittkortPanel: FunctionComponent<OwnProps> = ({
   }
 
   const soker = personopplysninger;
-  const annenPart = personopplysninger.annenPart ? personopplysninger : personopplysninger.annenPart;
+  const annenPart = typeof personopplysninger.annenPart !== 'undefined' ? personopplysninger.annenPart : null;
   const barnSoktFor = personopplysninger.barnSoktFor?.length > 0 ? personopplysninger.barnSoktFor : null;
 
   return (
