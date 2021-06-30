@@ -14,7 +14,10 @@ class SoknadsfristPanelDef extends ProsessStegPanelDef {
 
   getKomponent = props => <SoknadsfristVilkarProsessIndex {...props} />;
 
-  getAksjonspunktKoder = () => [aksjonspunktCodes.OVERSTYR_SOKNADSFRISTVILKAR];
+  getAksjonspunktKoder = () => [
+    aksjonspunktCodes.OVERSTYR_SOKNADSFRISTVILKAR,
+    aksjonspunktCodes.KONTROLLER_OPPLYSNINGER_OM_SØKNADSFRIST,
+  ];
 
   getVilkarKoder = () => [vilkarType.SOKNADSFRISTVILKARET];
 
@@ -33,7 +36,6 @@ class SoknadsfristPanelDef extends ProsessStegPanelDef {
   }): any => ({
     avslagsarsaker: alleKodeverk[kodeverkTyper.AVSLAGSARSAK][vilkarForSteg[0].vilkarType.kode],
     erOverstyrt: overstyrteAksjonspunktKoder.some(o => this.getAksjonspunktKoder().some(a => a === o)),
-    overstyringApKode: this.getAksjonspunktKoder()[0],
     panelTittelKode: this.getTekstKode() ? this.getTekstKode() : prosessStegTekstKode,
     lovReferanse: vilkarForSteg.length > 0 ? vilkarForSteg[0].lovReferanse : undefined,
     overrideReadOnly,
