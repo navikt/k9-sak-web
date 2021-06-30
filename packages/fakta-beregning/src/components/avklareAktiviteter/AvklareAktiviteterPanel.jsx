@@ -197,27 +197,39 @@ const validate = values => {
   return {};
 };
 
-export const transformValues = values => {
+export const transformValues = (values, behandlingResultatPerioder, aktivtBg) => {
   const fieldArrayList = values[fieldArrayName];
-  return fieldArrayList
+  const harOverstyrt = fieldArrayList.some(currentFormValues => currentFormValues[MANUELL_OVERSTYRING_FIELD]);
+  const valuesMedBegrunnelse = fieldArrayList.find(
+    currentFormValues => !!currentFormValues[BEGRUNNELSE_AVKLARE_AKTIVITETER_NAME],
+  );
+  const beg = valuesMedBegrunnelse ? valuesMedBegrunnelse[BEGRUNNELSE_AVKLARE_AKTIVITETER_NAME] : null;
+  const løsteGrunnlag = fieldArrayList
     .filter(currentFormValues => {
       const skalOverstyre = currentFormValues[MANUELL_OVERSTYRING_FIELD];
       return skalKunneLoseAksjonspunkt(skalOverstyre, currentFormValues.aksjonspunkter);
     })
     .map(currentFormValues => {
       const { avklarAktiviteter } = currentFormValues;
-      const skalOverstyre = currentFormValues[MANUELL_OVERSTYRING_FIELD];
       const vurderAktiviteterTransformed = VurderAktiviteterPanel.transformValues(
         currentFormValues,
         avklarAktiviteter.aktiviteterTomDatoMapping,
       );
-      const beg = currentFormValues[BEGRUNNELSE_AVKLARE_AKTIVITETER_NAME];
+      const vilkarPeriode = behandlingResultatPerioder.find(
+        periode => periode.periode.fom === aktivtBg.skjaeringstidspunktBeregning,
+      );
       return {
-        kode: skalOverstyre ? OVERSTYRING_AV_BEREGNINGSAKTIVITETER : AVKLAR_AKTIVITETER,
-        begrunnelse: beg === undefined ? null : beg,
-        grunnlag: [...vurderAktiviteterTransformed.beregningsaktivitetLagreDtoList],
+        ...vurderAktiviteterTransformed,
+        periode: vilkarPeriode.periode,
       };
     });
+  return [
+    {
+      kode: harOverstyrt ? OVERSTYRING_AV_BEREGNINGSAKTIVITETER : AVKLAR_AKTIVITETER,
+      begrunnelse: beg === undefined ? null : beg,
+      grunnlag: løsteGrunnlag,
+    },
+  ];
 };
 
 const skalKunneOverstyre = (erOverstyrer, aksjonspunkter) =>
@@ -235,7 +247,11 @@ const getIsAksjonspunktClosed = createSelector([ownProps => ownProps.aksjonspunk
 });
 
 const mapStateToPropsFactory = (initialState, initialProps) => {
-  const onSubmit = vals => initialProps.submitCallback(transformValues(vals));
+  const aktivtBg = initialProps.alleBeregningsgrunnlag
+    ? initialProps.alleBeregningsgrunnlag[initialProps.aktivtBeregningsgrunnlagIndex]
+    : initialProps.beregningsgrunnlag;
+  const onSubmit = vals =>
+    initialProps.submitCallback(transformValues(vals, initialProps.behandlingResultatPerioder, aktivtBg));
   return (state, ownProps) => {
     const values = getFormValuesForAvklarAktiviteter(state, ownProps);
 
