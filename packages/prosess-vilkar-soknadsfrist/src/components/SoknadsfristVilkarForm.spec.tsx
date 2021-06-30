@@ -15,13 +15,13 @@ describe('<SoknadsfristVilkarForm>', () => {
         {...reduxFormPropsMock}
         erVilkarOk
         isReadOnly
-        overstyringApKode="5011"
         avslagsarsaker={[
           { kode: 'test1', navn: 'test1', kodeverk: 'test' },
           { kode: 'test2', navn: 'test1', kodeverk: 'test' },
         ]}
         lovReferanse="§23"
-        hasAksjonspunkt
+        harAksjonspunkt
+        harÅpentAksjonspunkt={false}
         overrideReadOnly={false}
         toggleOverstyring={() => undefined}
         erOverstyrt
