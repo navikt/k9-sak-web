@@ -2,11 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import moment from 'moment';
-import { required, DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils';
+import { DDMMYYYY_DATE_FORMAT, required } from '@fpsak-frontend/utils';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
 import opptjeningAktivitetTyper from '@fpsak-frontend/kodeverk/src/opptjeningAktivitetType';
 import { RadioGroupField, RadioOption } from '@fpsak-frontend/form';
-import { Table, TableRow, TableColumn, PeriodLabel, EditedIcon } from '@fpsak-frontend/shared-components';
+import { EditedIcon, PeriodLabel, Table, TableColumn, TableRow } from '@fpsak-frontend/shared-components';
 import { createVisningsnavnForAktivitet } from '../ArbeidsforholdHelper';
 import beregningAktivitetPropType from './beregningAktivitetPropType';
 
@@ -190,7 +190,11 @@ VurderAktiviteterTabell.validate = (values, aktiviteter) => {
 
 VurderAktiviteterTabell.transformValues = (values, aktiviteter) =>
   aktiviteter
-    .filter(aktivitet => values[lagAktivitetFieldId(aktivitet)].skalBrukes === false)
+    .filter(
+      aktivitet =>
+        values[lagAktivitetFieldId(aktivitet)].skalBrukes === false ||
+        values[lagAktivitetFieldId(aktivitet)].tom != null,
+    )
     .map(aktivitet => ({
       oppdragsgiverOrg: aktivitet.aktørIdString ? null : aktivitet.arbeidsgiverId,
       arbeidsforholdRef: aktivitet.arbeidsforholdId,
@@ -198,7 +202,7 @@ VurderAktiviteterTabell.transformValues = (values, aktiviteter) =>
       tom: aktivitet.tom,
       opptjeningAktivitetType: aktivitet.arbeidsforholdType ? aktivitet.arbeidsforholdType.kode : null,
       arbeidsgiverIdentifikator: aktivitet.aktørIdString ? aktivitet.aktørIdString : null,
-      skalBrukes: false,
+      skalBrukes: values[lagAktivitetFieldId(aktivitet)].skalBrukes,
     }));
 
 VurderAktiviteterTabell.hasValueChangedFromInitial = (aktiviteter, values, initialValues) => {
