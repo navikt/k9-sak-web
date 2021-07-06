@@ -47,7 +47,7 @@ spec:
     - name: APP_URL_K9OPPDRAG
       value: "http://k9-oppdrag"
     - name: APP_URL_KLAGE
-      value: 'http://k9-klage'
+      value: "http://k9-klage.k9saksbehandling"
     - name: APP_URL_K9TILBAKE
       value: "http://k9-tilbake"
     # setter denne til å peke på k9-sak, inntil diagnosekode-apiinstansen er oppe i prod
@@ -70,7 +70,7 @@ spec:
 
     # Feature-flag
     - name: KLAGE_KABAL
-      value: "false"
+      value: "true"
     - name: VARSELTEKST
       value: "true"
     - name: DOKUMENTDATA
