@@ -121,7 +121,7 @@ interface ActivityPanelProps {
   selectNextPeriod?: (event: MouseEvent | KeyboardEvent) => void;
   selectPrevPeriod?: (event: MouseEvent | KeyboardEvent) => void;
   updateActivity: (values: string) => void;
-  vurderingsårsaker: string[];
+  vurderingsårsaker?: string[];
 }
 
 interface StateProps {
@@ -228,7 +228,7 @@ export const ActivityPanel: FunctionComponent<
       arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
     />
 
-    {vurderingsårsaker.length > 0 && (
+    {typeof vurderingsårsaker !== 'undefined' && vurderingsårsaker.length > 0 && (
       <Row>
         <Column xs="12">
           <p className={styles.vurderingsårsakerOverskrift}>Vurderingsstatus</p>
