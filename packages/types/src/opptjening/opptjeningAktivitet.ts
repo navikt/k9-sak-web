@@ -23,6 +23,7 @@ type OpptjeningAktivitet = Readonly<{
   privatpersonFødselsdato: string;
   privatpersonNavn: string;
   stillingsandel: number;
+  vurderingsStatus: string;
 }>;
 
 export default OpptjeningAktivitet;

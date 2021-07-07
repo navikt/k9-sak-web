@@ -120,6 +120,7 @@ interface ActivityPanelProps {
   selectNextPeriod?: (event: MouseEvent | KeyboardEvent) => void;
   selectPrevPeriod?: (event: MouseEvent | KeyboardEvent) => void;
   updateActivity: (values: string) => void;
+  vilkarStatus: string[];
 }
 
 interface StateProps {
@@ -156,6 +157,7 @@ export const ActivityPanel: FunctionComponent<
   handleSubmit,
   pristine,
   arbeidsgiverOpplysningerPerId,
+  vilkarStatus,
 }) => (
   <FaktaGruppe
     className={styles.panel}
@@ -224,6 +226,15 @@ export const ActivityPanel: FunctionComponent<
       selectedActivityType={selectedActivityType}
       arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
     />
+    <Row>
+      <Column xs="12">
+        <p>Vurderingsstatus</p>
+        {vilkarStatus.map(status => (
+          <p>{status}</p>
+        ))}
+      </Column>
+    </Row>
+
     {!shouldDisablePeriodpicker(hasAksjonspunkt, initialValues) && (
       <>
         <VerticalSpacer twentyPx />
@@ -276,14 +287,8 @@ export const ActivityPanel: FunctionComponent<
 );
 
 const mapStateToPropsFactory = (initialState, initialOwnProps: ActivityPanelProps) => {
-  const {
-    activity,
-    alleKodeverk,
-    behandlingId,
-    behandlingVersjon,
-    opptjeningAktivitetTypes,
-    updateActivity,
-  } = initialOwnProps;
+  const { activity, alleKodeverk, behandlingId, behandlingVersjon, opptjeningAktivitetTypes, updateActivity } =
+    initialOwnProps;
   const onSubmit = values => updateActivity(values);
   const arbeidTyper = alleKodeverk[kodeverkTyper.ARBEID_TYPE];
   const filtrerteOpptjeningAktivitetTypes = filterActivityType(
