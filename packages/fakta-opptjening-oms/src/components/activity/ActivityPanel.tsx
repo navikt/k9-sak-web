@@ -120,7 +120,7 @@ interface ActivityPanelProps {
   selectNextPeriod?: (event: MouseEvent | KeyboardEvent) => void;
   selectPrevPeriod?: (event: MouseEvent | KeyboardEvent) => void;
   updateActivity: (values: string) => void;
-  vilkarStatus: string[];
+  kode: string[];
 }
 
 interface StateProps {
@@ -157,7 +157,7 @@ export const ActivityPanel: FunctionComponent<
   handleSubmit,
   pristine,
   arbeidsgiverOpplysningerPerId,
-  vilkarStatus,
+  kode,
 }) => (
   <FaktaGruppe
     className={styles.panel}
@@ -229,7 +229,7 @@ export const ActivityPanel: FunctionComponent<
     <Row>
       <Column xs="12">
         <p>Vurderingsstatus</p>
-        {vilkarStatus.map(status => (
+        {kode.map(status => (
           <p>{status}</p>
         ))}
       </Column>

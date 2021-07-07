@@ -295,7 +295,7 @@ export class OpptjeningFaktaFormImpl extends Component<
     const { opptjeningFom, opptjeningTom } = fastsattOpptjening;
 
     const vurderingsStatusForOpptjeningAktivitet = opptjeningAktivitetList.map(
-      aktivitet => `${aktivitet.id} - ${aktivitet.vurderingsStatus}`,
+      aktivitet => `${aktivitet.id} - ${aktivitet.kode}`,
     );
 
     return (
@@ -376,7 +376,7 @@ export class OpptjeningFaktaFormImpl extends Component<
                 alleMerknaderFraBeslutter={alleMerknaderFraBeslutter}
                 alleKodeverk={alleKodeverk}
                 arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
-                vilkarStatus={vurderingsStatusForOpptjeningAktivitet}
+                kode={vurderingsStatusForOpptjeningAktivitet}
               />
               <VerticalSpacer twentyPx />
             </>
