@@ -15,7 +15,7 @@
     "prop-types": "^15.7.2",
     "react": "^16.14.0",
     "react-dom": "^16.14.0",
-    "react-intl": "^5.20.1",
+    "react-intl": "^5.20.4",
     "react-visjs-timeline": "^1.6.0",
     "vis-timeline": "7.4.9"
   }

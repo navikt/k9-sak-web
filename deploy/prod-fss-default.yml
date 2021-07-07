@@ -47,7 +47,7 @@ spec:
     - name: APP_URL_K9OPPDRAG
       value: "http://k9-oppdrag"
     - name: APP_URL_KLAGE
-      value: 'http://k9-klage'
+      value: "http://k9-klage.k9saksbehandling"
     - name: APP_URL_K9TILBAKE
       value: "http://k9-tilbake"
     # setter denne til å peke på k9-sak, inntil diagnosekode-apiinstansen er oppe i prod
@@ -66,11 +66,11 @@ spec:
     - name: PSB_ETABLERT_TILSYN_FRONTEND_URL
       value: "https://psb-etablert-tilsyn-frontend.intern.nav.no/"
     - name: PSB_OM_BARNET_FRONTEND_URL
-      value: "http://k9-sak"
+      value: "https://psb-om-barnet-frontend.intern.nav.no/"
 
     # Feature-flag
     - name: KLAGE_KABAL
-      value: "false"
+      value: "true"
     - name: VARSELTEKST
       value: "true"
     - name: DOKUMENTDATA

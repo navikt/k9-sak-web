@@ -23,11 +23,8 @@ const intl = createIntl(
   cache,
 );
 
-const {
-  VURDER_FAKTA_FOR_ATFL_SN,
-  OVERSTYRING_AV_BEREGNINGSAKTIVITETER,
-  OVERSTYRING_AV_BEREGNINGSGRUNNLAG,
-} = aksjonspunktCodes;
+const { VURDER_FAKTA_FOR_ATFL_SN, OVERSTYRING_AV_BEREGNINGSAKTIVITETER, OVERSTYRING_AV_BEREGNINGSGRUNNLAG } =
+  aksjonspunktCodes;
 
 const lagLabel = (bg, vilkårsperioder) => {
   const stpOpptjening = bg.faktaOmBeregning.avklarAktiviteter.skjæringstidspunkt;
@@ -90,6 +87,7 @@ const BeregningFaktaIndex = ({
           behandlingId={behandling.id}
           behandlingVersjon={behandling.versjon}
           beregningsgrunnlag={aktivtBeregningsrunnlag}
+          behandlingResultatPerioder={vilkårsperioder}
           aktivtBeregningsgrunnlagIndex={aktivtBeregningsgrunnlagIndeks}
           alleBeregningsgrunnlag={beregningsgrunnlag}
           arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
