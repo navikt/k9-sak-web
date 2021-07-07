@@ -295,7 +295,7 @@ export class OpptjeningFaktaFormImpl extends Component<
     const { opptjeningFom, opptjeningTom } = fastsattOpptjening;
 
     const vurderingsStatusForOpptjeningAktivitet = opptjeningAktivitetList.map(
-      aktivitet => `${aktivitet.id} - ${aktivitet.kode}`,
+      aktivitet => `${aktivitet.id} - ${aktivitet.vurderingÅrsak.kode}`,
     );
 
     return (
