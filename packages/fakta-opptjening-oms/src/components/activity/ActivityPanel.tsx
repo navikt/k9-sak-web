@@ -13,6 +13,7 @@ import arbeidType from '@fpsak-frontend/kodeverk/src/arbeidType';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import opptjeningAktivitetType from '@fpsak-frontend/kodeverk/src/opptjeningAktivitetType';
 import { FlexColumn, FlexContainer, FlexRow, VerticalSpacer, FaktaGruppe } from '@fpsak-frontend/shared-components';
+import { v4 as uuidv4 } from 'uuid';
 import { TimeLineButton } from '@fpsak-frontend/tidslinje';
 import {
   findDifferenceInMonthsAndDays,
@@ -120,7 +121,7 @@ interface ActivityPanelProps {
   selectNextPeriod?: (event: MouseEvent | KeyboardEvent) => void;
   selectPrevPeriod?: (event: MouseEvent | KeyboardEvent) => void;
   updateActivity: (values: string) => void;
-  kode: string[];
+  vurderingsårsaker: string[];
 }
 
 interface StateProps {
@@ -157,7 +158,7 @@ export const ActivityPanel: FunctionComponent<
   handleSubmit,
   pristine,
   arbeidsgiverOpplysningerPerId,
-  kode,
+  vurderingsårsaker,
 }) => (
   <FaktaGruppe
     className={styles.panel}
@@ -226,15 +227,19 @@ export const ActivityPanel: FunctionComponent<
       selectedActivityType={selectedActivityType}
       arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
     />
-    <Row>
-      <Column xs="12">
-        <p>Vurderingsstatus</p>
-        {kode.map(status => (
-          <p>{status}</p>
-        ))}
-      </Column>
-    </Row>
 
+    {vurderingsårsaker.length > 0 && (
+      <Row>
+        <Column xs="12">
+          <p className={styles.vurderingsårsakerOverskrift}>Vurderingsstatus</p>
+          {vurderingsårsaker.map(årsak => (
+            <p key={uuidv4()} className={styles.vurderingsårsaker}>
+              {årsak}
+            </p>
+          ))}
+        </Column>
+      </Row>
+    )}
     {!shouldDisablePeriodpicker(hasAksjonspunkt, initialValues) && (
       <>
         <VerticalSpacer twentyPx />

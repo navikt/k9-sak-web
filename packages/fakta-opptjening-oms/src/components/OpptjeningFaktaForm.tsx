@@ -27,6 +27,7 @@ import { change as reduxFormChange, initialize as reduxFormInitialize } from 're
 import ActivityPanel, { activityPanelNameFormName } from './activity/ActivityPanel';
 import styles from './opptjeningFaktaForm.less';
 import OpptjeningTimeLine from './timeline/OpptjeningTimeLine';
+import VurderingÅrsak from '../types/VurderingÅrsak';
 
 const sortByFomDate = (opptjeningPeriods: Opptjening[]) =>
   opptjeningPeriods.sort((o1, o2) => {
@@ -294,9 +295,15 @@ export class OpptjeningFaktaFormImpl extends Component<
     const { opptjeningAktivitetList, fastsattOpptjening } = activeOpptjeningObject;
     const { opptjeningFom, opptjeningTom } = fastsattOpptjening;
 
-    const vurderingsStatusForOpptjeningAktivitet = opptjeningAktivitetList.map(
-      aktivitet => `${aktivitet.id} - ${aktivitet.vurderingÅrsak.kode}`,
+    const vurderingsårsakMedVurdering: OpptjeningAktivitet[] = opptjeningAktivitetList.filter(
+      aktivitet =>
+        typeof aktivitet.vurderingÅrsak !== 'undefined' &&
+        aktivitet.vurderingÅrsak.kode !== VurderingÅrsak.INGEN_VURDERING,
     );
+    const vurderingsårsaker: string[] = vurderingsårsakMedVurdering.map(aktivitet => {
+      const årsakMedMellomrom = aktivitet.vurderingÅrsak.kode.replaceAll('_', ' ').toLowerCase();
+      return `${årsakMedMellomrom.charAt(0).toUpperCase()}${årsakMedMellomrom.slice(1)}`;
+    });
 
     return (
       <div className={styles.container}>
@@ -376,7 +383,7 @@ export class OpptjeningFaktaFormImpl extends Component<
                 alleMerknaderFraBeslutter={alleMerknaderFraBeslutter}
                 alleKodeverk={alleKodeverk}
                 arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
-                kode={vurderingsStatusForOpptjeningAktivitet}
+                vurderingsårsaker={vurderingsårsaker}
               />
               <VerticalSpacer twentyPx />
             </>

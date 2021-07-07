@@ -140,13 +140,19 @@ const ActivityDataSubPanel = ({
         )}
       </Row>
     )}
-    <VerticalSpacer eightPx />
     {isOfType(selectedActivityType, OAType.NARING) && (
-      <Row>
-        <Column xs="8">
-          <DatepickerField name="naringRegistreringsdato" label={{ id: 'ActivityPanel.Registreringsdato' }} readOnly />
-        </Column>
-      </Row>
+      <>
+        <VerticalSpacer eightPx />
+        <Row>
+          <Column xs="8">
+            <DatepickerField
+              name="naringRegistreringsdato"
+              label={{ id: 'ActivityPanel.Registreringsdato' }}
+              readOnly
+            />
+          </Column>
+        </Row>
+      </>
     )}
   </>
 );
