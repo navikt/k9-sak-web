@@ -138,9 +138,13 @@ SoknadsfristVilkarBegrunnelse.defaultProps = {
 SoknadsfristVilkarBegrunnelse.buildInitialValues = (avslagKode, aksjonspunkter, status, periode, dokument) => ({
   avklarteKrav: dokument.map(dok => ({
     ...VilkarResultPicker.buildInitialValues(avslagKode, aksjonspunkter, status),
-    begrunnelse: decodeHtmlEntity(dok.overstyrteOpplysninger?.begrunnelse || ''),
+    begrunnelse: decodeHtmlEntity(
+      dok.overstyrteOpplysninger?.begrunnelse || dok.avklarteOpplysninger?.begrunnelse || '',
+    ),
     journalpostId: dok.journalpostId,
-    fraDato: formatDate(dok.overstyrteOpplysninger?.fraDato || dok.innsendingstidspunkt),
+    fraDato: formatDate(
+      dok.overstyrteOpplysninger?.fraDato || dok.avklarteOpplysninger?.fraDato || dok.innsendingstidspunkt,
+    ),
   })),
 });
 
