@@ -50,7 +50,7 @@ const lagArbeidsgiverNavnOgFødselsdatoTekst = arbeidsgiver =>
   `${capitalizeFirstLetters(arbeidsgiver.navn)} (${moment(arbeidsgiver.fødselsdato).format(DDMMYYYY_DATE_FORMAT)})`;
 
 const lagArbeidsgiverNavnOgOrgnrTekst = arbeidsgiver =>
-  `${capitalizeFirstLetters(arbeidsgiver.navn)} (${arbeidsgiver.organisasjonsnummer})`;
+  `${capitalizeFirstLetters(arbeidsgiver.navn)} (${arbeidsgiver.organisasjonsnummer || ''})`;
 
 const formatArbeidsgiver = arbeidsgiver => {
   if (!arbeidsgiver) {
@@ -303,9 +303,7 @@ const mapStateToPropsFactory = (_initialState, initialOwnProps: PureOwnProps) =>
 };
 
 export default connect(mapStateToPropsFactory)(
-  injectIntl(
-    behandlingForm({
-      form: formName,
-    })(SokersOpplysningspliktFormImpl),
-  ),
+  behandlingForm({
+    form: formName,
+  })(injectIntl(SokersOpplysningspliktFormImpl)),
 );

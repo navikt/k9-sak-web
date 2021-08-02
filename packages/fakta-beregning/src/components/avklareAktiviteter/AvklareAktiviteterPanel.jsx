@@ -266,7 +266,7 @@ const mapStateToPropsFactory = (initialState, initialProps) => {
       onSubmit,
       validate,
       formValues: values,
-      kanOverstyre: skalKunneOverstyre(ownProps.erOverstyrer, ownProps.aksjonspunkter),
+      kanOverstyre: skalKunneOverstyre(ownProps.erOverstyrer, ownProps.aksjonspunkter || []),
       helpText: getHelpTextsAvklarAktiviteter(ownProps),
       behandlingFormPrefix: getBehandlingFormPrefix(ownProps.behandlingId, ownProps.behandlingVersjon),
       isAksjonspunktClosed: getIsAksjonspunktClosed(ownProps),

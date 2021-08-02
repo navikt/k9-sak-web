@@ -332,11 +332,9 @@ const validateForm = (values, props) => {
 };
 
 export default connect(mapStateToPropsFactory)(
-  injectIntl(
-    behandlingForm({
-      form: activityPanelName,
-      validate: validateForm,
-      enableReinitialize: true,
-    })(ActivityPanel),
-  ),
+  behandlingForm({
+    form: activityPanelName,
+    validate: validateForm,
+    enableReinitialize: true,
+  })(injectIntl(ActivityPanel)),
 );

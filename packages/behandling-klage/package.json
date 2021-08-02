@@ -17,14 +17,14 @@
     "@k9-sak-web/types": "1.0.0",
     "nav-frontend-grid": "2.0.1",
     "nav-frontend-grid-style": "1.0.2",
-    "nav-frontend-knapper": "3.0.1",
-    "nav-frontend-knapper-style": "2.0.1",
+    "nav-frontend-knapper": "3.0.2",
+    "nav-frontend-knapper-style": "2.0.2",
     "nav-frontend-modal": "2.0.1",
     "nav-frontend-modal-style": "2.0.1",
     "nav-frontend-typografi": "4.0.1",
     "nav-frontend-typografi-style": "2.0.1",
     "react": "^16.14.0",
-    "react-intl": "^5.20.4",
+    "react-intl": "^5.20.6",
     "react-redux": "^7.2.4",
     "redux": "^4.0.5",
     "redux-form": "^8.3.7",
@@ -34,6 +34,6 @@
     "axios-mock-adapter": "^1.19.0",
     "enzyme": "^3.11.0",
     "redux-mock-store": "^1.5.4",
-    "sinon": "^11.1.1"
+    "sinon": "^11.1.2"
   }
 }
