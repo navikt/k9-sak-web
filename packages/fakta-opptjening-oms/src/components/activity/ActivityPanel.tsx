@@ -276,14 +276,8 @@ export const ActivityPanel: FunctionComponent<
 );
 
 const mapStateToPropsFactory = (initialState, initialOwnProps: ActivityPanelProps) => {
-  const {
-    activity,
-    alleKodeverk,
-    behandlingId,
-    behandlingVersjon,
-    opptjeningAktivitetTypes,
-    updateActivity,
-  } = initialOwnProps;
+  const { activity, alleKodeverk, behandlingId, behandlingVersjon, opptjeningAktivitetTypes, updateActivity } =
+    initialOwnProps;
   const onSubmit = values => updateActivity(values);
   const arbeidTyper = alleKodeverk[kodeverkTyper.ARBEID_TYPE];
   const filtrerteOpptjeningAktivitetTypes = filterActivityType(
@@ -340,11 +334,9 @@ const validateForm = (values, props) => {
 };
 
 export default connect(mapStateToPropsFactory)(
-  injectIntl(
-    behandlingForm({
-      form: activityPanelNameFormName,
-      validate: validateForm,
-      enableReinitialize: true,
-    })(ActivityPanel),
-  ),
+  behandlingForm({
+    form: activityPanelNameFormName,
+    validate: validateForm,
+    enableReinitialize: true,
+  })(injectIntl(ActivityPanel)),
 );

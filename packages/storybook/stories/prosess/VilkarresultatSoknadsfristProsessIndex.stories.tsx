@@ -224,7 +224,7 @@ export const visOverstyringspanelForSoknadsfrist = () => {
       avslagsarsaker={avslagsarsaker}
       panelTittelKode="Inngangsvilkar.SoknadsfristVilkaret"
       lovReferanse="§§ Dette er en lovreferanse"
-      overstyringApKode={aksjonspunktCode.OVERSTYRING_AV_OPPTJENINGSVILKARET}
+      // overstyringApKode={aksjonspunktCode.OVERSTYRING_AV_OPPTJENINGSVILKARET}
       // vilkar={vilkarOpptjening}
       vilkar={vilkar}
       soknadsfristStatus={soknadsfristStatus}

@@ -124,7 +124,7 @@ export const SettPaVentModal: FunctionComponent<
 
   return (
     <Modal
-      className={styles.modal}
+      className={`${styles.modal} ${styles.settPaVentModal}`}
       isOpen={showModal}
       closeButton={false}
       contentLabel={intl.formatMessage({

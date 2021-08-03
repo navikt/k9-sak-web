@@ -11,21 +11,21 @@
     "nav-frontend-core": "6.0.1",
     "nav-frontend-ekspanderbartpanel": "4.0.1",
     "nav-frontend-ekspanderbartpanel-style": "2.0.1",
-    "nav-frontend-knapper": "3.0.1",
-    "nav-frontend-knapper-style": "2.0.1",
+    "nav-frontend-knapper": "3.0.2",
+    "nav-frontend-knapper-style": "2.0.2",
     "nav-frontend-paneler": "3.0.1",
     "nav-frontend-paneler-style": "2.0.1",
     "nav-frontend-typografi": "4.0.1",
     "nav-frontend-typografi-style": "2.0.1",
     "react": "^16.14.0",
     "react-collapse": "^5.1.0",
-    "react-intl": "^5.20.1",
+    "react-intl": "^5.20.6",
     "react-redux": "^7.2.4",
     "reselect": "^4.0.0"
   },
   "devDependencies": {
     "@fpsak-frontend/utils-test": "1.0.0",
     "enzyme": "^3.11.0",
-    "sinon": "^11.1.1"
+    "sinon": "^11.1.2"
   }
 }

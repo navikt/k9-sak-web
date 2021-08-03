@@ -16,7 +16,7 @@
     "nav-frontend-alertstriper-style": "3.0.1",
     "nav-frontend-core": "6.0.1",
     "nav-frontend-grid": "2.0.1",
-    "nav-frontend-hjelpetekst": "^3.0.2",
+    "nav-frontend-hjelpetekst": "^3.1.1",
     "nav-frontend-hjelpetekst-style": "^3.0.1",
     "nav-frontend-ikoner-assets": "^3.0.1",
     "nav-frontend-js-utils": "^1.0.19",
@@ -31,11 +31,11 @@
     "prop-types": "^15.7.2",
     "react": "^16.14.0",
     "react-dom": "^16.14.0",
-    "react-intl": "^5.20.1"
+    "react-intl": "^5.20.6"
   },
   "devDependencies": {
     "@fpsak-frontend/utils-test": "1.0.0",
     "enzyme": "^3.11.0",
-    "sinon": "^11.1.1"
+    "sinon": "^11.1.2"
   }
 }
