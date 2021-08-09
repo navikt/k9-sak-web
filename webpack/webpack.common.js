@@ -21,16 +21,18 @@ const config = {
       {
         test: /\.(tsx?|ts?|jsx?)$/,
         enforce: 'pre',
-        loader: 'eslint-loader',
-        options: {
-          failOnWarning: false,
-          failOnError: !isDevelopment,
-          configFile: path.resolve(
-            __dirname,
-            isDevelopment ? '../eslint/eslintrc.dev.js' : '../eslint/eslintrc.prod.js',
-          ),
-          fix: isDevelopment,
-          cache: true,
+        use: {
+          loader: 'eslint-loader',
+          options: {
+            failOnWarning: false,
+            failOnError: !isDevelopment,
+            configFile: path.resolve(
+              __dirname,
+              isDevelopment ? '../eslint/eslintrc.dev.js' : '../eslint/eslintrc.prod.js',
+            ),
+            fix: isDevelopment,
+            cache: true,
+          },
         },
         include: [PACKAGES_DIR],
       },
@@ -52,7 +54,7 @@ const config = {
             },
           },
         ],
-        include: PACKAGES_DIR,
+        include: [PACKAGES_DIR],
       },
       {
         test: /\.(less|css)?$/,
@@ -98,9 +100,7 @@ const config = {
               publicPath: isDevelopment ? './' : '/k9/web/',
             },
           },
-          {
-            loader: 'css-loader',
-          },
+          { loader: 'css-loader' },
           {
             loader: 'less-loader',
             options: {
@@ -117,42 +117,46 @@ const config = {
       },
       {
         test: /\.(jpg|png|svg)$/,
-        issuer: {
-          test: /\.less?$/,
+        issuer: /\.less?$/,
+        type: 'asset/resource',
+        generator: {
+          // filename: isDevelopment ? '[name]_[contenthash].[ext]' : '/[name]_[contenthash].[ext]',
+          filename: '[name]_[contenthash].[ext]',
         },
-        loader: 'file-loader',
-        options: {
-          esModule: false,
-          name: isDevelopment ? '[name]_[hash].[ext]' : '/[name]_[hash].[ext]',
-        },
+        // use: [{ loader: 'file-loader' }],
+        // options: {
+        //   esModule: false,
+        //   name: isDevelopment ? '[name]_[contenthash].[ext]' : '/[name]_[contenthash].[ext]',
+        // },
         include: [IMAGE_DIR],
       },
       {
         test: /\.(svg)$/,
-        issuer: {
-          test: /\.(jsx|tsx)?$/,
-        },
+        issuer: /\.(jsx|tsx)?$/,
         use: [
-          {
-            loader: '@svgr/webpack',
-          },
-          {
-            loader: 'file-loader',
-            options: {
-              esModule: false,
-              name: isDevelopment ? '[name]_[hash].[ext]' : '/[name]_[hash].[ext]',
-            },
-          },
+          '@svgr/webpack',
+          // {
+          //   loader: 'file-loader',
+          //   options: {
+          //     esModule: false,
+          //     name: isDevelopment ? '[name]_[contenthash].[ext]' : '/[name]_[contenthash].[ext]',
+          //   },
+          // },
         ],
         include: [IMAGE_DIR],
       },
       {
         test: /\.(svg)$/,
-        loader: 'file-loader',
-        options: {
-          esModule: false,
-          name: isDevelopment ? '[name]_[hash].[ext]' : '/[name]_[hash].[ext]',
+        type: 'asset/resource',
+        generator: {
+          // filename: isDevelopment ? '[name]_[contenthash].[ext]' : '/[name]_[contenthash].[ext]',
+          filename: '[name]_[contenthash].[ext]',
         },
+        // use: [{ loader: 'file-loader' }],
+        // options: {
+        //   esModule: false,
+        //   name: isDevelopment ? '[name]_[contenthash].[ext]' : '/[name]_[contenthash].[ext]',
+        // },
         include: [CORE_DIR],
       },
     ],
@@ -172,9 +176,17 @@ const config = {
     'utf-8-validate': 'utf-8-validate',
   },
 
+  cache: {
+    type: 'filesystem',
+
+    buildDependencies: {
+      config: [__filename],
+    },
+  },
+
   plugins: [
     new MiniCssExtractPlugin({
-      filename: isDevelopment ? 'style.css' : 'style_[contenthash].css',
+      filename: isDevelopment ? 'style_[contenthash].css' : 'style_[contenthash].css',
       ignoreOrder: true,
     }),
     new HtmlWebpackPlugin({
@@ -188,9 +200,11 @@ const config = {
           from: LANG_DIR,
           to: 'sprak/[name].[ext]',
           force: true,
-          cacheTransform: {
-            keys: {
-              key: '[hash]',
+          transform: {
+            cache: {
+              keys: {
+                key: '[contenthash]',
+              },
             },
           },
         },

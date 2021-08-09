@@ -1,7 +1,7 @@
 import Arbeidsgiver from './Arbeidsgiver';
 import { Kodeverk } from '../kodeverk';
 
-interface Aktivitet {
+export interface Aktivitet {
   arbeidsforholdId: string;
   arbeidsgiver: Arbeidsgiver;
   eksternArbeidsforholdId?: string;

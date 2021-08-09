@@ -1,6 +1,6 @@
 import TotrinnskontrollAksjonspunkter from './TotrinnskontrollAksjonspunkter';
 
-interface Approval {
+export interface Approval {
   contextCode: string;
   skjermlenke: string;
   skjermlenkeNavn: string;
