@@ -5,6 +5,12 @@ import { createBrowserHistory } from 'history';
 import { render } from 'react-dom';
 import { init, Integrations } from '@sentry/browser';
 
+// TODO: Remove these when this is resolved https://github.com/formatjs/formatjs/issues/3066
+import '@formatjs/intl-datetimeformat/polyfill-force';
+import '@formatjs/intl-datetimeformat/locale-data/nb';
+import '@formatjs/intl-numberformat/polyfill-force';
+import '@formatjs/intl-numberformat/locale-data/nb';
+
 import { RestApiErrorProvider, RestApiProvider } from '@k9-sak-web/rest-api-hooks';
 import AppIndex from './app/AppIndex';
 import configureStore from './configureStore';

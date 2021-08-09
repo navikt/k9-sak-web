@@ -198,7 +198,7 @@ const config = {
       patterns: [
         {
           from: LANG_DIR,
-          to: 'sprak/[name].[ext]',
+          to: 'sprak/[name][ext]',
           force: true,
           transform: {
             cache: {

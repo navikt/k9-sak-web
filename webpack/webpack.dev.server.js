@@ -1,6 +1,7 @@
 'use strict';
 require('dotenv').config();
 const webpack = require('webpack');
+const path = require('path');
 const WebpackDevServer = require('webpack-dev-server');
 const config = require('./webpack.dev');
 const vtpLogin = require('./mocks/login');
@@ -12,8 +13,10 @@ if (process.argv.includes('--no-fix')) {
   config.module.rules.find(rules => rules.loader === 'eslint-loader').options.fix = false;
 }
 
+const PACKAGES_DIR = path.resolve(__dirname, '../packages');
+
 const options = {
-  contentBase: ['packages'],
+  contentBase: PACKAGES_DIR,
   watchContentBase: true,
   before: function (app, server) {
     vtpLogin(app);
