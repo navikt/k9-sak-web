@@ -36,8 +36,6 @@
     "packages/*"
   ],
   "dependencies": {
-    "@babel/polyfill": "^7.12.1",
-    "@babel/runtime": "^7.14.8",
     "@formatjs/intl-datetimeformat": "^4.2.1",
     "@formatjs/intl-numberformat": "^7.2.1",
     "@sentry/browser": "^5.30.0",
@@ -66,15 +64,15 @@
     "@babel/preset-typescript": "^7.15.0",
     "@babel/register": "^7.14.5",
     "@commercetools/enzyme-extensions": "^5.0.0",
-    "@storybook/addon-actions": "^6.3.6",
-    "@storybook/addon-docs": "^6.3.6",
+    "@storybook/addon-actions": "^6.3.7",
+    "@storybook/addon-docs": "^6.3.7",
     "@storybook/addon-knobs": "^6.3.0",
-    "@storybook/addon-storyshots": "^6.3.6",
-    "@storybook/addons": "^6.3.6",
-    "@storybook/cli": "^6.3.6",
-    "@storybook/react": "^6.3.6",
+    "@storybook/addon-storyshots": "^6.3.7",
+    "@storybook/addons": "^6.3.7",
+    "@storybook/cli": "^6.3.7",
+    "@storybook/react": "^6.3.7",
     "@storybook/storybook-deployer": "^2.8.7",
-    "@storybook/theming": "^6.3.6",
+    "@storybook/theming": "^6.3.7",
     "@svgr/webpack": "^5.5.0",
     "@testing-library/dom": "^8.1.0",
     "@testing-library/jest-dom": "^5.12.0",
@@ -96,6 +94,7 @@
     "@types/styled-components": "^5.1.12",
     "@typescript-eslint/eslint-plugin": "^4.28.5",
     "@typescript-eslint/parser": "^4.28.5",
+    "@wojtekmaj/enzyme-adapter-react-17": "^0.6.3",
     "axios-mock-adapter": "^1.19.0",
     "babel-eslint": "^10.1.0",
     "babel-jest": "^27.0.6",
@@ -142,7 +141,7 @@
     "prettier": "^2.3.2",
     "raf": "^3.4.1",
     "react-is": "^17.0.2",
-    "react-test-renderer": "^16.14.0",
+    "react-test-renderer": "^17.0.2",
     "redux-mock-store": "^1.5.4",
     "sinon": "^11.1.2",
     "storybook-react-router": "^1.0.8",
@@ -156,12 +155,7 @@
     "webpack-dev-server": "^3.11.2",
     "webpack-merge": "^5.7.3"
   },
-  "resolutions": {
-    "react-test-renderer": "^16.14.0",
-    "minimist": "^1.2.5",
-    "react": "^16.14.0",
-    "react-dom": "^16.14.0"
-  },
+  "resolutions": {},
   "lint-staged": {
     "*.{js,jsx,ts,tsx}": [
       "eslint --fix",
