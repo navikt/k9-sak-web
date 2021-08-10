@@ -5,7 +5,9 @@ import { createBrowserHistory } from 'history';
 import { render } from 'react-dom';
 import { init, Integrations } from '@sentry/browser';
 
-// TODO: Remove these when this is resolved https://github.com/formatjs/formatjs/issues/3066
+// Bug i chrome 92 gjør at disse må polyfilles...
+// Se https://bugs.chromium.org/p/chromium/issues/detail?id=1215606&q=norwegian&can=2
+// Og https://github.com/formatjs/formatjs/issues/3066 for mer info.
 import '@formatjs/intl-datetimeformat/polyfill-force';
 import '@formatjs/intl-datetimeformat/locale-data/nb';
 import '@formatjs/intl-numberformat/polyfill-force';
