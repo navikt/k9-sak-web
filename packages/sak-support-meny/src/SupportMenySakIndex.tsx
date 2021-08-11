@@ -1,11 +1,11 @@
 import React, { FunctionComponent, useMemo } from 'react';
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 
-import FraBeslutterSvg from '@fpsak-frontend/assets/images/arrow-return.svg';
-import SendMeldingSvg from '@fpsak-frontend/assets/images/email-send-1.svg';
-import DokumenterSvg from '@fpsak-frontend/assets/images/folder-big.svg';
-import TilBeslutterSvg from '@fpsak-frontend/assets/images/person-favorite-star-2.svg';
-import HistorikkSvg from '@fpsak-frontend/assets/images/synchronize-time.svg';
+import { ReactComponent as FraBeslutterSvg } from '@fpsak-frontend/assets/images/arrow-return.svg';
+import { ReactComponent as SendMeldingSvg } from '@fpsak-frontend/assets/images/email-send-1.svg';
+import { ReactComponent as DokumenterSvg } from '@fpsak-frontend/assets/images/folder-big.svg';
+import { ReactComponent as TilBeslutterSvg } from '@fpsak-frontend/assets/images/person-favorite-star-2.svg';
+import { ReactComponent as HistorikkSvg } from '@fpsak-frontend/assets/images/synchronize-time.svg';
 
 import TabMeny from './components/TabMeny';
 import SupportTabs from './supportTabs';
@@ -70,11 +70,10 @@ interface OwnProps {
 }
 
 const SupportMenySakIndex: FunctionComponent<OwnProps> = ({ tilgjengeligeTabs, valgbareTabs, valgtIndex, onClick }) => {
-  const tabs = useMemo(() => lagTabs(tilgjengeligeTabs, valgbareTabs, valgtIndex), [
-    tilgjengeligeTabs,
-    valgbareTabs,
-    valgtIndex,
-  ]);
+  const tabs = useMemo(
+    () => lagTabs(tilgjengeligeTabs, valgbareTabs, valgtIndex),
+    [tilgjengeligeTabs, valgbareTabs, valgtIndex],
+  );
 
   return (
     <RawIntlProvider value={intl}>

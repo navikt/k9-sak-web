@@ -140,7 +140,7 @@ const BehandlingUnntakIndex: FunctionComponent<OwnProps> = ({
   });
 
   const harIkkeHentetBehandlingsdata = state === RestApiState.LOADING || state === RestApiState.NOT_STARTED;
-  if (!behandling || (harIkkeHentetBehandlingsdata && data === undefined)) {
+  if (!behandling || (harIkkeHentetBehandlingsdata && data === undefined) || state === RestApiState.ERROR) {
     return <LoadingPanel />;
   }
 

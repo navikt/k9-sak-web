@@ -44,7 +44,7 @@ const BehandlingPaVent: FunctionComponent<BehandlingPaVentProps> = ({
 
   const erManueltSattPaVent = useMemo(
     () =>
-      aksjonspunkter
+      (aksjonspunkter || [])
         .filter(ap => isAksjonspunktOpen(ap.status.kode))
         .some(ap => ap.definisjon.kode === aksjonspunktCodes.AUTO_MANUELT_SATT_PÅ_VENT),
     [aksjonspunkter],
