@@ -1,6 +1,6 @@
 'use strict';
-const TerserPlugin = require('terser-webpack-plugin');
-const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+
+const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
 const path = require('path');
 const { merge } = require('webpack-merge');
 const commonDevAndProd = require('./webpack.common');
@@ -21,14 +21,7 @@ const config = {
     publicPath: '/k9/web/',
   },
   optimization: {
-    minimizer: [
-      new TerserPlugin({
-        parallel: true,
-        // cache: true,
-        // sourceMap: true,
-      }),
-      new OptimizeCSSAssetsPlugin({}),
-    ],
+    minimizer: [new CssMinimizerPlugin()],
     splitChunks: {
       chunks: 'all',
     },

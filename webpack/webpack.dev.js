@@ -1,5 +1,6 @@
 const webpack = require('webpack');
 const path = require('path');
+const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
 const { merge } = require('webpack-merge');
 const commonDevAndProd = require('./webpack.common');
 
@@ -21,7 +22,7 @@ const config = {
     publicPath: '/k9/web/',
     filename: '[name].js',
   },
-  plugins: [new webpack.HotModuleReplacementPlugin()],
+  plugins: [new webpack.HotModuleReplacementPlugin(), new ReactRefreshWebpackPlugin()],
   optimization: {
     moduleIds: 'named',
     splitChunks: {

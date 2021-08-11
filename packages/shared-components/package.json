@@ -6,9 +6,11 @@
   "private": true,
   "dependencies": {
     "@fpsak-frontend/assets": "1.0.0",
+    "@fpsak-frontend/fakta-arbeidsforhold": "1.0.0",
     "@fpsak-frontend/form": "1.0.0",
     "@fpsak-frontend/kodeverk": "1.0.0",
     "@fpsak-frontend/utils": "1.0.0",
+    "@k9-sak-web/types": "1.0.0",
     "@navikt/fnrvalidator": "1.1.4",
     "classnames": "^2.3.1",
     "moment": "^2.29.1",
@@ -33,7 +35,8 @@
     "react-day-picker": "^7.4.10",
     "react-intl": "^5.20.7",
     "react-modal": "3.14.3",
-    "react-redux": "^7.2.4"
+    "react-redux": "^7.2.4",
+    "redux-form": "^8.3.7"
   },
   "devDependencies": {
     "@fpsak-frontend/utils-test": "1.0.0"

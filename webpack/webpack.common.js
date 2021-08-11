@@ -1,4 +1,5 @@
 'use strict';
+
 const CircularDependencyPlugin = require('circular-dependency-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
@@ -39,18 +40,11 @@ const config = {
       {
         test: /\.(jsx?|js?|tsx?|ts?)$/,
         use: [
-          { loader: 'cache-loader' },
-          {
-            loader: 'thread-loader',
-            options: {
-              workers: process.env.CIRCLE_NODE_TOTAL || require('os').cpus() - 1,
-              workerParallelJobs: 50,
-            },
-          },
           {
             loader: 'babel-loader',
             options: {
               cacheDirectory: true,
+              plugins: [isDevelopment && require.resolve('react-refresh/babel')].filter(Boolean),
             },
           },
         ],
@@ -120,29 +114,24 @@ const config = {
         issuer: /\.less?$/,
         type: 'asset/resource',
         generator: {
-          // filename: isDevelopment ? '[name]_[contenthash].[ext]' : '/[name]_[contenthash].[ext]',
           filename: '[name]_[contenthash].[ext]',
         },
-        // use: [{ loader: 'file-loader' }],
-        // options: {
-        //   esModule: false,
-        //   name: isDevelopment ? '[name]_[contenthash].[ext]' : '/[name]_[contenthash].[ext]',
-        // },
         include: [IMAGE_DIR],
       },
       {
         test: /\.(svg)$/,
         issuer: /\.(jsx|tsx)?$/,
         use: [
-          '@svgr/webpack',
-          // {
-          //   loader: 'file-loader',
-          //   options: {
-          //     esModule: false,
-          //     name: isDevelopment ? '[name]_[contenthash].[ext]' : '/[name]_[contenthash].[ext]',
-          //   },
-          // },
+          { loader: '@svgr/webpack' },
+          {
+            loader: 'file-loader',
+            options: {
+              esModule: false,
+              name: isDevelopment ? '[name]_[contenthash].[ext]' : '/[name]_[contenthash].[ext]',
+            },
+          },
         ],
+        type: 'javascript/auto',
         include: [IMAGE_DIR],
       },
       {
@@ -176,9 +165,9 @@ const config = {
     'utf-8-validate': 'utf-8-validate',
   },
 
+  // cache: false,
   cache: {
     type: 'filesystem',
-
     buildDependencies: {
       config: [__filename],
     },

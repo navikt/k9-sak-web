@@ -5,10 +5,13 @@
   "license": "MIT",
   "private": true,
   "dependencies": {
+    "@fpsak-frontend/assets": "1.0.0",
     "@fpsak-frontend/form": "1.0.0",
     "@fpsak-frontend/kodeverk": "1.0.0",
+    "@fpsak-frontend/prop-types": "1.0.0",
     "@fpsak-frontend/shared-components": "1.0.0",
     "@fpsak-frontend/utils": "1.0.0",
+    "@k9-sak-web/fakta-felles": "1.0.0",
     "@k9-sak-web/konstanter": "1.0.0",
     "core-js": "^3.16.1",
     "moment": "^2.29.1",
