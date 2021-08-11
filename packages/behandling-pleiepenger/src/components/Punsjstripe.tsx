@@ -15,7 +15,7 @@ const Punsjstripe = ({ aktørId }) => {
       .catch(error => console.error(error));
   }, []);
 
-  if (punsjoppgaver?.length === 0) {
+  if (!punsjoppgaver || punsjoppgaver?.length === 0) {
     return null;
   }
   return <AlertStripeAdvarsel>{`Du har ${punsjoppgaver.length} uløste oppgaver i Punsj`}</AlertStripeAdvarsel>;
