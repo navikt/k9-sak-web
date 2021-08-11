@@ -6,13 +6,34 @@ import sivilstandType from '@fpsak-frontend/kodeverk/src/sivilstandType';
 import opplysningAdresseType from '@fpsak-frontend/kodeverk/src/opplysningAdresseType';
 import { Normaltekst } from 'nav-frontend-typografi';
 import EtikettBase from 'nav-frontend-etiketter';
+import { KodeverkMedNavn } from '@k9-sak-web/types';
 import { BostedSokerView } from './BostedSokerView';
 import shallowWithIntl, { intlMock } from '../../i18n';
+
+import { BostedSokerPersonopplysninger } from '../BostedSokerFaktaIndex';
 
 describe('<BostedsokerView>', () => {
   const soker = {
     navn: 'Espen Utvikler',
-    aktoerId: '1',
+    adresser: [
+      {
+        adresseType: {
+          kode: opplysningAdresseType.POSTADRESSE,
+          navn: 'Bostedsadresse',
+        },
+        adresselinje1: 'Vei 1',
+        postNummer: '1000',
+        poststed: 'Oslo',
+      },
+    ],
+    sivilstand: {
+      kode: sivilstandType.UGIFT,
+      navn: 'Ugift',
+    },
+    region: {
+      kode: 'NORDEN',
+      navn: 'Norden',
+    },
     personstatus: {
       kode: 'BOSA',
       navn: 'Bosatt',
@@ -22,56 +43,23 @@ describe('<BostedsokerView>', () => {
         kode: personstatusType.BOSATT,
         navn: 'Bosatt',
       },
-      orginalPersonstatus: {
-        kode: personstatusType.DOD,
-        navn: 'Bosatt',
-      },
     },
-    navBrukerKjonn: {
-      kode: '',
-      navn: '',
-    },
-    statsborgerskap: {
-      kode: '',
-      navn: '',
-    },
-    diskresjonskode: {
-      kode: '',
-      navn: '',
-    },
-    sivilstand: {
-      kode: sivilstandType.UGIFT,
-      navn: 'Ugift',
-    },
-    region: {
-      kode: 'NORDEN',
-      navn: 'Norden',
-    },
-    adresser: [
-      {
-        adresselinje1: 'Vei 1',
-        postNummer: '1000',
-        poststed: 'Oslo',
-        adresseType: {
-          kode: opplysningAdresseType.POSTADRESSE,
-          navn: 'Bostedsadresse',
-        },
-      },
-    ],
-  };
+  } as BostedSokerPersonopplysninger;
 
   const regionTypes = [
     {
       kode: 'NORDEN',
       navn: 'Norden',
     },
-  ];
+  ] as KodeverkMedNavn[];
+
   const sivilstandTypes = [
     {
       kode: sivilstandType.UGIFT,
       navn: 'Ugift',
     },
-  ];
+  ] as KodeverkMedNavn[];
+
   const personstatusTypes = [
     {
       kode: personstatusType.BOSATT,
@@ -81,7 +69,7 @@ describe('<BostedsokerView>', () => {
       kode: personstatusType.DOD,
       navn: 'Bosatt',
     },
-  ];
+  ] as KodeverkMedNavn[];
 
   it('vise navn', () => {
     const wrapper = shallowWithIntl(
@@ -142,8 +130,9 @@ describe('<BostedsokerView>', () => {
   it('skal vise ukjent når personstatus ukjent', () => {
     soker.avklartPersonstatus = null;
     soker.personstatus = {
+      navn: '',
       kode: '-',
-    };
+    } as KodeverkMedNavn;
 
     const wrapper = shallowWithIntl(
       <BostedSokerView
