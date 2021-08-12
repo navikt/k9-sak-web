@@ -6,6 +6,19 @@ import { render } from 'react-dom';
 import { init, Integrations } from '@sentry/browser';
 
 import { RestApiErrorProvider, RestApiProvider } from '@k9-sak-web/rest-api-hooks';
+
+/**
+ * En bug i Chrome gjør at norsk locale ikke blir lastet inn riktig.
+ *
+ * Se
+ * - https://bugs.chromium.org/p/chromium/issues/detail?id=1215606&q=norwegian&can=2
+ * - https://github.com/formatjs/formatjs/issues/3066
+ */
+import '@formatjs/intl-datetimeformat/polyfill-force';
+import '@formatjs/intl-datetimeformat/locale-data/nb';
+import '@formatjs/intl-numberformat/polyfill-force';
+import '@formatjs/intl-numberformat/locale-data/nb';
+
 import AppIndex from './app/AppIndex';
 import configureStore from './configureStore';
 

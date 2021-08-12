@@ -9,7 +9,7 @@ export { REQUEST_POLLING_CANCELLED } from './src/requestApi/RequestRunner';
 export { default as RestApiConfigBuilder } from './src/RestApiConfigBuilder';
 export { default as AbstractRequestApi } from './src/requestApi/AbstractRequestApi';
 export { ErrorTypes, errorOfType, getErrorResponseData } from './src/requestApi/error/ErrorTypes';
-export { default as ErrorType } from './src/requestApi/error/errorTsType';
+export type { default as ErrorType } from './src/requestApi/error/errorTsType';
 export type { default as Link } from './src/requestApi/LinkTsType';
 
 let isUnitTestModeOn = false;

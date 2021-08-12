@@ -27,7 +27,6 @@ import {
   isBehandlingFormDirty,
   isBehandlingFormSubmitting,
 } from '@fpsak-frontend/form/src/behandlingForm';
-import { flattenArray } from 'less/lib/less/utils';
 import advarselIcon from '@fpsak-frontend/assets/images/advarsel.svg';
 import { DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils';
 import beregningsgrunnlagAksjonspunkterPropType from '../propTypes/beregningsgrunnlagAksjonspunkterPropType';
@@ -227,7 +226,7 @@ BeregningFP.defaultProps = {
 };
 
 const formaterAksjonspunkter = (aksjonspunkter, perioder) =>
-  flattenArray(aksjonspunkter).map(aksjonspunkt => {
+  aksjonspunkter.map(aksjonspunkt => {
     const { kode } = aksjonspunkt;
     return {
       '@type': kode,

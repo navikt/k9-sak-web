@@ -1,6 +1,6 @@
 import Kodeverk from '../kodeverkTsType';
 
-type FastsattOpptjeningAktivitet = Readonly<{
+export type FastsattOpptjeningAktivitet = Readonly<{
   aktivitetReferanse: string;
   arbeidsgiverNavn: string;
   fom: string;
