@@ -1,4 +1,4 @@
-type Opptjeningperiode = Readonly<{
+export type Opptjeningperiode = Readonly<{
   dager: number;
   måneder: number;
 }>;
