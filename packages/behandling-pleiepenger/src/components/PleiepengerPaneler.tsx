@@ -12,6 +12,7 @@ import React, { FunctionComponent, useState } from 'react';
 import FetchedData from '../types/fetchedDataTsType';
 import PleiepengerFakta from './PleiepengerFakta';
 import PleiepengerProsess from './PleiepengerProsess';
+import Punsjstripe from './Punsjstripe';
 
 interface OwnProps {
   fetchedData: FetchedData;
@@ -88,6 +89,7 @@ const PleiepengerPaneler: FunctionComponent<OwnProps> = ({
         arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
         featureToggles={featureToggles}
       />
+      <Punsjstripe aktørId={fagsakPerson.aktørId} />
       <PleiepengerFakta
         behandling={behandling}
         data={fetchedData}
