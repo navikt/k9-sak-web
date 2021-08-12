@@ -1,8 +1,9 @@
-import { Personopplysninger, ArbeidsgiverOpplysningerPerId } from '@k9-sak-web/types';
+import { ArbeidsgiverOpplysningerPerId, FagsakPerson, Personopplysninger } from '@k9-sak-web/types';
 
 function lagVisningsnavnForKlagepart(
   partId: string,
   personopplysninger?: Personopplysninger,
+  fagsakPerson?: FagsakPerson,
   arbeidsgiverOpplysningerPerId?: ArbeidsgiverOpplysningerPerId,
 ): string {
   if (
@@ -13,8 +14,8 @@ function lagVisningsnavnForKlagepart(
     return `${arbeidsgiverOpplysningerPerId[partId].navn} (${partId})`;
   }
 
-  if (personopplysninger && personopplysninger.aktoerId === partId) {
-    return `${personopplysninger.navn} (${personopplysninger.fnr || personopplysninger.nummer || partId})`;
+  if (fagsakPerson && fagsakPerson.aktørId === partId) {
+    return `${fagsakPerson.navn} (${fagsakPerson.personnummer || partId})`;
   }
 
   return partId;
