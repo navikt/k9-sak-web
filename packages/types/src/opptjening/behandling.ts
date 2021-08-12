@@ -1,6 +1,6 @@
 import Behandlingsresultat from './behandlingsresultat';
 
-type Behandling = Readonly<{
+export type Behandling = Readonly<{
   id: number;
   versjon: number;
   behandlingsresultat: Behandlingsresultat;

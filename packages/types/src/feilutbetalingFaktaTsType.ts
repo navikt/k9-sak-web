@@ -1,6 +1,6 @@
 import Kodeverk from './kodeverkTsType';
 
-type FeilutbetalingFakta = {
+export type FeilutbetalingFakta = {
   behandlingFakta?: {
     perioder?: {
       fom: string;

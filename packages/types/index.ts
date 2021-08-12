@@ -1,37 +1,37 @@
-export { default as Aksjonspunkt } from './src/aksjonspunktTsType';
-export { default as ArbeidsforholdV2 } from './src/arbeidsforholdV2TsType';
-export { default as Behandling } from './src/behandlingTsType';
-export { default as Beregningsgrunnlag } from './src/beregningsgrunnlagTsType';
-export { default as BeregningsresultatFp } from './src/beregningsresultatFpTsType';
-export { default as Dokument } from './src/dokumentTsType';
-export { default as Kodeverk } from './src/kodeverkTsType';
-export { default as KodeverkMedNavn } from './src/kodeverkMedNavnTsType';
-export { default as NavAnsatt } from './src/navAnsattTsType';
-export { default as Personopplysninger, PersonopplysningAdresse } from './src/personopplysningerTsType';
-export { default as SimuleringResultat } from './src/simuleringResultatTsType';
-export { default as Soknad, ManglendeVedleggSoknad } from './src/soknadTsType';
-export { default as UttaksresultatPeriode } from './src/uttaksresultatPeriodeTsType';
-export { default as Vilkar } from './src/vilkarTsType';
-export { default as Vilkarperiode } from './src/vilkarperiode';
-export { default as Ytelsefordeling } from './src/ytelsefordelingTsType';
-export { default as Periode } from './src/periodeTsType';
-export { FamilieHendelse, FamilieHendelseSamling } from './src/familieHendelseTsType';
-export { default as Fagsak } from './src/fagsakTsType';
-export { default as SubmitCallback } from './src/submitCallback';
-export { default as Sykdom } from './src/sykdom';
-export { default as OmsorgenFor } from './src/omsorgenFor';
-export { default as OpptjeningBehandling } from './src/opptjening/behandling';
-export { default as Opptjening } from './src/opptjening/opptjening';
-export { default as FastsattOpptjening } from './src/opptjening/fastsattOpptjening';
-export { default as FastsattOpptjeningAktivitet } from './src/opptjening/fastsattOpptjeningAktivitet';
-export { default as UtlandDokStatus } from './src/opptjening/utlandDokStatus';
-export { default as Vilkårresultat } from './src/opptjening/vilkårresultat';
+export type { default as Aksjonspunkt } from './src/aksjonspunktTsType';
+export type { default as ArbeidsforholdV2 } from './src/arbeidsforholdV2TsType';
+export type { default as Behandling } from './src/behandlingTsType';
+export type { default as Beregningsgrunnlag } from './src/beregningsgrunnlagTsType';
+export type { default as BeregningsresultatFp } from './src/beregningsresultatFpTsType';
+export type { default as Dokument } from './src/dokumentTsType';
+export type { default as Kodeverk } from './src/kodeverkTsType';
+export type { default as KodeverkMedNavn } from './src/kodeverkMedNavnTsType';
+export type { default as NavAnsatt } from './src/navAnsattTsType';
+export type { default as Personopplysninger, PersonopplysningAdresse } from './src/personopplysningerTsType';
+export type { default as SimuleringResultat } from './src/simuleringResultatTsType';
+export type { default as Soknad, ManglendeVedleggSoknad } from './src/soknadTsType';
+export type { default as UttaksresultatPeriode } from './src/uttaksresultatPeriodeTsType';
+export type { default as Vilkar } from './src/vilkarTsType';
+export type { default as Vilkarperiode } from './src/vilkarperiode';
+export type { default as Ytelsefordeling } from './src/ytelsefordelingTsType';
+export type { default as Periode } from './src/periodeTsType';
+export type { FamilieHendelse, FamilieHendelseSamling } from './src/familieHendelseTsType';
+export type { default as Fagsak } from './src/fagsakTsType';
+export type { default as SubmitCallback } from './src/submitCallback';
+export type { default as Sykdom } from './src/sykdom';
+export type { default as OmsorgenFor } from './src/omsorgenFor';
+export type { default as OpptjeningBehandling } from './src/opptjening/behandling';
+export type { default as Opptjening } from './src/opptjening/opptjening';
+export type { default as FastsattOpptjening } from './src/opptjening/fastsattOpptjening';
+export type { default as FastsattOpptjeningAktivitet } from './src/opptjening/fastsattOpptjeningAktivitet';
+export type { default as UtlandDokStatus } from './src/opptjening/utlandDokStatus';
+export type { default as Vilkårresultat } from './src/opptjening/vilkårresultat';
 export type { default as Rammevedtak } from './src/omsorgspenger/Rammevedtak';
-export { default as OpplysningerFraSøknaden } from './src/opplysningerFraSoknaden';
-export { default as FagsakPerson } from './src/fagsakPersonTsType';
-export { default as Risikoklassifisering } from './src/risikoklassifiseringTsType';
-export { default as FeatureToggles } from './src/featureTogglesTsType';
-export {
+export type { default as OpplysningerFraSøknaden } from './src/opplysningerFraSoknaden';
+export type { default as FagsakPerson } from './src/fagsakPersonTsType';
+export type { default as Risikoklassifisering } from './src/risikoklassifiseringTsType';
+export type { default as FeatureToggles } from './src/featureTogglesTsType';
+export type {
   BeregningsresultatUtbetalt,
   BeregningsresultatPeriode,
   BeregningsresultatPeriodeAndel,
@@ -39,36 +39,17 @@ export {
 
 export type { Uttaksperiode, Utfalltype, Vilkår, VurderteVilkår } from './src/omsorgspenger/Uttaksperiode';
 export { UtfallEnum, VilkårEnum } from './src/omsorgspenger/Uttaksperiode';
-export { default as Aktor } from './src/aktorTsType';
-export { default as BehandlingAppKontekst } from './src/behandlingAppKontekstTsType';
-export {
-  default as Historikkinnslag,
-  HistorikkInnslagDokumentLink,
-  HistorikkinnslagDel,
-  HistorikkinnslagEndretFelt,
-  HistorikkInnslagOpplysning,
-  HistorikkInnslagAksjonspunkt,
-} from './src/historikkinnslagTsType';
-export { default as KlageVurdering, KlageVurderingResultat } from './src/klageVurderingTsType';
-export {
-  default as TotrinnskontrollAksjonspunkt,
-  TotrinnskontrollArbeidsforhold,
-  OpptjeningAktiviteter,
-  TotrinnsBeregningDto,
-} from './src/totrinnskontrollAksjonspunktTsType';
-export { default as TotrinnskontrollSkjermlenkeContext } from './src/totrinnskontrollSkjermlenkeContextTsType';
-export { default as AnkeVurdering } from './src/ankeVurderingTsType';
-export { default as Innsyn, InnsynDokument, InnsynVedtaksdokument } from './src/innsynTsType';
-export { default as FeilutbetalingFakta } from './src/feilutbetalingFaktaTsType';
-export { default as FeilutbetalingPerioderWrapper, FeilutbetalingPeriode } from './src/feilutbetalingPerioderTsType';
-export {
-  default as BeregningsresultatTilbakekreving,
-  BeregningResultatPeriode,
-} from './src/beregningsresultatTilbakekrevingTsType';
-export {
-  default as ArbeidsgiverOpplysningerPerId,
-  ArbeidsgiverOpplysningerWrapper,
-  ArbeidsgiverOpplysninger,
-} from './src/arbeidsgiverOpplysningerTsType';
-export { default as Brevmaler, Brevmal, Mottaker } from './src/meldingTsType';
-export { default as RelatertFagsak } from './src/relatertFagsak';
+export type { default as Aktor } from './src/aktorTsType';
+export type { default as BehandlingAppKontekst } from './src/behandlingAppKontekstTsType';
+export * from './src/historikkinnslagTsType';
+export * from './src/klageVurderingTsType';
+export * from './src/totrinnskontrollAksjonspunktTsType';
+export type { default as TotrinnskontrollSkjermlenkeContext } from './src/totrinnskontrollSkjermlenkeContextTsType';
+export type { default as AnkeVurdering } from './src/ankeVurderingTsType';
+export * from './src/innsynTsType';
+export type { default as FeilutbetalingFakta } from './src/feilutbetalingFaktaTsType';
+export * from './src/feilutbetalingPerioderTsType';
+export * from './src/beregningsresultatTilbakekrevingTsType';
+export * from './src/arbeidsgiverOpplysningerTsType';
+export * from './src/meldingTsType';
+export type { default as RelatertFagsak } from './src/relatertFagsak';

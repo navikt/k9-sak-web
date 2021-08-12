@@ -10,7 +10,7 @@ export type KlageVurderingResultat = Readonly<{
   begrunnelse?: string;
 }>;
 
-type KlageVurdering = Readonly<{
+export type KlageVurdering = Readonly<{
   klageVurderingResultatNK?: KlageVurderingResultat;
   klageVurderingResultatNFP?: KlageVurderingResultat;
   klageFormkravResultatKA?: {

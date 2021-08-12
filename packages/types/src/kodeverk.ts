@@ -1,4 +1,4 @@
-interface AlleKodeverk {
+export interface AlleKodeverk {
   AktivitetStatus: Kodeverk[];
   AnkeVurdering: Kodeverk[];
   ArbeidsforholdHandlingType: Kodeverk[];

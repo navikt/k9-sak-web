@@ -7,7 +7,7 @@ export type ManglendeVedleggSoknad = Readonly<{
   brukerHarSagtAtIkkeKommer: boolean;
 }>;
 
-type Soknad = Readonly<{
+export type Soknad = Readonly<{
   fodselsdatoer?: Record<number, string>;
   termindato?: string;
   antallBarn: number;
