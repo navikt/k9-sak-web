@@ -40,7 +40,7 @@ export type BostedSokerPersonopplysninger = {
 
 interface OwnProps {
   personopplysninger: BostedSokerPersonopplysninger;
-  sokerTypeTextId: string;
+  sokerTypeTextId?: string;
   alleKodeverk: { [key: string]: KodeverkMedNavn[] };
 }
 
