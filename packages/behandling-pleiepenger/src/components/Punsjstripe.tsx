@@ -7,7 +7,7 @@ const Punsjstripe = ({ aktørId }) => {
 
   React.useEffect(() => {
     axios
-      .get(`/k9-punsj/api/journalpost/uferdig/${aktørId}`)
+      .get(`/k9-punsj/journalpost/uferdig/${aktørId}`)
       .then(({ data }) => {
         setPunsjoppgaver(data);
       })
