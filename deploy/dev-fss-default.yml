@@ -68,7 +68,7 @@ spec:
     - name: PSB_OM_BARNET_FRONTEND_URL
       value: "https://psb-om-barnet-frontend.dev.adeo.no/"
     - name: PUNSJ_URL
-      value: "https://k9-punsj-oidc-auth-proxy.dev.adeo.no/api/"
+      value: "https://k9-punsj-oidc-auth-proxy.dev.adeo.no/"
 
    # Feature-flag
     - name: KLAGE_KABAL
