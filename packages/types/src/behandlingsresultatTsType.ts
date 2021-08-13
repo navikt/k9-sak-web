@@ -1,6 +1,6 @@
 import Kodeverk from './kodeverkTsType';
 
-export type Behandlingsresultat = Readonly<{
+type Behandlingsresultat = Readonly<{
   type: Kodeverk;
   fritekstbrev?: string;
   overskrift?: string;

@@ -1,6 +1,6 @@
 import Kodeverk from './kodeverkTsType';
 
-export type AnkeVurdering = Readonly<{
+type AnkeVurdering = Readonly<{
   ankeVurderingResultat?: {
     ankeVurdering?: Kodeverk;
     ankeVurderingOmgjoer?: Kodeverk;

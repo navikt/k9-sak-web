@@ -59,7 +59,7 @@ export type HistorikkInnslagDokumentLink = Readonly<{
   utgått: boolean;
 }>;
 
-export type Historikkinnslag = Readonly<{
+type Historikkinnslag = Readonly<{
   opprettetAv?: string;
   opprettetTidspunkt: string;
   type: Kodeverk;

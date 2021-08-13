@@ -1,7 +1,7 @@
 import Aktivitet from './Aktivitet';
 import GraderingAvslagÅrsak from './GraderingAvslagÅrsak';
 
-export interface UttakPeriode {
+interface UttakPeriode {
   aktiviteter: Aktivitet[];
   begrunnelse?: string;
   flerbarnsdager: boolean;

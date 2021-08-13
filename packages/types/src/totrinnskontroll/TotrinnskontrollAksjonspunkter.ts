@@ -2,7 +2,7 @@ import Uttak from './Uttak';
 import ArbeidsforholdDto from './ArbeidsforholdDto';
 import Aktivitet from './Aktivitet';
 
-export interface TotrinnskontrollAksjonspunkter {
+interface TotrinnskontrollAksjonspunkter {
   aksjonspunktKode: string;
   opptjeningAktiviteter: Aktivitet[];
   beregningDto: BeregningDto;

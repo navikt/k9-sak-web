@@ -321,7 +321,7 @@ export const aapOgRefusjon = () => {
       }}
       submitCallback={action('button-click')}
       readOnly={false}
-      beregningsgrunnlag={[bg]}
+      beregningsgrunnlag={bg}
       aksjonspunkter={fordelAP}
       harApneAksjonspunkter={boolean('harApneAksjonspunkter', true)}
       submittable={boolean('submittable', true)}
@@ -357,7 +357,7 @@ export const kanEndreRefusjonskrav = () => {
       }}
       submitCallback={action('button-click')}
       readOnly={false}
-      beregningsgrunnlag={[bg]}
+      beregningsgrunnlag={bg}
       aksjonspunkter={fordelAP}
       harApneAksjonspunkter={boolean('harApneAksjonspunkter', true)}
       submittable={boolean('submittable', true)}
@@ -414,7 +414,7 @@ export const skalSlåSammenNaturalytelseperioder = () => {
       }}
       submitCallback={action('button-click')}
       readOnly={false}
-      beregningsgrunnlag={[bg]}
+      beregningsgrunnlag={bg}
       aksjonspunkter={fordelAP}
       harApneAksjonspunkter={boolean('harApneAksjonspunkter', true)}
       submittable={boolean('submittable', true)}

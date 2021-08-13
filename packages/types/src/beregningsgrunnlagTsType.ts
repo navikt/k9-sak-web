@@ -64,7 +64,7 @@ type FaktaOmBeregning = Readonly<{
   andelerForFaktaOmBeregning: AndelForFaktaOmBeregning[];
 }>;
 
-export type Beregningsgrunnlag = Readonly<{
+type Beregningsgrunnlag = Readonly<{
   aktivitetStatus?: {
     aktivitetStatus: Kodeverk;
   }[];

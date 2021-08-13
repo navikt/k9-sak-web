@@ -1,4 +1,4 @@
-export interface Aktivitet {
+interface Aktivitet {
   erEndring: boolean;
   aktivitetType: string;
   arbeidsgiverNavn: string;

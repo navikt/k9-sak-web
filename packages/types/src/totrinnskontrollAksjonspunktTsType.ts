@@ -30,7 +30,7 @@ export type TotrinnsBeregningDto = Readonly<{
   skjæringstidspunkt: string;
 }>;
 
-export type TotrinnskontrollAksjonspunkt = Readonly<{
+type TotrinnskontrollAksjonspunkt = Readonly<{
   aksjonspunktKode: string;
   opptjeningAktiviteter?: OpptjeningAktiviteter[];
   besluttersBegrunnelse?: string;

@@ -1,5 +1,3 @@
-export interface FeatureToggles {
+export default interface FeatureToggles {
   [index: string]: boolean;
 }
-
-export default FeatureToggles;

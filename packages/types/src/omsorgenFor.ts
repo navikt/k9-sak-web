@@ -1,4 +1,4 @@
-export type OmsorgenFor = Readonly<{
+type OmsorgenFor = Readonly<{
   sammeBosted: boolean;
   morEllerFar: boolean;
   harOmsorgenFor?: boolean;

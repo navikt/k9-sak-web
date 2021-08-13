@@ -70,10 +70,11 @@ interface OwnProps {
 }
 
 const SupportMenySakIndex: FunctionComponent<OwnProps> = ({ tilgjengeligeTabs, valgbareTabs, valgtIndex, onClick }) => {
-  const tabs = useMemo(
-    () => lagTabs(tilgjengeligeTabs, valgbareTabs, valgtIndex),
-    [tilgjengeligeTabs, valgbareTabs, valgtIndex],
-  );
+  const tabs = useMemo(() => lagTabs(tilgjengeligeTabs, valgbareTabs, valgtIndex), [
+    tilgjengeligeTabs,
+    valgbareTabs,
+    valgtIndex,
+  ]);
 
   return (
     <RawIntlProvider value={intl}>
