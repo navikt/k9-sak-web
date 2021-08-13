@@ -1,6 +1,6 @@
 import Kodeverk from './kodeverkTsType';
 
-type Inntektsmelding = Readonly<{
+export type Inntektsmelding = Readonly<{
   journalpostId?: string;
   mottattTidspunkt?: string;
   status?: Kodeverk;

@@ -1,6 +1,6 @@
 import Kodeverk from './kodeverkTsType';
 
-type FagsakPerson = Readonly<{
+export type FagsakPerson = Readonly<{
   erDod: boolean;
   navn: string;
   alder: number;

@@ -3,5 +3,8 @@
   "version": "1.0.0",
   "module": "index.jsx",
   "license": "MIT",
-  "private": true
+  "private": true,
+  "dependencies": {
+    "@k9-sak-web/types": "1.0.0"
+  }
 }
