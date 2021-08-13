@@ -1,4 +1,4 @@
-export interface Arbeidsgiver {
+interface Arbeidsgiver {
   aktørId?: string;
   identifikator: string;
   fødselsdato?: string;

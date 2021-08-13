@@ -1,4 +1,4 @@
-export enum MedisinskVilkårConsts {
+enum MedisinskVilkårConsts {
   LEGEERKLÆRING = 'legeerklæring',
   KILDE = 'kilde',
   FOM = 'fom',

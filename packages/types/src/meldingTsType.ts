@@ -10,7 +10,7 @@ export interface Brevmal {
   mottakere?: Mottaker[];
 }
 
-export interface Brevmaler {
+interface Brevmaler {
   [index: string]: Brevmal;
 }
 

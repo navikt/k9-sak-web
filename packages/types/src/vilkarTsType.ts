@@ -1,7 +1,7 @@
 import Kodeverk from './kodeverkTsType';
 import Vilkarperiode from './vilkarperiode';
 
-export type Vilkar = Readonly<{
+type Vilkar = Readonly<{
   lovReferanse?: string;
   vilkarType: Kodeverk;
   perioder: Vilkarperiode[];

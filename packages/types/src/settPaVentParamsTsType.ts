@@ -1,7 +1,7 @@
-export interface SettPaVentParams {
+interface SettPaVentParams {
   formData: {
-    ventearsak: string;
-    frist?: string;
+    ventearsak: string,
+    frist?: string,
   };
   behandlingId: number;
   behandlingVersjon: number;

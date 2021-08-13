@@ -11,7 +11,7 @@ export type PersonopplysningAdresse = Readonly<{
   mottakerNavn?: string;
 }>;
 
-export type PersonopplysningerBasic = Readonly<{
+type PersonopplysningerBasic = Readonly<{
   nummer?: number;
   navBrukerKjonn: Kodeverk;
   statsborgerskap: Kodeverk;

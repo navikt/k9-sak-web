@@ -1,4 +1,4 @@
-export interface Uttak {
+interface Uttak {
   id: number;
   hovedsoker: boolean;
   group: number;
