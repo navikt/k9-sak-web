@@ -33,7 +33,7 @@ const FormkravProsessIndex = ({
   parterMedKlagerett,
   valgtPartMedKlagerett,
   personopplysninger,
-  fagsakPerson,
+  fagsak,
   arbeidsgiverOpplysningerPerId,
 }) => (
   <RawIntlProvider value={intl}>
@@ -51,7 +51,7 @@ const FormkravProsessIndex = ({
           parterMedKlagerett={parterMedKlagerett}
           valgtPartMedKlagerett={valgtPartMedKlagerett}
           personopplysninger={personopplysninger}
-          fagsakPerson={fagsakPerson}
+          fagsakPerson={fagsak.person}
           arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
         />
       )}
@@ -69,7 +69,7 @@ const FormkravProsessIndex = ({
           parterMedKlagerett={parterMedKlagerett}
           valgtPartMedKlagerett={valgtPartMedKlagerett}
           personopplysninger={personopplysninger}
-          fagsakPerson={fagsakPerson}
+          fagsakPerson={fagsak.person}
           arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
         />
       )}
@@ -88,7 +88,7 @@ FormkravProsessIndex.propTypes = {
   parterMedKlagerett: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   valgtPartMedKlagerett: PropTypes.shape(),
   personopplysninger: PropTypes.shape(),
-  fagsakPerson: PropTypes.shape(),
+  fagsak: PropTypes.shape(),
   arbeidsgiverOpplysningerPerId: PropTypes.shape(),
 };
 
