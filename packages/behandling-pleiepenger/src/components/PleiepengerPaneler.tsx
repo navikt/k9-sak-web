@@ -1,19 +1,17 @@
-import React, { FunctionComponent, useState } from 'react';
-
-import { Rettigheter, BehandlingPaVent, SettPaVentParams } from '@k9-sak-web/behandling-felles';
+import { BehandlingPaVent, Rettigheter, SettPaVentParams } from '@k9-sak-web/behandling-felles';
 import {
-  KodeverkMedNavn,
-  Behandling,
-  FeatureToggles,
-  FagsakPerson,
-  Fagsak,
   ArbeidsgiverOpplysningerPerId,
+  Behandling,
   Dokument,
+  Fagsak,
+  FagsakPerson,
+  FeatureToggles,
+  KodeverkMedNavn,
 } from '@k9-sak-web/types';
-
-import PleiepengerProsess from './PleiepengerProsess';
-import PleiepengerFakta from './PleiepengerFakta';
+import React, { FunctionComponent, useState } from 'react';
 import FetchedData from '../types/fetchedDataTsType';
+import PleiepengerFakta from './PleiepengerFakta';
+import PleiepengerProsess from './PleiepengerProsess';
 
 interface OwnProps {
   fetchedData: FetchedData;

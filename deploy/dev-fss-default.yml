@@ -2,7 +2,7 @@ apiVersion: "nais.io/v1alpha1"
 kind: "Application"
 metadata:
   name: k9-sak-web
-  namespace: default
+  namespace: k9saksbehandling
   labels:
     team: k9saksbehandling
 spec:
@@ -46,11 +46,11 @@ spec:
     - name: APP_URL_K9FORMIDLING_DD
       value: "http://k9-formidling-dokumentdata.k9saksbehandling"
     - name: APP_URL_K9OPPDRAG
-      value: "http://k9-oppdrag"
+      value: "http://k9-oppdrag.default"
     - name: APP_URL_KLAGE
       value: "http://k9-klage.k9saksbehandling"
     - name: APP_URL_K9TILBAKE
-      value: "http://k9-tilbake"
+      value: "http://k9-tilbake.default"
     - name: APP_DIAGNOSEKODER
       value: "http://diagnosekode-api/diagnosekoder/"
     - name: MEDISINSK_VILKAR_FRONTEND_URL
@@ -67,6 +67,8 @@ spec:
       value: "https://psb-etablert-tilsyn-frontend.dev.adeo.no/"
     - name: PSB_OM_BARNET_FRONTEND_URL
       value: "https://psb-om-barnet-frontend.dev.adeo.no/"
+    - name: PUNSJ_URL
+      value: "https://k9-punsj-frontend.dev.adeo.no/"
 
    # Feature-flag
     - name: KLAGE_KABAL
