@@ -77,6 +77,9 @@ export const erTilbakekreving = (avsluttedeBehandlinger, påklagdVedtak) => {
   );
 };
 
+/**
+ * @deprecated: bruk påklagdBehandlingInfo() istedenfor
+ */
 export const påklagdTilbakekrevingInfo = (avsluttedeBehandlinger, påklagdVedtak) => {
   const behandling = getPåklagdBehandling(avsluttedeBehandlinger, påklagdVedtak);
   return behandling
@@ -88,6 +91,16 @@ export const påklagdTilbakekrevingInfo = (avsluttedeBehandlinger, påklagdVedta
     : null;
 };
 
+export const påklagdBehandlingInfo = (avsluttedeBehandlinger, påklagdVedtak) => {
+  const behandling = getPåklagdBehandling(avsluttedeBehandlinger, påklagdVedtak);
+  return behandling
+    ? {
+      påklagBehandlingUuid: behandling.uuid,
+      påklagBehandlingVedtakDato: behandling.avsluttet,
+      påklagBehandlingType: behandling.type.kode,
+    }
+    : null;
+};
 const transformValues = (values, avsluttedeBehandlinger) => ({
   erKlagerPart: values.erKlagerPart,
   erFristOverholdt: values.erFristOverholdt,
@@ -98,6 +111,7 @@ const transformValues = (values, avsluttedeBehandlinger) => ({
   vedtak: values.vedtak === IKKE_PAKLAGD_VEDTAK ? null : values.vedtak,
   erTilbakekreving: erTilbakekreving(avsluttedeBehandlinger, values.vedtak),
   tilbakekrevingInfo: påklagdTilbakekrevingInfo(avsluttedeBehandlinger, values.vedtak),
+  påklagdBehandlingInfo: påklagdBehandlingInfo(avsluttedeBehandlinger, values.vedtak),
   valgtKlagePart: safeJSONParse(values.valgtPartMedKlagerett),
 });
 

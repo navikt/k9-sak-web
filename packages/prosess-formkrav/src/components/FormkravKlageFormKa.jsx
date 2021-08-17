@@ -9,7 +9,7 @@ import { behandlingForm } from '@fpsak-frontend/form';
 import { safeJSONParse } from '@fpsak-frontend/utils';
 
 import FormkravKlageForm, { getPaklagdVedtak, IKKE_PAKLAGD_VEDTAK } from './FormkravKlageForm';
-import { erTilbakekreving, påklagdTilbakekrevingInfo } from './FormkravKlageFormNfp';
+import { erTilbakekreving, påklagdTilbakekrevingInfo, påklagdBehandlingInfo } from './FormkravKlageFormNfp';
 
 /**
  * FormkravKlageFormKA
@@ -76,6 +76,7 @@ export const transformValues = (values, avsluttedeBehandlinger) => ({
   vedtak: values.vedtak === IKKE_PAKLAGD_VEDTAK ? null : values.vedtak,
   erTilbakekreving: erTilbakekreving(avsluttedeBehandlinger, values.vedtak),
   tilbakekrevingInfo: påklagdTilbakekrevingInfo(avsluttedeBehandlinger, values.vedtak),
+  påklagdBehandlingInfo: påklagdBehandlingInfo(avsluttedeBehandlinger, values.vedtak),
   valgtKlagePart: safeJSONParse(values.valgtPartMedKlagerett),
 });
 
