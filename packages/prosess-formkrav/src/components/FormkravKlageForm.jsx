@@ -31,7 +31,7 @@ export const getPaklagdVedtak = (klageFormkravResultat, avsluttedeBehandlinger) 
   return behandlingid ? `${behandlingid}` : IKKE_PAKLAGD_VEDTAK;
 };
 
-const getKlagBareVedtak = (avsluttedeBehandlinger, intl, getKodeverknavn) => {
+const getKlagbareVedtak = (avsluttedeBehandlinger, intl, getKodeverknavn) => {
   const klagBareVedtak = [
     <option key="formkrav" value={IKKE_PAKLAGD_VEDTAK}>
       {intl.formatMessage({ id: 'Klage.Formkrav.IkkePåklagdVedtak' })}
@@ -64,13 +64,13 @@ export const FormkravKlageForm = ({
   intl,
   formProps,
   alleKodeverk,
-  personopplysninger,
+  fagsakPerson,
   arbeidsgiverOpplysningerPerId,
   parterMedKlagerett,
   skalKunneVelgeKlagepart,
 }) => {
   const getKodeverknavn = getKodeverknavnFn(alleKodeverk, kodeverkTyper);
-  const klageBareVedtakOptions = getKlagBareVedtak(avsluttedeBehandlinger, intl, getKodeverknavn);
+  const klagbareVedtakOptions = getKlagbareVedtak(avsluttedeBehandlinger, intl, getKodeverknavn);
 
   return (
     <FadingPanel>
@@ -93,7 +93,7 @@ export const FormkravKlageForm = ({
                   <option value={JSON.stringify(part)} key={part.identifikasjon.id}>
                     {lagVisningsnavnForKlagepart(
                       part.identifikasjon.id,
-                      personopplysninger,
+                      fagsakPerson,
                       arbeidsgiverOpplysningerPerId,
                     )}
                   </option>
@@ -119,7 +119,7 @@ export const FormkravKlageForm = ({
             name="vedtak"
             label={intl.formatMessage({ id: 'Klage.Formkrav.VelgVedtak' })}
             placeholder={intl.formatMessage({ id: 'Klage.Formkrav.SelectVedtakPlaceholder' })}
-            selectValues={klageBareVedtakOptions}
+            selectValues={klagbareVedtakOptions}
             bredde="l"
           />
           <VerticalSpacer sixteenPx />
@@ -197,7 +197,7 @@ FormkravKlageForm.propTypes = {
   readOnlySubmitButton: PropTypes.bool,
   intl: PropTypes.shape().isRequired,
   alleKodeverk: PropTypes.shape().isRequired,
-  personopplysninger: PropTypes.shape(),
+  fagsakPerson: PropTypes.shape(),
   arbeidsgiverOpplysningerPerId: PropTypes.shape(),
   parterMedKlagerett: PropTypes.arrayOf(PropTypes.shape()),
   skalKunneVelgeKlagepart: PropTypes.bool,

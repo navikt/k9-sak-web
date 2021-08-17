@@ -19,7 +19,6 @@ describe('<FormkravKlageFormNfp>', () => {
         behandlingId={1}
         behandlingVersjon={2}
         alleKodeverk={{}}
-        personopplysninger={{}}
         arbeidsgiverOpplysningerPerId={{}}
         avsluttedeBehandlinger={[]}
         parterMedKlagerett={[]}
