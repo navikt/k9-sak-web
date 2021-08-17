@@ -1,7 +1,7 @@
 import Kodeverk from './kodeverkTsType';
 import Periode from './periodeTsType';
 
-export type Fagsak = Readonly<{
+type Fagsak = Readonly<{
   saksnummer: string;
   sakstype: Kodeverk;
   relasjonsRolleType: Kodeverk;

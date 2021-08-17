@@ -1,4 +1,4 @@
-export type NavAnsatt = Readonly<{
+type NavAnsatt = Readonly<{
   brukernavn: string;
   kanBehandleKode6: boolean;
   kanBehandleKode7: boolean;

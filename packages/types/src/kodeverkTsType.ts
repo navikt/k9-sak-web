@@ -1,4 +1,4 @@
-export type Kodeverk = Readonly<{
+type Kodeverk = Readonly<{
   kode: string;
   kodeverk: string;
 }>;

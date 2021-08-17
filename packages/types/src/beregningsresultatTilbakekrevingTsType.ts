@@ -19,7 +19,7 @@ export type BeregningResultatPeriode = {
   riktigYtelseBeløp: number;
 };
 
-export type BeregningsresultatTilbakekreving = {
+type BeregningsresultatTilbakekreving = {
   beregningResultatPerioder: BeregningResultatPeriode[];
   vedtakResultatType: Kodeverk;
 };

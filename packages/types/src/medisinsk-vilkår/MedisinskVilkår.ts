@@ -55,7 +55,7 @@ export interface MedisinskVilkår {
   pleiebehov: Pleiebehov;
 }
 
-export interface Diagnosekode {
+interface Diagnosekode {
   key: string;
   value: string;
 }

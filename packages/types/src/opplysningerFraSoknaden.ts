@@ -1,4 +1,4 @@
-export interface OpplysningerFraSøknaden {
+export default interface OpplysningerFraSøknaden {
   førSøkerPerioden: SøkerPerioden;
   måneder: Måned[];
 }
@@ -38,5 +38,3 @@ interface OppgittArbeidsforhold {
   periode: Periode;
   inntekt: BruttoInntekt;
 }
-
-export default OpplysningerFraSøknaden;

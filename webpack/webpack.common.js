@@ -1,5 +1,4 @@
 'use strict';
-
 const CircularDependencyPlugin = require('circular-dependency-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
@@ -22,33 +21,38 @@ const config = {
       {
         test: /\.(tsx?|ts?|jsx?)$/,
         enforce: 'pre',
-        use: {
-          loader: 'eslint-loader',
-          options: {
-            failOnWarning: false,
-            failOnError: !isDevelopment,
-            configFile: path.resolve(
-              __dirname,
-              isDevelopment ? '../eslint/eslintrc.dev.js' : '../eslint/eslintrc.prod.js',
-            ),
-            fix: isDevelopment,
-            cache: true,
-          },
+        loader: 'eslint-loader',
+        options: {
+          failOnWarning: false,
+          failOnError: !isDevelopment,
+          configFile: path.resolve(
+            __dirname,
+            isDevelopment ? '../eslint/eslintrc.dev.js' : '../eslint/eslintrc.prod.js',
+          ),
+          fix: isDevelopment,
+          cache: true,
         },
         include: [PACKAGES_DIR],
       },
       {
         test: /\.(jsx?|js?|tsx?|ts?)$/,
         use: [
+          { loader: 'cache-loader' },
+          {
+            loader: 'thread-loader',
+            options: {
+              workers: process.env.CIRCLE_NODE_TOTAL || require('os').cpus() - 1,
+              workerParallelJobs: 50,
+            },
+          },
           {
             loader: 'babel-loader',
             options: {
               cacheDirectory: true,
-              plugins: [isDevelopment && require.resolve('react-refresh/babel')].filter(Boolean),
             },
           },
         ],
-        include: [PACKAGES_DIR],
+        include: PACKAGES_DIR,
       },
       {
         test: /\.(less|css)?$/,
@@ -94,7 +98,9 @@ const config = {
               publicPath: isDevelopment ? './' : '/k9/web/',
             },
           },
-          { loader: 'css-loader' },
+          {
+            loader: 'css-loader',
+          },
           {
             loader: 'less-loader',
             options: {
@@ -111,41 +117,42 @@ const config = {
       },
       {
         test: /\.(jpg|png|svg)$/,
-        issuer: /\.less?$/,
-        type: 'asset/resource',
-        generator: {
-          filename: '[name]_[contenthash].[ext]',
+        issuer: {
+          test: /\.less?$/,
+        },
+        loader: 'file-loader',
+        options: {
+          esModule: false,
+          name: isDevelopment ? '[name]_[hash].[ext]' : '/[name]_[hash].[ext]',
         },
         include: [IMAGE_DIR],
       },
       {
         test: /\.(svg)$/,
-        issuer: /\.(jsx|tsx)?$/,
+        issuer: {
+          test: /\.(jsx|tsx)?$/,
+        },
         use: [
-          { loader: '@svgr/webpack' },
+          {
+            loader: '@svgr/webpack',
+          },
           {
             loader: 'file-loader',
             options: {
               esModule: false,
-              name: isDevelopment ? '[name]_[contenthash].[ext]' : '/[name]_[contenthash].[ext]',
+              name: isDevelopment ? '[name]_[hash].[ext]' : '/[name]_[hash].[ext]',
             },
           },
         ],
-        type: 'javascript/auto',
         include: [IMAGE_DIR],
       },
       {
         test: /\.(svg)$/,
-        type: 'asset/resource',
-        generator: {
-          // filename: isDevelopment ? '[name]_[contenthash].[ext]' : '/[name]_[contenthash].[ext]',
-          filename: '[name]_[contenthash].[ext]',
+        loader: 'file-loader',
+        options: {
+          esModule: false,
+          name: isDevelopment ? '[name]_[hash].[ext]' : '/[name]_[hash].[ext]',
         },
-        // use: [{ loader: 'file-loader' }],
-        // options: {
-        //   esModule: false,
-        //   name: isDevelopment ? '[name]_[contenthash].[ext]' : '/[name]_[contenthash].[ext]',
-        // },
         include: [CORE_DIR],
       },
     ],
@@ -165,17 +172,9 @@ const config = {
     'utf-8-validate': 'utf-8-validate',
   },
 
-  // cache: false,
-  cache: {
-    type: 'filesystem',
-    buildDependencies: {
-      config: [__filename],
-    },
-  },
-
   plugins: [
     new MiniCssExtractPlugin({
-      filename: isDevelopment ? 'style_[contenthash].css' : 'style_[contenthash].css',
+      filename: isDevelopment ? 'style.css' : 'style_[contenthash].css',
       ignoreOrder: true,
     }),
     new HtmlWebpackPlugin({
@@ -187,13 +186,11 @@ const config = {
       patterns: [
         {
           from: LANG_DIR,
-          to: 'sprak/[name][ext]',
+          to: 'sprak/[name].[ext]',
           force: true,
-          transform: {
-            cache: {
-              keys: {
-                key: '[contenthash]',
-              },
+          cacheTransform: {
+            keys: {
+              key: '[hash]',
             },
           },
         },

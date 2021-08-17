@@ -1,6 +1,6 @@
 'use strict';
-
-const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
+const TerserPlugin = require('terser-webpack-plugin');
+const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const path = require('path');
 const { merge } = require('webpack-merge');
 const commonDevAndProd = require('./webpack.common');
@@ -13,7 +13,7 @@ const config = {
   devtool: 'source-map',
   performance: { hints: false },
 
-  entry: [APP_DIR + '/index.tsx'],
+  entry: ['@babel/polyfill', APP_DIR + '/index.tsx'],
   output: {
     filename: '[name]-[contenthash].js',
     chunkFilename: '[name].[contenthash].chunk.js',
@@ -21,7 +21,14 @@ const config = {
     publicPath: '/k9/web/',
   },
   optimization: {
-    minimizer: [new CssMinimizerPlugin()],
+    minimizer: [
+      new TerserPlugin({
+        parallel: true,
+        cache: true,
+        sourceMap: true,
+      }),
+      new OptimizeCSSAssetsPlugin({}),
+    ],
     splitChunks: {
       chunks: 'all',
     },

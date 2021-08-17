@@ -1,4 +1,4 @@
-export interface KlageVurderingResultat {
+interface KlageVurderingResultat {
   klageVurdering: string;
   klageVurderingOmgjoer?: string;
 }

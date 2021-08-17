@@ -1,6 +1,6 @@
 import Kodeverk from '../kodeverkTsType';
 
-export interface OpptjeningAktivitetType extends Kodeverk {
+interface OpptjeningAktivitetType extends Kodeverk {
   navn: string;
 }
 

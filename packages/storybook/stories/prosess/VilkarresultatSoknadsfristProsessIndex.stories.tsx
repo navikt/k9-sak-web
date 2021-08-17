@@ -1,4 +1,4 @@
-// import aksjonspunktCode from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import aksjonspunktCode from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import SoknadsfristVilkarProsessIndex from '@k9-sak-web/prosess-vilkar-soknadsfrist';
 import { action } from '@storybook/addon-actions';

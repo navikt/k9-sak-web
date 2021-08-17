@@ -1,9 +1,9 @@
 import BehandlingAppKontekst from './behandlingAppKontekstTsType';
 
-export type OpptjeningBehandling = BehandlingAppKontekst & {
+type Behandling = BehandlingAppKontekst & {
   taskStatus?: {
     readOnly: boolean;
   };
 };
 
-export default OpptjeningBehandling;
+export default Behandling;
