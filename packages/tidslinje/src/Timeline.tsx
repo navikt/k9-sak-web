@@ -10,7 +10,7 @@ import type {
   TimelineEvents,
   DateType,
   IdType,
-} from 'vis-timeline/types';
+} from 'vis-timeline';
 import 'vis-timeline/styles/vis-timeline-graph2d.min.css';
 
 export type TimelineEventsWithMissing = TimelineEvents | 'dragover' | 'markerchange' | 'markerchanged';

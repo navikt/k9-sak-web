@@ -40,11 +40,10 @@ const config = {
       {
         test: /\.(jsx?|js?|tsx?|ts?)$/,
         use: [
-          { loader: 'cache-loader' },
           {
             loader: 'thread-loader',
             options: {
-              workers: process.env.CIRCLE_NODE_TOTAL || require('os').cpus() - 1,
+              workers: process.env.CIRCLE_NODE_TOTAL || require('os').cpus().length - 1,
               workerParallelJobs: 50,
             },
           },
