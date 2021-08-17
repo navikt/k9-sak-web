@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import Timeline from 'react-visjs-timeline';
 
+import Timeline from '../../Timeline';
 import Tidslinje from './Tidslinje';
 import TidslinjeRad from './types/TidslinjeRad';
 
@@ -55,13 +55,13 @@ describe('<Tidslinje>', () => {
     const timeline = wrapper.find(Timeline);
     expect(timeline).toHaveLength(1);
 
-    const items = timeline.prop('items');
+    const items = timeline.prop('initialItems');
     expect(items).toHaveLength(3);
     expect(items[0].id).toBe('1-2');
     expect(items[1].id).toBe('2-1');
     expect(items[2].id).toBe('1-1');
 
-    const groups = timeline.prop('groups');
+    const groups = timeline.prop('initialGroups');
     expect(groups).toEqual([
       { id: '1', content: '' },
       { id: '2', content: '' },

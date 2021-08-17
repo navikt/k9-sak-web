@@ -1,12 +1,12 @@
 import React from 'react';
 import sinon from 'sinon';
+import moment from 'moment';
 import { expect } from 'chai';
 
-import Timeline from 'react-visjs-timeline';
 import { intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import { ISO_DATE_FORMAT } from '@fpsak-frontend/utils';
 
-import { TimeLineControl } from '@fpsak-frontend/tidslinje';
+import { Timeline, TimeLineControl } from '@fpsak-frontend/tidslinje';
 import TilbakekrevingTimeline from './TilbakekrevingTimeline';
 import shallowWithIntl from '../../../i18n';
 
@@ -51,9 +51,10 @@ describe('<TilbakekrevingTimeline>', () => {
     expect(wrapper.find(TimeLineControl)).has.length(1);
 
     const tidslinje = wrapper.find(Timeline);
-    expect(tidslinje.prop('options').min.format(ISO_DATE_FORMAT)).is.eql('2019-09-12');
-    expect(tidslinje.prop('options').max.format(ISO_DATE_FORMAT)).is.eql('2023-10-10');
+    const options = tidslinje.prop('options');
+    expect(moment(options.min).format(ISO_DATE_FORMAT)).is.eql('2019-09-12');
+    expect(moment(options.max).format(ISO_DATE_FORMAT)).is.eql('2023-10-10');
 
-    expect(tidslinje.prop('groups')).is.eql([{ id: 1, content: '' }]);
+    expect(tidslinje.prop('initialGroups')).is.eql([{ id: 1, content: '' }]);
   });
 });

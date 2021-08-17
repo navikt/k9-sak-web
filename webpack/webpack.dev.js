@@ -15,7 +15,7 @@ const APP_DIR = path.resolve(PACKAGES_DIR, 'sak-app/src');
 
 const config = {
   mode: 'development',
-  devtool: 'eval-cheap-module-source-map',
+  devtool: 'eval-cheap-source-map',
   entry: ['webpack-dev-server/client?http://localhost:9000', 'webpack/hot/only-dev-server', APP_DIR + '/index.tsx'],
   output: {
     path: ROOT_DIR,

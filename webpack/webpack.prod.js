@@ -1,5 +1,5 @@
 'use strict';
-
+const TerserPlugin = require('terser-webpack-plugin');
 const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
 const path = require('path');
 const { merge } = require('webpack-merge');
@@ -21,7 +21,12 @@ const config = {
     publicPath: '/k9/web/',
   },
   optimization: {
-    minimizer: [new CssMinimizerPlugin()],
+    minimizer: [
+      new TerserPlugin({
+        parallel: true,
+      }),
+      new CssMinimizerPlugin(),
+    ],
     splitChunks: {
       chunks: 'all',
     },

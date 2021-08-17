@@ -19,27 +19,35 @@ const isDevelopment = JSON.stringify(process.env.NODE_ENV) === '"development"';
 const config = {
   module: {
     rules: [
-      {
-        test: /\.(tsx?|ts?|jsx?)$/,
-        enforce: 'pre',
-        use: {
-          loader: 'eslint-loader',
-          options: {
-            failOnWarning: false,
-            failOnError: !isDevelopment,
-            configFile: path.resolve(
-              __dirname,
-              isDevelopment ? '../eslint/eslintrc.dev.js' : '../eslint/eslintrc.prod.js',
-            ),
-            fix: isDevelopment,
-            cache: true,
-          },
-        },
-        include: [PACKAGES_DIR],
-      },
+      // {
+      //   test: /\.(tsx?|ts?|jsx?)$/,
+      //   enforce: 'pre',
+      //   use: {
+      //     loader: 'eslint-loader',
+      //     options: {
+      //       failOnWarning: false,
+      //       failOnError: !isDevelopment,
+      //       configFile: path.resolve(
+      //         __dirname,
+      //         isDevelopment ? '../eslint/eslintrc.dev.js' : '../eslint/eslintrc.prod.js',
+      //       ),
+      //       fix: isDevelopment,
+      //       cache: true,
+      //     },
+      //   },
+      //   include: [PACKAGES_DIR],
+      // },
       {
         test: /\.(jsx?|js?|tsx?|ts?)$/,
         use: [
+          { loader: 'cache-loader' },
+          {
+            loader: 'thread-loader',
+            options: {
+              workers: process.env.CIRCLE_NODE_TOTAL || require('os').cpus() - 1,
+              workerParallelJobs: 50,
+            },
+          },
           {
             loader: 'babel-loader',
             options: {
@@ -138,14 +146,8 @@ const config = {
         test: /\.(svg)$/,
         type: 'asset/resource',
         generator: {
-          // filename: isDevelopment ? '[name]_[contenthash].[ext]' : '/[name]_[contenthash].[ext]',
           filename: '[name]_[contenthash].[ext]',
         },
-        // use: [{ loader: 'file-loader' }],
-        // options: {
-        //   esModule: false,
-        //   name: isDevelopment ? '[name]_[contenthash].[ext]' : '/[name]_[contenthash].[ext]',
-        // },
         include: [CORE_DIR],
       },
     ],
@@ -175,7 +177,7 @@ const config = {
 
   plugins: [
     new MiniCssExtractPlugin({
-      filename: isDevelopment ? 'style_[contenthash].css' : 'style_[contenthash].css',
+      filename: 'style_[contenthash].css',
       ignoreOrder: true,
     }),
     new HtmlWebpackPlugin({

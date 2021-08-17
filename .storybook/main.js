@@ -6,6 +6,9 @@ const IMAGE_DIR = path.join(PACKAGES_DIR, 'assets/images');
 const CSS_DIR = path.join(PACKAGES_DIR, 'assets/styles');
 
 module.exports = {
+  core: {
+    builder: 'webpack5',
+  },
   stories: ['../packages/storybook/stories/**/*.stories.@(js|tsx)'],
   addons: ['@storybook/addon-docs/preset', '@storybook/addon-actions/register'],
   webpackFinal: async (config, { configType }) => {
@@ -17,7 +20,7 @@ module.exports = {
       return data;
     });
 
-    config.devtool = 'cheap-module-eval-source-map';
+    config.devtool = 'eval-cheap-source-map';
 
     // Make whatever fine-grained changes you need
     config.module.rules = config.module.rules.concat(
@@ -116,22 +119,17 @@ module.exports = {
         include: [CSS_DIR, CORE_DIR],
       },
       {
-        test: /\.(svg)$/,
-        issuer: {
-          test: /\.less?$/,
-        },
-        loader: 'file-loader',
-        options: {
-          esModule: false,
-          name: '[name]_[hash].[ext]',
+        test: /\.(jpg|png|svg)$/,
+        issuer: /\.less?$/,
+        type: 'asset/resource',
+        generator: {
+          filename: '[name]_[contenthash].[ext]',
         },
         include: [IMAGE_DIR],
       },
       {
         test: /\.(svg)$/,
-        issuer: {
-          test: /\.(jsx?|js?|tsx?|ts?)?$/,
-        },
+        issuer: /\.(jsx?|js?|tsx?|ts?)?$/,
         use: [
           {
             loader: '@svgr/webpack',
@@ -144,14 +142,14 @@ module.exports = {
             },
           },
         ],
+        type: 'javascript/auto',
         include: [IMAGE_DIR],
       },
       {
         test: /\.(svg)$/,
-        loader: 'file-loader',
-        options: {
-          esModule: false,
-          name: '[name]_[hash].[ext]',
+        type: 'asset/resource',
+        generator: {
+          filename: '[name]_[contenthash].[ext]',
         },
         include: [CORE_DIR],
       },
@@ -159,7 +157,7 @@ module.exports = {
 
     config.plugins.push(
       new MiniCssExtractPlugin({
-        filename: 'style.css',
+        filename: 'style_[contenthash].css',
         ignoreOrder: true,
       }),
     );
