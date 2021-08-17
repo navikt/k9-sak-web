@@ -32,7 +32,6 @@ const FormkravProsessIndex = ({
   alleKodeverk,
   parterMedKlagerett,
   valgtPartMedKlagerett,
-  personopplysninger,
   fagsak,
   arbeidsgiverOpplysningerPerId,
 }) => (
@@ -50,7 +49,6 @@ const FormkravProsessIndex = ({
           avsluttedeBehandlinger={avsluttedeBehandlinger}
           parterMedKlagerett={parterMedKlagerett}
           valgtPartMedKlagerett={valgtPartMedKlagerett}
-          personopplysninger={personopplysninger}
           fagsakPerson={fagsak.person}
           arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
         />
@@ -68,7 +66,6 @@ const FormkravProsessIndex = ({
           avsluttedeBehandlinger={avsluttedeBehandlinger}
           parterMedKlagerett={parterMedKlagerett}
           valgtPartMedKlagerett={valgtPartMedKlagerett}
-          personopplysninger={personopplysninger}
           fagsakPerson={fagsak.person}
           arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
         />
@@ -87,7 +84,6 @@ FormkravProsessIndex.propTypes = {
   alleKodeverk: PropTypes.shape().isRequired,
   parterMedKlagerett: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   valgtPartMedKlagerett: PropTypes.shape(),
-  personopplysninger: PropTypes.shape(),
   fagsak: PropTypes.shape(),
   arbeidsgiverOpplysningerPerId: PropTypes.shape(),
 };

@@ -64,7 +64,6 @@ export const FormkravKlageForm = ({
   intl,
   formProps,
   alleKodeverk,
-  personopplysninger,
   fagsakPerson,
   arbeidsgiverOpplysningerPerId,
   parterMedKlagerett,
@@ -94,7 +93,6 @@ export const FormkravKlageForm = ({
                   <option value={JSON.stringify(part)} key={part.identifikasjon.id}>
                     {lagVisningsnavnForKlagepart(
                       part.identifikasjon.id,
-                      personopplysninger,
                       fagsakPerson,
                       arbeidsgiverOpplysningerPerId,
                     )}
@@ -199,7 +197,6 @@ FormkravKlageForm.propTypes = {
   readOnlySubmitButton: PropTypes.bool,
   intl: PropTypes.shape().isRequired,
   alleKodeverk: PropTypes.shape().isRequired,
-  personopplysninger: PropTypes.shape(),
   fagsakPerson: PropTypes.shape(),
   arbeidsgiverOpplysningerPerId: PropTypes.shape(),
   parterMedKlagerett: PropTypes.arrayOf(PropTypes.shape()),

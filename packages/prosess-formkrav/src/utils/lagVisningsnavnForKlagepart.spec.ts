@@ -1,9 +1,7 @@
 import { expect } from 'chai';
 
-import personstatusType from '@fpsak-frontend/kodeverk/src/personstatusType';
+import { FagsakPerson } from '@k9-sak-web/types';
 import lagVisningsnavnForKlagepart from './lagVisningsnavnForKlagepart';
-
-const personstatusKodeverk = 'PERSONSTATUS_TYPE';
 
 describe('lagVisningsnavnForKlagepart', () => {
   const partId = '12345678';
@@ -19,37 +17,17 @@ describe('lagVisningsnavnForKlagepart', () => {
       },
     };
 
-    const personopplysninger = {
-      aktoerId: '12345678',
+    const fagsakPerson: FagsakPerson = {
+      aktørId: '12345678',
       navn: 'Petra Tester',
-      fnr: '72031833441',
-      navBrukerKjonn: {
-        kode: 'K',
-        kodeverk: 'BRUKER_KJOENN',
-      },
-      statsborgerskap: { kode: '', kodeverk: '' },
-      diskresjonskode: { kode: '', kodeverk: '' },
-      sivilstand: { kode: '', kodeverk: '' },
-      adresser: [],
-      region: { kode: '', kodeverk: '' },
-      // erPrivatPerson: true,
-      personstatus: {
-        kode: personstatusType.DOD,
-        kodeverk: personstatusKodeverk,
-      },
-      avklartPersonstatus: {
-        orginalPersonstatus: {
-          kode: personstatusType.BOSATT,
-          kodeverk: personstatusKodeverk,
-        },
-        overstyrtPersonstatus: {
-          kode: personstatusType.DOD,
-          kodeverk: personstatusKodeverk,
-        },
-      },
+      personnummer: '72031833441',
+      alder: 0,
+      erDod: false,
+      erKvinne: false,
+      personstatusType: undefined,
     };
 
-    const navn = lagVisningsnavnForKlagepart(partId, personopplysninger, arbeidsgiverOpplysningerPerId);
+    const navn = lagVisningsnavnForKlagepart(partId, fagsakPerson, arbeidsgiverOpplysningerPerId);
     const expected = `Svendsen Eksos (12345678)`;
     expect(navn).to.eql(expected);
   });
@@ -65,37 +43,17 @@ describe('lagVisningsnavnForKlagepart', () => {
       },
     };
 
-    const personopplysninger = {
-      aktoerId: '12345678',
+    const fagsakPerson: FagsakPerson = {
+      aktørId: '12345678',
       navn: 'Petra Tester',
-      fnr: '72031833441',
-      navBrukerKjonn: {
-        kode: 'K',
-        kodeverk: 'BRUKER_KJOENN',
-      },
-      statsborgerskap: { kode: '', kodeverk: '' },
-      diskresjonskode: { kode: '', kodeverk: '' },
-      sivilstand: { kode: '', kodeverk: '' },
-      adresser: [],
-      region: { kode: '', kodeverk: '' },
-      // erPrivatPerson: true,
-      personstatus: {
-        kode: personstatusType.DOD,
-        kodeverk: personstatusKodeverk,
-      },
-      avklartPersonstatus: {
-        orginalPersonstatus: {
-          kode: personstatusType.BOSATT,
-          kodeverk: personstatusKodeverk,
-        },
-        overstyrtPersonstatus: {
-          kode: personstatusType.DOD,
-          kodeverk: personstatusKodeverk,
-        },
-      },
+      personnummer: '72031833441',
+      alder: 0,
+      erDod: false,
+      erKvinne: false,
+      personstatusType: undefined,
     };
 
-    const navn = lagVisningsnavnForKlagepart(partId, personopplysninger, arbeidsgiverOpplysningerPerId);
+    const navn = lagVisningsnavnForKlagepart(partId, fagsakPerson, arbeidsgiverOpplysningerPerId);
     const expected = `Petra Tester (72031833441)`;
     expect(navn).to.eql(expected);
   });
@@ -111,37 +69,17 @@ describe('lagVisningsnavnForKlagepart', () => {
       },
     };
 
-    const personopplysninger = {
-      aktoerId: '23456781',
+    const fagsakPerson: FagsakPerson = {
+      aktørId: '23456781',
       navn: 'Petra Tester',
-      fnr: '72031833441',
-      navBrukerKjonn: {
-        kode: 'K',
-        kodeverk: 'BRUKER_KJOENN',
-      },
-      statsborgerskap: { kode: '', kodeverk: '' },
-      diskresjonskode: { kode: '', kodeverk: '' },
-      sivilstand: { kode: '', kodeverk: '' },
-      adresser: [],
-      region: { kode: '', kodeverk: '' },
-      // erPrivatPerson: true,
-      personstatus: {
-        kode: personstatusType.DOD,
-        kodeverk: personstatusKodeverk,
-      },
-      avklartPersonstatus: {
-        orginalPersonstatus: {
-          kode: personstatusType.BOSATT,
-          kodeverk: personstatusKodeverk,
-        },
-        overstyrtPersonstatus: {
-          kode: personstatusType.DOD,
-          kodeverk: personstatusKodeverk,
-        },
-      },
+      personnummer: '72031833441',
+      alder: 0,
+      erDod: false,
+      erKvinne: false,
+      personstatusType: undefined,
     };
 
-    const navn = lagVisningsnavnForKlagepart(partId, personopplysninger, arbeidsgiverOpplysningerPerId);
+    const navn = lagVisningsnavnForKlagepart(partId, fagsakPerson, arbeidsgiverOpplysningerPerId);
     const expected = `12345678`;
     expect(navn).to.eql(expected);
   });

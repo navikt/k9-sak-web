@@ -21,7 +21,6 @@ class PanelDef extends ProsessStegPanelDef {
     klageVurdering,
     parterMedKlagerett,
     valgtPartMedKlagerett,
-    personopplysninger,
     arbeidsgiverOpplysningerPerId,
     fagsak
   }) => ({
@@ -29,7 +28,6 @@ class PanelDef extends ProsessStegPanelDef {
     klageVurdering,
     parterMedKlagerett,
     valgtPartMedKlagerett,
-    personopplysninger,
     arbeidsgiverOpplysningerPerId,
     fagsak
   });
