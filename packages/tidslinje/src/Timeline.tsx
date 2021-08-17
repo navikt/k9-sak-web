@@ -48,8 +48,6 @@ export type SelectionOptions = {
   animation?: TimelineAnimationOptions;
 };
 
-const noop = () => {};
-
 const events: TimelineEventsWithMissing[] = [
   'currentTimeTick',
   'click',
@@ -77,7 +75,7 @@ const events: TimelineEventsWithMissing[] = [
 const eventDefaultProps: TimelineEventsHandlers = {};
 
 events.forEach(event => {
-  eventDefaultProps[`${event}Handler`] = noop;
+  eventDefaultProps[`${event}Handler`] = null;
 });
 
 interface Props {
@@ -116,7 +114,7 @@ function Timeline(
 
     events.forEach(event => {
       const handler = rest[`${event}Handler`];
-      if (typeof handler === 'function' && handler !== noop) {
+      if (typeof handler === 'function') {
         timeline.current.on(event, handler);
       }
     });

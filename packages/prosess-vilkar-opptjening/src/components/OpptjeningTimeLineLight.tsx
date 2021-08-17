@@ -67,7 +67,7 @@ const createItems = (
 ): Item[] => {
   const items = opptjeningPeriods.map(
     (ap, index): Item => ({
-      id: parseInt(`${ap.fom}${ap.tom}${index}`.replace(/-|\/|\./g, ''), 10),
+      id: parseInt(`${ap.fom}${ap.tom}${index}`.replaceAll('-', ''), 10),
       start: moment(ap.fom).toDate(),
       end: moment(ap.tom).toDate(),
       className: classNameGenerator(ap.klasse.kode),
