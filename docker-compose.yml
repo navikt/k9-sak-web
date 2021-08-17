@@ -1,25 +1,12 @@
 version: '3'
 services:
   frontend:
-    # image: ghcr.io/navikt/k9-sak-web:latest
-    build: .
+    image: k9-sak-web:1.2.0
+    # build: .
     ports:
-      - '127.0.0.1:9000:9000'
+      - 9000:9000
     environment:
-      - 'TZ=Europe/Oslo'
-      - 'APP_PORT=9000'
-      - 'APP_URL=http://k9-sak:8080'
-      - 'APP_URL_K9FORMIDLING=http://k9-formidling:8290'
-      - 'APP_HOSTNAME=localhost'
-      - 'APP_DIAGNOSEKODER=http://diagnosekode-api:8300/diagnosekoder/'
-      - 'APP_URL_K9OPPDRAG=http://k9-oppdrag:8070'
-      - 'APP_URL_KLAGE=http://k9-sak:8070'
-      - 'APP_URL_K9TILBAKE=http://k9-sak:8080'
-      - 'APP_URL_K9FORMIDLING_DD=http://k9-formidling-dokumentdata:8294'
-      - 'MEDISINSK_VILKAR_FRONTEND_URL=http://medisinsk-vilkar-frontend:8080/'
-      - 'OMSORGSDAGER_FRONTEND_URL=http://omsorgsdager-frontend:8088/'
-      - 'PSB_UTTAK_FRONTEND_URL=http://psb-uttak-frontend:8080/'
-      - 'OMSORGEN_FOR_FRONTEND_URL=http://omsorgen-for-frontend:8080/'
-      - 'PSB_INNTEKTSMELDING_FRONTEND_URL=http://psb-inntektsmelding-frontend:8383/'
-      - 'PSB_ETABLERT_TILSYN_FRONTEND_URL=http://psb-etablert-tilsyn-frontend:8484/'
-      - 'PSB_OM_BARNET_FRONTEND_URL=http://psb-om-barnet-frontend:8585/'
+      - APP_HOSTNAME=localhost
+      - APP_URL=http://host.docker.internal:8080
+      - APP_PORT=9000
+      - APP_PATH_PREFIX=sak

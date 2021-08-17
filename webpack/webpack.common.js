@@ -19,24 +19,24 @@ const isDevelopment = JSON.stringify(process.env.NODE_ENV) === '"development"';
 const config = {
   module: {
     rules: [
-      // {
-      //   test: /\.(tsx?|ts?|jsx?)$/,
-      //   enforce: 'pre',
-      //   use: {
-      //     loader: 'eslint-loader',
-      //     options: {
-      //       failOnWarning: false,
-      //       failOnError: !isDevelopment,
-      //       configFile: path.resolve(
-      //         __dirname,
-      //         isDevelopment ? '../eslint/eslintrc.dev.js' : '../eslint/eslintrc.prod.js',
-      //       ),
-      //       fix: isDevelopment,
-      //       cache: true,
-      //     },
-      //   },
-      //   include: [PACKAGES_DIR],
-      // },
+      {
+        test: /\.(tsx?|ts?|jsx?)$/,
+        enforce: 'pre',
+        use: {
+          loader: 'eslint-loader',
+          options: {
+            failOnWarning: false,
+            failOnError: !isDevelopment,
+            configFile: path.resolve(
+              __dirname,
+              isDevelopment ? '../eslint/eslintrc.dev.js' : '../eslint/eslintrc.prod.js',
+            ),
+            fix: isDevelopment,
+            cache: true,
+          },
+        },
+        include: [PACKAGES_DIR],
+      },
       {
         test: /\.(jsx?|js?|tsx?|ts?)$/,
         use: [
