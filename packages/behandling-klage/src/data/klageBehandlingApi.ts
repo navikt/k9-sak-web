@@ -1,4 +1,4 @@
-import { RestApiConfigBuilder, createRequestApi } from '@k9-sak-web/rest-api';
+import { createRequestApi, RestApiConfigBuilder } from '@k9-sak-web/rest-api';
 import { RestApiHooks } from '@k9-sak-web/rest-api-hooks';
 
 // NB! ALDRI BRUK DETTE UTENFOR DENNE BEHANDLINGSPAKKEN
@@ -16,7 +16,6 @@ export enum KlageBehandlingApiKeys {
   PREVIEW_MESSAGE = 'PREVIEW_MESSAGE',
   SAVE_KLAGE_VURDERING = 'SAVE_KLAGE_VURDERING',
   SAVE_REOPEN_KLAGE_VURDERING = 'SAVE_REOPEN_KLAGE_VURDERING',
-  PERSONOPPLYSNINGER = 'PERSONOPPLYSNINGER',
   PARTER_MED_KLAGERETT = 'PARTER_MED_KLAGERETT',
   VALGT_PART_MED_KLAGERETT = 'VALGT_PART_MED_KLAGERETT',
 }
@@ -27,7 +26,6 @@ const endpoints = new RestApiConfigBuilder()
   // behandlingsdata
   .withRel('aksjonspunkter', KlageBehandlingApiKeys.AKSJONSPUNKTER)
   .withRel('klage-vurdering', KlageBehandlingApiKeys.KLAGE_VURDERING)
-  .withRel('soeker-personopplysninger', KlageBehandlingApiKeys.PERSONOPPLYSNINGER)
   .withRel('parter-klagerett', KlageBehandlingApiKeys.PARTER_MED_KLAGERETT)
   .withRel('valgt-part', KlageBehandlingApiKeys.VALGT_PART_MED_KLAGERETT)
 

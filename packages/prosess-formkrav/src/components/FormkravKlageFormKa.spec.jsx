@@ -19,7 +19,6 @@ describe('<FormkravKlageFormKa>', () => {
         behandlingId={1}
         behandlingVersjon={1}
         alleKodeverk={{}}
-        personopplysninger={{}}
         arbeidsgiverOpplysningerPerId={{}}
         avsluttedeBehandlinger={[]}
         parterMedKlagerett={[]}
