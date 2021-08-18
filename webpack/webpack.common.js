@@ -20,7 +20,7 @@ const config = {
   module: {
     rules: [
       {
-        test: /\.(tsx?|ts?|jsx?)$/,
+        test: /\.(t|j)sx?$/,
         enforce: 'pre',
         use: {
           loader: 'eslint-loader',
@@ -38,7 +38,7 @@ const config = {
         include: [PACKAGES_DIR],
       },
       {
-        test: /\.(jsx?|js?|tsx?|ts?)$/,
+        test: /\.(t|j)sx?$/,
         use: [
           {
             loader: 'thread-loader',
@@ -58,7 +58,7 @@ const config = {
         include: [PACKAGES_DIR],
       },
       {
-        test: /\.(less|css)?$/,
+        test: /\.(le|c)ss$/,
         use: [
           {
             loader: MiniCssExtractPlugin.loader,
@@ -93,7 +93,7 @@ const config = {
         exclude: [CSS_DIR],
       },
       {
-        test: /\.(less|css)?$/,
+        test: /\.(le|c)ss$/,
         use: [
           {
             loader: MiniCssExtractPlugin.loader,
@@ -117,8 +117,8 @@ const config = {
         include: [CSS_DIR, CORE_DIR],
       },
       {
-        test: /\.(jpg|png|svg)$/,
-        issuer: /\.less?$/,
+        test: /\.(jp|pn|sv)g$/,
+        issuer: /\.less$/,
         type: 'asset/resource',
         generator: {
           filename: '[name]_[contenthash].[ext]',
@@ -127,7 +127,7 @@ const config = {
       },
       {
         test: /\.(svg)$/,
-        issuer: /\.(jsx|tsx)?$/,
+        issuer: /\.(t|j)sx?$/,
         use: [
           { loader: '@svgr/webpack' },
           {

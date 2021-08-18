@@ -37,14 +37,14 @@
     "axios": "^0.21.1",
     "nav-frontend-alertstriper": "^4.0.1",
     "react": "^17.0.2",
-    "react-intl": "^5.20.7",
+    "react-intl": "^5.20.9",
     "react-redux": "^7.2.4",
     "redux": "^4.1.1",
     "redux-form": "^8.3.7",
     "reselect": "^4.0.0"
   },
   "devDependencies": {
-    "axios-mock-adapter": "^1.19.0",
+    "axios-mock-adapter": "^1.20.0",
     "enzyme": "^3.11.0",
     "redux-mock-store": "^1.5.4",
     "sinon": "^11.1.2"

@@ -9,10 +9,20 @@ module.exports = {
   core: {
     builder: 'webpack5',
   },
-  stories: ['../packages/storybook/stories/**/*.stories.@(js|tsx)'],
-  addons: ['@storybook/addon-docs/preset', '@storybook/addon-actions/register'],
+  stories: ['../packages/storybook/stories/**/*.stories.@(j|t)s?(x)'],
+  addons: [
+    '@storybook/addon-docs/preset',
+    '@storybook/addon-actions/register',
+    // '@storybook/addon-knobs',
+    // Burde bytte ut alle knobs osv med controls
+    // ref: https://medium.com/storybookjs/storybook-6-migration-guide-200346241bb5
+    // '@storybook/addon-essentials',
+  ],
+  reactOptions: {
+    fastRefresh: true,
+  },
   webpackFinal: async (config, { configType }) => {
-    //Fjern default svg-loader
+    // Fjern default svg-loader
     config.module.rules = config.module.rules.map(data => {
       if (/svg\|/.test(String(data.test))) {
         data.test = /\.(ico|jpg|jpeg|png|gif|eot|otf|webp|ttf|woff|woff2|cur|ani)(\?.*)?$/;
@@ -20,12 +30,12 @@ module.exports = {
       return data;
     });
 
-    config.devtool = 'eval-cheap-source-map';
+    config.devtool = configType === 'DEVELOPMENT' ? 'eval-cheap-source-map' : 'source-map';
 
     // Make whatever fine-grained changes you need
     config.module.rules = config.module.rules.concat(
       {
-        test: /\.(tsx?|ts?|jsx?)$/,
+        test: /\.(t|j)sx?$/,
         enforce: 'pre',
         loader: 'eslint-loader',
         options: {
@@ -38,13 +48,12 @@ module.exports = {
         include: [PACKAGES_DIR],
       },
       {
-        test: /\.(jsx?|js?|tsx?|ts?)$/,
+        test: /\.(t|j)sx?$/,
         use: [
-          { loader: 'cache-loader' },
           {
             loader: 'thread-loader',
             options: {
-              workers: process.env.CIRCLE_NODE_TOTAL || require('os').cpus() - 1,
+              workers: process.env.CIRCLE_NODE_TOTAL || require('os').cpus().length - 1,
               workerParallelJobs: 50,
             },
           },
@@ -52,13 +61,14 @@ module.exports = {
             loader: 'babel-loader',
             options: {
               cacheDirectory: true,
+              // plugins: [configType === 'DEVELOPMENT' && require.resolve('react-refresh/babel')].filter(Boolean),
             },
           },
         ],
         include: PACKAGES_DIR,
       },
       {
-        test: /\.(less|css)?$/,
+        test: /\.(le|c)ss$/,
         use: [
           {
             loader: MiniCssExtractPlugin.loader,
@@ -93,7 +103,7 @@ module.exports = {
         exclude: [CSS_DIR],
       },
       {
-        test: /\.(less)?$/,
+        test: /\.less$/,
         use: [
           {
             loader: MiniCssExtractPlugin.loader,
@@ -119,7 +129,7 @@ module.exports = {
         include: [CSS_DIR, CORE_DIR],
       },
       {
-        test: /\.(jpg|png|svg)$/,
+        test: /\.(jp|pn|sv)g$/,
         issuer: /\.less?$/,
         type: 'asset/resource',
         generator: {
@@ -129,7 +139,7 @@ module.exports = {
       },
       {
         test: /\.(svg)$/,
-        issuer: /\.(jsx?|js?|tsx?|ts?)?$/,
+        issuer: /\.(t|j)sx?$/,
         use: [
           {
             loader: '@svgr/webpack',
@@ -138,7 +148,7 @@ module.exports = {
             loader: 'file-loader',
             options: {
               esModule: false,
-              name: '[name]_[hash].[ext]',
+              name: '[name]_[contenthash].[ext]',
             },
           },
         ],
@@ -157,12 +167,12 @@ module.exports = {
 
     config.plugins.push(
       new MiniCssExtractPlugin({
-        filename: 'style_[contenthash].css',
+        filename: 'style[name].css',
         ignoreOrder: true,
       }),
     );
 
-    config.resolve.extensions.push('.ts', '.tsx', '.less');
+    config.resolve.extensions.push('.less');
 
     // Return the altered config
     return config;
