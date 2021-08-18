@@ -18,7 +18,7 @@ export { ProsessStegDef, ProsessStegPanelDef } from './src/util/prosessSteg/Pros
 export { default as ProsessStegOverstyringPanelDef } from './src/util/prosessSteg/ProsessStegOverstyringPanelDef';
 export { default as useSetBehandlingVedEndring } from './src/util/useSetBehandlingVedEndring';
 
-export { default as Rettigheter } from './src/types/rettigheterTsType';
-export { default as SettPaVentParams } from './src/types/settPaVentParamsTsType';
+export type { default as Rettigheter } from './src/types/rettigheterTsType';
+export type { default as SettPaVentParams } from './src/types/settPaVentParamsTsType';
 
 export { default as lagDokumentdata } from './src/util/lagDokumentdata';

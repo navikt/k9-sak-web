@@ -1,7 +1,7 @@
 import Kodeverk from './kodeverkTsType';
 import Behandlingsresultat from './behandlingsresultatTsType';
 
-type BehandlingAppKontekst = Readonly<{
+export type BehandlingAppKontekst = Readonly<{
   id: number;
   versjon: number;
   uuid?: string;

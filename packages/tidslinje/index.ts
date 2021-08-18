@@ -1,4 +1,5 @@
 export { default as LegendBox } from './src/components/LegendBox';
+export { default as Timeline } from './src/Timeline';
 export { default as Tidslinje } from './src/Tidslinje';
 export { default as TimeLineButton } from './src/components/TimeLineButton';
 export { default as TimeLineControl } from './src/components/TimeLineControl';

@@ -95,7 +95,7 @@ const erTilbakekrevingÅrsakKlage = (årsak?: Kodeverk): boolean =>
   årsak && tilbakekrevingÅrsakTyperKlage.includes(årsak.kode);
 
 const renderChevron = (chevron: string, messageId: string): ReactElement => (
-  <FormattedMessage id={messageId}>{(altText: string) => <Image src={chevron} alt={altText} />}</FormattedMessage>
+  <FormattedMessage id={messageId}>{altText => <Image src={chevron} alt={`${altText}`} />}</FormattedMessage>
 );
 
 interface OwnProps {

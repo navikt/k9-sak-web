@@ -1,4 +1,4 @@
-type OpptjeningAktivitet = Readonly<{
+export type OpptjeningAktivitet = Readonly<{
   aktivitetType: {
     kode: string;
   };

@@ -1,4 +1,4 @@
-type RelatertFagsak = Readonly<{
+export type RelatertFagsak = Readonly<{
   relaterteSøkere: {
     saksnummer: string;
     søkerIdent: string;
