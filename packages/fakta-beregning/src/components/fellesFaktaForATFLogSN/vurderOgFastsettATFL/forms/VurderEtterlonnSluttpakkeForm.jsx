@@ -6,7 +6,6 @@ import { RadioGroupField, RadioOption } from '@fpsak-frontend/form';
 import { required } from '@fpsak-frontend/utils';
 import OAType from '@fpsak-frontend/kodeverk/src/opptjeningAktivitetType';
 import faktaOmBeregningTilfelle from '@fpsak-frontend/kodeverk/src/faktaOmBeregningTilfelle';
-import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import 'core-js/features/array/flat-map';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 
@@ -21,7 +20,7 @@ import { getFormValuesForBeregning } from '../../../BeregningFormUtils';
  */
 export const harEtterlonnSluttpakkeField = 'vurderEtterlønnSluttpakke';
 
-const VurderEtterlonnSluttpakkeForm = ({ readOnly, isAksjonspunktClosed, fieldArrayID }) => (
+const VurderEtterlonnSluttpakkeForm = ({ readOnly, isAvklaringsbehovClosed, fieldArrayID }) => (
   <div>
     <Normaltekst>
       <FormattedMessage id="BeregningInfoPanel.EtterlønnSluttpakke.HarSøkerInntekt" />
@@ -31,7 +30,7 @@ const VurderEtterlonnSluttpakkeForm = ({ readOnly, isAksjonspunktClosed, fieldAr
       name={`${fieldArrayID}.${harEtterlonnSluttpakkeField}`}
       validate={[required]}
       readOnly={readOnly}
-      isEdited={isAksjonspunktClosed}
+      isEdited={isAvklaringsbehovClosed}
     >
       <RadioOption label={<FormattedMessage id="BeregningInfoPanel.FormAlternativ.Ja" />} value />
       <RadioOption label={<FormattedMessage id="BeregningInfoPanel.FormAlternativ.Nei" />} value={false} />
@@ -41,23 +40,22 @@ const VurderEtterlonnSluttpakkeForm = ({ readOnly, isAksjonspunktClosed, fieldAr
 
 VurderEtterlonnSluttpakkeForm.propTypes = {
   readOnly: PropTypes.bool.isRequired,
-  isAksjonspunktClosed: PropTypes.bool.isRequired,
+  isAvklaringsbehovClosed: PropTypes.bool.isRequired,
   fieldArrayID: PropTypes.string.isRequired,
 };
 
-VurderEtterlonnSluttpakkeForm.buildInitialValues = (beregningsgrunnlag, faktaAksjonspunkt) => {
+VurderEtterlonnSluttpakkeForm.buildInitialValues = (beregningsgrunnlag) => {
   const initialValues = {};
-  if (!beregningsgrunnlag || !beregningsgrunnlag.beregningsgrunnlagPeriode || !faktaAksjonspunkt) {
+  if (!beregningsgrunnlag || !beregningsgrunnlag.beregningsgrunnlagPeriode) {
     return initialValues;
   }
-  const apErTidligereLost = !isAksjonspunktOpen(faktaAksjonspunkt.status.kode);
   const relevanteAndeler = beregningsgrunnlag.beregningsgrunnlagPeriode
     .flatMap(periode => periode.beregningsgrunnlagPrStatusOgAndel)
     .filter(
       ({ arbeidsforhold }) => arbeidsforhold && arbeidsforhold.arbeidsforholdType.kode === OAType.ETTERLONN_SLUTTPAKKE,
     );
   if (relevanteAndeler.length > 0) {
-    initialValues[harEtterlonnSluttpakkeField] = apErTidligereLost ? relevanteAndeler[0].beregnetPrAar > 0 : undefined;
+    initialValues[harEtterlonnSluttpakkeField] = relevanteAndeler[0].beregnetPrAar && relevanteAndeler[0].beregnetPrAar > 0;
   }
   return initialValues;
 };

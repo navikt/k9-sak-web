@@ -59,7 +59,7 @@ const createAndelerTableRows = (
   beregningsgrunnlag,
   behandlingId,
   behandlingVersjon,
-  isAksjonspunktClosed,
+  isAvklaringsbehovClosed,
   alleKodeverk,
   arbeidsgiverOpplysningerPerId,
 ) => {
@@ -81,7 +81,7 @@ const createAndelerTableRows = (
           behandlingId={behandlingId}
           beregningsgrunnlag={beregningsgrunnlag}
           behandlingVersjon={behandlingVersjon}
-          isAksjonspunktClosed={isAksjonspunktClosed}
+          isAvklaringsbehovClosed={isAvklaringsbehovClosed}
           alleKodeverk={alleKodeverk}
           arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
         />,
@@ -122,7 +122,7 @@ export const InntektFieldArrayImpl = ({
   behandlingId,
   behandlingVersjon,
   beregningsgrunnlag,
-  isAksjonspunktClosed,
+  isAvklaringsbehovClosed,
   alleKodeverk,
   arbeidsgiverOpplysningerPerId,
 }) => {
@@ -133,7 +133,7 @@ export const InntektFieldArrayImpl = ({
     beregningsgrunnlag,
     behandlingId,
     behandlingVersjon,
-    isAksjonspunktClosed,
+    isAvklaringsbehovClosed,
     alleKodeverk,
     arbeidsgiverOpplysningerPerId,
   );
@@ -173,7 +173,7 @@ InntektFieldArrayImpl.propTypes = {
   beregningsgrunnlag: PropTypes.shape().isRequired,
   alleKodeverk: PropTypes.shape().isRequired,
   arbeidsgiverOpplysningerPerId: PropTypes.shape().isRequired,
-  isAksjonspunktClosed: PropTypes.bool.isRequired,
+  isAvklaringsbehovClosed: PropTypes.bool.isRequired,
 };
 
 InntektFieldArrayImpl.defaultProps = {

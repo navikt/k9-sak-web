@@ -85,7 +85,7 @@ const renderFordeling = ({
                 formName={formProps.form}
                 isSubmittable={submittable && submitEnabled}
                 isReadOnly={readOnly}
-                hasOpenAksjonspunkter={!isAksjonspunktClosed}
+                hasOpenAvklaringsbehov={!isAksjonspunktClosed}
                 behandlingId={behandlingId}
                 behandlingVersjon={behandlingVersjon}
               />

@@ -13,7 +13,7 @@ const mockBGMedStatus = mili => ({
 describe('<VurderMilitaer>', () => {
   it('Skal teste at komponenten vises korrekt med radioknapper', () => {
     const wrapper = shallowWithIntl(
-      <VurderMilitaer readOnly={false} isAksjonspunktClosed={false} fieldArrayID="dummyId" />,
+      <VurderMilitaer readOnly={false} isAvklaringsbehovClosed={false} fieldArrayID="dummyId" />,
     );
     const radios = wrapper.find('RadioOption');
     expect(radios).to.have.length(2);

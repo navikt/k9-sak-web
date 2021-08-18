@@ -65,7 +65,7 @@ describe('<TidsbegrensetArbeidsforholdForm>', () => {
       <TidsbegrensetArbeidsforholdFormImpl
         readOnly={false}
         andelsliste={andeler}
-        isAksjonspunktClosed={false}
+        isAvklaringsbehovClosed={false}
         alleKodeverk={alleKodeverk}
         arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
         fieldArrayID="dummyId"
@@ -79,7 +79,7 @@ describe('<TidsbegrensetArbeidsforholdForm>', () => {
       <TidsbegrensetArbeidsforholdFormImpl
         readOnly={false}
         andelsliste={andeler}
-        isAksjonspunktClosed={false}
+        isAvklaringsbehovClosed={false}
         alleKodeverk={alleKodeverk}
         arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
         fieldArrayID="dummyId"

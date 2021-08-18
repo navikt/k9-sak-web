@@ -1,4 +1,4 @@
-import aksjonspunktCodes, { hasAksjonspunkt } from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import avklaringsbehovCodes from '@fpsak-frontend/kodeverk/src/beregningAvklaringsbehovCodes';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { TabsPure } from 'nav-frontend-tabs';
 import PropTypes from 'prop-types';
@@ -8,7 +8,7 @@ import React, { useState } from 'react';
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 import messages from '../i18n/nb_NO.json';
 import VurderFaktaBeregningPanel from './components/fellesFaktaForATFLogSN/VurderFaktaBeregningPanel';
-import beregningAksjonspunkterPropType from './propTypes/beregningAksjonspunkterPropType';
+import beregningAvklaringsbehovPropType from './propTypes/beregningAvklaringsbehovPropType';
 import beregningBehandlingPropType from './propTypes/beregningBehandlingPropType';
 import beregningsgrunnlagPropType from './propTypes/beregningsgrunnlagPropType';
 import AvklareAktiviteterPanel from './components/avklareAktiviteter/AvklareAktiviteterPanel';
@@ -23,8 +23,8 @@ const intl = createIntl(
   cache,
 );
 
-const { VURDER_FAKTA_FOR_ATFL_SN, OVERSTYRING_AV_BEREGNINGSAKTIVITETER, OVERSTYRING_AV_BEREGNINGSGRUNNLAG } =
-  aksjonspunktCodes;
+const { VURDER_FAKTA_FOR_ATFL_SN, OVERSTYRING_AV_BEREGNINGSAKTIVITETER, OVERSTYRING_AV_BEREGNINGSGRUNNLAG, AVKLAR_AKTIVITETER } =
+avklaringsbehovCodes;
 
 const lagLabel = (bg, vilkårsperioder) => {
   const stpOpptjening = bg.faktaOmBeregning.avklarAktiviteter.skjæringstidspunkt;
@@ -44,6 +44,28 @@ const harTilfeller = beregningsgrunnlag =>
   beregningsgrunnlag.faktaOmBeregning.faktaOmBeregningTilfeller &&
   beregningsgrunnlag.faktaOmBeregning.faktaOmBeregningTilfeller.length > 0;
 
+const harAvklaringsbehovIPanel = (avklaringsbehov, beregningsgrunnlag) => {
+  const harAvklaringsbehov = avklaringsbehov;
+  if (harAvklaringsbehov) {
+    const harVurderFaktaAksjonspunkt = avklaringsbehov.some(ap => ap.definisjon.kode === VURDER_FAKTA_FOR_ATFL_SN) && harTilfeller(beregningsgrunnlag);
+    const harAvklarAktiviteterAP = avklaringsbehov.some(ap => ap.definisjon.kode === AVKLAR_AKTIVITETER);
+    return harVurderFaktaAksjonspunkt || harAvklarAktiviteterAP
+  }
+  return false;
+}
+
+  const harAvklaringsbehov = (kode, avklaringsbehov) =>
+  avklaringsbehov &&
+  avklaringsbehov.some(ap => ap.definisjon.kode === kode || ap.definisjon.kode === kode);
+
+const finnAvklaringsbehov = (aksjonspunkter, beregningsgrunnlag) => {
+  let avklaringsbehov = aksjonspunkter;
+  if (beregningsgrunnlag.avklaringsbehov && beregningsgrunnlag.avklaringsbehov.length > 0) {
+    avklaringsbehov = beregningsgrunnlag.avklaringsbehov;
+  }
+  return avklaringsbehov;
+}
+
 const BeregningFaktaIndex = ({
   behandling,
   beregningsgrunnlag,
@@ -57,9 +79,11 @@ const BeregningFaktaIndex = ({
 }) => {
   const skalBrukeTabs = beregningsgrunnlag.length > 1;
   const [aktivtBeregningsgrunnlagIndeks, setAktivtBeregningsgrunnlagIndeks] = useState(0);
-  const aktivtBeregningsrunnlag = beregningsgrunnlag[aktivtBeregningsgrunnlagIndeks];
+  const aktivtBeregningsgrunnlag = beregningsgrunnlag[aktivtBeregningsgrunnlagIndeks];
 
   const vilkårsperioder = behandling?.behandlingsresultat?.vilkårResultat.BEREGNINGSGRUNNLAGVILKÅR;
+
+  const aktiveAvklaringsBehov = finnAvklaringsbehov(aksjonspunkter, aktivtBeregningsgrunnlag);
 
   return (
     <RawIntlProvider value={intl}>
@@ -68,7 +92,9 @@ const BeregningFaktaIndex = ({
           tabs={beregningsgrunnlag.map((currentBeregningsgrunnlag, currentBeregningsgrunnlagIndex) => ({
             aktiv: aktivtBeregningsgrunnlagIndeks === currentBeregningsgrunnlagIndex,
             label: lagLabel(currentBeregningsgrunnlag, vilkårsperioder),
-            className: harTilfeller(currentBeregningsgrunnlag) ? 'harAksjonspunkt' : '', // TODO finne en måte finne ut om det finnes et aksjonspunkt eller ikke
+            className: harAvklaringsbehovIPanel(
+              finnAvklaringsbehov(aksjonspunkter, currentBeregningsgrunnlag), 
+                currentBeregningsgrunnlag) ? 'harAksjonspunkt' : '',
           }))}
           onChange={(e, clickedIndex) => setAktivtBeregningsgrunnlagIndeks(clickedIndex)}
         />
@@ -76,17 +102,17 @@ const BeregningFaktaIndex = ({
       <div style={{ paddingTop: skalBrukeTabs ? '16px' : '' }}>
         <AvklareAktiviteterPanel
           readOnly={
-            readOnly || (hasAksjonspunkt(OVERSTYRING_AV_BEREGNINGSAKTIVITETER, aksjonspunkter) && !erOverstyrer)
+            readOnly || (harAvklaringsbehov(OVERSTYRING_AV_BEREGNINGSAKTIVITETER, aktiveAvklaringsBehov) && !erOverstyrer)
           }
-          harAndreAksjonspunkterIPanel={hasAksjonspunkt(VURDER_FAKTA_FOR_ATFL_SN, aksjonspunkter)}
+          harAndreAvklaringsbehovIPanel={harAvklaringsbehov(VURDER_FAKTA_FOR_ATFL_SN, aktiveAvklaringsBehov)}
           submitCallback={submitCallback}
           submittable={submittable}
           erOverstyrer={erOverstyrer}
-          aksjonspunkter={aksjonspunkter}
+          avklaringsbehov={aktiveAvklaringsBehov}
           alleKodeverk={alleKodeverk}
           behandlingId={behandling.id}
           behandlingVersjon={behandling.versjon}
-          beregningsgrunnlag={aktivtBeregningsrunnlag}
+          beregningsgrunnlag={aktivtBeregningsgrunnlag}
           behandlingResultatPerioder={vilkårsperioder}
           aktivtBeregningsgrunnlagIndex={aktivtBeregningsgrunnlagIndeks}
           alleBeregningsgrunnlag={beregningsgrunnlag}
@@ -94,14 +120,14 @@ const BeregningFaktaIndex = ({
         />
         <VerticalSpacer thirtyTwoPx />
         <VurderFaktaBeregningPanel
-          readOnly={readOnly || (hasAksjonspunkt(OVERSTYRING_AV_BEREGNINGSGRUNNLAG, aksjonspunkter) && !erOverstyrer)}
+          readOnly={readOnly || (harAvklaringsbehov(OVERSTYRING_AV_BEREGNINGSGRUNNLAG, aktiveAvklaringsBehov) && !erOverstyrer)}
           submitCallback={submitCallback}
           submittable={submittable}
-          aksjonspunkter={aksjonspunkter}
+          avklaringsbehov={aktiveAvklaringsBehov}
           alleKodeverk={alleKodeverk}
           behandlingId={behandling.id}
           behandlingVersjon={behandling.versjon}
-          beregningsgrunnlag={aktivtBeregningsrunnlag}
+          beregningsgrunnlag={aktivtBeregningsgrunnlag}
           behandlingResultatPerioder={vilkårsperioder}
           erOverstyrer={erOverstyrer}
           alleBeregningsgrunnlag={beregningsgrunnlag}
@@ -120,7 +146,7 @@ BeregningFaktaIndex.propTypes = {
     notAccepted: PropTypes.bool,
   }).isRequired,
   alleKodeverk: PropTypes.shape().isRequired,
-  aksjonspunkter: PropTypes.arrayOf(beregningAksjonspunkterPropType).isRequired,
+  aksjonspunkter: PropTypes.arrayOf(beregningAvklaringsbehovPropType).isRequired,
   submitCallback: PropTypes.func.isRequired,
   readOnly: PropTypes.bool.isRequired,
   submittable: PropTypes.bool.isRequired,

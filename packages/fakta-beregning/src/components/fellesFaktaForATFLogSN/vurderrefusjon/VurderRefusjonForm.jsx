@@ -17,7 +17,7 @@ const erRefusjonskravGyldigFieldPrefix = 'erKravGyldig_';
 export const lagFieldName = arbeidsgiverVisningsnavn =>
   erRefusjonskravGyldigFieldPrefix + arbeidsgiverVisningsnavn.replace('.', '');
 
-const lagRefusjonskravRadios = (senRefusjonkravListe, readOnly, isAksjonspunktClosed, fieldArrayID) =>
+const lagRefusjonskravRadios = (senRefusjonkravListe, readOnly, isAvklaringsbehovClosed, fieldArrayID) =>
   senRefusjonkravListe.map(kravPerArbeidsgiver => {
     const arbeidsgiverVisningsnavn = createVisningsnavnForAktivitet(kravPerArbeidsgiver);
     return (
@@ -34,7 +34,7 @@ const lagRefusjonskravRadios = (senRefusjonkravListe, readOnly, isAksjonspunktCl
           name={`${fieldArrayID}.${lagFieldName(arbeidsgiverVisningsnavn)}`}
           validate={[required]}
           readOnly={readOnly}
-          isEdited={isAksjonspunktClosed}
+          isEdited={isAvklaringsbehovClosed}
         >
           <RadioOption label={<FormattedMessage id="BeregningInfoPanel.FormAlternativ.Ja" />} value />
           <RadioOption label={<FormattedMessage id="BeregningInfoPanel.FormAlternativ.Nei" />} value={false} />
@@ -48,12 +48,12 @@ const lagRefusjonskravRadios = (senRefusjonkravListe, readOnly, isAksjonspunktCl
  *
  * Container komponent. Har ansvar for å sette opp Redux Formen for vurdering av refusjonskrav som har kommet for sent.
  */
-export const VurderRefusjonFormImpl = ({ readOnly, isAksjonspunktClosed, senRefusjonkravListe, fieldArrayID }) =>
-  lagRefusjonskravRadios(senRefusjonkravListe, readOnly, isAksjonspunktClosed, fieldArrayID);
+export const VurderRefusjonFormImpl = ({ readOnly, isAvklaringsbehovClosed, senRefusjonkravListe, fieldArrayID }) =>
+  lagRefusjonskravRadios(senRefusjonkravListe, readOnly, isAvklaringsbehovClosed, fieldArrayID);
 
 VurderRefusjonFormImpl.propTypes = {
   readOnly: PropTypes.bool.isRequired,
-  isAksjonspunktClosed: PropTypes.bool.isRequired,
+  isAvklaringsbehovClosed: PropTypes.bool.isRequired,
   senRefusjonkravListe: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   fieldArrayID: PropTypes.string.isRequired,
 };

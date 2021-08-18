@@ -77,6 +77,17 @@ const lagBeregningsgrunnlagAvklarAktiviteter = aktiviteter => ({
   },
 });
 
+const lagAksjonspunkter = (faktaOmBeregning) => {
+  const aksjonspunkter = [];
+  if (!faktaOmBeregning) {
+    return aksjonspunkter;
+  }
+  if (faktaOmBeregning.faktaOmBeregningTilfeller  && faktaOmBeregning.faktaOmBeregningTilfeller.length > 0) {
+    aksjonspunkter.push({definisjon: { kode: VURDER_AT_OG_FL_I_SAMME_ORGANISASJON }});
+  }
+  return aksjonspunkter;
+}
+
 const lagBeregningsgrunnlag = (andeler, faktaOmBeregning) => ({
   beregningsgrunnlagPeriode: [
     {
@@ -89,6 +100,7 @@ const lagBeregningsgrunnlag = (andeler, faktaOmBeregning) => ({
     },
   ],
   faktaOmBeregning,
+  aksjonspunkter: lagAksjonspunkter(faktaOmBeregning),
 });
 
 const mapTilKodeliste = arrayOfCodes => arrayOfCodes.map(kode => ({ kode }));

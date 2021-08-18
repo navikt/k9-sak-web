@@ -126,7 +126,7 @@ describe('<VurderOgFastsettATFL>', () => {
     const wrapper = shallow(
       <VurderOgFastsettATFL.WrappedComponent
         readOnly={false}
-        isAksjonspunktClosed={false}
+        isAvklaringsbehovClosed={false}
         tilfeller={tilfeller}
         skalViseTabell={false}
         skalFastsetteAT
@@ -137,7 +137,7 @@ describe('<VurderOgFastsettATFL>', () => {
         behandlingVersjon={behandlingVersjon}
         alleKodeverk={{}}
         arbeidsgiverOpplysningerPerId={{}}
-        aksjonspunkter={[]}
+        avklaringsbehov={[]}
         erOverstyrer={false}
         beregningsgrunnlag={beregningsgrunnlag}
         fieldArrayID="dummyId"

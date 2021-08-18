@@ -24,7 +24,7 @@ import {
 } from '../BgFordelingUtils';
 import InntektFieldArray from '../InntektFieldArray';
 import VurderEtterlonnSluttpakkeForm from './forms/VurderEtterlonnSluttpakkeForm';
-import beregningAksjonspunkterPropType from '../../../propTypes/beregningAksjonspunkterPropType';
+import beregningAvklaringsbehovPropType from '../../../propTypes/beregningAvklaringsbehovPropType';
 
 const lonnsendringErVurdertEllerIkkjeTilstede = (tilfeller, values) =>
   !tilfeller.includes(faktaOmBeregningTilfelle.VURDER_LONNSENDRING) ||
@@ -70,7 +70,7 @@ const finnInntektstabell = (
   behandlingId,
   behandlingVersjon,
   beregningsgrunnlag,
-  isAksjonspunktClosed,
+  isAvklaringsbehovClosed,
   alleKodeverk,
   arbeidsgiverOpplysningerPerId,
   fieldArrayID,
@@ -85,7 +85,7 @@ const finnInntektstabell = (
     beregningsgrunnlag={beregningsgrunnlag}
     alleKodeverk={alleKodeverk}
     arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
-    isAksjonspunktClosed={isAksjonspunktClosed}
+    isAvklaringsbehovClosed={isAvklaringsbehovClosed}
   />
 );
 
@@ -100,7 +100,7 @@ const finnInntektstabell = (
 
 const VurderOgFastsettATFL = ({
   readOnly,
-  isAksjonspunktClosed,
+  isAvklaringsbehovClosed,
   tilfeller,
   beregningsgrunnlag,
   manglerInntektsmelding,
@@ -110,7 +110,7 @@ const VurderOgFastsettATFL = ({
   skalViseTabell,
   behandlingId,
   behandlingVersjon,
-  aksjonspunkter,
+  avklaringsbehov,
   alleKodeverk,
   arbeidsgiverOpplysningerPerId,
   erOverstyrer,
@@ -124,7 +124,7 @@ const VurderOgFastsettATFL = ({
         behandlingId,
         behandlingVersjon,
         beregningsgrunnlag,
-        isAksjonspunktClosed,
+        isAvklaringsbehovClosed,
         alleKodeverk,
         arbeidsgiverOpplysningerPerId,
         fieldArrayID,
@@ -133,7 +133,7 @@ const VurderOgFastsettATFL = ({
       hjelpeTekstId={findInstruksjonForFastsetting(skalFastsetteFL, skalFastsetteAT, harKunstigArbeid)}
       readOnly={readOnly}
       erOverstyrer={erOverstyrer}
-      aksjonspunkter={aksjonspunkter}
+      avklaringsbehov={avklaringsbehov}
       behandlingId={behandlingId}
       behandlingVersjon={behandlingVersjon}
       fieldArrayID={fieldArrayID}
@@ -142,7 +142,7 @@ const VurderOgFastsettATFL = ({
       {tilfeller.includes(faktaOmBeregningTilfelle.VURDER_LONNSENDRING) && (
         <LonnsendringForm
           readOnly={readOnly}
-          isAksjonspunktClosed={isAksjonspunktClosed}
+          isAvklaringsbehovClosed={isAvklaringsbehovClosed}
           tilfeller={tilfeller}
           manglerIM={manglerInntektsmelding}
           fieldArrayID={fieldArrayID}
@@ -151,7 +151,7 @@ const VurderOgFastsettATFL = ({
       {tilfeller.includes(faktaOmBeregningTilfelle.VURDER_ETTERLONN_SLUTTPAKKE) && (
         <VurderEtterlonnSluttpakkeForm
           readOnly={readOnly}
-          isAksjonspunktClosed={isAksjonspunktClosed}
+          isAvklaringsbehovClosed={isAvklaringsbehovClosed}
           behandlingId={behandlingId}
           behandlingVersjon={behandlingVersjon}
           fieldArrayID={fieldArrayID}
@@ -160,7 +160,7 @@ const VurderOgFastsettATFL = ({
       {tilfeller.includes(faktaOmBeregningTilfelle.VURDER_NYOPPSTARTET_FL) && (
         <NyoppstartetFLForm
           readOnly={readOnly}
-          isAksjonspunktClosed={isAksjonspunktClosed}
+          isAvklaringsbehovClosed={isAvklaringsbehovClosed}
           manglerIM={manglerInntektsmelding}
           fieldArrayID={fieldArrayID}
         />
@@ -168,7 +168,7 @@ const VurderOgFastsettATFL = ({
       {tilfeller.includes(faktaOmBeregningTilfelle.VURDER_MOTTAR_YTELSE) && (
         <VurderMottarYtelseForm
           readOnly={readOnly}
-          isAksjonspunktClosed={isAksjonspunktClosed}
+          isAvklaringsbehovClosed={isAvklaringsbehovClosed}
           tilfeller={tilfeller}
           beregningsgrunnlag={beregningsgrunnlag}
           alleKodeverk={alleKodeverk}
@@ -181,7 +181,7 @@ const VurderOgFastsettATFL = ({
 );
 
 VurderOgFastsettATFL.buildInitialValues = (
-  aksjonspunkter,
+  avklaringsbehov,
   faktaOmBeregning,
   alleKodeverk,
   arbeidsgiverOpplysningerPerId,
@@ -199,7 +199,7 @@ VurderOgFastsettATFL.buildInitialValues = (
       alleKodeverk,
       arbeidsgiverOpplysningerPerId,
     ),
-    ...InntektstabellPanel.buildInitialValues(aksjonspunkter),
+    ...InntektstabellPanel.buildInitialValues(avklaringsbehov),
   };
 };
 
@@ -334,7 +334,7 @@ VurderOgFastsettATFL.transformValues = (faktaOmBeregning, beregningsgrunnlag) =>
 
 VurderOgFastsettATFL.propTypes = {
   readOnly: PropTypes.bool.isRequired,
-  isAksjonspunktClosed: PropTypes.bool.isRequired,
+  isAvklaringsbehovClosed: PropTypes.bool.isRequired,
   tilfeller: PropTypes.arrayOf(PropTypes.string).isRequired,
   manglerInntektsmelding: PropTypes.bool.isRequired,
   skalFastsetteAT: PropTypes.bool.isRequired,
@@ -346,7 +346,7 @@ VurderOgFastsettATFL.propTypes = {
   alleKodeverk: PropTypes.shape().isRequired,
   arbeidsgiverOpplysningerPerId: PropTypes.shape().isRequired,
   erOverstyrer: PropTypes.bool.isRequired,
-  aksjonspunkter: PropTypes.arrayOf(beregningAksjonspunkterPropType).isRequired,
+  avklaringsbehov: PropTypes.arrayOf(beregningAvklaringsbehovPropType).isRequired,
   beregningsgrunnlag: PropTypes.shape().isRequired,
   fieldArrayID: PropTypes.string.isRequired,
 };

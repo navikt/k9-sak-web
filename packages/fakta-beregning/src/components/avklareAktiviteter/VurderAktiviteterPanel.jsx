@@ -29,11 +29,11 @@ const finnListerSomSkalVurderes = (aktiviteterTomDatoMapping, values) => {
  */
 export const VurderAktiviteterPanel = ({
   readOnly,
-  isAksjonspunktClosed,
+  isAvklaringsbehovClosed,
   values,
   aktiviteterTomDatoMapping,
   erOverstyrt,
-  harAksjonspunkt,
+  harAvklaringsbehov,
   alleKodeverk,
   fieldArrayID,
   arbeidsgiverOpplysningerPerId,
@@ -42,11 +42,11 @@ export const VurderAktiviteterPanel = ({
     <VurderAktiviteterTabell
       key={fieldArrayID}
       readOnly={readOnly}
-      isAksjonspunktClosed={isAksjonspunktClosed}
+      isAvklaringsbehovClosed={isAvklaringsbehovClosed}
       aktiviteter={aktivitetMap.aktiviteter}
       skjaeringstidspunkt={aktivitetMap.tom}
       erOverstyrt={erOverstyrt}
-      harAksjonspunkt={harAksjonspunkt}
+      harAvklaringsbehov={harAvklaringsbehov}
       alleKodeverk={alleKodeverk}
       fieldArrayID={fieldArrayID}
       arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
@@ -56,8 +56,8 @@ export const VurderAktiviteterPanel = ({
 VurderAktiviteterPanel.propTypes = {
   erOverstyrt: PropTypes.bool.isRequired,
   readOnly: PropTypes.bool.isRequired,
-  isAksjonspunktClosed: PropTypes.bool.isRequired,
-  harAksjonspunkt: PropTypes.bool.isRequired,
+  isAvklaringsbehovClosed: PropTypes.bool.isRequired,
+  harAvklaringsbehov: PropTypes.bool.isRequired,
   aktiviteterTomDatoMapping: PropTypes.arrayOf(
     PropTypes.shape({
       tom: PropTypes.string,
@@ -123,7 +123,7 @@ VurderAktiviteterPanel.buildInitialValues = (
   aktiviteterTomDatoMapping,
   alleKodeverk,
   erOverstyrt,
-  harAksjonspunkt,
+  harAvklaringsbehov,
   arbeidsgiverOpplysningerPerId,
 ) => {
   if (!aktiviteterTomDatoMapping || aktiviteterTomDatoMapping.length === 0) {
@@ -137,7 +137,7 @@ VurderAktiviteterPanel.buildInitialValues = (
         liste.aktiviteter,
         alleKodeverk,
         erOverstyrt,
-        harAksjonspunkt,
+        harAvklaringsbehov,
         arbeidsgiverOpplysningerPerId,
       ),
     };

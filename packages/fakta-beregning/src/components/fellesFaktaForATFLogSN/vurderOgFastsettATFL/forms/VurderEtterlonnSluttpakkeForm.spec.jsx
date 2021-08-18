@@ -9,7 +9,7 @@ describe('<VurderEtterlonnSluttpakkeForm>', () => {
     const wrapper = shallowWithIntl(
       <VurderEtterlonnSluttpakkeForm.WrappedComponent
         readOnly={false}
-        isAksjonspunktClosed={false}
+        isAvklaringsbehovClosed={false}
         harEtterlonnSluttpakke={false}
         fieldArrayID="dummyId"
       />,

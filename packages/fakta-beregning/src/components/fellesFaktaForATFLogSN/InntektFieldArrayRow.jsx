@@ -51,7 +51,7 @@ export const AndelRowImpl = ({
   andelElementFieldId,
   inntektskategoriKoder,
   readOnly,
-  isAksjonspunktClosed,
+  isAvklaringsbehovClosed,
   removeAndel,
   alleKodeverk,
   arbeidsgiverOpplysningerPerId,
@@ -87,7 +87,7 @@ export const AndelRowImpl = ({
             bredde="M"
             parse={parseCurrencyInput}
             readOnly={readOnly}
-            isEdited={isAksjonspunktClosed}
+            isEdited={isAvklaringsbehovClosed}
           />
         </TableColumn>
       )}
@@ -109,7 +109,7 @@ export const AndelRowImpl = ({
           selectValues={inntektskategoriSelectValues(inntektskategoriKoder)}
           value={fields.get(index).inntektskategori}
           readOnly={readOnly || !skalRedigereInntektskategori}
-          isEdited={isAksjonspunktClosed && skalRedigereInntektskategori}
+          isEdited={isAvklaringsbehovClosed && skalRedigereInntektskategori}
         />
       </TableColumn>
       <TableColumn>
@@ -131,7 +131,7 @@ AndelRowImpl.propTypes = {
   fields: PropTypes.shape().isRequired,
   intl: PropTypes.shape().isRequired,
   inntektskategoriKoder: kodeverkPropType.isRequired,
-  isAksjonspunktClosed: PropTypes.bool.isRequired,
+  isAvklaringsbehovClosed: PropTypes.bool.isRequired,
   skalVisePeriode: PropTypes.bool.isRequired,
   skalViseRefusjon: PropTypes.bool.isRequired,
   skalViseSletteknapp: PropTypes.bool.isRequired,
