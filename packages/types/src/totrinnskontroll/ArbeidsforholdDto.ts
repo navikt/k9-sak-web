@@ -1,6 +1,6 @@
 import { Kodeverk } from '../kodeverk';
 
-interface ArbeidsforholdDto {
+export interface ArbeidsforholdDto {
   navn: string;
   organisasjonsnummer: string;
   arbeidsforholdId: string;

@@ -1,6 +1,6 @@
 import KlageVurderingResultat from './KlageVurderingResultat';
 
-interface BehandlingKlageVurdering {
+export interface BehandlingKlageVurdering {
   klageVurdering: string;
   klageVurderingOmgjoer: string;
   klageVurderingResultatNFP: KlageVurderingResultat;

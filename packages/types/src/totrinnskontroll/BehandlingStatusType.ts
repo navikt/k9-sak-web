@@ -1,4 +1,4 @@
-interface BehandlingStatusType {
+export interface BehandlingStatusType {
   kode: string;
 }
 

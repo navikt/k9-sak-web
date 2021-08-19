@@ -1,12 +1,11 @@
 import React, { Component, MouseEvent } from 'react';
-import ReactDOM from 'react-dom';
 import moment from 'moment';
-import Timeline from 'react-visjs-timeline';
 import { Column, Row } from 'nav-frontend-grid';
 import { ISO_DATE_FORMAT } from '@fpsak-frontend/utils';
 import Kjønnkode from '@k9-sak-web/types/src/Kjønnkode';
 import UttakPeriode from '@k9-sak-web/types/src/uttak/UttakPeriode';
 
+import Timeline from './Timeline';
 import TimeLineControl from './components/TimeLineControl';
 import TimeLineSoker from './components/TimeLineSoker';
 import TimeLineSokerEnsamSoker from './components/TimeLineSokerEnsamSoker';
@@ -34,17 +33,22 @@ interface TidslinjeProps {
 }
 
 const getOptions = (customTimes, sortedUttakPeriods) => ({
-  end: moment(sortedUttakPeriods[sortedUttakPeriods.length - 1].tom).add(2, 'days'),
+  end: moment(sortedUttakPeriods[sortedUttakPeriods.length - 1].tom)
+    .add(2, 'days')
+    .toDate(),
   locale: moment.locale('nb'),
   margin: { item: 14 },
-  max: moment(customTimes.fodsel).add(4, 'years'),
-  min: moment.min([moment(customTimes.fodsel), moment(sortedUttakPeriods[0].fom)]).subtract(4, 'weeks'),
+  max: moment(customTimes.fodsel).add(4, 'years').toDate(),
+  min: moment
+    .min([moment(customTimes.fodsel), moment(sortedUttakPeriods[0].fom)])
+    .subtract(4, 'weeks')
+    .toDate(),
   moment,
   moveable: true,
   orientation: { axis: 'top' },
   showCurrentTime: false,
   stack: false,
-  start: moment(sortedUttakPeriods[0].fom).subtract(1, 'days'),
+  start: moment(sortedUttakPeriods[0].fom).subtract(1, 'days').toDate(),
   tooltip: { followMouse: true },
   verticalScroll: false,
   width: '100%',
@@ -112,44 +116,32 @@ class Tidslinje extends Component<TidslinjeProps> {
     this.timelineRef = React.createRef();
   }
 
-  componentDidMount() {
-    // TODO Fjern når denne er retta: https://github.com/Lighthouse-io/react-visjs-timeline/issues/40
-    // eslint-disable-next-line react/no-find-dom-node
-    const node = ReactDOM.findDOMNode(this.timelineRef.current);
-    if (node) {
-      node.children[0].style.visibility = 'visible';
-    }
-  }
-
   zoomOut() {
-    const timeline = this.timelineRef.current.$el;
-    timeline.zoomOut(0.5);
+    this.timelineRef.current.zoomOut(0.5);
   }
 
   zoomIn() {
-    const timeline = this.timelineRef.current.$el;
-    timeline.zoomIn(0.5);
+    this.timelineRef.current.zoomIn(0.5);
   }
 
   goBackward() {
-    const timeline = this.timelineRef.current.$el;
+    const timeline = this.timelineRef.current;
     const currentWindowTimes = timeline.getWindow();
     const newWindowTimes = {
       start: new Date(currentWindowTimes.start).setDate(currentWindowTimes.start.getDate() - 42),
       end: new Date(currentWindowTimes.end).setDate(currentWindowTimes.end.getDate() - 42),
     };
-    timeline.setWindow(newWindowTimes);
+    timeline.setWindow(newWindowTimes.start, newWindowTimes.end);
   }
 
   goForward() {
-    const timeline = this.timelineRef.current.$el;
+    const timeline = this.timelineRef.current;
     const currentWindowTimes = timeline.getWindow();
     const newWindowTimes = {
       start: new Date(currentWindowTimes.start).setDate(currentWindowTimes.start.getDate() + 42),
       end: new Date(currentWindowTimes.end).setDate(currentWindowTimes.end.getDate() + 42),
     };
-
-    timeline.setWindow(newWindowTimes);
+    timeline.setWindow(newWindowTimes.start, newWindowTimes.end);
   }
 
   render() {
@@ -180,8 +172,8 @@ class Tidslinje extends Component<TidslinjeProps> {
                 <Timeline
                   ref={this.timelineRef}
                   options={getOptions(customTimes, uttakPerioder.sort(sortByDate))}
-                  items={items}
-                  groups={groups}
+                  initialItems={items}
+                  initialGroups={groups}
                   customTimes={customTimes}
                   selectHandler={selectPeriodCallback}
                   selection={[selectedPeriod ? selectedPeriod.id : null]}

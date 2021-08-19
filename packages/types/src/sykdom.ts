@@ -5,7 +5,7 @@ import {
   PeriodeMedUtvidetTilsynOgPleieResponse,
 } from './medisinsk-vilkår/MedisinskVilkår';
 
-type Sykdom = Readonly<{
+export type Sykdom = Readonly<{
   periodeTilVurdering: Periode;
   legeerklæringer: Legeerklæring[];
   perioderMedKontinuerligTilsynOgPleie: PeriodeMedTilsynOgPleieResponse[];
