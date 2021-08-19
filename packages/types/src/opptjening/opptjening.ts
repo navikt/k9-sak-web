@@ -1,7 +1,7 @@
 import OpptjeningAktivitet from './opptjeningAktivitet';
 import FastsattOpptjening from './fastsattOpptjening';
 
-type Opptjening = Readonly<{
+export type Opptjening = Readonly<{
   fastsattOpptjening: FastsattOpptjening;
   opptjeningAktivitetList: OpptjeningAktivitet[];
 }>;

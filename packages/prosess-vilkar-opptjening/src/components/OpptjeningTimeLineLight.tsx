@@ -1,10 +1,8 @@
 import React, { Component, RefObject } from 'react';
-import ReactDOM from 'react-dom';
 import moment from 'moment';
-import Timeline from 'react-visjs-timeline';
 import { Column, Row } from 'nav-frontend-grid';
 import { DDMMYYYY_DATE_FORMAT, ISO_DATE_FORMAT } from '@fpsak-frontend/utils';
-import { TimeLineNavigation } from '@fpsak-frontend/tidslinje';
+import { Timeline, TimeLineNavigation } from '@fpsak-frontend/tidslinje';
 import opptjeningAktivitetKlassifisering from '@fpsak-frontend/prosess-vilkar-opptjening/src/kodeverk/opptjeningAktivitetKlassifisering';
 import { FastsattOpptjeningAktivitet } from '@k9-sak-web/types';
 
@@ -14,9 +12,9 @@ import TimeLineData from './TimeLineData';
 import styles from './opptjeningTimeLineLight.less';
 
 type Item = {
-  id?: number;
-  start: moment.Moment;
-  end: moment.Moment;
+  id: number;
+  start: Date;
+  end: Date;
   className: string;
   content: string;
   data?: FastsattOpptjeningAktivitet;
@@ -28,16 +26,16 @@ const standardItems = (opptjeningFomDate: string, opptjeningTomDate: string): It
   const items = [
     {
       id: 1000,
-      start: moment(opptjeningFomDate).startOf('month'),
-      end: moment(opptjeningFomDate).startOf('month'),
+      start: moment(opptjeningFomDate).startOf('month').toDate(),
+      end: moment(opptjeningFomDate).startOf('month').toDate(),
       content: '',
       group: 1,
       className: styles.hiddenpast,
     },
     {
       id: 1001,
-      start: moment(opptjeningTomDate).endOf('month'),
-      end: moment(opptjeningTomDate).endOf('month'),
+      start: moment(opptjeningTomDate).endOf('month').toDate(),
+      end: moment(opptjeningTomDate).endOf('month').toDate(),
       content: '',
       group: 1,
       className: styles.hiddenpast,
@@ -68,9 +66,10 @@ const createItems = (
   opptjeningTomDate: string,
 ): Item[] => {
   const items = opptjeningPeriods.map(
-    (ap): Item => ({
-      start: moment(ap.fom),
-      end: moment(ap.tom),
+    (ap, index): Item => ({
+      id: parseInt(`${ap.fom}${ap.tom}${index}`.replaceAll('-', ''), 10),
+      start: moment(ap.fom).toDate(),
+      end: moment(ap.tom).toDate(),
       className: classNameGenerator(ap.klasse.kode),
       content: '',
       data: ap,
@@ -80,17 +79,17 @@ const createItems = (
 };
 
 const options = (opptjeningFomDate: string, opptjeningTomDate: string): any => ({
-  end: moment(opptjeningTomDate).endOf('month'),
+  end: moment(opptjeningTomDate).endOf('month').toDate(),
   locale: moment.locale('nb'),
   margin: { item: 10 },
-  max: moment(opptjeningTomDate).endOf('month'),
-  min: moment(opptjeningFomDate).startOf('month'),
+  max: moment(opptjeningTomDate).endOf('month').toDate(),
+  min: moment(opptjeningFomDate).startOf('month').toDate(),
   moment,
   moveable: false,
   orientation: { axis: 'top' },
   showCurrentTime: true,
   stack: false,
-  start: moment(opptjeningFomDate).startOf('month'),
+  start: moment(opptjeningFomDate).startOf('month').toDate(),
   verticalScroll: false,
   width: '100%',
   zoomable: false,
@@ -132,15 +131,6 @@ class OpptjeningTimeLineLight extends Component<OwnProps, OwnState> {
     const unsortedItems = opptjeningPeriods.sort((a, b) => moment(a.fom).diff(moment(b.fom)));
     const items = createItems(unsortedItems, opptjeningFomDate, opptjeningTomDate);
     this.setState({ items });
-  }
-
-  componentDidMount(): void {
-    // TODO Fjern når denne er retta: https://github.com/Lighthouse-io/react-visjs-timeline/issues/40
-    // eslint-disable-next-line react/no-find-dom-node
-    const node = ReactDOM.findDOMNode(this.timelineRef.current);
-    if (node) {
-      node.children[0].style.visibility = 'visible';
-    }
   }
 
   selectHandler(eventProps: { items: number[] }): void {
@@ -209,7 +199,7 @@ class OpptjeningTimeLineLight extends Component<OwnProps, OwnState> {
                     <Timeline
                       ref={this.timelineRef}
                       options={options(opptjeningFomDate, opptjeningTomDate)}
-                      items={items}
+                      initialItems={items}
                       customTimes={{ currentDate: new Date(opptjeningTomDate) }}
                       selectHandler={this.selectHandler}
                       selection={[selectedPeriod ? selectedPeriod.id : undefined]}

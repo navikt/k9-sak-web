@@ -1,11 +1,10 @@
+import React, { Component } from 'react';
+import moment from 'moment';
 import { DDMMYYYY_DATE_FORMAT, isEqual } from '@fpsak-frontend/utils';
 import OpptjeningAktivitet from '@k9-sak-web/types/src/opptjening/opptjeningAktivitet';
 import OpptjeningAktivitetType from '@k9-sak-web/types/src/opptjening/opptjeningAktivitetType';
-import moment from 'moment';
 import { Column, Row } from 'nav-frontend-grid';
-import React, { Component } from 'react';
-import ReactDOM from 'react-dom';
-import Timeline from 'react-visjs-timeline';
+import { Timeline } from '@fpsak-frontend/tidslinje';
 import DateContainer from './DateContainer';
 import styles from './opptjeningTimeLine.less';
 
@@ -90,17 +89,17 @@ const createGroups = (opptjeningPeriods: OpptjeningAktivitet[], opptjeningAktivi
 };
 
 const options = (opptjeningFomDato, opptjeningTomDato) => ({
-  end: moment(opptjeningTomDato).add(1, 'months').endOf('month'),
+  end: moment(opptjeningTomDato).add(1, 'months').endOf('month').toDate(),
   locale: moment.locale('nb'),
   margin: { item: 10 },
-  max: moment(opptjeningTomDato).add(1, 'week').endOf('week'),
-  min: moment(opptjeningFomDato).subtract(1, 'week').startOf('week'),
+  max: moment(opptjeningTomDato).add(1, 'week').endOf('week').toDate(),
+  min: moment(opptjeningFomDato).subtract(1, 'week').startOf('week').toDate(),
   moment,
   moveable: false,
   orientation: { axis: 'top' },
   showCurrentTime: false,
   stack: false,
-  start: moment(opptjeningFomDato).subtract(1, 'months').startOf('month'),
+  start: moment(opptjeningFomDato).subtract(1, 'months').startOf('month').toDate(),
   verticalScroll: false,
   width: '100%',
   zoomable: false,
@@ -143,28 +142,14 @@ class OpptjeningTimeLine extends Component<OpptjeningTimeLineProps, OpptjeningTi
 
   // eslint-disable-next-line camelcase
   UNSAFE_componentWillMount() {
-    const {
-      opptjeningAktivitetTypes,
-      opptjeningPeriods,
-      opptjeningFomDato,
-      opptjeningTomDato,
-      harApneAksjonspunkter,
-    } = this.props;
+    const { opptjeningAktivitetTypes, opptjeningPeriods, opptjeningFomDato, opptjeningTomDato, harApneAksjonspunkter } =
+      this.props;
     const groups = createGroups(opptjeningPeriods, opptjeningAktivitetTypes);
     const items = createItems(opptjeningPeriods, groups, opptjeningFomDato, opptjeningTomDato, harApneAksjonspunkter);
     this.setState({
       groups,
       items,
     });
-  }
-
-  componentDidMount() {
-    // TODO Fjern når denne er retta: https://github.com/Lighthouse-io/react-visjs-timeline/issues/40
-    // eslint-disable-next-line react/no-find-dom-node
-    const node = ReactDOM.findDOMNode(this.timelineRef.current);
-    if (node) {
-      node.children[0].style.visibility = 'visible';
-    }
   }
 
   // eslint-disable-next-line camelcase
@@ -212,10 +197,10 @@ class OpptjeningTimeLine extends Component<OpptjeningTimeLineProps, OpptjeningTi
                   <Timeline
                     ref={this.timelineRef}
                     options={options(opptjeningFomDato, opptjeningTomDato)}
-                    items={items}
+                    initialItems={items}
+                    initialGroups={groups}
                     customTimes={{ currentDate: new Date(opptjeningTomDato) }}
                     selectHandler={this.selectHandler}
-                    groups={groups}
                     selection={[selectedPeriod ? selectedPeriod.id : undefined]}
                   />
                 </div>

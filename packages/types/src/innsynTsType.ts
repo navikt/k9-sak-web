@@ -12,7 +12,7 @@ export type InnsynVedtaksdokument = Readonly<{
   opprettetDato: string;
 }>;
 
-type Innsyn = Readonly<{
+export type Innsyn = Readonly<{
   innsynMottattDato: string;
   innsynResultatType: Kodeverk;
   vedtaksdokumentasjon: InnsynVedtaksdokument[];

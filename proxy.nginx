@@ -54,7 +54,6 @@ server {
   }
 
   location  "/k9/sak/" {
-
     proxy_set_header Host	$http_host;
     proxy_pass "${APP_URL}";
     proxy_intercept_errors on;

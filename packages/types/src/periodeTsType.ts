@@ -1,4 +1,4 @@
-type Periode = Readonly<{
+export type Periode = Readonly<{
   fom?: string;
   tom?: string;
 }>;
