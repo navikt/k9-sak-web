@@ -71,6 +71,7 @@ const faktaOmFordelingPropType = PropTypes.shape({
 });
 
 const beregningsgrunnlagPropType = PropTypes.shape({
+  avklaringsbehov: PropTypes.arrayOf(kodeverkObjektPropType),
   aktivitetStatus: PropTypes.arrayOf(
     PropTypes.shape({
       aktivitetStatus: kodeverkObjektPropType,

@@ -184,7 +184,7 @@ describe('<FordelBeregningsgrunnlagForm>', () => {
 
     const wrapper = shallow(
       <FordelBeregningsgrunnlagForm
-        isAksjonspunktClosed={false}
+        isAvklaringsbehovClosed={false}
         readOnly={false}
         beregningsgrunnlag={bg}
         alleKodeverk={{}}

@@ -103,7 +103,7 @@ export class FordelBeregningsgrunnlagForm extends Component {
   render() {
     const {
       readOnly,
-      isAksjonspunktClosed,
+      isAvklaringsbehovClosed,
       beregningsgrunnlag,
       alleKodeverk,
       arbeidsgiverOpplysningerPerId,
@@ -124,7 +124,7 @@ export class FordelBeregningsgrunnlagForm extends Component {
                 tom={periode.tom}
                 open={openPanels ? openPanels.filter(panel => panel === periode.fom).length > 0 : false}
                 harPeriodeAarsakGraderingEllerRefusjon={periode.harPeriodeAarsakGraderingEllerRefusjon}
-                isAksjonspunktClosed={isAksjonspunktClosed}
+                isAvklaringsbehovClosed={isAvklaringsbehovClosed}
                 showPanel={this.showPanel}
                 beregningsgrunnlag={beregningsgrunnlag}
                 alleKodeverk={alleKodeverk}
@@ -143,7 +143,7 @@ export class FordelBeregningsgrunnlagForm extends Component {
 
 FordelBeregningsgrunnlagForm.propTypes = {
   readOnly: PropTypes.bool.isRequired,
-  isAksjonspunktClosed: PropTypes.bool.isRequired,
+  isAvklaringsbehovClosed: PropTypes.bool.isRequired,
   beregningsgrunnlag: PropTypes.shape().isRequired,
   alleKodeverk: PropTypes.shape().isRequired,
   arbeidsgiverOpplysningerPerId: PropTypes.shape().isRequired,
