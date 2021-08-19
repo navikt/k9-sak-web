@@ -197,7 +197,7 @@ const AvklareAktiviteterPanelContent = props => {
                         formName={formProps.form}
                         isSubmittable={submittable && submitEnabled && !formProps.error}
                         isReadOnly={readOnly}
-                        hasOpenAvklaringsbehov={!isAvklaringsbehovClosed}
+                        hasOpenAksjonspunkter={!isAvklaringsbehovClosed}
                         behandlingId={behandlingId}
                         behandlingVersjon={behandlingVersjon}
                       />
@@ -216,7 +216,7 @@ const AvklareAktiviteterPanelContent = props => {
                       formName={formProps.form}
                       isSubmittable={submittable && submitEnabled && !formProps.error}
                       isReadOnly={readOnly}
-                      hasOpenAvklaringsbehov={!isAvklaringsbehovClosed}
+                      hasOpenAksjonspunkter={!isAvklaringsbehovClosed}
                       behandlingId={behandlingId}
                       behandlingVersjon={behandlingVersjon}
                     />

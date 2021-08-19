@@ -44,7 +44,7 @@ interface PureOwnProps {
   buttonText?: string;
   isReadOnly: boolean;
   isSubmittable: boolean;
-  hasOpenAvklaringsbehov: boolean;
+  hasOpenAksjonspunkter: boolean;
   onClick?: (event: React.MouseEvent) => void;
   dataId?: string;
 }
@@ -64,7 +64,7 @@ export const FaktaSubmitButton: FunctionComponent<PureOwnProps & MappedOwnProps>
   isSubmitting,
   isDirty,
   hasEmptyRequiredFields,
-  hasOpenAvklaringsbehov: hasOpenAksjonspunkter,
+  hasOpenAksjonspunkter,
   buttonText,
   onClick,
   dataId,

@@ -1,4 +1,4 @@
-import avklaringsbehovCodes from '@fpsak-frontend/kodeverk/src/beregningAvklaringsbehovCodes';
+import avklaringsbehovCodes, { harAvklaringsbehov } from '@fpsak-frontend/kodeverk/src/beregningAvklaringsbehovCodes';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { TabsPure } from 'nav-frontend-tabs';
 import PropTypes from 'prop-types';
@@ -45,8 +45,8 @@ const harTilfeller = beregningsgrunnlag =>
   beregningsgrunnlag.faktaOmBeregning.faktaOmBeregningTilfeller.length > 0;
 
 const harAvklaringsbehovIPanel = (avklaringsbehov, beregningsgrunnlag) => {
-  const harAvklaringsbehov = avklaringsbehov;
-  if (harAvklaringsbehov) {
+  const harBehovForAvklaring = !!avklaringsbehov;
+  if (harBehovForAvklaring) {
     const harVurderFaktaAksjonspunkt = avklaringsbehov.some(ap => ap.definisjon.kode === VURDER_FAKTA_FOR_ATFL_SN) && harTilfeller(beregningsgrunnlag);
     const harAvklarAktiviteterAP = avklaringsbehov.some(ap => ap.definisjon.kode === AVKLAR_AKTIVITETER);
     return harVurderFaktaAksjonspunkt || harAvklarAktiviteterAP
@@ -54,9 +54,6 @@ const harAvklaringsbehovIPanel = (avklaringsbehov, beregningsgrunnlag) => {
   return false;
 }
 
-  const harAvklaringsbehov = (kode, avklaringsbehov) =>
-  avklaringsbehov &&
-  avklaringsbehov.some(ap => ap.definisjon.kode === kode || ap.definisjon.kode === kode);
 
 const finnAvklaringsbehov = (aksjonspunkter, beregningsgrunnlag) => {
   let avklaringsbehov = aksjonspunkter;

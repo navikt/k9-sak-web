@@ -62,7 +62,7 @@ export const RegistrereVergeInfoPanelImpl = ({
           behandlingVersjon={behandlingVersjon}
           isSubmittable={submittable && !!valgtVergeType}
           isReadOnly={readOnly}
-          hasOpenAvklaringsbehov={hasOpenAksjonspunkter}
+          hasOpenAksjonspunkter={hasOpenAksjonspunkter}
           doNotCheckForRequiredFields
         />
       </form>

@@ -11,12 +11,17 @@ const harListeAktivitetSomSkalBrukes = (mapping, values) =>
     return skalBrukes;
   });
 
+  const harIkkeTattValgForListe = (mapping, values) =>
+  mapping.aktiviteter.every(aktivitet => {
+    const fieldId = lagAktivitetFieldId(aktivitet);
+    return !values[fieldId] || values[fieldId].skalBrukes == null;
+  });
+
+
 const finnListerSomSkalVurderes = (aktiviteterTomDatoMapping, values) => {
-  if (
-    !values ||
-    harListeAktivitetSomSkalBrukes(aktiviteterTomDatoMapping[0], values) ||
-    aktiviteterTomDatoMapping.length === 1
-  ) {
+  if (!values || harListeAktivitetSomSkalBrukes(aktiviteterTomDatoMapping[0], values) 
+  || harIkkeTattValgForListe(aktiviteterTomDatoMapping[0], values)
+  || aktiviteterTomDatoMapping.length === 1) {
     return [aktiviteterTomDatoMapping[0]];
   }
   return [aktiviteterTomDatoMapping[0], aktiviteterTomDatoMapping[1]];
@@ -40,7 +45,7 @@ export const VurderAktiviteterPanel = ({
 }) =>
   finnListerSomSkalVurderes(aktiviteterTomDatoMapping, values).map(aktivitetMap => (
     <VurderAktiviteterTabell
-      key={fieldArrayID}
+      key={aktivitetMap.tom}
       readOnly={readOnly}
       isAvklaringsbehovClosed={isAvklaringsbehovClosed}
       aktiviteter={aktivitetMap.aktiviteter}

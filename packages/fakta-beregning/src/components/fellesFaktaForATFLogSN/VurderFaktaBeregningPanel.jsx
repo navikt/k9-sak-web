@@ -7,7 +7,7 @@ import { formPropTypes, FieldArray } from 'redux-form';
 import { AksjonspunktHelpTextTemp, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { isAvklaringsbehovOpen } from '@fpsak-frontend/kodeverk/src/beregningAvklaringsbehovStatus';
 import { behandlingForm } from '@fpsak-frontend/form';
-import avklaringsbehovCodes from '@fpsak-frontend/kodeverk/src/beregningAvklaringsbehovCodes';
+import avklaringsbehovCodes, { harAvklaringsbehov } from '@fpsak-frontend/kodeverk/src/beregningAvklaringsbehovCodes';
 import { FaktaBegrunnelseTextField, FaktaSubmitButton } from '@k9-sak-web/fakta-felles';
 
 import FaktaForATFLOgSNPanel, {
@@ -29,10 +29,6 @@ const {
   OVERSTYRING_AV_BEREGNINGSAKTIVITETER,
 } = avklaringsbehovCodes;
 
-
-const harAvklaringsbehov = (kode, avklaringsbehov) =>
-  avklaringsbehov &&
-  avklaringsbehov.some(ap => ap.definisjon.kode === kode || ap.definisjon.kode === kode);
 
 const findAvklaringsbehovMedBegrunnelse = avklaringsbehov => {
   if (avklaringsbehov.some(ab => ab.definisjon.kode === OVERSTYRING_AV_BEREGNINGSGRUNNLAG)) {
@@ -207,7 +203,7 @@ export class VurderFaktaBeregningPanelImpl extends Component {
                     harIkkeEndringerIAvklarAktiviteterMedFlereAvklaringsbehov(verdiForAvklarAktivitetErEndret, avklaringsbehov)
                   }
                   isReadOnly={readOnly}
-                  hasOpenAvklaringsbehov={!isAvklaringsbehovClosed(avklaringsbehov)}
+                  hasOpenAksjonspunkter={!isAvklaringsbehovClosed(avklaringsbehov)}
                   behandlingId={behandlingId}
                   behandlingVersjon={behandlingVersjon}
                 />

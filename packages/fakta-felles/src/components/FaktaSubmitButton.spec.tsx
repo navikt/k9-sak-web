@@ -13,7 +13,7 @@ describe('<FaktaSubmitButton>', () => {
         isSubmitting={false}
         isDirty={false}
         hasEmptyRequiredFields={false}
-        hasOpenAvklaringsbehov
+        hasOpenAksjonspunkter
         behandlingId={1}
         behandlingVersjon={2}
       />,
@@ -30,7 +30,7 @@ describe('<FaktaSubmitButton>', () => {
         isSubmitting={false}
         isDirty
         hasEmptyRequiredFields={false}
-        hasOpenAvklaringsbehov
+        hasOpenAksjonspunkter
         behandlingId={1}
         behandlingVersjon={2}
       />,
@@ -49,7 +49,7 @@ describe('<FaktaSubmitButton>', () => {
         isSubmitting={false}
         isDirty
         hasEmptyRequiredFields={false}
-        hasOpenAvklaringsbehov
+        hasOpenAksjonspunkter
         behandlingId={1}
         behandlingVersjon={2}
       />,
@@ -68,7 +68,7 @@ describe('<FaktaSubmitButton>', () => {
         isSubmitting
         isDirty
         hasEmptyRequiredFields={false}
-        hasOpenAvklaringsbehov
+        hasOpenAksjonspunkter
         behandlingId={1}
         behandlingVersjon={2}
       />,
@@ -87,7 +87,7 @@ describe('<FaktaSubmitButton>', () => {
         isSubmitting={false}
         isDirty={false}
         hasEmptyRequiredFields
-        hasOpenAvklaringsbehov
+        hasOpenAksjonspunkter
         behandlingId={1}
         behandlingVersjon={2}
       />,
@@ -106,7 +106,7 @@ describe('<FaktaSubmitButton>', () => {
         isSubmitting={false}
         isDirty={false}
         hasEmptyRequiredFields={false}
-        hasOpenAvklaringsbehov
+        hasOpenAksjonspunkter
         behandlingId={1}
         behandlingVersjon={2}
       />,
@@ -125,7 +125,7 @@ describe('<FaktaSubmitButton>', () => {
         isSubmitting={false}
         isDirty={false}
         hasEmptyRequiredFields={false}
-        hasOpenAvklaringsbehov={false}
+        hasOpenAksjonspunkter={false}
         behandlingId={1}
         behandlingVersjon={2}
       />,

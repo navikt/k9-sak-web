@@ -55,7 +55,7 @@ VurderEtterlonnSluttpakkeForm.buildInitialValues = (beregningsgrunnlag) => {
       ({ arbeidsforhold }) => arbeidsforhold && arbeidsforhold.arbeidsforholdType.kode === OAType.ETTERLONN_SLUTTPAKKE,
     );
   if (relevanteAndeler.length > 0) {
-    initialValues[harEtterlonnSluttpakkeField] = relevanteAndeler[0].beregnetPrAar && relevanteAndeler[0].beregnetPrAar > 0;
+    initialValues[harEtterlonnSluttpakkeField] = !!relevanteAndeler[0].beregnetPrAar && relevanteAndeler[0].beregnetPrAar > 0;
   }
   return initialValues;
 };

@@ -33,7 +33,7 @@ const MedisinskVilkarFormButtons: FunctionComponent<MedisinskVilkarFormButtonsPr
           behandlingVersjon={behandlingVersjon}
           isSubmittable={submittable}
           isReadOnly={readOnly} // TODO: Mangler && overstyringDisabled
-          hasOpenAvklaringsbehov={harApneAksjonspunkter}
+          hasOpenAksjonspunkter={harApneAksjonspunkter}
         />
       </FlexColumn>
       <FlexColumn>

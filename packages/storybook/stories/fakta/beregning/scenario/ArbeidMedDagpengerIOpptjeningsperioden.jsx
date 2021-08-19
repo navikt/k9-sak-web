@@ -1,4 +1,5 @@
 export const beregningsgrunnlag = {
+  avklaringsbehov: [{definisjon: { kode : '5052' }, status: { kode: 'OPPR'}}],
   skjaeringstidspunktBeregning: '2020-01-13',
   skjæringstidspunkt: '2020-01-13',
   aktivitetStatus: [{ kode: 'AT', kodeverk: 'AKTIVITET_STATUS' }],
@@ -160,7 +161,7 @@ export const aksjonspunkt = [
     endretAv: 'im-just-a-fake-code',
   },
   {
-    definisjon: { kode: '5058', kodeverk: 'AKSJONSPUNKT_DEF' },
+    definisjon: { kode: '5052', kodeverk: 'AKSJONSPUNKT_DEF' },
     status: { kode: 'OPPR', kodeverk: 'AKSJONSPUNKT_STATUS' },
     begrunnelse: null,
     vilkarType: null,

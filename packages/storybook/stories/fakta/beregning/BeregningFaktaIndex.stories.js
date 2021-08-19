@@ -49,6 +49,22 @@ const behandling = {
   },
 };
 
+const lagBehandling = (stp) => ({
+  id: 1,
+  versjon: 1,
+  behandlingsresultat: {
+    vilkårResultat: {
+      BEREGNINGSGRUNNLAGVILKÅR: [
+        {
+          periode: {
+            fom: stp,
+          },
+        },
+      ],
+    },
+  },
+});
+
 const {
   VURDER_MOTTAR_YTELSE,
   VURDER_LONNSENDRING,
@@ -77,15 +93,15 @@ const lagBeregningsgrunnlagAvklarAktiviteter = aktiviteter => ({
   },
 });
 
-const lagAksjonspunkter = (faktaOmBeregning) => {
-  const aksjonspunkter = [];
+const lagAvklaringsbehov = (faktaOmBeregning) => {
+  const avklaringsbehov = [];
   if (!faktaOmBeregning) {
-    return aksjonspunkter;
+    return avklaringsbehov;
   }
   if (faktaOmBeregning.faktaOmBeregningTilfeller  && faktaOmBeregning.faktaOmBeregningTilfeller.length > 0) {
-    aksjonspunkter.push({definisjon: { kode: VURDER_AT_OG_FL_I_SAMME_ORGANISASJON }});
+    avklaringsbehov.push({definisjon: { kode: VURDER_AT_OG_FL_I_SAMME_ORGANISASJON }});
   }
-  return aksjonspunkter;
+  return avklaringsbehov;
 }
 
 const lagBeregningsgrunnlag = (andeler, faktaOmBeregning) => ({
@@ -100,7 +116,7 @@ const lagBeregningsgrunnlag = (andeler, faktaOmBeregning) => ({
     },
   ],
   faktaOmBeregning,
-  aksjonspunkter: lagAksjonspunkter(faktaOmBeregning),
+  avklaringsbehov: lagAvklaringsbehov(faktaOmBeregning),
 });
 
 const mapTilKodeliste = arrayOfCodes => arrayOfCodes.map(kode => ({ kode }));
@@ -243,7 +259,7 @@ export const ForSentRefusjonskravOgFlerePerioder = () => (
 
 export const ArbeidOgDagpenger = () => (
   <BeregningFaktaIndex
-    behandling={behandling}
+    behandling={lagBehandling(bgMedArbeidOgDagpenger.skjaeringstidspunktBeregning)}
     beregningsgrunnlag={[
       Object.assign(object('beregningsgrunnlag', bgMedArbeidOgDagpenger)),
       Object.assign(object('beregningsgrunnlag', bgMedArbeidOgDagpenger)),
