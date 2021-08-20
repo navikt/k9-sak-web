@@ -47,11 +47,9 @@ const getPaVentText = (originalVentearsak: string, hasManualPaVent: boolean, fri
 
 const manuelleVenteArsaker = [
   venteArsakType.AVV_DOK,
-  venteArsakType.AVV_FODSEL,
   venteArsakType.UTV_FRIST,
   venteArsakType.AVV_RESPONS_REVURDERING,
   venteArsakType.FOR_TIDLIG_SOKNAD,
-  venteArsakType.VENT_PÅ_SISTE_AAP_ELLER_DP_MELDEKORT,
   venteArsakType.VENT_PÅ_NY_INNTEKTSMELDING_MED_GYLDIG_ARB_ID,
   venteArsakType.ANKE_VENTER_PAA_MERKNADER_FRA_BRUKER,
   venteArsakType.ANKE_OVERSENDT_TIL_TRYGDERETTEN,
@@ -61,6 +59,8 @@ const manuelleVenteArsaker = [
   venteArsakType.ENDRE_TILKJENT_YTELSE,
   venteArsakType.VENT_PÅ_MULIG_MOTREGNING,
   venteArsakType.VENT_MANGL_FUNKSJ_SAKSBEHANDLER,
+  venteArsakType.VENTER_SVAR_PORTEN,
+  venteArsakType.VENTER_SVAR_TEAMS,
 ];
 
 const automatiskeVentearsakerForTilbakekreving = [
