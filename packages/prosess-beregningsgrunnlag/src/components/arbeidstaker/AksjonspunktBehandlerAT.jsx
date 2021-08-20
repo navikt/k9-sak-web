@@ -5,7 +5,7 @@ import { Normaltekst } from 'nav-frontend-typografi';
 import { InputField } from '@fpsak-frontend/form';
 import { parseCurrencyInput, removeSpacesFromNumber, required, getKodeverknavnFn } from '@fpsak-frontend/utils';
 import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import avklaringsbehovCodes from '@fpsak-frontend/kodeverk/src/beregningAvklaringsbehovCodes';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 
 import createVisningsnavnForAktivitet from '../../util/createVisningsnavnForAktivitet';
@@ -98,7 +98,7 @@ AksjonspunktBehandlerAT.transformValues = (values, relevanteStatuser, alleAndele
     frilansInntekt = removeSpacesFromNumber(values.inntektFrilanser);
   }
   return {
-    kode: aksjonspunktCodes.FASTSETT_BEREGNINGSGRUNNLAG_ARBEIDSTAKER_FRILANS,
+    kode: avklaringsbehovCodes.FASTSETT_BEREGNINGSGRUNNLAG_ARBEIDSTAKER_FRILANS,
     begrunnelse: values.ATFLVurdering,
     inntektFrilanser: frilansInntekt,
     inntektPrAndelList,

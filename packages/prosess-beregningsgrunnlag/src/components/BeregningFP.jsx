@@ -101,6 +101,14 @@ const lagMenyProps = (kronologiskeGrunnlag, bgVilkår) => {
   return menyProps;
 };
 
+const finnAvklaringsbehov = (aksjonspunkter, beregningsgrunnlag) => {
+  let avklaringsbehov = aksjonspunkter;
+  if (beregningsgrunnlag.avklaringsbehov && beregningsgrunnlag.avklaringsbehov.length > 0) {
+    avklaringsbehov = beregningsgrunnlag.avklaringsbehov;
+  }
+  return avklaringsbehov;
+}
+
 /**
  * BeregningFP
  *
@@ -114,7 +122,6 @@ export const BeregningFP = props => {
   const {
     behandling,
     beregningsgrunnlag,
-    aksjonspunkter,
     gjeldendeAksjonspunkter,
     submitCallback,
     readOnly,
@@ -137,12 +144,14 @@ export const BeregningFP = props => {
   if (!aktivtBeregningsgrunnlag || vilkaarBG === undefined) {
     return visningForManglendeBG();
   }
+
+  const avklaringsbehov = finnAvklaringsbehov(gjeldendeAksjonspunkter, aktivtBeregningsgrunnlag);
   const menyProps = lagMenyProps(kronologiskeGrunnlag, vilkaarBG);
   const relevanteStatuser = getRelevanteStatuser(aktivtBeregningsgrunnlag);
 
   const mainContainerClassnames = cx('mainContainer', { 'mainContainer--withSideMenu': skalBrukeSidemeny });
   const bgSkalVurderes = erBGTilVurdering(vilkaarBG, aktivtBeregningsgrunnlag);
-  const harAksjonspunkt = aksjonspunkter.length > 0;
+  const harAvklaringsbehov = avklaringsbehov.length > 0;
 
   return (
     <div className={mainContainerClassnames}>
@@ -150,7 +159,7 @@ export const BeregningFP = props => {
         <div className={styles.sideMenuContainer}>
           <SideMenu
             links={kronologiskeGrunnlag.map((currentBeregningsgrunnlag, currentBeregningsgrunnlagIndex) => ({
-              iconSrc: menyProps[currentBeregningsgrunnlagIndex].skalVurderes && harAksjonspunkt ? advarselIcon : null,
+              iconSrc: menyProps[currentBeregningsgrunnlagIndex].skalVurderes && harAvklaringsbehov ? advarselIcon : null,
               active: aktivtBeregningsgrunnlagIndeks === currentBeregningsgrunnlagIndex,
               label: `${intl.formatMessage({ id: 'Sidemeny.Beregningsgrunnlag' })} ${
                 menyProps[currentBeregningsgrunnlagIndex].stp
@@ -170,7 +179,7 @@ export const BeregningFP = props => {
               initialValues,
               aktivtBeregningsgrunnlagIndeks,
               aktivtBeregningsgrunnlag,
-              gjeldendeAksjonspunkter,
+              avklaringsbehov,
               relevanteStatuser,
               submitCallback,
               readOnlySubmitButton,
@@ -182,7 +191,7 @@ export const BeregningFP = props => {
               bgSkalVurderes,
             }}
           />
-          {harAksjonspunkt && (
+          {harAvklaringsbehov && (
             <Row>
               <Column xs="12">
                 <ProsessStegSubmitButton
@@ -207,7 +216,6 @@ export const BeregningFP = props => {
 BeregningFP.propTypes = {
   readOnly: PropTypes.bool.isRequired,
   submitCallback: PropTypes.func.isRequired,
-  aksjonspunkter: PropTypes.arrayOf(beregningsgrunnlagAksjonspunkterPropType).isRequired,
   readOnlySubmitButton: PropTypes.bool.isRequired,
   alleKodeverk: PropTypes.shape().isRequired,
   arbeidsgiverOpplysningerPerId: PropTypes.shape().isRequired,
@@ -217,7 +225,7 @@ BeregningFP.propTypes = {
   // eslint-disable-next-line
   handleSubmit: PropTypes.any.isRequired,
   // eslint-disable-next-line
-  gjeldendeAksjonspunkter: PropTypes.any.isRequired,
+  gjeldendeAksjonspunkter: PropTypes.arrayOf(beregningsgrunnlagAksjonspunkterPropType).isRequired,
   intl: PropTypes.shape().isRequired,
 };
 
@@ -241,10 +249,11 @@ const formaterAksjonspunkter = (aksjonspunkter, perioder) =>
     };
   });
 
-export const buildInitialValuesForBeregningrunnlag = (beregningsgrunnlag, gjeldendeAksjonspunkter, bgVilkar) => {
+export const buildInitialValuesForBeregningrunnlag = (beregningsgrunnlag, gjeldendeAksjonspunkter) => {
   if (!beregningsgrunnlag || !beregningsgrunnlag.beregningsgrunnlagPeriode) {
     return undefined;
   }
+  const avklaringsbehov = finnAvklaringsbehov(gjeldendeAksjonspunkter, beregningsgrunnlag);
   const allePerioder = beregningsgrunnlag.beregningsgrunnlagPeriode;
   const alleAndelerIForstePeriode = beregningsgrunnlag.beregningsgrunnlagPeriode[0].beregningsgrunnlagPrStatusOgAndel;
   const arbeidstakerAndeler = alleAndelerIForstePeriode.filter(
@@ -257,20 +266,20 @@ export const buildInitialValuesForBeregningrunnlag = (beregningsgrunnlag, gjelde
     andel => andel.aktivitetStatus.kode === aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE,
   );
   const initialValues = {
-    erTilVurdering: erBGTilVurdering(bgVilkar, beregningsgrunnlag),
+    erTilVurdering: !!beregningsgrunnlag.avklaringsbehov && beregningsgrunnlag.avklaringsbehov.length > 0,
     skjæringstidspunkt: beregningsgrunnlag.skjæringstidspunkt,
-    ...Beregningsgrunnlag.buildInitialValues(gjeldendeAksjonspunkter),
+    ...Beregningsgrunnlag.buildInitialValues(avklaringsbehov),
     ...AksjonspunktBehandlerTB.buildInitialValues(allePerioder),
     ...AksjonspunktBehandlerFL.buildInitialValues(frilanserAndeler),
-    ...VurderOgFastsettSN.buildInitialValues(selvstendigNaeringAndeler, gjeldendeAksjonspunkter),
+    ...VurderOgFastsettSN.buildInitialValues(selvstendigNaeringAndeler, avklaringsbehov),
     ...GrunnlagForAarsinntektPanelAT.buildInitialValues(arbeidstakerAndeler),
   };
   return initialValues;
 };
 
-export const buildInitialValues = (beregningsgrunnlag, gjeldendeAksjonspunkter, bgVilkar) =>
+export const buildInitialValues = (beregningsgrunnlag, gjeldendeAksjonspunkter) =>
   beregningsgrunnlag.map(currentBeregningsgrunnlag =>
-    buildInitialValuesForBeregningrunnlag(currentBeregningsgrunnlag, gjeldendeAksjonspunkter, bgVilkar),
+    buildInitialValuesForBeregningrunnlag(currentBeregningsgrunnlag, gjeldendeAksjonspunkter),
   );
 
 const mapStateToPropsFactory = (initialState, initialOwnProps) => {
@@ -283,6 +292,7 @@ const mapStateToPropsFactory = (initialState, initialOwnProps) => {
       .filter(val => val.erTilVurdering)
       .flatMap((currentBeregningsgrunnlagSkjemaverdier, currentBeregningsgrunnlagIndex) => {
         const opprinneligBeregningsgrunnlag = beregningsgrunnlag[currentBeregningsgrunnlagIndex];
+        const avklaringsbehov = finnAvklaringsbehov(gjeldendeAksjonspunkter, beregningsgrunnlag);
         const allePerioder = opprinneligBeregningsgrunnlag
           ? opprinneligBeregningsgrunnlag.beregningsgrunnlagPeriode
           : [];
@@ -293,7 +303,7 @@ const mapStateToPropsFactory = (initialState, initialOwnProps) => {
           currentBeregningsgrunnlagSkjemaverdier,
           relevanteStatuser,
           alleAndelerIForstePeriode,
-          gjeldendeAksjonspunkter,
+          avklaringsbehov,
           allePerioder,
         );
 
@@ -307,9 +317,7 @@ const mapStateToPropsFactory = (initialState, initialOwnProps) => {
     initialValues: {
       beregningsgrunnlagListe: buildInitialValues(
         ownProps.beregningsgrunnlag,
-        ownProps.aksjonspunkter,
-        getBGVilkar(ownProps.vilkar),
-      ),
+        ownProps.aksjonspunkter      ),
     },
     fieldArrayID: ownProps.fieldArrayID,
     gjeldendeAksjonspunkter,

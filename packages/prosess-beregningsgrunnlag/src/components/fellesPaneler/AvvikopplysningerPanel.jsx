@@ -47,8 +47,6 @@ const beregnAarsintektForAktivitetStatus = (alleAndelerIForstePeriode, statuser)
 const lagRelevantePaneler = (
   alleAndelerIForstePeriode,
   relevanteStatuser,
-  allePerioder,
-  harAksjonspunkter,
   sammenligningsgrunnlagPrStatus,
   skalViseAvviksprosent,
 ) => {
@@ -122,7 +120,6 @@ const harRelevanteStatuserSatt = relevanteStatuser => {
 const AvviksopplysningerPanel = ({
   relevanteStatuser,
   allePerioder,
-  harAksjonspunkter,
   sammenligningsgrunnlagPrStatus,
   skalViseAvviksprosent,
 }) => {
@@ -143,8 +140,6 @@ const AvviksopplysningerPanel = ({
       {lagRelevantePaneler(
         alleAndelerIForstePeriode,
         relevanteStatuser,
-        allePerioder,
-        harAksjonspunkter,
         sammenligningsgrunnlagPrStatus,
         skalViseAvviksprosent,
       )}
@@ -156,12 +151,10 @@ AvviksopplysningerPanel.propTypes = {
   relevanteStatuser: PropTypes.shape().isRequired,
   allePerioder: PropTypes.arrayOf(PropTypes.shape()),
   sammenligningsgrunnlagPrStatus: PropTypes.arrayOf(PropTypes.shape()),
-  harAksjonspunkter: PropTypes.bool,
   skalViseAvviksprosent: PropTypes.bool,
 };
 
 AvviksopplysningerPanel.defaultProps = {
-  harAksjonspunkter: false,
   sammenligningsgrunnlagPrStatus: undefined,
 };
 export default AvviksopplysningerPanel;
