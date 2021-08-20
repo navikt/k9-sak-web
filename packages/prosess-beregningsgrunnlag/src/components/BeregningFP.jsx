@@ -226,7 +226,7 @@ BeregningFP.defaultProps = {
 };
 
 const formaterAksjonspunkter = (aksjonspunkter, perioder) =>
-  aksjonspunkter.map(aksjonspunkt => {
+  aksjonspunkter.map((aksjonspunkt) => {
     const { kode } = aksjonspunkt;
     return {
       '@type': kode,
@@ -281,7 +281,7 @@ const mapStateToPropsFactory = (initialState, initialOwnProps) => {
     const fieldArrayValuesList = values.beregningsgrunnlagListe;
     const alleAksjonspunkter = fieldArrayValuesList
       .filter(val => val.erTilVurdering)
-      .map((currentBeregningsgrunnlagSkjemaverdier, currentBeregningsgrunnlagIndex) => {
+      .flatMap((currentBeregningsgrunnlagSkjemaverdier, currentBeregningsgrunnlagIndex) => {
         const opprinneligBeregningsgrunnlag = beregningsgrunnlag[currentBeregningsgrunnlagIndex];
         const allePerioder = opprinneligBeregningsgrunnlag
           ? opprinneligBeregningsgrunnlag.beregningsgrunnlagPeriode
