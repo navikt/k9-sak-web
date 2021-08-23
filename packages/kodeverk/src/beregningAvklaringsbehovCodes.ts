@@ -20,6 +20,15 @@ const beregningsgrunnlagFritekstfeltIVedtakAksjonspunkt = [
   avklaringsbehovCodes.FASTSETT_BEREGNINGSGRUNNLAG_TIDSBEGRENSET_ARBEIDSFORHOLD,
 ];
 
+const løsesIBeregningspunkt = [
+  avklaringsbehovCodes.VURDER_VARIG_ENDRET_ELLER_NYOPPSTARTET_NAERING_SELVSTENDIG_NAERINGSDRIVENDE,
+  avklaringsbehovCodes.FASTSETT_BEREGNINGSGRUNNLAG_ARBEIDSTAKER_FRILANS,
+  avklaringsbehovCodes.FASTSETT_BRUTTO_BEREGNINGSGRUNNLAG_SELVSTENDIG_NAERINGSDRIVENDE,
+  avklaringsbehovCodes.FASTSETT_BEREGNINGSGRUNNLAG_TIDSBEGRENSET_ARBEIDSFORHOLD,
+  avklaringsbehovCodes.FASTSETT_BEREGNINGSGRUNNLAG_SN_NY_I_ARBEIDSLIVET,
+];
+
+
 
 const avklaringsbehovIsOfType =
   (validAksjonspunktCodes: string[]) =>
@@ -32,5 +41,8 @@ export const harAvklaringsbehov = (avklaringsbehovCode: string, avklaringsbehov:
 export const isBGAksjonspunktSomGirFritekstfelt = avklaringsbehovIsOfType(
   beregningsgrunnlagFritekstfeltIVedtakAksjonspunkt,
 );
+
+export const isBeregningAvklaringsbehov = avklaringsbehovIsOfType(løsesIBeregningspunkt);
+
 
 export default avklaringsbehovCodes;
