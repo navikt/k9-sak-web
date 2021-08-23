@@ -25,6 +25,6 @@
     "nav-frontend-typografi": "4.0.1",
     "nav-frontend-typografi-style": "2.0.1",
     "react": "^17.0.2",
-    "react-intl": "^5.20.9"
+    "react-intl": "^5.20.10"
   }
 }
