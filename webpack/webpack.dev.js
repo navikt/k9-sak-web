@@ -13,13 +13,15 @@ const ROOT_DIR = path.resolve(__dirname, '../public/client');
 const PACKAGES_DIR = path.join(__dirname, '../packages');
 const APP_DIR = path.resolve(PACKAGES_DIR, 'sak-app/src');
 
+const PUBLIC_PATH = '/k9/web/';
+
 const config = {
   mode: 'development',
   devtool: 'eval-cheap-source-map',
-  entry: ['webpack-dev-server/client?http://localhost:9000', 'webpack/hot/only-dev-server', APP_DIR + '/index.tsx'],
+  entry: [APP_DIR + '/index.tsx'],
   output: {
     path: ROOT_DIR,
-    publicPath: '/k9/web/',
+    publicPath: PUBLIC_PATH,
     filename: '[name].js',
   },
   plugins: [new webpack.HotModuleReplacementPlugin(), new ReactRefreshWebpackPlugin()],
@@ -30,10 +32,28 @@ const config = {
     },
   },
   devServer: {
+    hot: true,
     port: 9000,
-    contentBase: PACKAGES_DIR,
-    watchContentBase: true,
-    before: function (app, server) {
+    // noInfo: true,
+    // liveReload: false,
+    // watchFiles: {
+    //   paths: [path.join(PACKAGES_DIR, '**/*')],
+    //   options: {
+    //     usePolling: false,
+    //   },
+    // },
+    // publicPath: PUBLIC_PATH,
+    devMiddleware: {
+      publicPath: PUBLIC_PATH,
+      stats: {
+        children: false,
+        colors: true,
+      },
+    },
+    historyApiFallback: {
+      index: PUBLIC_PATH,
+    },
+    onBeforeSetupMiddleware: function ({ app }) {
       vtpLogin(app);
       sentryMock(app);
       fakeError(app);
@@ -103,16 +123,6 @@ const config = {
         changeOrigin: true,
         pathRewrite: { '^/k9/microfrontend/medisinsk-vilkar': '' },
       },
-    },
-    publicPath: '/k9/web/',
-    hot: true,
-    // noInfo: true,
-    historyApiFallback: {
-      index: '/k9/web/',
-    },
-    stats: {
-      children: false,
-      colors: true,
     },
   },
 };
