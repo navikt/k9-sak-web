@@ -21,16 +21,12 @@ describe('<SoknadsfristVilkarForm>', () => {
             versjon: 1,
           } as Behandling
         }
-        medlemskap={{
-          fom: '2020-05-05',
-        }}
         kanOverstyreAccess={{
           isEnabled: true,
         }}
         toggleOverstyring={sinon.spy()}
         submitCallback={sinon.spy()}
         aksjonspunkter={[]}
-        avslagsarsaker={[]}
         panelTittelKode="tittel"
         lovReferanse=""
         erOverstyrt={false}
@@ -79,16 +75,12 @@ describe('<SoknadsfristVilkarForm>', () => {
             versjon: 1,
           } as Behandling
         }
-        medlemskap={{
-          fom: '2020-05-05',
-        }}
         aksjonspunkter={[]}
         kanOverstyreAccess={{
           isEnabled: true,
         }}
         toggleOverstyring={sinon.spy()}
         submitCallback={sinon.spy()}
-        avslagsarsaker={[]}
         panelTittelKode="tittel"
         lovReferanse=""
         erOverstyrt={false}

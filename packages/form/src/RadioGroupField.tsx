@@ -9,6 +9,10 @@ import renderNavField from './renderNavField';
 
 type Direction = 'horizontal' | 'vertical';
 
+interface RenderProp<TChildrenProps, TElement = any> {
+  (props: TChildrenProps): React.ReactElement<TElement>;
+}
+
 interface RadioGroupFieldProps {
   name: string;
   label?: React.ReactNode;
@@ -17,7 +21,7 @@ interface RadioGroupFieldProps {
    */
   columns?: number;
   bredde?: string;
-  children?: React.ReactElement<RadioOptionProps>[];
+  children?: RenderProp<{ value: any; optionProps: any }> | React.ReactElement<RadioOptionProps>[];
   spaceBetween?: boolean;
   rows?: number;
   direction?: Direction;
@@ -61,14 +65,18 @@ const renderRadioGroupField = renderNavField(
       className: classNames('radio'),
       actualValue: value,
     };
+
     const actualValueStringified = JSON.stringify(value);
     const showCheckedOnly = readOnly && value !== null && value !== undefined && value !== '';
-    const options = children
-      .filter(radioOption => !!radioOption)
-      .map(radioOption =>
-        React.cloneElement(radioOption, { key: JSON.stringify(radioOption.props.value), ...optionProps }),
-      )
-      .filter(radioOption => !showCheckedOnly || isChecked(radioOption, actualValueStringified));
+    const renderFn = typeof children === 'function';
+    const options = !renderFn
+      ? children
+          .filter(radioOption => !!radioOption)
+          .map(radioOption =>
+            React.cloneElement(radioOption, { key: JSON.stringify(radioOption.props.value), ...optionProps }),
+          )
+          .filter(radioOption => !showCheckedOnly || isChecked(radioOption, actualValueStringified))
+      : null;
 
     return (
       <NavSkjemaGruppe
@@ -77,14 +85,17 @@ const renderRadioGroupField = renderNavField(
         legend={legend}
       >
         {label.props.input && <div className={classNames('radioGroupLabel', { readOnly })}>{label}</div>}
-        <OptionGrid
-          direction={direction}
-          isEdited={readOnly && isEdited}
-          options={options}
-          spaceBetween={spaceBetween}
-          columns={showCheckedOnly ? 1 : columns}
-          rows={showCheckedOnly ? 1 : rows}
-        />
+        {renderFn && children({ value, optionProps })}
+        {options && (
+          <OptionGrid
+            direction={direction}
+            isEdited={readOnly && isEdited}
+            options={options}
+            spaceBetween={spaceBetween}
+            columns={showCheckedOnly ? 1 : columns}
+            rows={showCheckedOnly ? 1 : rows}
+          />
+        )}
       </NavSkjemaGruppe>
     );
   },
