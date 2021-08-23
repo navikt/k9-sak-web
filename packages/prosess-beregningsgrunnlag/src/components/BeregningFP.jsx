@@ -1,4 +1,4 @@
-import { isBeregningAksjonspunkt } from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import { isBeregningAvklaringsbehov } from '@fpsak-frontend/kodeverk/src/beregningAvklaringsbehovCodes';
 import aktivitetStatus, {
   isStatusArbeidstakerOrKombinasjon,
   isStatusDagpengerOrAAP,
@@ -60,7 +60,7 @@ const visningForManglendeBG = () => (
 );
 
 const getAksjonspunkterForBeregning = aksjonspunkter =>
-  aksjonspunkter ? aksjonspunkter.filter(ap => isBeregningAksjonspunkt(ap.definisjon.kode)) : [];
+  aksjonspunkter ? aksjonspunkter.filter(ap => isBeregningAvklaringsbehov(ap.definisjon.kode)) : [];
 const getRelevanteStatuser = bg =>
   bg && bg.aktivitetStatus
     ? {
@@ -248,7 +248,9 @@ const formaterAksjonspunkter = (aksjonspunkter, perioder) =>
     };
   });
 
-export const buildInitialValuesForBeregningrunnlag = (beregningsgrunnlag, gjeldendeAksjonspunkter) => {
+const harAvklaringsbehovIPanel = (avklaringsbehov) => avklaringsbehov.some(ab => isBeregningAvklaringsbehov(ab.definisjon.kode));
+
+export const buildInitialValuesForBeregningrunnlag = (beregningsgrunnlag, gjeldendeAksjonspunkter, bgVilkar) => {
   if (!beregningsgrunnlag || !beregningsgrunnlag.beregningsgrunnlagPeriode) {
     return undefined;
   }
@@ -265,7 +267,7 @@ export const buildInitialValuesForBeregningrunnlag = (beregningsgrunnlag, gjelde
     andel => andel.aktivitetStatus.kode === aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE,
   );
   const initialValues = {
-    erTilVurdering: !!beregningsgrunnlag.avklaringsbehov && beregningsgrunnlag.avklaringsbehov.length > 0,
+    erTilVurdering: erBGTilVurdering(bgVilkar, beregningsgrunnlag) && harAvklaringsbehovIPanel(avklaringsbehov),
     skjæringstidspunkt: beregningsgrunnlag.skjæringstidspunkt,
     ...Beregningsgrunnlag.buildInitialValues(avklaringsbehov),
     ...AksjonspunktBehandlerTB.buildInitialValues(allePerioder),
