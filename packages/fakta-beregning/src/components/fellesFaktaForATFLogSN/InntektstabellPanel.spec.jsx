@@ -2,10 +2,10 @@ import React from 'react';
 import { expect } from 'chai';
 import { shallow } from 'enzyme';
 import { CheckboxField } from '@fpsak-frontend/form';
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import avklaringsbehovCodes from '@fpsak-frontend/kodeverk/src/beregningAvklaringsbehovCodes';
 import { InntektstabellPanelImpl } from './InntektstabellPanel';
 
-const { OVERSTYRING_AV_BEREGNINGSGRUNNLAG } = aksjonspunktCodes;
+const { OVERSTYRING_AV_BEREGNINGSGRUNNLAG } = avklaringsbehovCodes;
 
 describe('<InntektstabellPanel>', () => {
   it('skal vise checkbox for overstyring', () => {
@@ -16,7 +16,7 @@ describe('<InntektstabellPanel>', () => {
         hjelpeTekstId="hjelpetekst"
         tabell={<span> tabell </span>}
         kanOverstyre
-        aksjonspunkter={[]}
+        avklaringsbehov={[]}
         readOnly={false}
         erOverstyrt={false}
       >
@@ -36,7 +36,7 @@ describe('<InntektstabellPanel>', () => {
         hjelpeTekstId="hjelpetekst"
         tabell={<span> tabell </span>}
         kanOverstyre={false}
-        aksjonspunkter={[]}
+        avklaringsbehov={[]}
         readOnly={false}
         erOverstyrt
       >
@@ -56,7 +56,7 @@ describe('<InntektstabellPanel>', () => {
         hjelpeTekstId="hjelpetekst"
         tabell={<span> tabell </span>}
         kanOverstyre
-        aksjonspunkter={[{ definisjon: { kode: OVERSTYRING_AV_BEREGNINGSGRUNNLAG }, status: { kode: 'OPPR' } }]}
+        avklaringsbehov={[{ definisjon: { kode: OVERSTYRING_AV_BEREGNINGSGRUNNLAG }, status: { kode: 'OPPR' } }]}
         readOnly={false}
         erOverstyrt={false}
       >

@@ -7,7 +7,7 @@ import shallowWithIntl from '../../../../i18n';
 describe('<NyIArbeidslivetSNForm>', () => {
   it('skal teste at korrekt antall radioknapper vises med korrekte props', () => {
     const wrapper = shallowWithIntl(
-      <NyIArbeidslivetSNForm readOnly={false} isAksjonspunktClosed={false} fieldArrayID="dummyId" />,
+      <NyIArbeidslivetSNForm readOnly={false} isAvklaringsbehovClosed={false} fieldArrayID="dummyId" />,
     );
     const radios = wrapper.find('RadioOption');
     expect(radios).to.have.length(2);

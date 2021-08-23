@@ -3,7 +3,7 @@ import { expect } from 'chai';
 import { shallow } from 'enzyme';
 import sinon from 'sinon';
 import faktaOmBeregningTilfelle from '@fpsak-frontend/kodeverk/src/faktaOmBeregningTilfelle';
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import avklaringsbehovCodes from '@fpsak-frontend/kodeverk/src/beregningAvklaringsbehovCodes';
 import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import { FaktaForATFLOgSNPanelImpl, transformValues, transformValuesFaktaForATFLOgSN } from './FaktaForATFLOgSNPanel';
 import TidsbegrensetArbeidsforholdForm from './tidsbegrensetArbeidsforhold/TidsbegrensetArbeidsforholdForm';
@@ -13,9 +13,9 @@ import { erNyoppstartetFLField } from './vurderOgFastsettATFL/forms/Nyoppstartet
 import VurderOgFastsettATFL from './vurderOgFastsettATFL/VurderOgFastsettATFL';
 import { INNTEKT_FIELD_ARRAY_NAME } from './BgFordelingUtils';
 
-const { VURDER_FAKTA_FOR_ATFL_SN } = aksjonspunktCodes;
+const { VURDER_FAKTA_FOR_ATFL_SN } = avklaringsbehovCodes;
 
-const aksjonspunkter = [
+const avklaringsbehov = [
   {
     definisjon: {
       kode: VURDER_FAKTA_FOR_ATFL_SN,
@@ -48,13 +48,13 @@ describe('<FaktaForATFLOgSNPanel>', () => {
         fieldArrayID="dummyId"
         readOnly={false}
         aktivePaneler={aktivertePaneler}
-        isAksjonspunktClosed={false}
+        isAvklaringsbehovClosed={false}
         showTableCallback={showTableCallback}
         faktaOmBeregning={{}}
         beregningsgrunnlag={{}}
         alleKodeverk={{}}
         arbeidsgiverOpplysningerPerId={{}}
-        aksjonspunkter={aksjonspunkter}
+        avklaringsbehov={avklaringsbehov}
         behandlingVersjon={1}
         behandlingId={1}
         erOverstyrer={false}
@@ -71,13 +71,13 @@ describe('<FaktaForATFLOgSNPanel>', () => {
         fieldArrayID="dummyId"
         readOnly={false}
         aktivePaneler={aktivertePaneler}
-        isAksjonspunktClosed={false}
+        isAvklaringsbehovClosed={false}
         showTableCallback={showTableCallback}
         faktaOmBeregning={{}}
         beregningsgrunnlag={{}}
         alleKodeverk={{}}
         arbeidsgiverOpplysningerPerId={{}}
-        aksjonspunkter={aksjonspunkter}
+        avklaringsbehov={avklaringsbehov}
         behandlingVersjon={1}
         behandlingId={1}
         erOverstyrer={false}
@@ -94,13 +94,13 @@ describe('<FaktaForATFLOgSNPanel>', () => {
         fieldArrayID="dummyId"
         readOnly={false}
         aktivePaneler={aktivertePaneler}
-        isAksjonspunktClosed={false}
+        isAvklaringsbehovClosed={false}
         showTableCallback={showTableCallback}
         faktaOmBeregning={{}}
         beregningsgrunnlag={{}}
         alleKodeverk={{}}
         arbeidsgiverOpplysningerPerId={{}}
-        aksjonspunkter={aksjonspunkter}
+        avklaringsbehov={avklaringsbehov}
         behandlingVersjon={1}
         behandlingId={1}
         erOverstyrer={false}

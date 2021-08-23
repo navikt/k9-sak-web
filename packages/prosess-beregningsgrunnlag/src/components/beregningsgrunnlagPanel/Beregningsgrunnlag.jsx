@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import avklaringsbehovCodes from '@fpsak-frontend/kodeverk/src/beregningAvklaringsbehovCodes';
 import periodeAarsak from '@fpsak-frontend/kodeverk/src/periodeAarsak';
 import { removeSpacesFromNumber } from '@fpsak-frontend/utils';
 
@@ -11,7 +11,6 @@ import TilstotendeYtelser from '../tilstotendeYtelser/TilstotendeYtelser';
 
 import MilitaerPanel from '../militær/MilitaerPanel';
 import AksjonspunktBehandlerTB from '../arbeidstaker/AksjonspunktBehandlerTB';
-import beregningsgrunnlagAksjonspunkterPropType from '../../propTypes/beregningsgrunnlagAksjonspunkterPropType';
 import GrunnlagForAarsinntektPanelFL from '../frilanser/GrunnlagForAarsinntektPanelFL';
 import SammenlignsgrunnlagAOrdningen from '../fellesPaneler/SammenligningsgrunnlagAOrdningen';
 import GrunnlagForAarsinntektPanelAT2 from '../arbeidstaker/GrunnlagForAarsinntektPanelAT';
@@ -26,7 +25,7 @@ import beregningStyles from './beregningsgrunnlag.less';
 const {
   FASTSETT_BEREGNINGSGRUNNLAG_ARBEIDSTAKER_FRILANS,
   FASTSETT_BEREGNINGSGRUNNLAG_TIDSBEGRENSET_ARBEIDSFORHOLD,
-} = aksjonspunktCodes;
+} = avklaringsbehovCodes;
 
 // ------------------------------------------------------------------------------------------ //
 // Methods
@@ -38,9 +37,9 @@ const harPerioderMedAvsluttedeArbeidsforhold = allePerioder =>
       periodeAarsaker && periodeAarsaker.some(({ kode }) => kode === periodeAarsak.ARBEIDSFORHOLD_AVSLUTTET),
   );
 
-const finnAksjonspunktForATFL = gjeldendeAksjonspunkter =>
-  gjeldendeAksjonspunkter &&
-  gjeldendeAksjonspunkter.find(
+const finnAvklaringsbehovForATFL = avklaringsbehov =>
+avklaringsbehov &&
+avklaringsbehov.find(
     ap =>
       ap.definisjon.kode === FASTSETT_BEREGNINGSGRUNNLAG_ARBEIDSTAKER_FRILANS ||
       ap.definisjon.kode === FASTSETT_BEREGNINGSGRUNNLAG_TIDSBEGRENSET_ARBEIDSFORHOLD,
@@ -55,7 +54,6 @@ const finnAlleAndelerIFørstePeriode = allePerioder => {
 
 const createRelevantePaneler = (
   alleAndelerIForstePeriode,
-  gjeldendeAksjonspunkter,
   relevanteStatuser,
   allePerioder,
   readOnly,
@@ -73,7 +71,6 @@ const createRelevantePaneler = (
           <>
             <GrunnlagForAarsinntektPanelAT2
               alleAndeler={alleAndelerIForstePeriode}
-              aksjonspunkter={gjeldendeAksjonspunkter}
               allePerioder={allePerioder}
               readOnly={readOnly}
               isKombinasjonsstatus={relevanteStatuser.isKombinasjonsstatus}
@@ -88,7 +85,6 @@ const createRelevantePaneler = (
           <>
             <GrunnlagForAarsinntektPanelAT2
               alleAndeler={alleAndelerIForstePeriode}
-              aksjonspunkter={gjeldendeAksjonspunkter}
               allePerioder={allePerioder}
               readOnly={readOnly}
               isKombinasjonsstatus={relevanteStatuser.isKombinasjonsstatus}
@@ -105,7 +101,6 @@ const createRelevantePaneler = (
       <>
         <GrunnlagForAarsinntektPanelFL
           alleAndeler={alleAndelerIForstePeriode}
-          aksjonspunkter={gjeldendeAksjonspunkter}
           readOnly={readOnly}
           isKombinasjonsstatus={relevanteStatuser.isKombinasjonsstatus}
         />
@@ -160,7 +155,6 @@ const createRelevantePaneler = (
 export const BeregningsgrunnlagImpl = ({
   readOnly,
   relevanteStatuser,
-  gjeldendeAksjonspunkter,
   allePerioder,
   behandlingId,
   behandlingVersjon,
@@ -172,7 +166,6 @@ export const BeregningsgrunnlagImpl = ({
   const alleAndelerIForstePeriode = finnAlleAndelerIFørstePeriode(allePerioder);
   return createRelevantePaneler(
     alleAndelerIForstePeriode,
-    gjeldendeAksjonspunkter,
     relevanteStatuser,
     allePerioder,
     readOnly,
@@ -187,7 +180,6 @@ export const BeregningsgrunnlagImpl = ({
 
 BeregningsgrunnlagImpl.propTypes = {
   readOnly: PropTypes.bool.isRequired,
-  gjeldendeAksjonspunkter: PropTypes.arrayOf(beregningsgrunnlagAksjonspunkterPropType).isRequired,
   relevanteStatuser: PropTypes.shape().isRequired,
   allePerioder: PropTypes.arrayOf(PropTypes.shape()),
   behandlingId: PropTypes.number.isRequired,
@@ -206,10 +198,10 @@ BeregningsgrunnlagImpl.defaultProps = {
 
 const Beregningsgrunnlag = BeregningsgrunnlagImpl;
 
-Beregningsgrunnlag.buildInitialValues = gjeldendeAksjonspunkter => {
-  const aksjonspunktATFL = finnAksjonspunktForATFL(gjeldendeAksjonspunkter);
+Beregningsgrunnlag.buildInitialValues = avklaringsbehov => {
+  const avklaringsbehovATFL = finnAvklaringsbehovForATFL(avklaringsbehov);
   return {
-    ATFLVurdering: aksjonspunktATFL ? aksjonspunktATFL.begrunnelse : '',
+    ATFLVurdering: avklaringsbehovATFL ? avklaringsbehovATFL.begrunnelse : '',
   };
 };
 

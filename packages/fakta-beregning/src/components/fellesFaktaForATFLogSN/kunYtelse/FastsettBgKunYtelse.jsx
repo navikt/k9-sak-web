@@ -14,7 +14,7 @@ const { FASTSETT_BG_KUN_YTELSE } = faktaOmBeregningTilfelle;
 export const brukersAndelFieldArrayName = 'brukersAndelBG';
 const FastsettBgKunYtelsePanel = ({
   readOnly,
-  isAksjonspunktClosed,
+  isAvklaringsbehovClosed,
   behandlingId,
   behandlingVersjon,
   alleKodeverk,
@@ -33,7 +33,7 @@ const FastsettBgKunYtelsePanel = ({
         name={`${fieldArrayID}.${brukersAndelFieldArrayName}`}
         component={BrukersAndelFieldArray}
         readOnly={readOnly}
-        isAksjonspunktClosed={isAksjonspunktClosed}
+        isAvklaringsbehovClosed={isAvklaringsbehovClosed}
         behandlingId={behandlingId}
         behandlingVersjon={behandlingVersjon}
         alleKodeverk={alleKodeverk}
@@ -44,7 +44,7 @@ const FastsettBgKunYtelsePanel = ({
 
 FastsettBgKunYtelsePanel.propTypes = {
   readOnly: PropTypes.bool.isRequired,
-  isAksjonspunktClosed: PropTypes.bool.isRequired,
+  isAvklaringsbehovClosed: PropTypes.bool.isRequired,
   alleKodeverk: PropTypes.shape().isRequired,
   behandlingId: PropTypes.number.isRequired,
   behandlingVersjon: PropTypes.number.isRequired,
