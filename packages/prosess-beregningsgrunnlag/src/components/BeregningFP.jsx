@@ -278,9 +278,9 @@ export const buildInitialValuesForBeregningrunnlag = (beregningsgrunnlag, gjelde
   return initialValues;
 };
 
-export const buildInitialValues = (beregningsgrunnlag, gjeldendeAksjonspunkter) =>
+export const buildInitialValues = (beregningsgrunnlag, gjeldendeAksjonspunkter, bgVilkar) =>
   beregningsgrunnlag.map(currentBeregningsgrunnlag =>
-    buildInitialValuesForBeregningrunnlag(currentBeregningsgrunnlag, gjeldendeAksjonspunkter),
+    buildInitialValuesForBeregningrunnlag(currentBeregningsgrunnlag, gjeldendeAksjonspunkter, bgVilkar),
   );
 
 const mapStateToPropsFactory = (initialState, initialOwnProps) => {
@@ -318,7 +318,9 @@ const mapStateToPropsFactory = (initialState, initialOwnProps) => {
     initialValues: {
       beregningsgrunnlagListe: buildInitialValues(
         ownProps.beregningsgrunnlag,
-        ownProps.aksjonspunkter      ),
+        ownProps.aksjonspunkter,
+        getBGVilkar(ownProps.vilkar)
+        ),
     },
     fieldArrayID: ownProps.fieldArrayID,
     gjeldendeAksjonspunkter,
