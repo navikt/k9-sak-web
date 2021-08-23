@@ -31,6 +31,7 @@ import VedtakAksjonspunktPanel from './VedtakAksjonspunktPanel';
 import styles from './vedtakForm.less';
 import VedtakOverstyrendeKnapp from './VedtakOverstyrendeKnapp';
 import BrevPanel from './brev/BrevPanel';
+import UstrukturerteDokumenter from './UstrukturerteDokumenter';
 
 const isVedtakSubmission = true;
 
@@ -93,6 +94,7 @@ export class VedtakForm extends Component {
       UNNTAK_FRA_TILSYNSORDNING,
       BEREGNING_25_PROSENT_AVVIK,
       OVER_18_AAR,
+      fritekstdokumenter,
       ...formProps
     } = this.props;
 
@@ -124,6 +126,8 @@ export class VedtakForm extends Component {
               />
             )
           )}
+
+          {fritekstdokumenter?.length > 0 && <UstrukturerteDokumenter fritekstdokumenter={fritekstdokumenter} />}
 
           {(isInnvilget(behandlingresultat.type.kode) || isDelvisInnvilget(behandlingresultat.type.kode)) && (
             <VedtakInnvilgetPanel
@@ -236,6 +240,7 @@ VedtakForm.propTypes = {
   UNNTAK_FRA_TILSYNSORDNING: PropTypes.string,
   BEREGNING_25_PROSENT_AVVIK: PropTypes.string,
   OVER_18_AAR: PropTypes.string,
+  fritekstdokumenter: PropTypes.arrayOf(PropTypes.shape()),
   ...formPropTypes,
 };
 
