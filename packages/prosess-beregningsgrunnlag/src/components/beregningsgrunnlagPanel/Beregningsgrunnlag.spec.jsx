@@ -3,7 +3,7 @@ import { expect } from 'chai';
 import { shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import periodeAarsak from '@fpsak-frontend/kodeverk/src/periodeAarsak';
 import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import avklaringsbehovCodes from '@fpsak-frontend/kodeverk/src/beregningAvklaringsbehovCodes';
 import Beregningsgrunnlag, { BeregningsgrunnlagImpl } from './Beregningsgrunnlag';
 import GrunnlagForAarsinntektPanelAT from '../arbeidstaker/GrunnlagForAarsinntektPanelAT';
 import GrunnlagForAarsinntektPanelFL from '../frilanser/GrunnlagForAarsinntektPanelFL';
@@ -89,7 +89,7 @@ const atflAksjonspunkt = {
   id: 55,
   erAktivt: true,
   definisjon: {
-    kode: aksjonspunktCodes.FASTSETT_BEREGNINGSGRUNNLAG_ARBEIDSTAKER_FRILANS,
+    kode: avklaringsbehovCodes.FASTSETT_BEREGNINGSGRUNNLAG_ARBEIDSTAKER_FRILANS,
     navn: 'Fastsett varig brutto beregning ATFL',
   },
   toTrinnsBehandling: false,
@@ -105,7 +105,7 @@ const selvstendigAksjonspunkt = {
   id: 55,
   erAktivt: true,
   definisjon: {
-    kode: aksjonspunktCodes.VURDER_VARIG_ENDRET_ELLER_NYOPPSTARTET_NAERING_SELVSTENDIG_NAERINGSDRIVENDE,
+    kode: avklaringsbehovCodes.VURDER_VARIG_ENDRET_ELLER_NYOPPSTARTET_NAERING_SELVSTENDIG_NAERINGSDRIVENDE,
     navn: 'Fastsett varig brutto beregning SN',
   },
   toTrinnsBehandling: false,
@@ -121,7 +121,7 @@ const selvstendigNyIArbAksjonspunkt = {
   id: 55,
   erAktivt: true,
   definisjon: {
-    kode: aksjonspunktCodes.FASTSETT_BEREGNINGSGRUNNLAG_SN_NY_I_ARBEIDSLIVET,
+    kode: avklaringsbehovCodes.FASTSETT_BEREGNINGSGRUNNLAG_SN_NY_I_ARBEIDSLIVET,
     navn: 'Fastsett varig brutto beregning SN',
   },
   toTrinnsBehandling: false,

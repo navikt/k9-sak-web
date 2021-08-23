@@ -20,7 +20,7 @@ describe('<VurderRefusjonForm>', () => {
         submittable
         submitEnabled
         hasBegrunnelse
-        isAksjonspunktClosed={false}
+        isAvklaringsbehovClosed={false}
         senRefusjonkravListe={senRefusjonkravListe}
         fieldArrayID="dummyId"
       />,
@@ -45,7 +45,7 @@ describe('<VurderRefusjonForm>', () => {
         submittable
         submitEnabled
         hasBegrunnelse
-        isAksjonspunktClosed={false}
+        isAvklaringsbehovClosed={false}
         senRefusjonkravListe={senRefusjonkravListe}
         fieldArrayID="dummyId"
       />,

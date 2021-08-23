@@ -5,9 +5,9 @@ import { connect } from 'react-redux';
 import { formPropTypes, FieldArray } from 'redux-form';
 
 import { AksjonspunktHelpTextTemp, VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
+import { isAvklaringsbehovOpen } from '@fpsak-frontend/kodeverk/src/beregningAvklaringsbehovStatus';
 import { behandlingForm } from '@fpsak-frontend/form';
-import aksjonspunktCodes, { hasAksjonspunkt } from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import avklaringsbehovCodes, { harAvklaringsbehov } from '@fpsak-frontend/kodeverk/src/beregningAvklaringsbehovCodes';
 import { FaktaBegrunnelseTextField, FaktaSubmitButton } from '@k9-sak-web/fakta-felles';
 
 import FaktaForATFLOgSNPanel, {
@@ -16,7 +16,7 @@ import FaktaForATFLOgSNPanel, {
   validationForVurderFakta,
 } from './FaktaForATFLOgSNPanel';
 import beregningsgrunnlagPropType from '../../propTypes/beregningsgrunnlagPropType';
-import beregningAksjonspunkterPropType from '../../propTypes/beregningAksjonspunkterPropType';
+import beregningAvklaringsbehovPropType from '../../propTypes/beregningAvklaringsbehovPropType';
 
 import { erAvklartAktivitetEndret } from '../avklareAktiviteter/AvklareAktiviteterPanel';
 import { formNameVurderFaktaBeregning } from '../BeregningFormUtils';
@@ -27,36 +27,37 @@ const {
   AVKLAR_AKTIVITETER,
   OVERSTYRING_AV_BEREGNINGSGRUNNLAG,
   OVERSTYRING_AV_BEREGNINGSAKTIVITETER,
-} = aksjonspunktCodes;
+} = avklaringsbehovCodes;
 
-const findAksjonspunktMedBegrunnelse = aksjonspunkter => {
-  if (aksjonspunkter.some(ap => ap.definisjon.kode === OVERSTYRING_AV_BEREGNINGSGRUNNLAG)) {
-    return aksjonspunkter.find(
-      ap => ap.definisjon.kode === OVERSTYRING_AV_BEREGNINGSGRUNNLAG && ap.begrunnelse !== null,
+
+const findAvklaringsbehovMedBegrunnelse = avklaringsbehov => {
+  if (avklaringsbehov.some(ab => ab.definisjon.kode === OVERSTYRING_AV_BEREGNINGSGRUNNLAG)) {
+    return avklaringsbehov.find(
+      ab => ab.definisjon.kode === OVERSTYRING_AV_BEREGNINGSGRUNNLAG && ab.begrunnelse !== null,
     );
   }
-  return aksjonspunkter.find(ap => ap.definisjon.kode === VURDER_FAKTA_FOR_ATFL_SN && ap.begrunnelse !== null);
+  return avklaringsbehov.find(ab => ab.definisjon.kode === VURDER_FAKTA_FOR_ATFL_SN && ab.begrunnelse !== null);
 };
 
 export const BEGRUNNELSE_FAKTA_TILFELLER_NAME = 'begrunnelseFaktaTilfeller';
 
-export const harIkkeEndringerIAvklarMedFlereAksjonspunkter = (verdiForAvklarAktivitetErEndret, aksjonspunkter) => {
+export const harIkkeEndringerIAvklarAktiviteterMedFlereAvklaringsbehov = (verdiForAvklarAktivitetErEndret, avklaringsbehov) => {
   if (
-    hasAksjonspunkt(VURDER_FAKTA_FOR_ATFL_SN, aksjonspunkter) ||
-    hasAksjonspunkt(OVERSTYRING_AV_BEREGNINGSGRUNNLAG, aksjonspunkter)
+    harAvklaringsbehov(VURDER_FAKTA_FOR_ATFL_SN, avklaringsbehov) ||
+    harAvklaringsbehov(OVERSTYRING_AV_BEREGNINGSGRUNNLAG, avklaringsbehov)
   ) {
     return !verdiForAvklarAktivitetErEndret;
   }
   return true;
 };
 
-const isAksjonspunktClosed = alleAp => {
-  const relevantAp = alleAp.filter(
-    ap =>
-      ap.definisjon.kode === aksjonspunktCodes.VURDER_FAKTA_FOR_ATFL_SN ||
-      ap.definisjon.kode === aksjonspunktCodes.OVERSTYRING_AV_BEREGNINGSGRUNNLAG,
+const isAvklaringsbehovClosed = alleAb => {
+  const relevantAp = alleAb.filter(
+    ab =>
+      ab.definisjon.kode === VURDER_FAKTA_FOR_ATFL_SN ||
+      ab.definisjon.kode === OVERSTYRING_AV_BEREGNINGSGRUNNLAG,
   );
-  return relevantAp.length === 0 ? false : relevantAp.some(ap => !isAksjonspunktOpen(ap.status.kode));
+  return relevantAp.length === 0 ? false : relevantAp.some(ap => !isAvklaringsbehovOpen(ap.status.kode));
 };
 
 const lagHelpTextsForFakta = () => {
@@ -67,16 +68,16 @@ const lagHelpTextsForFakta = () => {
   return helpTexts;
 };
 
-const hasOpenAksjonspunkt = (kode, aksjonspunkter) =>
-  aksjonspunkter.some(ap => ap.definisjon.kode === kode && isAksjonspunktOpen(ap.status.kode));
+const hasOpenAvklaringsbehov = (kode, avklaringsbehov) =>
+  avklaringsbehov.some(ab => ab.definisjon.kode === kode && isAvklaringsbehovOpen(ab.status.kode));
 
 const harTilfeller = beregningsgrunnlag =>
   beregningsgrunnlag.faktaOmBeregning &&
   beregningsgrunnlag.faktaOmBeregning.faktaOmBeregningTilfeller &&
   beregningsgrunnlag.faktaOmBeregning.faktaOmBeregningTilfeller.length > 0;
 
-const måVurderes = (beregningsgrunnlag, aksjonspunkter) =>
-  hasAksjonspunkt(VURDER_FAKTA_FOR_ATFL_SN, aksjonspunkter) && harTilfeller(beregningsgrunnlag);
+const måVurderes = (beregningsgrunnlag, avklaringsbehov) =>
+  harAvklaringsbehov(VURDER_FAKTA_FOR_ATFL_SN, avklaringsbehov) && harTilfeller(beregningsgrunnlag);
 
 const fieldArrayName = 'vurderFaktaListe';
 
@@ -107,7 +108,7 @@ export class VurderFaktaBeregningPanelImpl extends Component {
       props: {
         beregningsgrunnlag,
         readOnly,
-        aksjonspunkter,
+        avklaringsbehov,
         behandlingId,
         behandlingVersjon,
         alleKodeverk,
@@ -132,22 +133,22 @@ export class VurderFaktaBeregningPanelImpl extends Component {
       }
     }
 
-    const skalVurdere = måVurderes(beregningsgrunnlag, aksjonspunkter);
+    const skalVurdere = måVurderes(beregningsgrunnlag, avklaringsbehov);
 
     return fields.map(
       (field, index) =>
         index === aktivtBeregningsgrunnlagIndex && (
           <div key={field}>
             {skalVurdere && (
-              <AksjonspunktHelpTextTemp isAksjonspunktOpen={!isAksjonspunktClosed(aksjonspunkter)}>
+              <AksjonspunktHelpTextTemp isAksjonspunktOpen={!isAvklaringsbehovClosed(avklaringsbehov)}>
                 {lagHelpTextsForFakta()}
               </AksjonspunktHelpTextTemp>
             )}
             <VerticalSpacer twentyPx />
             <FaktaForATFLOgSNPanel
               readOnly={readOnly}
-              isAksjonspunktClosed={isAksjonspunktClosed(aksjonspunkter)}
-              aksjonspunkter={aksjonspunkter}
+              isAvklaringsbehovClosed={isAvklaringsbehovClosed(avklaringsbehov)}
+              avklaringsbehov={avklaringsbehov}
               behandlingId={behandlingId}
               behandlingVersjon={behandlingVersjon}
               beregningsgrunnlag={beregningsgrunnlag}
@@ -165,7 +166,7 @@ export class VurderFaktaBeregningPanelImpl extends Component {
   render() {
     const {
       props: {
-        aksjonspunkter,
+        avklaringsbehov,
         erOverstyrt,
         submittable,
         behandlingId,
@@ -180,12 +181,12 @@ export class VurderFaktaBeregningPanelImpl extends Component {
     return (
       <>
         {!(
-          hasOpenAksjonspunkt(AVKLAR_AKTIVITETER, aksjonspunkter) ||
-          hasOpenAksjonspunkt(OVERSTYRING_AV_BEREGNINGSAKTIVITETER, aksjonspunkter)
+          hasOpenAvklaringsbehov(AVKLAR_AKTIVITETER, avklaringsbehov) ||
+          hasOpenAvklaringsbehov(OVERSTYRING_AV_BEREGNINGSAKTIVITETER, avklaringsbehov)
         ) && (
           <form onSubmit={formProps.handleSubmit}>
             <FieldArray name={fieldArrayName} component={this.renderVurderFaktaBeregningPanel} />
-            {(hasAksjonspunkt(VURDER_FAKTA_FOR_ATFL_SN, aksjonspunkter) || erOverstyrt) && (
+            {(harAvklaringsbehov(VURDER_FAKTA_FOR_ATFL_SN, avklaringsbehov) || erOverstyrt) && (
               <>
                 <FaktaBegrunnelseTextField
                   name={BEGRUNNELSE_FAKTA_TILFELLER_NAME}
@@ -199,10 +200,10 @@ export class VurderFaktaBeregningPanelImpl extends Component {
                   isSubmittable={
                     submittable &&
                     submitEnabled &&
-                    harIkkeEndringerIAvklarMedFlereAksjonspunkter(verdiForAvklarAktivitetErEndret, aksjonspunkter)
+                    harIkkeEndringerIAvklarAktiviteterMedFlereAvklaringsbehov(verdiForAvklarAktivitetErEndret, avklaringsbehov)
                   }
                   isReadOnly={readOnly}
-                  hasOpenAksjonspunkter={!isAksjonspunktClosed(aksjonspunkter)}
+                  hasOpenAksjonspunkter={!isAvklaringsbehovClosed(avklaringsbehov)}
                   behandlingId={behandlingId}
                   behandlingVersjon={behandlingVersjon}
                 />
@@ -229,7 +230,7 @@ VurderFaktaBeregningPanelImpl.propTypes = {
     beregningsgrunnlagPropType,
     PropTypes.arrayOf(beregningsgrunnlagPropType),
   ]),
-  aksjonspunkter: PropTypes.arrayOf(beregningAksjonspunkterPropType).isRequired,
+  avklaringsbehov: PropTypes.arrayOf(beregningAvklaringsbehovPropType).isRequired,
   ...formPropTypes,
 };
 
@@ -237,7 +238,7 @@ const mapGrunnlagsliste = (fieldArrayList, alleBeregningsgrunnlag, behandlingRes
   fieldArrayList
     .filter(
       (currentFormValues, index) =>
-        måVurderes(alleBeregningsgrunnlag[index], currentFormValues.aksjonspunkter) || erOverstyring(currentFormValues),
+        måVurderes(alleBeregningsgrunnlag[index], currentFormValues.avklaringsbehov) || erOverstyring(currentFormValues),
     )
     .map(currentFormValues => {
       const faktaBeregningValues = currentFormValues;
@@ -273,8 +274,8 @@ export const transformValuesVurderFaktaBeregning = (values, alleBeregningsgrunnl
 };
 
 export const validateVurderFaktaBeregning = values => {
-  const { aksjonspunkter } = values;
-  if (aksjonspunkter && hasAksjonspunkt(VURDER_FAKTA_FOR_ATFL_SN, aksjonspunkter) && values) {
+  const { avklaringsbehov } = values;
+  if (avklaringsbehov && harAvklaringsbehov(VURDER_FAKTA_FOR_ATFL_SN, avklaringsbehov) && values) {
     return {
       [fieldArrayName]: values[fieldArrayName].map(value => validationForVurderFakta(value)),
     };
@@ -284,14 +285,14 @@ export const validateVurderFaktaBeregning = values => {
 
 export const buildInitialValues = (ownProps, alleBeregningsgrunnlag, aktivtBeregningsgrunnlagIndex) => ({
   [fieldArrayName]: alleBeregningsgrunnlag.map(beregningsgrunnlag => ({
-    aksjonspunkter: ownProps.aksjonspunkter,
+    avklaringsbehov: ownProps.avklaringsbehov,
     ...getBuildInitialValuesFaktaForATFLOgSN(ownProps, beregningsgrunnlag)(),
   })),
-  aksjonspunkter: ownProps.aksjonspunkter,
+  avklaringsbehov: ownProps.avklaringsbehov,
   alleBeregningsgrunnlag,
   aktivtBeregningsgrunnlagIndex,
   ...FaktaBegrunnelseTextField.buildInitialValues(
-    findAksjonspunktMedBegrunnelse(ownProps.aksjonspunkter),
+    findAvklaringsbehovMedBegrunnelse(ownProps.avklaringsbehov),
     BEGRUNNELSE_FAKTA_TILFELLER_NAME,
   ),
 });

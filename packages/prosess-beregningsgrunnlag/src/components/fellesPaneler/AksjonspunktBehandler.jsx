@@ -8,11 +8,11 @@ import { FormattedMessage, injectIntl } from 'react-intl';
 import { dateFormat, hasValidText, maxLength, minLength, required } from '@fpsak-frontend/utils';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import avklaringsbehovCodes from '@fpsak-frontend/kodeverk/src/beregningAvklaringsbehovCodes';
 import TextAreaField2 from '../redesign/TextAreaField';
 import styles from './aksjonspunktBehandler.less';
 import beregningStyles from '../beregningsgrunnlagPanel/beregningsgrunnlag.less';
-import beregningsgrunnlagAksjonspunkterPropType from '../../propTypes/beregningsgrunnlagAksjonspunkterPropType';
+import beregningAvklaringsbehovPropType from '../../propTypes/beregningAvklaringsbehovPropType';
 import AksjonspunktBehandlerAT from '../arbeidstaker/AksjonspunktBehandlerAT';
 import AksjonspunktBehandlerFL from '../frilanser/AksjonspunktBehandlerFL';
 import AksjonspunktBehandlerTB from '../arbeidstaker/AksjonspunktBehandlerTB';
@@ -27,37 +27,37 @@ const finnAlleAndelerIFørstePeriode = allePerioder => {
   }
   return undefined;
 };
-const harFlereAksjonspunkter = gjeldendeAksjonspunkter =>
-  !!gjeldendeAksjonspunkter && gjeldendeAksjonspunkter.length > 1;
-const finnATFLVurderingLabel = gjeldendeAksjonspunkter => {
-  if (harFlereAksjonspunkter(gjeldendeAksjonspunkter)) {
+const harFlereAvklaringsbehov = avklaringsbehov =>
+  !!avklaringsbehov && avklaringsbehov.length > 1;
+const finnATFLVurderingLabel = avklaringsbehov => {
+  if (harFlereAvklaringsbehov(avklaringsbehov)) {
     return <FormattedMessage id="Beregningsgrunnlag.Forms.VurderingAvFastsattBeregningsgrunnlag" />;
   }
   return <FormattedMessage id="Beregningsgrunnlag.Forms.Vurdering" />;
 };
-const finnGjeldeneAksjonsPunkt = (aksjonspunkter, erNyiArbeidslivet, readOnly, erSNellerFL) => {
+const finnGjeldendeAvklaringsbehov = (avklaringsbehov, erNyiArbeidslivet, erSNellerFL) => {
   if (erSNellerFL) {
-    return aksjonspunkter.find(
-      ap => ap.definisjon.kode === aksjonspunktCodes.FASTSETT_BEREGNINGSGRUNNLAG_ARBEIDSTAKER_FRILANS,
+    return avklaringsbehov.find(
+      ap => ap.definisjon.kode === avklaringsbehovCodes.FASTSETT_BEREGNINGSGRUNNLAG_ARBEIDSTAKER_FRILANS,
     );
   }
   if (erNyiArbeidslivet) {
-    return aksjonspunkter.find(
-      ap => ap.definisjon.kode === aksjonspunktCodes.FASTSETT_BEREGNINGSGRUNNLAG_SN_NY_I_ARBEIDSLIVET,
+    return avklaringsbehov.find(
+      ap => ap.definisjon.kode === avklaringsbehovCodes.FASTSETT_BEREGNINGSGRUNNLAG_SN_NY_I_ARBEIDSLIVET,
     );
   }
-  return aksjonspunkter.find(
+  return avklaringsbehov.find(
     ap =>
       ap.definisjon.kode ===
-      aksjonspunktCodes.VURDER_VARIG_ENDRET_ELLER_NYOPPSTARTET_NAERING_SELVSTENDIG_NAERINGSDRIVENDE,
+      avklaringsbehovCodes.VURDER_VARIG_ENDRET_ELLER_NYOPPSTARTET_NAERING_SELVSTENDIG_NAERINGSDRIVENDE,
   );
 };
 
-const lagEndretTekst = (aksjonspunkter, erNyiArbeidslivet, readOnly, erSNellerFL) => {
-  if (!aksjonspunkter || !readOnly) return null;
-  const aksjonspunkt = finnGjeldeneAksjonsPunkt(aksjonspunkter, erNyiArbeidslivet, readOnly, erSNellerFL);
-  if (!aksjonspunkt) return null;
-  const { endretAv, endretTidspunkt } = aksjonspunkt;
+const lagEndretTekst = (avklaringsbehov, erNyiArbeidslivet, readOnly, erSNellerFL) => {
+  if (!avklaringsbehov || !readOnly) return null;
+  const gjeldendeAvklaringsbehov = finnGjeldendeAvklaringsbehov(avklaringsbehov, erNyiArbeidslivet, erSNellerFL);
+  if (!gjeldendeAvklaringsbehov) return null;
+  const { endretAv, endretTidspunkt } = gjeldendeAvklaringsbehov;
   if (!endretTidspunkt) return null;
   const godkjentEndretAv = /[a-zA-Z]{1}[0-9]{6}/.test(endretAv) ? endretAv : '';
   return (
@@ -71,7 +71,7 @@ const lagEndretTekst = (aksjonspunkter, erNyiArbeidslivet, readOnly, erSNellerFL
 const AksjonspunktBehandler = ({
   intl,
   readOnly,
-  aksjonspunkter,
+  avklaringsbehov,
   formName,
   behandlingId,
   behandlingVersjon,
@@ -109,7 +109,7 @@ const AksjonspunktBehandler = ({
   }
   erVarigEndring = snAndel && snAndel.næringer && snAndel.næringer.some(naring => naring.erVarigEndret === true);
   erNyoppstartet = snAndel && snAndel.næringer && snAndel.næringer.some(naring => naring.erNyoppstartet === true);
-  if (!aksjonspunkter || aksjonspunkter.length === 0) {
+  if (!avklaringsbehov || avklaringsbehov.length === 0) {
     return null;
   }
   if (!relevanteStatuser.isSelvstendigNaeringsdrivende) {
@@ -134,7 +134,7 @@ const AksjonspunktBehandler = ({
               behandlingVersjon={behandlingVersjon}
               alleKodeverk={alleKodeverk}
               arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
-              aksjonspunkter={aksjonspunkter}
+              avklaringsbehov={avklaringsbehov}
               fieldArrayID={fieldArrayID}
             />
           )}
@@ -162,14 +162,14 @@ const AksjonspunktBehandler = ({
             <Column xs="12">
               <TextAreaField2
                 name={`${fieldArrayID}.ATFLVurdering`}
-                label={finnATFLVurderingLabel(aksjonspunkter)}
+                label={finnATFLVurderingLabel(avklaringsbehov)}
                 validate={[required, maxLength1500, minLength3, hasValidText]}
                 maxLength={1500}
                 readOnly={readOnly}
                 placeholder={intl.formatMessage({
                   id: 'Beregningsgrunnlag.Forms.VurderingAvFastsattBeregningsgrunnlag.Placeholder',
                 })}
-                endrettekst={lagEndretTekst(aksjonspunkter, erNyArbLivet, readOnly, true)}
+                endrettekst={lagEndretTekst(avklaringsbehov, erNyArbLivet, readOnly, true)}
               />
             </Column>
           </Row>
@@ -203,13 +203,13 @@ const AksjonspunktBehandler = ({
           <VerticalSpacer eightPx />
           <AksjonspunktBehandlerSN
             readOnly={readOnly}
-            aksjonspunkter={aksjonspunkter}
+            avklaringsbehov={avklaringsbehov}
             behandlingId={behandlingId}
             behandlingVersjon={behandlingVersjon}
             erNyArbLivet={erNyArbLivet}
             erVarigEndring={erVarigEndring}
             erNyoppstartet={erNyoppstartet}
-            endretTekst={lagEndretTekst(aksjonspunkter, erNyArbLivet, readOnly, false)}
+            endretTekst={lagEndretTekst(avklaringsbehov, erNyArbLivet, readOnly, false)}
             fieldArrayID={fieldArrayID}
           />
           <VerticalSpacer sixteenPx />
@@ -221,7 +221,7 @@ const AksjonspunktBehandler = ({
 };
 AksjonspunktBehandler.propTypes = {
   readOnly: PropTypes.bool.isRequired,
-  aksjonspunkter: PropTypes.arrayOf(beregningsgrunnlagAksjonspunkterPropType).isRequired,
+  avklaringsbehov: PropTypes.arrayOf(beregningAvklaringsbehovPropType).isRequired,
   alleKodeverk: PropTypes.shape().isRequired,
   arbeidsgiverOpplysningerPerId: PropTypes.shape().isRequired,
   behandlingId: PropTypes.number.isRequired,

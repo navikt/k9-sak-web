@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { kodeverkObjektPropType } from '@fpsak-frontend/prop-types';
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import avklaringsbehovCodes from '@fpsak-frontend/kodeverk/src/beregningAvklaringsbehovCodes';
 import FordelingForm from './FordelingForm';
-import fordelBeregningsgrunnlagAksjonspunkterPropType from '../propTypes/fordelBeregningsgrunnlagAksjonspunkterPropType';
+import beregningAvklaringsbehovPropType from '../propTypes/beregningAvklaringsbehovPropType';
 import vilkårPeriodePropType from '../propTypes/vilkårPeriodePropType';
 
-const { FORDEL_BEREGNINGSGRUNNLAG } = aksjonspunktCodes;
+const { FORDEL_BEREGNINGSGRUNNLAG } = avklaringsbehovCodes;
 
 export const BEGRUNNELSE_FORDELING_NAME = 'begrunnelseFordeling';
 
@@ -16,8 +16,8 @@ const harIkkeFordelInfo = bg => {
   }
   return bg.faktaOmFordeling ? !bg.faktaOmFordeling.fordelBeregningsgrunnlag : true;
 };
-const getFordelAksjonspunkt = aksjonspunkter =>
-  aksjonspunkter ? aksjonspunkter.find(ap => ap.definisjon.kode === FORDEL_BEREGNINGSGRUNNLAG) : undefined;
+const getFordelAvklaringsbehov = avklaringsbehov =>
+avklaringsbehov ? avklaringsbehov.find(ab => ab.definisjon.kode === FORDEL_BEREGNINGSGRUNNLAG) : undefined;
 
 /**
  * FordelBeregningsgrunnlagPanel
@@ -45,7 +45,7 @@ export class FordelBeregningsgrunnlagPanel extends Component {
     const {
       props: {
         readOnly,
-        aksjonspunkter,
+        avklaringsbehov,
         submitCallback,
         beregningsgrunnlag,
         behandlingId,
@@ -63,7 +63,7 @@ export class FordelBeregningsgrunnlagPanel extends Component {
       state: { submitEnabled },
     } = this;
 
-    const fordelAP = getFordelAksjonspunkt(aksjonspunkter);
+    const fordelAP = getFordelAvklaringsbehov(avklaringsbehov);
     if (harIkkeFordelInfo(beregningsgrunnlag) || !fordelAP) {
       return null;
     }
@@ -80,7 +80,7 @@ export class FordelBeregningsgrunnlagPanel extends Component {
         alleMerknaderFraBeslutter={alleMerknaderFraBeslutter}
         beregningsgrunnlag={beregningsgrunnlag}
         behandlingType={behandlingType}
-        aksjonspunkter={aksjonspunkter}
+        avklaringsbehov={avklaringsbehov}
         kreverManuellBehandling={kreverManuellBehandling}
         aktivtBeregningsgrunnlagIndex={aktivtBeregningsgrunnlagIndex}
         alleBeregningsgrunnlag={alleBeregningsgrunnlag}
@@ -92,7 +92,7 @@ export class FordelBeregningsgrunnlagPanel extends Component {
 
 FordelBeregningsgrunnlagPanel.propTypes = {
   readOnly: PropTypes.bool.isRequired,
-  aksjonspunkter: PropTypes.arrayOf(fordelBeregningsgrunnlagAksjonspunkterPropType.isRequired).isRequired,
+  avklaringsbehov: PropTypes.arrayOf(beregningAvklaringsbehovPropType.isRequired).isRequired,
   submitCallback: PropTypes.func.isRequired,
   submittable: PropTypes.bool.isRequired,
   behandlingId: PropTypes.number.isRequired,

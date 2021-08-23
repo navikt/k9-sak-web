@@ -6,18 +6,19 @@ import { Element } from 'nav-frontend-typografi';
 
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { CheckboxField } from '@fpsak-frontend/form';
-import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
+import { isAvklaringsbehovOpen } from '@fpsak-frontend/kodeverk/src/beregningAvklaringsbehovStatus';
 
-import aksjonspunktCodes, { hasAksjonspunkt } from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import avklaringsbehovCodes, { harAvklaringsbehov } from '@fpsak-frontend/kodeverk/src/beregningAvklaringsbehovCodes';
+
 import PropTypes from 'prop-types';
 import { getFormValuesForBeregning } from '../BeregningFormUtils';
-import beregningAksjonspunkterPropType from '../../propTypes/beregningAksjonspunkterPropType';
+import beregningAvklaringsbehovPropType from '../../propTypes/beregningAvklaringsbehovPropType';
 
 import styles from './InntektstabellPanel.less';
 
 export const MANUELL_OVERSTYRING_BEREGNINGSGRUNNLAG_FIELD = 'manuellOverstyringRapportertInntekt';
 
-const { OVERSTYRING_AV_BEREGNINGSGRUNNLAG, AVKLAR_AKTIVITETER } = aksjonspunktCodes;
+const { OVERSTYRING_AV_BEREGNINGSGRUNNLAG, AVKLAR_AKTIVITETER } = avklaringsbehovCodes;
 
 /**
  * Inntektstabell
@@ -31,7 +32,7 @@ export const InntektstabellPanelImpl = ({
   skalViseTabell,
   kanOverstyre,
   readOnly,
-  aksjonspunkter,
+  avklaringsbehov,
   erOverstyrt,
   fieldArrayID,
 }) => (
@@ -45,7 +46,7 @@ export const InntektstabellPanelImpl = ({
             key="manuellOverstyring"
             name={`${fieldArrayID}.${MANUELL_OVERSTYRING_BEREGNINGSGRUNNLAG_FIELD}`}
             label={{ id: 'VurderFaktaBeregning.ManuellOverstyring' }}
-            readOnly={hasAksjonspunkt(OVERSTYRING_AV_BEREGNINGSGRUNNLAG, aksjonspunkter) || readOnly}
+            readOnly={harAvklaringsbehov(OVERSTYRING_AV_BEREGNINGSGRUNNLAG, avklaringsbehov) || readOnly}
           />
         </div>
       )}
@@ -70,13 +71,13 @@ InntektstabellPanelImpl.propTypes = {
   skalViseTabell: PropTypes.bool,
   kanOverstyre: PropTypes.bool.isRequired,
   readOnly: PropTypes.bool.isRequired,
-  aksjonspunkter: PropTypes.arrayOf(beregningAksjonspunkterPropType).isRequired,
+  avklaringsbehov: PropTypes.arrayOf(beregningAvklaringsbehovPropType).isRequired,
   erOverstyrt: PropTypes.bool.isRequired,
   fieldArrayID: PropTypes.string.isRequired,
 };
 
-InntektstabellPanelImpl.buildInitialValues = aksjonspunkter => ({
-  [MANUELL_OVERSTYRING_BEREGNINGSGRUNNLAG_FIELD]: hasAksjonspunkt(OVERSTYRING_AV_BEREGNINGSGRUNNLAG, aksjonspunkter),
+InntektstabellPanelImpl.buildInitialValues = avklaringsbehov => ({
+  [MANUELL_OVERSTYRING_BEREGNINGSGRUNNLAG_FIELD]: harAvklaringsbehov(OVERSTYRING_AV_BEREGNINGSGRUNNLAG, avklaringsbehov),
 });
 
 InntektstabellPanelImpl.defaultProps = {
@@ -85,10 +86,10 @@ InntektstabellPanelImpl.defaultProps = {
 };
 
 const getSkalKunneOverstyre = createSelector(
-  [ownProps => ownProps.erOverstyrer, ownProps => ownProps.aksjonspunkter],
-  (erOverstyrer, aksjonspunkter) =>
+  [ownProps => ownProps.erOverstyrer, ownProps => ownProps.avklaringsbehov],
+  (erOverstyrer, avklaringsbehov) =>
     erOverstyrer &&
-    !aksjonspunkter.some(ap => ap.definisjon.kode === AVKLAR_AKTIVITETER && isAksjonspunktOpen(ap.status.kode)),
+    !avklaringsbehov.some(ab => ab.definisjon.kode === AVKLAR_AKTIVITETER && isAvklaringsbehovOpen(ab.status.kode)),
 );
 
 const mapStateToProps = (state, ownProps) => ({

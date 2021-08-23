@@ -28,7 +28,7 @@ const allePerioder = [
   },
 ];
 const formName = 'BeregningForm';
-const aksjonspunkter = [
+const avklaringsbehov = [
   {
     begrunnelse: null,
     definisjon: {
@@ -49,7 +49,7 @@ describe('<AksjonspunktBehandler>', () => {
       <AksjonspunktBehandler.WrappedComponent
         intl={intlMock}
         readOnly={readOnly}
-        aksjonspunkter={aksjonspunkter}
+        avklaringsbehov={avklaringsbehov}
         formName={formName}
         behandlingId={1}
         behandlingVersjon={1}
@@ -87,7 +87,7 @@ describe('<AksjonspunktBehandler>', () => {
     const wrapper = shallowWithIntl(
       <AksjonspunktBehandler.WrappedComponent
         readOnly={readOnly}
-        aksjonspunkter={aksjonspunkter}
+        avklaringsbehov={avklaringsbehov}
         formName={formName}
         behandlingId={1}
         behandlingVersjon={1}
@@ -125,7 +125,7 @@ describe('<AksjonspunktBehandler>', () => {
     const wrapper = shallowWithIntl(
       <AksjonspunktBehandler.WrappedComponent
         readOnly={readOnly}
-        aksjonspunkter={aksjonspunkter}
+        avklaringsbehov={avklaringsbehov}
         formName={formName}
         behandlingId={1}
         behandlingVersjon={1}
@@ -163,7 +163,7 @@ describe('<AksjonspunktBehandler>', () => {
     const wrapper = shallowWithIntl(
       <AksjonspunktBehandler.WrappedComponent
         readOnly={readOnly}
-        aksjonspunkter={aksjonspunkter}
+        avklaringsbehov={avklaringsbehov}
         formName={formName}
         behandlingId={1}
         behandlingVersjon={1}
@@ -214,7 +214,7 @@ describe('<AksjonspunktBehandler>', () => {
     const wrapper = shallowWithIntl(
       <AksjonspunktBehandler.WrappedComponent
         readOnly={readOnly}
-        aksjonspunkter={aksjonspunkter}
+        avklaringsbehov={avklaringsbehov}
         formName={formName}
         behandlingId={1}
         behandlingVersjon={1}

@@ -26,7 +26,6 @@ const BeregningsgrunnlagProsessIndex = ({
   submitCallback,
   isReadOnly,
   readOnlySubmitButton,
-  isAksjonspunktOpen,
   vilkar,
   alleKodeverk,
   arbeidsgiverOpplysningerPerId,
@@ -41,8 +40,6 @@ const BeregningsgrunnlagProsessIndex = ({
         submitCallback={submitCallback}
         readOnly={isReadOnly}
         readOnlySubmitButton={readOnlySubmitButton}
-        apCodes={aksjonspunkter.map(a => a.definisjon.kode)}
-        isApOpen={isAksjonspunktOpen}
         vilkar={vilkar}
         alleKodeverk={alleKodeverk}
         arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
@@ -58,7 +55,6 @@ BeregningsgrunnlagProsessIndex.propTypes = {
   aksjonspunkter: PropTypes.arrayOf(beregningsgrunnlagAksjonspunkterPropType).isRequired,
   submitCallback: PropTypes.func.isRequired,
   isReadOnly: PropTypes.bool.isRequired,
-  isAksjonspunktOpen: PropTypes.bool.isRequired,
   readOnlySubmitButton: PropTypes.bool.isRequired,
   vilkar: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   beregningsgrunnlag: PropTypes.arrayOf(beregningsgrunnlagPropType),

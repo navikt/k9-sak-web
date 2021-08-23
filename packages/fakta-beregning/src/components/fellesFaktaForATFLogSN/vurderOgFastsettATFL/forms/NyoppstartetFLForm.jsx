@@ -19,7 +19,7 @@ import faktaOmBeregningTilfelle from '@fpsak-frontend/kodeverk/src/faktaOmBeregn
 
 export const erNyoppstartetFLField = 'NyoppstartetFLField';
 
-const NyoppstartetFLForm = ({ readOnly, isAksjonspunktClosed, fieldArrayID }) => (
+const NyoppstartetFLForm = ({ readOnly, isAvklaringsbehovClosed, fieldArrayID }) => (
   <div>
     <Normaltekst>
       <FormattedMessage id="BeregningInfoPanel.VurderOgFastsettATFL.ErSokerNyoppstartetFL" />
@@ -29,7 +29,7 @@ const NyoppstartetFLForm = ({ readOnly, isAksjonspunktClosed, fieldArrayID }) =>
       name={`${fieldArrayID}.${erNyoppstartetFLField}`}
       validate={[required]}
       readOnly={readOnly}
-      isEdited={isAksjonspunktClosed}
+      isEdited={isAvklaringsbehovClosed}
     >
       <RadioOption label={<FormattedMessage id="BeregningInfoPanel.FormAlternativ.Ja" />} value />
       <RadioOption label={<FormattedMessage id="BeregningInfoPanel.FormAlternativ.Nei" />} value={false} />
@@ -39,7 +39,7 @@ const NyoppstartetFLForm = ({ readOnly, isAksjonspunktClosed, fieldArrayID }) =>
 
 NyoppstartetFLForm.propTypes = {
   readOnly: PropTypes.bool.isRequired,
-  isAksjonspunktClosed: PropTypes.bool.isRequired,
+  isAvklaringsbehovClosed: PropTypes.bool.isRequired,
   fieldArrayID: PropTypes.string.isRequired,
 };
 

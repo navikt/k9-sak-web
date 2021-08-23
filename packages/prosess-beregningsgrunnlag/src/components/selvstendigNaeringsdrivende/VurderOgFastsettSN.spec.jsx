@@ -1,6 +1,6 @@
 import React from 'react';
 import { expect } from 'chai';
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import avklaringsbehovCodes from '@fpsak-frontend/kodeverk/src/beregningAvklaringsbehovCodes';
 import VurderOgFastsettSN, { VurderOgFastsettSNImpl } from './VurderOgFastsettSN';
 import VurderVarigEndretEllerNyoppstartetSN2, {
   begrunnelseFieldname as vurderingBegrunnelse,
@@ -12,9 +12,9 @@ import shallowWithIntl from '../../../i18n';
 const {
   VURDER_VARIG_ENDRET_ELLER_NYOPPSTARTET_NAERING_SELVSTENDIG_NAERINGSDRIVENDE,
   FASTSETT_BEREGNINGSGRUNNLAG_SN_NY_I_ARBEIDSLIVET,
-} = aksjonspunktCodes;
+} = avklaringsbehovCodes;
 
-const mockAksjonspunktMedKodeOgStatus = (apKode, begrunnelse, status) => ({
+const mockAvklaringsbehovMedKodeOgStatus = (apKode, begrunnelse, status) => ({
   definisjon: {
     kode: apKode,
   },
@@ -32,12 +32,12 @@ describe('<VurderOgFastsettSN>', () => {
       <VurderOgFastsettSNImpl
         readOnly={false}
         erVarigEndretNaering={undefined}
-        isAksjonspunktClosed={false}
+        isAvklaringsbehovClosed={false}
         erNyArbLivet
         erVarigEndring
         erNyoppstartet={false}
-        gjeldendeAksjonspunkter={[
-          mockAksjonspunktMedKodeOgStatus(FASTSETT_BEREGNINGSGRUNNLAG_SN_NY_I_ARBEIDSLIVET, undefined, 'OPPR'),
+        avklaringsbehov={[
+          mockAvklaringsbehovMedKodeOgStatus(FASTSETT_BEREGNINGSGRUNNLAG_SN_NY_I_ARBEIDSLIVET, undefined, 'OPPR'),
         ]}
         fieldArrayID="dummyId"
       />,
@@ -47,7 +47,7 @@ describe('<VurderOgFastsettSN>', () => {
   });
 
   it('Skal vise korrekte komponenter når det er aksjonspunkt for å vurdere varig endring uten at varig endring er bestemt', () => {
-    const vurderEndring = mockAksjonspunktMedKodeOgStatus(
+    const vurderEndring = mockAvklaringsbehovMedKodeOgStatus(
       VURDER_VARIG_ENDRET_ELLER_NYOPPSTARTET_NAERING_SELVSTENDIG_NAERINGSDRIVENDE,
       undefined,
       'OPPR',
@@ -56,8 +56,8 @@ describe('<VurderOgFastsettSN>', () => {
       <VurderOgFastsettSNImpl
         readOnly={false}
         erVarigEndretNaering={undefined}
-        isAksjonspunktClosed={false}
-        gjeldendeAksjonspunkter={[vurderEndring]}
+        isAvklaringsbehovClosed={false}
+        avklaringsbehov={[vurderEndring]}
         erNyArbLivet={false}
         erVarigEndring
         erNyoppstartet={false}
@@ -69,7 +69,7 @@ describe('<VurderOgFastsettSN>', () => {
   });
 
   it('Skal vise korrekte komponenter når det er aksjonspunkt for å vurdere varig endring og det er vurdert at det ikke er varig endring', () => {
-    const vurderEndring = mockAksjonspunktMedKodeOgStatus(
+    const vurderEndring = mockAvklaringsbehovMedKodeOgStatus(
       VURDER_VARIG_ENDRET_ELLER_NYOPPSTARTET_NAERING_SELVSTENDIG_NAERINGSDRIVENDE,
       undefined,
       'OPPR',
@@ -78,9 +78,9 @@ describe('<VurderOgFastsettSN>', () => {
       <VurderOgFastsettSNImpl
         readOnly={false}
         erVarigEndretNaering={false}
-        isAksjonspunktClosed={false}
+        isAvklaringsbehovClosed={false}
         erNyArbLivet={false}
-        gjeldendeAksjonspunkter={[vurderEndring]}
+        avklaringsbehov={[vurderEndring]}
         erVarigEndring
         erNyoppstartet={false}
         fieldArrayID="dummyId"
@@ -91,7 +91,7 @@ describe('<VurderOgFastsettSN>', () => {
   });
 
   it('Skal vise korrekte komponenter når det er aksjonspunkt for å vurdere varig endring og det er vurdert at det er varig endring', () => {
-    const vurderEndring = mockAksjonspunktMedKodeOgStatus(
+    const vurderEndring = mockAvklaringsbehovMedKodeOgStatus(
       VURDER_VARIG_ENDRET_ELLER_NYOPPSTARTET_NAERING_SELVSTENDIG_NAERINGSDRIVENDE,
       undefined,
       'OPPR',
@@ -100,9 +100,9 @@ describe('<VurderOgFastsettSN>', () => {
       <VurderOgFastsettSNImpl
         readOnly={false}
         erVarigEndretNaering
-        isAksjonspunktClosed={false}
+        isAvklaringsbehovClosed={false}
         erNyArbLivet={false}
-        gjeldendeAksjonspunkter={[vurderEndring]}
+        avklaringsbehov={[vurderEndring]}
         erVarigEndring
         erNyoppstartet={false}
         fieldArrayID="dummyId"
@@ -113,7 +113,7 @@ describe('<VurderOgFastsettSN>', () => {
   });
 
   it('Skal teste at transformValues setter korrekte values når det kun skal fastsettes inntekt for søker ny i arbeidslivet', () => {
-    const snNyIArb = mockAksjonspunktMedKodeOgStatus(
+    const snNyIArb = mockAvklaringsbehovMedKodeOgStatus(
       FASTSETT_BEREGNINGSGRUNNLAG_SN_NY_I_ARBEIDSLIVET,
       undefined,
       'OPPR',
@@ -132,7 +132,7 @@ describe('<VurderOgFastsettSN>', () => {
   });
 
   it('Skal teste at transformValues setter korrekte values når det er vurdert at det ikke er varig endret næring', () => {
-    const vurderEndring = mockAksjonspunktMedKodeOgStatus(
+    const vurderEndring = mockAvklaringsbehovMedKodeOgStatus(
       VURDER_VARIG_ENDRET_ELLER_NYOPPSTARTET_NAERING_SELVSTENDIG_NAERINGSDRIVENDE,
       undefined,
       'OPPR',
@@ -152,7 +152,7 @@ describe('<VurderOgFastsettSN>', () => {
   });
 
   it('Skal teste at transformValues setter korrekte values når det er vurdert at det er varig endret næring og inntekt er fastsatt', () => {
-    const vurderEndring = mockAksjonspunktMedKodeOgStatus(
+    const vurderEndring = mockAvklaringsbehovMedKodeOgStatus(
       VURDER_VARIG_ENDRET_ELLER_NYOPPSTARTET_NAERING_SELVSTENDIG_NAERINGSDRIVENDE,
       undefined,
       'OPPR',

@@ -1,16 +1,16 @@
 import { expect } from 'chai';
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { lagStateMedAksjonspunkterOgBeregningsgrunnlag } from './beregning-test-helper';
+import avklaringsbehovCodes from '@fpsak-frontend/kodeverk/src/beregningAvklaringsbehovCodes';
+import { lagStateMedAvklaringsbehovOgBeregningsgrunnlag } from './beregning-test-helper';
 import {
   formNameVurderFaktaBeregning,
   getFormInitialValuesForBeregning,
   getFormValuesForBeregning,
 } from './BeregningFormUtils';
 
-const { VURDER_FAKTA_FOR_ATFL_SN, AVKLAR_AKTIVITETER } = aksjonspunktCodes;
+const { VURDER_FAKTA_FOR_ATFL_SN, AVKLAR_AKTIVITETER } = avklaringsbehovCodes;
 const fellesAksjonspunkt = { definisjon: { kode: VURDER_FAKTA_FOR_ATFL_SN } };
 const avklarAktiviteterAksjonspunkt = { definisjon: { kode: AVKLAR_AKTIVITETER } };
-const aksjonspunkter = [fellesAksjonspunkt, avklarAktiviteterAksjonspunkt];
+const avklaringsbehov = [fellesAksjonspunkt, avklarAktiviteterAksjonspunkt];
 
 const behandlingProps = {
   behandlingId: 1000051,
@@ -27,8 +27,8 @@ describe('<BeregningFormUtils>', () => {
     const values = {
       test: 'test',
     };
-    const state = lagStateMedAksjonspunkterOgBeregningsgrunnlag(
-      aksjonspunkter,
+    const state = lagStateMedAvklaringsbehovOgBeregningsgrunnlag(
+      avklaringsbehov,
       {},
       formNameVurderFaktaBeregning,
       values,
@@ -41,8 +41,8 @@ describe('<BeregningFormUtils>', () => {
     const values = {
       test: 'test',
     };
-    const state = lagStateMedAksjonspunkterOgBeregningsgrunnlag(
-      aksjonspunkter,
+    const state = lagStateMedAvklaringsbehovOgBeregningsgrunnlag(
+      avklaringsbehov,
       {},
       formNameVurderFaktaBeregning,
       {},
