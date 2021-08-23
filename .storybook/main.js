@@ -18,9 +18,9 @@ module.exports = {
     // ref: https://medium.com/storybookjs/storybook-6-migration-guide-200346241bb5
     // '@storybook/addon-essentials',
   ],
-  reactOptions: {
-    fastRefresh: true,
-  },
+  // reactOptions: {
+  //   fastRefresh: true,
+  // },
   webpackFinal: async (config, { configType }) => {
     // Fjern default svg-loader
     config.module.rules = config.module.rules.map(data => {
