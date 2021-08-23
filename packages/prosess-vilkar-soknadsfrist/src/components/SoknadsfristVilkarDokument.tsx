@@ -1,5 +1,4 @@
-import React, { Fragment } from 'react';
-// import { connect } from 'react-redux';
+import React from 'react';
 import moment from 'moment';
 
 import { FormattedMessage, useIntl } from 'react-intl';

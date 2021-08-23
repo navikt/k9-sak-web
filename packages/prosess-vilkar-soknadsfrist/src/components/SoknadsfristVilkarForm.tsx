@@ -7,8 +7,7 @@ import { FormattedMessage } from 'react-intl';
 
 import advarselIkonUrl from '@fpsak-frontend/assets/images/advarsel_ny.svg';
 import { behandlingForm, behandlingFormValueSelector } from '@fpsak-frontend/form';
-// import { VilkarResultPicker } from '@k9-sak-web/prosess-felles';
-import { DDMMYYYY_DATE_FORMAT, decodeHtmlEntity, isRequiredMessage } from '@fpsak-frontend/utils';
+import { DDMMYYYY_DATE_FORMAT, decodeHtmlEntity } from '@fpsak-frontend/utils';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
@@ -29,6 +28,8 @@ import { Element, Normaltekst } from 'nav-frontend-typografi';
 
 import OverstyrBekreftKnappPanel from './OverstyrBekreftKnappPanel';
 import SoknadsfristVilkarDokument, { DELVIS_OPPFYLT } from './SoknadsfristVilkarDokument';
+
+import validate from './validate';
 
 import styles from './SoknadsfristVilkarForm.less';
 
@@ -188,7 +189,7 @@ const buildInitialValues = createSelector(
     return {
       isOverstyrt: overstyrtAksjonspunkt !== undefined,
       avklarteKrav: alleDokumenter.map(dokument => ({
-        erVilkarOk: dokument.avklarteOpplysninger?.godkjent || dokument.avklarteOpplysninger?.godkjent,
+        erVilkarOk: dokument.overstyrteOpplysninger?.godkjent || dokument.avklarteOpplysninger?.godkjent,
         begrunnelse: decodeHtmlEntity(
           dokument.overstyrteOpplysninger?.begrunnelse || dokument.avklarteOpplysninger?.begrunnelse || '',
         ),
@@ -230,52 +231,6 @@ const transformValues = (values, alleDokumenter, apKode, periodeFom, periodeTom)
   erVilkarOk: !values.avklarteKrav.some(krav => !krav.erVilkarOk),
   periode: periodeFom && periodeTom ? { fom: periodeFom, tom: periodeTom } : undefined,
 });
-
-const validate = (
-  values: { avklarteKrav: any; erVilkarOk: boolean; avslagCode: string } = {
-    avklarteKrav: [],
-    erVilkarOk: false,
-    avslagCode: '',
-  },
-) => {
-  const errors: {
-    avklarteKrav?: Array<{
-      erVilkarOk?: string | { id: string }[];
-      begrunnelse?: string | { id: string }[];
-    }>;
-    erVilkarOk?: string | { id: string }[];
-    avslagCode?: string | { id: string }[];
-  } = {};
-
-  if (Array.isArray(values.avklarteKrav)) {
-    values.avklarteKrav.forEach((krav, index) => {
-      if (typeof krav.erVilkarOk === 'undefined') {
-        if (!errors.avklarteKrav) {
-          errors.avklarteKrav = [];
-        }
-
-        if (!errors.avklarteKrav[index]) {
-          errors.avklarteKrav[index] = {};
-        }
-
-        errors.avklarteKrav[index].erVilkarOk = isRequiredMessage();
-      }
-      if (!krav.begrunnelse || krav.begrunnelse.length < 3 || krav.begrunnelse.length >= 1500) {
-        if (!errors.avklarteKrav) {
-          errors.avklarteKrav = [];
-        }
-
-        if (!errors.avklarteKrav[index]) {
-          errors.avklarteKrav[index] = {};
-        }
-
-        errors.avklarteKrav[index].begrunnelse = isRequiredMessage();
-      }
-    });
-  }
-
-  return errors;
-};
 
 const mapStateToPropsFactory = (_initialState, initialOwnProps: SoknadsfristVilkarFormProps) => {
   const { submitCallback, alleDokumenter, periode } = initialOwnProps;
