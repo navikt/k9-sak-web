@@ -56,11 +56,10 @@ const harAvklaringsbehovIPanel = (avklaringsbehov, beregningsgrunnlag) => {
 
 
 const finnAvklaringsbehov = (aksjonspunkter, beregningsgrunnlag) => {
-  let avklaringsbehov = aksjonspunkter;
   if (beregningsgrunnlag.avklaringsbehov && beregningsgrunnlag.avklaringsbehov.length > 0) {
-    avklaringsbehov = beregningsgrunnlag.avklaringsbehov;
+    return beregningsgrunnlag.avklaringsbehov;
   }
-  return avklaringsbehov;
+  return aksjonspunkter;
 }
 
 const BeregningFaktaIndex = ({
