@@ -51,7 +51,7 @@ const config = {
             loader: 'babel-loader',
             options: {
               cacheDirectory: true,
-              plugins: [isDevelopment && require.resolve('react-refresh/babel')].filter(Boolean),
+              // plugins: [isDevelopment && require.resolve('react-refresh/babel')].filter(Boolean),
             },
           },
         ],
