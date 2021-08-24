@@ -36,6 +36,12 @@ const formatDate = dato => moment(dato).format(DDMMYYYY_DATE_FORMAT);
 const formName = 'SøknadsfristVilkårOverstyringForm';
 
 interface SoknadsfristVilkarFormProps {
+  /* eslint-disable react/no-unused-prop-types */
+  aksjonspunkter: Aksjonspunkt[];
+  behandlingId: number;
+  behandlingVersjon: number;
+  submitCallback: (props: SubmitCallback[]) => void;
+  periode?: Vilkarperiode;
   erOverstyrt?: boolean;
   erVilkarOk?: boolean;
   harAksjonspunkt: boolean;
@@ -47,14 +53,6 @@ interface SoknadsfristVilkarFormProps {
   alleDokumenter?: DokumentStatus[];
   dokumenter?: DokumentStatus[];
 }
-
-type SelectorProps = {
-  aksjonspunkter: Aksjonspunkt[];
-  behandlingId: number;
-  behandlingVersjon: number;
-  submitCallback: (props: SubmitCallback[]) => void;
-  periode?: Vilkarperiode;
-};
 
 interface StateProps {
   isSolvable: boolean;
@@ -179,8 +177,8 @@ export const SoknadsfristVilkarForm = ({
 
 const buildInitialValues = createSelector(
   [
-    (ownProps: SoknadsfristVilkarFormProps & SelectorProps) => ownProps.aksjonspunkter,
-    (ownProps: SoknadsfristVilkarFormProps & SelectorProps) => ownProps.alleDokumenter,
+    (ownProps: SoknadsfristVilkarFormProps) => ownProps.aksjonspunkter,
+    (ownProps: SoknadsfristVilkarFormProps) => ownProps.alleDokumenter,
   ],
   (aksjonspunkter, alleDokumenter) => {
     const overstyrtAksjonspunkt = aksjonspunkter.find(
@@ -270,7 +268,7 @@ const validate = (
   return errors;
 };
 
-const mapStateToPropsFactory = (_initialState, initialOwnProps: SoknadsfristVilkarFormProps & SelectorProps) => {
+const mapStateToPropsFactory = (_initialState, initialOwnProps: SoknadsfristVilkarFormProps) => {
   const { submitCallback, alleDokumenter, periode } = initialOwnProps;
   const periodeFom = periode?.periode?.fom;
   const periodeTom = periode?.periode?.tom;
