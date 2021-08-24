@@ -190,7 +190,7 @@ const buildInitialValues = createSelector(
     return {
       isOverstyrt: overstyrtAksjonspunkt !== undefined,
       avklarteKrav: alleDokumenter.map(dokument => ({
-        erVilkarOk: dokument.avklarteOpplysninger?.godkjent || dokument.avklarteOpplysninger?.godkjent,
+        erVilkarOk: dokument.overstyrteOpplysninger?.godkjent || dokument.avklarteOpplysninger?.godkjent,
         begrunnelse: decodeHtmlEntity(
           dokument.overstyrteOpplysninger?.begrunnelse || dokument.avklarteOpplysninger?.begrunnelse || '',
         ),
