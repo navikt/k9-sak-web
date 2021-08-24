@@ -24,7 +24,10 @@ const config = {
     publicPath: PUBLIC_PATH,
     filename: '[name].js',
   },
-  plugins: [new webpack.HotModuleReplacementPlugin(), new ReactRefreshWebpackPlugin()],
+  plugins: [
+    new webpack.HotModuleReplacementPlugin(),
+    // new ReactRefreshWebpackPlugin()
+  ],
   optimization: {
     moduleIds: 'named',
     splitChunks: {
