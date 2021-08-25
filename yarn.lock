@@ -2583,6 +2583,19 @@
     schema-utils "^2.6.5"
     source-map "^0.7.3"
 
+"@pmmmwh/react-refresh-webpack-plugin@^0.5.0-rc.5":
+  version "0.5.0-rc.5"
+  resolved "https://registry.yarnpkg.com/@pmmmwh/react-refresh-webpack-plugin/-/react-refresh-webpack-plugin-0.5.0-rc.5.tgz#4e46d22889eaa670f23db4f69dd7694c52b58004"
+  integrity sha512-u9W23sWcG9xUklyI4x+hhrR9YtfSdPTLWx6tVSJV8RjOxpzs73+s38e/aI94ywRAZwRLbLJ8mx6X98xGxRHaZw==
+  dependencies:
+    ansi-html "^0.0.7"
+    core-js-pure "^3.8.1"
+    error-stack-parser "^2.0.6"
+    html-entities "^2.1.0"
+    loader-utils "^2.0.0"
+    schema-utils "^3.0.0"
+    source-map "^0.7.3"
+
 "@popperjs/core@^2.5.4", "@popperjs/core@^2.6.0":
   version "2.9.3"
   resolved "https://registry.yarnpkg.com/@popperjs/core/-/core-2.9.3.tgz#8b68da1ebd7fc603999cf6ebee34a4899a14b88e"
@@ -6665,6 +6678,11 @@ core-js-pure@^3.16.0, core-js-pure@^3.8.2:
   resolved "https://registry.yarnpkg.com/core-js-pure/-/core-js-pure-3.16.1.tgz#b997df2669c957a5b29f06e95813a171f993592e"
   integrity sha512-TyofCdMzx0KMhi84mVRS8rL1XsRk2SPUNz2azmth53iRN0/08Uim9fdhQTaZTG1LqaXHYVci4RDHka6WrXfnvg==
 
+core-js-pure@^3.8.1:
+  version "3.16.3"
+  resolved "https://registry.yarnpkg.com/core-js-pure/-/core-js-pure-3.16.3.tgz#41ccb9b6027535f8dd51a0af004c1c7f0a8c9ca7"
+  integrity sha512-6In+2RwN0FT5yK0ZnhDP5rco/NnuuFZhHauQizZiHo5lDnqAvq8Phxcpy3f+prJOqtKodt/cftBl/GTOW0kiqQ==
+
 core-js@^3.0.4, core-js@^3.6.5, core-js@^3.8.2:
   version "3.16.1"
   resolved "https://registry.yarnpkg.com/core-js/-/core-js-3.16.1.tgz#f4485ce5c9f3c6a7cb18fa80488e08d362097249"
@@ -9670,7 +9688,7 @@ html-entities@^1.2.0, html-entities@^1.2.1:
   resolved "https://registry.yarnpkg.com/html-entities/-/html-entities-1.4.0.tgz#cfbd1b01d2afaf9adca1b10ae7dffab98c71d2dc"
   integrity sha512-8nxjcBcd8wovbeKx7h3wTji4e6+rhaVuPNpMqwWgnHh+N9ToqsCs6XztWRBPQ+UtzsoMAdKZtUENoVzU/EMtZA==
 
-html-entities@^2.3.2:
+html-entities@^2.1.0, html-entities@^2.3.2:
   version "2.3.2"
   resolved "https://registry.yarnpkg.com/html-entities/-/html-entities-2.3.2.tgz#760b404685cb1d794e4f4b744332e3b00dcfe488"
   integrity sha512-c3Ab/url5ksaT0WyleslpBEthOzWhrjQbg75y7XUsfSzi3Dgzt0l8w5e7DylRn15MTlMMD58dTfzddNS2kcAjQ==
@@ -17407,6 +17425,11 @@ type-fest@^0.8.1:
   version "0.8.1"
   resolved "https://registry.yarnpkg.com/type-fest/-/type-fest-0.8.1.tgz#09e249ebde851d3b1e48d27c105444667f17b83d"
   integrity sha512-4dbzIzqvjtgiM5rw1k5rEHtBANKmdudhGyBEajN01fEyhaAIhsoKNy6y7+IN93IfpFtwY9iqi7kD+xwKhQsNJA==
+
+type-fest@^2.1.0:
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/type-fest/-/type-fest-2.1.0.tgz#1f8b20ff51519f3b01b3188d50dea9f9ebfbf1b8"
+  integrity sha512-2wHUmKDy5wNLmebekbHx/zE9ElYAKOmz34psTLG7OwyEJHaIUr6jnaCd55EvgrawAvliwbwgbyH1LkxIfWFyNg==
 
 type-is@~1.6.17, type-is@~1.6.18:
   version "1.6.18"
