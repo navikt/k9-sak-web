@@ -1,23 +1,34 @@
-import axios from 'axios';
+import axios, { AxiosResponse } from 'axios';
 import { AlertStripeAdvarsel } from 'nav-frontend-alertstriper';
 import * as React from 'react';
 
+export interface Punsjoppgaver {
+  journalpostIder: JournalpostIder[];
+}
+
+export interface JournalpostIder {
+  journalpostId: string;
+}
+
 const Punsjstripe = ({ aktørId }) => {
-  const [punsjoppgaver, setPunsjoppgaver] = React.useState([]);
+  const [punsjoppgaver, setPunsjoppgaver] = React.useState<Punsjoppgaver>(null);
   const [error, setError] = React.useState(null);
 
   React.useEffect(() => {
     axios
       .get(`/k9/sak/api/punsj/journalpost/uferdig?aktoerId=${aktørId}`)
-      .then(({ data }) => {
-        setPunsjoppgaver(data);
+      .then((response: AxiosResponse) => {
+        setPunsjoppgaver(response.data);
       })
       .catch(err => setError(err));
   }, []);
 
-  if (!punsjoppgaver || punsjoppgaver?.length === 0 || error) {
+  const harPunsjoppgaver = punsjoppgaver?.journalpostIder?.length > 0;
+
+  if (!harPunsjoppgaver || error) {
     return null;
   }
-  return <AlertStripeAdvarsel>{`Du har ${punsjoppgaver?.length} uløste oppgaver i Punsj`}</AlertStripeAdvarsel>;
+  const { journalpostIder } = punsjoppgaver;
+  return <AlertStripeAdvarsel>{`Du har ${journalpostIder.length} uløste oppgaver i Punsj`}</AlertStripeAdvarsel>;
 };
 export default Punsjstripe;
