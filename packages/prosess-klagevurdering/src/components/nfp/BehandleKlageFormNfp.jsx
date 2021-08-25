@@ -131,6 +131,7 @@ export const buildInitialValues = createSelector(
   klageVurderingResultat => ({
     klageMedholdArsak: klageVurderingResultat ? klageVurderingResultat.klageMedholdArsak : null,
     klageVurderingOmgjoer: klageVurderingResultat ? klageVurderingResultat.klageVurderingOmgjoer : null,
+    klageHjemmel: klageVurderingResultat ? klageVurderingResultat.klageHjemmel : null,
     klageVurdering: klageVurderingResultat ? klageVurderingResultat.klageVurdering : null,
     begrunnelse: klageVurderingResultat ? klageVurderingResultat.begrunnelse : null,
     fritekstTilBrev: klageVurderingResultat ? klageVurderingResultat.fritekstTilBrev : null,
@@ -145,6 +146,7 @@ export const transformValues = values => ({
       : null,
   klageVurderingOmgjoer:
     values.klageVurdering === klageVurderingType.MEDHOLD_I_KLAGE ? values.klageVurderingOmgjoer : null,
+  klageHjemmel: values.klageVurdering === klageVurderingType.OPPHEVE_YTELSESVEDTAK ? values.klageHjemmel : null,
   klageVurdering: values.klageVurdering,
   fritekstTilBrev: values.fritekstTilBrev,
   begrunnelse: values.begrunnelse,
@@ -164,6 +166,7 @@ const mapStateToPropsFactory = (initialState, initialOwnProps) => {
       'fritekstTilBrev',
       'klageMedholdArsak',
       'klageVurderingOmgjoer',
+      'klageHjemmel',
     ),
     readOnly: ownProps.readOnly,
     onSubmit,
