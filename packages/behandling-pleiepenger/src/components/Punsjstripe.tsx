@@ -2,7 +2,7 @@ import axios, { AxiosResponse } from 'axios';
 import { AlertStripeAdvarsel } from 'nav-frontend-alertstriper';
 import * as React from 'react';
 
-export interface Punsjoppgaver {
+export interface PunsjResponse {
   journalpostIder: JournalpostIder[];
 }
 
@@ -11,7 +11,7 @@ export interface JournalpostIder {
 }
 
 const Punsjstripe = ({ aktørId }) => {
-  const [punsjoppgaver, setPunsjoppgaver] = React.useState<Punsjoppgaver>(null);
+  const [punsjoppgaver, setPunsjoppgaver] = React.useState<PunsjResponse>(null);
   const [error, setError] = React.useState(null);
 
   React.useEffect(() => {
