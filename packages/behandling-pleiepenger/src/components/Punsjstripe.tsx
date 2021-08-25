@@ -1,5 +1,5 @@
 import axios, { AxiosResponse } from 'axios';
-import { AlertStripeAdvarsel } from 'nav-frontend-alertstriper';
+import { AlertStripeAdvarsel, AlertStripeFeil } from 'nav-frontend-alertstriper';
 import * as React from 'react';
 
 export interface PunsjResponse {
@@ -25,7 +25,11 @@ const Punsjstripe = ({ aktørId }) => {
 
   const harPunsjoppgaver = punsjoppgaver?.journalpostIder?.length > 0;
 
-  if (!harPunsjoppgaver || error) {
+  if (error) {
+    return <AlertStripeFeil>Får ikke kontakt med K9-Punsj</AlertStripeFeil>;
+  }
+
+  if (!harPunsjoppgaver) {
     return null;
   }
   const { journalpostIder } = punsjoppgaver;
