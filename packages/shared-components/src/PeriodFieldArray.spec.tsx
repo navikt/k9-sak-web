@@ -1,9 +1,11 @@
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
-import { intlMock, shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import { metaMock, MockFields } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
+
 import Image from './Image';
 import PeriodFieldArray from './PeriodFieldArray';
+
+import shallowWithIntl, { intlMock } from '../i18n/index';
 
 const readOnly = false;
 

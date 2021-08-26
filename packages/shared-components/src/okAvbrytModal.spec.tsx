@@ -2,9 +2,10 @@ import React from 'react';
 import sinon from 'sinon';
 import { FormattedMessage } from 'react-intl';
 import Modal from 'nav-frontend-modal';
-import { intlMock, shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 
 import OkAvbrytModal from './OkAvbrytModal';
+
+import shallowWithIntl, { intlMock } from '../i18n/index';
 
 describe('<OkAvbrytModal>', () => {
   it('skal rendre modal', () => {

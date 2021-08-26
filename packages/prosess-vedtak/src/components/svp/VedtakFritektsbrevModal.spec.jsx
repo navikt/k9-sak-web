@@ -1,10 +1,9 @@
 import React from 'react';
 import { expect } from 'chai';
-import { intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import behandlingResultatType from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
 import Modal from 'nav-frontend-modal';
 import { VedtakFritekstbrevModal } from './VedtakFritekstbrevModal';
-import shallowWithIntl from '../../../i18n';
+import shallowWithIntl, { intlMock } from '../../../i18n';
 
 describe('<VedtakFritekstbrevModal>', () => {
   it('skal vise modal når behandlingsresultat er AVSLATT', () => {

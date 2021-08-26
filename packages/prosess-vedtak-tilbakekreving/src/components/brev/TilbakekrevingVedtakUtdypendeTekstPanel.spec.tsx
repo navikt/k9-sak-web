@@ -1,11 +1,10 @@
 import React from 'react';
 
-import { intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import { Image } from '@fpsak-frontend/shared-components';
 import { TextAreaField } from '@fpsak-frontend/form';
 
 import { TilbakekrevingVedtakUtdypendeTekstPanel } from './TilbakekrevingVedtakUtdypendeTekstPanel';
-import shallowWithIntl from '../../../i18n';
+import shallowWithIntl, { intlMock } from '../../../i18n';
 
 describe('<TilbakekrevingVedtakUtdypendeTekstPanel>', () => {
   it('skal vise lenke for å skrive inn tekst når felt ikke har verdi og en ikke er i readonly-modus', () => {

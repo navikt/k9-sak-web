@@ -1,9 +1,7 @@
 import React from 'react';
 import { NedChevron, OppChevron } from 'nav-frontend-chevron';
 
-import { intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
-
-import shallowWithIntl from '../../../../i18n/index';
+import shallowWithIntl, { intlMock } from '../../../../i18n/index';
 
 import BubbleText from './bubbleText';
 

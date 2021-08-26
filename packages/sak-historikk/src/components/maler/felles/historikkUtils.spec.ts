@@ -1,6 +1,6 @@
 import { getKodeverknavnFn } from '@fpsak-frontend/utils';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
-import { intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
+import { intlMock } from '../../../../i18n/index';
 
 import { findResultatText } from './historikkUtils';
 
@@ -44,6 +44,6 @@ describe('historikkUtils', () => {
       intlMock,
       getKodeverknavnFn(noenKodeverk, kodeverkTyper),
     );
-    expect(historikkResultatNavn).toEqual('HistorikkResultat.FullTilbakebetaling');
+    expect(historikkResultatNavn).toEqual('Full tilbakebetaling');
   });
 });
