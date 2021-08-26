@@ -45,6 +45,7 @@ interface SoknadsfristVilkarFormProps {
   erOverstyrt?: boolean;
   erVilkarOk?: boolean;
   harAksjonspunkt: boolean;
+  harÅpentAksjonspunkt: boolean;
   isReadOnly: boolean;
   overrideReadOnly: boolean;
   status: string;
@@ -56,7 +57,6 @@ interface SoknadsfristVilkarFormProps {
 
 interface StateProps {
   isSolvable: boolean;
-  harÅpentAksjonspunkt: boolean;
 }
 
 /**
@@ -277,16 +277,13 @@ const mapStateToPropsFactory = (_initialState, initialOwnProps: SoknadsfristVilk
   const validateFn = values => validate(values);
 
   return (state, ownProps) => {
-    const { behandlingId, behandlingVersjon, aksjonspunkter, erOverstyrt, overrideReadOnly } = ownProps;
+    const { behandlingId, behandlingVersjon, aksjonspunkter, harÅpentAksjonspunkt, erOverstyrt, overrideReadOnly } =
+      ownProps;
 
-    const harÅpentAksjonspunkt = aksjonspunkter.some(
-      ap =>
-        ap.definisjon.kode === aksjonspunktCodes.KONTROLLER_OPPLYSNINGER_OM_SØKNADSFRIST &&
-        !(ap.status.kode === aksjonspunktStatus.OPPRETTET && !ap.kanLoses),
-    );
     const aksjonspunkt = harÅpentAksjonspunkt
       ? aksjonspunkter.find(ap => ap.definisjon.kode === aksjonspunktCodes.KONTROLLER_OPPLYSNINGER_OM_SØKNADSFRIST)
       : aksjonspunkter.find(ap => ap.definisjon.kode === aksjonspunktCodes.OVERSTYR_SOKNADSFRISTVILKAR);
+
     const isSolvable =
       harÅpentAksjonspunkt || aksjonspunkt !== undefined
         ? !(aksjonspunkt.status.kode === aksjonspunktStatus.OPPRETTET && !aksjonspunkt.kanLoses)
