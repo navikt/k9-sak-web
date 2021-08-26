@@ -1,5 +1,4 @@
 import React from 'react';
-import { intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import { expect } from 'chai';
 import sinon from 'sinon';
 
@@ -8,7 +7,7 @@ import klageVurdering from '@fpsak-frontend/kodeverk/src/klageVurdering';
 import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
 import { BehandleKlageFormNfpImpl } from './BehandleKlageFormNfp';
 import TempSaveAndPreviewKlageLink from '../felles/TempSaveAndPreviewKlageLink';
-import shallowWithIntl from '../../../i18n';
+import shallowWithIntl, { intlMock } from '../../../i18n';
 
 describe('<BehandleKlageFormNfpImpl>', () => {
   const sprakkode = {

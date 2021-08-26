@@ -1,9 +1,11 @@
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
-import { intlMock, shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import { metaMock, MockFields } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
+
 import Image from './Image';
 import PeriodFieldArray from './PeriodFieldArray';
+
+import shallowWithIntl, { intlMock } from '../i18n/index';
 
 const readOnly = false;
 
@@ -12,7 +14,7 @@ describe('<PeriodFieldArray>', () => {
     const fields = new MockFields('perioder', 1);
     const wrapper = shallowWithIntl(
       <PeriodFieldArray.WrappedComponent intl={intlMock} fields={fields} meta={metaMock} readOnly={readOnly}>
-        {() => <span>test</span>}
+        {periodeElementFieldId => <span key={periodeElementFieldId}>test</span>}
       </PeriodFieldArray.WrappedComponent>,
     );
 
@@ -54,7 +56,7 @@ describe('<PeriodFieldArray>', () => {
 
     const wrapper = shallowWithIntl(
       <PeriodFieldArray.WrappedComponent intl={intlMock} fields={fields} meta={metaMock} readOnly={readOnly}>
-        {() => <span>test</span>}
+        {periodeElementFieldId => <span key={periodeElementFieldId}>test</span>}
       </PeriodFieldArray.WrappedComponent>,
     );
 
@@ -98,7 +100,7 @@ describe('<PeriodFieldArray>', () => {
         shouldShowAddButton={false}
         readOnly={readOnly}
       >
-        {() => <span>test</span>}
+        {periodeElementFieldId => <span key={periodeElementFieldId}>test</span>}
       </PeriodFieldArray.WrappedComponent>,
     );
 
@@ -116,7 +118,7 @@ describe('<PeriodFieldArray>', () => {
         createAddButtonInsteadOfImageLink
         readOnly={readOnly}
       >
-        {() => <span>test</span>}
+        {periodeElementFieldId => <span key={periodeElementFieldId}>test</span>}
       </PeriodFieldArray.WrappedComponent>,
     );
 

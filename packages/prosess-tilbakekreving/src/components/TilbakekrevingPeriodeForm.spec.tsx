@@ -2,7 +2,6 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import sinon from 'sinon';
 
-import { intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
 
 import SarligGrunn from '../kodeverk/sarligGrunn';
@@ -11,6 +10,8 @@ import ForeldetFormPanel from './tilbakekrevingPeriodePaneler/ForeldetFormPanel'
 import { CustomVilkarsVurdertePeriode, TilbakekrevingPeriodeFormImpl } from './TilbakekrevingPeriodeForm';
 import vilkarResultat from '../kodeverk/vilkarResultat';
 import DataForPeriode from '../types/dataForPeriodeTsType';
+
+import { intlMock } from '../../i18n';
 
 describe('<TilbakekrevingPeriodeForm>', () => {
   const sarligGrunnTyper = [

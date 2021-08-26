@@ -3,12 +3,11 @@ import sinon from 'sinon';
 import moment from 'moment';
 import { expect } from 'chai';
 
-import { intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import { ISO_DATE_FORMAT } from '@fpsak-frontend/utils';
 
 import { Timeline, TimeLineControl } from '@fpsak-frontend/tidslinje';
 import TilbakekrevingTimeline from './TilbakekrevingTimeline';
-import shallowWithIntl from '../../../i18n';
+import shallowWithIntl, { intlMock } from '../../../i18n';
 
 describe('<TilbakekrevingTimeline>', () => {
   it('skal rendre tidslinje korrekt', () => {

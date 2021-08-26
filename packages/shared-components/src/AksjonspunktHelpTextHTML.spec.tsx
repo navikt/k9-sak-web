@@ -1,7 +1,9 @@
 import React from 'react';
-import { intlMock, shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import { FormattedMessage } from 'react-intl';
+
 import AksjonspunktHelpTextHTML from './AksjonspunktHelpTextHTML';
+
+import shallowWithIntl, { intlMock } from '../i18n/index';
 
 describe('<AksjonspunktHelpTextHTML>', () => {
   it('Skal teste at aksjonspunkt hjelp viser riktig', () => {

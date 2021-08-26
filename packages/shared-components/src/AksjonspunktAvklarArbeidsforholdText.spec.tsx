@@ -1,9 +1,10 @@
 import React from 'react';
 import { expect } from 'chai';
-import { intlMock, shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 
 import ArbeidsforholdV2 from '@k9-sak-web/types/src/arbeidsforholdV2TsType';
 import AksjonspunktAvklarArbeidsforholdText from './AksjonspunktAvklarArbeidsforholdText';
+
+import shallowWithIntl, { intlMock } from '../i18n/index';
 
 describe('<AksjonspunktAvklarArbeidsforholdText>', () => {
   it('Utleder riktig text når arbeidsforholdet er registrert uten IM', () => {

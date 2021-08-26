@@ -10,7 +10,7 @@ const vedtakVarselPropType = PropTypes.shape({
   skjæringstidspunkt: PropTypes.shape({
     dato: PropTypes.string,
   }),
-  redusertUtbetalingÅrsaker: PropTypes.arrayOf(PropTypes.shape({})),
+  redusertUtbetalingÅrsaker: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.string, PropTypes.shape({})])),
   vedtaksbrev: kodeverkObjektPropType,
   vedtaksdato: PropTypes.string,
 });
