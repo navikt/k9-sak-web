@@ -7,6 +7,7 @@ import { dateFormat } from '@fpsak-frontend/utils';
 import { SideMenu } from '@navikt/k9-react-components';
 import advarselIcon from '@fpsak-frontend/assets/images/advarsel.svg';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 
 import SoknadsfristVilkarForm from './components/SoknadsfristVilkarForm';
@@ -77,6 +78,12 @@ const SoknadsfristVilkarProsessIndex = ({
     }
   }, [activeTab, visAllePerioder]);
 
+  const harÅpentAksjonspunkt = aksjonspunkter.some(
+    ap =>
+      ap.definisjon.kode === aksjonspunktCodes.KONTROLLER_OPPLYSNINGER_OM_SØKNADSFRIST &&
+      !(ap.status.kode === aksjonspunktStatus.OPPRETTET && !ap.kanLoses),
+  );
+
   const perioderMedAvslag = perioder.filter(perioderSomVurderesMedAvslagFn);
 
   const dokumenterSomSkalVurderes = soknadsfristStatus.dokumentStatus.filter(dok =>
@@ -106,7 +113,10 @@ const SoknadsfristVilkarProsessIndex = ({
               links={perioder.map(({ periode, vilkarStatus }, index) => ({
                 active: activeTab === index,
                 label: `${dateFormat(periode.fom)} - ${dateFormat(periode.tom)}`,
-                iconSrc: /* erOverstyrt && */ vilkarStatus.kode === vilkarUtfallType.IKKE_OPPFYLT ? advarselIcon : null,
+                iconSrc:
+                  (erOverstyrt || harÅpentAksjonspunkt) && vilkarStatus.kode !== vilkarUtfallType.OPPFYLT
+                    ? advarselIcon
+                    : null,
               }))}
               onClick={setActiveTab}
               theme="arrow"
@@ -130,6 +140,7 @@ const SoknadsfristVilkarProsessIndex = ({
             behandlingId={behandling.id}
             behandlingVersjon={behandling.versjon}
             aksjonspunkter={aksjonspunkter}
+            harÅpentAksjonspunkt={harÅpentAksjonspunkt}
             erOverstyrt={erOverstyrt}
             submitCallback={submitCallback}
             overrideReadOnly={overrideReadOnly}
