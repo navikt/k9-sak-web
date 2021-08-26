@@ -64,7 +64,7 @@ FormkravKlageFormNfpImpl.defaultProps = {
 };
 
 const getPåklagdBehandling = (avsluttedeBehandlinger, påklagdVedtak) =>
-  avsluttedeBehandlinger.find(behandling => behandling.id.toString() === påklagdVedtak);
+  avsluttedeBehandlinger.find(behandling => behandling.uuid.toString() === påklagdVedtak);
 
 export const erTilbakekreving = (avsluttedeBehandlinger, påklagdVedtak) => {
   const behandling = getPåklagdBehandling(avsluttedeBehandlinger, påklagdVedtak);
@@ -92,10 +92,10 @@ export const påklagdBehandlingInfo = (avsluttedeBehandlinger, påklagdVedtak) =
   const behandling = getPåklagdBehandling(avsluttedeBehandlinger, påklagdVedtak);
   return behandling
     ? {
-      påklagBehandlingUuid: behandling.uuid,
-      påklagBehandlingVedtakDato: behandling.avsluttet,
-      påklagBehandlingType: behandling.type.kode,
-    }
+        påklagBehandlingUuid: behandling.uuid,
+        påklagBehandlingVedtakDato: behandling.avsluttet,
+        påklagBehandlingType: behandling.type.kode,
+      }
     : null;
 };
 const transformValues = (values, avsluttedeBehandlinger) => ({
