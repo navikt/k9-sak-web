@@ -1,11 +1,9 @@
 export type DokumentStatus = Readonly<{
   type: string;
-  status: [
-    {
-      periode: { fom: string; tom: string };
-      status: { kode: string; kodeverk: string };
-    },
-  ];
+  status: Array<{
+    periode: { fom: string; tom: string };
+    status: { kode: string; kodeverk: string };
+  }>;
   innsendingstidspunkt: string;
   journalpostId: string;
   avklarteOpplysninger?: {

@@ -69,7 +69,7 @@ const SoknadsfristVilkarProsessIndex = ({
   const mainContainerClassnames = cx('mainContainer', { 'mainContainer--withSideMenu': skalBrukeSidemeny });
 
   const perioderSomVurderesMedAvslagFn = p =>
-    p.vurdersIBehandlingen && p.vilkarStatus.kode === vilkarUtfallType.IKKE_OPPFYLT;
+    p.vurdersIBehandlingen && p.vilkarStatus.kode !== vilkarUtfallType.OPPFYLT;
 
   useEffect(() => {
     if (!visAllePerioder && activeTab >= perioder.length) {
@@ -118,9 +118,7 @@ const SoknadsfristVilkarProsessIndex = ({
           <SoknadsfristVilkarHeader
             aksjonspunkter={aksjonspunkter}
             erOverstyrt={erOverstyrt}
-            kanOverstyreAccess={
-              activePeriode.vilkarStatus.kode !== vilkarUtfallType.OPPFYLT ? kanOverstyreAccess : { isEnabled: false }
-            }
+            kanOverstyreAccess={kanOverstyreAccess}
             lovReferanse={activeVilkår.lovReferanse ?? lovReferanse}
             overrideReadOnly={overrideReadOnly}
             overstyringApKode={aksjonspunktCodes.OVERSTYR_SOKNADSFRISTVILKAR}
