@@ -1,9 +1,12 @@
 import React from 'react';
 import { expect } from 'chai';
-import { shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
+
 import avklaringsbehovCodes from '@fpsak-frontend/kodeverk/src/beregningAvklaringsbehovCodes';
+
 import AksjonspunktBehandlerSN from './AksjonspunktsbehandlerSN';
 import VurderOgFastsettSN2 from './VurderOgFastsettSN';
+
+import shallowWithIntl from '../../../i18n';
 
 const {
   FASTSETT_BEREGNINGSGRUNNLAG_SN_NY_I_ARBEIDSLIVET,

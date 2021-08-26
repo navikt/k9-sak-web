@@ -1,11 +1,10 @@
 import React from 'react';
 import { expect } from 'chai';
-import { intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import { VedtakAksjonspunktPanelImpl } from './VedtakAksjonspunktPanel';
 import VedtakHelpTextPanel from './VedtakHelpTextPanel';
-import shallowWithIntl from '../../i18n';
+import shallowWithIntl, { intlMock } from '../../i18n';
 
 describe('<VedtakAksjonspunktPanel>', () => {
   it('skal rendre komponent korrekt', () => {

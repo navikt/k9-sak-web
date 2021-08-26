@@ -1,6 +1,5 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import { intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 
 import { RadioGroupField, TextAreaField } from '@fpsak-frontend/form';
 
@@ -8,6 +7,8 @@ import SarligGrunn from '../../../kodeverk/sarligGrunn';
 import Aktsomhet from '../../../kodeverk/aktsomhet';
 import AktsomhetSarligeGrunnerFormPanel from './AktsomhetSarligeGrunnerFormPanel';
 import AktsomhetGradUaktsomhetFormPanel from './AktsomhetGradUaktsomhetFormPanel';
+
+import { intlMock } from '../../../../i18n';
 
 describe('<AktsomhetGradUaktsomhetFormPanel>', () => {
   const sarligGrunnTyper = [

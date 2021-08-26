@@ -1,8 +1,10 @@
 import React from 'react';
-import { shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import { expect } from 'chai';
 import { formatCurrencyNoKr } from '@fpsak-frontend/utils';
+
 import AvvikopplysningerATFLSN from './AvvikopplysningerATFLSN';
+
+import shallowWithIntl from '../../../i18n';
 
 const beregnetAarsinntekt = 360000;
 const sammenligningsgrunnlag = kode => ({

@@ -23,7 +23,7 @@ describe('<SoknadsfristVilkarHeader>', () => {
             }}
             aksjonspunktCodes={[]}
             toggleOverstyring={() => undefined}
-            panelTittelKode="Behandlingspunkt.Soknadsfristvilkaret"
+            panelTittelKode="Inngangsvilkar.Soknadsfrist"
             erOverstyrt
             aksjonspunkter={[]}
           />
@@ -32,7 +32,7 @@ describe('<SoknadsfristVilkarHeader>', () => {
     );
     const melding = wrapper.find(FormattedMessage);
     expect(melding).toHaveLength(2);
-    expect(melding.first().prop('id')).toEqual('Behandlingspunkt.Soknadsfristvilkaret');
+    expect(melding.first().prop('id')).toEqual('Inngangsvilkar.Soknadsfrist');
 
     const normaltekst = wrapper.find(Undertekst);
     expect(normaltekst).toHaveLength(1);

@@ -1,12 +1,11 @@
 import React from 'react';
 import { expect } from 'chai';
 import { FormattedMessage } from 'react-intl';
-import { intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 
 import { DateTimeLabel, Image, Table, TableRow } from '@fpsak-frontend/shared-components';
 import kommunikasjonsretning from '@fpsak-frontend/kodeverk/src/kommunikasjonsretning';
 import DocumentListInnsyn from './DocumentListInnsyn';
-import shallowWithIntl from '../../i18n';
+import shallowWithIntl, { intlMock } from '../../i18n';
 
 describe('<DocumentListInnsyn>', () => {
   it('skal vise tekst ved tom dokumentliste', () => {
