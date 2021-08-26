@@ -105,19 +105,21 @@ export const SoknadsfristVilkarForm = ({
             </Element>
           )}
           <VerticalSpacer eightPx />
-          {Array.isArray(alleDokumenter) && alleDokumenter.length > 0
-            ? alleDokumenter.map((dokument, index) => (
-                <SoknadsfristVilkarDokument
-                  key={dokument.journalpostId}
-                  erAktivtDokument={dokumenter.findIndex(d => d.journalpostId === dokument.journalpostId) > -1}
-                  skalViseBegrunnelse={erOverstyrt || harAksjonspunkt}
-                  readOnly={isReadOnly || (!erOverstyrt && !harÅpentAksjonspunkt)}
-                  erVilkarOk={erVilkarOk}
-                  dokumentIndex={index}
-                  dokument={dokument}
-                />
-              ))
-            : null}
+          {Array.isArray(alleDokumenter) && alleDokumenter.length > 0 ? (
+            alleDokumenter.map((dokument, index) => (
+              <SoknadsfristVilkarDokument
+                key={dokument.journalpostId}
+                erAktivtDokument={dokumenter.findIndex(d => d.journalpostId === dokument.journalpostId) > -1}
+                skalViseBegrunnelse={erOverstyrt || harAksjonspunkt}
+                readOnly={isReadOnly || (!erOverstyrt && !harÅpentAksjonspunkt)}
+                erVilkarOk={erVilkarOk}
+                dokumentIndex={index}
+                dokument={dokument}
+              />
+            ))
+          ) : (
+            <FormattedMessage id="SoknadsfristVilkarForm.IngenDokumenter" />
+          )}
           <VerticalSpacer sixteenPx />
           {!erOverstyrt && erVilkarOk !== undefined && (
             <>

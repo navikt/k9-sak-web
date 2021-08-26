@@ -110,3 +110,34 @@ export const visOverstyringspanelForSoknadsfrist = () => {
     />
   );
 };
+
+export const visOverstyringspanelForSoknadsfristUtenDokumenter = () => {
+  const [erOverstyrt, toggleOverstyring] = React.useState(false);
+  return (
+    <SoknadsfristVilkarProsessIndex
+      behandling={
+        {
+          id: 1,
+          versjon: 1,
+          type: {
+            kode: behandlingType.FORSTEGANGSSOKNAD,
+            kodeverk: '',
+          },
+        } as Behandling
+      }
+      aksjonspunkter={[]}
+      submitCallback={action('button-click')}
+      overrideReadOnly={boolean('overrideReadOnly', false)}
+      kanOverstyreAccess={object('kanOverstyreAccess', {
+        isEnabled: true,
+      })}
+      toggleOverstyring={() => toggleOverstyring(!erOverstyrt)}
+      erOverstyrt={erOverstyrt}
+      soknadsfristStatus={{ dokumentStatus: [] }}
+      panelTittelKode="Inngangsvilkar.Soknadsfrist"
+      lovReferanse="§§ Dette er en lovreferanse"
+      vilkar={vilkarSoknadsfrist}
+      visAllePerioder
+    />
+  );
+};
