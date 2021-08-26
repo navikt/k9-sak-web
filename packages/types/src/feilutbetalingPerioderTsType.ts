@@ -10,7 +10,7 @@ export type FeilutbetalingPeriode = Readonly<{
   oppdagelsesDato?: Date;
 }>;
 
-type FeilutbetalingPerioderWrapper = Readonly<{
+export type FeilutbetalingPerioderWrapper = Readonly<{
   perioder: FeilutbetalingPeriode[];
 }>;
 

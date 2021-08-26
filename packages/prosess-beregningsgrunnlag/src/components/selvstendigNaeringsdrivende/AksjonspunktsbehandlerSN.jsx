@@ -1,25 +1,25 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import beregningsgrunnlagAksjonspunkterPropType from '../../propTypes/beregningsgrunnlagAksjonspunkterPropType';
+import avklaringsbehovCodes from '@fpsak-frontend/kodeverk/src/beregningAvklaringsbehovCodes';
+import beregningAvklaringsbehovPropType from '../../propTypes/beregningAvklaringsbehovPropType';
 import VurderOgFastsettSN2 from './VurderOgFastsettSN';
 
 const {
   FASTSETT_BEREGNINGSGRUNNLAG_SN_NY_I_ARBEIDSLIVET,
   VURDER_VARIG_ENDRET_ELLER_NYOPPSTARTET_NAERING_SELVSTENDIG_NAERINGSDRIVENDE,
-} = aksjonspunktCodes;
+} = avklaringsbehovCodes;
 
-const skalFastsetteSN = aksjonspunkter =>
-  aksjonspunkter &&
-  aksjonspunkter.some(
-    ap =>
-      ap.definisjon.kode === VURDER_VARIG_ENDRET_ELLER_NYOPPSTARTET_NAERING_SELVSTENDIG_NAERINGSDRIVENDE ||
-      ap.definisjon.kode === FASTSETT_BEREGNINGSGRUNNLAG_SN_NY_I_ARBEIDSLIVET,
+const skalFastsetteSN = avklaringsbehov =>
+  avklaringsbehov &&
+  avklaringsbehov.some(
+    ab =>
+      ab.definisjon.kode === VURDER_VARIG_ENDRET_ELLER_NYOPPSTARTET_NAERING_SELVSTENDIG_NAERINGSDRIVENDE ||
+      ab.definisjon.kode === FASTSETT_BEREGNINGSGRUNNLAG_SN_NY_I_ARBEIDSLIVET,
   );
 
 const AksjonspunktBehandlerSN = ({
   readOnly,
-  aksjonspunkter,
+  avklaringsbehov,
   behandlingId,
   behandlingVersjon,
   erNyArbLivet,
@@ -29,9 +29,9 @@ const AksjonspunktBehandlerSN = ({
   fieldArrayID,
 }) => (
   <>
-    {skalFastsetteSN(aksjonspunkter) && (
+    {skalFastsetteSN(avklaringsbehov) && (
       <VurderOgFastsettSN2
-        gjeldendeAksjonspunkter={aksjonspunkter}
+        avklaringsbehov={avklaringsbehov}
         readOnly={readOnly}
         behandlingId={behandlingId}
         behandlingVersjon={behandlingVersjon}
@@ -47,7 +47,7 @@ const AksjonspunktBehandlerSN = ({
 
 AksjonspunktBehandlerSN.propTypes = {
   readOnly: PropTypes.bool.isRequired,
-  aksjonspunkter: PropTypes.arrayOf(beregningsgrunnlagAksjonspunkterPropType).isRequired,
+  avklaringsbehov: PropTypes.arrayOf(beregningAvklaringsbehovPropType).isRequired,
   behandlingId: PropTypes.number.isRequired,
   behandlingVersjon: PropTypes.number.isRequired,
   erNyArbLivet: PropTypes.bool,

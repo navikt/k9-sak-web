@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import { kodeverkObjektPropType } from '@fpsak-frontend/prop-types';
+import beregningAvklaringsbehovPropType from './beregningAvklaringsbehovPropType';
 
 const beregningsgrunnlagArbeidsforholdProptype = PropTypes.shape({
   arbeidsgiverId: PropTypes.string,
@@ -73,6 +74,7 @@ export const faktaOmBeregningPropType = PropTypes.shape({
 });
 
 const beregningsgrunnlagPropType = PropTypes.shape({
+  avklaringsbehov: PropTypes.arrayOf(beregningAvklaringsbehovPropType),
   aktivitetStatus: PropTypes.arrayOf(
     PropTypes.shape({
       aktivitetStatus: kodeverkObjektPropType,

@@ -11,7 +11,7 @@ describe('<NyoppstartetFLForm>', () => {
     const wrapper = shallow(
       <NyoppstartetFLForm
         readOnly={false}
-        isAksjonspunktClosed={false}
+        isAvklaringsbehovClosed={false}
         erNyoppstartetFL={false}
         tilfeller={[]}
         radioknappOverskrift={['test1', 'test2']}

@@ -1,4 +1,4 @@
-type BeregningsresultatFp = Readonly<{
+export type BeregningsresultatFp = Readonly<{
   antallBarn: number;
 }>;
 

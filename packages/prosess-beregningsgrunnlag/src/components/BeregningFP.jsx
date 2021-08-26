@@ -1,4 +1,4 @@
-import { isBeregningAksjonspunkt } from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import { isBeregningAvklaringsbehov } from '@fpsak-frontend/kodeverk/src/beregningAvklaringsbehovCodes';
 import aktivitetStatus, {
   isStatusArbeidstakerOrKombinasjon,
   isStatusDagpengerOrAAP,
@@ -27,7 +27,6 @@ import {
   isBehandlingFormDirty,
   isBehandlingFormSubmitting,
 } from '@fpsak-frontend/form/src/behandlingForm';
-import { flattenArray } from 'less/lib/less/utils';
 import advarselIcon from '@fpsak-frontend/assets/images/advarsel.svg';
 import { DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils';
 import beregningsgrunnlagAksjonspunkterPropType from '../propTypes/beregningsgrunnlagAksjonspunkterPropType';
@@ -61,7 +60,7 @@ const visningForManglendeBG = () => (
 );
 
 const getAksjonspunkterForBeregning = aksjonspunkter =>
-  aksjonspunkter ? aksjonspunkter.filter(ap => isBeregningAksjonspunkt(ap.definisjon.kode)) : [];
+  aksjonspunkter ? aksjonspunkter.filter(ap => isBeregningAvklaringsbehov(ap.definisjon.kode)) : [];
 const getRelevanteStatuser = bg =>
   bg && bg.aktivitetStatus
     ? {
@@ -102,6 +101,13 @@ const lagMenyProps = (kronologiskeGrunnlag, bgVilkår) => {
   return menyProps;
 };
 
+const finnAvklaringsbehov = (aksjonspunkter, beregningsgrunnlag) => {
+  if (beregningsgrunnlag.avklaringsbehov && beregningsgrunnlag.avklaringsbehov.length > 0) {
+    return beregningsgrunnlag.avklaringsbehov.filter(ab => isBeregningAvklaringsbehov(ab.definisjon.kode));
+  }
+  return aksjonspunkter;
+}
+
 /**
  * BeregningFP
  *
@@ -115,7 +121,6 @@ export const BeregningFP = props => {
   const {
     behandling,
     beregningsgrunnlag,
-    aksjonspunkter,
     gjeldendeAksjonspunkter,
     submitCallback,
     readOnly,
@@ -138,12 +143,14 @@ export const BeregningFP = props => {
   if (!aktivtBeregningsgrunnlag || vilkaarBG === undefined) {
     return visningForManglendeBG();
   }
+
+  const avklaringsbehov = finnAvklaringsbehov(gjeldendeAksjonspunkter, aktivtBeregningsgrunnlag);
   const menyProps = lagMenyProps(kronologiskeGrunnlag, vilkaarBG);
   const relevanteStatuser = getRelevanteStatuser(aktivtBeregningsgrunnlag);
 
   const mainContainerClassnames = cx('mainContainer', { 'mainContainer--withSideMenu': skalBrukeSidemeny });
   const bgSkalVurderes = erBGTilVurdering(vilkaarBG, aktivtBeregningsgrunnlag);
-  const harAksjonspunkt = aksjonspunkter.length > 0;
+  const harAvklaringsbehov = avklaringsbehov.length > 0;
 
   return (
     <div className={mainContainerClassnames}>
@@ -151,7 +158,7 @@ export const BeregningFP = props => {
         <div className={styles.sideMenuContainer}>
           <SideMenu
             links={kronologiskeGrunnlag.map((currentBeregningsgrunnlag, currentBeregningsgrunnlagIndex) => ({
-              iconSrc: menyProps[currentBeregningsgrunnlagIndex].skalVurderes && harAksjonspunkt ? advarselIcon : null,
+              iconSrc: menyProps[currentBeregningsgrunnlagIndex].skalVurderes && harAvklaringsbehov ? advarselIcon : null,
               active: aktivtBeregningsgrunnlagIndeks === currentBeregningsgrunnlagIndex,
               label: `${intl.formatMessage({ id: 'Sidemeny.Beregningsgrunnlag' })} ${
                 menyProps[currentBeregningsgrunnlagIndex].stp
@@ -171,7 +178,7 @@ export const BeregningFP = props => {
               initialValues,
               aktivtBeregningsgrunnlagIndeks,
               aktivtBeregningsgrunnlag,
-              gjeldendeAksjonspunkter,
+              avklaringsbehov,
               relevanteStatuser,
               submitCallback,
               readOnlySubmitButton,
@@ -183,7 +190,7 @@ export const BeregningFP = props => {
               bgSkalVurderes,
             }}
           />
-          {harAksjonspunkt && (
+          {harAvklaringsbehov && (
             <Row>
               <Column xs="12">
                 <ProsessStegSubmitButton
@@ -208,7 +215,6 @@ export const BeregningFP = props => {
 BeregningFP.propTypes = {
   readOnly: PropTypes.bool.isRequired,
   submitCallback: PropTypes.func.isRequired,
-  aksjonspunkter: PropTypes.arrayOf(beregningsgrunnlagAksjonspunkterPropType).isRequired,
   readOnlySubmitButton: PropTypes.bool.isRequired,
   alleKodeverk: PropTypes.shape().isRequired,
   arbeidsgiverOpplysningerPerId: PropTypes.shape().isRequired,
@@ -218,7 +224,7 @@ BeregningFP.propTypes = {
   // eslint-disable-next-line
   handleSubmit: PropTypes.any.isRequired,
   // eslint-disable-next-line
-  gjeldendeAksjonspunkter: PropTypes.any.isRequired,
+  gjeldendeAksjonspunkter: PropTypes.arrayOf(beregningsgrunnlagAksjonspunkterPropType).isRequired,
   intl: PropTypes.shape().isRequired,
 };
 
@@ -227,7 +233,7 @@ BeregningFP.defaultProps = {
 };
 
 const formaterAksjonspunkter = (aksjonspunkter, perioder) =>
-  flattenArray(aksjonspunkter).map(aksjonspunkt => {
+  aksjonspunkter.map((aksjonspunkt) => {
     const { kode } = aksjonspunkt;
     return {
       '@type': kode,
@@ -242,10 +248,13 @@ const formaterAksjonspunkter = (aksjonspunkter, perioder) =>
     };
   });
 
+const harAvklaringsbehovIPanel = (avklaringsbehov) => avklaringsbehov.some(ab => isBeregningAvklaringsbehov(ab.definisjon.kode));
+
 export const buildInitialValuesForBeregningrunnlag = (beregningsgrunnlag, gjeldendeAksjonspunkter, bgVilkar) => {
   if (!beregningsgrunnlag || !beregningsgrunnlag.beregningsgrunnlagPeriode) {
     return undefined;
   }
+  const avklaringsbehov = finnAvklaringsbehov(gjeldendeAksjonspunkter, beregningsgrunnlag);
   const allePerioder = beregningsgrunnlag.beregningsgrunnlagPeriode;
   const alleAndelerIForstePeriode = beregningsgrunnlag.beregningsgrunnlagPeriode[0].beregningsgrunnlagPrStatusOgAndel;
   const arbeidstakerAndeler = alleAndelerIForstePeriode.filter(
@@ -258,12 +267,12 @@ export const buildInitialValuesForBeregningrunnlag = (beregningsgrunnlag, gjelde
     andel => andel.aktivitetStatus.kode === aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE,
   );
   const initialValues = {
-    erTilVurdering: erBGTilVurdering(bgVilkar, beregningsgrunnlag),
+    erTilVurdering: erBGTilVurdering(bgVilkar, beregningsgrunnlag) && harAvklaringsbehovIPanel(avklaringsbehov),
     skjæringstidspunkt: beregningsgrunnlag.skjæringstidspunkt,
-    ...Beregningsgrunnlag.buildInitialValues(gjeldendeAksjonspunkter),
+    ...Beregningsgrunnlag.buildInitialValues(avklaringsbehov),
     ...AksjonspunktBehandlerTB.buildInitialValues(allePerioder),
     ...AksjonspunktBehandlerFL.buildInitialValues(frilanserAndeler),
-    ...VurderOgFastsettSN.buildInitialValues(selvstendigNaeringAndeler, gjeldendeAksjonspunkter),
+    ...VurderOgFastsettSN.buildInitialValues(selvstendigNaeringAndeler, avklaringsbehov),
     ...GrunnlagForAarsinntektPanelAT.buildInitialValues(arbeidstakerAndeler),
   };
   return initialValues;
@@ -282,8 +291,9 @@ const mapStateToPropsFactory = (initialState, initialOwnProps) => {
     const fieldArrayValuesList = values.beregningsgrunnlagListe;
     const alleAksjonspunkter = fieldArrayValuesList
       .filter(val => val.erTilVurdering)
-      .map((currentBeregningsgrunnlagSkjemaverdier, currentBeregningsgrunnlagIndex) => {
+      .flatMap((currentBeregningsgrunnlagSkjemaverdier, currentBeregningsgrunnlagIndex) => {
         const opprinneligBeregningsgrunnlag = beregningsgrunnlag[currentBeregningsgrunnlagIndex];
+        const avklaringsbehov = finnAvklaringsbehov(gjeldendeAksjonspunkter, beregningsgrunnlag);
         const allePerioder = opprinneligBeregningsgrunnlag
           ? opprinneligBeregningsgrunnlag.beregningsgrunnlagPeriode
           : [];
@@ -294,7 +304,7 @@ const mapStateToPropsFactory = (initialState, initialOwnProps) => {
           currentBeregningsgrunnlagSkjemaverdier,
           relevanteStatuser,
           alleAndelerIForstePeriode,
-          gjeldendeAksjonspunkter,
+          avklaringsbehov,
           allePerioder,
         );
 
@@ -309,8 +319,8 @@ const mapStateToPropsFactory = (initialState, initialOwnProps) => {
       beregningsgrunnlagListe: buildInitialValues(
         ownProps.beregningsgrunnlag,
         ownProps.aksjonspunkter,
-        getBGVilkar(ownProps.vilkar),
-      ),
+        getBGVilkar(ownProps.vilkar)
+        ),
     },
     fieldArrayID: ownProps.fieldArrayID,
     gjeldendeAksjonspunkter,

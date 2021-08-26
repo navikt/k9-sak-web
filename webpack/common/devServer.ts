@@ -1,21 +1,34 @@
-'use strict';
-require('dotenv').config();
-const webpack = require('webpack');
-const WebpackDevServer = require('webpack-dev-server');
-const config = require('./webpack.dev');
-const vtpLogin = require('./mocks/login');
-const sentryMock = require('./mocks/sentry');
-const featureToggles = require('./mocks/feature-toggles');
-const fakeError = require('./mocks/fake-error');
-if (process.argv.includes('--no-fix')) {
-  console.warn("Setting eslint-loader option 'fix' to false");
-  config.module.rules.find(rules => rules.loader === 'eslint-loader').options.fix = false;
-}
+import vtpLogin from '../mocks/login';
+import sentryMock from '../mocks/sentry';
+import featureToggles from '../mocks/feature-toggles';
+import fakeError from '../mocks/fake-error';
 
-const options = {
-  contentBase: ['packages'],
-  watchContentBase: true,
-  before: function (app, server) {
+import { PUBLIC_PATH } from '../constants';
+
+export default {
+  port: 9000,
+  hot: true,
+  // client: false,
+  // noInfo: true,
+  // liveReload: false,
+  // watchFiles: {
+  //   paths: [path.join(PACKAGES_DIR, '**/*')],
+  //   options: {
+  //     usePolling: false,
+  //   },
+  // },
+  // publicPath: PUBLIC_PATH,
+  devMiddleware: {
+    publicPath: PUBLIC_PATH,
+    stats: {
+      children: false,
+      colors: true,
+    },
+  },
+  historyApiFallback: {
+    index: PUBLIC_PATH,
+  },
+  onBeforeSetupMiddleware: function ({ app }) {
     vtpLogin(app);
     sentryMock(app);
     fakeError(app);
@@ -86,25 +99,4 @@ const options = {
       pathRewrite: { '^/k9/microfrontend/medisinsk-vilkar': '' },
     },
   },
-  publicPath: config.output.publicPath,
-  hot: true,
-  noInfo: true,
-  historyApiFallback: {
-    index: '/k9/web/',
-  },
-  stats: {
-    children: false,
-    colors: true,
-  },
 };
-
-const wds = new WebpackDevServer(webpack(config), options);
-
-wds.listen(9000, 'localhost', function (err) {
-  if (err) {
-    return console.log(err); // NOSONAR
-  }
-  console.log('Listening at http://localhost:9000/');
-
-  console.log('If running against VTP you can login or change user here: http://localhost:9000/login-with-vtp');
-});

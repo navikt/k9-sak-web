@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import faktaOmBeregningTilfelle from '@fpsak-frontend/kodeverk/src/faktaOmBeregningTilfelle';
 import { createSelector, createStructuredSelector } from 'reselect';
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import TidsbegrensetArbeidsforholdForm from './tidsbegrensetArbeidsforhold/TidsbegrensetArbeidsforholdForm';
 import VurderMilitaer from './vurderMilitaer/VurderMilitaer';
@@ -15,9 +14,8 @@ import VurderOgFastsettATFL from './vurderOgFastsettATFL/VurderOgFastsettATFL';
 import VurderEtterlonnSluttpakkeForm from './vurderOgFastsettATFL/forms/VurderEtterlonnSluttpakkeForm';
 import VurderMottarYtelseForm from './vurderOgFastsettATFL/forms/VurderMottarYtelseForm';
 import VurderRefusjonForm from './vurderrefusjon/VurderRefusjonForm';
-import beregningAksjonspunkterPropType from '../../propTypes/beregningAksjonspunkterPropType';
+import beregningAvklaringsbehovPropType from '../../propTypes/beregningAvklaringsbehovPropType';
 
-const { VURDER_FAKTA_FOR_ATFL_SN } = aksjonspunktCodes;
 
 export const getFaktaOmBeregning = createSelector(
   [ownProps => ownProps.beregningsgrunnlag],
@@ -62,14 +60,14 @@ const spacer = hasShownPanel => {
 const getFaktaPanels = (
   readOnly,
   tilfeller,
-  isAksjonspunktClosed,
+  isAvklaringsbehovClosed,
   faktaOmBeregning,
   beregningsgrunnlag,
   behandlingId,
   behandlingVersjon,
   alleKodeverk,
   arbeidsgiverOpplysningerPerId,
-  aksjonspunkter,
+  avklaringsbehov,
   erOverstyrer,
   fieldArrayID,
 ) => {
@@ -82,7 +80,7 @@ const getFaktaPanels = (
         <React.Fragment key={tilfelle}>
           <TidsbegrensetArbeidsforholdForm
             readOnly={readOnly}
-            isAksjonspunktClosed={isAksjonspunktClosed}
+            isAvklaringsbehovClosed={isAvklaringsbehovClosed}
             faktaOmBeregning={faktaOmBeregning}
             alleKodeverk={alleKodeverk}
             fieldArrayID={fieldArrayID}
@@ -97,7 +95,7 @@ const getFaktaPanels = (
           {spacer(hasShownPanel)}
           <NyIArbeidslivetSNForm
             readOnly={readOnly}
-            isAksjonspunktClosed={isAksjonspunktClosed}
+            isAvklaringsbehovClosed={isAvklaringsbehovClosed}
             fieldArrayID={fieldArrayID}
           />
         </React.Fragment>,
@@ -107,7 +105,7 @@ const getFaktaPanels = (
       hasShownPanel = true;
       faktaPanels.push(
         <React.Fragment key={tilfelle}>
-          <VurderMilitaer readOnly={readOnly} isAksjonspunktClosed={isAksjonspunktClosed} fieldArrayID={fieldArrayID} />
+          <VurderMilitaer readOnly={readOnly} isAvklaringsbehovClosed={isAvklaringsbehovClosed} fieldArrayID={fieldArrayID} />
         </React.Fragment>,
       );
     }
@@ -117,7 +115,7 @@ const getFaktaPanels = (
         <React.Fragment key={tilfelle}>
           <VurderRefusjonForm
             readOnly={readOnly}
-            isAksjonspunktClosed={isAksjonspunktClosed}
+            isAvklaringsbehovClosed={isAvklaringsbehovClosed}
             faktaOmBeregning={faktaOmBeregning}
             fieldArrayID={fieldArrayID}
           />
@@ -130,7 +128,7 @@ const getFaktaPanels = (
         <React.Fragment key={tilfelle}>
           <FastsettBgKunYtelsePanel
             readOnly={readOnly}
-            isAksjonspunktClosed={isAksjonspunktClosed}
+            isAvklaringsbehovClosed={isAvklaringsbehovClosed}
             faktaOmBeregning={faktaOmBeregning}
             fieldArrayID={fieldArrayID}
             behandlingId={behandlingId}
@@ -146,7 +144,7 @@ const getFaktaPanels = (
       {spacer(true)}
       <VurderOgFastsettATFL
         readOnly={readOnly}
-        isAksjonspunktClosed={isAksjonspunktClosed}
+        isAvklaringsbehovClosed={isAvklaringsbehovClosed}
         tilfeller={tilfeller}
         behandlingId={behandlingId}
         behandlingVersjon={behandlingVersjon}
@@ -155,7 +153,7 @@ const getFaktaPanels = (
         alleKodeverk={alleKodeverk}
         arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
         erOverstyrer={erOverstyrer}
-        aksjonspunkter={aksjonspunkter}
+        avklaringsbehov={avklaringsbehov}
         fieldArrayID={fieldArrayID}
       />
     </React.Fragment>,
@@ -171,14 +169,14 @@ const getFaktaPanels = (
 export const FaktaForATFLOgSNPanelImpl = ({
   readOnly,
   aktivePaneler,
-  isAksjonspunktClosed,
+  isAvklaringsbehovClosed,
   faktaOmBeregning,
   behandlingId,
   behandlingVersjon,
   beregningsgrunnlag,
   alleKodeverk,
   arbeidsgiverOpplysningerPerId,
-  aksjonspunkter,
+  avklaringsbehov,
   erOverstyrer,
   fieldArrayID,
 }) => (
@@ -186,14 +184,14 @@ export const FaktaForATFLOgSNPanelImpl = ({
     {getFaktaPanels(
       readOnly,
       aktivePaneler,
-      isAksjonspunktClosed,
+      isAvklaringsbehovClosed,
       faktaOmBeregning,
       beregningsgrunnlag,
       behandlingId,
       behandlingVersjon,
       alleKodeverk,
       arbeidsgiverOpplysningerPerId,
-      aksjonspunkter,
+      avklaringsbehov,
       erOverstyrer,
       fieldArrayID,
     ).map(panelOrSpacer => panelOrSpacer)}
@@ -204,13 +202,13 @@ FaktaForATFLOgSNPanelImpl.propTypes = {
   readOnly: PropTypes.bool.isRequired,
   aktivePaneler: PropTypes.arrayOf(PropTypes.string).isRequired,
   faktaOmBeregning: PropTypes.shape().isRequired,
-  isAksjonspunktClosed: PropTypes.bool.isRequired,
+  isAvklaringsbehovClosed: PropTypes.bool.isRequired,
   beregningsgrunnlag: PropTypes.shape().isRequired,
   behandlingId: PropTypes.number.isRequired,
   behandlingVersjon: PropTypes.number.isRequired,
   alleKodeverk: PropTypes.shape().isRequired,
   arbeidsgiverOpplysningerPerId: PropTypes.shape().isRequired,
-  aksjonspunkter: PropTypes.arrayOf(beregningAksjonspunkterPropType).isRequired,
+  avklaringsbehov: PropTypes.arrayOf(beregningAvklaringsbehovPropType).isRequired,
   erOverstyrer: PropTypes.bool.isRequired,
   fieldArrayID: PropTypes.string.isRequired,
 };
@@ -303,13 +301,9 @@ export const transformValuesFaktaForATFLOgSN = values => {
   return setValuesForVurderFakta(tilfeller, values, kortvarigeArbeidsforhold, faktaOmBeregning, beregningsgrunnlag);
 };
 
-const getVurderFaktaAksjonspunkt = createSelector([ownProps => ownProps.aksjonspunkter], aksjonspunkter =>
-  aksjonspunkter ? aksjonspunkter.find(ap => ap.definisjon.kode === VURDER_FAKTA_FOR_ATFL_SN) : undefined,
-);
-
 const buildInitialValuesForTilfeller = (props, beregningsgrunnlag) => ({
   ...TidsbegrensetArbeidsforholdForm.buildInitialValues(props.kortvarigeArbeidsforhold),
-  ...VurderMilitaer.buildInitialValues(props.faktaOmBeregning, props.vurderFaktaAP),
+  ...VurderMilitaer.buildInitialValues(props.faktaOmBeregning),
   ...NyIArbeidslivetSNForm.buildInitialValues(beregningsgrunnlag),
   ...LonnsendringForm.buildInitialValues(beregningsgrunnlag),
   ...NyoppstartetFLForm.buildInitialValues(beregningsgrunnlag),
@@ -319,10 +313,10 @@ const buildInitialValuesForTilfeller = (props, beregningsgrunnlag) => ({
     props.faktaOmBeregning?.andelerForFaktaOmBeregning,
     props.alleKodeverk,
   ),
-  ...VurderEtterlonnSluttpakkeForm.buildInitialValues(beregningsgrunnlag, props.vurderFaktaAP),
+  ...VurderEtterlonnSluttpakkeForm.buildInitialValues(beregningsgrunnlag),
   ...VurderMottarYtelseForm.buildInitialValues(props.vurderMottarYtelse),
   ...VurderOgFastsettATFL.buildInitialValues(
-    props.aksjonspunkter,
+    props.avklaringsbehov,
     props.faktaOmBeregning,
     props.alleKodeverk,
     props.arbeidsgiverOpplysningerPerId,
@@ -339,7 +333,6 @@ const mapStateToBuildInitialValuesProps = createStructuredSelector({
   beregningsgrunnlag: (ownProps, beregningsgrunnlag) => beregningsgrunnlag,
   kortvarigeArbeidsforhold: (ownProps, beregningsgrunnlag) =>
     beregningsgrunnlag?.faktaOmBeregning?.kortvarigeArbeidsforhold,
-  vurderFaktaAP: getVurderFaktaAksjonspunkt,
   kunYtelse: (ownProps, beregningsgrunnlag) => beregningsgrunnlag?.faktaOmBeregning?.kunYtelse,
   tilfeller: (ownProps, beregningsgrunnlag) => {
     const tilfeller = getFaktaOmBeregningTilfellerKoder(beregningsgrunnlag?.faktaOmBeregning);
@@ -347,7 +340,7 @@ const mapStateToBuildInitialValuesProps = createStructuredSelector({
   },
   vurderMottarYtelse: (ownProps, beregningsgrunnlag) => beregningsgrunnlag?.faktaOmBeregning?.vurderMottarYtelse,
   alleKodeverk: ownProps => ownProps.alleKodeverk,
-  aksjonspunkter: ownProps => ownProps.aksjonspunkter,
+  avklaringsbehov: ownProps => ownProps.avklaringsbehov,
   faktaOmBeregning: (ownProps, beregningsgrunnlag) => beregningsgrunnlag?.faktaOmBeregning,
   arbeidsgiverOpplysningerPerId: ownProps => ownProps.arbeidsgiverOpplysningerPerId,
   refusjonskravSomKommerForSentListe: getArbeidsgiverInfoForRefusjonskravSomKommerForSent,

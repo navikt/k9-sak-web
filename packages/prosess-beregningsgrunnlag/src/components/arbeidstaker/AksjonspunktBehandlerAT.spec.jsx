@@ -2,7 +2,7 @@ import React from 'react';
 import { expect } from 'chai';
 import { shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import avklaringsbehovCodes from '@fpsak-frontend/kodeverk/src/beregningAvklaringsbehovCodes';
 import AksjonspunktBehandlerAT from './AksjonspunktBehandlerAT';
 
 const alleKodeverk = {
@@ -105,7 +105,7 @@ describe('<AksjonspunktBehandlerAT>', () => {
     };
     values;
     const expectedInitialValues = {
-      kode: aksjonspunktCodes.FASTSETT_BEREGNINGSGRUNNLAG_ARBEIDSTAKER_FRILANS,
+      kode: avklaringsbehovCodes.FASTSETT_BEREGNINGSGRUNNLAG_ARBEIDSTAKER_FRILANS,
       begrunnelse: values.ATFLVurdering,
       inntektFrilanser: null,
       inntektPrAndelList: [

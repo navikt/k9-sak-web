@@ -1,13 +1,19 @@
 import React, { SetStateAction, useState, useEffect } from 'react';
-import { dateFormat } from '@fpsak-frontend/utils';
-import { Aksjonspunkt, Behandling, KodeverkMedNavn, SubmitCallback, Vilkar } from '@k9-sak-web/types';
-import { SideMenu } from '@navikt/k9-react-components';
-import classNames from 'classnames/bind';
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
+import classNames from 'classnames/bind';
+
+import { Aksjonspunkt, DokumentStatus, Behandling, SubmitCallback, Vilkar } from '@k9-sak-web/types';
+import { dateFormat } from '@fpsak-frontend/utils';
+import { SideMenu } from '@navikt/k9-react-components';
+import advarselIcon from '@fpsak-frontend/assets/images/advarsel.svg';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import messages from '../i18n/nb_NO.json';
+import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
+
 import SoknadsfristVilkarForm from './components/SoknadsfristVilkarForm';
 import SoknadsfristVilkarHeader from './components/SoknadsfristVilkarHeader';
+
+import messages from '../i18n/nb_NO.json';
+
 import styles from './SoknadsfristVilkarProsessIndex.less';
 
 const cx = classNames.bind(styles);
@@ -24,9 +30,6 @@ const intl = createIntl(
 
 interface SoknadsfristVilkarProsessIndexProps {
   behandling: Behandling;
-  medlemskap?: {
-    fom: string;
-  };
   aksjonspunkter: Aksjonspunkt[];
   submitCallback: (props: SubmitCallback[]) => void;
   overrideReadOnly: boolean;
@@ -34,24 +37,21 @@ interface SoknadsfristVilkarProsessIndexProps {
     isEnabled: boolean;
   };
   toggleOverstyring: (overstyrtPanel: SetStateAction<string[]>) => void;
-  avslagsarsaker: KodeverkMedNavn[];
   lovReferanse?: string;
   erOverstyrt: boolean;
   panelTittelKode: string;
   vilkar: Vilkar[];
   visAllePerioder: boolean;
-  soknadsfristStatus: any;
+  soknadsfristStatus: { dokumentStatus: DokumentStatus[] };
 }
 
 const SoknadsfristVilkarProsessIndex = ({
   behandling,
-  medlemskap,
   aksjonspunkter,
   submitCallback,
   overrideReadOnly,
   kanOverstyreAccess,
   toggleOverstyring,
-  avslagsarsaker,
   erOverstyrt,
   panelTittelKode,
   lovReferanse,
@@ -68,13 +68,28 @@ const SoknadsfristVilkarProsessIndex = ({
   const activePeriode = activeVilkår.perioder[activeTab];
   const mainContainerClassnames = cx('mainContainer', { 'mainContainer--withSideMenu': skalBrukeSidemeny });
 
+  const perioderSomVurderesMedAvslagFn = p =>
+    p.vurdersIBehandlingen && p.vilkarStatus.kode === vilkarUtfallType.IKKE_OPPFYLT;
+
   useEffect(() => {
     if (!visAllePerioder && activeTab >= perioder.length) {
       setActiveTab(0);
     }
   }, [activeTab, visAllePerioder]);
 
-  const dokument = soknadsfristStatus.dokumentStatus.filter(dok =>
+  const perioderMedAvslag = perioder.filter(perioderSomVurderesMedAvslagFn);
+
+  const dokumenterSomSkalVurderes = soknadsfristStatus.dokumentStatus.filter(dok =>
+    dok.status.some(status =>
+      perioderMedAvslag.some(
+        p =>
+          (p.periode.fom >= status.periode.fom && p.periode.fom <= status.periode.tom) ||
+          (p.periode.tom >= status.periode.fom && p.periode.tom <= status.periode.tom),
+      ),
+    ),
+  );
+
+  const dokumenterIAktivPeriode = soknadsfristStatus.dokumentStatus.filter(dok =>
     dok.status.some(
       status =>
         (activePeriode.periode.fom >= status.periode.fom && activePeriode.periode.fom <= status.periode.tom) ||
@@ -88,9 +103,10 @@ const SoknadsfristVilkarProsessIndex = ({
         {skalBrukeSidemeny && (
           <div className={styles.sideMenuContainer}>
             <SideMenu
-              links={perioder.map((periode, index) => ({
+              links={perioder.map(({ periode, vilkarStatus }, index) => ({
                 active: activeTab === index,
-                label: `${dateFormat(periode.periode.fom)} - ${dateFormat(periode.periode.tom)}`,
+                label: `${dateFormat(periode.fom)} - ${dateFormat(periode.tom)}`,
+                iconSrc: /* erOverstyrt && */ vilkarStatus.kode === vilkarUtfallType.IKKE_OPPFYLT ? advarselIcon : null,
               }))}
               onClick={setActiveTab}
               theme="arrow"
@@ -102,7 +118,9 @@ const SoknadsfristVilkarProsessIndex = ({
           <SoknadsfristVilkarHeader
             aksjonspunkter={aksjonspunkter}
             erOverstyrt={erOverstyrt}
-            kanOverstyreAccess={kanOverstyreAccess}
+            kanOverstyreAccess={
+              activePeriode.vilkarStatus.kode !== vilkarUtfallType.OPPFYLT ? kanOverstyreAccess : { isEnabled: false }
+            }
             lovReferanse={activeVilkår.lovReferanse ?? lovReferanse}
             overrideReadOnly={overrideReadOnly}
             overstyringApKode={aksjonspunktCodes.OVERSTYR_SOKNADSFRISTVILKAR}
@@ -111,24 +129,19 @@ const SoknadsfristVilkarProsessIndex = ({
             toggleOverstyring={toggleOverstyring}
           />
           <SoknadsfristVilkarForm
-            key={`${activePeriode.periode?.fom}-${activePeriode.periode?.tom}`}
             behandlingId={behandling.id}
             behandlingVersjon={behandling.versjon}
-            behandlingType={behandling.type}
-            behandlingsresultat={behandling.behandlingsresultat}
-            medlemskapFom={medlemskap?.fom}
             aksjonspunkter={aksjonspunkter}
+            erOverstyrt={erOverstyrt}
             submitCallback={submitCallback}
             overrideReadOnly={overrideReadOnly}
             kanOverstyreAccess={kanOverstyreAccess}
             toggleOverstyring={toggleOverstyring}
-            avslagsarsaker={avslagsarsaker}
             status={activePeriode.vilkarStatus.kode}
-            erOverstyrt={erOverstyrt}
             panelTittelKode={panelTittelKode}
             lovReferanse={activeVilkår.lovReferanse ?? lovReferanse}
-            avslagKode={activePeriode.avslagKode}
-            dokument={dokument}
+            alleDokumenter={dokumenterSomSkalVurderes}
+            dokumenter={dokumenterIAktivPeriode}
             periode={activePeriode}
           />
         </div>
@@ -139,7 +152,6 @@ const SoknadsfristVilkarProsessIndex = ({
 
 SoknadsfristVilkarProsessIndex.defaultProps = {
   lovReferanse: '',
-  medlemskap: {},
 };
 
 export default SoknadsfristVilkarProsessIndex;

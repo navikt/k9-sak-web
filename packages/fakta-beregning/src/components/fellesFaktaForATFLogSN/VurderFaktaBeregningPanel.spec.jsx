@@ -1,12 +1,12 @@
 import { expect } from 'chai';
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
+import avklaringsbehovCodes from '@fpsak-frontend/kodeverk/src/beregningAvklaringsbehovCodes';
+import avklaringsbehovStatus from '@fpsak-frontend/kodeverk/src/beregningAvklaringsbehovStatus';
 import {
-  harIkkeEndringerIAvklarMedFlereAksjonspunkter,
+  harIkkeEndringerIAvklarAktiviteterMedFlereAvklaringsbehov,
   transformValuesVurderFaktaBeregning,
 } from './VurderFaktaBeregningPanel';
 
-const { AVKLAR_AKTIVITETER, VURDER_FAKTA_FOR_ATFL_SN } = aksjonspunktCodes;
+const { AVKLAR_AKTIVITETER, VURDER_FAKTA_FOR_ATFL_SN } = avklaringsbehovCodes;
 
 const avklarAktiviteterAp = {
   id: 1,
@@ -15,7 +15,7 @@ const avklarAktiviteterAp = {
     navn: 'ap1',
   },
   status: {
-    kode: aksjonspunktStatus.OPPRETTET,
+    kode: avklaringsbehovStatus.OPPRETTET,
     navn: 's1',
   },
 };
@@ -30,7 +30,7 @@ describe('<VurderFaktaBeregningPanel>', () => {
         },
       },
       faktaOmberegningTilfeller: [],
-      aksjonspunkter: [avklarAktiviteterAp],
+      avklaringsbehov: [avklarAktiviteterAp],
     };
     const values = {
       vurderFaktaListe: [faktaOmBeregning],
@@ -45,25 +45,25 @@ describe('<VurderFaktaBeregningPanel>', () => {
 
   it('skal returnere true for endring i avklar med kun avklar aksjonspunkt', () => {
     const aps = [{ definisjon: { kode: AVKLAR_AKTIVITETER } }];
-    const knappSkalKunneTrykkes = harIkkeEndringerIAvklarMedFlereAksjonspunkter(true, aps);
+    const knappSkalKunneTrykkes = harIkkeEndringerIAvklarAktiviteterMedFlereAvklaringsbehov(true, aps);
     expect(knappSkalKunneTrykkes).to.equal(true);
   });
 
-  it('skal returnere false for endring i avklar med to aksjonspunkter', () => {
+  it('skal returnere false for endring i avklar med to avklaringsbehov', () => {
     const aps = [{ definisjon: { kode: AVKLAR_AKTIVITETER } }, { definisjon: { kode: VURDER_FAKTA_FOR_ATFL_SN } }];
-    const knappSkalKunneTrykkes = harIkkeEndringerIAvklarMedFlereAksjonspunkter(true, aps);
+    const knappSkalKunneTrykkes = harIkkeEndringerIAvklarAktiviteterMedFlereAvklaringsbehov(true, aps);
     expect(knappSkalKunneTrykkes).to.equal(false);
   });
 
   it('skal returnere true for ingen endring i avklar med VURDER_FAKTA_FOR_ATFL_SN', () => {
     const aps = [{ definisjon: { kode: VURDER_FAKTA_FOR_ATFL_SN } }];
-    const knappSkalKunneTrykkes = harIkkeEndringerIAvklarMedFlereAksjonspunkter(false, aps);
+    const knappSkalKunneTrykkes = harIkkeEndringerIAvklarAktiviteterMedFlereAvklaringsbehov(false, aps);
     expect(knappSkalKunneTrykkes).to.equal(true);
   });
 
-  it('skal returnere true for ingen endring i avklar med to aksjonspunkter', () => {
+  it('skal returnere true for ingen endring i avklar med to avklaringsbehov', () => {
     const aps = [{ definisjon: { kode: AVKLAR_AKTIVITETER } }, { definisjon: { kode: VURDER_FAKTA_FOR_ATFL_SN } }];
-    const knappSkalKunneTrykkes = harIkkeEndringerIAvklarMedFlereAksjonspunkter(false, aps);
+    const knappSkalKunneTrykkes = harIkkeEndringerIAvklarAktiviteterMedFlereAvklaringsbehov(false, aps);
     expect(knappSkalKunneTrykkes).to.equal(true);
   });
 });

@@ -27,7 +27,7 @@ const createArbeidsforholdRadioKey = andel =>
 export const TidsbegrensetArbeidsforholdFormImpl = ({
   readOnly,
   andelsliste,
-  isAksjonspunktClosed,
+  isAvklaringsbehovClosed,
   alleKodeverk,
   arbeidsgiverOpplysningerPerId,
   fieldArrayID,
@@ -56,7 +56,7 @@ export const TidsbegrensetArbeidsforholdFormImpl = ({
           name={`${fieldArrayID}.${createArbeidsforholdRadioKey(andel)}`}
           validate={[required]}
           readOnly={readOnly}
-          isEdited={isAksjonspunktClosed}
+          isEdited={isAvklaringsbehovClosed}
         >
           <RadioOption label={<FormattedMessage id="BeregningInfoPanel.FormAlternativ.Ja" />} value />
           <RadioOption label={<FormattedMessage id="BeregningInfoPanel.FormAlternativ.Nei" />} value={false} />
@@ -69,7 +69,7 @@ export const TidsbegrensetArbeidsforholdFormImpl = ({
 TidsbegrensetArbeidsforholdFormImpl.propTypes = {
   readOnly: PropTypes.bool.isRequired,
   andelsliste: PropTypes.arrayOf(PropTypes.shape()).isRequired,
-  isAksjonspunktClosed: PropTypes.bool.isRequired,
+  isAvklaringsbehovClosed: PropTypes.bool.isRequired,
   alleKodeverk: PropTypes.shape().isRequired,
   arbeidsgiverOpplysningerPerId: PropTypes.shape().isRequired,
   fieldArrayID: PropTypes.string.isRequired,

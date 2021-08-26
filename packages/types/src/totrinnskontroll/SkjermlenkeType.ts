@@ -1,4 +1,4 @@
-interface SkjermlenkeTyper {
+export interface SkjermlenkeTyper {
   kode: string;
   navn: string;
 }

@@ -38,8 +38,8 @@ kodeverk[kodeverkTyper.INNTEKTSKATEGORI] = [
   { kode: 'FRILANSER', navn: 'Frilanser', kodeverk: kodeverkTyper.INNTEKTSKATEGORI },
 ];
 
-export const lagStateMedAksjonspunkterOgBeregningsgrunnlag = (
-  aksjonspunkter,
+export const lagStateMedAvklaringsbehovOgBeregningsgrunnlag = (
+  avklaringsbehov,
   beregningsgrunnlag,
   formName = 'test',
   values = {},
@@ -49,7 +49,7 @@ export const lagStateMedAksjonspunkterOgBeregningsgrunnlag = (
     id: 1000051,
     versjon: 1,
     beregningsgrunnlag,
-    aksjonspunkter,
+    avklaringsbehov,
   };
   /\const params = {}; */
   const dataState = {};

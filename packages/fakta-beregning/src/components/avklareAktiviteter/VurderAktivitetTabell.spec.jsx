@@ -112,13 +112,13 @@ describe('<VurderAktiviteterTabell>', () => {
     const wrapper = shallow(
       <VurderAktiviteterTabell
         readOnly={false}
-        isAksjonspunktClosed
+        isAvklaringsbehovClosed
         aktiviteter={aktiviteter}
         skjaeringstidspunkt="2019-02-01"
         alleKodeverk={alleKodeverk}
         arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
         erOverstyrt={false}
-        harAksjonspunkt
+        harAvklaringsbehov
         fieldArrayID="dummyId"
       />,
     );
@@ -161,13 +161,13 @@ describe('<VurderAktiviteterTabell>', () => {
     const wrapper = shallow(
       <VurderAktiviteterTabell
         readOnly={false}
-        isAksjonspunktClosed
+        isAvklaringsbehovClosed
         aktiviteter={utenAAP}
         skjaeringstidspunkt="2019-02-01"
         alleKodeverk={alleKodeverk}
         arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
         erOverstyrt={false}
-        harAksjonspunkt
+        harAvklaringsbehov
         fieldArrayID="dummyId"
       />,
     );
@@ -193,13 +193,13 @@ describe('<VurderAktiviteterTabell>', () => {
     const wrapper = shallow(
       <VurderAktiviteterTabell
         readOnly
-        isAksjonspunktClosed
+        isAvklaringsbehovClosed
         aktiviteter={aktiviteter}
         skjaeringstidspunkt="2019-02-01"
         alleKodeverk={alleKodeverk}
         arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
         erOverstyrt={false}
-        harAksjonspunkt
+        harAvklaringsbehov
         fieldArrayID="dummyId"
       />,
     );

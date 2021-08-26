@@ -240,26 +240,30 @@ describe('medisinskVilkarUtils', () => {
 
   // TODO (Hallvard): Finn en bedre måte å teste dette på
   it('skal formatere en dato likt med ulik input', () => {
-    const expectedResult = new Date('2020-02-20').toLocaleString('nb-NO', {
-      day: '2-digit',
-      month: '2-digit',
-      year: 'numeric',
-    });
-    const result1 = getMomentConvertedDate('2020-02-20');
-    expect(result1.toLocaleString('nb-NO', { day: '2-digit', month: '2-digit', year: 'numeric' })).toEqual(
-      expectedResult,
-    );
-    const result2 = getMomentConvertedDate(moment('2020-02-20'));
-    expect(result2.toLocaleString('nb-NO', { day: '2-digit', month: '2-digit', year: 'numeric' })).toEqual(
-      expectedResult,
-    );
-    const result3 = getMomentConvertedDate(moment('2020-02-20').toDate());
-    expect(result3.toLocaleString('nb-NO', { day: '2-digit', month: '2-digit', year: 'numeric' })).toEqual(
-      expectedResult,
-    );
-    const result4 = getMomentConvertedDate(moment('2020-02-20').toDate().toString());
-    expect(result4.toLocaleString('nb-NO', { day: '2-digit', month: '2-digit', year: 'numeric' })).toEqual(
-      expectedResult,
-    );
+    const formatDate = date =>
+      date.toLocaleString('nb-NO', {
+        day: '2-digit',
+        month: '2-digit',
+        year: 'numeric',
+      });
+
+    // Av en eller annen grunn så spiller ikke jest/jsdom helt på lag med polyfills for
+    // intl.numberformat og intl.datetimeformat (se setup/setup.js).
+
+    // moment('2020-02-20') -> 2020-02-19T23:00:00.000Z
+    // new Date('2020-02-20') -> 2020-02-20T00:00:00.000Z
+
+    // Dette er jo litt uheldig da det ser ut som at testene failer, når de egentlig
+    // fungerer i browser. Jeg har derfor justert testene til å bruke full dato med TZ.
+
+    const expectedResult = formatDate(new Date('2020-02-20T00:00:00.000Z'));
+    const result1 = getMomentConvertedDate('2020-02-20T00:00:00.000Z');
+    expect(formatDate(result1)).toEqual(expectedResult);
+    const result2 = getMomentConvertedDate(moment('2020-02-20T00:00:00.000Z'));
+    expect(formatDate(result2)).toEqual(expectedResult);
+    const result3 = getMomentConvertedDate(moment('2020-02-20T00:00:00.000Z').toDate());
+    expect(formatDate(result3)).toEqual(expectedResult);
+    const result4 = getMomentConvertedDate(moment('2020-02-20T00:00:00.000Z').toDate().toString());
+    expect(formatDate(result4)).toEqual(expectedResult);
   });
 });

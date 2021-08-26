@@ -3,25 +3,25 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import { behandlingFormValueSelector } from '@fpsak-frontend/form';
-import aksjonspunktCodes, { hasAksjonspunkt } from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
+import avklaringsbehovCodes, { harAvklaringsbehov } from '@fpsak-frontend/kodeverk/src/beregningAvklaringsbehovCodes';
+import { isAvklaringsbehovOpen } from '@fpsak-frontend/kodeverk/src/beregningAvklaringsbehovStatus';
 
 import VurderVarigEndretEllerNyoppstartetSN from './VurderVarigEndretEllerNyoppstartetSN';
 import FastsettSN from './FastsettSN';
-import beregningsgrunnlagAksjonspunkterPropType from '../../propTypes/beregningsgrunnlagAksjonspunkterPropType';
+import beregningAvklaringsbehovPropType from '../../propTypes/beregningAvklaringsbehovPropType';
 
 const FORM_NAME = 'BeregningForm';
 const {
   FASTSETT_BEREGNINGSGRUNNLAG_SN_NY_I_ARBEIDSLIVET,
   VURDER_VARIG_ENDRET_ELLER_NYOPPSTARTET_NAERING_SELVSTENDIG_NAERINGSDRIVENDE,
-} = aksjonspunktCodes;
+} = avklaringsbehovCodes;
 
-const finnSnAksjonspunkt = aksjonspunkter =>
-  aksjonspunkter &&
-  aksjonspunkter.find(
-    ap =>
-      ap.definisjon.kode === VURDER_VARIG_ENDRET_ELLER_NYOPPSTARTET_NAERING_SELVSTENDIG_NAERINGSDRIVENDE ||
-      ap.definisjon.kode === FASTSETT_BEREGNINGSGRUNNLAG_SN_NY_I_ARBEIDSLIVET,
+const finnSnAvklaringsbehov = avklaringsbehov =>
+  avklaringsbehov &&
+  avklaringsbehov.find(
+    ab =>
+      ab.definisjon.kode === VURDER_VARIG_ENDRET_ELLER_NYOPPSTARTET_NAERING_SELVSTENDIG_NAERINGSDRIVENDE ||
+      ab.definisjon.kode === FASTSETT_BEREGNINGSGRUNNLAG_SN_NY_I_ARBEIDSLIVET,
   );
 
 /**
@@ -32,11 +32,11 @@ const finnSnAksjonspunkt = aksjonspunkter =>
 export const VurderOgFastsettSNImpl = ({
   readOnly,
   erVarigEndretNaering,
-  isAksjonspunktClosed,
+  isAvklaringsbehovClosed,
   erNyArbLivet,
   erNyoppstartet,
   erVarigEndring,
-  gjeldendeAksjonspunkter,
+  avklaringsbehov,
   endretTekst,
   fieldArrayID,
 }) => {
@@ -44,8 +44,8 @@ export const VurderOgFastsettSNImpl = ({
     return (
       <FastsettSN
         readOnly={readOnly}
-        isAksjonspunktClosed={isAksjonspunktClosed}
-        gjeldendeAksjonspunkter={gjeldendeAksjonspunkter}
+        isAvklaringsbehovClosed={isAvklaringsbehovClosed}
+        avklaringsbehov={avklaringsbehov}
         erNyArbLivet={erNyArbLivet}
         fieldArrayID={fieldArrayID}
       />
@@ -55,19 +55,19 @@ export const VurderOgFastsettSNImpl = ({
     <>
       <VurderVarigEndretEllerNyoppstartetSN
         readOnly={readOnly}
-        isAksjonspunktClosed={isAksjonspunktClosed}
+        isAvklaringsbehovClosed={isAvklaringsbehovClosed}
         erVarigEndring={erVarigEndring}
         erNyoppstartet={erNyoppstartet}
         erVarigEndretNaering={erVarigEndretNaering}
-        gjeldendeAksjonspunkter={gjeldendeAksjonspunkter}
+        avklaringsbehov={avklaringsbehov}
         endretTekst={endretTekst}
         fieldArrayID={fieldArrayID}
       />
       {erVarigEndretNaering && (
         <FastsettSN
           readOnly={readOnly}
-          isAksjonspunktClosed={isAksjonspunktClosed}
-          gjeldendeAksjonspunkter={gjeldendeAksjonspunkter}
+          isAvklaringsbehovClosed={isAvklaringsbehovClosed}
+          avklaringsbehov={avklaringsbehov}
           erNyArbLivet={erNyArbLivet}
           endretTekst={endretTekst}
           fieldArrayID={fieldArrayID}
@@ -80,12 +80,12 @@ export const VurderOgFastsettSNImpl = ({
 VurderOgFastsettSNImpl.propTypes = {
   readOnly: PropTypes.bool.isRequired,
   erVarigEndretNaering: PropTypes.bool,
-  isAksjonspunktClosed: PropTypes.bool.isRequired,
+  isAvklaringsbehovClosed: PropTypes.bool.isRequired,
   erNyArbLivet: PropTypes.bool.isRequired,
   erVarigEndring: PropTypes.bool.isRequired,
   erNyoppstartet: PropTypes.bool.isRequired,
   endretTekst: PropTypes.node,
-  gjeldendeAksjonspunkter: PropTypes.arrayOf(beregningsgrunnlagAksjonspunkterPropType).isRequired,
+  avklaringsbehov: PropTypes.arrayOf(beregningAvklaringsbehovPropType).isRequired,
   fieldArrayID: PropTypes.string.isRequired,
 };
 
@@ -94,31 +94,31 @@ VurderOgFastsettSNImpl.defaultProps = {
 };
 
 const mapStateToPropsFactory = (initialState, ownPropsStatic) => {
-  const aksjonspunkt = finnSnAksjonspunkt(ownPropsStatic.gjeldendeAksjonspunkter);
+  const avklaringsbehovSN = finnSnAvklaringsbehov(ownPropsStatic.avklaringsbehov);
   return (state, ownProps) => ({
     erVarigEndretNaering: behandlingFormValueSelector(
       FORM_NAME,
       ownProps.behandlingId,
       ownProps.behandlingVersjon,
     )(state, `${ownProps.fieldArrayID}.erVarigEndretNaering`),
-    isAksjonspunktClosed: !isAksjonspunktOpen(aksjonspunkt.status.kode),
+    isAvklaringsbehovClosed: !isAvklaringsbehovOpen(avklaringsbehovSN.status.kode),
     fieldArrayID: ownProps.fieldArrayID,
   });
 };
 
 const VurderOgFastsettSN = connect(mapStateToPropsFactory)(VurderOgFastsettSNImpl);
 
-VurderOgFastsettSN.buildInitialValues = (relevanteAndeler, gjeldendeAksjonspunkter) => {
-  if (hasAksjonspunkt(FASTSETT_BEREGNINGSGRUNNLAG_SN_NY_I_ARBEIDSLIVET, gjeldendeAksjonspunkter)) {
-    return FastsettSN.buildInitialValuesNyIArbeidslivet(relevanteAndeler, gjeldendeAksjonspunkter);
+VurderOgFastsettSN.buildInitialValues = (relevanteAndeler, avklaringsbehov) => {
+  if (harAvklaringsbehov(FASTSETT_BEREGNINGSGRUNNLAG_SN_NY_I_ARBEIDSLIVET, avklaringsbehov)) {
+    return FastsettSN.buildInitialValuesNyIArbeidslivet(relevanteAndeler, avklaringsbehov);
   }
   return {
-    ...VurderVarigEndretEllerNyoppstartetSN.buildInitialValues(relevanteAndeler, gjeldendeAksjonspunkter),
+    ...VurderVarigEndretEllerNyoppstartetSN.buildInitialValues(relevanteAndeler, avklaringsbehov),
   };
 };
 
 VurderOgFastsettSN.transformValues = (values, gjeldendeAksjonspunkter) => {
-  if (hasAksjonspunkt(FASTSETT_BEREGNINGSGRUNNLAG_SN_NY_I_ARBEIDSLIVET, gjeldendeAksjonspunkter)) {
+  if (harAvklaringsbehov(FASTSETT_BEREGNINGSGRUNNLAG_SN_NY_I_ARBEIDSLIVET, gjeldendeAksjonspunkter)) {
     return FastsettSN.transformValuesNyIArbeidslivet(values);
   }
   return VurderVarigEndretEllerNyoppstartetSN.transformValues(values);

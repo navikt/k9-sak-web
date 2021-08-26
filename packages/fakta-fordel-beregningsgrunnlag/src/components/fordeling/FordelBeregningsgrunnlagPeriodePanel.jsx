@@ -55,7 +55,7 @@ const FordelBeregningsgrunnlagPeriodePanelImpl = ({
   fom,
   tom,
   harPeriodeAarsakGraderingEllerRefusjon,
-  isAksjonspunktClosed,
+  isAvklaringsbehovClosed,
   open,
   showPanel,
   beregningsgrunnlag,
@@ -74,7 +74,7 @@ const FordelBeregningsgrunnlagPeriodePanelImpl = ({
       component={RenderFordelBGFieldArray}
       readOnly={readOnly}
       periodeUtenAarsak={!harPeriodeAarsakGraderingEllerRefusjon}
-      isAksjonspunktClosed={isAksjonspunktClosed}
+      isAvklaringsbehovClosed={isAvklaringsbehovClosed}
       alleKodeverk={alleKodeverk}
       arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
       beregningsgrunnlag={beregningsgrunnlag}
@@ -90,7 +90,7 @@ FordelBeregningsgrunnlagPeriodePanelImpl.propTypes = {
   tom: PropTypes.string,
   open: PropTypes.bool,
   harPeriodeAarsakGraderingEllerRefusjon: PropTypes.bool.isRequired,
-  isAksjonspunktClosed: PropTypes.bool.isRequired,
+  isAvklaringsbehovClosed: PropTypes.bool.isRequired,
   showPanel: PropTypes.func.isRequired,
   beregningsgrunnlag: PropTypes.shape().isRequired,
   alleKodeverk: PropTypes.shape().isRequired,

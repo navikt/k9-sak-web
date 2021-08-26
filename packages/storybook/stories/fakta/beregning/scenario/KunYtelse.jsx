@@ -1,6 +1,7 @@
 // eslint-disable-next-line max-len
 export const beregningsgrunnlag = [
   {
+    avklaringsbehov: [],
     skjaeringstidspunktBeregning: '2020-05-18',
     skjæringstidspunkt: '2020-05-18',
     aktivitetStatus: [{ kode: 'AT', kodeverk: 'AKTIVITET_STATUS' }],
@@ -96,6 +97,7 @@ export const beregningsgrunnlag = [
     vilkårsperiodeFom: '2020-05-18',
   },
   {
+    avklaringsbehov: [{definisjon: { kode : '5058' }, status: { kode: 'OPPR'}}],
     skjaeringstidspunktBeregning: '2020-06-04',
     skjæringstidspunkt: '2020-06-04',
     aktivitetStatus: [{ kode: 'KUN_YTELSE', kodeverk: 'AKTIVITET_STATUS' }],

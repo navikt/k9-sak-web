@@ -65,7 +65,7 @@ const onKeyDown = (fields, aktivitetStatuser, alleKodeverk) => ({ keyCode }) => 
   }
 };
 
-const createAndelerTableRows = (fields, isAksjonspunktClosed, readOnly, inntektskategoriKoder, intl) =>
+const createAndelerTableRows = (fields, isAvklaringsbehovClosed, readOnly, inntektskategoriKoder, intl) =>
   fields.map((andelElementFieldId, index) => (
     <TableRow key={andelElementFieldId}>
       <TableColumn>
@@ -77,7 +77,7 @@ const createAndelerTableRows = (fields, isAksjonspunktClosed, readOnly, inntekts
           bredde="M"
           parse={parseCurrencyInput}
           readOnly={readOnly}
-          isEdited={isAksjonspunktClosed}
+          isEdited={isAvklaringsbehovClosed}
         />
       </TableColumn>
       <TableColumn className={styles.rightAlign}>
@@ -88,7 +88,7 @@ const createAndelerTableRows = (fields, isAksjonspunktClosed, readOnly, inntekts
           selectValues={inntektskategoriSelectValues(inntektskategoriKoder)}
           value={fields.get(index).inntektskategori}
           readOnly={readOnly}
-          isEdited={isAksjonspunktClosed}
+          isEdited={isAvklaringsbehovClosed}
         />
       </TableColumn>
       <TableColumn>
@@ -136,12 +136,12 @@ export const BrukersAndelFieldArrayImpl = ({
   inntektskategoriKoder,
   aktivitetStatuser,
   readOnly,
-  isAksjonspunktClosed,
+  isAvklaringsbehovClosed,
   isBeregningFormDirty,
   alleKodeverk,
 }) => {
   const sumFordeling = summerFordeling(fields) || 0;
-  const tablerows = createAndelerTableRows(fields, isAksjonspunktClosed, readOnly, inntektskategoriKoder, intl);
+  const tablerows = createAndelerTableRows(fields, isAvklaringsbehovClosed, readOnly, inntektskategoriKoder, intl);
   tablerows.push(createBruttoBGSummaryRow(sumFordeling));
   return (
     <NavFieldGroup errorMessage={getErrorMessage(meta, intl, isBeregningFormDirty)}>
@@ -185,7 +185,7 @@ BrukersAndelFieldArrayImpl.propTypes = {
   intl: PropTypes.shape().isRequired,
   inntektskategoriKoder: kodeverkPropType.isRequired,
   aktivitetStatuser: kodeverkPropType.isRequired,
-  isAksjonspunktClosed: PropTypes.bool.isRequired,
+  isAvklaringsbehovClosed: PropTypes.bool.isRequired,
   isBeregningFormDirty: PropTypes.bool.isRequired,
   alleKodeverk: PropTypes.shape().isRequired,
 };

@@ -178,7 +178,7 @@ describe('<VurderMottarYtelseForm>', () => {
       <VurderMottarYtelseFormImpl
         fieldArrayID="dummyId"
         readOnly={false}
-        isAksjonspunktClosed={false}
+        isAvklaringsbehovClosed={false}
         tilfeller={[]}
         erFrilans
         arbeidsforholdUtenIM={[]}
@@ -199,7 +199,7 @@ describe('<VurderMottarYtelseForm>', () => {
       <VurderMottarYtelseFormImpl
         fieldArrayID="dummyId"
         readOnly={false}
-        isAksjonspunktClosed={false}
+        isAvklaringsbehovClosed={false}
         tilfeller={[faktaOmBeregningTilfelle.VURDER_NYOPPSTARTET_FL]}
         erFrilans
         arbeidsforholdUtenIM={[]}
@@ -220,7 +220,7 @@ describe('<VurderMottarYtelseForm>', () => {
       <VurderMottarYtelseFormImpl
         fieldArrayID="dummyId"
         readOnly={false}
-        isAksjonspunktClosed={false}
+        isAvklaringsbehovClosed={false}
         tilfeller={[faktaOmBeregningTilfelle.VURDER_NYOPPSTARTET_FL]}
         erFrilans={false}
         arbeidsforholdUtenIM={arbeidstakerAndelerUtenIM}

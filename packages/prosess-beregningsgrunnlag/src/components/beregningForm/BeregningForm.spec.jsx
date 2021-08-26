@@ -4,7 +4,7 @@ import sinon from 'sinon';
 import { shallow } from 'enzyme/build';
 
 import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import avklaringsbehovCodes from '@fpsak-frontend/kodeverk/src/beregningAvklaringsbehovCodes';
 import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
@@ -21,7 +21,7 @@ import { buildInitialValuesForBeregningrunnlag } from '../BeregningFP';
 
 const apFastsettBgATFL = {
   definisjon: {
-    kode: aksjonspunktCodes.FASTSETT_BEREGNINGSGRUNNLAG_ARBEIDSTAKER_FRILANS,
+    kode: avklaringsbehovCodes.FASTSETT_BEREGNINGSGRUNNLAG_ARBEIDSTAKER_FRILANS,
     navn: 'apNavn1',
   },
   status: {
@@ -34,7 +34,7 @@ const apFastsettBgATFL = {
 
 const apVurderVarigEndretEllerNyoppstartetSN = {
   definisjon: {
-    kode: aksjonspunktCodes.VURDER_VARIG_ENDRET_ELLER_NYOPPSTARTET_NAERING_SELVSTENDIG_NAERINGSDRIVENDE,
+    kode: avklaringsbehovCodes.VURDER_VARIG_ENDRET_ELLER_NYOPPSTARTET_NAERING_SELVSTENDIG_NAERINGSDRIVENDE,
     navn: 'apNavn3',
   },
   status: {
@@ -47,7 +47,7 @@ const apVurderVarigEndretEllerNyoppstartetSN = {
 
 const apFastsettBgSnNyIArbeidslivet = {
   definisjon: {
-    kode: aksjonspunktCodes.FASTSETT_BEREGNINGSGRUNNLAG_SN_NY_I_ARBEIDSLIVET,
+    kode: avklaringsbehovCodes.FASTSETT_BEREGNINGSGRUNNLAG_SN_NY_I_ARBEIDSLIVET,
     navn: 'apNavn4',
   },
   status: {
@@ -59,7 +59,7 @@ const apFastsettBgSnNyIArbeidslivet = {
 };
 const apFastsettBgTidsbegrensetArbeidsforhold = {
   definisjon: {
-    kode: aksjonspunktCodes.FASTSETT_BEREGNINGSGRUNNLAG_TIDSBEGRENSET_ARBEIDSFORHOLD,
+    kode: avklaringsbehovCodes.FASTSETT_BEREGNINGSGRUNNLAG_TIDSBEGRENSET_ARBEIDSFORHOLD,
     navn: 'apNavn5',
   },
   status: {
@@ -70,7 +70,7 @@ const apFastsettBgTidsbegrensetArbeidsforhold = {
   erAktivt: true,
 };
 
-const aksjonspunktliste = [apFastsettBgATFL];
+const avklaringsbehovListe = [apFastsettBgATFL];
 
 const atAndel = [
   {
@@ -185,8 +185,9 @@ describe('<BeregningForm>', () => {
       <BeregningFormImpl
         fieldArrayID="dummyId"
         readOnly={false}
+        erAktiv
         beregningsgrunnlag={beregningsgrunnlag}
-        gjeldendeAksjonspunkter={aksjonspunktliste}
+        avklaringsbehov={avklaringsbehovListe}
         relevanteStatuser={relevanteStatuser}
         submitCallback={sinon.spy}
         readOnlySubmitButton
@@ -198,7 +199,6 @@ describe('<BeregningForm>', () => {
       />,
     );
     const avvikPanel = wrapper.find(AvviksopplysningerPanel);
-    expect(avvikPanel.props().harAksjonspunkter).to.have.equal(true);
     expect(avvikPanel.props().sammenligningsgrunnlagPrStatus[0]).to.have.equal(sammenligningsgrunnlagPrStatus);
     expect(avvikPanel.props().relevanteStatuser).to.have.equal(relevanteStatuser);
     const expectedPerioder = lagPeriode();
@@ -209,7 +209,8 @@ describe('<BeregningForm>', () => {
       <BeregningFormImpl
         fieldArrayID="dummyId"
         readOnly={false}
-        gjeldendeAksjonspunkter={aksjonspunktliste}
+        erAktiv
+        avklaringsbehov={avklaringsbehovListe}
         beregningsgrunnlag={lagBeregningsgrunnlag(0, 120000, 100000, 100, [])}
         behandling={behandling}
         alleKodeverk={alleKodeverk}
@@ -229,7 +230,8 @@ describe('<BeregningForm>', () => {
       <BeregningFormImpl
         fieldArrayID="dummyId"
         readOnly={false}
-        gjeldendeAksjonspunkter={aksjonspunktliste}
+        erAktiv
+        avklaringsbehov={avklaringsbehovListe}
         beregningsgrunnlag={lagBeregningsgrunnlag(0, 120000, 100000, 100, [])}
         behandling={behandling}
         alleKodeverk={alleKodeverk}
@@ -255,7 +257,8 @@ describe('<BeregningForm>', () => {
       <BeregningFormImpl
         fieldArrayID="dummyId"
         readOnly={false}
-        gjeldendeAksjonspunkter={aksjonspunktliste}
+        erAktiv
+        avklaringsbehov={avklaringsbehovListe}
         beregningsgrunnlag={lagBeregningsgrunnlag(0, 120000, 100000, 100, [])}
         behandling={behandling}
         alleKodeverk={alleKodeverk}
@@ -272,7 +275,7 @@ describe('<BeregningForm>', () => {
     expect(aksjonspunktBehandler.props().tidsBegrensetInntekt).to.have.equal(false);
     const expectedPerioder = lagPeriode();
     expect(aksjonspunktBehandler.props().allePerioder[0]).to.eql(expectedPerioder);
-    expect(aksjonspunktBehandler.props().aksjonspunkter).to.eql(aksjonspunktliste);
+    expect(aksjonspunktBehandler.props().avklaringsbehov).to.eql(avklaringsbehovListe);
   });
 
   it('skal teste at Beregningsgrunnlag får korrekte props fra BeregningFP', () => {
@@ -281,7 +284,8 @@ describe('<BeregningForm>', () => {
       <BeregningFormImpl
         fieldArrayID="dummyId"
         readOnly={false}
-        gjeldendeAksjonspunkter={aksjonspunktliste}
+        erAktiv
+        avklaringsbehov={avklaringsbehovListe}
         beregningsgrunnlag={lagBeregningsgrunnlag(0, 100000, 100000, 100, [])}
         behandling={behandling}
         alleKodeverk={alleKodeverk}
@@ -297,7 +301,6 @@ describe('<BeregningForm>', () => {
     const beregningsgrunnlag = wrapper.find(Beregningsgrunnlag);
     expect(beregningsgrunnlag.props().relevanteStatuser).to.have.equal(relevanteStatuser);
     expect(beregningsgrunnlag.props().readOnly).to.have.equal(false);
-    expect(beregningsgrunnlag.props().gjeldendeAksjonspunkter).to.have.equal(aksjonspunktliste);
     expect(beregningsgrunnlag.props().formName).to.have.equal(formName);
     expect(beregningsgrunnlag.props().readOnlySubmitButton).to.have.equal(true);
     expect(beregningsgrunnlag.props().submitCallback).to.have.equal(sinon.spy);
@@ -310,8 +313,9 @@ describe('<BeregningForm>', () => {
     const wrapper = shallow(
       <BeregningFormImpl
         fieldArrayID="dummyId"
+        erAktiv
         readOnly={false}
-        gjeldendeAksjonspunkter={aksjonspunktliste}
+        avklaringsbehov={avklaringsbehovListe}
         beregningsgrunnlag={lagBeregningsgrunnlag(0, 100000, 100000, 100, [])}
         behandling={behandling}
         alleKodeverk={alleKodeverk}
@@ -333,8 +337,9 @@ describe('<BeregningForm>', () => {
     const wrapper = shallowWithIntl(
       <BeregningFormImpl
         fieldArrayID="dummyId"
+        erAktiv
         readOnly={false}
-        gjeldendeAksjonspunkter={aksjonspunktliste}
+        avklaringsbehov={avklaringsbehovListe}
         beregningsgrunnlag={bg}
         behandling={behandling}
         alleKodeverk={alleKodeverk}
@@ -360,8 +365,8 @@ describe('<BeregningForm>', () => {
       bruttoBeregningsgrunnlag: 240000,
       erVarigEndretNaering: true,
     };
-    const aksjonspunkter = [apVurderVarigEndretEllerNyoppstartetSN];
-    const result = transformValues(values, relevanteStatuser, allAndeler, aksjonspunkter, allPerioder);
+    const avklaringsbehov = [apVurderVarigEndretEllerNyoppstartetSN];
+    const result = transformValues(values, relevanteStatuser, allAndeler, avklaringsbehov, allPerioder);
     expect(result).to.have.lengthOf(1);
     expect(result[0].kode).to.have.equal('5039');
   });
@@ -372,8 +377,8 @@ describe('<BeregningForm>', () => {
       bruttoBeregningsgrunnlag: 240000,
       erVarigEndretNaering: false,
     };
-    const aksjonspunkter = [apVurderVarigEndretEllerNyoppstartetSN];
-    const result = transformValues(values, relevanteStatuser, allAndeler, aksjonspunkter, allPerioder);
+    const avklaringsbehov = [apVurderVarigEndretEllerNyoppstartetSN];
+    const result = transformValues(values, relevanteStatuser, allAndeler, avklaringsbehov, allPerioder);
     expect(result).to.have.lengthOf(1);
     expect(result[0].kode).to.have.equal('5039');
   });
@@ -382,8 +387,8 @@ describe('<BeregningForm>', () => {
       ATFLVurdering: 'bbb',
       inntekt0: 200000,
     };
-    const aksjonspunkter = [apFastsettBgATFL];
-    const result = transformValues(values, relevanteStatuser, atAndel, aksjonspunkter, allPerioder);
+    const avklaringsbehov = [apFastsettBgATFL];
+    const result = transformValues(values, relevanteStatuser, atAndel, avklaringsbehov, allPerioder);
     expect(result).to.have.lengthOf(1);
     expect(result[0].kode).to.have.equal('5038');
   });
@@ -393,8 +398,8 @@ describe('<BeregningForm>', () => {
       erVarigEndretNaering: true,
       bruttoBeregningsgrunnlag: 240000,
     };
-    const aksjonspunkt = [apVurderVarigEndretEllerNyoppstartetSN];
-    const result = transformValues(values, relevanteStatuser, allAndeler, aksjonspunkt, allPerioder);
+    const avklaringsbehov = [apVurderVarigEndretEllerNyoppstartetSN];
+    const result = transformValues(values, relevanteStatuser, allAndeler, avklaringsbehov, allPerioder);
     expect(result).to.have.lengthOf(1);
     expect(result[0].kode).to.have.equal('5039');
   });
@@ -403,16 +408,16 @@ describe('<BeregningForm>', () => {
       fellesVurdering: 'bbb',
       bruttoBeregningsgrunnlag: 240000,
     };
-    const aksjonspunkt = [apFastsettBgSnNyIArbeidslivet];
-    const result = transformValues(values, relevanteStatuser, allAndeler, aksjonspunkt, allPerioder);
+    const avklaringsbehov = [apFastsettBgSnNyIArbeidslivet];
+    const result = transformValues(values, relevanteStatuser, allAndeler, avklaringsbehov, allPerioder);
     expect(result).to.have.lengthOf(1);
     expect(result[0].kode).to.have.equal('5049');
   });
   it('skal teste buildInitialValues', () => {
-    const gjeldendeAksjonspunkter = [apFastsettBgTidsbegrensetArbeidsforhold];
+    const avklaringsbehov = [apFastsettBgTidsbegrensetArbeidsforhold];
     const beregningsgrunnlag = lagBeregningsgrunnlag(0, 120000, 100000, 100, []);
 
-    const actualValues = buildInitialValuesForBeregningrunnlag(beregningsgrunnlag, gjeldendeAksjonspunkter);
+    const actualValues = buildInitialValuesForBeregningrunnlag(beregningsgrunnlag, avklaringsbehov);
     const expectedValues = {
       ATFLVurdering: undefined,
       undefined: '',

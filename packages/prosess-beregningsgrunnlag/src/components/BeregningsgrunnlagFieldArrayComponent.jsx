@@ -1,12 +1,13 @@
 import React from 'react';
 import BeregningForm2 from './beregningForm/BeregningForm';
 
+
 const BeregningsgrunnlagFieldArrayComponent = ({
   fields,
   initialValues,
   aktivtBeregningsgrunnlagIndeks,
   aktivtBeregningsgrunnlag,
-  gjeldendeAksjonspunkter,
+  avklaringsbehov,
   relevanteStatuser,
   submitCallback,
   readOnlySubmitButton,
@@ -22,7 +23,6 @@ const BeregningsgrunnlagFieldArrayComponent = ({
       fields.push(initialValueObject);
     });
   }
-  const aksjonspunkterForBG = bgSkalVurderes ? gjeldendeAksjonspunkter : [];
   return fields.map((fieldId, index) => (
     <BeregningForm2
       key={fieldId}
@@ -30,7 +30,7 @@ const BeregningsgrunnlagFieldArrayComponent = ({
       readOnly={readOnly || !bgSkalVurderes}
       fieldArrayID={fieldId}
       beregningsgrunnlag={aktivtBeregningsgrunnlag}
-      gjeldendeAksjonspunkter={aksjonspunkterForBG}
+      avklaringsbehov={avklaringsbehov}
       relevanteStatuser={relevanteStatuser}
       submitCallback={submitCallback}
       readOnlySubmitButton={readOnlySubmitButton}

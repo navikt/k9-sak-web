@@ -250,9 +250,7 @@ const settVisningsRaderForATDPSN = (periode, rowsAndeler, rowsForklaringer, vilk
 };
 const settVisningsRaderForDefault = (
   periode,
-  rows,
   rowsAndeler,
-  rowsForklaringer,
   vilkarStatus,
   harBortfallNaturalYtelse,
 ) => {
@@ -363,7 +361,6 @@ export const createBeregningTableData = createSelector(
         redusertRad.verdi = formatCurrencyNoKr(periode.redusertPrAar);
       }
       dagsatserRad.verdi = formatCurrencyNoKr(finnDagsats(periode));
-      const rows = [];
       const rowsAndeler = [];
       const rowsForklaringer = [];
       const sortedStatusList = aktivitetStatusList.sort((a, b) => (a.kode > b.kode ? 1 : -1)); // sorter alfabetisk
@@ -388,9 +385,7 @@ export const createBeregningTableData = createSelector(
         default: {
           settVisningsRaderForDefault(
             periode,
-            rows,
             rowsAndeler,
-            rowsForklaringer,
             vilkarStatus,
             harBortfallNaturalYtelse,
           );

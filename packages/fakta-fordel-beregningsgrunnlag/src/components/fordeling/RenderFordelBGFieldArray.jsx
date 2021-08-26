@@ -192,7 +192,7 @@ const arbeidsforholdReadOnlyOrSelect = (fields, index, elementFieldId, selectVal
   </>
 );
 
-export const lagBelopKolonne = (andelElementFieldId, readOnly, periodeUtenAarsak, isAksjonspunktClosed) => {
+export const lagBelopKolonne = (andelElementFieldId, readOnly, periodeUtenAarsak, isAvklaringsbehovClosed) => {
   if (!readOnly && periodeUtenAarsak) {
     return (
       <TableColumn>
@@ -213,7 +213,7 @@ export const lagBelopKolonne = (andelElementFieldId, readOnly, periodeUtenAarsak
         bredde="XS"
         parse={parseCurrencyInput}
         readOnly={readOnly}
-        isEdited={isAksjonspunktClosed && !periodeUtenAarsak}
+        isEdited={isAvklaringsbehovClosed && !periodeUtenAarsak}
       />
     </TableColumn>
   );
@@ -224,7 +224,7 @@ const skalViseSletteknapp = (index, fields, readOnly) =>
 
 const createAndelerTableRows = (
   fields,
-  isAksjonspunktClosed,
+  isAvklaringsbehovClosed,
   readOnly,
   inntektskategoriKoder,
   periodeUtenAarsak,
@@ -300,7 +300,7 @@ const createAndelerTableRows = (
           parse={parseCurrencyInput}
         />
       </TableColumn>
-      {lagBelopKolonne(andelElementFieldId, readOnly, periodeUtenAarsak, isAksjonspunktClosed)}
+      {lagBelopKolonne(andelElementFieldId, readOnly, periodeUtenAarsak, isAvklaringsbehovClosed)}
       <TableColumn className={readOnly || periodeUtenAarsak ? styles.shortLeftAligned : undefined}>
         <SelectField
           label=""
@@ -309,7 +309,7 @@ const createAndelerTableRows = (
           selectValues={inntektskategoriSelectValues(inntektskategoriKoder)}
           value={fields.get(index).inntektskategori}
           readOnly={readOnly || periodeUtenAarsak}
-          isEdited={isAksjonspunktClosed && !periodeUtenAarsak}
+          isEdited={isAvklaringsbehovClosed && !periodeUtenAarsak}
         />
       </TableColumn>
       <TableColumn>
@@ -382,7 +382,7 @@ export const RenderFordelBGFieldArrayImpl = ({
   inntektskategoriKoder,
   readOnly,
   periodeUtenAarsak,
-  isAksjonspunktClosed,
+  isAvklaringsbehovClosed,
   harKunYtelse,
   erRevurdering,
   getKodeverknavn,
@@ -396,7 +396,7 @@ export const RenderFordelBGFieldArrayImpl = ({
     : arbeidsgiverSelectValues(arbeidsforholdList, getKodeverknavn, arbeidsgiverOpplysningerPerId);
   const tablerows = createAndelerTableRows(
     fields,
-    isAksjonspunktClosed,
+    isAvklaringsbehovClosed,
     readOnly,
     inntektskategoriKoder,
     periodeUtenAarsak,
@@ -448,7 +448,7 @@ RenderFordelBGFieldArrayImpl.propTypes = {
   intl: PropTypes.shape().isRequired,
   arbeidsforholdList: PropTypes.arrayOf(arbeidsforholdBeregningProptype).isRequired,
   inntektskategoriKoder: kodeverkPropType.isRequired,
-  isAksjonspunktClosed: PropTypes.bool.isRequired,
+  isAvklaringsbehovClosed: PropTypes.bool.isRequired,
   periodeUtenAarsak: PropTypes.bool.isRequired,
   harKunYtelse: PropTypes.bool.isRequired,
   erRevurdering: PropTypes.bool.isRequired,

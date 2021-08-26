@@ -49,9 +49,7 @@ describe('<GrunnlagForAarsinntektPanelAT>', () => {
         intl={intlMock}
         readOnly
         alleAndeler={andeler}
-        isAksjonspunktClosed
         isKombinasjonsstatus={false}
-        harAksjonspunkt={false}
         allePerioder={perioder}
         getKodeverknavn={getKodeverknavn}
         arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
@@ -73,10 +71,8 @@ describe('<GrunnlagForAarsinntektPanelAT>', () => {
         intl={intlMock}
         readOnly
         isKombinasjonsstatus={false}
-        isAksjonspunktClosed
         allePerioder={perioder}
         alleAndeler={andeler}
-        aksjonspunkter={[]}
         getKodeverknavn={getKodeverknavn}
         arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
         bruttoFastsattInntekt={0}
@@ -114,10 +110,8 @@ describe('<GrunnlagForAarsinntektPanelAT>', () => {
         intl={intlMock}
         readOnly
         isKombinasjonsstatus={false}
-        isAksjonspunktClosed
         allePerioder={perioder}
         alleAndeler={andeler}
-        aksjonspunkter={[]}
         getKodeverknavn={getKodeverknavn}
         arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
         bruttoFastsattInntekt={0}

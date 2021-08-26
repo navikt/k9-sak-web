@@ -153,7 +153,7 @@ export const getPerioderMedKontinuerligTilsynOgPleie = (sykdom: Sykdom) =>
   }));
 
 export const getMomentConvertedDate = (date: string | Date | Moment) => {
-  const regex = /([12]\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01]))/gm;
+  const regex = /^([12]\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01]))$/gm;
   if (typeof date === 'string') {
     if (regex.test(date)) {
       return moment(date, 'YYYY-MM-DD').toDate();

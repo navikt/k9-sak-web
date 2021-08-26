@@ -16,7 +16,7 @@ import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 
 const radioGroupFieldName = 'erSNNyIArbeidslivet';
 
-const NyIArbeidslivetSNForm = ({ readOnly, isAksjonspunktClosed, fieldArrayID }) => (
+const NyIArbeidslivetSNForm = ({ readOnly, isAvklaringsbehovClosed, fieldArrayID }) => (
   <div>
     <Normaltekst>
       <FormattedMessage id="BeregningInfoPanel.NyIArbeidslivet.SelvstendigNaeringsdrivende" />
@@ -26,7 +26,7 @@ const NyIArbeidslivetSNForm = ({ readOnly, isAksjonspunktClosed, fieldArrayID })
       name={`${fieldArrayID}.${radioGroupFieldName}`}
       validate={[required]}
       readOnly={readOnly}
-      isEdited={isAksjonspunktClosed}
+      isEdited={isAvklaringsbehovClosed}
     >
       <RadioOption label={<FormattedMessage id="BeregningInfoPanel.FormAlternativ.Ja" />} value />
       <RadioOption label={<FormattedMessage id="BeregningInfoPanel.FormAlternativ.Nei" />} value={false} />
@@ -36,7 +36,7 @@ const NyIArbeidslivetSNForm = ({ readOnly, isAksjonspunktClosed, fieldArrayID })
 
 NyIArbeidslivetSNForm.propTypes = {
   readOnly: PropTypes.bool.isRequired,
-  isAksjonspunktClosed: PropTypes.bool.isRequired,
+  isAvklaringsbehovClosed: PropTypes.bool.isRequired,
   fieldArrayID: PropTypes.string.isRequired,
 };
 
