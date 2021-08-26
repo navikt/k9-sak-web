@@ -1,12 +1,12 @@
 import React from 'react';
-import { intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import { expect } from 'chai';
 import sinon from 'sinon';
 
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import klageVurdering from '@fpsak-frontend/kodeverk/src/klageVurdering';
 import { KlageVurderingRadioOptionsNfp } from './KlageVurderingRadioOptionsNfp';
-import shallowWithIntl from '../../../i18n';
+
+import shallowWithIntl, { intlMock } from '../../../i18n';
 
 describe('<KlageVurderingRadioOptionsNfp>', () => {
   const sprakkode = {
@@ -61,5 +61,23 @@ describe('<KlageVurderingRadioOptionsNfp>', () => {
     expect(radios.at(2).prop('label').id).to.equal('Klage.Behandle.Omgjort');
     expect(radios.at(3).prop('label').id).to.equal('Klage.Behandle.Ugunst');
     expect(radios.at(4).prop('label').id).to.equal('Klage.Behandle.DelvisOmgjort');
+  });
+
+  it('skal vise hjemler når klagevurdering er opprettholdt', () => {
+    const wrapper = shallowWithIntl(
+      <KlageVurderingRadioOptionsNfp
+        readOnly={false}
+        readOnlySubmitButton
+        medholdReasons={medholdReasons}
+        aksjonspunktCode={aksjonspunktCodes.BEHANDLE_KLAGE_NFP}
+        klageVurdering={klageVurdering.STADFESTE_YTELSESVEDTAK}
+        previewCallback={sinon.spy()}
+        intl={intlMock}
+        formProps={{}}
+        sprakkode={sprakkode}
+      />,
+    );
+    expect(wrapper.find('SelectField').props().name).to.equal('klageHjemmel');
+    expect(wrapper.find('SelectField')).to.have.length(1);
   });
 });
