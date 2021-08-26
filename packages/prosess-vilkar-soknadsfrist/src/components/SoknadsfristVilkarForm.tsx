@@ -90,14 +90,14 @@ export const SoknadsfristVilkarForm = ({
 
   return (
     <form onSubmit={handleSubmit}>
-      {(erOverstyrt || harAksjonspunkt) && status === vilkarUtfallType.IKKE_OPPFYLT && (
+      {(erOverstyrt || harAksjonspunkt) && status !== vilkarUtfallType.OPPFYLT && (
         <AksjonspunktBox
           className={styles.aksjonspunktMargin}
           erAksjonspunktApent={erOverstyrt || harÅpentAksjonspunkt}
         >
           {harÅpentAksjonspunkt ? (
             <AksjonspunktHelpTextTemp isAksjonspunktOpen>
-              {[<FormattedMessage id="SoknadsfristVilkarForm.AvklarVurdering" />]}
+              {[<FormattedMessage key={1} id="SoknadsfristVilkarForm.AvklarVurdering" />]}
             </AksjonspunktHelpTextTemp>
           ) : (
             <Element>
