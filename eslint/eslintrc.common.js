@@ -38,7 +38,7 @@ const config = {
   settings: {
     'import/resolver': {
       webpack: {
-        config: resolve(__dirname, '../webpack/webpack.common.js'),
+        config: resolve(__dirname, '../webpack/webpack.common.ts'),
       },
     },
   },
