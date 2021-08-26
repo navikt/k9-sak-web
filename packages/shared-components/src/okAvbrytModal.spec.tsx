@@ -12,7 +12,7 @@ describe('<OkAvbrytModal>', () => {
     const wrapper = shallowWithIntl(
       <OkAvbrytModal.WrappedComponent
         intl={intlMock}
-        textCode="OkAvbrytModal.OpenBehandling"
+        textCode="OkAvbrytModal.Ok"
         showModal
         cancel={sinon.spy()}
         submit={sinon.spy()}
@@ -22,10 +22,10 @@ describe('<OkAvbrytModal>', () => {
     const modal = wrapper.find(Modal);
     expect(modal).toHaveLength(1);
     expect(modal.prop('isOpen')).toBe(true);
-    expect(modal.prop('contentLabel')).toEqual('OkAvbrytModal.OpenBehandling');
+    expect(modal.prop('contentLabel')).toEqual('OK');
 
     const message = wrapper.find(FormattedMessage);
     expect(message).toHaveLength(1);
-    expect(message.prop('id')).toEqual('OkAvbrytModal.OpenBehandling');
+    expect(message.prop('id')).toEqual('OkAvbrytModal.Ok');
   });
 });

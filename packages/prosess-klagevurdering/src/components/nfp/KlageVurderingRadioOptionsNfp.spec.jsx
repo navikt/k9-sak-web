@@ -1,12 +1,12 @@
 import React from 'react';
-import { intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import { expect } from 'chai';
 import sinon from 'sinon';
 
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import klageVurdering from '@fpsak-frontend/kodeverk/src/klageVurdering';
 import { KlageVurderingRadioOptionsNfp } from './KlageVurderingRadioOptionsNfp';
-import shallowWithIntl from '../../../i18n';
+
+import shallowWithIntl, { intlMock } from '../../../i18n';
 
 describe('<KlageVurderingRadioOptionsNfp>', () => {
   const sprakkode = {

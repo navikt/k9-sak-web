@@ -1,9 +1,11 @@
 import React from 'react';
 import { expect } from 'chai';
-import { intlMock, shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
+
 import AksjonspunktBehandler from './AksjonspunktBehandler';
 import AksjonspunktBehandlerTB from '../arbeidstaker/AksjonspunktBehandlerTB';
+
+import shallowWithIntl, { intlMock } from '../../../i18n';
 
 const relevanteStatuser = {
   isFrilanser: false,

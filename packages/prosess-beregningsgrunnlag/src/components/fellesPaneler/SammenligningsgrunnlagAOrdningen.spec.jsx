@@ -1,11 +1,14 @@
 import React from 'react';
 import { expect } from 'chai';
-import { intlMock, mountWithIntl, shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import moment from 'moment';
+
 import { formatCurrencyNoKr, ISO_DATE_FORMAT } from '@fpsak-frontend/utils';
 import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
+
 import SammenligningsgrunnlagAOrdningen from './SammenligningsgrunnlagAOrdningen';
 import Lesmerpanel2 from '../redesign/LesmerPanel';
+
+import shallowWithIntl, { intlMock, mountWithIntl } from '../../../i18n';
 
 const relevanteStatuser = {
   isArbeidstaker: true,

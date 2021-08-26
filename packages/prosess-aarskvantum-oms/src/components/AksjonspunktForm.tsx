@@ -61,6 +61,7 @@ export const FormContent: FunctionComponent<FormContentProps> = ({
         <AksjonspunktHelpTextTemp isAksjonspunktOpen={isAksjonspunktOpen}>
           {[
             <FormattedMessage
+              key={1}
               id={
                 harOverlappendePerioderIInfotrygd
                   ? 'Årskvantum.Aksjonspunkt.Uavklart.OverlappInfotrygd'
@@ -96,7 +97,7 @@ export const FormContent: FunctionComponent<FormContentProps> = ({
   return (
     <>
       <AksjonspunktHelpTextTemp isAksjonspunktOpen={isAksjonspunktOpen}>
-        {[<FormattedMessage id="Årskvantum.Aksjonspunkt.Avslått" />]}
+        {[<FormattedMessage key={1} id="Årskvantum.Aksjonspunkt.Avslått" />]}
       </AksjonspunktHelpTextTemp>
       <VerticalSpacer sixteenPx />
       {isAksjonspunktOpen && (
