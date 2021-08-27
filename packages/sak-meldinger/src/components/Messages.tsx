@@ -7,32 +7,19 @@ import classNames from 'classnames';
 import { Hovedknapp } from 'nav-frontend-knapper';
 
 import dokumentMalType from '@fpsak-frontend/kodeverk/src/dokumentMalType';
-import {
-  KodeverkMedNavn,
-  Kodeverk,
-  Personopplysninger,
-  ArbeidsgiverOpplysningerPerId,
-  Brevmaler,
-  Brevmal,
-  Mottaker,
-} from '@k9-sak-web/types';
-import {
-  ariaCheck,
-  getLanguageCodeFromSprakkode,
-  hasValidText,
-  maxLength,
-  minLength,
-  required,
-  safeJSONParse,
-} from '@fpsak-frontend/utils';
+import { ArbeidsgiverOpplysningerPerId, Brevmal, Brevmaler, Kodeverk, KodeverkMedNavn, Mottaker, Personopplysninger } from '@k9-sak-web/types';
+import { ariaCheck, getLanguageCodeFromSprakkode, hasValidText, maxLength, minLength, required, safeJSONParse } from '@fpsak-frontend/utils';
 import { lagVisningsnavnForMottaker } from '@fpsak-frontend/utils/src/formidlingUtils';
 import ugunstAarsakTyper from '@fpsak-frontend/kodeverk/src/ugunstAarsakTyper';
-import { SelectField, TextAreaField, behandlingForm, behandlingFormValueSelector } from '@fpsak-frontend/form';
+import { behandlingForm, behandlingFormValueSelector, SelectField, TextAreaField } from '@fpsak-frontend/form';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 
+import InputField from '@fpsak-frontend/form/src/InputField';
+import { Fritekstbrev } from '@k9-sak-web/types/src/formidlingTsType';
 import styles from './messages.less';
 
 const maxLength4000 = maxLength(4000);
+const maxLength200 = maxLength(200);
 const minLength3 = minLength(3);
 
 export type FormValues = {
@@ -54,7 +41,7 @@ interface PureOwnProps {
   submitCallback: (values: FormValues) => void;
   behandlingId: number;
   behandlingVersjon: number;
-  previewCallback: (overstyrtMottaker: Mottaker, brevmalkode: string, fritekst: string, arsakskode?: string) => void;
+  previewCallback: (overstyrtMottaker: Mottaker, brevmalkode: string, fritekst: string, fritekstbrev?: Fritekstbrev) => void;
   templates: Brevmaler | Brevmal[];
   sprakKode?: Kodeverk;
   revurderingVarslingArsak: KodeverkMedNavn[];
@@ -69,6 +56,8 @@ interface MappedOwnProps {
   brevmalkode?: string;
   fritekst?: string;
   arsakskode?: string;
+  fritekstbrev?: Fritekstbrev;
+
 }
 
 const formName = 'Messages';
@@ -104,6 +93,7 @@ export const MessagesImpl = ({
   arsakskode,
   personopplysninger,
   arbeidsgiverOpplysningerPerId,
+  fritekstbrev,
   ...formProps
 }: PureOwnProps & MappedOwnProps & WrappedComponentProps & InjectedFormProps) => {
   if (!sprakKode) {
@@ -119,6 +109,7 @@ export const MessagesImpl = ({
         : undefined,
       brevmalkode,
       fritekst,
+      fritekstbrev
     );
   };
 
@@ -212,6 +203,28 @@ export const MessagesImpl = ({
               </div>
             </>
           )}
+          {brevmalkode === dokumentMalType.GENERELL_FRITEKSTBREV && (
+            <>
+              <div className='input--xxl'>
+                <VerticalSpacer eightPx />
+                <InputField
+                  name='fritekstbrev.overskrift'
+                  label={intl.formatMessage({ id: 'Messages.FritekstTittel' })}
+                  validate={[required, minLength3, maxLength200, hasValidText]}
+                  maxLength={200}
+                />
+
+                <VerticalSpacer eightPx />
+                <TextAreaField
+                  name='fritekstbrev.brødtekst'
+                  label={intl.formatMessage({ id: 'Messages.Fritekst' })}
+                  validate={[required, maxLength4000, minLength3, hasValidText]}
+                  maxLength={4000}
+                  badges={[{ type: 'fokus', textId: languageCode, title: 'Messages.Beskrivelse' }]}
+                />
+              </div>
+            </>
+          )}
           <VerticalSpacer eightPx />
           <div className={styles.buttonRow}>
             <Hovedknapp mini spinner={formProps.submitting} disabled={formProps.submitting} onClick={ariaCheck}>
@@ -253,6 +266,7 @@ const buildInitalValues = (templates: Brevmaler | Brevmal[], isKontrollerRevurde
     overstyrtMottaker,
     // overstyrtMottaker: null,
     fritekst: '',
+    fritekstbrev: null
     // arsakskode: null,
   };
 
@@ -285,6 +299,8 @@ const mapStateToPropsFactory = (_initialState, initialOwnProps: PureOwnProps) =>
       'brevmalkode',
       'fritekst',
       'arsakskode',
+      'fritekstbrev.overskrift',
+      'fritekstbrev.brødtekst'
     ),
     causes: getfilteredCauses(ownProps),
     initialValues: buildInitalValues(ownProps.templates, ownProps.isKontrollerRevurderingApOpen),
