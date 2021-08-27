@@ -63,13 +63,11 @@ const SoknadsfristVilkarProsessIndex = ({
   const [activeTab, setActiveTab] = useState(0);
 
   const [activeVilkår] = vilkar;
-  const skalBrukeSidemeny = activeVilkår.perioder.length > 1;
   const perioder = activeVilkår.perioder.filter(periode => visAllePerioder || periode.vurdersIBehandlingen);
 
   const activePeriode = activeVilkår.perioder[activeTab];
-  const mainContainerClassnames = cx('mainContainer', { 'mainContainer--withSideMenu': skalBrukeSidemeny });
 
-  const perioderSomVurderesMedAvslagFn = p =>
+  const ikkeOppfyltePerioderSomSkalVurderesFn = p =>
     p.vurdersIBehandlingen && p.vilkarStatus.kode !== vilkarUtfallType.OPPFYLT;
 
   useEffect(() => {
@@ -84,11 +82,12 @@ const SoknadsfristVilkarProsessIndex = ({
       !(ap.status.kode === aksjonspunktStatus.OPPRETTET && !ap.kanLoses),
   );
 
-  const perioderMedAvslag = perioder.filter(perioderSomVurderesMedAvslagFn);
+  const skalBrukeSidemeny = activeVilkår.perioder.length > 1 || harÅpentAksjonspunkt;
+  const ikkeOppfyltePerioder = perioder.filter(ikkeOppfyltePerioderSomSkalVurderesFn);
 
   const dokumenterSomSkalVurderes = soknadsfristStatus.dokumentStatus.filter(dok =>
     dok.status.some(status =>
-      perioderMedAvslag.some(
+      ikkeOppfyltePerioder.some(
         p =>
           (p.periode.fom >= status.periode.fom && p.periode.fom <= status.periode.tom) ||
           (p.periode.tom >= status.periode.fom && p.periode.tom <= status.periode.tom),
@@ -103,6 +102,8 @@ const SoknadsfristVilkarProsessIndex = ({
         (activePeriode.periode.tom >= status.periode.fom && activePeriode.periode.tom <= status.periode.tom),
     ),
   );
+
+  const mainContainerClassnames = cx('mainContainer', { 'mainContainer--withSideMenu': skalBrukeSidemeny });
 
   return (
     <RawIntlProvider value={intl}>
@@ -128,7 +129,7 @@ const SoknadsfristVilkarProsessIndex = ({
           <SoknadsfristVilkarHeader
             aksjonspunkter={aksjonspunkter}
             erOverstyrt={erOverstyrt}
-            kanOverstyreAccess={kanOverstyreAccess}
+            kanOverstyreAccess={{ enabled: kanOverstyreAccess?.isEnabled && ikkeOppfyltePerioder.length > 0 }}
             lovReferanse={activeVilkår.lovReferanse ?? lovReferanse}
             overrideReadOnly={overrideReadOnly}
             overstyringApKode={aksjonspunktCodes.OVERSTYR_SOKNADSFRISTVILKAR}

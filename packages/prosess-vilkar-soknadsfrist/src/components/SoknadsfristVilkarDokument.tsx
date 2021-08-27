@@ -28,7 +28,7 @@ const maxLength1500 = maxLength(1500);
 const formatDate = dato => moment(dato).format(DDMMYYYY_DATE_FORMAT);
 
 interface SoknadsfristVilkarDokumentProps {
-  erVilkarOk?: boolean;
+  erVilkarOk?: boolean | string;
   readOnly: boolean;
   skalViseBegrunnelse?: boolean;
   erAktivtDokument: boolean;
