@@ -78,7 +78,6 @@ export const SoknadsfristVilkarForm = ({
   handleSubmit,
   submitting,
   pristine,
-  status,
   invalid,
   alleDokumenter,
   dokumenter,
@@ -90,7 +89,7 @@ export const SoknadsfristVilkarForm = ({
 
   return (
     <form onSubmit={handleSubmit}>
-      {(erOverstyrt || harAksjonspunkt) && status !== vilkarUtfallType.OPPFYLT && (
+      {(erOverstyrt || harAksjonspunkt) && (
         <AksjonspunktBox
           className={styles.aksjonspunktMargin}
           erAksjonspunktApent={erOverstyrt || harÅpentAksjonspunkt}
@@ -177,35 +176,6 @@ export const SoknadsfristVilkarForm = ({
   );
 };
 
-const buildInitialValues = createSelector(
-  [
-    (ownProps: SoknadsfristVilkarFormProps) => ownProps.aksjonspunkter,
-    (ownProps: SoknadsfristVilkarFormProps) => ownProps.alleDokumenter,
-  ],
-  (aksjonspunkter, alleDokumenter) => {
-    const overstyrtAksjonspunkt = aksjonspunkter.find(
-      ap => ap.definisjon.kode === aksjonspunktCodes.OVERSTYR_SOKNADSFRISTVILKAR,
-    );
-
-    return {
-      isOverstyrt: overstyrtAksjonspunkt !== undefined,
-      avklarteKrav: alleDokumenter.map(dokument => ({
-        erVilkarOk: dokument.overstyrteOpplysninger?.godkjent || dokument.avklarteOpplysninger?.godkjent,
-        begrunnelse: decodeHtmlEntity(
-          dokument.overstyrteOpplysninger?.begrunnelse || dokument.avklarteOpplysninger?.begrunnelse || '',
-        ),
-        journalpostId: dokument.journalpostId,
-        fraDato: formatDate(
-          dokument.overstyrteOpplysninger?.fraDato ||
-            dokument.avklarteOpplysninger?.fraDato ||
-            dokument.innsendingstidspunkt,
-        ),
-      })),
-      // ...SoknadsfristVilkarDokument.buildInitialValues(dokumenter),
-    };
-  },
-);
-
 /**
  * Temporær fiks for saksbehandlere som setter dato og forventer at
  * backend skal telle fra og meg datoen de setter.
@@ -213,6 +183,47 @@ const buildInitialValues = createSelector(
  * Backend teller fra dagen etter..
  */
 const minusEnDag = dato => moment(dato).subtract(1, 'days').format('YYYY-MM-DD');
+const plusEnDag = dato => moment(dato).add(1, 'days').format('YYYY-MM-DD');
+
+const buildInitialValues = createSelector(
+  [
+    (ownProps: SoknadsfristVilkarFormProps) => ownProps.aksjonspunkter,
+    (ownProps: SoknadsfristVilkarFormProps) => ownProps.alleDokumenter,
+    (ownProps: SoknadsfristVilkarFormProps) => ownProps.status,
+  ],
+  (aksjonspunkter, alleDokumenter, status) => {
+    const overstyrtAksjonspunkt = aksjonspunkter.find(
+      ap => ap.definisjon.kode === aksjonspunktCodes.OVERSTYR_SOKNADSFRISTVILKAR,
+    );
+
+    return {
+      isOverstyrt: overstyrtAksjonspunkt !== undefined,
+      avklarteKrav: alleDokumenter.map(dokument => {
+        const fraDato = dokument.overstyrteOpplysninger?.fraDato || dokument.avklarteOpplysninger?.fraDato;
+
+        const erDelvisInnvilget =
+          status !== vilkarUtfallType.OPPFYLT && fraDato && fraDato !== dokument.innsendingstidspunkt;
+
+        return {
+          erVilkarOk: erDelvisInnvilget
+            ? DELVIS_OPPFYLT
+            : dokument.overstyrteOpplysninger?.godkjent ||
+              dokument.avklarteOpplysninger?.godkjent ||
+              status === vilkarUtfallType.OPPFYLT,
+          begrunnelse: decodeHtmlEntity(
+            dokument.overstyrteOpplysninger?.begrunnelse || dokument.avklarteOpplysninger?.begrunnelse || '',
+          ),
+          journalpostId: dokument.journalpostId,
+          fraDato: formatDate(
+            fraDato
+              ? plusEnDag(fraDato)
+              : moment(dokument.innsendingstidspunkt).startOf('month').subtract(3, 'months').format('YYYY-MM-DD'),
+          ),
+        };
+      }),
+    };
+  },
+);
 
 const transformValues = (values, alleDokumenter, apKode, periodeFom, periodeTom) => ({
   kode: apKode,
@@ -277,8 +288,15 @@ const mapStateToPropsFactory = (_initialState, initialOwnProps: SoknadsfristVilk
   const validateFn = values => validate(values);
 
   return (state, ownProps) => {
-    const { behandlingId, behandlingVersjon, aksjonspunkter, harÅpentAksjonspunkt, erOverstyrt, overrideReadOnly } =
-      ownProps;
+    const {
+      behandlingId,
+      behandlingVersjon,
+      aksjonspunkter,
+      status,
+      harÅpentAksjonspunkt,
+      erOverstyrt,
+      overrideReadOnly,
+    } = ownProps;
 
     const aksjonspunkt = harÅpentAksjonspunkt
       ? aksjonspunkter.find(ap => ap.definisjon.kode === aksjonspunktCodes.KONTROLLER_OPPLYSNINGER_OM_SØKNADSFRIST)
@@ -304,7 +322,7 @@ const mapStateToPropsFactory = (_initialState, initialOwnProps: SoknadsfristVilk
       harÅpentAksjonspunkt,
       harAksjonspunkt: aksjonspunkt !== undefined,
       isSolvable: erOverstyrt || isSolvable,
-      isReadOnly: overrideReadOnly,
+      isReadOnly: overrideReadOnly || status === vilkarUtfallType.OPPFYLT,
       validate: validateFn,
       ...behandlingFormValueSelector(formName, behandlingId, behandlingVersjon)(state, 'isOverstyrt', 'erVilkarOk'),
     };
