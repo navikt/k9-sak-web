@@ -27,7 +27,7 @@ export const IKKE_PAKLAGD_VEDTAK = 'ikkePaklagdVedtak';
 export const getPaklagdVedtak = (klageFormkravResultat, avsluttedeBehandlinger) => {
   const behandlingid =
     Array.isArray(avsluttedeBehandlinger) &&
-    avsluttedeBehandlinger.find(b => b.uuid === klageFormkravResultat.påklagdBehandlingRef)?.id;
+    avsluttedeBehandlinger.find(b => b.uuid === klageFormkravResultat.påklagdBehandlingRef)?.uuid;
   return behandlingid ? `${behandlingid}` : IKKE_PAKLAGD_VEDTAK;
 };
 
