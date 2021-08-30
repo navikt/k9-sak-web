@@ -3,9 +3,10 @@ import { shallow } from 'enzyme';
 
 import { TimeLineControl } from '@fpsak-frontend/tidslinje';
 import { BeregningsresultatPeriodeAndel } from '@k9-sak-web/types';
-import { intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 
 import { PeriodeMedId, TilkjentYtelse } from './TilkjentYtelse';
+
+import { intlMock } from '../../i18n';
 
 describe('<TilkjentYtelse>', () => {
   it('skall innehålla korrekt antal felter', () => {

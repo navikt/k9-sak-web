@@ -5,6 +5,7 @@ import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-te
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { FormkravKlageFormKa } from './FormkravKlageFormKa';
 import FormkravKlageForm from './FormkravKlageForm';
+
 import shallowWithIntl, { intlMock } from '../../i18n';
 
 describe('<FormkravKlageFormKa>', () => {

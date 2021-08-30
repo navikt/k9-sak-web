@@ -1,13 +1,12 @@
 import React from 'react';
 import sinon from 'sinon';
 
-import { intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import { Normaltekst } from 'nav-frontend-typografi';
 import { Table, TableColumn, TableRow } from '@fpsak-frontend/shared-components';
 import { FormattedMessage } from 'react-intl';
 import { Label } from '@fpsak-frontend/form/src/Label';
 import DocumentList from './DocumentList';
-import shallowWithIntl from '../../i18n/index';
+import shallowWithIntl, { intlMock } from '../../i18n/index';
 
 describe('<DocumentList>', () => {
   it('skal vise to dokumenter i liste', () => {

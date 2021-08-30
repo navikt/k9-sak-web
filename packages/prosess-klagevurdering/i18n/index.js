@@ -1,6 +1,6 @@
 import {
-  shallowWithIntl as globalShallowWithIntl,
   intlWithMessages,
+  shallowWithIntl as globalShallowWithIntl,
 } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 
 import messages from './nb_NO.json';

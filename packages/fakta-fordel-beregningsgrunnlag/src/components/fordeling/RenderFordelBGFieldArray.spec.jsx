@@ -1,7 +1,6 @@
 import React from 'react';
 import { expect } from 'chai';
 import { isRequiredMessage } from '@fpsak-frontend/utils';
-import { intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import { MockFieldsWithContent } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
 import { SelectField } from '@fpsak-frontend/form';
 import { TableRow } from '@fpsak-frontend/shared-components';
@@ -9,7 +8,7 @@ import { Element } from 'nav-frontend-typografi';
 import beregningsgrunnlagAndeltyper from '@fpsak-frontend/kodeverk/src/beregningsgrunnlagAndeltyper';
 import { skalIkkjeVereHoegereEnnRefusjonFraInntektsmelding } from '../ValidateAndelerUtils';
 import RenderFordelBGFieldArray, { lagBelopKolonne, RenderFordelBGFieldArrayImpl } from './RenderFordelBGFieldArray';
-import shallowWithIntl from '../../../i18n';
+import shallowWithIntl, { intlMock } from '../../../i18n';
 
 const inntektskategorier = [
   {

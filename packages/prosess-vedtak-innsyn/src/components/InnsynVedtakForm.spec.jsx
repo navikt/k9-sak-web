@@ -2,14 +2,13 @@ import React from 'react';
 import { expect } from 'chai';
 import { FormattedMessage } from 'react-intl';
 
-import { intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
 import innsynResultatType from '@fpsak-frontend/kodeverk/src/innsynResultatType';
 import { ProsessStegSubmitButton } from '@k9-sak-web/prosess-felles';
 import { TextAreaField } from '@fpsak-frontend/form';
 
 import { InnsynVedtakFormImpl } from './InnsynVedtakForm';
-import shallowWithIntl from '../../i18n';
+import shallowWithIntl, { intlMock } from '../../i18n';
 
 describe('<InnsynVedtakForm>', () => {
   //  Tester for readOnly betingelse på confirm-vilkår knapp

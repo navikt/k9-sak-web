@@ -21,7 +21,7 @@ describe('<Nokkeltall>', () => {
           {
             antallDager: 3,
             antallTimer: 3,
-            overskrifttekstId: 'Nøkkeltall.Heading',
+            overskrifttekstId: 'Nøkkeltall.VisUtregninger',
           },
         ]}
         visDetaljer={() => undefined}
@@ -50,7 +50,7 @@ describe('<Nokkeltall>', () => {
           {
             antallDager: 3,
             antallTimer: 3,
-            overskrifttekstId: 'Nøkkeltall.Heading',
+            overskrifttekstId: 'Nøkkeltall.VisUtregninger',
           },
         ]}
         visDetaljer={() => undefined}

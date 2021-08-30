@@ -1,10 +1,11 @@
 import React from 'react';
 import { expect } from 'chai';
-
-import { shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import sammenligningType from '@fpsak-frontend/kodeverk/src/sammenligningType';
+
 import AvviksopplysningerPanel from './AvvikopplysningerPanel';
+
+import shallowWithIntl from '../../../i18n';
 
 const sammenligningsgrunnlag = kode => ({
   sammenligningsgrunnlagFom: '2018-09-01',

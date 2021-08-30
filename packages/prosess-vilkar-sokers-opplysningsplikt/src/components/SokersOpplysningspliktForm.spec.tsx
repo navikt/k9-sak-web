@@ -1,6 +1,5 @@
 import React from 'react';
 
-import { intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
 
 import dokumentTypeId from '@fpsak-frontend/kodeverk/src/dokumentTypeId';
@@ -13,7 +12,7 @@ import {
   getSortedManglendeVedlegg,
   SokersOpplysningspliktFormImpl,
 } from './SokersOpplysningspliktForm';
-import shallowWithIntl from '../../i18n';
+import shallowWithIntl, { intlMock } from '../../i18n';
 
 describe('<SokersOpplysningspliktForm>', () => {
   const getKodeverknavn = () => undefined;
