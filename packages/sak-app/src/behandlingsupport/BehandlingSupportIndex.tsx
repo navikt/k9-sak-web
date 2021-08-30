@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useCallback, useMemo } from 'react';
+import React, { useCallback, useMemo } from 'react';
 import { useHistory } from 'react-router-dom';
 
 import SupportMenySakIndex, { SupportTabs } from '@fpsak-frontend/sak-support-meny';
@@ -53,7 +53,7 @@ interface OwnProps {
  * Har ansvar for å lage navigasjonsrad med korrekte navigasjonsvalg, og route til rett
  * støttepanelkomponent ihht. gitt parameter i URL-en.
  */
-const BehandlingSupportIndex: FunctionComponent<OwnProps> = ({
+const BehandlingSupportIndex = ({
   fagsak,
   alleBehandlinger,
   behandlingId,
@@ -61,7 +61,7 @@ const BehandlingSupportIndex: FunctionComponent<OwnProps> = ({
   behandlingRettigheter,
   personopplysninger,
   arbeidsgiverOpplysninger,
-}) => {
+}: OwnProps) => {
   const { selected: valgtSupportPanel, location } = useTrackRouteParam<string>({
     paramName: 'stotte',
     isQueryParam: true,

@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useState, useCallback, ReactNode, KeyboardEvent, MouseEvent } from 'react';
+import React, { useState, useCallback, ReactNode, KeyboardEvent, MouseEvent } from 'react';
 
 import Tooltip from './Tooltip';
 
@@ -20,7 +20,7 @@ interface OwnProps {
  *
  * Presentasjonskomponent. Komponent som har ansvar for visning av bilder.
  */
-const Image: FunctionComponent<OwnProps> = ({
+const Image = ({
   onClick = () => undefined,
   onMouseDown,
   tabIndex = -1,
@@ -31,7 +31,7 @@ const Image: FunctionComponent<OwnProps> = ({
   onKeyDown,
   tooltip,
   alignTooltipLeft = false,
-}) => {
+}: OwnProps) => {
   const [isHovering, setHoovering] = useState(false);
 
   const onFocus = useCallback(() => {

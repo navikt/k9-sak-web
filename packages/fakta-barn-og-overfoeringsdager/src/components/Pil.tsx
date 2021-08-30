@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from 'react';
+import React from 'react';
 import pilHøyre from '@fpsak-frontend/assets/images/pil_hoyre_filled.svg';
 import Image from '@fpsak-frontend/shared-components/src/Image';
 import classnames from 'classnames/bind';
@@ -12,7 +12,7 @@ interface PilProps {
   className?: string;
 }
 
-const Pil: FunctionComponent<PilProps> = ({ retning, className = '' }) => (
+const Pil = ({ retning, className = '' }: PilProps) => (
   <Image
     className={classNames('pil', className, { pilVenstre: retning === OverføringsretningEnum.INN })}
     src={pilHøyre}

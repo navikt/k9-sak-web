@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useState, useCallback } from 'react';
+import React, { useState, useCallback } from 'react';
 import { Route, Redirect, useLocation } from 'react-router-dom';
 
 import { RestApiState } from '@k9-sak-web/rest-api-hooks';
@@ -38,7 +38,7 @@ const erTilbakekreving = (behandlingType: Kodeverk): boolean =>
  *
  * Container komponent. Er rot for for fagsakdelen av hovedvinduet, og har ansvar å legge valgt saksnummer fra URL-en i staten.
  */
-const FagsakIndex: FunctionComponent = () => {
+const FagsakIndex = () => {
   const [behandlingerTeller, setBehandlingTeller] = useState(0);
   const [requestPendingMessage, setRequestPendingMessage] = useState<string>();
 

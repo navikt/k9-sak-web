@@ -62,7 +62,7 @@ interface TimeLineButtonProps {
   type: keyof ButtonTypes;
 }
 
-const TimeLineButton: React.FunctionComponent<TimeLineButtonProps> = ({ callback, inverted, text, type }) => (
+const TimeLineButton = ({ callback, inverted, text, type }: TimeLineButtonProps) => (
   <Image
     {...buttonTypes[type]}
     tabIndex={0}

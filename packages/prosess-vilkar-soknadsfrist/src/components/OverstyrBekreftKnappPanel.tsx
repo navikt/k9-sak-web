@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from 'react';
+import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import { Hovedknapp } from 'nav-frontend-knapper';
 
@@ -9,12 +9,7 @@ interface OwnProps {
   overrideReadOnly: boolean;
 }
 
-const OverstyrBekreftKnappPanel: FunctionComponent<OwnProps> = ({
-  disabled,
-  submitting,
-  pristine,
-  overrideReadOnly,
-}) => {
+const OverstyrBekreftKnappPanel = ({ disabled, submitting, pristine, overrideReadOnly }: OwnProps) => {
   if (overrideReadOnly) {
     return null;
   }

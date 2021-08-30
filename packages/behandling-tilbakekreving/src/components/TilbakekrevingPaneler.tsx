@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from 'react';
+import React from 'react';
 
 import { BehandlingPaVent, SettPaVentParams, Rettigheter } from '@k9-sak-web/behandling-felles';
 import { Behandling, Fagsak, FagsakPerson, KodeverkMedNavn } from '@k9-sak-web/types';
@@ -27,7 +27,7 @@ interface OwnProps {
   setBehandling: (behandling: Behandling) => void;
 }
 
-const TilbakekrevingPaneler: FunctionComponent<OwnProps> = ({
+const TilbakekrevingPaneler = ({
   fetchedData,
   fagsak,
   fagsakPerson,
@@ -45,7 +45,7 @@ const TilbakekrevingPaneler: FunctionComponent<OwnProps> = ({
   harApenRevurdering,
   hasFetchError,
   setBehandling,
-}) => (
+}: OwnProps) => (
   <>
     <BehandlingPaVent
       behandling={behandling}

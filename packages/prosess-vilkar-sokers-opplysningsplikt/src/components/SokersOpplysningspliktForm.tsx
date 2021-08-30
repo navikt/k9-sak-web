@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import { InjectedFormProps } from 'redux-form';
 import { createSelector } from 'reselect';
@@ -103,9 +103,7 @@ interface MappedOwnProps {
  *
  * Presentasjonskomponent. Informasjon om søkers informasjonsplikt er godkjent eller avvist.
  */
-export const SokersOpplysningspliktFormImpl: FunctionComponent<
-  PureOwnProps & MappedOwnProps & WrappedComponentProps & InjectedFormProps
-> = ({
+export const SokersOpplysningspliktFormImpl = ({
   intl,
   readOnly,
   readOnlySubmitButton,
@@ -121,7 +119,7 @@ export const SokersOpplysningspliktFormImpl: FunctionComponent<
   behandlingId,
   behandlingVersjon,
   ...formProps
-}) => (
+}: PureOwnProps & MappedOwnProps & WrappedComponentProps & InjectedFormProps) => (
   <ProsessPanelTemplate
     title={intl.formatMessage({ id: 'SokersOpplysningspliktForm.SokersOpplysningsplikt' })}
     isAksjonspunktOpen={!readOnlySubmitButton}
@@ -194,12 +192,6 @@ export const SokersOpplysningspliktFormImpl: FunctionComponent<
     )}
   </ProsessPanelTemplate>
 );
-
-SokersOpplysningspliktFormImpl.defaultProps = {
-  hasAksjonspunkt: false,
-  manglendeVedlegg: [],
-  inntektsmeldingerSomIkkeKommer: {},
-};
 
 export const getSortedManglendeVedlegg = createSelector([(ownProps: PureOwnProps) => ownProps.soknad], soknad =>
   soknad && soknad.manglendeVedlegg

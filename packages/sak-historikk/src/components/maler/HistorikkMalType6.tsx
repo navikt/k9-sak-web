@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from 'react';
+import React from 'react';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
 
 import { HistorikkInnslagOpplysning, Kodeverk } from '@k9-sak-web/types';
@@ -20,7 +20,7 @@ const formaterOpplysning = (
   </div>
 );
 
-const HistorikkMalType6: FunctionComponent<HistorikkMal> = ({ historikkinnslag, getKodeverknavn }) => (
+const HistorikkMalType6 = ({ historikkinnslag, getKodeverknavn }: HistorikkMal) => (
   <>
     {historikkinnslag.historikkinnslagDeler.map(del => (
       <div key={del.hendelse?.navn?.kode}>

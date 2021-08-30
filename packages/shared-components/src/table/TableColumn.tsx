@@ -1,4 +1,4 @@
-import React, { ReactNode, FunctionComponent } from 'react';
+import React, { ReactNode } from 'react';
 import classnames from 'classnames/bind';
 
 import styles from './tableColumn.less';
@@ -16,7 +16,7 @@ interface OwnProps {
  *
  * Presentasjonskomponent. Tabellkolonne som brukes av komponenten Table.
  */
-const TableColumn: FunctionComponent<OwnProps> = ({ children = '', className, hidden = false }) => {
+const TableColumn = ({ children = '', className, hidden = false }: OwnProps) => {
   if (hidden) {
     return null;
   }

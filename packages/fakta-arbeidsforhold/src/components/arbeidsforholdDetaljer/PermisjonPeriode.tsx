@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from 'react';
+import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import { Normaltekst } from 'nav-frontend-typografi';
 
@@ -18,7 +18,7 @@ interface OwnProps {
   arbeidsforhold: ArbeidsforholdV2;
 }
 
-const PermisjonPeriode: FunctionComponent<OwnProps> = ({ arbeidsforhold }) => (
+const PermisjonPeriode = ({ arbeidsforhold }: OwnProps) => (
   <>
     {arbeidsforhold.permisjoner && arbeidsforhold.permisjoner.length > 0 && (
       <div>

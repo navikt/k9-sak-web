@@ -1,4 +1,4 @@
-import React, { ReactNode, FunctionComponent } from 'react';
+import React, { ReactNode } from 'react';
 import classnames from 'classnames/bind';
 
 import styles from './flexRow.less';
@@ -20,7 +20,7 @@ interface OwnProps {
   autoFlex?: boolean;
 }
 
-const FlexRow: FunctionComponent<OwnProps> = ({
+const FlexRow = ({
   children,
   spaceBetween = false,
   alignItemsToBaseline = false,
@@ -30,7 +30,7 @@ const FlexRow: FunctionComponent<OwnProps> = ({
   justifyCenter = false,
   childrenMargin = false,
   autoFlex = false,
-}) => (
+}: OwnProps) => (
   <div
     className={classNames(
       'flexRow',

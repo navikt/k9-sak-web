@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from 'react';
+import React from 'react';
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 
 import { KodeverkMedNavn } from '@k9-sak-web/types';
@@ -28,7 +28,7 @@ interface OwnProps {
   erTilbakekreving?: boolean;
 }
 
-const SettPaVentModalIndex: FunctionComponent<OwnProps> = ({
+const SettPaVentModalIndex = ({
   cancelEvent,
   submitCallback,
   showModal,
@@ -38,7 +38,7 @@ const SettPaVentModalIndex: FunctionComponent<OwnProps> = ({
   visBrevErBestilt,
   hasManualPaVent,
   erTilbakekreving,
-}) => (
+}: OwnProps) => (
   <RawIntlProvider value={intl}>
     <SettPaVentModal
       cancelEvent={cancelEvent}

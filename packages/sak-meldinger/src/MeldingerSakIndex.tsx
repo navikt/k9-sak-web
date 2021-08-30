@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from 'react';
+import React from 'react';
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 
 import {
@@ -37,7 +37,7 @@ interface OwnProps {
   arbeidsgiverOpplysningerPerId?: ArbeidsgiverOpplysningerPerId;
 }
 
-const MeldingerSakIndex: FunctionComponent<OwnProps> = ({
+const MeldingerSakIndex = ({
   submitCallback,
   templates,
   sprakKode,
@@ -48,7 +48,7 @@ const MeldingerSakIndex: FunctionComponent<OwnProps> = ({
   revurderingVarslingArsak,
   personopplysninger,
   arbeidsgiverOpplysningerPerId,
-}) => (
+}: OwnProps) => (
   <RawIntlProvider value={intl}>
     <Messages
       submitCallback={submitCallback}

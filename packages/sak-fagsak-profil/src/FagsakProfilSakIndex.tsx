@@ -1,4 +1,4 @@
-import React, { FunctionComponent, ReactNode } from 'react';
+import React, { ReactNode } from 'react';
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 
 import { KodeverkMedNavn } from '@k9-sak-web/types';
@@ -25,14 +25,14 @@ interface OwnProps {
   dekningsgrad?: number;
 }
 
-const FagsakProfilSakIndex: FunctionComponent<OwnProps> = ({
+const FagsakProfilSakIndex = ({
   saksnummer,
   fagsakYtelseType,
   fagsakStatus,
   renderBehandlingMeny,
   renderBehandlingVelger,
   dekningsgrad,
-}) => (
+}: OwnProps) => (
   <RawIntlProvider value={intl}>
     <FagsakProfile
       saksnummer={saksnummer}

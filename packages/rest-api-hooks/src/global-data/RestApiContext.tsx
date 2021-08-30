@@ -1,4 +1,4 @@
-import React, { createContext, useReducer, FunctionComponent, ReactNode } from 'react';
+import React, { createContext, useReducer, ReactNode } from 'react';
 
 const defaultInitialState = {};
 
@@ -18,7 +18,7 @@ interface OwnProps {
  * Håndterer state for data som skal hentes fra backend kun en gang og som en trenger aksess til
  * mange steder i applikasjonen.
  */
-export const RestApiProvider: FunctionComponent<OwnProps> = ({ children, initialState }): JSX.Element => {
+export const RestApiProvider = ({ children, initialState }: OwnProps): JSX.Element => {
   const [state, dispatch] = useReducer((oldState, action) => {
     switch (action.type) {
       case 'success':

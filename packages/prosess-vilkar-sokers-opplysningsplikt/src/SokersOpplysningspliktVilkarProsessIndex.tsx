@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from 'react';
+import React from 'react';
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 
 import { Soknad } from '@k9-sak-web/types';
@@ -21,7 +21,7 @@ interface OwnProps {
   soknad: Soknad;
 }
 
-const SokersOpplysningspliktVilkarProsessIndex: FunctionComponent<OwnProps & StandardProsessFormProps> = ({
+const SokersOpplysningspliktVilkarProsessIndex = ({
   behandling,
   soknad,
   aksjonspunkter,
@@ -30,7 +30,7 @@ const SokersOpplysningspliktVilkarProsessIndex: FunctionComponent<OwnProps & Sta
   isReadOnly,
   readOnlySubmitButton,
   alleKodeverk,
-}) => (
+}: OwnProps & StandardProsessFormProps) => (
   <RawIntlProvider value={intl}>
     <SokersOpplysningspliktForm
       behandlingId={behandling.id}

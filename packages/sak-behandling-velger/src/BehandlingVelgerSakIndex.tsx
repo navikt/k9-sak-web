@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from 'react';
+import React from 'react';
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 import { Location } from 'history';
 
@@ -27,7 +27,7 @@ interface OwnProps {
   getKodeverkFn: (kodeverk: Kodeverk, behandlingType?: Kodeverk) => KodeverkMedNavn;
 }
 
-const BehandlingVelgerSakIndex: FunctionComponent<OwnProps> = ({
+const BehandlingVelgerSakIndex = ({
   behandlinger,
   getBehandlingLocation,
   noExistingBehandlinger,
@@ -35,7 +35,7 @@ const BehandlingVelgerSakIndex: FunctionComponent<OwnProps> = ({
   showAll,
   toggleShowAll,
   getKodeverkFn,
-}) => (
+}: OwnProps) => (
   <RawIntlProvider value={intl}>
     <BehandlingPicker
       behandlinger={behandlinger}

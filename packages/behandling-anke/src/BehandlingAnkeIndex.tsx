@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useEffect, useState, useCallback } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
 import { Rettigheter, ReduxFormStateCleaner, useSetBehandlingVedEndring } from '@k9-sak-web/behandling-felles';
@@ -37,7 +37,7 @@ interface OwnProps {
   setRequestPendingMessage: (message: string) => void;
 }
 
-const BehandlingAnkeIndex: FunctionComponent<OwnProps> = ({
+const BehandlingAnkeIndex = ({
   behandlingEventHandler,
   behandlingId,
   oppdaterBehandlingVersjon,
@@ -50,7 +50,7 @@ const BehandlingAnkeIndex: FunctionComponent<OwnProps> = ({
   opneSokeside,
   alleBehandlinger,
   setRequestPendingMessage,
-}) => {
+}: OwnProps) => {
   const [nyOgForrigeBehandling, setBehandlinger] = useState<{ current?: Behandling; previous?: Behandling }>({
     current: undefined,
     previous: undefined,

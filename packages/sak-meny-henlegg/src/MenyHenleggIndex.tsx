@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useCallback, useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 
 import { ArbeidsgiverOpplysningerPerId, Kodeverk, KodeverkMedNavn, Personopplysninger } from '@k9-sak-web/types';
@@ -43,7 +43,7 @@ interface OwnProps {
   hentMottakere: () => Promise<KlagePart[]>;
 }
 
-const MenyHenleggIndex: FunctionComponent<OwnProps> = ({
+const MenyHenleggIndex = ({
   behandlingId,
   behandlingVersjon,
   henleggBehandling,
@@ -57,7 +57,7 @@ const MenyHenleggIndex: FunctionComponent<OwnProps> = ({
   personopplysninger,
   arbeidsgiverOpplysningerPerId,
   hentMottakere,
-}) => {
+}: OwnProps) => {
   const [erHenlagt, setHenlagt] = useState(false);
 
   const submit = useCallback(

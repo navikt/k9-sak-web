@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from 'react';
+import React from 'react';
 import { FormattedMessage, injectIntl, WrappedComponentProps } from 'react-intl';
 
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
@@ -11,8 +11,8 @@ interface VilkarFieldsProps {
   readOnly: boolean;
 }
 
-const VilkarFields: FunctionComponent<VilkarFieldsProps & WrappedComponentProps> = React.memo(
-  ({ intl, erOmsorgspenger, fieldPrefix, erVilkarOk, readOnly }) => (
+const VilkarFields = React.memo(
+  ({ intl, erOmsorgspenger, fieldPrefix, erVilkarOk, readOnly }: VilkarFieldsProps & WrappedComponentProps) => (
     <>
       <ProsessStegBegrunnelseTextField
         text={

@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import { FormattedMessage } from 'react-intl';
 import Lenkepanel from 'nav-frontend-lenkepanel';
@@ -19,7 +19,7 @@ interface OwnProps {
   finnPathToFagsak: (saksnummer: string) => string;
 }
 
-const AktoerGrid: FunctionComponent<OwnProps> = ({ aktorInfo, alleKodeverk, finnPathToFagsak }) => {
+const AktoerGrid = ({ aktorInfo, alleKodeverk, finnPathToFagsak }: OwnProps) => {
   const getKodeverknavn = getKodeverknavnFn(alleKodeverk, kodeverkTyper);
 
   return (

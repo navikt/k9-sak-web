@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from 'react';
+import React from 'react';
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 
 import { Fagsak, KodeverkMedNavn } from '@k9-sak-web/types';
@@ -31,7 +31,7 @@ interface OwnProps {
 /*
  * NB! Denne komponenten blir kun brukt lokalt. I alle andre miljø brukes FPLOS
  */
-const FagsakSokSakIndex: FunctionComponent<OwnProps> = ({
+const FagsakSokSakIndex = ({
   fagsaker = [],
   searchFagsakCallback,
   searchResultReceived,
@@ -39,7 +39,7 @@ const FagsakSokSakIndex: FunctionComponent<OwnProps> = ({
   searchStarted = false,
   searchResultAccessDenied,
   alleKodeverk,
-}) => (
+}: OwnProps) => (
   <RawIntlProvider value={intl}>
     <FagsakSearch
       fagsaker={fagsaker}

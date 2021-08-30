@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from 'react';
+import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import Panel from 'nav-frontend-paneler';
 
@@ -23,14 +23,14 @@ interface OwnProps {
  *
  * Presentasjonskomponent. Statisk visning av panel som tilsier ingen faresignaler funnet i behandlingen.
  */
-const HoyRisikoPanel: FunctionComponent<OwnProps> = ({
+const HoyRisikoPanel = ({
   behandlingId,
   behandlingVersjon,
   risikoklassifisering,
   aksjonspunkt,
   readOnly,
   submitCallback,
-}) => (
+}: OwnProps) => (
   <Panel>
     {aksjonspunkt && aksjonspunkt.status.kode === aksjonspunktStatus.OPPRETTET && (
       <>

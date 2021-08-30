@@ -34,7 +34,7 @@ interface StateProps {
   reduxFormChange: (formName: string, fieldName: string, value: any) => void;
 }
 
-const KontinuerligTilsynOgPleie: React.FunctionComponent<KontinuerligTilsynOgPleieProps & StateProps> = ({
+const KontinuerligTilsynOgPleie = ({
   readOnly,
   periodeTilVurdering,
   innleggelsesperiode,
@@ -42,7 +42,7 @@ const KontinuerligTilsynOgPleie: React.FunctionComponent<KontinuerligTilsynOgPle
   behandlingFormPrefix,
   reduxFormChange: formChange,
   getAksjonspunktHelpText,
-}) => {
+}: Partial<KontinuerligTilsynOgPleieProps> & StateProps) => {
   const intl = useIntl();
   const getPolseForInnleggelsesperiode = () =>
     innleggelsesperiode ? (
@@ -51,8 +51,9 @@ const KontinuerligTilsynOgPleie: React.FunctionComponent<KontinuerligTilsynOgPle
           dates={`${moment(innleggelsesperiode.fom).format(DDMMYYYY_DATE_FORMAT)} - ${moment(
             innleggelsesperiode.tom,
           ).format(DDMMYYYY_DATE_FORMAT)}`}
-          lengthInText={`${Math.abs(moment(innleggelsesperiode.tom).diff(moment(innleggelsesperiode.fom), 'days')) +
-            1} dager`}
+          lengthInText={`${
+            Math.abs(moment(innleggelsesperiode.tom).diff(moment(innleggelsesperiode.fom), 'days')) + 1
+          } dager`}
           status="Innlagt"
           statusComment={intl.formatMessage({ id: 'MedisinskVilkarForm.VilkaarAutomatiskOppfylt' })}
           theme="success"
@@ -79,9 +80,7 @@ const KontinuerligTilsynOgPleie: React.FunctionComponent<KontinuerligTilsynOgPle
           formSelector,
           fieldNameFom,
           innleggelsesperiode
-            ? moment(innleggelsesperiode.tom)
-                .add(1, 'days')
-                .format(ISO_DATE_FORMAT)
+            ? moment(innleggelsesperiode.tom).add(1, 'days').format(ISO_DATE_FORMAT)
             : moment(periodeTilVurdering.fom).format(ISO_DATE_FORMAT),
         );
         formChange(formSelector, fieldNameTom, moment(periodeTilVurdering.tom).format(ISO_DATE_FORMAT));
@@ -116,9 +115,7 @@ const KontinuerligTilsynOgPleie: React.FunctionComponent<KontinuerligTilsynOgPle
             const valgtPeriodeMedBehovForKontinuerligTilsynOgPleieFom = fields.get(index).fom;
             const valgtPeriodeMedBehovForKontinuerligTilsynOgPleieTom = fields.get(index).tom;
             const datoBegrensningFom = innleggelsesperiode
-              ? moment(innleggelsesperiode.tom)
-                  .add(1, 'days')
-                  .toString()
+              ? moment(innleggelsesperiode.tom).add(1, 'days').toString()
               : periodeTilVurdering.fom;
 
             let periodStart;
@@ -213,8 +210,9 @@ const KontinuerligTilsynOgPleie: React.FunctionComponent<KontinuerligTilsynOgPle
         dates={`${moment(periodeTilVurdering.fom).format(DDMMYYYY_DATE_FORMAT)} - ${moment(
           periodeTilVurdering.tom,
         ).format(DDMMYYYY_DATE_FORMAT)}`}
-        lengthInText={`${Math.abs(moment(periodeTilVurdering.tom).diff(moment(periodeTilVurdering.fom), 'days')) +
-          1} dager`}
+        lengthInText={`${
+          Math.abs(moment(periodeTilVurdering.tom).diff(moment(periodeTilVurdering.fom), 'days')) + 1
+        } dager`}
         status="Søknadsperiode"
         theme="gray"
       />

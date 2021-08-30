@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from 'react';
+import React from 'react';
 import { required } from '@fpsak-frontend/utils';
 import { RadioGroupField, RadioOption } from '@fpsak-frontend/form';
 import arbeidsforholdHandlingType from '@fpsak-frontend/kodeverk/src/arbeidsforholdHandlingType';
@@ -18,11 +18,11 @@ interface OwnProps {
  * Ansvarlig for å håndtere visning av RadioKnapper for arbeidsforhold
  * som står i aksjonspunktet 5080 i fakta om arbeidsforhold.
  */
-const ArbeidsforholdRadioknapper: FunctionComponent<OwnProps & WrappedComponentProps> = ({
+const ArbeidsforholdRadioknapper = ({
   behandlingId,
   behandlingVersjon,
   formName,
-}) => (
+}: OwnProps & WrappedComponentProps) => (
   <RadioGroupField name="arbeidsforholdHandlingField" validate={[required]} direction="vertical">
     <RadioOption
       label={{ id: 'PersonArbeidsforholdDetailForm.ArbeidsforholdErAktivt' }}

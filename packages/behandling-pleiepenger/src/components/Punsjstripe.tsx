@@ -1,6 +1,6 @@
 import axios, { AxiosResponse } from 'axios';
 import { AlertStripeAdvarsel, AlertStripeFeil } from 'nav-frontend-alertstriper';
-import * as React from 'react';
+import React from 'react';
 
 export interface PunsjResponse {
   journalpostIder: JournalpostIder[];

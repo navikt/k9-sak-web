@@ -1,4 +1,4 @@
-import React, { ReactNode, FunctionComponent } from 'react';
+import React, { ReactNode } from 'react';
 import { Undertittel, Undertekst, Element, Normaltekst } from 'nav-frontend-typografi';
 
 import {
@@ -40,7 +40,7 @@ interface OwnProps {
  *
  * Presentasjonskomponent.
  */
-const ProsessPanelTemplate: FunctionComponent<OwnProps> = ({
+const ProsessPanelTemplate = ({
   behandlingId,
   behandlingVersjon,
   lovReferanse,
@@ -55,7 +55,7 @@ const ProsessPanelTemplate: FunctionComponent<OwnProps> = ({
   isDirty,
   children,
   isPeriodisertFormComplete,
-}) => {
+}: OwnProps) => {
   const intl = getPackageIntl();
   return (
     <>

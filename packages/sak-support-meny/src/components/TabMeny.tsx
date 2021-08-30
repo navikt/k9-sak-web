@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useRef, useEffect } from 'react';
+import React, { useRef, useEffect } from 'react';
 import classnames from 'classnames/bind';
 
 import { FlexContainer, FlexRow, FlexColumn } from '@fpsak-frontend/shared-components';
@@ -17,7 +17,7 @@ interface OwnProps {
   onClick: (index: number) => void;
 }
 
-const TabMeny: FunctionComponent<OwnProps> = ({ tabs, onClick }) => {
+const TabMeny = ({ tabs, onClick }: OwnProps) => {
   const tabRef = useRef([]);
 
   useEffect(() => {

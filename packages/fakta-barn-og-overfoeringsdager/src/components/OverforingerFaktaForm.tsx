@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from 'react';
+import React from 'react';
 import { InjectedFormProps } from 'redux-form';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
@@ -28,13 +28,14 @@ interface OverforingerFaktaFormProps {
   formValues?: FormValues;
 }
 
-export const OverforingerFaktaFormImpl: FunctionComponent<OverforingerFaktaFormProps & InjectedFormProps> = ({
+export const OverforingerFaktaFormImpl = ({
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   rammevedtak,
+
   formValues,
   behandlingId,
   behandlingVersjon,
-}) => {
+}: OverforingerFaktaFormProps & InjectedFormProps) => {
   if (isEmpty(formValues)) {
     return null;
   }

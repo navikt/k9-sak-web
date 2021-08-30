@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from 'react';
+import React from 'react';
 import { useIntl } from 'react-intl';
 
 import { TextAreaField } from '@fpsak-frontend/form';
@@ -15,20 +15,12 @@ interface OwnProps {
   isReadOnly: boolean;
 }
 
-interface StaticFunctions {
-  buildInitialValues?: (aksjonspunkt: Aksjonspunkt) => any;
-  transformValues?: (values: any) => any;
-}
-
 /**
  * VilkarBegrunnelse
  *
  * Presentasjonskomponent. Lar den NAV-ansatte skrive inn en begrunnelse før overstyring av vilkår eller beregning.
  */
-const VilkarBegrunnelse: FunctionComponent<OwnProps> & StaticFunctions = ({
-  isReadOnly,
-  begrunnelseLabel = 'VilkarBegrunnelse.Vilkar',
-}) => {
+const VilkarBegrunnelse = ({ isReadOnly, begrunnelseLabel = 'VilkarBegrunnelse.Vilkar' }: OwnProps) => {
   const intl = useIntl();
   return (
     <TextAreaField

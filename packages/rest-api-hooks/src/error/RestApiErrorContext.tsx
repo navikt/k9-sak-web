@@ -1,4 +1,4 @@
-import React, { createContext, useReducer, FunctionComponent, ReactNode } from 'react';
+import React, { createContext, useReducer, ReactNode } from 'react';
 
 const defaultInitialState = {
   errors: [],
@@ -19,7 +19,7 @@ interface OwnProps {
 /**
  * Tilbyr kontekst for lagring av feilmeldinger.
  */
-export const RestApiErrorProvider: FunctionComponent<OwnProps> = ({ children, initialState }): JSX.Element => {
+export const RestApiErrorProvider = ({ children, initialState }: OwnProps): JSX.Element => {
   const [state, dispatch] = useReducer((oldState, action) => {
     switch (action.type) {
       case 'add':

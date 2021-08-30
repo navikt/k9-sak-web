@@ -1,4 +1,4 @@
-import React, { ReactNode, FunctionComponent } from 'react';
+import React, { ReactNode } from 'react';
 
 import AksjonspunktHelpTextHTML from './AksjonspunktHelpTextHTML';
 import AksjonspunktHelpText from './AksjonspunktHelpText';
@@ -11,7 +11,7 @@ interface OwnProps {
 /**
  * TODO (TOR) Dette er ein midlertidig komponent som byttar mellom to komponentar. Er ikkje bestemt korleis dette faktisk skal sjå ut enno.
  */
-const AksjonspunktHelpTextTemp: FunctionComponent<OwnProps> = ({ isAksjonspunktOpen, children }) => (
+const AksjonspunktHelpTextTemp = ({ isAksjonspunktOpen, children }: OwnProps) => (
   <>
     {isAksjonspunktOpen && <AksjonspunktHelpTextHTML>{children}</AksjonspunktHelpTextHTML>}
     {!isAksjonspunktOpen && <AksjonspunktHelpText isAksjonspunktOpen={false}>{children}</AksjonspunktHelpText>}

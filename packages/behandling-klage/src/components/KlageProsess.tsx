@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useState, useCallback } from 'react';
+import React, { useState, useCallback } from 'react';
 
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import {
@@ -120,7 +120,7 @@ const getLagringSideeffekter =
     };
   };
 
-const KlageProsess: FunctionComponent<OwnProps> = ({
+const KlageProsess = ({
   data,
   fagsak,
   fagsakPerson,
@@ -135,7 +135,7 @@ const KlageProsess: FunctionComponent<OwnProps> = ({
   arbeidsgiverOpplysningerPerId,
   setBehandling,
   featureToggles,
-}) => {
+}: OwnProps) => {
   const toggleSkalOppdatereFagsakContext = prosessStegHooks.useOppdateringAvBehandlingsversjon(
     behandling.versjon,
     oppdaterBehandlingVersjon,

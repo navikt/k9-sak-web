@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from 'react';
+import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import { FormSection } from 'redux-form';
 import { Undertekst } from 'nav-frontend-typografi';
@@ -7,8 +7,8 @@ import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { decodeHtmlEntity, removeSpacesFromNumber, required } from '@fpsak-frontend/utils';
 import { RadioGroupField, RadioOption } from '@fpsak-frontend/form';
 
-import { Kodeverk, KodeverkMedNavn } from '@k9-sak-web/types';
-import KodeverkMedNavnTsType from "@k9-sak-web/types/src/kodeverkMedNavnTsType";
+import { KodeverkMedNavn } from '@k9-sak-web/types';
+import KodeverkMedNavnTsType from '@k9-sak-web/types/src/kodeverkMedNavnTsType';
 
 import Aktsomhet from '../../../kodeverk/aktsomhet';
 import AktsomhetGradFormPanel from './AktsomhetGradFormPanel';
@@ -63,13 +63,7 @@ interface OwnProps {
   andelSomTilbakekreves?: string;
 }
 
-interface StaticFunctions {
-  buildInitalValues?: (vilkarResultatInfo: { aktsomhet: Kodeverk | any; aktsomhetInfo?: AktsomhetInfo }) => InitialValuesAktsomhetForm,
-  transformValues?: (info: { handletUaktsomhetGrad: string }, sarligGrunnTyper: KodeverkMedNavn[], vurderingBegrunnelse: string) =>
-    TransformedValuesAktsomhetForm,
-}
-
-const AktsomhetFormPanel: FunctionComponent<OwnProps> & StaticFunctions = ({
+const AktsomhetFormPanel = ({
   readOnly,
   resetFields,
   handletUaktsomhetGrad,
@@ -82,18 +76,19 @@ const AktsomhetFormPanel: FunctionComponent<OwnProps> & StaticFunctions = ({
   feilutbetalingBelop,
   erTotalBelopUnder4Rettsgebyr,
   andelSomTilbakekreves,
-}) => (
+}: OwnProps) => (
   <>
     <Undertekst>
       <FormattedMessage id="AktsomhetFormPanel.HandletUaktsomhetGrad" />
     </Undertekst>
     <VerticalSpacer eightPx />
     <RadioGroupField
-        validate={[required]}
-        name="handletUaktsomhetGrad"
-        readOnly={readOnly}
-        // @ts-ignore tror denne trengs fordi fpsak-frontend/form ikkje er fullstendig konvertert til typescript
-        onChange={resetFields}>
+      validate={[required]}
+      name="handletUaktsomhetGrad"
+      readOnly={readOnly}
+      // @ts-ignore tror denne trengs fordi fpsak-frontend/form ikkje er fullstendig konvertert til typescript
+      onChange={resetFields}
+    >
       {aktsomhetTyper.map((vrt: KodeverkMedNavn) => (
         <RadioOption
           key={vrt.kode}
@@ -169,8 +164,11 @@ const formatAktsomhetData = (aktsomhet: any, sarligGrunnTyper: KodeverkMedNavn[]
   };
 };
 
-AktsomhetFormPanel.transformValues = (info: { handletUaktsomhetGrad: string}, sarligGrunnTyper: KodeverkMedNavnTsType[], vurderingBegrunnelse: string):
-    TransformedValuesAktsomhetForm => {
+AktsomhetFormPanel.transformValues = (
+  info: { handletUaktsomhetGrad: string },
+  sarligGrunnTyper: KodeverkMedNavnTsType[],
+  vurderingBegrunnelse: string,
+): TransformedValuesAktsomhetForm => {
   const aktsomhet = info[info.handletUaktsomhetGrad];
   return {
     '@type': 'annet',
@@ -180,14 +178,16 @@ AktsomhetFormPanel.transformValues = (info: { handletUaktsomhetGrad: string}, sa
   };
 };
 
-AktsomhetFormPanel.buildInitalValues = (vilkarResultatInfo: { aktsomhet: KodeverkMedNavn | any; aktsomhetInfo?: AktsomhetInfo }):
-    InitialValuesAktsomhetForm => {
+AktsomhetFormPanel.buildInitalValues = (vilkarResultatInfo: {
+  aktsomhet: KodeverkMedNavn | any;
+  aktsomhetInfo?: AktsomhetInfo;
+}): InitialValuesAktsomhetForm => {
   const { aktsomhet, aktsomhetInfo } = vilkarResultatInfo;
   const andelSomTilbakekreves =
     aktsomhetInfo && aktsomhetInfo.andelTilbakekreves !== undefined ? `${aktsomhetInfo.andelTilbakekreves}` : undefined;
   const aktsomhetData = aktsomhetInfo
     ? {
-        [(aktsomhet.kode && 'kode' in aktsomhet ? aktsomhet.kode : aktsomhet)]: {
+        [aktsomhet.kode && 'kode' in aktsomhet ? aktsomhet.kode : aktsomhet]: {
           andelSomTilbakekreves:
             andelSomTilbakekreves === undefined || ANDELER.includes(andelSomTilbakekreves)
               ? andelSomTilbakekreves
@@ -202,7 +202,10 @@ AktsomhetFormPanel.buildInitalValues = (vilkarResultatInfo: { aktsomhet: Kodever
           sarligGrunnerBegrunnelse: decodeHtmlEntity(aktsomhetInfo.sarligGrunnerBegrunnelse),
           tilbakekrevSelvOmBeloepErUnder4Rettsgebyr: aktsomhetInfo.tilbakekrevSelvOmBeloepErUnder4Rettsgebyr,
           ...(aktsomhetInfo.sarligGrunner
-            ? aktsomhetInfo.sarligGrunner.reduce((acc: any, sg: any) => ({ ...acc, [sg.kode ? sg.kode : sg]: true }), {})
+            ? aktsomhetInfo.sarligGrunner.reduce(
+                (acc: any, sg: any) => ({ ...acc, [sg.kode ? sg.kode : sg]: true }),
+                {},
+              )
             : {}),
         },
       }

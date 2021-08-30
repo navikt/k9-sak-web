@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from 'react';
+import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import moment from 'moment';
 import { PersonCard, Gender } from '@navikt/k9-react-components';
@@ -36,14 +36,14 @@ interface OwnProps {
   relaterteFagsaker: RelatertFagsakType;
 }
 
-const VisittkortPanel: FunctionComponent<OwnProps> = ({
+const VisittkortPanel = ({
   fagsakPerson,
   personopplysninger,
   alleKodeverk,
   sprakkode,
   harTilbakekrevingVerge,
   relaterteFagsaker,
-}) => {
+}: OwnProps) => {
   if (!personopplysninger && !harTilbakekrevingVerge) {
     return (
       <div className={styles.container}>

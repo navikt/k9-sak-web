@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 import { FieldArray, InjectedFormProps } from 'redux-form';
@@ -26,7 +26,7 @@ interface OwnProps {
   behandlingVersjon: number;
 }
 
-export const TilkjentYtelseNyPeriode: FC<OwnProps & InjectedFormProps> = ({
+export const TilkjentYtelseNyPeriode = ({
   newPeriodeResetCallback,
   newArbeidsforholdCallback,
   nyPeriode,
@@ -37,7 +37,7 @@ export const TilkjentYtelseNyPeriode: FC<OwnProps & InjectedFormProps> = ({
   arbeidsforhold,
   arbeidsgiverOpplysningerPerId,
   ...formProps
-}) => {
+}: OwnProps & InjectedFormProps) => {
   const numberOfDaysAndWeeks = calcDaysAndWeeks(nyPeriode.fom, nyPeriode.tom);
   return (
     <div className={styles.periodeContainer}>

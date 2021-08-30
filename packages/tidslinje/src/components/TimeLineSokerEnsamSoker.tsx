@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from 'react';
+import React from 'react';
 import { Row } from 'nav-frontend-grid';
 
 import navBrukerKjonn from '@fpsak-frontend/kodeverk/src/navBrukerKjonn';
@@ -18,7 +18,7 @@ import styles from './timeLineSokerEnsamSoker.less';
 
 const isKvinne = kode => kode === navBrukerKjonn.KVINNE;
 
-const TimeLineSokerEnsamSoker: FunctionComponent<{ hovedsokerKjonnKode: Kjønnkode }> = ({ hovedsokerKjonnKode }) => {
+const TimeLineSokerEnsamSoker = ({ hovedsokerKjonnKode }: { hovedsokerKjonnKode: Kjønnkode }) => {
   const intl = useIntl();
   return (
     <div className={styles.timelineSokerContatinerEnsamSoker}>

@@ -1,6 +1,6 @@
-import React, {FunctionComponent} from 'react';
+import React from 'react';
 
-import {KodeverkMedNavn} from "@k9-sak-web/types";
+import { KodeverkMedNavn } from '@k9-sak-web/types';
 
 import Aktsomhet from '../../../kodeverk/aktsomhet';
 import AktsomhetGradForsettFormPanel from './AktsomhetGradForsettFormPanel';
@@ -19,7 +19,7 @@ interface OwnProps {
   andelSomTilbakekreves?: string;
 }
 
-const AktsomhetGradFormPanel: FunctionComponent<OwnProps> = ({
+const AktsomhetGradFormPanel = ({
   harGrunnerTilReduksjon,
   readOnly,
   handletUaktsomhetGrad,
@@ -30,15 +30,15 @@ const AktsomhetGradFormPanel: FunctionComponent<OwnProps> = ({
   feilutbetalingBelop,
   erTotalBelopUnder4Rettsgebyr,
   andelSomTilbakekreves,
-}) => (
+}: OwnProps) => (
   <>
-    { handletUaktsomhetGrad === Aktsomhet.FORSETT && (
+    {handletUaktsomhetGrad === Aktsomhet.FORSETT && (
       <AktsomhetGradForsettFormPanel
         readOnly={readOnly}
         erValgtResultatTypeForstoBurdeForstaatt={erValgtResultatTypeForstoBurdeForstaatt}
       />
     )}
-    { handletUaktsomhetGrad !== Aktsomhet.FORSETT && (
+    {handletUaktsomhetGrad !== Aktsomhet.FORSETT && (
       <AktsomhetGradUaktsomhetFormPanel
         harGrunnerTilReduksjon={harGrunnerTilReduksjon}
         readOnly={readOnly}

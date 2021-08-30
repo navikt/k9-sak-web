@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from 'react';
+import React from 'react';
 
 import { prosessStegCodes } from '@k9-sak-web/konstanter';
 import { FadingPanel, LoadingPanel } from '@fpsak-frontend/shared-components';
@@ -30,7 +30,7 @@ interface OwnProps {
   featureToggles?: FeatureToggles;
 }
 
-const ProsessStegPanel: FunctionComponent<OwnProps> = ({
+const ProsessStegPanel = ({
   valgtProsessSteg,
   fagsak,
   behandling,
@@ -42,7 +42,7 @@ const ProsessStegPanel: FunctionComponent<OwnProps> = ({
   lagreOverstyrteAksjonspunkter,
   useMultipleRestApi,
   featureToggles,
-}) => {
+}: OwnProps) => {
   const erHenlagtOgVedtakStegValgt =
     behandling.behandlingHenlagt && valgtProsessSteg && valgtProsessSteg.getUrlKode() === prosessStegCodes.VEDTAK;
 

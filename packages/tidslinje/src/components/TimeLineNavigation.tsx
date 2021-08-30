@@ -1,12 +1,15 @@
-import React, { FunctionComponent, MouseEvent } from 'react';
+import React, { MouseEvent } from 'react';
 import { Column, Row } from 'nav-frontend-grid';
 
 import { useIntl } from 'react-intl';
 import TimeLineButton from './TimeLineButton';
 
-const TimeLineNavigation: FunctionComponent<{ openPeriodInfo: (event: MouseEvent) => void; className?: string }> = ({
+const TimeLineNavigation = ({
   openPeriodInfo,
   className,
+}: {
+  openPeriodInfo: (event: MouseEvent) => void;
+  className?: string;
 }) => {
   const intl = useIntl();
   return (

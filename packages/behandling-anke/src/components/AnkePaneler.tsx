@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from 'react';
+import React from 'react';
 
 import { BehandlingPaVent, SettPaVentParams, Rettigheter } from '@k9-sak-web/behandling-felles';
 import { Fagsak, Behandling, Kodeverk, KodeverkMedNavn, FagsakPerson } from '@k9-sak-web/types';
@@ -27,7 +27,7 @@ interface OwnProps {
   }[];
 }
 
-const AnkePaneler: FunctionComponent<OwnProps> = ({
+const AnkePaneler = ({
   fagsak,
   fagsakPerson,
   behandling,
@@ -42,7 +42,7 @@ const AnkePaneler: FunctionComponent<OwnProps> = ({
   opneSokeside,
   alleBehandlinger,
   setBehandling,
-}) => (
+}: OwnProps) => (
   <>
     <BehandlingPaVent
       behandling={behandling}

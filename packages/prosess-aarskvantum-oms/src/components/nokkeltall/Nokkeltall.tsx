@@ -1,6 +1,6 @@
 import classNames from 'classnames';
 import NavFrontendChevron from 'nav-frontend-chevron';
-import * as React from 'react';
+import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import styles from './nokkeltall.less';
 
@@ -23,13 +23,7 @@ export interface NøkkeltallProps {
   className?: string;
 }
 
-const Nokkeltall: React.FunctionComponent<NøkkeltallProps> = ({
-  overskrift,
-  detaljer,
-  viserDetaljer,
-  visDetaljer,
-  className,
-}) => (
+const Nokkeltall = ({ overskrift, detaljer, viserDetaljer, visDetaljer, className }: NøkkeltallProps) => (
   <article className={classNames(viserDetaljer && styles.viserDetaljer, className)}>
     <button className={styles.overskrift} onClick={visDetaljer} type="button">
       <span className={styles.dagerOgTimer}>

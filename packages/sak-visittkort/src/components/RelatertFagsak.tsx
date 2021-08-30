@@ -3,7 +3,7 @@ import { RelatertFagsak as RelatertFagsakType } from '@k9-sak-web/types';
 import Lenke from 'nav-frontend-lenker';
 import { Select as NavSelect } from 'nav-frontend-skjema';
 import { Normaltekst } from 'nav-frontend-typografi';
-import * as React from 'react';
+import React from 'react';
 import styles from './relatertFagsak.less';
 import RelatertSøkerIcon from './RelatertSøkerIcon';
 

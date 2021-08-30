@@ -1,7 +1,7 @@
 import { formatQueryString, parseQueryString } from '@fpsak-frontend/utils';
 import { faktaPanelCodes } from '@k9-sak-web/konstanter';
 import Lenke from 'nav-frontend-lenker';
-import * as React from 'react';
+import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import { useLocation } from 'react-router-dom';
 import Nokkeltall from './Nokkeltall';
@@ -18,7 +18,7 @@ interface DagerSokerHarRettPaProps {
   ar: string;
 }
 
-const DagerSokerHarRettPa: React.FunctionComponent<DagerSokerHarRettPaProps> = ({
+const DagerSokerHarRettPa = ({
   dagerRettPå,
   antallOmsorgsdager,
   antallKoronadager,
@@ -27,7 +27,7 @@ const DagerSokerHarRettPa: React.FunctionComponent<DagerSokerHarRettPaProps> = (
   visDetaljer,
   viserDetaljer,
   ar,
-}) => {
+}: DagerSokerHarRettPaProps) => {
   const location = useLocation();
   const { search, pathname } = location;
   const faktapanelUttak = {
