@@ -1,7 +1,7 @@
 import React, { FunctionComponent, useState, useEffect, useCallback } from 'react';
-import { withRouter, match } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 import moment from 'moment';
-import { Location, History } from 'history';
+import { Location } from 'history';
 
 import { useRestApiError, useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
 import EventType from '@k9-sak-web/rest-api/src/requestApi/eventType';
@@ -23,8 +23,6 @@ const EMPTY_ARRAY = [];
 
 interface OwnProps {
   location: Location;
-  history: History;
-  match: match;
 }
 
 /**
