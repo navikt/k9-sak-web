@@ -1,3 +1,6 @@
+import React, { SetStateAction } from 'react';
+import { connect } from 'react-redux';
+import { FormattedMessage } from 'react-intl';
 import avslattImage from '@fpsak-frontend/assets/images/avslaatt_hover.svg';
 import innvilgetImage from '@fpsak-frontend/assets/images/innvilget_hover.svg';
 import keyUtgraetImage from '@fpsak-frontend/assets/images/key-1-rotert-utgraet.svg';
@@ -6,9 +9,6 @@ import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import { FlexColumn, FlexContainer, FlexRow, Image, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { Aksjonspunkt } from '@k9-sak-web/types';
 import { Element, Undertekst, Undertittel } from 'nav-frontend-typografi';
-import React, { FunctionComponent, SetStateAction } from 'react';
-import { FormattedMessage } from 'react-intl';
-import { connect } from 'react-redux';
 import styles from './SoknadsfristVilkarForm.less';
 
 const isOverridden = (aksjonspunktCodes: string[], aksjonspunktCode: string) =>
@@ -46,7 +46,7 @@ interface SoknadsfristVilkarHeaderProps {
   toggleOverstyring: (overstyrtPanel: SetStateAction<string[]>) => void;
 }
 
-const SoknadsfristVilkarHeader: FunctionComponent<SoknadsfristVilkarHeaderProps> = ({
+const SoknadsfristVilkarHeader = ({
   panelTittelKode,
   erOverstyrt,
   overstyringApKode,
@@ -56,7 +56,7 @@ const SoknadsfristVilkarHeader: FunctionComponent<SoknadsfristVilkarHeaderProps>
   kanOverstyreAccess,
   aksjonspunktCodes,
   toggleOverstyring,
-}) => {
+}: Partial<SoknadsfristVilkarHeaderProps>) => {
   const togglePa = () => {
     toggleOverstyring(oldArray => [...oldArray, overstyringApKode]);
   };

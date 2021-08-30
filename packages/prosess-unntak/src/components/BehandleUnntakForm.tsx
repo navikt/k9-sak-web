@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from 'react';
+import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import { InjectedFormProps } from 'redux-form';
@@ -37,7 +37,7 @@ interface OwnProps {
   sprakkode: Kodeverk;
 }
 
-export const BehandleUnntakForm: FunctionComponent<OwnProps & InjectedFormProps> = ({
+export const BehandleUnntakForm = ({
   behandlingId,
   behandlingVersjon,
   readOnly,
@@ -46,7 +46,7 @@ export const BehandleUnntakForm: FunctionComponent<OwnProps & InjectedFormProps>
   sprakkode,
   // alleKodeverk,
   ...formProps
-}) => (
+}: OwnProps & InjectedFormProps) => (
   <form onSubmit={handleSubmit}>
     <FlexContainer>
       <FlexRow>
@@ -90,11 +90,6 @@ export const BehandleUnntakForm: FunctionComponent<OwnProps & InjectedFormProps>
     </FlexContainer>
   </form>
 );
-
-BehandleUnntakForm.defaultProps = {
-  readOnly: true,
-  readOnlySubmitButton: true,
-};
 
 export const buildInitialValues = createSelector(
   // @ts-ignore Fiks dette!

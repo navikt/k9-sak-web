@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from 'react';
+import React from 'react';
 import { FormattedMessage, injectIntl, WrappedComponentProps } from 'react-intl';
 import { Normaltekst } from 'nav-frontend-typografi';
 
@@ -13,7 +13,6 @@ import styles from './aksjonspunktAvklarArbeidsforholdText.less';
 import VerticalSpacer from './VerticalSpacer';
 
 interface OwnProps {
-  marginBottom?: boolean;
   arbeidsforhold: ArbeidsforholdV2;
 }
 
@@ -42,10 +41,7 @@ const utledAksjonspunktText = (arbeidsforhold, imUtenArbeidsforhold) => {
   return <FormattedMessage id="HelpText.IngenAksjonspunkt" />;
 };
 
-const AksjonspunktAvklarArbeidsforholdText: FunctionComponent<OwnProps & WrappedComponentProps> = ({
-  intl,
-  arbeidsforhold,
-}) => {
+const AksjonspunktAvklarArbeidsforholdText = ({ intl, arbeidsforhold }: OwnProps & WrappedComponentProps) => {
   const overgangArbeidsforholdsId = arbeidsforhold.aksjonspunktÅrsaker
     .map(k => k.kode)
     .includes(aksjonspunktÅrsaker.OVERGANG_ARBEIDSFORHOLDS_ID_UNDER_YTELSE);

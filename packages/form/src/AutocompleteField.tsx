@@ -8,7 +8,6 @@ import styles from './autocompleteField.less';
 
 interface AutocompleteFieldProps {
   onChange: () => void;
-  value: string;
   input: WrappedFieldInputProps;
 }
 
@@ -22,11 +21,10 @@ interface AutocompleteProps {
   onInputValueChange: (searchString: string) => void;
   inputValue: string;
   name: string;
-  validate?: ((value: string) => boolean | undefined | { id: string }[])[] | ((value: string) => boolean | undefined);
   dataId?: string;
 }
 
-const Autocomplete: FunctionComponent<AutocompleteFieldProps & AutocompleteProps> = ({
+const Autocomplete: FunctionComponent<AutocompleteFieldProps & Partial<AutocompleteProps>> = ({
   id,
   ariaLabel,
   label,

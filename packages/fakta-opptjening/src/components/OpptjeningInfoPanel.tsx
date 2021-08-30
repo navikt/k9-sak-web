@@ -40,7 +40,9 @@ interface StateProps {
  * Presentasjonskomponent. Har ansvar for å sette opp Redux Formen for Opptjeningsvilkåret.
  */
 
-export const OpptjeningInfoPanel: FunctionComponent<OpptjeningInfoPanelProps & InjectedFormProps & StateProps> = ({
+export const OpptjeningInfoPanel: FunctionComponent<
+  Partial<OpptjeningInfoPanelProps> & InjectedFormProps & StateProps
+> = ({
   harApneAksjonspunkter,
   readOnly,
   aksjonspunkt,
