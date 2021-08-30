@@ -12,7 +12,6 @@
     "@k9-sak-web/fakta-barn-og-overfoeringsdager": "1.0.0",
     "@k9-sak-web/prosess-aarskvantum-oms": "1.0.0",
     "@k9-sak-web/types": "1.0.0",
-    "lodash": "^4.17.21",
     "moment": "^2.29.1",
     "nav-frontend-alertstriper": "4.0.1",
     "nav-frontend-alertstriper-style": "3.0.1",
