@@ -136,7 +136,7 @@ const createGraderingOrRefusjonString = (
       />,
     );
   }
-  if (text.length < 1) {
+  if (text.length >= 1) {
     return text;
   }
   text.push(
