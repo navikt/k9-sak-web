@@ -63,7 +63,7 @@ const formatArbeidsgiver = arbeidsgiver => {
 };
 
 const isVilkarOppfyltDisabled = (hasSoknad, inntektsmeldingerSomIkkeKommer) =>
-  !hasSoknad || Object.values(inntektsmeldingerSomIkkeKommer).some(vd => !vd);
+  !hasSoknad || Object.values(inntektsmeldingerSomIkkeKommer || {}).some(vd => !vd);
 
 type FormValues = {
   erVilkarOk?: boolean;
