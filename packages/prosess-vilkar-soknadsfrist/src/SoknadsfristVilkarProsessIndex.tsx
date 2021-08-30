@@ -85,23 +85,27 @@ const SoknadsfristVilkarProsessIndex = ({
   const skalBrukeSidemeny = activeVilkår.perioder.length > 1 || harÅpentAksjonspunkt;
   const ikkeOppfyltePerioder = perioder.filter(ikkeOppfyltePerioderSomSkalVurderesFn);
 
-  const dokumenterSomSkalVurderes = soknadsfristStatus.dokumentStatus.filter(dok =>
-    dok.status.some(status =>
-      ikkeOppfyltePerioder.some(
-        p =>
-          (p.periode.fom >= status.periode.fom && p.periode.fom <= status.periode.tom) ||
-          (p.periode.tom >= status.periode.fom && p.periode.tom <= status.periode.tom),
-      ),
-    ),
-  );
+  const dokumenterSomSkalVurderes = Array.isArray(soknadsfristStatus?.dokumentStatus)
+    ? soknadsfristStatus.dokumentStatus.filter(dok =>
+        dok.status.some(status =>
+          ikkeOppfyltePerioder.some(
+            p =>
+              (p.periode.fom >= status.periode.fom && p.periode.fom <= status.periode.tom) ||
+              (p.periode.tom >= status.periode.fom && p.periode.tom <= status.periode.tom),
+          ),
+        ),
+      )
+    : [];
 
-  const dokumenterIAktivPeriode = soknadsfristStatus.dokumentStatus.filter(dok =>
-    dok.status.some(
-      status =>
-        (activePeriode.periode.fom >= status.periode.fom && activePeriode.periode.fom <= status.periode.tom) ||
-        (activePeriode.periode.tom >= status.periode.fom && activePeriode.periode.tom <= status.periode.tom),
-    ),
-  );
+  const dokumenterIAktivPeriode = Array.isArray(soknadsfristStatus?.dokumentStatus)
+    ? soknadsfristStatus.dokumentStatus.filter(dok =>
+        dok.status.some(
+          status =>
+            (activePeriode.periode.fom >= status.periode.fom && activePeriode.periode.fom <= status.periode.tom) ||
+            (activePeriode.periode.tom >= status.periode.fom && activePeriode.periode.tom <= status.periode.tom),
+        ),
+      )
+    : [];
 
   const mainContainerClassnames = cx('mainContainer', { 'mainContainer--withSideMenu': skalBrukeSidemeny });
 
