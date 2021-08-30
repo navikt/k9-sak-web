@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from 'react';
+import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import { Normaltekst } from 'nav-frontend-typografi';
 
@@ -8,12 +8,12 @@ import historikkOpplysningTypeCodes from '../../kodeverk/historikkOpplysningType
 import Skjermlenke from './felles/Skjermlenke';
 import HistorikkMal from '../HistorikkMalTsType';
 
-export const HistorikkMalTypeForeldelse: FunctionComponent<HistorikkMal> = ({
+export const HistorikkMalTypeForeldelse = ({
   historikkinnslag,
   behandlingLocation,
   getKodeverknavn,
   createLocationForSkjermlenke,
-}) => {
+}: HistorikkMal) => {
   const { historikkinnslagDeler } = historikkinnslag;
   if (historikkinnslagDeler.length === 0) {
     return null;

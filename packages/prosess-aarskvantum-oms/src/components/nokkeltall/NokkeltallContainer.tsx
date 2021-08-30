@@ -1,7 +1,7 @@
 import ÅrskvantumForbrukteDager from '@k9-sak-web/prosess-aarskvantum-oms/src/dto/ÅrskvantumForbrukteDager';
 import { Uttaksperiode } from '@k9-sak-web/types';
 import { AlertStripeAdvarsel } from 'nav-frontend-alertstriper';
-import * as React from 'react';
+import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import { periodeErIKoronaperioden } from '../utils';
 import DagerNavKanUtbetale from './DagerNavKanUtbetale';
@@ -43,7 +43,7 @@ const absoluttverdiDagerTimer = ({ dager, timer }: DagerTimer): DagerTimer => ({
   timer: Math.abs(timer),
 });
 
-const NokkeltallContainer: React.FunctionComponent<NokkeltallContainerProps> = ({
+const NokkeltallContainer = ({
   uttaksperioder,
   restTid,
   restdager,
@@ -59,7 +59,7 @@ const NokkeltallContainer: React.FunctionComponent<NokkeltallContainerProps> = (
   visEllerSkjulNokkeltalldetaljer,
   migrertData,
   ar,
-}) => {
+}: NokkeltallContainerProps) => {
   const erIKoronaperioden = React.useMemo(
     () => uttaksperioder.some(({ periode }) => periodeErIKoronaperioden(periode)),
     [uttaksperioder],

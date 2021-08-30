@@ -1,5 +1,4 @@
-import * as React from 'react';
-import { FunctionComponent } from 'react';
+import React from 'react';
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 import { Behandling } from '@k9-sak-web/types';
 import { Rammevedtak } from '@k9-sak-web/types/src/omsorgspenger/Rammevedtak';
@@ -21,7 +20,7 @@ interface FaktaRammevedtakIndexProps {
   behandling: Behandling;
 }
 
-const FaktaRammevedtakIndex: FunctionComponent<FaktaRammevedtakIndexProps> = ({ behandling, rammevedtak }) => (
+const FaktaRammevedtakIndex = ({ behandling, rammevedtak }: FaktaRammevedtakIndexProps) => (
   <RawIntlProvider value={intl}>
     <OverforingerFaktaForm
       rammevedtak={rammevedtak}

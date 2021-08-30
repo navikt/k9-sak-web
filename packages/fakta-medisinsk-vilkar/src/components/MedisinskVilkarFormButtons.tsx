@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from 'react';
+import React from 'react';
 import { Knapp } from 'nav-frontend-knapper';
 import { injectIntl, WrappedComponentProps } from 'react-intl';
 
@@ -14,7 +14,7 @@ interface MedisinskVilkarFormButtonsProps {
   submittable: boolean;
 }
 
-const MedisinskVilkarFormButtons: FunctionComponent<MedisinskVilkarFormButtonsProps & WrappedComponentProps> = ({
+const MedisinskVilkarFormButtons = ({
   intl,
   behandlingId,
   behandlingVersjon,
@@ -22,7 +22,7 @@ const MedisinskVilkarFormButtons: FunctionComponent<MedisinskVilkarFormButtonsPr
   harApneAksjonspunkter,
   readOnly,
   submittable,
-}) => (
+}: MedisinskVilkarFormButtonsProps & WrappedComponentProps) => (
   <FlexContainer>
     <FlexRow>
       <FlexColumn>

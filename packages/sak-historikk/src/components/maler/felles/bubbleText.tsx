@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useCallback, useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { injectIntl, WrappedComponentProps } from 'react-intl';
 import { NedChevron, OppChevron } from 'nav-frontend-chevron';
 
@@ -21,11 +21,7 @@ interface OwnProps {
  * <BubbleText bodyText={tekst} cutOffLength={70} />
  * ```
  */
-const BubbleText: FunctionComponent<OwnProps & WrappedComponentProps> = ({
-  intl,
-  cutOffLength = 83,
-  bodyText = '',
-}) => {
+const BubbleText = ({ intl, cutOffLength = 83, bodyText = '' }: OwnProps & WrappedComponentProps) => {
   const [expanded, setExpanded] = useState(false);
 
   const handleOnClick = useCallback(() => setExpanded(prevState => !prevState), []);

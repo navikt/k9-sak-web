@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React from 'react';
 import { WrappedComponentProps } from 'react-intl';
 import { FieldArrayFieldsProps, FieldArrayMetaProps } from 'redux-form';
 import AlertStripe from 'nav-frontend-alertstriper';
@@ -34,12 +34,12 @@ const headerTextCodes = [
   'TilkjentYtelse.NyPeriode.Ubetalingsgrad',
 ];
 
-const Andeler: FC<OwnProps & WrappedComponentProps> = ({
+const Andeler = ({
   fields,
   meta,
   alleKodeverk,
   arbeidsgiverOpplysningerPerId,
-}) => {
+}: Partial<OwnProps> & WrappedComponentProps) => {
   const getKodeverknavn = getKodeverknavnFn(alleKodeverk, kodeverkTyper);
 
   return (

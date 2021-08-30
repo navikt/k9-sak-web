@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useEffect, useState, useCallback } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 
 import { LoadingPanel, usePrevious } from '@fpsak-frontend/shared-components';
 import { Rettigheter, ReduxFormStateCleaner, useSetBehandlingVedEndring } from '@k9-sak-web/behandling-felles';
@@ -54,7 +54,7 @@ interface OwnProps {
   setRequestPendingMessage: (message: string) => void;
 }
 
-const BehandlingPleiepengerIndex: FunctionComponent<OwnProps> = ({
+const BehandlingPleiepengerIndex = ({
   behandlingEventHandler,
   behandlingId,
   oppdaterBehandlingVersjon,
@@ -69,7 +69,7 @@ const BehandlingPleiepengerIndex: FunctionComponent<OwnProps> = ({
   arbeidsgiverOpplysninger,
   setRequestPendingMessage,
   featureToggles,
-}) => {
+}: OwnProps) => {
   const forrigeSaksnummer = usePrevious(fagsak.saksnummer);
 
   const [nyOgForrigeBehandling, setBehandlinger] = useState<{ current?: Behandling; previous?: Behandling }>({

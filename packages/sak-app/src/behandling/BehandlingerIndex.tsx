@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from 'react';
+import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 
 import { BehandlingAppKontekst, Fagsak, ArbeidsgiverOpplysningerWrapper } from '@k9-sak-web/types';
@@ -15,13 +15,13 @@ interface OwnProps {
   setRequestPendingMessage: (message: string) => void;
 }
 
-export const BehandlingerIndex: FunctionComponent<OwnProps> = ({
+export const BehandlingerIndex = ({
   fagsak,
   alleBehandlinger,
   arbeidsgiverOpplysninger,
   setBehandlingIdOgVersjon,
   setRequestPendingMessage,
-}) => (
+}: OwnProps) => (
   <Switch>
     <Route
       strict

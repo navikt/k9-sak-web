@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { injectIntl, WrappedComponentProps } from 'react-intl';
 
@@ -15,7 +15,7 @@ const isDevelopment = () => process.env.NODE_ENV === 'development' || process.en
  *
  * Komponent som redirecter til Fplos eller går til fremsiden til Fpsak. Går alltid til Fpsak på utviklingsmiljø eller når Fplos ikke kan nåes
  */
-export const DashboardResolver: FunctionComponent<WrappedComponentProps> = ({ intl }) => {
+export const DashboardResolver = ({ intl }: WrappedComponentProps) => {
   const [isLoading, setLoading] = useState(true);
 
   const { addErrorMessage } = useRestApiErrorDispatcher();

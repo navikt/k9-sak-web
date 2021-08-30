@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import { InjectedFormProps } from 'redux-form';
 import { createSelector } from 'reselect';
@@ -42,7 +42,7 @@ interface PureOwnProps {
   beregningsresultat?: BeregningsresultatFp;
 }
 
-export const Tilbaketrekkpanel: FC<PureOwnProps & WrappedComponentProps & InjectedFormProps> = ({
+export const Tilbaketrekkpanel = ({
   intl,
   readOnly,
   vurderTilbaketrekkAP,
@@ -50,7 +50,7 @@ export const Tilbaketrekkpanel: FC<PureOwnProps & WrappedComponentProps & Inject
   behandlingId,
   behandlingVersjon,
   ...formProps
-}) => (
+}: PureOwnProps & WrappedComponentProps & InjectedFormProps) => (
   <div>
     <div className={styles.container}>
       <FlexContainer>

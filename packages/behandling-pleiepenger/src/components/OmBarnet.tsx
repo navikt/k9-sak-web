@@ -1,5 +1,5 @@
 import { MicroFrontend } from '@fpsak-frontend/utils';
-import * as React from 'react';
+import React from 'react';
 import { useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { BehandlingAppKontekst, Aksjonspunkt } from '@k9-sak-web/types';

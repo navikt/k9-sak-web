@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from 'react';
+import React from 'react';
 
 import { injectIntl, WrappedComponentProps } from 'react-intl';
 import { Rettigheter, SideMenuWrapper, faktaHooks, useSetBehandlingVedEndring } from '@k9-sak-web/behandling-felles';
@@ -37,7 +37,7 @@ interface OwnProps {
   dokumenter: Dokument[];
 }
 
-const PleiepengerFakta: FunctionComponent<OwnProps & WrappedComponentProps> = ({
+const PleiepengerFakta = ({
   intl,
   data,
   behandling,
@@ -53,19 +53,15 @@ const PleiepengerFakta: FunctionComponent<OwnProps & WrappedComponentProps> = ({
   setBehandling,
   arbeidsgiverOpplysningerPerId,
   dokumenter,
-}) => {
+}: OwnProps & WrappedComponentProps) => {
   const { aksjonspunkter, ...rest } = data;
 
-  const {
-    startRequest: lagreAksjonspunkter,
-    data: apBehandlingRes,
-  } = restApiPleiepengerHooks.useRestApiRunner<Behandling>(PleiepengerBehandlingApiKeys.SAVE_AKSJONSPUNKT);
+  const { startRequest: lagreAksjonspunkter, data: apBehandlingRes } =
+    restApiPleiepengerHooks.useRestApiRunner<Behandling>(PleiepengerBehandlingApiKeys.SAVE_AKSJONSPUNKT);
   useSetBehandlingVedEndring(apBehandlingRes, setBehandling);
 
-  const {
-    startRequest: lagreOverstyrteAksjonspunkter,
-    data: apOverstyrtBehandlingRes,
-  } = restApiPleiepengerHooks.useRestApiRunner<Behandling>(PleiepengerBehandlingApiKeys.SAVE_OVERSTYRT_AKSJONSPUNKT);
+  const { startRequest: lagreOverstyrteAksjonspunkter, data: apOverstyrtBehandlingRes } =
+    restApiPleiepengerHooks.useRestApiRunner<Behandling>(PleiepengerBehandlingApiKeys.SAVE_OVERSTYRT_AKSJONSPUNKT);
   useSetBehandlingVedEndring(apOverstyrtBehandlingRes, setBehandling);
 
   const dataTilUtledingAvPleiepengerPaneler = {

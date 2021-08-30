@@ -1,14 +1,12 @@
-import React, {FunctionComponent} from 'react';
-import {
-  FormattedMessage, injectIntl, IntlShape, WrappedComponentProps,
-} from 'react-intl';
+import React from 'react';
+import { FormattedMessage, injectIntl, IntlShape, WrappedComponentProps } from 'react-intl';
 import { Element, Undertekst } from 'nav-frontend-typografi';
 
 import { ArrowBox, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { RadioGroupField, RadioOption, TextAreaField } from '@fpsak-frontend/form';
 import { hasValidText, maxLength, minLength, required } from '@fpsak-frontend/utils';
 
-import { KodeverkMedNavn } from "@k9-sak-web/types";
+import { KodeverkMedNavn } from '@k9-sak-web/types';
 import Aktsomhet from '../../../kodeverk/aktsomhet';
 
 import AktsomhetSarligeGrunnerFormPanel from './AktsomhetSarligeGrunnerFormPanel';
@@ -49,7 +47,7 @@ interface OwnProps {
   erValgtResultatTypeForstoBurdeForstaatt?: boolean;
 }
 
-const AktsomhetGradUaktsomhetFormPanel: FunctionComponent<OwnProps & WrappedComponentProps> = ({
+const AktsomhetGradUaktsomhetFormPanel = ({
   harGrunnerTilReduksjon,
   readOnly,
   handletUaktsomhetGrad,
@@ -61,7 +59,7 @@ const AktsomhetGradUaktsomhetFormPanel: FunctionComponent<OwnProps & WrappedComp
   andelSomTilbakekreves,
   intl,
   erValgtResultatTypeForstoBurdeForstaatt,
-}) => {
+}: OwnProps & WrappedComponentProps) => {
   const grovUaktsomOffset = erValgtResultatTypeForstoBurdeForstaatt ? 188 : 208;
   return (
     <ArrowBox alignOffset={handletUaktsomhetGrad === Aktsomhet.GROVT_UAKTSOM ? grovUaktsomOffset : 28}>

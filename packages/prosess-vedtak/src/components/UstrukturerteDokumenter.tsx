@@ -1,6 +1,6 @@
 import { DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils';
 import { Normaltekst, Undertittel } from 'nav-frontend-typografi';
-import * as React from 'react';
+import React from 'react';
 import Lenke from 'nav-frontend-lenker';
 import moment from 'moment';
 import styles from './ustrukturerteDokumenter.less';

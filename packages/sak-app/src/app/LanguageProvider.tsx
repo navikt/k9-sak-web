@@ -1,4 +1,4 @@
-import React, { FunctionComponent, ReactNode } from 'react';
+import React, { ReactNode } from 'react';
 import { IntlProvider } from 'react-intl';
 
 import { K9sakApiKeys, restApiHooks } from '../data/k9sakApi';
@@ -12,7 +12,7 @@ interface OwnProps {
  *
  * Container komponent. Har ansvar for å hente språkfilen.
  */
-const LanguageProvider: FunctionComponent<OwnProps> = ({ children }) => {
+const LanguageProvider = ({ children }: OwnProps) => {
   const nbMessages = restApiHooks.useGlobalStateRestApiData<any>(K9sakApiKeys.LANGUAGE_FILE);
 
   return (

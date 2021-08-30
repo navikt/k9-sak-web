@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React from 'react';
 import {
   ArbeidsforholdV2,
   ArbeidsgiverOpplysningerPerId,
@@ -35,7 +35,7 @@ const intl = createIntl(
   cache,
 );
 
-const TilkjentYtelseProsessIndex: FC<OwnProps> = ({
+const TilkjentYtelseProsessIndex = ({
   behandling,
   beregningsresultat,
   fagsak,
@@ -46,7 +46,7 @@ const TilkjentYtelseProsessIndex: FC<OwnProps> = ({
   readOnlySubmitButton,
   arbeidsforhold,
   arbeidsgiverOpplysningerPerId,
-}) => (
+}: OwnProps) => (
   <RawIntlProvider value={intl}>
     <TilkjentYtelsePanel
       behandlingId={behandling.id}

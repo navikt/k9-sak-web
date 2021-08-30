@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import { FormattedMessage, injectIntl, WrappedComponentProps } from 'react-intl';
 import moment from 'moment';
@@ -20,14 +20,14 @@ interface OwnProps {
   periode: any;
 }
 
-export const SlettPeriodeModalImpl: FC<OwnProps & WrappedComponentProps & InjectedFormProps> = ({
+export const SlettPeriodeModalImpl = ({
   showModal,
   closeEvent,
   cancelEvent,
   intl,
   periode,
   ...formProps
-}) => {
+}: OwnProps & WrappedComponentProps & InjectedFormProps) => {
   const fom = moment(periode.fom).format(DDMMYYYY_DATE_FORMAT);
   const tom = moment(periode.tom).format(DDMMYYYY_DATE_FORMAT);
   return (

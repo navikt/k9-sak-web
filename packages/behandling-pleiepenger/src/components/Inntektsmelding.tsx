@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import { useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
 import { ArbeidsgiverOpplysningerPerId, Dokument } from '@k9-sak-web/types';
 import { MicroFrontend } from '@fpsak-frontend/utils';

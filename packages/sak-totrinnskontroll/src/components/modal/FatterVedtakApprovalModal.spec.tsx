@@ -18,7 +18,6 @@ describe('<FatterVedtakApprovalModal>', () => {
         intl={intlMock}
         closeEvent={closeEventCallback}
         allAksjonspunktApproved
-        behandlingId={1}
         behandlingStatusKode={behandlingStatus.FATTER_VEDTAK}
         behandlingTypeKode={BehandlingType.KLAGE}
         fagsakYtelseType={{
@@ -44,7 +43,6 @@ describe('<FatterVedtakApprovalModal>', () => {
         intl={intlMock}
         closeEvent={closeEventCallback}
         allAksjonspunktApproved
-        behandlingId={1}
         behandlingStatusKode={behandlingStatus.FATTER_VEDTAK}
         behandlingTypeKode={BehandlingType.FORSTEGANGSSOKNAD}
         fagsakYtelseType={{
@@ -72,7 +70,6 @@ describe('<FatterVedtakApprovalModal>', () => {
         intl={intlMock}
         closeEvent={closeEventCallback}
         allAksjonspunktApproved
-        behandlingId={1}
         behandlingStatusKode={behandlingStatus.FATTER_VEDTAK}
         behandlingTypeKode={BehandlingType.FORSTEGANGSSOKNAD}
         fagsakYtelseType={{
@@ -100,7 +97,6 @@ describe('<FatterVedtakApprovalModal>', () => {
         intl={intlMock}
         closeEvent={closeEventCallback}
         allAksjonspunktApproved
-        behandlingId={1}
         behandlingStatusKode={behandlingStatus.FATTER_VEDTAK}
         behandlingTypeKode={BehandlingType.FORSTEGANGSSOKNAD}
         fagsakYtelseType={{

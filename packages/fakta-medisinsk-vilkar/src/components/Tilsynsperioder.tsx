@@ -36,7 +36,7 @@ interface TilsynsperioderProps {
   brukSoknadsdato: (fieldNameFom: string, fieldNameTom: string) => void;
 }
 
-const Tilsynsperioder: React.FunctionComponent<TilsynsperioderProps> = React.memo(
+const Tilsynsperioder = React.memo(
   ({
     periodeMedBehovForKontinuerligTilsynId,
     readOnly,
@@ -52,7 +52,7 @@ const Tilsynsperioder: React.FunctionComponent<TilsynsperioderProps> = React.mem
     valgtPeriodeMedBehovForKontinuerligTilsynOgPleieTom,
     sammenhengMellomSykdomOgTilsyn,
     brukSoknadsdato,
-  }) => {
+  }: TilsynsperioderProps) => {
     const intl = useIntl();
     return (
       <div className={styles.periodeContainer}>

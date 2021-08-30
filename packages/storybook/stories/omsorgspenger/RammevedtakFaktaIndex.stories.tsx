@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import FaktaRammevedtakIndex from '@k9-sak-web/fakta-barn-og-overfoeringsdager';
 import { Behandling } from '@k9-sak-web/types';
 import { Rammevedtak, RammevedtakEnum, RammevedtakType } from '@k9-sak-web/types/src/omsorgspenger/Rammevedtak';

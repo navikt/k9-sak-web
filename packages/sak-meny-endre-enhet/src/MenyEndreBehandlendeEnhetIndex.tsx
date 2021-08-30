@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useCallback, useMemo } from 'react';
+import React, { useCallback, useMemo } from 'react';
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 
 import EndreBehandlendeEnhetModal from './components/EndreBehandlendeEnhetModal';
@@ -37,7 +37,7 @@ interface OwnProps {
   lukkModal: () => void;
 }
 
-const MenyEndreBehandlendeEnhetIndex: FunctionComponent<OwnProps> = ({
+const MenyEndreBehandlendeEnhetIndex = ({
   behandlingId,
   behandlingVersjon,
   behandlendeEnhetId,
@@ -45,7 +45,7 @@ const MenyEndreBehandlendeEnhetIndex: FunctionComponent<OwnProps> = ({
   nyBehandlendeEnhet,
   behandlendeEnheter,
   lukkModal,
-}) => {
+}: OwnProps) => {
   const filtrerteBehandlendeEnheter = useMemo(
     () => behandlendeEnheter.filter(enhet => enhet.enhetId !== behandlendeEnhetId),
     [behandlendeEnheter],

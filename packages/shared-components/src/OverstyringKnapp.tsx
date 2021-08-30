@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useEffect, useCallback, useState } from 'react';
+import React, { useEffect, useCallback, useState } from 'react';
 import { injectIntl, WrappedComponentProps } from 'react-intl';
 
 import keyImage from '@fpsak-frontend/assets/images/key-1-rotert.svg';
@@ -16,11 +16,11 @@ interface OwnProps {
 /*
  * OverstyringKnapp
  */
-const OverstyringKnapp: FunctionComponent<OwnProps & WrappedComponentProps> = ({
+const OverstyringKnapp = ({
   intl,
   onClick = () => undefined,
   erOverstyrt = false,
-}) => {
+}: OwnProps & WrappedComponentProps) => {
   const [isOverstyrt, setOverstyrt] = useState(erOverstyrt);
   const setOverstyrtFn = useCallback(() => {
     if (!isOverstyrt) {

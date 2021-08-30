@@ -1,4 +1,4 @@
-import React, {FunctionComponent} from 'react';
+import React from 'react';
 import moment from 'moment';
 import { FormattedMessage } from 'react-intl';
 import { Column, Row } from 'nav-frontend-grid';
@@ -6,7 +6,7 @@ import { Element, Normaltekst } from 'nav-frontend-typografi';
 
 import { calcDaysAndWeeks, DDMMYYYY_DATE_FORMAT, formatCurrencyNoKr } from '@fpsak-frontend/utils';
 
-import DataForPeriode from "../../types/dataForPeriodeTsType";
+import DataForPeriode from '../../types/dataForPeriodeTsType';
 
 import styles from './periodeInformasjon.less';
 
@@ -24,12 +24,7 @@ interface OwnProps {
  *
  * Presentationskomponent
  */
-const PeriodeInformasjon: FunctionComponent<OwnProps> = ({
-  fom,
-  tom,
-  feilutbetaling,
-  arsak,
-}) => {
+const PeriodeInformasjon = ({ fom, tom, feilutbetaling, arsak }: OwnProps) => {
   const daysAndWeeks = calcDaysAndWeeks(fom, tom);
   return (
     <Row>
@@ -38,7 +33,7 @@ const PeriodeInformasjon: FunctionComponent<OwnProps> = ({
           <Row>
             <Column xs="6">
               <Element>
-                { `${moment(fom).format(DDMMYYYY_DATE_FORMAT)} - ${moment(tom).format(DDMMYYYY_DATE_FORMAT)}` }
+                {`${moment(fom).format(DDMMYYYY_DATE_FORMAT)} - ${moment(tom).format(DDMMYYYY_DATE_FORMAT)}`}
               </Element>
             </Column>
             <Column xs="6">
@@ -57,17 +52,14 @@ const PeriodeInformasjon: FunctionComponent<OwnProps> = ({
             <Row className={styles.redNumbers}>
               <Column xs="6">
                 <Normaltekst className={styles.resultName}>
-                  <FormattedMessage id="PeriodeInformasjon.Feilutbetaling" />
-                  :
-                  <span className={feilutbetaling ? styles.redNumber : styles.positivNumber}>{ formatCurrencyNoKr(feilutbetaling) }</span>
+                  <FormattedMessage id="PeriodeInformasjon.Feilutbetaling" />:
+                  <span className={feilutbetaling ? styles.redNumber : styles.positivNumber}>
+                    {formatCurrencyNoKr(feilutbetaling)}
+                  </span>
                 </Normaltekst>
               </Column>
               <Column xs="6">
-                {arsak && (
-                  <Normaltekst className={styles.resultName}>
-                    {arsak.hendelseType.navn}
-                  </Normaltekst>
-                )}
+                {arsak && <Normaltekst className={styles.resultName}>{arsak.hendelseType.navn}</Normaltekst>}
               </Column>
             </Row>
           </div>

@@ -1,4 +1,4 @@
-import React, { useEffect, FunctionComponent, ReactElement } from 'react';
+import React, { useEffect, ReactElement } from 'react';
 import { formValueSelector, reduxForm, InjectedFormProps } from 'redux-form';
 import { createSelector } from 'reselect';
 import { connect } from 'react-redux';
@@ -86,9 +86,7 @@ interface MappedOwnProps {
  * Presentasjonskomponent. Denne modalen vises etter at en saksbehandler har valgt opprett ny 1.gangsbehandling i behandlingsmenyen.
  * Ved å trykke på ok skal ny behandling(1.gangsbehandling) av sak opprettes.
  */
-export const NyBehandlingModal: FunctionComponent<
-  PureOwnProps & MappedOwnProps & WrappedComponentProps & InjectedFormProps
-> = ({
+export const NyBehandlingModal = ({
   handleSubmit,
   cancelEvent,
   intl,
@@ -103,7 +101,7 @@ export const NyBehandlingModal: FunctionComponent<
   erTilbakekrevingAktivert,
   valgtBehandlingTypeKode,
   erTilbakekreving,
-}) => {
+}: Partial<PureOwnProps> & MappedOwnProps & WrappedComponentProps & InjectedFormProps) => {
   useEffect(() => {
     if (erTilbakekrevingAktivert) {
       if (uuid !== undefined) {

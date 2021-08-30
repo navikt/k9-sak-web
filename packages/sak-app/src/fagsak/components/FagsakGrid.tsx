@@ -1,4 +1,4 @@
-import React, { FunctionComponent, ReactNode } from 'react';
+import React, { ReactNode } from 'react';
 import MediaQuery from 'react-responsive';
 
 import styles from './fagsakGrid.less';
@@ -15,12 +15,12 @@ interface OwnProps {
  *
  * Presentasjonskomponent. Har ansvar for å sette opp applikasjonens hovedgrid.
  */
-const FagsakGrid: FunctionComponent<OwnProps> = ({
+const FagsakGrid = ({
   behandlingContent,
   profileAndNavigationContent,
   supportContent,
   visittkortContent,
-}) => (
+}: OwnProps) => (
   <>
     <MediaQuery maxWidth={1599}>{visittkortContent()}</MediaQuery>
     <div className={styles.gridContainer}>

@@ -1,4 +1,4 @@
-import React, { FunctionComponent, ReactNode, useEffect, useMemo, useRef } from 'react';
+import React, { ReactNode, useEffect, useMemo, useRef } from 'react';
 import moment from 'moment';
 
 import { Timeline } from '@fpsak-frontend/tidslinje';
@@ -83,14 +83,14 @@ const leggPåGroupId = (rad: TidslinjeRad<Periode<any>>) => {
   };
 };
 
-const Tidslinje: FunctionComponent<TidslinjeProps<any>> = ({
+const Tidslinje = ({
   rader,
   customTimes,
   velgPeriode,
   valgtPeriode,
   setTimelineRef,
   sideContentRader,
-}) => {
+}: TidslinjeProps<any>) => {
   const timelineRef = useRef();
 
   useEffect(() => setTimelineRef && setTimelineRef(timelineRef), [timelineRef]);

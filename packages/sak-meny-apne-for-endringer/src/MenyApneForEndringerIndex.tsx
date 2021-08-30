@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useCallback } from 'react';
+import React, { useCallback } from 'react';
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 
 import { OkAvbrytModal } from '@fpsak-frontend/shared-components';
@@ -24,12 +24,12 @@ interface OwnProps {
   lukkModal: () => void;
 }
 
-const MenyApneForEndringerIndex: FunctionComponent<OwnProps> = ({
+const MenyApneForEndringerIndex = ({
   behandlingId,
   behandlingVersjon,
   apneBehandlingForEndringer,
   lukkModal,
-}) => {
+}: OwnProps) => {
   const submit = useCallback(() => {
     const params = {
       behandlingId,

@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from 'react';
+import React from 'react';
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 
 import { Behandling, KodeverkMedNavn } from '@k9-sak-web/types';
@@ -33,7 +33,7 @@ interface OwnProps {
   aksjonspunktKodeForeslaVedtak: string;
 }
 
-const VedtakTilbakekrevingProsessIndex: FunctionComponent<OwnProps> = ({
+const VedtakTilbakekrevingProsessIndex = ({
   behandling,
   beregningsresultat,
   vedtaksbrev,
@@ -42,7 +42,7 @@ const VedtakTilbakekrevingProsessIndex: FunctionComponent<OwnProps> = ({
   alleKodeverk,
   fetchPreviewVedtaksbrev,
   aksjonspunktKodeForeslaVedtak,
-}) => {
+}: OwnProps) => {
   const erRevurderingTilbakekrevingKlage =
     behandling.førsteÅrsak && erTilbakekrevingÅrsakKlage(behandling.førsteÅrsak.behandlingArsakType);
   const erRevurderingTilbakekrevingFeilBeløpBortfalt =

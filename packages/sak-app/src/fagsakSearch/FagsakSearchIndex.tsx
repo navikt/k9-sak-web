@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useEffect, useMemo } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { useHistory } from 'react-router-dom';
 
 import { errorOfType, ErrorTypes, getErrorResponseData } from '@k9-sak-web/rest-api';
@@ -17,7 +17,7 @@ const EMPTY_ARRAY = [];
  * Container komponent. Har ansvar for å vise søkeskjermbildet og å håndtere fagsaksøket
  * mot server og lagringen av resultatet i klientens state.
  */
-const FagsakSearchIndex: FunctionComponent = () => {
+const FagsakSearchIndex = () => {
   const alleKodeverk = restApiHooks.useGlobalStateRestApiData<{ [key: string]: [KodeverkMedNavn] }>(
     K9sakApiKeys.KODEVERK,
   );

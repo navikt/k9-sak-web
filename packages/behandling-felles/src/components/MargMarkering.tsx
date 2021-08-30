@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useMemo } from 'react';
+import React, { useMemo } from 'react';
 import classnames from 'classnames/bind';
 
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
@@ -17,13 +17,13 @@ interface OwnProps {
   children: any;
 }
 
-const MargMarkering: FunctionComponent<OwnProps> = ({
+const MargMarkering = ({
   behandlingStatus,
   aksjonspunkter,
   isReadOnly,
   visAksjonspunktMarkering = true,
   children,
-}) => {
+}: OwnProps) => {
   if (aksjonspunkter.length === 0) {
     return <div className={styles.prosesspunkt}>{children}</div>;
   }

@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from 'react';
+import React from 'react';
 
 import { Rettigheter, BehandlingPaVent, SettPaVentParams } from '@k9-sak-web/behandling-felles';
 import { Fagsak, KodeverkMedNavn, Behandling, FeatureToggles, FagsakPerson } from '@k9-sak-web/types';
@@ -23,7 +23,7 @@ interface OwnProps {
   featureToggles: FeatureToggles;
 }
 
-const InnsynPaneler: FunctionComponent<OwnProps> = ({
+const InnsynPaneler = ({
   fagsak,
   fagsakPerson,
   behandling,
@@ -38,7 +38,7 @@ const InnsynPaneler: FunctionComponent<OwnProps> = ({
   opneSokeside,
   setBehandling,
   featureToggles,
-}) => (
+}: OwnProps) => (
   <>
     <BehandlingPaVent
       behandling={behandling}

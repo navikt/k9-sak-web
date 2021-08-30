@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from 'react';
+import React from 'react';
 import OverføringsdagerPanel from './OverføringsdagerPanel';
 import Overføring, { Overføringsretning, OverføringstypeEnum } from '../types/Overføring';
 import styles from './overføringsdagerPanelgruppe.less';
@@ -12,14 +12,14 @@ interface OverføringsdagerPanelgruppeProps {
   behandlingVersjon: number;
 }
 
-const OverføringsdagerPanelgruppe: FunctionComponent<OverføringsdagerPanelgruppeProps> = ({
+const OverføringsdagerPanelgruppe = ({
   overføringer,
   fordelinger,
   koronaoverføringer,
   retning,
   behandlingId,
   behandlingVersjon,
-}) => (
+}: OverføringsdagerPanelgruppeProps) => (
   <div className={styles.panelgruppeContainer}>
     <OverføringsdagerPanel
       overføringer={fordelinger}

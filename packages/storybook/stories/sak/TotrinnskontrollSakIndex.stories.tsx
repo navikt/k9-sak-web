@@ -108,7 +108,6 @@ export const visTotrinnskontrollForBeslutter = () => (
       location={location}
       readOnly={boolean('readOnly', false)}
       onSubmit={action('button-click')}
-      forhandsvisVedtaksbrev={action('button-click')}
       fagsakYtelseType={{
         kode: fagsakYtelseType.FORELDREPENGER,
         kodeverk: '',
@@ -148,7 +147,6 @@ export const visTotrinnskontrollForSaksbehandler = () => (
       location={location}
       readOnly
       onSubmit={action('button-click')}
-      forhandsvisVedtaksbrev={action('button-click')}
       fagsakYtelseType={{
         kode: fagsakYtelseType.FORELDREPENGER,
         kodeverk: '',

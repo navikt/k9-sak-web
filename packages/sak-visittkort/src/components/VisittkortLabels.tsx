@@ -1,4 +1,4 @@
-import React, { useMemo, FunctionComponent } from 'react';
+import React, { useMemo } from 'react';
 import moment from 'moment';
 import { injectIntl, FormattedMessage, WrappedComponentProps } from 'react-intl';
 import { EtikettInfo, EtikettAdvarsel, EtikettFokus } from 'nav-frontend-etiketter';
@@ -15,11 +15,11 @@ interface OwnProps {
   harTilbakekrevingVerge?: boolean;
 }
 
-const VisittkortLabels: FunctionComponent<OwnProps & WrappedComponentProps> = ({
+const VisittkortLabels = ({
   intl,
   personopplysninger,
   harTilbakekrevingVerge = false,
-}) => {
+}: OwnProps & WrappedComponentProps) => {
   const erSokerUnder18 = useMemo(
     () => personopplysninger && moment().diff(personopplysninger.fodselsdato, 'years') < 18,
     [personopplysninger],

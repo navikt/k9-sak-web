@@ -1,4 +1,4 @@
-import React, { FunctionComponent, ReactNode, useMemo, useState } from 'react';
+import React, { ReactNode, useMemo, useState } from 'react';
 import { useIntl } from 'react-intl';
 import classNames from 'classnames';
 import { Column, Row } from 'nav-frontend-grid';
@@ -74,7 +74,7 @@ export const mapSideContent = (uttaksplaner: Uttaksplan[], intl): ReactNode[] =>
     );
   });
 
-const Uttak: FunctionComponent<UttakkProps> = ({ uttaksplaner }) => {
+const Uttak = ({ uttaksplaner }: UttakkProps) => {
   const [valgtPeriode, velgPeriode] = useState<TidslinjePeriode<Uttaksperiode> | null>();
   const [timelineRef, setTimelineRef] = useState();
   const valgtPerson = useMemo<Person>(

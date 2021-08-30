@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from 'react';
+import React from 'react';
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 
 import { Dokument } from '@k9-sak-web/types';
@@ -22,7 +22,7 @@ interface OwnProps {
   behandlingId?: number;
 }
 
-const DokumenterSakIndex: FunctionComponent<OwnProps> = ({ documents, selectDocumentCallback, behandlingId }) => (
+const DokumenterSakIndex = ({ documents, selectDocumentCallback, behandlingId }: OwnProps) => (
   <RawIntlProvider value={intl}>
     <DocumentList documents={documents} selectDocumentCallback={selectDocumentCallback} behandlingId={behandlingId} />
   </RawIntlProvider>

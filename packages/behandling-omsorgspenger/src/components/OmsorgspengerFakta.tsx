@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from 'react';
+import React from 'react';
 
 import { injectIntl, WrappedComponentProps } from 'react-intl';
 import { Rettigheter, SideMenuWrapper, faktaHooks, useSetBehandlingVedEndring } from '@k9-sak-web/behandling-felles';
@@ -37,7 +37,7 @@ interface OwnProps {
   featureToggles?: FeatureToggles;
 }
 
-const OmsorgspengerFakta: FunctionComponent<OwnProps & WrappedComponentProps> = ({
+const OmsorgspengerFakta = ({
   intl,
   data,
   behandling,
@@ -53,7 +53,7 @@ const OmsorgspengerFakta: FunctionComponent<OwnProps & WrappedComponentProps> = 
   setBehandling,
   arbeidsgiverOpplysningerPerId,
   featureToggles,
-}) => {
+}: OwnProps & WrappedComponentProps) => {
   const { aksjonspunkter, ...rest } = data;
 
   const { startRequest: lagreAksjonspunkter, data: apBehandlingRes } = restApiOmsorgHooks.useRestApiRunner<Behandling>(
@@ -61,10 +61,8 @@ const OmsorgspengerFakta: FunctionComponent<OwnProps & WrappedComponentProps> = 
   );
   useSetBehandlingVedEndring(apBehandlingRes, setBehandling);
 
-  const {
-    startRequest: lagreOverstyrteAksjonspunkter,
-    data: apOverstyrtBehandlingRes,
-  } = restApiOmsorgHooks.useRestApiRunner<Behandling>(OmsorgspengerBehandlingApiKeys.SAVE_OVERSTYRT_AKSJONSPUNKT);
+  const { startRequest: lagreOverstyrteAksjonspunkter, data: apOverstyrtBehandlingRes } =
+    restApiOmsorgHooks.useRestApiRunner<Behandling>(OmsorgspengerBehandlingApiKeys.SAVE_OVERSTYRT_AKSJONSPUNKT);
   useSetBehandlingVedEndring(apOverstyrtBehandlingRes, setBehandling);
 
   const dataTilUtledingAvOmsorgPaneler = {

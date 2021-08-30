@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import { FormattedMessage, injectIntl, WrappedComponentProps } from 'react-intl';
 import classNames from 'classnames';
@@ -63,7 +63,7 @@ interface OwnProps {
   submitCallback: (aksjonspunktData: { kode: string }[]) => Promise<any>;
 }
 
-export const TilbakekrevingVedtakFormImpl: FunctionComponent<OwnProps & InjectedFormProps & WrappedComponentProps> = ({
+export const TilbakekrevingVedtakFormImpl = ({
   intl,
   readOnly,
   fetchPreviewVedtaksbrev,
@@ -77,7 +77,7 @@ export const TilbakekrevingVedtakFormImpl: FunctionComponent<OwnProps & Injected
   erRevurderingTilbakekrevingFeilBeløpBortfalt,
   fritekstOppsummeringPakrevdMenIkkeUtfylt,
   ...formProps
-}) => (
+}: OwnProps & InjectedFormProps & WrappedComponentProps) => (
   <form aria-label="form" onSubmit={formProps.handleSubmit}>
     <VerticalSpacer twentyPx />
     <TilbakekrevingEditerVedtaksbrevPanel

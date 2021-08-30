@@ -1,4 +1,4 @@
-import React, { useMemo, FunctionComponent } from 'react';
+import React, { useMemo } from 'react';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components/index';
 import { AlertStripeAdvarsel } from 'nav-frontend-alertstriper';
 import { FormattedMessage } from 'react-intl';
@@ -30,7 +30,7 @@ const typeInfo = {
   },
 };
 
-const UidentifiserteRammevedtak: FunctionComponent<UidentifiserteRammevedtakProps> = ({ rammevedtak, type }) => {
+const UidentifiserteRammevedtak = ({ rammevedtak, type }: UidentifiserteRammevedtakProps) => {
   const { text, erUidentifisert } = typeInfo[type];
   const uidentifiserteRammevedtak = useMemo(() => rammevedtak.filter(erUidentifisert), [rammevedtak]);
 

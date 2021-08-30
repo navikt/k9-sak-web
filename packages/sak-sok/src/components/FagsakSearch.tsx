@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from 'react';
+import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import { Normaltekst } from 'nav-frontend-typografi';
 
@@ -28,7 +28,7 @@ interface OwnProps {
  * Presentasjonskomponent. Denne setter sammen de ulike komponentene i søkebildet.
  * Er søkeresultat mottatt vises enten trefflisten og relatert person, eller en tekst som viser ingen resultater.
  */
-const FagsakSearch: FunctionComponent<OwnProps> = ({
+const FagsakSearch = ({
   fagsaker,
   searchFagsakCallback,
   searchResultReceived,
@@ -36,7 +36,7 @@ const FagsakSearch: FunctionComponent<OwnProps> = ({
   searchStarted,
   searchResultAccessDenied,
   alleKodeverk,
-}) => (
+}: OwnProps) => (
   <div className={styles.container}>
     <SearchForm
       onSubmit={searchFagsakCallback}

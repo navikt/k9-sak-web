@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from 'react';
+import React from 'react';
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 import { Location } from 'history';
 
@@ -28,14 +28,14 @@ interface OwnProps {
   erTilbakekreving: boolean;
 }
 
-const HistorikkSakIndex: FunctionComponent<OwnProps> = ({
+const HistorikkSakIndex = ({
   historikkinnslag,
   saksnummer,
   getBehandlingLocation,
   alleKodeverk,
   createLocationForSkjermlenke,
   erTilbakekreving,
-}) => (
+}: OwnProps) => (
   <RawIntlProvider value={intl}>
     <History
       historikkinnslag={historikkinnslag}

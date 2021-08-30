@@ -1,3 +1,8 @@
+import React from 'react';
+import { useIntl } from 'react-intl';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import moment from 'moment';
 import { DatepickerField } from '@fpsak-frontend/form';
 import { behandlingForm, behandlingFormValueSelector } from '@fpsak-frontend/form/src/behandlingForm';
 import InputField from '@fpsak-frontend/form/src/InputField';
@@ -17,13 +22,8 @@ import {
 } from '@fpsak-frontend/utils';
 import { Aksjonspunkt, Behandling, SubmitCallback } from '@k9-sak-web/types';
 import OpplysningerFraSøknaden, { Måned } from '@k9-sak-web/types/src/opplysningerFraSoknaden';
-import moment from 'moment';
 import { Knapp } from 'nav-frontend-knapper';
 import { TabsPure } from 'nav-frontend-tabs';
-import * as React from 'react';
-import { useIntl } from 'react-intl';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
 import { change as reduxFormChange, FieldArray, InjectedFormProps, untouch as reduxFormUntouch } from 'redux-form';
 import { startdatoErISøknadsperiode } from './validators';
 import styles from './opplysningerFraSoknadenForm.less';
@@ -110,7 +110,7 @@ interface StateProps {
   harSøktSomSSN: boolean;
 }
 
-const OppgittOpptjeningRevurderingForm: React.FunctionComponent<Props & InjectedFormProps & StateProps> = props => {
+const OppgittOpptjeningRevurderingForm = (props: Partial<Props> & InjectedFormProps & StateProps) => {
   const [activeTab, setActiveTab] = React.useState(0);
   const [formIsEditable, setFormIsEditable] = React.useState(false);
   const intl = useIntl();

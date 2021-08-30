@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from 'react';
+import React from 'react';
 import { FormattedMessage, injectIntl, WrappedComponentProps } from 'react-intl';
 import Modal from 'nav-frontend-modal';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
@@ -25,7 +25,7 @@ interface OwnProps {
  *
  * Presentasjonskomponent. Modal som viser en valgfri tekst i tillegg til knappene OK og Avbryt.
  */
-const OkAvbrytModal: FunctionComponent<OwnProps & WrappedComponentProps> = ({
+const OkAvbrytModal = ({
   textCode,
   text,
   okButtonTextCode = 'OkAvbrytModal.Ok',
@@ -33,7 +33,7 @@ const OkAvbrytModal: FunctionComponent<OwnProps & WrappedComponentProps> = ({
   cancel,
   submit,
   intl,
-}) => (
+}: OwnProps & WrappedComponentProps) => (
   <Modal
     className={styles.modal}
     isOpen={showModal}
