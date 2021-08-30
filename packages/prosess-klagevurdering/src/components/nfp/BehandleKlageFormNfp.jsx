@@ -33,6 +33,7 @@ import styles from './behandleKlageFormNfp.less';
  * Presentasjonskomponent. Setter opp aksjonspunktet for behandling av klage (NFP).
  */
 export const BehandleKlageFormNfpImpl = ({
+  erFrisinn,
   behandlingId,
   behandlingVersjon,
   readOnly,
@@ -56,6 +57,7 @@ export const BehandleKlageFormNfpImpl = ({
       </AksjonspunktHelpTextTemp>
       <VerticalSpacer sixteenPx />
       <KlageVurderingRadioOptionsNfp
+        erFrisinn={erFrisinn}
         readOnly={readOnly}
         klageVurdering={formValues.klageVurdering}
         aksjonspunktCode={aksjonspunktCodes.BEHANDLE_KLAGE_NFP}
@@ -112,6 +114,7 @@ export const BehandleKlageFormNfpImpl = ({
 );
 
 BehandleKlageFormNfpImpl.propTypes = {
+  erFrisinn: PropTypes.bool,
   previewCallback: PropTypes.func.isRequired,
   saveKlage: PropTypes.func.isRequired,
   formValues: PropTypes.shape(),
@@ -127,18 +130,18 @@ BehandleKlageFormNfpImpl.defaultProps = {
 };
 
 export const buildInitialValues = createSelector(
-  [ownProps => ownProps.klageVurdering.klageVurderingResultatNFP],
-  klageVurderingResultat => ({
+  [ownProps => ownProps.klageVurdering.klageVurderingResultatNFP, ownProps => ownProps.erFrisinn],
+  (klageVurderingResultat, erFrisinn) => ({
     klageMedholdArsak: klageVurderingResultat ? klageVurderingResultat.klageMedholdArsak : null,
     klageVurderingOmgjoer: klageVurderingResultat ? klageVurderingResultat.klageVurderingOmgjoer : null,
-    klageHjemmel: klageVurderingResultat ? klageVurderingResultat.klageHjemmel : null,
+    klageHjemmel: !erFrisinn && klageVurderingResultat ? klageVurderingResultat.klageHjemmel : null,
     klageVurdering: klageVurderingResultat ? klageVurderingResultat.klageVurdering : null,
     begrunnelse: klageVurderingResultat ? klageVurderingResultat.begrunnelse : null,
     fritekstTilBrev: klageVurderingResultat ? klageVurderingResultat.fritekstTilBrev : null,
   }),
 );
 
-export const transformValues = values => ({
+export const transformValues = (values, erFrisinn) => ({
   klageMedholdArsak:
     values.klageVurdering === klageVurderingType.MEDHOLD_I_KLAGE ||
     values.klageVurdering === klageVurderingType.OPPHEVE_YTELSESVEDTAK
@@ -146,7 +149,8 @@ export const transformValues = values => ({
       : null,
   klageVurderingOmgjoer:
     values.klageVurdering === klageVurderingType.MEDHOLD_I_KLAGE ? values.klageVurderingOmgjoer : null,
-  klageHjemmel: values.klageVurdering === klageVurderingType.OPPHEVE_YTELSESVEDTAK ? values.klageHjemmel : null,
+  klageHjemmel:
+    !erFrisinn && values.klageVurdering === klageVurderingType.OPPHEVE_YTELSESVEDTAK ? values.klageHjemmel : null,
   klageVurdering: values.klageVurdering,
   fritekstTilBrev: values.fritekstTilBrev,
   begrunnelse: values.begrunnelse,
@@ -156,7 +160,7 @@ export const transformValues = values => ({
 const formName = 'BehandleKlageNfpForm';
 
 const mapStateToPropsFactory = (initialState, initialOwnProps) => {
-  const onSubmit = values => initialOwnProps.submitCallback([transformValues(values)]);
+  const onSubmit = values => initialOwnProps.submitCallback([transformValues(values, initialOwnProps.erFrisinn)]);
   return (state, ownProps) => ({
     initialValues: buildInitialValues(ownProps),
     formValues: behandlingFormValueSelector(formName, ownProps.behandlingId, ownProps.behandlingVersjon)(

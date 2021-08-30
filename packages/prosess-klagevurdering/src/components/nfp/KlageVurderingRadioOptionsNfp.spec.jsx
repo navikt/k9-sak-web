@@ -66,6 +66,7 @@ describe('<KlageVurderingRadioOptionsNfp>', () => {
   it('skal vise hjemler når klagevurdering er opprettholdt', () => {
     const wrapper = shallowWithIntl(
       <KlageVurderingRadioOptionsNfp
+        erFrisinn={false}
         readOnly={false}
         readOnlySubmitButton
         medholdReasons={medholdReasons}
@@ -79,5 +80,23 @@ describe('<KlageVurderingRadioOptionsNfp>', () => {
     );
     expect(wrapper.find('SelectField').props().name).to.equal('klageHjemmel');
     expect(wrapper.find('SelectField')).to.have.length(1);
+  });
+
+  it('skal ikke vise hjemler når klagevurdering er opprettholdt og behandling er frisinn', () => {
+    const wrapper = shallowWithIntl(
+      <KlageVurderingRadioOptionsNfp
+        erFrisinn
+        readOnly={false}
+        readOnlySubmitButton
+        medholdReasons={medholdReasons}
+        aksjonspunktCode={aksjonspunktCodes.BEHANDLE_KLAGE_NFP}
+        klageVurdering={klageVurdering.STADFESTE_YTELSESVEDTAK}
+        previewCallback={sinon.spy()}
+        intl={intlMock}
+        formProps={{}}
+        sprakkode={sprakkode}
+      />,
+    );
+    expect(wrapper.find('SelectField')).to.have.length(0);
   });
 });

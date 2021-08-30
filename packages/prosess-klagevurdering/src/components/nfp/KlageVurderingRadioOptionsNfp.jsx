@@ -23,7 +23,7 @@ const hjemler = [
   { kode: '9', navn: '9' },
 ];
 
-export const KlageVurderingRadioOptionsNfp = ({ readOnly, medholdReasons, klageVurdering, intl }) => (
+export const KlageVurderingRadioOptionsNfp = ({ erFrisinn, readOnly, medholdReasons, klageVurdering, intl }) => (
   <div>
     <>
       <RadioGroupField
@@ -77,7 +77,7 @@ export const KlageVurderingRadioOptionsNfp = ({ readOnly, medholdReasons, klageV
         </RadioGroupField>
       </ArrowBox>
     )}
-    {klageVurdering === klageVurderingType.STADFESTE_YTELSESVEDTAK && (
+    {!erFrisinn && klageVurdering === klageVurderingType.STADFESTE_YTELSESVEDTAK && (
       <ArrowBox className={readOnly ? styles.selectReadOnly : null}>
         <SelectField
           readOnly={readOnly}
@@ -98,6 +98,7 @@ export const KlageVurderingRadioOptionsNfp = ({ readOnly, medholdReasons, klageV
 );
 
 KlageVurderingRadioOptionsNfp.propTypes = {
+  erFrisinn: PropTypes.bool,
   readOnly: PropTypes.bool,
   medholdReasons: PropTypes.arrayOf(
     PropTypes.shape({
