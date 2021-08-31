@@ -29,7 +29,7 @@ import { Element, Normaltekst } from 'nav-frontend-typografi';
 import OverstyrBekreftKnappPanel from './OverstyrBekreftKnappPanel';
 import SoknadsfristVilkarDokument, { DELVIS_OPPFYLT } from './SoknadsfristVilkarDokument';
 
-import { utledInnsendtSoknadsfrist, formatDate } from './utils';
+import { utledInnsendtSoknadsfrist, formatDate } from '../utils';
 
 import styles from './SoknadsfristVilkarForm.less';
 
@@ -89,7 +89,7 @@ export const SoknadsfristVilkarForm = ({
 
   return (
     <form onSubmit={handleSubmit}>
-      {(erOverstyrt || harAksjonspunkt) && (
+      {(erOverstyrt || harAksjonspunkt) && dokumenter.length > 0 && (
         <AksjonspunktBox
           className={styles.aksjonspunktMargin}
           erAksjonspunktApent={erOverstyrt || harÅpentAksjonspunkt}
@@ -296,15 +296,8 @@ const mapStateToPropsFactory = (_initialState, initialOwnProps: SoknadsfristVilk
   const validateFn = values => validate(values);
 
   return (state, ownProps) => {
-    const {
-      behandlingId,
-      behandlingVersjon,
-      aksjonspunkter,
-      status,
-      harÅpentAksjonspunkt,
-      erOverstyrt,
-      overrideReadOnly,
-    } = ownProps;
+    const { behandlingId, behandlingVersjon, aksjonspunkter, harÅpentAksjonspunkt, erOverstyrt, overrideReadOnly } =
+      ownProps;
 
     const aksjonspunkt = harÅpentAksjonspunkt
       ? aksjonspunkter.find(ap => ap.definisjon.kode === aksjonspunktCodes.KONTROLLER_OPPLYSNINGER_OM_SØKNADSFRIST)
@@ -330,7 +323,7 @@ const mapStateToPropsFactory = (_initialState, initialOwnProps: SoknadsfristVilk
       harÅpentAksjonspunkt,
       harAksjonspunkt: aksjonspunkt !== undefined,
       isSolvable: erOverstyrt || isSolvable,
-      isReadOnly: overrideReadOnly || status === vilkarUtfallType.OPPFYLT,
+      isReadOnly: overrideReadOnly,
       validate: validateFn,
       ...behandlingFormValueSelector(formName, behandlingId, behandlingVersjon)(
         state,
