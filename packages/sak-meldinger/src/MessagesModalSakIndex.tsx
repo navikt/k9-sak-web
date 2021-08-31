@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from 'react';
+import React from 'react';
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 
 import MessagesModal from './components/MessagesModal';
@@ -19,7 +19,7 @@ interface OwnProps {
   closeEvent: () => void;
 }
 
-const MessagesModalSakIndex: FunctionComponent<OwnProps> = ({ showModal, closeEvent }) => (
+const MessagesModalSakIndex = ({ showModal, closeEvent }: OwnProps) => (
   <RawIntlProvider value={intl}>
     <MessagesModal showModal={showModal} closeEvent={closeEvent} />
   </RawIntlProvider>

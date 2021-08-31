@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from 'react';
+import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import { Flatknapp } from 'nav-frontend-knapper';
 import { Normaltekst } from 'nav-frontend-typografi';
@@ -12,7 +12,7 @@ interface LeggTilKnappProps {
   disabled?: boolean;
 }
 
-const LeggTilKnapp: FunctionComponent<LeggTilKnappProps> = ({ onClick, tekstId, disabled = false }) => (
+const LeggTilKnapp = ({ onClick, tekstId, disabled = false }: LeggTilKnappProps) => (
   <Flatknapp mini kompakt onClick={onClick} htmlType="button" disabled={disabled}>
     <Image className={styles.image} src={addCircleIcon} />
     <Normaltekst>

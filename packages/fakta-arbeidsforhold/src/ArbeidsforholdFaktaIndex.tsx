@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from 'react';
+import React from 'react';
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 import ArbeidsforholdV2 from '@k9-sak-web/types/src/arbeidsforholdV2TsType';
 import { ArbeidsgiverOpplysningerPerId, Behandling, KodeverkMedNavn } from '@k9-sak-web/types';
@@ -23,7 +23,7 @@ interface OwnProps {
   arbeidsforhold: ArbeidsforholdV2[];
 }
 
-const ArbeidsforholdFaktaIndex: FunctionComponent<OwnProps & StandardFaktaProps> = ({
+const ArbeidsforholdFaktaIndex = ({
   behandling,
   arbeidsforhold,
   arbeidsgiverOpplysningerPerId,
@@ -33,7 +33,7 @@ const ArbeidsforholdFaktaIndex: FunctionComponent<OwnProps & StandardFaktaProps>
   harApneAksjonspunkter,
   submitCallback,
   readOnly,
-}) => (
+}: OwnProps & StandardFaktaProps) => (
   <RawIntlProvider value={intl}>
     {arbeidsforhold && arbeidsgiverOpplysningerPerId && (
       <ArbeidsforholdInfoPanel

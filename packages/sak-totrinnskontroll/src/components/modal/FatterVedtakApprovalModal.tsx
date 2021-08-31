@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from 'react';
+import React from 'react';
 import { FormattedMessage, injectIntl, WrappedComponentProps } from 'react-intl';
 import { Column, Row } from 'nav-frontend-grid';
 import { Hovedknapp } from 'nav-frontend-knapper';
@@ -167,7 +167,6 @@ interface OwnProps {
   fagsakYtelseType: Kodeverk;
   erKlageWithKA?: boolean;
   behandlingsresultat?: Behandling['behandlingsresultat'];
-  behandlingId: number;
   behandlingStatusKode: string;
   behandlingTypeKode: string;
   harSammeResultatSomOriginalBehandling?: boolean;
@@ -179,7 +178,7 @@ interface OwnProps {
  * Presentasjonskomponent. Denne modalen vises en lightbox etter at en beslutter har godkjent alle aksjonspunkter
  * med totrinnskontroll. Ved å trykke på knapp blir beslutter tatt tilbake til sokesiden.
  */
-const FatterVedtakApprovalModal: FunctionComponent<OwnProps & WrappedComponentProps> = ({
+const FatterVedtakApprovalModal = ({
   intl,
   closeEvent,
   allAksjonspunktApproved,
@@ -189,7 +188,7 @@ const FatterVedtakApprovalModal: FunctionComponent<OwnProps & WrappedComponentPr
   harSammeResultatSomOriginalBehandling,
   fagsakYtelseType,
   erKlageWithKA,
-}) => {
+}: OwnProps & WrappedComponentProps) => {
   const isBehandlingsresultatOpphor =
     behandlingsresultat && behandlingsresultat.type.kode === behandlingResultatType.OPPHOR;
   const infoTextCode = utledInfoTextCode(

@@ -9,7 +9,7 @@ import { dateFormat } from '@fpsak-frontend/utils';
 import { SideMenu } from '@navikt/k9-react-components';
 import classNames from 'classnames/bind';
 import { Element, Undertekst, Undertittel } from 'nav-frontend-typografi';
-import * as React from 'react';
+import React from 'react';
 import { createIntl, createIntlCache, FormattedMessage, RawIntlProvider } from 'react-intl';
 import Vilkarperiode from '../../types/src/vilkarperiode';
 import messages from '../i18n/nb_NO.json';

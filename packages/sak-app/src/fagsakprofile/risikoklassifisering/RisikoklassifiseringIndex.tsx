@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useEffect, useCallback, useMemo } from 'react';
+import React, { useEffect, useCallback, useMemo } from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
 
 import { Aksjonspunkt, NavAnsatt, Risikoklassifisering, Fagsak, BehandlingAppKontekst } from '@k9-sak-web/types';
@@ -35,14 +35,14 @@ interface OwnProps {
  * Viser en av tre komponenter avhengig av: Om ingen klassifisering er utført,
  * om klassifisering er utført og ingen faresignaler er funnet og om klassifisering er utført og faresignaler er funnet
  */
-const RisikoklassifiseringIndex: FunctionComponent<OwnProps> = ({
+const RisikoklassifiseringIndex = ({
   fagsak,
   alleBehandlinger,
   risikoAksjonspunkt,
   kontrollresultat,
   behandlingVersjon,
   behandlingId,
-}) => {
+}: OwnProps) => {
   const behandling = alleBehandlinger.find(b => b.id === behandlingId);
   const erPaaVent = behandling ? behandling.behandlingPaaVent : false;
   const behandlingStatus = behandling?.status;
@@ -58,11 +58,10 @@ const RisikoklassifiseringIndex: FunctionComponent<OwnProps> = ({
   const location = useLocation();
 
   const navAnsatt = restApiHooks.useGlobalStateRestApiData<NavAnsatt>(K9sakApiKeys.NAV_ANSATT);
-  const rettigheter = useMemo(() => getAccessRights(navAnsatt, fagsak.status, behandlingStatus, behandlingType), [
-    fagsak.status,
-    behandlingStatus,
-    behandlingType,
-  ]);
+  const rettigheter = useMemo(
+    () => getAccessRights(navAnsatt, fagsak.status, behandlingStatus, behandlingType),
+    [fagsak.status, behandlingStatus, behandlingType],
+  );
   const readOnly = useMemo(() => getReadOnly(navAnsatt, rettigheter, erPaaVent), [rettigheter, erPaaVent]);
 
   const toggleRiskPanel = useCallback(() => {

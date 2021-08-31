@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from 'react';
+import React from 'react';
 
 import { Aksjonspunkt, Behandling, FastsattOpptjening } from '@k9-sak-web/types';
 
@@ -24,7 +24,7 @@ interface OwnProps {
  *
  * Presentasjonskomponent. Viser resultatet av opptjeningsvilkåret.
  */
-const OpptjeningVilkarForm: FunctionComponent<OwnProps> = ({
+const OpptjeningVilkarForm = ({
   behandlingId,
   behandlingVersjon,
   behandlingsresultat,
@@ -36,7 +36,7 @@ const OpptjeningVilkarForm: FunctionComponent<OwnProps> = ({
   readOnlySubmitButton,
   readOnly,
   submitCallback,
-}) => {
+}: OwnProps) => {
   if (aksjonspunkter.length > 0) {
     return (
       <OpptjeningVilkarAksjonspunktPanel

@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useState, useCallback, FunctionComponent } from 'react';
+import React, { useRef, useEffect, useState, useCallback } from 'react';
 import { FormattedMessage, createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 import { Popover, BoxedListWithSelection } from '@navikt/k9-react-components';
 import { Knapp } from 'nav-frontend-knapper';
@@ -25,7 +25,7 @@ interface OwnProps {
   data: MenyData[];
 }
 
-const MenySakIndex: FunctionComponent<OwnProps> = ({ data }) => {
+const MenySakIndex = ({ data }: OwnProps) => {
   const filtrertData = data.filter(d => d.erSynlig);
 
   const [visMenySomApen, setVisMenyTilApen] = useState(false);

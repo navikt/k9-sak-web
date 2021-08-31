@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useCallback } from 'react';
+import React, { useCallback } from 'react';
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 
 import { OkAvbrytModal } from '@fpsak-frontend/shared-components';
@@ -26,7 +26,7 @@ interface OwnProps {
   lukkModal: () => void;
 }
 
-const MenyVergeIndex: FunctionComponent<OwnProps> = ({ fjernVerge, opprettVerge, lukkModal }) => {
+const MenyVergeIndex = ({ fjernVerge, opprettVerge, lukkModal }: OwnProps) => {
   const submit = useCallback(() => {
     lukkModal();
     const operasjon = opprettVerge || fjernVerge;

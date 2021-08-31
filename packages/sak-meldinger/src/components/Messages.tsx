@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { createSelector } from 'reselect';
 import { connect } from 'react-redux';
 import { InjectedFormProps } from 'redux-form';
@@ -91,9 +91,7 @@ const transformTemplates = templates =>
  * Presentasjonskomponent. Gir mulighet for å forhåndsvise og sende brev. Mottaker og brevtype velges fra predefinerte lister,
  * og fritekst som skal flettes inn i brevet skrives inn i et eget felt.
  */
-export const MessagesImpl: FunctionComponent<
-  PureOwnProps & MappedOwnProps & WrappedComponentProps & InjectedFormProps
-> = ({
+export const MessagesImpl = ({
   intl,
   templates,
   causes = [],
@@ -107,7 +105,7 @@ export const MessagesImpl: FunctionComponent<
   personopplysninger,
   arbeidsgiverOpplysningerPerId,
   ...formProps
-}) => {
+}: PureOwnProps & MappedOwnProps & WrappedComponentProps & InjectedFormProps) => {
   if (!sprakKode) {
     return null;
   }

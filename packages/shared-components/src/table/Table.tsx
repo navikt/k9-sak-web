@@ -1,4 +1,4 @@
-import React, { FunctionComponent, ReactElement, ReactNode } from 'react';
+import React, { ReactElement, ReactNode } from 'react';
 import { FormattedMessage } from 'react-intl';
 import classnames from 'classnames/bind';
 
@@ -51,7 +51,7 @@ interface OwnProps {
  *
  * Presentasjonskomponent. Definerer en tabell med rader og kolonner.
  */
-const Table: FunctionComponent<OwnProps> = ({
+const Table = ({
   headerTextCodes = [],
   headerColumnContent = [],
   classNameTable = '',
@@ -61,7 +61,7 @@ const Table: FunctionComponent<OwnProps> = ({
   suppliedHeaders,
   withoutTbody = false,
   notFocusableHeader = false,
-}) => {
+}: OwnProps) => {
   const performFunctionOnChildren = (
     childOrChildren: ReactElement | ReactElement[],
     func: (child: ReactElement) => ReactElement,

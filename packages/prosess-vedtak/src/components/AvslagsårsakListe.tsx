@@ -1,7 +1,7 @@
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import { Kodeverk, Vilkar } from '@k9-sak-web/types';
 import { Normaltekst } from 'nav-frontend-typografi';
-import * as React from 'react';
+import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import Vilkarperiode from '@k9-sak-web/types/src/vilkarperiode';
 

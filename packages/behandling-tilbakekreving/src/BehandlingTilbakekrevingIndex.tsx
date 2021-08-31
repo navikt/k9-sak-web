@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useEffect, useState, useCallback } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 
 import { ReduxFormStateCleaner, Rettigheter, useSetBehandlingVedEndring } from '@k9-sak-web/behandling-felles';
 import { KodeverkMedNavn, Behandling, Fagsak, FagsakPerson } from '@k9-sak-web/types';
@@ -39,7 +39,7 @@ interface OwnProps {
   setRequestPendingMessage: (message: string) => void;
 }
 
-const BehandlingTilbakekrevingIndex: FunctionComponent<OwnProps> = ({
+const BehandlingTilbakekrevingIndex = ({
   behandlingEventHandler,
   behandlingId,
   oppdaterBehandlingVersjon,
@@ -53,7 +53,7 @@ const BehandlingTilbakekrevingIndex: FunctionComponent<OwnProps> = ({
   valgtFaktaSteg,
   harApenRevurdering,
   setRequestPendingMessage,
-}) => {
+}: OwnProps) => {
   const [nyOgForrigeBehandling, setBehandlinger] = useState<{ current?: Behandling; previous?: Behandling }>({
     current: undefined,
     previous: undefined,

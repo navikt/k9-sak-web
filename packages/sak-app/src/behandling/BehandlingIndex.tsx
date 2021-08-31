@@ -1,4 +1,4 @@
-import React, { Suspense, FunctionComponent, useEffect, useCallback, useMemo } from 'react';
+import React, { Suspense, useEffect, useCallback, useMemo } from 'react';
 import { useHistory } from 'react-router-dom';
 import { History } from 'history';
 
@@ -80,13 +80,13 @@ interface OwnProps {
  * Er rot for for den delen av hovedvinduet som har innhold for en valgt behandling, og styrer livssyklusen til de mekanismene som er
  * relatert til den valgte behandlingen.
  */
-const BehandlingIndex: FunctionComponent<OwnProps> = ({
+const BehandlingIndex = ({
   setBehandlingIdOgVersjon,
   fagsak,
   alleBehandlinger,
   arbeidsgiverOpplysninger,
   setRequestPendingMessage,
-}) => {
+}: OwnProps) => {
   const { selected: behandlingId } = useTrackRouteParam<number>({
     paramName: 'behandlingId',
     parse: behandlingFromUrl => Number.parseInt(behandlingFromUrl, 10),

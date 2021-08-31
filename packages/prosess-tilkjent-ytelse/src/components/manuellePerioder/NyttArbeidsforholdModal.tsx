@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import { injectIntl, WrappedComponentProps } from 'react-intl';
 import { InjectedFormProps } from 'redux-form';
@@ -20,13 +20,13 @@ interface OwnProps {
   cancelEvent: (...args: any[]) => any;
 }
 
-export const NyttArbeidsforholdModal: FC<OwnProps & WrappedComponentProps & InjectedFormProps> = ({
+export const NyttArbeidsforholdModal = ({
   showModal,
   closeEvent,
   cancelEvent,
   intl,
   ...formProps
-}) => (
+}: OwnProps & WrappedComponentProps & InjectedFormProps) => (
   <Modal
     className={styles.modal}
     isOpen={showModal}

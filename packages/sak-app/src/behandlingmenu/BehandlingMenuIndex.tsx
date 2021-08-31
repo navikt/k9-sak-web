@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useCallback, useEffect, useMemo, useRef } from 'react';
+import React, { useCallback, useEffect, useMemo, useRef } from 'react';
 import moment from 'moment';
 import { useHistory, useLocation } from 'react-router-dom';
 
@@ -92,7 +92,7 @@ interface OwnProps {
   arbeidsgiverOpplysningerPerId?: ArbeidsgiverOpplysningerPerId;
 }
 
-export const BehandlingMenuIndex: FunctionComponent<OwnProps> = ({
+export const BehandlingMenuIndex = ({
   fagsak,
   alleBehandlinger = EMPTY_ARRAY,
   behandlingId,
@@ -103,7 +103,7 @@ export const BehandlingMenuIndex: FunctionComponent<OwnProps> = ({
   behandlendeEnheter,
   personopplysninger,
   arbeidsgiverOpplysningerPerId,
-}) => {
+}: OwnProps) => {
   const behandling = alleBehandlinger.find(b => b.id === behandlingId);
 
   const { push: pushLocation } = useHistory();

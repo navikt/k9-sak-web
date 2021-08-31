@@ -1,4 +1,4 @@
-import React, { ReactNode, FunctionComponent } from 'react';
+import React, { ReactNode } from 'react';
 import { FormattedMessage, injectIntl, WrappedComponentProps } from 'react-intl';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
 
@@ -27,12 +27,12 @@ interface OwnProps {
  * <AksjonspunktHelpText children={['tekst1', 'tekst2']} isAksjonspunktOpen={false} />
  * ```
  */
-const AksjonspunktHelpText: FunctionComponent<OwnProps & WrappedComponentProps> = ({
+const AksjonspunktHelpText = ({
   children,
   intl,
   isAksjonspunktOpen,
   marginBottom = false,
-}) => {
+}: OwnProps & WrappedComponentProps) => {
   if (!isAksjonspunktOpen) {
     return (
       <>

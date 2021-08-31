@@ -1,4 +1,4 @@
-import React, { FunctionComponent, ReactNode } from 'react';
+import React, { ReactNode } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { Normaltekst } from 'nav-frontend-typografi';
 
@@ -63,12 +63,12 @@ const buildEndretFeltText = (
   );
 };
 
-const HistorikkMalTypeFeilutbetaling: FunctionComponent<HistorikkMal> = ({
+const HistorikkMalTypeFeilutbetaling = ({
   historikkinnslag,
   behandlingLocation,
   getKodeverknavn,
   createLocationForSkjermlenke,
-}) => {
+}: HistorikkMal) => {
   const { historikkinnslagDeler } = historikkinnslag;
   return (
     <>

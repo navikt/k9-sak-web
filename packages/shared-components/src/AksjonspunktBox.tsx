@@ -1,4 +1,4 @@
-import React, { ReactNode, FunctionComponent } from 'react';
+import React, { ReactNode } from 'react';
 import classnames from 'classnames/bind';
 
 import styles from './aksjonspunktBox.less';
@@ -11,7 +11,7 @@ interface OwnProps {
   className?: string;
 }
 
-const AksjonspunktBox: FunctionComponent<OwnProps> = ({ erAksjonspunktApent, className, children }) => (
+const AksjonspunktBox = ({ erAksjonspunktApent, className, children }: OwnProps) => (
   <div className={classNames(className, 'aksjonspunkt', { erAksjonspunktApent })}>{children}</div>
 );
 

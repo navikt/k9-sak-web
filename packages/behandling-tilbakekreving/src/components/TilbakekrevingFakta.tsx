@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from 'react';
+import React from 'react';
 
 import { injectIntl, WrappedComponentProps } from 'react-intl';
 import { SideMenuWrapper, faktaHooks, Rettigheter, useSetBehandlingVedEndring } from '@k9-sak-web/behandling-felles';
@@ -25,7 +25,7 @@ interface OwnProps {
   setBehandling: (behandling: Behandling) => void;
 }
 
-const TilbakekrevingFakta: FunctionComponent<OwnProps & WrappedComponentProps> = ({
+const TilbakekrevingFakta = ({
   intl,
   data,
   fagsak,
@@ -37,13 +37,11 @@ const TilbakekrevingFakta: FunctionComponent<OwnProps & WrappedComponentProps> =
   valgtFaktaSteg,
   hasFetchError,
   setBehandling,
-}) => {
+}: OwnProps & WrappedComponentProps) => {
   const { aksjonspunkter, perioderForeldelse, beregningsresultat, feilutbetalingFakta } = data;
 
-  const {
-    startRequest: lagreAksjonspunkter,
-    data: apBehandlingRes,
-  } = restApiTilbakekrevingHooks.useRestApiRunner<Behandling>(TilbakekrevingBehandlingApiKeys.SAVE_AKSJONSPUNKT);
+  const { startRequest: lagreAksjonspunkter, data: apBehandlingRes } =
+    restApiTilbakekrevingHooks.useRestApiRunner<Behandling>(TilbakekrevingBehandlingApiKeys.SAVE_AKSJONSPUNKT);
   useSetBehandlingVedEndring(apBehandlingRes, setBehandling);
 
   const dataTilUtledingAvTilbakekrevingPaneler = {

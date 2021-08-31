@@ -1,4 +1,4 @@
-import { FunctionComponent, useEffect, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import { destroy } from 'redux-form';
 import { useDispatch } from 'react-redux';
 
@@ -9,10 +9,7 @@ interface OwnProps {
   behandlingVersjon: number;
 }
 
-const ReduxFormStateCleaner: FunctionComponent<OwnProps> = ({
-  behandlingId,
-  behandlingVersjon,
-}) => {
+const ReduxFormStateCleaner = ({ behandlingId, behandlingVersjon }: OwnProps) => {
   const dispatch = useDispatch();
   const ref = useRef<number>();
 

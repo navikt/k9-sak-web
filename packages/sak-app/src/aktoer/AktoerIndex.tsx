@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from 'react';
+import React from 'react';
 
 import { Aktor, KodeverkMedNavn } from '@k9-sak-web/types';
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
@@ -12,7 +12,7 @@ import { pathToFagsak } from '../app/paths';
 /**
  * AktoerIndex
  */
-const AktoerIndex: FunctionComponent = () => {
+const AktoerIndex = () => {
   const { selected: selectedAktoerId } = useTrackRouteParam<string>({
     paramName: 'aktoerId',
     parse: aktoerIdFromUrl => Number.parseInt(aktoerIdFromUrl, 10),

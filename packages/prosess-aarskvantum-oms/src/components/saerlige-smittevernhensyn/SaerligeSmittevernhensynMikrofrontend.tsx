@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import { MicroFrontend } from '@fpsak-frontend/utils';
 import sjekkHvisErIProduksjon from '@fpsak-frontend/utils/src/micro-frontends/sjekkHvisErIProduksjon';
 import { FormState } from '@fpsak-frontend/form/index';

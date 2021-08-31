@@ -1,4 +1,4 @@
-import React, { FunctionComponent, ReactNode } from 'react';
+import React, { ReactNode } from 'react';
 import { injectIntl, WrappedComponentProps } from 'react-intl';
 import { SideMenu } from '@navikt/k9-react-components';
 
@@ -15,7 +15,7 @@ interface OwnProps {
   children?: ReactNode;
 }
 
-const SideMenuWrapper: FunctionComponent<OwnProps & WrappedComponentProps> = ({ intl, paneler, onClick, children }) => (
+const SideMenuWrapper = ({ intl, paneler, onClick, children }: OwnProps & WrappedComponentProps) => (
   <div className={styles.container}>
     <FlexContainer fullHeight>
       <FlexRow>

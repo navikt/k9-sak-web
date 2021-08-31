@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from 'react';
+import React from 'react';
 import { createIntl, createIntlCache, RawIntlProvider, FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import { Hovedknapp } from 'nav-frontend-knapper';
@@ -58,7 +58,7 @@ interface MappedOwnProps {
 /**
  * FaktaSubmitButton
  */
-export const FaktaSubmitButton: FunctionComponent<PureOwnProps & MappedOwnProps> = ({
+export const FaktaSubmitButton = ({
   isReadOnly,
   isSubmittable,
   isSubmitting,
@@ -68,7 +68,7 @@ export const FaktaSubmitButton: FunctionComponent<PureOwnProps & MappedOwnProps>
   buttonText,
   onClick,
   dataId,
-}) => (
+}: Partial<PureOwnProps> & MappedOwnProps) => (
   <RawIntlProvider value={intl}>
     {!isReadOnly && (
       <Hovedknapp

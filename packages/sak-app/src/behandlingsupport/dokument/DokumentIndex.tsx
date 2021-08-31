@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useMemo } from 'react';
+import React, { useMemo } from 'react';
 
 import { LoadingPanel, requireProps, usePrevious } from '@fpsak-frontend/shared-components';
 import DokumenterSakIndex from '@fpsak-frontend/sak-dokumenter';
@@ -10,12 +10,14 @@ import { K9sakApiKeys, restApiHooks } from '../../data/k9sakApi';
 
 // TODO (hb) lag linker, ikke callback
 // TODO (hb) Kan implementeres med spesialisert selector som genererer hrefs til bruk i mapStateToProps
-const selectDocument = (saksNr: number) => (_e, _id, document: Dokument): void => {
-  window.open(
-    `/k9/sak/api/dokument/hent-dokument?saksnummer=${saksNr}&journalpostId=${document.journalpostId}&dokumentId=${document.dokumentId}`,
-    '_blank',
-  );
-};
+const selectDocument =
+  (saksNr: number) =>
+  (_e, _id, document: Dokument): void => {
+    window.open(
+      `/k9/sak/api/dokument/hent-dokument?saksnummer=${saksNr}&journalpostId=${document.journalpostId}&dokumentId=${document.dokumentId}`,
+      '_blank',
+    );
+  };
 
 const sorterDokumenter = (dok1: Dokument, dok2: Dokument): number => {
   if (!dok1.tidspunkt) {
@@ -41,7 +43,7 @@ const EMPTY_ARRAY = [];
  *
  * Container komponent. Har ansvar for å hente sakens dokumenter fra state og rendre det i en liste.
  */
-export const DokumentIndex: FunctionComponent<OwnProps> = ({ behandlingId, behandlingVersjon, saksnummer }) => {
+export const DokumentIndex = ({ behandlingId, behandlingVersjon, saksnummer }: OwnProps) => {
   const forrigeSaksnummer = usePrevious(saksnummer);
   const erBehandlingEndretFraUndefined = useBehandlingEndret(behandlingId, behandlingVersjon);
   const { data: alleDokumenter = EMPTY_ARRAY, state } = restApiHooks.useRestApi<Dokument[]>(

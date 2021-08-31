@@ -1,8 +1,8 @@
-import React, { FunctionComponent } from 'react';
+import React from 'react';
 import { FormattedMessage, injectIntl, WrappedComponentProps } from 'react-intl';
 import { connect } from 'react-redux';
 import moment from 'moment/moment';
-import { InjectedFormProps } from "redux-form";
+import { InjectedFormProps } from 'redux-form';
 import { Element, Normaltekst, Undertekst } from 'nav-frontend-typografi';
 import Modal from 'nav-frontend-modal';
 import { Column, Row } from 'nav-frontend-grid';
@@ -10,7 +10,12 @@ import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 import AlertStripe from 'nav-frontend-alertstriper';
 
 import {
-  dateAfterOrEqual, dateBeforeOrEqual, DDMMYYYY_DATE_FORMAT, hasValidDate, ISO_DATE_FORMAT, required,
+  dateAfterOrEqual,
+  dateBeforeOrEqual,
+  DDMMYYYY_DATE_FORMAT,
+  hasValidDate,
+  ISO_DATE_FORMAT,
+  required,
 } from '@fpsak-frontend/utils';
 import { DatepickerField, behandlingForm } from '@fpsak-frontend/form';
 
@@ -19,7 +24,7 @@ import styles from './delOppPeriodeModal.less';
 type PeriodeData = {
   fom: string;
   tom: string;
-}
+};
 
 interface OwnProps {
   periodeData: PeriodeData;
@@ -28,14 +33,14 @@ interface OwnProps {
   finnesBelopMed0Verdi: boolean;
 }
 
-export const DelOppPeriodeModalImpl: FunctionComponent<OwnProps & WrappedComponentProps & InjectedFormProps> = ({
+export const DelOppPeriodeModalImpl = ({
   intl,
   periodeData,
   showModal,
   cancelEvent,
   finnesBelopMed0Verdi,
   ...formProps
-}) => (
+}: OwnProps & WrappedComponentProps & InjectedFormProps) => (
   <Modal
     isOpen={showModal}
     contentLabel={intl.formatMessage({ id: 'DelOppPeriodeModalImpl.ModalDescription' })}
@@ -48,13 +53,19 @@ export const DelOppPeriodeModalImpl: FunctionComponent<OwnProps & WrappedCompone
       <FormattedMessage id="DelOppPeriodeModalImpl.DelOppPerioden" />
     </Element>
     <div className={styles.marginTop}>
-      <Undertekst><FormattedMessage id="DelOppPeriodeModalImpl.Periode" /></Undertekst>
+      <Undertekst>
+        <FormattedMessage id="DelOppPeriodeModalImpl.Periode" />
+      </Undertekst>
       <Normaltekst>
-        {`${moment(periodeData.fom.toString()).format(DDMMYYYY_DATE_FORMAT)} - ${moment(periodeData.tom.toString()).format(DDMMYYYY_DATE_FORMAT)}`}
+        {`${moment(periodeData.fom.toString()).format(DDMMYYYY_DATE_FORMAT)} - ${moment(
+          periodeData.tom.toString(),
+        ).format(DDMMYYYY_DATE_FORMAT)}`}
       </Normaltekst>
     </div>
     <div className={styles.marginTop}>
-      <Undertekst><FormattedMessage id="DelOppPeriodeModalImpl.AngiTomDato" /></Undertekst>
+      <Undertekst>
+        <FormattedMessage id="DelOppPeriodeModalImpl.AngiTomDato" />
+      </Undertekst>
       <DatepickerField
         name="ForstePeriodeTomDato"
         // @ts-ignore tror denne trengs fordi fpsak-frontend/form ikkje er fullstendig konvertert til typescript
@@ -80,12 +91,7 @@ export const DelOppPeriodeModalImpl: FunctionComponent<OwnProps & WrappedCompone
         >
           <FormattedMessage id="DelOppPeriodeModalImpl.Ok" />
         </Hovedknapp>
-        <Knapp
-          htmlType="button"
-          mini
-          onClick={cancelEvent}
-          className={styles.cancelButton}
-        >
+        <Knapp htmlType="button" mini onClick={cancelEvent} className={styles.cancelButton}>
           <FormattedMessage id="DelOppPeriodeModalImpl.Avbryt" />
         </Knapp>
       </Column>
@@ -94,9 +100,11 @@ export const DelOppPeriodeModalImpl: FunctionComponent<OwnProps & WrappedCompone
 );
 
 const validateForm = (value: any, periodeData: PeriodeData) => {
-  if (value.ForstePeriodeTomDato
-    && (dateAfterOrEqual(value.ForstePeriodeTomDato)(moment(periodeData.tom.toString()).subtract(1, 'day'))
-      || dateBeforeOrEqual(value.ForstePeriodeTomDato)(periodeData.fom))) {
+  if (
+    value.ForstePeriodeTomDato &&
+    (dateAfterOrEqual(value.ForstePeriodeTomDato)(moment(periodeData.tom.toString()).subtract(1, 'day')) ||
+      dateBeforeOrEqual(value.ForstePeriodeTomDato)(periodeData.fom))
+  ) {
     return {
       ForstePeriodeTomDato: [{ id: 'DelOppPeriodeModalImpl.DatoUtenforPeriode' }],
     };
@@ -122,18 +130,23 @@ const transformValues = (values: any, periodeData: PeriodeData) => {
 
 interface PureOwnProps {
   periodeData: PeriodeData;
-  splitPeriod: (perioder: { forstePeriode: { fom: string; tom: string }; andrePeriode: { fom: string; tom: string }}) => void;
+  splitPeriod: (perioder: {
+    forstePeriode: { fom: string; tom: string };
+    andrePeriode: { fom: string; tom: string };
+  }) => void;
 }
 
 export const mapStateToPropsFactory = (_initialState, ownProps: PureOwnProps) => {
-  const validate = (values) => validateForm(values, ownProps.periodeData);
-  const onSubmit = (values) => ownProps.splitPeriod(transformValues(values, ownProps.periodeData));
+  const validate = values => validateForm(values, ownProps.periodeData);
+  const onSubmit = values => ownProps.splitPeriod(transformValues(values, ownProps.periodeData));
   return () => ({
     validate,
     onSubmit,
   });
 };
 
-export default connect(mapStateToPropsFactory)(behandlingForm({
-  form: 'DelOppPeriode',
-})(injectIntl(DelOppPeriodeModalImpl)));
+export default connect(mapStateToPropsFactory)(
+  behandlingForm({
+    form: 'DelOppPeriode',
+  })(injectIntl(DelOppPeriodeModalImpl)),
+);

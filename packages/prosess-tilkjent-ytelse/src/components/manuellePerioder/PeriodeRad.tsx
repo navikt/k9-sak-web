@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from 'react';
+import React from 'react';
 import { injectIntl, WrappedComponentProps } from 'react-intl';
 import { FieldArray, FieldArrayFieldsProps, FieldArrayMetaProps } from 'redux-form';
 import AlertStripe from 'nav-frontend-alertstriper';
@@ -32,7 +32,7 @@ interface OwnProps {
 
 const headerTextCodes = ['TilkjentYtelse.Periode', 'TilkjentYtelse.Andeler'];
 
-const PeriodeRad: FunctionComponent<OwnProps & WrappedComponentProps> = ({
+const PeriodeRad = ({
   fields,
   meta,
   openSlettPeriodeModalCallback,
@@ -43,7 +43,7 @@ const PeriodeRad: FunctionComponent<OwnProps & WrappedComponentProps> = ({
   arbeidsforhold,
   arbeidsgiverOpplysningerPerId,
   isAnyFormOpen,
-}) => {
+}: Partial<OwnProps> & WrappedComponentProps) => {
   const isAnyFormOrNyPeriodeOpen = isAnyFormOpen() || isNyPeriodeFormOpen;
   return (
     <div>

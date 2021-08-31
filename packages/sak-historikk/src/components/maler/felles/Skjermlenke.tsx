@@ -13,13 +13,13 @@ interface SkjermlenkeProps {
   createLocationForSkjermlenke: (behandlingLocation: Location, skjermlenkeKode: string) => Location;
 }
 
-const Skjermlenke: React.FunctionComponent<SkjermlenkeProps> = ({
+const Skjermlenke = ({
   skjermlenke,
   behandlingLocation,
   getKodeverknavn,
   scrollUpOnClick,
   createLocationForSkjermlenke,
-}) => {
+}: SkjermlenkeProps) => {
   if (!skjermlenke) {
     return null;
   }

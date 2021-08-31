@@ -10,7 +10,7 @@ interface LegendBoxProps {
   }[];
 }
 
-const LegendBox: React.FunctionComponent<LegendBoxProps> = ({ legends }) => (
+const LegendBox = ({ legends }: LegendBoxProps) => (
   <span className={styles.popUnder}>
     <span>
       <TimeLineButton type="question" text="Question" />

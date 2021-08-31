@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 import { createSelector } from 'reselect';
@@ -52,7 +52,7 @@ interface MappedOwnProps {
  *
  * Presentasjonskomponent. Holds the form of the totrinnkontroll
  */
-export const TotrinnskontrollBeslutterForm: FunctionComponent<PureOwnProps & MappedOwnProps & InjectedFormProps> = ({
+export const TotrinnskontrollBeslutterForm = ({
   behandling,
   handleSubmit,
   readOnly,
@@ -66,7 +66,7 @@ export const TotrinnskontrollBeslutterForm: FunctionComponent<PureOwnProps & Map
   lagLenke,
   tilgjengeligeVedtaksbrev,
   ...formProps
-}) => {
+}: PureOwnProps & MappedOwnProps & InjectedFormProps) => {
   if (!behandling.toTrinnsBehandling) {
     return null;
   }

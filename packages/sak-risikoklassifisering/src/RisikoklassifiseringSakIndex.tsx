@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from 'react';
+import React from 'react';
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 
 import { Risikoklassifisering, Aksjonspunkt } from '@k9-sak-web/types';
@@ -45,7 +45,7 @@ interface OwnProps {
  * Viser en av tre komponenter avhengig av: Om ingen klassifisering er utført,
  * om klassifisering er utført og ingen faresignaler er funnet og om klassifisering er utført og faresignaler er funnet
  */
-const RisikoklassifiseringSakIndex: FunctionComponent<OwnProps> = ({
+const RisikoklassifiseringSakIndex = ({
   behandlingId,
   behandlingVersjon,
   aksjonspunkt,
@@ -54,7 +54,7 @@ const RisikoklassifiseringSakIndex: FunctionComponent<OwnProps> = ({
   readOnly,
   submitAksjonspunkt,
   toggleRiskPanel,
-}) => {
+}: OwnProps) => {
   const harIkkeHoyRisikoklassifisering = harResultatkode(kontrollresultatKode.IKKE_HOY, risikoklassifisering);
   const harHoyRisikoklassifisering = harResultatkode(kontrollresultatKode.HOY, risikoklassifisering);
   return (

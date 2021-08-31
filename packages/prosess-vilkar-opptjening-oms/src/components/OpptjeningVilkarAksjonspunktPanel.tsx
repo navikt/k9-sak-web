@@ -1,3 +1,8 @@
+import React, { useMemo } from 'react';
+import { FormattedMessage, injectIntl, WrappedComponentProps } from 'react-intl';
+import { connect } from 'react-redux';
+import { InjectedFormProps } from 'redux-form';
+import { createSelector } from 'reselect';
 import { behandlingForm, behandlingFormValueSelector, RadioGroupField, RadioOption } from '@fpsak-frontend/form';
 import { VilkarResultPicker, ProsessStegBegrunnelseTextField, ProsessPanelTemplate } from '@k9-sak-web/prosess-felles';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
@@ -6,11 +11,6 @@ import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktSta
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import { Aksjonspunkt, Opptjening, SubmitCallback, Vilkårresultat, Vilkarperiode } from '@k9-sak-web/types';
 import { Element } from 'nav-frontend-typografi';
-import React, { FunctionComponent, useMemo } from 'react';
-import { FormattedMessage, injectIntl, WrappedComponentProps } from 'react-intl';
-import { connect } from 'react-redux';
-import { InjectedFormProps } from 'redux-form';
-import { createSelector } from 'reselect';
 import VilkarFields from './VilkarFields';
 
 const FORM_NAME = 'OpptjeningVilkarForm';
@@ -53,9 +53,7 @@ interface StateProps {
  *
  * Presentasjonskomponent. Viser panel for å løse aksjonspunkt for avslått opptjeningsvilkår
  */
-export const OpptjeningVilkarAksjonspunktPanelImpl: FunctionComponent<
-  OpptjeningVilkarAksjonspunktPanelImplProps & StateProps & InjectedFormProps & WrappedComponentProps
-> = ({
+export const OpptjeningVilkarAksjonspunktPanelImpl = ({
   intl,
   behandlingId,
   behandlingVersjon,
@@ -72,7 +70,7 @@ export const OpptjeningVilkarAksjonspunktPanelImpl: FunctionComponent<
   periodeIndex,
   vilkårPerioder,
   vilkarFields,
-}) => {
+}: Partial<OpptjeningVilkarAksjonspunktPanelImplProps> & StateProps & InjectedFormProps & WrappedComponentProps) => {
   const formProps = useMemo(
     () => ({
       handleSubmit,
@@ -171,14 +169,8 @@ const transformValues = (
 });
 
 const mapStateToPropsFactory = (initialState, initialOwnProps: OpptjeningVilkarAksjonspunktPanelImplProps) => {
-  const {
-    erOmsorgspenger,
-    aksjonspunkter,
-    submitCallback,
-    periodeIndex,
-    vilkårPerioder,
-    opptjeninger,
-  } = initialOwnProps;
+  const { erOmsorgspenger, aksjonspunkter, submitCallback, periodeIndex, vilkårPerioder, opptjeninger } =
+    initialOwnProps;
   const onSubmit = values =>
     submitCallback([transformValues(values, erOmsorgspenger, aksjonspunkter, vilkårPerioder, opptjeninger)]);
 

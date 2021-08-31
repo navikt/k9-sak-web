@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useEffect, useState, useCallback, useMemo } from 'react';
+import React, { useEffect, useState, useCallback, useMemo } from 'react';
 
 import { Rettigheter, ReduxFormStateCleaner, useSetBehandlingVedEndring } from '@k9-sak-web/behandling-felles';
 import { Behandling, Fagsak, KodeverkMedNavn, FeatureToggles, FagsakPerson } from '@k9-sak-web/types';
@@ -34,7 +34,7 @@ interface OwnProps {
   featureToggles: FeatureToggles;
 }
 
-const BehandlingInnsynIndex: FunctionComponent<OwnProps> = ({
+const BehandlingInnsynIndex = ({
   behandlingEventHandler,
   behandlingId,
   oppdaterBehandlingVersjon,
@@ -47,7 +47,7 @@ const BehandlingInnsynIndex: FunctionComponent<OwnProps> = ({
   opneSokeside,
   setRequestPendingMessage,
   featureToggles,
-}) => {
+}: OwnProps) => {
   const [nyOgForrigeBehandling, setBehandlinger] = useState<{ current?: Behandling; previous?: Behandling }>({
     current: undefined,
     previous: undefined,

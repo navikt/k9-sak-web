@@ -1,4 +1,4 @@
-import React, { FunctionComponent, ReactElement } from 'react';
+import React, { ReactElement } from 'react';
 import moment from 'moment';
 import { FormattedMessage } from 'react-intl';
 import { Location } from 'history';
@@ -63,7 +63,7 @@ interface OwnProps {
  *
  * Viser behandlinger knyttet til fagsak,
  */
-const BehandlingPicker: FunctionComponent<OwnProps> = ({
+const BehandlingPicker = ({
   noExistingBehandlinger,
   behandlinger,
   getBehandlingLocation,
@@ -71,7 +71,7 @@ const BehandlingPicker: FunctionComponent<OwnProps> = ({
   showAll,
   toggleShowAll,
   getKodeverkFn,
-}) => (
+}: OwnProps) => (
   <ul className={styles.behandlingList}>
     {noExistingBehandlinger && (
       <Normaltekst>

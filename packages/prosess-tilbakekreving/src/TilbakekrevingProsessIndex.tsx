@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from 'react';
+import React from 'react';
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 
 import { Aksjonspunkt, Behandling, KodeverkMedNavn } from '@k9-sak-web/types';
@@ -34,7 +34,7 @@ interface OwnProps {
   aksjonspunkter: Aksjonspunkt[];
 }
 
-const TilbakekrevingProsessIndex: FunctionComponent<OwnProps> = ({
+const TilbakekrevingProsessIndex = ({
   behandling,
   perioderForeldelse,
   vilkarvurderingsperioder,
@@ -47,7 +47,7 @@ const TilbakekrevingProsessIndex: FunctionComponent<OwnProps> = ({
   alleKodeverk,
   beregnBelop,
   aksjonspunkter,
-}) => (
+}: OwnProps) => (
   <RawIntlProvider value={intl}>
     <TilbakekrevingForm
       behandlingId={behandling.id}

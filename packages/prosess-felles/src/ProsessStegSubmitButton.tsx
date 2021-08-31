@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import { Hovedknapp } from 'nav-frontend-knapper';
 
@@ -56,7 +56,7 @@ interface MappedOwnProps {
 /**
  * ProsessStegSubmitButton
  */
-export const ProsessStegSubmitButton: FunctionComponent<PureOwnProps & MappedOwnProps> = ({
+export const ProsessStegSubmitButton = ({
   isReadOnly,
   isSubmittable,
   isSubmitting,
@@ -64,7 +64,7 @@ export const ProsessStegSubmitButton: FunctionComponent<PureOwnProps & MappedOwn
   hasEmptyRequiredFields,
   text,
   isPeriodisertFormComplete,
-}) => (
+}: Partial<PureOwnProps> & MappedOwnProps) => (
   <>
     {!isReadOnly && (
       <Hovedknapp

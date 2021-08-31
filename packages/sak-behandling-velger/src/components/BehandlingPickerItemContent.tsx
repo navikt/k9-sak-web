@@ -1,4 +1,4 @@
-import React, { FunctionComponent, ReactElement } from 'react';
+import React, { ReactElement } from 'react';
 import { FormattedMessage } from 'react-intl';
 import classNames from 'classnames';
 import { Element, Normaltekst, Undertekst } from 'nav-frontend-typografi';
@@ -119,7 +119,7 @@ interface OwnProps {
  *
  * Presentasjonskomponent. Håndterer formatering av innholdet i den enkelte behandling i behandlingsvelgeren.
  */
-const BehandlingPickerItemContent: FunctionComponent<OwnProps> = ({
+const BehandlingPickerItemContent = ({
   withChevronDown = false,
   withChevronUp = false,
   behandlendeEnhetId,
@@ -133,7 +133,7 @@ const BehandlingPickerItemContent: FunctionComponent<OwnProps> = ({
   behandlingsresultatTypeNavn,
   førsteÅrsak,
   behandlingTypeKode,
-}) => (
+}: OwnProps) => (
   <Panel border>
     <FlexContainer>
       <FlexRow>

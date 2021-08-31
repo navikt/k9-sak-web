@@ -1,5 +1,5 @@
 import { MicroFrontend } from '@fpsak-frontend/utils';
-import * as React from 'react';
+import React from 'react';
 import { ArbeidsgiverOpplysningerPerId } from '@k9-sak-web/types';
 
 const initializeUttak = (

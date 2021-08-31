@@ -1,6 +1,6 @@
 import { required } from '@fpsak-frontend/utils';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
-import React, { FunctionComponent, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { ArbeidsgiverOpplysningerPerId, Personopplysninger } from '@k9-sak-web/types';
 import KlagePart from '@k9-sak-web/behandling-klage/src/types/klagePartTsType';
 import { SelectField } from '@fpsak-frontend/form/index';
@@ -32,12 +32,12 @@ function lagVisningsnavnForMottakere(
   return partId;
 }
 
-const Brevmottakere: FunctionComponent<OwnProps & WrappedComponentProps> = ({
+const Brevmottakere = ({
   hentMottakere,
   personopplysninger,
   arbeidsgiverOpplysninger,
   intl,
-}) => {
+}: OwnProps & WrappedComponentProps) => {
   const [mottakere, setMottakere] = useState<KlagePart[]>();
 
   useEffect(() => {

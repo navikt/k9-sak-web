@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import moment from 'moment';
 import { FormattedMessage, injectIntl, WrappedComponentProps } from 'react-intl';
@@ -95,9 +95,7 @@ interface MappedOwnProps {
   initialValues: FormValues;
 }
 
-export const SettPaVentModal: FunctionComponent<
-  PureOwnProps & MappedOwnProps & WrappedComponentProps & InjectedFormProps
-> = ({
+export const SettPaVentModal = ({
   intl,
   handleSubmit,
   cancelEvent,
@@ -110,7 +108,7 @@ export const SettPaVentModal: FunctionComponent<
   originalVentearsak,
   visBrevErBestilt = false,
   hasManualPaVent,
-}) => {
+}: PureOwnProps & Partial<MappedOwnProps> & WrappedComponentProps & InjectedFormProps) => {
   const venteArsakHasChanged = !(originalVentearsak === ventearsak || (!ventearsak && !originalVentearsak));
   const fristHasChanged = !(originalFrist === frist || (!frist && !originalFrist));
 

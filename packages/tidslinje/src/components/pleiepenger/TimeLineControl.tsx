@@ -1,4 +1,4 @@
-import React, { FunctionComponent, ReactNode, MouseEvent } from 'react';
+import React, { ReactNode, MouseEvent } from 'react';
 import { Row } from 'nav-frontend-grid';
 import styles from './timeLineControl.less';
 import TimeLineButton from '../TimeLineButton';
@@ -16,13 +16,7 @@ interface TimeLineControlProps {
   zoomOut: ButtonCallback;
 }
 
-const TimeLineControl: FunctionComponent<TimeLineControlProps> = ({
-  children,
-  goBackward,
-  goForward,
-  zoomIn,
-  zoomOut,
-}) => (
+const TimeLineControl = ({ children, goBackward, goForward, zoomIn, zoomOut }: TimeLineControlProps) => (
   <Row>
     <div className={styles.scrollButtonContainer}>
       {children}

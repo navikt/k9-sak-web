@@ -1,4 +1,4 @@
-import React, { ReactNode, FunctionComponent } from 'react';
+import React, { ReactNode } from 'react';
 
 const navGra40 = '#B7B1A9';
 const borderRadius = 4;
@@ -87,14 +87,14 @@ interface OwnProps {
  *
  * Vise innhold med ramme og pil
  */
-const ArrowBox: FunctionComponent<OwnProps> = ({
+const ArrowBox = ({
   children,
   alignOffset = 0,
   alignLeft = false,
   marginTop = 0,
   marginLeft = 0,
   hideBorder = false,
-}) => (
+}: OwnProps) => (
   <>
     {/* eslint-disable */}
     <style dangerouslySetInnerHTML={{ __html: getArrowBox(alignOffset, alignLeft, marginTop, marginLeft) }} />

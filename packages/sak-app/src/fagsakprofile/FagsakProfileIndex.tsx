@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { Redirect, useLocation, useRouteMatch } from 'react-router-dom';
 import { Location } from 'history';
 
@@ -50,7 +50,7 @@ interface OwnProps {
   arbeidsgiverOpplysningerPerId?: ArbeidsgiverOpplysningerPerId;
 }
 
-export const FagsakProfileIndex: FunctionComponent<OwnProps> = ({
+export const FagsakProfileIndex = ({
   fagsak,
   alleBehandlinger,
   harHentetBehandlinger,
@@ -61,7 +61,7 @@ export const FagsakProfileIndex: FunctionComponent<OwnProps> = ({
   behandlingRettigheter,
   personopplysninger,
   arbeidsgiverOpplysningerPerId,
-}) => {
+}: OwnProps) => {
   const [showAll, setShowAll] = useState(!behandlingId);
   const toggleShowAll = useCallback(() => setShowAll(!showAll), [showAll]);
 

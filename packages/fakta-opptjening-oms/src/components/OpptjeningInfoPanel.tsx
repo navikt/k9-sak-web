@@ -1,3 +1,8 @@
+import React from 'react';
+import { connect } from 'react-redux';
+import { InjectedFormProps } from 'redux-form';
+import { createSelector } from 'reselect';
+import moment from 'moment';
 import { behandlingForm } from '@fpsak-frontend/form';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { addDaysToDate, omit } from '@fpsak-frontend/utils';
@@ -11,11 +16,6 @@ import {
 } from '@k9-sak-web/types';
 import AlleKodeverk from '@k9-sak-web/types/src/kodeverk';
 import OpptjeningAktivitet from '@k9-sak-web/types/src/opptjening/opptjeningAktivitet';
-import moment from 'moment';
-import React, { FunctionComponent } from 'react';
-import { connect } from 'react-redux';
-import { InjectedFormProps } from 'redux-form';
-import { createSelector } from 'reselect';
 import OpptjeningFaktaForm from './OpptjeningFaktaForm';
 
 export const formName = 'OpptjeningInfoPanelForm';
@@ -48,7 +48,7 @@ interface StateProps {
  * Presentasjonskomponent. Har ansvar for å sette opp Redux Formen for Opptjeningsvilkåret.
  */
 
-export const OpptjeningInfoPanel: FunctionComponent<OpptjeningInfoPanelProps & InjectedFormProps & StateProps> = ({
+export const OpptjeningInfoPanel = ({
   harApneAksjonspunkter,
   readOnly,
   aksjonspunkt,
@@ -62,7 +62,7 @@ export const OpptjeningInfoPanel: FunctionComponent<OpptjeningInfoPanelProps & I
   submitting,
   dirty,
   handleSubmit,
-}) => (
+}: Partial<OpptjeningInfoPanelProps> & InjectedFormProps & StateProps) => (
   <form onSubmit={handleSubmit}>
     <OpptjeningFaktaForm
       behandlingId={behandlingId}
