@@ -23,6 +23,7 @@ const midlertidigInaktiv = {
 interface VilkårField {
   erVilkarOk: boolean;
   begrunnelse: string;
+  innvilgelseMerknadKode: string;
 }
 
 interface OpptjeningVilkarAksjonspunktPanelImplProps {
@@ -108,7 +109,7 @@ export const OpptjeningVilkarAksjonspunktPanelImpl = ({
       <VerticalSpacer sixteenPx />
 
       {!erOmsorgspenger ? (
-        <RadioGroupField name="innvilgelseMerknadKode" validate={[required]}>
+        <RadioGroupField name={`vilkarFields[${periodeIndex}].innvilgelseMerknadKode`} validate={[required]}>
           <RadioOption
             label={{ id: 'OpptjeningVilkarAksjonspunktPanel.MidlertidigInaktivA' }}
             value={midlertidigInaktiv.TYPE_A}
@@ -144,7 +145,6 @@ export const buildInitialValues = createSelector(
 
 interface Values {
   vilkarFields: VilkårField[];
-  innvilgelseMerknadKode: string;
 }
 
 const transformValues = (
@@ -154,11 +154,13 @@ const transformValues = (
   vilkårPerioder: Vilkarperiode[],
   opptjeninger: Opptjening[],
 ) => ({
-  vilkårPeriodeVurderinger: values.vilkarFields.map((vilkarField, index) => ({
+  vilkårPeriodeVurderinger: values.vilkarFields.map((vilkarField, index) => {
+    console.log(vilkarField);
+    return ({
     ...vilkarField,
-    innvilgelseMerknadKode: erOmsorgspenger ? midlertidigInaktiv.TYPE_B : values.innvilgelseMerknadKode,
+    innvilgelseMerknadKode: erOmsorgspenger ? midlertidigInaktiv.TYPE_B : vilkarField.innvilgelseMerknadKode,
     periode: Array.isArray(vilkårPerioder) && vilkårPerioder[index] ? vilkårPerioder[index].periode : {},
-  })),
+  })}),
   opptjeningPerioder: Array.isArray(opptjeninger)
     ? opptjeninger.map(opptjening => ({
         fom: opptjening.fastsattOpptjening.opptjeningFom,
