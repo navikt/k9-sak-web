@@ -7,7 +7,7 @@ import { FormattedMessage } from 'react-intl';
 
 import advarselIkonUrl from '@fpsak-frontend/assets/images/advarsel_ny.svg';
 import { behandlingForm, behandlingFormValueSelector } from '@fpsak-frontend/form';
-import { DDMMYYYY_DATE_FORMAT, decodeHtmlEntity, isRequiredMessage } from '@fpsak-frontend/utils';
+import { decodeHtmlEntity, isRequiredMessage } from '@fpsak-frontend/utils';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
@@ -29,12 +29,9 @@ import { Element, Normaltekst } from 'nav-frontend-typografi';
 import OverstyrBekreftKnappPanel from './OverstyrBekreftKnappPanel';
 import SoknadsfristVilkarDokument, { DELVIS_OPPFYLT } from './SoknadsfristVilkarDokument';
 
+import { utledInnsendtSoknadsfrist, formatDate } from './utils';
+
 import styles from './SoknadsfristVilkarForm.less';
-
-export const formatDate = dato => moment(dato).format(DDMMYYYY_DATE_FORMAT);
-
-export const utledInnsendtSoknadsfrist = innsendtDato =>
-  moment(innsendtDato).startOf('month').subtract(3, 'months').format('YYYY-MM-DD');
 
 const formName = 'SøknadsfristVilkårOverstyringForm';
 
