@@ -18,7 +18,7 @@ import innvilgetImage from '@fpsak-frontend/assets/images/check.svg';
 
 import { Normaltekst } from 'nav-frontend-typografi';
 
-import { utledInnsendtSoknadsfrist, formatDate } from './SoknadsfristVilkarForm';
+import { utledInnsendtSoknadsfrist, formatDate } from './utils';
 
 import styles from './SoknadsfristVilkarDokument.less';
 
