@@ -1,10 +1,8 @@
 import React from 'react';
 import moment from 'moment';
-
 import { FormattedMessage, useIntl } from 'react-intl';
 import { DatepickerField, RadioGroupField, RadioOption, TextAreaField } from '@fpsak-frontend/form';
 import {
-  DDMMYYYY_DATE_FORMAT,
   hasValidText,
   hasValidDate,
   maxLength,
@@ -20,12 +18,12 @@ import innvilgetImage from '@fpsak-frontend/assets/images/check.svg';
 
 import { Normaltekst } from 'nav-frontend-typografi';
 
+import { utledInnsendtSoknadsfrist, formatDate } from './SoknadsfristVilkarForm';
+
 import styles from './SoknadsfristVilkarDokument.less';
 
 const minLength3 = minLength(3);
 const maxLength1500 = maxLength(1500);
-
-const formatDate = dato => moment(dato).format(DDMMYYYY_DATE_FORMAT);
 
 interface SoknadsfristVilkarDokumentProps {
   erVilkarOk?: boolean | string;
@@ -53,6 +51,12 @@ export const SoknadsfristVilkarDokument = ({
   dokumentIndex,
 }: SoknadsfristVilkarDokumentProps) => {
   const intl = useIntl();
+
+  const minDate = dokument.status.reduce(
+    (acc, curr) => (!acc || moment(curr.periode.fom) < moment(acc) ? curr.periode.fom : acc),
+    '',
+  );
+  const maxDate = utledInnsendtSoknadsfrist(dokument.innsendingstidspunkt);
 
   return (
     <div style={{ display: erAktivtDokument ? 'block' : 'none' }}>
@@ -141,6 +145,10 @@ export const SoknadsfristVilkarDokument = ({
                       label={{ id: 'SoknadsfristVilkarForm.Dato' }}
                       validate={[required, hasValidDate]}
                       readOnly={readOnly}
+                      disabledDays={{
+                        before: moment(minDate).toDate(),
+                        after: moment(maxDate).toDate(),
+                      }}
                     />
                   </FlexRow>
                 )}

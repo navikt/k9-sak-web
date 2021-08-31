@@ -85,18 +85,6 @@ const SoknadsfristVilkarProsessIndex = ({
   const skalBrukeSidemeny = activeVilkår.perioder.length > 1 || harÅpentAksjonspunkt;
   const ikkeOppfyltePerioder = perioder.filter(ikkeOppfyltePerioderSomSkalVurderesFn);
 
-  const dokumenterSomSkalVurderes = Array.isArray(soknadsfristStatus?.dokumentStatus)
-    ? soknadsfristStatus.dokumentStatus.filter(dok =>
-        dok.status.some(status =>
-          ikkeOppfyltePerioder.some(
-            p =>
-              (p.periode.fom >= status.periode.fom && p.periode.fom <= status.periode.tom) ||
-              (p.periode.tom >= status.periode.fom && p.periode.tom <= status.periode.tom),
-          ),
-        ),
-      )
-    : [];
-
   const dokumenterIAktivPeriode = Array.isArray(soknadsfristStatus?.dokumentStatus)
     ? soknadsfristStatus.dokumentStatus.filter(dok =>
         dok.status.some(
@@ -154,7 +142,7 @@ const SoknadsfristVilkarProsessIndex = ({
             status={activePeriode.vilkarStatus.kode}
             panelTittelKode={panelTittelKode}
             lovReferanse={activeVilkår.lovReferanse ?? lovReferanse}
-            alleDokumenter={dokumenterSomSkalVurderes}
+            alleDokumenter={soknadsfristStatus?.dokumentStatus}
             dokumenter={dokumenterIAktivPeriode}
             periode={activePeriode}
           />
