@@ -204,12 +204,13 @@ const buildInitialValues = createSelector(
         const innsendtSoknadsfrist = utledInnsendtSoknadsfrist(dokument.innsendingstidspunkt);
 
         const erDelvisOppfylt =
-          status !== vilkarUtfallType.OPPFYLT && fraDato && plusEnDag(fraDato) === innsendtSoknadsfrist;
+          status !== vilkarUtfallType.OPPFYLT && fraDato && plusEnDag(fraDato) !== innsendtSoknadsfrist;
+
+        const erVilkarOk = erDelvisOppfylt ? DELVIS_OPPFYLT : status === vilkarUtfallType.OPPFYLT;
+        const erAvklartEllerOverstyrt = !!fraDato;
 
         return {
-          erVilkarOk: erDelvisOppfylt
-            ? DELVIS_OPPFYLT
-            : dokument.overstyrteOpplysninger?.godkjent || dokument.avklarteOpplysninger?.godkjent,
+          erVilkarOk: erAvklartEllerOverstyrt ? erVilkarOk : null,
           begrunnelse: decodeHtmlEntity(
             dokument.overstyrteOpplysninger?.begrunnelse || dokument.avklarteOpplysninger?.begrunnelse || '',
           ),
