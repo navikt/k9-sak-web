@@ -34,4 +34,4 @@ jobs:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Tester, typescript-sjekk og linting
-        run: yarn test:all && yarn ts-check && yarn less:lint
+        run: yarn test:all --runInBand && yarn ts-check && yarn less:lint
