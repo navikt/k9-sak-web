@@ -31,7 +31,10 @@ import SoknadsfristVilkarDokument, { DELVIS_OPPFYLT } from './SoknadsfristVilkar
 
 import styles from './SoknadsfristVilkarForm.less';
 
-const formatDate = dato => moment(dato).format(DDMMYYYY_DATE_FORMAT);
+export const formatDate = dato => moment(dato).format(DDMMYYYY_DATE_FORMAT);
+
+export const utledInnsendtSoknadsfrist = innsendtDato =>
+  moment(innsendtDato).startOf('month').subtract(3, 'months').format('YYYY-MM-DD');
 
 const formName = 'SøknadsfristVilkårOverstyringForm';
 
@@ -94,15 +97,16 @@ export const SoknadsfristVilkarForm = ({
           className={styles.aksjonspunktMargin}
           erAksjonspunktApent={erOverstyrt || harÅpentAksjonspunkt}
         >
-          {harÅpentAksjonspunkt ? (
-            <AksjonspunktHelpTextTemp isAksjonspunktOpen>
-              {[<FormattedMessage key={1} id="SoknadsfristVilkarForm.AvklarVurdering" />]}
-            </AksjonspunktHelpTextTemp>
-          ) : (
-            <Element>
-              <FormattedMessage id="SoknadsfristVilkarForm.AutomatiskVurdering" />
-            </Element>
-          )}
+          {!isReadOnly &&
+            (harÅpentAksjonspunkt ? (
+              <AksjonspunktHelpTextTemp isAksjonspunktOpen>
+                {[<FormattedMessage key={1} id="SoknadsfristVilkarForm.AvklarVurdering" />]}
+              </AksjonspunktHelpTextTemp>
+            ) : (
+              <Element>
+                <FormattedMessage id="SoknadsfristVilkarForm.AutomatiskVurdering" />
+              </Element>
+            ))}
           <VerticalSpacer eightPx />
           {Array.isArray(alleDokumenter) && alleDokumenter.length > 0 ? (
             alleDokumenter.map((dokument, index) => (
@@ -200,25 +204,19 @@ const buildInitialValues = createSelector(
       isOverstyrt: overstyrtAksjonspunkt !== undefined,
       avklarteKrav: alleDokumenter.map(dokument => {
         const fraDato = dokument.overstyrteOpplysninger?.fraDato || dokument.avklarteOpplysninger?.fraDato;
+        const innsendtSoknadsfrist = utledInnsendtSoknadsfrist(dokument.innsendingstidspunkt);
 
-        const erDelvisInnvilget =
-          status !== vilkarUtfallType.OPPFYLT && fraDato && fraDato !== dokument.innsendingstidspunkt;
+        const erDelvisInnvilget = status !== vilkarUtfallType.OPPFYLT && fraDato && fraDato !== innsendtSoknadsfrist;
 
         return {
           erVilkarOk: erDelvisInnvilget
             ? DELVIS_OPPFYLT
-            : dokument.overstyrteOpplysninger?.godkjent ||
-              dokument.avklarteOpplysninger?.godkjent ||
-              status === vilkarUtfallType.OPPFYLT,
+            : dokument.overstyrteOpplysninger?.godkjent || dokument.avklarteOpplysninger?.godkjent,
           begrunnelse: decodeHtmlEntity(
             dokument.overstyrteOpplysninger?.begrunnelse || dokument.avklarteOpplysninger?.begrunnelse || '',
           ),
           journalpostId: dokument.journalpostId,
-          fraDato: formatDate(
-            fraDato
-              ? plusEnDag(fraDato)
-              : moment(dokument.innsendingstidspunkt).startOf('month').subtract(3, 'months').format('YYYY-MM-DD'),
-          ),
+          fraDato: fraDato ? formatDate(plusEnDag(fraDato)) : '',
         };
       }),
     };
@@ -232,12 +230,25 @@ const transformValues = (values, alleDokumenter, apKode, periodeFom, periodeTom)
     const dokumentStatus = alleDokumenter.find(d => d.journalpostId === krav.journalpostId);
     const erVilkarOk = krav.erVilkarOk === true || krav.erVilkarOk === DELVIS_OPPFYLT;
 
+    const fraDato = (() => {
+      switch (krav.erVilkarOk) {
+        case true:
+          return dokumentStatus.status[0]?.periode.fom;
+
+        case DELVIS_OPPFYLT:
+          return krav.fraDato;
+
+        default:
+          return utledInnsendtSoknadsfrist(dokumentStatus.innsendingstidspunkt);
+      }
+    })();
+
     return {
       ...krav,
       erVilkarOk,
       godkjent: erVilkarOk,
-      // fjern denne modifiern hvis backend oppdateres..
-      fraDato: minusEnDag(krav.erVilkarOk === true ? dokumentStatus.status[0]?.periode.fom : krav.fraDato),
+      // fjern 'minusEnDag' hvis backend oppdateres..
+      fraDato: minusEnDag(fraDato),
     };
   }),
   erVilkarOk: !values.avklarteKrav.some(krav => !krav.erVilkarOk),
@@ -324,7 +335,12 @@ const mapStateToPropsFactory = (_initialState, initialOwnProps: SoknadsfristVilk
       isSolvable: erOverstyrt || isSolvable,
       isReadOnly: overrideReadOnly || status === vilkarUtfallType.OPPFYLT,
       validate: validateFn,
-      ...behandlingFormValueSelector(formName, behandlingId, behandlingVersjon)(state, 'isOverstyrt', 'erVilkarOk'),
+      ...behandlingFormValueSelector(formName, behandlingId, behandlingVersjon)(
+        state,
+        'isOverstyrt',
+        'erVilkarOk',
+        'avklarteKrav',
+      ),
     };
   };
 };
