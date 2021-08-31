@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from 'react';
+import React from 'react';
 import { FormattedMessage, injectIntl, WrappedComponentProps } from 'react-intl';
 import { Column, Row } from 'nav-frontend-grid';
 import { Knapp } from 'nav-frontend-knapper';
@@ -25,12 +25,12 @@ interface OwnProps {
  *
  * Presentasjonskomponent. Modal som viser en feildetaljer.
  */
-const ErrorMessageDetailsModal: FunctionComponent<OwnProps & WrappedComponentProps> = ({
+const ErrorMessageDetailsModal = ({
   intl,
   showModal,
   closeModalFn,
   errorDetails,
-}) => (
+}: OwnProps & WrappedComponentProps) => (
   <Modal
     className={styles.modal}
     isOpen={showModal}

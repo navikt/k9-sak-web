@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from 'react';
+import React from 'react';
 
 import { TextAreaField } from '@fpsak-frontend/form';
 import {
@@ -34,27 +34,18 @@ interface OwnProps {
   fieldNamePrefix?: string;
 }
 
-interface StaticFunctions {
-  buildInitialValues?: (aksjonspunkter: Aksjonspunkt[]) => FormValues;
-  transformValues?: (
-    values: FormValues,
-  ) => {
-    begrunnelse?: string;
-  };
-}
-
 /**
  * ProsessStegBegrunnelseTextField
  *
  * Presentasjonskomponent. Lar den NAV-ansatte skrive inn en begrunnelse før lagring av behandlingspunkter.
  */
-const ProsessStegBegrunnelseTextField: FunctionComponent<OwnProps> & StaticFunctions = ({
+const ProsessStegBegrunnelseTextField = ({
   readOnly,
   text,
   maxLength,
   useAllWidth = false,
   fieldNamePrefix,
-}) => {
+}: OwnProps) => {
   const intl = getPackageIntl();
   return (
     <div className={!useAllWidth ? styles.begrunnelseTextField : ''}>

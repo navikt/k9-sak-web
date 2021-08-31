@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from 'react';
+import React from 'react';
 
 import { Rettigheter, BehandlingPaVent, SettPaVentParams } from '@k9-sak-web/behandling-felles';
 import {
@@ -40,7 +40,7 @@ interface OwnProps {
   featureToggles: FeatureToggles;
 }
 
-const KlagePaneler: FunctionComponent<OwnProps> = ({
+const KlagePaneler = ({
   fagsak,
   fagsakPerson,
   behandling,
@@ -57,7 +57,7 @@ const KlagePaneler: FunctionComponent<OwnProps> = ({
   arbeidsgiverOpplysningerPerId,
   setBehandling,
   featureToggles,
-}) => (
+}: OwnProps) => (
   <>
     <BehandlingPaVent
       behandling={behandling}

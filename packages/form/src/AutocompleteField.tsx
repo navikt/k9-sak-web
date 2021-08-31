@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from 'react';
+import React from 'react';
 import { Element } from 'nav-frontend-typografi';
 import { Field, WrappedFieldInputProps } from 'redux-form';
 // eslint-disable-next-line import/no-named-default
@@ -8,7 +8,6 @@ import styles from './autocompleteField.less';
 
 interface AutocompleteFieldProps {
   onChange: () => void;
-  value: string;
   input: WrappedFieldInputProps;
 }
 
@@ -22,23 +21,23 @@ interface AutocompleteProps {
   onInputValueChange: (searchString: string) => void;
   inputValue: string;
   name: string;
-  validate?: ((value: string) => boolean | undefined | { id: string }[])[] | ((value: string) => boolean | undefined);
   dataId?: string;
 }
 
-const Autocomplete: FunctionComponent<AutocompleteFieldProps & AutocompleteProps> = ({
-  id,
-  ariaLabel,
-  label,
-  suggestions,
-  placeholder,
-  name,
-  onInputValueChange,
-  inputValue,
-  input: { onChange },
-  dataId,
-}) => (
-  // eslint-disable-next-line jsx-a11y/label-has-associated-control
+const Autocomplete = (
+  {
+    id,
+    ariaLabel,
+    label,
+    suggestions,
+    placeholder,
+    name,
+    onInputValueChange,
+    inputValue,
+    input: { onChange },
+    dataId,
+  }: AutocompleteFieldProps & Partial<AutocompleteProps>, // eslint-disable-next-line jsx-a11y/label-has-associated-control
+) => (
   <label htmlFor={id} className={styles.autocompleteLabel} data-id={dataId}>
     <Element className={styles.typoElement}>{label}</Element>
     <NAPAutocomplete

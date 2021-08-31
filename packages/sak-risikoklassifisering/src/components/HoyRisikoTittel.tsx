@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from 'react';
+import React from 'react';
 import { EkspanderbartpanelBase } from 'nav-frontend-ekspanderbartpanel';
 
 import risikoIkon from '@fpsak-frontend/assets/images/avslaatt_hover.svg';
@@ -26,7 +26,7 @@ interface OwnProps {
  *
  * Presentasjonskomponent. Statisk visning av tittel i utvidbart panel dersom faresignaler er funnet.
  */
-const HoyRisikoTittel: FunctionComponent<OwnProps> = ({
+const HoyRisikoTittel = ({
   risikoklassifisering,
   aksjonspunkt,
   readOnly,
@@ -35,7 +35,7 @@ const HoyRisikoTittel: FunctionComponent<OwnProps> = ({
   toggleRiskPanel,
   behandlingId,
   behandlingVersjon,
-}) => (
+}: OwnProps) => (
   <EkspanderbartpanelBase
     className={styles.hoyRisikoPanelTittel}
     apen={isRiskPanelOpen}

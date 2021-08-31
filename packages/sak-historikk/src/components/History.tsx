@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from 'react';
+import React from 'react';
 import { Location } from 'history';
 
 import { Historikkinnslag, Kodeverk } from '@k9-sak-web/types';
@@ -112,14 +112,14 @@ interface OwnProps {
  *
  * Historikken for en behandling
  */
-const History: FunctionComponent<OwnProps> = ({
+const History = ({
   historikkinnslag,
   saksnummer = '0',
   getBehandlingLocation,
   getKodeverknavn,
   createLocationForSkjermlenke,
   erTilbakekreving,
-}) => {
+}: OwnProps) => {
   const HistorikkMal = velgHistorikkMal(historikkinnslag.type);
   const aktorIsVL = historikkinnslag.aktoer.kode === HistorikkAktor.VEDTAKSLOSNINGEN;
   const aktorIsSOKER = historikkinnslag.aktoer.kode === HistorikkAktor.SOKER;

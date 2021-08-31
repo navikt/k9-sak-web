@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useCallback } from 'react';
+import React, { useCallback } from 'react';
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 
 import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
@@ -47,7 +47,7 @@ interface OwnProps {
   gjeldendeVedtakBehandlendeEnhetId?: string;
 }
 
-const MenyNyBehandlingIndex: FunctionComponent<OwnProps> = ({
+const MenyNyBehandlingIndex = ({
   ytelseType,
   saksnummer,
   behandlingId,
@@ -67,7 +67,7 @@ const MenyNyBehandlingIndex: FunctionComponent<OwnProps> = ({
   lukkModal,
   aktorId,
   gjeldendeVedtakBehandlendeEnhetId,
-}) => {
+}: OwnProps) => {
   const submit = useCallback(
     (formValues: FormValues) => {
       const isTilbakekreving = TILBAKEKREVING_BEHANDLINGSTYPER.includes(formValues.behandlingType);

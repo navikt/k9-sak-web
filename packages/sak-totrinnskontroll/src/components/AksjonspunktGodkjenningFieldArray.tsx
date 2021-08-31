@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from 'react';
+import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import { FieldArrayFieldsProps } from 'redux-form';
 import { NavLink } from 'react-router-dom';
@@ -43,7 +43,7 @@ interface OwnProps {
   lagLenke: (skjermlenkeCode: string) => Location;
 }
 
-export const AksjonspunktGodkjenningFieldArray: FunctionComponent<OwnProps> = ({
+export const AksjonspunktGodkjenningFieldArray = ({
   fields,
   totrinnskontrollSkjermlenkeContext,
   readOnly,
@@ -56,7 +56,7 @@ export const AksjonspunktGodkjenningFieldArray: FunctionComponent<OwnProps> = ({
   erTilbakekreving,
   skjemalenkeTyper,
   lagLenke,
-}) => (
+}: OwnProps) => (
   <>
     {fields.map((id, index) => {
       const { aksjonspunktKode, totrinnskontrollGodkjent } = fields.get(index);

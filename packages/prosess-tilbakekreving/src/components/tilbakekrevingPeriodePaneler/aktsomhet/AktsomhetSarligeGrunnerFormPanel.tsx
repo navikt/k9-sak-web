@@ -1,4 +1,4 @@
-import React, {FunctionComponent} from 'react';
+import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import { Column, Row } from 'nav-frontend-grid';
 import { Undertekst } from 'nav-frontend-typografi';
@@ -6,7 +6,7 @@ import { Undertekst } from 'nav-frontend-typografi';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { CheckboxField, TextAreaField } from '@fpsak-frontend/form';
 import { hasValidText, maxLength, minLength, required } from '@fpsak-frontend/utils';
-import { KodeverkMedNavn } from "@k9-sak-web/types";
+import { KodeverkMedNavn } from '@k9-sak-web/types';
 
 import AktsomhetReduksjonAvBelopFormPanel from './AktsomhetReduksjonAvBelopFormPanel';
 
@@ -24,7 +24,7 @@ interface OwnProps {
   sarligGrunnTyper?: KodeverkMedNavn[];
 }
 
-const AktsomhetSarligeGrunnerFormPanel: FunctionComponent<OwnProps> = ({
+const AktsomhetSarligeGrunnerFormPanel = ({
   harGrunnerTilReduksjon,
   readOnly,
   handletUaktsomhetGrad,
@@ -33,7 +33,7 @@ const AktsomhetSarligeGrunnerFormPanel: FunctionComponent<OwnProps> = ({
   harMerEnnEnYtelse,
   feilutbetalingBelop,
   andelSomTilbakekreves,
-}) => (
+}: OwnProps) => (
   <div>
     <Undertekst>
       <FormattedMessage id="AktsomhetSarligeGrunnerFormPanel.GrunnerTilReduksjon" />

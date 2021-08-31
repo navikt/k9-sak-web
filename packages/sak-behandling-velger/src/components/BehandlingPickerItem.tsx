@@ -1,4 +1,4 @@
-import React, { FunctionComponent, ReactElement } from 'react';
+import React, { ReactElement } from 'react';
 import { NavLink } from 'react-router-dom';
 import { Location } from 'history';
 
@@ -76,7 +76,7 @@ interface OwnProps {
   getKodeverkFn: (kodeverk: Kodeverk, behandlingType?: Kodeverk) => KodeverkMedNavn;
 }
 
-const BehandlingPickerItem: FunctionComponent<OwnProps> = ({
+const BehandlingPickerItem = ({
   onlyOneBehandling,
   behandling,
   getBehandlingLocation,
@@ -84,7 +84,7 @@ const BehandlingPickerItem: FunctionComponent<OwnProps> = ({
   showAll,
   toggleShowAll,
   getKodeverkFn,
-}) => {
+}: OwnProps) => {
   if (onlyOneBehandling && isActive) {
     return renderItemContent(behandling, getKodeverkFn);
   }

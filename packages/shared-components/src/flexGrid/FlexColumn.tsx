@@ -1,4 +1,4 @@
-import React, { ReactNode, FunctionComponent } from 'react';
+import React, { ReactNode } from 'react';
 import classnames from 'classnames/bind';
 
 import styles from './flexColumn.less';
@@ -10,7 +10,7 @@ interface OwnProps {
   className?: string;
 }
 
-const FlexColumn: FunctionComponent<OwnProps> = ({ children, className }) => (
+const FlexColumn = ({ children, className }: OwnProps) => (
   <div className={classNames('flexColumn', className)}>{children}</div>
 );
 

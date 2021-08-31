@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useMemo } from 'react';
+import React, { useMemo } from 'react';
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 
 import { ReactComponent as FraBeslutterSvg } from '@fpsak-frontend/assets/images/arrow-return.svg';
@@ -69,7 +69,7 @@ interface OwnProps {
   onClick: (index: number) => void;
 }
 
-const SupportMenySakIndex: FunctionComponent<OwnProps> = ({ tilgjengeligeTabs, valgbareTabs, valgtIndex, onClick }) => {
+const SupportMenySakIndex = ({ tilgjengeligeTabs, valgbareTabs, valgtIndex, onClick }: OwnProps) => {
   const tabs = useMemo(
     () => lagTabs(tilgjengeligeTabs, valgbareTabs, valgtIndex),
     [tilgjengeligeTabs, valgbareTabs, valgtIndex],

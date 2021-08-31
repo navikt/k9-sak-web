@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from 'react';
+import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import { Normaltekst } from 'nav-frontend-typografi';
 
@@ -20,13 +20,13 @@ interface OwnProps {
  *
  * Presentasjonskomponent. Viser resultatet av opptjeningsvilkåret.
  */
-export const OpptjeningVilkarViewImpl: FunctionComponent<OwnProps> = ({
+export const OpptjeningVilkarViewImpl = ({
   months,
   days,
   fastsattOpptjeningActivities = [],
   opptjeningFomDate,
   opptjeningTomDate,
-}) => (
+}: OwnProps) => (
   <>
     <FormattedMessage id="OpptjeningVilkarView.MonthsAndDays" values={{ months, days }} />
     <Normaltekst>

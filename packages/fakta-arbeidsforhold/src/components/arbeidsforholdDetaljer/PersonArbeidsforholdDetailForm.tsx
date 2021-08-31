@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import { InjectedFormProps } from 'redux-form';
 import { FormattedMessage, injectIntl, WrappedComponentProps } from 'react-intl';
@@ -44,12 +44,12 @@ type Props = PureOwnProps & MappedOwnProps & InjectedFormProps & WrappedComponen
 /**
  * PersonArbeidsforholdDetailForm
  */
-export const PersonArbeidsforholdDetailForm: FunctionComponent<Props> = ({
+export const PersonArbeidsforholdDetailForm = ({
   arbeidsforhold,
   behandlingId,
   behandlingVersjon,
   ...formProps
-}) => (
+}: Props) => (
   <div className={styles.container}>
     <VerticalSpacer eightPx />
     <AksjonspunktAvklarArbeidsforholdText arbeidsforhold={arbeidsforhold} />

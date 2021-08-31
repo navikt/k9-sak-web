@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from 'react';
+import React from 'react';
 import { FormattedMessage, injectIntl, WrappedComponentProps } from 'react-intl';
 import { Column, Row } from 'nav-frontend-grid';
 import Modal from 'nav-frontend-modal';
@@ -23,12 +23,12 @@ interface OwnProps {
  * i aksjonspunkt '' velger at ytelsesvedtaket skal stadfestes. Ved å trykke på knapp blir saksbehandler
  * tatt tilbake til sokesiden.
  */
-const AnkeVurderingModal: FunctionComponent<OwnProps & WrappedComponentProps> = ({
+const AnkeVurderingModal = ({
   visModal = false,
   lukkModal,
   erFerdigbehandlet,
   intl,
-}) => (
+}: OwnProps & WrappedComponentProps) => (
   <Modal
     className={styles.modal}
     isOpen={visModal}

@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from 'react';
+import React from 'react';
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 
 import { StandardProsessFormProps } from '@k9-sak-web/prosess-felles';
@@ -22,7 +22,7 @@ interface OwnProps {
   lovReferanse?: string;
 }
 
-const OpptjeningVilkarProsessIndex: FunctionComponent<OwnProps & StandardProsessFormProps> = ({
+const OpptjeningVilkarProsessIndex = ({
   behandling,
   opptjening,
   aksjonspunkter,
@@ -32,7 +32,7 @@ const OpptjeningVilkarProsessIndex: FunctionComponent<OwnProps & StandardProsess
   isReadOnly,
   isAksjonspunktOpen,
   readOnlySubmitButton,
-}) => (
+}: OwnProps & StandardProsessFormProps) => (
   <RawIntlProvider value={intl}>
     <OpptjeningVilkarForm
       behandlingId={behandling.id}

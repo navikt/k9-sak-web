@@ -1,5 +1,5 @@
 import { OpptjeningAktiviteter } from '@k9-sak-web/types';
-import React, { FunctionComponent } from 'react';
+import React from 'react';
 import { FormattedMessage } from 'react-intl';
 
 const mapAktivitetTextEndring = (aktivitetType: string, arbeidsgiverNavn?: string, orgnr?: string) => {
@@ -78,7 +78,7 @@ interface OwnProps {
  *
 
  */
-export const OpptjeningTotrinnText: FunctionComponent<OwnProps> = ({ aktivitet }) => {
+export const OpptjeningTotrinnText = ({ aktivitet }: OwnProps) => {
   if (aktivitet.erEndring) {
     return mapAktivitetTextEndring(
       aktivitet.aktivitetType ? aktivitet.aktivitetType.toLowerCase() : null,

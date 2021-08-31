@@ -1,4 +1,4 @@
-import React, { FunctionComponent, KeyboardEvent, MouseEvent } from 'react';
+import React, { KeyboardEvent, MouseEvent } from 'react';
 import {
   behandlingForm,
   behandlingFormValueSelector,
@@ -135,9 +135,7 @@ interface StateProps {
  *
  * Presentasjonskomponent. Viser informasjon om valgt aktivitet
  */
-export const ActivityPanel: FunctionComponent<
-  ActivityPanelProps & WrappedComponentProps & StateProps & InjectedFormProps
-> = ({
+export const ActivityPanel = ({
   intl,
   initialValues,
   readOnly,
@@ -156,7 +154,7 @@ export const ActivityPanel: FunctionComponent<
   handleSubmit,
   pristine,
   arbeidsgiverOpplysningerPerId,
-}) => (
+}: Partial<ActivityPanelProps> & WrappedComponentProps & StateProps & InjectedFormProps) => (
   <FaktaGruppe
     className={styles.panel}
     merknaderFraBeslutter={alleMerknaderFraBeslutter[aksjonspunktCodes.VURDER_PERIODER_MED_OPPTJENING]}

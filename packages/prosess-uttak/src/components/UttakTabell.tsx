@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from 'react';
+import React from 'react';
 import checkSvg from '@fpsak-frontend/assets/images/innvilget_valgt.svg';
 import avslåttSvg from '@fpsak-frontend/assets/images/avslaatt_hover.svg';
 import svgKvinne from '@fpsak-frontend/assets/images/kvinne.svg';
@@ -20,7 +20,7 @@ interface UttakTabellProps {
   person: Person;
 }
 
-const UttakTabell: FunctionComponent<UttakTabellProps> = ({ periode, person }) => {
+const UttakTabell = ({ periode, person }: UttakTabellProps) => {
   const headerCodes = ['EMPTY', 'UttakTabell.Periode', 'UttakTabell.Utfall', 'UttakTabell.Grad', 'UttakTabell.Årsak'];
   const { navn, kjønn } = person;
   const { fom, tom, utfall, grad, årsaker } = periode;

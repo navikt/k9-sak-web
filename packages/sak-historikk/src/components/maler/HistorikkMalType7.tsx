@@ -1,4 +1,4 @@
-import React, { FunctionComponent, ReactNode } from 'react';
+import React, { ReactNode } from 'react';
 import { FormattedMessage, injectIntl, IntlShape, WrappedComponentProps } from 'react-intl';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
 
@@ -44,14 +44,14 @@ const formatChangedField = (
   return false;
 };
 
-const HistorikkMalType7: FunctionComponent<HistorikkMal & WrappedComponentProps> = ({
+const HistorikkMalType7 = ({
   intl,
   historikkinnslag,
   behandlingLocation,
   getKodeverknavn,
   createLocationForSkjermlenke,
   saksnummer,
-}) => {
+}: HistorikkMal & WrappedComponentProps) => {
   const { historikkinnslagDeler, dokumentLinks } = historikkinnslag;
 
   return (

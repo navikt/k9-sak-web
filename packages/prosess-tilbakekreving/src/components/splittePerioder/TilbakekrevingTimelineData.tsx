@@ -1,9 +1,9 @@
-import React, {FunctionComponent} from 'react';
+import React from 'react';
 import { Column, Row } from 'nav-frontend-grid';
 
 import PeriodeController from './PeriodeController';
 import PeriodeInformasjon from './PeriodeInformasjon';
-import DataForPeriode from "../../types/dataForPeriodeTsType";
+import DataForPeriode from '../../types/dataForPeriodeTsType';
 
 type OwnProps = {
   periode: DataForPeriode;
@@ -16,7 +16,7 @@ type OwnProps = {
   beregnBelop: (data: any) => Promise<any>;
 };
 
-export const TilbakekrevingTimelineData: FunctionComponent<OwnProps> = ({
+export const TilbakekrevingTimelineData = ({
   periode,
   callbackForward,
   callbackBackward,
@@ -25,7 +25,7 @@ export const TilbakekrevingTimelineData: FunctionComponent<OwnProps> = ({
   behandlingId,
   behandlingVersjon,
   beregnBelop,
-}) => (
+}: OwnProps) => (
   <Row>
     <Column xs="12">
       <PeriodeController

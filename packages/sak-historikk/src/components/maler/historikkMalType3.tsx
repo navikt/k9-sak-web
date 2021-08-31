@@ -1,4 +1,4 @@
-import React, { FunctionComponent, ReactNode } from 'react';
+import React, { ReactNode } from 'react';
 import { injectIntl, IntlShape, WrappedComponentProps } from 'react-intl';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
 
@@ -82,14 +82,14 @@ const formaterAksjonspunkt = (
   );
 };
 
-const HistorikkMalType3: FunctionComponent<HistorikkMal & WrappedComponentProps> = ({
+const HistorikkMalType3 = ({
   intl,
   historikkinnslag,
   behandlingLocation,
   getKodeverknavn,
   createLocationForSkjermlenke,
   erTilbakekreving,
-}) => (
+}: HistorikkMal & WrappedComponentProps) => (
   <>
     {historikkinnslag.historikkinnslagDeler &&
       historikkinnslag.historikkinnslagDeler.map((historikkinnslagDel, index) => (

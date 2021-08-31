@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from 'react';
+import React from 'react';
 import { FormattedDate, FormattedMessage } from 'react-intl';
 
 interface OwnProps {
@@ -17,7 +17,7 @@ interface OwnProps {
  * <PeriodLabel dateStringFom="2017-08-25" dateStringTom="2017-08-31" />
  * ```
  */
-const PeriodLabel: FunctionComponent<OwnProps> = ({ dateStringFom, dateStringTom, showTodayString = false }) => (
+const PeriodLabel = ({ dateStringFom, dateStringTom, showTodayString = false }: OwnProps) => (
   <span>
     <FormattedDate day="2-digit" month="2-digit" year="numeric" value={new Date(dateStringFom)} />-
     {dateStringTom && <FormattedDate day="2-digit" month="2-digit" year="numeric" value={new Date(dateStringTom)} />}

@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from 'react';
+import React from 'react';
 import moment from 'moment';
 import { Column, Row } from 'nav-frontend-grid';
 import { Element } from 'nav-frontend-typografi';
@@ -46,11 +46,7 @@ interface OwnProps {
   selectPrevPeriod: (event: React.MouseEvent) => void;
 }
 
-const TimeLineData: FunctionComponent<OwnProps> = ({
-  fastsattOpptjeningAktivitet,
-  selectNextPeriod,
-  selectPrevPeriod,
-}) => {
+const TimeLineData = ({ fastsattOpptjeningAktivitet, selectNextPeriod, selectPrevPeriod }: OwnProps) => {
   const intl = useIntl();
   return (
     <div>

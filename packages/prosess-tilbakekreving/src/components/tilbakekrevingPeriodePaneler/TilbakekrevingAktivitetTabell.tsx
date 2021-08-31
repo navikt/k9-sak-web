@@ -1,4 +1,4 @@
-import React, {FunctionComponent} from 'react';
+import React from 'react';
 import { Normaltekst } from 'nav-frontend-typografi';
 
 import { formatCurrencyNoKr } from '@fpsak-frontend/utils';
@@ -6,10 +6,7 @@ import { Table, TableColumn, TableRow } from '@fpsak-frontend/shared-components'
 
 import styles from './tilbakekrevingAktivitetTabell.less';
 
-const headerTextCodes = [
-  'TilbakekrevingAktivitetTabell.Aktivitet',
-  'TilbakekrevingAktivitetTabell.FeilutbetaltBelop',
-];
+const headerTextCodes = ['TilbakekrevingAktivitetTabell.Aktivitet', 'TilbakekrevingAktivitetTabell.FeilutbetaltBelop'];
 
 interface OwnProps {
   ytelser: {
@@ -18,16 +15,14 @@ interface OwnProps {
   }[];
 }
 
-const TilbakekrevingAktivitetTabell: FunctionComponent<OwnProps> = ({
-  ytelser,
-}) => {
+const TilbakekrevingAktivitetTabell = ({ ytelser }: OwnProps) => {
   if (ytelser.length === 0) {
     return null;
   }
   let counter = 0;
   return (
     <Table headerTextCodes={headerTextCodes} noHover classNameTable={styles.feilutbetalingTable}>
-      {ytelser.map((y) => {
+      {ytelser.map(y => {
         counter += 1;
         return (
           <TableRow key={y.aktivitet + y.belop + counter}>

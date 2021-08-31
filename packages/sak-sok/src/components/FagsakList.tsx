@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from 'react';
+import React from 'react';
 
 import { DateLabel, Table, TableColumn, TableRow } from '@fpsak-frontend/shared-components';
 import { Fagsak, KodeverkMedNavn } from '@k9-sak-web/types';
@@ -25,7 +25,7 @@ interface OwnProps {
  *
  * Presentasjonskomponent. Formaterer fagsak-søkeresultatet for visning i tabell. Sortering av fagsakene blir håndtert her.
  */
-const FagsakList: FunctionComponent<OwnProps> = ({ fagsaker, selectFagsakCallback, alleKodeverk }) => {
+const FagsakList = ({ fagsaker, selectFagsakCallback, alleKodeverk }: OwnProps) => {
   const getKodeverknavn = getKodeverknavnFn(alleKodeverk, kodeverkTyper);
   const sortedFagsaker = fagsaker.sort((fagsak1, fagsak2) => {
     const a = lagFagsakSortObj(fagsak1);

@@ -16,7 +16,7 @@ import Hjelpetekst from 'nav-frontend-hjelpetekst';
 import Panel from 'nav-frontend-paneler';
 import Tabs from 'nav-frontend-tabs';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
-import React, { FunctionComponent, ReactNode, useMemo, useState } from 'react';
+import React, { ReactNode, useMemo, useState } from 'react';
 import { FormattedMessage } from 'react-intl';
 import classNames from 'classnames';
 import { FraværÅrsakEnum } from '@k9-sak-web/types/src/omsorgspenger/Uttaksperiode';
@@ -90,13 +90,13 @@ const utfallErIngenUtbetaling = (delvisFravær: string) => {
 const arbeidsforholdSist = (_, [vilkår2]: [Vilkår, Utfalltype]): number =>
   vilkår2 === VilkårEnum.ARBEIDSFORHOLD ? -1 : 0;
 
-const AktivitetTabell: FunctionComponent<AktivitetTabellProps> = ({
+const AktivitetTabell = ({
   arbeidsforhold,
   arbeidsgiverOpplysningerPerId,
   arbeidsforholdtypeKode,
   uttaksperioder,
   aktivitetsstatuser,
-}) => {
+}: AktivitetTabellProps) => {
   const [valgtPeriodeIndex, velgPeriodeIndex] = useState<number>();
   const [valgteDetaljfaner, velgDetaljfaner] = useState<number[]>();
   const [listeApneNokkeltall, endreListeApneNokkeltall] = useState<Nokkeltalltype[][]>();

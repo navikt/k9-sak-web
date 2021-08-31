@@ -1,6 +1,5 @@
-import React, { FunctionComponent, useCallback, useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
-
 import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import BehandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import { RestApiState } from '@k9-sak-web/rest-api-hooks';
@@ -13,8 +12,6 @@ import {
 } from '@k9-sak-web/types';
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
 import TotrinnskontrollSakIndex from '@fpsak-frontend/sak-totrinnskontroll';
-import dokumentMalType from '@fpsak-frontend/kodeverk/src/dokumentMalType';
-import { useVisForhandsvisningAvMelding } from '../../data/useVisForhandsvisningAvMelding';
 import { createLocationForSkjermlenke } from '../../app/paths';
 import { useKodeverk } from '../../data/useKodeverk';
 import { K9sakApiKeys, requestApi, restApiHooks } from '../../data/k9sakApi';
@@ -25,24 +22,26 @@ type Values = {
   erAlleAksjonspunktGodkjent: boolean;
 };
 
-const getLagreFunksjon = (
-  saksnummer: string,
-  behandlingId: number,
-  behandlingVersjon: number,
-  setAlleAksjonspunktTilGodkjent: (erGodkjent: boolean) => void,
-  setVisBeslutterModal: (visModal: boolean) => void,
-  godkjennTotrinnsaksjonspunkter: (params: any) => Promise<any>,
-) => (totrinnskontrollData: Values) => {
-  const params = {
-    saksnummer,
-    behandlingId,
-    behandlingVersjon,
-    bekreftedeAksjonspunktDtoer: [totrinnskontrollData.fatterVedtakAksjonspunktDto],
+const getLagreFunksjon =
+  (
+    saksnummer: string,
+    behandlingId: number,
+    behandlingVersjon: number,
+    setAlleAksjonspunktTilGodkjent: (erGodkjent: boolean) => void,
+    setVisBeslutterModal: (visModal: boolean) => void,
+    godkjennTotrinnsaksjonspunkter: (params: any) => Promise<any>,
+  ) =>
+  (totrinnskontrollData: Values) => {
+    const params = {
+      saksnummer,
+      behandlingId,
+      behandlingVersjon,
+      bekreftedeAksjonspunktDtoer: [totrinnskontrollData.fatterVedtakAksjonspunktDto],
+    };
+    setAlleAksjonspunktTilGodkjent(totrinnskontrollData.erAlleAksjonspunktGodkjent);
+    setVisBeslutterModal(true);
+    return godkjennTotrinnsaksjonspunkter(params);
   };
-  setAlleAksjonspunktTilGodkjent(totrinnskontrollData.erAlleAksjonspunktGodkjent);
-  setVisBeslutterModal(true);
-  return godkjennTotrinnsaksjonspunkter(params);
-};
 
 interface OwnProps {
   fagsak: Fagsak;
@@ -56,12 +55,7 @@ interface OwnProps {
  *
  * Containerklass ansvarlig for att rita opp vilkår og aksjonspunkter med toTrinnskontroll
  */
-const TotrinnskontrollIndex: FunctionComponent<OwnProps> = ({
-  fagsak,
-  alleBehandlinger,
-  behandlingId,
-  behandlingVersjon,
-}) => {
+const TotrinnskontrollIndex = ({ fagsak, alleBehandlinger, behandlingId, behandlingVersjon }: OwnProps) => {
   const [visBeslutterModal, setVisBeslutterModal] = useState(false);
   const [erAlleAksjonspunktGodkjent, setAlleAksjonspunktTilGodkjent] = useState(false);
 
@@ -117,11 +111,6 @@ const TotrinnskontrollIndex: FunctionComponent<OwnProps> = ({
     K9sakApiKeys.SAVE_TOTRINNSAKSJONSPUNKT,
   );
 
-  const forhandsvisMelding = useVisForhandsvisningAvMelding(behandling, fagsak);
-  const forhandsvisVedtaksbrev = useCallback(() => {
-    forhandsvisMelding(false, { dokumentMal: dokumentMalType.UTLED });
-  }, []);
-
   const onSubmit = useCallback(
     getLagreFunksjon(
       fagsak.saksnummer,
@@ -150,7 +139,6 @@ const TotrinnskontrollIndex: FunctionComponent<OwnProps> = ({
         location={location}
         readOnly={brukernavn === behandling.ansvarligSaksbehandler || kanVeilede}
         onSubmit={onSubmit}
-        forhandsvisVedtaksbrev={forhandsvisVedtaksbrev}
         fagsakYtelseType={fagsak.sakstype}
         alleKodeverk={alleKodeverk}
         behandlingKlageVurdering={totrinnsKlageVurdering}

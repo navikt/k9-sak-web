@@ -1,5 +1,5 @@
 import { Aksjonspunkt, Behandling, SubmitCallback } from '@k9-sak-web/types';
-import * as React from 'react';
+import React from 'react';
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 import OpplysningerFraSøknaden from '@k9-sak-web/types/src/opplysningerFraSoknaden';
 import messages from '../i18n/nb_NO.json';

@@ -1,4 +1,4 @@
-import React, { FunctionComponent, ReactNode } from 'react';
+import React, { ReactNode } from 'react';
 import { Normaltekst } from 'nav-frontend-typografi';
 
 import { VerticalSpacer, FlexContainer, FlexRow, FlexColumn, Image } from '@fpsak-frontend/shared-components';
@@ -30,28 +30,12 @@ interface OwnProps {
   fieldNamePrefix?: string;
 }
 
-interface StaticFunctions {
-  buildInitialValues?: (avslagKode: string, aksjonspunkter: Aksjonspunkt[], status: string) => FormValues;
-  transformValues?: (
-    values: FormValues,
-  ) =>
-    | {
-        erVilkarOk: boolean;
-      }
-    | {
-        erVilkarOk: boolean;
-        avslagskode: string;
-        avslagDato: string;
-      };
-  validate?: (erVilkarOk: boolean, avslagCode: string) => { avslagCode?: any };
-}
-
 /**
  * VilkarResultPicker
  *
  * Presentasjonskomponent. Lar NAV-ansatt velge om vilkåret skal oppfylles eller avvises.
  */
-const VilkarResultPicker: FunctionComponent<OwnProps> & StaticFunctions = ({
+const VilkarResultPicker = ({
   avslagsarsaker,
   erVilkarOk,
   customVilkarIkkeOppfyltText,
@@ -59,7 +43,7 @@ const VilkarResultPicker: FunctionComponent<OwnProps> & StaticFunctions = ({
   readOnly,
   erMedlemskapsPanel = false,
   fieldNamePrefix,
-}) => {
+}: OwnProps) => {
   const intl = getPackageIntl();
   return (
     <div className={styles.container}>

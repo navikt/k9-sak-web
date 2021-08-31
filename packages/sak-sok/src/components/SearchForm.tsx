@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from 'react';
+import React from 'react';
 import { FormattedMessage, injectIntl, WrappedComponentProps } from 'react-intl';
 import { formValueSelector, reduxForm, InjectedFormProps } from 'redux-form';
 import { connect } from 'react-redux';
@@ -32,9 +32,13 @@ interface MappedOwnProps {
  *
  * Presentasjonskomponent. Definerer søkefelt og tilhørende søkeknapp.
  */
-export const SearchForm: FunctionComponent<
-  PureOwnProps & MappedOwnProps & WrappedComponentProps & InjectedFormProps
-> = ({ intl, searchString = '', searchStarted, searchResultAccessDenied, ...formProps }) => (
+export const SearchForm = ({
+  intl,
+  searchString = '',
+  searchStarted,
+  searchResultAccessDenied,
+  ...formProps
+}: PureOwnProps & MappedOwnProps & WrappedComponentProps & InjectedFormProps) => (
   <form className={styles.container} onSubmit={formProps.handleSubmit}>
     <Undertittel>{intl.formatMessage({ id: 'Search.SearchFagsakOrPerson' })}</Undertittel>
     <VerticalSpacer eightPx />

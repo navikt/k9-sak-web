@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from 'react';
+import React from 'react';
 import { createIntl, createIntlCache, FormattedMessage, RawIntlProvider } from 'react-intl';
 import { Normaltekst } from 'nav-frontend-typografi';
 import { AlertStripeInfo } from 'nav-frontend-alertstriper';
@@ -31,7 +31,7 @@ interface OwnProps {
  *
  * Presentasjonskomponent. Vises når ingen behandling er valgt på en fagsak
  */
-const IngenBehandlingValgtPanel: FunctionComponent<OwnProps> = ({ numBehandlinger }) => (
+const IngenBehandlingValgtPanel = ({ numBehandlinger }: OwnProps) => (
   <RawIntlProvider value={intl}>
     <div className={styles.noSelectedBehandlingPanel}>
       <AlertStripeInfo>

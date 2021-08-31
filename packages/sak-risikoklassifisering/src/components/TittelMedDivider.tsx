@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from 'react';
+import React from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { Normaltekst } from 'nav-frontend-typografi';
 
@@ -16,7 +16,7 @@ interface OwnProps {
  *
  * Presentasjonskomponent. Viser et ikon og en tittel skilt med en vertikal grå linje.
  */
-const TittelMedDivider: FunctionComponent<OwnProps> = ({ imageSrc, tittel }) => {
+const TittelMedDivider = ({ imageSrc, tittel }: OwnProps) => {
   const intl = useIntl();
   return (
     <FlexContainer>

@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from 'react';
+import React from 'react';
 import { FormattedMessage, FormattedDate, FormattedTime } from 'react-intl';
 
 interface OwnProps {
@@ -16,7 +16,7 @@ interface OwnProps {
  * <DateTimeLabel dateTimeString="2017-08-02T00:54:25.455" />
  * ```
  */
-const DateTimeLabel: FunctionComponent<OwnProps> = ({ dateTimeString, useNewFormat = false }) => (
+const DateTimeLabel = ({ dateTimeString, useNewFormat = false }: OwnProps) => (
   <>
     <FormattedDate day="2-digit" month="2-digit" year="numeric" value={new Date(dateTimeString)} />
     {!useNewFormat && (

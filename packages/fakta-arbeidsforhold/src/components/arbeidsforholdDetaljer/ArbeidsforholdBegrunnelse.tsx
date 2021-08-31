@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import { minLength, maxLength, required, hasValidText } from '@fpsak-frontend/utils';
 import { TextAreaField, behandlingFormValueSelector, isBehandlingFormDirty } from '@fpsak-frontend/form';
@@ -23,7 +23,7 @@ interface MappedOwnProps {
 /**
  * ArbeidsforholdBegrunnelse er ansvarlig for å vise begrunnelsesfeltet.
  */
-export const ArbeidsforholdBegrunnelse: FunctionComponent<PureOwnProps & MappedOwnProps> = ({
+export const ArbeidsforholdBegrunnelse = ({
   readOnly,
   formName,
   isDirty,
@@ -31,7 +31,7 @@ export const ArbeidsforholdBegrunnelse: FunctionComponent<PureOwnProps & MappedO
   skalAvslaaYtelse,
   behandlingId,
   behandlingVersjon,
-}) => (
+}: PureOwnProps & MappedOwnProps) => (
   <div className={styles.container}>
     <BehandlingFormFieldCleaner
       formName={formName}

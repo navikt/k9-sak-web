@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from 'react';
+import React from 'react';
 import classnames from 'classnames/bind';
 import endretFelt from '@fpsak-frontend/assets/images/endret_felt.svg';
 import { useIntl } from 'react-intl';
@@ -18,7 +18,7 @@ interface OwnProps {
  * Komponent/Ikon som viser om noe i GUI er endret.
  */
 
-const EditedIcon: FunctionComponent<OwnProps> = ({ className = '' }) => {
+const EditedIcon = ({ className = '' }: OwnProps) => {
   const intl = useIntl();
   return (
     <span className={classNames('editedIcon', className)}>

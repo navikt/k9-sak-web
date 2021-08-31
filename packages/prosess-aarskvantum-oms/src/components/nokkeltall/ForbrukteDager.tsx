@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import AntallTimer from './AntallTimer';
 import { DagerTimer } from './durationUtils';
@@ -78,7 +78,7 @@ const forbrukteDagerDetaljer = (
   return detaljer;
 };
 
-const ForbrukteDager: React.FunctionComponent<ForbrukteDagerProps> = ({
+const ForbrukteDager = ({
   navHarUtbetaltDagerTimer,
   infotrygdDagerTimer,
   forbrukteDagerTimer,
@@ -87,7 +87,7 @@ const ForbrukteDager: React.FunctionComponent<ForbrukteDagerProps> = ({
   viserDetaljer,
   visDetaljer,
   ar,
-}) => (
+}: ForbrukteDagerProps) => (
   <Nokkeltall
     overskrift={{
       antallDager: navHarUtbetaltDagerTimer.dager,

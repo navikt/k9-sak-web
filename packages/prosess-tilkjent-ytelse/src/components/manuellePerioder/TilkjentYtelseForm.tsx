@@ -1,7 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
-import PropTypes from 'prop-types';
 import moment from 'moment';
 import { InjectedFormProps } from 'redux-form';
 import {
@@ -32,11 +31,13 @@ interface OwnProps {
   arbeidsforhold: ArbeidsforholdV2[];
   arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysningerPerId;
   vilkarForSykdomExists: boolean;
+  beregningsresultat: BeregningsresultatUtbetalt[];
+  submitCallback: (...args: any[]) => any;
 }
 
 const FORM_NAME = 'TilkjentYtelseForm';
 
-export const TilkjentYtelseForm: React.FC<OwnProps & InjectedFormProps> = ({
+export const TilkjentYtelseForm = ({
   readOnly,
   readOnlySubmitButton,
   aksjonspunkter,
@@ -46,7 +47,7 @@ export const TilkjentYtelseForm: React.FC<OwnProps & InjectedFormProps> = ({
   arbeidsforhold,
   arbeidsgiverOpplysningerPerId,
   ...formProps
-}) => (
+}: Partial<OwnProps> & InjectedFormProps) => (
   <>
     {aksjonspunkter.length > 0 && (
       <>
@@ -80,14 +81,6 @@ export const TilkjentYtelseForm: React.FC<OwnProps & InjectedFormProps> = ({
     </form>
   </>
 );
-
-TilkjentYtelseForm.propTypes = {
-  readOnly: PropTypes.bool,
-};
-
-TilkjentYtelseForm.defaultProps = {
-  readOnly: true,
-};
 
 export const sjekkOverlappendePerioder = (index: number, nestePeriode: any, forrigePeriode: any) =>
   index !== 0 && moment(nestePeriode.fom) <= moment(forrigePeriode.tom);
@@ -124,20 +117,12 @@ const validateForm = (values: any) => {
   return errors;
 };
 
-interface PureOwnProps {
-  beregningsresultat: BeregningsresultatUtbetalt[];
-  aksjonspunkter: Aksjonspunkt[];
-  behandlingId: number;
-  behandlingVersjon: number;
-  arbeidsforhold: ArbeidsforholdV2[];
-  submitCallback: (...args: any[]) => any;
-}
 // @ts-ignore
 const buildInitialValues = createSelector(
   [
     // @ts-ignore
-    (props: PureOwnProps) => props.beregningsresultat?.perioder,
-    (props: PureOwnProps) => props.arbeidsforhold,
+    (props: OwnProps) => props.beregningsresultat?.perioder,
+    (props: OwnProps) => props.arbeidsforhold,
   ],
   (perioder = [], arbeidsforhold = []) => {
     if (perioder) {
@@ -170,11 +155,11 @@ export const transformValues = (values: any) => [
 ];
 
 const lagSubmitFn = createSelector(
-  [(ownProps: PureOwnProps) => ownProps.submitCallback, buildInitialValues],
+  [(ownProps: OwnProps) => ownProps.submitCallback, buildInitialValues],
   submitCallback => (values: any) => submitCallback(transformValues(values)),
 );
 
-const mapStateToPropsFactory = (_initialState: any, props: PureOwnProps) => {
+const mapStateToPropsFactory = (_initialState: any, props: OwnProps) => {
   const initialValues = buildInitialValues(props);
   const { behandlingId, behandlingVersjon } = props;
 

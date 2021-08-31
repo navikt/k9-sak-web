@@ -1,4 +1,4 @@
-import React, { FunctionComponent, ReactElement, useEffect } from 'react';
+import React, { ReactElement, useEffect } from 'react';
 
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
 import { RestApiState, useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
@@ -16,7 +16,7 @@ const NO_PARAMS = {};
 /**
  * Komponent som henter backend-data som skal kunne aksesseres globalt i applikasjonen. Denne dataen blir kun hentet en gang.
  */
-const AppConfigResolver: FunctionComponent<OwnProps> = ({ children }) => {
+const AppConfigResolver = ({ children }: OwnProps) => {
   const { addErrorMessage } = useRestApiErrorDispatcher();
   useEffect(() => {
     requestApi.setAddErrorMessageHandler(addErrorMessage);

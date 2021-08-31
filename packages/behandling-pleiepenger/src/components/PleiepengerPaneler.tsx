@@ -8,7 +8,7 @@ import {
   FeatureToggles,
   KodeverkMedNavn,
 } from '@k9-sak-web/types';
-import React, { FunctionComponent, useState } from 'react';
+import React, { useState } from 'react';
 import FetchedData from '../types/fetchedDataTsType';
 import PleiepengerFakta from './PleiepengerFakta';
 import PleiepengerProsess from './PleiepengerProsess';
@@ -40,7 +40,7 @@ interface FaktaPanelInfo {
   textCode: string;
 }
 
-const PleiepengerPaneler: FunctionComponent<OwnProps> = ({
+const PleiepengerPaneler = ({
   fetchedData,
   fagsak,
   fagsakPerson,
@@ -59,7 +59,7 @@ const PleiepengerPaneler: FunctionComponent<OwnProps> = ({
   arbeidsgiverOpplysningerPerId,
   featureToggles,
   dokumenter,
-}) => {
+}: OwnProps) => {
   const [apentFaktaPanelInfo, setApentFaktaPanel] = useState<FaktaPanelInfo>();
 
   return (

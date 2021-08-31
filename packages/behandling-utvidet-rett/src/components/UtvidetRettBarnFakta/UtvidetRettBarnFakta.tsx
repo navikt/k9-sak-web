@@ -13,7 +13,7 @@ interface OwnProps {
   fagsaksType: string;
 }
 
-const UtvidetRettBarnFakta: React.FunctionComponent<OwnProps> = ({ personopplysninger, rammevedtak, fagsaksType }) => {
+const UtvidetRettBarnFakta = ({ personopplysninger, rammevedtak, fagsaksType }: OwnProps) => {
   const erFagsakYtelseTypeKroniskSyktBarn = FagsakYtelseType.OMSORGSPENGER_KRONISK_SYKT_BARN === fagsaksType;
   const barn = erFagsakYtelseTypeKroniskSyktBarn
     ? personopplysninger?.barnSoktFor || []

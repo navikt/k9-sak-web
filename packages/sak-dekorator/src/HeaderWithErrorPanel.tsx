@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useState, useCallback, useEffect, useRef, RefObject } from 'react';
+import React, { useState, useCallback, useEffect, useRef, RefObject } from 'react';
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 import { BoxedListWithLinks, Header, Popover, SystemButton, UserPanel } from '@navikt/k9-react-components';
 
@@ -97,13 +97,13 @@ const lenkerFormatertForBoxedList = [
  * Denne viser lenke tilbake til hovedsiden, nettside-navnet, NAV-ansatt navn og lenke til rettskildene og systemrutinen.
  * I tillegg vil den vise potensielle feilmeldinger i ErrorMessagePanel.
  */
-const HeaderWithErrorPanel: FunctionComponent<OwnProps> = ({
+const HeaderWithErrorPanel = ({
   navAnsattName = '',
   removeErrorMessage,
   errorMessages = [],
   setSiteHeight,
   getPathToFplos,
-}) => {
+}: OwnProps) => {
   const [erLenkepanelApent, setLenkePanelApent] = useState(false);
   const wrapperRef = useOutsideClickEvent(erLenkepanelApent, setLenkePanelApent);
 
