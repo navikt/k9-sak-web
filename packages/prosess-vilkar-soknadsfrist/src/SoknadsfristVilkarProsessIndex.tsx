@@ -1,4 +1,5 @@
 import React, { SetStateAction, useState, useEffect } from 'react';
+import moment from 'moment';
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 import classNames from 'classnames/bind';
 
@@ -12,6 +13,7 @@ import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 
 import SoknadsfristVilkarForm from './components/SoknadsfristVilkarForm';
 import SoknadsfristVilkarHeader from './components/SoknadsfristVilkarHeader';
+import { utledInnsendtSoknadsfrist } from './utils';
 
 import messages from '../i18n/nb_NO.json';
 
@@ -87,11 +89,17 @@ const SoknadsfristVilkarProsessIndex = ({
 
   const dokumenterIAktivPeriode = Array.isArray(soknadsfristStatus?.dokumentStatus)
     ? soknadsfristStatus.dokumentStatus.filter(dok =>
-        dok.status.some(
-          status =>
-            (activePeriode.periode.fom >= status.periode.fom && activePeriode.periode.fom <= status.periode.tom) ||
-            (activePeriode.periode.tom >= status.periode.fom && activePeriode.periode.tom <= status.periode.tom),
-        ),
+        dok.status.some(status => {
+          const activePeriodeFom = moment(activePeriode.periode.fom);
+          const activePeriodeTom = moment(activePeriode.periode.tom);
+          const statusPeriodeFom = moment(status.periode.fom);
+          const statusPeriodeTom = moment(status.periode.tom);
+          return (
+            utledInnsendtSoknadsfrist(dok.innsendingstidspunkt, false) > activePeriodeFom &&
+            ((activePeriodeFom >= statusPeriodeFom && activePeriodeFom <= statusPeriodeTom) ||
+              (activePeriodeTom >= statusPeriodeFom && activePeriodeTom <= statusPeriodeTom))
+          );
+        }),
       )
     : [];
 
