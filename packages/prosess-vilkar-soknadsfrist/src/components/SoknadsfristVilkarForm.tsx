@@ -206,8 +206,11 @@ const buildInitialValues = createSelector(
         const erDelvisOppfylt =
           status !== vilkarUtfallType.OPPFYLT && fraDato && plusEnDag(fraDato) !== innsendtSoknadsfrist;
 
+        const erVilkarOk = erDelvisOppfylt ? DELVIS_OPPFYLT : status === vilkarUtfallType.OPPFYLT;
+        const erAvklartEllerOverstyrt = !!fraDato;
+
         return {
-          erVilkarOk: erDelvisOppfylt ? DELVIS_OPPFYLT : status === vilkarUtfallType.OPPFYLT,
+          erVilkarOk: erAvklartEllerOverstyrt ? erVilkarOk : null,
           begrunnelse: decodeHtmlEntity(
             dokument.overstyrteOpplysninger?.begrunnelse || dokument.avklarteOpplysninger?.begrunnelse || '',
           ),
