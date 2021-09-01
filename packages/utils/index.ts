@@ -76,7 +76,6 @@ export {
   dateIsBefore,
   dateBeforeOrEqual,
   hasValidDate,
-  hasValidDateAlt,
   hasValidSaksnummerOrFodselsnummerFormat,
   hasValidDecimal,
   hasValidInteger,

@@ -4,7 +4,7 @@ import { FormattedMessage, useIntl } from 'react-intl';
 import { DatepickerField, RadioGroupField, RadioOption, TextAreaField } from '@fpsak-frontend/form';
 import {
   hasValidText,
-  hasValidDateAlt,
+  hasValidDate,
   dateAfterOrEqual,
   dateBeforeOrEqual,
   maxLength,
@@ -66,8 +66,8 @@ export const SoknadsfristVilkarDokument = ({
     [dokument.innsendingstidspunkt],
   );
 
-  const isAtleastDate = useCallback(v => dateAfterOrEqual(minDate)(moment(v, 'DD.MM.YYYY')), [minDate]);
-  const isAtmostDate = useCallback(v => dateBeforeOrEqual(maxDate)(moment(v, 'DD.MM.YYYY')), [maxDate]);
+  const isAtleastDate = useCallback(v => dateAfterOrEqual(minDate)(v), [minDate]);
+  const isAtmostDate = useCallback(v => dateBeforeOrEqual(maxDate)(v), [maxDate]);
 
   return (
     <div style={{ display: erAktivtDokument ? 'block' : 'none' }}>
@@ -154,7 +154,7 @@ export const SoknadsfristVilkarDokument = ({
                     <DatepickerField
                       name={`avklarteKrav.${dokumentIndex}.fraDato`}
                       label={{ id: 'SoknadsfristVilkarForm.Dato' }}
-                      validate={[required, hasValidDateAlt, isAtleastDate, isAtmostDate]}
+                      validate={[required, hasValidDate, isAtleastDate, isAtmostDate]}
                       readOnly={readOnly}
                       disabledDays={{
                         before: moment(minDate, 'YYYY-MM-DD').toDate(),

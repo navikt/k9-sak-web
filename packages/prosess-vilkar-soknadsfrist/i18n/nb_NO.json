@@ -1,6 +1,6 @@
 {
   "SoknadsfristVilkarForm.ErOppfylt": "Vilkåret er oppfylt for hele perioden",
-  "SoknadsfristVilkarForm.ErIkkeOppfylt": "Vilkåret er ikke oppfylt for denne perioden",
+  "SoknadsfristVilkarForm.ErIkkeOppfylt": "Vilkåret er avslått",
   "SoknadsfristVilkarForm.ErDelvisOppfylt": "Vilkåret er oppfylt for deler av perioden",
   "SoknadsfristVilkarForm.IkkeBehandlet": "Ikke behandlet",
   "SoknadsfristVilkarForm.Endret": "Endret av saksbehandler",
@@ -8,7 +8,7 @@
   "SoknadsfristVilkarForm.AvklarVurdering": "Vurder om søknadsfristvilkåret er oppfylt",
   "SoknadsfristVilkarForm.Avbryt": "Avbryt",
   "SoknadsfristVilkarForm.Unntakstilfeller": "Overstyring skal kun gjøres i unntakstilfeller",
-  "SoknadsfristVilkarForm.VilkarIkkeOppfylt": "Vilkåret er <b>ikke</b> oppfylt",
+  "SoknadsfristVilkarForm.VilkarIkkeOppfylt": "Vilkåret er <b>ikke</b> oppfylt for denne perioden",
   "SoknadsfristVilkarForm.IngenDokumenter": "Det finnes ingen dokumenter knyttet til denne behandlingen",
 
   "SoknadsfristVilkarForm.Dato": "Oppgi dato søknadsfristvilkåret er oppfylt fra",

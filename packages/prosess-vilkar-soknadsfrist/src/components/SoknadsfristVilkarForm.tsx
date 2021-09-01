@@ -29,7 +29,7 @@ import { Element, Normaltekst } from 'nav-frontend-typografi';
 import OverstyrBekreftKnappPanel from './OverstyrBekreftKnappPanel';
 import SoknadsfristVilkarDokument, { DELVIS_OPPFYLT } from './SoknadsfristVilkarDokument';
 
-import { utledInnsendtSoknadsfrist, formatDate } from '../utils';
+import { utledInnsendtSoknadsfrist } from '../utils';
 
 import styles from './SoknadsfristVilkarForm.less';
 
@@ -215,7 +215,7 @@ const buildInitialValues = createSelector(
             dokument.overstyrteOpplysninger?.begrunnelse || dokument.avklarteOpplysninger?.begrunnelse || '',
           ),
           journalpostId: dokument.journalpostId,
-          fraDato: fraDato ? formatDate(plusEnDag(fraDato)) : '',
+          fraDato: fraDato ? plusEnDag(fraDato) : '',
         };
       }),
     };
