@@ -31,9 +31,8 @@ const snakkeboblePanelCls = (aktoer: Kodeverk) =>
     snakkeboble__saksbehandler: aktoer.kode === HistorikkAktor.SAKSBEHANDLER,
     snakkeboble__beslutter: aktoer.kode === HistorikkAktor.BESLUTTER,
     snakkeboble__losningen: aktoer.kode === HistorikkAktor.VEDTAKSLOSNINGEN,
-    snakkeboble__bruker: HistorikkAktor.SOKER,
     snakkeboble__ekstern: aktoer.kode === HistorikkAktor.ARBEIDSGIVER,
-  });
+  }) || cx('snakkeboble__panel snakkeboble-panel', { snakkeboble__bruker: true });
 
 interface OwnProps {
   dato: string;
