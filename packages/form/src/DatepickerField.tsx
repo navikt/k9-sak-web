@@ -16,7 +16,7 @@ interface DatepickerFieldProps {
   isEdited?: boolean;
   validate?: (
     | ((text: any) => ({ id: string; length?: undefined } | { length: any; id?: undefined })[])
-    | ((text: any) => ({ id: string; limit?: undefined } | { limit: any; id?: undefined })[])
+    | ((text: any) => ({ id?: string; limit?: any } | { limit: any; id?: string })[])
     | ((value: any) => { id: string }[])
     | ((text: any) => ({ id: string; text?: undefined } | { text: any; id?: undefined })[])
   )[];
