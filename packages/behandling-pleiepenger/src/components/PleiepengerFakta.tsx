@@ -12,11 +12,12 @@ import {
 } from '@k9-sak-web/types';
 import ac from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
-import { RestApiState } from '@k9-sak-web/rest-api-hooks';
+import { RestApiState, useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
 
 import faktaPanelDefinisjoner from '../panelDefinisjoner/faktaPleiepengerPanelDefinisjoner';
 import FetchedData from '../types/fetchedDataTsType';
 import { restApiPleiepengerHooks, PleiepengerBehandlingApiKeys } from '../data/pleiepengerBehandlingApi';
+import ErrorBoundary from '../../../sak-app/src/app/ErrorBoundary';
 
 const overstyringApCodes = [ac.OVERSTYRING_AV_BEREGNINGSAKTIVITETER, ac.OVERSTYRING_AV_BEREGNINGSGRUNNLAG];
 
@@ -56,16 +57,12 @@ const PleiepengerFakta: FunctionComponent<OwnProps & WrappedComponentProps> = ({
 }) => {
   const { aksjonspunkter, ...rest } = data;
 
-  const {
-    startRequest: lagreAksjonspunkter,
-    data: apBehandlingRes,
-  } = restApiPleiepengerHooks.useRestApiRunner<Behandling>(PleiepengerBehandlingApiKeys.SAVE_AKSJONSPUNKT);
+  const { startRequest: lagreAksjonspunkter, data: apBehandlingRes } =
+    restApiPleiepengerHooks.useRestApiRunner<Behandling>(PleiepengerBehandlingApiKeys.SAVE_AKSJONSPUNKT);
   useSetBehandlingVedEndring(apBehandlingRes, setBehandling);
 
-  const {
-    startRequest: lagreOverstyrteAksjonspunkter,
-    data: apOverstyrtBehandlingRes,
-  } = restApiPleiepengerHooks.useRestApiRunner<Behandling>(PleiepengerBehandlingApiKeys.SAVE_OVERSTYRT_AKSJONSPUNKT);
+  const { startRequest: lagreOverstyrteAksjonspunkter, data: apOverstyrtBehandlingRes } =
+    restApiPleiepengerHooks.useRestApiRunner<Behandling>(PleiepengerBehandlingApiKeys.SAVE_OVERSTYRT_AKSJONSPUNKT);
   useSetBehandlingVedEndring(apOverstyrtBehandlingRes, setBehandling);
 
   const dataTilUtledingAvPleiepengerPaneler = {
@@ -88,6 +85,7 @@ const PleiepengerFakta: FunctionComponent<OwnProps & WrappedComponentProps> = ({
   );
 
   faktaHooks.useFaktaAksjonspunktNotifikator(faktaPaneler, setApentFaktaPanel, behandling.versjon);
+  const { addErrorMessage } = useRestApiErrorDispatcher();
 
   const [velgFaktaPanelCallback, bekreftAksjonspunktCallback] = faktaHooks.useCallbacks(
     faktaPaneler,
@@ -118,16 +116,18 @@ const PleiepengerFakta: FunctionComponent<OwnProps & WrappedComponentProps> = ({
     return (
       <SideMenuWrapper paneler={sidemenyPaneler} onClick={velgFaktaPanelCallback}>
         {valgtPanel && isLoading && <LoadingPanel />}
-        {valgtPanel &&
-          !isLoading &&
-          valgtPanel.getPanelDef().getKomponent({
-            ...faktaData,
-            behandling,
-            alleKodeverk,
-            submitCallback: bekreftAksjonspunktCallback,
-            ...valgtPanel.getKomponentData(rettigheter, dataTilUtledingAvPleiepengerPaneler, hasFetchError),
-            dokumenter,
-          })}
+        {valgtPanel && !isLoading && (
+          <ErrorBoundary errorMessageCallback={addErrorMessage}>
+            {valgtPanel.getPanelDef().getKomponent({
+              ...faktaData,
+              behandling,
+              alleKodeverk,
+              submitCallback: bekreftAksjonspunktCallback,
+              ...valgtPanel.getKomponentData(rettigheter, dataTilUtledingAvPleiepengerPaneler, hasFetchError),
+              dokumenter,
+            })}
+          </ErrorBoundary>
+        )}
       </SideMenuWrapper>
     );
   }
