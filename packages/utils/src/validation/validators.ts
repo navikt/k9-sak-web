@@ -65,8 +65,8 @@ export const minLength = length => text =>
 export const maxLength = length => text =>
   isEmpty(text) || text.toString().trim().length <= length ? null : maxLengthMessage(length);
 
-export const minValue = length => number => (number >= length ? null : minValueMessage(length));
-export const maxValue = length => number => (number <= length ? null : maxValueMessage(length));
+export const minValue = length => number => number >= length ? null : minValueMessage(length);
+export const maxValue = length => number => number <= length ? null : maxValueMessage(length);
 
 export const hasValidOrgNumber = number => (number.toString().trim().length === 9 ? null : invalidOrgNumberMessage());
 export const hasValidOrgNumberOrFodselsnr = number =>
@@ -89,18 +89,26 @@ export const hasValidSaksnummerOrFodselsnummerFormat = text =>
   isEmpty(text) || saksnummerOrFodselsnummerPattern.test(text) ? null : invalidSaksnummerOrFodselsnummerFormatMessage();
 
 export const hasValidDate = text => (isEmpty(text) || isoDateRegex.test(text) ? null : invalidDateMessage());
-export const dateBeforeOrEqual = latest => text =>
-  isEmpty(text) || moment(text).isSameOrBefore(moment(latest).startOf('day'))
-    ? null
-    : dateNotBeforeOrEqualMessage(moment(latest).format(DDMMYYYY_DATE_FORMAT));
-const getErrorMessage = (earliest, customErrorMessage) => {
+const getBeforeErrorMessage = (latest, customErrorMessage) => {
+  const date = moment(latest).format(DDMMYYYY_DATE_FORMAT);
+  return customErrorMessage ? customErrorMessage(date) : dateNotBeforeOrEqualMessage(date);
+};
+export const dateBeforeOrEqual =
+  (latest, customErrorMessageFunction = undefined) =>
+  text =>
+    isEmpty(text) || moment(text).isSameOrBefore(moment(latest).startOf('day'))
+      ? null
+      : getBeforeErrorMessage(latest, customErrorMessageFunction);
+const getAfterErrorMessage = (earliest, customErrorMessage) => {
   const date = moment(earliest).format(DDMMYYYY_DATE_FORMAT);
   return customErrorMessage ? customErrorMessage(date) : dateNotAfterOrEqualMessage(date);
 };
-export const dateAfterOrEqual = (earliest, customErrorMessageFunction = undefined) => text =>
-  isEmpty(text) || moment(text).isSameOrAfter(moment(earliest).startOf('day'))
-    ? null
-    : getErrorMessage(earliest, customErrorMessageFunction);
+export const dateAfterOrEqual =
+  (earliest, customErrorMessageFunction = undefined) =>
+  text =>
+    isEmpty(text) || moment(text).isSameOrAfter(moment(earliest).startOf('day'))
+      ? null
+      : getAfterErrorMessage(earliest, customErrorMessageFunction);
 export const dateIsBefore = (dateToCheckAgainst, errorMessageFunction) => inputDate =>
   isEmpty(inputDate) || moment(inputDate).isBefore(moment(dateToCheckAgainst).startOf('day'))
     ? null
@@ -136,9 +144,8 @@ export const hasValidName = text => {
   return null;
 };
 
-export const hasValidValue = value => invalidValue => (value !== invalidValue ? invalidValueMessage(value) : null);
-export const arrayMinLength = length => value =>
-  value && value.length >= length ? null : arrayMinLengthMessage(length);
+export const hasValidValue = value => invalidValue => value !== invalidValue ? invalidValueMessage(value) : null;
+export const arrayMinLength = length => value => value && value.length >= length ? null : arrayMinLengthMessage(length);
 
 export const dateIsAfter = (date, checkAgainsDate) => moment(date).isAfter(checkAgainsDate);
 export const isDatesEqual = (date1, date2) =>

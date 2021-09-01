@@ -1,10 +1,12 @@
-import React from 'react';
+import React, { useMemo, useCallback } from 'react';
 import moment from 'moment';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { DatepickerField, RadioGroupField, RadioOption, TextAreaField } from '@fpsak-frontend/form';
 import {
   hasValidText,
   hasValidDate,
+  dateAfterOrEqual,
+  dateBeforeOrEqual,
   maxLength,
   minLength,
   requiredIfNotPristine,
@@ -24,7 +26,6 @@ import styles from './SoknadsfristVilkarDokument.less';
 
 const minLength3 = minLength(3);
 const maxLength1500 = maxLength(1500);
-
 interface SoknadsfristVilkarDokumentProps {
   erVilkarOk?: boolean | string;
   readOnly: boolean;
@@ -52,11 +53,21 @@ export const SoknadsfristVilkarDokument = ({
 }: SoknadsfristVilkarDokumentProps) => {
   const intl = useIntl();
 
-  const minDate = dokument.status.reduce(
-    (acc, curr) => (!acc || moment(curr.periode.fom) < moment(acc) ? curr.periode.fom : acc),
-    '',
+  const minDate = useMemo(
+    () =>
+      dokument.status.reduce(
+        (acc, curr) => (!acc || moment(curr.periode.fom) < moment(acc) ? curr.periode.fom : acc),
+        '',
+      ),
+    [dokument.journalpostId],
   );
-  const maxDate = utledInnsendtSoknadsfrist(dokument.innsendingstidspunkt);
+  const maxDate = useMemo(
+    () => utledInnsendtSoknadsfrist(dokument.innsendingstidspunkt),
+    [dokument.innsendingstidspunkt],
+  );
+
+  const isAtleastDate = useCallback(v => dateAfterOrEqual(minDate)(v), [minDate]);
+  const isAtmostDate = useCallback(v => dateBeforeOrEqual(maxDate)(v), [maxDate]);
 
   return (
     <div style={{ display: erAktivtDokument ? 'block' : 'none' }}>
@@ -143,11 +154,11 @@ export const SoknadsfristVilkarDokument = ({
                     <DatepickerField
                       name={`avklarteKrav.${dokumentIndex}.fraDato`}
                       label={{ id: 'SoknadsfristVilkarForm.Dato' }}
-                      validate={[required, hasValidDate]}
+                      validate={[required, hasValidDate, isAtleastDate, isAtmostDate]}
                       readOnly={readOnly}
                       disabledDays={{
-                        before: moment(minDate).toDate(),
-                        after: moment(maxDate).toDate(),
+                        before: moment(minDate, 'YYYY-MM-DD').toDate(),
+                        after: moment(maxDate, 'YYYY-MM-DD').toDate(),
                       }}
                     />
                   </FlexRow>

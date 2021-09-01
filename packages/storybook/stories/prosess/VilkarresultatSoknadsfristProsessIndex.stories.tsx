@@ -104,7 +104,6 @@ export const visOverstyringspanelForSoknadsfrist = () => {
       erOverstyrt={erOverstyrt}
       soknadsfristStatus={soknadsStatus}
       panelTittelKode="Inngangsvilkar.Soknadsfrist"
-      lovReferanse="§§ Dette er en lovreferanse"
       vilkar={vilkarSoknadsfrist}
       visAllePerioder
     />
@@ -135,7 +134,6 @@ export const visOverstyringspanelForSoknadsfristUtenDokumenter = () => {
       erOverstyrt={erOverstyrt}
       soknadsfristStatus={{ dokumentStatus: [] }}
       panelTittelKode="Inngangsvilkar.Soknadsfrist"
-      lovReferanse="§§ Dette er en lovreferanse"
       vilkar={vilkarSoknadsfrist}
       visAllePerioder
     />
@@ -200,7 +198,6 @@ export const visSoknadsfristAksjonspunkt5077 = () => {
         ],
       }}
       panelTittelKode="Inngangsvilkar.Soknadsfrist"
-      lovReferanse="§§ Dette er en lovreferanse"
       vilkar={[
         {
           vilkarType: { kode: 'FP_VK_3', kodeverk: 'VILKAR_TYPE' },
@@ -303,7 +300,6 @@ export const visSoknadsfristAksjonspunkt5077Delvis = () => {
         ],
       }}
       panelTittelKode="Inngangsvilkar.Soknadsfrist"
-      lovReferanse="§§ Dette er en lovreferanse"
       vilkar={[
         {
           vilkarType: { kode: 'FP_VK_3', kodeverk: 'VILKAR_TYPE' },
