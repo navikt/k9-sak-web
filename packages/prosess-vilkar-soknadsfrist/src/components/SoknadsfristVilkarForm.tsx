@@ -7,7 +7,7 @@ import { FormattedMessage } from 'react-intl';
 
 import advarselIkonUrl from '@fpsak-frontend/assets/images/advarsel_ny.svg';
 import { behandlingForm, behandlingFormValueSelector } from '@fpsak-frontend/form';
-import { decodeHtmlEntity, isRequiredMessage } from '@fpsak-frontend/utils';
+import { decodeHtmlEntity } from '@fpsak-frontend/utils';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
@@ -203,11 +203,11 @@ const buildInitialValues = createSelector(
         const fraDato = dokument.overstyrteOpplysninger?.fraDato || dokument.avklarteOpplysninger?.fraDato;
         const innsendtSoknadsfrist = utledInnsendtSoknadsfrist(dokument.innsendingstidspunkt);
 
+        const erAvklartEllerOverstyrt = !!fraDato;
+
         const erDelvisOppfylt =
           status !== vilkarUtfallType.OPPFYLT && fraDato && plusEnDag(fraDato) !== innsendtSoknadsfrist;
-
         const erVilkarOk = erDelvisOppfylt ? DELVIS_OPPFYLT : status === vilkarUtfallType.OPPFYLT;
-        const erAvklartEllerOverstyrt = !!fraDato;
 
         return {
           erVilkarOk: erAvklartEllerOverstyrt ? erVilkarOk : null,
@@ -254,48 +254,10 @@ const transformValues = (values, alleDokumenter, apKode, periodeFom, periodeTom)
   periode: periodeFom && periodeTom ? { fom: periodeFom, tom: periodeTom } : undefined,
 });
 
-const validate = (
-  values: { avklarteKrav: any; erVilkarOk: boolean; avslagCode: string } = {
-    avklarteKrav: [],
-    erVilkarOk: false,
-    avslagCode: '',
-  },
-) => {
-  const errors: {
-    avklarteKrav?: Array<{
-      erVilkarOk?: string | { id: string }[];
-      begrunnelse?: string | { id: string }[];
-    }>;
-    erVilkarOk?: string | { id: string }[];
-    avslagCode?: string | { id: string }[];
-  } = {
-    avklarteKrav: [],
-  };
-
-  if (Array.isArray(values.avklarteKrav)) {
-    values.avklarteKrav.forEach((krav, index) => {
-      if (!errors.avklarteKrav[index]) {
-        errors.avklarteKrav[index] = {};
-      }
-
-      if (typeof krav.erVilkarOk === 'undefined') {
-        errors.avklarteKrav[index].erVilkarOk = isRequiredMessage();
-      }
-
-      if (!krav.begrunnelse || krav.begrunnelse.length < 3 || krav.begrunnelse.length >= 1500) {
-        errors.avklarteKrav[index].begrunnelse = isRequiredMessage();
-      }
-    });
-  }
-
-  return errors;
-};
-
 const mapStateToPropsFactory = (_initialState, initialOwnProps: SoknadsfristVilkarFormProps) => {
   const { submitCallback, alleDokumenter, periode } = initialOwnProps;
   const periodeFom = periode?.periode?.fom;
   const periodeTom = periode?.periode?.tom;
-  const validateFn = values => validate(values);
 
   return (state, ownProps) => {
     const { behandlingId, behandlingVersjon, aksjonspunkter, harÅpentAksjonspunkt, erOverstyrt, overrideReadOnly } =
@@ -326,7 +288,6 @@ const mapStateToPropsFactory = (_initialState, initialOwnProps: SoknadsfristVilk
       harAksjonspunkt: aksjonspunkt !== undefined,
       isSolvable: erOverstyrt || isSolvable,
       isReadOnly: overrideReadOnly,
-      validate: validateFn,
       ...behandlingFormValueSelector(formName, behandlingId, behandlingVersjon)(
         state,
         'isOverstyrt',
@@ -339,7 +300,6 @@ const mapStateToPropsFactory = (_initialState, initialOwnProps: SoknadsfristVilk
 
 const form = behandlingForm({
   form: formName,
-  // validate,
   enableReinitialize: true,
   destroyOnUnmount: false,
   forceUnregisterOnUnmount: true,

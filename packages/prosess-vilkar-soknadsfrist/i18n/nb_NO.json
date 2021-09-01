@@ -1,7 +1,7 @@
 {
-  "SoknadsfristVilkarForm.ErOppfylt": "Vilkåret er oppfylt",
-  "SoknadsfristVilkarForm.ErIkkeOppfylt": "Vilkåret er avslått",
-  "SoknadsfristVilkarForm.ErDelvisOppfylt": "Vilkåret er delvis oppfylt",
+  "SoknadsfristVilkarForm.ErOppfylt": "Vilkåret er oppfylt for hele perioden",
+  "SoknadsfristVilkarForm.ErIkkeOppfylt": "Vilkåret er ikke oppfylt for denne perioden",
+  "SoknadsfristVilkarForm.ErDelvisOppfylt": "Vilkåret er oppfylt for deler av perioden",
   "SoknadsfristVilkarForm.IkkeBehandlet": "Ikke behandlet",
   "SoknadsfristVilkarForm.Endret": "Endret av saksbehandler",
   "SoknadsfristVilkarForm.AutomatiskVurdering": "Manuell overstyring av automatisk vurdering",
