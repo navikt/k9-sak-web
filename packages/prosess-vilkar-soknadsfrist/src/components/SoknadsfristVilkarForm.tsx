@@ -7,7 +7,7 @@ import { FormattedMessage } from 'react-intl';
 
 import advarselIkonUrl from '@fpsak-frontend/assets/images/advarsel_ny.svg';
 import { behandlingForm, behandlingFormValueSelector } from '@fpsak-frontend/form';
-import { DDMMYYYY_DATE_FORMAT, decodeHtmlEntity, isRequiredMessage } from '@fpsak-frontend/utils';
+import { decodeHtmlEntity } from '@fpsak-frontend/utils';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
@@ -29,9 +29,9 @@ import { Element, Normaltekst } from 'nav-frontend-typografi';
 import OverstyrBekreftKnappPanel from './OverstyrBekreftKnappPanel';
 import SoknadsfristVilkarDokument, { DELVIS_OPPFYLT } from './SoknadsfristVilkarDokument';
 
-import styles from './SoknadsfristVilkarForm.less';
+import { utledInnsendtSoknadsfrist } from '../utils';
 
-const formatDate = dato => moment(dato).format(DDMMYYYY_DATE_FORMAT);
+import styles from './SoknadsfristVilkarForm.less';
 
 const formName = 'SøknadsfristVilkårOverstyringForm';
 
@@ -89,20 +89,21 @@ export const SoknadsfristVilkarForm = ({
 
   return (
     <form onSubmit={handleSubmit}>
-      {(erOverstyrt || harAksjonspunkt) && (
+      {(erOverstyrt || harAksjonspunkt) && dokumenter.length > 0 && (
         <AksjonspunktBox
           className={styles.aksjonspunktMargin}
           erAksjonspunktApent={erOverstyrt || harÅpentAksjonspunkt}
         >
-          {harÅpentAksjonspunkt ? (
-            <AksjonspunktHelpTextTemp isAksjonspunktOpen>
-              {[<FormattedMessage key={1} id="SoknadsfristVilkarForm.AvklarVurdering" />]}
-            </AksjonspunktHelpTextTemp>
-          ) : (
-            <Element>
-              <FormattedMessage id="SoknadsfristVilkarForm.AutomatiskVurdering" />
-            </Element>
-          )}
+          {!isReadOnly &&
+            (harÅpentAksjonspunkt ? (
+              <AksjonspunktHelpTextTemp isAksjonspunktOpen>
+                {[<FormattedMessage key={1} id="SoknadsfristVilkarForm.AvklarVurdering" />]}
+              </AksjonspunktHelpTextTemp>
+            ) : (
+              <Element>
+                <FormattedMessage id="SoknadsfristVilkarForm.AutomatiskVurdering" />
+              </Element>
+            ))}
           <VerticalSpacer eightPx />
           {Array.isArray(alleDokumenter) && alleDokumenter.length > 0 ? (
             alleDokumenter.map((dokument, index) => (
@@ -200,25 +201,21 @@ const buildInitialValues = createSelector(
       isOverstyrt: overstyrtAksjonspunkt !== undefined,
       avklarteKrav: alleDokumenter.map(dokument => {
         const fraDato = dokument.overstyrteOpplysninger?.fraDato || dokument.avklarteOpplysninger?.fraDato;
+        const innsendtSoknadsfrist = utledInnsendtSoknadsfrist(dokument.innsendingstidspunkt);
 
-        const erDelvisInnvilget =
-          status !== vilkarUtfallType.OPPFYLT && fraDato && fraDato !== dokument.innsendingstidspunkt;
+        const erAvklartEllerOverstyrt = !!fraDato;
+
+        const erDelvisOppfylt =
+          status !== vilkarUtfallType.OPPFYLT && fraDato && plusEnDag(fraDato) !== innsendtSoknadsfrist;
+        const erVilkarOk = erDelvisOppfylt ? DELVIS_OPPFYLT : status === vilkarUtfallType.OPPFYLT;
 
         return {
-          erVilkarOk: erDelvisInnvilget
-            ? DELVIS_OPPFYLT
-            : dokument.overstyrteOpplysninger?.godkjent ||
-              dokument.avklarteOpplysninger?.godkjent ||
-              status === vilkarUtfallType.OPPFYLT,
+          erVilkarOk: erAvklartEllerOverstyrt ? erVilkarOk : null,
           begrunnelse: decodeHtmlEntity(
             dokument.overstyrteOpplysninger?.begrunnelse || dokument.avklarteOpplysninger?.begrunnelse || '',
           ),
           journalpostId: dokument.journalpostId,
-          fraDato: formatDate(
-            fraDato
-              ? plusEnDag(fraDato)
-              : moment(dokument.innsendingstidspunkt).startOf('month').subtract(3, 'months').format('YYYY-MM-DD'),
-          ),
+          fraDato: fraDato ? plusEnDag(fraDato) : '',
         };
       }),
     };
@@ -232,71 +229,39 @@ const transformValues = (values, alleDokumenter, apKode, periodeFom, periodeTom)
     const dokumentStatus = alleDokumenter.find(d => d.journalpostId === krav.journalpostId);
     const erVilkarOk = krav.erVilkarOk === true || krav.erVilkarOk === DELVIS_OPPFYLT;
 
+    const fraDato = (() => {
+      switch (krav.erVilkarOk) {
+        case true:
+          return dokumentStatus.status[0]?.periode.fom;
+
+        case DELVIS_OPPFYLT:
+          return krav.fraDato;
+
+        default:
+          return utledInnsendtSoknadsfrist(dokumentStatus.innsendingstidspunkt);
+      }
+    })();
+
     return {
       ...krav,
       erVilkarOk,
       godkjent: erVilkarOk,
-      // fjern denne modifiern hvis backend oppdateres..
-      fraDato: minusEnDag(krav.erVilkarOk === true ? dokumentStatus.status[0]?.periode.fom : krav.fraDato),
+      // fjern 'minusEnDag' hvis backend oppdateres..
+      fraDato: minusEnDag(fraDato),
     };
   }),
   erVilkarOk: !values.avklarteKrav.some(krav => !krav.erVilkarOk),
   periode: periodeFom && periodeTom ? { fom: periodeFom, tom: periodeTom } : undefined,
 });
 
-const validate = (
-  values: { avklarteKrav: any; erVilkarOk: boolean; avslagCode: string } = {
-    avklarteKrav: [],
-    erVilkarOk: false,
-    avslagCode: '',
-  },
-) => {
-  const errors: {
-    avklarteKrav?: Array<{
-      erVilkarOk?: string | { id: string }[];
-      begrunnelse?: string | { id: string }[];
-    }>;
-    erVilkarOk?: string | { id: string }[];
-    avslagCode?: string | { id: string }[];
-  } = {
-    avklarteKrav: [],
-  };
-
-  if (Array.isArray(values.avklarteKrav)) {
-    values.avklarteKrav.forEach((krav, index) => {
-      if (!errors.avklarteKrav[index]) {
-        errors.avklarteKrav[index] = {};
-      }
-
-      if (typeof krav.erVilkarOk === 'undefined') {
-        errors.avklarteKrav[index].erVilkarOk = isRequiredMessage();
-      }
-
-      if (!krav.begrunnelse || krav.begrunnelse.length < 3 || krav.begrunnelse.length >= 1500) {
-        errors.avklarteKrav[index].begrunnelse = isRequiredMessage();
-      }
-    });
-  }
-
-  return errors;
-};
-
 const mapStateToPropsFactory = (_initialState, initialOwnProps: SoknadsfristVilkarFormProps) => {
   const { submitCallback, alleDokumenter, periode } = initialOwnProps;
   const periodeFom = periode?.periode?.fom;
   const periodeTom = periode?.periode?.tom;
-  const validateFn = values => validate(values);
 
   return (state, ownProps) => {
-    const {
-      behandlingId,
-      behandlingVersjon,
-      aksjonspunkter,
-      status,
-      harÅpentAksjonspunkt,
-      erOverstyrt,
-      overrideReadOnly,
-    } = ownProps;
+    const { behandlingId, behandlingVersjon, aksjonspunkter, harÅpentAksjonspunkt, erOverstyrt, overrideReadOnly } =
+      ownProps;
 
     const aksjonspunkt = harÅpentAksjonspunkt
       ? aksjonspunkter.find(ap => ap.definisjon.kode === aksjonspunktCodes.KONTROLLER_OPPLYSNINGER_OM_SØKNADSFRIST)
@@ -322,16 +287,19 @@ const mapStateToPropsFactory = (_initialState, initialOwnProps: SoknadsfristVilk
       harÅpentAksjonspunkt,
       harAksjonspunkt: aksjonspunkt !== undefined,
       isSolvable: erOverstyrt || isSolvable,
-      isReadOnly: overrideReadOnly || status === vilkarUtfallType.OPPFYLT,
-      validate: validateFn,
-      ...behandlingFormValueSelector(formName, behandlingId, behandlingVersjon)(state, 'isOverstyrt', 'erVilkarOk'),
+      isReadOnly: overrideReadOnly,
+      ...behandlingFormValueSelector(formName, behandlingId, behandlingVersjon)(
+        state,
+        'isOverstyrt',
+        'erVilkarOk',
+        'avklarteKrav',
+      ),
     };
   };
 };
 
 const form = behandlingForm({
   form: formName,
-  // validate,
   enableReinitialize: true,
   destroyOnUnmount: false,
   forceUnregisterOnUnmount: true,

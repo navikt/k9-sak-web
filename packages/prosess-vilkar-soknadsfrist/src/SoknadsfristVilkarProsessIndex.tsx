@@ -1,4 +1,5 @@
 import React, { SetStateAction, useState, useEffect } from 'react';
+import moment from 'moment';
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 import classNames from 'classnames/bind';
 
@@ -12,6 +13,7 @@ import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 
 import SoknadsfristVilkarForm from './components/SoknadsfristVilkarForm';
 import SoknadsfristVilkarHeader from './components/SoknadsfristVilkarHeader';
+import { utledInnsendtSoknadsfrist } from './utils';
 
 import messages from '../i18n/nb_NO.json';
 
@@ -29,6 +31,8 @@ const intl = createIntl(
   cache,
 );
 
+const lovReferanse = '§ 22-13';
+
 interface SoknadsfristVilkarProsessIndexProps {
   behandling: Behandling;
   aksjonspunkter: Aksjonspunkt[];
@@ -38,7 +42,6 @@ interface SoknadsfristVilkarProsessIndexProps {
     isEnabled: boolean;
   };
   toggleOverstyring: (overstyrtPanel: SetStateAction<string[]>) => void;
-  lovReferanse?: string;
   erOverstyrt: boolean;
   panelTittelKode: string;
   vilkar: Vilkar[];
@@ -55,7 +58,6 @@ const SoknadsfristVilkarProsessIndex = ({
   toggleOverstyring,
   erOverstyrt,
   panelTittelKode,
-  lovReferanse,
   vilkar,
   visAllePerioder,
   soknadsfristStatus,
@@ -66,9 +68,6 @@ const SoknadsfristVilkarProsessIndex = ({
   const perioder = activeVilkår.perioder.filter(periode => visAllePerioder || periode.vurdersIBehandlingen);
 
   const activePeriode = activeVilkår.perioder[activeTab];
-
-  const ikkeOppfyltePerioderSomSkalVurderesFn = p =>
-    p.vurdersIBehandlingen && p.vilkarStatus.kode !== vilkarUtfallType.OPPFYLT;
 
   useEffect(() => {
     if (!visAllePerioder && activeTab >= perioder.length) {
@@ -83,27 +82,20 @@ const SoknadsfristVilkarProsessIndex = ({
   );
 
   const skalBrukeSidemeny = activeVilkår.perioder.length > 1 || harÅpentAksjonspunkt;
-  const ikkeOppfyltePerioder = perioder.filter(ikkeOppfyltePerioderSomSkalVurderesFn);
-
-  const dokumenterSomSkalVurderes = Array.isArray(soknadsfristStatus?.dokumentStatus)
-    ? soknadsfristStatus.dokumentStatus.filter(dok =>
-        dok.status.some(status =>
-          ikkeOppfyltePerioder.some(
-            p =>
-              (p.periode.fom >= status.periode.fom && p.periode.fom <= status.periode.tom) ||
-              (p.periode.tom >= status.periode.fom && p.periode.tom <= status.periode.tom),
-          ),
-        ),
-      )
-    : [];
 
   const dokumenterIAktivPeriode = Array.isArray(soknadsfristStatus?.dokumentStatus)
     ? soknadsfristStatus.dokumentStatus.filter(dok =>
-        dok.status.some(
-          status =>
-            (activePeriode.periode.fom >= status.periode.fom && activePeriode.periode.fom <= status.periode.tom) ||
-            (activePeriode.periode.tom >= status.periode.fom && activePeriode.periode.tom <= status.periode.tom),
-        ),
+        dok.status.some(status => {
+          const activePeriodeFom = moment(activePeriode.periode.fom);
+          const activePeriodeTom = moment(activePeriode.periode.tom);
+          const statusPeriodeFom = moment(status.periode.fom);
+          const statusPeriodeTom = moment(status.periode.tom);
+          return (
+            utledInnsendtSoknadsfrist(dok.innsendingstidspunkt, false) > activePeriodeFom &&
+            ((activePeriodeFom >= statusPeriodeFom && activePeriodeFom <= statusPeriodeTom) ||
+              (activePeriodeTom >= statusPeriodeFom && activePeriodeTom <= statusPeriodeTom))
+          );
+        }),
       )
     : [];
 
@@ -133,7 +125,7 @@ const SoknadsfristVilkarProsessIndex = ({
           <SoknadsfristVilkarHeader
             aksjonspunkter={aksjonspunkter}
             erOverstyrt={erOverstyrt}
-            kanOverstyreAccess={{ enabled: kanOverstyreAccess?.isEnabled && ikkeOppfyltePerioder.length > 0 }}
+            kanOverstyreAccess={kanOverstyreAccess}
             lovReferanse={activeVilkår.lovReferanse ?? lovReferanse}
             overrideReadOnly={overrideReadOnly}
             overstyringApKode={aksjonspunktCodes.OVERSTYR_SOKNADSFRISTVILKAR}
@@ -154,7 +146,7 @@ const SoknadsfristVilkarProsessIndex = ({
             status={activePeriode.vilkarStatus.kode}
             panelTittelKode={panelTittelKode}
             lovReferanse={activeVilkår.lovReferanse ?? lovReferanse}
-            alleDokumenter={dokumenterSomSkalVurderes}
+            alleDokumenter={soknadsfristStatus?.dokumentStatus}
             dokumenter={dokumenterIAktivPeriode}
             periode={activePeriode}
           />
@@ -162,10 +154,6 @@ const SoknadsfristVilkarProsessIndex = ({
       </div>
     </RawIntlProvider>
   );
-};
-
-SoknadsfristVilkarProsessIndex.defaultProps = {
-  lovReferanse: '',
 };
 
 export default SoknadsfristVilkarProsessIndex;
