@@ -32,7 +32,9 @@ const snakkeboblePanelCls = (aktoer: Kodeverk) =>
     snakkeboble__beslutter: aktoer.kode === HistorikkAktor.BESLUTTER,
     snakkeboble__losningen: aktoer.kode === HistorikkAktor.VEDTAKSLOSNINGEN,
     snakkeboble__ekstern: aktoer.kode === HistorikkAktor.ARBEIDSGIVER,
-  }) || cx('snakkeboble__panel snakkeboble-panel', { snakkeboble__bruker: true });
+    snakkeboble__bruker: aktoer.kode === HistorikkAktor.SOKER
+  })
+
 
 interface OwnProps {
   dato: string;
