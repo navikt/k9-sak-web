@@ -16,7 +16,7 @@ class PanelDef extends ProsessStegPanelDef {
     featureToggles?.KLAGE_KABAL ? fagsak.sakstype.kode === fagsakYtelseType.FRISINN : true;
 
   getData = ({ fagsak, saveKlageText, klageVurdering, previewCallback }) => ({
-    erFrisinn: fagsak.sakstype.kode === fagsakYtelseType.FRISINN,
+    fagsak,
     saveKlage: saveKlageText,
     klageVurdering,
     previewCallback,

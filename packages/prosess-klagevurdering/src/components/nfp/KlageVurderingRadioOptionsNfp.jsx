@@ -3,6 +3,7 @@ import { injectIntl } from 'react-intl';
 import PropTypes from 'prop-types';
 
 import klageVurderingType from '@fpsak-frontend/kodeverk/src/klageVurdering';
+import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import { required } from '@fpsak-frontend/utils';
 import { ArrowBox, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { RadioGroupField, RadioOption, SelectField } from '@fpsak-frontend/form';
@@ -10,20 +11,39 @@ import klageVurderingOmgjoerType from '@fpsak-frontend/kodeverk/src/klageVurderi
 
 import styles from './klageVurderingRadioOptionsNfp.less';
 
-const hjemler = [
-  { kode: '9-2/9-3', navn: '9-2/9-3' },
-  { kode: '9-5/9-6', navn: '9-5/9-6' },
-  { kode: '9-8/9-9', navn: '9-8/9-9' },
-  { kode: '9-10', navn: '9-10' },
-  { kode: '9-11', navn: '9-11' },
-  { kode: '9-13', navn: '9-13' },
-  { kode: '9-14', navn: '9-14' },
-  { kode: '9-15', navn: '9-15' },
-  { kode: '22-13', navn: '22-13' },
-  { kode: '9', navn: '9' },
-];
+const utledHjemler = fagsak => {
+  switch (fagsak.sakstype.kode) {
+    case fagsakYtelseType.PLEIEPENGER:
+      return [
+        { kode: '9-2/9-3', navn: '§ 9-2/9-3' },
+        // { kode: '9-5/9-6', navn: '9-5/9-6' },
+        // { kode: '9-8/9-9', navn: '9-8/9-9' },
+        { kode: '9-10', navn: '§ 9-10' },
+        { kode: '9-11', navn: '§ 9-11' },
+        // { kode: '9-13', navn: '9-13' },
+        // { kode: '9-14', navn: '9-14' },
+        { kode: '9-15', navn: '§ 9-15' },
+        { kode: '22-13', navn: '§ 22-13' },
+        { kode: '9', navn: 'Kapittel 9' },
+      ];
 
-export const KlageVurderingRadioOptionsNfp = ({ erFrisinn, readOnly, medholdReasons, klageVurdering, intl }) => (
+    case fagsakYtelseType.OMSORGSPENGER:
+    case fagsakYtelseType.OMSORGSPENGER_KRONISK_SYKT_BARN:
+    case fagsakYtelseType.OMSORGSPENGER_MIDLERTIDIG_ALENE:
+      return [
+        { kode: '9-2/9-3', navn: '§ 9-2/9-3' },
+        { kode: '9-5/9-6', navn: '§ 9-5/9-6' },
+        { kode: '9-8/9-9', navn: '§ 9-8/9-9' },
+        { kode: '22-13', navn: '§ 22-13' },
+        { kode: '9', navn: 'Kapittel 9' },
+      ];
+
+    default:
+      return [];
+  }
+};
+
+export const KlageVurderingRadioOptionsNfp = ({ fagsak, readOnly, medholdReasons, klageVurdering, intl }) => (
   <div>
     <>
       <RadioGroupField
@@ -77,28 +97,29 @@ export const KlageVurderingRadioOptionsNfp = ({ erFrisinn, readOnly, medholdReas
         </RadioGroupField>
       </ArrowBox>
     )}
-    {!erFrisinn && klageVurdering === klageVurderingType.STADFESTE_YTELSESVEDTAK && (
-      <ArrowBox className={readOnly ? styles.selectReadOnly : null}>
-        <SelectField
-          readOnly={readOnly}
-          name="klageHjemmel"
-          selectValues={hjemler.map(h => (
-            <option key={h.kode} value={h.kode}>
-              {h.navn}
-            </option>
-          ))}
-          className={readOnly ? styles.selectReadOnly : null}
-          label={intl.formatMessage({ id: 'Klage.ResolveKlage.Hjemmel' })}
-          validate={[required]}
-          bredde="xl"
-        />
-      </ArrowBox>
-    )}
+    {fagsak.sakstype.kode !== fagsakYtelseType.FRISINN &&
+      klageVurdering === klageVurderingType.STADFESTE_YTELSESVEDTAK && (
+        <ArrowBox className={readOnly ? styles.selectReadOnly : null}>
+          <SelectField
+            readOnly={readOnly}
+            name="klageHjemmel"
+            selectValues={utledHjemler(fagsak).map(h => (
+              <option key={h.kode} value={h.kode}>
+                {h.navn}
+              </option>
+            ))}
+            className={readOnly ? styles.selectReadOnly : null}
+            label={intl.formatMessage({ id: 'Klage.ResolveKlage.Hjemmel' })}
+            validate={[required]}
+            bredde="xl"
+          />
+        </ArrowBox>
+      )}
   </div>
 );
 
 KlageVurderingRadioOptionsNfp.propTypes = {
-  erFrisinn: PropTypes.bool,
+  fagsak: PropTypes.shape().isRequired,
   readOnly: PropTypes.bool,
   medholdReasons: PropTypes.arrayOf(
     PropTypes.shape({

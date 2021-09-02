@@ -10,6 +10,7 @@ import { Undertittel } from 'nav-frontend-typografi';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import klageVurderingType from '@fpsak-frontend/kodeverk/src/klageVurdering';
+import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import { AksjonspunktHelpTextTemp, FadingPanel, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { ProsessStegSubmitButton, ProsessStegBegrunnelseTextField } from '@k9-sak-web/prosess-felles';
 import {
@@ -33,7 +34,7 @@ import styles from './behandleKlageFormNfp.less';
  * Presentasjonskomponent. Setter opp aksjonspunktet for behandling av klage (NFP).
  */
 export const BehandleKlageFormNfpImpl = ({
-  erFrisinn,
+  fagsak,
   behandlingId,
   behandlingVersjon,
   readOnly,
@@ -57,7 +58,7 @@ export const BehandleKlageFormNfpImpl = ({
       </AksjonspunktHelpTextTemp>
       <VerticalSpacer sixteenPx />
       <KlageVurderingRadioOptionsNfp
-        erFrisinn={erFrisinn}
+        fagsak={fagsak}
         readOnly={readOnly}
         klageVurdering={formValues.klageVurdering}
         aksjonspunktCode={aksjonspunktCodes.BEHANDLE_KLAGE_NFP}
@@ -114,7 +115,7 @@ export const BehandleKlageFormNfpImpl = ({
 );
 
 BehandleKlageFormNfpImpl.propTypes = {
-  erFrisinn: PropTypes.bool,
+  fagsak: PropTypes.shape().isRequired,
   previewCallback: PropTypes.func.isRequired,
   saveKlage: PropTypes.func.isRequired,
   formValues: PropTypes.shape(),
@@ -130,18 +131,21 @@ BehandleKlageFormNfpImpl.defaultProps = {
 };
 
 export const buildInitialValues = createSelector(
-  [ownProps => ownProps.klageVurdering.klageVurderingResultatNFP, ownProps => ownProps.erFrisinn],
-  (klageVurderingResultat, erFrisinn) => ({
+  [ownProps => ownProps.klageVurdering.klageVurderingResultatNFP, ownProps => ownProps.fagsak],
+  (klageVurderingResultat, fagsak) => ({
     klageMedholdArsak: klageVurderingResultat ? klageVurderingResultat.klageMedholdArsak : null,
     klageVurderingOmgjoer: klageVurderingResultat ? klageVurderingResultat.klageVurderingOmgjoer : null,
-    klageHjemmel: !erFrisinn && klageVurderingResultat ? klageVurderingResultat.klageHjemmel : null,
+    klageHjemmel:
+      fagsak.sakstype.kode !== fagsakYtelseType.FRISINN && klageVurderingResultat
+        ? klageVurderingResultat.klageHjemmel
+        : null,
     klageVurdering: klageVurderingResultat ? klageVurderingResultat.klageVurdering : null,
     begrunnelse: klageVurderingResultat ? klageVurderingResultat.begrunnelse : null,
     fritekstTilBrev: klageVurderingResultat ? klageVurderingResultat.fritekstTilBrev : null,
   }),
 );
 
-export const transformValues = (values, erFrisinn) => ({
+export const transformValues = (values, fagsak) => ({
   klageMedholdArsak:
     values.klageVurdering === klageVurderingType.MEDHOLD_I_KLAGE ||
     values.klageVurdering === klageVurderingType.OPPHEVE_YTELSESVEDTAK
@@ -149,7 +153,10 @@ export const transformValues = (values, erFrisinn) => ({
       : null,
   klageVurderingOmgjoer:
     values.klageVurdering === klageVurderingType.MEDHOLD_I_KLAGE ? values.klageVurderingOmgjoer : null,
-  klageHjemmel: !erFrisinn ? values.klageHjemmel : null,
+  klageHjemmel:
+    fagsak.sakstype.kode !== fagsakYtelseType.FRISINN && klageVurdering === klageVurderingType.STADFESTE_YTELSESVEDTAK
+      ? values.klageHjemmel
+      : null,
   klageVurdering: values.klageVurdering,
   fritekstTilBrev: values.fritekstTilBrev,
   begrunnelse: values.begrunnelse,
@@ -159,7 +166,7 @@ export const transformValues = (values, erFrisinn) => ({
 const formName = 'BehandleKlageNfpForm';
 
 const mapStateToPropsFactory = (initialState, initialOwnProps) => {
-  const onSubmit = values => initialOwnProps.submitCallback([transformValues(values, initialOwnProps.erFrisinn)]);
+  const onSubmit = values => initialOwnProps.submitCallback([transformValues(values, initialOwnProps.fagsak)]);
   return (state, ownProps) => ({
     initialValues: buildInitialValues(ownProps),
     formValues: behandlingFormValueSelector(formName, ownProps.behandlingId, ownProps.behandlingVersjon)(

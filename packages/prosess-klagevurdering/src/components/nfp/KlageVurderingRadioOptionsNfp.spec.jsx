@@ -3,6 +3,7 @@ import { expect } from 'chai';
 import sinon from 'sinon';
 
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import klageVurdering from '@fpsak-frontend/kodeverk/src/klageVurdering';
 import { KlageVurderingRadioOptionsNfp } from './KlageVurderingRadioOptionsNfp';
 
@@ -23,6 +24,7 @@ describe('<KlageVurderingRadioOptionsNfp>', () => {
   it('skal vise to options når klage opprettholdt', () => {
     const wrapper = shallowWithIntl(
       <KlageVurderingRadioOptionsNfp
+        fagsak={{ sakstype: { kode: fagsakYtelseType.OMSORGSPENGER } }}
         readOnly={false}
         readOnlySubmitButton
         medholdReasons={medholdReasons}
@@ -43,6 +45,7 @@ describe('<KlageVurderingRadioOptionsNfp>', () => {
   it('skal vise fem options når klage medhold', () => {
     const wrapper = shallowWithIntl(
       <KlageVurderingRadioOptionsNfp
+        fagsak={{ sakstype: { kode: fagsakYtelseType.OMSORGSPENGER } }}
         readOnly={false}
         readOnlySubmitButton
         aksjonspunktCode={aksjonspunktCodes.BEHANDLE_KLAGE_NFP}
@@ -66,7 +69,7 @@ describe('<KlageVurderingRadioOptionsNfp>', () => {
   it('skal vise hjemler når klagevurdering er opprettholdt', () => {
     const wrapper = shallowWithIntl(
       <KlageVurderingRadioOptionsNfp
-        erFrisinn={false}
+        fagsak={{ sakstype: { kode: fagsakYtelseType.OMSORGSPENGER } }}
         readOnly={false}
         readOnlySubmitButton
         medholdReasons={medholdReasons}
@@ -85,7 +88,7 @@ describe('<KlageVurderingRadioOptionsNfp>', () => {
   it('skal ikke vise hjemler når klagevurdering er opprettholdt og behandling er frisinn', () => {
     const wrapper = shallowWithIntl(
       <KlageVurderingRadioOptionsNfp
-        erFrisinn
+        fagsak={{ sakstype: { kode: fagsakYtelseType.FRISINN } }}
         readOnly={false}
         readOnlySubmitButton
         medholdReasons={medholdReasons}

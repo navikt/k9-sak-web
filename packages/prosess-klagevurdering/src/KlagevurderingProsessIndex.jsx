@@ -21,7 +21,7 @@ const intl = createIntl(
 );
 
 const KlagevurderingProsessIndex = ({
-  erFrisinn,
+  fagsak,
   behandling,
   klageVurdering,
   alleKodeverk,
@@ -51,7 +51,7 @@ const KlagevurderingProsessIndex = ({
     {Array.isArray(aksjonspunkter) &&
       aksjonspunkter.some(a => a.definisjon.kode === aksjonspunktCodes.BEHANDLE_KLAGE_NFP) && (
         <BehandleKlageFormNfp
-          erFrisinn={erFrisinn}
+          fagsak={fagsak}
           behandlingId={behandling.id}
           behandlingVersjon={behandling.versjon}
           sprakkode={behandling.sprakkode}
@@ -68,7 +68,7 @@ const KlagevurderingProsessIndex = ({
 );
 
 KlagevurderingProsessIndex.propTypes = {
-  erFrisinn: PropTypes.bool,
+  fagsak: PropTypes.shape().isRequired,
   behandling: klagevurderingBehandlingPropType.isRequired,
   klageVurdering: klageVurderingPropType.isRequired,
   alleKodeverk: PropTypes.shape().isRequired,
