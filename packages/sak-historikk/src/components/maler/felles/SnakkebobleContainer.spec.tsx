@@ -28,7 +28,7 @@ describe('SnakkebobleContainer', () => {
 
     const snakkebobla = wrapper.find(Snakkeboble);
     expect(snakkebobla.prop('className')).toEqual(
-      'snakkeboble__kompakt snakkeboble__panel snakkeboble-panel snakkeboble__saksbehandler snakkeboble__bruker',
+      'snakkeboble__kompakt snakkeboble__panel snakkeboble-panel snakkeboble__saksbehandler',
     );
   });
 
