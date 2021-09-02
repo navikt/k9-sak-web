@@ -26,6 +26,7 @@ export type FormValues = {
   overstyrtMottaker: string;
   brevmalkode: string;
   fritekst: string;
+  fritekstbrev: Fritekstbrev;
   arsakskode?: string;
 };
 
@@ -219,7 +220,7 @@ export const MessagesImpl = ({
                   name='fritekstbrev.brødtekst'
                   label={intl.formatMessage({ id: 'Messages.Fritekst' })}
                   validate={[required, maxLength4000, minLength3, hasValidText]}
-                  maxLength={4000}
+                  maxLength={100000}
                   badges={[{ type: 'fokus', textId: languageCode, title: 'Messages.Beskrivelse' }]}
                 />
               </div>
@@ -265,7 +266,7 @@ const buildInitalValues = (templates: Brevmaler | Brevmal[], isKontrollerRevurde
     brevmalkode,
     overstyrtMottaker,
     // overstyrtMottaker: null,
-    fritekst: '',
+    fritekst: null,
     fritekstbrev: null
     // arsakskode: null,
   };

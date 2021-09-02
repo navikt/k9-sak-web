@@ -58,6 +58,7 @@ const getSubmitCallback =
           brevmalkode: values.brevmalkode,
           fritekst: values.fritekst,
           arsakskode: values.arsakskode,
+          fritekstbrev: values.fritekstbrev
         };
     return submitMessage(data)
       .then(() => resetMessage())
