@@ -149,8 +149,7 @@ export const transformValues = (values, erFrisinn) => ({
       : null,
   klageVurderingOmgjoer:
     values.klageVurdering === klageVurderingType.MEDHOLD_I_KLAGE ? values.klageVurderingOmgjoer : null,
-  klageHjemmel:
-    !erFrisinn && values.klageVurdering === klageVurderingType.OPPHEVE_YTELSESVEDTAK ? values.klageHjemmel : null,
+  klageHjemmel: !erFrisinn ? values.klageHjemmel : null,
   klageVurdering: values.klageVurdering,
   fritekstTilBrev: values.fritekstTilBrev,
   begrunnelse: values.begrunnelse,
