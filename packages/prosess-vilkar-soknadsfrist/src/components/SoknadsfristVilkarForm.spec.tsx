@@ -74,7 +74,7 @@ describe('<SoknadsfristVilkarForm>', () => {
     );
 
     const melding = wrapper.find(FormattedMessage);
-    expect(melding).toHaveLength(3);
+    expect(melding).toHaveLength(2);
 
     const vilkarResultatMedBegrunnelse = wrapper.find(SoknadsfristVilkarDokument);
     expect(vilkarResultatMedBegrunnelse).toHaveLength(2);
