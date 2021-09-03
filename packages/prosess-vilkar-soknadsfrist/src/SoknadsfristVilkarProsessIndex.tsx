@@ -83,21 +83,39 @@ const SoknadsfristVilkarProsessIndex = ({
 
   const skalBrukeSidemeny = activeVilkår.perioder.length > 1 || harÅpentAksjonspunkt;
 
-  const dokumenterIAktivPeriode = Array.isArray(soknadsfristStatus?.dokumentStatus)
+  const dokumenterSomSkalVurderes = Array.isArray(soknadsfristStatus?.dokumentStatus)
     ? soknadsfristStatus.dokumentStatus.filter(dok =>
-        dok.status.some(status => {
-          const activePeriodeFom = moment(activePeriode.periode.fom);
-          const activePeriodeTom = moment(activePeriode.periode.tom);
-          const statusPeriodeFom = moment(status.periode.fom);
-          const statusPeriodeTom = moment(status.periode.tom);
-          return (
-            utledInnsendtSoknadsfrist(dok.innsendingstidspunkt, false) > activePeriodeFom &&
-            ((activePeriodeFom >= statusPeriodeFom && activePeriodeFom <= statusPeriodeTom) ||
-              (activePeriodeTom >= statusPeriodeFom && activePeriodeTom <= statusPeriodeTom))
-          );
-        }),
+        dok.status.some(
+          status =>
+            status.status.kode !== vilkarUtfallType.OPPFYLT &&
+            perioder.some(vilkårPeriode => {
+              const vilkårPeriodeFom = moment(vilkårPeriode.periode.fom);
+              const vilkårPeriodeTom = moment(vilkårPeriode.periode.tom);
+              const statusPeriodeFom = moment(status.periode.fom);
+              const statusPeriodeTom = moment(status.periode.tom);
+              return (
+                utledInnsendtSoknadsfrist(dok.innsendingstidspunkt, false) > vilkårPeriodeFom &&
+                ((vilkårPeriodeFom >= statusPeriodeFom && vilkårPeriodeFom <= statusPeriodeTom) ||
+                  (vilkårPeriodeTom >= statusPeriodeFom && vilkårPeriodeTom <= statusPeriodeTom))
+              );
+            }),
+        ),
       )
     : [];
+
+  const dokumenterIAktivPeriode = dokumenterSomSkalVurderes.filter(dok =>
+    dok.status.some(status => {
+      const activePeriodeFom = moment(activePeriode.periode.fom);
+      const activePeriodeTom = moment(activePeriode.periode.tom);
+      const statusPeriodeFom = moment(status.periode.fom);
+      const statusPeriodeTom = moment(status.periode.tom);
+      return (
+        utledInnsendtSoknadsfrist(dok.innsendingstidspunkt, false) > activePeriodeFom &&
+        ((activePeriodeFom >= statusPeriodeFom && activePeriodeFom <= statusPeriodeTom) ||
+          (activePeriodeTom >= statusPeriodeFom && activePeriodeTom <= statusPeriodeTom))
+      );
+    }),
+  );
 
   const mainContainerClassnames = cx('mainContainer', { 'mainContainer--withSideMenu': skalBrukeSidemeny });
 
@@ -146,7 +164,7 @@ const SoknadsfristVilkarProsessIndex = ({
             status={activePeriode.vilkarStatus.kode}
             panelTittelKode={panelTittelKode}
             lovReferanse={activeVilkår.lovReferanse ?? lovReferanse}
-            alleDokumenter={soknadsfristStatus?.dokumentStatus}
+            alleDokumenter={dokumenterSomSkalVurderes}
             dokumenter={dokumenterIAktivPeriode}
             periode={activePeriode}
           />
