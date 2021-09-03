@@ -12,6 +12,7 @@ export interface OmsorgenForProps {
   vedtakFattetVilkarOppfylt: boolean;
   informasjonOmVilkar?: InformasjonOmVurdertVilkar;
   barn: string[];
+  harBarnSoktForRammevedtakOmKroniskSyk: boolean;
   losAksjonspunkt: (harOmsorgen, begrunnelse) => void;
   formState: FormStateType;
 }

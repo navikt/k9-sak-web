@@ -16,6 +16,7 @@ const initializeOmsorgenForVilkar = (
     vilkar,
     angitteBarn,
     fagsaksType,
+    harBarnSoktForRammevedtakOmKroniskSyk
   },
 ) => {
   (window as any).renderMicrofrontendOmsorgsdagerApp(
@@ -29,6 +30,7 @@ const initializeOmsorgenForVilkar = (
       vilkarInformasjon: { vilkar, status },
       fagsaksType,
       FormState,
+      harBarnSoktForRammevedtakOmKroniskSyk
     }),
   );
 };
