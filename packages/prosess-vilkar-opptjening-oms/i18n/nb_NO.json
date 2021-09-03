@@ -11,13 +11,13 @@
 
   "OpptjeningVilkarAksjonspunktPanel.SokerHarVurdertOpptjentRettTilPleiepenger": "Opptjent rett til pleiepenger",
   "OpptjeningVilkarAksjonspunktPanel.SokerHarVurdertOpptjentRettTilOmsorgspenger": "Opptjent rett til omsorgspenger",
-  "OpptjeningVilkarAksjonspunktPanel.OmsorgspengerVurderLabel": "Vurder om bruker oppfyller opptjening jf § 8-47 bokstav B",
+  "OpptjeningVilkarAksjonspunktPanel.OmsorgspengerVurderLabel": "Vurder om bruker oppfyller opptjening jf § 9-2 eller § 8-47 bokstav B",
   "OpptjeningVilkarAksjonspunktPanel.ErOppfylt": "Søker har oppfylt krav om 28 dagers opptjening, vilkåret er oppfylt.",
-  "OpptjeningVilkarAksjonspunktPanel.Er847": "Vilkåret beregnes jf §§ 8-47.",
+  "OpptjeningVilkarAksjonspunktPanel.Er847": "Vilkåret beregnes jf § 8-47.",
   "OpptjeningVilkarAksjonspunktPanel.ErIkkeOppfylt": "Søker har ikke oppfylt krav om 28 dagers opptjening, vilkåret er <b>ikke</b> oppfylt.",
   "OpptjeningVilkarAksjonspunktPanel.Opptjeningsvilkaret": "Opptjening",
-  "OpptjeningVilkarAksjonspunktPanel.MidlertidigInaktivA": "Skal beregnes jf §§ 8-47. (A)",
-  "OpptjeningVilkarAksjonspunktPanel.MidlertidigInaktivB": "Skal beregnes jf §§ 8-47. (B)",
+  "OpptjeningVilkarAksjonspunktPanel.MidlertidigInaktivA": "Søker oppfyller vilkåret til opptjening jf § 8-47 bokstav A",
+  "OpptjeningVilkarAksjonspunktPanel.MidlertidigInaktivB": "Søker oppfyller vilkåret til opptjening jf § 8-47 bokstav B",
 
   "TimeLineNavigation.openData": "Åpne info om første periode",
   "TimeLineData.nextPeriod": "Neste periode",
