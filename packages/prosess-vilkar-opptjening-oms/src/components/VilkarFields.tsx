@@ -73,45 +73,44 @@ export const VilkarFields = ({
           <VerticalSpacer eightPx />
         </FlexContainer>
       )}
-      {!readOnly ||
-        (erVilkarOk === undefined && (
-          <RadioGroupField
-            name={`${fieldPrefix}.erVilkarOk`}
-            validate={[required]}
-            bredde="XXL"
-            direction="vertical"
-            readOnly={readOnly}
-          >
-            {({ optionProps }) => (
-              <FlexContainer>
-                <FlexColumn>
-                  <FlexRow spaceBetween={false}>
-                    <RadioOption label={erOppfyltText} value {...optionProps} />
-                  </FlexRow>
-                  <FlexRow spaceBetween={false}>
-                    <RadioOption label={erIkkeOppfyltText} value={false} {...optionProps} />
-                  </FlexRow>
-                  {!erOmsorgspenger ? (
-                    <FlexRow spaceBetween={false}>
-                      <RadioOption
-                        label={{ id: 'OpptjeningVilkarAksjonspunktPanel.MidlertidigInaktivA' }}
-                        value={midlertidigInaktiv.TYPE_A}
-                        {...optionProps}
-                      />
-                    </FlexRow>
-                  ) : null}
+      {(!readOnly || erVilkarOk === undefined) && (
+        <RadioGroupField
+          name={`${fieldPrefix}.erVilkarOk`}
+          validate={[required]}
+          bredde="XXL"
+          direction="vertical"
+          readOnly={readOnly}
+        >
+          {({ optionProps }) => (
+            <FlexContainer>
+              <FlexColumn>
+                <FlexRow spaceBetween={false}>
+                  <RadioOption label={erOppfyltText} value {...optionProps} />
+                </FlexRow>
+                <FlexRow spaceBetween={false}>
+                  <RadioOption label={erIkkeOppfyltText} value={false} {...optionProps} />
+                </FlexRow>
+                {!erOmsorgspenger ? (
                   <FlexRow spaceBetween={false}>
                     <RadioOption
-                      label={{ id: 'OpptjeningVilkarAksjonspunktPanel.MidlertidigInaktivB' }}
-                      value={midlertidigInaktiv.TYPE_B}
+                      label={{ id: 'OpptjeningVilkarAksjonspunktPanel.MidlertidigInaktivA' }}
+                      value={midlertidigInaktiv.TYPE_A}
                       {...optionProps}
                     />
                   </FlexRow>
-                </FlexColumn>
-              </FlexContainer>
-            )}
-          </RadioGroupField>
-        ))}
+                ) : null}
+                <FlexRow spaceBetween={false}>
+                  <RadioOption
+                    label={{ id: 'OpptjeningVilkarAksjonspunktPanel.MidlertidigInaktivB' }}
+                    value={midlertidigInaktiv.TYPE_B}
+                    {...optionProps}
+                  />
+                </FlexRow>
+              </FlexColumn>
+            </FlexContainer>
+          )}
+        </RadioGroupField>
+      )}
       <VerticalSpacer sixteenPx />
     </>
   );
