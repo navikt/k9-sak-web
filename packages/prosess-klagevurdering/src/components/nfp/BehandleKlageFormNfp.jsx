@@ -137,7 +137,7 @@ export const buildInitialValues = createSelector(
     klageVurderingOmgjoer: klageVurderingResultat ? klageVurderingResultat.klageVurderingOmgjoer : null,
     klageHjemmel:
       fagsak.sakstype.kode !== fagsakYtelseType.FRISINN && klageVurderingResultat
-        ? klageVurderingResultat.klageHjemmel
+        ? klageVurderingResultat.hjemmel
         : null,
     klageVurdering: klageVurderingResultat ? klageVurderingResultat.klageVurdering : null,
     begrunnelse: klageVurderingResultat ? klageVurderingResultat.begrunnelse : null,
@@ -154,7 +154,8 @@ export const transformValues = (values, fagsak) => ({
   klageVurderingOmgjoer:
     values.klageVurdering === klageVurderingType.MEDHOLD_I_KLAGE ? values.klageVurderingOmgjoer : null,
   klageHjemmel:
-    fagsak.sakstype.kode !== fagsakYtelseType.FRISINN && klageVurdering === klageVurderingType.STADFESTE_YTELSESVEDTAK
+    fagsak.sakstype.kode !== fagsakYtelseType.FRISINN &&
+    values.klageVurdering === klageVurderingType.STADFESTE_YTELSESVEDTAK
       ? values.klageHjemmel
       : null,
   klageVurdering: values.klageVurdering,
