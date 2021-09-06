@@ -1,5 +1,4 @@
 export { range, flatten, haystack, isArrayEmpty, without, zip } from './src/arrayUtils';
-export { isIE11, isEdge, getRelatedTargetIE11 } from './src/browserUtils';
 export {
   formatCurrencyWithKr,
   formatCurrencyNoKr,

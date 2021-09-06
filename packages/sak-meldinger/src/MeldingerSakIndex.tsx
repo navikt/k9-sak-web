@@ -11,6 +11,7 @@ import {
   Mottaker,
 } from '@k9-sak-web/types';
 
+import { Fritekstbrev } from '@k9-sak-web/types/src/formidlingTsType';
 import Messages, { FormValues } from './components/Messages';
 import messages from '../i18n/nb_NO.json';
 
@@ -28,7 +29,7 @@ interface OwnProps {
   submitCallback: (values: FormValues) => void;
   templates: Brevmaler | Brevmal[];
   sprakKode: Kodeverk;
-  previewCallback: (mottaker: string | Mottaker, brevmalkode: string, fritekst: string, arsakskode?: string) => void;
+  previewCallback: (mottaker: string | Mottaker, brevmalkode: string, fritekst: string, fritekstbrev?: Fritekstbrev) => void;
   behandlingId: number;
   behandlingVersjon: number;
   isKontrollerRevurderingApOpen?: boolean;
