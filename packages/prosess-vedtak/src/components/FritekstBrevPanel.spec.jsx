@@ -1,11 +1,10 @@
 import React from 'react';
 import { expect } from 'chai';
 import sinon from 'sinon';
-import { intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import { Undertittel } from 'nav-frontend-typografi';
 import { TextAreaField } from '@fpsak-frontend/form';
 import FritekstBrevPanel from './FritekstBrevPanel';
-import shallowWithIntl from '../../i18n';
+import shallowWithIntl, { intlMock } from '../../i18n';
 import PreviewLink from './PreviewLink';
 
 describe('<FritekstBrevPanel>', () => {

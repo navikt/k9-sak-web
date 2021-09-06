@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from 'react';
+import React from 'react';
 import { createIntlCache, createIntl, RawIntlProvider } from 'react-intl';
 import {
   Behandling,
@@ -42,7 +42,7 @@ interface ÅrsakvantumIndexProps {
   arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysningerPerId;
 }
 
-const ÅrskvantumIndex: FunctionComponent<ÅrsakvantumIndexProps> = ({
+const ÅrskvantumIndex = ({
   fullUttaksplan,
   årskvantum,
   alleKodeverk,
@@ -52,7 +52,7 @@ const ÅrskvantumIndex: FunctionComponent<ÅrsakvantumIndexProps> = ({
   aksjonspunkterForSteg = [],
   arbeidsforhold = [],
   arbeidsgiverOpplysningerPerId,
-}) => {
+}: ÅrsakvantumIndexProps) => {
   const { sisteUttaksplan } = årskvantum;
   const aktivitetsstatuser = alleKodeverk[kodeverkTyper.AKTIVITET_STATUS];
 

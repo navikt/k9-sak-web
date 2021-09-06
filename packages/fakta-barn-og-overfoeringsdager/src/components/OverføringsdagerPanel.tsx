@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useMemo } from 'react';
+import React, { useMemo } from 'react';
 import { FormattedMessage } from 'react-intl';
 import EkspanderbartPanel from 'nav-frontend-ekspanderbartpanel';
 import classnames from 'classnames/bind';
@@ -68,13 +68,13 @@ const renderTittel = (type, retning, totaltAntallDager) => (
 const summerDager = (overføringer: Overføring[]): number =>
   overføringer.reduce((sum, { antallDager }) => sum + antallDager, 0);
 
-const OverføringsdagerPanel: FunctionComponent<OverføringsdagerPanelProps> = ({
+const OverføringsdagerPanel = ({
   type,
   retning,
   behandlingId,
   behandlingVersjon,
   overføringer,
-}) => {
+}: OverføringsdagerPanelProps) => {
   const totaltAntallDager = useMemo(() => summerDager(overføringer), [overføringer]);
 
   return (

@@ -2,52 +2,81 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import { FormattedMessage } from 'react-intl';
 
-import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
+// import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
+import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
+import Vilkarperiode from '@k9-sak-web/types/src/vilkarperiode';
+import { DokumentStatus } from '@k9-sak-web/types';
 
-import SoknadsfristVilkarBegrunnelse from './SoknadsfristVilkarBegrunnelse';
+import SoknadsfristVilkarDokument from './SoknadsfristVilkarDokument';
 import { SoknadsfristVilkarForm } from './SoknadsfristVilkarForm';
+
+const periode = {
+  vilkarStatus: { kode: vilkarUtfallType.IKKE_OPPFYLT, kodeverk: 'test' },
+  vurdersIBehandlingen: true,
+  periode: {
+    fom: '2020-02-20',
+    tom: '2020-02-25',
+  },
+} as Vilkarperiode;
+
+const dokumenter = [
+  {
+    type: 'SOKNAD',
+    status: [
+      {
+        periode: { fom: '2020-02-20', tom: '2020-02-25' },
+        status: { kode: vilkarUtfallType.IKKE_OPPFYLT, kodeverk: 'test' },
+      },
+    ],
+    innsendingstidspunkt: '2020-06-01',
+    journalpostId: '12345',
+    avklarteOpplysninger: null,
+    overstyrteOpplysninger: null,
+  },
+  {
+    type: 'SOKNAD',
+    status: [
+      {
+        periode: { fom: '2020-02-26', tom: '2020-02-27' },
+        status: { kode: vilkarUtfallType.IKKE_OPPFYLT, kodeverk: 'test' },
+      },
+    ],
+    innsendingstidspunkt: '2020-06-01',
+    journalpostId: '23456',
+    avklarteOpplysninger: null,
+    overstyrteOpplysninger: null,
+  },
+] as DokumentStatus[];
 
 describe('<SoknadsfristVilkarForm>', () => {
   it('skal rendre form med knapp når vilkåret er overstyrt', () => {
     const wrapper = shallow(
       <SoknadsfristVilkarForm
         {...reduxFormPropsMock}
+        behandlingId={1}
+        behandlingVersjon={2}
+        erOverstyrt
         erVilkarOk
         isReadOnly
-        avslagsarsaker={[
-          { kode: 'test1', navn: 'test1', kodeverk: 'test' },
-          { kode: 'test2', navn: 'test1', kodeverk: 'test' },
-        ]}
-        lovReferanse="§23"
         harAksjonspunkt
         harÅpentAksjonspunkt={false}
         overrideReadOnly={false}
         toggleOverstyring={() => undefined}
-        erOverstyrt
         aksjonspunkter={[]}
-        behandlingsresultat={{
-          type: { kode: 'test', kodeverk: 'test' },
-        }}
-        behandlingId={1}
-        behandlingVersjon={2}
-        behandlingType={{
-          kode: behandlingType.FORSTEGANGSSOKNAD,
-          kodeverk: '',
-        }}
-        medlemskapFom="10.10.2010"
-        status=""
+        status={vilkarUtfallType.IKKE_OPPFYLT}
         submitCallback={() => undefined}
+        dokumenter={dokumenter}
+        alleDokumenter={dokumenter}
+        periode={periode}
         isSolvable
-        periodeFom="2019-01-01"
-        periodeTom="2020-01-01"
       />,
     );
 
     const melding = wrapper.find(FormattedMessage);
-    expect(melding).toHaveLength(3);
+    expect(melding).toHaveLength(2);
 
-    const vilkarResultatMedBegrunnelse = wrapper.find(SoknadsfristVilkarBegrunnelse);
-    expect(vilkarResultatMedBegrunnelse).toHaveLength(1);
+    const vilkarResultatMedBegrunnelse = wrapper.find(SoknadsfristVilkarDokument);
+    expect(vilkarResultatMedBegrunnelse).toHaveLength(2);
   });
 });

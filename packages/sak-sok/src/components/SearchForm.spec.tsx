@@ -1,11 +1,10 @@
 import React from 'react';
 import sinon from 'sinon';
 
-import { intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
 
 import { SearchForm } from './SearchForm';
-import shallowWithIntl from '../../i18n/index';
+import shallowWithIntl, { intlMock } from '../../i18n/index';
 
 describe('<Search>', () => {
   it('skal ha et søkefelt og en søkeknapp', () => {

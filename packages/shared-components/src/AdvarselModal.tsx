@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from 'react';
+import React from 'react';
 import { Column, Row } from 'nav-frontend-grid';
 import Modal from 'nav-frontend-modal';
 import { Hovedknapp } from 'nav-frontend-knapper';
@@ -23,7 +23,7 @@ interface OwnProps {
  *
  * Presentasjonskomponent. Modal med advarselikon og som viser en valgfri tekst i tillegg til knappen OK.
  */
-const AdvarselModal: FunctionComponent<OwnProps> = ({ bodyText, headerText, showModal, submit }) => {
+const AdvarselModal = ({ bodyText, headerText, showModal, submit }: OwnProps) => {
   const intl = getPackageIntl();
   return (
     <Modal

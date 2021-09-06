@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from 'react';
+import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
 import { v4 as uuidv4 } from 'uuid';
@@ -10,7 +10,7 @@ interface BarnInputProps {
   barnet: KombinertBarnOgRammevedtak;
 }
 
-const BarnRammevedtakVisning: FunctionComponent<BarnInputProps> = ({ barnet }) => {
+const BarnRammevedtakVisning = ({ barnet }: BarnInputProps) => {
   const { aleneomsorg, kroniskSykdom, fosterbarn, utenlandskBarn, deltBosted } = barnet.rammevedtak;
   return (
     <div className={styles.rammevedtak}>

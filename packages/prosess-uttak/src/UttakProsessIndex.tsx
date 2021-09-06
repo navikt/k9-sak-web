@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from 'react';
+import React from 'react';
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 
 import messages from '../i18n/nb_NO.json';
@@ -67,7 +67,7 @@ const mapUttaksplanerDtoTilInternformat: (
     return uttaksplan;
   });
 
-const UttakProsessIndex: FunctionComponent<UttakProsessIndexProps> = ({ uttaksplaner, behandlingPersonMap }) => (
+const UttakProsessIndex = ({ uttaksplaner, behandlingPersonMap }: UttakProsessIndexProps) => (
   <RawIntlProvider value={intl}>
     <Uttak uttaksplaner={mapUttaksplanerDtoTilInternformat(uttaksplaner, behandlingPersonMap)} />
   </RawIntlProvider>

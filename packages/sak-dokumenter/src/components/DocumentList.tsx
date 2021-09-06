@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from 'react';
+import React from 'react';
 import { FormattedMessage, injectIntl, WrappedComponentProps } from 'react-intl';
 import { Normaltekst } from 'nav-frontend-typografi';
 
@@ -54,12 +54,7 @@ interface OwnProps {
  * trigget når saksbehandler velger et dokument. Finnes ingen dokumenter blir det kun vist en label
  * som viser at ingen dokumenter finnes på fagsak.
  */
-const DocumentList: FunctionComponent<OwnProps & WrappedComponentProps> = ({
-  intl,
-  documents,
-  behandlingId,
-  selectDocumentCallback,
-}) => {
+const DocumentList = ({ intl, documents, behandlingId, selectDocumentCallback }: OwnProps & WrappedComponentProps) => {
   if (documents.length === 0) {
     return (
       <Normaltekst className={styles.noDocuments}>

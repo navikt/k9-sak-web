@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useMemo } from 'react';
+import React, { useMemo } from 'react';
 import { AksjonspunktHelpTextTemp, VerticalSpacer } from '@fpsak-frontend/shared-components/index';
 import { FormattedMessage } from 'react-intl';
 import { behandlingForm } from '@fpsak-frontend/form/src/behandlingForm';
@@ -36,11 +36,7 @@ const vilkårHarOverlappendePerioderIInfotrygd = (vurderteVilkår: VurderteVilk�
     ([vilkår, utfall]) => vilkår === VilkårEnum.NOK_DAGER && utfall === UtfallEnum.UAVKLART,
   );
 
-export const FormContent: FunctionComponent<FormContentProps> = ({
-  handleSubmit,
-  aktiviteter = [],
-  isAksjonspunktOpen,
-}) => {
+export const FormContent = ({ handleSubmit, aktiviteter = [], isAksjonspunktOpen }: FormContentProps) => {
   const uavklartePerioder = useMemo(
     () =>
       aktiviteter
@@ -61,6 +57,7 @@ export const FormContent: FunctionComponent<FormContentProps> = ({
         <AksjonspunktHelpTextTemp isAksjonspunktOpen={isAksjonspunktOpen}>
           {[
             <FormattedMessage
+              key={1}
               id={
                 harOverlappendePerioderIInfotrygd
                   ? 'Årskvantum.Aksjonspunkt.Uavklart.OverlappInfotrygd'
@@ -96,7 +93,7 @@ export const FormContent: FunctionComponent<FormContentProps> = ({
   return (
     <>
       <AksjonspunktHelpTextTemp isAksjonspunktOpen={isAksjonspunktOpen}>
-        {[<FormattedMessage id="Årskvantum.Aksjonspunkt.Avslått" />]}
+        {[<FormattedMessage key={1} id="Årskvantum.Aksjonspunkt.Avslått" />]}
       </AksjonspunktHelpTextTemp>
       <VerticalSpacer sixteenPx />
       {isAksjonspunktOpen && (
@@ -131,11 +128,11 @@ export const FormContent: FunctionComponent<FormContentProps> = ({
   );
 };
 
-const AksjonspunktFormImpl: FunctionComponent<AksjonspunktFormImplProps & InjectedFormProps> = ({
+const AksjonspunktFormImpl = ({
   aktiviteter,
   handleSubmit,
   isAksjonspunktOpen,
-}) => (
+}: AksjonspunktFormImplProps & InjectedFormProps) => (
   <form onSubmit={handleSubmit}>
     <div className={styles.graBoks}>
       <FormContent handleSubmit={handleSubmit} aktiviteter={aktiviteter} isAksjonspunktOpen={isAksjonspunktOpen} />

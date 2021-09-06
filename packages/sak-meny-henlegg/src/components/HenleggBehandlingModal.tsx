@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useMemo } from 'react';
+import React, { useMemo } from 'react';
 import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
 import { formValueSelector, InjectedFormProps, reduxForm } from 'redux-form';
@@ -135,9 +135,7 @@ interface MappedOwnProps {
  * Presentasjonskomponent. Denne modalen vises når saksbehandler valger 'Henlegg behandling og avslutt'.
  * Ved å angi årsak og begrunnelse og trykke på 'Henlegg behandling' blir behandlingen henlagt og avsluttet.
  */
-export const HenleggBehandlingModalImpl: FunctionComponent<
-  PureOwnProps & MappedOwnProps & WrappedComponentProps & InjectedFormProps
-> = ({
+export const HenleggBehandlingModalImpl = ({
   handleSubmit,
   cancelEvent,
   previewHenleggBehandling,
@@ -155,7 +153,7 @@ export const HenleggBehandlingModalImpl: FunctionComponent<
   personopplysninger,
   arbeidsgiverOpplysningerPerId,
   valgtMottaker,
-}) => {
+}: PureOwnProps & MappedOwnProps & WrappedComponentProps & InjectedFormProps) => {
   const henleggArsaker = useMemo(
     () => getHenleggArsaker(behandlingResultatTyper, behandlingType, ytelseType),
     [behandlingResultatTyper, behandlingType, ytelseType],

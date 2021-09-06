@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import { FormattedMessage } from 'react-intl';
 
@@ -11,7 +11,7 @@ import ErrorPageWrapper from './components/ErrorPageWrapper';
  * Det blir presentert en generell feilmelding og en lenke som tar NAV-ansatt tilbake til hovedsiden.
  */
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-const UnauthorizedPage: FunctionComponent = () => (
+const UnauthorizedPage = () => (
   <ErrorPageWrapper titleCode="UnauthorizedPage.Header">
     <Link to="/">
       <FormattedMessage id="UnauthorizedPage.LinkText" />

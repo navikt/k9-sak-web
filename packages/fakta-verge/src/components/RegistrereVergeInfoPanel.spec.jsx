@@ -2,12 +2,11 @@ import React from 'react';
 import { expect } from 'chai';
 import sinon from 'sinon';
 
-import { intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
 
 import { RegistrereVergeInfoPanelImpl } from './RegistrereVergeInfoPanel';
 import RegistrereVergeFaktaForm from './RegistrereVergeFaktaForm';
-import shallowWithIntl from '../../i18n';
+import shallowWithIntl, { intlMock } from '../../i18n';
 
 describe('<RegistrereVergeInfoPanel>', () => {
   it('skal vise faktapanel og form for registrere verge', () => {

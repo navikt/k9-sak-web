@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from 'react';
+import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import { Undertittel, Undertekst, Normaltekst } from 'nav-frontend-typografi';
 
@@ -28,7 +28,7 @@ interface OwnProps {
   erRevurderingTilbakekrevingFeilBeløpBortfalt?: boolean;
 }
 
-const TilbakekrevingVedtak: FunctionComponent<OwnProps> = ({
+const TilbakekrevingVedtak = ({
   submitCallback,
   readOnly,
   resultat,
@@ -42,7 +42,7 @@ const TilbakekrevingVedtak: FunctionComponent<OwnProps> = ({
   aksjonspunktKodeForeslaVedtak,
   erRevurderingTilbakekrevingKlage,
   erRevurderingTilbakekrevingFeilBeløpBortfalt,
-}) => {
+}: OwnProps) => {
   const getKodeverknavn = getKodeverknavnFn(alleKodeverk, kodeverkTyper);
   return (
     <>

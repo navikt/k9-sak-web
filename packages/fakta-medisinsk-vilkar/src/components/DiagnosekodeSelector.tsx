@@ -1,8 +1,7 @@
 import { AutocompleteField } from '@fpsak-frontend/form';
 import { FlexColumn, FlexRow } from '@fpsak-frontend/shared-components';
-import { required } from '@fpsak-frontend/utils';
 import axios from 'axios';
-import * as React from 'react';
+import React from 'react';
 import styles from './diagnosekodeSelector.less';
 
 const fetchDiagnosekoderByQuery = (queryString: string) => axios.get(`/k9/diagnosekoder?query=${queryString}&max=8`);
@@ -49,7 +48,6 @@ const DiagnosekodeSelector = ({ readOnly, initialDiagnosekodeValue }) => {
           label="Er det fastsatt en diagnose?"
           readOnly={readOnly}
           name="diagnosekode"
-          validate={[required]}
           dataId="diagnosekodesokefelt"
         />
       </FlexColumn>

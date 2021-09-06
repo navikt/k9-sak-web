@@ -1,4 +1,4 @@
-import React, { FunctionComponent, SetStateAction, useEffect } from 'react';
+import React, { SetStateAction } from 'react';
 import moment from 'moment';
 import { connect } from 'react-redux';
 import { InjectedFormProps } from 'redux-form';
@@ -7,10 +7,10 @@ import { FormattedMessage } from 'react-intl';
 
 import advarselIkonUrl from '@fpsak-frontend/assets/images/advarsel_ny.svg';
 import { behandlingForm, behandlingFormValueSelector } from '@fpsak-frontend/form';
-import { VilkarResultPicker } from '@k9-sak-web/prosess-felles';
+import { decodeHtmlEntity } from '@fpsak-frontend/utils';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
+import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import {
   AksjonspunktBox,
   EditedIcon,
@@ -21,65 +21,42 @@ import {
   VerticalSpacer,
   AksjonspunktHelpTextTemp,
 } from '@fpsak-frontend/shared-components';
-import { DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils';
-import { Aksjonspunkt, Kodeverk, KodeverkMedNavn, SubmitCallback } from '@k9-sak-web/types';
+import { Aksjonspunkt, DokumentStatus, SubmitCallback } from '@k9-sak-web/types';
 import Vilkarperiode from '@k9-sak-web/types/src/vilkarperiode';
 import { Knapp, Hovedknapp } from 'nav-frontend-knapper';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
+
 import OverstyrBekreftKnappPanel from './OverstyrBekreftKnappPanel';
-import { SoknadsfristVilkarBegrunnelse } from './SoknadsfristVilkarBegrunnelse';
+import SoknadsfristVilkarDokument, { DELVIS_OPPFYLT } from './SoknadsfristVilkarDokument';
+
+import { utledInnsendtSoknadsfrist } from '../utils';
+
 import styles from './SoknadsfristVilkarForm.less';
 
-const getFormName = (overstyringApKode: string) => `VilkarresultatForm_${overstyringApKode}`;
-
-export interface CustomVilkarText {
-  id: string;
-  values?: any;
-}
-
-export interface DokumentStatus {
-  type: string;
-  status: [
-    {
-      periode: { fom: string; tom: string };
-      status: { kode: string; kodeverk: string };
-    },
-  ];
-  innsendingstidspunkt: string;
-  journalpostId: string;
-}
+const formName = 'SøknadsfristVilkårOverstyringForm';
 
 interface SoknadsfristVilkarFormProps {
+  /* eslint-disable react/no-unused-prop-types */
   aksjonspunkter: Aksjonspunkt[];
-  avslagsarsaker: KodeverkMedNavn[];
-  behandlingsresultat: {
-    type: Kodeverk;
-  };
   behandlingId: number;
   behandlingVersjon: number;
-  behandlingType: Kodeverk;
-  customVilkarIkkeOppfyltText?: CustomVilkarText;
-  customVilkarOppfyltText?: CustomVilkarText;
+  submitCallback: (props: SubmitCallback[]) => void;
+  periode?: Vilkarperiode;
   erOverstyrt?: boolean;
   erVilkarOk?: boolean;
   harAksjonspunkt: boolean;
+  harÅpentAksjonspunkt: boolean;
   isReadOnly: boolean;
-  lovReferanse?: string;
-  medlemskapFom: string;
   overrideReadOnly: boolean;
   status: string;
-  submitCallback: (props: SubmitCallback[]) => void;
+  invalid: boolean;
   toggleOverstyring: (overstyrtPanel: SetStateAction<string[]>) => void;
-  avslagKode?: string;
-  periode?: Vilkarperiode;
-  dokument?: DokumentStatus[];
+  alleDokumenter?: DokumentStatus[];
+  dokumenter?: DokumentStatus[];
 }
 
 interface StateProps {
   isSolvable: boolean;
-  harÅpentAksjonspunkt: boolean;
-  periodeFom: string;
-  periodeTom: string;
 }
 
 /**
@@ -88,191 +65,208 @@ interface StateProps {
  * Presentasjonskomponent. Viser resultat av vilkårskjøring når det ikke finnes tilknyttede aksjonspunkter.
  * Resultatet kan overstyres av Nav-ansatt med overstyr-rettighet.
  */
-export const SoknadsfristVilkarForm: FunctionComponent<SoknadsfristVilkarFormProps & StateProps & InjectedFormProps> =
-  ({
-    erOverstyrt,
-    harÅpentAksjonspunkt,
-    isReadOnly,
-    isSolvable,
-    erVilkarOk,
-    customVilkarIkkeOppfyltText,
-    customVilkarOppfyltText,
-    harAksjonspunkt,
-    avslagsarsaker,
-    overrideReadOnly,
-    toggleOverstyring,
-    reset,
-    handleSubmit,
-    submitting,
-    pristine,
-    periodeFom,
-    periodeTom,
-    dokument,
-  }) => {
-    const toggleAv = () => {
-      reset();
-      toggleOverstyring(oldArray => oldArray.filter(code => code !== aksjonspunktCodes.OVERSTYR_SOKNADSFRISTVILKAR));
-    };
+export const SoknadsfristVilkarForm = ({
+  erOverstyrt,
+  harÅpentAksjonspunkt,
+  isReadOnly,
+  isSolvable,
+  erVilkarOk,
+  harAksjonspunkt,
+  overrideReadOnly,
+  toggleOverstyring,
+  reset,
+  handleSubmit,
+  submitting,
+  pristine,
+  invalid,
+  alleDokumenter,
+  dokumenter,
+}: SoknadsfristVilkarFormProps & StateProps & InjectedFormProps) => {
+  const toggleAv = () => {
+    reset();
+    toggleOverstyring(oldArray => oldArray.filter(code => code !== aksjonspunktCodes.OVERSTYR_SOKNADSFRISTVILKAR));
+  };
 
-    useEffect(
-      () => () => {
-        reset();
-      },
-      [periodeFom, periodeTom],
-    );
-
-    return (
-      <form onSubmit={handleSubmit}>
-        {(erOverstyrt || harAksjonspunkt) && (
-          <AksjonspunktBox
-            className={styles.aksjonspunktMargin}
-            erAksjonspunktApent={erOverstyrt || harÅpentAksjonspunkt}
-          >
-            {harÅpentAksjonspunkt ? (
+  return (
+    <form onSubmit={handleSubmit}>
+      {(erOverstyrt || harAksjonspunkt) && dokumenter.length > 0 && (
+        <AksjonspunktBox
+          className={styles.aksjonspunktMargin}
+          erAksjonspunktApent={erOverstyrt || harÅpentAksjonspunkt}
+        >
+          {!isReadOnly &&
+            (harÅpentAksjonspunkt ? (
               <AksjonspunktHelpTextTemp isAksjonspunktOpen>
-                {[<FormattedMessage id="SoknadsfristVilkarForm.AvklarVurdering" />]}
+                {[<FormattedMessage key={1} id="SoknadsfristVilkarForm.AvklarVurdering" />]}
               </AksjonspunktHelpTextTemp>
             ) : (
               <Element>
                 <FormattedMessage id="SoknadsfristVilkarForm.AutomatiskVurdering" />
               </Element>
-            )}
-            <VerticalSpacer eightPx />
-            <SoknadsfristVilkarBegrunnelse
-              skalViseBegrunnelse={erOverstyrt || harAksjonspunkt}
-              readOnly={isReadOnly || (!erOverstyrt && !harÅpentAksjonspunkt)}
-              erVilkarOk={erVilkarOk}
-              customVilkarIkkeOppfyltText={customVilkarIkkeOppfyltText}
-              customVilkarOppfyltText={customVilkarOppfyltText}
-              avslagsarsaker={avslagsarsaker}
-              dokument={dokument}
-            />
-            <VerticalSpacer sixteenPx />
-            {!erOverstyrt && erVilkarOk !== undefined && (
-              <>
-                <VerticalSpacer fourPx />
-                <FlexRow>
-                  <FlexColumn>
-                    <EditedIcon />
-                  </FlexColumn>
-                  <FlexColumn>
-                    <Normaltekst>
-                      <FormattedMessage id="SoknadsfristVilkarForm.Endret" />
-                    </Normaltekst>
-                  </FlexColumn>
-                </FlexRow>
-              </>
-            )}
-            {erOverstyrt && (
-              <FlexContainer>
-                <FlexRow>
-                  <FlexColumn>
-                    <Image src={advarselIkonUrl} />
-                  </FlexColumn>
-                  <FlexColumn>
-                    <Element>
-                      <FormattedMessage id="SoknadsfristVilkarForm.Unntakstilfeller" />
-                    </Element>
-                  </FlexColumn>
-                </FlexRow>
-                <VerticalSpacer sixteenPx />
-                <FlexRow>
-                  <FlexColumn>
-                    <OverstyrBekreftKnappPanel
-                      submitting={submitting}
-                      pristine={!isSolvable || pristine}
-                      overrideReadOnly={overrideReadOnly}
-                    />
-                  </FlexColumn>
-                  <FlexColumn>
-                    <Knapp htmlType="button" spinner={submitting} disabled={submitting} onClick={toggleAv}>
-                      <FormattedMessage id="SoknadsfristVilkarForm.Avbryt" />
-                    </Knapp>
-                  </FlexColumn>
-                </FlexRow>
-              </FlexContainer>
-            )}
-            {harÅpentAksjonspunkt && !erOverstyrt && (
-              <Hovedknapp mini spinner={submitting} disabled={submitting || pristine}>
-                <FormattedMessage id="SoknadsfristVilkarForm.ConfirmInformation" />
-              </Hovedknapp>
-            )}
-          </AksjonspunktBox>
-        )}
-      </form>
-    );
-  };
+            ))}
+          <VerticalSpacer eightPx />
+          {Array.isArray(alleDokumenter) && alleDokumenter.length > 0 ? (
+            alleDokumenter.map((dokument, index) => (
+              <SoknadsfristVilkarDokument
+                key={dokument.journalpostId}
+                erAktivtDokument={dokumenter.findIndex(d => d.journalpostId === dokument.journalpostId) > -1}
+                skalViseBegrunnelse={erOverstyrt || harAksjonspunkt}
+                readOnly={isReadOnly || (!erOverstyrt && !harÅpentAksjonspunkt)}
+                erVilkarOk={erVilkarOk}
+                dokumentIndex={index}
+                dokument={dokument}
+              />
+            ))
+          ) : (
+            <FormattedMessage id="SoknadsfristVilkarForm.IngenDokumenter" />
+          )}
+          <VerticalSpacer sixteenPx />
+          {!erOverstyrt && erVilkarOk !== undefined && (
+            <>
+              <VerticalSpacer fourPx />
+              <FlexRow>
+                <FlexColumn>
+                  <EditedIcon />
+                </FlexColumn>
+                <FlexColumn>
+                  <Normaltekst>
+                    <FormattedMessage id="SoknadsfristVilkarForm.Endret" />
+                  </Normaltekst>
+                </FlexColumn>
+              </FlexRow>
+            </>
+          )}
+          {erOverstyrt && (
+            <FlexContainer>
+              <FlexRow>
+                <FlexColumn>
+                  <Image src={advarselIkonUrl} />
+                </FlexColumn>
+                <FlexColumn>
+                  <Element>
+                    <FormattedMessage id="SoknadsfristVilkarForm.Unntakstilfeller" />
+                  </Element>
+                </FlexColumn>
+              </FlexRow>
+              <VerticalSpacer sixteenPx />
+              <FlexRow>
+                <FlexColumn>
+                  <OverstyrBekreftKnappPanel
+                    disabled={invalid}
+                    submitting={submitting}
+                    pristine={!isSolvable || pristine}
+                    overrideReadOnly={overrideReadOnly}
+                  />
+                </FlexColumn>
+                <FlexColumn>
+                  <Knapp htmlType="button" spinner={submitting} disabled={submitting} onClick={toggleAv}>
+                    <FormattedMessage id="SoknadsfristVilkarForm.Avbryt" />
+                  </Knapp>
+                </FlexColumn>
+              </FlexRow>
+            </FlexContainer>
+          )}
+          {harÅpentAksjonspunkt && !erOverstyrt && (
+            <Hovedknapp mini spinner={submitting} disabled={invalid || submitting || pristine}>
+              <FormattedMessage id="SoknadsfristVilkarForm.ConfirmInformation" />
+            </Hovedknapp>
+          )}
+        </AksjonspunktBox>
+      )}
+    </form>
+  );
+};
+
+/**
+ * Temporær fiks for saksbehandlere som setter dato og forventer at
+ * backend skal telle fra og meg datoen de setter.
+ *
+ * Backend teller fra dagen etter..
+ */
+const minusEnDag = dato => moment(dato).subtract(1, 'days').format('YYYY-MM-DD');
+const plusEnDag = dato => moment(dato).add(1, 'days').format('YYYY-MM-DD');
 
 const buildInitialValues = createSelector(
   [
-    (ownProps: SoknadsfristVilkarFormProps) => ownProps.avslagKode,
     (ownProps: SoknadsfristVilkarFormProps) => ownProps.aksjonspunkter,
+    (ownProps: SoknadsfristVilkarFormProps) => ownProps.alleDokumenter,
     (ownProps: SoknadsfristVilkarFormProps) => ownProps.status,
-    (ownProps: SoknadsfristVilkarFormProps) => ownProps.periode,
-    (ownProps: SoknadsfristVilkarFormProps) => ownProps.dokument,
   ],
-  (avslagKode, aksjonspunkter, status, periode, dokument) => {
+  (aksjonspunkter, alleDokumenter, status) => {
     const overstyrtAksjonspunkt = aksjonspunkter.find(
       ap => ap.definisjon.kode === aksjonspunktCodes.OVERSTYR_SOKNADSFRISTVILKAR,
     );
 
     return {
       isOverstyrt: overstyrtAksjonspunkt !== undefined,
-      ...SoknadsfristVilkarBegrunnelse.buildInitialValues(avslagKode, aksjonspunkter, status, periode, dokument),
+      avklarteKrav: alleDokumenter.map(dokument => {
+        const fraDato = dokument.overstyrteOpplysninger?.fraDato || dokument.avklarteOpplysninger?.fraDato;
+        const innsendtSoknadsfrist = utledInnsendtSoknadsfrist(dokument.innsendingstidspunkt);
+
+        const erAvklartEllerOverstyrt = !!fraDato;
+
+        const erDelvisOppfylt =
+          status !== vilkarUtfallType.OPPFYLT && fraDato && plusEnDag(fraDato) !== innsendtSoknadsfrist;
+        const erVilkarOk = erDelvisOppfylt ? DELVIS_OPPFYLT : status === vilkarUtfallType.OPPFYLT;
+
+        return {
+          erVilkarOk: erAvklartEllerOverstyrt ? erVilkarOk : null,
+          begrunnelse: decodeHtmlEntity(
+            dokument.overstyrteOpplysninger?.begrunnelse || dokument.avklarteOpplysninger?.begrunnelse || '',
+          ),
+          journalpostId: dokument.journalpostId,
+          fraDato: fraDato ? plusEnDag(fraDato) : '',
+        };
+      }),
     };
   },
 );
 
-const getCustomVilkarText = (medlemskapFom: string, behandlingType: Kodeverk, erOppfylt: boolean) => {
-  const customVilkarText = { id: '', values: null };
-  const isBehandlingRevurderingFortsattMedlemskap =
-    behandlingType.kode === BehandlingType.REVURDERING && !!medlemskapFom;
-  if (isBehandlingRevurderingFortsattMedlemskap) {
-    customVilkarText.id = erOppfylt
-      ? 'VilkarResultPicker.VilkarOppfyltRevurderingFom'
-      : 'VilkarResultPicker.VilkarIkkeOppfyltRevurderingFom';
-    customVilkarText.values = { fom: moment(medlemskapFom).format(DDMMYYYY_DATE_FORMAT) };
-  }
-  return customVilkarText.id ? customVilkarText : undefined;
-};
-
-const getCustomVilkarTextForOppfylt = createSelector(
-  [(ownProps: SoknadsfristVilkarFormProps) => ownProps.medlemskapFom, ownProps => ownProps.behandlingType],
-  (medlemskapFom, behandlingType) => getCustomVilkarText(medlemskapFom, behandlingType, true),
-);
-
-const getCustomVilkarTextForIkkeOppfylt = createSelector(
-  [(ownProps: SoknadsfristVilkarFormProps) => ownProps.medlemskapFom, ownProps => ownProps.behandlingType],
-  (medlemskapFom, behandlingType) => getCustomVilkarText(medlemskapFom, behandlingType, false),
-);
-
-const transformValues = (values, apKode, periodeFom, periodeTom) => ({
+const transformValues = (values, alleDokumenter, apKode, periodeFom, periodeTom) => ({
   kode: apKode,
-  // @ts-ignore Fiks
-  ...VilkarResultPicker.transformValues(values),
-  ...SoknadsfristVilkarBegrunnelse.transformValues(values),
+  begrunnelse: values.avklarteKrav.map(krav => krav.begrunnelse).join('\n'),
+  avklarteKrav: values.avklarteKrav.map(krav => {
+    const dokumentStatus = alleDokumenter.find(d => d.journalpostId === krav.journalpostId);
+    const erVilkarOk = krav.erVilkarOk === true || krav.erVilkarOk === DELVIS_OPPFYLT;
+
+    const fraDato = (() => {
+      switch (krav.erVilkarOk) {
+        case true:
+          return dokumentStatus.status[0]?.periode.fom;
+
+        case DELVIS_OPPFYLT:
+          return krav.fraDato;
+
+        default:
+          return utledInnsendtSoknadsfrist(dokumentStatus.innsendingstidspunkt);
+      }
+    })();
+
+    return {
+      ...krav,
+      erVilkarOk,
+      godkjent: erVilkarOk,
+      // fjern 'minusEnDag' hvis backend oppdateres..
+      fraDato: minusEnDag(fraDato),
+    };
+  }),
+  erVilkarOk: !values.avklarteKrav.some(krav => !krav.erVilkarOk),
   periode: periodeFom && periodeTom ? { fom: periodeFom, tom: periodeTom } : undefined,
 });
 
-const validate = values => SoknadsfristVilkarBegrunnelse.validate(values);
-
 const mapStateToPropsFactory = (_initialState, initialOwnProps: SoknadsfristVilkarFormProps) => {
-  const { submitCallback, periode } = initialOwnProps;
+  const { submitCallback, alleDokumenter, periode } = initialOwnProps;
   const periodeFom = periode?.periode?.fom;
   const periodeTom = periode?.periode?.tom;
-  const validateFn = values => validate(values);
 
   return (state, ownProps) => {
-    const { behandlingId, behandlingVersjon, aksjonspunkter, erOverstyrt, overrideReadOnly } = ownProps;
+    const { behandlingId, behandlingVersjon, aksjonspunkter, harÅpentAksjonspunkt, erOverstyrt, overrideReadOnly } =
+      ownProps;
 
-    const harÅpentAksjonspunkt = aksjonspunkter.some(
-      ap =>
-        ap.definisjon.kode === aksjonspunktCodes.KONTROLLER_OPPLYSNINGER_OM_SØKNADSFRIST &&
-        !(ap.status.kode === aksjonspunktStatus.OPPRETTET && !ap.kanLoses),
-    );
     const aksjonspunkt = harÅpentAksjonspunkt
       ? aksjonspunkter.find(ap => ap.definisjon.kode === aksjonspunktCodes.KONTROLLER_OPPLYSNINGER_OM_SØKNADSFRIST)
       : aksjonspunkter.find(ap => ap.definisjon.kode === aksjonspunktCodes.OVERSTYR_SOKNADSFRISTVILKAR);
+
     const isSolvable =
       harÅpentAksjonspunkt || aksjonspunkt !== undefined
         ? !(aksjonspunkt.status.kode === aksjonspunktStatus.OPPRETTET && !aksjonspunkt.kanLoses)
@@ -282,8 +276,8 @@ const mapStateToPropsFactory = (_initialState, initialOwnProps: SoknadsfristVilk
       ? aksjonspunktCodes.KONTROLLER_OPPLYSNINGER_OM_SØKNADSFRIST
       : aksjonspunktCodes.OVERSTYR_SOKNADSFRISTVILKAR;
 
-    const formName = getFormName(aksjonspunktCode);
-    const onSubmit = values => submitCallback([transformValues(values, aksjonspunktCode, periodeFom, periodeTom)]);
+    const onSubmit = values =>
+      submitCallback([transformValues(values, alleDokumenter, aksjonspunktCode, periodeFom, periodeTom)]);
 
     const initialValues = buildInitialValues(ownProps);
 
@@ -292,19 +286,23 @@ const mapStateToPropsFactory = (_initialState, initialOwnProps: SoknadsfristVilk
       initialValues,
       harÅpentAksjonspunkt,
       harAksjonspunkt: aksjonspunkt !== undefined,
-      customVilkarOppfyltText: getCustomVilkarTextForOppfylt(ownProps),
-      customVilkarIkkeOppfyltText: getCustomVilkarTextForIkkeOppfylt(ownProps),
       isSolvable: erOverstyrt || isSolvable,
       isReadOnly: overrideReadOnly,
-      validate: validateFn,
-      form: formName,
-      periodeFom,
-      periodeTom,
-      ...behandlingFormValueSelector(formName, behandlingId, behandlingVersjon)(state, 'isOverstyrt', 'erVilkarOk'),
+      ...behandlingFormValueSelector(formName, behandlingId, behandlingVersjon)(
+        state,
+        'isOverstyrt',
+        'erVilkarOk',
+        'avklarteKrav',
+      ),
     };
   };
 };
 
-// @ts-ignore Kan ikkje senda med formnavn her sidan det er dynamisk. Må fikse på ein annan måte
-const form = behandlingForm({ enableReinitialize: true })(SoknadsfristVilkarForm);
+const form = behandlingForm({
+  form: formName,
+  enableReinitialize: true,
+  destroyOnUnmount: false,
+  forceUnregisterOnUnmount: true,
+})(SoknadsfristVilkarForm);
+
 export default connect(mapStateToPropsFactory)(form);

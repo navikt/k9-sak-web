@@ -1,11 +1,11 @@
-import React, { FunctionComponent, useState } from 'react';
+import React, { useState } from 'react';
 import { BehandlingPaVent } from '@k9-sak-web/behandling-felles';
 import UtvidetRettProsess from './UtvidetRettProsess';
 import UtvidetRettFakta from './UtvidetRettFakta';
 import { PanelerProps } from '../types/PanelerProps';
 import { FaktaPanelInfoProps } from '../types/FaktaPanelInfoProps';
 
-const UtvidetRettPaneler: FunctionComponent<PanelerProps> = ({
+const UtvidetRettPaneler = ({
   fetchedData,
   fagsak,
   fagsakPerson,
@@ -23,7 +23,7 @@ const UtvidetRettPaneler: FunctionComponent<PanelerProps> = ({
   featureToggles,
   setBehandling,
   arbeidsgiverOpplysningerPerId,
-}) => {
+}: PanelerProps) => {
   const [apentFaktaPanelInfo, setApentFaktaPanel] = useState<FaktaPanelInfoProps>();
 
   return (

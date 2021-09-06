@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useState, useCallback } from 'react';
+import React, { useState, useCallback } from 'react';
 import { useHistory } from 'react-router-dom';
 
 import BehandlingType, { erTilbakekrevingType } from '@fpsak-frontend/kodeverk/src/behandlingType';
@@ -19,69 +19,78 @@ import {
 } from '@k9-sak-web/types';
 import SettPaVentModalIndex from '@k9-sak-web/modal-sett-pa-vent';
 
+import { Fritekstbrev } from '@k9-sak-web/types/src/formidlingTsType';
 import { useFpSakKodeverk } from '../../data/useKodeverk';
 import { useVisForhandsvisningAvMelding } from '../../data/useVisForhandsvisningAvMelding';
 import { setBehandlingOnHold } from '../../behandlingmenu/behandlingMenuOperations';
 import { K9sakApiKeys, restApiHooks, requestApi } from '../../data/k9sakApi';
 
-const getSubmitCallback = (
-  setShowMessageModal: (showModal: boolean) => void,
-  behandlingTypeKode: string,
-  behandlingId: number,
-  behandlingUuid: string,
-  submitMessage: (data: any) => Promise<any>,
-  resetMessage: () => void,
-  setShowSettPaVentModal: (erInnhentetEllerForlenget: boolean) => void,
-  setSubmitCounter: (fn: (prevValue: number) => number) => void,
-) => (values: FormValues) => {
-  const isInnhentEllerForlenget =
-    values.brevmalkode === dokumentMalType.INNHENT_DOK ||
-    values.brevmalkode === dokumentMalType.INNOPP ||
-    values.brevmalkode === dokumentMalType.FORLENGET_DOK ||
-    values.brevmalkode === dokumentMalType.FORLENGET_MEDL_DOK;
-  const erTilbakekreving = erTilbakekrevingType({ kode: behandlingTypeKode });
+const getSubmitCallback =
+  (
+    setShowMessageModal: (showModal: boolean) => void,
+    behandlingTypeKode: string,
+    behandlingId: number,
+    behandlingUuid: string,
+    submitMessage: (data: any) => Promise<any>,
+    resetMessage: () => void,
+    setShowSettPaVentModal: (erInnhentetEllerForlenget: boolean) => void,
+    setSubmitCounter: (fn: (prevValue: number) => number) => void,
+  ) =>
+  (values: FormValues) => {
+    const isInnhentEllerForlenget =
+      values.brevmalkode === dokumentMalType.INNHENT_DOK ||
+      values.brevmalkode === dokumentMalType.INNOPP ||
+      values.brevmalkode === dokumentMalType.FORLENGET_DOK ||
+      values.brevmalkode === dokumentMalType.FORLENGET_MEDL_DOK;
+    const erTilbakekreving = erTilbakekrevingType({ kode: behandlingTypeKode });
 
-  setShowMessageModal(!isInnhentEllerForlenget);
+    setShowMessageModal(!isInnhentEllerForlenget);
 
-  const data = erTilbakekreving
-    ? {
-        behandlingUuid,
-        fritekst: values.fritekst,
-        brevmalkode: values.brevmalkode,
-      }
-    : {
-        behandlingId,
-        overstyrtMottaker: values.overstyrtMottaker,
-        brevmalkode: values.brevmalkode,
-        fritekst: values.fritekst,
-        arsakskode: values.arsakskode,
-      };
-  return submitMessage(data)
-    .then(() => resetMessage())
-    .then(() => {
-      setShowSettPaVentModal(isInnhentEllerForlenget);
-      setSubmitCounter(prevValue => prevValue + 1);
-    });
-};
+    const data = erTilbakekreving
+      ? {
+          behandlingUuid,
+          fritekst: values.fritekst,
+          brevmalkode: values.brevmalkode,
+        }
+      : {
+          behandlingId,
+          overstyrtMottaker: values.overstyrtMottaker,
+          brevmalkode: values.brevmalkode,
+          fritekst: values.fritekst,
+          arsakskode: values.arsakskode,
+          fritekstbrev: values.fritekstbrev
+        };
+    return submitMessage(data)
+      .then(() => resetMessage())
+      .then(() => {
+        setShowSettPaVentModal(isInnhentEllerForlenget);
+        setSubmitCounter(prevValue => prevValue + 1);
+      });
+  };
 
-const getPreviewCallback = (
-  behandlingTypeKode: string,
-  behandlingUuid: string,
-  fagsakYtelseType: Kodeverk,
-  fetchPreview: (erHenleggelse: boolean, data: any) => void,
-) => (overstyrtMottaker: Mottaker, dokumentMal: string, fritekst: string) => {
-  const data = erTilbakekrevingType({ kode: behandlingTypeKode })
-    ? {
-        fritekst: fritekst || ' ',
-        brevmalkode: dokumentMal,
-      }
-    : {
-        overstyrtMottaker,
-        dokumentMal,
-        dokumentdata: { fritekst: fritekst || ' ' },
-      };
-  fetchPreview(false, data);
-};
+const getPreviewCallback =
+  (
+    behandlingTypeKode: string,
+    behandlingUuid: string,
+    fagsakYtelseType: Kodeverk,
+    fetchPreview: (erHenleggelse: boolean, data: any) => void,
+  ) =>
+  (overstyrtMottaker: Mottaker, dokumentMal: string, fritekst: string, fritekstbrev?: Fritekstbrev) => {
+    const data = erTilbakekrevingType({ kode: behandlingTypeKode })
+      ? {
+          fritekst: fritekst || ' ',
+          brevmalkode: dokumentMal,
+        }
+      : {
+          overstyrtMottaker,
+          dokumentMal,
+          dokumentdata: {
+          fritekst: fritekst || ' ' ,
+          fritekstbrev
+        },
+        };
+    fetchPreview(false, data);
+  };
 
 interface OwnProps {
   fagsak: Fagsak;
@@ -99,14 +108,14 @@ const EMPTY_ARRAY = [];
  *
  * Container komponent. Har ansvar for å hente mottakere og brevmaler fra serveren.
  */
-const MeldingIndex: FunctionComponent<OwnProps> = ({
+const MeldingIndex = ({
   fagsak,
   alleBehandlinger,
   behandlingId,
   behandlingVersjon,
   personopplysninger,
   arbeidsgiverOpplysninger,
-}) => {
+}: OwnProps) => {
   const [showSettPaVentModal, setShowSettPaVentModal] = useState(false);
   const [showMessagesModal, setShowMessageModal] = useState(false);
   const [submitCounter, setSubmitCounter] = useState(0);

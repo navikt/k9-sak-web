@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useState } from 'react';
+import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { FormattedMessage, injectIntl, WrappedComponentProps } from 'react-intl';
 import { Undertekst } from 'nav-frontend-typografi';
@@ -24,14 +24,14 @@ interface OwnProps {
   maximumLength?: number;
 }
 
-export const TilbakekrevingVedtakUtdypendeTekstPanel: FunctionComponent<OwnProps & WrappedComponentProps> = ({
+export const TilbakekrevingVedtakUtdypendeTekstPanel = ({
   intl,
   isEmpty,
   type,
   readOnly,
   fritekstPakrevet,
   maximumLength,
-}) => {
+}: OwnProps & WrappedComponentProps) => {
   const [isTextfieldHidden, hideTextField] = useState(isEmpty && !fritekstPakrevet);
   const valideringsRegler = fritekstPakrevet ? valideringsreglerPakrevet : valideringsregler;
   valideringsRegler.push(maximumLength ? maxLength(maximumLength) : maxLength4000);

@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useCallback, useMemo } from 'react';
+import React, { useCallback, useMemo } from 'react';
 import { useLocation } from 'react-router-dom';
 import moment from 'moment';
 
@@ -48,7 +48,7 @@ interface OwnProps {
  *
  * Container komponent. Har ansvar for å hente historiken for en fagsak fra state og vise den
  */
-const HistorikkIndex: FunctionComponent<OwnProps> = ({ saksnummer, behandlingId, behandlingVersjon }) => {
+const HistorikkIndex = ({ saksnummer, behandlingId, behandlingVersjon }: OwnProps) => {
   const enabledApplicationContexts = useGetEnabledApplikasjonContext();
 
   const alleKodeverkK9Sak = restApiHooks.useGlobalStateRestApiData<{ [key: string]: KodeverkMedNavn[] }>(

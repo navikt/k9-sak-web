@@ -97,6 +97,40 @@ export const visPanelForÅpentAksjonspunkt = () => (
     }
     // @ts-ignore Fiks!
     opptjening={opptjeninger}
+    vilkar={[
+      {
+        vilkarType: {
+          kode: 'FP_VK_23',
+          kodeverk: 'VILKAR_TYPE',
+        },
+        lovReferanse: '§ 9-2 jamfør 8-2',
+        overstyrbar: true,
+        perioder: [
+          {
+            avslagKode: null,
+            merknadParametere: {
+              antattGodkjentArbeid: 'P10D',
+              antattOpptjeningAktivitetTidslinje:
+                'LocalDateTimeline<2020-04-17, 2020-04-26 [1]> = [[2020-04-17, 2020-04-26]]',
+            },
+            vilkarStatus: {
+              kode: 'OPPFYLT',
+              kodeverk: 'VILKAR_UTFALL_TYPE',
+            },
+            periode: {
+              fom: '2020-04-27',
+              tom: '2020-04-27',
+            },
+            begrunnelse: null,
+            vurdersIBehandlingen: true,
+            merknad: {
+              kode: '7847B',
+              kodeverk: 'VILKAR_UTFALL_MERKNAD',
+            },
+          },
+        ],
+      },
+    ]}
     aksjonspunkter={
       [
         {
@@ -130,12 +164,46 @@ export const visPanelForNårEnIkkeHarAksjonspunkt = () => (
     }
     // @ts-ignore Fiks!
     opptjening={opptjening}
+    vilkar={[
+      {
+        vilkarType: {
+          kode: 'FP_VK_23',
+          kodeverk: 'VILKAR_TYPE',
+        },
+        lovReferanse: '§ 9-2 jamfør 8-2',
+        overstyrbar: true,
+        perioder: [
+          {
+            avslagKode: null,
+            merknadParametere: {
+              antattGodkjentArbeid: 'P10D',
+              antattOpptjeningAktivitetTidslinje:
+                'LocalDateTimeline<2020-04-17, 2020-04-26 [1]> = [[2020-04-17, 2020-04-26]]',
+            },
+            vilkarStatus: {
+              kode: 'OPPFYLT',
+              kodeverk: 'VILKAR_UTFALL_TYPE',
+            },
+            periode: {
+              fom: '2020-04-27',
+              tom: '2020-04-27',
+            },
+            begrunnelse: null,
+            vurdersIBehandlingen: true,
+            merknad: {
+              kode: '1035',
+              kodeverk: 'VILKAR_UTFALL_MERKNAD',
+            },
+          },
+        ],
+      },
+    ]}
     aksjonspunkter={[]}
-    status={vilkarUtfallType.IKKE_VURDERT}
+    status={vilkarUtfallType.OPPFYLT}
     lovReferanse="§§Dette er en lovreferanse"
     submitCallback={action('button-click')}
-    isReadOnly={boolean('isReadOnly', false)}
-    isAksjonspunktOpen={boolean('isAksjonspunktOpen', true)}
+    isReadOnly={boolean('isReadOnly', true)}
+    isAksjonspunktOpen={boolean('isAksjonspunktOpen', false)}
     readOnlySubmitButton={boolean('readOnlySubmitButton', false)}
   />
 );

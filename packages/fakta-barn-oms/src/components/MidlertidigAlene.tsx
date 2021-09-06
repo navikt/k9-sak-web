@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from 'react';
+import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import { Rammevedtak } from '@k9-sak-web/types/src/omsorgspenger/Rammevedtak';
 import formaterDato from '../utils/formaterDato';
@@ -7,7 +7,7 @@ interface MidlertidigAleneProps {
   midlertidigAlene?: Rammevedtak;
 }
 
-const MidlertidigAlene: FunctionComponent<MidlertidigAleneProps> = ({ midlertidigAlene }) =>
+const MidlertidigAlene = ({ midlertidigAlene }: MidlertidigAleneProps) =>
   midlertidigAlene ? (
     <FormattedMessage
       id="FaktaRammevedtak.MidlertidigAlene"

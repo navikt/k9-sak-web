@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from 'react';
+import React from 'react';
 import { injectIntl, WrappedComponentProps } from 'react-intl';
 import { SideMenuWrapper, faktaHooks, useSetBehandlingVedEndring } from '@k9-sak-web/behandling-felles';
 import { Behandling } from '@k9-sak-web/types';
@@ -9,7 +9,7 @@ import faktaUtvidetRettPanelDefinisjoner from '../panelDefinisjoner/faktaUtvidet
 import FetchedData from '../types/fetchedDataTsType';
 import { FaktaProps } from '../types/FaktaProps';
 
-const UtvidetRettFakta: FunctionComponent<FaktaProps & WrappedComponentProps> = ({
+const UtvidetRettFakta = ({
   intl,
   data,
   behandling,
@@ -25,13 +25,11 @@ const UtvidetRettFakta: FunctionComponent<FaktaProps & WrappedComponentProps> = 
   setBehandling,
   featureToggles,
   arbeidsgiverOpplysningerPerId,
-}) => {
+}: FaktaProps & WrappedComponentProps) => {
   const { aksjonspunkter, ...rest } = data;
 
-  const {
-    startRequest: lagreAksjonspunkter,
-    data: apBehandlingRes,
-  } = restApiUtvidetRettHooks.useRestApiRunner<Behandling>(UtvidetRettBehandlingApiKeys.SAVE_AKSJONSPUNKT);
+  const { startRequest: lagreAksjonspunkter, data: apBehandlingRes } =
+    restApiUtvidetRettHooks.useRestApiRunner<Behandling>(UtvidetRettBehandlingApiKeys.SAVE_AKSJONSPUNKT);
   useSetBehandlingVedEndring(apBehandlingRes, setBehandling);
 
   const dataTilUtledingAvUtvidetRettPaneler = {

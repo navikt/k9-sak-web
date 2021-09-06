@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useMemo } from 'react';
+import React, { useMemo } from 'react';
 import { injectIntl, IntlShape, WrappedComponentProps } from 'react-intl';
 
 import HeaderWithErrorPanel, { Feilmelding } from '@fpsak-frontend/sak-dekorator';
@@ -52,21 +52,21 @@ interface OwnProps {
   setSiteHeight: (headerHeight: number) => void;
 }
 
-const Dekorator: FunctionComponent<OwnProps & WrappedComponentProps> = ({
+const Dekorator = ({
   intl,
   queryStrings,
   setSiteHeight,
   hideErrorMessages = false,
-}) => {
+}: OwnProps & WrappedComponentProps) => {
   const navAnsatt = restApiHooks.useGlobalStateRestApiData<NavAnsatt>(K9sakApiKeys.NAV_ANSATT);
 
   const errorMessages = useRestApiError() || EMPTY_ARRAY;
   const formaterteFeilmeldinger = useMemo(() => new ErrorFormatter().format(errorMessages), [errorMessages]);
 
-  const resolvedErrorMessages = useMemo(() => lagFeilmeldinger(intl, formaterteFeilmeldinger, queryStrings), [
-    formaterteFeilmeldinger,
-    queryStrings,
-  ]);
+  const resolvedErrorMessages = useMemo(
+    () => lagFeilmeldinger(intl, formaterteFeilmeldinger, queryStrings),
+    [formaterteFeilmeldinger, queryStrings],
+  );
 
   const { removeErrorMessages } = useRestApiErrorDispatcher();
 

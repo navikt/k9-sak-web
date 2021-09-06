@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from 'react';
+import React from 'react';
 import { injectIntl, WrappedComponentProps } from 'react-intl';
 
 import { Rettigheter, SideMenuWrapper, faktaHooks, useSetBehandlingVedEndring } from '@k9-sak-web/behandling-felles';
@@ -29,7 +29,7 @@ interface OwnProps {
   arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysningerPerId;
 }
 
-const FrisinnFakta: FunctionComponent<OwnProps & WrappedComponentProps> = ({
+const FrisinnFakta = ({
   intl,
   data,
   behandling,
@@ -44,7 +44,7 @@ const FrisinnFakta: FunctionComponent<OwnProps & WrappedComponentProps> = ({
   setApentFaktaPanel,
   setBehandling,
   arbeidsgiverOpplysningerPerId,
-}) => {
+}: OwnProps & WrappedComponentProps) => {
   const { aksjonspunkter, ...rest } = data;
 
   const { startRequest: lagreAksjonspunkter, data: apBehandlingRes } = restApiFrisinnHooks.useRestApiRunner<Behandling>(
@@ -52,10 +52,8 @@ const FrisinnFakta: FunctionComponent<OwnProps & WrappedComponentProps> = ({
   );
   useSetBehandlingVedEndring(apBehandlingRes, setBehandling);
 
-  const {
-    startRequest: lagreOverstyrteAksjonspunkter,
-    data: apOverstyrtBehandlingRes,
-  } = restApiFrisinnHooks.useRestApiRunner<Behandling>(FrisinnBehandlingApiKeys.SAVE_OVERSTYRT_AKSJONSPUNKT);
+  const { startRequest: lagreOverstyrteAksjonspunkter, data: apOverstyrtBehandlingRes } =
+    restApiFrisinnHooks.useRestApiRunner<Behandling>(FrisinnBehandlingApiKeys.SAVE_OVERSTYRT_AKSJONSPUNKT);
   useSetBehandlingVedEndring(apOverstyrtBehandlingRes, setBehandling);
 
   const dataTilUtledingAvFpPaneler = {

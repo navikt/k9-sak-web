@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from 'react';
+import React from 'react';
 import classNames from 'classnames/bind';
 import Snakkeboble from 'nav-frontend-snakkeboble';
 
@@ -31,9 +31,10 @@ const snakkeboblePanelCls = (aktoer: Kodeverk) =>
     snakkeboble__saksbehandler: aktoer.kode === HistorikkAktor.SAKSBEHANDLER,
     snakkeboble__beslutter: aktoer.kode === HistorikkAktor.BESLUTTER,
     snakkeboble__losningen: aktoer.kode === HistorikkAktor.VEDTAKSLOSNINGEN,
-    snakkeboble__bruker: HistorikkAktor.SOKER,
     snakkeboble__ekstern: aktoer.kode === HistorikkAktor.ARBEIDSGIVER,
-  });
+    snakkeboble__bruker: aktoer.kode === HistorikkAktor.SOKER
+  })
+
 
 interface OwnProps {
   dato: string;
@@ -44,14 +45,7 @@ interface OwnProps {
   children: React.ReactElement;
 }
 
-const SnakkebobleContainer: FunctionComponent<OwnProps> = ({
-  dato,
-  aktoer,
-  rolleNavn = '',
-  kjoenn,
-  opprettetAv,
-  children,
-}) => (
+const SnakkebobleContainer = ({ dato, aktoer, rolleNavn = '', kjoenn, opprettetAv, children }: OwnProps) => (
   <Snakkeboble
     className={`snakkeboble__kompakt ${snakkeboblePanelCls(aktoer)}`}
     topp={`${formatDate(dato)} // ${rolleNavn} ${opprettetAv || ''}`}

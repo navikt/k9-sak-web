@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useCallback } from 'react';
+import React, { useCallback } from 'react';
 
 import { RestApiState } from '@k9-sak-web/rest-api-hooks';
 import { Kodeverk, BehandlingAppKontekst } from '@k9-sak-web/types';
@@ -15,13 +15,13 @@ interface OwnProps {
   erKlageWithKA: boolean;
 }
 
-const BeslutterModalIndex: FunctionComponent<OwnProps> = ({
+const BeslutterModalIndex = ({
   behandling,
   fagsakYtelseType,
   pushLocation,
   allAksjonspunktApproved,
   erKlageWithKA,
-}) => {
+}: OwnProps) => {
   const { data, state } = restApiHooks.useRestApi<{ harRevurderingSammeResultat: boolean }>(
     K9sakApiKeys.HAR_REVURDERING_SAMME_RESULTAT,
     undefined,

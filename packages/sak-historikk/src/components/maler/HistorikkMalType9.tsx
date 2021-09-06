@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from 'react';
+import React from 'react';
 import { FormattedMessage, injectIntl, WrappedComponentProps } from 'react-intl';
 
 import tilbakekrevingVidereBehandling from '@fpsak-frontend/kodeverk/src/tilbakekrevingVidereBehandling';
@@ -26,13 +26,13 @@ const getSplitPeriods = (endredeFelter: HistorikkinnslagEndretFelt[]): string =>
   return text;
 };
 
-const HistorikkMalType9: FunctionComponent<HistorikkMal & WrappedComponentProps> = ({
+const HistorikkMalType9 = ({
   intl,
   historikkinnslag,
   behandlingLocation,
   getKodeverknavn,
   createLocationForSkjermlenke,
-}) => (
+}: HistorikkMal & WrappedComponentProps) => (
   <>
     {historikkinnslag.historikkinnslagDeler.map((historikkinnslagDel, historikkinnslagDelIndex) => (
       <div

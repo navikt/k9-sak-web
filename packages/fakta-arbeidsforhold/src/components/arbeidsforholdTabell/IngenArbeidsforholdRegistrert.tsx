@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from 'react';
+import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import { Normaltekst } from 'nav-frontend-typografi';
 
@@ -10,7 +10,7 @@ interface OwnProps {
   headerColumnContent: React.ReactElement[];
 }
 
-const IngenArbeidsforholdRegistrert: FunctionComponent<OwnProps> = ({ headerColumnContent }) => (
+const IngenArbeidsforholdRegistrert = ({ headerColumnContent }: OwnProps) => (
   <Table headerColumnContent={headerColumnContent} noHover>
     <TableRow>
       <TableColumn>

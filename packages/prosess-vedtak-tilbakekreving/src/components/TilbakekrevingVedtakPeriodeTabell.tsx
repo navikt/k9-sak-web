@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from 'react';
+import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
 
@@ -25,7 +25,7 @@ interface OwnProps {
   getKodeverknavn: (kodeverk: Kodeverk) => string;
 }
 
-const TilbakekrevingVedtakPeriodeTabell: FunctionComponent<OwnProps> = ({ perioder, getKodeverknavn }) => {
+const TilbakekrevingVedtakPeriodeTabell = ({ perioder, getKodeverknavn }: OwnProps) => {
   const rader = perioder
     .map(periode => (
       <TableRow key={periode.periode.fom}>
@@ -41,7 +41,9 @@ const TilbakekrevingVedtakPeriodeTabell: FunctionComponent<OwnProps> = ({ period
           <Normaltekst>{getKodeverknavn(periode.vurdering)}</Normaltekst>
         </TableColumn>
         <TableColumn>
-          <Normaltekst>{periode.andelAvBeløp !== undefined && periode.andelAvBeløp !== null ? `${periode.andelAvBeløp}%` : ''}</Normaltekst>
+          <Normaltekst>
+            {periode.andelAvBeløp !== undefined && periode.andelAvBeløp !== null ? `${periode.andelAvBeløp}%` : ''}
+          </Normaltekst>
         </TableColumn>
         <TableColumn>
           <Normaltekst>{periode.renterProsent ? `${periode.renterProsent}%` : ''}</Normaltekst>

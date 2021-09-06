@@ -1,12 +1,12 @@
 import React from 'react';
 import { expect } from 'chai';
-import { intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
+
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import PerioderMedMedlemskapFaktaPanel, {
   PerioderMedMedlemskapFaktaPanelImpl as UndecoratedForm,
 } from './PerioderMedMedlemskapFaktaPanel';
-import shallowWithIntl from '../../../i18n';
+import shallowWithIntl, { intlMock } from '../../../i18n';
 
 describe('<PerioderMedMedlemskapFaktaPanel>', () => {
   it('skal vise periode og manuelle-vurderingstyper i form', () => {

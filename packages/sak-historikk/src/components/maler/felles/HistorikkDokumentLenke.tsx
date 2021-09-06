@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from 'react';
+import React from 'react';
 import { FormattedMessage } from 'react-intl';
 
 import { HistorikkInnslagDokumentLink } from '@k9-sak-web/types';
@@ -12,7 +12,7 @@ interface OwnProps {
   saksnummer: string;
 }
 
-const HistorikkDokumentLenke: FunctionComponent<OwnProps> = ({ dokumentLenke, saksnummer }) => {
+const HistorikkDokumentLenke = ({ dokumentLenke, saksnummer }: OwnProps) => {
   const { tag, journalpostId, dokumentId, utgått } = dokumentLenke;
 
   if (utgått) {

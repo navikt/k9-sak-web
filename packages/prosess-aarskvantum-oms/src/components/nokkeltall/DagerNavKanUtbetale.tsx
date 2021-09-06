@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import Nokkeltall from './Nokkeltall';
 import styles from './nokkeltall.less';
@@ -11,13 +11,13 @@ interface DagerNavKanUtbetaleProps {
   viserDetaljer: boolean;
 }
 
-const DagerNavKanUtbetale: React.FunctionComponent<DagerNavKanUtbetaleProps> = ({
+const DagerNavKanUtbetale = ({
   dagerNavKanUtbetale,
   dagerRettPå,
   antallDagerArbeidsgiverDekker,
   visDetaljer,
   viserDetaljer,
-}) => (
+}: DagerNavKanUtbetaleProps) => (
   <Nokkeltall
     overskrift={{ antallDager: dagerNavKanUtbetale, overskrifttekstId: 'Nøkkeltall.DagerNavKanUtbetale' }}
     detaljer={[

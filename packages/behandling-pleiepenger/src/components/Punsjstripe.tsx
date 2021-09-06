@@ -1,6 +1,6 @@
 import axios, { AxiosResponse } from 'axios';
 import { AlertStripeAdvarsel, AlertStripeFeil } from 'nav-frontend-alertstriper';
-import * as React from 'react';
+import React from 'react';
 
 export interface PunsjResponse {
   journalpostIder: JournalpostIder[];
@@ -32,7 +32,14 @@ const Punsjstripe = ({ aktørId }) => {
   if (!harPunsjoppgaver) {
     return null;
   }
-  const { journalpostIder } = punsjoppgaver;
-  return <AlertStripeAdvarsel>{`Du har ${journalpostIder.length} uløste oppgaver i Punsj`}</AlertStripeAdvarsel>;
+  const getUløsteOppgaverText = () => {
+    const { journalpostIder } = punsjoppgaver;
+    if (journalpostIder.length === 1) {
+      return 'Det er 1 uløst oppgave tilknyttet søkeren i Punsj.';
+    }
+    return `Det er ${journalpostIder.length} uløste oppgaver tilknyttet søkeren i Punsj.`;
+  };
+
+  return <AlertStripeAdvarsel>{getUløsteOppgaverText()}</AlertStripeAdvarsel>;
 };
 export default Punsjstripe;

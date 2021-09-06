@@ -1,9 +1,11 @@
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
-import { intlMock, shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import { Normaltekst } from 'nav-frontend-typografi';
+
 import AksjonspunktHelpText from './AksjonspunktHelpText';
 import Image from './Image';
+
+import shallowWithIntl, { intlMock } from '../i18n/index';
 
 describe('<AksjonspunktHelpText>', () => {
   it('skal vise hjelpetekst og ikon når aksjonspunkt er åpent', () => {

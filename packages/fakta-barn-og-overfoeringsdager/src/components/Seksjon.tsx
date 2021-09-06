@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from 'react';
+import React from 'react';
 import { Image } from '@fpsak-frontend/shared-components/index';
 import { Undertittel } from 'nav-frontend-typografi';
 import { FormattedMessage } from 'react-intl';
@@ -15,15 +15,10 @@ interface SeksjonProps {
   };
   bakgrunn: 'grå' | 'hvit';
   medMarg?: boolean;
+  children: React.ReactNode;
 }
 
-const Seksjon: FunctionComponent<SeksjonProps> = ({
-  imgSrc,
-  title,
-  bakgrunn,
-  children,
-  medMarg,
-}) => (
+const Seksjon = ({ imgSrc, title, bakgrunn, children, medMarg }: SeksjonProps) => (
   <section className={classNames('seksjon', { grå: bakgrunn === 'grå', medMarg })}>
     <Undertittel tag="h3" className={styles.tittel}>
       <Image src={imgSrc} />

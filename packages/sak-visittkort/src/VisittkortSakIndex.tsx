@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from 'react';
+import React from 'react';
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 
 import { Kodeverk, KodeverkMedNavn, Personopplysninger, FagsakPerson, RelatertFagsak } from '@k9-sak-web/types';
@@ -25,14 +25,14 @@ interface OwnProps {
   relaterteFagsaker?: RelatertFagsak;
 }
 
-const VisittkortSakIndex: FunctionComponent<OwnProps> = ({
+const VisittkortSakIndex = ({
   fagsakPerson,
   sprakkode,
   alleKodeverk,
   personopplysninger,
   harTilbakekrevingVerge,
   relaterteFagsaker,
-}) => (
+}: OwnProps) => (
   <RawIntlProvider value={intl}>
     <VisittkortPanel
       personopplysninger={personopplysninger}

@@ -1,4 +1,4 @@
-import React, { useMemo, FunctionComponent } from 'react';
+import React, { useMemo } from 'react';
 import { injectIntl, FormattedMessage, WrappedComponentProps } from 'react-intl';
 import { EtikettInfo } from 'nav-frontend-etiketter';
 import { Normaltekst, Element } from 'nav-frontend-typografi';
@@ -31,12 +31,12 @@ interface OwnProps {
   sprakkode?: Kodeverk;
 }
 
-const VisittkortDetaljerPopup: FunctionComponent<OwnProps & WrappedComponentProps> = ({
+const VisittkortDetaljerPopup = ({
   intl,
   personopplysninger,
   alleKodeverk,
   sprakkode,
-}) => {
+}: OwnProps & WrappedComponentProps) => {
   const getKodeverknavn = getKodeverknavnFn(alleKodeverk, kodeverkTyper);
   const adresser = useMemo(() => getAddresses(personopplysninger.adresser), [personopplysninger.adresser]);
   const borMedBarnet = useMemo(() => borSokerMedBarnet(adresser, personopplysninger.barnSoktFor), [personopplysninger]);

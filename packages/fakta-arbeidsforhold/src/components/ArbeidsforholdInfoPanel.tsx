@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from 'react';
+import React from 'react';
 import { FormattedMessage, injectIntl, WrappedComponentProps } from 'react-intl';
 import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
@@ -57,9 +57,7 @@ interface PureOwnProps {
  * Ansvarlig for å rendre aksjonspunktteksten, arbeidsforholdene, og
  * bekreft & fortsett knappen
  * */
-export const ArbeidsforholdInfoPanelImpl: FunctionComponent<
-  PureOwnProps & InjectedFormProps & WrappedComponentProps
-> = ({
+export const ArbeidsforholdInfoPanelImpl = ({
   aksjonspunkter,
   readOnly,
   alleMerknaderFraBeslutter,
@@ -70,7 +68,7 @@ export const ArbeidsforholdInfoPanelImpl: FunctionComponent<
   behandlingVersjon,
   intl,
   ...formProps
-}) => {
+}: PureOwnProps & InjectedFormProps & WrappedComponentProps) => {
   const shouldDisableSubmitButton = formProps.pristine;
   const harAksjonspunktAvklarArbeidsforhold = harAksjonspunkt(aksjonspunktCodes.AVKLAR_ARBEIDSFORHOLD, aksjonspunkter);
 

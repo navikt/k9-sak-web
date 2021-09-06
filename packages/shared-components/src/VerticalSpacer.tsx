@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from 'react';
+import React from 'react';
 import classnames from 'classnames/bind';
 
 import styles from './verticalSpacer.less';
@@ -19,14 +19,14 @@ interface OwnProps {
  *
  * Presentasjonskomponent. Legg inn vertikalt tomrom.
  */
-const VerticalSpacer: FunctionComponent<OwnProps> = ({
+const VerticalSpacer = ({
   fourPx = false,
   eightPx = false,
   sixteenPx = false,
   twentyPx = false,
   thirtyTwoPx = false,
   fourtyPx = false,
-}) => (
+}: OwnProps) => (
   <div
     className={classNames({
       fourPx,

@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from 'react';
+import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
 
@@ -15,7 +15,7 @@ interface OwnProps {
  *
  * Presentasjonskomponent. Viser en liste over faresignaler knyttet til behandlingen.
  */
-const Faresignaler: FunctionComponent<OwnProps> = ({ risikoklassifisering }) => (
+const Faresignaler = ({ risikoklassifisering }: OwnProps) => (
   <FlexContainer>
     {risikoklassifisering.medlFaresignaler && risikoklassifisering.medlFaresignaler.faresignaler && (
       <div>

@@ -1,4 +1,4 @@
-import React, { FunctionComponent, ReactNode, MouseEvent } from 'react';
+import React, { ReactNode, MouseEvent } from 'react';
 import { Row } from 'nav-frontend-grid';
 import { useIntl } from 'react-intl';
 import TimeLineButton from './TimeLineButton';
@@ -19,7 +19,7 @@ interface TimeLineControlProps {
  *
  * Holds the controls for the timeline (zoom, traversing left/right and opening the data area)
  */
-const TimeLineControl: FunctionComponent<TimeLineControlProps> = ({
+const TimeLineControl = ({
   children,
   goBackwardCallback,
   goForwardCallback,
@@ -27,7 +27,7 @@ const TimeLineControl: FunctionComponent<TimeLineControlProps> = ({
   selectedPeriod,
   zoomInCallback,
   zoomOutCallback,
-}) => {
+}: TimeLineControlProps) => {
   const { formatMessage } = useIntl();
   return (
     <div>

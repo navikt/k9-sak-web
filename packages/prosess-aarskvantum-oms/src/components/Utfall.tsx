@@ -18,7 +18,7 @@ const utfallSymbolMap = {
   [UtfallEnum.UAVKLART]: advarsel,
 };
 
-const Utfall: React.FunctionComponent<UtfallProps> = ({ utfall, textId }) => (
+const Utfall = ({ utfall, textId }: UtfallProps) => (
   <div>
     <span className={styles.utfallsikon}>
       <Image src={utfallSymbolMap[utfall]} />

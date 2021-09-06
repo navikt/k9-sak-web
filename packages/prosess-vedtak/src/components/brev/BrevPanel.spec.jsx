@@ -2,16 +2,18 @@ import sinon from 'sinon';
 import { expect } from 'chai';
 import React from 'react';
 import { shallow } from 'enzyme/build';
-import { intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import { AlertStripeInfo } from 'nav-frontend-alertstriper';
 import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
 import dokumentMalType from '@fpsak-frontend/kodeverk/src/dokumentMalType';
 import { SelectField } from '@fpsak-frontend/form';
 import vedtaksbrevtype from '@fpsak-frontend/kodeverk/src/vedtaksbrevtype';
+
 import { BrevPanel } from './BrevPanel';
 import { VedtakPreviewLink } from '../PreviewLink';
 import FritekstBrevPanel from '../FritekstBrevPanel';
 import InformasjonsbehovAutomatiskVedtaksbrev from './InformasjonsbehovAutomatiskVedtaksbrev';
+
+import { intlMock } from '../../../i18n/index';
 
 describe('<BrevPanel>', () => {
   const ingenTilgjengeligeVedtaksbrev = { vedtaksbrevmaler: [] };
@@ -35,6 +37,7 @@ describe('<BrevPanel>', () => {
         beregningErManueltFastsatt={false}
         dokumentdata={{}}
         tilgjengeligeVedtaksbrev={automatiskInnvilgelsebrevTilgjengelig}
+        informasjonsbehovValues={{}}
         skalBrukeOverstyrendeFritekstBrev={false}
         begrunnelse=""
         previewCallback={sinon.spy()}
@@ -61,6 +64,7 @@ describe('<BrevPanel>', () => {
         beregningErManueltFastsatt={false}
         dokumentdata={{}}
         tilgjengeligeVedtaksbrev={alleTilgjengeligeVedtaksbrev}
+        informasjonsbehovValues={{}}
         skalBrukeOverstyrendeFritekstBrev
         begrunnelse=""
         previewCallback={sinon.spy()}
@@ -87,6 +91,7 @@ describe('<BrevPanel>', () => {
         beregningErManueltFastsatt={false}
         dokumentdata={{}}
         tilgjengeligeVedtaksbrev={fritekstbrevTilgjenglig}
+        informasjonsbehovValues={{}}
         skalBrukeOverstyrendeFritekstBrev={false}
         begrunnelse=""
         previewCallback={sinon.spy()}
@@ -113,6 +118,7 @@ describe('<BrevPanel>', () => {
         beregningErManueltFastsatt={false}
         dokumentdata={{}}
         tilgjengeligeVedtaksbrev={ingenTilgjengeligeVedtaksbrev}
+        informasjonsbehovValues={{}}
         skalBrukeOverstyrendeFritekstBrev={false}
         begrunnelse=""
         previewCallback={sinon.spy()}
@@ -152,6 +158,7 @@ describe('<BrevPanel>', () => {
             },
           ],
         }}
+        informasjonsbehovValues={{}}
         skalBrukeOverstyrendeFritekstBrev={false}
         begrunnelse=""
         previewCallback={sinon.spy()}

@@ -9,14 +9,14 @@ import HistorikkDokumentLenke from './felles/HistorikkDokumentLenke';
 import HistorikkMal from '../HistorikkMalTsType';
 
 // TODO Kan denne slettast?
-const HistorikkMalFelles7og8: React.FunctionComponent<HistorikkMal & WrappedComponentProps> = ({
+const HistorikkMalFelles7og8 = ({
   intl,
   historikkinnslag,
   behandlingLocation,
   getKodeverknavn,
   createLocationForSkjermlenke,
   saksnummer,
-}) => {
+}: HistorikkMal & WrappedComponentProps) => {
   const { historikkinnslagDeler, dokumentLinks } = historikkinnslag;
   return (
     <>

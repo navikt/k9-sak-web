@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
 import { FormattedMessage } from 'react-intl';
@@ -62,7 +62,7 @@ interface MappedOwnProps {
   vurderTilbaketrekkAP?: Aksjonspunkt;
 }
 
-export const TilkjentYtelsePanelImpl: FC<PureOwnProps & MappedOwnProps> = ({
+export const TilkjentYtelsePanelImpl = ({
   beregningresultat,
   vurderTilbaketrekkAP,
   submitCallback,
@@ -74,7 +74,7 @@ export const TilkjentYtelsePanelImpl: FC<PureOwnProps & MappedOwnProps> = ({
   readOnly,
   alleKodeverk,
   arbeidsgiverOpplysningerPerId,
-}) => {
+}: Partial<PureOwnProps> & MappedOwnProps) => {
   const opphoersdato = beregningresultat?.opphoersdato;
 
   return (

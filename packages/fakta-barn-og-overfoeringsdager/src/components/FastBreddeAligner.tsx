@@ -1,4 +1,4 @@
-import React, { FunctionComponent, ReactNode } from 'react';
+import React, { ReactNode } from 'react';
 import styled from 'styled-components';
 
 const Rad = styled.div<{ padding?: string; margin?: string }>`
@@ -27,7 +27,7 @@ interface FastBreddeAlignerProps {
   };
 }
 
-const FastBreddeAligner: FunctionComponent<FastBreddeAlignerProps> = ({ kolonner, rad }) => (
+const FastBreddeAligner = ({ kolonner, rad }: FastBreddeAlignerProps) => (
   <Rad padding={rad?.padding} margin={rad?.margin}>
     {kolonner.map(({ width, id, content, padding }) => (
       <Kolonne width={width} key={id} padding={padding}>

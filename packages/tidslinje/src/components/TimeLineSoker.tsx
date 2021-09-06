@@ -34,7 +34,7 @@ const getKjønn = kode => {
   }
 };
 
-const TimeLineSoker: React.FunctionComponent<TimeLineSokerProps> = ({ hovedsokerKjonnKode, medsokerKjonnKode }) => {
+const TimeLineSoker = ({ hovedsokerKjonnKode, medsokerKjonnKode }: TimeLineSokerProps) => {
   const intl = useIntl();
   return (
     <div className={styles.timelineSokerContatiner}>

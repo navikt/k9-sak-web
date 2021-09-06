@@ -241,7 +241,7 @@ export const BeregningFormImpl = ({
         <Column xs="12" md="6">
           <Undertittel className={beregningStyles.panelLeft}>
             <FormattedMessage id="Beregningsgrunnlag.Title.Beregning" />
-          </Undertittel>1
+          </Undertittel>
           <VerticalSpacer twentyPx />
           <SkjeringspunktOgStatusPanel
             readOnly={readOnly}

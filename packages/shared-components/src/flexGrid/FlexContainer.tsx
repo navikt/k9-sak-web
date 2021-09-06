@@ -1,4 +1,4 @@
-import React, { ReactNode, FunctionComponent } from 'react';
+import React, { ReactNode } from 'react';
 import classnames from 'classnames/bind';
 
 import styles from './flexContainer.less';
@@ -11,7 +11,7 @@ interface OwnProps {
   fullHeight?: boolean;
 }
 
-const FlexContainer: FunctionComponent<OwnProps> = ({ children, wrap = false, fullHeight = false }) => (
+const FlexContainer = ({ children, wrap = false, fullHeight = false }: OwnProps) => (
   <div className={classNames('flexContainer', 'fluid', { flexWrap: wrap, fullHeight })}>{children}</div>
 );
 

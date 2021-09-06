@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from 'react';
+import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import Ekspanderbartpanel from 'nav-frontend-ekspanderbartpanel';
 import { Element, Normaltekst, Undertittel } from 'nav-frontend-typografi';
@@ -23,11 +23,7 @@ interface OwnProps {
   erRevurderingTilbakekrevingFeilBeløpBortfalt?: boolean;
 }
 
-interface StaticFunctions {
-  buildInitialValues?: (vedtaksbrevAvsnitt: VedtaksbrevAvsnitt[]) => any;
-}
-
-const TilbakekrevingEditerVedtaksbrevPanel: FunctionComponent<OwnProps> & StaticFunctions = ({
+const TilbakekrevingEditerVedtaksbrevPanel = ({
   vedtaksbrevAvsnitt,
   formName,
   readOnly,
@@ -36,7 +32,7 @@ const TilbakekrevingEditerVedtaksbrevPanel: FunctionComponent<OwnProps> & Static
   perioderSomIkkeHarUtfyltObligatoriskVerdi,
   fritekstOppsummeringPakrevdMenIkkeUtfylt = false,
   erRevurderingTilbakekrevingFeilBeløpBortfalt,
-}) => (
+}: OwnProps) => (
   <div className={styles.container}>
     <VerticalSpacer twentyPx />
     <Undertittel>

@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import { formValueSelector, reduxForm, InjectedFormProps } from 'redux-form';
 import { FormattedMessage, injectIntl, WrappedComponentProps } from 'react-intl';
@@ -37,9 +37,7 @@ interface MappedOwnProps {
  * Presentasjonskomponent. Denne modalen vises når saksbehandler valger 'Bytt behandlende enhet'.
  * Ved å angi ny enhet og begrunnelse og trykke på 'OK' blir behandlende enhet endret.
  */
-export const EndreBehandlendeEnhetModal: FunctionComponent<
-  PureOwnProps & MappedOwnProps & WrappedComponentProps & InjectedFormProps
-> = ({
+export const EndreBehandlendeEnhetModal = ({
   intl,
   handleSubmit,
   lukkModal,
@@ -48,7 +46,7 @@ export const EndreBehandlendeEnhetModal: FunctionComponent<
   gjeldendeBehandlendeEnhetNavn,
   nyEnhet,
   begrunnelse,
-}) => {
+}: PureOwnProps & MappedOwnProps & WrappedComponentProps & InjectedFormProps) => {
   const selectOptions = () =>
     behandlendeEnheter.map((enhet, index) => (
       <option value={`${index}`} key={enhet.enhetId}>

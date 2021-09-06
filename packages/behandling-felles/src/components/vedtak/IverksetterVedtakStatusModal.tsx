@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from 'react';
+import React from 'react';
 import { FormattedMessage, injectIntl, WrappedComponentProps } from 'react-intl';
 import { Column, Row } from 'nav-frontend-grid';
 import { Hovedknapp } from 'nav-frontend-knapper';
@@ -26,12 +26,12 @@ interface OwnProps {
  * Presentasjonskomponent. Denne modalen vises etter en vilkarsvurdering der behandlingsstatusen
  * er satt til Iverksetter vedtak. Ved å trykke på knapp blir den NAV-ansatte tatt tilbake til sokesiden.
  */
-const IverksetterVedtakStatusModal: FunctionComponent<OwnProps & WrappedComponentProps> = ({
+const IverksetterVedtakStatusModal = ({
   intl,
   lukkModal,
   visModal,
   behandlingsresultat,
-}) => {
+}: OwnProps & WrappedComponentProps) => {
   const erVedtakAvslatt = behandlingsresultat && behandlingsresultat.type.kode === behandlingResultatType.AVSLATT;
   const imageAltText = intl.formatMessage({
     id: erVedtakAvslatt ? 'IverksetterVedtakStatusModal.Avslatt' : 'IverksetterVedtakStatusModal.Innvilget',

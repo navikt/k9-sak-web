@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from 'react';
+import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import { Normaltekst } from 'nav-frontend-typografi';
 
@@ -10,12 +10,12 @@ import historikkEndretFeltType from '../../kodeverk/historikkEndretFeltType';
 import Skjermlenke from './felles/Skjermlenke';
 import HistorikkMal from '../HistorikkMalTsType';
 
-export const HistorikkMalTypeTilbakekreving: FunctionComponent<HistorikkMal> = ({
+export const HistorikkMalTypeTilbakekreving = ({
   historikkinnslag,
   behandlingLocation,
   getKodeverknavn,
   createLocationForSkjermlenke,
-}) => {
+}: HistorikkMal) => {
   const { historikkinnslagDeler } = historikkinnslag;
   if (historikkinnslagDeler.length === 0) {
     return null;

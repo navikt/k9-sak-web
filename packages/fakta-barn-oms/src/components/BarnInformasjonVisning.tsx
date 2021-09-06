@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from 'react';
+import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import { Normaltekst } from 'nav-frontend-typografi';
 import KombinertBarnOgRammevedtak from '@k9-sak-web/fakta-barn-oms/src/dto/KombinertBarnOgRammevedtak';
@@ -9,7 +9,7 @@ interface BarnInputProps {
   barnet: KombinertBarnOgRammevedtak;
 }
 
-const BarnInformasjonVisning: FunctionComponent<BarnInputProps> = ({ barnet }) => {
+const BarnInformasjonVisning = ({ barnet }: BarnInputProps) => {
   const { harSammeBosted, dødsdato, barnType } = barnet.barnRelevantIBehandling;
 
   return (
