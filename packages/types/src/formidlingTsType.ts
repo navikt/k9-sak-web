@@ -10,4 +10,11 @@ export type ForhåndsvisRequest = Readonly<{
   dokumentdata?: any;
 }>;
 
+export type Fritekstbrev = Readonly<{
+  fritekstbrev: {
+    brødtekst: string,
+    overskrift: string,
+  }
+}>
+
 export default ForhåndsvisRequest;

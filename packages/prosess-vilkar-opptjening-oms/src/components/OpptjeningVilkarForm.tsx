@@ -16,7 +16,7 @@ interface OpptjeningVilkarFormProps {
   aksjonspunkter: Aksjonspunkt[];
   status: string;
   lovReferanse?: string;
-  erOmsorgspenger?: boolean;
+  fagsakType?: string;
   readOnlySubmitButton: boolean;
   readOnly: boolean;
   submitCallback: (props: SubmitCallback[]) => void;
@@ -33,7 +33,7 @@ const OpptjeningVilkarForm = ({
   aksjonspunkter,
   status,
   lovReferanse,
-  erOmsorgspenger,
+  fagsakType,
   readOnlySubmitButton,
   readOnly,
   submitCallback,
@@ -52,7 +52,7 @@ const OpptjeningVilkarForm = ({
     aksjonspunkter={aksjonspunkter}
     status={status}
     lovReferanse={lovReferanse}
-    erOmsorgspenger={erOmsorgspenger}
+    fagsakType={fagsakType}
     vilkårPerioder={vilkårPerioder}
     periodeIndex={periodeIndex}
     opptjeninger={opptjeninger}

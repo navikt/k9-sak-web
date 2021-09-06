@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 import { Fagsak, Aksjonspunkt, Vilkar, OpptjeningBehandling, Opptjening, SubmitCallback } from '@k9-sak-web/types';
-import FagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import { SideMenu } from '@navikt/k9-react-components';
 import classNames from 'classnames/bind';
 import messages from '../i18n/nb_NO.json';
@@ -58,8 +57,6 @@ const OpptjeningVilkarProsessIndex = ({
   const { behandlingsresultat } = behandling;
   const vilkårsresultat = behandlingsresultat?.vilkårResultat?.OPPTJENINGSVILKÅRET;
 
-  const erOmsorgspenger = fagsak.sakstype.kode === FagsakYtelseType.OMSORGSPENGER;
-
   const mainContainerClassnames = cx('mainContainer', { 'mainContainer--withSideMenu': skalBrukeSidemeny });
 
   useEffect(() => {
@@ -90,7 +87,7 @@ const OpptjeningVilkarProsessIndex = ({
             vilkårsresultat={vilkårsresultat ? vilkårsresultat[activeTab] : null}
             status={status}
             lovReferanse={lovReferanse}
-            erOmsorgspenger={erOmsorgspenger}
+            fagsakType={fagsak.sakstype.kode}
             aksjonspunkter={aksjonspunkter}
             submitCallback={submitCallback}
             readOnly={isReadOnly}

@@ -7,6 +7,7 @@ import { behandlingForm, behandlingFormValueSelector } from '@fpsak-frontend/for
 import { ProsessStegBegrunnelseTextField, ProsessPanelTemplate } from '@k9-sak-web/prosess-felles';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
+import FagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import { Aksjonspunkt, Opptjening, SubmitCallback, Vilkårresultat, Vilkarperiode } from '@k9-sak-web/types';
 import { Element } from 'nav-frontend-typografi';
 import VilkarFields, { midlertidigInaktiv } from './VilkarFields';
@@ -26,7 +27,7 @@ interface OpptjeningVilkarAksjonspunktPanelImplProps {
   behandlingVersjon: number;
   isApOpen: boolean;
   lovReferanse?: string;
-  erOmsorgspenger?: boolean;
+  fagsakType?: string;
   readOnly: boolean;
   readOnlySubmitButton: boolean;
   status: string;
@@ -53,7 +54,7 @@ export const OpptjeningVilkarAksjonspunktPanelImpl = ({
   erVilkarOk,
   isApOpen,
   lovReferanse,
-  erOmsorgspenger,
+  fagsakType,
   originalErVilkarOk,
   readOnly,
   readOnlySubmitButton,
@@ -80,6 +81,14 @@ export const OpptjeningVilkarAksjonspunktPanelImpl = ({
       : false;
   };
 
+  const erOmsorgspenger =
+    fagsakType === FagsakYtelseType.OMSORGSPENGER ||
+    fagsakType === FagsakYtelseType.OMSORGSPENGER_ALENE_OM_OMSORGEN ||
+    fagsakType === FagsakYtelseType.OMSORGSPENGER_KRONISK_SYKT_BARN ||
+    fagsakType === FagsakYtelseType.OMSORGSPENGER_MIDLERTIDIG_ALENE;
+
+  const erPleiepenger = fagsakType === FagsakYtelseType.PLEIEPENGER;
+
   return (
     <ProsessPanelTemplate
       title={intl.formatMessage({ id: 'OpptjeningVilkarAksjonspunktPanel.Opptjeningsvilkaret' })}
@@ -96,7 +105,12 @@ export const OpptjeningVilkarAksjonspunktPanelImpl = ({
       isPeriodisertFormComplete={isFormComplete()}
     >
       <Element>
-        <FormattedMessage id="OpptjeningVilkarAksjonspunktPanel.SokerHarVurdertOpptjentRettTilOmsorgspenger" />
+        {erOmsorgspenger && (
+          <FormattedMessage id="OpptjeningVilkarAksjonspunktPanel.SokerHarVurdertOpptjentRettTilOmsorgspenger" />
+        )}
+        {erPleiepenger && (
+          <FormattedMessage id="OpptjeningVilkarAksjonspunktPanel.SokerHarVurdertOpptjentRettTilPleiepenger" />
+        )}
       </Element>
 
       <VilkarFields
