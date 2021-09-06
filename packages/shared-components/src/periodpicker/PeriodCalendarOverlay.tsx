@@ -2,16 +2,9 @@ import React, { Component } from 'react';
 import DayPicker, { AfterModifier, BeforeModifier, Modifier } from 'react-day-picker';
 import moment from 'moment';
 
-import { getRelatedTargetIE11, isIE11 } from '@fpsak-frontend/utils';
-
 import getPackageIntl from '../../i18n/getPackageIntl';
 
-const getRelatedTarget = (e: React.FocusEvent) => {
-  if (isIE11()) {
-    return getRelatedTargetIE11();
-  }
-  return Promise.resolve(e.relatedTarget);
-};
+const getRelatedTarget = (e: React.FocusEvent) => Promise.resolve(e.relatedTarget);
 
 interface OwnProps {
   onDayChange: (dato: Date) => void;
