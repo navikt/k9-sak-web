@@ -26,7 +26,7 @@ type FormValues = {
 };
 
 interface VilkarFieldsProps {
-  erOmsorgspenger: boolean;
+  erOmsorgspenger?: boolean;
   fieldPrefix: string;
   readOnly: boolean;
 }
