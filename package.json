@@ -40,7 +40,7 @@
     "@formatjs/intl-datetimeformat": "^4.2.3",
     "@formatjs/intl-numberformat": "^7.2.3",
     "@sentry/browser": "^5.30.0",
-    "axios": "0.21.1",
+    "axios": "0.21.3",
     "core-js": "^3.17.2",
     "dotenv": "^10.0.0",
     "history": "^4.10.1",

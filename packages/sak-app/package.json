@@ -48,7 +48,7 @@
     "@k9-sak-web/sak-meldinger": "1.0.0",
     "@k9-sak-web/types": "1.0.0",
     "@sentry/browser": "^5.30.0",
-    "axios": "0.21.1",
+    "axios": "0.21.3",
     "classnames": "^2.3.1",
     "history": "^4.10.1",
     "moment": "^2.29.1",
