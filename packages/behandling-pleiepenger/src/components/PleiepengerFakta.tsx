@@ -11,9 +11,8 @@ import {
   Dokument,
 } from '@k9-sak-web/types';
 import ac from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import ErrorBoundary from '@k9-sak-web/sak-app/src/app/ErrorBoundary';
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
-import { RestApiState, useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
+import { RestApiState } from '@k9-sak-web/rest-api-hooks';
 
 import faktaPanelDefinisjoner from '../panelDefinisjoner/faktaPleiepengerPanelDefinisjoner';
 import FetchedData from '../types/fetchedDataTsType';
@@ -56,7 +55,6 @@ const PleiepengerFakta = ({
   dokumenter,
 }: OwnProps & WrappedComponentProps) => {
   const { aksjonspunkter, ...rest } = data;
-  const { addErrorMessage } = useRestApiErrorDispatcher();
 
   const { startRequest: lagreAksjonspunkter, data: apBehandlingRes } =
     restApiPleiepengerHooks.useRestApiRunner<Behandling>(PleiepengerBehandlingApiKeys.SAVE_AKSJONSPUNKT);
@@ -116,18 +114,16 @@ const PleiepengerFakta = ({
     return (
       <SideMenuWrapper paneler={sidemenyPaneler} onClick={velgFaktaPanelCallback}>
         {valgtPanel && isLoading && <LoadingPanel />}
-        {valgtPanel && !isLoading && (
-          <ErrorBoundary errorMessageCallback={addErrorMessage}>
-            {valgtPanel.getPanelDef().getKomponent({
-              ...faktaData,
-              behandling,
-              alleKodeverk,
-              submitCallback: bekreftAksjonspunktCallback,
-              ...valgtPanel.getKomponentData(rettigheter, dataTilUtledingAvPleiepengerPaneler, hasFetchError),
-              dokumenter,
-            })}
-          </ErrorBoundary>
-        )}
+        {valgtPanel &&
+          !isLoading &&
+          valgtPanel.getPanelDef().getKomponent({
+            ...faktaData,
+            behandling,
+            alleKodeverk,
+            submitCallback: bekreftAksjonspunktCallback,
+            ...valgtPanel.getKomponentData(rettigheter, dataTilUtledingAvPleiepengerPaneler, hasFetchError),
+            dokumenter,
+          })}
       </SideMenuWrapper>
     );
   }

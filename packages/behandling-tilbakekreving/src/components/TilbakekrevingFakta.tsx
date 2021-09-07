@@ -4,8 +4,7 @@ import { injectIntl, WrappedComponentProps } from 'react-intl';
 import { SideMenuWrapper, faktaHooks, Rettigheter, useSetBehandlingVedEndring } from '@k9-sak-web/behandling-felles';
 import { KodeverkMedNavn, Behandling, Fagsak } from '@k9-sak-web/types';
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
-import { RestApiState, useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
-import ErrorBoundary from '@k9-sak-web/sak-app/src/app/ErrorBoundary';
+import { RestApiState } from '@k9-sak-web/rest-api-hooks';
 
 import { restApiTilbakekrevingHooks, TilbakekrevingBehandlingApiKeys } from '../data/tilbakekrevingBehandlingApi';
 import faktaPanelDefinisjoner from '../panelDefinisjoner/faktaTilbakekrevingPanelDefinisjoner';
@@ -40,12 +39,10 @@ const TilbakekrevingFakta = ({
   setBehandling,
 }: OwnProps & WrappedComponentProps) => {
   const { aksjonspunkter, perioderForeldelse, beregningsresultat, feilutbetalingFakta } = data;
-  const { addErrorMessage } = useRestApiErrorDispatcher();
 
   const { startRequest: lagreAksjonspunkter, data: apBehandlingRes } =
     restApiTilbakekrevingHooks.useRestApiRunner<Behandling>(TilbakekrevingBehandlingApiKeys.SAVE_AKSJONSPUNKT);
   useSetBehandlingVedEndring(apBehandlingRes, setBehandling);
-
 
   const dataTilUtledingAvTilbakekrevingPaneler = {
     fagsak,
@@ -93,18 +90,16 @@ const TilbakekrevingFakta = ({
     return (
       <SideMenuWrapper paneler={sidemenyPaneler} onClick={velgFaktaPanelCallback}>
         {valgtPanel && isLoading && <LoadingPanel />}
-        {valgtPanel && !isLoading && (
-          <ErrorBoundary errorMessageCallback={addErrorMessage}>
-            {valgtPanel.getPanelDef().getKomponent({
-              ...faktaData,
-              behandling,
-              alleKodeverk,
-              fpsakKodeverk,
-              submitCallback: bekreftAksjonspunktCallback,
-              ...valgtPanel.getKomponentData(rettigheter, dataTilUtledingAvTilbakekrevingPaneler, hasFetchError),
-            })}
-          </ErrorBoundary>
-        )}
+        {valgtPanel &&
+          !isLoading &&
+          valgtPanel.getPanelDef().getKomponent({
+            ...faktaData,
+            behandling,
+            alleKodeverk,
+            fpsakKodeverk,
+            submitCallback: bekreftAksjonspunktCallback,
+            ...valgtPanel.getKomponentData(rettigheter, dataTilUtledingAvTilbakekrevingPaneler, hasFetchError),
+          })}
       </SideMenuWrapper>
     );
   }

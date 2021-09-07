@@ -3,8 +3,7 @@ import { injectIntl, WrappedComponentProps } from 'react-intl';
 
 import { Rettigheter, SideMenuWrapper, faktaHooks, useSetBehandlingVedEndring } from '@k9-sak-web/behandling-felles';
 import { KodeverkMedNavn, Behandling, Fagsak, FagsakPerson, ArbeidsgiverOpplysningerPerId } from '@k9-sak-web/types';
-import { RestApiState, useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
-import ErrorBoundary from '@k9-sak-web/sak-app/src/app/ErrorBoundary';
+import { RestApiState } from '@k9-sak-web/rest-api-hooks';
 import ac from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
 
@@ -47,7 +46,6 @@ const FrisinnFakta = ({
   arbeidsgiverOpplysningerPerId,
 }: OwnProps & WrappedComponentProps) => {
   const { aksjonspunkter, ...rest } = data;
-  const { addErrorMessage } = useRestApiErrorDispatcher();
 
   const { startRequest: lagreAksjonspunkter, data: apBehandlingRes } = restApiFrisinnHooks.useRestApiRunner<Behandling>(
     FrisinnBehandlingApiKeys.SAVE_AKSJONSPUNKT,
@@ -108,17 +106,15 @@ const FrisinnFakta = ({
     return (
       <SideMenuWrapper paneler={sidemenyPaneler} onClick={velgFaktaPanelCallback}>
         {valgtPanel && isLoading && <LoadingPanel />}
-        {valgtPanel && !isLoading && (
-          <ErrorBoundary errorMessageCallback={addErrorMessage}>
-            {valgtPanel.getPanelDef().getKomponent({
-              ...faktaData,
-              behandling,
-              alleKodeverk,
-              submitCallback: bekreftAksjonspunktCallback,
-              ...valgtPanel.getKomponentData(rettigheter, dataTilUtledingAvFpPaneler, hasFetchError),
-            })}
-          </ErrorBoundary>
-        )}
+        {valgtPanel &&
+          !isLoading &&
+          valgtPanel.getPanelDef().getKomponent({
+            ...faktaData,
+            behandling,
+            alleKodeverk,
+            submitCallback: bekreftAksjonspunktCallback,
+            ...valgtPanel.getKomponentData(rettigheter, dataTilUtledingAvFpPaneler, hasFetchError),
+          })}
       </SideMenuWrapper>
     );
   }
