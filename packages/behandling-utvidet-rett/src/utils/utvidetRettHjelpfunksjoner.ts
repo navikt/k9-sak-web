@@ -15,7 +15,7 @@ export const erFagytelseTypeUtvidetRett = (fagytelseType: string) => {
 };
 
 export const harBarnSoktForRammevedtakOmKroniskSyk = (barnSoktFor: PersonopplysningerBasic[], rammevedtak: Rammevedtak[]): boolean => {
-  const identBarnSoktFor: string = barnSoktFor.length > 0 ? barnSoktFor[0].fnr : '';
+  const identBarnSoktFor: string = barnSoktFor.length > 0 ? barnSoktFor[0].fnr.substring(0, 6) : '';
   let finnesKSRammevedtakForBarnSoktFor = false;
   if(!!identBarnSoktFor
     && rammevedtak.length > 0
