@@ -18,7 +18,7 @@ import {
   ArbeidsgiverOpplysningerWrapper,
 } from '@k9-sak-web/types';
 
-import {erFagytelseTypeUtvidetRett} from "@k9-sak-web/behandling-utvidet-rett/src/utils/utvidetRettHjelpfunksjoner";
+import {erFagytelseTypeUtvidetRett} from '@k9-sak-web/behandling-utvidet-rett/src/utils/utvidetRettHjelpfunksjoner';
 import useTrackRouteParam from '../app/useTrackRouteParam';
 import getAccessRights from '../app/util/access';
 import { getProsessStegLocation, getFaktaLocation, getLocationWithDefaultProsessStegAndFakta } from '../app/paths';
