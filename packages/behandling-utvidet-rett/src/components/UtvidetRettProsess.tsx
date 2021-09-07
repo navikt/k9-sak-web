@@ -21,9 +21,7 @@ import '@fpsak-frontend/assets/styles/arrowForProcessMenu.less';
 import { ProsessProps } from '../types/ProsessProps';
 
 const forhandsvis = (data: any) => {
-  if (window.navigator.msSaveOrOpenBlob) {
-    window.navigator.msSaveOrOpenBlob(data);
-  } else if (URL.createObjectURL) {
+  if (URL.createObjectURL) {
     window.open(URL.createObjectURL(data));
   }
 };

@@ -60,7 +60,7 @@ const alleBehandlinger = [
 ];
 
 jest.mock('react-router-dom', () => ({
-  ...jest.requireActual('react-router-dom'),
+  ...(jest.requireActual('react-router-dom') as Record<string, unknown>),
   useHistory: () => ({
     push: jest.fn(),
   }),
