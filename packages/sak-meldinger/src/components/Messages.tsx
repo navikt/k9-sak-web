@@ -204,7 +204,7 @@ export const MessagesImpl = ({
               </div>
             </>
           )}
-          {brevmalkode === dokumentMalType.GENERELL_FRITEKSTBREV && (
+          {brevmalkode === dokumentMalType.GENERELT_FRITEKSTBREV && (
             <>
               <div className='input--xxl'>
                 <VerticalSpacer eightPx />
