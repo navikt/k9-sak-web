@@ -13,7 +13,7 @@ import { requestApi, K9sakApiKeys } from '../data/k9sakApi';
 import { FagsakProfileIndex } from './FagsakProfileIndex';
 
 jest.mock('react-router-dom', () => ({
-  ...jest.requireActual('react-router-dom'),
+  ...(jest.requireActual('react-router-dom') as Record<string, unknown>),
   useRouteMatch: () => ({ isExact: false }),
   useLocation: () => ({
     pathname: 'test',

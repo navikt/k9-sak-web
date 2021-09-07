@@ -11,9 +11,6 @@ yarn add @fpsak-frontend/utils
 ### isArrayEmpty
 ### without
 ### zip
-### isIE11
-### isEdge
-### getRelatedTargetIE11
 ### formatCurrencyWithKr
 ### formatCurrencyNoKr
 ### parseCurrencyInput

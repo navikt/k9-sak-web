@@ -3,6 +3,7 @@ import { expect } from 'chai';
 import sinon from 'sinon';
 
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import klageVurdering from '@fpsak-frontend/kodeverk/src/klageVurdering';
 import { KlageVurderingRadioOptionsNfp } from './KlageVurderingRadioOptionsNfp';
 
@@ -23,6 +24,7 @@ describe('<KlageVurderingRadioOptionsNfp>', () => {
   it('skal vise to options når klage opprettholdt', () => {
     const wrapper = shallowWithIntl(
       <KlageVurderingRadioOptionsNfp
+        fagsak={{ sakstype: { kode: fagsakYtelseType.OMSORGSPENGER } }}
         readOnly={false}
         readOnlySubmitButton
         medholdReasons={medholdReasons}
@@ -43,6 +45,7 @@ describe('<KlageVurderingRadioOptionsNfp>', () => {
   it('skal vise fem options når klage medhold', () => {
     const wrapper = shallowWithIntl(
       <KlageVurderingRadioOptionsNfp
+        fagsak={{ sakstype: { kode: fagsakYtelseType.OMSORGSPENGER } }}
         readOnly={false}
         readOnlySubmitButton
         aksjonspunktCode={aksjonspunktCodes.BEHANDLE_KLAGE_NFP}
@@ -61,5 +64,42 @@ describe('<KlageVurderingRadioOptionsNfp>', () => {
     expect(radios.at(2).prop('label').id).to.equal('Klage.Behandle.Omgjort');
     expect(radios.at(3).prop('label').id).to.equal('Klage.Behandle.Ugunst');
     expect(radios.at(4).prop('label').id).to.equal('Klage.Behandle.DelvisOmgjort');
+  });
+
+  it('skal vise hjemler når klagevurdering er opprettholdt', () => {
+    const wrapper = shallowWithIntl(
+      <KlageVurderingRadioOptionsNfp
+        fagsak={{ sakstype: { kode: fagsakYtelseType.OMSORGSPENGER } }}
+        readOnly={false}
+        readOnlySubmitButton
+        medholdReasons={medholdReasons}
+        aksjonspunktCode={aksjonspunktCodes.BEHANDLE_KLAGE_NFP}
+        klageVurdering={klageVurdering.STADFESTE_YTELSESVEDTAK}
+        previewCallback={sinon.spy()}
+        intl={intlMock}
+        formProps={{}}
+        sprakkode={sprakkode}
+      />,
+    );
+    expect(wrapper.find('SelectField').props().name).to.equal('klageHjemmel');
+    expect(wrapper.find('SelectField')).to.have.length(1);
+  });
+
+  it('skal ikke vise hjemler når klagevurdering er opprettholdt og behandling er frisinn', () => {
+    const wrapper = shallowWithIntl(
+      <KlageVurderingRadioOptionsNfp
+        fagsak={{ sakstype: { kode: fagsakYtelseType.FRISINN } }}
+        readOnly={false}
+        readOnlySubmitButton
+        medholdReasons={medholdReasons}
+        aksjonspunktCode={aksjonspunktCodes.BEHANDLE_KLAGE_NFP}
+        klageVurdering={klageVurdering.STADFESTE_YTELSESVEDTAK}
+        previewCallback={sinon.spy()}
+        intl={intlMock}
+        formProps={{}}
+        sprakkode={sprakkode}
+      />,
+    );
+    expect(wrapper.find('SelectField')).to.have.length(0);
   });
 });

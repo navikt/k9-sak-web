@@ -2,6 +2,7 @@ import React from 'react';
 import { action } from '@storybook/addon-actions';
 import { withKnobs, boolean, object } from '@storybook/addon-knobs';
 
+import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import klageVurderingCodes from '@fpsak-frontend/kodeverk/src/klageVurdering';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import KlagevurderingProsessIndex from '@fpsak-frontend/prosess-klagevurdering';
@@ -62,6 +63,8 @@ export const visPanelForKlagevurderingMedAksjonspunktNk = () => (
 export const visPanelForKlagevurderingMedAksjonspunktNfp = () => (
   <KlagevurderingProsessIndex
     behandling={behandling}
+    // fagsak={{ sakstype: { kode: fagsakYtelseType.OMSORGSPENGER } }}
+    fagsak={{ sakstype: { kode: fagsakYtelseType.PLEIEPENGER } }}
     klageVurdering={object('klageVurdering', {
       klageVurderingResultatNK: {
         klageVurdertAv: 'NK',

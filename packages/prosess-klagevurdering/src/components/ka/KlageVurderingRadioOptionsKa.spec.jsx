@@ -6,6 +6,7 @@ import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 
 import klageVurdering from '@fpsak-frontend/kodeverk/src/klageVurdering';
 import { KlageVurderingRadioOptionsKa } from './KlageVurderingRadioOptionsKa';
+
 import shallowWithIntl, { intlMock } from '../../../i18n';
 
 describe('<KlageVurderingRadioOptionsKaImpl>', () => {

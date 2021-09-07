@@ -7,9 +7,7 @@ import { K9sakApiKeys, restApiHooks } from './k9sakApi';
 type ForhandsvisFunksjon = (erHenleggelse: boolean, data: any) => void;
 
 const forhandsvis = (data: any) => {
-  if (window.navigator.msSaveOrOpenBlob) {
-    window.navigator.msSaveOrOpenBlob(data);
-  } else if (URL.createObjectURL) {
+  if (URL.createObjectURL) {
     window.open(URL.createObjectURL(data));
   }
 };

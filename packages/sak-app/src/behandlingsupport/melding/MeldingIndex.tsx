@@ -19,6 +19,7 @@ import {
 } from '@k9-sak-web/types';
 import SettPaVentModalIndex from '@k9-sak-web/modal-sett-pa-vent';
 
+import { Fritekstbrev } from '@k9-sak-web/types/src/formidlingTsType';
 import { useFpSakKodeverk } from '../../data/useKodeverk';
 import { useVisForhandsvisningAvMelding } from '../../data/useVisForhandsvisningAvMelding';
 import { setBehandlingOnHold } from '../../behandlingmenu/behandlingMenuOperations';
@@ -57,6 +58,7 @@ const getSubmitCallback =
           brevmalkode: values.brevmalkode,
           fritekst: values.fritekst,
           arsakskode: values.arsakskode,
+          fritekstbrev: values.fritekstbrev
         };
     return submitMessage(data)
       .then(() => resetMessage())
@@ -73,7 +75,7 @@ const getPreviewCallback =
     fagsakYtelseType: Kodeverk,
     fetchPreview: (erHenleggelse: boolean, data: any) => void,
   ) =>
-  (overstyrtMottaker: Mottaker, dokumentMal: string, fritekst: string) => {
+  (overstyrtMottaker: Mottaker, dokumentMal: string, fritekst: string, fritekstbrev?: Fritekstbrev) => {
     const data = erTilbakekrevingType({ kode: behandlingTypeKode })
       ? {
           fritekst: fritekst || ' ',
@@ -82,7 +84,10 @@ const getPreviewCallback =
       : {
           overstyrtMottaker,
           dokumentMal,
-          dokumentdata: { fritekst: fritekst || ' ' },
+          dokumentdata: {
+          fritekst: fritekst || ' ' ,
+          fritekstbrev
+        },
         };
     fetchPreview(false, data);
   };
