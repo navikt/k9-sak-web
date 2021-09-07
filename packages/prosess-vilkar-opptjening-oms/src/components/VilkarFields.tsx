@@ -129,7 +129,7 @@ VilkarFields.buildInitialValues = (
       ? vilkårPerioder.map(periode => ({
           erVilkarOk: Object.values(midlertidigInaktiv).includes(periode.merknad?.kode)
             ? periode.merknad.kode
-            : !!periode.avslagKode,
+            : periode.vilkarStatus.kode === vilkarUtfallType.OPPFYLT,
         }))
       : [],
   };

@@ -8,7 +8,7 @@ import { ProsessStegBegrunnelseTextField, ProsessPanelTemplate } from '@k9-sak-w
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import FagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
-import { Aksjonspunkt, Opptjening, SubmitCallback, Vilkårresultat, Vilkarperiode } from '@k9-sak-web/types';
+import { Aksjonspunkt, Opptjening, SubmitCallback, Vilkarperiode } from '@k9-sak-web/types';
 import { Element } from 'nav-frontend-typografi';
 import VilkarFields, { midlertidigInaktiv } from './VilkarFields';
 
@@ -23,7 +23,6 @@ interface VilkårField {
 interface OpptjeningVilkarAksjonspunktPanelImplProps {
   aksjonspunkter: Aksjonspunkt[];
   behandlingId: number;
-  vilkårsresultat: Vilkårresultat;
   behandlingVersjon: number;
   isApOpen: boolean;
   lovReferanse?: string;

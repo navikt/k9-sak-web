@@ -2,9 +2,15 @@ import React, { useState, useEffect } from 'react';
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 import { Fagsak, Aksjonspunkt, Vilkar, OpptjeningBehandling, Opptjening, SubmitCallback } from '@k9-sak-web/types';
 import { SideMenu } from '@navikt/k9-react-components';
+import { dateFormat } from '@fpsak-frontend/utils';
+import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
+import advarselIcon from '@fpsak-frontend/assets/images/advarsel.svg';
 import classNames from 'classnames/bind';
-import messages from '../i18n/nb_NO.json';
+
 import OpptjeningVilkarForm from './components/OpptjeningVilkarForm';
+
+import messages from '../i18n/nb_NO.json';
+
 import styles from './opptjeningVilkarProsessIndex.less';
 
 const cx = classNames.bind(styles);
@@ -54,9 +60,6 @@ const OpptjeningVilkarProsessIndex = ({
   const skalBrukeSidemeny = activeVilkår.perioder.length > 1;
   const perioder = activeVilkår.perioder.filter(periode => visAllePerioder || periode.vurdersIBehandlingen);
 
-  const { behandlingsresultat } = behandling;
-  const vilkårsresultat = behandlingsresultat?.vilkårResultat?.OPPTJENINGSVILKÅRET;
-
   const mainContainerClassnames = cx('mainContainer', { 'mainContainer--withSideMenu': skalBrukeSidemeny });
 
   useEffect(() => {
@@ -71,12 +74,15 @@ const OpptjeningVilkarProsessIndex = ({
         {skalBrukeSidemeny && (
           <div className={styles.sideMenuContainer}>
             <SideMenu
-              links={perioder.map((periode, index) => ({
+              links={perioder.map(({ periode, vilkarStatus }, index) => ({
                 active: activeTab === index,
-                label: `${intl.formatMessage({ id: 'Sidemeny.Opptjeningsperiode' })} ${index + 1}`,
+                label: `${dateFormat(periode.fom)} - ${dateFormat(periode.tom)}`,
+                iconSrc:
+                  isAksjonspunktOpen && vilkarStatus.kode === vilkarUtfallType.IKKE_VURDERT ? advarselIcon : null,
               }))}
               onClick={setActiveTab}
               theme="arrow"
+              heading={intl.formatMessage({ id: 'Sidemeny.Perioder' })}
             />
           </div>
         )}
@@ -84,7 +90,6 @@ const OpptjeningVilkarProsessIndex = ({
           <OpptjeningVilkarForm
             behandlingId={behandling.id}
             behandlingVersjon={behandling.versjon}
-            vilkårsresultat={vilkårsresultat ? vilkårsresultat[activeTab] : null}
             status={status}
             lovReferanse={lovReferanse}
             fagsakType={fagsak.sakstype.kode}

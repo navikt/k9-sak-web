@@ -1,4 +1,4 @@
-import { Aksjonspunkt, SubmitCallback, Vilkårresultat, Vilkarperiode, Opptjening } from '@k9-sak-web/types';
+import { Aksjonspunkt, SubmitCallback, Vilkarperiode, Opptjening } from '@k9-sak-web/types';
 import React from 'react';
 import OpptjeningVilkarAksjonspunktPanel from './OpptjeningVilkarAksjonspunktPanel';
 
@@ -11,7 +11,6 @@ import OpptjeningVilkarAksjonspunktPanel from './OpptjeningVilkarAksjonspunktPan
 interface OpptjeningVilkarFormProps {
   behandlingId: number;
   behandlingVersjon: number;
-  vilkårsresultat: Vilkårresultat;
   isAksjonspunktOpen: boolean;
   aksjonspunkter: Aksjonspunkt[];
   status: string;
@@ -28,7 +27,6 @@ interface OpptjeningVilkarFormProps {
 const OpptjeningVilkarForm = ({
   behandlingId,
   behandlingVersjon,
-  vilkårsresultat,
   isAksjonspunktOpen,
   aksjonspunkter,
   status,
@@ -48,7 +46,6 @@ const OpptjeningVilkarForm = ({
     readOnlySubmitButton={readOnlySubmitButton}
     behandlingId={behandlingId}
     behandlingVersjon={behandlingVersjon}
-    vilkårsresultat={vilkårsresultat}
     aksjonspunkter={aksjonspunkter}
     status={status}
     lovReferanse={lovReferanse}
