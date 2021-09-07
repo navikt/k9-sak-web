@@ -13,7 +13,7 @@ import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import innvilgetImageUrl from '@fpsak-frontend/assets/images/innvilget_valgt.svg';
 import { Behandling, Kodeverk } from '@k9-sak-web/types';
 
-import erFagytelseTypeUtvidetRett from '@k9-sak-web/behandling-utvidet-rett/src/utils/erFagytelseTypeUtvidetRett';
+import {erFagytelseTypeUtvidetRett} from '@k9-sak-web/behandling-utvidet-rett/src/utils/utvidetRettHjelpfunksjoner';
 import styles from './fatterVedtakApprovalModal.less';
 
 const getInfoTextCode = (

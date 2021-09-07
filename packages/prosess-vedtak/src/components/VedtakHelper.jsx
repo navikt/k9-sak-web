@@ -12,7 +12,7 @@ import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus'
 import tilbakekrevingVidereBehandling from '@fpsak-frontend/kodeverk/src/tilbakekrevingVidereBehandling';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { TIDENES_ENDE, getKodeverknavnFn } from '@fpsak-frontend/utils';
-import erFagytelseTypeUtvidetRett from '@k9-sak-web/behandling-utvidet-rett/src/utils/erFagytelseTypeUtvidetRett';
+import {erFagytelseTypeUtvidetRett} from '@k9-sak-web/behandling-utvidet-rett/src/utils/utvidetRettHjelpfunksjoner';
 
 const tilbakekrevingMedInntrekk = (tilbakekrevingKode, simuleringResultat) =>
   tilbakekrevingKode === tilbakekrevingVidereBehandling.TILBAKEKR_OPPRETT &&

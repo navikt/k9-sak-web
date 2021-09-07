@@ -16,6 +16,7 @@ const initializeOmsorgenForVilkar = (
     vilkar,
     angitteBarn,
     fagsaksType,
+    harBarnSoktForRammevedtakOmKroniskSyk
   },
 ) => {
   (window as any).renderMicrofrontendOmsorgsdagerApp(
@@ -29,6 +30,7 @@ const initializeOmsorgenForVilkar = (
       vilkarInformasjon: { vilkar, status },
       fagsaksType,
       FormState,
+      harBarnSoktForRammevedtakOmKroniskSyk
     }),
   );
 };
@@ -40,9 +42,9 @@ const hentVersjonInformasjon = () => {
     stylesheetIntegrity: 'sha384-3iUtet323prriMT769mdhUmWxrtoD2sTbqMwOZV0tKNwjCvRz+tNgmCtOq2Poocv',
   };
   const preprodVersjon = {
-    versjon: '2.0.4',
-    jsIntegrity: 'sha384-u2n/v/iDKvxXECxSD8n3Z0QeFfu74zEFzsoNGM3egZ4XRGRj9I0gfOY/E6zgPS68',
-    stylesheetIntegrity: 'sha384-zrAzgRd84XQvBESFpgMsjglo0FQbW2KE2+3r0qio1lA6y5G/CHD8JWz938HuirHQ',
+    versjon: '2.0.9',
+    jsIntegrity: 'sha384-kgBpgoA9COePv8VXCZXDwuxp9HSDNMtS21zszINDOU8/VfAfsGrVytR0NDODbp+n',
+    stylesheetIntegrity: 'sha384-yZqCZagpNwpD1z9gzcVU/3yE3qQSQAycDSwj8KyhgjqKwbweal0L+suvMaHu//lz',
   };
   return sjekkHvisErIProduksjon() ? produksjonsVersjon : preprodVersjon;
 };
