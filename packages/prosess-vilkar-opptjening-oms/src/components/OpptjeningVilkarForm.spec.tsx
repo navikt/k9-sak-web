@@ -4,7 +4,7 @@ import { shallow } from 'enzyme';
 
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { Aksjonspunkt, Vilkårresultat } from '@k9-sak-web/types';
+import { Aksjonspunkt } from '@k9-sak-web/types';
 
 import OpptjeningVilkarForm from './OpptjeningVilkarForm';
 import OpptjeningVilkarAksjonspunktPanel from './OpptjeningVilkarAksjonspunktPanel';
@@ -46,7 +46,6 @@ describe('<OpptjeningVilkarForm>', () => {
         }
         status="test"
         lovReferanse="Dette er en lovreferanse"
-        vilkårsresultat={{} as Vilkårresultat}
         periodeIndex={0}
         vilkårPerioder={[periode]}
         opptjeninger={[]}
