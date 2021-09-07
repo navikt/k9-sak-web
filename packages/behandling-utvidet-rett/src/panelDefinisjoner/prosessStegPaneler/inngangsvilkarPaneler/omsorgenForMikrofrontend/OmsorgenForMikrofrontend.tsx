@@ -52,15 +52,27 @@ const hentVersjonInformasjon = () => {
 export default props => {
   const omsorgenForVilkårAppID = 'omsorgenForRettApp';
   const { versjon, jsIntegrity, stylesheetIntegrity } = hentVersjonInformasjon();
+  const erIProduksjon = sjekkHvisErIProduksjon();
+  const path = erIProduksjon ? 'prod' : 'dev';
 
-  return (
-    <MicroFrontend
-      id={omsorgenForVilkårAppID}
-      jsSrc={`/k9/microfrontend/omsorgsdager/${versjon}/app.js`}
-      jsIntegrity={jsIntegrity}
-      stylesheetSrc={`/k9/microfrontend/omsorgsdager/${versjon}/styles.css`}
-      stylesheetIntegrity={stylesheetIntegrity}
-      onReady={() => initializeOmsorgenForVilkar(omsorgenForVilkårAppID, { ...props, FormState })}
-    />
-  );
+  if(erIProduksjon) {
+    return (
+      <MicroFrontend
+        id={omsorgenForVilkårAppID}
+        jsSrc={`/k9/microfrontend/omsorgsdager/${versjon}/app.js`}
+        jsIntegrity={jsIntegrity}
+        stylesheetSrc={`/k9/microfrontend/omsorgsdager/${versjon}/styles.css`}
+        stylesheetIntegrity={stylesheetIntegrity}
+        onReady={() => initializeOmsorgenForVilkar(omsorgenForVilkårAppID, {...props, FormState})}
+      />
+    );
+  }
+    return (
+      <MicroFrontend
+        id={omsorgenForVilkårAppID}
+        jsSrc={`/k9/microfrontend/omsorgsdager/${path}/app.js`}
+        stylesheetSrc={`/k9/microfrontend/omsorgsdager/${path}/styles.css`}
+        onReady={() => initializeOmsorgenForVilkar(omsorgenForVilkårAppID, {...props, FormState})}
+      />
+    );
 };
