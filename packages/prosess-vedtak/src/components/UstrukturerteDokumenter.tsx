@@ -52,8 +52,8 @@ const UstrukturerteDokumenter = ({ fritekstdokumenter }: UstrukturerteDokumenter
   <div className={styles.ustrukturerteDokumenter}>
     <Undertittel>Uregistrerte opplysninger</Undertittel>
     <Normaltekst className={styles.ustrukturerteDokumenter__text}>
-      Det finnes opplysninger som ikke er registrert i K9-sak. <br />
-      Vennligst se gjennom følgende dokumenter for å se om det finnes opplysninger som vil påvirke saken:
+      Noen av dokumentene i saken inneholder opplysninger som ikke kan punsjes. <br />
+      Se gjennom følgende dokumenter for å se om det finnes opplysninger som vil påvirke saken:
     </Normaltekst>
     <ul className={styles.ustrukturerteDokumenter__linkList}>{getLinks(fritekstdokumenter)}</ul>
   </div>
