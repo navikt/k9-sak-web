@@ -56,6 +56,7 @@ const PleiepengerFakta = ({
   dokumenter,
 }: OwnProps & WrappedComponentProps) => {
   const { aksjonspunkter, ...rest } = data;
+  const { addErrorMessage } = useRestApiErrorDispatcher();
 
   const { startRequest: lagreAksjonspunkter, data: apBehandlingRes } =
     restApiPleiepengerHooks.useRestApiRunner<Behandling>(PleiepengerBehandlingApiKeys.SAVE_AKSJONSPUNKT);
@@ -85,7 +86,6 @@ const PleiepengerFakta = ({
   );
 
   faktaHooks.useFaktaAksjonspunktNotifikator(faktaPaneler, setApentFaktaPanel, behandling.versjon);
-  const { addErrorMessage } = useRestApiErrorDispatcher();
 
   const [velgFaktaPanelCallback, bekreftAksjonspunktCallback] = faktaHooks.useCallbacks(
     faktaPaneler,

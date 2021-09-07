@@ -3,7 +3,8 @@ import { injectIntl, WrappedComponentProps } from 'react-intl';
 import { SideMenuWrapper, faktaHooks, useSetBehandlingVedEndring } from '@k9-sak-web/behandling-felles';
 import { Behandling } from '@k9-sak-web/types';
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
-import { RestApiState } from '@k9-sak-web/rest-api-hooks';
+import { RestApiState, useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
+import ErrorBoundary from '@k9-sak-web/sak-app/src/app/ErrorBoundary';
 import { restApiUtvidetRettHooks, UtvidetRettBehandlingApiKeys } from '../data/utvidetRettBehandlingApi';
 import faktaUtvidetRettPanelDefinisjoner from '../panelDefinisjoner/faktaUtvidetRettPanelDefinisjoner';
 import FetchedData from '../types/fetchedDataTsType';
@@ -27,6 +28,7 @@ const UtvidetRettFakta = ({
   arbeidsgiverOpplysningerPerId,
 }: FaktaProps & WrappedComponentProps) => {
   const { aksjonspunkter, ...rest } = data;
+  const { addErrorMessage } = useRestApiErrorDispatcher();
 
   const { startRequest: lagreAksjonspunkter, data: apBehandlingRes } =
     restApiUtvidetRettHooks.useRestApiRunner<Behandling>(UtvidetRettBehandlingApiKeys.SAVE_AKSJONSPUNKT);
@@ -80,15 +82,17 @@ const UtvidetRettFakta = ({
     return (
       <SideMenuWrapper paneler={sidemenyPaneler} onClick={velgFaktaPanelCallback}>
         {valgtPanel && isLoading && <LoadingPanel />}
-        {valgtPanel &&
-          !isLoading &&
-          valgtPanel.getPanelDef().getKomponent({
-            ...faktaData,
-            behandling,
-            alleKodeverk,
-            submitCallback: bekreftAksjonspunktCallback,
-            ...valgtPanel.getKomponentData(rettigheter, dataTilUtledingAvUtvidetRettPaneler, hasFetchError),
-          })}
+        {valgtPanel && !isLoading && (
+          <ErrorBoundary errorMessageCallback={addErrorMessage}>
+            {valgtPanel.getPanelDef().getKomponent({
+              ...faktaData,
+              behandling,
+              alleKodeverk,
+              submitCallback: bekreftAksjonspunktCallback,
+              ...valgtPanel.getKomponentData(rettigheter, dataTilUtledingAvUtvidetRettPaneler, hasFetchError),
+            })}
+          </ErrorBoundary>
+        )}
       </SideMenuWrapper>
     );
   }
