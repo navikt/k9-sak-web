@@ -85,30 +85,39 @@ const SoknadsfristVilkarProsessIndex = ({
 
   const dokumenterSomSkalVurderes = Array.isArray(soknadsfristStatus?.dokumentStatus)
     ? soknadsfristStatus.dokumentStatus.filter(dok =>
-        dok.status.some(
-          status =>
-            status.status.kode !== vilkarUtfallType.OPPFYLT &&
-            perioder.some(vilkårPeriode => {
-              const vilkårPeriodeFom = moment(vilkårPeriode.periode.fom);
-              const vilkårPeriodeTom = moment(vilkårPeriode.periode.tom);
-              const statusPeriodeFom = moment(status.periode.fom);
-              const statusPeriodeTom = moment(status.periode.tom);
-              return (
-                utledInnsendtSoknadsfrist(dok.innsendingstidspunkt, false) > vilkårPeriodeFom &&
-                ((vilkårPeriodeFom >= statusPeriodeFom && vilkårPeriodeFom <= statusPeriodeTom) ||
-                  (vilkårPeriodeTom >= statusPeriodeFom && vilkårPeriodeTom <= statusPeriodeTom))
-              );
-            }),
-        ),
+        dok.status.some(status => {
+          const erOppfyllt = status.status.kode === vilkarUtfallType.OPPFYLT;
+          const avklartEllerOverstyrt = dok.overstyrteOpplysninger || dok.avklarteOpplysninger;
+
+          if (erOppfyllt && !avklartEllerOverstyrt) {
+            return false;
+          }
+
+          const statusPeriodeFom = moment(status.periode.fom);
+          const statusPeriodeTom = moment(status.periode.tom);
+
+          return perioder.some(vilkårPeriode => {
+            const vilkårPeriodeFom = moment(vilkårPeriode.periode.fom);
+            const vilkårPeriodeTom = moment(vilkårPeriode.periode.tom);
+
+            return (
+              utledInnsendtSoknadsfrist(dok.innsendingstidspunkt, false) > vilkårPeriodeFom &&
+              ((vilkårPeriodeFom >= statusPeriodeFom && vilkårPeriodeFom <= statusPeriodeTom) ||
+                (vilkårPeriodeTom >= statusPeriodeFom && vilkårPeriodeTom <= statusPeriodeTom))
+            );
+          });
+        }),
       )
     : [];
 
+  const activePeriodeFom = moment(activePeriode.periode.fom);
+  const activePeriodeTom = moment(activePeriode.periode.tom);
+
   const dokumenterIAktivPeriode = dokumenterSomSkalVurderes.filter(dok =>
     dok.status.some(status => {
-      const activePeriodeFom = moment(activePeriode.periode.fom);
-      const activePeriodeTom = moment(activePeriode.periode.tom);
       const statusPeriodeFom = moment(status.periode.fom);
       const statusPeriodeTom = moment(status.periode.tom);
+
       return (
         utledInnsendtSoknadsfrist(dok.innsendingstidspunkt, false) > activePeriodeFom &&
         ((activePeriodeFom >= statusPeriodeFom && activePeriodeFom <= statusPeriodeTom) ||
