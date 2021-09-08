@@ -125,8 +125,9 @@ const lagTabellRader = (periodeData, ikkeVurdert) => {
   rows.push(lagDagsatsRad(dagsatser, ikkeVurdert));
   return rows;
 };
-const lagTabellRaderIkkeOppfylt = (listofAndeler, intl, halvGVerdi, key, fagsakYtelseType) => {
+const lagTabellRaderIkkeOppfylt = (listofAndeler, intl, key, grunnlagsdata) => {
   let ytelsetype = 'pleiepenger';
+  const {fagsakYtelseType, grunnbeløp, erMidlertidigInaktiv } = grunnlagsdata;
   if (fagsakYtelseType?.kode === 'OMP') {
     ytelsetype = 'omsorgspenger';
   }
@@ -138,14 +139,18 @@ const lagTabellRaderIkkeOppfylt = (listofAndeler, intl, halvGVerdi, key, fagsakY
         <Image
           className={styles.avslaat_icon}
           alt={intl.formatMessage(
-            { id: 'Beregningsgrunnlag.BeregningTable.VilkarIkkeOppfylt2' },
-            { ytelseType: ytelsetype, b: chunks => <b>{chunks}</b> },
+            { id: erMidlertidigInaktiv ? 
+              'Beregningsgrunnlag.BeregningTable.VilkarIkkeOppfyltMidlertidigInaktiv' :
+            'Beregningsgrunnlag.BeregningTable.VilkarIkkeOppfylt2' },
+            { ytelseType: ytelsetype, grunnbeløp: formatCurrencyNoKr(grunnbeløp), b: chunks => <b>{chunks}</b> },
           )}
           src={avslaatIkonUrl}
         />
         <FormattedMessage
-          id="Beregningsgrunnlag.BeregningTable.VilkarIkkeOppfylt2"
-          values={{ halvG: formatCurrencyNoKr(halvGVerdi), ytelseType: ytelsetype, b: chunks => <b>{chunks}</b> }}
+          id={erMidlertidigInaktiv ? 
+            'Beregningsgrunnlag.BeregningTable.VilkarIkkeOppfyltMidlertidigInaktiv' :
+          'Beregningsgrunnlag.BeregningTable.VilkarIkkeOppfylt2'}
+          values={{ grunnbeløp: formatCurrencyNoKr(grunnbeløp), ytelseType: ytelsetype, b: chunks => <b>{chunks}</b> }}
         />
       </Normaltekst>
     </React.Fragment>
@@ -174,9 +179,8 @@ const createPeriodeResultat = (
   periodeData,
   lagPeriodeHeaders,
   intl,
-  halvGVerdi,
   periodeIndex,
-  fagsakYtelseType,
+  grunnlagsdata
 ) => {
   const key = lagKeyForPeriode(periodeData.dagsatser[0], periodeData.headers[0]);
   const ikkeOppfylt = !!(
@@ -189,13 +193,20 @@ const createPeriodeResultat = (
     <React.Fragment key={`Wr${key}`}>
       {periodeData && lagPeriodeHeaders && lagPeriodeOverskrift(periodeData.headers, periodeIndex)}
       {!ikkeOppfylt && lagTabellRader(periodeData, ikkeVurdert)}
-      {ikkeOppfylt && lagTabellRaderIkkeOppfylt(periodeData.rowsAndeler, intl, halvGVerdi, key, fagsakYtelseType)}
+      {ikkeOppfylt && lagTabellRaderIkkeOppfylt(periodeData.rowsAndeler, intl, key, grunnlagsdata)}
     </React.Fragment>
   );
 };
-const BeregningsresutatPanel = ({ intl, vilkaarBG, periodeResultatTabeller, halvGVerdi }) => {
+const BeregningsresutatPanel = ({ intl, vilkaarBG, periodeResultatTabeller, 
+  halvGVerdi, erMidlertidigInaktiv }) => {
   const skalLagePeriodeHeaders = periodeResultatTabeller.length > 1;
   const context = useContext(BeregningContext);
+
+  const grunnlagsdata = {
+    fagsakYtelseType: context?.fagsakYtelseType,
+    grunnbeløp: halvGVerdi*2,
+    erMidlertidigInaktiv,
+  };
 
   return (
     <Panel className={beregningStyles.panelRight}>
@@ -209,9 +220,8 @@ const BeregningsresutatPanel = ({ intl, vilkaarBG, periodeResultatTabeller, halv
           periodeData,
           skalLagePeriodeHeaders,
           intl,
-          halvGVerdi,
           index,
-          context?.fagsakYtelseType,
+          grunnlagsdata
         ),
       )}
     </Panel>
@@ -222,5 +232,6 @@ BeregningsresutatPanel.propTypes = {
   halvGVerdi: PropTypes.number.isRequired,
   vilkaarBG: beregningsgrunnlagVilkarPropType.isRequired,
   periodeResultatTabeller: PropTypes.arrayOf(PropTypes.shape()).isRequired,
+  erMidlertidigInaktiv: PropTypes.bool.isRequired,
 };
 export default injectIntl(BeregningsresutatPanel);

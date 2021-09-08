@@ -426,12 +426,13 @@ export const createBeregningTableData = createSelector(
  * beregningen og hva dagsatsen ble.
  * Dersom vilkåret ble avslått vil grunnen til dette vises istedenfor tabellen
  */
-const BeregningsresultatTable = ({ intl, vilkaarBG, periodeResultatTabeller, halvGVerdi }) => (
+const BeregningsresultatTable = ({ intl, vilkaarBG, periodeResultatTabeller, halvGVerdi, erMidlertidigInaktiv }) => (
   <BeregningsresutatPanel
     intl={intl}
     halvGVerdi={halvGVerdi}
     periodeResultatTabeller={periodeResultatTabeller}
     vilkaarBG={vilkaarBG}
+    erMidlertidigInaktiv={erMidlertidigInaktiv}
   />
 );
 
@@ -440,6 +441,7 @@ BeregningsresultatTable.propTypes = {
   halvGVerdi: PropTypes.number.isRequired,
   vilkaarBG: beregningsgrunnlagVilkarPropType.isRequired,
   periodeResultatTabeller: PropTypes.arrayOf(PropTypes.shape()).isRequired,
+  erMidlertidigInaktiv: PropTypes.bool.isRequired,
 };
 
 const mapStateToProps = (state, ownProps) => ({
