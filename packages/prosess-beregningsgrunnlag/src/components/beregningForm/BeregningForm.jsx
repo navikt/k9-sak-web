@@ -196,6 +196,9 @@ const sjekkOmOmsorgspengegrunnlagOgSettAvviksvurdering = beregningsgrunnlag => {
   return true;
 };
 
+const sjekkErMidlertidigInaktiv = beregningsgrunnlag => 
+  beregningsgrunnlag.aktivitetStatus.some(a => a.kode === aktivitetStatus.MIDLERTIDIG_INAKTIV);
+
 // ------------------------------------------------------------------------------------------ //
 // Component : BeregningFormImpl
 // ------------------------------------------------------------------------------------------ //
@@ -229,6 +232,7 @@ export const BeregningFormImpl = ({
   const alleAndelerIForstePeriode = finnAlleAndelerIFørstePeriode(beregningsgrunnlagPeriode);
   const skalViseBeregningsresultat = !harFrisinngrunnlag(beregningsgrunnlag);
   const skalViseAvviksprosent = sjekkOmOmsorgspengegrunnlagOgSettAvviksvurdering(beregningsgrunnlag);
+  const erMidlertidigInaktiv = sjekkErMidlertidigInaktiv(beregningsgrunnlag);
   return (
     <div style={{ display: erAktiv ? 'block' : 'none' }}>
       {avklaringsbehov && (
@@ -317,6 +321,7 @@ export const BeregningFormImpl = ({
                 aktivitetStatusList={aktivitetStatusList}
                 grunnbelop={beregningsgrunnlag.grunnbeløp}
                 halvGVerdi={beregningsgrunnlag.halvG}
+                erMidlertidigInaktiv={erMidlertidigInaktiv}
               />
             </>
           )}

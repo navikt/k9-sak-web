@@ -1,6 +1,7 @@
 import beregningsgrunnlagAndeltyper from './beregningsgrunnlagAndeltyper';
 
 const aktivitetStatus = {
+  MIDLERTIDIG_INAKTIV: 'MIDL_INAKTIV',
   KUN_YTELSE: 'KUN_YTELSE',
   ARBEIDSTAKER: 'AT',
   FRILANSER: 'FL',

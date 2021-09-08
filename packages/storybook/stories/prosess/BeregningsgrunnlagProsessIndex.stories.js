@@ -194,14 +194,14 @@ const lagStatus = kode => ({
   kodeverk: 'AKTIVITET_STATUS',
 });
 
-const lagBG = (perioder, statuser, sammenligningsgrunnlagPrStatus) => {
+const lagBG = (perioder, statuser, sammenligningsgrunnlagPrStatus, grunnbeløp = 99858) => {
   const beregningsgrunnlag = {
     skjaeringstidspunktBeregning: '2019-09-16',
     skjæringstidspunkt: '2019-09-16',
     aktivitetStatus: statuser,
     beregningsgrunnlagPeriode: perioder,
     dekningsgrad: 80,
-    grunnbeløp: 99858,
+    grunnbeløp,
     sammenligningsgrunnlag: {
       sammenligningsgrunnlagFom: '2018-09-01',
       sammenligningsgrunnlagTom: '2019-08-31',
@@ -213,7 +213,7 @@ const lagBG = (perioder, statuser, sammenligningsgrunnlagPrStatus) => {
     ledetekstBrutto: 'Brutto beregningsgrunnlag',
     ledetekstAvkortet: 'Avkortet beregningsgrunnlag (6G=599148)',
     ledetekstRedusert: 'Redusert beregningsgrunnlag (100%)',
-    halvG: 49929,
+    halvG: grunnbeløp/2,
     faktaOmBeregning: {
       kortvarigeArbeidsforhold: null,
       frilansAndel: null,
@@ -2838,6 +2838,35 @@ export const militærOgSiviltjenesteSide33 = () => {
       readOnlySubmitButton={false}
       isAksjonspunktOpen={false}
       vilkar={vilkarMedUtfall(vilkarUtfallType.OPPFYLT, [
+        bg.skjaeringstidspunktBeregning,
+        bg.skjaeringstidspunktBeregning,
+      ])}
+      alleKodeverk={alleKodeverk}
+      arbeidsgiverOpplysningerPerId={arbeidsgivere}
+    />
+  );
+};
+
+export const midlertidigInaktivAvslagEnG = () => {
+  const andeler = [lagAndel('BA', 32232, undefined, false, false)];
+  const perioder = [lagPeriodeMedDagsats(andeler, 1844)];
+  perioder[0].bruttoInkludertBortfaltNaturalytelsePrAar = 450326;
+
+  const statuser = [lagStatus('MIDL_INAKTIV')];
+
+  const sammenligningsgrunnlagPrStatus = [lagSammenligningsGrunnlag(sammenligningType.ATFLSN, -42673, 26.2, -7131)];
+  const bg = lagBG(perioder, statuser, sammenligningsgrunnlagPrStatus, 106399);
+  bg.dekningsgrad = 100;
+  return (
+    <BeregningsgrunnlagProsessIndex
+      behandling={behandling}
+      beregningsgrunnlag={[bg, bg]}
+      submitCallback={action('button-click')}
+      aksjonspunkter={[]}
+      readOnly={false}
+      readOnlySubmitButton={false}
+      isAksjonspunktOpen={false}
+      vilkar={vilkarMedUtfall(vilkarUtfallType.IKKE_OPPFYLT, [
         bg.skjaeringstidspunktBeregning,
         bg.skjaeringstidspunktBeregning,
       ])}
