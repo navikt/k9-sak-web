@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from 'react';
+import React from 'react';
 import moment from 'moment';
 
 import {
@@ -30,25 +30,11 @@ interface OwnProps {
   behandlingVersjon: number;
 }
 
-interface StaticFunctions {
-  validate?: (
-    values: CustomArbeidsforhold,
-  ) => {
-    tomDato: string;
-    fomDato: string;
-  } | null;
-}
-
 // ----------------------------------------------------------------------------------
 // Component : LeggTilArbeidsforholdFelter
 // ----------------------------------------------------------------------------------
 
-const LeggTilArbeidsforholdFelter: FunctionComponent<OwnProps> & StaticFunctions = ({
-  readOnly,
-  formName,
-  behandlingId,
-  behandlingVersjon,
-}) => (
+const LeggTilArbeidsforholdFelter = ({ readOnly, formName, behandlingId, behandlingVersjon }: OwnProps) => (
   <BehandlingFormFieldCleaner
     formName={formName}
     fieldNames={['arbeidsgiverNavn', 'startdato', 'sluttdato', 'stillingsprosent', 'yrkestittel']}

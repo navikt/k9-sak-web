@@ -92,7 +92,6 @@ describe('<BeregningsgrunnlagProsessIndex>', () => {
         submitCallback={sinon.spy}
         isReadOnly={false}
         readOnlySubmitButton={false}
-        isAksjonspunktOpen={false}
         vilkar={vilkarMedUtfall(vilkarUtfallType.OPPFYLT)}
         alleKodeverk={alleKodeverk}
         arbeidsgiverOpplysningerPerId={{}}

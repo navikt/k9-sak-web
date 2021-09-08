@@ -1,10 +1,9 @@
 import React from 'react';
 import { TextAreaField } from '@fpsak-frontend/form';
-import { intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
 import { shallow } from 'enzyme';
 import { PersonArbeidsforholdDetailForm } from './PersonArbeidsforholdDetailForm';
-import shallowWithIntl from '../../../i18n/intl-enzyme-test-helper-fakta-arbeidsforhold';
+import shallowWithIntl, { intlMock } from '../../../i18n/intl-enzyme-test-helper-fakta-arbeidsforhold';
 import ArbeidsforholdRadioknapper from './ArbeidsforholdRadioknapper';
 
 describe('<PersonArbeidsforholdDetailForm>', () => {

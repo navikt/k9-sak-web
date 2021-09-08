@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import moment from 'moment';
 import { FormattedMessage, injectIntl, WrappedComponentProps } from 'react-intl';
@@ -47,11 +47,9 @@ const getPaVentText = (originalVentearsak: string, hasManualPaVent: boolean, fri
 
 const manuelleVenteArsaker = [
   venteArsakType.AVV_DOK,
-  venteArsakType.AVV_FODSEL,
   venteArsakType.UTV_FRIST,
   venteArsakType.AVV_RESPONS_REVURDERING,
   venteArsakType.FOR_TIDLIG_SOKNAD,
-  venteArsakType.VENT_PÅ_SISTE_AAP_ELLER_DP_MELDEKORT,
   venteArsakType.VENT_PÅ_NY_INNTEKTSMELDING_MED_GYLDIG_ARB_ID,
   venteArsakType.ANKE_VENTER_PAA_MERKNADER_FRA_BRUKER,
   venteArsakType.ANKE_OVERSENDT_TIL_TRYGDERETTEN,
@@ -61,6 +59,8 @@ const manuelleVenteArsaker = [
   venteArsakType.ENDRE_TILKJENT_YTELSE,
   venteArsakType.VENT_PÅ_MULIG_MOTREGNING,
   venteArsakType.VENT_MANGL_FUNKSJ_SAKSBEHANDLER,
+  venteArsakType.VENTER_SVAR_PORTEN,
+  venteArsakType.VENTER_SVAR_TEAMS,
 ];
 
 const automatiskeVentearsakerForTilbakekreving = [
@@ -95,9 +95,7 @@ interface MappedOwnProps {
   initialValues: FormValues;
 }
 
-export const SettPaVentModal: FunctionComponent<
-  PureOwnProps & MappedOwnProps & WrappedComponentProps & InjectedFormProps
-> = ({
+export const SettPaVentModal = ({
   intl,
   handleSubmit,
   cancelEvent,
@@ -110,7 +108,7 @@ export const SettPaVentModal: FunctionComponent<
   originalVentearsak,
   visBrevErBestilt = false,
   hasManualPaVent,
-}) => {
+}: PureOwnProps & Partial<MappedOwnProps> & WrappedComponentProps & InjectedFormProps) => {
   const venteArsakHasChanged = !(originalVentearsak === ventearsak || (!ventearsak && !originalVentearsak));
   const fristHasChanged = !(originalFrist === frist || (!frist && !originalFrist));
 
@@ -124,7 +122,7 @@ export const SettPaVentModal: FunctionComponent<
 
   return (
     <Modal
-      className={styles.modal}
+      className={`${styles.modal} ${styles.settPaVentModal}`}
       isOpen={showModal}
       closeButton={false}
       contentLabel={intl.formatMessage({

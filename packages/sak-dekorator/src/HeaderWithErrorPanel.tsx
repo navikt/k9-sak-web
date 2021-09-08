@@ -1,10 +1,6 @@
-import React, { FunctionComponent, useState, useCallback, useEffect, useRef, RefObject } from 'react';
+import React, { useState, useCallback, useEffect, useRef, RefObject } from 'react';
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
-import BoxedListWithLinks from '@navikt/boxed-list-with-links';
-import Header from '@navikt/nap-header';
-import Popover from '@navikt/nap-popover';
-import SystemButton from '@navikt/nap-system-button';
-import UserPanel from '@navikt/nap-user-panel';
+import { BoxedListWithLinks, Header, Popover, SystemButton, UserPanel } from '@navikt/k9-react-components';
 
 import { AINNTEKT_URL, AAREG_URL, RETTSKILDE_URL, SYSTEMRUTINE_URL } from '@k9-sak-web/konstanter';
 
@@ -54,6 +50,8 @@ const useOutsideClickEvent = (
 };
 
 const isRunningOnLocalhost = () => window.location.hostname === 'localhost';
+const isInDevelopmentMode = () =>
+  window.location.hostname === 'localhost' || window.location.hostname === 'app-q1.adeo.no';
 const getHeaderTitleHref = getPathToFplos => {
   if (!isRunningOnLocalhost()) {
     return getPathToFplos() || '/k9/web';
@@ -99,13 +97,13 @@ const lenkerFormatertForBoxedList = [
  * Denne viser lenke tilbake til hovedsiden, nettside-navnet, NAV-ansatt navn og lenke til rettskildene og systemrutinen.
  * I tillegg vil den vise potensielle feilmeldinger i ErrorMessagePanel.
  */
-const HeaderWithErrorPanel: FunctionComponent<OwnProps> = ({
+const HeaderWithErrorPanel = ({
   navAnsattName = '',
   removeErrorMessage,
   errorMessages = [],
   setSiteHeight,
   getPathToFplos,
-}) => {
+}: OwnProps) => {
   const [erLenkepanelApent, setLenkePanelApent] = useState(false);
   const wrapperRef = useOutsideClickEvent(erLenkepanelApent, setLenkePanelApent);
 
@@ -140,7 +138,10 @@ const HeaderWithErrorPanel: FunctionComponent<OwnProps> = ({
   );
 
   return (
-    <header ref={fixedHeaderRef} className={styles.container}>
+    <div
+      ref={fixedHeaderRef}
+      className={[styles.container, isInDevelopmentMode() ? styles.container_dev : ''].join(' ')}
+    >
       <RawIntlProvider value={intl}>
         <div ref={wrapperRef}>
           <Header
@@ -154,7 +155,7 @@ const HeaderWithErrorPanel: FunctionComponent<OwnProps> = ({
               popperProps={{
                 children: popperPropsChildren,
                 placement: 'bottom-start',
-                positionFixed: true,
+                strategy: 'fixed',
               }}
               referenceProps={{
                 children: referencePropsChildren,
@@ -165,7 +166,7 @@ const HeaderWithErrorPanel: FunctionComponent<OwnProps> = ({
         </div>
         <ErrorMessagePanel removeErrorMessage={removeErrorMessage} errorMessages={errorMessages} />
       </RawIntlProvider>
-    </header>
+    </div>
   );
 };
 

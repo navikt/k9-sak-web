@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useState } from 'react';
+import React, { useState } from 'react';
 
 import { Rettigheter, BehandlingPaVent, SettPaVentParams } from '@k9-sak-web/behandling-felles';
 import {
@@ -39,7 +39,7 @@ interface FaktaPanelInfo {
   textCode: string;
 }
 
-const UnntakPaneler: FunctionComponent<OwnProps> = ({
+const UnntakPaneler = ({
   fetchedData,
   fagsak,
   fagsakPerson,
@@ -57,7 +57,7 @@ const UnntakPaneler: FunctionComponent<OwnProps> = ({
   featureToggles,
   setBehandling,
   arbeidsgiverOpplysningerPerId,
-}) => {
+}: OwnProps) => {
   const [apentFaktaPanelInfo, setApentFaktaPanel] = useState<FaktaPanelInfo>();
 
   return (

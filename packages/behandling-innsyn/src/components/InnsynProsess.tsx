@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useState, useCallback } from 'react';
+import React, { useState, useCallback } from 'react';
 
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import {
@@ -18,9 +18,7 @@ import FetchedData from '../types/fetchedDataTsType';
 import '@fpsak-frontend/assets/styles/arrowForProcessMenu.less';
 
 const forhandsvis = data => {
-  if (window.navigator.msSaveOrOpenBlob) {
-    window.navigator.msSaveOrOpenBlob(data);
-  } else if (URL.createObjectURL) {
+  if (URL.createObjectURL) {
     window.open(URL.createObjectURL(data));
   }
 };
@@ -40,38 +38,32 @@ interface OwnProps {
   featureToggles: FeatureToggles;
 }
 
-const previewCallback = (
-  forhandsvisMelding,
-  fagsak: Fagsak,
-  fagsakPerson: FagsakPerson,
-  behandling: Behandling,
-) => parametre => {
-  const request = lagForhåndsvisRequest(behandling, fagsak, fagsakPerson, parametre);
-  return forhandsvisMelding(request).then(response => forhandsvis(response));
-};
-
-const getLagringSideeffekter = (
-  toggleIverksetterVedtakModal,
-  toggleOppdatereFagsakContext,
-  oppdaterProsessStegOgFaktaPanelIUrl,
-) => async aksjonspunktModels => {
-  const isVedtak = aksjonspunktModels.some(a => a.kode === aksjonspunktCodes.FORESLA_VEDTAK);
-
-  if (isVedtak) {
-    toggleOppdatereFagsakContext(false);
-  }
-
-  // Returner funksjon som blir kjørt etter lagring av aksjonspunkt(er)
-  return () => {
-    if (isVedtak) {
-      toggleIverksetterVedtakModal(true);
-    } else {
-      oppdaterProsessStegOgFaktaPanelIUrl('default', 'default');
-    }
+const previewCallback =
+  (forhandsvisMelding, fagsak: Fagsak, fagsakPerson: FagsakPerson, behandling: Behandling) => parametre => {
+    const request = lagForhåndsvisRequest(behandling, fagsak, fagsakPerson, parametre);
+    return forhandsvisMelding(request).then(response => forhandsvis(response));
   };
-};
 
-const InnsynProsess: FunctionComponent<OwnProps> = ({
+const getLagringSideeffekter =
+  (toggleIverksetterVedtakModal, toggleOppdatereFagsakContext, oppdaterProsessStegOgFaktaPanelIUrl) =>
+  async aksjonspunktModels => {
+    const isVedtak = aksjonspunktModels.some(a => a.kode === aksjonspunktCodes.FORESLA_VEDTAK);
+
+    if (isVedtak) {
+      toggleOppdatereFagsakContext(false);
+    }
+
+    // Returner funksjon som blir kjørt etter lagring av aksjonspunkt(er)
+    return () => {
+      if (isVedtak) {
+        toggleIverksetterVedtakModal(true);
+      } else {
+        oppdaterProsessStegOgFaktaPanelIUrl('default', 'default');
+      }
+    };
+  };
+
+const InnsynProsess = ({
   data,
   fagsak,
   fagsakPerson,
@@ -84,7 +76,7 @@ const InnsynProsess: FunctionComponent<OwnProps> = ({
   opneSokeside,
   setBehandling,
   featureToggles,
-}) => {
+}: OwnProps) => {
   const toggleSkalOppdatereFagsakContext = prosessStegHooks.useOppdateringAvBehandlingsversjon(
     behandling.versjon,
     oppdaterBehandlingVersjon,

@@ -11,8 +11,9 @@ import { intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper
 import { BeregningFP } from './BeregningFP';
 import BeregningForm2 from './beregningForm/BeregningForm';
 
-const lagBeregningsgrunnlag = (ferdigstilt, beregnetPrAar, sammenligningSum, avvikPromille) => {
+const lagBeregningsgrunnlag = (ferdigstilt, beregnetPrAar, sammenligningSum, avvikPromille, avklaringsbehov = null) => {
   const beregningsgrunnlag = {
+    avklaringsbehov,
     halvG: 30000,
     ledetekstBrutto: 'Brutto tekst',
     ledetekstAvkortet: 'Avkortet tekst',
@@ -85,6 +86,50 @@ const alleKodeverk = {
 };
 
 describe('<BeregningFP>', () => {
+  it('skal teste at BeregningForm får korrekte props fra BeregningFP med avklaringsbehov satt på BG', () => {
+    const avklaringsbehov = [
+      {
+        id: 55,
+        erAktivt: true,
+        definisjon: {
+          kode: aksjonspunktCodes.FASTSETT_BEREGNINGSGRUNNLAG_ARBEIDSTAKER_FRILANS,
+          navn: 'Fastsett varig brutto beregning ATFL',
+        },
+        toTrinnsBehandling: false,
+        status: {
+          kode: 'OPPR',
+          navn: 'Opprettet',
+        },
+        begrunnelse: 'En litt spesiell begrunnelse',
+        vilkarType: null,
+        kanLoses: true,
+      },
+    ];
+    const wrapper = shallow(
+      <BeregningFP
+        readOnly={false}
+        submitCallback={sinon.spy}
+        beregningsgrunnlag={[lagBeregningsgrunnlag(true, 100000, 100000, null, avklaringsbehov)]}
+        vilkar={vilkar}
+        behandling={behandling}
+        alleKodeverk={alleKodeverk}
+        arbeidsgiverOpplysningerPerId={{}}
+        gjeldendeAksjonspunkter={gjeldendeAksjonspunkter}
+        readOnlySubmitButton
+        sokerHarGraderingPaaAndelUtenBG={false}
+        intl={intlMock}
+        handleSubmit={() => {}}
+      />,
+    );
+    const beregningForm = wrapper.find(FieldArray);
+    expect(beregningForm.props().props.readOnly).to.have.equal(false);
+    expect(beregningForm.props().props.avklaringsbehov).to.eql(avklaringsbehov);
+    expect(beregningForm.props().props.relevanteStatuser.isArbeidstaker).to.eql(true);
+    expect(beregningForm.props().props.relevanteStatuser.isSelvstendigNaeringsdrivende).to.eql(true);
+    expect(beregningForm.props().props.relevanteStatuser.isKombinasjonsstatus).to.eql(true);
+    expect(beregningForm.props().props.relevanteStatuser.skalViseBeregningsgrunnlag).to.eql(true);
+    expect(beregningForm.props().props.submitCallback).to.have.equal(sinon.spy);
+  });
   it('skal teste at BeregningForm får korrekte props fra BeregningFP med beregnetAvvikPromille lik NULL', () => {
     const wrapper = shallow(
       <BeregningFP
@@ -96,7 +141,6 @@ describe('<BeregningFP>', () => {
         alleKodeverk={alleKodeverk}
         arbeidsgiverOpplysningerPerId={{}}
         gjeldendeAksjonspunkter={gjeldendeAksjonspunkter}
-        aksjonspunkter={gjeldendeAksjonspunkter}
         readOnlySubmitButton
         sokerHarGraderingPaaAndelUtenBG={false}
         intl={intlMock}
@@ -105,7 +149,7 @@ describe('<BeregningFP>', () => {
     );
     const beregningForm = wrapper.find(FieldArray);
     expect(beregningForm.props().props.readOnly).to.have.equal(false);
-    expect(beregningForm.props().props.gjeldendeAksjonspunkter).to.eql(gjeldendeAksjonspunkter);
+    expect(beregningForm.props().props.avklaringsbehov).to.eql(gjeldendeAksjonspunkter);
     expect(beregningForm.props().props.relevanteStatuser.isArbeidstaker).to.eql(true);
     expect(beregningForm.props().props.relevanteStatuser.isSelvstendigNaeringsdrivende).to.eql(true);
     expect(beregningForm.props().props.relevanteStatuser.isKombinasjonsstatus).to.eql(true);

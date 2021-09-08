@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from 'react';
+import React from 'react';
 import Panel from 'nav-frontend-paneler';
 
 import manglendeKlassifiseringIkon from '@fpsak-frontend/assets/images/behandle_disable.svg';
@@ -12,7 +12,7 @@ import styles from './manglendeKlassifiseringPanel.less';
  *
  * Presentasjonskomponent. Statisk visning av panel som tilsier ingen risikoklassifisering er utført for valgt behandling, eller at ingen behandling er valgt.
  */
-const ManglendeKlassifiseringPanel: FunctionComponent = () => (
+const ManglendeKlassifiseringPanel = () => (
   <Panel className={styles.ingenKlassifiseringUtfortTittel}>
     <TittelMedDivider imageSrc={manglendeKlassifiseringIkon} tittel="Risikopanel.Tittel.ManglerKlassifisering" />
   </Panel>

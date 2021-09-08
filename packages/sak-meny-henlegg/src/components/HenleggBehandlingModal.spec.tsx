@@ -4,12 +4,11 @@ import Modal from 'nav-frontend-modal';
 
 import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
-import { intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import behandlingResultatType from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 
 import { getHenleggArsaker, HenleggBehandlingModalImpl } from './HenleggBehandlingModal';
-import shallowWithIntl from '../../i18n/index';
+import shallowWithIntl, { intlMock } from '../../i18n/index';
 
 describe('<HenleggBehandlingModal>', () => {
   const ytelseType = {
@@ -48,11 +47,6 @@ describe('<HenleggBehandlingModal>', () => {
       kodeverk: 'BEHANDLING_RESULT_TYPE',
       navn: '',
     },
-    {
-      kode: behandlingResultatType.HENLAGT_SOKNAD_MANGLER,
-      kodeverk: 'BEHANDLING_RESULT_TYPE',
-      navn: '',
-    },
   ];
 
   it('skal rendre åpen modal', () => {
@@ -74,6 +68,7 @@ describe('<HenleggBehandlingModal>', () => {
           kode: behandlingType.FORSTEGANGSSOKNAD,
           kodeverk: '',
         }}
+        hentMottakere={sinon.spy()}
       />,
     );
 
@@ -110,6 +105,7 @@ describe('<HenleggBehandlingModal>', () => {
           kode: behandlingType.FORSTEGANGSSOKNAD,
           kodeverk: '',
         }}
+        hentMottakere={sinon.spy()}
       />,
     );
 
@@ -117,10 +113,9 @@ describe('<HenleggBehandlingModal>', () => {
     expect(selectField).toHaveLength(1);
     expect(selectField.prop('placeholder')).toEqual('Velg årsak til henleggelse');
     const values = selectField.prop('selectValues');
-    expect(values).toHaveLength(3);
+    expect(values).toHaveLength(2);
     expect(values[0].props.value).toEqual(behandlingResultatType.HENLAGT_SOKNAD_TRUKKET);
     expect(values[1].props.value).toEqual(behandlingResultatType.HENLAGT_FEILOPPRETTET);
-    expect(values[2].props.value).toEqual(behandlingResultatType.HENLAGT_SOKNAD_MANGLER);
   });
 
   it('skal bruke behandlingsresultat-typer for klage', () => {
@@ -162,7 +157,6 @@ describe('<HenleggBehandlingModal>', () => {
     expect(resultat.map(r => r.kode)).toEqual([
       behandlingResultatType.HENLAGT_SOKNAD_TRUKKET,
       behandlingResultatType.HENLAGT_FEILOPPRETTET,
-      behandlingResultatType.HENLAGT_SOKNAD_MANGLER,
     ]);
   });
 
@@ -172,7 +166,6 @@ describe('<HenleggBehandlingModal>', () => {
     expect(resultat.map(r => r.kode)).toEqual([
       behandlingResultatType.HENLAGT_SOKNAD_TRUKKET,
       behandlingResultatType.HENLAGT_FEILOPPRETTET,
-      behandlingResultatType.HENLAGT_SOKNAD_MANGLER,
     ]);
   });
 
@@ -205,6 +198,7 @@ describe('<HenleggBehandlingModal>', () => {
           kode: behandlingType.FORSTEGANGSSOKNAD,
           kodeverk: '',
         }}
+        hentMottakere={sinon.spy()}
       />,
     );
 
@@ -229,6 +223,7 @@ describe('<HenleggBehandlingModal>', () => {
           kode: behandlingType.FORSTEGANGSSOKNAD,
           kodeverk: '',
         }}
+        hentMottakere={sinon.spy()}
       />,
     );
 
@@ -256,6 +251,7 @@ describe('<HenleggBehandlingModal>', () => {
           kode: behandlingType.FORSTEGANGSSOKNAD,
           kodeverk: '',
         }}
+        hentMottakere={sinon.spy()}
       />,
     );
 
@@ -288,6 +284,7 @@ describe('<HenleggBehandlingModal>', () => {
           kode: behandlingType.FORSTEGANGSSOKNAD,
           kodeverk: '',
         }}
+        hentMottakere={sinon.spy()}
       />,
     );
 
@@ -319,6 +316,7 @@ describe('<HenleggBehandlingModal>', () => {
           kode: behandlingType.FORSTEGANGSSOKNAD,
           kodeverk: '',
         }}
+        hentMottakere={sinon.spy()}
       />,
     );
 
@@ -352,6 +350,7 @@ describe('<HenleggBehandlingModal>', () => {
           kode: behandlingType.FORSTEGANGSSOKNAD,
           kodeverk: '',
         }}
+        hentMottakere={sinon.spy()}
       />,
     );
 

@@ -7,7 +7,7 @@ import { Måned, Periode } from '@k9-sak-web/types/src/opplysningerFraSoknaden';
 import classnames from 'classnames/bind';
 import moment from 'moment';
 import { Element } from 'nav-frontend-typografi';
-import * as React from 'react';
+import React from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { connect } from 'react-redux';
 import { WrappedFieldArrayProps } from 'redux-form';

@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useEffect, useState, useCallback } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 
 import { Rettigheter, ReduxFormStateCleaner, useSetBehandlingVedEndring } from '@k9-sak-web/behandling-felles';
 import {
@@ -46,7 +46,7 @@ interface OwnProps {
   setRequestPendingMessage: (message: string) => void;
 }
 
-const BehandlingUnntakIndex: FunctionComponent<OwnProps> = ({
+const BehandlingUnntakIndex = ({
   behandlingEventHandler,
   behandlingId,
   oppdaterBehandlingVersjon,
@@ -61,7 +61,7 @@ const BehandlingUnntakIndex: FunctionComponent<OwnProps> = ({
   arbeidsgiverOpplysninger,
   setRequestPendingMessage,
   featureToggles,
-}) => {
+}: OwnProps) => {
   const [nyOgForrigeBehandling, setBehandlinger] = useState<{ current?: Behandling; previous?: Behandling }>({
     current: undefined,
     previous: undefined,
@@ -140,7 +140,7 @@ const BehandlingUnntakIndex: FunctionComponent<OwnProps> = ({
   });
 
   const harIkkeHentetBehandlingsdata = state === RestApiState.LOADING || state === RestApiState.NOT_STARTED;
-  if (!behandling || (harIkkeHentetBehandlingsdata && data === undefined)) {
+  if (!behandling || (harIkkeHentetBehandlingsdata && data === undefined) || state === RestApiState.ERROR) {
     return <LoadingPanel />;
   }
 

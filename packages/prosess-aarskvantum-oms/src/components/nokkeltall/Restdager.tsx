@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import { DagerTimer } from './durationUtils';
 import Nokkeltall from './Nokkeltall';
@@ -13,13 +13,13 @@ interface RestdagerProps {
   viserDetaljer: boolean;
 }
 
-const Restdager: React.FunctionComponent<RestdagerProps> = ({
+const Restdager = ({
   tilgodeDagertimer,
   dagerNavKanUtbetale,
   navHarUtbetaltDagerTimer,
   viserDetaljer,
   visDetaljer,
-}) => (
+}: RestdagerProps) => (
   <Nokkeltall
     overskrift={{
       antallDager: tilgodeDagertimer.dager,

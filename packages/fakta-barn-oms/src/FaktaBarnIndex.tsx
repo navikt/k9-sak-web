@@ -1,5 +1,5 @@
-import * as React from 'react';
-import { FunctionComponent } from 'react';
+import React from 'react';
+
 import { createIntl, createIntlCache, RawIntlProvider, FormattedMessage } from 'react-intl';
 import BarnDto from '@k9-sak-web/prosess-aarskvantum-oms/src/dto/BarnDto';
 import Seksjon from '@k9-sak-web/fakta-barn-og-overfoeringsdager/src/components/Seksjon';
@@ -68,7 +68,7 @@ const mapRammevedtakBarn = (
   };
 };
 
-const FaktaBarnIndex: FunctionComponent<FaktaBarnIndexProps> = ({ barn = [], rammevedtak = [], fagsaksType }) => {
+const FaktaBarnIndex = ({ barn = [], rammevedtak = [], fagsaksType }: FaktaBarnIndexProps) => {
   const midlertidigAleneansvar = rammevedtak.find(rv => rv.type === RammevedtakEnum.MIDLERTIDIG_ALENEOMSORG);
   let vanligeBarnTekstId;
   switch (fagsaksType) {

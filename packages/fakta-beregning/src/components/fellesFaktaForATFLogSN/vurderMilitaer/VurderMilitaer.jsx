@@ -13,7 +13,7 @@ import { required } from '@fpsak-frontend/utils';
  */
 export const vurderMilitaerField = 'vurderMilitær';
 
-const VurderMilitaer = ({ readOnly, isAksjonspunktClosed, fieldArrayID }) => (
+const VurderMilitaer = ({ readOnly, isAvklaringsbehovClosed, fieldArrayID }) => (
   <div>
     <Normaltekst>
       <FormattedMessage id="BeregningInfoPanel.VurderMilitaer.HarSøkerMilitærinntekt" />
@@ -22,7 +22,7 @@ const VurderMilitaer = ({ readOnly, isAksjonspunktClosed, fieldArrayID }) => (
       name={`${fieldArrayID}.${vurderMilitaerField}`}
       validate={[required]}
       readOnly={readOnly}
-      isEdited={isAksjonspunktClosed}
+      isEdited={isAvklaringsbehovClosed}
     >
       <RadioOption label={<FormattedMessage id="BeregningInfoPanel.FormAlternativ.Ja" />} value />
       <RadioOption label={<FormattedMessage id="BeregningInfoPanel.FormAlternativ.Nei" />} value={false} />
@@ -32,7 +32,7 @@ const VurderMilitaer = ({ readOnly, isAksjonspunktClosed, fieldArrayID }) => (
 
 VurderMilitaer.propTypes = {
   readOnly: PropTypes.bool.isRequired,
-  isAksjonspunktClosed: PropTypes.bool.isRequired,
+  isAvklaringsbehovClosed: PropTypes.bool.isRequired,
   fieldArrayID: PropTypes.string.isRequired,
 };
 

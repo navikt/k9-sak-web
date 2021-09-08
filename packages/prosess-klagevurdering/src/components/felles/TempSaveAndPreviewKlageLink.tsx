@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from 'react';
+import React from 'react';
 import classNames from 'classnames';
 import { FormattedMessage } from 'react-intl';
 
@@ -36,13 +36,13 @@ interface OwnProps {
   resetSaveKlage: () => void;
 }
 
-export const TempSaveAndPreviewKlageLink: FunctionComponent<OwnProps> = ({
+export const TempSaveAndPreviewKlageLink = ({
   formValues,
   saveKlage,
   aksjonspunktCode,
   readOnly,
   previewCallback,
-}) => {
+}: Partial<OwnProps>) => {
   const tempSave = event => {
     saveKlage(transformValues(formValues, aksjonspunktCode)).then(() =>
       previewCallback(getBrevData(formValues.fritekstTilBrev)),

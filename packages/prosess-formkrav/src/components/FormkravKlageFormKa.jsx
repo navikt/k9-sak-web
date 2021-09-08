@@ -9,7 +9,7 @@ import { behandlingForm } from '@fpsak-frontend/form';
 import { safeJSONParse } from '@fpsak-frontend/utils';
 
 import FormkravKlageForm, { getPaklagdVedtak, IKKE_PAKLAGD_VEDTAK } from './FormkravKlageForm';
-import { erTilbakekreving, påklagdTilbakekrevingInfo } from './FormkravKlageFormNfp';
+import { erTilbakekreving, påklagdBehandlingInfo } from './FormkravKlageFormNfp';
 
 /**
  * FormkravKlageFormKA
@@ -23,7 +23,7 @@ export const FormkravKlageFormKa = ({
   readOnly,
   readOnlySubmitButton,
   alleKodeverk,
-  personopplysninger,
+  fagsakPerson,
   arbeidsgiverOpplysningerPerId,
   avsluttedeBehandlinger,
   parterMedKlagerett,
@@ -38,7 +38,7 @@ export const FormkravKlageFormKa = ({
       aksjonspunktCode={aksjonspunktCodes.VURDERING_AV_FORMKRAV_KLAGE_KA}
       formProps={formProps}
       alleKodeverk={alleKodeverk}
-      personopplysninger={personopplysninger}
+      fagsakPerson={fagsakPerson}
       arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
       avsluttedeBehandlinger={avsluttedeBehandlinger}
       parterMedKlagerett={parterMedKlagerett}
@@ -50,7 +50,7 @@ export const FormkravKlageFormKa = ({
 FormkravKlageFormKa.propTypes = {
   behandlingId: PropTypes.number.isRequired,
   behandlingVersjon: PropTypes.number.isRequired,
-  personopplysninger: PropTypes.shape().isRequired,
+  fagsakPerson: PropTypes.shape().isRequired,
   arbeidsgiverOpplysningerPerId: PropTypes.shape().isRequired,
   parterMedKlagerett: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   readOnly: PropTypes.bool,
@@ -72,7 +72,7 @@ export const transformValues = (values, avsluttedeBehandlinger) => ({
   kode: aksjonspunktCodes.VURDERING_AV_FORMKRAV_KLAGE_KA,
   vedtak: values.vedtak === IKKE_PAKLAGD_VEDTAK ? null : values.vedtak,
   erTilbakekreving: erTilbakekreving(avsluttedeBehandlinger, values.vedtak),
-  tilbakekrevingInfo: påklagdTilbakekrevingInfo(avsluttedeBehandlinger, values.vedtak),
+  påklagdBehandlingInfo: påklagdBehandlingInfo(avsluttedeBehandlinger, values.vedtak),
   valgtKlagePart: safeJSONParse(values.valgtPartMedKlagerett),
 });
 

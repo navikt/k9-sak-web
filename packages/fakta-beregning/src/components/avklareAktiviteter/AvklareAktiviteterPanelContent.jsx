@@ -5,10 +5,10 @@ import AlertStripe from 'nav-frontend-alertstriper';
 import { Element } from 'nav-frontend-typografi';
 
 import { CheckboxField } from '@fpsak-frontend/form';
-import aksjonspunktCodes, { hasAksjonspunkt } from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import avklaringsbehovCodes, { harAvklaringsbehov } from '@fpsak-frontend/kodeverk/src/beregningAvklaringsbehovCodes';
 import { FaktaBegrunnelseTextField, FaktaSubmitButton } from '@k9-sak-web/fakta-felles';
 import { AksjonspunktHelpTextTemp, BorderBox, VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
+import { isAvklaringsbehovOpen } from '@fpsak-frontend/kodeverk/src/beregningAvklaringsbehovStatus';
 
 import VurderAktiviteterPanel from './VurderAktiviteterPanel';
 
@@ -17,20 +17,20 @@ import styles from './avklareAktiviteterPanel.less';
 export const BEGRUNNELSE_AVKLARE_AKTIVITETER_NAME = 'begrunnelseAvklareAktiviteter';
 export const MANUELL_OVERSTYRING_FIELD = 'manuellOverstyringBeregningAktiviteter';
 
-const { AVKLAR_AKTIVITETER, OVERSTYRING_AV_BEREGNINGSAKTIVITETER } = aksjonspunktCodes;
+const { AVKLAR_AKTIVITETER, OVERSTYRING_AV_BEREGNINGSAKTIVITETER } = avklaringsbehovCodes;
 
-const findAksjonspunktMedBegrunnelse = (aksjonspunkter, kode) =>
-  aksjonspunkter.filter(ap => ap.definisjon.kode === kode && ap.begrunnelse !== null)[0];
+const findAvklaringsbehovMedBegrunnelse = (avklaringsbehov, kode) =>
+  avklaringsbehov.filter(ap => ap.definisjon.kode === kode && ap.begrunnelse !== null)[0];
 
 const buildInitialValues = (
-  aksjonspunkter,
+  avklaringsbehov,
   avklarAktiviteter,
   alleKodeverk,
   aktivtBeregningsgrunnlagIndex,
   arbeidsgiverOpplysningerPerId,
 ) => {
-  const harAvklarAksjonspunkt = hasAksjonspunkt(AVKLAR_AKTIVITETER, aksjonspunkter);
-  const erOverstyrt = hasAksjonspunkt(OVERSTYRING_AV_BEREGNINGSAKTIVITETER, aksjonspunkter);
+  const harAvklarAksjonspunkt = harAvklaringsbehov(AVKLAR_AKTIVITETER, avklaringsbehov);
+  const erOverstyrt = harAvklaringsbehov(OVERSTYRING_AV_BEREGNINGSAKTIVITETER, avklaringsbehov);
   let initialValues = {};
   if (avklarAktiviteter && avklarAktiviteter.aktiviteterTomDatoMapping) {
     initialValues = VurderAktiviteterPanel.buildInitialValues(
@@ -41,15 +41,15 @@ const buildInitialValues = (
       arbeidsgiverOpplysningerPerId,
     );
   }
-  const overstyrAksjonspunktMedBegrunnelse = findAksjonspunktMedBegrunnelse(
-    aksjonspunkter,
+  const overstyrAksjonspunktMedBegrunnelse = findAvklaringsbehovMedBegrunnelse(
+    avklaringsbehov,
     OVERSTYRING_AV_BEREGNINGSAKTIVITETER,
   );
-  const aksjonspunktMedBegrunnelse = findAksjonspunktMedBegrunnelse(aksjonspunkter, AVKLAR_AKTIVITETER);
+  const aksjonspunktMedBegrunnelse = findAvklaringsbehovMedBegrunnelse(avklaringsbehov, AVKLAR_AKTIVITETER);
   const begrunnelse = erOverstyrt ? overstyrAksjonspunktMedBegrunnelse : aksjonspunktMedBegrunnelse;
   return {
     [MANUELL_OVERSTYRING_FIELD]: erOverstyrt,
-    aksjonspunkter,
+    avklaringsbehov,
     avklarAktiviteter,
     ...initialValues,
     ...FaktaBegrunnelseTextField.buildInitialValues(begrunnelse, BEGRUNNELSE_AVKLARE_AKTIVITETER_NAME),
@@ -64,7 +64,7 @@ export const getAvklarAktiviteter = createSelector(
 
 export const buildInitialValuesAvklarAktiviteter = createSelector(
   [
-    (beregningsgrunnlag, ownProps) => ownProps.aksjonspunkter,
+    (beregningsgrunnlag, ownProps) => ownProps.avklaringsbehov,
     beregningsgrunnlag => getAvklarAktiviteter(beregningsgrunnlag),
     (beregningsgrunnlag, ownProps) => ownProps.alleKodeverk,
     (beregningsgrunnlag, ownProps) => ownProps.aktivtBeregningsgrunnlagIndex,
@@ -73,27 +73,27 @@ export const buildInitialValuesAvklarAktiviteter = createSelector(
   buildInitialValues,
 );
 
-const skalViseSubmitKnappEllerBegrunnelse = (aksjonspunkter, erOverstyrt) =>
-  hasAksjonspunkt(AVKLAR_AKTIVITETER, aksjonspunkter) || erOverstyrt;
+const skalViseSubmitKnappEllerBegrunnelse = (avklaringsbehov, erOverstyrt) =>
+  harAvklaringsbehov(AVKLAR_AKTIVITETER, avklaringsbehov) || erOverstyrt;
 
-const hasOpenAksjonspunkt = (kode, aksjonspunkter) =>
-  aksjonspunkter.some(ap => ap.definisjon.kode === kode && isAksjonspunktOpen(ap.status.kode));
+const hasOpenAvklaringsbehov = (kode, avklaringsbehov) =>
+  avklaringsbehov.some(ap => ap.definisjon.kode === kode && isAvklaringsbehovOpen(ap.status.kode));
 
-const hasOpenAvklarAksjonspunkter = aksjonspunkter =>
-  hasOpenAksjonspunkt(AVKLAR_AKTIVITETER, aksjonspunkter) ||
-  hasOpenAksjonspunkt(OVERSTYRING_AV_BEREGNINGSAKTIVITETER, aksjonspunkter);
+const hasOpenBehovForAvklaringAvAktiviteter = avklaringsbehov =>
+  hasOpenAvklaringsbehov(AVKLAR_AKTIVITETER, avklaringsbehov) ||
+  hasOpenAvklaringsbehov(OVERSTYRING_AV_BEREGNINGSAKTIVITETER, avklaringsbehov);
 
 const AvklareAktiviteterPanelContent = props => {
   const {
     intl,
     readOnly,
-    isAksjonspunktClosed,
+    isAvklaringsbehovClosed,
     submittable,
     hasBegrunnelse,
     helpText,
-    harAndreAksjonspunkterIPanel,
+    harAndreAvklaringsbehovIPanel,
     erOverstyrt,
-    aksjonspunkter,
+    avklaringsbehov,
     kanOverstyre,
     erBgOverstyrt,
     alleKodeverk,
@@ -111,7 +111,7 @@ const AvklareAktiviteterPanelContent = props => {
   } = props;
   const avklarAktiviteter = getAvklarAktiviteter(beregningsgrunnlag);
   const skalViseSubmitknappInneforBorderBox =
-    (harAndreAksjonspunkterIPanel || erOverstyrt || erBgOverstyrt) && !hasOpenAvklarAksjonspunkter(aksjonspunkter);
+    (harAndreAvklaringsbehovIPanel || erOverstyrt || erBgOverstyrt) && !hasOpenBehovForAvklaringAvAktiviteter(avklaringsbehov);
 
   const harFlereBeregningsgrunnlag = Array.isArray(alleBeregningsgrunnlag);
 
@@ -137,15 +137,15 @@ const AvklareAktiviteterPanelContent = props => {
                 key="manuellOverstyring"
                 name={`${field}.${MANUELL_OVERSTYRING_FIELD}`}
                 label={{ id: 'AvklareAktiviteter.ManuellOverstyring' }}
-                readOnly={hasAksjonspunkt(OVERSTYRING_AV_BEREGNINGSAKTIVITETER, aksjonspunkter) || readOnly}
+                readOnly={harAvklaringsbehov(OVERSTYRING_AV_BEREGNINGSAKTIVITETER, avklaringsbehov) || readOnly}
                 onChange={initializeAktiviteter}
               />
             </div>
           )}
-          {(hasAksjonspunkt(AVKLAR_AKTIVITETER, aksjonspunkter) || kanOverstyre || erOverstyrt) && (
+          {(harAvklaringsbehov(AVKLAR_AKTIVITETER, avklaringsbehov) || kanOverstyre || erOverstyrt) && (
             <div>
-              {hasAksjonspunkt(AVKLAR_AKTIVITETER, aksjonspunkter) && (
-                <AksjonspunktHelpTextTemp isAksjonspunktOpen={!isAksjonspunktClosed}>
+              {harAvklaringsbehov(AVKLAR_AKTIVITETER, avklaringsbehov) && (
+                <AksjonspunktHelpTextTemp isAksjonspunktOpen={!isAvklaringsbehovClosed}>
                   {helpText}
                 </AksjonspunktHelpTextTemp>
               )}
@@ -170,17 +170,17 @@ const AvklareAktiviteterPanelContent = props => {
                   <VurderAktiviteterPanel
                     aktiviteterTomDatoMapping={avklarAktiviteter.aktiviteterTomDatoMapping}
                     readOnly={readOnly}
-                    isAksjonspunktClosed={isAksjonspunktClosed}
+                    isAvklaringsbehovClosed={isAvklaringsbehovClosed}
                     erOverstyrt={erOverstyrt}
                     alleKodeverk={alleKodeverk}
                     values={formValues}
-                    harAksjonspunkt={hasAksjonspunkt(AVKLAR_AKTIVITETER, aksjonspunkter)}
+                    harAvklaringsbehov={harAvklaringsbehov(AVKLAR_AKTIVITETER, avklaringsbehov)}
                     fieldArrayID={`${field}`}
                     arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
                   />
                 )}
                 <VerticalSpacer twentyPx />
-                {skalViseSubmitKnappEllerBegrunnelse(aksjonspunkter, erOverstyrt) && (
+                {skalViseSubmitKnappEllerBegrunnelse(avklaringsbehov, erOverstyrt) && (
                   <>
                     <FaktaBegrunnelseTextField
                       name={`${field}.${BEGRUNNELSE_AVKLARE_AKTIVITETER_NAME}`}
@@ -188,6 +188,7 @@ const AvklareAktiviteterPanelContent = props => {
                       isReadOnly={readOnly}
                       hasBegrunnelse={hasBegrunnelse}
                     />
+                    <VerticalSpacer twentyPx />
                     {skalViseSubmitknappInneforBorderBox && (
                       <FaktaSubmitButton
                         buttonText={intl.formatMessage({
@@ -196,7 +197,7 @@ const AvklareAktiviteterPanelContent = props => {
                         formName={formProps.form}
                         isSubmittable={submittable && submitEnabled && !formProps.error}
                         isReadOnly={readOnly}
-                        hasOpenAksjonspunkter={!isAksjonspunktClosed}
+                        hasOpenAksjonspunkter={!isAvklaringsbehovClosed}
                         behandlingId={behandlingId}
                         behandlingVersjon={behandlingVersjon}
                       />
@@ -205,7 +206,7 @@ const AvklareAktiviteterPanelContent = props => {
                 )}
               </BorderBox>
               {!skalViseSubmitknappInneforBorderBox &&
-                skalViseSubmitKnappEllerBegrunnelse(aksjonspunkter, erOverstyrt) && (
+                skalViseSubmitKnappEllerBegrunnelse(avklaringsbehov, erOverstyrt) && (
                   <>
                     <VerticalSpacer twentyPx />
                     <FaktaSubmitButton
@@ -215,7 +216,7 @@ const AvklareAktiviteterPanelContent = props => {
                       formName={formProps.form}
                       isSubmittable={submittable && submitEnabled && !formProps.error}
                       isReadOnly={readOnly}
-                      hasOpenAksjonspunkter={!isAksjonspunktClosed}
+                      hasOpenAksjonspunkter={!isAvklaringsbehovClosed}
                       behandlingId={behandlingId}
                       behandlingVersjon={behandlingVersjon}
                     />

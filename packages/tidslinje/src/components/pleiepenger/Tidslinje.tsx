@@ -1,14 +1,15 @@
-import React, { FunctionComponent, ReactNode, useEffect, useMemo, useRef } from 'react';
-import ReactDOM from 'react-dom';
+import React, { ReactNode, useEffect, useMemo, useRef } from 'react';
 import moment from 'moment';
-import Timeline from 'react-visjs-timeline';
 
+import { Timeline } from '@fpsak-frontend/tidslinje';
 import { ISO_DATE_FORMAT } from '@fpsak-frontend/utils';
 import { Column, Row } from 'nav-frontend-grid';
 import { Image, FlexRow } from '@fpsak-frontend/shared-components';
-import styles from './tidslinje.less';
+
 import Periode from './types/Periode';
 import TidslinjeRad from './types/TidslinjeRad';
+
+import styles from './tidslinje.less';
 
 interface EventProps {
   items: string[];
@@ -29,17 +30,21 @@ interface TidslinjeProps<Periodeinfo> {
 const momentDate = dateString => moment(dateString, ISO_DATE_FORMAT);
 
 const getOptions = (perioderSortert: Periode<any>[]) => ({
-  end: moment(perioderSortert[perioderSortert.length - 1].tom).add(2, 'days'),
+  end: moment(perioderSortert[perioderSortert.length - 1].tom)
+    .add(2, 'days')
+    .toDate(),
   locale: moment.locale('nb'),
   margin: { item: 14 },
-  max: moment(perioderSortert[perioderSortert.length - 1].tom).add(4, 'years'),
-  min: moment(perioderSortert[0].fom).subtract(4, 'weeks'),
+  max: moment(perioderSortert[perioderSortert.length - 1].tom)
+    .add(4, 'years')
+    .toDate(),
+  min: moment(perioderSortert[0].fom).subtract(4, 'weeks').toDate(),
   moment,
   moveable: true,
   orientation: { axis: 'top' },
   showCurrentTime: false,
   stack: false,
-  start: moment(perioderSortert[0].fom).subtract(1, 'days'),
+  start: moment(perioderSortert[0].fom).subtract(1, 'days').toDate(),
   tooltip: { followMouse: true },
   verticalScroll: false,
   width: '100%',
@@ -62,6 +67,7 @@ const createItems = (perioder: Periode<any>[]) =>
       .add(1, 'days') // Timeline sin end har til, men ikke med
       .toDate(),
     title: periode.hoverText,
+    content: '',
   }));
 
 const leggPåGroupId = (rad: TidslinjeRad<Periode<any>>) => {
@@ -77,26 +83,17 @@ const leggPåGroupId = (rad: TidslinjeRad<Periode<any>>) => {
   };
 };
 
-const Tidslinje: FunctionComponent<TidslinjeProps<any>> = ({
+const Tidslinje = ({
   rader,
   customTimes,
   velgPeriode,
   valgtPeriode,
   setTimelineRef,
   sideContentRader,
-}) => {
+}: TidslinjeProps<any>) => {
   const timelineRef = useRef();
 
   useEffect(() => setTimelineRef && setTimelineRef(timelineRef), [timelineRef]);
-
-  useEffect(() => {
-    // TODO Fjern når denne er retta: https://github.com/Lighthouse-io/react-visjs-timeline/issues/40
-    // eslint-disable-next-line react/no-find-dom-node
-    const node = ReactDOM.findDOMNode(timelineRef.current);
-    if (node) {
-      node.children[0].style.visibility = 'visible';
-    }
-  }, []);
 
   const allePerioderSortert = useMemo(
     () =>
@@ -113,8 +110,8 @@ const Tidslinje: FunctionComponent<TidslinjeProps<any>> = ({
         <Timeline
           ref={timelineRef}
           options={getOptions(allePerioderSortert)}
-          items={createItems(allePerioderSortert)}
-          groups={createGroups(rader)}
+          initialItems={createItems(allePerioderSortert)}
+          initialGroups={createGroups(rader)}
           customTimes={customTimes}
           selectHandler={velgPeriode}
           selection={[valgtPeriode ? valgtPeriode.id : null]}

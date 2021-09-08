@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from 'react';
+import React from 'react';
 import { createIntl, createIntlCache, RawIntlProvider, FormattedMessage } from 'react-intl';
 
 import { Normaltekst } from 'nav-frontend-typografi';
@@ -24,7 +24,7 @@ interface OwnProps {
   finnPathToFagsak: (saksnummer: string) => string;
 }
 
-const AktorSakIndex: FunctionComponent<OwnProps> = ({ valgtAktorId, aktorInfo, alleKodeverk, finnPathToFagsak }) => (
+const AktorSakIndex = ({ valgtAktorId, aktorInfo, alleKodeverk, finnPathToFagsak }: OwnProps) => (
   <RawIntlProvider value={intl}>
     {aktorInfo && <AktoerGrid aktorInfo={aktorInfo} alleKodeverk={alleKodeverk} finnPathToFagsak={finnPathToFagsak} />}
     {!aktorInfo && (

@@ -1,11 +1,19 @@
-import React, { FunctionComponent, useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { Redirect, useLocation, useRouteMatch } from 'react-router-dom';
 import { Location } from 'history';
 
 import { LoadingPanel, requireProps } from '@fpsak-frontend/shared-components';
 import BehandlingVelgerSakIndex from '@k9-sak-web/sak-behandling-velger';
 import FagsakProfilSakIndex from '@fpsak-frontend/sak-fagsak-profil';
-import { KodeverkMedNavn, Fagsak, Aksjonspunkt, Risikoklassifisering, BehandlingAppKontekst } from '@k9-sak-web/types';
+import {
+  KodeverkMedNavn,
+  Fagsak,
+  Aksjonspunkt,
+  Risikoklassifisering,
+  BehandlingAppKontekst,
+  Personopplysninger,
+  ArbeidsgiverOpplysningerPerId,
+} from '@k9-sak-web/types';
 import { RestApiState } from '@k9-sak-web/rest-api-hooks';
 
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
@@ -38,9 +46,11 @@ interface OwnProps {
   oppfriskBehandlinger: () => void;
   fagsakRettigheter: SakRettigheter;
   behandlingRettigheter?: BehandlingRettigheter;
+  personopplysninger?: Personopplysninger;
+  arbeidsgiverOpplysningerPerId?: ArbeidsgiverOpplysningerPerId;
 }
 
-export const FagsakProfileIndex: FunctionComponent<OwnProps> = ({
+export const FagsakProfileIndex = ({
   fagsak,
   alleBehandlinger,
   harHentetBehandlinger,
@@ -49,7 +59,9 @@ export const FagsakProfileIndex: FunctionComponent<OwnProps> = ({
   oppfriskBehandlinger,
   fagsakRettigheter,
   behandlingRettigheter,
-}) => {
+  personopplysninger,
+  arbeidsgiverOpplysningerPerId,
+}: OwnProps) => {
   const [showAll, setShowAll] = useState(!behandlingId);
   const toggleShowAll = useCallback(() => setShowAll(!showAll), [showAll]);
 
@@ -131,6 +143,8 @@ export const FagsakProfileIndex: FunctionComponent<OwnProps> = ({
                 behandlingRettigheter={behandlingRettigheter}
                 sakRettigheter={fagsakRettigheter}
                 behandlendeEnheter={behandlendeEnheter}
+                personopplysninger={personopplysninger}
+                arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
               />
             );
           }}

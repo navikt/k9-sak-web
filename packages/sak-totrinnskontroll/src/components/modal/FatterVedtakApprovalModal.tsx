@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from 'react';
+import React from 'react';
 import { FormattedMessage, injectIntl, WrappedComponentProps } from 'react-intl';
 import { Column, Row } from 'nav-frontend-grid';
 import { Hovedknapp } from 'nav-frontend-knapper';
@@ -13,6 +13,7 @@ import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import innvilgetImageUrl from '@fpsak-frontend/assets/images/innvilget_valgt.svg';
 import { Behandling, Kodeverk } from '@k9-sak-web/types';
 
+import {erFagytelseTypeUtvidetRett} from '@k9-sak-web/behandling-utvidet-rett/src/utils/utvidetRettHjelpfunksjoner';
 import styles from './fatterVedtakApprovalModal.less';
 
 const getInfoTextCode = (
@@ -49,10 +50,7 @@ const getInfoTextCode = (
     if (ytelseType.kode === FagsakYtelseType.FRISINN) {
       return 'FatterVedtakApprovalModal.IkkeInnvilgetFRISINN';
     }
-    if (
-      ytelseType.kode === FagsakYtelseType.OMSORGSPENGER_KRONISK_SYKT_BARN ||
-      ytelseType.kode === FagsakYtelseType.OMSORGSPENGER_MIDLERTIDIG_ALENE
-    ) {
+    if (erFagytelseTypeUtvidetRett(ytelseType.kode)) {
       return 'FatterVedtakApprovalModal.IkkeInnvilgetUtvidetRett';
     }
     return 'FatterVedtakApprovalModal.IkkeInnvilgetOmsorgspenger';
@@ -65,10 +63,7 @@ const getInfoTextCode = (
     if (ytelseType.kode === FagsakYtelseType.FRISINN) {
       return 'FatterVedtakApprovalModal.OpphortFRISINN';
     }
-    if (
-      ytelseType.kode === FagsakYtelseType.OMSORGSPENGER_KRONISK_SYKT_BARN ||
-      ytelseType.kode === FagsakYtelseType.OMSORGSPENGER_MIDLERTIDIG_ALENE
-    ) {
+    if (erFagytelseTypeUtvidetRett(ytelseType.kode)) {
       return 'FatterVedtakApprovalModal.OpphortUtvidetRett';
     }
     return 'FatterVedtakApprovalModal.OpphortOmsorgpenger';
@@ -81,10 +76,7 @@ const getInfoTextCode = (
   if (ytelseType.kode === FagsakYtelseType.PLEIEPENGER) {
     return 'FatterVedtakApprovalModal.InnvilgetPleiepenger';
   }
-  if (
-    ytelseType.kode === FagsakYtelseType.OMSORGSPENGER_KRONISK_SYKT_BARN ||
-    ytelseType.kode === FagsakYtelseType.OMSORGSPENGER_MIDLERTIDIG_ALENE
-  ) {
+  if (erFagytelseTypeUtvidetRett(ytelseType.kode)) {
     return 'FatterVedtakApprovalModal.InnvilgetUtvidetRett';
   }
   return 'FatterVedtakApprovalModal.InnvilgetOmsorgspenger';
@@ -111,10 +103,7 @@ const getModalDescriptionTextCode = (
   if (ytelseType.kode === FagsakYtelseType.PLEIEPENGER) {
     return 'FatterVedtakApprovalModal.ModalDescriptionPleiePengerApproval';
   }
-  if (
-    ytelseType.kode === FagsakYtelseType.OMSORGSPENGER_KRONISK_SYKT_BARN ||
-    ytelseType.kode === FagsakYtelseType.OMSORGSPENGER_MIDLERTIDIG_ALENE
-  ) {
+  if (erFagytelseTypeUtvidetRett(ytelseType.kode)) {
     return 'FatterVedtakApprovalModal.ModalDescriptionUtvidetRettApproval';
   }
   return 'FatterVedtakApprovalModal.ModalDescriptionOMSApproval';
@@ -178,7 +167,6 @@ interface OwnProps {
   fagsakYtelseType: Kodeverk;
   erKlageWithKA?: boolean;
   behandlingsresultat?: Behandling['behandlingsresultat'];
-  behandlingId: number;
   behandlingStatusKode: string;
   behandlingTypeKode: string;
   harSammeResultatSomOriginalBehandling?: boolean;
@@ -190,7 +178,7 @@ interface OwnProps {
  * Presentasjonskomponent. Denne modalen vises en lightbox etter at en beslutter har godkjent alle aksjonspunkter
  * med totrinnskontroll. Ved å trykke på knapp blir beslutter tatt tilbake til sokesiden.
  */
-const FatterVedtakApprovalModal: FunctionComponent<OwnProps & WrappedComponentProps> = ({
+const FatterVedtakApprovalModal = ({
   intl,
   closeEvent,
   allAksjonspunktApproved,
@@ -200,7 +188,7 @@ const FatterVedtakApprovalModal: FunctionComponent<OwnProps & WrappedComponentPr
   harSammeResultatSomOriginalBehandling,
   fagsakYtelseType,
   erKlageWithKA,
-}) => {
+}: OwnProps & WrappedComponentProps) => {
   const isBehandlingsresultatOpphor =
     behandlingsresultat && behandlingsresultat.type.kode === behandlingResultatType.OPPHOR;
   const infoTextCode = utledInfoTextCode(

@@ -16,10 +16,10 @@ import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 
 import { connect } from 'react-redux';
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import avklaringsbehovCodes from '@fpsak-frontend/kodeverk/src/beregningAvklaringsbehovCodes';
 import periodeAarsak from '@fpsak-frontend/kodeverk/src/periodeAarsak';
 import { createSelector } from 'reselect';
-import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
+import { isAvklaringsbehovOpen } from '@fpsak-frontend/kodeverk/src/beregningAvklaringsbehovStatus';
 import { InputField, behandlingFormValueSelector } from '@fpsak-frontend/form';
 
 import createVisningsnavnForAktivitet from '../../util/createVisningsnavnForAktivitet';
@@ -33,14 +33,14 @@ const formPrefix = 'inntektField';
 const {
   FASTSETT_BEREGNINGSGRUNNLAG_TIDSBEGRENSET_ARBEIDSFORHOLD,
   FASTSETT_BEREGNINGSGRUNNLAG_ARBEIDSTAKER_FRILANS,
-} = aksjonspunktCodes;
+} = avklaringsbehovCodes;
 
-const finnAksjonspunktForFastsettBgTidsbegrensetAT = gjeldendeAksjonspunkter =>
-  gjeldendeAksjonspunkter &&
-  gjeldendeAksjonspunkter.find(
-    ap =>
-      ap.definisjon.kode === FASTSETT_BEREGNINGSGRUNNLAG_TIDSBEGRENSET_ARBEIDSFORHOLD ||
-      ap.definisjon.kode === FASTSETT_BEREGNINGSGRUNNLAG_ARBEIDSTAKER_FRILANS,
+const finnAvklaringsbehovForFastsettBgTidsbegrensetAT = avklaringsbehov =>
+avklaringsbehov &&
+avklaringsbehov.find(
+    ab =>
+      ab.definisjon.kode === FASTSETT_BEREGNINGSGRUNNLAG_TIDSBEGRENSET_ARBEIDSFORHOLD ||
+      ab.definisjon.kode === FASTSETT_BEREGNINGSGRUNNLAG_ARBEIDSTAKER_FRILANS,
   );
 
 const harPeriodeArbeidsforholdAvsluttet = periode =>
@@ -209,7 +209,7 @@ const createPerioderRow = relevantePerioder => (
     <td />
   </tr>
 );
-const createRows = (tableData, readOnly, isAksjonspunktClosed, perioder, fieldArrayID) => {
+const createRows = (tableData, readOnly, isAvklaringsbehovClosed, perioder, fieldArrayID) => {
   const rows = [];
   rows.push(createPerioderRow(perioder));
   rows.push(
@@ -245,13 +245,13 @@ const createRows = (tableData, readOnly, isAksjonspunktClosed, perioder, fieldAr
           return (
             <React.Fragment key={`ElementWrapper${element.inputfieldKey}`}>
               <td key={`Col-${element.inputfieldKey}`} colSpan="2">
-                <div className={isAksjonspunktClosed && readOnly ? styles.adjustedField : undefined}>
+                <div className={isAvklaringsbehovClosed && readOnly ? styles.adjustedField : undefined}>
                   <InputField
                     name={`${fieldArrayID}.${element.inputfieldKey}`}
                     validate={[required]}
                     readOnly={readOnly}
                     parse={parseCurrencyInput}
-                    bredde="XS"
+                    bredde="S"
                   />
                 </div>
               </td>
@@ -275,7 +275,7 @@ const createRows = (tableData, readOnly, isAksjonspunktClosed, perioder, fieldAr
 export const AksjonspunktBehandlerTidsbegrensetImpl = ({
   readOnly,
   tableData,
-  isAksjonspunktClosed,
+  isAvklaringsbehovClosed,
   bruttoPrPeriodeList,
   fieldArrayID,
 }) => {
@@ -283,7 +283,7 @@ export const AksjonspunktBehandlerTidsbegrensetImpl = ({
   return (
     <table className={styles.inntektTableTB}>
       <tbody>
-        {createRows(tableData.arbeidsforholdPeriodeMap, readOnly, isAksjonspunktClosed, perioder, fieldArrayID)}
+        {createRows(tableData.arbeidsforholdPeriodeMap, readOnly, isAvklaringsbehovClosed, perioder, fieldArrayID)}
       </tbody>
     </table>
   );
@@ -292,21 +292,21 @@ export const AksjonspunktBehandlerTidsbegrensetImpl = ({
 AksjonspunktBehandlerTidsbegrensetImpl.propTypes = {
   readOnly: PropTypes.bool.isRequired,
   tableData: PropTypes.shape().isRequired,
-  isAksjonspunktClosed: PropTypes.bool,
+  isAvklaringsbehovClosed: PropTypes.bool,
   bruttoPrPeriodeList: PropTypes.arrayOf(PropTypes.shape()),
   fieldArrayID: PropTypes.string.isRequired,
 };
 
 AksjonspunktBehandlerTidsbegrensetImpl.defaultProps = {
-  isAksjonspunktClosed: false,
+  isAvklaringsbehovClosed: false,
   bruttoPrPeriodeList: undefined,
 };
 
-export const getIsAksjonspunktClosed = createSelector(
-  [(state, ownProps) => ownProps.aksjonspunkter],
-  gjeldendeAksjonspunkter => {
-    const aksjonspunkt = finnAksjonspunktForFastsettBgTidsbegrensetAT(gjeldendeAksjonspunkter);
-    return aksjonspunkt ? !isAksjonspunktOpen(aksjonspunkt.status.kode) : false;
+export const getIsAvklaringsbehovClosed = createSelector(
+  [(state, ownProps) => ownProps.avklaringsbehov],
+  avklaringsbehov => {
+    const avklaringsbehovTB = finnAvklaringsbehovForFastsettBgTidsbegrensetAT(avklaringsbehov);
+    return avklaringsbehovTB ? !isAvklaringsbehovOpen(avklaringsbehovTB.status.kode) : false;
   },
 );
 
@@ -343,7 +343,7 @@ const mapStateToProps = (state, ownProps) => {
   });
   return {
     tableData: createTableData(state, ownProps),
-    isAksjonspunktClosed: getIsAksjonspunktClosed(state, ownProps),
+    isAvklaringsbehovClosed: getIsAvklaringsbehovClosed(state, ownProps),
     bruttoPrPeriodeList,
     fieldArrayID: ownProps.fieldArrayID,
   };

@@ -1,4 +1,4 @@
-import React, { FunctionComponent, ReactNode } from 'react';
+import React, { ReactNode } from 'react';
 import { FormattedMessage, injectIntl, IntlShape, WrappedComponentProps } from 'react-intl';
 
 import { HistorikkinnslagDel, HistorikkinnslagEndretFelt, Kodeverk } from '@k9-sak-web/types';
@@ -122,14 +122,14 @@ const sortArray = (endredeFelter: HistorikkinnslagEndretFelt[]): Historikkinnsla
 /**
  * Mal for Historikk
  */
-const HistorikkMalType10: FunctionComponent<HistorikkMal & WrappedComponentProps> = ({
+const HistorikkMalType10 = ({
   intl,
   historikkinnslag,
   behandlingLocation,
   getKodeverknavn,
   createLocationForSkjermlenke,
   saksnummer,
-}) => {
+}: HistorikkMal & WrappedComponentProps) => {
   const { historikkinnslagDeler, dokumentLinks, type: originType } = historikkinnslag;
 
   return (

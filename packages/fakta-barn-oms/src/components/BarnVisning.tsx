@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from 'react';
+import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import Panel from 'nav-frontend-paneler';
 import moment from 'moment';
@@ -14,7 +14,7 @@ interface BarnInputProps {
 
 const beregnAntallÅr = fodselsdato => moment().diff(fodselsdato, 'years').toString();
 
-const BarnVisning: FunctionComponent<BarnInputProps> = ({ barnet, index }) => (
+const BarnVisning = ({ barnet, index }: BarnInputProps) => (
   <Panel border className={styles.barnInput}>
     <div className={styles.header}>
       <h4>

@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from 'react';
+import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 
 import { NotFoundPage } from '@k9-sak-web/sak-infosider';
@@ -19,7 +19,7 @@ interface OwnProps {
  *
  * Presentasjonskomponent. Wrapper for sideinnholdet som vises under header.
  */
-const Home: FunctionComponent<OwnProps> = ({ headerHeight }) => (
+const Home = ({ headerHeight }: OwnProps) => (
   <div className={styles.content} style={{ margin: `${headerHeight}px auto 0` }}>
     <Switch>
       <Route exact path="/" component={DashboardResolver} />

@@ -1,3 +1,6 @@
+import React, { SetStateAction } from 'react';
+import { connect } from 'react-redux';
+import { FormattedMessage } from 'react-intl';
 import avslattImage from '@fpsak-frontend/assets/images/avslaatt_hover.svg';
 import innvilgetImage from '@fpsak-frontend/assets/images/innvilget_hover.svg';
 import keyUtgraetImage from '@fpsak-frontend/assets/images/key-1-rotert-utgraet.svg';
@@ -5,10 +8,7 @@ import keyImage from '@fpsak-frontend/assets/images/key-1-rotert.svg';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import { FlexColumn, FlexContainer, FlexRow, Image, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { Aksjonspunkt } from '@k9-sak-web/types';
-import { Element, EtikettLiten, Undertittel } from 'nav-frontend-typografi';
-import React, { FunctionComponent, SetStateAction } from 'react';
-import { FormattedMessage } from 'react-intl';
-import { connect } from 'react-redux';
+import { Element, Undertekst, Undertittel } from 'nav-frontend-typografi';
 import styles from './vilkarresultatMedOverstyringForm.less';
 
 const isOverridden = (aksjonspunktCodes: string[], aksjonspunktCode: string) =>
@@ -46,7 +46,7 @@ interface VilkarresultatMedOverstyringHeaderProps {
   toggleOverstyring: (overstyrtPanel: SetStateAction<string[]>) => void;
 }
 
-const VilkarresultatMedOverstyringHeader: FunctionComponent<VilkarresultatMedOverstyringHeaderProps> = ({
+const VilkarresultatMedOverstyringHeader = ({
   panelTittelKode,
   erOverstyrt,
   overstyringApKode,
@@ -56,7 +56,7 @@ const VilkarresultatMedOverstyringHeader: FunctionComponent<VilkarresultatMedOve
   kanOverstyreAccess,
   aksjonspunktCodes,
   toggleOverstyring,
-}) => {
+}: Partial<VilkarresultatMedOverstyringHeaderProps>) => {
   const togglePa = () => {
     toggleOverstyring(oldArray => [...oldArray, overstyringApKode]);
   };
@@ -76,7 +76,7 @@ const VilkarresultatMedOverstyringHeader: FunctionComponent<VilkarresultatMedOve
           </FlexColumn>
           {lovReferanse && (
             <FlexColumn>
-              <EtikettLiten className={styles.vilkar}>{lovReferanse}</EtikettLiten>
+              <Undertekst className={styles.vilkar}>{lovReferanse}</Undertekst>
             </FlexColumn>
           )}
         </FlexRow>

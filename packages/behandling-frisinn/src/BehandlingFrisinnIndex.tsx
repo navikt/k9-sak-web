@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useEffect, useState, useCallback } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
 import {
@@ -45,7 +45,7 @@ interface OwnProps {
   featureToggles: FeatureToggles;
 }
 
-const BehandlingFrisinnIndex: FunctionComponent<OwnProps> = ({
+const BehandlingFrisinnIndex = ({
   behandlingEventHandler,
   behandlingId,
   oppdaterBehandlingVersjon,
@@ -60,7 +60,7 @@ const BehandlingFrisinnIndex: FunctionComponent<OwnProps> = ({
   kodeverk,
   arbeidsgiverOpplysninger,
   featureToggles,
-}) => {
+}: OwnProps) => {
   const [nyOgForrigeBehandling, setBehandlinger] = useState<{ current?: Behandling; previous?: Behandling }>({
     current: undefined,
     previous: undefined,
@@ -134,7 +134,7 @@ const BehandlingFrisinnIndex: FunctionComponent<OwnProps> = ({
   });
 
   const harIkkeHentetBehandlingsdata = state === RestApiState.LOADING || state === RestApiState.NOT_STARTED;
-  if (!behandling || (harIkkeHentetBehandlingsdata && data === undefined)) {
+  if (!behandling || (harIkkeHentetBehandlingsdata && data === undefined) || state === RestApiState.ERROR) {
     return <LoadingPanel />;
   }
 

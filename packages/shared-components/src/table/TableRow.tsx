@@ -1,4 +1,4 @@
-import React, { ReactNode, FunctionComponent } from 'react';
+import React, { ReactNode } from 'react';
 import classnames from 'classnames/bind';
 
 import styles from './tableRow.less';
@@ -53,7 +53,7 @@ interface OwnProps {
  *
  * Presentasjonskomponent. Tabellrad som brukes av komponenten Table.
  */
-const TableRow: FunctionComponent<OwnProps> = ({
+const TableRow = ({
   id,
   model,
   isHeader = false,
@@ -68,7 +68,7 @@ const TableRow: FunctionComponent<OwnProps> = ({
   isApLeftBorder = false,
   className,
   notFocusable = false,
-}) => (
+}: OwnProps) => (
   <tr
     className={classNames(className, {
       rowHeader: isHeader,

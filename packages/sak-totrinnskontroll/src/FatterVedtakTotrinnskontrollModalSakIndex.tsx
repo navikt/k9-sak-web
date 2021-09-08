@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from 'react';
+import React from 'react';
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 
 import { BehandlingAppKontekst, Kodeverk } from '@k9-sak-web/types';
@@ -24,14 +24,14 @@ interface OwnProps {
   harSammeResultatSomOriginalBehandling?: boolean;
 }
 
-const FatterVedtakTotrinnskontrollModalSakIndex: FunctionComponent<OwnProps> = ({
+const FatterVedtakTotrinnskontrollModalSakIndex = ({
   behandling,
   closeEvent,
   allAksjonspunktApproved,
   fagsakYtelseType,
   erKlageWithKA,
   harSammeResultatSomOriginalBehandling = false,
-}) => (
+}: OwnProps) => (
   <RawIntlProvider value={intl}>
     <FatterVedtakApprovalModal
       closeEvent={closeEvent}
@@ -39,7 +39,6 @@ const FatterVedtakTotrinnskontrollModalSakIndex: FunctionComponent<OwnProps> = (
       fagsakYtelseType={fagsakYtelseType}
       erKlageWithKA={erKlageWithKA}
       behandlingsresultat={behandling.behandlingsresultat}
-      behandlingId={behandling.id}
       behandlingStatusKode={behandling.status.kode}
       behandlingTypeKode={behandling.type.kode}
       harSammeResultatSomOriginalBehandling={harSammeResultatSomOriginalBehandling}

@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
-import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import { isAvklaringsbehovOpen } from '@fpsak-frontend/kodeverk/src/beregningAvklaringsbehovStatus';
+import avklaringsbehovCodes, { harAvklaringsbehov } from '@fpsak-frontend/kodeverk/src/beregningAvklaringsbehovCodes';
 import { AksjonspunktHelpTextHTML, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { Column, Row } from 'nav-frontend-grid';
 import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
@@ -13,7 +13,7 @@ import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import AvviksopplysningerPanel from '../fellesPaneler/AvvikopplysningerPanel';
 import SkjeringspunktOgStatusPanel from '../fellesPaneler/SkjeringspunktOgStatusPanel';
 import VurderOgFastsettSN from '../selvstendigNaeringsdrivende/VurderOgFastsettSN';
-import beregningsgrunnlagAksjonspunkterPropType from '../../propTypes/beregningsgrunnlagAksjonspunkterPropType';
+import beregningAvklaringsbehovPropType from '../../propTypes/beregningAvklaringsbehovPropType';
 import Beregningsgrunnlag from '../beregningsgrunnlagPanel/Beregningsgrunnlag';
 import AksjonspunktBehandler from '../fellesPaneler/AksjonspunktBehandler';
 import BeregningsresultatTable from '../beregningsresultatPanel/BeregningsresultatTable';
@@ -36,7 +36,7 @@ const {
   FASTSETT_BEREGNINGSGRUNNLAG_TIDSBEGRENSET_ARBEIDSFORHOLD,
   FASTSETT_BRUTTO_BEREGNINGSGRUNNLAG_SELVSTENDIG_NAERINGSDRIVENDE,
   FASTSETT_BEREGNINGSGRUNNLAG_SN_NY_I_ARBEIDSLIVET,
-} = aksjonspunktCodes;
+} = avklaringsbehovCodes;
 // ------------------------------------------------------------------------------------------ //
 // Methods
 // ------------------------------------------------------------------------------------------ //
@@ -47,8 +47,8 @@ const harPerioderMedAvsluttedeArbeidsforhold = allePerioder =>
       periodeAarsaker && periodeAarsaker.some(({ kode }) => kode === periodeAarsak.ARBEIDSFORHOLD_AVSLUTTET),
   );
 
-const findAksjonspunktHelpTekst = (gjeldendeAksjonspunkt, erVarigEndring, erNyArbLivet, erNyoppstartet) => {
-  switch (gjeldendeAksjonspunkt.definisjon.kode) {
+const findAksjonspunktHelpTekst = (gjeldendeAvklaringsbehov, erVarigEndring, erNyoppstartet) => {
+  switch (gjeldendeAvklaringsbehov.definisjon.kode) {
     case FASTSETT_BEREGNINGSGRUNNLAG_ARBEIDSTAKER_FRILANS:
       return 'Beregningsgrunnlag.Helptext.Arbeidstaker2';
     case VURDER_VARIG_ENDRET_ELLER_NYOPPSTARTET_NAERING_SELVSTENDIG_NAERINGSDRIVENDE:
@@ -70,27 +70,26 @@ const findAksjonspunktHelpTekst = (gjeldendeAksjonspunkt, erVarigEndring, erNyAr
   }
 };
 
-const lagAksjonspunktViser = (gjeldendeAksjonspunkter, avvikProsent, alleAndelerIForstePeriode) => {
-  if (gjeldendeAksjonspunkter === undefined || gjeldendeAksjonspunkter === null) {
+const lagAksjonspunktViser = (avklaringsbehov, avvikProsent, alleAndelerIForstePeriode) => {
+  if (avklaringsbehov === undefined || avklaringsbehov === null) {
     return undefined;
   }
-  const apneAksjonspunkt = gjeldendeAksjonspunkter.filter(ap => isAksjonspunktOpen(ap.status.kode));
-  const erDetMinstEttApentAksjonspunkt = apneAksjonspunkt.length > 0;
+  const apneAvklaringsbehov = avklaringsbehov.filter(ab => isAvklaringsbehovOpen(ab.status.kode));
+  const erDetMinstEttApentAvklaringsbehov = apneAvklaringsbehov.length > 0;
   const snAndel = alleAndelerIForstePeriode.find(
     andel => andel.aktivitetStatus.kode === aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE,
   );
   const erVarigEndring = snAndel && snAndel.næringer && snAndel.næringer.some(naring => naring.erVarigEndret === true);
   const erNyoppstartet = snAndel && snAndel.næringer && snAndel.næringer.some(naring => naring.erNyoppstartet === true);
-  const erNyArbLivet = snAndel && snAndel.erNyIArbeidslivet;
   return (
     <div>
-      {erDetMinstEttApentAksjonspunkt && (
+      {erDetMinstEttApentAvklaringsbehov && (
         <>
           <AksjonspunktHelpTextHTML>
-            {apneAksjonspunkt.map(ap => (
+            {apneAvklaringsbehov.map(ap => (
               <FormattedMessage
                 key={ap.definisjon.kode}
-                id={findAksjonspunktHelpTekst(ap, erVarigEndring, erNyArbLivet, erNyoppstartet)}
+                id={findAksjonspunktHelpTekst(ap, erVarigEndring, erNyoppstartet)}
                 values={{ verdi: avvikProsent, b: chunks => <b>{chunks}</b>, br: <br /> }}
               />
             ))}
@@ -102,10 +101,6 @@ const lagAksjonspunktViser = (gjeldendeAksjonspunkter, avvikProsent, alleAndeler
   );
 };
 
-const harAksjonspunkt = (aksjonspunktKode, gjeldendeAksjonspunkter) =>
-  gjeldendeAksjonspunkter !== undefined &&
-  gjeldendeAksjonspunkter !== null &&
-  gjeldendeAksjonspunkter.some(ap => ap.definisjon.kode === aksjonspunktKode);
 
 function leggPåSkjæringstidspunktPåAksjonspunktListe(aksjonspunktListe, skjæringstidspunkt) {
   return aksjonspunktListe.map(aksjonspunkt => ({
@@ -118,14 +113,14 @@ export const transformValues = (
   values,
   relevanteStatuser,
   alleAndelerIForstePeriode,
-  gjeldendeAksjonspunkter,
+  avklaringsbehov,
   allePerioder,
 ) => {
   const harTidsbegrensedeArbeidsforhold = harPerioderMedAvsluttedeArbeidsforhold(allePerioder);
   const aksjonspunkter = [];
   const { skjæringstidspunkt } = values;
   if (
-    harAksjonspunkt(FASTSETT_BEREGNINGSGRUNNLAG_ARBEIDSTAKER_FRILANS, gjeldendeAksjonspunkter) &&
+    harAvklaringsbehov(FASTSETT_BEREGNINGSGRUNNLAG_ARBEIDSTAKER_FRILANS, avklaringsbehov) &&
     !harTidsbegrensedeArbeidsforhold
   ) {
     return leggPåSkjæringstidspunktPåAksjonspunktListe(
@@ -136,20 +131,20 @@ export const transformValues = (
     );
   }
   if (
-    harAksjonspunkt(
+    harAvklaringsbehov(
       VURDER_VARIG_ENDRET_ELLER_NYOPPSTARTET_NAERING_SELVSTENDIG_NAERINGSDRIVENDE,
-      gjeldendeAksjonspunkter,
+      avklaringsbehov,
     ) ||
-    harAksjonspunkt(FASTSETT_BEREGNINGSGRUNNLAG_SN_NY_I_ARBEIDSLIVET, gjeldendeAksjonspunkter)
+    harAvklaringsbehov(FASTSETT_BEREGNINGSGRUNNLAG_SN_NY_I_ARBEIDSLIVET, avklaringsbehov)
   ) {
     return leggPåSkjæringstidspunktPåAksjonspunktListe(
-      aksjonspunkter.concat(VurderOgFastsettSN.transformValues(values, gjeldendeAksjonspunkter)),
+      aksjonspunkter.concat(VurderOgFastsettSN.transformValues(values, avklaringsbehov)),
       skjæringstidspunkt,
     );
   }
   if (
-    (harAksjonspunkt(FASTSETT_BEREGNINGSGRUNNLAG_ARBEIDSTAKER_FRILANS, gjeldendeAksjonspunkter) ||
-      harAksjonspunkt(FASTSETT_BEREGNINGSGRUNNLAG_TIDSBEGRENSET_ARBEIDSFORHOLD, gjeldendeAksjonspunkter)) &&
+    (harAvklaringsbehov(FASTSETT_BEREGNINGSGRUNNLAG_ARBEIDSTAKER_FRILANS, avklaringsbehov) ||
+      harAvklaringsbehov(FASTSETT_BEREGNINGSGRUNNLAG_TIDSBEGRENSET_ARBEIDSFORHOLD, avklaringsbehov)) &&
     harTidsbegrensedeArbeidsforhold
   ) {
     return leggPåSkjæringstidspunktPåAksjonspunktListe(
@@ -201,6 +196,9 @@ const sjekkOmOmsorgspengegrunnlagOgSettAvviksvurdering = beregningsgrunnlag => {
   return true;
 };
 
+const sjekkErMidlertidigInaktiv = beregningsgrunnlag => 
+  beregningsgrunnlag.aktivitetStatus.some(a => a.kode === aktivitetStatus.MIDLERTIDIG_INAKTIV);
+
 // ------------------------------------------------------------------------------------------ //
 // Component : BeregningFormImpl
 // ------------------------------------------------------------------------------------------ //
@@ -214,8 +212,9 @@ const sjekkOmOmsorgspengegrunnlagOgSettAvviksvurdering = beregningsgrunnlag => {
  */
 export const BeregningFormImpl = ({
   readOnly,
+  erAktiv,
   beregningsgrunnlag,
-  gjeldendeAksjonspunkter,
+  avklaringsbehov,
   relevanteStatuser,
   submitCallback,
   readOnlySubmitButton,
@@ -230,16 +229,16 @@ export const BeregningFormImpl = ({
   const avvikProsent = getAvviksprosent(sammenligningsgrunnlagPrStatus);
   const aktivitetStatusList = getStatusList(beregningsgrunnlagPeriode);
   const tidsBegrensetInntekt = harPerioderMedAvsluttedeArbeidsforhold(beregningsgrunnlagPeriode);
-  const harAksjonspunkter = gjeldendeAksjonspunkter && gjeldendeAksjonspunkter.length > 0;
   const alleAndelerIForstePeriode = finnAlleAndelerIFørstePeriode(beregningsgrunnlagPeriode);
   const skalViseBeregningsresultat = !harFrisinngrunnlag(beregningsgrunnlag);
   const skalViseAvviksprosent = sjekkOmOmsorgspengegrunnlagOgSettAvviksvurdering(beregningsgrunnlag);
+  const erMidlertidigInaktiv = sjekkErMidlertidigInaktiv(beregningsgrunnlag);
   return (
-    <>
-      {gjeldendeAksjonspunkter && (
+    <div style={{ display: erAktiv ? 'block' : 'none' }}>
+      {avklaringsbehov && (
         <>
           <VerticalSpacer eightPx />
-          {lagAksjonspunktViser(gjeldendeAksjonspunkter, avvikProsent, alleAndelerIForstePeriode)}
+          {lagAksjonspunktViser(avklaringsbehov, avvikProsent, alleAndelerIForstePeriode)}
         </>
       )}
       <Row>
@@ -250,11 +249,9 @@ export const BeregningFormImpl = ({
           <VerticalSpacer twentyPx />
           <SkjeringspunktOgStatusPanel
             readOnly={readOnly}
-            gjeldendeAksjonspunkter={gjeldendeAksjonspunkter}
             alleKodeverk={alleKodeverk}
             aktivitetStatusList={aktivitetStatusList}
             skjeringstidspunktDato={skjaeringstidspunktBeregning}
-            gjeldendeDekningsgrad={dekningsgrad}
           />
           {relevanteStatuser.skalViseBeregningsgrunnlag && (
             <>
@@ -262,7 +259,6 @@ export const BeregningFormImpl = ({
                 relevanteStatuser={relevanteStatuser}
                 readOnly={readOnly}
                 submitCallback={submitCallback}
-                gjeldendeAksjonspunkter={gjeldendeAksjonspunkter}
                 readOnlySubmitButton={readOnlySubmitButton}
                 formName={formName}
                 allePerioder={beregningsgrunnlagPeriode}
@@ -289,10 +285,9 @@ export const BeregningFormImpl = ({
             sammenligningsgrunnlagPrStatus={sammenligningsgrunnlagPrStatus}
             relevanteStatuser={relevanteStatuser}
             allePerioder={beregningsgrunnlagPeriode}
-            harAksjonspunkter={harAksjonspunkter}
             skalViseAvviksprosent={skalViseAvviksprosent}
           />
-          {harAksjonspunkter && (
+          {avklaringsbehov && avklaringsbehov.length > 0 && (
             <>
               <AvsnittSkiller luftOver luftUnder rightPanel />
               <AksjonspunktBehandler
@@ -304,7 +299,7 @@ export const BeregningFormImpl = ({
                 behandlingVersjon={behandling.versjon}
                 alleKodeverk={alleKodeverk}
                 arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
-                aksjonspunkter={gjeldendeAksjonspunkter}
+                avklaringsbehov={avklaringsbehov}
                 relevanteStatuser={relevanteStatuser}
                 tidsBegrensetInntekt={tidsBegrensetInntekt}
                 fieldArrayID={fieldArrayID}
@@ -323,23 +318,23 @@ export const BeregningFormImpl = ({
                 ytelseGrunnlag={beregningsgrunnlag.ytelsesspesifiktGrunnlag}
                 dekningsgrad={dekningsgrad}
                 vilkaarBG={vilkaarBG}
-                aksjonspunkter={gjeldendeAksjonspunkter}
                 aktivitetStatusList={aktivitetStatusList}
                 grunnbelop={beregningsgrunnlag.grunnbeløp}
                 halvGVerdi={beregningsgrunnlag.halvG}
-                harAksjonspunkter={harAksjonspunkter}
+                erMidlertidigInaktiv={erMidlertidigInaktiv}
               />
             </>
           )}
         </Column>
       </Row>
-    </>
+    </div>
   );
 };
 
 BeregningFormImpl.propTypes = {
   readOnly: PropTypes.bool.isRequired,
-  gjeldendeAksjonspunkter: PropTypes.arrayOf(beregningsgrunnlagAksjonspunkterPropType).isRequired,
+  erAktiv: PropTypes.bool.isRequired,
+  avklaringsbehov: PropTypes.arrayOf(beregningAvklaringsbehovPropType).isRequired,
   relevanteStatuser: PropTypes.shape().isRequired,
   submitCallback: PropTypes.func.isRequired,
   readOnlySubmitButton: PropTypes.bool.isRequired,

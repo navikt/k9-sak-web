@@ -1,8 +1,7 @@
 import React from 'react';
 import { expect } from 'chai';
 import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { intlMock, shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
+import avklaringsbehovCodes from '@fpsak-frontend/kodeverk/src/beregningAvklaringsbehovCodes';
 import VurderVarigEndretEllerNyoppstartetSN, {
   VurderVarigEndretEllerNyoppstartetSN as UnwrappedForm,
   begrunnelseFieldname,
@@ -10,12 +9,11 @@ import VurderVarigEndretEllerNyoppstartetSN, {
   varigEndringRadioname,
 } from './VurderVarigEndretEllerNyoppstartetSN';
 
+import shallowWithIntl, { intlMock } from '../../../i18n';
 
-const {
-  VURDER_VARIG_ENDRET_ELLER_NYOPPSTARTET_NAERING_SELVSTENDIG_NAERINGSDRIVENDE,
-} = aksjonspunktCodes;
+const { VURDER_VARIG_ENDRET_ELLER_NYOPPSTARTET_NAERING_SELVSTENDIG_NAERINGSDRIVENDE } = avklaringsbehovCodes;
 
-const mockAksjonspunktMedKodeOgStatus = (apKode, begrunnelse, status) => ({
+const mockAvklaringsbehovMedKodeOgStatus = (apKode, begrunnelse, status) => ({
   definisjon: {
     kode: apKode,
   },
@@ -37,27 +35,35 @@ const lagAndel = (status, fastsattBelop) => ({
 
 describe('<VurderVarigEndretEllerNyoppstartetSN>', () => {
   it('Skal teste at det rendres riktig antall rader', () => {
-    const aksjonspunkter = [mockAksjonspunktMedKodeOgStatus(VURDER_VARIG_ENDRET_ELLER_NYOPPSTARTET_NAERING_SELVSTENDIG_NAERINGSDRIVENDE, 'Ok.', 'UTFO')];
-    const wrapper = shallowWithIntl(<UnwrappedForm
-      readOnly={false}
-      isAksjonspunktClosed={false}
-      erVarigEndring
-      erNyoppstartet
-      erVarigEndretNaering={false}
-      gjeldendeAksjonspunkter={aksjonspunkter}
-      endretTekst="tekst"
-      intl={intlMock}
-    />);
+    const wrapper = shallowWithIntl(
+      <UnwrappedForm
+        readOnly={false}
+        erVarigEndring
+        erNyoppstartet
+        erVarigEndretNaering={false}
+        endretTekst="tekst"
+        intl={intlMock}
+      />,
+    );
 
     const rows = wrapper.find('Row');
     expect(rows.length).to.equal(2);
   });
 
   it('Skal teste at buildInitialValues bygges korrekt når tidligere vurdert ingen varig endring', () => {
-    const andeler = [lagAndel(aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE, null), lagAndel(aktivitetStatus.ARBEIDSTAKER, 250000)];
-    const aksjonspunkter = [mockAksjonspunktMedKodeOgStatus(VURDER_VARIG_ENDRET_ELLER_NYOPPSTARTET_NAERING_SELVSTENDIG_NAERINGSDRIVENDE, 'Ok.', 'UTFO')];
+    const andeler = [
+      lagAndel(aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE, null),
+      lagAndel(aktivitetStatus.ARBEIDSTAKER, 250000),
+    ];
+    const avklaringsbehov = [
+      mockAvklaringsbehovMedKodeOgStatus(
+        VURDER_VARIG_ENDRET_ELLER_NYOPPSTARTET_NAERING_SELVSTENDIG_NAERINGSDRIVENDE,
+        'Ok.',
+        'UTFO',
+      ),
+    ];
 
-    const actualValues = VurderVarigEndretEllerNyoppstartetSN.buildInitialValues(andeler, aksjonspunkter);
+    const actualValues = VurderVarigEndretEllerNyoppstartetSN.buildInitialValues(andeler, avklaringsbehov);
 
     const expectedValues = {
       [varigEndringRadioname]: false,
@@ -68,10 +74,19 @@ describe('<VurderVarigEndretEllerNyoppstartetSN>', () => {
   });
 
   it('Skal teste at buildInitialValues bygges korrekt når tidligere vurdert til ingen varig endring med fastsatt belop', () => {
-    const andeler = [lagAndel(aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE, 300000), lagAndel(aktivitetStatus.ARBEIDSTAKER, 250000)];
-    const aksjonspunkter = [mockAksjonspunktMedKodeOgStatus(VURDER_VARIG_ENDRET_ELLER_NYOPPSTARTET_NAERING_SELVSTENDIG_NAERINGSDRIVENDE, 'Ok.', 'UTFO')];
+    const andeler = [
+      lagAndel(aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE, 300000),
+      lagAndel(aktivitetStatus.ARBEIDSTAKER, 250000),
+    ];
+    const avklaringsbehov = [
+      mockAvklaringsbehovMedKodeOgStatus(
+        VURDER_VARIG_ENDRET_ELLER_NYOPPSTARTET_NAERING_SELVSTENDIG_NAERINGSDRIVENDE,
+        'Ok.',
+        'UTFO',
+      ),
+    ];
 
-    const actualValues = VurderVarigEndretEllerNyoppstartetSN.buildInitialValues(andeler, aksjonspunkter);
+    const actualValues = VurderVarigEndretEllerNyoppstartetSN.buildInitialValues(andeler, avklaringsbehov);
 
     const expectedValues = {
       [fastsettInntektFieldname]: '300 000',
@@ -83,10 +98,19 @@ describe('<VurderVarigEndretEllerNyoppstartetSN>', () => {
   });
 
   it('Skal teste at buildInitialValues bygges korrekt når ikke tidligere vurdert', () => {
-    const andeler = [lagAndel(aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE, null), lagAndel(aktivitetStatus.ARBEIDSTAKER, 250000)];
-    const aksjonspunkter = [mockAksjonspunktMedKodeOgStatus(VURDER_VARIG_ENDRET_ELLER_NYOPPSTARTET_NAERING_SELVSTENDIG_NAERINGSDRIVENDE, undefined, 'OPPR')];
+    const andeler = [
+      lagAndel(aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE, null),
+      lagAndel(aktivitetStatus.ARBEIDSTAKER, 250000),
+    ];
+    const avklaringsbehov = [
+      mockAvklaringsbehovMedKodeOgStatus(
+        VURDER_VARIG_ENDRET_ELLER_NYOPPSTARTET_NAERING_SELVSTENDIG_NAERINGSDRIVENDE,
+        undefined,
+        'OPPR',
+      ),
+    ];
 
-    const actualValues = VurderVarigEndretEllerNyoppstartetSN.buildInitialValues(andeler, aksjonspunkter);
+    const actualValues = VurderVarigEndretEllerNyoppstartetSN.buildInitialValues(andeler, avklaringsbehov);
 
     const expectedValues = {
       [fastsettInntektFieldname]: undefined,

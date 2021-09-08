@@ -1,7 +1,9 @@
 import React from 'react';
-import { intlMock, shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import { FormattedMessage } from 'react-intl';
+
 import AksjonspunktHelpTextHTML from './AksjonspunktHelpTextHTML';
+
+import shallowWithIntl, { intlMock } from '../i18n/index';
 
 describe('<AksjonspunktHelpTextHTML>', () => {
   it('Skal teste at aksjonspunkt hjelp viser riktig', () => {
@@ -11,7 +13,7 @@ describe('<AksjonspunktHelpTextHTML>', () => {
       </AksjonspunktHelpTextHTML.WrappedComponent>,
     );
     const flexContainer = wrapper.find('FlexContainer');
-    const messages = flexContainer.first().find('FormattedMessage');
+    const messages = flexContainer.first().find('MemoizedFormattedMessage');
     expect(messages.at(0).prop('id')).toEqual('Beregningsgrunnlag.Helptext.Arbeidstaker2');
     expect(messages.at(0).prop('values')).toEqual({ verdi: 23 });
     const image = flexContainer.first().find('Image');

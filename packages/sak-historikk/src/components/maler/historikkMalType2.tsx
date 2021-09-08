@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from 'react';
+import React from 'react';
 import { injectIntl, WrappedComponentProps } from 'react-intl';
 import { Element } from 'nav-frontend-typografi';
 
@@ -6,13 +6,13 @@ import { findHendelseText, findResultatText } from './felles/historikkUtils';
 import HistorikkMal from '../HistorikkMalTsType';
 import Skjermlenke from './felles/Skjermlenke';
 
-const HistorikkMalType2: FunctionComponent<HistorikkMal & WrappedComponentProps> = ({
+const HistorikkMalType2 = ({
   intl,
   historikkinnslag,
   behandlingLocation,
   getKodeverknavn,
   createLocationForSkjermlenke,
-}) => {
+}: HistorikkMal & WrappedComponentProps) => {
   const { historikkinnslagDeler } = historikkinnslag;
   return (
     <>

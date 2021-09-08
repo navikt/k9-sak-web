@@ -1,6 +1,8 @@
 {
   "TilleggsopplysningerInfoPanel.Tilleggsopplysninger": "Tilleggsopplysninger",
   "ArbeidsforholdInfoPanel.Title": "Arbeidsforhold",
+  "EtablertTilsynInfoPanel.Title": "Etablert tilsyn",
+  "InntektsmeldingInfoPanel.Title": "Inntektsmelding",
   "FodselInfoPanel.Fodsel": "Fødsel",
   "MedlemskapInfoPanel.Medlemskap": "Medlemskap",
   "RegistrereVergeInfoPanel.Info": "Verge/fullmektig",
@@ -20,6 +22,7 @@
   "InntektOgYtelser.Title": "Inntekt og ytelser",
   "OpplysningerFraSoknaden.Title": "Søknaden",
   "OmsorgenForInfoPanel.Title": "Omsorgen for",
+  "OmBarnetInfoPanel.Title": "Om barnet",
 
   "Personspanel.Arbeidsforhold": "Opplysninger om søker",
 

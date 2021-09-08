@@ -1,4 +1,4 @@
-import React, { FunctionComponent, ReactNode, useMemo, useState } from 'react';
+import React, { ReactNode, useMemo, useState } from 'react';
 import { useIntl } from 'react-intl';
 import classNames from 'classnames';
 import { Column, Row } from 'nav-frontend-grid';
@@ -74,7 +74,7 @@ export const mapSideContent = (uttaksplaner: Uttaksplan[], intl): ReactNode[] =>
     );
   });
 
-const Uttak: FunctionComponent<UttakkProps> = ({ uttaksplaner }) => {
+const Uttak = ({ uttaksplaner }: UttakkProps) => {
   const [valgtPeriode, velgPeriode] = useState<TidslinjePeriode<Uttaksperiode> | null>();
   const [timelineRef, setTimelineRef] = useState();
   const valgtPerson = useMemo<Person>(
@@ -101,7 +101,7 @@ const Uttak: FunctionComponent<UttakkProps> = ({ uttaksplaner }) => {
       start: new Date(currentWindowTimes.start).setDate(currentWindowTimes.start.getDate() - 31),
       end: new Date(currentWindowTimes.end).setDate(currentWindowTimes.end.getDate() - 31),
     };
-    timeline.setWindow(newWindowTimes);
+    timeline.setWindow(newWindowTimes.start, newWindowTimes.end);
   };
 
   const goForward = () => {
@@ -113,7 +113,7 @@ const Uttak: FunctionComponent<UttakkProps> = ({ uttaksplaner }) => {
       end: new Date(currentWindowTimes.end).setDate(currentWindowTimes.end.getDate() + 31),
     };
 
-    timeline.setWindow(newWindowTimes);
+    timeline.setWindow(newWindowTimes.start, newWindowTimes.end);
   };
 
   const zoomIn = () => {

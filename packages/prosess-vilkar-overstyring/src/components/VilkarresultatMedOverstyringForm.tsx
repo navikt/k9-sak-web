@@ -1,3 +1,8 @@
+import React, { SetStateAction, useEffect } from 'react';
+import { FormattedMessage } from 'react-intl';
+import { connect } from 'react-redux';
+import { InjectedFormProps } from 'redux-form';
+import { createSelector } from 'reselect';
 import advarselIkonUrl from '@fpsak-frontend/assets/images/advarsel_ny.svg';
 import { behandlingForm, behandlingFormValueSelector } from '@fpsak-frontend/form';
 import { VilkarResultPicker } from '@k9-sak-web/prosess-felles';
@@ -17,11 +22,6 @@ import { Aksjonspunkt, Kodeverk, KodeverkMedNavn, SubmitCallback } from '@k9-sak
 import moment from 'moment';
 import { Knapp } from 'nav-frontend-knapper';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
-import React, { FunctionComponent, SetStateAction, useEffect } from 'react';
-import { FormattedMessage } from 'react-intl';
-import { connect } from 'react-redux';
-import { InjectedFormProps } from 'redux-form';
-import { createSelector } from 'reselect';
 import Vilkarperiode from '@k9-sak-web/types/src/vilkarperiode';
 import OverstyrBekreftKnappPanel from './OverstyrBekreftKnappPanel';
 import { VilkarresultatMedBegrunnelse } from './VilkarresultatMedBegrunnelse';
@@ -73,9 +73,7 @@ interface StateProps {
  * Presentasjonskomponent. Viser resultat av vilkårskjøring når det ikke finnes tilknyttede aksjonspunkter.
  * Resultatet kan overstyres av Nav-ansatt med overstyr-rettighet.
  */
-export const VilkarresultatMedOverstyringForm: FunctionComponent<
-  VilkarresultatMedOverstyringFormProps & StateProps & InjectedFormProps
-> = ({
+export const VilkarresultatMedOverstyringForm = ({
   erOverstyrt,
   isReadOnly,
   overstyringApKode,
@@ -94,7 +92,7 @@ export const VilkarresultatMedOverstyringForm: FunctionComponent<
   pristine,
   periodeFom,
   periodeTom,
-}) => {
+}: Partial<VilkarresultatMedOverstyringFormProps> & StateProps & InjectedFormProps) => {
   const toggleAv = () => {
     reset();
     toggleOverstyring(oldArray => oldArray.filter(code => code !== overstyringApKode));

@@ -67,6 +67,7 @@ const aksjonspunktCodes = {
   SVANGERSKAPSVILKARET: '5092',
   VURDER_FARESIGNALER: '5095',
   MEDISINSK_VILKAAR: '9001',
+  INNTEKTSMELDING_MANGLER: '9069',
   OMSORGEN_FOR: '9002',
   OMSORGEN_FOR_PLEIEPENGER: '9020',
   VURDER_ÅRSKVANTUM_KVOTE: '9003',
@@ -75,6 +76,9 @@ const aksjonspunktCodes = {
   OVERSTYRING_FRISINN_OPPGITT_OPPTJENING: '8004',
   MANUELL_TILKJENT_YTELSE: '5057',
   OVERSTYRING_MANUELL_VURDERING_VILKÅR: '6016',
+  NATTEVÅK: '9200',
+  BEREDSKAP: '9201',
+  VURDER_RETT_ETTER_PLEIETRENGENDES_DØD: '9202',
 };
 
 const klageAksjonspunkter = [
@@ -107,8 +111,10 @@ const beregningAksjonspunkter = [
   aksjonspunktCodes.FASTSETT_BEREGNINGSGRUNNLAG_SN_NY_I_ARBEIDSLIVET,
 ];
 
-const aksjonspunktIsOfType = (validAksjonspunktCodes: string[]) => (aksjonspunktCode: string): boolean =>
-  validAksjonspunktCodes.includes(aksjonspunktCode);
+const aksjonspunktIsOfType =
+  (validAksjonspunktCodes: string[]) =>
+  (aksjonspunktCode: string): boolean =>
+    validAksjonspunktCodes.includes(aksjonspunktCode);
 
 export const hasAksjonspunkt = (aksjonspunktCode: string, aksjonspunkter: Aksjonspunkt[]): boolean =>
   aksjonspunkter.some(ap => ap.definisjon.kode === aksjonspunktCode);

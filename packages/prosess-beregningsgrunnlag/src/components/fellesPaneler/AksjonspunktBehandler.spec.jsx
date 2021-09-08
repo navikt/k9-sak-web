@@ -1,9 +1,11 @@
 import React from 'react';
 import { expect } from 'chai';
-import { intlMock, shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
+
 import AksjonspunktBehandler from './AksjonspunktBehandler';
 import AksjonspunktBehandlerTB from '../arbeidstaker/AksjonspunktBehandlerTB';
+
+import shallowWithIntl, { intlMock } from '../../../i18n';
 
 const relevanteStatuser = {
   isFrilanser: false,
@@ -28,7 +30,7 @@ const allePerioder = [
   },
 ];
 const formName = 'BeregningForm';
-const aksjonspunkter = [
+const avklaringsbehov = [
   {
     begrunnelse: null,
     definisjon: {
@@ -49,7 +51,7 @@ describe('<AksjonspunktBehandler>', () => {
       <AksjonspunktBehandler.WrappedComponent
         intl={intlMock}
         readOnly={readOnly}
-        aksjonspunkter={aksjonspunkter}
+        avklaringsbehov={avklaringsbehov}
         formName={formName}
         behandlingId={1}
         behandlingVersjon={1}
@@ -63,7 +65,7 @@ describe('<AksjonspunktBehandler>', () => {
       />,
     );
     const rows = wrapper.find('Row');
-    expect(rows.first().find('FormattedMessage').first().props().id).to.equal(
+    expect(rows.first().find('MemoizedFormattedMessage').first().props().id).to.equal(
       'Beregningsgrunnlag.AarsinntektPanel.AksjonspunktBehandler',
     );
     expect(rows.at(1).find('TextAreaField').first().props().name).to.equal('dummyId.ATFLVurdering');
@@ -87,7 +89,7 @@ describe('<AksjonspunktBehandler>', () => {
     const wrapper = shallowWithIntl(
       <AksjonspunktBehandler.WrappedComponent
         readOnly={readOnly}
-        aksjonspunkter={aksjonspunkter}
+        avklaringsbehov={avklaringsbehov}
         formName={formName}
         behandlingId={1}
         behandlingVersjon={1}
@@ -102,7 +104,7 @@ describe('<AksjonspunktBehandler>', () => {
       />,
     );
     const rows = wrapper.find('Row');
-    expect(rows.first().find('FormattedMessage').first().props().id).to.equal(
+    expect(rows.first().find('MemoizedFormattedMessage').first().props().id).to.equal(
       'Beregningsgrunnlag.AarsinntektPanel.AksjonspunktBehandler',
     );
     expect(rows.at(1).find('TextAreaField').first().props().name).to.equal('dummyId.ATFLVurdering');
@@ -125,7 +127,7 @@ describe('<AksjonspunktBehandler>', () => {
     const wrapper = shallowWithIntl(
       <AksjonspunktBehandler.WrappedComponent
         readOnly={readOnly}
-        aksjonspunkter={aksjonspunkter}
+        avklaringsbehov={avklaringsbehov}
         formName={formName}
         behandlingId={1}
         behandlingVersjon={1}
@@ -140,7 +142,7 @@ describe('<AksjonspunktBehandler>', () => {
       />,
     );
     const rows = wrapper.find('Row');
-    expect(rows.first().find('FormattedMessage').first().props().id).to.equal(
+    expect(rows.first().find('MemoizedFormattedMessage').first().props().id).to.equal(
       'Beregningsgrunnlag.AarsinntektPanel.AksjonspunktBehandler',
     );
     expect(rows.at(1).find('TextAreaField').first().props().name).to.equal('dummyId.ATFLVurdering');
@@ -163,7 +165,7 @@ describe('<AksjonspunktBehandler>', () => {
     const wrapper = shallowWithIntl(
       <AksjonspunktBehandler.WrappedComponent
         readOnly={readOnly}
-        aksjonspunkter={aksjonspunkter}
+        avklaringsbehov={avklaringsbehov}
         formName={formName}
         behandlingId={1}
         behandlingVersjon={1}
@@ -178,7 +180,7 @@ describe('<AksjonspunktBehandler>', () => {
       />,
     );
     const rows = wrapper.find('Row');
-    expect(rows.first().find('FormattedMessage').first().props().id).to.equal(
+    expect(rows.first().find('MemoizedFormattedMessage').first().props().id).to.equal(
       'Beregningsgrunnlag.AarsinntektPanel.AksjonspunktBehandler',
     );
     expect(rows.at(1).find('TextAreaField').first().props().name).to.equal('dummyId.ATFLVurdering');
@@ -214,7 +216,7 @@ describe('<AksjonspunktBehandler>', () => {
     const wrapper = shallowWithIntl(
       <AksjonspunktBehandler.WrappedComponent
         readOnly={readOnly}
-        aksjonspunkter={aksjonspunkter}
+        avklaringsbehov={avklaringsbehov}
         formName={formName}
         behandlingId={1}
         behandlingVersjon={1}
@@ -230,7 +232,7 @@ describe('<AksjonspunktBehandler>', () => {
       />,
     );
     const rows = wrapper.find('Row');
-    expect(rows.first().find('FormattedMessage').first().props().id).to.equal(
+    expect(rows.first().find('MemoizedFormattedMessage').first().props().id).to.equal(
       'Beregningsgrunnlag.AarsinntektPanel.AksjonspunktBehandler.NyIArbeidslivet',
     );
     const aksjonspunktBehandlerAT = wrapper.find('AksjonspunktBehandlerAT');

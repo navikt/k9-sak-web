@@ -1,4 +1,4 @@
-import React, { FunctionComponent, Fragment, useState } from 'react';
+import React, { Fragment, useState } from 'react';
 import { FormattedMessage, IntlShape } from 'react-intl';
 import { Normaltekst } from 'nav-frontend-typografi';
 import { DateLabel, Image, PeriodLabel, Table, TableColumn, TableRow } from '@fpsak-frontend/shared-components';
@@ -39,7 +39,7 @@ interface OwnProps {
   harAksjonspunktAvklarArbeidsforhold: boolean;
 }
 
-const PersonArbeidsforholdTable: FunctionComponent<OwnProps> = ({
+const PersonArbeidsforholdTable = ({
   alleArbeidsforhold,
   selectedId,
   alleKodeverk,
@@ -48,7 +48,7 @@ const PersonArbeidsforholdTable: FunctionComponent<OwnProps> = ({
   updateArbeidsforhold,
   intl,
   harAksjonspunktAvklarArbeidsforhold,
-}) => {
+}: OwnProps) => {
   const [selectedArbeidsforhold, setSelectedArbeidsforhold] = useState(undefined);
   const [visAksjonspunktInfo, setVisAksjonspunktInfo] = useState(true);
 

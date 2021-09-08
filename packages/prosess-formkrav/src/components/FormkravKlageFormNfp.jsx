@@ -23,7 +23,7 @@ export const FormkravKlageFormNfpImpl = ({
   readOnly,
   readOnlySubmitButton,
   alleKodeverk,
-  personopplysninger,
+  fagsakPerson,
   arbeidsgiverOpplysningerPerId,
   avsluttedeBehandlinger,
   parterMedKlagerett,
@@ -38,7 +38,7 @@ export const FormkravKlageFormNfpImpl = ({
       aksjonspunktCode={aksjonspunktCodes.VURDERING_AV_FORMKRAV_KLAGE_NFP}
       formProps={formProps}
       alleKodeverk={alleKodeverk}
-      personopplysninger={personopplysninger}
+      fagsakPerson={fagsakPerson}
       arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
       avsluttedeBehandlinger={avsluttedeBehandlinger}
       parterMedKlagerett={parterMedKlagerett}
@@ -50,7 +50,7 @@ export const FormkravKlageFormNfpImpl = ({
 FormkravKlageFormNfpImpl.propTypes = {
   behandlingId: PropTypes.number.isRequired,
   behandlingVersjon: PropTypes.number.isRequired,
-  personopplysninger: PropTypes.shape().isRequired,
+  fagsakPerson: PropTypes.shape().isRequired,
   arbeidsgiverOpplysningerPerId: PropTypes.shape().isRequired,
   parterMedKlagerett: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   readOnly: PropTypes.bool,
@@ -64,7 +64,7 @@ FormkravKlageFormNfpImpl.defaultProps = {
 };
 
 const getPåklagdBehandling = (avsluttedeBehandlinger, påklagdVedtak) =>
-  avsluttedeBehandlinger.find(behandling => behandling.id.toString() === påklagdVedtak);
+  avsluttedeBehandlinger.find(behandling => behandling.uuid.toString() === påklagdVedtak);
 
 export const erTilbakekreving = (avsluttedeBehandlinger, påklagdVedtak) => {
   const behandling = getPåklagdBehandling(avsluttedeBehandlinger, påklagdVedtak);
@@ -73,18 +73,16 @@ export const erTilbakekreving = (avsluttedeBehandlinger, påklagdVedtak) => {
     behandling?.type.kode === BehandlingType.TILBAKEKREVING_REVURDERING
   );
 };
-
-export const påklagdTilbakekrevingInfo = (avsluttedeBehandlinger, påklagdVedtak) => {
+export const påklagdBehandlingInfo = (avsluttedeBehandlinger, påklagdVedtak) => {
   const behandling = getPåklagdBehandling(avsluttedeBehandlinger, påklagdVedtak);
   return behandling
     ? {
-        tilbakekrevingUuid: behandling.uuid,
-        tilbakekrevingVedtakDato: behandling.avsluttet,
-        tilbakekrevingBehandlingType: behandling.type.kode,
+        påklagBehandlingUuid: behandling.uuid,
+        påklagBehandlingVedtakDato: behandling.avsluttet,
+        påklagBehandlingType: behandling.type.kode,
       }
     : null;
 };
-
 const transformValues = (values, avsluttedeBehandlinger) => ({
   erKlagerPart: values.erKlagerPart,
   erFristOverholdt: values.erFristOverholdt,
@@ -94,7 +92,7 @@ const transformValues = (values, avsluttedeBehandlinger) => ({
   kode: aksjonspunktCodes.VURDERING_AV_FORMKRAV_KLAGE_NFP,
   vedtak: values.vedtak === IKKE_PAKLAGD_VEDTAK ? null : values.vedtak,
   erTilbakekreving: erTilbakekreving(avsluttedeBehandlinger, values.vedtak),
-  tilbakekrevingInfo: påklagdTilbakekrevingInfo(avsluttedeBehandlinger, values.vedtak),
+  påklagdBehandlingInfo: påklagdBehandlingInfo(avsluttedeBehandlinger, values.vedtak),
   valgtKlagePart: safeJSONParse(values.valgtPartMedKlagerett),
 });
 

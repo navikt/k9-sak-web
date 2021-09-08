@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from 'react';
+import React from 'react';
 import { FormattedMessage, injectIntl, WrappedComponentProps } from 'react-intl';
 import { Hovedknapp } from 'nav-frontend-knapper';
 import { Column, Container, Row } from 'nav-frontend-grid';
@@ -21,7 +21,7 @@ interface OwnProps {
  * Presentasjonskomponent. Denne modalen vises etter at et brev har blitt bestilt.
  * Ved å trykke på knapp blir fritekst-feltet tømt.
  */
-const MessagesModal: FunctionComponent<OwnProps & WrappedComponentProps> = ({ showModal, closeEvent, intl }) => (
+const MessagesModal = ({ showModal, closeEvent, intl }: OwnProps & WrappedComponentProps) => (
   <Modal
     className={styles.modal}
     isOpen={showModal}

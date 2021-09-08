@@ -1,5 +1,5 @@
 import classnames from 'classnames/bind';
-import * as React from 'react';
+import React from 'react';
 import { Normaltekst, Element } from 'nav-frontend-typografi';
 import styles from './periodePolse.less';
 
@@ -18,7 +18,7 @@ interface PeriodePolseProps {
 
 const classNames = classnames.bind(styles);
 
-const PeriodePolse: React.FunctionComponent<PeriodePolseProps> = ({
+const PeriodePolse = ({
   dates,
   lengthInText,
   status,
@@ -27,7 +27,7 @@ const PeriodePolse: React.FunctionComponent<PeriodePolseProps> = ({
   icon,
   hideIcon,
   statusComment,
-}) => {
+}: PeriodePolseProps) => {
   const themeBorder = classNames('themeBorder', {
     success: theme === 'success',
     warn: theme === 'warn',

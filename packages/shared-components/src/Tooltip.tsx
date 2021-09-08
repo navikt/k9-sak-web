@@ -1,4 +1,4 @@
-import React, { FunctionComponent, ReactNode } from 'react';
+import React, { ReactNode } from 'react';
 import classnames from 'classnames/bind';
 
 import styles from './tooltip.less';
@@ -17,14 +17,14 @@ interface OwnProps {
 /**
  * Tooltip
  */
-const Tooltip: FunctionComponent<OwnProps> = ({
+const Tooltip = ({
   children,
   content,
   alignRight = false,
   alignLeft = false,
   alignTop = false,
   alignBottom = false,
-}) => (
+}: OwnProps) => (
   <div className={styles.tooltip}>
     <span
       className={classNames(styles.tooltiptext, {

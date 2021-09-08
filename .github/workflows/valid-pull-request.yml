@@ -11,7 +11,9 @@ jobs:
       - name: Sette opp Node
         uses: actions/setup-node@v2.1.5
         with:
-          node-version: 12.x
+          node-version: 15.x
+          registry-url: https://npm.pkg.github.com/
+          scope: '@navikt'
 
       - name: Get yarn cache directory path
         id: yarn-cache-dir-path
@@ -28,6 +30,8 @@ jobs:
 
       - name: Installere dependencies
         run: yarn install --ignore-optional --no-progress --frozen-lockfile
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Tester, typescript-sjekk og linting
-        run: yarn test:all && yarn ts-check && yarn less:lint
+        run: yarn test:all --runInBand && yarn ts-check && yarn less:lint

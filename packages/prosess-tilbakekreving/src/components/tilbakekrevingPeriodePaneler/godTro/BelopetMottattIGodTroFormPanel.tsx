@@ -1,14 +1,10 @@
-import React, {FunctionComponent} from 'react';
+import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import { Undertekst, Normaltekst } from 'nav-frontend-typografi';
 
-import {
-  minValue, required, removeSpacesFromNumber, formatCurrencyNoKr,
-} from '@fpsak-frontend/utils';
+import { minValue, required, removeSpacesFromNumber, formatCurrencyNoKr } from '@fpsak-frontend/utils';
 import { VerticalSpacer, ArrowBox } from '@fpsak-frontend/shared-components';
-import {
-  RadioOption, RadioGroupField, InputField,
-} from '@fpsak-frontend/form';
+import { RadioOption, RadioGroupField, InputField } from '@fpsak-frontend/form';
 
 import styles from './belopetMottattIGodTroFormPanel.less';
 
@@ -30,28 +26,13 @@ interface OwnProps {
   erBelopetIBehold?: boolean;
 }
 
-interface StaticFunctions {
-  buildIntialValues?: (info: { erBelopetIBehold: boolean; tilbakekrevesBelop: number }) => InitialValuesGodTroForm,
-  transformValues?: (info: { erBelopetIBehold: boolean; tilbakekrevdBelop: number }, vurderingBegrunnelse: string) => {
-    '@type': string;
-    begrunnelse: string;
-    erBelopetIBehold: boolean;
-    tilbakekrevesBelop: number;
-  },
-}
-
-const BelopetMottattIGodTroFormPanel: FunctionComponent<OwnProps> & StaticFunctions = ({
-  readOnly,
-  erBelopetIBehold,
-}) => (
+const BelopetMottattIGodTroFormPanel = ({ readOnly, erBelopetIBehold }: OwnProps) => (
   <>
-    <Undertekst><FormattedMessage id="BelopetMottattIGodTroFormPanel.BelopetIBehold" /></Undertekst>
+    <Undertekst>
+      <FormattedMessage id="BelopetMottattIGodTroFormPanel.BelopetIBehold" />
+    </Undertekst>
     <VerticalSpacer eightPx />
-    <RadioGroupField
-      validate={[required]}
-      name="erBelopetIBehold"
-      readOnly={readOnly}
-    >
+    <RadioGroupField validate={[required]} name="erBelopetIBehold" readOnly={readOnly}>
       <RadioOption label={<FormattedMessage id="BelopetMottattIGodTroFormPanel.Ja" />} value />
       <RadioOption label={<FormattedMessage id="BelopetMottattIGodTroFormPanel.Nei" />} value={false} />
     </RadioGroupField>
@@ -80,14 +61,20 @@ const BelopetMottattIGodTroFormPanel: FunctionComponent<OwnProps> & StaticFuncti
   </>
 );
 
-BelopetMottattIGodTroFormPanel.transformValues = (info: { erBelopetIBehold: boolean; tilbakekrevdBelop: number }, vurderingBegrunnelse: string) => ({
+BelopetMottattIGodTroFormPanel.transformValues = (
+  info: { erBelopetIBehold: boolean; tilbakekrevdBelop: number },
+  vurderingBegrunnelse: string,
+) => ({
   '@type': 'godTro',
   begrunnelse: vurderingBegrunnelse,
   erBelopetIBehold: info.erBelopetIBehold,
   tilbakekrevesBelop: info.erBelopetIBehold ? removeSpacesFromNumber(info.tilbakekrevdBelop) : undefined,
 });
 
-BelopetMottattIGodTroFormPanel.buildIntialValues = (info: { erBelopetIBehold: boolean; tilbakekrevesBelop: number }) => ({
+BelopetMottattIGodTroFormPanel.buildIntialValues = (info: {
+  erBelopetIBehold: boolean;
+  tilbakekrevesBelop: number;
+}) => ({
   erBelopetIBehold: info.erBelopetIBehold,
   tilbakekrevdBelop: info.tilbakekrevesBelop,
 });

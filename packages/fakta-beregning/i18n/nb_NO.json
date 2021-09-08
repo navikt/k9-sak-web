@@ -2,7 +2,7 @@
   "BegrunnelsePanel.readOnly": "Begrunnelse",
   "FaktaBegrunnelseTextField.Vurdering": "Vurdering",
 
-  "BeregningInfoPanel.AksjonspunktHelpText.FaktaOmBeregning": "Vurder fakta for beregningen",
+  "BeregningInfoPanel.AksjonspunktHelpText.FaktaOmBeregning": "Vurder fakta for beregningen. Normalinntekt for aktivitetene/arbeidsforholdene må fastsettes, se info ainntekt",
   "BeregningInfoPanel.TidsbegrensetArbFor.Arbeidsforhold": "Er arbeidsforholdet i {navn} med varighet {fom} - {tom} tidsbegrenset?",
   "BeregningInfoPanel.FormAlternativ.Ja": "Ja",
   "BeregningInfoPanel.FormAlternativ.Nei": "Nei",

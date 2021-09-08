@@ -1,5 +1,7 @@
 FROM nginx:1.17.8-alpine
 
+LABEL org.opencontainers.image.source=https://github.com/navikt/k9-sak-web
+
 # bash er ikke standard i alpine:
 RUN apk add --no-cache bash
 

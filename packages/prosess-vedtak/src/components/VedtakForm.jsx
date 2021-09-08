@@ -11,7 +11,7 @@ import { Column, Row } from 'nav-frontend-grid';
 import { kodeverkObjektPropType } from '@fpsak-frontend/prop-types';
 import klageBehandlingArsakType from '@fpsak-frontend/kodeverk/src/behandlingArsakType';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
-import { isAvslag, isInnvilget } from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
+import { isAvslag, isDelvisInnvilget, isInnvilget } from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
 import behandlingStatusCode from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import { behandlingForm, behandlingFormValueSelector, getBehandlingFormPrefix } from '@fpsak-frontend/form';
 
@@ -31,6 +31,7 @@ import VedtakAksjonspunktPanel from './VedtakAksjonspunktPanel';
 import styles from './vedtakForm.less';
 import VedtakOverstyrendeKnapp from './VedtakOverstyrendeKnapp';
 import BrevPanel from './brev/BrevPanel';
+import UstrukturerteDokumenter from './UstrukturerteDokumenter';
 
 const isVedtakSubmission = true;
 
@@ -93,6 +94,7 @@ export class VedtakForm extends Component {
       UNNTAK_FRA_TILSYNSORDNING,
       BEREGNING_25_PROSENT_AVVIK,
       OVER_18_AAR,
+      fritekstdokumenter,
       ...formProps
     } = this.props;
 
@@ -125,7 +127,9 @@ export class VedtakForm extends Component {
             )
           )}
 
-          {isInnvilget(behandlingresultat.type.kode) && (
+          {fritekstdokumenter?.length > 0 && <UstrukturerteDokumenter fritekstdokumenter={fritekstdokumenter} />}
+
+          {(isInnvilget(behandlingresultat.type.kode) || isDelvisInnvilget(behandlingresultat.type.kode)) && (
             <VedtakInnvilgetPanel
               intl={intl}
               antallBarn={antallBarn}
@@ -236,6 +240,7 @@ VedtakForm.propTypes = {
   UNNTAK_FRA_TILSYNSORDNING: PropTypes.string,
   BEREGNING_25_PROSENT_AVVIK: PropTypes.string,
   OVER_18_AAR: PropTypes.string,
+  fritekstdokumenter: PropTypes.arrayOf(PropTypes.shape()),
   ...formPropTypes,
 };
 

@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from 'react';
+import React from 'react';
 
 import { Rettigheter, BehandlingPaVent, SettPaVentParams } from '@k9-sak-web/behandling-felles';
 import {
@@ -8,6 +8,7 @@ import {
   KodeverkMedNavn,
   FagsakPerson,
   ArbeidsgiverOpplysningerPerId,
+  FeatureToggles,
 } from '@k9-sak-web/types';
 
 import KlageProsess from './KlageProsess';
@@ -36,9 +37,10 @@ interface OwnProps {
   }[];
   arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysningerPerId;
   setBehandling: (behandling: Behandling) => void;
+  featureToggles: FeatureToggles;
 }
 
-const KlagePaneler: FunctionComponent<OwnProps> = ({
+const KlagePaneler = ({
   fagsak,
   fagsakPerson,
   behandling,
@@ -54,7 +56,8 @@ const KlagePaneler: FunctionComponent<OwnProps> = ({
   alleBehandlinger,
   arbeidsgiverOpplysningerPerId,
   setBehandling,
-}) => (
+  featureToggles,
+}: OwnProps) => (
   <>
     <BehandlingPaVent
       behandling={behandling}
@@ -77,6 +80,7 @@ const KlagePaneler: FunctionComponent<OwnProps> = ({
       alleKodeverk={kodeverk}
       arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
       setBehandling={setBehandling}
+      featureToggles={featureToggles}
     />
   </>
 );

@@ -1,29 +1,23 @@
 import React from 'react';
 import { expect } from 'chai';
-import { intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 
 import personstatusType from '@fpsak-frontend/kodeverk/src/personstatusType';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import opplysningAdresseType from '@fpsak-frontend/kodeverk/src/opplysningAdresseType';
 import { Normaltekst } from 'nav-frontend-typografi';
-import { FormattedMessage } from 'react-intl';
 import OppholdINorgeOgAdresserFaktaPanel from './OppholdINorgeOgAdresserFaktaPanel';
-import shallowWithIntl from '../../../i18n';
+import shallowWithIntl, { intlMock } from '../../../i18n';
 
 describe('<OppholdINorgeOgAdresserFaktaPanel>', () => {
   const opphold = {
-    oppholdNorgeNa: true,
-    oppholdSistePeriode: true,
-    utlandsoppholdFor: [
+    utlandsopphold: [
       {
         landNavn: 'SVERIGE',
         fom: '2017-07-20',
         tom: '2017-07-31',
       },
     ],
-    utlandsoppholdEtter: [],
-    oppholdNestePeriode: false,
   };
 
   const foreldre = [
@@ -65,10 +59,8 @@ describe('<OppholdINorgeOgAdresserFaktaPanel>', () => {
       />,
     );
     const felter = wrapper.find(Normaltekst);
-    expect(felter).to.have.length(4);
-    expect(felter.first().childAt(0).find(FormattedMessage).prop('id')).to.eql('OppholdINorgeOgAdresserFaktaPanel.Yes');
-    expect(felter.at(1).childAt(0).text()).to.eql('Sverige');
-    expect(felter.at(3).childAt(0).find(FormattedMessage).prop('id')).to.eql('OppholdINorgeOgAdresserFaktaPanel.No');
+    expect(felter).to.have.length(2);
+    expect(felter.first().childAt(0).text()).to.eql('Sverige');
   });
 
   it('skal rendre form som viser bosatt informasjon', () => {
@@ -279,17 +271,13 @@ describe('<OppholdINorgeOgAdresserFaktaPanel>', () => {
       hasBosattAksjonspunkt: true,
       isBosattAksjonspunktClosed: false,
       opphold: {
-        oppholdNorgeNa: true,
-        oppholdSistePeriode: true,
-        utlandsoppholdFor: [
+        utlandsopphold: [
           {
             landNavn: 'SVERIGE',
             fom: '2017-07-20',
             tom: '2017-07-31',
           },
         ],
-        utlandsoppholdEtter: [],
-        oppholdNestePeriode: false,
       },
     });
   });

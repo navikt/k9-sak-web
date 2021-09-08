@@ -1,10 +1,11 @@
 import React from 'react';
 import { expect } from 'chai';
-
-import { shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import sammenligningType from '@fpsak-frontend/kodeverk/src/sammenligningType';
+
 import AvviksopplysningerPanel from './AvvikopplysningerPanel';
+
+import shallowWithIntl from '../../../i18n';
 
 const sammenligningsgrunnlag = kode => ({
   sammenligningsgrunnlagFom: '2018-09-01',
@@ -47,7 +48,7 @@ describe('<Avviksopplysninger>', () => {
       />,
     );
     const panel = wrapper.find('Panel');
-    const headerTitle = panel.find('FormattedMessage').first();
+    const headerTitle = panel.find('MemoizedFormattedMessage').first();
     expect(headerTitle.props().id).to.equal('Beregningsgrunnlag.Avikssopplysninger.ApplicationInformation');
     const avvikPanelAT = wrapper.find('AvviksopplysningerAT');
     expect(avvikPanelAT.props().sammenligningsgrunnlagPrStatus[0]).to.equal(sammenligningsgrunnlagPrStatus);
@@ -65,7 +66,7 @@ describe('<Avviksopplysninger>', () => {
       />,
     );
     const panel = wrapper.find('Panel');
-    const headerTitle = panel.find('FormattedMessage').first();
+    const headerTitle = panel.find('MemoizedFormattedMessage').first();
     expect(headerTitle.props().id).to.equal('Beregningsgrunnlag.Avikssopplysninger.ApplicationInformation');
     const avvikPanelAT = wrapper.find('AvviksopplysningerAT');
     expect(avvikPanelAT.props().sammenligningsgrunnlagPrStatus[0]).to.equal(sammenligningsgrunnlagPrStatus);
@@ -99,7 +100,7 @@ describe('<Avviksopplysninger>', () => {
       />,
     );
     const panel = wrapper.find('Panel');
-    const headerTitle = panel.find('FormattedMessage').first();
+    const headerTitle = panel.find('MemoizedFormattedMessage').first();
     expect(headerTitle.props().id).to.equal('Beregningsgrunnlag.Avikssopplysninger.ApplicationInformation');
     const avvikPanelSN = wrapper.find('AvviksopplysningerSN');
     expect(avvikPanelSN.props().sammenligningsgrunnlagPrStatus[0]).to.equal(sammenligningsgrunnlagPrStatus);
@@ -120,7 +121,7 @@ describe('<Avviksopplysninger>', () => {
       />,
     );
     const panel = wrapper.find('Panel');
-    const headerTitle = panel.find('FormattedMessage').first();
+    const headerTitle = panel.find('MemoizedFormattedMessage').first();
     expect(headerTitle.props().id).to.equal('Beregningsgrunnlag.Avikssopplysninger.ApplicationInformation');
     const avvikPanelFL = wrapper.find('AvviksopplysningerFL');
     expect(avvikPanelFL.props().sammenligningsgrunnlagPrStatus[0]).to.equal(sammenligningsgrunnlagPrStatus);
@@ -141,11 +142,11 @@ describe('<Avviksopplysninger>', () => {
       />,
     );
     const panel = wrapper.find('Panel');
-    const headerTitle = panel.find('FormattedMessage').first();
+    const headerTitle = panel.find('MemoizedFormattedMessage').first();
     expect(headerTitle.props().id).to.equal('Beregningsgrunnlag.Avikssopplysninger.ApplicationInformation');
     const rows = wrapper.find('Row');
     expect(rows).to.have.length(1);
-    const formatedText = rows.first().find('FormattedMessage');
+    const formatedText = rows.first().find('MemoizedFormattedMessage');
     expect(formatedText.first().prop('id')).to.eql('Beregningsgrunnlag.Avikssopplysninger.AAP');
     expect(wrapper.find('AvviksopplysningerAT')).to.have.length(0);
     expect(wrapper.find('AvviksopplysningerSN')).to.have.length(0);
@@ -166,11 +167,11 @@ describe('<Avviksopplysninger>', () => {
       />,
     );
     const panel = wrapper.find('Panel');
-    const headerTitle = panel.find('FormattedMessage').first();
+    const headerTitle = panel.find('MemoizedFormattedMessage').first();
     expect(headerTitle.props().id).to.equal('Beregningsgrunnlag.Avikssopplysninger.ApplicationInformation');
     const rows = wrapper.find('Row');
     expect(rows).to.have.length(1);
-    const formatedText = rows.first().find('FormattedMessage');
+    const formatedText = rows.first().find('MemoizedFormattedMessage');
     expect(formatedText.first().prop('id')).to.eql('Beregningsgrunnlag.Avikssopplysninger.Dagpenger');
     expect(wrapper.find('AvviksopplysningerAT')).to.have.length(0);
     expect(wrapper.find('AvviksopplysningerSN')).to.have.length(0);
@@ -191,7 +192,7 @@ describe('<Avviksopplysninger>', () => {
       />,
     );
     const panel = wrapper.find('Panel');
-    const formatedText = panel.find('FormattedMessage');
+    const formatedText = panel.find('MemoizedFormattedMessage');
     const headerTitle = formatedText.first();
     expect(headerTitle.props().id).to.equal('Beregningsgrunnlag.Avikssopplysninger.ApplicationInformation');
     expect(formatedText.last().prop('id')).to.eql('Beregningsgrunnlag.Avikssopplysninger.Miletar');

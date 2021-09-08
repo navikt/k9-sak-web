@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useState } from 'react';
+import React, { useState } from 'react';
 import { FormattedMessage } from 'react-intl';
 import Tabs from 'nav-frontend-tabs';
 import { Undertittel } from 'nav-frontend-typografi';
@@ -51,14 +51,14 @@ const mapAktiviteterTilTabell = (
   });
 };
 
-const Uttaksplan: FunctionComponent<UttaksplanProps> = ({
+const Uttaksplan = ({
   aktiviteterBehandling = [],
   aktiviteterHittilIÅr = [],
   aktivitetsstatuser = [],
   aktiv,
   arbeidsforhold,
   arbeidsgiverOpplysningerPerId,
-}) => {
+}: UttaksplanProps) => {
   const [valgtTabIndex, setValgtTabIndex] = useState<number>(0);
   return (
     <div className={styles.uttaksboks}>

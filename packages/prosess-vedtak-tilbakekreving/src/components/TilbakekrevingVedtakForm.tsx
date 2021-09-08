@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import { FormattedMessage, injectIntl, WrappedComponentProps } from 'react-intl';
 import classNames from 'classnames';
@@ -63,7 +63,7 @@ interface OwnProps {
   submitCallback: (aksjonspunktData: { kode: string }[]) => Promise<any>;
 }
 
-export const TilbakekrevingVedtakFormImpl: FunctionComponent<OwnProps & InjectedFormProps & WrappedComponentProps> = ({
+export const TilbakekrevingVedtakFormImpl = ({
   intl,
   readOnly,
   fetchPreviewVedtaksbrev,
@@ -77,8 +77,8 @@ export const TilbakekrevingVedtakFormImpl: FunctionComponent<OwnProps & Injected
   erRevurderingTilbakekrevingFeilBeløpBortfalt,
   fritekstOppsummeringPakrevdMenIkkeUtfylt,
   ...formProps
-}) => (
-  <form onSubmit={formProps.handleSubmit}>
+}: OwnProps & InjectedFormProps & WrappedComponentProps) => (
+  <form aria-label="form" onSubmit={formProps.handleSubmit}>
     <VerticalSpacer twentyPx />
     <TilbakekrevingEditerVedtaksbrevPanel
       vedtaksbrevAvsnitt={vedtaksbrevAvsnitt}
@@ -221,10 +221,12 @@ const mapStateToPropsFactory = (state: any, ownProps: PureOwnProps) => {
   };
 };
 
+export const TilbakekrevingVedtakFormImplWithIntl = injectIntl(TilbakekrevingVedtakFormImpl);
+
 const TilbakekrevingVedtakForm = connect(mapStateToPropsFactory)(
   behandlingForm({
     form: formName,
-  })(injectIntl(TilbakekrevingVedtakFormImpl)),
+  })(TilbakekrevingVedtakFormImplWithIntl),
 );
 
 export default TilbakekrevingVedtakForm;

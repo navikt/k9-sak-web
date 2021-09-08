@@ -7,22 +7,22 @@ import { connect } from 'react-redux';
 import { getKodeverknavnFn } from '@fpsak-frontend/utils';
 import { behandlingForm } from '@fpsak-frontend/form';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
+import { isAvklaringsbehovOpen } from '@fpsak-frontend/kodeverk/src/beregningAvklaringsbehovStatus';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { kodeverkObjektPropType } from '@fpsak-frontend/prop-types';
-import aksjonspunktCodes, { hasAksjonspunkt } from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import avklaringsbehovCodes, { harAvklaringsbehov } from '@fpsak-frontend/kodeverk/src/beregningAvklaringsbehovCodes';
 import { FaktaBegrunnelseTextField, FaktaSubmitButton } from '@k9-sak-web/fakta-felles';
 
 import FordelBeregningsgrunnlagForm from './fordeling/FordelBeregningsgrunnlagForm';
 import FordelingHelpText from './FordelingHelpText';
-import fordelBeregningsgrunnlagAksjonspunkterPropType from '../propTypes/fordelBeregningsgrunnlagAksjonspunkterPropType';
+import beregningAvklaringsbehovPropType from '../propTypes/beregningAvklaringsbehovPropType';
 
-const { FORDEL_BEREGNINGSGRUNNLAG } = aksjonspunktCodes;
+const { FORDEL_BEREGNINGSGRUNNLAG } = avklaringsbehovCodes;
 
 const FORM_NAME_FORDEL_BEREGNING = 'fordelBeregningsgrunnlagForm';
 
-const findAksjonspunktMedBegrunnelse = aksjonspunkter =>
-  aksjonspunkter.find(ap => ap.definisjon.kode === FORDEL_BEREGNINGSGRUNNLAG && ap.begrunnelse !== null);
+const findAvklaringsbehovMedBegrunnelse = avklaringsbehov =>
+  avklaringsbehov.find(ab => ab.definisjon.kode === FORDEL_BEREGNINGSGRUNNLAG && ab.begrunnelse !== null);
 
 export const BEGRUNNELSE_FORDELING_NAME = 'begrunnelseFordeling';
 
@@ -32,7 +32,7 @@ const renderFordeling = ({
   fields,
   readOnly,
   submittable,
-  isAksjonspunktClosed,
+  isAvklaringsbehovClosed,
   hasBegrunnelse,
   submitEnabled,
   behandlingId,
@@ -41,7 +41,7 @@ const renderFordeling = ({
   alleKodeverk,
   arbeidsgiverOpplysningerPerId,
   behandlingType,
-  aksjonspunkter,
+  avklaringsbehov,
   kreverManuellBehandling,
   aktivtBeregningsgrunnlagIndex,
   formProps,
@@ -53,10 +53,10 @@ const renderFordeling = ({
           {kreverManuellBehandling && (
             <>
               <FordelingHelpText
-                isAksjonspunktClosed={isAksjonspunktClosed}
+                isAvklaringsbehovClosed={isAvklaringsbehovClosed}
                 alleKodeverk={alleKodeverk}
                 arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
-                aksjonspunkter={aksjonspunkter}
+                avklaringsbehov={avklaringsbehov}
                 beregningsgrunnlag={beregningsgrunnlag}
               />
               <VerticalSpacer twentyPx />
@@ -64,7 +64,7 @@ const renderFordeling = ({
           )}
           <FordelBeregningsgrunnlagForm
             readOnly={readOnly}
-            isAksjonspunktClosed={isAksjonspunktClosed}
+            isAvklaringsbehovClosed={isAvklaringsbehovClosed}
             beregningsgrunnlag={beregningsgrunnlag}
             alleKodeverk={alleKodeverk}
             arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
@@ -85,7 +85,7 @@ const renderFordeling = ({
                 formName={formProps.form}
                 isSubmittable={submittable && submitEnabled}
                 isReadOnly={readOnly}
-                hasOpenAksjonspunkter={!isAksjonspunktClosed}
+                hasOpenAksjonspunkter={!isAvklaringsbehovClosed}
                 behandlingId={behandlingId}
                 behandlingVersjon={behandlingVersjon}
               />
@@ -103,7 +103,7 @@ const renderFordeling = ({
 const FordelingFormImpl = ({
   readOnly,
   submittable,
-  isAksjonspunktClosed,
+  isAvklaringsbehovClosed,
   hasBegrunnelse,
   submitEnabled,
   behandlingId,
@@ -112,7 +112,7 @@ const FordelingFormImpl = ({
   alleKodeverk,
   arbeidsgiverOpplysningerPerId,
   behandlingType,
-  aksjonspunkter,
+  avklaringsbehov,
   kreverManuellBehandling,
   aktivtBeregningsgrunnlagIndex,
   ...formProps
@@ -130,11 +130,11 @@ const FordelingFormImpl = ({
       arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
       beregningsgrunnlag={beregningsgrunnlag}
       behandlingType={behandlingType}
-      aksjonspunkter={aksjonspunkter}
+      avklaringsbehov={avklaringsbehov}
       kreverManuellBehandling={kreverManuellBehandling}
       aktivtBeregningsgrunnlagIndex={aktivtBeregningsgrunnlagIndex}
       hasBegrunnelse={hasBegrunnelse}
-      isAksjonspunktClosed={isAksjonspunktClosed}
+      isAvklaringsbehovClosed={isAvklaringsbehovClosed}
       formProps={formProps}
     />
   </form>
@@ -146,14 +146,14 @@ FordelingFormImpl.propTypes = {
   submittable: PropTypes.bool.isRequired,
   submitEnabled: PropTypes.bool.isRequired,
   hasBegrunnelse: PropTypes.bool.isRequired,
-  isAksjonspunktClosed: PropTypes.bool.isRequired,
+  isAvklaringsbehovClosed: PropTypes.bool.isRequired,
   behandlingId: PropTypes.number.isRequired,
   behandlingVersjon: PropTypes.number.isRequired,
   beregningsgrunnlag: PropTypes.shape().isRequired,
   alleKodeverk: PropTypes.shape().isRequired,
   arbeidsgiverOpplysningerPerId: PropTypes.shape().isRequired,
   behandlingType: kodeverkObjektPropType.isRequired,
-  aksjonspunkter: PropTypes.arrayOf(fordelBeregningsgrunnlagAksjonspunkterPropType).isRequired,
+  avklaringsbehov: PropTypes.arrayOf(beregningAvklaringsbehovPropType).isRequired,
   kreverManuellBehandling: PropTypes.bool.isRequired,
   aktivtBeregningsgrunnlagIndex: PropTypes.number.isRequired,
   ...formPropTypes,
@@ -186,11 +186,11 @@ const mapGrunnlagsliste = (fieldArrayList, alleBeregningsgrunnlag, vilkårsperio
 export const transformValuesFordelBeregning = createSelector(
   [
     ownProps => ownProps.alleBeregningsgrunnlag,
-    ownProps => ownProps.aksjonspunkter,
+    ownProps => ownProps.avklaringsbehov,
     ownProps => ownProps.vilkårsperioder,
   ],
-  (alleBeregningsgrunnlag, aksjonspunkter, vilkårsperioder) => values => {
-    if (hasAksjonspunkt(FORDEL_BEREGNINGSGRUNNLAG, aksjonspunkter)) {
+  (alleBeregningsgrunnlag, avklaringsbehov, vilkårsperioder) => values => {
+    if (harAvklaringsbehov(FORDEL_BEREGNINGSGRUNNLAG, avklaringsbehov)) {
       const fieldArrayList = values[fieldArrayName];
       const faktaBeregningValues = values;
       const begrunnelse = faktaBeregningValues[BEGRUNNELSE_FORDELING_NAME];
@@ -211,15 +211,15 @@ export const buildInitialValuesFordelBeregning = createSelector(
     ownProps => ownProps.alleBeregningsgrunnlag,
     ownProps => ownProps.alleKodeverk,
     ownProps => ownProps.arbeidsgiverOpplysningerPerId,
-    ownProps => ownProps.aksjonspunkter,
+    ownProps => ownProps.avklaringsbehov,
   ],
-  (alleBeregningsgrunnlag, alleKodeverk, arbeidsgiverOpplysningerPerId, aksjonspunkter) => {
-    if (!hasAksjonspunkt(FORDEL_BEREGNINGSGRUNNLAG, aksjonspunkter)) {
+  (alleBeregningsgrunnlag, alleKodeverk, arbeidsgiverOpplysningerPerId, avklaringsbehov) => {
+    if (!harAvklaringsbehov(FORDEL_BEREGNINGSGRUNNLAG, avklaringsbehov)) {
       return {};
     }
     return {
       ...FaktaBegrunnelseTextField.buildInitialValues(
-        findAksjonspunktMedBegrunnelse(aksjonspunkter),
+        findAvklaringsbehovMedBegrunnelse(avklaringsbehov),
         BEGRUNNELSE_FORDELING_NAME,
       ),
       [fieldArrayName]: alleBeregningsgrunnlag.map(bg =>
@@ -238,10 +238,10 @@ export const getValidationFordelBeregning = createSelector(
     ownProps => ownProps.beregningsgrunnlag,
     ownProps => ownProps.alleKodeverk,
     ownProps => ownProps.arbeidsgiverOpplysningerPerId,
-    ownProps => ownProps.aksjonspunkter,
+    ownProps => ownProps.avklaringsbehov,
   ],
-  (beregningsgrunnlag, alleKodeverk, arbeidsgiverOpplysningerPerId, aksjonspunkter) => values => {
-    if (hasAksjonspunkt(FORDEL_BEREGNINGSGRUNNLAG, aksjonspunkter)) {
+  (beregningsgrunnlag, alleKodeverk, arbeidsgiverOpplysningerPerId, avklaringsbehov) => values => {
+    if (harAvklaringsbehov(FORDEL_BEREGNINGSGRUNNLAG, avklaringsbehov)) {
       return {
         ...FordelBeregningsgrunnlagForm.validate(
           values,
@@ -258,12 +258,12 @@ export const getValidationFordelBeregning = createSelector(
 const mapStateToPropsFactory = (initialState, initialOwnProps) => {
   const onSubmit = values => initialOwnProps.submitCallback(transformValuesFordelBeregning(initialOwnProps)(values));
   return (state, ownProps) => {
-    const relevantAp = ownProps.aksjonspunkter.find(ap => ap.definisjon.kode === FORDEL_BEREGNINGSGRUNNLAG);
-    const isAksjonspunktClosed = !isAksjonspunktOpen(relevantAp.status.kode);
+    const relevantAb = ownProps.avklaringsbehov.find(ab => ab.definisjon.kode === FORDEL_BEREGNINGSGRUNNLAG);
+    const isAvklaringsbehovClosed = !isAvklaringsbehovOpen(relevantAb.status.kode);
     const initialValues = buildInitialValuesFordelBeregning(ownProps);
     const hasBegrunnelse = initialValues && !!initialValues[BEGRUNNELSE_FORDELING_NAME];
     return {
-      isAksjonspunktClosed,
+      isAvklaringsbehovClosed,
       hasBegrunnelse,
       initialValues,
       validate: getValidationFordelBeregning(ownProps),

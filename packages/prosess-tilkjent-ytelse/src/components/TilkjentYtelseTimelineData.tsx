@@ -1,4 +1,4 @@
-import React, { FC, useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
 import moment from 'moment';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
@@ -29,7 +29,7 @@ interface OwnProps {
  *
  * Viser opp data fra valgt periode i tilkjent ytelse-tidslinjen
  */
-const TilkjentYtelseTimeLineData: FC<OwnProps> = ({
+const TilkjentYtelseTimeLineData = ({
   selectedItemStartDate,
   selectedItemEndDate,
   selectedItemData,
@@ -37,7 +37,7 @@ const TilkjentYtelseTimeLineData: FC<OwnProps> = ({
   callbackBackward,
   alleKodeverk,
   arbeidsgiverOpplysningerPerId,
-}) => {
+}: OwnProps) => {
   const [activeTab, setActiveTab] = useState(0);
   useEffect(() => {
     setActiveTab(0);

@@ -1,9 +1,10 @@
 import React from 'react';
 import { expect } from 'chai';
-import { intlMock, shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 
 import ArbeidsforholdV2 from '@k9-sak-web/types/src/arbeidsforholdV2TsType';
 import AksjonspunktAvklarArbeidsforholdText from './AksjonspunktAvklarArbeidsforholdText';
+
+import shallowWithIntl, { intlMock } from '../i18n/index';
 
 describe('<AksjonspunktAvklarArbeidsforholdText>', () => {
   it('Utleder riktig text når arbeidsforholdet er registrert uten IM', () => {
@@ -26,7 +27,7 @@ describe('<AksjonspunktAvklarArbeidsforholdText>', () => {
       />,
     );
     const flexContainer = wrapper.find('FlexContainer');
-    const messages = flexContainer.first().find('FormattedMessage');
+    const messages = flexContainer.first().find('MemoizedFormattedMessage');
     expect(messages.at(0).prop('id')).is.eql('HelpText.FinnesIkkeIRegisteret');
     expect(messages.at(1).prop('id')).is.eql('HelpText.TaKontakt');
     const image = flexContainer.first().find('Image');
@@ -49,7 +50,7 @@ describe('<AksjonspunktAvklarArbeidsforholdText>', () => {
       />,
     );
     const flexContainer = wrapper.find('FlexContainer');
-    const messages = flexContainer.first().find('FormattedMessage');
+    const messages = flexContainer.first().find('MemoizedFormattedMessage');
     expect(messages.at(0).prop('id')).is.eql('HelpText.OvergangAbedsforholdsId');
     expect(messages.at(1).prop('id')).is.eql('HelpText.TaKontaktOvergangArbeidsforholdId');
     const image = flexContainer.first().find('Image');

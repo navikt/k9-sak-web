@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import { MicroFrontend } from '@fpsak-frontend/utils';
 import sjekkHvisErIProduksjon from '@fpsak-frontend/utils/src/micro-frontends/sjekkHvisErIProduksjon';
 import { FormState } from '@fpsak-frontend/form';
@@ -16,6 +16,7 @@ const initializeOmsorgenForVilkar = (
     vilkar,
     angitteBarn,
     fagsaksType,
+    harBarnSoktForRammevedtakOmKroniskSyk
   },
 ) => {
   (window as any).renderMicrofrontendOmsorgsdagerApp(
@@ -29,20 +30,21 @@ const initializeOmsorgenForVilkar = (
       vilkarInformasjon: { vilkar, status },
       fagsaksType,
       FormState,
+      harBarnSoktForRammevedtakOmKroniskSyk
     }),
   );
 };
 
 const hentVersjonInformasjon = () => {
   const produksjonsVersjon = {
-    versjon: '1.5.40',
-    jsIntegrity: 'sha384-dcM4G69O4KLmvKOBXwvUV0K0zfTFaJNo27mC8L4VaCTyalpuzO4IKy5KuuLIxQ3U',
-    stylesheetIntegrity: 'sha384-LC4FE5IBLroddA6Ew0fDNUxK+oapnpHA8pFrMSZ7Q67tIbZTe8hn8P/ktKJRojwr',
+    versjon: '2.0.3',
+    jsIntegrity: 'sha384-CGmeSJmx0S1O01lIOT2yZ2lcIvwEUPyud8xxVuUomL7CwUh9JcAjkrym8ZerExsX',
+    stylesheetIntegrity: 'sha384-3iUtet323prriMT769mdhUmWxrtoD2sTbqMwOZV0tKNwjCvRz+tNgmCtOq2Poocv',
   };
   const preprodVersjon = {
-    versjon: '1.5.40',
-    jsIntegrity: 'sha384-dcM4G69O4KLmvKOBXwvUV0K0zfTFaJNo27mC8L4VaCTyalpuzO4IKy5KuuLIxQ3U',
-    stylesheetIntegrity: 'sha384-LC4FE5IBLroddA6Ew0fDNUxK+oapnpHA8pFrMSZ7Q67tIbZTe8hn8P/ktKJRojwr',
+    versjon: '2.0.9',
+    jsIntegrity: 'sha384-kgBpgoA9COePv8VXCZXDwuxp9HSDNMtS21zszINDOU8/VfAfsGrVytR0NDODbp+n',
+    stylesheetIntegrity: 'sha384-yZqCZagpNwpD1z9gzcVU/3yE3qQSQAycDSwj8KyhgjqKwbweal0L+suvMaHu//lz',
   };
   return sjekkHvisErIProduksjon() ? produksjonsVersjon : preprodVersjon;
 };
@@ -50,15 +52,27 @@ const hentVersjonInformasjon = () => {
 export default props => {
   const omsorgenForVilkårAppID = 'omsorgenForRettApp';
   const { versjon, jsIntegrity, stylesheetIntegrity } = hentVersjonInformasjon();
+  const erIProduksjon = sjekkHvisErIProduksjon();
+  const path = erIProduksjon ? 'prod' : 'dev';
 
-  return (
-    <MicroFrontend
-      id={omsorgenForVilkårAppID}
-      jsSrc={`/k9/microfrontend/omsorgsdager/${versjon}/app.js`}
-      jsIntegrity={jsIntegrity}
-      stylesheetSrc={`/k9/microfrontend/omsorgsdager/${versjon}/styles.css`}
-      stylesheetIntegrity={stylesheetIntegrity}
-      onReady={() => initializeOmsorgenForVilkar(omsorgenForVilkårAppID, { ...props, FormState })}
-    />
-  );
+  if(erIProduksjon) {
+    return (
+      <MicroFrontend
+        id={omsorgenForVilkårAppID}
+        jsSrc={`/k9/microfrontend/omsorgsdager/${versjon}/app.js`}
+        jsIntegrity={jsIntegrity}
+        stylesheetSrc={`/k9/microfrontend/omsorgsdager/${versjon}/styles.css`}
+        stylesheetIntegrity={stylesheetIntegrity}
+        onReady={() => initializeOmsorgenForVilkar(omsorgenForVilkårAppID, {...props, FormState})}
+      />
+    );
+  }
+    return (
+      <MicroFrontend
+        id={omsorgenForVilkårAppID}
+        jsSrc={`/k9/microfrontend/omsorgsdager/${path}/app.js`}
+        stylesheetSrc={`/k9/microfrontend/omsorgsdager/${path}/styles.css`}
+        onReady={() => initializeOmsorgenForVilkar(omsorgenForVilkårAppID, {...props, FormState})}
+      />
+    );
 };

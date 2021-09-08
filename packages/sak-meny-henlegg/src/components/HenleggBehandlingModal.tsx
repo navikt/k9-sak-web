@@ -1,7 +1,7 @@
-import React, { FunctionComponent, useMemo } from 'react';
+import React, { useMemo } from 'react';
 import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
-import { formValueSelector, reduxForm, InjectedFormProps } from 'redux-form';
+import { formValueSelector, InjectedFormProps, reduxForm } from 'redux-form';
 import { Column, Row } from 'nav-frontend-grid';
 import { SkjemaGruppe } from 'nav-frontend-skjema';
 import { injectIntl, WrappedComponentProps } from 'react-intl';
@@ -12,41 +12,47 @@ import { Undertekst } from 'nav-frontend-typografi';
 import BehandlingType, { erTilbakekrevingType } from '@fpsak-frontend/kodeverk/src/behandlingType';
 import behandlingResultatType from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
 import { SelectField, TextAreaField } from '@fpsak-frontend/form';
-import { hasValidText, maxLength, required } from '@fpsak-frontend/utils';
-import { Kodeverk, KodeverkMedNavn } from '@k9-sak-web/types';
+import { hasValidText, maxLength, required, safeJSONParse } from '@fpsak-frontend/utils';
+import { ArbeidsgiverOpplysningerPerId, Kodeverk, KodeverkMedNavn, Personopplysninger } from '@k9-sak-web/types';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 
 import dokumentMalType from '@fpsak-frontend/kodeverk/src/dokumentMalType';
+import KlagePart from '@k9-sak-web/behandling-klage/src/types/klagePartTsType';
 import styles from './henleggBehandlingModal.less';
+import Brevmottakere from './Brevmottakere';
 
 const maxLength1500 = maxLength(1500);
 
 // TODO (TOR) Skal bruka navn fra kodeverk i staden for oppslag klientside for "henleggArsaker"
 
-const previewHenleggBehandlingDoc = (
-  previewHenleggBehandling: (erHenleggelse: boolean, data: any) => void,
-  ytelseType: Kodeverk,
-  fritekst: string,
-  behandlingId: number,
-  behandlingUuid?: string,
-  behandlingType?: Kodeverk,
-) => (e: React.MouseEvent | React.KeyboardEvent): void => {
-  // TODO Hardkoda verdiar. Er dette eit kodeverk?
-  const data = erTilbakekrevingType(behandlingType)
-    ? {
-        ytelseType,
-        dokumentMal: 'HENLEG',
-        fritekst,
-        mottaker: 'Søker',
-        behandlingId,
-      }
-    : {
-        dokumentMal: dokumentMalType.HENLEGG_BEHANDLING_DOK,
-        dokumentdata: { fritekst: fritekst || ' ' },
-      };
-  previewHenleggBehandling(true, data);
-  e.preventDefault();
-};
+const previewHenleggBehandlingDoc =
+  (
+    previewHenleggBehandling: (erHenleggelse: boolean, data: any) => void,
+    ytelseType: Kodeverk,
+    fritekst: string,
+    behandlingId: number,
+    behandlingUuid?: string,
+    behandlingType?: Kodeverk,
+    valgtMottaker?: KlagePart,
+  ) =>
+  (e: React.MouseEvent | React.KeyboardEvent): void => {
+    // TODO Hardkoda verdiar. Er dette eit kodeverk?
+    const data = erTilbakekrevingType(behandlingType)
+      ? {
+          ytelseType,
+          dokumentMal: 'HENLEG',
+          fritekst,
+          mottaker: 'Søker',
+          behandlingId,
+        }
+      : {
+          dokumentMal: dokumentMalType.HENLEGG_BEHANDLING_DOK,
+          dokumentdata: { fritekst: fritekst || ' ' },
+          overstyrtMottaker: valgtMottaker?.identifikasjon,
+        };
+    previewHenleggBehandling(true, data);
+    e.preventDefault();
+  };
 
 const showHenleggelseFritekst = (behandlingTypeKode: string, årsakKode?: string): boolean =>
   BehandlingType.TILBAKEKREVING_REVURDERING === behandlingTypeKode &&
@@ -79,12 +85,10 @@ const henleggArsakerPerBehandlingType = {
   [BehandlingType.REVURDERING]: [
     behandlingResultatType.HENLAGT_SOKNAD_TRUKKET,
     behandlingResultatType.HENLAGT_FEILOPPRETTET,
-    behandlingResultatType.HENLAGT_SOKNAD_MANGLER,
   ],
   [BehandlingType.FORSTEGANGSSOKNAD]: [
     behandlingResultatType.HENLAGT_SOKNAD_TRUKKET,
     behandlingResultatType.HENLAGT_FEILOPPRETTET,
-    behandlingResultatType.HENLAGT_SOKNAD_MANGLER,
   ],
 };
 
@@ -99,7 +103,6 @@ export const getHenleggArsaker = (
       type =>
         ytelseType.kode !== fagsakYtelseType.ENGANGSSTONAD ||
         (ytelseType.kode === fagsakYtelseType.ENGANGSSTONAD &&
-          type !== behandlingResultatType.HENLAGT_SOKNAD_MANGLER &&
           type !== behandlingResultatType.MANGLER_BEREGNINGSREGLER),
     )
     .map(type => behandlingResultatTyper.find(brt => brt.kode === type));
@@ -113,12 +116,16 @@ interface PureOwnProps {
   behandlingId?: number;
   behandlingResultatTyper: KodeverkMedNavn[];
   behandlingType: Kodeverk;
+  hentMottakere: () => Promise<KlagePart[]>;
+  personopplysninger?: Personopplysninger;
+  arbeidsgiverOpplysningerPerId?: ArbeidsgiverOpplysningerPerId;
 }
 
 interface MappedOwnProps {
   årsakKode?: string;
   begrunnelse?: string;
   fritekst?: string;
+  valgtMottaker?: KlagePart;
   showLink: boolean;
 }
 
@@ -128,9 +135,7 @@ interface MappedOwnProps {
  * Presentasjonskomponent. Denne modalen vises når saksbehandler valger 'Henlegg behandling og avslutt'.
  * Ved å angi årsak og begrunnelse og trykke på 'Henlegg behandling' blir behandlingen henlagt og avsluttet.
  */
-export const HenleggBehandlingModalImpl: FunctionComponent<
-  PureOwnProps & MappedOwnProps & WrappedComponentProps & InjectedFormProps
-> = ({
+export const HenleggBehandlingModalImpl = ({
   handleSubmit,
   cancelEvent,
   previewHenleggBehandling,
@@ -144,12 +149,15 @@ export const HenleggBehandlingModalImpl: FunctionComponent<
   behandlingType,
   behandlingId,
   behandlingResultatTyper,
-}) => {
-  const henleggArsaker = useMemo(() => getHenleggArsaker(behandlingResultatTyper, behandlingType, ytelseType), [
-    behandlingResultatTyper,
-    behandlingType,
-    ytelseType,
-  ]);
+  hentMottakere,
+  personopplysninger,
+  arbeidsgiverOpplysningerPerId,
+  valgtMottaker,
+}: PureOwnProps & MappedOwnProps & WrappedComponentProps & InjectedFormProps) => {
+  const henleggArsaker = useMemo(
+    () => getHenleggArsaker(behandlingResultatTyper, behandlingType, ytelseType),
+    [behandlingResultatTyper, behandlingType, ytelseType],
+  );
   return (
     <Modal
       className={styles.modal}
@@ -219,6 +227,14 @@ export const HenleggBehandlingModalImpl: FunctionComponent<
               <Column xs="4">
                 {showLink && (
                   <div className={styles.forhandsvis}>
+                    {behandlingType.kode === BehandlingType.KLAGE && (
+                      <Brevmottakere
+                        hentMottakere={hentMottakere}
+                        personopplysninger={personopplysninger}
+                        arbeidsgiverOpplysninger={arbeidsgiverOpplysningerPerId}
+                        intl={intl}
+                      />
+                    )}
                     <Undertekst>{intl.formatMessage({ id: 'HenleggBehandlingModal.SokerInformeres' })}</Undertekst>
                     <a
                       href=""
@@ -229,6 +245,7 @@ export const HenleggBehandlingModalImpl: FunctionComponent<
                         behandlingId,
                         behandlingUuid,
                         behandlingType,
+                        valgtMottaker,
                       )}
                       onKeyDown={previewHenleggBehandlingDoc(
                         previewHenleggBehandling,
@@ -237,6 +254,7 @@ export const HenleggBehandlingModalImpl: FunctionComponent<
                         behandlingId,
                         behandlingUuid,
                         behandlingType,
+                        valgtMottaker,
                       )}
                       className="lenke lenke--frittstaende"
                     >
@@ -279,6 +297,7 @@ const mapStateToProps = (state, ownProps: PureOwnProps): MappedOwnProps => ({
   årsakKode: formValueSelector('HenleggBehandlingModal')(state, 'årsakKode'),
   begrunnelse: formValueSelector('HenleggBehandlingModal')(state, 'begrunnelse'),
   fritekst: formValueSelector('HenleggBehandlingModal')(state, 'fritekst'),
+  valgtMottaker: safeJSONParse(formValueSelector('HenleggBehandlingModal')(state, 'valgtMottaker')),
   showLink: getShowLink(state, ownProps),
 });
 

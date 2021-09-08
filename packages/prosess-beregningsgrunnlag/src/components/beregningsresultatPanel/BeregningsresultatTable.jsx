@@ -250,9 +250,7 @@ const settVisningsRaderForATDPSN = (periode, rowsAndeler, rowsForklaringer, vilk
 };
 const settVisningsRaderForDefault = (
   periode,
-  rows,
   rowsAndeler,
-  rowsForklaringer,
   vilkarStatus,
   harBortfallNaturalYtelse,
 ) => {
@@ -363,7 +361,6 @@ export const createBeregningTableData = createSelector(
         redusertRad.verdi = formatCurrencyNoKr(periode.redusertPrAar);
       }
       dagsatserRad.verdi = formatCurrencyNoKr(finnDagsats(periode));
-      const rows = [];
       const rowsAndeler = [];
       const rowsForklaringer = [];
       const sortedStatusList = aktivitetStatusList.sort((a, b) => (a.kode > b.kode ? 1 : -1)); // sorter alfabetisk
@@ -388,9 +385,7 @@ export const createBeregningTableData = createSelector(
         default: {
           settVisningsRaderForDefault(
             periode,
-            rows,
             rowsAndeler,
-            rowsForklaringer,
             vilkarStatus,
             harBortfallNaturalYtelse,
           );
@@ -431,12 +426,13 @@ export const createBeregningTableData = createSelector(
  * beregningen og hva dagsatsen ble.
  * Dersom vilkåret ble avslått vil grunnen til dette vises istedenfor tabellen
  */
-const BeregningsresultatTable = ({ intl, vilkaarBG, periodeResultatTabeller, halvGVerdi }) => (
+const BeregningsresultatTable = ({ intl, vilkaarBG, periodeResultatTabeller, halvGVerdi, erMidlertidigInaktiv }) => (
   <BeregningsresutatPanel
     intl={intl}
     halvGVerdi={halvGVerdi}
     periodeResultatTabeller={periodeResultatTabeller}
     vilkaarBG={vilkaarBG}
+    erMidlertidigInaktiv={erMidlertidigInaktiv}
   />
 );
 
@@ -445,6 +441,7 @@ BeregningsresultatTable.propTypes = {
   halvGVerdi: PropTypes.number.isRequired,
   vilkaarBG: beregningsgrunnlagVilkarPropType.isRequired,
   periodeResultatTabeller: PropTypes.arrayOf(PropTypes.shape()).isRequired,
+  erMidlertidigInaktiv: PropTypes.bool.isRequired,
 };
 
 const mapStateToProps = (state, ownProps) => ({

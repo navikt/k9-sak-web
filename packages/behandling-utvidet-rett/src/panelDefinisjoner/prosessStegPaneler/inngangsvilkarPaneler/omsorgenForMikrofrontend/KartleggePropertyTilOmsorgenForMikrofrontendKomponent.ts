@@ -22,6 +22,7 @@ interface PropTypes {
   vilkarInformasjon: VilkarInformasjon;
   fagsaksType: fagsakTsType;
   FormState: FormStateType;
+  harBarnSoktForRammevedtakOmKroniskSyk: boolean;
 }
 
 const KartleggePropertyTilOmsorgenForMikrofrontendKomponent = ({
@@ -33,6 +34,7 @@ const KartleggePropertyTilOmsorgenForMikrofrontendKomponent = ({
   vilkarInformasjon,
   fagsaksType,
   FormState,
+  harBarnSoktForRammevedtakOmKroniskSyk
 }: PropTypes) => {
   let objektTilMikrofrontend = {};
   const { aksjonspunkter, isAksjonspunktOpen } = aksjonspunktInformasjon;
@@ -45,7 +47,6 @@ const KartleggePropertyTilOmsorgenForMikrofrontendKomponent = ({
     const skalVilkarsUtfallVises = behandling.status.kode === behandlingStatus.AVSLUTTET;
     const aksjonspunktLost = behandling.status.kode === behandlingStatus.BEHANDLING_UTREDES && !isAksjonspunktOpen;
     const behandlingsID = behandling.id.toString();
-
     objektTilMikrofrontend = {
       visKomponent: UtvidetRettMikrofrontendVisning.OMSORG,
       props: {
@@ -54,10 +55,11 @@ const KartleggePropertyTilOmsorgenForMikrofrontendKomponent = ({
         aksjonspunktLost,
         lesemodus: isReadOnly || !isAksjonspunktOpen,
         informasjonTilLesemodus: {
-          begrunnelse: aksjonspunkt.begrunnelse,
+          begrunnelse: aksjonspunkt.begrunnelse ? aksjonspunkt.begrunnelse : '',
           vilkarOppfylt: status === vilkarUtfallType.OPPFYLT,
         } as InformasjonTilLesemodus,
         barn: angitteBarn.map(barn => barn.personIdent),
+        harBarnSoktForRammevedtakOmKroniskSyk,
         vedtakFattetVilkarOppfylt: skalVilkarsUtfallVises,
         informasjonOmVilkar: generereInfoForVurdertVilkar(
           skalVilkarsUtfallVises,

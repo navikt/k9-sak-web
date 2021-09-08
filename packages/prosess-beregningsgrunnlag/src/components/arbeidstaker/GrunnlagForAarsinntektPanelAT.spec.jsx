@@ -49,9 +49,7 @@ describe('<GrunnlagForAarsinntektPanelAT>', () => {
         intl={intlMock}
         readOnly
         alleAndeler={andeler}
-        isAksjonspunktClosed
         isKombinasjonsstatus={false}
-        harAksjonspunkt={false}
         allePerioder={perioder}
         getKodeverknavn={getKodeverknavn}
         arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
@@ -73,10 +71,8 @@ describe('<GrunnlagForAarsinntektPanelAT>', () => {
         intl={intlMock}
         readOnly
         isKombinasjonsstatus={false}
-        isAksjonspunktClosed
         allePerioder={perioder}
         alleAndeler={andeler}
-        aksjonspunkter={[]}
         getKodeverknavn={getKodeverknavn}
         arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
         bruttoFastsattInntekt={0}
@@ -114,10 +110,8 @@ describe('<GrunnlagForAarsinntektPanelAT>', () => {
         intl={intlMock}
         readOnly
         isKombinasjonsstatus={false}
-        isAksjonspunktClosed
         allePerioder={perioder}
         alleAndeler={andeler}
-        aksjonspunkter={[]}
         getKodeverknavn={getKodeverknavn}
         arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
         bruttoFastsattInntekt={0}
@@ -152,7 +146,7 @@ describe('<GrunnlagForAarsinntektPanelAT>', () => {
     rowNr += 1;
     const mndSum = rows.at(rowNr).find('Normaltekst');
     const aarSum = rows.at(rowNr).find('Element');
-    const ledetextSum = rows.at(rowNr).find('FormattedMessage');
+    const ledetextSum = rows.at(rowNr).find('MemoizedFormattedMessage');
     const beregnetAarsinntekt = andeler.reduce((acc, andel) => acc + andel.beregnetPrAar, 0);
     const beregnetMaanedsinntekt = beregnetAarsinntekt / 12;
     expect(ledetextSum.get(0).props.id).to.equal('Beregningsgrunnlag.AarsinntektPanel.TotaltArbeidsinntekt');

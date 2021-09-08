@@ -1,11 +1,12 @@
 import { expect } from 'chai';
 import React from 'react';
 import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { intlMock, shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
+import avklaringsbehovCodes from '@fpsak-frontend/kodeverk/src/beregningAvklaringsbehovCodes';
 import FastsettSN, { FastsettSN as UnwrappedForm, begrunnelseFieldname, fastsettInntektFieldname } from './FastsettSN';
 
-const mockAksjonspunktMedKodeOgStatus = (apKode, begrunnelse) => ({
+import shallowWithIntl, { intlMock } from '../../../i18n';
+
+const mockAvklaringsbehovMedKodeOgStatus = (apKode, begrunnelse) => ({
   definisjon: {
     kode: apKode,
   },
@@ -27,16 +28,16 @@ const lagAndel = (status, fastsattBelop) => ({
 
 describe('<FastsettSN>', () => {
   it('Skal teste at det rendres riktig antall rader', () => {
-    const aksjonspunkter = [
-      mockAksjonspunktMedKodeOgStatus(aksjonspunktCodes.FASTSETT_BEREGNINGSGRUNNLAG_SN_NY_I_ARBEIDSLIVET, 'Ok.'),
+    const avklaringsbehov = [
+      mockAvklaringsbehovMedKodeOgStatus(avklaringsbehovCodes.FASTSETT_BEREGNINGSGRUNNLAG_SN_NY_I_ARBEIDSLIVET, 'Ok.'),
     ];
     const wrapper = shallowWithIntl(
       <UnwrappedForm
         readOnly={false}
-        isAksjonspunktClosed={false}
+        isAvklaringsbehovClosed={false}
         erVarigEndring
         erNyArbLivet
-        gjeldendeAksjonspunkter={aksjonspunkter}
+        avklaringsbehov={avklaringsbehov}
         endretTekst={{}}
         intl={intlMock}
         fieldArrayID="dummyId"
@@ -51,11 +52,11 @@ describe('<FastsettSN>', () => {
       lagAndel(aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE, null),
       lagAndel(aktivitetStatus.ARBEIDSTAKER, 250000),
     ];
-    const aksjonspunkter = [
-      mockAksjonspunktMedKodeOgStatus(aksjonspunktCodes.FASTSETT_BEREGNINGSGRUNNLAG_SN_NY_I_ARBEIDSLIVET, null),
+    const avklaringsbehov = [
+      mockAvklaringsbehovMedKodeOgStatus(avklaringsbehovCodes.FASTSETT_BEREGNINGSGRUNNLAG_SN_NY_I_ARBEIDSLIVET, null),
     ];
 
-    const actualValues = FastsettSN.buildInitialValuesNyIArbeidslivet(andeler, aksjonspunkter);
+    const actualValues = FastsettSN.buildInitialValuesNyIArbeidslivet(andeler, avklaringsbehov);
     const expectedValues = {
       [fastsettInntektFieldname]: undefined,
       [begrunnelseFieldname]: '',
@@ -69,11 +70,11 @@ describe('<FastsettSN>', () => {
       lagAndel(aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE, 500000),
       lagAndel(aktivitetStatus.ARBEIDSTAKER, 250000),
     ];
-    const aksjonspunkter = [
-      mockAksjonspunktMedKodeOgStatus(aksjonspunktCodes.FASTSETT_BEREGNINGSGRUNNLAG_SN_NY_I_ARBEIDSLIVET, 'Ok!!!'),
+    const avklaringsbehov = [
+      mockAvklaringsbehovMedKodeOgStatus(avklaringsbehovCodes.FASTSETT_BEREGNINGSGRUNNLAG_SN_NY_I_ARBEIDSLIVET, 'Ok!!!'),
     ];
 
-    const actualValues = FastsettSN.buildInitialValuesNyIArbeidslivet(andeler, aksjonspunkter);
+    const actualValues = FastsettSN.buildInitialValuesNyIArbeidslivet(andeler, avklaringsbehov);
 
     const expectedValues = {
       [fastsettInntektFieldname]: '500 000',

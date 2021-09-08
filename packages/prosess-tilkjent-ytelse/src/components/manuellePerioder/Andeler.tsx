@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React from 'react';
 import { WrappedComponentProps } from 'react-intl';
 import { FieldArrayFieldsProps, FieldArrayMetaProps } from 'redux-form';
 import AlertStripe from 'nav-frontend-alertstriper';
@@ -28,17 +28,18 @@ interface OwnProps {
 
 const headerTextCodes = [
   'TilkjentYtelse.NyPeriode.Arbeidsforhold',
+  'TilkjentYtelse.NyPeriode.TilSoker',
   'TilkjentYtelse.NyPeriode.Refusjon',
   'TilkjentYtelse.NyPeriode.Inntektskategori',
   'TilkjentYtelse.NyPeriode.Ubetalingsgrad',
 ];
 
-const Andeler: FC<OwnProps & WrappedComponentProps> = ({
+const Andeler = ({
   fields,
   meta,
   alleKodeverk,
   arbeidsgiverOpplysningerPerId,
-}) => {
+}: Partial<OwnProps> & WrappedComponentProps) => {
   const getKodeverknavn = getKodeverknavnFn(alleKodeverk, kodeverkTyper);
 
   return (
@@ -57,6 +58,9 @@ const Andeler: FC<OwnProps & WrappedComponentProps> = ({
             <tr>
               <TableColumn>
                 <Normaltekst>{label}</Normaltekst>
+              </TableColumn>
+              <TableColumn>
+                <Normaltekst>{andel.tilSoker}</Normaltekst>
               </TableColumn>
               <TableColumn>
                 <Normaltekst>{andel.refusjon}</Normaltekst>

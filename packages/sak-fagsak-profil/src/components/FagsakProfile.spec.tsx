@@ -3,10 +3,9 @@ import sinon from 'sinon';
 import { Systemtittel, Normaltekst } from 'nav-frontend-typografi';
 import { EtikettInfo } from 'nav-frontend-etiketter';
 
-import { intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import { Tooltip } from '@fpsak-frontend/shared-components';
 
-import shallowWithIntl from '../../i18n/index';
+import shallowWithIntl, { intlMock } from '../../i18n/index';
 import { FagsakProfile } from './FagsakProfile';
 
 describe('<FagsakProfile>', () => {

@@ -1,12 +1,11 @@
 import React from 'react';
 import { expect } from 'chai';
 
-import { intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import { SelectField, InputField } from '@fpsak-frontend/form';
 
 import RegistrereVergeFaktaForm from './RegistrereVergeFaktaForm';
 import vergeType from '../kodeverk/vergeType';
-import shallowWithIntl from '../../i18n';
+import shallowWithIntl, { intlMock } from '../../i18n';
 
 const vergetyper = [
   {

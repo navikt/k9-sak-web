@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useCallback } from 'react';
+import React, { useCallback } from 'react';
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 import { useHistory } from 'react-router-dom';
 
@@ -33,14 +33,14 @@ interface OwnProps {
   erTilbakekreving: boolean;
 }
 
-const MenySettPaVentIndex: FunctionComponent<OwnProps> = ({
+const MenySettPaVentIndex = ({
   behandlingId,
   behandlingVersjon,
   settBehandlingPaVent,
   ventearsaker,
   lukkModal,
   erTilbakekreving,
-}) => {
+}: OwnProps) => {
   const history = useHistory();
 
   const submit = useCallback(

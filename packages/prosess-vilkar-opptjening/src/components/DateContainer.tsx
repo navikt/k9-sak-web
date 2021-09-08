@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from 'react';
+import React from 'react';
 import { Column, Row } from 'nav-frontend-grid';
 
 import styles from './dateContainer.less';
@@ -8,7 +8,7 @@ interface OwnProps {
   opptjeningTomDate: string;
 }
 
-const DateContainer: FunctionComponent<OwnProps> = ({ opptjeningFomDate, opptjeningTomDate }) => (
+const DateContainer = ({ opptjeningFomDate, opptjeningTomDate }: OwnProps) => (
   <div className={styles.dateContainer}>
     <div className={styles.dates}>
       <Row className={styles.dateContainer}>

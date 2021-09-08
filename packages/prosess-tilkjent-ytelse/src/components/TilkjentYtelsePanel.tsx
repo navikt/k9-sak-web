@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
 import { FormattedMessage } from 'react-intl';
@@ -14,7 +14,6 @@ import {
   ArbeidsforholdV2,
   ArbeidsgiverOpplysningerPerId,
   Soknad,
-  Vilkar,
 } from '@k9-sak-web/types';
 import { DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils';
 
@@ -57,14 +56,13 @@ interface PureOwnProps {
   readOnlySubmitButton: boolean;
   arbeidsforhold: ArbeidsforholdV2[];
   arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysningerPerId;
-  vilkar: Vilkar[];
 }
 
 interface MappedOwnProps {
   vurderTilbaketrekkAP?: Aksjonspunkt;
 }
 
-export const TilkjentYtelsePanelImpl: FC<PureOwnProps & MappedOwnProps> = ({
+export const TilkjentYtelsePanelImpl = ({
   beregningresultat,
   vurderTilbaketrekkAP,
   submitCallback,
@@ -76,8 +74,7 @@ export const TilkjentYtelsePanelImpl: FC<PureOwnProps & MappedOwnProps> = ({
   readOnly,
   alleKodeverk,
   arbeidsgiverOpplysningerPerId,
-  vilkar,
-}) => {
+}: Partial<PureOwnProps> & MappedOwnProps) => {
   const opphoersdato = beregningresultat?.opphoersdato;
 
   return (
@@ -115,7 +112,6 @@ export const TilkjentYtelsePanelImpl: FC<PureOwnProps & MappedOwnProps> = ({
           readOnly={readOnly}
           submitCallback={submitCallback}
           readOnlySubmitButton={readOnlySubmitButton}
-          vilkar={vilkar}
         />
       )}
 
@@ -123,7 +119,7 @@ export const TilkjentYtelsePanelImpl: FC<PureOwnProps & MappedOwnProps> = ({
         <Tilbaketrekkpanel
           behandlingId={behandlingId}
           behandlingVersjon={behandlingVersjon}
-          readOnly
+          readOnly={readOnly}
           vurderTilbaketrekkAP={vurderTilbaketrekkAP}
           submitCallback={submitCallback}
           readOnlySubmitButton={readOnlySubmitButton}

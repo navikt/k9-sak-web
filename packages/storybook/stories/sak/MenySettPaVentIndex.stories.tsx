@@ -25,9 +25,9 @@ export const visMenyForÅSetteBehandlingPåVent = () => (
         navn: 'Avvent dokumentasjon',
       },
       {
-        kode: venteArsakType.AVV_FODSEL,
+        kode: venteArsakType.VENT_MANGL_FUNKSJ_SAKSBEHANDLER,
         kodeverk: 'VENT_ARSAK_TYPE',
-        navn: 'Avvent fødsel',
+        navn: 'Settes på vent av saksbehandler pga. manglende funksjonalitet i løsningen',
       },
     ]}
     lukkModal={action('button-click')}

@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from 'react';
+import React from 'react';
 import { InjectedFormProps } from 'redux-form';
 import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
@@ -40,9 +40,7 @@ interface MappedOwnProps {
  *
  * Presentasjonskomponent. Viser panel for å løse aksjonspunkt for avslått opptjeningsvilkår
  */
-export const OpptjeningVilkarAksjonspunktPanelImpl: FunctionComponent<
-  PureOwnProps & MappedOwnProps & InjectedFormProps & WrappedComponentProps
-> = ({
+export const OpptjeningVilkarAksjonspunktPanelImpl = ({
   intl,
   isApOpen,
   erVilkarOk,
@@ -54,7 +52,7 @@ export const OpptjeningVilkarAksjonspunktPanelImpl: FunctionComponent<
   behandlingVersjon,
   fastsattOpptjening,
   ...formProps
-}) => (
+}: Partial<PureOwnProps> & MappedOwnProps & InjectedFormProps & WrappedComponentProps) => (
   <ProsessPanelTemplate
     title={intl.formatMessage({ id: 'OpptjeningVilkarAksjonspunktPanel.Opptjeningsvilkaret' })}
     isAksjonspunktOpen={isApOpen}

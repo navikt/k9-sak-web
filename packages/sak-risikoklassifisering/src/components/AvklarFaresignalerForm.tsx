@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from 'react';
+import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import { InjectedFormProps } from 'redux-form';
@@ -42,11 +42,7 @@ interface PureOwnProps {
  *
  * Presentasjonskomponent. Statisk visning av panel som tilsier ingen faresignaler funnet i behandlingen.
  */
-export const AvklarFaresignalerForm: FunctionComponent<PureOwnProps & InjectedFormProps> = ({
-  readOnly,
-  aksjonspunkt,
-  ...formProps
-}) => (
+export const AvklarFaresignalerForm = ({ readOnly, aksjonspunkt, ...formProps }: PureOwnProps & InjectedFormProps) => (
   <FlexContainer>
     <form onSubmit={formProps.handleSubmit}>
       <FlexRow>

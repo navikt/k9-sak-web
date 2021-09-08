@@ -1,7 +1,6 @@
-import React, { FunctionComponent, useState, useEffect, useCallback } from 'react';
-import { withRouter, match } from 'react-router-dom';
+import React, { useState, useEffect, useCallback } from 'react';
+import { useLocation } from 'react-router-dom';
 import moment from 'moment';
-import { Location, History } from 'history';
 
 import { useRestApiError, useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
 import EventType from '@k9-sak-web/rest-api/src/requestApi/eventType';
@@ -21,19 +20,14 @@ import '@fpsak-frontend/assets/styles/global.less';
 
 const EMPTY_ARRAY = [];
 
-interface OwnProps {
-  location: Location;
-  history: History;
-  match: match;
-}
-
 /**
  * AppIndex
  *
  * Container komponent. Dette er toppkomponenten i applikasjonen. Denne vil rendre header
  * og home-komponentene. Home-komponenten vil rendre barn-komponenter via ruter.
  */
-const AppIndex: FunctionComponent<OwnProps> = ({ location }) => {
+const AppIndex = () => {
+  const location = useLocation();
   const [headerHeight, setHeaderHeight] = useState(0);
   const [hasCrashed, setCrashed] = useState(false);
 
@@ -87,4 +81,4 @@ const AppIndex: FunctionComponent<OwnProps> = ({ location }) => {
   );
 };
 
-export default withRouter(AppIndex);
+export default AppIndex;

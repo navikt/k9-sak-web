@@ -1,9 +1,7 @@
-import React, {Component, RefObject, MouseEvent } from 'react';
-import ReactDOM from 'react-dom';
+import React, { Component, RefObject, MouseEvent } from 'react';
 import moment from 'moment';
-import Timeline from 'react-visjs-timeline';
 import { Column, Row } from 'nav-frontend-grid';
-import {injectIntl, WrappedComponentProps} from 'react-intl';
+import { injectIntl, WrappedComponentProps } from 'react-intl';
 
 import { ISO_DATE_FORMAT } from '@fpsak-frontend/utils';
 import navBrukerKjonn from '@fpsak-frontend/kodeverk/src/navBrukerKjonn';
@@ -11,9 +9,9 @@ import { Image } from '@fpsak-frontend/shared-components';
 import urlMann from '@fpsak-frontend/assets/images/mann.svg';
 import urlKvinne from '@fpsak-frontend/assets/images/kvinne.svg';
 
-import { TimeLineControl } from '@fpsak-frontend/tidslinje';
+import { Timeline, TimeLineControl } from '@fpsak-frontend/tidslinje';
 
-import TidslinjePeriode from "../../types/tidslinjePeriodeTsType";
+import TidslinjePeriode from '../../types/tidslinjePeriodeTsType';
 import styles from './tilbakekrevingTimeline.less';
 
 export const GODKJENT_CLASSNAME = 'godkjentPeriode';
@@ -31,17 +29,17 @@ const getOptions = (sortedPeriods: Periode[]) => {
   const lastPeriod = sortedPeriods[sortedPeriods.length - 1];
 
   return {
-    end: moment(lastPeriod.tom).add(2, 'days'),
+    end: moment(lastPeriod.tom).add(2, 'days').toDate(),
     locale: moment.locale('nb'),
     margin: { item: 14 },
-    max: moment(firstPeriod.fom).add(4, 'years'),
-    min: moment(firstPeriod.fom).subtract(4, 'weeks'),
+    max: moment(firstPeriod.fom).add(4, 'years').toDate(),
+    min: moment(firstPeriod.fom).subtract(4, 'weeks').toDate(),
     moment,
     moveable: true,
     orientation: { axis: 'top' },
     showCurrentTime: false,
     stack: false,
-    start: moment(firstPeriod.fom).subtract(1, 'days'),
+    start: moment(firstPeriod.fom).subtract(1, 'days').toDate(),
     tooltip: { followMouse: true },
     verticalScroll: false,
     width: '100%',
@@ -51,8 +49,7 @@ const getOptions = (sortedPeriods: Periode[]) => {
   };
 };
 
-const parseDateString = (dateString: moment.Moment | string) => moment(dateString, ISO_DATE_FORMAT)
-  .toDate();
+const parseDateString = (dateString: moment.Moment | string) => moment(dateString, ISO_DATE_FORMAT).toDate();
 
 function sortByDate(a: Periode, b: Periode) {
   if (a.fom < b.fom) {
@@ -67,15 +64,14 @@ function sortByDate(a: Periode, b: Periode) {
 const parseDates = (item: Periode) => ({
   ...item,
   start: parseDateString(item.fom),
-  end: parseDateString(moment(item.tom)
-    .add(1, 'days')),
+  end: parseDateString(moment(item.tom).add(1, 'days')),
 });
 
 const formatItems = (periodItems: Periode[] = []) => {
   const itemsWithDates = periodItems.map(parseDates);
   const formattedItemsArray = [];
   formattedItemsArray.length = 0;
-  itemsWithDates.forEach((item) => {
+  itemsWithDates.forEach(item => {
     formattedItemsArray.push(item);
   });
   return formattedItemsArray;
@@ -83,11 +79,11 @@ const formatItems = (periodItems: Periode[] = []) => {
 
 const formatGroups = (periodItems = []) => {
   const duplicatesRemoved = periodItems.reduce((accPeriods, period) => {
-    const hasPeriod = accPeriods.some((p) => p.group === period.group);
+    const hasPeriod = accPeriods.some(p => p.group === period.group);
     if (!hasPeriod) accPeriods.push(period);
     return accPeriods;
   }, []);
-  return duplicatesRemoved.map((activity) => ({
+  return duplicatesRemoved.map(activity => ({
     id: activity.group,
     content: '',
   }));
@@ -109,7 +105,7 @@ interface OwnProps {
  */
 
 class TilbakekrevingTimeline extends Component<OwnProps & WrappedComponentProps> {
-  timelineRef: RefObject<any>
+  timelineRef: RefObject<any>;
 
   constructor(props: OwnProps & WrappedComponentProps) {
     super(props);
@@ -119,15 +115,6 @@ class TilbakekrevingTimeline extends Component<OwnProps & WrappedComponentProps>
     this.zoomIn = this.zoomIn.bind(this);
     this.zoomOut = this.zoomOut.bind(this);
     this.timelineRef = React.createRef();
-  }
-
-  componentDidMount() {
-    // TODO Fjern når denne er retta: https://github.com/Lighthouse-io/react-visjs-timeline/issues/40
-    // eslint-disable-next-line react/no-find-dom-node
-    const node = ReactDOM.findDOMNode(this.timelineRef.current);
-    if (node) {
-      node.children[0].style.visibility = 'visible';
-    }
   }
 
   zoomIn() {
@@ -148,7 +135,7 @@ class TilbakekrevingTimeline extends Component<OwnProps & WrappedComponentProps>
       end: new Date(currentWindowTimes.end).setDate(currentWindowTimes.end.getDate() + 42),
     };
 
-    timeline.setWindow(newWindowTimes);
+    timeline.setWindow(newWindowTimes.start, newWindowTimes.end);
   }
 
   goBackward() {
@@ -159,19 +146,12 @@ class TilbakekrevingTimeline extends Component<OwnProps & WrappedComponentProps>
       end: new Date(currentWindowTimes.end).setDate(currentWindowTimes.end.getDate() - 42),
     };
 
-    timeline.setWindow(newWindowTimes);
+    timeline.setWindow(newWindowTimes.start, newWindowTimes.end);
   }
 
   render() {
-    const {
-      intl,
-      perioder,
-      selectedPeriod,
-      selectPeriodCallback,
-      toggleDetaljevindu,
-      hjelpetekstKomponent,
-      kjonn,
-    } = this.props;
+    const { intl, perioder, selectedPeriod, selectPeriodCallback, toggleDetaljevindu, hjelpetekstKomponent, kjonn } =
+      this.props;
 
     const newPerioder = perioder.map((periode: TidslinjePeriode) => {
       const className = periode.isGodkjent ? GODKJENT_CLASSNAME : AVVIST_CLASSNAME;
@@ -193,7 +173,9 @@ class TilbakekrevingTimeline extends Component<OwnProps & WrappedComponentProps>
                 className={styles.iconMedsoker}
                 src={isKvinne(kjonn) ? urlKvinne : urlMann}
                 alt={intl.formatMessage({ id: 'TilbakekrevingTimeline.ImageText' })}
-                tooltip={intl.formatMessage({ id: isKvinne(kjonn) ? 'TilbakekrevingTimeline.Woman' : 'TilbakekrevingTimeline.Man' })}
+                tooltip={intl.formatMessage({
+                  id: isKvinne(kjonn) ? 'TilbakekrevingTimeline.Woman' : 'TilbakekrevingTimeline.Man',
+                })}
               />
             </Row>
           </Column>
@@ -203,8 +185,8 @@ class TilbakekrevingTimeline extends Component<OwnProps & WrappedComponentProps>
                 <Timeline
                   ref={this.timelineRef}
                   options={getOptions(newPerioder.sort(sortByDate))}
-                  items={items}
-                  groups={groups}
+                  initialItems={items}
+                  initialGroups={groups}
                   selectHandler={selectPeriodCallback}
                   selection={[selectedPeriod ? selectedPeriod.id : null]}
                 />

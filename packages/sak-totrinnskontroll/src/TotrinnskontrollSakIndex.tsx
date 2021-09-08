@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useCallback, useMemo } from 'react';
+import React, { useCallback, useMemo } from 'react';
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 import { Location } from 'history';
 
@@ -66,12 +66,11 @@ interface OwnProps {
   alleKodeverk: { [key: string]: KodeverkMedNavn[] };
   readOnly: boolean;
   onSubmit: (...args: any[]) => any;
-  forhandsvisVedtaksbrev: () => void;
   createLocationForSkjermlenke: (behandlingLocation: Location, skjermlenkeCode: string) => Location;
   tilgjengeligeVedtaksbrev: string[];
 }
 
-const TotrinnskontrollSakIndex: FunctionComponent<OwnProps> = ({
+const TotrinnskontrollSakIndex = ({
   behandling,
   totrinnskontrollSkjermlenkeContext,
   location,
@@ -82,7 +81,7 @@ const TotrinnskontrollSakIndex: FunctionComponent<OwnProps> = ({
   alleKodeverk,
   createLocationForSkjermlenke,
   tilgjengeligeVedtaksbrev,
-}) => {
+}: OwnProps) => {
   const erTilbakekreving =
     BehandlingType.TILBAKEKREVING === behandling.type.kode ||
     BehandlingType.TILBAKEKREVING_REVURDERING === behandling.type.kode;

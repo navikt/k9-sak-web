@@ -2,7 +2,7 @@
   "BeregningInfoPanel.AksjonspunktHelpText.FaktaOmBeregning.EndringBeregningsgrunnlag.Refusjon": "Nytt refusjonskrav hos {arbeidsforhold}. ",
   "BeregningInfoPanel.AksjonspunktHelpText.FaktaOmBeregning.EndringBeregningsgrunnlag.Gradering": "Søkt gradering hos {arbeidsforhold}. ",
   "BeregningInfoPanel.AksjonspunktHelpText.FaktaOmBeregning.EndringBeregningsgrunnlag.Permisjon": "Permisjon fra {arbeidsforhold} avsluttet {dato}.",
-  "BeregningInfoPanel.AksjonspunktHelpText.FaktaOmBeregning.EndringBeregningsgrunnlag.FastsetÅrsbeløp": "Fastsett årsbeløp for ny fordeling av beregningsgrunnlaget.",
+  "BeregningInfoPanel.AksjonspunktHelpText.FaktaOmBeregning.EndringBeregningsgrunnlag.FastsetÅrsbeløp": "Tilkommet inntekt. Vurder om beregningsgrunnlaget skal flyttes til nytt arbeidsforhold eller fordeles mellom arbeidsforholdene.",
 
   "FordelBeregningsgrunnlag.Validation.KanIkkeHaNullIBeregningsgrunnlag": "Fastsatt beløp for gradert andel må være høyere enn 0.",
 

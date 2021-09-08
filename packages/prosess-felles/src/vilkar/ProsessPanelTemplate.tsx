@@ -1,5 +1,5 @@
-import React, { ReactNode, FunctionComponent } from 'react';
-import { Undertittel, EtikettLiten, Element, Normaltekst } from 'nav-frontend-typografi';
+import React, { ReactNode } from 'react';
+import { Undertittel, Undertekst, Element, Normaltekst } from 'nav-frontend-typografi';
 
 import {
   VerticalSpacer,
@@ -40,7 +40,7 @@ interface OwnProps {
  *
  * Presentasjonskomponent.
  */
-const ProsessPanelTemplate: FunctionComponent<OwnProps> = ({
+const ProsessPanelTemplate = ({
   behandlingId,
   behandlingVersjon,
   lovReferanse,
@@ -55,7 +55,7 @@ const ProsessPanelTemplate: FunctionComponent<OwnProps> = ({
   isDirty,
   children,
   isPeriodisertFormComplete,
-}) => {
+}: OwnProps) => {
   const intl = getPackageIntl();
   return (
     <>
@@ -72,7 +72,7 @@ const ProsessPanelTemplate: FunctionComponent<OwnProps> = ({
             </FlexColumn>
             {lovReferanse && (
               <FlexColumn>
-                <EtikettLiten className={styles.vilkar}>{lovReferanse}</EtikettLiten>
+                <Undertekst className={styles.vilkar}>{lovReferanse}</Undertekst>
               </FlexColumn>
             )}
           </FlexRow>

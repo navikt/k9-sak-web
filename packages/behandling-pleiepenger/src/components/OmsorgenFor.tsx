@@ -1,5 +1,5 @@
 import { MicroFrontend } from '@fpsak-frontend/utils';
-import * as React from 'react';
+import React from 'react';
 import { useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { BehandlingAppKontekst, Aksjonspunkt } from '@k9-sak-web/types';
@@ -42,7 +42,7 @@ const OmsorgenFor = ({ behandling: { links }, readOnly, aksjonspunkter, submitCa
 
   const omsorgenForAksjonspunkt = findAksjonspunkt(aksjonspunkter, aksjonspunktCodes.OMSORGEN_FOR_PLEIEPENGER);
   const omsorgenForAksjonspunktkode = omsorgenForAksjonspunkt?.definisjon.kode;
-  const readOnlyArgument = omsorgenForAksjonspunktkode === undefined ? true : readOnly;
+  const harAksjonspunkt = !!omsorgenForAksjonspunktkode;
 
   const løsAksjonspunkt = omsorgsperioder =>
     submitCallback([{ kode: omsorgenForAksjonspunktkode, begrunnelse: 'Omsorgen for er behandlet', omsorgsperioder }]);
@@ -50,10 +50,9 @@ const OmsorgenFor = ({ behandling: { links }, readOnly, aksjonspunkter, submitCa
   return (
     <MicroFrontend
       id={omsorgenForAppID}
-      jsSrc="/k9/microfrontend/omsorgen-for/0.0.6/app.js"
-      jsIntegrity="sha384-A9S86CZHP2YflBUrr2aY3bukU3mA6TbKshadNGjhzcOb/qSVCvNd4KOYBQAtnHj+"
-      stylesheetSrc="/k9/microfrontend/omsorgen-for/0.0.6/styles.css"
-      stylesheetIntegrity="sha384-mrmomnx+L8nv4g7P+hsbpbXQNOmlMyx33DdRzd9JvB2GBKsBaE0wRbgTSWDM5VA4"
+      jsSrc="/k9/microfrontend/omsorgen-for/1/app.js"
+      stylesheetSrc="/k9/microfrontend/omsorgen-for/1/styles.css"
+      noCache
       onReady={() =>
         initializeOmsorgenFor(
           omsorgenForAppID,
@@ -64,7 +63,7 @@ const OmsorgenFor = ({ behandling: { links }, readOnly, aksjonspunkter, submitCa
               desiredName: 'omsorgsperioder',
             },
           ]),
-          readOnlyArgument,
+          readOnly || !harAksjonspunkt,
           løsAksjonspunkt,
         )
       }

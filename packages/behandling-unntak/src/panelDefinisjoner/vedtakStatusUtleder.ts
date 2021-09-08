@@ -29,6 +29,7 @@ const findStatusForVedtak = (vilkar, aksjonspunkter, vedtakAksjonspunkter, behan
     return vilkarUtfallType.IKKE_OPPFYLT;
   }
 
+  // TODO (Magnus) Burde ikke denne sjekke om vilkår ikke er oppfyllt snarere enn om de ikke er vurdert?
   if (harVilkårSomIkkeErVurdert(vilkar) || aksjonspunkter.some(isAksjonspunktOpenAndOfType)) {
     return vilkarUtfallType.IKKE_VURDERT;
   }

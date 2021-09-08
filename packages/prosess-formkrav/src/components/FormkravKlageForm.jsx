@@ -27,11 +27,11 @@ export const IKKE_PAKLAGD_VEDTAK = 'ikkePaklagdVedtak';
 export const getPaklagdVedtak = (klageFormkravResultat, avsluttedeBehandlinger) => {
   const behandlingid =
     Array.isArray(avsluttedeBehandlinger) &&
-    avsluttedeBehandlinger.find(b => b.uuid === klageFormkravResultat.påklagdBehandlingRef)?.id;
+    avsluttedeBehandlinger.find(b => b.uuid === klageFormkravResultat.påklagdBehandlingRef)?.uuid;
   return behandlingid ? `${behandlingid}` : IKKE_PAKLAGD_VEDTAK;
 };
 
-const getKlagBareVedtak = (avsluttedeBehandlinger, intl, getKodeverknavn) => {
+const getKlagbareVedtak = (avsluttedeBehandlinger, intl, getKodeverknavn) => {
   const klagBareVedtak = [
     <option key="formkrav" value={IKKE_PAKLAGD_VEDTAK}>
       {intl.formatMessage({ id: 'Klage.Formkrav.IkkePåklagdVedtak' })}
@@ -39,7 +39,7 @@ const getKlagBareVedtak = (avsluttedeBehandlinger, intl, getKodeverknavn) => {
   ];
   return klagBareVedtak.concat(
     avsluttedeBehandlinger.map(behandling => (
-      <option key={behandling.id} value={`${behandling.id}`}>
+      <option key={behandling.uuid} value={`${behandling.uuid}`}>
         {`${getKodeverknavn(behandling.type)} ${moment(behandling.avsluttet).format(DDMMYYYY_DATE_FORMAT)}`}
       </option>
     )),
@@ -64,13 +64,13 @@ export const FormkravKlageForm = ({
   intl,
   formProps,
   alleKodeverk,
-  personopplysninger,
+  fagsakPerson,
   arbeidsgiverOpplysningerPerId,
   parterMedKlagerett,
   skalKunneVelgeKlagepart,
 }) => {
   const getKodeverknavn = getKodeverknavnFn(alleKodeverk, kodeverkTyper);
-  const klageBareVedtakOptions = getKlagBareVedtak(avsluttedeBehandlinger, intl, getKodeverknavn);
+  const klagbareVedtakOptions = getKlagbareVedtak(avsluttedeBehandlinger, intl, getKodeverknavn);
 
   return (
     <FadingPanel>
@@ -91,11 +91,7 @@ export const FormkravKlageForm = ({
                 name="valgtPartMedKlagerett"
                 selectValues={parterMedKlagerett.map(part => (
                   <option value={JSON.stringify(part)} key={part.identifikasjon.id}>
-                    {lagVisningsnavnForKlagepart(
-                      part.identifikasjon.id,
-                      personopplysninger,
-                      arbeidsgiverOpplysningerPerId,
-                    )}
+                    {lagVisningsnavnForKlagepart(part.identifikasjon.id, fagsakPerson, arbeidsgiverOpplysningerPerId)}
                   </option>
                 ))}
                 className={readOnly ? styles.selectReadOnly : null}
@@ -119,7 +115,7 @@ export const FormkravKlageForm = ({
             name="vedtak"
             label={intl.formatMessage({ id: 'Klage.Formkrav.VelgVedtak' })}
             placeholder={intl.formatMessage({ id: 'Klage.Formkrav.SelectVedtakPlaceholder' })}
-            selectValues={klageBareVedtakOptions}
+            selectValues={klagbareVedtakOptions}
             bredde="l"
           />
           <VerticalSpacer sixteenPx />
@@ -188,7 +184,7 @@ FormkravKlageForm.propTypes = {
         kode: PropTypes.string.isRequired,
       }).isRequired,
       avsluttet: PropTypes.string,
-      uuid: PropTypes.string,
+      uuid: PropTypes.string.isRequired,
     }),
   ).isRequired,
   formProps: PropTypes.shape().isRequired,
@@ -197,7 +193,7 @@ FormkravKlageForm.propTypes = {
   readOnlySubmitButton: PropTypes.bool,
   intl: PropTypes.shape().isRequired,
   alleKodeverk: PropTypes.shape().isRequired,
-  personopplysninger: PropTypes.shape(),
+  fagsakPerson: PropTypes.shape(),
   arbeidsgiverOpplysningerPerId: PropTypes.shape(),
   parterMedKlagerett: PropTypes.arrayOf(PropTypes.shape()),
   skalKunneVelgeKlagepart: PropTypes.bool,

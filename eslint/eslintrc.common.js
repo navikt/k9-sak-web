@@ -16,7 +16,7 @@ const config = {
 
   parser: '@typescript-eslint/parser',
 
-  plugins: ['jest', '@typescript-eslint'],
+  plugins: ['jest', 'jest-dom', '@typescript-eslint'],
 
   extends: [
     'airbnb',
@@ -38,7 +38,7 @@ const config = {
   settings: {
     'import/resolver': {
       webpack: {
-        config: resolve(__dirname, '../webpack/webpack.common.js'),
+        config: resolve(__dirname, '../webpack/webpack.common.ts'),
       },
     },
   },

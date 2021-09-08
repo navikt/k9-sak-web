@@ -53,9 +53,9 @@ export const VedtakKlageFormImpl = ({
         <div>
           <Undertekst>{intl.formatMessage({ id: 'VedtakKlageForm.Resultat' })}</Undertekst>
         </div>
-        <Normaltekst>{intl.formatMessage({ id: behandlingsResultatTekst })}</Normaltekst>
+        {behandlingsResultatTekst && <Normaltekst>{intl.formatMessage({ id: behandlingsResultatTekst })}</Normaltekst>}
         <VerticalSpacer sixteenPx />
-        {isAvvist && (
+        {isAvvist && Array.isArray(avvistArsaker) && avvistArsaker.length > 0 && (
           <div>
             <Undertekst>{intl.formatMessage({ id: 'VedtakKlageForm.ArsakTilAvvisning' })}</Undertekst>
             {avvistArsaker.map(arsak => (
@@ -64,14 +64,14 @@ export const VedtakKlageFormImpl = ({
             <VerticalSpacer sixteenPx />
           </div>
         )}
-        {isOmgjort && (
+        {isOmgjort && omgjortAarsak && (
           <div>
             <Undertekst>{intl.formatMessage({ id: 'VedtakKlageForm.ArsakTilOmgjoring' })}</Undertekst>
             {omgjortAarsak}
             <VerticalSpacer sixteenPx />
           </div>
         )}
-        {isOpphevOgHjemsend && (
+        {isOpphevOgHjemsend && omgjortAarsak && (
           <div>
             <Undertekst>{intl.formatMessage({ id: 'VedtakKlageForm.ArsakTilOppheving' })}</Undertekst>
             {omgjortAarsak}
@@ -108,7 +108,7 @@ VedtakKlageFormImpl.propTypes = {
   isAvvist: PropTypes.bool.isRequired,
   isOmgjort: PropTypes.bool.isRequired,
   isOpphevOgHjemsend: PropTypes.bool.isRequired,
-  behandlingsResultatTekst: PropTypes.string.isRequired,
+  behandlingsResultatTekst: PropTypes.string,
   klageVurdering: PropTypes.shape().isRequired,
   previewVedtakCallback: PropTypes.func.isRequired,
   avvistArsaker: PropTypes.arrayOf(PropTypes.object),
@@ -163,6 +163,8 @@ const getResultatText = createSelector([getKlageresultat], klageresultat => {
       return 'VedtakKlageForm.YtelsesvedtakOpphevet';
     case klageVurderingCodes.HJEMSENDE_UTEN_Å_OPPHEVE:
       return 'VedtakKlageForm.HjemmsendUtenOpphev';
+    case klageVurderingCodes.TRUKKET_KLAGE:
+      return 'VedtakKlageForm.Trukket';
     case klageVurderingCodes.MEDHOLD_I_KLAGE:
       return omgjoerTekstMap[klageresultat.klageVurderingOmgjoer];
     default:

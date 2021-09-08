@@ -1,6 +1,6 @@
 import { FormattedMessage } from 'react-intl';
 import { Element } from 'nav-frontend-typografi';
-import React, { FunctionComponent } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import { v4 as uuidv4 } from 'uuid';
 import BarnVisning from './BarnVisning';
@@ -16,7 +16,7 @@ const AvstandTopp = styled.div`
   margin-top: 1.5rem;
 `;
 
-const BarnSeksjon: FunctionComponent<BarnSeksjonProps> = ({ barn, startIndex, tekstId }) => {
+const BarnSeksjon = ({ barn, startIndex, tekstId }: BarnSeksjonProps) => {
   if (barn.length === 0) {
     return null;
   }

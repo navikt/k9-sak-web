@@ -6,11 +6,11 @@ import moment from 'moment';
 import { connect } from 'react-redux';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { DDMMYYYY_DATE_FORMAT, ISO_DATE_FORMAT, getKodeverknavnFn } from '@fpsak-frontend/utils';
-import aksjonspunktCodes, { hasAksjonspunkt } from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import avklaringsbehovCodes, { harAvklaringsbehov } from '@fpsak-frontend/kodeverk/src/beregningAvklaringsbehovCodes';
 import { AksjonspunktHelpTextTemp, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { createVisningsnavnForAktivitet } from './util/visningsnavnHelper';
 
-const { FORDEL_BEREGNINGSGRUNNLAG } = aksjonspunktCodes;
+const { FORDEL_BEREGNINGSGRUNNLAG } = avklaringsbehovCodes;
 
 export const textCase = {
   GRADERING: 'GRADERING',
@@ -136,7 +136,7 @@ const createGraderingOrRefusjonString = (
       />,
     );
   }
-  if (text.length < 1) {
+  if (text.length >= 1) {
     return text;
   }
   text.push(
@@ -186,12 +186,12 @@ export const getHelpTextsFordelBG = createSelector(
     ownProps => ownProps.beregningsgrunnlag,
     ownProps => ownProps.alleKodeverk,
     ownProps => ownProps.arbeidsgiverOpplysningerPerId,
-    ownProps => ownProps.aksjonspunkter,
+    ownProps => ownProps.avklaringsbehov,
   ],
-  (beregningsgrunnlag, alleKodeverk, arbeidsgiverOpplysningerPerId, aksjonspunkter) => {
+  (beregningsgrunnlag, alleKodeverk, arbeidsgiverOpplysningerPerId, avklaringsbehov) => {
     const fordelBG = beregningsgrunnlag.faktaOmFordeling.fordelBeregningsgrunnlag;
     const endredeArbeidsforhold = fordelBG ? fordelBG.arbeidsforholdTilFordeling : [];
-    return hasAksjonspunkt(FORDEL_BEREGNINGSGRUNNLAG, aksjonspunkter)
+    return harAvklaringsbehov(FORDEL_BEREGNINGSGRUNNLAG, avklaringsbehov)
       ? lagHelpTextsFordelBG(
           endredeArbeidsforhold,
           getKodeverknavnFn(alleKodeverk, kodeverkTyper),
@@ -201,12 +201,12 @@ export const getHelpTextsFordelBG = createSelector(
   },
 );
 
-export const FordelingHelpTextImpl = ({ helpText, isAksjonspunktClosed }) => (
-  <AksjonspunktHelpTextTemp isAksjonspunktOpen={!isAksjonspunktClosed}>{helpText}</AksjonspunktHelpTextTemp>
+export const FordelingHelpTextImpl = ({ helpText, isAvklaringsbehovClosed }) => (
+  <AksjonspunktHelpTextTemp isAksjonspunktOpen={!isAvklaringsbehovClosed}>{helpText}</AksjonspunktHelpTextTemp>
 );
 
 FordelingHelpTextImpl.propTypes = {
-  isAksjonspunktClosed: PropTypes.bool.isRequired,
+  isAvklaringsbehovClosed: PropTypes.bool.isRequired,
   helpText: PropTypes.arrayOf(PropTypes.shape()).isRequired,
 };
 

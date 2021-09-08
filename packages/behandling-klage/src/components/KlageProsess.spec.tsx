@@ -77,11 +77,60 @@ describe('<KlageProsess>', () => {
     },
   } as KlageVurdering;
 
-  it('skal vise alle aktuelle prosessSteg i meny', () => {
+  // it('skal vise alle aktuelle prosessSteg i meny', () => {
+  //   const wrapper = shallow(
+  //     <KlageProsess
+  //       data={{ aksjonspunkter, klageVurdering }}
+  //       fagsak={fagsak}
+  //       fagsakPerson={fagsakPerson}
+  //       behandling={behandling as Behandling}
+  //       alleKodeverk={{}}
+  //       arbeidsgiverOpplysningerPerId={{}}
+  //       alleBehandlinger={[]}
+  //       rettigheter={rettigheter}
+  //       valgtProsessSteg="default"
+  //       oppdaterBehandlingVersjon={sinon.spy()}
+  //       oppdaterProsessStegOgFaktaPanelIUrl={sinon.spy()}
+  //       opneSokeside={sinon.spy()}
+  //       setBehandling={sinon.spy()}
+  //       featureToggles={{}}
+  //     />,
+  //   );
+
+  //   const meny = wrapper.find(ProsessStegContainer);
+  //   expect(meny.prop('formaterteProsessStegPaneler')).toEqual([
+  //     {
+  //       isActive: false,
+  //       isDisabled: false,
+  //       isFinished: false,
+  //       labelId: 'Behandlingspunkt.FormkravKlageNFP',
+  //       type: 'default',
+  //       usePartialStatus: false,
+  //     },
+  //     {
+  //       isActive: false,
+  //       isDisabled: false,
+  //       isFinished: false,
+  //       labelId: 'Behandlingspunkt.CheckKlageNFP',
+  //       type: 'default',
+  //       usePartialStatus: false,
+  //     },
+  //     {
+  //       isActive: false,
+  //       isDisabled: false,
+  //       isFinished: false,
+  //       labelId: 'Behandlingspunkt.ResultatKlage',
+  //       type: 'default',
+  //       usePartialStatus: false,
+  //     },
+  //   ]);
+  // });
+
+  it('skal vise alle aktuelle prosessSteg i meny (frisinn)', () => {
     const wrapper = shallow(
       <KlageProsess
         data={{ aksjonspunkter, klageVurdering }}
-        fagsak={fagsak}
+        fagsak={{ ...fagsak, sakstype: { kode: fagsakYtelseType.FRISINN, kodeverk: 'test' } }}
         fagsakPerson={fagsakPerson}
         behandling={behandling as Behandling}
         alleKodeverk={{}}
@@ -93,6 +142,7 @@ describe('<KlageProsess>', () => {
         oppdaterProsessStegOgFaktaPanelIUrl={sinon.spy()}
         opneSokeside={sinon.spy()}
         setBehandling={sinon.spy()}
+        featureToggles={{}}
       />,
     );
 
@@ -141,12 +191,12 @@ describe('<KlageProsess>', () => {
     ]);
   });
 
-  it('skal sette nytt valgt prosessSteg ved trykk i meny', () => {
+  it('skal sette nytt valgt prosessSteg ved trykk i meny (frisinn)', () => {
     const oppdaterProsessStegOgFaktaPanelIUrl = sinon.spy();
     const wrapper = shallow(
       <KlageProsess
         data={{ aksjonspunkter, klageVurdering }}
-        fagsak={fagsak}
+        fagsak={{ ...fagsak, sakstype: { kode: fagsakYtelseType.FRISINN, kodeverk: 'test' } }}
         fagsakPerson={fagsakPerson}
         behandling={behandling as Behandling}
         alleKodeverk={{}}
@@ -158,6 +208,7 @@ describe('<KlageProsess>', () => {
         oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
         opneSokeside={sinon.spy()}
         setBehandling={sinon.spy()}
+        featureToggles={{}}
       />,
     );
 
@@ -170,4 +221,35 @@ describe('<KlageProsess>', () => {
     expect(opppdaterKall[0].args).toHaveLength(2);
     expect(opppdaterKall[0].args[0]).toEqual('formkrav_klage_nav_klageinstans');
   });
+
+  // it('skal sette nytt valgt prosessSteg ved trykk i meny', () => {
+  //   const oppdaterProsessStegOgFaktaPanelIUrl = sinon.spy();
+  //   const wrapper = shallow(
+  //     <KlageProsess
+  //       data={{ aksjonspunkter, klageVurdering }}
+  //       fagsak={fagsak}
+  //       fagsakPerson={fagsakPerson}
+  //       behandling={behandling as Behandling}
+  //       alleKodeverk={{}}
+  //       arbeidsgiverOpplysningerPerId={{}}
+  //       alleBehandlinger={[]}
+  //       rettigheter={rettigheter}
+  //       valgtProsessSteg="default"
+  //       oppdaterBehandlingVersjon={sinon.spy()}
+  //       oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
+  //       opneSokeside={sinon.spy()}
+  //       setBehandling={sinon.spy()}
+  //       featureToggles={{}}
+  //     />,
+  //   );
+
+  //   const meny = wrapper.find(ProsessStegContainer);
+
+  //   meny.prop('velgProsessStegPanelCallback')(2);
+
+  //   const opppdaterKall = oppdaterProsessStegOgFaktaPanelIUrl.getCalls();
+  //   expect(opppdaterKall).toHaveLength(1);
+  //   expect(opppdaterKall[0].args).toHaveLength(2);
+  //   expect(opppdaterKall[0].args[0]).toEqual('resultat');
+  // });
 });

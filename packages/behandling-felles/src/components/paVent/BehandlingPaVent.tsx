@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useCallback, FunctionComponent, useEffect } from 'react';
+import React, { useState, useMemo, useCallback, useEffect } from 'react';
 
 import SettPaVentModalIndex from '@k9-sak-web/modal-sett-pa-vent';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
@@ -17,14 +17,14 @@ interface BehandlingPaVentProps {
   erTilbakekreving?: boolean;
 }
 
-const BehandlingPaVent: FunctionComponent<BehandlingPaVentProps> = ({
+const BehandlingPaVent = ({
   behandling,
   aksjonspunkter,
   kodeverk,
   settPaVent,
   hentBehandling,
   erTilbakekreving,
-}) => {
+}: BehandlingPaVentProps) => {
   const [skalViseModal, setVisModal] = useState(behandling.behandlingPaaVent);
   const skjulModal = useCallback(() => setVisModal(false), []);
 
@@ -44,7 +44,7 @@ const BehandlingPaVent: FunctionComponent<BehandlingPaVentProps> = ({
 
   const erManueltSattPaVent = useMemo(
     () =>
-      aksjonspunkter
+      (aksjonspunkter || [])
         .filter(ap => isAksjonspunktOpen(ap.status.kode))
         .some(ap => ap.definisjon.kode === aksjonspunktCodes.AUTO_MANUELT_SATT_PÅ_VENT),
     [aksjonspunkter],

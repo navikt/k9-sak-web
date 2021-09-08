@@ -4,12 +4,12 @@ import { shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test
 import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import periodeAarsak from '@fpsak-frontend/kodeverk/src/periodeAarsak';
 import { formatCurrencyNoKr } from '@fpsak-frontend/utils';
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
+import avklaringsbehovCodes from '@fpsak-frontend/kodeverk/src/beregningAvklaringsbehovCodes';
+import avklaringsbehovStatus from '@fpsak-frontend/kodeverk/src/beregningAvklaringsbehovStatus';
 import AksjonspunktBehandlerTidsbegrenset, {
   createInputFieldKey,
   createTableData,
-  getIsAksjonspunktClosed,
+  getIsAvklaringsbehovClosed,
 } from './AksjonspunktBehandlerTB';
 
 const firstCol = {
@@ -242,7 +242,7 @@ describe('<AksjonspunktBehandlerTidsbegrenset>', () => {
       <AksjonspunktBehandlerTidsbegrenset.WrappedComponent
         readOnly={false}
         tableData={mockTableData}
-        isAksjonspunktClosed={false}
+        isAvklaringsbehovClosed={false}
         bruttoPrPeriodeList={mockbruttoPerodeList}
         arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
         fieldArrayID="dummyId"
@@ -260,7 +260,7 @@ describe('<AksjonspunktBehandlerTidsbegrenset>', () => {
     const sumRows = wrapper.find('#bruttoPrPeriodeRad');
     const sumCols = sumRows.first().find('td');
     expect(sumCols).to.have.length(mockTableData.arbeidsforholdPeriodeMap.arbeidsgiver1.length);
-    expect(sumCols.first().find('FormattedMessage').first().props().id).to.equal(
+    expect(sumCols.first().find('MemoizedFormattedMessage').first().props().id).to.equal(
       'Beregningsgrunnlag.AarsinntektPanel.AksjonspunktBehandlerTB.SumPeriode',
     );
   });
@@ -351,26 +351,26 @@ describe('<AksjonspunktBehandlerTidsbegrenset>', () => {
     const korrektApLukket = [
       {
         definisjon: {
-          kode: aksjonspunktCodes.FASTSETT_BEREGNINGSGRUNNLAG_TIDSBEGRENSET_ARBEIDSFORHOLD,
+          kode: avklaringsbehovCodes.FASTSETT_BEREGNINGSGRUNNLAG_TIDSBEGRENSET_ARBEIDSFORHOLD,
         },
         status: {
-          kode: aksjonspunktStatus.UTFORT,
+          kode: avklaringsbehovStatus.UTFORT,
         },
       },
     ];
     const korrektApApent = [
       {
         definisjon: {
-          kode: aksjonspunktCodes.FASTSETT_BEREGNINGSGRUNNLAG_TIDSBEGRENSET_ARBEIDSFORHOLD,
+          kode: avklaringsbehovCodes.FASTSETT_BEREGNINGSGRUNNLAG_TIDSBEGRENSET_ARBEIDSFORHOLD,
         },
         status: {
-          kode: aksjonspunktStatus.OPPRETTET,
+          kode: avklaringsbehovStatus.OPPRETTET,
         },
       },
     ];
-    const selectorDataLukket = getIsAksjonspunktClosed.resultFunc(korrektApLukket);
+    const selectorDataLukket = getIsAvklaringsbehovClosed.resultFunc(korrektApLukket);
     expect(selectorDataLukket).to.equal(true);
-    const selectorDataApent = getIsAksjonspunktClosed.resultFunc(korrektApApent);
+    const selectorDataApent = getIsAvklaringsbehovClosed.resultFunc(korrektApApent);
     expect(selectorDataApent).to.equal(false);
   });
   it('Skal teste transformValues metode', () => {

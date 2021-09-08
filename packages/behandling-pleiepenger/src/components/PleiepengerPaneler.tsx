@@ -1,18 +1,18 @@
-import React, { FunctionComponent, useState } from 'react';
-
-import { Rettigheter, BehandlingPaVent, SettPaVentParams } from '@k9-sak-web/behandling-felles';
+import { BehandlingPaVent, Rettigheter, SettPaVentParams } from '@k9-sak-web/behandling-felles';
 import {
-  KodeverkMedNavn,
-  Behandling,
-  FeatureToggles,
-  FagsakPerson,
-  Fagsak,
   ArbeidsgiverOpplysningerPerId,
+  Behandling,
+  Dokument,
+  Fagsak,
+  FagsakPerson,
+  FeatureToggles,
+  KodeverkMedNavn,
 } from '@k9-sak-web/types';
-
-import PleiepengerProsess from './PleiepengerProsess';
-import PleiepengerFakta from './PleiepengerFakta';
+import React, { useState } from 'react';
 import FetchedData from '../types/fetchedDataTsType';
+import PleiepengerFakta from './PleiepengerFakta';
+import PleiepengerProsess from './PleiepengerProsess';
+import Punsjstripe from './Punsjstripe';
 
 interface OwnProps {
   fetchedData: FetchedData;
@@ -32,6 +32,7 @@ interface OwnProps {
   setBehandling: (behandling: Behandling) => void;
   arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysningerPerId;
   featureToggles: FeatureToggles;
+  dokumenter: Dokument[];
 }
 
 interface FaktaPanelInfo {
@@ -39,7 +40,7 @@ interface FaktaPanelInfo {
   textCode: string;
 }
 
-const PleiepengerPaneler: FunctionComponent<OwnProps> = ({
+const PleiepengerPaneler = ({
   fetchedData,
   fagsak,
   fagsakPerson,
@@ -57,7 +58,8 @@ const PleiepengerPaneler: FunctionComponent<OwnProps> = ({
   setBehandling,
   arbeidsgiverOpplysningerPerId,
   featureToggles,
-}) => {
+  dokumenter,
+}: OwnProps) => {
   const [apentFaktaPanelInfo, setApentFaktaPanel] = useState<FaktaPanelInfo>();
 
   return (
@@ -87,6 +89,7 @@ const PleiepengerPaneler: FunctionComponent<OwnProps> = ({
         arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
         featureToggles={featureToggles}
       />
+      <Punsjstripe aktørId={fagsakPerson.aktørId} />
       <PleiepengerFakta
         behandling={behandling}
         data={fetchedData}
@@ -101,6 +104,7 @@ const PleiepengerPaneler: FunctionComponent<OwnProps> = ({
         setApentFaktaPanel={setApentFaktaPanel}
         setBehandling={setBehandling}
         arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
+        dokumenter={dokumenter}
       />
     </>
   );

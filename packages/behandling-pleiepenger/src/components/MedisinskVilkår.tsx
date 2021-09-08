@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import { useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
 import { MicroFrontend } from '@fpsak-frontend/utils';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
@@ -48,10 +48,9 @@ export default ({ behandling: { links, uuid }, submitCallback, aksjonspunkter, r
   return (
     <MicroFrontend
       id={medisinskVilkårAppID}
-      jsSrc="/k9/microfrontend/medisinsk-vilkar/1.8.4/app.js"
-      jsIntegrity="sha384-Vx/ohRtzPKxGxeLVgV4JkxmJ1vI/ZZswz0MCe+k/CpEdLsBlwDFxgVS3RGx7fRxb"
-      stylesheetSrc="/k9/microfrontend/medisinsk-vilkar/1.8.4/styles.css"
-      stylesheetIntegrity="sha384-jgynT0LSuHE36k4/mSrYA4w/mr7aHL+DZvguC9Ct0YEhbYu29QCHk3urP3/XcBpp"
+      jsSrc="/k9/microfrontend/medisinsk-vilkar/1/app.js"
+      stylesheetSrc="/k9/microfrontend/medisinsk-vilkar/1/styles.css"
+      noCache
       onReady={() =>
         initializeMedisinskVilkår(
           medisinskVilkårAppID,
@@ -67,6 +66,7 @@ export default ({ behandling: { links, uuid }, submitCallback, aksjonspunkter, r
             { rel: 'sykdom-diagnosekoder', desiredName: 'diagnosekoder' },
             { rel: 'sykdom-dokument-liste', desiredName: 'dataTilVurdering' },
             { rel: 'sykdom-aksjonspunkt', desiredName: 'status' },
+            { rel: 'sykdom-dokument-eksisterendevurderinger', desiredName: 'nyeDokumenter' }
           ]),
           uuid,
           løsAksjonspunkt,

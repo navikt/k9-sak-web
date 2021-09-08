@@ -65,7 +65,7 @@ describe('<TidsbegrensetArbeidsforholdForm>', () => {
       <TidsbegrensetArbeidsforholdFormImpl
         readOnly={false}
         andelsliste={andeler}
-        isAksjonspunktClosed={false}
+        isAvklaringsbehovClosed={false}
         alleKodeverk={alleKodeverk}
         arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
         fieldArrayID="dummyId"
@@ -79,13 +79,13 @@ describe('<TidsbegrensetArbeidsforholdForm>', () => {
       <TidsbegrensetArbeidsforholdFormImpl
         readOnly={false}
         andelsliste={andeler}
-        isAksjonspunktClosed={false}
+        isAvklaringsbehovClosed={false}
         alleKodeverk={alleKodeverk}
         arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
         fieldArrayID="dummyId"
       />,
     );
-    const message = wrapper.find('FormattedMessage');
+    const message = wrapper.find('MemoizedFormattedMessage');
     expect(message).to.have.length(2);
     expect(message.first().prop('id')).to.equal('BeregningInfoPanel.TidsbegrensetArbFor.Arbeidsforhold');
     expect(message.first().prop('values').navn).to.equal('arbeidsgiver 1 (123456789)');

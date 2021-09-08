@@ -1,23 +1,22 @@
 import React from 'react';
 import sinon from 'sinon';
 import { expect } from 'chai';
-import { intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import { MockFieldsWithContent } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
 import aktivitetStatuser from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import avklaringsbehovCodes from '@fpsak-frontend/kodeverk/src/beregningAvklaringsbehovCodes';
 import inntektskategorier from '@fpsak-frontend/kodeverk/src/inntektskategorier';
 import { TableColumn, TableRow } from '@fpsak-frontend/shared-components';
 import { InputField, PeriodpickerField, SelectField } from '@fpsak-frontend/form';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
-import { lagStateMedAksjonspunkterOgBeregningsgrunnlag } from '../beregning-test-helper';
+import { lagStateMedAvklaringsbehovOgBeregningsgrunnlag } from '../beregning-test-helper';
 import { AndelRowImpl, mapStateToProps } from './InntektFieldArrayRow';
 import ArbeidsforholdField from './ArbeidsforholdField';
 import { formNameVurderFaktaBeregning } from '../BeregningFormUtils';
-import shallowWithIntl from '../../../i18n';
+import shallowWithIntl, { intlMock } from '../../../i18n';
 
-const aksjonspunkter = [
+const avklaringsbehov = [
   {
-    definisjon: { kode: aksjonspunktCodes.VURDER_FAKTA_FOR_ATFL_SN },
+    definisjon: { kode: avklaringsbehovCodes.VURDER_FAKTA_FOR_ATFL_SN },
     status: { kode: 'OPPR' },
   },
 ];
@@ -89,10 +88,10 @@ const ownProps = {
   arbeidsgiverOpplysningerPerId,
   fields,
   index: 0,
-  isAksjonspunktClosed: false,
+  isAvklaringsbehovClosed: false,
 };
-const state = lagStateMedAksjonspunkterOgBeregningsgrunnlag(
-  aksjonspunkter,
+const state = lagStateMedAvklaringsbehovOgBeregningsgrunnlag(
+  avklaringsbehov,
   beregningsgrunnlag,
   formNameVurderFaktaBeregning,
   initial,
@@ -159,7 +158,7 @@ it('skal vise komponent uten arbeidsperiode og refusjonskrav', () => {
       removeAndel={sinon.spy()}
       index={0}
       inntektskategoriKoder={[]}
-      isAksjonspunktClosed={false}
+      isAvklaringsbehovClosed={false}
       skalRedigereInntektskategori={false}
       {...ownProps}
     />,
@@ -206,7 +205,7 @@ it('skal vise komponent med readOnly beløp', () => {
       removeAndel={sinon.spy()}
       index={0}
       inntektskategoriKoder={[]}
-      isAksjonspunktClosed={false}
+      isAvklaringsbehovClosed={false}
       skalRedigereInntektskategori={false}
       {...ownProps}
     />,

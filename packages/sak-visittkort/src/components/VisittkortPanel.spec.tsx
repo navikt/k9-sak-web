@@ -1,5 +1,5 @@
 import React from 'react';
-import { PersonCard, Gender } from '@navikt/nap-person-card';
+import { PersonCard, Gender } from '@navikt/k9-react-components';
 
 import { FlexContainer } from '@fpsak-frontend/shared-components';
 import navBrukerKjonn from '@fpsak-frontend/kodeverk/src/navBrukerKjonn';
@@ -78,7 +78,12 @@ describe('<VisittkortPanel>', () => {
 
   it('skal vise enkelt visittkort når en ikke har personopplysninger', () => {
     const wrapper = shallowWithIntl(
-      <VisittkortPanel fagsakPerson={fagsakPerson} alleKodeverk={{}} sprakkode={{ kode: 'NN', kodeverk: '' }} />,
+      <VisittkortPanel
+        fagsakPerson={fagsakPerson}
+        alleKodeverk={{}}
+        sprakkode={{ kode: 'NN', kodeverk: '' }}
+        relaterteFagsaker={null}
+      />,
     );
 
     expect(wrapper.find(FlexContainer)).toHaveLength(0);
@@ -96,6 +101,7 @@ describe('<VisittkortPanel>', () => {
         alleKodeverk={{}}
         sprakkode={{ kode: 'NN', kodeverk: '' }}
         harTilbakekrevingVerge
+        relaterteFagsaker={null}
       />,
     );
 
@@ -114,6 +120,7 @@ describe('<VisittkortPanel>', () => {
         personopplysninger={personopplysningerSoker}
         alleKodeverk={{}}
         sprakkode={{ kode: 'NN', kodeverk: '' }}
+        relaterteFagsaker={null}
       />,
     );
 

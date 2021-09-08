@@ -10,7 +10,7 @@ describe('<LonnsendringForm>', () => {
     const wrapper = shallow(
       <LonnsendringForm
         readOnly={false}
-        isAksjonspunktClosed={false}
+        isAvklaringsbehovClosed={false}
         erLonnsendring={false}
         tilfeller={[]}
         radioknappOverskrift={['test1', 'test2']}

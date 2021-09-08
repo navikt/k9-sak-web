@@ -13,12 +13,12 @@ import {
   formatCurrencyNoKr,
 } from '@fpsak-frontend/utils';
 import { InputField } from '@fpsak-frontend/form';
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import avklaringsbehovCodes from '@fpsak-frontend/kodeverk/src/beregningAvklaringsbehovCodes';
 import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import { Normaltekst } from 'nav-frontend-typografi';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import TextAreaField from '../redesign/TextAreaField';
-import beregningsgrunnlagAksjonspunkterPropType from '../../propTypes/beregningsgrunnlagAksjonspunkterPropType';
+import beregningAvklaringsbehovPropType from '../../propTypes/beregningAvklaringsbehovPropType';
 import styles from '../fellesPaneler/aksjonspunktBehandler.less';
 
 const maxLength1500 = maxLength(1500);
@@ -28,7 +28,7 @@ export const fastsettInntektFieldname = 'bruttoBeregningsgrunnlag';
 const {
   FASTSETT_BEREGNINGSGRUNNLAG_SN_NY_I_ARBEIDSLIVET,
   FASTSETT_BRUTTO_BEREGNINGSGRUNNLAG_SELVSTENDIG_NAERINGSDRIVENDE,
-} = aksjonspunktCodes;
+} = avklaringsbehovCodes;
 
 /**
  * FastsettSN
@@ -40,20 +40,20 @@ const {
  */
 export const FastsettSN = ({
   readOnly,
-  isAksjonspunktClosed,
+  isAvklaringsbehovClosed,
   intl,
-  gjeldendeAksjonspunkter,
+  avklaringsbehov,
   erNyArbLivet,
   endretTekst,
   fieldArrayID,
 }) => {
-  const harGammeltAPFastsettBrutto = gjeldendeAksjonspunkter
-    ? gjeldendeAksjonspunkter.find(
+  const harGammeltAPFastsettBrutto = avklaringsbehov
+    ? avklaringsbehov.find(
         ap => ap.definisjon.kode === FASTSETT_BRUTTO_BEREGNINGSGRUNNLAG_SELVSTENDIG_NAERINGSDRIVENDE,
       )
     : false;
-  const harAPSNNyiArbLiv = gjeldendeAksjonspunkter
-    ? gjeldendeAksjonspunkter.find(ap => ap.definisjon.kode === FASTSETT_BEREGNINGSGRUNNLAG_SN_NY_I_ARBEIDSLIVET)
+  const harAPSNNyiArbLiv = avklaringsbehov
+    ? avklaringsbehov.find(ap => ap.definisjon.kode === FASTSETT_BEREGNINGSGRUNNLAG_SN_NY_I_ARBEIDSLIVET)
     : false;
 
   return (
@@ -70,10 +70,9 @@ export const FastsettSN = ({
               <div id="readOnlyWrapper" className={readOnly ? styles.inputPadding : undefined}>
                 <InputField
                   name={`${fieldArrayID}.${fastsettInntektFieldname}`}
-                  bredde="XS"
+                  bredde="S"
                   validate={[required]}
                   parse={parseCurrencyInput}
-                  className={styles['input--xs']}
                   readOnly={readOnly}
                 />
               </div>
@@ -95,7 +94,7 @@ export const FastsettSN = ({
                   validate={[required, maxLength1500, minLength3, hasValidText]}
                   maxLength={1500}
                   readOnly={readOnly}
-                  isEdited={isAksjonspunktClosed}
+                  isEdited={isAvklaringsbehovClosed}
                   placeholder={intl.formatMessage({
                     id: 'Beregningsgrunnlag.Forms.VurderingAvFastsattBeregningsgrunnlag.Placeholder',
                   })}
@@ -114,20 +113,20 @@ FastsettSN.propTypes = {
   intl: PropTypes.shape().isRequired,
   endretTekst: PropTypes.shape(),
   readOnly: PropTypes.bool.isRequired,
-  isAksjonspunktClosed: PropTypes.bool.isRequired,
+  isAvklaringsbehovClosed: PropTypes.bool.isRequired,
   erNyArbLivet: PropTypes.bool.isRequired,
-  gjeldendeAksjonspunkter: PropTypes.arrayOf(beregningsgrunnlagAksjonspunkterPropType).isRequired,
+  avklaringsbehov: PropTypes.arrayOf(beregningAvklaringsbehovPropType).isRequired,
   fieldArrayID: PropTypes.string.isRequired,
 };
 
-FastsettSN.buildInitialValuesNyIArbeidslivet = (relevanteAndeler, gjeldendeAksjonspunkter) => {
-  if (relevanteAndeler.length === 0 || !gjeldendeAksjonspunkter || gjeldendeAksjonspunkter.length === 0) {
+FastsettSN.buildInitialValuesNyIArbeidslivet = (relevanteAndeler, avklaringsbehov) => {
+  if (relevanteAndeler.length === 0 || !avklaringsbehov || avklaringsbehov.length === 0) {
     return undefined;
   }
   const snAndel = relevanteAndeler.find(
     andel => andel.aktivitetStatus.kode === aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE,
   );
-  const nyIArbeidslivetAP = gjeldendeAksjonspunkter.find(
+  const nyIArbeidslivetAP = avklaringsbehov.find(
     ap => ap.definisjon.kode === FASTSETT_BEREGNINGSGRUNNLAG_SN_NY_I_ARBEIDSLIVET,
   );
   return {

@@ -1,8 +1,8 @@
-import React, { FunctionComponent } from 'react';
+import React from 'react';
 import { InjectedFormProps } from 'redux-form';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
-import { isEmpty } from 'lodash';
+import isEmpty from 'just-is-empty';
 import Hjelpetekst from 'nav-frontend-hjelpetekst';
 import {
   behandlingForm,
@@ -28,25 +28,20 @@ interface OverforingerFaktaFormProps {
   formValues?: FormValues;
 }
 
-export const OverforingerFaktaFormImpl: FunctionComponent<OverforingerFaktaFormProps & InjectedFormProps> = ({
+export const OverforingerFaktaFormImpl = ({
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   rammevedtak,
+
   formValues,
   behandlingId,
   behandlingVersjon,
-}) => {
+}: OverforingerFaktaFormProps & InjectedFormProps) => {
   if (isEmpty(formValues)) {
     return null;
   }
 
-  const {
-    overføringGir,
-    overføringFår,
-    fordelingGir,
-    fordelingFår,
-    koronaoverføringGir,
-    koronaoverføringFår,
-  } = formValues;
+  const { overføringGir, overføringFår, fordelingGir, fordelingFår, koronaoverføringGir, koronaoverføringFår } =
+    formValues;
 
   const detFinnesOverføringer =
     [

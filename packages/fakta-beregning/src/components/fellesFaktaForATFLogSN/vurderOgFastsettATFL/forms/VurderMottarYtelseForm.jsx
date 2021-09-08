@@ -36,7 +36,7 @@ const utledArbeidsforholdUtenIMRadioTekst = (arbeidsforhold, alleKodeverk, arbei
 const mottarYtelseArbeidsforholdRadio = (
   andel,
   readOnly,
-  isAksjonspunktClosed,
+  isAvklaringsbehovClosed,
   alleKodeverk,
   arbeidsgiverOpplysningerPerId,
   fieldArrayID,
@@ -51,7 +51,7 @@ const mottarYtelseArbeidsforholdRadio = (
     <RadioGroupField
       name={`${fieldArrayID}.${utledArbeidsforholdFieldName(andel)}`}
       readOnly={readOnly}
-      isEdited={isAksjonspunktClosed}
+      isEdited={isAvklaringsbehovClosed}
     >
       <RadioOption label={<FormattedMessage id="BeregningInfoPanel.FormAlternativ.Ja" />} value />
       <RadioOption label={<FormattedMessage id="BeregningInfoPanel.FormAlternativ.Nei" />} value={false} />
@@ -78,7 +78,7 @@ const finnFrilansTekstKode = tilfeller => {
  */
 export const VurderMottarYtelseFormImpl = ({
   readOnly,
-  isAksjonspunktClosed,
+  isAvklaringsbehovClosed,
   erFrilans,
   arbeidsforholdUtenIM,
   tilfeller,
@@ -98,7 +98,7 @@ export const VurderMottarYtelseFormImpl = ({
         <RadioGroupField
           name={`${fieldArrayID}.${finnFrilansFieldName()}`}
           readOnly={readOnly}
-          isEdited={isAksjonspunktClosed}
+          isEdited={isAvklaringsbehovClosed}
         >
           <RadioOption label={<FormattedMessage id="BeregningInfoPanel.FormAlternativ.Ja" />} value />
           <RadioOption label={<FormattedMessage id="BeregningInfoPanel.FormAlternativ.Nei" />} value={false} />
@@ -109,7 +109,7 @@ export const VurderMottarYtelseFormImpl = ({
       mottarYtelseArbeidsforholdRadio(
         andel,
         readOnly,
-        isAksjonspunktClosed,
+        isAvklaringsbehovClosed,
         alleKodeverk,
         arbeidsgiverOpplysningerPerId,
         fieldArrayID,
@@ -120,7 +120,7 @@ export const VurderMottarYtelseFormImpl = ({
 
 VurderMottarYtelseFormImpl.propTypes = {
   readOnly: PropTypes.bool.isRequired,
-  isAksjonspunktClosed: PropTypes.bool.isRequired,
+  isAvklaringsbehovClosed: PropTypes.bool.isRequired,
   tilfeller: PropTypes.arrayOf(PropTypes.string).isRequired,
   arbeidsforholdUtenIM: PropTypes.arrayOf(PropTypes.object).isRequired,
   erFrilans: PropTypes.bool.isRequired,

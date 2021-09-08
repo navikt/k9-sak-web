@@ -1,4 +1,4 @@
-import React, { FunctionComponent, ReactNode } from 'react';
+import React, { ReactNode } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { NavLink } from 'react-router-dom';
 import { Normaltekst } from 'nav-frontend-typografi';
@@ -26,7 +26,7 @@ interface OwnProps {
   lagLenke: (skjermlenkeCode: string) => Location;
 }
 
-const TotrinnskontrollSaksbehandlerPanel: FunctionComponent<OwnProps> = ({
+const TotrinnskontrollSaksbehandlerPanel = ({
   totrinnskontrollSkjermlenkeContext,
   erForeldrepengerFagsak,
   behandlingKlageVurdering,
@@ -36,7 +36,7 @@ const TotrinnskontrollSaksbehandlerPanel: FunctionComponent<OwnProps> = ({
   skjemalenkeTyper,
   vurderArsaker,
   lagLenke,
-}) => (
+}: OwnProps) => (
   <>
     <div className={styles.resultatFraGodkjenningTextContainer}>
       <FormattedMessage

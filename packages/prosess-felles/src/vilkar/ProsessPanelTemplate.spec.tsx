@@ -2,7 +2,7 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import sinon from 'sinon';
 
-import { EtikettLiten } from 'nav-frontend-typografi';
+import { Undertekst } from 'nav-frontend-typografi';
 
 import ProsessPanelTemplate from './ProsessPanelTemplate';
 
@@ -24,7 +24,7 @@ describe('<ProsessPanelTemplate>', () => {
       </ProsessPanelTemplate>,
     );
 
-    expect(wrapper.find(EtikettLiten)).toHaveLength(0);
+    expect(wrapper.find(Undertekst)).toHaveLength(0);
   });
 
   it('skal vise lovreferanse når dette finnes', () => {
@@ -45,6 +45,6 @@ describe('<ProsessPanelTemplate>', () => {
       </ProsessPanelTemplate>,
     );
 
-    expect(wrapper.find(EtikettLiten)).toHaveLength(1);
+    expect(wrapper.find(Undertekst)).toHaveLength(1);
   });
 });

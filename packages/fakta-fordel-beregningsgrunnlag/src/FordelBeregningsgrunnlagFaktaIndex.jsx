@@ -44,6 +44,14 @@ const kreverManuellBehandlingFn = bg => {
   return false;
 };
 
+
+const finnAvklaringsbehov = (aksjonspunkter, beregningsgrunnlag) => {
+  if (beregningsgrunnlag.avklaringsbehov && beregningsgrunnlag.avklaringsbehov.length > 0) {
+    return beregningsgrunnlag.avklaringsbehov;
+  }
+  return aksjonspunkter;
+}
+
 const FordelBeregningsgrunnlagFaktaIndex = ({
   behandling,
   beregningsgrunnlag,
@@ -53,7 +61,6 @@ const FordelBeregningsgrunnlagFaktaIndex = ({
   aksjonspunkter,
   submitCallback,
   readOnly,
-  harApneAksjonspunkter,
   submittable,
 }) => {
   const skalBrukeTabs = beregningsgrunnlag.length > 1;
@@ -63,6 +70,8 @@ const FordelBeregningsgrunnlagFaktaIndex = ({
   const kreverManuellBehandling = kreverManuellBehandlingFn(aktivtBeregningsrunnlag);
 
   const vilkårsperioder = behandling?.behandlingsresultat?.vilkårResultat.BEREGNINGSGRUNNLAGVILKÅR;
+
+  const avklaringsbehov = finnAvklaringsbehov(aksjonspunkter, aktivtBeregningsrunnlag);
 
   return (
     <RawIntlProvider value={intl}>
@@ -83,11 +92,10 @@ const FordelBeregningsgrunnlagFaktaIndex = ({
           behandlingType={behandling.type}
           alleKodeverk={alleKodeverk}
           alleMerknaderFraBeslutter={alleMerknaderFraBeslutter}
-          aksjonspunkter={aksjonspunkter}
+          avklaringsbehov={avklaringsbehov}
           submitCallback={submitCallback}
           readOnly={readOnly}
           beregningsgrunnlag={aktivtBeregningsrunnlag}
-          hasOpenAksjonspunkter={harApneAksjonspunkter}
           submittable={submittable}
           kreverManuellBehandling={kreverManuellBehandling}
           aktivtBeregningsgrunnlagIndex={aktivtBeregningsgrunnlagIndeks}
@@ -111,7 +119,6 @@ FordelBeregningsgrunnlagFaktaIndex.propTypes = {
   aksjonspunkter: PropTypes.arrayOf(fordelBeregningsgrunnlagAksjonspunkterPropType).isRequired,
   submitCallback: PropTypes.func.isRequired,
   readOnly: PropTypes.bool.isRequired,
-  harApneAksjonspunkter: PropTypes.bool.isRequired,
   submittable: PropTypes.bool.isRequired,
 };
 

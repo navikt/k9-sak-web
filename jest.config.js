@@ -13,9 +13,11 @@ module.exports = {
       roots: ['<rootDir>/packages/'],
       setupFiles: ['<rootDir>/setup/setup.js'],
       setupFilesAfterEnv: [
+        '@testing-library/jest-dom/extend-expect',
         '<rootDir>/packages/utils-test/src/setup-test-env.ts',
         '<rootDir>/packages/utils-test/src/setup-test-env-hooks.ts',
       ],
+      testEnvironment: 'jsdom',
       testMatch: ['**/?(*.)+(spec).+(js|jsx|ts|tsx)'],
       testPathIgnorePatterns: ['/node_modules/', '/dist/'],
       transform: {

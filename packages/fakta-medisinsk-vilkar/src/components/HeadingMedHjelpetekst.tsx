@@ -1,5 +1,5 @@
 import { Element } from 'nav-frontend-typografi';
-import * as React from 'react';
+import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import { Image } from '@fpsak-frontend/shared-components';
 import chevronIkonUrl from '@fpsak-frontend/assets/images/pil_ned.svg';

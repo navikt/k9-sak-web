@@ -32,6 +32,7 @@ class PanelDef extends ProsessStegPanelDef {
     PleiepengerBehandlingApiKeys.TILGJENGELIGE_VEDTAKSBREV,
     PleiepengerBehandlingApiKeys.INFORMASJONSBEHOV_VEDTAKSBREV,
     PleiepengerBehandlingApiKeys.DOKUMENTDATA_HENTE,
+    PleiepengerBehandlingApiKeys.FRITEKSTDOKUMENTER,
   ];
 
   getOverstyrVisningAvKomponent = () => true;
@@ -53,7 +54,7 @@ class PanelDef extends ProsessStegPanelDef {
     vilkar,
     simuleringResultat,
     beregningsgrunnlag,
-    ytelseTypeKode: fagsakYtelseType.FORELDREPENGER,
+    ytelseTypeKode: fagsakYtelseType.PLEIEPENGER,
     employeeHasAccess: rettigheter.kanOverstyreAccess.isEnabled,
     arbeidsgiverOpplysningerPerId,
   });

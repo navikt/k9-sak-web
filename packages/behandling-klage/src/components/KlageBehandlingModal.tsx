@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from 'react';
+import React from 'react';
 import { FormattedMessage, injectIntl, WrappedComponentProps } from 'react-intl';
 import { Column, Row } from 'nav-frontend-grid';
 import Modal from 'nav-frontend-modal';
@@ -22,11 +22,7 @@ interface OwnProps {
  * i aksjonspunkt '' velger at ytelsesvedtaket skal stadfestes. Ved å trykke på knapp blir saksbehandler
  * tatt tilbake til sokesiden.
  */
-const KlageVurderingModal: FunctionComponent<OwnProps & WrappedComponentProps> = ({
-  visModal = false,
-  lukkModal,
-  intl,
-}) => (
+const KlageVurderingModal = ({ visModal = false, lukkModal, intl }: OwnProps & WrappedComponentProps) => (
   <Modal
     className={styles.modal}
     isOpen={visModal}
@@ -41,16 +37,15 @@ const KlageVurderingModal: FunctionComponent<OwnProps & WrappedComponentProps> =
         <div className={styles.divider} />
       </Column>
       <Column xs="9">
-        <Normaltekst><FormattedMessage id="KlageVurderingModal.VedtakOversendt" /></Normaltekst>
-        <Normaltekst><FormattedMessage id="KlageVurderingModal.GoToSearchPage" /></Normaltekst>
+        <Normaltekst>
+          <FormattedMessage id="KlageVurderingModal.VedtakOversendt" />
+        </Normaltekst>
+        <Normaltekst>
+          <FormattedMessage id="KlageVurderingModal.GoToSearchPage" />
+        </Normaltekst>
       </Column>
       <Column xs="2">
-        <Hovedknapp
-          mini
-          className={styles.button}
-          onClick={lukkModal}
-          autoFocus
-        >
+        <Hovedknapp mini className={styles.button} onClick={lukkModal} autoFocus>
           {intl.formatMessage({ id: 'KlageVurderingModal.Ok' })}
         </Hovedknapp>
       </Column>

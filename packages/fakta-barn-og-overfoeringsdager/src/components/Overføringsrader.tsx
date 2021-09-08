@@ -1,4 +1,4 @@
-import React, { FunctionComponent, ReactNode } from 'react';
+import React, { ReactNode } from 'react';
 import { InputField, PeriodpickerField } from '@fpsak-frontend/form/index';
 import { WrappedFieldArrayProps } from 'redux-form';
 import { FormattedMessage } from 'react-intl';
@@ -79,11 +79,7 @@ const renderHeaders = (antallRader: number, type: Overføringstype, retning: Ove
   );
 };
 
-const Overføringsrader: FunctionComponent<WrappedFieldArrayProps<Overføring> & OverføringsraderProps> = ({
-  fields,
-  type,
-  retning,
-}) => {
+const Overføringsrader = ({ fields, type, retning }: WrappedFieldArrayProps<Overføring> & OverføringsraderProps) => {
   if (fields.length === 0) {
     return (
       <FlexRow spaceBetween alignItemsToBaseline>

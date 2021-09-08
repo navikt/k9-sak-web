@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import { InjectedFormProps } from 'redux-form';
 import { createSelector } from 'reselect';
@@ -50,7 +50,7 @@ const lagArbeidsgiverNavnOgFødselsdatoTekst = arbeidsgiver =>
   `${capitalizeFirstLetters(arbeidsgiver.navn)} (${moment(arbeidsgiver.fødselsdato).format(DDMMYYYY_DATE_FORMAT)})`;
 
 const lagArbeidsgiverNavnOgOrgnrTekst = arbeidsgiver =>
-  `${capitalizeFirstLetters(arbeidsgiver.navn)} (${arbeidsgiver.organisasjonsnummer})`;
+  `${capitalizeFirstLetters(arbeidsgiver.navn)} (${arbeidsgiver.organisasjonsnummer || ''})`;
 
 const formatArbeidsgiver = arbeidsgiver => {
   if (!arbeidsgiver) {
@@ -63,7 +63,7 @@ const formatArbeidsgiver = arbeidsgiver => {
 };
 
 const isVilkarOppfyltDisabled = (hasSoknad, inntektsmeldingerSomIkkeKommer) =>
-  !hasSoknad || Object.values(inntektsmeldingerSomIkkeKommer).some(vd => !vd);
+  !hasSoknad || Object.values(inntektsmeldingerSomIkkeKommer || {}).some(vd => !vd);
 
 type FormValues = {
   erVilkarOk?: boolean;
@@ -103,9 +103,7 @@ interface MappedOwnProps {
  *
  * Presentasjonskomponent. Informasjon om søkers informasjonsplikt er godkjent eller avvist.
  */
-export const SokersOpplysningspliktFormImpl: FunctionComponent<
-  PureOwnProps & MappedOwnProps & WrappedComponentProps & InjectedFormProps
-> = ({
+export const SokersOpplysningspliktFormImpl = ({
   intl,
   readOnly,
   readOnlySubmitButton,
@@ -121,7 +119,7 @@ export const SokersOpplysningspliktFormImpl: FunctionComponent<
   behandlingId,
   behandlingVersjon,
   ...formProps
-}) => (
+}: PureOwnProps & MappedOwnProps & WrappedComponentProps & InjectedFormProps) => (
   <ProsessPanelTemplate
     title={intl.formatMessage({ id: 'SokersOpplysningspliktForm.SokersOpplysningsplikt' })}
     isAksjonspunktOpen={!readOnlySubmitButton}
@@ -194,12 +192,6 @@ export const SokersOpplysningspliktFormImpl: FunctionComponent<
     )}
   </ProsessPanelTemplate>
 );
-
-SokersOpplysningspliktFormImpl.defaultProps = {
-  hasAksjonspunkt: false,
-  manglendeVedlegg: [],
-  inntektsmeldingerSomIkkeKommer: {},
-};
 
 export const getSortedManglendeVedlegg = createSelector([(ownProps: PureOwnProps) => ownProps.soknad], soknad =>
   soknad && soknad.manglendeVedlegg
@@ -303,9 +295,7 @@ const mapStateToPropsFactory = (_initialState, initialOwnProps: PureOwnProps) =>
 };
 
 export default connect(mapStateToPropsFactory)(
-  injectIntl(
-    behandlingForm({
-      form: formName,
-    })(SokersOpplysningspliktFormImpl),
-  ),
+  behandlingForm({
+    form: formName,
+  })(injectIntl(SokersOpplysningspliktFormImpl)),
 );

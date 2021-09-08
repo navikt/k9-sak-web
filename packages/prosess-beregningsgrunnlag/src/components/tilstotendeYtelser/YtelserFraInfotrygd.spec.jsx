@@ -9,7 +9,7 @@ describe('<YtelserFraInfotrygd>', () => {
     const brutto = 290000;
     const wrapper = shallowWithIntl(<YtelserFraInfotrygd bruttoPrAar={brutto} />);
 
-    const formattedMessage = wrapper.find('FormattedMessage');
+    const formattedMessage = wrapper.find('MemoizedFormattedMessage');
 
     expect(formattedMessage).to.have.length(4);
     expect(formattedMessage.at(0).prop('id')).to.equal('Beregningsgrunnlag.YtelserFraInfotrygd.Ytelse2');

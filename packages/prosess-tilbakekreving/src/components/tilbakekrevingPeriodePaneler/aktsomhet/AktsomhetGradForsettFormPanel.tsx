@@ -1,4 +1,4 @@
-import React, {FunctionComponent} from 'react';
+import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import { Column, Row } from 'nav-frontend-grid';
 import { Normaltekst, Undertekst } from 'nav-frontend-typografi';
@@ -13,10 +13,7 @@ interface OwnProps {
   erValgtResultatTypeForstoBurdeForstaatt?: boolean;
 }
 
-const AktsomhetGradForsettFormPanel: FunctionComponent<OwnProps> = ({
-  readOnly,
-  erValgtResultatTypeForstoBurdeForstaatt,
-}) => (
+const AktsomhetGradForsettFormPanel = ({ readOnly, erValgtResultatTypeForstoBurdeForstaatt }: OwnProps) => (
   <div>
     <ArrowBox alignOffset={erValgtResultatTypeForstoBurdeForstaatt ? 328 : 368}>
       {erValgtResultatTypeForstoBurdeForstaatt && (

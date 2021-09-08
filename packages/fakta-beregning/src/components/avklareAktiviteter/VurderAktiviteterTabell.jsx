@@ -2,11 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import moment from 'moment';
-import { required, DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils';
+import { DDMMYYYY_DATE_FORMAT, required } from '@fpsak-frontend/utils';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
 import opptjeningAktivitetTyper from '@fpsak-frontend/kodeverk/src/opptjeningAktivitetType';
 import { RadioGroupField, RadioOption } from '@fpsak-frontend/form';
-import { Table, TableRow, TableColumn, PeriodLabel, EditedIcon } from '@fpsak-frontend/shared-components';
+import { EditedIcon, PeriodLabel, Table, TableColumn, TableRow } from '@fpsak-frontend/shared-components';
 import { createVisningsnavnForAktivitet } from '../ArbeidsforholdHelper';
 import beregningAktivitetPropType from './beregningAktivitetPropType';
 
@@ -28,8 +28,8 @@ export const lagAktivitetFieldId = aktivitet => {
   return aktivitet.arbeidsforholdType.kode + aktivitet.fom.replace('.', '');
 };
 
-export const skalVurdereAktivitet = (aktivitet, skalOverstyre, harAksjonspunkt) => {
-  if (!skalOverstyre && !harAksjonspunkt) {
+export const skalVurdereAktivitet = (aktivitet, skalOverstyre, harAvklaringsbehov) => {
+  if (!skalOverstyre && !harAvklaringsbehov) {
     return false;
   }
   if (aktivitet.arbeidsforholdType && aktivitet.arbeidsforholdType.kode === opptjeningAktivitetTyper.AAP) {
@@ -40,11 +40,11 @@ export const skalVurdereAktivitet = (aktivitet, skalOverstyre, harAksjonspunkt) 
 
 const lagTableRow = (
   readOnly,
-  isAksjonspunktClosed,
+  isAvklaringsbehovClosed,
   aktivitet,
   alleKodeverk,
   erOverstyrt,
-  harAksjonspunkt,
+  harAvklaringsbehov,
   fieldArrayID,
   arbeidsgiverOpplysningerPerId,
 ) => (
@@ -62,7 +62,7 @@ const lagTableRow = (
     <TableColumn className={styles.radioMiddle}>
       <RadioGroupField
         name={`${fieldArrayID}.${lagAktivitetFieldId(aktivitet)}.skalBrukes`}
-        readOnly={readOnly || !skalVurdereAktivitet(aktivitet, erOverstyrt, harAksjonspunkt)}
+        readOnly={readOnly || !skalVurdereAktivitet(aktivitet, erOverstyrt, harAvklaringsbehov)}
       >
         {[<RadioOption key={`${lagAktivitetFieldId(aktivitet)}.bruk`} value />]}
       </RadioGroupField>
@@ -70,13 +70,13 @@ const lagTableRow = (
     <TableColumn className={styles.radioMiddle}>
       <RadioGroupField
         name={`${fieldArrayID}.${lagAktivitetFieldId(aktivitet)}.skalBrukes`}
-        readOnly={readOnly || !skalVurdereAktivitet(aktivitet, erOverstyrt, harAksjonspunkt)}
+        readOnly={readOnly || !skalVurdereAktivitet(aktivitet, erOverstyrt, harAvklaringsbehov)}
       >
         {[<RadioOption key={`${lagAktivitetFieldId(aktivitet)}.ikkeBruk`} value={false} />]}
       </RadioGroupField>
     </TableColumn>
-    {isAksjonspunktClosed && readOnly && (
-      <TableColumn>{skalVurdereAktivitet(aktivitet, erOverstyrt, harAksjonspunkt) && <EditedIcon />}</TableColumn>
+    {isAvklaringsbehovClosed && readOnly && (
+      <TableColumn>{skalVurdereAktivitet(aktivitet, erOverstyrt, harAvklaringsbehov) && <EditedIcon />}</TableColumn>
     )}
   </TableRow>
 );
@@ -131,12 +131,12 @@ const finnHeading = (aktiviteter, erOverstyrt, skjaeringstidspunkt) => {
  */
 export const VurderAktiviteterTabell = ({
   readOnly,
-  isAksjonspunktClosed,
+  isAvklaringsbehovClosed,
   aktiviteter,
   skjaeringstidspunkt,
   alleKodeverk,
   erOverstyrt,
-  harAksjonspunkt,
+  harAvklaringsbehov,
   fieldArrayID,
   arbeidsgiverOpplysningerPerId,
 }) => (
@@ -146,11 +146,11 @@ export const VurderAktiviteterTabell = ({
       {aktiviteter.map(aktivitet =>
         lagTableRow(
           readOnly,
-          isAksjonspunktClosed,
+          isAvklaringsbehovClosed,
           aktivitet,
           alleKodeverk,
           erOverstyrt,
-          harAksjonspunkt,
+          harAvklaringsbehov,
           fieldArrayID,
           arbeidsgiverOpplysningerPerId,
         ),
@@ -161,12 +161,12 @@ export const VurderAktiviteterTabell = ({
 
 VurderAktiviteterTabell.propTypes = {
   readOnly: PropTypes.bool.isRequired,
-  isAksjonspunktClosed: PropTypes.bool.isRequired,
+  isAvklaringsbehovClosed: PropTypes.bool.isRequired,
   aktiviteter: PropTypes.arrayOf(beregningAktivitetPropType).isRequired,
   skjaeringstidspunkt: PropTypes.string.isRequired,
   alleKodeverk: PropTypes.shape().isRequired,
   erOverstyrt: PropTypes.bool.isRequired,
-  harAksjonspunkt: PropTypes.bool.isRequired,
+  harAvklaringsbehov: PropTypes.bool.isRequired,
   fieldArrayID: PropTypes.string.isRequired,
   arbeidsgiverOpplysningerPerId: PropTypes.shape().isRequired,
 };
@@ -190,7 +190,11 @@ VurderAktiviteterTabell.validate = (values, aktiviteter) => {
 
 VurderAktiviteterTabell.transformValues = (values, aktiviteter) =>
   aktiviteter
-    .filter(aktivitet => values[lagAktivitetFieldId(aktivitet)].skalBrukes === false)
+    .filter(
+      aktivitet =>
+        values[lagAktivitetFieldId(aktivitet)].skalBrukes === false ||
+        values[lagAktivitetFieldId(aktivitet)].tom != null,
+    )
     .map(aktivitet => ({
       oppdragsgiverOrg: aktivitet.aktørIdString ? null : aktivitet.arbeidsgiverId,
       arbeidsforholdRef: aktivitet.arbeidsforholdId,
@@ -198,7 +202,7 @@ VurderAktiviteterTabell.transformValues = (values, aktiviteter) =>
       tom: aktivitet.tom,
       opptjeningAktivitetType: aktivitet.arbeidsforholdType ? aktivitet.arbeidsforholdType.kode : null,
       arbeidsgiverIdentifikator: aktivitet.aktørIdString ? aktivitet.aktørIdString : null,
-      skalBrukes: false,
+      skalBrukes: values[lagAktivitetFieldId(aktivitet)].skalBrukes,
     }));
 
 VurderAktiviteterTabell.hasValueChangedFromInitial = (aktiviteter, values, initialValues) => {
@@ -213,25 +217,25 @@ VurderAktiviteterTabell.hasValueChangedFromInitial = (aktiviteter, values, initi
   return changedAktiviteter !== undefined;
 };
 
-const skalBrukesPretufylling = (aktivitet, erOverstyrt, harAksjonspunkt) => {
-  if (skalVurdereAktivitet(aktivitet, erOverstyrt, harAksjonspunkt)) {
+const skalBrukesPretufylling = (aktivitet, erOverstyrt, harAvklaringsbehov) => {
+  if (skalVurdereAktivitet(aktivitet, erOverstyrt, harAvklaringsbehov)) {
     return aktivitet.skalBrukes;
   }
   return aktivitet.skalBrukes === true || aktivitet.skalBrukes === null || aktivitet.skalBrukes === undefined;
 };
 
-const mapToInitialValues = (aktivitet, alleKodeverk, erOverstyrt, harAksjonspunkt, arbeidsgiverOpplysningerPerId) => ({
+const mapToInitialValues = (aktivitet, alleKodeverk, erOverstyrt, harAvklaringsbehov, arbeidsgiverOpplysningerPerId) => ({
   beregningAktivitetNavn: createVisningsnavnForAktivitet(aktivitet, alleKodeverk, arbeidsgiverOpplysningerPerId),
   fom: aktivitet.fom,
   tom: aktivitet.tom,
-  skalBrukes: skalBrukesPretufylling(aktivitet, erOverstyrt, harAksjonspunkt),
+  skalBrukes: skalBrukesPretufylling(aktivitet, erOverstyrt, harAvklaringsbehov),
 });
 
 VurderAktiviteterTabell.buildInitialValues = (
   aktiviteter,
   alleKodeverk,
   erOverstyrt,
-  harAksjonspunkt,
+  harAvklaringsbehov,
   arbeidsgiverOpplysningerPerId,
 ) => {
   if (!aktiviteter) {
@@ -243,7 +247,7 @@ VurderAktiviteterTabell.buildInitialValues = (
       aktivitet,
       alleKodeverk,
       erOverstyrt,
-      harAksjonspunkt,
+      harAvklaringsbehov,
       arbeidsgiverOpplysningerPerId,
     );
   });

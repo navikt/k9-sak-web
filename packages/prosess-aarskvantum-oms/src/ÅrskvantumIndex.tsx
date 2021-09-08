@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from 'react';
+import React from 'react';
 import { createIntlCache, createIntl, RawIntlProvider } from 'react-intl';
 import {
   Behandling,
@@ -6,7 +6,6 @@ import {
   ArbeidsgiverOpplysningerPerId,
   Aksjonspunkt,
   ArbeidsforholdV2,
-  FeatureToggles,
 } from '@k9-sak-web/types';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 
@@ -41,10 +40,9 @@ interface ÅrsakvantumIndexProps {
   aksjonspunkterForSteg?: Aksjonspunkt[];
   arbeidsforhold: ArbeidsforholdV2[];
   arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysningerPerId;
-  featureToggles: FeatureToggles;
 }
 
-const ÅrskvantumIndex: FunctionComponent<ÅrsakvantumIndexProps> = ({
+const ÅrskvantumIndex = ({
   fullUttaksplan,
   årskvantum,
   alleKodeverk,
@@ -54,8 +52,7 @@ const ÅrskvantumIndex: FunctionComponent<ÅrsakvantumIndexProps> = ({
   aksjonspunkterForSteg = [],
   arbeidsforhold = [],
   arbeidsgiverOpplysningerPerId,
-  featureToggles,
-}) => {
+}: ÅrsakvantumIndexProps) => {
   const { sisteUttaksplan } = årskvantum;
   const aktivitetsstatuser = alleKodeverk[kodeverkTyper.AKTIVITET_STATUS];
 
@@ -79,12 +76,12 @@ const ÅrskvantumIndex: FunctionComponent<ÅrsakvantumIndexProps> = ({
           behandlingId={behandling.id}
           behandlingVersjon={behandling.versjon}
           submitCallback={submitCallback}
-          aksjonspunkterForSteg={aksjonspunkterForSteg}
+          aksjonspunkterForSteg={aksjonspunkter}
           isAksjonspunktOpen={isAksjonspunktOpen && !visSaerligSmittevernAksjonspunkt}
         />
       )}
 
-      {featureToggles?.SAERLIGSMITTEVERNAKSJONSPUNKT && visSaerligSmittevernAksjonspunkt && (
+      {visSaerligSmittevernAksjonspunkt && (
         <SaerligeSmittevernhensynMikrofrontend
           {...{
             submitCallback,

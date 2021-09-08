@@ -1,6 +1,6 @@
 import Kodeverk from './kodeverkTsType';
 
-type Risikoklassifisering = Readonly<{
+export type Risikoklassifisering = Readonly<{
   kontrollresultat: Kodeverk;
   faresignalVurdering?: Kodeverk;
   iayFaresignaler?: {

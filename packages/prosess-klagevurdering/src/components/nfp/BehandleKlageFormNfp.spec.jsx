@@ -1,14 +1,14 @@
 import React from 'react';
-import { intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import { expect } from 'chai';
 import sinon from 'sinon';
 
+import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import klageVurdering from '@fpsak-frontend/kodeverk/src/klageVurdering';
 import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
 import { BehandleKlageFormNfpImpl } from './BehandleKlageFormNfp';
 import TempSaveAndPreviewKlageLink from '../felles/TempSaveAndPreviewKlageLink';
-import shallowWithIntl from '../../../i18n';
+import shallowWithIntl, { intlMock } from '../../../i18n';
 
 describe('<BehandleKlageFormNfpImpl>', () => {
   const sprakkode = {
@@ -23,6 +23,7 @@ describe('<BehandleKlageFormNfpImpl>', () => {
   it('skal vise lenke til forhåndsvis brev når fritekst er fylt, og klagevurdering valgt', () => {
     const wrapper = shallowWithIntl(
       <BehandleKlageFormNfpImpl
+        fagsak={{ sakstype: { kode: fagsakYtelseType.OMSORGSPENGER } }}
         readOnly={false}
         readOnlySubmitButton
         aksjonspunktCode={aksjonspunktCodes.BEHANDLE_KLAGE_NFP}
@@ -45,6 +46,7 @@ describe('<BehandleKlageFormNfpImpl>', () => {
   it('skal ikke vise lenke til forhåndsvis brev når fritekst fylt, og klagevurdering ikke valgt', () => {
     const wrapper = shallowWithIntl(
       <BehandleKlageFormNfpImpl
+        fagsak={{ sakstype: { kode: fagsakYtelseType.OMSORGSPENGER } }}
         readOnly={false}
         readOnlySubmitButton
         formValues={formValues2}
@@ -67,6 +69,7 @@ describe('<BehandleKlageFormNfpImpl>', () => {
   it('skal ikke vise lenke til forhåndsvis brev når fritekst ikke fylt, og klagevurdering valgt', () => {
     const wrapper = shallowWithIntl(
       <BehandleKlageFormNfpImpl
+        fagsak={{ sakstype: { kode: fagsakYtelseType.OMSORGSPENGER } }}
         readOnly={false}
         readOnlySubmitButton
         formValues={formValues3}

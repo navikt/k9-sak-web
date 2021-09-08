@@ -1,4 +1,4 @@
-import React, { FunctionComponent, ReactNode } from 'react';
+import React, { ReactNode } from 'react';
 import { injectIntl, WrappedComponentProps } from 'react-intl';
 import { Normaltekst, Systemtittel } from 'nav-frontend-typografi';
 import { EtikettInfo } from 'nav-frontend-etiketter';
@@ -28,7 +28,7 @@ interface OwnProps {
  *
  * Presentasjonskomponent. Viser fagsakinformasjon og knapper for å endre status eller lukke sak.
  */
-export const FagsakProfile: FunctionComponent<OwnProps & WrappedComponentProps> = ({
+export const FagsakProfile = ({
   saksnummer,
   fagsakYtelseType,
   fagsakStatus,
@@ -36,7 +36,7 @@ export const FagsakProfile: FunctionComponent<OwnProps & WrappedComponentProps> 
   renderBehandlingVelger,
   dekningsgrad,
   intl,
-}) => (
+}: OwnProps & WrappedComponentProps) => (
   <>
     <FlexContainer>
       <FlexRow spaceBetween alignItemsToBaseline>

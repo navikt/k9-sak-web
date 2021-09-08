@@ -48,6 +48,7 @@ const VedtakPanels = ({
   tilgjengeligeVedtaksbrev,
   informasjonsbehovVedtaksbrev,
   dokumentdata,
+  fritekstdokumenter,
 }) => {
   const bg = Array.isArray(beregningsgrunnlag) ? beregningsgrunnlag.filter(Boolean) : [];
   if (behandlingTypeKode === behandlingType.REVURDERING && Array.isArray(bg) && bg.length) {
@@ -117,6 +118,7 @@ const VedtakPanels = ({
       tilgjengeligeVedtaksbrev={tilgjengeligeVedtaksbrev}
       informasjonsbehovVedtaksbrev={informasjonsbehovVedtaksbrev}
       dokumentdata={dokumentdata}
+      fritekstdokumenter={fritekstdokumenter}
     />
   );
 };
@@ -152,6 +154,7 @@ VedtakPanels.propTypes = {
     informasjonsbehov: PropTypes.arrayOf(PropTypes.shape({ type: PropTypes.string })),
   }),
   dokumentdata: PropTypes.shape(),
+  fritekstdokumenter: PropTypes.arrayOf(PropTypes.shape()),
 };
 
 VedtakPanels.defaultProps = {

@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useMemo, useCallback, useState, Fragment } from 'react';
+import React, { useMemo, useCallback, useState, Fragment } from 'react';
 import { createIntl, createIntlCache, RawIntlProvider, FormattedMessage } from 'react-intl';
 import { Column, Row } from 'nav-frontend-grid';
 import Tabs from 'nav-frontend-tabs';
@@ -34,7 +34,7 @@ interface OwnProps {
   useMultipleRestApi: (endpoints: EndpointData[], options: Options) => RestApiData<any>;
 }
 
-const InngangsvilkarPanel: FunctionComponent<OwnProps> = ({
+const InngangsvilkarPanel = ({
   behandling,
   alleKodeverk,
   prosessStegData,
@@ -42,7 +42,7 @@ const InngangsvilkarPanel: FunctionComponent<OwnProps> = ({
   apentFaktaPanelInfo,
   oppdaterProsessStegOgFaktaPanelIUrl,
   useMultipleRestApi,
-}) => {
+}: OwnProps) => {
   const [visAllePerioder, setVisAllePerioder] = useState<boolean>(false);
   const filteredPanels = prosessStegData.filter(stegData => stegData.getKomponentData);
 

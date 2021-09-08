@@ -1,6 +1,6 @@
 import { ReactNode } from 'react';
 
-import { Aksjonspunkt, Vilkar, Behandling } from '@k9-sak-web/types';
+import { Aksjonspunkt, Fagsak, Vilkar, Behandling, FeatureToggles } from '@k9-sak-web/types';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 
 /**
@@ -76,14 +76,22 @@ export abstract class ProsessStegPanelDef {
     this.getOverstyringspanelDef() &&
     !this.getAksjonspunktKoder().some(ac => aksjonspunkter.some(a => a.definisjon.kode === ac));
 
-  public skalVisePanel = (behandling: Behandling, aksjonspunkter: Aksjonspunkt[], vilkar: Vilkar[]) => {
+  public skalVisePanel = (
+    fagsak: Fagsak,
+    behandling: Behandling,
+    aksjonspunkter: Aksjonspunkt[],
+    vilkar: Vilkar[],
+    featureToggles: FeatureToggles,
+  ) => {
     const panelDef = this.skalBrukeOverstyringspanel(aksjonspunkter) ? this.getOverstyringspanelDef() : this;
 
     const data = {
       behandling,
+      fagsak,
       aksjonspunktDefKoderForSteg: panelDef.getAksjonspunktKoder(),
       aksjonspunkterForSteg: this.finnAksjonspunkterForSteg(aksjonspunkter),
       vilkarForSteg: this.finnVilkarForSteg(vilkar),
+      featureToggles,
     };
 
     if (panelDef.getOverstyrVisningAvKomponent(data)) {
@@ -133,8 +141,16 @@ export abstract class ProsessStegDef {
    */
   public abstract getPanelDefinisjoner(): ProsessStegPanelDef[];
 
-  public skalViseProsessSteg = (behandling: Behandling, aksjonspunkter: Aksjonspunkt[], vilkar: Vilkar[]) =>
-    this.getPanelDefinisjoner().some(panelDef => panelDef.skalVisePanel(behandling, aksjonspunkter, vilkar));
+  public skalViseProsessSteg = (
+    fagsak: Fagsak,
+    behandling: Behandling,
+    aksjonspunkter: Aksjonspunkt[],
+    vilkar: Vilkar[],
+    featureToggles: FeatureToggles,
+  ) =>
+    this.getPanelDefinisjoner().some(panelDef =>
+      panelDef.skalVisePanel(fagsak, behandling, aksjonspunkter, vilkar, featureToggles),
+    );
 
   public harMinstEttApentAksjonspunkt = (aksjonspunkter, overstyrteAksjonspunktKoder) =>
     this.getPanelDefinisjoner().some(panelDef =>

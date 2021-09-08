@@ -1,23 +1,22 @@
 import React from 'react';
 import { expect } from 'chai';
-import { intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import faktaOmBeregningTilfelle from '@fpsak-frontend/kodeverk/src/faktaOmBeregningTilfelle';
 import aktivitetStatuser from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import avklaringsbehovCodes from '@fpsak-frontend/kodeverk/src/beregningAvklaringsbehovCodes';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { isRequiredMessage } from '@fpsak-frontend/utils';
 import { MockFieldsWithContent } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
 import { Table } from '@fpsak-frontend/shared-components';
-import { lagStateMedAksjonspunkterOgBeregningsgrunnlag } from '../beregning-test-helper';
+import { lagStateMedAvklaringsbehovOgBeregningsgrunnlag } from '../beregning-test-helper';
 import { AndelRow } from './InntektFieldArrayRow';
 import SummaryRow from './SummaryRow';
 import InntektFieldArray, { InntektFieldArrayImpl, mapStateToProps } from './InntektFieldArray';
 import { formNameVurderFaktaBeregning } from '../BeregningFormUtils';
-import shallowWithIntl from '../../../i18n';
+import shallowWithIntl, { intlMock } from '../../../i18n';
 
-const aksjonspunkter = [
+const avklaringsbehov = [
   {
-    definisjon: { kode: aksjonspunktCodes.VURDER_FAKTA_FOR_ATFL_SN },
+    definisjon: { kode: avklaringsbehovCodes.VURDER_FAKTA_FOR_ATFL_SN },
     status: { kode: 'OPPR' },
   },
 ];
@@ -55,7 +54,7 @@ const ownProps = {
   behandlingVersjon,
   alleKodeverk,
   arbeidsgiverOpplysningerPerId: {},
-  isAksjonspunktClosed: false,
+  isAvklaringsbehovClosed: false,
 };
 
 describe('<InntektFieldArray>', () => {
@@ -67,7 +66,7 @@ describe('<InntektFieldArray>', () => {
       beregningsgrunnlagPeriode: [{}],
       faktaOmBeregning,
     };
-    const state = lagStateMedAksjonspunkterOgBeregningsgrunnlag(aksjonspunkter, bg, formNameVurderFaktaBeregning);
+    const state = lagStateMedAvklaringsbehovOgBeregningsgrunnlag(avklaringsbehov, bg, formNameVurderFaktaBeregning);
     const props = mapStateToProps(state, { ...ownProps, beregningsgrunnlag: bg });
     expect(props.isBeregningFormDirty).to.eql(false);
     expect(props.erKunYtelse).to.eql(false);
@@ -81,7 +80,7 @@ describe('<InntektFieldArray>', () => {
       beregningsgrunnlagPeriode: [{}],
       faktaOmBeregning,
     };
-    const state = lagStateMedAksjonspunkterOgBeregningsgrunnlag(aksjonspunkter, bg, formNameVurderFaktaBeregning);
+    const state = lagStateMedAvklaringsbehovOgBeregningsgrunnlag(avklaringsbehov, bg, formNameVurderFaktaBeregning);
     const props = mapStateToProps(state, { ...ownProps, beregningsgrunnlag: bg });
     expect(props.erKunYtelse).to.eql(true);
   });
@@ -110,8 +109,8 @@ describe('<InntektFieldArray>', () => {
     beregningsgrunnlagPeriode: [{}],
     faktaOmBeregning,
   };
-  const state = lagStateMedAksjonspunkterOgBeregningsgrunnlag(
-    aksjonspunkter,
+  const state = lagStateMedAvklaringsbehovOgBeregningsgrunnlag(
+    avklaringsbehov,
     bg,
     formNameVurderFaktaBeregning,
     initial,

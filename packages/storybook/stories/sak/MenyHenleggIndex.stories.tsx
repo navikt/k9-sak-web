@@ -7,6 +7,7 @@ import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import MenyHenleggIndex from '@fpsak-frontend/sak-meny-henlegg';
 
+import KlagePart from '@k9-sak-web/behandling-klage/src/types/klagePartTsType';
 import withReduxProvider from '../../decorators/withRedux';
 
 export default {
@@ -49,11 +50,6 @@ export const visMenyForÅHenleggeEnBehandling = () => (
         navn: 'Henlagt feilopprettet',
       },
       {
-        kode: behandlingResultatType.HENLAGT_SOKNAD_MANGLER,
-        kodeverk: 'RESULTAT_TYPE',
-        navn: 'Henlagt soknad mangler',
-      },
-      {
         kode: behandlingResultatType.MANGLER_BEREGNINGSREGLER,
         kodeverk: 'RESULTAT_TYPE',
         navn: 'Mangler beregningsregler',
@@ -61,5 +57,6 @@ export const visMenyForÅHenleggeEnBehandling = () => (
     ]}
     gaaTilSokeside={action('button-click')}
     lukkModal={action('button-click')}
+    hentMottakere={action('button-click') as () => Promise<KlagePart[]>}
   />
 );

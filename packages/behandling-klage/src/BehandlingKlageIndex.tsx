@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useEffect, useState, useCallback } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 
 import { Rettigheter, ReduxFormStateCleaner, useSetBehandlingVedEndring } from '@k9-sak-web/behandling-felles';
 import {
@@ -8,6 +8,7 @@ import {
   Kodeverk,
   KodeverkMedNavn,
   ArbeidsgiverOpplysningerWrapper,
+  FeatureToggles,
 } from '@k9-sak-web/types';
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
 import { RestApiState, useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
@@ -19,7 +20,6 @@ import { restApiKlageHooks, requestKlageApi, KlageBehandlingApiKeys } from './da
 const klageData = [
   { key: KlageBehandlingApiKeys.AKSJONSPUNKTER },
   { key: KlageBehandlingApiKeys.KLAGE_VURDERING },
-  { key: KlageBehandlingApiKeys.PERSONOPPLYSNINGER },
   { key: KlageBehandlingApiKeys.PARTER_MED_KLAGERETT },
   { key: KlageBehandlingApiKeys.VALGT_PART_MED_KLAGERETT },
 ];
@@ -48,9 +48,10 @@ interface OwnProps {
   }[];
   arbeidsgiverOpplysninger?: ArbeidsgiverOpplysningerWrapper;
   setRequestPendingMessage: (message: string) => void;
+  featureToggles: FeatureToggles;
 }
 
-const BehandlingKlageIndex: FunctionComponent<OwnProps> = ({
+const BehandlingKlageIndex = ({
   behandlingEventHandler,
   behandlingId,
   oppdaterBehandlingVersjon,
@@ -64,7 +65,8 @@ const BehandlingKlageIndex: FunctionComponent<OwnProps> = ({
   alleBehandlinger,
   arbeidsgiverOpplysninger,
   setRequestPendingMessage,
-}) => {
+  featureToggles,
+}: OwnProps) => {
   const [nyOgForrigeBehandling, setBehandlinger] = useState<{ current?: Behandling; previous?: Behandling }>({
     current: undefined,
     previous: undefined,
@@ -151,6 +153,7 @@ const BehandlingKlageIndex: FunctionComponent<OwnProps> = ({
         alleBehandlinger={alleBehandlinger}
         arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysninger ? arbeidsgiverOpplysninger.arbeidsgivere : {}}
         setBehandling={setBehandling}
+        featureToggles={featureToggles}
       />
     </>
   );

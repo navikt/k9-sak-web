@@ -9,10 +9,12 @@
     "@fpsak-frontend/kodeverk": "1.0.0",
     "@fpsak-frontend/shared-components": "1.0.0",
     "@fpsak-frontend/utils": "1.0.0",
-    "nav-frontend-core": "5.1.1",
-    "nav-frontend-typografi": "2.0.37",
-    "react": "^16.14.0",
-    "react-intl": "^5.10.11"
+    "@navikt/k9-react-components": "^0.1.5",
+    "classnames": "^2.3.1",
+    "nav-frontend-core": "6.0.1",
+    "nav-frontend-typografi": "4.0.1",
+    "react": "^17.0.2",
+    "react-intl": "^5.20.10"
   },
   "devDependencies": {
     "@fpsak-frontend/utils-test": "1.0.0",

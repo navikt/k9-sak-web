@@ -12,6 +12,7 @@ import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus'
 import tilbakekrevingVidereBehandling from '@fpsak-frontend/kodeverk/src/tilbakekrevingVidereBehandling';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { TIDENES_ENDE, getKodeverknavnFn } from '@fpsak-frontend/utils';
+import {erFagytelseTypeUtvidetRett} from '@k9-sak-web/behandling-utvidet-rett/src/utils/utvidetRettHjelpfunksjoner';
 
 const tilbakekrevingMedInntrekk = (tilbakekrevingKode, simuleringResultat) =>
   tilbakekrevingKode === tilbakekrevingVidereBehandling.TILBAKEKR_OPPRETT &&
@@ -31,6 +32,29 @@ export const findTilbakekrevingText = createSelector(
   },
 );
 
+export const findDelvisInnvilgetResultatText = (behandlingResultatTypeKode, ytelseType) => {
+  if (behandlingResultatTypeKode === behandlingResultatType.KLAGE_YTELSESVEDTAK_STADFESTET) {
+    return 'VedtakForm.ResultatOpprettholdVedtak';
+  }
+  if (behandlingResultatTypeKode === behandlingResultatType.KLAGE_MEDHOLD) {
+    return 'VedtakForm.ResultatKlageMedhold';
+  }
+
+  if (ytelseType === fagsakYtelseType.OMSORGSPENGER) {
+    return 'VedtakForm.VilkarStatusDelvisInnvilgetOmsorgspenger';
+  }
+
+  if (ytelseType === fagsakYtelseType.FRISINN) {
+    return 'VedtakForm.VilkarStatusDelvisInnvilgetFrisinn';
+  }
+
+  if (erFagytelseTypeUtvidetRett(ytelseType)) {
+    return 'VedtakForm.VilkarStatusDelvisInnvilgetUtvidetRett';
+  }
+
+  return 'VedtakForm.VilkarStatusDelvisInnvilgetPleiepenger';
+};
+
 export const findInnvilgetResultatText = (behandlingResultatTypeKode, ytelseType) => {
   if (behandlingResultatTypeKode === behandlingResultatType.KLAGE_YTELSESVEDTAK_STADFESTET) {
     return 'VedtakForm.ResultatOpprettholdVedtak';
@@ -47,10 +71,7 @@ export const findInnvilgetResultatText = (behandlingResultatTypeKode, ytelseType
     return 'VedtakForm.VilkarStatusInnvilgetFrisinn';
   }
 
-  if (
-    ytelseType === fagsakYtelseType.OMSORGSPENGER_MIDLERTIDIG_ALENE ||
-    ytelseType === fagsakYtelseType.OMSORGSPENGER_KRONISK_SYKT_BARN
-  ) {
+  if (erFagytelseTypeUtvidetRett(ytelseType)) {
     return 'VedtakForm.VilkarStatusInnvilgetUtvidetRett';
   }
 
@@ -69,10 +90,11 @@ export const findAvslagResultatText = (behandlingResultatTypeKode, ytelseType) =
     return 'VedtakForm.OmsorgspengerIkkeInnvilget';
   }
 
-  if (
-    ytelseType === fagsakYtelseType.OMSORGSPENGER_KRONISK_SYKT_BARN ||
-    ytelseType === fagsakYtelseType.OMSORGSPENGER_MIDLERTIDIG_ALENE
-  ) {
+  if (ytelseType === fagsakYtelseType.OMSORGSPENGER) {
+    return 'VedtakForm.OmsorgspengerIkkeInnvilget';
+  }
+
+  if (erFagytelseTypeUtvidetRett(ytelseType)) {
     return 'VedtakForm.UtvidetRettIkkeInnvilget';
   }
 

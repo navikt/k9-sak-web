@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from 'react';
+import React from 'react';
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 import { decodeHtmlEntity, hasValidText, maxLength, minLength, required } from '@fpsak-frontend/utils';
 import { TextAreaField } from '@fpsak-frontend/form';
@@ -37,22 +37,17 @@ type TransformedValues = {
   begrunnelse: string;
 };
 
-interface StaticFunctions {
-  buildInitialValues: (aksjonspunkt: Aksjonspunkt[] | Aksjonspunkt, begrunnelseFieldName?: string) => FormValues;
-  transformValues: (values: FormValues, name?: string) => TransformedValues;
-}
-
 /**
  * FaktaBegrunnelseTextField
  */
-const FaktaBegrunnelseTextField: FunctionComponent<OwnProps> & StaticFunctions = ({
+const FaktaBegrunnelseTextField = ({
   isReadOnly,
   isSubmittable,
   hasBegrunnelse,
   label,
   hasVurderingText,
   name,
-}) => {
+}: OwnProps) => {
   const code = hasVurderingText ? 'FaktaBegrunnelseTextField.Vurdering' : 'FaktaBegrunnelseTextField.BegrunnEndringene';
   const textAreaLabel = label || { id: code };
   return (

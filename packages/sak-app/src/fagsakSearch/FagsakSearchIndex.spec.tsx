@@ -10,7 +10,7 @@ import FagsakSearchIndex from './FagsakSearchIndex';
 const mockHistoryPush = jest.fn();
 
 jest.mock('react-router-dom', () => ({
-  ...jest.requireActual('react-router-dom'),
+  ...(jest.requireActual('react-router-dom') as Record<string, unknown>),
   useHistory: () => ({
     push: mockHistoryPush,
   }),

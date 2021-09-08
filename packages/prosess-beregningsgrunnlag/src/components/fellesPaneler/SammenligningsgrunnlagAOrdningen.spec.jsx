@@ -1,11 +1,14 @@
 import React from 'react';
 import { expect } from 'chai';
-import { intlMock, mountWithIntl, shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import moment from 'moment';
+
 import { formatCurrencyNoKr, ISO_DATE_FORMAT } from '@fpsak-frontend/utils';
 import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
+
 import SammenligningsgrunnlagAOrdningen from './SammenligningsgrunnlagAOrdningen';
 import Lesmerpanel2 from '../redesign/LesmerPanel';
+
+import shallowWithIntl, { intlMock, mountWithIntl } from '../../../i18n';
 
 const relevanteStatuser = {
   isArbeidstaker: true,
@@ -274,8 +277,8 @@ describe('<SammenligningsgrunnlagFraA-Ordningen>', () => {
     const lesmer = wrapper.find(Lesmerpanel2);
     const rows = lesmer.find('FlexRow');
     expect(rows).to.have.length(2);
-    const headerTitle = wrapper.find('FormattedMessage').first();
-    const headerIngress = wrapper.find('FormattedMessage').at(1);
+    const headerTitle = wrapper.find('MemoizedFormattedMessage').first();
+    const headerIngress = wrapper.find('MemoizedFormattedMessage').at(1);
     expect(headerTitle.props().id).to.equal('Beregningsgrunnlag.SammenligningsGrunnlaAOrdningen.Tittel');
     expect(headerIngress.props().id).to.equal('Beregningsgrunnlag.SammenligningsGrunnlaAOrdningen.Ingress.AT_FL');
     const underTekster = wrapper.find('Undertekst');
@@ -329,7 +332,7 @@ describe('<SammenligningsgrunnlagFraA-Ordningen>', () => {
       expteller += 1;
     }
 
-    const sumTitle = wrapper.find('FormattedMessage').at(2);
+    const sumTitle = wrapper.find('MemoizedFormattedMessage').at(2);
     expect(sumTitle.props().id).to.equal('Beregningsgrunnlag.SammenligningsGrunnlaAOrdningen.SumTittel');
     const sumATAndeler = wrapper.find('Element').at(1);
     const sumFLAndeler = wrapper.find('Element').at(2);
@@ -351,8 +354,8 @@ describe('<SammenligningsgrunnlagFraA-Ordningen>', () => {
     const lesmer = wrapper.find(Lesmerpanel2);
     const rows = lesmer.find('FlexRow');
     expect(rows).to.have.length(2);
-    const headerTitle = wrapper.find('FormattedMessage').first();
-    const headerIngress = wrapper.find('FormattedMessage').at(1);
+    const headerTitle = wrapper.find('MemoizedFormattedMessage').first();
+    const headerIngress = wrapper.find('MemoizedFormattedMessage').at(1);
     expect(headerTitle.props().id).to.equal('Beregningsgrunnlag.SammenligningsGrunnlaAOrdningen.Tittel');
     expect(headerIngress.props().id).to.equal('Beregningsgrunnlag.SammenligningsGrunnlaAOrdningen.Ingress.FL');
     const underTekster = wrapper.find('Undertekst');
@@ -395,7 +398,7 @@ describe('<SammenligningsgrunnlagFraA-Ordningen>', () => {
       }
       expTeller += 1;
     }
-    const sumTitle = wrapper.find('FormattedMessage').at(2);
+    const sumTitle = wrapper.find('MemoizedFormattedMessage').at(2);
     expect(sumTitle.props().id).to.equal('Beregningsgrunnlag.SammenligningsGrunnlaAOrdningen.SumTittel');
     const sumFLAndeler = wrapper.find('Element').at(1);
     expect(sumFLAndeler.children().at(0).text()).to.equal(formatCurrencyNoKr(espectedSumFLAndeler));
@@ -417,8 +420,8 @@ describe('<SammenligningsgrunnlagFraA-Ordningen>', () => {
     const lesmer = wrapper.find(Lesmerpanel2);
     const rows = lesmer.find('FlexRow');
     expect(rows).to.have.length(2);
-    const headerTitle = wrapper.find('FormattedMessage').first();
-    const headerIngress = wrapper.find('FormattedMessage').at(1);
+    const headerTitle = wrapper.find('MemoizedFormattedMessage').first();
+    const headerIngress = wrapper.find('MemoizedFormattedMessage').at(1);
     expect(headerTitle.props().id).to.equal('Beregningsgrunnlag.SammenligningsGrunnlaAOrdningen.Tittel');
     expect(headerIngress.props().id).to.equal('Beregningsgrunnlag.SammenligningsGrunnlaAOrdningen.Ingress.AT');
     const underTekster = wrapper.find('Undertekst');
@@ -462,7 +465,7 @@ describe('<SammenligningsgrunnlagFraA-Ordningen>', () => {
       }
       expTeller += 1;
     }
-    const sumTitle = wrapper.find('FormattedMessage').at(2);
+    const sumTitle = wrapper.find('MemoizedFormattedMessage').at(2);
     expect(sumTitle.props().id).to.equal('Beregningsgrunnlag.SammenligningsGrunnlaAOrdningen.SumTittel');
     const sumATAndeler = wrapper.find('Element').at(1);
     expect(sumATAndeler.children().at(0).text()).to.equal(formatCurrencyNoKr(espectedSumATAndeler));

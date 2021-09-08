@@ -1,4 +1,4 @@
-import React, { FunctionComponent, ReactNode } from 'react';
+import React, { ReactNode } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { Element } from 'nav-frontend-typografi';
 
@@ -12,7 +12,7 @@ interface OwnPropsWrapper {
   className: string;
 }
 
-const Wrapper: FunctionComponent<OwnPropsWrapper> = ({ withoutBorder, error, children, className }) => (
+const Wrapper = ({ withoutBorder, error, children, className }: OwnPropsWrapper) => (
   <>
     {withoutBorder ? (
       children
@@ -40,13 +40,13 @@ interface OwnPropsFaktaGruppe {
  * Presentasjonskomponent. Grupperingsboks til bruk i faktapaneler, med eller uten ramme. Man kan også spesifisere hvilket aksjonspunkt
  * gruppen hører til, slik at gruppen får rød ramme hvis beslutter har lagt inn merknader.
  */
-const FaktaGruppe: FunctionComponent<OwnPropsFaktaGruppe> = ({
+const FaktaGruppe = ({
   merknaderFraBeslutter,
   titleCode = '',
   children,
   withoutBorder = false,
   className = '',
-}) => {
+}: OwnPropsFaktaGruppe) => {
   const error = !!(merknaderFraBeslutter && merknaderFraBeslutter.notAccepted);
   return (
     <Wrapper withoutBorder={withoutBorder && !error} error={error} className={className}>

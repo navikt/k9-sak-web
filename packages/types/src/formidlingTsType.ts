@@ -1,6 +1,6 @@
 import Kodeverk from './kodeverkTsType';
 
-type ForhåndsvisRequest = Readonly<{
+export type ForhåndsvisRequest = Readonly<{
   eksternReferanse: string;
   ytelseType: any;
   saksnummer: string;
@@ -9,5 +9,12 @@ type ForhåndsvisRequest = Readonly<{
   dokumentMal: Kodeverk;
   dokumentdata?: any;
 }>;
+
+export type Fritekstbrev = Readonly<{
+  fritekstbrev: {
+    brødtekst: string,
+    overskrift: string,
+  }
+}>
 
 export default ForhåndsvisRequest;

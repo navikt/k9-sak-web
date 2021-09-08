@@ -14,8 +14,8 @@ import {
 } from '@fpsak-frontend/utils';
 import { InputField, RadioGroupField, RadioOption } from '@fpsak-frontend/form';
 
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
+import avklaringsbehovCodes from '@fpsak-frontend/kodeverk/src/beregningAvklaringsbehovCodes';
+import { isAvklaringsbehovOpen } from '@fpsak-frontend/kodeverk/src/beregningAvklaringsbehovStatus';
 import { Normaltekst } from 'nav-frontend-typografi';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
@@ -27,7 +27,7 @@ const minLength3 = minLength(3);
 export const begrunnelseFieldname = 'varigEndringNyoppstartetBegrunnelse';
 export const varigEndringRadioname = 'erVarigEndretNaering';
 export const fastsettInntektFieldname = 'bruttoBeregningsgrunnlag';
-const { VURDER_VARIG_ENDRET_ELLER_NYOPPSTARTET_NAERING_SELVSTENDIG_NAERINGSDRIVENDE } = aksjonspunktCodes;
+const { VURDER_VARIG_ENDRET_ELLER_NYOPPSTARTET_NAERING_SELVSTENDIG_NAERINGSDRIVENDE } = avklaringsbehovCodes;
 
 /**
  * VurderVarigEndretEllerNyoppstartetSN
@@ -105,7 +105,6 @@ export const VurderVarigEndretEllerNyoppstartetSN = ({
                   bredde="S"
                   validate={[required]}
                   parse={parseCurrencyInput}
-                  className={styles['input--xs']}
                   readOnly={readOnly}
                 />
               </div>
@@ -149,17 +148,17 @@ VurderVarigEndretEllerNyoppstartetSN.defaultProps = {
 
 const verdiErSatt = verdi => typeof verdi === 'number';
 
-VurderVarigEndretEllerNyoppstartetSN.buildInitialValues = (relevanteAndeler, gjeldendeAksjonspunkter) => {
-  if (relevanteAndeler.length === 0 || !gjeldendeAksjonspunkter || gjeldendeAksjonspunkter.length === 0) {
+VurderVarigEndretEllerNyoppstartetSN.buildInitialValues = (relevanteAndeler, avklaringsbehov) => {
+  if (relevanteAndeler.length === 0 || !avklaringsbehov || avklaringsbehov.length === 0) {
     return undefined;
   }
   const snAndel = relevanteAndeler.find(
     andel => andel.aktivitetStatus.kode === aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE,
   );
-  const varigEndretNaeringAP = gjeldendeAksjonspunkter.find(
+  const varigEndretNaeringAP = avklaringsbehov.find(
     ap => ap.definisjon.kode === VURDER_VARIG_ENDRET_ELLER_NYOPPSTARTET_NAERING_SELVSTENDIG_NAERINGSDRIVENDE,
   );
-  const varigEndringValg = isAksjonspunktOpen(varigEndretNaeringAP.status.kode)
+  const varigEndringValg = isAvklaringsbehovOpen(varigEndretNaeringAP.status.kode)
     ? undefined
     : verdiErSatt(snAndel.overstyrtPrAar);
   if (varigEndretNaeringAP) {

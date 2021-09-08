@@ -1,12 +1,11 @@
 import React from 'react';
-import { intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import { expect } from 'chai';
 
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { FormkravKlageForm } from './FormkravKlageForm';
-import shallowWithIntl from '../../i18n';
+import shallowWithIntl, { intlMock } from '../../i18n';
 
 describe('<FormkravKlageForm>', () => {
   const behandlinger = [
@@ -69,6 +68,7 @@ describe('<FormkravKlageForm>', () => {
             },
           ],
         }}
+        fagsakPerson={{}}
         arbeidsgiverOpplysningerPerId={{}}
         parterMedKlagerett={[]}
       />,

@@ -13,6 +13,7 @@ export enum PleiepengerBehandlingApiKeys {
   STONADSKONTOER_GITT_UTTAKSPERIODER = 'STONADSKONTOER_GITT_UTTAKSPERIODER',
   AKSJONSPUNKTER = 'AKSJONSPUNKTER',
   VILKAR = 'VILKAR',
+  SOKNADSFRIST_STATUS = 'SOKNADSFRIST_STATUS',
   PERSONOPPLYSNINGER = 'PERSONOPPLYSNINGER',
   SIMULERING_RESULTAT = 'SIMULERING_RESULTAT',
   TILBAKEKREVINGVALG = 'TILBAKEKREVINGVALG',
@@ -46,6 +47,7 @@ export enum PleiepengerBehandlingApiKeys {
   DOKUMENTDATA_HENTE = 'DOKUMENTDATA_HENTE',
   ARBEIDSFORHOLD = 'ARBEIDSFORHOLD',
   UTTAK = 'UTTAK',
+  FRITEKSTDOKUMENTER = 'FRITEKSTDOKUMENTER',
 }
 
 const endpoints = new RestApiConfigBuilder()
@@ -55,6 +57,7 @@ const endpoints = new RestApiConfigBuilder()
   .withRel('beregningsresultat-utbetalt', PleiepengerBehandlingApiKeys.BEREGNINGSRESULTAT_UTBETALING)
   .withRel('aksjonspunkter', PleiepengerBehandlingApiKeys.AKSJONSPUNKTER)
   .withRel('vilkar-v3', PleiepengerBehandlingApiKeys.VILKAR)
+  .withRel('soknadsfrist-status', PleiepengerBehandlingApiKeys.SOKNADSFRIST_STATUS)
   .withRel('soeker-personopplysninger', PleiepengerBehandlingApiKeys.PERSONOPPLYSNINGER)
   .withRel('simuleringResultat', PleiepengerBehandlingApiKeys.SIMULERING_RESULTAT)
   .withRel('tilbakekrevingvalg', PleiepengerBehandlingApiKeys.TILBAKEKREVINGVALG)
@@ -78,6 +81,7 @@ const endpoints = new RestApiConfigBuilder()
   .withRel('tilgjengelige-vedtaksbrev', PleiepengerBehandlingApiKeys.TILGJENGELIGE_VEDTAKSBREV)
   .withRel('informasjonsbehov-vedtaksbrev', PleiepengerBehandlingApiKeys.INFORMASJONSBEHOV_VEDTAKSBREV)
   .withRel('pleiepenger-sykt-barn-uttaksplan', PleiepengerBehandlingApiKeys.UTTAK)
+  .withRel('pleiepenger-fritekstdokumenter', PleiepengerBehandlingApiKeys.FRITEKSTDOKUMENTER)
 
   // operasjoner
   .withRel('dokumentdata-lagre', PleiepengerBehandlingApiKeys.DOKUMENTDATA_LAGRE)

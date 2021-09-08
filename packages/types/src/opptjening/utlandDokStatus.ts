@@ -1,4 +1,4 @@
-type UtlandDokStatus = Readonly<{
+export type UtlandDokStatus = Readonly<{
   dokStatus: string;
 }>;
 

@@ -1,4 +1,4 @@
-import React, { ReactNode, FunctionComponent } from 'react';
+import React, { ReactNode } from 'react';
 import { injectIntl, WrappedComponentProps } from 'react-intl';
 import { Normaltekst } from 'nav-frontend-typografi';
 
@@ -20,7 +20,7 @@ interface OwnProps {
  * Presentasjonskomponent. Viser hjelpetekster som forteller NAV-ansatt hva som må gjøres for
  * å avklare en eller flere aksjonspunkter.
  */
-const AksjonspunktHelpTextHTML: FunctionComponent<OwnProps & WrappedComponentProps> = ({ children, intl }) => {
+const AksjonspunktHelpTextHTML = ({ children, intl }: OwnProps & WrappedComponentProps) => {
   if (!children || (Array.isArray(children) && children.length === 0)) {
     return null;
   }

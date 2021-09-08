@@ -1,17 +1,24 @@
-import React, { FunctionComponent } from 'react';
+import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import moment from 'moment';
-import { PersonCard, Gender } from '@navikt/nap-person-card';
+import { PersonCard, Gender } from '@navikt/k9-react-components';
 
 import { DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils/src/formats';
 import { FlexColumn, FlexContainer, FlexRow } from '@fpsak-frontend/shared-components';
 import navBrukerKjonn from '@fpsak-frontend/kodeverk/src/navBrukerKjonn';
-import { Kodeverk, KodeverkMedNavn, Personopplysninger, FagsakPerson } from '@k9-sak-web/types';
+import {
+  Kodeverk,
+  KodeverkMedNavn,
+  Personopplysninger,
+  FagsakPerson,
+  RelatertFagsak as RelatertFagsakType,
+} from '@k9-sak-web/types';
 
 import VisittkortDetaljerPopup from './VisittkortDetaljerPopup';
 import VisittkortLabels from './VisittkortLabels';
 
 import styles from './visittkortPanel.less';
+import RelatertFagsak from './RelatertFagsak';
 
 const utledKjonn = (kjonn: Kodeverk): Gender => {
   if (kjonn.kode === navBrukerKjonn.KVINNE) {
@@ -26,15 +33,17 @@ interface OwnProps {
   sprakkode?: Kodeverk;
   personopplysninger?: Personopplysninger;
   harTilbakekrevingVerge?: boolean;
+  relaterteFagsaker: RelatertFagsakType;
 }
 
-const VisittkortPanel: FunctionComponent<OwnProps> = ({
+const VisittkortPanel = ({
   fagsakPerson,
   personopplysninger,
   alleKodeverk,
   sprakkode,
   harTilbakekrevingVerge,
-}) => {
+  relaterteFagsaker,
+}: OwnProps) => {
   if (!personopplysninger && !harTilbakekrevingVerge) {
     return (
       <div className={styles.container}>
@@ -62,7 +71,7 @@ const VisittkortPanel: FunctionComponent<OwnProps> = ({
   }
 
   const soker = personopplysninger;
-  const annenPart = personopplysninger.annenPart ? personopplysninger : personopplysninger.annenPart;
+  const annenPart = typeof personopplysninger.annenPart !== 'undefined' ? personopplysninger.annenPart : null;
   const barnSoktFor = personopplysninger.barnSoktFor?.length > 0 ? personopplysninger.barnSoktFor : null;
 
   return (
@@ -97,22 +106,32 @@ const VisittkortPanel: FunctionComponent<OwnProps> = ({
               />
             </FlexColumn>
           )}
+          <FlexColumn>
+            <RelatertFagsak relaterteFagsaker={relaterteFagsaker} />
+          </FlexColumn>
           {barnSoktFor && (
             <div className={styles.pushRight}>
               {barnSoktFor.map(barn => (
                 <FlexColumn key={barn.aktoerId}>
-                  <PersonCard
-                    name={barn.navn}
-                    fodselsnummer={barn.fnr}
-                    gender={utledKjonn(barn.navBrukerKjonn)}
-                    isChild
-                    childAge={
-                      <FormattedMessage
-                        id="VisittkortBarnInfoFodselPanel.Fodt"
-                        values={{ dato: moment(barn.fodselsdato).format(DDMMYYYY_DATE_FORMAT) }}
-                      />
-                    }
-                  />
+                  <div className={styles.flexContainer}>
+                    <PersonCard
+                      name={barn.navn}
+                      fodselsnummer={barn.fnr}
+                      gender={utledKjonn(barn.navBrukerKjonn)}
+                      isChild
+                      childAge={
+                        <FormattedMessage
+                          id="VisittkortBarnInfoFodselPanel.Fodt"
+                          values={{ dato: moment(barn.fodselsdato).format(DDMMYYYY_DATE_FORMAT) }}
+                        />
+                      }
+                    />
+                    {barn.dodsdato && (
+                      <p className={styles.dødsdatoLabel}>
+                        {`Død ${moment(barn.dodsdato).format(DDMMYYYY_DATE_FORMAT)}`}
+                      </p>
+                    )}
+                  </div>
                 </FlexColumn>
               ))}
             </div>

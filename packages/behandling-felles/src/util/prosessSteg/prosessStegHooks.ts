@@ -3,6 +3,8 @@ import { useState, useMemo, useCallback, useEffect } from 'react';
 import { Behandling, Aksjonspunkt, Vilkar, Fagsak } from '@k9-sak-web/types';
 
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
+import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
+import { prosessStegCodes } from '@k9-sak-web/konstanter';
 import Rettigheter from '../../types/rettigheterTsType';
 import ProsessStegMenyRad from '../../types/prosessStegMenyRadTsType';
 import {
@@ -43,6 +45,8 @@ const useProsessStegPaneler = (
     }
   }, [behandling.versjon]);
 
+  const harSkriverettigheter = rettigheter.writeAccess.isEnabled && rettigheter.writeAccess.employeeHasAccess;
+
   const prosessStegPaneler = useMemo(() => {
     const paneler = utledProsessStegPaneler(
       prosessStegPanelDefinisjoner,
@@ -56,24 +60,38 @@ const useProsessStegPaneler = (
       hasFetchError,
     );
 
+    let stansetAvTidligereAvslag = false;
+
     return paneler.map((panel, index) => {
-      if (!paneler[index - 1] || index === paneler.length - 1) {
+      const forrigePanel = paneler[index - 1];
+      const urlKode = panel.getUrlKode();
+
+      if (
+        !forrigePanel ||
+        urlKode === prosessStegCodes.AVREGNING ||
+        urlKode === prosessStegCodes.SIMULERING ||
+        urlKode === prosessStegCodes.VEDTAK ||
+        urlKode === prosessStegCodes.KLAGE_RESULTAT ||
+        (fagsak.sakstype.kode === fagsakYtelseType.PLEIEPENGER && urlKode === prosessStegCodes.UTTAK)
+      ) {
         return panel;
       }
 
-      const forrigeStatus = paneler[index - 1].getStatus();
+      const forrigeStatus = forrigePanel.getStatus();
 
-      panel.setStansetAvTidligereAvslag(
-        forrigeStatus === vilkarUtfallType.IKKE_OPPFYLT || forrigeStatus === vilkarUtfallType.IKKE_VURDERT,
-      );
+      if (forrigeStatus === vilkarUtfallType.IKKE_OPPFYLT || forrigeStatus === vilkarUtfallType.IKKE_VURDERT) {
+        stansetAvTidligereAvslag = true;
+      }
+
+      panel.setStansetAvTidligereAvslag(stansetAvTidligereAvslag);
 
       return panel;
     });
-  }, [behandling.versjon, overstyrteAksjonspunktKoder]);
+  }, [behandling.versjon, harSkriverettigheter, overstyrteAksjonspunktKoder]);
 
   const valgtPanel = useMemo(
     () => finnValgtPanel(prosessStegPaneler, behandling.behandlingHenlagt, valgtProsessSteg, apentFaktaPanelInfo),
-    [behandling.versjon, valgtProsessSteg, overstyrteAksjonspunktKoder, apentFaktaPanelInfo],
+    [behandling.versjon, harSkriverettigheter, valgtProsessSteg, overstyrteAksjonspunktKoder, apentFaktaPanelInfo],
   );
 
   const urlCode = valgtPanel ? valgtPanel.getUrlKode() : undefined;

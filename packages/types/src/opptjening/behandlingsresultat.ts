@@ -1,6 +1,6 @@
 import Vilkårresultat from './vilkårresultat';
 
-type Behandlingsresultat = Readonly<{
+export type Behandlingsresultat = Readonly<{
   vilkårResultat: {
     [name: string]: Vilkårresultat[];
   };

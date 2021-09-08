@@ -1,4 +1,4 @@
-import React, { useState, FC } from 'react';
+import React, { useState } from 'react';
 import { WrappedComponentProps } from 'react-intl';
 import { FieldArrayFieldsProps, FieldArrayMetaProps } from 'redux-form';
 import { FlexColumn, FlexRow, PeriodFieldArray, Image } from '@fpsak-frontend/shared-components';
@@ -57,7 +57,7 @@ interface OwnProps {
   behandlingVersjon: number;
 }
 
-export const NyAndel: FC<OwnProps & WrappedComponentProps> = ({
+export const NyAndel = ({
   fields,
   meta,
   newArbeidsforholdCallback,
@@ -67,7 +67,7 @@ export const NyAndel: FC<OwnProps & WrappedComponentProps> = ({
   arbeidsgiverOpplysningerPerId,
   behandlingId,
   behandlingVersjon,
-}) => {
+}: OwnProps & WrappedComponentProps) => {
   const [isOpen, setOpen] = useState(false);
   const getKodeverknavn = getKodeverknavnFn(alleKodeverk, kodeverkTyper);
 
@@ -83,6 +83,14 @@ export const NyAndel: FC<OwnProps & WrappedComponentProps> = ({
       >
         {(periodeElementFieldId, index, getRemoveButton) => (
           <FlexRow key={periodeElementFieldId}>
+            <FlexColumn>
+              <InputField
+                label="Til søker"
+                name={`${periodeElementFieldId}.tilSoker`}
+                validate={[required, minValue0, maxValue3999, hasValidDecimal]}
+                format={value => value}
+              />
+            </FlexColumn>
             <FlexColumn>
               <InputField
                 label="Refusjon"

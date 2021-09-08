@@ -1,7 +1,7 @@
 import React, { SetStateAction, useState, useEffect } from 'react';
 import { dateFormat } from '@fpsak-frontend/utils';
 import { Aksjonspunkt, Behandling, KodeverkMedNavn, SubmitCallback, Vilkar } from '@k9-sak-web/types';
-import SideMenu from '@navikt/nap-side-menu';
+import { SideMenu } from '@navikt/k9-react-components';
 import classNames from 'classnames/bind';
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 import messages from '../i18n/nb_NO.json';
