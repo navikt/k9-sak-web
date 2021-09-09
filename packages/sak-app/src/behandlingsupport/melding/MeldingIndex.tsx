@@ -1,29 +1,21 @@
-import React, { useState, useCallback } from 'react';
+import React, { useCallback, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 
 import BehandlingType, { erTilbakekrevingType } from '@fpsak-frontend/kodeverk/src/behandlingType';
 import dokumentMalType from '@fpsak-frontend/kodeverk/src/dokumentMalType';
 import venteArsakType from '@fpsak-frontend/kodeverk/src/venteArsakType';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
-import MeldingerSakIndex, { MessagesModalSakIndex, FormValues } from '@k9-sak-web/sak-meldinger';
+import MeldingerSakIndex, { FormValues, MessagesModalSakIndex } from '@k9-sak-web/sak-meldinger';
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
 import { RestApiState } from '@k9-sak-web/rest-api-hooks';
-import {
-  BehandlingAppKontekst,
-  Fagsak,
-  Kodeverk,
-  Personopplysninger,
-  ArbeidsgiverOpplysningerWrapper,
-  Brevmaler,
-  Mottaker,
-} from '@k9-sak-web/types';
+import { ArbeidsgiverOpplysningerWrapper, BehandlingAppKontekst, Brevmaler, Fagsak, Kodeverk, Mottaker, Personopplysninger } from '@k9-sak-web/types';
 import SettPaVentModalIndex from '@k9-sak-web/modal-sett-pa-vent';
 
 import { Fritekstbrev } from '@k9-sak-web/types/src/formidlingTsType';
 import { useFpSakKodeverk } from '../../data/useKodeverk';
 import { useVisForhandsvisningAvMelding } from '../../data/useVisForhandsvisningAvMelding';
 import { setBehandlingOnHold } from '../../behandlingmenu/behandlingMenuOperations';
-import { K9sakApiKeys, restApiHooks, requestApi } from '../../data/k9sakApi';
+import { K9sakApiKeys, requestApi, restApiHooks } from '../../data/k9sakApi';
 
 const getSubmitCallback =
   (
@@ -86,8 +78,8 @@ const getPreviewCallback =
           dokumentMal,
           dokumentdata: {
           fritekst: fritekst || ' ' ,
-          fritekstbrev
-        },
+          fritekstbrev: Object.values(fritekstbrev).some(x => x === null || x === '') ? null : fritekstbrev
+         },
         };
     fetchPreview(false, data);
   };
