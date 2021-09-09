@@ -78,7 +78,7 @@ const getPreviewCallback =
           dokumentMal,
           dokumentdata: {
           fritekst: fritekst || ' ' ,
-          fritekstbrev: Object.values(fritekstbrev).some(x => x === null || x === '') ? null : fritekstbrev
+          fritekstbrev: fritekstbrev && Object.values(fritekstbrev).some(x => x === null || x === '') ? null : fritekstbrev
          },
         };
     fetchPreview(false, data);
