@@ -23,7 +23,7 @@ export type BehandlingAppKontekst = Readonly<{
   gjeldendeVedtak: boolean;
   sprakkode: Kodeverk;
   behandlendeEnhetId: string;
-  stegTilstand: {
+  stegTilstand?: {
     stegType: {
       kode: string;
     };
