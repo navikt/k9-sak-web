@@ -96,3 +96,42 @@ export const visVedtakspanelDerKlageErVurdertAvNfp = () => (
     alleKodeverk={alleKodeverk}
   />
 );
+
+export const visVedtakspanelDerKlageErVurdertAvNfpVurder5034 = () => (
+  <VedtakKlageProsessIndex
+    behandling={behandling}
+    klageVurdering={object('klageVurdering', {
+      klageVurderingResultatNK: {
+        klageVurdertAv: 'NFP',
+        klageVurdering: klageVurderingCodes.AVVIS_KLAGE,
+        fritekstTilBrev: 'test',
+        klageMedholdArsakNavn: 'TEST',
+        godkjentAvMedunderskriver: false,
+      },
+      klageFormkravResultatKA: {
+        avvistArsaker: [
+          {
+            kode: 'IKKE_KONKRET',
+            kodeverk: 'KLAGE_AVVIST_AARSAK',
+          },
+        ],
+      },
+    })}
+    aksjonspunkter={aksjonspunkter.concat([
+      {
+        definisjon: {
+          kode: aksjonspunktCodes.VURDERE_DOKUMENT,
+        },
+        status: {
+          kode: aksjonspunktStatus.OPPRETTET,
+        },
+        kanLoses: true,
+        begrunnelse: undefined,
+      },
+    ])}
+    submitCallback={action('button-click')}
+    previewVedtakCallback={action('button-click')}
+    isReadOnly={boolean('readOnly', false)}
+    alleKodeverk={alleKodeverk}
+  />
+);
