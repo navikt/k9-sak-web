@@ -281,6 +281,7 @@ const transformValues = values => {
   if (values.brevmalkode === dokumentMalType.REVURDERING_DOK && newValues.arsakskode !== ugunstAarsakTyper.ANNET) {
     newValues.fritekst = ' ';
   }
+
   const overstyrtMottaker =
     newValues.overstyrtMottaker && newValues.overstyrtMottaker !== JSON.stringify(RECIPIENT)
       ? safeJSONParse(newValues.overstyrtMottaker)
