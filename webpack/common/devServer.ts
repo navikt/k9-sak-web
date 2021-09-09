@@ -98,5 +98,35 @@ export default {
       changeOrigin: true,
       pathRewrite: { '^/k9/microfrontend/medisinsk-vilkar': '' },
     },
+    '/k9/microfrontend/omsorgen-for/**': {
+      target: process.env.OMSORGEN_FOR_FRONTEND_URL || 'http://localhost:8282',
+      secure: false,
+      changeOrigin: true,
+      pathRewrite: { '^/k9/microfrontend/omsorgen-for': '' },
+    },
+    '/k9/microfrontend/psb-om-barnet/**': {
+      target: process.env.PSB_OM_BARNET_FRONTEND_URL || 'http://localhost:8585',
+      secure: false,
+      changeOrigin: true,
+      pathRewrite: { '^/k9/microfrontend/psb-om-barnet': '' },
+    },
+    '/k9/microfrontend/psb-etablert-tilsyn/**': {
+      target: process.env.PSB_ETABLERT_TILSYN_FRONTEND_URL || 'http://localhost:8484',
+      secure: false,
+      changeOrigin: true,
+      pathRewrite: { '^/k9/microfrontend/psb-etablert-tilsyn': '' },
+    },
+    '/k9/microfrontend/psb-uttak/**': {
+      target: process.env.PSB_UTTAK_FRONTEND_URL || 'http://localhost:8181',
+      secure: false,
+      changeOrigin: true,
+      pathRewrite: { '^/k9/microfrontend/psb-uttak': '' },
+    },
+    '/k9/microfrontend/psb-inntektsmelding/**': {
+      target: process.env.PSB_INNTEKTSMELDING_FRONTEND_URL || 'http://localhost:8383',
+      secure: false,
+      changeOrigin: true,
+      pathRewrite: { '^/k9/microfrontend/psb-inntektsmelding': '' },
+    },
   },
 };
