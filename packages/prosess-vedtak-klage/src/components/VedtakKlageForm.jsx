@@ -1,13 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { injectIntl } from 'react-intl';
+import { useIntl } from 'react-intl';
 import { connect } from 'react-redux';
 import { formPropTypes } from 'redux-form';
 import { createSelector } from 'reselect';
 import { Normaltekst, Undertekst, Undertittel } from 'nav-frontend-typografi';
 
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
-import { FadingPanel, VerticalSpacer } from '@fpsak-frontend/shared-components';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
+import { AksjonspunktHelpTextTemp, FadingPanel, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { getKodeverknavnFn } from '@fpsak-frontend/utils';
 import { behandlingForm, behandlingFormValueSelector } from '@fpsak-frontend/form';
 import klageVurderingCodes from '@fpsak-frontend/kodeverk/src/klageVurdering';
@@ -29,7 +31,6 @@ const getPreviewVedtakCallback = previewVedtakCallback => () =>
  * Redux-form-komponent for klage-vedtak.
  */
 export const VedtakKlageFormImpl = ({
-  intl,
   readOnly,
   omgjortAarsak,
   previewVedtakCallback,
@@ -42,13 +43,24 @@ export const VedtakKlageFormImpl = ({
   klageresultat,
   behandlingPaaVent,
   alleKodeverk,
+  åpneAksjonspunktKoder,
   ...formProps
 }) => {
+  const intl = useIntl();
   const kodeverknavn = getKodeverknavnFn(alleKodeverk, kodeverkTyper);
+
   return (
     <FadingPanel>
       <Undertittel>{intl.formatMessage({ id: 'VedtakKlageForm.Header' })}</Undertittel>
       <VerticalSpacer twentyPx />
+      {!readOnly && åpneAksjonspunktKoder.includes(aksjonspunktCodes.VURDERE_DOKUMENT) ? (
+        <>
+          <AksjonspunktHelpTextTemp isAksjonspunktOpen>
+            {intl.formatMessage({ id: 'VedtakKlageForm.VurderDokument' })}
+          </AksjonspunktHelpTextTemp>
+          <VerticalSpacer eightPx />
+        </>
+      ) : null}
       <>
         <div>
           <Undertekst>{intl.formatMessage({ id: 'VedtakKlageForm.Resultat' })}</Undertekst>
@@ -199,6 +211,14 @@ export const getIsOpphevOgHjemsend = createSelector(
   klageresultat => klageresultat.klageVurdering === klageVurderingCodes.OPPHEVE_YTELSESVEDTAK,
 );
 
+const getÅpneAksjonspunktKoder = createSelector([ownProps => ownProps.aksjonspunkter], aksjonspunkter =>
+  Array.isArray(aksjonspunkter)
+    ? aksjonspunkter
+        .filter(ap => ap.status.kode === aksjonspunktStatus.OPPRETTET && ap.kanLoses)
+        .map(ap => ap.definisjon.kode)
+    : [],
+);
+
 export const getFritekstTilBrev = createSelector([getKlageresultat], klageresultat => klageresultat.fritekstTilBrev);
 
 export const buildInitialValues = createSelector([ownProps => ownProps.aksjonspunkter], aksjonspunkter => {
@@ -226,13 +246,14 @@ const mapStateToPropsFactory = (initialState, initialOwnProps) => {
       'begrunnelse',
       'aksjonspunktKoder',
     ),
+    åpneAksjonspunktKoder: getÅpneAksjonspunktKoder(ownProps),
   });
 };
 
 const VedtakKlageForm = connect(mapStateToPropsFactory)(
   behandlingForm({
     form: VEDTAK_KLAGE_FORM_NAME,
-  })(injectIntl(VedtakKlageFormImpl)),
+  })(VedtakKlageFormImpl),
 );
 
 export default VedtakKlageForm;
