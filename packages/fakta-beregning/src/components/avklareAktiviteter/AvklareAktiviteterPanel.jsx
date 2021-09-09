@@ -146,7 +146,7 @@ export class AvklareAktiviteterPanelImpl extends Component {
             name={fieldArrayName}
             component={AvklareAktiviteterPanelContent}
             props={{ ...this.props, submitEnabled }}
-            initializeAktiviteter={() => initializeAktiviteter()}
+            initializeAktiviteter={() => this.initializeAktiviteter()}
           />
         </form>
         {harAndreAvklaringsbehovIPanel && <VerticalSpacer twentyPx />}
