@@ -18,6 +18,7 @@ class PanelDef extends ProsessStegPanelDef {
     aksjonspunktCodes.FATTER_VEDTAK,
     aksjonspunktCodes.FORESLA_VEDTAK_MANUELT,
     aksjonspunktCodes.VEDTAK_UTEN_TOTRINNSKONTROLL,
+    aksjonspunktCodes.VURDERE_DOKUMENT,
   ];
 
   getData = ({ previewCallback, klageVurdering }) => ({
