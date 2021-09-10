@@ -20,7 +20,7 @@ class OmBarnetFaktaPanelDef extends FaktaPanelDef {
 
   getOverstyrVisningAvKomponent = ({ fagsak, behandling }: { fagsak: Fagsak; behandling: Behandling }) => {
     const erPleiepengesak = fagsak.sakstype.kode === fagsakYtelseType.PLEIEPENGER;
-    const søknadsfristErIkkeUnderVurdering = behandling.stegTilstand.stegType.kode !== 'VURDER_SØKNADSFRIST';
+    const søknadsfristErIkkeUnderVurdering = behandling.stegTilstand?.stegType?.kode !== 'VURDER_SØKNADSFRIST';
     return erPleiepengesak && søknadsfristErIkkeUnderVurdering;
   };
 }
