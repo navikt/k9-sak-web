@@ -9,6 +9,7 @@ export interface SaerligSmittevernhensynProps {
     vilkarOppfylt: boolean;
     antallDagerDelvisInnvilget: number;
   };
+  konfliktMedArbeidsgiver: boolean;
   losAksjonspunkt: (fravaerGrunnetSmittevernhensynEllerStengt, begrunnelse, antallDagerDelvisInnvilget) => void;
   formState: FormStateType;
 }
