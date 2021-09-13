@@ -38,6 +38,7 @@ describe('BeregningsresultatPanel', () => {
         periodeResultatTabeller={[tableData]}
         vilkaarBG={vilkaarBG}
         halvGVerdi={98866}
+        erMidlertidigInaktiv={false}
       />,
     );
     const panel = wrapper.find('Panel');
@@ -61,6 +62,7 @@ describe('BeregningsresultatPanel', () => {
         periodeResultatTabeller={[tableData]}
         vilkaarBG={vilkaarBG}
         halvGVerdi={98866}
+        erMidlertidigInaktiv={false}
       />,
     );
     const panel = wrapper.find('Panel');
