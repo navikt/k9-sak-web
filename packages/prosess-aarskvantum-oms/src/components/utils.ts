@@ -12,7 +12,7 @@ export const durationTilTimerMed7ogEnHalvTimesDagsbasis = (delvisFravær: string
 };
 
 const smittevernsperiodeStartdatoFom = moment('2020-04-20', ISO_DATE_FORMAT);
-const smittevernsperiodeSluttdato = moment('2020-12-31', ISO_DATE_FORMAT);
+const smittevernsperiodeSluttdato = moment('2021-09-30', ISO_DATE_FORMAT);
 
 export const periodeErISmittevernsperioden = (periode: string): boolean => {
   const [fom, tom] = periode.split('/');
