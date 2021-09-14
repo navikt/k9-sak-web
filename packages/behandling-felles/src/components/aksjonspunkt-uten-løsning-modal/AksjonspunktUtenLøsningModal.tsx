@@ -4,8 +4,6 @@ import Alertstripe from 'nav-frontend-alertstriper';
 import { Hovedknapp } from 'nav-frontend-knapper';
 import styles from './aksjonspunktUtenLøsningModal.less';
 
-Modal.setAppElement('#app');
-
 interface AksjonspunktUtenLøsningModalProps {
   melding: string;
 }
