@@ -20,12 +20,14 @@ import React, { ReactNode, useMemo, useState } from 'react';
 import { FormattedMessage } from 'react-intl';
 import classNames from 'classnames';
 import { FraværÅrsakEnum } from '@k9-sak-web/types/src/omsorgspenger/Uttaksperiode';
+import stjerneImg from '@fpsak-frontend/assets/images/stjerne.svg';
 import styles from './aktivitetTabell.less';
 import NøkkeltallContainer, { Nokkeltalltype } from './nokkeltall/NokkeltallContainer';
 import Utfall from './Utfall';
-import { durationTilTimerMed7ogEnHalvTimesDagsbasis, formatDate, periodeErIKoronaperioden } from './utils';
+import { durationTilTimerMed7ogEnHalvTimesDagsbasis, formatDate } from './utils';
 
 interface AktivitetTabellProps {
+  behandlingUuid: string;
   arbeidsforhold?: ArbeidsforholdV2;
   arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysningerPerId;
   arbeidsforholdtypeKode: string;
@@ -91,6 +93,7 @@ const arbeidsforholdSist = (_, [vilkår2]: [Vilkår, Utfalltype]): number =>
   vilkår2 === VilkårEnum.ARBEIDSFORHOLD ? -1 : 0;
 
 const AktivitetTabell = ({
+  behandlingUuid,
   arbeidsforhold,
   arbeidsgiverOpplysningerPerId,
   arbeidsforholdtypeKode,
@@ -160,7 +163,9 @@ const AktivitetTabell = ({
 
   return (
     <Panel border className={styles.aktivitetTabell}>
-      <Element>{beskrivelse}</Element>
+      <div className={styles.header}>
+        <Element>{beskrivelse}</Element>
+      </div>
       <Table
         suppliedHeaders={
           <>
@@ -190,11 +195,20 @@ const AktivitetTabell = ({
       >
         {uttaksperioder.map(
           (
-            { periode, delvisFravær, utfall, utbetalingsgrad, vurderteVilkår, hjemler, nøkkeltall, fraværÅrsak },
+            {
+              opprinneligBehandlingUuid,
+              periode,
+              delvisFravær,
+              utfall,
+              utbetalingsgrad,
+              vurderteVilkår,
+              hjemler,
+              nøkkeltall,
+              fraværÅrsak,
+            },
             index,
           ) => {
             const erValgt = valgtPeriodeIndex === index;
-            const erKoronaperiode = useMemo(() => periodeErIKoronaperioden(periode), [periode]);
             const sorterteVilkår = useMemo(
               () => Object.entries(vurderteVilkår.vilkår).sort(arbeidsforholdSist),
               [vurderteVilkår.vilkår],
@@ -227,7 +241,6 @@ const AktivitetTabell = ({
                         forbruktTid={nøkkeltall.forbruktTid}
                         restTid={nøkkeltall.restTid}
                         smitteverndager={nøkkeltall.smittevernTid}
-                        uttaksperioder={[]}
                         benyttetRammemelding
                         apneNokkeltall={apneNokkeltall}
                         visEllerSkjulNokkeltalldetaljer={visEllerSkjulNokkeltalldetaljer}
@@ -270,10 +283,23 @@ const AktivitetTabell = ({
             }
 
             return (
-              <tbody key={periode} className={erKoronaperiode ? styles.koronaperiode : undefined}>
+              <tbody key={periode}>
                 <TableRow notFocusable>
                   <td>
-                    <Normaltekst>{periodevisning(periode)}</Normaltekst>
+                    <Normaltekst
+                      className={classNames({
+                        [styles.ikkeGjeldendeBehandling]: behandlingUuid !== opprinneligBehandlingUuid,
+                      })}
+                    >
+                      {behandlingUuid === opprinneligBehandlingUuid && (
+                        <Image
+                          className={classNames(styles.starImage)}
+                          src={stjerneImg}
+                          tooltip={<FormattedMessage id="Uttaksplan.GjeldendeBehandling" />}
+                        />
+                      )}
+                      {periodevisning(periode)}
+                    </Normaltekst>
                   </td>
                   <td>
                     <Utfall
