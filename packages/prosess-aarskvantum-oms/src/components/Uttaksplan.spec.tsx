@@ -92,6 +92,7 @@ describe('Uttaksplan', () => {
     const aktiviteter: Aktivitet[] = [aktivitet1, aktivitet2, aktivitet3];
     const wrapper = shallowWithIntl(
       <Uttaksplan
+        behandlingUuid="abc"
         aktiviteterBehandling={aktiviteter}
         aktivitetsstatuser={[]}
         aktiviteterHittilIÅr={[]}
