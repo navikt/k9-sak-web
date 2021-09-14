@@ -1,3 +1,4 @@
+export { default as AksjonspunktUtenLøsningModal } from './src/components/aksjonspunkt-uten-løsning-modal/AksjonspunktUtenLøsningModal';
 export { default as BehandlingPaVent } from './src/components/paVent/BehandlingPaVent';
 export { default as ProsessStegContainer } from './src/components/ProsessStegContainer';
 export { default as MargMarkering } from './src/components/MargMarkering';
@@ -9,6 +10,7 @@ export { default as ProsessStegIkkeBehandletPanel } from './src/components/Prose
 export { default as IverksetterVedtakStatusModal } from './src/components/vedtak/IverksetterVedtakStatusModal';
 export { default as FatterVedtakStatusModal } from './src/components/vedtak/FatterVedtakStatusModal';
 
+export { default as harOpprettetAksjonspunkt } from './src/util/harOpprettetAksjonspunkt';
 export { default as readOnlyUtils } from './src/util/readOnlyUtils';
 export { default as getAlleMerknaderFraBeslutter } from './src/util/getAlleMerknaderFraBeslutter';
 export { default as faktaHooks } from './src/util/fakta/faktaHooks';
