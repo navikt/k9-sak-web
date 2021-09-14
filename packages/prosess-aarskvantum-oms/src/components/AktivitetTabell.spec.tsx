@@ -48,12 +48,12 @@ describe('<AktivitetTabell />', () => {
   it('rendrer tabellrad med rett info', () => {
     const wrapper = shallow(
       <AktivitetTabell
+        behandlingUuid="abc"
         uttaksperioder={aktivitet.uttaksperioder}
         arbeidsforholdtypeKode="AT"
         arbeidsforhold={arbeidsforhold}
         aktivitetsstatuser={[]}
         arbeidsgiverOpplysningerPerId={{}}
-        gjeldandeBehandling={false}
       />,
     );
     const kolonner = wrapper.find('td');
@@ -75,12 +75,12 @@ describe('<AktivitetTabell />', () => {
   it('Klikk expandknapp rendrer detaljer og viser vilkår om arbeidsforhold sist', () => {
     const wrapper = shallow(
       <AktivitetTabell
+        behandlingUuid="abc"
         uttaksperioder={aktivitet.uttaksperioder}
         arbeidsforhold={arbeidsforhold}
         arbeidsforholdtypeKode="AT"
         aktivitetsstatuser={[]}
         arbeidsgiverOpplysningerPerId={{}}
-        gjeldandeBehandling={false}
       />,
     );
 

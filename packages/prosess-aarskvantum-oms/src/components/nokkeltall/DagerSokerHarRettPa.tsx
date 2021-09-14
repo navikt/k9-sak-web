@@ -11,7 +11,6 @@ interface DagerSokerHarRettPaProps {
   dagerRettPå: number;
   antallOmsorgsdager: number;
   antallKoronadager: number;
-  erIKoronaperioden: boolean;
   benyttetRammemelding: boolean;
   visDetaljer: () => void;
   viserDetaljer: boolean;
@@ -22,7 +21,6 @@ const DagerSokerHarRettPa = ({
   dagerRettPå,
   antallOmsorgsdager,
   antallKoronadager,
-  erIKoronaperioden,
   benyttetRammemelding,
   visDetaljer,
   viserDetaljer,
@@ -60,7 +58,7 @@ const DagerSokerHarRettPa = ({
     },
   ];
 
-  if (erIKoronaperioden || antallKoronadager > 0) {
+  if (antallKoronadager > 0) {
     detaljer.push({
       antallDager: antallKoronadager,
       overskrifttekstId: 'Nøkkeltall.Koronadager',

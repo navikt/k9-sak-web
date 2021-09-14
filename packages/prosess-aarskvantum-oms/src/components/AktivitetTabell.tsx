@@ -24,15 +24,15 @@ import stjerneImg from '@fpsak-frontend/assets/images/stjerne.svg';
 import styles from './aktivitetTabell.less';
 import NøkkeltallContainer, { Nokkeltalltype } from './nokkeltall/NokkeltallContainer';
 import Utfall from './Utfall';
-import { durationTilTimerMed7ogEnHalvTimesDagsbasis, formatDate, periodeErIKoronaperioden } from './utils';
+import { durationTilTimerMed7ogEnHalvTimesDagsbasis, formatDate } from './utils';
 
 interface AktivitetTabellProps {
+  behandlingUuid: string;
   arbeidsforhold?: ArbeidsforholdV2;
   arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysningerPerId;
   arbeidsforholdtypeKode: string;
   uttaksperioder: Uttaksperiode[];
   aktivitetsstatuser: KodeverkMedNavn[];
-  gjeldandeBehandling: boolean;
 }
 
 const periodevisning = (periode: string): string => {
@@ -93,12 +93,12 @@ const arbeidsforholdSist = (_, [vilkår2]: [Vilkår, Utfalltype]): number =>
   vilkår2 === VilkårEnum.ARBEIDSFORHOLD ? -1 : 0;
 
 const AktivitetTabell = ({
+  behandlingUuid,
   arbeidsforhold,
   arbeidsgiverOpplysningerPerId,
   arbeidsforholdtypeKode,
   uttaksperioder,
   aktivitetsstatuser,
-  gjeldandeBehandling,
 }: AktivitetTabellProps) => {
   const [valgtPeriodeIndex, velgPeriodeIndex] = useState<number>();
   const [valgteDetaljfaner, velgDetaljfaner] = useState<number[]>();
@@ -165,14 +165,6 @@ const AktivitetTabell = ({
     <Panel border className={styles.aktivitetTabell}>
       <div className={styles.header}>
         <Element>{beskrivelse}</Element>
-        {gjeldandeBehandling && (
-          <Image
-            className={styles.starImage}
-            src={stjerneImg}
-            tooltip={<FormattedMessage id="Uttaksplan.GjeldendeBehandling" />}
-            alignTooltipLeft
-          />
-        )}
       </div>
       <Table
         suppliedHeaders={
@@ -203,11 +195,20 @@ const AktivitetTabell = ({
       >
         {uttaksperioder.map(
           (
-            { periode, delvisFravær, utfall, utbetalingsgrad, vurderteVilkår, hjemler, nøkkeltall, fraværÅrsak },
+            {
+              opprinneligBehandlingUuid,
+              periode,
+              delvisFravær,
+              utfall,
+              utbetalingsgrad,
+              vurderteVilkår,
+              hjemler,
+              nøkkeltall,
+              fraværÅrsak,
+            },
             index,
           ) => {
             const erValgt = valgtPeriodeIndex === index;
-            const erKoronaperiode = useMemo(() => periodeErIKoronaperioden(periode), [periode]);
             const sorterteVilkår = useMemo(
               () => Object.entries(vurderteVilkår.vilkår).sort(arbeidsforholdSist),
               [vurderteVilkår.vilkår],
@@ -240,7 +241,6 @@ const AktivitetTabell = ({
                         forbruktTid={nøkkeltall.forbruktTid}
                         restTid={nøkkeltall.restTid}
                         smitteverndager={nøkkeltall.smittevernTid}
-                        uttaksperioder={[]}
                         benyttetRammemelding
                         apneNokkeltall={apneNokkeltall}
                         visEllerSkjulNokkeltalldetaljer={visEllerSkjulNokkeltalldetaljer}
@@ -283,10 +283,23 @@ const AktivitetTabell = ({
             }
 
             return (
-              <tbody key={periode} className={erKoronaperiode ? styles.koronaperiode : undefined}>
+              <tbody key={periode}>
                 <TableRow notFocusable>
                   <td>
-                    <Normaltekst>{periodevisning(periode)}</Normaltekst>
+                    <Normaltekst
+                      className={classNames({
+                        [styles.ikkeGjeldendeBehandling]: behandlingUuid !== opprinneligBehandlingUuid,
+                      })}
+                    >
+                      {behandlingUuid === opprinneligBehandlingUuid && (
+                        <Image
+                          className={classNames(styles.starImage)}
+                          src={stjerneImg}
+                          tooltip={<FormattedMessage id="Uttaksplan.GjeldendeBehandling" />}
+                        />
+                      )}
+                      {periodevisning(periode)}
+                    </Normaltekst>
                   </td>
                   <td>
                     <Utfall

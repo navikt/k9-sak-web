@@ -12,6 +12,7 @@ import AktivitetTabell from './AktivitetTabell';
 import styles from './uttaksplan.less';
 
 interface UttaksplanProps {
+  behandlingUuid: string;
   aktiviteterBehandling: Aktivitet[];
   aktiviteterHittilIÅr: Aktivitet[];
   aktiv: boolean;
@@ -21,6 +22,7 @@ interface UttaksplanProps {
 }
 
 const mapAktiviteterTilTabell = (
+  behandlingUuid: string,
   aktiviteter: Aktivitet[],
   aktivitetsstatuser: KodeverkMedNavn[],
   alleArbeidsforhold: ArbeidsforholdV2[],
@@ -34,24 +36,23 @@ const mapAktiviteterTilTabell = (
     const gjeldendeArbeidsforhold = alleArbeidsforhold
       .filter(arb => arb.arbeidsgiver?.arbeidsgiverOrgnr === arbeidsforhold.organisasjonsnummer)
       .find(arb => arb.arbeidsforhold?.internArbeidsforholdId === arbeidsforhold.arbeidsforholdId);
-    // Inn med logikk her
-    const gjeldendeBehandling = true;
 
     return (
       <AktivitetTabell
+        behandlingUuid={behandlingUuid}
         arbeidsforhold={gjeldendeArbeidsforhold}
         arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
         arbeidsforholdtypeKode={arbeidsforhold.type}
         uttaksperioder={uttaksperioder}
         aktivitetsstatuser={aktivitetsstatuser}
         key={joinNonNullStrings(Object.values(arbeidsforhold))}
-        gjeldandeBehandling={gjeldendeBehandling}
       />
     );
   });
 };
 
 const Uttaksplan = ({
+  behandlingUuid,
   aktiviteterBehandling = [],
   aktiviteterHittilIÅr = [],
   aktivitetsstatuser = [],
@@ -60,6 +61,7 @@ const Uttaksplan = ({
   arbeidsgiverOpplysningerPerId,
 }: UttaksplanProps) => {
   const [valgtTabIndex, setValgtTabIndex] = useState<number>(0);
+
   return (
     <div className={styles.uttaksboks}>
       <div className={styles.overskrift}>
@@ -82,6 +84,7 @@ const Uttaksplan = ({
       />
       {valgtTabIndex === 0 &&
         mapAktiviteterTilTabell(
+          behandlingUuid,
           aktiviteterBehandling,
           aktivitetsstatuser,
           arbeidsforhold,
@@ -89,6 +92,7 @@ const Uttaksplan = ({
         )}
       {valgtTabIndex === 1 &&
         mapAktiviteterTilTabell(
+          behandlingUuid,
           aktiviteterHittilIÅr,
           aktivitetsstatuser,
           arbeidsforhold,
