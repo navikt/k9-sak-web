@@ -1,6 +1,6 @@
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
-import { Aksjonspunkt, Behandling, UtfallEnum } from '@k9-sak-web/types';
+import {Aksjonspunkt, Behandling, UtfallEnum, Uttaksperiode} from '@k9-sak-web/types';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import { FormStateType } from '@fpsak-frontend/form/src/types/FormStateType';
 import MikrofrontendKomponenter from './types/MikrofrontendKomponenter';
@@ -54,22 +54,23 @@ const KartleggePropertyTilSaerligeSmittevernhensynMikrofrontend = (
     harAktivitetEnPeriodeMedSoknadsårsakKonflikt => harAktivitetEnPeriodeMedSoknadsårsakKonflikt
   );
 
-  const perioderInnvilget = aktiviteter[0]?.uttaksperioder.filter(
-    period => visKonfliktMedArbeidsgiverAksjonspunkt
-      ? period.vurderteVilkår.vilkår.NOK_DAGER === UtfallEnum.INNVILGET
-      : period.vurderteVilkår.vilkår.SMITTEVERN === UtfallEnum.INNVILGET,
-  );
+  const perioderFilterFn = (period: Uttaksperiode, vilkarsUtfall: string): boolean =>
+    visKonfliktMedArbeidsgiverAksjonspunkt
+      ? period.vurderteVilkår.vilkår.NOK_DAGER === vilkarsUtfall
+      : period.vurderteVilkår.vilkår.SMITTEVERN === vilkarsUtfall;
 
-  const perioderAvslått = aktiviteter[0]?.uttaksperioder.filter(
-    period => visKonfliktMedArbeidsgiverAksjonspunkt
-      ? period.vurderteVilkår.vilkår.NOK_DAGER === UtfallEnum.AVSLÅTT
-      : period.vurderteVilkår.vilkår.SMITTEVERN === UtfallEnum.AVSLÅTT,
-  );
+  const perioderInnvilget = Array.isArray(aktiviteter[0]?.uttaksperioder)
+    ? aktiviteter[0].uttaksperioder.filter( p => perioderFilterFn(p, UtfallEnum.INNVILGET))
+    : [];
 
-  const eksistererInnvilgetPeriode = typeof perioderInnvilget !== 'undefined' && perioderInnvilget.length > 0;
+  const perioderAvslått = Array.isArray(aktiviteter[0]?.uttaksperioder)
+    ? aktiviteter[0].uttaksperioder.filter( p => perioderFilterFn(p, UtfallEnum.AVSLÅTT))
+    : [];
+
+  const eksistererInnvilgetPeriode = perioderInnvilget.length > 0;
   let dagerDelvisInnvilget = 0;
 
-  if (eksistererInnvilgetPeriode && typeof perioderAvslått !== 'undefined' && perioderAvslått.length > 0) {
+  if (eksistererInnvilgetPeriode && perioderAvslått.length > 0) {
     perioderInnvilget.forEach(period => {
       dagerDelvisInnvilget += parseInt(antallDager(period.periode), 10);
     });
