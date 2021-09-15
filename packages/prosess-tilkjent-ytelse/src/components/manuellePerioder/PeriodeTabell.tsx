@@ -19,6 +19,8 @@ import PeriodeRad from './PeriodeRad';
 import SlettPeriodeModal from './SlettPeriodeModal';
 import NyPeriode from './NyPeriode';
 
+const FORM_NAME = 'TilkjentYtelseForm';
+
 const createNewPerioder = (perioder, id: string, values: any) => {
   const updatedIndex = perioder.findIndex(p => p.id === id);
   const updatedPeriode = perioder.find(p => p.id === id);
@@ -32,6 +34,12 @@ const createNewPerioder = (perioder, id: string, values: any) => {
     ...perioder.slice(updatedIndex + 1),
   ];
 };
+
+interface PureOwnProps {
+  behandlingId: number;
+  behandlingVersjon: number;
+  alleKodeverk: { [key: string]: KodeverkMedNavn[] };
+}
 
 interface OwnProps {
   readOnly: boolean;
@@ -88,7 +96,7 @@ export const PeriodeTabell = ({
     (nyPeriode: any) => {
       const newPerioder = perioder.concat(nyPeriode).sort((a: any, b: any) => a.fom.localeCompare(b.fom));
 
-      formChange(`${behandlingFormPrefix}.TilkjentYtelseForm`, 'perioder', newPerioder);
+      formChange(`${behandlingFormPrefix}.${FORM_NAME}`, 'perioder', newPerioder);
 
       setState(state => ({ ...state, isNyPeriodeFormOpen: !state.isNyPeriodeFormOpen }));
     },
@@ -97,7 +105,7 @@ export const PeriodeTabell = ({
 
   const newArbeidsgiverCallback = useCallback(
     (nyArbeidsgivere: any) => {
-      formChange(`${behandlingFormPrefix}.TilkjentYtelseForm`, 'arbeidsgivere', {
+      formChange(`${behandlingFormPrefix}.${FORM_NAME}`, 'arbeidsgivere', {
         ...(arbeidsgivere || {}),
         [nyArbeidsgivere.orgNr]: { identifikator: nyArbeidsgivere.orgNr, navn: nyArbeidsgivere.navn },
       });
@@ -123,7 +131,7 @@ export const PeriodeTabell = ({
 
       if (hasOriginalPeriode) {
         formChange(
-          `${behandlingFormPrefix}.TilkjentYtelseForm`,
+          `${behandlingFormPrefix}.${FORM_NAME}`,
           'slettedePerioder',
           slettedePerioder.concat([
             {
@@ -135,7 +143,7 @@ export const PeriodeTabell = ({
       }
 
       formChange(
-        `${behandlingFormPrefix}.TilkjentYtelseForm`,
+        `${behandlingFormPrefix}.${FORM_NAME}`,
         'perioder',
         perioder.filter((periode: any) => periode.id !== periodeSlett?.id),
       );
@@ -148,7 +156,7 @@ export const PeriodeTabell = ({
   const cleaningUpForm = useCallback(
     (id: string) => {
       formChange(
-        `${behandlingFormPrefix}.TilkjentYtelseForm`,
+        `${behandlingFormPrefix}.${FORM_NAME}`,
         'perioder',
         perioder
           .map((periode: any) => {
@@ -171,7 +179,7 @@ export const PeriodeTabell = ({
     (id: string) => {
       const newPerioder = createNewPerioder(perioder, id, { openForm: true });
 
-      formChange(`${behandlingFormPrefix}.TilkjentYtelseForm`, 'perioder', newPerioder);
+      formChange(`${behandlingFormPrefix}.${FORM_NAME}`, 'perioder', newPerioder);
     },
     [perioder],
   );
@@ -180,7 +188,7 @@ export const PeriodeTabell = ({
     (id: string) => {
       const newPerioder = createNewPerioder(perioder, id, { openForm: false });
 
-      formChange(`${behandlingFormPrefix}.TilkjentYtelseForm`, 'perioder', newPerioder);
+      formChange(`${behandlingFormPrefix}.${FORM_NAME}`, 'perioder', newPerioder);
     },
     [perioder],
   );
@@ -199,7 +207,7 @@ export const PeriodeTabell = ({
       });
 
       formChange(
-        `${behandlingFormPrefix}.TilkjentYtelseForm`,
+        `${behandlingFormPrefix}.${FORM_NAME}`,
         'perioder',
         newPerioder.sort((a, b) => a.fom.localeCompare(b.fom)),
       );
@@ -277,32 +285,26 @@ export const PeriodeTabell = ({
   );
 };
 
-const slettedePerioder = (state: any, behandlingId: number, behandlingVersjon: number) =>
-  behandlingFormValueSelector('TilkjentYtelseForm', behandlingId, behandlingVersjon)(state, 'slettedePerioder');
-const perioder = (state: any, behandlingId: number, behandlingVersjon: number) =>
-  behandlingFormValueSelector('TilkjentYtelseForm', behandlingId, behandlingVersjon)(state, 'perioder');
-const arbeidsgivere = (state: any, behandlingId: number, behandlingVersjon: number) =>
-  behandlingFormValueSelector('TilkjentYtelseForm', behandlingId, behandlingVersjon)(state, 'arbeidsgivere');
-
-interface PureOwnProps {
-  behandlingId: number;
-  behandlingVersjon: number;
-  alleKodeverk: { [key: string]: KodeverkMedNavn[] };
-}
-
-const EMPTY_ARRAY = [];
+const getSlettedePerioder = (state: any, behandlingId: number, behandlingVersjon: number) =>
+  behandlingFormValueSelector(FORM_NAME, behandlingId, behandlingVersjon)(state, 'slettedePerioder');
+const getPerioder = (state: any, behandlingId: number, behandlingVersjon: number) =>
+  behandlingFormValueSelector(FORM_NAME, behandlingId, behandlingVersjon)(state, 'perioder');
+const getArbeidsgivere = (state: any, behandlingId: number, behandlingVersjon: number) =>
+  behandlingFormValueSelector(FORM_NAME, behandlingId, behandlingVersjon)(state, 'arbeidsgivere');
 
 const mapStateToProps = (state: any, props: PureOwnProps) => {
   const { behandlingId, behandlingVersjon } = props;
   const behandlingFormPrefix = getBehandlingFormPrefix(behandlingId, behandlingVersjon);
 
+  const perioder = getPerioder(state, behandlingId, behandlingVersjon) || [];
+
   return {
     behandlingFormPrefix,
-    openForms: !!perioder(state, behandlingId, behandlingVersjon).find(periode => periode.openForm === true),
-    initialValues: getFormInitialValues(`${behandlingFormPrefix}.TilkjentYtelseForm`)(state),
-    slettedePerioder: slettedePerioder(state, behandlingId, behandlingVersjon) || EMPTY_ARRAY,
-    perioder: perioder(state, behandlingId, behandlingVersjon) || EMPTY_ARRAY,
-    arbeidsgivere: arbeidsgivere(state, behandlingId, behandlingVersjon) || {},
+    openForms: !!perioder.find(periode => periode.openForm === true),
+    initialValues: getFormInitialValues(`${behandlingFormPrefix}.${FORM_NAME}`)(state),
+    slettedePerioder: getSlettedePerioder(state, behandlingId, behandlingVersjon) || [],
+    perioder,
+    arbeidsgivere: getArbeidsgivere(state, behandlingId, behandlingVersjon) || {},
   };
 };
 
