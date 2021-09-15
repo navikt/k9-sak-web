@@ -95,6 +95,7 @@ const ÅrskvantumIndex = ({
       )}
 
       <Uttaksplan
+        behandlingUuid={behandling.uuid}
         aktiviteterBehandling={sisteUttaksplan?.aktiviteter}
         aktiviteterHittilIÅr={fullUttaksplan?.aktiviteter}
         aktivitetsstatuser={aktivitetsstatuser}

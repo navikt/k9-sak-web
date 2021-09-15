@@ -16,7 +16,7 @@ import {
 
 import styles from './vedtakAvslagPanel.less';
 
-const maxLength1500 = maxLength(1500);
+const maxLength100000 = maxLength(100000);
 const minLength3 = minLength(3);
 
 const VedtakFritekstPanelImpl = ({ begrunnelse, begrunnelseFieldName, sprakkode, readOnly, label }) => (
@@ -28,8 +28,8 @@ const VedtakFritekstPanelImpl = ({ begrunnelse, begrunnelseFieldName, sprakkode,
           <TextAreaField
             name={begrunnelseFieldName}
             label={label}
-            validate={[requiredIfNotPristine, minLength3, maxLength1500, hasValidText]}
-            maxLength={1500}
+            validate={[requiredIfNotPristine, minLength3, maxLength100000, hasValidText]}
+            maxLength={100000}
             readOnly={readOnly}
             badges={[
               {

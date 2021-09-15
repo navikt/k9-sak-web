@@ -1,9 +1,7 @@
 import ÅrskvantumForbrukteDager from '@k9-sak-web/prosess-aarskvantum-oms/src/dto/ÅrskvantumForbrukteDager';
-import { Uttaksperiode } from '@k9-sak-web/types';
 import { AlertStripeAdvarsel } from 'nav-frontend-alertstriper';
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
-import { periodeErIKoronaperioden } from '../utils';
 import DagerNavKanUtbetale from './DagerNavKanUtbetale';
 import DagerSokerHarRettPa from './DagerSokerHarRettPa';
 import { beregnDagerTimer, DagerTimer, konverterDesimalTilDagerOgTimer, sumTid } from './durationUtils';
@@ -30,7 +28,6 @@ export type NokkeltallContainerProps = Pick<
   | 'antallDagerInfotrygd'
   | 'smitteverndager'
 > & {
-  uttaksperioder: Uttaksperiode[];
   benyttetRammemelding: boolean;
   apneNokkeltall?: Nokkeltalltype[];
   visEllerSkjulNokkeltalldetaljer: (nokkeltalltype: Nokkeltalltype) => void;
@@ -44,7 +41,6 @@ const absoluttverdiDagerTimer = ({ dager, timer }: DagerTimer): DagerTimer => ({
 });
 
 const NokkeltallContainer = ({
-  uttaksperioder,
   restTid,
   restdager,
   forbrukteDager,
@@ -60,11 +56,6 @@ const NokkeltallContainer = ({
   migrertData,
   ar,
 }: NokkeltallContainerProps) => {
-  const erIKoronaperioden = React.useMemo(
-    () => uttaksperioder.some(({ periode }) => periodeErIKoronaperioden(periode)),
-    [uttaksperioder],
-  );
-
   const smittevernDagerTimer = smitteverndager ? beregnDagerTimer(smitteverndager) : null;
   const harSmitteverndager = smittevernDagerTimer?.timer > 0 || smittevernDagerTimer?.dager > 0;
   const rest = restTid ? beregnDagerTimer(restTid) : konverterDesimalTilDagerOgTimer(restdager);
@@ -91,7 +82,6 @@ const NokkeltallContainer = ({
         dagerRettPå={dagerRettPå}
         antallOmsorgsdager={grunnrettsdager}
         antallKoronadager={antallKoronadager}
-        erIKoronaperioden={erIKoronaperioden}
         benyttetRammemelding={benyttetRammemelding}
         viserDetaljer={apneNokkeltall?.includes(Nokkeltalltype.DAGER_SOKER_HAR_RETT_PA)}
         visDetaljer={() => visEllerSkjulNokkeltalldetaljer(Nokkeltalltype.DAGER_SOKER_HAR_RETT_PA)}
