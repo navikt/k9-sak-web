@@ -66,10 +66,10 @@ const KartleggePropertyTilSaerligeSmittevernhensynMikrofrontend = (
       : period.vurderteVilkår.vilkår.SMITTEVERN === UtfallEnum.AVSLÅTT,
   );
 
-  const eksistererInnvilgetPeriode = perioderInnvilget.length > 0;
+  const eksistererInnvilgetPeriode = typeof perioderInnvilget !== 'undefined' && perioderInnvilget.length > 0;
   let dagerDelvisInnvilget = 0;
 
-  if (eksistererInnvilgetPeriode && perioderAvslått.length > 0) {
+  if (eksistererInnvilgetPeriode && typeof perioderAvslått !== 'undefined' && perioderAvslått.length > 0) {
     perioderInnvilget.forEach(period => {
       dagerDelvisInnvilget += parseInt(antallDager(period.periode), 10);
     });
