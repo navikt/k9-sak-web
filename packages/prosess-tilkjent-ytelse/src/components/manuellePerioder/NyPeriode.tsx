@@ -4,23 +4,22 @@ import { FormattedMessage } from 'react-intl';
 import { FieldArray, InjectedFormProps } from 'redux-form';
 import { Element } from 'nav-frontend-typografi';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
-import { calcDaysAndWeeks, safeJSONParse, guid, hasValidPeriod, required } from '@fpsak-frontend/utils';
+import { calcDaysAndWeeks, guid, hasValidPeriod, required } from '@fpsak-frontend/utils';
 import { DatepickerField, behandlingForm, behandlingFormValueSelector } from '@fpsak-frontend/form';
 import { FlexColumn, FlexContainer, FlexRow, VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { KodeverkMedNavn, Periode, ArbeidsforholdV2, ArbeidsgiverOpplysningerPerId } from '@k9-sak-web/types';
+import { KodeverkMedNavn, Periode, ArbeidsgiverOpplysningerPerId } from '@k9-sak-web/types';
 import NyAndel from './NyAndel';
 
 import styles from './periode.less';
 
 interface OwnProps {
   newPeriodeResetCallback: (values: any) => any;
-  newArbeidsforholdCallback: (values: any) => void;
+  newArbeidsgiverCallback: (values: any) => void;
   andeler: any[];
   nyPeriode: Periode;
   nyPeriodeDisabledDaysFom: string;
   alleKodeverk: { [key: string]: KodeverkMedNavn[] };
-  arbeidsforhold: ArbeidsforholdV2[];
-  arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysningerPerId;
+  arbeidsgivere: ArbeidsgiverOpplysningerPerId;
   readOnly: boolean;
   behandlingId: number;
   behandlingVersjon: number;
@@ -28,14 +27,14 @@ interface OwnProps {
 
 export const TilkjentYtelseNyPeriode = ({
   newPeriodeResetCallback,
-  newArbeidsforholdCallback,
+  newArbeidsgiverCallback,
   nyPeriode,
   readOnly,
+  andeler,
   alleKodeverk,
   behandlingId,
   behandlingVersjon,
-  arbeidsforhold,
-  arbeidsgiverOpplysningerPerId,
+  arbeidsgivere,
   ...formProps
 }: OwnProps & InjectedFormProps) => {
   const numberOfDaysAndWeeks = calcDaysAndWeeks(nyPeriode.fom, nyPeriode.tom);
@@ -82,12 +81,13 @@ export const TilkjentYtelseNyPeriode = ({
                     // @ts-ignore
                     component={NyAndel}
                     readOnly={readOnly}
+                    andeler={andeler}
                     alleKodeverk={alleKodeverk}
-                    arbeidsforhold={arbeidsforhold}
-                    arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
+                    arbeidsgivere={arbeidsgivere}
                     behandlingId={behandlingId}
                     behandlingVersjon={behandlingVersjon}
-                    newArbeidsforholdCallback={newArbeidsforholdCallback}
+                    newArbeidsgiverCallback={newArbeidsgiverCallback}
+                    rerenderOnEveryChange
                   />
                 </FlexColumn>
               </FlexRow>
@@ -118,31 +118,17 @@ const transformValues = (values: any) => ({
   fom: values.fom,
   tom: values.tom,
   // refusjon: values.refusjon,
-  andeler: values.andeler.map(andel => {
-    const arbeidsForhold = safeJSONParse(andel.arbeidsgiver);
-
-    const arbeidsgiverValues = {
-      identifikator: arbeidsForhold.arbeidsgiver.arbeidsgiverOrgnr,
-      identifikatorGUI: arbeidsForhold.arbeidsgiver.arbeidsgiverOrgnr,
-      arbeidsforholdId: `${arbeidsForhold.arbeidsgiver.arbeidsgiverOrgnr}-${arbeidsForhold.arbeidsforhold.internArbeidsforholdId}`,
-      arbeidsforholdRef: arbeidsForhold.arbeidsforhold.internArbeidsforholdId,
-    };
-
-    return {
-      utbetalingsgrad: andel.utbetalingsgrad,
-      // INNTEKTSKATEGORI
-      inntektskategori: {
-        kode: andel.inntektskategori,
-        kodeverk: 'INNTEKTSKATEGORI',
-      },
-      refusjon: andel.refusjon,
-      tilSoker: andel.tilSoker,
-      // OPPTJENING_AKTIVITET_TYPE
-      arbeidsgiver: arbeidsgiverValues,
-      arbeidsgiverOrgnr: arbeidsgiverValues.identifikator,
-      arbeidsforholdRef: arbeidsgiverValues.arbeidsforholdRef,
-    };
-  }),
+  andeler: values.andeler.map(andel => ({
+    utbetalingsgrad: andel.utbetalingsgrad || 100,
+    // INNTEKTSKATEGORI
+    inntektskategori: {
+      kode: andel.inntektskategori,
+      kodeverk: 'INNTEKTSKATEGORI',
+    },
+    refusjon: andel.refusjon || 0,
+    tilSoker: andel.tilSoker,
+    arbeidsgiverOrgNr: andel.arbeidsgiverOrgNr,
+  })),
   // lagtTilAvSaksbehandler: true,
 });
 
@@ -180,6 +166,14 @@ const mapStateToPropsFactory = (_initialState: any, ownProps: PureOwnProps) => {
       tom: null,
     },
     nyPeriode: behandlingFormValueSelector('nyPeriodeForm', behandlingId, behandlingVersjon)(state, 'fom', 'tom'),
+    andeler: behandlingFormValueSelector('andeler', behandlingId, behandlingVersjon)(
+      state,
+      'tilSoker',
+      'refusjon',
+      'arbeidsgiver',
+      'inntektskategori',
+      'utbetalingsgrad',
+    ),
     onSubmit,
   });
 };

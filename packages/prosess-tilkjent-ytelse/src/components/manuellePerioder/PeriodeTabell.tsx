@@ -4,7 +4,7 @@ import { change as reduxFormChange, FieldArray, getFormInitialValues, reset as r
 import { FormattedMessage } from 'react-intl';
 import { bindActionCreators } from 'redux';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
-import { KodeverkMedNavn, ArbeidsforholdV2, ArbeidsgiverOpplysningerPerId } from '@k9-sak-web/types';
+import { KodeverkMedNavn, ArbeidsgiverOpplysningerPerId } from '@k9-sak-web/types';
 import { getBehandlingFormPrefix, behandlingFormValueSelector } from '@fpsak-frontend/form';
 import uttakPeriodeVurdering from '@fpsak-frontend/kodeverk/src/uttakPeriodeVurdering';
 import { ariaCheck } from '@fpsak-frontend/utils';
@@ -49,8 +49,7 @@ interface OwnProps {
   behandlingVersjon: number;
   alleKodeverk: { [key: string]: KodeverkMedNavn[] };
   slettedePerioder?: any[];
-  arbeidsforhold?: ArbeidsforholdV2[];
-  arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysningerPerId;
+  arbeidsgivere?: ArbeidsgiverOpplysningerPerId;
 }
 
 interface OwnState {
@@ -72,7 +71,7 @@ export class PeriodeTabell extends PureComponent<OwnProps, OwnState> {
     };
 
     this.newPeriodeCallback = this.newPeriodeCallback.bind(this);
-    this.newArbeidsforholdCallback = this.newArbeidsforholdCallback.bind(this);
+    this.newArbeidsgiverCallback = this.newArbeidsgiverCallback.bind(this);
     this.addNewPeriod = this.addNewPeriod.bind(this);
     this.openSlettPeriodeModalCallback = this.openSlettPeriodeModalCallback.bind(this);
     this.newPeriodeResetCallback = this.newPeriodeResetCallback.bind(this);
@@ -116,13 +115,14 @@ export class PeriodeTabell extends PureComponent<OwnProps, OwnState> {
     });
   }
 
-  newArbeidsforholdCallback(nyArbeidsforhold: any) {
-    const { behandlingFormPrefix, arbeidsforhold, reduxFormChange: formChange, reduxFormReset: formReset } = this.props;
+  newArbeidsgiverCallback(nyArbeidsgivere: any) {
+    const { behandlingFormPrefix, arbeidsgivere, reduxFormChange: formChange, reduxFormReset: formReset } = this.props;
 
-    const newArbeidsforhold = (arbeidsforhold || []).concat(nyArbeidsforhold);
-
-    formChange(`${behandlingFormPrefix}.TilkjentYtelseForm`, 'arbeidsforhold', newArbeidsforhold);
-    formReset(`${behandlingFormPrefix}.nyttArbeidsforholdForm`);
+    formChange(`${behandlingFormPrefix}.TilkjentYtelseForm`, 'arbeidsgivere', {
+      ...(arbeidsgivere || {}),
+      [nyArbeidsgivere.orgNr]: { identifikator: nyArbeidsgivere.orgNr, navn: nyArbeidsgivere.navn },
+    });
+    formReset(`${behandlingFormPrefix}.nyArbeidsgiverForm`);
   }
 
   openSlettPeriodeModalCallback(id: string) {
@@ -247,16 +247,7 @@ export class PeriodeTabell extends PureComponent<OwnProps, OwnState> {
   }
 
   render() {
-    const {
-      readOnly,
-      perioder,
-      arbeidsforhold,
-      arbeidsgiverOpplysningerPerId,
-      submitting,
-      behandlingId,
-      behandlingVersjon,
-      alleKodeverk,
-    } = this.props;
+    const { readOnly, perioder, arbeidsgivere, submitting, behandlingId, behandlingVersjon, alleKodeverk } = this.props;
     const { periodeSlett, isNyPeriodeFormOpen, showModalSlettPeriode } = this.state;
 
     return (
@@ -266,8 +257,7 @@ export class PeriodeTabell extends PureComponent<OwnProps, OwnState> {
           name="perioder"
           // @ts-ignore
           component={PeriodeRad}
-          arbeidsforhold={arbeidsforhold}
-          arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
+          arbeidsgivere={arbeidsgivere}
           openSlettPeriodeModalCallback={this.openSlettPeriodeModalCallback}
           updatePeriode={this.updatePeriode}
           editPeriode={this.editPeriode}
@@ -301,14 +291,12 @@ export class PeriodeTabell extends PureComponent<OwnProps, OwnState> {
         {isNyPeriodeFormOpen && (
           <NyPeriode
             newPeriodeCallback={this.newPeriodeCallback}
-            newArbeidsforholdCallback={this.newArbeidsforholdCallback}
+            newArbeidsgiverCallback={this.newArbeidsgiverCallback}
             newPeriodeResetCallback={this.newPeriodeResetCallback}
             behandlingId={behandlingId}
             behandlingVersjon={behandlingVersjon}
             alleKodeverk={alleKodeverk}
-            // @ts-ignore
-            arbeidsforhold={arbeidsforhold}
-            arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
+            arbeidsgivere={arbeidsgivere}
             readOnly={readOnly}
           />
         )}
@@ -333,8 +321,8 @@ const slettedePerioder = (state: any, behandlingId: number, behandlingVersjon: n
   behandlingFormValueSelector('TilkjentYtelseForm', behandlingId, behandlingVersjon)(state, 'slettedePerioder');
 const perioder = (state: any, behandlingId: number, behandlingVersjon: number) =>
   behandlingFormValueSelector('TilkjentYtelseForm', behandlingId, behandlingVersjon)(state, 'perioder');
-const arbeidsforhold = (state: any, behandlingId: number, behandlingVersjon: number) =>
-  behandlingFormValueSelector('TilkjentYtelseForm', behandlingId, behandlingVersjon)(state, 'arbeidsforhold');
+const arbeidsgivere = (state: any, behandlingId: number, behandlingVersjon: number) =>
+  behandlingFormValueSelector('TilkjentYtelseForm', behandlingId, behandlingVersjon)(state, 'arbeidsgivere');
 
 interface PureOwnProps {
   behandlingId: number;
@@ -354,7 +342,7 @@ const mapStateToProps = (state: any, props: PureOwnProps) => {
     initialValues: getFormInitialValues(`${behandlingFormPrefix}.TilkjentYtelseForm`)(state),
     slettedePerioder: slettedePerioder(state, behandlingId, behandlingVersjon) || EMPTY_ARRAY,
     perioder: perioder(state, behandlingId, behandlingVersjon) || EMPTY_ARRAY,
-    arbeidsforhold: arbeidsforhold(state, behandlingId, behandlingVersjon) || EMPTY_ARRAY,
+    arbeidsgivere: arbeidsgivere(state, behandlingId, behandlingVersjon) || {},
   };
 };
 

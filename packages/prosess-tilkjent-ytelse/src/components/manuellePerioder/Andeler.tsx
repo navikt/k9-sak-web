@@ -23,23 +23,18 @@ interface OwnProps {
   behandlingId: number;
   behandlingStatus: Kodeverk;
   alleKodeverk: { [key: string]: KodeverkMedNavn[] };
-  arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysningerPerId;
+  arbeidsgivere: ArbeidsgiverOpplysningerPerId;
 }
 
 const headerTextCodes = [
-  'TilkjentYtelse.NyPeriode.Arbeidsforhold',
+  'TilkjentYtelse.NyPeriode.Inntektskategori',
+  'TilkjentYtelse.NyPeriode.Arbeidsgiver',
   'TilkjentYtelse.NyPeriode.TilSoker',
   'TilkjentYtelse.NyPeriode.Refusjon',
-  'TilkjentYtelse.NyPeriode.Inntektskategori',
   'TilkjentYtelse.NyPeriode.Ubetalingsgrad',
 ];
 
-const Andeler = ({
-  fields,
-  meta,
-  alleKodeverk,
-  arbeidsgiverOpplysningerPerId,
-}: Partial<OwnProps> & WrappedComponentProps) => {
+const Andeler = ({ fields, meta, alleKodeverk, arbeidsgivere }: Partial<OwnProps> & WrappedComponentProps) => {
   const getKodeverknavn = getKodeverknavnFn(alleKodeverk, kodeverkTyper);
 
   return (
@@ -50,23 +45,22 @@ const Andeler = ({
       <Table headerTextCodes={headerTextCodes}>
         {fields.map((fieldId: string, index: number, field: FieldArrayFieldsProps<any>) => {
           const andel = field.get(index);
-          const label = createVisningsnavnForAndel(andel, getKodeverknavn, arbeidsgiverOpplysningerPerId);
-
           const inntektskategori = getInntektskategori(andel.inntektskategori, getKodeverknavn);
+          const arbeidsgiver = createVisningsnavnForAndel(andel, getKodeverknavn, arbeidsgivere);
 
           return (
             <tr>
               <TableColumn>
-                <Normaltekst>{label}</Normaltekst>
+                <Normaltekst>{inntektskategori}</Normaltekst>
+              </TableColumn>
+              <TableColumn>
+                <Normaltekst>{arbeidsgiver}</Normaltekst>
               </TableColumn>
               <TableColumn>
                 <Normaltekst>{andel.tilSoker}</Normaltekst>
               </TableColumn>
               <TableColumn>
                 <Normaltekst>{andel.refusjon}</Normaltekst>
-              </TableColumn>
-              <TableColumn>
-                <Normaltekst>{inntektskategori}</Normaltekst>
               </TableColumn>
               <TableColumn>
                 <Normaltekst>{andel.utbetalingsgrad}</Normaltekst>
