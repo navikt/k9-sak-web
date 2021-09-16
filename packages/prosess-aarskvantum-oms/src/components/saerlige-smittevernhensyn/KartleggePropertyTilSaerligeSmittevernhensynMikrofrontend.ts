@@ -59,15 +59,15 @@ const KartleggePropertyTilSaerligeSmittevernhensynMikrofrontend = (
       ? period.vurderteVilkår.vilkår.NOK_DAGER === vilkarsUtfall
       : period.vurderteVilkår.vilkår.SMITTEVERN === vilkarsUtfall;
 
-  const perioderInnvilget = Array.isArray(aktiviteter[0]?.uttaksperioder)
+  const perioderInnvilget: Uttaksperiode[] = Array.isArray(aktiviteter[0]?.uttaksperioder)
     ? aktiviteter[0].uttaksperioder.filter( p => perioderFilterFn(p, UtfallEnum.INNVILGET))
     : [];
 
-  const perioderAvslått = Array.isArray(aktiviteter[0]?.uttaksperioder)
+  const perioderAvslått: Uttaksperiode[] = Array.isArray(aktiviteter[0]?.uttaksperioder)
     ? aktiviteter[0].uttaksperioder.filter( p => perioderFilterFn(p, UtfallEnum.AVSLÅTT))
     : [];
 
-  const eksistererInnvilgetPeriode = perioderInnvilget.length > 0;
+  const eksistererInnvilgetPeriode: boolean = perioderInnvilget.length > 0;
   let dagerDelvisInnvilget = 0;
 
   if (eksistererInnvilgetPeriode && perioderAvslått.length > 0) {
@@ -76,7 +76,7 @@ const KartleggePropertyTilSaerligeSmittevernhensynMikrofrontend = (
     });
   }
 
-  const behandlingsID = behandling.id.toString();
+  const behandlingsID: string = behandling.id.toString();
 
   if (typeof aksjonspunkt !== 'undefined' && aksjonspunkt.definisjon.kode === aksjonspunktCodes.VURDER_ÅRSKVANTUM_DOK) {
     const isAksjonspunktOpen = aksjonspunkt.status.kode === aksjonspunktStatus.OPPRETTET && aksjonspunkt.kanLoses;
