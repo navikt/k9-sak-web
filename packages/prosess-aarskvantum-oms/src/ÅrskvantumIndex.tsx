@@ -56,7 +56,7 @@ const ÅrskvantumIndex = ({
   const { sisteUttaksplan } = årskvantum;
   const aktivitetsstatuser = alleKodeverk[kodeverkTyper.AKTIVITET_STATUS];
 
-  const saerligSmittevernAp: Aksjonspunkt = aksjonspunkterForSteg.find(
+  const apForVurderÅrskvantumDok: Aksjonspunkt = aksjonspunkterForSteg.find(
     ap => ap.definisjon.kode === aksjonspunktCodes.VURDER_ÅRSKVANTUM_DOK,
   );
   const aksjonspunkter: Aksjonspunkt[] = aksjonspunkterForSteg.filter(
@@ -64,9 +64,16 @@ const ÅrskvantumIndex = ({
   );
   const åpenAksjonspunkt = aksjonspunkter.find(ap => ap.status.kode !== aksjonspunktStatus.UTFORT) !== undefined;
 
-  const visSaerligSmittevernAksjonspunkt =
-    saerligSmittevernAp !== undefined &&
-    (!åpenAksjonspunkt || saerligSmittevernAp.status.kode === aksjonspunktStatus.UTFORT);
+  const visAPVurderÅrskvantumDokIOmsorgsdagerFrontend =
+    apForVurderÅrskvantumDok !== undefined &&
+    (!åpenAksjonspunkt || apForVurderÅrskvantumDok.status.kode === aksjonspunktStatus.UTFORT);
+
+  const propsTilMikrofrontend = {
+    submitCallback,
+    behandling,
+    saerligSmittevernAp: apForVurderÅrskvantumDok,
+    aktiviteter: sisteUttaksplan?.aktiviteter
+  };
 
   return (
     <RawIntlProvider value={årskvantumIntl}>
@@ -77,18 +84,13 @@ const ÅrskvantumIndex = ({
           behandlingVersjon={behandling.versjon}
           submitCallback={submitCallback}
           aksjonspunkterForSteg={aksjonspunkter}
-          isAksjonspunktOpen={isAksjonspunktOpen && !visSaerligSmittevernAksjonspunkt}
+          isAksjonspunktOpen={isAksjonspunktOpen && !visAPVurderÅrskvantumDokIOmsorgsdagerFrontend}
         />
       )}
 
-      {visSaerligSmittevernAksjonspunkt && (
+      {visAPVurderÅrskvantumDokIOmsorgsdagerFrontend && (
         <SaerligeSmittevernhensynMikrofrontend
-          {...{
-            submitCallback,
-            behandling,
-            saerligSmittevernAp,
-            aktiviteter: sisteUttaksplan?.aktiviteter,
-          }}
+          {...propsTilMikrofrontend}
         />
       )}
 
