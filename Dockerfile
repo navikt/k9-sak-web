@@ -1,11 +1,11 @@
-FROM nginx:1.17.8-alpine
+FROM nginx:1.21.3-alpine
 
 LABEL org.opencontainers.image.source=https://github.com/navikt/k9-sak-web
 
 # bash er ikke standard i alpine:
 RUN apk add --no-cache bash
 
-ADD proxy.nginx /etc/nginx/conf.d/app.conf.template
+ADD proxy.nginx /etc/nginx/templates/default.conf.template
 ADD feature-toggles.json /etc/nginx/conf.d/feature-toggles.json
 
 ENV APP_DIR="/app" \
