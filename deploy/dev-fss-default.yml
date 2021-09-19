@@ -5,6 +5,9 @@ metadata:
   namespace: k9saksbehandling
   labels:
     team: k9saksbehandling
+  annotations:
+    nais.io/run-as-group: "0" # Fix permissions for nginx
+    nais.io/read-only-file-system: "false" # Fix permissions for nginx
 spec:
   image: {{ image }}
   port: 9000
