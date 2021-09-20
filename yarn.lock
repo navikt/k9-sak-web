@@ -13425,10 +13425,10 @@ nav-frontend-ikonknapper@^2.1.1:
   resolved "https://registry.yarnpkg.com/nav-frontend-ikonknapper/-/nav-frontend-ikonknapper-2.1.1.tgz#2350ce467246b0859352dc3391d9b014673b84b5"
   integrity sha512-JgKaBDAqWQitG6tnxcE+OAl6Nk7iysmsECVGKd2Nqb8rdzIlkpdshT+Vz7TCLbed/XqyO0ilwPIHGo6J/SjVrg==
 
-nav-frontend-js-utils@1.0.19, nav-frontend-js-utils@^1.0.19:
-  version "1.0.19"
-  resolved "https://registry.yarnpkg.com/nav-frontend-js-utils/-/nav-frontend-js-utils-1.0.19.tgz#56a14aa58cc249e34f98caaaeb101f638648e2ac"
-  integrity sha512-Z+ZGNcghkbx0VT0AN3H5ftCWWRMpXGcMI2JnMQJGzS8CkbjIEU8nkxsU63tyzq/n1BK69z1xT/1Vju6DRROidQ==
+nav-frontend-js-utils@1.0.20, nav-frontend-js-utils@^1.0.19:
+  version "1.0.20"
+  resolved "https://registry.yarnpkg.com/nav-frontend-js-utils/-/nav-frontend-js-utils-1.0.20.tgz#fac829adb801d66275ac273255d5102b73d5805e"
+  integrity sha512-rCEbgtLmk/95TJeke3Njgm0lBJuBa0N8p8h5Oqhxjov529UjTT2Vx4XJzjQd7/ApgeCkdc5DB9GW5jGTEFoYTA==
   dependencies:
     lodash.throttle "^4.1.1"
 
@@ -15124,9 +15124,9 @@ pretty-hrtime@^1.0.3:
   integrity sha1-t+PqQkNaTJsnWdmeDyAesZWALuE=
 
 prismjs@^1.21.0, prismjs@^1.24.0, prismjs@~1.24.0:
-  version "1.24.1"
-  resolved "https://registry.yarnpkg.com/prismjs/-/prismjs-1.24.1.tgz#c4d7895c4d6500289482fa8936d9cdd192684036"
-  integrity sha512-mNPsedLuk90RVJioIky8ANZEwYm5w9LcvCXrxHlwf4fNVSn8jEipMybMkWUyyF0JhnC+C4VcOVSBuHRKs1L5Ow==
+  version "1.25.0"
+  resolved "https://registry.yarnpkg.com/prismjs/-/prismjs-1.25.0.tgz#6f822df1bdad965734b310b315a23315cf999756"
+  integrity sha512-WCjJHl1KEWbnkQom1+SzftbtXMKQoezOCYs5rECqMN+jP+apI7ftoflyqigqzopSO3hMhTEb0mFClA8lkolgEg==
 
 private@^0.1.8:
   version "0.1.8"
