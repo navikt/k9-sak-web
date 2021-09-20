@@ -19,6 +19,7 @@ import { Fritekstbrev } from '@k9-sak-web/types/src/formidlingTsType';
 import styles from './messages.less';
 
 const maxLength4000 = maxLength(4000);
+const maxLength100000 = maxLength(100000);
 const maxLength200 = maxLength(200);
 const minLength3 = minLength(3);
 
@@ -204,7 +205,7 @@ export const MessagesImpl = ({
               </div>
             </>
           )}
-          {brevmalkode === dokumentMalType.GENERELL_FRITEKSTBREV && (
+          {brevmalkode === dokumentMalType.GENERELT_FRITEKSTBREV && (
             <>
               <div className='input--xxl'>
                 <VerticalSpacer eightPx />
@@ -219,7 +220,7 @@ export const MessagesImpl = ({
                 <TextAreaField
                   name='fritekstbrev.brødtekst'
                   label={intl.formatMessage({ id: 'Messages.Fritekst' })}
-                  validate={[required, maxLength4000, minLength3, hasValidText]}
+                  validate={[required, minLength3, maxLength100000, hasValidText]}
                   maxLength={100000}
                   badges={[{ type: 'fokus', textId: languageCode, title: 'Messages.Beskrivelse' }]}
                 />
@@ -281,6 +282,7 @@ const transformValues = values => {
   if (values.brevmalkode === dokumentMalType.REVURDERING_DOK && newValues.arsakskode !== ugunstAarsakTyper.ANNET) {
     newValues.fritekst = ' ';
   }
+
   const overstyrtMottaker =
     newValues.overstyrtMottaker && newValues.overstyrtMottaker !== JSON.stringify(RECIPIENT)
       ? safeJSONParse(newValues.overstyrtMottaker)

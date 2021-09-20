@@ -27,22 +27,9 @@
   tbody,
   thead {
     border-bottom: 1px solid;
-    &:not(.koronaperiode) { border-bottom-color: @navGra40; }
-    &.koronaperiode { border-bottom-color: @navOransjeLighten20; }
+    border-bottom-color: @navGra40;
     &:nth-child(even) { background-color: #f7f7f7; }
   }
-}
-
-.koronaperiode tr:last-child td:first-child:before {
-  border-color: transparent transparent transparent @navOransjeLighten20;
-  border-style: solid;
-  border-width: 15px 0 0 15px;
-  bottom: 0;
-  content: '';
-  height: 0;
-  left: 0;
-  position: absolute;
-  width: 0;
 }
 
 .fanerad td { padding: 0; }
@@ -105,4 +92,25 @@
   height: 20px;
   margin-right: 0.5em;
   width: 20px;
+}
+
+.header {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+}
+
+.starImage {
+  height: 1.25rem;
+  margin-right: 0.25rem;
+  margin-top: -0.25rem;
+  width: 1.5rem;
+
+  &.hidden {
+    opacity: 0;
+  }
+}
+
+.ikkeGjeldendeBehandling {
+  padding-left: 1.75rem;
 }

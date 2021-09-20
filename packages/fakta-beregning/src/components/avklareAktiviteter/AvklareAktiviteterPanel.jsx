@@ -146,7 +146,7 @@ export class AvklareAktiviteterPanelImpl extends Component {
             name={fieldArrayName}
             component={AvklareAktiviteterPanelContent}
             props={{ ...this.props, submitEnabled }}
-            initializeAktiviteter={() => initializeAktiviteter()}
+            initializeAktiviteter={() => this.initializeAktiviteter()}
           />
         </form>
         {harAndreAvklaringsbehovIPanel && <VerticalSpacer twentyPx />}
@@ -223,9 +223,18 @@ export const transformValues = (values, behandlingResultatPerioder, aktivtBg) =>
         periode: vilkarPeriode.periode,
       };
     });
+  if (harOverstyrt) {
+    // K9-sak støtter i dag kun overstyring av ein periode om gangen
+    return løsteGrunnlag.map(gr => 
+      ({
+        kode: OVERSTYRING_AV_BEREGNINGSAKTIVITETER,
+        begrunnelse: beg === undefined ? null : beg,
+        ...gr,
+      }));
+  }
   return [
     {
-      kode: harOverstyrt ? OVERSTYRING_AV_BEREGNINGSAKTIVITETER : AVKLAR_AKTIVITETER,
+      kode: AVKLAR_AKTIVITETER,
       begrunnelse: beg === undefined ? null : beg,
       grunnlag: løsteGrunnlag,
     },

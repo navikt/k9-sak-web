@@ -4,7 +4,7 @@ import sinon from 'sinon';
 import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
 import { Normaltekst, Undertekst } from 'nav-frontend-typografi';
 import { getAvvisningsAarsaker, getIsAvvist, getKlageresultat, VedtakKlageFormImpl } from './VedtakKlageForm';
-import shallowWithIntl, { intlMock } from '../../i18n';
+import { mountWithIntl, intlMock } from '../../i18n';
 
 const KLAGE_OMGJORT_TEKST = 'VedtakKlageForm.KlageOmgjortGunst';
 
@@ -19,7 +19,7 @@ describe('<VedtakKlageForm>', () => {
       klageVurdertAv: 'NFP',
       klageVurdering: 'AVVIS_KLAGE',
     };
-    const wrapper = shallowWithIntl(
+    const wrapper = mountWithIntl(
       <VedtakKlageFormImpl
         {...reduxFormPropsMock}
         intl={intlMock}
@@ -36,6 +36,7 @@ describe('<VedtakKlageForm>', () => {
         previewVedtakCallback={forhandsvisVedtaksbrevFunc}
         finishKlageCallback={forhandsvisVedtaksbrevFunc}
         aksjonspunktKoder={[]}
+        åpneAksjonspunktKoder={[]}
         klageVurdering={{ klageVurderingResultatNFP }}
         klageresultat={klageVurderingResultatNFP}
         isBehandlingReadOnly

@@ -42,6 +42,11 @@ describe('<PleiepengerFakta>', () => {
     taskStatus: {
       readOnly: false,
     },
+    stegTilstand: {
+      stegType: {
+        kode: '',
+      },
+    },
     behandlingHenlagt: false,
     links: [],
   };

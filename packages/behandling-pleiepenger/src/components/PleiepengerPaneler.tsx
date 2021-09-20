@@ -1,4 +1,10 @@
-import { BehandlingPaVent, Rettigheter, SettPaVentParams } from '@k9-sak-web/behandling-felles';
+import {
+  BehandlingPaVent,
+  Rettigheter,
+  SettPaVentParams,
+  AksjonspunktUtenLøsningModal,
+  harOpprettetAksjonspunkt,
+} from '@k9-sak-web/behandling-felles';
 import {
   ArbeidsgiverOpplysningerPerId,
   Behandling,
@@ -61,6 +67,7 @@ const PleiepengerPaneler = ({
   dokumenter,
 }: OwnProps) => {
   const [apentFaktaPanelInfo, setApentFaktaPanel] = useState<FaktaPanelInfo>();
+  const harOpprettetAksjonspunkt9203 = harOpprettetAksjonspunkt(fetchedData?.aksjonspunkter || [], 9203);
 
   return (
     <>
@@ -71,6 +78,12 @@ const PleiepengerPaneler = ({
         settPaVent={settPaVent}
         hentBehandling={hentBehandling}
       />
+      {harOpprettetAksjonspunkt9203 && (
+        <AksjonspunktUtenLøsningModal
+          melding="Den innsendte søknaden mangler opplysninger om arbeidskategori og arbeidstid.
+       For å komme videre i behandlingen må du punsje manglende opplysninger om arbeidskategori og arbeidstid i Punsj."
+        />
+      )}
       <PleiepengerProsess
         data={fetchedData}
         fagsak={fagsak}

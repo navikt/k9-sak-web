@@ -191,25 +191,6 @@ const beregningsresultat = {
   utbetaltePerioder: [],
 } as BeregningsresultatUtbetalt;
 
-const arbeidsforhold = [
-  {
-    id: '910909088-ab549827-4f9c-40f3-875c-3c28631b2291',
-    arbeidsgiver: { arbeidsgiverOrgnr: '12345678', arbeidsgiverAktørId: null },
-    arbeidsforhold: {
-      internArbeidsforholdId: 'ab549827-4f9c-40f3-875c-3c28631b2291',
-      eksternArbeidsforholdId: 'ARB001-001',
-    },
-    yrkestittel: 'Ukjent',
-    begrunnelse: null,
-    perioder: [{ fom: '2020-06-30', tom: '9999-12-31' }],
-    handlingType: { kode: 'BRUK', kodeverk: 'ARBEIDSFORHOLD_HANDLING_TYPE' },
-    kilde: [{ kode: 'AA-Registeret', kodeverk: 'ARBEIDSFORHOLD_KILDE' }],
-    permisjoner: [],
-    stillingsprosent: 100.0,
-    aksjonspunktÅrsaker: [],
-    inntektsmeldinger: null,
-  },
-];
 const arbeidsgiverOpplysningerPerId = {
   12345678: {
     navn: 'BEDRIFT1 AS',
@@ -234,7 +215,6 @@ export const visUtenAksjonspunkt = () => (
     isReadOnly={boolean('isReadOnly', false)}
     submitCallback={action('button-click')}
     readOnlySubmitButton={boolean('readOnly', true)}
-    arbeidsforhold={arbeidsforhold}
     arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
   />
 );
@@ -262,7 +242,6 @@ export const visÅpentAksjonspunkt = () => (
     isReadOnly={boolean('isReadOnly', false)}
     submitCallback={action('button-click')}
     readOnlySubmitButton={boolean('readOnly', true)}
-    arbeidsforhold={arbeidsforhold}
     arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
   />
 );

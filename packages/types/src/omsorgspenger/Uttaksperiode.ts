@@ -32,6 +32,7 @@ export type Uttaksperiode = {
   periode: string; // fom/tom
   delvisFravær?: string; // Duration
   fraværÅrsak: string;
+  søknadÅrsak?: string;
   utfall: Utfalltype;
   utbetalingsgrad: number;
   vurderteVilkår: {
@@ -39,6 +40,7 @@ export type Uttaksperiode = {
   };
   hjemler: string[];
   nøkkeltall?: Nøkkeltall;
+  opprinneligBehandlingUuid?: string;
 };
 
 export type Nøkkeltall = {

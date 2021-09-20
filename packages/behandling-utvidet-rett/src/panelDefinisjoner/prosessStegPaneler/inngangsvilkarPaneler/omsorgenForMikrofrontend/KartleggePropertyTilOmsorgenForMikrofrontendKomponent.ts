@@ -22,6 +22,7 @@ interface PropTypes {
   vilkarInformasjon: VilkarInformasjon;
   fagsaksType: fagsakTsType;
   FormState: FormStateType;
+  harBarnSoktForRammevedtakOmKroniskSyk: boolean;
 }
 
 const KartleggePropertyTilOmsorgenForMikrofrontendKomponent = ({
@@ -33,6 +34,7 @@ const KartleggePropertyTilOmsorgenForMikrofrontendKomponent = ({
   vilkarInformasjon,
   fagsaksType,
   FormState,
+  harBarnSoktForRammevedtakOmKroniskSyk
 }: PropTypes) => {
   let objektTilMikrofrontend = {};
   const { aksjonspunkter, isAksjonspunktOpen } = aksjonspunktInformasjon;
@@ -57,6 +59,7 @@ const KartleggePropertyTilOmsorgenForMikrofrontendKomponent = ({
           vilkarOppfylt: status === vilkarUtfallType.OPPFYLT,
         } as InformasjonTilLesemodus,
         barn: angitteBarn.map(barn => barn.personIdent),
+        harBarnSoktForRammevedtakOmKroniskSyk,
         vedtakFattetVilkarOppfylt: skalVilkarsUtfallVises,
         informasjonOmVilkar: generereInfoForVurdertVilkar(
           skalVilkarsUtfallVises,

@@ -1,4 +1,3 @@
-import { Uttaksperiode } from '@k9-sak-web/types';
 import React from 'react';
 import { shallowWithIntl } from '../../../i18n';
 import NokkeltallContainer from './NokkeltallContainer';
@@ -7,10 +6,6 @@ import ForbrukteDager from './ForbrukteDager';
 describe('<NokkeltallContainer>', () => {
   describe('Forbrukte dager', () => {
     const forbrukteDagerPropsForRestTidOgPeriode = (restTid: string, periode: string, smitteverndager?: string) => {
-      // @ts-ignore
-      const uttaksperiode: Uttaksperiode = {
-        periode,
-      };
       const nøkkeltallContainer = shallowWithIntl(
         <NokkeltallContainer
           totaltAntallDager={20}
@@ -20,7 +15,6 @@ describe('<NokkeltallContainer>', () => {
           benyttetRammemelding
           antallDagerInfotrygd={0}
           smitteverndager={smitteverndager}
-          uttaksperioder={[uttaksperiode]}
           visEllerSkjulNokkeltalldetaljer={() => undefined}
           migrertData={false}
           ar="2020"

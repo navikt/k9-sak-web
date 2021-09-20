@@ -606,8 +606,8 @@ describe('<AvklareAktiviteterPanel>', () => {
     const vilkårsperioder = [{ periode: { fom: '2019-02-02', tom: '2019-02-05' } }];
     const bg = { skjaeringstidspunktBeregning: '2019-02-02' };
     const transformed = transformValues(values, vilkårsperioder, bg);
-    expect(transformed[0].grunnlag.length).to.equal(1);
-    expect(transformed[0].grunnlag[0].beregningsaktivitetLagreDtoList[0].arbeidsgiverIdentifikator).to.equal(
+    expect(transformed.length).to.equal(1);
+    expect(transformed[0].beregningsaktivitetLagreDtoList[0].arbeidsgiverIdentifikator).to.equal(
       aktivitet3.aktørIdString,
     );
     expect(transformed[0].begrunnelse).to.equal('begrunnelse');

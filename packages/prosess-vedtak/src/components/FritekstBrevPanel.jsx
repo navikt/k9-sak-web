@@ -11,7 +11,7 @@ import styles from './vedtakForm.less';
 import PreviewLink from './PreviewLink';
 
 const maxLength200 = maxLength(200);
-const maxLength5000 = maxLength(5000);
+const maxLength100000 = maxLength(100000);
 const minLength3 = minLength(3);
 
 const FritekstBrevPanelImpl = ({ previewBrev, readOnly, sprakkode, harAutomatiskVedtaksbrev }) => (
@@ -64,8 +64,8 @@ const FritekstBrevPanelImpl = ({ previewBrev, readOnly, sprakkode, harAutomatisk
         <TextAreaField
           name="brødtekst"
           label={{ id: 'VedtakForm.Innhold' }}
-          validate={[required, minLength3, maxLength5000, hasValidText]}
-          maxLength={5000}
+          validate={[required, minLength3, maxLength100000, hasValidText]}
+          maxLength={100000}
           readOnly={readOnly}
         />
       </Column>

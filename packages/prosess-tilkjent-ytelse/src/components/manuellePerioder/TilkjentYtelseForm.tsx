@@ -7,7 +7,6 @@ import {
   Aksjonspunkt,
   Kodeverk,
   BeregningsresultatUtbetalt,
-  ArbeidsforholdV2,
   ArbeidsgiverOpplysningerPerId,
   KodeverkMedNavn,
 } from '@k9-sak-web/types';
@@ -28,7 +27,6 @@ interface OwnProps {
   behandlingVersjon: number;
   alleKodeverk: { [key: string]: KodeverkMedNavn[] };
   behandlingStatus: Kodeverk;
-  arbeidsforhold: ArbeidsforholdV2[];
   arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysningerPerId;
   vilkarForSykdomExists: boolean;
   beregningsresultat: BeregningsresultatUtbetalt[];
@@ -44,8 +42,6 @@ export const TilkjentYtelseForm = ({
   behandlingId,
   behandlingVersjon,
   alleKodeverk,
-  arbeidsforhold,
-  arbeidsgiverOpplysningerPerId,
   ...formProps
 }: Partial<OwnProps> & InjectedFormProps) => (
   <>
@@ -73,9 +69,6 @@ export const TilkjentYtelseForm = ({
         behandlingId={behandlingId}
         behandlingVersjon={behandlingVersjon}
         alleKodeverk={alleKodeverk}
-        // @ts-ignore
-        arbeidsforhold={arbeidsforhold}
-        arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
       />
       {formProps.error && <span>{formProps.error}</span>}
     </form>
@@ -122,12 +115,12 @@ const buildInitialValues = createSelector(
   [
     // @ts-ignore
     (props: OwnProps) => props.beregningsresultat?.perioder,
-    (props: OwnProps) => props.arbeidsforhold,
+    (props: OwnProps) => props.arbeidsgiverOpplysningerPerId,
   ],
-  (perioder = [], arbeidsforhold = []) => {
+  (perioder = [], arbeidsgiverOpplysningerPerId = {}) => {
     if (perioder) {
       return {
-        arbeidsforhold,
+        arbeidsgivere: arbeidsgiverOpplysningerPerId,
         perioder: perioder.map((periode: any) => ({
           ...periode,
           id: guid(),
@@ -138,7 +131,7 @@ const buildInitialValues = createSelector(
     }
 
     return {
-      arbeidsforhold,
+      arbeidsgivere: arbeidsgiverOpplysningerPerId,
       perioder,
     };
   },

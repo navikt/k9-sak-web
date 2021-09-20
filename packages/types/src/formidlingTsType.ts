@@ -11,10 +11,8 @@ export type ForhåndsvisRequest = Readonly<{
 }>;
 
 export type Fritekstbrev = Readonly<{
-  fritekstbrev: {
     brødtekst: string,
     overskrift: string,
-  }
 }>
 
 export default ForhåndsvisRequest;
