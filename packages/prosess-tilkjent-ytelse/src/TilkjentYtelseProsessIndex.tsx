@@ -1,6 +1,5 @@
 import React from 'react';
 import {
-  ArbeidsforholdV2,
   ArbeidsgiverOpplysningerPerId,
   Behandling,
   BeregningsresultatUtbetalt,
@@ -13,7 +12,6 @@ import TilkjentYtelsePanel from './components/TilkjentYtelsePanel';
 import messages from '../i18n/nb_NO.json';
 
 interface OwnProps {
-  arbeidsforhold: ArbeidsforholdV2[];
   arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysningerPerId;
   alleKodeverk: { [key: string]: KodeverkMedNavn[] };
   behandling: Behandling;
@@ -44,7 +42,6 @@ const TilkjentYtelseProsessIndex = ({
   isReadOnly,
   submitCallback,
   readOnlySubmitButton,
-  arbeidsforhold,
   arbeidsgiverOpplysningerPerId,
 }: OwnProps) => (
   <RawIntlProvider value={intl}>
@@ -58,7 +55,6 @@ const TilkjentYtelseProsessIndex = ({
       readOnly={isReadOnly}
       submitCallback={submitCallback}
       readOnlySubmitButton={readOnlySubmitButton}
-      arbeidsforhold={arbeidsforhold}
       arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
     />
   </RawIntlProvider>

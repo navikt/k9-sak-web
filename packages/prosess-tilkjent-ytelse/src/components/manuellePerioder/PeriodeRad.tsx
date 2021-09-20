@@ -2,7 +2,7 @@ import React from 'react';
 import { injectIntl, WrappedComponentProps } from 'react-intl';
 import { FieldArray, FieldArrayFieldsProps, FieldArrayMetaProps } from 'redux-form';
 import AlertStripe from 'nav-frontend-alertstriper';
-import { ArbeidsforholdV2, Kodeverk, KodeverkMedNavn, ArbeidsgiverOpplysningerPerId } from '@k9-sak-web/types';
+import { Kodeverk, KodeverkMedNavn, ArbeidsgiverOpplysningerPerId } from '@k9-sak-web/types';
 import { FlexRow, FlexColumn, Table, TableRow, TableColumn, Image } from '@fpsak-frontend/shared-components';
 import removePeriod from '@fpsak-frontend/assets/images/remove.svg';
 import removePeriodDisabled from '@fpsak-frontend/assets/images/remove_disabled.svg';
@@ -26,8 +26,7 @@ interface OwnProps {
   behandlingStatus: Kodeverk;
   alleKodeverk: { [key: string]: KodeverkMedNavn[] };
   isAnyFormOpen: (...args: any[]) => any;
-  arbeidsforhold: ArbeidsforholdV2[];
-  arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysningerPerId;
+  arbeidsgivere: ArbeidsgiverOpplysningerPerId;
 }
 
 const headerTextCodes = ['TilkjentYtelse.Periode', 'TilkjentYtelse.Andeler'];
@@ -40,8 +39,7 @@ const PeriodeRad = ({
   intl,
   isNyPeriodeFormOpen,
   readOnly,
-  arbeidsforhold,
-  arbeidsgiverOpplysningerPerId,
+  arbeidsgivere,
   isAnyFormOpen,
 }: Partial<OwnProps> & WrappedComponentProps) => {
   const isAnyFormOrNyPeriodeOpen = isAnyFormOpen() || isNyPeriodeFormOpen;
@@ -82,10 +80,9 @@ const PeriodeRad = ({
                   name={`${fieldId}.andeler`}
                   // @ts-ignore
                   component={Andeler}
-                  arbeidsforhold={arbeidsforhold}
                   readOnly
                   alleKodeverk={alleKodeverk}
-                  arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
+                  arbeidsgivere={arbeidsgivere}
                 />
               </TableColumn>
               <TableColumn>
