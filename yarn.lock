@@ -13411,9 +13411,9 @@ nav-frontend-hjelpetekst-style@^3.0.1:
   integrity sha512-O6zIv/6HZUH0/yfuqlRo+jLcuvxtg/1xDQAij/awThvh2tbS7hq0rxwoHmbIW9UDRXEWFf2AZv7cqS3vnziT5Q==
 
 nav-frontend-hjelpetekst@^3.1.1:
-  version "3.1.1"
-  resolved "https://registry.yarnpkg.com/nav-frontend-hjelpetekst/-/nav-frontend-hjelpetekst-3.1.1.tgz#e90dd45e63c1610357423756d7f85c0c6c0b6d9d"
-  integrity sha512-TSBsTeKO0pPBwpJiUEV3njL+Rx+hkHQr+Fe3tCtd3Bx2I/BPN+vLWhcfxRXxdtHg2CMdk8WXOwRyi9AR+tHuJg==
+  version "3.1.2"
+  resolved "https://registry.yarnpkg.com/nav-frontend-hjelpetekst/-/nav-frontend-hjelpetekst-3.1.2.tgz#de3f17c51d2a0aee98190dcfc48a08e060213fed"
+  integrity sha512-D3kHzENBw82WwY4+Gvms2C9a3Zx2dkhycXwOExu34kwvXow17IsmHNKdUKvXVOEP4NVtXQxzxvXxDPyPGn1oBg==
 
 nav-frontend-ikoner-assets@^3.0.1:
   version "3.0.1"
@@ -15124,9 +15124,9 @@ pretty-hrtime@^1.0.3:
   integrity sha1-t+PqQkNaTJsnWdmeDyAesZWALuE=
 
 prismjs@^1.21.0, prismjs@^1.24.0, prismjs@~1.24.0:
-  version "1.24.1"
-  resolved "https://registry.yarnpkg.com/prismjs/-/prismjs-1.24.1.tgz#c4d7895c4d6500289482fa8936d9cdd192684036"
-  integrity sha512-mNPsedLuk90RVJioIky8ANZEwYm5w9LcvCXrxHlwf4fNVSn8jEipMybMkWUyyF0JhnC+C4VcOVSBuHRKs1L5Ow==
+  version "1.25.0"
+  resolved "https://registry.yarnpkg.com/prismjs/-/prismjs-1.25.0.tgz#6f822df1bdad965734b310b315a23315cf999756"
+  integrity sha512-WCjJHl1KEWbnkQom1+SzftbtXMKQoezOCYs5rECqMN+jP+apI7ftoflyqigqzopSO3hMhTEb0mFClA8lkolgEg==
 
 private@^0.1.8:
   version "0.1.8"
