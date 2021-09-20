@@ -11,7 +11,6 @@ import {
   FamilieHendelse,
   KodeverkMedNavn,
   Personopplysninger,
-  ArbeidsforholdV2,
   ArbeidsgiverOpplysningerPerId,
   Soknad,
 } from '@k9-sak-web/types';
@@ -54,7 +53,6 @@ interface PureOwnProps {
   readOnly: boolean;
   submitCallback: (data: any) => Promise<any>;
   readOnlySubmitButton: boolean;
-  arbeidsforhold: ArbeidsforholdV2[];
   arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysningerPerId;
 }
 
@@ -70,7 +68,6 @@ export const TilkjentYtelsePanelImpl = ({
   behandlingId,
   behandlingVersjon,
   aksjonspunkter,
-  arbeidsforhold,
   readOnly,
   alleKodeverk,
   arbeidsgiverOpplysningerPerId,
@@ -105,7 +102,6 @@ export const TilkjentYtelsePanelImpl = ({
           behandlingId={behandlingId}
           behandlingVersjon={behandlingVersjon}
           beregningsresultat={beregningresultat}
-          arbeidsforhold={arbeidsforhold}
           arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
           aksjonspunkter={aksjonspunkter}
           alleKodeverk={alleKodeverk}
