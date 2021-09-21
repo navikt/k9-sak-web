@@ -11,6 +11,7 @@ import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import klageVurderingType from '@fpsak-frontend/kodeverk/src/klageVurdering';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
+import { erTilbakekrevingType } from '@fpsak-frontend/kodeverk/src/behandlingType';
 import { AksjonspunktHelpTextTemp, FadingPanel, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { ProsessStegSubmitButton, ProsessStegBegrunnelseTextField } from '@k9-sak-web/prosess-felles';
 import {
@@ -45,6 +46,7 @@ export const BehandleKlageFormNfpImpl = ({
   readOnlySubmitButton,
   sprakkode,
   formValues,
+  erPåklagdBehandlingTilbakekreving,
   intl,
   alleKodeverk,
   ...formProps
@@ -60,6 +62,7 @@ export const BehandleKlageFormNfpImpl = ({
       <KlageVurderingRadioOptionsNfp
         fagsak={fagsak}
         readOnly={readOnly}
+        erPåklagdBehandlingTilbakekreving={erPåklagdBehandlingTilbakekreving}
         klageVurdering={formValues.klageVurdering}
         aksjonspunktCode={aksjonspunktCodes.BEHANDLE_KLAGE_NFP}
         intl={intl}
@@ -164,6 +167,12 @@ export const transformValues = (values, fagsak) => ({
   kode: aksjonspunktCodes.BEHANDLE_KLAGE_NFP,
 });
 
+const erPåklagdBehandlingTilbakekreving = createSelector(
+  [ownProps => ownProps.klageVurdering.klageVurderingResultatNFP],
+  klageVurderingResultat =>
+    erTilbakekrevingType(klageVurderingResultat && klageVurderingResultat.påklagdBehandlingType),
+);
+
 const formName = 'BehandleKlageNfpForm';
 
 const mapStateToPropsFactory = (initialState, initialOwnProps) => {
@@ -179,6 +188,7 @@ const mapStateToPropsFactory = (initialState, initialOwnProps) => {
       'klageVurderingOmgjoer',
       'klageHjemmel',
     ),
+    erPåklagdBehandlingTilbakekreving: erPåklagdBehandlingTilbakekreving(ownProps),
     readOnly: ownProps.readOnly,
     onSubmit,
   });
