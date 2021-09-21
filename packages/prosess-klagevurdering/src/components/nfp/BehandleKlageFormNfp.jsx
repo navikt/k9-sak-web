@@ -167,7 +167,7 @@ export const transformValues = (values, fagsak) => ({
   kode: aksjonspunktCodes.BEHANDLE_KLAGE_NFP,
 });
 
-const erPåklagdBehandlingTilbakekreving = createSelector(
+const getErPåklagdBehandlingTilbakekreving = createSelector(
   [ownProps => ownProps.klageVurdering.klageVurderingResultatNFP],
   klageVurderingResultat =>
     erTilbakekrevingType(klageVurderingResultat && klageVurderingResultat.påklagdBehandlingType),
@@ -188,7 +188,7 @@ const mapStateToPropsFactory = (initialState, initialOwnProps) => {
       'klageVurderingOmgjoer',
       'klageHjemmel',
     ),
-    erPåklagdBehandlingTilbakekreving: erPåklagdBehandlingTilbakekreving(ownProps),
+    erPåklagdBehandlingTilbakekreving: getErPåklagdBehandlingTilbakekreving(ownProps),
     readOnly: ownProps.readOnly,
     onSubmit,
   });
