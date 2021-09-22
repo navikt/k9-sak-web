@@ -127,6 +127,7 @@ VilkarFields.buildInitialValues = (
     erVilkarOk,
     vilkarFields: Array.isArray(vilkårPerioder)
       ? vilkårPerioder.map(periode => ({
+          begrunnelse: periode.begrunnelse,
           erVilkarOk: Object.values(midlertidigInaktiv).includes(periode.merknad?.kode)
             ? periode.merknad.kode
             : periode.vilkarStatus.kode === vilkarUtfallType.OPPFYLT,
