@@ -1,13 +1,14 @@
 import PropTypes from 'prop-types';
-import { getKodeverknavnFn } from '@fpsak-frontend/utils';
+import moment from 'moment';
+import { DDMMYYYY_DATE_FORMAT, getKodeverknavnFn } from '@fpsak-frontend/utils';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 
 const getEndCharFromId = id => (id ? `...${id.substring(id.length - 4, id.length)}` : '');
 
 export const createVisningsnavnForAktivitet = (aktivitet, alleKodeverk, arbeidsgiverOpplysningerPerId) => {
   const arbeidsgiverOpplysninger =
-    arbeidsgiverOpplysningerPerId && aktivitet.arbeidsgiverId
-      ? arbeidsgiverOpplysningerPerId[aktivitet.arbeidsgiverId]
+    arbeidsgiverOpplysningerPerId && aktivitet.arbeidsgiverIdent
+      ? arbeidsgiverOpplysningerPerId[aktivitet.arbeidsgiverIdent]
       : {};
 
   const arbeidsgiverNavn = arbeidsgiverOpplysninger?.navn;
@@ -18,8 +19,15 @@ export const createVisningsnavnForAktivitet = (aktivitet, alleKodeverk, arbeidsg
       : '';
   }
 
-  return aktivitet.arbeidsgiverId
-    ? `${arbeidsgiverNavn} (${aktivitet.arbeidsgiverId})${getEndCharFromId(aktivitet.eksternArbeidsforholdId)}`
+  if (arbeidsgiverOpplysninger.erPrivatPerson) {
+    return arbeidsgiverOpplysninger.fødselsdato
+      ? `${arbeidsgiverOpplysninger.navn} (${moment(arbeidsgiverOpplysninger.fødselsdato).format(
+          DDMMYYYY_DATE_FORMAT,
+        )})${getEndCharFromId(aktivitet.eksternArbeidsforholdId)}`
+      : `${arbeidsgiverOpplysninger.navn}${getEndCharFromId(aktivitet.eksternArbeidsforholdId)}`;
+  }
+  return aktivitet.arbeidsgiverIdent
+    ? `${arbeidsgiverNavn} (${aktivitet.arbeidsgiverIdent})${getEndCharFromId(aktivitet.eksternArbeidsforholdId)}`
     : arbeidsgiverNavn;
 };
 
