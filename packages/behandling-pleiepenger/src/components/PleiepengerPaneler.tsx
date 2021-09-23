@@ -97,7 +97,7 @@ const PleiepengerPaneler = ({
                   {hasError && <p>Noe gikk galt under henting av perioder</p>}
                   {!isLoading && !hasError && (
                     <ArbeidsgiverMedManglendePerioderListe
-                      arbeidsgivereMedPerioder={data.mangler.map(mangel => ({
+                      arbeidsgivereMedPerioder={data.mangler?.map(mangel => ({
                         arbeidsgiverNavn: arbeidsgiverOpplysningerUtil.finnArbeidsgiversNavn(
                           mangel.arbeidsgiver.organisasjonsnummer,
                         ),
