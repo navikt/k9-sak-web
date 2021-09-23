@@ -13,7 +13,7 @@ import styles from './klageVurderingRadioOptionsNfp.less';
 
 const utledHjemler = (fagsak, erTilbakekreving = false) => {
   if (erTilbakekreving) {
-    return [{ kode: 'tilbakekreving', navn: 'Tilbakekreving' }];
+    return [{ kode: '22-15', navn: '§ 22-15' }];
   }
 
   switch (fagsak.sakstype.kode) {
