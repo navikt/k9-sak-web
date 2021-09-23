@@ -48,6 +48,7 @@ describe('<AktivitetTabell />', () => {
   it('rendrer tabellrad med rett info', () => {
     const wrapper = shallow(
       <AktivitetTabell
+        behandlingUuid="abc"
         uttaksperioder={aktivitet.uttaksperioder}
         arbeidsforholdtypeKode="AT"
         arbeidsforhold={arbeidsforhold}
@@ -74,6 +75,7 @@ describe('<AktivitetTabell />', () => {
   it('Klikk expandknapp rendrer detaljer og viser vilkår om arbeidsforhold sist', () => {
     const wrapper = shallow(
       <AktivitetTabell
+        behandlingUuid="abc"
         uttaksperioder={aktivitet.uttaksperioder}
         arbeidsforhold={arbeidsforhold}
         arbeidsforholdtypeKode="AT"

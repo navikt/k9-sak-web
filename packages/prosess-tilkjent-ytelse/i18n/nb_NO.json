@@ -37,6 +37,7 @@
   "TilkjentYtelse.NyPeriode.Ubetalingsgrad": "Utbetalingsgrad",
   "TilkjentYtelse.NyPeriode.TilSoker": "Til søker",
   "TilkjentYtelse.NyPeriode.Refusjon": "Refusjon",
+  "TilkjentYtelse.NyPeriode.Arbeidsgiver": "Arbeidsgiver",
   "TilkjentYtelse.NyPeriode.Arbeidsforhold": "Arbeidsforhold",
   "TilkjentYtelse.NyPeriode.AktivitetsStatus": "Aktivitetsstatus",
   "TilkjentYtelse.NyPeriode.Inntektskategori": "Inntektskategori",
@@ -54,6 +55,9 @@
   "TilkjentYtelse.Ok": "Ok",
   "TilkjentYtelse.ArbeidsgiverNavn": "Navn",
   "TilkjentYtelse.ArbeidsgiverOrgnummer": "Organisasjonsnummer",
+
+  "TilkjentYtelse.SlettPerioden": "Slett Perioden",
+  "TilkjentYtelse.PeriodenSlettes": "Perioden vil bli slettet",
 
   "HelpText.Aksjonspunkt": "Aksjonspunkt",
   "Malform.Beskrivelse": "Foretrukket språk",

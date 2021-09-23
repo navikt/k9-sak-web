@@ -1,12 +1,11 @@
-import React, { PureComponent } from 'react';
+import React, { useState, useCallback } from 'react';
 import { connect } from 'react-redux';
 import { change as reduxFormChange, FieldArray, getFormInitialValues, reset as reduxFormReset } from 'redux-form';
 import { FormattedMessage } from 'react-intl';
 import { bindActionCreators } from 'redux';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
-import { KodeverkMedNavn, ArbeidsforholdV2, ArbeidsgiverOpplysningerPerId } from '@k9-sak-web/types';
+import { KodeverkMedNavn, ArbeidsgiverOpplysningerPerId } from '@k9-sak-web/types';
 import { getBehandlingFormPrefix, behandlingFormValueSelector } from '@fpsak-frontend/form';
-import uttakPeriodeVurdering from '@fpsak-frontend/kodeverk/src/uttakPeriodeVurdering';
 import { ariaCheck } from '@fpsak-frontend/utils';
 import {
   // AksjonspunktHelpText,
@@ -19,6 +18,8 @@ import {
 import PeriodeRad from './PeriodeRad';
 import SlettPeriodeModal from './SlettPeriodeModal';
 import NyPeriode from './NyPeriode';
+
+const FORM_NAME = 'TilkjentYtelseForm';
 
 const createNewPerioder = (perioder, id: string, values: any) => {
   const updatedIndex = perioder.findIndex(p => p.id === id);
@@ -33,6 +34,12 @@ const createNewPerioder = (perioder, id: string, values: any) => {
     ...perioder.slice(updatedIndex + 1),
   ];
 };
+
+interface PureOwnProps {
+  behandlingId: number;
+  behandlingVersjon: number;
+  alleKodeverk: { [key: string]: KodeverkMedNavn[] };
+}
 
 interface OwnProps {
   readOnly: boolean;
@@ -49,312 +56,255 @@ interface OwnProps {
   behandlingVersjon: number;
   alleKodeverk: { [key: string]: KodeverkMedNavn[] };
   slettedePerioder?: any[];
-  arbeidsforhold?: ArbeidsforholdV2[];
-  arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysningerPerId;
+  arbeidsgivere?: ArbeidsgiverOpplysningerPerId;
 }
 
-interface OwnState {
-  isNyPeriodeFormOpen: boolean;
-  showModalSlettPeriode: boolean;
-  periodeSlett: any;
-}
+export const PeriodeTabell = ({
+  behandlingFormPrefix,
+  behandlingId,
+  behandlingVersjon,
+  alleKodeverk,
+  perioder,
+  slettedePerioder,
+  initialValues,
+  arbeidsgivere,
+  readOnly,
+  openForms,
+  submitting,
+  reduxFormChange: formChange,
+  reduxFormReset: formReset,
+}: OwnProps) => {
+  const [{ isNyPeriodeFormOpen, showModalSlettPeriode, periodeSlett }, setState] = useState({
+    isNyPeriodeFormOpen: false,
+    showModalSlettPeriode: false,
+    periodeSlett: undefined,
+  });
 
-export class PeriodeTabell extends PureComponent<OwnProps, OwnState> {
-  nyPeriodeFormRef: any;
-
-  constructor(props: OwnProps) {
-    super(props);
-
-    this.state = {
-      isNyPeriodeFormOpen: false,
-      showModalSlettPeriode: false,
-      periodeSlett: undefined,
-    };
-
-    this.newPeriodeCallback = this.newPeriodeCallback.bind(this);
-    this.newArbeidsforholdCallback = this.newArbeidsforholdCallback.bind(this);
-    this.addNewPeriod = this.addNewPeriod.bind(this);
-    this.openSlettPeriodeModalCallback = this.openSlettPeriodeModalCallback.bind(this);
-    this.newPeriodeResetCallback = this.newPeriodeResetCallback.bind(this);
-    this.removePeriode = this.removePeriode.bind(this);
-    this.hideModal = this.hideModal.bind(this);
-    this.cleaningUpForm = this.cleaningUpForm.bind(this);
-    this.updatePeriode = this.updatePeriode.bind(this);
-    this.editPeriode = this.editPeriode.bind(this);
-    this.cancelEditPeriode = this.cancelEditPeriode.bind(this);
-    this.isAnyFormOpen = this.isAnyFormOpen.bind(this);
-  }
-
-  overrideResultat = (resultat: any) => {
-    if (
-      [uttakPeriodeVurdering.PERIODE_KAN_IKKE_AVKLARES, uttakPeriodeVurdering.PERIODE_OK].some(
-        type => type === resultat,
-      )
-    ) {
-      return resultat;
-    }
-    return uttakPeriodeVurdering.PERIODE_IKKE_VURDERT;
-  };
-
-  newPeriodeResetCallback() {
-    const { behandlingFormPrefix, reduxFormReset: formReset } = this.props;
-    const { isNyPeriodeFormOpen } = this.state;
+  const newPeriodeResetCallback = useCallback(() => {
     formReset(`${behandlingFormPrefix}.nyPeriodeForm`);
-    this.setState({ isNyPeriodeFormOpen: !isNyPeriodeFormOpen });
-  }
+    setState(state => ({ ...state, isNyPeriodeFormOpen: !state.isNyPeriodeFormOpen }));
+  }, []);
 
-  newPeriodeCallback(nyPeriode: any) {
-    const { behandlingFormPrefix, perioder, reduxFormChange: formChange } = this.props;
-    const { isNyPeriodeFormOpen } = this.state;
-
-    const newPerioder = perioder.concat(nyPeriode).sort((a: any, b: any) => a.fom.localeCompare(b.fom));
-
-    formChange(`${behandlingFormPrefix}.TilkjentYtelseForm`, 'perioder', newPerioder);
-
-    this.setState({
-      isNyPeriodeFormOpen: !isNyPeriodeFormOpen,
-    });
-  }
-
-  newArbeidsforholdCallback(nyArbeidsforhold: any) {
-    const { behandlingFormPrefix, arbeidsforhold, reduxFormChange: formChange, reduxFormReset: formReset } = this.props;
-
-    const newArbeidsforhold = (arbeidsforhold || []).concat(nyArbeidsforhold);
-
-    formChange(`${behandlingFormPrefix}.TilkjentYtelseForm`, 'arbeidsforhold', newArbeidsforhold);
-    formReset(`${behandlingFormPrefix}.nyttArbeidsforholdForm`);
-  }
-
-  openSlettPeriodeModalCallback(id: string) {
-    const { showModalSlettPeriode } = this.state;
-    const { perioder } = this.props;
-    const periodeSlett = perioder.filter((periode: any) => periode.id === id);
-
-    this.setState({
-      showModalSlettPeriode: !showModalSlettPeriode,
-      periodeSlett: periodeSlett[0],
-    });
-  }
-
-  removePeriode(values: any) {
-    const { behandlingFormPrefix, perioder, slettedePerioder, initialValues, reduxFormChange: formChange } = this.props;
-    const { periodeSlett } = this.state;
-
-    const hasOriginalPeriode = initialValues.perioder.find((p: any) => p.id === periodeSlett.id);
-
-    if (hasOriginalPeriode) {
-      formChange(
-        `${behandlingFormPrefix}.TilkjentYtelseForm`,
-        'slettedePerioder',
-        slettedePerioder.concat([
-          {
-            ...periodeSlett,
-            begrunnelse: values.begrunnelse,
-          },
-        ]),
-      );
-    }
-
-    const newPerioder = perioder.filter((periode: any) => periode.id !== periodeSlett.id);
-
-    formChange(`${behandlingFormPrefix}.TilkjentYtelseForm`, 'perioder', newPerioder);
-
-    this.hideModal();
-  }
-
-  hideModal() {
-    this.setState({
+  const hideModal = useCallback(() => {
+    setState(state => ({
+      ...state,
       showModalSlettPeriode: false,
-    });
-  }
+    }));
+  }, []);
 
-  cleaningUpForm(id: string) {
-    const { behandlingFormPrefix, perioder, reduxFormChange: formChange } = this.props;
+  const newPeriodeCallback = useCallback(
+    (nyPeriode: any) => {
+      const newPerioder = perioder.concat(nyPeriode).sort((a: any, b: any) => a.fom.localeCompare(b.fom));
 
-    formChange(
-      `${behandlingFormPrefix}.TilkjentYtelseForm`,
-      'perioder',
-      perioder
-        .map((periode: any) => {
-          if (periode.id === id) {
-            return {
-              ...periode,
-              begrunnelse: undefined,
-              resultat: undefined,
-            };
-          }
-          return { ...periode };
-        })
-        .sort((a: any, b: any) => a.fom.localeCompare(b.fom)),
-    );
-  }
+      formChange(`${behandlingFormPrefix}.${FORM_NAME}`, 'perioder', newPerioder);
 
-  editPeriode(id: string) {
-    const { perioder, behandlingFormPrefix, reduxFormChange: formChange } = this.props;
+      setState(state => ({ ...state, isNyPeriodeFormOpen: !state.isNyPeriodeFormOpen }));
+    },
+    [perioder],
+  );
 
-    const newPerioder = createNewPerioder(perioder, id, { openForm: true });
+  const newArbeidsgiverCallback = useCallback(
+    (nyArbeidsgivere: any) => {
+      formChange(`${behandlingFormPrefix}.${FORM_NAME}`, 'arbeidsgivere', {
+        ...(arbeidsgivere || {}),
+        [nyArbeidsgivere.orgNr]: { identifikator: nyArbeidsgivere.orgNr, navn: nyArbeidsgivere.navn },
+      });
+      formReset(`${behandlingFormPrefix}.nyArbeidsgiverForm`);
+    },
+    [arbeidsgivere],
+  );
 
-    formChange(`${behandlingFormPrefix}.TilkjentYtelseForm`, 'perioder', newPerioder);
-  }
+  const openSlettPeriodeModalCallback = useCallback(
+    (id: string) => {
+      setState(state => ({
+        ...state,
+        showModalSlettPeriode: !state.showModalSlettPeriode,
+        periodeSlett: perioder.find((periode: any) => periode.id === id),
+      }));
+    },
+    [perioder],
+  );
 
-  cancelEditPeriode(id: string) {
-    const { perioder, behandlingFormPrefix, reduxFormChange: formChange } = this.props;
+  const removePeriode = useCallback(
+    (values: any) => {
+      const hasOriginalPeriode = initialValues.perioder.find((p: any) => p.id === periodeSlett?.id);
 
-    const newPerioder = createNewPerioder(perioder, id, { openForm: false });
+      if (hasOriginalPeriode) {
+        formChange(
+          `${behandlingFormPrefix}.${FORM_NAME}`,
+          'slettedePerioder',
+          slettedePerioder.concat([
+            {
+              ...(periodeSlett || {}),
+              begrunnelse: values.begrunnelse,
+            },
+          ]),
+        );
+      }
 
-    formChange(`${behandlingFormPrefix}.TilkjentYtelseForm`, 'perioder', newPerioder);
-  }
+      formChange(
+        `${behandlingFormPrefix}.${FORM_NAME}`,
+        'perioder',
+        perioder.filter((periode: any) => periode.id !== periodeSlett?.id),
+      );
 
-  async updatePeriode(values: any) {
-    const { behandlingFormPrefix, perioder, reduxFormChange: formChange } = this.props;
-    const { id, nyFom, nyTom } = values;
-    const updatedPeriode = perioder.find((p: any) => p.id === id);
-    const tom = nyTom || updatedPeriode.tom;
-    const fom = nyFom || updatedPeriode.fom;
-    const newPeriodeObject = {
-      id,
-      tom,
-      fom,
-      begrunnelse: values.begrunnelse,
-      openForm: !updatedPeriode.openForm,
-      isFromSøknad: updatedPeriode.isFromSøknad,
-      updated: true,
-    };
+      hideModal();
+    },
+    [initialValues, periodeSlett, perioder],
+  );
 
-    const newPerioder = await createNewPerioder(perioder, id, newPeriodeObject);
+  const cleaningUpForm = useCallback(
+    (id: string) => {
+      formChange(
+        `${behandlingFormPrefix}.${FORM_NAME}`,
+        'perioder',
+        perioder
+          .map((periode: any) => {
+            if (periode.id === id) {
+              return {
+                ...periode,
+                begrunnelse: undefined,
+                resultat: undefined,
+              };
+            }
+            return { ...periode };
+          })
+          .sort((a: any, b: any) => a.fom.localeCompare(b.fom)),
+      );
+    },
+    [perioder],
+  );
 
-    await formChange(
-      `${behandlingFormPrefix}.TilkjentYtelseForm`,
-      'perioder',
-      newPerioder.sort((a, b) => a.fom.localeCompare(b.fom)),
-    );
-  }
+  const editPeriode = useCallback(
+    (id: string) => {
+      const newPerioder = createNewPerioder(perioder, id, { openForm: true });
 
-  isAnyFormOpen() {
-    const { perioder } = this.props;
+      formChange(`${behandlingFormPrefix}.${FORM_NAME}`, 'perioder', newPerioder);
+    },
+    [perioder],
+  );
 
-    return perioder.some((p: any) => p.openForm);
-  }
+  const cancelEditPeriode = useCallback(
+    (id: string) => {
+      const newPerioder = createNewPerioder(perioder, id, { openForm: false });
 
-  addNewPeriod() {
-    this.newPeriodeResetCallback();
-  }
+      formChange(`${behandlingFormPrefix}.${FORM_NAME}`, 'perioder', newPerioder);
+    },
+    [perioder],
+  );
 
-  disableButtons() {
-    const { readOnly, openForms, submitting } = this.props;
-    const { isNyPeriodeFormOpen } = this.state;
-    return submitting || openForms || isNyPeriodeFormOpen || readOnly;
-  }
+  const updatePeriode = useCallback(
+    ({ id, begrunnelse, nyFom, nyTom }: any) => {
+      const updatedPeriode = perioder.find((p: any) => p.id === id);
+      const newPerioder = createNewPerioder(perioder, id, {
+        id,
+        tom: nyTom || updatedPeriode.tom,
+        fom: nyFom || updatedPeriode.fom,
+        begrunnelse,
+        openForm: !updatedPeriode.openForm,
+        isFromSøknad: updatedPeriode.isFromSøknad,
+        updated: true,
+      });
 
-  render() {
-    const {
-      readOnly,
-      perioder,
-      arbeidsforhold,
-      arbeidsgiverOpplysningerPerId,
-      submitting,
-      behandlingId,
-      behandlingVersjon,
-      alleKodeverk,
-    } = this.props;
-    const { periodeSlett, isNyPeriodeFormOpen, showModalSlettPeriode } = this.state;
+      formChange(
+        `${behandlingFormPrefix}.${FORM_NAME}`,
+        'perioder',
+        newPerioder.sort((a, b) => a.fom.localeCompare(b.fom)),
+      );
+    },
+    [perioder],
+  );
 
-    return (
-      <>
-        <VerticalSpacer twentyPx />
-        <FieldArray
-          name="perioder"
-          // @ts-ignore
-          component={PeriodeRad}
-          arbeidsforhold={arbeidsforhold}
-          arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
-          openSlettPeriodeModalCallback={this.openSlettPeriodeModalCallback}
-          updatePeriode={this.updatePeriode}
-          editPeriode={this.editPeriode}
-          cleaningUpForm={this.cleaningUpForm}
-          cancelEditPeriode={this.cancelEditPeriode}
-          isAnyFormOpen={this.isAnyFormOpen}
-          isNyPeriodeFormOpen={isNyPeriodeFormOpen}
-          perioder={perioder}
-          readOnly={readOnly}
+  const isAnyFormOpen = useCallback(() => perioder.some((p: any) => p.openForm), [perioder]);
+
+  const disableButtons = submitting || openForms || isNyPeriodeFormOpen || readOnly;
+
+  return (
+    <>
+      <VerticalSpacer twentyPx />
+      <FieldArray
+        name="perioder"
+        // @ts-ignore
+        component={PeriodeRad}
+        arbeidsgivere={arbeidsgivere}
+        openSlettPeriodeModalCallback={openSlettPeriodeModalCallback}
+        updatePeriode={updatePeriode}
+        editPeriode={editPeriode}
+        cleaningUpForm={cleaningUpForm}
+        cancelEditPeriode={cancelEditPeriode}
+        isAnyFormOpen={isAnyFormOpen}
+        isNyPeriodeFormOpen={isNyPeriodeFormOpen}
+        perioder={perioder}
+        readOnly={readOnly}
+        behandlingId={behandlingId}
+        behandlingVersjon={behandlingVersjon}
+        alleKodeverk={alleKodeverk}
+      />
+      <VerticalSpacer twentyPx />
+      <FlexContainer wrap>
+        <FlexRow>
+          <FlexColumn>
+            <Hovedknapp mini disabled={disableButtons} onClick={ariaCheck} spinner={submitting}>
+              <FormattedMessage id="TilkjentYtelse.BekreftOgFortsett" />
+            </Hovedknapp>
+          </FlexColumn>
+          <FlexColumn>
+            <Knapp mini htmlType="button" onClick={newPeriodeResetCallback} disabled={disableButtons}>
+              <FormattedMessage id="TilkjentYtelse.LeggTilPeriode" />
+            </Knapp>
+          </FlexColumn>
+        </FlexRow>
+      </FlexContainer>
+      <VerticalSpacer eightPx />
+
+      {isNyPeriodeFormOpen && (
+        <NyPeriode
+          newPeriodeCallback={newPeriodeCallback}
+          newArbeidsgiverCallback={newArbeidsgiverCallback}
+          newPeriodeResetCallback={newPeriodeResetCallback}
           behandlingId={behandlingId}
           behandlingVersjon={behandlingVersjon}
           alleKodeverk={alleKodeverk}
+          arbeidsgivere={arbeidsgivere}
+          readOnly={readOnly}
         />
-        <VerticalSpacer twentyPx />
-        <FlexContainer wrap>
-          <FlexRow>
-            <FlexColumn>
-              <Hovedknapp mini disabled={this.disableButtons()} onClick={ariaCheck} spinner={submitting}>
-                <FormattedMessage id="TilkjentYtelse.BekreftOgFortsett" />
-              </Hovedknapp>
-            </FlexColumn>
-            <FlexColumn>
-              <Knapp mini htmlType="button" onClick={this.addNewPeriod} disabled={this.disableButtons()}>
-                <FormattedMessage id="TilkjentYtelse.LeggTilPeriode" />
-              </Knapp>
-            </FlexColumn>
-          </FlexRow>
-        </FlexContainer>
-        <VerticalSpacer eightPx />
+      )}
 
-        {isNyPeriodeFormOpen && (
-          <NyPeriode
-            newPeriodeCallback={this.newPeriodeCallback}
-            newArbeidsforholdCallback={this.newArbeidsforholdCallback}
-            newPeriodeResetCallback={this.newPeriodeResetCallback}
-            behandlingId={behandlingId}
-            behandlingVersjon={behandlingVersjon}
-            alleKodeverk={alleKodeverk}
-            // @ts-ignore
-            arbeidsforhold={arbeidsforhold}
-            arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
-            readOnly={readOnly}
-          />
-        )}
+      {periodeSlett && (
+        <SlettPeriodeModal
+          // @ts-ignore
+          showModal={showModalSlettPeriode}
+          periode={periodeSlett}
+          cancelEvent={hideModal}
+          closeEvent={removePeriode}
+          behandlingId={behandlingId}
+          behandlingVersjon={behandlingVersjon}
+        />
+      )}
+    </>
+  );
+};
 
-        {periodeSlett && (
-          <SlettPeriodeModal
-            // @ts-ignore
-            showModal={showModalSlettPeriode}
-            periode={periodeSlett}
-            cancelEvent={this.hideModal}
-            closeEvent={this.removePeriode}
-            behandlingId={behandlingId}
-            behandlingVersjon={behandlingVersjon}
-          />
-        )}
-      </>
-    );
-  }
-}
-
-const slettedePerioder = (state: any, behandlingId: number, behandlingVersjon: number) =>
-  behandlingFormValueSelector('TilkjentYtelseForm', behandlingId, behandlingVersjon)(state, 'slettedePerioder');
-const perioder = (state: any, behandlingId: number, behandlingVersjon: number) =>
-  behandlingFormValueSelector('TilkjentYtelseForm', behandlingId, behandlingVersjon)(state, 'perioder');
-const arbeidsforhold = (state: any, behandlingId: number, behandlingVersjon: number) =>
-  behandlingFormValueSelector('TilkjentYtelseForm', behandlingId, behandlingVersjon)(state, 'arbeidsforhold');
-
-interface PureOwnProps {
-  behandlingId: number;
-  behandlingVersjon: number;
-  alleKodeverk: { [key: string]: KodeverkMedNavn[] };
-}
-
-const EMPTY_ARRAY = [];
+const getSlettedePerioder = (state: any, behandlingId: number, behandlingVersjon: number) =>
+  behandlingFormValueSelector(FORM_NAME, behandlingId, behandlingVersjon)(state, 'slettedePerioder');
+const getPerioder = (state: any, behandlingId: number, behandlingVersjon: number) =>
+  behandlingFormValueSelector(FORM_NAME, behandlingId, behandlingVersjon)(state, 'perioder');
+const getArbeidsgivere = (state: any, behandlingId: number, behandlingVersjon: number) =>
+  behandlingFormValueSelector(FORM_NAME, behandlingId, behandlingVersjon)(state, 'arbeidsgivere');
 
 const mapStateToProps = (state: any, props: PureOwnProps) => {
   const { behandlingId, behandlingVersjon } = props;
   const behandlingFormPrefix = getBehandlingFormPrefix(behandlingId, behandlingVersjon);
 
+  const perioder = getPerioder(state, behandlingId, behandlingVersjon) || [];
+
   return {
     behandlingFormPrefix,
-    openForms: !!perioder(state, behandlingId, behandlingVersjon).find(periode => periode.openForm === true),
-    initialValues: getFormInitialValues(`${behandlingFormPrefix}.TilkjentYtelseForm`)(state),
-    slettedePerioder: slettedePerioder(state, behandlingId, behandlingVersjon) || EMPTY_ARRAY,
-    perioder: perioder(state, behandlingId, behandlingVersjon) || EMPTY_ARRAY,
-    arbeidsforhold: arbeidsforhold(state, behandlingId, behandlingVersjon) || EMPTY_ARRAY,
+    openForms: !!perioder.find(periode => periode.openForm === true),
+    initialValues: getFormInitialValues(`${behandlingFormPrefix}.${FORM_NAME}`)(state),
+    slettedePerioder: getSlettedePerioder(state, behandlingId, behandlingVersjon) || [],
+    perioder,
+    arbeidsgivere: getArbeidsgivere(state, behandlingId, behandlingVersjon) || {},
   };
 };
 

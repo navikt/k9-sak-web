@@ -9,9 +9,9 @@ import { FlexColumn, FlexContainer, FlexRow, VerticalSpacer } from '@fpsak-front
 import { hasValidOrgNumber, required } from '@fpsak-frontend/utils';
 import styles from './periode.less';
 
-const defaultArbeidsforhold = {
+const defaultArbeidsgiver = {
   navn: '',
-  arbeidsgiverIdentifikator: '',
+  orgNr: '',
 };
 
 interface OwnProps {
@@ -20,7 +20,7 @@ interface OwnProps {
   cancelEvent: (...args: any[]) => any;
 }
 
-export const NyttArbeidsforholdModal = ({
+export const NyArbeidsgiverModal = ({
   showModal,
   closeEvent,
   cancelEvent,
@@ -30,7 +30,7 @@ export const NyttArbeidsforholdModal = ({
   <Modal
     className={styles.modal}
     isOpen={showModal}
-    contentLabel="Nytt arbeidsforhold"
+    contentLabel="Ny arbeidsgiver"
     onRequestClose={closeEvent}
     closeButton={false}
     shouldCloseOnOverlayClick={false}
@@ -47,7 +47,7 @@ export const NyttArbeidsforholdModal = ({
 
           <InputField
             label={{ id: 'TilkjentYtelse.ArbeidsgiverOrgnummer' }}
-            name="arbeidsgiverIdentifikator"
+            name="orgNr"
             validate={[required, hasValidOrgNumber]}
             format={value => value}
           />
@@ -74,7 +74,7 @@ export const NyttArbeidsforholdModal = ({
   </Modal>
 );
 
-NyttArbeidsforholdModal.defaultProps = {
+NyArbeidsgiverModal.defaultProps = {
   showModal: false,
 };
 
@@ -86,13 +86,13 @@ const mapStateToPropsFactory = (_initialState: any, ownProps: PureOwnProps) => {
   const onSubmit = (values: any) => ownProps.closeEvent(values);
 
   return () => ({
-    initialValues: defaultArbeidsforhold,
+    initialValues: defaultArbeidsgiver,
     onSubmit,
   });
 };
 
 export default connect(mapStateToPropsFactory)(
   behandlingForm({
-    form: 'nyttArbeidsforholdForm',
-  })(injectIntl(NyttArbeidsforholdModal)),
+    form: 'nyArbeidsgiverForm',
+  })(injectIntl(NyArbeidsgiverModal)),
 );

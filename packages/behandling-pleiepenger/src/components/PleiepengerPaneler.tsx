@@ -1,4 +1,5 @@
 import {
+<<<<<<< HEAD
   AksjonspunktUtenLøsningModal,
   ArbeidsgiverOpplysningerUtil,
   BehandlingPaVent,
@@ -6,6 +7,13 @@ import {
   harOpprettetAksjonspunkt,
   Rettigheter,
   SettPaVentParams,
+=======
+  BehandlingPaVent,
+  Rettigheter,
+  SettPaVentParams,
+  AksjonspunktUtenLøsningModal,
+  harOpprettetAksjonspunkt,
+>>>>>>> 9638e1d2b830ec9c9268f80215dcba0bca23e5b8
 } from '@k9-sak-web/behandling-felles';
 import {
   ArbeidsgiverOpplysningerPerId,
