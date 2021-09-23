@@ -11,11 +11,9 @@ import klageVurderingOmgjoerType from '@fpsak-frontend/kodeverk/src/klageVurderi
 
 import styles from './klageVurderingRadioOptionsNfp.less';
 
-const utledHjemler = (fagsak, erTilbakekreving = false) => {
-  if (erTilbakekreving) {
-    return [{ kode: '22-15', navn: '§ 22-15' }];
-  }
+export const TILBAKEKREVING_HJEMMEL = '22-15';
 
+const utledHjemler = fagsak => {
   switch (fagsak.sakstype.kode) {
     case fagsakYtelseType.PLEIEPENGER:
       return [
@@ -55,7 +53,7 @@ export const KlageVurderingRadioOptionsNfp = ({
   erPåklagdBehandlingTilbakekreving,
   intl,
 }) => {
-  const hjemler = utledHjemler(fagsak, erPåklagdBehandlingTilbakekreving);
+  const hjemler = utledHjemler(fagsak);
 
   const skalViseHjemler =
     fagsak.sakstype.kode !== fagsakYtelseType.FRISINN &&
@@ -132,9 +130,6 @@ export const KlageVurderingRadioOptionsNfp = ({
             bredde="xl"
           />
         </ArrowBox>
-      )}
-      {skalViseHjemler && erPåklagdBehandlingTilbakekreving && (
-        <input type="hidden" name="klageHjemmel" value={hjemler[0].kode} />
       )}
     </div>
   );
