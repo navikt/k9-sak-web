@@ -11,6 +11,8 @@ import klageVurderingOmgjoerType from '@fpsak-frontend/kodeverk/src/klageVurderi
 
 import styles from './klageVurderingRadioOptionsNfp.less';
 
+export const TILBAKEKREVING_HJEMMEL = '22-15';
+
 const utledHjemler = fagsak => {
   switch (fagsak.sakstype.kode) {
     case fagsakYtelseType.PLEIEPENGER:
@@ -43,67 +45,81 @@ const utledHjemler = fagsak => {
   }
 };
 
-export const KlageVurderingRadioOptionsNfp = ({ fagsak, readOnly, medholdReasons, klageVurdering, intl }) => (
-  <div>
-    <>
-      <RadioGroupField
-        name="klageVurdering"
-        validate={[required]}
-        readOnly={readOnly}
-        className={readOnly ? styles.selectReadOnly : null}
-      >
-        <RadioOption value={klageVurderingType.MEDHOLD_I_KLAGE} label={{ id: 'Klage.ResolveKlage.ChangeVedtak' }} />
-        <RadioOption
-          value={klageVurderingType.STADFESTE_YTELSESVEDTAK}
-          label={{ id: 'Klage.ResolveKlage.KeepVedtakNfp' }}
-        />
-      </RadioGroupField>
-    </>
-    {klageVurdering === klageVurderingType.MEDHOLD_I_KLAGE && (
-      <ArrowBox className={readOnly ? styles.selectReadOnly : null}>
-        <SelectField
-          readOnly={readOnly}
-          name="klageMedholdArsak"
-          selectValues={medholdReasons.map(mo => (
-            <option key={mo.kode} value={mo.kode}>
-              {mo.navn}
-            </option>
-          ))}
-          className={readOnly ? styles.selectReadOnly : null}
-          label={intl.formatMessage({ id: 'Klage.ResolveKlage.Cause' })}
-          validate={[required]}
-          bredde="xl"
-        />
-        <VerticalSpacer sixteenPx />
+export const KlageVurderingRadioOptionsNfp = ({
+  fagsak,
+  readOnly,
+  medholdReasons,
+  klageVurdering,
+  erPåklagdBehandlingTilbakekreving,
+  intl,
+}) => {
+  const hjemler = utledHjemler(fagsak);
+
+  const skalViseHjemler =
+    fagsak.sakstype.kode !== fagsakYtelseType.FRISINN &&
+    klageVurdering === klageVurderingType.STADFESTE_YTELSESVEDTAK &&
+    hjemler.length > 0;
+
+  return (
+    <div>
+      <>
         <RadioGroupField
-          name="klageVurderingOmgjoer"
+          name="klageVurdering"
           validate={[required]}
           readOnly={readOnly}
           className={readOnly ? styles.selectReadOnly : null}
-          direction="vertical"
         >
+          <RadioOption value={klageVurderingType.MEDHOLD_I_KLAGE} label={{ id: 'Klage.ResolveKlage.ChangeVedtak' }} />
           <RadioOption
-            value={klageVurderingOmgjoerType.GUNST_MEDHOLD_I_KLAGE}
-            label={{ id: 'Klage.Behandle.Omgjort' }}
-          />
-          <RadioOption
-            value={klageVurderingOmgjoerType.UGUNST_MEDHOLD_I_KLAGE}
-            label={{ id: 'Klage.Behandle.Ugunst' }}
-          />
-          <RadioOption
-            value={klageVurderingOmgjoerType.DELVIS_MEDHOLD_I_KLAGE}
-            label={{ id: 'Klage.Behandle.DelvisOmgjort' }}
+            value={klageVurderingType.STADFESTE_YTELSESVEDTAK}
+            label={{ id: 'Klage.ResolveKlage.KeepVedtakNfp' }}
           />
         </RadioGroupField>
-      </ArrowBox>
-    )}
-    {fagsak.sakstype.kode !== fagsakYtelseType.FRISINN &&
-      klageVurdering === klageVurderingType.STADFESTE_YTELSESVEDTAK && (
+      </>
+      {klageVurdering === klageVurderingType.MEDHOLD_I_KLAGE && (
+        <ArrowBox className={readOnly ? styles.selectReadOnly : null}>
+          <SelectField
+            readOnly={readOnly}
+            name="klageMedholdArsak"
+            selectValues={medholdReasons.map(mo => (
+              <option key={mo.kode} value={mo.kode}>
+                {mo.navn}
+              </option>
+            ))}
+            className={readOnly ? styles.selectReadOnly : null}
+            label={intl.formatMessage({ id: 'Klage.ResolveKlage.Cause' })}
+            validate={[required]}
+            bredde="xl"
+          />
+          <VerticalSpacer sixteenPx />
+          <RadioGroupField
+            name="klageVurderingOmgjoer"
+            validate={[required]}
+            readOnly={readOnly}
+            className={readOnly ? styles.selectReadOnly : null}
+            direction="vertical"
+          >
+            <RadioOption
+              value={klageVurderingOmgjoerType.GUNST_MEDHOLD_I_KLAGE}
+              label={{ id: 'Klage.Behandle.Omgjort' }}
+            />
+            <RadioOption
+              value={klageVurderingOmgjoerType.UGUNST_MEDHOLD_I_KLAGE}
+              label={{ id: 'Klage.Behandle.Ugunst' }}
+            />
+            <RadioOption
+              value={klageVurderingOmgjoerType.DELVIS_MEDHOLD_I_KLAGE}
+              label={{ id: 'Klage.Behandle.DelvisOmgjort' }}
+            />
+          </RadioGroupField>
+        </ArrowBox>
+      )}
+      {skalViseHjemler && !erPåklagdBehandlingTilbakekreving && (
         <ArrowBox className={readOnly ? styles.selectReadOnly : null}>
           <SelectField
             readOnly={readOnly}
             name="klageHjemmel"
-            selectValues={utledHjemler(fagsak).map(h => (
+            selectValues={hjemler.map(h => (
               <option key={h.kode} value={h.kode}>
                 {h.navn}
               </option>
@@ -115,12 +131,14 @@ export const KlageVurderingRadioOptionsNfp = ({ fagsak, readOnly, medholdReasons
           />
         </ArrowBox>
       )}
-  </div>
-);
+    </div>
+  );
+};
 
 KlageVurderingRadioOptionsNfp.propTypes = {
   fagsak: PropTypes.shape().isRequired,
   readOnly: PropTypes.bool,
+  erPåklagdBehandlingTilbakekreving: PropTypes.bool,
   medholdReasons: PropTypes.arrayOf(
     PropTypes.shape({
       kode: PropTypes.string,
