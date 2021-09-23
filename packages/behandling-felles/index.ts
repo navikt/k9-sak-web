@@ -24,3 +24,5 @@ export type { default as Rettigheter } from './src/types/rettigheterTsType';
 export type { default as SettPaVentParams } from './src/types/settPaVentParamsTsType';
 
 export { default as lagDokumentdata } from './src/util/lagDokumentdata';
+export { default as BehandlingUtil } from './src/util/BehandlingUtil';
+export { default as ArbeidsgiverOpplysningerUtil } from './src/util/ArbeidsgiverOpplysningerUtil';
