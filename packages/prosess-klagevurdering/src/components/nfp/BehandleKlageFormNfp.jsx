@@ -143,7 +143,7 @@ export const buildInitialValues = createSelector(
       klageVurderingResultat &&
       klageVurderingResultat.hjemmel !== '-'
         ? klageVurderingResultat.hjemmel
-        : undefined,
+        : null,
     klageVurdering: klageVurderingResultat ? klageVurderingResultat.klageVurdering : null,
     begrunnelse: klageVurderingResultat ? klageVurderingResultat.begrunnelse : null,
     fritekstTilBrev: klageVurderingResultat ? klageVurderingResultat.fritekstTilBrev : null,
