@@ -4,6 +4,7 @@ import { Normaltekst } from 'nav-frontend-typografi';
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import Vilkarperiode from '@k9-sak-web/types/src/vilkarperiode';
+import AvslagskoderAleneOmOmsorgen from "@k9-sak-web/behandling-utvidet-rett/src/types/utvidetRettMikrofrontend/AvslagskoderAleneOmOmsorgen";
 
 const finnUnikeAvslagskoder = (avslåttePerioder: Vilkarperiode[]) => {
   const funnedeAvslagskoder = new Set();
@@ -26,7 +27,7 @@ const visAvslåtteVilkårsperioder = (
 
   return avslåttePerioderMedUnikeAvslagskoder.map(avslåttPeriode => (
     <Normaltekst key={avslåttPeriode.avslagKode}>
-      {getKodeverknavn(avslåttVilkår.vilkarType)}:{' '}
+      {avslåttPeriode.avslagKode !== AvslagskoderAleneOmOmsorgen.IKKE_GRUNNLAG_ALENE_OMSORG ? getKodeverknavn(avslåttVilkår.vilkarType) : ' '}
       {getKodeverknavn({ kode: avslåttPeriode.avslagKode, kodeverk: 'AVSLAGSARSAK' }, avslåttVilkår.vilkarType.kode)}
     </Normaltekst>
   ));

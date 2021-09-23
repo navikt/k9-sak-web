@@ -1,17 +1,16 @@
-import { Aksjonspunkt, Vilkar } from '@k9-sak-web/types';
-import { FormState } from '@fpsak-frontend/form/index';
+import {Aksjonspunkt, Behandling, Vilkar} from '@k9-sak-web/types';
+import {FormState} from '@fpsak-frontend/form/index';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
+import behandlingTsType from "@k9-sak-web/types/src/behandlingTsType";
+import BehandlingType from "@fpsak-frontend/kodeverk/src/behandlingType";
 import UtvidetRettMikrofrontendVisning from '../../../../../types/MikrofrontendKomponenter';
-import { generereInfoForVurdertVilkar } from '../../../UtvidetRettOmsorgenForMikrofrontendFelles';
+import {generereInfoForVurdertVilkar} from '../../../UtvidetRettOmsorgenForMikrofrontendFelles';
 import UtvidetRettSoknad from '../../../../../types/UtvidetRettSoknad';
-import {
-  AleneOmOmsorgenAksjonspunktObjekt,
-  AleneOmOmsorgenProps,
-} from '../../../../../types/utvidetRettMikrofrontend/VilkarAleneOmOmsorgenProps';
-import AvslagskoderMidlertidigAlene from '../../../../../types/utvidetRettMikrofrontend/AvslagskoderMidlertidigAlene';
+import {AleneOmOmsorgenAksjonspunktObjekt, AleneOmOmsorgenProps,} from '../../../../../types/utvidetRettMikrofrontend/VilkarAleneOmOmsorgenProps';
+import AvslagskoderAleneOmOmsorgen from "../../../../../types/utvidetRettMikrofrontend/AvslagskoderAleneOmOmsorgen";
 
 interface OwnProps {
-  behandlingsID: string;
+  behandling: Behandling;
   aksjonspunktLost: boolean;
   lesemodus: boolean;
   vilkarKnyttetTilAksjonspunkt: Vilkar;
@@ -29,14 +28,11 @@ const formatereLesemodusObjekt = (vilkar: Vilkar, aksjonspunkt: Aksjonspunkt, st
       vilkarOppfylt: status === vilkarUtfallType.OPPFYLT,
       fraDato: vilkar.perioder[0].periode.fom,
       tilDato: vilkar.perioder[0].periode.tom,
-      avslagsArsakErPeriodeErIkkeOverSeksMån:
-        vilkar.perioder[0]?.avslagKode === AvslagskoderMidlertidigAlene.VARIGHET_UNDER_SEKS_MÅN,
     } as AleneOmOmsorgenAksjonspunktObjekt;
   }
   return {
     begrunnelse: '',
     vilkarOppfylt: false,
-    avslagsArsakErPeriodeErIkkeOverSeksMån: false,
     fraDato: '',
     tilDato: '',
   } as AleneOmOmsorgenAksjonspunktObjekt;
@@ -48,26 +44,31 @@ const formatereLosAksjonspunktObjekt = (
   erVilkarOk: boolean,
   fraDato: string,
   tilDato: string,
-) => ({
-  kode: aksjonspunktKode,
-  begrunnelse,
-  erVilkarOk,
-  periode: {
-    fom: fraDato,
-    tom: tilDato,
-  },
-});
+  erBehandlingRevurdering: boolean
+) => {
 
-/* Avventer funksjonelle avklaringer.
+  const losAksjonspunktObjekt = {
+    kode: aksjonspunktKode,
+    begrunnelse,
+    erVilkarOk,
+    periode: {
+      fom: fraDato,
+    }
+  };
+
   if (!erVilkarOk) {
-    losAksjonspunktObjekt['avslagsårsak'] = avslagsArsakErPeriodeErIkkeOverSeksMån
-      ? AvslagskoderMidlertidigAlene.VARIGHET_UNDER_SEKS_MÅN
-      : AvslagskoderMidlertidigAlene.REGNES_IKKE_SOM_Å_HA_ALENEOMSORG;
+    losAksjonspunktObjekt['avslagsårsak'] = AvslagskoderAleneOmOmsorgen.IKKE_GRUNNLAG_ALENE_OMSORG;
   }
-  return losAksjonspunktObjekt; */
+
+  if(erBehandlingRevurdering){
+    losAksjonspunktObjekt.periode.tom = tilDato;
+  }
+
+  return losAksjonspunktObjekt;
+}
 
 const AleneOmOmsorgenObjektTilMikrofrontend = ({
-  behandlingsID,
+  behandling,
   aksjonspunktLost,
   lesemodus,
   vilkarKnyttetTilAksjonspunkt,
@@ -80,10 +81,12 @@ const AleneOmOmsorgenObjektTilMikrofrontend = ({
   const angittBarn = soknad.angittePersoner.filter(person => person.rolle === 'BARN');
   const barnetsFodselsdato = new Date(angittBarn[0].fødselsdato);
   const årBarnetFyller13 = `${barnetsFodselsdato.getFullYear() + 13}-12-31`;
+  const erBehandlingRevurdering: boolean = behandling.type.kode === BehandlingType.REVURDERING;
+
   return {
     visKomponent: UtvidetRettMikrofrontendVisning.VILKAR_ALENE_OM_OMSORGEN,
     props: {
-      behandlingsID,
+      behandlingsID: behandling.id.toString(),
       lesemodus,
       aksjonspunktLost,
       fraDatoFraSoknad: soknad?.søknadsperiode.fom,
@@ -98,7 +101,7 @@ const AleneOmOmsorgenObjektTilMikrofrontend = ({
       informasjonTilLesemodus: formatereLesemodusObjekt(vilkarKnyttetTilAksjonspunkt, aksjonspunkt, status),
       losAksjonspunkt: ({ begrunnelse, vilkarOppfylt, fraDato, tilDato }) => {
         submitCallback([
-          formatereLosAksjonspunktObjekt(aksjonspunkt.definisjon.kode, begrunnelse, vilkarOppfylt, fraDato, tilDato),
+          formatereLosAksjonspunktObjekt(aksjonspunkt.definisjon.kode, begrunnelse, vilkarOppfylt, fraDato, tilDato, erBehandlingRevurdering),
         ]);
       },
       formState: FormState,
