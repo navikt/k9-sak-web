@@ -90,7 +90,7 @@ const PleiepengerPaneler = ({
           contentRenderer={(data, isLoading, hasError) => (
             <AksjonspunktUtenLøsningModal
               melding={
-                <span>
+                <div>
                   For å komme videre i behandlingen må du punsje manglende opplysninger om arbeidskategori og arbeidstid
                   i Punsj.
                   {isLoading && <p>Henter perioder...</p>}
@@ -111,7 +111,7 @@ const PleiepengerPaneler = ({
                       }))}
                     />
                   )}
-                </span>
+                </div>
               }
             />
           )}

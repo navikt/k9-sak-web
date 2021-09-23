@@ -11,17 +11,33 @@ const DataFetcher = ({ url, contentRenderer }: DataFetcherProps) => {
   const [isLoading, setIsLoading] = React.useState(true);
   const [hasError, setHasError] = React.useState(false);
 
+  const httpCanceler = React.useMemo(() => axios.CancelToken.source(), [url]);
+
   React.useEffect(() => {
-    axios.get(url).then(
-      response => {
-        setFetchedData(response.data);
-        setIsLoading(false);
-      },
-      () => {
-        setHasError(true);
-        setIsLoading(false);
-      },
-    );
+    let isMounted = true;
+    axios
+      .get(url, {
+        cancelToken: httpCanceler.token,
+      })
+      .then(
+        response => {
+          if (isMounted) {
+            setFetchedData(response.data);
+            setIsLoading(false);
+          }
+        },
+        () => {
+          if (isMounted) {
+            setHasError(true);
+            setIsLoading(false);
+          }
+        },
+      );
+
+    return () => {
+      isMounted = false;
+      httpCanceler.cancel();
+    };
   }, []);
 
   return <>{contentRenderer(fetchedData, isLoading, hasError)}</>;
