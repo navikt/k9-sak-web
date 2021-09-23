@@ -105,7 +105,7 @@ export const NyAndel = ({
                   <SelectField
                     label={{ id: 'TilkjentYtelse.NyPeriode.Arbeidsgiver' }}
                     bredde="xl"
-                    name={`${periodeElementFieldId}.arbeidsgiverOrgNr`}
+                    name={`${periodeElementFieldId}.arbeidsgiverOrgnr`}
                     validate={[required]}
                     selectValues={mapArbeidsgivere(arbeidsgivere)}
                   />
