@@ -24,7 +24,6 @@ const andelForFaktaOmBeregningPropType = PropTypes.shape({
   aktivitetStatus: kodeverkObjektPropType,
   belopReadOnly: PropTypes.number,
   fastsattBelop: PropTypes.number,
-  visningsnavn: PropTypes.string.isRequired,
   skalKunneEndreAktivitet: PropTypes.bool.isRequired,
   lagtTilAvSaksbehandler: PropTypes.bool.isRequired,
 });

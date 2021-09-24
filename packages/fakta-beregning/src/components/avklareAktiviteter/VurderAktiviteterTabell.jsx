@@ -13,17 +13,11 @@ import beregningAktivitetPropType from './beregningAktivitetPropType';
 import styles from './vurderAktiviteterTabell.less';
 
 export const lagAktivitetFieldId = aktivitet => {
-  if (aktivitet.arbeidsgiverId) {
-    if (aktivitet.arbeidsforholdId) {
-      return aktivitet.arbeidsgiverId + aktivitet.arbeidsforholdId + aktivitet.fom.replace('.', '');
+  if (aktivitet.arbeidsgiverIdent) {
+    if (aktivitet.eksternArbeidsforholdId) {
+      return aktivitet.arbeidsgiverIdent + aktivitet.eksternArbeidsforholdId + aktivitet.fom.replace('.', '');
     }
-    return aktivitet.arbeidsgiverId + aktivitet.fom.replace('.', '');
-  }
-  if (aktivitet.aktørIdString) {
-    if (aktivitet.arbeidsforholdId) {
-      return aktivitet.aktørIdString + aktivitet.arbeidsforholdId + aktivitet.fom.replace('.', '');
-    }
-    return aktivitet.aktørIdString + aktivitet.fom.replace('.', '');
+    return aktivitet.arbeidsgiverIdent + aktivitet.fom.replace('.', '');
   }
   return aktivitet.arbeidsforholdType.kode + aktivitet.fom.replace('.', '');
 };
