@@ -23,7 +23,7 @@ const preutfyllInntektskategori = andel =>
     : '';
 
 export const setArbeidsforholdInitialValues = andel => ({
-  arbeidsgiverId: andel.arbeidsforhold ? andel.arbeidsforhold.arbeidsgiverId : null,
+  arbeidsgiverIdent: andel.arbeidsforhold ? andel.arbeidsforhold.arbeidsgiverIdent : null,
   arbeidsforholdId: andel.arbeidsforhold ? andel.arbeidsforhold.arbeidsforholdId : null,
   arbeidsperiodeFom: andel.arbeidsforhold ? andel.arbeidsforhold.startdato : '',
   arbeidsperiodeTom: andel.arbeidsforhold ? andel.arbeidsforhold.opphoersdato : '',
@@ -137,7 +137,7 @@ const erAndelKunstigArbeidsforhold = (andel, beregningsgrunnlag) => {
   const lagtTilAvBruker = firstBgPeriod.beregningsgrunnlagPrStatusOgAndel.find(
     a =>
       a.arbeidsforhold &&
-      a.arbeidsforhold.arbeidsgiverId === andel.arbeidsgiverId &&
+      a.arbeidsforhold.arbeidsgiverIdent === andel.arbeidsgiverIdent &&
       a.arbeidsforhold.organisasjonstype &&
       a.arbeidsforhold.organisasjonstype.kode === organisasjonstyper.KUNSTIG,
   );

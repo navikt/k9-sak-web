@@ -126,10 +126,8 @@ VurderAktiviteterPanel.hasValueChangedFromInitial = (aktiviteterTomDatoMapping, 
 
 VurderAktiviteterPanel.buildInitialValues = (
   aktiviteterTomDatoMapping,
-  alleKodeverk,
   erOverstyrt,
   harAvklaringsbehov,
-  arbeidsgiverOpplysningerPerId,
 ) => {
   if (!aktiviteterTomDatoMapping || aktiviteterTomDatoMapping.length === 0) {
     return {};
@@ -140,10 +138,8 @@ VurderAktiviteterPanel.buildInitialValues = (
       ...initialValues,
       ...VurderAktiviteterTabell.buildInitialValues(
         liste.aktiviteter,
-        alleKodeverk,
         erOverstyrt,
         harAvklaringsbehov,
-        arbeidsgiverOpplysningerPerId,
       ),
     };
   });

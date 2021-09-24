@@ -38,7 +38,7 @@ export const sortArbeidsforholdList = arbeidsforhold => {
 };
 
 export const arbeidsforholdProptype = PropTypes.shape({
-  arbeidsgiverId: PropTypes.string,
+  arbeidsgiverIdent: PropTypes.string,
   startdato: PropTypes.string,
   opphoersdato: PropTypes.string,
   arbeidsforholdId: PropTypes.string,
@@ -46,7 +46,7 @@ export const arbeidsforholdProptype = PropTypes.shape({
 
 const arbeidsforholdEksistererIListen = (arbeidsforhold, arbeidsgiverList) => {
   if (arbeidsforhold.arbeidsforholdId === null) {
-    return arbeidsgiverList.map(({ arbeidsgiverId }) => arbeidsgiverId).includes(arbeidsforhold.arbeidsgiverId);
+    return arbeidsgiverList.map(({ arbeidsgiverIdent }) => arbeidsgiverIdent).includes(arbeidsforhold.arbeidsgiverIdent);
   }
   return arbeidsgiverList.map(({ arbeidsforholdId }) => arbeidsforholdId).includes(arbeidsforhold.arbeidsforholdId);
 };
@@ -63,7 +63,7 @@ export const getUniqueListOfArbeidsforholdFields = fields => {
       const arbeidsforholdObject = {
         andelsnr: field.andelsnr,
         arbeidsforholdId: field.arbeidsforholdId,
-        arbeidsgiverId: field.arbeidsgiverId,
+        arbeidsgiverIdent: field.arbeidsgiverIdent,
         arbeidsperiodeFom: field.arbeidsperiodeFom,
         arbeidsperiodeTom: field.arbeidsperiodeTom,
       };

@@ -84,6 +84,7 @@ const getFaktaPanels = (
             faktaOmBeregning={faktaOmBeregning}
             alleKodeverk={alleKodeverk}
             fieldArrayID={fieldArrayID}
+            arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
           />
         </React.Fragment>,
       );
@@ -118,6 +119,8 @@ const getFaktaPanels = (
             isAvklaringsbehovClosed={isAvklaringsbehovClosed}
             faktaOmBeregning={faktaOmBeregning}
             fieldArrayID={fieldArrayID}
+            alleKodeverk={alleKodeverk}
+            arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
           />
         </React.Fragment>,
       );
