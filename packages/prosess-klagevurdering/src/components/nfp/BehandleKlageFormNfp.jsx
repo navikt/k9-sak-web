@@ -177,7 +177,7 @@ export const transformValues = (values, fagsak, erPåklagdBehandlingTilbakekrevi
 };
 
 const getErPåklagdBehandlingTilbakekreving = createSelector(
-  [ownProps => ownProps.klageVurdering.klageVurderingResultatNFP],
+  [ownProps => ownProps.klageVurdering.klageFormkravResultatNFP],
   klageVurderingResultat =>
     erTilbakekrevingType(klageVurderingResultat && klageVurderingResultat.påklagdBehandlingType),
 );
