@@ -1,12 +1,15 @@
 import {Aksjonspunkt, Behandling, Vilkar} from '@k9-sak-web/types';
 import {FormState} from '@fpsak-frontend/form/index';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
-import behandlingTsType from "@k9-sak-web/types/src/behandlingTsType";
 import BehandlingType from "@fpsak-frontend/kodeverk/src/behandlingType";
 import UtvidetRettMikrofrontendVisning from '../../../../../types/MikrofrontendKomponenter';
 import {generereInfoForVurdertVilkar} from '../../../UtvidetRettOmsorgenForMikrofrontendFelles';
 import UtvidetRettSoknad from '../../../../../types/UtvidetRettSoknad';
-import {AleneOmOmsorgenAksjonspunktObjekt, AleneOmOmsorgenProps,} from '../../../../../types/utvidetRettMikrofrontend/VilkarAleneOmOmsorgenProps';
+import {
+  AleneOmOmsorgenAksjonspunktObjekt,
+  AleneOmOmsorgenLosAksjonspunktK9Format,
+  AleneOmOmsorgenProps,
+} from '../../../../../types/utvidetRettMikrofrontend/VilkarAleneOmOmsorgenProps';
 import AvslagskoderAleneOmOmsorgen from "../../../../../types/utvidetRettMikrofrontend/AvslagskoderAleneOmOmsorgen";
 
 interface OwnProps {
@@ -47,7 +50,7 @@ const formatereLosAksjonspunktObjekt = (
   erBehandlingRevurdering: boolean
 ) => {
 
-  const losAksjonspunktObjekt = {
+  const losAksjonspunktObjekt: AleneOmOmsorgenLosAksjonspunktK9Format = {
     kode: aksjonspunktKode,
     begrunnelse,
     erVilkarOk,
@@ -57,7 +60,7 @@ const formatereLosAksjonspunktObjekt = (
   };
 
   if (!erVilkarOk) {
-    losAksjonspunktObjekt['avslagsårsak'] = AvslagskoderAleneOmOmsorgen.IKKE_GRUNNLAG_ALENE_OMSORG;
+    losAksjonspunktObjekt.avslagsårsak = AvslagskoderAleneOmOmsorgen.IKKE_GRUNNLAG_ALENE_OMSORG;
   }
 
   if(erBehandlingRevurdering){
@@ -78,9 +81,6 @@ const AleneOmOmsorgenObjektTilMikrofrontend = ({
   submitCallback,
   soknad,
 }: OwnProps) => {
-  const angittBarn = soknad.angittePersoner.filter(person => person.rolle === 'BARN');
-  const barnetsFodselsdato = new Date(angittBarn[0].fødselsdato);
-  const årBarnetFyller13 = `${barnetsFodselsdato.getFullYear() + 13}-12-31`;
   const erBehandlingRevurdering: boolean = behandling.type.kode === BehandlingType.REVURDERING;
 
   return {
@@ -90,8 +90,8 @@ const AleneOmOmsorgenObjektTilMikrofrontend = ({
       lesemodus,
       aksjonspunktLost,
       fraDatoFraSoknad: soknad?.søknadsperiode.fom,
-      tomDato: årBarnetFyller13,
       vedtakFattetVilkarOppfylt: skalVilkarsUtfallVises,
+      erBehandlingstypeRevurdering: erBehandlingRevurdering,
       informasjonOmVilkar: generereInfoForVurdertVilkar(
         skalVilkarsUtfallVises,
         vilkarKnyttetTilAksjonspunkt,

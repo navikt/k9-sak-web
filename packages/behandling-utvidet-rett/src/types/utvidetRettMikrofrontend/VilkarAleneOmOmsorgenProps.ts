@@ -21,3 +21,14 @@ export interface AleneOmOmsorgenAksjonspunktObjekt {
   fraDato: string;
   tilDato?: string;
 }
+
+export interface AleneOmOmsorgenLosAksjonspunktK9Format {
+  kode: string;
+  begrunnelse: string;
+  erVilkarOk: boolean;
+  periode: {
+    fom: string,
+    tom?: string
+  }
+  avslagsårsak?: string;
+}
