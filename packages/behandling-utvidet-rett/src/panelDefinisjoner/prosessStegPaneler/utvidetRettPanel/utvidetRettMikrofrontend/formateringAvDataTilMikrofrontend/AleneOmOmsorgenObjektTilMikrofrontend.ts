@@ -63,7 +63,7 @@ const formatereLosAksjonspunktObjekt = (
     losAksjonspunktObjekt.avslagsårsak = AvslagskoderAleneOmOmsorgen.IKKE_GRUNNLAG_ALENE_OMSORG;
   }
 
-  if(erBehandlingRevurdering){
+  if(erBehandlingRevurdering && !!tilDato){
     losAksjonspunktObjekt.periode.tom = tilDato;
   }
 
