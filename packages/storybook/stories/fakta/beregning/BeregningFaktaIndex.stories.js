@@ -15,6 +15,12 @@ import {
 } from './scenario/ArbeidMedDagpengerIOpptjeningsperioden';
 
 import {
+  beregningsgrunnlag as bgTest,
+  behandling as behTest
+} from './scenario/PrivatpersonOrgOgFrilansISammeOrg';
+
+
+import {
   beregningsgrunnlag as bgFlerePerioder,
   aksjonspunkt as apFlerePerioder,
   behandling as behandlingFlerePerioder,
@@ -123,17 +129,16 @@ const mapTilKodeliste = arrayOfCodes => arrayOfCodes.map(kode => ({ kode }));
 
 const lagAndel = (andelsnr, aktivitetStatus, inntektskategori) => ({
   andelsnr,
-  aktivitetStatus: { kode: aktivitetStatus },
-  inntektskategori: { kode: inntektskategori },
+  aktivitetStatus: { kode: aktivitetStatus, kodeverk: 'AKTIVITET_STATUS'  },
+  inntektskategori: { kode: inntektskategori, kodeverk: 'INNTEKTSKATEGORI' },
 });
 
 const standardFaktaArbeidstakerAndel = {
   ...lagAndel(1, aktivitetStatuser.ARBEIDSTAKER, inntektskategorier.ARBEIDSTAKER),
-  visningsnavn: 'Bedriften (12345678)',
   belopReadOnly: 30000,
   lagtTilAvSaksbehandler: false,
   arbeidsforhold: {
-    arbeidsgiverId: '12345678',
+    arbeidsgiverIdent: '12345678',
     arbeidsforholdId: null,
     startdato: '01.01.2019',
     opphoersdato: null,
@@ -146,7 +151,7 @@ const standardFaktaArbeidstakerAndel2 = {
   belopReadOnly: 30000,
   lagtTilAvSaksbehandler: false,
   arbeidsforhold: {
-    arbeidsgiverId: '12345679',
+    arbeidsgiverIdent: '12345679',
     arbeidsforholdId: null,
     startdato: '01.01.2019',
     opphoersdato: '01.01.2020',
@@ -159,7 +164,7 @@ const tidsbegrensetFaktaArbeidstakerAndel = {
   belopReadOnly: 30000,
   lagtTilAvSaksbehandler: false,
   arbeidsforhold: {
-    arbeidsgiverId: '12345671',
+    arbeidsgiverIdent: '12345671',
     arbeidsforholdId: null,
     startdato: '01.09.2019',
     opphoersdato: '01.01.2020',
@@ -172,7 +177,7 @@ const etterlønnSluttpakkeFaktaArbeidstakerAndel = {
   belopReadOnly: 30000,
   lagtTilAvSaksbehandler: false,
   arbeidsforhold: {
-    arbeidsgiverId: '795349533',
+    arbeidsgiverIdent: '795349533',
     arbeidsforholdId: null,
     startdato: '01.09.2019',
     opphoersdato: null,
@@ -182,31 +187,26 @@ const etterlønnSluttpakkeFaktaArbeidstakerAndel = {
 
 const standardFaktaFrilansAndel = {
   ...lagAndel(2, aktivitetStatuser.FRILANSER, inntektskategorier.FRILANSER),
-  visningsnavn: 'Frilans',
   belopReadOnly: 10000,
   lagtTilAvSaksbehandler: false,
 };
 const standardFaktaMilitærAndel = {
   ...lagAndel(5, aktivitetStatuser.MILITAER_ELLER_SIVIL, inntektskategorier.ARBEIDSTAKER),
-  visningsnavn: 'Militær- eller sivilforsvarstjeneste',
   belopReadOnly: 10000,
   lagtTilAvSaksbehandler: false,
 };
 const standardFaktaYtelseAndel = {
   ...lagAndel(8, aktivitetStatuser.KUN_YTELSE, inntektskategorier.UDEFINERT),
-  visningsnavn: 'Ytelse',
   belopReadOnly: 10000,
   lagtTilAvSaksbehandler: false,
 };
 const standardFaktaNæringAndel = {
   ...lagAndel(9, aktivitetStatuser.SELVSTENDIG_NAERINGSDRIVENDE, inntektskategorier.SELVSTENDIG_NAERINGSDRIVENDE),
-  visningsnavn: 'Selvstendig næringsdrivende',
   belopReadOnly: 10000,
   lagtTilAvSaksbehandler: false,
 };
 const standardFaktaAAPAndel = {
   ...lagAndel(10, aktivitetStatuser.ARBEIDSAVKLARINGSPENGER, inntektskategorier.ARBEIDSAVKLARINGSPENGER),
-  visningsnavn: 'Arbeidsavklaringspenger',
   belopReadOnly: 10000,
   lagtTilAvSaksbehandler: false,
 };
@@ -220,6 +220,25 @@ export default {
   component: BeregningFaktaIndex,
   decorators: [withKnobs, withReduxProvider],
 };
+
+export const PrivatpersonSomArbeidsgiverOgFrilans = () => (
+  <BeregningFaktaIndex
+    behandling={behTest}
+    beregningsgrunnlag={bgTest}
+    aksjonspunkter={apKunYtelse}
+    erOverstyrer
+    alleKodeverk={alleKodeverk}
+    arbeidsgiverOpplysningerPerId={arbeidsgivere}
+    alleMerknaderFraBeslutter={{
+      [aksjonspunktCodes.VURDER_FAKTA_FOR_ATFL_SN]: object('merknaderFraBeslutter', merknaderFraBeslutter),
+    }}
+    submitCallback={action('button-click')}
+    readOnly={boolean('readOnly', false)}
+    harApneAksjonspunkter={boolean('harApneAksjonspunkter', true)}
+    submittable={boolean('submittable', true)}
+  />
+);
+
 
 export const KunYtelsePåSkjæringstidspunktet = () => (
   <BeregningFaktaIndex
@@ -353,8 +372,7 @@ export const AvklartAktiviteterMedAksjonspunktIFaktaAvklaring = () => {
   const andelerForFaktaOmBeregning = [standardFaktaArbeidstakerAndel, standardFaktaAAPAndel];
   const refusjonskravSomKommerForSentListe = [
     {
-      arbeidsgiverId: standardFaktaArbeidstakerAndel.arbeidsforhold.arbeidsforholdId,
-      arbeidsgiverVisningsnavn: standardFaktaArbeidstakerAndel.visningsnavn,
+      arbeidsgiverIdent: standardFaktaArbeidstakerAndel.arbeidsforhold.arbeidsgiverIdent,
     },
   ];
   const faktaOmBeregning = {
@@ -427,7 +445,7 @@ export const FrilansOgArbeidsforholdMedLønnendringOgNyoppstartet = () => {
     erNyoppstartet: null,
   };
   const andeler = [arbeidstakerBeregningsgrunnlagAndel, frilansBeregningsgrunnlagAndel];
-  const andelerForFaktaOmBeregning = [standardFaktaArbeidstakerAndel, standardFaktaFrilansAndel];
+  const andelerForFaktaOmBeregning = [standardFaktaArbeidstakerAndel, standardFaktaFrilansAndel ];
   const vurderMottarYtelse = {
     erFrilans: true,
     frilansMottarYtelse: null,
@@ -491,8 +509,7 @@ export const KunArbeidstakerMedVurderingSentRefusjonskrav = () => {
   const andelerForFaktaOmBeregning = [standardFaktaArbeidstakerAndel, standardFaktaArbeidstakerAndel2];
   const refusjonskravSomKommerForSentListe = [
     {
-      arbeidsgiverId: standardFaktaArbeidstakerAndel.arbeidsforhold.arbeidsforholdId,
-      arbeidsgiverVisningsnavn: standardFaktaArbeidstakerAndel.visningsnavn,
+      arbeidsgiverIdent: standardFaktaArbeidstakerAndel.arbeidsforhold.arbeidsgiverIdent,
     },
   ];
   const faktaOmBeregning = {
@@ -1035,8 +1052,7 @@ export const KombinasjonstestForFaktapanel = () => {
   ];
   const refusjonskravSomKommerForSentListe = [
     {
-      arbeidsgiverId: standardFaktaArbeidstakerAndel.arbeidsforhold.arbeidsforholdId,
-      arbeidsgiverVisningsnavn: standardFaktaArbeidstakerAndel.visningsnavn,
+      arbeidsgiverIdent: standardFaktaArbeidstakerAndel.arbeidsforhold.arbeidsgiverIdent,
     },
   ];
   const vurderMottarYtelse = {

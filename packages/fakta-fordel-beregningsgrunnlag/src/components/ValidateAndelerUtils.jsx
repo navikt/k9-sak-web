@@ -8,7 +8,7 @@ import {
   mapToBelop,
 } from './BgFordelingUtils';
 import TotalbelopPrArbeidsgiverError, { lagTotalInntektArbeidsforholdList } from './TotalbelopPrArbeidsgiverError';
-import { createVisningsnavnForAktivitet } from './util/visningsnavnHelper';
+import createVisningsnavnForAktivitet from './util/createVisningsnavnForAktivitet';
 
 const convertToNumber = n => (n == null || undefined ? null : Number(removeSpacesFromNumber(n)));
 
@@ -66,8 +66,8 @@ const finnArbeidsforholdRefusjonsinfoListe = andelList => {
   const arbeidsforholdRefusjonsbelop = [];
   andelerMedArbeidsforhold.forEach(andel => {
     const infoIndex = arbeidsforholdRefusjonsbelop.findIndex(
-      ({ arbeidsforholdId, arbeidsgiverId }) =>
-        arbeidsforholdId === andel.arbeidsforholdId && arbeidsgiverId === andel.arbeidsgiverId,
+      ({ arbeidsforholdId, arbeidsgiverIdent }) =>
+        arbeidsforholdId === andel.arbeidsforholdId && arbeidsgiverIdent === andel.arbeidsgiverIdent,
     );
     if (infoIndex >= 0) {
       const belopsInfo = arbeidsforholdRefusjonsbelop[infoIndex];
@@ -79,7 +79,7 @@ const finnArbeidsforholdRefusjonsinfoListe = andelList => {
           belopsInfo.totalRefusjon + Number(removeSpacesFromNumber(andel.refusjonskrav));
       }
     } else {
-      const { refusjonskravFraInntektsmelding, arbeidsforholdId, arbeidsgiverId, eksternArbeidsforholdId } = andel;
+      const { refusjonskravFraInntektsmelding, arbeidsforholdId, arbeidsgiverIdent, eksternArbeidsforholdId } = andel;
       let totalRefusjon = 0;
       if (andel.refusjonskrav !== null && andel.refusjonskrav !== undefined) {
         totalRefusjon = Number(removeSpacesFromNumber(andel.refusjonskrav));
@@ -87,7 +87,7 @@ const finnArbeidsforholdRefusjonsinfoListe = andelList => {
       arbeidsforholdRefusjonsbelop.push({
         arbeidsforholdId,
         eksternArbeidsforholdId,
-        arbeidsgiverId,
+        arbeidsgiverIdent,
         refusjonskravFraInntektsmelding,
         totalRefusjon,
       });

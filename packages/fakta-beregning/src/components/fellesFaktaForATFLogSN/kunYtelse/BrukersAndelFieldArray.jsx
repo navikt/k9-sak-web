@@ -119,7 +119,7 @@ const createBruttoBGSummaryRow = sumFordeling => (
 
 const getHeaderTextCodes = () => [
   'BeregningInfoPanel.FordelingBG.Andel',
-  'BeregningInfoPanel.FordelingBG.Fordeling',
+  'BeregningInfoPanel.FordelingBG.Inntekt',
   'BeregningInfoPanel.FordelingBG.Inntektskategori',
 ];
 

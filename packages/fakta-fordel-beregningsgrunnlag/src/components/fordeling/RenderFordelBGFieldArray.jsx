@@ -34,7 +34,7 @@ import {
   validateSumFastsattForUgraderteAktiviteter,
 } from '../ValidateAndelerUtils';
 import styles from './renderFordelBGFieldArray.less';
-import { createVisningsnavnForAktivitet } from '../util/visningsnavnHelper';
+import createVisningsnavnForAktivitet from '../util/createVisningsnavnForAktivitet';
 
 const ENTER_KEY_CODE = 13;
 
@@ -164,7 +164,7 @@ const setArbeidsforholdInfo = (fields, index, arbeidsforholdList, val) => {
   const arbeidsforhold = finnArbeidsforholdForAndel(arbeidsforholdList, val);
   if (arbeidsforhold) {
     field.arbeidsforholdId = arbeidsforhold.arbeidsforholdId;
-    field.arbeidsgiverId = arbeidsforhold.arbeidsgiverId;
+    field.arbeidsgiverIdent = arbeidsforhold.arbeidsgiverIdent;
     field.arbeidsperiodeFom = arbeidsforhold.startdato;
     field.arbeidsperiodeTom = arbeidsforhold.opphoersdato;
     field.andelsnrRef = arbeidsforhold.andelsnr;

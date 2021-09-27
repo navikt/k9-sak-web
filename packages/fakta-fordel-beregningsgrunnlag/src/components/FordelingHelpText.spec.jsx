@@ -6,7 +6,7 @@ const fn = sinon.spy();
 
 const arbeidsforhold = {
   arbeidsforholdId: '987654321',
-  arbeidsgiverId: '123456789',
+  arbeidsgiverIdent: '123456789',
   eksternArbeidsforholdId: '56789',
   permisjon: {
     permisjonFom: '2016-01-01',

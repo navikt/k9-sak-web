@@ -9,21 +9,21 @@ import {
 } from './VurderMottarYtelseUtils';
 
 const arbeidsforhold = {
-  arbeidsgiverId: '3284788923',
+  arbeidsgiverIdent: '3284788923',
   arbeidsforholdId: '321378huda7e2',
   startdato: '2017-01-01',
   opphoersdato: '2018-01-01',
 };
 
 const arbeidsforhold2 = {
-  arbeidsgiverId: '843597943435',
+  arbeidsgiverIdent: '843597943435',
   arbeidsforholdId: 'jjisefoosfe',
   startdato: '2017-01-01',
   opphoersdato: '2018-01-01',
 };
 
 const arbeidsforhold3 = {
-  arbeidsgiverId: '843597943435',
+  arbeidsgiverIdent: '843597943435',
   arbeidsforholdId: '5465465464',
   startdato: '2017-01-01',
   opphoersdato: '2018-01-01',

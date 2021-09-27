@@ -3,7 +3,7 @@ import { isRequiredMessage } from '@fpsak-frontend/utils';
 import VurderAktiviteterPanel from './VurderAktiviteterPanel';
 
 const aktivitet1 = {
-  arbeidsgiverId: '384723894723',
+  arbeidsgiverIdent: '384723894723',
   fom: '2019-01-01',
   tom: null,
   skalBrukes: null,
@@ -11,8 +11,8 @@ const aktivitet1 = {
 };
 
 const aktivitet2 = {
-  arbeidsgiverId: '334534623342',
-  arbeidsforholdId: 'efj8343f34f',
+  arbeidsgiverIdent: '334534623342',
+  eksternArbeidsforholdId: 'efj8343f34f',
   fom: '2019-01-01',
   tom: '2019-02-02',
   skalBrukes: true,
@@ -20,9 +20,8 @@ const aktivitet2 = {
 };
 
 const aktivitet3 = {
-  aktørIdString: '324234234234',
-  arbeidsgiverId: '1960-01-01',
-  arbeidsforholdId: 'efj8343f34f',
+  arbeidsgiverIdent: '324234234234',
+  eksternArbeidsforholdId: 'efj8343f34f',
   fom: '2019-01-01',
   tom: '2019-02-02',
   skalBrukes: false,
@@ -30,7 +29,7 @@ const aktivitet3 = {
 };
 
 const aktivitetAAP = {
-  arbeidsgiverId: null,
+  arbeidsgiverIdent: null,
   arbeidsforholdType: { kode: 'AAP', navn: 'Arbeidsavklaringspenger', kodeverk: 'OPPTJENING_AKTIVITET_TYPE' },
   fom: '2019-01-01',
   tom: '2020-02-02',
@@ -41,7 +40,7 @@ const aktiviteter = [aktivitet1, aktivitet2, aktivitet3, aktivitetAAP];
 
 const id1 = '3847238947232019-01-01';
 const id2 = '334534623342efj8343f34f2019-01-01';
-const id3 = '1960-01-01efj8343f34f2019-01-01';
+const id3 = '324234234234efj8343f34f2019-01-01';
 const idAAP = 'AAP2019-01-01';
 
 describe('<VurderAktiviteterPanel>', () => {

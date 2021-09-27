@@ -40,10 +40,10 @@ const fields = new MockFieldsWithContent('endringPeriode0', [andel]);
 const arbeidstakerNavn = 'Hansens bil og brems AS';
 const siste4SifferIArbeidsforholdId = '4352';
 const arbeidstakerAndelsnr = 1;
-const arbeidsgiverId = '12338';
+const arbeidsgiverIdent = '12338';
 const arbeidsforholdList = [
   {
-    arbeidsgiverId,
+    arbeidsgiverIdent,
     startDato: '2016-01-01',
     opphoersdato: '2018-04-01',
     arbeidsforholdId: '12142223323',
@@ -69,7 +69,7 @@ const arbeidsgiverOpplysningerPerId = {
 
 describe('<RenderFordelBGFieldArray>', () => {
   it('skal ha selectvalues med Ytelse når kun ytelse', () => {
-    const forventetArbeidstakerString = `${arbeidstakerNavn} (${arbeidsgiverId})...${siste4SifferIArbeidsforholdId}`;
+    const forventetArbeidstakerString = `${arbeidstakerNavn} (${arbeidsgiverIdent})...${siste4SifferIArbeidsforholdId}`;
     const wrapper = shallowWithIntl(
       <RenderFordelBGFieldArrayImpl
         fields={fields}
@@ -98,7 +98,7 @@ describe('<RenderFordelBGFieldArray>', () => {
   });
 
   it('skal ikkje selectvalues med Ytelse når ikkje kun ytelse', () => {
-    const forventetArbeidstakerString = `${arbeidstakerNavn} (${arbeidsgiverId})...${siste4SifferIArbeidsforholdId}`;
+    const forventetArbeidstakerString = `${arbeidstakerNavn} (${arbeidsgiverIdent})...${siste4SifferIArbeidsforholdId}`;
     const wrapper = shallowWithIntl(
       <RenderFordelBGFieldArrayImpl
         fields={fields}
@@ -363,7 +363,7 @@ describe('<RenderFordelBGFieldArray>', () => {
   });
 
   const arbeidsgiverInfo = {
-    arbeidsgiverId: '14235235235',
+    arbeidsgiverIdent: '14235235235',
     arbeidsforholdId: '82389r32fe9343tr',
     eksternArbeidsforholdId: '234567',
   };

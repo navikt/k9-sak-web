@@ -8,7 +8,7 @@ import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { DDMMYYYY_DATE_FORMAT, ISO_DATE_FORMAT, getKodeverknavnFn } from '@fpsak-frontend/utils';
 import avklaringsbehovCodes, { harAvklaringsbehov } from '@fpsak-frontend/kodeverk/src/beregningAvklaringsbehovCodes';
 import { AksjonspunktHelpTextTemp, VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { createVisningsnavnForAktivitet } from './util/visningsnavnHelper';
+import createVisningsnavnForAktivitet from './util/createVisningsnavnForAktivitet';
 
 const { FORDEL_BEREGNINGSGRUNNLAG } = avklaringsbehovCodes;
 

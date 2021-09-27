@@ -194,7 +194,7 @@ InntektFieldArray.transformValues = values =>
           lagtTilAvSaksbehandler: fieldValue.lagtTilAvSaksbehandler,
           aktivitetStatus: fieldValue.aktivitetStatus,
           arbeidsforholdId: fieldValue.arbeidsforholdId,
-          arbeidsgiverId: fieldValue.arbeidsgiverId,
+          arbeidsgiverIdent: fieldValue.arbeidsgiverIdent,
         }))
     : null;
 
