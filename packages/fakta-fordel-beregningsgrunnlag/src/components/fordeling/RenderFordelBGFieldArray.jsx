@@ -34,7 +34,7 @@ import {
   validateSumFastsattForUgraderteAktiviteter,
 } from '../ValidateAndelerUtils';
 import styles from './renderFordelBGFieldArray.less';
-import { createVisningsnavnForAktivitet } from '../util/visningsnavnHelper';
+import createVisningsnavnForAktivitet from '../util/createVisningsnavnForAktivitet';
 
 const ENTER_KEY_CODE = 13;
 

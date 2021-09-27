@@ -1,6 +1,6 @@
 const getEndCharFromId = id => (id ? `...${id.substring(id.length - 4, id.length)}` : '');
 
-export const createVisningsnavnForAktivitet = (aktivitet, getKodeverknavn, arbeidsgiverOpplysningerPerId) => {
+const createVisningsnavnForAktivitet = (aktivitet, getKodeverknavn, arbeidsgiverOpplysningerPerId) => {
   const arbeidsgiverNavn =
     arbeidsgiverOpplysningerPerId && arbeidsgiverOpplysningerPerId[aktivitet.arbeidsgiverIdent]
       ? arbeidsgiverOpplysningerPerId[aktivitet.arbeidsgiverIdent].navn
@@ -12,3 +12,5 @@ export const createVisningsnavnForAktivitet = (aktivitet, getKodeverknavn, arbei
 
   return `${arbeidsgiverNavn} (${aktivitet.arbeidsgiverIdent})${getEndCharFromId(aktivitet.eksternArbeidsforholdId)}`;
 };
+
+export default createVisningsnavnForAktivitet;

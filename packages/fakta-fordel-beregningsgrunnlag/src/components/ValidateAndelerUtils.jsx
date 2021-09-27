@@ -8,7 +8,7 @@ import {
   mapToBelop,
 } from './BgFordelingUtils';
 import TotalbelopPrArbeidsgiverError, { lagTotalInntektArbeidsforholdList } from './TotalbelopPrArbeidsgiverError';
-import { createVisningsnavnForAktivitet } from './util/visningsnavnHelper';
+import createVisningsnavnForAktivitet from './util/createVisningsnavnForAktivitet';
 
 const convertToNumber = n => (n == null || undefined ? null : Number(removeSpacesFromNumber(n)));
 
