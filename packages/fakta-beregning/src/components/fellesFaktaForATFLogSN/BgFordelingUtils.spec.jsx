@@ -21,7 +21,7 @@ import {
 import { MANUELL_OVERSTYRING_BEREGNINGSGRUNNLAG_FIELD } from './InntektstabellPanel';
 
 const arbeidsgiver = {
-  arbeidsgiverId: '3284788923',
+  arbeidsgiverIdent: '3284788923',
   startdato: '2017-01-01',
   opphoersdato: '2018-01-01',
 };
@@ -132,7 +132,7 @@ describe('<BgFordelingUtils>', () => {
       beregnetPrAar: null,
       belopFraMeldekortPrMnd: null,
       arbeidsforhold: {
-        arbeidsgiverId: '1231414',
+        arbeidsgiverIdent: '1231414',
       },
     };
     const atField = mapAndelToField(ATAndel, alleKodeverk, arbeidsgiverOpplysningerPerId);
@@ -182,7 +182,7 @@ describe('<BgFordelingUtils>', () => {
       belopReadOnly: 20000,
       arbeidsforhold: {
         belopFraInntektsmeldingPrMnd: 20000,
-        arbeidsgiverId: '1231414',
+        arbeidsgiverIdent: '1231414',
       },
     };
     const atField = mapAndelToField(ATAndel, alleKodeverk, arbeidsgiverOpplysningerPerId);
@@ -200,7 +200,7 @@ describe('<BgFordelingUtils>', () => {
   it('skal sette initial values for generell andelinfo med arbeidsforhold', () => {
     const andelValueFromState = {
       arbeidsforhold: {
-        arbeidsgiverId: '3284788923',
+        arbeidsgiverIdent: '3284788923',
         arbeidsforholdId: '321378huda7e2',
         eksternArbeidsforholdId: '321378huda7e2',
       },
@@ -255,7 +255,7 @@ describe('<BgFordelingUtils>', () => {
   const andelsnrKunstigArbeid = 241;
 
   const kunstigArbeidsgiver = {
-    arbeidsgiverId: '42672364432',
+    arbeidsgiverIdent: '42672364432',
     startdato: '2017-01-01',
     opphoersdato: '2018-01-01',
     organisasjonstype: { kode: organisasjonstyper.KUNSTIG },

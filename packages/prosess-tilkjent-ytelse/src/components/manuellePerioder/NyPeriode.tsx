@@ -117,19 +117,16 @@ const transformValues = (values: any) => ({
   id: guid(),
   fom: values.fom,
   tom: values.tom,
-  // refusjon: values.refusjon,
   andeler: values.andeler.map(andel => ({
-    utbetalingsgrad: andel.utbetalingsgrad || 100,
-    // INNTEKTSKATEGORI
     inntektskategori: {
       kode: andel.inntektskategori,
       kodeverk: 'INNTEKTSKATEGORI',
     },
-    refusjon: andel.refusjon || 0,
+    arbeidsgiverOrgnr: andel.arbeidsgiverOrgnr,
     tilSoker: andel.tilSoker,
-    arbeidsgiverOrgNr: andel.arbeidsgiverOrgNr,
+    refusjon: andel.refusjon || 0,
+    utbetalingsgrad: andel.utbetalingsgrad || 100,
   })),
-  // lagtTilAvSaksbehandler: true,
 });
 
 const validateNyPeriodeForm = (values: any) => {

@@ -14,12 +14,12 @@ const { VURDER_REFUSJONSKRAV_SOM_HAR_KOMMET_FOR_SENT } = faktaOmBeregningTilfell
 
 const erRefusjonskravGyldigFieldPrefix = 'erKravGyldig_';
 
-export const lagFieldName = arbeidsgiverVisningsnavn =>
-  erRefusjonskravGyldigFieldPrefix + arbeidsgiverVisningsnavn.replace('.', '');
+export const lagFieldName = arbeidsgiverIdent =>
+  erRefusjonskravGyldigFieldPrefix + arbeidsgiverIdent;
 
-const lagRefusjonskravRadios = (senRefusjonkravListe, readOnly, isAvklaringsbehovClosed, fieldArrayID) =>
+const lagRefusjonskravRadios = (senRefusjonkravListe, readOnly, isAvklaringsbehovClosed, fieldArrayID, alleKodeverk, arbeidsgiverOpplysningerPerId) =>
   senRefusjonkravListe.map(kravPerArbeidsgiver => {
-    const arbeidsgiverVisningsnavn = createVisningsnavnForAktivitet(kravPerArbeidsgiver);
+    const arbeidsgiverVisningsnavn = createVisningsnavnForAktivitet(kravPerArbeidsgiver, alleKodeverk, arbeidsgiverOpplysningerPerId);
     return (
       <React.Fragment key={arbeidsgiverVisningsnavn}>
         <VerticalSpacer twentyPx />
@@ -31,7 +31,7 @@ const lagRefusjonskravRadios = (senRefusjonkravListe, readOnly, isAvklaringsbeho
         />
         <VerticalSpacer eightPx />
         <RadioGroupField
-          name={`${fieldArrayID}.${lagFieldName(arbeidsgiverVisningsnavn)}`}
+          name={`${fieldArrayID}.${lagFieldName(kravPerArbeidsgiver.arbeidsgiverIdent)}`}
           validate={[required]}
           readOnly={readOnly}
           isEdited={isAvklaringsbehovClosed}
@@ -48,14 +48,21 @@ const lagRefusjonskravRadios = (senRefusjonkravListe, readOnly, isAvklaringsbeho
  *
  * Container komponent. Har ansvar for å sette opp Redux Formen for vurdering av refusjonskrav som har kommet for sent.
  */
-export const VurderRefusjonFormImpl = ({ readOnly, isAvklaringsbehovClosed, senRefusjonkravListe, fieldArrayID }) =>
-  lagRefusjonskravRadios(senRefusjonkravListe, readOnly, isAvklaringsbehovClosed, fieldArrayID);
+export const VurderRefusjonFormImpl = ({ readOnly, 
+  isAvklaringsbehovClosed,
+  senRefusjonkravListe,
+  fieldArrayID,
+  alleKodeverk,
+  arbeidsgiverOpplysningerPerId }) =>
+  lagRefusjonskravRadios(senRefusjonkravListe, readOnly, isAvklaringsbehovClosed, fieldArrayID, alleKodeverk, arbeidsgiverOpplysningerPerId);
 
 VurderRefusjonFormImpl.propTypes = {
   readOnly: PropTypes.bool.isRequired,
   isAvklaringsbehovClosed: PropTypes.bool.isRequired,
   senRefusjonkravListe: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   fieldArrayID: PropTypes.string.isRequired,
+  alleKodeverk: PropTypes.shape().isRequired,
+  arbeidsgiverOpplysningerPerId: PropTypes.shape().isRequired,
 };
 
 VurderRefusjonFormImpl.transformValues = arbeidsgiverListe => values => {
@@ -63,9 +70,9 @@ VurderRefusjonFormImpl.transformValues = arbeidsgiverListe => values => {
     return {};
   }
   return {
-    refusjonskravGyldighet: arbeidsgiverListe.map(({ arbeidsgiverId, arbeidsgiverVisningsnavn }) => ({
-      arbeidsgiverId,
-      skalUtvideGyldighet: values ? values[lagFieldName(arbeidsgiverVisningsnavn)] : undefined,
+    refusjonskravGyldighet: arbeidsgiverListe.map(({ arbeidsgiverIdent }) => ({
+      arbeidsgiverIdent,
+      skalUtvideGyldighet: values ? values[lagFieldName(arbeidsgiverIdent)] : undefined,
     })),
   };
 };
@@ -75,8 +82,8 @@ VurderRefusjonFormImpl.buildInitialValues = (tilfeller, arbeidsgiverListe) => {
   if (!tilfeller.includes(VURDER_REFUSJONSKRAV_SOM_HAR_KOMMET_FOR_SENT) || arbeidsgiverListe.length === 0) {
     return initialValues;
   }
-  arbeidsgiverListe.forEach(({ arbeidsgiverVisningsnavn, erRefusjonskravGyldig }) => {
-    initialValues[lagFieldName(arbeidsgiverVisningsnavn)] = erRefusjonskravGyldig;
+  arbeidsgiverListe.forEach(({ arbeidsgiverIdent, erRefusjonskravGyldig }) => {
+    initialValues[lagFieldName(arbeidsgiverIdent)] = erRefusjonskravGyldig;
   });
   return {
     ...initialValues,

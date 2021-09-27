@@ -1,6 +1,7 @@
 import Kodeverk from './kodeverkTsType';
 
 type BeregningsgrunnlagArbeidsforhold = Readonly<{
+  arbeidsgiverIdent?: string;
   arbeidsgiverId?: string;
   startdato?: string;
   opphoersdato?: string;
@@ -22,7 +23,6 @@ type AndelForFaktaOmBeregning = Readonly<{
   aktivitetStatus?: Kodeverk;
   belopReadOnly?: number;
   fastsattBelop?: number;
-  visningsnavn: string;
   skalKunneEndreAktivitet: boolean;
   lagtTilAvSaksbehandler: boolean;
 }>;
@@ -41,6 +41,7 @@ type AvklarAktiviteter = Readonly<{
   aktiviteterTomDatoMapping?: {
     tom: string;
     aktiviteter: {
+      arbeidsgiverIdent?: string;
       arbeidsgiverId?: string;
       eksternArbeidsforholdId?: string;
       fom: string;
