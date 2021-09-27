@@ -59,14 +59,11 @@ const finnArbeidsgiverId = arbeidsforhold => {
   if (!arbeidsforhold) {
     return '';
   }
-  if (arbeidsforhold.aktørId) {
-    return arbeidsforhold.aktørId;
-  }
-  return arbeidsforhold.arbeidsgiverId ? arbeidsforhold.arbeidsgiverId : '';
+  return arbeidsforhold.arbeidsgiverIdent ? arbeidsforhold.arbeidsgiverIdent : '';
 };
 
 export const setArbeidsforholdInitialValues = andel => ({
-  arbeidsgiverId: finnArbeidsgiverId(andel.arbeidsforhold),
+  arbeidsgiverIdent: finnArbeidsgiverId(andel.arbeidsforhold),
   arbeidsforholdId:
     andel.arbeidsforhold && andel.arbeidsforhold.arbeidsforholdId !== 0 ? andel.arbeidsforhold.arbeidsforholdId : '',
   arbeidsperiodeFom: andel.arbeidsforhold ? andel.arbeidsforhold.startdato : '',

@@ -14,7 +14,7 @@ const BelopPrArbeidsgiverPropType = PropTypes.shape({
 });
 
 const finnArbeidsgiverNavn = (andel, identifikator, getKodeverknavn, arbeidsgiverOpplysningerPerId) => {
-  if (identifikator === AAP_ARBEIDSGIVER_KEY && !andel.arbeidsgiverId) {
+  if (identifikator === AAP_ARBEIDSGIVER_KEY && !andel.arbeidsgiverIdent) {
     return null;
   }
   return createVisningsnavnForAktivitet(andel, getKodeverknavn, arbeidsgiverOpplysningerPerId);

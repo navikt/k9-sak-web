@@ -6,7 +6,7 @@ const andelUtenNavn = {
     kode: 'A',
   },
   arbeidsforholdId: '123',
-  arbeidsgiverId: '111',
+  arbeidsgiverIdent: '111',
   eksternArbeidsforholdId: '09876',
 };
 
@@ -14,14 +14,14 @@ const andelUtenArbeidsforholdId = {
   arbeidsforholdType: {
     kode: 'A',
   },
-  arbeidsgiverId: '321',
+  arbeidsgiverIdent: '321',
 };
 
 const andelMedAlt = {
   arbeidsforholdType: {
     kode: 'A',
   },
-  arbeidsgiverId: '321',
+  arbeidsgiverIdent: '321',
   arbeidsforholdId: '999888777',
   eksternArbeidsforholdId: '56789',
 };

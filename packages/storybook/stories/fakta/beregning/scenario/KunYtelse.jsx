@@ -24,9 +24,7 @@ export const beregningsgrunnlag = [
             andelsnr: 1,
             inntektskategori: { kode: 'ARBEIDSTAKER', kodeverk: 'INNTEKTSKATEGORI' },
             arbeidsforhold: {
-              arbeidsgiverId: '123456789',
               arbeidsgiverIdent: '123456789',
-              arbeidsgiverIdVisning: '123456789',
               startdato: '2017-11-01',
               opphoersdato: '2020-05-31',
               arbeidsforholdType: { kode: 'ARBEID', kodeverk: 'OPPTJENING_AKTIVITET_TYPE' },
@@ -52,7 +50,7 @@ export const beregningsgrunnlag = [
             tom: '2020-05-18',
             aktiviteter: [
               {
-                arbeidsgiverId: '123456789',
+                arbeidsgiverIdent: '123456789',
                 fom: '2017-11-01',
                 tom: '2020-05-31',
                 arbeidsforholdType: { kode: 'ARBEID', kodeverk: 'OPPTJENING_AKTIVITET_TYPE' },
@@ -73,11 +71,8 @@ export const beregningsgrunnlag = [
           inntektskategori: { kode: 'ARBEIDSTAKER', kodeverk: 'INNTEKTSKATEGORI' },
           aktivitetStatus: { kode: 'AT', kodeverk: 'AKTIVITET_STATUS' },
           refusjonskrav: 81364.35,
-          visningsnavn: 'Arbeidsgiveren AS (123456789)',
           arbeidsforhold: {
-            arbeidsgiverId: '123456789',
             arbeidsgiverIdent: '123456789',
-            arbeidsgiverIdVisning: '123456789',
             startdato: '2017-11-01',
             opphoersdato: '2020-05-31',
             arbeidsforholdType: { kode: 'ARBEID', kodeverk: 'OPPTJENING_AKTIVITET_TYPE' },
@@ -156,7 +151,7 @@ export const beregningsgrunnlag = [
             tom: '2020-06-01',
             aktiviteter: [
               {
-                arbeidsgiverId: '123456789',
+                arbeidsgiverIdent: '123456789',
                 fom: '2017-11-01',
                 tom: '2020-05-31',
                 arbeidsforholdType: { kode: 'ARBEID', kodeverk: 'OPPTJENING_AKTIVITET_TYPE' },

@@ -3,7 +3,7 @@ import { createSelector } from 'reselect';
 
 const arbeidsforholdEksistererIListen = (arbeidsforhold, arbeidsgiverList) => {
   if (arbeidsforhold.arbeidsforholdId === null) {
-    return arbeidsgiverList.map(({ arbeidsgiverId }) => arbeidsgiverId).includes(arbeidsforhold.arbeidsgiverId);
+    return arbeidsgiverList.map(({ arbeidsgiverIdent }) => arbeidsgiverIdent).includes(arbeidsforhold.arbeidsgiverIdent);
   }
   return arbeidsgiverList.map(({ arbeidsforholdId }) => arbeidsforholdId).includes(arbeidsforhold.arbeidsforholdId);
 };
@@ -12,7 +12,7 @@ const finnBgAndelMedSammeArbeidsforhold = (bgAndeler, andel) =>
   bgAndeler.find(
     ({ arbeidsforhold }) =>
       !!arbeidsforhold &&
-      arbeidsforhold.arbeidsgiverId === andel.arbeidsforhold.arbeidsgiverId &&
+      arbeidsforhold.arbeidsgiverIdent === andel.arbeidsforhold.arbeidsgiverIdent &&
       arbeidsforhold.arbeidsforholdId === andel.arbeidsforhold.arbeidsforholdId,
   );
 
@@ -69,7 +69,7 @@ export const getUniqueListOfArbeidsforholdFields = fields => {
       const arbeidsforholdObject = {
         andelsnr: field.andelsnr,
         arbeidsforholdId: field.arbeidsforholdId,
-        arbeidsgiverId: field.arbeidsgiverId,
+        arbeidsgiverIdent: field.arbeidsgiverIdent,
         arbeidsperiodeFom: field.arbeidsperiodeFom,
         arbeidsperiodeTom: field.arbeidsperiodeTom,
       };
@@ -80,7 +80,7 @@ export const getUniqueListOfArbeidsforholdFields = fields => {
 };
 
 export const arbeidsforholdProptype = PropTypes.shape({
-  arbeidsgiverId: PropTypes.string,
+  arbeidsgiverIdent: PropTypes.string,
   startdato: PropTypes.string,
   opphoersdato: PropTypes.string,
   arbeidsforholdId: PropTypes.string,

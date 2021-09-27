@@ -229,7 +229,7 @@ export const mapAndel = aktivitet => ({
   andel: aktivitet.andel,
   andelsnr: getAndelsnr(aktivitet),
   aktivitetStatus: aktivitet.aktivitetStatus,
-  arbeidsgiverId: aktivitet.arbeidsgiverId !== '' ? aktivitet.arbeidsgiverId : null,
+  arbeidsgiverId: aktivitet.arbeidsgiverIdent !== '' ? aktivitet.arbeidsgiverIdent : null,
   arbeidsforholdId: aktivitet.arbeidsforholdId !== '' ? aktivitet.arbeidsforholdId : null,
   nyAndel: aktivitet.nyAndel,
   lagtTilAvSaksbehandler: aktivitet.lagtTilAvSaksbehandler,
