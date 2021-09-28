@@ -1,13 +1,14 @@
 import PropTypes from 'prop-types';
-import { getKodeverknavnFn } from '@fpsak-frontend/utils';
+import moment from 'moment';
+import { DDMMYYYY_DATE_FORMAT, getKodeverknavnFn } from '@fpsak-frontend/utils';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 
 const getEndCharFromId = id => (id ? `...${id.substring(id.length - 4, id.length)}` : '');
 
 export const createVisningsnavnForAktivitet = (aktivitet, alleKodeverk, arbeidsgiverOpplysningerPerId) => {
   const arbeidsgiverOpplysninger =
-    arbeidsgiverOpplysningerPerId && aktivitet.arbeidsgiverId
-      ? arbeidsgiverOpplysningerPerId[aktivitet.arbeidsgiverId]
+    arbeidsgiverOpplysningerPerId && aktivitet.arbeidsgiverIdent
+      ? arbeidsgiverOpplysningerPerId[aktivitet.arbeidsgiverIdent]
       : {};
 
   const arbeidsgiverNavn = arbeidsgiverOpplysninger?.navn;
@@ -18,8 +19,15 @@ export const createVisningsnavnForAktivitet = (aktivitet, alleKodeverk, arbeidsg
       : '';
   }
 
-  return aktivitet.arbeidsgiverId
-    ? `${arbeidsgiverNavn} (${aktivitet.arbeidsgiverId})${getEndCharFromId(aktivitet.eksternArbeidsforholdId)}`
+  if (arbeidsgiverOpplysninger.erPrivatPerson) {
+    return arbeidsgiverOpplysninger.fødselsdato
+      ? `${arbeidsgiverOpplysninger.navn} (${moment(arbeidsgiverOpplysninger.fødselsdato).format(
+          DDMMYYYY_DATE_FORMAT,
+        )})${getEndCharFromId(aktivitet.eksternArbeidsforholdId)}`
+      : `${arbeidsgiverOpplysninger.navn}${getEndCharFromId(aktivitet.eksternArbeidsforholdId)}`;
+  }
+  return aktivitet.arbeidsgiverIdent
+    ? `${arbeidsgiverNavn} (${aktivitet.arbeidsgiverIdent})${getEndCharFromId(aktivitet.eksternArbeidsforholdId)}`
     : arbeidsgiverNavn;
 };
 
@@ -30,7 +38,7 @@ export const sortArbeidsforholdList = arbeidsforhold => {
 };
 
 export const arbeidsforholdProptype = PropTypes.shape({
-  arbeidsgiverId: PropTypes.string,
+  arbeidsgiverIdent: PropTypes.string,
   startdato: PropTypes.string,
   opphoersdato: PropTypes.string,
   arbeidsforholdId: PropTypes.string,
@@ -38,7 +46,7 @@ export const arbeidsforholdProptype = PropTypes.shape({
 
 const arbeidsforholdEksistererIListen = (arbeidsforhold, arbeidsgiverList) => {
   if (arbeidsforhold.arbeidsforholdId === null) {
-    return arbeidsgiverList.map(({ arbeidsgiverId }) => arbeidsgiverId).includes(arbeidsforhold.arbeidsgiverId);
+    return arbeidsgiverList.map(({ arbeidsgiverIdent }) => arbeidsgiverIdent).includes(arbeidsforhold.arbeidsgiverIdent);
   }
   return arbeidsgiverList.map(({ arbeidsforholdId }) => arbeidsforholdId).includes(arbeidsforhold.arbeidsforholdId);
 };
@@ -55,7 +63,7 @@ export const getUniqueListOfArbeidsforholdFields = fields => {
       const arbeidsforholdObject = {
         andelsnr: field.andelsnr,
         arbeidsforholdId: field.arbeidsforholdId,
-        arbeidsgiverId: field.arbeidsgiverId,
+        arbeidsgiverIdent: field.arbeidsgiverIdent,
         arbeidsperiodeFom: field.arbeidsperiodeFom,
         arbeidsperiodeTom: field.arbeidsperiodeTom,
       };

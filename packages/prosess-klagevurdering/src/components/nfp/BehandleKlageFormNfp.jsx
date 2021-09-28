@@ -11,6 +11,7 @@ import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import klageVurderingType from '@fpsak-frontend/kodeverk/src/klageVurdering';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
+import { erTilbakekrevingType } from '@fpsak-frontend/kodeverk/src/behandlingType';
 import { AksjonspunktHelpTextTemp, FadingPanel, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { ProsessStegSubmitButton, ProsessStegBegrunnelseTextField } from '@k9-sak-web/prosess-felles';
 import {
@@ -21,7 +22,7 @@ import {
   isBehandlingFormSubmitting,
 } from '@fpsak-frontend/form';
 
-import KlageVurderingRadioOptionsNfp from './KlageVurderingRadioOptionsNfp';
+import KlageVurderingRadioOptionsNfp, { TILBAKEKREVING_HJEMMEL } from './KlageVurderingRadioOptionsNfp';
 import FritekstBrevTextField from '../felles/FritekstKlageBrevTextField';
 import TempSaveAndPreviewKlageLink from '../felles/TempSaveAndPreviewKlageLink';
 import TempsaveKlageButton from '../felles/TempsaveKlageButton';
@@ -45,6 +46,7 @@ export const BehandleKlageFormNfpImpl = ({
   readOnlySubmitButton,
   sprakkode,
   formValues,
+  erPåklagdBehandlingTilbakekreving,
   intl,
   alleKodeverk,
   ...formProps
@@ -60,6 +62,7 @@ export const BehandleKlageFormNfpImpl = ({
       <KlageVurderingRadioOptionsNfp
         fagsak={fagsak}
         readOnly={readOnly}
+        erPåklagdBehandlingTilbakekreving={erPåklagdBehandlingTilbakekreving}
         klageVurdering={formValues.klageVurdering}
         aksjonspunktCode={aksjonspunktCodes.BEHANDLE_KLAGE_NFP}
         intl={intl}
@@ -136,7 +139,9 @@ export const buildInitialValues = createSelector(
     klageMedholdArsak: klageVurderingResultat ? klageVurderingResultat.klageMedholdArsak : null,
     klageVurderingOmgjoer: klageVurderingResultat ? klageVurderingResultat.klageVurderingOmgjoer : null,
     klageHjemmel:
-      fagsak.sakstype.kode !== fagsakYtelseType.FRISINN && klageVurderingResultat
+      fagsak.sakstype.kode !== fagsakYtelseType.FRISINN &&
+      klageVurderingResultat &&
+      klageVurderingResultat.hjemmel !== '-'
         ? klageVurderingResultat.hjemmel
         : null,
     klageVurdering: klageVurderingResultat ? klageVurderingResultat.klageVurdering : null,
@@ -145,29 +150,48 @@ export const buildInitialValues = createSelector(
   }),
 );
 
-export const transformValues = (values, fagsak) => ({
-  klageMedholdArsak:
-    values.klageVurdering === klageVurderingType.MEDHOLD_I_KLAGE ||
-    values.klageVurdering === klageVurderingType.OPPHEVE_YTELSESVEDTAK
-      ? values.klageMedholdArsak
-      : null,
-  klageVurderingOmgjoer:
-    values.klageVurdering === klageVurderingType.MEDHOLD_I_KLAGE ? values.klageVurderingOmgjoer : null,
-  klageHjemmel:
+export const transformValues = (values, fagsak, erPåklagdBehandlingTilbakekreving) => {
+  let klageHjemmel = null;
+
+  if (
     fagsak.sakstype.kode !== fagsakYtelseType.FRISINN &&
     values.klageVurdering === klageVurderingType.STADFESTE_YTELSESVEDTAK
-      ? values.klageHjemmel
-      : null,
-  klageVurdering: values.klageVurdering,
-  fritekstTilBrev: values.fritekstTilBrev,
-  begrunnelse: values.begrunnelse,
-  kode: aksjonspunktCodes.BEHANDLE_KLAGE_NFP,
-});
+  ) {
+    klageHjemmel = erPåklagdBehandlingTilbakekreving ? TILBAKEKREVING_HJEMMEL : values.klageHjemmel;
+  }
+
+  return {
+    klageMedholdArsak:
+      values.klageVurdering === klageVurderingType.MEDHOLD_I_KLAGE ||
+      values.klageVurdering === klageVurderingType.OPPHEVE_YTELSESVEDTAK
+        ? values.klageMedholdArsak
+        : null,
+    klageVurderingOmgjoer:
+      values.klageVurdering === klageVurderingType.MEDHOLD_I_KLAGE ? values.klageVurderingOmgjoer : null,
+    klageHjemmel,
+    klageVurdering: values.klageVurdering,
+    fritekstTilBrev: values.fritekstTilBrev,
+    begrunnelse: values.begrunnelse,
+    kode: aksjonspunktCodes.BEHANDLE_KLAGE_NFP,
+  };
+};
+
+const getErPåklagdBehandlingTilbakekreving = createSelector(
+  [ownProps => ownProps.klageVurdering.klageFormkravResultatNFP],
+  klageVurderingResultat =>
+    erTilbakekrevingType(klageVurderingResultat && klageVurderingResultat.påklagdBehandlingType),
+);
 
 const formName = 'BehandleKlageNfpForm';
 
 const mapStateToPropsFactory = (initialState, initialOwnProps) => {
-  const onSubmit = values => initialOwnProps.submitCallback([transformValues(values, initialOwnProps.fagsak)]);
+  const erPåklagdBehandlingTilbakekreving = getErPåklagdBehandlingTilbakekreving(initialOwnProps);
+
+  const onSubmit = values =>
+    initialOwnProps.submitCallback([
+      transformValues(values, initialOwnProps.fagsak, erPåklagdBehandlingTilbakekreving),
+    ]);
+
   return (state, ownProps) => ({
     initialValues: buildInitialValues(ownProps),
     formValues: behandlingFormValueSelector(formName, ownProps.behandlingId, ownProps.behandlingVersjon)(
@@ -179,6 +203,7 @@ const mapStateToPropsFactory = (initialState, initialOwnProps) => {
       'klageVurderingOmgjoer',
       'klageHjemmel',
     ),
+    erPåklagdBehandlingTilbakekreving,
     readOnly: ownProps.readOnly,
     onSubmit,
   });

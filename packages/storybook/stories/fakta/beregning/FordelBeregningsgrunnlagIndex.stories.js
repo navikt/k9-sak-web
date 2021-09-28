@@ -118,9 +118,9 @@ const lagBG = (perioder, faktaOmFordeling) => {
         aktiviteterTomDatoMapping: [
           {
             tom: '2019-09-16',
-            aktivitete: [
+            aktiviteter: [
               {
-                arbeidsgiverId: '910909088',
+                arbeidsgiverIdent: '910909088',
                 fom: '2018-10-09',
                 tom: '9999-12-31',
                 arbeidsforholdId: '2a3c0f5c-3d70-447a-b0d7-cd242d5155bb',
@@ -150,8 +150,7 @@ const lagBG = (perioder, faktaOmFordeling) => {
           refusjonskrav: 30000,
           visningsnavn: 'BEDRIFT AS (910909088) ...55bb',
           arbeidsforhold: {
-            arbeidsgiverId: '910909088',
-            arbeidsgiverIdentifikator: '910909088',
+            arbeidsgiverIdent: '910909088',
             startdato: '2018-10-09',
             opphoersdato: null,
             arbeidsforholdId: '2a3c0f5c-3d70-447a-b0d7-cd242d5155bb',
@@ -201,7 +200,7 @@ const lagArbforTilFordeling = (arbGiverId, arbId, refKrav, refKravFom) => ({
     kode: 'ARBEID',
     kodeverk: 'OPPTJENING_AKTIVITET_TYPE',
   },
-  arbeidsgiverId: arbGiverId,
+  arbeidsgiverIdent: arbGiverId,
   belopFraInntektsmeldingPrMnd: null,
   eksternArbeidsforholdId: 'ARB001-001',
   naturalytelseBortfaltPrÅr: null,
@@ -274,8 +273,8 @@ const lagFordelPeriode = (fordelAndeler, fom, tom, graderingEllerRef, skalKunneE
   tom,
 });
 
-const lagArbeidsforhold = (arbeidsgiverId, arbeidsforholdId, refKrav) => ({
-  arbeidsgiverId,
+const lagArbeidsforhold = (arbeidsgiverIdent, arbeidsforholdId, refKrav) => ({
+  arbeidsgiverIdent,
   startdato: '2018-10-09',
   opphoersdato: null,
   arbeidsforholdId,
@@ -366,8 +365,8 @@ export const kanEndreRefusjonskrav = () => {
 };
 
 export const skalSlåSammenNaturalytelseperioder = () => {
-  const arbeidsforholdEn = lagArbeidsforhold('965847123', 'AD-ASD-ADF-SADGF-ASGASDF-ÅTYIUOH', 500000);
-  const arbeidsforholdTo = lagArbeidsforhold('999999999', 'AD-ASD-ADF-SADGF-ASGASDF-SDFASDF', 300000);
+  const arbeidsforholdEn = lagArbeidsforhold('12345678', 'AD-ASD-ADF-SADGF-ASGASDF-ÅTYIUOH', 500000);
+  const arbeidsforholdTo = lagArbeidsforhold('9109090883', 'AD-ASD-ADF-SADGF-ASGASDF-SDFASDF', 300000);
 
   // Første periode
   const førsteFordelAndel = lagFordelingsandel(1, 'AT', 0, 0);
@@ -400,7 +399,7 @@ export const skalSlåSammenNaturalytelseperioder = () => {
     periodeAarsak.ENDRING_I_REFUSJONSKRAV,
   ]);
 
-  const arbfor = lagArbforTilFordeling('999999999', 'AD-ASD-ADF-SADGF-ASGASDF-SDFASDF', 300000, '2019-12-06');
+  const arbfor = lagArbforTilFordeling('9109090883', 'AD-ASD-ADF-SADGF-ASGASDF-SDFASDF', 300000, '2019-12-06');
   const faktaOmFordeling = lagFaktaOmFordeling([arbfor], [førstePeriode, andrePeriode, tredjePeriode]);
 
   const bg = lagBG([førsteBGPeriode, andreBGPperiode, tredjeBGPeriode], faktaOmFordeling);

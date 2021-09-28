@@ -9,7 +9,7 @@ import { getUniqueListOfArbeidsforholdFields } from '../ArbeidsforholdHelper';
 import { ArbeidsforholdFieldImpl } from './ArbeidsforholdField';
 
 const arbeidsforhold1 = {
-  arbeidsgiverId: '233647823',
+  arbeidsgiverIdent: '233647823',
   startdato: '01.01.1967',
   opphoersdato: null,
   arbeidsforholdId: null,

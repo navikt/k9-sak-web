@@ -47,7 +47,7 @@ const andel2 = {
 const arbeidsforhold1 = {
   arbeidsforholdId: null,
   arbeidsforholdType: { kode: 'ARBEID', kodeverk: 'OPPTJENING_AKTIVITET_TYPE' },
-  arbeidsgiverId: '914555825',
+  arbeidsgiverIdent: '914555825',
   belopFraInntektsmeldingPrMnd: 41667,
   opphoersdato: '2019-06-01',
   organisasjonstype: { kode: 'VIRKSOMHET', kodeverk: 'ORGANISASJONSTYPE' },
@@ -58,7 +58,7 @@ const arbeidsforhold1 = {
 const arbeidsforhold2 = {
   arbeidsforholdId: 'd0101e6c-c54a-4db2-ac91-f5b0d86a6d3e',
   arbeidsforholdType: { kode: 'ARBEID', kodeverk: 'OPPTJENING_AKTIVITET_TYPE' },
-  arbeidsgiverId: '996607852',
+  arbeidsgiverIdent: '996607852',
   belopFraInntektsmeldingPrMnd: 41667,
   organisasjonstype: { kode: 'VIRKSOMHET', kodeverk: 'ORGANISASJONSTYPE' },
   refusjonPrAar: 500004,

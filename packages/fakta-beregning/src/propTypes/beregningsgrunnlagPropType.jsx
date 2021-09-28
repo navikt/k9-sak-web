@@ -3,7 +3,7 @@ import { kodeverkObjektPropType } from '@fpsak-frontend/prop-types';
 import beregningAvklaringsbehovPropType from './beregningAvklaringsbehovPropType';
 
 const beregningsgrunnlagArbeidsforholdProptype = PropTypes.shape({
-  arbeidsgiverId: PropTypes.string,
+  arbeidsgiverIdent: PropTypes.string,
   startdato: PropTypes.string,
   opphoersdato: PropTypes.string,
   arbeidsforholdId: PropTypes.string,
@@ -24,14 +24,12 @@ const andelForFaktaOmBeregningPropType = PropTypes.shape({
   aktivitetStatus: kodeverkObjektPropType,
   belopReadOnly: PropTypes.number,
   fastsattBelop: PropTypes.number,
-  visningsnavn: PropTypes.string.isRequired,
   skalKunneEndreAktivitet: PropTypes.bool.isRequired,
   lagtTilAvSaksbehandler: PropTypes.bool.isRequired,
 });
 
 const refusjonskravSomKommerForSentListePropType = PropTypes.shape({
-  arbeidsgiverId: PropTypes.string.isRequired,
-  arbeidsgiverVisningsnavn: PropTypes.string.isRequired,
+  arbeidsgiverIdent: PropTypes.string,
   erRefusjonskravGyldig: PropTypes.bool,
 });
 
@@ -45,7 +43,7 @@ export const avklarAktiviteterPropType = PropTypes.shape({
       tom: PropTypes.string.isRequired,
       aktiviteter: PropTypes.arrayOf(
         PropTypes.shape({
-          arbeidsgiverId: PropTypes.string,
+          arbeidsgiverIdent: PropTypes.string,
           eksternArbeidsforholdId: PropTypes.string,
           fom: PropTypes.string.isRequired,
           tom: PropTypes.string,
@@ -91,7 +89,7 @@ const beregningsgrunnlagPropType = PropTypes.shape({
           erNyIArbeidslivet: PropTypes.bool,
           erTidsbegrensetArbeidsforhold: PropTypes.bool,
           erNyoppstartet: PropTypes.bool,
-          arbeidsgiverId: PropTypes.string,
+          arbeidsgiverIdent: PropTypes.string,
           andelsnr: PropTypes.number,
           lonnsendringIBeregningsperioden: PropTypes.bool,
         }),

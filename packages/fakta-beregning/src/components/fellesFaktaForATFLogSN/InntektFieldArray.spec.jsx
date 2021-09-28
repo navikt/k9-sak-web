@@ -92,7 +92,7 @@ describe('<InntektFieldArray>', () => {
     fastsattBelop: '0',
     lagtTilAvSaksbehandler: false,
     inntektskategori: 'ARBEIDSTAKER',
-    arbeidsgiverId: '233647823',
+    arbeidsgiverIdent: '233647823',
     arbeidsperiodeFom: '01.01.2018',
     arbeidsperiodeTom: null,
     refusjonskrav: '10 000',

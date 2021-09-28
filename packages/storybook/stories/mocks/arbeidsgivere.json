@@ -111,5 +111,33 @@
     "identifikator": "93178545",
     "navn": "A.Svaneby sykehjem",
     "fødselsdato": null
+  },
+  "0239748027348": {
+    "erPrivatPerson": true,
+    "referanse": "0239748027348",
+    "identifikator": "0239748027348",
+    "navn": "Ola Nordmann",
+    "fødselsdato": "1982.02.20"
+  },
+  "543512141411": {
+    "erPrivatPerson": true,
+    "referanse": "543512141411",
+    "identifikator": "543512141411",
+    "navn": "Kari Nordmann",
+    "fødselsdato": "1979.03.20"
+  },
+  "73232523223": {
+    "erPrivatPerson": true,
+    "referanse": "73232523223",
+    "identifikator": "73232523223",
+    "navn": "Donald Duck",
+    "fødselsdato": "1955.12.12"
+  },
+  "6456223432": {
+    "erPrivatPerson": true,
+    "referanse": "6456223432",
+    "identifikator": "6456223432",
+    "navn": "Dolly Duck",
+    "fødselsdato": "1955.12.13"
   }
 }

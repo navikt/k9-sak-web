@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import { kodeverkObjektPropType } from '@fpsak-frontend/prop-types';
 
 const beregningsgrunnlagArbeidsforholdProptype = PropTypes.shape({
-  arbeidsgiverId: PropTypes.string,
+  arbeidsgiverIdent: PropTypes.string,
   startdato: PropTypes.string,
   opphoersdato: PropTypes.string,
   arbeidsforholdId: PropTypes.string,
@@ -20,7 +20,7 @@ const arbeidsforholdTilFordelingPropType = PropTypes.shape({
   aktørId: PropTypes.number,
   arbeidsforholdId: PropTypes.string,
   arbeidsforholdType: kodeverkObjektPropType,
-  arbeidsgiverId: PropTypes.string,
+  arbeidsgiverIdent: PropTypes.string,
   belopFraInntektsmeldingPrMnd: PropTypes.number,
   eksternArbeidsforholdId: PropTypes.string,
   naturalytelseBortfaltPrÅr: PropTypes.number,
@@ -113,7 +113,7 @@ const beregningsgrunnlagPropType = PropTypes.shape({
           erNyIArbeidslivet: PropTypes.bool,
           erTidsbegrensetArbeidsforhold: PropTypes.bool,
           erNyoppstartet: PropTypes.bool,
-          arbeidsgiverId: PropTypes.string,
+          arbeidsgiverIdent: PropTypes.string,
           andelsnr: PropTypes.number,
           lonnsendringIBeregningsperioden: PropTypes.bool,
         }),
