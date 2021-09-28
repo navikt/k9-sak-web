@@ -2,10 +2,12 @@ import InngangsvilkarProsessStegPanelDef from './prosessStegPaneler/Inngangsvilk
 import VedtakProsessStegPanelDef from './prosessStegPaneler/VedtakProsessStegPanelDef';
 import UtvidetRettProsessStegPanelDef from './prosessStegPaneler/UtvidetRettProsessStegPanelDef';
 
-const prosessStegUtvidetRettPanelDefinisjoner = [
-  new InngangsvilkarProsessStegPanelDef(),
-  new UtvidetRettProsessStegPanelDef(),
-  new VedtakProsessStegPanelDef(),
-];
+
+const prosessStegUtvidetRettPanelDefinisjoner = (erFagytelseTypeAleneOmOmsorgen: boolean) => [
+    new InngangsvilkarProsessStegPanelDef(),
+    new UtvidetRettProsessStegPanelDef(erFagytelseTypeAleneOmOmsorgen),
+    new VedtakProsessStegPanelDef(),
+  ];
+
 
 export default prosessStegUtvidetRettPanelDefinisjoner;
