@@ -12,6 +12,11 @@ import withReduxProvider from '../../../decorators/withRedux';
 import alleKodeverk from '../../mocks/alleKodeverk.json';
 import arbeidsgivere from '../../mocks/arbeidsgivere.json';
 
+import {
+  beregningsgrunnlag as bgMedHelg,
+} from './scenario/FlerePerioderMedHelg';
+
+
 export default {
   title: 'fakta/fakta-fordel-beregningsgrunnlag',
   component: FordelBeregningsgrunnlagFaktaIndex,
@@ -291,6 +296,24 @@ const lagArbeidsforhold = (arbeidsgiverIdent, arbeidsforholdId, refKrav) => ({
   naturalytelseBortfaltPrÅr: null,
   naturalytelseTilkommetPrÅr: null,
 });
+
+export const flerePerioderMedHelg = () => (
+    <FordelBeregningsgrunnlagFaktaIndex
+      behandling={lagBehandling([{ fom: '2021-06-28' }])}
+      alleKodeverk={alleKodeverk}
+      arbeidsgiverOpplysningerPerId={arbeidsgivere}
+      alleMerknaderFraBeslutter={{
+        [aksjonspunktCodes.FORDEL_BEREGNINGSGRUNNLAG]: object('merknaderFraBeslutter', merknaderFraBeslutter),
+      }}
+      submitCallback={action('button-click')}
+      readOnly={false}
+      beregningsgrunnlag={bgMedHelg}
+      aksjonspunkter={fordelAP}
+      harApneAksjonspunkter={boolean('harApneAksjonspunkter', true)}
+      submittable={boolean('submittable', true)}
+    />
+  );
+
 
 export const aapOgRefusjon = () => {
   const førsteAndeler = [lagFordelingsandel(1, 'AAP', 0, 0)];
