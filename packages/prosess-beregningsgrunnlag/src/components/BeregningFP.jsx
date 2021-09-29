@@ -158,7 +158,8 @@ export const BeregningFP = props => {
         <div className={styles.sideMenuContainer}>
           <SideMenu
             links={kronologiskeGrunnlag.map((currentBeregningsgrunnlag, currentBeregningsgrunnlagIndex) => ({
-              iconSrc: menyProps[currentBeregningsgrunnlagIndex].skalVurderes && harAvklaringsbehov ? advarselIcon : null,
+              iconSrc: menyProps[currentBeregningsgrunnlagIndex].skalVurderes &&
+              finnAvklaringsbehov(gjeldendeAksjonspunkter, beregningsgrunnlag[currentBeregningsgrunnlagIndex]).length > 0 ? advarselIcon : null,
               active: aktivtBeregningsgrunnlagIndeks === currentBeregningsgrunnlagIndex,
               label: `${intl.formatMessage({ id: 'Sidemeny.Beregningsgrunnlag' })} ${
                 menyProps[currentBeregningsgrunnlagIndex].stp
