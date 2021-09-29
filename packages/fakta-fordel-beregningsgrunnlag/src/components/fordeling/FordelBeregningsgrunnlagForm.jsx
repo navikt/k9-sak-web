@@ -116,7 +116,7 @@ FordelBeregningsgrunnlagForm.validate = (
 ) => {
   const errors = {};
   const fordelBGPerioder = getFordelPerioder(beregningsgrunnlag);
-  if (fordelBGPerioder && fordelBGPerioder.length > 0) {
+  if (fordelBGPerioder && fordelBGPerioder.length > 0 && values) {
     const skalValidereMotBeregningsgrunnlagPrAar = andel =>
       skalValidereMotBeregningsgrunnlag(beregningsgrunnlag)(andel);
     const perioderSlattSammen = slåSammenPerioder(fordelBGPerioder, beregningsgrunnlag.beregningsgrunnlagPeriode);
