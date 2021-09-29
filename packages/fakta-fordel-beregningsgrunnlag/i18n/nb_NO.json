@@ -1,8 +1,7 @@
 {
   "BeregningInfoPanel.AksjonspunktHelpText.FaktaOmBeregning.EndringBeregningsgrunnlag.Refusjon": "Nytt refusjonskrav hos {arbeidsforhold}. ",
-  "BeregningInfoPanel.AksjonspunktHelpText.FaktaOmBeregning.EndringBeregningsgrunnlag.Gradering": "Søkt gradering hos {arbeidsforhold}. ",
   "BeregningInfoPanel.AksjonspunktHelpText.FaktaOmBeregning.EndringBeregningsgrunnlag.Permisjon": "Permisjon fra {arbeidsforhold} avsluttet {dato}.",
-  "BeregningInfoPanel.AksjonspunktHelpText.FaktaOmBeregning.EndringBeregningsgrunnlag.FastsetÅrsbeløp": "Tilkommet inntekt. Vurder om beregningsgrunnlaget skal flyttes til nytt arbeidsforhold eller fordeles mellom arbeidsforholdene.",
+  "BeregningInfoPanel.AksjonspunktHelpText.FaktaOmBeregning.EndringBeregningsgrunnlag.FastsetÅrsbeløp": "Tilkommet aktivitet. Vurder om beregningsgrunnlaget skal flyttes til ny aktivitet eller fordeles mellom aktivitetene.",
 
   "FordelBeregningsgrunnlag.Validation.KanIkkeHaNullIBeregningsgrunnlag": "Fastsatt beløp for gradert andel må være høyere enn 0.",
 
@@ -39,9 +38,8 @@
   "BeregningInfoPanel.FordelBG.PeriodeFom": "Gjeldende f.o.m. {fom}",
   "BeregningInfoPanel.FordelBG.PeriodeFomOgTom": "Gjeldende {fom} - {tom}",
   "BeregningInfoPanel.FordelBG.Andel": "Aktivitet",
-  "BeregningInfoPanel.FordelBG.AndelIArbeid": "Andel i arbeid",
   "BeregningInfoPanel.FordelBG.FordelingForrigeBehandling": "Fordeling forrige behandling",
-  "BeregningInfoPanel.FordelBG.Refusjonskrav": "Ref.krav",
+  "BeregningInfoPanel.FordelBG.Refusjonskrav": "Refusjonskrav",
   "BeregningInfoPanel.FordelBG.RapportertInntekt": "Rapportert inntekt",
   "BeregningInfoPanel.FordelBG.Fordeling": "Ny fordeling",
   "BeregningInfoPanel.FordelBG.Inntektskategori": "Inntektskategori",

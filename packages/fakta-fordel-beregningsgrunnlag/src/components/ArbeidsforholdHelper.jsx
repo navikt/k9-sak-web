@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import { createSelector } from 'reselect';
 
 const arbeidsforholdEksistererIListen = (arbeidsforhold, arbeidsgiverList) => {
-  if (arbeidsforhold.arbeidsforholdId === null) {
+  if (arbeidsforhold.arbeidsforholdId === null || arbeidsforhold.arbeidsforholdId === undefined) {
     return arbeidsgiverList.map(({ arbeidsgiverIdent }) => arbeidsgiverIdent).includes(arbeidsforhold.arbeidsgiverIdent);
   }
   return arbeidsgiverList.map(({ arbeidsforholdId }) => arbeidsforholdId).includes(arbeidsforhold.arbeidsforholdId);
