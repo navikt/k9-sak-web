@@ -15,7 +15,6 @@ interface PeriodpickerFieldProps {
   hideLabel?: boolean;
   format?: (value: string) => string;
   parse?: (value: string) => string;
-  isEdited?: boolean;
   renderIfMissingDateOnReadOnly?: boolean;
   validate?: ((value: string) => boolean | undefined | { id: string }[])[] | ((value: string) => boolean | undefined);
   dataId?: string;
@@ -47,28 +46,26 @@ const formatError = (intl: IntlShape, otherProps: any, names: string[]) => {
 const hasValue = (value: string) => value !== undefined && value !== null && value !== '';
 
 // eslint-disable-next-line react/prop-types
-const renderReadOnly = () => ({
-  names,
-  renderIfMissingDateOnReadOnly,
-  ...otherProps
-}: Partial<PeriodpickerFieldProps>) => {
-  const getFomDate = haystack(otherProps, names[0]);
-  const getTomDate = haystack(otherProps, names[1]);
-  const fomDate = getFomDate.input.value;
-  const tomDate = getTomDate.input.value;
-  if (hasValue(fomDate) && hasValue(tomDate)) {
-    return <ReadOnlyField input={{ value: `${fomDate} - ${tomDate}` }} {...otherProps} />;
-  }
-  if (renderIfMissingDateOnReadOnly) {
-    if (hasValue(fomDate) && !hasValue(tomDate)) {
-      return <ReadOnlyField input={{ value: `${fomDate} - ` }} {...otherProps} />;
+const renderReadOnly =
+  () =>
+  ({ names, renderIfMissingDateOnReadOnly, ...otherProps }: Partial<PeriodpickerFieldProps>) => {
+    const getFomDate = haystack(otherProps, names[0]);
+    const getTomDate = haystack(otherProps, names[1]);
+    const fomDate = getFomDate.input.value;
+    const tomDate = getTomDate.input.value;
+    if (hasValue(fomDate) && hasValue(tomDate)) {
+      return <ReadOnlyField input={{ value: `${fomDate} - ${tomDate}` }} {...otherProps} />;
     }
-    if (!hasValue(fomDate) && hasValue(tomDate)) {
-      return <ReadOnlyField input={{ value: ` - ${tomDate}` }} {...otherProps} />;
+    if (renderIfMissingDateOnReadOnly) {
+      if (hasValue(fomDate) && !hasValue(tomDate)) {
+        return <ReadOnlyField input={{ value: `${fomDate} - ` }} {...otherProps} />;
+      }
+      if (!hasValue(fomDate) && hasValue(tomDate)) {
+        return <ReadOnlyField input={{ value: ` - ${tomDate}` }} {...otherProps} />;
+      }
     }
-  }
-  return null;
-};
+    return null;
+  };
 
 const renderPeriodpicker = (hideLabel?: boolean) =>
   injectIntl(
@@ -76,13 +73,11 @@ const renderPeriodpicker = (hideLabel?: boolean) =>
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       intl,
       label,
-      isEdited,
       names,
       ...otherProps
     }: {
       intl: IntlShape;
       label: LabelType;
-      isEdited: boolean;
       names: string[];
     }) => {
       const fieldProps = {
@@ -90,7 +85,6 @@ const renderPeriodpicker = (hideLabel?: boolean) =>
         feil: formatError(intl, otherProps, names),
         label: <Label input={label} readOnly={false} />,
         names,
-        isEdited,
       };
       // @ts-ignore TODO Fiks
       return <Periodpicker {...fieldProps} {...otherProps} hideLabel={hideLabel} />;
@@ -123,7 +117,6 @@ const PeriodpickerField = ({
   readOnly,
   format,
   parse,
-  isEdited,
   hideLabel,
   ...otherProps
 }: PeriodpickerFieldProps) => (
@@ -135,14 +128,12 @@ const PeriodpickerField = ({
     format={formatValue(format)}
     parse={parseValue(parse, names)}
     readOnly={readOnly}
-    isEdited={isEdited}
   />
 );
 
 PeriodpickerField.defaultProps = {
   label: '',
   readOnly: false,
-  isEdited: false,
   renderIfMissingDateOnReadOnly: false,
   format: value => value,
   parse: value => value,
