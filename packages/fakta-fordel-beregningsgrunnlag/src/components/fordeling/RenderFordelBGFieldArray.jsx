@@ -15,7 +15,7 @@ import {
 } from '@fpsak-frontend/utils';
 import { Image, Table, TableColumn, TableRow } from '@fpsak-frontend/shared-components';
 import bt from '@fpsak-frontend/kodeverk/src/behandlingType';
-import { DecimalField, InputField, NavFieldGroup, PeriodpickerField, SelectField } from '@fpsak-frontend/form';
+import { InputField, NavFieldGroup, PeriodpickerField, SelectField } from '@fpsak-frontend/form';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { arbeidsforholdBeregningProptype, kodeverkPropType } from '@fpsak-frontend/prop-types';
 import beregningsgrunnlagAndeltyper from '@fpsak-frontend/kodeverk/src/beregningsgrunnlagAndeltyper';
@@ -264,20 +264,6 @@ const createAndelerTableRows = (
           />
         </TableColumn>
       )}
-      <TableColumn>
-        <DecimalField
-          name={`${andelElementFieldId}.andelIArbeid`}
-          readOnly
-          bredde="S"
-          format={value => {
-            if (value || value === 0) {
-              return `${value} %`;
-            }
-            return '';
-          }}
-          normalizeOnBlur={value => (Number.isNaN(value) ? value : parseFloat(value).toFixed(2))}
-        />
-      </TableColumn>
       <TableColumn
         className={
           readOnly || periodeUtenAarsak || !fields.get(index).skalKunneEndreRefusjon
@@ -335,13 +321,11 @@ const createBruttoBGSummaryRow = (
     <TableColumn>
       <FormattedMessage id="BeregningInfoPanel.FordelBG.Sum" />
     </TableColumn>
-    <TableColumn />
     {erRevurdering && (
       <TableColumn>
         <Element>{sumFordelingForrigeBehandling}</Element>
       </TableColumn>
     )}
-    <TableColumn />
     <TableColumn />
     <TableColumn>
       <Element>{sumBeregningsgrunnlagPrAar}</Element>
@@ -349,7 +333,6 @@ const createBruttoBGSummaryRow = (
     <TableColumn>
       <Element>{sumFordeling}</Element>
     </TableColumn>
-    <TableColumn />
     <TableColumn />
   </TableRow>
 );
@@ -360,7 +343,6 @@ const getHeaderTextCodes = erRevurdering => {
   if (erRevurdering) {
     headerCodes.push('BeregningInfoPanel.FordelBG.FordelingForrigeBehandling');
   }
-  headerCodes.push('BeregningInfoPanel.FordelBG.AndelIArbeid');
   headerCodes.push('BeregningInfoPanel.FordelBG.Refusjonskrav');
   headerCodes.push('BeregningInfoPanel.FordelBG.Beregningsgrunnlag');
   headerCodes.push('BeregningInfoPanel.FordelBG.Fordeling');

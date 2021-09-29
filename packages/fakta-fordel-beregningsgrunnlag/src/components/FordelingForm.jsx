@@ -31,12 +31,7 @@ const fieldArrayName = 'fordelingListe';
 const renderFordeling = ({
   fields,
   readOnly,
-  submittable,
   isAvklaringsbehovClosed,
-  hasBegrunnelse,
-  submitEnabled,
-  behandlingId,
-  behandlingVersjon,
   beregningsgrunnlag,
   alleKodeverk,
   arbeidsgiverOpplysningerPerId,
@@ -44,7 +39,6 @@ const renderFordeling = ({
   avklaringsbehov,
   kreverManuellBehandling,
   aktivtBeregningsgrunnlagIndex,
-  formProps,
 }) =>
   fields.map(
     (field, index) =>
@@ -71,26 +65,6 @@ const renderFordeling = ({
             behandlingType={behandlingType}
             grunnlagFieldId={field}
           />
-          <VerticalSpacer twentyPx />
-          {kreverManuellBehandling && (
-            <>
-              <FaktaBegrunnelseTextField
-                name={BEGRUNNELSE_FORDELING_NAME}
-                isSubmittable={submittable}
-                isReadOnly={readOnly}
-                hasBegrunnelse={hasBegrunnelse}
-              />
-              <VerticalSpacer twentyPx />
-              <FaktaSubmitButton
-                formName={formProps.form}
-                isSubmittable={submittable && submitEnabled}
-                isReadOnly={readOnly}
-                hasOpenAksjonspunkter={!isAvklaringsbehovClosed}
-                behandlingId={behandlingId}
-                behandlingVersjon={behandlingVersjon}
-              />
-            </>
-          )}
         </div>
       ),
   );
@@ -137,6 +111,26 @@ const FordelingFormImpl = ({
       isAvklaringsbehovClosed={isAvklaringsbehovClosed}
       formProps={formProps}
     />
+    <VerticalSpacer twentyPx />
+    {kreverManuellBehandling && (
+      <>
+        <FaktaBegrunnelseTextField
+          name={BEGRUNNELSE_FORDELING_NAME}
+          isSubmittable={submittable}
+          isReadOnly={readOnly}
+          hasBegrunnelse={hasBegrunnelse}
+        />
+        <VerticalSpacer twentyPx />
+        <FaktaSubmitButton
+          formName={formProps.form}
+          isSubmittable={submittable && submitEnabled}
+          isReadOnly={readOnly}
+          hasOpenAksjonspunkter={!isAvklaringsbehovClosed}
+          behandlingId={behandlingId}
+          behandlingVersjon={behandlingVersjon}
+        />
+      </>
+    )}
   </form>
 );
 
@@ -235,23 +229,30 @@ export const buildInitialValuesFordelBeregning = createSelector(
 
 export const getValidationFordelBeregning = createSelector(
   [
-    ownProps => ownProps.beregningsgrunnlag,
+    ownProps => ownProps.alleBeregningsgrunnlag,
     ownProps => ownProps.alleKodeverk,
     ownProps => ownProps.arbeidsgiverOpplysningerPerId,
-    ownProps => ownProps.avklaringsbehov,
   ],
-  (beregningsgrunnlag, alleKodeverk, arbeidsgiverOpplysningerPerId, avklaringsbehov) => values => {
-    if (harAvklaringsbehov(FORDEL_BEREGNINGSGRUNNLAG, avklaringsbehov)) {
+  (alleBeregningsgrunnlag, alleKodeverk, arbeidsgiverOpplysningerPerId) => values => {
+    const fieldArrayList = values[fieldArrayName];
+    if (!fieldArrayList) {
+      return null;
+    }
+    const errors = {};
+    errors[fieldArrayName] = fieldArrayList
+    .filter((currentFormValues, index) => kreverManuellBehandlingFn(alleBeregningsgrunnlag[index]))
+    .map((currentFormValues, index) => {
+      const bg = alleBeregningsgrunnlag[index];
       return {
         ...FordelBeregningsgrunnlagForm.validate(
-          values,
-          beregningsgrunnlag,
+          currentFormValues,
+          bg,
           getKodeverknavnFn(alleKodeverk, kodeverkTyper),
           arbeidsgiverOpplysningerPerId,
         ),
       };
-    }
-    return null;
+    });
+    return errors;
   },
 );
 

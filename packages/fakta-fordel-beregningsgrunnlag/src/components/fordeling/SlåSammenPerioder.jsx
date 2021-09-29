@@ -1,5 +1,4 @@
-
-
+/* eslint-disable */
 import periodeAarsak from '@fpsak-frontend/kodeverk/src/periodeAarsak';
 
 
@@ -29,7 +28,8 @@ const harIngenRelevantEndringForFordeling = (fordelPeriode, forrigeEndringPeriod
   if (periode.bruttoPrAar !== forrigePeriode.bruttoPrAar) {
     return false;
   }
-  for (let andelIPeriode of fordelPeriode.fordelBeregningsgrunnlagAndeler) {
+  for (let i = 0; i < fordelPeriode.fordelBeregningsgrunnlagAndeler.length; i += 1) {
+    const andelIPeriode = fordelPeriode.fordelBeregningsgrunnlagAndeler[i];
     const andelFraForrige = forrigeEndringPeriode.fordelBeregningsgrunnlagAndeler.find(a =>
       a.aktivitetStatus.kode === andelIPeriode.aktivitetStatus.kode &&
       a.inntektskategori.kode === andelIPeriode.inntektskategori.kode &&

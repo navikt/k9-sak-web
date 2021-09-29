@@ -57,12 +57,6 @@ export const createFordelArbeidsforholdString = (
 ) => {
   const listOfStrings = listOfArbeidsforhold.map(arbeidsforhold => {
     const navnOgOrgnr = createVisningsnavnForAktivitet(arbeidsforhold, getKodeverknavn, arbeidsgiverOpplysningerPerId);
-    if (mTextCase === textCase.GRADERING) {
-      return (
-        navnOgOrgnr +
-        lagPeriodeStreng(arbeidsforhold.perioderMedGraderingEllerRefusjon.filter(({ erGradering }) => erGradering))
-      );
-    }
     if (mTextCase === textCase.REFUSJON) {
       return (
         navnOgOrgnr +
@@ -81,16 +75,15 @@ export const createFordelArbeidsforholdString = (
 };
 
 const createGraderingOrRefusjonString = (
-  graderingArbeidsforhold,
   refusjonArbeidsforhold,
-  permisjonMedGraderingEllerRefusjon,
+  permisjonMedRefusjon,
   getKodeverknavn,
   arbeidsgiverOpplysningerPerId,
 ) => {
   const text = [];
-  if (permisjonMedGraderingEllerRefusjon.length > 0) {
+  if (permisjonMedRefusjon.length > 0) {
     const arbeidsforholdString = createFordelArbeidsforholdString(
-      permisjonMedGraderingEllerRefusjon,
+      permisjonMedRefusjon,
       textCase.PERMISJON,
       getKodeverknavn,
       arbeidsgiverOpplysningerPerId,
@@ -103,21 +96,6 @@ const createGraderingOrRefusjonString = (
           arbeidsforhold: arbeidsforholdString.navnOgOrgnr,
           dato: arbeidsforholdString.dato,
         }}
-      />,
-    );
-  }
-  if (graderingArbeidsforhold.length > 0) {
-    const arbeidsforholdString = createFordelArbeidsforholdString(
-      graderingArbeidsforhold,
-      textCase.GRADERING,
-      getKodeverknavn,
-      arbeidsgiverOpplysningerPerId,
-    );
-    text.push(
-      <FormattedMessage
-        key="EndringBeregningsgrunnlagGradering"
-        id="BeregningInfoPanel.AksjonspunktHelpText.FaktaOmBeregning.EndringBeregningsgrunnlag.Gradering"
-        values={{ arbeidsforhold: arbeidsforholdString }}
       />,
     );
   }
@@ -148,24 +126,19 @@ const createGraderingOrRefusjonString = (
   return text;
 };
 
-const harGraderingEllerRefusjon = perioderMedGraderingEllerRefusjon =>
-  perioderMedGraderingEllerRefusjon.map(({ erRefusjon }) => erRefusjon).includes(true) ||
-  perioderMedGraderingEllerRefusjon.map(({ erGradering }) => erGradering).includes(true);
+const harRefusjon = perioderMedGraderingEllerRefusjon =>
+  perioderMedGraderingEllerRefusjon.map(({ erRefusjon }) => erRefusjon).includes(true);
 
 const lagHelpTextsFordelBG = (endredeArbeidsforhold, getKodeverknavn, arbeidsgiverOpplysningerPerId) => {
-  const gradering = endredeArbeidsforhold.filter(({ perioderMedGraderingEllerRefusjon }) =>
-    perioderMedGraderingEllerRefusjon.map(({ erGradering }) => erGradering).includes(true),
-  );
   const refusjon = endredeArbeidsforhold.filter(({ perioderMedGraderingEllerRefusjon }) =>
     perioderMedGraderingEllerRefusjon.map(({ erRefusjon }) => erRefusjon).includes(true),
   );
-  const permisjonMedGraderingEllerRefusjon = endredeArbeidsforhold
+  const permisjonMedRefusjon = endredeArbeidsforhold
     .filter(({ permisjon }) => permisjon !== undefined && permisjon !== null)
-    .filter(({ perioderMedGraderingEllerRefusjon }) => harGraderingEllerRefusjon(perioderMedGraderingEllerRefusjon));
+    .filter(({ perioderMedGraderingEllerRefusjon }) => harRefusjon(perioderMedGraderingEllerRefusjon));
   const helpTexts = createGraderingOrRefusjonString(
-    gradering,
     refusjon,
-    permisjonMedGraderingEllerRefusjon,
+    permisjonMedRefusjon,
     getKodeverknavn,
     arbeidsgiverOpplysningerPerId,
   );
