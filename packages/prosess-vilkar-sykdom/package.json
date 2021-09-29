@@ -14,7 +14,7 @@
     "nav-frontend-core": "6.0.1",
     "nav-frontend-typografi": "4.0.1",
     "react": "^17.0.2",
-    "react-intl": "^5.20.10"
+    "react-intl": "^5.20.12"
   },
   "devDependencies": {
     "@fpsak-frontend/utils-test": "1.0.0",
