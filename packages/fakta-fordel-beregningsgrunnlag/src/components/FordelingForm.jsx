@@ -166,15 +166,14 @@ const kreverManuellBehandlingFn = bg => {
 
 const mapGrunnlagsliste = (fieldArrayList, alleBeregningsgrunnlag, vilkårsperioder) =>
   fieldArrayList
-    .filter((currentFormValues, index) => kreverManuellBehandlingFn(alleBeregningsgrunnlag[index]))
     .map((currentFormValues, index) => {
-      const bg = alleBeregningsgrunnlag[index];
-      const stpOpptjening = bg.faktaOmBeregning.avklarAktiviteter.skjæringstidspunkt;
-      const vilkarPeriode = vilkårsperioder.find(periode => periode.periode.fom === stpOpptjening);
-      return {
-        periode: vilkarPeriode.periode,
-        ...FordelBeregningsgrunnlagForm.transformValues(currentFormValues, bg),
-      };
+        const bg = alleBeregningsgrunnlag[index];
+        const stpOpptjening = bg.faktaOmBeregning.avklarAktiviteter.skjæringstidspunkt;
+        const vilkarPeriode = vilkårsperioder.find(periode => periode.periode.fom === stpOpptjening);
+        return {
+          periode: vilkarPeriode.periode,
+          ...FordelBeregningsgrunnlagForm.transformValues(currentFormValues, bg),
+        };
     });
 
 export const transformValuesFordelBeregning = createSelector(
