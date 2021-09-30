@@ -77,7 +77,7 @@ const harTilfeller = beregningsgrunnlag =>
   beregningsgrunnlag.faktaOmBeregning.faktaOmBeregningTilfeller.length > 0;
 
 const måVurderes = (beregningsgrunnlag, avklaringsbehov) =>
-  harAvklaringsbehov(VURDER_FAKTA_FOR_ATFL_SN, avklaringsbehov) && harTilfeller(beregningsgrunnlag);
+avklaringsbehov && harAvklaringsbehov(VURDER_FAKTA_FOR_ATFL_SN, avklaringsbehov) && harTilfeller(beregningsgrunnlag);
 
 const fieldArrayName = 'vurderFaktaListe';
 
@@ -234,13 +234,10 @@ VurderFaktaBeregningPanelImpl.propTypes = {
   ...formPropTypes,
 };
 
-const mapGrunnlagsliste = (fieldArrayList, alleBeregningsgrunnlag, behandlingResultatPerioder) =>
+const mapGrunnlagsliste = (fieldArrayList, alleBeregningsgrunnlag, behandlingResultatPerioder) => 
   fieldArrayList
-    .filter(
-      (currentFormValues, index) =>
-        måVurderes(alleBeregningsgrunnlag[index], currentFormValues.avklaringsbehov) || erOverstyring(currentFormValues),
-    )
-    .map(currentFormValues => {
+  .map((currentFormValues, index) => {
+    if (måVurderes(alleBeregningsgrunnlag[index], alleBeregningsgrunnlag[index].avklaringsbehov) || erOverstyring(currentFormValues)) {
       const faktaBeregningValues = currentFormValues;
       const stpOpptjening = faktaBeregningValues.faktaOmBeregning.avklarAktiviteter.skjæringstidspunkt;
       const vilkarPeriode = behandlingResultatPerioder.find(periode => periode.periode.fom === stpOpptjening);
@@ -248,7 +245,10 @@ const mapGrunnlagsliste = (fieldArrayList, alleBeregningsgrunnlag, behandlingRes
         periode: vilkarPeriode.periode,
         ...transformValuesFaktaForATFLOgSN(faktaBeregningValues),
       };
-    });
+    }
+    return null;
+  })
+  .filter(mappedValue => mappedValue !== null);
 
 export const transformValuesVurderFaktaBeregning = (values, alleBeregningsgrunnlag, behandlingResultatPerioder) => {
   const fieldArrayList = values[fieldArrayName];
