@@ -21,7 +21,6 @@ const andel1 = {
   harPeriodeAarsakGraderingEllerRefusjon: true,
   inntektskategori: 'ARBEIDSTAKER',
   nyAndel: false,
-  skalKunneEndreRefusjon: false,
   lagtTilAvSaksbehandler: false,
   arbeidsforholdId: null,
   andel: 'Sopra Steria AS (2342342348)',
@@ -33,7 +32,6 @@ const andel2 = {
   fastsattBelop: '20 000',
   readOnlyBelop: '10 000',
   harPeriodeAarsakGraderingEllerRefusjon: true,
-  skalKunneEndreRefusjon: false,
   refusjonskrav: '10 000',
   inntektskategori: 'ARBEIDSTAKER',
   nyAndel: false,
@@ -121,21 +119,18 @@ describe('<FordelBeregningsgrunnlagForm>', () => {
       fordelBeregningsgrunnlagAndeler: [fordelAndel],
       fom: '2019-04-01',
       harPeriodeAarsakGraderingEllerRefusjon: false,
-      skalKunneEndreRefusjon: false,
       tom: '2019-06-01',
     };
     const periode2 = {
       fordelBeregningsgrunnlagAndeler: [fordelAndel],
       fom: '2019-04-01',
       harPeriodeAarsakGraderingEllerRefusjon: false,
-      skalKunneEndreRefusjon: false,
       tom: '2019-06-01',
     };
     const periode3 = {
       fordelBeregningsgrunnlagAndeler: [fordelAndel, fordelAndel2],
       fom: '2019-06-02',
       harPeriodeAarsakGraderingEllerRefusjon: true,
-      skalKunneEndreRefusjon: false,
       tom: null,
     };
 
@@ -284,14 +279,6 @@ describe('<FordelBeregningsgrunnlagForm>', () => {
     const fastsatteVerdier = mapTilFastsatteVerdier(andel2);
     expect(fastsatteVerdier.fastsattÅrsbeløp).to.equal(20000);
     expect(fastsatteVerdier.refusjonPrÅr).to.equal(null);
-    expect(fastsatteVerdier.inntektskategori).to.equal('ARBEIDSTAKER');
-  });
-
-  it('skal mappe andel til fastsatte verdier med endring i refusjon', () => {
-    const andel = { ...andel2, skalKunneEndreRefusjon: true };
-    const fastsatteVerdier = mapTilFastsatteVerdier(andel);
-    expect(fastsatteVerdier.fastsattÅrsbeløp).to.equal(20000);
-    expect(fastsatteVerdier.refusjonPrÅr).to.equal(10000);
     expect(fastsatteVerdier.inntektskategori).to.equal('ARBEIDSTAKER');
   });
 

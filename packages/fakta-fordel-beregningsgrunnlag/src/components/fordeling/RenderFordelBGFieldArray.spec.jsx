@@ -295,7 +295,6 @@ describe('<RenderFordelBGFieldArray>', () => {
       refusjonskrav: '10 000',
       fastsattBelop: '100 000',
       belopFraInntektsmelding: 100000,
-      skalKunneEndreRefusjon: false,
       aktivitetstatus: 'ARBEIDSTAKER',
       andel: 'Visningsnavn for virksomhet',
       harPeriodeAarsakGraderingEllerRefusjon: true,
@@ -312,56 +311,6 @@ describe('<RenderFordelBGFieldArray>', () => {
     );
     expect(errors).to.equal(null);
   });
-
-  it('skal returnerer ingen errors for ingen refusjonskrav når skalKunneEndreRefusjon er false', () => {
-    const values = [];
-    const andel1 = {
-      refusjonskrav: '',
-      fastsattBelop: '100 000',
-      belopFraInntektsmelding: 100000,
-      skalKunneEndreRefusjon: false,
-      aktivitetstatus: 'ARBEIDSTAKER',
-      andel: 'Visningsnavn for virksomhet',
-      harPeriodeAarsakGraderingEllerRefusjon: true,
-      inntektskategori: 'ARBEIDSTAKER',
-      refusjonskravFraInntektsmelding: 10000,
-    };
-    values.push(andel1);
-    const errors = RenderFordelBGFieldArray.validate(
-      values,
-      100000,
-      skalValidereMotBeregningsgrunnlagPrAar,
-      getKodeverknavn,
-      arbeidsgiverOpplysningerPerId,
-    );
-    expect(errors).to.equal(null);
-  });
-
-  it('skal returnerer errors for ingen refusjonskrav når skalKunneEndreRefusjon er true', () => {
-    const values = [];
-    const andel1 = {
-      refusjonskrav: '',
-      fastsattBelop: '100 000',
-      belopFraInntektsmelding: 100000,
-      skalKunneEndreRefusjon: true,
-      aktivitetstatus: 'ARBEIDSTAKER',
-      andel: 'Visningsnavn for virksomhet',
-      harPeriodeAarsakGraderingEllerRefusjon: true,
-      inntektskategori: 'ARBEIDSTAKER',
-      refusjonskravFraInntektsmelding: 10000,
-    };
-    values.push(andel1);
-    const errors = RenderFordelBGFieldArray.validate(
-      values,
-      100000,
-      skalValidereMotBeregningsgrunnlagPrAar,
-      getKodeverknavn,
-      arbeidsgiverOpplysningerPerId,
-    );
-    expect(errors[0].refusjonskrav).to.have.length(1);
-    expect(errors[0].refusjonskrav[0].id).to.equal(isRequiredMessage()[0].id);
-  });
-
   const arbeidsgiverInfo = {
     arbeidsgiverIdent: '14235235235',
     arbeidsforholdId: '82389r32fe9343tr',
@@ -370,61 +319,6 @@ describe('<RenderFordelBGFieldArray>', () => {
 
   const arbeidsgiverstring = 'Test (14235235235)...4567';
 
-  it('skal returnerer errors for refusjonskrav når det ikkje er mottatt refusjonskrav i inntektsmelding', () => {
-    const values = [];
-    const andel1 = {
-      ...arbeidsgiverInfo,
-      refusjonskrav: '10 000',
-      fastsattBelop: '100 000',
-      belopFraInntektsmelding: 100000,
-      skalKunneEndreRefusjon: true,
-      aktivitetstatus: 'ARBEIDSTAKER',
-      andel: 'Visningsnavn for virksomhet',
-      harPeriodeAarsakGraderingEllerRefusjon: true,
-      inntektskategori: 'ARBEIDSTAKER',
-      refusjonskravFraInntektsmelding: null,
-    };
-    values.push(andel1);
-    const errors = RenderFordelBGFieldArray.validate(
-      values,
-      100000,
-      skalValidereMotBeregningsgrunnlagPrAar,
-      getKodeverknavn,
-      arbeidsgiverOpplysningerPerId,
-    );
-    const expected = skalIkkjeVereHoegereEnnRefusjonFraInntektsmelding(arbeidsgiverstring);
-    /* eslint no-underscore-dangle: ["error", { "allow": ["_error"] }] */
-    expect(errors._error.props.id).to.equal(expected[0].id);
-    expect(errors._error.props.values.arbeidsgiver).to.equal(arbeidsgiverstring);
-  });
-
-  it('skal returnerer errors for refusjonskrav når refusjonskrav er 0 i inntektsmelding', () => {
-    const values = [];
-    const andel1 = {
-      ...arbeidsgiverInfo,
-      refusjonskrav: '10 000',
-      fastsattBelop: '100 000',
-      belopFraInntektsmelding: 100000,
-      skalKunneEndreRefusjon: true,
-      aktivitetstatus: 'ARBEIDSTAKER',
-      andel: 'Visningsnavn for virksomhet',
-      harPeriodeAarsakGraderingEllerRefusjon: true,
-      inntektskategori: 'ARBEIDSTAKER',
-      refusjonskravFraInntektsmelding: 0,
-    };
-    values.push(andel1);
-    const errors = RenderFordelBGFieldArray.validate(
-      values,
-      100000,
-      skalValidereMotBeregningsgrunnlagPrAar,
-      getKodeverknavn,
-      arbeidsgiverOpplysningerPerId,
-    );
-    const expected = skalIkkjeVereHoegereEnnRefusjonFraInntektsmelding(arbeidsgiverstring);
-    /* eslint no-underscore-dangle: ["error", { "allow": ["_error"] }] */
-    expect(errors._error.props.id).to.equal(expected[0].id);
-    expect(errors._error.props.values.arbeidsgiver).to.equal(arbeidsgiverstring);
-  });
 
   it('skal returnerer errors for fastsattbeløp når ikkje oppgitt', () => {
     const values = [];
@@ -432,7 +326,7 @@ describe('<RenderFordelBGFieldArray>', () => {
       refusjonskrav: '10 000',
       fastsattBelop: '',
       belopFraInntektsmelding: 100000,
-      skalKunneEndreRefusjon: true,
+      skalRedigereInntekt: true,
       aktivitetstatus: 'ARBEIDSTAKER',
       andel: 'Visningsnavn for virksomhet',
       harPeriodeAarsakGraderingEllerRefusjon: true,
@@ -458,7 +352,7 @@ describe('<RenderFordelBGFieldArray>', () => {
       refusjonskrav: '10 000',
       fastsattBelop: '100 000',
       belopFraInntektsmelding: 100000,
-      skalKunneEndreRefusjon: true,
+      skalRedigereInntekt: true,
       aktivitetstatus: 'ARBEIDSTAKER',
       andel: 'Visningsnavn for virksomhet',
       harPeriodeAarsakGraderingEllerRefusjon: true,
@@ -483,7 +377,7 @@ describe('<RenderFordelBGFieldArray>', () => {
       refusjonskrav: '10 000',
       fastsattBelop: '100 000',
       belopFraInntektsmelding: 100000,
-      skalKunneEndreRefusjon: true,
+      skalRedigereInntekt: true,
       aktivitetstatus: 'ARBEIDSTAKER',
       andel: '',
       harPeriodeAarsakGraderingEllerRefusjon: true,
@@ -509,7 +403,7 @@ describe('<RenderFordelBGFieldArray>', () => {
       refusjonskrav: '10 000',
       fastsattBelop: '100 000',
       belopFraInntektsmelding: 100000,
-      skalKunneEndreRefusjon: true,
+      skalRedigereInntekt: false,
       aktivitetstatus: 'ARBEIDSTAKER',
       andel: '',
       harPeriodeAarsakGraderingEllerRefusjon: false,

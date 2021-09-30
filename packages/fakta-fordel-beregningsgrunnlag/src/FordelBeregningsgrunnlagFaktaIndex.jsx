@@ -38,7 +38,7 @@ const kreverManuellBehandlingFn = bg => {
   if (fordeling) {
     const fordelBg = fordeling.fordelBeregningsgrunnlag;
     if (fordelBg) {
-      return fordelBg.fordelBeregningsgrunnlagPerioder.some(p => p.skalRedigereInntekt || p.skalKunneEndreRefusjon);
+      return fordelBg.fordelBeregningsgrunnlagPerioder.some(p => p.skalRedigereInntekt);
     }
   }
   return false;

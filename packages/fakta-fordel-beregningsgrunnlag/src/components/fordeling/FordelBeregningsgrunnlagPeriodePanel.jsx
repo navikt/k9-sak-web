@@ -160,15 +160,11 @@ FordelBeregningsgrunnlagPeriodePanelImpl.buildInitialValues = (
           ? formatCurrencyNoKr(andel.fordelingForrigeBehandlingPrAar)
           : '',
       fastsattBelop: settFastsattBelop(andel.fordeltPrAar, andel.fastsattForrigePrAar),
-      readOnlyBelop: finnBeregningsgrunnlagPrAar(bgAndel),
+      readOnlyBelop: andel.fordeltPrAar !== null && andel.fordeltPrAar !== undefined ? andel.fordeltPrAar : finnBeregningsgrunnlagPrAar(bgAndel),
       refusjonskrav:
         andel.refusjonskravPrAar !== null && andel.refusjonskravPrAar !== undefined
           ? formatCurrencyNoKr(andel.refusjonskravPrAar)
           : '',
-      skalKunneEndreRefusjon:
-        periode.skalKunneEndreRefusjon && !andel.lagtTilAvSaksbehandler && andel.refusjonskravFraInntektsmeldingPrAar
-          ? periode.skalKunneEndreRefusjon
-          : false,
       belopFraInntektsmelding: andel.belopFraInntektsmeldingPrAar,
       harPeriodeAarsakGraderingEllerRefusjon: periode.harPeriodeAarsakGraderingEllerRefusjon,
       refusjonskravFraInntektsmelding: andel.refusjonskravFraInntektsmeldingPrAar,

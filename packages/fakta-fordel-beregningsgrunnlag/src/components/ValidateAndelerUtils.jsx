@@ -160,14 +160,6 @@ const totalFordelingSkalVereLavereEnn = (value, seksG, errorMessage) =>
 export const likFordeling = (value, fordeling) =>
   value !== Math.round(fordeling) ? skalVereLikFordelingMessage(formatCurrencyNoKr(Math.round(fordeling))) : null;
 
-export const validateRefusjonsbelop = (refusjonskrav, skalKunneEndreRefusjon) => {
-  let refusjonskravError;
-  if (skalKunneEndreRefusjon) {
-    refusjonskravError = required(refusjonskrav);
-  }
-  return refusjonskravError;
-};
-
 const validateFordelingForGradertAndel = (andel, periodeDato) => {
   const arbeidsforholdIkkeOpphørt = !andel.arbeidsperiodeTom || dateIsAfter(andel.arbeidsperiodeTom, periodeDato.fom);
   if (!andel.andelIArbeid || !arbeidsforholdIkkeOpphørt) {
@@ -259,9 +251,8 @@ export const validateAndelFields = (
   arbeidsgiverOpplysningerPerId,
   periodeDato,
 ) => {
-  const { refusjonskrav, skalKunneEndreRefusjon, andel, inntektskategori } = andelFieldValues;
+  const { andel, inntektskategori } = andelFieldValues;
   const fieldErrors = {};
-  fieldErrors.refusjonskrav = validateRefusjonsbelop(refusjonskrav, skalKunneEndreRefusjon);
   fieldErrors.fastsattBelop = validateFastsattBelop(
     andelFieldValues,
     totalInntektArbeidsforholdList,

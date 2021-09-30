@@ -122,18 +122,22 @@ FordelBeregningsgrunnlagForm.validate = (
     const perioderSlattSammen = slåSammenPerioder(fordelBGPerioder, beregningsgrunnlag.beregningsgrunnlagPeriode);
     const grunnbeløp = Number(beregningsgrunnlag.halvG) * 2;
     for (let i = 0; i < perioderSlattSammen.length; i += 1) {
-      const sumIPeriode = finnSumIPeriode(beregningsgrunnlag.beregningsgrunnlagPeriode, perioderSlattSammen[i].fom);
-      const periode = values[getFieldNameKey(i)];
-      const periodeDato = { fom: perioderSlattSammen[i], tom: perioderSlattSammen[i] };
-      errors[getFieldNameKey(i)] = FordelBeregningsgrunnlagPeriodePanel.validate(
-        periode,
-        sumIPeriode,
-        skalValidereMotBeregningsgrunnlagPrAar,
-        getKodeverknavn,
-        arbeidsgiverOpplysningerPerId,
-        grunnbeløp,
-        periodeDato,
-      );
+      if (perioderSlattSammen[i].skalRedigereInntekt) {
+        const sumIPeriode = finnSumIPeriode(beregningsgrunnlag.beregningsgrunnlagPeriode, perioderSlattSammen[i].fom);
+        const periode = values[getFieldNameKey(i)];
+        const periodeDato = { fom: perioderSlattSammen[i], tom: perioderSlattSammen[i] };
+        errors[getFieldNameKey(i)] = FordelBeregningsgrunnlagPeriodePanel.validate(
+          periode,
+          sumIPeriode,
+          skalValidereMotBeregningsgrunnlagPrAar,
+          getKodeverknavn,
+          arbeidsgiverOpplysningerPerId,
+          grunnbeløp,
+          periodeDato,
+        );
+      } else {
+        errors[getFieldNameKey(i)] = null;
+      }
     }
   }
   return errors;
@@ -172,7 +176,6 @@ const getAndelsnr = aktivitet => {
 };
 
 export const mapTilFastsatteVerdier = aktivitet => ({
-  refusjonPrÅr: aktivitet.skalKunneEndreRefusjon ? removeSpacesFromNumber(aktivitet.refusjonskrav) : null,
   fastsattÅrsbeløp: removeSpacesFromNumber(aktivitet.fastsattBelop),
   inntektskategori: aktivitet.inntektskategori,
 });
