@@ -9,10 +9,10 @@ const skalSlåSammenAvsluttetArbeidsforholdPerioder = (periode, bgPerioder) => {
 }
 
 const erArbeidsforholdLike = (andel1, andel2) => {
-  if (andel1.arbeidsforhold === null && andel2.arbeidsforhold === null) {
+  if (!andel1.arbeidsforhold && !andel2.arbeidsforhold) {
     return true;
   }
-  if (andel1.arbeidsforhold !== null && andel2.arbeidsforhold !== null) {
+  if (!!andel1.arbeidsforhold && !!andel2.arbeidsforhold) {
     return andel1.arbeidsforhold.arbeidsgiverIdent === andel2.arbeidsforhold.arbeidsgiverIdent &&
     andel1.arbeidsforhold.arbeidsforholdId === andel2.arbeidsforhold.arbeidsforholdId;
   }
