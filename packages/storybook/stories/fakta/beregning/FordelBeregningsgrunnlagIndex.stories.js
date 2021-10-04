@@ -316,7 +316,7 @@ export const flerePerioderMedHelg = () => (
 export const aapOgRefusjon = () => {
   const førsteAndeler = [lagFordelingsandel(1, 'AAP', 0, 0)];
   const førstePeriode = lagFordelPeriode(førsteAndeler, '2019-08-05', '2019-11-26', false);
-  const andreAndeler = [lagFordelingsandel(2, 'AAP', 0, 0), lagFordelingsandel(1, 'AT', 0, 0)];
+  const andreAndeler = [lagFordelingsandel(2, 'AAP', 0, 0), lagFordelingsandel(1, 'AT', 300_000, 0)];
   const arbeidsforhold = lagArbeidsforhold('999999999', 'AD-ASD-ADF-SADGF-ASGASDF-SDFASDF', 300000);
   andreAndeler[1].arbeidsforhold = arbeidsforhold;
   const andrePeriode = lagFordelPeriode(andreAndeler, '2019-11-27', undefined, true);
@@ -324,7 +324,7 @@ export const aapOgRefusjon = () => {
   const faktaOmFordeling = lagFaktaOmFordeling([arbfor], [førstePeriode, andrePeriode]);
 
   const førsteBGPeriode = lagBGPeriode([lagBGAndel(1, 'AAP', 100000)], '2019-08-05', '2019-11-26', []);
-  const atAndel = lagBGAndel(1, 'AT', 300000);
+  const atAndel = lagBGAndel(1, 'AT', null);
   atAndel.arbeidsforhold = arbeidsforhold;
   const aapAndel = lagBGAndel(2, 'AAP', 100000);
   const andreBGPperiode = lagBGPeriode([aapAndel, atAndel], '2019-11-27', null, [

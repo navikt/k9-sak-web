@@ -61,62 +61,6 @@ export const validateUlikeAndelerWithGroupingFunction = (andelList, mapToSort) =
 export const validateUlikeAndeler = andelList =>
   validateUlikeAndelerWithGroupingFunction(andelList, mapAndelToSortedObject);
 
-const finnArbeidsforholdRefusjonsinfoListe = andelList => {
-  const andelerMedArbeidsforhold = andelList.filter(andel => andel.arbeidsforholdId !== '');
-  const arbeidsforholdRefusjonsbelop = [];
-  andelerMedArbeidsforhold.forEach(andel => {
-    const infoIndex = arbeidsforholdRefusjonsbelop.findIndex(
-      ({ arbeidsforholdId, arbeidsgiverIdent }) =>
-        arbeidsforholdId === andel.arbeidsforholdId && arbeidsgiverIdent === andel.arbeidsgiverIdent,
-    );
-    if (infoIndex >= 0) {
-      const belopsInfo = arbeidsforholdRefusjonsbelop[infoIndex];
-      if (belopsInfo.refusjonskravFraInntektsmelding < andel.refusjonskravFraInntektsmelding) {
-        arbeidsforholdRefusjonsbelop[infoIndex].refusjonskravFraInntektsmelding = andel.refusjonskravFraInntektsmelding;
-      }
-      if (andel.refusjonskrav !== null && andel.refusjonskrav !== undefined) {
-        arbeidsforholdRefusjonsbelop[infoIndex].totalRefusjon =
-          belopsInfo.totalRefusjon + Number(removeSpacesFromNumber(andel.refusjonskrav));
-      }
-    } else {
-      const { refusjonskravFraInntektsmelding, arbeidsforholdId, arbeidsgiverIdent, eksternArbeidsforholdId } = andel;
-      let totalRefusjon = 0;
-      if (andel.refusjonskrav !== null && andel.refusjonskrav !== undefined) {
-        totalRefusjon = Number(removeSpacesFromNumber(andel.refusjonskrav));
-      }
-      arbeidsforholdRefusjonsbelop.push({
-        arbeidsforholdId,
-        eksternArbeidsforholdId,
-        arbeidsgiverIdent,
-        refusjonskravFraInntektsmelding,
-        totalRefusjon,
-      });
-    }
-  });
-  return arbeidsforholdRefusjonsbelop;
-};
-
-export const skalIkkjeVereHoegereEnnRefusjonFraInntektsmelding = arbeidsgiver => [
-  { id: 'BeregningInfoPanel.FordelBG.Validation.IkkjeHogereRefusjonEnnInntektsmelding' },
-  { arbeidsgiver },
-];
-
-export const validateTotalRefusjonPrArbeidsforhold = (andelList, getKodeverknavn, arbeidsgiverOpplysningerPerId) => {
-  const arbeidsforholdRefusjonsinfo = finnArbeidsforholdRefusjonsinfoListe(andelList);
-  const arbeidsforholdMedForHogRefusjon = arbeidsforholdRefusjonsinfo.filter(
-    refusjonsInfo => refusjonsInfo.totalRefusjon > refusjonsInfo.refusjonskravFraInntektsmelding,
-  );
-  if (arbeidsforholdMedForHogRefusjon.length > 0) {
-    const arbeidsgiverString = createVisningsnavnForAktivitet(
-      arbeidsforholdMedForHogRefusjon[0],
-      getKodeverknavn,
-      arbeidsgiverOpplysningerPerId,
-    );
-    return skalIkkjeVereHoegereEnnRefusjonFraInntektsmelding(arbeidsgiverString);
-  }
-  return null;
-};
-
 const skalIkkjeVereHogareEnn = (value, registerInntekt, errorMessage) =>
   value > Math.round(registerInntekt) ? errorMessage() : undefined;
 

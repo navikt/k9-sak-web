@@ -6,7 +6,6 @@ import { SelectField } from '@fpsak-frontend/form';
 import { TableRow } from '@fpsak-frontend/shared-components';
 import { Element } from 'nav-frontend-typografi';
 import beregningsgrunnlagAndeltyper from '@fpsak-frontend/kodeverk/src/beregningsgrunnlagAndeltyper';
-import { skalIkkjeVereHoegereEnnRefusjonFraInntektsmelding } from '../ValidateAndelerUtils';
 import RenderFordelBGFieldArray, { lagBelopKolonne, RenderFordelBGFieldArrayImpl } from './RenderFordelBGFieldArray';
 import shallowWithIntl, { intlMock } from '../../../i18n';
 
@@ -311,14 +310,6 @@ describe('<RenderFordelBGFieldArray>', () => {
     );
     expect(errors).to.equal(null);
   });
-  const arbeidsgiverInfo = {
-    arbeidsgiverIdent: '14235235235',
-    arbeidsforholdId: '82389r32fe9343tr',
-    eksternArbeidsforholdId: '234567',
-  };
-
-  const arbeidsgiverstring = 'Test (14235235235)...4567';
-
 
   it('skal returnerer errors for fastsattbeløp når ikkje oppgitt', () => {
     const values = [];
