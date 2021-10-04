@@ -21,7 +21,6 @@ const andel1 = {
   harPeriodeAarsakGraderingEllerRefusjon: true,
   inntektskategori: 'ARBEIDSTAKER',
   nyAndel: false,
-  skalKunneEndreRefusjon: false,
   lagtTilAvSaksbehandler: false,
   arbeidsforholdId: null,
   andel: 'Sopra Steria AS (2342342348)',
@@ -33,7 +32,6 @@ const andel2 = {
   fastsattBelop: '20 000',
   readOnlyBelop: '10 000',
   harPeriodeAarsakGraderingEllerRefusjon: true,
-  skalKunneEndreRefusjon: false,
   refusjonskrav: '10 000',
   inntektskategori: 'ARBEIDSTAKER',
   nyAndel: false,
@@ -121,21 +119,19 @@ describe('<FordelBeregningsgrunnlagForm>', () => {
       fordelBeregningsgrunnlagAndeler: [fordelAndel],
       fom: '2019-04-01',
       harPeriodeAarsakGraderingEllerRefusjon: false,
-      skalKunneEndreRefusjon: false,
       tom: '2019-06-01',
     };
     const periode2 = {
       fordelBeregningsgrunnlagAndeler: [fordelAndel],
       fom: '2019-04-01',
       harPeriodeAarsakGraderingEllerRefusjon: false,
-      skalKunneEndreRefusjon: false,
       tom: '2019-06-01',
     };
     const periode3 = {
       fordelBeregningsgrunnlagAndeler: [fordelAndel, fordelAndel2],
       fom: '2019-06-02',
       harPeriodeAarsakGraderingEllerRefusjon: true,
-      skalKunneEndreRefusjon: false,
+      skalRedigereInntekt: true,
       tom: null,
     };
 
@@ -229,7 +225,7 @@ describe('<FordelBeregningsgrunnlagForm>', () => {
   it('skal validere 1 periode', () => {
     const values = {};
     values[getFieldNameKey(0)] = [andel1, andel2];
-    const fordelBGPerioder = [{ fom: '2018-01-01', tom: null }];
+    const fordelBGPerioder = [{ fom: '2018-01-01', tom: null, skalRedigereInntekt: true }];
     const beregningsgrunnlag = {
       beregningsgrunnlagPeriode: [
         {
@@ -253,8 +249,8 @@ describe('<FordelBeregningsgrunnlagForm>', () => {
     values[getFieldNameKey(0)] = [andel1, andel2];
     values[getFieldNameKey(1)] = [andel1, andel2];
     const fordelBGPerioder = [
-      { fom: '2018-01-01', tom: '2018-07-01' },
-      { fom: '2018-07-02', tom: null },
+      { fom: '2018-01-01', tom: '2018-07-01', skalRedigereInntekt: true },
+      { fom: '2018-07-02', tom: null, skalRedigereInntekt: true },
     ];
     const beregningsgrunnlag = {
       beregningsgrunnlagPeriode: [
@@ -283,22 +279,12 @@ describe('<FordelBeregningsgrunnlagForm>', () => {
   it('skal mappe andel til fastsatte verdier uten endring i refusjon', () => {
     const fastsatteVerdier = mapTilFastsatteVerdier(andel2);
     expect(fastsatteVerdier.fastsattÅrsbeløp).to.equal(20000);
-    expect(fastsatteVerdier.refusjonPrÅr).to.equal(null);
-    expect(fastsatteVerdier.inntektskategori).to.equal('ARBEIDSTAKER');
-  });
-
-  it('skal mappe andel til fastsatte verdier med endring i refusjon', () => {
-    const andel = { ...andel2, skalKunneEndreRefusjon: true };
-    const fastsatteVerdier = mapTilFastsatteVerdier(andel);
-    expect(fastsatteVerdier.fastsattÅrsbeløp).to.equal(20000);
-    expect(fastsatteVerdier.refusjonPrÅr).to.equal(10000);
     expect(fastsatteVerdier.inntektskategori).to.equal('ARBEIDSTAKER');
   });
 
   it('skal mappe verdier fra andel', () => {
     const verdier = mapAndel(andel2);
     expect(verdier.fastsatteVerdier.fastsattÅrsbeløp).to.equal(20000);
-    expect(verdier.fastsatteVerdier.refusjonPrÅr).to.equal(null);
     expect(verdier.fastsatteVerdier.inntektskategori).to.equal('ARBEIDSTAKER');
     expect(verdier.lagtTilAvSaksbehandler).to.equal(false);
     expect(verdier.nyAndel).to.equal(false);
@@ -341,7 +327,6 @@ describe('<FordelBeregningsgrunnlagForm>', () => {
     expect(perioder[0].andeler.length).to.equal(2);
 
     expect(perioder[0].andeler[0].fastsatteVerdier.fastsattÅrsbeløp).to.equal(10000);
-    expect(perioder[0].andeler[0].fastsatteVerdier.refusjonPrÅr).to.equal(null);
     expect(perioder[0].andeler[0].fastsatteVerdier.inntektskategori).to.equal('ARBEIDSTAKER');
     expect(perioder[0].andeler[0].lagtTilAvSaksbehandler).to.equal(false);
     expect(perioder[0].andeler[0].nyAndel).to.equal(false);
@@ -349,7 +334,6 @@ describe('<FordelBeregningsgrunnlagForm>', () => {
     expect(perioder[0].andeler[0].arbeidsforholdId).to.equal(null);
 
     expect(perioder[0].andeler[1].fastsatteVerdier.fastsattÅrsbeløp).to.equal(20000);
-    expect(perioder[0].andeler[1].fastsatteVerdier.refusjonPrÅr).to.equal(null);
     expect(perioder[0].andeler[1].fastsatteVerdier.inntektskategori).to.equal('ARBEIDSTAKER');
     expect(perioder[0].andeler[1].lagtTilAvSaksbehandler).to.equal(false);
     expect(perioder[0].andeler[1].nyAndel).to.equal(false);
@@ -399,7 +383,6 @@ describe('<FordelBeregningsgrunnlagForm>', () => {
     expect(perioder[0].andeler.length).to.equal(2);
 
     expect(perioder[0].andeler[0].fastsatteVerdier.fastsattÅrsbeløp).to.equal(10000);
-    expect(perioder[0].andeler[0].fastsatteVerdier.refusjonPrÅr).to.equal(null);
     expect(perioder[0].andeler[0].fastsatteVerdier.inntektskategori).to.equal('ARBEIDSTAKER');
     expect(perioder[0].andeler[0].lagtTilAvSaksbehandler).to.equal(false);
     expect(perioder[0].andeler[0].nyAndel).to.equal(false);
@@ -407,7 +390,6 @@ describe('<FordelBeregningsgrunnlagForm>', () => {
     expect(perioder[0].andeler[0].arbeidsforholdId).to.equal(null);
 
     expect(perioder[0].andeler[1].fastsatteVerdier.fastsattÅrsbeløp).to.equal(20000);
-    expect(perioder[0].andeler[1].fastsatteVerdier.refusjonPrÅr).to.equal(null);
     expect(perioder[0].andeler[1].fastsatteVerdier.inntektskategori).to.equal('ARBEIDSTAKER');
     expect(perioder[0].andeler[1].lagtTilAvSaksbehandler).to.equal(false);
     expect(perioder[0].andeler[1].nyAndel).to.equal(false);
@@ -419,7 +401,6 @@ describe('<FordelBeregningsgrunnlagForm>', () => {
     expect(perioder[1].andeler.length).to.equal(2);
 
     expect(perioder[1].andeler[0].fastsatteVerdier.fastsattÅrsbeløp).to.equal(10000);
-    expect(perioder[1].andeler[0].fastsatteVerdier.refusjonPrÅr).to.equal(null);
     expect(perioder[1].andeler[0].fastsatteVerdier.inntektskategori).to.equal('ARBEIDSTAKER');
     expect(perioder[1].andeler[0].lagtTilAvSaksbehandler).to.equal(false);
     expect(perioder[1].andeler[0].nyAndel).to.equal(false);
@@ -427,7 +408,6 @@ describe('<FordelBeregningsgrunnlagForm>', () => {
     expect(perioder[1].andeler[0].arbeidsforholdId).to.equal(null);
 
     expect(perioder[1].andeler[1].fastsatteVerdier.fastsattÅrsbeløp).to.equal(20000);
-    expect(perioder[1].andeler[1].fastsatteVerdier.refusjonPrÅr).to.equal(null);
     expect(perioder[1].andeler[1].fastsatteVerdier.inntektskategori).to.equal('ARBEIDSTAKER');
     expect(perioder[1].andeler[1].lagtTilAvSaksbehandler).to.equal(false);
     expect(perioder[1].andeler[1].nyAndel).to.equal(false);
@@ -478,7 +458,6 @@ describe('<FordelBeregningsgrunnlagForm>', () => {
     expect(perioder[0].andeler.length).to.equal(2);
 
     expect(perioder[0].andeler[0].fastsatteVerdier.fastsattÅrsbeløp).to.equal(10000);
-    expect(perioder[0].andeler[0].fastsatteVerdier.refusjonPrÅr).to.equal(null);
     expect(perioder[0].andeler[0].fastsatteVerdier.inntektskategori).to.equal('ARBEIDSTAKER');
     expect(perioder[0].andeler[0].lagtTilAvSaksbehandler).to.equal(false);
     expect(perioder[0].andeler[0].nyAndel).to.equal(false);
@@ -486,7 +465,6 @@ describe('<FordelBeregningsgrunnlagForm>', () => {
     expect(perioder[0].andeler[0].arbeidsforholdId).to.equal(null);
 
     expect(perioder[0].andeler[1].fastsatteVerdier.fastsattÅrsbeløp).to.equal(20000);
-    expect(perioder[0].andeler[1].fastsatteVerdier.refusjonPrÅr).to.equal(null);
     expect(perioder[0].andeler[1].fastsatteVerdier.inntektskategori).to.equal('ARBEIDSTAKER');
     expect(perioder[0].andeler[1].lagtTilAvSaksbehandler).to.equal(false);
     expect(perioder[0].andeler[1].nyAndel).to.equal(false);
@@ -498,7 +476,6 @@ describe('<FordelBeregningsgrunnlagForm>', () => {
     expect(perioder[1].andeler.length).to.equal(2);
 
     expect(perioder[1].andeler[0].fastsatteVerdier.fastsattÅrsbeløp).to.equal(10000);
-    expect(perioder[1].andeler[0].fastsatteVerdier.refusjonPrÅr).to.equal(null);
     expect(perioder[1].andeler[0].fastsatteVerdier.inntektskategori).to.equal('ARBEIDSTAKER');
     expect(perioder[1].andeler[0].lagtTilAvSaksbehandler).to.equal(false);
     expect(perioder[1].andeler[0].nyAndel).to.equal(false);
@@ -506,7 +483,6 @@ describe('<FordelBeregningsgrunnlagForm>', () => {
     expect(perioder[1].andeler[0].arbeidsforholdId).to.equal(null);
 
     expect(perioder[1].andeler[1].fastsatteVerdier.fastsattÅrsbeløp).to.equal(20000);
-    expect(perioder[1].andeler[1].fastsatteVerdier.refusjonPrÅr).to.equal(null);
     expect(perioder[1].andeler[1].fastsatteVerdier.inntektskategori).to.equal('ARBEIDSTAKER');
     expect(perioder[1].andeler[1].lagtTilAvSaksbehandler).to.equal(false);
     expect(perioder[1].andeler[1].nyAndel).to.equal(false);
@@ -563,7 +539,6 @@ describe('<FordelBeregningsgrunnlagForm>', () => {
     expect(perioder[0].andeler.length).to.equal(2);
 
     expect(perioder[0].andeler[0].fastsatteVerdier.fastsattÅrsbeløp).to.equal(10000);
-    expect(perioder[0].andeler[0].fastsatteVerdier.refusjonPrÅr).to.equal(null);
     expect(perioder[0].andeler[0].fastsatteVerdier.inntektskategori).to.equal('ARBEIDSTAKER');
     expect(perioder[0].andeler[0].lagtTilAvSaksbehandler).to.equal(false);
     expect(perioder[0].andeler[0].nyAndel).to.equal(false);
@@ -571,7 +546,6 @@ describe('<FordelBeregningsgrunnlagForm>', () => {
     expect(perioder[0].andeler[0].arbeidsforholdId).to.equal(null);
 
     expect(perioder[0].andeler[1].fastsatteVerdier.fastsattÅrsbeløp).to.equal(20000);
-    expect(perioder[0].andeler[1].fastsatteVerdier.refusjonPrÅr).to.equal(null);
     expect(perioder[0].andeler[1].fastsatteVerdier.inntektskategori).to.equal('ARBEIDSTAKER');
     expect(perioder[0].andeler[1].lagtTilAvSaksbehandler).to.equal(false);
     expect(perioder[0].andeler[1].nyAndel).to.equal(false);
@@ -583,7 +557,6 @@ describe('<FordelBeregningsgrunnlagForm>', () => {
     expect(perioder[1].andeler.length).to.equal(2);
 
     expect(perioder[1].andeler[0].fastsatteVerdier.fastsattÅrsbeløp).to.equal(10000);
-    expect(perioder[1].andeler[0].fastsatteVerdier.refusjonPrÅr).to.equal(null);
     expect(perioder[1].andeler[0].fastsatteVerdier.inntektskategori).to.equal('ARBEIDSTAKER');
     expect(perioder[1].andeler[0].lagtTilAvSaksbehandler).to.equal(false);
     expect(perioder[1].andeler[0].nyAndel).to.equal(false);
@@ -591,7 +564,6 @@ describe('<FordelBeregningsgrunnlagForm>', () => {
     expect(perioder[1].andeler[0].arbeidsforholdId).to.equal(null);
 
     expect(perioder[1].andeler[1].fastsatteVerdier.fastsattÅrsbeløp).to.equal(20000);
-    expect(perioder[1].andeler[1].fastsatteVerdier.refusjonPrÅr).to.equal(null);
     expect(perioder[1].andeler[1].fastsatteVerdier.inntektskategori).to.equal('ARBEIDSTAKER');
     expect(perioder[1].andeler[1].lagtTilAvSaksbehandler).to.equal(false);
     expect(perioder[1].andeler[1].nyAndel).to.equal(false);

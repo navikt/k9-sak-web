@@ -61,9 +61,6 @@ const harPeriodeSomKanKombineresMedForrige = (periode, bgPerioder, fordelPeriode
     if (fordelPeriode.skalRedigereInntekt !== forrigeEndringPeriode.skalRedigereInntekt) {
       return false;
     }
-    if (fordelPeriode.skalKunneEndreRefusjon !== forrigeEndringPeriode.skalKunneEndreRefusjon) {
-      return false;
-    }
     if (harPeriodeårsakerSomIkkeSlåsSammen(periode)) {
       return false;
     }

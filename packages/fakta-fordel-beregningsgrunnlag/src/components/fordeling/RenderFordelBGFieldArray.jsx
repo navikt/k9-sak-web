@@ -28,9 +28,7 @@ import { getUniqueListOfArbeidsforhold } from '../ArbeidsforholdHelper';
 import {
   validateAndeler,
   validateSumFastsattBelop,
-  validateTotalRefusjonPrArbeidsforhold,
   validateUlikeAndeler,
-  validateSumRefusjon,
   validateSumFastsattForUgraderteAktiviteter,
 } from '../ValidateAndelerUtils';
 import styles from './renderFordelBGFieldArray.less';
@@ -264,17 +262,11 @@ const createAndelerTableRows = (
           />
         </TableColumn>
       )}
-      <TableColumn
-        className={
-          readOnly || periodeUtenAarsak || !fields.get(index).skalKunneEndreRefusjon
-            ? undefined
-            : styles.rightAlignInput
-        }
-      >
+      <TableColumn>
         <InputField
           name={`${andelElementFieldId}.refusjonskrav`}
           bredde="XS"
-          readOnly={readOnly || periodeUtenAarsak || !fields.get(index).skalKunneEndreRefusjon}
+          readOnly
           parse={parseCurrencyInput}
         />
       </TableColumn>
@@ -477,20 +469,7 @@ RenderFordelBGFieldArray.validate = (
       ),
     };
   }
-  const totalRefusjonError = validateSumRefusjon(values, grunnbeløp);
-  if (totalRefusjonError) {
-    return { _error: <FormattedMessage id={totalRefusjonError[0].id} values={totalRefusjonError[1]} /> };
-  }
-  const refusjonPrArbeidsforholdError = validateTotalRefusjonPrArbeidsforhold(
-    values,
-    getKodeverknavn,
-    arbeidsgiverOpplysningerPerId,
-  );
-  if (refusjonPrArbeidsforholdError) {
-    return {
-      _error: <FormattedMessage id={refusjonPrArbeidsforholdError[0].id} values={refusjonPrArbeidsforholdError[1]} />,
-    };
-  }
+
   if (
     sumIPeriode !== undefined &&
     sumIPeriode !== null &&

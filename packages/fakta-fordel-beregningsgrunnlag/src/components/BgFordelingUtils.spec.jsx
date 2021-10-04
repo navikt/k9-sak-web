@@ -146,7 +146,6 @@ describe('<BgFordelingUtils>', () => {
     fastsattBelop: 25000,
     readOnlyBelop: 25000,
     refusjonskrav: '',
-    skalKunneEndreRefusjon: false,
     belopFraInntektsmelding: 25000,
     refusjonskravFraInntektsmelding: null,
   };
