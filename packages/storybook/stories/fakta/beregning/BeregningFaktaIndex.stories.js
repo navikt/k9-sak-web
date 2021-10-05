@@ -7,6 +7,7 @@ import inntektskategorier from '@fpsak-frontend/kodeverk/src/inntektskategorier'
 import opptjeningAktivitetType from '@fpsak-frontend/kodeverk/src/opptjeningAktivitetType';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
+import avklaringsbehovStatus from '@fpsak-frontend/kodeverk/src/beregningAvklaringsbehovStatus';
 import BeregningFaktaIndex from '@fpsak-frontend/fakta-beregning';
 import faktaOmBeregningTilfelle from '@fpsak-frontend/kodeverk/src/faktaOmBeregningTilfelle';
 import {
@@ -105,7 +106,7 @@ const lagAvklaringsbehov = (faktaOmBeregning) => {
     return avklaringsbehov;
   }
   if (faktaOmBeregning.faktaOmBeregningTilfeller  && faktaOmBeregning.faktaOmBeregningTilfeller.length > 0) {
-    avklaringsbehov.push({definisjon: { kode: VURDER_AT_OG_FL_I_SAMME_ORGANISASJON }});
+    avklaringsbehov.push({definisjon: { kode: VURDER_AT_OG_FL_I_SAMME_ORGANISASJON }, status: { kode: avklaringsbehovStatus.OPPRETTET }});
   }
   return avklaringsbehov;
 }

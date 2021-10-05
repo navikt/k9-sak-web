@@ -11,7 +11,6 @@ export type OpptjeningAktivitet = Readonly<{
   erEndret: boolean;
   erGodkjent: boolean;
   erManueltOpprettet: boolean;
-  erPeriodeEndret: boolean;
   id: number;
   naringRegistreringsdato: string;
   omsorgsovertakelseDato: string;

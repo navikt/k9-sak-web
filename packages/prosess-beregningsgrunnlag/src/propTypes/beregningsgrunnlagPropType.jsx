@@ -75,7 +75,7 @@ const fordelBeregningsgrunnlagPeriodePropType = PropTypes.shape({
   fom: PropTypes.string,
   fordelBeregningsgrunnlagAndeler: PropTypes.arrayOf(fordelBeregningsgrunnlagAndelPropType),
   harPeriodeAarsakGraderingEllerRefusjon: PropTypes.bool,
-  skalKunneEndreRefusjon: PropTypes.bool,
+  skalRedigereInntekt: PropTypes.bool,
   tom: PropTypes.string,
 });
 

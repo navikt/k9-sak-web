@@ -1,7 +1,7 @@
 import React from 'react';
 import { MicroFrontend } from '@fpsak-frontend/utils';
-import sjekkHvisErIProduksjon from '@fpsak-frontend/utils/src/micro-frontends/sjekkHvisErIProduksjon';
 import { FormState } from '@fpsak-frontend/form/index';
+import sjekkHvisErIProduksjon from "@fpsak-frontend/utils/src/micro-frontends/sjekkHvisErIProduksjon";
 import KartleggePropertyTilUtvidetRettMikrofrontendKomponent from './KartleggePropertyTilUtvidetRettMikrofrontendKomponent';
 
 const initializeUtvidetRettVilkar = (
@@ -21,30 +21,16 @@ const initializeUtvidetRettVilkar = (
   );
 };
 
-const hentVersjonInformasjon = () => {
-  const produksjonsVersjon = {
-    versjon: '2.0.8',
-    jsIntegrity: 'sha384-O13ewZExZDDOsJ1U4zYyIN4c0u8bVjhQO4S1RVFIPp6QQUtvjtfrI6cCkH31fLc/',
-    stylesheetIntegrity: 'sha384-LhX+SFf72IcEUijL6Yzb8yPmzX2f1ES1ePAp13IiFMktOTbDWPXsiorPXeS4/xhI',
-  };
-  const preprodVersjon = {
-    versjon: '2.0.8',
-    jsIntegrity: 'sha384-O13ewZExZDDOsJ1U4zYyIN4c0u8bVjhQO4S1RVFIPp6QQUtvjtfrI6cCkH31fLc/',
-    stylesheetIntegrity: 'sha384-LhX+SFf72IcEUijL6Yzb8yPmzX2f1ES1ePAp13IiFMktOTbDWPXsiorPXeS4/xhI',
-  };
-  return sjekkHvisErIProduksjon() ? produksjonsVersjon : preprodVersjon;
-};
-
 export default props => {
   const utvidetRettVilkårAppID = 'utvidetRettApp';
-  const { versjon, jsIntegrity, stylesheetIntegrity } = hentVersjonInformasjon();
+  const erIProduksjon = sjekkHvisErIProduksjon();
+  const path = erIProduksjon ? 'prod' : 'dev';
+
   return (
     <MicroFrontend
       id={utvidetRettVilkårAppID}
-      jsSrc={`/k9/microfrontend/omsorgsdager/${versjon}/app.js`}
-      jsIntegrity={jsIntegrity}
-      stylesheetSrc={`/k9/microfrontend/omsorgsdager/${versjon}/styles.css`}
-      stylesheetIntegrity={stylesheetIntegrity}
+      jsSrc={`/k9/microfrontend/omsorgsdager/${path}/app.js`}
+      stylesheetSrc={`/k9/microfrontend/omsorgsdager/${path}/styles.css`}
       onReady={() => initializeUtvidetRettVilkar(utvidetRettVilkårAppID, { ...props, FormState })}
     />
   );

@@ -336,7 +336,6 @@ describe('<BgFordelingUtils>', () => {
     readOnlyBelop: 25000,
     skalRedigereInntekt: false,
     refusjonskrav: '',
-    skalKunneEndreRefusjon: false,
     belopFraInntektsmelding: null,
     refusjonskravFraInntektsmelding: null,
   };
@@ -347,7 +346,6 @@ describe('<BgFordelingUtils>', () => {
     readOnlyBelop: 25000,
     skalRedigereInntekt: false,
     refusjonskrav: '',
-    skalKunneEndreRefusjon: false,
     belopFraInntektsmelding: 25000,
     refusjonskravFraInntektsmelding: null,
   };

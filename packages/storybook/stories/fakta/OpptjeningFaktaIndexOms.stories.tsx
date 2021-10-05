@@ -52,7 +52,6 @@ const opptjeningNårEnHarAksjonspunkt = {
           erGodkjent: null,
           erEndret: false,
           begrunnelse: null,
-          erPeriodeEndret: false,
         },
         {
           aktivitetType: {
@@ -75,7 +74,6 @@ const opptjeningNårEnHarAksjonspunkt = {
           erGodkjent: true,
           erEndret: false,
           begrunnelse: null,
-          erPeriodeEndret: false,
         },
       ],
     },
@@ -107,7 +105,7 @@ const opptjeningUtenAksjonspunkt = {
           erEndret: false,
           erGodkjent: true,
           erManueltOpprettet: false,
-          erPeriodeEndret: false,
+
           oppdragsgiverOrg: '973861778',
           stillingsandel: 50,
         },
@@ -123,7 +121,7 @@ const opptjeningUtenAksjonspunkt = {
           erEndret: false,
           erGodkjent: true,
           erManueltOpprettet: false,
-          erPeriodeEndret: false,
+
           aringRegistreringsdato: '1995-09-14',
           oppdragsgiverOrg: '973861778',
           stillingsandel: 50,
