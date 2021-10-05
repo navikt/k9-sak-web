@@ -1,6 +1,8 @@
 import axios, { AxiosResponse } from 'axios';
 import { AlertStripeAdvarsel, AlertStripeFeil } from 'nav-frontend-alertstriper';
 import React from 'react';
+import Lenke from 'nav-frontend-lenker';
+import { getPathToFplos } from '@k9-sak-web/sak-app/src/app/paths';
 
 export interface PunsjResponse {
   journalpostIder: JournalpostIder[];
@@ -10,7 +12,12 @@ export interface JournalpostIder {
   journalpostId: string;
 }
 
-const Punsjstripe = ({ aktørId }) => {
+interface PunsjstripeProps {
+  aktørId: string;
+  saksnummer: string;
+}
+
+const Punsjstripe: React.FC<PunsjstripeProps> = ({ aktørId, saksnummer }) => {
   const [punsjoppgaver, setPunsjoppgaver] = React.useState<PunsjResponse>(null);
   const [error, setError] = React.useState(null);
 
@@ -40,6 +47,11 @@ const Punsjstripe = ({ aktørId }) => {
     return `Det er ${journalpostIder.length} uløste oppgaver tilknyttet søkeren i Punsj.`;
   };
 
-  return <AlertStripeAdvarsel>{getUløsteOppgaverText()}</AlertStripeAdvarsel>;
+  return (
+    <AlertStripeAdvarsel>
+      {`${getUløsteOppgaverText()} `}
+      <Lenke href={`${getPathToFplos()}?sok=${saksnummer}`}>Gå til oppgave</Lenke>
+    </AlertStripeAdvarsel>
+  );
 };
 export default Punsjstripe;
