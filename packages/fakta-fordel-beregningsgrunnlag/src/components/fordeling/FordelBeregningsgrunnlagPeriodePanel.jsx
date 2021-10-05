@@ -160,7 +160,7 @@ FordelBeregningsgrunnlagPeriodePanelImpl.buildInitialValues = (
           ? formatCurrencyNoKr(andel.fordelingForrigeBehandlingPrAar)
           : '',
       fastsattBelop: settFastsattBelop(andel.fordeltPrAar, andel.fastsattForrigePrAar),
-      readOnlyBelop: andel.fordeltPrAar !== null && andel.fordeltPrAar !== undefined ? andel.fordeltPrAar : finnBeregningsgrunnlagPrAar(bgAndel),
+      readOnlyBelop: andel.fordeltPrAar !== null && andel.fordeltPrAar !== undefined ? formatCurrencyNoKr(andel.fordeltPrAar) : finnBeregningsgrunnlagPrAar(bgAndel),
       refusjonskrav:
         andel.refusjonskravPrAar !== null && andel.refusjonskravPrAar !== undefined
           ? formatCurrencyNoKr(andel.refusjonskravPrAar)
