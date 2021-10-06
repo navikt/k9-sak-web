@@ -47,7 +47,6 @@ const formatereLosAksjonspunktObjekt = (
   erVilkarOk: boolean,
   fraDato: string,
   tilDato: string,
-  erBehandlingRevurdering: boolean
 ) => {
 
   const losAksjonspunktObjekt: AleneOmOmsorgenLosAksjonspunktK9Format = {
@@ -61,9 +60,7 @@ const formatereLosAksjonspunktObjekt = (
 
   if (!erVilkarOk) {
     losAksjonspunktObjekt.avslagsårsak = AvslagskoderAleneOmOmsorgen.IKKE_GRUNNLAG_ALENE_OMSORG;
-  }
-
-  if(erBehandlingRevurdering && !!tilDato){
+  } else {
     losAksjonspunktObjekt.periode.tom = tilDato;
   }
 
@@ -82,6 +79,9 @@ const AleneOmOmsorgenObjektTilMikrofrontend = ({
   soknad,
 }: OwnProps) => {
   const erBehandlingRevurdering: boolean = behandling.type.kode === BehandlingType.REVURDERING;
+  const angittBarn = soknad.angittePersoner.filter(person => person.rolle === 'BARN');
+  const barnetsFodselsdato = new Date(angittBarn[0].fødselsdato);
+  const åretBarnetFyller18 = `${barnetsFodselsdato.getFullYear() + 18}-12-31`;
 
   return {
     visKomponent: UtvidetRettMikrofrontendVisning.VILKAR_ALENE_OM_OMSORGEN,
@@ -101,7 +101,13 @@ const AleneOmOmsorgenObjektTilMikrofrontend = ({
       informasjonTilLesemodus: formatereLesemodusObjekt(vilkarKnyttetTilAksjonspunkt, aksjonspunkt, status),
       losAksjonspunkt: ({ begrunnelse, vilkarOppfylt, fraDato, tilDato }) => {
         submitCallback([
-          formatereLosAksjonspunktObjekt(aksjonspunkt.definisjon.kode, begrunnelse, vilkarOppfylt, fraDato, tilDato, erBehandlingRevurdering),
+          formatereLosAksjonspunktObjekt(
+            aksjonspunkt.definisjon.kode,
+            begrunnelse,
+            vilkarOppfylt,
+            fraDato,
+            erBehandlingRevurdering && !!tilDato ? tilDato : åretBarnetFyller18
+          ),
         ]);
       },
       formState: FormState,
