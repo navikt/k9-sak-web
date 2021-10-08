@@ -102,7 +102,7 @@ const lagMenyProps = (kronologiskeGrunnlag, bgVilkår) => {
 };
 
 const finnAvklaringsbehov = (aksjonspunkter, beregningsgrunnlag) => {
-  if (beregningsgrunnlag.avklaringsbehov && beregningsgrunnlag.avklaringsbehov.length > 0) {
+  if (beregningsgrunnlag.avklaringsbehov) {
     return beregningsgrunnlag.avklaringsbehov.filter(ab => isBeregningAvklaringsbehov(ab.definisjon.kode));
   }
   return aksjonspunkter;
