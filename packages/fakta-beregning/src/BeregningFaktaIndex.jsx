@@ -56,7 +56,7 @@ const harAvklaringsbehovIPanel = (avklaringsbehov, beregningsgrunnlag) => {
 
 
 const finnAvklaringsbehov = (aksjonspunkter, beregningsgrunnlag) => {
-  if (beregningsgrunnlag.avklaringsbehov && beregningsgrunnlag.avklaringsbehov.length > 0) {
+  if (beregningsgrunnlag.avklaringsbehov) {
     return beregningsgrunnlag.avklaringsbehov;
   }
   return aksjonspunkter;
