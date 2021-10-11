@@ -12,6 +12,7 @@ const aktivitetStatus = {
   KOMBINERT_AT_FL_SN: 'AT_FL_SN',
   DAGPENGER: 'DP',
   ARBEIDSAVKLARINGSPENGER: 'AAP',
+  SYKEPENGER_AV_DAGPENGER: 'SP_AV_DP',
   MILITAER_ELLER_SIVIL: 'MS',
   BRUKERS_ANDEL: 'BA',
   UDEFINERT: '-',
@@ -48,11 +49,15 @@ const kombinasjonsstatuser = [
   aktivitetStatus.KOMBINERT_FL_SN,
   aktivitetStatus.KOMBINERT_AT_SN,
 ];
-const statuserSomStotterDagpengerEllerAAP = [aktivitetStatus.DAGPENGER, aktivitetStatus.ARBEIDSAVKLARINGSPENGER];
+const statuserSomStotterDagpenger = [aktivitetStatus.DAGPENGER, aktivitetStatus.SYKEPENGER_AV_DAGPENGER];
+
+const statuserSomStotterDagpengerEllerAAP = [aktivitetStatus.DAGPENGER, aktivitetStatus.SYKEPENGER_AV_DAGPENGER, aktivitetStatus.ARBEIDSAVKLARINGSPENGER];
 const statuserSomStotterTilstottendeYtelser = [aktivitetStatus.KUN_YTELSE];
 const statuserSomStotterMilitaer = [aktivitetStatus.MILITAER_ELLER_SIVIL];
 
 export const isStatusDagpengerOrAAP = (status: string): boolean => statuserSomStotterDagpengerEllerAAP.includes(status);
+
+export const isStatusDagpenger = (status: string): boolean => statuserSomStotterDagpenger.includes(status);
 
 export const isStatusTilstotendeYtelse = (status: string): boolean =>
   statuserSomStotterTilstottendeYtelser.includes(status);
