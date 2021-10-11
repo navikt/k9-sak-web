@@ -8,7 +8,7 @@ import {
   mapToBelop,
 } from './BgFordelingUtils';
 import TotalbelopPrArbeidsgiverError, { lagTotalInntektArbeidsforholdList } from './TotalbelopPrArbeidsgiverError';
-import { createVisningsnavnForAktivitet } from './util/visningsnavnHelper';
+import createVisningsnavnForAktivitet from './util/createVisningsnavnForAktivitet';
 
 const convertToNumber = n => (n == null || undefined ? null : Number(removeSpacesFromNumber(n)));
 
@@ -61,62 +61,6 @@ export const validateUlikeAndelerWithGroupingFunction = (andelList, mapToSort) =
 export const validateUlikeAndeler = andelList =>
   validateUlikeAndelerWithGroupingFunction(andelList, mapAndelToSortedObject);
 
-const finnArbeidsforholdRefusjonsinfoListe = andelList => {
-  const andelerMedArbeidsforhold = andelList.filter(andel => andel.arbeidsforholdId !== '');
-  const arbeidsforholdRefusjonsbelop = [];
-  andelerMedArbeidsforhold.forEach(andel => {
-    const infoIndex = arbeidsforholdRefusjonsbelop.findIndex(
-      ({ arbeidsforholdId, arbeidsgiverId }) =>
-        arbeidsforholdId === andel.arbeidsforholdId && arbeidsgiverId === andel.arbeidsgiverId,
-    );
-    if (infoIndex >= 0) {
-      const belopsInfo = arbeidsforholdRefusjonsbelop[infoIndex];
-      if (belopsInfo.refusjonskravFraInntektsmelding < andel.refusjonskravFraInntektsmelding) {
-        arbeidsforholdRefusjonsbelop[infoIndex].refusjonskravFraInntektsmelding = andel.refusjonskravFraInntektsmelding;
-      }
-      if (andel.refusjonskrav !== null && andel.refusjonskrav !== undefined) {
-        arbeidsforholdRefusjonsbelop[infoIndex].totalRefusjon =
-          belopsInfo.totalRefusjon + Number(removeSpacesFromNumber(andel.refusjonskrav));
-      }
-    } else {
-      const { refusjonskravFraInntektsmelding, arbeidsforholdId, arbeidsgiverId, eksternArbeidsforholdId } = andel;
-      let totalRefusjon = 0;
-      if (andel.refusjonskrav !== null && andel.refusjonskrav !== undefined) {
-        totalRefusjon = Number(removeSpacesFromNumber(andel.refusjonskrav));
-      }
-      arbeidsforholdRefusjonsbelop.push({
-        arbeidsforholdId,
-        eksternArbeidsforholdId,
-        arbeidsgiverId,
-        refusjonskravFraInntektsmelding,
-        totalRefusjon,
-      });
-    }
-  });
-  return arbeidsforholdRefusjonsbelop;
-};
-
-export const skalIkkjeVereHoegereEnnRefusjonFraInntektsmelding = arbeidsgiver => [
-  { id: 'BeregningInfoPanel.FordelBG.Validation.IkkjeHogereRefusjonEnnInntektsmelding' },
-  { arbeidsgiver },
-];
-
-export const validateTotalRefusjonPrArbeidsforhold = (andelList, getKodeverknavn, arbeidsgiverOpplysningerPerId) => {
-  const arbeidsforholdRefusjonsinfo = finnArbeidsforholdRefusjonsinfoListe(andelList);
-  const arbeidsforholdMedForHogRefusjon = arbeidsforholdRefusjonsinfo.filter(
-    refusjonsInfo => refusjonsInfo.totalRefusjon > refusjonsInfo.refusjonskravFraInntektsmelding,
-  );
-  if (arbeidsforholdMedForHogRefusjon.length > 0) {
-    const arbeidsgiverString = createVisningsnavnForAktivitet(
-      arbeidsforholdMedForHogRefusjon[0],
-      getKodeverknavn,
-      arbeidsgiverOpplysningerPerId,
-    );
-    return skalIkkjeVereHoegereEnnRefusjonFraInntektsmelding(arbeidsgiverString);
-  }
-  return null;
-};
-
 const skalIkkjeVereHogareEnn = (value, registerInntekt, errorMessage) =>
   value > Math.round(registerInntekt) ? errorMessage() : undefined;
 
@@ -159,14 +103,6 @@ const totalFordelingSkalVereLavereEnn = (value, seksG, errorMessage) =>
 
 export const likFordeling = (value, fordeling) =>
   value !== Math.round(fordeling) ? skalVereLikFordelingMessage(formatCurrencyNoKr(Math.round(fordeling))) : null;
-
-export const validateRefusjonsbelop = (refusjonskrav, skalKunneEndreRefusjon) => {
-  let refusjonskravError;
-  if (skalKunneEndreRefusjon) {
-    refusjonskravError = required(refusjonskrav);
-  }
-  return refusjonskravError;
-};
 
 const validateFordelingForGradertAndel = (andel, periodeDato) => {
   const arbeidsforholdIkkeOpphørt = !andel.arbeidsperiodeTom || dateIsAfter(andel.arbeidsperiodeTom, periodeDato.fom);
@@ -259,9 +195,8 @@ export const validateAndelFields = (
   arbeidsgiverOpplysningerPerId,
   periodeDato,
 ) => {
-  const { refusjonskrav, skalKunneEndreRefusjon, andel, inntektskategori } = andelFieldValues;
+  const { andel, inntektskategori } = andelFieldValues;
   const fieldErrors = {};
-  fieldErrors.refusjonskrav = validateRefusjonsbelop(refusjonskrav, skalKunneEndreRefusjon);
   fieldErrors.fastsattBelop = validateFastsattBelop(
     andelFieldValues,
     totalInntektArbeidsforholdList,

@@ -5,7 +5,7 @@ import { Hovedknapp } from 'nav-frontend-knapper';
 import styles from './aksjonspunktUtenLøsningModal.less';
 
 interface AksjonspunktUtenLøsningModalProps {
-  melding: string;
+  melding: string | React.ReactNode;
 }
 
 const AksjonspunktUtenLøsningModal = ({ melding }: AksjonspunktUtenLøsningModalProps) => {

@@ -29,6 +29,7 @@ export type Map<Key extends string | number, Value> = {
 export type VurderteVilkår = Map<Vilkår, Utfalltype>;
 
 export type Uttaksperiode = {
+  bekreftet?: string;
   periode: string; // fom/tom
   delvisFravær?: string; // Duration
   fraværÅrsak: string;

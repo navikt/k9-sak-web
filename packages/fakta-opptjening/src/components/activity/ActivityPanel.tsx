@@ -189,7 +189,6 @@ export const ActivityPanel = ({
                 label={{ id: 'ActivityPanel.Period' }}
                 readOnly={readOnly || shouldDisablePeriodpicker(hasAksjonspunkt, initialValues)}
                 disabledDays={{ before: moment(opptjeningFomDato).toDate(), after: moment(opptjeningTomDato).toDate() }}
-                isEdited={initialValues.erPeriodeEndret}
               />
             </FlexColumn>
             <FlexColumn>

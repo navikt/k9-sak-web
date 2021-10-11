@@ -13,17 +13,11 @@ import beregningAktivitetPropType from './beregningAktivitetPropType';
 import styles from './vurderAktiviteterTabell.less';
 
 export const lagAktivitetFieldId = aktivitet => {
-  if (aktivitet.arbeidsgiverId) {
-    if (aktivitet.arbeidsforholdId) {
-      return aktivitet.arbeidsgiverId + aktivitet.arbeidsforholdId + aktivitet.fom.replace('.', '');
+  if (aktivitet.arbeidsgiverIdent) {
+    if (aktivitet.eksternArbeidsforholdId) {
+      return aktivitet.arbeidsgiverIdent + aktivitet.eksternArbeidsforholdId + aktivitet.fom.replace('.', '');
     }
-    return aktivitet.arbeidsgiverId + aktivitet.fom.replace('.', '');
-  }
-  if (aktivitet.aktørIdString) {
-    if (aktivitet.arbeidsforholdId) {
-      return aktivitet.aktørIdString + aktivitet.arbeidsforholdId + aktivitet.fom.replace('.', '');
-    }
-    return aktivitet.aktørIdString + aktivitet.fom.replace('.', '');
+    return aktivitet.arbeidsgiverIdent + aktivitet.fom.replace('.', '');
   }
   return aktivitet.arbeidsforholdType.kode + aktivitet.fom.replace('.', '');
 };
@@ -196,12 +190,11 @@ VurderAktiviteterTabell.transformValues = (values, aktiviteter) =>
         values[lagAktivitetFieldId(aktivitet)].tom != null,
     )
     .map(aktivitet => ({
-      oppdragsgiverOrg: aktivitet.aktørIdString ? null : aktivitet.arbeidsgiverId,
       arbeidsforholdRef: aktivitet.arbeidsforholdId,
       fom: aktivitet.fom,
       tom: aktivitet.tom,
       opptjeningAktivitetType: aktivitet.arbeidsforholdType ? aktivitet.arbeidsforholdType.kode : null,
-      arbeidsgiverIdentifikator: aktivitet.aktørIdString ? aktivitet.aktørIdString : null,
+      arbeidsgiverIdentifikator: aktivitet.arbeidsgiverIdent,
       skalBrukes: values[lagAktivitetFieldId(aktivitet)].skalBrukes,
     }));
 
@@ -224,8 +217,7 @@ const skalBrukesPretufylling = (aktivitet, erOverstyrt, harAvklaringsbehov) => {
   return aktivitet.skalBrukes === true || aktivitet.skalBrukes === null || aktivitet.skalBrukes === undefined;
 };
 
-const mapToInitialValues = (aktivitet, alleKodeverk, erOverstyrt, harAvklaringsbehov, arbeidsgiverOpplysningerPerId) => ({
-  beregningAktivitetNavn: createVisningsnavnForAktivitet(aktivitet, alleKodeverk, arbeidsgiverOpplysningerPerId),
+const mapToInitialValues = (aktivitet, erOverstyrt, harAvklaringsbehov) => ({
   fom: aktivitet.fom,
   tom: aktivitet.tom,
   skalBrukes: skalBrukesPretufylling(aktivitet, erOverstyrt, harAvklaringsbehov),
@@ -233,10 +225,8 @@ const mapToInitialValues = (aktivitet, alleKodeverk, erOverstyrt, harAvklaringsb
 
 VurderAktiviteterTabell.buildInitialValues = (
   aktiviteter,
-  alleKodeverk,
   erOverstyrt,
   harAvklaringsbehov,
-  arbeidsgiverOpplysningerPerId,
 ) => {
   if (!aktiviteter) {
     return {};
@@ -245,10 +235,8 @@ VurderAktiviteterTabell.buildInitialValues = (
   aktiviteter.forEach(aktivitet => {
     initialValues[lagAktivitetFieldId(aktivitet)] = mapToInitialValues(
       aktivitet,
-      alleKodeverk,
       erOverstyrt,
       harAvklaringsbehov,
-      arbeidsgiverOpplysningerPerId,
     );
   });
   return initialValues;

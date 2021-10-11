@@ -69,7 +69,7 @@ const lagStateMedAvklarAktitiveter = (
 };
 
 const aktivitet1 = {
-  arbeidsgiverId: '384723894723',
+  arbeidsgiverIdent: '384723894723',
   fom: '2019-01-01',
   tom: null,
   skalBrukes: null,
@@ -77,8 +77,8 @@ const aktivitet1 = {
 };
 
 const aktivitet2 = {
-  arbeidsgiverId: '334534623342',
-  arbeidsforholdId: 'efj8343f34f',
+  arbeidsgiverIdent: '334534623342',
+  eksternArbeidsforholdId: 'efj8343f34f',
   fom: '2019-01-01',
   tom: '2019-02-02',
   skalBrukes: true,
@@ -86,9 +86,8 @@ const aktivitet2 = {
 };
 
 const aktivitet3 = {
-  aktørIdString: '324234234234',
-  arbeidsgiverId: '1960-01-01',
-  arbeidsforholdId: 'efj8343f34f',
+  arbeidsgiverIdent: '324234234234',
+  eksternArbeidsforholdId: 'efj8343f34f',
   fom: '2019-01-01',
   tom: '2019-02-02',
   skalBrukes: false,
@@ -96,7 +95,7 @@ const aktivitet3 = {
 };
 
 const aktivitetAAP = {
-  arbeidsgiverId: null,
+  arbeidsgiverIdent: null,
   arbeidsforholdType: { kode: 'AAP', navn: 'Arbeidsavklaringspenger', kodeverk: 'OPPTJENING_AKTIVITET_TYPE' },
   fom: '2019-01-01',
   tom: '2020-02-02',
@@ -118,17 +117,17 @@ const arbeidsgiverOpplysningerPerId = {
     navn: 'Arbeidsgiveren2',
     fødselsdato: null,
   },
-  '1960-01-01': {
-    identifikator: '1960-01-01',
-    referanse: '1960-01-01',
+  324234234234: {
+    identifikator: 324234234234,
+    referanse: 324234234234,
     navn: 'Arbeidsgiveren3',
-    fødselsdato: null,
+    fødselsdato: "1960.01.01",
   },
 };
 
 const id1 = '3847238947232019-01-01';
 const id2 = '334534623342efj8343f34f2019-01-01';
-const id3 = '1960-01-01efj8343f34f2019-01-01';
+const id3 = '324234234234efj8343f34f2019-01-01';
 const idAAP = 'AAP2019-01-01';
 
 describe('<AvklareAktiviteterPanel>', () => {
@@ -583,8 +582,8 @@ describe('<AvklareAktiviteterPanel>', () => {
     const bg = { skjaeringstidspunktBeregning: '2019-02-02' };
     const transformed = transformValues(values, vilkårsperioder, bg);
     expect(transformed[0].grunnlag.length).to.equal(1);
-    expect(transformed[0].grunnlag[0].beregningsaktivitetLagreDtoList[0].oppdragsgiverOrg).to.equal(
-      aktivitet1.arbeidsgiverId,
+    expect(transformed[0].grunnlag[0].beregningsaktivitetLagreDtoList[0].arbeidsgiverIdentifikator).to.equal(
+      aktivitet1.arbeidsgiverIdent,
     );
   });
 
@@ -608,7 +607,7 @@ describe('<AvklareAktiviteterPanel>', () => {
     const transformed = transformValues(values, vilkårsperioder, bg);
     expect(transformed.length).to.equal(1);
     expect(transformed[0].beregningsaktivitetLagreDtoList[0].arbeidsgiverIdentifikator).to.equal(
-      aktivitet3.aktørIdString,
+      aktivitet3.arbeidsgiverIdent,
     );
     expect(transformed[0].begrunnelse).to.equal('begrunnelse');
     expect(transformed[0].kode).to.equal(OVERSTYRING_AV_BEREGNINGSAKTIVITETER);

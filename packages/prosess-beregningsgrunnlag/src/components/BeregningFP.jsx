@@ -102,7 +102,7 @@ const lagMenyProps = (kronologiskeGrunnlag, bgVilkår) => {
 };
 
 const finnAvklaringsbehov = (aksjonspunkter, beregningsgrunnlag) => {
-  if (beregningsgrunnlag.avklaringsbehov && beregningsgrunnlag.avklaringsbehov.length > 0) {
+  if (beregningsgrunnlag.avklaringsbehov) {
     return beregningsgrunnlag.avklaringsbehov.filter(ab => isBeregningAvklaringsbehov(ab.definisjon.kode));
   }
   return aksjonspunkter;
@@ -158,7 +158,8 @@ export const BeregningFP = props => {
         <div className={styles.sideMenuContainer}>
           <SideMenu
             links={kronologiskeGrunnlag.map((currentBeregningsgrunnlag, currentBeregningsgrunnlagIndex) => ({
-              iconSrc: menyProps[currentBeregningsgrunnlagIndex].skalVurderes && harAvklaringsbehov ? advarselIcon : null,
+              iconSrc: menyProps[currentBeregningsgrunnlagIndex].skalVurderes &&
+              finnAvklaringsbehov(gjeldendeAksjonspunkter, beregningsgrunnlag[currentBeregningsgrunnlagIndex]).length > 0 ? advarselIcon : null,
               active: aktivtBeregningsgrunnlagIndeks === currentBeregningsgrunnlagIndex,
               label: `${intl.formatMessage({ id: 'Sidemeny.Beregningsgrunnlag' })} ${
                 menyProps[currentBeregningsgrunnlagIndex].stp

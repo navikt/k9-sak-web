@@ -4,7 +4,7 @@ const erAndelUtenReferanseOgGrunnlagHarAndelForSammeArbeidsgiverMedReferanse = (
   if (andel.arbeidsforholdId === null) {
     const antallAndelerISammeVirksomhetMedReferanse = beregningsgrunnlag.beregningsgrunnlagPeriode[0].beregningsgrunnlagPrStatusOgAndel
       .filter((a) => a.aktivitetStatus.kode === aktivitetStatus.ARBEIDSTAKER)
-      .filter((a) => a.arbeidsforhold && a.arbeidsforhold.arbeidsgiverId === andel.arbeidsgiverId)
+      .filter((a) => a.arbeidsforhold && a.arbeidsforhold.arbeidsgiverIdent === andel.arbeidsgiverIdent)
       .filter((a) => a.arbeidsforhold && a.arbeidsforhold.arbeidsforholdId != null)
       .length;
     return antallAndelerISammeVirksomhetMedReferanse > 0;

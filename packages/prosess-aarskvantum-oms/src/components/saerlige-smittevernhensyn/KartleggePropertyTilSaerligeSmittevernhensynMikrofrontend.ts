@@ -8,6 +8,7 @@ import { SaerligSmittevernhensynProps } from './types/SaerligSmittevernhensynPro
 import Aktivitet from '../../dto/Aktivitet';
 import { antallDager } from '../AktivitetTabell';
 import Soknadsårsak from "../../dto/Soknadsårsak";
+import PeriodeBekreftetStatus from "../../dto/PeriodeBekreftetStatus";
 
 interface LosAksjonspunktSaerligSmittevern {
   kode: string;
@@ -56,16 +57,16 @@ const KartleggePropertyTilSaerligeSmittevernhensynMikrofrontend = (
 
   const perioderFilterFn = (period: Uttaksperiode, vilkarsUtfall: string): boolean =>
     visKonfliktMedArbeidsgiverAksjonspunkt
-      ? period.vurderteVilkår.vilkår.NOK_DAGER === vilkarsUtfall
-      : period.vurderteVilkår.vilkår.SMITTEVERN === vilkarsUtfall;
+      ? period.vurderteVilkår.vilkår.NOK_DAGER === vilkarsUtfall && !!period.bekreftet && period.bekreftet === PeriodeBekreftetStatus.MANUELTBEKREFTET
+      : period.vurderteVilkår.vilkår.SMITTEVERN === vilkarsUtfall && !!period.bekreftet && period.bekreftet === PeriodeBekreftetStatus.MANUELTBEKREFTET;
 
-  const perioderInnvilget: Uttaksperiode[] = Array.isArray(aktiviteter[0]?.uttaksperioder)
-    ? aktiviteter[0].uttaksperioder.filter( p => perioderFilterFn(p, UtfallEnum.INNVILGET))
-    : [];
+  let perioderInnvilget: Uttaksperiode[] = [];
+  let perioderAvslått: Uttaksperiode[] = [];
 
-  const perioderAvslått: Uttaksperiode[] = Array.isArray(aktiviteter[0]?.uttaksperioder)
-    ? aktiviteter[0].uttaksperioder.filter( p => perioderFilterFn(p, UtfallEnum.AVSLÅTT))
-    : [];
+  aktiviteter.forEach(aktivitet => {
+    perioderInnvilget = perioderInnvilget.concat(aktivitet.uttaksperioder.filter(p => perioderFilterFn(p, UtfallEnum.INNVILGET)));
+    perioderAvslått = perioderAvslått.concat(aktivitet.uttaksperioder.filter(p => perioderFilterFn(p, UtfallEnum.AVSLÅTT)));
+  });
 
   const eksistererInnvilgetPeriode: boolean = perioderInnvilget.length > 0;
   let dagerDelvisInnvilget = 0;

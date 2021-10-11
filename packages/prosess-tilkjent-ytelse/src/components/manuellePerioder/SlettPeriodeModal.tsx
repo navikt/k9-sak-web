@@ -1,12 +1,9 @@
 import React from 'react';
-import { connect } from 'react-redux';
-import { FormattedMessage, injectIntl, WrappedComponentProps } from 'react-intl';
+import { FormattedMessage, useIntl } from 'react-intl';
 import moment from 'moment';
-import { InjectedFormProps } from 'redux-form';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 import { Normaltekst } from 'nav-frontend-typografi';
 import Modal from 'nav-frontend-modal';
-import { behandlingForm } from '@fpsak-frontend/form';
 import { DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils';
 import innvilgetImageUrl from '@fpsak-frontend/assets/images/innvilget_valgt.svg';
 import { FlexColumn, FlexContainer, FlexRow, Image, VerticalSpacer } from '@fpsak-frontend/shared-components';
@@ -15,21 +12,17 @@ import styles from './periode.less';
 
 interface OwnProps {
   showModal?: boolean;
+  periode: any;
   closeEvent: (...args: any[]) => any;
   cancelEvent: (...args: any[]) => any;
-  periode: any;
 }
 
-export const SlettPeriodeModalImpl = ({
-  showModal,
-  closeEvent,
-  cancelEvent,
-  intl,
-  periode,
-  ...formProps
-}: OwnProps & WrappedComponentProps & InjectedFormProps) => {
+export const SlettPeriodeModal = ({ showModal, periode, closeEvent, cancelEvent }: OwnProps) => {
+  const intl = useIntl();
+
   const fom = moment(periode.fom).format(DDMMYYYY_DATE_FORMAT);
   const tom = moment(periode.tom).format(DDMMYYYY_DATE_FORMAT);
+
   return (
     <Modal
       className={styles.modal}
@@ -58,16 +51,10 @@ export const SlettPeriodeModalImpl = ({
         <FlexRow>
           <FlexColumn className={styles.right}>
             <VerticalSpacer eightPx />
-            <Hovedknapp mini className={styles.button} onClick={formProps.handleSubmit}>
+            <Hovedknapp mini className={styles.button} onClick={closeEvent}>
               {intl.formatMessage({ id: 'TilkjentYtelse.Ok' })}
             </Hovedknapp>
-            <Knapp
-              mini
-              onClick={() => {
-                cancelEvent();
-                formProps.destroy();
-              }}
-            >
+            <Knapp mini onClick={cancelEvent}>
               {intl.formatMessage({ id: 'TilkjentYtelse.Avbryt' })}
             </Knapp>
           </FlexColumn>
@@ -77,34 +64,8 @@ export const SlettPeriodeModalImpl = ({
   );
 };
 
-SlettPeriodeModalImpl.defaultProps = {
+SlettPeriodeModal.defaultProps = {
   showModal: false,
 };
-
-interface PureOwnProps {
-  closeEvent: (...args: any[]) => any;
-  periode: any;
-}
-
-const mapStateToPropsFactory = (_initialState: any, ownProps: PureOwnProps) => {
-  const onSubmit = (values: any) => ownProps.closeEvent(values);
-
-  return () => {
-    const formName = `slettPeriodeForm-${ownProps.periode.id}`;
-    return {
-      form: formName,
-      onSubmit,
-    };
-  };
-};
-
-const SlettPeriodeModal = connect(mapStateToPropsFactory)(
-  behandlingForm(
-    // @ts-ignore
-    {
-      enableReinitialize: true,
-    },
-  )(injectIntl(SlettPeriodeModalImpl)),
-);
 
 export default SlettPeriodeModal;

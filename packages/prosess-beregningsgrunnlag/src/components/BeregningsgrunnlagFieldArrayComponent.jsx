@@ -24,6 +24,7 @@ const BeregningsgrunnlagFieldArrayComponent = ({
     });
   }
   return fields.map((fieldId, index) => (
+    (index === aktivtBeregningsgrunnlagIndeks) &&
     <BeregningForm2
       key={fieldId}
       erAktiv={index === aktivtBeregningsgrunnlagIndeks}

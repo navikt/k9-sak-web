@@ -7,13 +7,7 @@ import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 import { KodeverkMedNavn, ArbeidsgiverOpplysningerPerId } from '@k9-sak-web/types';
 import { getBehandlingFormPrefix, behandlingFormValueSelector } from '@fpsak-frontend/form';
 import { ariaCheck } from '@fpsak-frontend/utils';
-import {
-  // AksjonspunktHelpText,
-  FlexColumn,
-  FlexContainer,
-  FlexRow,
-  VerticalSpacer,
-} from '@fpsak-frontend/shared-components';
+import { FlexColumn, FlexContainer, FlexRow, VerticalSpacer } from '@fpsak-frontend/shared-components';
 
 import PeriodeRad from './PeriodeRad';
 import SlettPeriodeModal from './SlettPeriodeModal';
@@ -272,13 +266,10 @@ export const PeriodeTabell = ({
 
       {periodeSlett && (
         <SlettPeriodeModal
-          // @ts-ignore
           showModal={showModalSlettPeriode}
           periode={periodeSlett}
           cancelEvent={hideModal}
           closeEvent={removePeriode}
-          behandlingId={behandlingId}
-          behandlingVersjon={behandlingVersjon}
         />
       )}
     </>
