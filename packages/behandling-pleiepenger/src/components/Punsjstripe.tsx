@@ -1,9 +1,6 @@
 import axios, { AxiosResponse } from 'axios';
 import { AlertStripeAdvarsel, AlertStripeFeil } from 'nav-frontend-alertstriper';
 import React from 'react';
-import Lenke from 'nav-frontend-lenker';
-import { getPathToFplos } from '@k9-sak-web/sak-app/src/app/paths';
-import styles from './punsjstripe.less';
 
 export interface PunsjResponse {
   journalpostIder: JournalpostIder[];
@@ -13,12 +10,7 @@ export interface JournalpostIder {
   journalpostId: string;
 }
 
-interface PunsjstripeProps {
-  aktørId: string;
-  saksnummer: string;
-}
-
-const Punsjstripe: React.FC<PunsjstripeProps> = ({ aktørId, saksnummer }) => {
+const Punsjstripe = ({ aktørId }) => {
   const [punsjoppgaver, setPunsjoppgaver] = React.useState<PunsjResponse>(null);
   const [error, setError] = React.useState(null);
 
@@ -43,24 +35,9 @@ const Punsjstripe: React.FC<PunsjstripeProps> = ({ aktørId, saksnummer }) => {
   const getUløsteOppgaverText = () => {
     const { journalpostIder } = punsjoppgaver;
     if (journalpostIder.length === 1) {
-      const { journalpostId } = journalpostIder[0];
-      return (
-        <>
-          <span>Det er 1 uløst oppgave tilknyttet søkeren i Punsj.</span>
-          <Lenke className={styles.oppgaveLenke} href={`${getPathToFplos()}?sok=${journalpostId}`}>
-            Gå til oppgave
-          </Lenke>
-        </>
-      );
+      return 'Det er 1 uløst oppgave tilknyttet søkeren i Punsj.';
     }
-    return (
-      <>
-        <span>{`Det er ${journalpostIder.length} uløste oppgaver tilknyttet søkeren i Punsj.`}</span>
-        <Lenke className={styles.oppgaveLenke} href={`${getPathToFplos()}?sok=${saksnummer}`}>
-          Reserver oppgaver i LOS
-        </Lenke>
-      </>
-    );
+    return `Det er ${journalpostIder.length} uløste oppgaver tilknyttet søkeren i Punsj.`;
   };
 
   return <AlertStripeAdvarsel>{getUløsteOppgaverText()}</AlertStripeAdvarsel>;

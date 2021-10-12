@@ -135,7 +135,7 @@ const PleiepengerPaneler = ({
         arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
         featureToggles={featureToggles}
       />
-      <Punsjstripe aktørId={fagsakPerson.aktørId} saksnummer={fagsak.saksnummer} />
+      <Punsjstripe aktørId={fagsakPerson.aktørId} />
       <PleiepengerFakta
         behandling={behandling}
         data={fetchedData}
