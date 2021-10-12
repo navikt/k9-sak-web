@@ -3,7 +3,6 @@ import { injectIntl, IntlShape, WrappedComponentProps } from 'react-intl';
 
 import HeaderWithErrorPanel, { Feilmelding } from '@fpsak-frontend/sak-dekorator';
 import { useRestApiError, useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
-import { decodeHtmlEntity } from '@fpsak-frontend/utils';
 import { NavAnsatt } from '@k9-sak-web/types';
 
 import { K9sakApiKeys, restApiHooks } from '../../data/k9sakApi';
@@ -36,7 +35,7 @@ const lagFeilmeldinger = (
     if (message.params && message.params.errorDetails) {
       msg = {
         ...msg,
-        additionalInfo: JSON.parse(decodeHtmlEntity(message.params.errorDetails)),
+        additionalInfo: JSON.parse(message.params.errorDetails),
       };
     }
     resolvedErrorMessages.push(msg);
