@@ -14,6 +14,9 @@ export const getTekstForAndelBruktIBeregning = andel => {
   if (andel.aktivitetStatus.kode === aktivitetStatus.DAGPENGER) {
     return 'Beregningsgrunnlag.TilstottendeYtelse.Dagpenger';
   }
+  if (andel.aktivitetStatus.kode === aktivitetStatus.SYKEPENGER_AV_DAGPENGER) {
+    return 'Beregningsgrunnlag.TilstottendeYtelse.SykepengerAvDagpenger';
+  }
   if (andel.aktivitetStatus.kode === aktivitetStatus.ARBEIDSAVKLARINGSPENGER) {
     return 'Beregningsgrunnlag.TilstottendeYtelse.AAP';
   }
