@@ -2,20 +2,18 @@ import React from 'react';
 import BeregningForm2 from './beregningForm/BeregningForm';
 
 
+
 const BeregningsgrunnlagFieldArrayComponent = ({
   fields,
   initialValues,
   aktivtBeregningsgrunnlagIndeks,
   aktivtBeregningsgrunnlag,
-  avklaringsbehov,
-  relevanteStatuser,
   submitCallback,
   readOnlySubmitButton,
   alleKodeverk,
   arbeidsgiverOpplysningerPerId,
   behandling,
   readOnly,
-  bgSkalVurderes,
   vilkaarBG,
 }) => {
   if (fields.length === 0) {
@@ -24,15 +22,14 @@ const BeregningsgrunnlagFieldArrayComponent = ({
     });
   }
   return fields.map((fieldId, index) => (
-    (index === aktivtBeregningsgrunnlagIndeks) &&
     <BeregningForm2
       key={fieldId}
       erAktiv={index === aktivtBeregningsgrunnlagIndeks}
-      readOnly={readOnly || !bgSkalVurderes}
+      readOnly={readOnly || !fields.get(index).erTilVurdering}
       fieldArrayID={fieldId}
       beregningsgrunnlag={aktivtBeregningsgrunnlag}
-      avklaringsbehov={avklaringsbehov}
-      relevanteStatuser={relevanteStatuser}
+      avklaringsbehov={fields.get(index).avklaringsbehov}
+      relevanteStatuser={fields.get(index).relevanteStatuser}
       submitCallback={submitCallback}
       readOnlySubmitButton={readOnlySubmitButton}
       alleKodeverk={alleKodeverk}
