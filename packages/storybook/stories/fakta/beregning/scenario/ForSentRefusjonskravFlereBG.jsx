@@ -96,6 +96,7 @@ export const beregningsgrunnlag = [
     vilkårsperiodeFom: '2019-03-13',
   },
   {
+    avklaringsbehov: [],
     skjaeringstidspunktBeregning: '2020-05-13',
     skjæringstidspunkt: '2020-05-13',
     aktivitetStatus: [{ kodeverk: 'AKTIVITET_STATUS', kode: 'AT' }],
@@ -182,6 +183,7 @@ export const beregningsgrunnlag = [
     vilkårsperiodeFom: '2020-05-13',
   },
   {
+    avklaringsbehov: [],
     skjaeringstidspunktBeregning: '2020-06-12',
     skjæringstidspunkt: '2020-06-12',
     aktivitetStatus: [{ kodeverk: 'AKTIVITET_STATUS', kode: 'AT' }],
@@ -267,6 +269,7 @@ export const beregningsgrunnlag = [
     vilkårsperiodeFom: '2020-06-12',
   },
   {
+    avklaringsbehov: [],
     skjaeringstidspunktBeregning: '2020-06-19',
     skjæringstidspunkt: '2020-06-19',
     aktivitetStatus: [{ kodeverk: 'AKTIVITET_STATUS', kode: 'AT' }],
@@ -352,6 +355,7 @@ export const beregningsgrunnlag = [
     vilkårsperiodeFom: '2020-06-19',
   },
   {
+    avklaringsbehov: [],
     skjaeringstidspunktBeregning: '2020-06-25',
     skjæringstidspunkt: '2020-06-25',
     aktivitetStatus: [{ kodeverk: 'AKTIVITET_STATUS', kode: 'AT' }],

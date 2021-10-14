@@ -136,7 +136,7 @@ const lagBeregningsgrunnlag = (avvikPromille, årsinntektVisningstall, sammenlig
   },
   aktivitetStatus: [
     {
-      kode: 'UDEFINERT',
+      kode: 'AT',
     },
   ],
 });
@@ -360,56 +360,66 @@ describe('<BeregningForm>', () => {
   });
 
   it('skal teste at transformValues blir transformert riktig med aksjonspunkt 5039, varigEndring', () => {
+    const avklaringsbehov = [apVurderVarigEndretEllerNyoppstartetSN];
     const values = {
+      relevanteStatuser,
+      avklaringsbehov,
       fellesVurdering: 'bbb',
       bruttoBeregningsgrunnlag: 240000,
       erVarigEndretNaering: true,
     };
-    const avklaringsbehov = [apVurderVarigEndretEllerNyoppstartetSN];
-    const result = transformValues(values, relevanteStatuser, allAndeler, avklaringsbehov, allPerioder);
+    const result = transformValues(values, allAndeler, allPerioder);
     expect(result).to.have.lengthOf(1);
     expect(result[0].kode).to.have.equal('5039');
   });
 
   it('skal teste at transformValues blir transformert riktig med aksjonspunkt 5039, uten varigEndring', () => {
+    const avklaringsbehov = [apVurderVarigEndretEllerNyoppstartetSN];
     const values = {
+      relevanteStatuser,
+      avklaringsbehov,
       fellesVurdering: 'bbb',
       bruttoBeregningsgrunnlag: 240000,
       erVarigEndretNaering: false,
     };
-    const avklaringsbehov = [apVurderVarigEndretEllerNyoppstartetSN];
-    const result = transformValues(values, relevanteStatuser, allAndeler, avklaringsbehov, allPerioder);
+    const result = transformValues(values, allAndeler, allPerioder);
     expect(result).to.have.lengthOf(1);
     expect(result[0].kode).to.have.equal('5039');
   });
   it('skal teste at transformValues blir transformert riktig med aksjonspunkt 5038', () => {
+    const avklaringsbehov = [apFastsettBgATFL];
     const values = {
+      relevanteStatuser,
+      avklaringsbehov,
       ATFLVurdering: 'bbb',
       inntekt0: 200000,
     };
-    const avklaringsbehov = [apFastsettBgATFL];
-    const result = transformValues(values, relevanteStatuser, atAndel, avklaringsbehov, allPerioder);
+    const result = transformValues(values, atAndel, allPerioder);
     expect(result).to.have.lengthOf(1);
     expect(result[0].kode).to.have.equal('5038');
   });
   it('skal teste at transformValues blir transformert riktig med aksjonspunkt 5039', () => {
+    const avklaringsbehov = [apVurderVarigEndretEllerNyoppstartetSN];
     const values = {
+      relevanteStatuser,
+      avklaringsbehov,
       fellesVurdering: 'bbb',
       erVarigEndretNaering: true,
       bruttoBeregningsgrunnlag: 240000,
     };
-    const avklaringsbehov = [apVurderVarigEndretEllerNyoppstartetSN];
-    const result = transformValues(values, relevanteStatuser, allAndeler, avklaringsbehov, allPerioder);
+    const result = transformValues(values, allAndeler, allPerioder);
     expect(result).to.have.lengthOf(1);
     expect(result[0].kode).to.have.equal('5039');
   });
   it('skal teste at transformValues blir transformert riktig med aksjonspunkt 5049', () => {
+    const avklaringsbehov = [apFastsettBgSnNyIArbeidslivet];
     const values = {
+      relevanteStatuser,
+      avklaringsbehov,
       fellesVurdering: 'bbb',
       bruttoBeregningsgrunnlag: 240000,
     };
-    const avklaringsbehov = [apFastsettBgSnNyIArbeidslivet];
-    const result = transformValues(values, relevanteStatuser, allAndeler, avklaringsbehov, allPerioder);
+    const result = transformValues(values, allAndeler, allPerioder);
     expect(result).to.have.lengthOf(1);
     expect(result[0].kode).to.have.equal('5049');
   });
@@ -423,6 +433,19 @@ describe('<BeregningForm>', () => {
       undefined: '',
       erTilVurdering: false,
       skjæringstidspunkt: undefined,
+      avklaringsbehov,
+      relevanteStatuser: {
+        isArbeidstaker: true,
+        isFrilanser: false,
+        isSelvstendigNaeringsdrivende: false,
+        harAndreTilstotendeYtelser: false,
+        harDagpengerEllerAAP: false,
+        isAAP: false,
+        isDagpenger: false,
+        skalViseBeregningsgrunnlag: true,
+        isKombinasjonsstatus: false,
+        isMilitaer: false,
+      }
     };
     expect(actualValues).to.deep.equal(expectedValues);
   });
