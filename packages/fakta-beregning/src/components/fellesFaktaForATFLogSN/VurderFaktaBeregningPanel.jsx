@@ -30,13 +30,14 @@ const {
 } = avklaringsbehovCodes;
 
 
-const findAvklaringsbehovMedBegrunnelse = avklaringsbehov => {
-  if (avklaringsbehov.some(ab => ab.definisjon.kode === OVERSTYRING_AV_BEREGNINGSGRUNNLAG)) {
-    return avklaringsbehov.find(
+const findAvklaringsbehovMedBegrunnelse = alleBeregningsgrunnlag => {
+  const alleAvklaringsbehov = alleBeregningsgrunnlag.flatMap(({avklaringsbehov}) => avklaringsbehov);
+  if (alleAvklaringsbehov.some(ab => ab.definisjon.kode === OVERSTYRING_AV_BEREGNINGSGRUNNLAG)) {
+    return alleAvklaringsbehov.find(
       ab => ab.definisjon.kode === OVERSTYRING_AV_BEREGNINGSGRUNNLAG && ab.begrunnelse !== null,
     );
   }
-  return avklaringsbehov.find(ab => ab.definisjon.kode === VURDER_FAKTA_FOR_ATFL_SN && ab.begrunnelse !== null);
+  return alleAvklaringsbehov.find(ab => ab.definisjon.kode === VURDER_FAKTA_FOR_ATFL_SN && ab.begrunnelse !== null);
 };
 
 export const BEGRUNNELSE_FAKTA_TILFELLER_NAME = 'begrunnelseFaktaTilfeller';
@@ -115,7 +116,6 @@ export class VurderFaktaBeregningPanelImpl extends Component {
         arbeidsgiverOpplysningerPerId,
         erOverstyrer,
         alleBeregningsgrunnlag,
-        aktivtBeregningsgrunnlagIndex,
       },
     } = this;
 
@@ -137,18 +137,17 @@ export class VurderFaktaBeregningPanelImpl extends Component {
 
     return fields.map(
       (field, index) =>
-        index === aktivtBeregningsgrunnlagIndex && (
-          <div key={field}>
+          (<div key={field}>
             {skalVurdere && (
-              <AksjonspunktHelpTextTemp isAksjonspunktOpen={!isAvklaringsbehovClosed(avklaringsbehov)}>
+              <AksjonspunktHelpTextTemp isAksjonspunktOpen={!isAvklaringsbehovClosed(fields.get(index).avklaringsbehov)}>
                 {lagHelpTextsForFakta()}
               </AksjonspunktHelpTextTemp>
             )}
             <VerticalSpacer twentyPx />
             <FaktaForATFLOgSNPanel
               readOnly={readOnly}
-              isAvklaringsbehovClosed={isAvklaringsbehovClosed(avklaringsbehov)}
-              avklaringsbehov={avklaringsbehov}
+              isAvklaringsbehovClosed={isAvklaringsbehovClosed(fields.get(index).avklaringsbehov)}
+              avklaringsbehov={fields.get(index).avklaringsbehov}
               behandlingId={behandlingId}
               behandlingVersjon={behandlingVersjon}
               beregningsgrunnlag={beregningsgrunnlag}
@@ -159,7 +158,7 @@ export class VurderFaktaBeregningPanelImpl extends Component {
             />
             <VerticalSpacer twentyPx />
           </div>
-        ),
+          ),
     );
   };
 
@@ -285,14 +284,13 @@ export const validateVurderFaktaBeregning = values => {
 
 export const buildInitialValues = (ownProps, alleBeregningsgrunnlag, aktivtBeregningsgrunnlagIndex) => ({
   [fieldArrayName]: alleBeregningsgrunnlag.map(beregningsgrunnlag => ({
-    avklaringsbehov: ownProps.avklaringsbehov,
+    avklaringsbehov: beregningsgrunnlag.avklaringsbehov,
     ...getBuildInitialValuesFaktaForATFLOgSN(ownProps, beregningsgrunnlag)(),
   })),
-  avklaringsbehov: ownProps.avklaringsbehov,
   alleBeregningsgrunnlag,
   aktivtBeregningsgrunnlagIndex,
   ...FaktaBegrunnelseTextField.buildInitialValues(
-    findAvklaringsbehovMedBegrunnelse(ownProps.avklaringsbehov),
+    findAvklaringsbehovMedBegrunnelse(alleBeregningsgrunnlag),
     BEGRUNNELSE_FAKTA_TILFELLER_NAME,
   ),
 });
