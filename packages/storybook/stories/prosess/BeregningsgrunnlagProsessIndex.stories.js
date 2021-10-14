@@ -59,11 +59,12 @@ const vilkarMedUtfall = (kode, fomArray) => [
       kodeverk: 'vilkarType',
     },
     perioder: fomArray.map(fom => ({
-      periode: { fom, tom: null },
+      periode: { fom, tom: null},
       vilkarStatus: {
         kode,
         kodeverk: 'vilkarStatus',
       },
+      vurdersIBehandlingen: true
     })),
   },
 ];

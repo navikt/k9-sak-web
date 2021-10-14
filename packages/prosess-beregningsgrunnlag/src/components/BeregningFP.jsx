@@ -2,6 +2,7 @@ import { isBeregningAvklaringsbehov } from '@fpsak-frontend/kodeverk/src/beregni
 import aktivitetStatus, {
   isStatusArbeidstakerOrKombinasjon,
   isStatusDagpengerOrAAP,
+  isStatusDagpenger,
   isStatusFrilanserOrKombinasjon,
   isStatusKombinasjon,
   isStatusMilitaer,
@@ -61,6 +62,7 @@ const visningForManglendeBG = () => (
 
 const getAksjonspunkterForBeregning = aksjonspunkter =>
   aksjonspunkter ? aksjonspunkter.filter(ap => isBeregningAvklaringsbehov(ap.definisjon.kode)) : [];
+  
 const getRelevanteStatuser = bg =>
   bg && bg.aktivitetStatus
     ? {
@@ -70,8 +72,7 @@ const getRelevanteStatuser = bg =>
         harAndreTilstotendeYtelser: bg.aktivitetStatus.some(({ kode }) => isStatusTilstotendeYtelse(kode)),
         harDagpengerEllerAAP: bg.aktivitetStatus.some(({ kode }) => isStatusDagpengerOrAAP(kode)),
         isAAP: bg.aktivitetStatus.some(({ kode }) => kode === aktivitetStatus.ARBEIDSAVKLARINGSPENGER),
-        isDagpenger: bg.aktivitetStatus.some(({ kode }) => kode === aktivitetStatus.DAGPENGER
-        || kode === aktivitetStatus.SYKEPENGER_AV_DAGPENGER),
+        isDagpenger: bg.aktivitetStatus.some(({ kode }) => isStatusDagpenger(kode)),
         skalViseBeregningsgrunnlag: bg.aktivitetStatus && bg.aktivitetStatus.length > 0,
         isKombinasjonsstatus:
           bg.aktivitetStatus.some(({ kode }) => isStatusKombinasjon(kode)) || bg.aktivitetStatus.length > 1,
@@ -147,10 +148,8 @@ export const BeregningFP = props => {
 
   const avklaringsbehov = finnAvklaringsbehov(gjeldendeAksjonspunkter, aktivtBeregningsgrunnlag);
   const menyProps = lagMenyProps(kronologiskeGrunnlag, vilkaarBG);
-  const relevanteStatuser = getRelevanteStatuser(aktivtBeregningsgrunnlag);
 
   const mainContainerClassnames = cx('mainContainer', { 'mainContainer--withSideMenu': skalBrukeSidemeny });
-  const bgSkalVurderes = erBGTilVurdering(vilkaarBG, aktivtBeregningsgrunnlag);
   const harAvklaringsbehov = avklaringsbehov.length > 0;
 
   return (
@@ -180,8 +179,6 @@ export const BeregningFP = props => {
               initialValues,
               aktivtBeregningsgrunnlagIndeks,
               aktivtBeregningsgrunnlag,
-              avklaringsbehov,
-              relevanteStatuser,
               submitCallback,
               readOnlySubmitButton,
               behandling,
@@ -189,7 +186,6 @@ export const BeregningFP = props => {
               vilkaarBG,
               alleKodeverk,
               arbeidsgiverOpplysningerPerId,
-              bgSkalVurderes,
             }}
           />
           {harAvklaringsbehov && (
@@ -269,6 +265,8 @@ export const buildInitialValuesForBeregningrunnlag = (beregningsgrunnlag, gjelde
     andel => andel.aktivitetStatus.kode === aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE,
   );
   const initialValues = {
+    relevanteStatuser: getRelevanteStatuser(beregningsgrunnlag),
+    avklaringsbehov,
     erTilVurdering: erBGTilVurdering(bgVilkar, beregningsgrunnlag) && harAvklaringsbehovIPanel(avklaringsbehov),
     skjæringstidspunkt: beregningsgrunnlag.skjæringstidspunkt,
     ...Beregningsgrunnlag.buildInitialValues(avklaringsbehov),
@@ -295,18 +293,14 @@ const mapStateToPropsFactory = (initialState, initialOwnProps) => {
       .filter(val => val.erTilVurdering)
       .flatMap((currentBeregningsgrunnlagSkjemaverdier, currentBeregningsgrunnlagIndex) => {
         const opprinneligBeregningsgrunnlag = beregningsgrunnlag[currentBeregningsgrunnlagIndex];
-        const avklaringsbehov = finnAvklaringsbehov(gjeldendeAksjonspunkter, beregningsgrunnlag);
         const allePerioder = opprinneligBeregningsgrunnlag
           ? opprinneligBeregningsgrunnlag.beregningsgrunnlagPeriode
           : [];
         const alleAndelerIForstePeriode =
           allePerioder && allePerioder.length > 0 ? allePerioder[0].beregningsgrunnlagPrStatusOgAndel : [];
-        const relevanteStatuser = getRelevanteStatuser(opprinneligBeregningsgrunnlag);
         const transformedValues = transformValues(
           currentBeregningsgrunnlagSkjemaverdier,
-          relevanteStatuser,
           alleAndelerIForstePeriode,
-          avklaringsbehov,
           allePerioder,
         );
 
