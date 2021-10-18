@@ -98,7 +98,7 @@ const OpptjeningVilkarProsessIndex = ({
             readOnly={isReadOnly}
             isAksjonspunktOpen={isAksjonspunktOpen}
             readOnlySubmitButton={readOnlySubmitButton}
-            vilkårPerioder={perioder}
+            vilkårPerioder={activeVilkår.perioder}
             periodeIndex={activeTab}
             opptjeninger={opptjening?.opptjeninger}
           />
