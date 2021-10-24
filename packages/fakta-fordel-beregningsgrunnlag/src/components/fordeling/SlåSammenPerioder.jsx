@@ -28,8 +28,8 @@ const harIngenRelevantEndringForFordeling = (fordelPeriode, forrigeEndringPeriod
   if (periode.bruttoPrAar !== forrigePeriode.bruttoPrAar) {
     return false;
   }
-  for (let i = 0; i < fordelPeriode.fordelBeregningsgrunnlagAndeler.length; i += 1) {
-    const andelIPeriode = fordelPeriode.fordelBeregningsgrunnlagAndeler[i];
+  for (let teller of fordelPeriode.fordelBeregningsgrunnlagAndeler) {
+    const andelIPeriode = fordelPeriode.fordelBeregningsgrunnlagAndeler[teller];
     const andelFraForrige = forrigeEndringPeriode.fordelBeregningsgrunnlagAndeler.find(a =>
       a.aktivitetStatus.kode === andelIPeriode.aktivitetStatus.kode &&
       a.inntektskategori.kode === andelIPeriode.inntektskategori.kode &&
