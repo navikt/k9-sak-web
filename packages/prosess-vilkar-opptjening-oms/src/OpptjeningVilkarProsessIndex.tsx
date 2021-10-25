@@ -68,6 +68,15 @@ const OpptjeningVilkarProsessIndex = ({
     }
   }, [activeTab, visAllePerioder]);
 
+  const getAlleVilkårIndex = () => {
+    const activePeriode = perioder.length === 1 ? perioder[0] : perioder[activeTab];
+    const alleVilkårIndex = activeVilkår.perioder.findIndex(
+      ({ periode }) => periode.fom === activePeriode.periode.fom && periode.tom === activePeriode.periode.tom,
+    );
+
+    return alleVilkårIndex;
+  };
+
   return (
     <RawIntlProvider value={intl}>
       <div className={mainContainerClassnames}>
@@ -99,7 +108,7 @@ const OpptjeningVilkarProsessIndex = ({
             isAksjonspunktOpen={isAksjonspunktOpen}
             readOnlySubmitButton={readOnlySubmitButton}
             vilkårPerioder={activeVilkår.perioder}
-            periodeIndex={activeTab}
+            periodeIndex={skalBrukeSidemeny ? getAlleVilkårIndex() : activeTab}
             opptjeninger={opptjening?.opptjeninger}
           />
         </div>
