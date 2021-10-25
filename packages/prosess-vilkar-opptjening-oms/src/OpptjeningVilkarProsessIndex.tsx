@@ -69,11 +69,11 @@ const OpptjeningVilkarProsessIndex = ({
     }
   }, [activeTab, visAllePerioder]);
 
-  const getAlleVilkårIndex = () => {
+  const getIndexBlantAllePerioder = () => {
     const activePeriode = perioder.length === 1 ? perioder[0] : perioder[activeTab];
-    const alleVilkårIndex = activeVilkår.perioder.findIndex(({ periode }) => isEqual(periode, activePeriode.periode));
+    const allePerioderIndex = activeVilkår.perioder.findIndex(({ periode }) => isEqual(periode, activePeriode.periode));
 
-    return alleVilkårIndex;
+    return allePerioderIndex;
   };
 
   return (
@@ -107,7 +107,7 @@ const OpptjeningVilkarProsessIndex = ({
             isAksjonspunktOpen={isAksjonspunktOpen}
             readOnlySubmitButton={readOnlySubmitButton}
             vilkårPerioder={activeVilkår.perioder}
-            periodeIndex={skalBrukeSidemeny ? getAlleVilkårIndex() : activeTab}
+            periodeIndex={skalBrukeSidemeny ? getIndexBlantAllePerioder() : activeTab}
             opptjeninger={opptjening?.opptjeninger}
           />
         </div>
