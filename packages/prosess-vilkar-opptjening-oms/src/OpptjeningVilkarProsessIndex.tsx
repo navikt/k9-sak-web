@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
+import isEqual from 'lodash.isequal';
 import { Fagsak, Aksjonspunkt, Vilkar, OpptjeningBehandling, Opptjening, SubmitCallback } from '@k9-sak-web/types';
 import { SideMenu } from '@navikt/k9-react-components';
 import { dateFormat } from '@fpsak-frontend/utils';
@@ -68,6 +69,13 @@ const OpptjeningVilkarProsessIndex = ({
     }
   }, [activeTab, visAllePerioder]);
 
+  const getIndexBlantAllePerioder = () => {
+    const activePeriode = perioder.length === 1 ? perioder[0] : perioder[activeTab];
+    const allePerioderIndex = activeVilkår.perioder.findIndex(({ periode }) => isEqual(periode, activePeriode.periode));
+
+    return allePerioderIndex;
+  };
+
   return (
     <RawIntlProvider value={intl}>
       <div className={mainContainerClassnames}>
@@ -99,7 +107,7 @@ const OpptjeningVilkarProsessIndex = ({
             isAksjonspunktOpen={isAksjonspunktOpen}
             readOnlySubmitButton={readOnlySubmitButton}
             vilkårPerioder={activeVilkår.perioder}
-            periodeIndex={activeTab}
+            periodeIndex={skalBrukeSidemeny ? getIndexBlantAllePerioder() : activeTab}
             opptjeninger={opptjening?.opptjeninger}
           />
         </div>
