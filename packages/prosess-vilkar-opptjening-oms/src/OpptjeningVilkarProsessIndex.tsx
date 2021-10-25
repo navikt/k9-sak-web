@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
+import isEqual from 'lodash.isequal';
 import { Fagsak, Aksjonspunkt, Vilkar, OpptjeningBehandling, Opptjening, SubmitCallback } from '@k9-sak-web/types';
 import { SideMenu } from '@navikt/k9-react-components';
 import { dateFormat } from '@fpsak-frontend/utils';
@@ -70,9 +71,7 @@ const OpptjeningVilkarProsessIndex = ({
 
   const getAlleVilkårIndex = () => {
     const activePeriode = perioder.length === 1 ? perioder[0] : perioder[activeTab];
-    const alleVilkårIndex = activeVilkår.perioder.findIndex(
-      ({ periode }) => periode.fom === activePeriode.periode.fom && periode.tom === activePeriode.periode.tom,
-    );
+    const alleVilkårIndex = activeVilkår.perioder.findIndex(({ periode }) => isEqual(periode, activePeriode.periode));
 
     return alleVilkårIndex;
   };
