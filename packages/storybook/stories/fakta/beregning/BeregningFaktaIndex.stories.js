@@ -16,8 +16,8 @@ import {
 } from './scenario/ArbeidMedDagpengerIOpptjeningsperioden';
 
 import {
-  beregningsgrunnlag as bgTest,
-  behandling as behTest
+  beregningsgrunnlag as bgPrivatArbeidsgiver,
+  behandling as behPrivatArbeidsgiver
 } from './scenario/PrivatpersonOrgOgFrilansISammeOrg';
 
 
@@ -127,7 +127,7 @@ const lagAvklaringsbehov = (faktaOmBeregning) => {
 }
 
 const lagBeregningsgrunnlag = (andeler, faktaOmBeregning, avklaringsbehov) => ({
-  avklaringsbehov,
+  avklaringsbehov: avklaringsbehov == null ? lagAvklaringsbehov(faktaOmBeregning) : avklaringsbehov,
   beregningsgrunnlagPeriode: [
     {
       beregningsgrunnlagPrStatusOgAndel: andeler.map(andel => ({
@@ -139,7 +139,6 @@ const lagBeregningsgrunnlag = (andeler, faktaOmBeregning, avklaringsbehov) => ({
     },
   ],
   faktaOmBeregning,
-  avklaringsbehov: lagAvklaringsbehov(faktaOmBeregning),
 });
 
 const mapTilKodeliste = arrayOfCodes => arrayOfCodes.map(kode => ({ kode }));
@@ -240,8 +239,8 @@ export default {
 
 export const PrivatpersonSomArbeidsgiverOgFrilans = () => (
   <BeregningFaktaIndex
-    behandling={behTest}
-    beregningsgrunnlag={bgTest}
+    behandling={behPrivatArbeidsgiver}
+    beregningsgrunnlag={bgPrivatArbeidsgiver}
     aksjonspunkter={apKunYtelse}
     erOverstyrer
     alleKodeverk={alleKodeverk}
