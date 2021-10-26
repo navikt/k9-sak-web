@@ -18,10 +18,15 @@ import {
   ArbeidsgiverOpplysningerWrapper,
 } from '@k9-sak-web/types';
 
-import {erFagytelseTypeUtvidetRett} from '@k9-sak-web/behandling-utvidet-rett/src/utils/utvidetRettHjelpfunksjoner';
+import { erFagytelseTypeUtvidetRett } from '@k9-sak-web/behandling-utvidet-rett/src/utils/utvidetRettHjelpfunksjoner';
 import useTrackRouteParam from '../app/useTrackRouteParam';
 import getAccessRights from '../app/util/access';
-import { getProsessStegLocation, getFaktaLocation, getLocationWithDefaultProsessStegAndFakta } from '../app/paths';
+import {
+  getProsessStegLocation,
+  getFaktaLocation,
+  getLocationWithDefaultProsessStegAndFakta,
+  getPathToFplos,
+} from '../app/paths';
 import { K9sakApiKeys, requestApi, restApiHooks, LinkCategory } from '../data/k9sakApi';
 import behandlingEventHandler from './BehandlingEventHandler';
 import ErrorBoundary from '../app/ErrorBoundary';
@@ -135,7 +140,7 @@ const BehandlingIndex = ({
 
   const history = useHistory();
   const opneSokeside = useCallback(() => {
-    history.push('/');
+    history.push(getPathToFplos() || '/');
   }, []);
   const oppdaterProsessStegOgFaktaPanelIUrl = useCallback(getOppdaterProsessStegOgFaktaPanelIUrl(history), [history]);
 
