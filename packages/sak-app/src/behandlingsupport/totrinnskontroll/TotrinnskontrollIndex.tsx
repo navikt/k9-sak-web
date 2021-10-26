@@ -1,5 +1,5 @@
 import React, { useCallback, useState } from 'react';
-import { useHistory, useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import BehandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import { RestApiState } from '@k9-sak-web/rest-api-hooks';
@@ -62,7 +62,6 @@ const TotrinnskontrollIndex = ({ fagsak, alleBehandlinger, behandlingId, behandl
   const behandling = alleBehandlinger.find(b => b.id === behandlingId);
 
   const location = useLocation();
-  const history = useHistory();
 
   const { brukernavn, kanVeilede } = restApiHooks.useGlobalStateRestApiData<NavAnsatt>(K9sakApiKeys.NAV_ANSATT);
 
@@ -149,7 +148,6 @@ const TotrinnskontrollIndex = ({ fagsak, alleBehandlinger, behandlingId, behandl
         <BeslutterModalIndex
           behandling={behandling}
           fagsakYtelseType={fagsak.sakstype}
-          pushLocation={history.push}
           allAksjonspunktApproved={erAlleAksjonspunktGodkjent}
           erKlageWithKA={totrinnsKlageVurdering ? !!totrinnsKlageVurdering.klageVurderingResultatNK : undefined}
         />

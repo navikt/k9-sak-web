@@ -11,18 +11,11 @@ import { getPathToFplos } from '../../app/paths';
 interface OwnProps {
   behandling: BehandlingAppKontekst;
   fagsakYtelseType: Kodeverk;
-  pushLocation: (location: string) => void;
   allAksjonspunktApproved: boolean;
   erKlageWithKA: boolean;
 }
 
-const BeslutterModalIndex = ({
-  behandling,
-  fagsakYtelseType,
-  pushLocation,
-  allAksjonspunktApproved,
-  erKlageWithKA,
-}: OwnProps) => {
+const BeslutterModalIndex = ({ behandling, fagsakYtelseType, allAksjonspunktApproved, erKlageWithKA }: OwnProps) => {
   const { data, state } = restApiHooks.useRestApi<{ harRevurderingSammeResultat: boolean }>(
     K9sakApiKeys.HAR_REVURDERING_SAMME_RESULTAT,
     undefined,
