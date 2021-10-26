@@ -24,7 +24,6 @@ import { useFpSakKodeverk } from '../../data/useKodeverk';
 import { useVisForhandsvisningAvMelding } from '../../data/useVisForhandsvisningAvMelding';
 import { setBehandlingOnHold } from '../../behandlingmenu/behandlingMenuOperations';
 import { K9sakApiKeys, requestApi, restApiHooks } from '../../data/k9sakApi';
-import { getPathToFplos } from '../../app/paths';
 
 const getSubmitCallback =
   (
