@@ -38,7 +38,7 @@ import {
   setBehandlingOnHold,
   shelveBehandling,
 } from './behandlingMenuOperations';
-import { getLocationWithDefaultProsessStegAndFakta, pathToBehandling } from '../app/paths';
+import { getLocationWithDefaultProsessStegAndFakta, pathToBehandling, getPathToFplos } from '../app/paths';
 import { useVisForhandsvisningAvMelding } from '../data/useVisForhandsvisningAvMelding';
 import { K9sakApiKeys, restApiHooks } from '../data/k9sakApi';
 import useGetEnabledApplikasjonContext from '../app/useGetEnabledApplikasjonContext';
@@ -143,7 +143,7 @@ export const BehandlingMenuIndex = ({
     .medTilbakeKodeverk(alleTilbakeKodeverk)
     .medKlageKodeverk(alleKlageKodeverk);
 
-  const gaaTilSokeside = useCallback(() => pushLocation('/'), [pushLocation]);
+  const gaaTilSokeside = useCallback(() => pushLocation(getPathToFplos() || '/'), [pushLocation]);
 
   const { startRequest: lagNyBehandlingK9Sak } = restApiHooks.useRestApiRunner<boolean>(
     K9sakApiKeys.NEW_BEHANDLING_K9SAK,
