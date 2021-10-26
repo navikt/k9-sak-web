@@ -143,7 +143,9 @@ export const BehandlingMenuIndex = ({
     .medTilbakeKodeverk(alleTilbakeKodeverk)
     .medKlageKodeverk(alleKlageKodeverk);
 
-  const gaaTilSokeside = useCallback(() => pushLocation(getPathToFplos() || '/'), [pushLocation]);
+  const gaaTilSokeside = useCallback(() => {
+    window.location.assign(getPathToFplos() || '/');
+  }, []);
 
   const { startRequest: lagNyBehandlingK9Sak } = restApiHooks.useRestApiRunner<boolean>(
     K9sakApiKeys.NEW_BEHANDLING_K9SAK,

@@ -166,7 +166,7 @@ const MeldingIndex = ({
       };
       setBehandlingOnHold(values);
       hideSettPaVentModal();
-      history.push(getPathToFplos() || '/');
+      history.push('/');
     },
     [behandlingId, behandlingVersjon],
   );

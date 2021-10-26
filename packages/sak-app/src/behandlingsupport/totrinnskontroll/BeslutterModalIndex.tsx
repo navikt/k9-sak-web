@@ -34,7 +34,7 @@ const BeslutterModalIndex = ({
   );
 
   const goToSearchPage = useCallback(() => {
-    pushLocation(getPathToFplos() || '/');
+    window.location.assign(getPathToFplos() || '/');
   }, []);
 
   if (state === RestApiState.LOADING) {

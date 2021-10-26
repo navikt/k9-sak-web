@@ -140,7 +140,7 @@ const BehandlingIndex = ({
 
   const history = useHistory();
   const opneSokeside = useCallback(() => {
-    history.push(getPathToFplos() || '/');
+    window.location.assign(getPathToFplos() || '/');
   }, []);
   const oppdaterProsessStegOgFaktaPanelIUrl = useCallback(getOppdaterProsessStegOgFaktaPanelIUrl(history), [history]);
 
