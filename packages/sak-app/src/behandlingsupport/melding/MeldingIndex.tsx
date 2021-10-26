@@ -8,15 +8,7 @@ import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import MeldingerSakIndex, { FormValues, MessagesModalSakIndex } from '@k9-sak-web/sak-meldinger';
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
 import { RestApiState } from '@k9-sak-web/rest-api-hooks';
-import {
-  ArbeidsgiverOpplysningerWrapper,
-  BehandlingAppKontekst,
-  Brevmaler,
-  Fagsak,
-  Kodeverk,
-  Mottaker,
-  Personopplysninger,
-} from '@k9-sak-web/types';
+import { ArbeidsgiverOpplysningerWrapper, BehandlingAppKontekst, Brevmaler, Fagsak, Kodeverk, Mottaker, Personopplysninger } from '@k9-sak-web/types';
 import SettPaVentModalIndex from '@k9-sak-web/modal-sett-pa-vent';
 
 import { Fritekstbrev } from '@k9-sak-web/types/src/formidlingTsType';
@@ -24,7 +16,6 @@ import { useFpSakKodeverk } from '../../data/useKodeverk';
 import { useVisForhandsvisningAvMelding } from '../../data/useVisForhandsvisningAvMelding';
 import { setBehandlingOnHold } from '../../behandlingmenu/behandlingMenuOperations';
 import { K9sakApiKeys, requestApi, restApiHooks } from '../../data/k9sakApi';
-import { getPathToFplos } from '../../app/paths';
 
 const getSubmitCallback =
   (
@@ -59,7 +50,7 @@ const getSubmitCallback =
           brevmalkode: values.brevmalkode,
           fritekst: values.fritekst,
           arsakskode: values.arsakskode,
-          fritekstbrev: values.fritekstbrev,
+          fritekstbrev: values.fritekstbrev
         };
     return submitMessage(data)
       .then(() => resetMessage())
@@ -86,10 +77,9 @@ const getPreviewCallback =
           overstyrtMottaker,
           dokumentMal,
           dokumentdata: {
-            fritekst: fritekst || ' ',
-            fritekstbrev:
-              fritekstbrev && Object.values(fritekstbrev).some(x => x === null || x === '') ? null : fritekstbrev,
-          },
+          fritekst: fritekst || ' ' ,
+          fritekstbrev: fritekstbrev && Object.values(fritekstbrev).some(x => x === null || x === '') ? null : fritekstbrev
+         },
         };
     fetchPreview(false, data);
   };
@@ -166,7 +156,7 @@ const MeldingIndex = ({
       };
       setBehandlingOnHold(values);
       hideSettPaVentModal();
-      history.push(getPathToFplos() || '/');
+      history.push('/');
     },
     [behandlingId, behandlingVersjon],
   );
