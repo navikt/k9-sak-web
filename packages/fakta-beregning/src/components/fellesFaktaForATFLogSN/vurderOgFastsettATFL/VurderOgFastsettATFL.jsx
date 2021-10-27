@@ -74,6 +74,7 @@ const finnInntektstabell = (
   alleKodeverk,
   arbeidsgiverOpplysningerPerId,
   fieldArrayID,
+  vilkaarPeriodeFieldArrayIndex,
 ) => (
   <FieldArray
     name={`${fieldArrayID}.${INNTEKT_FIELD_ARRAY_NAME}`}
@@ -86,6 +87,7 @@ const finnInntektstabell = (
     alleKodeverk={alleKodeverk}
     arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
     isAvklaringsbehovClosed={isAvklaringsbehovClosed}
+    vilkaarPeriodeFieldArrayIndex={vilkaarPeriodeFieldArrayIndex}
   />
 );
 
@@ -115,6 +117,7 @@ const VurderOgFastsettATFL = ({
   arbeidsgiverOpplysningerPerId,
   erOverstyrer,
   fieldArrayID,
+  vilkaarPeriodeFieldArrayIndex,
 }) => (
   <div>
     <InntektstabellPanel
@@ -128,6 +131,7 @@ const VurderOgFastsettATFL = ({
         alleKodeverk,
         arbeidsgiverOpplysningerPerId,
         fieldArrayID,
+        vilkaarPeriodeFieldArrayIndex,
       )}
       skalViseTabell={skalViseTabell}
       hjelpeTekstId={findInstruksjonForFastsetting(skalFastsetteFL, skalFastsetteAT, harKunstigArbeid)}
@@ -137,6 +141,7 @@ const VurderOgFastsettATFL = ({
       behandlingId={behandlingId}
       behandlingVersjon={behandlingVersjon}
       fieldArrayID={fieldArrayID}
+      vilkaarPeriodeFieldArrayIndex={vilkaarPeriodeFieldArrayIndex}
     >
       <ATFLSammeOrgTekst beregningsgrunnlag={beregningsgrunnlag} manglerInntektsmelding={manglerInntektsmelding} />
       {tilfeller.includes(faktaOmBeregningTilfelle.VURDER_LONNSENDRING) && (
@@ -155,6 +160,7 @@ const VurderOgFastsettATFL = ({
           behandlingId={behandlingId}
           behandlingVersjon={behandlingVersjon}
           fieldArrayID={fieldArrayID}
+          vilkaarPeriodeFieldArrayIndex={vilkaarPeriodeFieldArrayIndex}
         />
       )}
       {tilfeller.includes(faktaOmBeregningTilfelle.VURDER_NYOPPSTARTET_FL) && (
@@ -349,6 +355,7 @@ VurderOgFastsettATFL.propTypes = {
   avklaringsbehov: PropTypes.arrayOf(beregningAvklaringsbehovPropType).isRequired,
   beregningsgrunnlag: PropTypes.shape().isRequired,
   fieldArrayID: PropTypes.string.isRequired,
+  vilkaarPeriodeFieldArrayIndex: PropTypes.number.isRequired,
 };
 
 export const skalFastsettInntektForArbeidstaker = createSelector(

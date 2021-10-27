@@ -16,6 +16,10 @@ const historikkEndretFeltTypeCodes = {
     kode: 'AKTIVITET_PERIODE',
     feltId: 'HistorikkEndretFelt.AktivitetPeriode',
   },
+  ALENE_OM_OMSORG: {
+    kode: 'ALENE_OM_OMSORG',
+    feltId: 'HistorikkEndretFelt.AleneOmOmsorgen'
+  },
   ANTALL_BARN: {
     kode: 'ANTALL_BARN',
     feltId: 'HistorikkEndretFelt.AntallBarn',
@@ -123,6 +127,10 @@ const historikkEndretFeltTypeCodes = {
   MANN_ADOPTERER: {
     kode: 'MANN_ADOPTERER',
     feltId: 'HistorikkEndretFelt.MannAdoptererAleneFaktaForm.ApplicationInformation',
+  },
+  MIDLERTIDIG_ALENE: {
+    kode: 'MIDLERTIDIG_ALENE',
+    feltId: 'HistorikkEndretFelt.UtvidetRett'
   },
   MOTTAR_YTELSE_ARBEID: {
     kode: 'MOTTAR_YTELSE_ARBEID',

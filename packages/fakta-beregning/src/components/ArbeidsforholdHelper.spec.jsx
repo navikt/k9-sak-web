@@ -1,8 +1,8 @@
 import { expect } from 'chai';
 import { sortArbeidsforholdList } from './ArbeidsforholdHelper';
 
-const createArbeidsforhold = (arbeidsgiverId, startdato, opphoersdato, arbeidsforholdId) => ({
-  arbeidsgiverId,
+const createArbeidsforhold = (arbeidsgiverIdent, startdato, opphoersdato, arbeidsforholdId) => ({
+  arbeidsgiverIdent,
   startdato,
   opphoersdato,
   arbeidsforholdId,

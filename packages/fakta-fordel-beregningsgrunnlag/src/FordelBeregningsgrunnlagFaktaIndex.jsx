@@ -38,7 +38,7 @@ const kreverManuellBehandlingFn = bg => {
   if (fordeling) {
     const fordelBg = fordeling.fordelBeregningsgrunnlag;
     if (fordelBg) {
-      return fordelBg.fordelBeregningsgrunnlagPerioder.some(p => p.skalRedigereInntekt || p.skalKunneEndreRefusjon);
+      return fordelBg.fordelBeregningsgrunnlagPerioder.some(p => p.skalRedigereInntekt);
     }
   }
   return false;
@@ -46,7 +46,7 @@ const kreverManuellBehandlingFn = bg => {
 
 
 const finnAvklaringsbehov = (aksjonspunkter, beregningsgrunnlag) => {
-  if (beregningsgrunnlag.avklaringsbehov && beregningsgrunnlag.avklaringsbehov.length > 0) {
+  if (beregningsgrunnlag.avklaringsbehov) {
     return beregningsgrunnlag.avklaringsbehov;
   }
   return aksjonspunkter;
@@ -63,9 +63,16 @@ const FordelBeregningsgrunnlagFaktaIndex = ({
   readOnly,
   submittable,
 }) => {
-  const skalBrukeTabs = beregningsgrunnlag.length > 1;
+  const bgMedAvklaringsbehov = beregningsgrunnlag.filter(bg => kreverManuellBehandlingFn(bg));
+
+
+  if (bgMedAvklaringsbehov.length === 0) {
+    return null;
+  }
+
+  const skalBrukeTabs = bgMedAvklaringsbehov.length > 1;
   const [aktivtBeregningsgrunnlagIndeks, setAktivtBeregningsgrunnlagIndeks] = useState(0);
-  const aktivtBeregningsrunnlag = beregningsgrunnlag[aktivtBeregningsgrunnlagIndeks];
+  const aktivtBeregningsrunnlag = bgMedAvklaringsbehov[aktivtBeregningsgrunnlagIndeks];
 
   const kreverManuellBehandling = kreverManuellBehandlingFn(aktivtBeregningsrunnlag);
 
@@ -77,7 +84,7 @@ const FordelBeregningsgrunnlagFaktaIndex = ({
     <RawIntlProvider value={intl}>
       {skalBrukeTabs && (
         <TabsPure
-          tabs={beregningsgrunnlag.map((currentBeregningsgrunnlag, currentBeregningsgrunnlagIndex) => ({
+          tabs={bgMedAvklaringsbehov.map((currentBeregningsgrunnlag, currentBeregningsgrunnlagIndex) => ({
             aktiv: aktivtBeregningsgrunnlagIndeks === currentBeregningsgrunnlagIndex,
             label: lagLabel(currentBeregningsgrunnlag, vilkårsperioder),
             className: kreverManuellBehandlingFn(currentBeregningsgrunnlag) ? 'harAksjonspunkt' : '',
@@ -100,7 +107,7 @@ const FordelBeregningsgrunnlagFaktaIndex = ({
           kreverManuellBehandling={kreverManuellBehandling}
           aktivtBeregningsgrunnlagIndex={aktivtBeregningsgrunnlagIndeks}
           vilkårsperioder={vilkårsperioder}
-          alleBeregningsgrunnlag={beregningsgrunnlag}
+          alleBeregningsgrunnlag={bgMedAvklaringsbehov}
           arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
         />
       </div>

@@ -1,5 +1,4 @@
 import React from 'react';
-import sinon from 'sinon';
 import { shallow } from 'enzyme';
 
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
@@ -38,7 +37,6 @@ describe('<BeslutterModalIndex>', () => {
           kode: fagsakYtelseType.FORELDREPENGER,
           kodeverk: '',
         }}
-        pushLocation={sinon.spy()}
         allAksjonspunktApproved={false}
         erKlageWithKA={false}
       />,
@@ -62,7 +60,6 @@ describe('<BeslutterModalIndex>', () => {
           kode: fagsakYtelseType.FORELDREPENGER,
           kodeverk: '',
         }}
-        pushLocation={sinon.spy()}
         allAksjonspunktApproved={false}
         erKlageWithKA={false}
       />,

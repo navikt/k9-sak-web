@@ -15,6 +15,7 @@ import { Fagsak, FagsakPerson, Behandling } from '@k9-sak-web/types';
 
 import lagForhåndsvisRequest from '@fpsak-frontend/utils/src/formidlingUtils';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
+import fagsakYtelseType from "@fpsak-frontend/kodeverk/src/fagsakYtelseType";
 import { restApiUtvidetRettHooks, UtvidetRettBehandlingApiKeys } from '../data/utvidetRettBehandlingApi';
 import prosessStegUtvidetRettPanelDefinisjoner from '../panelDefinisjoner/prosessStegUtvidetRettPanelDefinisjoner';
 import '@fpsak-frontend/assets/styles/arrowForProcessMenu.less';
@@ -163,7 +164,7 @@ const UtvidetRettProsess = ({
   );
 
   const [prosessStegPaneler, valgtPanel, formaterteProsessStegPaneler] = prosessStegHooks.useProsessStegPaneler(
-    prosessStegUtvidetRettPanelDefinisjoner,
+    prosessStegUtvidetRettPanelDefinisjoner(fagsak.sakstype.kode === fagsakYtelseType.OMSORGSPENGER_ALENE_OM_OMSORGEN),
     dataTilUtledingAvFpPaneler,
     fagsak,
     rettigheter,

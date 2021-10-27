@@ -56,7 +56,7 @@ export const beregningsgrunnlag = [
             tom: '2019-03-13',
             aktiviteter: [
               {
-                arbeidsgiverId: '910909088',
+                arbeidsgiverIdent: '910909088',
                 fom: '2013-08-28',
                 tom: '2019-12-31',
                 arbeidsforholdType: { kodeverk: 'OPPTJENING_AKTIVITET_TYPE', kode: 'ARBEID' },
@@ -74,8 +74,7 @@ export const beregningsgrunnlag = [
           refusjonskrav: 60833.0,
           visningsnavn: 'BEDRIFTEN AS (910909088)',
           arbeidsforhold: {
-            arbeidsgiverId: '910909088',
-            arbeidsgiverIdVisning: '910909088',
+            arbeidsgiverIdent: '910909088',
             startdato: '2013-08-28',
             opphoersdato: '2019-12-31',
             arbeidsforholdType: { kodeverk: 'OPPTJENING_AKTIVITET_TYPE', kode: 'ARBEID' },
@@ -87,7 +86,7 @@ export const beregningsgrunnlag = [
         },
       ],
       vurderMilitaer: {},
-      refusjonskravSomKommerForSentListe: [{ arbeidsgiverId: '910909088', arbeidsgiverVisningsnavn: 'BEDRIFTEN AS' }],
+      refusjonskravSomKommerForSentListe: [{ arbeidsgiverIdent: '910909088' }],
     },
     hjemmel: { kodeverk: 'BG_HJEMMEL', kode: '-' },
     årsinntektVisningstall: 0,
@@ -97,6 +96,7 @@ export const beregningsgrunnlag = [
     vilkårsperiodeFom: '2019-03-13',
   },
   {
+    avklaringsbehov: [],
     skjaeringstidspunktBeregning: '2020-05-13',
     skjæringstidspunkt: '2020-05-13',
     aktivitetStatus: [{ kodeverk: 'AKTIVITET_STATUS', kode: 'AT' }],
@@ -119,8 +119,7 @@ export const beregningsgrunnlag = [
             andelsnr: 1,
             inntektskategori: { kodeverk: 'INNTEKTSKATEGORI', kode: 'ARBEIDSTAKER' },
             arbeidsforhold: {
-              arbeidsgiverId: '910909088',
-              arbeidsgiverIdVisning: '910909088',
+              arbeidsgiverIdent: '910909088',
               startdato: '2013-08-28',
               arbeidsforholdType: { kodeverk: 'OPPTJENING_AKTIVITET_TYPE', kode: 'ARBEID' },
               belopFraInntektsmeldingPrMnd: 60833.0,
@@ -147,7 +146,7 @@ export const beregningsgrunnlag = [
             tom: '2020-05-13',
             aktiviteter: [
               {
-                arbeidsgiverId: '910909088',
+                arbeidsgiverIdent: '910909088',
                 fom: '2020-01-01',
                 tom: '9999-12-31',
                 arbeidsforholdType: { kodeverk: 'OPPTJENING_AKTIVITET_TYPE', kode: 'ARBEID' },
@@ -165,8 +164,7 @@ export const beregningsgrunnlag = [
           refusjonskrav: 60833.0,
           visningsnavn: 'BEDRIFTEN AS (910909088)',
           arbeidsforhold: {
-            arbeidsgiverId: '910909088',
-            arbeidsgiverIdVisning: '910909088',
+            arbeidsgiverIdent: '910909088',
             startdato: '2013-08-28',
             arbeidsforholdType: { kodeverk: 'OPPTJENING_AKTIVITET_TYPE', kode: 'ARBEID' },
             belopFraInntektsmeldingPrMnd: 60833.0,
@@ -185,6 +183,7 @@ export const beregningsgrunnlag = [
     vilkårsperiodeFom: '2020-05-13',
   },
   {
+    avklaringsbehov: [],
     skjaeringstidspunktBeregning: '2020-06-12',
     skjæringstidspunkt: '2020-06-12',
     aktivitetStatus: [{ kodeverk: 'AKTIVITET_STATUS', kode: 'AT' }],
@@ -207,8 +206,7 @@ export const beregningsgrunnlag = [
             andelsnr: 1,
             inntektskategori: { kodeverk: 'INNTEKTSKATEGORI', kode: 'ARBEIDSTAKER' },
             arbeidsforhold: {
-              arbeidsgiverId: '910909088',
-              arbeidsgiverIdVisning: '910909088',
+              arbeidsgiverIdent: '910909088',
               startdato: '2013-08-28',
               arbeidsforholdType: { kodeverk: 'OPPTJENING_AKTIVITET_TYPE', kode: 'ARBEID' },
               belopFraInntektsmeldingPrMnd: 60833.0,
@@ -235,7 +233,7 @@ export const beregningsgrunnlag = [
             tom: '2020-06-12',
             aktiviteter: [
               {
-                arbeidsgiverId: '910909088',
+                arbeidsgiverIdent: '910909088',
                 fom: '2020-01-01',
                 tom: '9999-12-31',
                 arbeidsforholdType: { kodeverk: 'OPPTJENING_AKTIVITET_TYPE', kode: 'ARBEID' },
@@ -251,10 +249,8 @@ export const beregningsgrunnlag = [
           inntektskategori: { kodeverk: 'INNTEKTSKATEGORI', kode: 'ARBEIDSTAKER' },
           aktivitetStatus: { kodeverk: 'AKTIVITET_STATUS', kode: 'AT' },
           refusjonskrav: 60833.0,
-          visningsnavn: 'BEDRIFTEN AS (910909088)',
           arbeidsforhold: {
-            arbeidsgiverId: '910909088',
-            arbeidsgiverIdVisning: '910909088',
+            arbeidsgiverIdent: '910909088',
             startdato: '2013-08-28',
             arbeidsforholdType: { kodeverk: 'OPPTJENING_AKTIVITET_TYPE', kode: 'ARBEID' },
             belopFraInntektsmeldingPrMnd: 60833.0,
@@ -273,6 +269,7 @@ export const beregningsgrunnlag = [
     vilkårsperiodeFom: '2020-06-12',
   },
   {
+    avklaringsbehov: [],
     skjaeringstidspunktBeregning: '2020-06-19',
     skjæringstidspunkt: '2020-06-19',
     aktivitetStatus: [{ kodeverk: 'AKTIVITET_STATUS', kode: 'AT' }],
@@ -295,8 +292,7 @@ export const beregningsgrunnlag = [
             andelsnr: 1,
             inntektskategori: { kodeverk: 'INNTEKTSKATEGORI', kode: 'ARBEIDSTAKER' },
             arbeidsforhold: {
-              arbeidsgiverId: '910909088',
-              arbeidsgiverIdVisning: '910909088',
+              arbeidsgiverIdent: '910909088',
               startdato: '2013-08-28',
               arbeidsforholdType: { kodeverk: 'OPPTJENING_AKTIVITET_TYPE', kode: 'ARBEID' },
               belopFraInntektsmeldingPrMnd: 60833.0,
@@ -323,7 +319,7 @@ export const beregningsgrunnlag = [
             tom: '2020-06-19',
             aktiviteter: [
               {
-                arbeidsgiverId: '910909088',
+                arbeidsgiverIdent: '910909088',
                 fom: '2020-01-01',
                 tom: '9999-12-31',
                 arbeidsforholdType: { kodeverk: 'OPPTJENING_AKTIVITET_TYPE', kode: 'ARBEID' },
@@ -339,10 +335,8 @@ export const beregningsgrunnlag = [
           inntektskategori: { kodeverk: 'INNTEKTSKATEGORI', kode: 'ARBEIDSTAKER' },
           aktivitetStatus: { kodeverk: 'AKTIVITET_STATUS', kode: 'AT' },
           refusjonskrav: 60833.0,
-          visningsnavn: 'BEDRIFTEN AS (910909088)',
           arbeidsforhold: {
-            arbeidsgiverId: '910909088',
-            arbeidsgiverIdVisning: '910909088',
+            arbeidsgiverIdent: '910909088',
             startdato: '2013-08-28',
             arbeidsforholdType: { kodeverk: 'OPPTJENING_AKTIVITET_TYPE', kode: 'ARBEID' },
             belopFraInntektsmeldingPrMnd: 60833.0,
@@ -361,6 +355,7 @@ export const beregningsgrunnlag = [
     vilkårsperiodeFom: '2020-06-19',
   },
   {
+    avklaringsbehov: [],
     skjaeringstidspunktBeregning: '2020-06-25',
     skjæringstidspunkt: '2020-06-25',
     aktivitetStatus: [{ kodeverk: 'AKTIVITET_STATUS', kode: 'AT' }],
@@ -383,8 +378,7 @@ export const beregningsgrunnlag = [
             andelsnr: 1,
             inntektskategori: { kodeverk: 'INNTEKTSKATEGORI', kode: 'ARBEIDSTAKER' },
             arbeidsforhold: {
-              arbeidsgiverId: '910909088',
-              arbeidsgiverIdVisning: '910909088',
+              arbeidsgiverIdent: '910909088',
               startdato: '2013-08-28',
               arbeidsforholdType: { kodeverk: 'OPPTJENING_AKTIVITET_TYPE', kode: 'ARBEID' },
               belopFraInntektsmeldingPrMnd: 60833.0,
@@ -411,7 +405,7 @@ export const beregningsgrunnlag = [
             tom: '2020-06-25',
             aktiviteter: [
               {
-                arbeidsgiverId: '910909088',
+                arbeidsgiverIdent: '910909088',
                 fom: '2020-01-01',
                 tom: '9999-12-31',
                 arbeidsforholdType: { kodeverk: 'OPPTJENING_AKTIVITET_TYPE', kode: 'ARBEID' },
@@ -427,10 +421,8 @@ export const beregningsgrunnlag = [
           inntektskategori: { kodeverk: 'INNTEKTSKATEGORI', kode: 'ARBEIDSTAKER' },
           aktivitetStatus: { kodeverk: 'AKTIVITET_STATUS', kode: 'AT' },
           refusjonskrav: 60833.0,
-          visningsnavn: 'BEDRIFTEN AS (910909088)',
           arbeidsforhold: {
-            arbeidsgiverId: '910909088',
-            arbeidsgiverIdVisning: '910909088',
+            arbeidsgiverIdent: '910909088',
             startdato: '2013-08-28',
             arbeidsforholdType: { kodeverk: 'OPPTJENING_AKTIVITET_TYPE', kode: 'ARBEID' },
             belopFraInntektsmeldingPrMnd: 60833.0,

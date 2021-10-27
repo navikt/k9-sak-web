@@ -8,7 +8,7 @@ import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
-import { BeregningFP } from './BeregningFP';
+import { BeregningFP, buildInitialValuesForBeregningrunnlag } from './BeregningFP';
 import BeregningForm2 from './beregningForm/BeregningForm';
 
 const lagBeregningsgrunnlag = (ferdigstilt, beregnetPrAar, sammenligningSum, avvikPromille, avklaringsbehov = null) => {
@@ -34,6 +34,16 @@ const lagBeregningsgrunnlag = (ferdigstilt, beregnetPrAar, sammenligningSum, avv
     beregningsgrunnlagPeriode: [
       {
         dagsats: ferdigstilt ? 1500 : undefined,
+        beregningsgrunnlagPrStatusOgAndel: [
+          {
+            aktivitetStatus: 
+              {
+                kode: aktivitetStatus.KOMBINERT_AT_SN,
+                navn: 'Arbeidstaker',
+                kodeverk: 'test',
+              }
+          }
+        ]
       },
     ],
   };
@@ -86,7 +96,7 @@ const alleKodeverk = {
 };
 
 describe('<BeregningFP>', () => {
-  it('skal teste at BeregningForm får korrekte props fra BeregningFP med avklaringsbehov satt på BG', () => {
+  it('skal teste at det bygges korrekte initialvalues med avklaringsbehov satt på BG', () => {
     const avklaringsbehov = [
       {
         id: 55,
@@ -105,56 +115,27 @@ describe('<BeregningFP>', () => {
         kanLoses: true,
       },
     ];
-    const wrapper = shallow(
-      <BeregningFP
-        readOnly={false}
-        submitCallback={sinon.spy}
-        beregningsgrunnlag={[lagBeregningsgrunnlag(true, 100000, 100000, null, avklaringsbehov)]}
-        vilkar={vilkar}
-        behandling={behandling}
-        alleKodeverk={alleKodeverk}
-        arbeidsgiverOpplysningerPerId={{}}
-        gjeldendeAksjonspunkter={gjeldendeAksjonspunkter}
-        readOnlySubmitButton
-        sokerHarGraderingPaaAndelUtenBG={false}
-        intl={intlMock}
-        handleSubmit={() => {}}
-      />,
-    );
-    const beregningForm = wrapper.find(FieldArray);
-    expect(beregningForm.props().props.readOnly).to.have.equal(false);
-    expect(beregningForm.props().props.avklaringsbehov).to.eql(avklaringsbehov);
-    expect(beregningForm.props().props.relevanteStatuser.isArbeidstaker).to.eql(true);
-    expect(beregningForm.props().props.relevanteStatuser.isSelvstendigNaeringsdrivende).to.eql(true);
-    expect(beregningForm.props().props.relevanteStatuser.isKombinasjonsstatus).to.eql(true);
-    expect(beregningForm.props().props.relevanteStatuser.skalViseBeregningsgrunnlag).to.eql(true);
-    expect(beregningForm.props().props.submitCallback).to.have.equal(sinon.spy);
+    const initialValues = buildInitialValuesForBeregningrunnlag(
+      lagBeregningsgrunnlag(true, 100000, 100000, null, avklaringsbehov), 
+      gjeldendeAksjonspunkter, 
+      vilkar);
+    expect(initialValues.avklaringsbehov).to.eql(avklaringsbehov);
+    expect(initialValues.relevanteStatuser.isArbeidstaker).to.eql(true);
+    expect(initialValues.relevanteStatuser.isSelvstendigNaeringsdrivende).to.eql(true);
+    expect(initialValues.relevanteStatuser.isKombinasjonsstatus).to.eql(true);
+    expect(initialValues.relevanteStatuser.skalViseBeregningsgrunnlag).to.eql(true);
   });
-  it('skal teste at BeregningForm får korrekte props fra BeregningFP med beregnetAvvikPromille lik NULL', () => {
-    const wrapper = shallow(
-      <BeregningFP
-        readOnly={false}
-        submitCallback={sinon.spy}
-        beregningsgrunnlag={[lagBeregningsgrunnlag(true, 100000, 100000, null)]}
-        vilkar={vilkar}
-        behandling={behandling}
-        alleKodeverk={alleKodeverk}
-        arbeidsgiverOpplysningerPerId={{}}
-        gjeldendeAksjonspunkter={gjeldendeAksjonspunkter}
-        readOnlySubmitButton
-        sokerHarGraderingPaaAndelUtenBG={false}
-        intl={intlMock}
-        handleSubmit={() => {}}
-      />,
-    );
-    const beregningForm = wrapper.find(FieldArray);
-    expect(beregningForm.props().props.readOnly).to.have.equal(false);
-    expect(beregningForm.props().props.avklaringsbehov).to.eql(gjeldendeAksjonspunkter);
-    expect(beregningForm.props().props.relevanteStatuser.isArbeidstaker).to.eql(true);
-    expect(beregningForm.props().props.relevanteStatuser.isSelvstendigNaeringsdrivende).to.eql(true);
-    expect(beregningForm.props().props.relevanteStatuser.isKombinasjonsstatus).to.eql(true);
-    expect(beregningForm.props().props.relevanteStatuser.skalViseBeregningsgrunnlag).to.eql(true);
-    expect(beregningForm.props().props.submitCallback).to.have.equal(sinon.spy);
+  it('skal teste at det bygges korrekte initialvalues med beregnetAvvikPromille lik NULL', () => {
+    const initialValues = buildInitialValuesForBeregningrunnlag(
+      lagBeregningsgrunnlag(true, 100000, 100000, null, null), 
+      gjeldendeAksjonspunkter, 
+      vilkar);
+    expect(initialValues.avklaringsbehov).to.eql(gjeldendeAksjonspunkter);
+    expect(initialValues.relevanteStatuser.isArbeidstaker).to.eql(true);
+    expect(initialValues.relevanteStatuser.isSelvstendigNaeringsdrivende).to.eql(true);
+    expect(initialValues.relevanteStatuser.isKombinasjonsstatus).to.eql(true);
+    expect(initialValues.relevanteStatuser.skalViseBeregningsgrunnlag).to.eql(true);
+
   });
   it('skal teste visning av komponenter når beregningsgrunnlag er lik null', () => {
     const wrapper = shallow(

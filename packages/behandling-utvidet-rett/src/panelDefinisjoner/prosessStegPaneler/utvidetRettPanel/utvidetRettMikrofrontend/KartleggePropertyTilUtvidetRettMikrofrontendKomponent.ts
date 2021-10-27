@@ -59,7 +59,7 @@ const KartleggePropertyTilUtvidetRettMikrofrontendKomponent = (
         });
       case FagsakYtelseType.OMSORGSPENGER_ALENE_OM_OMSORGEN:
         return AleneOmOmsorgenObjektTilMikrofrontend({
-          behandlingsID,
+          behandling,
           aksjonspunktLost,
           lesemodus,
           vilkarKnyttetTilAksjonspunkt,
