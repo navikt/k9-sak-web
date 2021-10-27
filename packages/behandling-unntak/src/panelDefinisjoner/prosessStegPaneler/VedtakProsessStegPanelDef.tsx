@@ -44,6 +44,7 @@ class PanelDef extends ProsessStegPanelDef {
     fagsak,
     personopplysninger,
     arbeidsgiverOpplysningerPerId,
+    lagreDokumentdata,
   }) => ({
     previewCallback,
     aksjonspunkter,
@@ -53,6 +54,7 @@ class PanelDef extends ProsessStegPanelDef {
     employeeHasAccess: rettigheter.kanOverstyreAccess.isEnabled,
     personopplysninger,
     arbeidsgiverOpplysningerPerId,
+    lagreDokumentdata,
   });
 }
 
