@@ -58,12 +58,14 @@ const formatereLesemodusObjektForKroniskSyk = (vilkar: Vilkar, aksjonspunkt: Aks
       vilkarOppfylt: vilkar.perioder[0].vilkarStatus.kode === vilkarUtfallType.OPPFYLT,
       avslagsArsakErIkkeRiskioFraFravaer:
         vilkar.perioder[0]?.avslagKode === AvslagskoderKroniskSyk.IKKE_OKT_RISIKO_FRA_FRAVAER,
+      fraDato: vilkar.perioder[0].periode.fom,
     } as InformasjonTilLesemodusKroniskSyk;
   }
   return {
     begrunnelse: '',
     vilkarOppfylt: false,
     avslagsArsakErIkkeRiskioFraFravaer: false,
+    fraDato: '',
   } as InformasjonTilLesemodusKroniskSyk;
 };
 
@@ -91,14 +93,14 @@ const KroniskSykObjektTilMikrofrontend = ({
       aksjonspunkt.begrunnelse,
       'Utvidet Rett',
     ),
-    losAksjonspunkt: (harDokumentasjonOgFravaerRisiko, begrunnelse, avslagsArsakErIkkeRiskioFraFravaer) => {
+    losAksjonspunkt: (harDokumentasjonOgFravaerRisiko, begrunnelse, avslagsArsakErIkkeRiskioFraFravaer, fraDato) => {
       submitCallback([
         formatereLosAksjonspunktObjektForKroniskSyk(
           aksjonspunkt.definisjon.kode,
           begrunnelse,
           harDokumentasjonOgFravaerRisiko,
           avslagsArsakErIkkeRiskioFraFravaer,
-          soknad.soknadsdato,
+          fraDato,
           vilkarKnyttetTilAksjonspunkt,
         ),
       ]);
