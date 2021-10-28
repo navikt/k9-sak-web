@@ -7,12 +7,19 @@ import inntektskategorier from '@fpsak-frontend/kodeverk/src/inntektskategorier'
 import opptjeningAktivitetType from '@fpsak-frontend/kodeverk/src/opptjeningAktivitetType';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
+import avklaringsbehovStatus from '@fpsak-frontend/kodeverk/src/beregningAvklaringsbehovStatus';
 import BeregningFaktaIndex from '@fpsak-frontend/fakta-beregning';
 import faktaOmBeregningTilfelle from '@fpsak-frontend/kodeverk/src/faktaOmBeregningTilfelle';
 import {
   beregningsgrunnlag as bgMedArbeidOgDagpenger,
   aksjonspunkt as aksjonspunktArbeidOgDagpenger,
 } from './scenario/ArbeidMedDagpengerIOpptjeningsperioden';
+
+import {
+  beregningsgrunnlag as bgPrivatArbeidsgiver,
+  behandling as behPrivatArbeidsgiver
+} from './scenario/PrivatpersonOrgOgFrilansISammeOrg';
+
 
 import {
   beregningsgrunnlag as bgFlerePerioder,
@@ -32,6 +39,20 @@ import alleKodeverk from '../../mocks/alleKodeverk.json';
 import arbeidsgivere from '../../mocks/arbeidsgivere.json';
 
 const skjæringstidspunkt = '2020-01-01';
+
+const OPPRETTET_FAKTA_AVKLARING = [
+  {
+    definisjon: {
+      kode: aksjonspunktCodes.VURDER_FAKTA_FOR_ATFL_SN,
+    },
+    status: {
+      kode: aksjonspunktStatus.OPPRETTET,
+    },
+    begrunnelse: undefined,
+    kanLoses: true,
+    erAktivt: true,
+  },
+];
 
 const behandling = {
   id: 1,
@@ -78,7 +99,8 @@ const {
   VURDER_SN_NY_I_ARBEIDSLIVET,
 } = faktaOmBeregningTilfelle;
 
-const lagBeregningsgrunnlagAvklarAktiviteter = aktiviteter => ({
+const lagBeregningsgrunnlagAvklarAktiviteter = (aktiviteter, avklaringsbehov) => ({
+  avklaringsbehov,
   faktaOmBeregning: {
     avklarAktiviteter: {
       skjæringstidspunkt,
@@ -99,12 +121,13 @@ const lagAvklaringsbehov = (faktaOmBeregning) => {
     return avklaringsbehov;
   }
   if (faktaOmBeregning.faktaOmBeregningTilfeller  && faktaOmBeregning.faktaOmBeregningTilfeller.length > 0) {
-    avklaringsbehov.push({definisjon: { kode: VURDER_AT_OG_FL_I_SAMME_ORGANISASJON }});
+    avklaringsbehov.push({definisjon: { kode: VURDER_AT_OG_FL_I_SAMME_ORGANISASJON }, status: { kode: avklaringsbehovStatus.OPPRETTET }});
   }
   return avklaringsbehov;
 }
 
-const lagBeregningsgrunnlag = (andeler, faktaOmBeregning) => ({
+const lagBeregningsgrunnlag = (andeler, faktaOmBeregning, avklaringsbehov) => ({
+  avklaringsbehov: avklaringsbehov == null ? lagAvklaringsbehov(faktaOmBeregning) : avklaringsbehov,
   beregningsgrunnlagPeriode: [
     {
       beregningsgrunnlagPrStatusOgAndel: andeler.map(andel => ({
@@ -116,24 +139,22 @@ const lagBeregningsgrunnlag = (andeler, faktaOmBeregning) => ({
     },
   ],
   faktaOmBeregning,
-  avklaringsbehov: lagAvklaringsbehov(faktaOmBeregning),
 });
 
 const mapTilKodeliste = arrayOfCodes => arrayOfCodes.map(kode => ({ kode }));
 
 const lagAndel = (andelsnr, aktivitetStatus, inntektskategori) => ({
   andelsnr,
-  aktivitetStatus: { kode: aktivitetStatus },
-  inntektskategori: { kode: inntektskategori },
+  aktivitetStatus: { kode: aktivitetStatus, kodeverk: 'AKTIVITET_STATUS'  },
+  inntektskategori: { kode: inntektskategori, kodeverk: 'INNTEKTSKATEGORI' },
 });
 
 const standardFaktaArbeidstakerAndel = {
   ...lagAndel(1, aktivitetStatuser.ARBEIDSTAKER, inntektskategorier.ARBEIDSTAKER),
-  visningsnavn: 'Bedriften (12345678)',
   belopReadOnly: 30000,
   lagtTilAvSaksbehandler: false,
   arbeidsforhold: {
-    arbeidsgiverId: '12345678',
+    arbeidsgiverIdent: '12345678',
     arbeidsforholdId: null,
     startdato: '01.01.2019',
     opphoersdato: null,
@@ -146,7 +167,7 @@ const standardFaktaArbeidstakerAndel2 = {
   belopReadOnly: 30000,
   lagtTilAvSaksbehandler: false,
   arbeidsforhold: {
-    arbeidsgiverId: '12345679',
+    arbeidsgiverIdent: '12345679',
     arbeidsforholdId: null,
     startdato: '01.01.2019',
     opphoersdato: '01.01.2020',
@@ -159,7 +180,7 @@ const tidsbegrensetFaktaArbeidstakerAndel = {
   belopReadOnly: 30000,
   lagtTilAvSaksbehandler: false,
   arbeidsforhold: {
-    arbeidsgiverId: '12345671',
+    arbeidsgiverIdent: '12345671',
     arbeidsforholdId: null,
     startdato: '01.09.2019',
     opphoersdato: '01.01.2020',
@@ -172,7 +193,7 @@ const etterlønnSluttpakkeFaktaArbeidstakerAndel = {
   belopReadOnly: 30000,
   lagtTilAvSaksbehandler: false,
   arbeidsforhold: {
-    arbeidsgiverId: '795349533',
+    arbeidsgiverIdent: '795349533',
     arbeidsforholdId: null,
     startdato: '01.09.2019',
     opphoersdato: null,
@@ -182,31 +203,26 @@ const etterlønnSluttpakkeFaktaArbeidstakerAndel = {
 
 const standardFaktaFrilansAndel = {
   ...lagAndel(2, aktivitetStatuser.FRILANSER, inntektskategorier.FRILANSER),
-  visningsnavn: 'Frilans',
   belopReadOnly: 10000,
   lagtTilAvSaksbehandler: false,
 };
 const standardFaktaMilitærAndel = {
   ...lagAndel(5, aktivitetStatuser.MILITAER_ELLER_SIVIL, inntektskategorier.ARBEIDSTAKER),
-  visningsnavn: 'Militær- eller sivilforsvarstjeneste',
   belopReadOnly: 10000,
   lagtTilAvSaksbehandler: false,
 };
 const standardFaktaYtelseAndel = {
   ...lagAndel(8, aktivitetStatuser.KUN_YTELSE, inntektskategorier.UDEFINERT),
-  visningsnavn: 'Ytelse',
   belopReadOnly: 10000,
   lagtTilAvSaksbehandler: false,
 };
 const standardFaktaNæringAndel = {
   ...lagAndel(9, aktivitetStatuser.SELVSTENDIG_NAERINGSDRIVENDE, inntektskategorier.SELVSTENDIG_NAERINGSDRIVENDE),
-  visningsnavn: 'Selvstendig næringsdrivende',
   belopReadOnly: 10000,
   lagtTilAvSaksbehandler: false,
 };
 const standardFaktaAAPAndel = {
   ...lagAndel(10, aktivitetStatuser.ARBEIDSAVKLARINGSPENGER, inntektskategorier.ARBEIDSAVKLARINGSPENGER),
-  visningsnavn: 'Arbeidsavklaringspenger',
   belopReadOnly: 10000,
   lagtTilAvSaksbehandler: false,
 };
@@ -220,6 +236,25 @@ export default {
   component: BeregningFaktaIndex,
   decorators: [withKnobs, withReduxProvider],
 };
+
+export const PrivatpersonSomArbeidsgiverOgFrilans = () => (
+  <BeregningFaktaIndex
+    behandling={behPrivatArbeidsgiver}
+    beregningsgrunnlag={bgPrivatArbeidsgiver}
+    aksjonspunkter={apKunYtelse}
+    erOverstyrer
+    alleKodeverk={alleKodeverk}
+    arbeidsgiverOpplysningerPerId={arbeidsgivere}
+    alleMerknaderFraBeslutter={{
+      [aksjonspunktCodes.VURDER_FAKTA_FOR_ATFL_SN]: object('merknaderFraBeslutter', merknaderFraBeslutter),
+    }}
+    submitCallback={action('button-click')}
+    readOnly={boolean('readOnly', false)}
+    harApneAksjonspunkter={boolean('harApneAksjonspunkter', true)}
+    submittable={boolean('submittable', true)}
+  />
+);
+
 
 export const KunYtelsePåSkjæringstidspunktet = () => (
   <BeregningFaktaIndex
@@ -290,7 +325,20 @@ export const AvklarAktiviteterFullAAPOgAndreAktiviteter = () => {
     tom: '01-04-2020',
   };
   const aktiviteter = [aapAktivitet, arbeidsAktivitet];
-  const beregningsgrunnlag = lagBeregningsgrunnlagAvklarAktiviteter(aktiviteter);
+  const avklaringsbehov = [
+    {
+      definisjon: {
+        kode: aksjonspunktCodes.AVKLAR_AKTIVITETER,
+      },
+      status: {
+        kode: aksjonspunktStatus.OPPRETTET,
+      },
+      begrunnelse: undefined,
+      kanLoses: true,
+      erAktivt: true,
+    },
+  ];
+  const beregningsgrunnlag = lagBeregningsgrunnlagAvklarAktiviteter(aktiviteter, avklaringsbehov);
 
   return (
     <BeregningFaktaIndex
@@ -299,19 +347,7 @@ export const AvklarAktiviteterFullAAPOgAndreAktiviteter = () => {
         Object.assign(object('beregningsgrunnlag', beregningsgrunnlag)),
         Object.assign(object('beregningsgrunnlag', beregningsgrunnlag)),
       ]}
-      aksjonspunkter={[
-        {
-          definisjon: {
-            kode: aksjonspunktCodes.AVKLAR_AKTIVITETER,
-          },
-          status: {
-            kode: aksjonspunktStatus.OPPRETTET,
-          },
-          begrunnelse: undefined,
-          kanLoses: true,
-          erAktivt: true,
-        },
-      ]}
+      aksjonspunkter={avklaringsbehov}
       erOverstyrer={false}
       alleKodeverk={alleKodeverk}
       arbeidsgiverOpplysningerPerId={arbeidsgivere}
@@ -353,8 +389,7 @@ export const AvklartAktiviteterMedAksjonspunktIFaktaAvklaring = () => {
   const andelerForFaktaOmBeregning = [standardFaktaArbeidstakerAndel, standardFaktaAAPAndel];
   const refusjonskravSomKommerForSentListe = [
     {
-      arbeidsgiverId: standardFaktaArbeidstakerAndel.arbeidsforhold.arbeidsforholdId,
-      arbeidsgiverVisningsnavn: standardFaktaArbeidstakerAndel.visningsnavn,
+      arbeidsgiverIdent: standardFaktaArbeidstakerAndel.arbeidsforhold.arbeidsgiverIdent,
     },
   ];
   const faktaOmBeregning = {
@@ -371,35 +406,36 @@ export const AvklartAktiviteterMedAksjonspunktIFaktaAvklaring = () => {
       ],
     },
   };
-  const beregningsgrunnlag = lagBeregningsgrunnlag(andeler, faktaOmBeregning);
+  const avklaringsbehov = [
+    {
+      definisjon: {
+        kode: aksjonspunktCodes.AVKLAR_AKTIVITETER,
+      },
+      status: {
+        kode: aksjonspunktStatus.UTFORT,
+      },
+      begrunnelse: 'En begrunnelse for at arbeidsforholdet var gyldig.',
+      kanLoses: true,
+      erAktivt: true,
+    },
+    {
+      definisjon: {
+        kode: aksjonspunktCodes.VURDER_FAKTA_FOR_ATFL_SN,
+      },
+      status: {
+        kode: aksjonspunktStatus.OPPRETTET,
+      },
+      begrunnelse: undefined,
+      kanLoses: true,
+      erAktivt: true,
+    },
+  ];
+  const beregningsgrunnlag = lagBeregningsgrunnlag(andeler, faktaOmBeregning, avklaringsbehov);
   return (
     <BeregningFaktaIndex
       behandling={behandling}
       beregningsgrunnlag={[object('beregningsgrunnlag', beregningsgrunnlag)]}
-      aksjonspunkter={[
-        {
-          definisjon: {
-            kode: aksjonspunktCodes.AVKLAR_AKTIVITETER,
-          },
-          status: {
-            kode: aksjonspunktStatus.UTFORT,
-          },
-          begrunnelse: 'En begrunnelse for at arbeidsforholdet var gyldig.',
-          kanLoses: true,
-          erAktivt: true,
-        },
-        {
-          definisjon: {
-            kode: aksjonspunktCodes.VURDER_FAKTA_FOR_ATFL_SN,
-          },
-          status: {
-            kode: aksjonspunktStatus.OPPRETTET,
-          },
-          begrunnelse: undefined,
-          kanLoses: true,
-          erAktivt: true,
-        },
-      ]}
+      aksjonspunkter={avklaringsbehov}
       erOverstyrer={false}
       alleKodeverk={alleKodeverk}
       arbeidsgiverOpplysningerPerId={arbeidsgivere}
@@ -427,7 +463,7 @@ export const FrilansOgArbeidsforholdMedLønnendringOgNyoppstartet = () => {
     erNyoppstartet: null,
   };
   const andeler = [arbeidstakerBeregningsgrunnlagAndel, frilansBeregningsgrunnlagAndel];
-  const andelerForFaktaOmBeregning = [standardFaktaArbeidstakerAndel, standardFaktaFrilansAndel];
+  const andelerForFaktaOmBeregning = [standardFaktaArbeidstakerAndel, standardFaktaFrilansAndel ];
   const vurderMottarYtelse = {
     erFrilans: true,
     frilansMottarYtelse: null,
@@ -443,25 +479,13 @@ export const FrilansOgArbeidsforholdMedLønnendringOgNyoppstartet = () => {
       skjæringstidspunkt,
     },
   };
-  const beregningsgrunnlag = lagBeregningsgrunnlag(andeler, faktaOmBeregning);
+  const beregningsgrunnlag = lagBeregningsgrunnlag(andeler, faktaOmBeregning, OPPRETTET_FAKTA_AVKLARING);
 
   return (
     <BeregningFaktaIndex
       behandling={behandling}
       beregningsgrunnlag={[object('beregningsgrunnlag', beregningsgrunnlag)]}
-      aksjonspunkter={[
-        {
-          definisjon: {
-            kode: aksjonspunktCodes.VURDER_FAKTA_FOR_ATFL_SN,
-          },
-          status: {
-            kode: aksjonspunktStatus.OPPRETTET,
-          },
-          begrunnelse: undefined,
-          kanLoses: true,
-          erAktivt: true,
-        },
-      ]}
+      aksjonspunkter={OPPRETTET_FAKTA_AVKLARING}
       erOverstyrer={false}
       alleKodeverk={alleKodeverk}
       arbeidsgiverOpplysningerPerId={arbeidsgivere}
@@ -491,8 +515,7 @@ export const KunArbeidstakerMedVurderingSentRefusjonskrav = () => {
   const andelerForFaktaOmBeregning = [standardFaktaArbeidstakerAndel, standardFaktaArbeidstakerAndel2];
   const refusjonskravSomKommerForSentListe = [
     {
-      arbeidsgiverId: standardFaktaArbeidstakerAndel.arbeidsforhold.arbeidsforholdId,
-      arbeidsgiverVisningsnavn: standardFaktaArbeidstakerAndel.visningsnavn,
+      arbeidsgiverIdent: standardFaktaArbeidstakerAndel.arbeidsforhold.arbeidsgiverIdent,
     },
   ];
   const faktaOmBeregning = {
@@ -503,25 +526,13 @@ export const KunArbeidstakerMedVurderingSentRefusjonskrav = () => {
       skjæringstidspunkt,
     },
   };
-  const beregningsgrunnlag = lagBeregningsgrunnlag(andeler, faktaOmBeregning);
+  const beregningsgrunnlag = lagBeregningsgrunnlag(andeler, faktaOmBeregning, OPPRETTET_FAKTA_AVKLARING);
 
   return (
     <BeregningFaktaIndex
       behandling={behandling}
       beregningsgrunnlag={[object('beregningsgrunnlag', beregningsgrunnlag)]}
-      aksjonspunkter={[
-        {
-          definisjon: {
-            kode: aksjonspunktCodes.VURDER_FAKTA_FOR_ATFL_SN,
-          },
-          status: {
-            kode: aksjonspunktStatus.OPPRETTET,
-          },
-          begrunnelse: undefined,
-          kanLoses: true,
-          erAktivt: true,
-        },
-      ]}
+      aksjonspunkter={OPPRETTET_FAKTA_AVKLARING}
       erOverstyrer={false}
       alleKodeverk={alleKodeverk}
       arbeidsgiverOpplysningerPerId={arbeidsgivere}
@@ -566,24 +577,12 @@ export const FrilansOgArbeidsforholdISammeOrganisasjon = () => {
       skjæringstidspunkt,
     },
   };
-  const beregningsgrunnlag = lagBeregningsgrunnlag(andeler, faktaOmBeregning);
+  const beregningsgrunnlag = lagBeregningsgrunnlag(andeler, faktaOmBeregning, OPPRETTET_FAKTA_AVKLARING);
   return (
     <BeregningFaktaIndex
       behandling={behandling}
       beregningsgrunnlag={[object('beregningsgrunnlag', beregningsgrunnlag)]}
-      aksjonspunkter={[
-        {
-          definisjon: {
-            kode: aksjonspunktCodes.VURDER_FAKTA_FOR_ATFL_SN,
-          },
-          status: {
-            kode: aksjonspunktStatus.OPPRETTET,
-          },
-          begrunnelse: undefined,
-          kanLoses: true,
-          erAktivt: true,
-        },
-      ]}
+      aksjonspunkter={OPPRETTET_FAKTA_AVKLARING}
       erOverstyrer={false}
       alleKodeverk={alleKodeverk}
       arbeidsgiverOpplysningerPerId={arbeidsgivere}
@@ -613,24 +612,12 @@ export const VurderingAvMilitær = () => {
       skjæringstidspunkt,
     },
   };
-  const beregningsgrunnlag = lagBeregningsgrunnlag(andeler, faktaOmBeregning);
+  const beregningsgrunnlag = lagBeregningsgrunnlag(andeler, faktaOmBeregning, OPPRETTET_FAKTA_AVKLARING);
   return (
     <BeregningFaktaIndex
       behandling={behandling}
       beregningsgrunnlag={[object('beregningsgrunnlag', beregningsgrunnlag)]}
-      aksjonspunkter={[
-        {
-          definisjon: {
-            kode: aksjonspunktCodes.VURDER_FAKTA_FOR_ATFL_SN,
-          },
-          status: {
-            kode: aksjonspunktStatus.OPPRETTET,
-          },
-          begrunnelse: undefined,
-          kanLoses: true,
-          erAktivt: true,
-        },
-      ]}
+      aksjonspunkter={OPPRETTET_FAKTA_AVKLARING}
       erOverstyrer={false}
       alleKodeverk={alleKodeverk}
       arbeidsgiverOpplysningerPerId={arbeidsgivere}
@@ -680,24 +667,12 @@ export const FrilansOgTidsbegrensetArbeidsforholdISammeOrganisasjon = () => {
       skjæringstidspunkt,
     },
   };
-  const beregningsgrunnlag = lagBeregningsgrunnlag(andeler, faktaOmBeregning);
+  const beregningsgrunnlag = lagBeregningsgrunnlag(andeler, faktaOmBeregning, OPPRETTET_FAKTA_AVKLARING);
   return (
     <BeregningFaktaIndex
       behandling={behandling}
       beregningsgrunnlag={[object('beregningsgrunnlag', beregningsgrunnlag)]}
-      aksjonspunkter={[
-        {
-          definisjon: {
-            kode: aksjonspunktCodes.VURDER_FAKTA_FOR_ATFL_SN,
-          },
-          status: {
-            kode: aksjonspunktStatus.OPPRETTET,
-          },
-          begrunnelse: undefined,
-          kanLoses: true,
-          erAktivt: true,
-        },
-      ]}
+      aksjonspunkter={OPPRETTET_FAKTA_AVKLARING}
       erOverstyrer={false}
       alleKodeverk={alleKodeverk}
       arbeidsgiverOpplysningerPerId={arbeidsgivere}
@@ -729,24 +704,12 @@ export const KunTidsbegrensetArbeidsforhold = () => {
       skjæringstidspunkt,
     },
   };
-  const beregningsgrunnlag = lagBeregningsgrunnlag(andeler, faktaOmBeregning);
+  const beregningsgrunnlag = lagBeregningsgrunnlag(andeler, faktaOmBeregning, OPPRETTET_FAKTA_AVKLARING);
   return (
     <BeregningFaktaIndex
       behandling={behandling}
       beregningsgrunnlag={[object('beregningsgrunnlag', beregningsgrunnlag)]}
-      aksjonspunkter={[
-        {
-          definisjon: {
-            kode: aksjonspunktCodes.VURDER_FAKTA_FOR_ATFL_SN,
-          },
-          status: {
-            kode: aksjonspunktStatus.OPPRETTET,
-          },
-          begrunnelse: undefined,
-          kanLoses: true,
-          erAktivt: true,
-        },
-      ]}
+      aksjonspunkter={OPPRETTET_FAKTA_AVKLARING}
       erOverstyrer={false}
       alleKodeverk={alleKodeverk}
       arbeidsgiverOpplysningerPerId={arbeidsgivere}
@@ -777,24 +740,12 @@ export const VurderingAvEtterlønnSluttpakke = () => {
       skjæringstidspunkt,
     },
   };
-  const beregningsgrunnlag = lagBeregningsgrunnlag(andeler, faktaOmBeregning);
+  const beregningsgrunnlag = lagBeregningsgrunnlag(andeler, faktaOmBeregning, OPPRETTET_FAKTA_AVKLARING);
   return (
     <BeregningFaktaIndex
       behandling={behandling}
       beregningsgrunnlag={[object('beregningsgrunnlag', beregningsgrunnlag)]}
-      aksjonspunkter={[
-        {
-          definisjon: {
-            kode: aksjonspunktCodes.VURDER_FAKTA_FOR_ATFL_SN,
-          },
-          status: {
-            kode: aksjonspunktStatus.OPPRETTET,
-          },
-          begrunnelse: undefined,
-          kanLoses: true,
-          erAktivt: true,
-        },
-      ]}
+      aksjonspunkter={OPPRETTET_FAKTA_AVKLARING}
       erOverstyrer={false}
       alleKodeverk={alleKodeverk}
       arbeidsgiverOpplysningerPerId={arbeidsgivere}
@@ -829,24 +780,12 @@ export const FastsettingAvBeregningsgrunnlagForKunYtelse = () => {
       skjæringstidspunkt,
     },
   };
-  const beregningsgrunnlag = lagBeregningsgrunnlag(andeler, faktaOmBeregning);
+  const beregningsgrunnlag = lagBeregningsgrunnlag(andeler, faktaOmBeregning, OPPRETTET_FAKTA_AVKLARING);
   return (
     <BeregningFaktaIndex
       behandling={behandling}
       beregningsgrunnlag={[object('beregningsgrunnlag', beregningsgrunnlag)]}
-      aksjonspunkter={[
-        {
-          definisjon: {
-            kode: aksjonspunktCodes.VURDER_FAKTA_FOR_ATFL_SN,
-          },
-          status: {
-            kode: aksjonspunktStatus.OPPRETTET,
-          },
-          begrunnelse: undefined,
-          kanLoses: true,
-          erAktivt: true,
-        },
-      ]}
+      aksjonspunkter={OPPRETTET_FAKTA_AVKLARING}
       erOverstyrer={false}
       alleKodeverk={alleKodeverk}
       arbeidsgiverOpplysningerPerId={arbeidsgivere}
@@ -876,24 +815,12 @@ export const SelvstendigNæringNyIArbeidslivet = () => {
       skjæringstidspunkt,
     },
   };
-  const beregningsgrunnlag = lagBeregningsgrunnlag(andeler, faktaOmBeregning);
+  const beregningsgrunnlag = lagBeregningsgrunnlag(andeler, faktaOmBeregning, OPPRETTET_FAKTA_AVKLARING);
   return (
     <BeregningFaktaIndex
       behandling={behandling}
       beregningsgrunnlag={[object('beregningsgrunnlag', beregningsgrunnlag)]}
-      aksjonspunkter={[
-        {
-          definisjon: {
-            kode: aksjonspunktCodes.VURDER_FAKTA_FOR_ATFL_SN,
-          },
-          status: {
-            kode: aksjonspunktStatus.OPPRETTET,
-          },
-          begrunnelse: undefined,
-          kanLoses: true,
-          erAktivt: true,
-        },
-      ]}
+      aksjonspunkter={OPPRETTET_FAKTA_AVKLARING}
       erOverstyrer={false}
       alleKodeverk={alleKodeverk}
       arbeidsgiverOpplysningerPerId={arbeidsgivere}
@@ -1035,8 +962,7 @@ export const KombinasjonstestForFaktapanel = () => {
   ];
   const refusjonskravSomKommerForSentListe = [
     {
-      arbeidsgiverId: standardFaktaArbeidstakerAndel.arbeidsforhold.arbeidsforholdId,
-      arbeidsgiverVisningsnavn: standardFaktaArbeidstakerAndel.visningsnavn,
+      arbeidsgiverIdent: standardFaktaArbeidstakerAndel.arbeidsforhold.arbeidsgiverIdent,
     },
   ];
   const vurderMottarYtelse = {

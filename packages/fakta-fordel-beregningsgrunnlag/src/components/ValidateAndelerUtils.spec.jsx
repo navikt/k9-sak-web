@@ -3,7 +3,6 @@ import { isRequiredMessage } from '@fpsak-frontend/utils';
 import {
   compareAndeler,
   kanIkkjeHaNullBeregningsgrunnlagError,
-  skalIkkjeVereHoegereEnnRefusjonFraInntektsmelding,
   skalVereLikFordelingMessage,
   tomErrorMessage,
   ulikeAndelerErrorMessage,
@@ -11,7 +10,6 @@ import {
   validateAndeler,
   validateFastsattBelop,
   validateSumFastsattBelop,
-  validateTotalRefusjonPrArbeidsforhold,
   validateUlikeAndeler,
 } from './ValidateAndelerUtils';
 
@@ -39,136 +37,6 @@ const arbeidsgiverOpplysningerPerId = {
 };
 
 describe('<ValidateAndelerUtils>', () => {
-  it('skal ikkje gi error når total refusjon er lavere enn inntektsmelding', () => {
-    const arbeidsgiverAndersen = {
-      arbeidsforholdId: '89r2hf923',
-      arbeidsgiverId: '36363463463',
-    };
-    const andeler = [
-      {
-        ...arbeidsgiverAndersen,
-        refusjonskrav: '10 000',
-        refusjonskravFraInntektsmelding: 20000,
-      },
-      {
-        ...arbeidsgiverAndersen,
-        refusjonskrav: '5 000',
-        refusjonskravFraInntektsmelding: 0,
-      },
-      {
-        arbeidsforholdId: '43r34h',
-        refusjonskrav: '40 000',
-        refusjonskravFraInntektsmelding: 40000,
-        arbeidsgiverId: '658568568',
-      },
-      {
-        arbeidsforholdId: '',
-        refusjonskrav: null,
-        refusjonskravFraInntektsmelding: 0,
-      },
-    ];
-    const error = validateTotalRefusjonPrArbeidsforhold(andeler, arbeidsgiverOpplysningerPerId);
-    expect(error).to.equal(null);
-  });
-
-  it('skal ikkje gi error når total refusjon er lavere enn inntektsmelding for arbeidsforholdId lik null', () => {
-    const arbeidsgiverAndersen = {
-      arbeidsforholdId: null,
-      arbeidsgiverId: '36363463463',
-    };
-    const andeler = [
-      {
-        ...arbeidsgiverAndersen,
-        refusjonskrav: '10 000',
-        refusjonskravFraInntektsmelding: 20000,
-      },
-      {
-        ...arbeidsgiverAndersen,
-        refusjonskrav: '5 000',
-        refusjonskravFraInntektsmelding: 0,
-      },
-      {
-        arbeidsforholdId: null,
-        refusjonskrav: '40 000',
-        refusjonskravFraInntektsmelding: 40000,
-        arbeidsgiverId: '658568568',
-      },
-      {
-        arbeidsforholdId: '',
-        refusjonskrav: null,
-        refusjonskravFraInntektsmelding: 0,
-      },
-    ];
-    const error = validateTotalRefusjonPrArbeidsforhold(andeler, arbeidsgiverOpplysningerPerId);
-    expect(error).to.equal(null);
-  });
-
-  it('skal ikkje gi error når total refusjon er lik inntektsmelding', () => {
-    const arbeidsgiverAndersen = {
-      arbeidsforholdId: '89r2hf923',
-      arbeidsgiverId: '36363463463',
-    };
-    const andeler = [
-      {
-        ...arbeidsgiverAndersen,
-        refusjonskrav: '10 000',
-        refusjonskravFraInntektsmelding: 20000,
-      },
-      {
-        ...arbeidsgiverAndersen,
-        refusjonskrav: '10 000',
-        refusjonskravFraInntektsmelding: 0,
-      },
-      {
-        arbeidsforholdId: '43r34h',
-        refusjonskrav: '40 000',
-        refusjonskravFraInntektsmelding: 40000,
-        arbeidsgiverId: '658568568',
-      },
-      {
-        arbeidsforholdId: '',
-        refusjonskrav: null,
-        refusjonskravFraInntektsmelding: 0,
-      },
-    ];
-    const error = validateTotalRefusjonPrArbeidsforhold(andeler, arbeidsgiverOpplysningerPerId);
-    expect(error).to.equal(null);
-  });
-
-  it('skal gi error når total refusjon høyere enn inntektsmelding', () => {
-    const arbeidsgiverAndersen = {
-      arbeidsforholdId: '89r2hf923',
-      arbeidsgiverId: '36363463463',
-    };
-    const andeler = [
-      {
-        ...arbeidsgiverAndersen,
-        refusjonskrav: '10 000',
-        refusjonskravFraInntektsmelding: 20000,
-      },
-      {
-        ...arbeidsgiverAndersen,
-        refusjonskrav: '20 000',
-        refusjonskravFraInntektsmelding: 0,
-      },
-      {
-        arbeidsforholdId: '43r34h',
-        refusjonskrav: '40 000',
-        refusjonskravFraInntektsmelding: 40000,
-        arbeidsgiverId: '658568568',
-      },
-      {
-        arbeidsforholdId: '',
-        refusjonskrav: null,
-        refusjonskravFraInntektsmelding: 0,
-      },
-    ];
-    const arbeidsgiverString = 'Andersen flyttebyrå (36363463463) ...f923';
-    const error = validateTotalRefusjonPrArbeidsforhold(andeler, arbeidsgiverOpplysningerPerId);
-    const expected = skalIkkjeVereHoegereEnnRefusjonFraInntektsmelding(arbeidsgiverString);
-    expect(error.id).to.equal(expected.id);
-    expect(error.arbeidsgiver).to.equal(expected.arbeidsgiver);
-  });
 
   it('skal returnere 0 for lik andelsinfo og lik inntektskategori', () => {
     const andeler = [
@@ -789,7 +657,7 @@ describe('<ValidateAndelerUtils>', () => {
         harPeriodeAarsakGraderingEllerRefusjon: true,
         andel: 'Arbeidsgiver 1',
         fastsattBelop: '10 000',
-        arbeidsgiverId: '2342353525',
+        arbeidsgiverIdent: '2342353525',
         arbeidsperiodeFom: '2016-01-01',
         arbeidsforholdId: '3r4h3uihr43',
         eksternArbeidsforholdId: '56789',
@@ -800,7 +668,7 @@ describe('<ValidateAndelerUtils>', () => {
         harPeriodeAarsakGraderingEllerRefusjon: true,
         andel: 'Arbeidsgiver 1',
         fastsattBelop: '20 000',
-        arbeidsgiverId: '2342353525',
+        arbeidsgiverIdent: '2342353525',
         arbeidsperiodeFom: '2016-01-01',
         arbeidsforholdId: '3r4h3uihr43',
         eksternArbeidsforholdId: '56789',
@@ -823,7 +691,7 @@ describe('<ValidateAndelerUtils>', () => {
   it('skal validere mot beregningsgrunnlagPrAar for arbeidsforhold som tilkommer før skjæringstidspunktet', () => {
     const andelValue = {
       andel: 'Arbeidsgiver 1',
-      arbeidsgiverId: '2342353525',
+      arbeidsgiverIdent: '2342353525',
       arbeidsforholdId: '3r4h3uihr43',
       eksternArbeidsforholdId: '56789',
     };
@@ -847,7 +715,7 @@ describe('<ValidateAndelerUtils>', () => {
   it('skal ikkje validere mot beløp om det ikkje finnes ein matchende arbeidsforholdInntektMapping', () => {
     const andelValue = {
       andel: 'Arbeidsgiver 1',
-      arbeidsgiverId: '2342353525',
+      arbeidsgiverIdent: '2342353525',
       arbeidsforholdId: '3r4h3uihr43',
     };
     const inntektList = [
@@ -870,7 +738,7 @@ describe('<ValidateAndelerUtils>', () => {
   it('skal returnere required error om fastsatt beløp ikkje er satt', () => {
     const andelValue = {
       andel: 'Arbeidsgiver 1',
-      arbeidsgiverId: '2342353525',
+      arbeidsgiverIdent: '2342353525',
       arbeidsforholdId: '3r4h3uihr43',
       fastsattBelop: '',
     };

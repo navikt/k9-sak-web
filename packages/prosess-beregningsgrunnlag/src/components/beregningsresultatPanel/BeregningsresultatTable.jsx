@@ -5,7 +5,7 @@ import { FormattedMessage, injectIntl } from 'react-intl';
 import { connect } from 'react-redux';
 import moment from 'moment';
 import { createSelector } from 'reselect';
-import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
+import aktivitetStatus, { isStatusDagpenger } from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 
 import { DDMMYYYY_DATE_FORMAT, formatCurrencyNoKr, removeSpacesFromNumber } from '@fpsak-frontend/utils';
 import periodeAarsak from '@fpsak-frontend/kodeverk/src/periodeAarsak';
@@ -62,6 +62,10 @@ const hentAndelFraPeriode = (periode, andelType) => {
       .filter(andel => andel.aktivitetStatus.kode === aktivitetStatus.ARBEIDSTAKER)
       .filter(andel => andelErIkkeTilkommetEllerLagtTilAvSBH(andel));
   }
+  if (isStatusDagpenger(andelType)) {
+    return periode.beregningsgrunnlagPrStatusOgAndel
+      .find(andel => isStatusDagpenger(andel.aktivitetStatus.kode));
+  }
   return periode.beregningsgrunnlagPrStatusOgAndel.find(andel => andel.aktivitetStatus.kode === andelType);
 };
 const lagPeriodeHeader = (fom, tom) => (
@@ -85,6 +89,8 @@ const summertVerdiFraListeProp = (andeler, propNavn, altpropNavn) => {
   });
   return sum;
 };
+
+
 const opprettAndelElement = (periode, andelType, vilkarStatus) => {
   let inntekt;
   const andelElement = {};
@@ -95,6 +101,7 @@ const opprettAndelElement = (periode, andelType, vilkarStatus) => {
   }
   andelElement.ledetekst = 'Beregningsgrunnlag -';
   andelElement.erOverstyrt = false;
+  let strKey = '';
   switch (andelType) {
     case aktivitetStatus.ARBEIDSTAKER:
       skalFastsetteGrunnlag = andel.some(atAndel => atAndel.skalFastsetteGrunnlag === true);
@@ -114,6 +121,8 @@ const opprettAndelElement = (periode, andelType, vilkarStatus) => {
       } else {
         inntekt = summertVerdiFraListeProp(andel, 'bruttoPrAar');
       }
+      strKey = setTekstStrengKeyPavilkaarUtfallType(vilkarStatus, skalFastsetteGrunnlag);
+      andelElement.ledetekst = <FormattedMessage id={`Beregningsgrunnlag.BeregningTable.${strKey}.${andelType}`} />;
       break;
     case aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE:
       skalFastsetteGrunnlag = andel.skalFastsetteGrunnlag;
@@ -131,6 +140,8 @@ const opprettAndelElement = (periode, andelType, vilkarStatus) => {
       }
       // brukes for å sammeligne mot pensjonsgivende inntekt senere
       andelElement.pgiSnitt = andel && (andel.pgiSnitt || andel.pgiSnitt === 0) ? andel.pgiSnitt : undefined;
+      strKey = setTekstStrengKeyPavilkaarUtfallType(vilkarStatus, skalFastsetteGrunnlag);
+      andelElement.ledetekst = <FormattedMessage id={`Beregningsgrunnlag.BeregningTable.${strKey}.${andelType}`} />;
       break;
     default:
       if (skalFastsetteGrunnlag && vilkarStatus.kode !== vilkarUtfallType.IKKE_VURDERT) {
@@ -146,13 +157,13 @@ const opprettAndelElement = (periode, andelType, vilkarStatus) => {
         inntekt = andel && (andel.bruttoPrAar || andel.bruttoPrAar === 0) ? andel.bruttoPrAar : undefined;
       }
       skalFastsetteGrunnlag = andel.skalFastsetteGrunnlag;
+      strKey = setTekstStrengKeyPavilkaarUtfallType(vilkarStatus, skalFastsetteGrunnlag);
+      andelElement.ledetekst = <FormattedMessage id={`Beregningsgrunnlag.BeregningTable.${strKey}.${andel.aktivitetStatus.kode}`} />;
   }
   andelElement.skalFastsetteGrunnlag = skalFastsetteGrunnlag;
   if ((inntekt || inntekt === 0) && inntekt !== -1) {
     andelElement.verdi = inntekt;
   }
-  const strKey = setTekstStrengKeyPavilkaarUtfallType(vilkarStatus, skalFastsetteGrunnlag);
-  andelElement.ledetekst = <FormattedMessage id={`Beregningsgrunnlag.BeregningTable.${strKey}.${andelType}`} />;
   return andelElement;
 };
 const hentVerdiFraAndel = andel => {
@@ -325,6 +336,20 @@ const finnDagsats = (periode) => {
   return null;
 };
 
+const finnAktivitetStatusCombo = (aktivitetStatusList) => {
+  const resultList = []
+  aktivitetStatusList.sort((a, b) => (a.kode > b.kode ? 1 : -1))
+  .forEach((statuskode) => {
+    if (!resultList.includes(statuskode)) {
+      if (isStatusDagpenger(statuskode)) {
+        resultList.push(aktivitetStatus.DAGPENGER);
+      } else {
+        resultList.push(statuskode);
+      }
+    }}); // sorter alfabetisk
+  return resultList.map(andelKode => andelKode.kode).join('_');
+}
+
 export const createBeregningTableData = createSelector(
   [
     (state, ownProps) => ownProps.beregningsgrunnlagPerioder,
@@ -363,8 +388,7 @@ export const createBeregningTableData = createSelector(
       dagsatserRad.verdi = formatCurrencyNoKr(finnDagsats(periode));
       const rowsAndeler = [];
       const rowsForklaringer = [];
-      const sortedStatusList = aktivitetStatusList.sort((a, b) => (a.kode > b.kode ? 1 : -1)); // sorter alfabetisk
-      const aktivitetStatusKodeKombo = sortedStatusList.map(andelKode => andelKode.kode).join('_');
+      const aktivitetStatusKodeKombo = finnAktivitetStatusCombo(aktivitetStatusList);
       switch (aktivitetStatusKodeKombo) {
         case 'AT_SN': {
           settVisningsRaderForATSN(periode, rowsAndeler, rowsForklaringer, vilkarStatus);

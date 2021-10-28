@@ -18,7 +18,7 @@ export const getHeaderTextCodes = (skalVisePeriode, skalViseRefusjon) => {
   if (skalVisePeriode) {
     headerCodes.push('BeregningInfoPanel.FordelingBG.Arbeidsperiode');
   }
-  headerCodes.push('BeregningInfoPanel.FordelingBG.Fordeling');
+  headerCodes.push('BeregningInfoPanel.FordelingBG.Inntekt');
   if (skalViseRefusjon) {
     headerCodes.push('BeregningInfoPanel.FordelingBG.Refusjonskrav');
   }

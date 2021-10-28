@@ -12,7 +12,7 @@ import { erNyoppstartetFLField } from './vurderOgFastsettATFL/forms/Nyoppstartet
 import { harEtterlonnSluttpakkeField } from './vurderOgFastsettATFL/forms/VurderEtterlonnSluttpakkeForm';
 import erAndelUtenReferanseOgGrunnlagHarAndelForSammeArbeidsgiverMedReferanse from './vurderOgFastsettATFL/forms/AvsluttetArbeidsforhold';
 import { andelsnrMottarYtelseMap } from './vurderOgFastsettATFL/forms/VurderMottarYtelseUtils';
-import { getFormValuesForBeregning } from '../BeregningFormUtils';
+import { getFormValuesForBeregning, getFormValuesFaktaList } from '../BeregningFormUtils';
 import { MANUELL_OVERSTYRING_BEREGNINGSGRUNNLAG_FIELD } from './InntektstabellPanel';
 
 export const INNTEKT_FIELD_ARRAY_NAME = 'inntektFieldArray';
@@ -23,7 +23,7 @@ const preutfyllInntektskategori = andel =>
     : '';
 
 export const setArbeidsforholdInitialValues = andel => ({
-  arbeidsgiverId: andel.arbeidsforhold ? andel.arbeidsforhold.arbeidsgiverId : null,
+  arbeidsgiverIdent: andel.arbeidsforhold ? andel.arbeidsforhold.arbeidsgiverIdent : null,
   arbeidsforholdId: andel.arbeidsforhold ? andel.arbeidsforhold.arbeidsforholdId : null,
   arbeidsperiodeFom: andel.arbeidsforhold ? andel.arbeidsforhold.startdato : '',
   arbeidsperiodeTom: andel.arbeidsforhold ? andel.arbeidsforhold.opphoersdato : '',
@@ -137,7 +137,7 @@ const erAndelKunstigArbeidsforhold = (andel, beregningsgrunnlag) => {
   const lagtTilAvBruker = firstBgPeriod.beregningsgrunnlagPrStatusOgAndel.find(
     a =>
       a.arbeidsforhold &&
-      a.arbeidsforhold.arbeidsgiverId === andel.arbeidsgiverId &&
+      a.arbeidsforhold.arbeidsgiverIdent === andel.arbeidsgiverIdent &&
       a.arbeidsforhold.organisasjonstype &&
       a.arbeidsforhold.organisasjonstype.kode === organisasjonstyper.KUNSTIG,
   );
@@ -197,7 +197,8 @@ const skalKunneEndreTotaltBeregningsgrunnlag = (values, faktaOmBeregning, beregn
 
 export const erOverstyring = values => !!values && values[MANUELL_OVERSTYRING_BEREGNINGSGRUNNLAG_FIELD] === true;
 
-export const erOverstyringAvBeregningsgrunnlag = createSelector([getFormValuesForBeregning], erOverstyring);
+export const erOverstyringAvBeregningsgrunnlag = createSelector([getFormValuesFaktaList], 
+  (faktaList) => faktaList.some(erOverstyring));
 
 export const skalRedigereInntektForAndel = (values, faktaOmBeregning, beregningsgrunnlag) => andel =>
   erOverstyring(values) ||

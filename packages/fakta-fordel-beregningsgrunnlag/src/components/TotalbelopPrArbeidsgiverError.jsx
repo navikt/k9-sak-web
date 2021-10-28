@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { formatCurrencyNoKr, removeSpacesFromNumber } from '@fpsak-frontend/utils';
-import { createVisningsnavnForAktivitet } from './util/visningsnavnHelper';
+import createVisningsnavnForAktivitet from './util/createVisningsnavnForAktivitet';
 
 export const AAP_ARBEIDSGIVER_KEY = 'AAP_ARBEIDSGIVER_GRUNNLAG';
 
@@ -14,7 +14,7 @@ const BelopPrArbeidsgiverPropType = PropTypes.shape({
 });
 
 const finnArbeidsgiverNavn = (andel, identifikator, getKodeverknavn, arbeidsgiverOpplysningerPerId) => {
-  if (identifikator === AAP_ARBEIDSGIVER_KEY && !andel.arbeidsgiverId) {
+  if (identifikator === AAP_ARBEIDSGIVER_KEY && !andel.arbeidsgiverIdent) {
     return null;
   }
   return createVisningsnavnForAktivitet(andel, getKodeverknavn, arbeidsgiverOpplysningerPerId);

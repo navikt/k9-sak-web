@@ -4,7 +4,7 @@ import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 
 import { formatCurrencyNoKr, removeSpacesFromNumber } from '@fpsak-frontend/utils';
 
-import { createVisningsnavnForAktivitet } from './util/visningsnavnHelper';
+import createVisningsnavnForAktivitet from './util/createVisningsnavnForAktivitet';
 
 const nullOrUndefined = value => value === null || value === undefined;
 
@@ -59,14 +59,11 @@ const finnArbeidsgiverId = arbeidsforhold => {
   if (!arbeidsforhold) {
     return '';
   }
-  if (arbeidsforhold.aktørId) {
-    return arbeidsforhold.aktørId;
-  }
-  return arbeidsforhold.arbeidsgiverId ? arbeidsforhold.arbeidsgiverId : '';
+  return arbeidsforhold.arbeidsgiverIdent ? arbeidsforhold.arbeidsgiverIdent : '';
 };
 
 export const setArbeidsforholdInitialValues = andel => ({
-  arbeidsgiverId: finnArbeidsgiverId(andel.arbeidsforhold),
+  arbeidsgiverIdent: finnArbeidsgiverId(andel.arbeidsforhold),
   arbeidsforholdId:
     andel.arbeidsforhold && andel.arbeidsforhold.arbeidsforholdId !== 0 ? andel.arbeidsforhold.arbeidsforholdId : '',
   arbeidsperiodeFom: andel.arbeidsforhold ? andel.arbeidsforhold.startdato : '',

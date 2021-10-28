@@ -21,16 +21,14 @@ describe('<TotalbelopPrArbeidsgiverError>', () => {
   it('skal lage liste for to arbeidsforhold for samme arbeidsgiver', () => {
     const andeler = [
       {
-        arbeidsgiverNavn: 'Sopra Steria',
-        arbeidsgiverId: '33334444234123',
+        arbeidsgiverIdent: '33334444234123',
         arbeidsforholdId: null,
         fastsattBelop: '10 000',
         beregningsgrunnlagPrAar: '20 000',
         inntektskategori: 'ARBEIDSTAKER',
       },
       {
-        arbeidsgiverNavn: 'Sopra Steria',
-        arbeidsgiverId: '33334444234123',
+        arbeidsgiverIdent: '33334444234123',
         arbeidsforholdId: null,
         fastsattBelop: '20 000',
         inntektskategori: 'ARBEIDSTAKER',
@@ -59,8 +57,7 @@ describe('<TotalbelopPrArbeidsgiverError>', () => {
         inntektskategori: 'ARBEIDSAVKLARINGSPENGER',
       },
       {
-        arbeidsgiverNavn: 'Sopra Steria',
-        arbeidsgiverId: '33334444234123',
+        arbeidsgiverIdent: '33334444234123',
         arbeidsforholdId: null,
         fastsattBelop: '20 000',
         beregningsgrunnlagPrAar: '30 000',
@@ -94,8 +91,7 @@ describe('<TotalbelopPrArbeidsgiverError>', () => {
   it('skal ikkje lage liste for nytt arbeidsforhold', () => {
     const andeler = [
       {
-        arbeidsgiverNavn: 'Sopra Steria',
-        arbeidsgiverId: '33334444234123',
+        arbeidsgiverIdent: '33334444234123',
         arbeidsforholdId: null,
         fastsattBelop: '10 000',
         beregningsgrunnlagPrAar: '20 000',
@@ -103,8 +99,7 @@ describe('<TotalbelopPrArbeidsgiverError>', () => {
         nyttArbeidsforhold: true,
       },
       {
-        arbeidsgiverNavn: 'Sopra Steria',
-        arbeidsgiverId: '33334444234123',
+        arbeidsgiverIdent: '33334444234123',
         arbeidsforholdId: null,
         fastsattBelop: '20 000',
         inntektskategori: 'ARBEIDSTAKER',

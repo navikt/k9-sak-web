@@ -9,7 +9,7 @@ import { Table, TableRow, TableColumn, EditedIcon } from '@fpsak-frontend/shared
 import VurderAktiviteterTabell, { lagAktivitetFieldId, skalVurdereAktivitet } from './VurderAktiviteterTabell';
 
 const aktivitet1 = {
-  arbeidsgiverId: '384723894723',
+  arbeidsgiverIdent: '384723894723',
   fom: '2019-01-01',
   tom: null,
   skalBrukes: null,
@@ -17,9 +17,9 @@ const aktivitet1 = {
 };
 
 const aktivitet2 = {
-  arbeidsgiverId: '334534623342',
-  arbeidsforholdId: 'efj8343f34f',
+  arbeidsgiverIdent: '334534623342',
   eksternArbeidsforholdId: '123456',
+  arbeidsforholdId: '45fse23324',
   fom: '2019-01-01',
   tom: '2019-02-02',
   skalBrukes: true,
@@ -27,10 +27,9 @@ const aktivitet2 = {
 };
 
 const aktivitet3 = {
-  aktørIdString: '324234234234',
-  arbeidsgiverId: '1960-01-01',
-  arbeidsforholdId: 'efj8343f34f',
+  arbeidsgiverIdent: '324234234234',
   eksternArbeidsforholdId: '56789',
+  arbeidsforholdId: '63f3f32',
   fom: '2019-01-01',
   tom: '2019-02-02',
   skalBrukes: false,
@@ -38,7 +37,7 @@ const aktivitet3 = {
 };
 
 const aktivitetAAP = {
-  arbeidsgiverId: null,
+  arbeidsgiverIdent: null,
   arbeidsforholdType: { kode: opptjeningAktivitetType.AAP, kodeverk: 'OPPTJENING_AKTIVITET_TYPE' },
   fom: '2019-01-01',
   tom: '2020-02-02',
@@ -46,7 +45,7 @@ const aktivitetAAP = {
 };
 
 const aktivitetVentelonnVartpenger = {
-  arbeidsgiverId: null,
+  arbeidsgiverIdent: null,
   arbeidsforholdType: { kode: 'VENTELØNN_VARTPENGER', kodeverk: 'OPPTJENING_AKTIVITET_TYPE' },
   fom: '2019-01-01',
   tom: '2020-02-02',
@@ -69,12 +68,6 @@ const arbeidsgiverOpplysningerPerId = {
   324234234234: {
     identifikator: '324234234234',
     referanse: '324234234234',
-    navn: 'Arbeidsgiveren3',
-    fødselsdato: null,
-  },
-  '1960-01-01': {
-    identifikator: '1960-01-01',
-    referanse: '1960-01-01',
     navn: 'Arbeidsgiveren3',
     fødselsdato: null,
   },
@@ -249,17 +242,13 @@ describe('<VurderAktiviteterTabell>', () => {
     expect(idArbeid).to.equal(id1);
   });
 
-  const id2 = '334534623342efj8343f34f2019-01-01';
+  const id2 = '3345346233421234562019-01-01';
   it('skal lage id for arbeid med arbeidsforholdId', () => {
     const idArbeid = lagAktivitetFieldId(aktivitet2);
     expect(idArbeid).to.equal(id2);
   });
 
-  const id3 = '1960-01-01efj8343f34f2019-01-01';
-  it('skal lage id for arbeid med aktørId', () => {
-    const idArbeid = lagAktivitetFieldId(aktivitet3);
-    expect(idArbeid).to.equal(id3);
-  });
+  const id3 = '324234234234567892019-01-01';
 
   const idAAP = 'AAP2019-01-01';
   it('skal lage id for AAP', () => {
@@ -270,27 +259,22 @@ describe('<VurderAktiviteterTabell>', () => {
   it('skal bygge initial values', () => {
     const initialValues = VurderAktiviteterTabell.buildInitialValues(
       aktiviteter,
-      alleKodeverk,
       false,
       true,
-      arbeidsgiverOpplysningerPerId,
     );
-    expect(initialValues[id1].beregningAktivitetNavn).to.equal('Arbeidsgiveren (384723894723)');
+
     expect(initialValues[id1].fom).to.equal('2019-01-01');
     expect(initialValues[id1].tom).to.equal(null);
     expect(initialValues[id1].skalBrukes).to.equal(null);
 
-    expect(initialValues[id2].beregningAktivitetNavn).to.equal('Arbeidsgiveren2 (334534623342)...3456');
     expect(initialValues[id2].fom).to.equal('2019-01-01');
     expect(initialValues[id2].tom).to.equal('2019-02-02');
     expect(initialValues[id2].skalBrukes).to.equal(true);
 
-    expect(initialValues[id3].beregningAktivitetNavn).to.equal('Arbeidsgiveren3 (1960-01-01)...6789');
     expect(initialValues[id3].fom).to.equal('2019-01-01');
     expect(initialValues[id3].tom).to.equal('2019-02-02');
     expect(initialValues[id3].skalBrukes).to.equal(false);
 
-    expect(initialValues[idAAP].beregningAktivitetNavn).to.equal('Arbeidsavklaringspenger');
     expect(initialValues[idAAP].fom).to.equal('2019-01-01');
     expect(initialValues[idAAP].tom).to.equal('2020-02-02');
     expect(initialValues[idAAP].skalBrukes).to.equal(true);
@@ -299,27 +283,21 @@ describe('<VurderAktiviteterTabell>', () => {
   it('skal bygge initial values for overstyrer', () => {
     const initialValues = VurderAktiviteterTabell.buildInitialValues(
       aktiviteter,
-      alleKodeverk,
       false,
       false,
-      arbeidsgiverOpplysningerPerId,
     );
-    expect(initialValues[id1].beregningAktivitetNavn).to.equal('Arbeidsgiveren (384723894723)');
     expect(initialValues[id1].fom).to.equal('2019-01-01');
     expect(initialValues[id1].tom).to.equal(null);
     expect(initialValues[id1].skalBrukes).to.equal(true);
 
-    expect(initialValues[id2].beregningAktivitetNavn).to.equal('Arbeidsgiveren2 (334534623342)...3456');
     expect(initialValues[id2].fom).to.equal('2019-01-01');
     expect(initialValues[id2].tom).to.equal('2019-02-02');
     expect(initialValues[id2].skalBrukes).to.equal(true);
 
-    expect(initialValues[id3].beregningAktivitetNavn).to.equal('Arbeidsgiveren3 (1960-01-01)...6789');
     expect(initialValues[id3].fom).to.equal('2019-01-01');
     expect(initialValues[id3].tom).to.equal('2019-02-02');
     expect(initialValues[id3].skalBrukes).to.equal(false);
 
-    expect(initialValues[idAAP].beregningAktivitetNavn).to.equal('Arbeidsavklaringspenger');
     expect(initialValues[idAAP].fom).to.equal('2019-01-01');
     expect(initialValues[idAAP].tom).to.equal('2020-02-02');
     expect(initialValues[idAAP].skalBrukes).to.equal(true);
@@ -333,14 +311,12 @@ describe('<VurderAktiviteterTabell>', () => {
     values[idAAP] = { skalBrukes: true };
     const transformed = VurderAktiviteterTabell.transformValues(values, aktiviteter);
     expect(transformed.length).to.equal(2);
-    expect(transformed[0].oppdragsgiverOrg).to.equal('334534623342');
     expect(transformed[0].arbeidsforholdRef).to.equal(aktivitet2.arbeidsforholdId);
     expect(transformed[0].fom).to.equal('2019-01-01');
     expect(transformed[0].tom).to.equal('2019-02-02');
-    expect(transformed[0].arbeidsgiverIdentifikator).to.equal(null);
+    expect(transformed[0].arbeidsgiverIdentifikator).to.equal('334534623342');
     expect(transformed[0].skalBrukes).to.equal(false);
 
-    expect(transformed[1].oppdragsgiverOrg).to.equal(null);
     expect(transformed[1].arbeidsforholdRef).to.equal(aktivitet3.arbeidsforholdId);
     expect(transformed[1].fom).to.equal('2019-01-01');
     expect(transformed[1].tom).to.equal('2019-02-02');

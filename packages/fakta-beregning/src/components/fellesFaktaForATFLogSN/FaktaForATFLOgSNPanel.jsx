@@ -70,7 +70,8 @@ const getFaktaPanels = (
   avklaringsbehov,
   erOverstyrer,
   fieldArrayID,
-) => {
+  vilkaarPeriodeFieldArrayIndex
+  ) => {
   const faktaPanels = [];
   let hasShownPanel = false;
   tilfeller.forEach(tilfelle => {
@@ -84,6 +85,7 @@ const getFaktaPanels = (
             faktaOmBeregning={faktaOmBeregning}
             alleKodeverk={alleKodeverk}
             fieldArrayID={fieldArrayID}
+            arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
           />
         </React.Fragment>,
       );
@@ -118,6 +120,8 @@ const getFaktaPanels = (
             isAvklaringsbehovClosed={isAvklaringsbehovClosed}
             faktaOmBeregning={faktaOmBeregning}
             fieldArrayID={fieldArrayID}
+            alleKodeverk={alleKodeverk}
+            arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
           />
         </React.Fragment>,
       );
@@ -155,6 +159,7 @@ const getFaktaPanels = (
         erOverstyrer={erOverstyrer}
         avklaringsbehov={avklaringsbehov}
         fieldArrayID={fieldArrayID}
+        vilkaarPeriodeFieldArrayIndex={vilkaarPeriodeFieldArrayIndex}
       />
     </React.Fragment>,
   );
@@ -179,6 +184,7 @@ export const FaktaForATFLOgSNPanelImpl = ({
   avklaringsbehov,
   erOverstyrer,
   fieldArrayID,
+  vilkaarPeriodeFieldArrayIndex,
 }) => (
   <div>
     {getFaktaPanels(
@@ -194,6 +200,7 @@ export const FaktaForATFLOgSNPanelImpl = ({
       avklaringsbehov,
       erOverstyrer,
       fieldArrayID,
+      vilkaarPeriodeFieldArrayIndex,
     ).map(panelOrSpacer => panelOrSpacer)}
   </div>
 );
@@ -211,6 +218,7 @@ FaktaForATFLOgSNPanelImpl.propTypes = {
   avklaringsbehov: PropTypes.arrayOf(beregningAvklaringsbehovPropType).isRequired,
   erOverstyrer: PropTypes.bool.isRequired,
   fieldArrayID: PropTypes.string.isRequired,
+  vilkaarPeriodeFieldArrayIndex: PropTypes.number.isRequired,
 };
 
 const nyIArbeidslivetTransform = (vurderFaktaValues, values) => {
@@ -340,7 +348,7 @@ const mapStateToBuildInitialValuesProps = createStructuredSelector({
   },
   vurderMottarYtelse: (ownProps, beregningsgrunnlag) => beregningsgrunnlag?.faktaOmBeregning?.vurderMottarYtelse,
   alleKodeverk: ownProps => ownProps.alleKodeverk,
-  avklaringsbehov: ownProps => ownProps.avklaringsbehov,
+  avklaringsbehov: (ownProps, beregningsgrunnlag) => beregningsgrunnlag?.avklaringsbehov,
   faktaOmBeregning: (ownProps, beregningsgrunnlag) => beregningsgrunnlag?.faktaOmBeregning,
   arbeidsgiverOpplysningerPerId: ownProps => ownProps.arbeidsgiverOpplysningerPerId,
   refusjonskravSomKommerForSentListe: getArbeidsgiverInfoForRefusjonskravSomKommerForSent,
@@ -355,7 +363,7 @@ export const getBuildInitialValuesFaktaForATFLOgSN = createSelector(
     beregningsgrunnlag,
     vurderMottarYtelse: props.vurderMottarYtelse,
     kunYtelse: props.kunYtelse,
-    ...buildInitialValuesForTilfeller(props),
+    ...buildInitialValuesForTilfeller(props, beregningsgrunnlag),
   }),
 );
 

@@ -41,6 +41,7 @@ const {
 // Methods
 // ------------------------------------------------------------------------------------------ //
 
+
 const harPerioderMedAvsluttedeArbeidsforhold = allePerioder =>
   allePerioder.some(
     ({ periodeAarsaker }) =>
@@ -111,21 +112,19 @@ function leggPåSkjæringstidspunktPåAksjonspunktListe(aksjonspunktListe, skjæ
 
 export const transformValues = (
   values,
-  relevanteStatuser,
   alleAndelerIForstePeriode,
-  avklaringsbehov,
   allePerioder,
 ) => {
   const harTidsbegrensedeArbeidsforhold = harPerioderMedAvsluttedeArbeidsforhold(allePerioder);
   const aksjonspunkter = [];
   const { skjæringstidspunkt } = values;
   if (
-    harAvklaringsbehov(FASTSETT_BEREGNINGSGRUNNLAG_ARBEIDSTAKER_FRILANS, avklaringsbehov) &&
+    harAvklaringsbehov(FASTSETT_BEREGNINGSGRUNNLAG_ARBEIDSTAKER_FRILANS, values.avklaringsbehov) &&
     !harTidsbegrensedeArbeidsforhold
   ) {
     return leggPåSkjæringstidspunktPåAksjonspunktListe(
       aksjonspunkter.concat(
-        AksjonspunktBehandlerAT.transformValues(values, relevanteStatuser, alleAndelerIForstePeriode),
+        AksjonspunktBehandlerAT.transformValues(values, values.relevanteStatuser, alleAndelerIForstePeriode),
       ),
       skjæringstidspunkt,
     );
@@ -133,18 +132,18 @@ export const transformValues = (
   if (
     harAvklaringsbehov(
       VURDER_VARIG_ENDRET_ELLER_NYOPPSTARTET_NAERING_SELVSTENDIG_NAERINGSDRIVENDE,
-      avklaringsbehov,
+      values.avklaringsbehov,
     ) ||
-    harAvklaringsbehov(FASTSETT_BEREGNINGSGRUNNLAG_SN_NY_I_ARBEIDSLIVET, avklaringsbehov)
+    harAvklaringsbehov(FASTSETT_BEREGNINGSGRUNNLAG_SN_NY_I_ARBEIDSLIVET, values.avklaringsbehov)
   ) {
     return leggPåSkjæringstidspunktPåAksjonspunktListe(
-      aksjonspunkter.concat(VurderOgFastsettSN.transformValues(values, avklaringsbehov)),
+      aksjonspunkter.concat(VurderOgFastsettSN.transformValues(values, values.avklaringsbehov)),
       skjæringstidspunkt,
     );
   }
   if (
-    (harAvklaringsbehov(FASTSETT_BEREGNINGSGRUNNLAG_ARBEIDSTAKER_FRILANS, avklaringsbehov) ||
-      harAvklaringsbehov(FASTSETT_BEREGNINGSGRUNNLAG_TIDSBEGRENSET_ARBEIDSFORHOLD, avklaringsbehov)) &&
+    (harAvklaringsbehov(FASTSETT_BEREGNINGSGRUNNLAG_ARBEIDSTAKER_FRILANS, values.avklaringsbehov) ||
+      harAvklaringsbehov(FASTSETT_BEREGNINGSGRUNNLAG_TIDSBEGRENSET_ARBEIDSFORHOLD, values.avklaringsbehov)) &&
     harTidsbegrensedeArbeidsforhold
   ) {
     return leggPåSkjæringstidspunktPåAksjonspunktListe(

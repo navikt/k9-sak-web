@@ -25,9 +25,7 @@ const findAvklaringsbehovMedBegrunnelse = (avklaringsbehov, kode) =>
 const buildInitialValues = (
   avklaringsbehov,
   avklarAktiviteter,
-  alleKodeverk,
   aktivtBeregningsgrunnlagIndex,
-  arbeidsgiverOpplysningerPerId,
 ) => {
   const harAvklarAksjonspunkt = harAvklaringsbehov(AVKLAR_AKTIVITETER, avklaringsbehov);
   const erOverstyrt = harAvklaringsbehov(OVERSTYRING_AV_BEREGNINGSAKTIVITETER, avklaringsbehov);
@@ -35,10 +33,8 @@ const buildInitialValues = (
   if (avklarAktiviteter && avklarAktiviteter.aktiviteterTomDatoMapping) {
     initialValues = VurderAktiviteterPanel.buildInitialValues(
       avklarAktiviteter.aktiviteterTomDatoMapping,
-      alleKodeverk,
       erOverstyrt,
       harAvklarAksjonspunkt,
-      arbeidsgiverOpplysningerPerId,
     );
   }
   const overstyrAksjonspunktMedBegrunnelse = findAvklaringsbehovMedBegrunnelse(
@@ -64,11 +60,9 @@ export const getAvklarAktiviteter = createSelector(
 
 export const buildInitialValuesAvklarAktiviteter = createSelector(
   [
-    (beregningsgrunnlag, ownProps) => ownProps.avklaringsbehov,
+    beregningsgrunnlag => beregningsgrunnlag.avklaringsbehov,
     beregningsgrunnlag => getAvklarAktiviteter(beregningsgrunnlag),
-    (beregningsgrunnlag, ownProps) => ownProps.alleKodeverk,
     (beregningsgrunnlag, ownProps) => ownProps.aktivtBeregningsgrunnlagIndex,
-    (beregningsgrunnlag, ownProps) => ownProps.arbeidsgiverOpplysningerPerId,
   ],
   buildInitialValues,
 );
@@ -129,8 +123,7 @@ const AvklareAktiviteterPanelContent = props => {
 
   return fields.map(
     (field, index) =>
-      index === aktivtBeregningsgrunnlagIndex && (
-        <div key={field}>
+      (<div key={field} style={{ display: index === aktivtBeregningsgrunnlagIndex ? 'block' : 'none' }}>
           {(kanOverstyre || erOverstyrt) && (
             <div className={styles.rightAligned}>
               <CheckboxField
@@ -177,6 +170,7 @@ const AvklareAktiviteterPanelContent = props => {
                     harAvklaringsbehov={harAvklaringsbehov(AVKLAR_AKTIVITETER, avklaringsbehov)}
                     fieldArrayID={`${field}`}
                     arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
+                    vilkaarPeriodeFieldArrayIndex={index}
                   />
                 )}
                 <VerticalSpacer twentyPx />

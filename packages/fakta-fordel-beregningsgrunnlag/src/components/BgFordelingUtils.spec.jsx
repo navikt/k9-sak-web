@@ -11,7 +11,7 @@ import {
 } from './BgFordelingUtils';
 
 const arbeidsgiver = {
-  arbeidsgiverId: '3284788923',
+  arbeidsgiverIdent: '3284788923',
   startdato: '2017-01-01',
   opphoersdato: '2018-01-01',
 };
@@ -67,7 +67,7 @@ describe('<BgFordelingUtils>', () => {
   it('skal sette initial values for generell andelinfo med arbeidsforhold', () => {
     const andelValueFromState = {
       arbeidsforhold: {
-        arbeidsgiverId: '3284788923',
+        arbeidsgiverIdent: '3284788923',
         arbeidsforholdId: '321378huda7e2',
         eksternArbeidsforholdId: '345678',
       },
@@ -146,7 +146,6 @@ describe('<BgFordelingUtils>', () => {
     fastsattBelop: 25000,
     readOnlyBelop: 25000,
     refusjonskrav: '',
-    skalKunneEndreRefusjon: false,
     belopFraInntektsmelding: 25000,
     refusjonskravFraInntektsmelding: null,
   };
