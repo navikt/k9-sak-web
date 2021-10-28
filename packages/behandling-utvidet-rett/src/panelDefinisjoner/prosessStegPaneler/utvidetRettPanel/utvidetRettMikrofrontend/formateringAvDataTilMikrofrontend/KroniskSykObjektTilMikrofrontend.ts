@@ -100,8 +100,8 @@ const KroniskSykObjektTilMikrofrontend = ({
           begrunnelse,
           harDokumentasjonOgFravaerRisiko,
           avslagsArsakErIkkeRiskioFraFravaer,
-          fraDato,
-          vilkarKnyttetTilAksjonspunkt,
+          fraDato || soknad.soknadsdato,
+          vilkarKnyttetTilAksjonspunkt
         ),
       ]);
     },
