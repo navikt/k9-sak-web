@@ -95,6 +95,7 @@ export class VedtakForm extends Component {
       BEREGNING_25_PROSENT_AVVIK,
       OVER_18_AAR,
       fritekstdokumenter,
+      lagreDokumentdata,
       ...formProps
     } = this.props;
 
@@ -178,6 +179,7 @@ export class VedtakForm extends Component {
             overskrift={overskrift}
             begrunnelse={begrunnelse}
             overstyrtMottaker={overstyrtMottaker}
+            lagreDokumentdata={lagreDokumentdata}
           />
           {kanSendesTilGodkjenning(behandlingStatusKode) && (
             <Row>
@@ -193,7 +195,7 @@ export class VedtakForm extends Component {
                     {intl.formatMessage({
                       id:
                         aksjonspunkter &&
-                        aksjonspunkter.some(ap => ap.erAktivt === true && ap.toTrinnsBehandling === true)
+                          aksjonspunkter.some(ap => ap.erAktivt === true && ap.toTrinnsBehandling === true)
                           ? 'VedtakForm.TilGodkjenning'
                           : 'VedtakForm.FattVedtak',
                     })}

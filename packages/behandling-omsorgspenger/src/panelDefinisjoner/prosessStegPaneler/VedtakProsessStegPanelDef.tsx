@@ -48,6 +48,7 @@ class PanelDef extends ProsessStegPanelDef {
     forbrukteDager,
     personopplysninger,
     arbeidsgiverOpplysningerPerId,
+    lagreDokumentdata
   }) => ({
     previewCallback,
     aksjonspunkter,
@@ -59,7 +60,8 @@ class PanelDef extends ProsessStegPanelDef {
     uttaksperioder: forbrukteDager?.sisteUttaksplan?.aktiviteter?.flatMap(aktivitet => aktivitet.uttaksperioder),
     personopplysninger,
     arbeidsgiverOpplysningerPerId,
-  });
+    lagreDokumentdata
+  })
 }
 
 class VedtakProsessStegPanelDef extends ProsessStegDef {

@@ -48,6 +48,7 @@ class PanelDef extends ProsessStegPanelDef {
     simuleringResultat,
     beregningsgrunnlag,
     arbeidsgiverOpplysningerPerId,
+    lagreDokumentdata,
   }) => ({
     previewCallback,
     aksjonspunkter,
@@ -57,6 +58,7 @@ class PanelDef extends ProsessStegPanelDef {
     ytelseTypeKode: fagsakYtelseType.PLEIEPENGER,
     employeeHasAccess: rettigheter.kanOverstyreAccess.isEnabled,
     arbeidsgiverOpplysningerPerId,
+    lagreDokumentdata,
   });
 }
 
