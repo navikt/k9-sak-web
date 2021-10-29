@@ -79,6 +79,7 @@ const aksjonspunktCodes = {
   NATTEVÅK: '9200',
   BEREDSKAP: '9201',
   VURDER_RETT_ETTER_PLEIETRENGENDES_DØD: '9202',
+  VENT_ANNEN_PSB_SAK: '9290',
 };
 
 const klageAksjonspunkter = [
