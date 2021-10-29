@@ -9,13 +9,13 @@ const initializeUttak = (
   uttaksperioder,
   behandlingUuid: string,
   arbeidsforhold: ArbeidsgiverOpplysningerPerId,
-  funnedeRelevanteAksjonspunktkoder: string[],
+  aksjonspunktkoder: string[],
 ) => {
   (window as any).renderUttakApp(elementId, {
     uttaksperioder,
     aktivBehandlingUuid: behandlingUuid,
     arbeidsforhold,
-    funnedeRelevanteAksjonspunktkoder,
+    aksjonspunktkoder,
   });
 };
 
