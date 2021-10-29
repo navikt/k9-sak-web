@@ -2,19 +2,21 @@ import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import { ProsessStegDef, ProsessStegPanelDef } from '@k9-sak-web/behandling-felles';
 import { prosessStegCodes } from '@k9-sak-web/konstanter';
 import React from 'react';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import Uttak from '../../components/Uttak';
 import { PleiepengerBehandlingApiKeys } from '../../data/pleiepengerBehandlingApi';
 
 class PanelDef extends ProsessStegPanelDef {
-  getKomponent = ({ behandling, uttaksperioder, arbeidsgiverOpplysningerPerId }) => (
+  getKomponent = ({ behandling, uttaksperioder, arbeidsgiverOpplysningerPerId, aksjonspunkter }) => (
     <Uttak
       uuid={behandling.uuid}
       uttaksperioder={uttaksperioder?.perioder}
       arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
+      aksjonspunkter={aksjonspunkter}
     />
   );
 
-  getAksjonspunktKoder = () => [];
+  getAksjonspunktKoder = () => [aksjonspunktCodes.VENT_ANNEN_PSB_SAK];
 
   getOverstyrVisningAvKomponent = () => true;
 
