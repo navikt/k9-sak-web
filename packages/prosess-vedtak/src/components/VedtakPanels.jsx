@@ -89,6 +89,7 @@ const VedtakPanels = ({
         dokumentdata={dokumentdata}
         personopplysninger={personopplysninger}
         arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
+        lagreDokumentdata={lagreDokumentdata}
       />
     );
   }
