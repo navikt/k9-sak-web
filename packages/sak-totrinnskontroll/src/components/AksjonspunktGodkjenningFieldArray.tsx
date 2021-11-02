@@ -86,10 +86,17 @@ export const AksjonspunktGodkjenningFieldArray = ({
         skjemalenkeType => skjemalenkeType.kode === context.skjermlenkeType,
       );
 
+      const hentSkjermlenkeTypeKodeverkNavn = () => {
+        if (skjermlenkeTypeKodeverk.navn === 'Vedtak') {
+          return <FormattedMessage id="ToTrinnsForm.Vedtak.Brev" />;
+        }
+        return skjermlenkeTypeKodeverk.navn;
+      };
+
       return (
         <React.Fragment key={skjermlenkeTypeKodeverk.navn}>
           <NavLink to={lagLenke(context.skjermlenkeType)} onClick={() => window.scroll(0, 0)} className={styles.lenke}>
-            {skjermlenkeTypeKodeverk.navn}
+            {hentSkjermlenkeTypeKodeverkNavn()}
           </NavLink>
           <div className={styles.approvalItemContainer}>
             {aksjonspunktText

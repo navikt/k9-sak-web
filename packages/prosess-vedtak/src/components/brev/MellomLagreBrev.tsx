@@ -84,7 +84,8 @@ const MellomLagreBrev = ({
    * Følg med på endringer i overskrift og brødtekst, og se om innholdet er endret
    */
   useEffect(() => {
-    if (originalBrev !== undefined && originalBrev !== brevTilStreng(overskrift, brødtekst)) {
+    const brevStreng = (overskrift === null && brødtekst === null) ? null : brevTilStreng(overskrift, brødtekst);
+    if (originalBrev !== undefined && brevStreng !== null && originalBrev !== brevStreng) {
       setErTekstEndret(true);
       setErTekstLik(false);
     } else {
