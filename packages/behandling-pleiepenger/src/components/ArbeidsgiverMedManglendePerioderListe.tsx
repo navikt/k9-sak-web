@@ -14,7 +14,7 @@ interface ArbeidsgiverMedManglendePerioderListeProps {
 
 const arbeidsgiverTekst = ({ arbeidsgiverNavn, organisasjonsnummer }) =>
   `arbeidsgiver ${arbeidsgiverNavn} (${organisasjonsnummer})`;
-const arbeidstypeTekst = arbeidstype => arbeidstypeTilVisning[arbeidstype]?.toLowerCase();
+const arbeidstypeTekst = (arbeidstype: Arbeidstype) => arbeidstypeTilVisning[arbeidstype]?.toLowerCase() || 'arbeidsgiver';
 
 const ArbeidsgiverMedManglendePerioderListe = ({
   arbeidsgivereMedPerioder,
