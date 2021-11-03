@@ -1,23 +1,33 @@
 import React from 'react';
+import Arbeidstype, { arbeidstypeTilVisning } from '../types/Arbeidstype';
 
 interface ArbeidsgiverMedPerioder {
   arbeidsgiverNavn: string;
   organisasjonsnummer: string;
   perioder: string[];
+  arbeidstype: Arbeidstype;
 }
 
 interface ArbeidsgiverMedManglendePerioderListeProps {
   arbeidsgivereMedPerioder: ArbeidsgiverMedPerioder[];
 }
 
+const arbeidsgiverTekst = ({ arbeidsgiverNavn, organisasjonsnummer }) =>
+  `arbeidsgiver ${arbeidsgiverNavn} (${organisasjonsnummer})`;
+const arbeidstypeTekst = arbeidstype => arbeidstypeTilVisning[arbeidstype]?.toLowerCase();
+
 const ArbeidsgiverMedManglendePerioderListe = ({
   arbeidsgivereMedPerioder,
 }: ArbeidsgiverMedManglendePerioderListeProps) => (
   <div>
-    {arbeidsgivereMedPerioder.map(({ arbeidsgiverNavn, organisasjonsnummer, perioder }) => (
+    {arbeidsgivereMedPerioder.map(({ arbeidsgiverNavn, organisasjonsnummer, perioder, arbeidstype }) => (
       <span key={organisasjonsnummer}>
         <p>
-          Arbeidstid mangler for arbeidsgiver {arbeidsgiverNavn} ({organisasjonsnummer}) i følgende perioder:
+          {`Arbeidstid mangler for ${
+            arbeidstype === Arbeidstype.AT
+              ? arbeidsgiverTekst({ arbeidsgiverNavn, organisasjonsnummer })
+              : arbeidstypeTekst(arbeidstype)
+          } i følgende perioder:`}
         </p>
         <ul>
           {perioder.map(periode => (
