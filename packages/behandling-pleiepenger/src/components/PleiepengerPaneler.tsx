@@ -108,7 +108,7 @@ const PleiepengerPaneler = ({
                           const formattedTom = moment(tom, 'YYYY-MM-DD').format('DD.MM.YYYY');
                           return `${formattedFom} - ${formattedTom}`;
                         }),
-                        arbeidstype: mangel.arbeidstype
+                        arbeidstype: mangel.arbeidsgiver?.arbeidstype
                       }))}
                     />
                   )}
