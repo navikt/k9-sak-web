@@ -7,7 +7,7 @@ env:
 
 jobs:
   promote:
-    if: contains(github.event.comment.html_url, '/issues/') && startsWith( github.event.comment.body, '/promote ' ) && contains(['MEMBER', 'OWNER'], github.event.comment.author_association) 
+    if: contains(github.event.comment.html_url, '/issues/') && startsWith( github.event.comment.body, '/promote ' ) && (contains(github.event.comment.author_association, 'OWNER') || contains(github.event.comment.author_association, 'MEMBER') 
     runs-on: ubuntu-latest
     steps:
       - name: Acknowledge command
