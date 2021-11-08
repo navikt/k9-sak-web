@@ -200,6 +200,10 @@ export const erOverstyring = values => !!values && values[MANUELL_OVERSTYRING_BE
 export const erOverstyringAvBeregningsgrunnlag = createSelector([getFormValuesFaktaList], 
   (faktaList) => faktaList.some(erOverstyring));
 
+export const erOverstyringAvAktivtBeregningsgrunnlag = createSelector(
+    [getFormValuesFaktaList, (state, ownProps) => ownProps.aktivtBeregningsgrunnlagIndex], 
+    (faktaList, index) => erOverstyring(faktaList[index]));
+
 export const skalRedigereInntektForAndel = (values, faktaOmBeregning, beregningsgrunnlag) => andel =>
   erOverstyring(values) ||
   skalKunneEndreTotaltBeregningsgrunnlag(values, faktaOmBeregning, beregningsgrunnlag)(andel) ||
