@@ -1,47 +1,39 @@
+name: Promote
 on:
-  issue_comment:
-    types: [created]
+  repository_dispatch:
+    types: [promote-command]
 env:
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   IMAGE_BASE: ghcr.io/${{ github.repository }}
 
 jobs:
   promote:
-    if: contains(github.event.comment.html_url, '/issues/') && startsWith( github.event.comment.body, '/promote ' )
     runs-on: ubuntu-latest
+
     steps:
-      - name: Test
+      - name: Set variabler for image, namespace og cluster
+        shell: bash
         run: |
-          echo "Author_assosciation:"
-          echo "${{ github.event.comment.author_association }}"
-      - name: Autentiser bruker
-        if: "!contains(github.event.comment.author_association, 'MEMBER')"
+          echo "TAG=$(echo ${{ github.event.client_payload.github.payload.issue.title }} | awk '{print $NF}' | awk -F- '{print $NF}')" >> $GITHUB_ENV
+          echo "IMAGE=$IMAGE_BASE:$(echo ${{ github.event.client_payload.github.payload.issue.title }} | awk '{print $NF}')" >> $GITHUB_ENV
+          echo "CLUSTER=${{ github.event.client_payload.slash_command.arg1 }}" >> $GITHUB_ENV
+          echo "NAMESPACE=${{ github.event.client_payload.slash_command.arg2 }}" >> $GITHUB_ENV
+
+      - name: Sjekk ut kode
+        uses: actions/checkout@v2
+        with:
+          ref: ${{ env.TAG }}
+
+      - name: Acknowledge command
         uses: actions/github-script@v5
         with:
           script: |
-            core.setFailed('Bruker har ikke tilgang til å deploye!')
-      - name: Acknowledge command
-        uses: actions/github-script@v4
-        with:
-          script: |
-            github.reactions.createForIssueComment({
+            github.rest.reactions.createForIssueComment({
               comment_id: context.payload.comment.id,
               owner: context.repo.owner,
               repo: context.repo.repo,
               content: '+1',
             });
-      - name: Set variabler for image, namespace og cluster
-        shell: bash
-        run: |
-          echo "TAG=$(echo '${{ github.event.issue.title }}' | awk '{print $NF}' | awk -F- '{print $NF}')" >> $GITHUB_ENV
-          echo "IMAGE=$IMAGE_BASE:$(echo '${{  github.event.issue.title }}' | awk '{print $NF}')" >> $GITHUB_ENV
-          echo "CLUSTER=$(echo '${{github.event.comment.body}}' | cut -d' ' -f2)" >> $GITHUB_ENV
-          echo "NAMESPACE=$(echo '${{github.event.comment.body}}' | cut -d' ' -f3)" >> $GITHUB_ENV
-         
-      - name: Sjekk ut kode
-        uses: actions/checkout@v1
-        with:
-          ref: ${{ env.TAG }}
 
       - name: Promoter til cluster og namespace
         uses: nais/deploy/actions/deploy@v1
@@ -49,31 +41,29 @@ jobs:
           APIKEY: ${{ secrets.DEPLOY_KEY }}
           CLUSTER: ${{ env.CLUSTER }}
           RESOURCE: deploy/${{ env.CLUSTER }}-${{ env.NAMESPACE }}.yml
-          
+
       - name: Oppdater kommentar med deployment status ved feil
         if: failure()
-        uses: actions/github-script@v4
+        uses: actions/github-script@v5
         with:
           github-token: ${{secrets.GITHUB_TOKEN}}
           script: |
             const issue = { owner: context.issue.owner,
                             repo: context.issue.repo,
-                            issue_number: ${{ github.event.issue.number }} }
-            github.issues.createComment({...issue,
+                            issue_number: ${{ github.event.client_payload.github.payload.issue.number }} }
+            github.rest.issues.createComment({...issue,
                                     title: 'Deploy av ${{ env.TAG }}',
-                                    body: 'promote til ${{ env.CLUSTER }} ${{ env.NAMESPACE }} feilet'})
-                                  
+                                    body: 'promote til ${{ github.event.client_payload.slash_command.args }} feilet'})
+
       - name: Oppdater kommentar med deployment status
         if: success()
-        uses: actions/github-script@v4
+        uses: actions/github-script@v5
         with:
           github-token: ${{secrets.GITHUB_TOKEN}}
           script: |
             const issue = { owner: context.issue.owner,
                             repo: context.issue.repo,
-                            issue_number: ${{ github.event.issue.number }} }
-            github.issues.createComment({...issue,
-                                    body: 'promote til  ${{ env.CLUSTER }} ${{ env.NAMESPACE }} utført'})
-            github.issues.addLabels({...issue, labels: ['deployment','${{ env.CLUSTER }}-${{ env.NAMESPACE }}']})
-            
-            
+                            issue_number: ${{ github.event.client_payload.github.payload.issue.number }} }
+            github.rest.issues.createComment({...issue,
+                                    body: 'promote til ${{ github.event.client_payload.slash_command.args }} utført'})
+            github.rest.issues.addLabels({...issue, labels: ['deployment','${{ env.CLUSTER }}-${{ env.NAMESPACE }}']})
