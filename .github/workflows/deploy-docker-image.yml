@@ -78,7 +78,7 @@ jobs:
               labels: ['deployment']
             }).then(response => {
               response.data.forEach(issue => {
-                github.issues.update({
+                github.rest.issues.update({
                   owner: context.repo.owner,
                   repo: context.repo.repo,
                   issue_number: issue.number,
