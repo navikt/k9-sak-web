@@ -16,7 +16,6 @@ import FaktaForATFLOgSNPanel, {
   validationForVurderFakta,
 } from './FaktaForATFLOgSNPanel';
 import beregningsgrunnlagPropType from '../../propTypes/beregningsgrunnlagPropType';
-import beregningAvklaringsbehovPropType from '../../propTypes/beregningAvklaringsbehovPropType';
 
 import { erAvklartAktivitetEndret } from '../avklareAktiviteter/AvklareAktiviteterPanel';
 import { formNameVurderFaktaBeregning } from '../BeregningFormUtils';
@@ -238,7 +237,6 @@ VurderFaktaBeregningPanelImpl.propTypes = {
     beregningsgrunnlagPropType,
     PropTypes.arrayOf(beregningsgrunnlagPropType),
   ]),
-  avklaringsbehov: PropTypes.arrayOf(beregningAvklaringsbehovPropType).isRequired,
   ...formPropTypes,
 };
 
