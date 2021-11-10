@@ -5,7 +5,7 @@ import { injectIntl, WrappedComponentProps } from 'react-intl';
 
 import styles from './vedtakKlageSubmitPanel.less';
 
-interface ownProps {
+interface Props {
     klageResultat: {
         godkjentAvMedunderskriver
     };
@@ -33,7 +33,7 @@ const VedtakKlageNkkSubmitPanel = ({
     formProps,
     readOnly,
     behandlingPaaVent
-}: ownProps & WrappedComponentProps) => (
+}: Props & WrappedComponentProps) => (
     <Row>
         <Column xs="8">
             {!readOnly && (
