@@ -168,6 +168,7 @@ describe('<AvklareAktiviteterPanel>', () => {
         beregningsgrunnlag={beregningsgrunnlag}
         alleBeregningsgrunnlag={[beregningsgrunnlag]}
         fields={[]}
+        formValues={[]}
         {...behandlingProps}
       />,
     );
@@ -210,6 +211,7 @@ describe('<AvklareAktiviteterPanel>', () => {
         aktivtBeregningsgrunnlagIndex={0}
         reduxFormInitialize={sinon.spy()}
         fields={[]}
+        formValues={[]}
         {...behandlingProps}
       />,
     );
@@ -253,6 +255,7 @@ describe('<AvklareAktiviteterPanel>', () => {
         }}
         reduxFormInitialize={sinon.spy()}
         fields={[]}
+        formValues={[]}
         {...behandlingProps}
       />,
     );
@@ -294,6 +297,7 @@ describe('<AvklareAktiviteterPanel>', () => {
         alleKodeverk={alleKodeverk}
         arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
         fields={[]}
+        formValues={[]}
         reduxFormInitialize={sinon.spy()}
         {...behandlingProps}
       />,
@@ -343,6 +347,7 @@ describe('<AvklareAktiviteterPanel>', () => {
         arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
         reduxFormInitialize={sinon.spy()}
         fields={[]}
+        formValues={[]}
         {...behandlingProps}
       />,
     );
@@ -387,6 +392,7 @@ describe('<AvklareAktiviteterPanel>', () => {
         arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
         reduxFormInitialize={sinon.spy()}
         fields={[]}
+        formValues={[]}
         {...behandlingProps}
       />,
     );
@@ -432,6 +438,7 @@ describe('<AvklareAktiviteterPanel>', () => {
         arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
         reduxFormInitialize={sinon.spy()}
         fields={[]}
+        formValues={[]}
         {...behandlingProps}
       />,
     );
@@ -476,6 +483,7 @@ describe('<AvklareAktiviteterPanel>', () => {
         arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
         reduxFormInitialize={sinon.spy()}
         fields={[]}
+        formValues={[]}
         {...behandlingProps}
       />,
     );
@@ -519,6 +527,7 @@ describe('<AvklareAktiviteterPanel>', () => {
         alleKodeverk={alleKodeverk}
         arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
         fields={[]}
+        formValues={[]}
         reduxFormInitialize={sinon.spy()}
         {...behandlingProps}
       />,

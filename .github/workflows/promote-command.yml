@@ -10,6 +10,16 @@ jobs:
     if: contains(github.event.comment.html_url, '/issues/') && startsWith( github.event.comment.body, '/promote ' )
     runs-on: ubuntu-latest
     steps:
+      - name: Test
+        run: |
+          echo "Author_assosciation:"
+          echo "${{ github.event.comment.author_association }}"
+      - name: Autentiser bruker
+        if: "!contains(github.event.comment.author_association, 'MEMBER')"
+        uses: actions/github-script@v5
+        with:
+          script: |
+            core.setFailed('Bruker har ikke tilgang til å deploye!')
       - name: Acknowledge command
         uses: actions/github-script@v4
         with:
