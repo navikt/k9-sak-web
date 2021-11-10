@@ -23,9 +23,8 @@
   "VedtakKlageForm.KlageAvvist": "Avvist fordi klagen ikke oppfyller formkravene",
   "VedtakKlageForm.KlageStadfestet": "Vedtaket er stadfestet",
   "VedtakKlageForm.YtelsesvedtakOpphevet": "Vedtak er opphevet og hjemsendt",
-
   "VedtakKlageForm.VurderDokument": "Vurder om den åpne oppgaven «Vurder dokument» påvirker behandlingen",
-
+  "VedtakKlageForm.FattVedtak": "Fatt Vedtak",
   "ValidationMessage.NotEmpty": "Feltet må fylles ut",
   "ValidationMessage.MinLength": "Du må skrive minst {length} tegn",
   "ValidationMessage.MaxLength": "Du kan skrive maksimalt {length} tegn",
