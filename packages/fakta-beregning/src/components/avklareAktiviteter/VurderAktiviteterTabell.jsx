@@ -53,6 +53,8 @@ const lagTableRow = (
         <PeriodLabel dateStringFom={aktivitet.fom} dateStringTom={aktivitet.tom} />
       </Normaltekst>
     </TableColumn>
+    {(erOverstyrt || harAvklaringsbehov) && (
+      <>
     <TableColumn className={styles.radioMiddle}>
       <RadioGroupField
         name={`${fieldArrayID}.${lagAktivitetFieldId(aktivitet)}.skalBrukes`}
@@ -72,23 +74,34 @@ const lagTableRow = (
     {isAvklaringsbehovClosed && readOnly && (
       <TableColumn>{skalVurdereAktivitet(aktivitet, erOverstyrt, harAvklaringsbehov) && <EditedIcon />}</TableColumn>
     )}
+    </>)}
   </TableRow>
 );
 
-const getHeaderTextCodes = () => [
+const getHeaderTextCodes = (erOverstyrt, harAvklaringsbehov) => {
+  if (erOverstyrt || harAvklaringsbehov) {
+    return [
+      'VurderAktiviteterTabell.Header.Aktivitet',
+      'VurderAktiviteterTabell.Header.Periode',
+      'VurderAktiviteterTabell.Header.Benytt',
+      'VurderAktiviteterTabell.Header.IkkeBenytt',
+    ];
+  }
+  return [
   'VurderAktiviteterTabell.Header.Aktivitet',
   'VurderAktiviteterTabell.Header.Periode',
-  'VurderAktiviteterTabell.Header.Benytt',
-  'VurderAktiviteterTabell.Header.IkkeBenytt',
-];
+  ];
+}
 
 const finnHeading = (aktiviteter, erOverstyrt, skjaeringstidspunkt) => {
   if (erOverstyrt) {
     return (
+      <Element>
       <FormattedMessage
         id="VurderAktiviteterTabell.Overstyrt.Overskrift"
-        values={{ skjaeringstidspunkt: moment(skjaeringstidspunkt).format(DDMMYYYY_DATE_FORMAT) }}
+        values={{ skjaeringstidspunkt: moment(skjaeringstidspunkt, 'YYYY-MM-DD').format(DDMMYYYY_DATE_FORMAT) }}
       />
+      </Element>
     );
   }
   const harAAP = aktiviteter.some(
@@ -101,18 +114,23 @@ const finnHeading = (aktiviteter, erOverstyrt, skjaeringstidspunkt) => {
   );
   if (harAAP) {
     return (
+      <Element>
       <FormattedMessage
         id="VurderAktiviteterTabell.FullAAPKombinert.Overskrift"
-        values={{ skjaeringstidspunkt: moment(skjaeringstidspunkt).format(DDMMYYYY_DATE_FORMAT) }}
+        values={{ skjaeringstidspunkt: moment(skjaeringstidspunkt, 'YYYY-MM-DD').format(DDMMYYYY_DATE_FORMAT) }}
       />
+      </Element>
+
     );
   }
   if (harVentelonnVartpenger) {
     return (
+      <Element>
       <FormattedMessage
         id="VurderAktiviteterTabell.VentelonnVartpenger.Overskrift"
-        values={{ skjaeringstidspunkt: moment(skjaeringstidspunkt).format(DDMMYYYY_DATE_FORMAT) }}
+        values={{ skjaeringstidspunkt: moment(skjaeringstidspunkt, 'YYYY-MM-DD').format(DDMMYYYY_DATE_FORMAT) }}
       />
+      </Element>
     );
   }
   return null;
@@ -135,8 +153,8 @@ export const VurderAktiviteterTabell = ({
   arbeidsgiverOpplysningerPerId,
 }) => (
   <>
-    <Element>{finnHeading(aktiviteter, erOverstyrt, skjaeringstidspunkt)}</Element>
-    <Table headerTextCodes={getHeaderTextCodes()} noHover>
+    {finnHeading(aktiviteter, erOverstyrt, skjaeringstidspunkt)}
+    <Table headerTextCodes={getHeaderTextCodes(erOverstyrt, harAvklaringsbehov)} noHover>
       {aktiviteter.map(aktivitet =>
         lagTableRow(
           readOnly,

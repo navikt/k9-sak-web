@@ -20,17 +20,19 @@ import beregningsgrunnlagPropType from '../../propTypes/beregningsgrunnlagPropTy
 import {
   formNameAvklarAktiviteter,
   getFormInitialValuesAktivitetList,
-  getFormValuesForAvklarAktiviteter,
   formNameVurderFaktaBeregning,
   getFormValuesAktivitetList,
 } from '../BeregningFormUtils';
-import { erOverstyringAvBeregningsgrunnlag } from '../fellesFaktaForATFLogSN/BgFordelingUtils';
+import { erOverstyringAvAktivtBeregningsgrunnlag } from '../fellesFaktaForATFLogSN/BgFordelingUtils';
 import VurderAktiviteterPanel from './VurderAktiviteterPanel';
 
 const { AVKLAR_AKTIVITETER, OVERSTYRING_AV_BEREGNINGSAKTIVITETER } = avklaringsbehovCodes;
 
 
 const harEndringIAvklaring = (avklaringsbehov, avklarAktiviteter, currentValues, initialValues) => {
+  if (!currentValues) {
+    return false;
+  }
   if (!harAvklaringsbehov(AVKLAR_AKTIVITETER, avklaringsbehov) && (!currentValues || !currentValues[MANUELL_OVERSTYRING_FIELD])) {
     return false;
   }
@@ -199,11 +201,23 @@ const skalKunneLoseAvklaringsbehov = (skalOverstyre, avklaringsbehov) =>
   skalOverstyre || harAvklaringsbehov(AVKLAR_AKTIVITETER, avklaringsbehov);
 
 const validate = values => {
-  const { avklarAktiviteter } = values;
-  if (avklarAktiviteter) {
-    return VurderAktiviteterPanel.validate(values, avklarAktiviteter.aktiviteterTomDatoMapping);
+  const fieldArrayList = values[fieldArrayName];
+  const errors = {};
+
+  errors[fieldArrayName] = fieldArrayList ? fieldArrayList.map((value) => {
+    const { avklarAktiviteter, avklaringsbehov, manuellOverstyringBeregningAktiviteter } = value;
+    if (avklarAktiviteter && skalKunneLoseAvklaringsbehov(manuellOverstyringBeregningAktiviteter, avklaringsbehov)) {
+      return VurderAktiviteterPanel.validate(value, avklarAktiviteter.aktiviteterTomDatoMapping);
+    }
+    return {};
+  }) : [];
+  // eslint-disable-next-line no-underscore-dangle
+  if (errors[fieldArrayName].find(e => !!e._error) !== undefined) {
+    // Propagerer global error videre om den er satt.
+    // eslint-disable-next-line no-underscore-dangle
+    errors._error = errors[fieldArrayName].find(e => !!e._error)._error;
   }
-  return {};
+  return errors;
 };
 
 export const transformValues = (values, behandlingResultatPerioder, aktivtBg) => {
@@ -271,7 +285,7 @@ const mapStateToPropsFactory = (initialState, initialProps) => {
   const onSubmit = vals =>
     initialProps.submitCallback(transformValues(vals, initialProps.behandlingResultatPerioder, aktivtBg));
   return (state, ownProps) => {
-    const values = getFormValuesForAvklarAktiviteter(state, ownProps);
+    const values = getFormValuesAktivitetList(state, ownProps);
 
     const initialValues = {
       [fieldArrayName]: ownProps.alleBeregningsgrunnlag.map(beregningsgrunnlag =>
@@ -290,8 +304,11 @@ const mapStateToPropsFactory = (initialState, initialProps) => {
       isAvklaringsbehovClosed: getIsAvklaringsbehovClosed(ownProps),
       avklarAktiviteter: getAvklarAktiviteter(ownProps.beregningsgrunnlag),
       hasBegrunnelse: initialValues && !!initialValues[BEGRUNNELSE_AVKLARE_AKTIVITETER_NAME],
-      erOverstyrt: !!values && values[MANUELL_OVERSTYRING_FIELD],
-      erBgOverstyrt: erOverstyringAvBeregningsgrunnlag(state, ownProps),
+      erBgOverstyrt: erOverstyringAvAktivtBeregningsgrunnlag(state, ownProps),
+      erOverstyrt: !!values && 
+              !!values[ownProps.aktivtBeregningsgrunnlagIndex] && 
+              values[ownProps.aktivtBeregningsgrunnlagIndex][MANUELL_OVERSTYRING_FIELD],
+
     };
   };
 };

@@ -103,7 +103,7 @@ const AvklareAktiviteterPanelContent = props => {
     arbeidsgiverOpplysningerPerId,
     ...formProps
   } = props;
-  const avklarAktiviteter = getAvklarAktiviteter(beregningsgrunnlag);
+  const avklarAktiviteter = getAvklarAktiviteter(beregningsgrunnlag)
   const skalViseSubmitknappInneforBorderBox =
     (harAndreAvklaringsbehovIPanel || erOverstyrt || erBgOverstyrt) && !hasOpenBehovForAvklaringAvAktiviteter(avklaringsbehov);
 
@@ -166,7 +166,7 @@ const AvklareAktiviteterPanelContent = props => {
                     isAvklaringsbehovClosed={isAvklaringsbehovClosed}
                     erOverstyrt={erOverstyrt}
                     alleKodeverk={alleKodeverk}
-                    values={formValues}
+                    values={formValues[index]}
                     harAvklaringsbehov={harAvklaringsbehov(AVKLAR_AKTIVITETER, avklaringsbehov)}
                     fieldArrayID={`${field}`}
                     arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
