@@ -31,8 +31,6 @@ jobs:
 
       - name: Sjekk ut kode
         uses: actions/checkout@v2
-        with:
-          ref: ${{ steps.issue_comment.outputs.sha }}
 
       - name: Promoter til cluster og namespace
         uses: nais/deploy/actions/deploy@v1
