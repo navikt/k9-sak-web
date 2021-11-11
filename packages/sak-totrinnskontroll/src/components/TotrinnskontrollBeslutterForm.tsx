@@ -5,7 +5,6 @@ import { createSelector } from 'reselect';
 import { InjectedFormProps, FieldArray } from 'redux-form';
 import { Location } from 'history';
 import { Hovedknapp } from 'nav-frontend-knapper';
-import { AlertStripeInfo } from 'nav-frontend-alertstriper';
 
 import vurderPaNyttArsakType from '@fpsak-frontend/kodeverk/src/vurderPaNyttArsakType';
 import { ariaCheck, isRequiredMessage, decodeHtmlEntity } from '@fpsak-frontend/utils';
