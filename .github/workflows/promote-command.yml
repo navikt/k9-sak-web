@@ -32,7 +32,7 @@ jobs:
           echo "TAG=$(echo ${{ steps.issue_comment.outputs.title }} | awk -F- '{print $NF}')" >> $GITHUB_ENV
 
       - name: Sjekk ut kode
-        uses: actions/checkout@v2
+        uses: actions/checkout@v1
         with:
           ref: ${{ env.TAG }}
 
@@ -40,7 +40,7 @@ jobs:
         uses: nais/deploy/actions/deploy@v1
         env:
           PRINT_PAYLOAD: true
-          APIKEY: ${{ secrets.DEPLOY_APIKEY }}
+          APIKEY: ${{ secrets.DEPLOY_KEY }}
           CLUSTER: ${{ env.CLUSTER }}
           RESOURCE: deploy/${{ env.CLUSTER }}-${{ env.NAMESPACE }}.yml
 
