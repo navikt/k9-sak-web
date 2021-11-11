@@ -40,7 +40,6 @@ interface PureOwnProps {
   arbeidsforholdHandlingTyper: KodeverkMedNavn[];
   skjemalenkeTyper: KodeverkMedNavn[];
   lagLenke: (skjermlenkeCode: string) => Location;
-  tilgjengeligeVedtaksbrev: string[];
 }
 
 interface MappedOwnProps {
@@ -64,15 +63,11 @@ export const TotrinnskontrollBeslutterForm = ({
   aksjonspunktGodkjenning,
   totrinnskontrollSkjermlenkeContext,
   lagLenke,
-  tilgjengeligeVedtaksbrev,
   ...formProps
 }: PureOwnProps & MappedOwnProps & InjectedFormProps) => {
   if (!behandling.toTrinnsBehandling) {
     return null;
   }
-
-  const isTilgjengeligeVedtaksbrevArray = Array.isArray(tilgjengeligeVedtaksbrev);
-  const harTilgjengeligeVedtaksbrev = !isTilgjengeligeVedtaksbrevArray || !!tilgjengeligeVedtaksbrev.length;
 
   return (
     <form name="toTrinn" onSubmit={handleSubmit}>
@@ -122,11 +117,6 @@ export const TotrinnskontrollBeslutterForm = ({
         >
           <FormattedMessage id="ToTrinnsForm.SendTilbake" />
         </Hovedknapp>
-        {!harTilgjengeligeVedtaksbrev && (
-          <AlertStripeInfo className={styles.infoIkkeVedtaksbrev}>
-            <FormattedMessage id="ToTrinnsForm.IkkeVedtaksbrev" />
-          </AlertStripeInfo>
-        )}
       </div>
     </form>
   );
