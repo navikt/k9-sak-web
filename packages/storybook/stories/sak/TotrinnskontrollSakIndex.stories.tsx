@@ -121,7 +121,6 @@ export const visTotrinnskontrollForBeslutter = () => (
       }
       alleKodeverk={alleKodeverk as any}
       createLocationForSkjermlenke={() => location}
-      tilgjengeligeVedtaksbrev={[]}
     />
   </div>
 );
@@ -160,7 +159,6 @@ export const visTotrinnskontrollForSaksbehandler = () => (
       }
       alleKodeverk={alleKodeverk as any}
       createLocationForSkjermlenke={() => location}
-      tilgjengeligeVedtaksbrev={[]}
     />
   </div>
 );
