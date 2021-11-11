@@ -211,8 +211,10 @@ const validate = values => {
     }
     return {};
   }) : [];
-  if (errors[fieldArrayName].find(e => !!e._error) != undefined) {
+  // eslint-disable-next-line no-underscore-dangle
+  if (errors[fieldArrayName].find(e => !!e._error) !== undefined) {
     // Propagerer global error videre om den er satt.
+    // eslint-disable-next-line no-underscore-dangle
     errors._error = errors[fieldArrayName].find(e => !!e._error)._error;
   }
   return errors;
