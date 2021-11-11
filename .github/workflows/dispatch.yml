@@ -7,11 +7,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Slash command dispatch
-        uses: peter-evans/slash-command-dispatch@v1
+        uses: peter-evans/slash-command-dispatch@v2.3.0
         with:
-          reaction-token: ${{ secrets.GITHUB_TOKEN }}
           token: ${{ secrets.GA_P_TOKEN }}
           commands: promote
           issue-type: issue
           allow-edits: true
-          reactions: false
