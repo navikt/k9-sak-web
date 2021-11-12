@@ -49,7 +49,6 @@ describe('<TotrinnskontrollBeslutterForm>', () => {
         arbeidsforholdHandlingTyper={[]}
         skjemalenkeTyper={[]}
         aksjonspunktGodkjenning={[]}
-        tilgjengeligeVedtaksbrev={[]}
       />,
     );
 
