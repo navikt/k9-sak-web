@@ -8,6 +8,19 @@ Monorepo for Frontend kode for k9-sak.
 [![Known Vulnerabilities](https://snyk.io/test/github/navikt/k9-sak-frontend/badge.svg)](https://snyk.io/test/github/navikt/k9-sak-frontend)
 [![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square)](https://github.com/prettier/prettier)
 
+## Mikrofrontends i bruk per behandling
+
+### Pleiepenger sykt barn:
+ [Omsorgen for](https://github.com/navikt/omsorgen-for-frontend)
+ [Uttak](https://github.com/navikt/psb-uttak-frontend)
+ [Inntektsmelding](https://github.com/navikt/psb-inntektsmelding-frontend)
+ [Etablert tilsyn](https://github.com/navikt/psb-etablert-tilsyn-frontend)
+ [Medisinkt vilkår](https://github.com/navikt/medisinsk-vilkar-frontend)
+ [Om barnet](https://github.com/navikt/psb-om-barnet-frontend)
+
+### Omsorgsdager (Utvidet rett)
+ [Omsorgsdager](https://github.com/navikt/omsorgsdager-frontend)
+
 ## Komme i gang
 
 k9-sak-web har dependencies til pakker publisert fra [k9-frontend-modules](https://github.com/navikt/k9-frontend-modules).
