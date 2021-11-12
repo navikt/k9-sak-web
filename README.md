@@ -10,7 +10,7 @@ Monorepo for Frontend kode for k9-sak.
 
 ## Mikrofrontends i bruk per behandling
 
-### Pleiepenger sykt barn:
+### Pleiepenger sykt barn
  [Omsorgen for](https://github.com/navikt/omsorgen-for-frontend)
  [Uttak](https://github.com/navikt/psb-uttak-frontend)
  [Inntektsmelding](https://github.com/navikt/psb-inntektsmelding-frontend)
