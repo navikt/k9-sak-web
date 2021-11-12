@@ -15,7 +15,7 @@ Monorepo for Frontend kode for k9-sak.
  [Uttak](https://github.com/navikt/psb-uttak-frontend)
  [Inntektsmelding](https://github.com/navikt/psb-inntektsmelding-frontend)
  [Etablert tilsyn](https://github.com/navikt/psb-etablert-tilsyn-frontend)
- [Medisinkt vilkår](https://github.com/navikt/medisinsk-vilkar-frontend)
+ [Medisinsk vilkår](https://github.com/navikt/medisinsk-vilkar-frontend)
  [Om barnet](https://github.com/navikt/psb-om-barnet-frontend)
 
 ### Omsorgsdager (Utvidet rett)
