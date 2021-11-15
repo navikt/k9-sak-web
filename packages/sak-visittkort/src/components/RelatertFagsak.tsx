@@ -27,8 +27,9 @@ const RelatertFagsak = ({ relaterteFagsaker }: RelatertFagsakProps) => {
       return (
         <Lenke className={styles.relatertFagsak__selector} href={`/k9/web${pathToFagsak(saksnummer)}`} target="_blank">
           <Normaltekst tag="span" className={styles.relatertFagsak__name}>
-            {søkerNavn} {behandlingsstatus}
+            {søkerNavn}
           </Normaltekst>
+          <Normaltekst>{behandlingsstatus}</Normaltekst>
         </Lenke>
       );
     }
