@@ -180,7 +180,7 @@ export const visVisittkortNårEnHarEnRelatertFagsak = () => (
     alleKodeverk={alleKodeverk as any}
     sprakkode={{ kode: 'NN', kodeverk: 'SPRAK' }}
     relaterteFagsaker={{
-      relaterteSøkere: [{ søkerIdent: '17499944012', søkerNavn: 'SJØLØVE ANINE', saksnummer: '5YD0i' }],
+      relaterteSøkere: [{ søkerIdent: '17499944012', søkerNavn: 'SJØLØVE ANINE', saksnummer: '5YD0i' , åpenBehandling: true}],
     }}
   />
 );
@@ -193,8 +193,8 @@ export const visVisittkortNårEnHarFlereRelaterteFagsaker = () => (
     sprakkode={{ kode: 'NN', kodeverk: 'SPRAK' }}
     relaterteFagsaker={{
       relaterteSøkere: [
-        { søkerIdent: '12345678910', søkerNavn: 'Sjøløve Anine', saksnummer: '5YD0i' },
-        { søkerIdent: '10987654321', søkerNavn: 'Kreps Svein', saksnummer: '5YD1W' },
+        { søkerIdent: '12345678910', søkerNavn: 'Sjøløve Anine', saksnummer: '5YD0i', åpenBehandling: true},
+        { søkerIdent: '10987654321', søkerNavn: 'Kreps Svein', saksnummer: '5YD1W' , åpenBehandling: true},
       ],
     }}
   />
