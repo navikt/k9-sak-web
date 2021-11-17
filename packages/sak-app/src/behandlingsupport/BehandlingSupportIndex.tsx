@@ -25,15 +25,20 @@ export const hentSynligePaneler = (behandlingRettigheter?: BehandlingRettigheter
     }
   });
 
+/**
+ * Definerer hvilke paneler som skal være aktive
+ * Brukes foreløpig kun til å deaktivere "Meldinger" basert på behnadlingsrettigheter fra backend
+ *
+ * @param synligePaneler
+ * @param behandlingRettigheter
+ * @returns {array} array med alle paneler er aktive
+ * */
 export const hentValgbarePaneler = (
   synligePaneler: string[],
-  sendMeldingErRelevant: boolean,
   behandlingRettigheter?: BehandlingRettigheter,
 ): string[] =>
   synligePaneler.filter(supportPanel => {
-    if (supportPanel === SupportTabs.MELDINGER) {
-      return behandlingRettigheter && sendMeldingErRelevant ? behandlingRettigheter.behandlingKanSendeMelding : false;
-    }
+    if (supportPanel === SupportTabs.MELDINGER && behandlingRettigheter) return !behandlingRettigheter.behandlingKanSendeMelding;
     return true;
   });
 
@@ -71,13 +76,10 @@ const BehandlingSupportIndex = ({
 
   const history = useHistory();
 
-  const erPaVent = behandling ? behandling.behandlingPaaVent : false;
-  const erSendMeldingRelevant = fagsak && !erPaVent;
-
   const synligeSupportPaneler = useMemo(() => hentSynligePaneler(behandlingRettigheter), [behandlingRettigheter]);
   const valgbareSupportPaneler = useMemo(
-    () => hentValgbarePaneler(synligeSupportPaneler, erSendMeldingRelevant, behandlingRettigheter),
-    [synligeSupportPaneler, erSendMeldingRelevant, behandlingRettigheter],
+    () => hentValgbarePaneler(synligeSupportPaneler, behandlingRettigheter),
+    [synligeSupportPaneler, behandlingRettigheter],
   );
 
   const defaultSupportPanel = valgbareSupportPaneler.find(() => true) || SupportTabs.HISTORIKK;
