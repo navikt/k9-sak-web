@@ -5,7 +5,6 @@ import InntektOgYtelser from '@fpsak-frontend/fakta-inntekt-og-ytelser';
 import { FaktaPanelDef } from '@k9-sak-web/behandling-felles';
 
 import { PleiepengerBehandlingApiKeys } from '../../data/pleiepengerBehandlingApi';
-// import { pleiepengerBehandlingApiKeys } from '../../data/pleiepengerBehandlingApiKeys';
 
 class InntektOgYtelserFaktaPanelDef extends FaktaPanelDef {
   getUrlKode = () => faktaPanelCodes.INNTEKT_OG_YTELSER;
