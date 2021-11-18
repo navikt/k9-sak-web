@@ -78,8 +78,8 @@ const findArbeidstakerAndeler = periode =>
 
 const createArbeidsforholdMapKey = (arbeidsforhold, arbeidsgiverOpplysningerPerId) =>
   `${
-    arbeidsgiverOpplysningerPerId && arbeidsforhold && arbeidsgiverOpplysningerPerId[arbeidsforhold.arbeidsgiverId]
-      ? arbeidsgiverOpplysningerPerId[arbeidsforhold.arbeidsgiverId].navn
+    arbeidsgiverOpplysningerPerId && arbeidsforhold && arbeidsgiverOpplysningerPerId[arbeidsforhold.arbeidsgiverIdent]
+      ? arbeidsgiverOpplysningerPerId[arbeidsforhold.arbeidsgiverIdent].navn
       : ''
   }${arbeidsforhold ? arbeidsforhold.arbeidsforholdId : ''}`;
 

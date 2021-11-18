@@ -13,8 +13,8 @@ import AvsnittSkiller from '../redesign/AvsnittSkiller';
 
 const createArbeidsforholdKey = (arbeidsforhold, arbeidsgiverOpplysningerPerId) =>
   `${
-    arbeidsgiverOpplysningerPerId && arbeidsforhold && arbeidsgiverOpplysningerPerId[arbeidsforhold.arbeidsgiverId]
-      ? arbeidsgiverOpplysningerPerId[arbeidsforhold.arbeidsgiverId].navn
+    arbeidsgiverOpplysningerPerId && arbeidsforhold && arbeidsgiverOpplysningerPerId[arbeidsforhold.arbeidsgiverIdent]
+      ? arbeidsgiverOpplysningerPerId[arbeidsforhold.arbeidsgiverIdent].navn
       : ''
   }${arbeidsforhold ? arbeidsforhold.arbeidsforholdId : ''}`;
 
@@ -44,8 +44,8 @@ const createOrEditMapValue = (
   let newMapValue = [];
   if (mapValue === undefined) {
     newMapValue = [
-      arbeidsgiverOpplysningerPerId && arbeidsgiverOpplysningerPerId[andel.arbeidsforhold.arbeidsgiverId]
-        ? arbeidsgiverOpplysningerPerId[andel.arbeidsforhold.arbeidsgiverId].navn
+      arbeidsgiverOpplysningerPerId && arbeidsgiverOpplysningerPerId[andel.arbeidsforhold.arbeidsgiverIdent]
+        ? arbeidsgiverOpplysningerPerId[andel.arbeidsforhold.arbeidsgiverIdent].navn
         : '',
     ];
   } else {
