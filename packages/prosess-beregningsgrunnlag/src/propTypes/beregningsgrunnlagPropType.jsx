@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import { kodeverkObjektPropType } from '@fpsak-frontend/prop-types';
 
 const beregningsgrunnlagArbeidsforholdProptype = PropTypes.shape({
-  arbeidsgiverId: PropTypes.string,
+  arbeidsgiverIdent: PropTypes.string,
   startdato: PropTypes.string,
   opphoersdato: PropTypes.string,
   arbeidsforholdId: PropTypes.string,
