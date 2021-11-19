@@ -48,6 +48,7 @@ export enum PleiepengerBehandlingApiKeys {
   ARBEIDSFORHOLD = 'ARBEIDSFORHOLD',
   UTTAK = 'UTTAK',
   FRITEKSTDOKUMENTER = 'FRITEKSTDOKUMENTER',
+  INNTEKT_OG_YTELSER = 'INNTEKT_OG_YTELSER',
 }
 
 const endpoints = new RestApiConfigBuilder()
@@ -82,6 +83,7 @@ const endpoints = new RestApiConfigBuilder()
   .withRel('informasjonsbehov-vedtaksbrev', PleiepengerBehandlingApiKeys.INFORMASJONSBEHOV_VEDTAKSBREV)
   .withRel('pleiepenger-sykt-barn-uttaksplan', PleiepengerBehandlingApiKeys.UTTAK)
   .withRel('pleiepenger-fritekstdokumenter', PleiepengerBehandlingApiKeys.FRITEKSTDOKUMENTER)
+  .withRel('inntekt', PleiepengerBehandlingApiKeys.INNTEKT_OG_YTELSER)
 
   // operasjoner
   .withRel('dokumentdata-lagre', PleiepengerBehandlingApiKeys.DOKUMENTDATA_LAGRE)
