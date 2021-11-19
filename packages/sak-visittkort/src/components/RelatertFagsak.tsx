@@ -19,8 +19,9 @@ const RelatertFagsak = ({ relaterteFagsaker }: RelatertFagsakProps) => {
   const [valgtSøkerIdent, setValgtSøkerIdent] = React.useState(relaterteSøkere[0].søkerIdent);
   const valgtSøker = relaterteSøkere.find(søker => søker.søkerIdent === valgtSøkerIdent);
   const harMerEnnEnRelatertSøker = relaterteSøkere.length > 1;
-  const { saksnummer, søkerNavn, søkerIdent } = valgtSøker;
+  const { saksnummer, søkerNavn, søkerIdent, åpenBehandling } = valgtSøker;
 
+  const behandlingsstatus = åpenBehandling ? '(Åpen behandling)' : '(Lukket behandling)';
   const visRelaterteSøkere = () => {
     if (!harMerEnnEnRelatertSøker) {
       return (
@@ -28,21 +29,24 @@ const RelatertFagsak = ({ relaterteFagsaker }: RelatertFagsakProps) => {
           <Normaltekst tag="span" className={styles.relatertFagsak__name}>
             {søkerNavn}
           </Normaltekst>
+          <Normaltekst>{behandlingsstatus}</Normaltekst>
         </Lenke>
       );
     }
     return (
-      <NavSelect
-        label="Velg relatert søker"
-        onChange={e => setValgtSøkerIdent(e.target.value)}
-        className={styles.relatertFagsak__søkerSelect}
-      >
-        {relaterteSøkere.map(søker => (
-          <option key={søker.søkerIdent} value={søker.søkerIdent}>
-            {søker.søkerNavn}
-          </option>
-        ))}
-      </NavSelect>
+      <>
+        <NavSelect
+          label="Velg relatert søker"
+          onChange={e => setValgtSøkerIdent(e.target.value)}
+          className={styles.relatertFagsak__søkerSelect}
+        >
+          {relaterteSøkere.map(søker => (
+            <option key={søker.søkerIdent} value={søker.søkerIdent}>
+              {søker.søkerNavn} {behandlingsstatus}
+            </option>
+          ))}
+        </NavSelect>
+      </>
     );
   };
 

@@ -19,45 +19,56 @@ import beregningAvklaringsbehovPropType from '../../propTypes/beregningAvklaring
 import beregningsgrunnlagPropType from '../../propTypes/beregningsgrunnlagPropType';
 import {
   formNameAvklarAktiviteter,
-  getFormInitialValuesForAvklarAktiviteter,
-  getFormValuesForAvklarAktiviteter,
+  getFormInitialValuesAktivitetList,
   formNameVurderFaktaBeregning,
+  getFormValuesAktivitetList,
 } from '../BeregningFormUtils';
-import { erOverstyringAvBeregningsgrunnlag } from '../fellesFaktaForATFLogSN/BgFordelingUtils';
+import { erOverstyringAvAktivtBeregningsgrunnlag } from '../fellesFaktaForATFLogSN/BgFordelingUtils';
 import VurderAktiviteterPanel from './VurderAktiviteterPanel';
 
 const { AVKLAR_AKTIVITETER, OVERSTYRING_AV_BEREGNINGSAKTIVITETER } = avklaringsbehovCodes;
 
+
+const harEndringIAvklaring = (avklaringsbehov, avklarAktiviteter, currentValues, initialValues) => {
+  if (!currentValues) {
+    return false;
+  }
+  if (!harAvklaringsbehov(AVKLAR_AKTIVITETER, avklaringsbehov) && (!currentValues || !currentValues[MANUELL_OVERSTYRING_FIELD])) {
+    return false;
+  }
+  if (!!currentValues[MANUELL_OVERSTYRING_FIELD] !== harAvklaringsbehov(OVERSTYRING_AV_BEREGNINGSAKTIVITETER, avklaringsbehov)) {
+    return true;
+  }
+  let harEndring = false;
+  if (currentValues && avklarAktiviteter && avklarAktiviteter.aktiviteterTomDatoMapping) {
+    harEndring = VurderAktiviteterPanel.hasValueChangedFromInitial(
+      avklarAktiviteter.aktiviteterTomDatoMapping,
+      currentValues,
+      initialValues,
+    );
+  }
+  if (currentValues && !harEndring) {
+    harEndring = initialValues[BEGRUNNELSE_AVKLARE_AKTIVITETER_NAME] !== currentValues[BEGRUNNELSE_AVKLARE_AKTIVITETER_NAME];
+  }
+  return harEndring;
+};
+
+
 export const erAvklartAktivitetEndret = createSelector(
   [
-    (state, ownProps) => ownProps.avklaringsbehov,
-    (state, ownProps) => getAvklarAktiviteter(ownProps.beregningsgrunnlag),
-    getFormValuesForAvklarAktiviteter,
-    getFormInitialValuesForAvklarAktiviteter,
+    (state, ownProps) => ownProps.alleBeregningsgrunnlag,
+    getFormValuesAktivitetList,
+    getFormInitialValuesAktivitetList,
   ],
-  (avklaringsbehov, avklarAktiviteter, values, initialValues) => {
-    if (!harAvklaringsbehov(AVKLAR_AKTIVITETER, avklaringsbehov) && (!values || !values[MANUELL_OVERSTYRING_FIELD])) {
-      return false;
-    }
-    if (!!values[MANUELL_OVERSTYRING_FIELD] !== harAvklaringsbehov(OVERSTYRING_AV_BEREGNINGSAKTIVITETER, avklaringsbehov)) {
-      return true;
-    }
-    let harEndring = false;
-    if (values && avklarAktiviteter && avklarAktiviteter.aktiviteterTomDatoMapping) {
-      harEndring = VurderAktiviteterPanel.hasValueChangedFromInitial(
-        avklarAktiviteter.aktiviteterTomDatoMapping,
-        values,
-        initialValues,
-      );
-    }
-    if (values && !harEndring) {
-      harEndring = initialValues[BEGRUNNELSE_AVKLARE_AKTIVITETER_NAME] !== values[BEGRUNNELSE_AVKLARE_AKTIVITETER_NAME];
-    }
-    return harEndring;
-  },
+  (alleBeregningsgrunnlag, valuesList, initialValuesList) => 
+  alleBeregningsgrunnlag.some((bg, index) => harEndringIAvklaring(
+    bg.avklaringsbehov, 
+    getAvklarAktiviteter(bg), 
+    valuesList[index],
+    initialValuesList[index]))
 );
 
-const getHelpTextsAvklarAktiviteter = createSelector([ownProps => ownProps.avklaringsbehov], avklaringsbehov =>
+const getHelpTextsAvklarAktiviteter = createSelector([ownProps => ownProps.beregningsgrunnlag.avklaringsbehov], avklaringsbehov =>
   harAvklaringsbehov(AVKLAR_AKTIVITETER, avklaringsbehov)
     ? [
         <FormattedMessage
@@ -190,11 +201,23 @@ const skalKunneLoseAvklaringsbehov = (skalOverstyre, avklaringsbehov) =>
   skalOverstyre || harAvklaringsbehov(AVKLAR_AKTIVITETER, avklaringsbehov);
 
 const validate = values => {
-  const { avklarAktiviteter } = values;
-  if (avklarAktiviteter) {
-    return VurderAktiviteterPanel.validate(values, avklarAktiviteter.aktiviteterTomDatoMapping);
+  const fieldArrayList = values[fieldArrayName];
+  const errors = {};
+
+  errors[fieldArrayName] = fieldArrayList ? fieldArrayList.map((value) => {
+    const { avklarAktiviteter, avklaringsbehov, manuellOverstyringBeregningAktiviteter } = value;
+    if (avklarAktiviteter && skalKunneLoseAvklaringsbehov(manuellOverstyringBeregningAktiviteter, avklaringsbehov)) {
+      return VurderAktiviteterPanel.validate(value, avklarAktiviteter.aktiviteterTomDatoMapping);
+    }
+    return {};
+  }) : [];
+  // eslint-disable-next-line no-underscore-dangle
+  if (errors[fieldArrayName].find(e => !!e._error) !== undefined) {
+    // Propagerer global error videre om den er satt.
+    // eslint-disable-next-line no-underscore-dangle
+    errors._error = errors[fieldArrayName].find(e => !!e._error)._error;
   }
-  return {};
+  return errors;
 };
 
 export const transformValues = (values, behandlingResultatPerioder, aktivtBg) => {
@@ -244,7 +267,7 @@ export const transformValues = (values, behandlingResultatPerioder, aktivtBg) =>
 const skalKunneOverstyre = (erOverstyrer, avklaringsbehov) =>
   erOverstyrer && !harAvklaringsbehov(AVKLAR_AKTIVITETER, avklaringsbehov);
 
-const getIsAvklaringsbehovClosed = createSelector([ownProps => ownProps.avklaringsbehov], alleAb => {
+const getIsAvklaringsbehovClosed = createSelector([ownProps => ownProps.beregningsgrunnlag.avklaringsbehov], alleAb => {
   const relevantOpenAbs = alleAb
     .filter(
       ab =>
@@ -262,7 +285,7 @@ const mapStateToPropsFactory = (initialState, initialProps) => {
   const onSubmit = vals =>
     initialProps.submitCallback(transformValues(vals, initialProps.behandlingResultatPerioder, aktivtBg));
   return (state, ownProps) => {
-    const values = getFormValuesForAvklarAktiviteter(state, ownProps);
+    const values = getFormValuesAktivitetList(state, ownProps);
 
     const initialValues = {
       [fieldArrayName]: ownProps.alleBeregningsgrunnlag.map(beregningsgrunnlag =>
@@ -275,14 +298,17 @@ const mapStateToPropsFactory = (initialState, initialProps) => {
       onSubmit,
       validate,
       formValues: values,
-      kanOverstyre: skalKunneOverstyre(ownProps.erOverstyrer, ownProps.avklaringsbehov || []),
+      kanOverstyre: skalKunneOverstyre(ownProps.erOverstyrer, ownProps.beregningsgrunnlag.avklaringsbehov || []),
       helpText: getHelpTextsAvklarAktiviteter(ownProps),
       behandlingFormPrefix: getBehandlingFormPrefix(ownProps.behandlingId, ownProps.behandlingVersjon),
       isAvklaringsbehovClosed: getIsAvklaringsbehovClosed(ownProps),
       avklarAktiviteter: getAvklarAktiviteter(ownProps.beregningsgrunnlag),
       hasBegrunnelse: initialValues && !!initialValues[BEGRUNNELSE_AVKLARE_AKTIVITETER_NAME],
-      erOverstyrt: !!values && values[MANUELL_OVERSTYRING_FIELD],
-      erBgOverstyrt: erOverstyringAvBeregningsgrunnlag(state, ownProps),
+      erBgOverstyrt: erOverstyringAvAktivtBeregningsgrunnlag(state, ownProps),
+      erOverstyrt: !!values && 
+              !!values[ownProps.aktivtBeregningsgrunnlagIndex] && 
+              values[ownProps.aktivtBeregningsgrunnlagIndex][MANUELL_OVERSTYRING_FIELD],
+
     };
   };
 };

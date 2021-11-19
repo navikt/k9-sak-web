@@ -119,7 +119,6 @@ const BeregningFaktaIndex = ({
           readOnly={readOnly || (harAvklaringsbehov(OVERSTYRING_AV_BEREGNINGSGRUNNLAG, aktiveAvklaringsBehov) && !erOverstyrer)}
           submitCallback={submitCallback}
           submittable={submittable}
-          avklaringsbehov={aktiveAvklaringsBehov}
           alleKodeverk={alleKodeverk}
           behandlingId={behandling.id}
           behandlingVersjon={behandling.versjon}

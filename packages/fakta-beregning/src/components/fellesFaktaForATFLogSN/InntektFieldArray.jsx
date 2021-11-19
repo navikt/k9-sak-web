@@ -62,6 +62,7 @@ const createAndelerTableRows = (
   isAvklaringsbehovClosed,
   alleKodeverk,
   arbeidsgiverOpplysningerPerId,
+  vilkaarPeriodeFieldArrayIndex,
 ) => {
   const rows = [];
   fields.forEach((andelElementFieldId, index) => {
@@ -84,6 +85,7 @@ const createAndelerTableRows = (
           isAvklaringsbehovClosed={isAvklaringsbehovClosed}
           alleKodeverk={alleKodeverk}
           arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
+          vilkaarPeriodeFieldArrayIndex={vilkaarPeriodeFieldArrayIndex}
         />,
       );
     }
@@ -91,7 +93,12 @@ const createAndelerTableRows = (
   return rows;
 };
 
-const createBruttoBGSummaryRow = (fields, readOnly, beregningsgrunnlag, behandlingId, behandlingVersjon) => (
+const createBruttoBGSummaryRow = (fields, 
+  readOnly, 
+  beregningsgrunnlag, 
+  behandlingId,
+   behandlingVersjon,
+   vilkaarPeriodeFieldArrayIndex,) => (
   <SummaryRow
     readOnly={readOnly}
     key="summaryRow"
@@ -101,6 +108,7 @@ const createBruttoBGSummaryRow = (fields, readOnly, beregningsgrunnlag, behandli
     beregningsgrunnlag={beregningsgrunnlag}
     behandlingId={behandlingId}
     behandlingVersjon={behandlingVersjon}
+    vilkaarPeriodeFieldArrayIndex={vilkaarPeriodeFieldArrayIndex}
   />
 );
 
@@ -125,6 +133,7 @@ export const InntektFieldArrayImpl = ({
   isAvklaringsbehovClosed,
   alleKodeverk,
   arbeidsgiverOpplysningerPerId,
+  vilkaarPeriodeFieldArrayIndex,
 }) => {
   const tablerows = createAndelerTableRows(
     fields,
@@ -136,12 +145,18 @@ export const InntektFieldArrayImpl = ({
     isAvklaringsbehovClosed,
     alleKodeverk,
     arbeidsgiverOpplysningerPerId,
+    vilkaarPeriodeFieldArrayIndex
   );
 
   if (tablerows.length === 0) {
     return null;
   }
-  tablerows.push(createBruttoBGSummaryRow(fields, readOnly, beregningsgrunnlag, behandlingId, behandlingVersjon));
+  tablerows.push(createBruttoBGSummaryRow(fields, 
+    readOnly, 
+    beregningsgrunnlag, 
+    behandlingId, 
+    behandlingVersjon,
+    vilkaarPeriodeFieldArrayIndex,));
   return (
     <NavFieldGroup errorMessage={getErrorMessage(meta, intl, isBeregningFormDirty)}>
       <Table
@@ -174,6 +189,7 @@ InntektFieldArrayImpl.propTypes = {
   alleKodeverk: PropTypes.shape().isRequired,
   arbeidsgiverOpplysningerPerId: PropTypes.shape().isRequired,
   isAvklaringsbehovClosed: PropTypes.bool.isRequired,
+  vilkaarPeriodeFieldArrayIndex: PropTypes.number.isRequired,
 };
 
 InntektFieldArrayImpl.defaultProps = {

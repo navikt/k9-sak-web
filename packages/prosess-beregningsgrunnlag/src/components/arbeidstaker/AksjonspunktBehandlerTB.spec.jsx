@@ -76,7 +76,6 @@ const beregningsgrunnlagPerioder = [
         beregnetPrAar: beregnetPrAarAndelEn,
         overstyrtPrAar: overstyrtPrAarAndelEn,
         arbeidsforhold: {
-          arbeidsgiverId: '123',
           arbeidsgiverIdent: '123',
           arbeidsforholdId: '123',
           eksternArbeidsforholdId: '345678',
@@ -91,7 +90,6 @@ const beregningsgrunnlagPerioder = [
         beregnetPrAar: beregnetPrAarAndelTo,
         overstyrtPrAar: overstyrtPrAarAndelTo,
         arbeidsforhold: {
-          arbeidsgiverId: '456',
           arbeidsgiverIdent: '456',
           arbeidsforholdId: '456',
           eksternArbeidsforholdId: '567890',
@@ -113,7 +111,6 @@ const beregningsgrunnlagPerioder = [
         beregnetPrAar: beregnetPrAarAndelEn,
         overstyrtPrAar: overstyrtPrAarAndelEn,
         arbeidsforhold: {
-          arbeidsgiverId: '123',
           arbeidsgiverIdent: '123',
           arbeidsforholdId: '123',
           eksternArbeidsforholdId: '345678',
@@ -128,7 +125,6 @@ const beregningsgrunnlagPerioder = [
         beregnetPrAar: beregnetPrAarAndelTo,
         overstyrtPrAar: overstyrtPrAarAndelTo,
         arbeidsforhold: {
-          arbeidsgiverId: '456',
           arbeidsforholdId: '456',
           arbeidsgiverIdent: '456',
           eksternArbeidsforholdId: '567890',
@@ -149,7 +145,6 @@ const beregningsgrunnlagPerioder = [
         beregnetPrAar: beregnetPrAarAndelEn,
         overstyrtPrAar: overstyrtPrAarAndelEn,
         arbeidsforhold: {
-          arbeidsgiverId: '123',
           arbeidsgiverIdent: '123',
           arbeidsforholdId: '123',
           eksternArbeidsforholdId: '345678',
@@ -164,7 +159,6 @@ const beregningsgrunnlagPerioder = [
         beregnetPrAar: beregnetPrAarAndelTo,
         overstyrtPrAar: overstyrtPrAarAndelTo,
         arbeidsforhold: {
-          arbeidsgiverId: '456',
           arbeidsgiverIdent: '123',
           arbeidsforholdId: '456',
           eksternArbeidsforholdId: '567890',
@@ -185,7 +179,6 @@ const beregningsgrunnlagPerioder = [
         beregnetPrAar: beregnetPrAarAndelEn,
         overstyrtPrAar: overstyrtPrAarAndelEn,
         arbeidsforhold: {
-          arbeidsgiverId: '123',
           arbeidsgiverIdent: '123',
           arbeidsforholdId: '123',
           eksternArbeidsforholdId: '345678',
@@ -200,7 +193,6 @@ const beregningsgrunnlagPerioder = [
         beregnetPrAar: beregnetPrAarAndelTo,
         overstyrtPrAar: overstyrtPrAarAndelTo,
         arbeidsforhold: {
-          arbeidsgiverId: '456',
           arbeidsgiverIdent: '123',
           arbeidsforholdId: '456',
           eksternArbeidsforholdId: '567890',

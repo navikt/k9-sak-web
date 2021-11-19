@@ -96,34 +96,34 @@ const createArbeidsIntektRows = (relevanteAndeler, getKodeverknavn, arbeidsgiver
       key={`ArbInntektWrapper${lagVisningForAndel(andel, arbeidsgiverOpplysningerPerId, getKodeverknavn)}${index + 1}`}
     >
       <Row key={`index${index + 1}`}>
-        <Column xs="7" key={`ColLable${andel.arbeidsforhold.arbeidsgiverId}`}>
+        <Column xs="7" key={`ColLable${andel.arbeidsforhold.arbeidsgiverIdent}`}>
           <Normaltekst key={`ColLableTxt${index + 1}`} className={beregningStyles.semiBoldText}>
             {lagVisningForAndel(andel, arbeidsgiverOpplysningerPerId, getKodeverknavn)}
           </Normaltekst>
         </Column>
 
         <Column
-          key={`ColBrgMnd${andel.arbeidsforhold.arbeidsgiverId}`}
+          key={`ColBrgMnd${andel.arbeidsforhold.arbeidsgiverIdent}`}
           xs="2"
           className={beregningStyles.colMaanedText}
         >
-          <Normaltekst key={`ColBrgMndTxt${andel.arbeidsforhold.arbeidsgiverId}`}>
+          <Normaltekst key={`ColBrgMndTxt${andel.arbeidsforhold.arbeidsgiverIdent}`}>
             {formatCurrencyNoKr(månedsinntekt(andel.beregnetPrAar))}
           </Normaltekst>
         </Column>
-        <Column key={`ColBrgAar${andel.arbeidsforhold.arbeidsgiverId}`} xs="2" className={beregningStyles.colAarText}>
+        <Column key={`ColBrgAar${andel.arbeidsforhold.arbeidsgiverIdent}`} xs="2" className={beregningStyles.colAarText}>
           <Normaltekst
-            key={`ColBrgAarTxt${andel.arbeidsforhold.arbeidsgiverId}`}
+            key={`ColBrgAarTxt${andel.arbeidsforhold.arbeidsgiverIdent}`}
             className={!harFlereArbeidsforhold ? beregningStyles.semiBoldText : ''}
           >
             {formatCurrencyNoKr(andel.beregnetPrAar)}
           </Normaltekst>
         </Column>
-        <Column xs="1" key={`ColLink${andel.arbeidsforhold.arbeidsgiverId}`} className={beregningStyles.colLink}>
+        <Column xs="1" key={`ColLink${andel.arbeidsforhold.arbeidsgiverIdent}`} className={beregningStyles.colLink}>
           {userIdent && <LinkTilEksterntSystem linkText="IM" userIdent={userIdent} type="IM" />}
         </Column>
       </Row>
-      <FlexRow key={`indexD${andel.arbeidsforhold.arbeidsgiverId}`}>
+      <FlexRow key={`indexD${andel.arbeidsforhold.arbeidsgiverIdent}`}>
         {andel.arbeidsforhold && andel.arbeidsforhold.stillingsNavn && (
           <FlexColumn>
             <Normaltekst>{createArbeidsStillingsNavnOgProsent(andel.arbeidsforhold)}</Normaltekst>
@@ -143,7 +143,7 @@ const createArbeidsIntektRows = (relevanteAndeler, getKodeverknavn, arbeidsgiver
         )}
       </FlexRow>
       {index < relevanteAndeler.length && (
-        <Row key={`indexSp${andel.arbeidsforhold.arbeidsgiverId}`}>
+        <Row key={`indexSp${andel.arbeidsforhold.arbeidsgiverIdent}`}>
           <VerticalSpacer eightPx />
         </Row>
       )}

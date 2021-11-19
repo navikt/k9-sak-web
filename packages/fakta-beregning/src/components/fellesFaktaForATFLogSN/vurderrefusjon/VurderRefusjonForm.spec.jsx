@@ -107,9 +107,9 @@ describe('<VurderRefusjonForm>', () => {
     values[lagFieldName('45345345345')] = true;
     const transformedValues = VurderRefusjonFormImpl.transformValues(senRefusjonkravListe)(values);
     expect(transformedValues.refusjonskravGyldighet.length).to.equal(2);
-    expect(transformedValues.refusjonskravGyldighet[0].arbeidsgiverIdent).to.equal('8279312213');
+    expect(transformedValues.refusjonskravGyldighet[0].arbeidsgiverId).to.equal('8279312213');
     expect(transformedValues.refusjonskravGyldighet[0].skalUtvideGyldighet).to.equal(false);
-    expect(transformedValues.refusjonskravGyldighet[1].arbeidsgiverIdent).to.equal('45345345345');
+    expect(transformedValues.refusjonskravGyldighet[1].arbeidsgiverId).to.equal('45345345345');
     expect(transformedValues.refusjonskravGyldighet[1].skalUtvideGyldighet).to.equal(true);
   });
 });

@@ -48,6 +48,7 @@ const VedtakProsessIndex = ({
   informasjonsbehovVedtaksbrev,
   dokumentdataHente,
   fritekstdokumenter,
+  lagreDokumentdata
 }) => (
   <RawIntlProvider value={intl}>
     <VedtakPanels
@@ -81,7 +82,7 @@ const VedtakProsessIndex = ({
       informasjonsbehovVedtaksbrev={informasjonsbehovVedtaksbrev}
       dokumentdata={dokumentdataHente}
       fritekstdokumenter={fritekstdokumenter}
-    />
+      lagreDokumentdata={lagreDokumentdata} />
   </RawIntlProvider>
 );
 
@@ -111,6 +112,7 @@ VedtakProsessIndex.propTypes = {
   }),
   dokumentdataHente: PropTypes.shape(),
   fritekstdokumenter: PropTypes.arrayOf(PropTypes.shape()),
+  lagreDokumentdata: PropTypes.func.isRequired,
 };
 
 VedtakProsessIndex.defaultProps = {

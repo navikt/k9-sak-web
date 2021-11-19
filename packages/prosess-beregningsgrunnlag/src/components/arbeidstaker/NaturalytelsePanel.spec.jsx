@@ -20,7 +20,7 @@ const bgPerioder = [
           kode: aktivitetStatus.ARBEIDSTAKER,
         },
         arbeidsforhold: {
-          arbeidsgiverId: '123',
+          arbeidsgiverIdent: '123',
           arbeidsforholdId: '123',
         },
       },
@@ -29,7 +29,7 @@ const bgPerioder = [
           kode: aktivitetStatus.ARBEIDSTAKER,
         },
         arbeidsforhold: {
-          arbeidsgiverId: '456',
+          arbeidsgiverIdent: '456',
           arbeidsforholdId: '456',
         },
       },
@@ -38,7 +38,7 @@ const bgPerioder = [
           kode: aktivitetStatus.ARBEIDSTAKER,
         },
         arbeidsforhold: {
-          arbeidsgiverId: '789',
+          arbeidsgiverIdent: '789',
           arbeidsforholdId: '789',
         },
       },
@@ -57,7 +57,7 @@ const bgPerioder = [
           kode: aktivitetStatus.ARBEIDSTAKER,
         },
         arbeidsforhold: {
-          arbeidsgiverId: '123',
+          arbeidsgiverIdent: '123',
           arbeidsforholdId: '123',
         },
       },
@@ -67,7 +67,7 @@ const bgPerioder = [
         },
         bortfaltNaturalytelse: 10000,
         arbeidsforhold: {
-          arbeidsgiverId: '456',
+          arbeidsgiverIdent: '456',
           arbeidsforholdId: '456',
         },
       },
@@ -77,7 +77,7 @@ const bgPerioder = [
         },
         bortfaltNaturalytelse: 70000,
         arbeidsforhold: {
-          arbeidsgiverId: '789',
+          arbeidsgiverIdent: '789',
           arbeidsforholdId: '789',
         },
       },
@@ -96,7 +96,7 @@ const bgPerioder = [
           kode: aktivitetStatus.ARBEIDSTAKER,
         },
         arbeidsforhold: {
-          arbeidsgiverId: '123',
+          arbeidsgiverIdent: '123',
           arbeidsforholdId: '123',
         },
       },
@@ -106,7 +106,7 @@ const bgPerioder = [
         },
         bortfaltNaturalytelse: 70000,
         arbeidsforhold: {
-          arbeidsgiverId: '456',
+          arbeidsgiverIdent: '456',
           arbeidsforholdId: '456',
         },
       },
@@ -116,7 +116,7 @@ const bgPerioder = [
         },
         bortfaltNaturalytelse: 10000,
         arbeidsforhold: {
-          arbeidsgiverId: '789',
+          arbeidsgiverIdent: '789',
           arbeidsforholdId: '789',
         },
       },
@@ -137,7 +137,7 @@ const bgPerioder = [
         },
         bortfaltNaturalytelse: 50000,
         arbeidsforhold: {
-          arbeidsgiverId: '123',
+          arbeidsgiverIdent: '123',
           arbeidsforholdId: '123',
         },
       },
@@ -146,7 +146,7 @@ const bgPerioder = [
           kode: aktivitetStatus.ARBEIDSTAKER,
         },
         arbeidsforhold: {
-          arbeidsgiverId: '456',
+          arbeidsgiverIdent: '456',
           arbeidsforholdId: '456',
         },
       },
@@ -155,7 +155,7 @@ const bgPerioder = [
           kode: aktivitetStatus.ARBEIDSTAKER,
         },
         arbeidsforhold: {
-          arbeidsgiverId: '789',
+          arbeidsgiverIdent: '789',
           arbeidsforholdId: '789',
         },
       },

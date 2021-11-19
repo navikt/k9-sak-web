@@ -108,6 +108,7 @@ export class VedtakRevurderingFormImpl extends Component {
       UNNTAK_FRA_TILSYNSORDNING,
       BEREGNING_25_PROSENT_AVVIK,
       OVER_18_AAR,
+      lagreDokumentdata,
       ...formProps
     } = this.props;
 
@@ -228,6 +229,7 @@ export class VedtakRevurderingFormImpl extends Component {
               overskrift={overskrift}
               begrunnelse={begrunnelse}
               arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
+              lagreDokumentdata={lagreDokumentdata}
             />
             {behandlingStatusKode === behandlingStatusCode.BEHANDLING_UTREDES && (
               <VedtakRevurderingSubmitPanel
