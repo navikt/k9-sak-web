@@ -66,7 +66,8 @@ export default ({ behandling: { links, uuid }, submitCallback, aksjonspunkter, r
             { rel: 'sykdom-diagnosekoder', desiredName: 'diagnosekoder' },
             { rel: 'sykdom-dokument-liste', desiredName: 'dataTilVurdering' },
             { rel: 'sykdom-aksjonspunkt', desiredName: 'status' },
-            { rel: 'sykdom-dokument-eksisterendevurderinger', desiredName: 'nyeDokumenter' }
+            { rel: 'sykdom-dokument-eksisterendevurderinger', desiredName: 'nyeDokumenter' },
+            { rel: 'saksbehandler-info', desiredName: 'saksbehandlerInfo' }
           ]),
           uuid,
           løsAksjonspunkt,
