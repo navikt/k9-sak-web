@@ -71,7 +71,7 @@ VurderRefusjonFormImpl.transformValues = arbeidsgiverListe => values => {
   }
   return {
     refusjonskravGyldighet: arbeidsgiverListe.map(({ arbeidsgiverIdent }) => ({
-      arbeidsgiverIdent,
+      arbeidsgiverId: arbeidsgiverIdent,
       skalUtvideGyldighet: values ? values[lagFieldName(arbeidsgiverIdent)] : undefined,
     })),
   };
