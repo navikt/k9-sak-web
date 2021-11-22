@@ -20,6 +20,7 @@ export enum K9sakApiKeys {
   KODEVERK_KLAGE = 'KODEVERK_KLAGE',
   LANGUAGE_FILE = 'LANGUAGE_FILE',
   NAV_ANSATT = 'NAV_ANSATT',
+  HENT_SAKSBEHANDLERE = 'HENT_SAKSBEHANDLERE',
   BEHANDLENDE_ENHETER = 'BEHANDLENDE_ENHETER',
   FEATURE_TOGGLE = 'FEATURE_TOGGLE',
   SEARCH_FAGSAK = 'SEARCH_FAGSAK',
@@ -70,6 +71,7 @@ const endpoints = new RestApiConfigBuilder()
 
   // Generelle
   .withRel('nav-ansatt', K9sakApiKeys.NAV_ANSATT)
+  .withRel('saksbehandler-info', K9sakApiKeys.HENT_SAKSBEHANDLERE)
   .withRel('kodeverk', K9sakApiKeys.KODEVERK)
   .withRel('tilbake-kodeverk', K9sakApiKeys.KODEVERK_TILBAKE)
   .withRel('klage-kodeverk', K9sakApiKeys.KODEVERK_KLAGE)

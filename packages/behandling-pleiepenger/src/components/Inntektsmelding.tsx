@@ -17,7 +17,7 @@ const initializeInntektsmeldingApp = (
   dokumenter: Dokument[],
   løsAksjonspunkt,
   readOnly,
-  visFortsettKnapp: boolean,
+  visFortsettKnapp: boolean
 ) => {
   (window as any).renderKompletthetApp(elementId, {
     httpErrorHandler,
@@ -58,8 +58,8 @@ export default ({
   return (
     <MicroFrontend
       id={inntektsmeldingAppId}
-      jsSrc="/k9/microfrontend/psb-inntektsmelding/1/app.js"
-      stylesheetSrc="/k9/microfrontend/psb-inntektsmelding/1/styles.css"
+      jsSrc="http://localhost:8383/main.js"
+      stylesheetSrc="http://localhost:8383/styles.css"
       noCache
       onReady={() =>
         initializeInntektsmeldingApp(
