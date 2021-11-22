@@ -34,7 +34,7 @@ const initializeMedisinskVilkår = (
 const medisinskVilkårAppID = 'medisinskVilkårApp';
 export default ({ behandling: { links, uuid }, submitCallback, aksjonspunkter, readOnly }) => {
   const { addErrorMessage } = useRestApiErrorDispatcher();
-  const { saksbehandlere } = useGlobalStateRestApiData(K9sakApiKeys.HENT_SAKSBEHANDLERE);
+  const saksbehandlere = useGlobalStateRestApiData<any>(K9sakApiKeys.HENT_SAKSBEHANDLERE);
   const httpErrorHandlerCaller = (status: number, locationHeader?: string) =>
     httpErrorHandler(status, addErrorMessage, locationHeader);
 
@@ -77,7 +77,7 @@ export default ({ behandling: { links, uuid }, submitCallback, aksjonspunkter, r
           løsAksjonspunkt,
           readOnly || !harAksjonspunkt,
           visFortsettknapp,
-          saksbehandlere,
+          saksbehandlere?.saksbehandlere || {},
         )
       }
     />
