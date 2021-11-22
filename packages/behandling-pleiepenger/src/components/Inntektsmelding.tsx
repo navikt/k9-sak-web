@@ -17,7 +17,7 @@ const initializeInntektsmeldingApp = (
   dokumenter: Dokument[],
   løsAksjonspunkt,
   readOnly,
-  visFortsettKnapp: boolean,
+  visFortsettKnapp: boolean
 ) => {
   (window as any).renderKompletthetApp(elementId, {
     httpErrorHandler,
