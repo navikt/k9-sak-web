@@ -68,15 +68,6 @@ describe('<FordelingHelpText>', () => {
     expect(string.navnOgOrgnr).to.eql('Sopra Steria (123456789)...6789');
     expect(string.dato).to.eql('-');
   });
-  it('skal lage endret arbeidsforhold for gradering', () => {
-    const string = createFordelArbeidsforholdString(
-      arbeidsforholdListe,
-      textCase.GRADERING,
-      fn,
-      arbeidsgiverOpplysningerPerId,
-    );
-    expect(string).to.eql('Sopra Steria (123456789)...6789 f.o.m. 01.01.2015 - t.o.m. 01.01.2025');
-  });
   it('skal lage endret arbeidsforhold for refusjon', () => {
     const string = createFordelArbeidsforholdString(
       arbeidsforholdListe,

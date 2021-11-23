@@ -8,7 +8,6 @@ import {
   getFieldNameKey,
   mapAndel,
   mapTilFastsatteVerdier,
-  slaaSammenPerioder,
   transformPerioder,
 } from './FordelBeregningsgrunnlagForm';
 import FordelBeregningsgrunnlagPeriodePanel from './FordelBeregningsgrunnlagPeriodePanel';
@@ -22,7 +21,6 @@ const andel1 = {
   harPeriodeAarsakGraderingEllerRefusjon: true,
   inntektskategori: 'ARBEIDSTAKER',
   nyAndel: false,
-  skalKunneEndreRefusjon: false,
   lagtTilAvSaksbehandler: false,
   arbeidsforholdId: null,
   andel: 'Sopra Steria AS (2342342348)',
@@ -34,7 +32,6 @@ const andel2 = {
   fastsattBelop: '20 000',
   readOnlyBelop: '10 000',
   harPeriodeAarsakGraderingEllerRefusjon: true,
-  skalKunneEndreRefusjon: false,
   refusjonskrav: '10 000',
   inntektskategori: 'ARBEIDSTAKER',
   nyAndel: false,
@@ -122,21 +119,19 @@ describe('<FordelBeregningsgrunnlagForm>', () => {
       fordelBeregningsgrunnlagAndeler: [fordelAndel],
       fom: '2019-04-01',
       harPeriodeAarsakGraderingEllerRefusjon: false,
-      skalKunneEndreRefusjon: false,
       tom: '2019-06-01',
     };
     const periode2 = {
       fordelBeregningsgrunnlagAndeler: [fordelAndel],
       fom: '2019-04-01',
       harPeriodeAarsakGraderingEllerRefusjon: false,
-      skalKunneEndreRefusjon: false,
       tom: '2019-06-01',
     };
     const periode3 = {
       fordelBeregningsgrunnlagAndeler: [fordelAndel, fordelAndel2],
       fom: '2019-06-02',
       harPeriodeAarsakGraderingEllerRefusjon: true,
-      skalKunneEndreRefusjon: false,
+      skalRedigereInntekt: true,
       tom: null,
     };
 
@@ -213,314 +208,6 @@ describe('<FordelBeregningsgrunnlagForm>', () => {
     expect(errors[getFieldNameKey(1)]).to.not.be.empty;
   });
 
-  it('skal returnere liste med en periode om kun en periode i grunnlag', () => {
-    const perioder = [
-      {
-        fom: '01-01-2019',
-        tom: null,
-        fordelBeregningsgrunnlagAndeler: [fordelAndel],
-        harPeriodeAarsakGraderingEllerRefusjon: true,
-      },
-    ];
-    const bgPerioder = [
-      {
-        beregningsgrunnlagPeriodeFom: '01-01-2019',
-        beregningsgrunnlagPeriodeTom: null,
-        periodeAarsaker: [periodeAarsak.ENDRING_I_REFUSJONSKRAV],
-      },
-    ];
-    const nyePerioder = slaaSammenPerioder(perioder, bgPerioder);
-    expect(nyePerioder.length).to.equal(1);
-    expect(nyePerioder[0].fom).to.equal('01-01-2019');
-    expect(nyePerioder[0].tom).to.equal(null);
-  });
-
-  it('skal returnere liste med en periode om andre periode har naturalytelse tilkommet', () => {
-    const perioder = [
-      {
-        fom: '01-01-2019',
-        tom: '01-02-2019',
-        fordelBeregningsgrunnlagAndeler: [fordelAndel],
-        harPeriodeAarsakGraderingEllerRefusjon: true,
-      },
-      {
-        fom: '02-02-2019',
-        tom: null,
-        fordelBeregningsgrunnlagAndeler: [fordelAndel],
-        harPeriodeAarsakGraderingEllerRefusjon: true,
-      },
-    ];
-    const bgPerioder = [
-      {
-        beregningsgrunnlagPeriodeFom: '01-01-2019',
-        beregningsgrunnlagPeriodeTom: '01-02-2019',
-        periodeAarsaker: [{ kode: periodeAarsak.ENDRING_I_REFUSJONSKRAV }],
-      },
-      {
-        beregningsgrunnlagPeriodeFom: '02-02-2019',
-        beregningsgrunnlagPeriodeTom: null,
-        periodeAarsaker: [{ kode: periodeAarsak.NATURALYTELSE_TILKOMMER }],
-      },
-    ];
-    const nyePerioder = slaaSammenPerioder(perioder, bgPerioder);
-    expect(nyePerioder.length).to.equal(1);
-    expect(nyePerioder[0].fom).to.equal('01-01-2019');
-    expect(nyePerioder[0].tom).to.equal(null);
-  });
-
-  it('skal returnere liste med en periode om andre periode har naturalytelse bortfalt', () => {
-    const perioder = [
-      {
-        fom: '01-01-2019',
-        tom: '01-02-2019',
-        fordelBeregningsgrunnlagAndeler: [fordelAndel],
-        harPeriodeAarsakGraderingEllerRefusjon: true,
-      },
-      {
-        fom: '02-02-2019',
-        tom: null,
-        fordelBeregningsgrunnlagAndeler: [fordelAndel],
-        harPeriodeAarsakGraderingEllerRefusjon: true,
-      },
-    ];
-    const bgPerioder = [
-      {
-        beregningsgrunnlagPeriodeFom: '01-01-2019',
-        beregningsgrunnlagPeriodeTom: '01-02-2019',
-        periodeAarsaker: [{ kode: periodeAarsak.ENDRING_I_REFUSJONSKRAV }],
-      },
-      {
-        beregningsgrunnlagPeriodeFom: '02-02-2019',
-        beregningsgrunnlagPeriodeTom: null,
-        periodeAarsaker: [{ kode: periodeAarsak.NATURALYTELSE_BORTFALT }],
-      },
-    ];
-    const nyePerioder = slaaSammenPerioder(perioder, bgPerioder);
-    expect(nyePerioder.length).to.equal(1);
-    expect(nyePerioder[0].fom).to.equal('01-01-2019');
-    expect(nyePerioder[0].tom).to.equal(null);
-  });
-
-  it('skal returnere liste med en periode om andre periode har avsluttet arbeidsforhold uten endring i bruttoPrÅr', () => {
-    const perioder = [
-      {
-        fom: '01-01-2019',
-        tom: '01-02-2019',
-        fordelBeregningsgrunnlagAndeler: [fordelAndel],
-        harPeriodeAarsakGraderingEllerRefusjon: true,
-      },
-      {
-        fom: '02-02-2019',
-        tom: null,
-        fordelBeregningsgrunnlagAndeler: [fordelAndel],
-        harPeriodeAarsakGraderingEllerRefusjon: true,
-      },
-    ];
-    const bgPerioder = [
-      {
-        beregningsgrunnlagPeriodeFom: '01-01-2019',
-        beregningsgrunnlagPeriodeTom: '01-02-2019',
-        bruttoPrAar: 120000,
-        periodeAarsaker: [{ kode: periodeAarsak.ENDRING_I_REFUSJONSKRAV }],
-      },
-      {
-        beregningsgrunnlagPeriodeFom: '02-02-2019',
-        beregningsgrunnlagPeriodeTom: null,
-        bruttoPrAar: 120000,
-        periodeAarsaker: [{ kode: periodeAarsak.ARBEIDSFORHOLD_AVSLUTTET }],
-      },
-    ];
-    const nyePerioder = slaaSammenPerioder(perioder, bgPerioder);
-    expect(nyePerioder.length).to.equal(1);
-    expect(nyePerioder[0].fom).to.equal('01-01-2019');
-    expect(nyePerioder[0].tom).to.equal(null);
-  });
-
-  it('skal returnere liste med to perioder om andre periode har avsluttet arbeidsforhold med endring i bruttoPrÅr', () => {
-    const perioder = [
-      {
-        fom: '01-01-2019',
-        tom: '01-02-2019',
-        fordelBeregningsgrunnlagAndeler: [fordelAndel],
-        harPeriodeAarsakGraderingEllerRefusjon: true,
-      },
-      {
-        fom: '02-02-2019',
-        tom: null,
-        fordelBeregningsgrunnlagAndeler: [fordelAndel],
-        harPeriodeAarsakGraderingEllerRefusjon: true,
-      },
-    ];
-    const bgPerioder = [
-      {
-        beregningsgrunnlagPeriodeFom: '01-01-2019',
-        beregningsgrunnlagPeriodeTom: '01-02-2019',
-        bruttoPrAar: 120000,
-        periodeAarsaker: [{ kode: periodeAarsak.ENDRING_I_REFUSJONSKRAV }],
-      },
-      {
-        beregningsgrunnlagPeriodeFom: '02-02-2019',
-        beregningsgrunnlagPeriodeTom: null,
-        bruttoPrAar: 130000,
-        periodeAarsaker: [{ kode: periodeAarsak.ARBEIDSFORHOLD_AVSLUTTET }],
-      },
-    ];
-    const nyePerioder = slaaSammenPerioder(perioder, bgPerioder);
-    expect(nyePerioder.length).to.equal(2);
-    expect(nyePerioder[0].fom).to.equal('01-01-2019');
-    expect(nyePerioder[0].tom).to.equal('01-02-2019');
-    expect(nyePerioder[1].fom).to.equal('02-02-2019');
-    expect(nyePerioder[1].tom).to.equal(null);
-  });
-
-  it('skal returnere liste med to perioder om andre periode har opphør av gradering', () => {
-    const perioder = [
-      {
-        fom: '01-01-2019',
-        tom: '01-02-2019',
-        fordelBeregningsgrunnlagAndeler: [fordelAndel],
-        harPeriodeAarsakGraderingEllerRefusjon: true,
-      },
-      {
-        fom: '02-02-2019',
-        tom: null,
-        fordelBeregningsgrunnlagAndeler: [fordelAndel],
-        harPeriodeAarsakGraderingEllerRefusjon: false,
-      },
-    ];
-    const bgPerioder = [
-      {
-        beregningsgrunnlagPeriodeFom: '01-01-2019',
-        beregningsgrunnlagPeriodeTom: '01-02-2019',
-        bruttoPrAar: 120000,
-        periodeAarsaker: [{ kode: periodeAarsak.ENDRING_I_REFUSJONSKRAV }],
-      },
-      {
-        beregningsgrunnlagPeriodeFom: '02-02-2019',
-        beregningsgrunnlagPeriodeTom: null,
-        bruttoPrAar: 120000,
-        periodeAarsaker: [{ kode: periodeAarsak.GRADERING_OPPHOERER }],
-      },
-    ];
-    const nyePerioder = slaaSammenPerioder(perioder, bgPerioder);
-    expect(nyePerioder.length).to.equal(2);
-    expect(nyePerioder[0].fom).to.equal('01-01-2019');
-    expect(nyePerioder[0].tom).to.equal('01-02-2019');
-    expect(nyePerioder[1].fom).to.equal('02-02-2019');
-    expect(nyePerioder[1].tom).to.equal(null);
-  });
-
-  it('skal returnere liste med to perioder om andre periode har opphør av refusjon', () => {
-    const perioder = [
-      {
-        fom: '01-01-2019',
-        tom: '01-02-2019',
-        fordelBeregningsgrunnlagAndeler: [fordelAndel],
-        harPeriodeAarsakGraderingEllerRefusjon: true,
-      },
-      {
-        fom: '02-02-2019',
-        tom: null,
-        fordelBeregningsgrunnlagAndeler: [fordelAndel],
-        harPeriodeAarsakGraderingEllerRefusjon: false,
-      },
-    ];
-    const bgPerioder = [
-      {
-        beregningsgrunnlagPeriodeFom: '01-01-2019',
-        beregningsgrunnlagPeriodeTom: '01-02-2019',
-        bruttoPrAar: 120000,
-        periodeAarsaker: [{ kode: periodeAarsak.ENDRING_I_REFUSJONSKRAV }],
-      },
-      {
-        beregningsgrunnlagPeriodeFom: '02-02-2019',
-        beregningsgrunnlagPeriodeTom: null,
-        bruttoPrAar: 120000,
-        periodeAarsaker: [{ kode: periodeAarsak.REFUSJON_OPPHOERER }],
-      },
-    ];
-    const nyePerioder = slaaSammenPerioder(perioder, bgPerioder);
-    expect(nyePerioder.length).to.equal(2);
-    expect(nyePerioder[0].fom).to.equal('01-01-2019');
-    expect(nyePerioder[0].tom).to.equal('01-02-2019');
-    expect(nyePerioder[1].fom).to.equal('02-02-2019');
-    expect(nyePerioder[1].tom).to.equal(null);
-  });
-
-  it('skal returnere liste med to perioder om andre periode har endring i refusjon', () => {
-    const perioder = [
-      {
-        fom: '01-01-2019',
-        tom: '01-02-2019',
-        fordelBeregningsgrunnlagAndeler: [fordelAndel],
-        harPeriodeAarsakGraderingEllerRefusjon: false,
-      },
-      {
-        fom: '02-02-2019',
-        tom: null,
-        fordelBeregningsgrunnlagAndeler: [fordelAndel],
-        harPeriodeAarsakGraderingEllerRefusjon: true,
-      },
-    ];
-    const bgPerioder = [
-      {
-        beregningsgrunnlagPeriodeFom: '01-01-2019',
-        beregningsgrunnlagPeriodeTom: '01-02-2019',
-        bruttoPrAar: 120000,
-        periodeAarsaker: [],
-      },
-      {
-        beregningsgrunnlagPeriodeFom: '02-02-2019',
-        beregningsgrunnlagPeriodeTom: null,
-        bruttoPrAar: 120000,
-        periodeAarsaker: [{ kode: periodeAarsak.ENDRING_I_REFUSJONSKRAV }],
-      },
-    ];
-    const nyePerioder = slaaSammenPerioder(perioder, bgPerioder);
-    expect(nyePerioder.length).to.equal(2);
-    expect(nyePerioder[0].fom).to.equal('01-01-2019');
-    expect(nyePerioder[0].tom).to.equal('01-02-2019');
-    expect(nyePerioder[1].fom).to.equal('02-02-2019');
-    expect(nyePerioder[1].tom).to.equal(null);
-  });
-
-  it('skal returnere liste med to perioder om andre periode har gradering', () => {
-    const perioder = [
-      {
-        fom: '01-01-2019',
-        tom: '01-02-2019',
-        fordelBeregningsgrunnlagAndeler: [fordelAndel],
-        harPeriodeAarsakGraderingEllerRefusjon: true,
-      },
-      {
-        fom: '02-02-2019',
-        tom: null,
-        fordelBeregningsgrunnlagAndeler: [fordelAndel],
-        harPeriodeAarsakGraderingEllerRefusjon: true,
-      },
-    ];
-    const bgPerioder = [
-      {
-        beregningsgrunnlagPeriodeFom: '01-01-2019',
-        beregningsgrunnlagPeriodeTom: '01-02-2019',
-        bruttoPrAar: 120000,
-        periodeAarsaker: [],
-      },
-      {
-        beregningsgrunnlagPeriodeFom: '02-02-2019',
-        beregningsgrunnlagPeriodeTom: null,
-        bruttoPrAar: 120000,
-        periodeAarsaker: [{ kode: periodeAarsak.GRADERING }],
-      },
-    ];
-    const nyePerioder = slaaSammenPerioder(perioder, bgPerioder);
-    expect(nyePerioder.length).to.equal(2);
-    expect(nyePerioder[0].fom).to.equal('01-01-2019');
-    expect(nyePerioder[0].tom).to.equal('01-02-2019');
-    expect(nyePerioder[1].fom).to.equal('02-02-2019');
-    expect(nyePerioder[1].tom).to.equal(null);
-  });
-
   it('skal ikkje validere om det ikkje finnes perioder', () => {
     const values = {};
     const fordelBGPerioder = [];
@@ -538,7 +225,7 @@ describe('<FordelBeregningsgrunnlagForm>', () => {
   it('skal validere 1 periode', () => {
     const values = {};
     values[getFieldNameKey(0)] = [andel1, andel2];
-    const fordelBGPerioder = [{ fom: '2018-01-01', tom: null }];
+    const fordelBGPerioder = [{ fom: '2018-01-01', tom: null, skalRedigereInntekt: true }];
     const beregningsgrunnlag = {
       beregningsgrunnlagPeriode: [
         {
@@ -562,8 +249,8 @@ describe('<FordelBeregningsgrunnlagForm>', () => {
     values[getFieldNameKey(0)] = [andel1, andel2];
     values[getFieldNameKey(1)] = [andel1, andel2];
     const fordelBGPerioder = [
-      { fom: '2018-01-01', tom: '2018-07-01' },
-      { fom: '2018-07-02', tom: null },
+      { fom: '2018-01-01', tom: '2018-07-01', skalRedigereInntekt: true },
+      { fom: '2018-07-02', tom: null, skalRedigereInntekt: true },
     ];
     const beregningsgrunnlag = {
       beregningsgrunnlagPeriode: [
@@ -592,22 +279,12 @@ describe('<FordelBeregningsgrunnlagForm>', () => {
   it('skal mappe andel til fastsatte verdier uten endring i refusjon', () => {
     const fastsatteVerdier = mapTilFastsatteVerdier(andel2);
     expect(fastsatteVerdier.fastsattÅrsbeløp).to.equal(20000);
-    expect(fastsatteVerdier.refusjonPrÅr).to.equal(null);
-    expect(fastsatteVerdier.inntektskategori).to.equal('ARBEIDSTAKER');
-  });
-
-  it('skal mappe andel til fastsatte verdier med endring i refusjon', () => {
-    const andel = { ...andel2, skalKunneEndreRefusjon: true };
-    const fastsatteVerdier = mapTilFastsatteVerdier(andel);
-    expect(fastsatteVerdier.fastsattÅrsbeløp).to.equal(20000);
-    expect(fastsatteVerdier.refusjonPrÅr).to.equal(10000);
     expect(fastsatteVerdier.inntektskategori).to.equal('ARBEIDSTAKER');
   });
 
   it('skal mappe verdier fra andel', () => {
     const verdier = mapAndel(andel2);
     expect(verdier.fastsatteVerdier.fastsattÅrsbeløp).to.equal(20000);
-    expect(verdier.fastsatteVerdier.refusjonPrÅr).to.equal(null);
     expect(verdier.fastsatteVerdier.inntektskategori).to.equal('ARBEIDSTAKER');
     expect(verdier.lagtTilAvSaksbehandler).to.equal(false);
     expect(verdier.nyAndel).to.equal(false);
@@ -650,7 +327,6 @@ describe('<FordelBeregningsgrunnlagForm>', () => {
     expect(perioder[0].andeler.length).to.equal(2);
 
     expect(perioder[0].andeler[0].fastsatteVerdier.fastsattÅrsbeløp).to.equal(10000);
-    expect(perioder[0].andeler[0].fastsatteVerdier.refusjonPrÅr).to.equal(null);
     expect(perioder[0].andeler[0].fastsatteVerdier.inntektskategori).to.equal('ARBEIDSTAKER');
     expect(perioder[0].andeler[0].lagtTilAvSaksbehandler).to.equal(false);
     expect(perioder[0].andeler[0].nyAndel).to.equal(false);
@@ -658,7 +334,6 @@ describe('<FordelBeregningsgrunnlagForm>', () => {
     expect(perioder[0].andeler[0].arbeidsforholdId).to.equal(null);
 
     expect(perioder[0].andeler[1].fastsatteVerdier.fastsattÅrsbeløp).to.equal(20000);
-    expect(perioder[0].andeler[1].fastsatteVerdier.refusjonPrÅr).to.equal(null);
     expect(perioder[0].andeler[1].fastsatteVerdier.inntektskategori).to.equal('ARBEIDSTAKER');
     expect(perioder[0].andeler[1].lagtTilAvSaksbehandler).to.equal(false);
     expect(perioder[0].andeler[1].nyAndel).to.equal(false);
@@ -708,7 +383,6 @@ describe('<FordelBeregningsgrunnlagForm>', () => {
     expect(perioder[0].andeler.length).to.equal(2);
 
     expect(perioder[0].andeler[0].fastsatteVerdier.fastsattÅrsbeløp).to.equal(10000);
-    expect(perioder[0].andeler[0].fastsatteVerdier.refusjonPrÅr).to.equal(null);
     expect(perioder[0].andeler[0].fastsatteVerdier.inntektskategori).to.equal('ARBEIDSTAKER');
     expect(perioder[0].andeler[0].lagtTilAvSaksbehandler).to.equal(false);
     expect(perioder[0].andeler[0].nyAndel).to.equal(false);
@@ -716,7 +390,6 @@ describe('<FordelBeregningsgrunnlagForm>', () => {
     expect(perioder[0].andeler[0].arbeidsforholdId).to.equal(null);
 
     expect(perioder[0].andeler[1].fastsatteVerdier.fastsattÅrsbeløp).to.equal(20000);
-    expect(perioder[0].andeler[1].fastsatteVerdier.refusjonPrÅr).to.equal(null);
     expect(perioder[0].andeler[1].fastsatteVerdier.inntektskategori).to.equal('ARBEIDSTAKER');
     expect(perioder[0].andeler[1].lagtTilAvSaksbehandler).to.equal(false);
     expect(perioder[0].andeler[1].nyAndel).to.equal(false);
@@ -728,7 +401,6 @@ describe('<FordelBeregningsgrunnlagForm>', () => {
     expect(perioder[1].andeler.length).to.equal(2);
 
     expect(perioder[1].andeler[0].fastsatteVerdier.fastsattÅrsbeløp).to.equal(10000);
-    expect(perioder[1].andeler[0].fastsatteVerdier.refusjonPrÅr).to.equal(null);
     expect(perioder[1].andeler[0].fastsatteVerdier.inntektskategori).to.equal('ARBEIDSTAKER');
     expect(perioder[1].andeler[0].lagtTilAvSaksbehandler).to.equal(false);
     expect(perioder[1].andeler[0].nyAndel).to.equal(false);
@@ -736,7 +408,6 @@ describe('<FordelBeregningsgrunnlagForm>', () => {
     expect(perioder[1].andeler[0].arbeidsforholdId).to.equal(null);
 
     expect(perioder[1].andeler[1].fastsatteVerdier.fastsattÅrsbeløp).to.equal(20000);
-    expect(perioder[1].andeler[1].fastsatteVerdier.refusjonPrÅr).to.equal(null);
     expect(perioder[1].andeler[1].fastsatteVerdier.inntektskategori).to.equal('ARBEIDSTAKER');
     expect(perioder[1].andeler[1].lagtTilAvSaksbehandler).to.equal(false);
     expect(perioder[1].andeler[1].nyAndel).to.equal(false);
@@ -787,7 +458,6 @@ describe('<FordelBeregningsgrunnlagForm>', () => {
     expect(perioder[0].andeler.length).to.equal(2);
 
     expect(perioder[0].andeler[0].fastsatteVerdier.fastsattÅrsbeløp).to.equal(10000);
-    expect(perioder[0].andeler[0].fastsatteVerdier.refusjonPrÅr).to.equal(null);
     expect(perioder[0].andeler[0].fastsatteVerdier.inntektskategori).to.equal('ARBEIDSTAKER');
     expect(perioder[0].andeler[0].lagtTilAvSaksbehandler).to.equal(false);
     expect(perioder[0].andeler[0].nyAndel).to.equal(false);
@@ -795,7 +465,6 @@ describe('<FordelBeregningsgrunnlagForm>', () => {
     expect(perioder[0].andeler[0].arbeidsforholdId).to.equal(null);
 
     expect(perioder[0].andeler[1].fastsatteVerdier.fastsattÅrsbeløp).to.equal(20000);
-    expect(perioder[0].andeler[1].fastsatteVerdier.refusjonPrÅr).to.equal(null);
     expect(perioder[0].andeler[1].fastsatteVerdier.inntektskategori).to.equal('ARBEIDSTAKER');
     expect(perioder[0].andeler[1].lagtTilAvSaksbehandler).to.equal(false);
     expect(perioder[0].andeler[1].nyAndel).to.equal(false);
@@ -807,7 +476,6 @@ describe('<FordelBeregningsgrunnlagForm>', () => {
     expect(perioder[1].andeler.length).to.equal(2);
 
     expect(perioder[1].andeler[0].fastsatteVerdier.fastsattÅrsbeløp).to.equal(10000);
-    expect(perioder[1].andeler[0].fastsatteVerdier.refusjonPrÅr).to.equal(null);
     expect(perioder[1].andeler[0].fastsatteVerdier.inntektskategori).to.equal('ARBEIDSTAKER');
     expect(perioder[1].andeler[0].lagtTilAvSaksbehandler).to.equal(false);
     expect(perioder[1].andeler[0].nyAndel).to.equal(false);
@@ -815,7 +483,6 @@ describe('<FordelBeregningsgrunnlagForm>', () => {
     expect(perioder[1].andeler[0].arbeidsforholdId).to.equal(null);
 
     expect(perioder[1].andeler[1].fastsatteVerdier.fastsattÅrsbeløp).to.equal(20000);
-    expect(perioder[1].andeler[1].fastsatteVerdier.refusjonPrÅr).to.equal(null);
     expect(perioder[1].andeler[1].fastsatteVerdier.inntektskategori).to.equal('ARBEIDSTAKER');
     expect(perioder[1].andeler[1].lagtTilAvSaksbehandler).to.equal(false);
     expect(perioder[1].andeler[1].nyAndel).to.equal(false);
@@ -872,7 +539,6 @@ describe('<FordelBeregningsgrunnlagForm>', () => {
     expect(perioder[0].andeler.length).to.equal(2);
 
     expect(perioder[0].andeler[0].fastsatteVerdier.fastsattÅrsbeløp).to.equal(10000);
-    expect(perioder[0].andeler[0].fastsatteVerdier.refusjonPrÅr).to.equal(null);
     expect(perioder[0].andeler[0].fastsatteVerdier.inntektskategori).to.equal('ARBEIDSTAKER');
     expect(perioder[0].andeler[0].lagtTilAvSaksbehandler).to.equal(false);
     expect(perioder[0].andeler[0].nyAndel).to.equal(false);
@@ -880,7 +546,6 @@ describe('<FordelBeregningsgrunnlagForm>', () => {
     expect(perioder[0].andeler[0].arbeidsforholdId).to.equal(null);
 
     expect(perioder[0].andeler[1].fastsatteVerdier.fastsattÅrsbeløp).to.equal(20000);
-    expect(perioder[0].andeler[1].fastsatteVerdier.refusjonPrÅr).to.equal(null);
     expect(perioder[0].andeler[1].fastsatteVerdier.inntektskategori).to.equal('ARBEIDSTAKER');
     expect(perioder[0].andeler[1].lagtTilAvSaksbehandler).to.equal(false);
     expect(perioder[0].andeler[1].nyAndel).to.equal(false);
@@ -892,7 +557,6 @@ describe('<FordelBeregningsgrunnlagForm>', () => {
     expect(perioder[1].andeler.length).to.equal(2);
 
     expect(perioder[1].andeler[0].fastsatteVerdier.fastsattÅrsbeløp).to.equal(10000);
-    expect(perioder[1].andeler[0].fastsatteVerdier.refusjonPrÅr).to.equal(null);
     expect(perioder[1].andeler[0].fastsatteVerdier.inntektskategori).to.equal('ARBEIDSTAKER');
     expect(perioder[1].andeler[0].lagtTilAvSaksbehandler).to.equal(false);
     expect(perioder[1].andeler[0].nyAndel).to.equal(false);
@@ -900,7 +564,6 @@ describe('<FordelBeregningsgrunnlagForm>', () => {
     expect(perioder[1].andeler[0].arbeidsforholdId).to.equal(null);
 
     expect(perioder[1].andeler[1].fastsatteVerdier.fastsattÅrsbeløp).to.equal(20000);
-    expect(perioder[1].andeler[1].fastsatteVerdier.refusjonPrÅr).to.equal(null);
     expect(perioder[1].andeler[1].fastsatteVerdier.inntektskategori).to.equal('ARBEIDSTAKER');
     expect(perioder[1].andeler[1].lagtTilAvSaksbehandler).to.equal(false);
     expect(perioder[1].andeler[1].nyAndel).to.equal(false);

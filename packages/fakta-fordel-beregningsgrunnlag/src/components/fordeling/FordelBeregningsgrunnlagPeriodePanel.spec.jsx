@@ -155,7 +155,6 @@ describe('<FordelBeregningsgrunnlagPeriodePanel>', () => {
   it('skal sette initial values', () => {
     const periode = {
       harPeriodeAarsakGraderingEllerRefusjon: true,
-      skalKunneEndreRefusjon: true,
       fordelBeregningsgrunnlagAndeler: [
         lagArbeidstakerAndel(1, false, 10000, 10000, null, 10000, 10000, 10000, [0, 20]),
         lagArbeidstakerAndel(2, false, 20000, 10000, 10000, 10000, 20000, 10000, [0]),
@@ -297,7 +296,6 @@ describe('<FordelBeregningsgrunnlagPeriodePanel>', () => {
     expect(initialValues[0].refusjonskrav).to.equal('10 000');
     expect(initialValues[0].belopFraInntektsmelding).to.equal(10000);
     expect(initialValues[0].refusjonskravFraInntektsmelding).to.equal(10000);
-    expect(initialValues[0].skalKunneEndreRefusjon).to.equal(true);
     expect(initialValues[0].beregningsgrunnlagPrAar).to.equal('10 000');
 
     expect(initialValues[1].andelsnr).to.equal(2);
@@ -308,7 +306,6 @@ describe('<FordelBeregningsgrunnlagPeriodePanel>', () => {
     expect(initialValues[1].refusjonskrav).to.equal('10 000');
     expect(initialValues[1].belopFraInntektsmelding).to.equal(20000);
     expect(initialValues[1].refusjonskravFraInntektsmelding).to.equal(10000);
-    expect(initialValues[1].skalKunneEndreRefusjon).to.equal(true);
     expect(initialValues[1].beregningsgrunnlagPrAar).to.equal('20 000');
 
     expect(initialValues[2].andelsnr).to.equal(3);
@@ -319,7 +316,6 @@ describe('<FordelBeregningsgrunnlagPeriodePanel>', () => {
     expect(initialValues[2].refusjonskrav).to.equal('0');
     expect(initialValues[2].belopFraInntektsmelding).to.equal(30000);
     expect(initialValues[2].refusjonskravFraInntektsmelding).to.equal(0);
-    expect(initialValues[2].skalKunneEndreRefusjon).to.equal(false);
     expect(initialValues[2].beregningsgrunnlagPrAar).to.equal('30 000');
 
     expect(initialValues[3].andelsnr).to.equal(4);
@@ -330,7 +326,6 @@ describe('<FordelBeregningsgrunnlagPeriodePanel>', () => {
     expect(initialValues[3].refusjonskrav).to.equal('0');
     expect(initialValues[3].belopFraInntektsmelding).to.equal(null);
     expect(initialValues[3].refusjonskravFraInntektsmelding).to.equal(null);
-    expect(initialValues[3].skalKunneEndreRefusjon).to.equal(false);
     expect(initialValues[3].beregningsgrunnlagPrAar).to.equal('1 000');
 
     expect(initialValues[4].andelsnr).to.equal(5);
@@ -341,7 +336,6 @@ describe('<FordelBeregningsgrunnlagPeriodePanel>', () => {
     expect(initialValues[4].refusjonskrav).to.equal('10 000');
     expect(initialValues[4].belopFraInntektsmelding).to.equal(20000);
     expect(initialValues[4].refusjonskravFraInntektsmelding).to.equal(10000);
-    expect(initialValues[4].skalKunneEndreRefusjon).to.equal(true);
     expect(initialValues[4].beregningsgrunnlagPrAar).to.equal(null);
 
     expect(initialValues[5].andelsnr).to.equal(6);
@@ -352,7 +346,6 @@ describe('<FordelBeregningsgrunnlagPeriodePanel>', () => {
     expect(initialValues[5].refusjonskrav).to.equal('');
     expect(initialValues[5].belopFraInntektsmelding).to.equal(null);
     expect(initialValues[5].refusjonskravFraInntektsmelding).to.equal(null);
-    expect(initialValues[5].skalKunneEndreRefusjon).to.equal(false);
     expect(initialValues[5].beregningsgrunnlagPrAar).to.equal('10 000');
 
     expect(initialValues[6].andelsnr).to.equal(7);
@@ -363,7 +356,6 @@ describe('<FordelBeregningsgrunnlagPeriodePanel>', () => {
     expect(initialValues[6].refusjonskrav).to.equal('');
     expect(initialValues[6].belopFraInntektsmelding).to.equal(null);
     expect(initialValues[6].refusjonskravFraInntektsmelding).to.equal(null);
-    expect(initialValues[6].skalKunneEndreRefusjon).to.equal(false);
     expect(initialValues[6].beregningsgrunnlagPrAar).to.equal('1 000');
 
     expect(initialValues[7].andelsnr).to.equal(8);
@@ -374,7 +366,6 @@ describe('<FordelBeregningsgrunnlagPeriodePanel>', () => {
     expect(initialValues[7].refusjonskrav).to.equal('');
     expect(initialValues[7].belopFraInntektsmelding).to.equal(null);
     expect(initialValues[7].refusjonskravFraInntektsmelding).to.equal(null);
-    expect(initialValues[7].skalKunneEndreRefusjon).to.equal(false);
     expect(initialValues[7].beregningsgrunnlagPrAar).to.equal(null);
 
     expect(initialValues[8].andelsnr).to.equal(9);
@@ -385,7 +376,6 @@ describe('<FordelBeregningsgrunnlagPeriodePanel>', () => {
     expect(initialValues[8].refusjonskrav).to.equal('');
     expect(initialValues[8].belopFraInntektsmelding).to.equal(null);
     expect(initialValues[8].refusjonskravFraInntektsmelding).to.equal(null);
-    expect(initialValues[8].skalKunneEndreRefusjon).to.equal(false);
     expect(initialValues[8].beregningsgrunnlagPrAar).to.equal('0');
   });
 });

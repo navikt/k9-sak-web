@@ -123,6 +123,8 @@ const FagsakIndex = () => {
     options,
   );
 
+  restApiHooks.useGlobalStateRestApi(K9sakApiKeys.HENT_SAKSBEHANDLERE, { behandlingUuid: behandling?.uuid }, options);
+
   const { data: relaterteFagsaker } = restApiHooks.useRestApi<RelatertFagsak>(
     K9sakApiKeys.FAGSAK_RELATERTE_SAKER,
     {},

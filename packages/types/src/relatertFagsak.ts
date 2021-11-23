@@ -3,6 +3,7 @@ export type RelatertFagsak = Readonly<{
     saksnummer: string;
     søkerIdent: string;
     søkerNavn: string;
+    åpenBehandling: boolean;
   }[];
 }>;
 

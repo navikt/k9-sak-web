@@ -67,7 +67,6 @@ interface OwnProps {
   readOnly: boolean;
   onSubmit: (...args: any[]) => any;
   createLocationForSkjermlenke: (behandlingLocation: Location, skjermlenkeCode: string) => Location;
-  tilgjengeligeVedtaksbrev: string[];
 }
 
 const TotrinnskontrollSakIndex = ({
@@ -80,7 +79,6 @@ const TotrinnskontrollSakIndex = ({
   behandlingKlageVurdering,
   alleKodeverk,
   createLocationForSkjermlenke,
-  tilgjengeligeVedtaksbrev,
 }: OwnProps) => {
   const erTilbakekreving =
     BehandlingType.TILBAKEKREVING === behandling.type.kode ||
@@ -147,7 +145,6 @@ const TotrinnskontrollSakIndex = ({
           skjemalenkeTyper={skjemalenkeTyper}
           erTilbakekreving={erTilbakekreving}
           lagLenke={lagLenke}
-          tilgjengeligeVedtaksbrev={tilgjengeligeVedtaksbrev}
         />
       )}
       {!erStatusFatterVedtak && (

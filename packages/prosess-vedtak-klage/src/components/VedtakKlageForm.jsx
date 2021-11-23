@@ -15,6 +15,7 @@ import { behandlingForm, behandlingFormValueSelector } from '@fpsak-frontend/for
 import klageVurderingCodes from '@fpsak-frontend/kodeverk/src/klageVurdering';
 
 import dokumentMalType from '@fpsak-frontend/kodeverk/src/dokumentMalType';
+import VedtakKlageNkkSubmitPanel from './VedtakKlageNkkSubmitPanel';
 import VedtakKlageSubmitPanel from './VedtakKlageSubmitPanel';
 import VedtakKlageKaSubmitPanel from './VedtakKlageKaSubmitPanel';
 
@@ -90,6 +91,17 @@ export const VedtakKlageFormImpl = ({
             <VerticalSpacer sixteenPx />
           </div>
         )}
+
+        {klageresultat.klageVurdertAv === 'NKK' && (
+          <VedtakKlageNkkSubmitPanel
+            begrunnelse={fritekstTilBrev}
+            klageResultat={klageresultat}
+            formProps={formProps}
+            readOnly={readOnly}
+            behandlingPaaVent={behandlingPaaVent}
+          />
+        )}
+
         {klageresultat.klageVurdertAv === 'NK' && (
           <VedtakKlageKaSubmitPanel
             begrunnelse={fritekstTilBrev}
@@ -100,6 +112,7 @@ export const VedtakKlageFormImpl = ({
             behandlingPaaVent={behandlingPaaVent}
           />
         )}
+
         {klageresultat.klageVurdertAv === 'NFP' && (
           <VedtakKlageSubmitPanel
             begrunnelse={fritekstTilBrev}
@@ -214,8 +227,8 @@ export const getIsOpphevOgHjemsend = createSelector(
 const getÅpneAksjonspunktKoder = createSelector([ownProps => ownProps.aksjonspunkter], aksjonspunkter =>
   Array.isArray(aksjonspunkter)
     ? aksjonspunkter
-        .filter(ap => ap.status.kode === aksjonspunktStatus.OPPRETTET && ap.kanLoses)
-        .map(ap => ap.definisjon.kode)
+      .filter(ap => ap.status.kode === aksjonspunktStatus.OPPRETTET && ap.kanLoses)
+      .map(ap => ap.definisjon.kode)
     : [],
 );
 

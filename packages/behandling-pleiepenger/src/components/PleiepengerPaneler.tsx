@@ -108,6 +108,7 @@ const PleiepengerPaneler = ({
                           const formattedTom = moment(tom, 'YYYY-MM-DD').format('DD.MM.YYYY');
                           return `${formattedFom} - ${formattedTom}`;
                         }),
+                        arbeidstype: mangel.arbeidsgiver?.type
                       }))}
                     />
                   )}
@@ -135,7 +136,7 @@ const PleiepengerPaneler = ({
         arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
         featureToggles={featureToggles}
       />
-      <Punsjstripe aktørId={fagsakPerson.aktørId} />
+      <Punsjstripe aktørId={fagsakPerson.aktørId} saksnummer={fagsak.saksnummer} />
       <PleiepengerFakta
         behandling={behandling}
         data={fetchedData}

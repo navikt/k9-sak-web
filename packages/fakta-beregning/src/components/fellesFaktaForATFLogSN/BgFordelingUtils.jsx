@@ -12,7 +12,7 @@ import { erNyoppstartetFLField } from './vurderOgFastsettATFL/forms/Nyoppstartet
 import { harEtterlonnSluttpakkeField } from './vurderOgFastsettATFL/forms/VurderEtterlonnSluttpakkeForm';
 import erAndelUtenReferanseOgGrunnlagHarAndelForSammeArbeidsgiverMedReferanse from './vurderOgFastsettATFL/forms/AvsluttetArbeidsforhold';
 import { andelsnrMottarYtelseMap } from './vurderOgFastsettATFL/forms/VurderMottarYtelseUtils';
-import { getFormValuesForBeregning } from '../BeregningFormUtils';
+import { getFormValuesForBeregning, getFormValuesFaktaList } from '../BeregningFormUtils';
 import { MANUELL_OVERSTYRING_BEREGNINGSGRUNNLAG_FIELD } from './InntektstabellPanel';
 
 export const INNTEKT_FIELD_ARRAY_NAME = 'inntektFieldArray';
@@ -197,7 +197,12 @@ const skalKunneEndreTotaltBeregningsgrunnlag = (values, faktaOmBeregning, beregn
 
 export const erOverstyring = values => !!values && values[MANUELL_OVERSTYRING_BEREGNINGSGRUNNLAG_FIELD] === true;
 
-export const erOverstyringAvBeregningsgrunnlag = createSelector([getFormValuesForBeregning], erOverstyring);
+export const erOverstyringAvBeregningsgrunnlag = createSelector([getFormValuesFaktaList], 
+  (faktaList) => faktaList.some(erOverstyring));
+
+export const erOverstyringAvAktivtBeregningsgrunnlag = createSelector(
+    [getFormValuesFaktaList, (state, ownProps) => ownProps.aktivtBeregningsgrunnlagIndex], 
+    (faktaList, index) => erOverstyring(faktaList[index]));
 
 export const skalRedigereInntektForAndel = (values, faktaOmBeregning, beregningsgrunnlag) => andel =>
   erOverstyring(values) ||

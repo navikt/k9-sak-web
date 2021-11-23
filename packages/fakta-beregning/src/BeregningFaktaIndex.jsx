@@ -56,7 +56,7 @@ const harAvklaringsbehovIPanel = (avklaringsbehov, beregningsgrunnlag) => {
 
 
 const finnAvklaringsbehov = (aksjonspunkter, beregningsgrunnlag) => {
-  if (beregningsgrunnlag.avklaringsbehov && beregningsgrunnlag.avklaringsbehov.length > 0) {
+  if (beregningsgrunnlag.avklaringsbehov) {
     return beregningsgrunnlag.avklaringsbehov;
   }
   return aksjonspunkter;
@@ -119,7 +119,6 @@ const BeregningFaktaIndex = ({
           readOnly={readOnly || (harAvklaringsbehov(OVERSTYRING_AV_BEREGNINGSGRUNNLAG, aktiveAvklaringsBehov) && !erOverstyrer)}
           submitCallback={submitCallback}
           submittable={submittable}
-          avklaringsbehov={aktiveAvklaringsBehov}
           alleKodeverk={alleKodeverk}
           behandlingId={behandling.id}
           behandlingVersjon={behandling.versjon}

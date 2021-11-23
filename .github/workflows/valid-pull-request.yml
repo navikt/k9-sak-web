@@ -31,7 +31,7 @@ jobs:
       - name: Installere dependencies
         run: yarn install --ignore-optional --no-progress --frozen-lockfile
         env:
-          NODE_AUTH_TOKEN: ${{ secrets.READ_PACKAGES_PAT }}
+          NODE_AUTH_TOKEN: ${{ secrets.READER_TOKEN }}
 
       - name: Tester, typescript-sjekk og linting
         run: yarn test:all --runInBand && yarn ts-check && yarn less:lint

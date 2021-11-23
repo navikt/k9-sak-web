@@ -60,11 +60,9 @@ export const getAvklarAktiviteter = createSelector(
 
 export const buildInitialValuesAvklarAktiviteter = createSelector(
   [
-    (beregningsgrunnlag, ownProps) => ownProps.avklaringsbehov,
+    beregningsgrunnlag => beregningsgrunnlag.avklaringsbehov,
     beregningsgrunnlag => getAvklarAktiviteter(beregningsgrunnlag),
-    (beregningsgrunnlag, ownProps) => ownProps.alleKodeverk,
     (beregningsgrunnlag, ownProps) => ownProps.aktivtBeregningsgrunnlagIndex,
-    (beregningsgrunnlag, ownProps) => ownProps.arbeidsgiverOpplysningerPerId,
   ],
   buildInitialValues,
 );
@@ -105,7 +103,7 @@ const AvklareAktiviteterPanelContent = props => {
     arbeidsgiverOpplysningerPerId,
     ...formProps
   } = props;
-  const avklarAktiviteter = getAvklarAktiviteter(beregningsgrunnlag);
+  const avklarAktiviteter = getAvklarAktiviteter(beregningsgrunnlag)
   const skalViseSubmitknappInneforBorderBox =
     (harAndreAvklaringsbehovIPanel || erOverstyrt || erBgOverstyrt) && !hasOpenBehovForAvklaringAvAktiviteter(avklaringsbehov);
 
@@ -125,8 +123,7 @@ const AvklareAktiviteterPanelContent = props => {
 
   return fields.map(
     (field, index) =>
-      index === aktivtBeregningsgrunnlagIndex && (
-        <div key={field}>
+      (<div key={field} style={{ display: index === aktivtBeregningsgrunnlagIndex ? 'block' : 'none' }}>
           {(kanOverstyre || erOverstyrt) && (
             <div className={styles.rightAligned}>
               <CheckboxField
@@ -169,10 +166,11 @@ const AvklareAktiviteterPanelContent = props => {
                     isAvklaringsbehovClosed={isAvklaringsbehovClosed}
                     erOverstyrt={erOverstyrt}
                     alleKodeverk={alleKodeverk}
-                    values={formValues}
+                    values={formValues[index]}
                     harAvklaringsbehov={harAvklaringsbehov(AVKLAR_AKTIVITETER, avklaringsbehov)}
                     fieldArrayID={`${field}`}
                     arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
+                    vilkaarPeriodeFieldArrayIndex={index}
                   />
                 )}
                 <VerticalSpacer twentyPx />

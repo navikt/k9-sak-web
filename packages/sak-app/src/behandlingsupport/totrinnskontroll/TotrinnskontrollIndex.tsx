@@ -1,5 +1,5 @@
 import React, { useCallback, useState } from 'react';
-import { useHistory, useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import BehandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import { RestApiState } from '@k9-sak-web/rest-api-hooks';
@@ -62,7 +62,6 @@ const TotrinnskontrollIndex = ({ fagsak, alleBehandlinger, behandlingId, behandl
   const behandling = alleBehandlinger.find(b => b.id === behandlingId);
 
   const location = useLocation();
-  const history = useHistory();
 
   const { brukernavn, kanVeilede } = restApiHooks.useGlobalStateRestApiData<NavAnsatt>(K9sakApiKeys.NAV_ANSATT);
 
@@ -97,16 +96,6 @@ const TotrinnskontrollIndex = ({ fagsak, alleBehandlinger, behandlingId, behandl
     },
   );
 
-  const { data: tilgjengeligeVedtaksbrev, state: tilgjengeligeVedtaksbrevState } = restApiHooks.useRestApi<string[]>(
-    K9sakApiKeys.TILGJENGELIGE_VEDTAKSBREV,
-    undefined,
-    {
-      keepData: true,
-      updateTriggers: [behandlingId, behandlingVersjon],
-      suspendRequest: !requestApi.hasPath(K9sakApiKeys.TILGJENGELIGE_VEDTAKSBREV),
-    },
-  );
-
   const { startRequest: godkjennTotrinnsaksjonspunkter } = restApiHooks.useRestApiRunner(
     K9sakApiKeys.SAVE_TOTRINNSAKSJONSPUNKT,
   );
@@ -127,7 +116,7 @@ const TotrinnskontrollIndex = ({ fagsak, alleBehandlinger, behandlingId, behandl
     return null;
   }
 
-  if (totrinnsKlageVurderingState === RestApiState.LOADING || tilgjengeligeVedtaksbrevState === RestApiState.LOADING) {
+  if (totrinnsKlageVurderingState === RestApiState.LOADING) {
     return <LoadingPanel />;
   }
 
@@ -143,13 +132,11 @@ const TotrinnskontrollIndex = ({ fagsak, alleBehandlinger, behandlingId, behandl
         alleKodeverk={alleKodeverk}
         behandlingKlageVurdering={totrinnsKlageVurdering}
         createLocationForSkjermlenke={createLocationForSkjermlenke}
-        tilgjengeligeVedtaksbrev={tilgjengeligeVedtaksbrev}
       />
       {visBeslutterModal && (
         <BeslutterModalIndex
           behandling={behandling}
           fagsakYtelseType={fagsak.sakstype}
-          pushLocation={history.push}
           allAksjonspunktApproved={erAlleAksjonspunktGodkjent}
           erKlageWithKA={totrinnsKlageVurdering ? !!totrinnsKlageVurdering.klageVurderingResultatNK : undefined}
         />

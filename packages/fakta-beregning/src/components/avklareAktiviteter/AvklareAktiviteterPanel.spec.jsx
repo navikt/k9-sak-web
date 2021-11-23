@@ -137,6 +137,7 @@ describe('<AvklareAktiviteterPanel>', () => {
     };
     const avklaringsbehov = [{ definisjon: { kode: AVKLAR_AKTIVITETER }, status: { kode: 'OPPR' } }];
     const beregningsgrunnlag = {
+      avklaringsbehov,
       faktaOmBeregning: {
         avklarAktiviteter,
         andelerForFaktaOmBeregning: [{ skalKunneEndreAktivitet: true, lagtTilAvSaksbehandler: true }],
@@ -167,6 +168,7 @@ describe('<AvklareAktiviteterPanel>', () => {
         beregningsgrunnlag={beregningsgrunnlag}
         alleBeregningsgrunnlag={[beregningsgrunnlag]}
         fields={[]}
+        formValues={[]}
         {...behandlingProps}
       />,
     );
@@ -200,6 +202,7 @@ describe('<AvklareAktiviteterPanel>', () => {
         alleKodeverk={alleKodeverk}
         arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
         beregningsgrunnlag={{
+          avklaringsbehov,
           faktaOmBeregning: {
             avklarAktiviteter,
             andelerForFaktaOmBeregning: [{ skalKunneEndreAktivitet: true, lagtTilAvSaksbehandler: true }],
@@ -208,6 +211,7 @@ describe('<AvklareAktiviteterPanel>', () => {
         aktivtBeregningsgrunnlagIndex={0}
         reduxFormInitialize={sinon.spy()}
         fields={[]}
+        formValues={[]}
         {...behandlingProps}
       />,
     );
@@ -243,6 +247,7 @@ describe('<AvklareAktiviteterPanel>', () => {
         alleKodeverk={alleKodeverk}
         arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
         beregningsgrunnlag={{
+          avklaringsbehov,
           faktaOmBeregning: {
             avklarAktiviteter,
             andelerForFaktaOmBeregning: [{ skalKunneEndreAktivitet: true, lagtTilAvSaksbehandler: true }],
@@ -250,6 +255,7 @@ describe('<AvklareAktiviteterPanel>', () => {
         }}
         reduxFormInitialize={sinon.spy()}
         fields={[]}
+        formValues={[]}
         {...behandlingProps}
       />,
     );
@@ -270,6 +276,7 @@ describe('<AvklareAktiviteterPanel>', () => {
         readOnly={false}
         isAvklaringsbehovClosed={false}
         beregningsgrunnlag={{
+          avklaringsbehov,
           faktaOmBeregning: {
             avklarAktiviteter,
             andelerForFaktaOmBeregning: [{ skalKunneEndreAktivitet: true, lagtTilAvSaksbehandler: true }],
@@ -290,6 +297,7 @@ describe('<AvklareAktiviteterPanel>', () => {
         alleKodeverk={alleKodeverk}
         arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
         fields={[]}
+        formValues={[]}
         reduxFormInitialize={sinon.spy()}
         {...behandlingProps}
       />,
@@ -308,6 +316,7 @@ describe('<AvklareAktiviteterPanel>', () => {
     ];
 
     const beregningsgrunnlag = {
+      avklaringsbehov,
       faktaOmBeregning: {
         avklarAktiviteter,
         andelerForFaktaOmBeregning: [{ skalKunneEndreAktivitet: true, lagtTilAvSaksbehandler: true }],
@@ -338,6 +347,7 @@ describe('<AvklareAktiviteterPanel>', () => {
         arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
         reduxFormInitialize={sinon.spy()}
         fields={[]}
+        formValues={[]}
         {...behandlingProps}
       />,
     );
@@ -359,6 +369,7 @@ describe('<AvklareAktiviteterPanel>', () => {
         readOnly={false}
         isAvklaringsbehovClosed={false}
         beregningsgrunnlag={{
+          avklaringsbehov,
           faktaOmBeregning: {
             avklarAktiviteter,
             andelerForFaktaOmBeregning: [{ skalKunneEndreAktivitet: true, lagtTilAvSaksbehandler: true }],
@@ -381,6 +392,7 @@ describe('<AvklareAktiviteterPanel>', () => {
         arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
         reduxFormInitialize={sinon.spy()}
         fields={[]}
+        formValues={[]}
         {...behandlingProps}
       />,
     );
@@ -403,6 +415,7 @@ describe('<AvklareAktiviteterPanel>', () => {
         readOnly={false}
         isAvklaringsbehovClosed={false}
         beregningsgrunnlag={{
+          avklaringsbehov,
           faktaOmBeregning: {
             avklarAktiviteter,
             andelerForFaktaOmBeregning: [{ skalKunneEndreAktivitet: true, lagtTilAvSaksbehandler: true }],
@@ -425,6 +438,7 @@ describe('<AvklareAktiviteterPanel>', () => {
         arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
         reduxFormInitialize={sinon.spy()}
         fields={[]}
+        formValues={[]}
         {...behandlingProps}
       />,
     );
@@ -446,6 +460,7 @@ describe('<AvklareAktiviteterPanel>', () => {
         readOnly={false}
         isAvklaringsbehovClosed={false}
         beregningsgrunnlag={{
+          avklaringsbehov,
           faktaOmBeregning: {
             avklarAktiviteter,
             andelerForFaktaOmBeregning: [{ skalKunneEndreAktivitet: true, lagtTilAvSaksbehandler: true }],
@@ -468,6 +483,7 @@ describe('<AvklareAktiviteterPanel>', () => {
         arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
         reduxFormInitialize={sinon.spy()}
         fields={[]}
+        formValues={[]}
         {...behandlingProps}
       />,
     );
@@ -489,6 +505,7 @@ describe('<AvklareAktiviteterPanel>', () => {
         readOnly={false}
         isAvklaringsbehovClosed={false}
         beregningsgrunnlag={{
+          avklaringsbehov,
           faktaOmBeregning: {
             avklarAktiviteter,
             andelerForFaktaOmBeregning: [{ skalKunneEndreAktivitet: true, lagtTilAvSaksbehandler: true }],
@@ -510,6 +527,7 @@ describe('<AvklareAktiviteterPanel>', () => {
         alleKodeverk={alleKodeverk}
         arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
         fields={[]}
+        formValues={[]}
         reduxFormInitialize={sinon.spy()}
         {...behandlingProps}
       />,
@@ -525,10 +543,12 @@ describe('<AvklareAktiviteterPanel>', () => {
       aktiviteterTomDatoMapping: [{ tom: '2019-02-02', aktiviteter }],
     };
 
-    const beregningsgrunnlag = { faktaOmBeregning: { avklarAktiviteter } };
-    const initialValues = buildInitialValuesAvklarAktiviteter(beregningsgrunnlag, {
-      alleKodeverk,
+    const beregningsgrunnlag = { 
       avklaringsbehov: apsAvklarAktiviteter,
+      faktaOmBeregning: { avklarAktiviteter } 
+    };
+    const initialValues = buildInitialValuesAvklarAktiviteter(beregningsgrunnlag, {
+      aktivtBeregningsgrunnlagIndex: 1,
     });
     expect(initialValues !== null).to.equal(true);
     expect(initialValues[MANUELL_OVERSTYRING_FIELD]).to.equal(false);
@@ -540,10 +560,11 @@ describe('<AvklareAktiviteterPanel>', () => {
     };
     const aps = [];
     const initialValues = buildInitialValuesAvklarAktiviteter(
-      { faktaOmBeregning: { avklarAktiviteter } },
-      {
-        alleKodeverk,
+      { 
         avklaringsbehov: aps,
+        faktaOmBeregning: { avklarAktiviteter } },
+      {
+        aktivtBeregningsgrunnlagIndex: 1
       },
     );
     expect(initialValues !== null).to.equal(true);
@@ -556,10 +577,11 @@ describe('<AvklareAktiviteterPanel>', () => {
     };
     const aps = [{ definisjon: { kode: OVERSTYRING_AV_BEREGNINGSAKTIVITETER } }];
     const initialValues = buildInitialValuesAvklarAktiviteter(
-      { faktaOmBeregning: { avklarAktiviteter } },
-      {
-        alleKodeverk,
+      { 
         avklaringsbehov: aps,
+        faktaOmBeregning: { avklarAktiviteter } },
+      {
+        aktivtBeregningsgrunnlagIndex: 1
       },
     );
     expect(initialValues !== null).to.equal(true);
@@ -579,7 +601,10 @@ describe('<AvklareAktiviteterPanel>', () => {
     values.avklareAktiviteterListe[0][id3] = { skalBrukes: true };
     values.avklareAktiviteterListe[0][idAAP] = { skalBrukes: true };
     const vilkårsperioder = [{ periode: { fom: '2019-02-02', tom: '2019-02-05' } }];
-    const bg = { skjaeringstidspunktBeregning: '2019-02-02' };
+    const bg = { 
+      avklaringsbehov: apsAvklarAktiviteter,
+      skjaeringstidspunktBeregning: '2019-02-02' 
+    };
     const transformed = transformValues(values, vilkårsperioder, bg);
     expect(transformed[0].grunnlag.length).to.equal(1);
     expect(transformed[0].grunnlag[0].beregningsaktivitetLagreDtoList[0].arbeidsgiverIdentifikator).to.equal(
@@ -603,7 +628,7 @@ describe('<AvklareAktiviteterPanel>', () => {
     values.avklareAktiviteterListe[0][BEGRUNNELSE_AVKLARE_AKTIVITETER_NAME] = 'begrunnelse';
     values.avklareAktiviteterListe[0][MANUELL_OVERSTYRING_FIELD] = true;
     const vilkårsperioder = [{ periode: { fom: '2019-02-02', tom: '2019-02-05' } }];
-    const bg = { skjaeringstidspunktBeregning: '2019-02-02' };
+    const bg = { avklaringsbehov: aps, skjaeringstidspunktBeregning: '2019-02-02' };
     const transformed = transformValues(values, vilkårsperioder, bg);
     expect(transformed.length).to.equal(1);
     expect(transformed[0].beregningsaktivitetLagreDtoList[0].arbeidsgiverIdentifikator).to.equal(
@@ -632,8 +657,7 @@ describe('<AvklareAktiviteterPanel>', () => {
     const state = lagStateMedAvklarAktitiveter(avklarAktiviteter, values, initial);
     const erAvklartOgIkkeEndret = erAvklartAktivitetEndret(state, {
       ...behandlingProps,
-      avklaringsbehov: apsAvklarAktiviteter,
-      beregningsgrunnlag: { faktaOmBeregning: { avklarAktiviteter } },
+      alleBeregningsgrunnlag: [ { avklaringsbehov: apsAvklarAktiviteter, faktaOmBeregning: { avklarAktiviteter } } ],
     });
     expect(erAvklartOgIkkeEndret).to.equal(true);
   });
@@ -657,8 +681,7 @@ describe('<AvklareAktiviteterPanel>', () => {
     const state = lagStateMedAvklarAktitiveter(avklarAktiviteter, values, initial);
     const erAvklartOgIkkeEndret = erAvklartAktivitetEndret(state, {
       ...behandlingProps,
-      avklaringsbehov: apsAvklarAktiviteter,
-      beregningsgrunnlag: { faktaOmBeregning: { avklarAktiviteter } },
+      alleBeregningsgrunnlag: [ { avklaringsbehov: apsAvklarAktiviteter, faktaOmBeregning: { avklarAktiviteter } } ],
     });
     expect(erAvklartOgIkkeEndret).to.equal(true);
   });
@@ -682,8 +705,7 @@ describe('<AvklareAktiviteterPanel>', () => {
     const state = lagStateMedAvklarAktitiveter(avklarAktiviteter, values, initial);
     const erAvklartOgIkkeEndret = erAvklartAktivitetEndret(state, {
       ...behandlingProps,
-      avklaringsbehov: apsAvklarAktiviteter,
-      beregningsgrunnlag: { faktaOmBeregning: { avklarAktiviteter } },
+      alleBeregningsgrunnlag: [ { avklaringsbehov: apsAvklarAktiviteter, faktaOmBeregning: { avklarAktiviteter } } ],
     });
     expect(erAvklartOgIkkeEndret).to.equal(true);
   });
@@ -701,8 +723,7 @@ describe('<AvklareAktiviteterPanel>', () => {
     const state = lagStateMedAvklarAktitiveter(avklarAktiviteter, values, values);
     const erAvklartOgIkkeEndret = erAvklartAktivitetEndret(state, {
       ...behandlingProps,
-      avklaringsbehov: apsAvklarAktiviteter,
-      beregningsgrunnlag: { faktaOmBeregning: { avklarAktiviteter } },
+      alleBeregningsgrunnlag: [ { avklaringsbehov: apsAvklarAktiviteter, faktaOmBeregning: { avklarAktiviteter } } ],
     });
     expect(erAvklartOgIkkeEndret).to.equal(false);
   });

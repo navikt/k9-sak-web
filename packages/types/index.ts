@@ -55,3 +55,4 @@ export * from './src/arbeidsgiverOpplysningerTsType';
 export * from './src/meldingTsType';
 export type { default as RelatertFagsak } from './src/relatertFagsak';
 export type { default as DokumentStatus } from './src/dokumentStatusTsType';
+export type { default as SaksbehandlereInfo} from './src/saksbehandlereInfo';

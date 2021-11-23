@@ -21,6 +21,7 @@ import styles from './BrevPanel.less';
 import InformasjonsbehovAutomatiskVedtaksbrev from './InformasjonsbehovAutomatiskVedtaksbrev';
 import FritekstBrevPanel from '../FritekstBrevPanel';
 import { VedtakPreviewLink } from '../PreviewLink';
+import MellomLagreBrev from './MellomLagreBrev';
 
 const kanResultatForhåndsvises = behandlingResultat => {
   if (!behandlingResultat) {
@@ -124,6 +125,8 @@ export const BrevPanel = props => {
     behandlingResultat,
     overstyrtMottaker,
     formProps,
+    dokumentdata,
+    lagreDokumentdata
   } = props;
 
   const automatiskBrevCallback = getPreviewAutomatiskBrevCallback({
@@ -165,6 +168,12 @@ export const BrevPanel = props => {
         harAutomatiskVedtaksbrev={harAutomatiskVedtaksbrev}
       />
       <VedtakPreviewLink previewCallback={manuellBrevCallback} />
+      <MellomLagreBrev
+        lagreDokumentdata={lagreDokumentdata}
+        dokumentdata={dokumentdata}
+        overskrift={overskrift}
+        brødtekst={brødtekst}
+      />
     </>
   );
 
@@ -237,6 +246,8 @@ BrevPanel.propTypes = {
   personopplysninger: PropTypes.shape(),
   arbeidsgiverOpplysningerPerId: PropTypes.shape(),
   formProps: PropTypes.shape().isRequired,
+  dokumentdata: PropTypes.shape().isRequired,
+  lagreDokumentdata: PropTypes.func.isRequired,
 };
 
 BrevPanel.defaultProps = {

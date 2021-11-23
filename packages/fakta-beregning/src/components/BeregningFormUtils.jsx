@@ -7,46 +7,61 @@ export const formNameVurderFaktaBeregning = 'vurderFaktaBeregningForm';
 
 export const MANUELL_OVERSTYRING_BEREGNINGSGRUNNLAG_FIELD = 'manuellOverstyringRapportertInntekt';
 
+const getPeriodeIndex = (state, ownProps) => ownProps.vilkaarPeriodeFieldArrayIndex;
+
+const getBehandlingFormValuesAvklarAktiviteter = (state, ownProps) =>
+  getBehandlingFormValues(formNameAvklarAktiviteter, ownProps.behandlingId, ownProps.behandlingVersjon)(state);
+
 export const getFormValuesForAvklarAktiviteter = createSelector(
-  [
-    (state, ownProps) =>
-      getBehandlingFormValues(formNameAvklarAktiviteter, ownProps.behandlingId, ownProps.behandlingVersjon)(state),
-  ],
-  values =>
-    values?.avklareAktiviteterListe ? values.avklareAktiviteterListe[values.aktivtBeregningsgrunnlagIndex] : values,
+  [getBehandlingFormValuesAvklarAktiviteter, getPeriodeIndex],
+  (values, index) => values?.avklareAktiviteterListe ? values.avklareAktiviteterListe[index] : values,
 );
+
+export const getFormValuesAktivitetList = createSelector(
+  [getBehandlingFormValuesAvklarAktiviteter],
+  values => values?.avklareAktiviteterListe ? values.avklareAktiviteterListe: [values],
+);
+
+const getInitialValuesAvklarAktiviteter = (state, ownProps) =>
+getBehandlingFormInitialValues(
+  formNameAvklarAktiviteter,
+  ownProps.behandlingId,
+  ownProps.behandlingVersjon,
+)(state);
 
 export const getFormInitialValuesForAvklarAktiviteter = createSelector(
-  [
-    (state, ownProps) =>
-      getBehandlingFormInitialValues(
-        formNameAvklarAktiviteter,
-        ownProps.behandlingId,
-        ownProps.behandlingVersjon,
-      )(state),
-  ],
-  values =>
-    values?.avklareAktiviteterListe ? values.avklareAktiviteterListe[values.aktivtBeregningsgrunnlagIndex] : values,
+  [getInitialValuesAvklarAktiviteter, getPeriodeIndex],
+  (values, index) => values?.avklareAktiviteterListe ? values.avklareAktiviteterListe[index] : values,
 );
+
+export const getFormInitialValuesAktivitetList = createSelector(
+  [getInitialValuesAvklarAktiviteter],
+  values => values?.avklareAktiviteterListe ? values.avklareAktiviteterListe: [values],
+);
+
+const getBehandlingFormValuesFakta = (state, ownProps) =>
+  getBehandlingFormValues(formNameVurderFaktaBeregning, ownProps.behandlingId, ownProps.behandlingVersjon)(state);
 
 export const getFormValuesForBeregning = createSelector(
-  [
-    (state, ownProps) =>
-      getBehandlingFormValues(formNameVurderFaktaBeregning, ownProps.behandlingId, ownProps.behandlingVersjon)(state),
-  ],
-  values => (values?.vurderFaktaListe ? values.vurderFaktaListe[values.aktivtBeregningsgrunnlagIndex] : values),
+  [getBehandlingFormValuesFakta, getPeriodeIndex],
+  (values, index) => (values?.vurderFaktaListe ? values.vurderFaktaListe[index] : values),
 );
 
+export const getFormValuesFaktaList = createSelector(
+  [getBehandlingFormValuesFakta],
+  (values) => (values?.vurderFaktaListe ? values.vurderFaktaListe : [values]),
+);
+
+const getInitialValuesFakta = (state, ownProps) =>
+  getBehandlingFormInitialValues(
+  formNameVurderFaktaBeregning,
+  ownProps.behandlingId,
+  ownProps.behandlingVersjon,
+)(state);
+
 export const getFormInitialValuesForBeregning = createSelector(
-  [
-    (state, ownProps) =>
-      getBehandlingFormInitialValues(
-        formNameVurderFaktaBeregning,
-        ownProps.behandlingId,
-        ownProps.behandlingVersjon,
-      )(state),
-  ],
-  values => (values?.vurderFaktaListe ? values.vurderFaktaListe[values.aktivtBeregningsgrunnlagIndex] : values),
+  [getInitialValuesFakta, getPeriodeIndex],
+  (values, index) => (values?.vurderFaktaListe ? values.vurderFaktaListe[index] : values),
 );
 
 export const isBeregningFormDirty = createSelector(

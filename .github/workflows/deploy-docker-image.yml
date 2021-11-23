@@ -11,7 +11,7 @@ env:
   IMAGE_BASE: docker.pkg.github.com/${{ github.repository }}/k9-sak-web
   IMAGE_BASE_CR: ghcr.io/${{ github.repository }}
   CLUSTER: dev-fss
-  NAMESPACE: default
+  NAMESPACE: k9saksbehandling
 jobs:
   deploy-docker-image:
     name: Deploy Docker image
@@ -45,7 +45,7 @@ jobs:
       - name: Installere dependencies
         run: yarn install --ignore-optional --no-progress --frozen-lockfile
         env:
-          NODE_AUTH_TOKEN: ${{ secrets.READ_PACKAGES_PAT }}
+          NODE_AUTH_TOKEN: ${{ secrets.READER_TOKEN }}
 
       - name: Tester, typescript-sjekk og linting
         run: yarn test:all && yarn ts-check && yarn less:lint
@@ -67,18 +67,18 @@ jobs:
           docker push ${IMAGE_BASE} --all-tags
 
       - name: Lukk gamle issues
-        uses: actions/github-script@v3
+        uses: actions/github-script@v5
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
-            github.issues.listForRepo({
+            github.rest.issues.listForRepo({
               owner: context.repo.owner,
               repo: context.repo.repo,
               state: 'open',
               labels: ['deployment']
             }).then(response => {
               response.data.forEach(issue => {
-                github.issues.update({
+                github.rest.issues.update({
                   owner: context.repo.owner,
                   repo: context.repo.repo,
                   issue_number: issue.number,
@@ -90,15 +90,15 @@ jobs:
       - name: Opprett deployment issue
         id: createdeployissue
         if: success()
-        uses: actions/github-script@v3
+        uses: actions/github-script@v5
         with:
           github-token: ${{secrets.GITHUB_TOKEN}}
           script: |
-            github.issues.create( {
+            github.rest.issues.create( {
               owner: context.issue.owner,
               repo: context.issue.repo,
               labels: ['deployment'],
-              body: 'Kommenter enten "/promote dev-fss default" eller "/promote prod-fss default"',
+              body: 'Kommenter enten "/promote dev-fss k9saksbehandling" eller "/promote prod-fss k9saksbehandling"',
               title: 'Deploy av ${{ env.TAG }}'})
             .then(response => {
                     core.setOutput('number', response.data.number);
@@ -119,13 +119,13 @@ jobs:
 
       - name: Trigg deploy til dev-fss
         if: success()
-        uses: actions/github-script@v3
+        uses: actions/github-script@v5
         with:
           github-token: ${{secrets.GA_P_TOKEN}}
           script: |
             const issue = { owner: context.issue.owner,
                             repo: context.issue.repo,
                             issue_number: ${{ steps.createdeployissue.outputs.number }} }
-            github.issues.createComment({...issue,
+            github.rest.issues.createComment({...issue,
                                     title: 'Deploy av ${{ env.TAG }}',
                                     body: '/promote ${{ env.CLUSTER }} ${{ env.NAMESPACE }}'})
