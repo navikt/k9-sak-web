@@ -857,6 +857,14 @@ const historikkEndretFeltVerdiTypeCodes = {
     kode: 'INGEN_INNVIRKNING',
     verdiId: 'HistorikkEndretFeltVerdiType.IngenInnvirkning',
   },
+  FORTSETT: {
+    kode: 'FORTSETT',
+    verdiId: 'HistorikkEndretFeltVerdiType.Fortsett',
+  },
+  MANGLER_GRUNNLAG: {
+    kode: 'MANGLER_GRUNNLAG',
+    verdiId: 'HistorikkEndretFeltVerdiType.MangerGrunnlag',
+  },
 };
 
 export default historikkEndretFeltVerdiTypeCodes;
