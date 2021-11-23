@@ -64,7 +64,7 @@ export default ({
           arbeidsgiverOpplysningerPerId,
           dokumenter,
           løsAksjonspunkt,
-          readOnly || harAktivtAksjonspunkt,
+          readOnly || !harAktivtAksjonspunkt,
           saksbehandlere?.saksbehandlere || {},
           aksjonspunkter,
         )
