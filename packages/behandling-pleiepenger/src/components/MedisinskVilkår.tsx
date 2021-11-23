@@ -9,6 +9,7 @@ import findEndpointsForMicrofrontend from '../microfrontend/utils/findEndpointsF
 import SimpleEndpoints from '../microfrontend/types/SimpleEndpoints';
 import findAksjonspunkt from '../microfrontend/utils/findAksjonspunkt';
 import httpErrorHandler from '../microfrontend/utils/httpErrorHandler';
+import { SaksbehandlereInfo } from '../../../types';
 
 const initializeMedisinskVilkår = (
   elementId,
@@ -34,7 +35,7 @@ const initializeMedisinskVilkår = (
 const medisinskVilkårAppID = 'medisinskVilkårApp';
 export default ({ behandling: { links, uuid }, submitCallback, aksjonspunkter, readOnly }) => {
   const { addErrorMessage } = useRestApiErrorDispatcher();
-  const saksbehandlere = useGlobalStateRestApiData<any>(K9sakApiKeys.HENT_SAKSBEHANDLERE);
+  const saksbehandlere = useGlobalStateRestApiData<SaksbehandlereInfo>(K9sakApiKeys.HENT_SAKSBEHANDLERE);
   const httpErrorHandlerCaller = (status: number, locationHeader?: string) =>
     httpErrorHandler(status, addErrorMessage, locationHeader);
 
