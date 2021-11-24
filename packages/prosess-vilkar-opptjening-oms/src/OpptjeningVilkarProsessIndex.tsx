@@ -58,8 +58,8 @@ const OpptjeningVilkarProsessIndex = ({
 
   const [activeVilkår] = vilkar;
   const skalBrukeSidemeny = activeVilkår.perioder.length > 1;
-  const perioder = activeVilkår.perioder.filter(periode => visAllePerioder && !periode.vurdersIBehandlingen
-    || !visAllePerioder && periode.vurdersIBehandlingen);
+  const perioder = activeVilkår.perioder.filter(periode => (visAllePerioder && !periode.vurdersIBehandlingen)
+    || (!visAllePerioder && periode.vurdersIBehandlingen));
   const mainContainerClassnames = cx('mainContainer', { 'mainContainer--withSideMenu': skalBrukeSidemeny });
 
   useEffect(() => {
