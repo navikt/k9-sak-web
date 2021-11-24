@@ -54,6 +54,7 @@ export const VilkarFields = ({
         }
         readOnly={readOnly}
         fieldNamePrefix={fieldPrefix}
+        placeholderText={intl.formatMessage({ id: 'OpptjeningVilkarAksjonspunktPanel.VurderingPlaceholder' })}
       />
       <VerticalSpacer sixteenPx />
       {readOnly && erVilkarOk !== undefined && (
