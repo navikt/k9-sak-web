@@ -178,7 +178,7 @@ export const BeregningFP = props => {
             props={{
               initialValues,
               aktivtBeregningsgrunnlagIndeks,
-              aktivtBeregningsgrunnlag,
+              beregningsgrunnlag,
               submitCallback,
               readOnlySubmitButton,
               behandling,

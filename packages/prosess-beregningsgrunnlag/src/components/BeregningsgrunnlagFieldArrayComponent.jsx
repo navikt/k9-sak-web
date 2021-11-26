@@ -7,7 +7,7 @@ const BeregningsgrunnlagFieldArrayComponent = ({
   fields,
   initialValues,
   aktivtBeregningsgrunnlagIndeks,
-  aktivtBeregningsgrunnlag,
+  beregningsgrunnlag,
   submitCallback,
   readOnlySubmitButton,
   alleKodeverk,
@@ -21,13 +21,12 @@ const BeregningsgrunnlagFieldArrayComponent = ({
       fields.push(initialValueObject);
     });
   }
-  return fields.map((fieldId, index) => (
-    <BeregningForm2
+  return fields.map((fieldId, index) => (<BeregningForm2
       key={fieldId}
       erAktiv={index === aktivtBeregningsgrunnlagIndeks}
       readOnly={readOnly || !fields.get(index).erTilVurdering}
       fieldArrayID={fieldId}
-      beregningsgrunnlag={aktivtBeregningsgrunnlag}
+      beregningsgrunnlag={beregningsgrunnlag[index]}
       avklaringsbehov={fields.get(index).avklaringsbehov}
       relevanteStatuser={fields.get(index).relevanteStatuser}
       submitCallback={submitCallback}
