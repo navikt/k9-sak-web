@@ -6,6 +6,7 @@ import { dateFormat } from '@fpsak-frontend/utils';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import advarselIcon from '@fpsak-frontend/assets/images/advarsel.svg';
 import classNames from 'classnames/bind';
+import isEqual from 'lodash.isequal';
 
 import OpptjeningVilkarForm from './components/OpptjeningVilkarForm';
 
@@ -68,6 +69,13 @@ const OpptjeningVilkarProsessIndex = ({
     }
   }, [activeTab, visAllePerioder]);
 
+  const activePeriode = perioder.length === 1 ? perioder[0] : perioder[activeTab];
+  const getIndexBlantAllePerioder = () => {
+    const allePerioderIndex = activeVilkår.perioder.findIndex(({ periode }) => isEqual(periode, activePeriode.periode));
+
+    return allePerioderIndex;
+  };
+
   return (
     <RawIntlProvider value={intl}>
       <div className={mainContainerClassnames}>
@@ -90,7 +98,7 @@ const OpptjeningVilkarProsessIndex = ({
           <OpptjeningVilkarForm
             behandlingId={behandling.id}
             behandlingVersjon={behandling.versjon}
-            status={status}
+            status={activePeriode.vilkarStatus.kode}
             lovReferanse={lovReferanse}
             fagsakType={fagsak.sakstype.kode}
             aksjonspunkter={aksjonspunkter}
@@ -99,7 +107,7 @@ const OpptjeningVilkarProsessIndex = ({
             isAksjonspunktOpen={isAksjonspunktOpen}
             readOnlySubmitButton={readOnlySubmitButton}
             vilkårPerioder={activeVilkår.perioder}
-            periodeIndex={activeTab}
+            periodeIndex={skalBrukeSidemeny ? getIndexBlantAllePerioder() : activeTab}
             opptjeninger={opptjening?.opptjeninger}
           />
         </div>

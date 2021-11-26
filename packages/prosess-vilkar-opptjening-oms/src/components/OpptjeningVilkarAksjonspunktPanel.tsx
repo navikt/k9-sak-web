@@ -39,7 +39,6 @@ interface OpptjeningVilkarAksjonspunktPanelImplProps {
 
 interface StateProps {
   erVilkarOk: string | boolean;
-  originalErVilkarOk: boolean;
 }
 
 /**
@@ -48,13 +47,13 @@ interface StateProps {
  * Presentasjonskomponent. Viser panel for å løse aksjonspunkt for avslått opptjeningsvilkår
  */
 export const OpptjeningVilkarAksjonspunktPanelImpl = ({
+  aksjonspunkter,
   behandlingId,
   behandlingVersjon,
   erVilkarOk,
   isApOpen,
   lovReferanse,
   fagsakType,
-  originalErVilkarOk,
   readOnly,
   readOnlySubmitButton,
   dirty,
@@ -63,6 +62,7 @@ export const OpptjeningVilkarAksjonspunktPanelImpl = ({
   periodeIndex,
   vilkårPerioder,
   vilkarFields,
+  status,
 }: Partial<OpptjeningVilkarAksjonspunktPanelImplProps> & StateProps & InjectedFormProps) => {
   const intl = useIntl();
   const formProps = useMemo(
@@ -87,6 +87,8 @@ export const OpptjeningVilkarAksjonspunktPanelImpl = ({
     fagsakType === FagsakYtelseType.OMSORGSPENGER_MIDLERTIDIG_ALENE;
 
   const erPleiepenger = fagsakType === FagsakYtelseType.PLEIEPENGER;
+  const isOpenAksjonspunkt = aksjonspunkter.some(ap => isAksjonspunktOpen(ap.status.kode));
+  const originalErVilkarOk = isOpenAksjonspunkt ? undefined : vilkarUtfallType.OPPFYLT === status;
 
   return (
     <ProsessPanelTemplate
@@ -167,13 +169,9 @@ const mapStateToPropsFactory = (initialState, initialOwnProps: OpptjeningVilkarA
   const { aksjonspunkter, submitCallback, periodeIndex, vilkårPerioder, opptjeninger } = initialOwnProps;
   const onSubmit = values => submitCallback([transformValues(values, aksjonspunkter, vilkårPerioder, opptjeninger)]);
 
-  const isOpenAksjonspunkt = initialOwnProps.aksjonspunkter.some(ap => isAksjonspunktOpen(ap.status.kode));
-  const erVilkarOk = isOpenAksjonspunkt ? undefined : vilkarUtfallType.OPPFYLT === initialOwnProps.status;
-
   return (state, ownProps) => ({
     onSubmit,
     initialValues: buildInitialValues(ownProps),
-    originalErVilkarOk: erVilkarOk,
     erVilkarOk: behandlingFormValueSelector(
       FORM_NAME,
       ownProps.behandlingId,
