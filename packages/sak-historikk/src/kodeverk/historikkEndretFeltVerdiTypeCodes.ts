@@ -861,9 +861,9 @@ const historikkEndretFeltVerdiTypeCodes = {
     kode: 'FORTSETT',
     verdiId: 'HistorikkEndretFeltVerdiType.Fortsett',
   },
-  MANGLER_GRUNNLAG: {
-    kode: 'MANGLER_GRUNNLAG',
-    verdiId: 'HistorikkEndretFeltVerdiType.MangerGrunnlag',
+  MANGLENDE_GRUNNLAG: {
+    kode: 'MANGLENDE_GRUNNLAG',
+    verdiId: 'HistorikkEndretFeltVerdiType.ManglendeGrunnlag',
   },
 };
 

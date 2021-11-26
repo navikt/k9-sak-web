@@ -453,7 +453,7 @@
   "HistorikkEndretFeltVerdiType.VergeFullmektig": "Verge/fullmektig",
   "HistorikkEndretFeltVerdiType.Soker": "Søker",
   "HistorikkEndretFeltVerdiType.Fortsett": "benytter a-ordning som inntektsgrunnlag der hvor det mangler inntektsmeldinger",
-  "HistorikkEndretFeltVerdiType.MangerGrunnlag": "ikke tilstrekkelig inntektsgrunnlag",
+  "HistorikkEndretFeltVerdiType.ManglendeGrunnlag": "ikke tilstrekkelig inntektsgrunnlag",
 
 
   "HistorikkEndretFeltHeading.FordelingForNyAndel": "<b>Det er lagt til ny aktivitet:</b> {br}<b>{value}</b>: Fordeling for ",

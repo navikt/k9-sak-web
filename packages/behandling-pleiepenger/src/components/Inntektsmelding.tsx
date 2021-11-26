@@ -51,8 +51,8 @@ export default ({
   return (
     <MicroFrontend
       id={inntektsmeldingAppId}
-      jsSrc="http://localhost:8383/main.js"
-      stylesheetSrc="http://localhost:8383/styles.css"
+      jsSrc="/k9/microfrontend/psb-inntektsmelding/1/app.js"
+      stylesheetSrc="/k9/microfrontend/psb-inntektsmelding/1/styles.css"
       noCache
       onReady={() =>
         initializeInntektsmeldingApp(
