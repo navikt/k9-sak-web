@@ -865,6 +865,10 @@ const historikkEndretFeltVerdiTypeCodes = {
     kode: 'MANGLENDE_GRUNNLAG',
     verdiId: 'HistorikkEndretFeltVerdiType.ManglendeGrunnlag',
   },
+  UAVKLART: {
+    kode: 'UAVKLART',
+    verdiId: 'HistorikkEndretFeltVerdiType.Uavklart',
+  },
 };
 
 export default historikkEndretFeltVerdiTypeCodes;
