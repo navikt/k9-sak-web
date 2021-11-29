@@ -5,6 +5,7 @@ import { ErrorPage } from '@k9-sak-web/sak-infosider';
 
 interface OwnProps {
   errorMessageCallback: (error: any) => void;
+  textCode?: string;
   children: ReactNode;
   doNotShowErrorPage?: boolean;
 }
@@ -53,10 +54,10 @@ export class ErrorBoundary extends Component<OwnProps, State> {
   }
 
   render(): ReactNode {
-    const { children, doNotShowErrorPage } = this.props;
+    const { children, doNotShowErrorPage, textCode } = this.props;
     const { hasError } = this.state;
 
-    return hasError && !doNotShowErrorPage ? <ErrorPage /> : children;
+    return hasError && !doNotShowErrorPage ? <ErrorPage textCode={textCode} /> : children;
   }
 }
 
