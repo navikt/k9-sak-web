@@ -16,6 +16,12 @@ import {
   beregningsgrunnlag as bgMedHelg,
 } from './scenario/FlerePerioderMedHelg';
 
+import {
+  bgUtenDelvisRefusjon as vurderRefusjonBG,
+  bgMedDelvisRefusjon as vurderDelvisRefBG,
+  aksjonspunkt as vurderRefusjonAP,
+} from './scenario/VurderRefusjon';
+
 export default {
   title: 'fakta/fakta-fordel-beregningsgrunnlag',
   component: FordelBeregningsgrunnlagFaktaIndex,
@@ -57,6 +63,18 @@ const fordelAP = [
   },
 ];
 
+const fordelAvklaringsbehov = [
+  {
+    definisjon: {
+      kode: aksjonspunktCodes.FORDEL_BEREGNINGSGRUNNLAG,
+    },
+    status: {
+      kode: 'OPPR',
+    },
+    begrunnelse: null,
+  },
+];
+
 const lagBGAndel = (andelsnr, aktivitetstatuskode, beregnet) => ({
   beregningsgrunnlagTom: '2019-08-31',
   beregningsgrunnlagFom: '2019-06-01',
@@ -95,6 +113,7 @@ const lagBGPeriode = (andelsliste, fom, tom, periodeAarsaker) => {
 
 const lagBG = (perioder, faktaOmFordeling) => {
   const beregningsgrunnlag = {
+    avklaringsbehov: fordelAvklaringsbehov,
     skjaeringstidspunktBeregning: '2019-09-16',
     aktivitetStatus: [],
     beregningsgrunnlagPeriode: perioder,
@@ -404,4 +423,39 @@ export const skalSlåSammenNaturalytelseperioder = () => {
       submittable={boolean('submittable', true)}
     />
   );
+  
 };
+
+export const viseVurderTilkommetRefusjonskrav = () => (
+  <FordelBeregningsgrunnlagFaktaIndex
+    behandling={lagBehandling([{ fom: '2020-05-15' }])}
+    alleKodeverk={alleKodeverk}
+    alleMerknaderFraBeslutter={{
+      [aksjonspunktCodes.VURDER_REFUSJON_BERGRUNN]: object('merknaderFraBeslutter', merknaderFraBeslutter),
+    }}
+    submitCallback={action('button-click')}
+    readOnly={false}
+    beregningsgrunnlag={[vurderRefusjonBG]}
+    aksjonspunkter={vurderRefusjonAP}
+    harApneAksjonspunkter
+    submittable
+    arbeidsgiverOpplysningerPerId={arbeidsgivere}
+  />
+);
+
+export const skalVurdereTilkommetØktRefusjonPåTidligereInnvilgetDelvisRefusjon = () => (
+  <FordelBeregningsgrunnlagFaktaIndex
+  behandling={lagBehandling([{ fom: '2020-06-01' }])}
+  alleKodeverk={alleKodeverk}
+  alleMerknaderFraBeslutter={{
+    [aksjonspunktCodes.VURDER_REFUSJON_BERGRUNN]: object('merknaderFraBeslutter', merknaderFraBeslutter),
+  }}
+    submitCallback={action('button-click')}
+    readOnly={false}
+    beregningsgrunnlag={[vurderDelvisRefBG]}
+    aksjonspunkter={vurderRefusjonAP}
+    harApneAksjonspunkter
+    submittable
+    arbeidsgiverOpplysningerPerId={arbeidsgivere}
+  />
+);

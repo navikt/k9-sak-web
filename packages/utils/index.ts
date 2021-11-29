@@ -81,6 +81,8 @@ export {
   hasValidDecimalMaxNumberOfDecimals,
   maxValue,
   minValue,
+  maxValueFormatted,
+  minValueFormatted,
   maxLength,
   minLength,
   requiredIfCustomFunctionIsTrue,
