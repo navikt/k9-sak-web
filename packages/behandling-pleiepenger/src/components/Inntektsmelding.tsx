@@ -1,7 +1,7 @@
 import React from 'react';
 import { useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
 import useGlobalStateRestApiData from '@k9-sak-web/rest-api-hooks/src/global-data/useGlobalStateRestApiData';
-import { ArbeidsgiverOpplysningerPerId, Dokument } from '@k9-sak-web/types';
+import { ArbeidsgiverOpplysningerPerId, Dokument, SaksbehandlereInfo } from '@k9-sak-web/types';
 import { MicroFrontend } from '@fpsak-frontend/utils';
 import aksjonspunktStatus from '../../../kodeverk/src/aksjonspunktStatus';
 import { K9sakApiKeys } from '../../../sak-app/src/data/k9sakApi';
@@ -42,7 +42,7 @@ export default ({
   submitCallback,
 }) => {
   const { addErrorMessage } = useRestApiErrorDispatcher();
-  const saksbehandlere = useGlobalStateRestApiData<any>(K9sakApiKeys.HENT_SAKSBEHANDLERE);
+  const saksbehandlere = useGlobalStateRestApiData<SaksbehandlereInfo>(K9sakApiKeys.HENT_SAKSBEHANDLERE);
   const httpErrorHandlerCaller = (status: number, locationHeader?: string) =>
     httpErrorHandlerFn(status, addErrorMessage, locationHeader);
 
