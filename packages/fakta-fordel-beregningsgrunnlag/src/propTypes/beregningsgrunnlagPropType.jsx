@@ -1,6 +1,34 @@
 import PropTypes from 'prop-types';
 import { kodeverkObjektPropType } from '@fpsak-frontend/prop-types';
 
+const tidligereUtbetalingerPropType = PropTypes.shape({
+  fom: PropTypes.string.isRequired,
+  tom: PropTypes.string,
+  erTildeltRefusjon: PropTypes.bool.isRequired,
+});
+
+export const refusjonTilVurderingAndelPropType = PropTypes.shape({
+  aktivitetStatus: kodeverkObjektPropType.isRequired,
+  tidligereUtbetalinger: PropTypes.arrayOf(tidligereUtbetalingerPropType),
+  nyttRefusjonskravFom: PropTypes.string.isRequired,
+  fastsattNyttRefusjonskravFom: PropTypes.string,
+  tidligsteMuligeRefusjonsdato: PropTypes.string.isRequired,
+  arbeidsgiver: PropTypes.shape({
+    arbeidsgiverOrgnr: PropTypes.string,
+    arbeidsgiverAktørId: PropTypes.string,
+  }),
+  internArbeidsforholdRef: PropTypes.string,
+  eksternArbeidsforholdRef: PropTypes.string,
+  skalKunneFastsetteDelvisRefusjon: PropTypes.bool.isRequired,
+  fastsattDelvisRefusjonPrMnd: PropTypes.number,
+  maksTillattDelvisRefusjonPrMnd: PropTypes.number,
+});
+
+const refusjonTilVurderingPropType = PropTypes.shape({
+  andeler: PropTypes.arrayOf(refusjonTilVurderingAndelPropType).isRequired,
+});
+
+
 const beregningsgrunnlagArbeidsforholdProptype = PropTypes.shape({
   arbeidsgiverIdent: PropTypes.string,
   startdato: PropTypes.string,
@@ -122,6 +150,8 @@ const beregningsgrunnlagPropType = PropTypes.shape({
   ),
   skjaeringstidspunktBeregning: PropTypes.string,
   faktaOmFordeling: faktaOmFordelingPropType,
+  refusjonTilVurdering: refusjonTilVurderingPropType,
+
 });
 
 export default beregningsgrunnlagPropType;
