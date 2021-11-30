@@ -2,8 +2,8 @@ export const isRequiredMessage = () => [{ id: 'ValidationMessage.NotEmpty' }];
 export const minLengthMessage = length => [{ id: 'ValidationMessage.MinLength' }, { length }];
 export const maxLengthMessage = length => [{ id: 'ValidationMessage.MaxLength' }, { length }];
 export const maxLengthOrFodselsnrMessage = length => [{ id: 'ValidationMessage.maxLengthOrFodselsnr' }, { length }];
-export const minValueMessage = length => [{ id: 'ValidationMessage.MinValue' }, { length }];
-export const maxValueMessage = length => [{ id: 'ValidationMessage.MaxValue' }, { length }];
+export const minValueMessage = (length: number) => [{ id: 'ValidationMessage.MinValue' }, { length }];
+export const maxValueMessage = (length: number) => [{ id: 'ValidationMessage.MaxValue' }, { length }];
 export const invalidDateMessage = () => [{ id: 'ValidationMessage.InvalidDate' }];
 export const invalidIntegerMessage = text => [{ id: 'ValidationMessage.InvalidInteger' }, { text }];
 export const invalidDecimalMessage = (text, maxNumberOfDecimals) => [

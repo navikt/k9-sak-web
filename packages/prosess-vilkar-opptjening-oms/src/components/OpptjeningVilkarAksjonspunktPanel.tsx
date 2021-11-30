@@ -10,7 +10,10 @@ import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import FagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import { Aksjonspunkt, Opptjening, SubmitCallback, Vilkarperiode } from '@k9-sak-web/types';
 import { Element } from 'nav-frontend-typografi';
+import Hjelpetekst from 'nav-frontend-hjelpetekst';
 import VilkarFields, { midlertidigInaktiv } from './VilkarFields';
+import styles from './OpptjeningVilkarAksjonspunktPanel.less';
+
 
 const FORM_NAME = 'OpptjeningVilkarForm';
 
@@ -105,14 +108,22 @@ export const OpptjeningVilkarAksjonspunktPanelImpl = ({
       originalErVilkarOk={originalErVilkarOk}
       isPeriodisertFormComplete={isFormComplete()}
     >
-      <Element>
-        {erOmsorgspenger && (
-          <FormattedMessage id="OpptjeningVilkarAksjonspunktPanel.SokerHarVurdertOpptjentRettTilOmsorgspenger" />
-        )}
-        {erPleiepenger && (
-          <FormattedMessage id="OpptjeningVilkarAksjonspunktPanel.SokerHarVurdertOpptjentRettTilPleiepenger" />
-        )}
-      </Element>
+      <div className={styles.titelOgHjelpetekstFlexbox}>
+        <Element>
+          {erOmsorgspenger && (
+            <FormattedMessage id="OpptjeningVilkarAksjonspunktPanel.SokerHarVurdertOpptjentRettTilOmsorgspenger" />
+          )}
+          {erPleiepenger && (
+            <FormattedMessage id="OpptjeningVilkarAksjonspunktPanel.SokerHarVurdertOpptjentRettTilPleiepenger" />
+          )}
+        </Element>
+        <Hjelpetekst>
+          <FormattedMessage id="OpptjeningVilkarAksjonspunktPanel.VurderingHjelpetekst" values={{
+            b: (...chunks) => <b>{chunks}</b>,
+           linebreak: <br />
+          }}/>
+        </Hjelpetekst>
+      </div>
 
       <VilkarFields
         erOmsorgspenger={erOmsorgspenger}

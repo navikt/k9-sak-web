@@ -311,6 +311,7 @@
   "HistorikkEndretFelt.TypeVerge": "Type verge",
   "HistorikkEndretFelt.BrukerErUnderTvungenForvaltning": "Søker er under tvungen forvaltning",
   "HistorikkEndretFelt.TilkjentYtelse": "Tilkjent ytelse",
+  "HistorikkEndretFelt.Kompletthet": "Behovet for inntektsmelding til inntektsgrunnlaget for {value}",
 
   "HistorikkEndretFeltVerdiType.AdoptererAlene": "adopterer alene",
   "HistorikkEndretFeltVerdiType.AdoptererIkkeAlene": "adopterer ikke alene",
@@ -451,6 +452,10 @@
   "HistorikkEndretFeltVerdiType.IkkeGyldigGrunn": "Ingen gyldig grunn for sen fremsetting av søknaden",
   "HistorikkEndretFeltVerdiType.VergeFullmektig": "Verge/fullmektig",
   "HistorikkEndretFeltVerdiType.Soker": "Søker",
+  "HistorikkEndretFeltVerdiType.Fortsett": "benytter a-ordning som inntektsgrunnlag der hvor det mangler inntektsmeldinger",
+  "HistorikkEndretFeltVerdiType.ManglendeGrunnlag": "ikke tilstrekkelig inntektsgrunnlag",
+  "HistorikkEndretFeltVerdiType.Uavklart": "uavklart",
+
 
   "HistorikkEndretFeltHeading.FordelingForNyAndel": "<b>Det er lagt til ny aktivitet:</b> {br}<b>{value}</b>: Fordeling for ",
   "HistorikkEndretFeltHeading.FordelingForAndel": "Fordeling for <b>{value}</b>:",

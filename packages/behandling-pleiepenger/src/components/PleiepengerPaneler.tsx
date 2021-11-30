@@ -19,6 +19,7 @@ import {
 import moment from 'moment';
 import React, { useState } from 'react';
 import FetchedData from '../types/fetchedDataTsType';
+import AndreSakerPåSøkerStripe from './AndreSakerPåSøkerStripe';
 import ArbeidsgiverMedManglendePerioderListe from './ArbeidsgiverMedManglendePerioderListe';
 import DataFetcher from './DataFetcher';
 import PleiepengerFakta from './PleiepengerFakta';
@@ -108,7 +109,7 @@ const PleiepengerPaneler = ({
                           const formattedTom = moment(tom, 'YYYY-MM-DD').format('DD.MM.YYYY');
                           return `${formattedFom} - ${formattedTom}`;
                         }),
-                        arbeidstype: mangel.arbeidsgiver?.type
+                        arbeidstype: mangel.arbeidsgiver?.type,
                       }))}
                     />
                   )}
@@ -137,6 +138,7 @@ const PleiepengerPaneler = ({
         featureToggles={featureToggles}
       />
       <Punsjstripe aktørId={fagsakPerson.aktørId} saksnummer={fagsak.saksnummer} />
+      <AndreSakerPåSøkerStripe søkerIdent={fagsakPerson.personnummer} saksnummer={fagsak.saksnummer} />
       <PleiepengerFakta
         behandling={behandling}
         data={fetchedData}
