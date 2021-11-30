@@ -69,11 +69,7 @@ const OpptjeningVilkarProsessIndex = ({
   }, [activeTab, visAllePerioder]);
 
   const activePeriode = perioder.length === 1 ? perioder[0] : perioder[activeTab];
-  const getIndexBlantAllePerioder = () => {
-    const allePerioderIndex = activeVilkår.perioder.findIndex(({ periode }) => isEqual(periode, activePeriode.periode));
-
-    return allePerioderIndex;
-  };
+  const getIndexBlantAllePerioder = () => activeVilkår.perioder.findIndex(({ periode }) => isEqual(periode, activePeriode.periode));
 
   return (
     <RawIntlProvider value={intl}>
