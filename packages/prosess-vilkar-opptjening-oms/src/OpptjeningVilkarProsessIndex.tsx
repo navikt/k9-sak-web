@@ -32,7 +32,6 @@ interface OpptjeningVilkarProsessIndexProps {
   opptjening: { opptjeninger: Opptjening[] };
   aksjonspunkter: Aksjonspunkt[];
   vilkar: Vilkar[];
-  status: string;
   lovReferanse?: string;
   submitCallback: (props: SubmitCallback[]) => void;
   isReadOnly: boolean;
@@ -47,7 +46,6 @@ const OpptjeningVilkarProsessIndex = ({
   opptjening,
   aksjonspunkter,
   vilkar,
-  status,
   lovReferanse,
   submitCallback,
   isReadOnly,
@@ -59,7 +57,8 @@ const OpptjeningVilkarProsessIndex = ({
 
   const [activeVilkår] = vilkar;
   const skalBrukeSidemeny = activeVilkår.perioder.length > 1;
-  const perioder = activeVilkår.perioder.filter(periode => visAllePerioder || periode.vurdersIBehandlingen);
+  const perioder = activeVilkår.perioder.filter(periode => visAllePerioder &&
+    !periode.vurdersIBehandlingen || periode.vurdersIBehandlingen);
 
   const mainContainerClassnames = cx('mainContainer', { 'mainContainer--withSideMenu': skalBrukeSidemeny });
 
