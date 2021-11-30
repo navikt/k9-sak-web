@@ -56,11 +56,9 @@ const OpptjeningVilkarProsessIndex = ({
   const [activeTab, setActiveTab] = useState(0);
 
   const [activeVilkår] = vilkar;
-  const skalBrukeSidemeny = activeVilkår.perioder.length > 1;
-  const perioder = activeVilkår.perioder.filter(periode => visAllePerioder &&
-    !periode.vurdersIBehandlingen || periode.vurdersIBehandlingen);
-
-  const mainContainerClassnames = cx('mainContainer', { 'mainContainer--withSideMenu': skalBrukeSidemeny });
+  const perioder = activeVilkår.perioder.filter(periode => visAllePerioder && !periode.vurdersIBehandlingen
+    || periode.vurdersIBehandlingen && activeVilkår.perioder.length === 1
+    || periode.vurdersIBehandlingen && !visAllePerioder);
 
   useEffect(() => {
     if (!visAllePerioder && activeTab >= perioder.length) {
@@ -73,8 +71,7 @@ const OpptjeningVilkarProsessIndex = ({
 
   return (
     <RawIntlProvider value={intl}>
-      <div className={mainContainerClassnames}>
-        {skalBrukeSidemeny && (
+      <div className={cx('mainContainer--withSideMenu')}>
           <div className={styles.sideMenuContainer}>
             <SideMenu
               links={perioder.map(({ periode, vilkarStatus }, index) => ({
@@ -88,7 +85,6 @@ const OpptjeningVilkarProsessIndex = ({
               heading={intl.formatMessage({ id: 'Sidemeny.Perioder' })}
             />
           </div>
-        )}
         <div className={styles.contentContainer}>
           <OpptjeningVilkarForm
             behandlingId={behandling.id}
@@ -102,7 +98,7 @@ const OpptjeningVilkarProsessIndex = ({
             isAksjonspunktOpen={isAksjonspunktOpen}
             readOnlySubmitButton={readOnlySubmitButton}
             vilkårPerioder={activeVilkår.perioder}
-            periodeIndex={skalBrukeSidemeny ? getIndexBlantAllePerioder() : activeTab}
+            periodeIndex={getIndexBlantAllePerioder()}
             opptjeninger={opptjening?.opptjeninger}
           />
         </div>
