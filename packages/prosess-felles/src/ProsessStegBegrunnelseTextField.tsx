@@ -32,6 +32,7 @@ interface OwnProps {
   maxLength?: number;
   useAllWidth?: boolean;
   fieldNamePrefix?: string;
+  placeholderText?: string;
 }
 
 /**
@@ -45,6 +46,7 @@ const ProsessStegBegrunnelseTextField = ({
   maxLength,
   useAllWidth = false,
   fieldNamePrefix,
+  placeholderText,
 }: OwnProps) => {
   const intl = getPackageIntl();
   return (
@@ -61,7 +63,7 @@ const ProsessStegBegrunnelseTextField = ({
         textareaClass={styles.explanationTextarea}
         maxLength={maxLength || 1500}
         readOnly={readOnly}
-        placeholder={intl.formatMessage({ id: 'ProsessStegBegrunnelseTextField.BegrunnVurdering' })}
+        placeholder={ placeholderText || intl.formatMessage({ id: 'ProsessStegBegrunnelseTextField.BegrunnVurdering' })}
       />
     </div>
   );

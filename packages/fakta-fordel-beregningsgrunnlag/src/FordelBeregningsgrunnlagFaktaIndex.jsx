@@ -4,11 +4,15 @@ import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 import { TabsPure } from 'nav-frontend-tabs';
 import moment from 'moment';
 import { DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils';
+import avklaringsbehovCodes from '@fpsak-frontend/kodeverk/src/beregningAvklaringsbehovCodes';
 import FordelBeregningsgrunnlagPanel from './components/FordelBeregningsgrunnlagPanel';
 import fordelBeregningsgrunnlagAksjonspunkterPropType from './propTypes/fordelBeregningsgrunnlagAksjonspunkterPropType';
 import beregningsgrunnlagPropType from './propTypes/beregningsgrunnlagPropType';
 import fordelBeregningsgrunnlagBehandlingPropType from './propTypes/fordelBeregningsgrunnlagBehandlingPropType';
 import messages from '../i18n/nb_NO.json';
+
+const { FORDEL_BEREGNINGSGRUNNLAG, VURDER_REFUSJON_BERGRUNN } = avklaringsbehovCodes;
+
 
 const cache = createIntlCache();
 
@@ -33,16 +37,8 @@ const lagLabel = (bg, vilkårsperioder) => {
   return `${moment(stpOpptjening).format(DDMMYYYY_DATE_FORMAT)}`;
 };
 
-const kreverManuellBehandlingFn = bg => {
-  const fordeling = bg.faktaOmFordeling;
-  if (fordeling) {
-    const fordelBg = fordeling.fordelBeregningsgrunnlag;
-    if (fordelBg) {
-      return fordelBg.fordelBeregningsgrunnlagPerioder.some(p => p.skalRedigereInntekt);
-    }
-  }
-  return false;
-};
+const kreverManuellBehandlingFn = bg => bg.avklaringsbehov.some(a => a.definisjon.kode === VURDER_REFUSJON_BERGRUNN
+  || a.definisjon.kode === FORDEL_BEREGNINGSGRUNNLAG);
 
 
 const finnAvklaringsbehov = (aksjonspunkter, beregningsgrunnlag) => {
