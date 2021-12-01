@@ -66,16 +66,17 @@ const aksjonspunktCodes = {
   AUTO_VENTER_PÅ_KOMPLETT_SOKNAD: '7003',
   SVANGERSKAPSVILKARET: '5092',
   VURDER_FARESIGNALER: '5095',
-  MEDISINSK_VILKAAR: '9001',
   INNTEKTSMELDING_MANGLER: '9069',
-  OMSORGEN_FOR: '9002',
-  OMSORGEN_FOR_PLEIEPENGER: '9020',
-  VURDER_ÅRSKVANTUM_KVOTE: '9003',
-  VURDER_ÅRSKVANTUM_DOK: '9004',
   UTVIDET_RETT: '9013',
   OVERSTYRING_FRISINN_OPPGITT_OPPTJENING: '8004',
   MANUELL_TILKJENT_YTELSE: '5057',
   OVERSTYRING_MANUELL_VURDERING_VILKÅR: '6016',
+  MEDISINSK_VILKAAR: '9001',
+  OMSORGEN_FOR: '9002',
+  VURDER_ÅRSKVANTUM_KVOTE: '9003',
+  VURDER_ÅRSKVANTUM_DOK: '9004',
+  OVERSTYR_BEREGNING_INPUT: '9005',
+  OMSORGEN_FOR_PLEIEPENGER: '9020',
   NATTEVÅK: '9200',
   BEREDSKAP: '9201',
   VURDER_RETT_ETTER_PLEIETRENGENDES_DØD: '9202',
@@ -114,8 +115,8 @@ const beregningAksjonspunkter = [
 
 const aksjonspunktIsOfType =
   (validAksjonspunktCodes: string[]) =>
-  (aksjonspunktCode: string): boolean =>
-    validAksjonspunktCodes.includes(aksjonspunktCode);
+    (aksjonspunktCode: string): boolean =>
+      validAksjonspunktCodes.includes(aksjonspunktCode);
 
 export const hasAksjonspunkt = (aksjonspunktCode: string, aksjonspunkter: Aksjonspunkt[]): boolean =>
   aksjonspunkter.some(ap => ap.definisjon.kode === aksjonspunktCode);

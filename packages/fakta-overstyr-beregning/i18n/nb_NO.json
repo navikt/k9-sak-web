@@ -1,0 +1,6 @@
+{
+    "OverstyrInputForm.InntektFeltTypeFeil": "Inntekt må være et tall",
+    "OverstyrInputForm.InntektFeltPakrevdFeil": "Inntektsbeløp må fylles ut",
+    "OverstyrInputForm.RefusjonFeltTypeFeil": "Refusjon må være et tall",
+    "OverstyrInputForm.RefusjonFeltPakrevdFeil": "Refusjon for aktive arbeidsforhold må fylles ut"
+}

@@ -9,6 +9,7 @@
   "AdopsjonInfoPanel.Adopsjon": "Adopsjon",
   "OmsorgOgForeldreansvarInfoPanel.Omsorg": "Omsorg og foreldreansvar",
   "OpptjeningInfoPanel.KontrollerFaktaForOpptjening": "Opptjening",
+  "OverstyrBeregningPanel.OverstyrBeregning": "Overstyr beregning",
   "BeregningInfoPanel.Title": "Beregning",
   "FordelBeregningsgrunnlag.Title": "Fordeling",
   "OmsorgInfoPanel.Omsorg": "Omsorg",
@@ -23,14 +24,10 @@
   "OpplysningerFraSoknaden.Title": "Søknaden",
   "OmsorgenForInfoPanel.Title": "Omsorgen for",
   "OmBarnetInfoPanel.Title": "Om barnet",
-
   "Personspanel.Arbeidsforhold": "Opplysninger om søker",
-
   "BostedBarnView.DodsDato": "Barnets dødsdato",
   "YtelserFaktaIndex.Ytelser": "Ytelser",
-
   "SakenFaktaPanel.Title": "Saken",
-
   "Messages.BrevErBestilt": "Brevet er bestilt. Du kan endre frist eller årsak før du fortsetter.",
   "Behandlingspunkt.MedisinskVilkar": "Sykdom",
   "Behandlingspunkt.Saksopplysninger": "Saksopplysninger",
@@ -72,7 +69,6 @@
   "Behandlingspunkt.Foreldelse": "Foreldelse",
   "Behandlingspunkt.Tilbakekreving": "Tilbakekreving",
   "Behandlingspunkt.Opptjening": "Opptjening",
-
   "InngangsvilkarPanel.AvventerAvklaringAv": "Avventer avklaring av fakta om ",
   "OpptjeningVilkarView.VurderOmSøkerHarRett": "Vurder om søker har opptjent rett til foreldrepenger",
   "FodselVilkarForm.VurderGjelderSammeBarn": "Vurder om tidligere utbetalte foreldrepenger eller engangsstønad gjelder for samme barn. Dersom det gjelder for samme barn er dette vilkåret ikke oppfylt.",
@@ -84,7 +80,6 @@
   "ErForeldreansvarVilkaarOppfyltForm.4LeddParagraf": "Vurder om vilkårene i § 14-17 fjerde ledd for far er oppfylt (når far overtar foreldreansvaret alene)",
   "SvangerskapVilkarForm.FyllerVilkår": "Kontroller at søker fyller vilkårene i § 14-4 første eller andre ledd og tredje ledd, første punktum",
   "AdopsjonVilkarForm.VurderGjelderSammeBarn": "Vurder om tidligere utbetalte foreldrepenger eller engangsstønad gjelder for samme barn. Dersom det gjelder for samme barn er dette vilkåret ikke oppfylt.",
-
   "IverksetterVedtakStatusModal.Beskrivelse": "Vedtak er innvilget. Du kommer nå til forsiden.",
   "IverksetterVedtakStatusModal.VedtakAvslatt": "Vedtak er avslått.",
   "IverksetterVedtakStatusModal.VedtakInnvilet": "Vedtaket ble fattet og blir nå iverksatt",
@@ -105,7 +100,6 @@
   "ConfirmInformationVilkarReadOnly.Reasoning": "Begrunnelse",
   "ConfirmInformationVilkarReadOnly.ConditionMet": "Vilkåret er oppfylt",
   "ConfirmInformationVilkarReadOnly.ConditionNotMet": "Vilkåret er ikke oppfylt",
-
   "Fagsak.NoFagsakWithReferenceNr": "Det finnes ingen sak med saksnummer: {saksnummer}",
   "BehandlingErPaVentModal.ModalDescription": "Behandlingen er satt på vent",
   "BehandlingErPaVentModal.PaVent": "På vent",
@@ -253,7 +247,6 @@
   "FatterVedtakStatusModal.SendtBeslutter": "Forslag til vedtak er sendt til beslutter",
   "FatterVedtakStatusModal.KlagenErFerdigbehandlet": "Klagen er ferdigbehandlet.",
   "FatterVedtakStatusModal.SendtKlageResultatTilMedunderskriver": "Forslag til klageresultat er sendt til medunderskriver.",
-
   "SettBehandlingPaVentModal.ModalDescription": "Behandlingen settes på vent med frist",
   "SettBehandlingPaVentModal.PaVent": "På vent",
   "SettBehandlingPaVentModal.SettesPaVent": "Behandlingen settes på vent med frist",
@@ -264,9 +257,7 @@
   "SettBehandlingPaVentModal.SelectPlaceholder": "Velg årsak",
   "SettBehandlingPaVentModal.Avbryt": "Avbryt",
   "SettBehandlingPaVentModal.Lukk": "Lukk",
-
   "PeriodLabel.DateToday": "d.d.",
-
   "Registrering.RegistrereSoknad": "Registrere søknad",
   "Registrering.RegistrerAlleOpplysninger": "Registrer inn alle opplysninger fra papirsøknaden",
   "Registrering.Omsoknaden.Title": "Om søknaden",
@@ -278,7 +269,6 @@
   "SoknadRegistrertModal.InfoTextOne": "Søknaden er registrert og vil bli behandlet",
   "SoknadRegistrertModal.InfoTextTwo": "Du kommer nå til forsiden",
   "SoknadRegistrertModal.OkButtonText": "OK",
-
   "PeriodFieldArray.LeggTilPeriode": "Legg til periode",
   "PeriodFieldArray.LeggTilBarn": "Legg til barn",
   "PreviewAnkeLink.ForhandvisBrev": "Forhåndsvis brev",
@@ -287,9 +277,7 @@
   "PeriodeController.DelOppPerioden": "Del opp perioden",
   "PeriodeController.ForrigePeriode": "Forrige periode",
   "PeriodeController.NestePeriode": "Neste periode",
-
   "Behandling.EditedField": "Saksbehandler har endret feltets verdi",
-
   "Calendar.Day.0": "søndag",
   "Calendar.Day.1": "mandag",
   "Calendar.Day.2": "tirsdag",
@@ -316,10 +304,8 @@
   "Calendar.Month.9": "Oktober",
   "Calendar.Month.10": "November",
   "Calendar.Month.11": "Desember",
-
   "Skjermlenke.Klage.ResolveKlage.Title": "Behandle klage",
   "Klage.ResolveKlage.ExplanationRequiredBrev": "Begrunnelse/tekst i brev",
-
   "KlageVurderingModal.VedtakOversendt": "Innstilling er sendt til NAV Klageinstans.",
   "KlageVurderingModal.ModalDescription": "Vedtaket er stadfestet. Du kommer nå til forsiden",
   "KlageVurderingModal.GoToSearchPage": "Du kommer nå til forsiden.",
@@ -406,23 +392,17 @@
   "IntegrationStatusPanel.ErrorMessage": "Feilmelding:",
   "IntegrationStatusPanel.Stacktrace": "StackTrace:",
   "DataFetchPendingModal.LosningenJobberMedBehandlingen": "Løsningen jobber med behandlingen...",
-
   "AdvarselModal.Ok": "OK",
-
   "ProsessStegIkkeBehandletPanel.IkkeBehandlet": "Dette steget er ikke behandlet",
-
   "BehandlingHenlagtPanel.Henlagt": "Behandlingen er henlagt",
-
   "TilbakekrevingFakta.FaktaFeilutbetaling": "Feilutbetaling",
   "MainSideMenu.Heading": "Saksopplysninger",
   "AktoerGrid.IngenFagsaker": "Har ingen fagsaker i k9-sak",
   "DashboardResolver.FpLosErNede": "Forsiden har nedetid",
-
   "Rest.ErrorMessage.General": "Noe feilet. Feilen kan være forbigående. Prøv å behandle saken litt senere. Om feilen oppstår igjen, meld den inn via porten.",
   "Rest.ErrorMessage.DownTime": "Saksbehandlingsløsningen venter på et annet system som har nedetid nå. Du trenger ikke melde inn en feil, men prøv igjen {date} kl. {time}.\n{message}",
   "Rest.ErrorMessage.PollingTimeout": "Serverkall har gått ut på tid: {location}",
   "Rest.ErrorMessage.GatewayTimeoutOrNotFound": "Får ikke kontakt med {contextPath} ({location})",
-
   "OMSORGEN_FOR": "Omsorgen for",
   "KONTINUERLIG_TILSYN": "Kontinuerlig tilsyn og pleie"
 }
