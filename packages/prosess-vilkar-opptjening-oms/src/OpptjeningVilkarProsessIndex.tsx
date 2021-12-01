@@ -6,6 +6,7 @@ import { dateFormat } from '@fpsak-frontend/utils';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import advarselIcon from '@fpsak-frontend/assets/images/advarsel.svg';
 import classNames from 'classnames/bind';
+import isEqual from 'lodash.isequal';
 
 import OpptjeningVilkarForm from './components/OpptjeningVilkarForm';
 
@@ -31,7 +32,6 @@ interface OpptjeningVilkarProsessIndexProps {
   opptjening: { opptjeninger: Opptjening[] };
   aksjonspunkter: Aksjonspunkt[];
   vilkar: Vilkar[];
-  status: string;
   lovReferanse?: string;
   submitCallback: (props: SubmitCallback[]) => void;
   isReadOnly: boolean;
@@ -46,7 +46,6 @@ const OpptjeningVilkarProsessIndex = ({
   opptjening,
   aksjonspunkter,
   vilkar,
-  status,
   lovReferanse,
   submitCallback,
   isReadOnly,
@@ -57,10 +56,9 @@ const OpptjeningVilkarProsessIndex = ({
   const [activeTab, setActiveTab] = useState(0);
 
   const [activeVilkår] = vilkar;
-  const skalBrukeSidemeny = activeVilkår.perioder.length > 1;
-  const perioder = activeVilkår.perioder.filter(periode => visAllePerioder || periode.vurdersIBehandlingen);
-
-  const mainContainerClassnames = cx('mainContainer', { 'mainContainer--withSideMenu': skalBrukeSidemeny });
+  const perioder = activeVilkår.perioder.filter(periode => visAllePerioder && !periode.vurdersIBehandlingen
+    || periode.vurdersIBehandlingen && activeVilkår.perioder.length === 1
+    || periode.vurdersIBehandlingen && !visAllePerioder);
 
   useEffect(() => {
     if (!visAllePerioder && activeTab >= perioder.length) {
@@ -68,10 +66,12 @@ const OpptjeningVilkarProsessIndex = ({
     }
   }, [activeTab, visAllePerioder]);
 
+  const activePeriode = perioder.length === 1 ? perioder[0] : perioder[activeTab];
+  const getIndexBlantAllePerioder = () => activeVilkår.perioder.findIndex(({ periode }) => isEqual(periode, activePeriode.periode));
+
   return (
     <RawIntlProvider value={intl}>
-      <div className={mainContainerClassnames}>
-        {skalBrukeSidemeny && (
+      <div className={cx('mainContainer--withSideMenu')}>
           <div className={styles.sideMenuContainer}>
             <SideMenu
               links={perioder.map(({ periode, vilkarStatus }, index) => ({
@@ -85,12 +85,11 @@ const OpptjeningVilkarProsessIndex = ({
               heading={intl.formatMessage({ id: 'Sidemeny.Perioder' })}
             />
           </div>
-        )}
         <div className={styles.contentContainer}>
           <OpptjeningVilkarForm
             behandlingId={behandling.id}
             behandlingVersjon={behandling.versjon}
-            status={status}
+            status={activePeriode.vilkarStatus.kode}
             lovReferanse={lovReferanse}
             fagsakType={fagsak.sakstype.kode}
             aksjonspunkter={aksjonspunkter}
@@ -99,7 +98,7 @@ const OpptjeningVilkarProsessIndex = ({
             isAksjonspunktOpen={isAksjonspunktOpen}
             readOnlySubmitButton={readOnlySubmitButton}
             vilkårPerioder={activeVilkår.perioder}
-            periodeIndex={activeTab}
+            periodeIndex={getIndexBlantAllePerioder()}
             opptjeninger={opptjening?.opptjeninger}
           />
         </div>

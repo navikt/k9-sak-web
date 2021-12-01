@@ -12,7 +12,7 @@ const soknadsfristStatus = {
 };
 
 describe('<SoknadsfristVilkarForm>', () => {
-  it('skal ikke rendre tabs dersom bare en periode', () => {
+  it('skal rendre tabs dersom bare en periode', () => {
     const wrapper = shallow(
       <SoknadsfristVilkarProsessIndex
         behandling={
@@ -62,7 +62,7 @@ describe('<SoknadsfristVilkarForm>', () => {
     );
 
     const tabs = wrapper.find(SideMenu);
-    expect(tabs).toHaveLength(0);
+    expect(tabs).toHaveLength(1);
   });
 
   it('skal rendre tabs dersom mer enn en periode', () => {

@@ -24,7 +24,7 @@ const FORM_NAME_FORDEL_BEREGNING = 'fordelBeregningsgrunnlagForm';
 const findAvklaringsbehovMedBegrunnelse = avklaringsbehov =>
   avklaringsbehov.find(ab => ab.definisjon.kode === FORDEL_BEREGNINGSGRUNNLAG && ab.begrunnelse !== null);
 
-export const BEGRUNNELSE_FORDELING_NAME = 'begrunnelseFordeling';
+const BEGRUNNELSE_FORDELING_NAME = 'begrunnelseFordeling';
 
 const fieldArrayName = 'fordelingListe';
 
