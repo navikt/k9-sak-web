@@ -49,7 +49,8 @@ interface OwnProps {
 const SnakkebobleContainer = ({ dato, aktoer, rolleNavn = '', kjoenn, opprettetAv, children }: OwnProps) => {
   const saksbehandlere = useGlobalStateRestApiData<SaksbehandlereInfo>(K9sakApiKeys.HENT_SAKSBEHANDLERE);
   const saksbehandlernavn =
-    typeof saksbehandlere?.saksbehandlere === 'object' && saksbehandlere?.saksbehandlere[opprettetAv?.toLowerCase()];
+    typeof saksbehandlere?.saksbehandlere === 'object' &&
+    (saksbehandlere?.saksbehandlere[opprettetAv] || saksbehandlere?.saksbehandlere[opprettetAv?.toLowerCase()]);
   return (
     <Snakkeboble
       className={`snakkeboble__kompakt ${snakkeboblePanelCls(aktoer)}`}
