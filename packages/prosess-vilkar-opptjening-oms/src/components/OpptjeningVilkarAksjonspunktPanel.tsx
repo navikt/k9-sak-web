@@ -117,7 +117,7 @@ export const OpptjeningVilkarAksjonspunktPanelImpl = ({
             <FormattedMessage id="OpptjeningVilkarAksjonspunktPanel.SokerHarVurdertOpptjentRettTilPleiepenger" />
           )}
         </Element>
-        <Hjelpetekst>
+        <Hjelpetekst type="under-hoyre">
           <FormattedMessage id="OpptjeningVilkarAksjonspunktPanel.VurderingHjelpetekst" values={{
             b: (...chunks) => <b>{chunks}</b>,
            linebreak: <br />
