@@ -5,7 +5,7 @@ import sinon from 'sinon';
 import avklaringsbehovCodes from '@fpsak-frontend/kodeverk/src/beregningAvklaringsbehovCodes';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import opptjeningAktivitetType from '@fpsak-frontend/kodeverk/src/opptjeningAktivitetType';
-import { reduxFormPropsMock, MockFieldsWithContent } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
+import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
 import { CheckboxField } from '@fpsak-frontend/form';
 import { AksjonspunktHelpText, BorderBox } from '@fpsak-frontend/shared-components';
 import { FaktaSubmitButton } from '@k9-sak-web/fakta-felles';
@@ -137,7 +137,6 @@ describe('<AvklareAktiviteterPanel>', () => {
     };
     const avklaringsbehov = [{ definisjon: { kode: AVKLAR_AKTIVITETER }, status: { kode: 'OPPR' } }];
     const beregningsgrunnlag = {
-      skjæringstidspunkt: '2019-02-02',
       avklaringsbehov,
       faktaOmBeregning: {
         avklarAktiviteter,
@@ -167,9 +166,8 @@ describe('<AvklareAktiviteterPanel>', () => {
         reduxFormInitialize={sinon.spy()}
         aktivtBeregningsgrunnlagIndex={0}
         beregningsgrunnlag={beregningsgrunnlag}
-        behandlingResultatPerioder={[{ periode: { fom: '2019-02-02' }, vurdersIBehandlingen: true }]}
         alleBeregningsgrunnlag={[beregningsgrunnlag]}
-        fields={new MockFieldsWithContent('avklareAktiviteterListe', [{erTilVurdering: true}])}
+        fields={[]}
         formValues={[]}
         {...behandlingProps}
       />,
@@ -204,17 +202,15 @@ describe('<AvklareAktiviteterPanel>', () => {
         alleKodeverk={alleKodeverk}
         arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
         beregningsgrunnlag={{
-          skjæringstidspunkt: '2019-02-02',
           avklaringsbehov,
           faktaOmBeregning: {
             avklarAktiviteter,
             andelerForFaktaOmBeregning: [{ skalKunneEndreAktivitet: true, lagtTilAvSaksbehandler: true }],
           },
         }}
-        behandlingResultatPerioder={[{ periode: { fom: '2019-02-02' }, vurdersIBehandlingen: true }]}
         aktivtBeregningsgrunnlagIndex={0}
         reduxFormInitialize={sinon.spy()}
-        fields={new MockFieldsWithContent('avklareAktiviteterListe', [{erTilVurdering: true}])}
+        fields={[]}
         formValues={[]}
         {...behandlingProps}
       />,
@@ -251,16 +247,14 @@ describe('<AvklareAktiviteterPanel>', () => {
         alleKodeverk={alleKodeverk}
         arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
         beregningsgrunnlag={{
-          skjæringstidspunkt: '2019-02-02',
           avklaringsbehov,
           faktaOmBeregning: {
             avklarAktiviteter,
             andelerForFaktaOmBeregning: [{ skalKunneEndreAktivitet: true, lagtTilAvSaksbehandler: true }],
           },
         }}
-        behandlingResultatPerioder={[{ periode: { fom: '2019-02-02' }, vurdersIBehandlingen: true }]}
         reduxFormInitialize={sinon.spy()}
-        fields={new MockFieldsWithContent('avklareAktiviteterListe', [{erTilVurdering: true}])}
+        fields={[]}
         formValues={[]}
         {...behandlingProps}
       />,
@@ -282,14 +276,12 @@ describe('<AvklareAktiviteterPanel>', () => {
         readOnly={false}
         isAvklaringsbehovClosed={false}
         beregningsgrunnlag={{
-          skjæringstidspunkt: '2019-02-02',
           avklaringsbehov,
           faktaOmBeregning: {
             avklarAktiviteter,
             andelerForFaktaOmBeregning: [{ skalKunneEndreAktivitet: true, lagtTilAvSaksbehandler: true }],
           },
         }}
-        behandlingResultatPerioder={[{ periode: { fom: '2019-02-02' }, vurdersIBehandlingen: true }]}
         hasBegrunnelse={false}
         submittable
         isDirty
@@ -304,7 +296,7 @@ describe('<AvklareAktiviteterPanel>', () => {
         behandlingFormPrefix="test"
         alleKodeverk={alleKodeverk}
         arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
-        fields={new MockFieldsWithContent('avklareAktiviteterListe', [{erTilVurdering: true}])}
+        fields={[]}
         formValues={[]}
         reduxFormInitialize={sinon.spy()}
         {...behandlingProps}
@@ -324,7 +316,6 @@ describe('<AvklareAktiviteterPanel>', () => {
     ];
 
     const beregningsgrunnlag = {
-      skjæringstidspunkt: '2019-02-02',
       avklaringsbehov,
       faktaOmBeregning: {
         avklarAktiviteter,
@@ -338,7 +329,6 @@ describe('<AvklareAktiviteterPanel>', () => {
         readOnly={false}
         isAvklaringsbehovClosed={false}
         beregningsgrunnlag={beregningsgrunnlag}
-        behandlingResultatPerioder={[{ periode: { fom: '2019-02-02' }, vurdersIBehandlingen: true }]}
         alleBeregningsgrunnlag={[beregningsgrunnlag]}
         hasBegrunnelse={false}
         submittable
@@ -356,7 +346,7 @@ describe('<AvklareAktiviteterPanel>', () => {
         alleKodeverk={alleKodeverk}
         arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
         reduxFormInitialize={sinon.spy()}
-        fields={new MockFieldsWithContent('avklareAktiviteterListe', [{erTilVurdering: true}])}
+        fields={[]}
         formValues={[]}
         {...behandlingProps}
       />,
@@ -379,14 +369,12 @@ describe('<AvklareAktiviteterPanel>', () => {
         readOnly={false}
         isAvklaringsbehovClosed={false}
         beregningsgrunnlag={{
-          skjæringstidspunkt: '2019-02-02',
           avklaringsbehov,
           faktaOmBeregning: {
             avklarAktiviteter,
             andelerForFaktaOmBeregning: [{ skalKunneEndreAktivitet: true, lagtTilAvSaksbehandler: true }],
           },
         }}
-        behandlingResultatPerioder={[{ periode: { fom: '2019-02-02' }, vurdersIBehandlingen: true }]}
         hasBegrunnelse={false}
         submittable
         isDirty
@@ -403,7 +391,7 @@ describe('<AvklareAktiviteterPanel>', () => {
         alleKodeverk={alleKodeverk}
         arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
         reduxFormInitialize={sinon.spy()}
-        fields={new MockFieldsWithContent('avklareAktiviteterListe', [{ erTilVurdering: true}])}
+        fields={[]}
         formValues={[]}
         {...behandlingProps}
       />,
@@ -427,14 +415,12 @@ describe('<AvklareAktiviteterPanel>', () => {
         readOnly={false}
         isAvklaringsbehovClosed={false}
         beregningsgrunnlag={{
-          skjæringstidspunkt: '2019-02-02',
           avklaringsbehov,
           faktaOmBeregning: {
             avklarAktiviteter,
             andelerForFaktaOmBeregning: [{ skalKunneEndreAktivitet: true, lagtTilAvSaksbehandler: true }],
           },
         }}
-        behandlingResultatPerioder={[{ periode: { fom: '2019-02-02' }, vurdersIBehandlingen: true }]}
         hasBegrunnelse={false}
         submittable
         isDirty
@@ -451,7 +437,7 @@ describe('<AvklareAktiviteterPanel>', () => {
         alleKodeverk={alleKodeverk}
         arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
         reduxFormInitialize={sinon.spy()}
-        fields={new MockFieldsWithContent('avklareAktiviteterListe', [{erTilVurdering: true}])}
+        fields={[]}
         formValues={[]}
         {...behandlingProps}
       />,
@@ -474,14 +460,12 @@ describe('<AvklareAktiviteterPanel>', () => {
         readOnly={false}
         isAvklaringsbehovClosed={false}
         beregningsgrunnlag={{
-          skjæringstidspunkt: '2019-02-02',
           avklaringsbehov,
           faktaOmBeregning: {
             avklarAktiviteter,
             andelerForFaktaOmBeregning: [{ skalKunneEndreAktivitet: true, lagtTilAvSaksbehandler: true }],
           },
         }}
-        behandlingResultatPerioder={[{ periode: { fom: '2019-02-02' }, vurdersIBehandlingen: true }]}
         hasBegrunnelse={false}
         aktivtBeregningsgrunnlagIndex={0}
         submittable
@@ -498,7 +482,7 @@ describe('<AvklareAktiviteterPanel>', () => {
         alleKodeverk={alleKodeverk}
         arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
         reduxFormInitialize={sinon.spy()}
-        fields={new MockFieldsWithContent('avklareAktiviteterListe', [{erTilVurdering: true}])}
+        fields={[]}
         formValues={[]}
         {...behandlingProps}
       />,
@@ -521,14 +505,12 @@ describe('<AvklareAktiviteterPanel>', () => {
         readOnly={false}
         isAvklaringsbehovClosed={false}
         beregningsgrunnlag={{
-          skjæringstidspunkt: '2019-02-02',
           avklaringsbehov,
           faktaOmBeregning: {
             avklarAktiviteter,
             andelerForFaktaOmBeregning: [{ skalKunneEndreAktivitet: true, lagtTilAvSaksbehandler: true }],
           },
         }}
-        behandlingResultatPerioder={[{ periode: { fom: '2019-02-02' }, vurdersIBehandlingen: true }]}
         aktivtBeregningsgrunnlagIndex={0}
         hasBegrunnelse={false}
         submittable
@@ -544,7 +526,7 @@ describe('<AvklareAktiviteterPanel>', () => {
         behandlingFormPrefix="test"
         alleKodeverk={alleKodeverk}
         arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
-        fields={new MockFieldsWithContent('avklareAktiviteterListe', [{erTilVurdering: true}])}
+        fields={[]}
         formValues={[]}
         reduxFormInitialize={sinon.spy()}
         {...behandlingProps}
@@ -563,12 +545,10 @@ describe('<AvklareAktiviteterPanel>', () => {
 
     const beregningsgrunnlag = { 
       avklaringsbehov: apsAvklarAktiviteter,
-      faktaOmBeregning: { avklarAktiviteter },
-      skjæringstidspunkt: '2019-02-02'
+      faktaOmBeregning: { avklarAktiviteter } 
     };
     const initialValues = buildInitialValuesAvklarAktiviteter(beregningsgrunnlag, {
       aktivtBeregningsgrunnlagIndex: 1,
-      behandlingResultatPerioder: [{ periode: {fom : '2019-02-02' }, vurdersIBehandlingen: true }]
     });
     expect(initialValues !== null).to.equal(true);
     expect(initialValues[MANUELL_OVERSTYRING_FIELD]).to.equal(false);
@@ -582,12 +562,9 @@ describe('<AvklareAktiviteterPanel>', () => {
     const initialValues = buildInitialValuesAvklarAktiviteter(
       { 
         avklaringsbehov: aps,
-        faktaOmBeregning: { avklarAktiviteter },
-        skjæringstidspunkt: '2019-02-02'
-      },
+        faktaOmBeregning: { avklarAktiviteter } },
       {
-        aktivtBeregningsgrunnlagIndex: 1,
-        behandlingResultatPerioder: [{ periode: {fom : '2019-02-02' }, vurdersIBehandlingen:true }]
+        aktivtBeregningsgrunnlagIndex: 1
       },
     );
     expect(initialValues !== null).to.equal(true);
@@ -602,12 +579,9 @@ describe('<AvklareAktiviteterPanel>', () => {
     const initialValues = buildInitialValuesAvklarAktiviteter(
       { 
         avklaringsbehov: aps,
-        faktaOmBeregning: { avklarAktiviteter },
-        skjæringstidspunkt: '2019-02-02'
-      },
+        faktaOmBeregning: { avklarAktiviteter } },
       {
-        aktivtBeregningsgrunnlagIndex: 1,
-        behandlingResultatPerioder: [{ periode: {fom : '2019-02-02' }, vurdersIBehandlingen:true }]
+        aktivtBeregningsgrunnlagIndex: 1
       },
     );
     expect(initialValues !== null).to.equal(true);
@@ -619,18 +593,17 @@ describe('<AvklareAktiviteterPanel>', () => {
       aktiviteterTomDatoMapping: [{ tom: '2019-02-02', aktiviteter }],
     };
     const values = {
-      avklareAktiviteterListe: [{ avklarAktiviteter, avklaringsbehov: apsAvklarAktiviteter, erTilVurdering: true }],
+      avklareAktiviteterListe: [{ avklarAktiviteter, avklaringsbehov: apsAvklarAktiviteter }],
       avklarAktiviteter,
     };
     values.avklareAktiviteterListe[0][id1] = { skalBrukes: false };
     values.avklareAktiviteterListe[0][id2] = { skalBrukes: true };
     values.avklareAktiviteterListe[0][id3] = { skalBrukes: true };
     values.avklareAktiviteterListe[0][idAAP] = { skalBrukes: true };
-    const vilkårsperioder = [{ periode: { fom: '2019-02-02', tom: '2019-02-05' }, vurdersIBehandlingen: true }];
+    const vilkårsperioder = [{ periode: { fom: '2019-02-02', tom: '2019-02-05' } }];
     const bg = { 
       avklaringsbehov: apsAvklarAktiviteter,
-      skjæringstidspunkt: '2019-02-02',
-      skjaeringstidspunktBeregning: '2019-02-02',
+      skjaeringstidspunktBeregning: '2019-02-02' 
     };
     const transformed = transformValues(values, vilkårsperioder, bg);
     expect(transformed[0].grunnlag.length).to.equal(1);
@@ -645,7 +618,7 @@ describe('<AvklareAktiviteterPanel>', () => {
     };
     const aps = [];
     const values = {
-      avklareAktiviteterListe: [{ avklarAktiviteter, avklaringsbehov: aps, erTilVurdering: true,  }],
+      avklareAktiviteterListe: [{ avklarAktiviteter, avklaringsbehov: aps }],
       avklarAktiviteter,
     };
     values.avklareAktiviteterListe[0][id1] = { skalBrukes: null };
@@ -654,8 +627,8 @@ describe('<AvklareAktiviteterPanel>', () => {
     values.avklareAktiviteterListe[0][idAAP] = { skalBrukes: true };
     values.avklareAktiviteterListe[0][BEGRUNNELSE_AVKLARE_AKTIVITETER_NAME] = 'begrunnelse';
     values.avklareAktiviteterListe[0][MANUELL_OVERSTYRING_FIELD] = true;
-    const vilkårsperioder = [{ periode: { fom: '2019-02-02', tom: '2019-02-05' }, vurdersIBehandlingen: true }];
-    const bg = { avklaringsbehov: aps, skjaeringstidspunktBeregning: '2019-02-02', skjæringstidspunkt: '2019-02-02' };
+    const vilkårsperioder = [{ periode: { fom: '2019-02-02', tom: '2019-02-05' } }];
+    const bg = { avklaringsbehov: aps, skjaeringstidspunktBeregning: '2019-02-02' };
     const transformed = transformValues(values, vilkårsperioder, bg);
     expect(transformed.length).to.equal(1);
     expect(transformed[0].beregningsaktivitetLagreDtoList[0].arbeidsgiverIdentifikator).to.equal(

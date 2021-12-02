@@ -1,4 +1,4 @@
-const beregningsgrunnlag = {
+export const beregningsgrunnlag = {
   avklaringsbehov: [{definisjon: { kode : '5052' }, status: { kode: 'OPPR'}}],
   skjaeringstidspunktBeregning: '2020-01-13',
   skjæringstidspunkt: '2020-01-13',
@@ -142,4 +142,37 @@ const beregningsgrunnlag = {
   dekningsgrad: 100,
 };
 
-export default beregningsgrunnlag;
+export const aksjonspunkt = [
+  {
+    definisjon: { kode: '7003', kodeverk: 'AKSJONSPUNKT_DEF' },
+    status: { kode: 'UTFO', kodeverk: 'AKSJONSPUNKT_STATUS' },
+    begrunnelse: null,
+    vilkarType: null,
+    toTrinnsBehandling: false,
+    toTrinnsBehandlingGodkjent: null,
+    vurderPaNyttArsaker: null,
+    besluttersBegrunnelse: null,
+    aksjonspunktType: { kode: 'AUTO', kodeverk: 'AKSJONSPUNKT_TYPE' },
+    kanLoses: false,
+    erAktivt: true,
+    fristTid: '2020-02-10T00:00:00',
+    endretTidspunkt: '2020-02-03T12:19:52.486',
+    endretAv: 'im-just-a-fake-code',
+  },
+  {
+    definisjon: { kode: '5052', kodeverk: 'AKSJONSPUNKT_DEF' },
+    status: { kode: 'OPPR', kodeverk: 'AKSJONSPUNKT_STATUS' },
+    begrunnelse: null,
+    vilkarType: null,
+    toTrinnsBehandling: true,
+    toTrinnsBehandlingGodkjent: null,
+    vurderPaNyttArsaker: null,
+    besluttersBegrunnelse: null,
+    aksjonspunktType: { kode: 'MANU', kodeverk: 'AKSJONSPUNKT_TYPE' },
+    kanLoses: true,
+    erAktivt: true,
+    fristTid: null,
+    endretTidspunkt: null,
+    endretAv: null,
+  },
+];

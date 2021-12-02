@@ -82,9 +82,8 @@ const harTilfeller = beregningsgrunnlag =>
   beregningsgrunnlag.faktaOmBeregning.faktaOmBeregningTilfeller &&
   beregningsgrunnlag.faktaOmBeregning.faktaOmBeregningTilfeller.length > 0;
 
-const måVurderes = (avklaringsbehov, erTilVurdering) =>
-!!avklaringsbehov && harAvklaringsbehov(VURDER_FAKTA_FOR_ATFL_SN, avklaringsbehov) && erTilVurdering;
-
+const måVurderes = (avklaringsbehov) =>
+!!avklaringsbehov && harAvklaringsbehov(VURDER_FAKTA_FOR_ATFL_SN, avklaringsbehov);
 
 const fieldArrayName = 'vurderFaktaListe';
 
@@ -139,20 +138,18 @@ export class VurderFaktaBeregningPanelImpl extends Component {
     }
 
 
-
-
     return fields.map(
       (field, index) =>
           (<div key={field} style={{ display: index === aktivtBeregningsgrunnlagIndex ? 'block' : 'none' }}>
-            {måVurderes(fields.get(index).avklaringsbehov, fields.get(index).erTilVurdering) && (
+            {måVurderes(fields.get(index).avklaringsbehov) && (
               <AksjonspunktHelpTextTemp isAksjonspunktOpen={!isAvklaringsbehovClosed(fields.get(index).avklaringsbehov)}>
                 {lagHelpTextsForFakta()}
               </AksjonspunktHelpTextTemp>
             )}
             <VerticalSpacer twentyPx />
             <FaktaForATFLOgSNPanel
-              readOnly={readOnly || !fields.get(index).erTilVurdering}
-              isAvklaringsbehovClosed={isAvklaringsbehovClosed(fields.get(index).avklaringsbehov) && fields.get(index).erTilVurdering}
+              readOnly={readOnly}
+              isAvklaringsbehovClosed={isAvklaringsbehovClosed(fields.get(index).avklaringsbehov)}
               avklaringsbehov={fields.get(index).avklaringsbehov}
               behandlingId={behandlingId}
               behandlingVersjon={behandlingVersjon}
@@ -246,7 +243,7 @@ VurderFaktaBeregningPanelImpl.propTypes = {
 const mapGrunnlagsliste = (fieldArrayList, alleBeregningsgrunnlag, behandlingResultatPerioder) => 
   fieldArrayList
   .map((currentFormValues, index) => {
-    if ((måVurderes(alleBeregningsgrunnlag[index].avklaringsbehov) || erOverstyring(currentFormValues)) && currentFormValues.erTilVurdering) {
+    if (måVurderes(alleBeregningsgrunnlag[index].avklaringsbehov) || erOverstyring(currentFormValues)) {
       const faktaBeregningValues = currentFormValues;
       const stpOpptjening = faktaBeregningValues.faktaOmBeregning.avklarAktiviteter.skjæringstidspunkt;
       const vilkarPeriode = behandlingResultatPerioder.find(periode => periode.periode.fom === stpOpptjening);
@@ -286,8 +283,9 @@ export const validateVurderFaktaBeregning = values => {
   if (values && values[fieldArrayName]) {
     return {
       [fieldArrayName]: values[fieldArrayName].map(value => {
-        if ((harAvklaringsbehov(VURDER_FAKTA_FOR_ATFL_SN, value.avklaringsbehov) || erOverstyring(value)) && value.erTilVurdering) {
+        if (harAvklaringsbehov(VURDER_FAKTA_FOR_ATFL_SN, value.avklaringsbehov) || erOverstyring(value)) {
           return validationForVurderFakta(value);
+
         }
         return {};
       }),
@@ -296,9 +294,8 @@ export const validateVurderFaktaBeregning = values => {
   return null;
 };
 
-export const buildInitialValues = (ownProps, alleBeregningsgrunnlag, aktivtBeregningsgrunnlagIndex, behandlingResultatPerioder) => ({
+export const buildInitialValues = (ownProps, alleBeregningsgrunnlag, aktivtBeregningsgrunnlagIndex) => ({
   [fieldArrayName]: alleBeregningsgrunnlag.map(beregningsgrunnlag => ({
-    erTilVurdering: behandlingResultatPerioder.find(({periode}) => periode.fom === beregningsgrunnlag.skjæringstidspunkt).vurdersIBehandlingen,
     avklaringsbehov: beregningsgrunnlag.avklaringsbehov,
     ...getBuildInitialValuesFaktaForATFLOgSN(ownProps, beregningsgrunnlag)(),
   })),
@@ -320,12 +317,8 @@ const mapStateToPropsFactory = (initialState, initialProps) => {
       ),
     );
   return (state, ownProps) => {
-    const { alleBeregningsgrunnlag, aktivtBeregningsgrunnlagIndex, behandlingResultatPerioder } = ownProps;
-    const initialValues = buildInitialValues(
-      ownProps, 
-      alleBeregningsgrunnlag, 
-      aktivtBeregningsgrunnlagIndex, 
-      behandlingResultatPerioder);
+    const { alleBeregningsgrunnlag, aktivtBeregningsgrunnlagIndex } = ownProps;
+    const initialValues = buildInitialValues(ownProps, alleBeregningsgrunnlag, aktivtBeregningsgrunnlagIndex);
     return {
       initialValues,
       onSubmit,
