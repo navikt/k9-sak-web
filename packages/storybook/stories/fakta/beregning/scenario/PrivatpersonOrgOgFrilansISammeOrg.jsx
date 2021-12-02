@@ -544,6 +544,7 @@ export const beregningsgrunnlag = [
       tom: beregningsgrunnlag.length === index ? null : beregningsgrunnlag[index].skjaeringstidspunktBeregning,
     },
     begrunnelse: null,
+    vurdersIBehandlingen: true,
   }));
   
   export const behandling = {
@@ -558,23 +559,3 @@ export const beregningsgrunnlag = [
       },
     },
   };
-
-  export const aksjonspunkt = [
-    {
-      definisjon: { kode: '5058', kodeverk: 'AKSJONSPUNKT_DEF' },
-      status: { kode: 'OPPR', kodeverk: 'AKSJONSPUNKT_STATUS' },
-      begrunnelse: null,
-      vilkarType: null,
-      toTrinnsBehandling: true,
-      toTrinnsBehandlingGodkjent: null,
-      vurderPaNyttArsaker: null,
-      besluttersBegrunnelse: null,
-      aksjonspunktType: { kode: 'MANU', kodeverk: 'AKSJONSPUNKT_TYPE' },
-      kanLoses: true,
-      erAktivt: true,
-      fristTid: null,
-      endretTidspunkt: null,
-      endretAv: null,
-    },
-  ];
-  

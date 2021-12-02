@@ -454,6 +454,7 @@ export const behandling = {
           merknadParametere: {},
           vilkarStatus: { kode: 'IKKE_VURDERT', kodeverk: 'VILKAR_UTFALL_TYPE' },
           periode: { fom: '2019-03-13', tom: '2020-03-19' },
+          vurdersIBehandlingen: true,
           begrunnelse: null,
         },
         {
@@ -461,6 +462,7 @@ export const behandling = {
           merknadParametere: {},
           vilkarStatus: { kode: 'IKKE_VURDERT', kodeverk: 'VILKAR_UTFALL_TYPE' },
           periode: { fom: '2020-05-13', tom: '2020-05-14' },
+          vurdersIBehandlingen: true,
           begrunnelse: null,
         },
         {
@@ -468,6 +470,7 @@ export const behandling = {
           merknadParametere: {},
           vilkarStatus: { kode: 'IKKE_VURDERT', kodeverk: 'VILKAR_UTFALL_TYPE' },
           periode: { fom: '2020-06-12', tom: '2020-06-12' },
+          vurdersIBehandlingen: true,
           begrunnelse: null,
         },
         {
@@ -475,6 +478,7 @@ export const behandling = {
           merknadParametere: {},
           vilkarStatus: { kode: 'IKKE_VURDERT', kodeverk: 'VILKAR_UTFALL_TYPE' },
           periode: { fom: '2020-06-19', tom: '2020-06-23' },
+          vurdersIBehandlingen: true,
           begrunnelse: null,
         },
         {
@@ -483,27 +487,10 @@ export const behandling = {
           vilkarStatus: { kode: 'IKKE_VURDERT', kodeverk: 'VILKAR_UTFALL_TYPE' },
           periode: { fom: '2020-06-25', tom: '2020-06-26' },
           begrunnelse: null,
+          vurdersIBehandlingen: true,
         },
       ],
     },
   },
 };
 
-export const aksjonspunkt = [
-  {
-    definisjon: { kode: '5058', kodeverk: 'AKSJONSPUNKT_DEF' },
-    status: { kode: 'OPPR', kodeverk: 'AKSJONSPUNKT_STATUS' },
-    begrunnelse: null,
-    vilkarType: null,
-    toTrinnsBehandling: true,
-    toTrinnsBehandlingGodkjent: null,
-    vurderPaNyttArsaker: null,
-    besluttersBegrunnelse: null,
-    aksjonspunktType: { kode: 'MANU', kodeverk: 'AKSJONSPUNKT_TYPE' },
-    kanLoses: true,
-    erAktivt: true,
-    fristTid: null,
-    endretTidspunkt: null,
-    endretAv: null,
-  },
-];

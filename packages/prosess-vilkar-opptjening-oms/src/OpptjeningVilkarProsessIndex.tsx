@@ -56,9 +56,7 @@ const OpptjeningVilkarProsessIndex = ({
   const [activeTab, setActiveTab] = useState(0);
 
   const [activeVilkår] = vilkar;
-  const perioder = activeVilkår.perioder.filter(periode => visAllePerioder && !periode.vurdersIBehandlingen
-    || periode.vurdersIBehandlingen && activeVilkår.perioder.length === 1
-    || periode.vurdersIBehandlingen && !visAllePerioder);
+  const perioder = activeVilkår.perioder.filter(periode => visAllePerioder || periode.vurdersIBehandlingen);
 
   useEffect(() => {
     if (!visAllePerioder && activeTab >= perioder.length) {
