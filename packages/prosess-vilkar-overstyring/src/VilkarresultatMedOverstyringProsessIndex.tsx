@@ -63,11 +63,9 @@ const VilkarresultatMedOverstyringProsessIndex = ({
   const [activeTab, setActiveTab] = useState(0);
 
   const [activeVilkår] = vilkar;
-  const skalBrukeSidemeny = activeVilkår.perioder.length > 1;
   const perioder = activeVilkår.perioder.filter(periode => visAllePerioder || periode.vurdersIBehandlingen);
 
   const activePeriode = activeVilkår.perioder[activeTab];
-  const mainContainerClassnames = cx('mainContainer', { 'mainContainer--withSideMenu': skalBrukeSidemeny });
 
   useEffect(() => {
     if (!visAllePerioder && activeTab >= perioder.length) {
@@ -77,8 +75,7 @@ const VilkarresultatMedOverstyringProsessIndex = ({
 
   return (
     <RawIntlProvider value={intl}>
-      <div className={mainContainerClassnames}>
-        {skalBrukeSidemeny && (
+      <div className={cx('mainContainer--withSideMenu')}>
           <div className={styles.sideMenuContainer}>
             <SideMenu
               links={perioder.map((periode, index) => ({
@@ -90,7 +87,6 @@ const VilkarresultatMedOverstyringProsessIndex = ({
               heading={intl.formatMessage({ id: 'Sidemeny.Perioder' })}
             />
           </div>
-        )}
         <div className={styles.contentContainer}>
           <VilkarresultatMedOverstyringHeader
             aksjonspunkter={aksjonspunkter}

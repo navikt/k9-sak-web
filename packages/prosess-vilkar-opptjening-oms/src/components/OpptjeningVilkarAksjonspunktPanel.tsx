@@ -11,6 +11,8 @@ import FagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import { Aksjonspunkt, Opptjening, SubmitCallback, Vilkarperiode } from '@k9-sak-web/types';
 import { Element } from 'nav-frontend-typografi';
 import Hjelpetekst from 'nav-frontend-hjelpetekst';
+import { PopoverOrientering } from 'nav-frontend-popover';
+
 import VilkarFields, { midlertidigInaktiv } from './VilkarFields';
 import styles from './OpptjeningVilkarAksjonspunktPanel.less';
 
@@ -117,7 +119,7 @@ export const OpptjeningVilkarAksjonspunktPanelImpl = ({
             <FormattedMessage id="OpptjeningVilkarAksjonspunktPanel.SokerHarVurdertOpptjentRettTilPleiepenger" />
           )}
         </Element>
-        <Hjelpetekst>
+        <Hjelpetekst type={PopoverOrientering.UnderHoyre}>
           <FormattedMessage id="OpptjeningVilkarAksjonspunktPanel.VurderingHjelpetekst" values={{
             b: (...chunks) => <b>{chunks}</b>,
            linebreak: <br />

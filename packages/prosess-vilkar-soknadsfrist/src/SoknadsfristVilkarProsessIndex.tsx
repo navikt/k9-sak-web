@@ -81,8 +81,6 @@ const SoknadsfristVilkarProsessIndex = ({
       !(ap.status.kode === aksjonspunktStatus.OPPRETTET && !ap.kanLoses),
   );
 
-  const skalBrukeSidemeny = activeVilkår.perioder.length > 1 || harÅpentAksjonspunkt;
-
   const dokumenterSomSkalVurderes = Array.isArray(soknadsfristStatus?.dokumentStatus)
     ? soknadsfristStatus.dokumentStatus.filter(dok =>
         dok.status.some(status => {
@@ -126,12 +124,9 @@ const SoknadsfristVilkarProsessIndex = ({
     }),
   );
 
-  const mainContainerClassnames = cx('mainContainer', { 'mainContainer--withSideMenu': skalBrukeSidemeny });
-
   return (
     <RawIntlProvider value={intl}>
-      <div className={mainContainerClassnames}>
-        {skalBrukeSidemeny && (
+      <div className={cx('mainContainer--withSideMenu')}>
           <div className={styles.sideMenuContainer}>
             <SideMenu
               links={perioder.map(({ periode, vilkarStatus }, index) => ({
@@ -147,7 +142,6 @@ const SoknadsfristVilkarProsessIndex = ({
               heading={intl.formatMessage({ id: 'Sidemeny.Perioder' })}
             />
           </div>
-        )}
         <div className={styles.contentContainer}>
           <SoknadsfristVilkarHeader
             aksjonspunkter={aksjonspunkter}
