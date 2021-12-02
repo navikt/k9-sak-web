@@ -72,6 +72,7 @@ export class VedtakForm extends Component {
       aksjonspunktKoder,
       sprakkode,
       skalBrukeOverstyrendeFritekstBrev,
+      initialValues,
       ytelseTypeKode,
       resultatstruktur,
       alleKodeverk,
@@ -120,7 +121,7 @@ export class VedtakForm extends Component {
             kanHaFritekstbrev(tilgjengeligeVedtaksbrev) && (
               <VedtakOverstyrendeKnapp
                 toggleCallback={this.onToggleOverstyring}
-                readOnly={readOnly || harBareFritekstbrev(tilgjengeligeVedtaksbrev)}
+                readOnly={readOnly || initialValues.skalBrukeOverstyrendeFritekstBrev === true}
                 keyName="skalBrukeOverstyrendeFritekstBrev"
                 readOnlyHideEmpty={false}
               />
@@ -194,7 +195,7 @@ export class VedtakForm extends Component {
                     {intl.formatMessage({
                       id:
                         aksjonspunkter &&
-                        aksjonspunkter.some(ap => ap.erAktivt === true && ap.toTrinnsBehandling === true)
+                          aksjonspunkter.some(ap => ap.erAktivt === true && ap.toTrinnsBehandling === true)
                           ? 'VedtakForm.TilGodkjenning'
                           : 'VedtakForm.FattVedtak',
                     })}
@@ -290,7 +291,10 @@ export const buildInitialValues = createSelector(
     antallBarn: beregningResultat ? beregningResultat.antallBarn : undefined,
     aksjonspunktKoder: aksjonspunkter.filter(ap => ap.kanLoses).map(ap => ap.definisjon.kode),
     skalBrukeOverstyrendeFritekstBrev:
-      harBareFritekstbrev(tilgjengeligeVedtaksbrev) || harOverstyrtMedFritekstbrev(dokumentdata, vedtakVarsel),
+      (readonly && harOverstyrtMedFritekstbrev(dokumentdata, vedtakVarsel)) ||
+      (!readonly &&
+        (harBareFritekstbrev(tilgjengeligeVedtaksbrev) ||
+          (kanHaFritekstbrev(tilgjengeligeVedtaksbrev) && harOverstyrtMedFritekstbrev(dokumentdata, vedtakVarsel)))),
     skalUndertrykkeBrev: readonly && harOverstyrtMedIngenBrev(dokumentdata, vedtakVarsel),
     overskrift: decodeHtmlEntity(dokumentdata?.[dokumentdatatype.FRITEKSTBREV]?.overskrift),
     brødtekst: decodeHtmlEntity(dokumentdata?.[dokumentdatatype.FRITEKSTBREV]?.brødtekst),
