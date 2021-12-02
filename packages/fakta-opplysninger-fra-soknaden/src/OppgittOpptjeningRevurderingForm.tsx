@@ -141,6 +141,7 @@ const OppgittOpptjeningRevurderingForm = (props: Partial<Props> & InjectedFormPr
           {formIsEditable ? 'Lås opp skjema' : 'Lås skjema'}
         </Knapp>
       )}
+      <div className={styles.tabsContainer}>
       <TabsPure
         tabs={oppgittOpptjening.måneder.map((currentOppgittOpptjening, currentOppgittOpptjeningIndex) => ({
           aktiv: activeTab === currentOppgittOpptjeningIndex,
@@ -150,6 +151,7 @@ const OppgittOpptjeningRevurderingForm = (props: Partial<Props> & InjectedFormPr
         }))}
         onChange={(e, clickedIndex) => setActiveTab(clickedIndex)}
       />
+      </div>
       <div className={styles.tabContent}>
         <FieldArray
           component={SøknadsperiodeFieldArrayComponent}
