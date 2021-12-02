@@ -6,26 +6,28 @@ interface ArbeidsgiverMedPerioder {
   organisasjonsnummer: string;
   perioder: string[];
   arbeidstype: Arbeidstype;
+  identifikator: string;
 }
 
 interface ArbeidsgiverMedManglendePerioderListeProps {
   arbeidsgivereMedPerioder: ArbeidsgiverMedPerioder[];
 }
 
-const arbeidsgiverTekst = ({ arbeidsgiverNavn, organisasjonsnummer }) =>
-  `arbeidsgiver ${arbeidsgiverNavn} (${organisasjonsnummer})`;
-const arbeidstypeTekst = (arbeidstype: Arbeidstype) => arbeidstypeTilVisning[arbeidstype]?.toLowerCase() || 'arbeidsgiver';
+const arbeidsgiverTekst = ({ arbeidsgiverNavn, organisasjonsnummer, identifikator }) =>
+  `arbeidsgiver ${arbeidsgiverNavn} (${organisasjonsnummer || identifikator})`;
+const arbeidstypeTekst = (arbeidstype: Arbeidstype) =>
+  arbeidstypeTilVisning[arbeidstype]?.toLowerCase() || 'arbeidsgiver';
 
 const ArbeidsgiverMedManglendePerioderListe = ({
   arbeidsgivereMedPerioder,
 }: ArbeidsgiverMedManglendePerioderListeProps) => (
   <div>
-    {arbeidsgivereMedPerioder.map(({ arbeidsgiverNavn, organisasjonsnummer, perioder, arbeidstype }) => (
+    {arbeidsgivereMedPerioder.map(({ arbeidsgiverNavn, organisasjonsnummer, perioder, arbeidstype, identifikator }) => (
       <span key={organisasjonsnummer}>
         <p>
           {`Arbeidstid mangler for ${
             arbeidstype === Arbeidstype.AT
-              ? arbeidsgiverTekst({ arbeidsgiverNavn, organisasjonsnummer })
+              ? arbeidsgiverTekst({ arbeidsgiverNavn, organisasjonsnummer, identifikator })
               : arbeidstypeTekst(arbeidstype)
           } i følgende perioder:`}
         </p>
