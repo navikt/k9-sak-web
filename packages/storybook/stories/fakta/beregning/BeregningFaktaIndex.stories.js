@@ -10,10 +10,7 @@ import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus'
 import avklaringsbehovStatus from '@fpsak-frontend/kodeverk/src/beregningAvklaringsbehovStatus';
 import BeregningFaktaIndex from '@fpsak-frontend/fakta-beregning';
 import faktaOmBeregningTilfelle from '@fpsak-frontend/kodeverk/src/faktaOmBeregningTilfelle';
-import {
-  beregningsgrunnlag as bgMedArbeidOgDagpenger,
-  aksjonspunkt as aksjonspunktArbeidOgDagpenger,
-} from './scenario/ArbeidMedDagpengerIOpptjeningsperioden';
+import bgMedArbeidOgDagpenger from './scenario/ArbeidMedDagpengerIOpptjeningsperioden';
 
 import {
   beregningsgrunnlag as bgPrivatArbeidsgiver,
@@ -23,15 +20,18 @@ import {
 
 import {
   beregningsgrunnlag as bgFlerePerioder,
-  aksjonspunkt as apFlerePerioder,
   behandling as behandlingFlerePerioder,
 } from './scenario/ForSentRefusjonskravFlereBG';
 
 import {
   beregningsgrunnlag as bgKunYtelse,
-  aksjonspunkt as apKunYtelse,
   behandling as behandlingKunYtelse,
 } from './scenario/KunYtelse';
+
+import {
+  beregningsgrunnlag as bgKunYtelseVurderingEnPeriode,
+  behandling as behandlingKunYtelseVurderingEnPeriode,
+} from './scenario/KunYtelseEnPeriodeTilVurdering';
 
 import withReduxProvider from '../../../decorators/withRedux';
 
@@ -64,6 +64,7 @@ const behandling = {
           periode: {
             fom: skjæringstidspunkt,
           },
+          vurdersIBehandlingen: true,
         },
       ],
     },
@@ -80,6 +81,7 @@ const lagBehandling = (stp) => ({
           periode: {
             fom: stp,
           },
+          vurdersIBehandlingen: true,
         },
       ],
     },
@@ -101,6 +103,7 @@ const {
 
 const lagBeregningsgrunnlagAvklarAktiviteter = (aktiviteter, avklaringsbehov) => ({
   avklaringsbehov,
+  skjæringstidspunkt,
   faktaOmBeregning: {
     avklarAktiviteter: {
       skjæringstidspunkt,
@@ -128,6 +131,7 @@ const lagAvklaringsbehov = (faktaOmBeregning) => {
 
 const lagBeregningsgrunnlag = (andeler, faktaOmBeregning, avklaringsbehov) => ({
   avklaringsbehov: avklaringsbehov == null ? lagAvklaringsbehov(faktaOmBeregning) : avklaringsbehov,
+  skjæringstidspunkt,
   beregningsgrunnlagPeriode: [
     {
       beregningsgrunnlagPrStatusOgAndel: andeler.map(andel => ({
@@ -241,7 +245,6 @@ export const PrivatpersonSomArbeidsgiverOgFrilans = () => (
   <BeregningFaktaIndex
     behandling={behPrivatArbeidsgiver}
     beregningsgrunnlag={bgPrivatArbeidsgiver}
-    aksjonspunkter={apKunYtelse}
     erOverstyrer
     alleKodeverk={alleKodeverk}
     arbeidsgiverOpplysningerPerId={arbeidsgivere}
@@ -260,7 +263,6 @@ export const KunYtelsePåSkjæringstidspunktet = () => (
   <BeregningFaktaIndex
     behandling={behandlingKunYtelse}
     beregningsgrunnlag={bgKunYtelse}
-    aksjonspunkter={apKunYtelse}
     erOverstyrer
     alleKodeverk={alleKodeverk}
     arbeidsgiverOpplysningerPerId={arbeidsgivere}
@@ -269,16 +271,31 @@ export const KunYtelsePåSkjæringstidspunktet = () => (
     }}
     submitCallback={action('button-click')}
     readOnly={boolean('readOnly', false)}
-    harApneAksjonspunkter={boolean('harApneAksjonspunkter', true)}
     submittable={boolean('submittable', true)}
   />
 );
+
+export const KunYtelsePåSkjæringstidspunktetMedVurderingKunISistePeriode = () => (
+  <BeregningFaktaIndex
+    behandling={behandlingKunYtelseVurderingEnPeriode}
+    beregningsgrunnlag={bgKunYtelseVurderingEnPeriode}
+    erOverstyrer
+    alleKodeverk={alleKodeverk}
+    arbeidsgiverOpplysningerPerId={arbeidsgivere}
+    alleMerknaderFraBeslutter={{
+      [aksjonspunktCodes.VURDER_FAKTA_FOR_ATFL_SN]: object('merknaderFraBeslutter', merknaderFraBeslutter),
+    }}
+    submitCallback={action('button-click')}
+    readOnly={boolean('readOnly', false)}
+    submittable={boolean('submittable', true)}
+  />
+);
+
 
 export const ForSentRefusjonskravOgFlerePerioder = () => (
   <BeregningFaktaIndex
     behandling={behandlingFlerePerioder}
     beregningsgrunnlag={bgFlerePerioder}
-    aksjonspunkter={apFlerePerioder}
     erOverstyrer
     alleKodeverk={alleKodeverk}
     arbeidsgiverOpplysningerPerId={arbeidsgivere}
@@ -287,7 +304,6 @@ export const ForSentRefusjonskravOgFlerePerioder = () => (
     }}
     submitCallback={action('button-click')}
     readOnly={boolean('readOnly', false)}
-    harApneAksjonspunkter={boolean('harApneAksjonspunkter', true)}
     submittable={boolean('submittable', true)}
   />
 );
@@ -299,7 +315,6 @@ export const ArbeidOgDagpenger = () => (
       Object.assign(object('beregningsgrunnlag', bgMedArbeidOgDagpenger)),
       Object.assign(object('beregningsgrunnlag', bgMedArbeidOgDagpenger)),
     ]}
-    aksjonspunkter={aksjonspunktArbeidOgDagpenger}
     erOverstyrer
     alleKodeverk={alleKodeverk}
     arbeidsgiverOpplysningerPerId={arbeidsgivere}
@@ -308,7 +323,6 @@ export const ArbeidOgDagpenger = () => (
     }}
     submitCallback={action('button-click')}
     readOnly={boolean('readOnly', false)}
-    harApneAksjonspunkter={boolean('harApneAksjonspunkter', true)}
     submittable={boolean('submittable', true)}
   />
 );
@@ -342,12 +356,11 @@ export const AvklarAktiviteterFullAAPOgAndreAktiviteter = () => {
 
   return (
     <BeregningFaktaIndex
-      behandling={behandling}
+      behandling={lagBehandling(skjæringstidspunkt)}
       beregningsgrunnlag={[
         Object.assign(object('beregningsgrunnlag', beregningsgrunnlag)),
         Object.assign(object('beregningsgrunnlag', beregningsgrunnlag)),
       ]}
-      aksjonspunkter={avklaringsbehov}
       erOverstyrer={false}
       alleKodeverk={alleKodeverk}
       arbeidsgiverOpplysningerPerId={arbeidsgivere}
@@ -356,7 +369,6 @@ export const AvklarAktiviteterFullAAPOgAndreAktiviteter = () => {
       }}
       submitCallback={action('button-click')}
       readOnly={boolean('readOnly', false)}
-      harApneAksjonspunkter={boolean('harApneAksjonspunkter', true)}
       submittable={boolean('submittable', true)}
     />
   );
@@ -433,9 +445,8 @@ export const AvklartAktiviteterMedAksjonspunktIFaktaAvklaring = () => {
   const beregningsgrunnlag = lagBeregningsgrunnlag(andeler, faktaOmBeregning, avklaringsbehov);
   return (
     <BeregningFaktaIndex
-      behandling={behandling}
+      behandling={lagBehandling(skjæringstidspunkt)}
       beregningsgrunnlag={[object('beregningsgrunnlag', beregningsgrunnlag)]}
-      aksjonspunkter={avklaringsbehov}
       erOverstyrer={false}
       alleKodeverk={alleKodeverk}
       arbeidsgiverOpplysningerPerId={arbeidsgivere}
@@ -444,7 +455,6 @@ export const AvklartAktiviteterMedAksjonspunktIFaktaAvklaring = () => {
       }}
       submitCallback={action('button-click')}
       readOnly={boolean('readOnly', false)}
-      harApneAksjonspunkter={boolean('harApneAksjonspunkter', true)}
       submittable={boolean('submittable', true)}
     />
   );
@@ -485,7 +495,6 @@ export const FrilansOgArbeidsforholdMedLønnendringOgNyoppstartet = () => {
     <BeregningFaktaIndex
       behandling={behandling}
       beregningsgrunnlag={[object('beregningsgrunnlag', beregningsgrunnlag)]}
-      aksjonspunkter={OPPRETTET_FAKTA_AVKLARING}
       erOverstyrer={false}
       alleKodeverk={alleKodeverk}
       arbeidsgiverOpplysningerPerId={arbeidsgivere}
@@ -494,7 +503,6 @@ export const FrilansOgArbeidsforholdMedLønnendringOgNyoppstartet = () => {
       }}
       submitCallback={action('button-click')}
       readOnly={boolean('readOnly', false)}
-      harApneAksjonspunkter={boolean('harApneAksjonspunkter', true)}
       submittable={boolean('submittable', true)}
     />
   );
@@ -532,7 +540,6 @@ export const KunArbeidstakerMedVurderingSentRefusjonskrav = () => {
     <BeregningFaktaIndex
       behandling={behandling}
       beregningsgrunnlag={[object('beregningsgrunnlag', beregningsgrunnlag)]}
-      aksjonspunkter={OPPRETTET_FAKTA_AVKLARING}
       erOverstyrer={false}
       alleKodeverk={alleKodeverk}
       arbeidsgiverOpplysningerPerId={arbeidsgivere}
@@ -541,7 +548,6 @@ export const KunArbeidstakerMedVurderingSentRefusjonskrav = () => {
       }}
       submitCallback={action('button-click')}
       readOnly={boolean('readOnly', false)}
-      harApneAksjonspunkter={boolean('harApneAksjonspunkter', true)}
       submittable={boolean('submittable', true)}
     />
   );
@@ -582,7 +588,6 @@ export const FrilansOgArbeidsforholdISammeOrganisasjon = () => {
     <BeregningFaktaIndex
       behandling={behandling}
       beregningsgrunnlag={[object('beregningsgrunnlag', beregningsgrunnlag)]}
-      aksjonspunkter={OPPRETTET_FAKTA_AVKLARING}
       erOverstyrer={false}
       alleKodeverk={alleKodeverk}
       arbeidsgiverOpplysningerPerId={arbeidsgivere}
@@ -591,7 +596,6 @@ export const FrilansOgArbeidsforholdISammeOrganisasjon = () => {
       }}
       submitCallback={action('button-click')}
       readOnly={boolean('readOnly', false)}
-      harApneAksjonspunkter={boolean('harApneAksjonspunkter', true)}
       submittable={boolean('submittable', true)}
     />
   );
@@ -617,7 +621,6 @@ export const VurderingAvMilitær = () => {
     <BeregningFaktaIndex
       behandling={behandling}
       beregningsgrunnlag={[object('beregningsgrunnlag', beregningsgrunnlag)]}
-      aksjonspunkter={OPPRETTET_FAKTA_AVKLARING}
       erOverstyrer={false}
       alleKodeverk={alleKodeverk}
       arbeidsgiverOpplysningerPerId={arbeidsgivere}
@@ -626,7 +629,6 @@ export const VurderingAvMilitær = () => {
       }}
       submitCallback={action('button-click')}
       readOnly={boolean('readOnly', false)}
-      harApneAksjonspunkter={boolean('harApneAksjonspunkter', true)}
       submittable={boolean('submittable', true)}
     />
   );
@@ -672,7 +674,6 @@ export const FrilansOgTidsbegrensetArbeidsforholdISammeOrganisasjon = () => {
     <BeregningFaktaIndex
       behandling={behandling}
       beregningsgrunnlag={[object('beregningsgrunnlag', beregningsgrunnlag)]}
-      aksjonspunkter={OPPRETTET_FAKTA_AVKLARING}
       erOverstyrer={false}
       alleKodeverk={alleKodeverk}
       arbeidsgiverOpplysningerPerId={arbeidsgivere}
@@ -681,7 +682,6 @@ export const FrilansOgTidsbegrensetArbeidsforholdISammeOrganisasjon = () => {
       }}
       submitCallback={action('button-click')}
       readOnly={boolean('readOnly', false)}
-      harApneAksjonspunkter={boolean('harApneAksjonspunkter', true)}
       submittable={boolean('submittable', true)}
     />
   );
@@ -709,7 +709,6 @@ export const KunTidsbegrensetArbeidsforhold = () => {
     <BeregningFaktaIndex
       behandling={behandling}
       beregningsgrunnlag={[object('beregningsgrunnlag', beregningsgrunnlag)]}
-      aksjonspunkter={OPPRETTET_FAKTA_AVKLARING}
       erOverstyrer={false}
       alleKodeverk={alleKodeverk}
       arbeidsgiverOpplysningerPerId={arbeidsgivere}
@@ -718,7 +717,6 @@ export const KunTidsbegrensetArbeidsforhold = () => {
       }}
       submitCallback={action('button-click')}
       readOnly={boolean('readOnly', false)}
-      harApneAksjonspunkter={boolean('harApneAksjonspunkter', true)}
       submittable={boolean('submittable', true)}
     />
   );
@@ -745,7 +743,6 @@ export const VurderingAvEtterlønnSluttpakke = () => {
     <BeregningFaktaIndex
       behandling={behandling}
       beregningsgrunnlag={[object('beregningsgrunnlag', beregningsgrunnlag)]}
-      aksjonspunkter={OPPRETTET_FAKTA_AVKLARING}
       erOverstyrer={false}
       alleKodeverk={alleKodeverk}
       arbeidsgiverOpplysningerPerId={arbeidsgivere}
@@ -754,7 +751,6 @@ export const VurderingAvEtterlønnSluttpakke = () => {
       }}
       submitCallback={action('button-click')}
       readOnly={boolean('readOnly', false)}
-      harApneAksjonspunkter={boolean('harApneAksjonspunkter', true)}
       submittable={boolean('submittable', true)}
     />
   );
@@ -785,7 +781,6 @@ export const FastsettingAvBeregningsgrunnlagForKunYtelse = () => {
     <BeregningFaktaIndex
       behandling={behandling}
       beregningsgrunnlag={[object('beregningsgrunnlag', beregningsgrunnlag)]}
-      aksjonspunkter={OPPRETTET_FAKTA_AVKLARING}
       erOverstyrer={false}
       alleKodeverk={alleKodeverk}
       arbeidsgiverOpplysningerPerId={arbeidsgivere}
@@ -794,7 +789,6 @@ export const FastsettingAvBeregningsgrunnlagForKunYtelse = () => {
       }}
       submitCallback={action('button-click')}
       readOnly={boolean('readOnly', false)}
-      harApneAksjonspunkter={boolean('harApneAksjonspunkter', true)}
       submittable={boolean('submittable', true)}
     />
   );
@@ -820,7 +814,6 @@ export const SelvstendigNæringNyIArbeidslivet = () => {
     <BeregningFaktaIndex
       behandling={behandling}
       beregningsgrunnlag={[object('beregningsgrunnlag', beregningsgrunnlag)]}
-      aksjonspunkter={OPPRETTET_FAKTA_AVKLARING}
       erOverstyrer={false}
       alleKodeverk={alleKodeverk}
       arbeidsgiverOpplysningerPerId={arbeidsgivere}
@@ -829,7 +822,6 @@ export const SelvstendigNæringNyIArbeidslivet = () => {
       }}
       submitCallback={action('button-click')}
       readOnly={boolean('readOnly', false)}
-      harApneAksjonspunkter={boolean('harApneAksjonspunkter', true)}
       submittable={boolean('submittable', true)}
     />
   );
@@ -1003,30 +995,6 @@ export const KombinasjonstestForFaktapanel = () => {
     <BeregningFaktaIndex
       behandling={behandling}
       beregningsgrunnlag={[object('beregningsgrunnlag', beregningsgrunnlag)]}
-      aksjonspunkter={[
-        {
-          definisjon: {
-            kode: aksjonspunktCodes.AVKLAR_AKTIVITETER,
-          },
-          status: {
-            kode: aksjonspunktStatus.UTFORT,
-          },
-          begrunnelse: 'En begrunnelse for at arbeidsforholdet var gyldig.',
-          kanLoses: true,
-          erAktivt: true,
-        },
-        {
-          definisjon: {
-            kode: aksjonspunktCodes.VURDER_FAKTA_FOR_ATFL_SN,
-          },
-          status: {
-            kode: aksjonspunktStatus.OPPRETTET,
-          },
-          begrunnelse: undefined,
-          kanLoses: true,
-          erAktivt: true,
-        },
-      ]}
       erOverstyrer={false}
       alleKodeverk={alleKodeverk}
       arbeidsgiverOpplysningerPerId={arbeidsgivere}
@@ -1035,7 +1003,6 @@ export const KombinasjonstestForFaktapanel = () => {
       }}
       submitCallback={action('button-click')}
       readOnly={boolean('readOnly', false)}
-      harApneAksjonspunkter={boolean('harApneAksjonspunkter', true)}
       submittable={boolean('submittable', true)}
     />
   );
@@ -1087,19 +1054,6 @@ export const OverstyringAvInntekt = () => {
     <BeregningFaktaIndex
       behandling={behandling}
       beregningsgrunnlag={[object('beregningsgrunnlag', beregningsgrunnlag)]}
-      aksjonspunkter={[
-        {
-          definisjon: {
-            kode: aksjonspunktCodes.OVERSTYRING_AV_BEREGNINGSGRUNNLAG,
-          },
-          status: {
-            kode: aksjonspunktStatus.OPPRETTET,
-          },
-          begrunnelse: undefined,
-          kanLoses: true,
-          erAktivt: true,
-        },
-      ]}
       erOverstyrer
       alleKodeverk={alleKodeverk}
       arbeidsgiverOpplysningerPerId={arbeidsgivere}
@@ -1108,7 +1062,6 @@ export const OverstyringAvInntekt = () => {
       }}
       submitCallback={action('button-click')}
       readOnly={boolean('readOnly', false)}
-      harApneAksjonspunkter={boolean('harApneAksjonspunkter', true)}
       submittable={boolean('submittable', true)}
     />
   );
