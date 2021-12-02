@@ -8,6 +8,7 @@ import React, { useState } from 'react';
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 import messages from '../i18n/nb_NO.json';
 import VurderFaktaBeregningPanel from './components/fellesFaktaForATFLogSN/VurderFaktaBeregningPanel';
+import beregningAvklaringsbehovPropType from './propTypes/beregningAvklaringsbehovPropType';
 import beregningBehandlingPropType from './propTypes/beregningBehandlingPropType';
 import beregningsgrunnlagPropType from './propTypes/beregningsgrunnlagPropType';
 import AvklareAktiviteterPanel from './components/avklareAktiviteter/AvklareAktiviteterPanel';
@@ -38,24 +39,34 @@ const lagLabel = (bg, vilkårsperioder) => {
   return `${moment(stpOpptjening).format(DDMMYYYY_DATE_FORMAT)}`;
 };
 
-const harAvklaringsbehovIPanel = (avklaringsbehov) => {
+const harTilfeller = beregningsgrunnlag =>
+  beregningsgrunnlag.faktaOmBeregning &&
+  beregningsgrunnlag.faktaOmBeregning.faktaOmBeregningTilfeller &&
+  beregningsgrunnlag.faktaOmBeregning.faktaOmBeregningTilfeller.length > 0;
+
+const harAvklaringsbehovIPanel = (avklaringsbehov, beregningsgrunnlag) => {
   const harBehovForAvklaring = !!avklaringsbehov;
   if (harBehovForAvklaring) {
-    const harVurderFaktaAksjonspunkt = avklaringsbehov.some(ap => ap.definisjon.kode === VURDER_FAKTA_FOR_ATFL_SN);
+    const harVurderFaktaAksjonspunkt = avklaringsbehov.some(ap => ap.definisjon.kode === VURDER_FAKTA_FOR_ATFL_SN) && harTilfeller(beregningsgrunnlag);
     const harAvklarAktiviteterAP = avklaringsbehov.some(ap => ap.definisjon.kode === AVKLAR_AKTIVITETER);
     return harVurderFaktaAksjonspunkt || harAvklarAktiviteterAP
   }
   return false;
 }
 
-const skalVurderes = (bg, vilkårsperioder) => 
-  harAvklaringsbehovIPanel(bg.avklaringsbehov) &&
-  vilkårsperioder.find(({periode}) => periode.fom === bg.skjæringstidspunkt).vurdersIBehandlingen;
+
+const finnAvklaringsbehov = (aksjonspunkter, beregningsgrunnlag) => {
+  if (beregningsgrunnlag.avklaringsbehov) {
+    return beregningsgrunnlag.avklaringsbehov;
+  }
+  return aksjonspunkter;
+}
 
 const BeregningFaktaIndex = ({
   behandling,
   beregningsgrunnlag,
   alleKodeverk,
+  aksjonspunkter,
   submitCallback,
   readOnly,
   submittable,
@@ -65,8 +76,10 @@ const BeregningFaktaIndex = ({
   const skalBrukeTabs = beregningsgrunnlag.length > 1;
   const [aktivtBeregningsgrunnlagIndeks, setAktivtBeregningsgrunnlagIndeks] = useState(0);
   const aktivtBeregningsgrunnlag = beregningsgrunnlag[aktivtBeregningsgrunnlagIndeks];
+
   const vilkårsperioder = behandling?.behandlingsresultat?.vilkårResultat.BEREGNINGSGRUNNLAGVILKÅR;
-  const aktiveAvklaringsBehov = aktivtBeregningsgrunnlag.avklaringsbehov;
+
+  const aktiveAvklaringsBehov = finnAvklaringsbehov(aksjonspunkter, aktivtBeregningsgrunnlag);
 
   return (
     <RawIntlProvider value={intl}>
@@ -75,8 +88,9 @@ const BeregningFaktaIndex = ({
           tabs={beregningsgrunnlag.map((currentBeregningsgrunnlag, currentBeregningsgrunnlagIndex) => ({
             aktiv: aktivtBeregningsgrunnlagIndeks === currentBeregningsgrunnlagIndex,
             label: lagLabel(currentBeregningsgrunnlag, vilkårsperioder),
-            className: skalVurderes(currentBeregningsgrunnlag, vilkårsperioder) ? 
-            'harAksjonspunkt' : '',
+            className: harAvklaringsbehovIPanel(
+              finnAvklaringsbehov(aksjonspunkter, currentBeregningsgrunnlag), 
+                currentBeregningsgrunnlag) ? 'harAksjonspunkt' : '',
           }))}
           onChange={(e, clickedIndex) => setAktivtBeregningsgrunnlagIndeks(clickedIndex)}
         />
@@ -127,6 +141,7 @@ BeregningFaktaIndex.propTypes = {
     notAccepted: PropTypes.bool,
   }).isRequired,
   alleKodeverk: PropTypes.shape().isRequired,
+  aksjonspunkter: PropTypes.arrayOf(beregningAvklaringsbehovPropType).isRequired,
   submitCallback: PropTypes.func.isRequired,
   readOnly: PropTypes.bool.isRequired,
   submittable: PropTypes.bool.isRequired,
