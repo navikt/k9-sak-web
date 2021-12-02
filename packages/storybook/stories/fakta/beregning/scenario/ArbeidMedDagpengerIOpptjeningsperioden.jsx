@@ -1,4 +1,4 @@
-export const beregningsgrunnlag = {
+const beregningsgrunnlag = {
   avklaringsbehov: [{definisjon: { kode : '5052' }, status: { kode: 'OPPR'}}],
   skjaeringstidspunktBeregning: '2020-01-13',
   skjæringstidspunkt: '2020-01-13',
@@ -141,3 +141,5 @@ export const beregningsgrunnlag = {
   årsinntektVisningstall: 0,
   dekningsgrad: 100,
 };
+
+export default beregningsgrunnlag;

@@ -16,6 +16,7 @@ import AvklareAktiviteterPanelContent, {
   getAvklarAktiviteter,
 } from './AvklareAktiviteterPanelContent';
 import beregningAvklaringsbehovPropType from '../../propTypes/beregningAvklaringsbehovPropType';
+import vilkårPeriodePropType from '../../propTypes/vilkårPeriodePropType';
 import beregningsgrunnlagPropType from '../../propTypes/beregningsgrunnlagPropType';
 import {
   formNameAvklarAktiviteter,
@@ -132,8 +133,9 @@ export class AvklareAktiviteterPanelImpl extends Component {
       alleBeregningsgrunnlag,
     } = this.props;
     const initialValues = {
-      [fieldArrayName]: alleBeregningsgrunnlag.map(beregningsgrunnlag =>
-        buildInitialValuesAvklarAktiviteter(beregningsgrunnlag, this.props),
+      [fieldArrayName]: alleBeregningsgrunnlag.map(beregningsgrunnlag => 
+        buildInitialValuesAvklarAktiviteter(beregningsgrunnlag, 
+          this.props),
       ),
       aktivtBeregningsgrunnlagIndex,
     };
@@ -184,6 +186,7 @@ AvklareAktiviteterPanelImpl.propTypes = {
   behandlingId: PropTypes.number.isRequired,
   behandlingVersjon: PropTypes.number.isRequired,
   beregningsgrunnlag: beregningsgrunnlagPropType.isRequired,
+  behandlingResultatPerioder: PropTypes.arrayOf(vilkårPeriodePropType).isRequired,
   alleBeregningsgrunnlag: PropTypes.oneOfType([
     beregningsgrunnlagPropType,
     PropTypes.arrayOf(beregningsgrunnlagPropType),
@@ -197,8 +200,8 @@ AvklareAktiviteterPanelImpl.defaultProps = {
   formValues: undefined,
 };
 
-const skalKunneLoseAvklaringsbehov = (skalOverstyre, avklaringsbehov) =>
-  skalOverstyre || harAvklaringsbehov(AVKLAR_AKTIVITETER, avklaringsbehov);
+const skalKunneLoseAvklaringsbehov = (skalOverstyre, avklaringsbehov, erTilVurdering) =>
+  (skalOverstyre || harAvklaringsbehov(AVKLAR_AKTIVITETER, avklaringsbehov)) && erTilVurdering;
 
 const validate = values => {
   const fieldArrayList = values[fieldArrayName];
@@ -206,7 +209,7 @@ const validate = values => {
 
   errors[fieldArrayName] = fieldArrayList ? fieldArrayList.map((value) => {
     const { avklarAktiviteter, avklaringsbehov, manuellOverstyringBeregningAktiviteter } = value;
-    if (avklarAktiviteter && skalKunneLoseAvklaringsbehov(manuellOverstyringBeregningAktiviteter, avklaringsbehov)) {
+    if (avklarAktiviteter && skalKunneLoseAvklaringsbehov(manuellOverstyringBeregningAktiviteter, avklaringsbehov, value.erTilVurdering)) {
       return VurderAktiviteterPanel.validate(value, avklarAktiviteter.aktiviteterTomDatoMapping);
     }
     return {};
@@ -230,7 +233,7 @@ export const transformValues = (values, behandlingResultatPerioder, aktivtBg) =>
   const løsteGrunnlag = fieldArrayList
     .filter(currentFormValues => {
       const skalOverstyre = currentFormValues[MANUELL_OVERSTYRING_FIELD];
-      return skalKunneLoseAvklaringsbehov(skalOverstyre, currentFormValues.avklaringsbehov);
+      return skalKunneLoseAvklaringsbehov(skalOverstyre, currentFormValues.avklaringsbehov, currentFormValues.erTilVurdering);
     })
     .map(currentFormValues => {
       const { avklarAktiviteter } = currentFormValues;
@@ -239,7 +242,7 @@ export const transformValues = (values, behandlingResultatPerioder, aktivtBg) =>
         avklarAktiviteter.aktiviteterTomDatoMapping,
       );
       const vilkarPeriode = behandlingResultatPerioder.find(
-        periode => periode.periode.fom === aktivtBg.skjaeringstidspunktBeregning,
+        ({periode}) => periode.fom === aktivtBg.skjæringstidspunkt,
       );
       return {
         ...vurderAktiviteterTransformed,

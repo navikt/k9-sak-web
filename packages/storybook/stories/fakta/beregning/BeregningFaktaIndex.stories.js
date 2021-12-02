@@ -10,9 +10,7 @@ import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus'
 import avklaringsbehovStatus from '@fpsak-frontend/kodeverk/src/beregningAvklaringsbehovStatus';
 import BeregningFaktaIndex from '@fpsak-frontend/fakta-beregning';
 import faktaOmBeregningTilfelle from '@fpsak-frontend/kodeverk/src/faktaOmBeregningTilfelle';
-import {
-  beregningsgrunnlag as bgMedArbeidOgDagpenger,
-} from './scenario/ArbeidMedDagpengerIOpptjeningsperioden';
+import bgMedArbeidOgDagpenger from './scenario/ArbeidMedDagpengerIOpptjeningsperioden';
 
 import {
   beregningsgrunnlag as bgPrivatArbeidsgiver,

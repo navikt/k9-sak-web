@@ -9,8 +9,8 @@ export const beregningsgrunnlag = [
       {
         beregningsgrunnlagPeriodeFom: '2020-03-04',
         beregningsgrunnlagPeriodeTom: '9999-12-31',
-        beregnetPrAar: 0,
-        bruttoPrAar: 0,
+        beregnetPrAar: 120_000,
+        bruttoPrAar: 120_000,
         bruttoInkludertBortfaltNaturalytelsePrAar: 0,
         periodeAarsaker: [],
         beregningsgrunnlagPrStatusOgAndel: [
@@ -22,6 +22,7 @@ export const beregningsgrunnlag = [
             fastsattAvSaksbehandler: false,
             lagtTilAvSaksbehandler: false,
             erTilkommetAndel: false,
+            beregnetPrAar: 120_000,
           },
         ],
       },
@@ -39,6 +40,7 @@ export const beregningsgrunnlag = [
             kilde: { kode: 'PROSESS_START', kodeverk: 'ANDEL_KILDE' },
             lagtTilAvSaksbehandler: false,
             fastsattAvSaksbehandler: false,
+            fastsattBelopPrMnd: 10_000,
           },
         ],
         fodendeKvinneMedDP: false,
@@ -98,8 +100,8 @@ export const beregningsgrunnlag = [
       {
         beregningsgrunnlagPeriodeFom: '2020-06-04',
         beregningsgrunnlagPeriodeTom: '9999-12-31',
-        beregnetPrAar: 100_000,
-        bruttoPrAar: 100_000,
+        beregnetPrAar: null,
+        bruttoPrAar: null,
         bruttoInkludertBortfaltNaturalytelsePrAar: 0,
         periodeAarsaker: [],
         beregningsgrunnlagPrStatusOgAndel: [
@@ -111,7 +113,7 @@ export const beregningsgrunnlag = [
             fastsattAvSaksbehandler: true,
             lagtTilAvSaksbehandler: false,
             erTilkommetAndel: false,
-            beregnetPrAar: 100_000
+            beregnetPrAar: null
           },
         ],
       },
@@ -129,7 +131,6 @@ export const beregningsgrunnlag = [
             kilde: { kode: 'PROSESS_START', kodeverk: 'ANDEL_KILDE' },
             lagtTilAvSaksbehandler: false,
             fastsattAvSaksbehandler: false,
-            fastsattBelopPrMnd: 10_000,
           },
         ],
         fodendeKvinneMedDP: false,

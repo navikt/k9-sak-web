@@ -152,7 +152,7 @@ export class VurderFaktaBeregningPanelImpl extends Component {
             <VerticalSpacer twentyPx />
             <FaktaForATFLOgSNPanel
               readOnly={readOnly || !fields.get(index).erTilVurdering}
-              isAvklaringsbehovClosed={isAvklaringsbehovClosed(fields.get(index).avklaringsbehov)}
+              isAvklaringsbehovClosed={isAvklaringsbehovClosed(fields.get(index).avklaringsbehov) && fields.get(index).erTilVurdering}
               avklaringsbehov={fields.get(index).avklaringsbehov}
               behandlingId={behandlingId}
               behandlingVersjon={behandlingVersjon}
@@ -246,7 +246,7 @@ VurderFaktaBeregningPanelImpl.propTypes = {
 const mapGrunnlagsliste = (fieldArrayList, alleBeregningsgrunnlag, behandlingResultatPerioder) => 
   fieldArrayList
   .map((currentFormValues, index) => {
-    if (måVurderes(alleBeregningsgrunnlag[index].avklaringsbehov) || erOverstyring(currentFormValues)) {
+    if ((måVurderes(alleBeregningsgrunnlag[index].avklaringsbehov) || erOverstyring(currentFormValues)) && currentFormValues.erTilVurdering) {
       const faktaBeregningValues = currentFormValues;
       const stpOpptjening = faktaBeregningValues.faktaOmBeregning.avklarAktiviteter.skjæringstidspunkt;
       const vilkarPeriode = behandlingResultatPerioder.find(periode => periode.periode.fom === stpOpptjening);
@@ -286,9 +286,8 @@ export const validateVurderFaktaBeregning = values => {
   if (values && values[fieldArrayName]) {
     return {
       [fieldArrayName]: values[fieldArrayName].map(value => {
-        if (harAvklaringsbehov(VURDER_FAKTA_FOR_ATFL_SN, value.avklaringsbehov) || erOverstyring(value)) {
+        if ((harAvklaringsbehov(VURDER_FAKTA_FOR_ATFL_SN, value.avklaringsbehov) || erOverstyring(value)) && value.erTilVurdering) {
           return validationForVurderFakta(value);
-
         }
         return {};
       }),
