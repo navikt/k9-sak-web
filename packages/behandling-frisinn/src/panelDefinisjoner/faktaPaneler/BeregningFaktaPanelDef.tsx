@@ -16,10 +16,11 @@ class BeregningFaktaPanelDef extends FaktaPanelDef {
 
   getOverstyrVisningAvKomponent = ({ beregningsgrunnlag }) => !!beregningsgrunnlag;
 
-  getData = ({ beregningsgrunnlag, arbeidsgiverOpplysningerPerId }) => ({
+  getData = ({ beregningsgrunnlag, arbeidsgiverOpplysningerPerId, vilkar }) => ({
     erOverstyrer: false,
     beregningsgrunnlag: beregningsgrunnlag ? [beregningsgrunnlag[0]] : [], // FRISINN skal kun vise ett beregningsgrunnlag
     arbeidsgiverOpplysningerPerId,
+    vilkar
   });
 }
 

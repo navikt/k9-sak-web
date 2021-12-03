@@ -5,7 +5,6 @@ const vilkårPeriodePropType = PropTypes.shape({
     fom: PropTypes.string.isRequired,
     tom: PropTypes.string.isRequired,
   }).isRequired,
-  vurdersIBehandlingen: PropTypes.bool.isRequired,
 });
 
 export default vilkårPeriodePropType;

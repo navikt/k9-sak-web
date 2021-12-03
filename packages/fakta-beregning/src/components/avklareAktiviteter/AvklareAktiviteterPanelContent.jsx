@@ -26,6 +26,7 @@ const buildInitialValues = (
   avklaringsbehov,
   avklarAktiviteter,
   aktivtBeregningsgrunnlagIndex,
+  vilkårsperiode,
 ) => {
   const harAvklarAksjonspunkt = harAvklaringsbehov(AVKLAR_AKTIVITETER, avklaringsbehov);
   const erOverstyrt = harAvklaringsbehov(OVERSTYRING_AV_BEREGNINGSAKTIVITETER, avklaringsbehov);
@@ -44,6 +45,7 @@ const buildInitialValues = (
   const aksjonspunktMedBegrunnelse = findAvklaringsbehovMedBegrunnelse(avklaringsbehov, AVKLAR_AKTIVITETER);
   const begrunnelse = erOverstyrt ? overstyrAksjonspunktMedBegrunnelse : aksjonspunktMedBegrunnelse;
   return {
+    erTilVurdering: vilkårsperiode.vurdersIBehandlingen,
     [MANUELL_OVERSTYRING_FIELD]: erOverstyrt,
     avklaringsbehov,
     avklarAktiviteter,
@@ -63,12 +65,13 @@ export const buildInitialValuesAvklarAktiviteter = createSelector(
     beregningsgrunnlag => beregningsgrunnlag.avklaringsbehov,
     beregningsgrunnlag => getAvklarAktiviteter(beregningsgrunnlag),
     (beregningsgrunnlag, ownProps) => ownProps.aktivtBeregningsgrunnlagIndex,
+    (beregningsgrunnlag, ownProps) => ownProps.behandlingResultatPerioder.find(({periode}) => periode.fom === beregningsgrunnlag.skjæringstidspunkt),
   ],
   buildInitialValues,
 );
 
-const skalViseSubmitKnappEllerBegrunnelse = (avklaringsbehov, erOverstyrt) =>
-  harAvklaringsbehov(AVKLAR_AKTIVITETER, avklaringsbehov) || erOverstyrt;
+const skalViseSubmitKnappEllerBegrunnelse = (avklaringsbehov, erOverstyrt, erTilVurdering) =>
+  (harAvklaringsbehov(AVKLAR_AKTIVITETER, avklaringsbehov) || erOverstyrt) && erTilVurdering;
 
 const hasOpenAvklaringsbehov = (kode, avklaringsbehov) =>
   avklaringsbehov.some(ap => ap.definisjon.kode === kode && isAvklaringsbehovOpen(ap.status.kode));
@@ -124,7 +127,7 @@ const AvklareAktiviteterPanelContent = props => {
   return fields.map(
     (field, index) =>
       (<div key={field} style={{ display: index === aktivtBeregningsgrunnlagIndex ? 'block' : 'none' }}>
-          {(kanOverstyre || erOverstyrt) && (
+          {((kanOverstyre || erOverstyrt) && fields.get(index).erTilVurdering) && (
             <div className={styles.rightAligned}>
               <CheckboxField
                 key="manuellOverstyring"
@@ -137,12 +140,12 @@ const AvklareAktiviteterPanelContent = props => {
           )}
           {(harAvklaringsbehov(AVKLAR_AKTIVITETER, avklaringsbehov) || kanOverstyre || erOverstyrt) && (
             <div>
-              {harAvklaringsbehov(AVKLAR_AKTIVITETER, avklaringsbehov) && (
+              {(harAvklaringsbehov(AVKLAR_AKTIVITETER, avklaringsbehov) && fields.get(index).erTilVurdering) && (
                 <AksjonspunktHelpTextTemp isAksjonspunktOpen={!isAvklaringsbehovClosed}>
                   {helpText}
                 </AksjonspunktHelpTextTemp>
               )}
-              {erOverstyrt && (
+              {(erOverstyrt && fields.get(index).erTilVurdering) && (
                 <Element>
                   <FormattedMessage id="AvklareAktiviteter.OverstyrerAktivitetAdvarsel" />
                 </Element>
@@ -162,7 +165,7 @@ const AvklareAktiviteterPanelContent = props => {
                 {avklarAktiviteter && avklarAktiviteter.aktiviteterTomDatoMapping && (
                   <VurderAktiviteterPanel
                     aktiviteterTomDatoMapping={avklarAktiviteter.aktiviteterTomDatoMapping}
-                    readOnly={readOnly}
+                    readOnly={readOnly && !fields.get(index).erTilVurdering}
                     isAvklaringsbehovClosed={isAvklaringsbehovClosed}
                     erOverstyrt={erOverstyrt}
                     alleKodeverk={alleKodeverk}
@@ -174,7 +177,7 @@ const AvklareAktiviteterPanelContent = props => {
                   />
                 )}
                 <VerticalSpacer twentyPx />
-                {skalViseSubmitKnappEllerBegrunnelse(avklaringsbehov, erOverstyrt) && (
+                {skalViseSubmitKnappEllerBegrunnelse(avklaringsbehov, erOverstyrt, fields.get(index).erTilVurdering) && (
                   <>
                     <FaktaBegrunnelseTextField
                       name={`${field}.${BEGRUNNELSE_AVKLARE_AKTIVITETER_NAME}`}
@@ -200,7 +203,7 @@ const AvklareAktiviteterPanelContent = props => {
                 )}
               </BorderBox>
               {!skalViseSubmitknappInneforBorderBox &&
-                skalViseSubmitKnappEllerBegrunnelse(avklaringsbehov, erOverstyrt) && (
+                skalViseSubmitKnappEllerBegrunnelse(avklaringsbehov, erOverstyrt, fields.get(index).erTilVurdering) && (
                   <>
                     <VerticalSpacer twentyPx />
                     <FaktaSubmitButton
