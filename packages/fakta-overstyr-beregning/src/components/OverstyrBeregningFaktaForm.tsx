@@ -1,18 +1,20 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { injectIntl, WrappedComponentProps } from 'react-intl';
 
 import { format, sub } from 'date-fns';
 import { TableColumn, TableRow, Table, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { Knapp } from "nav-frontend-knapper";
-import { useFormikContext, Formik, Form, Field, FieldArray } from 'formik';
+import { Formik, Form, Field, FieldArray } from 'formik';
 import * as Yup from 'yup';
-import { Input, Feiloppsummering } from "nav-frontend-skjema";
+import { Input } from "nav-frontend-skjema";
 import { EtikettInfo } from 'nav-frontend-etiketter';
+import { ArbeidsgiverOpplysningerPerId } from '@k9-sak-web/types';
 import styles from './OverstyrBeregningFaktaForm.less';
 import OverstyrBeregningFeiloppsummering from "./OverstyrBeregningFeiloppsummering";
 
 interface Props {
     behandlingId?: number;
+    arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysningerPerId,
 };
 
 /**
@@ -45,7 +47,7 @@ export interface FirmaNavnMapping {
 /**
  * OverstyrBeregningFaktaIndex
  */
-const OverstyrBeregningFaktaForm = ({ behandlingId, intl }: Props & WrappedComponentProps) => {
+const OverstyrBeregningFaktaForm = ({  intl }: Props & WrappedComponentProps) => {
     const arbeidsgiverSchema = Yup.object().shape({
         firmaIdent: Yup.string().required(),
         inntekt: Yup.number()
@@ -103,6 +105,7 @@ const OverstyrBeregningFaktaForm = ({ behandlingId, intl }: Props & WrappedCompo
                     /**
                      * håndter innsending her ... fullføre aksjonspunktet
                      */
+                    // eslint-disable-next-line no-console
                     console.log(JSON.stringify(values, null, 2));
                 }}
                 validationSchema={validationSchema}
@@ -110,9 +113,9 @@ const OverstyrBeregningFaktaForm = ({ behandlingId, intl }: Props & WrappedCompo
                 validateOnChange
                 validateOnMount
             >
-                {({ values, isValid }) => {
-                    console.log("values", values);
-                    return <Form>
+                {({ values, isValid }) => 
+                    // console.log("values", values);
+                     <Form>
                         <FieldArray name="arbeidsgivere">
                             {() => (
                                 <Table stripet headerTextCodes={["Firma", "Inntekt", "Refusjon"]}>
@@ -152,7 +155,7 @@ const OverstyrBeregningFaktaForm = ({ behandlingId, intl }: Props & WrappedCompo
                         <VerticalSpacer sixteenPx />
                         <Knapp disabled={!isValid} autoDisableVedSpinner type="hoved" htmlType="submit">Lagre aksjonspunkt</Knapp>
                     </Form>
-                }}
+                }
             </Formik>
         </div >
     );
