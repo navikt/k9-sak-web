@@ -12,6 +12,7 @@ import VurderFaktaBeregningPanel from './components/fellesFaktaForATFLogSN/Vurde
 import beregningBehandlingPropType from './propTypes/beregningBehandlingPropType';
 import beregningsgrunnlagPropType from './propTypes/beregningsgrunnlagPropType';
 import AvklareAktiviteterPanel from './components/avklareAktiviteter/AvklareAktiviteterPanel';
+import styles from './beregningFaktaIndex.less';
 
 const cache = createIntlCache();
 
@@ -72,15 +73,17 @@ const BeregningFaktaIndex = ({
   return (
     <RawIntlProvider value={intl}>
       {skalBrukeTabs && (
-        <TabsPure
-          tabs={beregningsgrunnlag.map((currentBeregningsgrunnlag, currentBeregningsgrunnlagIndex) => ({
-            aktiv: aktivtBeregningsgrunnlagIndeks === currentBeregningsgrunnlagIndex,
-            label: lagLabel(currentBeregningsgrunnlag, vilkårsperioder),
-            className: skalVurderes(currentBeregningsgrunnlag, vilkårsperioder) ? 
-            'harAksjonspunkt' : '',
-          }))}
-          onChange={(e, clickedIndex) => setAktivtBeregningsgrunnlagIndeks(clickedIndex)}
-        />
+        <div className={styles.tabsContainer}>
+          <TabsPure
+            tabs={beregningsgrunnlag.map((currentBeregningsgrunnlag, currentBeregningsgrunnlagIndex) => ({
+              aktiv: aktivtBeregningsgrunnlagIndeks === currentBeregningsgrunnlagIndex,
+              label: lagLabel(currentBeregningsgrunnlag, vilkårsperioder),
+              className: skalVurderes(currentBeregningsgrunnlag, vilkårsperioder) ? 
+              'harAksjonspunkt' : '',
+            }))}
+            onChange={(e, clickedIndex) => setAktivtBeregningsgrunnlagIndeks(clickedIndex)}
+          />
+        </div>
       )}
       <div style={{ paddingTop: skalBrukeTabs ? '16px' : '' }}>
         <AvklareAktiviteterPanel
