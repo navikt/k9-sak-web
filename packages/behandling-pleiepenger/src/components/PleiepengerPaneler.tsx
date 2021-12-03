@@ -110,9 +110,9 @@ const PleiepengerPaneler = ({
                           return `${formattedFom} - ${formattedTom}`;
                         }),
                         arbeidstype: mangel.arbeidsgiver?.type,
-                        identifikator:
+                        personIdentifikator:
                           arbeidsgiverOpplysningerUtil.arbeidsgiverOpplysningerPerId[mangel.arbeidsgiver?.aktørId]
-                            ?.identifikator,
+                            ?.personIdentifikator,
                       }))}
                     />
                   )}

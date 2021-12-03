@@ -7,14 +7,15 @@ interface ArbeidsgiverMedPerioder {
   perioder: string[];
   arbeidstype: Arbeidstype;
   identifikator: string;
+  personIdentifikator: string;
 }
 
 interface ArbeidsgiverMedManglendePerioderListeProps {
   arbeidsgivereMedPerioder: ArbeidsgiverMedPerioder[];
 }
 
-const arbeidsgiverTekst = ({ arbeidsgiverNavn, organisasjonsnummer, identifikator }) =>
-  `arbeidsgiver ${arbeidsgiverNavn} (${organisasjonsnummer || identifikator})`;
+const arbeidsgiverTekst = ({ arbeidsgiverNavn, organisasjonsnummer, personIdentifikator }) =>
+  `arbeidsgiver ${arbeidsgiverNavn} (${organisasjonsnummer || personIdentifikator})`;
 const arbeidstypeTekst = (arbeidstype: Arbeidstype) =>
   arbeidstypeTilVisning[arbeidstype]?.toLowerCase() || 'arbeidsgiver';
 
@@ -22,22 +23,24 @@ const ArbeidsgiverMedManglendePerioderListe = ({
   arbeidsgivereMedPerioder,
 }: ArbeidsgiverMedManglendePerioderListeProps) => (
   <div>
-    {arbeidsgivereMedPerioder.map(({ arbeidsgiverNavn, organisasjonsnummer, perioder, arbeidstype, identifikator }) => (
-      <span key={organisasjonsnummer}>
-        <p>
-          {`Arbeidstid mangler for ${
-            arbeidstype === Arbeidstype.AT
-              ? arbeidsgiverTekst({ arbeidsgiverNavn, organisasjonsnummer, identifikator })
-              : arbeidstypeTekst(arbeidstype)
-          } i følgende perioder:`}
-        </p>
-        <ul>
-          {perioder.map(periode => (
-            <li key={periode}>{periode}</li>
-          ))}
-        </ul>
-      </span>
-    ))}
+    {arbeidsgivereMedPerioder.map(
+      ({ arbeidsgiverNavn, organisasjonsnummer, perioder, arbeidstype, personIdentifikator }) => (
+        <span key={organisasjonsnummer}>
+          <p>
+            {`Arbeidstid mangler for ${
+              arbeidstype === Arbeidstype.AT
+                ? arbeidsgiverTekst({ arbeidsgiverNavn, organisasjonsnummer, personIdentifikator })
+                : arbeidstypeTekst(arbeidstype)
+            } i følgende perioder:`}
+          </p>
+          <ul>
+            {perioder.map(periode => (
+              <li key={periode}>{periode}</li>
+            ))}
+          </ul>
+        </span>
+      ),
+    )}
   </div>
 );
 
