@@ -2,5 +2,8 @@
     "OverstyrInputForm.InntektFeltTypeFeil": "Inntekt må være et tall",
     "OverstyrInputForm.InntektFeltPakrevdFeil": "Inntektsbeløp må fylles ut",
     "OverstyrInputForm.RefusjonFeltTypeFeil": "Refusjon må være et tall",
-    "OverstyrInputForm.RefusjonFeltPakrevdFeil": "Refusjon for aktive arbeidsforhold må fylles ut"
+    "OverstyrInputForm.RefusjonFeltPakrevdFeil": "Refusjon for aktive arbeidsforhold må fylles ut",
+    "OverstyrInputForm.Feiloppsummering": "For å fullføre aksjonspunktet må du rette opp følgende",
+    "OverstyrInputForm.MåOppgiInntektFor": "Du må oppgi inntekt for",
+    "OverstyrInputForm.MåOppgiRefusjonFor": "Du må oppgi refusjon for"
 }

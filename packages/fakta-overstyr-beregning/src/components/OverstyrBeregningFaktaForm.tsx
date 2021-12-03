@@ -1,14 +1,15 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { injectIntl, WrappedComponentProps } from 'react-intl';
 
 import { format, sub } from 'date-fns';
 import { TableColumn, TableRow, Table, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { Knapp } from "nav-frontend-knapper";
-import { Formik, Form, Field, FieldArray } from 'formik';
+import { useFormikContext, Formik, Form, Field, FieldArray } from 'formik';
 import * as Yup from 'yup';
-import { Input } from "nav-frontend-skjema";
+import { Input, Feiloppsummering } from "nav-frontend-skjema";
 import { EtikettInfo } from 'nav-frontend-etiketter';
 import styles from './OverstyrBeregningFaktaForm.less';
+import OverstyrBeregningFeiloppsummering from "./OverstyrBeregningFeiloppsummering";
 
 interface Props {
     behandlingId?: number;
@@ -32,15 +33,19 @@ interface Arbeidsgiver {
  * Definerer strukturen på dataene som skal sendes til aksjonspunktet, og representerer 
  * strukturen i skjemaet 
  */
-interface FormikValues {
+export interface FormikValues {
     arbeidsgivere: Arbeidsgiver[];
 }
+
+export interface FirmaNavnMapping {
+    firmaIdent: string,
+    firmaNavn: string
+};
 
 /**
  * OverstyrBeregningFaktaIndex
  */
 const OverstyrBeregningFaktaForm = ({ behandlingId, intl }: Props & WrappedComponentProps) => {
-
     const arbeidsgiverSchema = Yup.object().shape({
         firmaIdent: Yup.string().required(),
         inntekt: Yup.number()
@@ -106,7 +111,6 @@ const OverstyrBeregningFaktaForm = ({ behandlingId, intl }: Props & WrappedCompo
                 validateOnMount
             >
                 {({ values, isValid }) => {
-                    // console.log( FormikErrors<Arbeidsgiver>);
                     console.log("values", values);
                     return <Form>
                         <FieldArray name="arbeidsgivere">
@@ -120,6 +124,7 @@ const OverstyrBeregningFaktaForm = ({ behandlingId, intl }: Props & WrappedCompo
                                             <TableColumn>
                                                 <Field name={`arbeidsgivere.${index}.inntekt`}>
                                                     {({ field, meta }) => <Input
+                                                        id={`arbeidsgivere-${index}-inntekt-id`}
                                                         type="number"
                                                         placeholder="Inntekt"
                                                         feil={meta.touched && meta.error ? meta.error : false}
@@ -130,6 +135,7 @@ const OverstyrBeregningFaktaForm = ({ behandlingId, intl }: Props & WrappedCompo
                                             <TableColumn>
                                                 <Field name={`arbeidsgivere.${index}.refusjon`}>
                                                     {({ field, meta }) => <Input
+                                                        id={`arbeidsgivere-${index}-refusjon-id`}
                                                         type="number"
                                                         placeholder="Refusjon"
                                                         feil={meta.touched && meta.error ? meta.error : false}
@@ -141,6 +147,8 @@ const OverstyrBeregningFaktaForm = ({ behandlingId, intl }: Props & WrappedCompo
                                 </Table>
                             )}
                         </FieldArray>
+                        <VerticalSpacer sixteenPx />
+                        <OverstyrBeregningFeiloppsummering firmaNavn={firmaNavn} />
                         <VerticalSpacer sixteenPx />
                         <Knapp disabled={!isValid} autoDisableVedSpinner type="hoved" htmlType="submit">Lagre aksjonspunkt</Knapp>
                     </Form>
