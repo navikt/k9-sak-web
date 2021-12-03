@@ -15,6 +15,7 @@ const VurderRefusjonFieldArrayComponent = ({
         <VurderEndringRefusjonPanel
             key={fieldId}
             readOnly={readOnly}
+            fieldId={fieldId}
             beregningsgrunnlag={alleBeregningsgrunnlag[index]}
             aktivtBeregningsgrunnlagIndex={aktivtBeregningsgrunnlagIndex}
             aksjonspunkter={alleBeregningsgrunnlag[index].avklaringsbehov}

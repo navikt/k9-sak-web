@@ -184,6 +184,7 @@ export const beregningsgrunnlag = [
 ];
 
 const vilkår = [{
+  vilkarType: { kode: "FP_VK_41" },
   avslagKode: null,
   merknadParametere: {},
   vilkarStatus: { kode: 'IKKE_VURDERT', kodeverk: 'VILKAR_UTFALL_TYPE' },

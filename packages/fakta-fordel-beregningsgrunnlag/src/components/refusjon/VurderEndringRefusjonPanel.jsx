@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 import { Undertittel } from 'nav-frontend-typografi';
 import { AksjonspunktHelpTextTemp, VerticalSpacer } from '@fpsak-frontend/shared-components';
@@ -34,6 +33,7 @@ export const VurderEndringRefusjonPanelImpl = ({
   beregningsgrunnlag,
   avklaringsbehov,
   arbeidsgiverOpplysningerPerId,
+  fieldId,
   ...formProps
 }) => {
   const { andeler } = beregningsgrunnlag.refusjonTilVurdering;
@@ -51,6 +51,7 @@ export const VurderEndringRefusjonPanelImpl = ({
         <TidligereUtbetalinger beregningsgrunnlag={beregningsgrunnlag} arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId} />
         { andeler.map((andel) => (
           <VurderEndringRefusjonRad
+            fieldId={fieldId}
             refusjonAndel={andel}
             readOnly={readOnly}
             erAksjonspunktÅpent={erAksjonspunktÅpent}
@@ -67,6 +68,7 @@ export const VurderEndringRefusjonPanelImpl = ({
 };
 
 VurderEndringRefusjonPanelImpl.propTypes = {
+  fieldId: PropTypes.string.isRequired,
   readOnly: PropTypes.bool.isRequired,
   beregningsgrunnlag: beregningsgrunnlagPropType.isRequired,
   aktivtBeregningsgrunnlagIndex: PropTypes.number.isRequired,
@@ -96,15 +98,6 @@ export const transformValues = (values, bg) => {
   };
 };
 
-const mapStateToProps = (initialState, initialProps) => {
-  const onSubmit = (values) => initialProps.submitCallback(transformValues(values, initialProps.beregningsgrunnlag));
-  return (state, ownProps) => {
-    const initialValues = buildInitialValues(ownProps.beregningsgrunnlag, ownProps.avklaringsbehov);
-    return ({
-      initialValues,
-      onSubmit,
-    });
-  };
-};
 
-export default connect(mapStateToProps)(VurderEndringRefusjonPanelImpl);
+
+export default VurderEndringRefusjonPanelImpl;

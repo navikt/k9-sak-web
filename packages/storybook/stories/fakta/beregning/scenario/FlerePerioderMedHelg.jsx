@@ -2741,6 +2741,7 @@ export const beregningsgrunnlag = [
 ];
 
 const vilkår = beregningsgrunnlag.map((bg, index) => ({
+    vilkarType: { kode: "FP_VK_41" },
     avslagKode: null,
     merknadParametere: {},
     vilkarStatus: { kode: 'IKKE_VURDERT', kodeverk: 'VILKAR_UTFALL_TYPE' },
