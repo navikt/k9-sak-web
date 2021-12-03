@@ -43,6 +43,7 @@ export const VurderEndringRefusjonRadImpl = ({
   erAksjonspunktÅpent,
   arbeidsgiverOpplysningerPerId,
   valgtDatoErLikSTP,
+  fieldId,
 }) => {
   if (!refusjonAndel) {
     return null;
@@ -75,7 +76,7 @@ export const VurderEndringRefusjonRadImpl = ({
         </Column>
         <Column xs="4">
           <DatepickerField
-            name={lagNøkkelRefusjonsstart(refusjonAndel)}
+            name={`${fieldId}.${lagNøkkelRefusjonsstart(refusjonAndel)}`}
             readOnly={readOnly}
             validate={[required, hasValidDate, dateAfterOrEqual(refusjonAndel.tidligsteMuligeRefusjonsdato)]}
             isEdited={!!refusjonAndel.fastsattNyttRefusjonskravFom && !erAksjonspunktÅpent}
@@ -93,7 +94,7 @@ export const VurderEndringRefusjonRadImpl = ({
           </Column>
           <Column xs="4">
             <InputField
-              name={lagNøkkelDelvisRefusjon(refusjonAndel)}
+              name={`${fieldId}.${lagNøkkelDelvisRefusjon(refusjonAndel)}`}
               bredde="S"
               validate={[required, minValueFormatted(1), maxValueFormatted(refusjonAndel.maksTillattDelvisRefusjonPrMnd)]}
               parse={parseCurrencyInput}
@@ -108,6 +109,7 @@ export const VurderEndringRefusjonRadImpl = ({
 };
 
 VurderEndringRefusjonRadImpl.propTypes = {
+  fieldId: PropTypes.string.isRequired,
   refusjonAndel: PropTypes.shape().isRequired,
   readOnly: PropTypes.bool.isRequired,
   erAksjonspunktÅpent: PropTypes.bool.isRequired,
