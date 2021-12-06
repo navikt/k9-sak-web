@@ -3,45 +3,47 @@ import { injectIntl, WrappedComponentProps } from 'react-intl';
 import { useFormikContext } from 'formik';
 
 import { Feiloppsummering, FeiloppsummeringFeil } from "nav-frontend-skjema";
-import { FirmaNavnMapping, FormikValues } from "./OverstyrBeregningFaktaForm";
+import { OverstyrInputBeregningDto } from "../types/OverstyrInputBeregningDto";
 
 interface ownProps {
-    firmaNavn: FirmaNavnMapping[]
+    utledFirmaNavn: (firmaIdent: string) => string;
 }
 
 /**
  * Summerer opp feilene fra overstyr beregning skjemaet via Formik context
  */
-const OverstyrBeregningFeiloppsummering = ({ firmaNavn, intl }: ownProps & WrappedComponentProps) => {
-    const { values, errors, touched } = useFormikContext<FormikValues>();
+const OverstyrBeregningFeiloppsummering = ({ utledFirmaNavn, intl }: ownProps & WrappedComponentProps) => {
+    const { values, errors, touched } = useFormikContext<OverstyrInputBeregningDto>();
     const [feil, setFeil] = React.useState<FeiloppsummeringFeil[]>([]);
 
-    /**
+    console.log("values", values);
+    console.log("errors", errors);
+    /** 
      * sjekk alle berorrte felt med feil og legg til en feil til feiloppsummeringen for hver
      */
     useEffect(() => {
         const nyeFeil: FeiloppsummeringFeil[] = [];
-        if (Array.isArray(errors.arbeidsgivere)) {
-            errors.arbeidsgivere.forEach((arbeidsgiverFeil: any, index: number) => {
-                if (arbeidsgiverFeil) { // Kan bli undefined etter en feil er "løst"
+        if (Array.isArray(errors.aktivitetliste)) {
+            errors.aktivitetliste.forEach((aktivitetsFeil: any, index: number) => {
+                if (aktivitetsFeil) { // Kan bli undefined etter en feil er "løst"
 
                     // Firmanavn fra firmanavnmappingen
-                    const firmaNavnet = firmaNavn.find(firma => firma.firmaIdent === values.arbeidsgivere[index].firmaIdent)?.firmaNavn;
+                    const firmaNavnet = "tester";// utledFirmaNavn((arbeidsgiverAktørId) || arbeidsgiverOrgnr)
 
-                    if (touched.arbeidsgivere && touched.arbeidsgivere[index]) {
+                    if (touched.aktivitetliste && touched.aktivitetliste[index]) {
 
                         // Legg til feil om inntekt feltet er berørt, og feltet har en feil
-                        if (touched.arbeidsgivere[index].inntekt && arbeidsgiverFeil.inntekt) {
+                        if (touched.aktivitetliste[index].inntektPrAar && aktivitetsFeil.inntektPrAar) {
                             nyeFeil.push({
-                                skjemaelementId: `arbeidsgivere-${index}-inntekt-id`,
+                                skjemaelementId: `aktivitetliste-${index}-inntekt-pr-ar-id`,
                                 feilmelding: `${intl.formatMessage({ id: 'OverstyrInputForm.MåOppgiInntektFor' })} ${firmaNavnet}`
                             });
                         }
 
                         // Legg til feil om refusjon feltet er berørt, og feltet har en feil
-                        if (touched.arbeidsgivere[index].refusjon && arbeidsgiverFeil.refusjon) {
+                        if (touched.aktivitetliste[index].refusjonPrAar && aktivitetsFeil.refusjonPrAar) {
                             nyeFeil.push({
-                                skjemaelementId: `arbeidsgivere-${index}-refusjon-id`,
+                                skjemaelementId: `aktivitetliste-${index}-refusjon-pr-ar-id`,
                                 feilmelding: `${intl.formatMessage({ id: 'OverstyrInputForm.MåOppgiRefusjonFor' })} ${firmaNavnet}`
                             });
                         }

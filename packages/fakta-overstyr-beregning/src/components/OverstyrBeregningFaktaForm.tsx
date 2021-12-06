@@ -1,110 +1,93 @@
 import React from "react";
 import { injectIntl, WrappedComponentProps } from 'react-intl';
-
-import { format, sub } from 'date-fns';
-import { TableColumn, TableRow, Table, VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { Knapp } from "nav-frontend-knapper";
 import { Formik, Form, Field, FieldArray } from 'formik';
 import * as Yup from 'yup';
-import { Input } from "nav-frontend-skjema";
+
+import { TableColumn, TableRow, Table, VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { Knapp } from "nav-frontend-knapper";
+import { Input, Textarea } from "nav-frontend-skjema";
 import { EtikettInfo } from 'nav-frontend-etiketter';
-import { ArbeidsgiverOpplysningerPerId } from '@k9-sak-web/types';
+import { Aksjonspunkt, ArbeidsgiverOpplysningerPerId, SubmitCallback } from '@k9-sak-web/types';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import styles from './OverstyrBeregningFaktaForm.less';
 import OverstyrBeregningFeiloppsummering from "./OverstyrBeregningFeiloppsummering";
+import { OverstyrInputBeregningDto } from "../types/OverstyrInputBeregningDto";
+import { formaterDatoString } from "./utils";
 
 interface Props {
-    behandlingId?: number;
     arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysningerPerId,
-};
-
-/**
- * Får inn skjæringstidspunkt, kommer fra bakenden
- */
-const skjaeringsTidspunkt = sub(new Date(), { years: 2 });
-
-/**
- * Denne skal sikkert hete noe annet, og ligge i en annen fil/type
- */
-interface Arbeidsgiver {
-    firmaIdent: string;
-    inntekt: string;
-    refusjon: string;
-}
-
-/**
- * Definerer strukturen på dataene som skal sendes til aksjonspunktet, og representerer 
- * strukturen i skjemaet 
- */
-export interface FormikValues {
-    arbeidsgivere: Arbeidsgiver[];
-}
-
-export interface FirmaNavnMapping {
-    firmaIdent: string,
-    firmaNavn: string
+    overstyrInputBeregning: OverstyrInputBeregningDto,
+    submitCallback: (SubmitCallback) => void,
+    readOnly: boolean,
+    submittable: boolean,
+    aksjonspunkter: Aksjonspunkt[],
 };
 
 /**
  * OverstyrBeregningFaktaIndex
  */
-const OverstyrBeregningFaktaForm = ({  intl }: Props & WrappedComponentProps) => {
-    const arbeidsgiverSchema = Yup.object().shape({
-        firmaIdent: Yup.string().required(),
-        inntekt: Yup.number()
+const OverstyrBeregningFaktaForm = ({
+    overstyrInputBeregning,
+    arbeidsgiverOpplysningerPerId,
+    submitCallback,
+    readOnly,
+    submittable,
+    aksjonspunkter,
+    intl
+}: Props & WrappedComponentProps) => {
+
+    const aktivitetSchema = Yup.object().shape({
+        arbiedsgiverAktørId: Yup.string(),
+        arbeidsgiverOrgnr: Yup.string(),
+        inntektPrAar: Yup.number()
             .typeError(intl.formatMessage({ id: 'OverstyrInputForm.InntektFeltTypeFeil' }))
             .required(intl.formatMessage({ id: 'OverstyrInputForm.InntektFeltPakrevdFeil' })),
-        refusjon: Yup.number()
+        refusjonPrAar: Yup.number()
             .typeError(intl.formatMessage({ id: 'OverstyrInputForm.RefusjonFeltTypeFeil' }))
             .required(intl.formatMessage({ id: 'OverstyrInputForm.RefusjonFeltPakrevdFeil' })),
     });
 
-    const validationSchema = Yup.object().shape({ arbeidsgivere: Yup.array().of(arbeidsgiverSchema) });
+    const periodeSchema = Yup.object().shape({
+        skjaeringstudspunkt: Yup.string(),
+        aktivitetliste: Yup.array().of(aktivitetSchema)
+    });
 
-    const firmaNavn = [
-        { firmaIdent: '123ident', firmaNavn: 'Firma 1' },
-        { firmaIdent: '321ident', firmaNavn: 'Firma 2' },
-        { firmaIdent: '231ident', firmaNavn: 'Firma 3' },
-    ];
+    const validationSchema = Yup.object().shape({
+        kode: Yup.string().required(),
+        begrunnelse: Yup.string().required(intl.formatMessage({ id: 'OverstyrInputForm.BegrunnelseErPåkrevd' })),
+        perioder: periodeSchema,
+    });
 
     /**
-     * Replikerer datastrukturen som skal sendes til aksjonspunktet
+     * @param firmaIdent Kan være enten orgnr eller aktørId
+     * @returns utledet firmanavn fra arbeidsgiverOpplysningerPerId
      */
-    const iniitialValues: FormikValues = {
-        arbeidsgivere: [
-            {
-                firmaIdent: '123ident',
-                inntekt: null,
-                refusjon: null,
-            },
-            {
-                firmaIdent: '321ident',
-                inntekt: null,
-                refusjon: null,
-            },
-            {
-                firmaIdent: '231ident',
-                inntekt: null,
-                refusjon: null,
-            },
-        ]
-    };
+    const utledFirmaNavn = (firmaIdent: string) => {
+        const firma = Object.values(arbeidsgiverOpplysningerPerId).find((arbeidsgiver => arbeidsgiver.identifikator === firmaIdent));
+        return (firma) ? firma.navn : "Ukjent firmanavn";
+    }
 
+    const utledBegrunnelse = () => aksjonspunkter.find((ap) => ap.definisjon.kode === aksjonspunktCodes.OVERSTYR_BEREGNING_INPUT).begrunnelse || ''
+
+    const kanLagres = () => { }
     return (
         <div className={styles.container}>
-
-            <header>
-                <EtikettInfo className="skjaeringstidspunkt">
-                    Skjæringstidspunkt: {format(skjaeringsTidspunkt, "dd-MM-yyyy HH:mm")}
-                </EtikettInfo>
-            </header>
-
             <VerticalSpacer thirtyTwoPx />
             <Formik
-                initialValues={iniitialValues}
+                initialValues={
+                    {
+                        kode: aksjonspunktCodes.OVERSTYR_BEREGNING_INPUT,
+                        begrunnelse: utledBegrunnelse(),
+                        perioder: overstyrInputBeregning
+                    }
+                }
                 onSubmit={values => {
-                    /**
-                     * håndter innsending her ... fullføre aksjonspunktet
-                     */
+                    const submitValues = {
+                        kode: values.kode,
+                        begrunnelse: values.begrunnelse,
+                        perioder: [values.perioder]
+                    };
+                    submitCallback([submitValues]);
                     // eslint-disable-next-line no-console
                     console.log(JSON.stringify(values, null, 2));
                 }}
@@ -113,45 +96,62 @@ const OverstyrBeregningFaktaForm = ({  intl }: Props & WrappedComponentProps) =>
                 validateOnChange
                 validateOnMount
             >
-                {({ values, isValid }) => 
-                    // console.log("values", values);
-                     <Form>
-                        <FieldArray name="arbeidsgivere">
+                {({ values, isValid }) =>
+                    <Form>
+                        <EtikettInfo className="skjaeringstidspunkt">
+                            Skjæringstidspunkt: {formaterDatoString(values.perioder.skjaeringstidspunkt)}
+                        </EtikettInfo>
+                        <FieldArray name="perioder.aktivitetliste">
                             {() => (
-                                <Table stripet headerTextCodes={["Firma", "Inntekt", "Refusjon"]}>
-                                    {values.arbeidsgivere.length > 0 && values.arbeidsgivere.map((arbeidsgiver, index) => (
-                                        <TableRow>
-                                            <TableColumn>
-                                                {firmaNavn.find(firma => firma.firmaIdent === arbeidsgiver.firmaIdent)?.firmaNavn}
-                                            </TableColumn>
-                                            <TableColumn>
-                                                <Field name={`arbeidsgivere.${index}.inntekt`}>
-                                                    {({ field, meta }) => <Input
-                                                        id={`arbeidsgivere-${index}-inntekt-id`}
-                                                        type="number"
-                                                        placeholder="Inntekt"
-                                                        feil={meta.touched && meta.error ? meta.error : false}
-                                                        {...field}
-                                                    />}
-                                                </Field>
-                                            </TableColumn>
-                                            <TableColumn>
-                                                <Field name={`arbeidsgivere.${index}.refusjon`}>
-                                                    {({ field, meta }) => <Input
-                                                        id={`arbeidsgivere-${index}-refusjon-id`}
-                                                        type="number"
-                                                        placeholder="Refusjon"
-                                                        feil={meta.touched && meta.error ? meta.error : false}
-                                                        {...field} />}
-                                                </Field>
-                                            </TableColumn>
-                                        </TableRow>
-                                    ))}
+                                <Table stripet headerTextCodes={["Firma", "Inntekt pr. år", "Refusjon pr. år"]}>
+                                    {values.perioder.aktivitetliste.length > 0 && values.perioder.aktivitetliste.map((aktivitet, index) => {
+                                        const { arbeidsgiverAktørId, arbeidsgiverOrgnr } = aktivitet;
+                                        return (
+                                            <TableRow>
+                                                <TableColumn>
+                                                    <span className={styles.firmaNavn}>
+                                                        {utledFirmaNavn((arbeidsgiverAktørId) || arbeidsgiverOrgnr)}
+                                                    </span>
+                                                </TableColumn>
+                                                <TableColumn>
+                                                    <Field name={`perioder.aktivitetliste.${index}.inntektPrAar`}>
+                                                        {({ field, meta }) => <Input
+                                                            id={`perioder-ktivitetliste-${index}-inntekt-pr-ar-id`}
+                                                            type="number"
+                                                            placeholder="Inntekt pr. år"
+                                                            feil={meta.touched && meta.error ? meta.error : false}
+                                                            {...field}
+                                                        />}
+                                                    </Field>
+                                                </TableColumn>
+                                                <TableColumn>
+                                                    <Field name={`perioder.aktivitetliste.${index}.refusjonPrAar`}>
+                                                        {({ field, meta }) => <Input
+                                                            id={`perioder-aktivitetliste-${index}-refusjon-pr-ar-id`}
+                                                            type="number"
+                                                            placeholder="Refusjon pr. år"
+                                                            feil={meta.touched && meta.error ? meta.error : false}
+                                                            {...field} />}
+                                                    </Field>
+                                                </TableColumn>
+                                            </TableRow>
+                                        )
+                                    }
+                                    )}
                                 </Table>
                             )}
                         </FieldArray>
                         <VerticalSpacer sixteenPx />
-                        <OverstyrBeregningFeiloppsummering firmaNavn={firmaNavn} />
+                        <Field name="begrunnelse">
+                            {({ field, meta }) => <Textarea
+                                id="begrunnelse"
+                                label="Begrunnelse"
+                                placeholder="Begrunnelse"
+                                feil={meta.touched && meta.error ? meta.error : false}
+                                {...field} />}
+                        </Field>
+                        <VerticalSpacer sixteenPx />
+                        {/* <OverstyrBeregningFeiloppsummering utledFirmaNavn={utledFirmaNavn} /> */}
                         <VerticalSpacer sixteenPx />
                         <Knapp disabled={!isValid} autoDisableVedSpinner type="hoved" htmlType="submit">Lagre aksjonspunkt</Knapp>
                     </Form>

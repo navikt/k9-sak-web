@@ -15,14 +15,33 @@ class OverstyrBeregningFaktaPanelDef extends FaktaPanelDef {
         aksjonspunktCodes.OVERSTYR_BEREGNING_INPUT,
     ];
 
-    getKomponent = props => <OverstyrBeregningFaktaIndex {...props} />;
+    getKomponent = props => {
+        console.log("Dette er propsene til faktapanelet", props);
+        const {
+            arbeidsgiverOpplysningerPerId,
+            overstyrInputBeregning,
+            submitCallback,
+            readOnly,
+            submittable,
+            aksjonspunkter
+        } = props;
+        return (
+            <OverstyrBeregningFaktaIndex
+                arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
+                overstyrInputBeregning={overstyrInputBeregning}
+                submitCallback={submitCallback}
+                readOnly={readOnly}
+                submittable={submittable}
+                aksjonspunkter={aksjonspunkter}
+            />
+        )
+    }
 
     getEndepunkter = (): string[] => [PleiepengerBehandlingApiKeys.OVERSTYR_INPUT_BEREGNING];
 
+    // getOverstyrVisningAvKomponent = ({  }) => ;
 
-    getOverstyrVisningAvKomponent = ({ behandlngId }) => behandlngId;
-
-    getData = ({ behandlingId, arbeidsgiverOpplysningerPerId }) => ({ behandlingId, arbeidsgiverOpplysningerPerId });
+    getData = ({ arbeidsgiverOpplysningerPerId }) => ({ arbeidsgiverOpplysningerPerId });
 }
 
 export default OverstyrBeregningFaktaPanelDef;
