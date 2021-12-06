@@ -2,7 +2,7 @@ export type ArbeidsgiverOpplysninger = Readonly<{
   erPrivatPerson: boolean;
   referanse?: string;
   identifikator: string;
-  personIdentifikator: string;
+  personIdentifikator?: string;
   navn: string;
   fødselsdato?: string;
 }>;
