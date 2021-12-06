@@ -28,7 +28,7 @@ const ArbeidsgiverMedManglendePerioderListe = ({
         <span key={organisasjonsnummer}>
           <p>
             {`Arbeidstid mangler for ${
-              arbeidstype === Arbeidstype.AT
+              arbeidstype === Arbeidstype[Arbeidstype.AT]
                 ? arbeidsgiverTekst({ arbeidsgiverNavn, organisasjonsnummer, personIdentifikator })
                 : arbeidstypeTekst(arbeidstype)
             } i følgende perioder:`}
