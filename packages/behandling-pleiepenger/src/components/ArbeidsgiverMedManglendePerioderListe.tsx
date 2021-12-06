@@ -1,12 +1,11 @@
 import React from 'react';
-import Arbeidstype, { arbeidstypeTilVisning } from '../types/Arbeidstype';
+import { arbeidstypeTilVisning, Arbeidstype } from '../types/Arbeidstype';
 
 interface ArbeidsgiverMedPerioder {
   arbeidsgiverNavn: string;
   organisasjonsnummer: string;
   perioder: string[];
   arbeidstype: Arbeidstype;
-  identifikator: string;
   personIdentifikator: string;
 }
 
@@ -28,7 +27,7 @@ const ArbeidsgiverMedManglendePerioderListe = ({
         <span key={organisasjonsnummer}>
           <p>
             {`Arbeidstid mangler for ${
-              arbeidstype === Arbeidstype[Arbeidstype.AT]
+              arbeidstype === Arbeidstype.ARBEIDSTAKER
                 ? arbeidsgiverTekst({ arbeidsgiverNavn, organisasjonsnummer, personIdentifikator })
                 : arbeidstypeTekst(arbeidstype)
             } i følgende perioder:`}
