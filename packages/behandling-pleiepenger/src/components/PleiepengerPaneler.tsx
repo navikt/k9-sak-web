@@ -100,7 +100,7 @@ const PleiepengerPaneler = ({
                     <ArbeidsgiverMedManglendePerioderListe
                       arbeidsgivereMedPerioder={data.mangler?.map(mangel => ({
                         arbeidsgiverNavn: arbeidsgiverOpplysningerUtil.finnArbeidsgiversNavn(
-                          mangel.arbeidsgiver.organisasjonsnummer,
+                          mangel.arbeidsgiver.organisasjonsnummer || mangel.arbeidsgiver.aktoerId,
                         ),
                         organisasjonsnummer: mangel.arbeidsgiver.organisasjonsnummer,
                         perioder: mangel.manglendePerioder.map(periode => {
@@ -110,6 +110,9 @@ const PleiepengerPaneler = ({
                           return `${formattedFom} - ${formattedTom}`;
                         }),
                         arbeidstype: mangel.arbeidsgiver?.type,
+                        personIdentifikator:
+                          arbeidsgiverOpplysningerUtil.arbeidsgiverOpplysningerPerId[mangel.arbeidsgiver?.aktørId]
+                            ?.personIdentifikator,
                       }))}
                     />
                   )}
