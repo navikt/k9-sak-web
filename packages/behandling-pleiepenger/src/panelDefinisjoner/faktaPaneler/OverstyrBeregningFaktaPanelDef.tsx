@@ -16,7 +16,6 @@ class OverstyrBeregningFaktaPanelDef extends FaktaPanelDef {
     ];
 
     getKomponent = props => {
-        console.log("Dette er propsene til faktapanelet", props);
         const {
             arbeidsgiverOpplysningerPerId,
             overstyrInputBeregning,

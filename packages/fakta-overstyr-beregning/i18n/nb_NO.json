@@ -5,5 +5,12 @@
     "OverstyrInputForm.RefusjonFeltPakrevdFeil": "Refusjon for aktive arbeidsforhold må fylles ut",
     "OverstyrInputForm.Feiloppsummering": "For å fullføre aksjonspunktet må du rette opp følgende",
     "OverstyrInputForm.MåOppgiInntektFor": "Du må oppgi inntekt for",
-    "OverstyrInputForm.MåOppgiRefusjonFor": "Du må oppgi refusjon for"
+    "OverstyrInputForm.MåOppgiRefusjonFor": "Du må oppgi refusjon for",
+    "OverstyrInputForm.BegrunnelseErPåkrevd": "Du må oppgi en begrunnelse",
+    "OverstyrInputForm.FirmaHeader": "Firma",
+    "OverstyrInputForm.InntektPrAar": "Inntekt pr. år",
+    "OverstyrInputForm.RefusjonPrAar": "Refusjon pr. år",
+    "OverstyrInputForm.UkjentFirma": "Ukjent firmanavn",
+    "OverstyrInputForm.Begrunnelse": "Begrunnelse",
+    "OverstyrInputForm.LagreAksjonspunkt": "Lagre aksjonspunkt"
 }

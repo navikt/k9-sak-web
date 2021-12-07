@@ -10,8 +10,8 @@ export type OverstyrInputForBeregningDto = {
     perioder: OverstyrInputBeregningDto[];
 }
 
-export type BekreftedeAksjonspunkterDto = {
-    behandlingId: BehandlingIdDto;
-    behandlingVersjon: number;
-    bekreftedeAksjonspunktDtoer: OverstyrInputForBeregningDto[];
-}
+// export type BekreftedeAksjonspunkterDto = {
+//     behandlingId: BehandlingIdDto;
+//     behandlingVersjon: number;
+//     bekreftedeAksjonspunktDtoer: OverstyrInputForBeregningDto[];
+// }

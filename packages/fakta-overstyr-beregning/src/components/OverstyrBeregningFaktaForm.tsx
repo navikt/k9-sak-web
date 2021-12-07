@@ -1,5 +1,5 @@
 import React from "react";
-import { injectIntl, WrappedComponentProps } from 'react-intl';
+import { injectIntl, WrappedComponentProps, FormattedMessage } from 'react-intl';
 import { Formik, Form, Field, FieldArray } from 'formik';
 import * as Yup from 'yup';
 
@@ -13,6 +13,7 @@ import styles from './OverstyrBeregningFaktaForm.less';
 import OverstyrBeregningFeiloppsummering from "./OverstyrBeregningFeiloppsummering";
 import { OverstyrInputBeregningDto } from "../types/OverstyrInputBeregningDto";
 import { formaterDatoString } from "./utils";
+import { OverstyrInputForBeregningDto } from "../types/OverstyrInputForBeregningDto";
 
 interface Props {
     arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysningerPerId,
@@ -55,7 +56,7 @@ const OverstyrBeregningFaktaForm = ({
     const validationSchema = Yup.object().shape({
         kode: Yup.string().required(),
         begrunnelse: Yup.string().required(intl.formatMessage({ id: 'OverstyrInputForm.BegrunnelseErPåkrevd' })),
-        perioder: periodeSchema,
+        perioder: Yup.array().of(periodeSchema),
     });
 
     /**
@@ -64,30 +65,36 @@ const OverstyrBeregningFaktaForm = ({
      */
     const utledFirmaNavn = (firmaIdent: string) => {
         const firma = Object.values(arbeidsgiverOpplysningerPerId).find((arbeidsgiver => arbeidsgiver.identifikator === firmaIdent));
-        return (firma) ? firma.navn : "Ukjent firmanavn";
+        return (firma) ? firma.navn : intl.formatMessage({ id: 'OverstyrInputForm.UkjentFirma' });
     }
 
     const utledBegrunnelse = () => aksjonspunkter.find((ap) => ap.definisjon.kode === aksjonspunktCodes.OVERSTYR_BEREGNING_INPUT).begrunnelse || ''
 
-    const kanLagres = () => { }
+    /**
+     * Formik liker ikke null i value feltene, null verdier kan forekomme fra backend. 
+     * "Oversetter" null verdier i skjemafeltene til undefined
+     */
+    const initialValues: OverstyrInputForBeregningDto = {
+        kode: aksjonspunktCodes.OVERSTYR_BEREGNING_INPUT,
+        begrunnelse: utledBegrunnelse(),
+        perioder: [{
+            ...overstyrInputBeregning, aktivitetliste: overstyrInputBeregning.aktivitetliste.map((aktivitet) => ({
+                ...aktivitet,
+                "inntektPrAar": aktivitet.inntektPrAar || undefined,
+                "refusjonPrAar": aktivitet.refusjonPrAar || undefined,
+            }))
+        }],
+    }
+
+    const erDeaktivert = (isValid) => readOnly || !submittable || !isValid;
+
     return (
         <div className={styles.container}>
             <VerticalSpacer thirtyTwoPx />
             <Formik
-                initialValues={
-                    {
-                        kode: aksjonspunktCodes.OVERSTYR_BEREGNING_INPUT,
-                        begrunnelse: utledBegrunnelse(),
-                        perioder: overstyrInputBeregning
-                    }
-                }
+                initialValues={initialValues}
                 onSubmit={values => {
-                    const submitValues = {
-                        kode: values.kode,
-                        begrunnelse: values.begrunnelse,
-                        perioder: [values.perioder]
-                    };
-                    submitCallback([submitValues]);
+                    submitCallback([values]);
                     // eslint-disable-next-line no-console
                     console.log(JSON.stringify(values, null, 2));
                 }}
@@ -98,62 +105,82 @@ const OverstyrBeregningFaktaForm = ({
             >
                 {({ values, isValid }) =>
                     <Form>
-                        <EtikettInfo className="skjaeringstidspunkt">
-                            Skjæringstidspunkt: {formaterDatoString(values.perioder.skjaeringstidspunkt)}
-                        </EtikettInfo>
-                        <FieldArray name="perioder.aktivitetliste">
-                            {() => (
-                                <Table stripet headerTextCodes={["Firma", "Inntekt pr. år", "Refusjon pr. år"]}>
-                                    {values.perioder.aktivitetliste.length > 0 && values.perioder.aktivitetliste.map((aktivitet, index) => {
-                                        const { arbeidsgiverAktørId, arbeidsgiverOrgnr } = aktivitet;
-                                        return (
-                                            <TableRow>
-                                                <TableColumn>
-                                                    <span className={styles.firmaNavn}>
-                                                        {utledFirmaNavn((arbeidsgiverAktørId) || arbeidsgiverOrgnr)}
-                                                    </span>
-                                                </TableColumn>
-                                                <TableColumn>
-                                                    <Field name={`perioder.aktivitetliste.${index}.inntektPrAar`}>
-                                                        {({ field, meta }) => <Input
-                                                            id={`perioder-ktivitetliste-${index}-inntekt-pr-ar-id`}
-                                                            type="number"
-                                                            placeholder="Inntekt pr. år"
-                                                            feil={meta.touched && meta.error ? meta.error : false}
-                                                            {...field}
-                                                        />}
-                                                    </Field>
-                                                </TableColumn>
-                                                <TableColumn>
-                                                    <Field name={`perioder.aktivitetliste.${index}.refusjonPrAar`}>
-                                                        {({ field, meta }) => <Input
-                                                            id={`perioder-aktivitetliste-${index}-refusjon-pr-ar-id`}
-                                                            type="number"
-                                                            placeholder="Refusjon pr. år"
-                                                            feil={meta.touched && meta.error ? meta.error : false}
-                                                            {...field} />}
-                                                    </Field>
-                                                </TableColumn>
-                                            </TableRow>
-                                        )
-                                    }
-                                    )}
-                                </Table>
-                            )}
+                        <FieldArray name="perioder">
+                            {() =>
+                                <>
+                                    {values.perioder.map((periode, periodeIndex) => {
+                                        const { skjaeringstidspunkt, aktivitetliste } = periode;
+                                        return <>
+                                            <EtikettInfo className="skjaeringstidspunkt">
+                                                Skjæringstidspunkt: {formaterDatoString(skjaeringstidspunkt)}
+                                            </EtikettInfo>
+                                            <FieldArray name={`perioder[${periodeIndex}].aktivitetliste`} >
+                                                {() =>
+                                                    <Table stripet headerTextCodes={[
+                                                        "OverstyrInputForm.FirmaHeader",
+                                                        "OverstyrInputForm.InntektPrAar",
+                                                        'OverstyrInputForm.RefusjonPrAar'
+                                                    ]}>
+                                                        {aktivitetliste.length > 0 && aktivitetliste.map((aktivitet, aktivitetIndex) => {
+                                                            const { arbeidsgiverAktørId, arbeidsgiverOrgnr } = aktivitet;
+                                                            return (
+                                                                <TableRow key={`aktivitet-${arbeidsgiverAktørId || arbeidsgiverOrgnr}`}>
+                                                                    <TableColumn>
+                                                                        <span className={styles.firmaNavn}>
+                                                                            {utledFirmaNavn((arbeidsgiverAktørId) || arbeidsgiverOrgnr)}
+                                                                        </span>
+                                                                    </TableColumn>
+                                                                    <TableColumn>
+                                                                        <Field name={`perioder.${periodeIndex}.aktivitetliste.${aktivitetIndex}.inntektPrAar`}>
+                                                                            {({ field, meta }) => <Input
+                                                                                id={`perioder-${periodeIndex}-aktivitetliste-${aktivitetIndex}-inntekt`}
+                                                                                type="number"
+                                                                                placeholder={intl.formatMessage({ id: 'OverstyrInputForm.InntektPrAar' })}
+                                                                                feil={meta.touched && meta.error ? meta.error : false}
+                                                                                value={field.value}
+                                                                                {...field}
+                                                                            />}
+                                                                        </Field>
+                                                                    </TableColumn>
+                                                                    <TableColumn>
+                                                                        <Field name={`perioder.${periodeIndex}.aktivitetliste.${aktivitetIndex}.refusjonPrAar`}>
+                                                                            {({ field, meta }) => <Input
+                                                                                id={`perioder-${periodeIndex}-aktivitetliste-${aktivitetIndex}-refusjon`}
+                                                                                type="number"
+                                                                                placeholder={intl.formatMessage({ id: 'OverstyrInputForm.RefusjonPrAar' })}
+                                                                                feil={meta.touched && meta.error ? meta.error : false}
+                                                                                value={field.value}
+                                                                                {...field} />}
+                                                                        </Field>
+                                                                    </TableColumn>
+                                                                </TableRow>
+                                                            )
+                                                        }
+                                                        )}
+                                                    </Table>
+                                                }
+                                            </FieldArray>
+                                        </>
+                                    })}
+                                </>
+                            }
                         </FieldArray>
                         <VerticalSpacer sixteenPx />
                         <Field name="begrunnelse">
                             {({ field, meta }) => <Textarea
                                 id="begrunnelse"
                                 label="Begrunnelse"
-                                placeholder="Begrunnelse"
+                                placeholder={intl.formatMessage({ id: 'OverstyrInputForm.Begrunnelse' })}
                                 feil={meta.touched && meta.error ? meta.error : false}
+                                value={field.value}
                                 {...field} />}
                         </Field>
                         <VerticalSpacer sixteenPx />
-                        {/* <OverstyrBeregningFeiloppsummering utledFirmaNavn={utledFirmaNavn} /> */}
+                        <OverstyrBeregningFeiloppsummering utledFirmaNavn={utledFirmaNavn} />
                         <VerticalSpacer sixteenPx />
-                        <Knapp disabled={!isValid} autoDisableVedSpinner type="hoved" htmlType="submit">Lagre aksjonspunkt</Knapp>
+                        <Knapp disabled={erDeaktivert(isValid)} autoDisableVedSpinner type="hoved" htmlType="submit">
+                            <FormattedMessage id="OverstyrInputForm.LagreAksjonspunkt" />
+                        </Knapp>
                     </Form>
                 }
             </Formik>

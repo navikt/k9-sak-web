@@ -4,6 +4,7 @@ import { useFormikContext } from 'formik';
 
 import { Feiloppsummering, FeiloppsummeringFeil } from "nav-frontend-skjema";
 import { OverstyrInputBeregningDto } from "../types/OverstyrInputBeregningDto";
+import { OverstyrInputForBeregningDto } from "../types/OverstyrInputForBeregningDto";
 
 interface ownProps {
     utledFirmaNavn: (firmaIdent: string) => string;
@@ -13,44 +14,60 @@ interface ownProps {
  * Summerer opp feilene fra overstyr beregning skjemaet via Formik context
  */
 const OverstyrBeregningFeiloppsummering = ({ utledFirmaNavn, intl }: ownProps & WrappedComponentProps) => {
-    const { values, errors, touched } = useFormikContext<OverstyrInputBeregningDto>();
+    const { values, errors, touched } = useFormikContext<OverstyrInputForBeregningDto>();
     const [feil, setFeil] = React.useState<FeiloppsummeringFeil[]>([]);
 
-    console.log("values", values);
-    console.log("errors", errors);
     /** 
-     * sjekk alle berorrte felt med feil og legg til en feil til feiloppsummeringen for hver
+     * sjekk alle berørte felt med feil og legg til en feil til feiloppsummeringen for hver
      */
     useEffect(() => {
         const nyeFeil: FeiloppsummeringFeil[] = [];
-        if (Array.isArray(errors.aktivitetliste)) {
-            errors.aktivitetliste.forEach((aktivitetsFeil: any, index: number) => {
-                if (aktivitetsFeil) { // Kan bli undefined etter en feil er "løst"
 
-                    // Firmanavn fra firmanavnmappingen
-                    const firmaNavnet = "tester";// utledFirmaNavn((arbeidsgiverAktørId) || arbeidsgiverOrgnr)
-
-                    if (touched.aktivitetliste && touched.aktivitetliste[index]) {
-
-                        // Legg til feil om inntekt feltet er berørt, og feltet har en feil
-                        if (touched.aktivitetliste[index].inntektPrAar && aktivitetsFeil.inntektPrAar) {
-                            nyeFeil.push({
-                                skjemaelementId: `aktivitetliste-${index}-inntekt-pr-ar-id`,
-                                feilmelding: `${intl.formatMessage({ id: 'OverstyrInputForm.MåOppgiInntektFor' })} ${firmaNavnet}`
-                            });
-                        }
-
-                        // Legg til feil om refusjon feltet er berørt, og feltet har en feil
-                        if (touched.aktivitetliste[index].refusjonPrAar && aktivitetsFeil.refusjonPrAar) {
-                            nyeFeil.push({
-                                skjemaelementId: `aktivitetliste-${index}-refusjon-pr-ar-id`,
-                                feilmelding: `${intl.formatMessage({ id: 'OverstyrInputForm.MåOppgiRefusjonFor' })} ${firmaNavnet}`
-                            });
-                        }
-                    }
-                }
-            })
+        if (errors.begrunnelse && touched.begrunnelse) {
+            nyeFeil.push({
+                skjemaelementId: `begrunnelse`,
+                feilmelding: `${intl.formatMessage({ id: 'OverstyrInputForm.BegrunnelseErPåkrevd' })}`
+            });
         }
+
+        if (Array.isArray(errors.perioder)) {
+            errors.perioder.forEach((periode, periodeIndex) => {
+                if (Array.isArray(periode.aktivitetliste)) {
+                    periode.aktivitetliste.forEach((aktivitetFeil, aktivitetIndex) => {
+
+                        if (
+                            touched
+                            && touched.perioder
+                            && touched.perioder[periodeIndex]
+                            && touched.perioder[periodeIndex].aktivitetliste
+                            && touched.perioder[periodeIndex].aktivitetliste[aktivitetIndex]
+                        ) {
+                            const touchedAktivitet = touched?.perioder[periodeIndex].aktivitetliste[aktivitetIndex];
+                            const { arbeidsgiverAktørId, arbeidsgiverOrgnr } = values.perioder[periodeIndex].aktivitetliste[aktivitetIndex];
+                            const firmaNavnet = utledFirmaNavn((arbeidsgiverAktørId) || arbeidsgiverOrgnr)
+                            const skjemaelementIdPrefix = `perioder-${periodeIndex}-aktivitetliste-${aktivitetIndex}`;
+
+                            if (touched.perioder && touchedAktivitet.inntektPrAar && aktivitetFeil.inntektPrAar) {
+                                nyeFeil.push({
+                                    skjemaelementId: `${skjemaelementIdPrefix}-inntekt`,
+                                    feilmelding: `${intl.formatMessage({ id: 'OverstyrInputForm.MåOppgiInntektFor' })} ${firmaNavnet}`
+                                });
+                            }
+
+                            if (touched.perioder && touchedAktivitet.refusjonPrAar && aktivitetFeil.refusjonPrAar) {
+                                nyeFeil.push({
+                                    skjemaelementId: `${skjemaelementIdPrefix}-refusjon`,
+                                    feilmelding: `${intl.formatMessage({ id: 'OverstyrInputForm.MåOppgiRefusjonFor' })} ${firmaNavnet}`
+                                });
+                            }
+
+                        }
+                    });
+
+                }
+            });
+        }
+
         setFeil(nyeFeil);
     }, [errors, touched])
 
