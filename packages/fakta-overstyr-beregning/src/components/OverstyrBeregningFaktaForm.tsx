@@ -7,7 +7,7 @@ import { TableColumn, TableRow, Table, VerticalSpacer } from '@fpsak-frontend/sh
 import { Knapp } from "nav-frontend-knapper";
 import { Input, Textarea } from "nav-frontend-skjema";
 import { EtikettInfo } from 'nav-frontend-etiketter';
-import { Aksjonspunkt, ArbeidsgiverOpplysningerPerId, SubmitCallback } from '@k9-sak-web/types';
+import { Aksjonspunkt, ArbeidsgiverOpplysningerPerId } from '@k9-sak-web/types';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import styles from './OverstyrBeregningFaktaForm.less';
 import OverstyrBeregningFeiloppsummering from "./OverstyrBeregningFeiloppsummering";
