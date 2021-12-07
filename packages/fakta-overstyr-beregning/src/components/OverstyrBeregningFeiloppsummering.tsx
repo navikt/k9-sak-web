@@ -3,17 +3,16 @@ import { injectIntl, WrappedComponentProps } from 'react-intl';
 import { useFormikContext } from 'formik';
 
 import { Feiloppsummering, FeiloppsummeringFeil } from "nav-frontend-skjema";
-import { OverstyrInputBeregningDto } from "../types/OverstyrInputBeregningDto";
 import { OverstyrInputForBeregningDto } from "../types/OverstyrInputForBeregningDto";
 
-interface ownProps {
+interface Props {
     utledFirmaNavn: (firmaIdent: string) => string;
 }
 
 /**
  * Summerer opp feilene fra overstyr beregning skjemaet via Formik context
  */
-const OverstyrBeregningFeiloppsummering = ({ utledFirmaNavn, intl }: ownProps & WrappedComponentProps) => {
+const OverstyrBeregningFeiloppsummering = ({ utledFirmaNavn, intl }: Props & WrappedComponentProps) => {
     const { values, errors, touched } = useFormikContext<OverstyrInputForBeregningDto>();
     const [feil, setFeil] = React.useState<FeiloppsummeringFeil[]>([]);
 

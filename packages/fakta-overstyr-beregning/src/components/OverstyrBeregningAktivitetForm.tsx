@@ -11,7 +11,7 @@ interface Props {
     periodeIndex: number;
     aktivitetIndex: number;
     firmaNavn: string;
-};
+}
 
 const OverstyrBeregningAktivitetForm: React.FC<Props & WrappedComponentProps> = ({
     key,

@@ -9,9 +9,3 @@ export type OverstyrInputForBeregningDto = {
     begrunnelse: string;
     perioder: OverstyrInputBeregningDto[];
 }
-
-// export type BekreftedeAksjonspunkterDto = {
-//     behandlingId: BehandlingIdDto;
-//     behandlingVersjon: number;
-//     bekreftedeAksjonspunktDtoer: OverstyrInputForBeregningDto[];
-// }

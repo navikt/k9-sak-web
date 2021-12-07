@@ -16,7 +16,7 @@ interface Props {
     readOnly: boolean,
     submittable: boolean,
     aksjonspunkter: Aksjonspunkt[],
-};
+}
 
 /**
  * OverstyrBeregningFaktaIndex
