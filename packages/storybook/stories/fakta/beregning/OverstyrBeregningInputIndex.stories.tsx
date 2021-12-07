@@ -18,8 +18,7 @@ export default {
 
 export const visOverstyrBeregningIndex = () => (
     <RawIntlProvider value={intl}>
-        <OverstyrBeregningFaktaIndex
-            behandlingId={123}
-        />
+        Kommentert ut foreløpig
+        {/* <OverstyrBeregningFaktaIndex /> */}
     </RawIntlProvider>
 );
