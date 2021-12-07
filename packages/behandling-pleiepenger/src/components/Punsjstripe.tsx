@@ -15,7 +15,7 @@ export interface JournalpostIder {
 
 interface PunsjstripeProps {
   aktørId: string;
-  saksnummer: string;
+  saksnummer?: string;
 }
 
 const Punsjstripe: React.FC<PunsjstripeProps> = ({ aktørId, saksnummer }) => {

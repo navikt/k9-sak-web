@@ -26,6 +26,7 @@ import DataFetcher from './DataFetcher';
 import PleiepengerFakta from './PleiepengerFakta';
 import PleiepengerProsess from './PleiepengerProsess';
 import Punsjstripe from './Punsjstripe';
+import UløsteOppgaverPaaBarn from './UløsteOppgaverPaaBarn';
 
 interface OwnProps {
   fetchedData: FetchedData;
@@ -88,6 +89,8 @@ const PleiepengerPaneler = ({
   const harOpprettetAksjonspunkt9203 = harOpprettetAksjonspunkt(fetchedData?.aksjonspunkter || [], 9203);
   const behandlingUtil = new BehandlingUtil(behandling);
   const arbeidsgiverOpplysningerUtil = new ArbeidsgiverOpplysningerUtil(arbeidsgiverOpplysningerPerId);
+  const barnSoektFor = fetchedData?.personopplysninger?.barnSoktFor;
+  console.log(barnSoektFor)
   return (
     <>
       <BehandlingPaVent
@@ -153,6 +156,7 @@ const PleiepengerPaneler = ({
         featureToggles={featureToggles}
       />
       <Punsjstripe aktørId={fagsakPerson.aktørId} saksnummer={fagsak.saksnummer} />
+      <UløsteOppgaverPaaBarn barnSoektFor={barnSoektFor} />
       <AndreSakerPåSøkerStripe søkerIdent={fagsakPerson.personnummer} saksnummer={fagsak.saksnummer} />
       <PleiepengerFakta
         behandling={behandling}
