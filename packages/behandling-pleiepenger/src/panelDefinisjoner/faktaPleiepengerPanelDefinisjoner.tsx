@@ -20,10 +20,10 @@ const faktaPanelDefinisjoner = [
   new MedlemskapsvilkaretFaktaPanelDef(),
   new OpptjeningsvilkaretFaktaPanelDef(),
   new InntektsmeldingFaktaPanelDef(),
+  new OverstyrBeregningFaktaPanelDef(),
   new BeregningFaktaPanelDef(),
   new FordelBeregningPanelDef(),
   new InntektOgYtelserFaktaPanelDef(),
-  new OverstyrBeregningFaktaPanelDef(),
 ];
 
 export default faktaPanelDefinisjoner;
