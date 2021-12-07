@@ -90,7 +90,6 @@ const PleiepengerPaneler = ({
   const behandlingUtil = new BehandlingUtil(behandling);
   const arbeidsgiverOpplysningerUtil = new ArbeidsgiverOpplysningerUtil(arbeidsgiverOpplysningerPerId);
   const barnSoektFor = fetchedData?.personopplysninger?.barnSoktFor;
-  console.log(barnSoektFor)
   return (
     <>
       <BehandlingPaVent
