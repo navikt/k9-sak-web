@@ -2,9 +2,11 @@ import React from 'react';
 import classNames from 'classnames/bind';
 import Snakkeboble from 'nav-frontend-snakkeboble';
 
+import useGlobalStateRestApiData from '@k9-sak-web/rest-api-hooks/src/global-data/useGlobalStateRestApiData';
 import HistorikkAktor from '@fpsak-frontend/kodeverk/src/historikkAktor';
 import navBrukerKjonn from '@fpsak-frontend/kodeverk/src/navBrukerKjonn';
-import { Kodeverk } from '@k9-sak-web/types';
+import { Kodeverk, SaksbehandlereInfo } from '@k9-sak-web/types';
+import { K9sakApiKeys } from '../../../../../sak-app/src/data/k9sakApi';
 
 import styles from './snakkebobleContainer.less';
 
@@ -32,9 +34,8 @@ const snakkeboblePanelCls = (aktoer: Kodeverk) =>
     snakkeboble__beslutter: aktoer.kode === HistorikkAktor.BESLUTTER,
     snakkeboble__losningen: aktoer.kode === HistorikkAktor.VEDTAKSLOSNINGEN,
     snakkeboble__ekstern: aktoer.kode === HistorikkAktor.ARBEIDSGIVER,
-    snakkeboble__bruker: aktoer.kode === HistorikkAktor.SOKER
-  })
-
+    snakkeboble__bruker: aktoer.kode === HistorikkAktor.SOKER,
+  });
 
 interface OwnProps {
   dato: string;
@@ -45,15 +46,21 @@ interface OwnProps {
   children: React.ReactElement;
 }
 
-const SnakkebobleContainer = ({ dato, aktoer, rolleNavn = '', kjoenn, opprettetAv, children }: OwnProps) => (
-  <Snakkeboble
-    className={`snakkeboble__kompakt ${snakkeboblePanelCls(aktoer)}`}
-    topp={`${formatDate(dato)} // ${rolleNavn} ${opprettetAv || ''}`}
-    pilHoyre={pilHøyre(aktoer)}
-    ikonClass={snakkebobleIkonCls(aktoer, kjoenn?.kode)}
-  >
-    {children}
-  </Snakkeboble>
-);
+const SnakkebobleContainer = ({ dato, aktoer, rolleNavn = '', kjoenn, opprettetAv, children }: OwnProps) => {
+  const saksbehandlere = useGlobalStateRestApiData<SaksbehandlereInfo>(K9sakApiKeys.HENT_SAKSBEHANDLERE);
+  const saksbehandlernavn =
+    typeof saksbehandlere?.saksbehandlere === 'object' &&
+    (saksbehandlere?.saksbehandlere[opprettetAv] || saksbehandlere?.saksbehandlere[opprettetAv?.toLowerCase()]);
+  return (
+    <Snakkeboble
+      className={`snakkeboble__kompakt ${snakkeboblePanelCls(aktoer)}`}
+      topp={`${formatDate(dato)} // ${rolleNavn} ${saksbehandlernavn || opprettetAv || ''}`}
+      pilHoyre={pilHøyre(aktoer)}
+      ikonClass={snakkebobleIkonCls(aktoer, kjoenn?.kode)}
+    >
+      {children}
+    </Snakkeboble>
+  );
+};
 
 export default SnakkebobleContainer;

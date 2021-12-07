@@ -36,7 +36,7 @@ export type {
   BeregningsresultatPeriode,
   BeregningsresultatPeriodeAndel,
 } from './src/beregningsresultatUtbetaltTsType';
-export type { default as BeregningAvklaringsbehov } from './src/beregningAvklaringsbehovTsType';
+export type { default as BeregningAvklaringsbehov } from './src/beregning/beregningAvklaringsbehovTsType';
 
 export type { Uttaksperiode, Utfalltype, Vilkår, VurderteVilkår } from './src/omsorgspenger/Uttaksperiode';
 export { UtfallEnum, VilkårEnum } from './src/omsorgspenger/Uttaksperiode';
@@ -56,3 +56,4 @@ export * from './src/meldingTsType';
 export type { default as RelatertFagsak } from './src/relatertFagsak';
 export type { default as DokumentStatus } from './src/dokumentStatusTsType';
 export type { default as SaksbehandlereInfo} from './src/saksbehandlereInfo';
+export type { default as Arbeidsgiver} from './src/arbeidsgiverTsType';

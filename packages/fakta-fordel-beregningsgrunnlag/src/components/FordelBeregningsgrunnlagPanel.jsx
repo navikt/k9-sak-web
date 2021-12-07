@@ -3,21 +3,22 @@ import PropTypes from 'prop-types';
 import { kodeverkObjektPropType } from '@fpsak-frontend/prop-types';
 import avklaringsbehovCodes from '@fpsak-frontend/kodeverk/src/beregningAvklaringsbehovCodes';
 import FordelingForm from './FordelingForm';
+import VurderEndringRefusjonForm from './refusjon/VurderEndringRefusjonForm';
+import beregningsgrunnlagPropType from '../propTypes/beregningsgrunnlagPropType';
 import beregningAvklaringsbehovPropType from '../propTypes/beregningAvklaringsbehovPropType';
 import vilkårPeriodePropType from '../propTypes/vilkårPeriodePropType';
 
-const { FORDEL_BEREGNINGSGRUNNLAG } = avklaringsbehovCodes;
+const { FORDEL_BEREGNINGSGRUNNLAG, VURDER_REFUSJON_BERGRUNN } = avklaringsbehovCodes;
 
-export const BEGRUNNELSE_FORDELING_NAME = 'begrunnelseFordeling';
+const harFordelInfo = bg => (bg && bg.faktaOmFordeling ? !!bg.faktaOmFordeling.fordelBeregningsgrunnlag : false);
 
-const harIkkeFordelInfo = bg => {
-  if (!bg) {
-    return true;
-  }
-  return bg.faktaOmFordeling ? !bg.faktaOmFordeling.fordelBeregningsgrunnlag : true;
-};
+const harRefusjonInfo = bg => !!(bg && bg.refusjonTilVurdering);
+
 const getFordelAvklaringsbehov = avklaringsbehov =>
 avklaringsbehov ? avklaringsbehov.find(ab => ab.definisjon.kode === FORDEL_BEREGNINGSGRUNNLAG) : undefined;
+
+const getRefusjonAvklaringsbehov = avklaringsbehov =>
+avklaringsbehov ? avklaringsbehov.find(ab => ab.definisjon.kode === VURDER_REFUSJON_BERGRUNN) : undefined;
 
 /**
  * FordelBeregningsgrunnlagPanel
@@ -64,28 +65,51 @@ export class FordelBeregningsgrunnlagPanel extends Component {
     } = this;
 
     const fordelAP = getFordelAvklaringsbehov(avklaringsbehov);
-    if (harIkkeFordelInfo(beregningsgrunnlag) || !fordelAP) {
-      return null;
-    }
+    const refusjonAP = getRefusjonAvklaringsbehov(avklaringsbehov);
+    const skalViseFordeling = fordelAP && harFordelInfo(beregningsgrunnlag);
+    const skalViseRefusjon = refusjonAP && harRefusjonInfo(beregningsgrunnlag);
     return (
-      <FordelingForm
-        submitEnabled={submitEnabled}
-        submittable={submittable}
-        readOnly={readOnly}
-        submitCallback={submitCallback}
-        behandlingId={behandlingId}
-        behandlingVersjon={behandlingVersjon}
-        alleKodeverk={alleKodeverk}
-        arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
-        alleMerknaderFraBeslutter={alleMerknaderFraBeslutter}
-        beregningsgrunnlag={beregningsgrunnlag}
-        behandlingType={behandlingType}
-        avklaringsbehov={avklaringsbehov}
-        kreverManuellBehandling={kreverManuellBehandling}
-        aktivtBeregningsgrunnlagIndex={aktivtBeregningsgrunnlagIndex}
-        alleBeregningsgrunnlag={alleBeregningsgrunnlag}
-        vilkårsperioder={vilkårsperioder}
-      />
+    <>
+      {skalViseRefusjon && (
+        <VurderEndringRefusjonForm
+            submitEnabled={submitEnabled}
+            submittable={submittable}
+            readOnly={readOnly}
+            submitCallback={submitCallback}
+            behandlingId={behandlingId}
+            behandlingVersjon={behandlingVersjon}
+            alleKodeverk={alleKodeverk}
+            arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
+            alleMerknaderFraBeslutter={alleMerknaderFraBeslutter}
+            behandlingType={behandlingType}
+            avklaringsbehov={avklaringsbehov}
+            kreverManuellBehandling={kreverManuellBehandling}
+            aktivtBeregningsgrunnlagIndex={aktivtBeregningsgrunnlagIndex}
+            alleBeregningsgrunnlag={alleBeregningsgrunnlag}
+            vilkårsperioder={vilkårsperioder}
+          />
+        )}
+        {skalViseFordeling && (
+          <FordelingForm
+            submitEnabled={submitEnabled}
+            submittable={submittable}
+            readOnly={readOnly}
+            submitCallback={submitCallback}
+            behandlingId={behandlingId}
+            behandlingVersjon={behandlingVersjon}
+            alleKodeverk={alleKodeverk}
+            arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
+            alleMerknaderFraBeslutter={alleMerknaderFraBeslutter}
+            beregningsgrunnlag={beregningsgrunnlag}
+            behandlingType={behandlingType}
+            avklaringsbehov={avklaringsbehov}
+            kreverManuellBehandling={kreverManuellBehandling}
+            aktivtBeregningsgrunnlagIndex={aktivtBeregningsgrunnlagIndex}
+            alleBeregningsgrunnlag={alleBeregningsgrunnlag}
+            vilkårsperioder={vilkårsperioder}
+          />
+        )}
+      </>
     );
   }
 }
@@ -97,7 +121,7 @@ FordelBeregningsgrunnlagPanel.propTypes = {
   submittable: PropTypes.bool.isRequired,
   behandlingId: PropTypes.number.isRequired,
   behandlingVersjon: PropTypes.number.isRequired,
-  beregningsgrunnlag: PropTypes.shape().isRequired,
+  beregningsgrunnlag: beregningsgrunnlagPropType.isRequired,
   alleKodeverk: PropTypes.shape().isRequired,
   arbeidsgiverOpplysningerPerId: PropTypes.shape().isRequired,
   alleMerknaderFraBeslutter: PropTypes.shape({
@@ -106,7 +130,7 @@ FordelBeregningsgrunnlagPanel.propTypes = {
   behandlingType: kodeverkObjektPropType.isRequired,
   kreverManuellBehandling: PropTypes.bool.isRequired,
   aktivtBeregningsgrunnlagIndex: PropTypes.number.isRequired,
-  alleBeregningsgrunnlag: PropTypes.arrayOf(PropTypes.shape()).isRequired,
+  alleBeregningsgrunnlag: PropTypes.arrayOf(beregningsgrunnlagPropType).isRequired,
   vilkårsperioder: PropTypes.arrayOf(vilkårPeriodePropType).isRequired,
 };
 

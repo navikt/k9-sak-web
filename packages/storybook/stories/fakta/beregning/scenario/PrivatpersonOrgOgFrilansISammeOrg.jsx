@@ -1,7 +1,7 @@
 // eslint-disable max-len
 export const beregningsgrunnlag = [
     {
-      "avklaringsbehov": [],
+      "avklaringsbehov": [{"definisjon": { "kode" : '5058' }, "status": { "kode": 'OPPR'}}],
       "skjaeringstidspunktBeregning": "2020-03-01",
       "skjæringstidspunkt": "2020-03-01",
       "aktivitetStatus": [
@@ -535,7 +535,8 @@ export const beregningsgrunnlag = [
     }
   ];
   
-  const vilkår = beregningsgrunnlag.map((bg, index) => ({
+  export const vilkår = beregningsgrunnlag.map((bg, index) => ({
+    vilkarType: { kode: "FP_VK_41" },
     avslagKode: null,
     merknadParametere: {},
     vilkarStatus: { kode: 'IKKE_VURDERT', kodeverk: 'VILKAR_UTFALL_TYPE' },
@@ -544,6 +545,7 @@ export const beregningsgrunnlag = [
       tom: beregningsgrunnlag.length === index ? null : beregningsgrunnlag[index].skjaeringstidspunktBeregning,
     },
     begrunnelse: null,
+    vurdersIBehandlingen: true,
   }));
   
   export const behandling = {
@@ -558,23 +560,3 @@ export const beregningsgrunnlag = [
       },
     },
   };
-
-  export const aksjonspunkt = [
-    {
-      definisjon: { kode: '5058', kodeverk: 'AKSJONSPUNKT_DEF' },
-      status: { kode: 'OPPR', kodeverk: 'AKSJONSPUNKT_STATUS' },
-      begrunnelse: null,
-      vilkarType: null,
-      toTrinnsBehandling: true,
-      toTrinnsBehandlingGodkjent: null,
-      vurderPaNyttArsaker: null,
-      besluttersBegrunnelse: null,
-      aksjonspunktType: { kode: 'MANU', kodeverk: 'AKSJONSPUNKT_TYPE' },
-      kanLoses: true,
-      erAktivt: true,
-      fristTid: null,
-      endretTidspunkt: null,
-      endretAv: null,
-    },
-  ];
-  

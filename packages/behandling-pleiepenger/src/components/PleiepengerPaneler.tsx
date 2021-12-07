@@ -18,7 +18,9 @@ import {
 } from '@k9-sak-web/types';
 import moment from 'moment';
 import React, { useState } from 'react';
+import { Arbeidstype } from '../types/Arbeidstype';
 import FetchedData from '../types/fetchedDataTsType';
+import AndreSakerPåSøkerStripe from './AndreSakerPåSøkerStripe';
 import ArbeidsgiverMedManglendePerioderListe from './ArbeidsgiverMedManglendePerioderListe';
 import DataFetcher from './DataFetcher';
 import PleiepengerFakta from './PleiepengerFakta';
@@ -49,6 +51,17 @@ interface OwnProps {
 interface FaktaPanelInfo {
   urlCode: string;
   textCode: string;
+}
+
+interface Data {
+  mangler?: {
+    arbeidsgiver: {
+      organisasjonsnummer: string;
+      type: Arbeidstype;
+      aktørId: string;
+    };
+    manglendePerioder: string[];
+  }[];
 }
 
 const PleiepengerPaneler = ({
@@ -87,7 +100,7 @@ const PleiepengerPaneler = ({
       {harOpprettetAksjonspunkt9203 && (
         <DataFetcher
           url={behandlingUtil.getEndpointHrefByRel('psb-manglende-arbeidstid')}
-          contentRenderer={(data, isLoading, hasError) => (
+          contentRenderer={(data: Data, isLoading, hasError) => (
             <AksjonspunktUtenLøsningModal
               melding={
                 <div>
@@ -99,7 +112,7 @@ const PleiepengerPaneler = ({
                     <ArbeidsgiverMedManglendePerioderListe
                       arbeidsgivereMedPerioder={data.mangler?.map(mangel => ({
                         arbeidsgiverNavn: arbeidsgiverOpplysningerUtil.finnArbeidsgiversNavn(
-                          mangel.arbeidsgiver.organisasjonsnummer,
+                          mangel.arbeidsgiver.organisasjonsnummer || mangel.arbeidsgiver.aktørId,
                         ),
                         organisasjonsnummer: mangel.arbeidsgiver.organisasjonsnummer,
                         perioder: mangel.manglendePerioder.map(periode => {
@@ -108,7 +121,10 @@ const PleiepengerPaneler = ({
                           const formattedTom = moment(tom, 'YYYY-MM-DD').format('DD.MM.YYYY');
                           return `${formattedFom} - ${formattedTom}`;
                         }),
-                        arbeidstype: mangel.arbeidsgiver?.type
+                        arbeidstype: mangel.arbeidsgiver?.type,
+                        personIdentifikator:
+                          arbeidsgiverOpplysningerUtil.arbeidsgiverOpplysningerPerId[mangel.arbeidsgiver?.aktørId]
+                            ?.personIdentifikator,
                       }))}
                     />
                   )}
@@ -137,6 +153,7 @@ const PleiepengerPaneler = ({
         featureToggles={featureToggles}
       />
       <Punsjstripe aktørId={fagsakPerson.aktørId} saksnummer={fagsak.saksnummer} />
+      <AndreSakerPåSøkerStripe søkerIdent={fagsakPerson.personnummer} saksnummer={fagsak.saksnummer} />
       <PleiepengerFakta
         behandling={behandling}
         data={fetchedData}
