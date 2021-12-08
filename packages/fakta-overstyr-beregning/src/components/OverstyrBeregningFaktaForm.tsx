@@ -10,7 +10,6 @@ import { EtikettInfo } from 'nav-frontend-etiketter';
 import { Aksjonspunkt, ArbeidsgiverOpplysningerPerId } from '@k9-sak-web/types';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import styles from './OverstyrBeregningFaktaForm.less';
-import OverstyrBeregningFeiloppsummering from "./OverstyrBeregningFeiloppsummering";
 import { OverstyrInputBeregningDto } from "../types/OverstyrInputBeregningDto";
 import { formaterDatoString } from "./utils";
 import { OverstyrInputForBeregningDto } from "../types/OverstyrInputForBeregningDto";
@@ -171,8 +170,6 @@ const OverstyrBeregningFaktaForm = ({
                                     value={field.value}
                                     {...field} />}
                             </Field>
-                            <VerticalSpacer sixteenPx />
-                            <OverstyrBeregningFeiloppsummering utledFirmaNavn={utledFirmaNavn} />
                             <VerticalSpacer sixteenPx />
                             <Knapp spinner={submitDelay} disabled={erDeaktivert(isValid)} autoDisableVedSpinner type="hoved" htmlType="submit">
                                 <FormattedMessage id="OverstyrInputForm.LagreAksjonspunkt" />
