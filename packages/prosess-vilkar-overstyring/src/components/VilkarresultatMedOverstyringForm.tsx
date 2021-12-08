@@ -23,6 +23,7 @@ import moment from 'moment';
 import { Knapp } from 'nav-frontend-knapper';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
 import Vilkarperiode from '@k9-sak-web/types/src/vilkarperiode';
+import vilkarUtfallType from "@fpsak-frontend/kodeverk/src/vilkarUtfallType";
 import OverstyrBekreftKnappPanel from './OverstyrBekreftKnappPanel';
 import { VilkarresultatMedBegrunnelse } from './VilkarresultatMedBegrunnelse';
 import styles from './vilkarresultatMedOverstyringForm.less';
@@ -230,6 +231,7 @@ const validate = values => VilkarresultatMedBegrunnelse.validate(values);
 
 const mapStateToPropsFactory = (_initialState, initialOwnProps: VilkarresultatMedOverstyringFormProps) => {
   const { overstyringApKode, submitCallback, periode } = initialOwnProps;
+  console.log('PERIODE', periode);
   const periodeFom = periode?.periode?.fom;
   const periodeTom = periode?.periode?.tom;
   const onSubmit = values => submitCallback([transformValues(values, overstyringApKode, periodeFom, periodeTom)]);
@@ -253,7 +255,7 @@ const mapStateToPropsFactory = (_initialState, initialOwnProps: VilkarresultatMe
       customVilkarOppfyltText: getCustomVilkarTextForOppfylt(ownProps),
       customVilkarIkkeOppfyltText: getCustomVilkarTextForIkkeOppfylt(ownProps),
       isSolvable: erOverstyrt || isSolvable,
-      isReadOnly: overrideReadOnly,
+      isReadOnly: overrideReadOnly || isSolvable && periode?.vilkarStatus.kode !== vilkarUtfallType.IKKE_VURDERT,
       hasAksjonspunkt: aksjonspunkt !== undefined,
       validate: validateFn,
       form: formName,
