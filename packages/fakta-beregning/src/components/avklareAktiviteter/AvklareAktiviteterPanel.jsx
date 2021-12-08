@@ -226,10 +226,7 @@ const validate = values => {
 export const transformValues = (values, behandlingResultatPerioder, aktivtBg) => {
   const fieldArrayList = values[fieldArrayName];
   const harOverstyrt = fieldArrayList.some(currentFormValues => currentFormValues[MANUELL_OVERSTYRING_FIELD]);
-  const valuesMedBegrunnelse = fieldArrayList.find(
-    currentFormValues => !!currentFormValues[BEGRUNNELSE_AVKLARE_AKTIVITETER_NAME],
-  );
-  const beg = valuesMedBegrunnelse ? valuesMedBegrunnelse[BEGRUNNELSE_AVKLARE_AKTIVITETER_NAME] : null;
+  const beg = values[BEGRUNNELSE_AVKLARE_AKTIVITETER_NAME];
   const løsteGrunnlag = fieldArrayList
     .filter(currentFormValues => {
       const skalOverstyre = currentFormValues[MANUELL_OVERSTYRING_FIELD];
