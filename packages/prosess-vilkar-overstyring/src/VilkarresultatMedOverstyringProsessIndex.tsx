@@ -63,15 +63,21 @@ const VilkarresultatMedOverstyringProsessIndex = ({
   const [activeTab, setActiveTab] = useState(0);
 
   const [activeVilkår] = vilkar;
-  const perioder = activeVilkår.perioder.filter(periode => visAllePerioder || periode.vurdersIBehandlingen);
-
-  const activePeriode = activeVilkår.perioder[activeTab];
+  const perioder = activeVilkår.perioder.filter(periode => visAllePerioder && !periode.vurdersIBehandlingen
+    || periode.vurdersIBehandlingen && activeVilkår.perioder.length === 1
+    || periode.vurdersIBehandlingen && !visAllePerioder);
 
   useEffect(() => {
     if (!visAllePerioder && activeTab >= perioder.length) {
       setActiveTab(0);
     }
   }, [activeTab, visAllePerioder]);
+
+  if(perioder.length === 0){
+    return null;
+  }
+
+  const activePeriode = perioder.length === 1 ? perioder[0] : perioder[activeTab];
 
   return (
     <RawIntlProvider value={intl}>
