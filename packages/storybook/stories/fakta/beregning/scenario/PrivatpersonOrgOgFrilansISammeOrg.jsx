@@ -1,7 +1,7 @@
 // eslint-disable max-len
 export const beregningsgrunnlag = [
     {
-      "avklaringsbehov": [],
+      "avklaringsbehov": [{"definisjon": { "kode" : '5058' }, "status": { "kode": 'OPPR'}}],
       "skjaeringstidspunktBeregning": "2020-03-01",
       "skjæringstidspunkt": "2020-03-01",
       "aktivitetStatus": [
@@ -535,7 +535,8 @@ export const beregningsgrunnlag = [
     }
   ];
   
-  const vilkår = beregningsgrunnlag.map((bg, index) => ({
+  export const vilkår = beregningsgrunnlag.map((bg, index) => ({
+    vilkarType: { kode: "FP_VK_41" },
     avslagKode: null,
     merknadParametere: {},
     vilkarStatus: { kode: 'IKKE_VURDERT', kodeverk: 'VILKAR_UTFALL_TYPE' },

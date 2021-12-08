@@ -1,4 +1,5 @@
 import avklaringsbehovCodes, { harAvklaringsbehov } from '@fpsak-frontend/kodeverk/src/beregningAvklaringsbehovCodes';
+import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { TabsPure } from 'nav-frontend-tabs';
 import PropTypes from 'prop-types';
@@ -11,6 +12,7 @@ import VurderFaktaBeregningPanel from './components/fellesFaktaForATFLogSN/Vurde
 import beregningBehandlingPropType from './propTypes/beregningBehandlingPropType';
 import beregningsgrunnlagPropType from './propTypes/beregningsgrunnlagPropType';
 import AvklareAktiviteterPanel from './components/avklareAktiviteter/AvklareAktiviteterPanel';
+import styles from './beregningFaktaIndex.less';
 
 const cache = createIntlCache();
 
@@ -53,6 +55,7 @@ const skalVurderes = (bg, vilkårsperioder) =>
   vilkårsperioder.find(({periode}) => periode.fom === bg.skjæringstidspunkt).vurdersIBehandlingen;
 
 const BeregningFaktaIndex = ({
+  vilkar,
   behandling,
   beregningsgrunnlag,
   alleKodeverk,
@@ -65,21 +68,22 @@ const BeregningFaktaIndex = ({
   const skalBrukeTabs = beregningsgrunnlag.length > 1;
   const [aktivtBeregningsgrunnlagIndeks, setAktivtBeregningsgrunnlagIndeks] = useState(0);
   const aktivtBeregningsgrunnlag = beregningsgrunnlag[aktivtBeregningsgrunnlagIndeks];
-  const vilkårsperioder = behandling?.behandlingsresultat?.vilkårResultat.BEREGNINGSGRUNNLAGVILKÅR;
   const aktiveAvklaringsBehov = aktivtBeregningsgrunnlag.avklaringsbehov;
-
+  const vilkårsperioder = vilkar.find(v => v.vilkarType && v.vilkarType.kode === vilkarType.BEREGNINGSGRUNNLAGVILKARET).perioder
   return (
     <RawIntlProvider value={intl}>
       {skalBrukeTabs && (
-        <TabsPure
-          tabs={beregningsgrunnlag.map((currentBeregningsgrunnlag, currentBeregningsgrunnlagIndex) => ({
-            aktiv: aktivtBeregningsgrunnlagIndeks === currentBeregningsgrunnlagIndex,
-            label: lagLabel(currentBeregningsgrunnlag, vilkårsperioder),
-            className: skalVurderes(currentBeregningsgrunnlag, vilkårsperioder) ? 
-            'harAksjonspunkt' : '',
-          }))}
-          onChange={(e, clickedIndex) => setAktivtBeregningsgrunnlagIndeks(clickedIndex)}
-        />
+        <div className={styles.tabsContainer}>
+          <TabsPure
+            tabs={beregningsgrunnlag.map((currentBeregningsgrunnlag, currentBeregningsgrunnlagIndex) => ({
+              aktiv: aktivtBeregningsgrunnlagIndeks === currentBeregningsgrunnlagIndex,
+              label: lagLabel(currentBeregningsgrunnlag, vilkårsperioder),
+              className: skalVurderes(currentBeregningsgrunnlag, vilkårsperioder) ? 
+              'harAksjonspunkt' : '',
+            }))}
+            onChange={(e, clickedIndex) => setAktivtBeregningsgrunnlagIndeks(clickedIndex)}
+          />
+        </div>
       )}
       <div style={{ paddingTop: skalBrukeTabs ? '16px' : '' }}>
         <AvklareAktiviteterPanel
@@ -132,6 +136,7 @@ BeregningFaktaIndex.propTypes = {
   submittable: PropTypes.bool.isRequired,
   erOverstyrer: PropTypes.bool.isRequired,
   arbeidsgiverOpplysningerPerId: PropTypes.shape().isRequired,
+  vilkar: PropTypes.arrayOf(PropTypes.shape()).isRequired,
 };
 
 BeregningFaktaIndex.defaultProps = {

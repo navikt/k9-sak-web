@@ -246,7 +246,8 @@ VurderFaktaBeregningPanelImpl.propTypes = {
 const mapGrunnlagsliste = (fieldArrayList, alleBeregningsgrunnlag, behandlingResultatPerioder) => 
   fieldArrayList
   .map((currentFormValues, index) => {
-    if ((måVurderes(alleBeregningsgrunnlag[index].avklaringsbehov) || erOverstyring(currentFormValues)) && currentFormValues.erTilVurdering) {
+    if ((måVurderes(alleBeregningsgrunnlag[index].avklaringsbehov, currentFormValues.erTilVurdering) || erOverstyring(currentFormValues))
+    && currentFormValues.erTilVurdering) {
       const faktaBeregningValues = currentFormValues;
       const stpOpptjening = faktaBeregningValues.faktaOmBeregning.avklarAktiviteter.skjæringstidspunkt;
       const vilkarPeriode = behandlingResultatPerioder.find(periode => periode.periode.fom === stpOpptjening);

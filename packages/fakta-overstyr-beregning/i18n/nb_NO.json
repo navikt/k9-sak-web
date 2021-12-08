@@ -1,0 +1,16 @@
+{
+    "OverstyrInputForm.InntektFeltTypeFeil": "Inntekt må være et tall",
+    "OverstyrInputForm.InntektFeltPakrevdFeil": "Inntektsbeløp må fylles ut",
+    "OverstyrInputForm.RefusjonFeltTypeFeil": "Refusjon må være et tall",
+    "OverstyrInputForm.RefusjonFeltPakrevdFeil": "Refusjon for aktive arbeidsforhold må fylles ut",
+    "OverstyrInputForm.Feiloppsummering": "For å fullføre aksjonspunktet må du rette opp følgende",
+    "OverstyrInputForm.MåOppgiInntektFor": "Du må oppgi inntekt for",
+    "OverstyrInputForm.MåOppgiRefusjonFor": "Du må oppgi refusjon for",
+    "OverstyrInputForm.BegrunnelseErPåkrevd": "Du må oppgi en begrunnelse",
+    "OverstyrInputForm.FirmaHeader": "Arbeidsgiver",
+    "OverstyrInputForm.InntektPrAar": "Inntekt pr. år",
+    "OverstyrInputForm.RefusjonPrAar": "Refusjon pr. år",
+    "OverstyrInputForm.UkjentFirma": "Ukjent arbeidsgiver",
+    "OverstyrInputForm.Begrunnelse": "Begrunnelse",
+    "OverstyrInputForm.LagreAksjonspunkt": "Bekreft og fortsett"
+}

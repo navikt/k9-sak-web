@@ -1,4 +1,4 @@
-export const AINNTEKT_URL = 'https://arbeid-og-inntekt.nais.adeo.no/'; // /?0#!empty';
+export const AINNTEKT_URL = 'https://arbeid-og-inntekt.nais.adeo.no'; // /?0#!empty';
 export const AAREG_URL = 'https://arbeid-og-inntekt.nais.adeo.no/'; // /?4';
 export const RETTSKILDE_URL = 'https://lovdata.no/pro/sso/login/nav';
 export const LINK_TIL_BESTE_BEREGNING_REGNEARK =
