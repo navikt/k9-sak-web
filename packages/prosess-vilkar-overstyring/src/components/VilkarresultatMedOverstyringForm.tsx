@@ -231,7 +231,6 @@ const validate = values => VilkarresultatMedBegrunnelse.validate(values);
 
 const mapStateToPropsFactory = (_initialState, initialOwnProps: VilkarresultatMedOverstyringFormProps) => {
   const { overstyringApKode, submitCallback, periode } = initialOwnProps;
-  console.log('PERIODE', periode);
   const periodeFom = periode?.periode?.fom;
   const periodeTom = periode?.periode?.tom;
   const onSubmit = values => submitCallback([transformValues(values, overstyringApKode, periodeFom, periodeTom)]);
