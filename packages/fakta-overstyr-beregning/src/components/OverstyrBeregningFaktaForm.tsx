@@ -108,8 +108,6 @@ const OverstyrBeregningFaktaForm = ({
                 onSubmit={values => {
                     setSubmitDelay(true);
                     submitCallback([values]);
-                    // eslint-disable-next-line no-console
-                    console.log(JSON.stringify(values, null, 2));
                 }}
                 validationSchema={validationSchema}
                 validateOnBlur
