@@ -81,21 +81,18 @@ export const SoknadsfristVilkarForm = ({
   invalid,
   alleDokumenter,
   dokumenter,
-  status
 }: SoknadsfristVilkarFormProps & StateProps & InjectedFormProps) => {
   const toggleAv = () => {
     reset();
     toggleOverstyring(oldArray => oldArray.filter(code => code !== aksjonspunktCodes.OVERSTYR_SOKNADSFRISTVILKAR));
   };
 
-  const erPerioderVurdertOgApSkaIkkeOverstyres = !erOverstyrt && harÅpentAksjonspunkt && status !== vilkarUtfallType.IKKE_VURDERT;
-
   return (
     <form onSubmit={handleSubmit}>
       {(erOverstyrt || harAksjonspunkt) && dokumenter.length > 0 && (
         <AksjonspunktBox
           className={styles.aksjonspunktMargin}
-          erAksjonspunktApent={erOverstyrt || erPerioderVurdertOgApSkaIkkeOverstyres}
+          erAksjonspunktApent={erOverstyrt}
         >
           {!isReadOnly &&
             (harÅpentAksjonspunkt ? (
@@ -114,7 +111,7 @@ export const SoknadsfristVilkarForm = ({
                 key={dokument.journalpostId}
                 erAktivtDokument={dokumenter.findIndex(d => d.journalpostId === dokument.journalpostId) > -1}
                 skalViseBegrunnelse={erOverstyrt || harAksjonspunkt}
-                readOnly={isReadOnly || (!erOverstyrt && !harÅpentAksjonspunkt) || erPerioderVurdertOgApSkaIkkeOverstyres}
+                readOnly={isReadOnly || !erOverstyrt && !harÅpentAksjonspunkt}
                 erVilkarOk={erVilkarOk}
                 dokumentIndex={index}
                 dokument={dokument}
@@ -169,7 +166,7 @@ export const SoknadsfristVilkarForm = ({
               </FlexRow>
             </FlexContainer>
           )}
-          {harÅpentAksjonspunkt && !erPerioderVurdertOgApSkaIkkeOverstyres && !erOverstyrt && (
+          {harÅpentAksjonspunkt && !erOverstyrt && (
             <Hovedknapp mini spinner={submitting} disabled={invalid || submitting || pristine}>
               <FormattedMessage id="SoknadsfristVilkarForm.ConfirmInformation" />
             </Hovedknapp>
@@ -290,7 +287,7 @@ const mapStateToPropsFactory = (_initialState, initialOwnProps: SoknadsfristVilk
       harÅpentAksjonspunkt,
       harAksjonspunkt: aksjonspunkt !== undefined,
       isSolvable: erOverstyrt || isSolvable,
-      isReadOnly: overrideReadOnly,
+      isReadOnly: overrideReadOnly || !periode?.vurdersIBehandlingen,
       ...behandlingFormValueSelector(formName, behandlingId, behandlingVersjon)(
         state,
         'isOverstyrt',
