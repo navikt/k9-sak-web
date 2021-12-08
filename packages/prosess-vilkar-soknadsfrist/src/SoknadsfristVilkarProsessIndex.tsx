@@ -154,7 +154,7 @@ const SoknadsfristVilkarProsessIndex = ({
             erOverstyrt={erOverstyrt}
             kanOverstyreAccess={kanOverstyreAccess}
             lovReferanse={activeVilkår.lovReferanse ?? lovReferanse}
-            overrideReadOnly={overrideReadOnly}
+            overrideReadOnly={overrideReadOnly || dokumenterSomSkalVurderes.length === 0}
             overstyringApKode={aksjonspunktCodes.OVERSTYR_SOKNADSFRISTVILKAR}
             panelTittelKode={panelTittelKode}
             status={activePeriode.vilkarStatus.kode}
