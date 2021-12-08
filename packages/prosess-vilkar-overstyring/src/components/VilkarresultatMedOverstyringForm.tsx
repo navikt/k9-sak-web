@@ -23,7 +23,6 @@ import moment from 'moment';
 import { Knapp } from 'nav-frontend-knapper';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
 import Vilkarperiode from '@k9-sak-web/types/src/vilkarperiode';
-import vilkarUtfallType from "@fpsak-frontend/kodeverk/src/vilkarUtfallType";
 import OverstyrBekreftKnappPanel from './OverstyrBekreftKnappPanel';
 import { VilkarresultatMedBegrunnelse } from './VilkarresultatMedBegrunnelse';
 import styles from './vilkarresultatMedOverstyringForm.less';
