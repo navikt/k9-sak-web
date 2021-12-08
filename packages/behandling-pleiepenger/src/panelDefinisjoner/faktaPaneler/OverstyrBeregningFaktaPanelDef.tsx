@@ -38,8 +38,6 @@ class OverstyrBeregningFaktaPanelDef extends FaktaPanelDef {
 
     getEndepunkter = (): string[] => [PleiepengerBehandlingApiKeys.OVERSTYR_INPUT_BEREGNING];
 
-    // getOverstyrVisningAvKomponent = ({  }) => ;
-
     getData = ({ arbeidsgiverOpplysningerPerId }) => ({ arbeidsgiverOpplysningerPerId });
 }
 
