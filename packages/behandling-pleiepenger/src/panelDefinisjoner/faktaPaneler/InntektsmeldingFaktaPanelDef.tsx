@@ -14,10 +14,7 @@ class InntektsmeldingFaktaPanelDef extends FaktaPanelDef {
 
   getTekstKode = () => 'InntektsmeldingInfoPanel.Title';
 
-  getAksjonspunktKoder = () => [
-    aksjonspunktCodes.INNTEKTSMELDING_MANGLER,
-    aksjonspunktCodes.INNTEKTSMELDING_MANGLER_ENDELIG_AVKLARING,
-  ];
+  getAksjonspunktKoder = () => [aksjonspunktCodes.INNTEKTSMELDING_MANGLER];
 
   getEndepunkter = () => [PleiepengerBehandlingApiKeys.ARBEIDSFORHOLD];
 
