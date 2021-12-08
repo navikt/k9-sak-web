@@ -2,6 +2,7 @@ export { default as CheckboxField } from './src/CheckboxField';
 export { default as DatepickerField } from './src/DatepickerField';
 export { default as DecimalField } from './src/DecimalField';
 export { default as InputField } from './src/InputField';
+export { default as ReadOnlyField } from './src/ReadOnlyField'
 export { default as NavFieldGroup } from './src/NavFieldGroup';
 export { default as RadioGroupField } from './src/RadioGroupField';
 export { default as RadioOption } from './src/RadioOption';

@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { FormattedMessage, injectIntl } from 'react-intl';
 import { Undertekst } from 'nav-frontend-typografi';
 import { Column, Row } from 'nav-frontend-grid';
-import { InputField, NavFieldGroup, SelectField } from '@fpsak-frontend/form';
+import { InputField, NavFieldGroup, SelectField, ReadOnlyField } from '@fpsak-frontend/form';
 import {
   formatCurrencyNoKr,
   isArrayEmpty,
@@ -105,13 +105,18 @@ const createAndelerTableRows = (fields, isAvklaringsbehovClosed, readOnly, innte
       </TableColumn>
     </TableRow>
   ));
-const createBruttoBGSummaryRow = sumFordeling => (
+const createBruttoBGSummaryRow = (sumFordeling, readOnly) => (
   <TableRow key="bruttoBGSummaryRow">
     <TableColumn>
       <FormattedMessage id="BeregningInfoPanel.FordelingBG.Sum" />
     </TableColumn>
-    <TableColumn className={styles.rightAlign}>
-      <Undertekst>{sumFordeling}</Undertekst>
+    <TableColumn className={readOnly ? styles.leftAlign : styles.rightAlign}>
+    <ReadOnlyField
+          input={{value : sumFordeling }}
+          type="text"
+          parse={parseCurrencyInput}
+          readOnly
+        />
     </TableColumn>
     <TableColumn />
   </TableRow>
@@ -142,7 +147,7 @@ export const BrukersAndelFieldArrayImpl = ({
 }) => {
   const sumFordeling = summerFordeling(fields) || 0;
   const tablerows = createAndelerTableRows(fields, isAvklaringsbehovClosed, readOnly, inntektskategoriKoder, intl);
-  tablerows.push(createBruttoBGSummaryRow(sumFordeling));
+  tablerows.push(createBruttoBGSummaryRow(sumFordeling, readOnly));
   return (
     <NavFieldGroup errorMessage={getErrorMessage(meta, intl, isBeregningFormDirty)}>
       <Table headerTextCodes={getHeaderTextCodes()} noHover classNameTable={styles.inntektTable}>

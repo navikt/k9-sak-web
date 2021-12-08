@@ -180,7 +180,7 @@ const AvklareAktiviteterPanelContent = props => {
                 {skalViseSubmitKnappEllerBegrunnelse(avklaringsbehov, erOverstyrt, fields.get(index).erTilVurdering) && (
                   <>
                     <FaktaBegrunnelseTextField
-                      name={`${field}.${BEGRUNNELSE_AVKLARE_AKTIVITETER_NAME}`}
+                      name={BEGRUNNELSE_AVKLARE_AKTIVITETER_NAME}
                       isSubmittable={submittable}
                       isReadOnly={readOnly}
                       hasBegrunnelse={hasBegrunnelse}
