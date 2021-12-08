@@ -92,7 +92,7 @@ export const SoknadsfristVilkarForm = ({
       {(erOverstyrt || harAksjonspunkt) && dokumenter.length > 0 && (
         <AksjonspunktBox
           className={styles.aksjonspunktMargin}
-          erAksjonspunktApent={erOverstyrt}
+          erAksjonspunktApent={erOverstyrt || harÅpentAksjonspunkt}
         >
           {!isReadOnly &&
             (harÅpentAksjonspunkt ? (
@@ -111,7 +111,7 @@ export const SoknadsfristVilkarForm = ({
                 key={dokument.journalpostId}
                 erAktivtDokument={dokumenter.findIndex(d => d.journalpostId === dokument.journalpostId) > -1}
                 skalViseBegrunnelse={erOverstyrt || harAksjonspunkt}
-                readOnly={isReadOnly || !erOverstyrt && !harÅpentAksjonspunkt}
+                readOnly={isReadOnly || (!erOverstyrt && !harÅpentAksjonspunkt)}
                 erVilkarOk={erVilkarOk}
                 dokumentIndex={index}
                 dokument={dokument}
