@@ -287,7 +287,7 @@ const mapStateToPropsFactory = (_initialState, initialOwnProps: SoknadsfristVilk
       harÅpentAksjonspunkt,
       harAksjonspunkt: aksjonspunkt !== undefined,
       isSolvable: erOverstyrt || isSolvable,
-      isReadOnly: overrideReadOnly,
+      isReadOnly: overrideReadOnly || !periode?.vurdersIBehandlingen,
       ...behandlingFormValueSelector(formName, behandlingId, behandlingVersjon)(
         state,
         'isOverstyrt',
