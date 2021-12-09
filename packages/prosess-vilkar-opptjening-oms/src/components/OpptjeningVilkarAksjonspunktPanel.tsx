@@ -15,7 +15,10 @@ import { PopoverOrientering } from 'nav-frontend-popover';
 
 import VilkarFields, { midlertidigInaktiv } from './VilkarFields';
 import styles from './OpptjeningVilkarAksjonspunktPanel.less';
+import dayjs from "dayjs";
 
+import isBetween from 'dayjs/plugin/isBetween';
+dayjs.extend(isBetween);
 
 const FORM_NAME = 'OpptjeningVilkarForm';
 
@@ -68,6 +71,7 @@ export const OpptjeningVilkarAksjonspunktPanelImpl = ({
   vilkårPerioder,
   vilkarFields,
   status,
+  opptjeninger,
 }: Partial<OpptjeningVilkarAksjonspunktPanelImplProps> & StateProps & InjectedFormProps) => {
   const intl = useIntl();
   const formProps = useMemo(
@@ -94,6 +98,19 @@ export const OpptjeningVilkarAksjonspunktPanelImpl = ({
   const erPleiepenger = fagsakType === FagsakYtelseType.PLEIEPENGER;
   const isOpenAksjonspunkt = aksjonspunkter.some(ap => isAksjonspunktOpen(ap.status.kode));
   const originalErVilkarOk = isOpenAksjonspunkt ? undefined : vilkarUtfallType.OPPFYLT === status;
+
+  const finnesOpptjeningsaktiviteterVidSkjeringstidspunkt = (): boolean => {
+    if(erPleiepenger){
+      return opptjeninger.some(opptjening => {
+        const skjeringstidspunkt = dayjs(opptjening.fastsattOpptjening.opptjeningTom).add(1, 'days');
+
+        return opptjening.opptjeningAktivitetList.some(opptjeningAktivitet =>
+          dayjs(skjeringstidspunkt).isBetween(opptjeningAktivitet.opptjeningFom, opptjeningAktivitet.opptjeningTom, null, "[]")
+        );
+      });
+    }
+    return true;
+  };
 
   return (
     <ProsessPanelTemplate
@@ -132,6 +149,7 @@ export const OpptjeningVilkarAksjonspunktPanelImpl = ({
         erVilkarOk={erVilkarOk}
         readOnly={readOnly}
         fieldPrefix={`vilkarFields[${periodeIndex}]`}
+        skalValgMidlertidigInaktivTypeBVises={finnesOpptjeningsaktiviteterVidSkjeringstidspunkt()}
       />
     </ProsessPanelTemplate>
   );
