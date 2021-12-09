@@ -41,7 +41,7 @@ const OverstyrBeregningAktivitetForm: React.FC<Props & WrappedComponentProps> = 
                             type="text"
                             placeholder={intl.formatMessage({ id: 'OverstyrInputForm.InntektPrAar' })}
                             onChange={(e) => {
-                                const tallverdi: number = parseInt(e.target.value.replace(/[^0-9]/g, ''), 10);
+                                const tallverdi: number = parseInt(e.target.value.replace(/[^D]/g, ''), 10);
                                 setFieldValue(field.name, tallverdi);
                             }}
                             maxLength={10}
@@ -60,7 +60,7 @@ const OverstyrBeregningAktivitetForm: React.FC<Props & WrappedComponentProps> = 
                         type="text"
                         placeholder={intl.formatMessage({ id: 'OverstyrInputForm.RefusjonPrAar' })}
                         onChange={(e) => {
-                            const tallverdi: number = parseInt(e.target.value.replace(/[^0-9]/g, ''), 10);
+                            const tallverdi: number = parseInt(e.target.value.replace(/[^D]/g, ''), 10);
                             setFieldValue(field.name, tallverdi);
                         }}
                         maxLength={10}
