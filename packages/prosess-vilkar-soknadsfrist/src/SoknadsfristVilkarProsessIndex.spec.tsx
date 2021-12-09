@@ -111,7 +111,7 @@ describe('<SoknadsfristVilkarForm>', () => {
                   kodeverk: 'test',
                 },
                 avslagKode: 'test',
-                vurdersIBehandlingen: true,
+                vurdersIBehandlingen: false,
                 merknadParametere: {
                   test: 'test',
                 },
