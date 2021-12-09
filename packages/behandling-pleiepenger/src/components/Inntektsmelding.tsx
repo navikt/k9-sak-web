@@ -1,13 +1,13 @@
 import React from 'react';
 import { useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
+import useGlobalStateRestApiData from '@k9-sak-web/rest-api-hooks/src/global-data/useGlobalStateRestApiData';
 import { ArbeidsgiverOpplysningerPerId, Dokument } from '@k9-sak-web/types';
 import { MicroFrontend } from '@fpsak-frontend/utils';
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
+import aksjonspunktStatus from '../../../kodeverk/src/aksjonspunktStatus';
+import { K9sakApiKeys } from '../../../sak-app/src/data/k9sakApi';
 import httpErrorHandlerFn from '../microfrontend/utils/httpErrorHandler';
 import findEndpointsForMicrofrontend from '../microfrontend/utils/findEndpointsForMicrofrontend';
 import SimpleEndpoints from '../microfrontend/types/SimpleEndpoints';
-import findAksjonspunkt from '../microfrontend/utils/findAksjonspunkt';
 
 const initializeInntektsmeldingApp = (
   elementId,
@@ -17,7 +17,8 @@ const initializeInntektsmeldingApp = (
   dokumenter: Dokument[],
   løsAksjonspunkt,
   readOnly,
-  visFortsettKnapp: boolean
+  saksbehandlere,
+  aksjonspunkter,
 ) => {
   (window as any).renderKompletthetApp(elementId, {
     httpErrorHandler,
@@ -26,7 +27,8 @@ const initializeInntektsmeldingApp = (
     readOnly,
     onFinished: løsAksjonspunkt,
     endpoints,
-    visFortsettKnapp,
+    saksbehandlere,
+    aksjonspunkter,
   });
 };
 
@@ -40,20 +42,14 @@ export default ({
   submitCallback,
 }) => {
   const { addErrorMessage } = useRestApiErrorDispatcher();
+  const saksbehandlere = useGlobalStateRestApiData<any>(K9sakApiKeys.HENT_SAKSBEHANDLERE);
   const httpErrorHandlerCaller = (status: number, locationHeader?: string) =>
     httpErrorHandlerFn(status, addErrorMessage, locationHeader);
 
-  const inntektsmeldingManglerAksjonspunkt = findAksjonspunkt(
-    aksjonspunkter,
-    aksjonspunktCodes.INNTEKTSMELDING_MANGLER,
+  const harAktivtAksjonspunkt = aksjonspunkter.some(
+    aksjonspunkt => aksjonspunkt.status.kode === aksjonspunktStatus.OPPRETTET,
   );
-  const inntektsmeldingManglerAksjonspunktkode = inntektsmeldingManglerAksjonspunkt?.definisjon.kode;
-  const inntektsmeldingManglerAksjonspunktstatus = inntektsmeldingManglerAksjonspunkt?.status.kode;
-  const visFortsettknapp = inntektsmeldingManglerAksjonspunktstatus === aksjonspunktStatus.OPPRETTET;
-  const harAksjonspunkt = !!inntektsmeldingManglerAksjonspunktkode;
-
-  const løsAksjonspunkt = aksjonspunktArgs =>
-    submitCallback([{ kode: inntektsmeldingManglerAksjonspunktkode, ...aksjonspunktArgs }]);
+  const løsAksjonspunkt = aksjonspunktArgs => submitCallback([{ ...aksjonspunktArgs }]);
 
   return (
     <MicroFrontend
@@ -71,8 +67,9 @@ export default ({
           arbeidsgiverOpplysningerPerId,
           dokumenter,
           løsAksjonspunkt,
-          readOnly || !harAksjonspunkt,
-          visFortsettknapp,
+          readOnly || !harAktivtAksjonspunkt,
+          saksbehandlere?.saksbehandlere || {},
+          aksjonspunkter,
         )
       }
     />
