@@ -8,6 +8,7 @@ import advarselIcon from '@fpsak-frontend/assets/images/advarsel.svg';
 import classNames from 'classnames/bind';
 import isEqual from 'lodash.isequal';
 
+import hentAktivePerioderFraVilkar from "@fpsak-frontend/utils/src/periodeUtils";
 import OpptjeningVilkarForm from './components/OpptjeningVilkarForm';
 
 import messages from '../i18n/nb_NO.json';
@@ -56,9 +57,7 @@ const OpptjeningVilkarProsessIndex = ({
   const [activeTab, setActiveTab] = useState(0);
 
   const [activeVilkår] = vilkar;
-  const perioder = activeVilkår.perioder.filter(periode => visAllePerioder && !periode.vurdersIBehandlingen
-    || periode.vurdersIBehandlingen && activeVilkår.perioder.length === 1
-    || periode.vurdersIBehandlingen && !visAllePerioder);
+  const perioder = hentAktivePerioderFraVilkar(vilkar, visAllePerioder);
 
   useEffect(() => {
     if (!visAllePerioder && activeTab >= perioder.length) {

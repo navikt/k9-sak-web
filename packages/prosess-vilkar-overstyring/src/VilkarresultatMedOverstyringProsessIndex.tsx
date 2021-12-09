@@ -4,6 +4,7 @@ import { Aksjonspunkt, Behandling, KodeverkMedNavn, SubmitCallback, Vilkar } fro
 import { SideMenu } from '@navikt/k9-react-components';
 import classNames from 'classnames/bind';
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
+import hentAktivePerioderFraVilkar from "@fpsak-frontend/utils/src/periodeUtils";
 import messages from '../i18n/nb_NO.json';
 import VilkarresultatMedOverstyringForm from './components/VilkarresultatMedOverstyringForm';
 import VilkarresultatMedOverstyringHeader from './components/VilkarresultatMedOverstyringHeader';
@@ -63,9 +64,7 @@ const VilkarresultatMedOverstyringProsessIndex = ({
   const [activeTab, setActiveTab] = useState(0);
 
   const [activeVilkår] = vilkar;
-  const perioder = activeVilkår.perioder.filter(periode => visAllePerioder && !periode.vurdersIBehandlingen
-    || periode.vurdersIBehandlingen && activeVilkår.perioder.length === 1
-    || periode.vurdersIBehandlingen && !visAllePerioder);
+  const perioder = hentAktivePerioderFraVilkar(vilkar, visAllePerioder);
 
   useEffect(() => {
     if (!visAllePerioder && activeTab >= perioder.length) {

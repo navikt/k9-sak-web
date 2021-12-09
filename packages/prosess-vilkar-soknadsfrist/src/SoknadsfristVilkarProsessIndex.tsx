@@ -11,6 +11,7 @@ import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 
+import hentAktivePerioderFraVilkar from "@fpsak-frontend/utils/src/periodeUtils";
 import SoknadsfristVilkarForm from './components/SoknadsfristVilkarForm';
 import SoknadsfristVilkarHeader from './components/SoknadsfristVilkarHeader';
 import { utledInnsendtSoknadsfrist } from './utils';
@@ -65,9 +66,7 @@ const SoknadsfristVilkarProsessIndex = ({
   const [activeTab, setActiveTab] = useState(0);
 
   const [activeVilkår] = vilkar;
-  const perioder = activeVilkår.perioder.filter(periode => visAllePerioder && !periode.vurdersIBehandlingen
-    || periode.vurdersIBehandlingen && activeVilkår.perioder.length === 1
-    || periode.vurdersIBehandlingen && !visAllePerioder);
+  const perioder = hentAktivePerioderFraVilkar(vilkar, visAllePerioder);
 
   useEffect(() => {
     if (!visAllePerioder && activeTab >= perioder.length) {
