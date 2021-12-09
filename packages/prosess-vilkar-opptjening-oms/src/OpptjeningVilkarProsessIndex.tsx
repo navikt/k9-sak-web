@@ -8,7 +8,7 @@ import advarselIcon from '@fpsak-frontend/assets/images/advarsel.svg';
 import classNames from 'classnames/bind';
 import isEqual from 'lodash.isequal';
 
-import hentAktivePerioderFraVilkar from "@fpsak-frontend/utils/src/periodeUtils";
+import hentAktivePerioderFraVilkar from "@fpsak-frontend/utils/src/hentAktivePerioderFraVilkar";
 import OpptjeningVilkarForm from './components/OpptjeningVilkarForm';
 
 import messages from '../i18n/nb_NO.json';
