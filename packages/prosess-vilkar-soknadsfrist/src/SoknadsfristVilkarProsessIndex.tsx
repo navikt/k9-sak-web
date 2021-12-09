@@ -11,6 +11,7 @@ import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 
+import hentAktivePerioderFraVilkar from "@fpsak-frontend/utils/src/hentAktivePerioderFraVilkar";
 import SoknadsfristVilkarForm from './components/SoknadsfristVilkarForm';
 import SoknadsfristVilkarHeader from './components/SoknadsfristVilkarHeader';
 import { utledInnsendtSoknadsfrist } from './utils';
@@ -65,9 +66,7 @@ const SoknadsfristVilkarProsessIndex = ({
   const [activeTab, setActiveTab] = useState(0);
 
   const [activeVilkår] = vilkar;
-  const perioder = activeVilkår.perioder.filter(periode => visAllePerioder || periode.vurdersIBehandlingen);
-
-  const activePeriode = activeVilkår.perioder[activeTab];
+  const perioder = hentAktivePerioderFraVilkar(vilkar, visAllePerioder);
 
   useEffect(() => {
     if (!visAllePerioder && activeTab >= perioder.length) {
@@ -75,13 +74,17 @@ const SoknadsfristVilkarProsessIndex = ({
     }
   }, [activeTab, visAllePerioder]);
 
+  if(perioder.length === 0){
+    return null;
+  }
+
+  const activePeriode = perioder.length === 1 ? perioder[0] : perioder[activeTab];
+
   const harÅpentAksjonspunkt = aksjonspunkter.some(
     ap =>
       ap.definisjon.kode === aksjonspunktCodes.KONTROLLER_OPPLYSNINGER_OM_SØKNADSFRIST &&
       !(ap.status.kode === aksjonspunktStatus.OPPRETTET && !ap.kanLoses),
   );
-
-  const skalBrukeSidemeny = activeVilkår.perioder.length > 1 || harÅpentAksjonspunkt;
 
   const dokumenterSomSkalVurderes = Array.isArray(soknadsfristStatus?.dokumentStatus)
     ? soknadsfristStatus.dokumentStatus.filter(dok =>
@@ -126,12 +129,9 @@ const SoknadsfristVilkarProsessIndex = ({
     }),
   );
 
-  const mainContainerClassnames = cx('mainContainer', { 'mainContainer--withSideMenu': skalBrukeSidemeny });
-
   return (
     <RawIntlProvider value={intl}>
-      <div className={mainContainerClassnames}>
-        {skalBrukeSidemeny && (
+      <div className={cx('mainContainer--withSideMenu')}>
           <div className={styles.sideMenuContainer}>
             <SideMenu
               links={perioder.map(({ periode, vilkarStatus }, index) => ({
@@ -147,14 +147,13 @@ const SoknadsfristVilkarProsessIndex = ({
               heading={intl.formatMessage({ id: 'Sidemeny.Perioder' })}
             />
           </div>
-        )}
         <div className={styles.contentContainer}>
           <SoknadsfristVilkarHeader
             aksjonspunkter={aksjonspunkter}
             erOverstyrt={erOverstyrt}
             kanOverstyreAccess={kanOverstyreAccess}
             lovReferanse={activeVilkår.lovReferanse ?? lovReferanse}
-            overrideReadOnly={overrideReadOnly}
+            overrideReadOnly={overrideReadOnly || dokumenterSomSkalVurderes.length === 0}
             overstyringApKode={aksjonspunktCodes.OVERSTYR_SOKNADSFRISTVILKAR}
             panelTittelKode={panelTittelKode}
             status={activePeriode.vilkarStatus.kode}

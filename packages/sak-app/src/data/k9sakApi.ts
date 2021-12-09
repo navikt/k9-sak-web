@@ -24,6 +24,7 @@ export enum K9sakApiKeys {
   BEHANDLENDE_ENHETER = 'BEHANDLENDE_ENHETER',
   FEATURE_TOGGLE = 'FEATURE_TOGGLE',
   SEARCH_FAGSAK = 'SEARCH_FAGSAK',
+  MATCH_FAGSAK = 'MATCH_FAGSAK',
   FETCH_FAGSAK = 'FETCH_FAGSAK',
   SAK_BRUKER = 'SAK_BRUKER',
   BEHANDLINGER_K9SAK = 'BEHANDLINGER_K9SAK',
@@ -133,6 +134,7 @@ const endpoints = new RestApiConfigBuilder()
 
   // Kun brukt for søk på localhost
   .withPost('/k9/sak/api/fagsak/sok', K9sakApiKeys.SEARCH_FAGSAK)
+  .withPost('/k9/sak/api/fagsak/match', K9sakApiKeys.MATCH_FAGSAK)
 
   .withRel('parter-klagerett', KlageBehandlingApiKeys.PARTER_MED_KLAGERETT)
 

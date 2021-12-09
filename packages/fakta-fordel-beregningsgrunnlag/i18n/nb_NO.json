@@ -104,5 +104,18 @@
   "ValidationMessage.UtsettelseUtenFullArbeid": "Søker har ikke 100% stilling, vurder om perioden kan utsettes.",
   "ValidationMessage.MerEn100Prosent": "Samlet utbetalingsgrad og andel i arbeid bør ikke overskride 100%.",
   "ValidationMessage.MerEn100ProsentOgOgyldigUtsettlse": "Samlet utbetalingsgrad og andel i arbeid bør ikke overskride 100%. Søker har ikke 100% stilling, vurder om perioden kan utsettes.",
-  "ValidationMessage.InvalidOrganisasjonsnummer": "Ugyldig organisasjonsnummer."
+  "ValidationMessage.InvalidOrganisasjonsnummer": "Ugyldig organisasjonsnummer.",
+
+  "BeregningInfoPanel.RefusjonBG.Tittel": "Endring i refusjon",
+  "BeregningInfoPanel.RefusjonBG.Aktivitet": "Aktivitet",
+  "BeregningInfoPanel.RefusjonBG.TidligereUtb": "Tidligere utbetalinger",
+  "BeregningInfoPanel.RefusjonBG.GjeldendeFra": "Gjelder fra",
+  "BeregningInfoPanel.RefusjonBG.Direkteutbetaling": "Direkte utbetaling",
+  "BeregningInfoPanel.RefusjonBG.Periode": "{fom} - {tom}",
+  "BeregningInfoPanel.RefusjonBG.IngenTidligereRefusjon": "<b>{ag}</b> krever refusjon fra og med {dato}",
+  "BeregningInfoPanel.RefusjonBG.TidligereRefusjon": "<b>{ag}</b> krever refusjon fra og med {dato}. Det er tidligere innvilget et lavere refusjonsbeløp",
+  "BeregningInfoPanel.RefusjonBG.RefusjonFra": "Refusjonsbeløpet skal gjelde fra og med",
+  "BeregningInfoPanel.RefusjonBG.Aksjonspunkt": "Nytt refusjonskrav overlapper tidligere utbetalinger. Sett endringsdato for ny refusjon.",
+  "BeregningInfoPanel.RefusjonBG.DelvisPrMnd": "Før denne datoen skal refusjonsbeløpet per måned være"
+
 }

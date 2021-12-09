@@ -4,6 +4,7 @@ import { Aksjonspunkt, Behandling, KodeverkMedNavn, SubmitCallback, Vilkar } fro
 import { SideMenu } from '@navikt/k9-react-components';
 import classNames from 'classnames/bind';
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
+import hentAktivePerioderFraVilkar from "@fpsak-frontend/utils/src/hentAktivePerioderFraVilkar";
 import messages from '../i18n/nb_NO.json';
 import VilkarresultatMedOverstyringForm from './components/VilkarresultatMedOverstyringForm';
 import VilkarresultatMedOverstyringHeader from './components/VilkarresultatMedOverstyringHeader';
@@ -63,11 +64,7 @@ const VilkarresultatMedOverstyringProsessIndex = ({
   const [activeTab, setActiveTab] = useState(0);
 
   const [activeVilkår] = vilkar;
-  const skalBrukeSidemeny = activeVilkår.perioder.length > 1;
-  const perioder = activeVilkår.perioder.filter(periode => visAllePerioder || periode.vurdersIBehandlingen);
-
-  const activePeriode = activeVilkår.perioder[activeTab];
-  const mainContainerClassnames = cx('mainContainer', { 'mainContainer--withSideMenu': skalBrukeSidemeny });
+  const perioder = hentAktivePerioderFraVilkar(vilkar, visAllePerioder);
 
   useEffect(() => {
     if (!visAllePerioder && activeTab >= perioder.length) {
@@ -75,10 +72,15 @@ const VilkarresultatMedOverstyringProsessIndex = ({
     }
   }, [activeTab, visAllePerioder]);
 
+  if(perioder.length === 0){
+    return null;
+  }
+
+  const activePeriode = perioder.length === 1 ? perioder[0] : perioder[activeTab];
+
   return (
     <RawIntlProvider value={intl}>
-      <div className={mainContainerClassnames}>
-        {skalBrukeSidemeny && (
+      <div className={cx('mainContainer--withSideMenu')}>
           <div className={styles.sideMenuContainer}>
             <SideMenu
               links={perioder.map((periode, index) => ({
@@ -90,7 +92,6 @@ const VilkarresultatMedOverstyringProsessIndex = ({
               heading={intl.formatMessage({ id: 'Sidemeny.Perioder' })}
             />
           </div>
-        )}
         <div className={styles.contentContainer}>
           <VilkarresultatMedOverstyringHeader
             aksjonspunkter={aksjonspunkter}

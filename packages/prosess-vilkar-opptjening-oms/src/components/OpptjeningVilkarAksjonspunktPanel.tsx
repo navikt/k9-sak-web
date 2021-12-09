@@ -10,7 +10,12 @@ import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import FagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import { Aksjonspunkt, Opptjening, SubmitCallback, Vilkarperiode } from '@k9-sak-web/types';
 import { Element } from 'nav-frontend-typografi';
+import Hjelpetekst from 'nav-frontend-hjelpetekst';
+import { PopoverOrientering } from 'nav-frontend-popover';
+
 import VilkarFields, { midlertidigInaktiv } from './VilkarFields';
+import styles from './OpptjeningVilkarAksjonspunktPanel.less';
+
 
 const FORM_NAME = 'OpptjeningVilkarForm';
 
@@ -39,7 +44,6 @@ interface OpptjeningVilkarAksjonspunktPanelImplProps {
 
 interface StateProps {
   erVilkarOk: string | boolean;
-  originalErVilkarOk: boolean;
 }
 
 /**
@@ -48,13 +52,13 @@ interface StateProps {
  * Presentasjonskomponent. Viser panel for å løse aksjonspunkt for avslått opptjeningsvilkår
  */
 export const OpptjeningVilkarAksjonspunktPanelImpl = ({
+  aksjonspunkter,
   behandlingId,
   behandlingVersjon,
   erVilkarOk,
   isApOpen,
   lovReferanse,
   fagsakType,
-  originalErVilkarOk,
   readOnly,
   readOnlySubmitButton,
   dirty,
@@ -63,6 +67,7 @@ export const OpptjeningVilkarAksjonspunktPanelImpl = ({
   periodeIndex,
   vilkårPerioder,
   vilkarFields,
+  status,
 }: Partial<OpptjeningVilkarAksjonspunktPanelImplProps> & StateProps & InjectedFormProps) => {
   const intl = useIntl();
   const formProps = useMemo(
@@ -87,6 +92,8 @@ export const OpptjeningVilkarAksjonspunktPanelImpl = ({
     fagsakType === FagsakYtelseType.OMSORGSPENGER_MIDLERTIDIG_ALENE;
 
   const erPleiepenger = fagsakType === FagsakYtelseType.PLEIEPENGER;
+  const isOpenAksjonspunkt = aksjonspunkter.some(ap => isAksjonspunktOpen(ap.status.kode));
+  const originalErVilkarOk = isOpenAksjonspunkt ? undefined : vilkarUtfallType.OPPFYLT === status;
 
   return (
     <ProsessPanelTemplate
@@ -95,27 +102,35 @@ export const OpptjeningVilkarAksjonspunktPanelImpl = ({
       formName={formProps.form}
       handleSubmit={formProps.handleSubmit}
       isDirty={dirty}
-      readOnlySubmitButton={readOnlySubmitButton}
-      readOnly={readOnly}
+      readOnlySubmitButton={readOnlySubmitButton || !vilkårPerioder[periodeIndex].vurdersIBehandlingen}
+      readOnly={readOnly || !vilkårPerioder[periodeIndex].vurdersIBehandlingen}
       lovReferanse={lovReferanse}
       behandlingId={behandlingId}
       behandlingVersjon={behandlingVersjon}
       originalErVilkarOk={originalErVilkarOk}
       isPeriodisertFormComplete={isFormComplete()}
     >
-      <Element>
-        {erOmsorgspenger && (
-          <FormattedMessage id="OpptjeningVilkarAksjonspunktPanel.SokerHarVurdertOpptjentRettTilOmsorgspenger" />
-        )}
-        {erPleiepenger && (
-          <FormattedMessage id="OpptjeningVilkarAksjonspunktPanel.SokerHarVurdertOpptjentRettTilPleiepenger" />
-        )}
-      </Element>
+      <div className={styles.titelOgHjelpetekstFlexbox}>
+        <Element>
+          {erOmsorgspenger && (
+            <FormattedMessage id="OpptjeningVilkarAksjonspunktPanel.SokerHarVurdertOpptjentRettTilOmsorgspenger" />
+          )}
+          {erPleiepenger && (
+            <FormattedMessage id="OpptjeningVilkarAksjonspunktPanel.SokerHarVurdertOpptjentRettTilPleiepenger" />
+          )}
+        </Element>
+        <Hjelpetekst type={PopoverOrientering.UnderHoyre}>
+          <FormattedMessage id="OpptjeningVilkarAksjonspunktPanel.VurderingHjelpetekst" values={{
+            b: (...chunks) => <b>{chunks}</b>,
+           linebreak: <br />
+          }}/>
+        </Hjelpetekst>
+      </div>
 
       <VilkarFields
         erOmsorgspenger={erOmsorgspenger}
         erVilkarOk={erVilkarOk}
-        readOnly={readOnly}
+        readOnly={readOnly || !vilkårPerioder[periodeIndex].vurdersIBehandlingen}
         fieldPrefix={`vilkarFields[${periodeIndex}]`}
       />
     </ProsessPanelTemplate>
@@ -167,13 +182,9 @@ const mapStateToPropsFactory = (initialState, initialOwnProps: OpptjeningVilkarA
   const { aksjonspunkter, submitCallback, periodeIndex, vilkårPerioder, opptjeninger } = initialOwnProps;
   const onSubmit = values => submitCallback([transformValues(values, aksjonspunkter, vilkårPerioder, opptjeninger)]);
 
-  const isOpenAksjonspunkt = initialOwnProps.aksjonspunkter.some(ap => isAksjonspunktOpen(ap.status.kode));
-  const erVilkarOk = isOpenAksjonspunkt ? undefined : vilkarUtfallType.OPPFYLT === initialOwnProps.status;
-
   return (state, ownProps) => ({
     onSubmit,
     initialValues: buildInitialValues(ownProps),
-    originalErVilkarOk: erVilkarOk,
     erVilkarOk: behandlingFormValueSelector(
       FORM_NAME,
       ownProps.behandlingId,

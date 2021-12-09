@@ -88,7 +88,6 @@ export class VedtakRevurderingFormImpl extends Component {
       skalBrukeOverstyrendeFritekstBrev,
       brødtekst,
       overskrift,
-      initialValues,
       resultatstruktur,
       alleKodeverk,
       tilbakekrevingvalg,
@@ -109,6 +108,7 @@ export class VedtakRevurderingFormImpl extends Component {
       BEREGNING_25_PROSENT_AVVIK,
       OVER_18_AAR,
       lagreDokumentdata,
+      personopplysninger,
       ...formProps
     } = this.props;
 
@@ -137,11 +137,10 @@ export class VedtakRevurderingFormImpl extends Component {
             {ytelseTypeKode === fagsakYtelseType.FRISINN ? (
               <VedtakOverstyrendeKnapp readOnly={readOnly} keyName="skalUndertrykkeBrev" readOnlyHideEmpty={false} />
             ) : (
-              kanHaFritekstbrev(tilgjengeligeVedtaksbrev) &&
-              !harBareFritekstbrev(tilgjengeligeVedtaksbrev) && (
+              kanHaFritekstbrev(tilgjengeligeVedtaksbrev) && (
                 <VedtakOverstyrendeKnapp
                   toggleCallback={this.onToggleOverstyring}
-                  readOnly={readOnly || initialValues.skalBrukeOverstyrendeFritekstBrev === true}
+                  readOnly={readOnly || harBareFritekstbrev(tilgjengeligeVedtaksbrev)}
                   keyName="skalBrukeOverstyrendeFritekstBrev"
                   readOnlyHideEmpty={false}
                 />
@@ -230,6 +229,7 @@ export class VedtakRevurderingFormImpl extends Component {
               begrunnelse={begrunnelse}
               arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
               lagreDokumentdata={lagreDokumentdata}
+              personopplysninger={personopplysninger}
             />
             {behandlingStatusKode === behandlingStatusCode.BEHANDLING_UTREDES && (
               <VedtakRevurderingSubmitPanel
@@ -278,6 +278,7 @@ VedtakRevurderingFormImpl.propTypes = {
   BEREGNING_25_PROSENT_AVVIK: PropTypes.string,
   OVER_18_AAR: PropTypes.string,
   arbeidsgiverOpplysningerPerId: PropTypes.shape().isRequired,
+  personopplysninger: PropTypes.shape().isRequired,
   ...formPropTypes,
 };
 
@@ -349,10 +350,7 @@ const buildInitialValues = createSelector(
       sprakkode,
       aksjonspunktKoder,
       skalBrukeOverstyrendeFritekstBrev:
-        (readonly && harOverstyrtMedFritekstbrev(dokumentdata, vedtakVarsel)) ||
-        (!readonly &&
-          (harBareFritekstbrev(tilgjengeligeVedtaksbrev) ||
-            (kanHaFritekstbrev(tilgjengeligeVedtaksbrev) && harOverstyrtMedFritekstbrev(dokumentdata, vedtakVarsel)))),
+        harBareFritekstbrev(tilgjengeligeVedtaksbrev) || harOverstyrtMedFritekstbrev(dokumentdata, vedtakVarsel),
       skalUndertrykkeBrev: readonly && harOverstyrtMedIngenBrev(dokumentdata, vedtakVarsel),
       overskrift: decodeHtmlEntity(dokumentdata?.[dokumentdatatype.FRITEKSTBREV]?.overskrift),
       brødtekst: decodeHtmlEntity(dokumentdata?.[dokumentdatatype.FRITEKSTBREV]?.brødtekst),

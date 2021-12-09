@@ -253,7 +253,7 @@ const mapStateToPropsFactory = (_initialState, initialOwnProps: VilkarresultatMe
       customVilkarOppfyltText: getCustomVilkarTextForOppfylt(ownProps),
       customVilkarIkkeOppfyltText: getCustomVilkarTextForIkkeOppfylt(ownProps),
       isSolvable: erOverstyrt || isSolvable,
-      isReadOnly: overrideReadOnly,
+      isReadOnly: overrideReadOnly || !periode?.vurdersIBehandlingen,
       hasAksjonspunkt: aksjonspunkt !== undefined,
       validate: validateFn,
       form: formName,

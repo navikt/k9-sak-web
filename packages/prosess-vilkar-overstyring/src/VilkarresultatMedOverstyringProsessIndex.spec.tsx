@@ -8,7 +8,7 @@ import { Behandling } from '@k9-sak-web/types';
 import VilkarresultatMedOverstyringProsessIndex from './VilkarresultatMedOverstyringProsessIndex';
 
 describe('<VilkarresultatMedOverstyringForm>', () => {
-  it('skal ikke rendre tabs dersom bare en periode', () => {
+  it('skal rendre tabs dersom bare en periode', () => {
     const wrapper = shallow(
       <VilkarresultatMedOverstyringProsessIndex
         behandling={
@@ -64,7 +64,7 @@ describe('<VilkarresultatMedOverstyringForm>', () => {
     );
 
     const tabs = wrapper.find(SideMenu);
-    expect(tabs).toHaveLength(0);
+    expect(tabs).toHaveLength(1);
   });
 
   it('skal rendre tabs dersom mer enn en periode', () => {
@@ -120,7 +120,7 @@ describe('<VilkarresultatMedOverstyringForm>', () => {
                   kodeverk: 'test',
                 },
                 avslagKode: 'test',
-                vurdersIBehandlingen: true,
+                vurdersIBehandlingen: false,
                 merknadParametere: {
                   test: 'test',
                 },
