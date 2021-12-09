@@ -118,7 +118,7 @@ const OverstyrBeregningFaktaForm = ({
                 validateOnChange
                 validateOnMount
             >
-                {({ values, isValid, dirty, isSubmitting }) => (
+                {({ values, isValid, isSubmitting }) => (
                     <Form>
                         <FieldArray name="perioder">
                             {() =>
