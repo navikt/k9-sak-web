@@ -11,7 +11,7 @@ const intl = createIntl({ locale: 'nb-NO', messages }, intlCache);
 
 interface Props {
     arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysningerPerId,
-    overstyrInputBeregning: OverstyrInputBeregningDto,
+    overstyrInputBeregning: OverstyrInputBeregningDto[] | OverstyrInputBeregningDto,
     submitCallback: () => void,
     readOnly: boolean,
     submittable: boolean,
