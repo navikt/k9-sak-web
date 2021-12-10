@@ -11,7 +11,6 @@ import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 
-import hentAktivePerioderFraVilkar from "@fpsak-frontend/utils/src/hentAktivePerioderFraVilkar";
 import SoknadsfristVilkarForm from './components/SoknadsfristVilkarForm';
 import SoknadsfristVilkarHeader from './components/SoknadsfristVilkarHeader';
 import { utledInnsendtSoknadsfrist } from './utils';
@@ -66,19 +65,15 @@ const SoknadsfristVilkarProsessIndex = ({
   const [activeTab, setActiveTab] = useState(0);
 
   const [activeVilkår] = vilkar;
-  const perioder = hentAktivePerioderFraVilkar(vilkar, visAllePerioder);
+  const perioder = activeVilkår.perioder.filter(periode => visAllePerioder || periode.vurdersIBehandlingen);
+
+  const activePeriode = activeVilkår.perioder[activeTab];
 
   useEffect(() => {
     if (!visAllePerioder && activeTab >= perioder.length) {
       setActiveTab(0);
     }
   }, [activeTab, visAllePerioder]);
-
-  if(perioder.length === 0){
-    return null;
-  }
-
-  const activePeriode = perioder.length === 1 ? perioder[0] : perioder[activeTab];
 
   const harÅpentAksjonspunkt = aksjonspunkter.some(
     ap =>
@@ -153,7 +148,7 @@ const SoknadsfristVilkarProsessIndex = ({
             erOverstyrt={erOverstyrt}
             kanOverstyreAccess={kanOverstyreAccess}
             lovReferanse={activeVilkår.lovReferanse ?? lovReferanse}
-            overrideReadOnly={overrideReadOnly || dokumenterSomSkalVurderes.length === 0}
+            overrideReadOnly={overrideReadOnly}
             overstyringApKode={aksjonspunktCodes.OVERSTYR_SOKNADSFRISTVILKAR}
             panelTittelKode={panelTittelKode}
             status={activePeriode.vilkarStatus.kode}
