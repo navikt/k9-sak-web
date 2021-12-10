@@ -102,8 +102,8 @@ export const OpptjeningVilkarAksjonspunktPanelImpl = ({
       formName={formProps.form}
       handleSubmit={formProps.handleSubmit}
       isDirty={dirty}
-      readOnlySubmitButton={readOnlySubmitButton || !vilkårPerioder[periodeIndex].vurdersIBehandlingen}
-      readOnly={readOnly || !vilkårPerioder[periodeIndex].vurdersIBehandlingen}
+      readOnlySubmitButton={readOnlySubmitButton}
+      readOnly={readOnly}
       lovReferanse={lovReferanse}
       behandlingId={behandlingId}
       behandlingVersjon={behandlingVersjon}
@@ -130,7 +130,7 @@ export const OpptjeningVilkarAksjonspunktPanelImpl = ({
       <VilkarFields
         erOmsorgspenger={erOmsorgspenger}
         erVilkarOk={erVilkarOk}
-        readOnly={readOnly || !vilkårPerioder[periodeIndex].vurdersIBehandlingen}
+        readOnly={readOnly}
         fieldPrefix={`vilkarFields[${periodeIndex}]`}
       />
     </ProsessPanelTemplate>
