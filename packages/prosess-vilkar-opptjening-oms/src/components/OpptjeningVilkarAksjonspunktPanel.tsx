@@ -13,11 +13,12 @@ import { Element } from 'nav-frontend-typografi';
 import Hjelpetekst from 'nav-frontend-hjelpetekst';
 import { PopoverOrientering } from 'nav-frontend-popover';
 
+import dayjs from "dayjs";
+import isBetween from 'dayjs/plugin/isBetween';
 import VilkarFields, { midlertidigInaktiv } from './VilkarFields';
 import styles from './OpptjeningVilkarAksjonspunktPanel.less';
-import dayjs from "dayjs";
 
-import isBetween from 'dayjs/plugin/isBetween';
+
 dayjs.extend(isBetween);
 
 const FORM_NAME = 'OpptjeningVilkarForm';
@@ -105,6 +106,7 @@ export const OpptjeningVilkarAksjonspunktPanelImpl = ({
         const skjeringstidspunkt = dayjs(opptjening.fastsattOpptjening.opptjeningTom).add(1, 'days');
 
         return opptjening.opptjeningAktivitetList.some(opptjeningAktivitet =>
+          // Siste argument ("[]") til isBetween inkluderer start og sluttdato
           dayjs(skjeringstidspunkt).isBetween(opptjeningAktivitet.opptjeningFom, opptjeningAktivitet.opptjeningTom, null, "[]")
         );
       });
