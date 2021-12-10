@@ -120,7 +120,7 @@ describe('<VilkarresultatMedOverstyringForm>', () => {
                   kodeverk: 'test',
                 },
                 avslagKode: 'test',
-                vurdersIBehandlingen: false,
+                vurdersIBehandlingen: true,
                 merknadParametere: {
                   test: 'test',
                 },
