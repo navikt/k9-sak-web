@@ -121,8 +121,8 @@ export const OpptjeningVilkarAksjonspunktPanelImpl = ({
       formName={formProps.form}
       handleSubmit={formProps.handleSubmit}
       isDirty={dirty}
-      readOnlySubmitButton={readOnlySubmitButton}
-      readOnly={readOnly}
+      readOnlySubmitButton={readOnlySubmitButton || !vilkårPerioder[periodeIndex].vurdersIBehandlingen}
+      readOnly={readOnly || !vilkårPerioder[periodeIndex].vurdersIBehandlingen}
       lovReferanse={lovReferanse}
       behandlingId={behandlingId}
       behandlingVersjon={behandlingVersjon}
@@ -149,7 +149,7 @@ export const OpptjeningVilkarAksjonspunktPanelImpl = ({
       <VilkarFields
         erOmsorgspenger={erOmsorgspenger}
         erVilkarOk={erVilkarOk}
-        readOnly={readOnly}
+        readOnly={readOnly || !vilkårPerioder[periodeIndex].vurdersIBehandlingen}
         fieldPrefix={`vilkarFields[${periodeIndex}]`}
         skalValgMidlertidigInaktivTypeBVises={finnesOpptjeningsaktiviteterVidSkjeringstidspunkt()}
       />

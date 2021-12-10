@@ -44,7 +44,14 @@ export const VilkarFields = ({
     <FormattedMessage id="OpptjeningVilkarAksjonspunktPanel.ErIkkeOppfylt" values={{ b: chunks => <b>{chunks}</b> }} />
   );
   const erOppfyltText = <FormattedMessage id="OpptjeningVilkarAksjonspunktPanel.ErOppfylt" />;
-  const er847Text = <FormattedMessage id="OpptjeningVilkarAksjonspunktPanel.Er847" />;
+
+  const hent847Text = () => {
+    switch(erVilkarOk){
+      case midlertidigInaktiv.TYPE_A: return <FormattedMessage id="OpptjeningVilkarAksjonspunktPanel.Er847A" />;
+      case midlertidigInaktiv.TYPE_B: return <FormattedMessage id="OpptjeningVilkarAksjonspunktPanel.Er847B" />;
+      default: return <FormattedMessage id="OpptjeningVilkarAksjonspunktPanel.Er847" />;
+    }
+  };
 
   return (
     <>
@@ -67,7 +74,7 @@ export const VilkarFields = ({
             </FlexColumn>
             <FlexColumn>
               {typeof erVilkarOk === 'string' && Object.values(midlertidigInaktiv).includes(erVilkarOk) === true && (
-                <Normaltekst>{er847Text}</Normaltekst>
+                <Normaltekst>{hent847Text()}</Normaltekst>
               )}
               {erVilkarOk === true && <Normaltekst>{erOppfyltText}</Normaltekst>}
               {!erVilkarOk && <Normaltekst>{erIkkeOppfyltText}</Normaltekst>}

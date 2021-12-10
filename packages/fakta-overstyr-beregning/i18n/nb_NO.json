@@ -12,5 +12,11 @@
     "OverstyrInputForm.RefusjonPrAar": "Refusjon pr. år",
     "OverstyrInputForm.UkjentFirma": "Ukjent arbeidsgiver",
     "OverstyrInputForm.Begrunnelse": "Begrunnelse",
-    "OverstyrInputForm.LagreAksjonspunkt": "Bekreft og fortsett"
+    "OverstyrInputForm.LagreAksjonspunkt": "Bekreft og fortsett",
+    "OverstyrInputForm.InntektFeltMin": "Inntekt kan ikke være et negativt tall",
+    "OverstyrInputForm.InntektFeltMax": "Inntekt kan ikke være større enn 10 000 000",
+    "OverstyrInputForm.RefusjonFeltMin": "Refusjon kan ikke være et negativt tall",
+    "OverstyrInputForm.RefusjonFeltMax": "Refusjon kan ikke være større enn 10 000 000",
+    "OverstyrInputForm.KanIkkeBekreftes": "Aksjonspunktet kan ikke bekreftes",
+    "OverstyrInputForm.KontrollerSkjema": "Kontroller skjema"
 }
