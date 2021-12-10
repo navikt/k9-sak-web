@@ -1,6 +1,6 @@
 export type OverstyrInputBeregningAktivitet = {
     arbeidsgiverOrgnr: string;
     arbeidsgiverAktørId: string | null;
-    inntektPrAar: number | null;
-    refusjonPrAar: number | null;
+    inntektPrAar: number | string | null;
+    refusjonPrAar: number | string | null;
 };
