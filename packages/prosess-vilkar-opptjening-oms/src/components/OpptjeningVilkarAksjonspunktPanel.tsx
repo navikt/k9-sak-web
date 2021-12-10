@@ -100,7 +100,7 @@ export const OpptjeningVilkarAksjonspunktPanelImpl = ({
   const isOpenAksjonspunkt = aksjonspunkter.some(ap => isAksjonspunktOpen(ap.status.kode));
   const originalErVilkarOk = isOpenAksjonspunkt ? undefined : vilkarUtfallType.OPPFYLT === status;
 
-  const finnesOpptjeningsaktiviteterVidOpptjeningTom: boolean = erPleiepenger ? true : opptjeninger.some(opptjening => {
+  const finnesOpptjeningsaktiviteterVidOpptjeningTom: boolean = !erPleiepenger ? true : opptjeninger.some(opptjening => {
     const opptjeningTom = dayjs(opptjening.fastsattOpptjening.opptjeningTom);
 
     return opptjening.opptjeningAktivitetList.some(opptjeningAktivitet =>
