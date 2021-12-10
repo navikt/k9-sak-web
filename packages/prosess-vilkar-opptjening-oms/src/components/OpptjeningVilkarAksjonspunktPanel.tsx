@@ -103,7 +103,7 @@ export const OpptjeningVilkarAksjonspunktPanelImpl = ({
   const finnesOpptjeningsaktiviteterVidSkjeringstidspunkt = (): boolean => {
     if(erPleiepenger){
       return opptjeninger.some(opptjening => {
-        const skjeringstidspunkt = dayjs(opptjening.fastsattOpptjening.opptjeningTom).add(1, 'days');
+        const skjeringstidspunkt = dayjs(opptjening.fastsattOpptjening.opptjeningTom);
 
         return opptjening.opptjeningAktivitetList.some(opptjeningAktivitet =>
           // Siste argument ("[]") til isBetween inkluderer start og sluttdato
