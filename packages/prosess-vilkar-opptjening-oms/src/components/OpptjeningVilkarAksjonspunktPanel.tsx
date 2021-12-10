@@ -100,19 +100,14 @@ export const OpptjeningVilkarAksjonspunktPanelImpl = ({
   const isOpenAksjonspunkt = aksjonspunkter.some(ap => isAksjonspunktOpen(ap.status.kode));
   const originalErVilkarOk = isOpenAksjonspunkt ? undefined : vilkarUtfallType.OPPFYLT === status;
 
-  const finnesOpptjeningsaktiviteterVidSkjeringstidspunkt = (): boolean => {
-    if(erPleiepenger){
-      return opptjeninger.some(opptjening => {
-        const skjeringstidspunkt = dayjs(opptjening.fastsattOpptjening.opptjeningTom);
+  const finnesOpptjeningsaktiviteterVidOpptjeningTom: boolean = erPleiepenger ? true : opptjeninger.some(opptjening => {
+    const opptjeningTom = dayjs(opptjening.fastsattOpptjening.opptjeningTom);
 
-        return opptjening.opptjeningAktivitetList.some(opptjeningAktivitet =>
-          // Siste argument ("[]") til isBetween inkluderer start og sluttdato
-          dayjs(skjeringstidspunkt).isBetween(opptjeningAktivitet.opptjeningFom, opptjeningAktivitet.opptjeningTom, null, "[]")
-        );
-      });
-    }
-    return true;
-  };
+    return opptjening.opptjeningAktivitetList.some(opptjeningAktivitet =>
+      // Siste argument ("[]") til isBetween inkluderer start og sluttdato
+      dayjs(opptjeningTom).isBetween(opptjeningAktivitet.opptjeningFom, opptjeningAktivitet.opptjeningTom, null, "[]")
+    );
+  });
 
   return (
     <ProsessPanelTemplate
@@ -151,7 +146,7 @@ export const OpptjeningVilkarAksjonspunktPanelImpl = ({
         erVilkarOk={erVilkarOk}
         readOnly={readOnly}
         fieldPrefix={`vilkarFields[${periodeIndex}]`}
-        skalValgMidlertidigInaktivTypeBVises={finnesOpptjeningsaktiviteterVidSkjeringstidspunkt()}
+        skalValgMidlertidigInaktivTypeBVises={finnesOpptjeningsaktiviteterVidOpptjeningTom}
       />
     </ProsessPanelTemplate>
   );
