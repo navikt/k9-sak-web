@@ -108,6 +108,7 @@ export class VedtakRevurderingFormImpl extends Component {
       BEREGNING_25_PROSENT_AVVIK,
       OVER_18_AAR,
       lagreDokumentdata,
+      personopplysninger,
       ...formProps
     } = this.props;
 
@@ -228,6 +229,7 @@ export class VedtakRevurderingFormImpl extends Component {
               begrunnelse={begrunnelse}
               arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
               lagreDokumentdata={lagreDokumentdata}
+              personopplysninger={personopplysninger}
             />
             {behandlingStatusKode === behandlingStatusCode.BEHANDLING_UTREDES && (
               <VedtakRevurderingSubmitPanel
@@ -276,6 +278,7 @@ VedtakRevurderingFormImpl.propTypes = {
   BEREGNING_25_PROSENT_AVVIK: PropTypes.string,
   OVER_18_AAR: PropTypes.string,
   arbeidsgiverOpplysningerPerId: PropTypes.shape().isRequired,
+  personopplysninger: PropTypes.shape().isRequired,
   ...formPropTypes,
 };
 
