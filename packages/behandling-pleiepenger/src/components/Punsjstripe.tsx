@@ -7,6 +7,7 @@ import styles from './punsjstripe.less';
 
 export interface PunsjResponse {
   journalpostIder: JournalpostIder[];
+  journalpostIderBarn: JournalpostIder[];
 }
 
 export interface JournalpostIder {
@@ -15,16 +16,20 @@ export interface JournalpostIder {
 
 interface PunsjstripeProps {
   aktørId: string;
+  aktørIdBarn: string;
   saksnummer?: string;
 }
 
-const Punsjstripe: React.FC<PunsjstripeProps> = ({ aktørId, saksnummer }) => {
+const Punsjstripe: React.FC<PunsjstripeProps> = ({ aktørId, saksnummer, aktørIdBarn }) => {
   const [punsjoppgaver, setPunsjoppgaver] = React.useState<PunsjResponse>(null);
   const [error, setError] = React.useState(null);
 
   React.useEffect(() => {
-    axios
-      .get(`/k9/sak/api/punsj/journalpost/uferdig?aktoerId=${aktørId}`)
+    axios({
+      method: 'get',
+      url: `/k9/sak/api/punsj/journalpost/uferdig?aktoerId=${aktørId}`,
+      headers: { 'X-Nav-AktorId-barn': aktørIdBarn },
+    })
       .then((response: AxiosResponse) => {
         setPunsjoppgaver(response.data);
       })
@@ -40,13 +45,13 @@ const Punsjstripe: React.FC<PunsjstripeProps> = ({ aktørId, saksnummer }) => {
   if (!harPunsjoppgaver) {
     return null;
   }
-  const getUløsteOppgaverText = () => {
-    const { journalpostIder } = punsjoppgaver;
-    if (journalpostIder.length === 1) {
+  const { journalpostIder, journalpostIderBarn } = punsjoppgaver;
+  const getUløsteOppgaverText = (journalposter, subjekt: string) => {
+    if (journalposter.length === 1) {
       const { journalpostId } = journalpostIder[0];
       return (
         <>
-          <span>Det er 1 uløst oppgave tilknyttet søkeren i Punsj.</span>
+          <span>{`Det er 1 uløst oppgave tilknyttet ${subjekt} i Punsj.`}</span>
           <Lenke className={styles.oppgaveLenke} href={`${getPathToFplos()}?sok=${journalpostId}`}>
             Gå til oppgave
           </Lenke>
@@ -55,7 +60,7 @@ const Punsjstripe: React.FC<PunsjstripeProps> = ({ aktørId, saksnummer }) => {
     }
     return (
       <>
-        <span>{`Det er ${journalpostIder.length} uløste oppgaver tilknyttet søkeren i Punsj.`}</span>
+        <span>{`Det er ${journalposter.length} uløste oppgaver tilknyttet ${subjekt} i Punsj.`}</span>
         <Lenke className={styles.oppgaveLenke} href={`${getPathToFplos()}?sok=${saksnummer}`}>
           Reserver oppgaver i LOS
         </Lenke>
@@ -63,6 +68,11 @@ const Punsjstripe: React.FC<PunsjstripeProps> = ({ aktørId, saksnummer }) => {
     );
   };
 
-  return <AlertStripeAdvarsel>{getUløsteOppgaverText()}</AlertStripeAdvarsel>;
+  return (
+    <>
+      <AlertStripeAdvarsel>{getUløsteOppgaverText(journalpostIder, 'søkeren')}</AlertStripeAdvarsel>
+      <AlertStripeAdvarsel>{getUløsteOppgaverText(journalpostIderBarn, 'barnet')}</AlertStripeAdvarsel>
+    </>
+  );
 };
 export default Punsjstripe;
