@@ -34,7 +34,7 @@ import beregningsgrunnlagAksjonspunkterPropType from '../propTypes/beregningsgru
 import beregningsgrunnlagBehandlingPropType from '../propTypes/beregningsgrunnlagBehandlingPropType';
 import beregningsgrunnlagPropType from '../propTypes/beregningsgrunnlagPropType';
 import beregningsgrunnlagVilkarPropType from '../propTypes/beregningsgrunnlagVilkarPropType';
-import { transformValues } from './beregningForm/BeregningForm';
+import { transformValues as transformBeregningsgrunnlagValues } from './beregningForm/BeregningForm';
 import BeregningsgrunnlagFieldArrayComponent from './BeregningsgrunnlagFieldArrayComponent';
 import styles from './beregningFP.less';
 import beregningStyles from './beregningsgrunnlagPanel/beregningsgrunnlag.less';
@@ -283,32 +283,36 @@ export const buildInitialValues = (beregningsgrunnlag, gjeldendeAksjonspunkter, 
     buildInitialValuesForBeregningrunnlag(currentBeregningsgrunnlag, gjeldendeAksjonspunkter, bgVilkar),
   );
 
+// Kun eksportert for test
+export const transformValues = (values, alleBeregningsgrunnlag, vilkar) => {
+  const fieldArrayValuesList = values.beregningsgrunnlagListe;
+  const alleAksjonspunkter = fieldArrayValuesList
+    .flatMap((currentBeregningsgrunnlagSkjemaverdier, currentBeregningsgrunnlagIndex) => {
+      // Indeks i visning må vere lik indeks i array alleBeregningsgrunnlag
+      const opprinneligBeregningsgrunnlag = alleBeregningsgrunnlag[currentBeregningsgrunnlagIndex];
+      const allePerioder = opprinneligBeregningsgrunnlag
+        ? opprinneligBeregningsgrunnlag.beregningsgrunnlagPeriode
+        : [];
+      const alleAndelerIForstePeriode =
+        allePerioder && allePerioder.length > 0 ? allePerioder[0].beregningsgrunnlagPrStatusOgAndel : [];
+      if (!currentBeregningsgrunnlagSkjemaverdier.erTilVurdering) {
+        return [];
+      }
+      const transformedValues = transformBeregningsgrunnlagValues(
+        currentBeregningsgrunnlagSkjemaverdier,
+        alleAndelerIForstePeriode,
+        allePerioder,
+      );
+
+      return transformedValues;
+    });
+    return formaterAksjonspunkter(alleAksjonspunkter, getBGVilkar(vilkar).perioder);
+}
+
 const mapStateToPropsFactory = (initialState, initialOwnProps) => {
   const { aksjonspunkter, submitCallback, beregningsgrunnlag, vilkar } = initialOwnProps;
   const gjeldendeAksjonspunkter = getAksjonspunkterForBeregning(aksjonspunkter);
-
-  const onSubmit = values => {
-    const fieldArrayValuesList = values.beregningsgrunnlagListe;
-    const alleAksjonspunkter = fieldArrayValuesList
-      .filter(val => val.erTilVurdering)
-      .flatMap((currentBeregningsgrunnlagSkjemaverdier, currentBeregningsgrunnlagIndex) => {
-        const opprinneligBeregningsgrunnlag = beregningsgrunnlag[currentBeregningsgrunnlagIndex];
-        const allePerioder = opprinneligBeregningsgrunnlag
-          ? opprinneligBeregningsgrunnlag.beregningsgrunnlagPeriode
-          : [];
-        const alleAndelerIForstePeriode =
-          allePerioder && allePerioder.length > 0 ? allePerioder[0].beregningsgrunnlagPrStatusOgAndel : [];
-        const transformedValues = transformValues(
-          currentBeregningsgrunnlagSkjemaverdier,
-          alleAndelerIForstePeriode,
-          allePerioder,
-        );
-
-        return transformedValues;
-      });
-    return submitCallback(formaterAksjonspunkter(alleAksjonspunkter, getBGVilkar(vilkar).perioder));
-  };
-
+  const onSubmit = values => submitCallback(transformValues(values, beregningsgrunnlag, vilkar));
   return (state, ownProps) => ({
     onSubmit,
     initialValues: {
