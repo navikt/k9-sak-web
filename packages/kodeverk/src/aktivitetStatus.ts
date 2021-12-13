@@ -13,6 +13,7 @@ const aktivitetStatus = {
   DAGPENGER: 'DP',
   ARBEIDSAVKLARINGSPENGER: 'AAP',
   SYKEPENGER_AV_DAGPENGER: 'SP_AV_DP',
+  PLEIEPENGER_AV_DAGPENGER: 'PSB_AV_DP',
   MILITAER_ELLER_SIVIL: 'MS',
   BRUKERS_ANDEL: 'BA',
   UDEFINERT: '-',
@@ -49,9 +50,15 @@ const kombinasjonsstatuser = [
   aktivitetStatus.KOMBINERT_FL_SN,
   aktivitetStatus.KOMBINERT_AT_SN,
 ];
-const statuserSomStotterDagpenger = [aktivitetStatus.DAGPENGER, aktivitetStatus.SYKEPENGER_AV_DAGPENGER];
+const statuserSomStotterDagpenger = [
+  aktivitetStatus.DAGPENGER, 
+  aktivitetStatus.SYKEPENGER_AV_DAGPENGER, 
+  aktivitetStatus.PLEIEPENGER_AV_DAGPENGER];
 
-const statuserSomStotterDagpengerEllerAAP = [aktivitetStatus.DAGPENGER, aktivitetStatus.SYKEPENGER_AV_DAGPENGER, aktivitetStatus.ARBEIDSAVKLARINGSPENGER];
+const statuserSomStotterDagpengerEllerAAP = [aktivitetStatus.DAGPENGER, 
+  aktivitetStatus.SYKEPENGER_AV_DAGPENGER,
+  aktivitetStatus.PLEIEPENGER_AV_DAGPENGER,
+  aktivitetStatus.ARBEIDSAVKLARINGSPENGER];
 const statuserSomStotterTilstottendeYtelser = [aktivitetStatus.KUN_YTELSE];
 const statuserSomStotterMilitaer = [aktivitetStatus.MILITAER_ELLER_SIVIL];
 
