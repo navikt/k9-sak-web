@@ -18,7 +18,7 @@ const historikkEndretFeltTypeCodes = {
   },
   ALENE_OM_OMSORG: {
     kode: 'ALENE_OM_OMSORG',
-    feltId: 'HistorikkEndretFelt.AleneOmOmsorgen',
+    feltId: 'HistorikkEndretFelt.AleneOmOmsorgen'
   },
   ANTALL_BARN: {
     kode: 'ANTALL_BARN',
@@ -130,7 +130,7 @@ const historikkEndretFeltTypeCodes = {
   },
   MIDLERTIDIG_ALENE: {
     kode: 'MIDLERTIDIG_ALENE',
-    feltId: 'HistorikkEndretFelt.UtvidetRett',
+    feltId: 'HistorikkEndretFelt.UtvidetRett'
   },
   MOTTAR_YTELSE_ARBEID: {
     kode: 'MOTTAR_YTELSE_ARBEID',
@@ -467,10 +467,6 @@ const historikkEndretFeltTypeCodes = {
   TILKJENT_YTELSE: {
     kode: 'TILKJENT_YTELSE',
     feltId: 'HistorikkEndretFelt.TilkjentYtelse',
-  },
-  KOMPLETTHET: {
-    kode: 'KOMPLETTHET',
-    feltId: 'HistorikkEndretFelt.Kompletthet',
   },
 };
 

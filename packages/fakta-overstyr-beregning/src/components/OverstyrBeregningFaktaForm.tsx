@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { injectIntl, WrappedComponentProps, FormattedMessage } from 'react-intl';
 import { Formik, Form, Field, FieldArray } from 'formik';
 import * as Yup from 'yup';
@@ -9,15 +9,17 @@ import { Textarea } from "nav-frontend-skjema";
 import { EtikettInfo } from 'nav-frontend-etiketter';
 import { Aksjonspunkt, ArbeidsgiverOpplysningerPerId } from '@k9-sak-web/types';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import AlertStripe from 'nav-frontend-alertstriper';
 import styles from './OverstyrBeregningFaktaForm.less';
 import { OverstyrInputBeregningDto } from "../types/OverstyrInputBeregningDto";
 import { formaterDatoString } from "./utils";
 import { OverstyrInputForBeregningDto } from "../types/OverstyrInputForBeregningDto";
 import OverstyrBeregningAktivitetForm from "./OverstyrBeregningAktivitetForm";
+import { OverstyrInputBeregningAktivitet } from "../types/OverstyrInputBeregningAktivitet";
 
 interface Props {
     arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysningerPerId,
-    overstyrInputBeregning: OverstyrInputBeregningDto,
+    overstyrInputBeregning: OverstyrInputBeregningDto | OverstyrInputBeregningDto[],
     submitCallback: (SubmitCallback) => void,
     readOnly: boolean,
     submittable: boolean,
@@ -36,28 +38,19 @@ const OverstyrBeregningFaktaForm = ({
     aksjonspunkter,
     intl
 }: Props & WrappedComponentProps) => {
-    const [submitDelay, setSubmitDelay] = React.useState(false);
-    const [harEndredeVerdier, setHarEndredeVerdier] = React.useState(false);
-
-    useEffect(() => {
-        if (submitDelay === true) {
-            const delayTimer = setTimeout(() => {
-                setSubmitDelay(false);
-            }, 5000);
-            return () => clearTimeout(delayTimer);
-        }
-        return undefined;
-    }, [submitDelay]);
-
     const aktivitetSchema = Yup.object().shape({
         arbiedsgiverAktørId: Yup.string(),
         arbeidsgiverOrgnr: Yup.string(),
         inntektPrAar: Yup.number()
             .typeError(intl.formatMessage({ id: 'OverstyrInputForm.InntektFeltTypeFeil' }))
-            .required(intl.formatMessage({ id: 'OverstyrInputForm.InntektFeltPakrevdFeil' })),
+            .required(intl.formatMessage({ id: 'OverstyrInputForm.InntektFeltPakrevdFeil' }))
+            .min(0, intl.formatMessage({ id: 'OverstyrInputForm.InntektFeltMin' }))
+            .max(100000000, intl.formatMessage({ id: 'OverstyrInputForm.InntektFeltMax' })),
         refusjonPrAar: Yup.number()
             .typeError(intl.formatMessage({ id: 'OverstyrInputForm.RefusjonFeltTypeFeil' }))
-            .required(intl.formatMessage({ id: 'OverstyrInputForm.RefusjonFeltPakrevdFeil' })),
+            .required(intl.formatMessage({ id: 'OverstyrInputForm.RefusjonFeltPakrevdFeil' }))
+            .min(0, intl.formatMessage({ id: 'OverstyrInputForm.RefusjonFeltMin' }))
+            .max(100000000, intl.formatMessage({ id: 'OverstyrInputForm.RefusjonFeltMax' })),
     });
 
     const periodeSchema = Yup.object().shape({
@@ -84,21 +77,33 @@ const OverstyrBeregningFaktaForm = ({
 
     /**
      * Formik liker ikke null i value feltene, null verdier kan forekomme fra backend. 
-     * "Oversetter" null verdier i skjemafeltene til undefined
+     * "Oversetter" null verdier i skjemafeltene til en tom streng
      */
+    const behandleOverstyrInputBeregning = (input: OverstyrInputBeregningDto[]): OverstyrInputBeregningDto[] => input.map((periode) => (
+        {
+            ...periode, aktivitetliste: periode.aktivitetliste.map((aktivitet) => (
+                {
+                    ...aktivitet,
+                    "inntektPrAar": aktivitet.inntektPrAar || '',
+                    "refusjonPrAar": aktivitet.refusjonPrAar || ''
+                }
+            )) // end of periode.aktivitetliste.map((aktivitet) => {})
+        } // end of periode objekt
+    )); // end of input.map((periode) => {})
+
     const initialValues: OverstyrInputForBeregningDto = {
         kode: aksjonspunktCodes.OVERSTYR_BEREGNING_INPUT,
         begrunnelse: utledBegrunnelse(),
-        perioder: [{
-            ...overstyrInputBeregning, aktivitetliste: overstyrInputBeregning.aktivitetliste.map((aktivitet) => ({
-                ...aktivitet,
-                "inntektPrAar": aktivitet.inntektPrAar || undefined,
-                "refusjonPrAar": aktivitet.refusjonPrAar || undefined,
-            }))
-        }],
+        perioder: behandleOverstyrInputBeregning(
+            Array.isArray(overstyrInputBeregning) ? overstyrInputBeregning : [overstyrInputBeregning]
+        )
     }
 
-    const erDeaktivert = (isValid) => readOnly || !submittable || !isValid || !harEndredeVerdier || submitDelay;
+    /**
+     * Trenger en unik key for å mappe periodene
+     */
+    const getPeriodeKey = (aktivitetliste: OverstyrInputBeregningAktivitet[]): string =>
+        aktivitetliste[0].arbeidsgiverAktørId || aktivitetliste[0].arbeidsgiverOrgnr;
 
     return (
         <div className={styles.container}>
@@ -106,75 +111,94 @@ const OverstyrBeregningFaktaForm = ({
             <Formik
                 initialValues={initialValues}
                 onSubmit={values => {
-                    setSubmitDelay(true);
-                    submitCallback([values]);
+                    if (!readOnly && submittable) submitCallback([values]);
                 }}
                 validationSchema={validationSchema}
                 validateOnBlur
                 validateOnChange
                 validateOnMount
             >
-                {({ values, isValid, dirty }) => {
-
-                    if (dirty && !harEndredeVerdier) {
-                        setHarEndredeVerdier(true);
-                    }
-
-                    return (
-                        <Form>
-                            <FieldArray name="perioder">
-                                {() =>
-                                    <>
-                                        {values.perioder.map((periode, periodeIndex) => {
-                                            const { skjaeringstidspunkt, aktivitetliste } = periode;
-                                            return <>
-                                                <EtikettInfo className="skjaeringstidspunkt">
-                                                    Skjæringstidspunkt: {formaterDatoString(skjaeringstidspunkt)}
-                                                </EtikettInfo>
-                                                <FieldArray name={`perioder[${periodeIndex}].aktivitetliste`} >
-                                                    {() =>
-                                                        <Table stripet headerTextCodes={[
-                                                            "OverstyrInputForm.FirmaHeader",
-                                                            "OverstyrInputForm.InntektPrAar",
-                                                            'OverstyrInputForm.RefusjonPrAar'
-                                                        ]}>
-                                                            {aktivitetliste.length > 0 && aktivitetliste.map((aktivitet, aktivitetIndex) => {
-                                                                const { arbeidsgiverAktørId, arbeidsgiverOrgnr } = aktivitet;
-                                                                const firmaNavn = utledFirmaNavn((arbeidsgiverAktørId) || arbeidsgiverOrgnr);
-                                                                return (
-                                                                    <OverstyrBeregningAktivitetForm
-                                                                        key=""
-                                                                        periodeIndex={periodeIndex}
-                                                                        aktivitetIndex={aktivitetIndex}
-                                                                        firmaNavn={firmaNavn} />
-                                                                )
-                                                            }
-                                                            )}
-                                                        </Table>
-                                                    }
-                                                </FieldArray>
-                                            </>
-                                        })}
-                                    </>
-                                }
-                            </FieldArray>
-                            <VerticalSpacer sixteenPx />
-                            <Field name="begrunnelse">
-                                {({ field, meta }) => <Textarea
-                                    id="begrunnelse"
-                                    label="Begrunnelse"
-                                    placeholder={intl.formatMessage({ id: 'OverstyrInputForm.Begrunnelse' })}
-                                    feil={meta.touched && meta.error ? meta.error : false}
-                                    value={field.value}
-                                    {...field} />}
-                            </Field>
-                            <VerticalSpacer sixteenPx />
-                            <Knapp spinner={submitDelay} disabled={erDeaktivert(isValid)} autoDisableVedSpinner type="hoved" htmlType="submit">
+                {({ values, isValid, isSubmitting }) => (
+                    <Form>
+                        <FieldArray name="perioder">
+                            {() =>
+                                <>
+                                    {values.perioder.map((periode, periodeIndex) => {
+                                        const { skjaeringstidspunkt, aktivitetliste } = periode;
+                                        return <div key={getPeriodeKey(aktivitetliste)}>
+                                            <EtikettInfo className="skjaeringstidspunkt">
+                                                Skjæringstidspunkt: {formaterDatoString(skjaeringstidspunkt)}
+                                            </EtikettInfo>
+                                            <FieldArray name={`perioder[${periodeIndex}].aktivitetliste`} >
+                                                {() =>
+                                                    <Table stripet headerTextCodes={[
+                                                        "OverstyrInputForm.FirmaHeader",
+                                                        "OverstyrInputForm.InntektPrAar",
+                                                        'OverstyrInputForm.RefusjonPrAar'
+                                                    ]}>
+                                                        {aktivitetliste.length > 0 && aktivitetliste.map((aktivitet, aktivitetIndex) => {
+                                                            const { arbeidsgiverAktørId, arbeidsgiverOrgnr } = aktivitet;
+                                                            const firmaNavn = utledFirmaNavn((arbeidsgiverAktørId) || arbeidsgiverOrgnr);
+                                                            return (
+                                                                <OverstyrBeregningAktivitetForm
+                                                                    key=""
+                                                                    periodeIndex={periodeIndex}
+                                                                    aktivitetIndex={aktivitetIndex}
+                                                                    firmaNavn={firmaNavn}
+                                                                    readOnly={readOnly} />
+                                                            )
+                                                        }
+                                                        )}
+                                                    </Table>
+                                                }
+                                            </FieldArray>
+                                        </div>
+                                    })}
+                                </>
+                            }
+                        </FieldArray>
+                        <VerticalSpacer sixteenPx />
+                        <Field name="begrunnelse">
+                            {({ field, meta }) => <Textarea
+                                id="begrunnelse"
+                                label="Begrunnelse"
+                                placeholder={intl.formatMessage({ id: 'OverstyrInputForm.Begrunnelse' })}
+                                feil={meta.touched && meta.error ? meta.error : false}
+                                value={field.value}
+                                disabled={readOnly}
+                                {...field} />}
+                        </Field>
+                        {(readOnly || !submittable) && (
+                            <>
+                                <VerticalSpacer sixteenPx />
+                                <AlertStripe type="advarsel">
+                                    <FormattedMessage id="OverstyrInputForm.KanIkkeBekreftes" />
+                                </AlertStripe>
+                            </>
+                        )}
+                        <VerticalSpacer sixteenPx />
+                        <div className={styles.buttonBar}>
+                            <Knapp
+                                className={styles.button}
+                                spinner={isSubmitting}
+                                disabled={readOnly || !submittable || !isValid}
+                                autoDisableVedSpinner
+                                type="hoved"
+                                htmlType="submit"
+                            >
                                 <FormattedMessage id="OverstyrInputForm.LagreAksjonspunkt" />
                             </Knapp>
-                        </Form>
-                    )
-                }}
+                            <Knapp
+                                className={styles.button}
+                                disabled={isValid}
+                                type="flat"
+                                htmlType="submit"
+                            >
+                                <FormattedMessage id="OverstyrInputForm.KontrollerSkjema" />
+                            </Knapp>
+                        </div>
+                    </Form>
+                )}
             </Formik>
         </div >
     );
