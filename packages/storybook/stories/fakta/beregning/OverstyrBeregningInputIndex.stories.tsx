@@ -39,7 +39,8 @@ const overstyrInputBeregning: OverstyrInputBeregningDto[] = [
                 "arbeidsgiverOrgnr": "910909088",
                 "arbeidsgiverAktørId": null,
                 "inntektPrAar": null,
-                "refusjonPrAar": null
+                "refusjonPrAar": null,
+                "opphørRefusjon": null
             }
         ]
     },
@@ -50,7 +51,8 @@ const overstyrInputBeregning: OverstyrInputBeregningDto[] = [
                 "arbeidsgiverOrgnr": "910909081",
                 "arbeidsgiverAktørId": null,
                 "inntektPrAar": null,
-                "refusjonPrAar": null
+                "refusjonPrAar": null,
+                "opphørRefusjon": null
             }
         ]
     },
