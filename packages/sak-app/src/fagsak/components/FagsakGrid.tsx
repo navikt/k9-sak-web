@@ -1,5 +1,4 @@
 import React, { ReactNode } from 'react';
-import MediaQuery from 'react-responsive';
 
 import styles from './fagsakGrid.less';
 
@@ -22,12 +21,9 @@ const FagsakGrid = ({
   visittkortContent,
 }: OwnProps) => (
   <>
-    <MediaQuery maxWidth={1599}>{visittkortContent()}</MediaQuery>
+    {visittkortContent()}
     <div className={styles.gridContainer}>
-      <div className={styles.leftColumn}>
-        <MediaQuery minWidth={1600}>{visittkortContent()}</MediaQuery>
-        {behandlingContent}
-      </div>
+      <div className={styles.leftColumn}>{behandlingContent}</div>
       <div className={styles.rightColumn}>
         <div>{profileAndNavigationContent}</div>
         <div>{supportContent()}</div>
