@@ -55,11 +55,17 @@ const OverstyrBeregningFaktaForm = ({
             .max(100000000, intl.formatMessage({ id: 'OverstyrInputForm.RefusjonFeltMax' })),
         opphørRefusjon: Yup.date()
             .typeError(intl.formatMessage({ id: 'OverstyrInputForm.OpphorFeltDato' }))
-            .test(
-                'dato',
-                intl.formatMessage({ id: 'OverstyrInputForm.MaVareDato' }),
-                (value) => isDate(value)
-            ),
+            .when("refusjonPrAar", (refusjonPrAar, schema) => {
+                if (!Number.isNaN(refusjonPrAar) && refusjonPrAar > 0) {
+                    return schema.test(
+                        'dato',
+                        intl.formatMessage({ id: 'OverstyrInputForm.MaVareDato' }),
+                        (value) => isDate(value)
+                    )
+                }
+                return schema;
+            }),
+
     });
 
     const periodeSchema = Yup.object().shape({

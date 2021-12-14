@@ -63,7 +63,11 @@ const OverstyrBeregningAktivitetForm: React.FC<Props & WrappedComponentProps> = 
                         onChange={(e) => {
                             const tallverdi: number = parseInt(e.target.value.replace(/\D+/g, ''), 10);
                             setFieldValue(field.name, tallverdi);
-                            if (!(tallverdi > 0)) setFieldValue(`perioder.${periodeIndex}.aktivitetliste.${aktivitetIndex}.opphørRefusjon`, '');
+                            if (tallverdi <= 0 || !tallverdi) {
+                                const targetFieldName = `perioder.${periodeIndex}.aktivitetliste.${aktivitetIndex}.opphørRefusjon`;
+                                setFieldValue(targetFieldName, '');
+                                setFieldTouched(targetFieldName, true);
+                            }
                         }}
                         maxLength={10}
                         value={parseCurrencyInput(field.value)}
@@ -74,23 +78,26 @@ const OverstyrBeregningAktivitetForm: React.FC<Props & WrappedComponentProps> = 
             </TableColumn>
             <TableColumn>
                 <Field name={`perioder.${periodeIndex}.aktivitetliste.${aktivitetIndex}.opphørRefusjon`}>
-                    {({ field, meta }) => (
-                        <>
-                            <Datepicker
-                                inputProps={{
-                                    placeholder: intl.formatMessage({ id: 'OverstyrInputForm.OpphorRefusjonPlaceholder' }),
-                                    'aria-invalid': !!(meta.touched && meta.error),
-                                }}
-                                value={field.value}
-                                onChange={(value) => {
-                                    setFieldTouched(field.name, true);
-                                    setFieldValue(field.name, value);
-                                }}
-                                disabled={!(values.perioder[periodeIndex].aktivitetliste[aktivitetIndex].refusjonPrAar > 0)}
-                            />
-                            {(meta.touched && meta.error) && (<p className={styles.errorText}>{meta.error}</p>)}
-                        </>
-                    )}
+                    {({ field, meta }) => {
+                        const tallverdi = values.perioder[periodeIndex].aktivitetliste[aktivitetIndex].refusjonPrAar;
+                        return (
+                            <>
+                                <Datepicker
+                                    inputProps={{
+                                        placeholder: intl.formatMessage({ id: 'OverstyrInputForm.OpphorRefusjonPlaceholder' }),
+                                        'aria-invalid': !!(meta.touched && meta.error),
+                                    }}
+                                    value={field.value}
+                                    onChange={(value) => {
+                                        setFieldTouched(field.name, true);
+                                        setFieldValue(field.name, value);
+                                    }}
+                                    disabled={(tallverdi <= 0 || !tallverdi || readOnly)}
+                                />
+                                {(meta.touched && meta.error) && (<p className={styles.errorText}>{meta.error}</p>)}
+                            </>
+                        )
+                    }}
                 </Field>
             </TableColumn>
         </TableRow>
