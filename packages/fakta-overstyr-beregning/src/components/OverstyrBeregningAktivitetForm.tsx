@@ -5,6 +5,7 @@ import { TableColumn, TableRow } from '@fpsak-frontend/shared-components';
 import { parseCurrencyInput } from '@fpsak-frontend/utils';
 import { Field, useFormikContext } from "formik";
 import { Input } from "nav-frontend-skjema";
+import { Datepicker } from 'nav-datovelger';
 import styles from './OverstyrBeregningFaktaForm.less';
 import { OverstyrInputForBeregningDto } from "../types/OverstyrInputForBeregningDto";
 
@@ -24,7 +25,7 @@ const OverstyrBeregningAktivitetForm: React.FC<Props & WrappedComponentProps> = 
     readOnly,
     intl
 }) => {
-    const { setFieldValue } = useFormikContext<OverstyrInputForBeregningDto>();
+    const { setFieldValue, setFieldTouched, values } = useFormikContext<OverstyrInputForBeregningDto>();
     return (
         <TableRow key={key}>
             <TableColumn>
@@ -62,12 +63,34 @@ const OverstyrBeregningAktivitetForm: React.FC<Props & WrappedComponentProps> = 
                         onChange={(e) => {
                             const tallverdi: number = parseInt(e.target.value.replace(/\D+/g, ''), 10);
                             setFieldValue(field.name, tallverdi);
+                            if (!(tallverdi > 0)) setFieldValue(`perioder.${periodeIndex}.aktivitetliste.${aktivitetIndex}.opphørRefusjon`, '');
                         }}
                         maxLength={10}
                         value={parseCurrencyInput(field.value)}
                         feil={meta.touched && meta.error ? meta.error : false}
                         disabled={readOnly}
                     />)}
+                </Field>
+            </TableColumn>
+            <TableColumn>
+                <Field name={`perioder.${periodeIndex}.aktivitetliste.${aktivitetIndex}.opphørRefusjon`}>
+                    {({ field, meta }) => (
+                        <>
+                            <Datepicker
+                                inputProps={{
+                                    placeholder: intl.formatMessage({ id: 'OverstyrInputForm.OpphorRefusjonPlaceholder' }),
+                                    'aria-invalid': !!(meta.touched && meta.error),
+                                }}
+                                value={field.value}
+                                onChange={(value) => {
+                                    setFieldTouched(field.name, true);
+                                    setFieldValue(field.name, value);
+                                }}
+                                disabled={!(values.perioder[periodeIndex].aktivitetliste[aktivitetIndex].refusjonPrAar > 0)}
+                            />
+                            {(meta.touched && meta.error) && (<p className={styles.errorText}>{meta.error}</p>)}
+                        </>
+                    )}
                 </Field>
             </TableColumn>
         </TableRow>

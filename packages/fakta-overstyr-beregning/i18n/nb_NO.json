@@ -10,6 +10,9 @@
     "OverstyrInputForm.FirmaHeader": "Arbeidsgiver",
     "OverstyrInputForm.InntektPrAar": "Inntekt pr. år",
     "OverstyrInputForm.RefusjonPrAar": "Refusjon pr. år",
+    "OverstyrInputForm.OpphorRefusjon": "Refusjon opphører (dd-mm-åååå)",
+    "OverstyrInputForm.OpphorRefusjonPlaceholder": "dd-mm-åååå",
+    "OverstyrInputForm.MaVareDato": "Refusjon opphører må være en gyldig dato",
     "OverstyrInputForm.UkjentFirma": "Ukjent arbeidsgiver",
     "OverstyrInputForm.Begrunnelse": "Begrunnelse",
     "OverstyrInputForm.LagreAksjonspunkt": "Bekreft og fortsett",
@@ -17,6 +20,7 @@
     "OverstyrInputForm.InntektFeltMax": "Inntekt kan ikke være større enn 10 000 000",
     "OverstyrInputForm.RefusjonFeltMin": "Refusjon kan ikke være et negativt tall",
     "OverstyrInputForm.RefusjonFeltMax": "Refusjon kan ikke være større enn 10 000 000",
+    "OverstyrInputForm.OpphorFeltDato": "Refusjon opphører må være en dato",
     "OverstyrInputForm.KanIkkeBekreftes": "Aksjonspunktet kan ikke bekreftes",
     "OverstyrInputForm.KontrollerSkjema": "Kontroller skjema"
 }
