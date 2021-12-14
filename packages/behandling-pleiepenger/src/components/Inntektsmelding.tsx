@@ -46,9 +46,6 @@ export default ({
   const httpErrorHandlerCaller = (status: number, locationHeader?: string) =>
     httpErrorHandlerFn(status, addErrorMessage, locationHeader);
 
-  const harAktivtAksjonspunkt = aksjonspunkter.some(
-    aksjonspunkt => aksjonspunkt.status.kode === aksjonspunktStatus.OPPRETTET,
-  );
   const løsAksjonspunkt = aksjonspunktArgs => submitCallback([{ ...aksjonspunktArgs }]);
 
   return (
@@ -67,7 +64,7 @@ export default ({
           arbeidsgiverOpplysningerPerId,
           dokumenter,
           løsAksjonspunkt,
-          readOnly || !harAktivtAksjonspunkt,
+          readOnly,
           saksbehandlere?.saksbehandlere || {},
           aksjonspunkter,
         )
