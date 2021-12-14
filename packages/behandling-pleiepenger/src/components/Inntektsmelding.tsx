@@ -3,7 +3,6 @@ import { useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
 import useGlobalStateRestApiData from '@k9-sak-web/rest-api-hooks/src/global-data/useGlobalStateRestApiData';
 import { ArbeidsgiverOpplysningerPerId, Dokument } from '@k9-sak-web/types';
 import { MicroFrontend } from '@fpsak-frontend/utils';
-import aksjonspunktStatus from '../../../kodeverk/src/aksjonspunktStatus';
 import { K9sakApiKeys } from '../../../sak-app/src/data/k9sakApi';
 import httpErrorHandlerFn from '../microfrontend/utils/httpErrorHandler';
 import findEndpointsForMicrofrontend from '../microfrontend/utils/findEndpointsForMicrofrontend';
