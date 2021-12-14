@@ -17,6 +17,6 @@ describe('<FagsakGrid>', () => {
     expect(wrapper.find('#behandlingContent')).toHaveLength(1);
     expect(wrapper.find('#profileContent')).toHaveLength(1);
     expect(wrapper.find('#supportContent')).toHaveLength(1);
-    expect(wrapper.find('#visittkort')).toHaveLength(2);
+    expect(wrapper.find('#visittkort')).toHaveLength(1);
   });
 });
