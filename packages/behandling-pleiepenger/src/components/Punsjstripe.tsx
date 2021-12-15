@@ -4,7 +4,6 @@ import React from 'react';
 import Lenke from 'nav-frontend-lenker';
 import { getPathToFplos } from '@k9-sak-web/sak-app/src/app/paths';
 import styles from './punsjstripe.less';
-import queryString from 'query-string';
 
 export interface PunsjResponse {
   journalpostIder: JournalpostIder[];
@@ -24,10 +23,10 @@ interface PunsjstripeProps {
 const Punsjstripe: React.FC<PunsjstripeProps> = ({ aktørId, saksnummer, aktørIdBarn }) => {
   const [punsjoppgaver, setPunsjoppgaver] = React.useState<PunsjResponse>(null);
   const [error, setError] = React.useState(null);
-  const params = queryString.stringify({ aktoerId: aktørId, aktoerIdBarn: aktørIdBarn });
+  const body = JSON.stringify({ aktorIdDto: { aktørId }, aktorIdDtoBarn: { aktørId: aktørIdBarn } });
   React.useEffect(() => {
     axios
-      .get(`/k9/sak/api/punsj/journalpost/uferdig?${params}`)
+      .post('/k9/sak/api/punsj/journalpost/uferdig', body)
       .then((response: AxiosResponse) => {
         setPunsjoppgaver(response.data);
       })
