@@ -10,6 +10,7 @@ import { EtikettInfo } from 'nav-frontend-etiketter';
 import { Aksjonspunkt, ArbeidsgiverOpplysningerPerId } from '@k9-sak-web/types';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import AlertStripe from 'nav-frontend-alertstriper';
+import { isDate } from "date-fns";
 import styles from './OverstyrBeregningFaktaForm.less';
 import { OverstyrInputBeregningDto } from "../types/OverstyrInputBeregningDto";
 import { formaterDatoString } from "./utils";
@@ -38,6 +39,7 @@ const OverstyrBeregningFaktaForm = ({
     aksjonspunkter,
     intl
 }: Props & WrappedComponentProps) => {
+
     const aktivitetSchema = Yup.object().shape({
         arbiedsgiverAktørId: Yup.string(),
         arbeidsgiverOrgnr: Yup.string(),
@@ -51,6 +53,19 @@ const OverstyrBeregningFaktaForm = ({
             .required(intl.formatMessage({ id: 'OverstyrInputForm.RefusjonFeltPakrevdFeil' }))
             .min(0, intl.formatMessage({ id: 'OverstyrInputForm.RefusjonFeltMin' }))
             .max(100000000, intl.formatMessage({ id: 'OverstyrInputForm.RefusjonFeltMax' })),
+        opphørRefusjon: Yup.date()
+            .typeError(intl.formatMessage({ id: 'OverstyrInputForm.OpphorFeltDato' }))
+            .when("refusjonPrAar", (refusjonPrAar, schema) => {
+                if (!Number.isNaN(refusjonPrAar) && refusjonPrAar > 0) {
+                    return schema.test(
+                        'dato',
+                        intl.formatMessage({ id: 'OverstyrInputForm.MaVareDato' }),
+                        (value) => isDate(value)
+                    )
+                }
+                return schema;
+            }),
+
     });
 
     const periodeSchema = Yup.object().shape({
@@ -85,7 +100,8 @@ const OverstyrBeregningFaktaForm = ({
                 {
                     ...aktivitet,
                     "inntektPrAar": aktivitet.inntektPrAar || '',
-                    "refusjonPrAar": aktivitet.refusjonPrAar || ''
+                    "refusjonPrAar": aktivitet.refusjonPrAar || '',
+                    "opphørRefusjon": aktivitet.opphørRefusjon || '',
                 }
             )) // end of periode.aktivitetliste.map((aktivitet) => {})
         } // end of periode objekt
@@ -134,7 +150,8 @@ const OverstyrBeregningFaktaForm = ({
                                                     <Table stripet headerTextCodes={[
                                                         "OverstyrInputForm.FirmaHeader",
                                                         "OverstyrInputForm.InntektPrAar",
-                                                        'OverstyrInputForm.RefusjonPrAar'
+                                                        'OverstyrInputForm.RefusjonPrAar',
+                                                        'OverstyrInputForm.OpphorRefusjon',
                                                     ]}>
                                                         {aktivitetliste.length > 0 && aktivitetliste.map((aktivitet, aktivitetIndex) => {
                                                             const { arbeidsgiverAktørId, arbeidsgiverOrgnr } = aktivitet;
