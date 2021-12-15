@@ -1,15 +1,12 @@
 import React from 'react';
 import { useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
-import useGlobalStateRestApiData from '@k9-sak-web/rest-api-hooks/src/global-data/useGlobalStateRestApiData';
 import { MicroFrontend } from '@fpsak-frontend/utils';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
-import { K9sakApiKeys } from '../../../sak-app/src/data/k9sakApi';
 import findEndpointsForMicrofrontend from '../microfrontend/utils/findEndpointsForMicrofrontend';
 import SimpleEndpoints from '../microfrontend/types/SimpleEndpoints';
 import findAksjonspunkt from '../microfrontend/utils/findAksjonspunkt';
 import httpErrorHandler from '../microfrontend/utils/httpErrorHandler';
-import { SaksbehandlereInfo } from '../../../types';
 
 const initializeMedisinskVilkår = (
   elementId,
@@ -33,9 +30,8 @@ const initializeMedisinskVilkår = (
 };
 
 const medisinskVilkårAppID = 'medisinskVilkårApp';
-export default ({ behandling: { links, uuid }, submitCallback, aksjonspunkter, readOnly }) => {
+export default ({ behandling: { links, uuid }, submitCallback, aksjonspunkter, readOnly, saksbehandlere }) => {
   const { addErrorMessage } = useRestApiErrorDispatcher();
-  const saksbehandlere = useGlobalStateRestApiData<SaksbehandlereInfo>(K9sakApiKeys.HENT_SAKSBEHANDLERE);
   const httpErrorHandlerCaller = (status: number, locationHeader?: string) =>
     httpErrorHandler(status, addErrorMessage, locationHeader);
 
@@ -78,7 +74,7 @@ export default ({ behandling: { links, uuid }, submitCallback, aksjonspunkter, r
           løsAksjonspunkt,
           readOnly || !harAksjonspunkt,
           visFortsettknapp,
-          saksbehandlere?.saksbehandlere || {},
+          saksbehandlere || {},
         )
       }
     />
