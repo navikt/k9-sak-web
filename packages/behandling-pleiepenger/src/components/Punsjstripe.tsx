@@ -45,7 +45,7 @@ const Punsjstripe: React.FC<PunsjstripeProps> = ({ aktørId, saksnummer, aktørI
   const { journalpostIder, journalpostIderBarn } = punsjoppgaver;
   const getUløsteOppgaverText = (journalposter, subjekt: string) => {
     if (journalposter.length === 1) {
-      const { journalpostId } = journalpostIder[0];
+      const { journalpostId } = journalposter[0];
       return (
         <>
           <span>{`Det er 1 uløst oppgave tilknyttet ${subjekt} i Punsj.`}</span>
