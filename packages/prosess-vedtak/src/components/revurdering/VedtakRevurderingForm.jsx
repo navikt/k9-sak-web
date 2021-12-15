@@ -368,24 +368,6 @@ const buildInitialValues = createSelector(
   },
 );
 
-const transformValues = (values, tilgjengeligeVedtaksbrev) =>
-  values.aksjonspunktKoder.map(apCode => {
-    const transformedValues = {
-      kode: apCode,
-      begrunnelse: values.begrunnelse,
-      overstyrtMottaker: safeJSONParse(values.overstyrtMottaker),
-      fritekstbrev: { brødtekst: values.brødtekst, overskrift: values.overskrift },
-      skalBrukeOverstyrendeFritekstBrev: values.skalBrukeOverstyrendeFritekstBrev,
-      skalUndertrykkeBrev: values.skalUndertrykkeBrev,
-      isVedtakSubmission,
-      tilgjengeligeVedtaksbrev,
-    };
-    if (apCode === aksjonspunktCodes.FORESLA_VEDTAK_MANUELT) {
-      transformedValues.redusertUtbetalingÅrsaker = transformRedusertUtbetalingÅrsaker(values);
-    }
-    return transformedValues;
-  });
-
 const transformValuesForFlereInformasjonsbehov = (values, informasjonsbehov, tilgjengeligeVedtaksbrev) => {
   const begrunnelser = informasjonsbehov.map(({ kode }) => ({ kode, begrunnelse: values[kode] }));
   return values.aksjonspunktKoder.map(apCode => {
@@ -406,6 +388,24 @@ const transformValuesForFlereInformasjonsbehov = (values, informasjonsbehov, til
     return transformedValues;
   });
 };
+
+const transformValues = (values, tilgjengeligeVedtaksbrev) =>
+  values.aksjonspunktKoder.map(apCode => {
+    const transformedValues = {
+      kode: apCode,
+      begrunnelse: values.begrunnelse,
+      overstyrtMottaker: safeJSONParse(values.overstyrtMottaker),
+      fritekstbrev: { brødtekst: values.brødtekst, overskrift: values.overskrift },
+      skalBrukeOverstyrendeFritekstBrev: values.skalBrukeOverstyrendeFritekstBrev,
+      skalUndertrykkeBrev: values.skalUndertrykkeBrev,
+      isVedtakSubmission,
+      tilgjengeligeVedtaksbrev,
+    };
+    if (apCode === aksjonspunktCodes.FORESLA_VEDTAK_MANUELT) {
+      transformedValues.redusertUtbetalingÅrsaker = transformRedusertUtbetalingÅrsaker(values);
+    }
+    return transformedValues;
+  });
 
 const createAarsakString = (revurderingAarsaker, getKodeverknavn) => {
   if (revurderingAarsaker === undefined || revurderingAarsaker.length < 1) {
