@@ -3,7 +3,7 @@ import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 import messages from '@fpsak-frontend/fakta-overstyr-beregning/i18n'
 import OverstyrBeregningFaktaIndex from '@fpsak-frontend/fakta-overstyr-beregning';
 import { Aksjonspunkt, ArbeidsgiverOpplysningerPerId } from '@k9-sak-web/types';
-import { OverstyrInputBeregningDto } from 'fakta-overstyr-beregning/src/types/OverstyrInputBeregningDto';
+import { OverstyrInputBeregningDto } from '@fpsak-frontend/fakta-overstyr-beregning/src/types/OverstyrInputBeregningDto';
 import { action } from '@storybook/addon-actions';
 
 const intl = createIntl(
