@@ -84,7 +84,7 @@ export const VedtakAvslagArsakOgBegrunnelsePanel = ({
           </Column>
         </Row>
       )}
-      {readOnly && vedtakVarsel.avslagsarsakFritekst !== null && (
+      {readOnly && vedtakVarsel.avslagsarsakFritekst != null && (
         <span>
           <VerticalSpacer twentyPx />
           <Undertekst>{intl.formatMessage({ id: 'VedtakForm.Fritekst' })}</Undertekst>
