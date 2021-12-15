@@ -19,7 +19,7 @@ class MedisinskVilkarFaktaPanelDef2 extends FaktaPanelDef {
 
   getKomponent = props => <MedisinskVilkår {...props} />;
 
-  getData = ({ saksbehandlere }) => ({ saksbehandlere: saksbehandlere?.saksbehandlere });
+  getData = ({ hentSaksbehandlere }) => ({ saksbehandlere: hentSaksbehandlere?.saksbehandlere });
 
   getOverstyrVisningAvKomponent = ({ fagsak, behandling }: { fagsak: Fagsak; behandling: Behandling }) => {
     const erPleiepengesak = fagsak.sakstype.kode === fagsakYtelseType.PLEIEPENGER;

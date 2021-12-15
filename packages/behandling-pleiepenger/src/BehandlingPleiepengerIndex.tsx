@@ -32,7 +32,7 @@ const pleiepengerData = [
   { key: PleiepengerBehandlingApiKeys.BEREGNINGSGRUNNLAG },
   { key: PleiepengerBehandlingApiKeys.SIMULERING_RESULTAT },
   { key: PleiepengerBehandlingApiKeys.UTTAK },
-  { key: PleiepengerBehandlingApiKeys.SAKSBEHANDLERE },
+  { key: PleiepengerBehandlingApiKeys.HENT_SAKSBEHANDLERE },
 ];
 
 interface OwnProps {
