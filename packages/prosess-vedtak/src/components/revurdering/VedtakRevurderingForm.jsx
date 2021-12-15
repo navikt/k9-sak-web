@@ -13,7 +13,7 @@ import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import behandlingStatusCode from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import BehandlingArsakType from '@fpsak-frontend/kodeverk/src/behandlingArsakType';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { decodeHtmlEntity, getKodeverknavnFn } from '@fpsak-frontend/utils';
+import { decodeHtmlEntity, getKodeverknavnFn, safeJSONParse } from '@fpsak-frontend/utils';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 
 import { Column, Row } from 'nav-frontend-grid';
@@ -80,6 +80,7 @@ export class VedtakRevurderingFormImpl extends Component {
       aksjonspunkter,
       previewCallback,
       begrunnelse,
+      overstyrtMottaker,
       aksjonspunktKoder,
       antallBarn,
       ytelseTypeKode,
@@ -227,6 +228,7 @@ export class VedtakRevurderingFormImpl extends Component {
               brødtekst={brødtekst}
               overskrift={overskrift}
               begrunnelse={begrunnelse}
+              overstyrtMottaker={overstyrtMottaker}
               arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
               lagreDokumentdata={lagreDokumentdata}
               personopplysninger={personopplysninger}
@@ -354,6 +356,7 @@ const buildInitialValues = createSelector(
       skalUndertrykkeBrev: readonly && harOverstyrtMedIngenBrev(dokumentdata, vedtakVarsel),
       overskrift: decodeHtmlEntity(dokumentdata?.[dokumentdatatype.FRITEKSTBREV]?.overskrift),
       brødtekst: decodeHtmlEntity(dokumentdata?.[dokumentdatatype.FRITEKSTBREV]?.brødtekst),
+      overstyrtMottaker: JSON.stringify(dokumentdata?.[dokumentdatatype.OVERSTYRT_MOTTAKER]),
       begrunnelse: dokumentdata?.[dokumentdatatype.BEREGNING_FRITEKST],
       KONTINUERLIG_TILSYN: dokumentdata?.KONTINUERLIG_TILSYN,
       OMSORGEN_FOR: dokumentdata?.OMSORGEN_FOR,
@@ -365,12 +368,31 @@ const buildInitialValues = createSelector(
   },
 );
 
+const transformValues = (values, tilgjengeligeVedtaksbrev) =>
+  values.aksjonspunktKoder.map(apCode => {
+    const transformedValues = {
+      kode: apCode,
+      begrunnelse: values.begrunnelse,
+      overstyrtMottaker: safeJSONParse(values.overstyrtMottaker),
+      fritekstbrev: { brødtekst: values.brødtekst, overskrift: values.overskrift },
+      skalBrukeOverstyrendeFritekstBrev: values.skalBrukeOverstyrendeFritekstBrev,
+      skalUndertrykkeBrev: values.skalUndertrykkeBrev,
+      isVedtakSubmission,
+      tilgjengeligeVedtaksbrev,
+    };
+    if (apCode === aksjonspunktCodes.FORESLA_VEDTAK_MANUELT) {
+      transformedValues.redusertUtbetalingÅrsaker = transformRedusertUtbetalingÅrsaker(values);
+    }
+    return transformedValues;
+  });
+
 const transformValuesForFlereInformasjonsbehov = (values, informasjonsbehov, tilgjengeligeVedtaksbrev) => {
   const begrunnelser = informasjonsbehov.map(({ kode }) => ({ kode, begrunnelse: values[kode] }));
   return values.aksjonspunktKoder.map(apCode => {
     const transformedValues = {
       kode: apCode,
       begrunnelse: values.begrunnelse,
+      overstyrtMottaker: safeJSONParse(values.overstyrtMottaker),
       fritekstbrev: { brødtekst: values.brødtekst, overskrift: values.overskrift },
       skalBrukeOverstyrendeFritekstBrev: values.skalBrukeOverstyrendeFritekstBrev,
       skalUndertrykkeBrev: values.skalUndertrykkeBrev,
@@ -384,23 +406,6 @@ const transformValuesForFlereInformasjonsbehov = (values, informasjonsbehov, til
     return transformedValues;
   });
 };
-
-const transformValues = (values, tilgjengeligeVedtaksbrev) =>
-  values.aksjonspunktKoder.map(apCode => {
-    const transformedValues = {
-      kode: apCode,
-      begrunnelse: values.begrunnelse,
-      fritekstbrev: { brødtekst: values.brødtekst, overskrift: values.overskrift },
-      skalBrukeOverstyrendeFritekstBrev: values.skalBrukeOverstyrendeFritekstBrev,
-      skalUndertrykkeBrev: values.skalUndertrykkeBrev,
-      isVedtakSubmission,
-      tilgjengeligeVedtaksbrev,
-    };
-    if (apCode === aksjonspunktCodes.FORESLA_VEDTAK_MANUELT) {
-      transformedValues.redusertUtbetalingÅrsaker = transformRedusertUtbetalingÅrsaker(values);
-    }
-    return transformedValues;
-  });
 
 const createAarsakString = (revurderingAarsaker, getKodeverknavn) => {
   if (revurderingAarsaker === undefined || revurderingAarsaker.length < 1) {
@@ -476,6 +481,7 @@ const mapStateToPropsFactory = (initialState, initialOwnProps) => {
         'brødtekst',
         'overskrift',
         'begrunnelse',
+        'overstyrtMottaker',
         ...Object.values(redusertUtbetalingArsak),
         ...informasjonsbehovFieldNames,
       ),
