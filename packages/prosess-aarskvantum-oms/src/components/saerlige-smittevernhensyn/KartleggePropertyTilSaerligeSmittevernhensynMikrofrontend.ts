@@ -56,9 +56,9 @@ const KartleggePropertyTilSaerligeSmittevernhensynMikrofrontend = (
   );
 
   const perioderFilterFn = (period: Uttaksperiode, vilkarsUtfall: string): boolean =>
-    visKonfliktMedArbeidsgiverAksjonspunkt
-      ? period.vurderteVilkår.vilkår.NOK_DAGER === vilkarsUtfall && !!period.bekreftet && period.bekreftet === PeriodeBekreftetStatus.MANUELTBEKREFTET
-      : period.vurderteVilkår.vilkår.SMITTEVERN === vilkarsUtfall && !!period.bekreftet && period.bekreftet === PeriodeBekreftetStatus.MANUELTBEKREFTET;
+    period.vurderteVilkår.vilkår[visKonfliktMedArbeidsgiverAksjonspunkt ? 'NOK_DAGER' : 'SMITTEVERN'] === vilkarsUtfall
+    && !!period.bekreftet
+    && period.bekreftet === PeriodeBekreftetStatus.MANUELTBEKREFTET;
 
   let perioderInnvilget: Uttaksperiode[] = [];
   let perioderAvslått: Uttaksperiode[] = [];
@@ -88,7 +88,7 @@ const KartleggePropertyTilSaerligeSmittevernhensynMikrofrontend = (
       props: {
         behandlingsID,
         aksjonspunktLost,
-        lesemodus: !isAksjonspunktOpen,
+        lesemodus: !isAksjonspunktOpen || behandling.behandlingPaaVent,
         informasjonTilLesemodus: {
           begrunnelse: aksjonspunkt.begrunnelse ? aksjonspunkt.begrunnelse : '',
           vilkarOppfylt: eksistererInnvilgetPeriode,
