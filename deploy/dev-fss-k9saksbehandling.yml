@@ -85,5 +85,5 @@ spec:
     - name: TILBAKE
       value: "true"
     - name: INNTEKTSMELDING_NY_FLYT
-      value: "false"
+      value: "true"
 
