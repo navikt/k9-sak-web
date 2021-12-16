@@ -57,8 +57,8 @@ const KartleggePropertyTilSaerligeSmittevernhensynMikrofrontend = (
 
   const perioderFilterFn = (period: Uttaksperiode, vilkarsUtfall: string): boolean =>
     period.vurderteVilkår.vilkår[visKonfliktMedArbeidsgiverAksjonspunkt ? 'NOK_DAGER' : 'SMITTEVERN'] === vilkarsUtfall
-    && !!period.bekreftet 
-    && period?.bekreftet === PeriodeBekreftetStatus.MANUELTBEKREFTET;
+    && !!period.bekreftet
+    && period.bekreftet === PeriodeBekreftetStatus.MANUELTBEKREFTET;
 
   let perioderInnvilget: Uttaksperiode[] = [];
   let perioderAvslått: Uttaksperiode[] = [];
