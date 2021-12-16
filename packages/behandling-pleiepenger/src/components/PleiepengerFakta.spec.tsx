@@ -159,6 +159,7 @@ describe('<PleiepengerFakta>', () => {
         setBehandling={sinon.spy()}
         arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
         dokumenter={[]}
+        featureToggles={{}}
       />,
     );
 
@@ -197,7 +198,7 @@ describe('<PleiepengerFakta>', () => {
       {
         erAktiv: false,
         harAksjonspunkt: false,
-        tekst: "Inntekt og ytelser",
+        tekst: 'Inntekt og ytelser',
       },
     ]);
   });
@@ -228,6 +229,7 @@ describe('<PleiepengerFakta>', () => {
         setBehandling={sinon.spy()}
         arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
         dokumenter={[]}
+        featureToggles={{}}
       />,
     );
 
@@ -266,6 +268,7 @@ describe('<PleiepengerFakta>', () => {
         setBehandling={sinon.spy()}
         arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
         dokumenter={[]}
+        featureToggles={{}}
       />,
     );
 
