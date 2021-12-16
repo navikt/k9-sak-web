@@ -88,7 +88,7 @@ const KartleggePropertyTilSaerligeSmittevernhensynMikrofrontend = (
       props: {
         behandlingsID,
         aksjonspunktLost,
-        lesemodus: !isAksjonspunktOpen,
+        lesemodus: !isAksjonspunktOpen || behandling.behandlingPaaVent,
         informasjonTilLesemodus: {
           begrunnelse: aksjonspunkt.begrunnelse ? aksjonspunkt.begrunnelse : '',
           vilkarOppfylt: eksistererInnvilgetPeriode,
