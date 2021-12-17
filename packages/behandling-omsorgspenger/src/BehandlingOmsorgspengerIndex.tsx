@@ -29,6 +29,7 @@ const omsorgspengerData = [
   { key: OmsorgspengerBehandlingApiKeys.BEREGNINGSGRUNNLAG },
   { key: OmsorgspengerBehandlingApiKeys.SIMULERING_RESULTAT },
   { key: OmsorgspengerBehandlingApiKeys.FORBRUKTE_DAGER },
+  { key: OmsorgspengerBehandlingApiKeys.OVERLAPPENDE_YTELSER },
 ];
 
 interface OwnProps {

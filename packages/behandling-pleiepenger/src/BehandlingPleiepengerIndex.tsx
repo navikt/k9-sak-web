@@ -32,6 +32,7 @@ const pleiepengerData = [
   { key: PleiepengerBehandlingApiKeys.BEREGNINGSGRUNNLAG },
   { key: PleiepengerBehandlingApiKeys.SIMULERING_RESULTAT },
   { key: PleiepengerBehandlingApiKeys.UTTAK },
+  { key: PleiepengerBehandlingApiKeys.OVERLAPPENDE_YTELSER },
 ];
 
 interface OwnProps {
