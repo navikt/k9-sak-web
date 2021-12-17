@@ -128,8 +128,7 @@ VilkarFields.buildInitialValues = (
   aksjonspunkter: Aksjonspunkt[],
   vilkårPerioder: Vilkarperiode[],
   erVilkarOk: boolean,
-): FormValues => {
-  return {
+): FormValues => ({
     erVilkarOk,
     vilkarFields: Array.isArray(vilkårPerioder)
       ? vilkårPerioder.map(periode => ({
@@ -140,7 +139,6 @@ VilkarFields.buildInitialValues = (
             : periode.vilkarStatus.kode === vilkarUtfallType.OPPFYLT,
         }))
       : [],
-  };
-};
+  });
 
 export default VilkarFields;
