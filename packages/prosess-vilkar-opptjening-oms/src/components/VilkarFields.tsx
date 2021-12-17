@@ -127,15 +127,14 @@ export const VilkarFields = ({
 VilkarFields.buildInitialValues = (
   aksjonspunkter: Aksjonspunkt[],
   vilkårPerioder: Vilkarperiode[],
-  status: string,
+  erVilkarOk: boolean,
 ): FormValues => {
-  const isOpenAksjonspunkt = aksjonspunkter.some(ap => isAksjonspunktOpen(ap.status.kode));
-  const erVilkarOk = isOpenAksjonspunkt ? undefined : vilkarUtfallType.OPPFYLT === status;
   return {
     erVilkarOk,
     vilkarFields: Array.isArray(vilkårPerioder)
       ? vilkårPerioder.map(periode => ({
           begrunnelse: periode.begrunnelse,
+          vurdersIBehandlingen: periode.vurdersIBehandlingen,
           erVilkarOk: Object.values(midlertidigInaktiv).includes(periode.merknad?.kode)
             ? periode.merknad.kode
             : periode.vilkarStatus.kode === vilkarUtfallType.OPPFYLT,
