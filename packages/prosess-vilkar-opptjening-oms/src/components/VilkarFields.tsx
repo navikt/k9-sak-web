@@ -5,7 +5,6 @@ import { Normaltekst } from 'nav-frontend-typografi';
 import { VerticalSpacer, FlexContainer, FlexRow, FlexColumn, Image } from '@fpsak-frontend/shared-components';
 import { RadioGroupField, RadioOption } from '@fpsak-frontend/form';
 import { ProsessStegBegrunnelseTextField } from '@k9-sak-web/prosess-felles';
-import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import { required } from '@fpsak-frontend/utils';
 import { Aksjonspunkt, Vilkarperiode } from '@k9-sak-web/types';
