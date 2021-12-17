@@ -3,10 +3,10 @@ import { injectIntl, WrappedComponentProps, FormattedMessage } from 'react-intl'
 import { Formik, Form, Field, FieldArray } from 'formik';
 import * as Yup from 'yup';
 
-import { Table, VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { Table, VerticalSpacer, BorderBox } from '@fpsak-frontend/shared-components';
 import { Knapp } from "nav-frontend-knapper";
 import { Textarea } from "nav-frontend-skjema";
-import { EtikettInfo } from 'nav-frontend-etiketter';
+import { EtikettInfo, EtikettFokus } from 'nav-frontend-etiketter';
 import { Aksjonspunkt, ArbeidsgiverOpplysningerPerId } from '@k9-sak-web/types';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import AlertStripe from 'nav-frontend-alertstriper';
@@ -16,7 +16,6 @@ import { OverstyrInputBeregningDto } from "../types/OverstyrInputBeregningDto";
 import { formaterDatoString } from "./utils";
 import { OverstyrInputForBeregningDto } from "../types/OverstyrInputForBeregningDto";
 import OverstyrBeregningAktivitetForm from "./OverstyrBeregningAktivitetForm";
-import { OverstyrInputBeregningAktivitet } from "../types/OverstyrInputBeregningAktivitet";
 
 interface Props {
     arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysningerPerId,
@@ -115,12 +114,6 @@ const OverstyrBeregningFaktaForm = ({
         )
     }
 
-    /**
-     * Trenger en unik key for å mappe periodene
-     */
-    const getPeriodeKey = (aktivitetliste: OverstyrInputBeregningAktivitet[]): string =>
-        aktivitetliste[0].arbeidsgiverAktørId || aktivitetliste[0].arbeidsgiverOrgnr;
-
     return (
         <div className={styles.container}>
             <VerticalSpacer thirtyTwoPx />
@@ -140,35 +133,56 @@ const OverstyrBeregningFaktaForm = ({
                             {() =>
                                 <>
                                     {values.perioder.map((periode, periodeIndex) => {
-                                        const { skjaeringstidspunkt, aktivitetliste } = periode;
-                                        return <div key={getPeriodeKey(aktivitetliste)}>
-                                            <EtikettInfo className="skjaeringstidspunkt">
-                                                Skjæringstidspunkt: {formaterDatoString(skjaeringstidspunkt)}
-                                            </EtikettInfo>
-                                            <FieldArray name={`perioder[${periodeIndex}].aktivitetliste`} >
-                                                {() =>
-                                                    <Table stripet headerTextCodes={[
-                                                        "OverstyrInputForm.FirmaHeader",
-                                                        "OverstyrInputForm.InntektPrAar",
-                                                        'OverstyrInputForm.RefusjonPrAar',
-                                                        'OverstyrInputForm.OpphorRefusjon',
-                                                    ]}>
-                                                        {aktivitetliste.length > 0 && aktivitetliste.map((aktivitet, aktivitetIndex) => {
-                                                            const { arbeidsgiverAktørId, arbeidsgiverOrgnr } = aktivitet;
-                                                            const firmaNavn = utledFirmaNavn((arbeidsgiverAktørId) || arbeidsgiverOrgnr);
-                                                            return (
-                                                                <OverstyrBeregningAktivitetForm
-                                                                    key=""
-                                                                    periodeIndex={periodeIndex}
-                                                                    aktivitetIndex={aktivitetIndex}
-                                                                    firmaNavn={firmaNavn}
-                                                                    readOnly={readOnly} />
-                                                            )
-                                                        }
-                                                        )}
-                                                    </Table>
+                                        const { skjaeringstidspunkt, aktivitetliste, harKategoriNæring, harKategoriFrilans } = periode;
+                                        return <div key={skjaeringstidspunkt}>
+                                            <BorderBox>
+                                                <EtikettInfo className="skjaeringstidspunkt">
+                                                    Skjæringstidspunkt: {formaterDatoString(skjaeringstidspunkt)}
+                                                </EtikettInfo>
+                                                {harKategoriNæring &&
+                                                    <div>
+                                                        <VerticalSpacer twentyPx />
+                                                        <EtikettFokus>
+                                                            <FormattedMessage id="OverstyrInputForm.HarKategoriNæring" />
+                                                        </EtikettFokus>
+                                                    </div>
                                                 }
-                                            </FieldArray>
+                                                {harKategoriFrilans &&
+                                                    <div>
+                                                        <VerticalSpacer twentyPx />
+                                                        <EtikettFokus>
+                                                            <FormattedMessage id="OverstyrInputForm.HarKategoriFrilans" />
+                                                        </EtikettFokus>
+                                                    </div>
+                                                }
+                                                <VerticalSpacer twentyPx />
+                                                {aktivitetliste.length > 0 &&
+                                                <FieldArray name={`perioder[${periodeIndex}].aktivitetliste`} >
+                                                    {() =>
+                                                            <Table stripet headerTextCodes={[
+                                                                "OverstyrInputForm.FirmaHeader",
+                                                                "OverstyrInputForm.InntektPrAar",
+                                                                'OverstyrInputForm.RefusjonPrAar',
+                                                                'OverstyrInputForm.OpphorRefusjon',
+                                                            ]}>
+                                                                {aktivitetliste.map((aktivitet, aktivitetIndex) => {
+                                                                    const { arbeidsgiverAktørId, arbeidsgiverOrgnr } = aktivitet;
+                                                                    const firmaNavn = utledFirmaNavn((arbeidsgiverAktørId) || arbeidsgiverOrgnr);
+                                                                    return (
+                                                                        <OverstyrBeregningAktivitetForm
+                                                                            key=""
+                                                                            periodeIndex={periodeIndex}
+                                                                            aktivitetIndex={aktivitetIndex}
+                                                                            firmaNavn={firmaNavn}
+                                                                            readOnly={readOnly} />
+                                                                    )
+                                                                }
+                                                                )}
+                                                            </Table>
+                        
+                                                    }
+                                                </FieldArray>}
+                                            </BorderBox>
                                         </div>
                                     })}
                                 </>

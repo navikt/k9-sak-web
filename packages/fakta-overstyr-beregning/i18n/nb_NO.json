@@ -22,5 +22,8 @@
     "OverstyrInputForm.RefusjonFeltMax": "Refusjon kan ikke være større enn 10 000 000",
     "OverstyrInputForm.OpphorFeltDato": "Refusjon opphører må være en dato",
     "OverstyrInputForm.KanIkkeBekreftes": "Aksjonspunktet kan ikke bekreftes",
-    "OverstyrInputForm.KontrollerSkjema": "Kontroller skjema"
+    "OverstyrInputForm.KontrollerSkjema": "Kontroller skjema",
+    "OverstyrInputForm.HarKategoriNæring": "Vurder om søknadsopplysninger for næring er korrekte.",
+    "OverstyrInputForm.HarKategoriFrilans": "Vurder om søknadsopplysninger for frilans er korrekte."
+
 }
