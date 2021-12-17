@@ -5,8 +5,9 @@ import CircularDependencyPlugin from 'circular-dependency-plugin';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import CopyWebpackPlugin from 'copy-webpack-plugin';
+const { ModuleFederationPlugin } = require('webpack').container;
 
-import { PUBLIC_ROOT, LANG_DIR } from '../paths';
+import { PUBLIC_ROOT, LANG_DIR} from '../paths';
 
 export default [
   new MiniCssExtractPlugin({
@@ -38,5 +39,13 @@ export default [
   new CircularDependencyPlugin({
     exclude: /node_modules/,
     failOnError: true,
+  }),
+  new ModuleFederationPlugin({
+    name: "gocrazy",
+    library: { type: "var", name: "gocrazy" },
+    filename: "remoteEntry.js",
+    exposes: {
+      "./Test": "./packages/test-mf/Test",
+    },
   }),
 ];
