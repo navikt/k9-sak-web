@@ -453,8 +453,6 @@ export const visAvslåttForEngangsstønadRevurdering = () => (
 );
 
 export const visOverlappendeYtelser = () => {
-  console.log("viser overlappende ytelser");
-
   const aksjonspunkt5040 = {
     "aksjonspunktType": { "kode": "MANU", "kodeverk": "AKSJONSPUNKT_TYPE" },
     "begrunnelse": null,
