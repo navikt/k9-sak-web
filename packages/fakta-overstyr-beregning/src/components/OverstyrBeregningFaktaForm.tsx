@@ -3,12 +3,13 @@ import { injectIntl, WrappedComponentProps, FormattedMessage } from 'react-intl'
 import { Formik, Form, Field, FieldArray } from 'formik';
 import * as Yup from 'yup';
 
-import { Table, VerticalSpacer, BorderBox } from '@fpsak-frontend/shared-components';
+import { Table, VerticalSpacer, BorderBox, AksjonspunktHelpTextTemp } from '@fpsak-frontend/shared-components';
 import { Knapp } from "nav-frontend-knapper";
 import { Textarea } from "nav-frontend-skjema";
 import { EtikettInfo, EtikettFokus } from 'nav-frontend-etiketter';
 import { Aksjonspunkt, ArbeidsgiverOpplysningerPerId } from '@k9-sak-web/types';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import AlertStripe from 'nav-frontend-alertstriper';
 import { isDate } from "date-fns";
 import styles from './OverstyrBeregningFaktaForm.less';
@@ -89,6 +90,8 @@ const OverstyrBeregningFaktaForm = ({
 
     const utledBegrunnelse = () => aksjonspunkter.find((ap) => ap.definisjon.kode === aksjonspunktCodes.OVERSTYR_BEREGNING_INPUT).begrunnelse || ''
 
+    const erAksjonspunktÅpent = () => isAksjonspunktOpen(aksjonspunkter.find((ap) => ap.definisjon.kode === aksjonspunktCodes.OVERSTYR_BEREGNING_INPUT).status.kode); 
+
     /**
      * Formik liker ikke null i value feltene, null verdier kan forekomme fra backend. 
      * "Oversetter" null verdier i skjemafeltene til en tom streng
@@ -117,6 +120,9 @@ const OverstyrBeregningFaktaForm = ({
     return (
         <div className={styles.container}>
             <VerticalSpacer thirtyTwoPx />
+            <AksjonspunktHelpTextTemp isAksjonspunktOpen={erAksjonspunktÅpent()}>
+                {[<FormattedMessage id="OverstyrInputForm.Aksjonspunkt" key="aksjonspunktText" />]}
+            </AksjonspunktHelpTextTemp>
             <Formik
                 initialValues={initialValues}
                 onSubmit={values => {
