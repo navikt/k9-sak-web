@@ -1,4 +1,5 @@
 {
+    "OverstyrInputForm.Aksjonspunkt": "Vurder inntekt og søknadsopplysninger ved direkte overgang fra infotrygd. Dette aksjonspunktet krever spesielle rettigheter.",
     "OverstyrInputForm.InntektFeltTypeFeil": "Inntekt må være et tall",
     "OverstyrInputForm.InntektFeltPakrevdFeil": "Inntektsbeløp må fylles ut",
     "OverstyrInputForm.RefusjonFeltTypeFeil": "Refusjon må være et tall",
@@ -23,7 +24,7 @@
     "OverstyrInputForm.OpphorFeltDato": "Refusjon opphører må være en dato",
     "OverstyrInputForm.KanIkkeBekreftes": "Aksjonspunktet kan ikke bekreftes",
     "OverstyrInputForm.KontrollerSkjema": "Kontroller skjema",
-    "OverstyrInputForm.HarKategoriNæring": "Vurder om søknadsopplysninger for næring er korrekte.",
+    "OverstyrInputForm.HarKategoriNæring": "Vurder om søknadsopplysninger for næring er korrekte. Bruk rutinen for direkte overgang fra infotrygd for å kontrollere opplysningene.",
     "OverstyrInputForm.HarKategoriFrilans": "Vurder om søknadsopplysninger for frilans er korrekte."
 
 }
