@@ -90,7 +90,8 @@ const OverstyrBeregningFaktaForm = ({
 
     const utledBegrunnelse = () => aksjonspunkter.find((ap) => ap.definisjon.kode === aksjonspunktCodes.OVERSTYR_BEREGNING_INPUT).begrunnelse || ''
 
-    const erAksjonspunktÅpent = () => isAksjonspunktOpen(aksjonspunkter.find((ap) => ap.definisjon.kode === aksjonspunktCodes.OVERSTYR_BEREGNING_INPUT).status.kode); 
+    const erAksjonspunktÅpent = () => isAksjonspunktOpen(aksjonspunkter.find((ap) => 
+    ap.definisjon.kode === aksjonspunktCodes.OVERSTYR_BEREGNING_INPUT).status.kode); 
 
     /**
      * Formik liker ikke null i value feltene, null verdier kan forekomme fra backend. 
