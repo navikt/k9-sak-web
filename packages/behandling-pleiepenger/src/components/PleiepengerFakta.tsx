@@ -9,6 +9,7 @@ import {
   FagsakPerson,
   Fagsak,
   Dokument,
+  FeatureToggles,
 } from '@k9-sak-web/types';
 import ac from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import ErrorBoundary from '@k9-sak-web/sak-app/src/app/ErrorBoundary';
@@ -36,6 +37,7 @@ interface OwnProps {
   setBehandling: (behandling: Behandling) => void;
   arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysningerPerId;
   dokumenter: Dokument[];
+  featureToggles: FeatureToggles;
 }
 
 const PleiepengerFakta = ({
@@ -54,6 +56,7 @@ const PleiepengerFakta = ({
   setBehandling,
   arbeidsgiverOpplysningerPerId,
   dokumenter,
+  featureToggles,
 }: OwnProps & WrappedComponentProps) => {
   const { aksjonspunkter, ...rest } = data;
   const { addErrorMessage } = useRestApiErrorDispatcher();
@@ -122,6 +125,7 @@ const PleiepengerFakta = ({
               ...faktaData,
               behandling,
               alleKodeverk,
+              featureToggles,
               submitCallback: bekreftAksjonspunktCallback,
               ...valgtPanel.getKomponentData(rettigheter, dataTilUtledingAvPleiepengerPaneler, hasFetchError),
               dokumenter,

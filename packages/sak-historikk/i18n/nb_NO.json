@@ -242,6 +242,8 @@
   "HistorikkEndretFelt.MottarYtelseForFrilans": "Mottar søker ytelse for frilansaktiviteten",
   "HistorikkEndretFelt.NyFordelingFor": "Ny fordeling <b>{value}</b>",
   "HistorikkEndretFelt.NyAktivitetFor": "Det er lagt til ny aktivitet for <b>{value}</b>",
+  "HistorikkEndretFelt.NyStartdatoRefusjon": "Startdato for refusjon",
+  "HistorikkEndretFelt.DelvisRefusjonFørStart": "Refusjon før oppgitt dato",
   "HistorikkEndretFelt.Inntektskategori": "Inntektskategori",
   "HistorikkEndretFelt.NyttRefusjonskrav": "Nytt refusjonskrav",
   "HistorikkEndretFelt.Inntekt": "Inntekt",
