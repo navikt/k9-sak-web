@@ -5,6 +5,7 @@ import { Normaltekst } from 'nav-frontend-typografi';
 import { VerticalSpacer, FlexContainer, FlexRow, FlexColumn, Image } from '@fpsak-frontend/shared-components';
 import { RadioGroupField, RadioOption } from '@fpsak-frontend/form';
 import { ProsessStegBegrunnelseTextField } from '@k9-sak-web/prosess-felles';
+import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import { required } from '@fpsak-frontend/utils';
 import { Aksjonspunkt, Vilkarperiode } from '@k9-sak-web/types';
@@ -126,18 +127,21 @@ export const VilkarFields = ({
 VilkarFields.buildInitialValues = (
   aksjonspunkter: Aksjonspunkt[],
   vilkårPerioder: Vilkarperiode[],
-  erVilkarOk: boolean,
-): FormValues => ({
+  status: string,
+): FormValues => {
+  const isOpenAksjonspunkt = aksjonspunkter.some(ap => isAksjonspunktOpen(ap.status.kode));
+  const erVilkarOk = isOpenAksjonspunkt ? undefined : vilkarUtfallType.OPPFYLT === status;
+  return {
     erVilkarOk,
     vilkarFields: Array.isArray(vilkårPerioder)
       ? vilkårPerioder.map(periode => ({
           begrunnelse: periode.begrunnelse,
-          vurdersIBehandlingen: periode.vurdersIBehandlingen,
           erVilkarOk: Object.values(midlertidigInaktiv).includes(periode.merknad?.kode)
             ? periode.merknad.kode
             : periode.vilkarStatus.kode === vilkarUtfallType.OPPFYLT,
         }))
       : [],
-  });
+  };
+};
 
 export default VilkarFields;
