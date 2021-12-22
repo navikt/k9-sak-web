@@ -3,7 +3,7 @@ import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 import messages from '@fpsak-frontend/fakta-overstyr-beregning/i18n'
 import OverstyrBeregningFaktaIndex from '@fpsak-frontend/fakta-overstyr-beregning';
 import { Aksjonspunkt, ArbeidsgiverOpplysningerPerId } from '@k9-sak-web/types';
-import { OverstyrInputBeregningDto } from 'fakta-overstyr-beregning/src/types/OverstyrInputBeregningDto';
+import { OverstyrInputBeregningDto } from '@fpsak-frontend/fakta-overstyr-beregning/src/types/OverstyrInputBeregningDto';
 import { action } from '@storybook/addon-actions';
 
 const intl = createIntl(
@@ -31,7 +31,44 @@ const arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysningerPerId = {
     }
 }
 
-const overstyrInputBeregning: OverstyrInputBeregningDto[] = [
+const overstyrInputBeregningEnPeriodeKunNæring: OverstyrInputBeregningDto[] = [
+    {
+        "skjaeringstidspunkt": "2021-10-04",
+        "harKategoriNæring": true,
+        "harKategoriFrilans": false,
+        "aktivitetliste": []
+    }
+];
+
+const overstyrInputBeregningEnPeriodeNæringOgArbeid: OverstyrInputBeregningDto[] = [
+    {
+        "skjaeringstidspunkt": "2021-10-04",
+        "harKategoriNæring": true,
+        "harKategoriFrilans": false,
+        "aktivitetliste": [
+            {
+                "arbeidsgiverOrgnr": "910909088",
+                "arbeidsgiverAktørId": null,
+                "inntektPrAar": null,
+                "refusjonPrAar": null,
+                "opphørRefusjon": null
+            }
+        ]
+    }
+];
+
+
+const overstyrInputBeregningEnPeriodeKunFrilans: OverstyrInputBeregningDto[] = [
+    {
+        "skjaeringstidspunkt": "2021-10-04",
+        "harKategoriNæring": false,
+        "harKategoriFrilans": true,
+        "aktivitetliste": []
+    }
+];
+
+
+const overstyrInputBeregningToPerioder: OverstyrInputBeregningDto[] = [
     {
         "skjaeringstidspunkt": "2021-10-04",
         "aktivitetliste": [
@@ -89,11 +126,51 @@ export default {
     component: OverstyrBeregningFaktaIndex,
 };
 
-export const visOverstyrBeregningIndex = () => (
+export const visOverstyrBeregningForEnPeriodeMedNæring = () => (
     <RawIntlProvider value={intl}>
         <OverstyrBeregningFaktaIndex
             arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
-            overstyrInputBeregning={overstyrInputBeregning}
+            overstyrInputBeregning={overstyrInputBeregningEnPeriodeKunNæring}
+            submitCallback={action('button-click')}
+            readOnly={false}
+            submittable
+            aksjonspunkter={aksjonspunkter}
+        />
+    </RawIntlProvider>
+);
+
+export const visOverstyrBeregningForEnPeriodeMedFrilans = () => (
+    <RawIntlProvider value={intl}>
+        <OverstyrBeregningFaktaIndex
+            arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
+            overstyrInputBeregning={overstyrInputBeregningEnPeriodeKunFrilans}
+            submitCallback={action('button-click')}
+            readOnly={false}
+            submittable
+            aksjonspunkter={aksjonspunkter}
+        />
+    </RawIntlProvider>
+);
+
+export const visOverstyrBeregningForEnPeriodeMedNæringOgArbeid = () => (
+    <RawIntlProvider value={intl}>
+        <OverstyrBeregningFaktaIndex
+            arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
+            overstyrInputBeregning={overstyrInputBeregningEnPeriodeNæringOgArbeid}
+            submitCallback={action('button-click')}
+            readOnly={false}
+            submittable
+            aksjonspunkter={aksjonspunkter}
+        />
+    </RawIntlProvider>
+);
+
+
+export const visOverstyrBeregningToPerioder = () => (
+    <RawIntlProvider value={intl}>
+        <OverstyrBeregningFaktaIndex
+            arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
+            overstyrInputBeregning={overstyrInputBeregningToPerioder}
             submitCallback={action('button-click')}
             readOnly={false}
             submittable
