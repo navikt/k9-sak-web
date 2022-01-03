@@ -13,9 +13,13 @@ import { Element } from 'nav-frontend-typografi';
 import Hjelpetekst from 'nav-frontend-hjelpetekst';
 import { PopoverOrientering } from 'nav-frontend-popover';
 
+import dayjs from "dayjs";
+import isBetween from 'dayjs/plugin/isBetween';
 import VilkarFields, { midlertidigInaktiv } from './VilkarFields';
 import styles from './OpptjeningVilkarAksjonspunktPanel.less';
 
+
+dayjs.extend(isBetween);
 
 const FORM_NAME = 'OpptjeningVilkarForm';
 
@@ -68,6 +72,7 @@ export const OpptjeningVilkarAksjonspunktPanelImpl = ({
   vilkårPerioder,
   vilkarFields,
   status,
+  opptjeninger,
 }: Partial<OpptjeningVilkarAksjonspunktPanelImplProps> & StateProps & InjectedFormProps) => {
   const intl = useIntl();
   const formProps = useMemo(
@@ -94,6 +99,15 @@ export const OpptjeningVilkarAksjonspunktPanelImpl = ({
   const erPleiepenger = fagsakType === FagsakYtelseType.PLEIEPENGER;
   const isOpenAksjonspunkt = aksjonspunkter.some(ap => isAksjonspunktOpen(ap.status.kode));
   const originalErVilkarOk = isOpenAksjonspunkt ? undefined : vilkarUtfallType.OPPFYLT === status;
+
+  const finnesOpptjeningsaktiviteterVidOpptjeningTom: boolean = !erPleiepenger ? true : opptjeninger.some(opptjening => {
+    const opptjeningTom = dayjs(opptjening.fastsattOpptjening.opptjeningTom);
+
+    return opptjening.opptjeningAktivitetList.some(opptjeningAktivitet =>
+      // Siste argument ("[]") til isBetween inkluderer start og sluttdato
+      dayjs(opptjeningTom).isBetween(opptjeningAktivitet.opptjeningFom, opptjeningAktivitet.opptjeningTom, null, "[]")
+    );
+  });
 
   return (
     <ProsessPanelTemplate
@@ -132,6 +146,7 @@ export const OpptjeningVilkarAksjonspunktPanelImpl = ({
         erVilkarOk={vilkårPerioder[periodeIndex].vurdersIBehandlingen ? erVilkarOk : originalErVilkarOk}
         readOnly={readOnly || !vilkårPerioder[periodeIndex].vurdersIBehandlingen}
         fieldPrefix={`vilkarFields[${periodeIndex}]`}
+        skalValgMidlertidigInaktivTypeBVises={finnesOpptjeningsaktiviteterVidOpptjeningTom}
       />
     </ProsessPanelTemplate>
   );
