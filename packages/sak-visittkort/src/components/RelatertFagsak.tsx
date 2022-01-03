@@ -5,6 +5,7 @@ import { Select as NavSelect } from 'nav-frontend-skjema';
 import { Normaltekst } from 'nav-frontend-typografi';
 import React from 'react';
 import { LockedFilled, UnlockedFilled } from '@navikt/ds-icons';
+import classNames from 'classnames';
 import styles from './relatertFagsak.less';
 import RelatertSøkerIcon from './RelatertSøkerIcon';
 
@@ -26,7 +27,11 @@ const RelatertFagsak = ({ relaterteFagsaker }: RelatertFagsakProps) => {
   const visRelaterteSøkere = () => {
     if (!harMerEnnEnRelatertSøker) {
       return (
-        <Lenke className={styles.relatertFagsak__selector} href={`/k9/web${pathToFagsak(saksnummer)}`} target="_blank">
+        <Lenke
+          className={classNames([styles.relatertFagsak__selector, styles.relatertFagsak__marginLeft])}
+          href={`/k9/web${pathToFagsak(saksnummer)}`}
+          target="_blank"
+        >
           <Normaltekst tag="span" className={styles.relatertFagsak__name}>
             {søkerNavn}
           </Normaltekst>
@@ -54,7 +59,7 @@ const RelatertFagsak = ({ relaterteFagsaker }: RelatertFagsakProps) => {
     if (harMerEnnEnRelatertSøker) {
       return `Andre parter (${relaterteSøkere.length}):`;
     }
-    return 'Annen part:';
+    return 'Annen part: ';
   };
 
   return (
@@ -67,7 +72,11 @@ const RelatertFagsak = ({ relaterteFagsaker }: RelatertFagsakProps) => {
       <Normaltekst tag="span">/</Normaltekst>
       <div className={styles.relatertFagsak__centeredFlex}>
         <Normaltekst>{søkerIdent}</Normaltekst>
-        {!harMerEnnEnRelatertSøker && åpenBehandling ? <UnlockedFilled /> : <LockedFilled />}
+        {!harMerEnnEnRelatertSøker && åpenBehandling ? (
+          <UnlockedFilled className={styles.relatertFagsak__lock} width="1.25em" height="1.25em" />
+        ) : (
+          <LockedFilled className={styles.relatertFagsak__lock} width="1.25em" height="1.25em" />
+        )}
         {harMerEnnEnRelatertSøker && (
           <Lenke
             className={`${styles.relatertFagsak__selector} ${styles['relatertFagsak__selector--pushLeft']}`}
