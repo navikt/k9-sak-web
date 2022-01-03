@@ -20,17 +20,16 @@ export const VedtakAksjonspunktPanelImpl = ({
   readOnly,
   overlappendeYtelser,
   alleKodeverk,
-}) => (
-  <>
+}) => <>
     <Undertittel>{intl.formatMessage({ id: getTextCode(behandlingStatusKode) })}</Undertittel>
     <VerticalSpacer twentyPx />
     <VedtakHelpTextPanel aksjonspunktKoder={aksjonspunktKoder} readOnly={readOnly} />
-    <VedtakOverlappendeYtelsePanel overlappendeYtelser={overlappendeYtelser} alleKodeverk={alleKodeverk} />
+    {overlappendeYtelser && overlappendeYtelser.length > 0 &&
+      <VedtakOverlappendeYtelsePanel alleKodeverk={alleKodeverk} />
+    }
     <VerticalSpacer twentyPx />
     {children}
   </>
-);
-
 
 VedtakAksjonspunktPanelImpl.propTypes = {
   intl: PropTypes.shape().isRequired,
