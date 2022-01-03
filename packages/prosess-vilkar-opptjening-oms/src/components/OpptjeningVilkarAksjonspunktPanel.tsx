@@ -27,6 +27,7 @@ interface VilkårField {
   erVilkarOk: string | boolean;
   begrunnelse: string;
   innvilgelseMerknadKode: string;
+  vurdersIBehandlingen: boolean;
 }
 
 interface OpptjeningVilkarAksjonspunktPanelImplProps {
@@ -48,6 +49,11 @@ interface OpptjeningVilkarAksjonspunktPanelImplProps {
 
 interface StateProps {
   erVilkarOk: string | boolean;
+}
+
+const hentErVilkarOK = (aksjonspunkter: Aksjonspunkt[], vilkårPerioder: Vilkarperiode[], periodeIndex: number, status: string) => {
+  const isOpenAksjonspunkt = aksjonspunkter.some(ap => isAksjonspunktOpen(ap.status.kode));
+  return isOpenAksjonspunkt && vilkårPerioder[periodeIndex].vurdersIBehandlingen ? undefined : vilkarUtfallType.OPPFYLT === status;
 }
 
 /**
@@ -86,7 +92,7 @@ export const OpptjeningVilkarAksjonspunktPanelImpl = ({
   const isFormComplete = () => {
     const isAllTabsCreated = Array.isArray(vilkårPerioder) && vilkårPerioder.length === vilkarFields?.length;
     return isAllTabsCreated
-      ? !vilkarFields.some(vilkarField => !vilkarField.begrunnelse || vilkarField.erVilkarOk === undefined)
+      ? !vilkarFields.some(vilkarField => vilkarField.vurdersIBehandlingen && (!vilkarField.begrunnelse || vilkarField.erVilkarOk === undefined))
       : false;
   };
 
@@ -97,8 +103,7 @@ export const OpptjeningVilkarAksjonspunktPanelImpl = ({
     fagsakType === FagsakYtelseType.OMSORGSPENGER_MIDLERTIDIG_ALENE;
 
   const erPleiepenger = fagsakType === FagsakYtelseType.PLEIEPENGER;
-  const isOpenAksjonspunkt = aksjonspunkter.some(ap => isAksjonspunktOpen(ap.status.kode));
-  const originalErVilkarOk = isOpenAksjonspunkt ? undefined : vilkarUtfallType.OPPFYLT === status;
+  const originalErVilkarOk = hentErVilkarOK(aksjonspunkter, vilkårPerioder, periodeIndex, status);
 
   const finnesOpptjeningsaktiviteterVidOpptjeningTom: boolean = !erPleiepenger ? true : opptjeninger.some(opptjening => {
     const opptjeningTom = dayjs(opptjening.fastsattOpptjening.opptjeningTom);
@@ -157,9 +162,10 @@ export const buildInitialValues = createSelector(
     (ownProps: OpptjeningVilkarAksjonspunktPanelImplProps) => ownProps.aksjonspunkter,
     (ownProps: OpptjeningVilkarAksjonspunktPanelImplProps) => ownProps.vilkårPerioder,
     (ownProps: OpptjeningVilkarAksjonspunktPanelImplProps) => ownProps.status,
+    (ownProps: OpptjeningVilkarAksjonspunktPanelImplProps) => ownProps.periodeIndex,
   ],
-  (aksjonspunkter, vilkårPerioder, status) => ({
-    ...VilkarFields.buildInitialValues(aksjonspunkter, vilkårPerioder, status),
+  (aksjonspunkter, vilkårPerioder, status, periodeIndex) => ({
+    ...VilkarFields.buildInitialValues(aksjonspunkter, vilkårPerioder, hentErVilkarOK(aksjonspunkter, vilkårPerioder, periodeIndex, status)),
     ...ProsessStegBegrunnelseTextField.buildInitialValues(aksjonspunkter),
   }),
 );
