@@ -112,7 +112,7 @@ export const OpptjeningVilkarAksjonspunktPanelImpl = ({
   return (
     <ProsessPanelTemplate
       title={intl.formatMessage({ id: 'OpptjeningVilkarAksjonspunktPanel.Opptjeningsvilkaret' })}
-      isAksjonspunktOpen={isApOpen}
+      isAksjonspunktOpen={isApOpen && vilkårPerioder[periodeIndex].vurdersIBehandlingen}
       formName={formProps.form}
       handleSubmit={formProps.handleSubmit}
       isDirty={dirty}
@@ -143,7 +143,7 @@ export const OpptjeningVilkarAksjonspunktPanelImpl = ({
 
       <VilkarFields
         erOmsorgspenger={erOmsorgspenger}
-        erVilkarOk={erVilkarOk}
+        erVilkarOk={vilkårPerioder[periodeIndex].vurdersIBehandlingen ? erVilkarOk : originalErVilkarOk}
         readOnly={readOnly || !vilkårPerioder[periodeIndex].vurdersIBehandlingen}
         fieldPrefix={`vilkarFields[${periodeIndex}]`}
         skalValgMidlertidigInaktivTypeBVises={finnesOpptjeningsaktiviteterVidOpptjeningTom}
