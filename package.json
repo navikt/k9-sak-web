@@ -79,7 +79,7 @@
     "@types/classnames": "^2.3.1",
     "@types/enzyme": "^3.10.11",
     "@types/history": "^4.7.9",
-    "@types/jest": "^27.4.0",
+    "@types/jest": "^27.0.2",
     "@types/prop-types": "^15.7.4",
     "@types/react": "^17.0.38",
     "@types/react-collapse": "^5.0.1",
