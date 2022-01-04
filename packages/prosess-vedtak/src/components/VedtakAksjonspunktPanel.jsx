@@ -25,11 +25,11 @@ export const VedtakAksjonspunktPanelImpl = ({
     <VerticalSpacer twentyPx />
     <VedtakHelpTextPanel aksjonspunktKoder={aksjonspunktKoder} readOnly={readOnly} />
     {overlappendeYtelser && overlappendeYtelser.length > 0 &&
-      <VedtakOverlappendeYtelsePanel alleKodeverk={alleKodeverk} />
+      <VedtakOverlappendeYtelsePanel alleKodeverk={alleKodeverk} overlappendeYtelser={overlappendeYtelser} />
     }
     <VerticalSpacer twentyPx />
     {children}
-  </>
+  </>;
 
 VedtakAksjonspunktPanelImpl.propTypes = {
   intl: PropTypes.shape().isRequired,
@@ -38,7 +38,7 @@ VedtakAksjonspunktPanelImpl.propTypes = {
   aksjonspunktKoder: PropTypes.arrayOf(PropTypes.string).isRequired,
   behandlingStatusKode: PropTypes.string.isRequired,
   overlappendeYtelser: PropTypes.arrayOf(PropTypes.shape()),
-  alleKodeverk: PropTypes.arrayOf(PropTypes.shape()),
+  alleKodeverk: PropTypes.shape(),
 };
 
 VedtakAksjonspunktPanelImpl.defaultProps = {
