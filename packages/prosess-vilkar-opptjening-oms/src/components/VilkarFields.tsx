@@ -5,7 +5,6 @@ import { Normaltekst } from 'nav-frontend-typografi';
 import { VerticalSpacer, FlexContainer, FlexRow, FlexColumn, Image } from '@fpsak-frontend/shared-components';
 import { RadioGroupField, RadioOption } from '@fpsak-frontend/form';
 import { ProsessStegBegrunnelseTextField } from '@k9-sak-web/prosess-felles';
-import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import { required } from '@fpsak-frontend/utils';
 import { Aksjonspunkt, Vilkarperiode } from '@k9-sak-web/types';
@@ -29,6 +28,7 @@ interface VilkarFieldsProps {
   erOmsorgspenger?: boolean;
   fieldPrefix: string;
   readOnly: boolean;
+  skalValgMidlertidigInaktivTypeBVises: boolean;
 }
 
 export const VilkarFields = ({
@@ -36,6 +36,7 @@ export const VilkarFields = ({
   fieldPrefix,
   erVilkarOk,
   readOnly,
+  skalValgMidlertidigInaktivTypeBVises
 }: VilkarFieldsProps & Partial<FormValues>) => {
   const intl = useIntl();
   const erIkkeOppfyltText = (
@@ -107,13 +108,13 @@ export const VilkarFields = ({
                     />
                   </FlexRow>
                 ) : null}
-                <FlexRow spaceBetween={false}>
+                {skalValgMidlertidigInaktivTypeBVises && <FlexRow spaceBetween={false}>
                   <RadioOption
                     label={{ id: 'OpptjeningVilkarAksjonspunktPanel.MidlertidigInaktivB' }}
                     value={midlertidigInaktiv.TYPE_B}
                     {...optionProps}
                   />
-                </FlexRow>
+                </FlexRow>}
               </FlexColumn>
             </FlexContainer>
           )}
@@ -127,21 +128,18 @@ export const VilkarFields = ({
 VilkarFields.buildInitialValues = (
   aksjonspunkter: Aksjonspunkt[],
   vilkårPerioder: Vilkarperiode[],
-  status: string,
-): FormValues => {
-  const isOpenAksjonspunkt = aksjonspunkter.some(ap => isAksjonspunktOpen(ap.status.kode));
-  const erVilkarOk = isOpenAksjonspunkt ? undefined : vilkarUtfallType.OPPFYLT === status;
-  return {
+  erVilkarOk: boolean,
+): FormValues => ({
     erVilkarOk,
     vilkarFields: Array.isArray(vilkårPerioder)
       ? vilkårPerioder.map(periode => ({
           begrunnelse: periode.begrunnelse,
+          vurdersIBehandlingen: periode.vurdersIBehandlingen,
           erVilkarOk: Object.values(midlertidigInaktiv).includes(periode.merknad?.kode)
             ? periode.merknad.kode
             : periode.vilkarStatus.kode === vilkarUtfallType.OPPFYLT,
         }))
       : [],
-  };
-};
+  });
 
 export default VilkarFields;

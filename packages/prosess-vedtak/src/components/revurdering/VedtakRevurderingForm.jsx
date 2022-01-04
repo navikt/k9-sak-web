@@ -108,6 +108,7 @@ export class VedtakRevurderingFormImpl extends Component {
       UNNTAK_FRA_TILSYNSORDNING,
       BEREGNING_25_PROSENT_AVVIK,
       OVER_18_AAR,
+      REVURDERING_ENDRING,
       lagreDokumentdata,
       personopplysninger,
       overlappendeYtelser,
@@ -121,6 +122,7 @@ export class VedtakRevurderingFormImpl extends Component {
       UNNTAK_FRA_TILSYNSORDNING,
       BEREGNING_25_PROSENT_AVVIK,
       OVER_18_AAR,
+      REVURDERING_ENDRING,
     };
 
     const { erSendtInnUtenArsaker } = this.state;
@@ -282,6 +284,7 @@ VedtakRevurderingFormImpl.propTypes = {
   UNNTAK_FRA_TILSYNSORDNING: PropTypes.string,
   BEREGNING_25_PROSENT_AVVIK: PropTypes.string,
   OVER_18_AAR: PropTypes.string,
+  REVURDERING_ENDRING: PropTypes.string,
   arbeidsgiverOpplysningerPerId: PropTypes.shape().isRequired,
   personopplysninger: PropTypes.shape().isRequired,
   ...formPropTypes,
@@ -304,6 +307,7 @@ VedtakRevurderingFormImpl.defaultProps = {
   UNNTAK_FRA_TILSYNSORDNING: undefined,
   BEREGNING_25_PROSENT_AVVIK: undefined,
   OVER_18_AAR: undefined,
+  REVURDERING_ENDRING: undefined,
 };
 
 const buildInitialValues = createSelector(
@@ -367,6 +371,7 @@ const buildInitialValues = createSelector(
       UNNTAK_FRA_TILSYNSORDNING: dokumentdata?.UNNTAK_FRA_TILSYNSORDNING,
       BEREGNING_25_PROSENT_AVVIK: dokumentdata?.BEREGNING_25_PROSENT_AVVIK,
       OVER_18_AAR: dokumentdata?.OVER_18_AAR,
+      REVURDERING_ENDRING: dokumentdata?.REVURDERING_ENDRING,
     };
   },
 );
