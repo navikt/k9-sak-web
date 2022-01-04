@@ -768,6 +768,7 @@ describe('<VedtakForm>', () => {
       KONTINUERLIG_TILSYN: undefined,
       OMSORGEN_FOR: undefined,
       OVER_18_AAR: undefined,
+      REVURDERING_ENDRING: undefined,
       UNNTAK_FRA_TILSYNSORDNING: undefined,
       VILKAR_FOR_TO: undefined,
     });
@@ -842,6 +843,7 @@ describe('<VedtakForm>', () => {
       KONTINUERLIG_TILSYN: undefined,
       OMSORGEN_FOR: undefined,
       OVER_18_AAR: undefined,
+      REVURDERING_ENDRING: undefined,
       UNNTAK_FRA_TILSYNSORDNING: undefined,
       VILKAR_FOR_TO: undefined,
       sprakkode,

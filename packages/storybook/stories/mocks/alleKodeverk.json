@@ -1117,13 +1117,8 @@
   ],
   "FagsakYtelseType": [
     {
-      "kode": "SVP",
-      "navn": "Svangerskapspenger",
-      "kodeverk": "FAGSAK_YTELSE"
-    },
-    {
-      "kode": "ES",
-      "navn": "Engangsstønad",
+      "kode": "OLP",
+      "navn": "Opplæringspenger",
       "kodeverk": "FAGSAK_YTELSE"
     },
     {
@@ -1132,8 +1127,78 @@
       "kodeverk": "FAGSAK_YTELSE"
     },
     {
+      "kode": "OBSOLETE",
+      "navn": "Kun brukt for å markere noen som utgått - ikke en gyldig type i seg selv",
+      "kodeverk": "FAGSAK_YTELSE"
+    },
+    {
+      "kode": "EF",
+      "navn": "Enslig forsørger",
+      "kodeverk": "FAGSAK_YTELSE"
+    },
+    {
+      "kode": "DAG",
+      "navn": "Dagpenger",
+      "kodeverk": "FAGSAK_YTELSE"
+    },
+    {
+      "kode": "PS",
+      "navn": "Pårørende sykdom",
+      "kodeverk": "FAGSAK_YTELSE"
+    },
+    {
+      "kode": "SVP",
+      "navn": "Svangerskapspenger",
+      "kodeverk": "FAGSAK_YTELSE"
+    },
+    {
       "kode": "PSB",
       "navn": "Pleiepenger sykt barn",
+      "kodeverk": "FAGSAK_YTELSE"
+    },
+    {
+      "kode": "ES",
+      "navn": "Engangsstønad",
+      "kodeverk": "FAGSAK_YTELSE"
+    },
+    {
+      "kode": "OMP_KS",
+      "navn": "Ekstra omsorgsdager kronisk syk",
+      "kodeverk": "FAGSAK_YTELSE"
+    },
+    {
+      "kode": "OMP_AO",
+      "navn": "Alene om omsorgen",
+      "kodeverk": "FAGSAK_YTELSE"
+    },
+    {
+      "kode": "PPN",
+      "navn": "Pleiepenger nærstående",
+      "kodeverk": "FAGSAK_YTELSE"
+    },
+    {
+      "kode": "SP",
+      "navn": "Sykepenger",
+      "kodeverk": "FAGSAK_YTELSE"
+    },
+    {
+      "kode": "AAP",
+      "navn": "Arbeidsavklaringspenger",
+      "kodeverk": "FAGSAK_YTELSE"
+    },
+    {
+      "kode": "OMP",
+      "navn": "Omsorgspenger",
+      "kodeverk": "FAGSAK_YTELSE"
+    },
+    {
+      "kode": "FRISINN",
+      "navn": "FRIlansere og Selvstendig næringsdrivendes INNtektskompensasjon",
+      "kodeverk": "FAGSAK_YTELSE"
+    },
+    {
+      "kode": "OMP_MA",
+      "navn": "Ekstra omsorgsdager midlertidig alene",
       "kodeverk": "FAGSAK_YTELSE"
     }
   ],

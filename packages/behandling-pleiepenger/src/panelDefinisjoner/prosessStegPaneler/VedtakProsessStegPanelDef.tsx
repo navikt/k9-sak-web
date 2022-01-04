@@ -33,6 +33,7 @@ class PanelDef extends ProsessStegPanelDef {
     PleiepengerBehandlingApiKeys.INFORMASJONSBEHOV_VEDTAKSBREV,
     PleiepengerBehandlingApiKeys.DOKUMENTDATA_HENTE,
     PleiepengerBehandlingApiKeys.FRITEKSTDOKUMENTER,
+    PleiepengerBehandlingApiKeys.OVERLAPPENDE_YTELSER,
   ];
 
   getOverstyrVisningAvKomponent = () => true;
