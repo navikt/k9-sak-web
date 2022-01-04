@@ -93,6 +93,7 @@ export class VedtakForm extends Component {
       UNNTAK_FRA_TILSYNSORDNING,
       BEREGNING_25_PROSENT_AVVIK,
       OVER_18_AAR,
+      REVURDERING_ENDRING,
       fritekstdokumenter,
       lagreDokumentdata,
       ...formProps
@@ -105,6 +106,7 @@ export class VedtakForm extends Component {
       UNNTAK_FRA_TILSYNSORDNING,
       BEREGNING_25_PROSENT_AVVIK,
       OVER_18_AAR,
+      REVURDERING_ENDRING,
     };
 
     return (
@@ -241,6 +243,7 @@ VedtakForm.propTypes = {
   UNNTAK_FRA_TILSYNSORDNING: PropTypes.string,
   BEREGNING_25_PROSENT_AVVIK: PropTypes.string,
   OVER_18_AAR: PropTypes.string,
+  REVURDERING_ENDRING: PropTypes.string,
   fritekstdokumenter: PropTypes.arrayOf(PropTypes.shape()),
   ...formPropTypes,
 };
@@ -258,6 +261,7 @@ VedtakForm.defaultProps = {
   UNNTAK_FRA_TILSYNSORDNING: undefined,
   BEREGNING_25_PROSENT_AVVIK: undefined,
   OVER_18_AAR: undefined,
+  REVURDERING_ENDRING: undefined,
 };
 
 export const buildInitialValues = createSelector(
@@ -302,6 +306,7 @@ export const buildInitialValues = createSelector(
     UNNTAK_FRA_TILSYNSORDNING: dokumentdata?.UNNTAK_FRA_TILSYNSORDNING,
     BEREGNING_25_PROSENT_AVVIK: dokumentdata?.BEREGNING_25_PROSENT_AVVIK,
     OVER_18_AAR: dokumentdata?.OVER_18_AAR,
+    REVURDERING_ENDRING: dokumentdata?.REVURDERING_ENDRING,
   }),
 );
 
