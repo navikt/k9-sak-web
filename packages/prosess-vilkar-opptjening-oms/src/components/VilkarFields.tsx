@@ -28,6 +28,7 @@ interface VilkarFieldsProps {
   erOmsorgspenger?: boolean;
   fieldPrefix: string;
   readOnly: boolean;
+  skalValgMidlertidigInaktivTypeBVises: boolean;
 }
 
 export const VilkarFields = ({
@@ -35,6 +36,7 @@ export const VilkarFields = ({
   fieldPrefix,
   erVilkarOk,
   readOnly,
+  skalValgMidlertidigInaktivTypeBVises
 }: VilkarFieldsProps & Partial<FormValues>) => {
   const intl = useIntl();
   const erIkkeOppfyltText = (
@@ -106,13 +108,13 @@ export const VilkarFields = ({
                     />
                   </FlexRow>
                 ) : null}
-                <FlexRow spaceBetween={false}>
+                {skalValgMidlertidigInaktivTypeBVises && <FlexRow spaceBetween={false}>
                   <RadioOption
                     label={{ id: 'OpptjeningVilkarAksjonspunktPanel.MidlertidigInaktivB' }}
                     value={midlertidigInaktiv.TYPE_B}
                     {...optionProps}
                   />
-                </FlexRow>
+                </FlexRow>}
               </FlexColumn>
             </FlexContainer>
           )}
