@@ -30,11 +30,11 @@
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-intl": "^5.20.12",
-    "react-redux": "^7.2.5",
-    "redux": "^4.1.1",
-    "redux-form": "^8.3.6",
+    "react-redux": "^7.2.6",
+    "redux": "^4.1.2",
+    "redux-form": "^8.3.8",
     "reselect": "^4.0.0",
-    "xss": "^1.0.9"
+    "xss": "^1.0.10"
   },
   "devDependencies": {
     "@fpsak-frontend/utils-test": "1.0.0",
