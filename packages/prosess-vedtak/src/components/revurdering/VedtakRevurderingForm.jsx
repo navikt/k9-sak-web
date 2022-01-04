@@ -111,6 +111,7 @@ export class VedtakRevurderingFormImpl extends Component {
       REVURDERING_ENDRING,
       lagreDokumentdata,
       personopplysninger,
+      overlappendeYtelser,
       ...formProps
     } = this.props;
 
@@ -134,6 +135,8 @@ export class VedtakRevurderingFormImpl extends Component {
           behandlingStatusKode={behandlingStatusKode}
           aksjonspunktKoder={aksjonspunktKoder}
           readOnly={readOnly}
+          overlappendeYtelser={overlappendeYtelser}
+          alleKodeverk={alleKodeverk}
         >
           <VerticalSpacer eightPx />
           <>

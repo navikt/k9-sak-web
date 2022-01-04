@@ -96,6 +96,7 @@ export class VedtakForm extends Component {
       REVURDERING_ENDRING,
       fritekstdokumenter,
       lagreDokumentdata,
+      overlappendeYtelser,
       ...formProps
     } = this.props;
 
@@ -115,6 +116,8 @@ export class VedtakForm extends Component {
           behandlingStatusKode={behandlingStatusKode}
           aksjonspunktKoder={aksjonspunktKoder}
           readOnly={readOnly}
+          overlappendeYtelser={overlappendeYtelser}
+          alleKodeverk={alleKodeverk}
         >
           {ytelseTypeKode === fagsakYtelseType.FRISINN ? (
             <VedtakOverstyrendeKnapp readOnly={readOnly} keyName="skalUndertrykkeBrev" readOnlyHideEmpty={false} />
@@ -196,7 +199,7 @@ export class VedtakForm extends Component {
                     {intl.formatMessage({
                       id:
                         aksjonspunkter &&
-                        aksjonspunkter.some(ap => ap.erAktivt === true && ap.toTrinnsBehandling === true)
+                          aksjonspunkter.some(ap => ap.erAktivt === true && ap.toTrinnsBehandling === true)
                           ? 'VedtakForm.TilGodkjenning'
                           : 'VedtakForm.FattVedtak',
                     })}

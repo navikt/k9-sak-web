@@ -246,7 +246,7 @@ BrevPanel.propTypes = {
   personopplysninger: PropTypes.shape(),
   arbeidsgiverOpplysningerPerId: PropTypes.shape(),
   formProps: PropTypes.shape().isRequired,
-  dokumentdata: PropTypes.shape().isRequired,
+  dokumentdata: PropTypes.shape(),
   lagreDokumentdata: PropTypes.func.isRequired,
 };
 

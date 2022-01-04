@@ -29,6 +29,10 @@ const findHelpTexts = (intl, aksjonspunktKoder) => {
   return helpTexts;
 };
 
+/**
+ * Det er i denne filen teksten vises ... 
+ */
+
 export const VedtakHelpTextPanelImpl = ({ intl, readOnly, aksjonspunktKoder }) => {
   const helpTexts = findHelpTexts(intl, aksjonspunktKoder);
   if (!readOnly && helpTexts.length > 0) {
