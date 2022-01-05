@@ -22,9 +22,7 @@ const config = {
     'airbnb',
     'plugin:@typescript-eslint/recommended',
     'plugin:jest/recommended',
-    'prettier/@typescript-eslint',
     'prettier',
-    'prettier/react',
   ],
 
   parserOptions: {
