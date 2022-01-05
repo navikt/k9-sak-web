@@ -11,7 +11,7 @@ import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 
 import { EtikettInfo } from 'nav-frontend-etiketter';
 
-import BlaBoksMedCheckmark from "@fpsak-frontend/shared-components/src/blaBoksMedCheckmark/BlaBoksMedCheckmark";
+import BlaBoksMedCheckmarkListe from "@fpsak-frontend/shared-components/src/blaBoksMedCheckmark/BlaBoksMedCheckmark";
 import styles from './skjeringspunktOgStatusPanel.less';
 import beregningStyles from '../beregningsgrunnlagPanel/beregningsgrunnlag.less';
 import AvsnittSkiller from '../redesign/AvsnittSkiller';
@@ -43,37 +43,45 @@ const createStatusEtiketter = (listeMedStatuser, getKodeverknavn) => {
  * Viser skjæringstidspunkt for beregningen og en liste med aktivitetsstatuser.
  */
 
-export const SkjeringspunktOgStatusPanelImpl = ({ skjeringstidspunktDato, aktivitetStatusList, getKodeverknavn, lonnsendringSisteTreMan }) => (
-  <>
-    <AvsnittSkiller luftUnder leftPanel />
-    <div className={beregningStyles.panelLeft}>
-      {createStatusEtiketter(aktivitetStatusList, getKodeverknavn)}
-      <VerticalSpacer sixteenPx />
-      <FlexContainer>
-        <FlexRow>
-          <FlexColumn>
-            <Normaltekst>
-              <FormattedMessage id="Beregningsgrunnlag.Skjeringstidspunkt.SkjeringForBeregning" />
-            </Normaltekst>
-          </FlexColumn>
-          <FlexColumn>
-            <Normaltekst className={beregningStyles.semiBoldText}>
-              <DateLabel dateString={skjeringstidspunktDato} />
-            </Normaltekst>
-          </FlexColumn>
-        </FlexRow>
-        {lonnsendringSisteTreMan && <>
-          <VerticalSpacer sixteenPx />
+export const SkjeringspunktOgStatusPanelImpl = ({ skjeringstidspunktDato, aktivitetStatusList, getKodeverknavn, lonnsendringSisteTreMan }) => {
+  const textIdsTilBlaBoksMedCheckmarkListe = [];
+
+  if(lonnsendringSisteTreMan){
+    textIdsTilBlaBoksMedCheckmarkListe.push("Beregningsgrunnlag.Skjeringstidspunkt.LonnsendringSisteTreMan");
+  }
+
+  return(
+    <>
+      <AvsnittSkiller luftUnder leftPanel />
+      <div className={beregningStyles.panelLeft}>
+        {createStatusEtiketter(aktivitetStatusList, getKodeverknavn)}
+        <VerticalSpacer sixteenPx />
+        <FlexContainer>
           <FlexRow>
             <FlexColumn>
-              <BlaBoksMedCheckmark textId="Beregningsgrunnlag.Skjeringstidspunkt.LonnsendringSisteTreMan" />
+              <Normaltekst>
+                <FormattedMessage id="Beregningsgrunnlag.Skjeringstidspunkt.SkjeringForBeregning" />
+              </Normaltekst>
+            </FlexColumn>
+            <FlexColumn>
+              <Normaltekst className={beregningStyles.semiBoldText}>
+                <DateLabel dateString={skjeringstidspunktDato} />
+              </Normaltekst>
             </FlexColumn>
           </FlexRow>
-        </>}
-      </FlexContainer>
-    </div>
-  </>
-);
+          {textIdsTilBlaBoksMedCheckmarkListe.length > 0 && <>
+            <VerticalSpacer sixteenPx />
+            <FlexRow>
+              <FlexColumn>
+                <BlaBoksMedCheckmarkListe textIds={textIdsTilBlaBoksMedCheckmarkListe} />
+              </FlexColumn>
+            </FlexRow>
+          </>}
+        </FlexContainer>
+      </div>
+    </>
+  );
+}
 
 SkjeringspunktOgStatusPanelImpl.propTypes = {
   skjeringstidspunktDato: PropTypes.string.isRequired,
