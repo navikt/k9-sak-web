@@ -17,10 +17,9 @@ export interface JournalpostIder {
 interface PunsjstripeProps {
   aktørId: string;
   aktørIdBarn: string;
-  saksnummer?: string;
 }
 
-const Punsjstripe: React.FC<PunsjstripeProps> = ({ aktørId, saksnummer, aktørIdBarn }) => {
+const Punsjstripe: React.FC<PunsjstripeProps> = ({ aktørId, aktørIdBarn }) => {
   const [punsjoppgaver, setPunsjoppgaver] = React.useState<PunsjResponse>(null);
   const [error, setError] = React.useState(null);
   const body = JSON.stringify({ aktorIdDto: { aktørId }, aktorIdDtoBarn: { aktørId: aktørIdBarn } });
