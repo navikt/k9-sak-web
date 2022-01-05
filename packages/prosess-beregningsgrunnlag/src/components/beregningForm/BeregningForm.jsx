@@ -198,15 +198,11 @@ const sjekkOmOmsorgspengegrunnlagOgSettAvviksvurdering = beregningsgrunnlag => {
 const sjekkErMidlertidigInaktiv = beregningsgrunnlag =>
   beregningsgrunnlag.aktivitetStatus.some(a => a.kode === aktivitetStatus.MIDLERTIDIG_INAKTIV);
 
-const sjekkLonnsendringSisteTreMan = (beregningsgrunnlag) => {
-  if(beregningsgrunnlag.faktaOmBeregning
+const sjekkLonnsendringSisteTreMan = (beregningsgrunnlag) =>
+    beregningsgrunnlag.faktaOmBeregning
     && beregningsgrunnlag.faktaOmBeregning.saksopplysninger
     && beregningsgrunnlag.faktaOmBeregning.saksopplysninger.arbeidsforholdMedLønnsendring
-    && beregningsgrunnlag.faktaOmBeregning.saksopplysninger.arbeidsforholdMedLønnsendring.length > 0){
-    return true;
-  }
-  return false;
-};
+    && beregningsgrunnlag.faktaOmBeregning.saksopplysninger.arbeidsforholdMedLønnsendring.length > 0;
 
 // ----------------------------------------------------- ------------------------------------- //
 // Component : BeregningFormImpl
