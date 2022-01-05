@@ -451,3 +451,118 @@ export const visAvslåttForEngangsstønadRevurdering = () => (
     alleKodeverk={alleKodeverk}
   />
 );
+
+export const visOverlappendeYtelser = () => {
+  const aksjonspunkt5040 = {
+    "aksjonspunktType": { "kode": "MANU", "kodeverk": "AKSJONSPUNKT_TYPE" },
+    "begrunnelse": null,
+    "besluttersBegrunnelse": null,
+    "definisjon": {
+      "skalAvbrytesVedTilbakeføring": true,
+      "kode": "5040",
+      "kodeverk": "AKSJONSPUNKT_DEF"
+    },
+    "erAktivt": true,
+    "fristTid": null,
+    "kanLoses": true,
+    "status": { "kode": "OPPR", "kodeverk": "AKSJONSPUNKT_STATUS" },
+    "toTrinnsBehandling": false,
+    "toTrinnsBehandlingGodkjent": null,
+    "vilkarType": null,
+    "vurderPaNyttArsaker": null,
+    "venteårsak": { "kode": "-", "kodeverk": "VENT_AARSAK" }
+  }
+
+  const overlappendeYtelser = [
+    {
+      "ytelseType": {
+        "kode": "SP",
+        "kodeverk": "FAGSAK_YTELSE"
+      },
+      "kilde": {
+        "kode": "INFOTRYGD",
+        "kodeverk": "FAGSYSTEM"
+      },
+      "overlappendePerioder": [
+        {
+          "fom": "2021-08-18",
+          "tom": "2021-08-20"
+        },
+        {
+          "fom": "2021-08-23",
+          "tom": "2021-08-27"
+        },
+        {
+          "fom": "2021-08-30",
+          "tom": "2021-08-31"
+        }
+      ]
+    },
+    {
+      "ytelseType": {
+        "kode": "SP",
+        "kodeverk": "FAGSAK_YTELSE"
+      },
+      "kilde": {
+        "kode": "INFOTRYGD",
+        "kodeverk": "FAGSYSTEM"
+      },
+      "overlappendePerioder": [
+        {
+          "fom": "2021-08-15",
+          "tom": "2021-08-19"
+        },
+        {
+          "fom": "2021-08-21",
+          "tom": "2021-08-27"
+        },
+        {
+          "fom": "2021-09-01",
+          "tom": "2021-08-09"
+        }
+      ]
+    }
+  ];
+
+  return <VedtakProsessIndex
+    behandling={{
+      ...behandling,
+      type: {
+        kode: behandlingType.OMSORGSPENGER,
+      },
+      behandlingsresultat: {
+        vedtaksbrev: {
+          kode: 'FRITEKST',
+        },
+        type: {
+          kode: behandlingResultatType.INNVILGET,
+        },
+        avslagsarsak: {
+          kode: avslagsarsakCodes.INGEN_BEREGNINGSREGLER,
+          kodeverk: kodeverkTyper.AVSLAGSARSAK,
+        },
+      },
+
+    }}
+    vilkar={[
+      {
+        ...vilkar[0],
+        vilkarStatus: {
+          kode: vilkarUtfallType.IKKE_OPPFYLT,
+        },
+      },
+    ]}
+    beregningresultatEngangsstonad={resultatstruktur}
+    sendVarselOmRevurdering={boolean('sendVarselOmRevurdering', false)}
+    resultatstrukturOriginalBehandling={resultatstrukturOriginalBehandling}
+    medlemskap={{ fom: '2019-01-01' }}
+    aksjonspunkter={[aksjonspunkt5040]}
+    ytelseType={{ kode: fagsakYtelseType.ENGANGSSTONAD }}
+    employeeHasAccess={boolean('employeeHasAccess', false)}
+    isReadOnly={boolean('isReadOnly', false)}
+    previewCallback={action('button-click')}
+    submitCallback={action('button-click')}
+    alleKodeverk={alleKodeverk}
+    overlappendeYtelser={overlappendeYtelser}
+  />;
+}

@@ -13,7 +13,7 @@ import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import behandlingStatusCode from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import BehandlingArsakType from '@fpsak-frontend/kodeverk/src/behandlingArsakType';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { decodeHtmlEntity, getKodeverknavnFn } from '@fpsak-frontend/utils';
+import { decodeHtmlEntity, getKodeverknavnFn, safeJSONParse } from '@fpsak-frontend/utils';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 
 import { Column, Row } from 'nav-frontend-grid';
@@ -80,6 +80,7 @@ export class VedtakRevurderingFormImpl extends Component {
       aksjonspunkter,
       previewCallback,
       begrunnelse,
+      overstyrtMottaker,
       aksjonspunktKoder,
       antallBarn,
       ytelseTypeKode,
@@ -107,8 +108,10 @@ export class VedtakRevurderingFormImpl extends Component {
       UNNTAK_FRA_TILSYNSORDNING,
       BEREGNING_25_PROSENT_AVVIK,
       OVER_18_AAR,
+      REVURDERING_ENDRING,
       lagreDokumentdata,
       personopplysninger,
+      overlappendeYtelser,
       ...formProps
     } = this.props;
 
@@ -119,6 +122,7 @@ export class VedtakRevurderingFormImpl extends Component {
       UNNTAK_FRA_TILSYNSORDNING,
       BEREGNING_25_PROSENT_AVVIK,
       OVER_18_AAR,
+      REVURDERING_ENDRING,
     };
 
     const { erSendtInnUtenArsaker } = this.state;
@@ -131,6 +135,8 @@ export class VedtakRevurderingFormImpl extends Component {
           behandlingStatusKode={behandlingStatusKode}
           aksjonspunktKoder={aksjonspunktKoder}
           readOnly={readOnly}
+          overlappendeYtelser={overlappendeYtelser}
+          alleKodeverk={alleKodeverk}
         >
           <VerticalSpacer eightPx />
           <>
@@ -227,6 +233,7 @@ export class VedtakRevurderingFormImpl extends Component {
               brødtekst={brødtekst}
               overskrift={overskrift}
               begrunnelse={begrunnelse}
+              overstyrtMottaker={overstyrtMottaker}
               arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
               lagreDokumentdata={lagreDokumentdata}
               personopplysninger={personopplysninger}
@@ -277,6 +284,7 @@ VedtakRevurderingFormImpl.propTypes = {
   UNNTAK_FRA_TILSYNSORDNING: PropTypes.string,
   BEREGNING_25_PROSENT_AVVIK: PropTypes.string,
   OVER_18_AAR: PropTypes.string,
+  REVURDERING_ENDRING: PropTypes.string,
   arbeidsgiverOpplysningerPerId: PropTypes.shape().isRequired,
   personopplysninger: PropTypes.shape().isRequired,
   ...formPropTypes,
@@ -299,6 +307,7 @@ VedtakRevurderingFormImpl.defaultProps = {
   UNNTAK_FRA_TILSYNSORDNING: undefined,
   BEREGNING_25_PROSENT_AVVIK: undefined,
   OVER_18_AAR: undefined,
+  REVURDERING_ENDRING: undefined,
 };
 
 const buildInitialValues = createSelector(
@@ -354,6 +363,7 @@ const buildInitialValues = createSelector(
       skalUndertrykkeBrev: readonly && harOverstyrtMedIngenBrev(dokumentdata, vedtakVarsel),
       overskrift: decodeHtmlEntity(dokumentdata?.[dokumentdatatype.FRITEKSTBREV]?.overskrift),
       brødtekst: decodeHtmlEntity(dokumentdata?.[dokumentdatatype.FRITEKSTBREV]?.brødtekst),
+      overstyrtMottaker: JSON.stringify(dokumentdata?.[dokumentdatatype.OVERSTYRT_MOTTAKER]),
       begrunnelse: dokumentdata?.[dokumentdatatype.BEREGNING_FRITEKST],
       KONTINUERLIG_TILSYN: dokumentdata?.KONTINUERLIG_TILSYN,
       OMSORGEN_FOR: dokumentdata?.OMSORGEN_FOR,
@@ -361,6 +371,7 @@ const buildInitialValues = createSelector(
       UNNTAK_FRA_TILSYNSORDNING: dokumentdata?.UNNTAK_FRA_TILSYNSORDNING,
       BEREGNING_25_PROSENT_AVVIK: dokumentdata?.BEREGNING_25_PROSENT_AVVIK,
       OVER_18_AAR: dokumentdata?.OVER_18_AAR,
+      REVURDERING_ENDRING: dokumentdata?.REVURDERING_ENDRING,
     };
   },
 );
@@ -371,6 +382,7 @@ const transformValuesForFlereInformasjonsbehov = (values, informasjonsbehov, til
     const transformedValues = {
       kode: apCode,
       begrunnelse: values.begrunnelse,
+      overstyrtMottaker: safeJSONParse(values.overstyrtMottaker),
       fritekstbrev: { brødtekst: values.brødtekst, overskrift: values.overskrift },
       skalBrukeOverstyrendeFritekstBrev: values.skalBrukeOverstyrendeFritekstBrev,
       skalUndertrykkeBrev: values.skalUndertrykkeBrev,
@@ -390,6 +402,7 @@ const transformValues = (values, tilgjengeligeVedtaksbrev) =>
     const transformedValues = {
       kode: apCode,
       begrunnelse: values.begrunnelse,
+      overstyrtMottaker: safeJSONParse(values.overstyrtMottaker),
       fritekstbrev: { brødtekst: values.brødtekst, overskrift: values.overskrift },
       skalBrukeOverstyrendeFritekstBrev: values.skalBrukeOverstyrendeFritekstBrev,
       skalUndertrykkeBrev: values.skalUndertrykkeBrev,
@@ -476,6 +489,7 @@ const mapStateToPropsFactory = (initialState, initialOwnProps) => {
         'brødtekst',
         'overskrift',
         'begrunnelse',
+        'overstyrtMottaker',
         ...Object.values(redusertUtbetalingArsak),
         ...informasjonsbehovFieldNames,
       ),

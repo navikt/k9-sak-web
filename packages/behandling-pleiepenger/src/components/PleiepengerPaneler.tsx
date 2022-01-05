@@ -170,6 +170,8 @@ const PleiepengerPaneler = ({
         setBehandling={setBehandling}
         arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
         dokumenter={dokumenter}
+        featureToggles={featureToggles}
+
       />
     </>
   );

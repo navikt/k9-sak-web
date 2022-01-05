@@ -50,6 +50,8 @@ export enum PleiepengerBehandlingApiKeys {
   FRITEKSTDOKUMENTER = 'FRITEKSTDOKUMENTER',
   INNTEKT_OG_YTELSER = 'INNTEKT_OG_YTELSER',
   OVERSTYR_INPUT_BEREGNING = 'OVERSTYR_INPUT_BEREGNING',
+  OVERLAPPENDE_YTELSER = 'OVERLAPPENDE_YTELSER',
+  HENT_SAKSBEHANDLERE = 'HENT_SAKSBEHANDLERE',
 }
 
 const endpoints = new RestApiConfigBuilder()
@@ -86,7 +88,8 @@ const endpoints = new RestApiConfigBuilder()
   .withRel('pleiepenger-fritekstdokumenter', PleiepengerBehandlingApiKeys.FRITEKSTDOKUMENTER)
   .withRel('inntekt', PleiepengerBehandlingApiKeys.INNTEKT_OG_YTELSER)
   .withRel('overstyr-input-beregning', PleiepengerBehandlingApiKeys.OVERSTYR_INPUT_BEREGNING)
-
+  .withRel('overlappende-ytelser', PleiepengerBehandlingApiKeys.OVERLAPPENDE_YTELSER)
+  .withRel('saksbehandler-info', PleiepengerBehandlingApiKeys.HENT_SAKSBEHANDLERE)
 
   // operasjoner
   .withRel('dokumentdata-lagre', PleiepengerBehandlingApiKeys.DOKUMENTDATA_LAGRE)

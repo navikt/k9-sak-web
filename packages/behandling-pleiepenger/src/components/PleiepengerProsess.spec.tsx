@@ -225,7 +225,7 @@ describe('<PleiepengerProsess>', () => {
         usePartialStatus: false,
       },
       {
-        labelId: 'Behandlingspunkt.Uttak',
+        labelId: 'Behandlingspunkt.Beregning',
         isActive: false,
         isDisabled: false,
         isFinished: false,
@@ -233,7 +233,7 @@ describe('<PleiepengerProsess>', () => {
         usePartialStatus: false,
       },
       {
-        labelId: 'Behandlingspunkt.Beregning',
+        labelId: 'Behandlingspunkt.Uttak',
         isActive: false,
         isDisabled: false,
         isFinished: false,

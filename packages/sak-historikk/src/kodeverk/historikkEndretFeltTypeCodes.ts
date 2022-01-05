@@ -52,9 +52,17 @@ const historikkEndretFeltTypeCodes = {
     kode: 'BRUTTO_NAERINGSINNTEKT',
     feltId: 'HistorikkEndretFelt.FastsettSelvstendigNaeringForm.BruttoBerGr',
   },
+  DAGPENGER_INNTEKT: {
+    kode: 'DAGPENGER_INNTEKT',
+    feltId: 'HistorikkEndretFeltVerdiType.DagpengerInntekt',
+  },
   DOKUMENTASJON_FORELIGGER: {
     kode: 'DOKUMENTASJON_FORELIGGER',
     feltId: 'Historikk.Fodsel.DokumentasjonForeligger',
+  },
+  DELVIS_REFUSJON_FØR_STARTDATO: {
+    kode: 'DELVIS_REFUSJON_FØR_STARTDATO',
+    feltId: 'HistorikkEndretFelt.DelvisRefusjonFørStart',
   },
   EKTEFELLES_BARN: {
     kode: 'EKTEFELLES_BARN',
@@ -63,10 +71,6 @@ const historikkEndretFeltTypeCodes = {
   ENDRING_NAERING: {
     kode: 'ENDRING_NAERING',
     feltId: 'HistorikkEndretFelt.FastsettSelvstendigNaeringForm.EndringNæring',
-  },
-  DAGPENGER_INNTEKT: {
-    kode: 'DAGPENGER_INNTEKT',
-    feltId: 'HistorikkEndretFeltVerdiType.DagpengerInntekt',
   },
   ER_SOKER_BOSATT_I_NORGE: {
     kode: 'ER_SOKER_BOSATT_I_NORGE',
@@ -147,6 +151,10 @@ const historikkEndretFeltTypeCodes = {
   NY_FORDELING: {
     kode: 'NY_FORDELING',
     feltId: 'HistorikkEndretFelt.NyFordelingFor',
+  },
+  NY_STARTDATO_REFUSJON: {
+    kode: 'NY_STARTDATO_REFUSJON',
+    feltId: 'HistorikkEndretFelt.NyStartdatoRefusjon',
   },
   NYTT_REFUSJONSKRAV: {
     kode: 'NYTT_REFUSJONSKRAV',

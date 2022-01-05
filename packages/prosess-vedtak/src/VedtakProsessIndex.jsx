@@ -48,7 +48,8 @@ const VedtakProsessIndex = ({
   informasjonsbehovVedtaksbrev,
   dokumentdataHente,
   fritekstdokumenter,
-  lagreDokumentdata
+  lagreDokumentdata,
+  overlappendeYtelser
 }) => (
   <RawIntlProvider value={intl}>
     <VedtakPanels
@@ -82,7 +83,8 @@ const VedtakProsessIndex = ({
       informasjonsbehovVedtaksbrev={informasjonsbehovVedtaksbrev}
       dokumentdata={dokumentdataHente}
       fritekstdokumenter={fritekstdokumenter}
-      lagreDokumentdata={lagreDokumentdata} />
+      lagreDokumentdata={lagreDokumentdata}
+      overlappendeYtelser={overlappendeYtelser} />
   </RawIntlProvider>
 );
 
@@ -113,6 +115,7 @@ VedtakProsessIndex.propTypes = {
   dokumentdataHente: PropTypes.shape(),
   fritekstdokumenter: PropTypes.arrayOf(PropTypes.shape()),
   lagreDokumentdata: PropTypes.func.isRequired,
+  overlappendeYtelser: PropTypes.arrayOf(PropTypes.shape()),
 };
 
 VedtakProsessIndex.defaultProps = {
