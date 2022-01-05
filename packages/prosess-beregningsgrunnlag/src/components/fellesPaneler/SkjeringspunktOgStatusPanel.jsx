@@ -5,7 +5,7 @@ import { FormattedMessage } from 'react-intl';
 import { Normaltekst } from 'nav-frontend-typografi';
 
 import { getKodeverknavnFn } from '@fpsak-frontend/utils';
-import {DateLabel, FlexContainer, FlexColumn, FlexRow, VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { DateLabel, FlexContainer, FlexColumn, FlexRow, VerticalSpacer } from '@fpsak-frontend/shared-components';
 
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 
@@ -66,7 +66,7 @@ export const SkjeringspunktOgStatusPanelImpl = ({ skjeringstidspunktDato, aktivi
           <VerticalSpacer sixteenPx />
           <FlexRow>
             <FlexColumn>
-              <BlaBoksMedCheckmark textId={Beregningsgrunnlag.Skjeringstidspunkt.LonnsendringSisteTreMan} />
+              <BlaBoksMedCheckmark textId="Beregningsgrunnlag.Skjeringstidspunkt.LonnsendringSisteTreMan" />
             </FlexColumn>
           </FlexRow>
         </>}
