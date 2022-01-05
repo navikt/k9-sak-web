@@ -68,8 +68,15 @@ const BeregningFaktaIndex = ({
   const skalBrukeTabs = beregningsgrunnlag.length > 1;
   const [aktivtBeregningsgrunnlagIndeks, setAktivtBeregningsgrunnlagIndeks] = useState(0);
   const aktivtBeregningsgrunnlag = beregningsgrunnlag[aktivtBeregningsgrunnlagIndeks];
+  const harBeregningsgrunnlagVilkår = vilkar.find(vilkår => vilkår?.vilkarType?.kode === vilkarType.BEREGNINGSGRUNNLAGVILKARET)
+
+  if (!aktivtBeregningsgrunnlag || !harBeregningsgrunnlagVilkår) {
+    return 'Har ikke beregningsgrunnlag.'
+  }
+
   const aktiveAvklaringsBehov = aktivtBeregningsgrunnlag.avklaringsbehov;
   const vilkårsperioder = vilkar.find(v => v.vilkarType && v.vilkarType.kode === vilkarType.BEREGNINGSGRUNNLAGVILKARET).perioder
+
   return (
     <RawIntlProvider value={intl}>
       {skalBrukeTabs && (
