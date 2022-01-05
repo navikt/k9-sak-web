@@ -84,7 +84,9 @@ const Uttak = ({ uttaksplaner }: UttakkProps) => {
   );
   const intl = useIntl();
 
-  const rader: TidslinjeRad<Uttaksperiode>[] = useMemo(() => mapRader(uttaksplaner, intl), [uttaksplaner]);
+  const rader: TidslinjeRad<Uttaksperiode>[] = useMemo(
+    () => mapRader(uttaksplaner, intl), [uttaksplaner]
+  );
   const sideContent: ReactNode[] = useMemo(() => mapSideContent(uttaksplaner, intl), [uttaksplaner]);
 
   const selectHandler = eventProps => {

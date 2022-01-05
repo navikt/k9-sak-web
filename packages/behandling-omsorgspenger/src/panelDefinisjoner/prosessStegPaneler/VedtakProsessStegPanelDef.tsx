@@ -31,6 +31,7 @@ class PanelDef extends ProsessStegPanelDef {
     OmsorgspengerBehandlingApiKeys.VEDTAK_VARSEL,
     OmsorgspengerBehandlingApiKeys.TILGJENGELIGE_VEDTAKSBREV,
     OmsorgspengerBehandlingApiKeys.DOKUMENTDATA_HENTE,
+    OmsorgspengerBehandlingApiKeys.OVERLAPPENDE_YTELSER
   ];
 
   getOverstyrVisningAvKomponent = () => true;
