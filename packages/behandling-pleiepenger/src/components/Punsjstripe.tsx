@@ -54,14 +54,21 @@ const Punsjstripe: React.FC<PunsjstripeProps> = ({ aktørId, aktørIdBarn }) => 
         </>
       );
     }
+    const flereIListen = journalposter.length > 1;
     return (
       <>
         <span>{`Det er ${journalposter.length} uløste oppgaver tilknyttet ${subjekt} i Punsj.`}</span>
-        {journalposter.map(journalpostId => (
-          <Lenke key={journalpostId} className={styles.oppgaveLenke} href={`${getPathToFplos()}?sok=${journalpostId}`}>
-            {`Reserver journalpost ${journalpostId}`}
-          </Lenke>
-        ))}
+        <div>
+          Reserver journalposter:
+          {journalposter.map((journalpostId, index) => (
+            <>
+              <Lenke className={styles.oppgaveLenke} href={`${getPathToFplos()}?sok=${journalpostId}`}>
+                {`${journalpostId}`}
+              </Lenke>
+              {`${flereIListen && journalposter.length !== index + 1 ? ',' : '.'}`}
+            </>
+          ))}
+        </div>
       </>
     );
   };
