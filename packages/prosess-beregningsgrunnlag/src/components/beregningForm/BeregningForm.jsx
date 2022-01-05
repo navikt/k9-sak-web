@@ -233,7 +233,7 @@ export const BeregningFormImpl = ({
   vilkaarBG,
   fieldArrayID,
 }) => {
-  const { dekningsgrad, skjaeringstidspunktBeregning, beregningsgrunnlagPeriode, faktaOmBeregning } = beregningsgrunnlag;
+  const { dekningsgrad, skjaeringstidspunktBeregning, beregningsgrunnlagPeriode } = beregningsgrunnlag;
   const sammenligningsgrunnlagPrStatus = getSammenligningsgrunnlagsPrStatus(beregningsgrunnlag);
   const avvikProsent = getAvviksprosent(sammenligningsgrunnlagPrStatus);
   const aktivitetStatusList = getStatusList(beregningsgrunnlagPeriode);
