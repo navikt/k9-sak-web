@@ -5,12 +5,13 @@ import { FormattedMessage } from 'react-intl';
 import { Normaltekst } from 'nav-frontend-typografi';
 
 import { getKodeverknavnFn } from '@fpsak-frontend/utils';
-import { DateLabel, FlexContainer, FlexColumn, FlexRow, VerticalSpacer } from '@fpsak-frontend/shared-components';
+import {DateLabel, FlexContainer, FlexColumn, FlexRow, VerticalSpacer } from '@fpsak-frontend/shared-components';
 
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 
 import { EtikettInfo } from 'nav-frontend-etiketter';
 
+import BlaBoksMedCheckmark from "@fpsak-frontend/shared-components/src/blaBoksMedCheckmark/BlaBoksMedCheckmark";
 import styles from './skjeringspunktOgStatusPanel.less';
 import beregningStyles from '../beregningsgrunnlagPanel/beregningsgrunnlag.less';
 import AvsnittSkiller from '../redesign/AvsnittSkiller';
@@ -42,7 +43,7 @@ const createStatusEtiketter = (listeMedStatuser, getKodeverknavn) => {
  * Viser skjæringstidspunkt for beregningen og en liste med aktivitetsstatuser.
  */
 
-export const SkjeringspunktOgStatusPanelImpl = ({ skjeringstidspunktDato, aktivitetStatusList, getKodeverknavn }) => (
+export const SkjeringspunktOgStatusPanelImpl = ({ skjeringstidspunktDato, aktivitetStatusList, getKodeverknavn, lonnsendringSisteTreMan }) => (
   <>
     <AvsnittSkiller luftUnder leftPanel />
     <div className={beregningStyles.panelLeft}>
@@ -61,6 +62,14 @@ export const SkjeringspunktOgStatusPanelImpl = ({ skjeringstidspunktDato, aktivi
             </Normaltekst>
           </FlexColumn>
         </FlexRow>
+        {lonnsendringSisteTreMan && <>
+          <VerticalSpacer sixteenPx />
+          <FlexRow>
+            <FlexColumn>
+              <BlaBoksMedCheckmark textId={Beregningsgrunnlag.Skjeringstidspunkt.LonnsendringSisteTreMan} />
+            </FlexColumn>
+          </FlexRow>
+        </>}
       </FlexContainer>
     </div>
   </>
@@ -70,6 +79,7 @@ SkjeringspunktOgStatusPanelImpl.propTypes = {
   skjeringstidspunktDato: PropTypes.string.isRequired,
   aktivitetStatusList: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   getKodeverknavn: PropTypes.func.isRequired,
+  lonnsendringSisteTreMan: PropTypes.bool.isRequired,
 };
 
 const mapStateToProps = (state, ownProps) => {
