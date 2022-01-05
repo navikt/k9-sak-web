@@ -146,6 +146,7 @@ const behandlinger = [
 ];
 
 const locationMock = {
+  key: "test",
   pathname: 'test',
   search: 'test',
   state: {},

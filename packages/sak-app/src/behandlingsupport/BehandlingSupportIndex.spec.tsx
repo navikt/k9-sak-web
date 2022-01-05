@@ -42,6 +42,7 @@ describe('<BehandlingSupportIndex>', () => {
   };
 
   const location = {
+    key: '',
     pathname: '',
     search: '',
     state: {},

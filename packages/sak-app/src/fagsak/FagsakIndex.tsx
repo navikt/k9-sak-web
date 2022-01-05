@@ -1,5 +1,5 @@
 import React, { useState, useCallback } from 'react';
-import { Route, Redirect, useLocation } from 'react-router-dom';
+import { Route, Navigate, useLocation } from 'react-router-dom';
 
 import { RestApiState } from '@k9-sak-web/rest-api-hooks';
 import VisittkortSakIndex from '@fpsak-frontend/sak-visittkort';
@@ -20,7 +20,7 @@ import useBehandlingEndret from '../behandling/useBehandlingEndret';
 import useTrackRouteParam from '../app/useTrackRouteParam';
 import BehandlingSupportIndex from '../behandlingsupport/BehandlingSupportIndex';
 import FagsakProfileIndex from '../fagsakprofile/FagsakProfileIndex';
-import { pathToMissingPage, erUrlUnderBehandling, erBehandlingValgt, behandlingerPath } from '../app/paths';
+import { pathToMissingPage, erUrlUnderBehandling, erBehandlingValgt, behandlingerRoutePath } from '../app/paths';
 import FagsakGrid from './components/FagsakGrid';
 import { K9sakApiKeys, restApiHooks } from '../data/k9sakApi';
 import useHentFagsakRettigheter from './useHentFagsakRettigheter';
@@ -36,7 +36,7 @@ const erTilbakekreving = (behandlingType: Kodeverk): boolean =>
 /**
  * FagsakIndex
  *
- * Container komponent. Er rot for for fagsakdelen av hovedvinduet, og har ansvar å legge valgt saksnummer fra URL-en i staten.
+ * Container komponent. Er rot for fagsakdelen av hovedvinduet, og har ansvar å legge valgt saksnummer fra URL-en i staten.
  */
 const FagsakIndex = () => {
   const [behandlingerTeller, setBehandlingTeller] = useState(0);
@@ -138,7 +138,7 @@ const FagsakIndex = () => {
     if (fagsakState === RestApiState.NOT_STARTED || fagsakState === RestApiState.LOADING) {
       return <LoadingPanel />;
     }
-    return <Redirect to={pathToMissingPage()} />;
+    return <Navigate to={pathToMissingPage()} />;
   }
 
   const harIkkeHentetfagsakPersonData =
@@ -149,7 +149,7 @@ const FagsakIndex = () => {
   }
 
   if (fagsak.saksnummer !== selectedSaksnummer) {
-    return <Redirect to={pathToMissingPage()} />;
+    return <Navigate to={pathToMissingPage()} />;
   }
 
   const harVerge = behandling ? behandling.harVerge : false;
@@ -159,11 +159,9 @@ const FagsakIndex = () => {
       <FagsakGrid
         behandlingContent={
           <Route
-            strict
-            path={behandlingerPath}
-            render={props => (
+            path={behandlingerRoutePath}
+            element={(
               <BehandlingerIndex
-                {...props}
                 fagsak={fagsak}
                 alleBehandlinger={alleBehandlinger}
                 arbeidsgiverOpplysninger={arbeidsgiverOpplysninger}

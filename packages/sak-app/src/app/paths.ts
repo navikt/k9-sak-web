@@ -1,7 +1,6 @@
-import { Location, Search } from 'history';
-
 import { buildPath, formatQueryString, parseQueryString } from '@fpsak-frontend/utils';
 import { skjermlenkeCodes } from '@k9-sak-web/konstanter';
+import { Location } from 'react-router-dom';
 
 export const DEFAULT_FAKTA = 'default';
 export const DEFAULT_PROSESS_STEG = 'default';
@@ -15,20 +14,20 @@ type QueryParams = {
 
 const DEV_LOGIN_URL = 'http://localhost:8080/k9/sak/jetty/login';
 
-export const fagsakPath = '/fagsak/:saksnummer/';
-export const aktoerPath = '/aktoer/:aktoerId(\\d+)';
-export const behandlingerPath = `${fagsakPath}behandling/`;
-export const behandlingPath = `${behandlingerPath}:behandlingId(\\d+)/`;
+export const fagsakRoutePath = '/fagsak/:saksnummer/';
+export const aktoerRoutePath = '/aktoer/:aktoerId';
+export const behandlingerRoutePath = `${fagsakRoutePath}behandling/`;
+export const behandlingRoutePath = `${behandlingerRoutePath}:behandlingId/`;
 
-export const pathToFagsak = (saksnummer: string): string => buildPath(fagsakPath, { saksnummer });
-export const pathToBehandlinger = (saksnummer: string): string => buildPath(behandlingerPath, { saksnummer });
+export const pathToFagsak = (saksnummer: string): string => buildPath(fagsakRoutePath, { saksnummer });
+export const pathToBehandlinger = (saksnummer: string): string => buildPath(behandlingerRoutePath, { saksnummer });
 export const pathToBehandling = (saksnummer: string, behandlingId: number): string =>
-  buildPath(behandlingPath, { saksnummer, behandlingId });
+  buildPath(behandlingRoutePath, { saksnummer, behandlingId });
 export const pathToMissingPage = (): string => '/404';
 
 const emptyQueryString = (queryString: string): boolean => queryString === '?' || !queryString;
 
-const updateQueryParams = (queryString: string, nextParams: QueryParams): Search => {
+const updateQueryParams = (queryString: string, nextParams: QueryParams): string => {
   const prevParams = emptyQueryString(queryString) ? {} : parseQueryString(queryString);
   return formatQueryString({
     ...prevParams,

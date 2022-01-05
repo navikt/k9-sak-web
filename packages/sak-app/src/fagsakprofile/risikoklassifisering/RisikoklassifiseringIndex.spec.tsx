@@ -28,6 +28,7 @@ const behandling = {
 };
 
 const location = {
+  key: '1',
   hash: '23',
   pathname: '/test/',
   state: {},

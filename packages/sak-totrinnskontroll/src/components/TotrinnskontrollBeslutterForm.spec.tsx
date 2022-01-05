@@ -7,6 +7,7 @@ import { TotrinnskontrollBeslutterForm } from './TotrinnskontrollBeslutterForm';
 import shallowWithIntl from '../../i18n/index';
 
 const location = {
+  key: '1',
   pathname: '',
   search: '',
   state: {},

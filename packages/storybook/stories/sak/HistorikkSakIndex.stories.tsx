@@ -139,6 +139,7 @@ const history = [
 ];
 
 const locationMock = {
+  key: "test",
   pathname: 'test',
   search: 'test',
   state: {},

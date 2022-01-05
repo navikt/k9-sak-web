@@ -1,10 +1,10 @@
 import React from 'react';
-import { Route, Switch } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 
 import { BehandlingAppKontekst, Fagsak, ArbeidsgiverOpplysningerWrapper } from '@k9-sak-web/types';
 import { IngenBehandlingValgtPanel } from '@k9-sak-web/sak-infosider';
 
-import { behandlingPath } from '../app/paths';
+import { behandlingRoutePath } from '../app/paths';
 import BehandlingIndex from './BehandlingIndex';
 
 interface OwnProps {
@@ -22,13 +22,11 @@ export const BehandlingerIndex = ({
   setBehandlingIdOgVersjon,
   setRequestPendingMessage,
 }: OwnProps) => (
-  <Switch>
+  <Routes>
     <Route
-      strict
-      path={behandlingPath}
-      render={props => (
+      path={behandlingRoutePath}
+      element={(
         <BehandlingIndex
-          {...props}
           fagsak={fagsak}
           alleBehandlinger={alleBehandlinger}
           arbeidsgiverOpplysninger={arbeidsgiverOpplysninger}
@@ -40,7 +38,7 @@ export const BehandlingerIndex = ({
     <Route>
       <IngenBehandlingValgtPanel numBehandlinger={alleBehandlinger.length} />
     </Route>
-  </Switch>
+  </Routes>
 );
 
 export default BehandlingerIndex;

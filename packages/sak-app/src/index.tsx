@@ -1,7 +1,6 @@
 import React from 'react';
 import { Provider } from 'react-redux';
-import { Router } from 'react-router-dom';
-import { createBrowserHistory } from 'history';
+import { BrowserRouter } from 'react-router-dom';
 import { render } from 'react-dom';
 import { init, Integrations } from '@sentry/browser';
 
@@ -57,9 +56,6 @@ init({
   },
 });
 
-const history = createBrowserHistory({
-  basename: '/k9/web/',
-});
 const store = configureStore();
 
 const renderFunc = Component => {
@@ -69,13 +65,13 @@ const renderFunc = Component => {
   }
   render(
     <Provider store={store}>
-      <Router history={history}>
+      <BrowserRouter basename={'/k9/web/'}>
         <RestApiProvider>
           <RestApiErrorProvider>
             <Component />
           </RestApiErrorProvider>
         </RestApiProvider>
-      </Router>
+      </BrowserRouter>
     </Provider>,
     app,
   );
