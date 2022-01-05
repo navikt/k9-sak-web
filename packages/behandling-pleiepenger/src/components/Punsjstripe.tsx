@@ -58,9 +58,11 @@ const Punsjstripe: React.FC<PunsjstripeProps> = ({ aktørId, saksnummer, aktørI
     return (
       <>
         <span>{`Det er ${journalposter.length} uløste oppgaver tilknyttet ${subjekt} i Punsj.`}</span>
-        <Lenke className={styles.oppgaveLenke} href={`${getPathToFplos()}?sok=${saksnummer}`}>
-          Reserver oppgaver i LOS
-        </Lenke>
+        {journalposter.map(journalpostId => (
+          <Lenke className={styles.oppgaveLenke} href={`${getPathToFplos()}?sok=${journalpostId}`}>
+            {`Reserver journalpost ${journalpostId}`}
+          </Lenke>
+        ))}
       </>
     );
   };
