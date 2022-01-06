@@ -7,6 +7,7 @@ import styles from './punsjstripe.less';
 
 export interface PunsjResponse {
   journalpostIder: JournalpostIder[];
+  journalpostIderBarn: JournalpostIder[];
 }
 
 export interface JournalpostIder {
@@ -15,16 +16,16 @@ export interface JournalpostIder {
 
 interface PunsjstripeProps {
   aktørId: string;
-  saksnummer: string;
+  aktørIdBarn: string;
 }
 
-const Punsjstripe: React.FC<PunsjstripeProps> = ({ aktørId, saksnummer }) => {
+const Punsjstripe: React.FC<PunsjstripeProps> = ({ aktørId, aktørIdBarn }) => {
   const [punsjoppgaver, setPunsjoppgaver] = React.useState<PunsjResponse>(null);
   const [error, setError] = React.useState(null);
-
+  const body = JSON.stringify({ aktorIdDto: { aktørId }, aktorIdDtoBarn: { aktørId: aktørIdBarn } });
   React.useEffect(() => {
     axios
-      .get(`/k9/sak/api/punsj/journalpost/uferdig?aktoerId=${aktørId}`)
+      .post('/k9/sak/api/punsj/journalpost/uferdig', body)
       .then((response: AxiosResponse) => {
         setPunsjoppgaver(response.data);
       })
@@ -40,29 +41,43 @@ const Punsjstripe: React.FC<PunsjstripeProps> = ({ aktørId, saksnummer }) => {
   if (!harPunsjoppgaver) {
     return null;
   }
-  const getUløsteOppgaverText = () => {
-    const { journalpostIder } = punsjoppgaver;
-    if (journalpostIder.length === 1) {
-      const { journalpostId } = journalpostIder[0];
+  const { journalpostIder, journalpostIderBarn } = punsjoppgaver;
+  const getUløsteOppgaverText = (journalposter, subjekt: string) => {
+    if (journalposter.length === 1) {
+      const { journalpostId } = journalposter[0];
       return (
         <>
-          <span>Det er 1 uløst oppgave tilknyttet søkeren i Punsj.</span>
+          <span>{`Det er 1 uløst oppgave tilknyttet ${subjekt} i Punsj.`}</span>
           <Lenke className={styles.oppgaveLenke} href={`${getPathToFplos()}?sok=${journalpostId}`}>
             Gå til oppgave
           </Lenke>
         </>
       );
     }
+    const flereIListen = journalposter.length > 1;
     return (
       <>
-        <span>{`Det er ${journalpostIder.length} uløste oppgaver tilknyttet søkeren i Punsj.`}</span>
-        <Lenke className={styles.oppgaveLenke} href={`${getPathToFplos()}?sok=${saksnummer}`}>
-          Reserver oppgaver i LOS
-        </Lenke>
+        <span>{`Det er ${journalposter.length} uløste oppgaver tilknyttet ${subjekt} i Punsj.`}</span>
+        <div>
+          Reserver journalposter:
+          {journalposter.map((journalpostId, index) => (
+            <>
+              <Lenke className={styles.oppgaveLenke} href={`${getPathToFplos()}?sok=${journalpostId}`}>
+                {`${journalpostId}`}
+              </Lenke>
+              {`${flereIListen && journalposter.length !== index + 1 ? ',' : '.'}`}
+            </>
+          ))}
+        </div>
       </>
     );
   };
 
-  return <AlertStripeAdvarsel>{getUløsteOppgaverText()}</AlertStripeAdvarsel>;
+  return (
+    <>
+      <AlertStripeAdvarsel>{getUløsteOppgaverText(journalpostIder, 'søkeren')}</AlertStripeAdvarsel>
+      <AlertStripeAdvarsel>{getUløsteOppgaverText(journalpostIderBarn, 'barnet')}</AlertStripeAdvarsel>
+    </>
+  );
 };
 export default Punsjstripe;
