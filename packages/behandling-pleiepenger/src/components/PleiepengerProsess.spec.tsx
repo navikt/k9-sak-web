@@ -195,6 +195,7 @@ describe('<PleiepengerProsess>', () => {
         setBehandling={sinon.spy()}
         arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
         featureToggles={{}}
+        setBeregningErBehandlet={() => {}}
       />,
     );
 
@@ -288,6 +289,7 @@ describe('<PleiepengerProsess>', () => {
         setBehandling={sinon.spy()}
         arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
         featureToggles={{}}
+        setBeregningErBehandlet={() => {}}
       />,
     );
 
@@ -345,6 +347,7 @@ describe('<PleiepengerProsess>', () => {
         setBehandling={sinon.spy()}
         arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
         featureToggles={{}}
+        setBeregningErBehandlet={() => {}}
       />,
     );
 
@@ -406,6 +409,7 @@ describe('<PleiepengerProsess>', () => {
         setBehandling={sinon.spy()}
         arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
         featureToggles={{}}
+        setBeregningErBehandlet={() => {}}
       />,
     );
 
@@ -465,6 +469,7 @@ describe('<PleiepengerProsess>', () => {
         setBehandling={sinon.spy()}
         arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
         featureToggles={{}}
+        setBeregningErBehandlet={() => {}}
       />,
     );
 
@@ -500,6 +505,7 @@ describe('<PleiepengerProsess>', () => {
         setBehandling={sinon.spy()}
         arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
         featureToggles={{}}
+        setBeregningErBehandlet={() => {}}
       />,
     );
 
@@ -538,6 +544,7 @@ describe('<PleiepengerProsess>', () => {
         setBehandling={sinon.spy()}
         arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
         featureToggles={{}}
+        setBeregningErBehandlet={() => {}}
       />,
     );
 
@@ -581,13 +588,16 @@ describe('<PleiepengerProsess>', () => {
         setBehandling={sinon.spy()}
         arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
         featureToggles={{}}
+        setBeregningErBehandlet={() => {}}
       />,
     );
 
     const panel = wrapper.find(ProsessStegPanel);
     expect(panel.prop('valgtProsessSteg').getUrlKode()).toEqual('simulering');
-    const forhandsvisCallback = panel.prop('valgtProsessSteg').getDelPaneler()[0].getKomponentData()
-      .previewFptilbakeCallback;
+    const forhandsvisCallback = panel
+      .prop('valgtProsessSteg')
+      .getDelPaneler()[0]
+      .getKomponentData().previewFptilbakeCallback;
     expect(forhandsvisCallback).not.toBeNull();
 
     forhandsvisCallback({ param: 'test' });
