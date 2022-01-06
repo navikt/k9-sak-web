@@ -17,7 +17,8 @@ const utledHjemler = fagsak => {
   switch (fagsak.sakstype.kode) {
     case fagsakYtelseType.PLEIEPENGER:
       return [
-        { kode: '9-2/9-3', navn: '§ 9-2/9-3' },
+        { kode: '9-2', navn: '§ 9-2' },
+        { kode: '9-3', navn: '§ 9-3' },
         // { kode: '9-5/9-6', navn: '9-5/9-6' },
         // { kode: '9-8/9-9', navn: '9-8/9-9' },
         { kode: '9-10', navn: '§ 9-10' },
@@ -33,9 +34,12 @@ const utledHjemler = fagsak => {
     case fagsakYtelseType.OMSORGSPENGER_KRONISK_SYKT_BARN:
     case fagsakYtelseType.OMSORGSPENGER_MIDLERTIDIG_ALENE:
       return [
-        { kode: '9-2/9-3', navn: '§ 9-2/9-3' },
-        { kode: '9-5/9-6', navn: '§ 9-5/9-6' },
-        { kode: '9-8/9-9', navn: '§ 9-8/9-9' },
+        { kode: '9-2', navn: '§ 9-2' },
+        { kode: '9-3', navn: '§ 9-3' },
+        { kode: '9-5', navn: '§ 9-5' },
+        { kode: '9-6', navn: '§ 9-6' },
+        { kode: '9-8', navn: '§ 9-8' },
+        { kode: '9-9', navn: '§ 9-9' },
         { kode: '22-13', navn: '§ 22-13' },
         { kode: '9', navn: 'Kapittel 9' },
       ];
