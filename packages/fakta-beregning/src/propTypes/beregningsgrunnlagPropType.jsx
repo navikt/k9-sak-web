@@ -72,7 +72,7 @@ export const faktaOmBeregningPropType = PropTypes.shape({
 });
 
 const beregningsgrunnlagPropType = PropTypes.shape({
-  avklaringsbehov: PropTypes.arrayOf(beregningAvklaringsbehovPropType),
+  avklaringsbehov: PropTypes.arrayOf(beregningAvklaringsbehovPropType).isRequired,
   aktivitetStatus: PropTypes.arrayOf(
     PropTypes.shape({
       aktivitetStatus: kodeverkObjektPropType,

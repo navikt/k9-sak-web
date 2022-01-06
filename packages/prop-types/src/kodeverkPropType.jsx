@@ -4,11 +4,11 @@ import PropTypes from 'prop-types';
 export const kodeverkPropType = PropTypes.arrayOf(PropTypes.shape({
   kode: PropTypes.string.isRequired,
   kodeverk: PropTypes.string.isRequired,
-}));
+})).readOnly;
 
 export const kodeverkObjektPropType = PropTypes.shape({
   kode: PropTypes.string.isRequired,
   kodeverk: PropTypes.string.isRequired,
-});
+}).readOnly
 
 export default kodeverkPropType;

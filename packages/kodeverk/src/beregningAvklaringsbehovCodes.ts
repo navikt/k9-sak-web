@@ -1,5 +1,3 @@
-import { BeregningAvklaringsbehov } from '@k9-sak-web/types';
-
 const avklaringsbehovCodes = {
   FASTSETT_BEREGNINGSGRUNNLAG_ARBEIDSTAKER_FRILANS: '5038',
   VURDER_VARIG_ENDRET_ELLER_NYOPPSTARTET_NAERING_SELVSTENDIG_NAERINGSDRIVENDE: '5039',
@@ -36,7 +34,7 @@ const avklaringsbehovIsOfType =
   (aksjonspunktCode: string): boolean =>
     validAksjonspunktCodes.includes(aksjonspunktCode);
 
-export const harAvklaringsbehov = (avklaringsbehovCode: string, avklaringsbehov: BeregningAvklaringsbehov[]): boolean =>
+export const harAvklaringsbehov = (avklaringsbehovCode: string, avklaringsbehov: any): boolean =>
   avklaringsbehov.some(ap => ap.definisjon.kode === avklaringsbehovCode);
 
 export const isBGAksjonspunktSomGirFritekstfelt = avklaringsbehovIsOfType(
