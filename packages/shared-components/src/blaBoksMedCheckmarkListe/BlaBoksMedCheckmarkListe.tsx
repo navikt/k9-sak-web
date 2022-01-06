@@ -3,7 +3,7 @@ import checkBlaIkonUrl from "@fpsak-frontend/assets/images/check_blue.svg";
 import { Normaltekst } from "nav-frontend-typografi";
 import { FormattedMessage } from "react-intl";
 import { Image } from "../../index";
-import styles from './blaBoksMedCheckmark.less';
+import styles from './blaBoksMedCheckmarkListe.less';
 
 interface OwnProps{
   textIds: string[];

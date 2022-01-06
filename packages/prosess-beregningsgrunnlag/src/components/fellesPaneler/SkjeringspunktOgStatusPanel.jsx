@@ -11,7 +11,7 @@ import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 
 import { EtikettInfo } from 'nav-frontend-etiketter';
 
-import BlaBoksMedCheckmarkListe from "@fpsak-frontend/shared-components/src/blaBoksMedCheckmark/BlaBoksMedCheckmark";
+import BlaBoksMedCheckmarkListe from "@fpsak-frontend/shared-components/src/blaBoksMedCheckmarkListe/BlaBoksMedCheckmarkListe";
 import styles from './skjeringspunktOgStatusPanel.less';
 import beregningStyles from '../beregningsgrunnlagPanel/beregningsgrunnlag.less';
 import AvsnittSkiller from '../redesign/AvsnittSkiller';
