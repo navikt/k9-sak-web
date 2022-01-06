@@ -14,7 +14,6 @@ import beregningsgrunnlagPropType from './propTypes/beregningsgrunnlagPropType';
 import AvklareAktiviteterPanel from './components/avklareAktiviteter/AvklareAktiviteterPanel';
 import styles from './beregningFaktaIndex.less';
 
-
 const BeregningFaktaIndexPropTypes = {
   behandling: beregningBehandlingPropType.isRequired,
   beregningsgrunnlag: PropTypes.arrayOf(beregningsgrunnlagPropType),
@@ -31,7 +30,7 @@ const BeregningFaktaIndexPropTypes = {
   beregningErBehandlet: PropTypes.bool,
 };
 
-type OwnProps = PropTypes.InferProps<typeof BeregningFaktaIndexPropTypes>
+type OwnProps = PropTypes.InferProps<typeof BeregningFaktaIndexPropTypes>;
 
 const cache = createIntlCache();
 
@@ -92,7 +91,7 @@ const BeregningFaktaIndex = ({
   const skalBrukeTabs = beregningsgrunnlag.length > 1;
   const [aktivtBeregningsgrunnlagIndeks, setAktivtBeregningsgrunnlagIndeks] = useState(0);
   const aktivtBeregningsgrunnlag = beregningsgrunnlag[aktivtBeregningsgrunnlagIndeks];
-  const harBeregningsgrunnlagVilkår = vilkar.find(
+  const beregningsgrunnlagVilkår = vilkar.find(
     vilkår => vilkår?.vilkarType?.kode === vilkarType.BEREGNINGSGRUNNLAGVILKARET,
   );
 
@@ -100,14 +99,12 @@ const BeregningFaktaIndex = ({
     return <>Beregningssteget er ikke behandlet.</>;
   }
 
-  if (!aktivtBeregningsgrunnlag || !harBeregningsgrunnlagVilkår) {
+  if (!aktivtBeregningsgrunnlag || !beregningsgrunnlagVilkår) {
     return <>Har ikke beregningsgrunnlag.</>;
   }
 
   const aktiveAvklaringsBehov = aktivtBeregningsgrunnlag.avklaringsbehov;
-  const vilkårsperioder = vilkar.find(
-    v => v.vilkarType && v.vilkarType.kode === vilkarType.BEREGNINGSGRUNNLAGVILKARET,
-  ).perioder;
+  const vilkårsperioder = beregningsgrunnlagVilkår.perioder;
 
   return (
     <RawIntlProvider value={intl}>
@@ -164,7 +161,6 @@ const BeregningFaktaIndex = ({
     </RawIntlProvider>
   );
 };
-
 
 BeregningFaktaIndex.defaultProps = {
   beregningsgrunnlag: undefined,
