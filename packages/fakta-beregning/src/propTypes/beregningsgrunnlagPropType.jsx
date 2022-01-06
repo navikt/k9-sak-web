@@ -71,7 +71,7 @@ export const faktaOmBeregningPropType = PropTypes.shape({
   andelerForFaktaOmBeregning: PropTypes.arrayOf(andelForFaktaOmBeregningPropType).isRequired,
 });
 
-const beregningsgrunnlagPropType = PropTypes.shape({
+const beregningsgrunnlagPropType = PropTypes.exact({
   avklaringsbehov: PropTypes.arrayOf(beregningAvklaringsbehovPropType).isRequired,
   aktivitetStatus: PropTypes.arrayOf(
     PropTypes.shape({
