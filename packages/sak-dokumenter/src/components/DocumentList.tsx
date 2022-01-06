@@ -102,6 +102,7 @@ const DocumentList = ({ intl, documents, behandlingId, selectDocumentCallback }:
                 model={document}
                 onMouseDown={selectDocumentCallback}
                 onKeyDown={selectDocumentCallback}
+                className={isVedtaksdokument(document) ? styles.borderTop : ''}
               >
                 <TableColumn>
                   <Image
