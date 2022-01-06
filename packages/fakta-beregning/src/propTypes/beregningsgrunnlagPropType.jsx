@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import { kodeverkObjektPropType } from '@fpsak-frontend/prop-types';
 import beregningAvklaringsbehovPropType from './beregningAvklaringsbehovPropType';
 
-const beregningsgrunnlagArbeidsforholdProptype = PropTypes.shape({
+const beregningsgrunnlagArbeidsforholdProptype = PropTypes.exact({
   arbeidsgiverIdent: PropTypes.string,
   startdato: PropTypes.string,
   opphoersdato: PropTypes.string,
@@ -10,14 +10,14 @@ const beregningsgrunnlagArbeidsforholdProptype = PropTypes.shape({
   arbeidsforholdType: kodeverkObjektPropType,
 });
 
-const faktaOmBeregningAndelPropType = PropTypes.shape({
+const faktaOmBeregningAndelPropType = PropTypes.exact({
   arbeidsforhold: beregningsgrunnlagArbeidsforholdProptype,
   andelsnr: PropTypes.number,
   inntektskategori: kodeverkObjektPropType,
   aktivitetStatus: kodeverkObjektPropType,
 });
 
-const andelForFaktaOmBeregningPropType = PropTypes.shape({
+const andelForFaktaOmBeregningPropType = PropTypes.exact({
   arbeidsforhold: beregningsgrunnlagArbeidsforholdProptype,
   andelsnr: PropTypes.number,
   inntektskategori: kodeverkObjektPropType,
@@ -28,21 +28,21 @@ const andelForFaktaOmBeregningPropType = PropTypes.shape({
   lagtTilAvSaksbehandler: PropTypes.bool.isRequired,
 });
 
-const refusjonskravSomKommerForSentListePropType = PropTypes.shape({
+const refusjonskravSomKommerForSentListePropType = PropTypes.exact({
   arbeidsgiverIdent: PropTypes.string,
   erRefusjonskravGyldig: PropTypes.bool,
 });
 
-const vurderMilitaerPropType = PropTypes.shape({
+const vurderMilitaerPropType = PropTypes.exact({
   harMilitaer: PropTypes.bool,
 });
 
-export const avklarAktiviteterPropType = PropTypes.shape({
+export const avklarAktiviteterPropType = PropTypes.exact({
   aktiviteterTomDatoMapping: PropTypes.arrayOf(
-    PropTypes.shape({
+    PropTypes.exact({
       tom: PropTypes.string.isRequired,
       aktiviteter: PropTypes.arrayOf(
-        PropTypes.shape({
+        PropTypes.exact({
           arbeidsgiverIdent: PropTypes.string,
           eksternArbeidsforholdId: PropTypes.string,
           fom: PropTypes.string.isRequired,
@@ -56,9 +56,9 @@ export const avklarAktiviteterPropType = PropTypes.shape({
   ),
 });
 
-export const faktaOmBeregningPropType = PropTypes.shape({
+export const faktaOmBeregningPropType = PropTypes.exact({
   beregningsgrunnlagArbeidsforhold: PropTypes.arrayOf(
-    PropTypes.shape({
+    PropTypes.exact({
       ...beregningsgrunnlagArbeidsforholdProptype,
       erTidsbegrensetArbeidsforhold: PropTypes.bool,
     }),
@@ -74,14 +74,14 @@ export const faktaOmBeregningPropType = PropTypes.shape({
 const beregningsgrunnlagPropType = PropTypes.exact({
   avklaringsbehov: PropTypes.arrayOf(beregningAvklaringsbehovPropType).isRequired,
   aktivitetStatus: PropTypes.arrayOf(
-    PropTypes.shape({
+    PropTypes.exact({
       aktivitetStatus: kodeverkObjektPropType,
     }),
   ),
   beregningsgrunnlagPeriode: PropTypes.arrayOf(
-    PropTypes.shape({
+    PropTypes.exact({
       beregningsgrunnlagPrStatusOgAndel: PropTypes.arrayOf(
-        PropTypes.shape({
+        PropTypes.exact({
           aktivitetStatus: kodeverkObjektPropType,
           arbeidsforholdType: kodeverkObjektPropType,
           beregnetPrAar: PropTypes.number,
