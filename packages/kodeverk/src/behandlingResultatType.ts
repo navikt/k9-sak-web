@@ -5,13 +5,13 @@ const behandlingResultatType = {
   INNVILGET_ENDRING: 'INNVILGET_ENDRING',
   AVSLATT: 'AVSLÅTT',
   OPPHOR: 'OPPHØR',
-  HENLAGT_SOKNAD_TRUKKET: 'HENLAGT_SØKNAD_TRUKKET',
   KLAGE_AVVIST: 'KLAGE_AVVIST',
   KLAGE_MEDHOLD: 'KLAGE_MEDHOLD',
   KLAGE_YTELSESVEDTAK_OPPHEVET: 'KLAGE_YTELSESVEDTAK_OPPHEVET',
   KLAGE_YTELSESVEDTAK_STADFESTET: 'KLAGE_YTELSESVEDTAK_STADFESTET',
   DELVIS_MEDHOLD_I_KLAGE: 'DELVIS_MEDHOLD_I_KLAGE',
   HJEMSENDE_UTEN_OPPHEVE: 'HJEMSENDE_UTEN_OPPHEVE',
+  HENLAGT_SOKNAD_TRUKKET: 'HENLAGT_SØKNAD_TRUKKET',
   HENLAGT_KLAGE_TRUKKET: 'HENLAGT_KLAGE_TRUKKET',
   HENLAGT_INNSYN_TRUKKET: 'HENLAGT_INNSYN_TRUKKET',
   HENLAGT_FEILOPPRETTET: 'HENLAGT_FEILOPPRETTET',
@@ -48,5 +48,16 @@ export const isAvslag = behandlingResultatTypeKode =>
   behandlingResultatTypeKode === behandlingResultatType.KLAGE_YTELSESVEDTAK_OPPHEVET;
 
 export const isOpphor = behandlingResultatTypeKode => behandlingResultatTypeKode === behandlingResultatType.OPPHOR;
+
+export const isHenlagt = behandlingResultatTypeKode =>
+  [
+    behandlingResultatType.HENLAGT_BRUKER_DOD,
+    behandlingResultatType.HENLAGT_FEILOPPRETTET,
+    behandlingResultatType.HENLAGT_FEILOPPRETTET_MED_BREV,
+    behandlingResultatType.HENLAGT_FEILOPPRETTET_UTEN_BREV,
+    behandlingResultatType.HENLAGT_INNSYN_TRUKKET,
+    behandlingResultatType.HENLAGT_KLAGE_TRUKKET,
+    behandlingResultatType.HENLAGT_SOKNAD_TRUKKET,
+  ].some(type => type === behandlingResultatTypeKode);
 
 export default behandlingResultatType;

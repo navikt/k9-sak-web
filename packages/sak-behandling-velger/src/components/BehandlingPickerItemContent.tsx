@@ -1,115 +1,102 @@
-import React, { ReactElement } from 'react';
-import { FormattedMessage } from 'react-intl';
-import classNames from 'classnames';
-import { Element, Normaltekst, Undertekst } from 'nav-frontend-typografi';
+import advarselImg from '@fpsak-frontend/assets/images/advarsel-circle.svg';
+import avslaattImg from '@fpsak-frontend/assets/images/avslaatt_valgt.svg';
+import innvilgetImg from '@fpsak-frontend/assets/images/innvilget_valgt.svg';
+import binImg from '@fpsak-frontend/assets/images/bin.svg';
+import behandlingResultatType, { isHenlagt } from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
+import { DateLabel, Image } from '@fpsak-frontend/shared-components';
 import Panel from 'nav-frontend-paneler';
-
-import {
-  FlexContainer,
-  FlexRow,
-  FlexColumn,
-  DateLabel,
-  TimeLabel,
-  Image,
-  VerticalSpacer,
-  Tooltip,
-} from '@fpsak-frontend/shared-components';
-import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
-import behandlingArsakType from '@fpsak-frontend/kodeverk/src/behandlingArsakType';
-import chevronUp from '@fpsak-frontend/assets/images/pil_opp.svg';
-import chevronDown from '@fpsak-frontend/assets/images/pil_ned.svg';
-import stjerneImg from '@fpsak-frontend/assets/images/stjerne.svg';
-import { BehandlingAppKontekst, Kodeverk } from '@k9-sak-web/types';
-
+import { Normaltekst, Undertittel } from 'nav-frontend-typografi';
+import React from 'react';
+import { FormattedMessage } from 'react-intl';
 import styles from './behandlingPickerItemContent.less';
 
 // TODO (TOR) Kva er dette for noko? Desse tekstane burde vel komma fra kodeverket? Ein skal uansett ikkje hardkoda kodane her!
 // TODO hente de forksjellige kodeverkene man trenger
-const getÅrsak = (årsak: BehandlingAppKontekst['førsteÅrsak']) => {
-  switch (årsak.behandlingArsakType.kode) {
-    case 'RE-MF':
-    case 'RE-MFIP':
-      return 'Behandlingspunkt.Årsak.ManglerFødselsdato';
-    case 'RE-AVAB':
-      return 'Behandlingspunkt.Årsak.AvvikAntallBarn';
-    case 'RE-LOV':
-    case 'RE-RGLF':
-      return 'Behandlingspunkt.Årsak.FeilLovanvendelse';
-    case 'RE-FEFAKTA':
-      return 'Behandlingspunkt.Årsak.EndredeOpplysninger';
-    case 'RE-PRSSL':
-    case 'RE-ANNET':
-      return 'Behandlingspunkt.Årsak.Annet';
-    case 'RE-END-FRA-BRUKER':
-      return 'Behandlingspunkt.Årsak.Søknad';
-    case 'RE-END-INNTEKTSMELD':
-      return 'Behandlingspunkt.Årsak.Inntektsmelding';
-    case 'BERØRT-BEHANDLING':
-      return 'Behandlingspunkt.Årsak.BerørtBehandling';
-    case 'KØET-BEHANDLING':
-      return 'Behandlingspunkt.Årsak.KøetBehandling';
-    case 'RE-KLAG-U-INNTK':
-    case 'RE-KLAG-M-INNTK':
-    case 'ETTER_KLAGE':
-      return 'Behandlingspunkt.Årsak.Klage';
-    case 'RE-MDL':
-      return 'Behandlingspunkt.Årsak.OpplysningerMedlemskap';
-    case 'RE-OPTJ':
-      return 'Behandlingspunkt.Årsak.OpplysningerOpptjening';
-    case 'RE-FRDLING':
-      return 'Behandlingspunkt.Årsak.OpplysningerFordeling';
-    case 'RE-INNTK':
-      return 'Behandlingspunkt.Årsak.OpplysningerInntekt';
-    case 'RE-DØD':
-      return 'Behandlingspunkt.Årsak.OpplysningerDød';
-    case 'RE-SRTB':
-      return 'Behandlingspunkt.Årsak.OpplysningerRelasjon';
-    case 'RE-FRIST':
-      return 'Behandlingspunkt.Årsak.OpplysningerSøknadsfrist';
-    case 'RE-BER-GRUN':
-    case 'RE-ENDR-BER-GRUN':
-      return 'Behandlingspunkt.Årsak.OpplysningerBeregning';
-    case 'RE-YTELSE':
-    case 'RE-TILST-YT-INNVIL':
-    case 'RE-TILST-YT-OPPH':
-      return 'Behandlingspunkt.Årsak.OpplysningerAnnenYtelse';
-    case 'RE-HENDELSE-FØDSEL':
-    case 'RE-FØDSEL':
-      return 'Behandlingspunkt.Årsak.Fødsel';
-    case 'RE-HENDELSE-DØD-F':
-      return 'Behandlingspunkt.Årsak.SøkerDød';
-    case 'RE-HENDELSE-DØD-B':
-      return 'Behandlingspunkt.Årsak.BarnDød';
-    case 'RE-HENDELSE-DØDFØD':
-      return 'Behandlingspunkt.Årsak.Dødfødsel';
-    case 'RE-REGISTEROPPL':
-      return 'Behandlingspunkt.Årsak.NyeRegisteropplysninger';
-    default:
-      return 'Behandlingspunkt.Årsak.Annet';
-  }
-};
+// const getÅrsak = (årsak: BehandlingAppKontekst['førsteÅrsak']) => {
+//   switch (årsak.behandlingArsakType.kode) {
+//     case 'RE-MF':
+//     case 'RE-MFIP':
+//       return 'Behandlingspunkt.Årsak.ManglerFødselsdato';
+//     case 'RE-AVAB':
+//       return 'Behandlingspunkt.Årsak.AvvikAntallBarn';
+//     case 'RE-LOV':
+//     case 'RE-RGLF':
+//       return 'Behandlingspunkt.Årsak.FeilLovanvendelse';
+//     case 'RE-FEFAKTA':
+//       return 'Behandlingspunkt.Årsak.EndredeOpplysninger';
+//     case 'RE-PRSSL':
+//     case 'RE-ANNET':
+//       return 'Behandlingspunkt.Årsak.Annet';
+//     case 'RE-END-FRA-BRUKER':
+//       return 'Behandlingspunkt.Årsak.Søknad';
+//     case 'RE-END-INNTEKTSMELD':
+//       return 'Behandlingspunkt.Årsak.Inntektsmelding';
+//     case 'BERØRT-BEHANDLING':
+//       return 'Behandlingspunkt.Årsak.BerørtBehandling';
+//     case 'KØET-BEHANDLING':
+//       return 'Behandlingspunkt.Årsak.KøetBehandling';
+//     case 'RE-KLAG-U-INNTK':
+//     case 'RE-KLAG-M-INNTK':
+//     case 'ETTER_KLAGE':
+//       return 'Behandlingspunkt.Årsak.Klage';
+//     case 'RE-MDL':
+//       return 'Behandlingspunkt.Årsak.OpplysningerMedlemskap';
+//     case 'RE-OPTJ':
+//       return 'Behandlingspunkt.Årsak.OpplysningerOpptjening';
+//     case 'RE-FRDLING':
+//       return 'Behandlingspunkt.Årsak.OpplysningerFordeling';
+//     case 'RE-INNTK':
+//       return 'Behandlingspunkt.Årsak.OpplysningerInntekt';
+//     case 'RE-DØD':
+//       return 'Behandlingspunkt.Årsak.OpplysningerDød';
+//     case 'RE-SRTB':
+//       return 'Behandlingspunkt.Årsak.OpplysningerRelasjon';
+//     case 'RE-FRIST':
+//       return 'Behandlingspunkt.Årsak.OpplysningerSøknadsfrist';
+//     case 'RE-BER-GRUN':
+//     case 'RE-ENDR-BER-GRUN':
+//       return 'Behandlingspunkt.Årsak.OpplysningerBeregning';
+//     case 'RE-YTELSE':
+//     case 'RE-TILST-YT-INNVIL':
+//     case 'RE-TILST-YT-OPPH':
+//       return 'Behandlingspunkt.Årsak.OpplysningerAnnenYtelse';
+//     case 'RE-HENDELSE-FØDSEL':
+//     case 'RE-FØDSEL':
+//       return 'Behandlingspunkt.Årsak.Fødsel';
+//     case 'RE-HENDELSE-DØD-F':
+//       return 'Behandlingspunkt.Årsak.SøkerDød';
+//     case 'RE-HENDELSE-DØD-B':
+//       return 'Behandlingspunkt.Årsak.BarnDød';
+//     case 'RE-HENDELSE-DØDFØD':
+//       return 'Behandlingspunkt.Årsak.Dødfødsel';
+//     case 'RE-REGISTEROPPL':
+//       return 'Behandlingspunkt.Årsak.NyeRegisteropplysninger';
+//     default:
+//       return 'Behandlingspunkt.Årsak.Annet';
+//   }
+// };
 
-const tilbakekrevingÅrsakTyperKlage = [behandlingArsakType.RE_KLAGE_KA, behandlingArsakType.RE_KLAGE_NFP];
+// const tilbakekrevingÅrsakTyperKlage = [behandlingArsakType.RE_KLAGE_KA, behandlingArsakType.RE_KLAGE_NFP];
 
-const erTilbakekrevingÅrsakKlage = (årsak?: Kodeverk): boolean =>
-  årsak && tilbakekrevingÅrsakTyperKlage.includes(årsak.kode);
+// const erTilbakekrevingÅrsakKlage = (årsak?: Kodeverk): boolean =>
+//   årsak && tilbakekrevingÅrsakTyperKlage.includes(årsak.kode);
 
-const renderChevron = (chevron: string, messageId: string): ReactElement => (
-  <FormattedMessage id={messageId}>{altText => <Image src={chevron} alt={`${altText}`} />}</FormattedMessage>
-);
+// const renderChevron = (chevron: string, messageId: string): ReactElement => (
+//   <FormattedMessage id={messageId}>{altText => <Image src={chevron} alt={`${altText}`} />}</FormattedMessage>
+// );
 
 interface OwnProps {
-  withChevronDown?: boolean;
-  withChevronUp?: boolean;
-  behandlendeEnhetId?: string;
-  behandlendeEnhetNavn?: string;
+  // withChevronDown?: boolean;
+  // withChevronUp?: boolean;
+  // behandlendeEnhetId?: string;
+  // behandlendeEnhetNavn?: string;
   opprettetDato: string;
   avsluttetDato?: string;
   behandlingsstatus: string;
-  behandlingTypeKode: string;
-  behandlingTypeNavn: string;
-  førsteÅrsak?: BehandlingAppKontekst['førsteÅrsak'];
-  erGjeldendeVedtak?: boolean;
+  // behandlingTypeKode: string;
+  // behandlingTypeNavn: string;
+  // førsteÅrsak?: BehandlingAppKontekst['førsteÅrsak'];
+  // erGjeldendeVedtak?: boolean;
   behandlingsresultatTypeKode?: string;
   behandlingsresultatTypeNavn?: string;
 }
@@ -120,22 +107,22 @@ interface OwnProps {
  * Presentasjonskomponent. Håndterer formatering av innholdet i den enkelte behandling i behandlingsvelgeren.
  */
 const BehandlingPickerItemContent = ({
-  withChevronDown = false,
-  withChevronUp = false,
-  behandlendeEnhetId,
-  behandlendeEnhetNavn,
+  // withChevronDown = false,
+  // withChevronUp = false,
+  // behandlendeEnhetId,
+  // behandlendeEnhetNavn,
   opprettetDato,
   avsluttetDato,
   behandlingsstatus,
-  behandlingTypeNavn,
-  erGjeldendeVedtak = false,
+  // behandlingTypeNavn,
+  // erGjeldendeVedtak = false,
   behandlingsresultatTypeKode,
   behandlingsresultatTypeNavn,
-  førsteÅrsak,
-  behandlingTypeKode,
-}: OwnProps) => (
+}: // førsteÅrsak,
+// behandlingTypeKode,
+OwnProps) => (
   <Panel border>
-    <FlexContainer>
+    {/* <FlexContainer>
       <FlexRow>
         <FlexColumn className={styles.arsakPadding}>
           <Element>{behandlingTypeNavn}</Element>
@@ -251,7 +238,57 @@ const BehandlingPickerItemContent = ({
         </FlexColumn>
       </FlexRow>
     </FlexContainer>
-    <VerticalSpacer fourPx />
+    <VerticalSpacer fourPx /> */}
+    <div className={styles.behandlingPicker}>
+      <div>
+        <Undertittel>{behandlingsstatus}</Undertittel>
+        <div className={styles.dateContainer}>
+          <Normaltekst>
+            <DateLabel dateString={opprettetDato} />
+            {` - `}
+            <DateLabel dateString={avsluttetDato} />
+          </Normaltekst>
+        </div>
+        <div className={styles.resultContainer}>
+          <Normaltekst>
+            <FormattedMessage id="BehandlingPickerItemContent.Resultat" />
+            {`: ${behandlingsresultatTypeKode ? behandlingsresultatTypeNavn : '-'}`}
+          </Normaltekst>
+        </div>
+      </div>
+      {behandlingsresultatTypeKode === behandlingResultatType.INNVILGET && (
+        <Image
+          className={styles.utfallImage}
+          src={innvilgetImg}
+          tooltip={<FormattedMessage id="BehandlingPickerItemContent.Behandling.Innvilget" />}
+          alignTooltipLeft
+        />
+      )}
+      {behandlingsresultatTypeKode === behandlingResultatType.AVSLATT && (
+        <Image
+          className={styles.utfallImage}
+          src={avslaattImg}
+          tooltip={<FormattedMessage id="BehandlingPickerItemContent.Behandling.Avslaatt" />}
+          alignTooltipLeft
+        />
+      )}
+      {isHenlagt(behandlingsresultatTypeKode) && (
+        <Image
+          className={styles.utfallImage}
+          src={binImg}
+          tooltip={<FormattedMessage id="BehandlingPickerItemContent.Behandling.Henlagt" />}
+          alignTooltipLeft
+        />
+      )}
+      {!behandlingsresultatTypeKode && (
+        <Image
+          className={styles.utfallImage}
+          src={advarselImg}
+          tooltip={<FormattedMessage id="BehandlingPickerItemContent.Behandling.Aapen" />}
+          alignTooltipLeft
+        />
+      )}
+    </div>
   </Panel>
 );
 

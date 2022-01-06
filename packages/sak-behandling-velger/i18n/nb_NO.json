@@ -9,6 +9,10 @@
   "BehandlingPickerItemContent.Behandlingstatus": "Behandlingsstatus",
   "BehandlingPickerItemContent.Resultat": "Resultat",
   "BehandlingPickerItemContent.Enhet": "Enhet ",
+  "BehandlingPickerItemContent.Behandling.Aapen": "Åpen behandling",
+  "BehandlingPickerItemContent.Behandling.Innvilget": "Innvilget",
+  "BehandlingPickerItemContent.Behandling.Avslaatt": "Avslått",
+  "BehandlingPickerItemContent.Behandling.Henlagt": "Henlagt",
 
   "BehandlingList.ZeroBehandlinger": "Ingen behandlinger er opprettet",
 

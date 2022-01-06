@@ -32,12 +32,12 @@ const getContentProps = (
 const renderItemContent = (
   behandling: BehandlingAppKontekst,
   getKodeverkFn: (kodeverk: Kodeverk, behandlingType?: Kodeverk) => KodeverkMedNavn,
-  withChevronDown = false,
-  withChevronUp = false,
+  // withChevronDown = false,
+  // withChevronUp = false,
 ): ReactElement => (
   <BehandlingPickerItemContent
-    withChevronDown={withChevronDown}
-    withChevronUp={withChevronUp}
+    // withChevronDown={withChevronDown}
+    // withChevronUp={withChevronUp}
     {...getContentProps(behandling, getKodeverkFn)}
   />
 );
@@ -49,7 +49,11 @@ const renderToggleShowAllButton = (
   getKodeverkFn: (kodeverk: Kodeverk, behandlingType?: Kodeverk) => KodeverkMedNavn,
 ): ReactElement => (
   <button type="button" className={styles.toggleShowAllButton} onClick={toggleShowAll}>
-    {renderItemContent(behandling, getKodeverkFn, !showAll, showAll)}
+    {renderItemContent(
+      behandling,
+      getKodeverkFn,
+      // !showAll, showAll
+    )}
   </button>
 );
 
@@ -62,7 +66,12 @@ const renderLinkToBehandling = (
   getKodeverkFn: (kodeverk: Kodeverk, behandlingType?: Kodeverk) => KodeverkMedNavn,
 ): ReactElement => (
   <NavLink className={styles.linkToBehandling} to={getBehandlingLocation(behandling.id)} onClick={toggleShowAll}>
-    {renderItemContent(behandling, getKodeverkFn, false, showAll && isActive)}
+    {renderItemContent(
+      behandling,
+      getKodeverkFn,
+      // false,
+      // showAll && isActive
+    )}
   </NavLink>
 );
 

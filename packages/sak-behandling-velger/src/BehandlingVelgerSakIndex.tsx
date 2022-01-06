@@ -21,9 +21,6 @@ interface OwnProps {
   behandlinger: BehandlingAppKontekst[];
   getBehandlingLocation: (behandlingId: number) => Location;
   noExistingBehandlinger: boolean;
-  behandlingId?: number;
-  showAll: boolean;
-  toggleShowAll: () => void;
   getKodeverkFn: (kodeverk: Kodeverk, behandlingType?: Kodeverk) => KodeverkMedNavn;
 }
 
@@ -31,9 +28,6 @@ const BehandlingVelgerSakIndex = ({
   behandlinger,
   getBehandlingLocation,
   noExistingBehandlinger,
-  behandlingId,
-  showAll,
-  toggleShowAll,
   getKodeverkFn,
 }: OwnProps) => (
   <RawIntlProvider value={intl}>
@@ -41,9 +35,6 @@ const BehandlingVelgerSakIndex = ({
       behandlinger={behandlinger}
       getBehandlingLocation={getBehandlingLocation}
       noExistingBehandlinger={noExistingBehandlinger}
-      behandlingId={behandlingId}
-      showAll={showAll}
-      toggleShowAll={toggleShowAll}
       getKodeverkFn={getKodeverkFn}
     />
   </RawIntlProvider>
