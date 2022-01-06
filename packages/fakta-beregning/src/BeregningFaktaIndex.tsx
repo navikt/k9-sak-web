@@ -14,6 +14,25 @@ import beregningsgrunnlagPropType from './propTypes/beregningsgrunnlagPropType';
 import AvklareAktiviteterPanel from './components/avklareAktiviteter/AvklareAktiviteterPanel';
 import styles from './beregningFaktaIndex.less';
 
+
+const BeregningFaktaIndexPropTypes = {
+  behandling: beregningBehandlingPropType.isRequired,
+  beregningsgrunnlag: PropTypes.arrayOf(beregningsgrunnlagPropType),
+  alleMerknaderFraBeslutter: PropTypes.shape({
+    notAccepted: PropTypes.bool,
+  }).isRequired,
+  alleKodeverk: PropTypes.shape({}).isRequired,
+  submitCallback: PropTypes.func.isRequired,
+  readOnly: PropTypes.bool.isRequired,
+  submittable: PropTypes.bool.isRequired,
+  erOverstyrer: PropTypes.bool.isRequired,
+  arbeidsgiverOpplysningerPerId: PropTypes.shape({}).isRequired,
+  vilkar: PropTypes.any.isRequired,
+  beregningErBehandlet: PropTypes.bool,
+};
+
+type OwnProps = PropTypes.InferProps<typeof BeregningFaktaIndexPropTypes>
+
 const cache = createIntlCache();
 
 const intl = createIntl(
@@ -69,7 +88,7 @@ const BeregningFaktaIndex = ({
   erOverstyrer,
   arbeidsgiverOpplysningerPerId,
   beregningErBehandlet,
-}) => {
+}: OwnProps) => {
   const skalBrukeTabs = beregningsgrunnlag.length > 1;
   const [aktivtBeregningsgrunnlagIndeks, setAktivtBeregningsgrunnlagIndeks] = useState(0);
   const aktivtBeregningsgrunnlag = beregningsgrunnlag[aktivtBeregningsgrunnlagIndeks];
@@ -146,21 +165,6 @@ const BeregningFaktaIndex = ({
   );
 };
 
-BeregningFaktaIndex.propTypes = {
-  behandling: beregningBehandlingPropType.isRequired,
-  beregningsgrunnlag: PropTypes.arrayOf(beregningsgrunnlagPropType),
-  alleMerknaderFraBeslutter: PropTypes.shape({
-    notAccepted: PropTypes.bool,
-  }).isRequired,
-  alleKodeverk: PropTypes.shape().isRequired,
-  submitCallback: PropTypes.func.isRequired,
-  readOnly: PropTypes.bool.isRequired,
-  submittable: PropTypes.bool.isRequired,
-  erOverstyrer: PropTypes.bool.isRequired,
-  arbeidsgiverOpplysningerPerId: PropTypes.shape().isRequired,
-  vilkar: PropTypes.arrayOf(PropTypes.shape()).isRequired,
-  beregningErBehandlet: PropTypes.bool,
-};
 
 BeregningFaktaIndex.defaultProps = {
   beregningsgrunnlag: undefined,
