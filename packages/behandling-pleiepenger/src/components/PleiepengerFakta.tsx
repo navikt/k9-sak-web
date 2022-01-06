@@ -38,7 +38,7 @@ interface OwnProps {
   arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysningerPerId;
   dokumenter: Dokument[];
   featureToggles: FeatureToggles;
-  beregningErBehandlet: boolean;
+  beregningErBehandlet?: boolean;
 }
 
 const PleiepengerFakta = ({
