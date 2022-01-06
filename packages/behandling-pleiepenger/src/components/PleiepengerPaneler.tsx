@@ -85,6 +85,7 @@ const PleiepengerPaneler = ({
   dokumenter,
 }: OwnProps) => {
   const [apentFaktaPanelInfo, setApentFaktaPanel] = useState<FaktaPanelInfo>();
+  const [beregningErBehandlet, setBeregningErBehandlet] = useState<boolean>(undefined);
   const harOpprettetAksjonspunkt9203 = harOpprettetAksjonspunkt(fetchedData?.aksjonspunkter || [], 9203);
   const behandlingUtil = new BehandlingUtil(behandling);
   const arbeidsgiverOpplysningerUtil = new ArbeidsgiverOpplysningerUtil(arbeidsgiverOpplysningerPerId);
@@ -152,6 +153,7 @@ const PleiepengerPaneler = ({
         setBehandling={setBehandling}
         arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
         featureToggles={featureToggles}
+        setBeregningErBehandlet={setBeregningErBehandlet}
       />
       <Punsjstripe aktørId={fagsakPerson.aktørId} aktørIdBarn={aktørIdBarn} />
       <AndreSakerPåSøkerStripe søkerIdent={fagsakPerson.personnummer} saksnummer={fagsak.saksnummer} />
@@ -171,6 +173,7 @@ const PleiepengerPaneler = ({
         arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
         dokumenter={dokumenter}
         featureToggles={featureToggles}
+        beregningErBehandlet={beregningErBehandlet}
 
       />
     </>

@@ -38,6 +38,7 @@ interface OwnProps {
   arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysningerPerId;
   dokumenter: Dokument[];
   featureToggles: FeatureToggles;
+  beregningErBehandlet: boolean;
 }
 
 const PleiepengerFakta = ({
@@ -57,6 +58,7 @@ const PleiepengerFakta = ({
   arbeidsgiverOpplysningerPerId,
   dokumenter,
   featureToggles,
+  beregningErBehandlet
 }: OwnProps & WrappedComponentProps) => {
   const { aksjonspunkter, ...rest } = data;
   const { addErrorMessage } = useRestApiErrorDispatcher();
@@ -129,6 +131,7 @@ const PleiepengerFakta = ({
               submitCallback: bekreftAksjonspunktCallback,
               ...valgtPanel.getKomponentData(rettigheter, dataTilUtledingAvPleiepengerPaneler, hasFetchError),
               dokumenter,
+              beregningErBehandlet
             })}
           </ErrorBoundary>
         )}
