@@ -85,7 +85,7 @@ const PleiepengerPaneler = ({
   dokumenter,
 }: OwnProps) => {
   const [apentFaktaPanelInfo, setApentFaktaPanel] = useState<FaktaPanelInfo>();
-  const [beregningErBehandlet, setBeregningErBehandlet] = useState<boolean>(undefined);
+  const [beregningErBehandlet, setBeregningErBehandlet] = useState<boolean>(false);
   const harOpprettetAksjonspunkt9203 = harOpprettetAksjonspunkt(fetchedData?.aksjonspunkter || [], 9203);
   const behandlingUtil = new BehandlingUtil(behandling);
   const arbeidsgiverOpplysningerUtil = new ArbeidsgiverOpplysningerUtil(arbeidsgiverOpplysningerPerId);
