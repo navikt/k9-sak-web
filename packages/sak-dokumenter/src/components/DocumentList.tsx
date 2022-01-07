@@ -67,7 +67,7 @@ const DocumentList = ({ intl, documents, behandlingId, selectDocumentCallback }:
   const [selectedFilter, setSelectedFilter] = useState(alleBehandlinger);
   const harMerEnnEnBehandlingKnyttetTilDokumenter = () => {
     const unikeBehandlinger = [];
-    if (documents.some(document => document.behandlinger.length > 0)) {
+    if (documents.some(document => document.behandlinger?.length > 0)) {
       documents.forEach(document =>
         document.behandlinger.forEach(behandling => {
           if (!unikeBehandlinger.includes(behandling)) {
