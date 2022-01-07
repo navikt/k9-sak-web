@@ -30,7 +30,7 @@ const Punsjstripe: React.FC<PunsjstripeProps> = ({ behandlingUuid }) => {
       .catch(err => setError(err));
   }, []);
 
-  const harPunsjoppgaver = punsjoppgaver?.journalpostIder?.length > 0 && punsjoppgaver?.journalpostIderBarn?.length > 0;
+  const harPunsjoppgaver = punsjoppgaver?.journalpostIder?.length > 0 || punsjoppgaver?.journalpostIderBarn?.length > 0;
 
   if (error) {
     return <AlertStripeFeil>Får ikke kontakt med K9-Punsj</AlertStripeFeil>;
