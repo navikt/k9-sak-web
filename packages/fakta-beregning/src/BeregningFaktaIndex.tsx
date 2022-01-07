@@ -74,7 +74,7 @@ const harAvklaringsbehovIPanel = avklaringsbehov => {
 
 const skalVurderes = (bg, vilkårsperioder) =>
   harAvklaringsbehovIPanel(bg.avklaringsbehov) &&
-  vilkårsperioder.find(({ periode }) => periode.fom === bg.skjæringstidspunkt).vurdersIBehandlingen;
+  vilkårsperioder.find(({periode}) => periode.fom === bg.vilkårsperiodeFom).vurdersIBehandlingen;
 
 const BeregningFaktaIndex = ({
   vilkar,
