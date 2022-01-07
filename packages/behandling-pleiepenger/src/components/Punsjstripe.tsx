@@ -15,24 +15,22 @@ export interface JournalpostIder {
 }
 
 interface PunsjstripeProps {
-  aktørId: string;
-  aktørIdBarn: string;
+  behandlingUuid: string;
 }
 
-const Punsjstripe: React.FC<PunsjstripeProps> = ({ aktørId, aktørIdBarn }) => {
+const Punsjstripe: React.FC<PunsjstripeProps> = ({ behandlingUuid }) => {
   const [punsjoppgaver, setPunsjoppgaver] = React.useState<PunsjResponse>(null);
   const [error, setError] = React.useState(null);
-  const body = JSON.stringify({ aktorIdDto: { aktørId }, aktorIdDtoBarn: { aktørId: aktørIdBarn } });
   React.useEffect(() => {
     axios
-      .post('/k9/sak/api/punsj/journalpost/uferdig', body)
+      .get(`/k9/sak/api/punsj/journalpost/uferdig?behandlingUuid=${behandlingUuid}`)
       .then((response: AxiosResponse) => {
         setPunsjoppgaver(response.data);
       })
       .catch(err => setError(err));
   }, []);
 
-  const harPunsjoppgaver = punsjoppgaver?.journalpostIder?.length > 0;
+  const harPunsjoppgaver = punsjoppgaver?.journalpostIder?.length > 0 || punsjoppgaver?.journalpostIderBarn?.length > 0;
 
   if (error) {
     return <AlertStripeFeil>Får ikke kontakt med K9-Punsj</AlertStripeFeil>;
@@ -43,6 +41,9 @@ const Punsjstripe: React.FC<PunsjstripeProps> = ({ aktørId, aktørIdBarn }) => 
   }
   const { journalpostIder, journalpostIderBarn } = punsjoppgaver;
   const getUløsteOppgaverText = (journalposter, subjekt: string) => {
+    if (!journalposter.length) {
+      return null;
+    }
     if (journalposter.length === 1) {
       const { journalpostId } = journalposter[0];
       return (
@@ -60,7 +61,7 @@ const Punsjstripe: React.FC<PunsjstripeProps> = ({ aktørId, aktørIdBarn }) => 
         <span>{`Det er ${journalposter.length} uløste oppgaver tilknyttet ${subjekt} i Punsj.`}</span>
         <div>
           Reserver journalposter:
-          {journalposter.map((journalpostId, index) => (
+          {journalposter.map(({ journalpostId }, index) => (
             <>
               <Lenke className={styles.oppgaveLenke} href={`${getPathToFplos()}?sok=${journalpostId}`}>
                 {`${journalpostId}`}
@@ -75,8 +76,10 @@ const Punsjstripe: React.FC<PunsjstripeProps> = ({ aktørId, aktørIdBarn }) => 
 
   return (
     <>
-      <AlertStripeAdvarsel>{getUløsteOppgaverText(journalpostIder, 'søkeren')}</AlertStripeAdvarsel>
-      <AlertStripeAdvarsel>{getUløsteOppgaverText(journalpostIderBarn, 'barnet')}</AlertStripeAdvarsel>
+      <AlertStripeAdvarsel>
+        <div>{getUløsteOppgaverText(journalpostIder, 'søkeren')}</div>
+        <div className="marginTop">{getUløsteOppgaverText(journalpostIderBarn, 'barnet')}</div>
+      </AlertStripeAdvarsel>
     </>
   );
 };

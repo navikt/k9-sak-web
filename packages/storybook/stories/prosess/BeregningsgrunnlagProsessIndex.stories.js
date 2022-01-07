@@ -199,6 +199,7 @@ const lagBG = (perioder, statuser, sammenligningsgrunnlagPrStatus, grunnbeløp =
   const beregningsgrunnlag = {
     skjaeringstidspunktBeregning: '2019-09-16',
     skjæringstidspunkt: '2019-09-16',
+    vilkårsperiodeFom: '2019-09-16',
     aktivitetStatus: statuser,
     beregningsgrunnlagPeriode: perioder,
     dekningsgrad: 80,
@@ -569,7 +570,7 @@ export const selvstendigNæringsdrivende = () => {
       orgnr: '910909077',
       utenlandskvirksomhetsnavn: null,
       virksomhetType: { kode: 'JORDBRUK_SKOGBRUK', kodeverk: 'VIRKSOMHET_TYPE' },
-      virksomhetNavn: 'Berit Jensen',
+      virksomhetNavn: 'Navn Navnesen',
     },
   ];
   andeler[0].næringer = næringer;

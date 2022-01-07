@@ -65,7 +65,7 @@ export const buildInitialValuesAvklarAktiviteter = createSelector(
     beregningsgrunnlag => beregningsgrunnlag.avklaringsbehov,
     beregningsgrunnlag => getAvklarAktiviteter(beregningsgrunnlag),
     (beregningsgrunnlag, ownProps) => ownProps.aktivtBeregningsgrunnlagIndex,
-    (beregningsgrunnlag, ownProps) => ownProps.behandlingResultatPerioder.find(({periode}) => periode.fom === beregningsgrunnlag.skjæringstidspunkt),
+    (beregningsgrunnlag, ownProps) => ownProps.behandlingResultatPerioder.find(({periode}) => periode.fom === beregningsgrunnlag.vilkårsperiodeFom),
   ],
   buildInitialValues,
 );
