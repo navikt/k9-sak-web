@@ -1,17 +1,14 @@
+import arrowLeftPurpleImageUrl from '@fpsak-frontend/assets/images/arrow_left_purple.svg';
+import internDokumentImageUrl from '@fpsak-frontend/assets/images/intern_dokument.svg';
+import mottaDokumentImageUrl from '@fpsak-frontend/assets/images/motta_dokument.svg';
+import sendDokumentImageUrl from '@fpsak-frontend/assets/images/send_dokument.svg';
+import kommunikasjonsretning from '@fpsak-frontend/kodeverk/src/kommunikasjonsretning';
+import { DateTimeLabel, Image, Table, TableColumn, TableRow, Tooltip } from '@fpsak-frontend/shared-components';
+import { Dokument } from '@k9-sak-web/types';
+import { Select } from 'nav-frontend-skjema';
+import { Element, Normaltekst } from 'nav-frontend-typografi';
 import React, { useState } from 'react';
 import { FormattedMessage, injectIntl, WrappedComponentProps } from 'react-intl';
-import { Element, Normaltekst } from 'nav-frontend-typografi';
-
-import { DateTimeLabel, Image, Table, TableColumn, TableRow, Tooltip } from '@fpsak-frontend/shared-components';
-import kommunikasjonsretning from '@fpsak-frontend/kodeverk/src/kommunikasjonsretning';
-import sendDokumentImageUrl from '@fpsak-frontend/assets/images/send_dokument.svg';
-import mottaDokumentImageUrl from '@fpsak-frontend/assets/images/motta_dokument.svg';
-import internDokumentImageUrl from '@fpsak-frontend/assets/images/intern_dokument.svg';
-import arrowLeftPurpleImageUrl from '@fpsak-frontend/assets/images/arrow_left_purple.svg';
-import erIBrukImageUrl from '@fpsak-frontend/assets/images/stjerne.svg';
-import { Dokument } from '@k9-sak-web/types';
-
-import { Select } from 'nav-frontend-skjema';
 import styles from './documentList.less';
 
 const headerTextCodes = [
@@ -68,7 +65,19 @@ interface OwnProps {
  */
 const DocumentList = ({ intl, documents, behandlingId, selectDocumentCallback }: OwnProps & WrappedComponentProps) => {
   const [selectedFilter, setSelectedFilter] = useState(alleBehandlinger);
-  const harBehandlingerKnyttetTilDokumenter = documents.some(document => document.behandlinger.length > 0);
+  const harMerEnnEnBehandlingKnyttetTilDokumenter = () => {
+    const unikeBehandlinger = [];
+    if (documents.some(document => document.behandlinger.length > 0)) {
+      documents.forEach(document =>
+        document.behandlinger.forEach(behandling => {
+          if (!unikeBehandlinger.includes(behandling)) {
+            unikeBehandlinger.push(behandling);
+          }
+        }),
+      );
+    }
+    return unikeBehandlinger.length > 1;
+  };
 
   if (documents.length === 0) {
     return (
@@ -79,8 +88,12 @@ const DocumentList = ({ intl, documents, behandlingId, selectDocumentCallback }:
   }
   return (
     <>
-      {harBehandlingerKnyttetTilDokumenter && (
-        <Select onChange={event => setSelectedFilter(event.target.value)}>
+      {harMerEnnEnBehandlingKnyttetTilDokumenter() && (
+        <Select
+          className={styles.behandlingSelector}
+          bredde="m"
+          onChange={event => setSelectedFilter(event.target.value)}
+        >
           <option value={alleBehandlinger}>Alle behandlinger</option>
           <option value={behandlingId}>Denne behandlingen</option>
         </Select>
@@ -113,13 +126,10 @@ const DocumentList = ({ intl, documents, behandlingId, selectDocumentCallback }:
                   />
                 </TableColumn>
                 <TableColumn>
-                  {isVedtaksdokument(document) ? <Element>{document.tittel}</Element> : document.tittel}
-                  {document.behandlinger && document.behandlinger.includes(behandlingId) && (
-                    <Image
-                      className={styles.image}
-                      src={erIBrukImageUrl}
-                      tooltip={<FormattedMessage id="DocumentList.IBruk" />}
-                    />
+                  {isVedtaksdokument(document) ? (
+                    <Element>{document.tittel}</Element>
+                  ) : (
+                    <Normaltekst>{document.tittel}</Normaltekst>
                   )}
                 </TableColumn>
                 <TableColumn>
