@@ -88,6 +88,7 @@ const PleiepengerPaneler = ({
   const harOpprettetAksjonspunkt9203 = harOpprettetAksjonspunkt(fetchedData?.aksjonspunkter || [], 9203);
   const behandlingUtil = new BehandlingUtil(behandling);
   const arbeidsgiverOpplysningerUtil = new ArbeidsgiverOpplysningerUtil(arbeidsgiverOpplysningerPerId);
+
   return (
     <>
       <BehandlingPaVent
@@ -152,7 +153,7 @@ const PleiepengerPaneler = ({
         arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
         featureToggles={featureToggles}
       />
-      <Punsjstripe aktørId={fagsakPerson.aktørId} saksnummer={fagsak.saksnummer} />
+      <Punsjstripe behandlingUuid={behandling?.uuid} />
       <AndreSakerPåSøkerStripe søkerIdent={fagsakPerson.personnummer} saksnummer={fagsak.saksnummer} />
       <PleiepengerFakta
         behandling={behandling}
@@ -170,7 +171,6 @@ const PleiepengerPaneler = ({
         arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
         dokumenter={dokumenter}
         featureToggles={featureToggles}
-
       />
     </>
   );

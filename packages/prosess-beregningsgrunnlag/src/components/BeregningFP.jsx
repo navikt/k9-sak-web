@@ -84,11 +84,11 @@ const getBGVilkar = vilkar =>
   vilkar ? vilkar.find(v => v.vilkarType && v.vilkarType.kode === vilkarType.BEREGNINGSGRUNNLAGVILKARET) : undefined;
 
 const erBGTilVurdering = (bgVilkar, beregningsgrunnlag) => {
-  const stp = beregningsgrunnlag.skjæringstidspunkt;
+  const vilårsperiodeFom = beregningsgrunnlag.vilkårsperiodeFom;
   const perioderTilVurdering =
     bgVilkar && bgVilkar.perioder ? bgVilkar.perioder.filter(periode => !!periode.vurdersIBehandlingen) : [];
   return perioderTilVurdering.some(
-    vkp => !moment(stp).isBefore(vkp.periode.fom) && !moment(stp).isAfter(vkp.periode.tom),
+    vkp => vkp.periode.fom === vilårsperiodeFom,
   );
 };
 

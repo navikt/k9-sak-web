@@ -49,7 +49,8 @@ const VedtakPanels = ({
   informasjonsbehovVedtaksbrev,
   dokumentdata,
   fritekstdokumenter,
-  lagreDokumentdata
+  lagreDokumentdata,
+  overlappendeYtelser,
 }) => {
   const bg = Array.isArray(beregningsgrunnlag) ? beregningsgrunnlag.filter(Boolean) : [];
   if (behandlingTypeKode === behandlingType.REVURDERING && Array.isArray(bg) && bg.length) {
@@ -90,10 +91,10 @@ const VedtakPanels = ({
         personopplysninger={personopplysninger}
         arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
         lagreDokumentdata={lagreDokumentdata}
+        overlappendeYtelser={overlappendeYtelser}
       />
     );
   }
-
   return (
     <VedtakForm
       submitCallback={submitCallback}
@@ -122,6 +123,7 @@ const VedtakPanels = ({
       dokumentdata={dokumentdata}
       fritekstdokumenter={fritekstdokumenter}
       lagreDokumentdata={lagreDokumentdata}
+      overlappendeYtelser={overlappendeYtelser}
     />
   );
 };
@@ -159,6 +161,7 @@ VedtakPanels.propTypes = {
   dokumentdata: PropTypes.shape(),
   fritekstdokumenter: PropTypes.arrayOf(PropTypes.shape()),
   lagreDokumentdata: PropTypes.func.isRequired,
+  overlappendeYtelser: PropTypes.arrayOf(PropTypes.shape()),
 };
 
 VedtakPanels.defaultProps = {
