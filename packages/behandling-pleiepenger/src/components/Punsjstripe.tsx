@@ -41,6 +41,9 @@ const Punsjstripe: React.FC<PunsjstripeProps> = ({ behandlingUuid }) => {
   }
   const { journalpostIder, journalpostIderBarn } = punsjoppgaver;
   const getUløsteOppgaverText = (journalposter, subjekt: string) => {
+    if (!journalposter.length) {
+      return null;
+    }
     if (journalposter.length === 1) {
       const { journalpostId } = journalposter[0];
       return (
@@ -58,7 +61,7 @@ const Punsjstripe: React.FC<PunsjstripeProps> = ({ behandlingUuid }) => {
         <span>{`Det er ${journalposter.length} uløste oppgaver tilknyttet ${subjekt} i Punsj.`}</span>
         <div>
           Reserver journalposter:
-          {journalposter.map((journalpostId, index) => (
+          {journalposter.map(({ journalpostId }, index) => (
             <>
               <Lenke className={styles.oppgaveLenke} href={`${getPathToFplos()}?sok=${journalpostId}`}>
                 {`${journalpostId}`}
@@ -73,8 +76,10 @@ const Punsjstripe: React.FC<PunsjstripeProps> = ({ behandlingUuid }) => {
 
   return (
     <>
-      <AlertStripeAdvarsel>{getUløsteOppgaverText(journalpostIder, 'søkeren')}</AlertStripeAdvarsel>
-      <AlertStripeAdvarsel>{getUløsteOppgaverText(journalpostIderBarn, 'barnet')}</AlertStripeAdvarsel>
+      <AlertStripeAdvarsel>
+        <div>{getUløsteOppgaverText(journalpostIder, 'søkeren')}</div>
+        <div className="marginTop">{getUløsteOppgaverText(journalpostIderBarn, 'barnet')}</div>
+      </AlertStripeAdvarsel>
     </>
   );
 };
