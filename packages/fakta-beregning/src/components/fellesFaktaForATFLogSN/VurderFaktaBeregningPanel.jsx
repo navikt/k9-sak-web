@@ -299,7 +299,7 @@ export const validateVurderFaktaBeregning = values => {
 
 export const buildInitialValues = (ownProps, alleBeregningsgrunnlag, aktivtBeregningsgrunnlagIndex, behandlingResultatPerioder) => ({
   [fieldArrayName]: alleBeregningsgrunnlag.map(beregningsgrunnlag => ({
-    erTilVurdering: behandlingResultatPerioder.find(({periode}) => periode.fom === beregningsgrunnlag.skjæringstidspunkt).vurdersIBehandlingen,
+    erTilVurdering: behandlingResultatPerioder.find(({periode}) => periode.fom === beregningsgrunnlag.vilkårsperiodeFom).vurdersIBehandlingen,
     avklaringsbehov: beregningsgrunnlag.avklaringsbehov,
     ...getBuildInitialValuesFaktaForATFLOgSN(ownProps, beregningsgrunnlag)(),
   })),
