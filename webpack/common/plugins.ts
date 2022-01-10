@@ -5,8 +5,10 @@ import CircularDependencyPlugin from 'circular-dependency-plugin';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import CopyWebpackPlugin from 'copy-webpack-plugin';
+const ModuleFederationPlugin = require('webpack/lib/container/ModuleFederationPlugin');
 
 import { PUBLIC_ROOT, LANG_DIR } from '../paths';
+
 
 export default [
   new MiniCssExtractPlugin({
@@ -39,4 +41,10 @@ export default [
     exclude: /node_modules/,
     failOnError: true,
   }),
+new ModuleFederationPlugin({
+  name: 'k9_sak_web',
+  remotes: {
+    pleiepenger_i_livets_sluttfase_mikrofrontend: `pleiepenger_i_livets_sluttfase_mikrofrontend@http://localhost:8088/remoteEntry.js`,
+  },
+})
 ];

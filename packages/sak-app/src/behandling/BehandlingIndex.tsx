@@ -40,6 +40,10 @@ const BehandlingAnkeIndex = React.lazy(() => import('@k9-sak-web/behandling-anke
 const BehandlingFrisinnIndex = React.lazy(() => import('@k9-sak-web/behandling-frisinn'));
 const BehandlingUnntakIndex = React.lazy(() => import('@k9-sak-web/behandling-unntak'));
 const BehandlingUtvidetRettIndex = React.lazy(() => import('@k9-sak-web/behandling-utvidet-rett'));
+const BehandlingPleiepengerILivetsSluttfaseIndex = React.lazy(() => import(
+  // @ts-ignore
+  'pleiepenger_i_livets_sluttfase_mikrofrontend/MainComponent' // eslint-disable-line import/no-unresolved
+  ));
 
 const erTilbakekreving = (behandlingTypeKode: string): boolean =>
   behandlingTypeKode === BehandlingType.TILBAKEKREVING ||
@@ -265,6 +269,19 @@ const BehandlingIndex = ({
             valgtFaktaSteg={query.fakta}
             {...defaultProps}
           />
+        </ErrorBoundary>
+      </Suspense>
+    );
+  }
+
+
+  if (fagsak.sakstype.kode === FagsakYtelseType.PLEIEPENGER_I_LIVETS_SLUTTFASE) {
+    return (
+      <Suspense fallback={<LoadingPanel />}>
+        <ErrorBoundary errorMessageCallback={addErrorMessage}>
+          <React.Suspense fallback="Error that needs to be handled">
+            <BehandlingPleiepengerILivetsSluttfaseIndex />
+          </React.Suspense>
         </ErrorBoundary>
       </Suspense>
     );
