@@ -27,6 +27,7 @@ const getContentProps = (
     ? getKodeverkFn(behandling.behandlingsresultat.type, behandling.type).navn
     : undefined,
   behandlingsresultatTypeKode: behandling.behandlingsresultat ? behandling.behandlingsresultat.type.kode : undefined,
+  erAutomatiskRevurdering: behandling.behandlingÅrsaker.some(årsak => årsak.erAutomatiskRevurdering),
 });
 
 const renderItemContent = (

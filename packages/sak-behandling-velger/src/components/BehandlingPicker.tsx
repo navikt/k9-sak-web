@@ -52,6 +52,7 @@ const renderListItems = (
           behandlingsresultatTypeKode={
             behandling.behandlingsresultat ? behandling.behandlingsresultat.type.kode : undefined
           }
+          erAutomatiskRevurdering={behandling.behandlingÅrsaker.some(årsak => årsak.erAutomatiskRevurdering)}
         />
       </NavLink>
     </li>

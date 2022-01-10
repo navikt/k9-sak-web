@@ -1,8 +1,5 @@
-import advarselImg from '@fpsak-frontend/assets/images/advarsel-circle.svg';
-import avslaattImg from '@fpsak-frontend/assets/images/avslaatt_valgt.svg';
-import innvilgetImg from '@fpsak-frontend/assets/images/innvilget_valgt.svg';
-import binImg from '@fpsak-frontend/assets/images/bin.svg';
-import behandlingResultatType, { isHenlagt } from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
+import calendarImg from '@fpsak-frontend/assets/images/calendar-2.svg';
+import chevronBlueRightImg from '@fpsak-frontend/assets/images/chevron_blue_right.svg';
 import { DateLabel, Image } from '@fpsak-frontend/shared-components';
 import Panel from 'nav-frontend-paneler';
 import { Normaltekst, Undertittel } from 'nav-frontend-typografi';
@@ -85,6 +82,8 @@ import styles from './behandlingPickerItemContent.less';
 //   <FormattedMessage id={messageId}>{altText => <Image src={chevron} alt={`${altText}`} />}</FormattedMessage>
 // );
 
+const getAutomatiskRevurderingText = () => <span className={styles.smallerUndertittel}>(automatisk behandlet)</span>;
+
 interface OwnProps {
   // withChevronDown?: boolean;
   // withChevronUp?: boolean;
@@ -99,6 +98,7 @@ interface OwnProps {
   // erGjeldendeVedtak?: boolean;
   behandlingsresultatTypeKode?: string;
   behandlingsresultatTypeNavn?: string;
+  erAutomatiskRevurdering: boolean;
 }
 
 /**
@@ -118,10 +118,11 @@ const BehandlingPickerItemContent = ({
   // erGjeldendeVedtak = false,
   behandlingsresultatTypeKode,
   behandlingsresultatTypeNavn,
+  erAutomatiskRevurdering,
 }: // førsteÅrsak,
 // behandlingTypeKode,
 OwnProps) => (
-  <Panel border>
+  <Panel className={erAutomatiskRevurdering ? styles.indent : ''} border>
     {/* <FlexContainer>
       <FlexRow>
         <FlexColumn className={styles.arsakPadding}>
@@ -241,8 +242,17 @@ OwnProps) => (
     <VerticalSpacer fourPx /> */}
     <div className={styles.behandlingPicker}>
       <div>
-        <Undertittel>{behandlingsstatus}</Undertittel>
+        <Undertittel>
+          {behandlingsstatus}
+          {erAutomatiskRevurdering ? getAutomatiskRevurderingText() : ''}
+        </Undertittel>
         <div className={styles.dateContainer}>
+          <Image
+            className={styles.kalenderIcon}
+            src={calendarImg}
+            tooltip={<FormattedMessage id="BehandlingPickerItemContent.Kalender" />}
+            alignTooltipLeft
+          />
           <Normaltekst>
             <DateLabel dateString={opprettetDato} />
             {` - `}
@@ -256,23 +266,16 @@ OwnProps) => (
           </Normaltekst>
         </div>
       </div>
-      {behandlingsresultatTypeKode === behandlingResultatType.INNVILGET && (
+      <div className={styles.åpneText}>
+        <p>Åpne</p>
         <Image
-          className={styles.utfallImage}
-          src={innvilgetImg}
-          tooltip={<FormattedMessage id="BehandlingPickerItemContent.Behandling.Innvilget" />}
+          className={styles.åpneChevron}
+          src={chevronBlueRightImg}
+          tooltip={<FormattedMessage id="BehandlingPickerItemContent.Behandling.Aapne" />}
           alignTooltipLeft
         />
-      )}
-      {behandlingsresultatTypeKode === behandlingResultatType.AVSLATT && (
-        <Image
-          className={styles.utfallImage}
-          src={avslaattImg}
-          tooltip={<FormattedMessage id="BehandlingPickerItemContent.Behandling.Avslaatt" />}
-          alignTooltipLeft
-        />
-      )}
-      {isHenlagt(behandlingsresultatTypeKode) && (
+      </div>
+      {/* {isHenlagt(behandlingsresultatTypeKode) && (
         <Image
           className={styles.utfallImage}
           src={binImg}
@@ -287,7 +290,7 @@ OwnProps) => (
           tooltip={<FormattedMessage id="BehandlingPickerItemContent.Behandling.Aapen" />}
           alignTooltipLeft
         />
-      )}
+      )} */}
     </div>
   </Panel>
 );

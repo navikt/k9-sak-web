@@ -48,11 +48,12 @@
 }
 
 .behandlingPicker {
-  display: flex;
   align-items: center;
+  display: flex;
   justify-content: space-between;
 
   .dateContainer {
+    align-items: end;
     display: flex;
     margin-top: 0.0625rem;
   }
@@ -62,7 +63,29 @@
     margin-top: 0.0625rem;
   }
 
-  .utfallImage {
+  .åpneText {
+    align-items: center;
+    color: #0067c5;
+    display: flex;
     margin-right: 0.875rem;
   }
+
+  .åpneChevron {
+    margin-left: 0.5rem;
+  }
+
+  .kalenderIcon {
+    margin-right: 0.75rem;
+  }
+
+  .smallerUndertittel {
+    font-size: 1.125rem;
+    font-weight: 400;
+    margin-left: 0.25rem;
+  }
+}
+
+.indent {
+  margin-left: 10%;
+  width: 90%;
 }
