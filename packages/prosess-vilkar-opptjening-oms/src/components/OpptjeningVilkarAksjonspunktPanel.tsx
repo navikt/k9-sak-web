@@ -107,6 +107,15 @@ export const OpptjeningVilkarAksjonspunktPanelImpl = ({
 
   const finnesOpptjeningsaktiviteterVidOpptjeningTom: boolean = !erPleiepenger ? true : opptjeninger.some(opptjening => {
     const opptjeningTom = dayjs(opptjening.fastsattOpptjening.opptjeningTom);
+    const skjæringstidspunkt = dayjs(opptjening.fastsattOpptjening.opptjeningTom).add(1, 'day').format("YYYY-MM-DD");
+
+    const vurderesOpptjeningsaktivitetIBehandling = vilkårPerioder.find(
+      ({periode}) => periode.fom === skjæringstidspunkt
+    )?.vurdersIBehandlingen;
+
+    if(!vurderesOpptjeningsaktivitetIBehandling){
+      return false;
+    }
 
     return opptjening.opptjeningAktivitetList.some(opptjeningAktivitet =>
       // Siste argument ("[]") til isBetween inkluderer start og sluttdato
