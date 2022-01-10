@@ -88,7 +88,7 @@ const erBGTilVurdering = (bgVilkar, beregningsgrunnlag) => {
   const perioderTilVurdering =
     bgVilkar && bgVilkar.perioder ? bgVilkar.perioder.filter(periode => !!periode.vurdersIBehandlingen) : [];
   return perioderTilVurdering.some(
-    vkp => vkp.periode.fom = vilårsperiodeFom,
+    vkp => vkp.periode.fom === vilårsperiodeFom,
   );
 };
 
