@@ -44,7 +44,6 @@ export default ({
     httpErrorHandlerFn(status, addErrorMessage, locationHeader);
 
   const løsAksjonspunkt = aksjonspunktArgs => submitCallback([{ ...aksjonspunktArgs }]);
-
   return (
     <MicroFrontend
       id={inntektsmeldingAppId}
