@@ -7,6 +7,7 @@ export const bgUtenDelvisRefusjon = {
     }
   ],
   skjaeringstidspunktBeregning: '2020-05-15',
+  vilkårsperiodeFom:  '2020-05-15',
   dekningsgrad: null,
   grunnbeløp: null,
   erOverstyrtInntekt: null,
@@ -45,6 +46,7 @@ export const bgMedDelvisRefusjon = {
     }
   ],
   skjaeringstidspunktBeregning: '2020-06-01',
+  vilkårsperiodeFom: '2020-06-01',
   skjæringstidspunkt: '2020-06-01',
   dekningsgrad: null,
   grunnbeløp: null,
