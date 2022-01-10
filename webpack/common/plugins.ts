@@ -42,10 +42,10 @@ export default [
     exclude: /node_modules/,
     failOnError: true,
   }),
-new ModuleFederationPlugin({
-  name: 'k9_sak_web',
-  remotes: {
-    pleiepenger_i_livets_sluttfase_mikrofrontend: `pleiepenger_i_livets_sluttfase_mikrofrontend@${hentURLTilILivetsSluttfase()}/remoteEntry.js`,
-  },
-})
+  new ModuleFederationPlugin({
+    name: 'k9_sak_web',
+    remotes: {
+      pleiepenger_i_livets_sluttfase_mikrofrontend: `pleiepenger_i_livets_sluttfase_mikrofrontend@${hentURLTilILivetsSluttfase()}/remoteEntry.js`,
+    },
+  })
 ];
