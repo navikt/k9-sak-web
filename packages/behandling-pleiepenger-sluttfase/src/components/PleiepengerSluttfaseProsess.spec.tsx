@@ -25,7 +25,7 @@ import FetchedData from '../types/fetchedDataTsType';
 import PleiepengerSluttfaseProsess from './PleiepengerSluttfaseProsess';
 import { PleiepengerSluttfaseBehandlingApiKeys, requestPleiepengerSluttfaseApi } from '../data/pleiepengerSluttfaseBehandlingApi';
 
-describe('<PleiepengerProsess>', () => {
+describe('<PleiepengerSluttfaseProsess>', () => {
   const fagsak = {
     saksnummer: '123456',
     sakstype: { kode: fagsakYtelseType.FORELDREPENGER, kodeverk: 'test' },
@@ -218,14 +218,6 @@ describe('<PleiepengerProsess>', () => {
         usePartialStatus: false,
       },
       {
-        labelId: 'Behandlingspunkt.InngangsvilkarForts',
-        isActive: false,
-        isDisabled: false,
-        isFinished: false,
-        type: 'default',
-        usePartialStatus: false,
-      },
-      {
         labelId: 'Behandlingspunkt.Beregning',
         isActive: false,
         isDisabled: false,
@@ -300,7 +292,7 @@ describe('<PleiepengerProsess>', () => {
     const opppdaterKall = oppdaterProsessStegOgFaktaPanelIUrl.getCalls();
     expect(opppdaterKall).toHaveLength(1);
     expect(opppdaterKall[0].args).toHaveLength(2);
-    expect(opppdaterKall[0].args[0]).toEqual('opptjening');
+    expect(opppdaterKall[0].args[0]).toEqual('beregningsgrunnlag');
     expect(opppdaterKall[0].args[1]).toEqual('default');
   });
 
@@ -379,8 +371,6 @@ describe('<PleiepengerProsess>', () => {
         erAktivt: true,
       },
     ];
-
-    requestPleiepengerSluttfaseApi.mock(PleiepengerSluttfaseBehandlingApiKeys.DOKUMENTDATA_LAGRE, undefined);
 
     const opneSokeside = sinon.spy();
 

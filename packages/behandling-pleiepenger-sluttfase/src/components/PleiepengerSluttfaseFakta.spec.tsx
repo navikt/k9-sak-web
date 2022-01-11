@@ -19,7 +19,7 @@ import PleiepengerSluttfaseFakta from './PleiepengerSluttfaseFakta';
 import FetchedData from '../types/fetchedDataTsType';
 import { PleiepengerSluttfaseBehandlingApiKeys, requestPleiepengerSluttfaseApi } from '../data/pleiepengerSluttfaseBehandlingApi';
 
-describe('<PleiepengerFakta>', () => {
+describe('<PleiepengerSluttfaseFakta>', () => {
   const fagsak = {
     saksnummer: '123456',
     sakstype: { kode: fagsakYtelseType.PLEIEPENGER, kodeverk: 'test' },
@@ -166,11 +166,6 @@ describe('<PleiepengerFakta>', () => {
     const panel = wrapper.find(SideMenuWrapper);
     expect(panel.prop('paneler')).toEqual([
       {
-        erAktiv: false,
-        harAksjonspunkt: false,
-        tekst: 'Om barnet',
-      },
-      {
         erAktiv: true,
         harAksjonspunkt: true,
         tekst: 'Arbeidsforhold',
@@ -178,17 +173,7 @@ describe('<PleiepengerFakta>', () => {
       {
         erAktiv: false,
         harAksjonspunkt: false,
-        tekst: 'Omsorgen for',
-      },
-      {
-        erAktiv: false,
-        harAksjonspunkt: false,
         tekst: 'Sykdom',
-      },
-      {
-        erAktiv: false,
-        harAksjonspunkt: false,
-        tekst: 'Etablert tilsyn',
       },
       {
         erAktiv: false,
@@ -204,7 +189,6 @@ describe('<PleiepengerFakta>', () => {
   });
 
   it('skal oppdatere url ved valg av faktapanel', () => {
-    requestPleiepengerSluttfaseApi.mock(PleiepengerSluttfaseBehandlingApiKeys.ARBEIDSFORHOLD, arbeidsforhold);
 
     const oppdaterProsessStegOgFaktaPanelIUrl = sinon.spy();
     const fetchedData: Partial<FetchedData> = {
@@ -242,11 +226,10 @@ describe('<PleiepengerFakta>', () => {
     const { args } = calls[0];
     expect(args).toHaveLength(2);
     expect(args[0]).toEqual('default');
-    expect(args[1]).toEqual('om-barnet');
+    expect(args[1]).toEqual('arbeidsforhold');
   });
 
   it('skal rendre faktapanel korrekt', () => {
-    requestPleiepengerSluttfaseApi.mock(PleiepengerSluttfaseBehandlingApiKeys.ARBEIDSFORHOLD, arbeidsforhold);
     const fetchedData: Partial<FetchedData> = {
       aksjonspunkter,
       vilkar,

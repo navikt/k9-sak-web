@@ -56,7 +56,7 @@ interface OwnProps {
   setRequestPendingMessage: (message: string) => void;
 }
 
-const BehandlingPleiepengerIndex = ({
+const BehandlingPleiepengerSluttfaseIndex = ({
   behandlingEventHandler,
   behandlingId,
   oppdaterBehandlingVersjon,
@@ -203,4 +203,4 @@ const BehandlingPleiepengerIndex = ({
   );
 };
 
-export default BehandlingPleiepengerIndex;
+export default BehandlingPleiepengerSluttfaseIndex;
