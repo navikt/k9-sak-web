@@ -45,11 +45,15 @@ describe('<DocumentList>', () => {
 
     const tableColumnsRow1 = tableRows.first().find(TableColumn);
     expect(tableColumnsRow1.children()).toHaveLength(3);
-    expect(tableColumnsRow1.at(1).html()).toEqual('<td class="columnStyle">Terminbekreftelse</td>');
+    expect(tableColumnsRow1.at(1).html()).toEqual(
+      '<td class="columnStyle"><p class="typo-normal">Terminbekreftelse</p></td>',
+    );
 
     const tableColumnsRow2 = tableRows.last().find(TableColumn);
     expect(tableColumnsRow2.children()).toHaveLength(3);
-    expect(tableColumnsRow2.at(1).html()).toEqual('<td class="columnStyle">Førstegangssøknad</td>');
+    expect(tableColumnsRow2.at(1).html()).toEqual(
+      '<td class="columnStyle"><p class="typo-normal">Førstegangssøknad</p></td>',
+    );
   });
 
   it('skal vise korrekt tekst om ikke tidspunkt finnes', () => {
