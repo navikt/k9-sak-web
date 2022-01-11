@@ -4,6 +4,7 @@ const faktaPanelCodes = {
   ARBEIDSFORHOLD: 'arbeidsforhold',
   BEREGNING: 'beregning',
   OVERSTYRING: 'overstyring',
+  INFOTRYGDMIGRERING: 'infotrygdmigrering',
   DEFAULT: 'default',
   FORDELING: 'fordeling',
   FEILUTBETALING: 'feilutbetaling',
