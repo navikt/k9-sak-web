@@ -8,6 +8,7 @@ const fagsakYtelseType = {
   OMSORGSPENGER_KRONISK_SYKT_BARN: 'OMP_KS',
   OMSORGSPENGER_ALENE_OM_OMSORGEN: 'OMP_AO',
   FRISINN: 'FRISINN',
+  PLEIEPENGER_SLUTTFASE: 'PNN',
 };
 
 export default fagsakYtelseType;
