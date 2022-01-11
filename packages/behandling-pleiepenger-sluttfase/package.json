@@ -1,5 +1,5 @@
 {
-  "name": "@k9-sak-web/behandling-pleiepenger-livets-sluttfase",
+  "name": "@k9-sak-web/behandling-pleiepenger-sluttfase",
   "version": "1.0.0",
   "module": "index.ts",
   "license": "MIT",
