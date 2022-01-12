@@ -5,6 +5,7 @@ export { default as arrowDown } from './arrow_down.svg';
 export { default as arrowDownFilled } from './arrow_down_filled.svg';
 export { default as arrowLeft } from './arrow_left.svg';
 export { default as arrowLeftFilled } from './arrow_left_filled.svg';
+export { default as arrowLeftPurple } from './arrow_left_purple.svg';
 export { default as arrowRight } from './arrow_right.svg';
 export { default as arrowRightFilled } from './arrow_right_filled.svg';
 export { default as avslaatt } from './avslaatt.svg';

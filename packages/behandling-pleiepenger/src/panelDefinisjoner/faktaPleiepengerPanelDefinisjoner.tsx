@@ -10,10 +10,13 @@ import FordelBeregningPanelDef from './faktaPaneler/FordelBeregningPanelDef';
 import OmBarnetFaktaPanelDef from './faktaPaneler/OmBarnetFaktaPanelDef';
 import InntektOgYtelserFaktaPanelDef from './faktaPaneler/InntektOgYtelserFaktaPanelDef';
 import OverstyrBeregningFaktaPanelDef from './faktaPaneler/OverstyrBeregningFaktaPanelDef';
+import DirekteOvergangFaktaPanelDef from './faktaPaneler/DirekteOvergangFaktaPanelDef';
+
 
 const faktaPanelDefinisjoner = [
   new OmBarnetFaktaPanelDef(),
   new ArbeidsforholdFaktaPanelDef(),
+  new DirekteOvergangFaktaPanelDef(),
   new OmsorgenForFaktaPanelDef(),
   new MedisinskVilkarFaktaPanelDef2(),
   new EtablertTilsynFaktaPanelDef(),

@@ -1,0 +1,8 @@
+{
+  "name": "@fpsak-frontend/fakta-direkte-overgang",
+  "version": "1.0.0",
+  "module": "index.ts",
+  "license": "MIT",
+  "private": true,
+  "dependencies": {}
+}

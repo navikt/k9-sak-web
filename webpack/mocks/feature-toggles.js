@@ -17,10 +17,6 @@ const featureToggles = [
     key: 'UNNTAKSBEHANDLING',
     value: process.env.UNNTAKSBEHANDLING,
   },
-  {
-    key: 'INNTEKTSMELDING_NY_FLYT',
-    value: process.env.INNTEKTSMELDING_NY_FLYT,
-  },
 ];
 
 module.exports = function (app) {
