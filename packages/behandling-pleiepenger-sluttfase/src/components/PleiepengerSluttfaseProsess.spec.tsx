@@ -105,7 +105,7 @@ describe('<PleiepengerSluttfaseProsess>', () => {
       ],
     },
     {
-      vilkarType: { kode: vilkarType.MEDISINSKEVILKÅR_UNDER_18_ÅR, kodeverk: 'test' },
+      vilkarType: { kode: vilkarType.PLEIEPENGER_LIVETS_SLUTTFASE, kodeverk: 'test' },
       overstyrbar: true,
       perioder: [
         {
