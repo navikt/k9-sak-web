@@ -166,6 +166,11 @@ describe('<PleiepengerSluttfaseFakta>', () => {
     const panel = wrapper.find(SideMenuWrapper);
     expect(panel.prop('paneler')).toEqual([
       {
+        erAktiv: false,
+        harAksjonspunkt: false,
+        tekst: "OmPleietrengendeInfoPanel.Title"
+      },
+      {
         erAktiv: true,
         harAksjonspunkt: true,
         tekst: 'Arbeidsforhold',
