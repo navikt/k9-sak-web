@@ -86,7 +86,7 @@ const BeregningFaktaIndex = ({
   submittable,
   erOverstyrer,
   arbeidsgiverOpplysningerPerId,
-  beregningErBehandlet,
+  // beregningErBehandlet,
 }: OwnProps) => {
   const skalBrukeTabs = beregningsgrunnlag.length > 1;
   const [aktivtBeregningsgrunnlagIndeks, setAktivtBeregningsgrunnlagIndeks] = useState(0);
@@ -95,13 +95,13 @@ const BeregningFaktaIndex = ({
     vilkår => vilkår?.vilkarType?.kode === vilkarType.BEREGNINGSGRUNNLAGVILKARET,
   );
 
-  if (beregningErBehandlet === false) {
-    return <>Beregningssteget er ikke behandlet.</>;
-  }
+  // if (beregningErBehandlet === false ) {
+  //   return <>Beregningssteget er ikke behandlet.</>;
+  // }
 
-  if (!aktivtBeregningsgrunnlag || !beregningsgrunnlagVilkår) {
-    return <>Har ikke beregningsgrunnlag.</>;
-  }
+  // if (!aktivtBeregningsgrunnlag || !beregningsgrunnlagVilkår) {
+  //   return <>Har ikke beregningsgrunnlag.</>;
+  // }
 
   const aktiveAvklaringsBehov = aktivtBeregningsgrunnlag.avklaringsbehov;
   const vilkårsperioder = beregningsgrunnlagVilkår.perioder;
