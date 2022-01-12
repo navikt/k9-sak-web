@@ -17,20 +17,15 @@ class PanelDef extends ProsessStegPanelDef {
 
   getKomponent = (props: Props) => {
     const { vilkar } = props;
-    const vilkårPleietrengendeUnder18år = vilkar.find(
-      v => v.vilkarType.kode === vilkarType.MEDISINSKEVILKÅR_UNDER_18_ÅR,
+    const vilkarPleiepengerLivetsSluttfase = vilkar.find(
+      v => v.vilkarType.kode === vilkarType.PLEIEPENGER_LIVETS_SLUTTFASE,
     );
-    const vilkårPleietrengendeOver18år = vilkar.find(v => v.vilkarType.kode === vilkarType.MEDISINSKEVILKÅR_18_ÅR);
-    const perioderUnder18 = vilkårPleietrengendeUnder18år?.perioder.map(periode => ({
-      ...periode,
-      pleietrengendeErOver18år: false,
-    }));
-    const perioderOver18 = vilkårPleietrengendeOver18år?.perioder.map(periode => ({
+    const perioder = vilkarPleiepengerLivetsSluttfase?.perioder.map(periode => ({
       ...periode,
       pleietrengendeErOver18år: true,
     }));
-    const allePerioder = perioderUnder18.concat(perioderOver18);
-    return <SykdomProsessIndex {...props} perioder={allePerioder} />;
+
+    return <SykdomProsessIndex {...props} perioder={perioder} />;
   };
 
   getAksjonspunktKoder = () => [aksjonspunktCodes.MEDISINSK_VILKAAR];
