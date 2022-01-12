@@ -226,7 +226,7 @@ describe('<PleiepengerSluttfaseFakta>', () => {
     const { args } = calls[0];
     expect(args).toHaveLength(2);
     expect(args[0]).toEqual('default');
-    expect(args[1]).toEqual('arbeidsforhold');
+    expect(args[1]).toEqual('om-pleietrengende');
   });
 
   it('skal rendre faktapanel korrekt', () => {
