@@ -35,7 +35,7 @@ class PanelDef extends ProsessStegPanelDef {
 
   getAksjonspunktKoder = () => [aksjonspunktCodes.MEDISINSK_VILKAAR];
 
-  getVilkarKoder = () => [vilkarType.MEDISINSKEVILKÅR_UNDER_18_ÅR, vilkarType.MEDISINSKEVILKÅR_18_ÅR];
+  getVilkarKoder = () => [vilkarType.PLEIEPENGER_LIVETS_SLUTTFASE];
 
   getOverstyrVisningAvKomponent = data => this.overstyringDef.getOverstyrVisningAvKomponent(data);
 
@@ -43,7 +43,7 @@ class PanelDef extends ProsessStegPanelDef {
 }
 
 class MedisinskVilkarProsessStegPanelDef extends ProsessStegDef {
-  getUrlKode = () => prosessStegCodes.MEDISINSK_VILKAR;
+  getUrlKode = () => prosessStegCodes.PLEIEPENGER_SLUTTFASE;
 
   getTekstKode = () => 'Behandlingspunkt.MedisinskVilkar';
 
