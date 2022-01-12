@@ -45,6 +45,7 @@ describe('<FaktaForATFLOgSNPanel>', () => {
     const aktivertePaneler = [faktaOmBeregningTilfelle.VURDER_TIDSBEGRENSET_ARBEIDSFORHOLD];
     const wrapper = shallow(
       <FaktaForATFLOgSNPanelImpl
+        vilkaarPeriodeFieldArrayIndex={0}
         fieldArrayID="dummyId"
         readOnly={false}
         aktivePaneler={aktivertePaneler}
@@ -68,6 +69,7 @@ describe('<FaktaForATFLOgSNPanel>', () => {
     const aktivertePaneler = [faktaOmBeregningTilfelle.VURDER_SN_NY_I_ARBEIDSLIVET];
     const wrapper = shallow(
       <FaktaForATFLOgSNPanelImpl
+        vilkaarPeriodeFieldArrayIndex={0}
         fieldArrayID="dummyId"
         readOnly={false}
         aktivePaneler={aktivertePaneler}
@@ -91,6 +93,7 @@ describe('<FaktaForATFLOgSNPanel>', () => {
     const aktivertePaneler = [faktaOmBeregningTilfelle.VURDER_NYOPPSTARTET_FL];
     const wrapper = shallow(
       <FaktaForATFLOgSNPanelImpl
+        vilkaarPeriodeFieldArrayIndex={0}
         fieldArrayID="dummyId"
         readOnly={false}
         aktivePaneler={aktivertePaneler}

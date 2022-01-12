@@ -1,6 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 import sinon from 'sinon';
+import { MemoryRouter } from 'react-router-dom';
 
 import { BehandlingAppKontekst, Fagsak } from '@k9-sak-web/types';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
@@ -11,6 +12,11 @@ import { VergeBehandlingmenyValg } from '../behandling/behandlingRettigheterTsTy
 import * as useTrackRouteParam from '../app/useTrackRouteParam';
 import BehandlingSupportIndex, { hentSynligePaneler, hentValgbarePaneler } from './BehandlingSupportIndex';
 import { requestApi, K9sakApiKeys } from '../data/k9sakApi';
+
+jest.mock('react-router-dom', () => ({
+  ...(jest.requireActual('react-router-dom') as Record<string, unknown>),
+  useNavigate: () => jest.fn()
+}));
 
 describe('<BehandlingSupportIndex>', () => {
   const fagsak = {
@@ -71,6 +77,7 @@ describe('<BehandlingSupportIndex>', () => {
         behandlingId={1}
         behandlingVersjon={2}
       />,
+      { wrappingComponent: MemoryRouter }
     );
 
     expect(wrapper.find(SupportMenySakIndex)).toHaveLength(1);

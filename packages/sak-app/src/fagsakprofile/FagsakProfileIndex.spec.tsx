@@ -1,6 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 import sinon from 'sinon';
+import { MemoryRouter } from 'react-router-dom';
 
 import FagsakProfilSakIndex from '@fpsak-frontend/sak-fagsak-profil';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
@@ -21,6 +22,8 @@ jest.mock('react-router-dom', () => ({
     state: {},
     hash: 'test',
   }),
+  useNavigate: () => jest.fn(),
+  useMatch: () => (null),
 }));
 
 describe('<FagsakProfileIndex>', () => {
@@ -78,6 +81,7 @@ describe('<FagsakProfileIndex>', () => {
         oppfriskBehandlinger={sinon.spy()}
         fagsakRettigheter={fagsakRettigheter}
       />,
+      { wrappingComponent: MemoryRouter }
     );
 
     const fagsakProfile = wrapper.find(FagsakProfilSakIndex);
@@ -105,6 +109,8 @@ describe('<FagsakProfileIndex>', () => {
         behandlingId={1}
         fagsakRettigheter={fagsakRettigheter}
       />,
+      { wrappingComponent: MemoryRouter }
+
     );
 
     const fagsakProfile = wrapper.find(FagsakProfilSakIndex);

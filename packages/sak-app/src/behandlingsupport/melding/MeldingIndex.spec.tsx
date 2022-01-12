@@ -1,6 +1,7 @@
 import React from 'react';
 import sinon from 'sinon';
 import { shallow } from 'enzyme';
+import { MemoryRouter } from 'react-router-dom';
 
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import MeldingerSakIndex, { MessagesModalSakIndex } from '@k9-sak-web/sak-meldinger';
@@ -12,13 +13,11 @@ import behandlingEventHandler from '../../behandling/BehandlingEventHandler';
 import { requestApi, K9sakApiKeys } from '../../data/k9sakApi';
 import MeldingIndex from './MeldingIndex';
 
-const mockHistoryPush = jest.fn();
+const mockNavigate = jest.fn();
 
 jest.mock('react-router-dom', () => ({
   ...(jest.requireActual('react-router-dom') as Record<string, unknown>),
-  useHistory: () => ({
-    push: mockHistoryPush,
-  }),
+  useNavigate: () => mockNavigate,
 }));
 
 describe('<MeldingIndex>', () => {
@@ -69,6 +68,7 @@ describe('<MeldingIndex>', () => {
         behandlingId={1}
         behandlingVersjon={123}
       />,
+      { wrappingComponent: MemoryRouter }
     );
 
     const index = wrapper.find(MeldingerSakIndex);
@@ -356,7 +356,7 @@ describe('<MeldingIndex>', () => {
       ventearsak: formValues.ventearsak,
     });
 
-    expect(mockHistoryPush).toHaveBeenCalledWith('/');
+    expect(mockNavigate).toHaveBeenCalledWith('/');
 
     expect(wrapper.find(SettPaVentModalIndex)).toHaveLength(0);
 

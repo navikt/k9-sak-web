@@ -1,6 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 import sinon from 'sinon';
+import { MemoryRouter } from 'react-router-dom';
 
 import RisikoklassifiseringSakIndex from '@fpsak-frontend/sak-risikoklassifisering';
 import kontrollresultatKode from '@fpsak-frontend/sak-risikoklassifisering/src/kodeverk/kontrollresultatKode';
@@ -39,15 +40,13 @@ const navAnsatt = { navn: 'Ann S. Att', kanSaksbehandle: true };
 
 jest.mock('react-router-dom', () => ({
   ...(jest.requireActual('react-router-dom') as Record<string, unknown>),
-  useHistory: () => ({
-    push: jest.fn(),
-  }),
   useLocation: () => ({
     hash: '23',
     pathname: '/test/',
     state: {},
     search: '',
   }),
+  useNavigate: () => jest.fn(),
 }));
 
 describe('<RisikoklassifiseringIndex>', () => {
@@ -74,6 +73,7 @@ describe('<RisikoklassifiseringIndex>', () => {
         behandlingVersjon={1}
         behandlingId={1}
       />,
+      { wrappingComponent: MemoryRouter }
     );
     expect(wrapper.find(RisikoklassifiseringSakIndex)).toHaveLength(1);
   });

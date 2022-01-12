@@ -43,23 +43,32 @@ describe('<faktaUtils>', () => {
   };
 
   class ArbeidsforholdFaktaPanelDef extends FaktaPanelDef {
+    // eslint-disable-next-line class-methods-use-this
     getUrlKode = () => faktaPanelCodes.ARBEIDSFORHOLD;
 
+    // eslint-disable-next-line class-methods-use-this
     getTekstKode = () => 'ArbeidsforholdInfoPanel.Title';
 
+    // eslint-disable-next-line class-methods-use-this
     getAksjonspunktKoder = () => [aksjonspunktCodes.AVKLAR_ARBEIDSFORHOLD];
 
+    // eslint-disable-next-line class-methods-use-this
     getKomponent = props => <ArbeidsforholdFaktaIndex {...props} />;
 
+    // eslint-disable-next-line class-methods-use-this
     getOverstyrVisningAvKomponent = ({ personopplysninger }) => personopplysninger;
 
+    // eslint-disable-next-line class-methods-use-this
     getData = ({ personopplysninger, arbeidsforhold }) => ({ personopplysninger, arbeidsforhold });
   }
   class TestFaktaPanelDef extends FaktaPanelDef {
+    // eslint-disable-next-line class-methods-use-this
     getUrlKode = () => 'test';
 
+    // eslint-disable-next-line class-methods-use-this
     getTekstKode = () => 'Test.Title';
 
+    // eslint-disable-next-line class-methods-use-this
     getKomponent = () => <div>test</div>;
   }
 

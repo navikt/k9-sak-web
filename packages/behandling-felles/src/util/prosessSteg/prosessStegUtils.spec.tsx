@@ -74,18 +74,23 @@ describe('<prosessStegUtils>', () => {
   const toggleOverstyring = () => undefined;
 
   class TestPanelDef extends ProsessStegPanelDef {
+    // eslint-disable-next-line class-methods-use-this
     getKomponent = props => <div {...props} />;
 
+    // eslint-disable-next-line class-methods-use-this
     getAksjonspunktKoder = () => [aksjonspunktCodes.AVKLAR_OPPHOLDSRETT];
   }
 
   const testPanelDef = new TestPanelDef();
 
   class TestProsessStegPanelDef extends ProsessStegDef {
+    // eslint-disable-next-line class-methods-use-this
     getUrlKode = () => 'test';
 
+    // eslint-disable-next-line class-methods-use-this
     getTekstKode = () => 'Behandlingspunkt.Test';
 
+    // eslint-disable-next-line class-methods-use-this
     getPanelDefinisjoner = () => [testPanelDef];
   }
 
@@ -104,14 +109,19 @@ describe('<prosessStegUtils>', () => {
   const utledetTestPanel = new ProsessStegUtledet(testStegDef, [utledetTestDelPanel]);
 
   class PanelDef extends ProsessStegPanelDef {
+    // eslint-disable-next-line class-methods-use-this
     getKomponent = props => <div {...props} />;
 
+    // eslint-disable-next-line class-methods-use-this
     getAksjonspunktKoder = () => [aksjonspunktCodes.SOKERS_OPPLYSNINGSPLIKT_MANU];
 
+    // eslint-disable-next-line class-methods-use-this
     getAksjonspunktTekstkoder = () => ['SokersOpplysningspliktForm.UtfyllendeOpplysninger'];
 
+    // eslint-disable-next-line class-methods-use-this
     getVilkarKoder = () => [vilkarType.SOKERSOPPLYSNINGSPLIKT];
 
+    // eslint-disable-next-line class-methods-use-this
     getData = ({ soknad }) => ({
       soknad,
     });
@@ -120,10 +130,13 @@ describe('<prosessStegUtils>', () => {
   const panelDef = new PanelDef();
 
   class OpplysningspliktProsessStegPanelDef extends ProsessStegDef {
+    // eslint-disable-next-line class-methods-use-this
     getUrlKode = () => prosessStegCodes.OPPLYSNINGSPLIKT;
 
+    // eslint-disable-next-line class-methods-use-this
     getTekstKode = () => 'Behandlingspunkt.Opplysningsplikt';
 
+    // eslint-disable-next-line class-methods-use-this
     getPanelDefinisjoner = () => [panelDef];
   }
 

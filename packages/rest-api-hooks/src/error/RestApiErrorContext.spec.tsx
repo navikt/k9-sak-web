@@ -5,7 +5,7 @@ import { RestApiErrorProvider } from './RestApiErrorContext';
 import useRestApiErrorDispatcher from './useRestApiErrorDispatcher';
 import useRestApiError from './useRestApiError';
 
-const TestErrorMessage = ({ skalFjerne = false }) => {
+function TestErrorMessage({ skalFjerne = false }) {
   const { addErrorMessage, removeErrorMessages } = useRestApiErrorDispatcher();
   useEffect(() => {
     addErrorMessage('Feilmeldingstest 1');

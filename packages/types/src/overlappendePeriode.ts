@@ -5,3 +5,8 @@ export interface OverlappendePeriode {
     kilde: Kodeverk;
     overlappendePerioder: { fom: string; tom: string }[];
 }
+
+export interface OverlappendePeriodeTidslinje {
+    ytelseType: Kodeverk;
+    kilde: Kodeverk;
+}

@@ -141,6 +141,7 @@ describe('<VurderOgFastsettATFL>', () => {
         erOverstyrer={false}
         beregningsgrunnlag={beregningsgrunnlag}
         fieldArrayID="dummyId"
+        vilkaarPeriodeFieldArrayIndex={0}
       />,
     );
     const inntektstabellPanel = wrapper.find(InntektstabellPanel);

@@ -36,7 +36,7 @@ const arbeidsgiverOpplysningerPerId = {
     navn: 'Virksomheten',
     fødselsdato: null,
   },
-  32847889234234233: {
+  '32847889234234233': {
     identifikator: '32847889234234233',
     referanse: '32847889234234233',
     navn: 'Virksomheten 2',

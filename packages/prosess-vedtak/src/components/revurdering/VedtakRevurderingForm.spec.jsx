@@ -37,9 +37,9 @@ const createBehandling = (behandlingResultatType, behandlingHenlagt) => ({
     avslagsarsak:
       behandlingResultatType === BehandlingResultatType.AVSLATT
         ? {
-            kode: '1019',
-            navn: 'Manglende dokumentasjon',
-          }
+          kode: '1019',
+          navn: 'Manglende dokumentasjon',
+        }
         : null,
     avslagsarsakFritekst: null,
   },
@@ -103,6 +103,7 @@ describe('<VedtakRevurderingForm>', () => {
         beregningErManueltFastsatt={false}
         arbeidsgiverOpplysningerPerId={{}}
         tilgjengeligeVedtaksbrev={tilgjengeligeVedtaksbrev}
+        personopplysninger={{ aktoerId: '1' }}
       />,
     );
 
@@ -156,6 +157,7 @@ describe('<VedtakRevurderingForm>', () => {
         beregningErManueltFastsatt={false}
         arbeidsgiverOpplysningerPerId={{}}
         tilgjengeligeVedtaksbrev={tilgjengeligeVedtaksbrev}
+        personopplysninger={{ aktoerId: '1' }}
       />,
     );
 
@@ -194,6 +196,7 @@ describe('<VedtakRevurderingForm>', () => {
         beregningErManueltFastsatt={false}
         arbeidsgiverOpplysningerPerId={{}}
         tilgjengeligeVedtaksbrev={tilgjengeligeVedtaksbrev}
+        personopplysninger={{ aktoerId: '1' }}
       />,
     );
 
@@ -233,6 +236,7 @@ describe('<VedtakRevurderingForm>', () => {
         beregningErManueltFastsatt={false}
         arbeidsgiverOpplysningerPerId={{}}
         tilgjengeligeVedtaksbrev={tilgjengeligeVedtaksbrev}
+        personopplysninger={{ aktoerId: '1' }}
       />,
     );
 
@@ -265,6 +269,7 @@ describe('<VedtakRevurderingForm>', () => {
         beregningErManueltFastsatt={false}
         arbeidsgiverOpplysningerPerId={{}}
         tilgjengeligeVedtaksbrev={tilgjengeligeVedtaksbrev}
+        personopplysninger={{ aktoerId: '1' }}
       />,
     );
 
@@ -304,6 +309,7 @@ describe('<VedtakRevurderingForm>', () => {
           },
         }}
         arbeidsgiverOpplysningerPerId={{}}
+        personopplysninger={{ aktoerId: '1' }}
       />,
     );
 

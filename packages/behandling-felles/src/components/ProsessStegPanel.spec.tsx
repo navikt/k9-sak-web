@@ -67,12 +67,16 @@ describe('<ProsessStegPanel>', () => {
 
   const lagPanelDef = (id, aksjonspunktKoder, aksjonspunktTekstKoder) => {
     class PanelDef extends ProsessStegPanelDef {
+      // eslint-disable-next-line class-methods-use-this
       getId = () => '';
 
+      // eslint-disable-next-line class-methods-use-this
       getKomponent = props => <div {...props} />;
 
+      // eslint-disable-next-line class-methods-use-this
       getAksjonspunktKoder = () => aksjonspunktKoder;
 
+      // eslint-disable-next-line class-methods-use-this
       getAksjonspunktTekstkoder = () => aksjonspunktTekstKoder;
     }
     return new PanelDef();
@@ -80,10 +84,13 @@ describe('<ProsessStegPanel>', () => {
 
   const lagStegDef = (urlKode, panelDefs) => {
     class StegPanelDef extends ProsessStegDef {
+      // eslint-disable-next-line class-methods-use-this
       getUrlKode = () => urlKode;
 
+      // eslint-disable-next-line class-methods-use-this
       getTekstKode = () => urlKode;
 
+      // eslint-disable-next-line class-methods-use-this
       getPanelDefinisjoner = () => panelDefs;
     }
     return new StegPanelDef();

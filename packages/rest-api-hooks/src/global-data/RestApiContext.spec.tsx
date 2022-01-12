@@ -20,32 +20,43 @@ class RequestApiTestMock extends AbstractRequestApi {
 
   public startRequest = () => Promise.resolve({ payload: this.data });
 
+  // eslint-disable-next-line class-methods-use-this
   public hasPath = () => true;
 
-  public injectPaths = () => {};
+  // eslint-disable-next-line class-methods-use-this
+  public injectPaths = () => { };
 
-  public resetCache = () => {};
+  // eslint-disable-next-line class-methods-use-this
+  public resetCache = () => { };
 
+  // eslint-disable-next-line class-methods-use-this
   public isMock = () => false;
 
-  public setAddErrorMessageHandler = () => {};
+  // eslint-disable-next-line class-methods-use-this
+  public setAddErrorMessageHandler = () => { };
 
-  public setRequestPendingHandler = () => {};
+  // eslint-disable-next-line class-methods-use-this
+  public setRequestPendingHandler = () => { };
 
-  public setLinks = () => {};
+  // eslint-disable-next-line class-methods-use-this
+  public setLinks = () => { };
 
+  // eslint-disable-next-line class-methods-use-this
   public mock = () => {
     throw new Error('Not Implemented');
   };
 
+  // eslint-disable-next-line class-methods-use-this
   public setMissingPath = () => {
     throw new Error('Not Implemented');
   };
 
+  // eslint-disable-next-line class-methods-use-this
   public getRequestMockData = () => {
     throw new Error('Not Implemented');
   };
 
+  // eslint-disable-next-line class-methods-use-this
   public clearAllMockData = () => {
     throw new Error('Not Implemented');
   };
@@ -55,7 +66,7 @@ const dataHentetFraBackend = { id: 1 };
 
 const useGlobalStateRestApi = getUseGlobalStateRestApi(new RequestApiTestMock(dataHentetFraBackend));
 
-const TestGlobalData = ({ setValue }) => {
+function TestGlobalData({ setValue }) {
   useGlobalStateRestApi('BEHANDLING');
 
   const data = useGlobalStateRestApiData('BEHANDLING');

@@ -1,5 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
+import { MemoryRouter } from 'react-router-dom';
 
 import { Fagsak } from '@k9-sak-web/types';
 import FagsakSokSakIndex from '@fpsak-frontend/sak-sok';
@@ -7,13 +8,11 @@ import FagsakSokSakIndex from '@fpsak-frontend/sak-sok';
 import { requestApi, K9sakApiKeys } from '../data/k9sakApi';
 import FagsakSearchIndex from './FagsakSearchIndex';
 
-const mockHistoryPush = jest.fn();
+const mockNavigate = jest.fn();
 
 jest.mock('react-router-dom', () => ({
   ...(jest.requireActual('react-router-dom') as Record<string, unknown>),
-  useHistory: () => ({
-    push: mockHistoryPush,
-  }),
+  useNavigate: () => mockNavigate,
 }));
 
 describe('<FagsakSearchIndex>', () => {
@@ -59,12 +58,12 @@ describe('<FagsakSearchIndex>', () => {
     requestApi.mock(K9sakApiKeys.KODEVERK, {});
     requestApi.mock(K9sakApiKeys.SEARCH_FAGSAK, fagsaker);
 
-    const wrapper = shallow(<FagsakSearchIndex />);
+    const wrapper = shallow(<FagsakSearchIndex />, { wrappingComponent: MemoryRouter });
 
     const fagsakSearchIndex = wrapper.find(FagsakSokSakIndex);
     const velgFagsak = fagsakSearchIndex.prop('selectFagsakCallback') as (event: any, saksnummer: string) => undefined;
     velgFagsak('', fagsak.saksnummer);
 
-    expect(mockHistoryPush).toHaveBeenCalledWith(`/fagsak/${fagsak.saksnummer}/`);
+    expect(mockNavigate).toHaveBeenCalledWith(`/fagsak/${fagsak.saksnummer}/`);
   });
 });

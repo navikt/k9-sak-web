@@ -6,7 +6,10 @@ import { intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper
 
 import renderNavField from './renderNavField';
 
-const MockField = () => <div />;
+function MockField() {
+  return <div />;
+}
+
 const RenderedMockField = renderNavField(MockField).WrappedComponent;
 
 const FORMATTED_MESSAGE = 'En formatert melding';

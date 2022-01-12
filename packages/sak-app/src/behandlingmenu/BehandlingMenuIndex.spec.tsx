@@ -1,6 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 import sinon from 'sinon';
+import { MemoryRouter } from 'react-router-dom';
 
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
@@ -61,9 +62,7 @@ const alleBehandlinger = [
 
 jest.mock('react-router-dom', () => ({
   ...(jest.requireActual('react-router-dom') as Record<string, unknown>),
-  useHistory: () => ({
-    push: jest.fn(),
-  }),
+  useNavigate: () => jest.fn(),
   useLocation: () => ({
     pathname: 'test',
     search: 'test',
@@ -119,6 +118,7 @@ describe('BehandlingMenuIndex', () => {
           },
         ]}
       />,
+      { wrappingComponent: MemoryRouter }
     );
 
     const meny = wrapper.find(MenySakIndex);

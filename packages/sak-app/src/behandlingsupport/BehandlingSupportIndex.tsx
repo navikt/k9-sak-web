@@ -66,7 +66,6 @@ const BehandlingSupportIndex = ({
     paramName: 'stotte',
     isQueryParam: true,
   });
-
   const behandling = alleBehandlinger.find(b => b.id === behandlingId);
 
   const navigate = useNavigate();

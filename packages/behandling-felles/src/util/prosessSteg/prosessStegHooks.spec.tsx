@@ -18,7 +18,9 @@ import { ProsessStegDef, ProsessStegPanelDef } from './ProsessStegDef';
 import { ProsessStegUtledet, ProsessStegPanelUtledet } from './ProsessStegUtledet';
 import prosessStegHooks from './prosessStegHooks';
 
-const HookWrapper = ({ callback }) => <div data-values={callback()} />;
+function HookWrapper({ callback }) {
+  return <div data-values={callback()} />;
+}
 
 const testHook = callback => shallow(<HookWrapper callback={callback} />);
 
@@ -71,14 +73,19 @@ describe('<prosessStegHooks>', () => {
   const kanOverstyreAccess = { isEnabled: false, employeeHasAccess: false };
 
   class PanelDef extends ProsessStegPanelDef {
+    // eslint-disable-next-line class-methods-use-this
     getKomponent = props => <div {...props} />;
 
+    // eslint-disable-next-line class-methods-use-this
     getAksjonspunktKoder = () => [aksjonspunktCodes.SOKERS_OPPLYSNINGSPLIKT_MANU];
 
+    // eslint-disable-next-line class-methods-use-this
     getAksjonspunktTekstkoder = () => ['SokersOpplysningspliktForm.UtfyllendeOpplysninger'];
 
+    // eslint-disable-next-line class-methods-use-this
     getVilkarKoder = () => [vilkarType.SOKERSOPPLYSNINGSPLIKT];
 
+    // eslint-disable-next-line class-methods-use-this
     getData = ({ soknad }) => ({
       soknad,
     });
@@ -87,10 +94,13 @@ describe('<prosessStegHooks>', () => {
   const panelDef = new PanelDef();
 
   class OpplysningspliktProsessStegPanelDef extends ProsessStegDef {
+    // eslint-disable-next-line class-methods-use-this
     getUrlKode = () => prosessStegCodes.OPPLYSNINGSPLIKT;
 
+    // eslint-disable-next-line class-methods-use-this
     getTekstKode = () => 'Behandlingspunkt.Opplysningsplikt';
 
+    // eslint-disable-next-line class-methods-use-this
     getPanelDefinisjoner = () => [panelDef];
   }
 
@@ -252,7 +262,7 @@ describe('<prosessStegHooks>', () => {
 
     const lagreAksjonspunkter = sinon.stub();
     lagreAksjonspunkter.returns(Promise.resolve());
-    const lagringSideEffectsCallback = () => () => {};
+    const lagringSideEffectsCallback = () => () => { };
 
     const wrapper = testHook(() =>
       prosessStegHooks.useBekreftAksjonspunkt(

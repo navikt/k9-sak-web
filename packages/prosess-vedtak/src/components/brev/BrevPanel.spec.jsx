@@ -31,6 +31,7 @@ describe('<BrevPanel>', () => {
   it('skal forhåndsvise brev når ingen behandlingsresultat', () => {
     const wrapper = shallow(
       <BrevPanel
+        lagreDokumentdata={jest.fn()}
         intl={intlMock}
         readOnly={false}
         sprakkode={{ kode: 'NB' }}
@@ -58,6 +59,7 @@ describe('<BrevPanel>', () => {
   it('skal vise fritekstpanel når overstyrt', () => {
     const wrapper = shallow(
       <BrevPanel
+        lagreDokumentdata={jest.fn()}
         intl={intlMock}
         readOnly={false}
         sprakkode={{ kode: 'NB' }}
@@ -85,6 +87,7 @@ describe('<BrevPanel>', () => {
   it('skal vise fritekstpanel selv om ikke overstyrt når fritekst er eneste typen', () => {
     const wrapper = shallow(
       <BrevPanel
+        lagreDokumentdata={jest.fn()}
         intl={intlMock}
         readOnly={false}
         sprakkode={{ kode: 'NB' }}
@@ -112,6 +115,7 @@ describe('<BrevPanel>', () => {
   it('skal vise varsel om ingen brev når ingen brev', () => {
     const wrapper = shallow(
       <BrevPanel
+        lagreDokumentdata={jest.fn()}
         intl={intlMock}
         readOnly={false}
         sprakkode={{ kode: 'NB' }}
@@ -139,6 +143,7 @@ describe('<BrevPanel>', () => {
   it('skal vise valg av mottaker hvis alternative mottakere er definert', () => {
     const wrapper = shallow(
       <BrevPanel
+        lagreDokumentdata={jest.fn()}
         intl={intlMock}
         readOnly={false}
         sprakkode={{ kode: 'NB' }}

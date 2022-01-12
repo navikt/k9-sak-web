@@ -3,17 +3,17 @@ import { injectIntl, WrappedComponentProps } from 'react-intl';
 import Tidslinje from '@fpsak-frontend/tidslinje/src/components/pleiepenger/Tidslinje';
 import TidslinjeRad from '@fpsak-frontend/tidslinje/src/components/pleiepenger/types/TidslinjeRad';
 import Periode from '@fpsak-frontend/tidslinje/src/components/pleiepenger/types/Periode';
-import { AlleKodeverk, OverlappendePeriode } from '@k9-sak-web/types';
+import { KodeverkMedNavn, OverlappendePeriode, OverlappendePeriodeTidslinje } from '@k9-sak-web/types';
 import { BorderBox } from '@fpsak-frontend/shared-components';
 import { EtikettInfo, EtikettFokus } from 'nav-frontend-etiketter';
 import styles from './VedtakOverlappendeYtelsePanel.less';
 
 interface Props {
-    overlappendeYtelser: any;
-    alleKodeverk: AlleKodeverk;
+    overlappendeYtelser: OverlappendePeriode[];
+    alleKodeverk: { [key: string]: KodeverkMedNavn[] };
 }
 
-const VedtakOverlappendeYtelsePanel: React.FC<Props & WrappedComponentProps> = ({
+export const VedtakOverlappendeYtelsePanelImpl: React.FC<Props & WrappedComponentProps> = ({
     overlappendeYtelser,
     alleKodeverk,
     intl
@@ -34,8 +34,11 @@ const VedtakOverlappendeYtelsePanel: React.FC<Props & WrappedComponentProps> = (
         return fagSystemKode;
     }
 
+    const utledKeyFraRad = (rad: OverlappendePeriode, index: number) =>
+        `${rad.kilde.kode}-${rad.kilde.kodeverk}-${rad.ytelseType.kode}-${rad.ytelseType.kodeverk}-${index}`;
+
     /**
-     * Set opp radene som brukes i Tidslinjen
+     * Sett opp radene som brukes i Tidslinjen
      */
     const rader = overlappendeYtelser.map((rad, radIndex): TidslinjeRad<OverlappendePeriode> => ({
         id: `rad-${radIndex}`,
@@ -47,6 +50,7 @@ const VedtakOverlappendeYtelsePanel: React.FC<Props & WrappedComponentProps> = (
             periodeinfo: {
                 kilde: rad.kilde,
                 ytelseType: rad.ytelseType,
+                overlappendePerioder: rad.overlappendePerioder,
             }
         })),
     }));
@@ -54,11 +58,14 @@ const VedtakOverlappendeYtelsePanel: React.FC<Props & WrappedComponentProps> = (
     /**
      * Sett opp korresponderende rader til sidekolonnen
      */
-    const sideKolonneRader = overlappendeYtelser.map((rad) => (<span className={styles.sideKolonne}>
-        {`${utledYtelseType(rad.ytelseType.kode)}`}
-    </span>));
+    const sideKolonneRader = overlappendeYtelser.map((rad, index) => {
+        return (<span className={styles.sideKolonne} key={utledKeyFraRad(rad, index)}>
+            {`${utledYtelseType(rad.ytelseType.kode)}`}
+        </span>)
+    });
 
     const velgPeriodeHandler = (eventProps: any) => {
+        console.log("prop", eventProps);
         const raden: TidslinjeRad<OverlappendePeriode> = rader.find((rad) =>
             rad.perioder.find((periode) => periode.id === eventProps.items[0])
         );
@@ -67,7 +74,7 @@ const VedtakOverlappendeYtelsePanel: React.FC<Props & WrappedComponentProps> = (
 
     return <>
         <BorderBox>
-
+            test
             {overlappendeYtelser && overlappendeYtelser.length > 0 && <Tidslinje
                 rader={rader}
                 velgPeriode={velgPeriodeHandler}
@@ -99,4 +106,4 @@ const VedtakOverlappendeYtelsePanel: React.FC<Props & WrappedComponentProps> = (
     </>;
 }
 
-export default injectIntl(VedtakOverlappendeYtelsePanel);
+export default injectIntl(VedtakOverlappendeYtelsePanelImpl);

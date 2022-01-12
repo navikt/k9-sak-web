@@ -121,6 +121,7 @@ describe('<InntektFieldArray>', () => {
   it('skal vise komponent', () => {
     const wrapper = shallowWithIntl(
       <InntektFieldArrayImpl
+        vilkaarPeriodeFieldArrayIndex={0}
         intl={intlMock}
         fields={fields}
         meta={{}}
@@ -151,6 +152,7 @@ describe('<InntektFieldArray>', () => {
     const newFields = new MockFieldsWithContent('fieldArrayName', [andelField, SNandel]);
     const wrapper = shallowWithIntl(
       <InntektFieldArrayImpl
+        vilkaarPeriodeFieldArrayIndex={0}
         intl={intlMock}
         fields={newFields}
         meta={{}}
@@ -182,6 +184,7 @@ describe('<InntektFieldArray>', () => {
     const newFields = new MockFieldsWithContent('fieldArrayName', [andelField, SNandel]);
     const wrapper = shallowWithIntl(
       <InntektFieldArrayImpl
+        vilkaarPeriodeFieldArrayIndex={0}
         intl={intlMock}
         fields={newFields}
         meta={{}}

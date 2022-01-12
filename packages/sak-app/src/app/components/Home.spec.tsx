@@ -6,6 +6,6 @@ import Home from './Home';
 describe('<Home>', () => {
   it('skal rendre komponent', () => {
     const wrapper = shallow(<Home headerHeight={48} />);
-    expect(wrapper.find('Switch')).toHaveLength(1);
+    expect(wrapper.find('Routes')).toHaveLength(1);
   });
 });
