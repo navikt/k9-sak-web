@@ -45,15 +45,15 @@ const ManglerSøknadForm = ({
         begrunnelse: Yup.string().required(intl.formatMessage({ id: 'ManglerSøknadForm.BegrunnelseErPåkrevd' })),
     });
 
-    const utledBegrunnelse = () => aksjonspunkter.find((ap) => ap.definisjon.kode === aksjonspunktCodes.MANGLER_KOMPLETT_SØKNAD 
+    const utledBegrunnelse = () => aksjonspunkter.find((ap) => ap.definisjon.kode === aksjonspunktCodes.MANGLER_KOMPLETT_SØKNAD
     || ap.definisjon.kode === aksjonspunktCodes.MANGLER_KOMPLETT_SØKNAD_ANNEN_PART).begrunnelse || ''
 
-    const erAksjonspunktÅpent = () => isAksjonspunktOpen(aksjonspunkter.find((ap) => ap.definisjon.kode === aksjonspunktCodes.MANGLER_KOMPLETT_SØKNAD 
-    || ap.definisjon.kode === aksjonspunktCodes.MANGLER_KOMPLETT_SØKNAD_ANNEN_PART).status.kode); 
+    const erAksjonspunktÅpent = () => isAksjonspunktOpen(aksjonspunkter.find((ap) => ap.definisjon.kode === aksjonspunktCodes.MANGLER_KOMPLETT_SØKNAD
+    || ap.definisjon.kode === aksjonspunktCodes.MANGLER_KOMPLETT_SØKNAD_ANNEN_PART).status.kode);
 
-    
-    const manglerSøknadForPeriode = () => aksjonspunkter.some((ap) => ap.definisjon.kode === aksjonspunktCodes.MANGLER_KOMPLETT_SØKNAD); 
-    const manglerSøknadAnnenPart = () => aksjonspunkter.some((ap) => ap.definisjon.kode === aksjonspunktCodes.MANGLER_KOMPLETT_SØKNAD_ANNEN_PART); 
+
+    const manglerSøknadForPeriode = () => aksjonspunkter.some((ap) => ap.definisjon.kode === aksjonspunktCodes.MANGLER_KOMPLETT_SØKNAD);
+    const manglerSøknadAnnenPart = () => aksjonspunkter.some((ap) => ap.definisjon.kode === aksjonspunktCodes.MANGLER_KOMPLETT_SØKNAD_ANNEN_PART);
 
 
     const initialValues: ManglerSøknadDto = {
@@ -67,11 +67,11 @@ const ManglerSøknadForm = ({
                 {[<FormattedMessage id="HelpText.Aksjonspunkt" key="aksjonspunktText" />]}
             </AksjonspunktHelpTextTemp>
             <VerticalSpacer thirtyTwoPx />
-            {manglerSøknadForPeriode() && 
+            {manglerSøknadForPeriode() &&
                 <AlertStripeAdvarsel> <FormattedMessage id="ManglerSøknadForm.ManglerKomplettSøknad" key="aksjonspunktText" /> </AlertStripeAdvarsel>
             }
             <VerticalSpacer thirtyTwoPx />
-            {manglerSøknadAnnenPart() && 
+            {manglerSøknadAnnenPart() &&
                 <AlertStripeAdvarsel> <FormattedMessage id="ManglerSøknadForm.ManglerKomplettSøknadAnnenPart" key="aksjonspunktText" /> </AlertStripeAdvarsel>
             }
 
@@ -82,7 +82,7 @@ const ManglerSøknadForm = ({
                 initialValues={initialValues}
                 onSubmit={values => {
                     if (!readOnly && submittable) submitCallback(
-                        aksjonspunkter.filter((ap) => ap.definisjon.kode === aksjonspunktCodes.MANGLER_KOMPLETT_SØKNAD 
+                        aksjonspunkter.filter((ap) => ap.definisjon.kode === aksjonspunktCodes.MANGLER_KOMPLETT_SØKNAD
                         || ap.definisjon.kode === aksjonspunktCodes.MANGLER_KOMPLETT_SØKNAD_ANNEN_PART)
                         .map(ap => ({
                             kode: ap.definisjon.kode,
@@ -98,7 +98,7 @@ const ManglerSøknadForm = ({
                     <Form>
                         <VerticalSpacer sixteenPx />
                         <Field name="begrunnelse">
-                            {({ field, meta }) => <Textarea
+                            {({ field }) => <Textarea
                                 id="begrunnelse"
                                 label="Begrunnelse"
                                 placeholder={intl.formatMessage({ id: 'ManglerSøknadForm.Begrunnelse' })}
