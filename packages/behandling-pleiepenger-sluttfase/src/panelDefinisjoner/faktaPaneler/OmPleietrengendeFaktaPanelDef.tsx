@@ -14,10 +14,7 @@ class OmPleietrengendeFaktaPanelDef extends FaktaPanelDef {
 
   getOverstyrVisningAvKomponent = () => true;
 
-  getKomponent = props => {
-    // eslint-disbable-next-line
-    console.log('props', props);
-    return <OmPleietrengende {...props} />;}
+  getKomponent = props => <OmPleietrengende {...props} />;
 }
 
 export default OmPleietrengendeFaktaPanelDef;
