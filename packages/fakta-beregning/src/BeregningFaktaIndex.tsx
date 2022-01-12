@@ -99,9 +99,9 @@ const BeregningFaktaIndex = ({
   //   return <>Beregningssteget er ikke behandlet.</>;
   // }
 
-  if (!aktivtBeregningsgrunnlag || !beregningsgrunnlagVilkår) {
-    return <>Har ikke beregningsgrunnlag.</>;
-  }
+  // if (!aktivtBeregningsgrunnlag || !beregningsgrunnlagVilkår) {
+  //   return <>Har ikke beregningsgrunnlag.</>;
+  // }
 
   const aktiveAvklaringsBehov = aktivtBeregningsgrunnlag.avklaringsbehov;
   const vilkårsperioder = beregningsgrunnlagVilkår.perioder;
