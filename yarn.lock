@@ -2814,14 +2814,6 @@
     "@navikt/k9-date-utils" "^0.0.6"
     "@navikt/k9-period-utils" "^0.0.8"
 
-"@navikt/k9-react-components@^0.1.6":
-  version "0.1.6"
-  resolved "https://npm.pkg.github.com/download/@navikt/k9-react-components/0.1.6/fd683a41cce25d9d0831ab6cd495a14426f0d86c734157ddfc8f0a86d189c5f9#ab99966204ea21ef726029ba025abbc3a81851fc"
-  integrity sha512-2KlDiq7M+n/CDSqqJD8oa42LnYMEwZCwwaGPhlXkNza0M98FAy4QL695rB7y38HS0q93oKDC51c75uyTpTbUsg==
-  dependencies:
-    "@navikt/k9-bem-utils" "^1.0.1"
-    "@navikt/k9-period-utils" "^0.0.8"
-
 "@nodelib/fs.scandir@2.1.5":
   version "2.1.5"
   resolved "https://registry.yarnpkg.com/@nodelib/fs.scandir/-/fs.scandir-2.1.5.tgz#7619c2eb21b25483f6d167548b4cfd5a7488c3d5"
