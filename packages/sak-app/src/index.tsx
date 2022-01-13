@@ -70,11 +70,10 @@ const renderFunc = Component => {
   }
   if (process.env.NODE_ENV === 'development') {
     // eslint-disable-next-line global-require
-    const { worker } = require('../../mocks/browser')
-    worker.start()
+    const { worker } = require('../../mocks/browser');
+    worker.start({ onUnhandledRequest: 'bypass' });
   }
 
-  
   render(
     <Provider store={store}>
       <Router history={history}>
