@@ -24,7 +24,7 @@
     "react-collapse": "^5.1.0",
     "react-intl": "^5.20.12",
     "react-redux": "^7.2.5",
-    "redux-form": "^8.3.7",
+    "redux-form": "^8.3.8",
     "reselect": "^4.0.0"
   },
   "devDependencies": {
