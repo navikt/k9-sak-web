@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
 import React from 'react';
 import { Provider } from 'react-redux';
 import { Router } from 'react-router-dom';
@@ -67,6 +68,13 @@ const renderFunc = Component => {
   if (app === null) {
     throw new Error('No app element');
   }
+  if (process.env.NODE_ENV === 'development') {
+    // eslint-disable-next-line global-require
+    const { worker } = require('../../mocks/browser')
+    worker.start()
+  }
+
+  
   render(
     <Provider store={store}>
       <Router history={history}>
