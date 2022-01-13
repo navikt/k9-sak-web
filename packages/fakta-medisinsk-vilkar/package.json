@@ -9,7 +9,7 @@
     "@fpsak-frontend/kodeverk": "1.0.0",
     "@fpsak-frontend/shared-components": "1.0.0",
     "@fpsak-frontend/utils": "1.0.0",
-    "@types/redux-form": "^8.3.2",
+    "@types/redux-form": "^8.3.3",
     "moment": "^2.29.1",
     "nav-frontend-core": "6.0.1",
     "nav-frontend-knapper": "3.1.2",
