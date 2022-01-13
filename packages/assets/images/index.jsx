@@ -28,6 +28,8 @@ export { default as beregnValgtIkkeOppfylt } from './beregn_valgt_ikke_oppfylt.s
 export { default as beregnValgtIkkeOppfyltHover } from './beregn_valgt_ikke_oppfylt_hover.svg';
 export { default as beslutter } from './beslutter.svg';
 export { default as check } from './check.svg';
+export { default as checkBlue } from './check_blue.svg';
+
 export { default as currentDay } from './currentDay.svg';
 export { default as endre } from './endre.svg';
 export { default as endreDisabled } from './endre_disablet.svg';
