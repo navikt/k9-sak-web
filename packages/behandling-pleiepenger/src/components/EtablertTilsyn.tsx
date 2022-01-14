@@ -17,7 +17,6 @@ const initializeEtablertTilsynApp = (
   lagreNattevåkvurdering,
   harAksjonspunktForBeredskap,
   harAksjonspunktForNattevåk,
-  saksbehandlere,
 ) => {
   (window as any).renderTilsynApp(etablertTilsynAppId, {
     httpErrorHandler,
@@ -27,11 +26,10 @@ const initializeEtablertTilsynApp = (
     lagreNattevåkvurdering,
     harAksjonspunktForBeredskap,
     harAksjonspunktForNattevåk,
-    saksbehandlere,
   });
 };
 
-export default ({ aksjonspunkter, behandling, readOnly, submitCallback, saksbehandlere }) => {
+export default ({ aksjonspunkter, behandling, readOnly, submitCallback }) => {
   const { addErrorMessage } = useRestApiErrorDispatcher();
   const httpErrorHandlerCaller = (status: number, locationHeader?: string) =>
     httpErrorHandlerFn(status, addErrorMessage, locationHeader);
@@ -67,7 +65,6 @@ export default ({ aksjonspunkter, behandling, readOnly, submitCallback, saksbeha
           løsNattevåkAksjonspunkt,
           harUløstAksjonspunktForBeredskap,
           harUløstAksjonspunktForNattevåk,
-          saksbehandlere,
         )
       }
     />
