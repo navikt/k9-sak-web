@@ -96,11 +96,11 @@ const BeregningFaktaIndex = ({
   const beregningsgrunnlagVilkår = vilkar.find(
     vilkår => vilkår?.vilkarType?.kode === vilkarType.BEREGNINGSGRUNNLAGVILKARET,
   );
-  if (beregningErBehandlet === false && aksjonspunkter.length) {
+  if (beregningErBehandlet === false && !aksjonspunkter.length) {
     return <>Beregningssteget er ikke behandlet.</>;
   }
 
-  if (!aktivtBeregningsgrunnlag || !beregningsgrunnlagVilkår) {
+  if ((!aktivtBeregningsgrunnlag || !beregningsgrunnlagVilkår) && !aksjonspunkter.length) {
     return <>Har ikke beregningsgrunnlag.</>;
   }
 
