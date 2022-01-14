@@ -8,6 +8,7 @@ import { Normaltekst, Undertittel } from 'nav-frontend-typografi';
 import React, { ReactElement, useEffect, useRef, useState } from 'react';
 import { FormattedMessage, IntlShape, useIntl } from 'react-intl';
 import { NavLink } from 'react-router-dom';
+import BehandlingFilter from './BehandlingFilter';
 import styles from './behandlingPicker.less';
 import BehandlingPickerItemContent from './BehandlingPickerItemContent';
 import BehandlingSelected from './BehandlingSelected';
@@ -27,7 +28,11 @@ export const sortBehandlinger = (behandlinger: BehandlingAppKontekst[]): Behandl
     return moment(b2.opprettet).diff(moment(b1.opprettet));
   });
 
-const getBehandlingNavn = (behandling, getKodeverkFn, intl) => {
+const getBehandlingNavn = (
+  behandling,
+  getKodeverkFn: (kodeverk: Kodeverk, behandlingType?: Kodeverk) => KodeverkMedNavn,
+  intl: IntlShape,
+) => {
   if (behandling.type.kode === behandlingType.FORSTEGANGSSOKNAD || behandling.type.kode === behandlingType.KLAGE) {
     return getKodeverkFn(behandling.type, behandling.type).navn;
   }
@@ -42,30 +47,38 @@ const renderListItems = (
   setValgtBehandling,
   intl: IntlShape,
   alleSøknadsperioder: PerioderMedBehandlingsId[],
+  activeFilters: string[],
 ): ReactElement[] =>
-  sortBehandlinger(behandlinger).map(behandling => (
-    <li key={behandling.id}>
-      <NavLink
-        onClick={() => setValgtBehandling(behandling.id)}
-        className={styles.linkToBehandling}
-        to={getBehandlingLocation(behandling.id)}
-      >
-        <BehandlingPickerItemContent
-          behandlingTypeNavn={getBehandlingNavn(behandling, getKodeverkFn, intl)}
-          behandlingsresultatTypeNavn={
-            behandling.behandlingsresultat
-              ? getKodeverkFn(behandling.behandlingsresultat.type, behandling.type).navn
-              : undefined
-          }
-          behandlingsresultatTypeKode={
-            behandling.behandlingsresultat ? behandling.behandlingsresultat.type.kode : undefined
-          }
-          erAutomatiskRevurdering={behandling.behandlingÅrsaker.some(årsak => årsak.erAutomatiskRevurdering)}
-          søknadsperioder={alleSøknadsperioder.find(periode => periode.id === behandling.id)?.perioder}
-        />
-      </NavLink>
-    </li>
-  ));
+  sortBehandlinger(behandlinger)
+    .filter(behandling => {
+      if (activeFilters.length === 0) {
+        return true;
+      }
+      return activeFilters.includes(behandling.type.kode);
+    })
+    .map(behandling => (
+      <li key={behandling.id}>
+        <NavLink
+          onClick={() => setValgtBehandling(behandling.id)}
+          className={styles.linkToBehandling}
+          to={getBehandlingLocation(behandling.id)}
+        >
+          <BehandlingPickerItemContent
+            behandlingTypeNavn={getBehandlingNavn(behandling, getKodeverkFn, intl)}
+            behandlingsresultatTypeNavn={
+              behandling.behandlingsresultat
+                ? getKodeverkFn(behandling.behandlingsresultat.type, behandling.type).navn
+                : undefined
+            }
+            behandlingsresultatTypeKode={
+              behandling.behandlingsresultat ? behandling.behandlingsresultat.type.kode : undefined
+            }
+            erAutomatiskRevurdering={behandling.behandlingÅrsaker.some(årsak => årsak.erAutomatiskRevurdering)}
+            søknadsperioder={alleSøknadsperioder.find(periode => periode.id === behandling.id)?.perioder}
+          />
+        </NavLink>
+      </li>
+    ));
 
 const usePrevious = (value: number): number => {
   const ref = useRef<number>();
@@ -99,6 +112,7 @@ const BehandlingPicker = ({
   const [valgtBehandlingId, setValgtBehandlingId] = useState(behandlingId);
   const previousBehandlingId = usePrevious(behandlingId);
   const [søknadsperioder, setSøknadsperioder] = useState<Array<PerioderMedBehandlingsId>>([]);
+  const [activeFilters, setActiveFilters] = useState([]);
 
   useEffect(() => {
     if (!previousBehandlingId && behandlingId) {
@@ -126,17 +140,51 @@ const BehandlingPicker = ({
     ? behandlinger.find(behandling => behandling.id === valgtBehandlingId)
     : null;
 
+  const updateFilter = valgtFilter => {
+    if (activeFilters.includes(valgtFilter)) {
+      setActiveFilters(activeFilters.filter(v => v !== valgtFilter));
+    } else {
+      setActiveFilters(activeFilters.concat([valgtFilter]));
+    }
+  };
+
+  const getFilterListe = () => {
+    const filterListe = [];
+    behandlinger.forEach(behandling => {
+      if (!filterListe.some(filter => filter.value === behandling.type.kode)) {
+        filterListe.push({
+          value: behandling.type.kode,
+          label: getBehandlingNavn(behandling, getKodeverkFn, intl),
+        });
+      }
+    });
+    return filterListe;
+  };
+
   return (
     <div className={styles.behandlingPicker}>
       {valgtBehandlingId && (
         <Tilbakeknapp className={styles.backButton} onClick={() => setValgtBehandlingId(undefined)}>
-          Se alle behandlinger
+          <FormattedMessage id="Behandlingspunkt.Behandling.SeAlle" />
         </Tilbakeknapp>
       )}
 
       {!valgtBehandlingId && (
         <>
-          <Undertittel>{`Velg behandling (${behandlinger.length})`}</Undertittel>
+          <div className={styles.headerContainer}>
+            <Undertittel>
+              <FormattedMessage
+                id="Behandlingspunkt.VelgBehandling"
+                values={{ antallBehandlinger: behandlinger.length }}
+              />
+            </Undertittel>
+            <BehandlingFilter
+              filters={getFilterListe()}
+              activeFilters={activeFilters}
+              onFilterChange={updateFilter}
+              text={intl.formatMessage({ id: 'Behandlingspunkt.Filtrer' })}
+            />
+          </div>
           <ul className={styles.behandlingList}>
             {noExistingBehandlinger && (
               <Normaltekst>
@@ -151,6 +199,7 @@ const BehandlingPicker = ({
                 setValgtBehandlingId,
                 intl,
                 søknadsperioder,
+                activeFilters,
               )}
           </ul>
         </>

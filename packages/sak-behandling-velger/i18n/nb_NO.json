@@ -17,6 +17,7 @@
   "BehandlingPickerItemContent.Behandling.Aapne": "Åpne",
   "BehandlingPickerItemContent.Kalender": "Kalender",
   "BehandlingPickerItemContent.BehandlingTypeNavn.Viderebehandling": "Viderebehandling",
+  "Behandlingspunkt.Behandling.SeAlle": "Se alle behandlinger",
 
   "BehandlingList.ZeroBehandlinger": "Ingen behandlinger er opprettet",
 
@@ -45,6 +46,9 @@
   "Behandlingspunkt.Årsak.Dødfødsel": "Dødfødsel",
   "Behandlingspunkt.Årsak.NyeRegisteropplysninger": "Nye registeropplysninger",
   "Behandlingspunkt.Årsak.OpplysningerAnnenYtelse": "Opplysninger annen ytelse",
+
+  "Behandlingspunkt.Filtrer": "Filtrer",
+  "Behandlingspunkt.VelgBehandling": "Velg behandling ({antallBehandlinger})",
 
   "DateTimeLabel.Kl": "Kl."
 }
