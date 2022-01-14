@@ -28,6 +28,7 @@ const BeregningFaktaIndexPropTypes = {
   arbeidsgiverOpplysningerPerId: PropTypes.shape({}).isRequired,
   vilkar: PropTypes.any.isRequired,
   beregningErBehandlet: PropTypes.bool,
+  aksjonspunkter: PropTypes.any,
 };
 
 type OwnProps = PropTypes.InferProps<typeof BeregningFaktaIndexPropTypes>;
@@ -74,7 +75,7 @@ const harAvklaringsbehovIPanel = avklaringsbehov => {
 
 const skalVurderes = (bg, vilkårsperioder) =>
   harAvklaringsbehovIPanel(bg.avklaringsbehov) &&
-  vilkårsperioder.find(({periode}) => periode.fom === bg.vilkårsperiodeFom).vurdersIBehandlingen;
+  vilkårsperioder.find(({ periode }) => periode.fom === bg.vilkårsperiodeFom).vurdersIBehandlingen;
 
 const BeregningFaktaIndex = ({
   vilkar,
@@ -86,7 +87,8 @@ const BeregningFaktaIndex = ({
   submittable,
   erOverstyrer,
   arbeidsgiverOpplysningerPerId,
-  // beregningErBehandlet,
+  beregningErBehandlet,
+  aksjonspunkter,
 }: OwnProps) => {
   const skalBrukeTabs = beregningsgrunnlag.length > 1;
   const [aktivtBeregningsgrunnlagIndeks, setAktivtBeregningsgrunnlagIndeks] = useState(0);
@@ -94,14 +96,13 @@ const BeregningFaktaIndex = ({
   const beregningsgrunnlagVilkår = vilkar.find(
     vilkår => vilkår?.vilkarType?.kode === vilkarType.BEREGNINGSGRUNNLAGVILKARET,
   );
+  if (beregningErBehandlet === false && aksjonspunkter.length) {
+    return <>Beregningssteget er ikke behandlet.</>;
+  }
 
-  // if (beregningErBehandlet === false ) {
-  //   return <>Beregningssteget er ikke behandlet.</>;
-  // }
-
-  // if (!aktivtBeregningsgrunnlag || !beregningsgrunnlagVilkår) {
-  //   return <>Har ikke beregningsgrunnlag.</>;
-  // }
+  if (!aktivtBeregningsgrunnlag || !beregningsgrunnlagVilkår) {
+    return <>Har ikke beregningsgrunnlag.</>;
+  }
 
   const aktiveAvklaringsBehov = aktivtBeregningsgrunnlag.avklaringsbehov;
   const vilkårsperioder = beregningsgrunnlagVilkår.perioder;
