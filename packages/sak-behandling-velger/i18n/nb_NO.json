@@ -10,14 +10,17 @@
   "BehandlingPickerItemContent.Resultat": "Resultat",
   "BehandlingPickerItemContent.Enhet": "Enhet ",
   "BehandlingPickerItemContent.Behandling.Aapen": "Åpen behandling",
+  "BehandlingPickerItemContent.Behandling.UnderBehandling": "Under behandling",
   "BehandlingPickerItemContent.Behandling.Innvilget": "Innvilget",
   "BehandlingPickerItemContent.Behandling.Avslaatt": "Avslått",
   "BehandlingPickerItemContent.Behandling.Henlagt": "Henlagt",
   "BehandlingPickerItemContent.Behandling.Aapne": "Åpne",
   "BehandlingPickerItemContent.Kalender": "Kalender",
+  "BehandlingPickerItemContent.BehandlingTypeNavn.Viderebehandling": "Viderebehandling",
 
   "BehandlingList.ZeroBehandlinger": "Ingen behandlinger er opprettet",
 
+  "Behandlingspunkt.ÅrsakerForBehandling": "Årsaker for behandling:",
   "Behandlingspunkt.Årsak.ManglerFødselsdato": "Mangler fødselsdato",
   "Behandlingspunkt.Årsak.AvvikAntallBarn": "Avvik antall barn",
   "Behandlingspunkt.Årsak.FeilLovanvendelse": "Feil lovanvendelse",

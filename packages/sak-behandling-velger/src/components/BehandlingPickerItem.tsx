@@ -21,7 +21,6 @@ const getContentProps = (
   behandlendeEnhetNavn: behandling.behandlendeEnhetNavn,
   opprettetDato: behandling.opprettet,
   avsluttetDato: behandling.avsluttet,
-  behandlingsstatus: getKodeverkFn(behandling.status, { kode: BehandlingType.FORSTEGANGSSOKNAD, kodeverk: '' }).navn,
   erGjeldendeVedtak: behandling.gjeldendeVedtak,
   behandlingsresultatTypeNavn: behandling.behandlingsresultat
     ? getKodeverkFn(behandling.behandlingsresultat.type, behandling.type).navn

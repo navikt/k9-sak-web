@@ -1,15 +1,17 @@
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
-import { BehandlingAppKontekst, Kodeverk, KodeverkMedNavn } from '@k9-sak-web/types';
-import { Tilbakeknapp } from 'nav-frontend-ikonknapper';
+import { BehandlingAppKontekst, BehandlingPerioder, Kodeverk, KodeverkMedNavn } from '@k9-sak-web/types';
+import axios from 'axios';
 import { Location } from 'history';
 import moment from 'moment';
+import { Tilbakeknapp } from 'nav-frontend-ikonknapper';
 import { Normaltekst, Undertittel } from 'nav-frontend-typografi';
-import React, { ReactElement, useState } from 'react';
-import { FormattedMessage } from 'react-intl';
+import React, { ReactElement, useEffect, useRef, useState } from 'react';
+import { FormattedMessage, IntlShape, useIntl } from 'react-intl';
 import { NavLink } from 'react-router-dom';
 import styles from './behandlingPicker.less';
 import BehandlingPickerItemContent from './BehandlingPickerItemContent';
 import BehandlingSelected from './BehandlingSelected';
+import PerioderMedBehandlingsId from './PerioderMedBehandlingsId';
 
 export const sortBehandlinger = (behandlinger: BehandlingAppKontekst[]): BehandlingAppKontekst[] =>
   behandlinger.sort((b1, b2) => {
@@ -25,11 +27,21 @@ export const sortBehandlinger = (behandlinger: BehandlingAppKontekst[]): Behandl
     return moment(b2.opprettet).diff(moment(b1.opprettet));
   });
 
+const getBehandlingNavn = (behandling, getKodeverkFn, intl) => {
+  if (behandling.type.kode === behandlingType.FORSTEGANGSSOKNAD || behandling.type.kode === behandlingType.KLAGE) {
+    return getKodeverkFn(behandling.type, behandling.type).navn;
+  }
+
+  return intl.formatMessage({ id: 'BehandlingPickerItemContent.BehandlingTypeNavn.Viderebehandling' });
+};
+
 const renderListItems = (
   behandlinger: BehandlingAppKontekst[],
   getBehandlingLocation: (behandlingId: number) => Location,
   getKodeverkFn: (kodeverk: Kodeverk, behandlingType?: Kodeverk) => KodeverkMedNavn,
   setValgtBehandling,
+  intl: IntlShape,
+  alleSøknadsperioder: PerioderMedBehandlingsId[],
 ): ReactElement[] =>
   sortBehandlinger(behandlinger).map(behandling => (
     <li key={behandling.id}>
@@ -39,11 +51,7 @@ const renderListItems = (
         to={getBehandlingLocation(behandling.id)}
       >
         <BehandlingPickerItemContent
-          opprettetDato={behandling.opprettet}
-          avsluttetDato={behandling.avsluttet}
-          behandlingsstatus={
-            getKodeverkFn(behandling.status, { kode: behandlingType.FORSTEGANGSSOKNAD, kodeverk: '' }).navn
-          }
+          behandlingTypeNavn={getBehandlingNavn(behandling, getKodeverkFn, intl)}
           behandlingsresultatTypeNavn={
             behandling.behandlingsresultat
               ? getKodeverkFn(behandling.behandlingsresultat.type, behandling.type).navn
@@ -53,16 +61,26 @@ const renderListItems = (
             behandling.behandlingsresultat ? behandling.behandlingsresultat.type.kode : undefined
           }
           erAutomatiskRevurdering={behandling.behandlingÅrsaker.some(årsak => årsak.erAutomatiskRevurdering)}
+          søknadsperioder={alleSøknadsperioder.find(periode => periode.id === behandling.id)?.perioder}
         />
       </NavLink>
     </li>
   ));
+
+const usePrevious = (value: number): number => {
+  const ref = useRef<number>();
+  useEffect(() => {
+    ref.current = value;
+  });
+  return ref.current;
+};
 
 interface OwnProps {
   behandlinger: BehandlingAppKontekst[];
   getBehandlingLocation: (behandlingId: number) => Location;
   noExistingBehandlinger: boolean;
   getKodeverkFn: (kodeverk: Kodeverk, behandlingType?: Kodeverk) => KodeverkMedNavn;
+  behandlingId?: number;
 }
 
 /**
@@ -70,13 +88,44 @@ interface OwnProps {
  *
  * Viser behandlinger knyttet til fagsak,
  */
-const BehandlingPicker = ({ noExistingBehandlinger, behandlinger, getBehandlingLocation, getKodeverkFn }: OwnProps) => {
-  const [valgtBehandlingId, setValgtBehandlingId] = useState(
-    behandlinger.find(behandling => !behandling.behandlingsresultat)?.id,
-  );
+const BehandlingPicker = ({
+  noExistingBehandlinger,
+  behandlingId,
+  behandlinger,
+  getBehandlingLocation,
+  getKodeverkFn,
+}: OwnProps) => {
+  const intl = useIntl();
+  const [valgtBehandlingId, setValgtBehandlingId] = useState(behandlingId);
+  const previousBehandlingId = usePrevious(behandlingId);
+  const [søknadsperioder, setSøknadsperioder] = useState<Array<PerioderMedBehandlingsId>>([]);
+
+  useEffect(() => {
+    if (!previousBehandlingId && behandlingId) {
+      setValgtBehandlingId(behandlingId);
+    }
+  }, [behandlingId]);
+
+  useEffect(() => {
+    const perioder = [];
+    Promise.all(
+      behandlinger.map(behandling =>
+        axios
+          .get(behandling.links.find(link => link.rel === 'behandling-perioder-årsak').href)
+          .then(response => ({ data: response.data, id: behandling.id })),
+      ),
+    ).then((responses: { data: BehandlingPerioder; id: number }[]) => {
+      responses.forEach(({ data, id }) => {
+        perioder.push({ id, perioder: data.perioderTilVurdering });
+      });
+      setSøknadsperioder(perioder);
+    });
+  }, []);
+
   const valgtBehandling = valgtBehandlingId
     ? behandlinger.find(behandling => behandling.id === valgtBehandlingId)
     : null;
+
   return (
     <div className={styles.behandlingPicker}>
       {valgtBehandlingId && (
@@ -95,19 +144,22 @@ const BehandlingPicker = ({ noExistingBehandlinger, behandlinger, getBehandlingL
               </Normaltekst>
             )}
             {!noExistingBehandlinger &&
-              renderListItems(behandlinger, getBehandlingLocation, getKodeverkFn, setValgtBehandlingId)}
+              renderListItems(
+                behandlinger,
+                getBehandlingLocation,
+                getKodeverkFn,
+                setValgtBehandlingId,
+                intl,
+                søknadsperioder,
+              )}
           </ul>
         </>
       )}
       {valgtBehandling && (
         <>
-          <Undertittel>Om behandling</Undertittel>
           <BehandlingSelected
             opprettetDato={valgtBehandling.opprettet}
             avsluttetDato={valgtBehandling.avsluttet}
-            behandlingsstatus={
-              getKodeverkFn(valgtBehandling.status, { kode: behandlingType.FORSTEGANGSSOKNAD, kodeverk: '' }).navn
-            }
             behandlingsresultatTypeNavn={
               valgtBehandling.behandlingsresultat
                 ? getKodeverkFn(valgtBehandling.behandlingsresultat.type, valgtBehandling.type).navn
@@ -116,13 +168,11 @@ const BehandlingPicker = ({ noExistingBehandlinger, behandlinger, getBehandlingL
             behandlingsresultatTypeKode={
               valgtBehandling.behandlingsresultat ? valgtBehandling.behandlingsresultat.type.kode : undefined
             }
-            behandlingÅrsak={
-              valgtBehandling.førsteÅrsak
-                ? getKodeverkFn(valgtBehandling.førsteÅrsak.behandlingArsakType, valgtBehandling.type).navn
-                : undefined
-            }
-            behandlingTypeKode={valgtBehandling.type.kode}
-            førsteÅrsak={valgtBehandling.førsteÅrsak}
+            behandlingsårsaker={valgtBehandling.behandlingÅrsaker.map(
+              årsak => getKodeverkFn(årsak.behandlingArsakType).navn,
+            )}
+            behandlingTypeNavn={getBehandlingNavn(valgtBehandling, getKodeverkFn, intl)}
+            søknadsperioder={søknadsperioder.find(periode => periode.id === valgtBehandling.id)?.perioder}
           />
         </>
       )}
