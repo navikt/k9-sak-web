@@ -2,9 +2,9 @@ import PropTypes from 'prop-types';
 
 import { kodeverkObjektPropType } from '@fpsak-frontend/prop-types';
 
-const beregningAvklaringsbehovPropType = PropTypes.shape({
-  definisjon: kodeverkObjektPropType.isRequired,
-  status: kodeverkObjektPropType.isRequired,
+const beregningAvklaringsbehovPropType = PropTypes.exact({
+  definisjon: kodeverkObjektPropType,
+  status: kodeverkObjektPropType,
   begrunnelse: PropTypes.string,
 });
 

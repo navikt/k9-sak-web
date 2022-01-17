@@ -2,12 +2,9 @@ import React from 'react';
 import { useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
 import { ArbeidsgiverOpplysningerPerId, Dokument } from '@k9-sak-web/types';
 import { MicroFrontend } from '@fpsak-frontend/utils';
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import httpErrorHandlerFn from '../microfrontend/utils/httpErrorHandler';
 import findEndpointsForMicrofrontend from '../microfrontend/utils/findEndpointsForMicrofrontend';
 import SimpleEndpoints from '../microfrontend/types/SimpleEndpoints';
-import findAksjonspunkt from '../microfrontend/utils/findAksjonspunkt';
 
 const initializeInntektsmeldingApp = (
   elementId,
@@ -17,7 +14,8 @@ const initializeInntektsmeldingApp = (
   dokumenter: Dokument[],
   løsAksjonspunkt,
   readOnly,
-  visFortsettKnapp: boolean,
+  saksbehandlere,
+  aksjonspunkter,
 ) => {
   (window as any).renderKompletthetApp(elementId, {
     httpErrorHandler,
@@ -26,7 +24,8 @@ const initializeInntektsmeldingApp = (
     readOnly,
     onFinished: løsAksjonspunkt,
     endpoints,
-    visFortsettKnapp,
+    saksbehandlere,
+    aksjonspunkter,
   });
 };
 
@@ -38,23 +37,13 @@ export default ({
   dokumenter,
   aksjonspunkter,
   submitCallback,
+  saksbehandlere,
 }) => {
   const { addErrorMessage } = useRestApiErrorDispatcher();
   const httpErrorHandlerCaller = (status: number, locationHeader?: string) =>
     httpErrorHandlerFn(status, addErrorMessage, locationHeader);
 
-  const inntektsmeldingManglerAksjonspunkt = findAksjonspunkt(
-    aksjonspunkter,
-    aksjonspunktCodes.INNTEKTSMELDING_MANGLER,
-  );
-  const inntektsmeldingManglerAksjonspunktkode = inntektsmeldingManglerAksjonspunkt?.definisjon.kode;
-  const inntektsmeldingManglerAksjonspunktstatus = inntektsmeldingManglerAksjonspunkt?.status.kode;
-  const visFortsettknapp = inntektsmeldingManglerAksjonspunktstatus === aksjonspunktStatus.OPPRETTET;
-  const harAksjonspunkt = !!inntektsmeldingManglerAksjonspunktkode;
-
-  const løsAksjonspunkt = aksjonspunktArgs =>
-    submitCallback([{ kode: inntektsmeldingManglerAksjonspunktkode, ...aksjonspunktArgs }]);
-
+  const løsAksjonspunkt = aksjonspunktArgs => submitCallback([{ ...aksjonspunktArgs }]);
   return (
     <MicroFrontend
       id={inntektsmeldingAppId}
@@ -71,8 +60,9 @@ export default ({
           arbeidsgiverOpplysningerPerId,
           dokumenter,
           løsAksjonspunkt,
-          readOnly || !harAksjonspunkt,
-          visFortsettknapp,
+          readOnly,
+          saksbehandlere || {},
+          aksjonspunkter,
         )
       }
     />

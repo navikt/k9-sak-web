@@ -14,9 +14,5 @@
   {
     "key": "UNNTAKSBEHANDLING",
     "value": "${UNNTAKSBEHANDLING}"
-  },
-  {
-    "key": "INNTEKTSMELDING_NY_FLYT",
-    "value": "${INNTEKTSMELDING_NY_FLYT}"
   }
 ]

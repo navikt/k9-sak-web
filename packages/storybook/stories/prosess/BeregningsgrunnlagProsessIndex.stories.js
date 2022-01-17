@@ -199,6 +199,7 @@ const lagBG = (perioder, statuser, sammenligningsgrunnlagPrStatus, grunnbeløp =
   const beregningsgrunnlag = {
     skjaeringstidspunktBeregning: '2019-09-16',
     skjæringstidspunkt: '2019-09-16',
+    vilkårsperiodeFom: '2019-09-16',
     aktivitetStatus: statuser,
     beregningsgrunnlagPeriode: perioder,
     dekningsgrad: 80,
@@ -284,6 +285,9 @@ const lagBG = (perioder, statuser, sammenligningsgrunnlagPrStatus, grunnbeløp =
       ],
       vurderMilitaer: null,
       refusjonskravSomKommerForSentListe: null,
+      saksopplysninger: {
+        arbeidsforholdMedLønnsendring: [],
+      }
     },
     hjemmel: {
       kode: 'F_14_7_8_30',
@@ -566,7 +570,7 @@ export const selvstendigNæringsdrivende = () => {
       orgnr: '910909077',
       utenlandskvirksomhetsnavn: null,
       virksomhetType: { kode: 'JORDBRUK_SKOGBRUK', kodeverk: 'VIRKSOMHET_TYPE' },
-      virksomhetNavn: 'Berit Jensen',
+      virksomhetNavn: 'Navn Navnesen',
     },
   ];
   andeler[0].næringer = næringer;
@@ -2876,3 +2880,32 @@ export const midlertidigInaktivAvslagEnG = () => {
     />
   );
 };
+
+export const arbeidstakerUtenAvvikMedLonnsendringSisteTreMan = () => {
+  const andeler = [lagAndel('AT', 450000, undefined, false)];
+  const perioder = [lagPeriodeMedDagsats(andeler, 1384.6153)];
+  const statuser = [lagStatus('AT')];
+  const sammenligningsgrunnlagPrStatus = [lagSammenligningsGrunnlag(sammenligningType.ATFLSN, 330257, 6.2, -30257)];
+  const bg = lagBG(perioder, statuser, sammenligningsgrunnlagPrStatus);
+
+  bg.faktaOmBeregning.saksopplysninger.arbeidsforholdMedLønnsendring = [true];
+
+  return (
+    <BeregningsgrunnlagProsessIndex
+      behandling={behandling}
+      beregningsgrunnlag={[bg, bg]}
+      aksjonspunkter={[]}
+      submitCallback={action('button-click')}
+      isReadOnly={false}
+      readOnlySubmitButton={false}
+      isAksjonspunktOpen={false}
+      vilkar={vilkarMedUtfall(vilkarUtfallType.OPPFYLT, [
+        bg.skjaeringstidspunktBeregning,
+        bg.skjaeringstidspunktBeregning,
+      ])}
+      alleKodeverk={alleKodeverk}
+      arbeidsgiverOpplysningerPerId={arbeidsgivere}
+    />
+  );
+};
+

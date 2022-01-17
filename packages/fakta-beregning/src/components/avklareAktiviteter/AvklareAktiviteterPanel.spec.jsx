@@ -138,6 +138,7 @@ describe('<AvklareAktiviteterPanel>', () => {
     const avklaringsbehov = [{ definisjon: { kode: AVKLAR_AKTIVITETER }, status: { kode: 'OPPR' } }];
     const beregningsgrunnlag = {
       skjæringstidspunkt: '2019-02-02',
+      vilkårsperiodeFom: '2019-02-02',
       avklaringsbehov,
       faktaOmBeregning: {
         avklarAktiviteter,
@@ -205,6 +206,7 @@ describe('<AvklareAktiviteterPanel>', () => {
         arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
         beregningsgrunnlag={{
           skjæringstidspunkt: '2019-02-02',
+          vilkårsperiodeFom: '2019-02-02',
           avklaringsbehov,
           faktaOmBeregning: {
             avklarAktiviteter,
@@ -252,6 +254,7 @@ describe('<AvklareAktiviteterPanel>', () => {
         arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
         beregningsgrunnlag={{
           skjæringstidspunkt: '2019-02-02',
+          vilkårsperiodeFom: '2019-02-02',
           avklaringsbehov,
           faktaOmBeregning: {
             avklarAktiviteter,
@@ -283,6 +286,7 @@ describe('<AvklareAktiviteterPanel>', () => {
         isAvklaringsbehovClosed={false}
         beregningsgrunnlag={{
           skjæringstidspunkt: '2019-02-02',
+          vilkårsperiodeFom: '2019-02-02',
           avklaringsbehov,
           faktaOmBeregning: {
             avklarAktiviteter,
@@ -325,6 +329,7 @@ describe('<AvklareAktiviteterPanel>', () => {
 
     const beregningsgrunnlag = {
       skjæringstidspunkt: '2019-02-02',
+      vilkårsperiodeFom: '2019-02-02',
       avklaringsbehov,
       faktaOmBeregning: {
         avklarAktiviteter,
@@ -380,6 +385,7 @@ describe('<AvklareAktiviteterPanel>', () => {
         isAvklaringsbehovClosed={false}
         beregningsgrunnlag={{
           skjæringstidspunkt: '2019-02-02',
+          vilkårsperiodeFom: '2019-02-02',
           avklaringsbehov,
           faktaOmBeregning: {
             avklarAktiviteter,
@@ -428,6 +434,7 @@ describe('<AvklareAktiviteterPanel>', () => {
         isAvklaringsbehovClosed={false}
         beregningsgrunnlag={{
           skjæringstidspunkt: '2019-02-02',
+          vilkårsperiodeFom: '2019-02-02',
           avklaringsbehov,
           faktaOmBeregning: {
             avklarAktiviteter,
@@ -475,6 +482,7 @@ describe('<AvklareAktiviteterPanel>', () => {
         isAvklaringsbehovClosed={false}
         beregningsgrunnlag={{
           skjæringstidspunkt: '2019-02-02',
+          vilkårsperiodeFom: '2019-02-02',
           avklaringsbehov,
           faktaOmBeregning: {
             avklarAktiviteter,
@@ -522,6 +530,7 @@ describe('<AvklareAktiviteterPanel>', () => {
         isAvklaringsbehovClosed={false}
         beregningsgrunnlag={{
           skjæringstidspunkt: '2019-02-02',
+          vilkårsperiodeFom: '2019-02-02',
           avklaringsbehov,
           faktaOmBeregning: {
             avklarAktiviteter,
@@ -564,7 +573,8 @@ describe('<AvklareAktiviteterPanel>', () => {
     const beregningsgrunnlag = { 
       avklaringsbehov: apsAvklarAktiviteter,
       faktaOmBeregning: { avklarAktiviteter },
-      skjæringstidspunkt: '2019-02-02'
+      skjæringstidspunkt: '2019-02-02',
+      vilkårsperiodeFom: '2019-02-02'
     };
     const initialValues = buildInitialValuesAvklarAktiviteter(beregningsgrunnlag, {
       aktivtBeregningsgrunnlagIndex: 1,
@@ -583,7 +593,8 @@ describe('<AvklareAktiviteterPanel>', () => {
       { 
         avklaringsbehov: aps,
         faktaOmBeregning: { avklarAktiviteter },
-        skjæringstidspunkt: '2019-02-02'
+        skjæringstidspunkt: '2019-02-02',
+        vilkårsperiodeFom: '2019-02-02',
       },
       {
         aktivtBeregningsgrunnlagIndex: 1,
@@ -603,7 +614,8 @@ describe('<AvklareAktiviteterPanel>', () => {
       { 
         avklaringsbehov: aps,
         faktaOmBeregning: { avklarAktiviteter },
-        skjæringstidspunkt: '2019-02-02'
+        skjæringstidspunkt: '2019-02-02',
+        vilkårsperiodeFom: '2019-02-02',
       },
       {
         aktivtBeregningsgrunnlagIndex: 1,
@@ -655,7 +667,7 @@ describe('<AvklareAktiviteterPanel>', () => {
     values[BEGRUNNELSE_AVKLARE_AKTIVITETER_NAME] = 'begrunnelse';
     values.avklareAktiviteterListe[0][MANUELL_OVERSTYRING_FIELD] = true;
     const vilkårsperioder = [{ periode: { fom: '2019-02-02', tom: '2019-02-05' }, vurdersIBehandlingen: true }];
-    const bg = { avklaringsbehov: aps, skjaeringstidspunktBeregning: '2019-02-02', skjæringstidspunkt: '2019-02-02' };
+    const bg = { avklaringsbehov: aps, skjaeringstidspunktBeregning: '2019-02-02', skjæringstidspunkt: '2019-02-02', vilkårsperiodeFom: '2019-02-02'  };
     const transformed = transformValues(values, vilkårsperioder, bg);
     expect(transformed.length).to.equal(1);
     expect(transformed[0].beregningsaktivitetLagreDtoList[0].arbeidsgiverIdentifikator).to.equal(
