@@ -1,7 +1,4 @@
-import advarselImg from '@fpsak-frontend/assets/images/advarsel-circle.svg';
-import avslaattImg from '@fpsak-frontend/assets/images/avslaatt_valgt.svg';
 import calendarImg from '@fpsak-frontend/assets/images/calendar-2.svg';
-import innvilgetImg from '@fpsak-frontend/assets/images/innvilget_valgt.svg';
 import behandlingResultatType from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
 import { DateLabel, Image } from '@fpsak-frontend/shared-components';
 import { Periode } from '@k9-sak-web/types';
@@ -9,7 +6,7 @@ import classnames from 'classnames/bind';
 import { Element, Normaltekst, Undertittel } from 'nav-frontend-typografi';
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
-import getFormattedPerioder from './getFormattedPerioder';
+import { getFormattedPerioder, getStatusIcon } from './behandlingVelgerUtils';
 import styles from './behandlingSelected.less';
 
 const cx = classnames.bind(styles);
@@ -69,30 +66,7 @@ const BehandlingSelected: React.FC<BehandlingSelectedProps> = props => {
             <Normaltekst>{getFormattedPerioder(søknadsperioder)}</Normaltekst>
           </div>
           <div className={`${styles.resultContainer} ${styles.marginTop8}`}>
-            {behandlingsresultatTypeKode === behandlingResultatType.INNVILGET && (
-              <Image
-                className={styles.utfallImage}
-                src={innvilgetImg}
-                tooltip={<FormattedMessage id="BehandlingPickerItemContent.Behandling.Innvilget" />}
-                alignTooltipLeft
-              />
-            )}
-            {behandlingsresultatTypeKode === behandlingResultatType.AVSLATT && (
-              <Image
-                className={styles.utfallImage}
-                src={avslaattImg}
-                tooltip={<FormattedMessage id="BehandlingPickerItemContent.Behandling.Avslaatt" />}
-                alignTooltipLeft
-              />
-            )}
-            {behandlingsresultatTypeKode === behandlingResultatType.IKKE_FASTSATT && (
-              <Image
-                className={styles.utfallImage}
-                src={advarselImg}
-                tooltip={<FormattedMessage id="BehandlingPickerItemContent.Behandling.UnderBehandling" />}
-                alignTooltipLeft
-              />
-            )}
+            {getStatusIcon(behandlingsresultatTypeKode, styles.utfallImage)}
             <Normaltekst>{behandlingsresultatTypeKode ? behandlingsresultatTypeNavn : '-'}</Normaltekst>
           </div>
         </div>
