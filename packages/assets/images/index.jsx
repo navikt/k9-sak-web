@@ -97,6 +97,5 @@ export { default as zoomIn } from './zoom_in.svg';
 export { default as zoomInFilled } from './zoom_in_filled.svg';
 export { default as zoomOut } from './zoom_out.svg';
 export { default as zoomOutFilled } from './zoom_out_filled.svg';
-export { default as bin } from './bin.svg';
 export { default as chevronBlueRight } from './chevron_blue_right.svg';
 export { default as calendar2 } from './calendar-2.svg';
