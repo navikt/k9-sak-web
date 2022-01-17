@@ -11,7 +11,7 @@ import { Normaltekst, Undertittel } from 'nav-frontend-typografi';
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import styles from './behandlingPickerItemContent.less';
-import getFormattedPerioder from './behandlingPickerUtils';
+import getFormattedPerioder from './getFormattedPerioder';
 
 const getAutomatiskRevurderingText = () => <span className={styles.smallerUndertittel}>(automatisk behandlet)</span>;
 

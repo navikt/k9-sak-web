@@ -9,7 +9,7 @@ import classnames from 'classnames/bind';
 import { Element, Normaltekst, Undertittel } from 'nav-frontend-typografi';
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
-import getFormattedPerioder from './behandlingPickerUtils';
+import getFormattedPerioder from './getFormattedPerioder';
 import styles from './behandlingSelected.less';
 
 const cx = classnames.bind(styles);
