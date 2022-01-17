@@ -103,6 +103,7 @@ const {
 const lagBeregningsgrunnlagAvklarAktiviteter = (aktiviteter, avklaringsbehov) => ({
   avklaringsbehov,
   skjæringstidspunkt,
+  vilkårsperiodeFom:   skjæringstidspunkt,
   faktaOmBeregning: {
     avklarAktiviteter: {
       skjæringstidspunkt,
@@ -130,6 +131,7 @@ const lagAvklaringsbehov = (faktaOmBeregning) => {
 const lagBeregningsgrunnlag = (andeler, faktaOmBeregning, avklaringsbehov) => ({
   avklaringsbehov: avklaringsbehov === null || avklaringsbehov === undefined  ? lagAvklaringsbehov(faktaOmBeregning) : avklaringsbehov,
   skjæringstidspunkt,
+  vilkårsperiodeFom:   skjæringstidspunkt,
   beregningsgrunnlagPeriode: [
     {
       beregningsgrunnlagPrStatusOgAndel: andeler.map(andel => ({

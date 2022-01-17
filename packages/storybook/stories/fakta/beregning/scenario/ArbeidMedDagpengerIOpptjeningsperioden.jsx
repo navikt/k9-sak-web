@@ -2,6 +2,7 @@ const beregningsgrunnlag = {
   avklaringsbehov: [{definisjon: { kode : '5052' }, status: { kode: 'OPPR'}}],
   skjaeringstidspunktBeregning: '2020-01-13',
   skjæringstidspunkt: '2020-01-13',
+  vilkårsperiodeFom:   '2020-01-13',
   aktivitetStatus: [{ kode: 'AT', kodeverk: 'AKTIVITET_STATUS' }],
   beregningsgrunnlagPeriode: [
     {

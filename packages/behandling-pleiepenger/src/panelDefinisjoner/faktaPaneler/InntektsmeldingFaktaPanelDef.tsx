@@ -8,7 +8,6 @@ import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { PleiepengerBehandlingApiKeys } from '../../data/pleiepengerBehandlingApi';
 import Inntektsmelding from '../../components/Inntektsmelding';
-import InntektsmeldingGammelFlyt from '../../components/InntektsmeldingGammelFlyt';
 
 class InntektsmeldingFaktaPanelDef extends FaktaPanelDef {
   getUrlKode = () => faktaPanelCodes.INNTEKTSMELDING;
@@ -22,12 +21,7 @@ class InntektsmeldingFaktaPanelDef extends FaktaPanelDef {
 
   getEndepunkter = () => [PleiepengerBehandlingApiKeys.ARBEIDSFORHOLD];
 
-  getKomponent = props =>
-    props?.featureToggles?.INNTEKTSMELDING_NY_FLYT ? (
-      <Inntektsmelding {...props} />
-    ) : (
-      <InntektsmeldingGammelFlyt {...props} />
-    );
+  getKomponent = props => <Inntektsmelding {...props} />;
 
   getData = ({ arbeidsgiverOpplysningerPerId, dokumenter, hentSaksbehandlere }) => ({
     arbeidsgiverOpplysningerPerId,

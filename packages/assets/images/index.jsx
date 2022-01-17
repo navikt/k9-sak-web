@@ -6,6 +6,7 @@ export { default as arrowDown } from './arrow_down.svg';
 export { default as arrowDownFilled } from './arrow_down_filled.svg';
 export { default as arrowLeft } from './arrow_left.svg';
 export { default as arrowLeftFilled } from './arrow_left_filled.svg';
+export { default as arrowLeftPurple } from './arrow_left_purple.svg';
 export { default as arrowRight } from './arrow_right.svg';
 export { default as arrowRightFilled } from './arrow_right_filled.svg';
 export { default as avslaatt } from './avslaatt.svg';
@@ -28,6 +29,8 @@ export { default as beregnValgtIkkeOppfylt } from './beregn_valgt_ikke_oppfylt.s
 export { default as beregnValgtIkkeOppfyltHover } from './beregn_valgt_ikke_oppfylt_hover.svg';
 export { default as beslutter } from './beslutter.svg';
 export { default as check } from './check.svg';
+export { default as checkBlue } from './check_blue.svg';
+
 export { default as currentDay } from './currentDay.svg';
 export { default as endre } from './endre.svg';
 export { default as endreDisabled } from './endre_disablet.svg';
