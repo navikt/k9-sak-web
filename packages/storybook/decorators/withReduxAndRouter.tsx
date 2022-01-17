@@ -1,6 +1,6 @@
 import React from 'react';
 import { Provider } from 'react-redux';
-import { Router } from 'react-router-dom';
+import { MemoryRouter } from 'react-router-dom';
 import { createBrowserHistory } from 'history';
 
 import configureStore from '@k9-sak-web/sak-app/src/configureStore';
@@ -14,9 +14,9 @@ const withReduxAndRouterProvider = Story => {
 
   return (
     <Provider store={store}>
-      <Router history={history}>
+      <MemoryRouter>
         <Story />
-      </Router>
+      </MemoryRouter>
     </Provider>
   );
 };
