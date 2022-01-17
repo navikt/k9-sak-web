@@ -1,20 +1,22 @@
-import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
-import FagsakProfilSakIndex from '@fpsak-frontend/sak-fagsak-profil';
-import { LoadingPanel, requireProps } from '@fpsak-frontend/shared-components';
-import { RestApiState } from '@k9-sak-web/rest-api-hooks';
-import BehandlingVelgerSakIndex from '@k9-sak-web/sak-behandling-velger';
-import {
-  Aksjonspunkt,
-  ArbeidsgiverOpplysningerPerId,
-  BehandlingAppKontekst,
-  Fagsak,
-  KodeverkMedNavn,
-  Personopplysninger,
-  Risikoklassifisering,
-} from '@k9-sak-web/types';
+import React, { useState, useEffect, useCallback } from 'react';
+import { Navigate, useLocation, useMatch } from 'react-router-dom';
 import { Location } from 'history';
-import React, { useCallback, useEffect, useState } from 'react';
-import { Redirect, useLocation, useRouteMatch } from 'react-router-dom';
+
+import { LoadingPanel, requireProps } from '@fpsak-frontend/shared-components';
+import BehandlingVelgerSakIndex from '@k9-sak-web/sak-behandling-velger';
+import FagsakProfilSakIndex from '@fpsak-frontend/sak-fagsak-profil';
+import {
+  KodeverkMedNavn,
+  Fagsak,
+  Aksjonspunkt,
+  Risikoklassifisering,
+  BehandlingAppKontekst,
+  Personopplysninger,
+  ArbeidsgiverOpplysningerPerId,
+} from '@k9-sak-web/types';
+import { RestApiState } from '@k9-sak-web/rest-api-hooks';
+
+import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import { getLocationWithDefaultProsessStegAndFakta, pathToBehandling, pathToBehandlinger } from '../app/paths';
 import BehandlingRettigheter from '../behandling/behandlingRettigheterTsType';
 import BehandlingMenuIndex, { BehandlendeEnheter } from '../behandlingmenu/BehandlingMenuIndex';
@@ -92,8 +94,8 @@ export const FagsakProfileIndex = ({
     setShowAll(!behandlingId);
   }, [behandlingId]);
 
-  const match = useRouteMatch();
-  const shouldRedirectToBehandlinger = match.isExact;
+  const match = useMatch('/fagsak/:saksnummer/');
+  const shouldRedirectToBehandlinger = !!match;
 
   const location = useLocation();
   const getBehandlingLocation = useCallback(
@@ -118,7 +120,7 @@ export const FagsakProfileIndex = ({
     <div className={styles.panelPadding}>
       {!harHentetBehandlinger && <LoadingPanel />}
       {harHentetBehandlinger && shouldRedirectToBehandlinger && (
-        <Redirect to={findPathToBehandling(fagsak.saksnummer, location, alleBehandlinger)} />
+        <Navigate to={findPathToBehandling(fagsak.saksnummer, location, alleBehandlinger)} />
       )}
       {harHentetBehandlinger && !shouldRedirectToBehandlinger && (
         <FagsakProfilSakIndex
