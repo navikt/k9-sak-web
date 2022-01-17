@@ -68,7 +68,7 @@ const BehandlingSelected: React.FC<BehandlingSelectedProps> = props => {
             />
             <Normaltekst>{getFormattedPerioder(søknadsperioder)}</Normaltekst>
           </div>
-          <div className={`${styles.resultContainer} ${styles.marginTop4}`}>
+          <div className={`${styles.resultContainer} ${styles.marginTop8}`}>
             {behandlingsresultatTypeKode === behandlingResultatType.INNVILGET && (
               <Image
                 className={styles.utfallImage}
@@ -103,7 +103,7 @@ const BehandlingSelected: React.FC<BehandlingSelectedProps> = props => {
               <DateLabel dateString={opprettetDato} />
             </Normaltekst>
           </div>
-          <div className={`${styles.flexContainer} ${styles.marginTop4}`}>
+          <div className={`${styles.flexContainer} ${styles.marginTop8}`}>
             <Element className={styles.marginRight4}>Avsluttet:</Element>
             <Normaltekst>
               <DateLabel dateString={avsluttetDato} />

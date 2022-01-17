@@ -3,12 +3,9 @@ import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import BehandlingVelgerSakIndex from '@k9-sak-web/sak-behandling-velger';
 import { Behandling, Kodeverk } from '@k9-sak-web/types';
 import { boolean, number, object, withKnobs } from '@storybook/addon-knobs';
-import React, { useState } from 'react';
+import React from 'react';
 import withReduxAndRouterProvider from '../../decorators/withReduxAndRouter';
 import alleKodeverk from '../mocks/alleKodeverk.json';
-
-// const BEHANDLING_TYPE_KODEVERK = 'BEHANDLING_TYPE';
-// const BEHANDLING_STATUS_KODEVERK = 'BEHANDLING_STATUS';
 
 const behandlinger = [
   {
@@ -272,7 +269,6 @@ export default {
 };
 
 export const visPanelForValgAvBehandlinger = () => {
-  const [visAlle, toggleVisAlle] = useState(false);
   return (
     <div style={{ width: '600px' }}>
       <BehandlingVelgerSakIndex
@@ -280,8 +276,6 @@ export const visPanelForValgAvBehandlinger = () => {
         getBehandlingLocation={() => locationMock}
         noExistingBehandlinger={boolean('noExistingBehandlinger', false)}
         behandlingId={number('behandlingId', 1)}
-        showAll={visAlle}
-        toggleShowAll={() => toggleVisAlle(!visAlle)}
         getKodeverkFn={getKodeverkFn}
       />
     </div>

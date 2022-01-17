@@ -49,15 +49,4 @@ export const isAvslag = behandlingResultatTypeKode =>
 
 export const isOpphor = behandlingResultatTypeKode => behandlingResultatTypeKode === behandlingResultatType.OPPHOR;
 
-export const isHenlagt = behandlingResultatTypeKode =>
-  [
-    behandlingResultatType.HENLAGT_BRUKER_DOD,
-    behandlingResultatType.HENLAGT_FEILOPPRETTET,
-    behandlingResultatType.HENLAGT_FEILOPPRETTET_MED_BREV,
-    behandlingResultatType.HENLAGT_FEILOPPRETTET_UTEN_BREV,
-    behandlingResultatType.HENLAGT_INNSYN_TRUKKET,
-    behandlingResultatType.HENLAGT_KLAGE_TRUKKET,
-    behandlingResultatType.HENLAGT_SOKNAD_TRUKKET,
-  ].some(type => type === behandlingResultatTypeKode);
-
 export default behandlingResultatType;

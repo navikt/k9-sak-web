@@ -83,7 +83,9 @@ const BehandlingPickerItemContent: React.FC<OwnProps> = ({
         </div>
       </div>
       <div className={styles.åpneText}>
-        <p>Åpne</p>
+        <Normaltekst>
+          <FormattedMessage id="BehandlingPickerItemContent.Behandling.Aapne" />
+        </Normaltekst>
         <Image
           className={styles.åpneChevron}
           src={chevronBlueRightImg}
