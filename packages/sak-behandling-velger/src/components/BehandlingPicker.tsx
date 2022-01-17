@@ -34,21 +34,29 @@ const getBehandlingNavn = (
   intl: IntlShape,
 ) => {
   if (behandling.type.kode === behandlingType.FORSTEGANGSSOKNAD || behandling.type.kode === behandlingType.KLAGE) {
-    return getKodeverkFn(behandling.type, behandling.type).navn;
+    return getKodeverkFn(behandling.type).navn;
   }
 
   return intl.formatMessage({ id: 'BehandlingPickerItemContent.BehandlingTypeNavn.Viderebehandling' });
 };
 
-const renderListItems = (
-  behandlinger: BehandlingAppKontekst[],
-  getBehandlingLocation: (behandlingId: number) => Location,
-  getKodeverkFn: (kodeverk: Kodeverk, behandlingType?: Kodeverk) => KodeverkMedNavn,
-  setValgtBehandling,
-  intl: IntlShape,
-  alleSøknadsperioder: PerioderMedBehandlingsId[],
-  activeFilters: string[],
-): ReactElement[] =>
+const renderListItems = ({
+  behandlinger,
+  getBehandlingLocation,
+  getKodeverkFn,
+  setValgtBehandlingId,
+  intl,
+  alleSøknadsperioder,
+  activeFilters,
+}: {
+  behandlinger: BehandlingAppKontekst[];
+  getBehandlingLocation: (behandlingId: number) => Location;
+  getKodeverkFn: (kodeverk: Kodeverk, behandlingType?: Kodeverk) => KodeverkMedNavn;
+  setValgtBehandlingId;
+  intl: IntlShape;
+  alleSøknadsperioder: PerioderMedBehandlingsId[];
+  activeFilters: string[];
+}): ReactElement[] =>
   sortBehandlinger(behandlinger)
     .filter(behandling => {
       if (activeFilters.length === 0) {
@@ -59,7 +67,7 @@ const renderListItems = (
     .map(behandling => (
       <li key={behandling.id}>
         <NavLink
-          onClick={() => setValgtBehandling(behandling.id)}
+          onClick={() => setValgtBehandlingId(behandling.id)}
           className={styles.linkToBehandling}
           to={getBehandlingLocation(behandling.id)}
         >
@@ -192,15 +200,15 @@ const BehandlingPicker = ({
               </Normaltekst>
             )}
             {!noExistingBehandlinger &&
-              renderListItems(
+              renderListItems({
                 behandlinger,
                 getBehandlingLocation,
                 getKodeverkFn,
                 setValgtBehandlingId,
                 intl,
-                søknadsperioder,
+                alleSøknadsperioder: søknadsperioder,
                 activeFilters,
-              )}
+              })}
           </ul>
         </>
       )}
