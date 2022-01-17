@@ -1,0 +1,24 @@
+{
+  "MedlemskapInfoPanel.Medlemskap": "Medlemskap",
+  "ArbeidsforholdInfoPanel.Title": "Arbeidsforhold",
+  "OmPleietrengende.Titel": "Om pleietrengende",
+  "BeregningInfoPanel.Title": "Beregning",
+  "MedisinskVilkarPanel.MedisinskVilkar": "Sykdom",
+  "InntektOgYtelser.Title": "Inntekt og ytelser",
+  "MainSideMenu.Heading": "Saksopplysninger",
+  "OpptjeningInfoPanel.KontrollerFaktaForOpptjening": "Opptjening",
+
+  "Behandlingspunkt.MedisinskVilkar": "Sykdom",
+  "Behandlingspunkt.Inngangsvilkar": "Inngangsvilkår",
+  "Behandlingspunkt.InngangsvilkarForts": "Inngangsvilkår Fortsettelse",
+  "Behandlingspunkt.Beregning": "Beregning",
+  "Behandlingspunkt.Uttak": "Uttak",
+  "Behandlingspunkt.Vedtak": "Vedtak",
+  "Behandlingspunkt.TilkjentYtelse": "Tilkjent ytelse",
+  "Behandlingspunkt.Soknadsfristvilkaret": "Søknadsfrist",
+  "Behandlingspunkt.Avregning": "Simulering",
+
+  "ProsessStegIkkeBehandletPanel.IkkeBehandlet": "Dette steget er ikke behandlet",
+  
+  "OmPleietrengendeInfoPanel.Title": "Om pleietrengende"
+}
