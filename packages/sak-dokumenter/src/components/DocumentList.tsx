@@ -2,13 +2,15 @@ import arrowLeftPurpleImageUrl from '@fpsak-frontend/assets/images/arrow_left_pu
 import internDokumentImageUrl from '@fpsak-frontend/assets/images/intern_dokument.svg';
 import mottaDokumentImageUrl from '@fpsak-frontend/assets/images/motta_dokument.svg';
 import sendDokumentImageUrl from '@fpsak-frontend/assets/images/send_dokument.svg';
+import eksternLinkImageUrl from '@fpsak-frontend/assets/images/ekstern_link_pil_boks.svg';
 import kommunikasjonsretning from '@fpsak-frontend/kodeverk/src/kommunikasjonsretning';
 import { DateTimeLabel, Image, Table, TableColumn, TableRow, Tooltip } from '@fpsak-frontend/shared-components';
-import { Dokument } from '@k9-sak-web/types';
+import { Dokument, Personopplysninger } from '@k9-sak-web/types';
 import { Select } from 'nav-frontend-skjema';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
 import React, { useState } from 'react';
 import { FormattedMessage, injectIntl, WrappedComponentProps } from 'react-intl';
+import Lenke from 'nav-frontend-lenker';
 import styles from './documentList.less';
 
 const headerTextCodes = [
@@ -50,10 +52,22 @@ const getDirectionText = (document: Dokument): string => {
   return 'DocumentList.Intern';
 };
 
+const getModiaPath = (fødselsnummer: string) => {
+  const { host } = window.location;
+  if (host === 'app-q1.adeo.no') {
+    return `https://app-q1.adeo.no/modiapersonoversikt/person/${fødselsnummer}/meldinger/`;
+  }
+  if (host === 'app.adeo.no') {
+    return `https://app.adeo.no/modiapersonoversikt/person/${fødselsnummer}/meldinger/`;
+  }
+  return null;
+};
+
 interface OwnProps {
   documents: Dokument[];
   behandlingId?: number;
   selectDocumentCallback: (e: React.SyntheticEvent, id: number, dokument: Dokument) => void;
+  personopplysninger?: Personopplysninger;
 }
 
 /**
@@ -63,7 +77,13 @@ interface OwnProps {
  * trigget når saksbehandler velger et dokument. Finnes ingen dokumenter blir det kun vist en label
  * som viser at ingen dokumenter finnes på fagsak.
  */
-const DocumentList = ({ intl, documents, behandlingId, selectDocumentCallback }: OwnProps & WrappedComponentProps) => {
+const DocumentList = ({
+  intl,
+  documents,
+  behandlingId,
+  selectDocumentCallback,
+  personopplysninger,
+}: OwnProps & WrappedComponentProps) => {
   const [selectedFilter, setSelectedFilter] = useState(alleBehandlinger);
   const harMerEnnEnBehandlingKnyttetTilDokumenter = () => {
     const unikeBehandlinger = [];
@@ -88,16 +108,20 @@ const DocumentList = ({ intl, documents, behandlingId, selectDocumentCallback }:
   }
   return (
     <>
-      {harMerEnnEnBehandlingKnyttetTilDokumenter() && (
-        <Select
-          className={styles.behandlingSelector}
-          bredde="m"
-          onChange={event => setSelectedFilter(event.target.value)}
-        >
-          <option value={alleBehandlinger}>Alle behandlinger</option>
-          <option value={behandlingId}>Denne behandlingen</option>
-        </Select>
-      )}
+      <div className={styles.controlsContainer}>
+        {harMerEnnEnBehandlingKnyttetTilDokumenter() && (
+          <Select bredde="m" onChange={event => setSelectedFilter(event.target.value)}>
+            <option value={alleBehandlinger}>Alle behandlinger</option>
+            <option value={behandlingId}>Denne behandlingen</option>
+          </Select>
+        )}
+        <Lenke target="_blank" className={styles.modiaLink} href={getModiaPath(personopplysninger?.fnr)}>
+          <span>
+            <FormattedMessage id="DocumentList.ModiaLink" />
+          </span>
+          <Image className={styles.externalIcon} src={eksternLinkImageUrl} />
+        </Lenke>
+      </div>
       <Table headerTextCodes={headerTextCodes}>
         {documents
           .filter(document =>
