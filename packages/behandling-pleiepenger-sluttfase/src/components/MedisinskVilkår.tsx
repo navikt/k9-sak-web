@@ -17,6 +17,7 @@ const initializeMedisinskVilkår = (
   readOnly,
   visFortsettknapp,
   saksbehandlere,
+  erFagytelsetypePPN
 ) => {
   (window as any).renderMedisinskVilkarApp(elementId, {
     httpErrorHandler: httpErrorHandlerFn,
@@ -26,11 +27,12 @@ const initializeMedisinskVilkår = (
     readOnly,
     visFortsettknapp,
     saksbehandlere,
+    erFagytelsetypePPN,
   });
 };
 
 const medisinskVilkårAppID = 'medisinskVilkårApp';
-export default ({ behandling: { links, uuid }, submitCallback, aksjonspunkter, readOnly, saksbehandlere }) => {
+export default ({ behandling: { links, uuid }, submitCallback, aksjonspunkter, readOnly, saksbehandlere, erFagytelsetypePPN}) => {
   const { addErrorMessage } = useRestApiErrorDispatcher();
   const httpErrorHandlerCaller = (status: number, locationHeader?: string) =>
     httpErrorHandler(status, addErrorMessage, locationHeader);
@@ -75,6 +77,7 @@ export default ({ behandling: { links, uuid }, submitCallback, aksjonspunkter, r
           readOnly || !harAksjonspunkt,
           visFortsettknapp,
           saksbehandlere || {},
+          erFagytelsetypePPN
         )
       }
     />
