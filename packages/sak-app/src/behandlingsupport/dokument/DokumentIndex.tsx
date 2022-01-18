@@ -2,7 +2,7 @@ import React, { useMemo } from 'react';
 
 import { LoadingPanel, requireProps, usePrevious } from '@fpsak-frontend/shared-components';
 import DokumenterSakIndex from '@fpsak-frontend/sak-dokumenter';
-import { Dokument } from '@k9-sak-web/types';
+import { Dokument, Personopplysninger } from '@k9-sak-web/types';
 import { RestApiState } from '@k9-sak-web/rest-api-hooks';
 
 import useBehandlingEndret from '../../behandling/useBehandlingEndret';
@@ -34,6 +34,7 @@ interface OwnProps {
   saksnummer: number;
   behandlingId?: number;
   behandlingVersjon?: number;
+  personopplysninger?: Personopplysninger;
 }
 
 const EMPTY_ARRAY = [];
@@ -43,7 +44,7 @@ const EMPTY_ARRAY = [];
  *
  * Container komponent. Har ansvar for å hente sakens dokumenter fra state og rendre det i en liste.
  */
-export const DokumentIndex = ({ behandlingId, behandlingVersjon, saksnummer }: OwnProps) => {
+export const DokumentIndex = ({ behandlingId, behandlingVersjon, personopplysninger, saksnummer }: OwnProps) => {
   const forrigeSaksnummer = usePrevious(saksnummer);
   const erBehandlingEndretFraUndefined = useBehandlingEndret(behandlingId, behandlingVersjon);
   const { data: alleDokumenter = EMPTY_ARRAY, state } = restApiHooks.useRestApi<Dokument[]>(
@@ -67,6 +68,7 @@ export const DokumentIndex = ({ behandlingId, behandlingVersjon, saksnummer }: O
       documents={sorterteDokumenter}
       selectDocumentCallback={selectDocument(saksnummer)}
       behandlingId={behandlingId}
+      personopplysninger={personopplysninger}
     />
   );
 };
