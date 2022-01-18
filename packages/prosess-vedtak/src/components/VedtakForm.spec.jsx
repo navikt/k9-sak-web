@@ -14,7 +14,7 @@ import vedtaksbrevtype from '@fpsak-frontend/kodeverk/src/vedtaksbrevtype';
 import { buildInitialValues, VedtakForm } from './VedtakForm';
 import VedtakInnvilgetPanel from './VedtakInnvilgetPanel';
 import VedtakAvslagPanel from './VedtakAvslagPanel';
-import VedtakOverstyrendeKnapp from './VedtakOverstyrendeKnapp';
+import VedtakKnapp from './VedtakKnapp';
 import shallowWithIntl, { intlMock } from '../../i18n';
 
 describe('<VedtakForm>', () => {
@@ -927,7 +927,7 @@ describe('<VedtakForm>', () => {
         tilgjengeligeVedtaksbrev={alleTilgjengeligeVedtaksbrev}
       />,
     );
-    const overstyringsKnapp = wrapper.find(VedtakOverstyrendeKnapp);
+    const overstyringsKnapp = wrapper.find(VedtakKnapp);
     expect(overstyringsKnapp).to.have.length(1);
     expect(overstyringsKnapp.prop('readOnly')).to.eql(true);
     expect(overstyringsKnapp.prop('keyName')).to.eql('skalBrukeOverstyrendeFritekstBrev');
@@ -963,7 +963,7 @@ describe('<VedtakForm>', () => {
         tilgjengeligeVedtaksbrev={alleTilgjengeligeVedtaksbrev}
       />,
     );
-    const overstyringsKnapp = wrapper.find(VedtakOverstyrendeKnapp);
+    const overstyringsKnapp = wrapper.find(VedtakKnapp);
     expect(overstyringsKnapp).to.have.length(1);
     expect(overstyringsKnapp.prop('readOnly')).to.eql(false);
     expect(overstyringsKnapp.prop('keyName')).to.eql('skalBrukeOverstyrendeFritekstBrev');

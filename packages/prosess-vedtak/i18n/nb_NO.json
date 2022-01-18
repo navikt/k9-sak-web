@@ -57,6 +57,7 @@
   "VedtakForm.Revurdering.OpphoererDato": "{ytelse} opphører f.o.m. {dato}",
   "VedtakForm.Revurdering.Opphoerer": "{ytelse} opphører",
   "VedtakForm.ManuellOverstyring": "Overstyr automatisk brev",
+  "VedtakForm.HindreUtsending": "Hindre utsending av brev",
   "VedtakForm.Brev": "Manuelt brev",
   "VedtakForm.Overskrift": "Overskrift",
   "VedtakForm.Innhold": "Innhold i brev til søker",

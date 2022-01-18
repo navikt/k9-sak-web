@@ -26,7 +26,7 @@ import {
 } from '@fpsak-frontend/utils/src/formidlingUtils';
 import vedtakBeregningsresultatPropType from '../../propTypes/vedtakBeregningsresultatPropType';
 
-import VedtakOverstyrendeKnapp from '../VedtakOverstyrendeKnapp';
+import VedtakKnapp from '../VedtakKnapp';
 import VedtakAksjonspunktPanel from '../VedtakAksjonspunktPanel';
 import VedtakRevurderingSubmitPanel from './VedtakRevurderingSubmitPanel';
 import VedtakInnvilgetRevurderingPanel from './VedtakInnvilgetRevurderingPanel';
@@ -141,10 +141,10 @@ export class VedtakRevurderingFormImpl extends Component {
           <VerticalSpacer eightPx />
           <>
             {ytelseTypeKode === fagsakYtelseType.FRISINN ? (
-              <VedtakOverstyrendeKnapp readOnly={readOnly} keyName="skalUndertrykkeBrev" readOnlyHideEmpty={false} />
+              <VedtakKnapp readOnly={readOnly} keyName="skalUndertrykkeBrev" readOnlyHideEmpty={false} />
             ) : (
               kanHaFritekstbrev(tilgjengeligeVedtaksbrev) && (
-                <VedtakOverstyrendeKnapp
+                <VedtakKnapp
                   toggleCallback={this.onToggleOverstyring}
                   readOnly={readOnly || harBareFritekstbrev(tilgjengeligeVedtaksbrev)}
                   keyName="skalBrukeOverstyrendeFritekstBrev"

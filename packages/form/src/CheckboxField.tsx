@@ -22,6 +22,7 @@ interface RenderCheckboxFieldProps {
 export const RenderCheckboxField = renderNavField(({ onChange, label, ...otherProps }: RenderCheckboxFieldProps) => {
   // eslint-disable-next-line no-param-reassign
   delete otherProps.isEdited;
+  console.log(otherProps)
   return (
     <NavCheckbox
       onChange={event => onChange(event.target.checked)}

@@ -29,7 +29,7 @@ import VedtakInnvilgetPanel from './VedtakInnvilgetPanel';
 import VedtakAvslagPanel from './VedtakAvslagPanel';
 import VedtakAksjonspunktPanel from './VedtakAksjonspunktPanel';
 import styles from './vedtakForm.less';
-import VedtakOverstyrendeKnapp from './VedtakOverstyrendeKnapp';
+import VedtakKnapp from './VedtakKnapp';
 import BrevPanel from './brev/BrevPanel';
 import UstrukturerteDokumenter from './UstrukturerteDokumenter';
 
@@ -43,23 +43,41 @@ const formName = 'VedtakForm';
 export class VedtakForm extends Component {
   constructor(props) {
     super(props);
-    this.onToggleOverstyring = this.onToggleOverstyring.bind(this);
     this.state = {
       skalBrukeOverstyrendeFritekstBrev: props.skalBrukeOverstyrendeFritekstBrev,
+      skalHindreUtsendingAvBrev: false,
     };
   }
 
-  onToggleOverstyring() {
+  onToggleOverstyring = () => {
     const { behandlingFormPrefix, clearFields: clearFormFields } = this.props;
     const { skalBrukeOverstyrendeFritekstBrev } = this.state;
     this.setState({
       skalBrukeOverstyrendeFritekstBrev: !skalBrukeOverstyrendeFritekstBrev,
     });
+
+    if (this.state.skalHindreUtsendingAvBrev && !skalBrukeOverstyrendeFritekstBrev) {
+      this.setState({ skalHindreUtsendingAvBrev: false });
+    }
     const fields = ['begrunnelse', 'overskrift', 'brødtekst'];
     clearFormFields(`${behandlingFormPrefix}.VedtakForm`, false, false, ...fields);
-  }
+  };
 
+  onToggleHindreUtsending = () => {
+    const { skalHindreUtsendingAvBrev } = this.state;
+    this.setState({
+      skalHindreUtsendingAvBrev: !skalHindreUtsendingAvBrev,
+    });
+
+    if (this.state.skalBrukeOverstyrendeFritekstBrev && !skalHindreUtsendingAvBrev) {
+      this.setState({ skalBrukeOverstyrendeFritekstBrev: false });
+    }
+  };
+
+  
   render() {
+    console.log('fritekst', this.state.skalBrukeOverstyrendeFritekstBrev)
+    console.log('hindre', this.state.skalHindreUtsendingAvBrev)
     const {
       intl,
       readOnly,
@@ -119,18 +137,28 @@ export class VedtakForm extends Component {
           overlappendeYtelser={overlappendeYtelser}
           alleKodeverk={alleKodeverk}
         >
-          {ytelseTypeKode === fagsakYtelseType.FRISINN ? (
-            <VedtakOverstyrendeKnapp readOnly={readOnly} keyName="skalUndertrykkeBrev" readOnlyHideEmpty={false} />
-          ) : (
-            kanHaFritekstbrev(tilgjengeligeVedtaksbrev) && (
-              <VedtakOverstyrendeKnapp
-                toggleCallback={this.onToggleOverstyring}
+          <div className={styles.knappContainer}>
+            {kanHaFritekstbrev(tilgjengeligeVedtaksbrev) && (
+              <VedtakKnapp
+                value={this.state.skalBrukeOverstyrendeFritekstBrev}
+                onChange={this.onToggleOverstyring}
                 readOnly={readOnly || harBareFritekstbrev(tilgjengeligeVedtaksbrev)}
                 keyName="skalBrukeOverstyrendeFritekstBrev"
+                label="VedtakForm.ManuellOverstyring"
                 readOnlyHideEmpty={false}
               />
-            )
-          )}
+            )}
+            {(ytelseTypeKode === fagsakYtelseType.FRISINN || ytelseTypeKode === fagsakYtelseType.PLEIEPENGER) && (
+              <VedtakKnapp
+                onChange={this.onToggleHindreUtsending}
+                value={this.state.skalHindreUtsendingAvBrev}
+                readOnly={readOnly}
+                keyName="skalUndertrykkeBrev"
+                label="VedtakForm.HindreUtsending"
+                readOnlyHideEmpty={false}
+              />
+            )}
+          </div>
 
           {fritekstdokumenter?.length > 0 && <UstrukturerteDokumenter fritekstdokumenter={fritekstdokumenter} />}
 
@@ -199,7 +227,7 @@ export class VedtakForm extends Component {
                     {intl.formatMessage({
                       id:
                         aksjonspunkter &&
-                          aksjonspunkter.some(ap => ap.erAktivt === true && ap.toTrinnsBehandling === true)
+                        aksjonspunkter.some(ap => ap.erAktivt === true && ap.toTrinnsBehandling === true)
                           ? 'VedtakForm.TilGodkjenning'
                           : 'VedtakForm.FattVedtak',
                     })}
