@@ -15,12 +15,9 @@ import { isAvslag, isDelvisInnvilget, isInnvilget } from '@fpsak-frontend/kodeve
 import behandlingStatusCode from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import { behandlingForm, behandlingFormValueSelector, getBehandlingFormPrefix } from '@fpsak-frontend/form';
 
-import { dokumentdatatype } from '@k9-sak-web/konstanter';
-import { decodeHtmlEntity, safeJSONParse } from '@fpsak-frontend/utils';
+import { safeJSONParse } from '@fpsak-frontend/utils';
 import {
   kanHaFritekstbrev,
-  harOverstyrtMedFritekstbrev,
-  harOverstyrtMedIngenBrev,
   harBareFritekstbrev,
 } from '@fpsak-frontend/utils/src/formidlingUtils';
 import vedtakBeregningsresultatPropType from '../propTypes/vedtakBeregningsresultatPropType';
@@ -76,8 +73,6 @@ export class VedtakForm extends Component {
 
   
   render() {
-    console.log('fritekst', this.state.skalBrukeOverstyrendeFritekstBrev)
-    console.log('hindre', this.state.skalHindreUtsendingAvBrev)
     const {
       intl,
       readOnly,
@@ -280,72 +275,14 @@ VedtakForm.propTypes = {
 };
 
 VedtakForm.defaultProps = {
-  antallBarn: undefined,
-  kanOverstyre: undefined,
-  resultatstruktur: undefined,
   skalBrukeOverstyrendeFritekstBrev: false,
-  tilgjengeligeVedtaksbrev: undefined,
-  dokumentdata: undefined,
-  KONTINUERLIG_TILSYN: undefined,
-  OMSORGEN_FOR: undefined,
-  VILKAR_FOR_TO: undefined,
-  UNNTAK_FRA_TILSYNSORDNING: undefined,
-  BEREGNING_25_PROSENT_AVVIK: undefined,
-  OVER_18_AAR: undefined,
-  REVURDERING_ENDRING: undefined,
 };
-
-export const buildInitialValues = createSelector(
-  [
-    ownProps => ownProps.behandlingStatus,
-    ownProps => ownProps.resultatstruktur,
-    ownProps => ownProps.aksjonspunkter,
-    ownProps => ownProps.ytelseTypeKode,
-    ownProps => ownProps.behandlingresultat,
-    ownProps => ownProps.sprakkode,
-    ownProps => ownProps.vedtakVarsel,
-    ownProps => ownProps.dokumentdata,
-    ownProps => ownProps.tilgjengeligeVedtaksbrev,
-    ownProps => ownProps.readOnly,
-  ],
-  (
-    status,
-    beregningResultat,
-    aksjonspunkter,
-    ytelseTypeKode,
-    behandlingresultat,
-    sprakkode,
-    vedtakVarsel,
-    dokumentdata,
-    tilgjengeligeVedtaksbrev,
-    readonly,
-  ) => ({
-    sprakkode,
-    isEngangsstonad: beregningResultat && ytelseTypeKode ? ytelseTypeKode === fagsakYtelseType.ENGANGSSTONAD : false,
-    antallBarn: beregningResultat ? beregningResultat.antallBarn : undefined,
-    aksjonspunktKoder: aksjonspunkter.filter(ap => ap.kanLoses).map(ap => ap.definisjon.kode),
-    skalBrukeOverstyrendeFritekstBrev:
-      harBareFritekstbrev(tilgjengeligeVedtaksbrev) || harOverstyrtMedFritekstbrev(dokumentdata, vedtakVarsel),
-    skalUndertrykkeBrev: readonly && harOverstyrtMedIngenBrev(dokumentdata, vedtakVarsel),
-    overskrift: decodeHtmlEntity(dokumentdata?.[dokumentdatatype.FRITEKSTBREV]?.overskrift),
-    brødtekst: decodeHtmlEntity(dokumentdata?.[dokumentdatatype.FRITEKSTBREV]?.brødtekst),
-    overstyrtMottaker: JSON.stringify(dokumentdata?.[dokumentdatatype.OVERSTYRT_MOTTAKER]),
-    begrunnelse: dokumentdata?.[dokumentdatatype.BEREGNING_FRITEKST],
-    KONTINUERLIG_TILSYN: dokumentdata?.KONTINUERLIG_TILSYN,
-    OMSORGEN_FOR: dokumentdata?.OMSORGEN_FOR,
-    VILKAR_FOR_TO: dokumentdata?.VILKAR_FOR_TO,
-    UNNTAK_FRA_TILSYNSORDNING: dokumentdata?.UNNTAK_FRA_TILSYNSORDNING,
-    BEREGNING_25_PROSENT_AVVIK: dokumentdata?.BEREGNING_25_PROSENT_AVVIK,
-    OVER_18_AAR: dokumentdata?.OVER_18_AAR,
-    REVURDERING_ENDRING: dokumentdata?.REVURDERING_ENDRING,
-  }),
-);
 
 export const getAksjonspunktKoder = createSelector([ownProps => ownProps.aksjonspunkter], aksjonspunkter =>
   aksjonspunkter.map(ap => ap.definisjon.kode),
 );
 
-const transformValues = (values, tilgjengeligeVedtaksbrev) =>
+const onSubmitPayload = (values, tilgjengeligeVedtaksbrev) =>
   values.aksjonspunktKoder.map(apCode => ({
     kode: apCode,
     begrunnelse: values.begrunnelse,
@@ -360,7 +297,7 @@ const transformValues = (values, tilgjengeligeVedtaksbrev) =>
     tilgjengeligeVedtaksbrev,
   }));
 
-const transformValuesForFlereInformasjonsbehov = (values, informasjonsbehov, tilgjengeligeVedtaksbrev) => {
+const onSubmitPayloadMedEkstraInformasjon = (values, informasjonsbehov, tilgjengeligeVedtaksbrev) => {
   const begrunnelser = informasjonsbehov.map(({ kode }) => ({ kode, begrunnelse: values[kode] }));
   return values.aksjonspunktKoder.map(apCode => ({
     kode: apCode,
@@ -402,14 +339,14 @@ const mapStateToPropsFactory = (initialState, initialOwnProps) => {
   const onSubmit = values => {
     const { informasjonsbehovVedtaksbrev, submitCallback } = initialOwnProps;
     if (harPotensieltFlereInformasjonsbehov(informasjonsbehovVedtaksbrev)) {
-      const transformedValuesForFlereInformasjonsbehov = transformValuesForFlereInformasjonsbehov(
+      const transformedValuesForFlereInformasjonsbehov = onSubmitPayloadMedEkstraInformasjon(
         values,
         informasjonsbehovVedtaksbrev.informasjonsbehov,
         initialOwnProps.tilgjengeligeVedtaksbrev,
       );
       return submitCallback(transformedValuesForFlereInformasjonsbehov);
     }
-    const transformedValues = transformValues(values, initialOwnProps.tilgjengeligeVedtaksbrev);
+    const transformedValues = onSubmitPayload(values, initialOwnProps.tilgjengeligeVedtaksbrev);
     return submitCallback(transformedValues);
   };
   return (state, ownProps) => {
