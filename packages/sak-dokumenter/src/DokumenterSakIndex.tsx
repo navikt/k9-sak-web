@@ -1,7 +1,7 @@
 import React from 'react';
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 
-import { Dokument } from '@k9-sak-web/types';
+import { Dokument, Personopplysninger } from '@k9-sak-web/types';
 
 import DocumentList from './components/DocumentList';
 import messages from '../i18n/nb_NO.json';
@@ -20,11 +20,17 @@ interface OwnProps {
   documents: Dokument[];
   selectDocumentCallback: (e: React.SyntheticEvent, id: number, dokument: Dokument) => void;
   behandlingId?: number;
+  personopplysninger?: Personopplysninger;
 }
 
-const DokumenterSakIndex = ({ documents, selectDocumentCallback, behandlingId }: OwnProps) => (
+const DokumenterSakIndex = ({ documents, selectDocumentCallback, behandlingId, personopplysninger }: OwnProps) => (
   <RawIntlProvider value={intl}>
-    <DocumentList documents={documents} selectDocumentCallback={selectDocumentCallback} behandlingId={behandlingId} />
+    <DocumentList
+      documents={documents}
+      selectDocumentCallback={selectDocumentCallback}
+      behandlingId={behandlingId}
+      personopplysninger={personopplysninger}
+    />
   </RawIntlProvider>
 );
 
