@@ -360,7 +360,6 @@ const mapStateToPropsFactory = (initialState, initialOwnProps) => {
 
     return {
       onSubmit,
-      initialValues: buildInitialValues(ownProps),
       ...behandlingFormValueSelector(formName, ownProps.behandlingId, ownProps.behandlingVersjon)(
         state,
         'antallBarn',

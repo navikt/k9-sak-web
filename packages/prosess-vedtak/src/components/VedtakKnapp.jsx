@@ -3,9 +3,7 @@ import PropTypes from 'prop-types';
 
 import { CheckboxField } from '@fpsak-frontend/form';
 
-const VedtakKnapp = ({ readOnly, readOnlyHideEmpty, onChange, keyName, label, value }) => {
-  console.log(value)
-  return (
+const VedtakKnapp = ({ readOnly, readOnlyHideEmpty, onChange, keyName, label, value }) => (
     <div>
       <CheckboxField
         key={keyName}
@@ -18,7 +16,6 @@ const VedtakKnapp = ({ readOnly, readOnlyHideEmpty, onChange, keyName, label, va
       />
     </div>
   );
-};
 
 VedtakKnapp.propTypes = {
   onChange: PropTypes.func,
