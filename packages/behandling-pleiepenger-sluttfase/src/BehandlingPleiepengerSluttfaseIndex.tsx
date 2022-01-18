@@ -15,6 +15,9 @@ import { RestApiState, useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-ho
 
 import { K9sakApiKeys, restApiHooks } from '@k9-sak-web/sak-app/src/data/k9sakApi';
 import useBehandlingEndret from '@k9-sak-web/sak-app/src/behandling/useBehandlingEndret';
+import {createIntl, createIntlCache, RawIntlProvider} from "react-intl";
+import messages from '../i18n/nb_NO.json';
+
 import {
   restApiPleiepengerSluttfaseHooks,
   requestPleiepengerSluttfaseApi,
@@ -35,6 +38,16 @@ const pleiepengerData = [
   { key: PleiepengerSluttfaseBehandlingApiKeys.OVERLAPPENDE_YTELSER },
   { key: PleiepengerSluttfaseBehandlingApiKeys.HENT_SAKSBEHANDLERE },
 ];
+
+const cache = createIntlCache();
+
+const intl = createIntl(
+  {
+    locale: 'nb-NO',
+    messages,
+  },
+  cache,
+);
 
 interface OwnProps {
   behandlingId: number;
@@ -179,26 +192,28 @@ const BehandlingPleiepengerSluttfaseIndex = ({
         behandlingId={behandling.id}
         behandlingVersjon={harIkkeHentetBehandlingsdata ? forrigeBehandling.versjon : behandling.versjon}
       />
-      <PleiepengerSluttfasePaneler
-        behandling={harIkkeHentetBehandlingsdata ? forrigeBehandling : behandling}
-        fetchedData={data}
-        fagsak={fagsak}
-        fagsakPerson={fagsakPerson}
-        alleKodeverk={kodeverk}
-        rettigheter={rettigheter}
-        valgtProsessSteg={valgtProsessSteg}
-        valgtFaktaSteg={valgtFaktaSteg}
-        oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
-        oppdaterBehandlingVersjon={oppdaterBehandlingVersjon}
-        settPaVent={settPaVent}
-        hentBehandling={hentBehandling}
-        opneSokeside={opneSokeside}
-        hasFetchError={behandlingState === RestApiState.ERROR}
-        setBehandling={setBehandling}
-        arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysninger ? arbeidsgiverOpplysninger.arbeidsgivere : {}}
-        featureToggles={featureToggles}
-        dokumenter={alleDokumenter}
-      />
+      <RawIntlProvider value={intl}>
+        <PleiepengerSluttfasePaneler
+          behandling={harIkkeHentetBehandlingsdata ? forrigeBehandling : behandling}
+          fetchedData={data}
+          fagsak={fagsak}
+          fagsakPerson={fagsakPerson}
+          alleKodeverk={kodeverk}
+          rettigheter={rettigheter}
+          valgtProsessSteg={valgtProsessSteg}
+          valgtFaktaSteg={valgtFaktaSteg}
+          oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
+          oppdaterBehandlingVersjon={oppdaterBehandlingVersjon}
+          settPaVent={settPaVent}
+          hentBehandling={hentBehandling}
+          opneSokeside={opneSokeside}
+          hasFetchError={behandlingState === RestApiState.ERROR}
+          setBehandling={setBehandling}
+          arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysninger ? arbeidsgiverOpplysninger.arbeidsgivere : {}}
+          featureToggles={featureToggles}
+          dokumenter={alleDokumenter}
+        />
+      </RawIntlProvider>
     </>
   );
 };
