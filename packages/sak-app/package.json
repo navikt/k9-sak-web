@@ -70,7 +70,7 @@
     "react-dom": "^17.0.2",
     "react-intl": "^5.24.3",
     "react-redux": "^7.2.6",
-    "react-responsive": "^8.2.0",
+    "react-responsive": "^9.0.0-beta.6",
     "react-router-dom": "^6.2.1",
     "redux": "^4.1.2",
     "redux-form": "^8.3.8",
