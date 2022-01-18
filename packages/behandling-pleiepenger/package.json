@@ -36,7 +36,7 @@
     "@k9-sak-web/rest-api-hooks": "1.0.0",
     "@k9-sak-web/sak-app": "1.0.0",
     "@k9-sak-web/types": "1.0.0",
-    "axios": "0.24.0",
+    "axios": "0.25.0",
     "nav-frontend-alertstriper": "^4.0.1",
     "react": "^17.0.2",
     "react-intl": "^5.24.3",
