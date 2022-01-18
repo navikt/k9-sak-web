@@ -1,16 +1,16 @@
 import arrowLeftPurpleImageUrl from '@fpsak-frontend/assets/images/arrow_left_purple.svg';
+import eksternLinkImageUrl from '@fpsak-frontend/assets/images/ekstern_link_pil_boks.svg';
 import internDokumentImageUrl from '@fpsak-frontend/assets/images/intern_dokument.svg';
 import mottaDokumentImageUrl from '@fpsak-frontend/assets/images/motta_dokument.svg';
 import sendDokumentImageUrl from '@fpsak-frontend/assets/images/send_dokument.svg';
-import eksternLinkImageUrl from '@fpsak-frontend/assets/images/ekstern_link_pil_boks.svg';
 import kommunikasjonsretning from '@fpsak-frontend/kodeverk/src/kommunikasjonsretning';
 import { DateTimeLabel, Image, Table, TableColumn, TableRow, Tooltip } from '@fpsak-frontend/shared-components';
-import { Dokument, Personopplysninger } from '@k9-sak-web/types';
+import { Dokument, FagsakPerson } from '@k9-sak-web/types';
+import Lenke from 'nav-frontend-lenker';
 import { Select } from 'nav-frontend-skjema';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
 import React, { useState } from 'react';
 import { FormattedMessage, injectIntl, WrappedComponentProps } from 'react-intl';
-import Lenke from 'nav-frontend-lenker';
 import styles from './documentList.less';
 
 const headerTextCodes = [
@@ -67,7 +67,7 @@ interface OwnProps {
   documents: Dokument[];
   behandlingId?: number;
   selectDocumentCallback: (e: React.SyntheticEvent, id: number, dokument: Dokument) => void;
-  personopplysninger?: Personopplysninger;
+  fagsakPerson?: FagsakPerson;
 }
 
 /**
@@ -82,7 +82,7 @@ const DocumentList = ({
   documents,
   behandlingId,
   selectDocumentCallback,
-  personopplysninger,
+  fagsakPerson,
 }: OwnProps & WrappedComponentProps) => {
   const [selectedFilter, setSelectedFilter] = useState(alleBehandlinger);
   const harMerEnnEnBehandlingKnyttetTilDokumenter = () => {
@@ -99,11 +99,23 @@ const DocumentList = ({
     return unikeBehandlinger.length > 1;
   };
 
+  const getModiaLenke = () => (
+    <Lenke target="_blank" className={styles.modiaLink} href={getModiaPath(fagsakPerson?.personnummer)}>
+      <span>
+        <FormattedMessage id="DocumentList.ModiaLink" />
+      </span>
+      <Image className={styles.externalIcon} src={eksternLinkImageUrl} />
+    </Lenke>
+  );
+
   if (documents.length === 0) {
     return (
-      <Normaltekst className={styles.noDocuments}>
-        <FormattedMessage id="DocumentList.NoDocuments" />
-      </Normaltekst>
+      <>
+        <div className={styles.controlsContainer}>{getModiaLenke()}</div>
+        <Normaltekst className={styles.noDocuments}>
+          <FormattedMessage id="DocumentList.NoDocuments" />
+        </Normaltekst>
+      </>
     );
   }
   return (
@@ -115,12 +127,7 @@ const DocumentList = ({
             <option value={behandlingId}>Denne behandlingen</option>
           </Select>
         )}
-        <Lenke target="_blank" className={styles.modiaLink} href={getModiaPath(personopplysninger?.fnr)}>
-          <span>
-            <FormattedMessage id="DocumentList.ModiaLink" />
-          </span>
-          <Image className={styles.externalIcon} src={eksternLinkImageUrl} />
-        </Lenke>
+        {getModiaLenke()}
       </div>
       <Table headerTextCodes={headerTextCodes}>
         {documents
