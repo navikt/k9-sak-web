@@ -1,10 +1,8 @@
+import { Dokument, FagsakPerson } from '@k9-sak-web/types';
 import React from 'react';
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
-
-import { Dokument } from '@k9-sak-web/types';
-
-import DocumentList from './components/DocumentList';
 import messages from '../i18n/nb_NO.json';
+import DocumentList from './components/DocumentList';
 
 const cache = createIntlCache();
 
@@ -20,11 +18,17 @@ interface OwnProps {
   documents: Dokument[];
   selectDocumentCallback: (e: React.SyntheticEvent, id: number, dokument: Dokument) => void;
   behandlingId?: number;
+  fagsakPerson?: FagsakPerson;
 }
 
-const DokumenterSakIndex = ({ documents, selectDocumentCallback, behandlingId }: OwnProps) => (
+const DokumenterSakIndex = ({ documents, selectDocumentCallback, behandlingId, fagsakPerson }: OwnProps) => (
   <RawIntlProvider value={intl}>
-    <DocumentList documents={documents} selectDocumentCallback={selectDocumentCallback} behandlingId={behandlingId} />
+    <DocumentList
+      documents={documents}
+      selectDocumentCallback={selectDocumentCallback}
+      behandlingId={behandlingId}
+      fagsakPerson={fagsakPerson}
+    />
   </RawIntlProvider>
 );
 

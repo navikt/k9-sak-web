@@ -135,6 +135,7 @@ const BehandlingSupportIndex = ({
             saksnummer={fagsak.saksnummer}
             behandlingId={behandlingId}
             behandlingVersjon={behandlingVersjon}
+            fagsakPerson={fagsak.person}
           />
         )}
       </div>

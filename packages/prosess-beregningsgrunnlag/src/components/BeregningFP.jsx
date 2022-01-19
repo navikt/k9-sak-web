@@ -182,7 +182,7 @@ export const BeregningFP = props => {
               submitCallback,
               readOnlySubmitButton,
               behandling,
-              readOnly,
+              readOnly: readOnly || !avklaringsbehov.some(ap => ap.kanLoses !== false),
               vilkaarBG,
               alleKodeverk,
               arbeidsgiverOpplysningerPerId,
@@ -195,7 +195,7 @@ export const BeregningFP = props => {
                   formName={formName}
                   behandlingId={behandling.id}
                   behandlingVersjon={behandling.versjon}
-                  isReadOnly={readOnly}
+                  isReadOnly={readOnly || !avklaringsbehov.some(ap => ap.kanLoses !== false)}
                   isSubmittable={!readOnlySubmitButton}
                   isBehandlingFormSubmitting={isBehandlingFormSubmitting}
                   isBehandlingFormDirty={isBehandlingFormDirty}

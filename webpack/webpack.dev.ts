@@ -25,7 +25,7 @@ export default {
   resolve,
   externals,
   cache,
-  plugins: [...plugins, new ReactRefreshWebpackPlugin()],
+  plugins: [...plugins, new ReactRefreshWebpackPlugin(), new webpack.EnvironmentPlugin({ MSW_MODE: 'development' })],
   optimization: {
     moduleIds: 'named',
     splitChunks: {
