@@ -50,6 +50,11 @@ const {
   AVKLAR_AKTIVITETER,
 } = avklaringsbehovCodes;
 
+const relevanteKoder = [VURDER_FAKTA_FOR_ATFL_SN,
+  OVERSTYRING_AV_BEREGNINGSAKTIVITETER,
+  OVERSTYRING_AV_BEREGNINGSGRUNNLAG,
+  AVKLAR_AKTIVITETER];
+
 const lagLabel = (bg, vilkårsperioder) => {
   const stpOpptjening = bg.faktaOmBeregning.avklarAktiviteter.skjæringstidspunkt;
   const vilkårPeriode = vilkårsperioder.find(({ periode }) => periode.fom === stpOpptjening);
@@ -66,8 +71,8 @@ const lagLabel = (bg, vilkårsperioder) => {
 const harAvklaringsbehovIPanel = avklaringsbehov => {
   const harBehovForAvklaring = !!avklaringsbehov;
   if (harBehovForAvklaring) {
-    const harVurderFaktaAksjonspunkt = avklaringsbehov.some(ap => ap.definisjon.kode === VURDER_FAKTA_FOR_ATFL_SN);
-    const harAvklarAktiviteterAP = avklaringsbehov.some(ap => ap.definisjon.kode === AVKLAR_AKTIVITETER);
+    const harVurderFaktaAksjonspunkt = avklaringsbehov.some(ap => ap.definisjon.kode === VURDER_FAKTA_FOR_ATFL_SN && ap.kanLoses !== false);
+    const harAvklarAktiviteterAP = avklaringsbehov.some(ap => ap.definisjon.kode === AVKLAR_AKTIVITETER && ap.kanLoses !== false);
     return harVurderFaktaAksjonspunkt || harAvklarAktiviteterAP;
   }
   return false;
@@ -105,6 +110,7 @@ const BeregningFaktaIndex = ({
   }
 
   const aktiveAvklaringsBehov = aktivtBeregningsgrunnlag.avklaringsbehov;
+  const relevanteLøsbareAvklaringsbehov = aktiveAvklaringsBehov.filter(ap => relevanteKoder.includes(ap.definisjon.kode) && ap.kanLoses !== false)
   const vilkårsperioder = beregningsgrunnlagVilkår.perioder;
 
   return (
@@ -125,6 +131,7 @@ const BeregningFaktaIndex = ({
         <AvklareAktiviteterPanel
           readOnly={
             readOnly ||
+            relevanteLøsbareAvklaringsbehov.length === 0 ||
             (harAvklaringsbehov(OVERSTYRING_AV_BEREGNINGSAKTIVITETER, aktiveAvklaringsBehov) && !erOverstyrer)
           }
           harAndreAvklaringsbehovIPanel={harAvklaringsbehov(VURDER_FAKTA_FOR_ATFL_SN, aktiveAvklaringsBehov)}
@@ -144,7 +151,9 @@ const BeregningFaktaIndex = ({
         <VerticalSpacer thirtyTwoPx />
         <VurderFaktaBeregningPanel
           readOnly={
-            readOnly || (harAvklaringsbehov(OVERSTYRING_AV_BEREGNINGSGRUNNLAG, aktiveAvklaringsBehov) && !erOverstyrer)
+            readOnly || 
+            relevanteLøsbareAvklaringsbehov.length === 0 ||
+            (harAvklaringsbehov(OVERSTYRING_AV_BEREGNINGSGRUNNLAG, aktiveAvklaringsBehov) && !erOverstyrer)
           }
           submitCallback={submitCallback}
           submittable={submittable}
