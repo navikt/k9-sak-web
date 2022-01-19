@@ -103,3 +103,4 @@ export { default as zoomOut } from './zoom_out.svg';
 export { default as zoomOutFilled } from './zoom_out_filled.svg';
 export { default as chevronBlueRight } from './chevron_blue_right.svg';
 export { default as calendar2 } from './calendar-2.svg';
+export { default as xIcon } from './x.svg';

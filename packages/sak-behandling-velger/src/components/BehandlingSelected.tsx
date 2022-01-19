@@ -1,13 +1,14 @@
 import calendarImg from '@fpsak-frontend/assets/images/calendar-2.svg';
 import behandlingResultatType from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
+import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import { DateLabel, Image } from '@fpsak-frontend/shared-components';
 import { Periode } from '@k9-sak-web/types';
 import classnames from 'classnames/bind';
 import { Element, Normaltekst, Undertittel } from 'nav-frontend-typografi';
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
-import { getFormattedPerioder, getStatusIcon } from './behandlingVelgerUtils';
 import styles from './behandlingSelected.less';
+import { getFormattedPerioder, getStatusIcon } from './behandlingVelgerUtils';
 
 const cx = classnames.bind(styles);
 interface BehandlingSelectedProps {
@@ -18,16 +19,18 @@ interface BehandlingSelectedProps {
   behandlingsårsaker: string[];
   behandlingTypeNavn: string;
   søknadsperioder: Periode[];
+  behandlingTypeKode: string;
 }
 
 const BehandlingSelected: React.FC<BehandlingSelectedProps> = props => {
   const {
-    opprettetDato,
     avsluttetDato,
     behandlingsresultatTypeKode,
     behandlingsresultatTypeNavn,
     behandlingsårsaker,
+    behandlingTypeKode,
     behandlingTypeNavn,
+    opprettetDato,
     søknadsperioder,
   } = props;
 
@@ -35,21 +38,26 @@ const BehandlingSelected: React.FC<BehandlingSelectedProps> = props => {
     aapen: !behandlingsresultatTypeKode || behandlingsresultatTypeKode === behandlingResultatType.IKKE_FASTSATT,
   });
 
-  const getÅrsakerForBehandling = () => (
-    <div className={styles.årsakerContainer}>
-      <Undertittel tag="h3" className={styles.font18}>
-        <FormattedMessage id="Behandlingspunkt.ÅrsakerForBehandling" />
-      </Undertittel>
-      <ul className={styles.årsakerList}>
-        {behandlingsårsaker.map((årsak, index) => (
-          // eslint-disable-next-line react/no-array-index-key
-          <li key={`${årsak}_${index}`}>
-            <Normaltekst>{årsak}</Normaltekst>
-          </li>
-        ))}
-      </ul>
-    </div>
-  );
+  const getÅrsakerForBehandling = () => {
+    if (behandlingTypeKode === behandlingType.FORSTEGANGSSOKNAD) {
+      return null;
+    }
+    return (
+      <div className={styles.årsakerContainer}>
+        <Undertittel tag="h3" className={styles.font18}>
+          <FormattedMessage id="Behandlingspunkt.ÅrsakerForBehandling" />
+        </Undertittel>
+        <ul className={styles.årsakerList}>
+          {behandlingsårsaker.map((årsak, index) => (
+            // eslint-disable-next-line react/no-array-index-key
+            <li key={`${årsak}_${index}`}>
+              <Normaltekst>{årsak}</Normaltekst>
+            </li>
+          ))}
+        </ul>
+      </div>
+    );
+  };
 
   return (
     <div className={containerCls}>
