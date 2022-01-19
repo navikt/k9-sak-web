@@ -82,7 +82,7 @@ function BehandlingFilter({ text, filters, activeFilters, onFilterChange }: Beha
             </button>
             <div className={styles.chevronDropdown__dropdown__checkbox}>
               <CheckboxGruppe legend={<FormattedMessage id="Behandlingspunkt.BehandlingFilter.CheckboxLegend" />}>
-                {filters.sort(sortFilters).map(({ label, value }) => {
+                {[...filters].sort(sortFilters).map(({ label, value }) => {
                   if (value === automatiskBehandling) {
                     return (
                       <Checkbox
