@@ -15,6 +15,7 @@ import { RestApiState, useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-ho
 
 import { K9sakApiKeys, restApiHooks } from '@k9-sak-web/sak-app/src/data/k9sakApi';
 import useBehandlingEndret from '@k9-sak-web/sak-app/src/behandling/useBehandlingEndret';
+import { Provider as ReduxProvider } from 'react-redux';
 import {
   restApiPleiepengerSluttfaseHooks,
   requestPleiepengerSluttfaseApi,
@@ -22,10 +23,11 @@ import {
 } from './data/pleiepengerSluttfaseBehandlingApi';
 import PleiepengerSluttfasePaneler from './components/PleiepengerSluttfasePaneler';
 import FetchedData from './types/fetchedDataTsType';
+import store from './store';
 
 const pleiepengerData = [
-  { key: PleiepengerSluttfaseBehandlingApiKeys.AKSJONSPUNKTER },
-  { key: PleiepengerSluttfaseBehandlingApiKeys.VILKAR },
+  // { key: PleiepengerSluttfaseBehandlingApiKeys.AKSJONSPUNKTER },
+  // { key: PleiepengerSluttfaseBehandlingApiKeys.VILKAR },
   { key: PleiepengerSluttfaseBehandlingApiKeys.PERSONOPPLYSNINGER },
   { key: PleiepengerSluttfaseBehandlingApiKeys.SOKNAD },
   { key: PleiepengerSluttfaseBehandlingApiKeys.BEREGNINGSRESULTAT_UTBETALING },
@@ -175,30 +177,32 @@ const BehandlingPleiepengerSluttfaseIndex = ({
 
   return (
     <>
-      <ReduxFormStateCleaner
-        behandlingId={behandling.id}
-        behandlingVersjon={harIkkeHentetBehandlingsdata ? forrigeBehandling.versjon : behandling.versjon}
-      />
-      <PleiepengerSluttfasePaneler
-        behandling={harIkkeHentetBehandlingsdata ? forrigeBehandling : behandling}
-        fetchedData={data}
-        fagsak={fagsak}
-        fagsakPerson={fagsakPerson}
-        alleKodeverk={kodeverk}
-        rettigheter={rettigheter}
-        valgtProsessSteg={valgtProsessSteg}
-        valgtFaktaSteg={valgtFaktaSteg}
-        oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
-        oppdaterBehandlingVersjon={oppdaterBehandlingVersjon}
-        settPaVent={settPaVent}
-        hentBehandling={hentBehandling}
-        opneSokeside={opneSokeside}
-        hasFetchError={behandlingState === RestApiState.ERROR}
-        setBehandling={setBehandling}
-        arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysninger ? arbeidsgiverOpplysninger.arbeidsgivere : {}}
-        featureToggles={featureToggles}
-        dokumenter={alleDokumenter}
-      />
+      <ReduxProvider store={store}>
+        <ReduxFormStateCleaner
+          behandlingId={behandling.id}
+          behandlingVersjon={harIkkeHentetBehandlingsdata ? forrigeBehandling.versjon : behandling.versjon}
+        />
+        <PleiepengerSluttfasePaneler
+          behandling={harIkkeHentetBehandlingsdata ? forrigeBehandling : behandling}
+          fetchedData={data}
+          fagsak={fagsak}
+          fagsakPerson={fagsakPerson}
+          alleKodeverk={kodeverk}
+          rettigheter={rettigheter}
+          valgtProsessSteg={valgtProsessSteg}
+          valgtFaktaSteg={valgtFaktaSteg}
+          oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
+          oppdaterBehandlingVersjon={oppdaterBehandlingVersjon}
+          settPaVent={settPaVent}
+          hentBehandling={hentBehandling}
+          opneSokeside={opneSokeside}
+          hasFetchError={behandlingState === RestApiState.ERROR}
+          setBehandling={setBehandling}
+          arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysninger ? arbeidsgiverOpplysninger.arbeidsgivere : {}}
+          featureToggles={featureToggles}
+          dokumenter={alleDokumenter}
+        />
+      </ReduxProvider>
     </>
   );
 };
