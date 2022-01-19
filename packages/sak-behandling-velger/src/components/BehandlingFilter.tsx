@@ -1,9 +1,29 @@
+import xImg from '@fpsak-frontend/assets/images/x.svg';
+import { Image } from '@fpsak-frontend/shared-components';
 import classNames from 'classnames';
 import Chevron from 'nav-frontend-chevron';
-import { Checkbox } from 'nav-frontend-skjema';
+import { Checkbox, CheckboxGruppe } from 'nav-frontend-skjema';
 import { Element } from 'nav-frontend-typografi';
 import React, { useEffect, useRef, useState } from 'react';
+import { FormattedMessage } from 'react-intl';
 import styles from './behandlingFilter.less';
+
+interface FilterType {
+  value: string;
+  label: string;
+}
+
+export const automatiskBehandling = 'automatiskBehandling';
+
+const sortFilters = (filterA: FilterType, filterB: FilterType) => {
+  if (filterA.value === automatiskBehandling) {
+    return 1;
+  }
+  if (filterB.value === automatiskBehandling) {
+    return -1;
+  }
+  return 0;
+};
 
 interface ChevronWithTextProps {
   chevronDirection: 'opp' | 'ned';
@@ -13,7 +33,7 @@ interface ChevronWithTextProps {
 interface BehandlingfilterProps {
   text: string;
   activeFilters: string[];
-  filters: { label: string; value: string }[];
+  filters: FilterType[];
   onFilterChange: (value: string) => void;
 }
 
@@ -53,19 +73,39 @@ function BehandlingFilter({ text, filters, activeFilters, onFilterChange }: Beha
       </div>
       {open && (
         <div className={styles.chevronDropdown__dropdown}>
-          <span className={classNames(styles.chevronDropdown)}>
-            <ChevronWithText chevronDirection={chevronDirection} onClick={() => setOpen(!open)} text="Lukk" />
+          <div className={classNames(styles.chevronDropdown)}>
+            <button className={styles.closeButton} type="button" onClick={() => setOpen(!open)}>
+              <span>
+                <FormattedMessage id="Behandlingspunkt.BehandlingFilter.Lukk" />
+              </span>
+              <Image src={xImg} />
+            </button>
             <div className={styles.chevronDropdown__dropdown__checkbox}>
-              {filters.map(({ label, value }) => (
-                <Checkbox
-                  key={value}
-                  label={label}
-                  checked={activeFilters.includes(value)}
-                  onChange={() => onFilterChange(value)}
-                />
-              ))}
+              <CheckboxGruppe legend={<FormattedMessage id="Behandlingspunkt.BehandlingFilter.CheckboxLegend" />}>
+                {[...filters].sort(sortFilters).map(({ label, value }) => {
+                  if (value === automatiskBehandling) {
+                    return (
+                      <Checkbox
+                        className={styles.automaticCheckbox}
+                        label={label}
+                        checked={activeFilters.includes(automatiskBehandling)}
+                        onChange={() => onFilterChange(automatiskBehandling)}
+                        key={value}
+                      />
+                    );
+                  }
+                  return (
+                    <Checkbox
+                      key={value}
+                      label={label}
+                      checked={activeFilters.includes(value)}
+                      onChange={() => onFilterChange(value)}
+                    />
+                  );
+                })}
+              </CheckboxGruppe>
             </div>
-          </span>
+          </div>
         </div>
       )}
     </div>
