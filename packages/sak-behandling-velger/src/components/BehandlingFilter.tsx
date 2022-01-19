@@ -8,7 +8,22 @@ import React, { useEffect, useRef, useState } from 'react';
 import { FormattedMessage } from 'react-intl';
 import styles from './behandlingFilter.less';
 
+interface FilterType {
+  value: string;
+  label: string;
+}
+
 export const automatiskBehandling = 'automatiskBehandling';
+
+const sortFilters = (filterA: FilterType, filterB: FilterType) => {
+  if (filterA.value === automatiskBehandling) {
+    return 1;
+  }
+  if (filterB.value === automatiskBehandling) {
+    return -1;
+  }
+  return 0;
+};
 
 interface ChevronWithTextProps {
   chevronDirection: 'opp' | 'ned';
@@ -18,7 +33,7 @@ interface ChevronWithTextProps {
 interface BehandlingfilterProps {
   text: string;
   activeFilters: string[];
-  filters: { label: string; value: string }[];
+  filters: FilterType[];
   onFilterChange: (value: string) => void;
 }
 
@@ -67,37 +82,27 @@ function BehandlingFilter({ text, filters, activeFilters, onFilterChange }: Beha
             </button>
             <div className={styles.chevronDropdown__dropdown__checkbox}>
               <CheckboxGruppe legend={<FormattedMessage id="Behandlingspunkt.BehandlingFilter.CheckboxLegend" />}>
-                {filters
-                  .sort((filterA, filterB) => {
-                    if (filterA.value === automatiskBehandling) {
-                      return 1;
-                    }
-                    if (filterB.value === automatiskBehandling) {
-                      return -1;
-                    }
-                    return 0;
-                  })
-                  .map(({ label, value }) => {
-                    if (value === automatiskBehandling) {
-                      return (
-                        <Checkbox
-                          className={styles.automaticCheckbox}
-                          label={label}
-                          checked={activeFilters.includes(automatiskBehandling)}
-                          onChange={() => onFilterChange(automatiskBehandling)}
-                          key={value}
-                        />
-                      );
-                    }
+                {filters.sort(sortFilters).map(({ label, value }) => {
+                  if (value === automatiskBehandling) {
                     return (
                       <Checkbox
-                        key={value}
+                        className={styles.automaticCheckbox}
                         label={label}
-                        checked={activeFilters.includes(value)}
-                        onChange={() => onFilterChange(value)}
+                        checked={activeFilters.includes(automatiskBehandling)}
+                        onChange={() => onFilterChange(automatiskBehandling)}
+                        key={value}
                       />
                     );
-                  })}
+                  }
+                  return (
+                    <Checkbox
+                      key={value}
+                      label={label}
+                      checked={activeFilters.includes(value)}
+                      onChange={() => onFilterChange(value)}
+                    />
+                  );
+                })}
               </CheckboxGruppe>
             </div>
           </div>
