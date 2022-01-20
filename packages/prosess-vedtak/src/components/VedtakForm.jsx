@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
@@ -36,7 +36,7 @@ const kanSendesTilGodkjenning = behandlingStatusKode =>
 const formName = 'VedtakForm';
 
 const FORMIK_FIELDNAME = {
-  SKAL_BRUKE_OVERSTYRENDE_FRITEKSTBREV: 'skalBrukeOverstyrendeFritekstBrev',
+  SKAL_BRUKE_OVERSTYRENDE_FRITEKST_BREV: 'skalBrukeOverstyrendeFritekstBrev',
   SKAL_HINDRE_UTSENDING_AV_BREV: 'skalHindreUtsendingAvBrev',
 };
 
@@ -79,12 +79,26 @@ export const VedtakForm = ({
   overlappendeYtelser,
   ...formProps
 }) => {
+  const overstyrBrevRef = useRef(null);
+  const hindreUtsendingRef = useRef(null);
   const onToggleOverstyring = (e, setFieldValue) => {
-    setFieldValue(FORMIK_FIELDNAME.SKAL_BRUKE_OVERSTYRENDE_FRITEKSTBREV, e.target.value);
+    const kommendeVerdi = e.target.checked;
+    setFieldValue(FORMIK_FIELDNAME.SKAL_BRUKE_OVERSTYRENDE_FRITEKST_BREV, e.target.checked);
+
+    if (kommendeVerdi) {
+      setFieldValue(FORMIK_FIELDNAME.SKAL_HINDRE_UTSENDING_AV_BREV, false);
+      hindreUtsendingRef.current.checked = !kommendeVerdi;
+    }
   };
 
   const onToggleHindreUtsending = (e, setFieldValue) => {
-    setFieldValue(FORMIK_FIELDNAME.SKAL_HINDRE_UTSENDING_AV_BREV, e.target.value);
+    const kommendeVerdi = e.target.checked;
+    setFieldValue(FORMIK_FIELDNAME.SKAL_HINDRE_UTSENDING_AV_BREV, kommendeVerdi);
+
+    if (kommendeVerdi) {
+      setFieldValue(FORMIK_FIELDNAME.SKAL_BRUKE_OVERSTYRENDE_FRITEKST_BREV, false);
+      overstyrBrevRef.current.checked = !kommendeVerdi;
+    }
   };
 
   const informasjonsbehovValues = {
@@ -99,7 +113,12 @@ export const VedtakForm = ({
 
   return (
     <>
-      <Formik initialValues={{ skalBrukeOverstyrendeFritekstBrev: false, skalHindreUtsendingAvBrev: false }}>
+      <Formik
+        initialValues={{
+          [FORMIK_FIELDNAME.SKAL_BRUKE_OVERSTYRENDE_FRITEKST_BREV]: false,
+          [FORMIK_FIELDNAME.SKAL_HINDRE_UTSENDING_AV_BREV]: false,
+        }}
+      >
         {({ values, setFieldValue }) => (
           <VedtakAksjonspunktPanel
             behandlingStatusKode={behandlingStatusKode}
@@ -114,7 +133,7 @@ export const VedtakForm = ({
                   value={values.skalBrukeOverstyrendeFritekstBrev}
                   onChange={e => onToggleOverstyring(e, setFieldValue)}
                   disabled={readOnly || harBareFritekstbrev(tilgjengeligeVedtaksbrev)}
-                  key="skalBrukeOverstyrendeFritekstBrev"
+                  ref={overstyrBrevRef}
                 >
                   {intl.formatMessage({ id: 'VedtakForm.ManuellOverstyring' })}
                 </Checkbox>
@@ -124,7 +143,7 @@ export const VedtakForm = ({
                   onChange={e => onToggleHindreUtsending(e, setFieldValue)}
                   value={values.skalHindreUtsendingAvBrev}
                   disabled={readOnly}
-                  keyName="skalUndertrykkeBrev"
+                  ref={hindreUtsendingRef}
                 >
                   {intl.formatMessage({ id: 'VedtakForm.HindreUtsending' })}
                 </Checkbox>
