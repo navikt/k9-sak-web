@@ -15,7 +15,8 @@ import { RestApiState, useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-ho
 
 import { K9sakApiKeys, restApiHooks } from '@k9-sak-web/sak-app/src/data/k9sakApi';
 import useBehandlingEndret from '@k9-sak-web/sak-app/src/behandling/useBehandlingEndret';
-import {createIntl, createIntlCache, RawIntlProvider} from "react-intl";
+import { createIntl, createIntlCache, RawIntlProvider } from "react-intl";
+import { Provider as ReduxProvider } from 'react-redux';
 import messages from '../i18n/nb_NO.json';
 
 import {
@@ -25,10 +26,11 @@ import {
 } from './data/pleiepengerSluttfaseBehandlingApi';
 import PleiepengerSluttfasePaneler from './components/PleiepengerSluttfasePaneler';
 import FetchedData from './types/fetchedDataTsType';
+import store from './store';
 
 const pleiepengerData = [
-  { key: PleiepengerSluttfaseBehandlingApiKeys.AKSJONSPUNKTER },
-  { key: PleiepengerSluttfaseBehandlingApiKeys.VILKAR },
+  // { key: PleiepengerSluttfaseBehandlingApiKeys.AKSJONSPUNKTER },
+  // { key: PleiepengerSluttfaseBehandlingApiKeys.VILKAR },
   { key: PleiepengerSluttfaseBehandlingApiKeys.PERSONOPPLYSNINGER },
   { key: PleiepengerSluttfaseBehandlingApiKeys.SOKNAD },
   { key: PleiepengerSluttfaseBehandlingApiKeys.BEREGNINGSRESULTAT_UTBETALING },
@@ -187,11 +189,7 @@ const BehandlingPleiepengerSluttfaseIndex = ({
   }
 
   return (
-    <>
-      <ReduxFormStateCleaner
-        behandlingId={behandling.id}
-        behandlingVersjon={harIkkeHentetBehandlingsdata ? forrigeBehandling.versjon : behandling.versjon}
-      />
+    <ReduxProvider store={store}>
       <RawIntlProvider value={intl}>
         <PleiepengerSluttfasePaneler
           behandling={harIkkeHentetBehandlingsdata ? forrigeBehandling : behandling}
@@ -214,7 +212,7 @@ const BehandlingPleiepengerSluttfaseIndex = ({
           dokumenter={alleDokumenter}
         />
       </RawIntlProvider>
-    </>
+    </ReduxProvider>
   );
 };
 
