@@ -2,17 +2,17 @@ import ArbeidsforholdFaktaPanelDef from './faktaPaneler/ArbeidsforholdFaktaPanel
 import MedlemskapsvilkaretFaktaPanelDef from './faktaPaneler/MedlemskapsvilkaretFaktaPanelDef';
 import OpptjeningsvilkaretFaktaPanelDef from './faktaPaneler/OpptjeningsvilkaretFaktaPanelDef';
 import BeregningFaktaPanelDef from './faktaPaneler/BeregningFaktaPanelDef';
-import MedisinskVilkarFaktaPanelDef2 from './faktaPaneler/MedisinskVilkarFaktaPanelDef2';
 import InntektsmeldingFaktaPanelDef from './faktaPaneler/InntektsmeldingFaktaPanelDef';
 import FordelBeregningPanelDef from './faktaPaneler/FordelBeregningPanelDef';
 import InntektOgYtelserFaktaPanelDef from './faktaPaneler/InntektOgYtelserFaktaPanelDef';
 import OverstyrBeregningFaktaPanelDef from './faktaPaneler/OverstyrBeregningFaktaPanelDef';
 import OmPleietrengendeFaktaPanelDef from "./faktaPaneler/OmPleietrengendeFaktaPanelDef";
+import MedisinskVilkarFaktaPanelDef from './faktaPaneler/MedisinskVilkarFaktaPanelDef';
 
 const faktaPanelDefinisjoner = [
   new OmPleietrengendeFaktaPanelDef(),
   new ArbeidsforholdFaktaPanelDef(),
-  new MedisinskVilkarFaktaPanelDef2(),
+  new MedisinskVilkarFaktaPanelDef(),
   new MedlemskapsvilkaretFaktaPanelDef(),
   new OpptjeningsvilkaretFaktaPanelDef(),
   new InntektsmeldingFaktaPanelDef(),

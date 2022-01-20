@@ -6,10 +6,10 @@ import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { FaktaPanelDef } from '@k9-sak-web/behandling-felles';
 import { Fagsak, Behandling } from '@k9-sak-web/types';
 
-import MedisinskVilkår from '../../components/MedisinskVilkår';
+import MedisinskVilkarFaktaIndex from '@k9-sak-web/fakta-medisinsk-vilkar/src/MedisinskVilkarFaktaIndex';
 
-class MedisinskVilkarFaktaPanelDef2 extends FaktaPanelDef {
-  getUrlKode = () => faktaPanelCodes.MEDISINSKVILKAAR_V2;
+class MedisinskVilkarFaktaPanelDef extends FaktaPanelDef {
+  getUrlKode = () => faktaPanelCodes.MEDISINSKVILKAAR;
 
   getTekstKode = () => 'MedisinskVilkarPanel.MedisinskVilkar';
 
@@ -17,7 +17,10 @@ class MedisinskVilkarFaktaPanelDef2 extends FaktaPanelDef {
 
   getEndepunkter = () => [];
 
-  getKomponent = props => <MedisinskVilkår {...props} />;
+  getKomponent = props => {
+    console.log("Her er props ... ", props);
+    return <MedisinskVilkarFaktaIndex {...props} />;
+  }
 
   getData = ({ hentSaksbehandlere, fagsak }) => ({
     saksbehandlere: hentSaksbehandlere?.saksbehandlere,
@@ -31,4 +34,4 @@ class MedisinskVilkarFaktaPanelDef2 extends FaktaPanelDef {
   };
 }
 
-export default MedisinskVilkarFaktaPanelDef2;
+export default MedisinskVilkarFaktaPanelDef;
