@@ -20,7 +20,7 @@ import { dokumentdatatype } from '@k9-sak-web/konstanter';
 import { kanHaFritekstbrev, harBareFritekstbrev } from '@fpsak-frontend/utils/src/formidlingUtils';
 import vedtakBeregningsresultatPropType from '../../propTypes/vedtakBeregningsresultatPropType';
 
-import VedtakKnapp from '../VedtakKnapp';
+import VedtakCheckbox from '../VedtakCheckbox';
 import VedtakAksjonspunktPanel from '../VedtakAksjonspunktPanel';
 import VedtakRevurderingSubmitPanel from './VedtakRevurderingSubmitPanel';
 import VedtakInnvilgetRevurderingPanel from './VedtakInnvilgetRevurderingPanel';
@@ -135,10 +135,10 @@ export class VedtakRevurderingFormImpl extends Component {
           <VerticalSpacer eightPx />
           <>
             {ytelseTypeKode === fagsakYtelseType.FRISINN ? (
-              <VedtakKnapp readOnly={readOnly} keyName="skalUndertrykkeBrev" readOnlyHideEmpty={false} />
+              <VedtakCheckbox readOnly={readOnly} keyName="skalUndertrykkeBrev" readOnlyHideEmpty={false} />
             ) : (
               kanHaFritekstbrev(tilgjengeligeVedtaksbrev) && (
-                <VedtakKnapp
+                <VedtakCheckbox
                   toggleCallback={this.onToggleOverstyring}
                   readOnly={readOnly || harBareFritekstbrev(tilgjengeligeVedtaksbrev)}
                   keyName="skalBrukeOverstyrendeFritekstBrev"
