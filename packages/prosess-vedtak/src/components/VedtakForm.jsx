@@ -51,7 +51,6 @@ export const VedtakForm = ({
   previewCallback,
   aksjonspunktKoder,
   sprakkode,
-  skalBrukeOverstyrendeFritekstBrev,
   ytelseTypeKode,
   resultatstruktur,
   alleKodeverk,
@@ -158,7 +157,7 @@ export const VedtakForm = ({
                 antallBarn={antallBarn}
                 behandlingsresultat={behandlingresultat}
                 readOnly={readOnly}
-                skalBrukeOverstyrendeFritekstBrev={skalBrukeOverstyrendeFritekstBrev}
+                skalBrukeOverstyrendeFritekstBrev={values.skalBrukeOverstyrendeFritekstBrev}
                 ytelseTypeKode={ytelseTypeKode}
                 aksjonspunkter={aksjonspunkter}
                 sprakkode={sprakkode}
@@ -194,7 +193,7 @@ export const VedtakForm = ({
               tilgjengeligeVedtaksbrev={tilgjengeligeVedtaksbrev}
               informasjonsbehovVedtaksbrev={informasjonsbehovVedtaksbrev}
               informasjonsbehovValues={informasjonsbehovValues}
-              skalBrukeOverstyrendeFritekstBrev={skalBrukeOverstyrendeFritekstBrev}
+              skalBrukeOverstyrendeFritekstBrev={values.skalBrukeOverstyrendeFritekstBrev}
               previewCallback={previewCallback}
               formProps={formProps}
               brødtekst={brødtekst}
