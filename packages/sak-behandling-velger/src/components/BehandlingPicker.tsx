@@ -71,7 +71,7 @@ const renderListItems = ({
       return activeFilters.includes(behandling.type.kode);
     })
     .map(behandling => (
-      <li key={behandling.id}>
+      <li data-testid="behandling" key={behandling.id}>
         <NavLink
           onClick={() => setValgtBehandlingId(behandling.id)}
           className={styles.linkToBehandling}
@@ -207,7 +207,7 @@ const BehandlingPicker = ({
           </div>
           <ul className={styles.behandlingList}>
             {noExistingBehandlinger && (
-              <Normaltekst>
+              <Normaltekst data-testid="ingenBehandlinger">
                 <FormattedMessage id="BehandlingList.ZeroBehandlinger" />
               </Normaltekst>
             )}
