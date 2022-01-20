@@ -18,6 +18,7 @@ class MedisinskVilkarFaktaPanelDef extends FaktaPanelDef {
   getEndepunkter = () => [];
 
   getKomponent = props => {
+    // eslint-disable-next-line no-console
     console.log("Her er props ... ", props);
     return <MedisinskVilkarFaktaIndex {...props} />;
   }
