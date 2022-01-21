@@ -15,13 +15,14 @@ import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import { isAvslag, isDelvisInnvilget, isInnvilget } from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
 import behandlingStatusCode from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import { behandlingForm, behandlingFormValueSelector } from '@fpsak-frontend/form';
+import { dokumentdatatype } from '@k9-sak-web/konstanter';
 
-import { safeJSONParse } from '@fpsak-frontend/utils';
+import { safeJSONParse, decodeHtmlEntity } from '@fpsak-frontend/utils';
 import {
   kanHaFritekstbrev,
   kanKunVelgeFritekstbrev,
   harMellomlagretFritekstbrev,
-  harOverstyrtMedIngenBrev
+  harOverstyrtMedIngenBrev,
 } from '@fpsak-frontend/utils/src/formidlingUtils';
 import vedtakBeregningsresultatPropType from '../propTypes/vedtakBeregningsresultatPropType';
 import vedtakVilkarPropType from '../propTypes/vedtakVilkarPropType';
@@ -39,9 +40,13 @@ const kanSendesTilGodkjenning = behandlingStatusKode =>
 
 const formName = 'VedtakForm';
 
-const FORMIK_FIELDNAME = {
+const fieldnames = {
   SKAL_BRUKE_OVERSTYRENDE_FRITEKST_BREV: 'skalBrukeOverstyrendeFritekstBrev',
   SKAL_HINDRE_UTSENDING_AV_BREV: 'skalHindreUtsendingAvBrev',
+  OVERSKRIFT: 'overskrift',
+  BRØDTEKST: 'brødtekst',
+  OVERSTYRT_MOTTAKER: 'overstyrtMottaker',
+  BEGRUNNELSE: 'begrunnelse',
 };
 
 export const VedtakForm = ({
@@ -51,6 +56,7 @@ export const VedtakForm = ({
   behandlingresultat,
   aksjonspunkter,
   behandlingPaaVent,
+  vedtakVarsel,
   previewCallback,
   sprakkode,
   ytelseTypeKode,
@@ -59,7 +65,6 @@ export const VedtakForm = ({
   personopplysninger,
   arbeidsgiverOpplysningerPerId,
   tilbakekrevingvalg,
-  simuleringResultat,
   vilkar,
   tilgjengeligeVedtaksbrev,
   informasjonsbehovVedtaksbrev,
@@ -84,20 +89,20 @@ export const VedtakForm = ({
   const hindreUtsendingRef = useRef(null);
   const onToggleOverstyring = (e, setFieldValue) => {
     const kommendeVerdi = e.target.checked;
-    setFieldValue(FORMIK_FIELDNAME.SKAL_BRUKE_OVERSTYRENDE_FRITEKST_BREV, e.target.checked);
+    setFieldValue(fieldnames.SKAL_BRUKE_OVERSTYRENDE_FRITEKST_BREV, e.target.checked);
 
     if (kommendeVerdi) {
-      setFieldValue(FORMIK_FIELDNAME.SKAL_HINDRE_UTSENDING_AV_BREV, false);
+      setFieldValue(fieldnames.SKAL_HINDRE_UTSENDING_AV_BREV, false);
       hindreUtsendingRef.current.checked = !kommendeVerdi;
     }
   };
 
   const onToggleHindreUtsending = (e, setFieldValue) => {
     const kommendeVerdi = e.target.checked;
-    setFieldValue(FORMIK_FIELDNAME.SKAL_HINDRE_UTSENDING_AV_BREV, kommendeVerdi);
+    setFieldValue(fieldnames.SKAL_HINDRE_UTSENDING_AV_BREV, kommendeVerdi);
 
     if (kommendeVerdi) {
-      setFieldValue(FORMIK_FIELDNAME.SKAL_BRUKE_OVERSTYRENDE_FRITEKST_BREV, false);
+      setFieldValue(fieldnames.SKAL_BRUKE_OVERSTYRENDE_FRITEKST_BREV, false);
       overstyrBrevRef.current.checked = !kommendeVerdi;
     }
   };
@@ -163,11 +168,14 @@ export const VedtakForm = ({
     <>
       <Formik
         initialValues={{
-          [FORMIK_FIELDNAME.SKAL_BRUKE_OVERSTYRENDE_FRITEKST_BREV]:
+          [fieldnames.SKAL_BRUKE_OVERSTYRENDE_FRITEKST_BREV]:
             kanKunVelgeFritekstbrev(tilgjengeligeVedtaksbrev) ||
             harMellomlagretFritekstbrev(dokumentdata, vedtakVarsel),
-          [FORMIK_FIELDNAME.SKAL_HINDRE_UTSENDING_AV_BREV]:
-            readonly && harOverstyrtMedIngenBrev(dokumentdata, vedtakVarsel),
+          [fieldnames.SKAL_HINDRE_UTSENDING_AV_BREV]: readOnly && harOverstyrtMedIngenBrev(dokumentdata, vedtakVarsel),
+          [fieldnames.OVERSKRIFT]: decodeHtmlEntity(dokumentdata?.[dokumentdatatype.FRITEKSTBREV]?.overskrift),
+          [fieldnames.BRØDTEKST]: decodeHtmlEntity(dokumentdata?.[dokumentdatatype.FRITEKSTBREV]?.brødtekst),
+          [fieldnames.OVERSTYRT_MOTTAKER]: JSON.stringify(dokumentdata?.[dokumentdatatype.OVERSTYRT_MOTTAKER]),
+          [fieldnames.BEGRUNNELSE]: dokumentdata?.[dokumentdatatype.BEREGNING_FRITEKST],
         }}
         onSubmit={onSubmit}
       >
@@ -226,7 +234,6 @@ export const VedtakForm = ({
                 ytelseTypeKode={ytelseTypeKode}
                 alleKodeverk={alleKodeverk}
                 tilbakekrevingvalg={tilbakekrevingvalg}
-                simuleringResultat={simuleringResultat}
                 vilkar={vilkar}
               />
             )}
@@ -299,7 +306,6 @@ VedtakForm.propTypes = {
   personopplysninger: PropTypes.shape().isRequired,
   arbeidsgiverOpplysningerPerId: PropTypes.shape().isRequired,
   tilbakekrevingvalg: PropTypes.shape(),
-  simuleringResultat: PropTypes.shape(),
   vilkar: PropTypes.arrayOf(vedtakVilkarPropType.isRequired),
   tilgjengeligeVedtaksbrev: PropTypes.oneOfType([PropTypes.shape(), PropTypes.arrayOf(PropTypes.string)]),
   informasjonsbehovVedtaksbrev: PropTypes.shape({
@@ -344,10 +350,6 @@ export const buildInitialValues = createSelector(
     vedtakVarsel,
     dokumentdata,
   ) => ({
-    overskrift: decodeHtmlEntity(dokumentdata?.[dokumentdatatype.FRITEKSTBREV]?.overskrift),
-    brødtekst: decodeHtmlEntity(dokumentdata?.[dokumentdatatype.FRITEKSTBREV]?.brødtekst),
-    overstyrtMottaker: JSON.stringify(dokumentdata?.[dokumentdatatype.OVERSTYRT_MOTTAKER]),
-    begrunnelse: dokumentdata?.[dokumentdatatype.BEREGNING_FRITEKST],
     KONTINUERLIG_TILSYN: dokumentdata?.KONTINUERLIG_TILSYN,
     OMSORGEN_FOR: dokumentdata?.OMSORGEN_FOR,
     VILKAR_FOR_TO: dokumentdata?.VILKAR_FOR_TO,
@@ -397,7 +399,6 @@ const mapStateToPropsFactory = (initialState, initialOwnProps) => {
       onSubmit,
       ...behandlingFormValueSelector(formName, ownProps.behandlingId, ownProps.behandlingVersjon)(
         state,
-        'skalUndertrykkeBrev',
         'brødtekst',
         'overskrift',
         'begrunnelse',
