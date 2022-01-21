@@ -11,11 +11,10 @@ import { Column, Row } from 'nav-frontend-grid';
 import { Checkbox, CheckboxGroup } from '@navikt/ds-react';
 
 import { kodeverkObjektPropType } from '@fpsak-frontend/prop-types';
-import klageBehandlingArsakType from '@fpsak-frontend/kodeverk/src/behandlingArsakType';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import { isAvslag, isDelvisInnvilget, isInnvilget } from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
 import behandlingStatusCode from '@fpsak-frontend/kodeverk/src/behandlingStatus';
-import { behandlingForm, behandlingFormValueSelector, getBehandlingFormPrefix } from '@fpsak-frontend/form';
+import { behandlingForm, behandlingFormValueSelector } from '@fpsak-frontend/form';
 
 import { safeJSONParse } from '@fpsak-frontend/utils';
 import { kanHaFritekstbrev, harBareFritekstbrev } from '@fpsak-frontend/utils/src/formidlingUtils';
@@ -346,19 +345,6 @@ const onSubmitPayloadMedEkstraInformasjon = (values, informasjonsbehov, tilgjeng
   }));
 };
 
-const erArsakTypeBehandlingEtterKlage = createSelector(
-  [ownProps => ownProps.behandlingArsaker],
-  (behandlingArsakTyper = []) =>
-    behandlingArsakTyper
-      .map(({ behandlingArsakType }) => behandlingArsakType)
-      .some(
-        bt =>
-          bt.kode === klageBehandlingArsakType.ETTER_KLAGE ||
-          bt.kode === klageBehandlingArsakType.KLAGE_U_INNTK ||
-          bt.kode === klageBehandlingArsakType.KLAGE_M_INNTK,
-      ),
-);
-
 const harPotensieltFlereInformasjonsbehov = informasjonsbehovVedtaksbrev => {
   if (informasjonsbehovVedtaksbrev) {
     const { informasjonsbehov } = informasjonsbehovVedtaksbrev;
@@ -402,8 +388,6 @@ const mapStateToPropsFactory = (initialState, initialOwnProps) => {
         'overstyrtMottaker',
         ...informasjonsbehovFieldNames,
       ),
-      behandlingFormPrefix: getBehandlingFormPrefix(ownProps.behandlingId, ownProps.behandlingVersjon),
-      erBehandlingEtterKlage: erArsakTypeBehandlingEtterKlage(ownProps),
     };
   };
 };
