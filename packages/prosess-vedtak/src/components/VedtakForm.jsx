@@ -60,7 +60,6 @@ export const VedtakForm = ({
   previewCallback,
   sprakkode,
   ytelseTypeKode,
-  resultatstruktur,
   alleKodeverk,
   personopplysninger,
   arbeidsgiverOpplysningerPerId,
@@ -216,12 +215,7 @@ export const VedtakForm = ({
               <VedtakInnvilgetPanel
                 intl={intl}
                 behandlingsresultat={behandlingresultat}
-                readOnly={readOnly}
-                skalBrukeOverstyrendeFritekstBrev={values.skalBrukeOverstyrendeFritekstBrev}
                 ytelseTypeKode={ytelseTypeKode}
-                aksjonspunkter={aksjonspunkter}
-                beregningResultat={resultatstruktur}
-                alleKodeverk={alleKodeverk}
                 tilbakekrevingvalg={tilbakekrevingvalg}
               />
             )}
@@ -230,7 +224,6 @@ export const VedtakForm = ({
               <VedtakAvslagPanel
                 aksjonspunkter={aksjonspunkter}
                 behandlingsresultat={behandlingresultat}
-                readOnly={readOnly}
                 ytelseTypeKode={ytelseTypeKode}
                 alleKodeverk={alleKodeverk}
                 tilbakekrevingvalg={tilbakekrevingvalg}
@@ -242,20 +235,19 @@ export const VedtakForm = ({
               intl={intl}
               readOnly={readOnly}
               sprakkode={sprakkode}
-              ytelseTypeKode={ytelseTypeKode}
               personopplysninger={personopplysninger}
               arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
-              dokumentdata={dokumentdata}
               tilgjengeligeVedtaksbrev={tilgjengeligeVedtaksbrev}
               informasjonsbehovVedtaksbrev={informasjonsbehovVedtaksbrev}
               informasjonsbehovValues={informasjonsbehovValues}
               skalBrukeOverstyrendeFritekstBrev={values.skalBrukeOverstyrendeFritekstBrev}
+              begrunnelse={begrunnelse}
               previewCallback={previewCallback}
-              formProps={formProps}
               brødtekst={brødtekst}
               overskrift={overskrift}
-              begrunnelse={begrunnelse}
               overstyrtMottaker={overstyrtMottaker}
+              formProps={formProps}
+              dokumentdata={dokumentdata}
               lagreDokumentdata={lagreDokumentdata}
             />
             {kanSendesTilGodkjenning(behandlingStatus?.kode) && (
