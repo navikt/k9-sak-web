@@ -1,7 +1,7 @@
 import Periode from './periodeTsType';
 export default interface BehandlingPerioderType {
   perioderTilVurdering: Periode[];
-  perioderMedÅrsak: PerioderMedÅrsak[];
+  perioderMedÅrsak: PerioderMedAarsak[];
   dokumenterTilBehandling: DokumenterTilBehandling[];
 }
 
@@ -9,17 +9,17 @@ interface DokumenterTilBehandling {
   journalpostId: string;
   innsendingsTidspunkt: string;
   type: string;
-  søktePerioder: SøktePerioder[];
+  søktePerioder: SoktePerioder[];
 }
 
-interface SøktePerioder {
+interface SoktePerioder {
   periode: Periode;
   type: null;
   arbeidsgiver: null;
   arbeidsforholdRef: null;
 }
 
-interface PerioderMedÅrsak {
+interface PerioderMedAarsak {
   periode: Periode;
   årsaker: string[];
 }
