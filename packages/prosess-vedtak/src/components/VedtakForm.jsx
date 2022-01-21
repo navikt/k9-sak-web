@@ -43,13 +43,11 @@ const FORMIK_FIELDNAME = {
 export const VedtakForm = ({
   intl,
   readOnly,
-  behandlingStatusKode,
+  behandlingStatus,
   behandlingresultat,
   aksjonspunkter,
   behandlingPaaVent,
-  antallBarn,
   previewCallback,
-  aksjonspunktKoder,
   sprakkode,
   ytelseTypeKode,
   resultatstruktur,
@@ -120,8 +118,8 @@ export const VedtakForm = ({
       >
         {({ values, setFieldValue }) => (
           <VedtakAksjonspunktPanel
-            behandlingStatusKode={behandlingStatusKode}
-            aksjonspunktKoder={aksjonspunktKoder}
+            behandlingStatusKode={behandlingStatus?.kode}
+            aksjonspunktKoder={aksjonspunkter.map(ap => ap.definisjon.kode)}
             readOnly={readOnly}
             overlappendeYtelser={overlappendeYtelser}
             alleKodeverk={alleKodeverk}
@@ -154,13 +152,11 @@ export const VedtakForm = ({
             {(isInnvilget(behandlingresultat.type.kode) || isDelvisInnvilget(behandlingresultat.type.kode)) && (
               <VedtakInnvilgetPanel
                 intl={intl}
-                antallBarn={antallBarn}
                 behandlingsresultat={behandlingresultat}
                 readOnly={readOnly}
                 skalBrukeOverstyrendeFritekstBrev={values.skalBrukeOverstyrendeFritekstBrev}
                 ytelseTypeKode={ytelseTypeKode}
                 aksjonspunkter={aksjonspunkter}
-                sprakkode={sprakkode}
                 beregningResultat={resultatstruktur}
                 alleKodeverk={alleKodeverk}
                 tilbakekrevingvalg={tilbakekrevingvalg}
@@ -169,12 +165,10 @@ export const VedtakForm = ({
 
             {isAvslag(behandlingresultat.type.kode) && (
               <VedtakAvslagPanel
-                behandlingStatusKode={behandlingStatusKode}
                 aksjonspunkter={aksjonspunkter}
                 behandlingsresultat={behandlingresultat}
                 readOnly={readOnly}
                 ytelseTypeKode={ytelseTypeKode}
-                sprakkode={sprakkode}
                 alleKodeverk={alleKodeverk}
                 tilbakekrevingvalg={tilbakekrevingvalg}
                 simuleringResultat={simuleringResultat}
@@ -202,7 +196,7 @@ export const VedtakForm = ({
               overstyrtMottaker={overstyrtMottaker}
               lagreDokumentdata={lagreDokumentdata}
             />
-            {kanSendesTilGodkjenning(behandlingStatusKode) && (
+            {kanSendesTilGodkjenning(behandlingStatus?.kode) && (
               <Row>
                 <Column xs="12">
                   {!readOnly && (
@@ -235,8 +229,7 @@ export const VedtakForm = ({
 VedtakForm.propTypes = {
   resultatstruktur: vedtakBeregningsresultatPropType,
   intl: PropTypes.shape().isRequired,
-  antallBarn: PropTypes.number,
-  behandlingStatusKode: PropTypes.string.isRequired,
+  behandlingStatusKode: PropTypes.shape({ kode: PropTypes.string }),
   aksjonspunkter: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   behandlingresultat: PropTypes.shape().isRequired,
   behandlingPaaVent: PropTypes.bool.isRequired,
@@ -272,6 +265,50 @@ VedtakForm.propTypes = {
 VedtakForm.defaultProps = {
   skalBrukeOverstyrendeFritekstBrev: false,
 };
+
+export const buildInitialValues = createSelector(
+  [
+    ownProps => ownProps.behandlingStatus,
+    ownProps => ownProps.resultatstruktur,
+    ownProps => ownProps.aksjonspunkter,
+    ownProps => ownProps.ytelseTypeKode,
+    ownProps => ownProps.behandlingresultat,
+    ownProps => ownProps.sprakkode,
+    ownProps => ownProps.vedtakVarsel,
+    ownProps => ownProps.dokumentdata,
+    ownProps => ownProps.tilgjengeligeVedtaksbrev,
+    ownProps => ownProps.readOnly,
+  ],
+  (
+    status,
+    beregningResultat,
+    aksjonspunkter,
+    ytelseTypeKode,
+    behandlingresultat,
+    sprakkode,
+    vedtakVarsel,
+    dokumentdata,
+    tilgjengeligeVedtaksbrev,
+    readonly,
+  ) => ({
+    sprakkode,
+    aksjonspunktKoder: aksjonspunkter.filter(ap => ap.kanLoses).map(ap => ap.definisjon.kode),
+    skalBrukeOverstyrendeFritekstBrev:
+      harBareFritekstbrev(tilgjengeligeVedtaksbrev) || harOverstyrtMedFritekstbrev(dokumentdata, vedtakVarsel),
+    skalUndertrykkeBrev: readonly && harOverstyrtMedIngenBrev(dokumentdata, vedtakVarsel),
+    overskrift: decodeHtmlEntity(dokumentdata?.[dokumentdatatype.FRITEKSTBREV]?.overskrift),
+    brødtekst: decodeHtmlEntity(dokumentdata?.[dokumentdatatype.FRITEKSTBREV]?.brødtekst),
+    overstyrtMottaker: JSON.stringify(dokumentdata?.[dokumentdatatype.OVERSTYRT_MOTTAKER]),
+    begrunnelse: dokumentdata?.[dokumentdatatype.BEREGNING_FRITEKST],
+    KONTINUERLIG_TILSYN: dokumentdata?.KONTINUERLIG_TILSYN,
+    OMSORGEN_FOR: dokumentdata?.OMSORGEN_FOR,
+    VILKAR_FOR_TO: dokumentdata?.VILKAR_FOR_TO,
+    UNNTAK_FRA_TILSYNSORDNING: dokumentdata?.UNNTAK_FRA_TILSYNSORDNING,
+    BEREGNING_25_PROSENT_AVVIK: dokumentdata?.BEREGNING_25_PROSENT_AVVIK,
+    OVER_18_AAR: dokumentdata?.OVER_18_AAR,
+    REVURDERING_ENDRING: dokumentdata?.REVURDERING_ENDRING,
+  }),
+);
 
 export const getAksjonspunktKoder = createSelector([ownProps => ownProps.aksjonspunkter], aksjonspunkter =>
   aksjonspunkter.map(ap => ap.definisjon.kode),
@@ -357,8 +394,6 @@ const mapStateToPropsFactory = (initialState, initialOwnProps) => {
       onSubmit,
       ...behandlingFormValueSelector(formName, ownProps.behandlingId, ownProps.behandlingVersjon)(
         state,
-        'antallBarn',
-        'aksjonspunktKoder',
         'skalBrukeOverstyrendeFritekstBrev',
         'skalUndertrykkeBrev',
         'brødtekst',
@@ -368,8 +403,6 @@ const mapStateToPropsFactory = (initialState, initialOwnProps) => {
         ...informasjonsbehovFieldNames,
       ),
       behandlingFormPrefix: getBehandlingFormPrefix(ownProps.behandlingId, ownProps.behandlingVersjon),
-      behandlingStatusKode: ownProps.behandlingStatus.kode,
-      aksjonspunktKoder: getAksjonspunktKoder(ownProps),
       erBehandlingEtterKlage: erArsakTypeBehandlingEtterKlage(ownProps),
     };
   };
