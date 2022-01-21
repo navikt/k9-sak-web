@@ -107,6 +107,53 @@ export const VedtakForm = ({
     REVURDERING_ENDRING,
   };
 
+  const harPotensieltFlereInformasjonsbehov = infobehovVedtaksbrev => {
+    if (infobehovVedtaksbrev) {
+      const { informasjonsbehov } = infobehovVedtaksbrev;
+      return informasjonsbehov.length > 0;
+    }
+    return false;
+  };
+
+  const onSubmitPayloadMedEkstraInformasjon = values => {
+    const begrunnelser = informasjonsbehovVedtaksbrev?.informasjonsbehov.map(({ kode }) => ({
+      kode,
+      begrunnelse: values[kode],
+    }));
+    return values.aksjonspunktKoder.map(apCode => ({
+      kode: apCode,
+      overstyrtMottaker: safeJSONParse(values.overstyrtMottaker),
+      fritekstbrev: {
+        brødtekst: values.brødtekst,
+        overskrift: values.overskrift,
+      },
+      skalBrukeOverstyrendeFritekstBrev: values.skalBrukeOverstyrendeFritekstBrev,
+      skalUndertrykkeBrev: values.skalUndertrykkeBrev,
+      isVedtakSubmission,
+      begrunnelserMedInformasjonsbehov: begrunnelser,
+      tilgjengeligeVedtaksbrev,
+    }));
+  };
+
+  const onSubmitPayload = values =>
+    values.aksjonspunktKoder.map(apCode => ({
+      kode: apCode,
+      begrunnelse: values.begrunnelse,
+      overstyrtMottaker: safeJSONParse(values.overstyrtMottaker),
+      fritekstbrev: {
+        brødtekst: values.brødtekst,
+        overskrift: values.overskrift,
+      },
+      skalBrukeOverstyrendeFritekstBrev: values.skalBrukeOverstyrendeFritekstBrev,
+      skalUndertrykkeBrev: values.skalUndertrykkeBrev,
+      isVedtakSubmission,
+      tilgjengeligeVedtaksbrev,
+    }));
+
+  const onSubmit = harPotensieltFlereInformasjonsbehov(informasjonsbehovVedtaksbrev)
+    ? values => onSubmitPayloadMedEkstraInformasjon(values)
+    : values => onSubmitPayload(values);
+
   return (
     <>
       <Formik
@@ -114,6 +161,7 @@ export const VedtakForm = ({
           [FORMIK_FIELDNAME.SKAL_BRUKE_OVERSTYRENDE_FRITEKST_BREV]: false,
           [FORMIK_FIELDNAME.SKAL_HINDRE_UTSENDING_AV_BREV]: false,
         }}
+        onSubmit={onSubmit}
       >
         {({ values, setFieldValue }) => (
           <VedtakAksjonspunktPanel
@@ -290,8 +338,6 @@ export const buildInitialValues = createSelector(
     tilgjengeligeVedtaksbrev,
     readonly,
   ) => ({
-    sprakkode,
-    aksjonspunktKoder: aksjonspunkter.filter(ap => ap.kanLoses).map(ap => ap.definisjon.kode),
     skalBrukeOverstyrendeFritekstBrev:
       harBareFritekstbrev(tilgjengeligeVedtaksbrev) || harOverstyrtMedFritekstbrev(dokumentdata, vedtakVarsel),
     skalUndertrykkeBrev: readonly && harOverstyrtMedIngenBrev(dokumentdata, vedtakVarsel),
@@ -312,38 +358,6 @@ export const buildInitialValues = createSelector(
 export const getAksjonspunktKoder = createSelector([ownProps => ownProps.aksjonspunkter], aksjonspunkter =>
   aksjonspunkter.map(ap => ap.definisjon.kode),
 );
-
-const onSubmitPayload = (values, tilgjengeligeVedtaksbrev) =>
-  values.aksjonspunktKoder.map(apCode => ({
-    kode: apCode,
-    begrunnelse: values.begrunnelse,
-    overstyrtMottaker: safeJSONParse(values.overstyrtMottaker),
-    fritekstbrev: {
-      brødtekst: values.brødtekst,
-      overskrift: values.overskrift,
-    },
-    skalBrukeOverstyrendeFritekstBrev: values.skalBrukeOverstyrendeFritekstBrev,
-    skalUndertrykkeBrev: values.skalUndertrykkeBrev,
-    isVedtakSubmission,
-    tilgjengeligeVedtaksbrev,
-  }));
-
-const onSubmitPayloadMedEkstraInformasjon = (values, informasjonsbehov, tilgjengeligeVedtaksbrev) => {
-  const begrunnelser = informasjonsbehov.map(({ kode }) => ({ kode, begrunnelse: values[kode] }));
-  return values.aksjonspunktKoder.map(apCode => ({
-    kode: apCode,
-    overstyrtMottaker: safeJSONParse(values.overstyrtMottaker),
-    fritekstbrev: {
-      brødtekst: values.brødtekst,
-      overskrift: values.overskrift,
-    },
-    skalBrukeOverstyrendeFritekstBrev: values.skalBrukeOverstyrendeFritekstBrev,
-    skalUndertrykkeBrev: values.skalUndertrykkeBrev,
-    isVedtakSubmission,
-    begrunnelserMedInformasjonsbehov: begrunnelser,
-    tilgjengeligeVedtaksbrev,
-  }));
-};
 
 const harPotensieltFlereInformasjonsbehov = informasjonsbehovVedtaksbrev => {
   if (informasjonsbehovVedtaksbrev) {
