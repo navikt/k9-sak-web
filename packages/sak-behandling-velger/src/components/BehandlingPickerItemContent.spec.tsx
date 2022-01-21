@@ -38,19 +38,4 @@ describe('<BehandlingPickerItemContent>', () => {
     expect(labels.first().prop('dateString')).toEqual('2022-01-01');
     expect(labels.last().prop('dateString')).toEqual('2022-01-18');
   });
-
-  // it('skal vise årsak for revurdering', () => {
-  //   const wrapper = shallow(
-  //     <BehandlingPickerItemContent
-  //       behandlingTypeNavn="Viderebehandling"
-  //       behandlingsresultatTypeNavn="Innvilget"
-  //       behandlingsresultatTypeKode="INNVILGET"
-  //       erAutomatiskRevurdering={false}
-  //       søknadsperioder={[{ fom: '2022-01-01', tom: '2022-01-18' }]}
-  //     />,
-  //   );
-
-  //   const formattedMessages = wrapper.find('MemoizedFormattedMessage');
-  //   expect(formattedMessages.first().prop('id')).toEqual('Behandlingspunkt.Årsak.Annet');
-  // });
 });
