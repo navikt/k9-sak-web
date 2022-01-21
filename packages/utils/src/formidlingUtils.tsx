@@ -54,12 +54,12 @@ export function kanHaFritekstbrev(tilgjengeligeVedtaksbrev: TilgjengeligeVedtaks
   return vedtaksbrevmaler(tilgjengeligeVedtaksbrev).some(vb => vb === vedtaksbrevtype.FRITEKST);
 }
 
-export function harBareFritekstbrev(tilgjengeligeVedtaksbrev: TilgjengeligeVedtaksbrev): boolean {
+export function kanKunVelgeFritekstbrev(tilgjengeligeVedtaksbrev: TilgjengeligeVedtaksbrev): boolean {
   const vedtaksbrev = vedtaksbrevmaler(tilgjengeligeVedtaksbrev);
   return vedtaksbrev.length > 0 && vedtaksbrev.every(vb => vb === vedtaksbrevtype.FRITEKST);
 }
 
-export function harOverstyrtMedFritekstbrev(dokumentdata, vedtakVarsel): boolean {
+export function harMellomlagretFritekstbrev(dokumentdata, vedtakVarsel): boolean {
   return (
     (dokumentdata?.[dokumentdatatype.VEDTAKSBREV_TYPE] ?? vedtakVarsel?.vedtaksbrev.kode) === vedtaksbrevtype.FRITEKST
   );

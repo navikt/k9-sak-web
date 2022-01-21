@@ -17,7 +17,7 @@ import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 
 import { Column, Row } from 'nav-frontend-grid';
 import { dokumentdatatype } from '@k9-sak-web/konstanter';
-import { kanHaFritekstbrev, harBareFritekstbrev } from '@fpsak-frontend/utils/src/formidlingUtils';
+import { kanHaFritekstbrev, kanKunVelgeFritekstbrev } from '@fpsak-frontend/utils/src/formidlingUtils';
 import vedtakBeregningsresultatPropType from '../../propTypes/vedtakBeregningsresultatPropType';
 
 import VedtakCheckbox from '../VedtakCheckbox';
@@ -140,7 +140,7 @@ export class VedtakRevurderingFormImpl extends Component {
               kanHaFritekstbrev(tilgjengeligeVedtaksbrev) && (
                 <VedtakCheckbox
                   toggleCallback={this.onToggleOverstyring}
-                  readOnly={readOnly || harBareFritekstbrev(tilgjengeligeVedtaksbrev)}
+                  readOnly={readOnly || kanKunVelgeFritekstbrev(tilgjengeligeVedtaksbrev)}
                   keyName="skalBrukeOverstyrendeFritekstBrev"
                   readOnlyHideEmpty={false}
                 />

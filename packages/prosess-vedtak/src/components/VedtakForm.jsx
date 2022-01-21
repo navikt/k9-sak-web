@@ -17,7 +17,11 @@ import behandlingStatusCode from '@fpsak-frontend/kodeverk/src/behandlingStatus'
 import { behandlingForm, behandlingFormValueSelector } from '@fpsak-frontend/form';
 
 import { safeJSONParse } from '@fpsak-frontend/utils';
-import { kanHaFritekstbrev, harBareFritekstbrev } from '@fpsak-frontend/utils/src/formidlingUtils';
+import {
+  kanHaFritekstbrev,
+  kanKunVelgeFritekstbrev,
+  harMellomlagretFritekstbrev,
+} from '@fpsak-frontend/utils/src/formidlingUtils';
 import vedtakBeregningsresultatPropType from '../propTypes/vedtakBeregningsresultatPropType';
 import vedtakVilkarPropType from '../propTypes/vedtakVilkarPropType';
 import VedtakInnvilgetPanel from './VedtakInnvilgetPanel';
@@ -158,7 +162,8 @@ export const VedtakForm = ({
     <>
       <Formik
         initialValues={{
-          [FORMIK_FIELDNAME.SKAL_BRUKE_OVERSTYRENDE_FRITEKST_BREV]: false,
+          [FORMIK_FIELDNAME.SKAL_BRUKE_OVERSTYRENDE_FRITEKST_BREV]:
+            kanKunVelgeFritekstbrev(tilgjengeligeVedtaksbrev) || harMellomlagretFritekstbrev(dokumentdata, vedtakVarsel),
           [FORMIK_FIELDNAME.SKAL_HINDRE_UTSENDING_AV_BREV]: false,
         }}
         onSubmit={onSubmit}
@@ -176,7 +181,7 @@ export const VedtakForm = ({
                 <Checkbox
                   value={values.skalBrukeOverstyrendeFritekstBrev}
                   onChange={e => onToggleOverstyring(e, setFieldValue)}
-                  disabled={readOnly || harBareFritekstbrev(tilgjengeligeVedtaksbrev)}
+                  disabled={readOnly || kanKunVelgeFritekstbrev(tilgjengeligeVedtaksbrev)}
                   ref={overstyrBrevRef}
                 >
                   {intl.formatMessage({ id: 'VedtakForm.ManuellOverstyring' })}
@@ -339,7 +344,7 @@ export const buildInitialValues = createSelector(
     readonly,
   ) => ({
     skalBrukeOverstyrendeFritekstBrev:
-      harBareFritekstbrev(tilgjengeligeVedtaksbrev) || harOverstyrtMedFritekstbrev(dokumentdata, vedtakVarsel),
+      kanKunVelgeFritekstbrev(tilgjengeligeVedtaksbrev) || harMellomlagretFritekstbrev(dokumentdata, vedtakVarsel),
     skalUndertrykkeBrev: readonly && harOverstyrtMedIngenBrev(dokumentdata, vedtakVarsel),
     overskrift: decodeHtmlEntity(dokumentdata?.[dokumentdatatype.FRITEKSTBREV]?.overskrift),
     brødtekst: decodeHtmlEntity(dokumentdata?.[dokumentdatatype.FRITEKSTBREV]?.brødtekst),
