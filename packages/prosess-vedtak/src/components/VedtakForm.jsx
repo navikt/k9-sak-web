@@ -14,7 +14,7 @@ import { kodeverkObjektPropType } from '@fpsak-frontend/prop-types';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import { isAvslag, isDelvisInnvilget, isInnvilget } from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
 import behandlingStatusCode from '@fpsak-frontend/kodeverk/src/behandlingStatus';
-import { behandlingForm, behandlingFormValueSelector } from '@fpsak-frontend/form';
+import { behandlingFormValueSelector } from '@fpsak-frontend/form';
 import { dokumentdatatype } from '@k9-sak-web/konstanter';
 
 import { safeJSONParse, decodeHtmlEntity } from '@fpsak-frontend/utils';
@@ -24,7 +24,6 @@ import {
   harMellomlagretFritekstbrev,
   harOverstyrtMedIngenBrev,
 } from '@fpsak-frontend/utils/src/formidlingUtils';
-import vedtakBeregningsresultatPropType from '../propTypes/vedtakBeregningsresultatPropType';
 import vedtakVilkarPropType from '../propTypes/vedtakVilkarPropType';
 import VedtakInnvilgetPanel from './VedtakInnvilgetPanel';
 import VedtakAvslagPanel from './VedtakAvslagPanel';
@@ -68,17 +67,6 @@ export const VedtakForm = ({
   tilgjengeligeVedtaksbrev,
   informasjonsbehovVedtaksbrev,
   dokumentdata,
-  brødtekst,
-  overskrift,
-  begrunnelse,
-  overstyrtMottaker,
-  KONTINUERLIG_TILSYN,
-  OMSORGEN_FOR,
-  VILKAR_FOR_TO,
-  UNNTAK_FRA_TILSYNSORDNING,
-  BEREGNING_25_PROSENT_AVVIK,
-  OVER_18_AAR,
-  REVURDERING_ENDRING,
   fritekstdokumenter,
   lagreDokumentdata,
   overlappendeYtelser,
@@ -162,7 +150,7 @@ export const VedtakForm = ({
   const onSubmit = harPotensieltFlereInformasjonsbehov(informasjonsbehovVedtaksbrev)
     ? values => onSubmitPayloadMedEkstraInformasjon(values)
     : values => onSubmitPayload(values);
-  
+
   return (
     <>
       <Formik
@@ -281,9 +269,7 @@ export const VedtakForm = ({
 };
 
 VedtakForm.propTypes = {
-  resultatstruktur: vedtakBeregningsresultatPropType,
   intl: PropTypes.shape().isRequired,
-  behandlingStatusKode: PropTypes.shape({ kode: PropTypes.string }),
   aksjonspunkter: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   behandlingresultat: PropTypes.shape().isRequired,
   behandlingPaaVent: PropTypes.bool.isRequired,
@@ -292,7 +278,6 @@ VedtakForm.propTypes = {
   kanOverstyre: PropTypes.bool,
   skalBrukeOverstyrendeFritekstBrev: PropTypes.bool,
   sprakkode: kodeverkObjektPropType.isRequired,
-  erBehandlingEtterKlage: PropTypes.bool.isRequired,
   ytelseTypeKode: PropTypes.string.isRequired,
   alleKodeverk: PropTypes.shape().isRequired,
   personopplysninger: PropTypes.shape().isRequired,
@@ -403,13 +388,4 @@ const mapDispatchToProps = dispatch => ({
   ),
 });
 
-export default connect(
-  mapStateToPropsFactory,
-  mapDispatchToProps,
-)(
-  injectIntl(
-    behandlingForm({
-      form: formName,
-    })(VedtakForm),
-  ),
-);
+export default connect(mapStateToPropsFactory, mapDispatchToProps)(injectIntl(VedtakForm));
