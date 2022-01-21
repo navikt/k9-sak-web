@@ -8,7 +8,7 @@ import { Normaltekst, Undertittel } from 'nav-frontend-typografi';
 import React, { ReactElement, useEffect, useRef, useState } from 'react';
 import { FormattedMessage, IntlShape, useIntl } from 'react-intl';
 import { NavLink } from 'react-router-dom';
-import BehandlingFilter from './BehandlingFilter';
+import BehandlingFilter, { automatiskBehandling } from './BehandlingFilter';
 import styles from './behandlingPicker.less';
 import BehandlingPickerItemContent from './BehandlingPickerItemContent';
 import BehandlingSelected from './BehandlingSelected';
@@ -40,6 +40,9 @@ const getBehandlingNavn = (
   return intl.formatMessage({ id: 'BehandlingPickerItemContent.BehandlingTypeNavn.Viderebehandling' });
 };
 
+const harAutomatiskBehandlingÅrsak = (behandling: BehandlingAppKontekst) =>
+  behandling.behandlingÅrsaker.some(årsak => årsak.erAutomatiskRevurdering);
+
 const renderListItems = ({
   behandlinger,
   getBehandlingLocation,
@@ -62,10 +65,13 @@ const renderListItems = ({
       if (activeFilters.length === 0) {
         return true;
       }
+      if (activeFilters.includes(automatiskBehandling)) {
+        return harAutomatiskBehandlingÅrsak(behandling);
+      }
       return activeFilters.includes(behandling.type.kode);
     })
     .map(behandling => (
-      <li key={behandling.id}>
+      <li data-testid="behandling" key={behandling.id}>
         <NavLink
           onClick={() => setValgtBehandlingId(behandling.id)}
           className={styles.linkToBehandling}
@@ -81,7 +87,7 @@ const renderListItems = ({
             behandlingsresultatTypeKode={
               behandling.behandlingsresultat ? behandling.behandlingsresultat.type.kode : undefined
             }
-            erAutomatiskRevurdering={behandling.behandlingÅrsaker.some(årsak => årsak.erAutomatiskRevurdering)}
+            erAutomatiskRevurdering={harAutomatiskBehandlingÅrsak(behandling)}
             søknadsperioder={alleSøknadsperioder.find(periode => periode.id === behandling.id)?.perioder}
           />
         </NavLink>
@@ -165,6 +171,12 @@ const BehandlingPicker = ({
           label: getBehandlingNavn(behandling, getKodeverkFn, intl),
         });
       }
+      if (harAutomatiskBehandlingÅrsak(behandling) && !filterListe.includes(automatiskBehandling)) {
+        filterListe.push({
+          value: automatiskBehandling,
+          label: intl.formatMessage({ id: 'Behandlingspunkt.BehandlingFilter.AutomatiskBehandling' }),
+        });
+      }
     });
     return filterListe;
   };
@@ -195,7 +207,7 @@ const BehandlingPicker = ({
           </div>
           <ul className={styles.behandlingList}>
             {noExistingBehandlinger && (
-              <Normaltekst>
+              <Normaltekst data-testid="ingenBehandlinger">
                 <FormattedMessage id="BehandlingList.ZeroBehandlinger" />
               </Normaltekst>
             )}
@@ -229,6 +241,7 @@ const BehandlingPicker = ({
               årsak => getKodeverkFn(årsak.behandlingArsakType).navn,
             )}
             behandlingTypeNavn={getBehandlingNavn(valgtBehandling, getKodeverkFn, intl)}
+            behandlingTypeKode={valgtBehandling.type.kode}
             søknadsperioder={søknadsperioder.find(periode => periode.id === valgtBehandling.id)?.perioder}
           />
         </>
