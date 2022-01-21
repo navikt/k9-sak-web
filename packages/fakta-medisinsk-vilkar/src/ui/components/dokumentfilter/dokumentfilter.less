@@ -1,0 +1,34 @@
+.dokumentfilter {
+    margin-right: -2.25rem;
+}
+.chevronDropdown {
+    &__dropdown {
+        position: absolute;
+        top: -14px;
+        left: 40px;
+        border: 1px solid black;
+        border-radius: 3px;
+        padding: 13px 13px 24px 16px;
+        margin-left: 4px;
+        z-index: 1;
+        background-color: white;
+
+        &__checkbox {
+            div {
+                margin: 10px 0;
+            }
+        }
+    }
+    &__toggleButton {
+        border: none;
+        background: none;
+        padding: unset;
+        &__text {
+            display: inline;
+            line-height: 19px;
+        }
+    }
+    &__hidden {
+        visibility: hidden;
+    }
+}

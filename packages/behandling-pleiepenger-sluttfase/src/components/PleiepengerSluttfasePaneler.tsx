@@ -19,7 +19,7 @@ import {
 import moment from 'moment';
 import React, { useState } from 'react';
 import useAksjonspunkter from '../store/aksjonspunkter/hooks/useAksjonspunkter';
-import useVilkar from '../store/vilkar/hooks/useVilkar';
+// import useVilkar from '../store/vilkar/hooks/useVilkar';
 import { Arbeidstype } from '../types/Arbeidstype';
 import FetchedData from '../types/fetchedDataTsType';
 import AndreSakerPåSøkerStripe from './AndreSakerPåSøkerStripe';
@@ -88,12 +88,12 @@ const PleiepengerSluttfasePaneler = ({
   /*
    * TODO Dette er midlertidig, en PoC på hooks. Skal fordeles videre i hierarkiet
    */
-  const { aksjonspunkter, loading: aksjonspunkterLoading } = useAksjonspunkter();
+  // const { aksjonspunkter, loading: aksjonspunkterLoading } = useAksjonspunkter();
   // const { vilkar, loading: vilkarLoading } = useVilkar();
 
   const [apentFaktaPanelInfo, setApentFaktaPanel] = useState<FaktaPanelInfo>();
   const [beregningErBehandlet, setBeregningErBehandlet] = useState<boolean>(false);
-  const harOpprettetAksjonspunkt9203 = harOpprettetAksjonspunkt(aksjonspunkter || [], 9203);
+  const harOpprettetAksjonspunkt9203 = harOpprettetAksjonspunkt(fetchedData.aksjonspunkter || [], 9203);
   const behandlingUtil = new BehandlingUtil(behandling);
   const arbeidsgiverOpplysningerUtil = new ArbeidsgiverOpplysningerUtil(arbeidsgiverOpplysningerPerId);
 
@@ -101,102 +101,102 @@ const PleiepengerSluttfasePaneler = ({
   /*
   * TODO: Fjern når dette er flyttet videre i hierarkiet
   */
-  const testReduxHook = { ...fetchedData, aksjonspunkter };
-  console.log("alle dataene?", testReduxHook);
+  // const testReduxHook = { ...fetchedData, aksjonspunkter };
+  // console.log("alle dataene?", testReduxHook);
 
-  const isLoadingData = () => aksjonspunkterLoading; // || vilkarLoading;
+  // const isLoadingData = () => aksjonspunkterLoading; // || vilkarLoading;
 
   return (
     <>
-      {isLoadingData && (<>noe skjer</>)}
-      {aksjonspunkter.length > 0 && (<>Det er noe der</>)}
+      {/* {isLoadingData && (<>noe skjer</>)}
+      {aksjonspunkter.length > 0 && (<>Det er noe der</>)} */}
 
-      {!isLoadingData && aksjonspunkter.length > 0 && (<>
-        <BehandlingPaVent
-          behandling={behandling}
-          aksjonspunkter={aksjonspunkter}
-          kodeverk={alleKodeverk}
-          settPaVent={settPaVent}
-          hentBehandling={hentBehandling}
-        />
+      {/* {!isLoadingData && aksjonspunkter.length > 0 && (<> */}
+      <BehandlingPaVent
+        behandling={behandling}
+        aksjonspunkter={fetchedData.aksjonspunkter}
+        kodeverk={alleKodeverk}
+        settPaVent={settPaVent}
+        hentBehandling={hentBehandling}
+      />
 
-        {harOpprettetAksjonspunkt9203 && (
-          <DataFetcher
-            url={behandlingUtil.getEndpointHrefByRel('psb-manglende-arbeidstid')}
-            contentRenderer={(data: Data, isLoading, hasError) => (
-              <AksjonspunktUtenLøsningModal
-                melding={
-                  <div>
-                    For å komme videre i behandlingen må du punsje manglende opplysninger om arbeidskategori og arbeidstid
-                    i Punsj.
-                    {isLoading && <p>Henter perioder...</p>}
-                    {hasError && <p>Noe gikk galt under henting av perioder</p>}
-                    {!isLoading && !hasError && (
-                      <ArbeidsgiverMedManglendePerioderListe
-                        arbeidsgivereMedPerioder={data.mangler?.map(mangel => ({
-                          arbeidsgiverNavn: arbeidsgiverOpplysningerUtil.finnArbeidsgiversNavn(
-                            mangel.arbeidsgiver.organisasjonsnummer || mangel.arbeidsgiver.aktørId,
-                          ),
-                          organisasjonsnummer: mangel.arbeidsgiver.organisasjonsnummer,
-                          perioder: mangel.manglendePerioder.map(periode => {
-                            const [fom, tom] = periode.split('/');
-                            const formattedFom = moment(fom, 'YYYY-MM-DD').format('DD.MM.YYYY');
-                            const formattedTom = moment(tom, 'YYYY-MM-DD').format('DD.MM.YYYY');
-                            return `${formattedFom} - ${formattedTom}`;
-                          }),
-                          arbeidstype: mangel.arbeidsgiver?.type,
-                          personIdentifikator:
-                            arbeidsgiverOpplysningerUtil.arbeidsgiverOpplysningerPerId[mangel.arbeidsgiver?.aktørId]
-                              ?.personIdentifikator,
-                        }))}
-                      />
-                    )}
-                  </div>
-                }
-              />
-            )}
-          />
-        )}
-        <PleiepengerSluttfaseProsess
-          data={testReduxHook}
-          fagsak={fagsak}
-          fagsakPerson={fagsakPerson}
-          behandling={behandling}
-          alleKodeverk={alleKodeverk}
-          rettigheter={rettigheter}
-          valgtProsessSteg={valgtProsessSteg}
-          valgtFaktaSteg={valgtFaktaSteg}
-          oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
-          oppdaterBehandlingVersjon={oppdaterBehandlingVersjon}
-          opneSokeside={opneSokeside}
-          hasFetchError={hasFetchError}
-          apentFaktaPanelInfo={apentFaktaPanelInfo}
-          setBehandling={setBehandling}
-          arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
-          featureToggles={featureToggles}
-          setBeregningErBehandlet={setBeregningErBehandlet}
+      {harOpprettetAksjonspunkt9203 && (
+        <DataFetcher
+          url={behandlingUtil.getEndpointHrefByRel('psb-manglende-arbeidstid')}
+          contentRenderer={(data: Data, isLoading, hasError) => (
+            <AksjonspunktUtenLøsningModal
+              melding={
+                <div>
+                  For å komme videre i behandlingen må du punsje manglende opplysninger om arbeidskategori og arbeidstid
+                  i Punsj.
+                  {isLoading && <p>Henter perioder...</p>}
+                  {hasError && <p>Noe gikk galt under henting av perioder</p>}
+                  {!isLoading && !hasError && (
+                    <ArbeidsgiverMedManglendePerioderListe
+                      arbeidsgivereMedPerioder={data.mangler?.map(mangel => ({
+                        arbeidsgiverNavn: arbeidsgiverOpplysningerUtil.finnArbeidsgiversNavn(
+                          mangel.arbeidsgiver.organisasjonsnummer || mangel.arbeidsgiver.aktørId,
+                        ),
+                        organisasjonsnummer: mangel.arbeidsgiver.organisasjonsnummer,
+                        perioder: mangel.manglendePerioder.map(periode => {
+                          const [fom, tom] = periode.split('/');
+                          const formattedFom = moment(fom, 'YYYY-MM-DD').format('DD.MM.YYYY');
+                          const formattedTom = moment(tom, 'YYYY-MM-DD').format('DD.MM.YYYY');
+                          return `${formattedFom} - ${formattedTom}`;
+                        }),
+                        arbeidstype: mangel.arbeidsgiver?.type,
+                        personIdentifikator:
+                          arbeidsgiverOpplysningerUtil.arbeidsgiverOpplysningerPerId[mangel.arbeidsgiver?.aktørId]
+                            ?.personIdentifikator,
+                      }))}
+                    />
+                  )}
+                </div>
+              }
+            />
+          )}
         />
-        <AndreSakerPåSøkerStripe søkerIdent={fagsakPerson.personnummer} saksnummer={fagsak.saksnummer} />
-        <PleiepengerSluttfaseFakta
-          behandling={behandling}
-          data={testReduxHook}
-          fagsak={fagsak}
-          fagsakPerson={fagsakPerson}
-          alleKodeverk={alleKodeverk}
-          rettigheter={rettigheter}
-          hasFetchError={hasFetchError}
-          valgtFaktaSteg={valgtFaktaSteg}
-          valgtProsessSteg={valgtProsessSteg}
-          oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
-          setApentFaktaPanel={setApentFaktaPanel}
-          setBehandling={setBehandling}
-          arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
-          dokumenter={dokumenter}
-          featureToggles={featureToggles}
-          beregningErBehandlet={beregningErBehandlet}
+      )}
+      <PleiepengerSluttfaseProsess
+        data={fetchedData}
+        fagsak={fagsak}
+        fagsakPerson={fagsakPerson}
+        behandling={behandling}
+        alleKodeverk={alleKodeverk}
+        rettigheter={rettigheter}
+        valgtProsessSteg={valgtProsessSteg}
+        valgtFaktaSteg={valgtFaktaSteg}
+        oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
+        oppdaterBehandlingVersjon={oppdaterBehandlingVersjon}
+        opneSokeside={opneSokeside}
+        hasFetchError={hasFetchError}
+        apentFaktaPanelInfo={apentFaktaPanelInfo}
+        setBehandling={setBehandling}
+        arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
+        featureToggles={featureToggles}
+        setBeregningErBehandlet={setBeregningErBehandlet}
+      />
+      <AndreSakerPåSøkerStripe søkerIdent={fagsakPerson.personnummer} saksnummer={fagsak.saksnummer} />
+      <PleiepengerSluttfaseFakta
+        behandling={behandling}
+        data={fetchedData}
+        fagsak={fagsak}
+        fagsakPerson={fagsakPerson}
+        alleKodeverk={alleKodeverk}
+        rettigheter={rettigheter}
+        hasFetchError={hasFetchError}
+        valgtFaktaSteg={valgtFaktaSteg}
+        valgtProsessSteg={valgtProsessSteg}
+        oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
+        setApentFaktaPanel={setApentFaktaPanel}
+        setBehandling={setBehandling}
+        arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
+        dokumenter={dokumenter}
+        featureToggles={featureToggles}
+        beregningErBehandlet={beregningErBehandlet}
 
-        />
-      </>)}
+      />
+      {/* </>)} */}
     </>
   );
 };

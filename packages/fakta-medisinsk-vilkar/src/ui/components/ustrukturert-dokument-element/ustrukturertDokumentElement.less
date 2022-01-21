@@ -1,0 +1,50 @@
+.ustrukturertDokumentElement {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+
+    &__texts {
+        margin-left: 2rem;
+        display: flex;
+        align-items: center;
+
+        &__type {
+            display: inline-block;
+            min-width: 128px;
+            color: rgba(0, 103, 197, 1);
+            text-decoration: underline;
+            margin: 0;
+        }
+
+        &__date {
+            margin-left: 1rem;
+        }
+
+        &__part {
+            margin-left: 1rem;
+            margin-bottom: -0.25rem;
+            display: inline-block;
+        }
+
+        &__document {
+            margin-left: 1.5rem;
+            margin-bottom: -0.125rem;
+
+            svg {
+                width: 1.125rem;
+                height: 1.375rem;
+                stroke: none;
+            }
+        }
+    }
+    .visuallyHidden {
+        position: absolute;
+        overflow: hidden;
+        clip: rect(0 0 0 0);
+        height: 1px;
+        width: 1px;
+        margin: -1px;
+        padding: 0;
+        border: 0;
+    }
+}

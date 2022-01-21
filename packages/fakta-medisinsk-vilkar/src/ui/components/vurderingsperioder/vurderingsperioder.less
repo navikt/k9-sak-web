@@ -1,0 +1,41 @@
+.vurderingsperioder {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+
+    &__indicator {
+        width: 3.5rem;
+    }
+
+    &__texts {
+        display: flex;
+        align-items: center;
+
+        &__period {
+            margin: 0;
+            color: rgba(0, 103, 197, 1);
+            text-decoration: underline;
+            min-width: 10.0625rem;
+        }
+
+        &__parterIcon {
+            display: inline-block;
+            vertical-align: top;
+            margin-left: 1.625rem;
+        }
+    }
+    &__etikett {
+        margin-left: 1.375rem;
+    }
+
+    .visuallyHidden {
+        position: absolute;
+        overflow: hidden;
+        clip: rect(0 0 0 0);
+        height: 1px;
+        width: 1px;
+        margin: -1px;
+        padding: 0;
+        border: 0;
+    }
+}

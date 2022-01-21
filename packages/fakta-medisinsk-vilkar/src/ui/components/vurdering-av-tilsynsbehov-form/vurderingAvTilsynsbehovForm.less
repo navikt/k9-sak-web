@@ -1,0 +1,71 @@
+.begrunnelsesfelt {
+    &__labeltekst {
+        font-weight: 400;
+        margin-bottom: 0;
+    }
+
+    &__liste {
+        margin-top: 0;
+        padding-left: 1rem;
+        font-weight: 400;
+    }
+}
+
+.visDokumenterKnapp {
+    margin-top: 0.75rem;
+    color: #0067c5;
+    background: none;
+    text-decoration: underline;
+    cursor: pointer;
+    border: none;
+    padding: 0;
+}
+
+.checkboxGroupWrapper {
+    margin-top: 1rem;
+
+    legend {
+        position: absolute;
+        overflow: hidden;
+        clip: rect(0 0 0 0);
+        height: 1px;
+        width: 1px;
+        margin: -1px;
+        padding: 0;
+        border: 0;
+    }
+}
+
+.fjernFilterKnapp {
+    align-items: center;
+    background: #c9c9c9;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    margin-right: 0.5rem;
+    padding: 0.3125rem 0.5625rem;
+
+    svg {
+        margin-left: 0.5rem;
+        height: 0.75rem;
+        width: 0.75rem;
+    }
+}
+
+.filterKnappContainer {
+    display: flex;
+    margin: 1.25rem 0 1.5rem;
+}
+
+.filterContainer {
+    position: relative;
+    margin-top: 0.75rem;
+}
+
+.dokumentEtiketter {
+    display: flex;
+
+    :global .contentWithTooltip {
+        margin-right: 0.5rem;
+    }
+}

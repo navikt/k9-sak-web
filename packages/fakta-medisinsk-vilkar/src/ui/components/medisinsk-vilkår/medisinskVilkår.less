@@ -1,0 +1,63 @@
+.medisinskVilkår {
+    color: #262626;
+    &__vilkårContentContainer {
+        margin-top: 1.5rem;
+
+        @media screen and (min-width: 1350px) {
+            min-height: 1250px;
+        }
+    }
+
+    :global {
+        .nav-frontend-tabs__tab-label {
+            padding-bottom: 0.1rem;
+        }
+
+        .nav-frontend-tabs__tab-inner--aktiv .nav-frontend-tabs__tab-label {
+            border-bottom: 2px solid #0067c5;
+        }
+
+        .alertstripe {
+            padding-top: 0.4375rem;
+            padding-bottom: 0.4375rem;
+        }
+
+        .alertstripe__tekst {
+            max-width: 47rem;
+        }
+
+        .navigationWithDetailView__navigationSection {
+            flex-shrink: 0;
+            min-width: 25.3125rem;
+        }
+
+        .navigationWithDetailView__detailSection {
+            padding-bottom: 9.375rem;
+        }
+    }
+}
+
+.medisinskVilkårTabItem {
+    position: relative;
+
+    &__warningIcon {
+        position: absolute;
+        right: 0;
+        bottom: -2px;
+        height: 1.5rem;
+    }
+}
+
+.medisinskVilkårTabItemExtended {
+    padding-right: 2rem;
+}
+
+.infostripe {
+    &__diagnosekode__tittel {
+        margin-left: 1.75rem;
+    }
+    &__diagnosekode {
+        margin-left: 0.5rem;
+        font-weight: bold;
+    }
+}

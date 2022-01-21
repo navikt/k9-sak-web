@@ -1,0 +1,59 @@
+.nyVurderingKnapp {
+    flex-basis: 40%;
+    margin-left: auto;
+}
+
+.vurderingsvelgerContainer {
+    flex-grow: 1;
+    margin-top: 0.125rem;
+    padding: 1.25rem 0 0;
+
+    &__columnHeadings {
+        display: flex;
+        margin-bottom: 0.25rem;
+    }
+
+    &__columnHeading--first {
+        width: 4.1875rem;
+        margin-left: 0.875rem;
+    }
+
+    &__columnHeading--third {
+        margin-left: 8.1875rem;
+    }
+}
+
+.vurderingsperiode__postElementContainer {
+    margin-left: 1.375rem;
+    display: flex;
+
+    :nth-child(2) {
+        margin-left: 1rem;
+    }
+
+    :global .editedBySaksbehandlerIcon {
+        position: absolute;
+        height: 1.875rem;
+    }
+}
+
+.vurderingsnavigasjon {
+    &__opprettVurderingKnapp {
+        margin-top: 1.375rem;
+        padding-right: 1.75rem;
+        font-size: 0.875rem;
+    }
+
+    &__headingContainer {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    &__heading {
+        padding: 1.25rem 0.9375rem 0;
+    }
+
+    &__ingenVurderinger {
+        margin-left: 0.9375rem;
+    }
+}

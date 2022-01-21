@@ -1,0 +1,35 @@
+.vurderingDokumentfilter {
+    margin-right: -2.25rem;
+}
+.chevronDropdown {
+    &__dropdown {
+        position: absolute;
+        top: -0.875rem;
+        left: -1.3125rem;
+        border: 1px solid black;
+        border-radius: 0.1875rem;
+        padding: 0.8125rem 0.8125rem 0.8125rem 1rem;
+        margin-left: 0.25rem;
+        z-index: 1;
+        background-color: white;
+
+        &__checkbox {
+            div {
+                margin: 0.625rem 0;
+            }
+        }
+    }
+    &__toggleButton {
+        border: none;
+        background: none;
+        padding: unset;
+        &__text {
+            display: inline;
+            line-height: 1.1875rem;
+            margin-right: 0.375rem;
+        }
+    }
+    &__hidden {
+        visibility: hidden;
+    }
+}
