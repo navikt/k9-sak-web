@@ -7,11 +7,10 @@ import { useFormContext } from 'react-hook-form';
 import LinkRel from '../../../constants/LinkRel';
 import Dokument from '../../../types/Dokument';
 import { StrukturerDokumentFormFieldName as FieldName } from '../../../types/StrukturerDokumentFormState';
-import { renderDokumenttypeText } from '../../../util/dokumentUtils';
+import { ikkeDuplikatValue, renderDokumenttypeText } from '../../../util/dokumentUtils';
 import { findLinkByRel } from '../../../util/linkUtils';
 import ContainerContext from '../../context/ContainerContext';
 import { required } from '../../form/validators';
-import { ikkeDuplikatValue } from '../strukturer-dokument-form/StrukturerDokumentForm';
 
 interface DuplikatRadiobuttonsProps {
     dokument: Dokument;

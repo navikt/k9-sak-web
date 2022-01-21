@@ -24,8 +24,6 @@ interface StrukturerDokumentFormProps {
     strukturerteDokumenter: Dokument[];
 }
 
-export const ikkeDuplikatValue = 'ikkeDuplikat';
-
 const StrukturerDokumentForm = ({
     dokument,
     onSubmit,

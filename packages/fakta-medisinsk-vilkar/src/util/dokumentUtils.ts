@@ -4,7 +4,8 @@ import {
     StrukturerDokumentFormFieldName as FieldName,
     StrukturerDokumentFormState,
 } from '../types/StrukturerDokumentFormState';
-import { ikkeDuplikatValue } from '../ui/components/strukturer-dokument-form/StrukturerDokumentForm';
+
+export const ikkeDuplikatValue = 'ikkeDuplikat';
 
 export const finnBenyttedeDokumenter = (benyttedeDokumentIder: string[], alleDokumenter: Dokument[]): Dokument[] =>
     alleDokumenter.filter((dokument) => benyttedeDokumentIder.includes(dokument.id));

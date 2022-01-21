@@ -7,6 +7,7 @@ import Lenke from 'nav-frontend-lenker';
 import { Element } from 'nav-frontend-typografi';
 import React, { useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
+import { TilsynFieldName, VurderingAvTilsynsbehovFormState } from '../../../types/VurderingAvTilsynsbehovFormState';
 import Dokument from '../../../types/Dokument';
 import { Vurderingsversjon } from '../../../types/Vurdering';
 import {
@@ -14,7 +15,7 @@ import {
     finnMaksavgrensningerForPerioder,
     slåSammenSammenhengendePerioder,
 } from '../../../util/periodUtils';
-import { lagTilsynsbehovVurdering, TilsynFieldName as FieldName } from '../../../util/vurderingUtils';
+import { lagTilsynsbehovVurdering } from '../../../util/vurderingUtils';
 import ContainerContext from '../../context/ContainerContext';
 import { fomDatoErFørTomDato, harBruktDokumentasjon, required } from '../../form/validators';
 import AddButton from '../add-button/AddButton';
@@ -28,13 +29,6 @@ import styles from './vurderingAvTilsynsbehovForm.less';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type AnyType = any;
-
-export interface VurderingAvTilsynsbehovFormState {
-    [FieldName.VURDERING_AV_KONTINUERLIG_TILSYN_OG_PLEIE]?: string;
-    [FieldName.HAR_BEHOV_FOR_KONTINUERLIG_TILSYN_OG_PLEIE]?: boolean;
-    [FieldName.PERIODER]?: Period[];
-    [FieldName.DOKUMENTER]: string[];
-}
 
 interface VurderingAvTilsynsbehovFormProps {
     defaultValues: VurderingAvTilsynsbehovFormState;
@@ -106,7 +100,7 @@ const VurderingAvTilsynsbehovForm = ({
         return true;
     };
 
-    const perioderSomBlirVurdert = formMethods.watch(FieldName.PERIODER);
+    const perioderSomBlirVurdert = formMethods.watch(TilsynFieldName.PERIODER);
     const harVurdertAlleDagerSomSkalVurderes = React.useMemo(() => {
         const dagerSomSkalVurderes = (resterendeVurderingsperioder || []).flatMap((p) => p.asListOfDays());
         const dagerSomBlirVurdert = (perioderSomBlirVurdert || [])
@@ -140,7 +134,7 @@ const VurderingAvTilsynsbehovForm = ({
     );
 
     return (
-        <DetailViewVurdering title="Vurdering av tilsyn og pleie" perioder={defaultValues[FieldName.PERIODER]}>
+        <DetailViewVurdering title="Vurdering av tilsyn og pleie" perioder={defaultValues[TilsynFieldName.PERIODER]}>
             <div id="modal" />
             {/* eslint-disable-next-line react/jsx-props-no-spreading */}
             <FormProvider {...formMethods}>
@@ -186,7 +180,7 @@ const VurderingAvTilsynsbehovForm = ({
                             <div className={styles.checkboxGroupWrapper}>
                                 <CheckboxGroup
                                     question="Hvilke dokumenter er brukt i vurderingen av tilsyn og pleie?"
-                                    name={FieldName.DOKUMENTER}
+                                    name={TilsynFieldName.DOKUMENTER}
                                     checkboxes={getDokumenterSomSkalVises().map((dokument) => ({
                                         value: dokument.id,
                                         label: (
@@ -239,7 +233,7 @@ const VurderingAvTilsynsbehovForm = ({
                             id="begrunnelsesfelt"
                             disabled={readOnly}
                             textareaClass={styles.begrunnelsesfelt}
-                            name={FieldName.VURDERING_AV_KONTINUERLIG_TILSYN_OG_PLEIE}
+                            name={TilsynFieldName.VURDERING_AV_KONTINUERLIG_TILSYN_OG_PLEIE}
                             label={
                                 <>
                                     {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
@@ -275,7 +269,7 @@ const VurderingAvTilsynsbehovForm = ({
                     <Box marginTop={Margin.xLarge}>
                         <YesOrNoQuestion
                             question="Er det behov for tilsyn og pleie?"
-                            name={FieldName.HAR_BEHOV_FOR_KONTINUERLIG_TILSYN_OG_PLEIE}
+                            name={TilsynFieldName.HAR_BEHOV_FOR_KONTINUERLIG_TILSYN_OG_PLEIE}
                             validators={{ required }}
                             disabled={readOnly}
                         />
@@ -283,9 +277,9 @@ const VurderingAvTilsynsbehovForm = ({
                     <Box marginTop={Margin.xLarge}>
                         <PeriodpickerList
                             legend="Oppgi perioder"
-                            name={FieldName.PERIODER}
+                            name={TilsynFieldName.PERIODER}
                             disabled={readOnly}
-                            defaultValues={defaultValues[FieldName.PERIODER] || []}
+                            defaultValues={defaultValues[TilsynFieldName.PERIODER] || []}
                             validators={{
                                 required,
                                 inngårISammenhengendeSøknadsperiode: (value: Period) => {

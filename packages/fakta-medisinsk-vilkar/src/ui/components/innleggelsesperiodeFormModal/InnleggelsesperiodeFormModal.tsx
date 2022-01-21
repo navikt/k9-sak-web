@@ -7,10 +7,10 @@ import Modal from 'nav-frontend-modal';
 import { Element } from 'nav-frontend-typografi';
 import React from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
+import InnleggelsesperioderFieldName from '../../../types/InnleggelsesperioderFieldName';
 import { InnleggelsesperiodeDryRunResponse } from '../../../api/api';
 import AddButton from '../add-button/AddButton';
 import DeleteButton from '../delete-button/DeleteButton';
-import { FieldName } from '../innleggelsesperiodeoversikt/Innleggelsesperiodeoversikt';
 import ModalFormWrapper from '../modal-form-wrapper/ModalFormWrapper';
 import styles from './innleggelsesperiodeFormModal.less';
 
@@ -19,7 +19,7 @@ type AnyType = any;
 
 interface InnleggelsesperiodeFormModal {
     defaultValues: {
-        [FieldName.INNLEGGELSESPERIODER]: Period[];
+        [InnleggelsesperioderFieldName.INNLEGGELSESPERIODER]: Period[];
     };
     setModalIsOpen: (isOpen: boolean) => void;
     onSubmit: (formState) => void;
@@ -96,7 +96,7 @@ const InnleggelsesperiodeFormModal = ({
                                         );
                                     }
                                 }}
-                                defaultValues={defaultValues[FieldName.INNLEGGELSESPERIODER] || []}
+                                defaultValues={defaultValues[InnleggelsesperioderFieldName.INNLEGGELSESPERIODER] || []}
                                 validators={{
                                     overlaps: (periodValue: Period) => {
                                         const innleggelsesperioderFormValue = getValues()

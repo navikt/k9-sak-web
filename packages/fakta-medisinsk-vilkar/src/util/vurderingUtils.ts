@@ -1,8 +1,4 @@
 import { Period } from '@navikt/k9-period-utils';
-// import {
-//     FieldName as ToOmsorgspersonerFieldName,
-//     VurderingAvToOmsorgspersonerFormState,
-// } from '../ui/components/vurdering-av-to-omsorgspersoner-form/VurderingAvToOmsorgspersonerForm';
 import Vurderingsresultat from '../types/Vurderingsresultat';
 import Dokument from '../types/Dokument';
 import { Vurderingsversjon } from '../types/Vurdering';
@@ -11,23 +7,13 @@ import {
     ToOmsorgspersonerFieldName,
     VurderingAvToOmsorgspersonerFormState
 } from '../types/VurderingAvToOmsorgspersonerFormState';
+import {
+    TilsynFieldName,
+    VurderingAvTilsynsbehovFormState
+} from '../types/VurderingAvTilsynsbehovFormState';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type AnyType = any;
-
-export enum TilsynFieldName {
-    VURDERING_AV_KONTINUERLIG_TILSYN_OG_PLEIE = 'vurderingAvKontinuerligTilsynOgPleie',
-    HAR_BEHOV_FOR_KONTINUERLIG_TILSYN_OG_PLEIE = 'harBehovForKontinuerligTilsynOgPleie',
-    PERIODER = 'perioder',
-    DOKUMENTER = 'dokumenter',
-}
-
-export interface VurderingAvTilsynsbehovFormState {
-    [TilsynFieldName.VURDERING_AV_KONTINUERLIG_TILSYN_OG_PLEIE]?: string;
-    [TilsynFieldName.HAR_BEHOV_FOR_KONTINUERLIG_TILSYN_OG_PLEIE]?: boolean;
-    [TilsynFieldName.PERIODER]?: Period[];
-    [TilsynFieldName.DOKUMENTER]: string[];
-}
 
 export const lagTilsynsbehovVurdering = (
     formState: VurderingAvTilsynsbehovFormState,

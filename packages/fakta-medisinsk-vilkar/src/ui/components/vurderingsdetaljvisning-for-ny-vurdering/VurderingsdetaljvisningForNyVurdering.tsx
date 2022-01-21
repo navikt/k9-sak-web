@@ -5,16 +5,18 @@ import { findLinkByRel } from '../../../util/linkUtils';
 import LinkRel from '../../../constants/LinkRel';
 import ContainerContext from '../../context/ContainerContext';
 import Vurderingstype from '../../../types/Vurderingstype';
-import VurderingAvTilsynsbehovForm, {
-    FieldName as KTPFieldName,
-    VurderingAvTilsynsbehovFormState,
-} from '../vurdering-av-tilsynsbehov-form/VurderingAvTilsynsbehovForm';
-import VurderingAvToOmsorgspersonerForm, {
-    FieldName as TOFieldName,
-    VurderingAvToOmsorgspersonerFormState,
-} from '../vurdering-av-to-omsorgspersoner-form/VurderingAvToOmsorgspersonerForm';
 import NyVurderingController from '../ny-vurdering-controller/NyVurderingController';
 import VurderingContext from '../../context/VurderingContext';
+import {
+    ToOmsorgspersonerFieldName,
+    VurderingAvToOmsorgspersonerFormState
+} from '../../../types/VurderingAvToOmsorgspersonerFormState';
+import {
+    TilsynFieldName,
+    VurderingAvTilsynsbehovFormState
+} from '../../../types/VurderingAvTilsynsbehovFormState';
+import VurderingAvTilsynsbehovForm from '../vurdering-av-tilsynsbehov-form/VurderingAvTilsynsbehovForm';
+import VurderingAvToOmsorgspersonerForm from '../vurdering-av-to-omsorgspersoner-form/VurderingAvToOmsorgspersonerForm';
 
 interface VurderingsdetaljvisningForNyVurderingProps {
     vurderingsoversikt: Vurderingsoversikt;
@@ -29,18 +31,19 @@ function makeDefaultValues(
 ): VurderingAvToOmsorgspersonerFormState | VurderingAvTilsynsbehovFormState {
     if (vurderingstype === Vurderingstype.KONTINUERLIG_TILSYN_OG_PLEIE) {
         return {
-            [KTPFieldName.VURDERING_AV_KONTINUERLIG_TILSYN_OG_PLEIE]: '',
-            [KTPFieldName.HAR_BEHOV_FOR_KONTINUERLIG_TILSYN_OG_PLEIE]: undefined,
-            [KTPFieldName.PERIODER]: perioder,
-            [KTPFieldName.DOKUMENTER]: [],
+            [TilsynFieldName.VURDERING_AV_KONTINUERLIG_TILSYN_OG_PLEIE]: '',
+            [TilsynFieldName.HAR_BEHOV_FOR_KONTINUERLIG_TILSYN_OG_PLEIE]: undefined,
+            [TilsynFieldName.PERIODER]: perioder,
+            [TilsynFieldName.DOKUMENTER]: [],
         };
     }
+
     if (vurderingstype === Vurderingstype.TO_OMSORGSPERSONER) {
         return {
-            [TOFieldName.VURDERING_AV_TO_OMSORGSPERSONER]: '',
-            [TOFieldName.HAR_BEHOV_FOR_TO_OMSORGSPERSONER]: undefined,
-            [TOFieldName.PERIODER]: perioder,
-            [TOFieldName.DOKUMENTER]: [],
+            [ToOmsorgspersonerFieldName.VURDERING_AV_TO_OMSORGSPERSONER]: '',
+            [ToOmsorgspersonerFieldName.HAR_BEHOV_FOR_TO_OMSORGSPERSONER]: undefined,
+            [ToOmsorgspersonerFieldName.PERIODER]: perioder,
+            [ToOmsorgspersonerFieldName.DOKUMENTER]: [],
         };
     }
     return null;

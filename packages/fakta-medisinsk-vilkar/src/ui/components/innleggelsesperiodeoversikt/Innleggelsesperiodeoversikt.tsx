@@ -5,6 +5,7 @@ import Modal from 'nav-frontend-modal';
 import Spinner from 'nav-frontend-spinner';
 import axios from 'axios';
 import React, { useEffect, useMemo } from 'react';
+import InnleggelsesperioderFieldName from '../../../types/InnleggelsesperioderFieldName';
 import ContainerContext from '../../context/ContainerContext';
 import AddButton from '../add-button/AddButton';
 import Innleggelsesperiodeliste from '../innleggelsesperiodeliste/Innleggelsesperiodeliste';
@@ -15,10 +16,6 @@ import { findLinkByRel } from '../../../util/linkUtils';
 import LinkRel from '../../../constants/LinkRel';
 import { postInnleggelsesperioder, postInnleggelsesperioderDryRun } from '../../../api/api';
 import styles from './innleggelsesperiodeoversikt.less';
-
-export enum FieldName {
-    INNLEGGELSESPERIODER = 'innleggelsesperioder',
-}
 
 interface InnleggelsesperiodeoversiktProps {
     onInnleggelsesperioderUpdated: () => void;
@@ -163,7 +160,7 @@ const Innleggelsesperiodeoversikt = ({
             {modalIsOpen && (
                 <InnleggelsesperiodeFormModal
                     defaultValues={{
-                        [FieldName.INNLEGGELSESPERIODER]: innleggelsesperioderDefault,
+                        [InnleggelsesperioderFieldName.INNLEGGELSESPERIODER]: innleggelsesperioderDefault,
                     }}
                     setModalIsOpen={setModalIsOpen}
                     onSubmit={lagreInnleggelsesperioder}
