@@ -60,7 +60,7 @@ const BehandlingSelected: React.FC<BehandlingSelectedProps> = props => {
   };
 
   return (
-    <div data-testid="behandlingSelected" className={containerCls}>
+    <div className={containerCls}>
       <Undertittel>{behandlingTypeNavn}</Undertittel>
       <div className={styles.infoContainer}>
         <div>
@@ -71,7 +71,7 @@ const BehandlingSelected: React.FC<BehandlingSelectedProps> = props => {
               tooltip={<FormattedMessage id="BehandlingPickerItemContent.Kalender" />}
               alignTooltipLeft
             />
-            {søknadsperioder?.length > 0 && <Normaltekst>{getFormattedPerioder(søknadsperioder)}</Normaltekst>}
+            <Normaltekst>{getFormattedPerioder(søknadsperioder)}</Normaltekst>
           </div>
           <div className={`${styles.resultContainer} ${styles.marginTop8}`}>
             {getStatusIcon(behandlingsresultatTypeKode, styles.utfallImage)}
