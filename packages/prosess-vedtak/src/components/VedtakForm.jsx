@@ -21,6 +21,7 @@ import {
   kanHaFritekstbrev,
   kanKunVelgeFritekstbrev,
   harMellomlagretFritekstbrev,
+  harOverstyrtMedIngenBrev
 } from '@fpsak-frontend/utils/src/formidlingUtils';
 import vedtakBeregningsresultatPropType from '../propTypes/vedtakBeregningsresultatPropType';
 import vedtakVilkarPropType from '../propTypes/vedtakVilkarPropType';
@@ -163,8 +164,10 @@ export const VedtakForm = ({
       <Formik
         initialValues={{
           [FORMIK_FIELDNAME.SKAL_BRUKE_OVERSTYRENDE_FRITEKST_BREV]:
-            kanKunVelgeFritekstbrev(tilgjengeligeVedtaksbrev) || harMellomlagretFritekstbrev(dokumentdata, vedtakVarsel),
-          [FORMIK_FIELDNAME.SKAL_HINDRE_UTSENDING_AV_BREV]: false,
+            kanKunVelgeFritekstbrev(tilgjengeligeVedtaksbrev) ||
+            harMellomlagretFritekstbrev(dokumentdata, vedtakVarsel),
+          [FORMIK_FIELDNAME.SKAL_HINDRE_UTSENDING_AV_BREV]:
+            readonly && harOverstyrtMedIngenBrev(dokumentdata, vedtakVarsel),
         }}
         onSubmit={onSubmit}
       >
@@ -340,12 +343,7 @@ export const buildInitialValues = createSelector(
     sprakkode,
     vedtakVarsel,
     dokumentdata,
-    tilgjengeligeVedtaksbrev,
-    readonly,
   ) => ({
-    skalBrukeOverstyrendeFritekstBrev:
-      kanKunVelgeFritekstbrev(tilgjengeligeVedtaksbrev) || harMellomlagretFritekstbrev(dokumentdata, vedtakVarsel),
-    skalUndertrykkeBrev: readonly && harOverstyrtMedIngenBrev(dokumentdata, vedtakVarsel),
     overskrift: decodeHtmlEntity(dokumentdata?.[dokumentdatatype.FRITEKSTBREV]?.overskrift),
     brødtekst: decodeHtmlEntity(dokumentdata?.[dokumentdatatype.FRITEKSTBREV]?.brødtekst),
     overstyrtMottaker: JSON.stringify(dokumentdata?.[dokumentdatatype.OVERSTYRT_MOTTAKER]),
@@ -399,7 +397,6 @@ const mapStateToPropsFactory = (initialState, initialOwnProps) => {
       onSubmit,
       ...behandlingFormValueSelector(formName, ownProps.behandlingId, ownProps.behandlingVersjon)(
         state,
-        'skalBrukeOverstyrendeFritekstBrev',
         'skalUndertrykkeBrev',
         'brødtekst',
         'overskrift',
