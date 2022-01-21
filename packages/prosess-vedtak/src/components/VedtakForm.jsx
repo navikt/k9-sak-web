@@ -162,7 +162,7 @@ export const VedtakForm = ({
   const onSubmit = harPotensieltFlereInformasjonsbehov(informasjonsbehovVedtaksbrev)
     ? values => onSubmitPayloadMedEkstraInformasjon(values)
     : values => onSubmitPayload(values);
-
+  
   return (
     <>
       <Formik
@@ -352,10 +352,6 @@ export const buildInitialValues = createSelector(
   }),
 );
 
-export const getAksjonspunktKoder = createSelector([ownProps => ownProps.aksjonspunkter], aksjonspunkter =>
-  aksjonspunkter.map(ap => ap.definisjon.kode),
-);
-
 const harPotensieltFlereInformasjonsbehov = informasjonsbehovVedtaksbrev => {
   if (informasjonsbehovVedtaksbrev) {
     const { informasjonsbehov } = informasjonsbehovVedtaksbrev;
@@ -389,14 +385,11 @@ const mapStateToPropsFactory = (initialState, initialOwnProps) => {
 
     return {
       onSubmit,
-      ...behandlingFormValueSelector(formName, ownProps.behandlingId, ownProps.behandlingVersjon)(
-        state,
-        'brødtekst',
-        'overskrift',
-        'begrunnelse',
-        'overstyrtMottaker',
-        ...informasjonsbehovFieldNames,
-      ),
+      ...behandlingFormValueSelector(
+        formName,
+        ownProps.behandlingId,
+        ownProps.behandlingVersjon,
+      )(state, ...informasjonsbehovFieldNames),
     };
   };
 };
