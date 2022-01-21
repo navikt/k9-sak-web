@@ -8,5 +8,6 @@
   "DocumentList.Send": "Ut",
   "DocumentList.Intern": "Intern",
   "DocumentList.IProduksjon": "I bestilling",
-  "DocumentList.IBruk": "Brukes i behandlingen"
+  "DocumentList.IBruk": "Brukes i behandlingen",
+  "DocumentList.ModiaLink": "Se dialog med søker i Modia"
 }

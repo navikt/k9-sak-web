@@ -74,9 +74,8 @@ describe('<DocumentList>', () => {
       />,
     );
 
-    const formattedMessage = wrapper.find(FormattedMessage);
+    const formattedMessage = wrapper.find(FormattedMessage).findWhere(n => n.prop('id') === 'DocumentList.IProduksjon');
     expect(formattedMessage).toHaveLength(1);
-    expect(formattedMessage.prop('id')).toEqual('DocumentList.IProduksjon');
   });
 
   it('skal ikke vise tabell når det ikke finnes dokumenter', () => {

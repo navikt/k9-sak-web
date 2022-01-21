@@ -33,6 +33,7 @@ export { default as endre } from './endre.svg';
 export { default as endreDisabled } from './endre_disablet.svg';
 export { default as endreFelt } from './endret_felt.svg';
 export { default as endringstidspunkt } from './endringstidspunkt.svg';
+export { default as eksternLinkPilBoks } from './ekstern_link_pil_boks.svg';
 export { default as fodsel } from './fodsel.svg';
 export { default as hjem } from './hjem.svg';
 export { default as hourglass } from './hourglass.svg';

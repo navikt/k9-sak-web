@@ -2311,7 +2311,7 @@ export const arbeidstakerOgSelvstendigNæringsdrivendeMedVarigEndringApBehandlet
     />
   );
 };
-export const arbeidstakerOgSelvstendigNæringsdrivendeAtStorreEnnSNSide22 = () => {
+export const arbeidstakerOgSelvstendigNæringsdrivendeAtStorreEnnSNMedVarigEndringSide22 = () => {
   const andeler = [lagAndel('SN', 0, 780342, undefined, true), lagAndel('AT', 851316, undefined, undefined)];
   const pgi = lagPGIVerdier();
   andeler[0].pgiVerdier = pgi;
@@ -2353,6 +2353,62 @@ export const arbeidstakerOgSelvstendigNæringsdrivendeAtStorreEnnSNSide22 = () =
   );
   ap[0].begrunnelse = 'Endring eller nyoppstartet begrunnelse';
   ap[0].status.kode = 'UTFO';
+  return (
+    <BeregningsgrunnlagProsessIndex
+      behandling={behandling}
+      beregningsgrunnlag={[bg, bg]}
+      aksjonspunkter={ap}
+      submitCallback={action('button-click')}
+      isReadOnly
+      readOnlySubmitButton
+      isAksjonspunktOpen={false}
+      vilkar={vilkarMedUtfall(vilkarUtfallType.OPPFYLT, [
+        bg.skjaeringstidspunktBeregning,
+        bg.skjaeringstidspunktBeregning,
+      ])}
+      alleKodeverk={alleKodeverk}
+      arbeidsgiverOpplysningerPerId={arbeidsgivere}
+    />
+  );
+};
+export const arbeidstakerOgSelvstendigNæringsdrivendeAtStorreEnnSNSide22 = () => {
+  const andeler = [lagAndel('SN', 0, 0, undefined, true), lagAndel('AT', 851316, undefined, undefined)];
+  const pgi = lagPGIVerdier();
+  andeler[0].pgiVerdier = pgi;
+  andeler[0].pgiSnitt = 631129;
+  andeler[0].overstyrtPrAar = null;
+  andeler[0].beregnetPrAar = 0;
+  const perioder = [lagPeriodeMedDagsats(andeler, 1843)];
+
+  perioder[0].redusertPrAar = 479318;
+  perioder[0].beregnetPrAar = 631129;
+  perioder[0].avkortetPrAar = 599148;
+  perioder[0].bruttoInkludertBortfaltNaturalytelsePrAar = 1331658;
+  const statuser = [lagStatus('AT_SN')];
+  const næringer = [
+    {
+      begrunnelse: 'Endringsbeskrivelse',
+      endringsdato: '2019-11-22',
+      erNyIArbeidslivet: false,
+      erNyoppstartet: false,
+      erVarigEndret: false,
+      kanRegnskapsførerKontaktes: false,
+      oppgittInntekt: 900000,
+      oppstartsdato: null,
+      orgnr: '910909088',
+      regnskapsførerNavn: 'Regnar Regnskap',
+      regnskapsførerTlf: '99999999',
+      utenlandskvirksomhetsnavn: null,
+      virksomhetType: { kode: 'ANNEN', kodeverk: 'VIRKSOMHET_TYPE' },
+      kode: 'ANNEN',
+      kodeverk: 'VIRKSOMHET_TYPE',
+    },
+  ];
+  andeler[0].næringer = næringer;
+  const sammenligningsgrunnlagPrStatus = [lagSammenligningsGrunnlag(sammenligningType.ATFLSN, 900000, 29.9, -268871)];
+  const bg = lagBG(perioder, statuser, sammenligningsgrunnlagPrStatus);
+  bg.dekningsgrad = 80;
+  const ap = [];
   return (
     <BeregningsgrunnlagProsessIndex
       behandling={behandling}
