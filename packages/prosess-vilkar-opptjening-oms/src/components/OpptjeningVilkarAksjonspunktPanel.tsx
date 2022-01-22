@@ -106,7 +106,6 @@ export const OpptjeningVilkarAksjonspunktPanelImpl = ({
   const originalErVilkarOk = hentErVilkarOK(aksjonspunkter, vilkårPerioder, periodeIndex, status);
 
   const finnesOpptjeningsaktiviteterVidOpptjeningTom: boolean = !erPleiepenger ? true : opptjeninger.some(opptjening => {
-    const opptjeningTom = dayjs(opptjening.fastsattOpptjening.opptjeningTom);
     const skjæringstidspunkt = dayjs(opptjening.fastsattOpptjening.opptjeningTom).add(1, 'day').format("YYYY-MM-DD");
 
     const vurderesOpptjeningsaktivitetIBehandling = vilkårPerioder.find(
@@ -119,7 +118,7 @@ export const OpptjeningVilkarAksjonspunktPanelImpl = ({
 
     return opptjening.opptjeningAktivitetList.some(opptjeningAktivitet =>
       // Siste argument ("[]") til isBetween inkluderer start og sluttdato
-      dayjs(opptjeningTom).isBetween(opptjeningAktivitet.opptjeningFom, opptjeningAktivitet.opptjeningTom, null, "[]")
+      dayjs(skjæringstidspunkt).isBetween(opptjeningAktivitet.opptjeningFom, opptjeningAktivitet.opptjeningTom, null, "[]")
     );
   });
 
