@@ -174,11 +174,7 @@ const MedisinskVilkår = (): JSX.Element => {
             <Infostripe
                 element={
                     <>
-                        <span>Sykdomsvurderingen gjelder barnet og er felles for alle parter.</span>
-                        <span className={styles.infostripe__diagnosekode__tittel}>Diagnose:</span>
-                        <span className={styles.infostripe__diagnosekode}>
-                            {(diagnosekoderLoading && ' ') || diagnosekoderTekst}
-                        </span>
+                        <span>Vurderingen gjelder pleietrengende og er felles for alle parter.</span>
                     </>
                 }
                 iconRenderer={() => <ChildIcon />}
