@@ -18,7 +18,6 @@ import {
 } from '@k9-sak-web/types';
 import moment from 'moment';
 import React, { useState } from 'react';
-// import useVilkar from '../store/vilkar/hooks/useVilkar';
 import { Arbeidstype } from '../types/Arbeidstype';
 import FetchedData from '../types/fetchedDataTsType';
 import AndreSakerPåSøkerStripe from './AndreSakerPåSøkerStripe';
@@ -84,41 +83,21 @@ const PleiepengerSluttfasePaneler = ({
   featureToggles,
   dokumenter,
 }: OwnProps) => {
-  /*
-   * TODO Dette er midlertidig, en PoC på hooks. Skal fordeles videre i hierarkiet
-   */
-  // const { aksjonspunkter, loading: aksjonspunkterLoading } = useAksjonspunkter();
-  // const { vilkar, loading: vilkarLoading } = useVilkar();
-
   const [apentFaktaPanelInfo, setApentFaktaPanel] = useState<FaktaPanelInfo>();
   const [beregningErBehandlet, setBeregningErBehandlet] = useState<boolean>(false);
-  const harOpprettetAksjonspunkt9203 = harOpprettetAksjonspunkt(fetchedData.aksjonspunkter || [], 9203);
+  const harOpprettetAksjonspunkt9203 = harOpprettetAksjonspunkt(fetchedData?.aksjonspunkter || [], 9203);
   const behandlingUtil = new BehandlingUtil(behandling);
   const arbeidsgiverOpplysningerUtil = new ArbeidsgiverOpplysningerUtil(arbeidsgiverOpplysningerPerId);
 
-
-  /*
-  * TODO: Fjern når dette er flyttet videre i hierarkiet
-  */
-  // const testReduxHook = { ...fetchedData, aksjonspunkter };
-  // console.log("alle dataene?", testReduxHook);
-
-  // const isLoadingData = () => aksjonspunkterLoading; // || vilkarLoading;
-
   return (
     <>
-      {/* {isLoadingData && (<>noe skjer</>)}
-      {aksjonspunkter.length > 0 && (<>Det er noe der</>)} */}
-
-      {/* {!isLoadingData && aksjonspunkter.length > 0 && (<> */}
       <BehandlingPaVent
         behandling={behandling}
-        aksjonspunkter={fetchedData.aksjonspunkter}
+        aksjonspunkter={fetchedData?.aksjonspunkter}
         kodeverk={alleKodeverk}
         settPaVent={settPaVent}
         hentBehandling={hentBehandling}
       />
-
       {harOpprettetAksjonspunkt9203 && (
         <DataFetcher
           url={behandlingUtil.getEndpointHrefByRel('psb-manglende-arbeidstid')}
@@ -195,7 +174,6 @@ const PleiepengerSluttfasePaneler = ({
         beregningErBehandlet={beregningErBehandlet}
 
       />
-      {/* </>)} */}
     </>
   );
 };

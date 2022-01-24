@@ -15,7 +15,6 @@ import { RestApiState, useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-ho
 
 import { K9sakApiKeys, restApiHooks } from '@k9-sak-web/sak-app/src/data/k9sakApi';
 import useBehandlingEndret from '@k9-sak-web/sak-app/src/behandling/useBehandlingEndret';
-import { Provider as ReduxProvider } from 'react-redux';
 
 import {
   restApiPleiepengerSluttfaseHooks,
@@ -24,7 +23,6 @@ import {
 } from './data/pleiepengerSluttfaseBehandlingApi';
 import PleiepengerSluttfasePaneler from './components/PleiepengerSluttfasePaneler';
 import FetchedData from './types/fetchedDataTsType';
-import store from './store';
 
 const pleiepengerData = [
   { key: PleiepengerSluttfaseBehandlingApiKeys.AKSJONSPUNKTER },
@@ -177,28 +175,26 @@ const BehandlingPleiepengerSluttfaseIndex = ({
   }
 
   return (
-    <ReduxProvider store={store}>
-      <PleiepengerSluttfasePaneler
-        behandling={harIkkeHentetBehandlingsdata ? forrigeBehandling : behandling}
-        fetchedData={data}
-        fagsak={fagsak}
-        fagsakPerson={fagsakPerson}
-        alleKodeverk={kodeverk}
-        rettigheter={rettigheter}
-        valgtProsessSteg={valgtProsessSteg}
-        valgtFaktaSteg={valgtFaktaSteg}
-        oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
-        oppdaterBehandlingVersjon={oppdaterBehandlingVersjon}
-        settPaVent={settPaVent}
-        hentBehandling={hentBehandling}
-        opneSokeside={opneSokeside}
-        hasFetchError={behandlingState === RestApiState.ERROR}
-        setBehandling={setBehandling}
-        arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysninger ? arbeidsgiverOpplysninger.arbeidsgivere : {}}
-        featureToggles={featureToggles}
-        dokumenter={alleDokumenter}
-      />
-    </ReduxProvider>
+    <PleiepengerSluttfasePaneler
+      behandling={harIkkeHentetBehandlingsdata ? forrigeBehandling : behandling}
+      fetchedData={data}
+      fagsak={fagsak}
+      fagsakPerson={fagsakPerson}
+      alleKodeverk={kodeverk}
+      rettigheter={rettigheter}
+      valgtProsessSteg={valgtProsessSteg}
+      valgtFaktaSteg={valgtFaktaSteg}
+      oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
+      oppdaterBehandlingVersjon={oppdaterBehandlingVersjon}
+      settPaVent={settPaVent}
+      hentBehandling={hentBehandling}
+      opneSokeside={opneSokeside}
+      hasFetchError={behandlingState === RestApiState.ERROR}
+      setBehandling={setBehandling}
+      arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysninger ? arbeidsgiverOpplysninger.arbeidsgivere : {}}
+      featureToggles={featureToggles}
+      dokumenter={alleDokumenter}
+    />
   );
 };
 
