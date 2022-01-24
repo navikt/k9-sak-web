@@ -42,7 +42,7 @@ const getManuellBrevCallback = ({
   previewCallback,
   tilgjengeligeVedtaksbrev,
 }) => e => {
-  if (formProps.valid || formProps.pristine) {
+  if (formProps.isValid) {
     previewCallback({
       dokumentdata: { fritekstbrev: { brødtekst: brødtekst || ' ', overskrift: overskrift || ' ' } },
       // Bruker FRITKS som fallback til lenken ikke vises for avsluttede behandlinger
@@ -90,7 +90,7 @@ const getPreviewAutomatiskBrevCallback = ({
   tilgjengeligeVedtaksbrev,
   informasjonsbehovValues,
 }) => e => {
-  if (formProps.valid || formProps.pristine) {
+  if (formProps.isValid) {
     previewCallback(
       automatiskVedtaksbrevParams({
         fritekst,

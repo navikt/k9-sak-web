@@ -24,7 +24,6 @@ import {
   harMellomlagretFritekstbrev,
   harOverstyrtMedIngenBrev,
 } from '@fpsak-frontend/utils/src/formidlingUtils';
-import vedtakBeregningsresultatPropType from '../propTypes/vedtakBeregningsresultatPropType';
 import vedtakVilkarPropType from '../propTypes/vedtakVilkarPropType';
 import VedtakInnvilgetPanel from './VedtakInnvilgetPanel';
 import VedtakAvslagPanel from './VedtakAvslagPanel';
@@ -72,6 +71,7 @@ export const VedtakForm = ({
   overskrift,
   begrunnelse,
   overstyrtMottaker,
+  submitCallback,
   KONTINUERLIG_TILSYN,
   OMSORGEN_FOR,
   VILKAR_FOR_TO,
@@ -81,8 +81,7 @@ export const VedtakForm = ({
   REVURDERING_ENDRING,
   fritekstdokumenter,
   lagreDokumentdata,
-  overlappendeYtelser,
-  ...formProps
+  overlappendeYtelser
 }) => {
   const overstyrBrevRef = useRef(null);
   const hindreUtsendingRef = useRef(null);
@@ -185,7 +184,7 @@ export const VedtakForm = ({
           submitCallback(createPayload(values));
         }}
       >
-        {({ values, setFieldValue, isSubmitting }) => (
+        {(formikProps) => (
           <Form>
             <VedtakAksjonspunktPanel
               behandlingStatusKode={behandlingStatus?.kode}
@@ -197,8 +196,8 @@ export const VedtakForm = ({
               <CheckboxGroup className={styles.knappContainer} size="small">
                 {kanHaFritekstbrev(tilgjengeligeVedtaksbrev) && (
                   <Checkbox
-                    value={values.skalBrukeOverstyrendeFritekstBrev}
-                    onChange={e => onToggleOverstyring(e, setFieldValue)}
+                    value={formikProps.values.skalBrukeOverstyrendeFritekstBrev}
+                    onChange={e => onToggleOverstyring(e, formikProps.setFieldValue)}
                     disabled={readOnly || kanKunVelgeFritekstbrev(tilgjengeligeVedtaksbrev)}
                     ref={overstyrBrevRef}
                   >
@@ -207,8 +206,8 @@ export const VedtakForm = ({
                 )}
                 {(ytelseTypeKode === fagsakYtelseType.FRISINN || ytelseTypeKode === fagsakYtelseType.PLEIEPENGER) && (
                   <Checkbox
-                    onChange={e => onToggleHindreUtsending(e, setFieldValue)}
-                    value={values.skalHindreUtsendingAvBrev}
+                    onChange={e => onToggleHindreUtsending(e, formikProps.setFieldValue)}
+                    value={formikProps.values.skalHindreUtsendingAvBrev}
                     disabled={readOnly}
                     ref={hindreUtsendingRef}
                   >
@@ -248,13 +247,13 @@ export const VedtakForm = ({
                 tilgjengeligeVedtaksbrev={tilgjengeligeVedtaksbrev}
                 informasjonsbehovVedtaksbrev={informasjonsbehovVedtaksbrev}
                 informasjonsbehovValues={informasjonsbehovValues}
-                skalBrukeOverstyrendeFritekstBrev={values.skalBrukeOverstyrendeFritekstBrev}
+                skalBrukeOverstyrendeFritekstBrev={formikProps.values.skalBrukeOverstyrendeFritekstBrev}
                 begrunnelse={begrunnelse}
                 previewCallback={previewCallback}
                 brødtekst={brødtekst}
                 overskrift={overskrift}
                 overstyrtMottaker={overstyrtMottaker}
-                formProps={formProps}
+                formProps={formikProps}
                 dokumentdata={dokumentdata}
                 lagreDokumentdata={lagreDokumentdata}
               />
@@ -265,8 +264,8 @@ export const VedtakForm = ({
                       <Hovedknapp
                         mini
                         className={styles.mainButton}
-                        disabled={behandlingPaaVent || isSubmitting}
-                        spinner={isSubmitting}
+                        disabled={behandlingPaaVent || formikProps.isSubmitting}
+                        spinner={formikProps.isSubmitting}
                       >
                         {intl.formatMessage({
                           id:
@@ -289,7 +288,6 @@ export const VedtakForm = ({
 };
 
 VedtakForm.propTypes = {
-  resultatstruktur: vedtakBeregningsresultatPropType,
   intl: PropTypes.shape().isRequired,
   behandlingStatusKode: PropTypes.shape({ kode: PropTypes.string }),
   aksjonspunkter: PropTypes.arrayOf(PropTypes.shape()).isRequired,
@@ -297,10 +295,7 @@ VedtakForm.propTypes = {
   behandlingPaaVent: PropTypes.bool.isRequired,
   previewCallback: PropTypes.func.isRequired,
   readOnly: PropTypes.bool.isRequired,
-  kanOverstyre: PropTypes.bool,
-  skalBrukeOverstyrendeFritekstBrev: PropTypes.bool,
   sprakkode: kodeverkObjektPropType.isRequired,
-  erBehandlingEtterKlage: PropTypes.bool.isRequired,
   ytelseTypeKode: PropTypes.string.isRequired,
   alleKodeverk: PropTypes.shape().isRequired,
   personopplysninger: PropTypes.shape().isRequired,
@@ -321,10 +316,6 @@ VedtakForm.propTypes = {
   REVURDERING_ENDRING: PropTypes.string,
   fritekstdokumenter: PropTypes.arrayOf(PropTypes.shape()),
   ...formPropTypes,
-};
-
-VedtakForm.defaultProps = {
-  skalBrukeOverstyrendeFritekstBrev: false,
 };
 
 export const buildInitialValues = createSelector(
