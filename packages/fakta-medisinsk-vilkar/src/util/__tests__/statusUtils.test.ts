@@ -10,11 +10,6 @@ describe('statusUtils', () => {
                 expect(nesteSteg.id).toBe(StepId.Dokument);
             });
 
-            it('manglerDiagnosekode=true should give Step.Dokument', () => {
-                const nesteSteg = finnNesteSteg({ manglerDiagnosekode: true } as StatusResponse);
-                expect(nesteSteg.id).toBe(StepId.Dokument);
-            });
-
             it('manglerGodkjentLegeerklæring=true should give Step.Dokument', () => {
                 const nesteSteg = finnNesteSteg({ manglerGodkjentLegeerklæring: true } as StatusResponse);
                 expect(nesteSteg.id).toBe(StepId.Dokument);

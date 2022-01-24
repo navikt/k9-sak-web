@@ -4,8 +4,6 @@ import axios from 'axios';
 import classnames from 'classnames';
 import { TabsPure } from 'nav-frontend-tabs';
 import React, { useMemo } from 'react';
-import { useQuery } from 'react-query';
-import { DiagnosekodeResponse } from '../../../types/DiagnosekodeResponse';
 import Dokument from '../../../types/Dokument';
 import { NyeDokumenterResponse } from '../../../types/NyeDokumenterResponse';
 import Step, { dokumentSteg, tilsynOgPleieSteg, toOmsorgspersonerSteg } from '../../../types/Step';
@@ -64,20 +62,7 @@ const MedisinskVilkår = (): JSX.Element => {
 
     const httpCanceler = useMemo(() => axios.CancelToken.source(), []);
 
-    const hentDiagnosekoder = () =>
-        get<DiagnosekodeResponse>(endpoints.diagnosekoder, httpErrorHandler).then(
-            (response: DiagnosekodeResponse) => response
-        );
-
-    const { isLoading: diagnosekoderLoading, data: diagnosekoderData } = useQuery(
-        'diagnosekodeResponse',
-        hentDiagnosekoder
-    );
-    const { diagnosekoder } = diagnosekoderData;
-    const diagnosekoderTekst = diagnosekoder?.length > 0 ? `${diagnosekoder?.join(', ')}` : 'Kode mangler';
-
     const hentSykdomsstegStatus = async () => {
-        console.log("henter sykdomstegstatus", endpoints);
         try {
             const status = await get<SykdomsstegStatusResponse>(endpoints.status, httpErrorHandler, {
                 cancelToken: httpCanceler.token,
@@ -174,11 +159,7 @@ const MedisinskVilkår = (): JSX.Element => {
             <Infostripe
                 element={
                     <>
-                        <span>Sykdomsvurderingen gjelder barnet og er felles for alle parter.</span>
-                        <span className={styles.infostripe__diagnosekode__tittel}>Diagnose:</span>
-                        <span className={styles.infostripe__diagnosekode}>
-                            {(diagnosekoderLoading && ' ') || diagnosekoderTekst}
-                        </span>
+                        <span>Vurderingen gjelder pleietrengende og er felles for alle parter.</span>
                     </>
                 }
                 iconRenderer={() => <ChildIcon />}
