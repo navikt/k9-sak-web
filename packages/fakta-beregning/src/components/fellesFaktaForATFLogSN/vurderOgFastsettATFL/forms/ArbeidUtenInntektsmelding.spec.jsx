@@ -1,7 +1,6 @@
 import { expect } from 'chai';
 import organisasjonstyper from '@fpsak-frontend/kodeverk/src/organisasjonstype';
 import faktaOmBeregningTilfelle from '@fpsak-frontend/kodeverk/src/faktaOmBeregningTilfelle';
-import { lonnsendringField } from './LonnsendringForm';
 import transformValues from './ArbeidUtenInntektsmelding';
 
 
@@ -77,7 +76,6 @@ describe('<ArbeidUtenInntektsmelding>', () => {
 
   it('skal teste at transformValues gir korrekt output når lønnsendring', () => {
     const values = { };
-    values[lonnsendringField] = true;
     values.dummyField = 'tilfeldig verdi';
     const inntektVerdier = [
       { fastsattBelop: '10 000', andelsnr: 1 },
@@ -104,7 +102,6 @@ describe('<ArbeidUtenInntektsmelding>', () => {
 
   it('skal ikkje submitte inntekt uten lønnsendring', () => {
     const values = { };
-    values[lonnsendringField] = false;
     const inntektVerdier = [
       { fastsattBelop: '', andelsnr: 1 },
     ];

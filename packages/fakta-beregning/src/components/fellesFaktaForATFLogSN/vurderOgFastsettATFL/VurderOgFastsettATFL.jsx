@@ -5,7 +5,8 @@ import { FieldArray } from 'redux-form';
 import faktaOmBeregningTilfelle from '@fpsak-frontend/kodeverk/src/faktaOmBeregningTilfelle';
 import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import { createSelector } from 'reselect';
-import LonnsendringForm, { lonnsendringField } from './forms/LonnsendringForm';
+import { VerticalSpacer } from '@fpsak-frontend/shared-components';
+import LonnsendringTekst from './forms/LonnsendringTekst';
 import NyoppstartetFLForm, { erNyoppstartetFLField } from './forms/NyoppstartetFLForm';
 import { harVurdertMottarYtelse } from './forms/VurderMottarYtelseUtils';
 import InntektstabellPanel from '../InntektstabellPanel';
@@ -26,9 +27,6 @@ import InntektFieldArray from '../InntektFieldArray';
 import VurderEtterlonnSluttpakkeForm from './forms/VurderEtterlonnSluttpakkeForm';
 import beregningAvklaringsbehovPropType from '../../../propTypes/beregningAvklaringsbehovPropType';
 
-const lonnsendringErVurdertEllerIkkjeTilstede = (tilfeller, values) =>
-  !tilfeller.includes(faktaOmBeregningTilfelle.VURDER_LONNSENDRING) ||
-  (values[lonnsendringField] !== undefined && values[lonnsendringField] !== null);
 
 const nyoppstartetFLErVurdertEllerIkkjeTilstede = (tilfeller, values) =>
   !tilfeller.includes(faktaOmBeregningTilfelle.VURDER_NYOPPSTARTET_FL) ||
@@ -39,7 +37,6 @@ const mottarYtelseErVurdertEllerIkkjeTilstede = (tilfeller, vurderMottarYtelse, 
   harVurdertMottarYtelse(values, vurderMottarYtelse);
 
 const harVurdert = (tilfeller, values, faktaOmBeregning) =>
-  lonnsendringErVurdertEllerIkkjeTilstede(tilfeller, values) &&
   nyoppstartetFLErVurdertEllerIkkjeTilstede(tilfeller, values) &&
   mottarYtelseErVurdertEllerIkkjeTilstede(tilfeller, faktaOmBeregning.vurderMottarYtelse, values);
 
@@ -143,45 +140,55 @@ const VurderOgFastsettATFL = ({
       fieldArrayID={fieldArrayID}
       vilkaarPeriodeFieldArrayIndex={vilkaarPeriodeFieldArrayIndex}
     >
-      <ATFLSammeOrgTekst beregningsgrunnlag={beregningsgrunnlag} manglerInntektsmelding={manglerInntektsmelding} />
-      {tilfeller.includes(faktaOmBeregningTilfelle.VURDER_LONNSENDRING) && (
-        <LonnsendringForm
-          readOnly={readOnly}
-          isAvklaringsbehovClosed={isAvklaringsbehovClosed}
-          tilfeller={tilfeller}
-          manglerIM={manglerInntektsmelding}
-          fieldArrayID={fieldArrayID}
-        />
-      )}
       {tilfeller.includes(faktaOmBeregningTilfelle.VURDER_ETTERLONN_SLUTTPAKKE) && (
-        <VurderEtterlonnSluttpakkeForm
-          readOnly={readOnly}
-          isAvklaringsbehovClosed={isAvklaringsbehovClosed}
-          behandlingId={behandlingId}
-          behandlingVersjon={behandlingVersjon}
-          fieldArrayID={fieldArrayID}
-          vilkaarPeriodeFieldArrayIndex={vilkaarPeriodeFieldArrayIndex}
-        />
+        <>
+          <VurderEtterlonnSluttpakkeForm
+            readOnly={readOnly}
+            isAvklaringsbehovClosed={isAvklaringsbehovClosed}
+            behandlingId={behandlingId}
+            behandlingVersjon={behandlingVersjon}
+            fieldArrayID={fieldArrayID}
+            vilkaarPeriodeFieldArrayIndex={vilkaarPeriodeFieldArrayIndex}
+          />
+          <VerticalSpacer eightPx />
+        </>
       )}
       {tilfeller.includes(faktaOmBeregningTilfelle.VURDER_NYOPPSTARTET_FL) && (
-        <NyoppstartetFLForm
-          readOnly={readOnly}
-          isAvklaringsbehovClosed={isAvklaringsbehovClosed}
-          manglerIM={manglerInntektsmelding}
-          fieldArrayID={fieldArrayID}
-        />
+        <>
+          <NyoppstartetFLForm
+            readOnly={readOnly}
+            isAvklaringsbehovClosed={isAvklaringsbehovClosed}
+            manglerIM={manglerInntektsmelding}
+            fieldArrayID={fieldArrayID}
+          />
+          <VerticalSpacer eightPx />
+        </>
       )}
       {tilfeller.includes(faktaOmBeregningTilfelle.VURDER_MOTTAR_YTELSE) && (
-        <VurderMottarYtelseForm
-          readOnly={readOnly}
-          isAvklaringsbehovClosed={isAvklaringsbehovClosed}
-          tilfeller={tilfeller}
-          beregningsgrunnlag={beregningsgrunnlag}
-          alleKodeverk={alleKodeverk}
-          fieldArrayID={fieldArrayID}
-          arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
-        />
+        <>
+          <VurderMottarYtelseForm
+            readOnly={readOnly}
+            isAvklaringsbehovClosed={isAvklaringsbehovClosed}
+            tilfeller={tilfeller}
+            beregningsgrunnlag={beregningsgrunnlag}
+            alleKodeverk={alleKodeverk}
+            fieldArrayID={fieldArrayID}
+            arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
+          />
+          <VerticalSpacer eightPx />
+        </>
       )}
+      {tilfeller.includes(faktaOmBeregningTilfelle.VURDER_LONNSENDRING) && (
+        <>
+          <LonnsendringTekst
+            beregningsgrunnlag={beregningsgrunnlag}
+            alleKodeverk={alleKodeverk}
+            arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
+          />
+          <VerticalSpacer eightPx />
+        </>
+      )}
+      <ATFLSammeOrgTekst beregningsgrunnlag={beregningsgrunnlag} manglerInntektsmelding={manglerInntektsmelding} />
     </InntektstabellPanel>
   </div>
 );
@@ -288,8 +295,6 @@ const transformValuesForAksjonspunkt = (
         fastsatteAndelsnr,
       ),
     );
-    // Lønnsendring FL
-    transformed = concatTilfeller(transformed, LonnsendringForm.transformValues(values, faktaOmBeregning));
     // Mottar ytelse
     transformed = concatTilfeller(
       transformed,

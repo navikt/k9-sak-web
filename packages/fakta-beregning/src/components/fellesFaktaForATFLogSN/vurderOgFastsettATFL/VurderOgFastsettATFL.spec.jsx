@@ -9,7 +9,7 @@ import VurderOgFastsettATFL, {
   skalFastsettInntektForFrilans,
 } from './VurderOgFastsettATFL';
 import { INNTEKT_FIELD_ARRAY_NAME } from '../BgFordelingUtils';
-import LonnsendringForm, { lonnsendringField } from './forms/LonnsendringForm';
+import LonnsendringTekst from './forms/LonnsendringTekst';
 import NyoppstartetFLForm, { erNyoppstartetFLField } from './forms/NyoppstartetFLForm';
 import VurderMottarYtelseForm from './forms/VurderMottarYtelseForm';
 import InntektstabellPanel from '../InntektstabellPanel';
@@ -77,7 +77,6 @@ const lagAndelValues = (
 describe('<VurderOgFastsettATFL>', () => {
   it('skal fastsette inntekt for nyoppstartetFL og arbeidstaker uten inntektsmelding med lønnendring', () => {
     const values = {};
-    values[lonnsendringField] = true;
     values[erNyoppstartetFLField] = true;
     values[INNTEKT_FIELD_ARRAY_NAME] = [
       lagAndelValues(1, '10 000', inntektskategorier.ARBEIDSTAKER, aktivitetStatuser.ARBEIDSTAKER),
@@ -144,7 +143,7 @@ describe('<VurderOgFastsettATFL>', () => {
       />,
     );
     const inntektstabellPanel = wrapper.find(InntektstabellPanel);
-    const lonnsendringForm = inntektstabellPanel.find(LonnsendringForm);
+    const lonnsendringForm = inntektstabellPanel.find(LonnsendringTekst);
     expect(lonnsendringForm.length).to.equal(1);
 
     const nyoppstartetFLForm = inntektstabellPanel.find(NyoppstartetFLForm);

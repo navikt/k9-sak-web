@@ -8,7 +8,6 @@ import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import { FaktaForATFLOgSNPanelImpl, transformValues, transformValuesFaktaForATFLOgSN } from './FaktaForATFLOgSNPanel';
 import TidsbegrensetArbeidsforholdForm from './tidsbegrensetArbeidsforhold/TidsbegrensetArbeidsforholdForm';
 import NyIArbeidslivetSNForm from './nyIArbeidslivet/NyIArbeidslivetSNForm';
-import { lonnsendringField } from './vurderOgFastsettATFL/forms/LonnsendringForm';
 import { erNyoppstartetFLField } from './vurderOgFastsettATFL/forms/NyoppstartetFLForm';
 import VurderOgFastsettATFL from './vurderOgFastsettATFL/VurderOgFastsettATFL';
 import { INNTEKT_FIELD_ARRAY_NAME } from './BgFordelingUtils';
@@ -168,7 +167,6 @@ describe('<FaktaForATFLOgSNPanel>', () => {
       faktaOmBeregning,
       beregningsgrunnlag,
     };
-    values[lonnsendringField] = true;
     values[erNyoppstartetFLField] = true;
     values[INNTEKT_FIELD_ARRAY_NAME] = [
       {
