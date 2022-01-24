@@ -90,6 +90,7 @@ const getPreviewAutomatiskBrevCallback = ({
   tilgjengeligeVedtaksbrev,
   informasjonsbehovValues,
 }) => e => {
+  e.preventDefault();
   if (formProps.isValid) {
     previewCallback(
       automatiskVedtaksbrevParams({
@@ -100,10 +101,7 @@ const getPreviewAutomatiskBrevCallback = ({
         informasjonsbehovValues,
       }),
     );
-  } else {
-    formProps.submit();
   }
-  e.preventDefault();
 };
 
 export const BrevPanel = props => {

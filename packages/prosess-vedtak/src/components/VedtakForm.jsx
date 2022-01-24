@@ -81,7 +81,7 @@ export const VedtakForm = ({
   REVURDERING_ENDRING,
   fritekstdokumenter,
   lagreDokumentdata,
-  overlappendeYtelser
+  overlappendeYtelser,
 }) => {
   const overstyrBrevRef = useRef(null);
   const hindreUtsendingRef = useRef(null);
@@ -175,8 +175,8 @@ export const VedtakForm = ({
             kanKunVelgeFritekstbrev(tilgjengeligeVedtaksbrev) ||
             harMellomlagretFritekstbrev(dokumentdata, vedtakVarsel),
           [fieldnames.SKAL_HINDRE_UTSENDING_AV_BREV]: readOnly && harOverstyrtMedIngenBrev(dokumentdata, vedtakVarsel),
-          [fieldnames.OVERSKRIFT]: decodeHtmlEntity(dokumentdata?.[dokumentdatatype.FRITEKSTBREV]?.overskrift),
-          [fieldnames.BRØDTEKST]: decodeHtmlEntity(dokumentdata?.[dokumentdatatype.FRITEKSTBREV]?.brødtekst),
+          [fieldnames.OVERSKRIFT]: decodeHtmlEntity(dokumentdata?.[dokumentdatatype.FRITEKSTBREV]?.overskrift) || '',
+          [fieldnames.BRØDTEKST]: decodeHtmlEntity(dokumentdata?.[dokumentdatatype.FRITEKSTBREV]?.brødtekst) || '',
           [fieldnames.OVERSTYRT_MOTTAKER]: JSON.stringify(dokumentdata?.[dokumentdatatype.OVERSTYRT_MOTTAKER]),
           [fieldnames.BEGRUNNELSE]: dokumentdata?.[dokumentdatatype.BEREGNING_FRITEKST],
         }}
@@ -184,7 +184,7 @@ export const VedtakForm = ({
           submitCallback(createPayload(values));
         }}
       >
-        {(formikProps) => (
+        {formikProps => (
           <Form>
             <VedtakAksjonspunktPanel
               behandlingStatusKode={behandlingStatus?.kode}
