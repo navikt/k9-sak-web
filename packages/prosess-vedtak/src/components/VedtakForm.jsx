@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
 import { clearFields, formPropTypes } from 'redux-form';
-import { Formik } from 'formik';
+import { Formik, Form } from 'formik';
 import { bindActionCreators } from 'redux';
 import { injectIntl } from 'react-intl';
 import { Hovedknapp } from 'nav-frontend-knapper';
@@ -124,45 +124,50 @@ export const VedtakForm = ({
     return false;
   };
 
-  const onSubmitPayloadMedEkstraInformasjon = values => {
+  const handleSubmitPayloadMedEkstraInformasjon = values => {
     const begrunnelser = informasjonsbehovVedtaksbrev?.informasjonsbehov.map(({ kode }) => ({
       kode,
       begrunnelse: values[kode],
     }));
-    return values.aksjonspunktKoder.map(apCode => ({
-      kode: apCode,
-      overstyrtMottaker: safeJSONParse(values.overstyrtMottaker),
+    return aksjonspunkter.map(aksjonspunkt => ({
+      kode: aksjonspunkt.definisjon.kode,
+      overstyrtMottaker: safeJSONParse(values?.[fieldnames.OVERSTYRT_MOTTAKER]),
       fritekstbrev: {
-        brødtekst: values.brødtekst,
-        overskrift: values.overskrift,
+        brødtekst: values?.[fieldnames.BRØDTEKST],
+        overskrift: values?.[fieldnames.OVERSKRIFT],
       },
-      skalBrukeOverstyrendeFritekstBrev: values.skalBrukeOverstyrendeFritekstBrev,
-      skalUndertrykkeBrev: values.skalUndertrykkeBrev,
+      skalBrukeOverstyrendeFritekstBrev: values?.[fieldnames.SKAL_BRUKE_OVERSTYRENDE_FRITEKST_BREV],
+      skalUndertrykkeBrev: values?.[fieldnames.SKAL_HINDRE_UTSENDING_AV_BREV],
       isVedtakSubmission,
       begrunnelserMedInformasjonsbehov: begrunnelser,
       tilgjengeligeVedtaksbrev,
     }));
   };
 
-  const onSubmitPayload = values =>
-    values.aksjonspunktKoder.map(apCode => ({
-      kode: apCode,
-      begrunnelse: values.begrunnelse,
-      overstyrtMottaker: safeJSONParse(values.overstyrtMottaker),
+  const handleSubmitPayload = values =>
+    aksjonspunkter.map(aksjonspunkt => ({
+      kode: aksjonspunkt.definisjon.kode,
+      begrunnelse: values?.[fieldnames.BEGRUNNELSE],
+      overstyrtMottaker: safeJSONParse(values?.[fieldnames.OVERSTYRT_MOTTAKER]),
       fritekstbrev: {
-        brødtekst: values.brødtekst,
-        overskrift: values.overskrift,
+        brødtekst: values?.[fieldnames.BRØDTEKST],
+        overskrift: values?.[fieldnames.OVERSKRIFT],
       },
-      skalBrukeOverstyrendeFritekstBrev: values.skalBrukeOverstyrendeFritekstBrev,
-      skalUndertrykkeBrev: values.skalUndertrykkeBrev,
+      skalBrukeOverstyrendeFritekstBrev: values?.[fieldnames.SKAL_BRUKE_OVERSTYRENDE_FRITEKST_BREV],
+      skalUndertrykkeBrev: values?.[fieldnames.SKAL_HINDRE_UTSENDING_AV_BREV],
       isVedtakSubmission,
       tilgjengeligeVedtaksbrev,
     }));
 
-  const onSubmit = harPotensieltFlereInformasjonsbehov(informasjonsbehovVedtaksbrev)
-    ? values => onSubmitPayloadMedEkstraInformasjon(values)
-    : values => onSubmitPayload(values);
-  
+  const createPayload = harPotensieltFlereInformasjonsbehov(informasjonsbehovVedtaksbrev)
+    ? values => handleSubmitPayloadMedEkstraInformasjon(values)
+    : values => handleSubmitPayload(values);
+  console.log(createPayload);
+
+  const { FRITEKSTBREV, VEDTAKSBREV_MAL, ...informasjonsbehovArray } = dokumentdata ?? {};
+  console.log(FRITEKSTBREV);
+  console.log(VEDTAKSBREV_MAL);
+  console.log(informasjonsbehovArray);
   return (
     <>
       <Formik
@@ -176,104 +181,107 @@ export const VedtakForm = ({
           [fieldnames.OVERSTYRT_MOTTAKER]: JSON.stringify(dokumentdata?.[dokumentdatatype.OVERSTYRT_MOTTAKER]),
           [fieldnames.BEGRUNNELSE]: dokumentdata?.[dokumentdatatype.BEREGNING_FRITEKST],
         }}
-        onSubmit={onSubmit}
+        onSubmit={values => {
+          submitCallback(createPayload(values));
+        }}
       >
-        {({ values, setFieldValue }) => (
-          <VedtakAksjonspunktPanel
-            behandlingStatusKode={behandlingStatus?.kode}
-            aksjonspunktKoder={aksjonspunkter.map(ap => ap.definisjon.kode)}
-            readOnly={readOnly}
-            overlappendeYtelser={overlappendeYtelser}
-            alleKodeverk={alleKodeverk}
-          >
-            <CheckboxGroup className={styles.knappContainer} size="small">
-              {kanHaFritekstbrev(tilgjengeligeVedtaksbrev) && (
-                <Checkbox
-                  value={values.skalBrukeOverstyrendeFritekstBrev}
-                  onChange={e => onToggleOverstyring(e, setFieldValue)}
-                  disabled={readOnly || kanKunVelgeFritekstbrev(tilgjengeligeVedtaksbrev)}
-                  ref={overstyrBrevRef}
-                >
-                  {intl.formatMessage({ id: 'VedtakForm.ManuellOverstyring' })}
-                </Checkbox>
-              )}
-              {(ytelseTypeKode === fagsakYtelseType.FRISINN || ytelseTypeKode === fagsakYtelseType.PLEIEPENGER) && (
-                <Checkbox
-                  onChange={e => onToggleHindreUtsending(e, setFieldValue)}
-                  value={values.skalHindreUtsendingAvBrev}
-                  disabled={readOnly}
-                  ref={hindreUtsendingRef}
-                >
-                  {intl.formatMessage({ id: 'VedtakForm.HindreUtsending' })}
-                </Checkbox>
-              )}
-            </CheckboxGroup>
-
-            {fritekstdokumenter?.length > 0 && <UstrukturerteDokumenter fritekstdokumenter={fritekstdokumenter} />}
-
-            {(isInnvilget(behandlingresultat.type.kode) || isDelvisInnvilget(behandlingresultat.type.kode)) && (
-              <VedtakInnvilgetPanel
-                intl={intl}
-                behandlingsresultat={behandlingresultat}
-                ytelseTypeKode={ytelseTypeKode}
-                tilbakekrevingvalg={tilbakekrevingvalg}
-              />
-            )}
-
-            {isAvslag(behandlingresultat.type.kode) && (
-              <VedtakAvslagPanel
-                aksjonspunkter={aksjonspunkter}
-                behandlingsresultat={behandlingresultat}
-                ytelseTypeKode={ytelseTypeKode}
-                alleKodeverk={alleKodeverk}
-                tilbakekrevingvalg={tilbakekrevingvalg}
-                vilkar={vilkar}
-              />
-            )}
-
-            <BrevPanel
-              intl={intl}
+        {({ values, setFieldValue, isSubmitting }) => (
+          <Form>
+            <VedtakAksjonspunktPanel
+              behandlingStatusKode={behandlingStatus?.kode}
+              aksjonspunktKoder={aksjonspunkter.map(ap => ap.definisjon.kode)}
               readOnly={readOnly}
-              sprakkode={sprakkode}
-              personopplysninger={personopplysninger}
-              arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
-              tilgjengeligeVedtaksbrev={tilgjengeligeVedtaksbrev}
-              informasjonsbehovVedtaksbrev={informasjonsbehovVedtaksbrev}
-              informasjonsbehovValues={informasjonsbehovValues}
-              skalBrukeOverstyrendeFritekstBrev={values.skalBrukeOverstyrendeFritekstBrev}
-              begrunnelse={begrunnelse}
-              previewCallback={previewCallback}
-              brødtekst={brødtekst}
-              overskrift={overskrift}
-              overstyrtMottaker={overstyrtMottaker}
-              formProps={formProps}
-              dokumentdata={dokumentdata}
-              lagreDokumentdata={lagreDokumentdata}
-            />
-            {kanSendesTilGodkjenning(behandlingStatus?.kode) && (
-              <Row>
-                <Column xs="12">
-                  {!readOnly && (
-                    <Hovedknapp
-                      mini
-                      className={styles.mainButton}
-                      onClick={formProps.handleSubmit}
-                      disabled={behandlingPaaVent || formProps.submitting}
-                      spinner={formProps.submitting}
-                    >
-                      {intl.formatMessage({
-                        id:
-                          aksjonspunkter &&
-                          aksjonspunkter.some(ap => ap.erAktivt === true && ap.toTrinnsBehandling === true)
-                            ? 'VedtakForm.TilGodkjenning'
-                            : 'VedtakForm.FattVedtak',
-                      })}
-                    </Hovedknapp>
-                  )}
-                </Column>
-              </Row>
-            )}
-          </VedtakAksjonspunktPanel>
+              overlappendeYtelser={overlappendeYtelser}
+              alleKodeverk={alleKodeverk}
+            >
+              <CheckboxGroup className={styles.knappContainer} size="small">
+                {kanHaFritekstbrev(tilgjengeligeVedtaksbrev) && (
+                  <Checkbox
+                    value={values.skalBrukeOverstyrendeFritekstBrev}
+                    onChange={e => onToggleOverstyring(e, setFieldValue)}
+                    disabled={readOnly || kanKunVelgeFritekstbrev(tilgjengeligeVedtaksbrev)}
+                    ref={overstyrBrevRef}
+                  >
+                    {intl.formatMessage({ id: 'VedtakForm.ManuellOverstyring' })}
+                  </Checkbox>
+                )}
+                {(ytelseTypeKode === fagsakYtelseType.FRISINN || ytelseTypeKode === fagsakYtelseType.PLEIEPENGER) && (
+                  <Checkbox
+                    onChange={e => onToggleHindreUtsending(e, setFieldValue)}
+                    value={values.skalHindreUtsendingAvBrev}
+                    disabled={readOnly}
+                    ref={hindreUtsendingRef}
+                  >
+                    {intl.formatMessage({ id: 'VedtakForm.HindreUtsending' })}
+                  </Checkbox>
+                )}
+              </CheckboxGroup>
+
+              {fritekstdokumenter?.length > 0 && <UstrukturerteDokumenter fritekstdokumenter={fritekstdokumenter} />}
+
+              {(isInnvilget(behandlingresultat.type.kode) || isDelvisInnvilget(behandlingresultat.type.kode)) && (
+                <VedtakInnvilgetPanel
+                  intl={intl}
+                  behandlingsresultat={behandlingresultat}
+                  ytelseTypeKode={ytelseTypeKode}
+                  tilbakekrevingvalg={tilbakekrevingvalg}
+                />
+              )}
+
+              {isAvslag(behandlingresultat.type.kode) && (
+                <VedtakAvslagPanel
+                  aksjonspunkter={aksjonspunkter}
+                  behandlingsresultat={behandlingresultat}
+                  ytelseTypeKode={ytelseTypeKode}
+                  alleKodeverk={alleKodeverk}
+                  tilbakekrevingvalg={tilbakekrevingvalg}
+                  vilkar={vilkar}
+                />
+              )}
+
+              <BrevPanel
+                intl={intl}
+                readOnly={readOnly}
+                sprakkode={sprakkode}
+                personopplysninger={personopplysninger}
+                arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
+                tilgjengeligeVedtaksbrev={tilgjengeligeVedtaksbrev}
+                informasjonsbehovVedtaksbrev={informasjonsbehovVedtaksbrev}
+                informasjonsbehovValues={informasjonsbehovValues}
+                skalBrukeOverstyrendeFritekstBrev={values.skalBrukeOverstyrendeFritekstBrev}
+                begrunnelse={begrunnelse}
+                previewCallback={previewCallback}
+                brødtekst={brødtekst}
+                overskrift={overskrift}
+                overstyrtMottaker={overstyrtMottaker}
+                formProps={formProps}
+                dokumentdata={dokumentdata}
+                lagreDokumentdata={lagreDokumentdata}
+              />
+              {kanSendesTilGodkjenning(behandlingStatus?.kode) && (
+                <Row>
+                  <Column xs="12">
+                    {!readOnly && (
+                      <Hovedknapp
+                        mini
+                        className={styles.mainButton}
+                        disabled={behandlingPaaVent || isSubmitting}
+                        spinner={isSubmitting}
+                      >
+                        {intl.formatMessage({
+                          id:
+                            aksjonspunkter &&
+                            aksjonspunkter.some(ap => ap.erAktivt === true && ap.toTrinnsBehandling === true)
+                              ? 'VedtakForm.TilGodkjenning'
+                              : 'VedtakForm.FattVedtak',
+                        })}
+                      </Hovedknapp>
+                    )}
+                  </Column>
+                </Row>
+              )}
+            </VedtakAksjonspunktPanel>
+          </Form>
         )}
       </Formik>
     </>
