@@ -184,10 +184,7 @@ describe('<FaktaForATFLOgSNPanel>', () => {
       },
     ];
     const transformedValues = transformValuesFaktaForATFLOgSN(values);
-    expect(transformedValues.fakta.faktaOmBeregningTilfeller).to.have.length(4);
-    expect(
-      transformedValues.fakta.faktaOmBeregningTilfeller.includes(faktaOmBeregningTilfelle.VURDER_LONNSENDRING),
-    ).is.eql(true);
+    expect(transformedValues.fakta.faktaOmBeregningTilfeller).to.have.length(3);
     expect(
       transformedValues.fakta.faktaOmBeregningTilfeller.includes(
         faktaOmBeregningTilfelle.FASTSETT_MAANEDSLONN_ARBEIDSTAKER_UTEN_INNTEKTSMELDING,

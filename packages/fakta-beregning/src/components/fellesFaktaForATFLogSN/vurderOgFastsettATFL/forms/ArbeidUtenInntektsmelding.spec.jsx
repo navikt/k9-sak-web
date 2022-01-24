@@ -99,30 +99,6 @@ describe('<ArbeidUtenInntektsmelding>', () => {
     expect(transformedObject.fastsattUtenInntektsmelding.andelListe[0].fastsattBeløp).to.equal(10000);
   });
 
-
-  it('skal ikkje submitte inntekt uten lønnsendring', () => {
-    const values = { };
-    const inntektVerdier = [
-      { fastsattBelop: '', andelsnr: 1 },
-    ];
-    const faktaOmBeregning = {
-      faktaOmBeregningTilfeller: [{ kode: faktaOmBeregningTilfelle.VURDER_LONNSENDRING }],
-      arbeidsforholdMedLønnsendringUtenIM: [{ andelsnr: 1 }],
-    };
-    const bg = {
-      beregningsgrunnlagPeriode: [
-        {
-          beregningsgrunnlagPrStatusOgAndel: [
-            { andelsnr: 1, arbeidsforhold: {} },
-          ],
-        },
-      ],
-    };
-    const transformedObject = transformValues(values, inntektVerdier, faktaOmBeregning, bg, []);
-    expect(transformedObject).to.be.empty;
-  });
-
-
   it('skal transform values når ved avsluttet arbeidsforhold dagen før skjæringstidspunktet '
   + 'og et annet løpende i samme virksomhet der det er mottatt inntektsmelding', () => {
     const values = { };

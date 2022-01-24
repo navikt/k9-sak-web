@@ -75,7 +75,7 @@ const lagAndelValues = (
 });
 
 describe('<VurderOgFastsettATFL>', () => {
-  it('skal fastsette inntekt for nyoppstartetFL og arbeidstaker uten inntektsmelding med lønnendring', () => {
+  it('skal fastsette inntekt for nyoppstartetFL og arbeidstaker uten inntektsmelding med lønnsendring', () => {
     const values = {};
     values[erNyoppstartetFLField] = true;
     values[INNTEKT_FIELD_ARRAY_NAME] = [
@@ -102,9 +102,8 @@ describe('<VurderOgFastsettATFL>', () => {
     expect(transformed.fastsattUtenInntektsmelding.andelListe[0].andelsnr).to.equal(1);
     expect(transformed.fastsattUtenInntektsmelding.andelListe[0].fastsattBeløp).to.equal(10000);
     expect(transformed.fastsettMaanedsinntektFL.maanedsinntekt).to.equal(30000);
-    expect(transformed.faktaOmBeregningTilfeller.length).to.equal(4);
+    expect(transformed.faktaOmBeregningTilfeller.length).to.equal(3);
     expect(transformed.faktaOmBeregningTilfeller.includes(VURDER_NYOPPSTARTET_FL)).to.equal(true);
-    expect(transformed.faktaOmBeregningTilfeller.includes(VURDER_LONNSENDRING)).to.equal(true);
     expect(transformed.faktaOmBeregningTilfeller.includes(FASTSETT_MAANEDSINNTEKT_FL)).to.equal(true);
     expect(
       transformed.faktaOmBeregningTilfeller.includes(FASTSETT_MAANEDSLONN_ARBEIDSTAKER_UTEN_INNTEKTSMELDING),

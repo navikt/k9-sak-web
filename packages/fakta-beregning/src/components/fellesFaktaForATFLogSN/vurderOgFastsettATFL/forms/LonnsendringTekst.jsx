@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { Normaltekst } from 'nav-frontend-typografi';
-import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import beregningsgrunnlagPropType from '../../../../propTypes/beregningsgrunnlagPropType';
 import { createVisningsnavnForAktivitet } from '../../../ArbeidsforholdHelper';
 
