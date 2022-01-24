@@ -113,6 +113,10 @@ const BeregningFaktaIndex = ({
   const relevanteLøsbareAvklaringsbehov = aktiveAvklaringsBehov.filter(ap => relevanteKoder.includes(ap.definisjon.kode) && ap.kanLoses !== false)
   const vilkårsperioder = beregningsgrunnlagVilkår.perioder;
 
+  const avklarAktiviteterReadOnly = readOnly || ((relevanteLøsbareAvklaringsbehov.length === 0 ||
+    harAvklaringsbehov(OVERSTYRING_AV_BEREGNINGSAKTIVITETER, aktiveAvklaringsBehov)) && !erOverstyrer)
+  const avklarFaktaBeregningReadOnly = readOnly || ((relevanteLøsbareAvklaringsbehov.length === 0 ||
+    harAvklaringsbehov(OVERSTYRING_AV_BEREGNINGSGRUNNLAG, aktiveAvklaringsBehov)) && !erOverstyrer)
   return (
     <RawIntlProvider value={intl}>
       {skalBrukeTabs && (
@@ -129,11 +133,7 @@ const BeregningFaktaIndex = ({
       )}
       <div style={{ paddingTop: skalBrukeTabs ? '16px' : '' }}>
         <AvklareAktiviteterPanel
-          readOnly={
-            readOnly ||
-            relevanteLøsbareAvklaringsbehov.length === 0 ||
-            (harAvklaringsbehov(OVERSTYRING_AV_BEREGNINGSAKTIVITETER, aktiveAvklaringsBehov) && !erOverstyrer)
-          }
+          readOnly={avklarAktiviteterReadOnly}
           harAndreAvklaringsbehovIPanel={harAvklaringsbehov(VURDER_FAKTA_FOR_ATFL_SN, aktiveAvklaringsBehov)}
           submitCallback={submitCallback}
           submittable={submittable}
@@ -150,11 +150,7 @@ const BeregningFaktaIndex = ({
         />
         <VerticalSpacer thirtyTwoPx />
         <VurderFaktaBeregningPanel
-          readOnly={
-            readOnly || 
-            relevanteLøsbareAvklaringsbehov.length === 0 ||
-            (harAvklaringsbehov(OVERSTYRING_AV_BEREGNINGSGRUNNLAG, aktiveAvklaringsBehov) && !erOverstyrer)
-          }
+          readOnly={avklarFaktaBeregningReadOnly}
           submitCallback={submitCallback}
           submittable={submittable}
           alleKodeverk={alleKodeverk}
