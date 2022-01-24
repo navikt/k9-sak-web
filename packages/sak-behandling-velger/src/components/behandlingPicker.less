@@ -1,14 +1,7 @@
-@import '@{coreModulePath}nav-frontend-core/less/_variabler';
-
-.behandlingPicker {
-  margin-bottom: 2rem;
-  margin-top: 3.125rem;
-}
-
 .behandlingList {
   list-style-type: none;
   margin-bottom: 0;
-  margin-top: 1rem;
+  margin-top: 24px;
   padding: 0;
   width: 100%;
 
@@ -19,52 +12,4 @@
 
 .behandlingList > li:not(:first-child) {
   margin-top: 16px;
-}
-
-.linkToBehandling,
-.toggleShowAllButton {
-  background: none;
-  border: 0;
-  color: inherit;
-  margin: 0;
-  padding: 0;
-  text-align: inherit;
-  text-decoration: none;
-  width: 100%;
-}
-
-.linkToBehandling:hover,
-.toggleShowAllButton:hover {
-  cursor: pointer;
-  text-decoration: none;
-
-  & > :first-child {
-    background: @navLysGra;
-  }
-}
-
-.linkToBehandling:visited {
-  color: inherit;
-}
-
-.linkToBehandling:focus,
-.toggleShowAllButton:focus {
-  outline: none;
-}
-
-.backButton {
-  /* stylelint-disable-next-line declaration-no-important */
-  border: none !important;
-  margin-bottom: 0.25rem;
-  margin-left: -0.25rem;
-  padding-left: 0;
-  padding-right: 0;
-  padding-top: 0;
-  text-decoration: underline;
-}
-
-.headerContainer {
-  display: flex;
-  justify-content: space-between;
-  position: relative;
 }

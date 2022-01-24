@@ -75,7 +75,7 @@ describe('<BeregningsresultatTable>', () => {
       expect(redusertRad.ledetekst.props.id).to.equal('Beregningsgrunnlag.BeregningTable.RedusertProsent');
       expect(redusertRad.ledetekst.props.values.redusert).to.equal(dekningsgrad);
       const andelLabel = rowsAndeler[0].ledetekst;
-      expect(andelLabel.props.id).to.equal('Beregningsgrunnlag.BeregningTable.Fastsatt.AT');
+      expect(andelLabel.props.id).to.equal('Beregningsgrunnlag.BeregningTable.Omberegnet.AT');
       expect(dagsatser.verdi).to.equal(formatCurrencyNoKr(beregningsgrunnlagPerioder[0].dagsats));
     });
   });
@@ -119,7 +119,7 @@ describe('<BeregningsresultatTable>', () => {
       expect(redusertRad.ledetekst.props.id).to.equal('Beregningsgrunnlag.BeregningTable.RedusertProsent');
       expect(redusertRad.ledetekst.props.values.redusert).to.equal(dekningsgrad);
       const andelLabel = rowsAndeler[0].ledetekst;
-      expect(andelLabel.props.id).to.equal('Beregningsgrunnlag.BeregningTable.Fastsatt.BA');
+      expect(andelLabel.props.id).to.equal('Beregningsgrunnlag.BeregningTable.Omberegnet.BA');
       expect(dagsatser.verdi).to.equal(formatCurrencyNoKr(beregningsgrunnlagPerioder[0].dagsats));
     });
   });
@@ -149,10 +149,10 @@ describe('<BeregningsresultatTable>', () => {
       expect(redusertRad.ledetekst.props.values.redusert).to.equal(dekningsgrad);
       expect(rowsAndeler.length).to.equal(2);
       const andelLabelAT = rowsAndeler[0].ledetekst;
-      expect(andelLabelAT.props.id).to.equal('Beregningsgrunnlag.BeregningTable.Fastsatt.AT');
+      expect(andelLabelAT.props.id).to.equal('Beregningsgrunnlag.BeregningTable.Omberegnet.AT');
       expect(formatCurrencyNoKr(rowsAndeler[0].verdi)).to.equal(formatCurrencyNoKr(300001));
       const andelLabelFL = rowsAndeler[1].ledetekst;
-      expect(andelLabelFL.props.id).to.equal('Beregningsgrunnlag.BeregningTable.Fastsatt.FL');
+      expect(andelLabelFL.props.id).to.equal('Beregningsgrunnlag.BeregningTable.Omberegnet.FL');
       expect(formatCurrencyNoKr(rowsAndeler[1].verdi)).to.equal(formatCurrencyNoKr(flAndel.bruttoPrAar));
 
       expect(dagsatser.verdi).to.equal(formatCurrencyNoKr(beregningsgrunnlagPerioder[0].dagsats));
@@ -185,7 +185,6 @@ describe('<BeregningsresultatTable>', () => {
       vilkaarBG,
     );
     selectorData.forEach(periode => {
-      expect(periode.rowsAndeler.length).to.equal(1);
       const { rowsAndeler, dagsatser, bruttoRad, redusertRad } = periode;
       expect(bruttoRad.ledetekst.props.id).to.equal('Beregningsgrunnlag.BeregningTable.BruttoTotalt');
       expect(bruttoRad.verdi).to.equal(
@@ -193,9 +192,9 @@ describe('<BeregningsresultatTable>', () => {
       );
       expect(redusertRad.ledetekst.props.id).to.equal('Beregningsgrunnlag.BeregningTable.RedusertProsent');
       expect(redusertRad.ledetekst.props.values.redusert).to.equal(dekningsgrad);
-      expect(rowsAndeler.length).to.equal(1);
+      expect(rowsAndeler.length).to.equal(2);
       const andelLabelSN = rowsAndeler[0].ledetekst;
-      expect(andelLabelSN.props.id).to.equal('Beregningsgrunnlag.BeregningTable.Fastsatt.SN');
+      expect(andelLabelSN.props.id).to.equal('Beregningsgrunnlag.BeregningTable.Omberegnet.SN');
       expect(formatCurrencyNoKr(rowsAndeler[0].verdi)).to.equal(formatCurrencyNoKr(snAndel.bruttoPrAar));
       expect(dagsatser.verdi).to.equal(formatCurrencyNoKr(beregningsgrunnlagPerioder[0].dagsats));
     });
@@ -212,7 +211,7 @@ describe('<BeregningsresultatTable>', () => {
         kode: aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE,
         kodeverk: 'AKTIVITET_STATUS',
       },
-      bruttoPrAar: 254985,
+      bruttoPrAar: 0,
       pgiSnitt: 254985,
     };
     beregningsgrunnlagPerioder[0].beregningsgrunnlagPrStatusOgAndel.push(snAndel);
@@ -294,7 +293,7 @@ describe('<BeregningsresultatTable>', () => {
       expect(andelLabelFL.props.id).to.equal('Beregningsgrunnlag.BeregningTable.Omberegnet.FL');
       expect(formatCurrencyNoKr(rowsAndeler[1].verdi)).to.equal(formatCurrencyNoKr(flAndel.bruttoPrAar));
       const andelLabelSN = rowsAndeler[2].ledetekst;
-      expect(andelLabelSN.props.id).to.equal('Beregningsgrunnlag.BeregningTable.Fastsatt.SN');
+      expect(andelLabelSN.props.id).to.equal('Beregningsgrunnlag.BeregningTable.Omberegnet.SN');
       expect(formatCurrencyNoKr(rowsAndeler[2].verdi)).to.equal(formatCurrencyNoKr(snAndel.bruttoPrAar));
       expect(dagsatser.verdi).to.equal(formatCurrencyNoKr(beregningsgrunnlagPerioder[0].dagsats));
     });
@@ -314,8 +313,8 @@ describe('<BeregningsresultatTable>', () => {
         kode: aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE,
         kodeverk: 'AKTIVITET_STATUS',
       },
-      avkortetPrAar: 599985,
-      bruttoPrAar: 154985,
+      avkortetPrAar: 0,
+      bruttoPrAar: 0,
       pgiSnitt: 154985,
     };
     flAndel.bruttoPrAar = 596000;
@@ -326,7 +325,6 @@ describe('<BeregningsresultatTable>', () => {
     beregningsgrunnlagPerioder[0].avkortetPrAar = seksG;
     beregningsgrunnlagPerioder[0].dagsats = 2287;
     beregningsgrunnlagPerioder[0].redusertPrAar = 479318;
-    beregningsgrunnlagPerioder[0].beregningsgrunnlagPrStatusOgAndel[0].bruttoPrAar = 551316;
 
     const selectorData = createBeregningTableData.resultFunc(
       beregningsgrunnlagPerioder,
@@ -349,7 +347,7 @@ describe('<BeregningsresultatTable>', () => {
       expect(avkortetRad.verdi).to.equal(formatCurrencyNoKr(seksG));
       const andelLabelAT = rowsAndeler[0].ledetekst;
       expect(andelLabelAT.props.id).to.equal('Beregningsgrunnlag.BeregningTable.Omberegnet.AT');
-      expect(formatCurrencyNoKr(rowsAndeler[0].verdi)).to.equal(formatCurrencyNoKr(551316));
+      expect(formatCurrencyNoKr(rowsAndeler[0].verdi)).to.equal(formatCurrencyNoKr(300001));
       const andelLabelFL = rowsAndeler[1].ledetekst;
       expect(andelLabelFL.props.id).to.equal('Beregningsgrunnlag.BeregningTable.Omberegnet.FL');
       expect(formatCurrencyNoKr(rowsAndeler[1].verdi)).to.equal(formatCurrencyNoKr(flAndel.bruttoPrAar));

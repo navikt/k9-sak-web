@@ -9,19 +9,9 @@
   "BehandlingPickerItemContent.Behandlingstatus": "Behandlingsstatus",
   "BehandlingPickerItemContent.Resultat": "Resultat",
   "BehandlingPickerItemContent.Enhet": "Enhet ",
-  "BehandlingPickerItemContent.Behandling.Aapen": "Åpen behandling",
-  "BehandlingPickerItemContent.Behandling.UnderBehandling": "Under behandling",
-  "BehandlingPickerItemContent.Behandling.Innvilget": "Innvilget",
-  "BehandlingPickerItemContent.Behandling.Avslaatt": "Avslått",
-  "BehandlingPickerItemContent.Behandling.Henlagt": "Henlagt",
-  "BehandlingPickerItemContent.Behandling.Aapne": "Åpne",
-  "BehandlingPickerItemContent.Kalender": "Kalender",
-  "BehandlingPickerItemContent.BehandlingTypeNavn.Viderebehandling": "Viderebehandling",
-  "Behandlingspunkt.Behandling.SeAlle": "Se alle behandlinger",
 
   "BehandlingList.ZeroBehandlinger": "Ingen behandlinger er opprettet",
 
-  "Behandlingspunkt.ÅrsakerForBehandling": "Årsaker for behandling:",
   "Behandlingspunkt.Årsak.ManglerFødselsdato": "Mangler fødselsdato",
   "Behandlingspunkt.Årsak.AvvikAntallBarn": "Avvik antall barn",
   "Behandlingspunkt.Årsak.FeilLovanvendelse": "Feil lovanvendelse",
@@ -46,9 +36,6 @@
   "Behandlingspunkt.Årsak.Dødfødsel": "Dødfødsel",
   "Behandlingspunkt.Årsak.NyeRegisteropplysninger": "Nye registeropplysninger",
   "Behandlingspunkt.Årsak.OpplysningerAnnenYtelse": "Opplysninger annen ytelse",
-
-  "Behandlingspunkt.Filtrer": "Filtrer",
-  "Behandlingspunkt.VelgBehandling": "Velg behandling ({antallBehandlinger})",
 
   "DateTimeLabel.Kl": "Kl."
 }
