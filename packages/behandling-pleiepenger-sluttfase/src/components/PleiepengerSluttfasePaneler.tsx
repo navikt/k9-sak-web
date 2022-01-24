@@ -18,7 +18,6 @@ import {
 } from '@k9-sak-web/types';
 import moment from 'moment';
 import React, { useState } from 'react';
-import useAksjonspunkter from '../store/aksjonspunkter/hooks/useAksjonspunkter';
 // import useVilkar from '../store/vilkar/hooks/useVilkar';
 import { Arbeidstype } from '../types/Arbeidstype';
 import FetchedData from '../types/fetchedDataTsType';

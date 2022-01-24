@@ -4,35 +4,10 @@ import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import MedisinskVilkarFaktaIndex from '@k9-sak-web/fakta-medisinsk-vilkar/src/MedisinskVilkarFaktaIndex';
 import findEndpointsForMicrofrontend from '../microfrontend/utils/findEndpointsForMicrofrontend';
-import SimpleEndpoints from '../microfrontend/types/SimpleEndpoints';
 import findAksjonspunkt from '../microfrontend/utils/findAksjonspunkt';
 import httpErrorHandler from '../microfrontend/utils/httpErrorHandler';
 
-const initializeMedisinskVilkår = (
-  elementId,
-  httpErrorHandlerFn,
-  endpoints: SimpleEndpoints,
-  behandlingUuid: string,
-  løsAksjonspunkt,
-  readOnly,
-  visFortsettknapp,
-  saksbehandlere,
-  erFagytelsetypePPN
-) => {
-  (window as any).renderMedisinskVilkarApp(elementId, {
-    httpErrorHandler: httpErrorHandlerFn,
-    endpoints,
-    behandlingUuid,
-    onFinished: løsAksjonspunkt,
-    readOnly,
-    visFortsettknapp,
-    saksbehandlere,
-    erFagytelsetypePPN,
-  });
-};
-
-const medisinskVilkårAppID = 'medisinskVilkårApp';
-export default ({ behandling: { links, uuid }, submitCallback, aksjonspunkter, readOnly, saksbehandlere, erFagytelsetypePPN }) => {
+export default ({ behandling: { links, uuid }, submitCallback, aksjonspunkter, readOnly, saksbehandlere }) => {
   const { addErrorMessage } = useRestApiErrorDispatcher();
   const httpErrorHandlerCaller = (status: number, locationHeader?: string) =>
     httpErrorHandler(status, addErrorMessage, locationHeader);
@@ -55,7 +30,7 @@ export default ({ behandling: { links, uuid }, submitCallback, aksjonspunkter, r
       endpoints={findEndpointsForMicrofrontend(links, [
         /*
          * TODO: har vi alle endepunkter vi trenger, er det endepunkter vi ikke trenger lenger?
-         * Vi trenger egentlig ikke "findendpoints", da vi ikke er i en microfrontend lenger ... 
+         * Vi trenger egentlig ikke "findendpoints", da vi ikke er i en microfrontend lenger ...
          */
         { rel: 'sykdom-vurdering-oversikt-ktp', desiredName: 'vurderingsoversiktKontinuerligTilsynOgPleie' },
         { rel: 'sykdom-vurdering-oversikt-too', desiredName: 'vurderingsoversiktBehovForToOmsorgspersoner' },

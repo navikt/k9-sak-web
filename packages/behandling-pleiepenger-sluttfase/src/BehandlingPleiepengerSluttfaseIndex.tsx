@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useCallback } from 'react';
 
 import { LoadingPanel, usePrevious } from '@fpsak-frontend/shared-components';
-import { Rettigheter, ReduxFormStateCleaner, useSetBehandlingVedEndring } from '@k9-sak-web/behandling-felles';
+import { Rettigheter, useSetBehandlingVedEndring } from '@k9-sak-web/behandling-felles';
 import {
   Behandling,
   KodeverkMedNavn,
@@ -15,9 +15,7 @@ import { RestApiState, useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-ho
 
 import { K9sakApiKeys, restApiHooks } from '@k9-sak-web/sak-app/src/data/k9sakApi';
 import useBehandlingEndret from '@k9-sak-web/sak-app/src/behandling/useBehandlingEndret';
-import { createIntl, createIntlCache, RawIntlProvider } from "react-intl";
 import { Provider as ReduxProvider } from 'react-redux';
-import messages from '../i18n/nb_NO.json';
 
 import {
   restApiPleiepengerSluttfaseHooks,
