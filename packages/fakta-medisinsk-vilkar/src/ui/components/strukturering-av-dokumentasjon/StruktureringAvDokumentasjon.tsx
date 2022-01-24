@@ -71,7 +71,6 @@ const StruktureringAvDokumentasjon = ({
         dispatch({ type: ActionType.VELG_DOKUMENT, valgtDokument: nyttValgtDokument });
     };
 
-    console.log('lkjdhsd', dokumentoversikt);
     const åpneDokumentSomMåBehandles = ({ ustrukturerteDokumenter }: Dokumentoversikt) => {
         const sisteDokumentIndex = ustrukturerteDokumenter?.length > 0 ? ustrukturerteDokumenter.length - 1 : null;
         const førsteDokumentSomMåBehandles =
