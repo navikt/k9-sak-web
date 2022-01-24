@@ -17,7 +17,7 @@ import styles from './innleggelsesperiodeFormModal.less';
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type AnyType = any;
 
-interface InnleggelsesperiodeFormModal {
+interface InnleggelsesperiodeFormModalProps {
     defaultValues: {
         [InnleggelsesperioderFieldName.INNLEGGELSESPERIODER]: Period[];
     };
@@ -33,7 +33,7 @@ const InnleggelsesperiodeFormModal = ({
     onSubmit,
     isLoading,
     endringerPåvirkerAndreBehandlinger,
-}: InnleggelsesperiodeFormModal): JSX.Element => {
+}: InnleggelsesperiodeFormModalProps): JSX.Element => {
     const formMethods = useForm({
         defaultValues,
     });

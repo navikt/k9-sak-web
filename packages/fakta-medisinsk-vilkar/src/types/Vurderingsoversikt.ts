@@ -76,10 +76,9 @@ export class Vurderingsoversikt {
             this.vurderingselementer
                 .filter(({ periode }) => {
                     const vurdertPeriode = new Period(periode.fom, periode.tom);
-                    const overlapperMedEnSøknadsperiode = this.resterendeVurderingsperioder.some(({ fom, tom }) =>
+                    return this.resterendeVurderingsperioder.some(({ fom, tom }) =>
                         vurdertPeriode.overlapsWith(new Period(fom, tom))
                     );
-                    return overlapperMedEnSøknadsperiode;
                 })
                 .map(({ periode }) => periode) || []
         );
