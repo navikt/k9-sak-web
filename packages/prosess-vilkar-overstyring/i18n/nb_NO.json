@@ -14,6 +14,7 @@
   "OverstyrVurderingVelger.OverstyrtAutomatiskVurdering": "Overstyrt automatisk vurdering",
   "OverstyrBekreftKnappPanel.ConfirmInformation": "Bekreft overstyring",
   "VilkarBegrunnelse.Vilkar": "Vurdering",
+  "VilkarBegrunnelse.Begrunnelse": "Begrunnelse",
   "VilkarResultPicker.Arsak": "Avslagsårsak",
   "VilkarResultPicker.SelectArsak": "Velg årsak",
   "VilkarResultPicker.VilkarOppfylt": "Vilkåret er oppfylt",
