@@ -74,16 +74,16 @@ const renderFunc = Component => {
     worker.start({ onUnhandledRequest: 'bypass' });
   }
 
-  // <Provider store={store}>
-  /* </Provider>, */
   render(
-    <Router history={history}>
-      <RestApiProvider>
-        <RestApiErrorProvider>
-          <Component />
-        </RestApiErrorProvider>
-      </RestApiProvider>
-    </Router>,
+    <Provider store={store}>
+      <Router history={history}>
+        <RestApiProvider>
+          <RestApiErrorProvider>
+            <Component />
+          </RestApiErrorProvider>
+        </RestApiProvider>
+      </Router>
+    </Provider>,
     app,
   );
 };

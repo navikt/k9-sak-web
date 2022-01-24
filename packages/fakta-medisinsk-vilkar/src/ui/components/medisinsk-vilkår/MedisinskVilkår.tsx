@@ -77,6 +77,7 @@ const MedisinskVilkår = (): JSX.Element => {
     const diagnosekoderTekst = diagnosekoder?.length > 0 ? `${diagnosekoder?.join(', ')}` : 'Kode mangler';
 
     const hentSykdomsstegStatus = async () => {
+        console.log("henter sykdomstegstatus", endpoints);
         try {
             const status = await get<SykdomsstegStatusResponse>(endpoints.status, httpErrorHandler, {
                 cancelToken: httpCanceler.token,

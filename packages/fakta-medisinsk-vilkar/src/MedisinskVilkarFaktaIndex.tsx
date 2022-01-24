@@ -14,31 +14,6 @@ const intlConfig = createIntl(
     cache,
 );
 
-/*
-data til medisinsk vilkar:
-endepunkter:
-    { rel: 'sykdom-vurdering-oversikt-ktp', desiredName: 'vurderingsoversiktKontinuerligTilsynOgPleie' },
-    { rel: 'sykdom-vurdering-oversikt-too', desiredName: 'vurderingsoversiktBehovForToOmsorgspersoner' },
-    { rel: 'sykdom-vurdering-direkte', desiredName: 'hentVurdering' },
-    { rel: 'sykdom-vurdering-opprettelse', desiredName: 'opprettVurdering' },
-    { rel: 'sykdom-vurdering-endring', desiredName: 'endreVurdering' },
-    { rel: 'sykdom-dokument-oversikt', desiredName: 'dokumentoversikt' },
-    { rel: 'sykdom-innleggelse', desiredName: 'innleggelsesperioder' },
-    { rel: 'sykdom-diagnosekoder', desiredName: 'diagnosekoder' },
-    { rel: 'sykdom-dokument-liste', desiredName: 'dataTilVurdering' },
-    { rel: 'sykdom-aksjonspunkt', desiredName: 'status' },
-    { rel: 'sykdom-dokument-eksisterendevurderinger', desiredName: 'nyeDokumenter' },
-
-    elementId,
-    httpErrorHandlerFn,
-    endpoints: SimpleEndpoints,
-    behandlingUuid: string,
-    løsAksjonspunkt,
-    readOnly,
-    visFortsettknapp,
-    saksbehandlere,
-*/
-
 const MedisinskVilkarFaktaIndex = (
     {
         behandlingUuid,
@@ -49,32 +24,7 @@ const MedisinskVilkarFaktaIndex = (
         visFortsettknapp,
         saksbehandlere,
     }: ContainerContract
-) =>
-
-    // const data: ContainerContract = {
-    //     endpoints: findEndpointsForMicrofrontend(links, [
-    //         { rel: 'sykdom-vurdering-oversikt-ktp', desiredName: 'vurderingsoversiktKontinuerligTilsynOgPleie' },
-    //         { rel: 'sykdom-vurdering-oversikt-too', desiredName: 'vurderingsoversiktBehovForToOmsorgspersoner' },
-    //         { rel: 'sykdom-vurdering-direkte', desiredName: 'hentVurdering' },
-    //         { rel: 'sykdom-vurdering-opprettelse', desiredName: 'opprettVurdering' },
-    //         { rel: 'sykdom-vurdering-endring', desiredName: 'endreVurdering' },
-    //         { rel: 'sykdom-dokument-oversikt', desiredName: 'dokumentoversikt' },
-    //         { rel: 'sykdom-innleggelse', desiredName: 'innleggelsesperioder' },
-    //         { rel: 'sykdom-diagnosekoder', desiredName: 'diagnosekoder' },
-    //         { rel: 'sykdom-dokument-liste', desiredName: 'dataTilVurdering' },
-    //         { rel: 'sykdom-aksjonspunkt', desiredName: 'status' },
-    //         { rel: 'sykdom-dokument-eksisterendevurderinger', desiredName: 'nyeDokumenter' },
-    //       ]),
-    //     behandlingUuid: ;
-    //     readOnly: ;
-    //     onFinished: (...args: unknown[]) => void;
-    //     httpErrorHandler: ;
-    //     visFortsettknapp: ;
-    //     saksbehandlere: ;
-    // };
-
-    // console.log("behandling", behandling);
-    <RawIntlProvider value={intlConfig}>
+) => < RawIntlProvider value={intlConfig} >
         <MainComponent containerData={{
             endpoints,
             behandlingUuid,
@@ -85,8 +35,6 @@ const MedisinskVilkarFaktaIndex = (
             saksbehandlere,
         }
         } />
-    </RawIntlProvider>
-
-
+    </RawIntlProvider >
 
 export default MedisinskVilkarFaktaIndex;
