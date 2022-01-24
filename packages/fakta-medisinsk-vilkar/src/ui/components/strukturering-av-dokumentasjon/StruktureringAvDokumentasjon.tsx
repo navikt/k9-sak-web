@@ -9,13 +9,9 @@ import { StepId } from '../../../types/Step';
 import SykdomsstegStatusResponse from '../../../types/SykdomsstegStatusResponse';
 import { nesteStegErVurdering } from '../../../util/statusUtils';
 import ContainerContext from '../../context/ContainerContext';
-import Diagnosekodeoversikt from '../diagnosekodeoversikt/Diagnosekodeoversikt';
-import DokumentasjonFooter from '../dokumentasjon-footer/DokumentasjonFooter';
 import Dokumentdetaljer from '../dokumentdetaljer/Dokumentdetaljer';
 import Dokumentnavigasjon from '../dokumentnavigasjon/Dokumentnavigasjon';
 import DokumentoversiktMessages from '../dokumentoversikt-messages/DokmentoversiktMessages';
-import Innleggelsesperiodeoversikt from '../innleggelsesperiodeoversikt/Innleggelsesperiodeoversikt';
-import SignertSeksjon from '../signert-seksjon/SignertSeksjon';
 import ActionType from './actionTypes';
 import dokumentReducer from './reducer';
 import styles from './struktureringAvDokumentasjon.less';
@@ -75,6 +71,7 @@ const StruktureringAvDokumentasjon = ({
         dispatch({ type: ActionType.VELG_DOKUMENT, valgtDokument: nyttValgtDokument });
     };
 
+    console.log('lkjdhsd', dokumentoversikt);
     const åpneDokumentSomMåBehandles = ({ ustrukturerteDokumenter }: Dokumentoversikt) => {
         const sisteDokumentIndex = ustrukturerteDokumenter?.length > 0 ? ustrukturerteDokumenter.length - 1 : null;
         const førsteDokumentSomMåBehandles =
@@ -118,7 +115,6 @@ const StruktureringAvDokumentasjon = ({
         <PageContainer isLoading={isLoading} hasError={dokumentoversiktFeilet} key={StepId.Dokument} preventUnmount>
             <DokumentoversiktMessages
                 dokumentoversikt={dokumentoversikt}
-                harRegistrertDiagnosekode={!sykdomsstegStatus.manglerDiagnosekode}
                 kanNavigereVidere={nesteStegErVurdering(sykdomsstegStatus)}
                 navigerTilNesteSteg={navigerTilNesteSteg}
             />
@@ -156,18 +152,6 @@ const StruktureringAvDokumentasjon = ({
                             />
                         )}
                     />
-
-                    <Box marginTop={Margin.xxLarge}>
-                        <DokumentasjonFooter
-                            firstSectionRenderer={() => (
-                                <Innleggelsesperiodeoversikt onInnleggelsesperioderUpdated={sjekkStatus} />
-                            )}
-                            secondSectionRenderer={() => <Diagnosekodeoversikt onDiagnosekoderUpdated={sjekkStatus} />}
-                            thirdSectionRenderer={() => (
-                                <SignertSeksjon harGyldigSignatur={dokumentoversikt.harGyldigSignatur()} />
-                            )}
-                        />
-                    </Box>
                 </div>
             )}
         </PageContainer>

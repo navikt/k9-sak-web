@@ -7,7 +7,6 @@ export const finnNesteSteg = (
     {
         kanLøseAksjonspunkt,
         harUklassifiserteDokumenter,
-        manglerDiagnosekode,
         manglerVurderingAvKontinuerligTilsynOgPleie,
         manglerVurderingAvToOmsorgspersoner,
         manglerGodkjentLegeerklæring,
@@ -15,7 +14,7 @@ export const finnNesteSteg = (
     }: StatusResponse,
     isOnMount?: boolean
 ): Steg => {
-    if (harUklassifiserteDokumenter || manglerDiagnosekode || manglerGodkjentLegeerklæring) {
+    if (harUklassifiserteDokumenter || manglerGodkjentLegeerklæring) {
         return dokumentSteg;
     }
 

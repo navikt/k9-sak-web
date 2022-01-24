@@ -58,7 +58,7 @@ describe('MedisinskVilkår', () => {
         const { getByText } = renderMedisinskVilkår();
         expect(getByText('Venter...')).toBeInTheDocument();
         await waitFor(() => {
-            expect(getByText(/Sykdomsvurderingen gjelder barnet og er felles for alle parter./)).toBeInTheDocument();
+            expect(getByText(/Vurderingen gjelder pleietrengende og er felles for alle parter./)).toBeInTheDocument();
         });
     });
 

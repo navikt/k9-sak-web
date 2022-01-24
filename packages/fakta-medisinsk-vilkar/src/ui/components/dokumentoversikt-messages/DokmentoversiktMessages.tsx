@@ -8,14 +8,12 @@ import FristForDokumentasjonUtløptPanel from '../frist-for-dokumentasjon-utløp
 
 interface DokumentoversiktMessagesProps {
     dokumentoversikt: Dokumentoversikt;
-    harRegistrertDiagnosekode: boolean;
     kanNavigereVidere: boolean;
     navigerTilNesteSteg: () => void;
 }
 
 const DokumentoversiktMessages = ({
     dokumentoversikt,
-    harRegistrertDiagnosekode,
     kanNavigereVidere,
     navigerTilNesteSteg,
 }: DokumentoversiktMessagesProps): JSX.Element => {
@@ -35,13 +33,6 @@ const DokumentoversiktMessages = ({
 
     return (
         <>
-            {harRegistrertDiagnosekode === false && (
-                <Box marginBottom={Margin.large}>
-                    <Alertstripe type="advarsel">
-                        Diagnosekode mangler. Du må legge til en diagnosekode for å vurdere tilsyn og pleie.
-                    </Alertstripe>
-                </Box>
-            )}
             {visFristForDokumentasjonUtløptMelding && !readOnly && (
                 <>
                     <Box marginBottom={Margin.large}>
