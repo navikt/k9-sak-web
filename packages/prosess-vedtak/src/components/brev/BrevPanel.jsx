@@ -190,7 +190,6 @@ export const BrevPanel = props => {
 
   const brevpanel =
     skalBrukeOverstyrendeFritekstBrev || kanKunVelgeFritekstbrev(tilgjengeligeVedtaksbrev) ? fritekstbrev : automatiskbrev;
-  console.log(informasjonsbehovValues)
   return (
     <div>
       {harAlternativeMottakere && (

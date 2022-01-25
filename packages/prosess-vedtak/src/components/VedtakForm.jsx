@@ -1,10 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import { createSelector } from 'reselect';
-import { clearFields, formPropTypes } from 'redux-form';
+import { formPropTypes } from 'redux-form';
 import { Formik, Form } from 'formik';
-import { bindActionCreators } from 'redux';
 import { injectIntl } from 'react-intl';
 import { Hovedknapp } from 'nav-frontend-knapper';
 import { Column, Row } from 'nav-frontend-grid';
@@ -14,7 +11,6 @@ import { kodeverkObjektPropType } from '@fpsak-frontend/prop-types';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import { isAvslag, isDelvisInnvilget, isInnvilget } from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
 import behandlingStatusCode from '@fpsak-frontend/kodeverk/src/behandlingStatus';
-import { behandlingForm, behandlingFormValueSelector } from '@fpsak-frontend/form';
 import { dokumentdatatype } from '@k9-sak-web/konstanter';
 
 import { safeJSONParse, decodeHtmlEntity } from '@fpsak-frontend/utils';
@@ -36,8 +32,6 @@ const isVedtakSubmission = true;
 
 const kanSendesTilGodkjenning = behandlingStatusKode =>
   behandlingStatusKode === behandlingStatusCode.BEHANDLING_UTREDES;
-
-const formName = 'VedtakForm';
 
 const fieldnames = {
   SKAL_BRUKE_OVERSTYRENDE_FRITEKST_BREV: 'skalBrukeOverstyrendeFritekstBrev',
@@ -177,7 +171,6 @@ export const VedtakForm = ({
       >
         {formikProps => (
           <Form>
-            {console.log(formikProps.values)}
             <VedtakAksjonspunktPanel
               behandlingStatusKode={behandlingStatus?.kode}
               aksjonspunktKoder={aksjonspunkter.map(ap => ap.definisjon.kode)}
@@ -303,97 +296,4 @@ VedtakForm.propTypes = {
   ...formPropTypes,
 };
 
-export const buildInitialValues = createSelector(
-  [
-    ownProps => ownProps.behandlingStatus,
-    ownProps => ownProps.resultatstruktur,
-    ownProps => ownProps.aksjonspunkter,
-    ownProps => ownProps.ytelseTypeKode,
-    ownProps => ownProps.behandlingresultat,
-    ownProps => ownProps.sprakkode,
-    ownProps => ownProps.vedtakVarsel,
-    ownProps => ownProps.dokumentdata,
-    ownProps => ownProps.tilgjengeligeVedtaksbrev,
-    ownProps => ownProps.readOnly,
-  ],
-  (
-    status,
-    beregningResultat,
-    aksjonspunkter,
-    ytelseTypeKode,
-    behandlingresultat,
-    sprakkode,
-    vedtakVarsel,
-    dokumentdata,
-  ) => ({
-    KONTINUERLIG_TILSYN: dokumentdata?.KONTINUERLIG_TILSYN,
-    OMSORGEN_FOR: dokumentdata?.OMSORGEN_FOR,
-    VILKAR_FOR_TO: dokumentdata?.VILKAR_FOR_TO,
-    UNNTAK_FRA_TILSYNSORDNING: dokumentdata?.UNNTAK_FRA_TILSYNSORDNING,
-    BEREGNING_25_PROSENT_AVVIK: dokumentdata?.BEREGNING_25_PROSENT_AVVIK,
-    OVER_18_AAR: dokumentdata?.OVER_18_AAR,
-    REVURDERING_ENDRING: dokumentdata?.REVURDERING_ENDRING,
-  }),
-);
-
-const harPotensieltFlereInformasjonsbehov = informasjonsbehovVedtaksbrev => {
-  if (informasjonsbehovVedtaksbrev) {
-    const { informasjonsbehov } = informasjonsbehovVedtaksbrev;
-    return informasjonsbehov.length > 0;
-  }
-  return false;
-};
-
-const mapStateToPropsFactory = (initialState, initialOwnProps) => {
-  const onSubmit = values => {
-    const { informasjonsbehovVedtaksbrev, submitCallback } = initialOwnProps;
-    if (harPotensieltFlereInformasjonsbehov(informasjonsbehovVedtaksbrev)) {
-      const transformedValuesForFlereInformasjonsbehov = onSubmitPayloadMedEkstraInformasjon(
-        values,
-        informasjonsbehovVedtaksbrev.informasjonsbehov,
-        initialOwnProps.tilgjengeligeVedtaksbrev,
-      );
-      return submitCallback(transformedValuesForFlereInformasjonsbehov);
-    }
-    const transformedValues = onSubmitPayload(values, initialOwnProps.tilgjengeligeVedtaksbrev);
-    return submitCallback(transformedValues);
-  };
-  return (state, ownProps) => {
-    const { informasjonsbehovVedtaksbrev } = initialOwnProps;
-    const informasjonsbehovFieldNames = [];
-    if (harPotensieltFlereInformasjonsbehov(informasjonsbehovVedtaksbrev)) {
-      informasjonsbehovVedtaksbrev.informasjonsbehov.forEach(({ kode }) => {
-        informasjonsbehovFieldNames.push(kode);
-      });
-    }
-
-    return {
-      onSubmit,
-      ...behandlingFormValueSelector(
-        formName,
-        ownProps.behandlingId,
-        ownProps.behandlingVersjon,
-      )(state, ...informasjonsbehovFieldNames),
-    };
-  };
-};
-
-const mapDispatchToProps = dispatch => ({
-  ...bindActionCreators(
-    {
-      clearFields,
-    },
-    dispatch,
-  ),
-});
-
-export default connect(
-  mapStateToPropsFactory,
-  mapDispatchToProps,
-)(
-  injectIntl(
-    behandlingForm({
-      form: formName,
-    })(VedtakForm),
-  ),
-);
+export default injectIntl(VedtakForm);

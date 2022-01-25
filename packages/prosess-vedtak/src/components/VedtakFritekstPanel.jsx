@@ -23,7 +23,6 @@ const VedtakFritekstPanelImpl = ({ begrunnelse, begrunnelseFieldName, sprakkode,
   <>
     {!readOnly && (
       <Row>
-        {console.log(sprakkode)}
         <VerticalSpacer sixteenPx />
         <Column xs="12">
           <TextAreaFormik
