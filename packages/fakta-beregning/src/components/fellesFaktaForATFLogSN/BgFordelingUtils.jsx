@@ -7,7 +7,6 @@ import { formatCurrencyNoKr, getKodeverknavnFn, removeSpacesFromNumber } from '@
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { createSelector } from 'reselect';
 import { createVisningsnavnForAktivitet } from '@fpsak-frontend/fakta-beregning/src/components/ArbeidsforholdHelper';
-import { lonnsendringField } from './vurderOgFastsettATFL/forms/LonnsendringForm';
 import { erNyoppstartetFLField } from './vurderOgFastsettATFL/forms/NyoppstartetFLForm';
 import { harEtterlonnSluttpakkeField } from './vurderOgFastsettATFL/forms/VurderEtterlonnSluttpakkeForm';
 import erAndelUtenReferanseOgGrunnlagHarAndelForSammeArbeidsgiverMedReferanse from './vurderOgFastsettATFL/forms/AvsluttetArbeidsforhold';
@@ -98,13 +97,12 @@ const erNyoppstartetFrilanser = (field, values) => {
 
 // Lonnsendring
 
-const harLonnsendringUtenInntektsmelding = (values, field, faktaOmBeregning) =>
+const harLonnsendringUtenInntektsmelding = (field, faktaOmBeregning) =>
   faktaOmBeregning?.arbeidsforholdMedLønnsendringUtenIM &&
-  listeInneholderAndel(faktaOmBeregning.arbeidsforholdMedLønnsendringUtenIM, field) &&
-  values[lonnsendringField];
+  listeInneholderAndel(faktaOmBeregning.arbeidsforholdMedLønnsendringUtenIM, field);
 
-const erATUtenInntektsmeldingMedLonnsendring = (field, values, faktaOmBeregning) =>
-  erArbeidstaker(field) && harLonnsendringUtenInntektsmelding(values, field, faktaOmBeregning);
+const erATUtenInntektsmeldingMedLonnsendring = (field, faktaOmBeregning) =>
+  erArbeidstaker(field) && harLonnsendringUtenInntektsmelding(field, faktaOmBeregning);
 
 // AT og FL i samme organisasjon
 
@@ -160,7 +158,7 @@ const skalKunneOverstigeRapportertInntektOgTotaltBeregningsgrunnlag = (
   if (sokerMottarYtelseForAndel(values, andel, faktaOmBeregning, beregningsgrunnlag)) {
     return true;
   }
-  if (erATUtenInntektsmeldingMedLonnsendring(andel, values, faktaOmBeregning)) {
+  if (erATUtenInntektsmeldingMedLonnsendring(andel, faktaOmBeregning)) {
     return true;
   }
   if (andelErStatusFLOgHarATISammeOrg(andel, faktaOmBeregning)) {

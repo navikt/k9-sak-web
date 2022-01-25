@@ -8,7 +8,6 @@ import TidsbegrensetArbeidsforholdForm from './tidsbegrensetArbeidsforhold/Tidsb
 import VurderMilitaer from './vurderMilitaer/VurderMilitaer';
 import NyoppstartetFLForm from './vurderOgFastsettATFL/forms/NyoppstartetFLForm';
 import FastsettBgKunYtelsePanel from './kunYtelse/FastsettBgKunYtelse';
-import LonnsendringForm from './vurderOgFastsettATFL/forms/LonnsendringForm';
 import NyIArbeidslivetSNForm from './nyIArbeidslivet/NyIArbeidslivetSNForm';
 import VurderOgFastsettATFL from './vurderOgFastsettATFL/VurderOgFastsettATFL';
 import VurderEtterlonnSluttpakkeForm from './vurderOgFastsettATFL/forms/VurderEtterlonnSluttpakkeForm';
@@ -313,7 +312,6 @@ const buildInitialValuesForTilfeller = (props, beregningsgrunnlag) => ({
   ...TidsbegrensetArbeidsforholdForm.buildInitialValues(props.kortvarigeArbeidsforhold),
   ...VurderMilitaer.buildInitialValues(props.faktaOmBeregning),
   ...NyIArbeidslivetSNForm.buildInitialValues(beregningsgrunnlag),
-  ...LonnsendringForm.buildInitialValues(beregningsgrunnlag),
   ...NyoppstartetFLForm.buildInitialValues(beregningsgrunnlag),
   ...FastsettBgKunYtelsePanel.buildInitialValues(
     props.kunYtelse,

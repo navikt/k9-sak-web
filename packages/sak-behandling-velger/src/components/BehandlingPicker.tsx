@@ -40,8 +40,7 @@ const getBehandlingNavn = (
   return intl.formatMessage({ id: 'BehandlingPickerItemContent.BehandlingTypeNavn.Viderebehandling' });
 };
 
-const harAutomatiskBehandlingÅrsak = (behandling: BehandlingAppKontekst) =>
-  behandling.behandlingÅrsaker.some(årsak => årsak.erAutomatiskRevurdering);
+const erAutomatiskBehandlet = (behandling: BehandlingAppKontekst) => !behandling.ansvarligSaksbehandler;
 
 const renderListItems = ({
   behandlinger,
@@ -66,7 +65,7 @@ const renderListItems = ({
         return true;
       }
       if (activeFilters.includes(automatiskBehandling)) {
-        return harAutomatiskBehandlingÅrsak(behandling);
+        return erAutomatiskBehandlet(behandling);
       }
       return activeFilters.includes(behandling.type.kode);
     })
@@ -87,7 +86,7 @@ const renderListItems = ({
             behandlingsresultatTypeKode={
               behandling.behandlingsresultat ? behandling.behandlingsresultat.type.kode : undefined
             }
-            erAutomatiskRevurdering={harAutomatiskBehandlingÅrsak(behandling)}
+            erAutomatiskRevurdering={erAutomatiskBehandlet(behandling)}
             søknadsperioder={alleSøknadsperioder.find(periode => periode.id === behandling.id)?.perioder}
           />
         </NavLink>
@@ -171,7 +170,7 @@ const BehandlingPicker = ({
           label: getBehandlingNavn(behandling, getKodeverkFn, intl),
         });
       }
-      if (harAutomatiskBehandlingÅrsak(behandling) && !filterListe.includes(automatiskBehandling)) {
+      if (erAutomatiskBehandlet(behandling) && !filterListe.includes(automatiskBehandling)) {
         filterListe.push({
           value: automatiskBehandling,
           label: intl.formatMessage({ id: 'Behandlingspunkt.BehandlingFilter.AutomatiskBehandling' }),
