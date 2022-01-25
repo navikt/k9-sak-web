@@ -100,10 +100,12 @@ export const VedtakForm = ({
     return aksjonspunkter.map(aksjonspunkt => ({
       kode: aksjonspunkt.definisjon.kode,
       overstyrtMottaker: safeJSONParse(values?.[fieldnames.OVERSTYRT_MOTTAKER]),
-      fritekstbrev: {
-        brødtekst: values?.[fieldnames.BRØDTEKST],
-        overskrift: values?.[fieldnames.OVERSKRIFT],
-      },
+      fritekstbrev: values?.[fieldnames.SKAL_BRUKE_OVERSTYRENDE_FRITEKST_BREV]
+        ? {
+            brødtekst: values?.[fieldnames.BRØDTEKST],
+            overskrift: values?.[fieldnames.OVERSKRIFT],
+          }
+        : {},
       skalBrukeOverstyrendeFritekstBrev: values?.[fieldnames.SKAL_BRUKE_OVERSTYRENDE_FRITEKST_BREV],
       skalUndertrykkeBrev: values?.[fieldnames.SKAL_HINDRE_UTSENDING_AV_BREV],
       isVedtakSubmission,
