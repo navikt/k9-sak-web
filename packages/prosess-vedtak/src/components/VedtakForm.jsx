@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
@@ -79,15 +79,12 @@ export const VedtakForm = ({
   lagreDokumentdata,
   overlappendeYtelser,
 }) => {
-  const overstyrBrevRef = useRef(null);
-  const hindreUtsendingRef = useRef(null);
   const onToggleOverstyring = (e, setFieldValue) => {
     const kommendeVerdi = e.target.checked;
     setFieldValue(fieldnames.SKAL_BRUKE_OVERSTYRENDE_FRITEKST_BREV, e.target.checked);
 
     if (kommendeVerdi) {
       setFieldValue(fieldnames.SKAL_HINDRE_UTSENDING_AV_BREV, false);
-      hindreUtsendingRef.current.checked = !kommendeVerdi;
     }
   };
 
@@ -97,7 +94,6 @@ export const VedtakForm = ({
 
     if (kommendeVerdi) {
       setFieldValue(fieldnames.SKAL_BRUKE_OVERSTYRENDE_FRITEKST_BREV, false);
-      overstyrBrevRef.current.checked = !kommendeVerdi;
     }
   };
 
@@ -177,7 +173,6 @@ export const VedtakForm = ({
       >
         {formikProps => (
           <Form>
-            {console.log(formikProps)}
             <VedtakAksjonspunktPanel
               behandlingStatusKode={behandlingStatus?.kode}
               aksjonspunktKoder={aksjonspunkter.map(ap => ap.definisjon.kode)}
@@ -191,7 +186,6 @@ export const VedtakForm = ({
                     checked={formikProps.values.skalBrukeOverstyrendeFritekstBrev}
                     onChange={e => onToggleOverstyring(e, formikProps.setFieldValue)}
                     disabled={readOnly || kanKunVelgeFritekstbrev(tilgjengeligeVedtaksbrev)}
-                    ref={overstyrBrevRef}
                   >
                     {intl.formatMessage({ id: 'VedtakForm.ManuellOverstyring' })}
                   </Checkbox>
@@ -200,7 +194,6 @@ export const VedtakForm = ({
                   <Checkbox
                     onChange={e => onToggleHindreUtsending(e, formikProps.setFieldValue)}
                     disabled={readOnly}
-                    ref={hindreUtsendingRef}
                     checked={formikProps.values.skalHindreUtsendingAvBrev}
                   >
                     {intl.formatMessage({ id: 'VedtakForm.HindreUtsending' })}
