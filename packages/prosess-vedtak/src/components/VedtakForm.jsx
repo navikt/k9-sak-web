@@ -92,7 +92,7 @@ export const VedtakForm = ({
     return false;
   };
 
-  const handleSubmitPayloadMedEkstraInformasjon = values => {
+  const payloadMedEkstraInformasjon = values => {
     const begrunnelser = informasjonsbehovVedtaksbrev?.informasjonsbehov.map(({ kode }) => ({
       kode,
       begrunnelse: values[kode],
@@ -112,7 +112,7 @@ export const VedtakForm = ({
     }));
   };
 
-  const handleSubmitPayload = values =>
+  const payload = values =>
     aksjonspunkter.map(aksjonspunkt => ({
       kode: aksjonspunkt.definisjon.kode,
       begrunnelse: values?.[fieldnames.BEGRUNNELSE],
@@ -128,8 +128,8 @@ export const VedtakForm = ({
     }));
 
   const createPayload = harPotensieltFlereInformasjonsbehov(informasjonsbehovVedtaksbrev)
-    ? values => handleSubmitPayloadMedEkstraInformasjon(values)
-    : values => handleSubmitPayload(values);
+    ? values => payloadMedEkstraInformasjon(values)
+    : values => payload(values);
 
   const filterInformasjonsbehov = (formikValues, aktiverteInformasjonsbehov) => {
     const aktiveVerdier = [];
