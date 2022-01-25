@@ -3,7 +3,6 @@ import aktivitetStatuser from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import organisasjonstyper from '@fpsak-frontend/kodeverk/src/organisasjonstype';
 import faktaOmBeregningTilfelle from '@fpsak-frontend/kodeverk/src/faktaOmBeregningTilfelle';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
-import { lonnsendringField } from './vurderOgFastsettATFL/forms/LonnsendringForm';
 import { erNyoppstartetFLField } from './vurderOgFastsettATFL/forms/NyoppstartetFLForm';
 import {
   mapAndelToField,
@@ -328,7 +327,6 @@ describe('<BgFordelingUtils>', () => {
   const values = {};
   values[utledArbeidsforholdFieldName(arbeidstakerAndel3)] = true;
   values[finnFrilansFieldName()] = true;
-  values[lonnsendringField] = true;
 
   const andelValuesUtenInntektsmelding = {
     fordelingForrigeBehandling: '',

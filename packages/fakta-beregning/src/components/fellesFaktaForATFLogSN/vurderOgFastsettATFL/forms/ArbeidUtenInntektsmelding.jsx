@@ -2,26 +2,30 @@ import { removeSpacesFromNumber } from '@fpsak-frontend/utils';
 import faktaOmBeregningTilfelle from '@fpsak-frontend/kodeverk/src/faktaOmBeregningTilfelle';
 import erAndelUtenReferanseOgGrunnlagHarAndelForSammeArbeidsgiverMedReferanse from './AvsluttetArbeidsforhold';
 import { harFieldKunstigArbeidsforhold } from './KunstigArbeidsforhold';
-import { harFieldLønnsendring } from './LonnsendringForm';
+import { harLønnsendring } from './LonnsendringTekst';
 
+
+const harIkkeRelevantTilfelle = (tilfeller) => !tilfeller.map(({ kode }) => kode)
+.includes(faktaOmBeregningTilfelle.FASTSETT_MAANEDSLONN_ARBEIDSTAKER_UTEN_INNTEKTSMELDING)
+&& !tilfeller.map(({ kode }) => kode)
+  .includes(faktaOmBeregningTilfelle.VURDER_LONNSENDRING);
+
+const harIkkeSattInntekt = (inntektVerdier) => inntektVerdier === null;
 
 const transformValuesArbeidUtenInntektsmelding = (values, inntektVerdier, faktaOmBeregning, bg, fastsatteAndelsnr) => {
   const tilfeller = faktaOmBeregning.faktaOmBeregningTilfeller ? faktaOmBeregning.faktaOmBeregningTilfeller : [];
 
-  if (!tilfeller.map(({ kode }) => kode)
-    .includes(faktaOmBeregningTilfelle.FASTSETT_MAANEDSLONN_ARBEIDSTAKER_UTEN_INNTEKTSMELDING)
-    && !tilfeller.map(({ kode }) => kode)
-      .includes(faktaOmBeregningTilfelle.VURDER_LONNSENDRING)) {
+  if (harIkkeRelevantTilfelle(tilfeller)) {
     return {};
   }
-  if (inntektVerdier === null) {
+  if (harIkkeSattInntekt(inntektVerdier)) {
     return {};
   }
   const arbeidUtenInntektsmelding = inntektVerdier
     .filter((field) => !fastsatteAndelsnr.includes(field.andelsnr) && !fastsatteAndelsnr.includes(field.andelsnrRef))
     .filter((field) => erAndelUtenReferanseOgGrunnlagHarAndelForSammeArbeidsgiverMedReferanse(field, bg)
       || harFieldKunstigArbeidsforhold(field, bg)
-      || harFieldLønnsendring(field, faktaOmBeregning, values));
+      || harLønnsendring(field, faktaOmBeregning, values));
 
   arbeidUtenInntektsmelding.forEach((field) => fastsatteAndelsnr.push(field.andelsnr));
   const fastsattInntekt = arbeidUtenInntektsmelding
