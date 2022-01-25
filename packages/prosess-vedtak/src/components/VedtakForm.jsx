@@ -161,12 +161,7 @@ export const VedtakForm = ({
   const createPayload = harPotensieltFlereInformasjonsbehov(informasjonsbehovVedtaksbrev)
     ? values => handleSubmitPayloadMedEkstraInformasjon(values)
     : values => handleSubmitPayload(values);
-  console.log(createPayload);
 
-  const { FRITEKSTBREV, VEDTAKSBREV_MAL, ...informasjonsbehovArray } = dokumentdata ?? {};
-  console.log(FRITEKSTBREV);
-  console.log(VEDTAKSBREV_MAL);
-  console.log(informasjonsbehovArray);
   return (
     <>
       <Formik

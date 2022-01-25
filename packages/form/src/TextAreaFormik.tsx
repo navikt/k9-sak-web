@@ -20,23 +20,23 @@ interface TextAreaFieldProps {
   placeholder?: string;
 }
 
-const renderTextarea = ({ field, label, maxLength }) => (
-  <Textarea value={field.value} onChange={field.onChange} label={label} maxLength={maxLength} />
+const renderTextarea = ({ field: { value, name }, form, label, maxLength }) => (
+  <Textarea value={value} onChange={form.handleChange(name)} label={label} maxLength={maxLength} />
 );
 
 const TextAreaFormik = ({ name, label, validate, readOnly, ...otherProps }: TextAreaFieldProps) => (
-    <FormikField
-      name={name}
-      validate={validate}
-      component={readOnly ? ReadOnlyField : renderTextarea}
-      label={label}
-      {...otherProps}
-      readOnly={readOnly}
-      readOnlyHideEmpty
-      autoComplete="off"
-      type="textarea"
-    />
-  );
+  <FormikField
+    name={name}
+    validate={validate}
+    component={readOnly ? ReadOnlyField : renderTextarea}
+    label={label}
+    {...otherProps}
+    readOnly={readOnly}
+    readOnlyHideEmpty
+    autoComplete="off"
+    type="textarea"
+  />
+);
 
 TextAreaFormik.defaultProps = {
   validate: null,
