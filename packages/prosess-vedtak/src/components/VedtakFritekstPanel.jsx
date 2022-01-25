@@ -24,7 +24,7 @@ const VedtakFritekstPanelImpl = ({ begrunnelse, begrunnelseFieldName, sprakkode,
     {!readOnly && (
       <Row>
         <VerticalSpacer sixteenPx />
-        <Column xs="8">
+        <Column xs="12">
           <TextAreaField
             name={begrunnelseFieldName}
             label={label}
