@@ -12,7 +12,9 @@ import BehandlingFilter, { automatiskBehandling } from './BehandlingFilter';
 import styles from './behandlingPicker.less';
 import BehandlingPickerItemContent from './BehandlingPickerItemContent';
 import BehandlingSelected from './BehandlingSelected';
-import PerioderMedBehandlingsId from './PerioderMedBehandlingsId';
+import PerioderMedBehandlingsId from '@k9-sak-web/types/src/PerioderMedBehandlingsId';
+import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
+import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 
 export const sortBehandlinger = (behandlinger: BehandlingAppKontekst[]): BehandlingAppKontekst[] =>
   behandlinger.sort((b1, b2) => {
@@ -40,7 +42,8 @@ const getBehandlingNavn = (
   return intl.formatMessage({ id: 'BehandlingPickerItemContent.BehandlingTypeNavn.Viderebehandling' });
 };
 
-const erAutomatiskBehandlet = (behandling: BehandlingAppKontekst) => !behandling.ansvarligSaksbehandler;
+const erAutomatiskBehandlet = (behandling: BehandlingAppKontekst) =>
+  !behandling.ansvarligSaksbehandler && behandling.status.kode === behandlingStatus.AVSLUTTET;
 
 const renderListItems = ({
   behandlinger,
@@ -143,7 +146,7 @@ const BehandlingPicker = ({
       ),
     ).then((responses: { data: BehandlingPerioder; id: number }[]) => {
       responses.forEach(({ data, id }) => {
-        perioder.push({ id, perioder: data.perioderTilVurdering });
+        perioder.push({ id, perioder: data.perioderTilVurdering, PerioderMedÅrsak: data.perioderMedÅrsak });
       });
       setSøknadsperioder(perioder);
     });
@@ -178,6 +181,17 @@ const BehandlingPicker = ({
       }
     });
     return filterListe;
+  };
+
+  const getÅrsaksliste = (): string[] => {
+    const søknadsperiode = søknadsperioder.find(periode => periode.id === valgtBehandling.id);
+    const årsaker = [];
+    [...søknadsperiode.perioderMedÅrsak].reverse().forEach(periode =>
+      periode.årsaker.forEach(årsak => {
+        årsaker.push(getKodeverkFn({ kode: årsak, kodeverk: kodeverkTyper.BEHANDLING_AARSAK }).navn);
+      }),
+    );
+    return årsaker;
   };
 
   return (
@@ -236,9 +250,7 @@ const BehandlingPicker = ({
             behandlingsresultatTypeKode={
               valgtBehandling.behandlingsresultat ? valgtBehandling.behandlingsresultat.type.kode : undefined
             }
-            behandlingsårsaker={valgtBehandling.behandlingÅrsaker.map(
-              årsak => getKodeverkFn(årsak.behandlingArsakType).navn,
-            )}
+            behandlingsårsaker={getÅrsaksliste()}
             behandlingTypeNavn={getBehandlingNavn(valgtBehandling, getKodeverkFn, intl)}
             behandlingTypeKode={valgtBehandling.type.kode}
             søknadsperioder={søknadsperioder.find(periode => periode.id === valgtBehandling.id)?.perioder}
