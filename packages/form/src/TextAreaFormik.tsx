@@ -1,8 +1,10 @@
-import { Textarea } from '@navikt/ds-react';
 import React from 'react';
 import { Field as FormikField } from 'formik';
+import { Textarea } from '@navikt/ds-react';
+import { EtikettFokus } from 'nav-frontend-etiketter';
 import LabelType from './LabelType';
 import ReadOnlyField from './ReadOnlyField';
+import styles from './textAreaField.less';
 
 interface TextAreaFieldProps {
   name: string;
@@ -20,8 +22,19 @@ interface TextAreaFieldProps {
   placeholder?: string;
 }
 
-const renderTextarea = ({ field: { value, name }, form, label, maxLength }) => (
-  <Textarea value={value} onChange={form.handleChange(name)} label={label} maxLength={maxLength} />
+const renderTextarea = ({ field: { value, name }, form, label, maxLength, badges }) => (
+  <div className={badges ? styles.textAreaFieldWithBadges : null}>
+    {badges && (
+      <div className={styles.etikettWrapper}>
+        {badges.map(({ text, type, title }) => (
+          <EtikettFokus key={text} type={type} title={title}>
+            <span>{text}</span>
+          </EtikettFokus>
+        ))}
+      </div>
+    )}
+    <Textarea value={value} onChange={form.handleChange(name)} label={label} maxLength={maxLength} />
+  </div>
 );
 
 const TextAreaFormik = ({ name, label, validate, readOnly, ...otherProps }: TextAreaFieldProps) => (

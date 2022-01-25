@@ -4,28 +4,29 @@ import { Column, Row } from 'nav-frontend-grid';
 import { Undertekst } from 'nav-frontend-typografi';
 
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { TextAreaField } from '@fpsak-frontend/form';
 import {
   decodeHtmlEntity,
-  getLanguageCodeFromSprakkode,
+  getLanguageFromSprakkode,
   hasValidText,
   maxLength,
   minLength,
   requiredIfNotPristine,
 } from '@fpsak-frontend/utils';
+import TextAreaFormik from '../../../form/src/TextAreaFormik';
 
 import styles from './vedtakAvslagPanel.less';
 
 const maxLength100000 = maxLength(100000);
 const minLength3 = minLength(3);
 
-const VedtakFritekstPanelImpl = ({ begrunnelse, begrunnelseFieldName, sprakkode, readOnly, label }) => (
+const VedtakFritekstPanelImpl = ({ begrunnelse, begrunnelseFieldName, sprakkode, readOnly, label, intl }) => (
   <>
     {!readOnly && (
       <Row>
+        {console.log(sprakkode)}
         <VerticalSpacer sixteenPx />
         <Column xs="12">
-          <TextAreaField
+          <TextAreaFormik
             name={begrunnelseFieldName}
             label={label}
             validate={[requiredIfNotPristine, minLength3, maxLength100000, hasValidText]}
@@ -34,8 +35,8 @@ const VedtakFritekstPanelImpl = ({ begrunnelse, begrunnelseFieldName, sprakkode,
             badges={[
               {
                 type: 'fokus',
-                textId: getLanguageCodeFromSprakkode(sprakkode),
-                title: 'Malform.Beskrivelse',
+                text: getLanguageFromSprakkode(sprakkode),
+                title: intl.formatMessage({ id: 'Malform.Beskrivelse' }),
               },
             ]}
           />
@@ -64,5 +65,6 @@ VedtakFritekstPanelImpl.propTypes = {
   sprakkode: PropTypes.shape().isRequired,
   readOnly: PropTypes.bool.isRequired,
   label: PropTypes.string.isRequired,
+  intl: PropTypes.shape(),
 };
 export default VedtakFritekstPanelImpl;

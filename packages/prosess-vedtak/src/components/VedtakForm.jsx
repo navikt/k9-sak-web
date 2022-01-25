@@ -68,13 +68,6 @@ export const VedtakForm = ({
   informasjonsbehovVedtaksbrev,
   dokumentdata,
   submitCallback,
-  KONTINUERLIG_TILSYN,
-  OMSORGEN_FOR,
-  VILKAR_FOR_TO,
-  UNNTAK_FRA_TILSYNSORDNING,
-  BEREGNING_25_PROSENT_AVVIK,
-  OVER_18_AAR,
-  REVURDERING_ENDRING,
   fritekstdokumenter,
   lagreDokumentdata,
   overlappendeYtelser,
@@ -95,16 +88,6 @@ export const VedtakForm = ({
     if (kommendeVerdi) {
       setFieldValue(fieldnames.SKAL_BRUKE_OVERSTYRENDE_FRITEKST_BREV, false);
     }
-  };
-
-  const informasjonsbehovValues = {
-    KONTINUERLIG_TILSYN,
-    OMSORGEN_FOR,
-    VILKAR_FOR_TO,
-    UNNTAK_FRA_TILSYNSORDNING,
-    BEREGNING_25_PROSENT_AVVIK,
-    OVER_18_AAR,
-    REVURDERING_ENDRING,
   };
 
   const harPotensieltFlereInformasjonsbehov = infobehovVedtaksbrev => {
@@ -154,25 +137,47 @@ export const VedtakForm = ({
     ? values => handleSubmitPayloadMedEkstraInformasjon(values)
     : values => handleSubmitPayload(values);
 
+  const filterInformasjonsbehov = (formikValues, aktiverteInformasjonsbehov) => {
+    const aktiveVerdier = [];
+    const keys = Object.keys(formikValues);
+
+    keys.forEach(key => {
+      if (aktiverteInformasjonsbehov.some(informasjonsbehov => informasjonsbehov.kode === key))
+        aktiveVerdier.push({ [key]: formikValues[key] });
+    });
+    return aktiveVerdier;
+  };
+
+  const aktiverteInformasjonsbehov =
+    (informasjonsbehovVedtaksbrev?.informasjonsbehov || []).filter(({ type }) => type === 'FRITEKST') ?? [];
+  const mellomlagredeInformasjonsbehov = aktiverteInformasjonsbehov.map(informasjonsbehov => ({
+    [informasjonsbehov.kode]: dokumentdata?.[informasjonsbehov.kode] || '',
+  }));
   return (
     <>
       <Formik
-        initialValues={{
-          [fieldnames.SKAL_BRUKE_OVERSTYRENDE_FRITEKST_BREV]:
-            kanKunVelgeFritekstbrev(tilgjengeligeVedtaksbrev) ||
-            harMellomlagretFritekstbrev(dokumentdata, vedtakVarsel),
-          [fieldnames.SKAL_HINDRE_UTSENDING_AV_BREV]: readOnly && harOverstyrtMedIngenBrev(dokumentdata, vedtakVarsel),
-          [fieldnames.OVERSKRIFT]: decodeHtmlEntity(dokumentdata?.[dokumentdatatype.FRITEKSTBREV]?.overskrift) || '',
-          [fieldnames.BRØDTEKST]: decodeHtmlEntity(dokumentdata?.[dokumentdatatype.FRITEKSTBREV]?.brødtekst) || '',
-          [fieldnames.OVERSTYRT_MOTTAKER]: JSON.stringify(dokumentdata?.[dokumentdatatype.OVERSTYRT_MOTTAKER]),
-          [fieldnames.BEGRUNNELSE]: dokumentdata?.[dokumentdatatype.BEREGNING_FRITEKST],
-        }}
+        initialValues={Object.assign(
+          {},
+          {
+            [fieldnames.SKAL_BRUKE_OVERSTYRENDE_FRITEKST_BREV]:
+              kanKunVelgeFritekstbrev(tilgjengeligeVedtaksbrev) ||
+              harMellomlagretFritekstbrev(dokumentdata, vedtakVarsel),
+            [fieldnames.SKAL_HINDRE_UTSENDING_AV_BREV]:
+              readOnly && harOverstyrtMedIngenBrev(dokumentdata, vedtakVarsel),
+            [fieldnames.OVERSKRIFT]: decodeHtmlEntity(dokumentdata?.[dokumentdatatype.FRITEKSTBREV]?.overskrift) || '',
+            [fieldnames.BRØDTEKST]: decodeHtmlEntity(dokumentdata?.[dokumentdatatype.FRITEKSTBREV]?.brødtekst) || '',
+            [fieldnames.OVERSTYRT_MOTTAKER]: JSON.stringify(dokumentdata?.[dokumentdatatype.OVERSTYRT_MOTTAKER]),
+            [fieldnames.BEGRUNNELSE]: dokumentdata?.[dokumentdatatype.BEREGNING_FRITEKST],
+          },
+          ...mellomlagredeInformasjonsbehov,
+        )}
         onSubmit={values => {
           submitCallback(createPayload(values));
         }}
       >
         {formikProps => (
           <Form>
+            {console.log(formikProps.values)}
             <VedtakAksjonspunktPanel
               behandlingStatusKode={behandlingStatus?.kode}
               aksjonspunktKoder={aksjonspunkter.map(ap => ap.definisjon.kode)}
@@ -186,6 +191,7 @@ export const VedtakForm = ({
                     checked={formikProps.values.skalBrukeOverstyrendeFritekstBrev}
                     onChange={e => onToggleOverstyring(e, formikProps.setFieldValue)}
                     disabled={readOnly || kanKunVelgeFritekstbrev(tilgjengeligeVedtaksbrev)}
+                    value={fieldnames.SKAL_BRUKE_OVERSTYRENDE_FRITEKST_BREV}
                   >
                     {intl.formatMessage({ id: 'VedtakForm.ManuellOverstyring' })}
                   </Checkbox>
@@ -195,6 +201,7 @@ export const VedtakForm = ({
                     onChange={e => onToggleHindreUtsending(e, formikProps.setFieldValue)}
                     disabled={readOnly}
                     checked={formikProps.values.skalHindreUtsendingAvBrev}
+                    value={fieldnames.SKAL_HINDRE_UTSENDING_AV_BREV}
                   >
                     {intl.formatMessage({ id: 'VedtakForm.HindreUtsending' })}
                   </Checkbox>
@@ -231,7 +238,7 @@ export const VedtakForm = ({
                 arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
                 tilgjengeligeVedtaksbrev={tilgjengeligeVedtaksbrev}
                 informasjonsbehovVedtaksbrev={informasjonsbehovVedtaksbrev}
-                informasjonsbehovValues={informasjonsbehovValues}
+                informasjonsbehovValues={filterInformasjonsbehov(formikProps.values, aktiverteInformasjonsbehov)}
                 skalBrukeOverstyrendeFritekstBrev={formikProps.values.skalBrukeOverstyrendeFritekstBrev}
                 begrunnelse={formikProps.values.begrunnelse}
                 previewCallback={previewCallback}
@@ -292,13 +299,6 @@ VedtakForm.propTypes = {
     informasjonsbehov: PropTypes.arrayOf(PropTypes.shape({ type: PropTypes.string })),
   }),
   dokumentdata: PropTypes.shape(),
-  KONTINUERLIG_TILSYN: PropTypes.string,
-  OMSORGEN_FOR: PropTypes.string,
-  VILKAR_FOR_TO: PropTypes.string,
-  UNNTAK_FRA_TILSYNSORDNING: PropTypes.string,
-  BEREGNING_25_PROSENT_AVVIK: PropTypes.string,
-  OVER_18_AAR: PropTypes.string,
-  REVURDERING_ENDRING: PropTypes.string,
   fritekstdokumenter: PropTypes.arrayOf(PropTypes.shape()),
   ...formPropTypes,
 };
