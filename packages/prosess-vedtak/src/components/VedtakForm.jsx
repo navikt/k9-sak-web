@@ -97,37 +97,41 @@ export const VedtakForm = ({
       kode,
       begrunnelse: values[kode],
     }));
-    return aksjonspunkter.map(aksjonspunkt => ({
-      kode: aksjonspunkt.definisjon.kode,
-      overstyrtMottaker: safeJSONParse(values?.[fieldnames.OVERSTYRT_MOTTAKER]),
-      fritekstbrev: values?.[fieldnames.SKAL_BRUKE_OVERSTYRENDE_FRITEKST_BREV]
-        ? {
-            brødtekst: values?.[fieldnames.BRØDTEKST],
-            overskrift: values?.[fieldnames.OVERSKRIFT],
-          }
-        : {},
-      skalBrukeOverstyrendeFritekstBrev: values?.[fieldnames.SKAL_BRUKE_OVERSTYRENDE_FRITEKST_BREV],
-      skalUndertrykkeBrev: values?.[fieldnames.SKAL_HINDRE_UTSENDING_AV_BREV],
-      isVedtakSubmission,
-      begrunnelserMedInformasjonsbehov: begrunnelser,
-      tilgjengeligeVedtaksbrev,
-    }));
+    return aksjonspunkter
+      .filter(ap => ap.kanLoses)
+      .map(aksjonspunkt => ({
+        kode: aksjonspunkt.definisjon.kode,
+        overstyrtMottaker: safeJSONParse(values?.[fieldnames.OVERSTYRT_MOTTAKER]),
+        fritekstbrev: values?.[fieldnames.SKAL_BRUKE_OVERSTYRENDE_FRITEKST_BREV]
+          ? {
+              brødtekst: values?.[fieldnames.BRØDTEKST],
+              overskrift: values?.[fieldnames.OVERSKRIFT],
+            }
+          : {},
+        skalBrukeOverstyrendeFritekstBrev: values?.[fieldnames.SKAL_BRUKE_OVERSTYRENDE_FRITEKST_BREV],
+        skalUndertrykkeBrev: values?.[fieldnames.SKAL_HINDRE_UTSENDING_AV_BREV],
+        isVedtakSubmission,
+        begrunnelserMedInformasjonsbehov: begrunnelser,
+        tilgjengeligeVedtaksbrev,
+      }));
   };
 
   const payload = values =>
-    aksjonspunkter.map(aksjonspunkt => ({
-      kode: aksjonspunkt.definisjon.kode,
-      begrunnelse: values?.[fieldnames.BEGRUNNELSE],
-      overstyrtMottaker: safeJSONParse(values?.[fieldnames.OVERSTYRT_MOTTAKER]),
-      fritekstbrev: {
-        brødtekst: values?.[fieldnames.BRØDTEKST],
-        overskrift: values?.[fieldnames.OVERSKRIFT],
-      },
-      skalBrukeOverstyrendeFritekstBrev: values?.[fieldnames.SKAL_BRUKE_OVERSTYRENDE_FRITEKST_BREV],
-      skalUndertrykkeBrev: values?.[fieldnames.SKAL_HINDRE_UTSENDING_AV_BREV],
-      isVedtakSubmission,
-      tilgjengeligeVedtaksbrev,
-    }));
+    aksjonspunkter
+      .filter(ap => ap.kanLoses)
+      .map(aksjonspunkt => ({
+        kode: aksjonspunkt.definisjon.kode,
+        begrunnelse: values?.[fieldnames.BEGRUNNELSE],
+        overstyrtMottaker: safeJSONParse(values?.[fieldnames.OVERSTYRT_MOTTAKER]),
+        fritekstbrev: {
+          brødtekst: values?.[fieldnames.BRØDTEKST],
+          overskrift: values?.[fieldnames.OVERSKRIFT],
+        },
+        skalBrukeOverstyrendeFritekstBrev: values?.[fieldnames.SKAL_BRUKE_OVERSTYRENDE_FRITEKST_BREV],
+        skalUndertrykkeBrev: values?.[fieldnames.SKAL_HINDRE_UTSENDING_AV_BREV],
+        isVedtakSubmission,
+        tilgjengeligeVedtaksbrev,
+      }));
 
   const createPayload = harPotensieltFlereInformasjonsbehov(informasjonsbehovVedtaksbrev)
     ? values => payloadMedEkstraInformasjon(values)
