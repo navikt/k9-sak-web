@@ -67,10 +67,6 @@ export const VedtakForm = ({
   tilgjengeligeVedtaksbrev,
   informasjonsbehovVedtaksbrev,
   dokumentdata,
-  brødtekst,
-  overskrift,
-  begrunnelse,
-  overstyrtMottaker,
   submitCallback,
   KONTINUERLIG_TILSYN,
   OMSORGEN_FOR,
@@ -181,6 +177,7 @@ export const VedtakForm = ({
       >
         {formikProps => (
           <Form>
+            {console.log(formikProps)}
             <VedtakAksjonspunktPanel
               behandlingStatusKode={behandlingStatus?.kode}
               aksjonspunktKoder={aksjonspunkter.map(ap => ap.definisjon.kode)}
@@ -191,7 +188,7 @@ export const VedtakForm = ({
               <CheckboxGroup className={styles.knappContainer} size="small">
                 {kanHaFritekstbrev(tilgjengeligeVedtaksbrev) && (
                   <Checkbox
-                    value={formikProps.values.skalBrukeOverstyrendeFritekstBrev}
+                    checked={formikProps.values.skalBrukeOverstyrendeFritekstBrev}
                     onChange={e => onToggleOverstyring(e, formikProps.setFieldValue)}
                     disabled={readOnly || kanKunVelgeFritekstbrev(tilgjengeligeVedtaksbrev)}
                     ref={overstyrBrevRef}
@@ -202,9 +199,9 @@ export const VedtakForm = ({
                 {(ytelseTypeKode === fagsakYtelseType.FRISINN || ytelseTypeKode === fagsakYtelseType.PLEIEPENGER) && (
                   <Checkbox
                     onChange={e => onToggleHindreUtsending(e, formikProps.setFieldValue)}
-                    value={formikProps.values.skalHindreUtsendingAvBrev}
                     disabled={readOnly}
                     ref={hindreUtsendingRef}
+                    checked={formikProps.values.skalHindreUtsendingAvBrev}
                   >
                     {intl.formatMessage({ id: 'VedtakForm.HindreUtsending' })}
                   </Checkbox>
@@ -243,11 +240,11 @@ export const VedtakForm = ({
                 informasjonsbehovVedtaksbrev={informasjonsbehovVedtaksbrev}
                 informasjonsbehovValues={informasjonsbehovValues}
                 skalBrukeOverstyrendeFritekstBrev={formikProps.values.skalBrukeOverstyrendeFritekstBrev}
-                begrunnelse={begrunnelse}
+                begrunnelse={formikProps.values.begrunnelse}
                 previewCallback={previewCallback}
-                brødtekst={brødtekst}
-                overskrift={overskrift}
-                overstyrtMottaker={overstyrtMottaker}
+                brødtekst={formikProps.values.brødtekst}
+                overskrift={formikProps.values.overskrift}
+                overstyrtMottaker={formikProps.values.overstyrtMottaker}
                 formProps={formikProps}
                 dokumentdata={dokumentdata}
                 lagreDokumentdata={lagreDokumentdata}
