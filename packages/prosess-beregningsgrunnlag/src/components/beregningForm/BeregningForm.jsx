@@ -195,10 +195,16 @@ const sjekkOmOmsorgspengegrunnlagOgSettAvviksvurdering = beregningsgrunnlag => {
   return true;
 };
 
-const sjekkErMidlertidigInaktiv = beregningsgrunnlag => 
+const sjekkErMidlertidigInaktiv = beregningsgrunnlag =>
   beregningsgrunnlag.aktivitetStatus.some(a => a.kode === aktivitetStatus.MIDLERTIDIG_INAKTIV);
 
-// ------------------------------------------------------------------------------------------ //
+const sjekkLonnsendringSisteTreMan = (beregningsgrunnlag) =>
+    beregningsgrunnlag.faktaOmBeregning
+    && beregningsgrunnlag.faktaOmBeregning.saksopplysninger
+    && beregningsgrunnlag.faktaOmBeregning.saksopplysninger.arbeidsforholdMedLønnsendring
+    && beregningsgrunnlag.faktaOmBeregning.saksopplysninger.arbeidsforholdMedLønnsendring.length > 0;
+
+// ----------------------------------------------------- ------------------------------------- //
 // Component : BeregningFormImpl
 // ------------------------------------------------------------------------------------------ //
 /**
@@ -232,6 +238,7 @@ export const BeregningFormImpl = ({
   const skalViseBeregningsresultat = !harFrisinngrunnlag(beregningsgrunnlag);
   const skalViseAvviksprosent = sjekkOmOmsorgspengegrunnlagOgSettAvviksvurdering(beregningsgrunnlag);
   const erMidlertidigInaktiv = sjekkErMidlertidigInaktiv(beregningsgrunnlag);
+  const lonnsendringSisteTreMan = sjekkLonnsendringSisteTreMan(beregningsgrunnlag);
   return (
     <div style={{ display: erAktiv ? 'block' : 'none' }}>
       {avklaringsbehov && (
@@ -251,6 +258,7 @@ export const BeregningFormImpl = ({
             alleKodeverk={alleKodeverk}
             aktivitetStatusList={aktivitetStatusList}
             skjeringstidspunktDato={skjaeringstidspunktBeregning}
+            lonnsendringSisteTreMan={lonnsendringSisteTreMan}
           />
           {relevanteStatuser.skalViseBeregningsgrunnlag && (
             <>
