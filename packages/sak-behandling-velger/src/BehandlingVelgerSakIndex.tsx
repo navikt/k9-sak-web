@@ -1,11 +1,9 @@
+import { BehandlingAppKontekst, Kodeverk, KodeverkMedNavn } from '@k9-sak-web/types';
+import { Location } from 'history';
 import React from 'react';
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
-import { Location } from 'history';
-
-import { BehandlingAppKontekst, KodeverkMedNavn, Kodeverk } from '@k9-sak-web/types';
-
-import BehandlingPicker from './components/BehandlingPicker';
 import messages from '../i18n/nb_NO.json';
+import BehandlingPicker from './components/BehandlingPicker';
 
 const cache = createIntlCache();
 
@@ -22,8 +20,6 @@ interface OwnProps {
   getBehandlingLocation: (behandlingId: number) => Location;
   noExistingBehandlinger: boolean;
   behandlingId?: number;
-  showAll: boolean;
-  toggleShowAll: () => void;
   getKodeverkFn: (kodeverk: Kodeverk, behandlingType?: Kodeverk) => KodeverkMedNavn;
 }
 
@@ -31,20 +27,16 @@ const BehandlingVelgerSakIndex = ({
   behandlinger,
   getBehandlingLocation,
   noExistingBehandlinger,
-  behandlingId,
-  showAll,
-  toggleShowAll,
   getKodeverkFn,
+  behandlingId,
 }: OwnProps) => (
   <RawIntlProvider value={intl}>
     <BehandlingPicker
       behandlinger={behandlinger}
       getBehandlingLocation={getBehandlingLocation}
       noExistingBehandlinger={noExistingBehandlinger}
-      behandlingId={behandlingId}
-      showAll={showAll}
-      toggleShowAll={toggleShowAll}
       getKodeverkFn={getKodeverkFn}
+      behandlingId={behandlingId}
     />
   </RawIntlProvider>
 );
