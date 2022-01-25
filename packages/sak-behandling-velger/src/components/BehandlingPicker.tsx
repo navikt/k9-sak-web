@@ -191,7 +191,12 @@ const BehandlingPicker = ({
     const årsaker = [];
     [...søknadsperiode.perioderMedÅrsak].reverse().forEach(periode =>
       periode.årsaker.forEach(årsak => {
-        årsaker.push(getKodeverkFn({ kode: årsak, kodeverk: kodeverkTyper.BEHANDLING_AARSAK }).navn);
+        // TODO: try/catch skal ikke være nødvendig etter at backend har lagt inn alle behandlingsårsaker
+        try {
+          årsaker.push(getKodeverkFn({ kode: årsak, kodeverk: kodeverkTyper.BEHANDLING_AARSAK }).navn);
+        } catch {
+          årsaker.push(årsak);
+        }
       }),
     );
     return årsaker;
