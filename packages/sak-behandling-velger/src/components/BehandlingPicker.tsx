@@ -31,12 +31,12 @@ export const sortBehandlinger = (behandlinger: BehandlingAppKontekst[]): Behandl
   });
 
 const getBehandlingNavn = (
-  behandling,
+  behandling: BehandlingAppKontekst,
   getKodeverkFn: (kodeverk: Kodeverk, behandlingType?: Kodeverk) => KodeverkMedNavn,
   intl: IntlShape,
 ) => {
   if (behandling.type.kode === behandlingType.FORSTEGANGSSOKNAD || behandling.type.kode === behandlingType.KLAGE) {
-    return getKodeverkFn(behandling.type).navn;
+    return getKodeverkFn(behandling.type, behandling.type).navn;
   }
 
   return intl.formatMessage({ id: 'BehandlingPickerItemContent.BehandlingTypeNavn.Viderebehandling' });
