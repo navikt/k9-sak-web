@@ -8,13 +8,13 @@ import { Normaltekst, Undertittel } from 'nav-frontend-typografi';
 import React, { ReactElement, useEffect, useRef, useState } from 'react';
 import { FormattedMessage, IntlShape, useIntl } from 'react-intl';
 import { NavLink } from 'react-router-dom';
+import PerioderMedBehandlingsId from '@k9-sak-web/types/src/PerioderMedBehandlingsId';
+import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
+import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import BehandlingFilter, { automatiskBehandling } from './BehandlingFilter';
 import styles from './behandlingPicker.less';
 import BehandlingPickerItemContent from './BehandlingPickerItemContent';
 import BehandlingSelected from './BehandlingSelected';
-import PerioderMedBehandlingsId from '@k9-sak-web/types/src/PerioderMedBehandlingsId';
-import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
-import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 
 export const sortBehandlinger = (behandlinger: BehandlingAppKontekst[]): BehandlingAppKontekst[] =>
   behandlinger.sort((b1, b2) => {
@@ -146,7 +146,7 @@ const BehandlingPicker = ({
       ),
     ).then((responses: { data: BehandlingPerioder; id: number }[]) => {
       responses.forEach(({ data, id }) => {
-        perioder.push({ id, perioder: data.perioderTilVurdering, PerioderMedÅrsak: data.perioderMedÅrsak });
+        perioder.push({ id, perioder: data.perioderTilVurdering, perioderMedÅrsak: data.perioderMedÅrsak });
       });
       setSøknadsperioder(perioder);
     });
@@ -185,6 +185,9 @@ const BehandlingPicker = ({
 
   const getÅrsaksliste = (): string[] => {
     const søknadsperiode = søknadsperioder.find(periode => periode.id === valgtBehandling.id);
+    if (!søknadsperiode) {
+      return [];
+    }
     const årsaker = [];
     [...søknadsperiode.perioderMedÅrsak].reverse().forEach(periode =>
       periode.årsaker.forEach(årsak => {
