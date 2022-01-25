@@ -19,9 +19,6 @@ export const MANUELL_OVERSTYRING_FIELD = 'manuellOverstyringBeregningAktiviteter
 
 const { AVKLAR_AKTIVITETER, OVERSTYRING_AV_BEREGNINGSAKTIVITETER } = avklaringsbehovCodes;
 
-const findAvklaringsbehovMedBegrunnelse = (avklaringsbehov, kode) =>
-  avklaringsbehov.filter(ap => ap.definisjon.kode === kode && ap.begrunnelse !== null)[0];
-
 const buildInitialValues = (
   avklaringsbehov,
   avklarAktiviteter,
@@ -38,19 +35,12 @@ const buildInitialValues = (
       harAvklarAksjonspunkt,
     );
   }
-  const overstyrAksjonspunktMedBegrunnelse = findAvklaringsbehovMedBegrunnelse(
-    avklaringsbehov,
-    OVERSTYRING_AV_BEREGNINGSAKTIVITETER,
-  );
-  const aksjonspunktMedBegrunnelse = findAvklaringsbehovMedBegrunnelse(avklaringsbehov, AVKLAR_AKTIVITETER);
-  const begrunnelse = erOverstyrt ? overstyrAksjonspunktMedBegrunnelse : aksjonspunktMedBegrunnelse;
   return {
     erTilVurdering: vilkårsperiode.vurdersIBehandlingen,
     [MANUELL_OVERSTYRING_FIELD]: erOverstyrt,
     avklaringsbehov,
     avklarAktiviteter,
     ...initialValues,
-    ...FaktaBegrunnelseTextField.buildInitialValues(begrunnelse, BEGRUNNELSE_AVKLARE_AKTIVITETER_NAME),
     aktivtBeregningsgrunnlagIndex,
   };
 };

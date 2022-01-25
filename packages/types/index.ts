@@ -59,3 +59,4 @@ export type { default as SaksbehandlereInfo } from './src/saksbehandlereInfo';
 export type { default as Arbeidsgiver } from './src/arbeidsgiverTsType';
 export * from './src/overlappendePeriode';
 export * from './src/kodeverk';
+export type { default as BehandlingPerioder } from './src/behandlingPerioderType';
