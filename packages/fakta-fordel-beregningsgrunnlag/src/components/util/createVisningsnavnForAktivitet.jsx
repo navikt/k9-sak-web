@@ -1,3 +1,5 @@
+import { DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils';
+
 const getEndCharFromId = id => (id ? `...${id.substring(id.length - 4, id.length)}` : '');
 
 const createVisningsnavnForAktivitet = (aktivitet, getKodeverknavn, arbeidsgiverOpplysningerPerId) => {
