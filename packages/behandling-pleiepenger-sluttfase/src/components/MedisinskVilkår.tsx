@@ -32,7 +32,7 @@ const initializeMedisinskVilkår = (
 };
 
 const medisinskVilkårAppID = 'medisinskVilkårApp';
-export default ({ behandling: { links, uuid }, submitCallback, aksjonspunkter, readOnly, saksbehandlere, erFagytelsetypeLivetsSluttfase}) => {
+export default ({ behandling: { links, uuid }, submitCallback, aksjonspunkter, readOnly, saksbehandlere, erFagytelsetypeLivetsSluttfase }) => {
   const { addErrorMessage } = useRestApiErrorDispatcher();
   const httpErrorHandlerCaller = (status: number, locationHeader?: string) =>
     httpErrorHandler(status, addErrorMessage, locationHeader);
@@ -62,6 +62,7 @@ export default ({ behandling: { links, uuid }, submitCallback, aksjonspunkter, r
           findEndpointsForMicrofrontend(links, [
             { rel: 'sykdom-vurdering-oversikt-ktp', desiredName: 'vurderingsoversiktKontinuerligTilsynOgPleie' },
             { rel: 'sykdom-vurdering-oversikt-too', desiredName: 'vurderingsoversiktBehovForToOmsorgspersoner' },
+            { rel: 'sykdom-vurdering-oversikt-slu', desiredName: 'vurderingsoversiktLivetsSluttfase' },
             { rel: 'sykdom-vurdering-direkte', desiredName: 'hentVurdering' },
             { rel: 'sykdom-vurdering-opprettelse', desiredName: 'opprettVurdering' },
             { rel: 'sykdom-vurdering-endring', desiredName: 'endreVurdering' },
