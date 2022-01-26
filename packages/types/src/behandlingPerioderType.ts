@@ -1,4 +1,5 @@
 import Periode from './periodeTsType';
+import PerioderMedAarsak from './PerioderMedAarsak';
 export default interface BehandlingPerioderType {
   perioderTilVurdering: Periode[];
   perioderMedÅrsak: PerioderMedAarsak[];
@@ -17,9 +18,4 @@ interface SoktePerioder {
   type: null;
   arbeidsgiver: null;
   arbeidsforholdRef: null;
-}
-
-interface PerioderMedAarsak {
-  periode: Periode;
-  årsaker: string[];
 }
