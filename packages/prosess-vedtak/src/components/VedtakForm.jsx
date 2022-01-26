@@ -5,7 +5,7 @@ import { Formik, Form } from 'formik';
 import { injectIntl } from 'react-intl';
 import { Hovedknapp } from 'nav-frontend-knapper';
 import { Column, Row } from 'nav-frontend-grid';
-import { Checkbox, CheckboxGroup } from '@navikt/ds-react';
+import { Checkbox } from '@navikt/ds-react';
 
 import { kodeverkObjektPropType } from '@fpsak-frontend/prop-types';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
@@ -184,13 +184,14 @@ export const VedtakForm = ({
               overlappendeYtelser={overlappendeYtelser}
               alleKodeverk={alleKodeverk}
             >
-              <CheckboxGroup className={styles.knappContainer} size="small">
+              <div className={styles.knappContainer}>
                 {kanHaFritekstbrev(tilgjengeligeVedtaksbrev) && (
                   <Checkbox
                     checked={formikProps.values.skalBrukeOverstyrendeFritekstBrev}
                     onChange={e => onToggleOverstyring(e, formikProps.setFieldValue)}
                     disabled={readOnly || kanKunVelgeFritekstbrev(tilgjengeligeVedtaksbrev)}
                     value={fieldnames.SKAL_BRUKE_OVERSTYRENDE_FRITEKST_BREV}
+                    size="small"
                   >
                     {intl.formatMessage({ id: 'VedtakForm.ManuellOverstyring' })}
                   </Checkbox>
@@ -201,11 +202,12 @@ export const VedtakForm = ({
                     disabled={readOnly}
                     checked={formikProps.values.skalHindreUtsendingAvBrev}
                     value={fieldnames.SKAL_HINDRE_UTSENDING_AV_BREV}
+                    size="small"
                   >
                     {intl.formatMessage({ id: 'VedtakForm.HindreUtsending' })}
                   </Checkbox>
                 )}
-              </CheckboxGroup>
+              </div>
 
               {fritekstdokumenter?.length > 0 && <UstrukturerteDokumenter fritekstdokumenter={fritekstdokumenter} />}
 
