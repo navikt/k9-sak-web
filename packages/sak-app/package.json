@@ -47,7 +47,7 @@
     "@k9-sak-web/sak-infosider": "1.0.0",
     "@k9-sak-web/sak-meldinger": "1.0.0",
     "@k9-sak-web/types": "1.0.0",
-    "@sentry/browser": "^5.30.0",
+    "@sentry/browser": "^6.17.2",
     "axios": "0.21.4",
     "classnames": "^2.3.1",
     "history": "^4.10.1",
