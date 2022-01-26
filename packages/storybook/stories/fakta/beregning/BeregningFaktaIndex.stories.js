@@ -478,6 +478,8 @@ export const FrilansOgArbeidsforholdMedLønnendringOgNyoppstartet = () => {
     andelsnr: standardFaktaArbeidstakerAndel.andelsnr,
     aktivitetStatus: standardFaktaArbeidstakerAndel.aktivitetStatus,
     inntektskategori: standardFaktaArbeidstakerAndel.inntektskategori,
+    arbeidsforhold: standardFaktaArbeidstakerAndel.arbeidsforhold,
+    lonnsendringIBeregningsperioden: true
   };
   const frilansBeregningsgrunnlagAndel = {
     andelsnr: standardFaktaFrilansAndel.andelsnr,

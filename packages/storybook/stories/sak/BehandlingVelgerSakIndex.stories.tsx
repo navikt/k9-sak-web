@@ -268,8 +268,7 @@ export default {
   decorators: [withKnobs, withReduxAndRouterProvider],
 };
 
-export const visPanelForValgAvBehandlinger = () => {
-  return (
+export const visPanelForValgAvBehandlinger = () => (
     <div style={{ width: '600px' }}>
       <BehandlingVelgerSakIndex
         behandlinger={object('behandlinger', behandlinger as Behandling[])}
@@ -280,4 +279,3 @@ export const visPanelForValgAvBehandlinger = () => {
       />
     </div>
   );
-};
