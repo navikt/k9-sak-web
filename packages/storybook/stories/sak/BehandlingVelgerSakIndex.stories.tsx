@@ -164,16 +164,19 @@ export default {
   decorators: [withKnobs, withReduxAndRouterProvider],
 };
 
-export const visPanelForValgAvBehandlinger = () => (
-  <div style={{ width: '600px' }}>
-    <BehandlingVelgerSakIndex
-      behandlinger={object('behandlinger', behandlinger as Behandling[])}
-      getBehandlingLocation={() => locationMock}
-      noExistingBehandlinger={boolean('noExistingBehandlinger', false)}
-      behandlingId={number('behandlingId', 1)}
-      showAll={visAlle}
-      toggleShowAll={() => toggleVisAlle(!visAlle)}
-      getKodeverkFn={getKodeverkFn}
-    />
-  </div>
-);
+export const visPanelForValgAvBehandlinger = () => {
+  const [visAlle, toggleVisAlle] = useState(false);
+  return (
+    <div style={{ width: '600px' }}>
+      <BehandlingVelgerSakIndex
+        behandlinger={object('behandlinger', behandlinger as Behandling[])}
+        getBehandlingLocation={() => locationMock}
+        noExistingBehandlinger={boolean('noExistingBehandlinger', false)}
+        behandlingId={number('behandlingId', 1)}
+        showAll={visAlle}
+        toggleShowAll={() => toggleVisAlle(!visAlle)}
+        getKodeverkFn={getKodeverkFn}
+      />
+    </div>
+  );
+};
