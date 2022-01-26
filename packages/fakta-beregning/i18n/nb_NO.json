@@ -20,7 +20,7 @@
   "BeregningInfoPanel.VurderOgFastsettATFL.FastsettFrilans": "Fastsett frilansinntekt",
   "BeregningInfoPanel.VurderOgFastsettATFL.FastsettATFLAlleOppdrag": "Fastsett arbeidsinntekt og samlet frilansinntekt for alle oppdrag.",
   "BeregningInfoPanel.VurderOgFastsettATFL.FastsettArbeidsinntekt": "Fastsett arbeidsinntekt",
-  "BeregningInfoPanel.VurderOgFastsettATFL.HarSokerEndring": "Har søker hatt lønnsendring i løpet av de siste tre månedene?",
+  "BeregningInfoPanel.VurderOgFastsettATFL.Lonnsendring": "Søker har hatt lønnsendring i {arbeidsforhold} i den siste måneden i beregningsperioden. Fastsett ny månedsinntekt i arbeidsforholdet.",
   "BeregningInfoPanel.VurderMottarYtelse.MottarYtelseForFrilansUtenFrilans": "Mottar søker sykepenger, foreldrepenger, pleiepenger eller svangerskapspenger for frilansaktiviteten?",
   "BeregningInfoPanel.VurderMottarYtelse.MottarYtelseForFrilans": "Søker er frilanser. Mottar søker sykepenger, foreldrepenger, pleiepenger eller svangerskapspenger for frilansaktiviteten?",
   "BeregningInfoPanel.VurderMottarYtelse.MottarYtelseForArbeid": "Søker er arbeidstaker og det er ikke mottatt inntektsmelding. Mottar søker sykepenger, foreldrepenger, pleiepenger, omsorgspenger, opplæringspenger eller svangerskapspenger for arbeid i {arbeid}?",

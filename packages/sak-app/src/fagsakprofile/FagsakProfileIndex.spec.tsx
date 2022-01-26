@@ -85,7 +85,6 @@ describe('<FagsakProfileIndex>', () => {
 
     const behandlingVelger = fagsakProfile.renderProp('renderBehandlingVelger')().find(BehandlingVelgerSakIndex);
     expect(behandlingVelger).toHaveLength(1);
-    expect(behandlingVelger.prop('showAll')).toBe(true);
   });
 
   it('skal ikke vise alle behandlinger når behandling er valgt', () => {
@@ -112,6 +111,5 @@ describe('<FagsakProfileIndex>', () => {
 
     const behandlingVelger = fagsakProfile.renderProp('renderBehandlingVelger')().find(BehandlingVelgerSakIndex);
     expect(behandlingVelger).toHaveLength(1);
-    expect(behandlingVelger.prop('showAll')).toBe(false);
   });
 });
