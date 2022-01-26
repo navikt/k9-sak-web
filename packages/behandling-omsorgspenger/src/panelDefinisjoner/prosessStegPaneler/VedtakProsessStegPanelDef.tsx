@@ -28,7 +28,6 @@ class PanelDef extends ProsessStegPanelDef {
     OmsorgspengerBehandlingApiKeys.TILBAKEKREVINGVALG,
     OmsorgspengerBehandlingApiKeys.SEND_VARSEL_OM_REVURDERING,
     OmsorgspengerBehandlingApiKeys.MEDLEMSKAP,
-    OmsorgspengerBehandlingApiKeys.VEDTAK_VARSEL,
     OmsorgspengerBehandlingApiKeys.TILGJENGELIGE_VEDTAKSBREV,
     OmsorgspengerBehandlingApiKeys.DOKUMENTDATA_HENTE,
     OmsorgspengerBehandlingApiKeys.OVERLAPPENDE_YTELSER
