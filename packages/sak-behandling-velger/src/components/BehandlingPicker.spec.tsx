@@ -53,11 +53,6 @@ describe('<BehandlingPicker>', () => {
       mockedAxios.get.mockResolvedValue({
         data: {
           perioderTilVurdering: [{ fom: '2022-01-01', tom: '2022-01-18' }],
-          perioderMedÅrsak: [
-            {
-              årsaker: ['RE_ANNEN_SAK'],
-            },
-          ],
         },
       });
       renderWithIntl(
@@ -100,11 +95,6 @@ describe('<BehandlingPicker>', () => {
       mockedAxios.get.mockResolvedValue({
         data: {
           perioderTilVurdering: [{ fom: '2022-01-01', tom: '2022-01-18' }],
-          perioderMedÅrsak: [
-            {
-              årsaker: ['RE_ANNEN_SAK'],
-            },
-          ],
         },
       });
       renderWithIntl(
@@ -197,11 +187,6 @@ describe('<BehandlingPicker>', () => {
       mockedAxios.get.mockResolvedValue({
         data: {
           perioderTilVurdering: [{ fom: '2022-01-01', tom: '2022-01-18' }],
-          perioderMedÅrsak: [
-            {
-              årsaker: ['RE_ANNEN_SAK'],
-            },
-          ],
         },
       });
       renderWithIntl(
