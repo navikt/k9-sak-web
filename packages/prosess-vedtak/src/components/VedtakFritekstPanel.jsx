@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Column, Row } from 'nav-frontend-grid';
-import { Undertekst } from 'nav-frontend-typografi';
 
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import {
@@ -45,7 +44,6 @@ const VedtakFritekstPanelImpl = ({ begrunnelse, begrunnelseFieldName, sprakkode,
     {readOnly && begrunnelse !== null && (
       <span>
         <VerticalSpacer twentyPx />
-        <Undertekst>{intl.formatMessage({ id: labelTextCode })}</Undertekst>
         <VerticalSpacer eightPx />
         <div className={styles.fritekstItem}>{decodeHtmlEntity(begrunnelse)}</div>
       </span>

@@ -74,6 +74,7 @@ const getFirstDate = (date1, date2) => (moment(date1).isSameOrBefore(moment(date
 
 const emptyArray = [];
 const mapStateToProps = (state, ownProps) => ({
+  // eslint-disable-next-line no-undef
   skjaringstidspunkt: getFirstDate(getBehandlingSkjaringstidspunkt(state), getBehandlingStartDatoForPermisjon(state)),
   changedOpplysninger: ownProps.medlem && ownProps.medlem.endringer ? ownProps.medlem.endringer : emptyArray,
 });
