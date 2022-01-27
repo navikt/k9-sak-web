@@ -40,6 +40,11 @@ const fieldnames = {
   BEGRUNNELSE: 'begrunnelse',
 };
 
+const transformRedusertUtbetalingÅrsaker = formProps =>
+  Object.values(redusertUtbetalingArsak).filter(name =>
+    Object.keys(formProps).some(key => key === name && formProps[key]),
+  );
+
 export const VedtakForm = ({
   intl,
   readOnly,
@@ -69,7 +74,6 @@ export const VedtakForm = ({
   resultatstrukturOriginalBehandling,
   bgPeriodeMedAvslagsårsak,
   medlemskapFom,
-  formProps,
   erRevurdering,
   behandlingArsaker,
 }) => {
@@ -280,6 +284,9 @@ export const VedtakForm = ({
                 informasjonsbehovVedtaksbrev={informasjonsbehovVedtaksbrev}
                 informasjonsbehovValues={filterInformasjonsbehov(formikProps.values, aktiverteInformasjonsbehov)}
                 skalBrukeOverstyrendeFritekstBrev={formikProps.values.skalBrukeOverstyrendeFritekstBrev}
+                redusertUtbetalingÅrsaker={
+                  readOnly ? vedtakVarsel?.redusertUtbetalingÅrsaker : transformRedusertUtbetalingÅrsaker(formProps)
+                }
                 begrunnelse={formikProps.values.begrunnelse}
                 previewCallback={previewCallback}
                 brødtekst={formikProps.values.brødtekst}
@@ -288,6 +295,7 @@ export const VedtakForm = ({
                 formProps={formikProps}
                 dokumentdata={dokumentdata}
                 lagreDokumentdata={lagreDokumentdata}
+                ytelseTypeKode={ytelseTypeKode}
               />
               {!erRevurdering ? (
                 <VedtakSubmit
