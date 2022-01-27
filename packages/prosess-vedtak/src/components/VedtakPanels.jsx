@@ -53,7 +53,7 @@ const VedtakPanels = ({
   overlappendeYtelser,
 }) => {
   const bg = Array.isArray(beregningsgrunnlag) ? beregningsgrunnlag.filter(Boolean) : [];
-  if (behandlingTypeKode === behandlingType.REVURDERING && Array.isArray(bg) && bg.length) {
+  if (behandlingTypeKode === behandlingType.REVURDERING && bg.length) {
     const bgYtelsegrunnlag = bg[0].ytelsesspesifiktGrunnlag;
     let bgPeriodeMedAvslagsårsak;
     if (ytelseTypeKode === fagsakYtelseType.FRISINN && bgYtelsegrunnlag?.avslagsårsakPrPeriode) {
@@ -124,6 +124,17 @@ const VedtakPanels = ({
       fritekstdokumenter={fritekstdokumenter}
       lagreDokumentdata={lagreDokumentdata}
       overlappendeYtelser={overlappendeYtelser}
+      antallBarn={antallBarn}
+      revurderingsAarsakString={revurderingsAarsakString}
+      resultatstrukturOriginalBehandling={resultatstrukturOriginalBehandling}
+      bgPeriodeMedAvslagsårsak={bgPeriodeMedAvslagsårsak}
+      behandlingStatusKode={behandlingStatusKode}
+      medlemskapFom={medlemskapFom}
+      harRedusertUtbetaling={harRedusertUtbetaling}
+      redusertUtbetalingArsak={redusertUtbetalingArsak}
+      formProps={formProps}
+      erSendtInnUtenArsaker={erSendtInnUtenArsaker}
+      erRevurdering={erRevurdering}
     />
   );
 };

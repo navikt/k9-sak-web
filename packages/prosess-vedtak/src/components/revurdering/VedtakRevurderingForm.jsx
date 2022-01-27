@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
@@ -30,6 +31,7 @@ import vedtakVarselPropType from '../../propTypes/vedtakVarselPropType';
 import VedtakRedusertUtbetalingArsaker from './VedtakRedusertUtbetalingArsaker';
 import redusertUtbetalingArsak from '../../kodeverk/redusertUtbetalingArsak';
 import BrevPanel from '../brev/BrevPanel';
+import RevurderingPaneler from './RevurderingPaneler';
 
 export const VEDTAK_REVURDERING_FORM_NAME = 'VEDTAK_REVURDERING_FORM';
 
@@ -122,7 +124,6 @@ export class VedtakRevurderingFormImpl extends Component {
     const { erSendtInnUtenArsaker } = this.state;
 
     const harRedusertUtbetaling = ytelseTypeKode === fagsakYtelseType.FRISINN;
-
     return (
       <>
         <VedtakAksjonspunktPanel
@@ -146,92 +147,52 @@ export class VedtakRevurderingFormImpl extends Component {
                 />
               )
             )}
-            <Row>
-              <Column xs={ytelseTypeKode === fagsakYtelseType.FRISINN ? '4' : '12'}>
-                {isInnvilget(behandlingresultat.type.kode) && (
-                  <VedtakInnvilgetRevurderingPanel
-                    antallBarn={antallBarn}
-                    ytelseTypeKode={ytelseTypeKode}
-                    aksjonspunktKoder={aksjonspunktKoder}
-                    revurderingsAarsakString={revurderingsAarsakString}
-                    behandlingsresultat={behandlingresultat}
-                    readOnly={readOnly}
-                    beregningResultat={resultatstruktur}
-                    sprakKode={sprakkode}
-                    tilbakekrevingvalg={tilbakekrevingvalg}
-                    simuleringResultat={simuleringResultat}
-                    alleKodeverk={alleKodeverk}
-                    originaltBeregningResultat={resultatstrukturOriginalBehandling}
-                    vedtakVarsel={vedtakVarsel}
-                    bgPeriodeMedAvslagsårsak={bgPeriodeMedAvslagsårsak}
-                  />
-                )}
-                {isAvslag(behandlingresultat.type.kode) && (
-                  <VedtakAvslagRevurderingPanel
-                    behandlingStatusKode={behandlingStatusKode}
-                    aksjonspunkter={aksjonspunkter}
-                    behandlingsresultat={behandlingresultat}
-                    readOnly={readOnly}
-                    alleKodeverk={alleKodeverk}
-                    beregningResultat={resultatstruktur}
-                    sprakkode={sprakkode}
-                    vilkar={vilkar}
-                    tilbakekrevingvalg={tilbakekrevingvalg}
-                    simuleringResultat={simuleringResultat}
-                    originaltBeregningResultat={resultatstrukturOriginalBehandling}
-                    vedtakVarsel={vedtakVarsel}
-                    ytelseTypeKode={ytelseTypeKode}
-                  />
-                )}
-                {isOpphor(behandlingresultat.type.kode) && (
-                  <VedtakOpphorRevurderingPanel
-                    revurderingsAarsakString={revurderingsAarsakString}
-                    ytelseTypeKode={ytelseTypeKode}
-                    readOnly={readOnly}
-                    behandlingsresultat={behandlingresultat}
-                    sprakKode={sprakkode}
-                    medlemskapFom={medlemskapFom}
-                    resultatstruktur={resultatstruktur}
-                    vedtakVarsel={vedtakVarsel}
-                  />
-                )}
-              </Column>
-              {harRedusertUtbetaling && (
-                <Column xs="8">
-                  <VedtakRedusertUtbetalingArsaker
-                    intl={intl}
-                    readOnly={readOnly}
-                    values={new Map(Object.values(redusertUtbetalingArsak).map(a => [a, !!formProps[a]]))}
-                    vedtakVarsel={vedtakVarsel}
-                    erSendtInnUtenArsaker={erSendtInnUtenArsaker}
-                    merkedeArsaker={dokumentdata?.[dokumentdatatype.REDUSERT_UTBETALING_AARSAK]}
-                  />
-                </Column>
-              )}
-            </Row>
-            <BrevPanel
+            <RevurderingPaneler
+              ytelseTypeKode={ytelseTypeKode}
+              behandlingresultat={behandlingresultat}
+              antallBarn={antallBarn}
+              revurderingsAarsakString={revurderingsAarsakString}
+              resultatstruktur={resultatstruktur}
+              tilbakekrevingvalg={tilbakekrevingvalg}
+              simuleringResultat={simuleringResultat}
+              alleKodeverk={alleKodeverk}
+              resultatstrukturOriginalBehandling={resultatstrukturOriginalBehandling}
+              bgPeriodeMedAvslagsårsak={bgPeriodeMedAvslagsårsak}
+              behandlingStatusKode={behandlingStatusKode}
+              vilkar={vilkar}
+              aksjonspunkter={aksjonspunkter}
+              sprakkode={sprakkode}
+              readOnly={readOnly}
+              vedtakVarsel={vedtakVarsel}
+              medlemskapFom={medlemskapFom}
+              harRedusertUtbetaling={harRedusertUtbetaling}
+              redusertUtbetalingArsak={redusertUtbetalingArsak}
+              formProps={formProps}
+              erSendtInnUtenArsaker={erSendtInnUtenArsaker}
+              dokumentdata={dokumentdata}
+            />
+            {/* <BrevPanel
               intl={intl}
               readOnly={readOnly}
               sprakkode={sprakkode}
-              ytelseTypeKode={ytelseTypeKode}
-              dokumentdata={dokumentdata}
+              personopplysninger={personopplysninger}
+              arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
               tilgjengeligeVedtaksbrev={tilgjengeligeVedtaksbrev}
               informasjonsbehovVedtaksbrev={informasjonsbehovVedtaksbrev}
               informasjonsbehovValues={informasjonsbehovValues}
               skalBrukeOverstyrendeFritekstBrev={skalBrukeOverstyrendeFritekstBrev}
+              begrunnelse={begrunnelse}
               previewCallback={previewCallback}
-              formProps={formProps}
               redusertUtbetalingÅrsaker={
                 readOnly ? vedtakVarsel?.redusertUtbetalingÅrsaker : transformRedusertUtbetalingÅrsaker(formProps)
               }
               brødtekst={brødtekst}
               overskrift={overskrift}
-              begrunnelse={begrunnelse}
               overstyrtMottaker={overstyrtMottaker}
-              arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
+              formProps={formProps}
+              dokumentdata={dokumentdata}
               lagreDokumentdata={lagreDokumentdata}
-              personopplysninger={personopplysninger}
-            />
+            /> */}
             {behandlingStatusKode === behandlingStatusCode.BEHANDLING_UTREDES && (
               <VedtakRevurderingSubmitPanel
                 formProps={formProps}

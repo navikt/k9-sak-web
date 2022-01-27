@@ -1,3 +1,7 @@
+export type redusertUtbetalingArsakType = {
+  [key: string]: string;
+}
+
 const redusertUtbetalingArsak = {
   INNTEKT_REDUSERT_2019: 'INNTEKT_REDUSERT_2019',
   INNTEKT_REDUSERT_2020_FOR_MARS: 'INNTEKT_REDUSERT_2020_FØR_MARS',

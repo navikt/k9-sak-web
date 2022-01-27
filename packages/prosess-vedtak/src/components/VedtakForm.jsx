@@ -27,6 +27,7 @@ import VedtakAksjonspunktPanel from './VedtakAksjonspunktPanel';
 import styles from './vedtakForm.less';
 import BrevPanel from './brev/BrevPanel';
 import UstrukturerteDokumenter from './UstrukturerteDokumenter';
+import RevurderingPaneler from './revurdering/RevurderingPaneler';
 
 const isVedtakSubmission = true;
 
@@ -65,6 +66,19 @@ export const VedtakForm = ({
   fritekstdokumenter,
   lagreDokumentdata,
   overlappendeYtelser,
+  antallBarn,
+  revurderingsAarsakString,
+  resultatstruktur,
+  simuleringResultat,
+  resultatstrukturOriginalBehandling,
+  bgPeriodeMedAvslagsårsak,
+  behandlingStatusKode,
+  medlemskapFom,
+  harRedusertUtbetaling,
+  redusertUtbetalingArsak,
+  formProps,
+  erSendtInnUtenArsaker,
+  erRevurdering
 }) => {
   const onToggleOverstyring = (e, setFieldValue) => {
     const kommendeVerdi = e.target.checked;
@@ -230,6 +244,31 @@ export const VedtakForm = ({
                   vilkar={vilkar}
                 />
               )}
+
+              <RevurderingPaneler
+                ytelseTypeKode={ytelseTypeKode}
+                behandlingresultat={behandlingresultat}
+                antallBarn={antallBarn}
+                revurderingsAarsakString={revurderingsAarsakString}
+                resultatstruktur={resultatstruktur}
+                tilbakekrevingvalg={tilbakekrevingvalg}
+                simuleringResultat={simuleringResultat}
+                alleKodeverk={alleKodeverk}
+                resultatstrukturOriginalBehandling={resultatstrukturOriginalBehandling}
+                bgPeriodeMedAvslagsårsak={bgPeriodeMedAvslagsårsak}
+                behandlingStatusKode={behandlingStatusKode}
+                vilkar={vilkar}
+                aksjonspunkter={aksjonspunkter}
+                sprakkode={sprakkode}
+                readOnly={readOnly}
+                vedtakVarsel={vedtakVarsel}
+                medlemskapFom={medlemskapFom}
+                harRedusertUtbetaling={harRedusertUtbetaling}
+                redusertUtbetalingArsak={redusertUtbetalingArsak}
+                formProps={formProps}
+                erSendtInnUtenArsaker={erSendtInnUtenArsaker}
+                dokumentdata={dokumentdata}
+              />
 
               <BrevPanel
                 intl={intl}
