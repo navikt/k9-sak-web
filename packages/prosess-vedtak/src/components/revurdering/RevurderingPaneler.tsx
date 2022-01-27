@@ -3,16 +3,37 @@ import { useIntl } from 'react-intl';
 
 import { Column, Row } from 'nav-frontend-grid';
 
+import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import { isAvslag, isInnvilget, isOpphor } from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
 import { redusertUtbetalingArsakType } from '@fpsak-frontend/prosess-vedtak/src/kodeverk/redusertUtbetalingArsak';
+import BehandlingArsakType from '@fpsak-frontend/kodeverk/src/behandlingArsakType';
 import { dokumentdatatype } from '@k9-sak-web/konstanter';
+import { getKodeverknavnFn } from '@fpsak-frontend/utils';
 import { Aksjonspunkt, Kodeverk, KodeverkMedNavn, Vilkar } from '../../../../types';
 import VedtakInnvilgetRevurderingPanel from './VedtakInnvilgetRevurderingPanel';
 import VedtakAvslagRevurderingPanel from './VedtakAvslagRevurderingPanel';
 import VedtakOpphorRevurderingPanel from './VedtakOpphorRevurderingPanel';
 import VedtakRedusertUtbetalingArsaker from './VedtakRedusertUtbetalingArsaker';
 
+const createAarsakString = (revurderingAarsaker, getKodeverknavn) => {
+  if (revurderingAarsaker === undefined || revurderingAarsaker.length < 1) {
+    return '';
+  }
+  const aarsakTekstList = [];
+  const endringFraBrukerAarsak = revurderingAarsaker.find(
+    aarsak => aarsak.kode === BehandlingArsakType.RE_ENDRING_FRA_BRUKER,
+  );
+  const alleAndreAarsakerNavn = revurderingAarsaker
+    .filter(aarsak => aarsak.kode !== BehandlingArsakType.RE_ENDRING_FRA_BRUKER)
+    .map(aarsak => getKodeverknavn(aarsak));
+  // Dersom en av årsakene er "RE_ENDRING_FRA_BRUKER" skal alltid denne vises først
+  if (endringFraBrukerAarsak !== undefined) {
+    aarsakTekstList.push(getKodeverknavn(endringFraBrukerAarsak));
+  }
+  aarsakTekstList.push(...alleAndreAarsakerNavn);
+  return aarsakTekstList.join(', ');
+};
 interface OwnProps {
   ytelseTypeKode: string;
   behandlingresultat: {
@@ -20,8 +41,6 @@ interface OwnProps {
       kode: string;
     };
   };
-  antallBarn: number;
-  revurderingsAarsakString: string;
   resultatstruktur: string;
   tilbakekrevingvalg: {
     videreBehandling: {
@@ -44,13 +63,12 @@ interface OwnProps {
   formProps: any;
   erSendtInnUtenArsaker: boolean;
   dokumentdata: any;
+  behandlingArsaker: any;
 }
 
 export default function RevurderingPaneler({
   ytelseTypeKode,
   behandlingresultat,
-  antallBarn,
-  revurderingsAarsakString,
   resultatstruktur,
   tilbakekrevingvalg,
   simuleringResultat,
@@ -69,14 +87,21 @@ export default function RevurderingPaneler({
   formProps,
   erSendtInnUtenArsaker,
   dokumentdata,
+  behandlingArsaker,
 }: OwnProps): JSX.Element {
   const intl = useIntl();
+
+  const behandlingArsakstyper =
+    behandlingArsaker && behandlingArsaker.map(({ behandlingArsakType }) => behandlingArsakType);
+  const revurderingsAarsakString = createAarsakString(
+    behandlingArsakstyper,
+    getKodeverknavnFn(alleKodeverk, kodeverkTyper),
+  );
   return (
     <Row>
       <Column xs={ytelseTypeKode === fagsakYtelseType.FRISINN ? '4' : '12'}>
         {isInnvilget(behandlingresultat.type.kode) && (
           <VedtakInnvilgetRevurderingPanel
-            antallBarn={antallBarn}
             ytelseTypeKode={ytelseTypeKode}
             revurderingsAarsakString={revurderingsAarsakString}
             behandlingsresultat={behandlingresultat}

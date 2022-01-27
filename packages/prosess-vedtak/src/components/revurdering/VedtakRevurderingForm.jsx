@@ -301,21 +301,6 @@ const buildInitialValues = createSelector(
       .filter(ap => ap.kanLoses)
       .map(ap => ap.definisjon.kode);
 
-    if (ytelseTypeKode === fagsakYtelseType.ENGANGSSTONAD) {
-      if (beregningResultat) {
-        return {
-          antallBarn: beregningResultat.antallBarn,
-          aksjonspunktKoder,
-        };
-      }
-      if (behandlingstatusKode !== behandlingStatusCode.AVSLUTTET) {
-        return {
-          antallBarn: null,
-          aksjonspunktKoder,
-        };
-      }
-      return { antallBarn: null };
-    }
     return {
       sprakkode,
       aksjonspunktKoder,

@@ -71,7 +71,6 @@ const lagPeriodevisning = periodeMedÅrsak => {
 
 export const VedtakInnvilgetRevurderingPanelImpl = ({
   intl,
-  antallBarn,
   originaltBeregningResultat,
   beregningResultat,
   ytelseTypeKode,
@@ -97,12 +96,6 @@ export const VedtakInnvilgetRevurderingPanelImpl = ({
               <Column xs="4">
                 <Undertekst>{intl.formatMessage({ id: 'VedtakForm.beregnetTilkjentYtelse' })}</Undertekst>
                 <Element>{formatCurrencyWithKr(beregningResultat.beregnetTilkjentYtelse)}</Element>
-              </Column>
-            )}
-            {antallBarn && (
-              <Column xs="8">
-                <Undertekst>{intl.formatMessage({ id: 'VedtakForm.AntallBarn' })}</Undertekst>
-                <Element>{antallBarn}</Element>
               </Column>
             )}
           </Row>
@@ -134,7 +127,6 @@ export const VedtakInnvilgetRevurderingPanelImpl = ({
 
 VedtakInnvilgetRevurderingPanelImpl.propTypes = {
   intl: PropTypes.shape().isRequired,
-  antallBarn: PropTypes.number,
   originaltBeregningResultat: PropTypes.shape(),
   beregningResultat: PropTypes.shape(),
   ytelseTypeKode: PropTypes.string.isRequired,
@@ -146,7 +138,6 @@ VedtakInnvilgetRevurderingPanelImpl.propTypes = {
 };
 
 VedtakInnvilgetRevurderingPanelImpl.defaultProps = {
-  antallBarn: undefined,
   beregningResultat: undefined,
   originaltBeregningResultat: undefined,
   konsekvenserForYtelsen: undefined,

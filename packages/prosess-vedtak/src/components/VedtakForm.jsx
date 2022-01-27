@@ -1,10 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { formPropTypes } from 'redux-form';
 import { Formik, Form } from 'formik';
 import { injectIntl } from 'react-intl';
-import { Hovedknapp } from 'nav-frontend-knapper';
-import { Column, Row } from 'nav-frontend-grid';
 import { Checkbox } from '@navikt/ds-react';
 
 import { kodeverkObjektPropType } from '@fpsak-frontend/prop-types';
@@ -28,11 +26,11 @@ import styles from './vedtakForm.less';
 import BrevPanel from './brev/BrevPanel';
 import UstrukturerteDokumenter from './UstrukturerteDokumenter';
 import RevurderingPaneler from './revurdering/RevurderingPaneler';
+import redusertUtbetalingArsak from '../kodeverk/redusertUtbetalingArsak';
+import VedtakRevurderingSubmitPanel from './revurdering/VedtakRevurderingSubmitPanel';
+import VedtakSubmit from './VedtakSubmit';
 
 const isVedtakSubmission = true;
-
-const kanSendesTilGodkjenning = behandlingStatusKode =>
-  behandlingStatusKode === behandlingStatusCode.BEHANDLING_UTREDES;
 
 const fieldnames = {
   SKAL_BRUKE_OVERSTYRENDE_FRITEKST_BREV: 'skalBrukeOverstyrendeFritekstBrev',
@@ -72,12 +70,11 @@ export const VedtakForm = ({
   resultatstrukturOriginalBehandling,
   bgPeriodeMedAvslagsårsak,
   medlemskapFom,
-  redusertUtbetalingArsak,
   formProps,
-  erSendtInnUtenArsaker,
   erRevurdering,
   behandlingArsaker,
 }) => {
+  const [erSendtInnUtenArsaker, setErSendtInnUtenArsaker] = useState(false);
   const onToggleOverstyring = (e, setFieldValue) => {
     const kommendeVerdi = e.target.checked;
     setFieldValue(fieldnames.SKAL_BRUKE_OVERSTYRENDE_FRITEKST_BREV, e.target.checked);
@@ -221,7 +218,7 @@ export const VedtakForm = ({
                   </Checkbox>
                 )}
               </div>
-              {erRevurdering ? (
+              {!erRevurdering ? (
                 <>
                   {fritekstdokumenter?.length > 0 && (
                     <UstrukturerteDokumenter fritekstdokumenter={fritekstdokumenter} />
@@ -293,27 +290,26 @@ export const VedtakForm = ({
                 dokumentdata={dokumentdata}
                 lagreDokumentdata={lagreDokumentdata}
               />
-              {kanSendesTilGodkjenning(behandlingStatus?.kode) && (
-                <Row>
-                  <Column xs="12">
-                    {!readOnly && (
-                      <Hovedknapp
-                        mini
-                        className={styles.mainButton}
-                        disabled={behandlingPaaVent || formikProps.isSubmitting}
-                        spinner={formikProps.isSubmitting}
-                      >
-                        {intl.formatMessage({
-                          id:
-                            aksjonspunkter &&
-                            aksjonspunkter.some(ap => ap.erAktivt === true && ap.toTrinnsBehandling === true)
-                              ? 'VedtakForm.TilGodkjenning'
-                              : 'VedtakForm.FattVedtak',
-                        })}
-                      </Hovedknapp>
-                    )}
-                  </Column>
-                </Row>
+              {!erRevurdering ? (
+                <VedtakSubmit
+                  behandlingStatusKode={behandlingStatus?.kode}
+                  readOnly={readOnly}
+                  behandlingPaaVent={behandlingPaaVent}
+                  isSubmitting={formikProps.values.isSubmitting}
+                  aksjonspunkter={aksjonspunkter}
+                />
+              ) : (
+                behandlingStatus?.kode === behandlingStatusCode.BEHANDLING_UTREDES && (
+                  <VedtakRevurderingSubmitPanel
+                    formProps={formProps}
+                    skalBrukeOverstyrendeFritekstBrev={formikProps.values.skalBrukeOverstyrendeFritekstBrev}
+                    ytelseTypeKode={ytelseTypeKode}
+                    readOnly={readOnly}
+                    behandlingStatusKode={behandlingStatus?.kode}
+                    harRedusertUtbetaling={harRedusertUtbetaling}
+                    visFeilmeldingFordiArsakerMangler={() => setErSendtInnUtenArsaker(true)}
+                  />
+                )
               )}
             </VedtakAksjonspunktPanel>
           </Form>

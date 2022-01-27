@@ -6,6 +6,7 @@ import { Hovedknapp } from 'nav-frontend-knapper';
 import { connect } from 'react-redux';
 
 import klageBehandlingArsakType from '@fpsak-frontend/kodeverk/src/behandlingArsakType';
+import behandlingStatusCode from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 
 import styles from '../vedtakForm.less';
 import redusertUtbetalingArsak from '../../kodeverk/redusertUtbetalingArsak';
@@ -23,11 +24,16 @@ export const VedtakRevurderingSubmitPanelImpl = ({
   submitKnappTextId,
   harRedusertUtbetaling,
   visFeilmeldingFordiArsakerMangler,
+  behandlingStatusKode,
 }) => {
   const onClick = event =>
     !harRedusertUtbetaling || Object.values(redusertUtbetalingArsak).some(a => !!formProps[a])
       ? formProps.handleSubmit(event)
       : visFeilmeldingFordiArsakerMangler();
+
+  if (behandlingStatusKode !== behandlingStatusCode.BEHANDLING_UTREDES) {
+    return null;
+  }
 
   return (
     <div>
@@ -56,6 +62,7 @@ VedtakRevurderingSubmitPanelImpl.propTypes = {
   submitKnappTextId: PropTypes.string.isRequired,
   harRedusertUtbetaling: PropTypes.bool.isRequired,
   visFeilmeldingFordiArsakerMangler: PropTypes.func.isRequired,
+  behandlingStatusKode: PropTypes.string.isRequired,
 };
 
 const erArsakTypeBehandlingEtterKlage = createSelector(
