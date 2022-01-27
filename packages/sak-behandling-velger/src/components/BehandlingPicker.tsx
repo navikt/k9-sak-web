@@ -1,34 +1,20 @@
+import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
+import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { BehandlingAppKontekst, BehandlingPerioder, Kodeverk, KodeverkMedNavn } from '@k9-sak-web/types';
+import PerioderMedBehandlingsId from '@k9-sak-web/types/src/PerioderMedBehandlingsId';
 import axios from 'axios';
 import { Location } from 'history';
-import moment from 'moment';
 import { Tilbakeknapp } from 'nav-frontend-ikonknapper';
 import { Normaltekst, Undertittel } from 'nav-frontend-typografi';
 import React, { ReactElement, useEffect, useRef, useState } from 'react';
 import { FormattedMessage, IntlShape, useIntl } from 'react-intl';
 import { NavLink } from 'react-router-dom';
-import PerioderMedBehandlingsId from '@k9-sak-web/types/src/PerioderMedBehandlingsId';
-import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
-import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import BehandlingFilter, { automatiskBehandling } from './BehandlingFilter';
 import styles from './behandlingPicker.less';
 import BehandlingPickerItemContent from './BehandlingPickerItemContent';
 import BehandlingSelected from './BehandlingSelected';
-
-export const sortBehandlinger = (behandlinger: BehandlingAppKontekst[]): BehandlingAppKontekst[] =>
-  behandlinger.sort((b1, b2) => {
-    if (b1.avsluttet && !b2.avsluttet) {
-      return 1;
-    }
-    if (!b1.avsluttet && b2.avsluttet) {
-      return -1;
-    }
-    if (b1.avsluttet && b2.avsluttet) {
-      return moment(b2.avsluttet).diff(moment(b1.avsluttet));
-    }
-    return moment(b2.opprettet).diff(moment(b1.opprettet));
-  });
+import { sortBehandlinger } from './behandlingVelgerUtils';
 
 const getBehandlingNavn = (
   behandling: BehandlingAppKontekst,
@@ -112,6 +98,7 @@ interface OwnProps {
   behandlingId?: number;
 }
 
+const behandlingPerioderÅrsakRel = 'behandling-perioder-årsak';
 /**
  * BehandlingPicker
  *
@@ -138,18 +125,23 @@ const BehandlingPicker = ({
 
   useEffect(() => {
     const perioder = [];
-    Promise.all(
-      behandlinger.map(behandling =>
-        axios
-          .get(behandling.links.find(link => link.rel === 'behandling-perioder-årsak').href)
-          .then(response => ({ data: response.data, id: behandling.id })),
-      ),
-    ).then((responses: { data: BehandlingPerioder; id: number }[]) => {
-      responses.forEach(({ data, id }) => {
-        perioder.push({ id, perioder: data.perioderTilVurdering, perioderMedÅrsak: data.perioderMedÅrsak });
+    const harPerioderMedÅrsak = !behandlinger.some(behandling =>
+      behandling.links.some(link => link.rel === behandlingPerioderÅrsakRel),
+    );
+    if (harPerioderMedÅrsak) {
+      Promise.all(
+        behandlinger.map(behandling =>
+          axios
+            .get(behandling.links.find(link => link.rel === behandlingPerioderÅrsakRel).href)
+            .then(response => ({ data: response.data, id: behandling.id })),
+        ),
+      ).then((responses: { data: BehandlingPerioder; id: number }[]) => {
+        responses.forEach(({ data, id }) => {
+          perioder.push({ id, perioder: data.perioderTilVurdering, perioderMedÅrsak: data.perioderMedÅrsak });
+        });
+        setSøknadsperioder(perioder);
       });
-      setSøknadsperioder(perioder);
-    });
+    }
   }, []);
 
   const valgtBehandling = valgtBehandlingId

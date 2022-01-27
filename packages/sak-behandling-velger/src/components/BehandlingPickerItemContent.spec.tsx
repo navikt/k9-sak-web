@@ -17,7 +17,6 @@ describe('<BehandlingPickerItemContent>', () => {
         søknadsperioder={[{ fom: '2022-01-01', tom: '2022-01-18' }]}
       />,
     );
-    wrapper.debug();
     expect(wrapper.find(Panel)).toHaveLength(1);
     expect(wrapper.find(DateLabel)).toHaveLength(2);
   });

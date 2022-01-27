@@ -13,7 +13,7 @@ import {
   Risikoklassifisering,
 } from '@k9-sak-web/types';
 import { Location } from 'history';
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { Redirect, useLocation, useRouteMatch } from 'react-router-dom';
 import { getLocationWithDefaultProsessStegAndFakta, pathToBehandling, pathToBehandlinger } from '../app/paths';
 import BehandlingRettigheter from '../behandling/behandlingRettigheterTsType';
@@ -59,6 +59,9 @@ export const FagsakProfileIndex = ({
   personopplysninger,
   arbeidsgiverOpplysningerPerId,
 }: OwnProps) => {
+  const [showAll, setShowAll] = useState(!behandlingId);
+  const toggleShowAll = useCallback(() => setShowAll(!showAll), [showAll]);
+
   const getKodeverkFn = useGetKodeverkFn();
 
   const fagsakStatusMedNavn = useFpSakKodeverkMedNavn<KodeverkMedNavn>(fagsak.status);
@@ -84,6 +87,10 @@ export const FagsakProfileIndex = ({
   const { data: behandlendeEnheter } = restApiHooks.useRestApi<BehandlendeEnheter>(K9sakApiKeys.BEHANDLENDE_ENHETER, {
     ytelseType: fagsak.sakstype.kode,
   });
+
+  useEffect(() => {
+    setShowAll(!behandlingId);
+  }, [behandlingId]);
 
   const match = useRouteMatch();
   const shouldRedirectToBehandlinger = match.isExact;
@@ -145,6 +152,9 @@ export const FagsakProfileIndex = ({
               noExistingBehandlinger={alleBehandlinger.length === 0}
               behandlingId={behandlingId}
               getKodeverkFn={getKodeverkFn}
+              showAll={showAll}
+              toggleShowAll={toggleShowAll}
+              fagsak={fagsak}
             />
           )}
         />
