@@ -77,7 +77,7 @@ const lagRedusertBGRad = (tekstIdRedusert, beløpÅRedusere, tekstIdLøpende, l�
 
 const erBeløpSatt = beløp => beløp || beløp === 0;
 
-const finnDekningsgrad = (avkortet, redusert) =>  Math.round(redusert/avkortet);
+const finnDekningsgrad = (avkortet, redusert) =>  redusert === null || !avkortet ? 100 : Math.round(redusert/avkortet);
 
 const lagPeriodeblokk = (bgperiode, ytelsegrunnlag, frilansGrunnlag, næringGrunnlag) => {
   const andelerDetErSøktOm = statuserDetErSøktOmIPerioden(bgperiode, ytelsegrunnlag);
