@@ -125,7 +125,7 @@ const BehandlingPicker = ({
 
   useEffect(() => {
     const perioder = [];
-    const harPerioderMedÅrsak = !behandlinger.some(behandling =>
+    const harPerioderMedÅrsak = behandlinger.some(behandling =>
       behandling.links.some(link => link.rel === behandlingPerioderÅrsakRel),
     );
     if (harPerioderMedÅrsak) {
