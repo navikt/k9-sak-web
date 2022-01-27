@@ -294,7 +294,7 @@ export const VedtakForm = ({
                   behandlingStatusKode={behandlingStatus?.kode}
                   readOnly={readOnly}
                   behandlingPaaVent={behandlingPaaVent}
-                  isSubmitting={formikProps.values.isSubmitting}
+                  isSubmitting={formikProps.isSubmitting}
                   aksjonspunkter={aksjonspunkter}
                 />
               ) : (
