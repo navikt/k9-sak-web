@@ -9,20 +9,7 @@ import { BehandlingAppKontekst, KodeverkMedNavn, Kodeverk } from '@k9-sak-web/ty
 import BehandlingPickerItem from './BehandlingPickerItem';
 
 import styles from './behandlingPickerOld.less';
-
-export const sortBehandlinger = (behandlinger: BehandlingAppKontekst[]): BehandlingAppKontekst[] =>
-  behandlinger.sort((b1, b2) => {
-    if (b1.avsluttet && !b2.avsluttet) {
-      return 1;
-    }
-    if (!b1.avsluttet && b2.avsluttet) {
-      return -1;
-    }
-    if (b1.avsluttet && b2.avsluttet) {
-      return moment(b2.avsluttet).diff(moment(b1.avsluttet));
-    }
-    return moment(b2.opprettet).diff(moment(b1.opprettet));
-  });
+import { sortBehandlinger } from './behandlingVelgerUtils';
 
 const renderListItems = (
   behandlinger: BehandlingAppKontekst[],

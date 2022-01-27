@@ -15,20 +15,7 @@ import BehandlingFilter, { automatiskBehandling } from './BehandlingFilter';
 import styles from './behandlingPicker.less';
 import BehandlingPickerItemContent from './BehandlingPickerItemContent';
 import BehandlingSelected from './BehandlingSelected';
-
-export const sortBehandlinger = (behandlinger: BehandlingAppKontekst[]): BehandlingAppKontekst[] =>
-  behandlinger.sort((b1, b2) => {
-    if (b1.avsluttet && !b2.avsluttet) {
-      return 1;
-    }
-    if (!b1.avsluttet && b2.avsluttet) {
-      return -1;
-    }
-    if (b1.avsluttet && b2.avsluttet) {
-      return moment(b2.avsluttet).diff(moment(b1.avsluttet));
-    }
-    return moment(b2.opprettet).diff(moment(b1.opprettet));
-  });
+import { sortBehandlinger } from './behandlingVelgerUtils';
 
 const getBehandlingNavn = (
   behandling: BehandlingAppKontekst,

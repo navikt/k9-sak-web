@@ -1,10 +1,11 @@
-import React from 'react';
-import { Periode } from '@k9-sak-web/types';
-import { DateLabel, Image } from '@fpsak-frontend/shared-components';
-import behandlingResultatType from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
 import advarselImg from '@fpsak-frontend/assets/images/advarsel-circle.svg';
 import avslaattImg from '@fpsak-frontend/assets/images/avslaatt_valgt.svg';
 import innvilgetImg from '@fpsak-frontend/assets/images/innvilget_valgt.svg';
+import behandlingResultatType from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
+import { DateLabel, Image } from '@fpsak-frontend/shared-components';
+import { BehandlingAppKontekst, Periode } from '@k9-sak-web/types';
+import moment from 'moment';
+import React from 'react';
 import { FormattedMessage } from 'react-intl';
 
 export const getFormattedSøknadserioder = (søknadsperioder: Periode[]) =>
@@ -63,3 +64,17 @@ export const getStatusIcon = (behandlingsresultatTypeKode: string, className: st
 
   return null;
 };
+
+export const sortBehandlinger = (behandlinger: BehandlingAppKontekst[]): BehandlingAppKontekst[] =>
+  behandlinger.sort((b1, b2) => {
+    if (b1.avsluttet && !b2.avsluttet) {
+      return 1;
+    }
+    if (!b1.avsluttet && b2.avsluttet) {
+      return -1;
+    }
+    if (b1.avsluttet && b2.avsluttet) {
+      return moment(b2.avsluttet).diff(moment(b1.avsluttet));
+    }
+    return moment(b2.opprettet).diff(moment(b1.opprettet));
+  });
