@@ -99,7 +99,7 @@ const lagPeriodeblokk = (bgperiode, ytelsegrunnlag, frilansGrunnlag, næringGrun
     bgperiode,
     ytelsegrunnlag,
   );
-  const gjeldendeDekningsgrad = finnDekningsgrad(bgperiode.avkortetPrAar, bgPeriode.redusertPrAar);
+  const gjeldendeDekningsgrad = finnDekningsgrad(bgperiode.avkortetPrAar, bgperiode.redusertPrAar);
   return (
     <>
       {erBeløpSatt(beregningsgrunnlagFL) &&
