@@ -66,19 +66,17 @@ export const VedtakForm = ({
   fritekstdokumenter,
   lagreDokumentdata,
   overlappendeYtelser,
-  antallBarn,
   revurderingsAarsakString,
   resultatstruktur,
   simuleringResultat,
   resultatstrukturOriginalBehandling,
   bgPeriodeMedAvslagsårsak,
-  behandlingStatusKode,
   medlemskapFom,
-  harRedusertUtbetaling,
   redusertUtbetalingArsak,
   formProps,
   erSendtInnUtenArsaker,
-  erRevurdering
+  erRevurdering,
+  behandlingArsaker,
 }) => {
   const onToggleOverstyring = (e, setFieldValue) => {
     const kommendeVerdi = e.target.checked;
@@ -162,6 +160,7 @@ export const VedtakForm = ({
     return aktiveVerdier;
   };
 
+  const harRedusertUtbetaling = ytelseTypeKode === fagsakYtelseType.FRISINN;
   const aktiverteInformasjonsbehov =
     (informasjonsbehovVedtaksbrev?.informasjonsbehov || []).filter(({ type }) => type === 'FRITEKST') ?? [];
   const mellomlagredeInformasjonsbehov = aktiverteInformasjonsbehov.map(informasjonsbehov => ({
@@ -222,53 +221,58 @@ export const VedtakForm = ({
                   </Checkbox>
                 )}
               </div>
+              {erRevurdering ? (
+                <>
+                  {fritekstdokumenter?.length > 0 && (
+                    <UstrukturerteDokumenter fritekstdokumenter={fritekstdokumenter} />
+                  )}
 
-              {fritekstdokumenter?.length > 0 && <UstrukturerteDokumenter fritekstdokumenter={fritekstdokumenter} />}
+                  {(isInnvilget(behandlingresultat.type.kode) || isDelvisInnvilget(behandlingresultat.type.kode)) && (
+                    <VedtakInnvilgetPanel
+                      intl={intl}
+                      behandlingsresultat={behandlingresultat}
+                      ytelseTypeKode={ytelseTypeKode}
+                      tilbakekrevingvalg={tilbakekrevingvalg}
+                    />
+                  )}
 
-              {(isInnvilget(behandlingresultat.type.kode) || isDelvisInnvilget(behandlingresultat.type.kode)) && (
-                <VedtakInnvilgetPanel
-                  intl={intl}
-                  behandlingsresultat={behandlingresultat}
+                  {isAvslag(behandlingresultat.type.kode) && (
+                    <VedtakAvslagPanel
+                      aksjonspunkter={aksjonspunkter}
+                      behandlingsresultat={behandlingresultat}
+                      ytelseTypeKode={ytelseTypeKode}
+                      alleKodeverk={alleKodeverk}
+                      tilbakekrevingvalg={tilbakekrevingvalg}
+                      vilkar={vilkar}
+                    />
+                  )}
+                </>
+              ) : (
+                <RevurderingPaneler
                   ytelseTypeKode={ytelseTypeKode}
+                  behandlingresultat={behandlingresultat}
+                  revurderingsAarsakString={revurderingsAarsakString}
+                  resultatstruktur={resultatstruktur}
                   tilbakekrevingvalg={tilbakekrevingvalg}
-                />
-              )}
-
-              {isAvslag(behandlingresultat.type.kode) && (
-                <VedtakAvslagPanel
-                  aksjonspunkter={aksjonspunkter}
-                  behandlingsresultat={behandlingresultat}
-                  ytelseTypeKode={ytelseTypeKode}
+                  simuleringResultat={simuleringResultat}
                   alleKodeverk={alleKodeverk}
-                  tilbakekrevingvalg={tilbakekrevingvalg}
+                  resultatstrukturOriginalBehandling={resultatstrukturOriginalBehandling}
+                  bgPeriodeMedAvslagsårsak={bgPeriodeMedAvslagsårsak}
+                  behandlingStatusKode={behandlingStatus?.kode}
                   vilkar={vilkar}
+                  aksjonspunkter={aksjonspunkter}
+                  sprakkode={sprakkode}
+                  readOnly={readOnly}
+                  vedtakVarsel={vedtakVarsel}
+                  medlemskapFom={medlemskapFom}
+                  harRedusertUtbetaling={harRedusertUtbetaling}
+                  redusertUtbetalingArsak={redusertUtbetalingArsak}
+                  formProps={formProps}
+                  erSendtInnUtenArsaker={erSendtInnUtenArsaker}
+                  dokumentdata={dokumentdata}
+                  behandlingArsaker={behandlingArsaker}
                 />
               )}
-
-              <RevurderingPaneler
-                ytelseTypeKode={ytelseTypeKode}
-                behandlingresultat={behandlingresultat}
-                antallBarn={antallBarn}
-                revurderingsAarsakString={revurderingsAarsakString}
-                resultatstruktur={resultatstruktur}
-                tilbakekrevingvalg={tilbakekrevingvalg}
-                simuleringResultat={simuleringResultat}
-                alleKodeverk={alleKodeverk}
-                resultatstrukturOriginalBehandling={resultatstrukturOriginalBehandling}
-                bgPeriodeMedAvslagsårsak={bgPeriodeMedAvslagsårsak}
-                behandlingStatusKode={behandlingStatusKode}
-                vilkar={vilkar}
-                aksjonspunkter={aksjonspunkter}
-                sprakkode={sprakkode}
-                readOnly={readOnly}
-                vedtakVarsel={vedtakVarsel}
-                medlemskapFom={medlemskapFom}
-                harRedusertUtbetaling={harRedusertUtbetaling}
-                redusertUtbetalingArsak={redusertUtbetalingArsak}
-                formProps={formProps}
-                erSendtInnUtenArsaker={erSendtInnUtenArsaker}
-                dokumentdata={dokumentdata}
-              />
 
               <BrevPanel
                 intl={intl}
