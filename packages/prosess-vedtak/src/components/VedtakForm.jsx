@@ -8,7 +8,6 @@ import { Checkbox } from '@navikt/ds-react';
 import { kodeverkObjektPropType } from '@fpsak-frontend/prop-types';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import { isAvslag, isDelvisInnvilget, isInnvilget } from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
-import behandlingStatusCode from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import { dokumentdatatype } from '@k9-sak-web/konstanter';
 
 import { safeJSONParse, decodeHtmlEntity } from '@fpsak-frontend/utils';
@@ -299,17 +298,15 @@ export const VedtakForm = ({
                   aksjonspunkter={aksjonspunkter}
                 />
               ) : (
-                behandlingStatus?.kode === behandlingStatusCode.BEHANDLING_UTREDES && (
-                  <VedtakRevurderingSubmitPanel
-                    formProps={formProps}
-                    skalBrukeOverstyrendeFritekstBrev={formikProps.values.skalBrukeOverstyrendeFritekstBrev}
-                    ytelseTypeKode={ytelseTypeKode}
-                    readOnly={readOnly}
-                    behandlingStatusKode={behandlingStatus?.kode}
-                    harRedusertUtbetaling={harRedusertUtbetaling}
-                    visFeilmeldingFordiArsakerMangler={() => setErSendtInnUtenArsaker(true)}
-                  />
-                )
+                <VedtakRevurderingSubmitPanel
+                  formProps={formProps}
+                  skalBrukeOverstyrendeFritekstBrev={formikProps.values.skalBrukeOverstyrendeFritekstBrev}
+                  ytelseTypeKode={ytelseTypeKode}
+                  readOnly={readOnly}
+                  behandlingStatusKode={behandlingStatus?.kode}
+                  harRedusertUtbetaling={harRedusertUtbetaling}
+                  visFeilmeldingFordiArsakerMangler={() => setErSendtInnUtenArsaker(true)}
+                />
               )}
             </VedtakAksjonspunktPanel>
           </Form>
