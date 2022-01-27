@@ -1,13 +1,9 @@
-import React, { ReactElement } from 'react';
-import moment from 'moment';
-import { FormattedMessage } from 'react-intl';
+import { BehandlingAppKontekst, Kodeverk, KodeverkMedNavn } from '@k9-sak-web/types';
 import { Location } from 'history';
 import { Normaltekst } from 'nav-frontend-typografi';
-
-import { BehandlingAppKontekst, KodeverkMedNavn, Kodeverk } from '@k9-sak-web/types';
-
+import React, { ReactElement } from 'react';
+import { FormattedMessage } from 'react-intl';
 import BehandlingPickerItem from './BehandlingPickerItem';
-
 import styles from './behandlingPickerOld.less';
 import { sortBehandlinger } from './behandlingVelgerUtils';
 
