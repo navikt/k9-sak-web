@@ -112,6 +112,7 @@ interface OwnProps {
   behandlingId?: number;
 }
 
+const behandlingPerioderÅrsakRel = 'behandling-perioder-årsak';
 /**
  * BehandlingPicker
  *
@@ -138,18 +139,23 @@ const BehandlingPicker = ({
 
   useEffect(() => {
     const perioder = [];
-    Promise.all(
-      behandlinger.map(behandling =>
-        axios
-          .get(behandling.links.find(link => link.rel === 'behandling-perioder-årsak').href)
-          .then(response => ({ data: response.data, id: behandling.id })),
-      ),
-    ).then((responses: { data: BehandlingPerioder; id: number }[]) => {
-      responses.forEach(({ data, id }) => {
-        perioder.push({ id, perioder: data.perioderTilVurdering, perioderMedÅrsak: data.perioderMedÅrsak });
+    const harPerioderMedÅrsak = !behandlinger.some(behandling =>
+      behandling.links.some(link => link.rel === behandlingPerioderÅrsakRel),
+    );
+    if (harPerioderMedÅrsak) {
+      Promise.all(
+        behandlinger.map(behandling =>
+          axios
+            .get(behandling.links.find(link => link.rel === behandlingPerioderÅrsakRel).href)
+            .then(response => ({ data: response.data, id: behandling.id })),
+        ),
+      ).then((responses: { data: BehandlingPerioder; id: number }[]) => {
+        responses.forEach(({ data, id }) => {
+          perioder.push({ id, perioder: data.perioderTilVurdering, perioderMedÅrsak: data.perioderMedÅrsak });
+        });
+        setSøknadsperioder(perioder);
       });
-      setSøknadsperioder(perioder);
-    });
+    }
   }, []);
 
   const valgtBehandling = valgtBehandlingId

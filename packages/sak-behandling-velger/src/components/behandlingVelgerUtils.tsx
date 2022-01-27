@@ -7,15 +7,25 @@ import avslaattImg from '@fpsak-frontend/assets/images/avslaatt_valgt.svg';
 import innvilgetImg from '@fpsak-frontend/assets/images/innvilget_valgt.svg';
 import { FormattedMessage } from 'react-intl';
 
-export const getFormattedPerioder = (søknadsperioder: Periode[]) =>
-  søknadsperioder?.map((periode, index) => (
-    <React.Fragment key={`${periode.fom}_${periode.tom}`}>
-      {index > 0 && ', '}
-      <DateLabel dateString={periode.fom} />
-      {` - `}
-      <DateLabel dateString={periode.tom} />
-    </React.Fragment>
-  ));
+export const getFormattedSøknadserioder = (søknadsperioder: Periode[]) =>
+  søknadsperioder?.map((periode, index) => {
+    if (periode.fom === periode.tom) {
+      return (
+        <React.Fragment key={periode.fom}>
+          {index > 0 && ', '}
+          <DateLabel dateString={periode.fom} />
+        </React.Fragment>
+      );
+    }
+    return (
+      <React.Fragment key={`${periode.fom}_${periode.tom}`}>
+        {index > 0 && ', '}
+        <DateLabel dateString={periode.fom} />
+        {` - `}
+        <DateLabel dateString={periode.tom} />
+      </React.Fragment>
+    );
+  });
 
 export const getStatusIcon = (behandlingsresultatTypeKode: string, className: string) => {
   if (behandlingsresultatTypeKode === behandlingResultatType.INNVILGET) {
