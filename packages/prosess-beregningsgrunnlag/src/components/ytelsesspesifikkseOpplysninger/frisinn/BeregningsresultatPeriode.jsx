@@ -77,7 +77,16 @@ const lagRedusertBGRad = (tekstIdRedusert, beløpÅRedusere, tekstIdLøpende, l�
 
 const erBeløpSatt = beløp => beløp || beløp === 0;
 
-const finnDekningsgrad = (avkortet, redusert) =>  redusert === null || !avkortet ? 100 : Math.round(100*redusert/avkortet);
+const finnDekningsgrad = bgPeriodeFom => {
+  const fomDato = moment(bgPeriodeFom);
+  if (fomDato.isBefore(moment('2020-11-01', 'YYYY-MM-DD'))) {
+    return 80;
+  } else if (fomDato.isBefore(moment('2022-01-01', 'YYYY-MM-DD'))) {
+    return 60;
+  } else {
+    return 70;
+  }
+};
 
 const lagPeriodeblokk = (bgperiode, ytelsegrunnlag, frilansGrunnlag, næringGrunnlag) => {
   const andelerDetErSøktOm = statuserDetErSøktOmIPerioden(bgperiode, ytelsegrunnlag);
@@ -99,7 +108,7 @@ const lagPeriodeblokk = (bgperiode, ytelsegrunnlag, frilansGrunnlag, næringGrun
     bgperiode,
     ytelsegrunnlag,
   );
-  const gjeldendeDekningsgrad = finnDekningsgrad(bgperiode.avkortetPrAar, bgperiode.redusertPrAar);
+  const gjeldendeDekningsgrad = finnDekningsgrad(bgperiode.beregningsgrunnlagPeriodeFom);
   return (
     <>
       {erBeløpSatt(beregningsgrunnlagFL) &&
