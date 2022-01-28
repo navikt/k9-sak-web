@@ -193,7 +193,6 @@ export const VedtakForm = ({
       >
         {formikProps => (
           <Form>
-            {console.log(formikProps.values)}
             <VedtakAksjonspunktPanel
               behandlingStatusKode={behandlingStatus?.kode}
               aksjonspunktKoder={aksjonspunkter.map(ap => ap.definisjon.kode)}
@@ -316,6 +315,7 @@ export const VedtakForm = ({
                   formikValues={formikProps.values}
                   isSubmitting={formikProps.isSubmitting}
                   skalBrukeOverstyrendeFritekstBrev={formikProps.values.skalBrukeOverstyrendeFritekstBrev}
+                  handleSubmit={formikProps.handleSubmit}
                   ytelseTypeKode={ytelseTypeKode}
                   readOnly={readOnly}
                   behandlingStatusKode={behandlingStatus?.kode}

@@ -26,10 +26,11 @@ export const VedtakRevurderingSubmitPanelImpl = ({
   visFeilmeldingFordiArsakerMangler,
   behandlingStatusKode,
   isSubmitting,
+  handleSubmit,
 }) => {
   const onClick = event =>
     !harRedusertUtbetaling || Object.values(redusertUtbetalingArsak).some(a => !!formikProps.values[a])
-      ? formikProps.handleSubmit(event)
+      ? handleSubmit(event)
       : visFeilmeldingFordiArsakerMangler();
 
   if (behandlingStatusKode !== behandlingStatusCode.BEHANDLING_UTREDES) {
@@ -59,6 +60,7 @@ VedtakRevurderingSubmitPanelImpl.propTypes = {
   behandlingStatusKode: PropTypes.string.isRequired,
   formikProps: PropTypes.shape(),
   isSubmitting: PropTypes.bool,
+  handleSubmit: PropTypes.func,
 };
 
 const erArsakTypeBehandlingEtterKlage = createSelector(
