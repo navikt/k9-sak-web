@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { formPropTypes } from 'redux-form';
-import { Formik, Form } from 'formik';
+import { Formik } from 'formik';
 import { injectIntl } from 'react-intl';
 import { Checkbox } from '@navikt/ds-react';
 
@@ -192,7 +192,7 @@ export const VedtakForm = ({
         }}
       >
         {formikProps => (
-          <Form>
+          <form>
             <VedtakAksjonspunktPanel
               behandlingStatusKode={behandlingStatus?.kode}
               aksjonspunktKoder={aksjonspunkter.map(ap => ap.definisjon.kode)}
@@ -309,6 +309,7 @@ export const VedtakForm = ({
                   behandlingPaaVent={behandlingPaaVent}
                   isSubmitting={formikProps.isSubmitting}
                   aksjonspunkter={aksjonspunkter}
+                  handleSubmit={formikProps.handleSubmit}
                 />
               ) : (
                 <VedtakRevurderingSubmitPanel
@@ -324,7 +325,7 @@ export const VedtakForm = ({
                 />
               )}
             </VedtakAksjonspunktPanel>
-          </Form>
+          </form>
         )}
       </Formik>
     </>

@@ -15,6 +15,7 @@ interface Props {
   behandlingPaaVent: boolean;
   isSubmitting: boolean;
   aksjonspunkter: Aksjonspunkt[];
+  handleSubmit: (e) => void;
 }
 
 const kanSendesTilGodkjenning = behandlingStatusKode =>
@@ -26,6 +27,7 @@ export default function VedtakSubmit({
   behandlingPaaVent,
   isSubmitting,
   aksjonspunkter,
+  handleSubmit,
 }: Props): JSX.Element {
   const intl = useIntl();
 
@@ -41,6 +43,7 @@ export default function VedtakSubmit({
             className={styles.mainButton}
             disabled={behandlingPaaVent || isSubmitting}
             spinner={isSubmitting}
+            onClick={handleSubmit}
           >
             {intl.formatMessage({
               id:
