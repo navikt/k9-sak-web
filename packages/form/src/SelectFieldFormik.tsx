@@ -1,9 +1,8 @@
 import React, { ReactNode } from 'react';
 import { Field } from 'formik';
-import CustomNavSelect from './CustomNavSelect';
 import LabelType from './LabelType';
 import ReadOnlyField from './ReadOnlyField';
-import renderNavField from './renderNavField';
+import CustomNavSelect from './CustomNavSelect';
 
 interface SelectFieldProps {
   name: string;
@@ -32,7 +31,9 @@ const renderReadOnly =
     return <ReadOnlyField input={{ value }} {...otherProps} />;
   };
 
-const renderNavSelect = renderNavField(CustomNavSelect);
+const renderNavSelect = ({ label, selectValues, field, ...props }) => (
+  <CustomNavSelect selectValues={selectValues} label={label} {...field} {...props} />
+);
 
 const SelectFieldFormik = ({ name, label, selectValues, validate, readOnly, ...otherProps }: SelectFieldProps) => (
   <Field

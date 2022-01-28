@@ -19,16 +19,17 @@ export const getSubmitKnappTekst = createSelector([ownProps => ownProps.aksjonsp
 
 export const VedtakRevurderingSubmitPanelImpl = ({
   intl,
-  formProps,
+  formikProps,
   readOnly,
   submitKnappTextId,
   harRedusertUtbetaling,
   visFeilmeldingFordiArsakerMangler,
   behandlingStatusKode,
+  isSubmitting,
 }) => {
   const onClick = event =>
-    !harRedusertUtbetaling || Object.values(redusertUtbetalingArsak).some(a => !!formProps[a])
-      ? formProps.handleSubmit(event)
+    !harRedusertUtbetaling || Object.values(redusertUtbetalingArsak).some(a => !!formikProps.values[a])
+      ? formikProps.handleSubmit(event)
       : visFeilmeldingFordiArsakerMangler();
 
   if (behandlingStatusKode !== behandlingStatusCode.BEHANDLING_UTREDES) {
@@ -39,13 +40,7 @@ export const VedtakRevurderingSubmitPanelImpl = ({
     <div>
       <div className={styles.margin} />
       {!readOnly && (
-        <Hovedknapp
-          mini
-          className={styles.mainButton}
-          onClick={onClick}
-          disabled={formProps.submitting}
-          spinner={formProps.submitting}
-        >
+        <Hovedknapp mini className={styles.mainButton} onClick={onClick} disabled={isSubmitting} spinner={isSubmitting}>
           {intl.formatMessage({
             id: submitKnappTextId,
           })}
@@ -58,11 +53,12 @@ export const VedtakRevurderingSubmitPanelImpl = ({
 VedtakRevurderingSubmitPanelImpl.propTypes = {
   intl: PropTypes.shape().isRequired,
   readOnly: PropTypes.bool.isRequired,
-  formProps: PropTypes.shape().isRequired,
   submitKnappTextId: PropTypes.string.isRequired,
   harRedusertUtbetaling: PropTypes.bool.isRequired,
   visFeilmeldingFordiArsakerMangler: PropTypes.func.isRequired,
   behandlingStatusKode: PropTypes.string.isRequired,
+  formikProps: PropTypes.shape(),
+  isSubmitting: PropTypes.bool,
 };
 
 const erArsakTypeBehandlingEtterKlage = createSelector(

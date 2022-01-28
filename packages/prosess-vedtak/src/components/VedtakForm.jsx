@@ -40,9 +40,9 @@ const fieldnames = {
   BEGRUNNELSE: 'begrunnelse',
 };
 
-const transformRedusertUtbetalingÅrsaker = formProps =>
+const transformRedusertUtbetalingÅrsaker = formikValues =>
   Object.values(redusertUtbetalingArsak).filter(name =>
-    Object.keys(formProps).some(key => key === name && formProps[key]),
+    Object.keys(formikValues).some(key => key === name && formikValues[key]),
   );
 
 export const VedtakForm = ({
@@ -182,7 +182,10 @@ export const VedtakForm = ({
             [fieldnames.OVERSTYRT_MOTTAKER]: JSON.stringify(dokumentdata?.[dokumentdatatype.OVERSTYRT_MOTTAKER]),
             [fieldnames.BEGRUNNELSE]: dokumentdata?.[dokumentdatatype.BEREGNING_FRITEKST],
           },
-          ...mellomlagredeInformasjonsbehov,
+          ...[
+            ...mellomlagredeInformasjonsbehov,
+            ...Object.values(redusertUtbetalingArsak).map(key => ({ [key]: undefined })),
+          ],
         )}
         onSubmit={values => {
           submitCallback(createPayload(values));
@@ -190,6 +193,7 @@ export const VedtakForm = ({
       >
         {formikProps => (
           <Form>
+            {console.log(formikProps.values)}
             <VedtakAksjonspunktPanel
               behandlingStatusKode={behandlingStatus?.kode}
               aksjonspunktKoder={aksjonspunkter.map(ap => ap.definisjon.kode)}
@@ -267,7 +271,7 @@ export const VedtakForm = ({
                   medlemskapFom={medlemskapFom}
                   harRedusertUtbetaling={harRedusertUtbetaling}
                   redusertUtbetalingArsak={redusertUtbetalingArsak}
-                  formProps={formProps}
+                  formikValues={formikProps.values}
                   erSendtInnUtenArsaker={erSendtInnUtenArsaker}
                   dokumentdata={dokumentdata}
                   behandlingArsaker={behandlingArsaker}
@@ -285,7 +289,9 @@ export const VedtakForm = ({
                 informasjonsbehovValues={filterInformasjonsbehov(formikProps.values, aktiverteInformasjonsbehov)}
                 skalBrukeOverstyrendeFritekstBrev={formikProps.values.skalBrukeOverstyrendeFritekstBrev}
                 redusertUtbetalingÅrsaker={
-                  readOnly ? vedtakVarsel?.redusertUtbetalingÅrsaker : transformRedusertUtbetalingÅrsaker(formProps)
+                  readOnly
+                    ? vedtakVarsel?.redusertUtbetalingÅrsaker
+                    : transformRedusertUtbetalingÅrsaker(formikProps.values)
                 }
                 begrunnelse={formikProps.values.begrunnelse}
                 previewCallback={previewCallback}
@@ -307,7 +313,8 @@ export const VedtakForm = ({
                 />
               ) : (
                 <VedtakRevurderingSubmitPanel
-                  formProps={formProps}
+                  formikValues={formikProps.values}
+                  isSubmitting={formikProps.isSubmitting}
                   skalBrukeOverstyrendeFritekstBrev={formikProps.values.skalBrukeOverstyrendeFritekstBrev}
                   ytelseTypeKode={ytelseTypeKode}
                   readOnly={readOnly}
