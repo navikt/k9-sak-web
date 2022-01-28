@@ -1,7 +1,6 @@
 import { expect } from 'chai';
 import organisasjonstyper from '@fpsak-frontend/kodeverk/src/organisasjonstype';
 import faktaOmBeregningTilfelle from '@fpsak-frontend/kodeverk/src/faktaOmBeregningTilfelle';
-import { lonnsendringField } from './LonnsendringForm';
 import transformValues from './ArbeidUtenInntektsmelding';
 
 
@@ -77,7 +76,6 @@ describe('<ArbeidUtenInntektsmelding>', () => {
 
   it('skal teste at transformValues gir korrekt output når lønnsendring', () => {
     const values = { };
-    values[lonnsendringField] = true;
     values.dummyField = 'tilfeldig verdi';
     const inntektVerdier = [
       { fastsattBelop: '10 000', andelsnr: 1 },
@@ -100,31 +98,6 @@ describe('<ArbeidUtenInntektsmelding>', () => {
     expect(transformedObject.fastsattUtenInntektsmelding.andelListe[0].andelsnr).to.equal(1);
     expect(transformedObject.fastsattUtenInntektsmelding.andelListe[0].fastsattBeløp).to.equal(10000);
   });
-
-
-  it('skal ikkje submitte inntekt uten lønnsendring', () => {
-    const values = { };
-    values[lonnsendringField] = false;
-    const inntektVerdier = [
-      { fastsattBelop: '', andelsnr: 1 },
-    ];
-    const faktaOmBeregning = {
-      faktaOmBeregningTilfeller: [{ kode: faktaOmBeregningTilfelle.VURDER_LONNSENDRING }],
-      arbeidsforholdMedLønnsendringUtenIM: [{ andelsnr: 1 }],
-    };
-    const bg = {
-      beregningsgrunnlagPeriode: [
-        {
-          beregningsgrunnlagPrStatusOgAndel: [
-            { andelsnr: 1, arbeidsforhold: {} },
-          ],
-        },
-      ],
-    };
-    const transformedObject = transformValues(values, inntektVerdier, faktaOmBeregning, bg, []);
-    expect(transformedObject).to.be.empty;
-  });
-
 
   it('skal transform values når ved avsluttet arbeidsforhold dagen før skjæringstidspunktet '
   + 'og et annet løpende i samme virksomhet der det er mottatt inntektsmelding', () => {
