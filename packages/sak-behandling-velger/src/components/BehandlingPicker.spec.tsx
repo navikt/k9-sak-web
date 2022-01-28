@@ -6,7 +6,8 @@ import React from 'react';
 import { BrowserRouter } from 'react-router-dom';
 import sinon from 'sinon';
 import messages from '../../i18n/nb_NO.json';
-import BehandlingPicker, { sortBehandlinger } from './BehandlingPicker';
+import BehandlingPicker from './BehandlingPicker';
+import { sortBehandlinger } from './behandlingVelgerUtils';
 
 jest.mock('axios');
 const mockedAxios = axios as jest.Mocked<typeof axios>;

@@ -8,7 +8,7 @@ import { Element, Normaltekst, Undertittel } from 'nav-frontend-typografi';
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import styles from './behandlingSelected.less';
-import { getFormattedPerioder, getStatusIcon } from './behandlingVelgerUtils';
+import { getFormattedSøknadserioder, getStatusIcon } from './behandlingVelgerUtils';
 
 const cx = classnames.bind(styles);
 interface BehandlingSelectedProps {
@@ -39,16 +39,22 @@ const BehandlingSelected: React.FC<BehandlingSelectedProps> = props => {
   });
 
   const getÅrsakerForBehandling = () => {
-    if (behandlingTypeKode === behandlingType.FORSTEGANGSSOKNAD) {
+    if (behandlingTypeKode === behandlingType.FORSTEGANGSSOKNAD || !behandlingsårsaker.length) {
       return null;
     }
+    const funnedeÅrsaker: string[] = [];
+    const unikeÅrsaker = behandlingsårsaker.filter(årsak => {
+      const erDuplikat = funnedeÅrsaker.includes(årsak);
+      funnedeÅrsaker.push(årsak);
+      return !erDuplikat;
+    });
     return (
       <div className={styles.årsakerContainer}>
         <Undertittel tag="h3" className={styles.font18}>
           <FormattedMessage id="Behandlingspunkt.ÅrsakerForBehandling" />
         </Undertittel>
         <ul className={styles.årsakerList}>
-          {behandlingsårsaker.map((årsak, index) => (
+          {unikeÅrsaker.map((årsak, index) => (
             // eslint-disable-next-line react/no-array-index-key
             <li key={`${årsak}_${index}`}>
               <Normaltekst>{årsak}</Normaltekst>
@@ -71,7 +77,7 @@ const BehandlingSelected: React.FC<BehandlingSelectedProps> = props => {
               tooltip={<FormattedMessage id="BehandlingPickerItemContent.Kalender" />}
               alignTooltipLeft
             />
-            {søknadsperioder?.length > 0 && <Normaltekst>{getFormattedPerioder(søknadsperioder)}</Normaltekst>}
+            {søknadsperioder?.length > 0 && <Normaltekst>{getFormattedSøknadserioder(søknadsperioder)}</Normaltekst>}
           </div>
           <div className={`${styles.resultContainer} ${styles.marginTop8}`}>
             {getStatusIcon(behandlingsresultatTypeKode, styles.utfallImage)}
