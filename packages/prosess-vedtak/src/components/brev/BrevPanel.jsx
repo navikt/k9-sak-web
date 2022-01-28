@@ -7,7 +7,7 @@ import {
   kanHaAutomatiskVedtaksbrev,
   kanHaFritekstbrev,
   kanOverstyreMottakere,
-  kanKunVelgeFritekstbrev,
+  kanKunVelge,
   lagVisningsnavnForMottaker,
 } from '@fpsak-frontend/utils/src/formidlingUtils';
 import { Column, Row } from 'nav-frontend-grid';
@@ -182,7 +182,7 @@ export const BrevPanel = props => {
   );
 
   const brevpanel =
-    skalBrukeOverstyrendeFritekstBrev || kanKunVelgeFritekstbrev(tilgjengeligeVedtaksbrev)
+    skalBrukeOverstyrendeFritekstBrev || kanKunVelge(tilgjengeligeVedtaksbrev, vedtaksbrevtype.FRITEKST)
       ? fritekstbrev
       : automatiskbrev;
   return (

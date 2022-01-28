@@ -13,11 +13,12 @@ import { dokumentdatatype } from '@k9-sak-web/konstanter';
 import { safeJSONParse, decodeHtmlEntity } from '@fpsak-frontend/utils';
 import {
   kanHaFritekstbrev,
-  kanKunVelgeFritekstbrev,
+  kanKunVelge,
   harMellomlagretFritekstbrev,
-  harOverstyrtMedIngenBrev,
-  kanHindreUtsending
+  harMellomLagretMedIngenBrev,
+  kanHindreUtsending,
 } from '@fpsak-frontend/utils/src/formidlingUtils';
+import vedtaksbrevtype from '@fpsak-frontend/kodeverk/src/vedtaksbrevtype';
 import vedtakVilkarPropType from '../propTypes/vedtakVilkarPropType';
 import VedtakInnvilgetPanel from './VedtakInnvilgetPanel';
 import VedtakAvslagPanel from './VedtakAvslagPanel';
@@ -174,10 +175,11 @@ export const VedtakForm = ({
           {},
           {
             [fieldnames.SKAL_BRUKE_OVERSTYRENDE_FRITEKST_BREV]:
-              kanKunVelgeFritekstbrev(tilgjengeligeVedtaksbrev) ||
+              kanKunVelge(tilgjengeligeVedtaksbrev, vedtaksbrevtype.AUTOMATISK) ||
               harMellomlagretFritekstbrev(dokumentdata, vedtakVarsel),
             [fieldnames.SKAL_HINDRE_UTSENDING_AV_BREV]:
-              readOnly && harOverstyrtMedIngenBrev(dokumentdata, vedtakVarsel),
+              kanKunVelge(tilgjengeligeVedtaksbrev, vedtaksbrevtype.INGEN) ||
+              (readOnly && harMellomLagretMedIngenBrev(dokumentdata, vedtakVarsel)),
             [fieldnames.OVERSKRIFT]: decodeHtmlEntity(dokumentdata?.[dokumentdatatype.FRITEKSTBREV]?.overskrift) || '',
             [fieldnames.BRØDTEKST]: decodeHtmlEntity(dokumentdata?.[dokumentdatatype.FRITEKSTBREV]?.brødtekst) || '',
             [fieldnames.OVERSTYRT_MOTTAKER]: JSON.stringify(dokumentdata?.[dokumentdatatype.OVERSTYRT_MOTTAKER]),
@@ -206,17 +208,17 @@ export const VedtakForm = ({
                   <Checkbox
                     checked={formikProps.values.skalBrukeOverstyrendeFritekstBrev}
                     onChange={e => onToggleOverstyring(e, formikProps.setFieldValue)}
-                    disabled={readOnly || kanKunVelgeFritekstbrev(tilgjengeligeVedtaksbrev)}
+                    disabled={readOnly || kanKunVelge(tilgjengeligeVedtaksbrev, vedtaksbrevtype.FRITEKST)}
                     value={fieldnames.SKAL_BRUKE_OVERSTYRENDE_FRITEKST_BREV}
                     size="small"
                   >
                     {intl.formatMessage({ id: 'VedtakForm.ManuellOverstyring' })}
                   </Checkbox>
                 )}
-                {(ytelseTypeKode === fagsakYtelseType.FRISINN || ytelseTypeKode === fagsakYtelseType.PLEIEPENGER) && (
+                {kanHindreUtsending(tilgjengeligeVedtaksbrev) && (
                   <Checkbox
                     onChange={e => onToggleHindreUtsending(e, formikProps.setFieldValue)}
-                    disabled={readOnly || !kanHindreUtsending()}
+                    disabled={readOnly || kanKunVelge(tilgjengeligeVedtaksbrev, vedtaksbrevtype.INGEN)}
                     checked={formikProps.values.skalHindreUtsendingAvBrev}
                     value={fieldnames.SKAL_HINDRE_UTSENDING_AV_BREV}
                     size="small"

@@ -58,9 +58,9 @@ export function kanHindreUtsending(tilgjengeligeVedtaksbrev: TilgjengeligeVedtak
   return vedtaksbrevmaler(tilgjengeligeVedtaksbrev).some(vb => vb === vedtaksbrevtype.INGEN);
 }
 
-export function kanKunVelgeFritekstbrev(tilgjengeligeVedtaksbrev: TilgjengeligeVedtaksbrev): boolean {
+export function kanKunVelge(tilgjengeligeVedtaksbrev: TilgjengeligeVedtaksbrev, brevtype) : boolean {
   const vedtaksbrev = vedtaksbrevmaler(tilgjengeligeVedtaksbrev);
-  return vedtaksbrev.length > 0 && vedtaksbrev.every(vb => vb === vedtaksbrevtype.FRITEKST);
+  return vedtaksbrev.length > 0 && vedtaksbrev.every(vb => vb === brevtype);
 }
 
 export function harMellomlagretFritekstbrev(dokumentdata, vedtakVarsel): boolean {
@@ -69,7 +69,7 @@ export function harMellomlagretFritekstbrev(dokumentdata, vedtakVarsel): boolean
   );
 }
 
-export function harOverstyrtMedIngenBrev(dokumentdata, vedtakVarsel): boolean {
+export function harMellomLagretMedIngenBrev(dokumentdata, vedtakVarsel): boolean {
   return (
     (dokumentdata?.[dokumentdatatype.VEDTAKSBREV_TYPE] ?? vedtakVarsel?.vedtaksbrev.kode) === vedtaksbrevtype.INGEN
   );
