@@ -52,7 +52,7 @@ const VedtakPanels = ({
   overlappendeYtelser,
 }) => {
   const bg = Array.isArray(beregningsgrunnlag) ? beregningsgrunnlag.filter(Boolean) : [];
-  const bgYtelsegrunnlag = bg[0].ytelsesspesifiktGrunnlag;
+  const bgYtelsegrunnlag = bg[0]?.ytelsesspesifiktGrunnlag;
   let bgPeriodeMedAvslagsårsak;
   if (ytelseTypeKode === fagsakYtelseType.FRISINN && bgYtelsegrunnlag?.avslagsårsakPrPeriode) {
     bgPeriodeMedAvslagsårsak = finnSistePeriodeMedAvslagsårsakBeregning(
