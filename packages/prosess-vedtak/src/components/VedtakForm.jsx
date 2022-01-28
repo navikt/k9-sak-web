@@ -16,6 +16,7 @@ import {
   kanKunVelgeFritekstbrev,
   harMellomlagretFritekstbrev,
   harOverstyrtMedIngenBrev,
+  kanHindreUtsending
 } from '@fpsak-frontend/utils/src/formidlingUtils';
 import vedtakVilkarPropType from '../propTypes/vedtakVilkarPropType';
 import VedtakInnvilgetPanel from './VedtakInnvilgetPanel';
@@ -215,7 +216,7 @@ export const VedtakForm = ({
                 {(ytelseTypeKode === fagsakYtelseType.FRISINN || ytelseTypeKode === fagsakYtelseType.PLEIEPENGER) && (
                   <Checkbox
                     onChange={e => onToggleHindreUtsending(e, formikProps.setFieldValue)}
-                    disabled={readOnly}
+                    disabled={readOnly || !kanHindreUtsending()}
                     checked={formikProps.values.skalHindreUtsendingAvBrev}
                     value={fieldnames.SKAL_HINDRE_UTSENDING_AV_BREV}
                     size="small"

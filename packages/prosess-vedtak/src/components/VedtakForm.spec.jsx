@@ -11,7 +11,7 @@ import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 
 import dokumentMalType from '@fpsak-frontend/kodeverk/src/dokumentMalType';
 import vedtaksbrevtype from '@fpsak-frontend/kodeverk/src/vedtaksbrevtype';
-import { buildInitialValues, VedtakForm } from './VedtakForm';
+import { VedtakForm } from './VedtakForm';
 import VedtakInnvilgetPanel from './VedtakInnvilgetPanel';
 import VedtakAvslagPanel from './VedtakAvslagPanel';
 import VedtakCheckbox from './VedtakCheckbox';
@@ -64,7 +64,6 @@ describe('<VedtakForm>', () => {
 
     const wrapper = shallowWithIntl(
       <VedtakForm
-        {...reduxFormPropsMock}
         intl={intlMock}
         antallBarn={2}
         previewCallback={previewCallback}
