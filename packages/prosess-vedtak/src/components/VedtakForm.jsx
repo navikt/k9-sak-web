@@ -17,6 +17,7 @@ import {
   harMellomlagretFritekstbrev,
   harMellomLagretMedIngenBrev,
   kanHindreUtsending,
+  kanHaAutomatiskVedtaksbrev,
 } from '@fpsak-frontend/utils/src/formidlingUtils';
 import vedtaksbrevtype from '@fpsak-frontend/kodeverk/src/vedtaksbrevtype';
 import vedtakVilkarPropType from '../propTypes/vedtakVilkarPropType';
@@ -176,7 +177,8 @@ export const VedtakForm = ({
           {
             [fieldnames.SKAL_BRUKE_OVERSTYRENDE_FRITEKST_BREV]:
               kanKunVelge(tilgjengeligeVedtaksbrev, vedtaksbrevtype.AUTOMATISK) ||
-              harMellomlagretFritekstbrev(dokumentdata, vedtakVarsel),
+              harMellomlagretFritekstbrev(dokumentdata, vedtakVarsel) ||
+              (kanHaFritekstbrev(tilgjengeligeVedtaksbrev) && !kanHaAutomatiskVedtaksbrev(tilgjengeligeVedtaksbrev)),
             [fieldnames.SKAL_HINDRE_UTSENDING_AV_BREV]:
               kanKunVelge(tilgjengeligeVedtaksbrev, vedtaksbrevtype.INGEN) ||
               (readOnly && harMellomLagretMedIngenBrev(dokumentdata, vedtakVarsel)),
@@ -208,7 +210,12 @@ export const VedtakForm = ({
                   <Checkbox
                     checked={formikProps.values.skalBrukeOverstyrendeFritekstBrev}
                     onChange={e => onToggleOverstyring(e, formikProps.setFieldValue)}
-                    disabled={readOnly || kanKunVelge(tilgjengeligeVedtaksbrev, vedtaksbrevtype.FRITEKST)}
+                    disabled={
+                      readOnly ||
+                      kanKunVelge(tilgjengeligeVedtaksbrev, vedtaksbrevtype.FRITEKST) ||
+                      (formikProps.values.skalBrukeOverstyrendeFritekstBrev &&
+                        !kanHaAutomatiskVedtaksbrev(tilgjengeligeVedtaksbrev))
+                    }
                     value={fieldnames.SKAL_BRUKE_OVERSTYRENDE_FRITEKST_BREV}
                     size="small"
                   >
@@ -218,7 +225,12 @@ export const VedtakForm = ({
                 {kanHindreUtsending(tilgjengeligeVedtaksbrev) && (
                   <Checkbox
                     onChange={e => onToggleHindreUtsending(e, formikProps.setFieldValue)}
-                    disabled={readOnly || kanKunVelge(tilgjengeligeVedtaksbrev, vedtaksbrevtype.INGEN)}
+                    disabled={
+                      readOnly ||
+                      kanKunVelge(tilgjengeligeVedtaksbrev, vedtaksbrevtype.INGEN) ||
+                      (formikProps.values.skalHindreUtsendingAvBrev &&
+                        !kanHaAutomatiskVedtaksbrev(tilgjengeligeVedtaksbrev))
+                    }
                     checked={formikProps.values.skalHindreUtsendingAvBrev}
                     value={fieldnames.SKAL_HINDRE_UTSENDING_AV_BREV}
                     size="small"
@@ -239,6 +251,8 @@ export const VedtakForm = ({
                       behandlingsresultat={behandlingresultat}
                       ytelseTypeKode={ytelseTypeKode}
                       tilbakekrevingvalg={tilbakekrevingvalg}
+                      simuleringResultat={simuleringResultat}
+                      alleKodeverk={alleKodeverk}
                     />
                   )}
 
@@ -249,6 +263,7 @@ export const VedtakForm = ({
                       ytelseTypeKode={ytelseTypeKode}
                       alleKodeverk={alleKodeverk}
                       tilbakekrevingvalg={tilbakekrevingvalg}
+                      simuleringResultat={simuleringResultat}
                       vilkar={vilkar}
                     />
                   )}
