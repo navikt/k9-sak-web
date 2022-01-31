@@ -328,6 +328,10 @@ export const VedtakForm = ({
                   isSubmitting={formikProps.isSubmitting}
                   aksjonspunkter={aksjonspunkter}
                   handleSubmit={formikProps.handleSubmit}
+                  dokumentdata={dokumentdata}
+                  lagreDokumentdata={lagreDokumentdata}
+                  brødtekst={formikProps.values.brødtekst}
+                  overskrift={formikProps.values.overskrift}
                 />
               ) : (
                 <VedtakRevurderingSubmitPanel
@@ -339,6 +343,10 @@ export const VedtakForm = ({
                   readOnly={readOnly}
                   behandlingStatusKode={behandlingStatus?.kode}
                   harRedusertUtbetaling={harRedusertUtbetaling}
+                  dokumentdata={dokumentdata}
+                  lagreDokumentdata={lagreDokumentdata}
+                  brødtekst={formikProps.values.brødtekst}
+                  overskrift={formikProps.values.overskrift}
                   visFeilmeldingFordiArsakerMangler={() => setErSendtInnUtenArsaker(true)}
                 />
               )}

@@ -1,21 +1,39 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { createSelector } from 'reselect';
-import { injectIntl } from 'react-intl';
-import { Hovedknapp } from 'nav-frontend-knapper';
+import { injectIntl, IntlShape } from 'react-intl';
 import { connect } from 'react-redux';
+import { FormikState } from 'formik';
+import { Button } from '@navikt/ds-react';
 
 import klageBehandlingArsakType from '@fpsak-frontend/kodeverk/src/behandlingArsakType';
 import behandlingStatusCode from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 
-import styles from '../vedtakForm.less';
+import { DokumentDataType, LagreDokumentdataType } from '@k9-sak-web/types/src/dokumentdata';
+import MellomLagreBrev from '../brev/MellomLagreBrev';
 import redusertUtbetalingArsak from '../../kodeverk/redusertUtbetalingArsak';
+import styles from '../vedtakForm.less';
 
 export const getSubmitKnappTekst = createSelector([ownProps => ownProps.aksjonspunkter], aksjonspunkter =>
   aksjonspunkter && aksjonspunkter.some(ap => ap.erAktivt === true && ap.toTrinnsBehandling === true)
     ? 'VedtakForm.TilGodkjenning'
     : 'VedtakForm.FattVedtak',
 );
+
+interface OwnProps {
+  intl: IntlShape;
+  formikProps: FormikState<any>;
+  readOnly: boolean;
+  submitKnappTextId: string;
+  harRedusertUtbetaling: boolean;
+  visFeilmeldingFordiArsakerMangler: () => void;
+  behandlingStatusKode: string;
+  isSubmitting: boolean;
+  handleSubmit: (event: any) => void;
+  brødtekst: string;
+  overskrift: string;
+  dokumentdata: DokumentDataType;
+  lagreDokumentdata: LagreDokumentdataType;
+}
 
 export const VedtakRevurderingSubmitPanelImpl = ({
   intl,
@@ -27,11 +45,29 @@ export const VedtakRevurderingSubmitPanelImpl = ({
   behandlingStatusKode,
   isSubmitting,
   handleSubmit,
-}) => {
+  lagreDokumentdata,
+  dokumentdata,
+  overskrift,
+  brødtekst,
+}: OwnProps): JSX.Element => {
   const onClick = event =>
     !harRedusertUtbetaling || Object.values(redusertUtbetalingArsak).some(a => !!formikProps.values[a])
       ? handleSubmit(event)
       : visFeilmeldingFordiArsakerMangler();
+
+  const submitKnapp = (
+    <Button
+      variant="primary"
+      className={styles.mainButton}
+      onClick={onClick}
+      disabled={isSubmitting}
+      loading={isSubmitting}
+    >
+      {intl.formatMessage({
+        id: submitKnappTextId,
+      })}
+    </Button>
+  );
 
   if (behandlingStatusKode !== behandlingStatusCode.BEHANDLING_UTREDES) {
     return null;
@@ -41,26 +77,18 @@ export const VedtakRevurderingSubmitPanelImpl = ({
     <div>
       <div className={styles.margin} />
       {!readOnly && (
-        <Hovedknapp mini className={styles.mainButton} onClick={onClick} disabled={isSubmitting} spinner={isSubmitting}>
-          {intl.formatMessage({
-            id: submitKnappTextId,
-          })}
-        </Hovedknapp>
+        <>
+          <MellomLagreBrev
+            lagreDokumentdata={lagreDokumentdata}
+            dokumentdata={dokumentdata}
+            overskrift={overskrift}
+            brødtekst={brødtekst}
+            submitKnapp={submitKnapp}
+          />
+        </>
       )}
     </div>
   );
-};
-
-VedtakRevurderingSubmitPanelImpl.propTypes = {
-  intl: PropTypes.shape().isRequired,
-  readOnly: PropTypes.bool.isRequired,
-  submitKnappTextId: PropTypes.string.isRequired,
-  harRedusertUtbetaling: PropTypes.bool.isRequired,
-  visFeilmeldingFordiArsakerMangler: PropTypes.func.isRequired,
-  behandlingStatusKode: PropTypes.string.isRequired,
-  formikProps: PropTypes.shape(),
-  isSubmitting: PropTypes.bool,
-  handleSubmit: PropTypes.func,
 };
 
 const erArsakTypeBehandlingEtterKlage = createSelector(

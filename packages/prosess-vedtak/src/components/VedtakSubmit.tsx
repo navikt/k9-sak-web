@@ -4,8 +4,10 @@ import behandlingStatusCode from '@fpsak-frontend/kodeverk/src/behandlingStatus'
 import { useIntl } from 'react-intl';
 
 import { Column, Row } from 'nav-frontend-grid';
-import { Hovedknapp } from 'nav-frontend-knapper';
+import { Button } from '@navikt/ds-react';
 import { Aksjonspunkt } from '@k9-sak-web/types';
+import { DokumentDataType, LagreDokumentdataType } from '@k9-sak-web/types/src/dokumentdata';
+import MellomLagreBrev from './brev/MellomLagreBrev';
 
 import styles from './vedtakForm.less';
 
@@ -16,6 +18,10 @@ interface Props {
   isSubmitting: boolean;
   aksjonspunkter: Aksjonspunkt[];
   handleSubmit: (e) => void;
+  brødtekst: string;
+  overskrift: string;
+  dokumentdata: DokumentDataType;
+  lagreDokumentdata: LagreDokumentdataType;
 }
 
 const kanSendesTilGodkjenning = behandlingStatusKode =>
@@ -28,8 +34,29 @@ export default function VedtakSubmit({
   isSubmitting,
   aksjonspunkter,
   handleSubmit,
+  lagreDokumentdata,
+  dokumentdata,
+  overskrift,
+  brødtekst,
 }: Props): JSX.Element {
   const intl = useIntl();
+
+  const submitKnapp = (
+    <Button
+      variant="primary"
+      className={styles.mainButton}
+      disabled={behandlingPaaVent || isSubmitting}
+      loading={isSubmitting}
+      onClick={handleSubmit}
+    >
+      {intl.formatMessage({
+        id:
+          aksjonspunkter && aksjonspunkter.some(ap => ap.erAktivt === true && ap.toTrinnsBehandling === true)
+            ? 'VedtakForm.TilGodkjenning'
+            : 'VedtakForm.FattVedtak',
+      })}
+    </Button>
+  );
 
   if (!kanSendesTilGodkjenning(behandlingStatusKode)) {
     return null;
@@ -38,20 +65,15 @@ export default function VedtakSubmit({
     <Row>
       <Column xs="12">
         {!readOnly && (
-          <Hovedknapp
-            mini
-            className={styles.mainButton}
-            disabled={behandlingPaaVent || isSubmitting}
-            spinner={isSubmitting}
-            onClick={handleSubmit}
-          >
-            {intl.formatMessage({
-              id:
-                aksjonspunkter && aksjonspunkter.some(ap => ap.erAktivt === true && ap.toTrinnsBehandling === true)
-                  ? 'VedtakForm.TilGodkjenning'
-                  : 'VedtakForm.FattVedtak',
-            })}
-          </Hovedknapp>
+          <>
+            <MellomLagreBrev
+              lagreDokumentdata={lagreDokumentdata}
+              dokumentdata={dokumentdata}
+              overskrift={overskrift}
+              brødtekst={brødtekst}
+              submitKnapp={submitKnapp}
+            />
+          </>
         )}
       </Column>
     </Row>
