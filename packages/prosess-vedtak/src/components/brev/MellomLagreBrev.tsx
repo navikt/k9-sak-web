@@ -65,7 +65,8 @@ const MellomLagreBrev = ({
    * Håndter klikk på lagre knappen, send lagre kallet og oppdatert original strengen for å vise optimistisk
    * status til brukeren
    */
-  const onMellomlagreClick = async () => {
+  const onMellomlagreClick = async event => {
+    event.stopPropagation();
     await lagreDokumentdata({ ...dokumentdata, FRITEKSTBREV: { brødtekst, overskrift } });
     setOriginalBrev(brevTilStreng(overskrift, brødtekst));
   };
@@ -106,7 +107,7 @@ const MellomLagreBrev = ({
               </AlertStripe>
               <VerticalSpacer sixteenPx />
               {submitKnapp}
-              <Button variant="tertiary" size="medium" onClick={onMellomlagreClick} disabled={erTekstLik}>
+              <Button type="button" variant="tertiary" size="medium" onClick={onMellomlagreClick} disabled={erTekstLik}>
                 {intl.formatMessage({ id: 'VedtakForm.FritekstBrevLagre' })}
               </Button>
               <VerticalSpacer sixteenPx />
@@ -121,7 +122,7 @@ const MellomLagreBrev = ({
               {submitKnapp}
               <VerticalSpacer sixteenPx />
             </>
-          )} 
+          )}
         </Column>
       </Row>
     );
