@@ -28,7 +28,6 @@ class PanelDef extends ProsessStegPanelDef {
     PleiepengerSluttfaseBehandlingApiKeys.TILBAKEKREVINGVALG,
     PleiepengerSluttfaseBehandlingApiKeys.SEND_VARSEL_OM_REVURDERING,
     PleiepengerSluttfaseBehandlingApiKeys.MEDLEMSKAP,
-    PleiepengerSluttfaseBehandlingApiKeys.VEDTAK_VARSEL,
     PleiepengerSluttfaseBehandlingApiKeys.TILGJENGELIGE_VEDTAKSBREV,
     PleiepengerSluttfaseBehandlingApiKeys.INFORMASJONSBEHOV_VEDTAKSBREV,
     PleiepengerSluttfaseBehandlingApiKeys.DOKUMENTDATA_HENTE,
