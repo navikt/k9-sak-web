@@ -218,7 +218,7 @@ BrevPanel.propTypes = {
   informasjonsbehovVedtaksbrev: PropTypes.shape({
     informasjonsbehov: PropTypes.arrayOf(PropTypes.shape({ type: PropTypes.string })),
   }),
-  informasjonsbehovValues: PropTypes.shape().isRequired,
+  informasjonsbehovValues: PropTypes.arrayOf(PropTypes.string).isRequired,
   skalBrukeOverstyrendeFritekstBrev: PropTypes.bool.isRequired,
   previewCallback: PropTypes.func.isRequired,
   redusertUtbetalingÅrsaker: PropTypes.arrayOf(PropTypes.string),
