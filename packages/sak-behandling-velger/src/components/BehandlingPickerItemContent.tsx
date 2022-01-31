@@ -7,7 +7,7 @@ import { Normaltekst, Undertittel } from 'nav-frontend-typografi';
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import styles from './behandlingPickerItemContent.less';
-import { getFormattedSøknadserioder, getStatusIcon } from './behandlingVelgerUtils';
+import { getFormattedPerioder, getStatusIcon } from './behandlingVelgerUtils';
 
 const getAutomatiskRevurderingText = () => <span className={styles.smallerUndertittel}>(automatisk behandlet)</span>;
 
@@ -45,7 +45,7 @@ const BehandlingPickerItemContent: React.FC<OwnProps> = ({
             tooltip={<FormattedMessage id="BehandlingPickerItemContent.Kalender" />}
             alignTooltipLeft
           />
-          {søknadsperioder?.length > 0 && <Normaltekst>{getFormattedSøknadserioder(søknadsperioder)}</Normaltekst>}
+          {søknadsperioder?.length > 0 && <Normaltekst>{getFormattedPerioder(søknadsperioder)}</Normaltekst>}
         </div>
         <div className={styles.resultContainer}>
           {getStatusIcon(behandlingsresultatTypeKode, styles.utfallImage)}

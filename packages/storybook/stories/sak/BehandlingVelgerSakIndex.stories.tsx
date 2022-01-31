@@ -1,12 +1,9 @@
 /* eslint-disable max-len */
-import fagsakStatus from '@fpsak-frontend/kodeverk/src/fagsakStatus';
-import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
-import relasjonsRolleType from '@fpsak-frontend/kodeverk/src/relasjonsRolleType';
 import BehandlingVelgerSakIndex from '@k9-sak-web/sak-behandling-velger';
-import { Behandling, Fagsak, Kodeverk } from '@k9-sak-web/types';
+import { Behandling, Kodeverk } from '@k9-sak-web/types';
 import { boolean, number, object, withKnobs } from '@storybook/addon-knobs';
-import React, { useState } from 'react';
+import React from 'react';
 import withReduxAndRouterProvider from '../../decorators/withReduxAndRouter';
 import alleKodeverk from '../mocks/alleKodeverk.json';
 
@@ -252,29 +249,6 @@ const behandlinger = [
   },
 ];
 
-const fagsak = {
-  saksnummer: '35425245',
-  sakstype: {
-    kode: fagsakYtelseType.PLEIEPENGER,
-    kodeverk: '',
-  },
-  relasjonsRolleType: {
-    kode: relasjonsRolleType.MOR,
-    kodeverk: '',
-  },
-  status: {
-    kode: fagsakStatus.UNDER_BEHANDLING,
-    kodeverk: '',
-  },
-  barnFodt: '2020-01-01',
-  opprettet: '2020-01-01',
-  endret: '2020-01-01',
-  antallBarn: 1,
-  kanRevurderingOpprettes: false,
-  skalBehandlesAvInfotrygd: false,
-  dekningsgrad: 100,
-} as Fagsak;
-
 const locationMock = {
   pathname: 'test',
   search: 'test',
@@ -294,20 +268,14 @@ export default {
   decorators: [withKnobs, withReduxAndRouterProvider],
 };
 
-export const visPanelForValgAvBehandlinger = () => {
-  const [visAlle, toggleVisAlle] = useState(false);
-  return (
+export const visPanelForValgAvBehandlinger = () => (
     <div style={{ width: '600px' }}>
       <BehandlingVelgerSakIndex
         behandlinger={object('behandlinger', behandlinger as Behandling[])}
         getBehandlingLocation={() => locationMock}
         noExistingBehandlinger={boolean('noExistingBehandlinger', false)}
         behandlingId={number('behandlingId', 1)}
-        showAll={visAlle}
-        toggleShowAll={() => toggleVisAlle(!visAlle)}
         getKodeverkFn={getKodeverkFn}
-        fagsak={fagsak}
       />
     </div>
   );
-};
