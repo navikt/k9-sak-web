@@ -114,14 +114,14 @@ export const BrevPanel = props => {
     overskrift,
     behandlingResultat,
     overstyrtMottaker,
-    formProps,
+    formikProps,
   } = props;
 
   const automatiskBrevCallback = getPreviewAutomatiskBrevCallback({
     fritekst: begrunnelse,
     redusertUtbetalingÅrsaker,
     overstyrtMottaker,
-    formProps,
+    formProps: formikProps,
     previewCallback,
     tilgjengeligeVedtaksbrev,
     informasjonsbehovValues,
@@ -138,7 +138,7 @@ export const BrevPanel = props => {
     brødtekst,
     overskrift,
     overstyrtMottaker,
-    formProps,
+    formProps: formikProps,
     previewCallback,
     tilgjengeligeVedtaksbrev,
   });
@@ -228,7 +228,7 @@ BrevPanel.propTypes = {
   behandlingResultat: PropTypes.shape(),
   personopplysninger: PropTypes.shape(),
   arbeidsgiverOpplysningerPerId: PropTypes.shape(),
-  formProps: PropTypes.shape().isRequired,
+  formikProps: PropTypes.shape().isRequired,
 };
 
 BrevPanel.defaultProps = {

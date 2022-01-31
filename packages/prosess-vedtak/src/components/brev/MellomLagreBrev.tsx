@@ -95,7 +95,7 @@ const MellomLagreBrev = ({
     }
   }, [originalBrev, overskrift, brødtekst]);
 
-  if (erTekstEndret) {
+  if (erTekstEndret && (overskrift || brødtekst)) {
     return (
       <Row>
         <Column xs="12">
