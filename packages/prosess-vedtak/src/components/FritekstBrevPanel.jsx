@@ -2,9 +2,10 @@ import React from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
 import PropTypes from 'prop-types';
 import { Column, Row } from 'nav-frontend-grid';
-import { Undertittel } from 'nav-frontend-typografi';
+import { Heading } from '@navikt/ds-react';
 
 import { hasValidText, maxLength, minLength, required } from '@fpsak-frontend/utils';
+import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import TextAreaFormik from '../../../form/src/TextAreaFormik';
 
 import styles from './vedtakForm.less';
@@ -34,11 +35,12 @@ const FritekstBrevPanel = ({ previewBrev, readOnly, harAutomatiskVedtaksbrev }) 
           </Row>
         </div>
       )}
+      {!harAutomatiskVedtaksbrev && <VerticalSpacer sixteenPx />}
       <Row>
         <Column xs="12">
-          <Undertittel>
+          <Heading size="small" level={2}>
             <FormattedMessage id="VedtakForm.Brev" />
-          </Undertittel>
+          </Heading>
         </Column>
       </Row>
       <Row>
@@ -53,6 +55,7 @@ const FritekstBrevPanel = ({ previewBrev, readOnly, harAutomatiskVedtaksbrev }) 
           />
         </Column>
       </Row>
+      <VerticalSpacer sixteenPx />
       <Row>
         <Column xs="12">
           <TextAreaFormik

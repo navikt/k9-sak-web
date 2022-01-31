@@ -7,6 +7,7 @@ import LabelType from './LabelType';
 import ReadOnlyField from './ReadOnlyField';
 import styles from './textAreaField.less';
 import { validateAll } from './formikUtils';
+import './TextAreaFormik.less'
 
 interface TextAreaFieldProps {
   name: string;

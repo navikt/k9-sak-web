@@ -85,11 +85,11 @@ export const VedtakInnvilgetRevurderingPanelImpl = ({
     <>
       {ytelseTypeKode === fagsakYtelseType.ENGANGSSTONAD && (
         <div>
-          <Undertekst>{intl.formatMessage({ id: 'VedtakForm.Resultat' })}</Undertekst>
-          <Normaltekst>
+          <Normaltekst>{intl.formatMessage({ id: 'VedtakForm.Resultat' })}</Normaltekst>
+          <Undertekst>
             {intl.formatMessage({ id: resultTextES(beregningResultat, originaltBeregningResultat) })}
             {tilbakekrevingText && `. ${intl.formatMessage({ id: tilbakekrevingText })}`}
-          </Normaltekst>
+          </Undertekst>
           <VerticalSpacer sixteenPx />
           <Row>
             {beregningResultat && (
@@ -107,19 +107,19 @@ export const VedtakInnvilgetRevurderingPanelImpl = ({
         ytelseTypeKode === fagsakYtelseType.FRISINN ||
         ytelseTypeKode === fagsakYtelseType.PLEIEPENGER) && (
         <div>
-          <Undertekst>{intl.formatMessage({ id: 'VedtakForm.Resultat' })}</Undertekst>
-          <Normaltekst>
+          <Normaltekst>{intl.formatMessage({ id: 'VedtakForm.Resultat' })}</Normaltekst>
+          <Undertekst>
             {lagKonsekvensForYtelsenTekst(konsekvenserForYtelsen, getKodeverknavn)}
             {lagKonsekvensForYtelsenTekst(konsekvenserForYtelsen, getKodeverknavn) !== '' && tilbakekrevingText && '. '}
             {tilbakekrevingText &&
               intl.formatMessage({
                 id: tilbakekrevingText,
               })}
-            {bgPeriodeMedAvslagsårsak && <Normaltekst>{lagPeriodevisning(bgPeriodeMedAvslagsårsak)}</Normaltekst>}
-          </Normaltekst>
+            {bgPeriodeMedAvslagsårsak && <Undertekst>{lagPeriodevisning(bgPeriodeMedAvslagsårsak)}</Undertekst>}
+          </Undertekst>
           <VerticalSpacer sixteenPx />
-          <Undertekst>{intl.formatMessage({ id: 'VedtakForm.RevurderingFP.Aarsak' })}</Undertekst>
-          {revurderingsAarsakString !== undefined && <Normaltekst>{revurderingsAarsakString}</Normaltekst>}
+          <Normaltekst>{intl.formatMessage({ id: 'VedtakForm.RevurderingFP.Aarsak' })}</Normaltekst>
+          {revurderingsAarsakString !== undefined && <Undertekst>{revurderingsAarsakString}</Undertekst>}
         </div>
       )}
     </>
