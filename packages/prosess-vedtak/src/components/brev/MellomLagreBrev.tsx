@@ -94,38 +94,47 @@ const MellomLagreBrev = ({
     }
   }, [originalBrev, overskrift, brødtekst]);
 
+  if (erTekstEndret) {
+    return (
+      <Row>
+        <Column xs="12">
+          {!erTekstLik && (
+            <>
+              <VerticalSpacer sixteenPx />
+              <AlertStripe type="advarsel" form="inline">
+                {intl.formatMessage({ id: 'VedtakForm.FritekstBrevIkkeLagret' })}
+              </AlertStripe>
+              <VerticalSpacer sixteenPx />
+              {submitKnapp}
+              <Button variant="tertiary" size="medium" onClick={onMellomlagreClick} disabled={erTekstLik}>
+                {intl.formatMessage({ id: 'VedtakForm.FritekstBrevLagre' })}
+              </Button>
+              <VerticalSpacer sixteenPx />
+            </>
+          )}
+          {erTekstLik && (
+            <>
+              <VerticalSpacer sixteenPx />
+              <AlertStripe type="suksess" form="inline">
+                {intl.formatMessage({ id: 'VedtakForm.FritekstBrevLagret' })}
+              </AlertStripe>
+              {submitKnapp}
+              <VerticalSpacer sixteenPx />
+            </>
+          )} 
+        </Column>
+      </Row>
+    );
+  }
   return (
     <>
-      {erTekstEndret && (
-        <Row>
-          <Column xs="12">
-            {!erTekstLik && (
-              <>
-                <VerticalSpacer sixteenPx />
-                <AlertStripe type="advarsel" form="inline">
-                  {intl.formatMessage({ id: 'VedtakForm.FritekstBrevIkkeLagret' })}
-                </AlertStripe>
-                <VerticalSpacer sixteenPx />
-                {submitKnapp}
-                <Button variant="tertiary" size="medium" onClick={onMellomlagreClick} disabled={erTekstLik}>
-                  {intl.formatMessage({ id: 'VedtakForm.FritekstBrevLagre' })}
-                </Button>
-                <VerticalSpacer sixteenPx />
-              </>
-            )}
-            {erTekstLik && (
-              <>
-                <VerticalSpacer sixteenPx />
-                <AlertStripe type="suksess" form="inline">
-                  {intl.formatMessage({ id: 'VedtakForm.FritekstBrevLagret' })}
-                </AlertStripe>
-                {submitKnapp}
-                <VerticalSpacer sixteenPx />
-              </>
-            )}
-          </Column>
-        </Row>
-      )}
+      <Row>
+        <Column xs="12">
+          <VerticalSpacer sixteenPx />
+          {submitKnapp}
+          <VerticalSpacer sixteenPx />
+        </Column>
+      </Row>
     </>
   );
 };
