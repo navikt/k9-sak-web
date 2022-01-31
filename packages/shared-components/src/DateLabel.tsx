@@ -15,17 +15,8 @@ interface OwnProps {
  * <DateLabel dateString="2017-08-31" />
  * ```
  */
-
-function isValidDate(d) {
-  return d instanceof Date && !Number.isNaN(d.getTime());
-}
-
-const DateLabel = ({ dateString }: OwnProps) => {
-  const date = new Date(dateString);
-  if (!isValidDate(date)) {
-    return null;
-  }
-  return <FormattedDate day="2-digit" month="2-digit" year="numeric" value={date} />;
-};
+const DateLabel = ({ dateString }: OwnProps) => (
+  <FormattedDate day="2-digit" month="2-digit" year="numeric" value={new Date(dateString)} />
+);
 
 export default DateLabel;
