@@ -52,6 +52,7 @@ export enum PleiepengerSluttfaseBehandlingApiKeys {
   OVERSTYR_INPUT_BEREGNING = 'OVERSTYR_INPUT_BEREGNING',
   OVERLAPPENDE_YTELSER = 'OVERLAPPENDE_YTELSER',
   HENT_SAKSBEHANDLERE = 'HENT_SAKSBEHANDLERE',
+  OM_PLEIETRENGENDE = 'OM_PLEIETRENGENDE',
 }
 
 const endpoints = new RestApiConfigBuilder()
@@ -90,6 +91,7 @@ const endpoints = new RestApiConfigBuilder()
   .withRel('overstyr-input-beregning', PleiepengerSluttfaseBehandlingApiKeys.OVERSTYR_INPUT_BEREGNING)
   .withRel('overlappende-ytelser', PleiepengerSluttfaseBehandlingApiKeys.OVERLAPPENDE_YTELSER)
   .withRel('saksbehandler-info', PleiepengerSluttfaseBehandlingApiKeys.HENT_SAKSBEHANDLERE)
+  .withRel('om-pleietrengende', PleiepengerSluttfaseBehandlingApiKeys.OM_PLEIETRENGENDE)
 
   // operasjoner
   .withRel('dokumentdata-lagre', PleiepengerSluttfaseBehandlingApiKeys.DOKUMENTDATA_LAGRE)
