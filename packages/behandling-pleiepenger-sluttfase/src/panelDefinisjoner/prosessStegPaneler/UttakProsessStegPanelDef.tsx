@@ -10,7 +10,7 @@ class PanelDef extends ProsessStegPanelDef {
   getKomponent = ({ behandling, uttaksperioder, arbeidsgiverOpplysningerPerId, aksjonspunkter }) => (
     <Uttak
       uuid={behandling.uuid}
-      uttaksperioder={uttaksperioder?.perioder}
+      uttaksperioder={uttaksperioder}
       arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
       aksjonspunkter={aksjonspunkter}
     />
