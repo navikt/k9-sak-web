@@ -40,7 +40,6 @@ export enum PleiepengerSluttfaseBehandlingApiKeys {
   VERGE_OPPRETT = 'VERGE_OPPRETT',
   VERGE_FJERN = 'VERGE_FJERN',
   SYKDOM = 'SYKDOM',
-  VEDTAK_VARSEL = 'VEDTAK_VARSEL',
   TILGJENGELIGE_VEDTAKSBREV = 'TILGJENGELIGE_VEDTAKSBREV',
   INFORMASJONSBEHOV_VEDTAKSBREV = 'INFORMASJONSBEHOV_VEDTAKSBREV',
   DOKUMENTDATA_LAGRE = 'DOKUMENTDATA_LAGRE',
@@ -82,7 +81,6 @@ const endpoints = new RestApiConfigBuilder()
   .withRel('uttak-stonadskontoer', PleiepengerSluttfaseBehandlingApiKeys.UTTAK_STONADSKONTOER)
   .withRel('uttak-kontroller-fakta-perioder', PleiepengerSluttfaseBehandlingApiKeys.UTTAK_KONTROLLER_FAKTA_PERIODER)
   .withRel('sykdom', PleiepengerSluttfaseBehandlingApiKeys.SYKDOM)
-  .withRel('vedtak-varsel', PleiepengerSluttfaseBehandlingApiKeys.VEDTAK_VARSEL)
   .withRel('tilgjengelige-vedtaksbrev', PleiepengerSluttfaseBehandlingApiKeys.TILGJENGELIGE_VEDTAKSBREV)
   .withRel('informasjonsbehov-vedtaksbrev', PleiepengerSluttfaseBehandlingApiKeys.INFORMASJONSBEHOV_VEDTAKSBREV)
   .withRel('pleiepenger-sykt-barn-uttaksplan', PleiepengerSluttfaseBehandlingApiKeys.UTTAK)
