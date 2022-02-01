@@ -18,6 +18,8 @@ import {
   harMellomLagretMedIngenBrev,
   kanHindreUtsending,
   kanHaAutomatiskVedtaksbrev,
+  filterInformasjonsbehov,
+  harPotensieltFlereInformasjonsbehov,
 } from '@fpsak-frontend/utils/src/formidlingUtils';
 import vedtaksbrevtype from '@fpsak-frontend/kodeverk/src/vedtaksbrevtype';
 import vedtakVilkarPropType from '../propTypes/vedtakVilkarPropType';
@@ -99,14 +101,6 @@ export const VedtakForm = ({
     }
   };
 
-  const harPotensieltFlereInformasjonsbehov = infobehovVedtaksbrev => {
-    if (infobehovVedtaksbrev) {
-      const { informasjonsbehov } = infobehovVedtaksbrev;
-      return informasjonsbehov.length > 0;
-    }
-    return false;
-  };
-
   const payloadMedEkstraInformasjon = values => {
     const begrunnelser = informasjonsbehovVedtaksbrev?.informasjonsbehov.map(({ kode }) => ({
       kode,
@@ -151,17 +145,6 @@ export const VedtakForm = ({
   const createPayload = harPotensieltFlereInformasjonsbehov(informasjonsbehovVedtaksbrev)
     ? values => payloadMedEkstraInformasjon(values)
     : values => payload(values);
-
-  const filterInformasjonsbehov = (formikValues, aktiverteInformasjonsbehov) => {
-    const aktiveVerdier = [];
-    const keys = Object.keys(formikValues);
-
-    keys.forEach(key => {
-      if (aktiverteInformasjonsbehov.some(informasjonsbehov => informasjonsbehov.kode === key))
-        aktiveVerdier.push({ [key]: formikValues[key] });
-    });
-    return aktiveVerdier;
-  };
 
   const harRedusertUtbetaling = ytelseTypeKode === fagsakYtelseType.FRISINN;
   const aktiverteInformasjonsbehov =

@@ -82,6 +82,25 @@ export function kanOverstyreMottakere(tilgjengeligeVedtaksbrev: TilgjengeligeVed
   );
 }
 
+export const filterInformasjonsbehov = (formikValues, aktiverteInformasjonsbehov) => {
+  const aktiveVerdier = [];
+  const keys = Object.keys(formikValues);
+
+  keys.forEach(key => {
+    if (aktiverteInformasjonsbehov.some(informasjonsbehov => informasjonsbehov.kode === key))
+      aktiveVerdier.push({ [key]: formikValues[key] });
+  });
+  return aktiveVerdier;
+};
+
+export const harPotensieltFlereInformasjonsbehov = infobehovVedtaksbrev => {
+  if (infobehovVedtaksbrev) {
+    const { informasjonsbehov } = infobehovVedtaksbrev;
+    return informasjonsbehov.length > 0;
+  }
+  return false;
+};
+
 export const lagForhåndsvisRequest = (
   behandling: Behandling,
   fagsak: Fagsak,
