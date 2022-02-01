@@ -59,7 +59,7 @@ describe('<VilkarresultatMedOverstyringForm>', () => {
             },
           },
         ]}
-        visAllePerioder
+        visAllePerioder={false}
       />,
     );
 
