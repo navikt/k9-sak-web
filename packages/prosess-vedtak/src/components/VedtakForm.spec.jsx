@@ -1,25 +1,26 @@
 import React from 'react';
-import { expect } from 'chai';
+
+import { renderWithIntlAndReduxForm, screen } from '@fpsak-frontend/utils-test/src/test-utils';
 import sinon from 'sinon';
 
-import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import BehandlingResultatType from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
-import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
+import behandlingStatuser from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
+import { intlWithMessages } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 
 import dokumentMalType from '@fpsak-frontend/kodeverk/src/dokumentMalType';
 import vedtaksbrevtype from '@fpsak-frontend/kodeverk/src/vedtaksbrevtype';
 import { VedtakForm } from './VedtakForm';
-import VedtakInnvilgetPanel from './VedtakInnvilgetPanel';
-import VedtakAvslagPanel from './VedtakAvslagPanel';
-import VedtakCheckbox from './VedtakCheckbox';
-import shallowWithIntl, { intlMock } from '../../i18n';
+/* import VedtakInnvilgetPanel from './VedtakInnvilgetPanel';
+import VedtakAvslagPanel from './VedtakAvslagPanel'; */
+import messages from '../../i18n/nb_NO.json';
 
 describe('<VedtakForm>', () => {
   const sprakkode = {
     kode: 'NO',
+    kodeverk: '',
   };
   const aksjonspunktKoder = [
     {
@@ -28,7 +29,6 @@ describe('<VedtakForm>', () => {
     },
   ];
 
-  const ingenTilgjengeligeVedtaksbrev = { vedtaksbrevmaler: [] };
   const alleTilgjengeligeVedtaksbrev = {
     vedtaksbrevmaler: {
       [vedtaksbrevtype.AUTOMATISK]: dokumentMalType.INNVILGELSE,
@@ -36,14 +36,9 @@ describe('<VedtakForm>', () => {
     },
   };
 
-  const initialValues = {
-    skalBrukeOverstyrendeFritekstBrev: false,
-    aksjonspunktKoder,
-    sprakkode,
-    tilgjengeligeVedtaksbrev: ingenTilgjengeligeVedtaksbrev,
-  };
+  const behandlingStatusUtredes = { kode: behandlingStatuser.BEHANDLING_UTREDES };
 
-  it('skal vise at vedtak er innvilget, beløp og antall barn når en har et beregningsresultat', () => {
+  /*   it('skal vise at vedtak er innvilget, beløp og antall barn når en har et beregningsresultat', () => {
     const previewCallback = sinon.spy();
     const behandlingsresultat = {
       id: 1,
@@ -62,23 +57,16 @@ describe('<VedtakForm>', () => {
       },
     };
 
-    const wrapper = shallowWithIntl(
+    const wrapper = renderWithIntlAndReduxForm(
       <VedtakForm
         intl={intlMock}
-        antallBarn={2}
         previewCallback={previewCallback}
-        behandlingStatusKode={behandlingStatus.BEHANDLING_UTREDES}
+        behandlingStatus={behandlingStatusUtredes}
         behandlingresultat={behandlingsresultat}
         aksjonspunkter={aksjonspunkter}
-        aksjonspunktKoder={aksjonspunktKoder}
-        kanOverstyre
         readOnly={false}
         behandlingPaaVent={false}
-        isBehandlingReadOnly
-        skalBrukeOverstyrendeFritekstBrev={false}
         sprakkode={sprakkode}
-        erBehandlingEtterKlage={false}
-        initialValues={initialValues}
         ytelseTypeKode={fagsakYtelseType.FORELDREPENGER}
         alleKodeverk={{}}
         personopplysninger={{}}
@@ -131,12 +119,12 @@ describe('<VedtakForm>', () => {
         kode: 'FRITEKST',
       },
     };
-    const wrapper = shallowWithIntl(
+    const wrapper = renderWithIntlAndReduxForm(
       <VedtakForm
         {...reduxFormPropsMock}
         intl={intlMock}
         antallBarn={2}
-        behandlingStatusKode={behandlingStatus.BEHANDLING_UTREDES}
+        behandlingStatus={behandlingStatusUtredes}
         behandlingresultat={behandlingsresultat}
         aksjonspunkter={aksjonspunkter}
         behandlingPaaVent={false}
@@ -196,11 +184,11 @@ describe('<VedtakForm>', () => {
         kode: 'FRITEKST',
       },
     };
-    const wrapper = shallowWithIntl(
+    const wrapper = renderWithIntlAndReduxForm(
       <VedtakForm
         {...reduxFormPropsMock}
         intl={intlMock}
-        behandlingStatusKode={behandlingStatus.BEHANDLING_UTREDES}
+        behandlingStatus={behandlingStatusUtredes}
         behandlingresultat={behandlingsresultat}
         aksjonspunkter={aksjonspunkter}
         behandlingPaaVent={false}
@@ -263,11 +251,11 @@ describe('<VedtakForm>', () => {
         kode: 'FRITEKST',
       },
     };
-    const wrapper = shallowWithIntl(
+    const wrapper = renderWithIntlAndReduxForm(
       <VedtakForm
         {...reduxFormPropsMock}
         intl={intlMock}
-        behandlingStatusKode={behandlingStatus.BEHANDLING_UTREDES}
+        behandlingStatus={behandlingStatusUtredes}
         behandlingresultat={behandlingsresultat}
         aksjonspunkter={aksjonspunkter}
         behandlingPaaVent={false}
@@ -327,12 +315,12 @@ describe('<VedtakForm>', () => {
         kode: 'FRITEKST',
       },
     };
-    const wrapper = shallowWithIntl(
+    const wrapper = renderWithIntlAndReduxForm(
       <VedtakForm
         {...reduxFormPropsMock}
         intl={intlMock}
         antallBarn={2}
-        behandlingStatusKode={behandlingStatus.BEHANDLING_UTREDES}
+        behandlingStatus={behandlingStatusUtredes}
         behandlingresultat={behandlingsresultat}
         aksjonspunkter={aksjonspunkter}
         behandlingPaaVent={false}
@@ -391,12 +379,12 @@ describe('<VedtakForm>', () => {
         kode: 'FRITEKST',
       },
     };
-    const wrapper = shallowWithIntl(
+    const wrapper = renderWithIntlAndReduxForm(
       <VedtakForm
         {...reduxFormPropsMock}
         intl={intlMock}
         antallBarn={2}
-        behandlingStatusKode={behandlingStatus.BEHANDLING_UTREDES}
+        behandlingStatus={behandlingStatusUtredes}
         behandlingresultat={behandlingsresultat}
         aksjonspunkter={aksjonspunkter}
         behandlingPaaVent={false}
@@ -460,11 +448,11 @@ describe('<VedtakForm>', () => {
         kode: 'FRITEKST',
       },
     };
-    const wrapper = shallowWithIntl(
+    const wrapper = renderWithIntlAndReduxForm(
       <VedtakForm
         {...reduxFormPropsMock}
         intl={intlMock}
-        behandlingStatusKode={behandlingStatus.BEHANDLING_UTREDES}
+        behandlingStatus={behandlingStatusUtredes}
         behandlingresultat={behandlingsresultat}
         aksjonspunkter={aksjonspunkter}
         behandlingPaaVent={false}
@@ -525,12 +513,12 @@ describe('<VedtakForm>', () => {
         kode: 'FRITEKST',
       },
     };
-    const wrapper = shallowWithIntl(
+    const wrapper = renderWithIntlAndReduxForm(
       <VedtakForm
         {...reduxFormPropsMock}
         intl={intlMock}
         antallBarn={2}
-        behandlingStatusKode={behandlingStatus.AVSLUTTET}
+        behandlingStatus={{ kode: behandlingStatuser.AVSLUTTET }}
         behandlingresultat={behandlingsresultat}
         aksjonspunkter={aksjonspunkter}
         behandlingPaaVent={false}
@@ -590,12 +578,12 @@ describe('<VedtakForm>', () => {
       },
     };
     const previewCallback = sinon.spy();
-    const wrapper = shallowWithIntl(
+    const wrapper = renderWithIntlAndReduxForm(
       <VedtakForm
         {...reduxFormPropsMock}
         intl={intlMock}
         antallBarn={2}
-        behandlingStatusKode={behandlingStatus.IVERKSETTER_VEDTAK}
+        behandlingStatus={{ kode: behandlingStatuser.IVERKSETTER_VEDTAK }}
         behandlingresultat={behandlingsresultat}
         aksjonspunkter={aksjonspunkter}
         behandlingPaaVent={false}
@@ -656,12 +644,12 @@ describe('<VedtakForm>', () => {
         kode: 'FRITEKST',
       },
     };
-    const wrapper = shallowWithIntl(
+    const wrapper = renderWithIntlAndReduxForm(
       <VedtakForm
         {...reduxFormPropsMock}
         intl={intlMock}
         antallBarn={2}
-        behandlingStatusKode={behandlingStatus.FATTER_VEDTAK}
+        behandlingStatus={{ kode: behandlingStatuser.FATTER_VEDTAK }}
         behandlingresultat={behandlingsresultat}
         aksjonspunkter={aksjonspunkter}
         behandlingPaaVent={false}
@@ -688,174 +676,7 @@ describe('<VedtakForm>', () => {
     expect(hovedknapp).to.have.length(0);
     const button = wrapper.find('button');
     expect(button).to.have.length(0);
-  });
-
-  it('skal sette opp initialvalues når en ikke har beregningsresultat og vedtaksbrev ikke er overstyrt', () => {
-    const aksjonspunkter = [
-      {
-        id: 0,
-        definisjon: {
-          navn: 'vedtak',
-          kode: aksjonspunktCodes.VEDTAK_UTEN_TOTRINNSKONTROLL,
-        },
-        status: {
-          navn: 'Opprettet',
-          kode: aksjonspunktStatus.OPPRETTET,
-        },
-        kanLoses: true,
-      },
-      {
-        id: 1,
-        definisjon: {
-          navn: 'annen ytelse',
-          kode: aksjonspunktCodes.VURDERE_ANNEN_YTELSE,
-        },
-        status: {
-          navn: 'Opprettet',
-          kode: aksjonspunktStatus.OPPRETTET,
-        },
-        kanLoses: true,
-        erAktivt: true,
-      },
-    ];
-    const behandlingsresultat = {
-      id: 1,
-      type: {
-        kode: BehandlingResultatType.INNVILGET,
-        navn: 'test',
-      },
-    };
-    const vedtakVarsel = {
-      vedtaksbrev: {
-        kode: 'AUTOMATISK',
-      },
-      avslagsarsak: null,
-      avslagsarsakFritekst: null,
-    };
-    const dokumentdata = {
-      VEDTAKSBREV_TYPE: 'AUTOMATISK',
-    };
-
-    const readOnly = false;
-
-    // eslint-disable-next-line
-    const model = buildInitialValues.resultFunc(
-      behandlingStatus.BEHANDLING_UTREDES,
-      undefined,
-      aksjonspunkter,
-      { kode: 'ES' },
-      behandlingsresultat,
-      sprakkode,
-      vedtakVarsel,
-      dokumentdata,
-      alleTilgjengeligeVedtaksbrev,
-      readOnly,
-    );
-
-    expect(model).to.eql({
-      aksjonspunktKoder: ['5018', '5033'],
-      sprakkode,
-      brødtekst: undefined,
-      overskrift: undefined,
-      begrunnelse: undefined,
-      overstyrtMottaker: undefined,
-      skalBrukeOverstyrendeFritekstBrev: false,
-      skalUndertrykkeBrev: false,
-      isEngangsstonad: false,
-      antallBarn: undefined,
-      BEREGNING_25_PROSENT_AVVIK: undefined,
-      KONTINUERLIG_TILSYN: undefined,
-      OMSORGEN_FOR: undefined,
-      OVER_18_AAR: undefined,
-      REVURDERING_ENDRING: undefined,
-      UNNTAK_FRA_TILSYNSORDNING: undefined,
-      VILKAR_FOR_TO: undefined,
-    });
-  });
-
-  it('skal sette opp initialvalues når en har beregningsresultat og vedtaksbrev er overstyrt', () => {
-    const aksjonspunkter = [
-      {
-        id: 1,
-        definisjon: {
-          navn: 'annen ytelse',
-          kode: aksjonspunktCodes.VURDERE_ANNEN_YTELSE,
-        },
-        status: {
-          navn: 'Opprettet',
-          kode: aksjonspunktStatus.OPPRETTET,
-        },
-        kanLoses: true,
-        erAktivt: true,
-      },
-    ];
-
-    const beregningResultat = {
-      beregnetTilkjentYtelse: '10000',
-      antallBarn: 2,
-      vedtaksbrev: {
-        kode: 'FRITEKST',
-      },
-    };
-    const behandlingsresultat = {
-      id: 1,
-      type: {
-        kode: BehandlingResultatType.INNVILGET,
-        navn: 'test',
-      },
-    };
-
-    const vedtakVarsel = {
-      vedtaksbrev: {
-        kode: 'FRITEKST',
-      },
-      avslagsarsak: null,
-      avslagsarsakFritekst: null,
-      overskrift: 'Overskrift',
-      fritekstbrev: 'Brødtekst',
-    };
-    const dokumentdata = {
-      VEDTAKSBREV_TYPE: 'FRITEKST',
-      FRITEKSTBREV: {
-        overskrift: 'Overskrift',
-        brødtekst: 'Brødtekst',
-      },
-    };
-
-    const readOnly = false;
-
-    const model = buildInitialValues.resultFunc(
-      behandlingStatus.BEHANDLING_UTREDES,
-      beregningResultat,
-      aksjonspunkter,
-      'ES',
-      behandlingsresultat,
-      sprakkode,
-      vedtakVarsel,
-      dokumentdata,
-      alleTilgjengeligeVedtaksbrev,
-      readOnly,
-    );
-    expect(model).to.eql({
-      aksjonspunktKoder: ['5033'],
-      BEREGNING_25_PROSENT_AVVIK: undefined,
-      KONTINUERLIG_TILSYN: undefined,
-      OMSORGEN_FOR: undefined,
-      OVER_18_AAR: undefined,
-      REVURDERING_ENDRING: undefined,
-      UNNTAK_FRA_TILSYNSORDNING: undefined,
-      VILKAR_FOR_TO: undefined,
-      sprakkode,
-      antallBarn: 2,
-      isEngangsstonad: true,
-      skalBrukeOverstyrendeFritekstBrev: true,
-      skalUndertrykkeBrev: false,
-      overskrift: 'Overskrift',
-      brødtekst: 'Brødtekst',
-      overstyrtMottaker: undefined,
-      begrunnelse: undefined,
-    });
-  });
+  }); */
 
   const previewCallback = sinon.spy();
   const behandlingsresultat = {
@@ -885,6 +706,7 @@ describe('<VedtakForm>', () => {
     avslagsarsakFritekst: null,
     vedtaksbrev: {
       kode: 'FRITEKST',
+      kodeverk: 'FRITKST',
     },
   };
 
@@ -896,13 +718,13 @@ describe('<VedtakForm>', () => {
     },
   };
 
-  it('skal vise avkrysningsboks i lesemodus for rolle med overstyringstilgang', () => {
-    const wrapper = shallowWithIntl(
+  /*   it('skal vise avkrysningsboks i lesemodus for rolle med overstyringstilgang', () => {
+    const wrapper = renderWithIntlAndReduxForm(
       <VedtakForm
         {...reduxFormPropsMock}
         intl={intlMock}
         antallBarn={2}
-        behandlingStatusKode={behandlingStatus.BEHANDLING_UTREDES}
+        behandlingStatus={behandlingStatusUtredes}
         behandlingresultat={behandlingsresultat}
         aksjonspunkter={aksjonspunkter}
         behandlingPaaVent={false}
@@ -933,12 +755,12 @@ describe('<VedtakForm>', () => {
   });
 
   it('skal vise avkrysningsboks i skrivemodus for rolle med overstyringstilgang', () => {
-    const wrapper = shallowWithIntl(
+    const wrapper = renderWithIntlAndReduxForm(
       <VedtakForm
         {...reduxFormPropsMock}
         intl={intlMock}
         antallBarn={2}
-        behandlingStatusKode={behandlingStatus.BEHANDLING_UTREDES}
+        behandlingStatus={behandlingStatusUtredes}
         behandlingresultat={behandlingsresultat}
         aksjonspunkter={aksjonspunkter}
         behandlingPaaVent={false}
@@ -966,28 +788,21 @@ describe('<VedtakForm>', () => {
     expect(overstyringsKnapp).to.have.length(1);
     expect(overstyringsKnapp.prop('readOnly')).to.eql(false);
     expect(overstyringsKnapp.prop('keyName')).to.eql('skalBrukeOverstyrendeFritekstBrev');
-  });
+  }); */
 
-  it('skal vise avkrysningsboks for roller uten overstyringstilgang', () => {
-    const wrapper = shallowWithIntl(
+  it('skal vise avkrysningsboks for overstyring', () => {
+    renderWithIntlAndReduxForm(
       <VedtakForm
-        {...reduxFormPropsMock}
-        intl={intlMock}
-        antallBarn={2}
-        behandlingStatusKode={behandlingStatus.BEHANDLING_UTREDES}
+        intl={intlWithMessages(messages)}
+        behandlingStatus={behandlingStatusUtredes}
         behandlingresultat={behandlingsresultat}
         aksjonspunkter={aksjonspunkter}
         behandlingPaaVent={false}
         previewCallback={previewCallback}
         aksjonspunktKoder={aksjonspunktKoder}
         readOnly={false}
-        isBehandlingReadOnly
         sprakkode={sprakkode}
-        kanOverstyre={false}
-        erBehandlingEtterKlage={false}
-        skalBrukeOverstyrendeFritekstBrev={false}
-        initialValues={initialValues}
-        ytelseTypeKode={fagsakYtelseType.FORELDREPENGER}
+        ytelseTypeKode={fagsakYtelseType.PLEIEPENGER}
         alleKodeverk={{}}
         personopplysninger={{}}
         arbeidsgiverOpplysningerPerId={{}}
@@ -997,8 +812,40 @@ describe('<VedtakForm>', () => {
         dokumentdata={dokumentdata}
         tilgjengeligeVedtaksbrev={alleTilgjengeligeVedtaksbrev}
       />,
+      { messages },
     );
-    const overstyringsKnapp = wrapper.find('VedtakOverstyrendeKnapp');
-    expect(overstyringsKnapp).to.have.length(1);
+    const overstyringsCheckbox = screen.getByLabelText('Overstyr automatisk brev');
+    expect(overstyringsCheckbox).toBeVisible();
+  });
+
+  it('skal vise avkrysningsboks for å hindre brevutsending', () => {
+    renderWithIntlAndReduxForm(
+      <VedtakForm
+        intl={intlWithMessages(messages)}
+        behandlingStatus={behandlingStatusUtredes}
+        behandlingresultat={behandlingsresultat}
+        aksjonspunkter={aksjonspunkter}
+        behandlingPaaVent={false}
+        previewCallback={previewCallback}
+        aksjonspunktKoder={aksjonspunktKoder}
+        readOnly={false}
+        sprakkode={sprakkode}
+        ytelseTypeKode={fagsakYtelseType.PLEIEPENGER}
+        alleKodeverk={{}}
+        personopplysninger={{}}
+        arbeidsgiverOpplysningerPerId={{}}
+        beregningErManueltFastsatt={false}
+        vilkar={[]}
+        vedtakVarsel={vedtakVarsel}
+        dokumentdata={dokumentdata}
+        tilgjengeligeVedtaksbrev={{
+          vedtaksbrevmaler: { ...alleTilgjengeligeVedtaksbrev.vedtaksbrevmaler, INGEN: null },
+        }}
+      />,
+      { messages },
+    );
+
+    const overstyringsCheckbox = screen.getByLabelText('Hindre utsending av brev');
+    expect(overstyringsCheckbox).toBeVisible();
   });
 });
