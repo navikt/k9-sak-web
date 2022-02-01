@@ -1,7 +1,8 @@
 import React from 'react';
 
-import { renderWithIntlAndReduxForm, screen } from '@fpsak-frontend/utils-test/src/test-utils';
+import { renderWithIntlAndReduxForm, screen, waitFor } from '@fpsak-frontend/utils-test/src/test-utils';
 import sinon from 'sinon';
+import userEvent from '@testing-library/user-event';
 
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
@@ -29,10 +30,12 @@ describe('<VedtakForm>', () => {
     },
   ];
 
+  const ingenTilgjengeligeVedtaksbrev = { vedtaksbrevmaler: [] };
   const alleTilgjengeligeVedtaksbrev = {
     vedtaksbrevmaler: {
       [vedtaksbrevtype.AUTOMATISK]: dokumentMalType.INNVILGELSE,
       [vedtaksbrevtype.FRITEKST]: dokumentMalType.FRITKS,
+      [vedtaksbrevtype.INGEN]: null,
     },
   };
 
@@ -281,7 +284,7 @@ describe('<VedtakForm>', () => {
 
     expect(wrapper.find(VedtakAvslagPanel)).to.have.length(1);
     expect(wrapper.find(VedtakInnvilgetPanel)).to.have.length(0);
-  });
+  }); 
 
   it('skal vise knapper for å avslutt behandling då behandlingen er innvilget', () => {
     const previewCallback = sinon.spy();
@@ -345,7 +348,7 @@ describe('<VedtakForm>', () => {
     const hovedknapp = wrapper.find('Hovedknapp');
     expect(hovedknapp).to.have.length(1);
     expect(hovedknapp.childAt(0).text()).to.eql('Til godkjenning');
-  });
+  }); */
 
   it('skal ikke vise knapper for å avslutt behandling når behandlingen er avvist med årsakkode 1099', () => {
     const previewCallback = sinon.spy();
@@ -379,37 +382,28 @@ describe('<VedtakForm>', () => {
         kode: 'FRITEKST',
       },
     };
-    const wrapper = renderWithIntlAndReduxForm(
+    renderWithIntlAndReduxForm(
       <VedtakForm
-        {...reduxFormPropsMock}
-        intl={intlMock}
-        antallBarn={2}
+        intl={intlWithMessages(messages)}
         behandlingStatus={behandlingStatusUtredes}
         behandlingresultat={behandlingsresultat}
         aksjonspunkter={aksjonspunkter}
         behandlingPaaVent={false}
         previewCallback={previewCallback}
-        aksjonspunktKoder={aksjonspunktKoder}
         readOnly={false}
-        isBehandlingReadOnly
         sprakkode={sprakkode}
-        skalBrukeOverstyrendeFritekstBrev={false}
-        initialValues={initialValues}
-        erBehandlingEtterKlage={false}
-        ytelseTypeKode={fagsakYtelseType.FORELDREPENGER}
+        ytelseTypeKode={fagsakYtelseType.PLEIEPENGER}
         alleKodeverk={{}}
         personopplysninger={{}}
         arbeidsgiverOpplysningerPerId={{}}
-        beregningErManueltFastsatt={false}
         vilkar={[]}
         vedtakVarsel={vedtakVarsel}
         tilgjengeligeVedtaksbrev={ingenTilgjengeligeVedtaksbrev}
       />,
     );
 
-    const hovedknapp = wrapper.find('Hovedknapp');
-    expect(hovedknapp).to.have.length(1);
-    expect(hovedknapp.childAt(0).text()).to.eql('Til godkjenning');
+    const fattVedtakButton = screen.getByRole('button');
+    expect(fattVedtakButton).toHaveTextContent('VedtakForm.TilGodkjenning');
   });
 
   it('skal vise knapper for å fatte vedtak når foreslå avslag', () => {
@@ -448,36 +442,28 @@ describe('<VedtakForm>', () => {
         kode: 'FRITEKST',
       },
     };
-    const wrapper = renderWithIntlAndReduxForm(
+    renderWithIntlAndReduxForm(
       <VedtakForm
-        {...reduxFormPropsMock}
-        intl={intlMock}
+        intl={intlWithMessages(messages)}
         behandlingStatus={behandlingStatusUtredes}
         behandlingresultat={behandlingsresultat}
         aksjonspunkter={aksjonspunkter}
         behandlingPaaVent={false}
         previewCallback={previewCallback}
-        aksjonspunktKoder={aksjonspunktKoder}
         readOnly={false}
-        isBehandlingReadOnly
         sprakkode={sprakkode}
-        skalBrukeOverstyrendeFritekstBrev={false}
-        initialValues={initialValues}
-        erBehandlingEtterKlage={false}
-        ytelseTypeKode={fagsakYtelseType.FORELDREPENGER}
+        ytelseTypeKode={fagsakYtelseType.PLEIEPENGER}
         alleKodeverk={{}}
         personopplysninger={{}}
         arbeidsgiverOpplysningerPerId={{}}
-        beregningErManueltFastsatt={false}
         vilkar={[]}
         vedtakVarsel={vedtakVarsel}
         tilgjengeligeVedtaksbrev={ingenTilgjengeligeVedtaksbrev}
       />,
     );
 
-    const hovedknapp = wrapper.find('Hovedknapp');
-    expect(hovedknapp).to.have.length(1);
-    expect(hovedknapp.childAt(0).text()).to.eql('Fatt vedtak');
+    const fattVedtakButton = screen.getByRole('button');
+    expect(fattVedtakButton).toHaveTextContent('VedtakForm.FattVedtak');
   });
 
   it('skal ikke vise knapper når status er avsluttet', () => {
@@ -513,38 +499,28 @@ describe('<VedtakForm>', () => {
         kode: 'FRITEKST',
       },
     };
-    const wrapper = renderWithIntlAndReduxForm(
+    renderWithIntlAndReduxForm(
       <VedtakForm
-        {...reduxFormPropsMock}
-        intl={intlMock}
-        antallBarn={2}
+        intl={intlWithMessages(messages)}
         behandlingStatus={{ kode: behandlingStatuser.AVSLUTTET }}
         behandlingresultat={behandlingsresultat}
         aksjonspunkter={aksjonspunkter}
         behandlingPaaVent={false}
         previewCallback={previewCallback}
-        aksjonspunktKoder={aksjonspunktKoder}
         readOnly={false}
-        isBehandlingReadOnly
         sprakkode={sprakkode}
-        skalBrukeOverstyrendeFritekstBrev={false}
-        initialValues={initialValues}
-        erBehandlingEtterKlage={false}
-        ytelseTypeKode={fagsakYtelseType.FORELDREPENGER}
+        ytelseTypeKode={fagsakYtelseType.PLEIEPENGER}
         alleKodeverk={{}}
         personopplysninger={{}}
         arbeidsgiverOpplysningerPerId={{}}
-        beregningErManueltFastsatt={false}
         vilkar={[]}
         vedtakVarsel={vedtakVarsel}
         tilgjengeligeVedtaksbrev={ingenTilgjengeligeVedtaksbrev}
       />,
     );
 
-    const hovedknapp = wrapper.find('Hovedknapp');
-    expect(hovedknapp).to.have.length(0);
-    const button = wrapper.find('button');
-    expect(button).to.have.length(0);
+    const hovedknapp = screen.queryByRole('button');
+    expect(hovedknapp).toBeNull();
   });
 
   it('skal ikke vise knapper når status er iverksetter vedtak', () => {
@@ -578,38 +554,29 @@ describe('<VedtakForm>', () => {
       },
     };
     const previewCallback = sinon.spy();
-    const wrapper = renderWithIntlAndReduxForm(
+
+    renderWithIntlAndReduxForm(
       <VedtakForm
-        {...reduxFormPropsMock}
-        intl={intlMock}
-        antallBarn={2}
+        intl={intlWithMessages(messages)}
         behandlingStatus={{ kode: behandlingStatuser.IVERKSETTER_VEDTAK }}
         behandlingresultat={behandlingsresultat}
         aksjonspunkter={aksjonspunkter}
         behandlingPaaVent={false}
         previewCallback={previewCallback}
-        erBehandlingEtterKlage={false}
-        aksjonspunktKoder={aksjonspunktKoder}
         readOnly={false}
-        isBehandlingReadOnly
         sprakkode={sprakkode}
-        skalBrukeOverstyrendeFritekstBrev={false}
-        initialValues={initialValues}
-        ytelseTypeKode={fagsakYtelseType.FORELDREPENGER}
+        ytelseTypeKode={fagsakYtelseType.PLEIEPENGER}
         alleKodeverk={{}}
         personopplysninger={{}}
         arbeidsgiverOpplysningerPerId={{}}
-        beregningErManueltFastsatt={false}
         vilkar={[]}
         vedtakVarsel={vedtakVarsel}
         tilgjengeligeVedtaksbrev={ingenTilgjengeligeVedtaksbrev}
       />,
     );
 
-    const hovedknapp = wrapper.find('Hovedknapp');
-    expect(hovedknapp).to.have.length(0);
-    const button = wrapper.find('button');
-    expect(button).to.have.length(0);
+    const hovedknapp = screen.queryByRole('button');
+    expect(hovedknapp).toBeNull();
   });
 
   it('skal ikke vise knapper når status er fatter vedtak', () => {
@@ -644,24 +611,17 @@ describe('<VedtakForm>', () => {
         kode: 'FRITEKST',
       },
     };
-    const wrapper = renderWithIntlAndReduxForm(
+    renderWithIntlAndReduxForm(
       <VedtakForm
-        {...reduxFormPropsMock}
-        intl={intlMock}
-        antallBarn={2}
+        intl={intlWithMessages(messages)}
         behandlingStatus={{ kode: behandlingStatuser.FATTER_VEDTAK }}
         behandlingresultat={behandlingsresultat}
         aksjonspunkter={aksjonspunkter}
         behandlingPaaVent={false}
         previewCallback={previewCallback}
-        aksjonspunktKoder={aksjonspunktKoder}
         readOnly={false}
-        isBehandlingReadOnly
         sprakkode={sprakkode}
-        skalBrukeOverstyrendeFritekstBrev
-        initialValues={initialValues}
-        erBehandlingEtterKlage={false}
-        ytelseTypeKode={fagsakYtelseType.FORELDREPENGER}
+        ytelseTypeKode={fagsakYtelseType.PLEIEPENGER}
         alleKodeverk={{}}
         personopplysninger={{}}
         arbeidsgiverOpplysningerPerId={{}}
@@ -670,13 +630,12 @@ describe('<VedtakForm>', () => {
         vedtakVarsel={vedtakVarsel}
         tilgjengeligeVedtaksbrev={ingenTilgjengeligeVedtaksbrev}
       />,
+      { messages },
     );
 
-    const hovedknapp = wrapper.find('Hovedknapp');
-    expect(hovedknapp).to.have.length(0);
-    const button = wrapper.find('button');
-    expect(button).to.have.length(0);
-  }); */
+    const hovedknapp = screen.queryByRole('button');
+    expect(hovedknapp).toBeNull();
+  });
 
   const previewCallback = sinon.spy();
   const behandlingsresultat = {
@@ -718,78 +677,6 @@ describe('<VedtakForm>', () => {
     },
   };
 
-  /*   it('skal vise avkrysningsboks i lesemodus for rolle med overstyringstilgang', () => {
-    const wrapper = renderWithIntlAndReduxForm(
-      <VedtakForm
-        {...reduxFormPropsMock}
-        intl={intlMock}
-        antallBarn={2}
-        behandlingStatus={behandlingStatusUtredes}
-        behandlingresultat={behandlingsresultat}
-        aksjonspunkter={aksjonspunkter}
-        behandlingPaaVent={false}
-        previewCallback={previewCallback}
-        aksjonspunktKoder={aksjonspunktKoder}
-        readOnly
-        isBehandlingReadOnly
-        sprakkode={sprakkode}
-        kanOverstyre
-        skalBrukeOverstyrendeFritekstBrev={false}
-        initialValues={initialValues}
-        erBehandlingEtterKlage={false}
-        ytelseTypeKode={fagsakYtelseType.FORELDREPENGER}
-        alleKodeverk={{}}
-        personopplysninger={{}}
-        arbeidsgiverOpplysningerPerId={{}}
-        beregningErManueltFastsatt={false}
-        vilkar={[]}
-        vedtakVarsel={vedtakVarsel}
-        dokumentdata={dokumentdata}
-        tilgjengeligeVedtaksbrev={alleTilgjengeligeVedtaksbrev}
-      />,
-    );
-    const overstyringsKnapp = wrapper.find(VedtakCheckbox);
-    expect(overstyringsKnapp).to.have.length(1);
-    expect(overstyringsKnapp.prop('readOnly')).to.eql(true);
-    expect(overstyringsKnapp.prop('keyName')).to.eql('skalBrukeOverstyrendeFritekstBrev');
-  });
-
-  it('skal vise avkrysningsboks i skrivemodus for rolle med overstyringstilgang', () => {
-    const wrapper = renderWithIntlAndReduxForm(
-      <VedtakForm
-        {...reduxFormPropsMock}
-        intl={intlMock}
-        antallBarn={2}
-        behandlingStatus={behandlingStatusUtredes}
-        behandlingresultat={behandlingsresultat}
-        aksjonspunkter={aksjonspunkter}
-        behandlingPaaVent={false}
-        previewCallback={previewCallback}
-        aksjonspunktKoder={aksjonspunktKoder}
-        readOnly={false}
-        isBehandlingReadOnly
-        sprakkode={sprakkode}
-        kanOverstyre
-        skalBrukeOverstyrendeFritekstBrev={false}
-        initialValues={initialValues}
-        erBehandlingEtterKlage={false}
-        ytelseTypeKode={fagsakYtelseType.FORELDREPENGER}
-        alleKodeverk={{}}
-        personopplysninger={{}}
-        arbeidsgiverOpplysningerPerId={{}}
-        beregningErManueltFastsatt={false}
-        vilkar={[]}
-        vedtakVarsel={vedtakVarsel}
-        dokumentdata={dokumentdata}
-        tilgjengeligeVedtaksbrev={alleTilgjengeligeVedtaksbrev}
-      />,
-    );
-    const overstyringsKnapp = wrapper.find(VedtakCheckbox);
-    expect(overstyringsKnapp).to.have.length(1);
-    expect(overstyringsKnapp.prop('readOnly')).to.eql(false);
-    expect(overstyringsKnapp.prop('keyName')).to.eql('skalBrukeOverstyrendeFritekstBrev');
-  }); */
-
   it('skal vise avkrysningsboks for overstyring', () => {
     renderWithIntlAndReduxForm(
       <VedtakForm
@@ -799,7 +686,6 @@ describe('<VedtakForm>', () => {
         aksjonspunkter={aksjonspunkter}
         behandlingPaaVent={false}
         previewCallback={previewCallback}
-        aksjonspunktKoder={aksjonspunktKoder}
         readOnly={false}
         sprakkode={sprakkode}
         ytelseTypeKode={fagsakYtelseType.PLEIEPENGER}
@@ -827,7 +713,6 @@ describe('<VedtakForm>', () => {
         aksjonspunkter={aksjonspunkter}
         behandlingPaaVent={false}
         previewCallback={previewCallback}
-        aksjonspunktKoder={aksjonspunktKoder}
         readOnly={false}
         sprakkode={sprakkode}
         ytelseTypeKode={fagsakYtelseType.PLEIEPENGER}
@@ -838,14 +723,84 @@ describe('<VedtakForm>', () => {
         vilkar={[]}
         vedtakVarsel={vedtakVarsel}
         dokumentdata={dokumentdata}
-        tilgjengeligeVedtaksbrev={{
-          vedtaksbrevmaler: { ...alleTilgjengeligeVedtaksbrev.vedtaksbrevmaler, INGEN: null },
-        }}
+        tilgjengeligeVedtaksbrev={alleTilgjengeligeVedtaksbrev}
       />,
       { messages },
     );
 
-    const overstyringsCheckbox = screen.getByLabelText('Hindre utsending av brev');
-    expect(overstyringsCheckbox).toBeVisible();
+    const hindreUtsendingCheckbox = screen.getByLabelText('Hindre utsending av brev');
+    expect(hindreUtsendingCheckbox).toBeVisible();
+  });
+
+  it('skal disable checkboxer i readonly', () => {
+    renderWithIntlAndReduxForm(
+      <VedtakForm
+        intl={intlWithMessages(messages)}
+        behandlingStatus={behandlingStatusUtredes}
+        behandlingresultat={behandlingsresultat}
+        aksjonspunkter={aksjonspunkter}
+        behandlingPaaVent={false}
+        previewCallback={previewCallback}
+        readOnly
+        sprakkode={sprakkode}
+        ytelseTypeKode={fagsakYtelseType.PLEIEPENGER}
+        alleKodeverk={{}}
+        personopplysninger={{}}
+        arbeidsgiverOpplysningerPerId={{}}
+        vilkar={[]}
+        vedtakVarsel={vedtakVarsel}
+        dokumentdata={dokumentdata}
+        tilgjengeligeVedtaksbrev={alleTilgjengeligeVedtaksbrev}
+      />,
+      { messages },
+    );
+    const overstyringsCheckbox = screen.getByLabelText('Overstyr automatisk brev');
+    const hindreUtsendingCheckbox = screen.getByLabelText('Hindre utsending av brev');
+
+    expect(overstyringsCheckbox).toBeDisabled();
+    expect(hindreUtsendingCheckbox).toBeDisabled();
+  });
+
+  it('skal ikke kunne avhuke checkbox hvis automatisk brev ikke kan sendes', async () => {
+    const vedtaksbrevmalerUtenAutomatisk = {
+      vedtaksbrevmaler: { [vedtaksbrevtype.FRITEKST]: dokumentMalType.FRITKS, [vedtaksbrevtype.INGEN]: null },
+    };
+    renderWithIntlAndReduxForm(
+      <VedtakForm
+        intl={intlWithMessages(messages)}
+        behandlingStatus={behandlingStatusUtredes}
+        behandlingresultat={behandlingsresultat}
+        aksjonspunkter={aksjonspunkter}
+        behandlingPaaVent={false}
+        previewCallback={previewCallback}
+        aksjonspunktKoder={aksjonspunktKoder}
+        sprakkode={sprakkode}
+        skalBrukeOverstyrendeFritekstBrev={false}
+        erBehandlingEtterKlage={false}
+        readOnly={false}
+        ytelseTypeKode={fagsakYtelseType.PLEIEPENGER}
+        alleKodeverk={{}}
+        personopplysninger={{}}
+        arbeidsgiverOpplysningerPerId={{}}
+        beregningErManueltFastsatt={false}
+        vilkar={[]}
+        vedtakVarsel={vedtakVarsel}
+        dokumentdata={dokumentdata}
+        tilgjengeligeVedtaksbrev={vedtaksbrevmalerUtenAutomatisk}
+      />,
+      { messages },
+    );
+    const overstyringsCheckbox = screen.getByLabelText('Overstyr automatisk brev');
+    const hindreUtsendingCheckbox = screen.getByLabelText('Hindre utsending av brev');
+
+    expect(overstyringsCheckbox).toBeChecked();
+    expect(overstyringsCheckbox).toBeDisabled();
+    expect(hindreUtsendingCheckbox).toBeEnabled();
+
+    userEvent.click(hindreUtsendingCheckbox);
+
+    await waitFor(() => expect(hindreUtsendingCheckbox).toBeChecked());
+    await waitFor(() => expect(hindreUtsendingCheckbox).toBeDisabled());
+    await waitFor(() => expect(overstyringsCheckbox).toBeEnabled());
   });
 });
