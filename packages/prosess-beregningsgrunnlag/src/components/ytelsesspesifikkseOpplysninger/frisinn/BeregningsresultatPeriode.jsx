@@ -81,11 +81,8 @@ const finnDekningsgrad = bgPeriodeFom => {
   const fomDato = moment(bgPeriodeFom);
   if (fomDato.isBefore(moment('2020-11-01', 'YYYY-MM-DD'))) {
     return 80;
-  } else if (fomDato.isBefore(moment('2022-01-01', 'YYYY-MM-DD'))) {
-    return 60;
-  } else {
-    return 70;
   }
+  return fomDato.isBefore(moment('2022-01-01', 'YYYY-MM-DD')) ? 60 : 70;
 };
 
 const lagPeriodeblokk = (bgperiode, ytelsegrunnlag, frilansGrunnlag, næringGrunnlag) => {

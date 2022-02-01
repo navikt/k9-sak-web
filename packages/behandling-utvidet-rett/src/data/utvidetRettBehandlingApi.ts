@@ -24,7 +24,6 @@ export enum UtvidetRettBehandlingApiKeys {
   OPEN_BEHANDLING_FOR_CHANGES = 'OPEN_BEHANDLING_FOR_CHANGES',
   VERGE_OPPRETT = 'VERGE_OPPRETT',
   VERGE_FJERN = 'VERGE_FJERN',
-  VEDTAK_VARSEL = 'VEDTAK_VARSEL',
   RAMMEVEDTAK = 'RAMMEVEDTAK',
   TILGJENGELIGE_VEDTAKSBREV = 'TILGJENGELIGE_VEDTAKSBREV',
   DOKUMENTDATA_LAGRE = 'DOKUMENTDATA_LAGRE',
@@ -47,7 +46,6 @@ const endpoints = new RestApiConfigBuilder()
   .withRel('tilbakekrevingvalg', UtvidetRettBehandlingApiKeys.TILBAKEKREVINGVALG)
   .withRel('sendt-varsel-om-revurdering', UtvidetRettBehandlingApiKeys.SEND_VARSEL_OM_REVURDERING)
   .withRel('soeker-medlemskap-v2', UtvidetRettBehandlingApiKeys.MEDLEMSKAP)
-  .withRel('vedtak-varsel', UtvidetRettBehandlingApiKeys.VEDTAK_VARSEL)
   .withRel('tilgjengelige-vedtaksbrev', UtvidetRettBehandlingApiKeys.TILGJENGELIGE_VEDTAKSBREV)
 
   // operasjoner
