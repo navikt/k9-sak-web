@@ -120,6 +120,8 @@ export const SettPaVentModal = ({
   const erVenterPaKravgrunnlag = ventearsak === venteArsakType.VENT_PÅ_TILBAKEKREVINGSGRUNNLAG;
   const showFristenTekst = erTilbakekreving && erFristenUtløpt && erVenterPaKravgrunnlag;
 
+  Modal.setAppElement(document.body);
+
   return (
     <Modal
       className={`${styles.modal} ${styles.settPaVentModal}`}
@@ -132,7 +134,7 @@ export const SettPaVentModal = ({
       shouldCloseOnOverlayClick={false}
     >
       <Container fluid>
-        <form onSubmit={handleSubmit} name="ventModalForm">
+        <form onSubmit={handleSubmit} name="ventModalForm" data-testid="ventModalForm">
           <Row>
             <Column xs="1">
               <Image
@@ -152,7 +154,7 @@ export const SettPaVentModal = ({
             {(hasManualPaVent || frist) && (
               <Column xs="2">
                 <div className={styles.datePicker}>
-                  <DatepickerField name="frist" validate={[required, hasValidDate, dateAfterOrEqualToToday]} />
+                  <DatepickerField name="frist" validate={[required, hasValidDate, dateAfterOrEqualToToday]} data-testid="datofelt" />
                 </div>
               </Column>
             )}
