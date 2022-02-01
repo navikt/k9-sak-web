@@ -7,7 +7,7 @@ import LabelType from './LabelType';
 import ReadOnlyField from './ReadOnlyField';
 import styles from './textAreaField.less';
 import { validateAll } from './formikUtils';
-import './TextAreaFormik.less'
+import './TextAreaFormik.less';
 
 interface TextAreaFieldProps {
   name: string;
@@ -32,8 +32,8 @@ const renderTextarea = ({ field: { value, name }, form, label, maxLength, badges
     <div className={badges ? styles.textAreaFieldWithBadges : null}>
       {badges && (
         <div className={styles.etikettWrapper}>
-          {badges.map(({ text, type, title }) => (
-            <EtikettFokus key={text} type={type} title={title}>
+          {badges.map(({ text, title }) => (
+            <EtikettFokus key={text} title={title}>
               <span>{text}</span>
             </EtikettFokus>
           ))}

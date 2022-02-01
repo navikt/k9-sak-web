@@ -13,6 +13,7 @@ import MellomLagreBrev from '../brev/MellomLagreBrev';
 import redusertUtbetalingArsak from '../../kodeverk/redusertUtbetalingArsak';
 import styles from '../vedtakForm.less';
 
+// @ts-ignore
 export const getSubmitKnappTekst = createSelector([ownProps => ownProps.aksjonspunkter], aksjonspunkter =>
   aksjonspunkter && aksjonspunkter.some(ap => ap.erAktivt === true && ap.toTrinnsBehandling === true)
     ? 'VedtakForm.TilGodkjenning'
@@ -93,6 +94,7 @@ export const VedtakRevurderingSubmitPanelImpl = ({
 };
 
 const erArsakTypeBehandlingEtterKlage = createSelector(
+  // @ts-ignore
   [ownProps => ownProps.behandlingArsaker],
   (behandlingArsakTyper = []) =>
     behandlingArsakTyper
