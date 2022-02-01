@@ -53,13 +53,13 @@ interface SykdomProsessIndexProps {
 
 const SykdomProsessIndex = ({ perioder, panelTittelKode }: SykdomProsessIndexProps) => {
   const [activePeriode, setActivePeriode] = React.useState(perioder[0]);
-  const status = activePeriode.vilkarStatus.kode;
+  const status = activePeriode?.vilkarStatus.kode || vilkarUtfallType.IKKE_VURDERT;
   const erOppfylt = vilkarUtfallType.OPPFYLT === status;
   const erVilkarOk = vilkarUtfallType.IKKE_VURDERT !== status ? erOppfylt : undefined;
   const skalBrukeSidemeny = perioder.length > 1;
   const mainContainerClassnames = cx('mainContainer', { 'mainContainer--withSideMenu': skalBrukeSidemeny });
   let lovReferanse = '§ 9-10 første og andre ledd, og 9-16 første ledd';
-  if (activePeriode.pleietrengendeErOver18år) {
+  if (activePeriode?.pleietrengendeErOver18år) {
     lovReferanse = '§ 9-10 tredje ledd (over 18 år)';
   }
 
