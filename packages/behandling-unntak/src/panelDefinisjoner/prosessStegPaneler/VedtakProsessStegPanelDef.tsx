@@ -25,7 +25,6 @@ class PanelDef extends ProsessStegPanelDef {
   getEndepunkter = () => [
     UnntakBehandlingApiKeys.TILBAKEKREVINGVALG,
     UnntakBehandlingApiKeys.SEND_VARSEL_OM_REVURDERING,
-    UnntakBehandlingApiKeys.VEDTAK_VARSEL,
     UnntakBehandlingApiKeys.TILGJENGELIGE_VEDTAKSBREV,
     UnntakBehandlingApiKeys.DOKUMENTDATA_HENTE,
   ];

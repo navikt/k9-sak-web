@@ -51,8 +51,8 @@ const finnErDelvisBehandlet = (vilkar: Vilkar[], uttaksperioder: Uttaksperiode[]
 
   // uttak må sjekke uttaksperioder i tillegg
   if ((uttaksperioder || []).length > 0) {
-    const alleUttaksperioderAvslått = uttaksperioder.every(p => p.utfall === UtfallEnum.AVSLÅTT);
-    const alleUttaksperioderInnvilget = uttaksperioder.every(p => p.utfall === UtfallEnum.INNVILGET);
+    const alleUttaksperioderAvslått = uttaksperioder.every(p => p.utfall === UtfallEnum.AVSLÅTT || p.utfall === vilkarUtfallType.IKKE_OPPFYLT);
+    const alleUttaksperioderInnvilget = uttaksperioder.every(p => p.utfall === UtfallEnum.INNVILGET || p.utfall === vilkarUtfallType.OPPFYLT);
 
     if (alleUttaksperioderAvslått || alleUttaksperioderInnvilget) {
       return false;
