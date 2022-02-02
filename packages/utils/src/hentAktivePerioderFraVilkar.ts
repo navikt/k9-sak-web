@@ -4,7 +4,7 @@ const hentAktivePerioderFraVilkar = (vilkar: Vilkar[], visAllePerioder: boolean)
   const [activeVilkår] = vilkar;
 
   if(!activeVilkår?.perioder){
-    return []
+    return [];
   }
 
   return activeVilkår.perioder.filter(periode => (visAllePerioder && !periode.vurdersIBehandlingen)
