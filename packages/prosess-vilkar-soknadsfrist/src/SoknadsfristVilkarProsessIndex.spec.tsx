@@ -57,7 +57,7 @@ describe('<SoknadsfristVilkarForm>', () => {
           },
         ]}
         soknadsfristStatus={soknadsfristStatus}
-        visAllePerioder
+        visAllePerioder={false}
       />,
     );
 
@@ -125,7 +125,7 @@ describe('<SoknadsfristVilkarForm>', () => {
           },
         ]}
         soknadsfristStatus={soknadsfristStatus}
-        visAllePerioder
+        visAllePerioder={false}
       />,
     );
 
