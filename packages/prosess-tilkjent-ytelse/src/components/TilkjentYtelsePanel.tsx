@@ -126,18 +126,6 @@ export const TilkjentYtelsePanelImpl = ({
   );
 };
 
-// const gammelfinnTilbaketrekkAksjonspunkt = createSelector(
-//   [(state, ownProps) => ownProps.aksjonspunkter],
-//   alleAksjonspunkter => {
-//     if (alleAksjonspunkter) {
-//       return alleAksjonspunkter.find(
-//         ap => ap.definisjon && ap.definisjon.kode === aksjonspunktCodes.VURDER_TILBAKETREKK,
-//       );
-//     }
-//     return undefined;
-//   },
-// );
-
 const finnTilbaketrekkAksjonspunkt = (alleAksjonspunkter: Aksjonspunkt[]): Aksjonspunkt | undefined => (alleAksjonspunkter
   ? alleAksjonspunkter.find(ap => ap.definisjon?.kode === aksjonspunktCodes.VURDER_TILBAKETREKK)
   : undefined);
