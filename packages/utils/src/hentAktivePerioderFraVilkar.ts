@@ -5,7 +5,7 @@ const hentAktivePerioderFraVilkar = (vilkar: Vilkar[], visAllePerioder: boolean)
 
   if(!activeVilkår?.perioder){
     return []
-  };
+  }
 
   return activeVilkår.perioder.filter(periode => (visAllePerioder && !periode.vurdersIBehandlingen)
     || (periode.vurdersIBehandlingen && !visAllePerioder));
