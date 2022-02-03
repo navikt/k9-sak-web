@@ -1,21 +1,16 @@
 import React from 'react';
-import { expect } from 'chai';
 import sinon from 'sinon';
-import { shallow } from 'enzyme';
-import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
+
 import { intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
+import { renderWithIntlAndReduxForm, screen } from '@fpsak-frontend/utils-test/src/test-utils';
 import BehandlingResultatType from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import dokumentMalType from '@fpsak-frontend/kodeverk/src/dokumentMalType';
+import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import vedtaksbrevtype from '@fpsak-frontend/kodeverk/src/vedtaksbrevtype';
-import { VedtakRevurderingFormImpl as UnwrappedForm } from './VedtakRevurderingForm';
-import VedtakRevurderingSubmitPanel from './VedtakRevurderingSubmitPanel';
-import VedtakAvslagRevurderingPanel from './VedtakAvslagRevurderingPanel';
-import VedtakOpphorRevurderingPanel from './VedtakOpphorRevurderingPanel';
-import VedtakAksjonspunktPanel from '../VedtakAksjonspunktPanel';
-import VedtakInnvilgetRevurderingPanel from './VedtakInnvilgetRevurderingPanel';
-import BrevPanel from '../brev/BrevPanel';
+
+import VedtakForm from '../VedtakForm';
 
 const createBehandling = (behandlingResultatType, behandlingHenlagt) => ({
   id: 1,
@@ -26,7 +21,7 @@ const createBehandling = (behandlingResultatType, behandlingHenlagt) => ({
   behandlingHenlagt,
   sprakkode: {
     kode: 'NO',
-    navn: 'norsk',
+    kodeverk: '',
   },
   behandlingsresultat: {
     id: 1,
@@ -56,6 +51,7 @@ const createBehandling = (behandlingResultatType, behandlingHenlagt) => ({
 
 const resultatstruktur = {
   antallBarn: 1,
+  opphoersdato: '2018-01-01',
 };
 
 const tilgjengeligeVedtaksbrev = { vedtaksbrevmaler: {} };
@@ -87,30 +83,34 @@ describe('<VedtakRevurderingForm>', () => {
       erAktivt: true,
     });
 
-    const wrapper = shallow(
-      <UnwrappedForm
-        {...reduxFormPropsMock}
+    renderWithIntlAndReduxForm(
+      <VedtakForm
         intl={intlMock}
-        behandlingStatusKode={revurdering.status.kode}
+        behandlingStatus={revurdering.status}
         behandlingresultat={revurdering.behandlingsresultat}
         aksjonspunkter={revurdering.aksjonspunkter}
+        sprakkode={revurdering.sprakkode}
+        behandlingPaaVent={revurdering.behandlingPaaVent}
         previewCallback={previewCallback}
-        initialValues={{ skalBrukeOverstyrendeFritekstBrev: false }}
         readOnly={false}
-        ytelseTypeKode="ES"
-        isBehandlingReadOnly={false}
+        ytelseTypeKode={fagsakYtelseType.PLEIEPENGER}
         resultatstruktur={resultatstruktur}
-        beregningErManueltFastsatt={false}
         arbeidsgiverOpplysningerPerId={{}}
         tilgjengeligeVedtaksbrev={tilgjengeligeVedtaksbrev}
+        personopplysninger={{}}
+        vilkar={[]}
+        alleKodeverk={{}}
+        erRevurdering
       />,
     );
 
-    expect(wrapper.find(VedtakAksjonspunktPanel)).to.have.length(1);
-    expect(wrapper.find(VedtakAvslagRevurderingPanel)).to.have.length(1);
-    expect(wrapper.find(VedtakInnvilgetRevurderingPanel)).to.have.length(0);
-    expect(wrapper.find(VedtakRevurderingSubmitPanel)).to.have.length(1);
-    expect(wrapper.find(BrevPanel)).to.have.length(1);
+    expect(screen.getByTestId('vedtakAksjonspunktPanel')).toBeInTheDocument();
+    expect(screen.getByText('VedtakForm.ArsakTilAvslag')).toBeInTheDocument();
+    expect(screen.queryByText('VedtakForm.RevurderingFP.Aarsak')).not.toBeInTheDocument();
+
+    const submitknapp = screen.getByRole('button');
+    expect(submitknapp).toHaveTextContent('VedtakForm.FattVedtak');
+    expect(screen.getByTestId('brevpanel')).toBeInTheDocument();
   });
 
   it('Revurdering, skal vise resultat ved endret belop, hovedknappen for totrinnskontroll', () => {
@@ -136,37 +136,40 @@ describe('<VedtakRevurderingForm>', () => {
       },
       kanLoses: true,
       erAktivt: true,
+      toTrinnsBehandling: true,
     });
 
-    const wrapper = shallow(
-      <UnwrappedForm
-        {...reduxFormPropsMock}
+    renderWithIntlAndReduxForm(
+      <VedtakForm
         intl={intlMock}
-        antallBarn={1}
-        behandlingStatusKode={revurdering.status.kode}
+        behandlingStatus={revurdering.status}
         behandlingresultat={revurdering.behandlingsresultat}
         aksjonspunkter={revurdering.aksjonspunkter}
+        sprakkode={revurdering.sprakkode}
+        behandlingPaaVent={revurdering.behandlingPaaVent}
+        personopplysninger={{}}
         previewCallback={previewCallback}
-        aksjonspunktKoder={[aksjonspunktCodes.FORESLA_VEDTAK]}
-        initialValues={{ skalBrukeOverstyrendeFritekstBrev: false }}
         readOnly={false}
-        ytelseTypeKode="ES"
-        isBehandlingReadOnly
+        ytelseTypeKode={fagsakYtelseType.PLEIEPENGER}
         resultatstruktur={resultatstruktur}
-        beregningErManueltFastsatt={false}
         arbeidsgiverOpplysningerPerId={{}}
         tilgjengeligeVedtaksbrev={tilgjengeligeVedtaksbrev}
+        alleKodeverk={{}}
+        vilkar={[]}
+        erRevurdering
       />,
     );
 
-    expect(wrapper.find(VedtakAksjonspunktPanel)).to.have.length(1);
-    expect(wrapper.find(VedtakAvslagRevurderingPanel)).to.have.length(0);
-    expect(wrapper.find(VedtakInnvilgetRevurderingPanel)).to.have.length(1);
-    expect(wrapper.find(VedtakRevurderingSubmitPanel)).to.have.length(1);
-    expect(wrapper.find(BrevPanel)).to.have.length(1);
+    expect(screen.getByTestId('vedtakAksjonspunktPanel')).toBeInTheDocument();
+    expect(screen.getByTestId('innvilgetRevurdering')).toBeInTheDocument();
+    expect(screen.queryByText('VedtakForm.ArsakTilAvslag')).not.toBeInTheDocument();
+
+    const submitknapp = screen.getByRole('button');
+    expect(submitknapp).toHaveTextContent('VedtakForm.TilGodkjenning');
+    expect(screen.getByTestId('brevpanel')).toBeInTheDocument();
   });
 
-  it('skal vise result ved ingen endring, hoved knappen', () => {
+  it('skal vise result ved ingen endring, hovedknappen', () => {
     const previewCallback = sinon.spy();
     const revurdering = createBehandlingAvslag();
     revurdering.behandlingsresultat = {
@@ -177,31 +180,32 @@ describe('<VedtakRevurderingForm>', () => {
       },
     };
 
-    const wrapper = shallow(
-      <UnwrappedForm
-        {...reduxFormPropsMock}
+    renderWithIntlAndReduxForm(
+      <VedtakForm
         intl={intlMock}
-        antallBarn={1}
-        behandlingStatusKode={revurdering.status.kode}
+        behandlingStatus={revurdering.status}
         behandlingresultat={revurdering.behandlingsresultat}
         aksjonspunkter={revurdering.aksjonspunkter}
+        sprakkode={revurdering.sprakkode}
+        behandlingPaaVent={revurdering.behandlingPaaVent}
+        personopplysninger={{}}
         previewCallback={previewCallback}
-        initialValues={{ skalBrukeOverstyrendeFritekstBrev: false }}
         readOnly={false}
-        ytelseTypeKode="ES"
-        isBehandlingReadOnly
+        ytelseTypeKode={fagsakYtelseType.PLEIEPENGER}
         resultatstruktur={resultatstruktur}
-        beregningErManueltFastsatt={false}
         arbeidsgiverOpplysningerPerId={{}}
+        alleKodeverk={{}}
         tilgjengeligeVedtaksbrev={tilgjengeligeVedtaksbrev}
+        erRevurdering
       />,
     );
 
-    expect(wrapper.find(VedtakAksjonspunktPanel)).to.have.length(1);
-    expect(wrapper.find(VedtakAvslagRevurderingPanel)).to.have.length(0);
-    expect(wrapper.find(VedtakInnvilgetRevurderingPanel)).to.have.length(1);
-    expect(wrapper.find(VedtakRevurderingSubmitPanel)).to.have.length(1);
-    expect(wrapper.find(BrevPanel)).to.have.length(1);
+    const submitknapp = screen.getByRole('button');
+    expect(submitknapp).toHaveTextContent('VedtakForm.FattVedtak');
+    expect(screen.getByTestId('brevpanel')).toBeInTheDocument();
+    expect(screen.getByTestId('vedtakAksjonspunktPanel')).toBeInTheDocument();
+    expect(screen.getByTestId('innvilgetRevurdering')).toBeInTheDocument();
+    expect(screen.queryByText('VedtakForm.ArsakTilAvslag')).not.toBeInTheDocument();
   });
 
   it('skal vise result ved ingen endring, og submitpanel', () => {
@@ -215,99 +219,63 @@ describe('<VedtakRevurderingForm>', () => {
       },
     };
 
-    const wrapper = shallow(
-      <UnwrappedForm
-        {...reduxFormPropsMock}
+    renderWithIntlAndReduxForm(
+      <VedtakForm
         intl={intlMock}
-        behandlingStatusKode={revurdering.status.kode}
+        behandlingStatus={revurdering.status}
         behandlingresultat={revurdering.behandlingsresultat}
         aksjonspunkter={revurdering.aksjonspunkter}
-        antallBarn={1}
-        initialValues={{ skalBrukeOverstyrendeFritekstBrev: false }}
+        sprakkode={revurdering.sprakkode}
+        behandlingPaaVent={revurdering.behandlingPaaVent}
+        personopplysninger={{}}
         previewCallback={previewCallback}
-        haveSentVarsel
         readOnly={false}
-        ytelseTypeKode="ES"
-        isBehandlingReadOnly
+        ytelseTypeKode={fagsakYtelseType.PLEIEPENGER}
         resultatstruktur={resultatstruktur}
-        beregningErManueltFastsatt={false}
+        alleKodeverk={{}}
         arbeidsgiverOpplysningerPerId={{}}
         tilgjengeligeVedtaksbrev={tilgjengeligeVedtaksbrev}
+        erRevurdering
       />,
     );
 
-    expect(wrapper.find(VedtakAksjonspunktPanel)).to.have.length(1);
-    expect(wrapper.find(VedtakAvslagRevurderingPanel)).to.have.length(0);
-    expect(wrapper.find(VedtakInnvilgetRevurderingPanel)).to.have.length(1);
-    expect(wrapper.find(VedtakRevurderingSubmitPanel)).to.have.length(1);
-    expect(wrapper.find(BrevPanel)).to.have.length(1);
+    const submitknapp = screen.getByRole('button');
+    expect(submitknapp).toHaveTextContent('VedtakForm.FattVedtak');
+    expect(screen.getByTestId('brevpanel')).toBeInTheDocument();
+    expect(screen.getByTestId('vedtakAksjonspunktPanel')).toBeInTheDocument();
+    expect(screen.getByTestId('innvilgetRevurdering')).toBeInTheDocument();
+    expect(screen.queryByText('VedtakForm.ArsakTilAvslag')).not.toBeInTheDocument();
   });
 
   it('skal vise opphørspanel når behandlingsresultat er opphør', () => {
     const previewCallback = sinon.spy();
     const revurdering = createBehandlingOpphor();
 
-    const wrapper = shallow(
-      <UnwrappedForm
-        {...reduxFormPropsMock}
+    renderWithIntlAndReduxForm(
+      <VedtakForm
         intl={intlMock}
-        behandlingStatusKode={revurdering.status.kode}
+        behandlingStatus={revurdering.status}
         behandlingresultat={revurdering.behandlingsresultat}
         aksjonspunkter={revurdering.aksjonspunkter}
-        antallBarn={1}
-        initialValues={{ skalBrukeOverstyrendeFritekstBrev: false }}
+        sprakkode={revurdering.sprakkode}
+        behandlingPaaVent={revurdering.behandlingPaaVent}
+        personopplysninger={{}}
         previewCallback={previewCallback}
-        haveSentVarsel
         readOnly={false}
-        ytelseTypeKode="ES"
-        isBehandlingReadOnly
+        ytelseTypeKode={fagsakYtelseType.PLEIEPENGER}
         resultatstruktur={resultatstruktur}
-        beregningErManueltFastsatt={false}
         arbeidsgiverOpplysningerPerId={{}}
         tilgjengeligeVedtaksbrev={tilgjengeligeVedtaksbrev}
+        erRevurdering
       />,
     );
 
-    expect(wrapper.find(VedtakAksjonspunktPanel)).to.have.length(1);
-    expect(wrapper.find(VedtakAvslagRevurderingPanel)).to.have.length(0);
-    expect(wrapper.find(VedtakInnvilgetRevurderingPanel)).to.have.length(0);
-    expect(wrapper.find(VedtakOpphorRevurderingPanel)).to.have.length(1);
-    expect(wrapper.find(VedtakRevurderingSubmitPanel)).to.have.length(1);
-    expect(wrapper.find(BrevPanel)).to.have.length(1);
-  });
-
-  it('skal vise avkrysningsboks for roller uten overstyringstilgang', () => {
-    const previewCallback = sinon.spy();
-    const revurdering = createBehandlingOpphor();
-
-    const wrapper = shallow(
-      <UnwrappedForm
-        {...reduxFormPropsMock}
-        intl={intlMock}
-        behandlingStatusKode={revurdering.status.kode}
-        behandlingresultat={revurdering.behandlingsresultat}
-        aksjonspunkter={revurdering.aksjonspunkter}
-        antallBarn={1}
-        initialValues={{ skalBrukeOverstyrendeFritekstBrev: false }}
-        previewCallback={previewCallback}
-        haveSentVarsel
-        readOnly={false}
-        kanOverstyre={false}
-        ytelseTypeKode="ES"
-        isBehandlingReadOnly
-        resultatstruktur={resultatstruktur}
-        beregningErManueltFastsatt={false}
-        tilgjengeligeVedtaksbrev={{
-          vedtaksbrevmaler: {
-            [vedtaksbrevtype.AUTOMATISK]: dokumentMalType.INNVILGELSE,
-            [vedtaksbrevtype.FRITEKST]: dokumentMalType.FRITKS,
-          },
-        }}
-        arbeidsgiverOpplysningerPerId={{}}
-      />,
-    );
-
-    const overstyringsKnapp = wrapper.find('VedtakOverstyrendeKnapp');
-    expect(overstyringsKnapp).to.have.length(1);
+    const submitknapp = screen.getByRole('button');
+    expect(submitknapp).toHaveTextContent('VedtakForm.FattVedtak');
+    expect(screen.getByTestId('brevpanel')).toBeInTheDocument();
+    expect(screen.getByTestId('vedtakAksjonspunktPanel')).toBeInTheDocument();
+    expect(screen.getByTestId('opphorRevurdering')).toBeInTheDocument();
+    expect(screen.queryByTestId('innvilgetRevurdering')).not.toBeInTheDocument();
+    expect(screen.queryByText('VedtakForm.ArsakTilAvslag')).not.toBeInTheDocument();
   });
 });

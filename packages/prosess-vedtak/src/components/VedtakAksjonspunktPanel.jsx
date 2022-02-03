@@ -26,7 +26,7 @@ export const VedtakAksjonspunktPanelImpl = ({
 }) => (
   <Row>
     <Column xs="8">
-      <Undertittel>{intl.formatMessage({ id: getTextCode(behandlingStatusKode) })}</Undertittel>
+      <Undertittel data-testid='vedtakAksjonspunktPanel'>{intl.formatMessage({ id: getTextCode(behandlingStatusKode) })}</Undertittel>
       <VerticalSpacer twentyPx />
       <VedtakHelpTextPanel aksjonspunktKoder={aksjonspunktKoder} readOnly={readOnly} />
       {overlappendeYtelser && overlappendeYtelser.length > 0 && (

@@ -7,24 +7,17 @@ import { Button } from '@navikt/ds-react';
 
 import klageBehandlingArsakType from '@fpsak-frontend/kodeverk/src/behandlingArsakType';
 import behandlingStatusCode from '@fpsak-frontend/kodeverk/src/behandlingStatus';
+import { Aksjonspunkt } from '@k9-sak-web/types';
 
 import { DokumentDataType, LagreDokumentdataType } from '@k9-sak-web/types/src/dokumentdata';
 import MellomLagreBrev from '../brev/MellomLagreBrev';
 import redusertUtbetalingArsak from '../../kodeverk/redusertUtbetalingArsak';
 import styles from '../vedtakForm.less';
 
-// @ts-ignore
-export const getSubmitKnappTekst = createSelector([ownProps => ownProps.aksjonspunkter], aksjonspunkter =>
-  aksjonspunkter && aksjonspunkter.some(ap => ap.erAktivt === true && ap.toTrinnsBehandling === true)
-    ? 'VedtakForm.TilGodkjenning'
-    : 'VedtakForm.FattVedtak',
-);
-
 interface OwnProps {
   intl: IntlShape;
   formikProps: FormikState<any>;
   readOnly: boolean;
-  submitKnappTextId: string;
   harRedusertUtbetaling: boolean;
   visFeilmeldingFordiArsakerMangler: () => void;
   behandlingStatusKode: string;
@@ -34,13 +27,13 @@ interface OwnProps {
   overskrift: string;
   dokumentdata: DokumentDataType;
   lagreDokumentdata: LagreDokumentdataType;
+  aksjonspunkter: Aksjonspunkt[];
 }
 
 export const VedtakRevurderingSubmitPanelImpl = ({
   intl,
   formikProps,
   readOnly,
-  submitKnappTextId,
   harRedusertUtbetaling,
   visFeilmeldingFordiArsakerMangler,
   behandlingStatusKode,
@@ -50,11 +43,17 @@ export const VedtakRevurderingSubmitPanelImpl = ({
   dokumentdata,
   overskrift,
   brødtekst,
+  aksjonspunkter, 
 }: OwnProps): JSX.Element => {
   const onClick = event =>
     !harRedusertUtbetaling || Object.values(redusertUtbetalingArsak).some(a => !!formikProps.values[a])
       ? handleSubmit(event)
       : visFeilmeldingFordiArsakerMangler();
+
+  const submitKnappTextId =
+    aksjonspunkter && aksjonspunkter.some(ap => ap.erAktivt === true && ap.toTrinnsBehandling === true)
+      ? 'VedtakForm.TilGodkjenning'
+      : 'VedtakForm.FattVedtak';
 
   const submitKnapp = (
     <Button
@@ -108,7 +107,6 @@ const erArsakTypeBehandlingEtterKlage = createSelector(
 );
 
 const mapStateToProps = (state, ownProps) => ({
-  submitKnappTextId: getSubmitKnappTekst(ownProps),
   erBehandlingEtterKlage: erArsakTypeBehandlingEtterKlage(ownProps),
 });
 

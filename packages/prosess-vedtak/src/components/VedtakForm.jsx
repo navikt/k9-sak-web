@@ -329,6 +329,7 @@ export const VedtakForm = ({
                   brødtekst={formikProps.values.brødtekst}
                   overskrift={formikProps.values.overskrift}
                   visFeilmeldingFordiArsakerMangler={() => setErSendtInnUtenArsaker(true)}
+                  aksjonspunkter={aksjonspunkter}
                 />
               )}
             </VedtakAksjonspunktPanel>
