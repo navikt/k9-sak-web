@@ -3,16 +3,13 @@ import { Field } from 'formik';
 import LabelType from './LabelType';
 import ReadOnlyField from './ReadOnlyField';
 import CustomNavSelect from './CustomNavSelect';
+import { validateAll } from './formikUtils';
 
 interface SelectFieldProps {
   name: string;
   selectValues: any[];
   label: LabelType;
-  validate?: (
-    | ((text: any) => ({ id: string; length?: undefined } | { length: any; id?: undefined })[])
-    | ((value: any) => { id: string }[])
-    | ((text: any) => ({ id: string; text?: undefined } | { text: any; id?: undefined })[])
-  )[];
+  validate?: ((value: any) => string | null)[];
   readOnly?: boolean;
   placeholder?: string;
   hideValueOnDisable?: boolean;
@@ -38,14 +35,13 @@ const renderNavSelect = ({ label, selectValues, field, ...props }) => (
 const SelectFieldFormik = ({ name, label, selectValues, validate, readOnly, ...otherProps }: SelectFieldProps) => (
   <Field
     name={name}
-    validate={validate}
+    validate={value => validateAll(validate, value)}
     component={readOnly ? renderReadOnly() : renderNavSelect}
     label={label}
     selectValues={selectValues}
     disabled={!!readOnly}
     {...otherProps}
     readOnly={readOnly}
-    // @ts-ignore TODO Fiks
     readOnlyHideEmpty
   />
 );

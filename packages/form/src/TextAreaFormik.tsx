@@ -12,12 +12,7 @@ import './TextAreaFormik.less';
 interface TextAreaFieldProps {
   name: string;
   label: LabelType;
-  validate?: (
-    | ((text: any) => ({ id: string; length?: undefined } | { length: any; id?: undefined })[])
-    | ((value: any, allValues: any, props: any) => { id: string }[])
-    | ((value: any) => { id: string }[])
-    | ((text: any) => ({ id: string; text?: undefined } | { text: any; id?: undefined })[])
-  )[];
+  validate?: ((value: any) => string | null)[];
   readOnly?: boolean;
   dataId?: string;
   textareaClass?: string;
