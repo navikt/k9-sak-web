@@ -382,7 +382,7 @@ VedtakForm.propTypes = {
   bgPeriodeMedAvslagsårsak: PropTypes.shape(),
   medlemskapFom: PropTypes.string,
   erRevurdering: PropTypes.bool,
-  behandlingArsaker: PropTypes.shape(),
+  behandlingArsaker: PropTypes.arrayOf(PropTypes.shape()),
 };
 
 export default injectIntl(VedtakForm);
