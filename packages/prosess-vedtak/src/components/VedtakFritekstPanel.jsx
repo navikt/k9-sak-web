@@ -3,14 +3,7 @@ import PropTypes from 'prop-types';
 import { Column, Row } from 'nav-frontend-grid';
 
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
-import {
-  decodeHtmlEntity,
-  getLanguageFromSprakkode,
-  hasValidText,
-  maxLength,
-  minLength,
-  requiredIfNotPristine,
-} from '@fpsak-frontend/utils';
+import { decodeHtmlEntity, getLanguageFromSprakkode, hasValidText, maxLength, minLength } from '@fpsak-frontend/utils';
 import TextAreaFormik from '../../../form/src/TextAreaFormik';
 
 import styles from './vedtakAvslagPanel.less';
@@ -27,7 +20,7 @@ const VedtakFritekstPanelImpl = ({ begrunnelse, begrunnelseFieldName, sprakkode,
           <TextAreaFormik
             name={begrunnelseFieldName}
             label={label}
-            validate={[requiredIfNotPristine, minLength3, maxLength100000, hasValidText]}
+            validate={[minLength3, maxLength100000, hasValidText]}
             maxLength={100000}
             readOnly={readOnly}
             badges={[
