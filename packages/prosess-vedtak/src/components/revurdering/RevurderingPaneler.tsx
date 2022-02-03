@@ -141,7 +141,6 @@ export default function RevurderingPaneler({
           />
         )}
       </Column>
-      {console.log(redusertUtbetalingArsak)}
       {harRedusertUtbetaling && (
         <Column xs="8">
           <VedtakRedusertUtbetalingArsaker

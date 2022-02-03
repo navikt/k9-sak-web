@@ -8,6 +8,7 @@ import { kodeverkObjektPropType } from '@fpsak-frontend/prop-types';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import { isAvslag, isDelvisInnvilget, isInnvilget } from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
 import { dokumentdatatype } from '@k9-sak-web/konstanter';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 
 import { safeJSONParse, decodeHtmlEntity } from '@fpsak-frontend/utils';
 import {
@@ -120,6 +121,10 @@ export const VedtakForm = ({
         skalUndertrykkeBrev: values?.[fieldnames.SKAL_HINDRE_UTSENDING_AV_BREV],
         isVedtakSubmission,
         begrunnelserMedInformasjonsbehov: begrunnelser,
+        redusertUtbetalingÅrsaker:
+          aksjonspunkt.definisjon.kode === aksjonspunktCodes.FORESLA_VEDTAK_MANUELT
+            ? transformRedusertUtbetalingÅrsaker(values)
+            : null,
         tilgjengeligeVedtaksbrev,
       }));
   };
@@ -137,6 +142,10 @@ export const VedtakForm = ({
         },
         skalBrukeOverstyrendeFritekstBrev: values?.[fieldnames.SKAL_BRUKE_OVERSTYRENDE_FRITEKST_BREV],
         skalUndertrykkeBrev: values?.[fieldnames.SKAL_HINDRE_UTSENDING_AV_BREV],
+        redusertUtbetalingÅrsaker:
+          aksjonspunkt.definisjon.kode === aksjonspunktCodes.FORESLA_VEDTAK_MANUELT
+            ? transformRedusertUtbetalingÅrsaker(values)
+            : null,
         isVedtakSubmission,
         tilgjengeligeVedtaksbrev,
       }));

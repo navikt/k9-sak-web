@@ -11,7 +11,7 @@ interface CheckboxFieldProps {
   name: string;
   label: LabelType;
   validate?: ((value: string) => boolean | undefined)[] | ((value: string) => boolean | undefined);
-  readOnly?: boolean;
+  disabled?: boolean;
 }
 
 interface RenderCheckboxFieldProps {
@@ -34,14 +34,14 @@ export const RenderCheckboxField = ({
   );
 };
 
-const CheckboxFieldFormik = ({ name, label, readOnly, validate = [] }: CheckboxFieldProps) => (
+const CheckboxFieldFormik = ({ name, label, disabled, validate = [] }: CheckboxFieldProps) => (
   <Field
     name={name}
     key={name}
     validate={value => validateAll(validate, value)}
     component={RenderCheckboxField}
     label={label}
-    disabled={readOnly}
+    disabled={disabled}
   />
 );
 
