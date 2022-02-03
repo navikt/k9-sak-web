@@ -103,7 +103,7 @@ export const harPotensieltFlereInformasjonsbehov = infobehovVedtaksbrev => {
 
 export const harMellomlagretRedusertUtbetalingArsak = (key, dokumentdata, vedtakVarsel) => {
   const årsaker =
-    dokumentdata?.[dokumentdatatype.REDUSERT_UTBETALING_AARSAK] || vedtakVarsel?.redusertUtbetalingÅrsaker;
+    dokumentdata?.[dokumentdatatype.REDUSERT_UTBETALING_AARSAK] || vedtakVarsel?.redusertUtbetalingÅrsaker || [];
   return årsaker.some(v => v === key);
 };
 
