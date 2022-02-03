@@ -14,8 +14,6 @@ import { intlWithMessages } from '@fpsak-frontend/utils-test/src/intl-enzyme-tes
 import dokumentMalType from '@fpsak-frontend/kodeverk/src/dokumentMalType';
 import vedtaksbrevtype from '@fpsak-frontend/kodeverk/src/vedtaksbrevtype';
 import { VedtakForm } from './VedtakForm';
-/* import VedtakInnvilgetPanel from './VedtakInnvilgetPanel';
-import VedtakAvslagPanel from './VedtakAvslagPanel'; */
 import messages from '../../i18n/nb_NO.json';
 
 describe('<VedtakForm>', () => {
@@ -41,7 +39,7 @@ describe('<VedtakForm>', () => {
 
   const behandlingStatusUtredes = { kode: behandlingStatuser.BEHANDLING_UTREDES };
 
-  /*   it('skal vise at vedtak er innvilget, beløp og antall barn når en har et beregningsresultat', () => {
+  it('skal vise at vedtak er innvilget, beløp og antall barn når en har et beregningsresultat', () => {
     const previewCallback = sinon.spy();
     const behandlingsresultat = {
       id: 1,
@@ -60,9 +58,9 @@ describe('<VedtakForm>', () => {
       },
     };
 
-    const wrapper = renderWithIntlAndReduxForm(
+    renderWithIntlAndReduxForm(
       <VedtakForm
-        intl={intlMock}
+        intl={intlWithMessages(messages)}
         previewCallback={previewCallback}
         behandlingStatus={behandlingStatusUtredes}
         behandlingresultat={behandlingsresultat}
@@ -70,153 +68,18 @@ describe('<VedtakForm>', () => {
         readOnly={false}
         behandlingPaaVent={false}
         sprakkode={sprakkode}
-        ytelseTypeKode={fagsakYtelseType.FORELDREPENGER}
+        ytelseTypeKode={fagsakYtelseType.PLEIEPENGER}
         alleKodeverk={{}}
         personopplysninger={{}}
         arbeidsgiverOpplysningerPerId={{}}
-        beregningErManueltFastsatt={false}
         vilkar={[]}
         vedtakVarsel={vedtakVarsel}
         tilgjengeligeVedtaksbrev={ingenTilgjengeligeVedtaksbrev}
       />,
     );
 
-    const vedtakInnvilgetPanel = wrapper.find(VedtakInnvilgetPanel);
-    expect(vedtakInnvilgetPanel).to.have.length(1);
-    expect(wrapper.find('VedtakAvslagPanel')).to.have.length(0);
-
-    expect(vedtakInnvilgetPanel.prop('antallBarn')).is.eql(2);
-  });
-
-  it('skal ikke vise et element når en ikke har et beregningsresultat', () => {
-    const previewCallback = sinon.spy();
-    const behandlingsresultat = {
-      id: 1,
-      type: {
-        kode: BehandlingResultatType.AVSLATT,
-        navn: 'test',
-      },
-    };
-    const aksjonspunkter = [
-      {
-        id: 1,
-        definisjon: {
-          navn: 'annen ytelse',
-          kode: aksjonspunktCodes.VURDERE_ANNEN_YTELSE,
-        },
-        status: {
-          navn: 'Opprettet',
-          kode: aksjonspunktStatus.OPPRETTET,
-        },
-        kanLoses: true,
-        erAktivt: true,
-      },
-    ];
-    const vedtakVarsel = {
-      avslagsarsak: {
-        kode: '1019',
-        navn: 'Manglende dokumentasjon',
-      },
-      avslagsarsakFritekst: null,
-      vedtaksbrev: {
-        kode: 'FRITEKST',
-      },
-    };
-    const wrapper = renderWithIntlAndReduxForm(
-      <VedtakForm
-        {...reduxFormPropsMock}
-        intl={intlMock}
-        antallBarn={2}
-        behandlingStatus={behandlingStatusUtredes}
-        behandlingresultat={behandlingsresultat}
-        aksjonspunkter={aksjonspunkter}
-        behandlingPaaVent={false}
-        previewCallback={previewCallback}
-        aksjonspunktKoder={aksjonspunktKoder}
-        readOnly={false}
-        initialValues={initialValues}
-        isBehandlingReadOnly
-        sprakkode={sprakkode}
-        skalBrukeOverstyrendeFritekstBrev
-        erBehandlingEtterKlage={false}
-        ytelseTypeKode={fagsakYtelseType.FORELDREPENGER}
-        alleKodeverk={{}}
-        personopplysninger={{}}
-        arbeidsgiverOpplysningerPerId={{}}
-        beregningErManueltFastsatt={false}
-        vilkar={[]}
-        vedtakVarsel={vedtakVarsel}
-        tilgjengeligeVedtaksbrev={ingenTilgjengeligeVedtaksbrev}
-      />,
-    );
-    const label = wrapper.find('Element');
-    expect(label).to.have.length(0);
-  });
-
-  it('skal vise Engangsstønad ikke innvilget når en ikke har et beregningsresultat', () => {
-    const previewCallback = sinon.spy();
-    const behandlingsresultat = {
-      id: 1,
-      type: {
-        kode: BehandlingResultatType.AVSLATT,
-        navn: 'test',
-      },
-    };
-    const aksjonspunkter = [
-      {
-        id: 1,
-        definisjon: {
-          navn: 'annen ytelse',
-          kode: aksjonspunktCodes.VURDERE_ANNEN_YTELSE,
-        },
-        status: {
-          navn: 'Opprettet',
-          kode: aksjonspunktStatus.OPPRETTET,
-        },
-        kanLoses: true,
-        erAktivt: true,
-      },
-    ];
-    const vedtakVarsel = {
-      avslagsarsak: {
-        kode: '1019',
-        navn: 'Manglende dokumentasjon',
-      },
-      avslagsarsakFritekst: null,
-      vedtaksbrev: {
-        kode: 'FRITEKST',
-      },
-    };
-    const wrapper = renderWithIntlAndReduxForm(
-      <VedtakForm
-        {...reduxFormPropsMock}
-        intl={intlMock}
-        behandlingStatus={behandlingStatusUtredes}
-        behandlingresultat={behandlingsresultat}
-        aksjonspunkter={aksjonspunkter}
-        behandlingPaaVent={false}
-        previewCallback={previewCallback}
-        aksjonspunktKoder={aksjonspunktKoder}
-        readOnly={false}
-        isBehandlingReadOnly
-        kanOverstyre
-        sprakkode={sprakkode}
-        skalBrukeOverstyrendeFritekstBrev={false}
-        initialValues={initialValues}
-        erBehandlingEtterKlage={false}
-        ytelseTypeKode={fagsakYtelseType.FORELDREPENGER}
-        alleKodeverk={{}}
-        personopplysninger={{}}
-        arbeidsgiverOpplysningerPerId={{}}
-        beregningErManueltFastsatt={false}
-        vilkar={[]}
-        vedtakVarsel={vedtakVarsel}
-        tilgjengeligeVedtaksbrev={ingenTilgjengeligeVedtaksbrev}
-      />,
-    );
-
-    expect(wrapper.find(VedtakAvslagPanel)).to.have.length(1);
-    expect(wrapper.find(VedtakInnvilgetPanel)).to.have.length(0);
+    expect(screen.getByTestId('innvilget')).toBeDefined();
+    expect(screen.queryByTestId('avslaatt')).toBeNull();
   });
 
   it('skal vise avslagsgrunn for søknadsfristvilkåret', () => {
@@ -254,37 +117,29 @@ describe('<VedtakForm>', () => {
         kode: 'FRITEKST',
       },
     };
-    const wrapper = renderWithIntlAndReduxForm(
+    renderWithIntlAndReduxForm(
       <VedtakForm
-        {...reduxFormPropsMock}
-        intl={intlMock}
+        intl={intlWithMessages(messages)}
         behandlingStatus={behandlingStatusUtredes}
         behandlingresultat={behandlingsresultat}
         aksjonspunkter={aksjonspunkter}
         behandlingPaaVent={false}
         previewCallback={previewCallback}
-        aksjonspunktKoder={aksjonspunktKoder}
         readOnly={false}
-        isBehandlingReadOnly
-        kanOverstyre
         sprakkode={sprakkode}
-        skalBrukeOverstyrendeFritekstBrev={false}
-        erBehandlingEtterKlage={false}
-        initialValues={initialValues}
-        ytelseTypeKode={fagsakYtelseType.FORELDREPENGER}
+        ytelseTypeKode={fagsakYtelseType.PLEIEPENGER}
         alleKodeverk={{}}
         personopplysninger={{}}
         arbeidsgiverOpplysningerPerId={{}}
-        beregningErManueltFastsatt={false}
         vilkar={[]}
         vedtakVarsel={vedtakVarsel}
         tilgjengeligeVedtaksbrev={ingenTilgjengeligeVedtaksbrev}
       />,
     );
 
-    expect(wrapper.find(VedtakAvslagPanel)).to.have.length(1);
-    expect(wrapper.find(VedtakInnvilgetPanel)).to.have.length(0);
-  }); 
+    expect(screen.getByTestId('avslaatt')).toBeDefined();
+    expect(screen.queryByTestId('innvilget')).toBeNull();
+  });
 
   it('skal vise knapper for å avslutt behandling då behandlingen er innvilget', () => {
     const previewCallback = sinon.spy();
@@ -318,37 +173,28 @@ describe('<VedtakForm>', () => {
         kode: 'FRITEKST',
       },
     };
-    const wrapper = renderWithIntlAndReduxForm(
+    renderWithIntlAndReduxForm(
       <VedtakForm
-        {...reduxFormPropsMock}
-        intl={intlMock}
-        antallBarn={2}
+        intl={intlWithMessages(messages)}
         behandlingStatus={behandlingStatusUtredes}
         behandlingresultat={behandlingsresultat}
         aksjonspunkter={aksjonspunkter}
         behandlingPaaVent={false}
         previewCallback={previewCallback}
-        aksjonspunktKoder={aksjonspunktKoder}
         readOnly={false}
-        isBehandlingReadOnly
         sprakkode={sprakkode}
-        skalBrukeOverstyrendeFritekstBrev={false}
-        initialValues={initialValues}
-        erBehandlingEtterKlage={false}
         ytelseTypeKode={fagsakYtelseType.FORELDREPENGER}
         alleKodeverk={{}}
         personopplysninger={{}}
         arbeidsgiverOpplysningerPerId={{}}
-        beregningErManueltFastsatt={false}
         vilkar={[]}
         vedtakVarsel={vedtakVarsel}
         tilgjengeligeVedtaksbrev={ingenTilgjengeligeVedtaksbrev}
       />,
     );
-    const hovedknapp = wrapper.find('Hovedknapp');
-    expect(hovedknapp).to.have.length(1);
-    expect(hovedknapp.childAt(0).text()).to.eql('Til godkjenning');
-  }); */
+    const fattVedtakButton = screen.getByRole('button');
+    expect(fattVedtakButton).toHaveTextContent('VedtakForm.TilGodkjenning');
+  });
 
   it('skal ikke vise knapper for å avslutt behandling når behandlingen er avvist med årsakkode 1099', () => {
     const previewCallback = sinon.spy();
@@ -625,7 +471,6 @@ describe('<VedtakForm>', () => {
         alleKodeverk={{}}
         personopplysninger={{}}
         arbeidsgiverOpplysningerPerId={{}}
-        beregningErManueltFastsatt={false}
         vilkar={[]}
         vedtakVarsel={vedtakVarsel}
         tilgjengeligeVedtaksbrev={ingenTilgjengeligeVedtaksbrev}
@@ -692,7 +537,6 @@ describe('<VedtakForm>', () => {
         alleKodeverk={{}}
         personopplysninger={{}}
         arbeidsgiverOpplysningerPerId={{}}
-        beregningErManueltFastsatt={false}
         vilkar={[]}
         vedtakVarsel={vedtakVarsel}
         dokumentdata={dokumentdata}
@@ -719,7 +563,6 @@ describe('<VedtakForm>', () => {
         alleKodeverk={{}}
         personopplysninger={{}}
         arbeidsgiverOpplysningerPerId={{}}
-        beregningErManueltFastsatt={false}
         vilkar={[]}
         vedtakVarsel={vedtakVarsel}
         dokumentdata={dokumentdata}
@@ -775,14 +618,11 @@ describe('<VedtakForm>', () => {
         previewCallback={previewCallback}
         aksjonspunktKoder={aksjonspunktKoder}
         sprakkode={sprakkode}
-        skalBrukeOverstyrendeFritekstBrev={false}
-        erBehandlingEtterKlage={false}
         readOnly={false}
         ytelseTypeKode={fagsakYtelseType.PLEIEPENGER}
         alleKodeverk={{}}
         personopplysninger={{}}
         arbeidsgiverOpplysningerPerId={{}}
-        beregningErManueltFastsatt={false}
         vilkar={[]}
         vedtakVarsel={vedtakVarsel}
         dokumentdata={dokumentdata}
