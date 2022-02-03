@@ -1,5 +1,5 @@
 import React from 'react';
-import { FormattedMessage, useIntl } from 'react-intl';
+import { FormattedMessage, injectIntl } from 'react-intl';
 import PropTypes from 'prop-types';
 import { Column, Row } from 'nav-frontend-grid';
 import { Heading } from '@navikt/ds-react';
@@ -15,8 +15,8 @@ const maxLength200 = maxLength(200);
 const maxLength100000 = maxLength(100000);
 const minLength3 = minLength(3);
 
-const FritekstBrevPanel = ({ previewBrev, readOnly, harAutomatiskVedtaksbrev }) => {
-  const { formatMessage } = useIntl();
+const FritekstBrevPanel = ({ previewBrev, readOnly, harAutomatiskVedtaksbrev, intl }) => {
+  const { formatMessage } = intl;
   return (
     <>
       {!readOnly && harAutomatiskVedtaksbrev && (
@@ -75,8 +75,9 @@ FritekstBrevPanel.propTypes = {
   readOnly: PropTypes.bool.isRequired,
   previewBrev: PropTypes.func.isRequired,
   harAutomatiskVedtaksbrev: PropTypes.bool.isRequired,
+  intl: PropTypes.shape(),
 };
 
 FritekstBrevPanel.defaultProps = {};
 
-export default FritekstBrevPanel;
+export default injectIntl(FritekstBrevPanel);
