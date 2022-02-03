@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { formPropTypes } from 'redux-form';
 import { Formik } from 'formik';
 import { injectIntl } from 'react-intl';
 import { Checkbox } from '@navikt/ds-react';
@@ -33,6 +32,7 @@ import RevurderingPaneler from './revurdering/RevurderingPaneler';
 import redusertUtbetalingArsak from '../kodeverk/redusertUtbetalingArsak';
 import VedtakRevurderingSubmitPanel from './revurdering/VedtakRevurderingSubmitPanel';
 import VedtakSubmit from './VedtakSubmit';
+import vedtakVarselPropType from '../propTypes/vedtakVarselPropType';
 
 const isVedtakSubmission = true;
 
@@ -73,7 +73,6 @@ export const VedtakForm = ({
   fritekstdokumenter,
   lagreDokumentdata,
   overlappendeYtelser,
-  revurderingsAarsakString,
   resultatstruktur,
   simuleringResultat,
   resultatstrukturOriginalBehandling,
@@ -255,7 +254,6 @@ export const VedtakForm = ({
                 <RevurderingPaneler
                   ytelseTypeKode={ytelseTypeKode}
                   behandlingresultat={behandlingresultat}
-                  revurderingsAarsakString={revurderingsAarsakString}
                   resultatstruktur={resultatstruktur}
                   tilbakekrevingvalg={tilbakekrevingvalg}
                   simuleringResultat={simuleringResultat}
@@ -331,6 +329,7 @@ export const VedtakForm = ({
                   brødtekst={formikProps.values.brødtekst}
                   overskrift={formikProps.values.overskrift}
                   visFeilmeldingFordiArsakerMangler={() => setErSendtInnUtenArsaker(true)}
+                  aksjonspunkter={aksjonspunkter}
                 />
               )}
             </VedtakAksjonspunktPanel>
@@ -343,7 +342,7 @@ export const VedtakForm = ({
 
 VedtakForm.propTypes = {
   intl: PropTypes.shape().isRequired,
-  behandlingStatusKode: PropTypes.shape({ kode: PropTypes.string }),
+  behandlingStatus: PropTypes.shape({ kode: PropTypes.string }),
   aksjonspunkter: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   behandlingresultat: PropTypes.shape().isRequired,
   behandlingPaaVent: PropTypes.bool.isRequired,
@@ -362,7 +361,17 @@ VedtakForm.propTypes = {
   }),
   dokumentdata: PropTypes.shape(),
   fritekstdokumenter: PropTypes.arrayOf(PropTypes.shape()),
-  ...formPropTypes,
+  vedtakVarsel: vedtakVarselPropType,
+  submitCallback: PropTypes.func,
+  lagreDokumentdata: PropTypes.func,
+  overlappendeYtelser: PropTypes.arrayOf(PropTypes.shape()),
+  resultatstruktur: PropTypes.shape(),
+  simuleringResultat: PropTypes.shape(),
+  resultatstrukturOriginalBehandling: PropTypes.shape(),
+  bgPeriodeMedAvslagsårsak: PropTypes.shape(),
+  medlemskapFom: PropTypes.string,
+  erRevurdering: PropTypes.bool,
+  behandlingArsaker: PropTypes.shape(),
 };
 
 export default injectIntl(VedtakForm);

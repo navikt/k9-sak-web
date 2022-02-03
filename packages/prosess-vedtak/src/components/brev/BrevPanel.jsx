@@ -177,7 +177,7 @@ export const BrevPanel = props => {
       ? fritekstbrev
       : automatiskbrev;
   return (
-    <div>
+    <div data-testid='brevpanel'>
       {harAlternativeMottakere && (
         <Row>
           <Column xs="12">
