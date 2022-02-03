@@ -8,7 +8,6 @@ import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import { isAvslag, isInnvilget, isOpphor } from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
 import { redusertUtbetalingArsakType } from '@fpsak-frontend/prosess-vedtak/src/kodeverk/redusertUtbetalingArsak';
 import BehandlingArsakType from '@fpsak-frontend/kodeverk/src/behandlingArsakType';
-import { dokumentdatatype } from '@k9-sak-web/konstanter';
 import { getKodeverknavnFn } from '@fpsak-frontend/utils';
 import { Aksjonspunkt, Kodeverk, KodeverkMedNavn, Vilkar } from '../../../../types';
 import VedtakInnvilgetRevurderingPanel from './VedtakInnvilgetRevurderingPanel';
@@ -62,7 +61,6 @@ interface OwnProps {
   redusertUtbetalingArsak: redusertUtbetalingArsakType;
   formikValues: any;
   erSendtInnUtenArsaker: boolean;
-  dokumentdata: any;
   behandlingArsaker: any;
 }
 
@@ -86,7 +84,6 @@ export default function RevurderingPaneler({
   redusertUtbetalingArsak,
   formikValues,
   erSendtInnUtenArsaker,
-  dokumentdata,
   behandlingArsaker,
 }: OwnProps): JSX.Element {
   const intl = useIntl();
@@ -146,10 +143,8 @@ export default function RevurderingPaneler({
           <VedtakRedusertUtbetalingArsaker
             intl={intl}
             readOnly={readOnly}
-            values={Object.values(redusertUtbetalingArsak).map(key => ({ [key]: formikValues[key] }))}
-            vedtakVarsel={vedtakVarsel}
+            values={new Map(Object.values(redusertUtbetalingArsak).map(key => [key, formikValues[key]]))}
             erSendtInnUtenArsaker={erSendtInnUtenArsaker}
-            merkedeArsaker={dokumentdata?.[dokumentdatatype.REDUSERT_UTBETALING_AARSAK]}
           />
         </Column>
       )}

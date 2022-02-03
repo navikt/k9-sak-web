@@ -58,7 +58,7 @@ export function kanHindreUtsending(tilgjengeligeVedtaksbrev: TilgjengeligeVedtak
   return vedtaksbrevmaler(tilgjengeligeVedtaksbrev).some(vb => vb === vedtaksbrevtype.INGEN);
 }
 
-export function kanKunVelge(tilgjengeligeVedtaksbrev: TilgjengeligeVedtaksbrev, brevtype) : boolean {
+export function kanKunVelge(tilgjengeligeVedtaksbrev: TilgjengeligeVedtaksbrev, brevtype): boolean {
   const vedtaksbrev = vedtaksbrevmaler(tilgjengeligeVedtaksbrev);
   return vedtaksbrev.length > 0 && vedtaksbrev.every(vb => vb === brevtype);
 }
@@ -99,6 +99,12 @@ export const harPotensieltFlereInformasjonsbehov = infobehovVedtaksbrev => {
     return informasjonsbehov.length > 0;
   }
   return false;
+};
+
+export const harMellomlagretRedusertUtbetalingArsak = (key, dokumentdata, vedtakVarsel) => {
+  const årsaker =
+    dokumentdata?.[dokumentdatatype.REDUSERT_UTBETALING_AARSAK] || vedtakVarsel?.redusertUtbetalingÅrsaker;
+  return årsaker.some(v => v === key);
 };
 
 export const lagForhåndsvisRequest = (

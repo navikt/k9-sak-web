@@ -20,6 +20,7 @@ import {
   kanHaAutomatiskVedtaksbrev,
   filterInformasjonsbehov,
   harPotensieltFlereInformasjonsbehov,
+  harMellomlagretRedusertUtbetalingArsak,
 } from '@fpsak-frontend/utils/src/formidlingUtils';
 import vedtaksbrevtype from '@fpsak-frontend/kodeverk/src/vedtaksbrevtype';
 import vedtakVilkarPropType from '../propTypes/vedtakVilkarPropType';
@@ -180,7 +181,9 @@ export const VedtakForm = ({
           },
           ...[
             ...mellomlagredeInformasjonsbehov,
-            ...Object.values(redusertUtbetalingArsak).map(key => ({ [key]: false })),
+            ...Object.values(redusertUtbetalingArsak).map(key => ({
+              [key]: harMellomlagretRedusertUtbetalingArsak(key, dokumentdata, vedtakVarsel),
+            })),
           ],
         )}
         onSubmit={values => {
@@ -280,7 +283,6 @@ export const VedtakForm = ({
                   redusertUtbetalingArsak={redusertUtbetalingArsak}
                   formikValues={formikProps.values}
                   erSendtInnUtenArsaker={erSendtInnUtenArsaker}
-                  dokumentdata={dokumentdata}
                   behandlingArsaker={behandlingArsaker}
                 />
               )}
