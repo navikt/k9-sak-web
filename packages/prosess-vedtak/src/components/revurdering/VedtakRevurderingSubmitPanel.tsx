@@ -30,6 +30,11 @@ interface OwnProps {
   aksjonspunkter: Aksjonspunkt[];
 }
 
+export const submitKnappTekst = aksjonspunkter =>
+  aksjonspunkter && aksjonspunkter.some(ap => ap.erAktivt === true && ap.toTrinnsBehandling === true)
+    ? 'VedtakForm.TilGodkjenning'
+    : 'VedtakForm.FattVedtak';
+
 export const VedtakRevurderingSubmitPanelImpl = ({
   intl,
   formikProps,
@@ -43,17 +48,14 @@ export const VedtakRevurderingSubmitPanelImpl = ({
   dokumentdata,
   overskrift,
   brødtekst,
-  aksjonspunkter, 
+  aksjonspunkter,
 }: OwnProps): JSX.Element => {
   const onClick = event =>
     !harRedusertUtbetaling || Object.values(redusertUtbetalingArsak).some(a => !!formikProps.values[a])
       ? handleSubmit(event)
       : visFeilmeldingFordiArsakerMangler();
 
-  const submitKnappTextId =
-    aksjonspunkter && aksjonspunkter.some(ap => ap.erAktivt === true && ap.toTrinnsBehandling === true)
-      ? 'VedtakForm.TilGodkjenning'
-      : 'VedtakForm.FattVedtak';
+  const submitKnappTekstID = submitKnappTekst(aksjonspunkter);
 
   const submitKnapp = (
     <Button
@@ -65,7 +67,7 @@ export const VedtakRevurderingSubmitPanelImpl = ({
       loading={isSubmitting}
     >
       {intl.formatMessage({
-        id: submitKnappTextId,
+        id: submitKnappTekstID,
       })}
     </Button>
   );
