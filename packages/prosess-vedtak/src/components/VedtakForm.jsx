@@ -158,7 +158,7 @@ export const VedtakForm = ({
           {},
           {
             [fieldnames.SKAL_BRUKE_OVERSTYRENDE_FRITEKST_BREV]:
-              kanKunVelge(tilgjengeligeVedtaksbrev, vedtaksbrevtype.AUTOMATISK) ||
+              kanKunVelge(tilgjengeligeVedtaksbrev, vedtaksbrevtype.FRITEKST) ||
               harMellomlagretFritekstbrev(dokumentdata, vedtakVarsel) ||
               (kanHaFritekstbrev(tilgjengeligeVedtaksbrev) && !kanHaAutomatiskVedtaksbrev(tilgjengeligeVedtaksbrev)),
             [fieldnames.SKAL_HINDRE_UTSENDING_AV_BREV]:
