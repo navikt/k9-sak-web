@@ -2,7 +2,6 @@ import React from 'react';
 import { createSelector } from 'reselect';
 import { injectIntl, IntlShape } from 'react-intl';
 import { connect } from 'react-redux';
-import { FormikState } from 'formik';
 import { Button } from '@navikt/ds-react';
 
 import klageBehandlingArsakType from '@fpsak-frontend/kodeverk/src/behandlingArsakType';
@@ -16,7 +15,7 @@ import styles from '../vedtakForm.less';
 
 interface OwnProps {
   intl: IntlShape;
-  formikProps: FormikState<any>;
+  formikValues: any;
   readOnly: boolean;
   harRedusertUtbetaling: boolean;
   visFeilmeldingFordiArsakerMangler: () => void;
@@ -37,7 +36,7 @@ export const submitKnappTekst = aksjonspunkter =>
 
 export const VedtakRevurderingSubmitPanelImpl = ({
   intl,
-  formikProps,
+  formikValues,
   readOnly,
   harRedusertUtbetaling,
   visFeilmeldingFordiArsakerMangler,
@@ -51,7 +50,7 @@ export const VedtakRevurderingSubmitPanelImpl = ({
   aksjonspunkter,
 }: OwnProps): JSX.Element => {
   const onClick = event =>
-    !harRedusertUtbetaling || Object.values(redusertUtbetalingArsak).some(a => !!formikProps.values[a])
+    !harRedusertUtbetaling || Object.values(redusertUtbetalingArsak).some(a => !!formikValues[a])
       ? handleSubmit(event)
       : visFeilmeldingFordiArsakerMangler();
 

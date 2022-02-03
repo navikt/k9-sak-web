@@ -92,7 +92,7 @@ const VedtakPanels = ({
       resultatstrukturOriginalBehandling={resultatstrukturOriginalBehandling}
       bgPeriodeMedAvslagsårsak={bgPeriodeMedAvslagsårsak}
       medlemskapFom={medlemskapFom}
-      erRevurdering={behandlingTypeKode === behandlingType.REVURDERING && bg.length}
+      erRevurdering={!!(behandlingTypeKode === behandlingType.REVURDERING && bg.length)}
     />
   );
 };

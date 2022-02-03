@@ -171,7 +171,7 @@ export const VedtakForm = ({
           },
           ...[
             ...mellomlagredeInformasjonsbehov,
-            ...Object.values(redusertUtbetalingArsak).map(key => ({ [key]: undefined })),
+            ...Object.values(redusertUtbetalingArsak).map(key => ({ [key]: false })),
           ],
         )}
         onSubmit={values => {

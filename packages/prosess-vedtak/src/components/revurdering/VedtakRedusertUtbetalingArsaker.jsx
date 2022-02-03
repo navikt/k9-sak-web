@@ -1,5 +1,5 @@
 import React from 'react';
-import { CheckboxField } from '@fpsak-frontend/form';
+import CheckboxFieldFormik from '@fpsak-frontend/form/src/CheckboxFieldFormik';
 import PropTypes from 'prop-types';
 import { CheckboxGruppe } from 'nav-frontend-skjema';
 import styles from './vedtakRedusertUtbetalingArsaker.less';
@@ -29,12 +29,12 @@ const VedtakRedusertUtbetalingArsaker = ({
       }
     >
       {Object.values(redusertUtbetalingArsak).map(name => (
-        <CheckboxField
+        <CheckboxFieldFormik
           name={name}
           key={name}
           label={{ id: `VedtakForm.RedusertUtbetalingArsak.${name}` }}
           disabled={readOnly}
-          checked={readOnly ? arsaker?.some(key => key === name) : values.get(name)}
+          checked={readOnly ? arsaker?.some(key => key === name) : values[name]}
         />
       ))}
     </CheckboxGruppe>
@@ -44,7 +44,7 @@ const VedtakRedusertUtbetalingArsaker = ({
 VedtakRedusertUtbetalingArsaker.propTypes = {
   intl: PropTypes.shape().isRequired,
   readOnly: PropTypes.bool.isRequired,
-  values: PropTypes.instanceOf(Map),
+  values: PropTypes.instanceOf(PropTypes.shape()),
   vedtakVarsel: vedtakVarselPropType,
   erSendtInnUtenArsaker: PropTypes.bool.isRequired,
   merkedeArsaker: PropTypes.arrayOf(PropTypes.string),

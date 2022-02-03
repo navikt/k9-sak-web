@@ -60,7 +60,7 @@ interface OwnProps {
   medlemskapFom: string;
   harRedusertUtbetaling: boolean;
   redusertUtbetalingArsak: redusertUtbetalingArsakType;
-  formProps: any;
+  formikValues: any;
   erSendtInnUtenArsaker: boolean;
   dokumentdata: any;
   behandlingArsaker: any;
@@ -84,7 +84,7 @@ export default function RevurderingPaneler({
   medlemskapFom,
   harRedusertUtbetaling,
   redusertUtbetalingArsak,
-  formProps,
+  formikValues,
   erSendtInnUtenArsaker,
   dokumentdata,
   behandlingArsaker,
@@ -141,12 +141,13 @@ export default function RevurderingPaneler({
           />
         )}
       </Column>
+      {console.log(redusertUtbetalingArsak)}
       {harRedusertUtbetaling && (
         <Column xs="8">
           <VedtakRedusertUtbetalingArsaker
             intl={intl}
             readOnly={readOnly}
-            values={new Map(Object.values(redusertUtbetalingArsak).map(a => [a, !!formProps[a]]))}
+            values={Object.values(redusertUtbetalingArsak).map(key => ({ [key]: formikValues[key] }))}
             vedtakVarsel={vedtakVarsel}
             erSendtInnUtenArsaker={erSendtInnUtenArsaker}
             merkedeArsaker={dokumentdata?.[dokumentdatatype.REDUSERT_UTBETALING_AARSAK]}
