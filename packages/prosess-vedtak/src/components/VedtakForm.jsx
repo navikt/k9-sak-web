@@ -147,6 +147,7 @@ export class VedtakForm extends Component {
               beregningResultat={resultatstruktur}
               alleKodeverk={alleKodeverk}
               tilbakekrevingvalg={tilbakekrevingvalg}
+              simuleringResultat={simuleringResultat}
             />
           )}
 
