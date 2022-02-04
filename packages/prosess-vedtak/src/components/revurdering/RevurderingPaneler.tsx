@@ -27,7 +27,7 @@ const createAarsakString = (revurderingAarsaker, getKodeverknavn) => {
     .filter(aarsak => aarsak.kode !== BehandlingArsakType.RE_ENDRING_FRA_BRUKER)
     .map(aarsak => getKodeverknavn(aarsak));
   // Dersom en av årsakene er "RE_ENDRING_FRA_BRUKER" skal alltid denne vises først
-  if (endringFraBrukerAarsak !== undefined) {
+  if (endringFraBrukerAarsak) {
     aarsakTekstList.push(getKodeverknavn(endringFraBrukerAarsak));
   }
   aarsakTekstList.push(...alleAndreAarsakerNavn);

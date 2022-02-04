@@ -86,7 +86,7 @@ export const VedtakForm = ({
   const [erSendtInnUtenArsaker, setErSendtInnUtenArsaker] = useState(false);
   const onToggleOverstyring = (e, setFieldValue) => {
     const kommendeVerdi = e.target.checked;
-    setFieldValue(fieldnames.SKAL_BRUKE_OVERSTYRENDE_FRITEKST_BREV, e.target.checked);
+    setFieldValue(fieldnames.SKAL_BRUKE_OVERSTYRENDE_FRITEKST_BREV, kommendeVerdi);
 
     if (kommendeVerdi) {
       setFieldValue(fieldnames.SKAL_HINDRE_UTSENDING_AV_BREV, false);
@@ -156,8 +156,9 @@ export const VedtakForm = ({
     : values => payload(values);
 
   const harRedusertUtbetaling = ytelseTypeKode === fagsakYtelseType.FRISINN;
-  const aktiverteInformasjonsbehov =
-    (informasjonsbehovVedtaksbrev?.informasjonsbehov || []).filter(({ type }) => type === 'FRITEKST') ?? [];
+  const aktiverteInformasjonsbehov = (informasjonsbehovVedtaksbrev?.informasjonsbehov || []).filter(
+    ({ type }) => type === 'FRITEKST',
+  );
   const mellomlagredeInformasjonsbehov = aktiverteInformasjonsbehov.map(informasjonsbehov => ({
     [informasjonsbehov.kode]: dokumentdata?.[informasjonsbehov.kode] || '',
   }));
