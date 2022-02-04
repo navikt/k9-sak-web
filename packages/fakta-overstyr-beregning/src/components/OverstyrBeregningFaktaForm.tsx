@@ -60,7 +60,7 @@ const OverstyrBeregningFaktaForm = ({
                     return schema.test(
                         'dato',
                         intl.formatMessage({ id: 'OverstyrInputForm.MaVareDato' }),
-                        (value) => isDate(value)
+                        (value) => (value) ? isDate(value) : true // dato skal ikke være påkrevd
                     )
                 }
                 return schema;
@@ -90,8 +90,8 @@ const OverstyrBeregningFaktaForm = ({
 
     const utledBegrunnelse = () => aksjonspunkter.find((ap) => ap.definisjon.kode === aksjonspunktCodes.OVERSTYR_BEREGNING_INPUT).begrunnelse || ''
 
-    const erAksjonspunktÅpent = () => isAksjonspunktOpen(aksjonspunkter.find((ap) => 
-    ap.definisjon.kode === aksjonspunktCodes.OVERSTYR_BEREGNING_INPUT).status.kode); 
+    const erAksjonspunktÅpent = () => isAksjonspunktOpen(aksjonspunkter.find((ap) =>
+        ap.definisjon.kode === aksjonspunktCodes.OVERSTYR_BEREGNING_INPUT).status.kode);
 
     /**
      * Formik liker ikke null i value feltene, null verdier kan forekomme fra backend. 
@@ -164,8 +164,8 @@ const OverstyrBeregningFaktaForm = ({
                                                 }
                                                 <VerticalSpacer twentyPx />
                                                 {aktivitetliste.length > 0 &&
-                                                <FieldArray name={`perioder[${periodeIndex}].aktivitetliste`} >
-                                                    {() =>
+                                                    <FieldArray name={`perioder[${periodeIndex}].aktivitetliste`} >
+                                                        {() =>
                                                             <Table stripet headerTextCodes={[
                                                                 "OverstyrInputForm.FirmaHeader",
                                                                 "OverstyrInputForm.InntektPrAar",
@@ -186,9 +186,9 @@ const OverstyrBeregningFaktaForm = ({
                                                                 }
                                                                 )}
                                                             </Table>
-                        
-                                                    }
-                                                </FieldArray>}
+
+                                                        }
+                                                    </FieldArray>}
                                             </BorderBox>
                                         </div>
                                     })}
