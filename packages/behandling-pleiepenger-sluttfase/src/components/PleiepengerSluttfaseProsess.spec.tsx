@@ -25,7 +25,7 @@ import FetchedData from '../types/fetchedDataTsType';
 import PleiepengerSluttfaseProsess from './PleiepengerSluttfaseProsess';
 import { PleiepengerSluttfaseBehandlingApiKeys, requestPleiepengerSluttfaseApi } from '../data/pleiepengerSluttfaseBehandlingApi';
 
-describe('<PleiepengerSluttfaseProsess>', () => {
+describe('< PleiepengerSluttfaseProsess>', () => {
   const fagsak = {
     saksnummer: '123456',
     sakstype: { kode: fagsakYtelseType.FORELDREPENGER, kodeverk: 'test' },
@@ -210,7 +210,7 @@ describe('<PleiepengerSluttfaseProsess>', () => {
         usePartialStatus: false,
       },
       {
-        labelId: 'Behandlingspunkt.MedisinskVilkar',
+        labelId: 'Behandlingspunkt.LivetsSluttfase',
         isActive: false,
         isDisabled: false,
         isFinished: false,

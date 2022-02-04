@@ -1,6 +1,5 @@
 import React from 'react';
 
-import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import VedtakProsessIndex from '@fpsak-frontend/prosess-vedtak';
 import { prosessStegCodes } from '@k9-sak-web/konstanter';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
@@ -49,13 +48,14 @@ class PanelDef extends ProsessStegPanelDef {
     beregningsgrunnlag,
     arbeidsgiverOpplysningerPerId,
     lagreDokumentdata,
+    fagsak
   }) => ({
     previewCallback,
     aksjonspunkter,
     vilkar,
     simuleringResultat,
     beregningsgrunnlag,
-    ytelseTypeKode: fagsakYtelseType.PLEIEPENGER,
+    ytelseTypeKode: fagsak.sakstype.kode,
     employeeHasAccess: rettigheter.kanOverstyreAccess.isEnabled,
     arbeidsgiverOpplysningerPerId,
     lagreDokumentdata,
