@@ -1,4 +1,4 @@
-import React, { useMemo, useCallback, useStateW } from 'react';
+import React, { useMemo, useCallback, useState } from 'react';
 import { createIntl, createIntlCache, RawIntlProvider, FormattedMessage } from 'react-intl';
 import { Column, Row } from 'nav-frontend-grid';
 import Tabs from 'nav-frontend-tabs';
