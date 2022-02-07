@@ -39,6 +39,8 @@
     "@babel/runtime": "^7.15.4",
     "@formatjs/intl-datetimeformat": "^4.2.4",
     "@formatjs/intl-numberformat": "^7.2.4",
+    "@navikt/ds-css": "^0.12.11",
+    "@navikt/ds-react": "^0.14.11",
     "@sentry/browser": "^5.30.0",
     "axios": "0.21.4",
     "core-js": "^3.18.1",
