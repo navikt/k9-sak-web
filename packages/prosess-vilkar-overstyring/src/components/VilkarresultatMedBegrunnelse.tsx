@@ -16,7 +16,6 @@ interface VilkarresultatMedBegrunnelseProps {
   customVilkarIkkeOppfyltText?: CustomVilkarText;
   customVilkarOppfyltText?: CustomVilkarText;
   skalViseBegrunnelse?: boolean;
-  customBegrunnelseLabel?: string;
 }
 
 /**
@@ -33,12 +32,11 @@ export const VilkarresultatMedBegrunnelse = ({
   skalViseBegrunnelse,
   customVilkarIkkeOppfyltText,
   customVilkarOppfyltText,
-  customBegrunnelseLabel,
 }: VilkarresultatMedBegrunnelseProps) => (
   <>
     {skalViseBegrunnelse && (
       <>
-        <VilkarBegrunnelse isReadOnly={readOnly} begrunnelseLabel={customBegrunnelseLabel} />
+        <VilkarBegrunnelse isReadOnly={readOnly} />
         <VerticalSpacer eightPx />
       </>
     )}
