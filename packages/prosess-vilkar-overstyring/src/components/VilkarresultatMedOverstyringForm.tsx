@@ -169,18 +169,6 @@ export const VilkarresultatMedOverstyringForm = ({
           )}
         </AksjonspunktBox>
       )}
-      {!erOverstyrt && !hasAksjonspunkt && (
-        <VilkarresultatMedBegrunnelse
-          skalViseBegrunnelse
-          readOnly
-          erVilkarOk={erVilkarOk}
-          customVilkarIkkeOppfyltText={customVilkarIkkeOppfyltText}
-          customVilkarOppfyltText={customVilkarOppfyltText}
-          customBegrunnelseLabel="VilkarBegrunnelse.Begrunnelse"
-          erMedlemskapsPanel={erMedlemskapsPanel}
-          avslagsarsaker={avslagsarsaker}
-        />
-      )}
     </form>
   );
 };

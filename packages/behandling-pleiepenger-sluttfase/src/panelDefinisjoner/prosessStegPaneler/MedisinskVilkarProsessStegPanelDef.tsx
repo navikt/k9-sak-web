@@ -38,9 +38,9 @@ class PanelDef extends ProsessStegPanelDef {
 }
 
 class MedisinskVilkarProsessStegPanelDef extends ProsessStegDef {
-  getUrlKode = () => prosessStegCodes.PLEIEPENGER_SLUTTFASE;
+  getUrlKode = () => prosessStegCodes.MEDISINSK_VILKAR;
 
-  getTekstKode = () => 'Behandlingspunkt.MedisinskVilkar';
+  getTekstKode = () => 'Behandlingspunkt.LivetsSluttfase';
 
   getPanelDefinisjoner = () => [new PanelDef()];
 }
