@@ -37,6 +37,7 @@
   "VisittkortBarnInfoOmsorgPanel.AdopsjonAntallBarn": "Adopsjon({antall} barn) {dato}",
 
   "VisittkortPanel.Ukjent": "Ukjent navn, mangler norsk id-nr",
+  "VisittkortPanel.FraInfotrygd": "Fra Infotrygd",
 
   "Malform.Bokmal": "Bokmål",
   "Malform.Nynorsk": "Nynorsk",

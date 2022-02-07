@@ -63,6 +63,7 @@ export enum K9sakApiKeys {
   ARBEIDSGIVERE = 'ARBEIDSGIVERE',
   FAGSAK_RELATERTE_SAKER = 'FAGSAK_RELATERTE_SAKER',
   PARTER_MED_KLAGERETT = 'PARTER_MED_KLAGERETT',
+  DIREKTE_OVERGANG_FRA_INFOTRYGD = 'DIREKTE_OVERGANG_FRA_INFOTRYGD',
 }
 
 const endpoints = new RestApiConfigBuilder()
@@ -113,6 +114,7 @@ const endpoints = new RestApiConfigBuilder()
   .withRel('behandling-rettigheter', K9sakApiKeys.BEHANDLING_RETTIGHETER)
   .withRel('tilgjengelige-vedtaksbrev', K9sakApiKeys.TILGJENGELIGE_VEDTAKSBREV)
   .withRel('fagsak-relaterte-saker', K9sakApiKeys.FAGSAK_RELATERTE_SAKER)
+  .withRel('direkte-overgang', K9sakApiKeys.DIREKTE_OVERGANG_FRA_INFOTRYGD)
 
   .withPost('/k9/tilbake/api/brev/forhandsvis', K9sakApiKeys.PREVIEW_MESSAGE_TILBAKEKREVING, { isResponseBlob: true })
   .withPost(
