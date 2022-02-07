@@ -7,7 +7,6 @@ import { Element, Normaltekst, Undertittel } from 'nav-frontend-typografi';
 import { DDMMYYYY_DATE_FORMAT, formatCurrencyNoKr, TIDENES_ENDE } from '@fpsak-frontend/utils';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
-import dekningsgrad from '@fpsak-frontend/kodeverk/src/dekningsgrad';
 import beregningStyles from '../../beregningsgrunnlagPanel/beregningsgrunnlag.less';
 import { finnOppgittInntektForAndelIPeriode } from './FrisinnUtils';
 
@@ -50,7 +49,7 @@ const lagBeskrivelseMedBeløpRad = (tekstId, beløp) => (
 );
 
 const lagRedusertBGRad = (tekstIdRedusert, beløpÅRedusere, tekstIdLøpende, løpendeBeløp, gjeldendeDekningsgrad) => {
-  const multiplikator = gjeldendeDekningsgrad === dekningsgrad.SEKSTI ? 0.6 : 0.8;
+  const multiplikator = gjeldendeDekningsgrad/100;
   const redusert = beløpÅRedusere * multiplikator;
   return (
     <>
@@ -80,8 +79,10 @@ const erBeløpSatt = beløp => beløp || beløp === 0;
 
 const finnDekningsgrad = bgPeriodeFom => {
   const fomDato = moment(bgPeriodeFom);
-  const førsteDagMedRedusertDekning = moment('2020-11-01', 'YYYY-MM-DD');
-  return fomDato.isBefore(førsteDagMedRedusertDekning) ? dekningsgrad.ATTI : dekningsgrad.SEKSTI;
+  if (fomDato.isBefore(moment('2020-11-01', 'YYYY-MM-DD'))) {
+    return 80;
+  }
+  return fomDato.isBefore(moment('2022-01-01', 'YYYY-MM-DD')) ? 60 : 70;
 };
 
 const lagPeriodeblokk = (bgperiode, ytelsegrunnlag, frilansGrunnlag, næringGrunnlag) => {

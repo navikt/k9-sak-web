@@ -34,7 +34,6 @@ export enum OmsorgspengerBehandlingApiKeys {
   OPEN_BEHANDLING_FOR_CHANGES = 'OPEN_BEHANDLING_FOR_CHANGES',
   VERGE_OPPRETT = 'VERGE_OPPRETT',
   VERGE_FJERN = 'VERGE_FJERN',
-  VEDTAK_VARSEL = 'VEDTAK_VARSEL',
   FORBRUKTE_DAGER = 'FORBRUKTE_DAGER',
   FULL_UTTAKSPLAN = 'FULL_UTTAKSPLAN',
   INNTEKT_OG_YTELSER = 'INNTEKT_OG_YTELSER',
@@ -66,7 +65,6 @@ const endpoints = new RestApiConfigBuilder()
   .withRel('soeker-verge', OmsorgspengerBehandlingApiKeys.VERGE)
   .withRel('opptjening-v2', OmsorgspengerBehandlingApiKeys.OPPTJENING)
   .withRel('sendt-varsel-om-revurdering', OmsorgspengerBehandlingApiKeys.SEND_VARSEL_OM_REVURDERING)
-  .withRel('vedtak-varsel', OmsorgspengerBehandlingApiKeys.VEDTAK_VARSEL)
   .withRel('forbrukte-dager', OmsorgspengerBehandlingApiKeys.FORBRUKTE_DAGER)
   .withRel('full-uttaksplan', OmsorgspengerBehandlingApiKeys.FULL_UTTAKSPLAN)
   .withRel('inntekt', OmsorgspengerBehandlingApiKeys.INNTEKT_OG_YTELSER)

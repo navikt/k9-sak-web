@@ -49,10 +49,16 @@ const finnErDelvisBehandlet = (vilkar: Vilkar[], uttaksperioder: Uttaksperiode[]
     }
   }
 
+  let formatertUttaksperioder = uttaksperioder;
+
   // uttak må sjekke uttaksperioder i tillegg
-  if ((uttaksperioder || []).length > 0) {
-    const alleUttaksperioderAvslått = uttaksperioder.every(p => p.utfall === UtfallEnum.AVSLÅTT);
-    const alleUttaksperioderInnvilget = uttaksperioder.every(p => p.utfall === UtfallEnum.INNVILGET);
+  if(typeof uttaksperioder === 'object'){
+    formatertUttaksperioder = Object.values(uttaksperioder);
+  }
+
+  if ((formatertUttaksperioder || []).length > 0) {
+    const alleUttaksperioderAvslått = formatertUttaksperioder.every(p => p.utfall === UtfallEnum.AVSLÅTT || p.utfall === vilkarUtfallType.IKKE_OPPFYLT);
+    const alleUttaksperioderInnvilget = formatertUttaksperioder.every(p => p.utfall === UtfallEnum.INNVILGET || p.utfall === vilkarUtfallType.OPPFYLT);
 
     if (alleUttaksperioderAvslått || alleUttaksperioderInnvilget) {
       return false;

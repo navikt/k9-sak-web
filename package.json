@@ -39,6 +39,8 @@
     "@babel/runtime": "^7.15.4",
     "@formatjs/intl-datetimeformat": "^4.2.4",
     "@formatjs/intl-numberformat": "^7.2.4",
+    "@navikt/ds-css": "^0.12.11",
+    "@navikt/ds-react": "^0.14.11",
     "@sentry/browser": "^5.30.0",
     "axios": "0.21.4",
     "core-js": "^3.18.1",
@@ -127,6 +129,7 @@
     "less-loader": "^10.0.1",
     "lint-staged": "^11.1.2",
     "mini-css-extract-plugin": "^2.3.0",
+    "msw": "^0.36.4",
     "prettier": "^2.4.1",
     "raf": "^3.4.1",
     "react-refresh": "^0.10.0",
@@ -156,5 +159,8 @@
     "tar": "^6.1.2",
     "trim": "^1.0.1",
     "trim-newlines": "^3.0.1"
+  },
+  "msw": {
+    "workerDirectory": "public"
   }
 }

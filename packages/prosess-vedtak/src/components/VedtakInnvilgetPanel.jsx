@@ -9,7 +9,7 @@ import { findDelvisInnvilgetResultatText, findInnvilgetResultatText, findTilbake
 
 export const VedtakInnvilgetPanelImpl = ({ intl, behandlingsresultat, ytelseTypeKode, tilbakekrevingText }) => (
   <>
-    <Undertekst>{intl.formatMessage({ id: 'VedtakForm.Resultat' })}</Undertekst>
+    <Undertekst data-testid="innvilget">{intl.formatMessage({ id: 'VedtakForm.Resultat' })}</Undertekst>
     <Normaltekst>
       {intl.formatMessage({
         id: isDelvisInnvilget(behandlingsresultat.type.kode)
