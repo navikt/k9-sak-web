@@ -1,9 +1,5 @@
 import {
-  AksjonspunktUtenLøsningModal,
-  ArbeidsgiverOpplysningerUtil,
   BehandlingPaVent,
-  BehandlingUtil,
-  harOpprettetAksjonspunkt,
   Rettigheter,
   SettPaVentParams,
 } from '@k9-sak-web/behandling-felles';
@@ -16,13 +12,9 @@ import {
   FeatureToggles,
   KodeverkMedNavn,
 } from '@k9-sak-web/types';
-import moment from 'moment';
 import React, { useState } from 'react';
-import { Arbeidstype } from '../types/Arbeidstype';
 import FetchedData from '../types/fetchedDataTsType';
 import AndreSakerPåSøkerStripe from './AndreSakerPåSøkerStripe';
-import ArbeidsgiverMedManglendePerioderListe from './ArbeidsgiverMedManglendePerioderListe';
-import DataFetcher from './DataFetcher';
 import PleiepengerSluttfaseFakta from './PleiepengerSluttfaseFakta';
 import PleiepengerSluttfaseProsess from './PleiepengerSluttfaseProsess';
 
@@ -52,17 +44,6 @@ interface FaktaPanelInfo {
   textCode: string;
 }
 
-interface Data {
-  mangler?: {
-    arbeidsgiver: {
-      organisasjonsnummer: string;
-      type: Arbeidstype;
-      aktørId: string;
-    };
-    manglendePerioder: string[];
-  }[];
-}
-
 const PleiepengerSluttfasePaneler = ({
   fetchedData,
   fagsak,
@@ -85,9 +66,6 @@ const PleiepengerSluttfasePaneler = ({
 }: OwnProps) => {
   const [apentFaktaPanelInfo, setApentFaktaPanel] = useState<FaktaPanelInfo>();
   const [beregningErBehandlet, setBeregningErBehandlet] = useState<boolean>(false);
-  const harOpprettetAksjonspunkt9203 = harOpprettetAksjonspunkt(fetchedData?.aksjonspunkter || [], 9203);
-  const behandlingUtil = new BehandlingUtil(behandling);
-  const arbeidsgiverOpplysningerUtil = new ArbeidsgiverOpplysningerUtil(arbeidsgiverOpplysningerPerId);
 
   return (
     <>
@@ -98,43 +76,6 @@ const PleiepengerSluttfasePaneler = ({
         settPaVent={settPaVent}
         hentBehandling={hentBehandling}
       />
-      {harOpprettetAksjonspunkt9203 && (
-        <DataFetcher
-          url={behandlingUtil.getEndpointHrefByRel('psb-manglende-arbeidstid')}
-          contentRenderer={(data: Data, isLoading, hasError) => (
-            <AksjonspunktUtenLøsningModal
-              melding={
-                <div>
-                  For å komme videre i behandlingen må du punsje manglende opplysninger om arbeidskategori og arbeidstid
-                  i Punsj.
-                  {isLoading && <p>Henter perioder...</p>}
-                  {hasError && <p>Noe gikk galt under henting av perioder</p>}
-                  {!isLoading && !hasError && (
-                    <ArbeidsgiverMedManglendePerioderListe
-                      arbeidsgivereMedPerioder={data.mangler?.map(mangel => ({
-                        arbeidsgiverNavn: arbeidsgiverOpplysningerUtil.finnArbeidsgiversNavn(
-                          mangel.arbeidsgiver.organisasjonsnummer || mangel.arbeidsgiver.aktørId,
-                        ),
-                        organisasjonsnummer: mangel.arbeidsgiver.organisasjonsnummer,
-                        perioder: mangel.manglendePerioder.map(periode => {
-                          const [fom, tom] = periode.split('/');
-                          const formattedFom = moment(fom, 'YYYY-MM-DD').format('DD.MM.YYYY');
-                          const formattedTom = moment(tom, 'YYYY-MM-DD').format('DD.MM.YYYY');
-                          return `${formattedFom} - ${formattedTom}`;
-                        }),
-                        arbeidstype: mangel.arbeidsgiver?.type,
-                        personIdentifikator:
-                          arbeidsgiverOpplysningerUtil.arbeidsgiverOpplysningerPerId[mangel.arbeidsgiver?.aktørId]
-                            ?.personIdentifikator,
-                      }))}
-                    />
-                  )}
-                </div>
-              }
-            />
-          )}
-        />
-      )}
       <PleiepengerSluttfaseProsess
         data={fetchedData}
         fagsak={fagsak}
