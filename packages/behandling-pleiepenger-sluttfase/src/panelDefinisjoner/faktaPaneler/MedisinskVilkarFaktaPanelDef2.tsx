@@ -11,7 +11,7 @@ import MedisinskVilkår from '../../components/MedisinskVilkår';
 class MedisinskVilkarFaktaPanelDef2 extends FaktaPanelDef {
   getUrlKode = () => faktaPanelCodes.MEDISINSKVILKAAR_V2;
 
-  getTekstKode = () => 'MedisinskVilkarPanel.MedisinskVilkar';
+  getTekstKode = () => 'LivetsSluttfasePanel.LivetsSluttfase';
 
   getAksjonspunktKoder = () => [aksjonspunktCodes.MEDISINSK_VILKAAR];
 
