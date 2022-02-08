@@ -3,17 +3,20 @@ import { ProsessStegDef, ProsessStegPanelDef } from '@k9-sak-web/behandling-fell
 import { prosessStegCodes } from '@k9-sak-web/konstanter';
 import React from 'react';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import AntallDagerLivetsSluttfaseIndex from "@k9-sak-web/prosess-uttak-antall-dager-sluttfase";
 import Uttak from '../../components/Uttak';
 import { PleiepengerSluttfaseBehandlingApiKeys } from '../../data/pleiepengerSluttfaseBehandlingApi';
 
 class PanelDef extends ProsessStegPanelDef {
-  getKomponent = ({ behandling, uttaksperioder, arbeidsgiverOpplysningerPerId, aksjonspunkter }) => (
+  getKomponent = ({ behandling, uttaksperioder, arbeidsgiverOpplysningerPerId, aksjonspunkter }) => (<>
+    <AntallDagerLivetsSluttfaseIndex maxAntallDager={60} antallDagerInnvilgetForPleietrengendeHittil={40} sistePleiedag="2021.01.02" />
     <Uttak
       uuid={behandling.uuid}
       uttaksperioder={uttaksperioder}
       arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
       aksjonspunkter={aksjonspunkter}
     />
+    </>
   );
 
   getAksjonspunktKoder = () => [aksjonspunktCodes.VENT_ANNEN_PSB_SAK];
