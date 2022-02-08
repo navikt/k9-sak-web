@@ -5,7 +5,7 @@ const skjermlenkeCodes = {
   BEREGNING: {
     kode: 'BEREGNING',
     faktaNavn: faktaPanelCodes.DEFAULT,
-    punktNavn: prosessStegCodes.BEREGNING,
+    punktNavn: prosessStegCodes.BEREGNINGSGRUNNLAG,
   },
   BEREGNING_ENGANGSSTOENAD: {
     kode: 'BEREGNING_ENGANGSSTOENAD',

@@ -7,11 +7,11 @@ import {
   kanHaAutomatiskVedtaksbrev,
   kanHaFritekstbrev,
   kanOverstyreMottakere,
-  harBareFritekstbrev,
+  kanKunVelge,
   lagVisningsnavnForMottaker,
 } from '@fpsak-frontend/utils/src/formidlingUtils';
 import { Column, Row } from 'nav-frontend-grid';
-import { SelectField } from '@fpsak-frontend/form';
+import SelectFieldFormik from '@fpsak-frontend/form/src/SelectFieldFormik';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { safeJSONParse, required } from '@fpsak-frontend/utils';
 
@@ -21,7 +21,6 @@ import styles from './BrevPanel.less';
 import InformasjonsbehovAutomatiskVedtaksbrev from './InformasjonsbehovAutomatiskVedtaksbrev';
 import FritekstBrevPanel from '../FritekstBrevPanel';
 import { VedtakPreviewLink } from '../PreviewLink';
-import MellomLagreBrev from './MellomLagreBrev';
 
 const kanResultatForhåndsvises = behandlingResultat => {
   if (!behandlingResultat) {
@@ -34,26 +33,21 @@ const kanResultatForhåndsvises = behandlingResultat => {
   return type.kode !== 'ENDRING_I_FORDELING_AV_YTELSEN' && type.kode !== 'INGEN_ENDRING';
 };
 
-const getManuellBrevCallback = ({
-  brødtekst,
-  overskrift,
-  overstyrtMottaker,
-  formProps,
-  previewCallback,
-  tilgjengeligeVedtaksbrev,
-}) => e => {
-  if (formProps.valid || formProps.pristine) {
-    previewCallback({
-      dokumentdata: { fritekstbrev: { brødtekst: brødtekst || ' ', overskrift: overskrift || ' ' } },
-      // Bruker FRITKS som fallback til lenken ikke vises for avsluttede behandlinger
-      dokumentMal: tilgjengeligeVedtaksbrev?.vedtaksbrevmaler?.[vedtaksbrevtype.FRITEKST] ?? dokumentMalType.FRITKS,
-      ...(overstyrtMottaker ? { overstyrtMottaker: safeJSONParse(overstyrtMottaker) } : {}),
-    });
-  } else {
-    formProps.submit();
-  }
-  e.preventDefault();
-};
+const getManuellBrevCallback =
+  ({ brødtekst, overskrift, overstyrtMottaker, formProps, previewCallback, tilgjengeligeVedtaksbrev }) =>
+  e => {
+    if (formProps.isValid) {
+      previewCallback({
+        dokumentdata: { fritekstbrev: { brødtekst: brødtekst || ' ', overskrift: overskrift || ' ' } },
+        // Bruker FRITKS som fallback til lenken ikke vises for avsluttede behandlinger
+        dokumentMal: tilgjengeligeVedtaksbrev?.vedtaksbrevmaler?.[vedtaksbrevtype.FRITEKST] ?? dokumentMalType.FRITKS,
+        ...(overstyrtMottaker ? { overstyrtMottaker: safeJSONParse(overstyrtMottaker) } : {}),
+      });
+    } else {
+      formProps.submit();
+    }
+    e.preventDefault();
+  };
 
 const automatiskVedtaksbrevParams = ({
   fritekst,
@@ -68,43 +62,39 @@ const automatiskVedtaksbrevParams = ({
   ...(overstyrtMottaker ? { overstyrtMottaker: safeJSONParse(overstyrtMottaker) } : {}),
 });
 
-const getPreviewAutomatiskBrevCallbackUtenValidering = ({
-  fritekst,
-  redusertUtbetalingÅrsaker,
-  overstyrtMottaker,
-  previewCallback,
-  tilgjengeligeVedtaksbrev,
-}) => e => {
-  previewCallback(
-    automatiskVedtaksbrevParams({ fritekst, redusertUtbetalingÅrsaker, overstyrtMottaker, tilgjengeligeVedtaksbrev }),
-  );
-  e.preventDefault();
-};
-
-const getPreviewAutomatiskBrevCallback = ({
-  fritekst,
-  redusertUtbetalingÅrsaker,
-  overstyrtMottaker,
-  formProps,
-  previewCallback,
-  tilgjengeligeVedtaksbrev,
-  informasjonsbehovValues,
-}) => e => {
-  if (formProps.valid || formProps.pristine) {
+const getPreviewAutomatiskBrevCallbackUtenValidering =
+  ({ fritekst, redusertUtbetalingÅrsaker, overstyrtMottaker, previewCallback, tilgjengeligeVedtaksbrev }) =>
+  e => {
     previewCallback(
-      automatiskVedtaksbrevParams({
-        fritekst,
-        redusertUtbetalingÅrsaker,
-        overstyrtMottaker,
-        tilgjengeligeVedtaksbrev,
-        informasjonsbehovValues,
-      }),
+      automatiskVedtaksbrevParams({ fritekst, redusertUtbetalingÅrsaker, overstyrtMottaker, tilgjengeligeVedtaksbrev }),
     );
-  } else {
-    formProps.submit();
-  }
-  e.preventDefault();
-};
+    e.preventDefault();
+  };
+
+const getPreviewAutomatiskBrevCallback =
+  ({
+    fritekst,
+    redusertUtbetalingÅrsaker,
+    overstyrtMottaker,
+    formProps,
+    previewCallback,
+    tilgjengeligeVedtaksbrev,
+    informasjonsbehovValues,
+  }) =>
+  e => {
+    e.preventDefault();
+    if (formProps.isValid) {
+      previewCallback(
+        automatiskVedtaksbrevParams({
+          fritekst,
+          redusertUtbetalingÅrsaker,
+          overstyrtMottaker,
+          tilgjengeligeVedtaksbrev,
+          informasjonsbehovValues,
+        }),
+      );
+    }
+  };
 
 export const BrevPanel = props => {
   const {
@@ -124,16 +114,14 @@ export const BrevPanel = props => {
     overskrift,
     behandlingResultat,
     overstyrtMottaker,
-    formProps,
-    dokumentdata,
-    lagreDokumentdata
+    formikProps,
   } = props;
 
   const automatiskBrevCallback = getPreviewAutomatiskBrevCallback({
     fritekst: begrunnelse,
     redusertUtbetalingÅrsaker,
     overstyrtMottaker,
-    formProps,
+    formProps: formikProps,
     previewCallback,
     tilgjengeligeVedtaksbrev,
     informasjonsbehovValues,
@@ -150,7 +138,7 @@ export const BrevPanel = props => {
     brødtekst,
     overskrift,
     overstyrtMottaker,
-    formProps,
+    formProps: formikProps,
     previewCallback,
     tilgjengeligeVedtaksbrev,
   });
@@ -168,12 +156,6 @@ export const BrevPanel = props => {
         harAutomatiskVedtaksbrev={harAutomatiskVedtaksbrev}
       />
       <VedtakPreviewLink previewCallback={manuellBrevCallback} />
-      <MellomLagreBrev
-        lagreDokumentdata={lagreDokumentdata}
-        dokumentdata={dokumentdata}
-        overskrift={overskrift}
-        brødtekst={brødtekst}
-      />
     </>
   );
 
@@ -191,14 +173,15 @@ export const BrevPanel = props => {
   );
 
   const brevpanel =
-    skalBrukeOverstyrendeFritekstBrev || harBareFritekstbrev(tilgjengeligeVedtaksbrev) ? fritekstbrev : automatiskbrev;
-
+    skalBrukeOverstyrendeFritekstBrev || kanKunVelge(tilgjengeligeVedtaksbrev, vedtaksbrevtype.FRITEKST)
+      ? fritekstbrev
+      : automatiskbrev;
   return (
-    <div>
+    <div data-testid='brevpanel'>
       {harAlternativeMottakere && (
         <Row>
           <Column xs="12">
-            <SelectField
+            <SelectFieldFormik
               readOnly={readOnly}
               name="overstyrtMottaker"
               selectValues={tilgjengeligeVedtaksbrev.alternativeMottakere.map(mottaker => (
@@ -235,7 +218,7 @@ BrevPanel.propTypes = {
   informasjonsbehovVedtaksbrev: PropTypes.shape({
     informasjonsbehov: PropTypes.arrayOf(PropTypes.shape({ type: PropTypes.string })),
   }),
-  informasjonsbehovValues: PropTypes.shape().isRequired,
+  informasjonsbehovValues: PropTypes.arrayOf(PropTypes.string).isRequired,
   skalBrukeOverstyrendeFritekstBrev: PropTypes.bool.isRequired,
   previewCallback: PropTypes.func.isRequired,
   redusertUtbetalingÅrsaker: PropTypes.arrayOf(PropTypes.string),
@@ -245,9 +228,7 @@ BrevPanel.propTypes = {
   behandlingResultat: PropTypes.shape(),
   personopplysninger: PropTypes.shape(),
   arbeidsgiverOpplysningerPerId: PropTypes.shape(),
-  formProps: PropTypes.shape().isRequired,
-  dokumentdata: PropTypes.shape(),
-  lagreDokumentdata: PropTypes.func.isRequired,
+  formikProps: PropTypes.shape().isRequired,
 };
 
 BrevPanel.defaultProps = {
