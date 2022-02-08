@@ -1,0 +1,5 @@
+{
+  "Titel.UttakAvPleiepenger": "Uttak av pleiepenger",
+  "Underskrift.DagerInnvilget": "<b>{antallDagerInnvilget} av {maksAntallDagerInnvilget} dager</b> pleiepenger er innvilget for pleietrengende",
+  "Underskrift.SistePleiedag": "<b>Siste pleiedag:</b> {sistePleiedag}"
+}
