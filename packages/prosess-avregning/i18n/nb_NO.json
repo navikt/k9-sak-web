@@ -24,7 +24,7 @@
   "Avregning.ingenData": "Ingen informasjon om simulering mottatt fra økonomiløsningen.",
   "Avregning.ingenPerioder": "Ingen periode med avvik",
   "Avregning.AksjonspunktHelpText.5084": "Vurder videre behandling av tilbakekreving",
-  "Avregning.vurdering": "Begrunn hvordan feilutbetalingen skal behandles videre",
+  "Avregning.vurdering": "Forklar hva feilutbetalingen skyldes og valget av videre behandling",
   "Avregning.videreBehandling": "Fastsett videre behandling",
   "Avregning.gjennomfør": "Opprett tilbakekreving, send varsel",
   "Avregning.OpprettMenIkkeSendVarsel": "Opprett tilbakekreving, ikke send varsel",
