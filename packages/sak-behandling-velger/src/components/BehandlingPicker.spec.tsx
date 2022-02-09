@@ -1,12 +1,16 @@
-import React from 'react';
-import { shallow } from 'enzyme';
-import sinon from 'sinon';
-import { FormattedMessage } from 'react-intl';
-
+import { renderWithIntl } from '@fpsak-frontend/utils-test/src/test-utils';
 import { BehandlingAppKontekst } from '@k9-sak-web/types';
+import { screen, waitFor } from '@testing-library/react';
+import axios from 'axios';
+import React from 'react';
+import { BrowserRouter } from 'react-router-dom';
+import sinon from 'sinon';
+import messages from '../../i18n/nb_NO.json';
+import BehandlingPicker from './BehandlingPicker';
+import { sortBehandlinger } from './behandlingVelgerUtils';
 
-import BehandlingPickerItem from './BehandlingPickerItem';
-import BehandlingPicker, { sortBehandlinger } from './BehandlingPicker';
+jest.mock('axios');
+const mockedAxios = axios as jest.Mocked<typeof axios>;
 
 describe('<BehandlingPicker>', () => {
   const behandlingTemplate = {
@@ -28,8 +32,14 @@ describe('<BehandlingPicker>', () => {
         rel: 'test',
         type: 'GET',
       },
+      {
+        href: '/k9sak/behandling-perioder-årsak',
+        rel: 'behandling-perioder-årsak',
+        type: 'GET',
+      },
     ],
     gjeldendeVedtak: false,
+    behandlingÅrsaker: [],
   };
 
   const locationMock = {
@@ -39,24 +49,36 @@ describe('<BehandlingPicker>', () => {
     hash: 'test',
   };
 
-  it('skal vise forklarende tekst når det ikke finnes behandlinger', () => {
-    const wrapper = shallow(
-      <BehandlingPicker
-        noExistingBehandlinger
-        behandlinger={[]}
-        getBehandlingLocation={() => locationMock}
-        showAll={false}
-        toggleShowAll={sinon.spy()}
-        getKodeverkFn={sinon.spy()}
-      />,
-    );
+  it('skal vise forklarende tekst når det ikke finnes behandlinger', async () => {
+    await waitFor(() => {
+      mockedAxios.get.mockResolvedValue({
+        data: {
+          perioderTilVurdering: [{ fom: '2022-01-01', tom: '2022-01-18' }],
+          perioderMedÅrsak: [
+            {
+              årsaker: ['RE_ANNEN_SAK'],
+            },
+          ],
+        },
+      });
+      renderWithIntl(
+        <BehandlingPicker
+          noExistingBehandlinger
+          behandlinger={[]}
+          getBehandlingLocation={() => locationMock}
+          getKodeverkFn={sinon.spy()}
+        />,
+        {
+          locale: 'nb-NO',
+          messages,
+        },
+      );
 
-    const message = wrapper.find(FormattedMessage);
-    expect(message).toHaveLength(1);
-    expect(message.prop('id')).toEqual('BehandlingList.ZeroBehandlinger');
+      expect(screen.getByTestId('ingenBehandlinger')).toBeInTheDocument();
+    });
   });
 
-  it('skal vise alle behandlinger sortert med sist opprettet først i listen', () => {
+  it('skal vise alle behandlinger', async () => {
     const behandlinger = [
       {
         ...behandlingTemplate,
@@ -74,59 +96,35 @@ describe('<BehandlingPicker>', () => {
         opprettet: '2017-01-01',
       },
     ];
-    const wrapper = shallow(
-      <BehandlingPicker
-        noExistingBehandlinger={false}
-        behandlinger={behandlinger as BehandlingAppKontekst[]}
-        getBehandlingLocation={() => locationMock}
-        showAll
-        toggleShowAll={sinon.spy()}
-        getKodeverkFn={sinon.spy()}
-      />,
-    );
 
-    const item = wrapper.find(BehandlingPickerItem);
+    await waitFor(() => {
+      mockedAxios.get.mockResolvedValue({
+        data: {
+          perioderTilVurdering: [{ fom: '2022-01-01', tom: '2022-01-18' }],
+          perioderMedÅrsak: [
+            {
+              årsaker: ['RE_ANNEN_SAK'],
+            },
+          ],
+        },
+      });
+      renderWithIntl(
+        <BrowserRouter>
+          <BehandlingPicker
+            noExistingBehandlinger={false}
+            behandlinger={behandlinger as BehandlingAppKontekst[]}
+            getBehandlingLocation={() => locationMock}
+            getKodeverkFn={sinon.spy()}
+          />
+        </BrowserRouter>,
+        {
+          locale: 'nb-NO',
+          messages,
+        },
+      );
+    });
+    const item = await screen.findAllByTestId('behandling');
     expect(item).toHaveLength(3);
-    expect(item.first().prop('behandling').id).toEqual(2);
-    expect(item.at(1).prop('behandling').id).toEqual(1);
-    expect(item.last().prop('behandling').id).toEqual(3);
-  });
-
-  it('skal vise alle behandlinger sortert med valgt behandling først i listen', () => {
-    const behandlinger = [
-      {
-        ...behandlingTemplate,
-        id: 1,
-        opprettet: '2017-05-01',
-      },
-      {
-        ...behandlingTemplate,
-        id: 2,
-        opprettet: '2018-01-01',
-      },
-      {
-        ...behandlingTemplate,
-        id: 3,
-        opprettet: '2017-01-01',
-      },
-    ];
-    const wrapper = shallow(
-      <BehandlingPicker
-        noExistingBehandlinger={false}
-        behandlinger={behandlinger as BehandlingAppKontekst[]}
-        behandlingId={2}
-        getBehandlingLocation={() => locationMock}
-        showAll
-        toggleShowAll={sinon.spy()}
-        getKodeverkFn={sinon.spy()}
-      />,
-    );
-
-    const item = wrapper.find(BehandlingPickerItem);
-    expect(item).toHaveLength(3);
-    expect(item.first().prop('behandling').id).toEqual(2);
-    expect(item.at(1).prop('behandling').id).toEqual(1);
-    expect(item.last().prop('behandling').id).toEqual(3);
   });
 
   it('skal sortere behandlingene gitt avsluttet og opprettet datoer', () => {
@@ -165,5 +163,64 @@ describe('<BehandlingPicker>', () => {
         avsluttet: '2019-08-13T13:32:57',
       },
     ]);
+  });
+
+  it('skal vise BehandlingSelected dersom en behandling er valgt', async () => {
+    const behandlinger = [
+      {
+        ...behandlingTemplate,
+        id: 1,
+        opprettet: '2017-05-01',
+        avsluttet: '2017-05-01',
+        behandlingÅrsaker: [
+          {
+            erAutomatiskRevurdering: false,
+            behandlingArsakType: { kode: 'RE_ANNEN_SAK', kodeverk: 'BEHANDLING_AARSAK' },
+            manueltOpprettet: false,
+          },
+        ],
+      },
+      {
+        ...behandlingTemplate,
+        id: 2,
+        opprettet: '2018-01-01',
+        avsluttet: '2018-01-01',
+      },
+      {
+        ...behandlingTemplate,
+        id: 3,
+        opprettet: '2017-01-01',
+        avsluttet: '2017-01-01',
+      },
+    ];
+
+    await waitFor(() => {
+      mockedAxios.get.mockResolvedValue({
+        data: {
+          perioderTilVurdering: [{ fom: '2022-01-01', tom: '2022-01-18' }],
+          perioderMedÅrsak: [
+            {
+              årsaker: ['RE_ANNEN_SAK'],
+            },
+          ],
+        },
+      });
+      renderWithIntl(
+        <BrowserRouter>
+          <BehandlingPicker
+            noExistingBehandlinger={false}
+            behandlinger={behandlinger as BehandlingAppKontekst[]}
+            getBehandlingLocation={() => locationMock}
+            getKodeverkFn={() => ({ navn: 'test', kode: 'test', kodeverk: 'test' })}
+            behandlingId={1}
+          />
+        </BrowserRouter>,
+        {
+          locale: 'nb-NO',
+          messages,
+        },
+      );
+    });
+    expect(screen.getByTestId('behandlingSelected')).toBeInTheDocument();
   });
 });

@@ -19,6 +19,7 @@ import VisittkortLabels from './VisittkortLabels';
 
 import styles from './visittkortPanel.less';
 import RelatertFagsak from './RelatertFagsak';
+import OvergangFraInfotrygd from '../../../types/src/overgangFraInfotrygd';
 
 const utledKjonn = (kjonn: Kodeverk): Gender => {
   if (kjonn.kode === navBrukerKjonn.KVINNE) {
@@ -34,6 +35,7 @@ interface OwnProps {
   personopplysninger?: Personopplysninger;
   harTilbakekrevingVerge?: boolean;
   relaterteFagsaker: RelatertFagsakType;
+  direkteOvergangFraInfotrygd?: OvergangFraInfotrygd;
 }
 
 const VisittkortPanel = ({
@@ -43,6 +45,7 @@ const VisittkortPanel = ({
   sprakkode,
   harTilbakekrevingVerge,
   relaterteFagsaker,
+  direkteOvergangFraInfotrygd,
 }: OwnProps) => {
   if (!personopplysninger && !harTilbakekrevingVerge) {
     return (
@@ -73,6 +76,7 @@ const VisittkortPanel = ({
   const soker = personopplysninger;
   const annenPart = typeof personopplysninger.annenPart !== 'undefined' ? personopplysninger.annenPart : null;
   const barnSoktFor = personopplysninger.barnSoktFor?.length > 0 ? personopplysninger.barnSoktFor : null;
+  const erDirekteOvergangFraInfotrygd = direkteOvergangFraInfotrygd?.skjæringstidspunkter?.length > 0;
 
   return (
     <div className={styles.container}>
@@ -109,9 +113,9 @@ const VisittkortPanel = ({
           <FlexColumn>
             <RelatertFagsak relaterteFagsaker={relaterteFagsaker} />
           </FlexColumn>
-          {barnSoktFor && (
-            <div className={styles.pushRight}>
-              {barnSoktFor.map(barn => (
+          <div className={styles.pushRight}>
+            {barnSoktFor &&
+              barnSoktFor.map(barn => (
                 <FlexColumn key={barn.aktoerId}>
                   <div className={styles.flexContainer}>
                     <PersonCard
@@ -134,8 +138,16 @@ const VisittkortPanel = ({
                   </div>
                 </FlexColumn>
               ))}
-            </div>
-          )}
+            {erDirekteOvergangFraInfotrygd && (
+              <FlexColumn>
+                <div className={styles.flexContainer}>
+                  <p className={styles.overgangFraInfotrygdLabel}>
+                    <FormattedMessage id="VisittkortPanel.FraInfotrygd" />
+                  </p>
+                </div>
+              </FlexColumn>
+            )}
+          </div>
         </FlexRow>
       </FlexContainer>
     </div>
