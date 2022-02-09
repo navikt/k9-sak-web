@@ -9,6 +9,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { change as reduxFormChange, FieldArray, formPropTypes, initialize as reduxFormInitialize } from 'redux-form';
 import { createSelector } from 'reselect';
+import { FaktaBegrunnelseTextField } from '@k9-sak-web/fakta-felles';
 import AvklareAktiviteterPanelContent, {
   buildInitialValuesAvklarAktiviteter,
   BEGRUNNELSE_AVKLARE_AKTIVITETER_NAME,
@@ -278,6 +279,13 @@ const getIsAvklaringsbehovClosed = createSelector([ownProps => ownProps.beregnin
   return relevantOpenAbs.length === 0;
 });
 
+const getAvklaringsbehov= avklaringsbehov => avklaringsbehov
+    .find(
+      ab =>
+        ab.definisjon.kode === avklaringsbehovCodes.AVKLAR_AKTIVITETER ||
+        ab.definisjon.kode === avklaringsbehovCodes.OVERSTYRING_AV_BEREGNINGSAKTIVITETER,
+    );
+
 const mapStateToPropsFactory = (initialState, initialProps) => {
   const aktivtBg = initialProps.alleBeregningsgrunnlag
     ? initialProps.alleBeregningsgrunnlag[initialProps.aktivtBeregningsgrunnlagIndex]
@@ -292,6 +300,7 @@ const mapStateToPropsFactory = (initialState, initialProps) => {
         buildInitialValuesAvklarAktiviteter(beregningsgrunnlag, ownProps),
       ),
       aktivtBeregningsgrunnlagIndex: ownProps.aktivtBeregningsgrunnlagIndex,
+      ...FaktaBegrunnelseTextField.buildInitialValues(getAvklaringsbehov(aktivtBg.avklaringsbehov), BEGRUNNELSE_AVKLARE_AKTIVITETER_NAME),
     };
     return {
       initialValues,

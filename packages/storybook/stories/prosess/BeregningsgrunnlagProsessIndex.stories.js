@@ -285,6 +285,9 @@ const lagBG = (perioder, statuser, sammenligningsgrunnlagPrStatus, grunnbeløp =
       ],
       vurderMilitaer: null,
       refusjonskravSomKommerForSentListe: null,
+      saksopplysninger: {
+        arbeidsforholdMedLønnsendring: [],
+      }
     },
     hjemmel: {
       kode: 'F_14_7_8_30',
@@ -2933,3 +2936,32 @@ export const midlertidigInaktivAvslagEnG = () => {
     />
   );
 };
+
+export const arbeidstakerUtenAvvikMedLonnsendringSisteTreMan = () => {
+  const andeler = [lagAndel('AT', 450000, undefined, false)];
+  const perioder = [lagPeriodeMedDagsats(andeler, 1384.6153)];
+  const statuser = [lagStatus('AT')];
+  const sammenligningsgrunnlagPrStatus = [lagSammenligningsGrunnlag(sammenligningType.ATFLSN, 330257, 6.2, -30257)];
+  const bg = lagBG(perioder, statuser, sammenligningsgrunnlagPrStatus);
+
+  bg.faktaOmBeregning.saksopplysninger.arbeidsforholdMedLønnsendring = [true];
+
+  return (
+    <BeregningsgrunnlagProsessIndex
+      behandling={behandling}
+      beregningsgrunnlag={[bg, bg]}
+      aksjonspunkter={[]}
+      submitCallback={action('button-click')}
+      isReadOnly={false}
+      readOnlySubmitButton={false}
+      isAksjonspunktOpen={false}
+      vilkar={vilkarMedUtfall(vilkarUtfallType.OPPFYLT, [
+        bg.skjaeringstidspunktBeregning,
+        bg.skjaeringstidspunktBeregning,
+      ])}
+      alleKodeverk={alleKodeverk}
+      arbeidsgiverOpplysningerPerId={arbeidsgivere}
+    />
+  );
+};
+

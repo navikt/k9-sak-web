@@ -21,7 +21,7 @@
     "OverstyrInputForm.InntektFeltMax": "Inntekt kan ikke være større enn 10 000 000",
     "OverstyrInputForm.RefusjonFeltMin": "Refusjon kan ikke være et negativt tall",
     "OverstyrInputForm.RefusjonFeltMax": "Refusjon kan ikke være større enn 10 000 000",
-    "OverstyrInputForm.OpphorFeltDato": "Refusjon opphører må være en dato",
+    "OverstyrInputForm.OpphorFeltDato": "Refusjon opphører må være en dato eller blank/tom",
     "OverstyrInputForm.KanIkkeBekreftes": "Aksjonspunktet kan ikke bekreftes",
     "OverstyrInputForm.KontrollerSkjema": "Kontroller skjema",
     "OverstyrInputForm.HarKategoriNæring": "Vurder om søknadsopplysninger for næring er korrekte. Bruk rutinen for direkte overgang fra infotrygd for å kontrollere opplysningene.",

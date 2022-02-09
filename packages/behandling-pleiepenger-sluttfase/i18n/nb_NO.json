@@ -3,12 +3,13 @@
   "ArbeidsforholdInfoPanel.Title": "Arbeidsforhold",
   "OmPleietrengende.Titel": "Om pleietrengende",
   "BeregningInfoPanel.Title": "Beregning",
-  "MedisinskVilkarPanel.MedisinskVilkar": "Sykdom",
+  "LivetsSluttfasePanel.LivetsSluttfase": "Livets sluttfase",
   "InntektOgYtelser.Title": "Inntekt og ytelser",
   "MainSideMenu.Heading": "Saksopplysninger",
   "OpptjeningInfoPanel.KontrollerFaktaForOpptjening": "Opptjening",
+  "InntektsmeldingInfoPanel.Title": "Inntektsmelding",
 
-  "Behandlingspunkt.MedisinskVilkar": "Sykdom",
+  "Behandlingspunkt.LivetsSluttfase": "Livets sluttfase",
   "Behandlingspunkt.Inngangsvilkar": "Inngangsvilkår",
   "Behandlingspunkt.InngangsvilkarForts": "Inngangsvilkår Fortsettelse",
   "Behandlingspunkt.Beregning": "Beregning",
@@ -19,6 +20,20 @@
   "Behandlingspunkt.Avregning": "Simulering",
 
   "ProsessStegIkkeBehandletPanel.IkkeBehandlet": "Dette steget er ikke behandlet",
-  
-  "OmPleietrengendeInfoPanel.Title": "Om pleietrengende"
+
+  "OmPleietrengendeInfoPanel.Title": "Om pleietrengende",
+
+  "FatterVedtakStatusModal.SendtBeslutter": "Forslag til vedtak er sendt til beslutter",
+  "FatterVedtakStatusModal.ModalDescriptionPleiepenger": "Pleiepenger i livets sluttfase er avslått.",
+  "FatterVedtakStatusModal.GoToSearchPage": "Du kommer nå til forsiden.",
+  "FatterVedtakStatusModal.Ok": "OK",
+
+  "FatterVedtakApprovalModal.ModalDescriptionLivetsSluttfase": "Pleiepenger i livets sluttfase er innvilget og vedtaket blir iverksatt. Du kommer nå til forsiden.",
+  "FatterVedtakApprovalModal.IkkeInnvilgetLivetsSluttfase": "Pleiepenger i livets sluttfase er avslått",
+  "FatterVedtakApprovalModal.OpphortLivetsSluttfase": "Pleiepenger i livet sluttfase er opphørt.",
+  "FatterVedtakApprovalModal.InnvilgetLivetsSluttfase": "Pleiepenger i livets sluttfase er innvilget og vedtaket blir iverksatt",
+
+  "VedtakForm.VilkarStatusDelvisInnvilgetLivetsSluttfase": "Pleiepenger i livets sluttfase er delvis innvilget",
+  "VedtakForm.VilkarStatusInnvilgetLivetsSluttfase": "Pleiepenger i livets sluttfase er innvilget",
+  "VedtakForm.LivetsSluttfaseIkkeInnvilget": "Pleiepenger i livets sluttfase er avslått"
 }

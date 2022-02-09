@@ -5,6 +5,7 @@ import { Kodeverk, KodeverkMedNavn, Personopplysninger, FagsakPerson, RelatertFa
 
 import VisittkortPanel from './components/VisittkortPanel';
 import messages from '../i18n/nb_NO.json';
+import OvergangFraInfotrygd from '../../types/src/overgangFraInfotrygd';
 
 const cache = createIntlCache();
 
@@ -23,6 +24,7 @@ interface OwnProps {
   personopplysninger?: Personopplysninger;
   harTilbakekrevingVerge?: boolean;
   relaterteFagsaker?: RelatertFagsak;
+  direkteOvergangFraInfotrygd?: OvergangFraInfotrygd;
 }
 
 const VisittkortSakIndex = ({
@@ -32,6 +34,7 @@ const VisittkortSakIndex = ({
   personopplysninger,
   harTilbakekrevingVerge,
   relaterteFagsaker,
+  direkteOvergangFraInfotrygd,
 }: OwnProps) => (
   <RawIntlProvider value={intl}>
     <VisittkortPanel
@@ -41,6 +44,7 @@ const VisittkortSakIndex = ({
       sprakkode={sprakkode}
       harTilbakekrevingVerge={harTilbakekrevingVerge}
       relaterteFagsaker={relaterteFagsaker}
+      direkteOvergangFraInfotrygd={direkteOvergangFraInfotrygd}
     />
   </RawIntlProvider>
 );

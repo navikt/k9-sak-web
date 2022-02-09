@@ -11,7 +11,7 @@ import MedisinskVilkår from '../../components/MedisinskVilkår';
 class MedisinskVilkarFaktaPanelDef2 extends FaktaPanelDef {
   getUrlKode = () => faktaPanelCodes.MEDISINSKVILKAAR_V2;
 
-  getTekstKode = () => 'MedisinskVilkarPanel.MedisinskVilkar';
+  getTekstKode = () => 'LivetsSluttfasePanel.LivetsSluttfase';
 
   getAksjonspunktKoder = () => [aksjonspunktCodes.MEDISINSK_VILKAAR];
 
@@ -21,7 +21,7 @@ class MedisinskVilkarFaktaPanelDef2 extends FaktaPanelDef {
 
   getData = ({ hentSaksbehandlere, fagsak }) => ({
     saksbehandlere: hentSaksbehandlere?.saksbehandlere,
-    erFagytelsetypePPN: fagsak.sakstype.kode === fagsakYtelseType.PLEIEPENGER_SLUTTFASE
+    erFagytelsetypeLivetsSluttfase: fagsak.sakstype.kode === fagsakYtelseType.PLEIEPENGER_SLUTTFASE
   });
 
   getOverstyrVisningAvKomponent = ({ fagsak, behandling }: { fagsak: Fagsak; behandling: Behandling }) => {
