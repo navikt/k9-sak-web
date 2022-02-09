@@ -178,7 +178,7 @@ describe('<PleiepengerSluttfaseFakta>', () => {
       {
         erAktiv: false,
         harAksjonspunkt: false,
-        tekst: 'Sykdom',
+        tekst: 'LivetsSluttfasePanel.LivetsSluttfase',
       },
       {
         erAktiv: false,
