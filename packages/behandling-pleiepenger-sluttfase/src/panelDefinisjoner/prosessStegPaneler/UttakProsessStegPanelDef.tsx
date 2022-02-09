@@ -3,6 +3,7 @@ import { ProsessStegDef, ProsessStegPanelDef } from '@k9-sak-web/behandling-fell
 import { prosessStegCodes } from '@k9-sak-web/konstanter';
 import React from 'react';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import fagsakYtelseType from "@fpsak-frontend/kodeverk/src/fagsakYtelseType";
 import Uttak from '../../components/Uttak';
 import { PleiepengerSluttfaseBehandlingApiKeys } from '../../data/pleiepengerSluttfaseBehandlingApi';
 
@@ -36,9 +37,10 @@ class PanelDef extends ProsessStegPanelDef {
 
   getEndepunkter = () => [PleiepengerSluttfaseBehandlingApiKeys.ARBEIDSFORHOLD];
 
-  getData = ({ uttak, arbeidsgiverOpplysningerPerId }) => ({
+  getData = ({ uttak, arbeidsgiverOpplysningerPerId, fagsak }) => ({
     uttaksperioder: uttak?.perioder,
     arbeidsgiverOpplysningerPerId,
+    erFagytelsetypeLivetsSluttfase: fagsak.sakstype.kode === fagsakYtelseType.PLEIEPENGER_SLUTTFASE
   });
 }
 
