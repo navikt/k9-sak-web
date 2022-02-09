@@ -27,6 +27,7 @@ import useHentFagsakRettigheter from './useHentFagsakRettigheter';
 import useHentAlleBehandlinger from './useHentAlleBehandlinger';
 import BehandlingRettigheter from '../behandling/behandlingRettigheterTsType';
 import RelatertFagsak from '../../../types/src/relatertFagsak';
+import OvergangFraInfotrygd from '../../../types/src/overgangFraInfotrygd';
 
 const erTilbakekreving = (behandlingType: Kodeverk): boolean =>
   behandlingType &&
@@ -134,6 +135,15 @@ const FagsakIndex = () => {
     },
   );
 
+  const { data: direkteOvergangFraInfotrygd } = restApiHooks.useRestApi<OvergangFraInfotrygd>(
+    K9sakApiKeys.DIREKTE_OVERGANG_FRA_INFOTRYGD,
+    {},
+    {
+      updateTriggers: [!behandling],
+      suspendRequest: !behandling,
+    },
+  );
+
   if (!fagsak) {
     if (fagsakState === RestApiState.NOT_STARTED || fagsakState === RestApiState.LOADING) {
       return <LoadingPanel />;
@@ -221,6 +231,7 @@ const FagsakIndex = () => {
               fagsakPerson={fagsakPerson || fagsak.person}
               harTilbakekrevingVerge={erTilbakekreving(behandling?.type) && harVerge}
               relaterteFagsaker={relaterteFagsaker}
+              direkteOvergangFraInfotrygd={direkteOvergangFraInfotrygd}
             />
           );
         }}
