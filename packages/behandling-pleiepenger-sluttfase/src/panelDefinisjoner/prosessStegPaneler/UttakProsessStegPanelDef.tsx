@@ -8,12 +8,13 @@ import Uttak from '../../components/Uttak';
 import { PleiepengerSluttfaseBehandlingApiKeys } from '../../data/pleiepengerSluttfaseBehandlingApi';
 
 class PanelDef extends ProsessStegPanelDef {
-  getKomponent = ({ behandling, uttaksperioder, arbeidsgiverOpplysningerPerId, aksjonspunkter }) => (
+  getKomponent = ({ behandling, uttaksperioder, arbeidsgiverOpplysningerPerId, aksjonspunkter, erFagytelsetypeLivetsSluttfase }) => (
     <Uttak
       uuid={behandling.uuid}
       uttaksperioder={uttaksperioder}
       arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
       aksjonspunkter={aksjonspunkter}
+      erFagytelsetypeLivetsSluttfase={erFagytelsetypeLivetsSluttfase}
     />
   );
 
