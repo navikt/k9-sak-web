@@ -34,9 +34,9 @@ const DateLabel = ({ dateString }: OwnProps) => {
   }
   const formatedDate = format(zonedTimeToUtc(date, 'Europe/Oslo'), 'dd.MM.yyyy');
   return (
-    <span data-testid="FormattedDate">
+    <>
       {formatedDate}
-    </span>
+    </>
   );
 };
 
