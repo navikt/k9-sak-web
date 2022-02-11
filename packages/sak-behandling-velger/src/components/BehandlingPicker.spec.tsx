@@ -47,6 +47,7 @@ describe('<BehandlingPicker>', () => {
     search: 'test',
     state: {},
     hash: 'test',
+    key: 'test',
   };
 
   it('skal vise forklarende tekst når det ikke finnes behandlinger', async () => {

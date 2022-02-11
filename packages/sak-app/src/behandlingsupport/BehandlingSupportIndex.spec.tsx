@@ -41,7 +41,7 @@ describe('<BehandlingSupportIndex>', () => {
     },
   };
 
-  const location = { pathname: '', search: '', state: {}, hash: '' };
+  const location = { pathname: '', search: '', state: {}, hash: '', key: '' };
 
   let contextStub: SinonStub;
   beforeEach(() => {

@@ -153,6 +153,7 @@ const locationMock = {
   search: 'test',
   state: {},
   hash: 'test',
+  key: 'test',
 };
 
 const fagsak = {
