@@ -218,6 +218,6 @@ describe('<FagsakProfileIndex>', () => {
     expect(screen.queryAllByText('Avslått').length).toBe(2);
     expect(screen.queryByText('Opprettet:')).toBeInTheDocument();
     console.log(await screen.debug());
-    expect(screen.queryByText('31.01.2020')).toBeInTheDocument();
+    expect(screen.queryByText('01.02.2020')).toBeInTheDocument();
   });
 });
