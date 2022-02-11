@@ -21,7 +21,7 @@ import {
 } from '@fpsak-frontend/form';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { ProsessStegSubmitButton } from '@k9-sak-web/prosess-felles';
-import { Aksjonspunkt, BeregningsresultatFp } from '@k9-sak-web/types';
+import { Aksjonspunkt, BeregningsresultatFp, BeregningsresultatUtbetalt } from '@k9-sak-web/types';
 
 import styles from './tilbaketrekkpanel.less';
 
@@ -44,7 +44,7 @@ interface PureOwnProps {
   vurderTilbaketrekkAP?: Aksjonspunkt;
   submitCallback: (data: any) => Promise<any>;
   readOnlySubmitButton: boolean;
-  beregningsresultat?: BeregningsresultatFp;
+  beregningsresultat?: BeregningsresultatFp | BeregningsresultatUtbetalt;
 }
 
 interface MappedOwnProps {
