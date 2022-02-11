@@ -94,7 +94,7 @@ describe('<FagsakSearchIndex>', () => {
     expect(screen.queryAllByRole('table').length).toBe(1);
     expect(screen.queryAllByRole('cell', { name: '12345' }).length).toBe(1);
 
-    userEvent.click(screen.getByRole('row', { name: '12345 09.10.2017' }));
+    userEvent.click(screen.getByRole('row', { name: '12345 10.10.2017' }));
 
     expect(mockNavigate.mock.calls[0][0]).toBe('/fagsak/12345/');
   });
