@@ -2,6 +2,7 @@ import React from 'react';
 import sinon from 'sinon';
 import { render, screen } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
+import { IntlProvider } from 'react-intl';
 
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import fagsakStatus from '@fpsak-frontend/kodeverk/src/fagsakStatus';
@@ -15,7 +16,6 @@ import behandlingResultatType from '@fpsak-frontend/kodeverk/src/behandlingResul
 
 import { requestApi, K9sakApiKeys } from '../data/k9sakApi';
 import { FagsakProfileIndex } from './FagsakProfileIndex';
-import { IntlProvider } from 'react-intl';
 
 const lagRisikoklassifisering = kode => ({
   kontrollresultat: {
