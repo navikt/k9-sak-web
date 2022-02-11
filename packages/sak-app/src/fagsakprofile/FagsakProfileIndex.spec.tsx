@@ -15,6 +15,7 @@ import behandlingResultatType from '@fpsak-frontend/kodeverk/src/behandlingResul
 
 import { requestApi, K9sakApiKeys } from '../data/k9sakApi';
 import { FagsakProfileIndex } from './FagsakProfileIndex';
+import { IntlProvider } from 'react-intl';
 
 const lagRisikoklassifisering = kode => ({
   kontrollresultat: {
@@ -162,13 +163,15 @@ describe('<FagsakProfileIndex>', () => {
 
     render(
       <MemoryRouter>
-        <FagsakProfileIndex
-          fagsak={fagsak as Fagsak}
-          alleBehandlinger={[forstegang, revurdering] as BehandlingAppKontekst[]}
-          harHentetBehandlinger
-          oppfriskBehandlinger={sinon.spy()}
-          fagsakRettigheter={fagsakRettigheter}
-        />
+        <IntlProvider locale="nb-NO">
+          <FagsakProfileIndex
+            fagsak={fagsak as Fagsak}
+            alleBehandlinger={[forstegang, revurdering] as BehandlingAppKontekst[]}
+            harHentetBehandlinger
+            oppfriskBehandlinger={sinon.spy()}
+            fagsakRettigheter={fagsakRettigheter}
+          />
+        </IntlProvider>
       </MemoryRouter>
     );
 
@@ -195,14 +198,16 @@ describe('<FagsakProfileIndex>', () => {
 
     render(
       <MemoryRouter>
-        <FagsakProfileIndex
-          fagsak={fagsak as Fagsak}
-          alleBehandlinger={[forstegang, revurdering] as BehandlingAppKontekst[]}
-          harHentetBehandlinger
-          oppfriskBehandlinger={sinon.spy()}
-          behandlingId={1}
-          fagsakRettigheter={fagsakRettigheter}
-        />
+        <IntlProvider locale="nb-NO">
+          <FagsakProfileIndex
+            fagsak={fagsak as Fagsak}
+            alleBehandlinger={[forstegang, revurdering] as BehandlingAppKontekst[]}
+            harHentetBehandlinger
+            oppfriskBehandlinger={sinon.spy()}
+            behandlingId={1}
+            fagsakRettigheter={fagsakRettigheter}
+          />
+        </IntlProvider>
       </MemoryRouter>
     );
 
