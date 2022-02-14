@@ -8,7 +8,6 @@ import behandlingResultatType from '@fpsak-frontend/kodeverk/src/behandlingResul
 import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
 import { BehandleUnntakForm } from './BehandleUnntakForm';
 import shallowWithIntl from '../../i18n';
-import TempSaveAndPreviewKlageLink from '../../../prosess-klagevurdering/src/components/felles/TempSaveAndPreviewKlageLink';
 
 describe('<BehandleKlageFormKaImpl>', () => {
   const sprakkode = {
