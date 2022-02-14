@@ -30,7 +30,7 @@ export function renderWithReduxForm(ui: ReactElement, { ...renderOptions } = {})
 export function renderWithIntlAndReduxForm(ui: ReactElement, { locale, messages, ...renderOptions }: any = {}) {
   const Wrapper = ({ children }) => (
     <Provider store={createStore(combineReducers({ form: reducer }))}>
-      <IntlProvider locale={locale || 'nb-NO'} messages={messages || defaultMessages} onError={() => null}>
+      <IntlProvider locale={locale || 'nb-NO'} messages={messages || defaultMessages}>
         {children}
       </IntlProvider>
     </Provider>
