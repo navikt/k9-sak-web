@@ -125,12 +125,12 @@ const BehandlingPicker = ({
 
   useEffect(() => {
     const perioder = [];
-    const harPerioderMedÅrsak = behandlinger.some(behandling =>
+    const behandlingerMedPerioderMedÅrsak = behandlinger.filter(behandling =>
       behandling.links.some(link => link.rel === behandlingPerioderÅrsakRel),
     );
-    if (harPerioderMedÅrsak) {
+    if (behandlingerMedPerioderMedÅrsak.length > 0) {
       Promise.all(
-        behandlinger.map(behandling =>
+        behandlingerMedPerioderMedÅrsak.map(behandling =>
           axios
             .get(behandling.links.find(link => link.rel === behandlingPerioderÅrsakRel).href)
             .then(response => ({ data: response.data, id: behandling.id })),
