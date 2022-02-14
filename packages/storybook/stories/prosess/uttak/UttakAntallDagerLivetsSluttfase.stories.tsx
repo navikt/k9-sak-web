@@ -8,4 +8,10 @@ export default {
   decorators: [withKnobs],
 };
 
-export const antallDagerLivetsSluttfaseIndex = () => <AntallDagerLivetsSluttfaseIndex maxAntallDager={60} antallDagerInnvilgetForPleietrengendeHittil={40} sistePleiedag="2021.01.02" />;
+export const antallDagerLivetsSluttfaseIndex = () =>
+  <AntallDagerLivetsSluttfaseIndex
+    maxAntallDager={60}
+    antallDagerInnvilgetForPleietrengendeHittil={20}
+    antallDagerInnvilgetMedBehandlingen={10}
+    sistePleiedag="2021.01.02"
+  />;

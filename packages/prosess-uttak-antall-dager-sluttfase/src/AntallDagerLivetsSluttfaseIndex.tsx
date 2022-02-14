@@ -1,10 +1,10 @@
 import React from 'react';
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 import { VerticalSpacer } from "@fpsak-frontend/shared-components";
+import Fremdriftslinje from '@k9-sak-web/fremdriftslinje';
 import messages from '../i18n/nb_NO.json';
 
 import styles from './antallDagerLivetsSluttfaseIndex.less';
-import AntallDagerBarVisning from "./components/AntallDagerBarVisning";
 
 const cache = createIntlCache();
 
@@ -18,10 +18,17 @@ const intl = createIntl(
 
 interface OwnProps {
   antallDagerInnvilgetForPleietrengendeHittil: number;
+  antallDagerInnvilgetMedBehandlingen: number;
   maxAntallDager: number;
   sistePleiedag: string;
 }
-const AntallDagerLivetsSluttfaseIndex = ({antallDagerInnvilgetForPleietrengendeHittil, maxAntallDager, sistePleiedag }: OwnProps) => (
+
+const AntallDagerLivetsSluttfaseIndex = ({
+  antallDagerInnvilgetForPleietrengendeHittil,
+  antallDagerInnvilgetMedBehandlingen,
+  maxAntallDager,
+  sistePleiedag
+}: OwnProps) => (
   <RawIntlProvider value={intl}>
     <div className={styles.antallDagerLivetsSluttfaseIndexContainer}>
       <div className={styles.header}>
@@ -36,7 +43,13 @@ const AntallDagerLivetsSluttfaseIndex = ({antallDagerInnvilgetForPleietrengendeH
         </div>
       </div>
       <VerticalSpacer sixteenPx/>
-      <AntallDagerBarVisning maxDager={maxAntallDager} widthPercentage={100} antallDager={antallDagerInnvilgetForPleietrengendeHittil}/>
+
+      <Fremdriftslinje
+        max={maxAntallDager}
+        totalBreddeProsent={100}
+        antallGrønnBar={antallDagerInnvilgetForPleietrengendeHittil}
+        antallGulBar={antallDagerInnvilgetMedBehandlingen}
+      />
       <VerticalSpacer fourPx/>
       <p>
         {intl.formatMessage({id: 'Underskrift.DagerInnvilget'}, {
