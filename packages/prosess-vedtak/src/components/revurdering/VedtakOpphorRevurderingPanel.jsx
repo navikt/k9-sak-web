@@ -24,7 +24,7 @@ const ytelseNavnMap = kode => {
 };
 
 export const VedtakOpphorRevurderingPanelImpl = ({ intl, opphoersdato, revurderingsAarsakString, ytelseTypeKode }) => (
-  <div>
+  <div data-testid="opphorRevurdering">
     <Undertekst>{intl.formatMessage({ id: 'VedtakForm.Resultat' })}</Undertekst>
     {opphoersdato && (
       <Normaltekst>
