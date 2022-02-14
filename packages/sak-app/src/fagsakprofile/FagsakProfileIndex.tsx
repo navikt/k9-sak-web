@@ -18,13 +18,14 @@ import { RestApiState } from '@k9-sak-web/rest-api-hooks';
 
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import { getLocationWithDefaultProsessStegAndFakta, pathToBehandling, pathToBehandlinger } from '../app/paths';
-import BehandlingRettigheter from '../behandling/behandlingRettigheterTsType';
 import BehandlingMenuIndex, { BehandlendeEnheter } from '../behandlingmenu/BehandlingMenuIndex';
-import { K9sakApiKeys, requestApi, restApiHooks } from '../data/k9sakApi';
+import RisikoklassifiseringIndex from './risikoklassifisering/RisikoklassifiseringIndex';
+import { K9sakApiKeys, restApiHooks, requestApi } from '../data/k9sakApi';
 import { useFpSakKodeverkMedNavn, useGetKodeverkFn } from '../data/useKodeverk';
 import SakRettigheter from '../fagsak/sakRettigheterTsType';
+import BehandlingRettigheter from '../behandling/behandlingRettigheterTsType';
+
 import styles from './fagsakProfileIndex.less';
-import RisikoklassifiseringIndex from './risikoklassifisering/RisikoklassifiseringIndex';
 
 const findPathToBehandling = (saksnummer: string, location: Location, alleBehandlinger: BehandlingAppKontekst[]) => {
   if (alleBehandlinger.length === 1) {
@@ -153,10 +154,9 @@ export const FagsakProfileIndex = ({
               getBehandlingLocation={getBehandlingLocation}
               noExistingBehandlinger={alleBehandlinger.length === 0}
               behandlingId={behandlingId}
-              getKodeverkFn={getKodeverkFn}
               showAll={showAll}
               toggleShowAll={toggleShowAll}
-              fagsak={fagsak}
+              getKodeverkFn={getKodeverkFn}
             />
           )}
         />
