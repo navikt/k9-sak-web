@@ -1,5 +1,7 @@
 {
-  "RegistrereVergeInfoPanel.CheckInformation": "Fyll ut og kontroller vergeopplysninger",
+  "RegistrereVergeInfoPanel.CheckInformation": "Søker er under 18 år.",
+  "RegistrereVergeInfoPanel.HjelpeTekst": "Vurder om søknaden kan behandles videre, eller om den må henlegges.",
+  "RegistrereVergeInfoPanel.Begrunnelse": "Begrunnelse",
 
   "Verge.KontaktPerson": "Kontaktperson",
   "Verge.Navn": "Navn",
