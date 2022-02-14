@@ -54,22 +54,18 @@ export function kanHaFritekstbrev(tilgjengeligeVedtaksbrev: TilgjengeligeVedtaks
   return vedtaksbrevmaler(tilgjengeligeVedtaksbrev).some(vb => vb === vedtaksbrevtype.FRITEKST);
 }
 
-export function kanHindreUtsending(tilgjengeligeVedtaksbrev: TilgjengeligeVedtaksbrev): boolean {
-  return vedtaksbrevmaler(tilgjengeligeVedtaksbrev).some(vb => vb === vedtaksbrevtype.INGEN);
-}
-
-export function kanKunVelge(tilgjengeligeVedtaksbrev: TilgjengeligeVedtaksbrev, brevtype): boolean {
+export function harBareFritekstbrev(tilgjengeligeVedtaksbrev: TilgjengeligeVedtaksbrev): boolean {
   const vedtaksbrev = vedtaksbrevmaler(tilgjengeligeVedtaksbrev);
-  return vedtaksbrev.length > 0 && vedtaksbrev.every(vb => vb === brevtype);
+  return vedtaksbrev.length > 0 && vedtaksbrev.every(vb => vb === vedtaksbrevtype.FRITEKST);
 }
 
-export function harMellomlagretFritekstbrev(dokumentdata, vedtakVarsel): boolean {
+export function harOverstyrtMedFritekstbrev(dokumentdata, vedtakVarsel): boolean {
   return (
     (dokumentdata?.[dokumentdatatype.VEDTAKSBREV_TYPE] ?? vedtakVarsel?.vedtaksbrev.kode) === vedtaksbrevtype.FRITEKST
   );
 }
 
-export function harMellomLagretMedIngenBrev(dokumentdata, vedtakVarsel): boolean {
+export function harOverstyrtMedIngenBrev(dokumentdata, vedtakVarsel): boolean {
   return (
     (dokumentdata?.[dokumentdatatype.VEDTAKSBREV_TYPE] ?? vedtakVarsel?.vedtaksbrev.kode) === vedtaksbrevtype.INGEN
   );
@@ -81,31 +77,6 @@ export function kanOverstyreMottakere(tilgjengeligeVedtaksbrev: TilgjengeligeVed
     tilgjengeligeVedtaksbrev?.alternativeMottakere.length > 0
   );
 }
-
-export const filterInformasjonsbehov = (formikValues, aktiverteInformasjonsbehov) => {
-  const aktiveVerdier = [];
-  const keys = Object.keys(formikValues);
-
-  keys.forEach(key => {
-    if (aktiverteInformasjonsbehov.some(informasjonsbehov => informasjonsbehov.kode === key))
-      aktiveVerdier.push({ [key]: formikValues[key] });
-  });
-  return aktiveVerdier;
-};
-
-export const harPotensieltFlereInformasjonsbehov = infobehovVedtaksbrev => {
-  if (infobehovVedtaksbrev) {
-    const { informasjonsbehov } = infobehovVedtaksbrev;
-    return informasjonsbehov.length > 0;
-  }
-  return false;
-};
-
-export const harMellomlagretRedusertUtbetalingArsak = (key, dokumentdata, vedtakVarsel) => {
-  const årsaker =
-    dokumentdata?.[dokumentdatatype.REDUSERT_UTBETALING_AARSAK] || vedtakVarsel?.redusertUtbetalingÅrsaker || [];
-  return årsaker.some(v => v === key);
-};
 
 export const lagForhåndsvisRequest = (
   behandling: Behandling,
