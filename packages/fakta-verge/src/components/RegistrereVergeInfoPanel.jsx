@@ -92,7 +92,7 @@ const buildInitialValues = createSelector(
   }),
 );
 
-const transformValues = values => ({...{ begrunnelse: values.begrunnelse }});
+const transformValues = values => ({ begrunnelse: values.begrunnelse, kode: aksjonspunktCodes.AVKLAR_VERGE});
 
 const FORM_NAVN = 'RegistrereVergeInfoPanel';
 
