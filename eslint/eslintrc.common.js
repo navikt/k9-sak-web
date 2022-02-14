@@ -47,7 +47,7 @@ const config = {
     'linebreak-style': OFF,
     'import/no-named-as-default': OFF,
     'max-len': [ERROR, 160],
-    'no-undef': ERROR,
+    'no-undef': OFF,
     'react/require-default-props': OFF,
     'react/jsx-filename-extension': OFF,
     'react/static-property-placement': OFF,
@@ -92,10 +92,6 @@ const config = {
       rules: {
         'react/prop-types': OFF,
       },
-    },
-    {
-      files: ['*.ts', '*.tsx'],
-      rules: { 'no-undef': OFF },
     },
   ],
 };

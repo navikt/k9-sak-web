@@ -20,7 +20,7 @@ export const VedtakAvslagPanelImpl = ({
   const getKodeverknavn = getKodeverknavnFn(alleKodeverk, kodeverkTyper);
   return (
     <div>
-      <Undertekst data-testid="avslaatt">{intl.formatMessage({ id: 'VedtakForm.Resultat' })}</Undertekst>
+      <Undertekst>{intl.formatMessage({ id: 'VedtakForm.Resultat' })}</Undertekst>
       <Normaltekst>
         {intl.formatMessage({ id: findAvslagResultatText(behandlingsresultat.type.kode, ytelseTypeKode) })}
         {tilbakekrevingText && `. ${intl.formatMessage({ id: tilbakekrevingText })}`}
