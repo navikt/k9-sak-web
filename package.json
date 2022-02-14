@@ -41,7 +41,7 @@
     "@formatjs/intl-numberformat": "^7.2.4",
     "@navikt/ds-css": "^0.12.11",
     "@navikt/ds-react": "^0.14.11",
-    "@sentry/browser": "^5.30.0",
+    "@sentry/browser": "^6.17.7",
     "axios": "0.21.4",
     "core-js": "^3.18.1",
     "dotenv": "^10.0.0",
