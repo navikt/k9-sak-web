@@ -32,7 +32,7 @@ const Fremdriftslinje = ({max, antallGrønnBar, antallGulBar, totalBreddeProsent
     <div className={styles.antallTitler}>{antallTitler}</div>
     <div className={styles.bakgrunnsBar} style={{width: `${totalBreddeProsent}%`}}/>
 
-    {antallGrønnBar > 0 && <div
+    {antallGrønnBar && antallGrønnBar > 0 && <div
       className={styles.gronnBar}
       style={{
         width: `${antallGrønnBar >= max ? totalBreddeProsent : antallGrønnBar * breddePerDagProsent}%`,
@@ -41,7 +41,7 @@ const Fremdriftslinje = ({max, antallGrønnBar, antallGulBar, totalBreddeProsent
     />
     }
 
-    {antallGulBar > 0 && antallGrønnBar < 60 && <div
+    {antallGulBar && antallGulBar > 0 && (antallGrønnBar < 60 || !antallGrønnBar) && <div
       className={styles.gulBar}
       style={{
         width: `${

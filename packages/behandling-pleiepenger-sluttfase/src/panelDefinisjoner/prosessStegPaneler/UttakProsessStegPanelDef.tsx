@@ -8,8 +8,8 @@ import Uttak from '../../components/Uttak';
 import { PleiepengerSluttfaseBehandlingApiKeys } from '../../data/pleiepengerSluttfaseBehandlingApi';
 
 class PanelDef extends ProsessStegPanelDef {
-  getKomponent = ({ behandling, uttaksperioder, arbeidsgiverOpplysningerPerId, aksjonspunkter }) => (<>
-    <AntallDagerLivetsSluttfaseIndex maxAntallDager={60} antallDagerInnvilgetForPleietrengendeHittil={40} sistePleiedag="2021.01.02" />
+  getKomponent = ({ behandling, uttaksperioder, kvoteInfo, arbeidsgiverOpplysningerPerId, aksjonspunkter }) => (<>
+    <AntallDagerLivetsSluttfaseIndex kvoteInfo={kvoteInfo} />
     <Uttak
       uuid={behandling.uuid}
       uttaksperioder={uttaksperioder}
@@ -41,6 +41,7 @@ class PanelDef extends ProsessStegPanelDef {
 
   getData = ({ uttak, arbeidsgiverOpplysningerPerId }) => ({
     uttaksperioder: uttak?.perioder,
+    kvoteInfo: uttak?.kvoteInfo,
     arbeidsgiverOpplysningerPerId,
   });
 }
