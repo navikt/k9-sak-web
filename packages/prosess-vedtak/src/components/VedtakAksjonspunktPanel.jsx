@@ -6,14 +6,11 @@ import { Undertittel } from 'nav-frontend-typografi';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import behandlingStatusCode from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 
-import { Column, Row } from 'nav-frontend-grid';
 import VedtakHelpTextPanel from './VedtakHelpTextPanel';
 import VedtakOverlappendeYtelsePanel from './VedtakOverlappendeYtelsePanel';
 
-export const getTextCode = behandlingStatus =>
-  behandlingStatus === behandlingStatusCode.AVSLUTTET || behandlingStatus === behandlingStatusCode.IVERKSETTER_VEDTAK
-    ? 'VedtakForm.vedtak'
-    : 'VedtakForm.ForslagTilVedtak';
+export const getTextCode = (behandlingStatus) => (behandlingStatus === behandlingStatusCode.AVSLUTTET
+  || behandlingStatus === behandlingStatusCode.IVERKSETTER_VEDTAK ? 'VedtakForm.vedtak' : 'VedtakForm.ForslagTilVedtak');
 
 export const VedtakAksjonspunktPanelImpl = ({
   intl,
@@ -23,20 +20,16 @@ export const VedtakAksjonspunktPanelImpl = ({
   readOnly,
   overlappendeYtelser,
   alleKodeverk,
-}) => (
-  <Row>
-    <Column xs="8">
-      <Undertittel data-testid='vedtakAksjonspunktPanel'>{intl.formatMessage({ id: getTextCode(behandlingStatusKode) })}</Undertittel>
-      <VerticalSpacer twentyPx />
-      <VedtakHelpTextPanel aksjonspunktKoder={aksjonspunktKoder} readOnly={readOnly} />
-      {overlappendeYtelser && overlappendeYtelser.length > 0 && (
-        <VedtakOverlappendeYtelsePanel alleKodeverk={alleKodeverk} overlappendeYtelser={overlappendeYtelser} />
-      )}
-      <VerticalSpacer twentyPx />
-      {children}
-    </Column>
-  </Row>
-);
+}) => <>
+    <Undertittel>{intl.formatMessage({ id: getTextCode(behandlingStatusKode) })}</Undertittel>
+    <VerticalSpacer twentyPx />
+    <VedtakHelpTextPanel aksjonspunktKoder={aksjonspunktKoder} readOnly={readOnly} />
+    {overlappendeYtelser && overlappendeYtelser.length > 0 &&
+      <VedtakOverlappendeYtelsePanel alleKodeverk={alleKodeverk} overlappendeYtelser={overlappendeYtelser} />
+    }
+    <VerticalSpacer twentyPx />
+    {children}
+  </>;
 
 VedtakAksjonspunktPanelImpl.propTypes = {
   intl: PropTypes.shape().isRequired,
