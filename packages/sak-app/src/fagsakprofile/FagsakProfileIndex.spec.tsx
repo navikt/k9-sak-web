@@ -55,12 +55,24 @@ describe('<FagsakProfileIndex>', () => {
   };
 
   const alleKodeverk = {
+    [kodeverkTyper.BEHANDLING_STATUS]: [
+      {
+        kode: behandlingStatus.OPPRETTET,
+        kodeverk: 'BEHANDLING_STATUS',
+        navn: 'Opprettet',
+      }
+    ],
     [kodeverkTyper.BEHANDLING_TYPE]: [
       {
         kode: behandlingType.FORSTEGANGSSOKNAD,
         kodeverk: "BEHANDLING_TYPE",
         navn: "Førstegangsbehandling",
-      }
+      },
+      {
+        kode: behandlingType.REVURDERING,
+        kodeverk: "BEHANDLING_TYPE",
+        navn: "Revurdering",
+      },
     ],
     [kodeverkTyper.BEHANDLING_RESULTAT_TYPE]: [
       {
@@ -175,12 +187,11 @@ describe('<FagsakProfileIndex>', () => {
       </MemoryRouter>
     );
 
-    expect(await screen.findByText('Velg behandling (2)')).toBeInTheDocument();
+    expect(await screen.findByRole('button', { name: 'Behandlingsmeny' })).toBeInTheDocument();
+    expect(screen.queryAllByTestId('BehandlingPickerItem').length).toBe(2);
+    expect(screen.getByTestId('BehandlingPicker')).toBeInTheDocument();
     expect(screen.getByText('123 - Opprettet')).toBeInTheDocument();
     expect(screen.getByText('Førstegangsbehandling')).toBeInTheDocument();
-    expect(screen.getByText('Resultat: Innvilget')).toBeInTheDocument();
-    expect(screen.getByText('Resultat: Avslått')).toBeInTheDocument();
-    expect(screen.getAllByTestId('behandling').length).toBe(2);
   });
 
   it('skal ikke vise alle behandlinger når behandling er valgt', async () => {
@@ -211,12 +222,9 @@ describe('<FagsakProfileIndex>', () => {
       </MemoryRouter>
     );
 
+    expect(await screen.findByRole('button', { name: 'Behandlingsmeny' })).toBeInTheDocument();
+    expect(screen.queryAllByTestId('BehandlingPickerItem').length).toBe(1);
     expect(await screen.findByText('123 - Opprettet')).toBeInTheDocument();
-    expect(screen.queryByText('Velg behandling')).toBeNull();
     expect(screen.queryByText('Førstegangsbehandling')).toBeInTheDocument();
-    expect(screen.queryByText('Se alle behandlinger')).toBeInTheDocument();
-    expect(screen.queryAllByText('Avslått').length).toBe(2);
-    expect(screen.queryByText('Opprettet:')).toBeInTheDocument();
-    expect(screen.queryByText('01.02.2020')).toBeInTheDocument();
   });
 });
