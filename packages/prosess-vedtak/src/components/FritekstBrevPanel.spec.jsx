@@ -1,7 +1,8 @@
 import React from 'react';
 import { expect } from 'chai';
 import sinon from 'sinon';
-import TextAreaFormik from '@fpsak-frontend/form/src/TextAreaFormik';
+import { Undertittel } from 'nav-frontend-typografi';
+import { TextAreaField } from '@fpsak-frontend/form';
 import FritekstBrevPanel from './FritekstBrevPanel';
 import shallowWithIntl, { intlMock } from '../../i18n';
 import PreviewLink from './PreviewLink';
@@ -22,10 +23,10 @@ describe('<FritekstBrevPanel>', () => {
       />,
     );
 
-    const textArea = wrapper.find(TextAreaFormik);
-    expect(textArea).to.have.length(2);
-    expect(textArea.at(0).prop('readOnly')).to.equal(true);
-    expect(textArea.at(1).prop('readOnly')).to.equal(true);
+    const overskrift = wrapper.find('TextAreaField');
+    expect(overskrift).to.have.length(2);
+    expect(overskrift.at(0).prop('readOnly')).to.equal(true);
+    expect(overskrift.at(1).prop('readOnly')).to.equal(true);
     expect(wrapper.find(PreviewLink)).to.have.length(0);
   });
 
@@ -41,6 +42,7 @@ describe('<FritekstBrevPanel>', () => {
     );
 
     expect(wrapper.find(PreviewLink)).to.have.length(1);
-    expect(wrapper.find(TextAreaFormik)).to.have.length(2);
+    expect(wrapper.find(TextAreaField)).to.have.length(2);
+    expect(wrapper.find(Undertittel)).to.have.length(1);
   });
 });

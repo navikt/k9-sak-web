@@ -17,7 +17,6 @@ import Home from './components/Home';
 import Dekorator from './components/Dekorator';
 
 import '@fpsak-frontend/assets/styles/global.less';
-import '@navikt/ds-css'
 
 const EMPTY_ARRAY = [];
 
