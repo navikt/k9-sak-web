@@ -36,7 +36,7 @@ const Fremdriftslinje = ({max, antallGrønnBar, antallGulBar, totalBreddeProsent
       className={styles.gronnBar}
       style={{
         width: `${antallGrønnBar >= max ? totalBreddeProsent : antallGrønnBar * breddePerDagProsent}%`,
-        borderRadius: `${antallGulBar > 0 ? '1.5rem 0rem 0rem 1.5rem' : '1.5rem'}`
+        borderRadius: `${antallGulBar > 0 && antallGrønnBar < max ? '1.5rem 0rem 0rem 1.5rem' : '1.5rem'}`
       }}
     />
     }
