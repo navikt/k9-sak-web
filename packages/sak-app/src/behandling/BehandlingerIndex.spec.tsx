@@ -1,14 +1,14 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { render, screen } from '@testing-library/react';
+import { MemoryRouter } from 'react-router-dom';
 import sinon from 'sinon';
 
 import { BehandlingAppKontekst, Fagsak } from '@k9-sak-web/types';
-import { IngenBehandlingValgtPanel } from '@k9-sak-web/sak-infosider';
 
 import { BehandlingerIndex } from './BehandlingerIndex';
 
 describe('BehandlingerIndex', () => {
-  it('skal rendre komponent korrekt', () => {
+  it('skal rendre komponent korrekt', async () => {
     const fagsak = {
       saksnummer: '123',
     };
@@ -18,17 +18,18 @@ describe('BehandlingerIndex', () => {
       },
     ];
 
-    const wrapper = shallow(
-      <BehandlingerIndex
-        fagsak={fagsak as Fagsak}
-        alleBehandlinger={alleBehandlinger as BehandlingAppKontekst[]}
-        setBehandlingIdOgVersjon={sinon.spy()}
-        setRequestPendingMessage={sinon.spy()}
-      />,
+    render(
+      <MemoryRouter>
+        <BehandlingerIndex
+          fagsak={fagsak as Fagsak}
+          alleBehandlinger={alleBehandlinger as BehandlingAppKontekst[]}
+          setBehandlingIdOgVersjon={sinon.spy()}
+          setRequestPendingMessage={sinon.spy()}
+        />
+      </MemoryRouter>
     );
 
-    const noBehandling = wrapper.find(IngenBehandlingValgtPanel);
-    expect(noBehandling).toHaveLength(1);
-    expect(noBehandling.prop('numBehandlinger')).toEqual(1);
+    expect(await screen.queryByTestId("IngenBehandlingValgtPanel")).toBeInTheDocument();
+    expect(screen.queryByText('Velg behandling')).toBeInTheDocument();
   });
 });

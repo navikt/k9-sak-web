@@ -1,5 +1,5 @@
 import React, { useCallback, useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import BehandlingType, { erTilbakekrevingType } from '@fpsak-frontend/kodeverk/src/behandlingType';
 import dokumentMalType from '@fpsak-frontend/kodeverk/src/dokumentMalType';
@@ -36,23 +36,23 @@ const getSubmitCallback =
     setShowSettPaVentModal: (erInnhentetEllerForlenget: boolean) => void,
     setSubmitCounter: (fn: (prevValue: number) => number) => void,
   ) =>
-  (values: FormValues) => {
-    const isInnhentEllerForlenget =
-      values.brevmalkode === dokumentMalType.INNHENT_DOK ||
-      values.brevmalkode === dokumentMalType.INNOPP ||
-      values.brevmalkode === dokumentMalType.FORLENGET_DOK ||
-      values.brevmalkode === dokumentMalType.FORLENGET_MEDL_DOK;
-    const erTilbakekreving = erTilbakekrevingType({ kode: behandlingTypeKode });
+    (values: FormValues) => {
+      const isInnhentEllerForlenget =
+        values.brevmalkode === dokumentMalType.INNHENT_DOK ||
+        values.brevmalkode === dokumentMalType.INNOPP ||
+        values.brevmalkode === dokumentMalType.FORLENGET_DOK ||
+        values.brevmalkode === dokumentMalType.FORLENGET_MEDL_DOK;
+      const erTilbakekreving = erTilbakekrevingType({ kode: behandlingTypeKode });
 
-    setShowMessageModal(!isInnhentEllerForlenget);
+      setShowMessageModal(!isInnhentEllerForlenget);
 
-    const data = erTilbakekreving
-      ? {
+      const data = erTilbakekreving
+        ? {
           behandlingUuid,
           fritekst: values.fritekst,
           brevmalkode: values.brevmalkode,
         }
-      : {
+        : {
           behandlingId,
           overstyrtMottaker: values.overstyrtMottaker,
           brevmalkode: values.brevmalkode,
@@ -60,13 +60,13 @@ const getSubmitCallback =
           arsakskode: values.arsakskode,
           fritekstbrev: values.fritekstbrev,
         };
-    return submitMessage(data)
-      .then(() => resetMessage())
-      .then(() => {
-        setShowSettPaVentModal(isInnhentEllerForlenget);
-        setSubmitCounter(prevValue => prevValue + 1);
-      });
-  };
+      return submitMessage(data)
+        .then(() => resetMessage())
+        .then(() => {
+          setShowSettPaVentModal(isInnhentEllerForlenget);
+          setSubmitCounter(prevValue => prevValue + 1);
+        });
+    };
 
 const getPreviewCallback =
   (
@@ -75,13 +75,13 @@ const getPreviewCallback =
     fagsakYtelseType: Kodeverk,
     fetchPreview: (erHenleggelse: boolean, data: any) => void,
   ) =>
-  (overstyrtMottaker: Mottaker, dokumentMal: string, fritekst: string, fritekstbrev?: Fritekstbrev) => {
-    const data = erTilbakekrevingType({ kode: behandlingTypeKode })
-      ? {
+    (overstyrtMottaker: Mottaker, dokumentMal: string, fritekst: string, fritekstbrev?: Fritekstbrev) => {
+      const data = erTilbakekrevingType({ kode: behandlingTypeKode })
+        ? {
           fritekst: fritekst || ' ',
           brevmalkode: dokumentMal,
         }
-      : {
+        : {
           overstyrtMottaker,
           dokumentMal,
           dokumentdata: {
@@ -90,8 +90,8 @@ const getPreviewCallback =
               fritekstbrev && Object.values(fritekstbrev).some(x => x === null || x === '') ? null : fritekstbrev,
           },
         };
-    fetchPreview(false, data);
-  };
+      fetchPreview(false, data);
+    };
 
 interface OwnProps {
   fagsak: Fagsak;
@@ -123,7 +123,7 @@ const MeldingIndex = ({
 
   const behandling = alleBehandlinger.find(b => b.id === behandlingId);
 
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const ventearsaker = useFpSakKodeverk(kodeverkTyper.VENT_AARSAK) || EMPTY_ARRAY;
   const revurderingVarslingArsak = useFpSakKodeverk(kodeverkTyper.REVURDERING_VARSLING_ÅRSAK);
@@ -165,7 +165,7 @@ const MeldingIndex = ({
       };
       setBehandlingOnHold(values);
       hideSettPaVentModal();
-      history.push('/');
+      navigate('/');
     },
     [behandlingId, behandlingVersjon],
   );

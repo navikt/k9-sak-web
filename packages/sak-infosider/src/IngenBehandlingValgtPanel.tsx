@@ -33,7 +33,7 @@ interface OwnProps {
  */
 const IngenBehandlingValgtPanel = ({ numBehandlinger }: OwnProps) => (
   <RawIntlProvider value={intl}>
-    <div className={styles.noSelectedBehandlingPanel}>
+    <div className={styles.noSelectedBehandlingPanel} data-testid="IngenBehandlingValgtPanel">
       <AlertStripeInfo>
         <Normaltekst>
           <FormattedMessage id={getMessage(numBehandlinger)} />

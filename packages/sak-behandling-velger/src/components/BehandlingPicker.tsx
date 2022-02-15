@@ -35,7 +35,7 @@ const renderListItems = (
   sortBehandlinger(behandlinger)
     .filter(behandling => showAll || behandling.id === behandlingId)
     .map(behandling => (
-      <li key={behandling.id}>
+      <li key={behandling.id} data-testid="BehandlingPickerItem">
         <BehandlingPickerItem
           onlyOneBehandling={behandlinger.length === 1}
           behandling={behandling}
@@ -72,7 +72,7 @@ const BehandlingPicker = ({
   toggleShowAll,
   getKodeverkFn,
 }: OwnProps) => (
-  <ul className={styles.behandlingList}>
+  <ul className={styles.behandlingList} data-testid="BehandlingPicker">
     {noExistingBehandlinger && (
       <Normaltekst>
         <FormattedMessage id="BehandlingList.ZeroBehandlinger" />
