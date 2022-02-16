@@ -1,10 +1,15 @@
 import React from 'react';
-import { MemoryRouter } from 'react-router-dom';
+import { Router } from 'react-router-dom';
+import { createBrowserHistory } from 'history';
+
+const history = createBrowserHistory({
+  basename: '/k9/web/',
+});
 
 const withRouterProvider = Story => (
-  <MemoryRouter>
+  <Router history={history}>
     <Story />
-  </MemoryRouter>
+  </Router>
 );
 
 export default withRouterProvider;
