@@ -4,7 +4,7 @@ import { NavLink } from 'react-router-dom';
 
 import { BehandlingAppKontekst } from '@k9-sak-web/types';
 
-import BehandlingPickerItemContent from './BehandlingPickerItemContentOld';
+import BehandlingPickerItemContent from './BehandlingPickerItemContent';
 import BehandlingPickerItem from './BehandlingPickerItem';
 
 describe('<BehandlingPickerItem>', () => {
@@ -37,6 +37,7 @@ describe('<BehandlingPickerItem>', () => {
     search: 'test',
     state: {},
     hash: 'test',
+    key: 'test',
   };
 
   const getKodeverkFn = () => ({

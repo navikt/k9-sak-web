@@ -30,14 +30,12 @@ import beregningStyles from '../beregningsgrunnlagPanel/beregningsgrunnlag.less'
 const formPrefix = 'inntektField';
 
 // Disse er nå slått sammen til et AP, men må håndtere begge AP'ene helt til det ene er slettet fra databasen
-const {
-  FASTSETT_BEREGNINGSGRUNNLAG_TIDSBEGRENSET_ARBEIDSFORHOLD,
-  FASTSETT_BEREGNINGSGRUNNLAG_ARBEIDSTAKER_FRILANS,
-} = avklaringsbehovCodes;
+const { FASTSETT_BEREGNINGSGRUNNLAG_TIDSBEGRENSET_ARBEIDSFORHOLD, FASTSETT_BEREGNINGSGRUNNLAG_ARBEIDSTAKER_FRILANS } =
+  avklaringsbehovCodes;
 
 const finnAvklaringsbehovForFastsettBgTidsbegrensetAT = avklaringsbehov =>
-avklaringsbehov &&
-avklaringsbehov.find(
+  avklaringsbehov &&
+  avklaringsbehov.find(
     ab =>
       ab.definisjon.kode === FASTSETT_BEREGNINGSGRUNNLAG_TIDSBEGRENSET_ARBEIDSFORHOLD ||
       ab.definisjon.kode === FASTSETT_BEREGNINGSGRUNNLAG_ARBEIDSTAKER_FRILANS,
@@ -90,9 +88,8 @@ const createBeregnetInntektForAlleAndeler = (perioder, arbeidsgiverOpplysningerP
     andel => andel.aktivitetStatus.kode === aktivitetStatus.ARBEIDSTAKER,
   );
   arbeidstakerAndeler.forEach(andel => {
-    mapMedInnteker[
-      createArbeidsforholdMapKey(andel.arbeidsforhold, arbeidsgiverOpplysningerPerId)
-    ] = formatCurrencyNoKr(andel.beregnetPrAar);
+    mapMedInnteker[createArbeidsforholdMapKey(andel.arbeidsforhold, arbeidsgiverOpplysningerPerId)] =
+      formatCurrencyNoKr(andel.beregnetPrAar);
   });
   return mapMedInnteker;
 };
@@ -197,7 +194,7 @@ const createSummaryTableRow = listOfBruttoPrPeriode => (
 
 const createPerioderRow = relevantePerioder => (
   <tr key="PeriodeHeaderRad">
-    <td />
+    <td colSpan="2" />
     {relevantePerioder.map(element => {
       const fraDato = element.periode.split('_')[0];
       return (

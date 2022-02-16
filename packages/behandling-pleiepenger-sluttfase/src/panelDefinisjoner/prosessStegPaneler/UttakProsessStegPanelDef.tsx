@@ -4,11 +4,13 @@ import { prosessStegCodes } from '@k9-sak-web/konstanter';
 import React from 'react';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import fagsakYtelseType from "@fpsak-frontend/kodeverk/src/fagsakYtelseType";
+import AntallDagerLivetsSluttfaseIndex from "@k9-sak-web/prosess-uttak-antall-dager-sluttfase";
 import Uttak from '../../components/Uttak';
 import { PleiepengerSluttfaseBehandlingApiKeys } from '../../data/pleiepengerSluttfaseBehandlingApi';
 
 class PanelDef extends ProsessStegPanelDef {
-  getKomponent = ({ behandling, uttaksperioder, arbeidsgiverOpplysningerPerId, aksjonspunkter, erFagytelsetypeLivetsSluttfase }) => (
+  getKomponent = ({ behandling, uttaksperioder, kvoteInfo, arbeidsgiverOpplysningerPerId, aksjonspunkter, erFagytelsetypeLivetsSluttfase }) => (<>
+    <AntallDagerLivetsSluttfaseIndex kvoteInfo={kvoteInfo} />
     <Uttak
       uuid={behandling.uuid}
       uttaksperioder={uttaksperioder}
@@ -16,6 +18,7 @@ class PanelDef extends ProsessStegPanelDef {
       aksjonspunkter={aksjonspunkter}
       erFagytelsetypeLivetsSluttfase={erFagytelsetypeLivetsSluttfase}
     />
+    </>
   );
 
   getAksjonspunktKoder = () => [aksjonspunktCodes.VENT_ANNEN_PSB_SAK];
@@ -40,6 +43,7 @@ class PanelDef extends ProsessStegPanelDef {
 
   getData = ({ uttak, arbeidsgiverOpplysningerPerId, fagsak }) => ({
     uttaksperioder: uttak?.perioder,
+    kvoteInfo: uttak?.kvoteInfo,
     arbeidsgiverOpplysningerPerId,
     erFagytelsetypeLivetsSluttfase: fagsak.sakstype.kode === fagsakYtelseType.PLEIEPENGER_SLUTTFASE
   });
