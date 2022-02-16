@@ -1,11 +1,11 @@
 import React from 'react';
-import sinon, { SinonStub } from 'sinon';
-import { render, screen } from '@testing-library/react';
-import { MemoryRouter } from 'react-router-dom';
+import { shallow } from 'enzyme';
+import sinon from 'sinon';
 
 import { BehandlingAppKontekst, Fagsak } from '@k9-sak-web/types';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
+import SupportMenySakIndex from '@fpsak-frontend/sak-support-meny';
 
 import { VergeBehandlingmenyValg } from '../behandling/behandlingRettigheterTsType';
 import * as useTrackRouteParam from '../app/useTrackRouteParam';
@@ -41,9 +41,14 @@ describe('<BehandlingSupportIndex>', () => {
     },
   };
 
-  const location = { pathname: '', search: '', state: {}, hash: '', key: '' };
+  const location = {
+    pathname: '',
+    search: '',
+    state: {},
+    hash: '',
+  };
 
-  let contextStub: SinonStub;
+  let contextStub;
   beforeEach(() => {
     contextStub = sinon.stub(useTrackRouteParam, 'default').callsFake(() => ({
       selected: 123456,
@@ -57,27 +62,17 @@ describe('<BehandlingSupportIndex>', () => {
 
   it('skal vise godkjennings-panelet', () => {
     requestApi.mock(K9sakApiKeys.NAV_ANSATT, navAnsatt);
-    requestApi.mock(K9sakApiKeys.INIT_FETCH_TILBAKE, {});
-    requestApi.mock(K9sakApiKeys.INIT_FETCH_KLAGE, {});
-    requestApi.mock(K9sakApiKeys.KODEVERK, {});
-    requestApi.mock(K9sakApiKeys.KODEVERK_TILBAKE, {});
-    requestApi.mock(K9sakApiKeys.KODEVERK_KLAGE, {});
-    requestApi.mock(K9sakApiKeys.HISTORY_K9SAK, []);
-    requestApi.mock(K9sakApiKeys.HISTORY_TILBAKE, []);
-    requestApi.mock(K9sakApiKeys.HISTORY_KLAGE, []);
 
-    render(
-      <MemoryRouter>
-        <BehandlingSupportIndex
-          fagsak={fagsak as Fagsak}
-          alleBehandlinger={[behandling] as BehandlingAppKontekst[]}
-          behandlingId={1}
-          behandlingVersjon={2}
-        />
-      </MemoryRouter>
+    const wrapper = shallow(
+      <BehandlingSupportIndex
+        fagsak={fagsak as Fagsak}
+        alleBehandlinger={[behandling] as BehandlingAppKontekst[]}
+        behandlingId={1}
+        behandlingVersjon={2}
+      />,
     );
 
-    expect(screen.queryAllByTestId('TabMenyKnapp').length).toBe(3);
+    expect(wrapper.find(SupportMenySakIndex)).toHaveLength(1);
   });
 
   describe('hentSynligePaneler', () => {

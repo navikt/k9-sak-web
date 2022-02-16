@@ -37,7 +37,6 @@ describe('<VurderEndringRefusjonRad>', () => {
       skjæringstidspunkt={stp}
       arbeidsgiverOpplysningerPerId={agOpplysninger}
       formName="test"
-      fieldId="test"
     />);
 
     const datepicker = wrapper.find('DatepickerField');
@@ -57,7 +56,6 @@ describe('<VurderEndringRefusjonRad>', () => {
       skjæringstidspunkt={stp}
       arbeidsgiverOpplysningerPerId={agOpplysninger}
       formName="test"
-      fieldId='test'
     />);
 
     const datepicker = wrapper.find('DatepickerField');

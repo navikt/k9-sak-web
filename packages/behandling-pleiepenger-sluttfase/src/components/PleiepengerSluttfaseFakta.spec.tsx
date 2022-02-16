@@ -168,7 +168,7 @@ describe('<PleiepengerSluttfaseFakta>', () => {
       {
         erAktiv: false,
         harAksjonspunkt: false,
-        tekst: "Om pleietrengende",
+        tekst: "OmPleietrengendeInfoPanel.Title"
       },
       {
         erAktiv: true,

@@ -1,5 +1,5 @@
 import React, { useCallback, useMemo } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 
 import SupportMenySakIndex, { SupportTabs } from '@fpsak-frontend/sak-support-meny';
 import { Fagsak, BehandlingAppKontekst, Personopplysninger, ArbeidsgiverOpplysningerWrapper } from '@k9-sak-web/types';
@@ -69,7 +69,7 @@ const BehandlingSupportIndex = ({
 
   const behandling = alleBehandlinger.find(b => b.id === behandlingId);
 
-  const navigate = useNavigate();
+  const history = useHistory();
 
   const erPaVent = behandling ? behandling.behandlingPaaVent : false;
   const erSendMeldingRelevant = fagsak && !erPaVent;
@@ -89,7 +89,7 @@ const BehandlingSupportIndex = ({
     index => {
       const supportPanel = synligeSupportPaneler[index];
       const getSupportPanelLocation = getSupportPanelLocationCreator(location);
-      navigate(getSupportPanelLocation(supportPanel));
+      history.push(getSupportPanelLocation(supportPanel));
     },
     [location, synligeSupportPaneler],
   );
