@@ -72,7 +72,7 @@ const renderFunc = Component => {
 
   render(
     <Provider store={store}>
-      <BrowserRouter basename="/k9/web/">
+      <BrowserRouter basename="/">
         <RestApiProvider>
           <RestApiErrorProvider>
             <Component />
