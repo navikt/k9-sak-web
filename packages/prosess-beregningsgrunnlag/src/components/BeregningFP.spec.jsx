@@ -36,12 +36,12 @@ const lagBeregningsgrunnlag = (ferdigstilt, beregnetPrAar, sammenligningSum, avv
         dagsats: ferdigstilt ? 1500 : undefined,
         beregningsgrunnlagPrStatusOgAndel: [
           {
-            aktivitetStatus:
-            {
-              kode: aktivitetStatus.KOMBINERT_AT_SN,
-              navn: 'Arbeidstaker',
-              kodeverk: 'test',
-            }
+            aktivitetStatus: 
+              {
+                kode: aktivitetStatus.KOMBINERT_AT_SN,
+                navn: 'Arbeidstaker',
+                kodeverk: 'test',
+              }
           }
         ]
       },
@@ -54,7 +54,6 @@ const vilkar = [
   {
     vilkarType: {
       kode: 'FP_VK_41',
-      kodeverk: '',
     },
     vilkarStatus: {
       kode: vilkarUtfallType.OPPFYLT,
@@ -70,13 +69,11 @@ const gjeldendeAksjonspunkter = [
     definisjon: {
       kode: aksjonspunktCodes.FASTSETT_BEREGNINGSGRUNNLAG_ARBEIDSTAKER_FRILANS,
       navn: 'Fastsett varig brutto beregning ATFL',
-      kodeverk: '',
     },
     toTrinnsBehandling: false,
     status: {
       kode: 'OPPR',
       navn: 'Opprettet',
-      kodeverk: '',
     },
     begrunnelse: 'begrunnelse arbeidstaker/frilans',
     vilkarType: null,
@@ -119,8 +116,8 @@ describe('<BeregningFP>', () => {
       },
     ];
     const initialValues = buildInitialValuesForBeregningrunnlag(
-      lagBeregningsgrunnlag(true, 100000, 100000, null, avklaringsbehov),
-      gjeldendeAksjonspunkter,
+      lagBeregningsgrunnlag(true, 100000, 100000, null, avklaringsbehov), 
+      gjeldendeAksjonspunkter, 
       vilkar);
     expect(initialValues.avklaringsbehov).to.eql(avklaringsbehov);
     expect(initialValues.relevanteStatuser.isArbeidstaker).to.eql(true);
@@ -130,8 +127,8 @@ describe('<BeregningFP>', () => {
   });
   it('skal teste at det bygges korrekte initialvalues med beregnetAvvikPromille lik NULL', () => {
     const initialValues = buildInitialValuesForBeregningrunnlag(
-      lagBeregningsgrunnlag(true, 100000, 100000, null, null),
-      gjeldendeAksjonspunkter,
+      lagBeregningsgrunnlag(true, 100000, 100000, null, null), 
+      gjeldendeAksjonspunkter, 
       vilkar);
     expect(initialValues.avklaringsbehov).to.eql(gjeldendeAksjonspunkter);
     expect(initialValues.relevanteStatuser.isArbeidstaker).to.eql(true);
@@ -154,7 +151,7 @@ describe('<BeregningFP>', () => {
         aksjonspunkter={gjeldendeAksjonspunkter}
         readOnlySubmitButton
         intl={intlMock}
-        handleSubmit={() => { }}
+        handleSubmit={() => {}}
       />,
     );
     const beregningForm = wrapper.find(BeregningForm2);
@@ -178,7 +175,7 @@ describe('<BeregningFP>', () => {
         behandling={behandling}
         readOnlySubmitButton
         intl={intlMock}
-        handleSubmit={() => { }}
+        handleSubmit={() => {}}
       />,
     );
     const beregningForm = wrapper.find(FieldArray);
@@ -189,323 +186,323 @@ describe('<BeregningFP>', () => {
 
 
   it('skal teste transform value for flere beregningsgrunnlag aksjonspunkt, men kun siste til vurdering', () => {
-
+    
     const values = {
       "beregningsgrunnlagListe": [
-        {
-          "relevanteStatuser": {
-            "isArbeidstaker": true,
-            "isFrilanser": false,
-            "isSelvstendigNaeringsdrivende": false,
-            "harAndreTilstotendeYtelser": false,
-            "harDagpengerEllerAAP": false,
-            "isAAP": false,
-            "isDagpenger": false,
-            "skalViseBeregningsgrunnlag": true,
-            "isKombinasjonsstatus": false,
-            "isMilitaer": false
+          {
+              "relevanteStatuser": {
+                  "isArbeidstaker": true,
+                  "isFrilanser": false,
+                  "isSelvstendigNaeringsdrivende": false,
+                  "harAndreTilstotendeYtelser": false,
+                  "harDagpengerEllerAAP": false,
+                  "isAAP": false,
+                  "isDagpenger": false,
+                  "skalViseBeregningsgrunnlag": true,
+                  "isKombinasjonsstatus": false,
+                  "isMilitaer": false
+              },
+              "avklaringsbehov": [
+                  {
+                      "definisjon": {
+                          "kode": "5047",
+                          "kodeverk": "AVKLARINGSBEHOV_DEF"
+                      },
+                      "status": {
+                          "kode": "UTFO",
+                          "kodeverk": "AKSJONSPUNKT_STATUS"
+                      },
+                      "begrunnelse": "dfwdwad"
+                  }
+              ],
+              "erTilVurdering": false,
+              "skjæringstidspunkt": "2021-07-08",
+              "ATFLVurdering": "dfwdwad",
+              "inntektField_undefined_1_2021-07-08": "433 500",
+              "inntektField_undefined_1_2021-09-01": "433 500",
+              "inntekt0": "433 500"
           },
-          "avklaringsbehov": [
+          {
+              "relevanteStatuser": {
+                  "isArbeidstaker": true,
+                  "isFrilanser": false,
+                  "isSelvstendigNaeringsdrivende": false,
+                  "harAndreTilstotendeYtelser": false,
+                  "harDagpengerEllerAAP": false,
+                  "isAAP": false,
+                  "isDagpenger": false,
+                  "skalViseBeregningsgrunnlag": true,
+                  "isKombinasjonsstatus": false,
+                  "isMilitaer": false
+              },
+              "avklaringsbehov": [
+                  {
+                      "definisjon": {
+                          "kode": "5038",
+                          "kodeverk": "AVKLARINGSBEHOV_DEF"
+                      },
+                      "status": {
+                          "kode": "OPPR",
+                          "kodeverk": "AKSJONSPUNKT_STATUS"
+                      }
+                  }
+              ],
+              "erTilVurdering": true,
+              "skjæringstidspunkt": "2021-10-11",
+              "ATFLVurdering": "dwadwa",
+              "inntektField_c4aa63f5-4132-4156-b5a6-832bd0c81c37_1_2021-10-11": "",
+              "inntekt0": "231 123"
+          }
+      ]
+  };
+
+  const alleBeregningsgrunnlag = [
+    {
+      "avklaringsbehov": [
+        {
+          "definisjon": {
+            "kode": "5047",
+            "kodeverk": "AVKLARINGSBEHOV_DEF"
+          },
+          "status": {
+            "kode": "UTFO",
+            "kodeverk": "AKSJONSPUNKT_STATUS"
+          },
+          "begrunnelse": "dfwdwad"
+        }
+      ],
+      "skjaeringstidspunktBeregning": "2021-07-08",
+      "skjæringstidspunkt": "2021-07-08",
+      "aktivitetStatus": [
+        {
+          "kode": "AT",
+          "kodeverk": "AKTIVITET_STATUS"
+        }
+      ],
+      "beregningsgrunnlagPeriode": [
+        {
+          "beregningsgrunnlagPeriodeFom": "2021-07-08",
+          "beregningsgrunnlagPeriodeTom": "2021-08-31",
+          "beregnetPrAar": 433500.00,
+          "bruttoPrAar": 433500.00,
+          "bruttoInkludertBortfaltNaturalytelsePrAar": 433500.00,
+          "avkortetPrAar": 433500.00,
+          "redusertPrAar": 433500.00,
+          "periodeAarsaker": [],
+          "dagsats": 1667,
+          "beregningsgrunnlagPrStatusOgAndel": [
             {
-              "definisjon": {
-                "kode": "5047",
-                "kodeverk": "AVKLARINGSBEHOV_DEF"
+              "dtoType": "GENERELL",
+              "beregningsgrunnlagFom": "2021-04-01",
+              "beregningsgrunnlagTom": "2021-06-30",
+              "aktivitetStatus": {
+                "kode": "AT",
+                "kodeverk": "AKTIVITET_STATUS"
               },
-              "status": {
-                "kode": "UTFO",
-                "kodeverk": "AKSJONSPUNKT_STATUS"
+              "beregningsperiodeFom": "2021-04-01",
+              "beregningsperiodeTom": "2021-06-30",
+              "beregnetPrAar": 433500.00,
+              "overstyrtPrAar": 433500.00,
+              "bruttoPrAar": 433500.00,
+              "avkortetPrAar": 433500.00,
+              "redusertPrAar": 433500.00,
+              "erTidsbegrensetArbeidsforhold": true,
+              "andelsnr": 1,
+              "inntektskategori": {
+                "kode": "ARBEIDSTAKER",
+                "kodeverk": "INNTEKTSKATEGORI"
               },
-              "begrunnelse": "dfwdwad"
+              "arbeidsforhold": {
+                "arbeidsgiverIdent": "111111111",
+                "startdato": "2021-06-01",
+                "opphoersdato": "2021-08-31",
+                "arbeidsforholdType": {
+                  "kode": "ARBEID",
+                  "kodeverk": "OPPTJENING_AKTIVITET_TYPE"
+                },
+                "refusjonPrAar": 433500.00,
+                "belopFraInntektsmeldingPrMnd": 36125.0
+              },
+              "fastsattAvSaksbehandler": false,
+              "lagtTilAvSaksbehandler": false,
+              "dagsats": 1667,
+              "erTilkommetAndel": false,
+              "skalFastsetteGrunnlag": true
             }
-          ],
-          "erTilVurdering": false,
-          "skjæringstidspunkt": "2021-07-08",
-          "ATFLVurdering": "dfwdwad",
-          "inntektField_undefined_1_2021-07-08": "433 500",
-          "inntektField_undefined_1_2021-09-01": "433 500",
-          "inntekt0": "433 500"
+          ]
         },
         {
-          "relevanteStatuser": {
-            "isArbeidstaker": true,
-            "isFrilanser": false,
-            "isSelvstendigNaeringsdrivende": false,
-            "harAndreTilstotendeYtelser": false,
-            "harDagpengerEllerAAP": false,
-            "isAAP": false,
-            "isDagpenger": false,
-            "skalViseBeregningsgrunnlag": true,
-            "isKombinasjonsstatus": false,
-            "isMilitaer": false
-          },
-          "avklaringsbehov": [
+          "beregningsgrunnlagPeriodeFom": "2021-09-01",
+          "beregningsgrunnlagPeriodeTom": "9999-12-31",
+          "beregnetPrAar": 433500.00,
+          "bruttoPrAar": 433500.00,
+          "bruttoInkludertBortfaltNaturalytelsePrAar": 433500.00,
+          "avkortetPrAar": 433500.00,
+          "redusertPrAar": 0.00,
+          "periodeAarsaker": [
             {
-              "definisjon": {
-                "kode": "5038",
-                "kodeverk": "AVKLARINGSBEHOV_DEF"
-              },
-              "status": {
-                "kode": "OPPR",
-                "kodeverk": "AKSJONSPUNKT_STATUS"
-              }
+              "kode": "ARBEIDSFORHOLD_AVSLUTTET",
+              "kodeverk": "PERIODE_AARSAK"
             }
           ],
-          "erTilVurdering": true,
-          "skjæringstidspunkt": "2021-10-11",
-          "ATFLVurdering": "dwadwa",
-          "inntektField_c4aa63f5-4132-4156-b5a6-832bd0c81c37_1_2021-10-11": "",
-          "inntekt0": "231 123"
+          "dagsats": 0,
+          "beregningsgrunnlagPrStatusOgAndel": [
+            {
+              "dtoType": "GENERELL",
+              "beregningsgrunnlagFom": "2021-04-01",
+              "beregningsgrunnlagTom": "2021-06-30",
+              "aktivitetStatus": {
+                "kode": "AT",
+                "kodeverk": "AKTIVITET_STATUS"
+              },
+              "beregningsperiodeFom": "2021-04-01",
+              "beregningsperiodeTom": "2021-06-30",
+              "beregnetPrAar": 433500.00,
+              "overstyrtPrAar": 433500.00,
+              "bruttoPrAar": 433500.00,
+              "avkortetPrAar": 0.00,
+              "redusertPrAar": 0.00,
+              "erTidsbegrensetArbeidsforhold": true,
+              "andelsnr": 1,
+              "inntektskategori": {
+                "kode": "ARBEIDSTAKER",
+                "kodeverk": "INNTEKTSKATEGORI"
+              },
+              "arbeidsforhold": {
+                "arbeidsgiverIdent": "111111111",
+                "startdato": "2021-06-01",
+                "opphoersdato": "2021-08-31",
+                "arbeidsforholdType": {
+                  "kode": "ARBEID",
+                  "kodeverk": "OPPTJENING_AKTIVITET_TYPE"
+                },
+                "refusjonPrAar": 0.00,
+                "belopFraInntektsmeldingPrMnd": 36125.0
+              },
+              "fastsattAvSaksbehandler": false,
+              "lagtTilAvSaksbehandler": false,
+              "dagsats": 0,
+              "erTilkommetAndel": false,
+              "skalFastsetteGrunnlag": true
+            }
+          ]
         }
-      ]
-    };
-
-    const alleBeregningsgrunnlag = [
-      {
-        "avklaringsbehov": [
-          {
-            "definisjon": {
-              "kode": "5047",
-              "kodeverk": "AVKLARINGSBEHOV_DEF"
-            },
-            "status": {
-              "kode": "UTFO",
-              "kodeverk": "AKSJONSPUNKT_STATUS"
-            },
-            "begrunnelse": "dfwdwad"
-          }
-        ],
-        "skjaeringstidspunktBeregning": "2021-07-08",
-        "skjæringstidspunkt": "2021-07-08",
-        "aktivitetStatus": [
-          {
-            "kode": "AT",
-            "kodeverk": "AKTIVITET_STATUS"
-          }
-        ],
-        "beregningsgrunnlagPeriode": [
-          {
-            "beregningsgrunnlagPeriodeFom": "2021-07-08",
-            "beregningsgrunnlagPeriodeTom": "2021-08-31",
-            "beregnetPrAar": 433500.00,
-            "bruttoPrAar": 433500.00,
-            "bruttoInkludertBortfaltNaturalytelsePrAar": 433500.00,
-            "avkortetPrAar": 433500.00,
-            "redusertPrAar": 433500.00,
-            "periodeAarsaker": [],
-            "dagsats": 1667,
-            "beregningsgrunnlagPrStatusOgAndel": [
-              {
-                "dtoType": "GENERELL",
-                "beregningsgrunnlagFom": "2021-04-01",
-                "beregningsgrunnlagTom": "2021-06-30",
-                "aktivitetStatus": {
-                  "kode": "AT",
-                  "kodeverk": "AKTIVITET_STATUS"
-                },
-                "beregningsperiodeFom": "2021-04-01",
-                "beregningsperiodeTom": "2021-06-30",
-                "beregnetPrAar": 433500.00,
-                "overstyrtPrAar": 433500.00,
-                "bruttoPrAar": 433500.00,
-                "avkortetPrAar": 433500.00,
-                "redusertPrAar": 433500.00,
-                "erTidsbegrensetArbeidsforhold": true,
-                "andelsnr": 1,
-                "inntektskategori": {
-                  "kode": "ARBEIDSTAKER",
-                  "kodeverk": "INNTEKTSKATEGORI"
-                },
-                "arbeidsforhold": {
-                  "arbeidsgiverIdent": "111111111",
-                  "startdato": "2021-06-01",
-                  "opphoersdato": "2021-08-31",
-                  "arbeidsforholdType": {
-                    "kode": "ARBEID",
-                    "kodeverk": "OPPTJENING_AKTIVITET_TYPE"
-                  },
-                  "refusjonPrAar": 433500.00,
-                  "belopFraInntektsmeldingPrMnd": 36125.0
-                },
-                "fastsattAvSaksbehandler": false,
-                "lagtTilAvSaksbehandler": false,
-                "dagsats": 1667,
-                "erTilkommetAndel": false,
-                "skalFastsetteGrunnlag": true
-              }
-            ]
+      ],
+      "vilkårsperiodeFom": "2021-07-08"
+    },
+    {
+      "avklaringsbehov": [
+        {
+          "definisjon": {
+            "kode": "5038",
+            "kodeverk": "AVKLARINGSBEHOV_DEF"
           },
-          {
-            "beregningsgrunnlagPeriodeFom": "2021-09-01",
-            "beregningsgrunnlagPeriodeTom": "9999-12-31",
-            "beregnetPrAar": 433500.00,
-            "bruttoPrAar": 433500.00,
-            "bruttoInkludertBortfaltNaturalytelsePrAar": 433500.00,
-            "avkortetPrAar": 433500.00,
-            "redusertPrAar": 0.00,
-            "periodeAarsaker": [
-              {
-                "kode": "ARBEIDSFORHOLD_AVSLUTTET",
-                "kodeverk": "PERIODE_AARSAK"
-              }
-            ],
-            "dagsats": 0,
-            "beregningsgrunnlagPrStatusOgAndel": [
-              {
-                "dtoType": "GENERELL",
-                "beregningsgrunnlagFom": "2021-04-01",
-                "beregningsgrunnlagTom": "2021-06-30",
-                "aktivitetStatus": {
-                  "kode": "AT",
-                  "kodeverk": "AKTIVITET_STATUS"
-                },
-                "beregningsperiodeFom": "2021-04-01",
-                "beregningsperiodeTom": "2021-06-30",
-                "beregnetPrAar": 433500.00,
-                "overstyrtPrAar": 433500.00,
-                "bruttoPrAar": 433500.00,
-                "avkortetPrAar": 0.00,
-                "redusertPrAar": 0.00,
-                "erTidsbegrensetArbeidsforhold": true,
-                "andelsnr": 1,
-                "inntektskategori": {
-                  "kode": "ARBEIDSTAKER",
-                  "kodeverk": "INNTEKTSKATEGORI"
-                },
-                "arbeidsforhold": {
-                  "arbeidsgiverIdent": "111111111",
-                  "startdato": "2021-06-01",
-                  "opphoersdato": "2021-08-31",
-                  "arbeidsforholdType": {
-                    "kode": "ARBEID",
-                    "kodeverk": "OPPTJENING_AKTIVITET_TYPE"
-                  },
-                  "refusjonPrAar": 0.00,
-                  "belopFraInntektsmeldingPrMnd": 36125.0
-                },
-                "fastsattAvSaksbehandler": false,
-                "lagtTilAvSaksbehandler": false,
-                "dagsats": 0,
-                "erTilkommetAndel": false,
-                "skalFastsetteGrunnlag": true
-              }
-            ]
+          "status": {
+            "kode": "OPPR",
+            "kodeverk": "AKSJONSPUNKT_STATUS"
           }
-        ],
-        "vilkårsperiodeFom": "2021-07-08"
+        }
+      ],
+      "skjaeringstidspunktBeregning": "2021-10-11",
+      "skjæringstidspunkt": "2021-10-11",
+      "aktivitetStatus": [
+        {
+          "kode": "AT",
+          "kodeverk": "AKTIVITET_STATUS"
+        }
+      ],
+      "beregningsgrunnlagPeriode": [
+        {
+          "beregningsgrunnlagPeriodeFom": "2021-10-11",
+          "beregningsgrunnlagPeriodeTom": "9999-12-31",
+          "beregnetPrAar": 543100.08,
+          "bruttoPrAar": 543100.08,
+          "bruttoInkludertBortfaltNaturalytelsePrAar": 543100.08,
+          "periodeAarsaker": [],
+          "beregningsgrunnlagPrStatusOgAndel": [
+            {
+              "dtoType": "GENERELL",
+              "beregningsgrunnlagFom": "2021-07-01",
+              "beregningsgrunnlagTom": "2021-09-30",
+              "aktivitetStatus": {
+                "kode": "AT",
+                "kodeverk": "AKTIVITET_STATUS"
+              },
+              "beregningsperiodeFom": "2021-07-01",
+              "beregningsperiodeTom": "2021-09-30",
+              "beregnetPrAar": 543100.08,
+              "bruttoPrAar": 543100.08,
+              "andelsnr": 1,
+              "inntektskategori": {
+                "kode": "ARBEIDSTAKER",
+                "kodeverk": "INNTEKTSKATEGORI"
+              },
+              "arbeidsforhold": {
+                "arbeidsgiverIdent": "999999999",
+                "startdato": "2021-09-01",
+                "arbeidsforholdId": "c4aa63f5-4132-4156-b5a6-832bd0c81c37",
+                "eksternArbeidsforholdId": "WFFESF345345",
+                "arbeidsforholdType": {
+                  "kode": "ARBEID",
+                  "kodeverk": "OPPTJENING_AKTIVITET_TYPE"
+                },
+                "belopFraInntektsmeldingPrMnd": 45258.34
+              },
+              "fastsattAvSaksbehandler": false,
+              "lagtTilAvSaksbehandler": false,
+              "erTilkommetAndel": false,
+              "skalFastsetteGrunnlag": true
+            }
+          ]
+        }
+      ],
+      "halvG": 53199.5,
+      "grunnbeløp": 106399.00,
+      "hjemmel": {
+        "kode": "F_9_9_8_28_8_30",
+        "kodeverk": "BG_HJEMMEL"
+      },
+      "årsinntektVisningstall": 543100.08,
+      "dekningsgrad": 100,
+      "erOverstyrtInntekt": false,
+      "vilkårsperiodeFom": "2021-10-11"
+    }
+  ];
+
+  const vilk = [{
+    "vilkarType": {
+      "kode": "FP_VK_41",
+      "kodeverk": "VILKAR_TYPE"
+    },
+    "lovReferanse": "§ 8",
+    "overstyrbar": true,
+    "perioder": [
+      {
+        "vilkarStatus": {
+          "kode": "OPPFYLT",
+          "kodeverk": "VILKAR_UTFALL_TYPE"
+        },
+        "periode": {
+          "fom": "2021-07-08",
+          "tom": "2021-07-20"
+        },
+        "vurdersIBehandlingen": false,
       },
       {
-        "avklaringsbehov": [
-          {
-            "definisjon": {
-              "kode": "5038",
-              "kodeverk": "AVKLARINGSBEHOV_DEF"
-            },
-            "status": {
-              "kode": "OPPR",
-              "kodeverk": "AKSJONSPUNKT_STATUS"
-            }
-          }
-        ],
-        "skjaeringstidspunktBeregning": "2021-10-11",
-        "skjæringstidspunkt": "2021-10-11",
-        "aktivitetStatus": [
-          {
-            "kode": "AT",
-            "kodeverk": "AKTIVITET_STATUS"
-          }
-        ],
-        "beregningsgrunnlagPeriode": [
-          {
-            "beregningsgrunnlagPeriodeFom": "2021-10-11",
-            "beregningsgrunnlagPeriodeTom": "9999-12-31",
-            "beregnetPrAar": 543100.08,
-            "bruttoPrAar": 543100.08,
-            "bruttoInkludertBortfaltNaturalytelsePrAar": 543100.08,
-            "periodeAarsaker": [],
-            "beregningsgrunnlagPrStatusOgAndel": [
-              {
-                "dtoType": "GENERELL",
-                "beregningsgrunnlagFom": "2021-07-01",
-                "beregningsgrunnlagTom": "2021-09-30",
-                "aktivitetStatus": {
-                  "kode": "AT",
-                  "kodeverk": "AKTIVITET_STATUS"
-                },
-                "beregningsperiodeFom": "2021-07-01",
-                "beregningsperiodeTom": "2021-09-30",
-                "beregnetPrAar": 543100.08,
-                "bruttoPrAar": 543100.08,
-                "andelsnr": 1,
-                "inntektskategori": {
-                  "kode": "ARBEIDSTAKER",
-                  "kodeverk": "INNTEKTSKATEGORI"
-                },
-                "arbeidsforhold": {
-                  "arbeidsgiverIdent": "999999999",
-                  "startdato": "2021-09-01",
-                  "arbeidsforholdId": "c4aa63f5-4132-4156-b5a6-832bd0c81c37",
-                  "eksternArbeidsforholdId": "WFFESF345345",
-                  "arbeidsforholdType": {
-                    "kode": "ARBEID",
-                    "kodeverk": "OPPTJENING_AKTIVITET_TYPE"
-                  },
-                  "belopFraInntektsmeldingPrMnd": 45258.34
-                },
-                "fastsattAvSaksbehandler": false,
-                "lagtTilAvSaksbehandler": false,
-                "erTilkommetAndel": false,
-                "skalFastsetteGrunnlag": true
-              }
-            ]
-          }
-        ],
-        "halvG": 53199.5,
-        "grunnbeløp": 106399.00,
-        "hjemmel": {
-          "kode": "F_9_9_8_28_8_30",
-          "kodeverk": "BG_HJEMMEL"
+        "vilkarStatus": {
+          "kode": "IKKE_VURDERT",
+          "kodeverk": "VILKAR_UTFALL_TYPE"
         },
-        "årsinntektVisningstall": 543100.08,
-        "dekningsgrad": 100,
-        "erOverstyrtInntekt": false,
-        "vilkårsperiodeFom": "2021-10-11"
+        "periode": {
+          "fom": "2021-10-11",
+          "tom": "2021-10-22"
+        },
+        "vurdersIBehandlingen": true,
       }
-    ];
+    ]
+  }];
 
-    const vilk = [{
-      "vilkarType": {
-        "kode": "FP_VK_41",
-        "kodeverk": "VILKAR_TYPE"
-      },
-      "lovReferanse": "§ 8",
-      "overstyrbar": true,
-      "perioder": [
-        {
-          "vilkarStatus": {
-            "kode": "OPPFYLT",
-            "kodeverk": "VILKAR_UTFALL_TYPE"
-          },
-          "periode": {
-            "fom": "2021-07-08",
-            "tom": "2021-07-20"
-          },
-          "vurdersIBehandlingen": false,
-        },
-        {
-          "vilkarStatus": {
-            "kode": "IKKE_VURDERT",
-            "kodeverk": "VILKAR_UTFALL_TYPE"
-          },
-          "periode": {
-            "fom": "2021-10-11",
-            "tom": "2021-10-22"
-          },
-          "vurdersIBehandlingen": true,
-        }
-      ]
-    }];
-
-
+    
     const transformed = transformValues(values, alleBeregningsgrunnlag, vilk)[0];
 
     expect(transformed.begrunnelse).to.be.equal("dwadwa");
