@@ -247,8 +247,8 @@ export class TilbakekrevingFormImpl extends Component<OwnProps & DispatchProps &
     const isApOpen = perioderFormatertForTidslinje.some((p: TidslinjePeriode) => p.isAksjonspunktOpen);
     const valgtPeriodeFormatertForTidslinje = valgtPeriode
       ? perioderFormatertForTidslinje.find(
-          (p: TidslinjePeriode) => p.fom === valgtPeriode.fom && p.tom === valgtPeriode.tom,
-        )
+        (p: TidslinjePeriode) => p.fom === valgtPeriode.fom && p.tom === valgtPeriode.tom,
+      )
       : undefined;
 
     return (
@@ -327,13 +327,13 @@ export const transformValues = (
   values: { vilkarsVurdertePerioder: CustomVilkarsVurdertePeriode[] },
   sarligGrunnTyper: KodeverkMedNavn[],
 ) => [
-  {
-    kode: aksjonspunktCodesTilbakekreving.VURDER_TILBAKEKREVING,
-    vilkarsVurdertePerioder: values.vilkarsVurdertePerioder
-      .filter((p: CustomVilkarsVurdertePeriode) => !p.erForeldet)
-      .map((p: CustomVilkarsVurdertePeriode) => periodeFormTransformValues(p, sarligGrunnTyper)),
-  },
-];
+    {
+      kode: aksjonspunktCodesTilbakekreving.VURDER_TILBAKEKREVING,
+      vilkarsVurdertePerioder: values.vilkarsVurdertePerioder
+        .filter((p: CustomVilkarsVurdertePeriode) => !p.erForeldet)
+        .map((p: CustomVilkarsVurdertePeriode) => periodeFormTransformValues(p, sarligGrunnTyper)),
+    },
+  ];
 
 const finnOriginalPeriode = (
   lagretPeriode: CustomVilkarsVurdertePeriode | VilkarsVurdertPeriode,
@@ -482,7 +482,9 @@ const mapStateToProps = (state: any, ownProps: PureOwnProps) => {
     ownProps.behandlingVersjon,
   )(state) as { erForeldet: boolean }) || { erForeldet: false };
   return {
+    // @ts-ignore Fiks denne (reselect)
     initialValues: buildInitialValues(state, ownProps),
+    // @ts-ignore Fiks denne (reselect)
     dataForDetailForm: settOppPeriodeDataForDetailForm(state, ownProps),
     vilkarsVurdertePerioder: behandlingFormValueSelector(
       TILBAKEKREVING_FORM_NAME,

@@ -70,7 +70,7 @@ describe('<DecimalField>', () => {
       { prosent: 10 },
     );
     expect(wrapper.find('input')).to.have.length(1);
-    wrapper.find('input').simulate('change', { target: { value: 10.322843578934758934758934758934758943 } });
+    wrapper.find('input').simulate('change', { target: { value: '10.322843578934758934758934758934758943' } });
     wrapper.find('input').simulate('blur');
     wrapper.update();
     expect(wrapper.find('input').prop('value')).to.eql('10.32');

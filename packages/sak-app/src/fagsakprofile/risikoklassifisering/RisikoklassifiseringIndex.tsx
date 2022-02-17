@@ -1,5 +1,5 @@
 import React, { useEffect, useCallback, useMemo } from 'react';
-import { useHistory, useLocation } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 import { Aksjonspunkt, NavAnsatt, Risikoklassifisering, Fagsak, BehandlingAppKontekst } from '@k9-sak-web/types';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
@@ -54,7 +54,7 @@ const RisikoklassifiseringIndex = ({
     isQueryParam: true,
   });
 
-  const history = useHistory();
+  const navigate = useNavigate();
   const location = useLocation();
 
   const navAnsatt = restApiHooks.useGlobalStateRestApiData<NavAnsatt>(K9sakApiKeys.NAV_ANSATT);
@@ -65,16 +65,16 @@ const RisikoklassifiseringIndex = ({
   const readOnly = useMemo(() => getReadOnly(navAnsatt, rettigheter, erPaaVent), [rettigheter, erPaaVent]);
 
   const toggleRiskPanel = useCallback(() => {
-    history.push(getRiskPanelLocationCreator(location)(!isRiskPanelOpen));
+    navigate(getRiskPanelLocationCreator(location)(!isRiskPanelOpen));
   }, [location, isRiskPanelOpen]);
 
   const harRisikoAksjonspunkt = !!risikoAksjonspunkt;
   useEffect(() => {
     if (harRisikoAksjonspunkt && risikoAksjonspunkt.status.kode === aksjonspunktStatus.OPPRETTET && !isRiskPanelOpen) {
-      history.push(getRiskPanelLocationCreator(location)(true));
+      navigate(getRiskPanelLocationCreator(location)(true));
     }
     if (harRisikoAksjonspunkt && risikoAksjonspunkt.status.kode === aksjonspunktStatus.UTFORT) {
-      history.push(getRiskPanelLocationCreator(location)(false));
+      navigate(getRiskPanelLocationCreator(location)(false));
     }
   }, [harRisikoAksjonspunkt, behandlingId, behandlingVersjon]);
 
