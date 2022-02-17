@@ -1,0 +1,8 @@
+{
+  "Titel.UttakAvPleiepenger": "Uttak av pleiepenger",
+  "Underskrift.TidligereDagerInnvilget": "<b>{tidligereAntallDagerInnvilget} av {maksAntallDagerInnvilget} dager</b> er tidligere innvilget for pleietrengende.",
+  "Underskrift.DagerInnvilget": " <b>{antallDagerInnvilget} av {maksAntallDagerInnvilget} dager</b> er innvilget i nåværende søknad.",
+  "Underskrift.AntallDagerGjennstar": " <b>{antallDagerGjennstar} av {maksAntallDagerInnvilget} dager</b> gjenstår.",
+
+  "Underskrift.SistePleiedag": "<b>Siste pleiedag:</b> {sistePleiedag}"
+}
