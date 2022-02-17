@@ -60,6 +60,15 @@ init({
 const store = configureStore();
 
 const renderFunc = Component => {
+
+  /**
+   * Redirecte til riktig basename om man kommer hit uten
+   * Vil kunne forekomme lokalt og i tester
+   */
+  if (window.location.pathname === '/') {
+    window.location.assign('/k9/web');
+  }
+
   const app = document.getElementById('app');
   if (app === null) {
     throw new Error('No app element');
@@ -72,7 +81,7 @@ const renderFunc = Component => {
 
   render(
     <Provider store={store}>
-      <BrowserRouter basename="/">
+      <BrowserRouter basename="/k9/web/">
         <RestApiProvider>
           <RestApiErrorProvider>
             <Component />
