@@ -81,7 +81,7 @@ const renderFunc = Component => {
 
   render(
     <Provider store={store}>
-      <BrowserRouter basename="/k9/web/">
+      <BrowserRouter basename="/k9/web">
         <RestApiProvider>
           <RestApiErrorProvider>
             <Component />
