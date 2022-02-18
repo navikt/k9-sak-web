@@ -58,5 +58,6 @@ export type { default as OvergangFraInfotrygd } from './src/overgangFraInfotrygd
 export type { default as DokumentStatus } from './src/dokumentStatusTsType';
 export type { default as SaksbehandlereInfo } from './src/saksbehandlereInfo';
 export type { default as Arbeidsgiver } from './src/arbeidsgiverTsType';
+export * from './src/utenlandsopphold/utenlandsoppholdTsType';
 export * from './src/overlappendePeriode';
 export * from './src/kodeverk';

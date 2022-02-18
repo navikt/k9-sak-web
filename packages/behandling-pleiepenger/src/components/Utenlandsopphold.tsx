@@ -1,8 +1,7 @@
-import React from 'react'
+import React from 'react';
 
-export default function Utenlandsopphold(props) {
-    console.log(props)
-  return (
-    <div>Utenlandsopphold</div>
-  )
+import { UtenlandsoppholdPerioder } from '@k9-sak-web/types';
+
+export default function Utenlandsopphold({ utenlandsopphold }: UtenlandsoppholdPerioder) {
+  return <div>Utenlandsopphold</div>;
 }
