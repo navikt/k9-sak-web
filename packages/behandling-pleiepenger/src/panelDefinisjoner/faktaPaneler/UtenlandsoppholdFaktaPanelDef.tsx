@@ -13,9 +13,9 @@ class UtenlandsoppholdFaktaPanelDef extends FaktaPanelDef {
 
   getEndepunkter = () => [PleiepengerBehandlingApiKeys.UTENLANDSOPPHOLD];
 
-  getKomponent = ({utenlandsopphold}) => <Utenlandsopphold utenlandsopphold={utenlandsopphold} />;
+  getKomponent = props => <Utenlandsopphold utenlandsopphold={props.utenlandsopphold} kodeverk={props.alleKodeverk} />;
 
-  skalVisePanel = () => true
+  skalVisePanel = () => true;
 }
 
 export default UtenlandsoppholdFaktaPanelDef;
