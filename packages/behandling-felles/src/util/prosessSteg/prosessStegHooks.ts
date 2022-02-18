@@ -86,7 +86,7 @@ const useProsessStegPaneler = (
       if (forrigePanel.paneler.find(v => v.getId() === 'SOKNADSFRIST')) {
         alleAndrePanelerEnnSoknadsfristErOppfyllt = forrigePanel.paneler
           .filter(v => v.getId() !== 'SOKNADSFRIST')
-          .some(v => v.getStatus() === vilkarUtfallType.OPPFYLT);
+          .every(v => v.getStatus() === vilkarUtfallType.OPPFYLT);
       }
 
       if (
