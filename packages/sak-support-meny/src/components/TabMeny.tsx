@@ -9,7 +9,7 @@ const classNames = classnames.bind(styles);
 
 interface OwnProps {
   tabs: {
-    getSvg: (isActive: boolean, isDisabled: boolean, props) => React.ReactNode;
+    getSvg: (isActive: boolean, isDisabled: boolean, props: any) => React.ReactNode;
     tooltip: string;
     isActive: boolean;
     isDisabled: boolean;
@@ -18,21 +18,18 @@ interface OwnProps {
 }
 
 const TabMeny = ({ tabs, onClick }: OwnProps) => {
-  const tabRef = useRef<HTMLButtonElement[] | null>([]);
+  const tabRef = useRef([]);
 
   useEffect(() => {
-    if (tabRef.current) {
-      tabRef.current = tabRef.current.slice(0, tabs.length);
-    }
+    tabRef.current = tabRef.current.slice(0, tabs.length);
   }, [tabs]);
 
   return (
-    <FlexContainer data-testid="TabMeny">
+    <FlexContainer>
       <FlexRow className={styles.container}>
         {tabs.map((tab, index) => (
           <FlexColumn key={tab.tooltip} className={styles.column}>
             <button
-              data-testid="TabMenyKnapp"
               className={classNames(styles.button, { active: tab.isActive })}
               type="button"
               onClick={() => {

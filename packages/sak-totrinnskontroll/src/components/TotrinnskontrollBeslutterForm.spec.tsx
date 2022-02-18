@@ -11,7 +11,6 @@ const location = {
   search: '',
   state: {},
   hash: '',
-  key: '',
 };
 
 describe('<TotrinnskontrollBeslutterForm>', () => {
