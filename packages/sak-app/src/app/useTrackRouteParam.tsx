@@ -1,4 +1,4 @@
-import { useHistory, useRouteMatch, match as RouterMatch } from 'react-router-dom';
+import { useLocation, useParams, Params } from 'react-router-dom';
 import { Location } from 'history';
 
 import { parseQueryString } from '@fpsak-frontend/utils';
@@ -15,19 +15,18 @@ interface Config {
   isQueryParam?: boolean;
 }
 
-const mapMatchToParam = (match: RouterMatch, location: Location, trackingConfig: Config) => {
-  const params = trackingConfig.isQueryParam ? parseQueryString(location.search) : match.params;
-  return trackingConfig.parse(params[trackingConfig.paramName]);
+const mapMatchToParam = (params: Params, location: Location, trackingConfig: Config) => {
+  const newParams = trackingConfig.isQueryParam ? parseQueryString(location.search) : params;
+  return trackingConfig.parse(newParams[trackingConfig.paramName]);
 };
 
 function useTrackRouteParam<T>(config: Config): { location: Location; selected: T } {
   const trackingConfig = { ...defaultConfig, ...config };
 
-  const history = useHistory();
-  const { location } = history;
-  const match = useRouteMatch();
+  const location = useLocation();
+  const params = useParams();
 
-  const paramFromUrl = mapMatchToParam(match, location, trackingConfig);
+  const paramFromUrl = mapMatchToParam(params, location, trackingConfig);
   return {
     location,
     selected: paramFromUrl,

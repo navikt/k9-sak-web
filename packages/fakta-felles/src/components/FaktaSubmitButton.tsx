@@ -98,8 +98,9 @@ const mapStateToProps = (state: any, ownProps: PureOwnProps): MappedOwnProps => 
     hasEmptyRequiredFields: ownProps.doNotCheckForRequiredFields
       ? false
       : formNames.some(formName =>
-          hasBehandlingFormErrorsOfType(formName, behandlingId, behandlingVersjon, isRequiredMessage())(state),
-        ),
+        // @ts-ignore Fiks denne (reselect)
+        hasBehandlingFormErrorsOfType(formName, behandlingId, behandlingVersjon, isRequiredMessage())(state),
+      ),
   };
 };
 
