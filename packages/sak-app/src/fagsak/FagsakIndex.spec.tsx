@@ -42,7 +42,6 @@ describe('<FagsakIndex>', () => {
         search: 'test',
         state: {},
         hash: 'test',
-        key: 'test',
       },
     }));
   });

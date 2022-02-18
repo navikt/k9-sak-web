@@ -1,6 +1,5 @@
 import React from 'react';
-import { format } from "date-fns";
-import { zonedTimeToUtc } from 'date-fns-tz';
+import { FormattedDate } from 'react-intl';
 
 interface OwnProps {
   dateString: string;
@@ -15,29 +14,9 @@ interface OwnProps {
  * ```html
  * <DateLabel dateString="2017-08-31" />
  * ```
- *
- * Lagt til med date-fns og time zone. grunnet ulik output i tester lokalt og på github.
- *
- * Tidligere implementasjon:
- * <FormattedDate day="2-digit" month="2-digit" year="numeric" value={date} />
- *
  */
-
-function isValidDate(d) {
-  return d instanceof Date && !Number.isNaN(d.getTime());
-}
-
-const DateLabel = ({ dateString }: OwnProps) => {
-  const date = new Date(dateString);
-  if (!isValidDate(date)) {
-    return null;
-  }
-  const formatedDate = format(zonedTimeToUtc(date, 'Europe/Oslo'), 'dd.MM.yyyy');
-  return (
-    <>
-      {formatedDate}
-    </>
-  );
-};
+const DateLabel = ({ dateString }: OwnProps) => (
+  <FormattedDate day="2-digit" month="2-digit" year="numeric" value={new Date(dateString)} />
+);
 
 export default DateLabel;

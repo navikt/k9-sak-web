@@ -23,8 +23,7 @@ describe('<MedlemskapInfoPanel>', () => {
         behandlingId={1}
         behandlingVersjon={1}
         behandlingType={{
-          kode: 'Test',
-          kodeverk: 'test',
+          kode: 'TEst',
         }}
         behandlingStatus={{
           kode: behandlingStatus.BEHANDLING_UTREDES,
@@ -54,8 +53,7 @@ describe('<MedlemskapInfoPanel>', () => {
         behandlingId={1}
         behandlingVersjon={1}
         behandlingType={{
-          kode: 'test',
-          kodeverk: 'test',
+          kode: 'TEst',
         }}
         behandlingStatus={{
           kode: behandlingStatus.BEHANDLING_UTREDES,
