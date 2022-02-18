@@ -91,7 +91,7 @@ const PleiepengerFakta = ({
   );
 
   faktaHooks.useFaktaAksjonspunktNotifikator(faktaPaneler, setApentFaktaPanel, behandling.versjon);
-    console.log(faktaPaneler)
+
   const [velgFaktaPanelCallback, bekreftAksjonspunktCallback] = faktaHooks.useCallbacks(
     faktaPaneler,
     fagsak,
