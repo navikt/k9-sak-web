@@ -79,7 +79,20 @@ const useProsessStegPaneler = (
 
       const forrigeStatus = forrigePanel.getStatus();
 
-      if (forrigeStatus === vilkarUtfallType.IKKE_OPPFYLT || forrigeStatus === vilkarUtfallType.IKKE_VURDERT) {
+      // alleAndrePanelerEnnSoknadsfristErOppfyllt:
+      // I saker hvor søknadsfrist er IKKE_OPPFYLT skal etterfølgende prosessteg fremdeles behandles
+      // og skal ikke føre til at senere steg blir stanset av tidligere avslag
+      let alleAndrePanelerEnnSoknadsfristErOppfyllt: boolean;
+      if (forrigePanel.paneler.find(v => v.getId() === 'SOKNADSFRIST')) {
+        alleAndrePanelerEnnSoknadsfristErOppfyllt = forrigePanel.paneler
+          .filter(v => v.getId() !== 'SOKNADSFRIST')
+          .every(v => v.getStatus() === vilkarUtfallType.OPPFYLT);
+      }
+
+      if (
+        (forrigeStatus === vilkarUtfallType.IKKE_OPPFYLT || forrigeStatus === vilkarUtfallType.IKKE_VURDERT) &&
+        !alleAndrePanelerEnnSoknadsfristErOppfyllt
+      ) {
         stansetAvTidligereAvslag = true;
       }
 
@@ -95,11 +108,10 @@ const useProsessStegPaneler = (
   );
 
   const urlCode = valgtPanel ? valgtPanel.getUrlKode() : undefined;
-  const formaterteProsessStegPaneler = useMemo(() => formaterPanelerForProsessmeny(prosessStegPaneler, urlCode), [
-    behandling.versjon,
-    urlCode,
-    overstyrteAksjonspunktKoder,
-  ]);
+  const formaterteProsessStegPaneler = useMemo(
+    () => formaterPanelerForProsessmeny(prosessStegPaneler, urlCode),
+    [behandling.versjon, urlCode, overstyrteAksjonspunktKoder],
+  );
 
   return [prosessStegPaneler, valgtPanel, formaterteProsessStegPaneler];
 };
