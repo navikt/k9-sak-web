@@ -10,12 +10,14 @@ const initializeUttak = (
   behandlingUuid: string,
   arbeidsforhold: ArbeidsgiverOpplysningerPerId,
   aksjonspunktkoder: string[],
+  erFagytelsetypeLivetsSluttfase: boolean
 ) => {
   (window as any).renderUttakApp(elementId, {
     uttaksperioder,
     aktivBehandlingUuid: behandlingUuid,
     arbeidsforhold,
     aksjonspunktkoder,
+    erFagytelsetypeLivetsSluttfase
   });
 };
 
@@ -24,10 +26,11 @@ interface UttakProps {
   uttaksperioder: any;
   arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysningerPerId;
   aksjonspunkter: Aksjonspunkt[];
+  erFagytelsetypeLivetsSluttfase: boolean;
 }
 
 const uttakAppID = 'uttakApp';
-export default ({ uuid, uttaksperioder, arbeidsgiverOpplysningerPerId, aksjonspunkter }: UttakProps) => {
+export default ({ uuid, uttaksperioder, arbeidsgiverOpplysningerPerId, aksjonspunkter, erFagytelsetypeLivetsSluttfase }: UttakProps) => {
   const relevanteAksjonspunkter = [aksjonspunktCodes.VENT_ANNEN_PSB_SAK];
   const funnedeRelevanteAksjonspunkter = aksjonspunkter.filter(aksjonspunkt =>
     relevanteAksjonspunkter.some(relevantAksjonspunkt => relevantAksjonspunkt === aksjonspunkt.definisjon.kode),
@@ -48,6 +51,7 @@ export default ({ uuid, uttaksperioder, arbeidsgiverOpplysningerPerId, aksjonspu
           uuid,
           arbeidsgiverOpplysningerPerId,
           funnedeRelevanteAksjonspunktkoder,
+          erFagytelsetypeLivetsSluttfase
         )
       }
     />

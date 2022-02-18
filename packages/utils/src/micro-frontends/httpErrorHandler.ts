@@ -3,7 +3,7 @@ import EventType from '@k9-sak-web/rest-api/src/requestApi/eventType';
 type ErrorDispatcherArguments = { type: EventType };
 type ErrorDispatcher = (args: ErrorDispatcherArguments) => void;
 
-const httpErrorHandler = (status: number, errorDispatcher: ErrorDispatcher, locationHeader?: string) => {
+export const httpErrorHandler = (status: number, errorDispatcher: ErrorDispatcher, locationHeader?: string) => {
   if (status === 403) {
     errorDispatcher({ type: EventType.REQUEST_FORBIDDEN });
   } else if (status === 401) {
@@ -15,5 +15,3 @@ const httpErrorHandler = (status: number, errorDispatcher: ErrorDispatcher, loca
     }
   }
 };
-
-export default httpErrorHandler;

@@ -168,7 +168,7 @@ describe('<PleiepengerSluttfaseFakta>', () => {
       {
         erAktiv: false,
         harAksjonspunkt: false,
-        tekst: "OmPleietrengendeInfoPanel.Title"
+        tekst: "Om pleietrengende",
       },
       {
         erAktiv: true,
@@ -179,11 +179,6 @@ describe('<PleiepengerSluttfaseFakta>', () => {
         erAktiv: false,
         harAksjonspunkt: false,
         tekst: 'LivetsSluttfasePanel.LivetsSluttfase',
-      },
-      {
-        erAktiv: false,
-        harAksjonspunkt: false,
-        tekst: 'Inntektsmelding',
       },
       {
         erAktiv: false,
