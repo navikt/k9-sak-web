@@ -6,7 +6,7 @@ import { FaktaPanelDef } from '@k9-sak-web/behandling-felles';
 import { Fagsak } from '@k9-sak-web/types';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { PleiepengerSluttfaseBehandlingApiKeys } from '../../data/pleiepengerSluttfaseBehandlingApi';
+import { OmsorgspengerBehandlingApiKeys } from '../../data/omsorgspengerBehandlingApi';
 
 import Inntektsmelding from '../../components/Inntektsmelding';
 
@@ -20,18 +20,19 @@ class InntektsmeldingFaktaPanelDef extends FaktaPanelDef {
     aksjonspunktCodes.INNTEKTSMELDING_MANGLER_ENDELIG_AVKLARING,
   ];
 
-  getEndepunkter = () => [PleiepengerSluttfaseBehandlingApiKeys.ARBEIDSFORHOLD];
+  getEndepunkter = () => [OmsorgspengerBehandlingApiKeys.ARBEIDSFORHOLD];
 
   getKomponent = props => <Inntektsmelding {...props} />;
 
   getData = ({ arbeidsgiverOpplysningerPerId, dokumenter, hentSaksbehandlere }) => ({
     arbeidsgiverOpplysningerPerId,
     dokumenter,
+    // sjekke hvis den linken er tilgjenglig.
     saksbehandlere: hentSaksbehandlere?.saksbehandlere,
   });
 
   getOverstyrVisningAvKomponent = ({ fagsak }: { fagsak: Fagsak }) =>
-    fagsak.sakstype.kode === fagsakYtelseType.PLEIEPENGER_SLUTTFASE;
+    fagsak.sakstype.kode === fagsakYtelseType.OMSORGSPENGER;
 }
 
 export default InntektsmeldingFaktaPanelDef;
