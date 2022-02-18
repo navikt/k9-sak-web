@@ -1,7 +1,8 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 import React from 'react';
 import { Provider } from 'react-redux';
-import { BrowserRouter } from 'react-router-dom';
+import { Router } from 'react-router-dom';
+import { createBrowserHistory } from 'history';
 import { render } from 'react-dom';
 import { init, Integrations } from '@sentry/browser';
 
@@ -57,18 +58,12 @@ init({
   },
 });
 
+const history = createBrowserHistory({
+  basename: '/k9/web/',
+});
 const store = configureStore();
 
 const renderFunc = Component => {
-
-  /**
-   * Redirecte til riktig basename om man kommer hit uten
-   * Vil kunne forekomme lokalt og i tester
-   */
-  if (window.location.pathname === '/') {
-    window.location.assign('/k9/web');
-  }
-
   const app = document.getElementById('app');
   if (app === null) {
     throw new Error('No app element');
@@ -81,13 +76,13 @@ const renderFunc = Component => {
 
   render(
     <Provider store={store}>
-      <BrowserRouter basename="/k9/web">
+      <Router history={history}>
         <RestApiProvider>
           <RestApiErrorProvider>
             <Component />
           </RestApiErrorProvider>
         </RestApiProvider>
-      </BrowserRouter>
+      </Router>
     </Provider>,
     app,
   );

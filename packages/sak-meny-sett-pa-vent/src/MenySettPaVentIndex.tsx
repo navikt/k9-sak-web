@@ -1,6 +1,6 @@
 import React, { useCallback } from 'react';
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
-import { useNavigate } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 
 import { KodeverkMedNavn } from '@k9-sak-web/types';
 import SettPaVentModalIndex from '@k9-sak-web/modal-sett-pa-vent';
@@ -41,7 +41,7 @@ const MenySettPaVentIndex = ({
   lukkModal,
   erTilbakekreving,
 }: OwnProps) => {
-  const navigate = useNavigate();
+  const history = useHistory();
 
   const submit = useCallback(
     formValues => {
@@ -54,7 +54,7 @@ const MenySettPaVentIndex = ({
       settBehandlingPaVent(values);
 
       // lukkModal();
-      navigate('/');
+      history.push('/');
     },
     [behandlingId, behandlingVersjon],
   );
