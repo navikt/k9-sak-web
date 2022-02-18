@@ -1,11 +1,17 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { render, screen } from '@testing-library/react';
+import { MemoryRouter } from 'react-router-dom';
 
 import Home from './Home';
 
 describe('<Home>', () => {
-  it('skal rendre komponent', () => {
-    const wrapper = shallow(<Home headerHeight={48} />);
-    expect(wrapper.find('Switch')).toHaveLength(1);
+  it('skal rendre komponent', async () => {
+    render(
+      <MemoryRouter initialEntries={['/test']}>
+        <Home headerHeight={48} />
+      </MemoryRouter>,
+    );
+
+    expect(await screen.findByText('Beklager, vi finner ikke siden du leter etter.')).toBeInTheDocument();
   });
 });
