@@ -1,6 +1,5 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { createSelector } from 'reselect';
 import { FormattedMessage } from 'react-intl';
 import { Undertittel } from 'nav-frontend-typografi';
 import moment from 'moment';
@@ -54,6 +53,7 @@ interface PureOwnProps {
   submitCallback: (data: any) => Promise<any>;
   readOnlySubmitButton: boolean;
   arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysningerPerId;
+  antallBarn: number;
 }
 
 interface MappedOwnProps {
@@ -126,21 +126,14 @@ export const TilkjentYtelsePanelImpl = ({
   );
 };
 
-const finnTilbaketrekkAksjonspunkt = createSelector(
-  [(state, ownProps) => ownProps.aksjonspunkter],
-  alleAksjonspunkter => {
-    if (alleAksjonspunkter) {
-      return alleAksjonspunkter.find(
-        ap => ap.definisjon && ap.definisjon.kode === aksjonspunktCodes.VURDER_TILBAKETREKK,
-      );
-    }
-    return undefined;
-  },
-);
+const finnTilbaketrekkAksjonspunkt = (alleAksjonspunkter: Aksjonspunkt[]): Aksjonspunkt | undefined => (alleAksjonspunkter
+  ? alleAksjonspunkter.find(ap => ap.definisjon?.kode === aksjonspunktCodes.VURDER_TILBAKETREKK)
+  : undefined);
 
 const mapStateToProps = (state, ownProps) => ({
   beregningresultat: ownProps.beregningsresultat,
-  vurderTilbaketrekkAP: finnTilbaketrekkAksjonspunkt(state, ownProps),
+
+  vurderTilbaketrekkAP: finnTilbaketrekkAksjonspunkt(ownProps.aksjonspunkter),
 });
 
 export default connect(mapStateToProps)(TilkjentYtelsePanelImpl);
