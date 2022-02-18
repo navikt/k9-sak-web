@@ -18,4 +18,24 @@ export const testHandlers = {
       }),
     ),
   ),
+  utenlandsopphold: rest.get('/k9/sak/api/nav-ansatt', (req, res, ctx) =>
+    res(
+      ctx.json({
+        perioder: [
+          {
+            periode: '2021-12-20/2022-03-20',
+            landkode: {
+              kode: 'FIN',
+              navn: 'FIN',
+              kodeverk: 'LANDKODER',
+            },
+            årsak: {
+              kode: 'BARNET_INNLAGT_I_HELSEINSTITUSJON_FOR_NORSK_OFFENTLIG_REGNING',
+              navn: 'Barnet er innlagt i helseinstitusjon for norsk offentlig regning (mottar pleiepenger som i Norge, telles ikke i 8 uker)',
+            },
+          },
+        ],
+      }),
+    ),
+  ),
 };
