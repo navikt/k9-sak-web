@@ -138,7 +138,6 @@ export const SettPaVentModal = ({
           <form onSubmit={handleSubmit} name="ventModalForm" data-testid="ventModalForm">
             <Row>
               <Column xs="1">
-                En
                 <Image
                   className={styles.image}
                   alt={intl.formatMessage({ id: 'SettPaVentModal.PaVent' })}
@@ -147,7 +146,6 @@ export const SettPaVentModal = ({
                 <div className={styles.divider} />
               </Column>
               <Column xs="7">
-                To
                 <div className={styles.label}>
                   <Normaltekst className={styles.label}>
                     <FormattedMessage id={getPaVentText(originalVentearsak, hasManualPaVent, frist)} />
@@ -156,7 +154,6 @@ export const SettPaVentModal = ({
               </Column>
               {(hasManualPaVent || frist) && (
                 <Column xs="2">
-                  Tre
                   <div className={styles.datePicker}>
                     her er dato
                     <DatepickerField name="frist" validate={[required, hasValidDate, dateAfterOrEqualToToday]} data-testid="datofelt" />
@@ -165,7 +162,6 @@ export const SettPaVentModal = ({
               )}
             </Row>
             <Row className={styles.marginTop}>
-              Fire
               <Column xs="1" />
               <Column xs="11">
                 <SelectField
