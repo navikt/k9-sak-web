@@ -37,7 +37,6 @@ const HoyRisikoTittel = ({
   behandlingVersjon,
 }: OwnProps) => (
   <EkspanderbartpanelBase
-    data-testid="HoyRisikoTittel"
     className={styles.hoyRisikoPanelTittel}
     apen={isRiskPanelOpen}
     onClick={toggleRiskPanel}

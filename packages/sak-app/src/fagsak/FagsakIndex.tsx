@@ -1,5 +1,5 @@
 import React, { useState, useCallback } from 'react';
-import { Route, Navigate, useLocation, Routes } from 'react-router-dom';
+import { Route, Redirect, useLocation } from 'react-router-dom';
 
 import { RestApiState } from '@k9-sak-web/rest-api-hooks';
 import VisittkortSakIndex from '@fpsak-frontend/sak-visittkort';
@@ -20,8 +20,7 @@ import useBehandlingEndret from '../behandling/useBehandlingEndret';
 import useTrackRouteParam from '../app/useTrackRouteParam';
 import BehandlingSupportIndex from '../behandlingsupport/BehandlingSupportIndex';
 import FagsakProfileIndex from '../fagsakprofile/FagsakProfileIndex';
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { pathToMissingPage, erUrlUnderBehandling, erBehandlingValgt, behandlingerRoutePath } from '../app/paths';
+import { pathToMissingPage, erUrlUnderBehandling, erBehandlingValgt, behandlingerPath } from '../app/paths';
 import FagsakGrid from './components/FagsakGrid';
 import { K9sakApiKeys, restApiHooks } from '../data/k9sakApi';
 import useHentFagsakRettigheter from './useHentFagsakRettigheter';
@@ -38,15 +37,13 @@ const erTilbakekreving = (behandlingType: Kodeverk): boolean =>
 /**
  * FagsakIndex
  *
- * Container komponent. Er rot for fagsakdelen av hovedvinduet, og har ansvar å legge valgt saksnummer fra URL-en i staten.
+ * Container komponent. Er rot for for fagsakdelen av hovedvinduet, og har ansvar å legge valgt saksnummer fra URL-en i staten.
  */
 const FagsakIndex = () => {
   const [behandlingerTeller, setBehandlingTeller] = useState(0);
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [requestPendingMessage, setRequestPendingMessage] = useState<string>();
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+
   const [behandlingIdOgVersjon, setIdOgVersjon] = useState({ behandlingId: undefined, behandlingVersjon: undefined });
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const setBehandlingIdOgVersjon = useCallback(
     (behandlingId, behandlingVersjon) => setIdOgVersjon({ behandlingId, behandlingVersjon }),
     [],
@@ -151,7 +148,7 @@ const FagsakIndex = () => {
     if (fagsakState === RestApiState.NOT_STARTED || fagsakState === RestApiState.LOADING) {
       return <LoadingPanel />;
     }
-    return <Navigate to={pathToMissingPage()} />;
+    return <Redirect to={pathToMissingPage()} />;
   }
 
   const harIkkeHentetfagsakPersonData =
@@ -162,28 +159,29 @@ const FagsakIndex = () => {
   }
 
   if (fagsak.saksnummer !== selectedSaksnummer) {
-    return <Navigate to={pathToMissingPage()} />;
+    return <Redirect to={pathToMissingPage()} />;
   }
 
   const harVerge = behandling ? behandling.harVerge : false;
+
   return (
     <>
       <FagsakGrid
         behandlingContent={
-          <Routes>
-            <Route
-              path={behandlingerRoutePath}
-              element={(
-                <BehandlingerIndex
-                  fagsak={fagsak}
-                  alleBehandlinger={alleBehandlinger}
-                  arbeidsgiverOpplysninger={arbeidsgiverOpplysninger}
-                  setBehandlingIdOgVersjon={setBehandlingIdOgVersjon}
-                  setRequestPendingMessage={setRequestPendingMessage}
-                />
-              )}
-            />
-          </Routes>
+          <Route
+            strict
+            path={behandlingerPath}
+            render={props => (
+              <BehandlingerIndex
+                {...props}
+                fagsak={fagsak}
+                alleBehandlinger={alleBehandlinger}
+                arbeidsgiverOpplysninger={arbeidsgiverOpplysninger}
+                setBehandlingIdOgVersjon={setBehandlingIdOgVersjon}
+                setRequestPendingMessage={setRequestPendingMessage}
+              />
+            )}
+          />
         }
         profileAndNavigationContent={
           <FagsakProfileIndex
