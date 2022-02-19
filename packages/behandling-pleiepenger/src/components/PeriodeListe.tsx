@@ -18,8 +18,9 @@ type Periode = {
 type OwnProps = {
   perioder: Periode[];
   tittel: string;
+  customRenderFunc?: (items: { label: string; value: string }[]) => JSX.Element | null;
 };
-const PeriodeListe = ({ perioder, tittel }: OwnProps) => {
+const PeriodeListe = ({ perioder, tittel, customRenderFunc }: OwnProps) => {
   if (!perioder || !Array.isArray(perioder)) {
     return null;
   }
@@ -41,14 +42,18 @@ const PeriodeListe = ({ perioder, tittel }: OwnProps) => {
                 <CalendarIcon />
                 <span className={styles.periodList__element__title__period}>{period.prettifyPeriod()}</span>
               </div>
-              <div className={styles.periodList__element__content}>
-                {items.map(item => (
-                  <div className={styles.periodList__element__content__item}>
-                    <Label size="small">{item.label}</Label>
-                    <BodyShort size="small">{item.value}</BodyShort>
-                  </div>
-                ))}
-              </div>
+              {!customRenderFunc ? (
+                <div className={styles.periodList__element__content}>
+                  {items.map(item => (
+                    <div className={styles.periodList__element__content__item}>
+                      <Label size="small">{item.label}</Label>
+                      <BodyShort size="small">{item.value}</BodyShort>
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                customRenderFunc(items)
+              )}
             </li>
           );
         })}

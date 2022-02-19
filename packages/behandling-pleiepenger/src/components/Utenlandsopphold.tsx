@@ -6,14 +6,31 @@ import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import PeriodeListe from './PeriodeListe';
 import styles from './utenlandsopphold.less';
 
+const årsaker = {
+  BARNET_INNLAGT_I_HELSEINSTITUSJON_DEKKET_ETTER_AVTALE_MED_ET_ANNET_LAND_OM_TRYGD:
+    'Barn er innlagt i helseinstitusjon dekket etter avtale med annet land om trygd, telles ikke i 8 uker.',
+  BARNET_INNLAGT_I_HELSEINSTITUSJON_FOR_NORSK_OFFENTLIG_REGNING:
+    'Barn er innlagt i helseinstitusjon for norsk offentlig regning, telles ikke i 8 uker.',
+  INGEN: 'Ingen, telles i 8 uker.',
+  EOS: 'Ikke relevant innenfor EØS, telles ikke i 8 uker.',
+};
+
+const finnÅrsaker = (periode, erEØS) => {
+  if (erEØS) {
+    return årsaker.EOS;
+  }
+  return årsaker[periode.årsak];
+};
+
+// TODO: få navn på land i kodeverk, slik at man kan slå opp med landkode.
 const mapItems = periode => {
   const erEØS = periode.region.kode === 'NORDEN' || periode.region.kode === 'EOS';
 
   const land = { label: 'Land', value: periode.landkode.navn };
   const eos = { label: 'EØS', value: erEØS ? 'Ja' : 'Nei' };
-  const årsak = { label: 'Årsak', value: 'finnårsak func' };
+  const årsak = { label: 'Årsak', value: finnÅrsaker(periode, erEØS) };
 
-  return [land, eos];
+  return [land, eos, årsak];
 };
 export default function Utenlandsopphold({
   utenlandsopphold,
@@ -28,9 +45,9 @@ export default function Utenlandsopphold({
     return <>Ingen utenlandsopphold å vise.</>;
   }
 
-  const perioderFomTom = perioder.map(periode => {
+  const perioderMedItems = perioder.map(periode => {
     const [fom, tom] = periode.periode.split('/');
-    return { fom, tom, items: [] };
+    return { fom, tom, items: mapItems(periode) };
   });
 
   return (
@@ -53,7 +70,7 @@ export default function Utenlandsopphold({
         </BodyLong>
       </Alert>
       <VerticalSpacer fourtyPx />
-      <PeriodeListe perioder={[...perioderFomTom]} tittel="Perioder i utlandet" />
+      <PeriodeListe perioder={[...perioderMedItems]} tittel="Perioder i utlandet" />
     </div>
   );
 }
