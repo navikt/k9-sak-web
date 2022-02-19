@@ -1,4 +1,6 @@
 import { rest } from 'msw';
+
+import utenlandsopphold from './mockdata/utenlandsoppholdMock';
 // eslint-disable-next-line import/prefer-default-export
 export const testHandlers = {
   navAnsatt: rest.get('/k9/sak/api/nav-ansatt', (req, res, ctx) =>
@@ -18,24 +20,7 @@ export const testHandlers = {
       }),
     ),
   ),
-  utenlandsopphold: rest.get('/k9/sak/api/nav-ansatt', (req, res, ctx) =>
-    res(
-      ctx.json({
-        perioder: [
-          {
-            periode: '2021-12-20/2022-03-20',
-            landkode: {
-              kode: 'FIN',
-              navn: 'FIN',
-              kodeverk: 'LANDKODER',
-            },
-            årsak: {
-              kode: 'BARNET_INNLAGT_I_HELSEINSTITUSJON_FOR_NORSK_OFFENTLIG_REGNING',
-              navn: 'Barnet er innlagt i helseinstitusjon for norsk offentlig regning (mottar pleiepenger som i Norge, telles ikke i 8 uker)',
-            },
-          },
-        ],
-      }),
-    ),
+  utenlandsopphold: rest.get('/k9/sak/api/behandling/uttak/utenlandsopphold', (req, res, ctx) =>
+    res(ctx.json(utenlandsopphold)),
   ),
 };

@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { CalendarIcon } from '@navikt/k9-react-components';
-import { Period } from '@navikt/k9-period-utils';
+import { Period, sortPeriodsByFomDate } from '@navikt/k9-period-utils';
 import { Heading, Label, BodyShort } from '@navikt/ds-react';
 import styles from './periodeListe.less';
 
@@ -33,30 +33,32 @@ const PeriodeListe = ({ perioder, tittel, customRenderFunc }: OwnProps) => {
         </Heading>
       )}
       <ul className={styles.periodList}>
-        {perioder.map(periode => {
-          const { fom, tom, items = [] } = periode;
-          const period = new Period(fom, tom);
-          return (
-            <li className={styles.periodList__element} key={fom}>
-              <div className={styles.periodList__element__title}>
-                <CalendarIcon />
-                <span className={styles.periodList__element__title__period}>{period.prettifyPeriod()}</span>
-              </div>
-              {!customRenderFunc ? (
-                <div className={styles.periodList__element__content}>
-                  {items.map(item => (
-                    <div className={styles.periodList__element__content__item}>
-                      <Label size="small">{item.label}</Label>
-                      <BodyShort size="small">{item.value}</BodyShort>
-                    </div>
-                  ))}
+        {perioder
+          .map(periode => ({ period: new Period(periode.fom, periode.tom), items: periode.items }))
+          .sort((periode1, periode2) => sortPeriodsByFomDate(periode1.period, periode2.period))
+          .map(periode => {
+            const { period, items = [] } = periode;
+            return (
+              <li className={styles.periodList__element} key={period.fom}>
+                <div className={styles.periodList__element__title}>
+                  <CalendarIcon />
+                  <span className={styles.periodList__element__title__period}>{period.prettifyPeriod()}</span>
                 </div>
-              ) : (
-                customRenderFunc(items)
-              )}
-            </li>
-          );
-        })}
+                {!customRenderFunc ? (
+                  <div className={styles.periodList__element__content}>
+                    {items.map(item => (
+                      <div className={styles.periodList__element__content__item}>
+                        <Label size="small">{item.label}</Label>
+                        <BodyShort size="small">{item.value}</BodyShort>
+                      </div>
+                    ))}
+                  </div>
+                ) : (
+                  customRenderFunc(items)
+                )}
+              </li>
+            );
+          })}
       </ul>
     </>
   );
