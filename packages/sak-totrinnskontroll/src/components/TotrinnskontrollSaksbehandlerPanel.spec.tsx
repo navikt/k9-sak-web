@@ -86,7 +86,6 @@ const totrinnskontrollSkjermlenkeContext = [
 ];
 
 const location = {
-  key: '1',
   pathname: '',
   search: '',
   state: {},

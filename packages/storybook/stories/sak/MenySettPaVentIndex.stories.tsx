@@ -5,12 +5,12 @@ import { withKnobs } from '@storybook/addon-knobs';
 import MenySettPaVentIndex from '@fpsak-frontend/sak-meny-sett-pa-vent';
 import venteArsakType from '@fpsak-frontend/kodeverk/src/venteArsakType';
 
-import withReduxAndRouterProvider from '../../decorators/withReduxAndRouter';
+import withReduxProvider from '../../decorators/withRedux';
 
 export default {
   title: 'sak/sak-meny-sett-pa-vent',
   component: MenySettPaVentIndex,
-  decorators: [withKnobs, withReduxAndRouterProvider],
+  decorators: [withKnobs, withReduxProvider],
 };
 
 export const visMenyForÅSetteBehandlingPåVent = () => (
