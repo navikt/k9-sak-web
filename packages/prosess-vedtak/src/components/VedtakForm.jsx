@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import PropTypes from 'prop-types';
 import { Formik } from 'formik';
 import { injectIntl } from 'react-intl';
@@ -9,6 +9,7 @@ import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import { isAvslag, isDelvisInnvilget, isInnvilget } from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
 import { dokumentdatatype } from '@k9-sak-web/konstanter';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import { VedtakFormContext } from '@k9-sak-web/behandling-felles/src/components/ProsessStegContainer';
 
 import { safeJSONParse, decodeHtmlEntity } from '@fpsak-frontend/utils';
 import {
@@ -35,6 +36,7 @@ import redusertUtbetalingArsak from '../kodeverk/redusertUtbetalingArsak';
 import VedtakRevurderingSubmitPanel from './revurdering/VedtakRevurderingSubmitPanel';
 import VedtakSubmit from './VedtakSubmit';
 import vedtakVarselPropType from '../propTypes/vedtakVarselPropType';
+import LagreFormikStateLokalt from './LagreFormikStateLokalt';
 
 const isVedtakSubmission = true;
 
@@ -84,6 +86,7 @@ export const VedtakForm = ({
   behandlingArsaker,
 }) => {
   const [erSendtInnUtenArsaker, setErSendtInnUtenArsaker] = useState(false);
+  const vedtakContext = useContext(VedtakFormContext);
   const onToggleOverstyring = (e, setFieldValue) => {
     const kommendeVerdi = e.target.checked;
     setFieldValue(fieldnames.SKAL_BRUKE_OVERSTYRENDE_FRITEKST_BREV, kommendeVerdi);
@@ -165,37 +168,42 @@ export const VedtakForm = ({
   return (
     <>
       <Formik
-        initialValues={Object.assign(
-          {},
-          {
-            [fieldnames.SKAL_BRUKE_OVERSTYRENDE_FRITEKST_BREV]:
-              kanKunVelge(tilgjengeligeVedtaksbrev, vedtaksbrevtype.FRITEKST) ||
-              harMellomlagretFritekstbrev(dokumentdata, vedtakVarsel) ||
-              (kanHaFritekstbrev(tilgjengeligeVedtaksbrev) &&
-                !kanHaAutomatiskVedtaksbrev(tilgjengeligeVedtaksbrev) &&
-                !harMellomLagretMedIngenBrev(dokumentdata, vedtakVarsel)),
-            [fieldnames.SKAL_HINDRE_UTSENDING_AV_BREV]:
-              kanKunVelge(tilgjengeligeVedtaksbrev, vedtaksbrevtype.INGEN) ||
-              (harMellomLagretMedIngenBrev(dokumentdata, vedtakVarsel) &&
-                !harMellomlagretFritekstbrev(dokumentdata, vedtakVarsel)),
-            [fieldnames.OVERSKRIFT]: decodeHtmlEntity(dokumentdata?.[dokumentdatatype.FRITEKSTBREV]?.overskrift) || '',
-            [fieldnames.BRØDTEKST]: decodeHtmlEntity(dokumentdata?.[dokumentdatatype.FRITEKSTBREV]?.brødtekst) || '',
-            [fieldnames.OVERSTYRT_MOTTAKER]: JSON.stringify(dokumentdata?.[dokumentdatatype.OVERSTYRT_MOTTAKER]),
-            [fieldnames.BEGRUNNELSE]: dokumentdata?.[dokumentdatatype.BEREGNING_FRITEKST],
-          },
-          ...[
-            ...mellomlagredeInformasjonsbehov,
-            ...Object.values(redusertUtbetalingArsak).map(key => ({
-              [key]: harMellomlagretRedusertUtbetalingArsak(key, dokumentdata, vedtakVarsel),
-            })),
-          ],
-        )}
+        initialValues={
+          vedtakContext?.vedtakFormState ||
+          Object.assign(
+            {},
+            {
+              [fieldnames.SKAL_BRUKE_OVERSTYRENDE_FRITEKST_BREV]:
+                kanKunVelge(tilgjengeligeVedtaksbrev, vedtaksbrevtype.FRITEKST) ||
+                harMellomlagretFritekstbrev(dokumentdata, vedtakVarsel) ||
+                (kanHaFritekstbrev(tilgjengeligeVedtaksbrev) &&
+                  !kanHaAutomatiskVedtaksbrev(tilgjengeligeVedtaksbrev) &&
+                  !harMellomLagretMedIngenBrev(dokumentdata, vedtakVarsel)),
+              [fieldnames.SKAL_HINDRE_UTSENDING_AV_BREV]:
+                kanKunVelge(tilgjengeligeVedtaksbrev, vedtaksbrevtype.INGEN) ||
+                (harMellomLagretMedIngenBrev(dokumentdata, vedtakVarsel) &&
+                  !harMellomlagretFritekstbrev(dokumentdata, vedtakVarsel)),
+              [fieldnames.OVERSKRIFT]:
+                decodeHtmlEntity(dokumentdata?.[dokumentdatatype.FRITEKSTBREV]?.overskrift) || '',
+              [fieldnames.BRØDTEKST]: decodeHtmlEntity(dokumentdata?.[dokumentdatatype.FRITEKSTBREV]?.brødtekst) || '',
+              [fieldnames.OVERSTYRT_MOTTAKER]: JSON.stringify(dokumentdata?.[dokumentdatatype.OVERSTYRT_MOTTAKER]),
+              [fieldnames.BEGRUNNELSE]: dokumentdata?.[dokumentdatatype.BEREGNING_FRITEKST],
+            },
+            ...[
+              ...mellomlagredeInformasjonsbehov,
+              ...Object.values(redusertUtbetalingArsak).map(key => ({
+                [key]: harMellomlagretRedusertUtbetalingArsak(key, dokumentdata, vedtakVarsel),
+              })),
+            ],
+          )
+        }
         onSubmit={values => {
           submitCallback(createPayload(values));
         }}
       >
         {formikProps => (
           <form>
+            <LagreFormikStateLokalt />
             <VedtakAksjonspunktPanel
               behandlingStatusKode={behandlingStatus?.kode}
               aksjonspunktKoder={aksjonspunkter.map(ap => ap.definisjon.kode)}
