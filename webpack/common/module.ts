@@ -6,6 +6,22 @@ import { MODULES_DIR, PACKAGES_DIR, CSS_DIR, IMAGE_DIR } from '../paths';
 
 import { IS_DEV } from '../constants';
 
+const eslintRules = {
+  test: /\.(t|j)sx?$/,
+  enforce: 'pre',
+  use: {
+    loader: 'eslint-loader',
+    options: {
+      failOnWarning: false,
+      failOnError: !IS_DEV,
+      configFile: path.resolve(__dirname, IS_DEV ? '../../eslint/eslintrc.dev.js' : '../../eslint/eslintrc.prod.js'),
+      fix: IS_DEV,
+      // cache: true,
+    },
+  },
+  include: [PACKAGES_DIR],
+};
+
 const babelRules = {
   test: /\.(t|j)sx?$/,
   use: [
@@ -126,5 +142,5 @@ const svgExternalRules = {
 };
 
 export default {
-  rules: [babelRules, lessLocalRules, lessExternalRules, assetRules, svgLocalRules, svgExternalRules],
+  rules: [eslintRules, babelRules, lessLocalRules, lessExternalRules, assetRules, svgLocalRules, svgExternalRules],
 };
