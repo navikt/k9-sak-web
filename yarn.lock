@@ -2494,15 +2494,15 @@
   resolved "https://npm.pkg.github.com/download/@navikt/k9-bem-utils/1.0.1/1c8b370a7f8e822ffffeff6fa566af9a025692ae3fd258c7a4e4c0d67cd52ea1#451f330cbf3636c6406468c157468ea07dfb3b10"
   integrity sha512-DRV0rm6NDyAIosWGeMk0RlfUciUNIdD4AxpnGYOpqJCTIoCJHxLtzwRa1Zv15LEX5BHDWbiDYF5ZxDFhfE4yBg==
 
+"@navikt/k9-date-utils@0.0.6", "@navikt/k9-date-utils@^0.0.6":
+  version "0.0.6"
+  resolved "https://npm.pkg.github.com/download/@navikt/k9-date-utils/0.0.6/73b5b9ef333f21f0cbdfec2e20d70b7b8f7cb1bf04b6ddc46188418cedc31f1d#af9bc93a6ff9cf212f7ebdc6c4fc0b6d6c7e14d3"
+  integrity sha512-Z2sz3wcYyFQm3oCo7aoWhS+fQd69vWzWqPumvkR3FJmmmRxnKnIos2mpeCN5WA1fJgRv1YihYQNSlWbplZ/UxQ==
+
 "@navikt/k9-date-utils@^0.0.5":
   version "0.0.5"
   resolved "https://npm.pkg.github.com/download/@navikt/k9-date-utils/0.0.5/62215107bf7c1a3b45d5d5a569773bcf94696b98620199aaeb79d11601c047cf#38418e62899fe77647cc4a3ac60ada6ddf0ce3b1"
   integrity sha512-JkJGDvvIiYnPb5hejxoOOd14xY9NqXP6kuGodQ7zRxo7qmUBHXX8cmZgNIP0uMofMSnN1LIobCI4lmChbKpPnw==
-
-"@navikt/k9-date-utils@^0.0.6":
-  version "0.0.6"
-  resolved "https://npm.pkg.github.com/download/@navikt/k9-date-utils/0.0.6/73b5b9ef333f21f0cbdfec2e20d70b7b8f7cb1bf04b6ddc46188418cedc31f1d#af9bc93a6ff9cf212f7ebdc6c4fc0b6d6c7e14d3"
-  integrity sha512-Z2sz3wcYyFQm3oCo7aoWhS+fQd69vWzWqPumvkR3FJmmmRxnKnIos2mpeCN5WA1fJgRv1YihYQNSlWbplZ/UxQ==
 
 "@navikt/k9-period-utils@^0.0.8":
   version "0.0.8"
@@ -2866,6 +2866,13 @@
   version "9.1.0"
   resolved "https://registry.yarnpkg.com/@sinonjs/fake-timers/-/fake-timers-9.1.0.tgz#8c92c56f195e0bed4c893ba59c8e3d55831ca0df"
   integrity sha512-M8vapsv9qQupMdzrVzkn5rb9jG7aUTEPAZdMtME2PuBaefksFZVE2C1g4LBRTkF/k3nRDNbDc5tp5NFC1PEYxA==
+  dependencies:
+    "@sinonjs/commons" "^1.7.0"
+
+"@sinonjs/fake-timers@^7.1.2":
+  version "7.1.2"
+  resolved "https://registry.yarnpkg.com/@sinonjs/fake-timers/-/fake-timers-7.1.2.tgz#2524eae70c4910edccf99b2f4e6efc5894aff7b5"
+  integrity sha512-iQADsW4LBMISqZ6Ci1dupJL9pprqwcVFTcOsEmQOEhW+KLCVn/Y4Jrvg2k19fIHCp+iFprriYPTdRcQR8NbUPg==
   dependencies:
     "@sinonjs/commons" "^1.7.0"
 
@@ -15234,7 +15241,7 @@ react-inspector@^5.1.0:
     is-dom "^1.0.0"
     prop-types "^15.0.0"
 
-react-intl@^5.24.3:
+react-intl@^5.20.12, react-intl@^5.24.3:
   version "5.24.6"
   resolved "https://registry.yarnpkg.com/react-intl/-/react-intl-5.24.6.tgz#d3dcd07ff967f804504cfdfd5dfa4ee1f64b4f80"
   integrity sha512-6gUhQwNAeAoRpN6F3N+bR66aot/mI6yduRwQS5ajfmXHX/YFvOfINkgMFTTrcbf3+qjBhACNU3ek4wFt6cn2ww==
@@ -16445,6 +16452,18 @@ signal-exit@^3.0.0, signal-exit@^3.0.2, signal-exit@^3.0.3, signal-exit@^3.0.7:
   version "3.0.7"
   resolved "https://registry.yarnpkg.com/signal-exit/-/signal-exit-3.0.7.tgz#a9a1767f8af84155114eaabd73f99273c8f59ad9"
   integrity sha512-wnD2ZE+l+SPC/uoS0vXeE9L1+0wuaMqKlfz9AMUo38JsyLSBWSFcHR1Rri62LZc12vLr1gb3jl7iwQhgwpAbGQ==
+
+sinon@^11.1.2:
+  version "11.1.2"
+  resolved "https://registry.yarnpkg.com/sinon/-/sinon-11.1.2.tgz#9e78850c747241d5c59d1614d8f9cbe8840e8674"
+  integrity sha512-59237HChms4kg7/sXhiRcUzdSkKuydDeTiamT/jesUVHshBgL8XAmhgFo0GfK6RruMDM/iRSij1EybmMog9cJw==
+  dependencies:
+    "@sinonjs/commons" "^1.8.3"
+    "@sinonjs/fake-timers" "^7.1.2"
+    "@sinonjs/samsam" "^6.0.2"
+    diff "^5.0.0"
+    nise "^5.1.0"
+    supports-color "^7.2.0"
 
 sinon@^12.0.1:
   version "12.0.1"

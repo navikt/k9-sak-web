@@ -31,7 +31,7 @@ module.exports = {
       return data;
     });
 
-    config.devtool = configType === 'DEVELOPMENT' ? 'eval-cheap-source-map' : 'source-map';
+    config.devtool = configType === 'DEVELOPMENT' ? 'inline-source-map' : 'source-map';
 
     // Make whatever fine-grained changes you need
     config.module.rules = config.module.rules.concat(
@@ -161,15 +161,20 @@ module.exports = {
       }),
     );
 
-    config.plugins.push(new ESLintPlugin({
-      context: PACKAGES_DIR,
-      extensions: ['.js', '.jsx', '.ts', '.tsx'],
-      failOnWarning: false,
-      failOnError: !(configType === 'DEVELOPMENT'),
-      fix: (configType === 'DEVELOPMENT'),
-      overrideConfigFile: path.resolve(__dirname, (configType === 'DEVELOPMENT') ? '../eslint/eslintrc.dev.js' : '../eslint/eslintrc.prod.js'),
-      cache: true,
-    }));
+    config.plugins.push(
+      new ESLintPlugin({
+        context: PACKAGES_DIR,
+        extensions: ['.js', '.jsx', '.ts', '.tsx'],
+        failOnWarning: false,
+        failOnError: !(configType === 'DEVELOPMENT'),
+        fix: configType === 'DEVELOPMENT',
+        overrideConfigFile: path.resolve(
+          __dirname,
+          configType === 'DEVELOPMENT' ? '../eslint/eslintrc.dev.js' : '../eslint/eslintrc.prod.js',
+        ),
+        cache: true,
+      }),
+    );
 
     config.resolve.extensions.push('.ts', '.tsx', '.less');
 
