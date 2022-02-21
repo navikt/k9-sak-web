@@ -56,7 +56,12 @@ const automatiskVedtaksbrevParams = ({
   tilgjengeligeVedtaksbrev,
   informasjonsbehovValues,
 }) => ({
-  dokumentdata: { fritekst: fritekst || ' ', redusertUtbetalingÅrsaker, ...informasjonsbehovValues },
+  dokumentdata: {
+    fritekst: fritekst || ' ',
+    redusertUtbetalingÅrsaker,
+    ...Object.assign({}, ...informasjonsbehovValues),
+  },
+
   // Bruker UTLED som fallback til lenken ikke vises for avsluttede behandlinger
   dokumentMal: tilgjengeligeVedtaksbrev?.vedtaksbrevmaler?.[vedtaksbrevtype.AUTOMATISK] ?? dokumentMalType.UTLED,
   ...(overstyrtMottaker ? { overstyrtMottaker: safeJSONParse(overstyrtMottaker) } : {}),
@@ -177,7 +182,7 @@ export const BrevPanel = props => {
       ? fritekstbrev
       : automatiskbrev;
   return (
-    <div data-testid='brevpanel'>
+    <div data-testid="brevpanel">
       {harAlternativeMottakere && (
         <Row>
           <Column xs="12">
