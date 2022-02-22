@@ -1,10 +1,17 @@
 import React from 'react';
 
-import { Kodeverk, UtenlandsoppholdPerioder } from '@k9-sak-web/types';
 import { Alert, BodyLong, Heading } from '@navikt/ds-react';
+import Ekspanderbartpanel from 'nav-frontend-ekspanderbartpanel';
+
+import { UtenlandsoppholdPerioder } from '@k9-sak-web/types';
+import { PeriodList } from '@navikt/k9-react-components';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
-import PeriodeListe from './PeriodeListe';
+
+import countries from 'i18n-iso-countries';
+import norwegianLocale from 'i18n-iso-countries/langs/no.json';
 import styles from './utenlandsopphold.less';
+
+countries.registerLocale(norwegianLocale);
 
 const årsaker = {
   BARNET_INNLAGT_I_HELSEINSTITUSJON_DEKKET_ETTER_AVTALE_MED_ET_ANNET_LAND_OM_TRYGD:
@@ -22,23 +29,16 @@ const finnÅrsaker = (periode, erEØS) => {
   return årsaker[periode.årsak];
 };
 
-// TODO: få navn på land i kodeverk, slik at man kan slå opp med landkode.
 const mapItems = periode => {
   const erEØS = periode.region.kode === 'NORDEN' || periode.region.kode === 'EOS';
 
-  const land = { label: 'Land', value: periode.landkode.navn };
+  const land = { label: 'Land', value: countries.getName(periode.landkode.kode, 'no') };
   const eos = { label: 'EØS', value: erEØS ? 'Ja' : 'Nei' };
   const årsak = { label: 'Årsak', value: finnÅrsaker(periode, erEØS) };
 
   return [land, eos, årsak];
 };
-export default function Utenlandsopphold({
-  utenlandsopphold,
-  kodeverk,
-}: {
-  utenlandsopphold: UtenlandsoppholdPerioder;
-  kodeverk: Kodeverk;
-}) {
+export default function Utenlandsopphold({ utenlandsopphold }: { utenlandsopphold: UtenlandsoppholdPerioder }) {
   const perioder = utenlandsopphold?.perioder;
 
   if (!perioder || !perioder.length) {
@@ -55,22 +55,27 @@ export default function Utenlandsopphold({
       <Heading spacing size="small" level="4">
         Utenlandsopphold
       </Heading>
-      <Alert variant="info">
-        <BodyLong spacing size="small">
-          Det er et vilkår for rett til pleiepenger at medlemmet oppholder seg i Norge/EØS.
-        </BodyLong>
-        <BodyLong spacing size="small">
-          Det gis likevel ytelser etter dette kapitlet ved opphold i utlandet til en person som er medlem etter §§ 2-5,
-          2-6 eller 2-8 et medlem som har omsorgen for et barn som er innlagt i helseinstitusjon for norsk offentlig
-          regning, eller der barnet får oppholdet dekket etter avtale med et annet land om trygd.{' '}
-        </BodyLong>
-        <BodyLong spacing size="small">
-          Et medlem kan også ellers få ytelser etter dette kapitlet i inntil åtte uker i løpet av en
-          tolvmånedersperiode. Medlemmet skal informere Arbeids- og velferdsetaten om utenlandsoppholdet.
-        </BodyLong>
+      <Alert variant="info" className={styles.alertstripe}>
+        <Ekspanderbartpanel
+          tittel="I hvilke tilfeller har søker rett på pleiepenger ved utenlandsopphold?"
+          className={styles.utenlandsopphold__info}
+        >
+          <BodyLong spacing size="small">
+            Det er et vilkår for rett til pleiepenger at medlemmet oppholder seg i Norge/EØS.
+          </BodyLong>
+          <BodyLong spacing size="small">
+            Det gis likevel ytelser etter dette kapitlet ved opphold i utlandet til en person som er medlem etter §§
+            2-5, 2-6 eller 2-8 et medlem som har omsorgen for et barn som er innlagt i helseinstitusjon for norsk
+            offentlig regning, eller der barnet får oppholdet dekket etter avtale med et annet land om trygd.{' '}
+          </BodyLong>
+          <BodyLong spacing size="small">
+            Et medlem kan også ellers få ytelser etter dette kapitlet i inntil åtte uker i løpet av en
+            tolvmånedersperiode. Medlemmet skal informere Arbeids- og velferdsetaten om utenlandsoppholdet.
+          </BodyLong>
+        </Ekspanderbartpanel>
       </Alert>
       <VerticalSpacer fourtyPx />
-      <PeriodeListe perioder={[...perioderMedItems]} tittel="Perioder i utlandet" />
+      <PeriodList perioder={[...perioderMedItems]} tittel="Perioder i utlandet" />
     </div>
   );
 }
