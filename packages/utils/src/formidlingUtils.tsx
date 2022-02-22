@@ -65,7 +65,8 @@ export function kanKunVelge(tilgjengeligeVedtaksbrev: TilgjengeligeVedtaksbrev, 
 
 export function harMellomlagretFritekstbrev(dokumentdata, vedtakVarsel): boolean {
   return (
-    (dokumentdata?.[dokumentdatatype.VEDTAKSBREV_TYPE] ?? vedtakVarsel?.vedtaksbrev.kode) === vedtaksbrevtype.FRITEKST
+    (dokumentdata?.[dokumentdatatype.VEDTAKSBREV_TYPE] ?? vedtakVarsel?.vedtaksbrev.kode) ===
+      vedtaksbrevtype.FRITEKST || dokumentdata?.[dokumentdatatype.FRITEKSTBREV]
   );
 }
 
