@@ -1,4 +1,4 @@
-import React, { useMemo, ReactNode } from 'react';
+import React, { useMemo, ReactNode, useState } from 'react';
 import { injectIntl, WrappedComponentProps } from 'react-intl';
 import { ProcessMenu } from '@navikt/k9-react-components';
 
@@ -11,6 +11,8 @@ interface OwnProps {
   velgProsessStegPanelCallback: (index: number) => void;
   children: ReactNode;
 }
+
+export const VedtakFormContext = React.createContext(null);
 
 const ProsessStegContainer = ({
   intl,
@@ -28,12 +30,18 @@ const ProsessStegContainer = ({
     [formaterteProsessStegPaneler],
   );
 
+  // Byttet ut redux-form med formik uten å tenke på at staten forsvinner når man bytter panel
+  // Dette er en fiks for det, men bør på sikt erstattes med hyppig mellomlagring i vedtak
+  const [vedtakFormState, setVedtakFormState] = useState(null);
+
   return (
     <div className={styles.container}>
       <div className={styles.meny}>
         <ProcessMenu steps={steg} onClick={velgProsessStegPanelCallback} />
       </div>
-      {children}
+      <VedtakFormContext.Provider value={{ vedtakFormState, setVedtakFormState }}>
+        {children}
+      </VedtakFormContext.Provider>
     </div>
   );
 };

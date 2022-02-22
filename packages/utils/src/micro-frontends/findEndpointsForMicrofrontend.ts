@@ -14,3 +14,5 @@ export function findEndpointsForMicrofrontend(
   });
   return endpoints;
 }
+
+export default findEndpointsForMicrofrontend;

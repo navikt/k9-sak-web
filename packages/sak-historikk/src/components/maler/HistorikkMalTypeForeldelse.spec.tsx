@@ -63,7 +63,6 @@ describe('HistorikkMalTypeForeldelse', () => {
       search: 'test',
       state: {},
       hash: 'test',
-      key: 'test',
     };
 
     const wrapper = shallow(

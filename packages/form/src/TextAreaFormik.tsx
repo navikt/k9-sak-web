@@ -7,7 +7,7 @@ import LabelType from './LabelType';
 import ReadOnlyField from './ReadOnlyField';
 import styles from './textAreaField.less';
 import { validateAll } from './formikUtils';
-import './TextAreaFormik.less';
+import formikStyles from './TextAreaFormik.less';
 
 interface TextAreaFieldProps {
   name: string;
@@ -34,6 +34,7 @@ const renderTextarea = ({ field: { value, name }, form, label, maxLength, badges
           ))}
         </div>
       )}
+      <div className={formikStyles.label}>
       <Textarea
         value={value}
         onChange={form.handleChange(name)}
@@ -41,6 +42,7 @@ const renderTextarea = ({ field: { value, name }, form, label, maxLength, badges
         error={touched && error ? intl.formatMessage(error) : null}
         maxLength={maxLength}
       />
+      </div>
     </div>
   );
 };
