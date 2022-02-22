@@ -244,18 +244,18 @@ const SoknadsperioderIndex = (props: SoknadsperioderIndexProps) => {
         </div>
         <Tidslinje rader={filtrerteRader} tidslinjeSkala={tidslinjeSkala} startDato={startDato} />
         <div className={styles.legendContainer}>
-          <p>
+          <Normaltekst>
             <CheckIcon />
             Innvilget periode
-          </p>
-          <p>
+          </Normaltekst>
+          <Normaltekst>
             <RejectedIcon />
             Avslått periode
-          </p>
-          <p>
+          </Normaltekst>
+          <Normaltekst>
             <SaksbehandlerIcon />
             Til behandling
-          </p>
+          </Normaltekst>
         </div>
       </div>
     </RawIntlProvider>
