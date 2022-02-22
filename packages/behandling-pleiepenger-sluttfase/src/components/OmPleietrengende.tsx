@@ -11,6 +11,10 @@ interface OwnProps{
 const OmPleietrengende:React.FunctionComponent<OwnProps> = ({omPleietrengende}) => {
   const intl = useIntl();
 
+  if(!omPleietrengende){
+    return <p>Ikke hentet inn data.</p>
+  }
+
   return <>
     <h3>
       {intl.formatMessage({ id: 'OmPleietrengende.Titel' })}
