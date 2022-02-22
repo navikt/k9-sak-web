@@ -3,6 +3,8 @@ import React from 'react';
 import { faktaPanelCodes } from '@k9-sak-web/konstanter';
 import { FaktaPanelDef } from '@k9-sak-web/behandling-felles';
 
+import { Fagsak } from '@k9-sak-web/types';
+import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { PleiepengerSluttfaseBehandlingApiKeys } from '../../data/pleiepengerSluttfaseBehandlingApi';
 
@@ -27,6 +29,9 @@ class InntektsmeldingFaktaPanelDef extends FaktaPanelDef {
     dokumenter,
     saksbehandlere: hentSaksbehandlere?.saksbehandlere,
   });
+
+  getOverstyrVisningAvKomponent = ({ fagsak }: { fagsak: Fagsak }) =>
+    fagsak.sakstype.kode === fagsakYtelseType.PLEIEPENGER_SLUTTFASE;
 }
 
 export default InntektsmeldingFaktaPanelDef;
