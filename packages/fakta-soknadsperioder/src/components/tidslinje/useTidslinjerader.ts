@@ -94,7 +94,7 @@ export const useTidslinjerader = (
           radClassname,
           radLabel,
           id: uuidv4(),
-          periods: direction === 'left' ? tidslinjeperioder : tidslinjeperioder.reverse(),
+          periods: direction === 'left' ? tidslinjeperioder : [...tidslinjeperioder].reverse(),
           onClick,
           emptyRowClassname,
         };

@@ -6,7 +6,7 @@ import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 import messages from '../i18n/nb_NO.json';
 import CheckIcon from './components/tidslinje/CheckIcon';
 import RejectedIcon from './components/tidslinje/RejectedIcon';
-import SaksbehandlerIcon from './components/tidslinje/SakdsbehandlerIcon';
+import SaksbehandlerIcon from './components/tidslinje/SaksbehandlerIcon';
 import { Tidslinje } from './components/tidslinje/Tidslinje';
 import { useTidligsteDato } from './components/tidslinje/useTidslinjerader';
 import styles from './soknadsperioderIndex.less';
@@ -36,7 +36,7 @@ const SoknadsperioderIndex = (props: SoknadsperioderIndexProps) => {
   const [expandEndringerFraSøker, setExpandEndringerFraSøker] = useState(false);
   const [expandTrukketKrav, setExpandTrukketKrav] = useState(false);
   const sortertePerioderPåFomDato = () =>
-    behandlingPerioderårsakMedVilkår.perioderMedÅrsak.perioderMedÅrsak.sort((a, b) =>
+    [...behandlingPerioderårsakMedVilkår.perioderMedÅrsak.perioderMedÅrsak].sort((a, b) =>
       dateStringSorter(a.periode.fom, b.periode.fom),
     );
 
