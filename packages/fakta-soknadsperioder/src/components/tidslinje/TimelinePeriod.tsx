@@ -1,8 +1,8 @@
-import React, { CSSProperties, ReactNode, RefObject, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import classNames from 'classnames';
+import React, { CSSProperties, RefObject, useEffect, useLayoutEffect, useRef, useState } from 'react';
+import { PositionedPeriod } from '../../types/types.internal';
 import styles from './TimelinePeriod.less';
-import { Tooltip } from './Tooltip';
-import { PositionedPeriod } from './types.internal';
+import Tooltip from './Tooltip';
 
 interface NonClickablePeriodProps {
   period: PositionedPeriod;
@@ -21,7 +21,6 @@ interface TimelinePeriodProps {
   period: PositionedPeriod;
   active?: boolean;
   onSelectPeriod?: (period: PositionedPeriod) => void;
-  onHoverPeriod?: ReactNode;
 }
 
 const ariaLabel = (period: PositionedPeriod): string => {
@@ -44,14 +43,8 @@ const ClickablePeriod = React.memo(({ buttonRef, period, className, onSelectPeri
     }
   };
 
-  const enableHoverLabel = () => {
-    period.hoverLabel && setShowHoverLabel(true);
-  };
-
-  const disableHoverLabel = () => {
-    period.hoverLabel && setShowHoverLabel(false);
-  };
-
+  const enableHoverLabel = () => period.hoverLabel && setShowHoverLabel(true);
+  const disableHoverLabel = () => period.hoverLabel && setShowHoverLabel(false);
   return (
     <button
       ref={buttonRef}
@@ -61,6 +54,7 @@ const ClickablePeriod = React.memo(({ buttonRef, period, className, onSelectPeri
       onMouseLeave={disableHoverLabel}
       aria-label={ariaLabel(period)}
       style={style(period)}
+      type="button"
     >
       {period.hoverLabel && showHoverLabel && <Tooltip>{period.hoverLabel}</Tooltip>}
       {period.infoPin && <div className={styles.infoPin} />}
@@ -74,7 +68,7 @@ const NonClickablePeriod = ({ divRef, period, className }: NonClickablePeriodPro
   </div>
 );
 
-export const TimelinePeriod = React.memo(({ period, onSelectPeriod, active }: TimelinePeriodProps) => {
+const TimelinePeriod = React.memo(({ period, onSelectPeriod, active }: TimelinePeriodProps) => {
   const ref = useRef<HTMLButtonElement | HTMLDivElement>(null);
   const [isMini, setIsMini] = useState(false);
 
@@ -114,3 +108,5 @@ export const TimelinePeriod = React.memo(({ period, onSelectPeriod, active }: Ti
     <NonClickablePeriod divRef={ref as RefObject<HTMLDivElement>} period={period} className={className} />
   );
 });
+
+export default TimelinePeriod;

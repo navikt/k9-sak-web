@@ -3,7 +3,7 @@ import dayjs, { Dayjs } from 'dayjs';
 import { Pin } from '../../types/types.external';
 import { position } from './calc';
 import styles from './Pins.less';
-import { Tooltip } from './Tooltip';
+import Tooltip from './Tooltip';
 
 const PinView = ({ render, classname }: Partial<Pin>) => {
   const [showRender, setShowRender] = useState(false);
@@ -25,7 +25,7 @@ interface PinsProps {
   direction: 'left' | 'right';
 }
 
-export const Pins = ({ pins, start, slutt, direction }: PinsProps) => (
+const Pins = ({ pins, start, slutt, direction }: PinsProps) => (
   <div className={styles.pins}>
     {pins.map(({ date, render, classname }, i) => (
       <span key={i} className={styles.container} style={{ [direction]: `${position(dayjs(date), start, slutt)}%` }}>
@@ -34,3 +34,5 @@ export const Pins = ({ pins, start, slutt, direction }: PinsProps) => (
     ))}
   </div>
 );
+
+export default Pins;

@@ -1,5 +1,5 @@
 import { Dayjs } from 'dayjs';
-import { Period, PositionedPeriod } from './types.internal';
+import { Period, PositionedPeriod } from '../../types/types.internal';
 
 export const sisteDato = (a: Dayjs, b: Dayjs): number => b.diff(a);
 

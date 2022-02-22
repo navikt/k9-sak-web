@@ -1,6 +1,6 @@
-import { sisteDato, sisteEnklePeriode, sistePeriode } from './sort';
 import dayjs, { Dayjs } from 'dayjs';
-import { Period, PositionedPeriod } from './types.internal';
+import { Period, PositionedPeriod } from '../../types/types.internal';
+import { sisteDato, sisteEnklePeriode, sistePeriode } from './sort';
 
 const enDato = ({ plussDager = 0 } = {}): Dayjs => dayjs('2020-01-01').add(plussDager, 'day');
 
@@ -12,7 +12,7 @@ const enPosisjonertPeriode = ({ horizontalPosition = 50 } = {}): PositionedPerio
   start: dayjs(),
   endInclusive: dayjs(),
   width: 123,
-  horizontalPosition: horizontalPosition,
+  horizontalPosition,
   direction: 'left',
 });
 

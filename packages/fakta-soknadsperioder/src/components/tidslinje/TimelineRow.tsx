@@ -1,8 +1,8 @@
 import React from 'react';
 import classNames from 'classnames';
 import styles from './Tidslinjerad.less';
-import { TimelinePeriod } from './TimelinePeriod';
-import { PositionedPeriod } from './types.internal';
+import TimelinePeriod from './TimelinePeriod';
+import { PositionedPeriod } from '../../types/types.internal';
 
 interface TimelineRowProps {
   periods: PositionedPeriod[];
@@ -10,7 +10,7 @@ interface TimelineRowProps {
   active?: boolean;
 }
 
-export const EmptyTimelineRow = () => <hr className={styles.emptyRow} />;
+export const EmptyTimelineRow = ({ className }) => <hr className={`${styles.emptyRow} ${className || ''}`} />;
 
 export const TimelineRow = ({ periods, onSelectPeriod, active = false }: TimelineRowProps) => (
   <div className={classNames('tidslinjerad', styles.perioder, active && styles.aktivRad)}>

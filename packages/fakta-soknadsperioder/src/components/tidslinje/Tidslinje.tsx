@@ -1,12 +1,12 @@
 import classNames from 'classnames';
 import dayjs, { Dayjs } from 'dayjs';
+import React, { ReactNode, useCallback } from 'react';
 import { Normaltekst } from 'nav-frontend-typografi';
-import React, { ReactNode, useCallback, useState } from 'react';
 import Rad from '../../types/Rad';
 import { Etikett, Periode, Pin } from '../../types/types.external';
 import { AxisLabel, InternalSimpleTimeline, PositionedPeriod, Tidslinjeskala } from '../../types/types.internal';
 import { AxisLabels } from './AxisLabels';
-import { Pins } from './Pins';
+import Pins from './Pins';
 import styles from './Tidslinje.less';
 import { EmptyTimelineRow, TimelineRow } from './TimelineRow';
 import { useTidligsteDato, useTidslinjerader } from './useTidslinjerader';
@@ -46,6 +46,7 @@ export interface TidslinjeProps {
    * Markeringer for enkeltdager på tidslinjen.
    */
   pins?: Pin[];
+  tidslinjeSkala?: Tidslinjeskala;
 }
 
 export interface TimelineProps {
@@ -80,14 +81,20 @@ const Timeline = React.memo(
         <AxisLabels start={start} slutt={endInclusive} direction={direction} etikettRender={axisLabelRenderer} />
         <div className={classNames('tidslinjerader', styles.rader)}>
           <div className={classNames(styles.emptyRows)}>
-            {rows.map((_, i) => (
-              <EmptyTimelineRow key={i} />
+            {rows.map(tidslinje => (
+              <EmptyTimelineRow className={`${tidslinje.emptyRowClassname || ''}`} key={tidslinje.id} />
             ))}
           </div>
           {pins && <Pins pins={pins} start={start} slutt={endInclusive} direction={direction} />}
           {rows.map((tidslinje, i) => (
             <div key={tidslinje.id} className={`${styles.radContainer} ${tidslinje.radClassname || ''}`}>
-              <p className={styles.radLabel}>{tidslinje.radLabel}</p>
+              {tidslinje.onClick ? (
+                <button onClick={tidslinje.onClick} type="button" className={styles.radLabel}>
+                  <Normaltekst tag="span">{tidslinje.radLabel}</Normaltekst>
+                </button>
+              ) : (
+                <Normaltekst className={styles.radLabel}>{tidslinje.radLabel}</Normaltekst>
+              )}
               <TimelineRow {...tidslinje} onSelectPeriod={onSelectPeriodeWrapper} active={i === activeRow} />
             </div>
           ))}
@@ -106,12 +113,11 @@ export const Tidslinje = React.memo(
     rader,
     aktivRad,
     startDato,
-    sluttDato,
     etikettRender,
     onSelectPeriode,
+    tidslinjeSkala,
     retning = 'stigende',
   }: TidslinjeProps) => {
-    const [tidslinjeSkala, setTidslinjeSkala] = useState<Tidslinjeskala>(6);
     if (!rader) throw new Error('Tidslinjen mangler rader.');
 
     const direction = retning === 'stigende' ? 'left' : 'right';
@@ -121,21 +127,13 @@ export const Tidslinje = React.memo(
     const getPins = () => {
       const monthPins = [{ date: start.toDate(), classname: '' }];
       if (tidslinjeSkala === 6) {
-        // const endDate = start.add(6, 'month');
-        // for (let index = 1; index <= endDate.diff(start, 'week'); index++) {
-        //   monthPins.push({
-        //     date: start.add(index, 'week').toDate(),
-        //     classname: index % 4 !== 0 ? styles.monthPin : '',
-        //   });
-        // }
-        // const endDate = start.add(6, 'month');
-        for (let x = 0; x <= 6; x++) {
-          const thisMonth = start.add(x, 'month');
-          const interval = thisMonth.daysInMonth() / 4;
+        for (let x = 0; x <= 6; x += 1) {
+          const currentMonth = start.add(x, 'month');
+          const interval = currentMonth.daysInMonth() / 4;
           if (x !== 6) {
-            for (let y = 1; y < 4; y++) {
+            for (let y = 1; y < 4; y += 1) {
               monthPins.push({
-                date: thisMonth.add(Math.ceil(interval * y), 'day').toDate(),
+                date: currentMonth.add(Math.ceil(interval * y), 'day').toDate(),
                 classname: styles.weekPin,
               });
             }
@@ -146,30 +144,15 @@ export const Tidslinje = React.memo(
           });
         }
       } else {
-        for (let index = 1; index <= tidslinjeSkala; index++) {
+        for (let index = 1; index <= tidslinjeSkala; index += 1) {
           monthPins.push({ date: start.add(index, 'month').startOf('month').toDate(), classname: '' });
         }
       }
       return monthPins;
     };
 
-    const getSkalaRadio = (label: string, value: Tidslinjeskala) => (
-      <label className={`${styles.skalaRadio} ${tidslinjeSkala === value ? styles['skalaRadio--selected'] : ''}`}>
-        <Normaltekst>{label}</Normaltekst>
-        <input onChange={() => setTidslinjeSkala(value)} type="radio" name="skala" value={value} />
-      </label>
-    );
-
     return (
       <div>
-        <div className={styles.skalavelgerContainer}>
-          <fieldset>
-            <legend>Velg skala for visning</legend>
-            {getSkalaRadio('6 mnd', 6)}
-            {getSkalaRadio('1 år', 12)}
-            {getSkalaRadio('3 år', 36)}
-          </fieldset>
-        </div>
         <Timeline
           rows={rows}
           start={start}

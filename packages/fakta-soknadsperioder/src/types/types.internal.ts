@@ -42,4 +42,6 @@ export interface InternalSimpleTimeline {
   periods: PositionedPeriod[];
   radLabel: string;
   radClassname: string;
+  onClick?: () => void;
+  emptyRowClassname?: string;
 }

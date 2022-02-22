@@ -25,8 +25,6 @@ export const horizontalPositionAndWidth = (
   };
 };
 
-export const isOutOfBounds = (position: Percentage, width: number): boolean => position >= 100 || position + width < 0;
-
 export const breddeMellomDatoer = (start: Dayjs, slutt: Dayjs, totaltAntallDatoer: number): Percentage => {
   const dagerMellomDatoer = slutt.diff(start, 'minute') / 60 / 24;
   return (dagerMellomDatoer / totaltAntallDatoer) * 100;

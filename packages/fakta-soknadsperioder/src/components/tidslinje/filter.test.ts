@@ -1,6 +1,6 @@
-import { innenEtDøgn, erSynlig } from './filter';
 import dayjs, { Dayjs } from 'dayjs';
-import { Positioned } from './types.internal';
+import { Positioned } from '../../types/types.internal';
+import { erSynlig, innenEtDøgn } from './filter';
 
 const enDato = ({ plussDager = 0, plussTimer = 0 } = {}): Dayjs =>
   dayjs('2020-01-01').add(plussDager, 'day').add(plussTimer, 'hour');

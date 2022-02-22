@@ -43,13 +43,16 @@ const spatialPeriod = (
 const adjustedEdges = (period: PositionedPeriod, i: number, allPeriods: PositionedPeriod[]): PositionedPeriod => {
   const left = i > 0 && innenEtDøgn(allPeriods[i - 1].endInclusive, period.start);
   const right = i < allPeriods.length - 1 && innenEtDøgn(period.endInclusive, allPeriods[i + 1].start);
-  return left && right
-    ? { ...period, cropped: 'both' }
-    : left
-    ? { ...period, cropped: 'left' }
-    : right
-    ? { ...period, cropped: 'right' }
-    : period;
+  if (left && right) {
+    return { ...period, cropped: 'both' };
+  }
+  if (left) {
+    return { ...period, cropped: 'left' };
+  }
+  if (right) {
+    return { ...period, cropped: 'right' };
+  }
+  return period;
 };
 
 const trimmedPeriods = (period: PositionedPeriod) => {
@@ -79,18 +82,21 @@ export const useTidslinjerader = (
 ): InternalSimpleTimeline[] =>
   useMemo(
     () =>
-      rader.map(({ perioder, radLabel, radClassname }) => {
+      rader.map(({ perioder, radLabel, radClassname, onClick, emptyRowClassname }) => {
         const tidslinjeperioder = perioder
           .map((periode: Periode) => spatialPeriod(periode, startDato, sluttDato, direction))
           .sort(sistePeriode)
           .map(adjustedEdges)
           .map(trimmedPeriods)
           .filter(invisiblePeriods);
+
         return {
           radClassname,
           radLabel,
           id: uuidv4(),
           periods: direction === 'left' ? tidslinjeperioder : tidslinjeperioder.reverse(),
+          onClick,
+          emptyRowClassname,
         };
       }),
     [rader, startDato, sluttDato],
@@ -104,14 +110,4 @@ export const useTidligsteDato = ({ startDato, rader }: TidslinjeProps) =>
   useMemo(
     () => (startDato ? dayjs(startDato) : dayjs(tidligsteFomDato(rader.map(rad => rad.perioder)))),
     [startDato, rader],
-  );
-
-const senesteDato = (senest: Date, periode: Periode) => (periode.tom > senest ? periode.tom : senest);
-
-const senesteTomDato = (rader: Periode[][]) => rader.flat().reduce(senesteDato, new Date(0));
-
-export const useSenesteDato = ({ sluttDato, rader }: TidslinjeProps) =>
-  useMemo(
-    () => (sluttDato ? dayjs(sluttDato) : dayjs(senesteTomDato(rader.map(rad => rad.perioder))).add(1, 'day')),
-    [sluttDato, rader],
   );

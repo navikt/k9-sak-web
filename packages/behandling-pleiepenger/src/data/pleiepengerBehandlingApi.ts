@@ -52,7 +52,7 @@ export enum PleiepengerBehandlingApiKeys {
   OVERLAPPENDE_YTELSER = 'OVERLAPPENDE_YTELSER',
   HENT_SAKSBEHANDLERE = 'HENT_SAKSBEHANDLERE',
 
-  BEHANDLING_PERIODER = 'BEHANDLING_PERIODER',
+  BEHANDLING_PERIODER_ÅRSAK_MED_VILKÅR = 'BEHANDLING_PERIODER_ÅRSAK_MED_VILKÅR',
 }
 
 const endpoints = new RestApiConfigBuilder()
@@ -90,7 +90,7 @@ const endpoints = new RestApiConfigBuilder()
   .withRel('overstyr-input-beregning', PleiepengerBehandlingApiKeys.OVERSTYR_INPUT_BEREGNING)
   .withRel('overlappende-ytelser', PleiepengerBehandlingApiKeys.OVERLAPPENDE_YTELSER)
   .withRel('saksbehandler-info', PleiepengerBehandlingApiKeys.HENT_SAKSBEHANDLERE)
-  .withRel('behandling-perioder-årsak', PleiepengerBehandlingApiKeys.BEHANDLING_PERIODER)
+  .withRel('behandling-perioder-årsak-med-vilkår', PleiepengerBehandlingApiKeys.BEHANDLING_PERIODER_ÅRSAK_MED_VILKÅR)
 
   // operasjoner
   .withRel('dokumentdata-lagre', PleiepengerBehandlingApiKeys.DOKUMENTDATA_LAGRE)

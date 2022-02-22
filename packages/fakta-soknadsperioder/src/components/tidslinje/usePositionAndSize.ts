@@ -1,6 +1,6 @@
-import { EnkelPeriode } from '../../types/types.external';
 import dayjs, { Dayjs } from 'dayjs';
-import { breddeMellomDatoer, horizontalPositionAndWidth } from './calc';
+import { EnkelPeriode } from '../../types/types.external';
+import { horizontalPositionAndWidth } from './calc';
 
 interface UsePositionAndSizeOptions {
   periode: EnkelPeriode;
