@@ -13,20 +13,11 @@ import styles from './utenlandsopphold.less';
 
 countries.registerLocale(norwegianLocale);
 
-const årsaker = {
-  BARNET_INNLAGT_I_HELSEINSTITUSJON_DEKKET_ETTER_AVTALE_MED_ET_ANNET_LAND_OM_TRYGD:
-    'Barn er innlagt i helseinstitusjon dekket etter avtale med annet land om trygd, telles ikke i 8 uker.',
-  BARNET_INNLAGT_I_HELSEINSTITUSJON_FOR_NORSK_OFFENTLIG_REGNING:
-    'Barn er innlagt i helseinstitusjon for norsk offentlig regning, telles ikke i 8 uker.',
-  INGEN: 'Ingen, telles i 8 uker.',
-  EOS: 'Ikke relevant innenfor EØS, telles ikke i 8 uker.',
-};
-
 const finnÅrsaker = (periode, erEØS) => {
   if (erEØS) {
-    return årsaker.EOS;
+    return 'Ikke relevant innenfor EØS, telles ikke i 8 uker.';
   }
-  return årsaker[periode.årsak];
+  return periode?.årsak?.navn || 'Ukjent årsak';
 };
 
 const mapItems = periode => {
@@ -34,7 +25,7 @@ const mapItems = periode => {
 
   const land = { label: 'Land', value: countries.getName(periode.landkode.kode, 'no') };
   const eos = { label: 'EØS', value: erEØS ? 'Ja' : 'Nei' };
-  const årsak = { label: 'Årsak', value: finnÅrsaker(periode, erEØS) };
+  const årsak = { label: 'Årsak', value: finnÅrsaker(periode, false) };
 
   return [land, eos, årsak];
 };
