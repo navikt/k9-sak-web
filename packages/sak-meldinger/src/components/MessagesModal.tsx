@@ -21,38 +21,41 @@ interface OwnProps {
  * Presentasjonskomponent. Denne modalen vises etter at et brev har blitt bestilt.
  * Ved å trykke på knapp blir fritekst-feltet tømt.
  */
-const MessagesModal = ({ showModal, closeEvent, intl }: OwnProps & WrappedComponentProps) => (
-  <Modal
-    className={styles.modal}
-    isOpen={showModal}
-    closeButton={false}
-    contentLabel={intl.formatMessage({ id: 'MessagesModal.description' })}
-    onRequestClose={closeEvent}
-    shouldCloseOnOverlayClick={false}
-  >
-    <Container className={styles.container}>
-      <Row>
-        <Column xs="1">
-          <Image
-            className={styles.image}
-            alt={intl.formatMessage({ id: 'MessagesModal.description' })}
-            src={innvilgetImageUrl}
-          />
-          <div className={styles.divider} />
-        </Column>
-        <Column xs="9">
-          <Element className={styles.text}>
-            <FormattedMessage id="MessagesModal.text" />
-          </Element>
-        </Column>
-        <Column xs="2">
-          <Hovedknapp className={styles.button} mini onClick={closeEvent} autoFocus>
-            {intl.formatMessage({ id: 'MessagesModal.OK' })}
-          </Hovedknapp>
-        </Column>
-      </Row>
-    </Container>
-  </Modal>
-);
+const MessagesModal = ({ showModal, closeEvent, intl }: OwnProps & WrappedComponentProps) => {
+  Modal.setAppElement(document.body);
+  return (
+    <Modal
+      className={styles.modal}
+      isOpen={showModal}
+      closeButton={false}
+      contentLabel={intl.formatMessage({ id: 'MessagesModal.description' })}
+      onRequestClose={closeEvent}
+      shouldCloseOnOverlayClick={false}
+    >
+      <Container className={styles.container} data-testid="MessagesModal">
+        <Row>
+          <Column xs="1">
+            <Image
+              className={styles.image}
+              alt={intl.formatMessage({ id: 'MessagesModal.description' })}
+              src={innvilgetImageUrl}
+            />
+            <div className={styles.divider} />
+          </Column>
+          <Column xs="9">
+            <Element className={styles.text}>
+              <FormattedMessage id="MessagesModal.text" />
+            </Element>
+          </Column>
+          <Column xs="2">
+            <Hovedknapp className={styles.button} mini onClick={closeEvent} autoFocus>
+              {intl.formatMessage({ id: 'MessagesModal.OK' })}
+            </Hovedknapp>
+          </Column>
+        </Row>
+      </Container>
+    </Modal>
+  );
+};
 
 export default injectIntl(MessagesModal);
