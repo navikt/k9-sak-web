@@ -200,6 +200,11 @@ describe('<PleiepengerFakta>', () => {
         harAksjonspunkt: false,
         tekst: 'Inntekt og ytelser',
       },
+      {
+        erAktiv: false,
+        harAksjonspunkt: false,
+        tekst: 'Utenlandsopphold',
+      },
     ]);
   });
 
