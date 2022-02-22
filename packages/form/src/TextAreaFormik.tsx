@@ -42,7 +42,7 @@ const renderTextarea = ({ field: { value, name }, form, label, maxLength, badges
         error={touched && error ? intl.formatMessage(error) : null}
         maxLength={maxLength}
       />
-      </div>∆
+      </div>
     </div>
   );
 };
