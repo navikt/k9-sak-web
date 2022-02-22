@@ -27,12 +27,12 @@ const Fremdriftslinje = ({max, antallGrønnBar, antallGulBar, totalBreddeProsent
   for(let i = antallPerIntervall; i <= max; i += antallPerIntervall){
     antallTitler.push(<div key={i} style={{width: `${breddePerDagProsent * antallPerIntervall}%`, textAlign: 'right'}}> {i} </div>);
   }
-
+  
   return <>
     <div className={styles.antallTitler}>{antallTitler}</div>
     <div className={styles.bakgrunnsBar} style={{width: `${totalBreddeProsent}%`}}/>
 
-    {antallGrønnBar && antallGrønnBar > 0 && <div
+    {antallGrønnBar > 0 && <div
       className={styles.gronnBar}
       style={{
         width: `${antallGrønnBar >= max ? totalBreddeProsent : antallGrønnBar * breddePerDagProsent}%`,
@@ -41,7 +41,7 @@ const Fremdriftslinje = ({max, antallGrønnBar, antallGulBar, totalBreddeProsent
     />
     }
 
-    {antallGulBar && antallGulBar > 0 && (antallGrønnBar < 60 || !antallGrønnBar) && <div
+    {antallGulBar > 0 && (antallGrønnBar < 60 || !antallGrønnBar) && <div
       className={styles.gulBar}
       style={{
         width: `${
