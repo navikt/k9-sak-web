@@ -22,7 +22,7 @@ const AndreSakerPåSøkerStripe: React.FC<Props> = ({ søkerIdent, saksnummer })
   } = restApiHooks.useRestApiRunner<Fagsak[]>(K9sakApiKeys.MATCH_FAGSAK);
   useEffect(() => {
     searchFagsaker({
-      ytelseType: FagsakYtelseType.PLEIEPENGER,
+      ytelseType: FagsakYtelseType.PLEIEPENGER_SLUTTFASE,
       bruker: søkerIdent,
     });
   }, []);
