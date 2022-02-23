@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useMemo } from 'react';
 import { IntlShape } from 'react-intl';
 
-import { Behandling, Aksjonspunkt, Fagsak } from '@k9-sak-web/types';
+import { Behandling, Aksjonspunkt, Fagsak, FeatureToggles } from '@k9-sak-web/types';
 
 import {
   utledFaktaPaneler,
@@ -22,22 +22,23 @@ const useFaktaPaneler = (
   aksjonspunkter: Aksjonspunkt[],
   valgtFaktaPanelKode: string,
   intl: IntlShape,
+  featureToggles: FeatureToggles,
 ): [FaktaPanelUtledet[], FaktaPanelUtledet, FaktaPanelMenyRad[]] => {
   const faktaPaneler = useMemo(
-    () => utledFaktaPaneler(faktaPanelDefinisjoner, panelData, behandling, rettigheter, aksjonspunkter),
+    () => utledFaktaPaneler(faktaPanelDefinisjoner, panelData, behandling, rettigheter, aksjonspunkter, featureToggles),
     [behandling.versjon],
   );
 
-  const valgtPanel = useMemo(() => finnValgtPanel(faktaPaneler, valgtFaktaPanelKode), [
-    behandling.versjon,
-    valgtFaktaPanelKode,
-  ]);
+  const valgtPanel = useMemo(
+    () => finnValgtPanel(faktaPaneler, valgtFaktaPanelKode),
+    [behandling.versjon, valgtFaktaPanelKode],
+  );
 
   const urlCode = valgtPanel ? valgtPanel.getUrlKode() : undefined;
-  const sidemenyPaneler = useMemo(() => formaterPanelerForSidemeny(intl, faktaPaneler, urlCode), [
-    behandling.versjon,
-    urlCode,
-  ]);
+  const sidemenyPaneler = useMemo(
+    () => formaterPanelerForSidemeny(intl, faktaPaneler, urlCode),
+    [behandling.versjon, urlCode],
+  );
 
   return [faktaPaneler, valgtPanel, sidemenyPaneler];
 };
