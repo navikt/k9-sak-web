@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { Redirect, useLocation, useRouteMatch } from 'react-router-dom';
+import { Navigate, useLocation, useMatch } from 'react-router-dom';
 import { Location } from 'history';
 
 import { LoadingPanel, requireProps } from '@fpsak-frontend/shared-components';
@@ -95,8 +95,8 @@ export const FagsakProfileIndex = ({
     setShowAll(!behandlingId);
   }, [behandlingId]);
 
-  const match = useRouteMatch();
-  const shouldRedirectToBehandlinger = match.isExact;
+  const match = useMatch('/fagsak/:saksnummer/');
+  const shouldRedirectToBehandlinger = !!match;
 
   const location = useLocation();
   const getBehandlingLocation = useCallback(
@@ -121,7 +121,7 @@ export const FagsakProfileIndex = ({
     <div className={styles.panelPadding}>
       {!harHentetBehandlinger && <LoadingPanel />}
       {harHentetBehandlinger && shouldRedirectToBehandlinger && (
-        <Redirect to={findPathToBehandling(fagsak.saksnummer, location, alleBehandlinger)} />
+        <Navigate to={findPathToBehandling(fagsak.saksnummer, location, alleBehandlinger)} />
       )}
       {harHentetBehandlinger && !shouldRedirectToBehandlinger && (
         <FagsakProfilSakIndex
