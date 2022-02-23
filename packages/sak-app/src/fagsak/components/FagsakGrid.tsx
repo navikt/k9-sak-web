@@ -20,16 +20,16 @@ const FagsakGrid = ({
   supportContent,
   visittkortContent,
 }: OwnProps) => (
-    <>
-      {visittkortContent()}
-      <div className={styles.gridContainer}>
-        <div className={styles.leftColumn}>|{behandlingContent}|</div>
-        <div className={styles.rightColumn}>
-          <div>{profileAndNavigationContent}</div>
-          <div>{supportContent()}</div>
-        </div>
+  <>
+    {visittkortContent()}
+    <div className={styles.gridContainer}>
+      <div className={styles.leftColumn}>{behandlingContent}</div>
+      <div className={styles.rightColumn}>
+        <div>{profileAndNavigationContent}</div>
+        <div>{supportContent()}</div>
       </div>
-    </>
-  );
+    </div>
+  </>
+);
 
 export default FagsakGrid;
