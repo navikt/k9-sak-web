@@ -17,6 +17,10 @@ const featureToggles = [
     key: 'UNNTAKSBEHANDLING',
     value: process.env.UNNTAKSBEHANDLING,
   },
+  {
+    key: 'FAKTA_SOKNADSPERIODER',
+    value: process.env.FAKTA_SOKNADSPERIODER,
+  },
 ];
 
 module.exports = function (app) {
