@@ -1,6 +1,6 @@
 import React, { Suspense, useEffect, useCallback, useMemo } from 'react';
-import { useHistory } from 'react-router-dom';
-import { History } from 'history';
+import { useNavigate, useLocation, NavigateFunction } from 'react-router-dom';
+import { Location } from 'history';
 
 import { useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
 import BehandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
@@ -49,28 +49,27 @@ const erTilbakekreving = (behandlingTypeKode: string): boolean =>
 const formatName = (bpName = ''): string => replaceNorwegianCharacters(bpName.toLowerCase());
 
 const getOppdaterProsessStegOgFaktaPanelIUrl =
-  (history: History) =>
-  (prosessStegId: string, faktaPanelId: string): void => {
-    let newLocation;
-    const { location } = history;
-    if (prosessStegId === 'default') {
-      newLocation = getLocationWithDefaultProsessStegAndFakta(location);
-    } else if (prosessStegId) {
-      newLocation = getProsessStegLocation(location)(formatName(prosessStegId));
-    } else {
-      newLocation = getProsessStegLocation(location)(null);
-    }
+  (location: Location, navigate: NavigateFunction) =>
+    (prosessStegId: string, faktaPanelId: string): void => {
+      let newLocation;
+      if (prosessStegId === 'default') {
+        newLocation = getLocationWithDefaultProsessStegAndFakta(location);
+      } else if (prosessStegId) {
+        newLocation = getProsessStegLocation(location)(formatName(prosessStegId));
+      } else {
+        newLocation = getProsessStegLocation(location)(null);
+      }
 
-    if (faktaPanelId === 'default') {
-      newLocation = getFaktaLocation(newLocation)('default');
-    } else if (faktaPanelId) {
-      newLocation = getFaktaLocation(newLocation)(formatName(faktaPanelId));
-    } else {
-      newLocation = getFaktaLocation(newLocation)(null);
-    }
+      if (faktaPanelId === 'default') {
+        newLocation = getFaktaLocation(newLocation)('default');
+      } else if (faktaPanelId) {
+        newLocation = getFaktaLocation(newLocation)(formatName(faktaPanelId));
+      } else {
+        newLocation = getFaktaLocation(newLocation)(null);
+      }
 
-    history.push(newLocation);
-  };
+      navigate(newLocation);
+    };
 
 interface OwnProps {
   setBehandlingIdOgVersjon: (behandlingId: number, behandlingVersjon: number) => void;
@@ -139,13 +138,11 @@ const BehandlingIndex = ({
     [fagsak.status, behandlingId, behandling?.status, behandling?.type],
   );
 
-  const history = useHistory();
-  const opneSokeside = useCallback(() => {
-    window.location.assign(getPathToFplos() || '/');
-  }, []);
-  const oppdaterProsessStegOgFaktaPanelIUrl = useCallback(getOppdaterProsessStegOgFaktaPanelIUrl(history), [history]);
+  const location = useLocation();
+  const navigate = useNavigate();
+  const opneSokeside = useCallback(() => { navigate(getPathToFplos() || '/'); }, []);
+  const oppdaterProsessStegOgFaktaPanelIUrl = useCallback(getOppdaterProsessStegOgFaktaPanelIUrl(location, navigate), [location, navigate]);
 
-  const { location } = history;
   const query = parseQueryString(location.search);
 
   const behandlingTypeKode = behandling?.type ? behandling.type.kode : undefined;
