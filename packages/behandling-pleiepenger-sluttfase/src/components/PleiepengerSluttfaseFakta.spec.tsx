@@ -22,7 +22,7 @@ import { PleiepengerSluttfaseBehandlingApiKeys, requestPleiepengerSluttfaseApi }
 describe('<PleiepengerSluttfaseFakta>', () => {
   const fagsak = {
     saksnummer: '123456',
-    sakstype: { kode: fagsakYtelseType.PLEIEPENGER, kodeverk: 'test' },
+    sakstype: { kode: fagsakYtelseType.PLEIEPENGER_SLUTTFASE, kodeverk: 'test' },
     status: { kode: fagsakStatus.UNDER_BEHANDLING, kodeverk: 'test' },
   } as Fagsak;
   const fagsakPerson = {
@@ -181,9 +181,9 @@ describe('<PleiepengerSluttfaseFakta>', () => {
         tekst: 'LivetsSluttfasePanel.LivetsSluttfase',
       },
       {
-        erAktiv: false,
-        harAksjonspunkt: false,
-        tekst: 'Inntektsmelding',
+        "erAktiv": false,
+        "harAksjonspunkt": false,
+        "tekst": "Inntektsmelding"
       },
       {
         erAktiv: false,
