@@ -1,10 +1,5 @@
 import dayjs from 'dayjs';
-import { breddeMellomDatoer, erDelAv, erLike, horizontalPositionAndWidth, overlapper, position } from './calc';
-
-const enPeriode = ({ start = dayjs('2020-01-01'), endInclusive = dayjs('2020-01-01') } = {}) => ({
-  start,
-  endInclusive,
-});
+import { horizontalPositionAndWidth, position } from './calc';
 
 test('position', () => {
   expect(position(dayjs('2020-01-01'), dayjs('2020-01-01'), dayjs('2020-01-10'))).toEqual(0);
@@ -62,56 +57,4 @@ test('horizontalPositionAndWidth', () => {
   expect(
     horizontalPositionAndWidth(dayjs('2020-01-08'), dayjs('2020-01-10'), dayjs('2020-01-01'), dayjs('2020-01-11')),
   ).toEqual({ horizontalPosition: 70, width: 20 });
-});
-
-test('breddeMellomDatoer', () => {
-  expect(breddeMellomDatoer(dayjs('2020-01-01'), dayjs('2020-01-01'), 100)).toBe(0);
-  expect(breddeMellomDatoer(dayjs('2020-01-01'), dayjs('2020-01-02'), 100)).toBe(1);
-  expect(breddeMellomDatoer(dayjs('2020-01-01'), dayjs('2020-01-99'), 100)).toBe(97.95833333333333);
-});
-
-test('erLike', () => {
-  expect(erLike(enPeriode(), enPeriode())).toBeTruthy();
-  expect(erLike(enPeriode(), enPeriode({ endInclusive: dayjs('2020-01-02') }))).toBeFalsy();
-  expect(
-    erLike(
-      enPeriode({
-        start: dayjs('2021-03-04'),
-        endInclusive: dayjs('2021-03-15'),
-      }),
-      enPeriode({ start: dayjs('2021-03-04'), endInclusive: dayjs('2021-03-15') }),
-    ),
-  ).toBeTruthy();
-});
-
-test('erDelAv', () => {
-  expect(erDelAv(enPeriode(), enPeriode())).toBeFalsy();
-  expect(
-    erDelAv(
-      enPeriode({ endInclusive: dayjs('2020-01-04') }),
-      enPeriode({ start: dayjs('2020-01-02'), endInclusive: dayjs('2020-01-03') }),
-    ),
-  ).toBeTruthy();
-  expect(erDelAv(enPeriode(), enPeriode({ endInclusive: dayjs('2020-01-02') }))).toBeFalsy();
-});
-
-test('overlapper', () => {
-  expect(overlapper(enPeriode(), enPeriode())).toBeTruthy();
-  expect(overlapper(enPeriode(), enPeriode({ endInclusive: dayjs('2020-01-02') }))).toBeFalsy();
-  expect(
-    overlapper(
-      enPeriode({
-        start: dayjs('2021-03-04'),
-        endInclusive: dayjs('2021-03-15'),
-      }),
-      enPeriode({ start: dayjs('2021-03-04'), endInclusive: dayjs('2021-03-15') }),
-    ),
-  ).toBeTruthy();
-  expect(
-    overlapper(
-      enPeriode({ endInclusive: dayjs('2020-01-04') }),
-      enPeriode({ start: dayjs('2020-01-02'), endInclusive: dayjs('2020-01-03') }),
-    ),
-  ).toBeTruthy();
-  expect(overlapper(enPeriode(), enPeriode({ endInclusive: dayjs('2020-01-02') }))).toBeFalsy();
 });

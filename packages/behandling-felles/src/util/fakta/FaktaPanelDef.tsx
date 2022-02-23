@@ -47,7 +47,6 @@ abstract class FaktaPanelDef {
    * For å avgjøre om komponent skal vises sjekker en om det finnes aksjonspunkter for dette panelet. Det
    * er også mulig å legge til egen sjekk i @see getOverstyrVisningAvKomponent
    */
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   public skalVisePanel = (apCodes: string[], data: any, featureToggles?: any): boolean =>
     this.getAksjonspunktKoder().some(a => apCodes.includes(a)) ||
     this.getOverstyrVisningAvKomponent(data, featureToggles);

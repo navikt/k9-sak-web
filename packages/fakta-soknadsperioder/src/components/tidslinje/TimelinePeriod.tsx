@@ -34,7 +34,7 @@ const style = (period: PositionedPeriod): CSSProperties => ({
   width: `${period.width}%`,
 });
 
-const ClickablePeriod = React.memo(({ buttonRef, period, className, onSelectPeriod }: ClickablePeriodProps) => {
+const ClickablePeriod = ({ buttonRef, period, className, onSelectPeriod }: ClickablePeriodProps) => {
   const [showHoverLabel, setShowHoverLabel] = useState(false);
 
   const onClick = () => {
@@ -60,7 +60,7 @@ const ClickablePeriod = React.memo(({ buttonRef, period, className, onSelectPeri
       {period.infoPin && <div className={styles.infoPin} />}
     </button>
   );
-});
+};
 
 const NonClickablePeriod = ({ divRef, period, className }: NonClickablePeriodProps) => (
   <div ref={divRef} className={className} aria-label={ariaLabel(period)} style={style(period)}>
@@ -68,7 +68,7 @@ const NonClickablePeriod = ({ divRef, period, className }: NonClickablePeriodPro
   </div>
 );
 
-const TimelinePeriod = React.memo(({ period, onSelectPeriod, active }: TimelinePeriodProps) => {
+const TimelinePeriod = ({ period, onSelectPeriod, active }: TimelinePeriodProps) => {
   const ref = useRef<HTMLButtonElement | HTMLDivElement>(null);
   const [isMini, setIsMini] = useState(false);
 
@@ -107,6 +107,6 @@ const TimelinePeriod = React.memo(({ period, onSelectPeriod, active }: TimelineP
   ) : (
     <NonClickablePeriod divRef={ref as RefObject<HTMLDivElement>} period={period} className={className} />
   );
-});
+};
 
 export default TimelinePeriod;

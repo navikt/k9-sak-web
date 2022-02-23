@@ -41,11 +41,10 @@ export const usePositionAndSize = ({
       [direction]: 0,
       width: `${adjustedWidth}%`,
     };
-  } else {
-    return {
-      [direction]: `${adjustedHorizontalPosition}%`,
-      width: `${adjustedWidth}%`,
-      display: horizontalPosition > 100 ? 'none' : undefined,
-    };
   }
+  return {
+    [direction]: `${adjustedHorizontalPosition}%`,
+    width: `${adjustedWidth}%`,
+    display: horizontalPosition > 100 ? 'none' : undefined,
+  };
 };

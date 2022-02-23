@@ -121,11 +121,11 @@ const SoknadsperioderIndex = (props: SoknadsperioderIndexProps) => {
     ];
 
     const endringerFraSøkerPerioder = getPerioderMedÅrsak('ENDRING_FRA_BRUKER');
-    const søknaderTilhørendeEringerFraSøker = finnRelevantePerioderFraDokumenter(
+    const søknaderTilhørendeEndringerFraSøker = finnRelevantePerioderFraDokumenter(
       behandlingPerioderårsakMedVilkår.perioderMedÅrsak.dokumenterTilBehandling,
       endringerFraSøkerPerioder,
     );
-    const hasSøknaderTilhørendeEringerFraSøker = søknaderTilhørendeEringerFraSøker.length > 0;
+    const hasSøknaderTilhørendeEringerFraSøker = søknaderTilhørendeEndringerFraSøker.length > 0;
 
     const endringerFraSøker = [
       {
@@ -138,7 +138,7 @@ const SoknadsperioderIndex = (props: SoknadsperioderIndexProps) => {
           ? `${styles.ekspanderbarRad} ${expandEndringerFraSøker ? styles['ekspanderbarRad--active'] : ''}`
           : '',
       },
-      ...søknaderTilhørendeEringerFraSøker.filter(() => expandEndringerFraSøker),
+      ...søknaderTilhørendeEndringerFraSøker.filter(() => expandEndringerFraSøker),
     ];
 
     const endringerPgaAnnenPart = {

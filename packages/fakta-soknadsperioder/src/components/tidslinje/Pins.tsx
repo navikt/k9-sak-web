@@ -8,6 +8,7 @@ import Tooltip from './Tooltip';
 const PinView = ({ render, classname }: Partial<Pin>) => {
   const [showRender, setShowRender] = useState(false);
   return (
+    // eslint-disable-next-line jsx-a11y/mouse-events-have-key-events
     <div
       className={`${styles.pin} ${classname} pin`}
       onMouseOver={() => setShowRender(true)}
@@ -28,6 +29,7 @@ interface PinsProps {
 const Pins = ({ pins, start, slutt, direction }: PinsProps) => (
   <div className={styles.pins}>
     {pins.map(({ date, render, classname }, i) => (
+      // eslint-disable-next-line react/no-array-index-key
       <span key={i} className={styles.container} style={{ [direction]: `${position(dayjs(date), start, slutt)}%` }}>
         <PinView render={render} classname={classname} />
       </span>

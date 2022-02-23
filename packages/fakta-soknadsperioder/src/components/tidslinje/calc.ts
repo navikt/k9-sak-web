@@ -1,7 +1,6 @@
 import dayjs, { Dayjs } from 'dayjs';
-import isSameOrBefore from 'dayjs/plugin/isSameOrBefore';
 import isSameOrAfter from 'dayjs/plugin/isSameOrAfter';
-import { Percentage, Period } from '../../types/types.internal';
+import isSameOrBefore from 'dayjs/plugin/isSameOrBefore';
 
 dayjs.extend(isSameOrBefore);
 dayjs.extend(isSameOrAfter);
@@ -24,17 +23,3 @@ export const horizontalPositionAndWidth = (
     width,
   };
 };
-
-export const breddeMellomDatoer = (start: Dayjs, slutt: Dayjs, totaltAntallDatoer: number): Percentage => {
-  const dagerMellomDatoer = slutt.diff(start, 'minute') / 60 / 24;
-  return (dagerMellomDatoer / totaltAntallDatoer) * 100;
-};
-
-export const erLike = (p1: Period, p2?: Period) =>
-  p2 && p1.start.isSame(p2.start) && p1.endInclusive.isSame(p2.endInclusive);
-
-export const erDelAv = (p1: Period, p2?: Period) =>
-  p2 && p1.start.isBefore(p2.start) && p1.endInclusive.isAfter(p2.endInclusive);
-
-export const overlapper = (p1: Period, p2?: Period) =>
-  p2 && p1.start.isSameOrBefore(p2.start) && p1.endInclusive.isSameOrAfter(p2.endInclusive);

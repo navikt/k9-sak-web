@@ -1,10 +1,8 @@
 import dayjs, { Dayjs } from 'dayjs';
-import { Period, PositionedPeriod } from '../../types/types.internal';
-import { sisteDato, sisteEnklePeriode, sistePeriode } from './sort';
+import { PositionedPeriod } from '../../types/types.internal';
+import { sisteDato, sistePeriode } from './sort';
 
 const enDato = ({ plussDager = 0 } = {}): Dayjs => dayjs('2020-01-01').add(plussDager, 'day');
-
-const enPeriode = ({ start = enDato(), endInclusive = enDato() } = {}): Period => ({ start, endInclusive });
 
 const enPosisjonertPeriode = ({ horizontalPosition = 50 } = {}): PositionedPeriod => ({
   id: 'id',
@@ -47,23 +45,4 @@ test('sistePeriode', () => {
     enPosisjonertPeriode({ horizontalPosition: 80 }),
   ];
   expect(usortert.sort(sistePeriode)).toEqual(sortert);
-});
-
-test('sisteEnklePeriode', () => {
-  const usortert = [
-    enPeriode(),
-    enPeriode({ start: enDato({ plussDager: 1 }), endInclusive: enDato({ plussDager: 3 }) }),
-    enPeriode({ start: enDato({ plussDager: 10 }), endInclusive: enDato({ plussDager: 15 }) }),
-    enPeriode({ endInclusive: enDato({ plussDager: 1 }) }),
-    enPeriode({ start: enDato({ plussDager: 8 }), endInclusive: enDato({ plussDager: 20 }) }),
-  ];
-  const sortert = [
-    enPeriode({ start: enDato({ plussDager: 8 }), endInclusive: enDato({ plussDager: 20 }) }),
-    enPeriode({ start: enDato({ plussDager: 10 }), endInclusive: enDato({ plussDager: 15 }) }),
-    enPeriode({ start: enDato({ plussDager: 1 }), endInclusive: enDato({ plussDager: 3 }) }),
-    enPeriode({ endInclusive: enDato({ plussDager: 1 }) }),
-    enPeriode(),
-  ];
-
-  expect(usortert.sort(sisteEnklePeriode)).toEqual(sortert);
 });

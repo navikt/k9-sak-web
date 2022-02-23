@@ -60,110 +60,115 @@ export interface TimelineProps {
   pins?: Pin[];
 }
 
-const Timeline = React.memo(
-  ({ pins, rows, start, endInclusive, onSelectPeriod, activeRow, direction, axisLabelRenderer }: TimelineProps) => {
-    const onSelectPeriodeWrapper =
-      onSelectPeriod &&
-      useCallback(
-        (periode: PositionedPeriod) => {
-          onSelectPeriod?.({
-            id: periode.id,
-            fom: periode.start.toDate(),
-            tom: periode.endInclusive.toDate(),
-            disabled: periode.disabled,
-            status: periode.status,
-          });
-        },
-        [onSelectPeriod],
-      );
-    return (
-      <div className={classNames('tidslinje', styles.tidslinje)}>
-        <AxisLabels start={start} slutt={endInclusive} direction={direction} etikettRender={axisLabelRenderer} />
-        <div className={classNames('tidslinjerader', styles.rader)}>
-          <div className={classNames(styles.emptyRows)}>
-            {rows.map(tidslinje => (
-              <EmptyTimelineRow className={`${tidslinje.emptyRowClassname || ''}`} key={tidslinje.id} />
-            ))}
-          </div>
-          {pins && <Pins pins={pins} start={start} slutt={endInclusive} direction={direction} />}
-          {rows.map((tidslinje, i) => (
-            <div key={tidslinje.id} className={`${styles.radContainer} ${tidslinje.radClassname || ''}`}>
-              {tidslinje.onClick ? (
-                <button onClick={tidslinje.onClick} type="button" className={styles.radLabel}>
-                  <Normaltekst tag="span">{tidslinje.radLabel}</Normaltekst>
-                </button>
-              ) : (
-                <Normaltekst className={styles.radLabel}>{tidslinje.radLabel}</Normaltekst>
-              )}
-              <TimelineRow {...tidslinje} onSelectPeriod={onSelectPeriodeWrapper} active={i === activeRow} />
-            </div>
+const Timeline = ({
+  pins,
+  rows,
+  start,
+  endInclusive,
+  onSelectPeriod,
+  activeRow,
+  direction,
+  axisLabelRenderer,
+}: TimelineProps) => {
+  const onSelectPeriodeWrapper =
+    onSelectPeriod &&
+    useCallback(
+      (periode: PositionedPeriod) => {
+        onSelectPeriod?.({
+          id: periode.id,
+          fom: periode.start.toDate(),
+          tom: periode.endInclusive.toDate(),
+          disabled: periode.disabled,
+          status: periode.status,
+        });
+      },
+      [onSelectPeriod],
+    );
+  return (
+    <div className={classNames('tidslinje', styles.tidslinje)}>
+      <AxisLabels start={start} slutt={endInclusive} direction={direction} etikettRender={axisLabelRenderer} />
+      <div className={classNames('tidslinjerader', styles.rader)}>
+        <div className={classNames(styles.emptyRows)}>
+          {rows.map(tidslinje => (
+            <EmptyTimelineRow className={`${tidslinje.emptyRowClassname || ''}`} key={tidslinje.id} />
           ))}
         </div>
+        {pins && <Pins pins={pins} start={start} slutt={endInclusive} direction={direction} />}
+        {rows.map((tidslinje, i) => (
+          <div key={tidslinje.id} className={`${styles.radContainer} ${tidslinje.radClassname || ''}`}>
+            {tidslinje.onClick ? (
+              <button onClick={tidslinje.onClick} type="button" className={styles.radLabel}>
+                <Normaltekst tag="span">{tidslinje.radLabel}</Normaltekst>
+              </button>
+            ) : (
+              <Normaltekst className={styles.radLabel}>{tidslinje.radLabel}</Normaltekst>
+            )}
+            <TimelineRow {...tidslinje} onSelectPeriod={onSelectPeriodeWrapper} active={i === activeRow} />
+          </div>
+        ))}
       </div>
-    );
-  },
-);
+    </div>
+  );
+};
 
 /**
  * Viser perioder i en tidslinje.
  */
-export const Tidslinje = React.memo(
-  ({
-    pins,
-    rader,
-    aktivRad,
-    startDato,
-    etikettRender,
-    onSelectPeriode,
-    tidslinjeSkala,
-    retning = 'stigende',
-  }: TidslinjeProps) => {
-    if (!rader) throw new Error('Tidslinjen mangler rader.');
+export const Tidslinje = ({
+  pins,
+  rader,
+  aktivRad,
+  startDato,
+  etikettRender,
+  onSelectPeriode,
+  tidslinjeSkala,
+  retning = 'stigende',
+}: TidslinjeProps) => {
+  if (!rader) throw new Error('Tidslinjen mangler rader.');
 
-    const direction = retning === 'stigende' ? 'left' : 'right';
-    const start = useTidligsteDato({ startDato, rader }).startOf('month');
-    const endInclusive = dayjs(start).add(tidslinjeSkala, 'month').endOf('day');
-    const rows = useTidslinjerader(rader, start, endInclusive, direction);
-    const getPins = () => {
-      const monthPins = [{ date: start.toDate(), classname: '' }];
-      if (tidslinjeSkala === 6) {
-        for (let x = 0; x <= 6; x += 1) {
-          const currentMonth = start.add(x, 'month');
-          const interval = currentMonth.daysInMonth() / 4;
-          if (x !== 6) {
-            for (let y = 1; y < 4; y += 1) {
-              monthPins.push({
-                date: currentMonth.add(Math.ceil(interval * y), 'day').toDate(),
-                classname: styles.weekPin,
-              });
-            }
+  const direction = retning === 'stigende' ? 'left' : 'right';
+  const start = useTidligsteDato({ startDato, rader }).startOf('month');
+  const endInclusive = dayjs(start).add(tidslinjeSkala, 'month').endOf('day');
+  const rows = useTidslinjerader(rader, start, endInclusive, direction);
+  const getPins = () => {
+    const monthPins = [{ date: start.toDate(), classname: '' }];
+    if (tidslinjeSkala === 6) {
+      for (let x = 0; x <= 6; x += 1) {
+        const currentMonth = start.add(x, 'month');
+        const interval = currentMonth.daysInMonth() / 4;
+        if (x !== 6) {
+          for (let y = 1; y < 4; y += 1) {
+            monthPins.push({
+              date: currentMonth.add(Math.ceil(interval * y), 'day').toDate(),
+              classname: styles.weekPin,
+            });
           }
-          monthPins.push({
-            date: start.add(x, 'month').startOf('month').toDate(),
-            classname: '',
-          });
         }
-      } else {
-        for (let index = 1; index <= tidslinjeSkala; index += 1) {
-          monthPins.push({ date: start.add(index, 'month').startOf('month').toDate(), classname: '' });
-        }
+        monthPins.push({
+          date: start.add(x, 'month').startOf('month').toDate(),
+          classname: '',
+        });
       }
-      return monthPins;
-    };
+    } else {
+      for (let index = 1; index <= tidslinjeSkala; index += 1) {
+        monthPins.push({ date: start.add(index, 'month').startOf('month').toDate(), classname: '' });
+      }
+    }
+    return monthPins;
+  };
 
-    return (
-      <div>
-        <Timeline
-          rows={rows}
-          start={start}
-          activeRow={aktivRad}
-          direction={direction}
-          endInclusive={endInclusive}
-          onSelectPeriod={onSelectPeriode}
-          axisLabelRenderer={etikettRender}
-          pins={pins?.length > 0 ? pins : getPins()}
-        />
-      </div>
-    );
-  },
-);
+  return (
+    <div>
+      <Timeline
+        rows={rows}
+        start={start}
+        activeRow={aktivRad}
+        direction={direction}
+        endInclusive={endInclusive}
+        onSelectPeriod={onSelectPeriode}
+        axisLabelRenderer={etikettRender}
+        pins={pins?.length > 0 ? pins : getPins()}
+      />
+    </div>
+  );
+};
