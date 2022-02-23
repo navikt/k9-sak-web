@@ -16,7 +16,7 @@ export const utledFaktaPaneler = (
   behandling: Behandling,
   rettigheter: Rettigheter,
   aksjonspunkter: Aksjonspunkt[],
-  featureToggles: FeatureToggles,
+  featureToggles?: FeatureToggles,
 ): FaktaPanelUtledet[] => {
   const utvidetEkstraPanelData = { ...ekstraPanelData, rettigheter };
   const apCodes = aksjonspunkter.map(ap => ap.definisjon.kode);

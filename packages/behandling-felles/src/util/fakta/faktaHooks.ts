@@ -22,7 +22,7 @@ const useFaktaPaneler = (
   aksjonspunkter: Aksjonspunkt[],
   valgtFaktaPanelKode: string,
   intl: IntlShape,
-  featureToggles: FeatureToggles,
+  featureToggles?: FeatureToggles,
 ): [FaktaPanelUtledet[], FaktaPanelUtledet, FaktaPanelMenyRad[]] => {
   const faktaPaneler = useMemo(
     () => utledFaktaPaneler(faktaPanelDefinisjoner, panelData, behandling, rettigheter, aksjonspunkter, featureToggles),
