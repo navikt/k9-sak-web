@@ -1,6 +1,7 @@
 .colors(@background, @border, @hover) {
   background: @background;
   border: 1px solid @border;
+
   &:hover,
   &.active,
   &:focus {
@@ -44,6 +45,7 @@ button.periode {
 
 .periode {
   .colors(#e7e9e9, #59514b, #e7e9e9);
+
   height: 1.5rem;
   border-radius: 1.5rem;
   position: absolute;
@@ -74,6 +76,7 @@ button.periode {
 .mini {
   min-width: 0;
   padding: 0;
+
   &:before {
     display: none;
   }
@@ -122,8 +125,10 @@ button.suksess {
 }
 
 .sammenhengendeFraBegge {
-  composes: sammenhengendeFraHøyre;
-  composes: sammenhengendeFraVenstre;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
 }
 
 .usynlig {
