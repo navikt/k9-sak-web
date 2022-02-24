@@ -12,14 +12,14 @@ export const sorterOverlappendePerioder = (perioder: Periode<OverlappendePeriode
     if (isBefore(
         parse(periode1.fom, 'yyyy-MM-dd', new Date()),
         parse(periode2.fom, 'yyyy-MM-dd', new Date())
-    )) {
-        return -1;
-    } if (isBefore(
+    )) return -1;
+
+    if (isBefore(
         parse(periode2.fom, 'yyyy-MM-dd', new Date()),
         parse(periode1.fom, 'yyyy-MM-dd', new Date())
-    )) {
-        return 1;
-    } return 0;
+    )) return 1;
+
+    return 0;
 });
 
 /**
@@ -33,12 +33,12 @@ export const sorterOverlappendeRader = (rader: TidslinjeRad<OverlappendePeriode>
     if (isBefore(
         parse(perioder1[0].fom, 'yyyy-MM-dd', new Date()),
         parse(perioder2[0].fom, 'yyyy-MM-dd', new Date())
-    )) {
-        return -1;
-    } if (isBefore(
+    )) return -1;
+
+    if (isBefore(
         parse(perioder2[0].fom, 'yyyy-MM-dd', new Date()),
         parse(perioder1[0].fom, 'yyyy-MM-dd', new Date())
-    )) {
-        return 1;
-    } return 0;
+    )) return 1;
+
+    return 0;
 })
