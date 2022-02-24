@@ -5,7 +5,7 @@ type Utenlandsopphold = {
   region: Kodeverk;
   periode: string;
   landkode: KodeverkMedNavn;
-  årsak: Kodeverk;
+  årsak?: KodeverkMedNavn;
 };
 
 export type UtenlandsoppholdPerioder = {
