@@ -15,7 +15,7 @@ countries.registerLocale(norwegianLocale);
 
 const finnÅrsaker = (periode, erEØS) => {
   if (erEØS) {
-    return 'Ikke relevant innenfor EØS, telles ikke i 8 uker.';
+    return 'Periode telles ikke.';
   }
   return periode?.årsak?.navn || 'Ukjent årsak';
 };
@@ -25,7 +25,7 @@ const mapItems = periode => {
 
   const land = { label: 'Land', value: countries.getName(periode.landkode.kode, 'no') };
   const eos = { label: 'EØS', value: erEØS ? 'Ja' : 'Nei' };
-  const årsak = { label: 'Årsak', value: finnÅrsaker(periode, erEØS) };
+  const årsak = { label: 'Merknad til utenlandsopphold', value: finnÅrsaker(periode, erEØS) };
 
   return [land, eos, årsak];
 };
@@ -46,21 +46,32 @@ export default function Utenlandsopphold({ utenlandsopphold }: { utenlandsopphol
       </Heading>
       <Alert variant="info" className={styles.alertstripe}>
         <Ekspanderbartpanel
-          tittel="I hvilke tilfeller har søker rett på pleiepenger ved utenlandsopphold?"
+          tittel="Hvor lenge har søker rett på pleiepenger i utlandet?"
           className={styles.utenlandsopphold__info}
         >
-          <BodyLong spacing size="small">
-            Det er et vilkår for rett til pleiepenger at medlemmet oppholder seg i Norge/EØS.
-          </BodyLong>
-          <BodyLong spacing size="small">
-            Det gis likevel ytelser etter dette kapitlet ved opphold i utlandet til en person som er medlem etter §§
-            2-5, 2-6 eller 2-8 et medlem som har omsorgen for et barn som er innlagt i helseinstitusjon for norsk
-            offentlig regning, eller der barnet får oppholdet dekket etter avtale med et annet land om trygd.{' '}
-          </BodyLong>
-          <BodyLong spacing size="small">
-            Et medlem kan også ellers få ytelser etter dette kapitlet i inntil åtte uker i løpet av en
-            tolvmånedersperiode. Medlemmet skal informere Arbeids- og velferdsetaten om utenlandsoppholdet.
-          </BodyLong>
+          <ul>
+            <li>
+              Opphold innenfor EØS likestilles med opphold i Norge, og det er ingen tidsbegrensning på hvor lenge søker
+              kan motta pleiepenger.
+            </li>
+            <li>
+              For opphold utenfor EØS skal perioden med pleiepenger i utgangspunktet begrenses til 8 uker i løpet av en
+              periode på 12 måneder.
+            </li>
+            <li>
+              <div>Opphold utenfor EØS har likevel ingen tidsbegrensning dersom</div>
+              <ul>
+                <li>barnet er innlagt i helseinstitusjon for norsk offentlig regning</li>
+                <li>barnet er innlagt i helseinstitusjon og oppholdet dekkes av trygdeordning med annet land</li>
+                <li>søker er medlem etter §§ 2-5, 2-6 eller 2-8</li>
+              </ul>
+            </li>
+            <li>Vilkårene for rett til pleiepenger må være oppfylt hele perioden.</li>
+            <li>
+              Det utbetales ikke pleiepenger når søker avvikler ferie. Utenlandsopphold i en periode med ferie telles
+              derfor ikke med, uavhengig av årsaken til utenlandsoppholdet.
+            </li>
+          </ul>
         </Ekspanderbartpanel>
       </Alert>
       <VerticalSpacer fourtyPx />
