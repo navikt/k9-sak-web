@@ -86,4 +86,6 @@ spec:
       value: "true"
     - name: BEHANDLINGSVELGER_NY
       value: "false"
+    - name: FAKTA_SOKNADSPERIODER
+      value: "false"
 

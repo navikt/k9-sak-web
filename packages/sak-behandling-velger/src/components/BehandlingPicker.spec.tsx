@@ -47,6 +47,7 @@ describe('<BehandlingPicker>', () => {
     search: 'test',
     state: {},
     hash: 'test',
+    key: 'test',
   };
 
   it('skal vise forklarende tekst når det ikke finnes behandlinger', async () => {
@@ -123,7 +124,7 @@ describe('<BehandlingPicker>', () => {
         },
       );
     });
-    const item = await screen.findAllByTestId('behandling');
+    const item = await screen.findAllByTestId('BehandlingPickerItem');
     expect(item).toHaveLength(3);
   });
 

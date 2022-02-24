@@ -21,6 +21,7 @@
   "FodselOgTilretteleggingInfoPanel.FaktaFodselOgTilrettelegging": "Fødsel og tilrettelegging",
   "FaktaOmAlderOgOmsorg.header": "Alder og omsorg",
   "MedisinskVilkarPanel.MedisinskVilkar": "Sykdom",
+  "SoknadsperioderPanel.Soknadsperioder": "Søknadsperioder",
   "InntektOgYtelser.Title": "Inntekt og ytelser",
   "OpplysningerFraSoknaden.Title": "Søknaden",
   "OmsorgenForInfoPanel.Title": "Omsorgen for",
@@ -405,5 +406,6 @@
   "Rest.ErrorMessage.PollingTimeout": "Serverkall har gått ut på tid: {location}",
   "Rest.ErrorMessage.GatewayTimeoutOrNotFound": "Får ikke kontakt med {contextPath} ({location})",
   "OMSORGEN_FOR": "Omsorgen for",
-  "KONTINUERLIG_TILSYN": "Kontinuerlig tilsyn og pleie"
+  "KONTINUERLIG_TILSYN": "Kontinuerlig tilsyn og pleie",
+  "OmPleietrengendeInfoPanel.Title": "Om pleietrengende"
 }

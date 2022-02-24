@@ -59,7 +59,7 @@ const renderListItems = ({
       return activeFilters.includes(behandling.type.kode);
     })
     .map(behandling => (
-      <li data-testid="behandling" key={behandling.id}>
+      <li data-testid="BehandlingPickerItem" key={behandling.id}>
         <NavLink
           onClick={() => setValgtBehandlingId(behandling.id)}
           className={styles.linkToBehandling}
@@ -195,7 +195,7 @@ const BehandlingPicker = ({
   };
 
   return (
-    <div className={styles.behandlingPicker}>
+    <div className={styles.behandlingPicker} data-testid="BehandlingPicker">
       {valgtBehandlingId && (
         <Tilbakeknapp className={styles.backButton} onClick={() => setValgtBehandlingId(undefined)}>
           <FormattedMessage id="Behandlingspunkt.Behandling.SeAlle" />

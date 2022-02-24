@@ -55,19 +55,19 @@ const AntallDagerLivetsSluttfaseIndex = ({
       />
       <VerticalSpacer fourPx/>
       <p>
-        {kvoteInfo.forbruktKvoteHittil && intl.formatMessage({id: 'Underskrift.TidligereDagerInnvilget'}, {
+        {!!kvoteInfo.forbruktKvoteHittil && intl.formatMessage({id: 'Underskrift.TidligereDagerInnvilget'}, {
           tidligereAntallDagerInnvilget: kvoteInfo.forbruktKvoteHittil,
           maksAntallDagerInnvilget: maxAntallDager,
           b: (...chunks) => <b>{chunks}</b>
         }) }
 
-        {kvoteInfo.forbruktKvoteDenneBehandlingen && intl.formatMessage({id: 'Underskrift.DagerInnvilget'}, {
+        {!!kvoteInfo.forbruktKvoteDenneBehandlingen && intl.formatMessage({id: 'Underskrift.DagerInnvilget'}, {
           antallDagerInnvilget: kvoteInfo.forbruktKvoteDenneBehandlingen,
           maksAntallDagerInnvilget: maxAntallDager,
           b: (...chunks) => <b>{chunks}</b>
         }) }
 
-        {kvoteInfo.forbruktKvoteHittil && kvoteInfo.forbruktKvoteDenneBehandlingen && intl.formatMessage({id: 'Underskrift.AntallDagerGjennstar'}, {
+        {!!kvoteInfo.forbruktKvoteDenneBehandlingen && intl.formatMessage({id: 'Underskrift.AntallDagerGjennstar'}, {
           antallDagerGjennstar: antallDagerGjenstår > 0 ? antallDagerGjenstår : 0,
           maksAntallDagerInnvilget: maxAntallDager,
           b: (...chunks) => <b>{chunks}</b>
