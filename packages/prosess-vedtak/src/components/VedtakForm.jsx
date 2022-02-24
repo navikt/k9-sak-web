@@ -372,7 +372,7 @@ VedtakForm.propTypes = {
   sprakkode: kodeverkObjektPropType.isRequired,
   ytelseTypeKode: PropTypes.string.isRequired,
   alleKodeverk: PropTypes.shape().isRequired,
-  personopplysninger: PropTypes.shape().isRequired,
+  personopplysninger: PropTypes.shape(),
   arbeidsgiverOpplysningerPerId: PropTypes.shape().isRequired,
   tilbakekrevingvalg: PropTypes.shape(),
   vilkar: PropTypes.arrayOf(vedtakVilkarPropType.isRequired),
