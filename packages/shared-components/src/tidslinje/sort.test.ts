@@ -1,5 +1,5 @@
 import dayjs, { Dayjs } from 'dayjs';
-import { PositionedPeriod } from '../../types/types.internal';
+import { PositionedPeriod } from '@k9-sak-web/types/src/tidslinje';
 import { sisteDato, sistePeriode } from './sort';
 
 const enDato = ({ plussDager = 0 } = {}): Dayjs => dayjs('2020-01-01').add(plussDager, 'day');
