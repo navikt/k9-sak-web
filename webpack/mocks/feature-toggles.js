@@ -17,6 +17,10 @@ const featureToggles = [
     key: 'UNNTAKSBEHANDLING',
     value: process.env.UNNTAKSBEHANDLING,
   },
+  {
+    key: 'BEHANDLINGSVELGER_NY',
+    value: process.env.BEHANDLINGSVELGER_NY,
+  },
 ];
 
 module.exports = function (app) {

@@ -11,9 +11,9 @@ import {
   KodeverkMedNavn,
   Personopplysninger,
   Risikoklassifisering,
-} from '@k9-sak-web/types';
+ FeatureToggles } from '@k9-sak-web/types';
 import { Location } from 'history';
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { Redirect, useLocation, useRouteMatch } from 'react-router-dom';
 import { getLocationWithDefaultProsessStegAndFakta, pathToBehandling, pathToBehandlinger } from '../app/paths';
 import BehandlingRettigheter from '../behandling/behandlingRettigheterTsType';
@@ -88,6 +88,18 @@ export const FagsakProfileIndex = ({
     ytelseType: fagsak.sakstype.kode,
   });
 
+  const featureTogglesData = restApiHooks.useGlobalStateRestApiData<{ key: string; value: string }[]>(
+    K9sakApiKeys.FEATURE_TOGGLE,
+  );
+  const featureToggles = useMemo<FeatureToggles>(
+    () =>
+      featureTogglesData.reduce((acc, curr) => {
+        acc[curr.key] = `${curr.value}`.toLowerCase() === 'true';
+        return acc;
+      }, {}),
+    [featureTogglesData],
+  );
+
   useEffect(() => {
     setShowAll(!behandlingId);
   }, [behandlingId]);
@@ -155,6 +167,7 @@ export const FagsakProfileIndex = ({
               showAll={showAll}
               toggleShowAll={toggleShowAll}
               fagsak={fagsak}
+              featureToggles={featureToggles}
             />
           )}
         />

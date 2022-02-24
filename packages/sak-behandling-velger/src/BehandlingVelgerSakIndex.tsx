@@ -1,4 +1,4 @@
-import { BehandlingAppKontekst, Kodeverk, KodeverkMedNavn, Fagsak } from '@k9-sak-web/types';
+import { BehandlingAppKontekst, Kodeverk, KodeverkMedNavn, Fagsak, FeatureToggles } from '@k9-sak-web/types';
 import { Location } from 'history';
 import React from 'react';
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
@@ -26,6 +26,7 @@ interface OwnProps {
   showAll: boolean;
   toggleShowAll: () => void;
   fagsak: Fagsak;
+  featureToggles: FeatureToggles;
 }
 
 const BehandlingVelgerSakIndex = ({
@@ -37,9 +38,10 @@ const BehandlingVelgerSakIndex = ({
   showAll,
   toggleShowAll,
   fagsak,
+  featureToggles,
 }: OwnProps) => (
   <RawIntlProvider value={intl}>
-    {fagsak.sakstype.kode === fagsakYtelseType.FRISINN ? (
+    {fagsak.sakstype.kode === fagsakYtelseType.FRISINN || !featureToggles?.BEHANDLINGSVELGER_NY ? (
       <BehandlingPickerOld
         behandlinger={behandlinger}
         getBehandlingLocation={getBehandlingLocation}
