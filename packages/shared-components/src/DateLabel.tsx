@@ -1,5 +1,5 @@
 import React from 'react';
-import { format } from "date-fns";
+import { format } from 'date-fns';
 import { zonedTimeToUtc } from 'date-fns-tz';
 
 interface OwnProps {
@@ -33,11 +33,7 @@ const DateLabel = ({ dateString }: OwnProps) => {
     return null;
   }
   const formatedDate = format(zonedTimeToUtc(date, 'Europe/Oslo'), 'dd.MM.yyyy');
-  return (
-    <>
-      {formatedDate}
-    </>
-  );
+  return <>{formatedDate}</>;
 };
 
 export default DateLabel;

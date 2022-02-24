@@ -26,7 +26,7 @@ const lagRisikoklassifisering = kode => ({
   iayFaresignaler: undefined,
   status: {
     kode: aksjonspunktStatus.UTFORT,
-  }
+  },
 });
 
 jest.mock('react-router-dom', () => ({
@@ -60,31 +60,31 @@ describe('<FagsakProfileIndex>', () => {
         kode: behandlingStatus.OPPRETTET,
         kodeverk: 'BEHANDLING_STATUS',
         navn: 'Opprettet',
-      }
+      },
     ],
     [kodeverkTyper.BEHANDLING_TYPE]: [
       {
         kode: behandlingType.FORSTEGANGSSOKNAD,
-        kodeverk: "BEHANDLING_TYPE",
-        navn: "Førstegangsbehandling",
+        kodeverk: 'BEHANDLING_TYPE',
+        navn: 'Førstegangsbehandling',
       },
       {
         kode: behandlingType.REVURDERING,
-        kodeverk: "BEHANDLING_TYPE",
-        navn: "Revurdering",
+        kodeverk: 'BEHANDLING_TYPE',
+        navn: 'Revurdering',
       },
     ],
     [kodeverkTyper.BEHANDLING_RESULTAT_TYPE]: [
       {
-        "kode": "INNVILGET",
-        "navn": "Innvilget",
-        "kodeverk": "BEHANDLING_RESULTAT_TYPE"
+        kode: 'INNVILGET',
+        navn: 'Innvilget',
+        kodeverk: 'BEHANDLING_RESULTAT_TYPE',
       },
       {
-        "kode": "AVSLÅTT",
-        "navn": "Avslått",
-        "kodeverk": "BEHANDLING_RESULTAT_TYPE"
-      }
+        kode: 'AVSLÅTT',
+        navn: 'Avslått',
+        kodeverk: 'BEHANDLING_RESULTAT_TYPE',
+      },
     ],
     [kodeverkTyper.FAGSAK_YTELSE]: [
       {
@@ -132,9 +132,9 @@ describe('<FagsakProfileIndex>', () => {
     behandlingsresultat: {
       type: {
         kode: behandlingResultatType.AVSLATT,
-        kodeverk: "BEHANDLING_RESULTAT_TYPE",
+        kodeverk: 'BEHANDLING_RESULTAT_TYPE',
       },
-    }
+    },
   };
 
   const revurdering: BehandlingAppKontekst = {
@@ -147,13 +147,12 @@ describe('<FagsakProfileIndex>', () => {
     behandlingsresultat: {
       type: {
         kode: behandlingResultatType.INNVILGET,
-        kodeverk: "BEHANDLING_RESULTAT_TYPE",
+        kodeverk: 'BEHANDLING_RESULTAT_TYPE',
       },
     },
     uuid: 'uuid-2',
     opprettet: '2021-02-01T00:54:25.455',
   };
-
 
   const fagsakRettigheter = {
     sakSkalTilInfotrygd: true,
@@ -170,7 +169,7 @@ describe('<FagsakProfileIndex>', () => {
     requestApi.mock(K9sakApiKeys.NAV_ANSATT, {});
     requestApi.mock(K9sakApiKeys.INIT_FETCH_TILBAKE, {});
     requestApi.mock(K9sakApiKeys.INIT_FETCH_KLAGE, {});
-    requestApi.mock(K9sakApiKeys.FEATURE_TOGGLE, []);
+    requestApi.mock(K9sakApiKeys.FEATURE_TOGGLE, [{ key: 'BEHANDLINGSVELGER_NY', value: 'true' }]);
     requestApi.mock(K9sakApiKeys.SAK_BRUKER, {});
 
     render(
@@ -184,7 +183,7 @@ describe('<FagsakProfileIndex>', () => {
             fagsakRettigheter={fagsakRettigheter}
           />
         </IntlProvider>
-      </MemoryRouter>
+      </MemoryRouter>,
     );
 
     expect(await screen.findByRole('button', { name: 'Behandlingsmeny' })).toBeInTheDocument();
@@ -192,6 +191,7 @@ describe('<FagsakProfileIndex>', () => {
     expect(screen.getByTestId('BehandlingPicker')).toBeInTheDocument();
     expect(screen.getByText('123 - Opprettet')).toBeInTheDocument();
     expect(screen.getByText('Førstegangsbehandling')).toBeInTheDocument();
+    expect(screen.getByText('Viderebehandling')).toBeInTheDocument();
   });
 
   it('skal ikke vise alle behandlinger når behandling er valgt', async () => {
@@ -204,7 +204,7 @@ describe('<FagsakProfileIndex>', () => {
     requestApi.mock(K9sakApiKeys.NAV_ANSATT, {});
     requestApi.mock(K9sakApiKeys.INIT_FETCH_TILBAKE, {});
     requestApi.mock(K9sakApiKeys.INIT_FETCH_KLAGE, {});
-    requestApi.mock(K9sakApiKeys.FEATURE_TOGGLE, []);
+    requestApi.mock(K9sakApiKeys.FEATURE_TOGGLE, [{ key: 'BEHANDLINGSVELGER_NY', value: 'true' }]);
     requestApi.mock(K9sakApiKeys.SAK_BRUKER, {});
 
     render(
@@ -219,11 +219,11 @@ describe('<FagsakProfileIndex>', () => {
             fagsakRettigheter={fagsakRettigheter}
           />
         </IntlProvider>
-      </MemoryRouter>
+      </MemoryRouter>,
     );
 
     expect(await screen.findByRole('button', { name: 'Behandlingsmeny' })).toBeInTheDocument();
-    expect(screen.queryAllByTestId('BehandlingPickerItem').length).toBe(1);
+    expect(screen.queryAllByTestId('behandlingSelected').length).toBe(1);
     expect(await screen.findByText('123 - Opprettet')).toBeInTheDocument();
     expect(screen.queryByText('Førstegangsbehandling')).toBeInTheDocument();
   });
