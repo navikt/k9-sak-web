@@ -153,6 +153,7 @@ const locationMock = {
   search: 'test',
   state: {},
   hash: 'test',
+  key: '',
 };
 
 const fagsak = {
@@ -203,6 +204,7 @@ export const visPanelForValgAvBehandlinger = () => {
         toggleShowAll={() => toggleVisAlle(!visAlle)}
         getKodeverkFn={getKodeverkFn}
         fagsak={fagsak}
+        featureToggles={{}}
       />
     </div>
   );
