@@ -31,7 +31,7 @@ module.exports = {
       return data;
     });
 
-    config.devtool = configType === 'DEVELOPMENT' ? 'eval-cheap-source-map' : 'source-map';
+    config.devtool = configType === 'DEVELOPMENT' ? 'inline-source-map' : 'source-map';
 
     // Make whatever fine-grained changes you need
     config.module.rules = config.module.rules.concat(

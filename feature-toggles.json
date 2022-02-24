@@ -14,5 +14,9 @@
   {
     "key": "UNNTAKSBEHANDLING",
     "value": "${UNNTAKSBEHANDLING}"
+  },
+  {
+    "key": "FAKTA_SOKNADSPERIODER",
+    "value": "${FAKTA_SOKNADSPERIODER}"
   }
 ]

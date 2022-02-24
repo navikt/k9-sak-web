@@ -2522,15 +2522,15 @@
   resolved "https://npm.pkg.github.com/download/@navikt/k9-bem-utils/1.0.1/1c8b370a7f8e822ffffeff6fa566af9a025692ae3fd258c7a4e4c0d67cd52ea1#451f330cbf3636c6406468c157468ea07dfb3b10"
   integrity sha512-DRV0rm6NDyAIosWGeMk0RlfUciUNIdD4AxpnGYOpqJCTIoCJHxLtzwRa1Zv15LEX5BHDWbiDYF5ZxDFhfE4yBg==
 
+"@navikt/k9-date-utils@0.0.6", "@navikt/k9-date-utils@^0.0.6":
+  version "0.0.6"
+  resolved "https://npm.pkg.github.com/download/@navikt/k9-date-utils/0.0.6/73b5b9ef333f21f0cbdfec2e20d70b7b8f7cb1bf04b6ddc46188418cedc31f1d#af9bc93a6ff9cf212f7ebdc6c4fc0b6d6c7e14d3"
+  integrity sha512-Z2sz3wcYyFQm3oCo7aoWhS+fQd69vWzWqPumvkR3FJmmmRxnKnIos2mpeCN5WA1fJgRv1YihYQNSlWbplZ/UxQ==
+
 "@navikt/k9-date-utils@^0.0.5":
   version "0.0.5"
   resolved "https://npm.pkg.github.com/download/@navikt/k9-date-utils/0.0.5/62215107bf7c1a3b45d5d5a569773bcf94696b98620199aaeb79d11601c047cf#38418e62899fe77647cc4a3ac60ada6ddf0ce3b1"
   integrity sha512-JkJGDvvIiYnPb5hejxoOOd14xY9NqXP6kuGodQ7zRxo7qmUBHXX8cmZgNIP0uMofMSnN1LIobCI4lmChbKpPnw==
-
-"@navikt/k9-date-utils@^0.0.6":
-  version "0.0.6"
-  resolved "https://npm.pkg.github.com/download/@navikt/k9-date-utils/0.0.6/73b5b9ef333f21f0cbdfec2e20d70b7b8f7cb1bf04b6ddc46188418cedc31f1d#af9bc93a6ff9cf212f7ebdc6c4fc0b6d6c7e14d3"
-  integrity sha512-Z2sz3wcYyFQm3oCo7aoWhS+fQd69vWzWqPumvkR3FJmmmRxnKnIos2mpeCN5WA1fJgRv1YihYQNSlWbplZ/UxQ==
 
 "@navikt/k9-period-utils@^0.0.8":
   version "0.0.8"
