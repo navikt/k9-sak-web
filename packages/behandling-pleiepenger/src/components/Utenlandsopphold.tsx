@@ -32,11 +32,9 @@ const mapItems = periode => {
 export default function Utenlandsopphold({ utenlandsopphold }: { utenlandsopphold: UtenlandsoppholdPerioder }) {
   const perioder = utenlandsopphold?.perioder;
 
-  if (!perioder || !perioder.length) {
-    return <>Ingen utenlandsopphold å vise.</>;
-  }
+  const harUtenlandsopphold = perioder?.length;
 
-  const perioderMedItems = perioder.map(periode => {
+  const perioderMedItems = perioder?.map(periode => {
     const [fom, tom] = periode.periode.split('/');
     return { fom, tom, items: mapItems(periode) };
   });
@@ -66,7 +64,11 @@ export default function Utenlandsopphold({ utenlandsopphold }: { utenlandsopphol
         </Ekspanderbartpanel>
       </Alert>
       <VerticalSpacer fourtyPx />
-      <PeriodList perioder={[...perioderMedItems]} tittel="Perioder i utlandet" />
+      {harUtenlandsopphold ? (
+        <PeriodList perioder={[...perioderMedItems]} tittel="Perioder i utlandet" />
+      ) : (
+        <>Søker har ingen utenlandsopphold å vise.</>
+      )}
     </div>
   );
 }
