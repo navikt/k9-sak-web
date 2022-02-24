@@ -16,7 +16,8 @@ describe('Utenlandsopphold', () => {
 
   test('kan kan toggle på hjelpetekst', () => {
     renderWithIntl(<Utenlandsopphold utenlandsopphold={utenlandsoppholdMock} />);
-    const infoboksTekst = 'Det er et vilkår for rett til pleiepenger at medlemmet oppholder seg i Norge/EØS.';
+    const infoboksTekst =
+      'Opphold innenfor EØS likestilles med opphold i Norge, og det er ingen tidsbegrensning på hvor lenge søker kan motta pleiepenger.';
     expect(screen.queryByText(infoboksTekst)).toBeFalsy();
     userEvent.click(screen.getByRole('button'));
     expect(screen.getByText(infoboksTekst)).toBeVisible();
