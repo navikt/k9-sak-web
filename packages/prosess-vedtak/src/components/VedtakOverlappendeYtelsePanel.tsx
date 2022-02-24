@@ -38,7 +38,7 @@ const VedtakOverlappendeYtelsePanel: React.FC<Props & WrappedComponentProps> = (
     /**
      * Set opp radene som brukes i Tidslinjen
      */
-    const rader = overlappendeYtelser.map((rad, radIndex): TidslinjeRad<OverlappendePeriode> => ({
+    const usorterteRader = overlappendeYtelser.map((rad, radIndex): TidslinjeRad<OverlappendePeriode> => ({
         id: `rad-${radIndex}`,
         perioder: rad.overlappendePerioder.map((periode, periodeIndex) => ({
             fom: periode.fom,
@@ -56,7 +56,7 @@ const VedtakOverlappendeYtelsePanel: React.FC<Props & WrappedComponentProps> = (
      * Sorter radene slik at raden som har en periode med den tidligeste datoen sorteres øverst
      * for å unngå "rotete" pølsefest
      */
-    sorterOverlappendeRader(rader);
+    const rader = sorterOverlappendeRader(usorterteRader);
 
     /**
      * Sett opp korresponderende rader til sidekolonnen
