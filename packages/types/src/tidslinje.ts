@@ -73,12 +73,9 @@ export interface Positioned {
   direction: 'left' | 'right';
 }
 
-export interface Period {
+export interface PositionedPeriod extends Positioned {
   start: Dayjs;
   endInclusive: Dayjs;
-}
-
-export interface PositionedPeriod extends Period, Positioned {
   id: string;
   width: number;
   status: PeriodStatus;
