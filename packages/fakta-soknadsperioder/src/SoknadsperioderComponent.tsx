@@ -1,3 +1,5 @@
+import { Tidslinje } from '@fpsak-frontend/shared-components';
+import { useTidligsteDato } from '@fpsak-frontend/shared-components/src/tidslinje/useTidslinjerader';
 import { dateStringSorter } from '@navikt/k9-date-utils';
 import dayjs from 'dayjs';
 import { Normaltekst } from 'nav-frontend-typografi';
@@ -6,8 +8,6 @@ import { useIntl } from 'react-intl';
 import CheckIcon from './components/tidslinje/CheckIcon';
 import RejectedIcon from './components/tidslinje/RejectedIcon';
 import SaksbehandlerIcon from './components/tidslinje/SaksbehandlerIcon';
-import { Tidslinje } from './components/tidslinje/Tidslinje';
-import { useTidligsteDato } from './components/tidslinje/useTidslinjerader';
 import styles from './soknadsperioderComponent.less';
 import BehandlingPerioderårsakMedVilkår, { DokumenterTilBehandling } from './types/BehandlingPerioderårsakMedVilkår';
 import Periode from './types/Periode';
