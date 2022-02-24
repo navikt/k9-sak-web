@@ -7,12 +7,12 @@ import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import BehandlingVelgerSakIndex from '@k9-sak-web/sak-behandling-velger';
 import { Behandling, Kodeverk, Fagsak } from '@k9-sak-web/types';
 
-import withReduxAndRouterProvider from '../../decorators/withReduxAndRouter';
 
-import alleKodeverk from '../mocks/alleKodeverk.json';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import relasjonsRolleType from '@fpsak-frontend/kodeverk/src/relasjonsRolleType';
 import fagsakStatus from '@fpsak-frontend/kodeverk/src/fagsakStatus';
+import alleKodeverk from '../mocks/alleKodeverk.json';
+import withReduxAndRouterProvider from '../../decorators/withReduxAndRouter';
 
 const BEHANDLING_TYPE_KODEVERK = 'BEHANDLING_TYPE';
 const BEHANDLING_STATUS_KODEVERK = 'BEHANDLING_STATUS';
