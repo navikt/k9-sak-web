@@ -21,4 +21,15 @@ describe('Utenlandsopphold', () => {
     userEvent.click(screen.getByRole('button'));
     expect(screen.getByText(infoboksTekst)).toBeVisible();
   });
+
+  test('viser land, tilhørighet til EØS og årsak for utenlandsopphold', () => {
+    renderWithIntl(<Utenlandsopphold utenlandsopphold={{ perioder: [utenlandsoppholdMock.perioder[0]] }} />);
+
+    expect(screen.getByText('Land')).toBeVisible();
+    expect(screen.getByText('Luxemburg')).toBeVisible();
+    expect(screen.getByText('EØS')).toBeVisible();
+    expect(screen.getByText('Ja')).toBeVisible();
+    expect(screen.getByText('Årsak')).toBeVisible();
+    expect(screen.getByText('Ikke relevant innenfor EØS, telles ikke i 8 uker.')).toBeVisible();
+  });
 });

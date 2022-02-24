@@ -2550,10 +2550,10 @@
     "@navikt/k9-date-utils" "^0.0.6"
     "@navikt/k9-period-utils" "^0.0.8"
 
-"@navikt/k9-react-components@^0.1.17":
-  version "0.1.17"
-  resolved "https://npm.pkg.github.com/download/@navikt/k9-react-components/0.1.17/567837c219926baf4affdc41d7662a4d2f49e33efddce414f1fa3b7ca3311283#8685b0eccca6568f71eb0e8598a4078caa6dcc0a"
-  integrity sha512-2y2PMiDbYmCk+2g5zKiUicWm3vdEzCaycUc0uK9qopNfKbn7OFLFFRW0vkDRxFYsvbXxBLLlqBDP3mYHtNnpxg==
+"@navikt/k9-react-components@^0.1.18":
+  version "0.1.18"
+  resolved "https://npm.pkg.github.com/download/@navikt/k9-react-components/0.1.18/a520c2bbfdb9ffc7c4dc9e50a8941fb009df1f29e74fab318375c42267e5bff1#d8b2e953d54df489c5b385f834febd6520c2b793"
+  integrity sha512-LCT6hLxMuMAtlA4oV1IItyAWVBDBG6PfHWnplnvbgdvKNHN0Po/4KbTmR/6FcLrv8IUZgjv9myn0yIfWoWduIQ==
   dependencies:
     "@navikt/ds-css" "^0.15.4"
     "@navikt/ds-icons" "^0.5.5"

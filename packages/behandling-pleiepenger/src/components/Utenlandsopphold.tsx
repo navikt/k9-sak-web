@@ -25,7 +25,7 @@ const mapItems = periode => {
 
   const land = { label: 'Land', value: countries.getName(periode.landkode.kode, 'no') };
   const eos = { label: 'EØS', value: erEØS ? 'Ja' : 'Nei' };
-  const årsak = { label: 'Årsak', value: finnÅrsaker(periode, false) };
+  const årsak = { label: 'Årsak', value: finnÅrsaker(periode, erEØS) };
 
   return [land, eos, årsak];
 };
