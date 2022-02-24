@@ -29,7 +29,7 @@ describe('Utenlandsopphold', () => {
     expect(screen.getByText('Luxemburg')).toBeVisible();
     expect(screen.getByText('EØS')).toBeVisible();
     expect(screen.getByText('Ja')).toBeVisible();
-    expect(screen.getByText('Årsak')).toBeVisible();
-    expect(screen.getByText('Ikke relevant innenfor EØS, telles ikke i 8 uker.')).toBeVisible();
+    expect(screen.getByText('Merknad til utenlandsopphold')).toBeVisible();
+    expect(screen.getByText('Periode telles ikke.')).toBeVisible();
   });
 });
