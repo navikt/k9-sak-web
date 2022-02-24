@@ -224,7 +224,7 @@ const validate = values => {
   return errors;
 };
 
-export const transformValues = (values, behandlingResultatPerioder, aktivtBg) => {
+export const transformValues = (values) => {
   const fieldArrayList = values[fieldArrayName];
   const harOverstyrt = fieldArrayList.some(currentFormValues => currentFormValues[MANUELL_OVERSTYRING_FIELD]);
   const beg = values[BEGRUNNELSE_AVKLARE_AKTIVITETER_NAME];
@@ -239,12 +239,9 @@ export const transformValues = (values, behandlingResultatPerioder, aktivtBg) =>
         currentFormValues,
         avklarAktiviteter.aktiviteterTomDatoMapping,
       );
-      const vilkarPeriode = behandlingResultatPerioder.find(
-        ({periode}) => periode.fom === aktivtBg.skjæringstidspunkt,
-      );
       return {
         ...vurderAktiviteterTransformed,
-        periode: vilkarPeriode.periode,
+        periode: currentFormValues.periode,
       };
     });
   if (harOverstyrt) {
@@ -291,7 +288,7 @@ const mapStateToPropsFactory = (initialState, initialProps) => {
     ? initialProps.alleBeregningsgrunnlag[initialProps.aktivtBeregningsgrunnlagIndex]
     : initialProps.beregningsgrunnlag;
   const onSubmit = vals =>
-    initialProps.submitCallback(transformValues(vals, initialProps.behandlingResultatPerioder, aktivtBg));
+    initialProps.submitCallback(transformValues(vals));
   return (state, ownProps) => {
     const values = getFormValuesAktivitetList(state, ownProps);
 

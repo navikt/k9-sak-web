@@ -36,6 +36,7 @@ const buildInitialValues = (
     );
   }
   return {
+    periode: vilkårsperiode.periode,
     erTilVurdering: vilkårsperiode.vurdersIBehandlingen,
     [MANUELL_OVERSTYRING_FIELD]: erOverstyrt,
     avklaringsbehov,

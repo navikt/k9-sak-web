@@ -631,20 +631,16 @@ describe('<AvklareAktiviteterPanel>', () => {
       aktiviteterTomDatoMapping: [{ tom: '2019-02-02', aktiviteter }],
     };
     const values = {
-      avklareAktiviteterListe: [{ avklarAktiviteter, avklaringsbehov: apsAvklarAktiviteter, erTilVurdering: true }],
+      avklareAktiviteterListe: [{ avklarAktiviteter, avklaringsbehov: apsAvklarAktiviteter, 
+        erTilVurdering: true,
+        periode: { fom: '2019-02-02', tom: '2019-02-05' } }],
       avklarAktiviteter,
     };
     values.avklareAktiviteterListe[0][id1] = { skalBrukes: false };
     values.avklareAktiviteterListe[0][id2] = { skalBrukes: true };
     values.avklareAktiviteterListe[0][id3] = { skalBrukes: true };
     values.avklareAktiviteterListe[0][idAAP] = { skalBrukes: true };
-    const vilkårsperioder = [{ periode: { fom: '2019-02-02', tom: '2019-02-05' }, vurdersIBehandlingen: true }];
-    const bg = { 
-      avklaringsbehov: apsAvklarAktiviteter,
-      skjæringstidspunkt: '2019-02-02',
-      skjaeringstidspunktBeregning: '2019-02-02',
-    };
-    const transformed = transformValues(values, vilkårsperioder, bg);
+    const transformed = transformValues(values);
     expect(transformed[0].grunnlag.length).to.equal(1);
     expect(transformed[0].grunnlag[0].beregningsaktivitetLagreDtoList[0].arbeidsgiverIdentifikator).to.equal(
       aktivitet1.arbeidsgiverIdent,
@@ -657,7 +653,8 @@ describe('<AvklareAktiviteterPanel>', () => {
     };
     const aps = [];
     const values = {
-      avklareAktiviteterListe: [{ avklarAktiviteter, avklaringsbehov: aps, erTilVurdering: true,  }],
+      avklareAktiviteterListe: [{ avklarAktiviteter, avklaringsbehov: aps, erTilVurdering: true, 
+        periode: { fom: '2019-02-02', tom: '2019-02-05' }  }],
       avklarAktiviteter,
     };
     values.avklareAktiviteterListe[0][id1] = { skalBrukes: null };
@@ -666,9 +663,7 @@ describe('<AvklareAktiviteterPanel>', () => {
     values.avklareAktiviteterListe[0][idAAP] = { skalBrukes: true };
     values[BEGRUNNELSE_AVKLARE_AKTIVITETER_NAME] = 'begrunnelse';
     values.avklareAktiviteterListe[0][MANUELL_OVERSTYRING_FIELD] = true;
-    const vilkårsperioder = [{ periode: { fom: '2019-02-02', tom: '2019-02-05' }, vurdersIBehandlingen: true }];
-    const bg = { avklaringsbehov: aps, skjaeringstidspunktBeregning: '2019-02-02', skjæringstidspunkt: '2019-02-02', vilkårsperiodeFom: '2019-02-02'  };
-    const transformed = transformValues(values, vilkårsperioder, bg);
+    const transformed = transformValues(values);
     expect(transformed.length).to.equal(1);
     expect(transformed[0].beregningsaktivitetLagreDtoList[0].arbeidsgiverIdentifikator).to.equal(
       aktivitet3.arbeidsgiverIdent,
