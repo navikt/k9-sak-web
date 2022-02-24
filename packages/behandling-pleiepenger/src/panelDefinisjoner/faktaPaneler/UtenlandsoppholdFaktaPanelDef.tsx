@@ -15,7 +15,7 @@ class UtenlandsoppholdFaktaPanelDef extends FaktaPanelDef {
 
   getKomponent = props => <Utenlandsopphold utenlandsopphold={props.utenlandsopphold} />;
 
-  skalVisePanel = () => true;
+  skalVisePanel = (apCodes, data, featureToggles) => featureToggles?.UTENLANDSOPPHOLD;
 }
 
 export default UtenlandsoppholdFaktaPanelDef;

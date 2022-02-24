@@ -86,4 +86,6 @@ spec:
       value: "true"
     - name: FAKTA_SOKNADSPERIODER
       value: "true"
+    - name: UTENLANDSOPPHOLD
+      value: "true"
 

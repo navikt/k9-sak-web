@@ -18,5 +18,9 @@
   {
     "key": "FAKTA_SOKNADSPERIODER",
     "value": "${FAKTA_SOKNADSPERIODER}"
+  },
+  {
+    "key": "UTENLANDSOPPHOLD",
+    "value": "${UTENLANDSOPPHOLD}"
   }
 ]
