@@ -18,6 +18,10 @@ const featureToggles = [
     value: process.env.UNNTAKSBEHANDLING,
   },
   {
+    key: 'BEHANDLINGSVELGER_NY',
+    value: process.env.BEHANDLINGSVELGER_NY,
+  },
+  {
     key: 'FAKTA_SOKNADSPERIODER',
     value: process.env.FAKTA_SOKNADSPERIODER,
   },
