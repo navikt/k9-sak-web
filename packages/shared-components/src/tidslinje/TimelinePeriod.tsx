@@ -1,6 +1,6 @@
 import classNames from 'classnames';
 import React, { CSSProperties, RefObject, useEffect, useLayoutEffect, useRef, useState } from 'react';
-import { PositionedPeriod } from '../../types/types.internal';
+import { PositionedPeriod } from '@k9-sak-web/types/src/tidslinje';
 import styles from './TimelinePeriod.less';
 import Tooltip from './Tooltip';
 

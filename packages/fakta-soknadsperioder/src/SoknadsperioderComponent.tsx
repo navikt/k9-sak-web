@@ -1,17 +1,17 @@
 import { Tidslinje } from '@fpsak-frontend/shared-components';
 import { useTidligsteDato } from '@fpsak-frontend/shared-components/src/tidslinje/useTidslinjerader';
+import { PeriodStatus, Tidslinjeskala } from '@k9-sak-web/types/src/tidslinje';
 import { dateStringSorter } from '@navikt/k9-date-utils';
 import dayjs from 'dayjs';
 import { Normaltekst } from 'nav-frontend-typografi';
 import React, { useState } from 'react';
 import { useIntl } from 'react-intl';
-import CheckIcon from './components/tidslinje/CheckIcon';
-import RejectedIcon from './components/tidslinje/RejectedIcon';
-import SaksbehandlerIcon from './components/tidslinje/SaksbehandlerIcon';
+import CheckIcon from './icons/CheckIcon';
+import RejectedIcon from './icons/RejectedIcon';
+import SaksbehandlerIcon from './icons/SaksbehandlerIcon';
 import styles from './soknadsperioderComponent.less';
 import BehandlingPerioderårsakMedVilkår, { DokumenterTilBehandling } from './types/BehandlingPerioderårsakMedVilkår';
 import Periode from './types/Periode';
-import { PeriodStatus, Tidslinjeskala } from './types/types.internal';
 
 interface SoknadsperioderComponentProps {
   behandlingPerioderårsakMedVilkår: BehandlingPerioderårsakMedVilkår;

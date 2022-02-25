@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import dayjs, { Dayjs } from 'dayjs';
-import { Pin } from '../../types/types.external';
+import { Pin } from '@k9-sak-web/types/src/tidslinje';
 import { position } from './calc';
 import styles from './Pins.less';
 import Tooltip from './Tooltip';
