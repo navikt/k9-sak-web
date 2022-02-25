@@ -128,7 +128,7 @@
   }
 }
 
-.skalaRadio {
+.skalaRadioLabel {
   align-items: center;
   background-color: white;
   border: 1px solid #c6c2bf;
@@ -143,25 +143,29 @@
     font-weight: 400;
   }
 
-  &:first-of-type {
+  &--selected {
+    background-color: #59514b;
+    color: white;
+  }
+}
+
+.skalaRadioInput {
+  .visuallyhidden();
+
+  &:focus-visible + label {
+    box-shadow: 0 0 0 3px #00347d;
+  }
+
+  &:first-of-type + label {
     border-top-left-radius: 4px;
     border-bottom-left-radius: 4px;
     border-right: none;
   }
 
-  &:last-of-type {
+  &:last-of-type + label {
     border-left: none;
     border-top-right-radius: 4px;
     border-bottom-right-radius: 4px;
-  }
-
-  &--selected {
-    background-color: #59514b;
-    color: white;
-  }
-
-  input {
-    .visuallyhidden();
   }
 }
 
@@ -173,6 +177,7 @@
   p {
     align-items: center;
     display: flex;
+    line-height: 1rem;
     margin-right: 2rem;
 
     &:last-of-type {

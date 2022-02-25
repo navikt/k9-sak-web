@@ -1,11 +1,11 @@
-import React, { ReactNode } from 'react';
-import dayjs, { Dayjs } from 'dayjs';
+import { AxisLabel } from '@k9-sak-web/types/src/tidslinje';
 import classNames from 'classnames';
-import styles from './AxisLabels.less';
-import { erSynlig } from './filter';
-import { horizontalPositionAndWidth } from './calc';
-import { AxisLabel } from '../../types/types.internal';
+import dayjs, { Dayjs } from 'dayjs';
 import 'dayjs/locale/nb';
+import React, { ReactNode } from 'react';
+import styles from './AxisLabels.less';
+import { horizontalPositionAndWidth } from './calc';
+import { erSynlig } from './filter';
 
 dayjs.locale('nb');
 

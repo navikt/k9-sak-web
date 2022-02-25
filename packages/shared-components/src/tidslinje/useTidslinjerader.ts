@@ -1,13 +1,12 @@
+import { InternalSimpleTimeline, Periode, PositionedPeriod } from '@k9-sak-web/types/src/tidslinje';
 import dayjs, { Dayjs } from 'dayjs';
-import { v4 as uuidv4 } from 'uuid';
 import { useMemo } from 'react';
-import { InternalSimpleTimeline, PositionedPeriod } from '../../types/types.internal';
-import { Periode } from '../../types/types.external';
+import { v4 as uuidv4 } from 'uuid';
+import Rad from './Rad';
 import { horizontalPositionAndWidth } from './calc';
 import { innenEtDøgn, invisiblePeriods } from './filter';
 import { sistePeriode } from './sort';
 import { TidslinjeProps } from './Tidslinje';
-import Rad from '../../types/Rad';
 
 const spatialPeriod = (
   period: Periode,

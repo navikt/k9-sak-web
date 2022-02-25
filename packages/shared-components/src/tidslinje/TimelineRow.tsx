@@ -1,8 +1,8 @@
-import React from 'react';
+import { PositionedPeriod } from '@k9-sak-web/types/src/tidslinje';
 import classNames from 'classnames';
+import React from 'react';
 import styles from './Tidslinjerad.less';
 import TimelinePeriod from './TimelinePeriod';
-import { PositionedPeriod } from '../../types/types.internal';
 
 interface TimelineRowProps {
   periods: PositionedPeriod[];

@@ -2,9 +2,16 @@ import classNames from 'classnames';
 import dayjs, { Dayjs } from 'dayjs';
 import React, { ReactNode, useCallback } from 'react';
 import { Normaltekst } from 'nav-frontend-typografi';
-import Rad from '../../types/Rad';
-import { Etikett, Periode, Pin } from '../../types/types.external';
-import { AxisLabel, InternalSimpleTimeline, PositionedPeriod, Tidslinjeskala } from '../../types/types.internal';
+import {
+  AxisLabel,
+  Etikett,
+  InternalSimpleTimeline,
+  Periode,
+  Pin,
+  PositionedPeriod,
+  Tidslinjeskala,
+} from '@k9-sak-web/types/src/tidslinje';
+import Rad from './Rad';
 import { AxisLabels } from './AxisLabels';
 import Pins from './Pins';
 import styles from './Tidslinje.less';
@@ -114,7 +121,7 @@ const Timeline = ({
 /**
  * Viser perioder i en tidslinje.
  */
-export const Tidslinje = ({
+const Tidslinje = ({
   pins,
   rader,
   aktivRad,
@@ -172,3 +179,5 @@ export const Tidslinje = ({
     </div>
   );
 };
+
+export default Tidslinje;

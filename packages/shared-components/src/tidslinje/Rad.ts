@@ -1,4 +1,4 @@
-import { Periode } from './types.external';
+import { Periode } from '@k9-sak-web/types/src/tidslinje';
 
 interface Rad {
   radLabel: string;

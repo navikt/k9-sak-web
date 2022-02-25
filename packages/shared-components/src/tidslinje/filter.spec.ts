@@ -1,5 +1,5 @@
 import dayjs, { Dayjs } from 'dayjs';
-import { Positioned } from '../../types/types.internal';
+import { Positioned } from '@k9-sak-web/types/src/tidslinje';
 import { erSynlig, innenEtDøgn } from './filter';
 
 const enDato = ({ plussDager = 0, plussTimer = 0 } = {}): Dayjs =>

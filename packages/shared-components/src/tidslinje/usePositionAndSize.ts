@@ -1,5 +1,5 @@
 import dayjs, { Dayjs } from 'dayjs';
-import { EnkelPeriode } from '../../types/types.external';
+import { EnkelPeriode } from '@k9-sak-web/types/src/tidslinje';
 import { horizontalPositionAndWidth } from './calc';
 
 interface UsePositionAndSizeOptions {
