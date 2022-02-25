@@ -98,7 +98,7 @@ interface OwnProps {
   behandlingId?: number;
 }
 
-const behandlingPerioderÅrsakRel = 'behandling-perioder-årsak';
+const behandlingPerioderÅrsakRel = 'behandling-perioder-årsak-med-vilkår';
 /**
  * BehandlingPicker
  *
@@ -137,7 +137,11 @@ const BehandlingPicker = ({
         ),
       ).then((responses: { data: BehandlingPerioder; id: number }[]) => {
         responses.forEach(({ data, id }) => {
-          perioder.push({ id, perioder: data.perioderTilVurdering, perioderMedÅrsak: data.perioderMedÅrsak });
+          perioder.push({
+            id,
+            perioder: data.perioderMedÅrsak?.perioderTilVurdering,
+            perioderMedÅrsak: data.perioderMedÅrsak?.perioderMedÅrsak,
+          });
         });
         setSøknadsperioder(perioder);
       });
