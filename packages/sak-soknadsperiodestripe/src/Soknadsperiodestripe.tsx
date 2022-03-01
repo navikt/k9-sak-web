@@ -32,11 +32,11 @@ const Soknadsperiodestripe: React.FC<SoknadsperiodestripeProps> = ({ behandlingP
     const overlappendePerioder: Period[] = [];
     const vedtakshistorikk: RadPeriode[] =
       behandlingPerioderMedVilkår?.forrigeVedtak?.map(({ periode, utfall }) => {
-        const forrigeVedtaksperiode = new Period(periode.fom, periode.tom);
+        const vedtaksperiode = new Period(periode.fom, periode.tom);
         const harOverlappMedPeriodeTilVurdering =
           behandlingPerioderMedVilkår?.perioderMedÅrsak?.perioderTilVurdering.some(({ fom, tom }) => {
             const periodeTilVurdering = new Period(fom, tom);
-            return periodeTilVurdering.covers(forrigeVedtaksperiode);
+            return periodeTilVurdering.covers(vedtaksperiode);
           });
         const nyPeriode = {
           id: `${periode.fom}-${periode.tom}`,
@@ -46,7 +46,7 @@ const Soknadsperiodestripe: React.FC<SoknadsperiodestripeProps> = ({ behandlingP
           status: utfall.kode === 'OPPFYLT' ? ('suksess' as PeriodStatus) : 'feil',
         };
         if (harOverlappMedPeriodeTilVurdering) {
-          overlappendePerioder.push(forrigeVedtaksperiode);
+          overlappendePerioder.push(vedtaksperiode);
           nyPeriode.status = utfall.kode === 'OPPFYLT' ? ('suksessRevurder' as PeriodStatus) : 'feilRevurder';
           nyPeriode.className = styles.advarsel;
         }
@@ -67,11 +67,11 @@ const Soknadsperiodestripe: React.FC<SoknadsperiodestripeProps> = ({ behandlingP
             status: 'advarsel' as PeriodStatus,
             className: `${styles.advarsel} ${styles.aktivPeriode}`,
           };
-          const likPeriodeMedUtfall = behandlingPerioderMedVilkår.periodeMedUtfall.find(
+          const identiskPeriodeMedUtfall = behandlingPerioderMedVilkår.periodeMedUtfall.find(
             periodeMedUtfall => periodeMedUtfall.periode.fom === fom && periodeMedUtfall.periode.tom === tom,
           );
-          if (likPeriodeMedUtfall) {
-            const utfall = likPeriodeMedUtfall.utfall.kode === 'OPPFYLT' ? 'suksess' : 'feil';
+          if (identiskPeriodeMedUtfall) {
+            const utfall = identiskPeriodeMedUtfall.utfall.kode === 'OPPFYLT' ? 'suksess' : 'feil';
             nyPeriode.status = utfall;
             nyPeriode.className = `${styles[utfall]} ${styles.aktivPeriode}`;
             return nyPeriode;
@@ -153,14 +153,11 @@ const Soknadsperiodestripe: React.FC<SoknadsperiodestripeProps> = ({ behandlingP
     return `${fom} - ${tom}`;
   };
 
-  const disableNavigasjonTom = () => {
+  const disableNavigasjonTomButton = () => {
     const perioderSortertPåTom = [...rader[0].perioder].sort((a, b) =>
       dateStringSorter(a.tom.toISOString(), b.tom.toISOString()),
     );
     const senesteTom = perioderSortertPåTom[perioderSortertPåTom.length - 1].tom;
-    // if (tidslinjeSkala === 6) {
-    //   return dayjs(senesteTom).isSameOrBefore(dayjs(navigasjonFomDato).add(1, 'month'));
-    // }
     return dayjs(senesteTom).isSameOrBefore(dayjs(navigasjonFomDato).add(6, 'month'));
   };
 
@@ -187,7 +184,7 @@ const Soknadsperiodestripe: React.FC<SoknadsperiodestripeProps> = ({ behandlingP
           className={styles.navigasjonButtonRight}
           aria-label="Naviger tidslinje fremover i tid"
           type="button"
-          disabled={disableNavigasjonTom()}
+          disabled={disableNavigasjonTomButton()}
         />
         <Normaltekst className={styles.navigasjonDatoContainer}>{formatNavigasjonsdato()}</Normaltekst>
       </div>
