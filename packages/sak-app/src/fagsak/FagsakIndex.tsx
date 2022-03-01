@@ -234,7 +234,7 @@ const FagsakIndex = () => {
           }
 
           return (
-            <>
+            <div style={{ overflow: 'hidden' }}>
               <VisittkortSakIndex
                 personopplysninger={behandlingPersonopplysninger}
                 alleKodeverk={alleKodeverk}
@@ -245,7 +245,7 @@ const FagsakIndex = () => {
                 direkteOvergangFraInfotrygd={direkteOvergangFraInfotrygd}
               />
               <Soknadsperiodestripe behandlingPerioderMedVilkår={behandlingPerioderMedVilkår} />
-            </>
+            </div>
           );
         }}
       />

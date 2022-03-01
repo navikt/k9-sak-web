@@ -95,7 +95,7 @@ const Soknadsperiodestripe: React.FC<SoknadsperiodestripeProps> = ({ behandlingP
   const rader = [
     {
       perioder: formatertePerioder,
-      radLabel: 'Søknadsperioder',
+      radLabel: intl.formatMessage({ id: 'Soknadsperioder.Søknadsperioder' }),
       radClassname: styles.rad,
     },
   ];
@@ -158,6 +158,9 @@ const Soknadsperiodestripe: React.FC<SoknadsperiodestripeProps> = ({ behandlingP
       dateStringSorter(a.tom.toISOString(), b.tom.toISOString()),
     );
     const senesteTom = perioderSortertPåTom[perioderSortertPåTom.length - 1].tom;
+    if (tidslinjeSkala === 24) {
+      return dayjs(senesteTom).isSameOrBefore(dayjs(navigasjonFomDato).add(12, 'month'));
+    }
     return dayjs(senesteTom).isSameOrBefore(dayjs(navigasjonFomDato).add(6, 'month'));
   };
 
@@ -176,13 +179,13 @@ const Soknadsperiodestripe: React.FC<SoknadsperiodestripeProps> = ({ behandlingP
         <button
           onClick={() => updateNavigasjon(true)}
           className={styles.navigasjonButtonLeft}
-          aria-label="Naviger tidslinje bakover i tid"
+          aria-label={intl.formatMessage({ id: 'Soknadsperioder.Navigasjonsknapp.Bakover' })}
           type="button"
         />
         <button
           onClick={() => updateNavigasjon()}
           className={styles.navigasjonButtonRight}
-          aria-label="Naviger tidslinje fremover i tid"
+          aria-label={intl.formatMessage({ id: 'Soknadsperioder.Navigasjonsknapp.Fremover' })}
           type="button"
           disabled={disableNavigasjonTomButton()}
         />
