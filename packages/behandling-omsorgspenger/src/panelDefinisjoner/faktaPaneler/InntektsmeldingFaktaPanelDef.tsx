@@ -3,6 +3,8 @@ import React from 'react';
 import { faktaPanelCodes } from '@k9-sak-web/konstanter';
 import { FaktaPanelDef } from '@k9-sak-web/behandling-felles';
 
+import { Fagsak } from '@k9-sak-web/types';
+import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { OmsorgspengerBehandlingApiKeys } from '../../data/omsorgspengerBehandlingApi';
 
@@ -25,8 +27,12 @@ class InntektsmeldingFaktaPanelDef extends FaktaPanelDef {
   getData = ({ arbeidsgiverOpplysningerPerId, dokumenter, hentSaksbehandlere }) => ({
     arbeidsgiverOpplysningerPerId,
     dokumenter,
+    // sjekke hvis den linken er tilgjenglig.
     saksbehandlere: hentSaksbehandlere?.saksbehandlere,
   });
+
+  getOverstyrVisningAvKomponent = ({ fagsak }: { fagsak: Fagsak }) =>
+    fagsak.sakstype.kode === fagsakYtelseType.OMSORGSPENGER;
 }
 
 export default InntektsmeldingFaktaPanelDef;
