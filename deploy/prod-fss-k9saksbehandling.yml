@@ -9,7 +9,7 @@ metadata:
     nais.io/run-as-user: "101" # Fix permissions for nginx
     nais.io/read-only-file-system: "false" # Fix permissions for nginx
 spec:
-  image: { { image } }
+  image: {{ image }}
   port: 9000
   sessionAffinity: ClientIP
   team: k9saksbehandling
