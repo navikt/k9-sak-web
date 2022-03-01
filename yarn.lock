@@ -2532,7 +2532,7 @@
   resolved "https://npm.pkg.github.com/download/@navikt/k9-date-utils/0.0.5/62215107bf7c1a3b45d5d5a569773bcf94696b98620199aaeb79d11601c047cf#38418e62899fe77647cc4a3ac60ada6ddf0ce3b1"
   integrity sha512-JkJGDvvIiYnPb5hejxoOOd14xY9NqXP6kuGodQ7zRxo7qmUBHXX8cmZgNIP0uMofMSnN1LIobCI4lmChbKpPnw==
 
-"@navikt/k9-period-utils@^0.0.8":
+"@navikt/k9-period-utils@0.0.8", "@navikt/k9-period-utils@^0.0.8":
   version "0.0.8"
   resolved "https://npm.pkg.github.com/download/@navikt/k9-period-utils/0.0.8/c07eb6e3a075b5231d5b1fd31be5ab30a39ae597036aabaad4ae787ead613784#60afc63f2f24498c10a6fabac8d7cb2875d3ce57"
   integrity sha512-ZmUbuaDwiwO9oBnu01jKkZzq/ABgT7538pXEb1fSmCIrdBF1Xd/iXOKtFlbejj/wa6IR8PKtIR2sgt3rqYDr4g==
