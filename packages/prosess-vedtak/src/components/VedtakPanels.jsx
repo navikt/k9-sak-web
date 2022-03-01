@@ -113,7 +113,7 @@ VedtakPanels.propTypes = {
   ytelseTypeKode: PropTypes.string.isRequired,
   employeeHasAccess: PropTypes.bool.isRequired,
   alleKodeverk: PropTypes.shape().isRequired,
-  personopplysninger: PropTypes.shape().isRequired,
+  personopplysninger: PropTypes.shape(),
   arbeidsgiverOpplysningerPerId: PropTypes.shape().isRequired,
   vilkar: PropTypes.arrayOf(vedtakVilkarPropType.isRequired),
   resultatstrukturOriginalBehandling: vedtakBeregningsresultatPropType,

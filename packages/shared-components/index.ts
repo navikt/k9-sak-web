@@ -32,3 +32,4 @@ export { default as requireProps } from './src/requireProps';
 export { default as LeggTilKnapp } from './src/LeggTilKnapp';
 export { default as FaktaGruppe } from './src/FaktaGruppe';
 export { default as usePrevious } from './src/hooks/componentHooks';
+export { default as Tidslinje } from './src/tidslinje/Tidslinje';

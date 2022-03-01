@@ -21,7 +21,7 @@ import {
 } from '@fpsak-frontend/form';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { ProsessStegSubmitButton } from '@k9-sak-web/prosess-felles';
-import { Aksjonspunkt, BeregningsresultatFp } from '@k9-sak-web/types';
+import { Aksjonspunkt, BeregningsresultatFp, BeregningsresultatUtbetalt } from '@k9-sak-web/types';
 
 import styles from './tilbaketrekkpanel.less';
 
@@ -32,6 +32,11 @@ const formName = 'vurderTilbaketrekkForm';
 const maxLength1500 = maxLength(1500);
 const minLength3 = minLength(3);
 
+type FormValues = {
+  radioVurderTilbaketrekk: boolean;
+  begrunnelseVurderTilbaketrekk: string;
+}
+
 interface PureOwnProps {
   behandlingId: number;
   behandlingVersjon: number;
@@ -39,7 +44,12 @@ interface PureOwnProps {
   vurderTilbaketrekkAP?: Aksjonspunkt;
   submitCallback: (data: any) => Promise<any>;
   readOnlySubmitButton: boolean;
-  beregningsresultat?: BeregningsresultatFp;
+  beregningsresultat?: BeregningsresultatFp | BeregningsresultatUtbetalt;
+}
+
+interface MappedOwnProps {
+  onSubmit: (formValues: FormValues) => any;
+  initialValues: FormValues;
 }
 
 export const Tilbaketrekkpanel = ({
@@ -132,7 +142,10 @@ export const transformValues = values => {
 };
 
 export const buildInitialValues = createSelector(
-  [(state, ownProps) => ownProps.vurderTilbaketrekkAP, (state, ownProps) => ownProps.beregningsresultat],
+  [
+    (state, ownProps) => ownProps.vurderTilbaketrekkAP,
+    (state, ownProps) => ownProps.beregningsresultat,
+  ],
   (ap, tilkjentYtelse) => {
     const tidligereValgt = tilkjentYtelse?.skalHindreTilbaketrekk;
     if (tidligereValgt === undefined || tidligereValgt === null || !ap || !ap.begrunnelse) {
@@ -145,12 +158,13 @@ export const buildInitialValues = createSelector(
   },
 );
 
-const mapStateToPropsFactory = (initialState, ownProps) => {
-  const onSubmit = values => ownProps.submitCallback([transformValues(values)]);
-  return state => ({
-    onSubmit,
-    initialValues: buildInitialValues(state, ownProps),
-  });
-};
+const lagSubmitFn = createSelector([(ownProps: PureOwnProps) => ownProps.submitCallback],
+  (submitCallback) => (values: FormValues) => submitCallback(transformValues(values)));
 
-export default connect(mapStateToPropsFactory)(behandlingForm({ form: formName })(injectIntl(Tilbaketrekkpanel)));
+const mapStateToProps = (state: any, ownProps: PureOwnProps): MappedOwnProps => ({
+  onSubmit: lagSubmitFn(ownProps),
+  // @ts-ignore Fiks denne (reselect)
+  initialValues: buildInitialValues(state, ownProps),
+});
+
+export default connect(mapStateToProps)(behandlingForm({ form: formName })(injectIntl(Tilbaketrekkpanel)));
