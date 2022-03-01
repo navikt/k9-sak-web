@@ -8,11 +8,12 @@ import {
   behandlingPerioderårsakMedVilkår,
   Fagsak,
   FagsakPerson,
+  FeatureToggles,
   Kodeverk,
   KodeverkMedNavn,
   Personopplysninger,
 } from '@k9-sak-web/types';
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useMemo, useState } from 'react';
 import { Navigate, Route, Routes, useLocation } from 'react-router-dom';
 import OvergangFraInfotrygd from '../../../types/src/overgangFraInfotrygd';
 import RelatertFagsak from '../../../types/src/relatertFagsak';
@@ -155,6 +156,18 @@ const FagsakIndex = () => {
     },
   );
 
+  const featureTogglesData = restApiHooks.useGlobalStateRestApiData<{ key: string; value: string }[]>(
+    K9sakApiKeys.FEATURE_TOGGLE,
+  );
+  const featureToggles = useMemo<FeatureToggles>(
+    () =>
+      featureTogglesData.reduce((acc, curr) => {
+        acc[curr.key] = `${curr.value}`.toLowerCase() === 'true';
+        return acc;
+      }, {}),
+    [featureTogglesData],
+  );
+
   if (!fagsak) {
     if (fagsakState === RestApiState.NOT_STARTED || fagsakState === RestApiState.LOADING) {
       return <LoadingPanel />;
@@ -244,7 +257,9 @@ const FagsakIndex = () => {
                 relaterteFagsaker={relaterteFagsaker}
                 direkteOvergangFraInfotrygd={direkteOvergangFraInfotrygd}
               />
-              <Soknadsperiodestripe behandlingPerioderMedVilkår={behandlingPerioderMedVilkår} />
+              {featureToggles?.SOKNADPERIODESTRIPE && (
+                <Soknadsperiodestripe behandlingPerioderMedVilkår={behandlingPerioderMedVilkår} />
+              )}
             </div>
           );
         }}
