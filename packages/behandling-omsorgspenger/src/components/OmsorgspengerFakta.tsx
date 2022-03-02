@@ -8,7 +8,7 @@ import {
   Fagsak,
   FagsakPerson,
   KodeverkMedNavn,
-  FeatureToggles,
+  FeatureToggles, Dokument,
 } from '@k9-sak-web/types';
 import ac from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
@@ -36,6 +36,7 @@ interface OwnProps {
   setBehandling: (behandling: Behandling) => void;
   arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysningerPerId;
   featureToggles?: FeatureToggles;
+  dokumenter: Dokument[];
 }
 
 const OmsorgspengerFakta = ({
@@ -54,6 +55,7 @@ const OmsorgspengerFakta = ({
   setBehandling,
   arbeidsgiverOpplysningerPerId,
   featureToggles,
+  dokumenter
 }: OwnProps & WrappedComponentProps) => {
   const { aksjonspunkter, ...rest } = data;
   const { addErrorMessage } = useRestApiErrorDispatcher();
@@ -124,6 +126,7 @@ const OmsorgspengerFakta = ({
               alleKodeverk,
               submitCallback: bekreftAksjonspunktCallback,
               ...valgtPanel.getKomponentData(rettigheter, dataTilUtledingAvOmsorgPaneler, hasFetchError),
+              dokumenter,
             })}
           </ErrorBoundary>
         )}{' '}
