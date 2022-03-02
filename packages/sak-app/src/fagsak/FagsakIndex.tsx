@@ -161,7 +161,7 @@ const FagsakIndex = () => {
   );
   const featureToggles = useMemo<FeatureToggles>(
     () =>
-      featureTogglesData.reduce((acc, curr) => {
+      featureTogglesData?.reduce((acc, curr) => {
         acc[curr.key] = `${curr.value}`.toLowerCase() === 'true';
         return acc;
       }, {}),
