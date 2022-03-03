@@ -1,5 +1,8 @@
 import { Tidslinje } from '@fpsak-frontend/shared-components';
 import { useTidligsteDato } from '@fpsak-frontend/shared-components/src/tidslinje/useTidslinjerader';
+import BehandlingPerioderårsakMedVilkår, {
+  DokumenterTilBehandling,
+} from '@k9-sak-web/types/src/behandlingPerioderårsakMedVilkår';
 import { PeriodStatus, Tidslinjeskala } from '@k9-sak-web/types/src/tidslinje';
 import { dateStringSorter } from '@navikt/k9-date-utils';
 import dayjs from 'dayjs';
@@ -10,7 +13,6 @@ import CheckIcon from './icons/CheckIcon';
 import RejectedIcon from './icons/RejectedIcon';
 import SaksbehandlerIcon from './icons/SaksbehandlerIcon';
 import styles from './soknadsperioderComponent.less';
-import BehandlingPerioderårsakMedVilkår, { DokumenterTilBehandling } from './types/BehandlingPerioderårsakMedVilkår';
 import Periode from './types/Periode';
 
 interface SoknadsperioderComponentProps {

@@ -1,11 +1,13 @@
+@label-width: 14.625rem;
+
 .tidslinje {
   position: relative;
   padding: 0.75rem 0 0;
-  margin: 0 1rem 0 20%;
+  margin: 0 1rem 0 @label-width;
   display: flex;
   flex-direction: column;
   flex: 1;
-  width: 80%;
+  width: calc(100% - @label-width);
 }
 
 .rader {
@@ -25,8 +27,8 @@
 
 .radLabel {
   position: absolute;
-  left: -25%;
-  top: 2px;
+  left: -@label-width;
+  top: 0.125rem;
 }
 
 .visuallyhidden {

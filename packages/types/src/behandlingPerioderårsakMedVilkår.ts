@@ -1,7 +1,7 @@
 interface BehandlingPerioderårsakMedVilkår {
   perioderMedÅrsak: PerioderMedÅrsak;
   periodeMedUtfall: PeriodeMedUtfall[];
-  forrigeVedtak: any[];
+  forrigeVedtak: PeriodeMedUtfall[];
 }
 
 export interface PeriodeMedUtfall {

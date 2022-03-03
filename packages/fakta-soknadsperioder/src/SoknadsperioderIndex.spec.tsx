@@ -3,7 +3,7 @@ import { screen } from '@testing-library/react';
 import * as React from 'react';
 import SoknadsperioderIndex from './SoknadsperioderIndex';
 
-describe('<SøknadsperioderIndex', () => {
+describe('<SøknadsperioderIndex>', () => {
   const data = {
     perioderMedÅrsak: {
       perioderTilVurdering: [{ fom: '2021-12-28', tom: '2022-03-28' }],
