@@ -23,7 +23,8 @@ const RelatertFagsak = ({ relaterteFagsaker }: RelatertFagsakProps) => {
   const harMerEnnEnRelatertSøker = relaterteSøkere.length > 1;
   const { saksnummer, søkerNavn, søkerIdent, åpenBehandling } = valgtSøker;
 
-  const behandlingsstatus = åpenBehandling ? '(Åpen behandling)' : '(Lukket behandling)';
+  const behandlingsstatus = (søker: RelatertFagsakType["relaterteSøkere"][number]) => søker.åpenBehandling ? '(Åpen behandling)' : '(Lukket behandling)';
+
   const visRelaterteSøkere = () => {
     if (!harMerEnnEnRelatertSøker) {
       return (
@@ -47,7 +48,7 @@ const RelatertFagsak = ({ relaterteFagsaker }: RelatertFagsakProps) => {
         >
           {relaterteSøkere.map(søker => (
             <option key={søker.søkerIdent} value={søker.søkerIdent}>
-              {søker.søkerNavn} {behandlingsstatus}
+              {søker.søkerNavn} {behandlingsstatus(søker)}
             </option>
           ))}
         </NavSelect>
