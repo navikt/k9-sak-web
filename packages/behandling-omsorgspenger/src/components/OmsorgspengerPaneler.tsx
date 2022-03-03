@@ -7,7 +7,7 @@ import {
   FeatureToggles,
   Fagsak,
   FagsakPerson,
-  ArbeidsgiverOpplysningerPerId,
+  ArbeidsgiverOpplysningerPerId, Dokument,
 } from '@k9-sak-web/types';
 
 import OmsorgspengerProsess from './OmsorgspengerProsess';
@@ -32,6 +32,7 @@ interface OwnProps {
   featureToggles: FeatureToggles;
   setBehandling: (behandling: Behandling) => void;
   arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysningerPerId;
+  dokumenter: Dokument[];
 }
 
 interface FaktaPanelInfo {
@@ -57,6 +58,7 @@ const OmsorgspengerPaneler = ({
   featureToggles,
   setBehandling,
   arbeidsgiverOpplysningerPerId,
+  dokumenter
 }: OwnProps) => {
   const [apentFaktaPanelInfo, setApentFaktaPanel] = useState<FaktaPanelInfo>();
 
@@ -102,6 +104,7 @@ const OmsorgspengerPaneler = ({
         setBehandling={setBehandling}
         arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
         featureToggles={featureToggles}
+        dokumenter={dokumenter}
       />
     </>
   );
