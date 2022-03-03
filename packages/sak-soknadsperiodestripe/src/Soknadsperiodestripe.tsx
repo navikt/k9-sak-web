@@ -100,13 +100,22 @@ const Soknadsperiodestripe: React.FC<SoknadsperiodestripeProps> = ({ behandlingP
     },
   ];
 
+  const getSenesteTom = () => {
+    const perioderSortertPåTom = [...rader[0].perioder].sort((a, b) =>
+      dateStringSorter(a.tom.toISOString(), b.tom.toISOString()),
+    );
+    return perioderSortertPåTom[perioderSortertPåTom.length - 1].tom;
+  };
+
   const [tidslinjeSkala, setTidslinjeSkala] = useState<Tidslinjeskala>(6);
   const [navigasjonFomDato, setNavigasjonFomDato] = useState(undefined);
 
   useEffect(() => {
     if (formatertePerioder.length > 0) {
-      const dato = useTidligsteDato({ startDato: undefined, rader }).startOf('month').toDate();
-      setNavigasjonFomDato(dato);
+      const senesteTom = getSenesteTom();
+      // Tidslinjen skal initielt slutte på første dag i månenden etter den seneste perioden
+      const fomDato = dayjs(senesteTom).endOf('month').add(1, 'day').subtract(6, 'months').toDate();
+      setNavigasjonFomDato(fomDato);
     }
   }, [behandlingPerioderMedVilkår]);
 
@@ -114,24 +123,27 @@ const Soknadsperiodestripe: React.FC<SoknadsperiodestripeProps> = ({ behandlingP
     return null;
   }
 
-  const getSkalaRadio = (label: string, value: Tidslinjeskala) => (
-    <>
-      <input
-        className={styles.skalaRadioInput}
-        id={label}
-        onChange={() => setTidslinjeSkala(value)}
-        type="radio"
-        name="skala"
-        value={value}
-      />
-      <label
-        htmlFor={label}
-        className={`${styles.skalaRadioLabel} ${tidslinjeSkala === value ? styles['skalaRadioLabel--selected'] : ''}`}
-      >
-        <Normaltekst>{label}</Normaltekst>
-      </label>
-    </>
-  );
+  const getSkalaRadio = (label: string, value: Tidslinjeskala) => {
+    const id = `soknadsperiodestripe_${label}`;
+    return (
+      <>
+        <input
+          className={styles.skalaRadioInput}
+          id={id}
+          onChange={() => setTidslinjeSkala(value)}
+          type="radio"
+          name="soknadsperiodestripe_skala"
+          value={value}
+        />
+        <label
+          htmlFor={id}
+          className={`${styles.skalaRadioLabel} ${tidslinjeSkala === value ? styles['skalaRadioLabel--selected'] : ''}`}
+        >
+          <Normaltekst>{label}</Normaltekst>
+        </label>
+      </>
+    );
+  };
 
   const updateNavigasjon = (subtract?: boolean) => {
     if (subtract) {
@@ -154,10 +166,7 @@ const Soknadsperiodestripe: React.FC<SoknadsperiodestripeProps> = ({ behandlingP
   };
 
   const disableNavigasjonTomButton = () => {
-    const perioderSortertPåTom = [...rader[0].perioder].sort((a, b) =>
-      dateStringSorter(a.tom.toISOString(), b.tom.toISOString()),
-    );
-    const senesteTom = perioderSortertPåTom[perioderSortertPåTom.length - 1].tom;
+    const senesteTom = getSenesteTom();
     if (tidslinjeSkala === 24) {
       return dayjs(senesteTom).isSameOrBefore(dayjs(navigasjonFomDato).add(12, 'month'));
     }
