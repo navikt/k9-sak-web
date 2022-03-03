@@ -30,7 +30,7 @@ import {
 import { K9sakApiKeys, requestApi, restApiHooks, LinkCategory } from '../data/k9sakApi';
 import behandlingEventHandler from './BehandlingEventHandler';
 import ErrorBoundary from '../app/ErrorBoundary';
-import BehandlingPleiepengerSluttfaseIndex from "../../../behandling-pleiepenger-sluttfase/src/BehandlingPleiepengerSluttfaseIndex";
+import BehandlingPleiepengerSluttfaseIndex from '../../../behandling-pleiepenger-sluttfase/src/BehandlingPleiepengerSluttfaseIndex';
 
 const BehandlingPleiepengerIndex = React.lazy(() => import('@k9-sak-web/behandling-pleiepenger'));
 const BehandlingOmsorgspengerIndex = React.lazy(() => import('@k9-sak-web/behandling-omsorgspenger'));
@@ -50,26 +50,26 @@ const formatName = (bpName = ''): string => replaceNorwegianCharacters(bpName.to
 
 const getOppdaterProsessStegOgFaktaPanelIUrl =
   (location: Location, navigate: NavigateFunction) =>
-    (prosessStegId: string, faktaPanelId: string): void => {
-      let newLocation;
-      if (prosessStegId === 'default') {
-        newLocation = getLocationWithDefaultProsessStegAndFakta(location);
-      } else if (prosessStegId) {
-        newLocation = getProsessStegLocation(location)(formatName(prosessStegId));
-      } else {
-        newLocation = getProsessStegLocation(location)(null);
-      }
+  (prosessStegId: string, faktaPanelId: string): void => {
+    let newLocation;
+    if (prosessStegId === 'default') {
+      newLocation = getLocationWithDefaultProsessStegAndFakta(location);
+    } else if (prosessStegId) {
+      newLocation = getProsessStegLocation(location)(formatName(prosessStegId));
+    } else {
+      newLocation = getProsessStegLocation(location)(null);
+    }
 
-      if (faktaPanelId === 'default') {
-        newLocation = getFaktaLocation(newLocation)('default');
-      } else if (faktaPanelId) {
-        newLocation = getFaktaLocation(newLocation)(formatName(faktaPanelId));
-      } else {
-        newLocation = getFaktaLocation(newLocation)(null);
-      }
+    if (faktaPanelId === 'default') {
+      newLocation = getFaktaLocation(newLocation)('default');
+    } else if (faktaPanelId) {
+      newLocation = getFaktaLocation(newLocation)(formatName(faktaPanelId));
+    } else {
+      newLocation = getFaktaLocation(newLocation)(null);
+    }
 
-      navigate(newLocation);
-    };
+    navigate(newLocation);
+  };
 
 interface OwnProps {
   setBehandlingIdOgVersjon: (behandlingId: number, behandlingVersjon: number) => void;
@@ -140,8 +140,13 @@ const BehandlingIndex = ({
 
   const location = useLocation();
   const navigate = useNavigate();
-  const opneSokeside = useCallback(() => { navigate(getPathToFplos() || '/'); }, []);
-  const oppdaterProsessStegOgFaktaPanelIUrl = useCallback(getOppdaterProsessStegOgFaktaPanelIUrl(location, navigate), [location, navigate]);
+  const opneSokeside = useCallback(() => {
+    window.location.assign(getPathToFplos() || '/');
+  }, []);
+  const oppdaterProsessStegOgFaktaPanelIUrl = useCallback(getOppdaterProsessStegOgFaktaPanelIUrl(location, navigate), [
+    location,
+    navigate,
+  ]);
 
   const query = parseQueryString(location.search);
 
