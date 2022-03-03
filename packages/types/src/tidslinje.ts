@@ -64,7 +64,15 @@ export interface Pin {
 
 export type Etikett = AxisLabel;
 
-export type PeriodStatus = 'suksess' | 'suksessRevurder' | 'advarsel' | 'feil' | 'feilRevurder' | 'inaktiv' | 'ukjent';
+export type PeriodStatus =
+  | 'suksess'
+  | 'suksessRevurder'
+  | 'suksessDelvis'
+  | 'advarsel'
+  | 'feil'
+  | 'feilRevurder'
+  | 'inaktiv'
+  | 'ukjent';
 export type Tidslinjeskala = 6 | 12 | 24 | 36;
 export type Percentage = number;
 

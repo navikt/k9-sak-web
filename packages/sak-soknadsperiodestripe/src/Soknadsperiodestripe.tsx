@@ -1,14 +1,14 @@
+import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import { Tidslinje } from '@fpsak-frontend/shared-components';
-import { useTidligsteDato } from '@fpsak-frontend/shared-components/src/tidslinje/useTidslinjerader';
 import BehandlingPerioderårsakMedVilkår from '@k9-sak-web/types/src/behandlingPerioderårsakMedVilkår';
 import { PeriodStatus, Tidslinjeskala } from '@k9-sak-web/types/src/tidslinje';
+import { dateStringSorter } from '@navikt/k9-date-utils';
 import { Period } from '@navikt/k9-period-utils';
 import dayjs from 'dayjs';
 import 'dayjs/locale/nb';
 import { Normaltekst } from 'nav-frontend-typografi';
 import React, { useEffect, useMemo, useState } from 'react';
 import { useIntl } from 'react-intl';
-import { dateStringSorter } from '@navikt/k9-date-utils';
 import styles from './soknadsperiodestripe.less';
 
 dayjs.locale('nb');
@@ -25,72 +25,85 @@ interface RadPeriode {
   className: string;
 }
 
+export const formaterPerioder = (behandlingPerioderMedVilkår: BehandlingPerioderårsakMedVilkår) => {
+  const overlappendePerioder: Period[] = [];
+  const vedtakshistorikk: RadPeriode[] =
+    behandlingPerioderMedVilkår?.forrigeVedtak?.map(({ periode, utfall }) => {
+      const vedtaksperiode = new Period(periode.fom, periode.tom);
+      const harOverlappMedPeriodeTilVurdering =
+        behandlingPerioderMedVilkår?.perioderMedÅrsak?.perioderTilVurdering.some(({ fom, tom }) => {
+          const periodeTilVurdering = new Period(fom, tom);
+          return periodeTilVurdering.covers(vedtaksperiode);
+        });
+      const nyPeriode = {
+        id: `${periode.fom}-${periode.tom}`,
+        fom: new Date(periode.fom),
+        tom: new Date(periode.tom),
+        className: utfall.kode === vilkarUtfallType.OPPFYLT ? styles.suksess : styles.feil,
+        status: utfall.kode === vilkarUtfallType.OPPFYLT ? ('suksess' as PeriodStatus) : 'feil',
+      };
+      if (harOverlappMedPeriodeTilVurdering) {
+        overlappendePerioder.push(vedtaksperiode);
+        nyPeriode.status =
+          utfall.kode === vilkarUtfallType.OPPFYLT ? ('suksessRevurder' as PeriodStatus) : 'feilRevurder';
+        nyPeriode.className = styles.advarsel;
+      }
+      return nyPeriode;
+    }) || [];
+
+  const perioderTilVurdering: RadPeriode[] =
+    behandlingPerioderMedVilkår?.perioderMedÅrsak?.perioderTilVurdering
+      .map(({ fom, tom }) => {
+        const periodeTilVurdering = new Period(fom, tom);
+        const vedtaksperiodeMedOverlapp = overlappendePerioder.find(overlappendePeriode =>
+          periodeTilVurdering.covers(overlappendePeriode),
+        );
+        const identiskPeriodeMedUtfall = behandlingPerioderMedVilkår.periodeMedUtfall.find(
+          periodeMedUtfall => periodeMedUtfall.periode.fom === fom && periodeMedUtfall.periode.tom === tom,
+        );
+        const erDelvisInnvilget = behandlingPerioderMedVilkår.periodeMedUtfall.some(
+          periodeMedUtfall =>
+            periodeTilVurdering.covers(new Period(periodeMedUtfall.periode.fom, periodeMedUtfall.periode.tom)) &&
+            periodeMedUtfall.utfall.kode === vilkarUtfallType.OPPFYLT,
+        );
+        const nyPeriode = {
+          id: `${fom}-${tom}`,
+          fom: new Date(fom),
+          tom: new Date(tom),
+          status: 'advarsel' as PeriodStatus,
+          className: `${styles.advarsel} ${styles.aktivPeriode}`,
+        };
+        if (identiskPeriodeMedUtfall) {
+          const utfall = identiskPeriodeMedUtfall.utfall.kode === vilkarUtfallType.OPPFYLT ? 'suksess' : 'feil';
+          nyPeriode.status = utfall;
+          nyPeriode.className = `${styles[utfall]} ${styles.aktivPeriode}`;
+          return nyPeriode;
+        }
+        if (vedtaksperiodeMedOverlapp) {
+          if (dayjs(vedtaksperiodeMedOverlapp.tom).isSame(periodeTilVurdering.tom)) {
+            return undefined;
+          }
+          const nyFom = dayjs(vedtaksperiodeMedOverlapp.tom).add(1, 'day').toDate();
+          nyPeriode.id = `${nyFom.toISOString()}-${tom}`;
+          nyPeriode.fom = nyFom;
+        }
+        if (erDelvisInnvilget) {
+          nyPeriode.status = 'suksessDelvis';
+          nyPeriode.className = `${styles.suksess} ${styles.aktivPeriode}`;
+        }
+        return nyPeriode;
+      })
+      .filter(periodeTilVurdering => periodeTilVurdering) || [];
+  return vedtakshistorikk.concat(perioderTilVurdering);
+};
+
 const Soknadsperiodestripe: React.FC<SoknadsperiodestripeProps> = ({ behandlingPerioderMedVilkår }) => {
   const intl = useIntl();
 
-  const formaterPerioder = () => {
-    const overlappendePerioder: Period[] = [];
-    const vedtakshistorikk: RadPeriode[] =
-      behandlingPerioderMedVilkår?.forrigeVedtak?.map(({ periode, utfall }) => {
-        const vedtaksperiode = new Period(periode.fom, periode.tom);
-        const harOverlappMedPeriodeTilVurdering =
-          behandlingPerioderMedVilkår?.perioderMedÅrsak?.perioderTilVurdering.some(({ fom, tom }) => {
-            const periodeTilVurdering = new Period(fom, tom);
-            return periodeTilVurdering.covers(vedtaksperiode);
-          });
-        const nyPeriode = {
-          id: `${periode.fom}-${periode.tom}`,
-          fom: new Date(periode.fom),
-          tom: new Date(periode.tom),
-          className: utfall.kode === 'OPPFYLT' ? styles.suksess : styles.feil,
-          status: utfall.kode === 'OPPFYLT' ? ('suksess' as PeriodStatus) : 'feil',
-        };
-        if (harOverlappMedPeriodeTilVurdering) {
-          overlappendePerioder.push(vedtaksperiode);
-          nyPeriode.status = utfall.kode === 'OPPFYLT' ? ('suksessRevurder' as PeriodStatus) : 'feilRevurder';
-          nyPeriode.className = styles.advarsel;
-        }
-        return nyPeriode;
-      }) || [];
-
-    const perioderTilVurdering: RadPeriode[] =
-      behandlingPerioderMedVilkår?.perioderMedÅrsak?.perioderTilVurdering
-        .map(({ fom, tom }) => {
-          const periodeTilVurdering = new Period(fom, tom);
-          const vedtaksperiodeMedOverlapp = overlappendePerioder.find(overlappendePeriode =>
-            periodeTilVurdering.covers(overlappendePeriode),
-          );
-          const nyPeriode = {
-            id: `${fom}-${tom}`,
-            fom: new Date(fom),
-            tom: new Date(tom),
-            status: 'advarsel' as PeriodStatus,
-            className: `${styles.advarsel} ${styles.aktivPeriode}`,
-          };
-          const identiskPeriodeMedUtfall = behandlingPerioderMedVilkår.periodeMedUtfall.find(
-            periodeMedUtfall => periodeMedUtfall.periode.fom === fom && periodeMedUtfall.periode.tom === tom,
-          );
-          if (identiskPeriodeMedUtfall) {
-            const utfall = identiskPeriodeMedUtfall.utfall.kode === 'OPPFYLT' ? 'suksess' : 'feil';
-            nyPeriode.status = utfall;
-            nyPeriode.className = `${styles[utfall]} ${styles.aktivPeriode}`;
-            return nyPeriode;
-          }
-          if (vedtaksperiodeMedOverlapp) {
-            if (dayjs(vedtaksperiodeMedOverlapp.tom).isSame(periodeTilVurdering.tom)) {
-              return undefined;
-            }
-            const nyFom = dayjs(vedtaksperiodeMedOverlapp.tom).add(1, 'day').toDate();
-            nyPeriode.id = `${nyFom.toISOString()}-${tom}`;
-            nyPeriode.fom = nyFom;
-          }
-          return nyPeriode;
-        })
-        .filter(periodeTilVurdering => periodeTilVurdering) || [];
-    return vedtakshistorikk.concat(perioderTilVurdering);
-  };
-
-  const formatertePerioder = useMemo(() => formaterPerioder(), [behandlingPerioderMedVilkår]);
+  const formatertePerioder = useMemo(
+    () => formaterPerioder(behandlingPerioderMedVilkår),
+    [behandlingPerioderMedVilkår],
+  );
 
   const rader = [
     {
