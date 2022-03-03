@@ -162,6 +162,33 @@ export const VedtakForm = ({
   const mellomlagredeInformasjonsbehov = aktiverteInformasjonsbehov.map(informasjonsbehov => ({
     [informasjonsbehov.kode]: dokumentdata?.[informasjonsbehov.kode] || '',
   }));
+
+  const initialValues = Object.assign(
+    {},
+    {
+      [fieldnames.SKAL_BRUKE_OVERSTYRENDE_FRITEKST_BREV]:
+        kanKunVelge(tilgjengeligeVedtaksbrev, vedtaksbrevtype.FRITEKST) ||
+        (harMellomlagretFritekstbrev(dokumentdata, vedtakVarsel) && kanHaFritekstbrev(tilgjengeligeVedtaksbrev)) ||
+        (kanHaFritekstbrev(tilgjengeligeVedtaksbrev) &&
+          !kanHaAutomatiskVedtaksbrev(tilgjengeligeVedtaksbrev) &&
+          !harMellomLagretMedIngenBrev(dokumentdata, vedtakVarsel)),
+      [fieldnames.SKAL_HINDRE_UTSENDING_AV_BREV]:
+        kanKunVelge(tilgjengeligeVedtaksbrev, vedtaksbrevtype.INGEN) ||
+        (harMellomLagretMedIngenBrev(dokumentdata, vedtakVarsel) &&
+          kanHindreUtsending(tilgjengeligeVedtaksbrev) &&
+          !harMellomlagretFritekstbrev(dokumentdata, vedtakVarsel)),
+      [fieldnames.OVERSKRIFT]: decodeHtmlEntity(dokumentdata?.[dokumentdatatype.FRITEKSTBREV]?.overskrift) || '',
+      [fieldnames.BRØDTEKST]: decodeHtmlEntity(dokumentdata?.[dokumentdatatype.FRITEKSTBREV]?.brødtekst) || '',
+      [fieldnames.OVERSTYRT_MOTTAKER]: JSON.stringify(dokumentdata?.[dokumentdatatype.OVERSTYRT_MOTTAKER]),
+      [fieldnames.BEGRUNNELSE]: dokumentdata?.[dokumentdatatype.BEREGNING_FRITEKST],
+    },
+    ...[
+      ...mellomlagredeInformasjonsbehov,
+      ...Object.values(redusertUtbetalingArsak).map(key => ({
+        [key]: harMellomlagretRedusertUtbetalingArsak(key, dokumentdata, vedtakVarsel),
+      })),
+    ],
+  );
   return (
     <>
       <Formik

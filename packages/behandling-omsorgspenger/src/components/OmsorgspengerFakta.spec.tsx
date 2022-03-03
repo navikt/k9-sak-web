@@ -157,6 +157,7 @@ describe('<OmsorgspengerFakta>', () => {
         setBehandling={sinon.spy()}
         arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
         featureToggles={{}}
+        dokumenter={[]}
       />,
     );
 
@@ -200,6 +201,7 @@ describe('<OmsorgspengerFakta>', () => {
         setBehandling={sinon.spy()}
         arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
         featureToggles={{}}
+        dokumenter={[]}
       />,
     );
 
@@ -239,6 +241,7 @@ describe('<OmsorgspengerFakta>', () => {
         setBehandling={sinon.spy()}
         arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
         featureToggles={{}}
+        dokumenter={[]}
       />,
     );
 
