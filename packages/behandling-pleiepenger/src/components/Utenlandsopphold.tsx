@@ -1,9 +1,9 @@
 import React from 'react';
 
-import { Alert, BodyLong, Heading } from '@navikt/ds-react';
+import { Alert, Heading } from '@navikt/ds-react';
 import Ekspanderbartpanel from 'nav-frontend-ekspanderbartpanel';
 
-import { UtenlandsoppholdPerioder } from '@k9-sak-web/types';
+import { AlleKodeverk, UtenlandsoppholdPerioder } from '@k9-sak-web/types';
 import { PeriodList } from '@navikt/k9-react-components';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 
@@ -13,23 +13,33 @@ import styles from './utenlandsopphold.less';
 
 countries.registerLocale(norwegianLocale);
 
-const finnÅrsaker = (periode, erEØS) => {
-  if (erEØS) {
-    return 'Periode telles ikke.';
-  }
-  return periode?.årsak?.navn || 'Ukjent årsak';
-};
+export default function Utenlandsopphold({
+  utenlandsopphold,
+  alleKodeverk,
+}: {
+  utenlandsopphold: UtenlandsoppholdPerioder;
+  alleKodeverk: AlleKodeverk;
+}) {
+  const finnÅrsaker = (periode, erEØS) => {
+    if (erEØS) {
+      return 'Periode telles ikke.';
+    }
 
-const mapItems = periode => {
-  const erEØS = periode.region.kode === 'NORDEN' || periode.region.kode === 'EOS';
+    return (
+      alleKodeverk?.UtenlandsoppholdÅrsak?.find(kodeverk => kodeverk.kode === periode?.årsak)?.navn || 'Ukjent årsak'
+    );
+  };
 
-  const land = { label: 'Land', value: countries.getName(periode.landkode.kode, 'no') };
-  const eos = { label: 'EØS', value: erEØS ? 'Ja' : 'Nei' };
-  const årsak = { label: 'Merknad til utenlandsopphold', value: finnÅrsaker(periode, erEØS) };
+  const mapItems = periode => {
+    const erEØS = periode.region.kode === 'NORDEN' || periode.region.kode === 'EOS';
 
-  return [land, eos, årsak];
-};
-export default function Utenlandsopphold({ utenlandsopphold }: { utenlandsopphold: UtenlandsoppholdPerioder }) {
+    const land = { label: 'Land', value: countries.getName(periode.landkode.kode, 'no') };
+    const eos = { label: 'EØS', value: erEØS ? 'Ja' : 'Nei' };
+    const årsak = { label: 'Merknad til utenlandsopphold', value: finnÅrsaker(periode, erEØS) };
+
+    return [land, eos, årsak];
+  };
+
   const perioder = utenlandsopphold?.perioder;
 
   const harUtenlandsopphold = perioder?.length;

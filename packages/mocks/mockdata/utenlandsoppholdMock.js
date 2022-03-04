@@ -26,7 +26,7 @@ const utenlandsopphold = {
         kode: 'ANNET',
         kodeverk: 'REGION',
       },
-      årsak: { kode: 'INGEN', navn: 'Ingen, telles i 8 uker.', kodeverk: 'UTENLANDSOPPHOLD_ÅRSAK' },
+      årsak: 'INGEN',
     },
     {
       periode: `${dayjs().subtract(22, 'day').format('YYYY-MM-DD')}/${dayjs()
@@ -41,11 +41,7 @@ const utenlandsopphold = {
         kode: 'ANNET',
         kodeverk: 'REGION',
       },
-      årsak: {
-        kode: 'BARNET_INNLAGT_I_HELSEINSTITUSJON_DEKKET_ETTER_AVTALE_MED_ET_ANNET_LAND_OM_TRYGD',
-        navn: 'Barnet er innlagt i helseinstitusjon dekket etter avtale med annet land om trygd (mottar pleiepenger som i Norge, telles ikke i 8 uker)',
-        kodeverk: 'UTENLANDSOPPHOLD_ÅRSAK',
-      },
+      årsak: 'BARNET_INNLAGT_I_HELSEINSTITUSJON_DEKKET_ETTER_AVTALE_MED_ET_ANNET_LAND_OM_TRYGD',
     },
     {
       periode: `${dayjs().subtract(30, 'day').format('YYYY-MM-DD')}/${dayjs()
@@ -75,11 +71,7 @@ const utenlandsopphold = {
         kode: 'ANNET',
         kodeverk: 'REGION',
       },
-      årsak: {
-        kode: 'BARNET_INNLAGT_I_HELSEINSTITUSJON_FOR_NORSK_OFFENTLIG_REGNING',
-        navn: 'Barnet er innlagt i helseinstitusjon for norsk offentlig regning (mottar pleiepenger som i Norge, telles ikke i 8 uker)',
-        kodeverk: 'UTENLANDSOPPHOLD_ÅRSAK',
-      },
+      årsak: 'BARNET_INNLAGT_I_HELSEINSTITUSJON_FOR_NORSK_OFFENTLIG_REGNING',
     },
   ],
 };
