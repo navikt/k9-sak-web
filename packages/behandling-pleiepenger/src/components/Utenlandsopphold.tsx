@@ -3,7 +3,7 @@ import React from 'react';
 import { Alert, Heading } from '@navikt/ds-react';
 import Ekspanderbartpanel from 'nav-frontend-ekspanderbartpanel';
 
-import { AlleKodeverk, UtenlandsoppholdPerioder } from '@k9-sak-web/types';
+import { KodeverkMedNavn, UtenlandsoppholdPerioder } from '@k9-sak-web/types';
 import { PeriodList } from '@navikt/k9-react-components';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 
@@ -15,19 +15,17 @@ countries.registerLocale(norwegianLocale);
 
 export default function Utenlandsopphold({
   utenlandsopphold,
-  alleKodeverk,
+  kodeverk,
 }: {
   utenlandsopphold: UtenlandsoppholdPerioder;
-  alleKodeverk: AlleKodeverk;
+  kodeverk: { UtenlandsoppholdÅrsak: KodeverkMedNavn[] };
 }) {
   const finnÅrsaker = (periode, erEØS) => {
     if (erEØS) {
       return 'Periode telles ikke.';
     }
 
-    return (
-      alleKodeverk?.UtenlandsoppholdÅrsak?.find(kodeverk => kodeverk.kode === periode?.årsak)?.navn || 'Ukjent årsak'
-    );
+    return kodeverk?.UtenlandsoppholdÅrsak?.find(v => v.kode === periode?.årsak)?.navn || 'Ukjent årsak';
   };
 
   const mapItems = periode => {
