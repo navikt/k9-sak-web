@@ -16,7 +16,7 @@ export interface Periode extends EnkelPeriode {
   /**
    * Brukes for å style/fargesette periodeknappene og indikerer status for perioden.
    */
-  status: 'suksess' | 'feil' | 'advarsel' | 'inaktiv' | 'ukjent';
+  status: PeriodStatus;
   /**
    * Brukes for å unikt identifisere perioden, f.eks. om du ønsker å identifisere
    * perioden du klikker på med `onSelectPeriod`-funksjonen.
@@ -64,8 +64,16 @@ export interface Pin {
 
 export type Etikett = AxisLabel;
 
-export type PeriodStatus = 'suksess' | 'advarsel' | 'feil' | 'inaktiv' | 'ukjent';
-export type Tidslinjeskala = 6 | 12 | 36;
+export type PeriodStatus =
+  | 'suksess'
+  | 'suksessRevurder'
+  | 'suksessDelvis'
+  | 'advarsel'
+  | 'feil'
+  | 'feilRevurder'
+  | 'inaktiv'
+  | 'ukjent';
+export type Tidslinjeskala = 6 | 12 | 24 | 36;
 export type Percentage = number;
 
 export interface Positioned {

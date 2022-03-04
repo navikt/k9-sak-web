@@ -29,6 +29,10 @@ const featureToggles = [
     key: 'UTENLANDSOPPHOLD',
     value: process.env.UTENLANDSOPPHOLD,
   },
+  {
+    key: 'SOKNADPERIODESTRIPE',
+    value: process.env.SOKNADPERIODESTRIPE,
+  },
 ];
 
 module.exports = function (app) {

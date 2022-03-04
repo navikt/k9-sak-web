@@ -1,3 +1,4 @@
+/* stylelint-disable max-line-length */
 .colors(@background, @border, @hover) {
   background: @background;
   border: 1px solid @border;
@@ -83,7 +84,7 @@ button.periode {
 }
 
 .advarsel {
-  .colors(#ffe9cc, #ff9100, #ffe9cc);
+  .colors(#FFECCC, #D47B00, #FFECCC);
 }
 
 button.advarsel {
@@ -91,7 +92,11 @@ button.advarsel {
 }
 
 .feil {
-  .colors(#f1d8d4, #ba3a26, #f1d8d4);
+  .colors(#EFA89D, #BA3A26, #EFA89D);
+}
+
+.feilRevurder {
+  .colors(repeating-linear-gradient(-45deg, #EFA89D, #EFA89D 10px, #ffe9cc 10px, #ffe9cc 20px), #ba3a26, repeating-linear-gradient(-45deg, #EFA89D, #EFA89D 10px, #ffe9cc 10px, #ffe9cc 20px));
 }
 
 button.feil {
@@ -107,7 +112,15 @@ button.inaktiv {
 }
 
 .suksess {
-  .colors(#cde7d8, #117938, #cde7d8);
+  .colors(#99dead, #06893a, #99dead);
+}
+
+.suksessRevurder {
+  .colors(repeating-linear-gradient(-45deg, #99dead, #99dead 10px, #FFECCC 10px, #FFECCC 20px), #06893a, repeating-linear-gradient(-45deg, #99dead, #99dead 10px, #FFECCC 10px, #FFECCC 20px));
+}
+
+.suksessDelvis {
+  .colors(repeating-linear-gradient(-45deg, #99dead, #99dead 10px, #CCF1D6 10px, #CCF1D6 20px), #06893a, repeating-linear-gradient(-45deg, #99dead, #99dead 10px, #CCF1D6 10px, #CCF1D6 20px));
 }
 
 button.suksess {

@@ -1,8 +1,13 @@
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
-import { BehandlingAppKontekst, BehandlingPerioder, Kodeverk, KodeverkMedNavn } from '@k9-sak-web/types';
-import PerioderMedBehandlingsId from '@k9-sak-web/types/src/PerioderMedBehandlingsId';
+import {
+  BehandlingAppKontekst,
+  BehandlingPerioder,
+  Kodeverk,
+  KodeverkMedNavn,
+  PerioderMedBehandlingsId,
+} from '@k9-sak-web/types';
 import axios from 'axios';
 import { Location } from 'history';
 import { Tilbakeknapp } from 'nav-frontend-ikonknapper';

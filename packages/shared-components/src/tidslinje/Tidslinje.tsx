@@ -104,11 +104,11 @@ const Timeline = ({
         {rows.map((tidslinje, i) => (
           <div key={tidslinje.id} className={`${styles.radContainer} ${tidslinje.radClassname || ''}`}>
             {tidslinje.onClick ? (
-              <button onClick={tidslinje.onClick} type="button" className={styles.radLabel}>
+              <button onClick={tidslinje.onClick} type="button" className={`${styles.radLabel} radLabel`}>
                 <Normaltekst tag="span">{tidslinje.radLabel}</Normaltekst>
               </button>
             ) : (
-              <Normaltekst className={styles.radLabel}>{tidslinje.radLabel}</Normaltekst>
+              <Normaltekst className={`${styles.radLabel} radLabel`}>{tidslinje.radLabel}</Normaltekst>
             )}
             <TimelineRow {...tidslinje} onSelectPeriod={onSelectPeriodeWrapper} active={i === activeRow} />
           </div>
@@ -165,18 +165,16 @@ const Tidslinje = ({
   };
 
   return (
-    <div>
-      <Timeline
-        rows={rows}
-        start={start}
-        activeRow={aktivRad}
-        direction={direction}
-        endInclusive={endInclusive}
-        onSelectPeriod={onSelectPeriode}
-        axisLabelRenderer={etikettRender}
-        pins={pins?.length > 0 ? pins : getPins()}
-      />
-    </div>
+    <Timeline
+      rows={rows}
+      start={start}
+      activeRow={aktivRad}
+      direction={direction}
+      endInclusive={endInclusive}
+      onSelectPeriod={onSelectPeriode}
+      axisLabelRenderer={etikettRender}
+      pins={pins?.length > 0 ? pins : getPins()}
+    />
   );
 };
 
