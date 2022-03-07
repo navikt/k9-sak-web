@@ -105,7 +105,7 @@ export const AxisLabels = ({ start, slutt, direction = 'left', etikettRender }: 
           style={{
             display: 'flex',
             justifyContent: direction === 'left' ? 'flex-start' : 'flex-end',
-            [direction]: `${etikett.horizontalPosition}%`,
+            [direction]: `calc(${etikett.horizontalPosition}% - ${etikett.label.length * 3.5}px)`, // Midtstiller label over strek
             width: `${etikett.width}%`,
           }}
         >
