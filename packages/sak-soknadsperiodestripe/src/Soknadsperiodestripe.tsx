@@ -75,7 +75,12 @@ export const formaterPerioder = (behandlingPerioderMedVilkår: BehandlingPeriode
           className: `${styles.advarsel} ${styles.aktivPeriode}`,
         };
         if (identiskPeriodeMedUtfall) {
-          const utfall = identiskPeriodeMedUtfall.utfall.kode === vilkarUtfallType.OPPFYLT ? 'suksess' : 'feil';
+          let utfall = nyPeriode.status;
+          if (identiskPeriodeMedUtfall.utfall.kode === vilkarUtfallType.OPPFYLT) {
+            utfall = 'suksess';
+          } else if (identiskPeriodeMedUtfall.utfall.kode === vilkarUtfallType.IKKE_OPPFYLT) {
+            utfall = 'feil';
+          }
           nyPeriode.status = utfall;
           nyPeriode.className = `${styles[utfall]} ${styles.aktivPeriode}`;
           return nyPeriode;
