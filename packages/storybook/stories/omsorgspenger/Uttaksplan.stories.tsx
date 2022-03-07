@@ -68,7 +68,7 @@ const innvilgetPeriodeMedAvvik: Uttaksperiode = {
   periode: '2020-04-01/2020-04-19',
   utbetalingsgrad: 100,
   hjemler: ['FTRL_9_5__1', 'FTRL_9_5__3', 'FTRL_9_3__1', 'FTRL_9_6__1'],
-  avvikImSøknad: AvvikIMType.IM_REFUSJONSKRAV_TRUMFER_SØKNAD
+  avvikImSøknad: AvvikIMType.SØKNAD_UTEN_MATCHENDE_IM
 };
 
 const nullFravær: Uttaksperiode = {
