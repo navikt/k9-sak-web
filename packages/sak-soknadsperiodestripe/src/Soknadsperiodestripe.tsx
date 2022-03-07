@@ -1,8 +1,9 @@
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import { Tidslinje } from '@fpsak-frontend/shared-components';
-import BehandlingPerioderårsakMedVilkår from '@k9-sak-web/types/src/behandlingPerioderårsakMedVilkår';
+import HorisontalNavigering from '@fpsak-frontend/shared-components/src/tidslinje/HorisontalNavigering';
+import { useSenesteDato } from '@fpsak-frontend/shared-components/src/tidslinje/useTidslinjerader';
+import BehandlingPerioderårsakMedVilkår from '@k9-sak-web/types/src/behandlingPerioderarsakMedVilkar';
 import { PeriodStatus, Tidslinjeskala } from '@k9-sak-web/types/src/tidslinje';
-import { dateStringSorter } from '@navikt/k9-date-utils';
 import { Period } from '@navikt/k9-period-utils';
 import dayjs from 'dayjs';
 import 'dayjs/locale/nb';
@@ -113,28 +114,31 @@ const Soknadsperiodestripe: React.FC<SoknadsperiodestripeProps> = ({ behandlingP
     },
   ];
 
-  const getSenesteTom = () => {
-    const perioderSortertPåTom = [...rader[0].perioder].sort((a, b) =>
-      dateStringSorter(a.tom.toISOString(), b.tom.toISOString()),
-    );
-    return perioderSortertPåTom[perioderSortertPåTom.length - 1].tom;
-  };
+  const getSenesteTom = () => useSenesteDato({ sluttDato: undefined, rader });
 
   const [tidslinjeSkala, setTidslinjeSkala] = useState<Tidslinjeskala>(6);
   const [navigasjonFomDato, setNavigasjonFomDato] = useState(undefined);
 
+  const updateNavigasjonFomDato = (antallMånederFraSluttdato: number) => {
+    const senesteTom = getSenesteTom();
+    const fomDato = dayjs(senesteTom).subtract(antallMånederFraSluttdato, 'months').toDate();
+    setNavigasjonFomDato(fomDato);
+  };
+
   useEffect(() => {
     if (formatertePerioder.length > 0) {
-      const senesteTom = getSenesteTom();
-      // Tidslinjen skal initielt slutte på første dag i månenden etter den seneste perioden
-      const fomDato = dayjs(senesteTom).endOf('month').add(1, 'day').subtract(6, 'months').toDate();
-      setNavigasjonFomDato(fomDato);
+      updateNavigasjonFomDato(6);
     }
   }, [behandlingPerioderMedVilkår]);
 
   if (formatertePerioder.length === 0) {
     return null;
   }
+
+  const updateSkala = (value: number) => {
+    setTidslinjeSkala(value);
+    updateNavigasjonFomDato(value);
+  };
 
   const getSkalaRadio = (label: string, value: Tidslinjeskala) => {
     const id = `soknadsperiodestripe_${label}`;
@@ -143,7 +147,7 @@ const Soknadsperiodestripe: React.FC<SoknadsperiodestripeProps> = ({ behandlingP
         <input
           className={styles.skalaRadioInput}
           id={id}
-          onChange={() => setTidslinjeSkala(value)}
+          onChange={() => updateSkala(value)}
           type="radio"
           name="soknadsperiodestripe_skala"
           value={value}
@@ -158,34 +162,6 @@ const Soknadsperiodestripe: React.FC<SoknadsperiodestripeProps> = ({ behandlingP
     );
   };
 
-  const updateNavigasjon = (subtract?: boolean) => {
-    if (subtract) {
-      if (tidslinjeSkala === 6) {
-        setNavigasjonFomDato(dayjs(navigasjonFomDato).subtract(1, 'month'));
-      } else {
-        setNavigasjonFomDato(dayjs(navigasjonFomDato).subtract(6, 'month'));
-      }
-    } else if (tidslinjeSkala === 6) {
-      setNavigasjonFomDato(dayjs(navigasjonFomDato).add(1, 'month'));
-    } else {
-      setNavigasjonFomDato(dayjs(navigasjonFomDato).add(6, 'month'));
-    }
-  };
-
-  const formatNavigasjonsdato = () => {
-    const fom = dayjs(navigasjonFomDato).format('DD. MMMM YYYY');
-    const tom = dayjs(navigasjonFomDato).add(tidslinjeSkala, 'months').format('DD. MMMM YYYY');
-    return `${fom} - ${tom}`;
-  };
-
-  const disableNavigasjonTomButton = () => {
-    const senesteTom = getSenesteTom();
-    if (tidslinjeSkala === 24) {
-      return dayjs(senesteTom).isSameOrBefore(dayjs(navigasjonFomDato).add(12, 'month'));
-    }
-    return dayjs(senesteTom).isSameOrBefore(dayjs(navigasjonFomDato).add(6, 'month'));
-  };
-
   return (
     <div className={styles.container}>
       <div className={styles.skalavelgerContainer}>
@@ -197,22 +173,12 @@ const Soknadsperiodestripe: React.FC<SoknadsperiodestripeProps> = ({ behandlingP
         </fieldset>
       </div>
       <Tidslinje rader={rader} tidslinjeSkala={tidslinjeSkala} startDato={navigasjonFomDato} />
-      <div className={styles.navigasjonContainer}>
-        <button
-          onClick={() => updateNavigasjon(true)}
-          className={styles.navigasjonButtonLeft}
-          aria-label={intl.formatMessage({ id: 'Soknadsperioder.Navigasjonsknapp.Bakover' })}
-          type="button"
-        />
-        <button
-          onClick={() => updateNavigasjon()}
-          className={styles.navigasjonButtonRight}
-          aria-label={intl.formatMessage({ id: 'Soknadsperioder.Navigasjonsknapp.Fremover' })}
-          type="button"
-          disabled={disableNavigasjonTomButton()}
-        />
-        <Normaltekst className={styles.navigasjonDatoContainer}>{formatNavigasjonsdato()}</Normaltekst>
-      </div>
+      <HorisontalNavigering
+        tidslinjeSkala={tidslinjeSkala}
+        rader={rader}
+        navigasjonFomDato={navigasjonFomDato}
+        updateHorisontalNavigering={setNavigasjonFomDato}
+      />
     </div>
   );
 };

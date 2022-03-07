@@ -1,4 +1,4 @@
-import BehandlingPerioderårsakMedVilkår from '@k9-sak-web/types/src/behandlingPerioderårsakMedVilkår';
+import BehandlingPerioderårsakMedVilkår from '@k9-sak-web/types/src/behandlingPerioderarsakMedVilkar';
 import React from 'react';
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 import messages from '../i18n/nb_NO.json';

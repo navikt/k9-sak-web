@@ -5,7 +5,7 @@ import { RestApiState } from '@k9-sak-web/rest-api-hooks';
 import Soknadsperiodestripe from '@k9-sak-web/sak-soknadsperiodestripe';
 import {
   ArbeidsgiverOpplysningerWrapper,
-  behandlingPerioderårsakMedVilkår,
+  BehandlingPerioderårsakMedVilkår,
   Fagsak,
   FagsakPerson,
   FeatureToggles,
@@ -147,7 +147,7 @@ const FagsakIndex = () => {
     },
   );
 
-  const { data: behandlingPerioderMedVilkår } = restApiHooks.useRestApi<behandlingPerioderårsakMedVilkår>(
+  const { data: behandlingPerioderMedVilkår } = restApiHooks.useRestApi<BehandlingPerioderårsakMedVilkår>(
     K9sakApiKeys.BEHANDLING_PERIODER_ÅRSAK_MED_VILKÅR,
     {},
     {

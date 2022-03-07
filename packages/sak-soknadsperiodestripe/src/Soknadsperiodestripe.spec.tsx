@@ -88,4 +88,46 @@ describe('<Soknadsperiodestripe>', () => {
     ];
     expect(formatertePerioder).toEqual(expectedResult);
   });
+
+  it('skal formatere avslåtte perioder', () => {
+    const data = {
+      perioderMedÅrsak: {
+        perioderTilVurdering: [{ fom: '2022-01-05', tom: '2022-04-05' }],
+        perioderMedÅrsak: [{ periode: { fom: '2022-01-05', tom: '2022-04-05' }, årsaker: ['FØRSTEGANGSVURDERING'] }],
+        dokumenterTilBehandling: [
+          {
+            journalpostId: '3295403',
+            innsendingsTidspunkt: '2022-03-02T09:57:39.405',
+            type: 'SØKNAD',
+            søktePerioder: [
+              {
+                periode: { fom: '2022-01-05', tom: '2022-04-05' },
+                type: null,
+                arbeidsgiver: null,
+                arbeidsforholdRef: null,
+              },
+            ],
+          },
+        ],
+      },
+      periodeMedUtfall: [
+        {
+          periode: { fom: '2022-01-05', tom: '2022-04-05' },
+          utfall: { kode: 'IKKE_OPPFYLT', kodeverk: 'VILKAR_UTFALL_TYPE' },
+        },
+      ],
+      forrigeVedtak: [],
+    };
+    const formatertePerioder = formaterPerioder(data);
+    const expectedResult = [
+      {
+        id: '2022-01-05-2022-04-05',
+        fom: new Date('2022-01-05T00:00:00.000Z'),
+        tom: new Date('2022-04-05T00:00:00.000Z'),
+        className: 'feil aktivPeriode',
+        status: 'feil',
+      },
+    ];
+    expect(formatertePerioder).toEqual(expectedResult);
+  });
 });
