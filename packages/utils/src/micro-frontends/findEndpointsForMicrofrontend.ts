@@ -1,7 +1,7 @@
-import SimpleLink from '../types/SimpleLink';
-import SimpleEndpoints from '../types/SimpleEndpoints';
+import { SimpleLink } from './types/SimpleLink';
+import { SimpleEndpoints } from './types/SimpleEndpoints';
 
-function findEndpointsForMicrofrontend(
+export function findEndpointsForMicrofrontend(
   links: SimpleLink[],
   desiredRels: { rel: string; desiredName: string }[],
 ): SimpleEndpoints {
