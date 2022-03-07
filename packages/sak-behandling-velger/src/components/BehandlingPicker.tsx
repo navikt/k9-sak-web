@@ -26,7 +26,11 @@ const getBehandlingNavn = (
   getKodeverkFn: (kodeverk: Kodeverk, behandlingType?: Kodeverk) => KodeverkMedNavn,
   intl: IntlShape,
 ) => {
-  if (behandling.type.kode === behandlingType.FORSTEGANGSSOKNAD || behandling.type.kode === behandlingType.KLAGE) {
+  if (
+    behandling.type.kode === behandlingType.FORSTEGANGSSOKNAD ||
+    behandling.type.kode === behandlingType.KLAGE ||
+    behandling.type.kode === behandlingType.TILBAKEKREVING
+  ) {
     return getKodeverkFn(behandling.type, behandling.type).navn;
   }
 
@@ -194,7 +198,7 @@ const BehandlingPicker = ({
       periode.årsaker.forEach(årsak => {
         // TODO: try/catch skal ikke være nødvendig etter at backend har lagt inn alle behandlingsårsaker
         try {
-          årsaker.push(getKodeverkFn({ kode: årsak, kodeverk: kodeverkTyper.BEHANDLING_AARSAK }).navn);
+          årsaker.push(getKodeverkFn({ kode: årsak, kodeverk: 'ÅRSAK_TIL_VURDERING' }).navn);
         } catch {
           årsaker.push(årsak);
         }
