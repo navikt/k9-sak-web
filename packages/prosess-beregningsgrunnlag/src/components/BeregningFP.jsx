@@ -230,21 +230,26 @@ BeregningFP.defaultProps = {
   beregningsgrunnlag: undefined,
 };
 
-const formaterAksjonspunkter = (aksjonspunkter, perioder) =>
-  aksjonspunkter.map((aksjonspunkt) => {
-    const { kode } = aksjonspunkt;
-    return {
-      '@type': kode,
-      kode,
-      begrunnelse: aksjonspunkt.begrunnelse,
-      grunnlag: [
-        {
-          ...aksjonspunkt,
-          periode: perioder.find(p => p.periode.fom === aksjonspunkt.skjæringstidspunkt).periode,
-        },
-      ],
-    };
-  });
+const initAksjonspunktData = (aksjonspunktData) => ({
+  '@type': aksjonspunktData.kode,
+  kode: aksjonspunktData.kode,
+  begrunnelse: aksjonspunktData.begrunnelse,
+  grunnlag: [],
+});
+
+const mapTilSubmitGrunnlagsdata = (aksjonspunktData, perioder) => ({
+  ...aksjonspunktData,
+  periode: perioder.find(p => p.periode.fom === aksjonspunktData.skjæringstidspunkt).periode,
+});
+
+const formaterAksjonspunkter = (aksjonspunkter, perioder) => {
+  const gruppertPrKode = aksjonspunkter.reduce((gruppert, aksjonspunktData) => {
+    gruppert[aksjonspunktData.kode] = gruppert[aksjonspunktData.kode] ?? initAksjonspunktData(aksjonspunktData);
+    gruppert[aksjonspunktData.kode].grunnlag.push(mapTilSubmitGrunnlagsdata(aksjonspunktData, perioder));
+    return gruppert;
+  }, {});
+  return Object.values(gruppertPrKode);
+}
 
 const harAvklaringsbehovIPanel = (avklaringsbehov) => avklaringsbehov.some(ab => isBeregningAvklaringsbehov(ab.definisjon.kode));
 
