@@ -52,6 +52,7 @@ export interface AlleKodeverk {
   SkjermlenkeType: Kodeverk[];
   StønadskontoType: Kodeverk[];
   TilbakekrevingVidereBehandling: Kodeverk[];
+  UtenlandsoppholdÅrsak: Kodeverk[];
   UtsettelseÅrsak: Kodeverk[];
   UttakArbeidType: Kodeverk[];
   UttakPeriodeType: Kodeverk[];

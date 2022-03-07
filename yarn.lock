@@ -2605,10 +2605,20 @@
     "@navikt/k9-array-utils" "^0.0.1"
     "@navikt/k9-date-utils" "^0.0.5"
 
-"@navikt/k9-react-components@^0.1.14", "@navikt/k9-react-components@^0.1.18":
-  version "0.1.18"
-  resolved "https://npm.pkg.github.com/download/@navikt/k9-react-components/0.1.18/a520c2bbfdb9ffc7c4dc9e50a8941fb009df1f29e74fab318375c42267e5bff1#d8b2e953d54df489c5b385f834febd6520c2b793"
-  integrity sha512-LCT6hLxMuMAtlA4oV1IItyAWVBDBG6PfHWnplnvbgdvKNHN0Po/4KbTmR/6FcLrv8IUZgjv9myn0yIfWoWduIQ==
+"@navikt/k9-react-components@^0.1.14":
+  version "0.1.14"
+  resolved "https://npm.pkg.github.com/download/@navikt/k9-react-components/0.1.14/99347e7a17ab6f49589e3c292bb478905b73e8f0edd9dc086400956b2b3cf01d#7a65beee29cf3a1ff608a757c152fcd52e392d1a"
+  integrity sha512-icDbOpJTiGZ3R392GKIW7IC5ceukGVPsRaOAkn9mq6GcVnBUbAC8IiKapiQkSH11YyCBhnFCU6ZXTvo+cWMeKg==
+  dependencies:
+    "@navikt/ds-icons" "^0.5.5"
+    "@navikt/k9-bem-utils" "^1.0.1"
+    "@navikt/k9-date-utils" "^0.0.6"
+    "@navikt/k9-period-utils" "^0.0.8"
+
+"@navikt/k9-react-components@^0.1.19":
+  version "0.1.19"
+  resolved "https://npm.pkg.github.com/download/@navikt/k9-react-components/0.1.19/5673c863e473394dbe64fd3b9d7ad3944098478bdb3989f6aed7f294e87c4cd0#75986a7608d03bedb12a59ca125e7c7ad3362bd9"
+  integrity sha512-vUbqwDzPmPxRL73UIXQKCSCnCWQCFKtCgFDPG3YUhCUq+3Hn155oC8fkKBLw/37wElcTmqxmbN0+ItzT+A1P7A==
   dependencies:
     "@navikt/ds-css" "^0.15.4"
     "@navikt/ds-icons" "^0.5.5"
