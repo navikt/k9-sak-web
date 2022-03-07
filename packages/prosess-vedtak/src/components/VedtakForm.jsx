@@ -136,7 +136,8 @@ export const VedtakForm = ({
   const payload = values =>
     aksjonspunkter
       .filter(ap => ap.kanLoses)
-      .map(aksjonspunkt => ({
+      .map(aksjonspunkt => {
+        const tranformedValues = {
         kode: aksjonspunkt.definisjon.kode,
         begrunnelse: values?.[fieldnames.BEGRUNNELSE],
         overstyrtMottaker: safeJSONParse(values?.[fieldnames.OVERSTYRT_MOTTAKER]),
@@ -146,19 +147,21 @@ export const VedtakForm = ({
         },
         skalBrukeOverstyrendeFritekstBrev: values?.[fieldnames.SKAL_BRUKE_OVERSTYRENDE_FRITEKST_BREV],
         skalUndertrykkeBrev: values?.[fieldnames.SKAL_HINDRE_UTSENDING_AV_BREV],
-        redusertUtbetalingÅrsaker:
-          aksjonspunkt.definisjon.kode === aksjonspunktCodes.FORESLA_VEDTAK_MANUELT
-            ? transformRedusertUtbetalingÅrsaker(values)
-            : null,
         isVedtakSubmission,
         tilgjengeligeVedtaksbrev,
-      }));
+        }
+        if (aksjonspunkt.definisjon.kode === aksjonspunktCodes.FORESLA_VEDTAK_MANUELT) {
+          tranformedValues.redusertUtbetalingÅrsaker = transformRedusertUtbetalingÅrsaker(values)
+        }
+        return tranformedValues
+      });
 
   const createPayload = harPotensieltFlereInformasjonsbehov(informasjonsbehovVedtaksbrev)
     ? values => payloadMedEkstraInformasjon(values)
     : values => payload(values);
 
   const harRedusertUtbetaling = ytelseTypeKode === fagsakYtelseType.FRISINN;
+
   const aktiverteInformasjonsbehov = (informasjonsbehovVedtaksbrev?.informasjonsbehov || []).filter(
     ({ type }) => type === 'FRITEKST',
   );
@@ -192,6 +195,16 @@ export const VedtakForm = ({
       })),
     ],
   );
+
+  const redusertUtbetalingÅrsaker = formikProps => {
+    if (harRedusertUtbetaling) {
+      return readOnly
+        ? vedtakVarsel?.redusertUtbetalingÅrsaker
+        : transformRedusertUtbetalingÅrsaker(formikProps.values)
+    }
+    return null
+  };
+
   return (
     <>
       <Formik
@@ -308,11 +321,7 @@ export const VedtakForm = ({
                 informasjonsbehovVedtaksbrev={informasjonsbehovVedtaksbrev}
                 informasjonsbehovValues={filterInformasjonsbehov(formikProps.values, aktiverteInformasjonsbehov)}
                 skalBrukeOverstyrendeFritekstBrev={formikProps.values.skalBrukeOverstyrendeFritekstBrev}
-                redusertUtbetalingÅrsaker={
-                  readOnly
-                    ? vedtakVarsel?.redusertUtbetalingÅrsaker
-                    : transformRedusertUtbetalingÅrsaker(formikProps.values)
-                }
+                redusertUtbetalingÅrsaker={redusertUtbetalingÅrsaker(formikProps)}
                 begrunnelse={formikProps.values.begrunnelse}
                 previewCallback={previewCallback}
                 brødtekst={formikProps.values.brødtekst}
