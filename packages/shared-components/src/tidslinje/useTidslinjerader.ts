@@ -106,7 +106,4 @@ const tidligsteDato = (tidligst: Date, periode: Periode) => (periode.fom < tidli
 const tidligsteFomDato = (rader: Periode[][]) => rader.flat().reduce(tidligsteDato, new Date());
 
 export const useTidligsteDato = ({ startDato, rader }: TidslinjeProps) =>
-  useMemo(
-    () => (startDato ? dayjs(startDato) : dayjs(tidligsteFomDato(rader.map(rad => rad.perioder)))),
-    [startDato, rader],
-  );
+  startDato ? dayjs(startDato) : dayjs(tidligsteFomDato(rader.map(rad => rad.perioder)));

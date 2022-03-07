@@ -6,16 +6,16 @@ import userEvent from '@testing-library/user-event';
 import { renderWithIntl } from '@fpsak-frontend/utils-test/src/test-utils';
 
 import Utenlandsopphold from './Utenlandsopphold';
-import utenlandsoppholdMock from '../../../mocks/mockdata/utenlandsoppholdMock';
+import utenlandsoppholdMock, { utenlandsoppholdÅrsakMock } from '../../../mocks/mockdata/utenlandsoppholdMock';
 
 describe('Utenlandsopphold', () => {
   test('har utenlandsopphold som tittel', () => {
-    renderWithIntl(<Utenlandsopphold utenlandsopphold={utenlandsoppholdMock} />);
+    renderWithIntl(<Utenlandsopphold utenlandsopphold={utenlandsoppholdMock} kodeverk={utenlandsoppholdÅrsakMock} />);
     screen.getByText('Utenlandsopphold');
   });
 
   test('kan kan toggle på hjelpetekst', () => {
-    renderWithIntl(<Utenlandsopphold utenlandsopphold={utenlandsoppholdMock} />);
+    renderWithIntl(<Utenlandsopphold utenlandsopphold={utenlandsoppholdMock} kodeverk={utenlandsoppholdÅrsakMock} />);
     const infoboksTekst =
       'Opphold innenfor EØS likestilles med opphold i Norge, og det er ingen tidsbegrensning på hvor lenge søker kan motta pleiepenger.';
     expect(screen.queryByText(infoboksTekst)).toBeFalsy();
@@ -24,7 +24,12 @@ describe('Utenlandsopphold', () => {
   });
 
   test('viser land, tilhørighet til EØS og årsak for utenlandsopphold', () => {
-    renderWithIntl(<Utenlandsopphold utenlandsopphold={{ perioder: [utenlandsoppholdMock.perioder[0]] }} />);
+    renderWithIntl(
+      <Utenlandsopphold
+        utenlandsopphold={{ perioder: [utenlandsoppholdMock.perioder[0]] }}
+        kodeverk={utenlandsoppholdÅrsakMock}
+      />,
+    );
 
     expect(screen.getByText('Land')).toBeVisible();
     expect(screen.getByText('Luxemburg')).toBeVisible();

@@ -90,4 +90,5 @@ spec:
       value: "true"
     - name: UTENLANDSOPPHOLD
       value: "true"
-
+    - name: SOKNADPERIODESTRIPE
+      value: "true"

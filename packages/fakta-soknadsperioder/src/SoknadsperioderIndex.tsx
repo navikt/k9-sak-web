@@ -1,7 +1,7 @@
+import BehandlingPerioderårsakMedVilkår from '@k9-sak-web/types/src/behandlingPerioderårsakMedVilkår';
 import React from 'react';
-import { createIntlCache, createIntl, RawIntlProvider } from 'react-intl';
+import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 import messages from '../i18n/nb_NO.json';
-import BehandlingPerioderårsakMedVilkår from './types/BehandlingPerioderårsakMedVilkår';
 import SoknadsperioderComponent from './SoknadsperioderComponent';
 
 const cache = createIntlCache();
