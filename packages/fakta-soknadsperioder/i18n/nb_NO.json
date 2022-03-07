@@ -18,5 +18,7 @@
   "Soknadsperioder.Status.AvslåttPeriode": "Avslått periode",
   "Soknadsperioder.Status.TilBehandling": "Til behandling",
   "Soknadsperioder.SøknadMedDato": "Søknad {dato}",
-  "Soknadsperioder.Søknadsperioder": "Søknadsperioder"
+  "Soknadsperioder.Søknadsperioder": "Søknadsperioder",
+  "Soknadsperioder.Zoom.Forstørre": "Forstørre",
+  "Soknadsperioder.Zoom.Forminske": "Forminske"
 }

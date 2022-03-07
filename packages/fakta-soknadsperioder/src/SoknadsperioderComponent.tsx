@@ -266,7 +266,7 @@ const SoknadsperioderComponent = (props: SoknadsperioderComponentProps) => {
     <div className={styles.soknadsperioder}>
       <div className={styles.flexContainer}>
         <h1 className={styles.heading}>{intl.formatMessage({ id: 'Soknadsperioder.Søknadsperioder' })}</h1>
-        <div style={{ display: 'flex' }}>
+        <div className={styles.navigasjonContainer}>
           <HorisontalNavigering
             tidslinjeSkala={tidslinjeSkala}
             rader={getRader()}
@@ -286,7 +286,7 @@ const SoknadsperioderComponent = (props: SoknadsperioderComponentProps) => {
               className={styles.zoomButton}
             >
               <ZoomInIcon />
-              <Normaltekst>Forstørre</Normaltekst>
+              <Normaltekst>{intl.formatMessage({ id: 'Soknadsperioder.Zoom.Forstørre' })}</Normaltekst>
             </button>
             <button
               onClick={() => {
@@ -300,7 +300,7 @@ const SoknadsperioderComponent = (props: SoknadsperioderComponentProps) => {
               className={styles.zoomButton}
             >
               <ZoomOutIcon />
-              <Normaltekst>Forminske</Normaltekst>
+              <Normaltekst>{intl.formatMessage({ id: 'Soknadsperioder.Zoom.Forminske' })}</Normaltekst>
             </button>
           </div>
         </div>
