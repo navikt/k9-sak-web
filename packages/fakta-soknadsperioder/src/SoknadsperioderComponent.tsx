@@ -223,10 +223,12 @@ const SoknadsperioderComponent = (props: SoknadsperioderComponentProps) => {
     }));
 
   const getSenesteTom = () => useSenesteDato({ sluttDato: undefined, rader: getRader() });
+  const subtractMonthsFromDate = (dateToSubtractFrom, numberOfMonthsToSubtract) =>
+    dayjs(dateToSubtractFrom).subtract(numberOfMonthsToSubtract, 'months').toDate();
 
   const updateNavigasjonFomDato = (antallMånederFraSluttdato: number) => {
     const senesteTom = getSenesteTom();
-    const fomDato = dayjs(senesteTom).subtract(antallMånederFraSluttdato, 'months').toDate();
+    const fomDato = subtractMonthsFromDate(senesteTom, antallMånederFraSluttdato);
     setNavigasjonFomDato(fomDato);
   };
 
@@ -246,14 +248,15 @@ const SoknadsperioderComponent = (props: SoknadsperioderComponentProps) => {
   const updateZoom = (zoomValue: number) => {
     const senesteTom = getSenesteTom();
     if (dayjs(navigasjonFomDato).add(zoomValue, 'months').isSameOrAfter(senesteTom)) {
-      setNavigasjonFomDato(senesteTom.subtract(zoomValue, 'months'));
+      setNavigasjonFomDato(subtractMonthsFromDate(senesteTom, zoomValue));
     }
     setTidslinjeSkala(zoomValue);
   };
 
   const updateHorisontalNavigering = (nyFomDato: Dayjs) => {
-    if (nyFomDato.isAfter(getSenesteTom())) {
-      setNavigasjonFomDato(getSenesteTom().subtract(tidslinjeSkala).toDate());
+    if (nyFomDato.add(tidslinjeSkala, 'months').isSameOrAfter(getSenesteTom())) {
+      const senesteTom = getSenesteTom();
+      setNavigasjonFomDato(subtractMonthsFromDate(senesteTom, tidslinjeSkala));
     } else {
       setNavigasjonFomDato(nyFomDato.toDate());
     }
