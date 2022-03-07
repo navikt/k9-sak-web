@@ -232,7 +232,6 @@ const SoknadsperioderComponent = (props: SoknadsperioderComponentProps) => {
 
   useEffect(() => {
     if (getRader().length > 0) {
-      // Tidslinjen skal initielt slutte på første dag i månenden etter den seneste perioden
       updateNavigasjonFomDato(6);
     }
   }, [behandlingPerioderårsakMedVilkår]);
