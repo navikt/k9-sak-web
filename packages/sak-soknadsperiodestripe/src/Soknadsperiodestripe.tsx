@@ -4,11 +4,12 @@ import HorisontalNavigering from '@fpsak-frontend/shared-components/src/tidslinj
 import { useSenesteDato } from '@fpsak-frontend/shared-components/src/tidslinje/useTidslinjerader';
 import BehandlingPerioderårsakMedVilkår from '@k9-sak-web/types/src/behandlingPerioderarsakMedVilkar';
 import { PeriodStatus, Tidslinjeskala } from '@k9-sak-web/types/src/tidslinje';
-import { Period } from '@navikt/k9-period-utils';
+import { getPeriodDifference, Period } from '@navikt/k9-period-utils';
 import dayjs from 'dayjs';
 import 'dayjs/locale/nb';
 import { Normaltekst } from 'nav-frontend-typografi';
 import React, { useEffect, useMemo, useState } from 'react';
+import ReactDOM from 'react-dom';
 import { useIntl } from 'react-intl';
 import styles from './soknadsperiodestripe.less';
 
@@ -27,7 +28,6 @@ interface RadPeriode {
 }
 
 export const formaterPerioder = (behandlingPerioderMedVilkår: BehandlingPerioderårsakMedVilkår) => {
-  const overlappendePerioder: Period[] = [];
   const vedtakshistorikk: RadPeriode[] =
     behandlingPerioderMedVilkår?.forrigeVedtak?.map(({ periode, utfall }) => {
       const vedtaksperiode = new Period(periode.fom, periode.tom);
@@ -44,67 +44,65 @@ export const formaterPerioder = (behandlingPerioderMedVilkår: BehandlingPeriode
         status: utfall.kode === vilkarUtfallType.OPPFYLT ? ('suksess' as PeriodStatus) : 'feil',
       };
       if (harOverlappMedPeriodeTilVurdering) {
-        overlappendePerioder.push(vedtaksperiode);
         nyPeriode.status =
           utfall.kode === vilkarUtfallType.OPPFYLT ? ('suksessRevurder' as PeriodStatus) : 'feilRevurder';
-        nyPeriode.className = styles.advarsel;
+        nyPeriode.className = `${styles.advarsel} ${styles.aktivPeriode}`;
       }
       return nyPeriode;
     }) || [];
 
-  const perioderTilVurdering: RadPeriode[] =
-    behandlingPerioderMedVilkår?.perioderMedÅrsak?.perioderTilVurdering
-      .map(({ fom, tom }) => {
-        const periodeTilVurdering = new Period(fom, tom);
-        const vedtaksperiodeMedOverlapp = overlappendePerioder.find(overlappendePeriode =>
-          periodeTilVurdering.covers(overlappendePeriode),
-        );
-        const identiskPeriodeMedUtfall = behandlingPerioderMedVilkår.periodeMedUtfall.find(
-          periodeMedUtfall => periodeMedUtfall.periode.fom === fom && periodeMedUtfall.periode.tom === tom,
-        );
-        const erDelvisInnvilget = behandlingPerioderMedVilkår.periodeMedUtfall.some(
-          periodeMedUtfall =>
-            periodeTilVurdering.covers(new Period(periodeMedUtfall.periode.fom, periodeMedUtfall.periode.tom)) &&
-            periodeMedUtfall.utfall.kode === vilkarUtfallType.OPPFYLT,
-        );
-        const nyPeriode = {
-          id: `${fom}-${tom}`,
-          fom: new Date(fom),
-          tom: new Date(tom),
-          status: 'advarsel' as PeriodStatus,
-          className: `${styles.advarsel} ${styles.aktivPeriode}`,
-        };
-        if (identiskPeriodeMedUtfall) {
-          let utfall = nyPeriode.status;
-          if (identiskPeriodeMedUtfall.utfall.kode === vilkarUtfallType.OPPFYLT) {
-            utfall = 'suksess';
-          } else if (identiskPeriodeMedUtfall.utfall.kode === vilkarUtfallType.IKKE_OPPFYLT) {
-            utfall = 'feil';
-          }
-          nyPeriode.status = utfall;
-          nyPeriode.className = `${styles[utfall]} ${styles.aktivPeriode}`;
-          return nyPeriode;
+  const perioderTilVurdering =
+    behandlingPerioderMedVilkår?.perioderMedÅrsak?.perioderTilVurdering.map(
+      periode => new Period(periode.fom, periode.tom),
+    ) || [];
+  const vedtaksperioder =
+    behandlingPerioderMedVilkår?.forrigeVedtak?.map(({ periode }) => new Period(periode.fom, periode.tom)) || [];
+  const perioderTilVurderingUtenOverlapp = getPeriodDifference(perioderTilVurdering, vedtaksperioder);
+
+  const formatertePerioderTilVurdering: RadPeriode[] =
+    perioderTilVurderingUtenOverlapp.map(periodeTilVurdering => {
+      const { fom, tom } = periodeTilVurdering;
+      const identiskPeriodeMedUtfall = behandlingPerioderMedVilkår.periodeMedUtfall.find(
+        periodeMedUtfall =>
+          periodeMedUtfall.periode.fom === fom &&
+          periodeMedUtfall.periode.tom === tom &&
+          periodeMedUtfall.utfall.kode !== vilkarUtfallType.IKKE_VURDERT,
+      );
+      const erDelvisInnvilget = behandlingPerioderMedVilkår.periodeMedUtfall.some(
+        periodeMedUtfall =>
+          periodeTilVurdering.covers(new Period(periodeMedUtfall.periode.fom, periodeMedUtfall.periode.tom)) &&
+          periodeMedUtfall.utfall.kode === vilkarUtfallType.OPPFYLT,
+      );
+      const nyPeriode = {
+        id: `${fom}-${tom}`,
+        fom: new Date(fom),
+        tom: new Date(tom),
+        status: 'advarsel' as PeriodStatus,
+        className: `${styles.advarsel} ${styles.aktivPeriode}`,
+      };
+      if (identiskPeriodeMedUtfall) {
+        let utfall = nyPeriode.status;
+        if (identiskPeriodeMedUtfall.utfall.kode === vilkarUtfallType.OPPFYLT) {
+          utfall = 'suksess';
+        } else if (identiskPeriodeMedUtfall.utfall.kode === vilkarUtfallType.IKKE_OPPFYLT) {
+          utfall = 'feil';
         }
-        if (vedtaksperiodeMedOverlapp) {
-          if (dayjs(vedtaksperiodeMedOverlapp.tom).isSame(periodeTilVurdering.tom)) {
-            return undefined;
-          }
-          const nyFom = dayjs(vedtaksperiodeMedOverlapp.tom).add(1, 'day').toDate();
-          nyPeriode.id = `${nyFom.toISOString()}-${tom}`;
-          nyPeriode.fom = nyFom;
-        }
-        if (erDelvisInnvilget) {
-          nyPeriode.status = 'suksessDelvis';
-          nyPeriode.className = `${styles.suksess} ${styles.aktivPeriode}`;
-        }
+        nyPeriode.status = utfall;
+        nyPeriode.className = `${styles[utfall]} ${styles.aktivPeriode}`;
         return nyPeriode;
-      })
-      .filter(periodeTilVurdering => periodeTilVurdering) || [];
-  return vedtakshistorikk.concat(perioderTilVurdering);
+      }
+      if (erDelvisInnvilget) {
+        nyPeriode.status = 'suksessDelvis';
+        nyPeriode.className = `${styles.suksess} ${styles.aktivPeriode}`;
+      }
+      return nyPeriode;
+    }) || [];
+  return vedtakshistorikk.concat(formatertePerioderTilVurdering);
 };
 
 const Soknadsperiodestripe: React.FC<SoknadsperiodestripeProps> = ({ behandlingPerioderMedVilkår }) => {
   const intl = useIntl();
+  const portalRoot = document.getElementById('visittkort-portal');
 
   const formatertePerioder = useMemo(
     () => formaterPerioder(behandlingPerioderMedVilkår),
@@ -140,7 +138,7 @@ const Soknadsperiodestripe: React.FC<SoknadsperiodestripeProps> = ({ behandlingP
     return null;
   }
 
-  const updateSkala = (value: number) => {
+  const updateSkala = (value: Tidslinjeskala) => {
     setTidslinjeSkala(value);
     updateNavigasjonFomDato(value);
   };
@@ -169,14 +167,17 @@ const Soknadsperiodestripe: React.FC<SoknadsperiodestripeProps> = ({ behandlingP
 
   return (
     <div className={styles.container}>
-      <div className={styles.skalavelgerContainer}>
-        <fieldset>
-          <legend>{intl.formatMessage({ id: 'Soknadsperioder.Skala.SkalaForVisning' })}</legend>
-          {getSkalaRadio(intl.formatMessage({ id: 'Soknadsperioder.Skala.6mnd' }), 6)}
-          {getSkalaRadio(intl.formatMessage({ id: 'Soknadsperioder.Skala.1år' }), 12)}
-          {getSkalaRadio(intl.formatMessage({ id: 'Soknadsperioder.Skala.2år' }), 24)}
-        </fieldset>
-      </div>
+      {ReactDOM.createPortal(
+        <div className={styles.skalavelgerContainer}>
+          <fieldset>
+            <legend>{intl.formatMessage({ id: 'Soknadsperioder.Skala.SkalaForVisning' })}</legend>
+            {getSkalaRadio(intl.formatMessage({ id: 'Soknadsperioder.Skala.6mnd' }), 6)}
+            {getSkalaRadio(intl.formatMessage({ id: 'Soknadsperioder.Skala.1år' }), 12)}
+            {getSkalaRadio(intl.formatMessage({ id: 'Soknadsperioder.Skala.2år' }), 24)}
+          </fieldset>
+        </div>,
+        portalRoot,
+      )}
       <Tidslinje rader={rader} tidslinjeSkala={tidslinjeSkala} startDato={navigasjonFomDato} />
       <HorisontalNavigering
         tidslinjeSkala={tidslinjeSkala}

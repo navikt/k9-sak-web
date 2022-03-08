@@ -50,11 +50,7 @@
 }
 
 .skalavelgerContainer {
-  display: flex;
-  justify-content: flex-end;
-  position: absolute;
-  right: 2.25rem;
-  top: -2.5rem;
+  margin: 1rem 2.25rem 0 1.375rem;
 
   fieldset {
     border: none;
@@ -144,7 +140,36 @@
 }
 
 .aktivPeriode {
-  border: none;
-  outline: 3px solid #254b6d;
-  z-index: 1;
+  height: 1.875rem;
+}
+
+:global(.frittstående).aktivPeriode {
+  border: 3px solid #254b6d;
+}
+
+:global(.sammenhengendeFraBegge).aktivPeriode {
+  border-top: 3px solid #254b6d;
+  border-bottom: 3px solid #254b6d;
+  border-left: none;
+  border-right: none;
+
+  &:before {
+    display: none;
+  }
+}
+
+:global(.sammenhengendeFraHøyre).aktivPeriode {
+  border-top: 3px solid #254b6d;
+  border-bottom: 3px solid #254b6d;
+  border-left: 3px solid #254b6d;
+}
+
+:global(.sammenhengendeFraVenstre).aktivPeriode {
+  border-top: 3px solid #254b6d;
+  border-bottom: 3px solid #254b6d;
+  border-right: 3px solid #254b6d;
+
+  &:before {
+    display: none;
+  }
 }

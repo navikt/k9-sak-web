@@ -143,15 +143,14 @@ const Tidslinje = ({
       for (let x = 0; x <= tidslinjeSkala; x += 1) {
         const currentMonth = start.startOf('month').add(x, 'month');
         const interval = currentMonth.daysInMonth() / 4;
-        if (x !== tidslinjeSkala) {
-          for (let y = 1; y < 4; y += 1) {
-            const skipWeek = x === 0 && start.date() > interval * y;
-            if (!skipWeek) {
-              monthPins.push({
-                date: currentMonth.add(Math.ceil(interval * y), 'day').toDate(),
-                classname: styles.weekPin,
-              });
-            }
+        for (let y = 1; y < 4; y += 1) {
+          const skipWeek =
+            (x === 0 && start.date() > interval * y) || (x === tidslinjeSkala && endInclusive.date() < interval * y);
+          if (!skipWeek) {
+            monthPins.push({
+              date: currentMonth.add(Math.ceil(interval * y), 'day').toDate(),
+              classname: styles.weekPin,
+            });
           }
         }
         if (x > 0 || (x === 0 && start.date() === 0)) {
