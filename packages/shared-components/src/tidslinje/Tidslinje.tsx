@@ -145,10 +145,13 @@ const Tidslinje = ({
         const interval = currentMonth.daysInMonth() / 4;
         if (x !== tidslinjeSkala) {
           for (let y = 1; y < 4; y += 1) {
-            monthPins.push({
-              date: currentMonth.add(Math.ceil(interval * y), 'day').toDate(),
-              classname: styles.weekPin,
-            });
+            const skipWeek = x === 0 && start.date() > interval * y;
+            if (!skipWeek) {
+              monthPins.push({
+                date: currentMonth.add(Math.ceil(interval * y), 'day').toDate(),
+                classname: styles.weekPin,
+              });
+            }
           }
         }
         if (x > 0 || (x === 0 && start.date() === 0)) {
