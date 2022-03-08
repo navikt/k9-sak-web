@@ -181,6 +181,11 @@ describe('<PleiepengerSluttfaseFakta>', () => {
         tekst: 'LivetsSluttfasePanel.LivetsSluttfase',
       },
       {
+        "erAktiv": false,
+        "harAksjonspunkt": false,
+        "tekst": "Inntektsmelding"
+      },
+      {
         erAktiv: false,
         harAksjonspunkt: false,
         tekst: 'Inntekt og ytelser',

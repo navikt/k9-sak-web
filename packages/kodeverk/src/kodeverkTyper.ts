@@ -71,6 +71,7 @@ const kodeverkTyper = {
   HENDELSE_TYPE: 'HendelseType',
   HENDELSE_UNDERTYPE: 'HendelseUnderType',
   VURDER_AARSAK: 'VurderÅrsak',
+  ÅRSAK_TIL_VURDERING: 'ÅrsakTilVurdering',
 };
 
 export default kodeverkTyper;
