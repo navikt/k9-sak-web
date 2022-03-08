@@ -15,6 +15,7 @@ import {
 } from '@k9-sak-web/types';
 import React, { useCallback, useMemo, useState } from 'react';
 import { Navigate, Route, Routes, useLocation } from 'react-router-dom';
+import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import OvergangFraInfotrygd from '../../../types/src/overgangFraInfotrygd';
 import RelatertFagsak from '../../../types/src/relatertFagsak';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -187,6 +188,8 @@ const FagsakIndex = () => {
   }
 
   const harVerge = behandling ? behandling.harVerge : false;
+  const showSøknadsperiodestripe =
+    featureToggles?.SOKNADPERIODESTRIPE && fagsak?.sakstype?.kode === fagsakYtelseType.PLEIEPENGER;
   return (
     <>
       <FagsakGrid
@@ -257,7 +260,7 @@ const FagsakIndex = () => {
                 relaterteFagsaker={relaterteFagsaker}
                 direkteOvergangFraInfotrygd={direkteOvergangFraInfotrygd}
               />
-              {featureToggles?.SOKNADPERIODESTRIPE && (
+              {showSøknadsperiodestripe && (
                 <Soknadsperiodestripe behandlingPerioderMedVilkår={behandlingPerioderMedVilkår} />
               )}
             </div>

@@ -26,7 +26,7 @@ const arbeidsforholdHandlingTyper = [
   { kode: 'BRUK_UTEN_INNTEKTSMELDING', navn: 'ccc', kodeverk: '' },
   { kode: 'IKKE_BRUK', navn: 'ddd', kodeverk: '' },
   { kode: 'SLÅTT_SAMMEN_MED_ANNET', navn: 'eee', kodeverk: '' },
-  { kode: 'LAGT_TIL_AV_SAKSBEHANDLER', navn: 'fff', kodeverk: '' },
+  { kode: 'BASERT_PÅ_INNTEKTSMELDING', navn: 'fff', kodeverk: '' },
 ];
 
 describe('aksjonspunktTekstUtleder', () => {
