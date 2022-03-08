@@ -2,6 +2,7 @@ import { renderWithIntl } from '@fpsak-frontend/utils-test/src/test-utils';
 import { screen } from '@testing-library/react';
 import * as React from 'react';
 import SoknadsperioderIndex from './SoknadsperioderIndex';
+import messages from '../i18n/nb_NO.json';
 
 describe('<SøknadsperioderIndex>', () => {
   const data = {
@@ -34,7 +35,7 @@ describe('<SøknadsperioderIndex>', () => {
   };
 
   it('skal vise ekspanderknapper for søknader knyttet til perioder', async () => {
-    renderWithIntl(<SoknadsperioderIndex behandlingPerioderårsakMedVilkår={data} />);
+    renderWithIntl(<SoknadsperioderIndex behandlingPerioderårsakMedVilkår={data} />, { messages });
     expect(await screen.findByRole('button', { name: 'Søknad om ny periode' })).toBeInTheDocument();
   });
 });
