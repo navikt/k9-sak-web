@@ -1,3 +1,5 @@
+import InngangsvilkarFortsProsessStegPanelDef
+  from '@k9-sak-web/behandling-pleiepenger/src/panelDefinisjoner/prosessStegPaneler/InngangsvilkarFortsProsessStegPanelDef';
 import VarselProsessStegPanelDef from './prosessStegPaneler/VarselProsessStegPanelDef';
 import MedisinskVilkarProsessStegPanelDef from './prosessStegPaneler/MedisinskVilkarProsessStegPanelDef';
 import SaksopplysningerProsessStegPanelDef from './prosessStegPaneler/SaksopplysningerProsessStegPanelDef';
@@ -14,6 +16,7 @@ const prosessStegPanelDefinisjoner = [
   new SaksopplysningerProsessStegPanelDef(),
   new InngangsvilkarProsessStegPanelDef(),
   new MedisinskVilkarProsessStegPanelDef(),
+  new InngangsvilkarFortsProsessStegPanelDef(),
   new FortsattMedlemskapProsessStegPanelDef(),
   new BeregningsgrunnlagProsessStegPanelDef(),
   new UttakProsessStegPanelDef(),
