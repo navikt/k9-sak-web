@@ -189,7 +189,7 @@ const FagsakIndex = () => {
 
   const harVerge = behandling ? behandling.harVerge : false;
   const showSøknadsperiodestripe =
-    featureToggles?.SOKNADPERIODESTRIPE && fagsak.sakstype.kode === fagsakYtelseType.PLEIEPENGER;
+    featureToggles?.SOKNADPERIODESTRIPE && fagsak?.sakstype?.kode === fagsakYtelseType.PLEIEPENGER;
   return (
     <>
       <FagsakGrid
