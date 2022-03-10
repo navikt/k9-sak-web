@@ -235,7 +235,7 @@ const SoknadsperioderComponent = (props: SoknadsperioderComponentProps) => {
       ...trukketKrav,
       gRegulering,
       revurdererManuellRevurdering,
-    ];
+    ].filter(radGruppertPåÅrsak => radGruppertPåÅrsak.perioder.length > 0);
   };
 
   const getRader = () =>

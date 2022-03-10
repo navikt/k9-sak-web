@@ -50,11 +50,25 @@ describe('<SøknadsperioderIndex>', () => {
         },
       ],
     };
-    renderWithIntl(<SoknadsperioderIndex behandlingPerioderårsakMedVilkår={data} />, { messages });
+    renderWithIntl(
+      <SoknadsperioderIndex
+        behandlingPerioderårsakMedVilkår={data}
+        alleKodeverk={{
+          ÅrsakTilVurdering: [
+            {
+              kode: 'FØRSTEGANGSVURDERING',
+              navn: 'Ny periode',
+              kodeverk: 'ÅRSAK_TIL_VURDERING',
+            },
+          ],
+        }}
+      />,
+      { messages },
+    );
   });
 
   it('skal vise ekspanderknapper for søknader knyttet til perioder', async () => {
-    expect(await screen.findByRole('button', { name: 'Søknad om ny periode' })).toBeInTheDocument();
+    expect(await screen.findByRole('button', { name: 'Ny periode' })).toBeInTheDocument();
   });
 
   it('skal ha knapper for horisontal navigering', async () => {
