@@ -1,13 +1,11 @@
 /* eslint-disable max-len */
-import React from 'react';
-import sinon from 'sinon';
-
-import { Normaltekst } from 'nav-frontend-typografi';
-import { Table, TableColumn, TableRow } from '@fpsak-frontend/shared-components';
-import { FormattedMessage } from 'react-intl';
 import { Label } from '@fpsak-frontend/form/src/Label';
-import DocumentList from './DocumentList';
+import { Table, TableColumn, TableRow } from '@fpsak-frontend/shared-components';
+import { Normaltekst } from 'nav-frontend-typografi';
+import React from 'react';
+import { FormattedMessage } from 'react-intl';
 import shallowWithIntl, { intlMock } from '../../i18n/index';
+import DocumentList from './DocumentList';
 
 describe('<DocumentList>', () => {
   it('skal vise to dokumenter i liste', () => {
@@ -67,12 +65,7 @@ describe('<DocumentList>', () => {
     };
 
     const wrapper = shallowWithIntl(
-      <DocumentList.WrappedComponent
-        intl={intlMock}
-        documents={[document]}
-        selectDocumentCallback={sinon.spy()}
-        behandlingId={1}
-      />,
+      <DocumentList.WrappedComponent intl={intlMock} documents={[document]} behandlingId={1} saksnummer={1} />,
     );
 
     const formattedMessage = wrapper.find(FormattedMessage).findWhere(n => n.prop('id') === 'DocumentList.IProduksjon');
@@ -81,12 +74,7 @@ describe('<DocumentList>', () => {
 
   it('skal ikke vise tabell når det ikke finnes dokumenter', () => {
     const wrapper = shallowWithIntl(
-      <DocumentList.WrappedComponent
-        intl={intlMock}
-        documents={[]}
-        selectDocumentCallback={sinon.spy()}
-        behandlingId={1}
-      />,
+      <DocumentList.WrappedComponent intl={intlMock} documents={[]} behandlingId={1} saksnummer={1} />,
     );
 
     const label = wrapper.find(Normaltekst);
