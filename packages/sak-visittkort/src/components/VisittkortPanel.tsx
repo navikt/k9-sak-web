@@ -148,6 +148,7 @@ const VisittkortPanel = ({
               </FlexColumn>
             )}
           </div>
+          <div id="visittkort-portal" />
         </FlexRow>
       </FlexContainer>
     </div>
