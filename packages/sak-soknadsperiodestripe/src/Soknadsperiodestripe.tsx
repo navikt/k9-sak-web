@@ -2,7 +2,10 @@ import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import { Tidslinje } from '@fpsak-frontend/shared-components';
 import HorisontalNavigering from '@fpsak-frontend/shared-components/src/tidslinje/HorisontalNavigering';
 import { useSenesteDato } from '@fpsak-frontend/shared-components/src/tidslinje/useTidslinjerader';
-import BehandlingPerioderårsakMedVilkår from '@k9-sak-web/types/src/behandlingPerioderarsakMedVilkar';
+import BehandlingPerioderårsakMedVilkår, {
+  Periode,
+  PeriodeMedUtfall,
+} from '@k9-sak-web/types/src/behandlingPerioderarsakMedVilkar';
 import { PeriodStatus, Tidslinjeskala } from '@k9-sak-web/types/src/tidslinje';
 import { getPeriodDifference, Period } from '@navikt/k9-period-utils';
 import dayjs from 'dayjs';
@@ -27,6 +30,19 @@ interface RadPeriode {
   className: string;
 }
 
+const harAllePerioderUtfall = (perioderTilVurdering: Periode[], perioderMedUtfall: PeriodeMedUtfall[]) => {
+  if (perioderTilVurdering?.length && perioderMedUtfall?.length) {
+    return perioderTilVurdering.every(periodeTilVurdering =>
+      perioderMedUtfall.some(
+        periodeMedUtfall =>
+          new Period(periodeMedUtfall.periode.fom, periodeMedUtfall.periode.tom).covers(
+            new Period(periodeTilVurdering.fom, periodeTilVurdering.tom),
+          ) && periodeMedUtfall.utfall.kode !== vilkarUtfallType.IKKE_VURDERT,
+      ),
+    );
+  }
+  return false;
+};
 export const formaterPerioder = (behandlingPerioderMedVilkår: BehandlingPerioderårsakMedVilkår) => {
   const vedtakshistorikk: RadPeriode[] =
     behandlingPerioderMedVilkår?.forrigeVedtak?.map(({ periode, utfall }) => {
@@ -51,21 +67,26 @@ export const formaterPerioder = (behandlingPerioderMedVilkår: BehandlingPeriode
       return nyPeriode;
     }) || [];
 
-  const perioderTilVurdering =
+  const perioderTilVurderingPeriodType =
     behandlingPerioderMedVilkår?.perioderMedÅrsak?.perioderTilVurdering.map(
       periode => new Period(periode.fom, periode.tom),
     ) || [];
   const vedtaksperioder =
     behandlingPerioderMedVilkår?.forrigeVedtak?.map(({ periode }) => new Period(periode.fom, periode.tom)) || [];
-  const perioderTilVurderingUtenOverlapp = getPeriodDifference(perioderTilVurdering, vedtaksperioder);
+  const erBehandlingFullført = harAllePerioderUtfall(
+    behandlingPerioderMedVilkår?.perioderMedÅrsak?.perioderTilVurdering,
+    behandlingPerioderMedVilkår?.periodeMedUtfall,
+  );
+  const perioderTilVurdering = erBehandlingFullført
+    ? perioderTilVurderingPeriodType
+    : getPeriodDifference(perioderTilVurderingPeriodType, vedtaksperioder);
 
   const formatertePerioderTilVurdering: RadPeriode[] =
-    perioderTilVurderingUtenOverlapp.map(periodeTilVurdering => {
+    perioderTilVurdering.map(periodeTilVurdering => {
       const { fom, tom } = periodeTilVurdering;
-      const identiskPeriodeMedUtfall = behandlingPerioderMedVilkår.periodeMedUtfall.find(
+      const overlappendePeriodeMedUtfall = behandlingPerioderMedVilkår.periodeMedUtfall.find(
         periodeMedUtfall =>
-          periodeMedUtfall.periode.fom === fom &&
-          periodeMedUtfall.periode.tom === tom &&
+          new Period(periodeMedUtfall.periode.fom, periodeMedUtfall.periode.tom).covers(new Period(fom, tom)) &&
           periodeMedUtfall.utfall.kode !== vilkarUtfallType.IKKE_VURDERT,
       );
       const erDelvisInnvilget = behandlingPerioderMedVilkår.periodeMedUtfall.some(
@@ -80,11 +101,11 @@ export const formaterPerioder = (behandlingPerioderMedVilkår: BehandlingPeriode
         status: 'advarsel' as PeriodStatus,
         className: `${styles.advarsel} ${styles.aktivPeriode}`,
       };
-      if (identiskPeriodeMedUtfall) {
+      if (overlappendePeriodeMedUtfall) {
         let utfall = nyPeriode.status;
-        if (identiskPeriodeMedUtfall.utfall.kode === vilkarUtfallType.OPPFYLT) {
+        if (overlappendePeriodeMedUtfall.utfall.kode === vilkarUtfallType.OPPFYLT) {
           utfall = 'suksess';
-        } else if (identiskPeriodeMedUtfall.utfall.kode === vilkarUtfallType.IKKE_OPPFYLT) {
+        } else if (overlappendePeriodeMedUtfall.utfall.kode === vilkarUtfallType.IKKE_OPPFYLT) {
           utfall = 'feil';
         }
         nyPeriode.status = utfall;
@@ -102,7 +123,12 @@ export const formaterPerioder = (behandlingPerioderMedVilkår: BehandlingPeriode
 
 const Soknadsperiodestripe: React.FC<SoknadsperiodestripeProps> = ({ behandlingPerioderMedVilkår }) => {
   const intl = useIntl();
-  const portalRoot = document.getElementById('visittkort-portal');
+  let portalRoot = document.getElementById('visittkort-portal');
+  if (!portalRoot) {
+    portalRoot = document.createElement('div');
+    portalRoot.setAttribute('id', 'visittkort-portal');
+    document.body.appendChild(portalRoot);
+  }
 
   const formatertePerioder = useMemo(
     () => formaterPerioder(behandlingPerioderMedVilkår),

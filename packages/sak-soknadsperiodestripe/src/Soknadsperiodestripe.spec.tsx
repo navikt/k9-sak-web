@@ -38,7 +38,7 @@ describe('Soknadsperiodestripe skal formatere perioder', () => {
         id: '2022-01-05-2022-02-05',
         fom: new Date('2022-01-05T00:00:00.000Z'),
         tom: new Date('2022-02-05T00:00:00.000Z'),
-        className: 'advarsel',
+        className: 'advarsel aktivPeriode',
         status: 'suksessRevurder',
       },
       {
