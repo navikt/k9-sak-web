@@ -3,6 +3,7 @@ import { Location } from 'history';
 import React from 'react';
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
+import KodeverkType from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import messages from '../i18n/nb_NO.json';
 import BehandlingPicker from './components/BehandlingPicker';
 import BehandlingPickerOld from './components/BehandlingPickerOld';
@@ -22,7 +23,7 @@ interface OwnProps {
   getBehandlingLocation: (behandlingId: number) => Location;
   noExistingBehandlinger: boolean;
   behandlingId?: number;
-  getKodeverkFn: (kodeverk: Kodeverk, behandlingType?: Kodeverk) => KodeverkMedNavn;
+  getKodeverkFn: (kode: string, kodeverk: KodeverkType, behandlingType?: string) => KodeverkMedNavn;
   showAll: boolean;
   toggleShowAll: () => void;
   fagsak: Fagsak;
@@ -41,7 +42,7 @@ const BehandlingVelgerSakIndex = ({
   featureToggles,
 }: OwnProps) => (
   <RawIntlProvider value={intl}>
-    {fagsak.sakstype.kode === fagsakYtelseType.FRISINN || !featureToggles?.BEHANDLINGSVELGER_NY ? (
+    {fagsak.sakstype === fagsakYtelseType.FRISINN || !featureToggles?.BEHANDLINGSVELGER_NY ? (
       <BehandlingPickerOld
         behandlinger={behandlinger}
         getBehandlingLocation={getBehandlingLocation}

@@ -21,10 +21,10 @@ import HistorikkMalTypeTilbakekreving from './maler/HistorikkMalTypeTilbakekrevi
 import HistorikkMalTypeForeldelse from './maler/HistorikkMalTypeForeldelse';
 import PlaceholderHistorikkMal from './maler/placeholderHistorikkMal';
 
-const velgHistorikkMal = (histType: Kodeverk) => {
+const velgHistorikkMal = (histType: string) => {
   // NOSONAR
   switch (
-    histType.kode // NOSONAR
+  histType // NOSONAR
   ) {
     case historikkinnslagType.BEH_GJEN:
     case historikkinnslagType.KOET_BEH_GJEN:
@@ -102,7 +102,7 @@ interface OwnProps {
   historikkinnslag: Historikkinnslag;
   saksnummer?: string;
   getBehandlingLocation: (behandlingId: number) => Location;
-  getKodeverknavn: (kodeverk: Kodeverk) => string;
+  getKodeverknavn: (kodeverk: string) => string;
   createLocationForSkjermlenke: (behandlingLocation: Location, skjermlenkeCode: string) => Location;
   erTilbakekreving: boolean;
 }
@@ -121,9 +121,9 @@ const History = ({
   erTilbakekreving,
 }: OwnProps) => {
   const HistorikkMal = velgHistorikkMal(historikkinnslag.type);
-  const aktorIsVL = historikkinnslag.aktoer.kode === HistorikkAktor.VEDTAKSLOSNINGEN;
-  const aktorIsSOKER = historikkinnslag.aktoer.kode === HistorikkAktor.SOKER;
-  const aktorIsArbeidsgiver = historikkinnslag.aktoer.kode === HistorikkAktor.ARBEIDSGIVER;
+  const aktorIsVL = historikkinnslag.aktoer === HistorikkAktor.VEDTAKSLOSNINGEN;
+  const aktorIsSOKER = historikkinnslag.aktoer === HistorikkAktor.SOKER;
+  const aktorIsArbeidsgiver = historikkinnslag.aktoer === HistorikkAktor.ARBEIDSGIVER;
 
   return (
     <SnakkebobleContainer

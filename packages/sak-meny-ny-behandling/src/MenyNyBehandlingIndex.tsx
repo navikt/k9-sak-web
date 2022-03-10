@@ -23,12 +23,12 @@ const intl = createIntl(
 export const getMenytekst = (): string => intl.formatMessage({ id: 'MenyNyBehandlingIndex.NyForstegangsbehandling' });
 
 interface OwnProps {
-  ytelseType: Kodeverk;
+  ytelseType: string;
   saksnummer: string;
   behandlingId?: number;
   behandlingUuid?: string;
   behandlingVersjon?: number;
-  behandlingType?: Kodeverk;
+  behandlingType?: string;
   lagNyBehandling: (behandlingTypeKode: string, data: any) => void;
   behandlingstyper: KodeverkMedNavn[];
   tilbakekrevingRevurderingArsaker: KodeverkMedNavn[];

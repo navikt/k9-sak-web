@@ -32,8 +32,8 @@ interface OwnProps {
     begrunnelse: string;
   }) => Promise<any>;
   forhandsvisHenleggBehandling: (erHenleggelse: boolean, data: any) => void;
-  ytelseType: Kodeverk;
-  behandlingType: Kodeverk;
+  ytelseType: string;
+  behandlingType: string;
   behandlingUuid: string;
   behandlingResultatTyper: KodeverkMedNavn[];
   gaaTilSokeside: () => void;

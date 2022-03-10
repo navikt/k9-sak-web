@@ -3,9 +3,9 @@ import Periode from './periodeTsType';
 
 export type Fagsak = Readonly<{
   saksnummer: string;
-  sakstype: Kodeverk;
+  sakstype: string;
   relasjonsRolleType: Kodeverk;
-  status: Kodeverk;
+  status: string;
   barnFodt: string;
   person: {
     erDod: boolean;

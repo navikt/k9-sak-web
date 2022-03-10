@@ -1,5 +1,6 @@
 import { BehandlingAppKontekst, Kodeverk, KodeverkMedNavn } from '@k9-sak-web/types';
 import { Location } from 'history';
+import KodeverkType from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { Normaltekst } from 'nav-frontend-typografi';
 import React, { ReactElement } from 'react';
 import { FormattedMessage } from 'react-intl';
@@ -12,7 +13,7 @@ const renderListItems = (
   getBehandlingLocation: (behandlingId: number) => Location,
   showAll: boolean,
   toggleShowAll: () => void,
-  getKodeverkFn: (kodeverk: Kodeverk, behandlingType?: Kodeverk) => KodeverkMedNavn,
+  getKodeverkFn: (kode: string, kodeverk: KodeverkType, behandlingType?: string) => KodeverkMedNavn,
   behandlingId?: number,
 ): ReactElement[] =>
   sortBehandlinger(behandlinger)
@@ -38,7 +39,7 @@ interface OwnProps {
   behandlingId?: number;
   showAll: boolean;
   toggleShowAll: () => void;
-  getKodeverkFn: (kodeverk: Kodeverk, behandlingType?: Kodeverk) => KodeverkMedNavn;
+  getKodeverkFn: (kode: string, kodeverk: KodeverkType, behandlingType?: string) => KodeverkMedNavn;
 }
 
 /**
