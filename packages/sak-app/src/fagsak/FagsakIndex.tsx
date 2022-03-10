@@ -36,6 +36,8 @@ const erTilbakekreving = (behandlingType: Kodeverk): boolean =>
   (BehandlingType.TILBAKEKREVING === behandlingType.kode ||
     BehandlingType.TILBAKEKREVING_REVURDERING === behandlingType.kode);
 
+const erPleiepengerSyktBarn = (fagsak: Fagsak) => fagsak?.sakstype?.kode === fagsakYtelseType.PLEIEPENGER;
+
 /**
  * FagsakIndex
  *
@@ -153,7 +155,7 @@ const FagsakIndex = () => {
     {},
     {
       updateTriggers: [behandlingId, behandlingVersjon],
-      suspendRequest: !behandling,
+      suspendRequest: !behandling || !erPleiepengerSyktBarn(fagsak),
     },
   );
 
@@ -188,8 +190,7 @@ const FagsakIndex = () => {
   }
 
   const harVerge = behandling ? behandling.harVerge : false;
-  const showSøknadsperiodestripe =
-    featureToggles?.SOKNADPERIODESTRIPE && fagsak?.sakstype?.kode === fagsakYtelseType.PLEIEPENGER;
+  const showSøknadsperiodestripe = featureToggles?.SOKNADPERIODESTRIPE && erPleiepengerSyktBarn(fagsak);
   return (
     <>
       <FagsakGrid
