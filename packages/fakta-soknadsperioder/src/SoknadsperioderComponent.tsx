@@ -1,6 +1,7 @@
 import { Tidslinje } from '@fpsak-frontend/shared-components';
 import HorisontalNavigering from '@fpsak-frontend/shared-components/src/tidslinje/HorisontalNavigering';
 import { useSenesteDato } from '@fpsak-frontend/shared-components/src/tidslinje/useTidslinjerader';
+import { KodeverkMedNavn } from '@k9-sak-web/types';
 import BehandlingPerioderårsakMedVilkår, {
   DokumenterTilBehandling,
 } from '@k9-sak-web/types/src/behandlingPerioderarsakMedVilkar';
@@ -69,10 +70,11 @@ const getExpanderbarRadStyles = (flag: boolean) =>
 
 interface SoknadsperioderComponentProps {
   behandlingPerioderårsakMedVilkår: BehandlingPerioderårsakMedVilkår;
+  kodeverk: KodeverkMedNavn[];
 }
 
 const SoknadsperioderComponent = (props: SoknadsperioderComponentProps) => {
-  const { behandlingPerioderårsakMedVilkår } = props;
+  const { behandlingPerioderårsakMedVilkår, kodeverk } = props;
   const [tidslinjeSkala, setTidslinjeSkala] = useState<Tidslinjeskala>(6);
   const [expandPerioderTilBehandling, setExpandPerioderTilBehandling] = useState(true);
   const [expandSøknaderOmNyPeriode, setExpandSøknaderOmNyPeriode] = useState(false);
@@ -80,6 +82,8 @@ const SoknadsperioderComponent = (props: SoknadsperioderComponentProps) => {
   const [expandTrukketKrav, setExpandTrukketKrav] = useState(false);
   const [navigasjonFomDato, setNavigasjonFomDato] = useState(undefined);
   const intl = useIntl();
+
+  const getNavnFraKodeverk = (kode: string) => kodeverk.find(kv => kv.kode === kode)?.navn;
 
   /** TODO: Hallvard: Denne bør refaktoreres */
   const getPerioderGruppertPåÅrsak = (): {
@@ -119,7 +123,7 @@ const SoknadsperioderComponent = (props: SoknadsperioderComponentProps) => {
     const hasSøknaderTilhørendeFørstegangsvurderinger = søknaderTilhørendeFørstegangsvurderinger.length > 0;
     const søknadOmNyPeriode = [
       {
-        radLabel: intl.formatMessage({ id: 'Soknadsperioder.Rad.SøknadOmNyPeriode' }),
+        radLabel: getNavnFraKodeverk('FØRSTEGANGSVURDERING'),
         perioder: førstegangsvurderingsperioder,
         onClick: hasSøknaderTilhørendeFørstegangsvurderinger
           ? () => setExpandSøknaderOmNyPeriode(!expandSøknaderOmNyPeriode)
@@ -141,7 +145,7 @@ const SoknadsperioderComponent = (props: SoknadsperioderComponentProps) => {
 
     const endringerFraSøker = [
       {
-        radLabel: intl.formatMessage({ id: 'Soknadsperioder.Rad.EndringerFraSøker' }),
+        radLabel: getNavnFraKodeverk('ENDRING_FRA_BRUKER'),
         perioder: endringerFraSøkerPerioder,
         onClick: hasSøknaderTilhørendeEringerFraSøker
           ? () => setExpandEndringerFraSøker(!expandEndringerFraSøker)
@@ -151,18 +155,42 @@ const SoknadsperioderComponent = (props: SoknadsperioderComponentProps) => {
       ...søknaderTilhørendeEndringerFraSøker.filter(() => expandEndringerFraSøker),
     ];
 
-    const endringerPgaAnnenPart = {
-      radLabel: intl.formatMessage({ id: 'Soknadsperioder.Rad.EndringerPgaAnnenPart' }),
+    const revurdererEndringerPgaAnnenPart = {
+      radLabel: getNavnFraKodeverk('REVURDERER_ENDRING_FRA_ANNEN_PART'),
       perioder: getPerioderMedÅrsak('REVURDERER_ENDRING_FRA_ANNEN_PART', behandlingPerioderårsakMedVilkår),
     };
 
+    const revurdererEtablertTilsynEndringFraAnnenOmsorgsperson = {
+      radLabel: getNavnFraKodeverk('REVURDERER_ETABLERT_TILSYN_ENDRING_FRA_ANNEN_OMSORGSPERSON'),
+      perioder: getPerioderMedÅrsak(
+        'REVURDERER_ETABLERT_TILSYN_ENDRING_FRA_ANNEN_OMSORGSPERSON',
+        behandlingPerioderårsakMedVilkår,
+      ),
+    };
+
+    const revurdererSykdomEndringFraAnnenOmsorgsperson = {
+      radLabel: getNavnFraKodeverk('REVURDERER_SYKDOM_ENDRING_FRA_ANNEN_OMSORGSPERSON'),
+      perioder: getPerioderMedÅrsak(
+        'REVURDERER_SYKDOM_ENDRING_FRA_ANNEN_OMSORGSPERSON',
+        behandlingPerioderårsakMedVilkår,
+      ),
+    };
+
+    const revurdererNattevåkBeredskapEndringFraAnnenOmsorgsperson = {
+      radLabel: getNavnFraKodeverk('REVURDERER_NATTEVÅKBEREDSKAP_ENDRING_FRA_ANNEN_OMSORGSPERSON'),
+      perioder: getPerioderMedÅrsak(
+        'REVURDERER_NATTEVÅKBEREDSKAP_ENDRING_FRA_ANNEN_OMSORGSPERSON',
+        behandlingPerioderårsakMedVilkår,
+      ),
+    };
+
     const revurdererNyInntektsmelding = {
-      radLabel: intl.formatMessage({ id: 'Soknadsperioder.Rad.NyInntektsmelding' }),
+      radLabel: getNavnFraKodeverk('REVURDERER_NY_INNTEKTSMELDING'),
       perioder: getPerioderMedÅrsak('REVURDERER_NY_INNTEKTSMELDING', behandlingPerioderårsakMedVilkår),
     };
 
     const revurdererBerørtPeriode = {
-      radLabel: intl.formatMessage({ id: 'Soknadsperioder.Rad.BerørtPeriode' }),
+      radLabel: getNavnFraKodeverk('REVURDERER_BERØRT_PERIODE'),
       perioder: getPerioderMedÅrsak('REVURDERER_BERØRT_PERIODE', behandlingPerioderårsakMedVilkår),
     };
 
@@ -176,7 +204,7 @@ const SoknadsperioderComponent = (props: SoknadsperioderComponentProps) => {
 
     const trukketKrav = [
       {
-        radLabel: intl.formatMessage({ id: 'Soknadsperioder.Rad.TrukketKrav' }),
+        radLabel: getNavnFraKodeverk('TRUKKET_KRAV'),
         perioder: trukketKravPerioder,
         onClick: hasSøknaderTilhørendeTrukketKrav ? () => setExpandTrukketKrav(!expandTrukketKrav) : undefined,
         radClassname: hasSøknaderTilhørendeTrukketKrav ? getExpanderbarRadStyles(expandTrukketKrav) : '',
@@ -185,11 +213,11 @@ const SoknadsperioderComponent = (props: SoknadsperioderComponentProps) => {
     ];
 
     const gRegulering = {
-      radLabel: intl.formatMessage({ id: 'Soknadsperioder.Rad.GRegulering' }),
+      radLabel: getNavnFraKodeverk('G_REGULERING'),
       perioder: getPerioderMedÅrsak('G_REGULERING', behandlingPerioderårsakMedVilkår),
     };
     const revurdererManuellRevurdering = {
-      radLabel: intl.formatMessage({ id: 'Soknadsperioder.Rad.ManuellRevurdering' }),
+      radLabel: getNavnFraKodeverk('MANUELT_REVURDERER_PERIODE'),
       perioder: getPerioderMedÅrsak('MANUELT_REVURDERER_PERIODE', behandlingPerioderårsakMedVilkår),
     };
 
@@ -198,7 +226,10 @@ const SoknadsperioderComponent = (props: SoknadsperioderComponentProps) => {
       perioderTilBehandling,
       ...søknadOmNyPeriode,
       ...endringerFraSøker,
-      endringerPgaAnnenPart,
+      revurdererEndringerPgaAnnenPart,
+      revurdererEtablertTilsynEndringFraAnnenOmsorgsperson,
+      revurdererSykdomEndringFraAnnenOmsorgsperson,
+      revurdererNattevåkBeredskapEndringFraAnnenOmsorgsperson,
       revurdererNyInntektsmelding,
       revurdererBerørtPeriode,
       ...trukketKrav,
