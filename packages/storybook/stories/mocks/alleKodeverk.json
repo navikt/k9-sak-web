@@ -6665,11 +6665,6 @@
       "kode": "SLÅTT_SAMMEN_MED_ANNET",
       "navn": "Arbeidsforholdet er slått sammen med et annet",
       "kodeverk": "ARBEIDSFORHOLD_HANDLING_TYPE"
-    },
-    {
-      "kode": "LAGT_TIL_AV_SAKSBEHANDLER",
-      "navn": "Arbeidsforhold lagt til av saksbehandler",
-      "kodeverk": "ARBEIDSFORHOLD_HANDLING_TYPE"
     }
   ],
   "HistorikkAktør": [

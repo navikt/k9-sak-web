@@ -66,8 +66,8 @@ const getModiaPath = (fødselsnummer: string) => {
 interface OwnProps {
   documents: Dokument[];
   behandlingId?: number;
-  selectDocumentCallback: (e: React.SyntheticEvent, id: number, dokument: Dokument) => void;
   fagsakPerson?: FagsakPerson;
+  saksnummer: number;
 }
 
 /**
@@ -81,8 +81,8 @@ const DocumentList = ({
   intl,
   documents,
   behandlingId,
-  selectDocumentCallback,
   fagsakPerson,
+  saksnummer,
 }: OwnProps & WrappedComponentProps) => {
   const [selectedFilter, setSelectedFilter] = useState(alleBehandlinger);
   const harMerEnnEnBehandlingKnyttetTilDokumenter = () => {
@@ -118,6 +118,14 @@ const DocumentList = ({
       </>
     );
   }
+
+  const makeDocumentURL = (document: Dokument) =>
+    `/k9/sak/api/dokument/hent-dokument?saksnummer=${saksnummer}&journalpostId=${document.journalpostId}&dokumentId=${document.dokumentId}`;
+
+  const selectDocument = (_e, _id, document: Dokument): void => {
+    window.open(makeDocumentURL(document), '_blank');
+  };
+
   return (
     <>
       <div className={styles.controlsContainer}>
@@ -144,8 +152,8 @@ const DocumentList = ({
                 key={document.dokumentId}
                 id={document.dokumentId}
                 model={document}
-                onMouseDown={selectDocumentCallback}
-                onKeyDown={selectDocumentCallback}
+                onMouseDown={selectDocument}
+                onKeyDown={selectDocument}
                 className={isVedtaksdokument(document) ? styles.borderTop : ''}
               >
                 <TableColumn>
@@ -157,11 +165,22 @@ const DocumentList = ({
                   />
                 </TableColumn>
                 <TableColumn>
-                  {isVedtaksdokument(document) ? (
-                    <Element>{document.tittel}</Element>
-                  ) : (
-                    <Normaltekst>{document.tittel}</Normaltekst>
-                  )}
+                  <a
+                    onClick={event => {
+                      event.stopPropagation();
+                    }}
+                    href={makeDocumentURL(document)}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={styles.documentAnchor}
+                    tabIndex={-1}
+                  >
+                    {isVedtaksdokument(document) ? (
+                      <Element>{document.tittel}</Element>
+                    ) : (
+                      <Normaltekst>{document.tittel}</Normaltekst>
+                    )}
+                  </a>
                 </TableColumn>
                 <TableColumn>
                   {isTextMoreThan25char(document.gjelderFor) && (

@@ -254,7 +254,7 @@ describe('<PersonArbeidsforholdTable>', () => {
     const endretArbeidsforhold = {
       ...arbeidsforhold,
       handlingType: {
-        kode: arbeidsforholdHandlingType.LAGT_TIL_AV_SAKSBEHANDLER,
+        kode: arbeidsforholdHandlingType.BASERT_PÅ_INNTEKTSMELDING,
         kodeverk: '',
       },
       yrkestittel: 'Lærer',
