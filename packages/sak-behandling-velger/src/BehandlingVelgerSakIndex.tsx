@@ -39,28 +39,35 @@ const BehandlingVelgerSakIndex = ({
   toggleShowAll,
   fagsak,
   featureToggles,
-}: OwnProps) => (
-  <RawIntlProvider value={intl}>
-    {fagsak.sakstype.kode === fagsakYtelseType.FRISINN || !featureToggles?.BEHANDLINGSVELGER_NY ? (
-      <BehandlingPickerOld
-        behandlinger={behandlinger}
-        getBehandlingLocation={getBehandlingLocation}
-        noExistingBehandlinger={noExistingBehandlinger}
-        behandlingId={behandlingId}
-        showAll={showAll}
-        toggleShowAll={toggleShowAll}
-        getKodeverkFn={getKodeverkFn}
-      />
-    ) : (
-      <BehandlingPicker
-        behandlinger={behandlinger}
-        getBehandlingLocation={getBehandlingLocation}
-        noExistingBehandlinger={noExistingBehandlinger}
-        getKodeverkFn={getKodeverkFn}
-        behandlingId={behandlingId}
-      />
-    )}
-  </RawIntlProvider>
-);
-
+}: OwnProps) => {
+  const skalViseGammelBehandlingsvelger =
+    fagsak.sakstype.kode === fagsakYtelseType.FRISINN ||
+    fagsak.sakstype.kode === fagsakYtelseType.OMSORGSPENGER_ALENE_OM_OMSORGEN ||
+    fagsak.sakstype.kode === fagsakYtelseType.OMSORGSPENGER_KRONISK_SYKT_BARN ||
+    fagsak.sakstype.kode === fagsakYtelseType.OMSORGSPENGER_MIDLERTIDIG_ALENE ||
+    !featureToggles?.BEHANDLINGSVELGER_NY;
+  return (
+    <RawIntlProvider value={intl}>
+      {skalViseGammelBehandlingsvelger ? (
+        <BehandlingPickerOld
+          behandlinger={behandlinger}
+          getBehandlingLocation={getBehandlingLocation}
+          noExistingBehandlinger={noExistingBehandlinger}
+          behandlingId={behandlingId}
+          showAll={showAll}
+          toggleShowAll={toggleShowAll}
+          getKodeverkFn={getKodeverkFn}
+        />
+      ) : (
+        <BehandlingPicker
+          behandlinger={behandlinger}
+          getBehandlingLocation={getBehandlingLocation}
+          noExistingBehandlinger={noExistingBehandlinger}
+          getKodeverkFn={getKodeverkFn}
+          behandlingId={behandlingId}
+        />
+      )}
+    </RawIntlProvider>
+  );
+};
 export default BehandlingVelgerSakIndex;
