@@ -185,7 +185,7 @@ const AktivitetTabell = ({
             )}
             {skalAvvikVises && (
               <th>
-                <FormattedMessage id="Uttaksplan.Til" />
+                <FormattedMessage id="Uttaksplan.Avvik" />
               </th>
             )}
             <th>
@@ -316,11 +316,14 @@ const AktivitetTabell = ({
                   <td>{formaterFravær(periode, delvisFravær)}</td>
                   {skalÅrsakVises && <td>{formaterFraværsårsak(fraværÅrsak)}</td>}
                   {skalAvvikVises && <td>
-                    {avvikImSøknad
-                    && avvikImSøknad.length > 0
+                    {avvikImSøknad && avvikImSøknad.length > 0
                     && (avvikImSøknad === AvvikIMType.SØKNAD_UTEN_MATCHENDE_IM || avvikImSøknad === AvvikIMType.IM_REFUSJONSKRAV_TRUMFER_SØKNAD)
-                      ? <FormattedMessage id="Uttaksplan.Arbeidsgiver"/>
-                      : <FormattedMessage id="Uttaksplan.Søker"/>
+                      ? <FormattedMessage id={
+                        avvikImSøknad === AvvikIMType.SØKNAD_UTEN_MATCHENDE_IM
+                          ? 'Uttaksplan.AvvikSoknadIM.UtenMatchendeIM'
+                          : 'Uttaksplan.AvvikSoknadIM.RefusjonskravTrumfer'
+                      }/>
+                      : <FormattedMessage id="Uttaksplan.AvvikSoknadIM.IkkeAvvik" />
                     }
                   </td>}
                   <td>{`${utbetalingsgrad}%`}</td>
