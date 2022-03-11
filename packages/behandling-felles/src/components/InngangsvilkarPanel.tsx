@@ -106,9 +106,9 @@ const InngangsvilkarPanel = ({
         <Tabs
           tabs={
             perioderFraTidligereBehandlinger.length > 0
-              ? [{label: <FormattedMessage id="Vilkarsperioder.DenneBehandling"/>},
-                {label: <FormattedMessage id="Vilkarsperioder.HittilIÅr"/>}]
-              : [{label: <FormattedMessage id="Vilkarsperioder.DenneBehandling"/>}]
+              ? [{ label: <FormattedMessage id="Vilkarsperioder.DenneBehandling" /> },
+              { label: <FormattedMessage id="Vilkarsperioder.HittilIÅr" /> }]
+              : [{ label: <FormattedMessage id="Vilkarsperioder.DenneBehandling" /> }]
           }
           onChange={(e, index) => setVisAllePerioder(index === 1)}
         />

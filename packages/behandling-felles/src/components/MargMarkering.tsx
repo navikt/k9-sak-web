@@ -34,7 +34,7 @@ const MargMarkering = ({
     aksjonspunkter[0].toTrinnsBehandlingGodkjent === false;
 
   const harApnentAksjonspunktSomKanLoses = useMemo(
-    () => aksjonspunkter.some(ap => isAksjonspunktOpen(ap.status.kode) && ap.kanLoses),
+    () => aksjonspunkter.some(ap => isAksjonspunktOpen(ap.status) && ap.kanLoses),
     [aksjonspunkter],
   );
   const visAksjonspunkt = visAksjonspunktMarkering && harApnentAksjonspunktSomKanLoses && !isReadOnly;

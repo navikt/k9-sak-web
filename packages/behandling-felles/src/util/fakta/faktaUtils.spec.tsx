@@ -119,8 +119,8 @@ describe('<faktaUtils>', () => {
 
     const aksjonspunkter = [
       {
-        definisjon: { kode: aksjonspunktCodes.AVKLAR_ARBEIDSFORHOLD, kodeverk: 'BEHANDLING_DEF' },
-        status: { kode: aksjonspunktStatus.OPPRETTET, kodeverk: 'BEHANDLING_STATUS' },
+        definisjon: aksjonspunktCodes.AVKLAR_ARBEIDSFORHOLD,
+        status: aksjonspunktStatus.OPPRETTET,
         kanLoses: true,
         erAktivt: true,
       },
@@ -166,8 +166,8 @@ describe('<faktaUtils>', () => {
     const panelDef2 = new TestFaktaPanelDef();
     const aksjonspunkter = [
       {
-        definisjon: { kode: aksjonspunktCodes.AVKLAR_ARBEIDSFORHOLD, kodeverk: 'BEHANDLING_DEF' },
-        status: { kode: aksjonspunktStatus.OPPRETTET, kodeverk: 'BEHANDLING_STATUS' },
+        definisjon: aksjonspunktCodes.AVKLAR_ARBEIDSFORHOLD,
+        status: aksjonspunktStatus.OPPRETTET,
         kanLoses: true,
         erAktivt: true,
       },
@@ -229,8 +229,8 @@ describe('<faktaUtils>', () => {
       behandlingVersjon: behandling.versjon,
       bekreftedeAksjonspunktDtoer: [
         {
-          '@type': aksjonspunkter[0],
-          kode: aksjonspunkter[0],
+          '@type': aksjonspunkter[0].kode,
+          kode: aksjonspunkter[0].kode,
         },
       ],
     });
@@ -275,8 +275,8 @@ describe('<faktaUtils>', () => {
       behandlingVersjon: behandling.versjon,
       overstyrteAksjonspunktDtoer: [
         {
-          '@type': aksjonspunkter[0],
-          kode: aksjonspunkter[0],
+          '@type': aksjonspunkter[0].kode,
+          kode: aksjonspunkter[0].kode,
         },
       ],
     });

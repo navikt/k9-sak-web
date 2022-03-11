@@ -125,8 +125,8 @@ describe('<faktaHooks>', () => {
   it('skal bruke callbacks for å velge faktapanel og for å lagre', () => {
     const aksjonspunkter = [
       {
-        definisjon: { kode: aksjonspunktCodes.AVKLAR_ARBEIDSFORHOLD, kodeverk: 'test' },
-        status: { kode: aksjonspunktStatus.OPPRETTET, kodeverk: 'test' },
+        definisjon: aksjonspunktCodes.AVKLAR_ARBEIDSFORHOLD,
+        status: aksjonspunktStatus.OPPRETTET,
         kanLoses: true,
         erAktivt: true,
       },
