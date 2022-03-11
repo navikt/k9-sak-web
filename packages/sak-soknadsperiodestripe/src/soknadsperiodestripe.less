@@ -18,6 +18,7 @@
     .tidslinje {
       margin-left: @label-width;
       width: calc(100% - @label-width);
+      margin-bottom: 0.625rem;
     }
   }
 }
@@ -49,11 +50,7 @@
 }
 
 .skalavelgerContainer {
-  display: flex;
-  justify-content: flex-end;
-  position: absolute;
-  right: 2.25rem;
-  top: -2.5rem;
+  margin: 1rem 2.25rem 0 1.375rem;
 
   fieldset {
     border: none;
@@ -107,55 +104,6 @@
   }
 }
 
-.navigasjonContainer {
-  align-items: center;
-  display: flex;
-  justify-content: flex-end;
-  height: 2rem;
-  margin-top: 0.625rem;
-}
-
-.navigasjonButton {
-  width: 24px;
-  height: 24px;
-  border: 2px solid #3e3832;
-  border-radius: 50%;
-  cursor: pointer;
-  background-color: white;
-  background-repeat: no-repeat;
-  background-position: 50%;
-  margin-right: 0.875rem;
-  padding: 0;
-
-  &:hover {
-    box-shadow: 0 0 0 3px #00347d;
-  }
-}
-
-.navigasjonButtonLeft {
-  .navigasjonButton();
-
-  background-image: url("data:image/svg+xml,%3Csvg width='8' height='11' viewBox='0 0 8 11' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M0.792316 5.7085L5.79232 0.458496L7.20898 1.91683L3.41732 5.7085L7.20898 9.50016L5.79232 10.9585L0.792316 5.7085Z' fill='%233E3832'/%3E%3C/svg%3E%0A");
-}
-
-.navigasjonButtonRight {
-  .navigasjonButton();
-
-  background-image: url("data:image/svg+xml,%3Csvg width='14' height='14' viewBox='0 0 14 14' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M10.2077 6.7085L5.20768 11.9585L3.79102 10.5002L7.58268 6.7085L3.79102 2.91683L5.20768 1.4585L10.2077 6.7085Z' fill='%233E3832'/%3E%3C/svg%3E%0A");
-
-  &:disabled {
-    opacity: 0.2;
-
-    &:hover {
-      box-shadow: none;
-    }
-  }
-}
-
-.navigasjonDatoContainer {
-  min-width: 17rem;
-}
-
 .icon() {
   content: '';
   position: absolute;
@@ -192,6 +140,36 @@
 }
 
 .aktivPeriode {
-  border: none;
-  outline: 3px solid #254b6d;
+  height: 1.875rem;
+}
+
+:global(.frittstående).aktivPeriode {
+  border: 3px solid #254b6d;
+}
+
+:global(.sammenhengendeFraBegge).aktivPeriode {
+  border-top: 3px solid #254b6d;
+  border-bottom: 3px solid #254b6d;
+  border-left: none;
+  border-right: none;
+
+  &:before {
+    display: none;
+  }
+}
+
+:global(.sammenhengendeFraHøyre).aktivPeriode {
+  border-top: 3px solid #254b6d;
+  border-bottom: 3px solid #254b6d;
+  border-left: 3px solid #254b6d;
+}
+
+:global(.sammenhengendeFraVenstre).aktivPeriode {
+  border-top: 3px solid #254b6d;
+  border-bottom: 3px solid #254b6d;
+  border-right: 3px solid #254b6d;
+
+  &:before {
+    display: none;
+  }
 }
