@@ -55,36 +55,36 @@ const transformRedusertUtbetalingÅrsaker = formikValues =>
   );
 
 export const VedtakForm = ({
-                             intl,
-                             readOnly,
-                             behandlingStatus,
-                             behandlingresultat,
-                             aksjonspunkter,
-                             behandlingPaaVent,
-                             vedtakVarsel,
-                             previewCallback,
-                             sprakkode,
-                             ytelseTypeKode,
-                             alleKodeverk,
-                             personopplysninger,
-                             arbeidsgiverOpplysningerPerId,
-                             tilbakekrevingvalg,
-                             vilkar,
-                             tilgjengeligeVedtaksbrev,
-                             informasjonsbehovVedtaksbrev,
-                             dokumentdata,
-                             submitCallback,
-                             fritekstdokumenter,
-                             lagreDokumentdata,
-                             overlappendeYtelser,
-                             resultatstruktur,
-                             simuleringResultat,
-                             resultatstrukturOriginalBehandling,
-                             bgPeriodeMedAvslagsårsak,
-                             medlemskapFom,
-                             erRevurdering,
-                             behandlingArsaker,
-                           }) => {
+  intl,
+  readOnly,
+  behandlingStatus,
+  behandlingresultat,
+  aksjonspunkter,
+  behandlingPaaVent,
+  vedtakVarsel,
+  previewCallback,
+  sprakkode,
+  ytelseTypeKode,
+  alleKodeverk,
+  personopplysninger,
+  arbeidsgiverOpplysningerPerId,
+  tilbakekrevingvalg,
+  vilkar,
+  tilgjengeligeVedtaksbrev,
+  informasjonsbehovVedtaksbrev,
+  dokumentdata,
+  submitCallback,
+  fritekstdokumenter,
+  lagreDokumentdata,
+  overlappendeYtelser,
+  resultatstruktur,
+  simuleringResultat,
+  resultatstrukturOriginalBehandling,
+  bgPeriodeMedAvslagsårsak,
+  medlemskapFom,
+  erRevurdering,
+  behandlingArsaker,
+}) => {
   const [erSendtInnUtenArsaker, setErSendtInnUtenArsaker] = useState(false);
   const vedtakContext = useContext(VedtakFormContext);
   const onToggleOverstyring = (e, setFieldValue) => {
@@ -117,9 +117,9 @@ export const VedtakForm = ({
         overstyrtMottaker: safeJSONParse(values?.[fieldnames.OVERSTYRT_MOTTAKER]),
         fritekstbrev: values?.[fieldnames.SKAL_BRUKE_OVERSTYRENDE_FRITEKST_BREV]
           ? {
-            brødtekst: values?.[fieldnames.BRØDTEKST],
-            overskrift: values?.[fieldnames.OVERSKRIFT],
-          }
+              brødtekst: values?.[fieldnames.BRØDTEKST],
+              overskrift: values?.[fieldnames.OVERSKRIFT],
+            }
           : {},
         skalBrukeOverstyrendeFritekstBrev: values?.[fieldnames.SKAL_BRUKE_OVERSTYRENDE_FRITEKST_BREV],
         skalUndertrykkeBrev: values?.[fieldnames.SKAL_HINDRE_UTSENDING_AV_BREV],
@@ -138,17 +138,17 @@ export const VedtakForm = ({
       .filter(ap => ap.kanLoses)
       .map(aksjonspunkt => {
         const tranformedValues = {
-          kode: aksjonspunkt.definisjon.kode,
-          begrunnelse: values?.[fieldnames.BEGRUNNELSE],
-          overstyrtMottaker: safeJSONParse(values?.[fieldnames.OVERSTYRT_MOTTAKER]),
-          fritekstbrev: {
-            brødtekst: values?.[fieldnames.BRØDTEKST],
-            overskrift: values?.[fieldnames.OVERSKRIFT],
-          },
-          skalBrukeOverstyrendeFritekstBrev: values?.[fieldnames.SKAL_BRUKE_OVERSTYRENDE_FRITEKST_BREV],
-          skalUndertrykkeBrev: values?.[fieldnames.SKAL_HINDRE_UTSENDING_AV_BREV],
-          isVedtakSubmission,
-          tilgjengeligeVedtaksbrev,
+        kode: aksjonspunkt.definisjon.kode,
+        begrunnelse: values?.[fieldnames.BEGRUNNELSE],
+        overstyrtMottaker: safeJSONParse(values?.[fieldnames.OVERSTYRT_MOTTAKER]),
+        fritekstbrev: {
+          brødtekst: values?.[fieldnames.BRØDTEKST],
+          overskrift: values?.[fieldnames.OVERSKRIFT],
+        },
+        skalBrukeOverstyrendeFritekstBrev: values?.[fieldnames.SKAL_BRUKE_OVERSTYRENDE_FRITEKST_BREV],
+        skalUndertrykkeBrev: values?.[fieldnames.SKAL_HINDRE_UTSENDING_AV_BREV],
+        isVedtakSubmission,
+        tilgjengeligeVedtaksbrev,
         }
         if (aksjonspunkt.definisjon.kode === aksjonspunktCodes.FORESLA_VEDTAK_MANUELT) {
           tranformedValues.redusertUtbetalingÅrsaker = transformRedusertUtbetalingÅrsaker(values)
@@ -173,16 +173,16 @@ export const VedtakForm = ({
     {},
     {
       [fieldnames.SKAL_BRUKE_OVERSTYRENDE_FRITEKST_BREV]:
-      kanKunVelge(tilgjengeligeVedtaksbrev, vedtaksbrevtype.FRITEKST) ||
-      (harMellomlagretFritekstbrev(dokumentdata, vedtakVarsel) && kanHaFritekstbrev(tilgjengeligeVedtaksbrev)) ||
-      (kanHaFritekstbrev(tilgjengeligeVedtaksbrev) &&
-        !kanHaAutomatiskVedtaksbrev(tilgjengeligeVedtaksbrev) &&
-        !harMellomLagretMedIngenBrev(dokumentdata, vedtakVarsel)),
+        kanKunVelge(tilgjengeligeVedtaksbrev, vedtaksbrevtype.FRITEKST) ||
+        (harMellomlagretFritekstbrev(dokumentdata, vedtakVarsel) && kanHaFritekstbrev(tilgjengeligeVedtaksbrev)) ||
+        (kanHaFritekstbrev(tilgjengeligeVedtaksbrev) &&
+          !kanHaAutomatiskVedtaksbrev(tilgjengeligeVedtaksbrev) &&
+          !harMellomLagretMedIngenBrev(dokumentdata, vedtakVarsel)),
       [fieldnames.SKAL_HINDRE_UTSENDING_AV_BREV]:
-      kanKunVelge(tilgjengeligeVedtaksbrev, vedtaksbrevtype.INGEN) ||
-      (harMellomLagretMedIngenBrev(dokumentdata, vedtakVarsel) &&
-        kanHindreUtsending(tilgjengeligeVedtaksbrev) &&
-        !harMellomlagretFritekstbrev(dokumentdata, vedtakVarsel)),
+        kanKunVelge(tilgjengeligeVedtaksbrev, vedtaksbrevtype.INGEN) ||
+        (harMellomLagretMedIngenBrev(dokumentdata, vedtakVarsel) &&
+          kanHindreUtsending(tilgjengeligeVedtaksbrev) &&
+          !harMellomlagretFritekstbrev(dokumentdata, vedtakVarsel)),
       [fieldnames.OVERSKRIFT]: decodeHtmlEntity(dokumentdata?.[dokumentdatatype.FRITEKSTBREV]?.overskrift) || '',
       [fieldnames.BRØDTEKST]: decodeHtmlEntity(dokumentdata?.[dokumentdatatype.FRITEKSTBREV]?.brødtekst) || '',
       [fieldnames.OVERSTYRT_MOTTAKER]: JSON.stringify(dokumentdata?.[dokumentdatatype.OVERSTYRT_MOTTAKER]),
