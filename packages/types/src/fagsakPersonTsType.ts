@@ -6,8 +6,8 @@ export type FagsakPerson = Readonly<{
   alder: number;
   personnummer: string;
   erKvinne: boolean;
-  personstatusType: Kodeverk;
-  diskresjonskode?: Kodeverk;
+  personstatusType: string;
+  diskresjonskode?: string;
   dodsdato?: string;
   aktørId?: string;
 }>;
