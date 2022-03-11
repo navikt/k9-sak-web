@@ -5,7 +5,7 @@ import { RestApiState } from '@k9-sak-web/rest-api-hooks';
 import Soknadsperiodestripe from '@k9-sak-web/sak-soknadsperiodestripe';
 import {
   ArbeidsgiverOpplysningerWrapper,
-  behandlingPerioderårsakMedVilkår,
+  BehandlingPerioderårsakMedVilkår,
   Fagsak,
   FagsakPerson,
   FeatureToggles,
@@ -35,6 +35,8 @@ const erTilbakekreving = (behandlingType: Kodeverk): boolean =>
   behandlingType &&
   (BehandlingType.TILBAKEKREVING === behandlingType.kode ||
     BehandlingType.TILBAKEKREVING_REVURDERING === behandlingType.kode);
+
+const erPleiepengerSyktBarn = (fagsak: Fagsak) => fagsak?.sakstype?.kode === fagsakYtelseType.PLEIEPENGER;
 
 /**
  * FagsakIndex
@@ -148,12 +150,12 @@ const FagsakIndex = () => {
     },
   );
 
-  const { data: behandlingPerioderMedVilkår } = restApiHooks.useRestApi<behandlingPerioderårsakMedVilkår>(
+  const { data: behandlingPerioderMedVilkår } = restApiHooks.useRestApi<BehandlingPerioderårsakMedVilkår>(
     K9sakApiKeys.BEHANDLING_PERIODER_ÅRSAK_MED_VILKÅR,
     {},
     {
       updateTriggers: [behandlingId, behandlingVersjon],
-      suspendRequest: !behandling,
+      suspendRequest: !behandling || !erPleiepengerSyktBarn(fagsak),
     },
   );
 
@@ -188,8 +190,7 @@ const FagsakIndex = () => {
   }
 
   const harVerge = behandling ? behandling.harVerge : false;
-  const showSøknadsperiodestripe =
-    featureToggles?.SOKNADPERIODESTRIPE && fagsak?.sakstype?.kode === fagsakYtelseType.PLEIEPENGER;
+  const showSøknadsperiodestripe = featureToggles?.SOKNADPERIODESTRIPE && erPleiepengerSyktBarn(fagsak);
   return (
     <>
       <FagsakGrid

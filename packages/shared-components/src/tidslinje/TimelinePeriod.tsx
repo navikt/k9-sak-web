@@ -75,11 +75,16 @@ const TimelinePeriod = ({ period, onSelectPeriod, active }: TimelinePeriodProps)
   const className = classNames(
     'periode',
     styles.periode,
-    period.cropped === 'both' && styles.sammenhengendeFraBegge,
+    period.cropped === 'both' && `${styles.sammenhengendeFraBegge} sammenhengendeFraBegge`,
     period.cropped === 'right' &&
-      (period.direction === 'left' ? styles.sammenhengendeFraHøyre : styles.sammenhengendeFraVenstre),
+      (period.direction === 'left'
+        ? `${styles.sammenhengendeFraHøyre} sammenhengendeFraHøyre`
+        : `${styles.sammenhengendeFraVenstre} sammenhengendeFraVenstre`),
     period.cropped === 'left' &&
-      (period.direction === 'left' ? styles.sammenhengendeFraVenstre : styles.sammenhengendeFraHøyre),
+      (period.direction === 'left'
+        ? `${styles.sammenhengendeFraVenstre} sammenhengendeFraVenstre`
+        : `${styles.sammenhengendeFraHøyre} sammenhengendeFraHøyre`),
+    !period.cropped && 'frittstående',
     active && styles.active,
     isMini && styles.mini,
     styles[period.status],

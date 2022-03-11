@@ -2597,7 +2597,15 @@
   resolved "https://npm.pkg.github.com/download/@navikt/k9-date-utils/0.0.5/62215107bf7c1a3b45d5d5a569773bcf94696b98620199aaeb79d11601c047cf#38418e62899fe77647cc4a3ac60ada6ddf0ce3b1"
   integrity sha512-JkJGDvvIiYnPb5hejxoOOd14xY9NqXP6kuGodQ7zRxo7qmUBHXX8cmZgNIP0uMofMSnN1LIobCI4lmChbKpPnw==
 
-"@navikt/k9-period-utils@0.0.8", "@navikt/k9-period-utils@^0.0.8":
+"@navikt/k9-period-utils@0.0.9":
+  version "0.0.9"
+  resolved "https://npm.pkg.github.com/download/@navikt/k9-period-utils/0.0.9/2ea3871d6717a79e328067e6795882a027116f3c7f33c2791705ea273141fdf7#12f36361860dcc0b100d6c0aa873b26f596859a6"
+  integrity sha512-/SWmrGXv5fUwzbP0+jUokDn/SDKsFXiD0V/RsODjLHMbiUZM3c27kaVtrBaiYwKSnGMGmaIP6ITzh9cG8rXqEw==
+  dependencies:
+    "@navikt/k9-array-utils" "^0.0.1"
+    "@navikt/k9-date-utils" "^0.0.6"
+
+"@navikt/k9-period-utils@^0.0.8":
   version "0.0.8"
   resolved "https://npm.pkg.github.com/download/@navikt/k9-period-utils/0.0.8/c07eb6e3a075b5231d5b1fd31be5ab30a39ae597036aabaad4ae787ead613784#60afc63f2f24498c10a6fabac8d7cb2875d3ce57"
   integrity sha512-ZmUbuaDwiwO9oBnu01jKkZzq/ABgT7538pXEb1fSmCIrdBF1Xd/iXOKtFlbejj/wa6IR8PKtIR2sgt3rqYDr4g==
