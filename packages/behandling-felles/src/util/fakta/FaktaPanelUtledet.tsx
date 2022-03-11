@@ -26,10 +26,10 @@ class FaktaPanelUtledet {
   public getTekstKode = (): string => this.faktaPanelDef.getTekstKode();
 
   private getFiltrerteAksjonspunkter = (): Aksjonspunkt[] =>
-    this.aksjonspunkter.filter(ap => this.faktaPanelDef.getAksjonspunktKoder().includes(ap.definisjon.kode));
+    this.aksjonspunkter.filter(ap => this.faktaPanelDef.getAksjonspunktKoder().includes(ap.definisjon));
 
   public getHarApneAksjonspunkter = (): boolean =>
-    this.getFiltrerteAksjonspunkter().some(ap => isAksjonspunktOpen(ap.status.kode) && ap.kanLoses);
+    this.getFiltrerteAksjonspunkter().some(ap => isAksjonspunktOpen(ap.status) && ap.kanLoses);
 
   public getKomponentData = (rettigheter: Rettigheter, ekstraPanelData: any, hasFetchError: boolean) => {
     const filtrerteAksjonspunkter = this.getFiltrerteAksjonspunkter();
@@ -37,7 +37,7 @@ class FaktaPanelUtledet {
       aksjonspunkter: filtrerteAksjonspunkter,
       readOnly: readOnlyUtils.erReadOnly(this.behandling, filtrerteAksjonspunkter, [], rettigheter, hasFetchError),
       submittable:
-        !filtrerteAksjonspunkter.some(ap => isAksjonspunktOpen(ap.status.kode)) ||
+        !filtrerteAksjonspunkter.some(ap => isAksjonspunktOpen(ap.status)) ||
         filtrerteAksjonspunkter.some(ap => ap.kanLoses),
       harApneAksjonspunkter: this.getHarApneAksjonspunkter(),
       alleMerknaderFraBeslutter: getAlleMerknaderFraBeslutter(this.behandling, filtrerteAksjonspunkter),

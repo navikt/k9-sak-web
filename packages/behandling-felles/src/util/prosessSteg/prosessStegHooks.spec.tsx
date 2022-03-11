@@ -25,15 +25,15 @@ const testHook = callback => shallow(<HookWrapper callback={callback} />);
 describe('<prosessStegHooks>', () => {
   const fagsak = {
     saksnummer: '123456',
-    sakstype: { kode: fagsakYtelseType.FORELDREPENGER, kodeverk: 'test' },
-    status: { kode: fagsakStatus.UNDER_BEHANDLING, kodeverk: 'test' },
+    sakstype: fagsakYtelseType.FORELDREPENGER,
+    status: fagsakStatus.UNDER_BEHANDLING,
   } as Fagsak;
 
   const behandling = {
     id: 1,
     versjon: 2,
-    status: { kode: behandlingStatus.BEHANDLING_UTREDES, kodeverk: 'test' },
-    type: { kode: behandlingType.FORSTEGANGSSOKNAD, kodeverk: 'test' },
+    status: behandlingStatus.BEHANDLING_UTREDES,
+    type: behandlingType.FORSTEGANGSSOKNAD,
     behandlingPaaVent: false,
     taskStatus: {
       readOnly: false,
@@ -44,8 +44,8 @@ describe('<prosessStegHooks>', () => {
 
   const aksjonspunkter = [
     {
-      definisjon: { kode: aksjonspunktCodes.SOKERS_OPPLYSNINGSPLIKT_MANU, kodeverk: 'BEHANDLING_DEF' },
-      status: { kode: aksjonspunktStatus.OPPRETTET, kodeverk: 'BEHANDLING_STATUS' },
+      definisjon: aksjonspunktCodes.SOKERS_OPPLYSNINGSPLIKT_MANU,
+      status: aksjonspunktStatus.OPPRETTET,
       kanLoses: true,
       erAktivt: true,
     },
@@ -53,11 +53,11 @@ describe('<prosessStegHooks>', () => {
 
   const vilkar = [
     {
-      vilkarType: { kode: vilkarType.SOKERSOPPLYSNINGSPLIKT, kodeverk: 'test' },
+      vilkarType: vilkarType.SOKERSOPPLYSNINGSPLIKT,
       overstyrbar: false,
       perioder: [
         {
-          vilkarStatus: { kode: vilkarUtfallType.IKKE_VURDERT, kodeverk: 'test' },
+          vilkarStatus: vilkarUtfallType.IKKE_VURDERT,
           merknadParametere: {
             antattGodkjentArbeid: 'P0D',
             antattOpptjeningAktivitetTidslinje: 'LocalDateTimeline<0 [0]> = []',
@@ -252,7 +252,7 @@ describe('<prosessStegHooks>', () => {
 
     const lagreAksjonspunkter = sinon.stub();
     lagreAksjonspunkter.returns(Promise.resolve());
-    const lagringSideEffectsCallback = () => () => {};
+    const lagringSideEffectsCallback = () => () => { };
 
     const wrapper = testHook(() =>
       prosessStegHooks.useBekreftAksjonspunkt(
@@ -277,8 +277,8 @@ describe('<prosessStegHooks>', () => {
       behandlingVersjon: behandling.versjon,
       bekreftedeAksjonspunktDtoer: [
         {
-          '@type': aksjonspunkter[0].definisjon.kode,
-          kode: aksjonspunkter[0].definisjon.kode,
+          '@type': aksjonspunkter[0].definisjon,
+          kode: aksjonspunkter[0].definisjon,
         },
       ],
     });

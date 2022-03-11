@@ -1,10 +1,9 @@
-import Kodeverk from './kodeverkTsType';
 import Periode from './periodeTsType';
 
 export type Fagsak = Readonly<{
   saksnummer: string;
   sakstype: string;
-  relasjonsRolleType: Kodeverk;
+  relasjonsRolleType: string;
   status: string;
   barnFodt: string;
   person: {
@@ -13,8 +12,8 @@ export type Fagsak = Readonly<{
     alder: number;
     personnummer: string;
     erKvinne: boolean;
-    personstatusType: Kodeverk;
-    diskresjonskode?: Kodeverk;
+    personstatusType: string;
+    diskresjonskode?: string;
     dodsdato?: string;
     aktørId?: string;
   };

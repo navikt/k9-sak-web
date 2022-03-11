@@ -56,33 +56,33 @@ export const getBekreftAksjonspunktCallback =
     lagreAksjonspunkter: (params: any, keepData?: boolean) => Promise<any>,
     lagreOverstyrteAksjonspunkter?: (params: any, keepData?: boolean) => Promise<any>,
   ) =>
-  aksjonspunkter => {
-    const model = aksjonspunkter.map(ap => ({
-      '@type': ap.kode,
-      ...ap,
-    }));
+    aksjonspunkter => {
+      const model = aksjonspunkter.map(ap => ({
+        '@type': ap.kode,
+        ...ap,
+      }));
 
-    const params = {
-      saksnummer: fagsak.saksnummer,
-      behandlingId: behandling.id,
-      behandlingVersjon: behandling.versjon,
-    };
+      const params = {
+        saksnummer: fagsak.saksnummer,
+        behandlingId: behandling.id,
+        behandlingVersjon: behandling.versjon,
+      };
 
-    if (model && overstyringApCodes.includes(model[0].kode)) {
-      return lagreOverstyrteAksjonspunkter(
+      if (model && overstyringApCodes.includes(model[0].kode)) {
+        return lagreOverstyrteAksjonspunkter(
+          {
+            ...params,
+            overstyrteAksjonspunktDtoer: model,
+          },
+          true,
+        ).then(() => oppdaterProsessStegOgFaktaPanelIUrl(DEFAULT_PROSESS_STEG_KODE, DEFAULT_FAKTA_KODE));
+      }
+
+      return lagreAksjonspunkter(
         {
           ...params,
-          overstyrteAksjonspunktDtoer: model,
+          bekreftedeAksjonspunktDtoer: model,
         },
         true,
       ).then(() => oppdaterProsessStegOgFaktaPanelIUrl(DEFAULT_PROSESS_STEG_KODE, DEFAULT_FAKTA_KODE));
-    }
-
-    return lagreAksjonspunkter(
-      {
-        ...params,
-        bekreftedeAksjonspunktDtoer: model,
-      },
-      true,
-    ).then(() => oppdaterProsessStegOgFaktaPanelIUrl(DEFAULT_PROSESS_STEG_KODE, DEFAULT_FAKTA_KODE));
-  };
+    };

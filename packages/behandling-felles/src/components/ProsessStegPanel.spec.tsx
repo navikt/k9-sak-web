@@ -343,7 +343,7 @@ describe('<ProsessStegPanel>', () => {
 
     const aksjonspunktModels = [
       {
-        kode: fodselAksjonspunkter[0].definisjon.kode,
+        kode: fodselAksjonspunkter[0].definisjon,
       },
     ];
     panel.prop('submitCallback')(aksjonspunktModels);
@@ -359,8 +359,8 @@ describe('<ProsessStegPanel>', () => {
       behandlingVersjon: behandling.versjon,
       bekreftedeAksjonspunktDtoer: [
         {
-          '@type': aksjonspunktModels[0].kode,
-          kode: aksjonspunktModels[0].kode,
+          '@type': aksjonspunktModels[0],
+          kode: aksjonspunktModels[0],
         },
       ],
     });

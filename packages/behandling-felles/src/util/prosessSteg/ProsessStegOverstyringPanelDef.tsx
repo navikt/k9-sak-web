@@ -6,7 +6,7 @@ import VilkarresultatMedOverstyringProsessIndex from '@fpsak-frontend/prosess-vi
 import { ProsessStegPanelDef } from './ProsessStegDef';
 
 const harVilkarresultatMedOverstyring = (aksjonspunkterForSteg, aksjonspunktDefKoderForSteg) => {
-  const apKoder = aksjonspunkterForSteg.map(ap => ap.definisjon.kode);
+  const apKoder = aksjonspunkterForSteg.map(ap => ap.definisjon);
   const harIngenApOgMulighetTilOverstyring = apKoder.length === 0 && aksjonspunktDefKoderForSteg.length > 0;
   const harApSomErOverstyringAp = apKoder.some(apCode => aksjonspunktDefKoderForSteg.includes(apCode));
   return harIngenApOgMulighetTilOverstyring || harApSomErOverstyringAp;
@@ -45,7 +45,7 @@ class ProsessStegOverstyringPanelDef extends ProsessStegPanelDef {
     kanOverstyreAccess,
     toggleOverstyring,
   }): any => ({
-    avslagsarsaker: alleKodeverk[kodeverkTyper.AVSLAGSARSAK][vilkarForSteg[0].vilkarType.kode],
+    avslagsarsaker: alleKodeverk[kodeverkTyper.AVSLAGSARSAK][vilkarForSteg[0].vilkarType],
     erOverstyrt: overstyrteAksjonspunktKoder.some(o => this.getAksjonspunktKoder().some(a => a === o)),
     overstyringApKode: this.getAksjonspunktKoder()[0],
     panelTittelKode: this.getTekstKode() ? this.getTekstKode() : prosessStegTekstKode,
