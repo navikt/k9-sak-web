@@ -151,6 +151,18 @@ const AktivitetTabell = ({
       (uttaksperiode.avvikImSøknad === AvvikIMType.SØKNAD_UTEN_MATCHENDE_IM || uttaksperiode.avvikImSøknad === AvvikIMType.IM_REFUSJONSKRAV_TRUMFER_SØKNAD),
     ) !== undefined;
 
+  const hentTekstIdForAvvik = (avvikImSøknad: string): string => {
+    const harAvvikRelevantType = avvikImSøknad === AvvikIMType.SØKNAD_UTEN_MATCHENDE_IM
+      || avvikImSøknad === AvvikIMType.IM_REFUSJONSKRAV_TRUMFER_SØKNAD;
+
+    if (avvikImSøknad && avvikImSøknad.length && harAvvikRelevantType) {
+      return avvikImSøknad === AvvikIMType.SØKNAD_UTEN_MATCHENDE_IM
+        ? 'Uttaksplan.AvvikSoknadIM.UtenMatchendeIM'
+        : 'Uttaksplan.AvvikSoknadIM.RefusjonskravTrumfer';
+    }
+    return 'Uttaksplan.AvvikSoknadIM.IkkeAvvik'
+  }
+
   let antallKolonner = 5;
   if(skalÅrsakVises){ antallKolonner += 1; }
   if(skalAvvikVises){ antallKolonner += 1; }
@@ -315,17 +327,7 @@ const AktivitetTabell = ({
                   </td>
                   <td>{formaterFravær(periode, delvisFravær)}</td>
                   {skalÅrsakVises && <td>{formaterFraværsårsak(fraværÅrsak)}</td>}
-                  {skalAvvikVises && <td>
-                    {avvikImSøknad && avvikImSøknad.length > 0
-                    && (avvikImSøknad === AvvikIMType.SØKNAD_UTEN_MATCHENDE_IM || avvikImSøknad === AvvikIMType.IM_REFUSJONSKRAV_TRUMFER_SØKNAD)
-                      ? <FormattedMessage id={
-                        avvikImSøknad === AvvikIMType.SØKNAD_UTEN_MATCHENDE_IM
-                          ? 'Uttaksplan.AvvikSoknadIM.UtenMatchendeIM'
-                          : 'Uttaksplan.AvvikSoknadIM.RefusjonskravTrumfer'
-                      }/>
-                      : <FormattedMessage id="Uttaksplan.AvvikSoknadIM.IkkeAvvik" />
-                    }
-                  </td>}
+                  {skalAvvikVises && <td><FormattedMessage id={hentTekstIdForAvvik(avvikImSøknad)} /></td>}
                   <td>{`${utbetalingsgrad}%`}</td>
                   <td>
                     <button className={styles.utvidelsesknapp} onClick={() => velgPeriode(index)} type="button">
