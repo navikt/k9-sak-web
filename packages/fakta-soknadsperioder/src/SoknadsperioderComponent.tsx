@@ -97,8 +97,9 @@ const SoknadsperioderComponent = (props: SoknadsperioderComponentProps) => {
     emptyRowClassname?: string;
     onClick?: () => void;
   }[] => {
+    const vedtakshistorikkLabel = intl.formatMessage({ id: 'Soknadsperioder.Rad.Vedtakshistorikk' });
     const vedtakshistorikk = {
-      radLabel: intl.formatMessage({ id: 'Soknadsperioder.Rad.Vedtakshistorikk' }),
+      radLabel: vedtakshistorikkLabel,
       perioder: behandlingPerioderårsakMedVilkår.forrigeVedtak.map(periode => ({
         periode: periode.periode,
         status: periode.utfall.kode === 'OPPFYLT' ? ('suksess' as PeriodStatus) : 'feil',
@@ -107,8 +108,9 @@ const SoknadsperioderComponent = (props: SoknadsperioderComponentProps) => {
       radClassname: styles.vedtakhistorikkRad,
     };
 
+    const perioderTilBehandlingLabel = intl.formatMessage({ id: 'Soknadsperioder.Rad.PerioderTilBehandling' });
     const perioderTilBehandling = {
-      radLabel: intl.formatMessage({ id: 'Soknadsperioder.Rad.PerioderTilBehandling' }),
+      radLabel: perioderTilBehandlingLabel,
       perioder: behandlingPerioderårsakMedVilkår.perioderMedÅrsak.perioderTilVurdering.map(periode => ({ periode })),
       radClassname: `${styles.perdioderTilBehandlingRad} ${getExpanderbarRadStyles(expandPerioderTilBehandling)}`,
       onClick: () => setExpandPerioderTilBehandling(!expandPerioderTilBehandling),
@@ -235,7 +237,15 @@ const SoknadsperioderComponent = (props: SoknadsperioderComponentProps) => {
       ...trukketKrav,
       gRegulering,
       revurdererManuellRevurdering,
-    ].filter(radGruppertPåÅrsak => radGruppertPåÅrsak.perioder.length > 0);
+    ].filter(radGruppertPåÅrsak => {
+      if (
+        radGruppertPåÅrsak.radLabel === vedtakshistorikkLabel ||
+        radGruppertPåÅrsak.radLabel === perioderTilBehandlingLabel
+      ) {
+        return true;
+      }
+      return radGruppertPåÅrsak.perioder.length > 0;
+    });
   };
 
   const getRader = () =>
