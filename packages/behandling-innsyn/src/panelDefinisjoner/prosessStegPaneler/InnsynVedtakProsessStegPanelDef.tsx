@@ -13,7 +13,7 @@ const getVedtakStatus = (innsynResultatType, aksjonspunkter) => {
   if (aksjonspunkter.length === 0 || harApentAksjonpunkt) {
     return vilkarUtfallType.IKKE_VURDERT;
   }
-  return innsynResultatType.kode === innsynResultatTypeKV.INNVILGET
+  return innsynResultatType === innsynResultatTypeKV.INNVILGET
     ? vilkarUtfallType.OPPFYLT
     : vilkarUtfallType.IKKE_OPPFYLT;
 };

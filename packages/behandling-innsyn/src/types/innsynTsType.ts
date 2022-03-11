@@ -7,7 +7,7 @@ type Innsyn = Readonly<{
     tidspunkt: string;
   }[];
   innsynMottattDato: string;
-  innsynResultatType: Kodeverk;
+  innsynResultatType: string;
   vedtaksdokumentasjon: {
     dokumentId: string;
     tittel: string;
