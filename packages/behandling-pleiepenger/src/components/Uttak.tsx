@@ -30,11 +30,11 @@ const uttakAppID = 'uttakApp';
 export default ({ uuid, uttaksperioder, arbeidsgiverOpplysningerPerId, aksjonspunkter }: UttakProps) => {
   const relevanteAksjonspunkter = [aksjonspunktCodes.VENT_ANNEN_PSB_SAK];
   const funnedeRelevanteAksjonspunkter = aksjonspunkter.filter(aksjonspunkt =>
-    relevanteAksjonspunkter.some(relevantAksjonspunkt => relevantAksjonspunkt === aksjonspunkt.definisjon.kode),
+    relevanteAksjonspunkter.some(relevantAksjonspunkt => relevantAksjonspunkt === aksjonspunkt.definisjon),
   );
   const funnedeRelevanteAksjonspunktkoder = funnedeRelevanteAksjonspunkter
-    .filter(aksjonspunkt => aksjonspunkt.status.kode === aksjonspunktStatus.OPPRETTET)
-    .map(aksjonspunkt => aksjonspunkt.definisjon.kode);
+    .filter(aksjonspunkt => aksjonspunkt.status === aksjonspunktStatus.OPPRETTET)
+    .map(aksjonspunkt => aksjonspunkt.definisjon);
   return (
     <MicroFrontend
       id={uttakAppID}

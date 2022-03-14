@@ -21,7 +21,7 @@ class MedisinFaktaPanelDef extends FaktaPanelDef {
   getKomponent = props => <MedisinskVilkarIndex {...props} />;
 
   getOverstyrVisningAvKomponent = ({ fagsak }: { fagsak: Fagsak }) =>
-    fagsak.sakstype.kode === fagsakYtelseType.PLEIEPENGER;
+    fagsak.sakstype === fagsakYtelseType.PLEIEPENGER;
 }
 
 export default MedisinFaktaPanelDef;

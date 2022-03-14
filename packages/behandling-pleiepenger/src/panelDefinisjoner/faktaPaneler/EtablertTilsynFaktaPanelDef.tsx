@@ -20,7 +20,7 @@ class EtablertTilsynFaktaPanelDef extends FaktaPanelDef {
   });
 
   getOverstyrVisningAvKomponent = ({ fagsak }: { fagsak: Fagsak }) =>
-    fagsak.sakstype.kode === fagsakYtelseType.PLEIEPENGER;
+    fagsak.sakstype === fagsakYtelseType.PLEIEPENGER;
 }
 
 export default EtablertTilsynFaktaPanelDef;

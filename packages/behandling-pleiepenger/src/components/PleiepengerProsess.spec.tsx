@@ -28,13 +28,13 @@ import { PleiepengerBehandlingApiKeys, requestPleiepengerApi } from '../data/ple
 describe('<PleiepengerProsess>', () => {
   const fagsak = {
     saksnummer: '123456',
-    sakstype: { kode: fagsakYtelseType.FORELDREPENGER, kodeverk: 'test' },
-    status: { kode: fagsakStatus.UNDER_BEHANDLING, kodeverk: 'test' },
-  } as Fagsak;
+    sakstype: fagsakYtelseType.FORELDREPENGER,
+    status: fagsakStatus.UNDER_BEHANDLING,
 
+  } as Fagsak;
   const fagsakPerson = {
     alder: 30,
-    personstatusType: { kode: personstatusType.BOSATT, kodeverk: 'test' },
+    personstatusType: personstatusType.BOSATT,
     erDod: false,
     erKvinne: true,
     navn: 'Espen Utvikler',
@@ -43,8 +43,8 @@ describe('<PleiepengerProsess>', () => {
   const behandling = {
     id: 1,
     versjon: 2,
-    status: { kode: behandlingStatus.BEHANDLING_UTREDES, kodeverk: 'test' },
-    type: { kode: behandlingType.FORSTEGANGSSOKNAD, kodeverk: 'test' },
+    status: behandlingStatus.BEHANDLING_UTREDES,
+    type: behandlingType.FORSTEGANGSSOKNAD,
     behandlingPaaVent: false,
     taskStatus: {
       readOnly: false,
@@ -64,86 +64,86 @@ describe('<PleiepengerProsess>', () => {
   };
   const aksjonspunkter = [
     {
-      definisjon: { kode: aksjonspunktCodes.AUTOMATISK_MARKERING_AV_UTENLANDSSAK, kodeverk: 'test' },
-      status: { kode: aksjonspunktStatus.OPPRETTET, kodeverk: 'test' },
+      definisjon: aksjonspunktCodes.AUTOMATISK_MARKERING_AV_UTENLANDSSAK,
+      status: aksjonspunktStatus.OPPRETTET,
       kanLoses: true,
       erAktivt: true,
     },
   ];
   const vilkar = [
     {
-      vilkarType: { kode: vilkarType.SOKERSOPPLYSNINGSPLIKT, kodeverk: 'test' },
+      vilkarType: vilkarType.SOKERSOPPLYSNINGSPLIKT,
       overstyrbar: true,
       perioder: [
         {
           merknadParametere: {},
-          vilkarStatus: { kode: vilkarUtfallType.IKKE_VURDERT, kodeverk: 'test' },
+          vilkarStatus: vilkarUtfallType.IKKE_VURDERT,
           periode: { fom: '2020-12-30', tom: '2021-02-28' },
         },
       ],
     },
     {
-      vilkarType: { kode: vilkarType.BEREGNINGSGRUNNLAGVILKARET, kodeverk: 'test' },
+      vilkarType: vilkarType.BEREGNINGSGRUNNLAGVILKARET,
       overstyrbar: true,
       perioder: [
         {
           merknadParametere: {},
-          vilkarStatus: { kode: vilkarUtfallType.IKKE_VURDERT, kodeverk: 'test' },
+          vilkarStatus: vilkarUtfallType.IKKE_VURDERT,
           periode: { fom: '2020-12-30', tom: '2021-02-28' },
         },
       ],
     },
     {
-      vilkarType: { kode: vilkarType.MEDLEMSKAPSVILKARET, kodeverk: 'test' },
+      vilkarType: vilkarType.MEDLEMSKAPSVILKARET,
       overstyrbar: true,
       perioder: [
         {
           merknadParametere: {},
-          vilkarStatus: { kode: vilkarUtfallType.IKKE_VURDERT, kodeverk: 'test' },
+          vilkarStatus: vilkarUtfallType.IKKE_VURDERT,
           periode: { fom: '2020-12-30', tom: '2021-02-28' },
         },
       ],
     },
     {
-      vilkarType: { kode: vilkarType.MEDISINSKEVILKÅR_UNDER_18_ÅR, kodeverk: 'test' },
+      vilkarType: vilkarType.MEDISINSKEVILKÅR_UNDER_18_ÅR,
       overstyrbar: true,
       perioder: [
         {
           merknadParametere: {},
-          vilkarStatus: { kode: vilkarUtfallType.IKKE_VURDERT, kodeverk: 'test' },
+          vilkarStatus: vilkarUtfallType.IKKE_VURDERT,
           periode: { fom: '2020-12-30', tom: '2021-02-28' },
         },
       ],
     },
     {
-      vilkarType: { kode: vilkarType.OPPTJENINGSVILKARET, kodeverk: 'test' },
+      vilkarType: vilkarType.OPPTJENINGSVILKARET,
       overstyrbar: true,
       perioder: [
         {
           merknadParametere: {},
-          vilkarStatus: { kode: vilkarUtfallType.IKKE_VURDERT, kodeverk: 'test' },
+          vilkarStatus: vilkarUtfallType.IKKE_VURDERT,
           periode: { fom: '2020-12-30', tom: '2021-02-28' },
         },
       ],
     },
     {
-      vilkarType: { kode: vilkarType.OMSORGENFORVILKARET, kodeverk: 'test' },
+      vilkarType: vilkarType.OMSORGENFORVILKARET,
       overstyrbar: true,
       perioder: [
         {
           merknadParametere: {},
-          vilkarStatus: { kode: vilkarUtfallType.IKKE_VURDERT, kodeverk: 'test' },
+          vilkarStatus: vilkarUtfallType.IKKE_VURDERT,
           periode: { fom: '2020-12-30', tom: '2021-02-28' },
         },
       ],
     },
     {
-      vilkarType: { kode: vilkarType.SOKNADSFRISTVILKARET, kodeverk: 'test' },
+      vilkarType: vilkarType.SOKNADSFRISTVILKARET,
       overstyrbar: true,
       perioder: [
         {
           merknadParametere: {},
-          vilkarStatus: { kode: vilkarUtfallType.IKKE_VURDERT, kodeverk: 'test' },
+          vilkarStatus: vilkarUtfallType.IKKE_VURDERT,
           periode: { fom: '2020-12-30', tom: '2021-02-28' },
         },
       ],
@@ -195,7 +195,7 @@ describe('<PleiepengerProsess>', () => {
         setBehandling={sinon.spy()}
         arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
         featureToggles={{}}
-        setBeregningErBehandlet={() => {}}
+        setBeregningErBehandlet={() => { }}
       />,
     );
 
@@ -289,7 +289,7 @@ describe('<PleiepengerProsess>', () => {
         setBehandling={sinon.spy()}
         arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
         featureToggles={{}}
-        setBeregningErBehandlet={() => {}}
+        setBeregningErBehandlet={() => { }}
       />,
     );
 
@@ -307,15 +307,15 @@ describe('<PleiepengerProsess>', () => {
   it('skal vise fatter vedtak modal etter lagring når aksjonspunkt er FORESLA_VEDTAK og så lukke denne og gå til søkeside', async () => {
     const vedtakAksjonspunkter = [
       {
-        definisjon: { kode: aksjonspunktCodes.FORESLA_VEDTAK, kodeverk: 'test' },
-        status: { kode: aksjonspunktStatus.OPPRETTET, kodeverk: 'test' },
+        definisjon: aksjonspunktCodes.FORESLA_VEDTAK,
+        status: aksjonspunktStatus.OPPRETTET,
         kanLoses: true,
         erAktivt: true,
       },
     ];
     const vedtakBehandling = {
       ...behandling,
-      status: { kode: behandlingStatus.FATTER_VEDTAK, kodeverk: 'test' },
+      status: behandlingStatus.FATTER_VEDTAK,
     };
 
     requestPleiepengerApi.mock(PleiepengerBehandlingApiKeys.DOKUMENTDATA_LAGRE, undefined);
@@ -347,7 +347,7 @@ describe('<PleiepengerProsess>', () => {
         setBehandling={sinon.spy()}
         arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
         featureToggles={{}}
-        setBeregningErBehandlet={() => {}}
+        setBeregningErBehandlet={() => { }}
       />,
     );
 
@@ -373,8 +373,8 @@ describe('<PleiepengerProsess>', () => {
   it('skal vise iverksetter vedtak modal etter lagring når aksjonspunkt er FATTER_VEDTAK og så lukke denne og gå til søkeside', async () => {
     const vedtakAksjonspunkter = [
       {
-        definisjon: { kode: aksjonspunktCodes.FATTER_VEDTAK, kodeverk: 'test' },
-        status: { kode: aksjonspunktStatus.OPPRETTET, kodeverk: 'test' },
+        definisjon: aksjonspunktCodes.FATTER_VEDTAK,
+        status: aksjonspunktStatus.OPPRETTET,
         kanLoses: true,
         erAktivt: true,
       },
@@ -409,7 +409,7 @@ describe('<PleiepengerProsess>', () => {
         setBehandling={sinon.spy()}
         arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
         featureToggles={{}}
-        setBeregningErBehandlet={() => {}}
+        setBeregningErBehandlet={() => { }}
       />,
     );
 
@@ -435,8 +435,8 @@ describe('<PleiepengerProsess>', () => {
   it('skal gå til søkeside når en har revurderingsaksjonspunkt', async () => {
     const vedtakAksjonspunkter = [
       {
-        definisjon: { kode: aksjonspunktCodes.VARSEL_REVURDERING_MANUELL, kodeverk: 'test' },
-        status: { kode: aksjonspunktStatus.OPPRETTET, kodeverk: 'test' },
+        definisjon: aksjonspunktCodes.VARSEL_REVURDERING_MANUELL,
+        status: aksjonspunktStatus.OPPRETTET,
         kanLoses: true,
         erAktivt: true,
       },
@@ -469,7 +469,7 @@ describe('<PleiepengerProsess>', () => {
         setBehandling={sinon.spy()}
         arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
         featureToggles={{}}
-        setBeregningErBehandlet={() => {}}
+        setBeregningErBehandlet={() => { }}
       />,
     );
 
@@ -505,7 +505,7 @@ describe('<PleiepengerProsess>', () => {
         setBehandling={sinon.spy()}
         arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
         featureToggles={{}}
-        setBeregningErBehandlet={() => {}}
+        setBeregningErBehandlet={() => { }}
       />,
     );
 
@@ -544,7 +544,7 @@ describe('<PleiepengerProsess>', () => {
         setBehandling={sinon.spy()}
         arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
         featureToggles={{}}
-        setBeregningErBehandlet={() => {}}
+        setBeregningErBehandlet={() => { }}
       />,
     );
 
@@ -588,7 +588,7 @@ describe('<PleiepengerProsess>', () => {
         setBehandling={sinon.spy()}
         arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
         featureToggles={{}}
-        setBeregningErBehandlet={() => {}}
+        setBeregningErBehandlet={() => { }}
       />,
     );
 
