@@ -20,13 +20,13 @@ import vedtakResultatType from '../kodeverk/vedtakResultatType';
 describe('<TilbakekrevingProsess>', () => {
   const fagsak = {
     saksnummer: '123456',
-    sakstype: { kode: fagsakYtelseType.FORELDREPENGER, kodeverk: 'test' },
-    status: { kode: fagsakStatus.UNDER_BEHANDLING, kodeverk: 'test' },
+    sakstype: fagsakYtelseType.FORELDREPENGER,
+    status: fagsakStatus.UNDER_BEHANDLING,
   } as Fagsak;
 
   const fagsakPerson = {
     alder: 30,
-    personstatusType: { kode: personstatusType.BOSATT, kodeverk: 'test' },
+    personstatusType: personstatusType.BOSATT,
     erDod: false,
     erKvinne: true,
     navn: 'Espen Utvikler',
@@ -35,8 +35,8 @@ describe('<TilbakekrevingProsess>', () => {
   const behandling: Partial<Behandling> = {
     id: 1,
     versjon: 2,
-    status: { kode: behandlingStatus.BEHANDLING_UTREDES, kodeverk: 'test' },
-    type: { kode: behandlingType.FORSTEGANGSSOKNAD, kodeverk: 'test' },
+    status: behandlingStatus.BEHANDLING_UTREDES,
+    type: behandlingType.FORSTEGANGSSOKNAD,
     behandlingPaaVent: false,
     taskStatus: {
       readOnly: false,
@@ -56,8 +56,8 @@ describe('<TilbakekrevingProsess>', () => {
   };
   const aksjonspunkter = [
     {
-      definisjon: { kode: aksjonspunktCodesTilbakekreving.VURDER_TILBAKEKREVING, kodeverk: 'test' },
-      status: { kode: aksjonspunktStatus.OPPRETTET, kodeverk: 'test' },
+      definisjon: aksjonspunktCodesTilbakekreving.VURDER_TILBAKEKREVING,
+      status: aksjonspunktStatus.OPPRETTET,
       kanLoses: true,
       erAktivt: true,
     },
@@ -68,19 +68,13 @@ describe('<TilbakekrevingProsess>', () => {
         fom: '2019-01-01',
         tom: '2019-04-01',
         belop: 1212,
-        foreldelseVurderingType: {
-          kode: foreldelseVurderingType.FORELDET,
-          kodeverk: 'FORELDRE_VURDERING_TYPE',
-        },
+        foreldelseVurderingType: foreldelseVurderingType.FORELDET,
       },
     ],
   } as FeilutbetalingPerioderWrapper;
   const beregningsresultat = {
     beregningResultatPerioder: [],
-    vedtakResultatType: {
-      kode: vedtakResultatType.INGEN_TILBAKEBETALING,
-      kodeverk: 'VEDTAK_RESULTAT_TYPE',
-    },
+    vedtakResultatType: vedtakResultatType.INGEN_TILBAKEBETALING,
   };
 
   const feilutbetalingFakta = {
@@ -97,18 +91,12 @@ describe('<TilbakekrevingProsess>', () => {
         },
       ],
       behandlingsresultat: {
-        type: {
-          kode: 'TEST',
-          kodeverk: 'BEHANDLINGSRESULTAT',
-        },
+        type: 'TEST',
         konsekvenserForYtelsen: [],
       },
       behandlingÅrsaker: [
         {
-          behandlingArsakType: {
-            kode: '',
-            kodeverk: '',
-          },
+          behandlingArsakType: '',
         },
       ],
     },

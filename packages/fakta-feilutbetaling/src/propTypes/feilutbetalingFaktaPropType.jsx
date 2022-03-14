@@ -1,7 +1,5 @@
 import PropTypes from 'prop-types';
 
-import { kodeverkObjektPropType } from '@fpsak-frontend/prop-types';
-
 const feilutbetalingFaktaPropType = PropTypes.shape({
   behandlingFakta: PropTypes.shape({
     perioder: PropTypes.arrayOf(
@@ -17,15 +15,15 @@ const feilutbetalingFaktaPropType = PropTypes.shape({
     tidligereVarseltBeløp: PropTypes.number,
     behandlingÅrsaker: PropTypes.arrayOf(
       PropTypes.shape({
-        behandlingArsakType: kodeverkObjektPropType.isRequired,
+        behandlingArsakType: PropTypes.string.isRequired,
       }),
     ),
     behandlingsresultat: PropTypes.shape({
-      type: kodeverkObjektPropType.isRequired,
-      konsekvenserForYtelsen: PropTypes.arrayOf(kodeverkObjektPropType.isRequired),
+      type: PropTypes.string.isRequired,
+      konsekvenserForYtelsen: PropTypes.arrayOf(PropTypes.string.isRequired),
     }),
     tilbakekrevingValg: PropTypes.shape({
-      videreBehandling: kodeverkObjektPropType.isRequired,
+      videreBehandling: PropTypes.string.isRequired,
     }),
     datoForRevurderingsvedtak: PropTypes.string.isRequired,
     begrunnelse: PropTypes.string,

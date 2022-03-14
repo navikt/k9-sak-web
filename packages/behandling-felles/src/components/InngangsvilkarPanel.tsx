@@ -27,7 +27,7 @@ const intl = createIntl(
 
 interface OwnProps {
   behandling: Behandling;
-  alleKodeverk: { [key: string]: KodeverkMedNavn[] };
+  alleKodeverk: { [key: string]: string[] };
   prosessStegData: ProsessStegPanelUtledet[];
   submitCallback: (data: any) => Promise<any>;
   apentFaktaPanelInfo?: { urlCode: string; textCode: string };
