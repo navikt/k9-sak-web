@@ -13,12 +13,12 @@ class OmPleietrengendeFaktaPanelDef extends FaktaPanelDef {
   getTekstKode = () => 'OmPleietrengendeInfoPanel.Title';
 
   getEndepunkter = () => [PleiepengerSluttfaseBehandlingApiKeys.OM_PLEIETRENGENDE];
-  
+
   getKomponent = props => <OmPleietrengende {...props} />;
 
   getOverstyrVisningAvKomponent = ({ fagsak, behandling }: { fagsak: Fagsak; behandling: Behandling }) => {
     const søknadsfristErIkkeUnderVurdering = behandling.stegTilstand?.stegType?.kode !== 'VURDER_SØKNADSFRIST';
-    return fagsak.sakstype.kode === fagsakYtelseType.PLEIEPENGER_SLUTTFASE && søknadsfristErIkkeUnderVurdering;
+    return fagsak.sakstype === fagsakYtelseType.PLEIEPENGER_SLUTTFASE && søknadsfristErIkkeUnderVurdering;
   };
 }
 

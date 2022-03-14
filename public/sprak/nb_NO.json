@@ -396,10 +396,8 @@
   "IntegrationStatusPanel.Stacktrace": "StackTrace:",
   "DataFetchPendingModal.LosningenJobberMedBehandlingen": "Løsningen jobber med behandlingen...",
   "AdvarselModal.Ok": "OK",
-  "ProsessStegIkkeBehandletPanel.IkkeBehandlet": "Dette steget er ikke behandlet",
   "BehandlingHenlagtPanel.Henlagt": "Behandlingen er henlagt",
   "TilbakekrevingFakta.FaktaFeilutbetaling": "Feilutbetaling",
-  "MainSideMenu.Heading": "Saksopplysninger",
   "AktoerGrid.IngenFagsaker": "Har ingen fagsaker i k9-sak",
   "DashboardResolver.FpLosErNede": "Forsiden har nedetid",
   "Rest.ErrorMessage.General": "Noe feilet. Feilen kan være forbigående. Prøv å behandle saken litt senere. Om feilen oppstår igjen, meld den inn via porten.",
@@ -408,5 +406,10 @@
   "Rest.ErrorMessage.GatewayTimeoutOrNotFound": "Får ikke kontakt med {contextPath} ({location})",
   "OMSORGEN_FOR": "Omsorgen for",
   "KONTINUERLIG_TILSYN": "Kontinuerlig tilsyn og pleie",
+  "OmPleietrengende.Titel": "Om pleietrengende",
+  "LivetsSluttfasePanel.LivetsSluttfase": "Livets sluttfase",
+  "MainSideMenu.Heading": "Saksopplysninger",
+  "Behandlingspunkt.LivetsSluttfase": "Livets sluttfase",
+  "ProsessStegIkkeBehandletPanel.IkkeBehandlet": "Dette steget er ikke behandlet",
   "OmPleietrengendeInfoPanel.Title": "Om pleietrengende"
 }

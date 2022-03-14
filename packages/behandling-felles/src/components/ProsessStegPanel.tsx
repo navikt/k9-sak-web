@@ -17,7 +17,7 @@ import { ProsessStegUtledet } from '../util/prosessSteg/ProsessStegUtledet';
 interface OwnProps {
   fagsak: Fagsak;
   behandling: Behandling;
-  alleKodeverk: { [key: string]: KodeverkMedNavn[] };
+  alleKodeverk: { [key: string]: string[] };
   valgtProsessSteg?: ProsessStegUtledet;
   apentFaktaPanelInfo?: { urlCode: string; textCode: string };
   oppdaterProsessStegOgFaktaPanelIUrl?: (punktnavn?: string, faktanavn?: string) => void;
@@ -48,10 +48,10 @@ const ProsessStegPanel = ({
 
   const panelKeys = valgtProsessSteg
     ? valgtProsessSteg
-        .getDelPaneler()[0]
-        .getProsessStegDelPanelDef()
-        .getEndepunkter(featureToggles)
-        .map(e => ({ key: e }))
+      .getDelPaneler()[0]
+      .getProsessStegDelPanelDef()
+      .getEndepunkter(featureToggles)
+      .map(e => ({ key: e }))
     : [];
 
   const suspendRequest = !!(

@@ -1,4 +1,3 @@
-import Kodeverk from './kodeverkTsType';
 
 export type Aksjonspunkt = Readonly<{
   definisjon: string;
