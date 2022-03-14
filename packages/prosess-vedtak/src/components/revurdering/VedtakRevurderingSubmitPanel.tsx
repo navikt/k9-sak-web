@@ -11,6 +11,7 @@ import { Aksjonspunkt } from '@k9-sak-web/types';
 import { DokumentDataType, LagreDokumentdataType } from '@k9-sak-web/types/src/dokumentdata';
 import MellomLagreBrev from '../brev/MellomLagreBrev';
 import redusertUtbetalingArsak from '../../kodeverk/redusertUtbetalingArsak';
+import { fieldnames } from '../../konstanter';
 import styles from '../vedtakForm.less';
 
 interface OwnProps {
@@ -84,6 +85,7 @@ export const VedtakRevurderingSubmitPanelImpl = ({
             lagreDokumentdata={lagreDokumentdata}
             dokumentdata={dokumentdata}
             overskrift={overskrift}
+            inkluderKalender={formikValues[fieldnames.BEHOLD_KALENDER_VED_OVERSTYRING]}
             brødtekst={brødtekst}
             submitKnapp={submitKnapp}
           />

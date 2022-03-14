@@ -20,6 +20,7 @@ interface Props {
   handleSubmit: (e) => void;
   brødtekst: string;
   overskrift: string;
+  inkluderKalender: boolean;
   dokumentdata: DokumentDataType;
   lagreDokumentdata: LagreDokumentdataType;
 }
@@ -38,6 +39,7 @@ export default function VedtakSubmit({
   dokumentdata,
   overskrift,
   brødtekst,
+  inkluderKalender,
 }: Props): JSX.Element {
   const intl = useIntl();
 
@@ -70,6 +72,7 @@ export default function VedtakSubmit({
               lagreDokumentdata={lagreDokumentdata}
               dokumentdata={dokumentdata}
               overskrift={overskrift}
+              inkluderKalender={inkluderKalender}
               brødtekst={brødtekst}
               submitKnapp={submitKnapp}
             />
