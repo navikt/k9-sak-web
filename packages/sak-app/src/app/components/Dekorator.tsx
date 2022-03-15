@@ -1,6 +1,7 @@
 import React, { useMemo } from 'react';
 import { injectIntl, IntlShape, WrappedComponentProps } from 'react-intl';
 
+import Endringslogg from '@navikt/familie-endringslogg';
 import HeaderWithErrorPanel, { Feilmelding } from '@fpsak-frontend/sak-dekorator';
 import { useRestApiError, useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
 import { NavAnsatt } from '@k9-sak-web/types';
@@ -70,13 +71,21 @@ const Dekorator = ({
   const { removeErrorMessages } = useRestApiErrorDispatcher();
 
   return (
-    <HeaderWithErrorPanel
-      navAnsattName={navAnsatt?.navn}
-      removeErrorMessage={removeErrorMessages}
-      errorMessages={hideErrorMessages ? EMPTY_ARRAY : resolvedErrorMessages}
-      setSiteHeight={setSiteHeight}
-      getPathToFplos={getPathToFplos}
-    />
+    <>
+      <HeaderWithErrorPanel
+        navAnsattName={navAnsatt?.navn}
+        removeErrorMessage={removeErrorMessages}
+        errorMessages={hideErrorMessages ? EMPTY_ARRAY : resolvedErrorMessages}
+        setSiteHeight={setSiteHeight}
+        getPathToFplos={getPathToFplos}
+      />
+      <Endringslogg
+        userId={navAnsatt.brukernavn}
+        appId="K9_SAK"
+        appName="k9-sak-web"
+        backendUrl="https://familie-endringslogg.dev.intern.nav.no"
+      />
+    </>
   );
 };
 
