@@ -17,6 +17,7 @@ const initializeUttak = (
     aktivBehandlingUuid: behandlingUuid,
     arbeidsforhold,
     aksjonspunktkoder,
+    erFagytelsetypeLivetsSluttfase: false,
     kodeverkUtenlandsoppholdÅrsak,
   });
 };
