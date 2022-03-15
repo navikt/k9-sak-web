@@ -7,12 +7,12 @@ import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 
 const hasOnlyClosedAps = (aksjonspunkter, vedtakAksjonspunkter) =>
   aksjonspunkter
-    .filter(ap => !vedtakAksjonspunkter.some(vap => vap.definisjon.kode === ap.definisjon.kode))
-    .every(ap => !isAksjonspunktOpen(ap.status.kode));
+    .filter(ap => !vedtakAksjonspunkter.some(vap => vap.definisjon === ap.definisjon))
+    .every(ap => !isAksjonspunktOpen(ap.status));
 
-const hasAksjonspunkt = ap => ap.definisjon.kode === aksjonspunktCodes.OVERSTYR_BEREGNING;
+const hasAksjonspunkt = ap => ap.definisjon === aksjonspunktCodes.OVERSTYR_BEREGNING;
 
-const isAksjonspunktOpenAndOfType = ap => hasAksjonspunkt(ap) && isAksjonspunktOpen(ap.status.kode);
+const isAksjonspunktOpenAndOfType = ap => hasAksjonspunkt(ap) && isAksjonspunktOpen(ap.status);
 
 const harVilkårSomIkkeErOppfylt = vilkar =>
   vilkar.some(v => v.perioder.some(periode => periode.vilkarStatus === vilkarUtfallType.IKKE_OPPFYLT));

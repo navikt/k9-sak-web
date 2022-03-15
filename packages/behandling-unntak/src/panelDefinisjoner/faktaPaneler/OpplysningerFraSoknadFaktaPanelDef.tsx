@@ -21,7 +21,7 @@ class OpplysningerFraSoknadFaktaPanelDef extends FaktaPanelDef {
   getOverstyrVisningAvKomponent = () => true;
 
   getData = ({ rettigheter, behandling }) => {
-    const behandlingenErAvsluttet = behandlingStatus.AVSLUTTET === behandling.status.kode;
+    const behandlingenErAvsluttet = behandlingStatus.AVSLUTTET === behandling.status;
     const kanEndrePåSøknadsopplysninger = rettigheter.writeAccess.isEnabled && !behandlingenErAvsluttet;
     return {
       kanEndrePåSøknadsopplysninger,

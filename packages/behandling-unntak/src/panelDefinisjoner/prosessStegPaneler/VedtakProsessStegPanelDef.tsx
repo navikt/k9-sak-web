@@ -49,7 +49,7 @@ class PanelDef extends ProsessStegPanelDef {
     aksjonspunkter,
     vilkar,
     simuleringResultat,
-    ytelseTypeKode: fagsak.sakstype.kode,
+    ytelseTypeKode: fagsak.sakstype,
     employeeHasAccess: rettigheter.kanOverstyreAccess.isEnabled,
     personopplysninger,
     arbeidsgiverOpplysningerPerId,

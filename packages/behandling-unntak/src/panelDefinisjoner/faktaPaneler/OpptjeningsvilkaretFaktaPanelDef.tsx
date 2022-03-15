@@ -10,11 +10,11 @@ import { FaktaPanelDef } from '@k9-sak-web/behandling-felles';
 import { UnntakBehandlingApiKeys } from '../../data/unntakBehandlingApi';
 
 const erAllePerioderOppfylt = vilkarsperioder =>
-  vilkarsperioder.every(periode => periode.vilkarStatus.kode === vilkarUtfallType.OPPFYLT);
+  vilkarsperioder.every(periode => periode.vilkarStatus === vilkarUtfallType.OPPFYLT);
 
 const shouldShowOpptjening = vilkar =>
-  vilkar.some(v => v.vilkarType.kode === vilkarType.OPPTJENINGSVILKARET) &&
-  vilkar.some(v => v.vilkarType.kode === vilkarType.MEDLEMSKAPSVILKARET && erAllePerioderOppfylt(v.perioder));
+  vilkar.some(v => v.vilkarType === vilkarType.OPPTJENINGSVILKARET) &&
+  vilkar.some(v => v.vilkarType === vilkarType.MEDLEMSKAPSVILKARET && erAllePerioderOppfylt(v.perioder));
 
 class OpptjeningsvilkaretFaktaPanelDef extends FaktaPanelDef {
   getUrlKode = () => faktaPanelCodes.OPPTJENINGSVILKARET;
