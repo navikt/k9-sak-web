@@ -43,7 +43,7 @@ const getManuellBrevCallback =
           fritekstbrev: {
             brødtekst: brødtekst || ' ',
             overskrift: overskrift || ' ',
-            inkluderKalender: formProps.values[fieldnames.BEHOLD_KALENDER_VED_OVERSTYRING] || false,
+            inkluderKalender: formProps.values[fieldnames.INKLUDER_KALENDER_VED_OVERSTYRING] || false,
           },
         },
         // Bruker FRITKS som fallback til lenken ikke vises for avsluttede behandlinger

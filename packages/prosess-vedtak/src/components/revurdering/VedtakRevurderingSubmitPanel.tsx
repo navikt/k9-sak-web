@@ -85,7 +85,7 @@ export const VedtakRevurderingSubmitPanelImpl = ({
             lagreDokumentdata={lagreDokumentdata}
             dokumentdata={dokumentdata}
             overskrift={overskrift}
-            inkluderKalender={formikValues[fieldnames.BEHOLD_KALENDER_VED_OVERSTYRING]}
+            inkluderKalender={formikValues[fieldnames.INKLUDER_KALENDER_VED_OVERSTYRING]}
             brødtekst={brødtekst}
             submitKnapp={submitKnapp}
           />

@@ -18,14 +18,14 @@ const InkluderKalenderCheckbox = ({
   skalBrukeOverstyrendeFritekstBrev,
   disabled,
 }: OwnProps): JSX.Element | null => {
-  useEffect(() => () => setFieldValue(fieldnames.BEHOLD_KALENDER_VED_OVERSTYRING, false), []);
+  useEffect(() => () => setFieldValue(fieldnames.IKLUDER_KALENDER_VED_OVERSTYRING, false), []);
 
   if (!skalBrukeOverstyrendeFritekstBrev) {
     return null;
   }
 
   return (
-    <Field name={fieldnames.BEHOLD_KALENDER_VED_OVERSTYRING}>
+    <Field name={fieldnames.INKLUDER_KALENDER_VED_OVERSTYRING}>
       {({ field }) => (
         <Checkbox
           onChange={() => setFieldValue(field.name, !field.value)}
@@ -33,7 +33,7 @@ const InkluderKalenderCheckbox = ({
           disabled={disabled}
           size="small"
         >
-          {intl.formatMessage({ id: 'VedtakForm.BeholdKalenderVedOverstyring' })}
+          {intl.formatMessage({ id: 'VedtakForm.InkluderKalenderVedOverstyring' })}
         </Checkbox>
       )}
     </Field>

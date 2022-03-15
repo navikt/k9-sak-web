@@ -6,5 +6,5 @@ export const fieldnames = {
     BRØDTEKST: 'brødtekst',
     OVERSTYRT_MOTTAKER: 'overstyrtMottaker',
     BEGRUNNELSE: 'begrunnelse',
-    BEHOLD_KALENDER_VED_OVERSTYRING: 'beholdKalenderVedOverstyring',
+    INKLUDER_KALENDER_VED_OVERSTYRING: 'InkluderKalenderVedOverstyring',
   };

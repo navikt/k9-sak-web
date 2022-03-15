@@ -61,7 +61,7 @@
   "VedtakForm.Revurdering.Opphoerer": "{ytelse} opphører",
   "VedtakForm.ManuellOverstyring": "Overstyr automatisk brev",
   "VedtakForm.HindreUtsending": "Hindre utsending av brev",
-  "VedtakForm.BeholdKalenderVedOverstyring": "Behold kalender ved overstyring",
+  "VedtakForm.InkluderKalenderVedOverstyring": "Inkluder kalender ved overstyring",
   "VedtakForm.Brev": "Manuelt brev",
   "VedtakForm.Overskrift": "Overskrift",
   "VedtakForm.Innhold": "Innhold i brev til søker",

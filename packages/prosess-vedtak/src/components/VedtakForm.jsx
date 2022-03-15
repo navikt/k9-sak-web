@@ -111,7 +111,7 @@ export const VedtakForm = ({
           ? {
               brødtekst: values?.[fieldnames.BRØDTEKST],
               overskrift: values?.[fieldnames.OVERSKRIFT],
-              inkluderKalender: values?.[fieldnames.BEHOLD_KALENDER_VED_OVERSTYRING],
+              inkluderKalender: values?.[fieldnames.INKLUDER_KALENDER_VED_OVERSTYRING],
             }
           : {},
         skalBrukeOverstyrendeFritekstBrev: values?.[fieldnames.SKAL_BRUKE_OVERSTYRENDE_FRITEKST_BREV],
@@ -137,7 +137,7 @@ export const VedtakForm = ({
           fritekstbrev: {
             brødtekst: values?.[fieldnames.BRØDTEKST],
             overskrift: values?.[fieldnames.OVERSKRIFT],
-            inkluderKalender: values?.[fieldnames.BEHOLD_KALENDER_VED_OVERSTYRING],
+            inkluderKalender: values?.[fieldnames.INKLUDER_KALENDER_VED_OVERSTYRING],
           },
           skalBrukeOverstyrendeFritekstBrev: values?.[fieldnames.SKAL_BRUKE_OVERSTYRENDE_FRITEKST_BREV],
           skalUndertrykkeBrev: values?.[fieldnames.SKAL_HINDRE_UTSENDING_AV_BREV],
@@ -177,7 +177,7 @@ export const VedtakForm = ({
         (harMellomLagretMedIngenBrev(dokumentdata, vedtakVarsel) &&
           kanHindreUtsending(tilgjengeligeVedtaksbrev) &&
           !harMellomlagretFritekstbrev(dokumentdata, vedtakVarsel)),
-      [fieldnames.BEHOLD_KALENDER_VED_OVERSTYRING]:
+      [fieldnames.INKLUDER_KALENDER_VED_OVERSTYRING]:
         dokumentdata?.[dokumentdatatype.FRITEKSTBREV]?.inkluderKalender || false,
       [fieldnames.OVERSKRIFT]: decodeHtmlEntity(dokumentdata?.[dokumentdatatype.FRITEKSTBREV]?.overskrift) || '',
       [fieldnames.BRØDTEKST]: decodeHtmlEntity(dokumentdata?.[dokumentdatatype.FRITEKSTBREV]?.brødtekst) || '',
@@ -340,7 +340,7 @@ export const VedtakForm = ({
                   lagreDokumentdata={lagreDokumentdata}
                   brødtekst={formikProps.values.brødtekst}
                   overskrift={formikProps.values.overskrift}
-                  inkluderKalender={formikProps.values[fieldnames.BEHOLD_KALENDER_VED_OVERSTYRING]}
+                  inkluderKalender={formikProps.values[fieldnames.INKLUDER_KALENDER_VED_OVERSTYRING]}
                 />
               ) : (
                 <VedtakRevurderingSubmitPanel
