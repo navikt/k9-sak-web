@@ -4,7 +4,6 @@ import { Rettigheter, ReduxFormStateCleaner, useSetBehandlingVedEndring } from '
 import {
   Fagsak,
   Behandling,
-  KodeverkMedNavn,
   FeatureToggles,
   FagsakPerson,
   ArbeidsgiverOpplysningerWrapper,
@@ -41,7 +40,7 @@ interface OwnProps {
   };
   opneSokeside: () => void;
   featureToggles: FeatureToggles;
-  kodeverk?: { [key: string]: KodeverkMedNavn[] };
+  kodeverk?: { [key: string]: string[] };
   arbeidsgiverOpplysninger?: ArbeidsgiverOpplysningerWrapper;
   setRequestPendingMessage: (message: string) => void;
 }

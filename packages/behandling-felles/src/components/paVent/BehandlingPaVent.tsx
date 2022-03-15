@@ -11,7 +11,7 @@ import SettPaVentParams from '../../types/settPaVentParamsTsType';
 interface BehandlingPaVentProps {
   behandling: Behandling;
   aksjonspunkter: Aksjonspunkt[];
-  kodeverk: { [key: string]: KodeverkMedNavn[] };
+  kodeverk: { [key: string]: string[] };
   settPaVent: (params: SettPaVentParams) => Promise<any>;
   hentBehandling: ({ behandlingId: number }, keepData: boolean) => Promise<any>;
   erTilbakekreving?: boolean;

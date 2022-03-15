@@ -2,7 +2,7 @@ import React from 'react';
 import { injectIntl, WrappedComponentProps } from 'react-intl';
 
 import { Rettigheter, SideMenuWrapper, faktaHooks, useSetBehandlingVedEndring } from '@k9-sak-web/behandling-felles';
-import { ArbeidsgiverOpplysningerPerId, Behandling, Fagsak, FagsakPerson, KodeverkMedNavn } from '@k9-sak-web/types';
+import { ArbeidsgiverOpplysningerPerId, Behandling, Fagsak, FagsakPerson } from '@k9-sak-web/types';
 import ac from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
 import { RestApiState, useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
@@ -19,7 +19,7 @@ interface OwnProps {
   fagsak: Fagsak;
   fagsakPerson: FagsakPerson;
   behandling: Behandling;
-  alleKodeverk: { [key: string]: KodeverkMedNavn[] };
+  alleKodeverk: { [key: string]: string[] };
   rettigheter: Rettigheter;
   hasFetchError: boolean;
   oppdaterProsessStegOgFaktaPanelIUrl: (prosessPanel?: string, faktanavn?: string) => void;
@@ -93,9 +93,9 @@ const UnntakFakta = ({
 
   const endepunkter = valgtPanel
     ? valgtPanel
-        .getPanelDef()
-        .getEndepunkter()
-        .map(e => ({ key: e }))
+      .getPanelDef()
+      .getEndepunkter()
+      .map(e => ({ key: e }))
     : [];
   // TODO type FetchedData er feil her
   const { data: faktaData, state } = restApiUnntakHooks.useMultipleRestApi<FetchedData>(endepunkter, {
