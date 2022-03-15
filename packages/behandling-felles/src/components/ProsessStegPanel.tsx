@@ -17,7 +17,7 @@ import { ProsessStegUtledet } from '../util/prosessSteg/ProsessStegUtledet';
 interface OwnProps {
   fagsak: Fagsak;
   behandling: Behandling;
-  alleKodeverk: { [key: string]: string[] };
+  alleKodeverk: { [key: string]: KodeverkMedNavn[] };
   valgtProsessSteg?: ProsessStegUtledet;
   apentFaktaPanelInfo?: { urlCode: string; textCode: string };
   oppdaterProsessStegOgFaktaPanelIUrl?: (punktnavn?: string, faktanavn?: string) => void;

@@ -79,7 +79,7 @@ type FormValues = {
 interface PureOwnProps {
   cancelEvent: () => void;
   showModal: boolean;
-  ventearsaker: string[];
+  ventearsaker: KodeverkMedNavn[];
   erTilbakekreving: boolean;
   visBrevErBestilt?: boolean;
   hasManualPaVent: boolean;

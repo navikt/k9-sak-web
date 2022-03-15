@@ -20,7 +20,7 @@ interface OwnProps {
   cancelEvent: () => void;
   submitCallback: (formData: any) => void;
   showModal: boolean;
-  ventearsaker: string[];
+  ventearsaker: KodeverkMedNavn[];
   frist?: string;
   ventearsak?: string;
   visBrevErBestilt?: boolean;

@@ -30,7 +30,7 @@ interface OwnProps {
   fagsak: Fagsak;
   fagsakPerson: FagsakPerson;
   behandling: Behandling;
-  alleKodeverk: { [key: string]: string[] };
+  alleKodeverk: { [key: string]: KodeverkMedNavn[] };
   rettigheter: Rettigheter;
   valgtProsessSteg?: string;
   hasFetchError: boolean;

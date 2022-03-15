@@ -7,6 +7,7 @@ import {
   FeatureToggles,
   FagsakPerson,
   ArbeidsgiverOpplysningerWrapper,
+  KodeverkMedNavn,
 } from '@k9-sak-web/types';
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
 import { RestApiState, useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
@@ -40,7 +41,7 @@ interface OwnProps {
   };
   opneSokeside: () => void;
   featureToggles: FeatureToggles;
-  kodeverk?: { [key: string]: string[] };
+  kodeverk?: { [key: string]: KodeverkMedNavn[] };
   arbeidsgiverOpplysninger?: ArbeidsgiverOpplysningerWrapper;
   setRequestPendingMessage: (message: string) => void;
 }

@@ -14,7 +14,7 @@ export interface PanelerProps {
   fagsak: Fagsak;
   fagsakPerson: FagsakPerson;
   behandling: Behandling;
-  alleKodeverk: { [key: string]: KodeverkMedNavn[] };
+  alleKodeverk: { [key: string]: string[] };
   rettigheter: Rettigheter;
   valgtProsessSteg?: string;
   valgtFaktaSteg?: string;
