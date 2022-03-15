@@ -37,7 +37,6 @@ import VedtakRevurderingSubmitPanel from './revurdering/VedtakRevurderingSubmitP
 import VedtakSubmit from './VedtakSubmit';
 import vedtakVarselPropType from '../propTypes/vedtakVarselPropType';
 import LagreFormikStateLokalt from './LagreFormikStateLokalt';
-import InkluderKalenderCheckbox from './InkluderKalenderCheckbox';
 import { fieldnames } from '../konstanter';
 
 const isVedtakSubmission = true;
@@ -253,12 +252,6 @@ export const VedtakForm = ({
                     {intl.formatMessage({ id: 'VedtakForm.HindreUtsending' })}
                   </Checkbox>
                 )}
-                <InkluderKalenderCheckbox
-                  intl={intl}
-                  setFieldValue={formikProps.setFieldValue}
-                  skalBrukeOverstyrendeFritekstBrev={formikProps.values.skalBrukeOverstyrendeFritekstBrev}
-                  disabled={readOnly}
-                />
               </div>
               {!erRevurdering ? (
                 <>
