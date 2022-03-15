@@ -15,6 +15,7 @@ interface OwnProps {
   dokumentdata: DokumentDataType;
   overskrift: string;
   brødtekst: string;
+  inkluderKalender: boolean;
   submitKnapp: JSX.Element;
 }
 
@@ -48,6 +49,7 @@ const MellomLagreBrev = ({
   dokumentdata,
   overskrift,
   brødtekst,
+  inkluderKalender,
   submitKnapp,
 }: OwnProps & WrappedComponentProps) => {
   const [originalBrev, setOriginalBrev] = useState(undefined);
@@ -59,7 +61,11 @@ const MellomLagreBrev = ({
    * @param {string} brødtekstStreng
    * @returns {string} Returnerer en sammenslått streng med overskrift og brødtekst, til bruk i sammenlikning
    */
-  const brevTilStreng = (overskriftStreng: string, brødtekstStreng: string) => `${overskriftStreng}-${brødtekstStreng}`;
+  const brevTilStreng = (
+    overskriftStreng: string,
+    brødtekstStreng: string,
+    harOverstyrtOgSkalInkludereKalender: boolean,
+  ) => `${overskriftStreng}-${brødtekstStreng}-${String(harOverstyrtOgSkalInkludereKalender)}`;
 
   /**
    * Håndter klikk på lagre knappen, send lagre kallet og oppdatert original strengen for å vise optimistisk
@@ -67,8 +73,8 @@ const MellomLagreBrev = ({
    */
   const onMellomlagreClick = async event => {
     event.stopPropagation();
-    await lagreDokumentdata({ ...dokumentdata, FRITEKSTBREV: { brødtekst, overskrift } });
-    setOriginalBrev(brevTilStreng(overskrift, brødtekst));
+    await lagreDokumentdata({ ...dokumentdata, FRITEKSTBREV: { brødtekst, overskrift, inkluderKalender } });
+    setOriginalBrev(brevTilStreng(overskrift, brødtekst, inkluderKalender));
   };
 
   /**
@@ -76,7 +82,9 @@ const MellomLagreBrev = ({
    */
   useEffect(() => {
     if (dokumentdata) {
-      setOriginalBrev(`${dokumentdata.FRITEKSTBREV?.overskrift}-${dokumentdata.FRITEKSTBREV?.brødtekst}`);
+      setOriginalBrev(
+        `${dokumentdata.FRITEKSTBREV?.overskrift}-${dokumentdata.FRITEKSTBREV?.brødtekst}-${dokumentdata.FRITEKSTBREV?.inkluderKalender}`,
+      );
     } else {
       setOriginalBrev('-');
     }
@@ -86,16 +94,17 @@ const MellomLagreBrev = ({
    * Følg med på endringer i overskrift og brødtekst, og se om innholdet er endret
    */
   useEffect(() => {
-    const brevStreng = overskrift === null && brødtekst === null ? null : brevTilStreng(overskrift, brødtekst);
+    const brevStreng =
+      overskrift === null && brødtekst === null ? null : brevTilStreng(overskrift, brødtekst, inkluderKalender);
     if (originalBrev !== undefined && brevStreng !== null && originalBrev !== brevStreng) {
       setErTekstEndret(true);
       setErTekstLik(false);
     } else {
       setErTekstLik(true);
     }
-  }, [originalBrev, overskrift, brødtekst]);
+  }, [originalBrev, overskrift, brødtekst, inkluderKalender]);
 
-  if (erTekstEndret && (overskrift || brødtekst)) {
+  if (erTekstEndret && (overskrift || brødtekst || inkluderKalender)) {
     return (
       <Row>
         <Column xs="12">
