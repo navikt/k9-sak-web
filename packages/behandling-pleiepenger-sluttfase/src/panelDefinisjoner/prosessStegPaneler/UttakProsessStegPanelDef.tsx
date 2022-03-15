@@ -18,7 +18,7 @@ class PanelDef extends ProsessStegPanelDef {
       aksjonspunkter={aksjonspunkter}
       erFagytelsetypeLivetsSluttfase={erFagytelsetypeLivetsSluttfase}
     />
-    </>
+  </>
   );
 
   getAksjonspunktKoder = () => [aksjonspunktCodes.VENT_ANNEN_PSB_SAK];
@@ -45,7 +45,7 @@ class PanelDef extends ProsessStegPanelDef {
     uttaksperioder: uttak?.perioder,
     kvoteInfo: uttak?.kvoteInfo,
     arbeidsgiverOpplysningerPerId,
-    erFagytelsetypeLivetsSluttfase: fagsak.sakstype.kode === fagsakYtelseType.PLEIEPENGER_SLUTTFASE
+    erFagytelsetypeLivetsSluttfase: fagsak.sakstype === fagsakYtelseType.PLEIEPENGER_SLUTTFASE
   });
 }
 

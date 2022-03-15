@@ -34,7 +34,7 @@ class SoknadsfristPanelDef extends ProsessStegPanelDef {
     kanOverstyreAccess,
     toggleOverstyring,
   }): any => ({
-    avslagsarsaker: alleKodeverk[kodeverkTyper.AVSLAGSARSAK][vilkarForSteg[0].vilkarType.kode],
+    avslagsarsaker: alleKodeverk[kodeverkTyper.AVSLAGSARSAK][vilkarForSteg[0].vilkarType],
     erOverstyrt: overstyrteAksjonspunktKoder.some(o => this.getAksjonspunktKoder().some(a => a === o)),
     panelTittelKode: this.getTekstKode() ? this.getTekstKode() : prosessStegTekstKode,
     lovReferanse: vilkarForSteg.length > 0 ? vilkarForSteg[0].lovReferanse : undefined,
