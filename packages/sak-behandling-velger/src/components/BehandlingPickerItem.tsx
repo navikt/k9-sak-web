@@ -90,15 +90,12 @@ const BehandlingPickerItem = ({
   getKodeverkFn,
 }: OwnProps) => {
   if (onlyOneBehandling && isActive) {
-    console.log("only one behandling and active");
     return renderItemContent(behandling, getKodeverkFn);
   }
   if (onlyOneBehandling || showAll) {
-    console.log("only one behandling or show all");
     return renderLinkToBehandling(getBehandlingLocation, behandling, isActive, toggleShowAll, showAll, getKodeverkFn);
   }
   if (isActive) {
-    console.log("active");
     return renderToggleShowAllButton(toggleShowAll, behandling, showAll, getKodeverkFn);
   }
   return null;
