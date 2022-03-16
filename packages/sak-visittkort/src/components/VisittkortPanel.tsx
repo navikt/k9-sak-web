@@ -36,6 +36,7 @@ interface OwnProps {
   harTilbakekrevingVerge?: boolean;
   relaterteFagsaker: RelatertFagsakType;
   direkteOvergangFraInfotrygd?: OvergangFraInfotrygd;
+  erPbSak?: boolean;
 }
 
 const VisittkortPanel = ({
@@ -46,6 +47,7 @@ const VisittkortPanel = ({
   harTilbakekrevingVerge,
   relaterteFagsaker,
   direkteOvergangFraInfotrygd,
+  erPbSak,
 }: OwnProps) => {
   if (!personopplysninger && !harTilbakekrevingVerge) {
     return (
@@ -143,6 +145,15 @@ const VisittkortPanel = ({
                 <div className={styles.flexContainer}>
                   <p className={styles.overgangFraInfotrygdLabel}>
                     <FormattedMessage id="VisittkortPanel.FraInfotrygd" />
+                  </p>
+                </div>
+              </FlexColumn>
+            )}
+            {erPbSak && (
+              <FlexColumn>
+                <div className={styles.flexContainer}>
+                  <p className={styles.pbSakLabel}>
+                    <FormattedMessage id="VisittkortPanel.PB" />
                   </p>
                 </div>
               </FlexColumn>

@@ -260,6 +260,7 @@ const FagsakIndex = () => {
                 harTilbakekrevingVerge={erTilbakekreving(behandling?.type) && harVerge}
                 relaterteFagsaker={relaterteFagsaker}
                 direkteOvergangFraInfotrygd={direkteOvergangFraInfotrygd}
+                erPbSak={fagsak.erPbSak}
               />
               {showSøknadsperiodestripe && (
                 <Soknadsperiodestripe behandlingPerioderMedVilkår={behandlingPerioderMedVilkår} />
