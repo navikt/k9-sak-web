@@ -37,7 +37,7 @@ export const fjernIdFraArbeidsforholdLagtTilAvSaksbehandler = arbeidsforhold =>
   });
 
 const harAksjonspunkt = (aksjonspunktCode, aksjonspunkter) =>
-  aksjonspunkter.some(ap => ap.definisjon.kode === aksjonspunktCode);
+  aksjonspunkter.some(ap => ap.definisjon === aksjonspunktCode);
 
 interface PureOwnProps {
   behandlingId: number;

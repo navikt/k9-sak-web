@@ -19,7 +19,7 @@ import CustomArbeidsforhold from '../../typer/CustomArbeidsforholdTsType';
 export const PERSON_ARBEIDSFORHOLD_DETAIL_FORM = 'PersonArbeidsforholdDetailForm';
 
 const IMutenArbeidsforhold = arbeidsforhold =>
-  arbeidsforhold.aksjonspunktÅrsaker.some(a => a.kode === aksjonspunktÅrsaker.INNTEKTSMELDING_UTEN_ARBEIDSFORHOLD);
+  arbeidsforhold.aksjonspunktÅrsaker.some(a => a === aksjonspunktÅrsaker.INNTEKTSMELDING_UTEN_ARBEIDSFORHOLD);
 
 interface PureOwnProps {
   arbeidsforhold: ArbeidsforholdV2;

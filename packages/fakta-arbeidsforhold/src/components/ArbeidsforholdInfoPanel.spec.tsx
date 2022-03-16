@@ -12,31 +12,19 @@ import PersonArbeidsforholdPanel from './PersonArbeidsforholdPanel';
 import BekreftOgForsettKnapp from './BekreftOgForsettKnapp';
 
 const ap5080 = {
-  aksjonspunktType: {
-    kode: 'MANU',
-    kodeverk: 'AKSJONSPUNKT_TYPE',
-  },
+  aksjonspunktType: 'MANU',
   begrunnelse: null,
   besluttersBegrunnelse: null,
-  definisjon: {
-    kode: '5080',
-    kodeverk: 'AKSJONSPUNKT_DEF',
-  },
+  definisjon: '5080',
   erAktivt: true,
   fristTid: null,
   kanLoses: true,
-  status: {
-    kode: 'OPPR',
-    kodeverk: 'AKSJONSPUNKT_STATUS',
-  },
+  status: 'OPPR',
   toTrinnsBehandling: false,
   toTrinnsBehandlingGodkjent: null,
   vilkarType: null,
   vurderPaNyttArsaker: null,
-  venteårsak: {
-    kode: '-',
-    kodeverk: 'VENT_AARSAK',
-  },
+  venteårsak: '-',
 };
 
 const submitCallback = sinon.spy();
