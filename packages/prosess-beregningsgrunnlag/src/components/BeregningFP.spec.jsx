@@ -11,7 +11,7 @@ import { intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper
 import { BeregningFP, buildInitialValuesForBeregningrunnlag, transformValues } from './BeregningFP';
 import BeregningForm2 from './beregningForm/BeregningForm';
 
-const lagBeregningsgrunnlag = (ferdigstilt, beregnetPrAar, sammenligningSum, avvikPromille, avklaringsbehov = null) => {
+const lagBeregningsgrunnlag = (ferdigstilt, beregnetPrAar, sammenligningSum, avvikPromille, avklaringsbehov = []) => {
   const beregningsgrunnlag = {
     avklaringsbehov,
     halvG: 30000,
@@ -120,7 +120,6 @@ describe('<BeregningFP>', () => {
     ];
     const initialValues = buildInitialValuesForBeregningrunnlag(
       lagBeregningsgrunnlag(true, 100000, 100000, null, avklaringsbehov),
-      gjeldendeAksjonspunkter,
       vilkar);
     expect(initialValues.avklaringsbehov).to.eql(avklaringsbehov);
     expect(initialValues.relevanteStatuser.isArbeidstaker).to.eql(true);
@@ -130,8 +129,7 @@ describe('<BeregningFP>', () => {
   });
   it('skal teste at det bygges korrekte initialvalues med beregnetAvvikPromille lik NULL', () => {
     const initialValues = buildInitialValuesForBeregningrunnlag(
-      lagBeregningsgrunnlag(true, 100000, 100000, null, null),
-      gjeldendeAksjonspunkter,
+      lagBeregningsgrunnlag(true, 100000, 100000, null, gjeldendeAksjonspunkter),
       vilkar);
     expect(initialValues.avklaringsbehov).to.eql(gjeldendeAksjonspunkter);
     expect(initialValues.relevanteStatuser.isArbeidstaker).to.eql(true);
@@ -150,8 +148,6 @@ describe('<BeregningFP>', () => {
         behandling={behandling}
         alleKodeverk={alleKodeverk}
         arbeidsgiverOpplysningerPerId={{}}
-        gjeldendeAksjonspunkter={gjeldendeAksjonspunkter}
-        aksjonspunkter={gjeldendeAksjonspunkter}
         readOnlySubmitButton
         intl={intlMock}
         handleSubmit={() => { }}
@@ -171,10 +167,8 @@ describe('<BeregningFP>', () => {
         submitCallback={sinon.spy}
         alleKodeverk={alleKodeverk}
         arbeidsgiverOpplysningerPerId={{}}
-        beregningsgrunnlag={[lagBeregningsgrunnlag(true, 250000, 250000, undefined)]}
+        beregningsgrunnlag={[lagBeregningsgrunnlag(true, 250000, 250000, undefined, gjeldendeAksjonspunkter)]}
         vilkar={vilkar}
-        gjeldendeAksjonspunkter={gjeldendeAksjonspunkter}
-        aksjonspunkter={gjeldendeAksjonspunkter}
         behandling={behandling}
         readOnlySubmitButton
         intl={intlMock}
