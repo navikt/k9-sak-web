@@ -234,7 +234,7 @@ const OmsorgspengerProsess = ({
         behandlingsresultat={behandling.behandlingsresultat}
       />
       <FatterVedtakStatusModal
-        visModal={visFatterVedtakModal && behandling.status.kode === behandlingStatus.FATTER_VEDTAK}
+        visModal={visFatterVedtakModal && behandling.status === behandlingStatus.FATTER_VEDTAK}
         lukkModal={useCallback(() => {
           toggleFatterVedtakModal(false);
           opneSokeside();
