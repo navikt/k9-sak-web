@@ -69,21 +69,15 @@ const Dekorator = ({
   );
 
   const { removeErrorMessages } = useRestApiErrorDispatcher();
-
   return (
     <>
       <HeaderWithErrorPanel
         navAnsattName={navAnsatt?.navn}
+        navBrukernavn={navAnsatt?.brukernavn}
         removeErrorMessage={removeErrorMessages}
         errorMessages={hideErrorMessages ? EMPTY_ARRAY : resolvedErrorMessages}
         setSiteHeight={setSiteHeight}
         getPathToFplos={getPathToFplos}
-      />
-      <Endringslogg
-        userId={navAnsatt.brukernavn}
-        appId="K9_SAK"
-        appName="k9-sak-web"
-        backendUrl="https://familie-endringslogg.dev.intern.nav.no"
       />
     </>
   );

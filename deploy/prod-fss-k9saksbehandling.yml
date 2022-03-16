@@ -72,8 +72,6 @@ spec:
       value: "https://psb-etablert-tilsyn-frontend.intern.nav.no/"
     - name: PSB_OM_BARNET_FRONTEND_URL
       value: "https://psb-om-barnet-frontend.intern.nav.no/"
-    - name: ENDRINGSLOGG_URL
-      value: "https://familie-endringslogg.intern.nav.no"
 
     # Feature-flag
     - name: KLAGE_KABAL
