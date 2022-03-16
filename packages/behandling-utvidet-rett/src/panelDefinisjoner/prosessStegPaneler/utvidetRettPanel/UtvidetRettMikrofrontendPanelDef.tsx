@@ -18,7 +18,7 @@ class UtvidetRettMikrofrontendPanelDef extends ProsessStegPanelDef {
 
   getData = ({ fagsak, soknad }) => ({
     saksInformasjon: {
-      fagsaksType: fagsak.sakstype.kode,
+      fagsaksType: fagsak.sakstype,
       soknad,
     },
   });

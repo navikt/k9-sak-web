@@ -19,7 +19,7 @@ export const generereInfoForVurdertVilkar = (
     const periode = vilkar.perioder[0];
     vurdertVilkar.begrunnelse = begrunnelseFraAksjonspunkt;
     vurdertVilkar.navnPåAksjonspunkt = navnPåAksjonspunkt;
-    vurdertVilkar.vilkarOppfylt = periode.vilkarStatus.kode === vilkarUtfallType.OPPFYLT;
+    vurdertVilkar.vilkarOppfylt = periode.vilkarStatus === vilkarUtfallType.OPPFYLT;
     vurdertVilkar.vilkar = vilkar.lovReferanse;
   }
   return vurdertVilkar;

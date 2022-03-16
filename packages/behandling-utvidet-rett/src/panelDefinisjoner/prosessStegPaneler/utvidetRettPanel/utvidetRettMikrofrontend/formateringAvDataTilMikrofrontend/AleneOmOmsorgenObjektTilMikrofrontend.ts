@@ -1,9 +1,9 @@
-import {Aksjonspunkt, Behandling, Vilkar} from '@k9-sak-web/types';
-import {FormState} from '@fpsak-frontend/form/index';
+import { Aksjonspunkt, Behandling, Vilkar } from '@k9-sak-web/types';
+import { FormState } from '@fpsak-frontend/form/index';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import BehandlingType from "@fpsak-frontend/kodeverk/src/behandlingType";
 import UtvidetRettMikrofrontendVisning from '../../../../../types/MikrofrontendKomponenter';
-import {generereInfoForVurdertVilkar} from '../../../UtvidetRettOmsorgenForMikrofrontendFelles';
+import { generereInfoForVurdertVilkar } from '../../../UtvidetRettOmsorgenForMikrofrontendFelles';
 import UtvidetRettSoknad from '../../../../../types/UtvidetRettSoknad';
 import {
   AleneOmOmsorgenAksjonspunktObjekt,
@@ -25,7 +25,7 @@ interface OwnProps {
 }
 
 const formatereLesemodusObjekt = (vilkar: Vilkar, aksjonspunkt: Aksjonspunkt, status: string) => {
-  if (vilkar.perioder[0].vilkarStatus.kode !== vilkarUtfallType.IKKE_VURDERT) {
+  if (vilkar.perioder[0].vilkarStatus !== vilkarUtfallType.IKKE_VURDERT) {
     return {
       begrunnelse: aksjonspunkt.begrunnelse,
       vilkarOppfylt: status === vilkarUtfallType.OPPFYLT,
@@ -78,7 +78,7 @@ const AleneOmOmsorgenObjektTilMikrofrontend = ({
   submitCallback,
   soknad,
 }: OwnProps) => {
-  const erBehandlingRevurdering: boolean = behandling.type.kode === BehandlingType.REVURDERING;
+  const erBehandlingRevurdering: boolean = behandling.type === BehandlingType.REVURDERING;
   const angittBarn = soknad.angittePersoner.filter(person => person.rolle === 'BARN');
   const barnetsFodselsdato = new Date(angittBarn[0].fødselsdato);
   const åretBarnetFyller18 = `${barnetsFodselsdato.getFullYear() + 18}-12-31`;
@@ -102,7 +102,7 @@ const AleneOmOmsorgenObjektTilMikrofrontend = ({
       losAksjonspunkt: ({ begrunnelse, vilkarOppfylt, fraDato, tilDato }) => {
         submitCallback([
           formatereLosAksjonspunktObjekt(
-            aksjonspunkt.definisjon.kode,
+            aksjonspunkt.definisjon,
             begrunnelse,
             vilkarOppfylt,
             fraDato,

@@ -71,10 +71,7 @@ describe('<InnsynProsess>', () => {
   const innsyn = {
     dokumenter: [],
     innsynMottattDato: '2020.10.10',
-    innsynResultatType: {
-      kode: innsynResultatType.INNVILGET,
-      kodeverk: 'INNSYN_RESULTAT_TYPE',
-    },
+    innsynResultatType: innsynResultatType.INNVILGET,
     vedtaksdokumentasjon: [
       {
         dokumentId: '1',

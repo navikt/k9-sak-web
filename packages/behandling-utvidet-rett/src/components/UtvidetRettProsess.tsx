@@ -164,7 +164,7 @@ const UtvidetRettProsess = ({
   );
 
   const [prosessStegPaneler, valgtPanel, formaterteProsessStegPaneler] = prosessStegHooks.useProsessStegPaneler(
-    prosessStegUtvidetRettPanelDefinisjoner(fagsak.sakstype.kode === fagsakYtelseType.OMSORGSPENGER_ALENE_OM_OMSORGEN),
+    prosessStegUtvidetRettPanelDefinisjoner(fagsak.sakstype === fagsakYtelseType.OMSORGSPENGER_ALENE_OM_OMSORGEN),
     dataTilUtledingAvFpPaneler,
     fagsak,
     rettigheter,
@@ -204,7 +204,7 @@ const UtvidetRettProsess = ({
         behandlingsresultat={behandling.behandlingsresultat}
       />
       <FatterVedtakStatusModal
-        visModal={visFatterVedtakModal && behandling.status.kode === behandlingStatus.FATTER_VEDTAK}
+        visModal={visFatterVedtakModal && behandling.status === behandlingStatus.FATTER_VEDTAK}
         lukkModal={useCallback(() => {
           toggleFatterVedtakModal(false);
           opneSokeside();

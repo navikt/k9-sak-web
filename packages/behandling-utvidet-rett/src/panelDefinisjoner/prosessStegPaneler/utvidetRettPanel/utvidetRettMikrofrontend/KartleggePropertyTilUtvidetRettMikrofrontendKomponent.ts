@@ -27,9 +27,9 @@ const KartleggePropertyTilUtvidetRettMikrofrontendKomponent = (
   const eksistererAksjonspunktOgVilkar = aksjonspunkt && vilkarKnyttetTilAksjonspunkt;
 
   if (eksistererAksjonspunktOgVilkar) {
-    const skalVilkarsUtfallVises = behandling.status.kode === behandlingStatus.AVSLUTTET;
+    const skalVilkarsUtfallVises = behandling.status === behandlingStatus.AVSLUTTET;
     const lesemodus = isReadOnly || !isAksjonspunktOpen;
-    const aksjonspunktLost = behandling.status.kode === behandlingStatus.BEHANDLING_UTREDES && !isAksjonspunktOpen;
+    const aksjonspunktLost = behandling.status === behandlingStatus.BEHANDLING_UTREDES && !isAksjonspunktOpen;
     const behandlingsID = behandling.id.toString();
 
     switch (fagsaksType) {

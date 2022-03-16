@@ -21,9 +21,9 @@ const finnÅrsaker = (periode, erEØS) => {
 };
 
 const mapItems = periode => {
-  const erEØS = periode.region.kode === 'NORDEN' || periode.region.kode === 'EOS';
+  const erEØS = periode.region === 'NORDEN' || periode.region === 'EOS';
 
-  const land = { label: 'Land', value: countries.getName(periode.landkode.kode, 'no') };
+  const land = { label: 'Land', value: countries.getName(periode.landkode, 'no') };
   const eos = { label: 'EØS', value: erEØS ? 'Ja' : 'Nei' };
   const årsak = { label: 'Merknad til utenlandsopphold', value: finnÅrsaker(periode, erEØS) };
 

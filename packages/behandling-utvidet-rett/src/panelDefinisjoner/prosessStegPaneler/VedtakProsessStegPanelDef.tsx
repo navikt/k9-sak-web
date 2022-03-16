@@ -38,7 +38,7 @@ class PanelDef extends ProsessStegPanelDef {
     aksjonspunkter,
     vilkar,
     personopplysninger,
-    ytelseTypeKode: fagsak.sakstype.kode,
+    ytelseTypeKode: fagsak.sakstype,
     employeeHasAccess: rettigheter.kanOverstyreAccess.isEnabled,
     arbeidsgiverOpplysningerPerId,
     lagreDokumentdata,

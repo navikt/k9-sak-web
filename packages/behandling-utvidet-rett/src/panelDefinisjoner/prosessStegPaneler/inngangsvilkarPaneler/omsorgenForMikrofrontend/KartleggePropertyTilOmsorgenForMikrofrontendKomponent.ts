@@ -43,9 +43,9 @@ const KartleggePropertyTilOmsorgenForMikrofrontendKomponent = ({
   const aksjonspunkt = aksjonspunkter[0];
   const vilkarKnyttetTilAksjonspunkt = vilkar[0];
 
-  if (aksjonspunkt && vilkarKnyttetTilAksjonspunkt && aksjonspunkt.definisjon.kode === aksjonspunktCodes.OMSORGEN_FOR) {
-    const skalVilkarsUtfallVises = behandling.status.kode === behandlingStatus.AVSLUTTET;
-    const aksjonspunktLost = behandling.status.kode === behandlingStatus.BEHANDLING_UTREDES && !isAksjonspunktOpen;
+  if (aksjonspunkt && vilkarKnyttetTilAksjonspunkt && aksjonspunkt.definisjon === aksjonspunktCodes.OMSORGEN_FOR) {
+    const skalVilkarsUtfallVises = behandling.status === behandlingStatus.AVSLUTTET;
+    const aksjonspunktLost = behandling.status === behandlingStatus.BEHANDLING_UTREDES && !isAksjonspunktOpen;
     const behandlingsID = behandling.id.toString();
     objektTilMikrofrontend = {
       visKomponent: UtvidetRettMikrofrontendVisning.OMSORG,
@@ -70,7 +70,7 @@ const KartleggePropertyTilOmsorgenForMikrofrontendKomponent = ({
         losAksjonspunkt: (harOmsorgen, begrunnelse) => {
           submitCallback([
             {
-              kode: aksjonspunkt.definisjon.kode,
+              kode: aksjonspunkt.definisjon,
               harOmsorgenFor: harOmsorgen,
               begrunnelse,
             },

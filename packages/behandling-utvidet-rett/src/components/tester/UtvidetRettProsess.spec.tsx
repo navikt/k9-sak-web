@@ -123,8 +123,8 @@ describe('<UtvidetRettProsess>', () => {
   it('skal vise fatter vedtak modal etter lagring når aksjonspunkt er FORESLA_VEDTAK og så lukke denne og gå til søkeside', async () => {
     const vedtakAksjonspunkter = [
       {
-        definisjon: { kode: aksjonspunktCodes.FORESLA_VEDTAK, kodeverk: 'testKodeverk' },
-        status: { kode: aksjonspunktStatus.OPPRETTET, kodeverk: 'testKodeverk' },
+        definisjon: aksjonspunktCodes.FORESLA_VEDTAK,
+        status: aksjonspunktStatus.OPPRETTET,
         kanLoses: true,
         erAktivt: true,
       },
@@ -132,7 +132,7 @@ describe('<UtvidetRettProsess>', () => {
 
     const vedtakBehandling = {
       ...behandling,
-      status: { kode: behandlingStatus.FATTER_VEDTAK, kodeverk: 'test' },
+      status: behandlingStatus.FATTER_VEDTAK,
     };
 
     requestUtvidetRettApi.mock(UtvidetRettBehandlingApiKeys.DOKUMENTDATA_LAGRE, undefined);
@@ -190,8 +190,8 @@ describe('<UtvidetRettProsess>', () => {
   it('skal vise fatter vedtak modal etter lagring når aksjonspunkt er FATTER_VEDTAK og så lukke denne og gå til søkeside', async () => {
     const vedtakAksjonspunkter = [
       {
-        definisjon: { kode: aksjonspunktCodes.FATTER_VEDTAK, kodeverk: 'testKodeverk' },
-        status: { kode: aksjonspunktStatus.OPPRETTET, kodeverk: 'testKodeverk' },
+        definisjon: aksjonspunktCodes.FATTER_VEDTAK,
+        status: aksjonspunktStatus.OPPRETTET,
         kanLoses: true,
         erAktivt: true,
       },
