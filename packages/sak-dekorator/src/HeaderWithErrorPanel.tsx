@@ -143,8 +143,7 @@ const HeaderWithErrorPanel = ({
   return (
     <div
       ref={fixedHeaderRef}
-      className={styles.container}
-    >
+      className={[styles.container, isInDevelopmentMode() ? styles.container_dev : ''].join(' ')}    >
       <RawIntlProvider value={intl}>
         <div ref={wrapperRef}>
           <Header
