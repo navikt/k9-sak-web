@@ -1,3 +1,4 @@
+import webpack from 'webpack';
 import path from 'path';
 
 import TerserPlugin from 'terser-webpack-plugin';
@@ -26,7 +27,10 @@ export default {
   },
   cache,
   module,
-  plugins,
+  plugins: [
+    ...plugins,
+    new webpack.EnvironmentPlugin({ ENDRINGSLOGG_URL: 'https://familie-endringslogg.intern.nav.no' }),
+  ],
   externals,
   resolve,
   optimization: {
