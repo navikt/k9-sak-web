@@ -13,7 +13,7 @@ describe('<ATFLSammeOrg>', () => {
     const wrapper = shallow(
       <ATFLSammeOrgTekst
         beregningsgrunnlag={{
-          faktaOmBeregning: { faktaOmBeregningTilfeller: [{ kode: faktaOmBeregningTilfelle.VURDER_MOTTAR_YTELSE }] },
+          faktaOmBeregning: { faktaOmBeregningTilfeller: [faktaOmBeregningTilfelle.VURDER_MOTTAR_YTELSE] },
         }}
         manglerInntektsmelding
       />,
@@ -25,8 +25,8 @@ describe('<ATFLSammeOrg>', () => {
     const beregningsgrunnlag = {
       faktaOmBeregning: {
         faktaOmBeregningTilfeller: [
-          { kode: faktaOmBeregningTilfelle.VURDER_MOTTAR_YTELSE },
-          { kode: faktaOmBeregningTilfelle.VURDER_AT_OG_FL_I_SAMME_ORGANISASJON },
+          faktaOmBeregningTilfelle.VURDER_MOTTAR_YTELSE,
+          faktaOmBeregningTilfelle.VURDER_AT_OG_FL_I_SAMME_ORGANISASJON,
         ],
       },
     };
@@ -40,8 +40,8 @@ describe('<ATFLSammeOrg>', () => {
     const beregningsgrunnlag = {
       faktaOmBeregning: {
         faktaOmBeregningTilfeller: [
-          { kode: faktaOmBeregningTilfelle.VURDER_MOTTAR_YTELSE },
-          { kode: faktaOmBeregningTilfelle.VURDER_AT_OG_FL_I_SAMME_ORGANISASJON },
+          faktaOmBeregningTilfelle.VURDER_MOTTAR_YTELSE,
+          faktaOmBeregningTilfelle.VURDER_AT_OG_FL_I_SAMME_ORGANISASJON,
         ],
       },
     };
@@ -62,16 +62,16 @@ describe('<ATFLSammeOrg>', () => {
   const faktaOmBeregningFrilansAndel = {
     andelsnr: 1,
     arbeidsforhold: null,
-    inntektskategori: { kode: inntektskategorier.FRILANSER },
-    aktivitetStatus: { kode: aktivitetStatus.FRILANSER },
+    inntektskategori: inntektskategorier.FRILANSER,
+    aktivitetStatus: aktivitetStatus.FRILANSER,
     lagtTilAvSaksbehandler: false,
   };
 
   const faktaOmBeregningATAndel = {
     andelsnr: 2,
     arbeidsforhold,
-    inntektskategori: { kode: inntektskategorier.ARBEIDSTAKER },
-    aktivitetStatus: { kode: aktivitetStatus.ARBEIDSTAKER },
+    inntektskategori: inntektskategorier.ARBEIDSTAKER,
+    aktivitetStatus: aktivitetStatus.ARBEIDSTAKER,
     lagtTilAvSaksbehandler: false,
   };
 
@@ -97,7 +97,7 @@ describe('<ATFLSammeOrg>', () => {
 
   it('skal ikkje transform values uten tilfelle', () => {
     const faktaOmBeregning = {
-      faktaOmBeregningTilfeller: [{ kode: faktaOmBeregningTilfelle.VURDER_LONNSENDRING }],
+      faktaOmBeregningTilfeller: [faktaOmBeregningTilfelle.VURDER_LONNSENDRING],
       arbeidstakerOgFrilanserISammeOrganisasjonListe: [{ ...faktaOmBeregningATAndel, inntektPrMnd: 10000 }],
       frilansAndel: faktaOmBeregningFrilansAndel,
     };
@@ -108,7 +108,7 @@ describe('<ATFLSammeOrg>', () => {
 
   it('skal transform values', () => {
     const faktaOmBeregning = {
-      faktaOmBeregningTilfeller: [{ kode: faktaOmBeregningTilfelle.VURDER_AT_OG_FL_I_SAMME_ORGANISASJON }],
+      faktaOmBeregningTilfeller: [faktaOmBeregningTilfelle.VURDER_AT_OG_FL_I_SAMME_ORGANISASJON],
       arbeidstakerOgFrilanserISammeOrganisasjonListe: [{ ...faktaOmBeregningATAndel, inntektPrMnd: 10000 }],
       frilansAndel: faktaOmBeregningFrilansAndel,
     };
@@ -135,7 +135,7 @@ describe('<ATFLSammeOrg>', () => {
 
   it('skal ikkje transform values når andelsnr har blitt submittet fra før', () => {
     const faktaOmBeregning = {
-      faktaOmBeregningTilfeller: [{ kode: faktaOmBeregningTilfelle.VURDER_AT_OG_FL_I_SAMME_ORGANISASJON }],
+      faktaOmBeregningTilfeller: [faktaOmBeregningTilfelle.VURDER_AT_OG_FL_I_SAMME_ORGANISASJON],
       arbeidstakerOgFrilanserISammeOrganisasjonListe: [{ ...faktaOmBeregningATAndel, inntektPrMnd: 10000 }],
       frilansAndel: faktaOmBeregningFrilansAndel,
     };

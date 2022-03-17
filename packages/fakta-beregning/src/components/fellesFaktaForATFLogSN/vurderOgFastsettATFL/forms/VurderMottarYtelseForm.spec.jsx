@@ -20,10 +20,10 @@ const beregningsgrunnlag = {
   beregningsgrunnlagPeriode: [
     {
       beregningsgrunnlagPrStatusOgAndel: [
-        { andelsnr: 1, aktivitetStatus: { kode: 'AT' } },
-        { andelsnr: 2, aktivitetStatus: { kode: 'AT' } },
-        { andelsnr: 3, aktivitetStatus: { kode: 'AT' } },
-        { andelsnr: 4, aktivitetStatus: { kode: 'FL' } },
+        { andelsnr: 1, aktivitetStatus: 'AT' },
+        { andelsnr: 2, aktivitetStatus: 'AT' },
+        { andelsnr: 3, aktivitetStatus: 'AT' },
+        { andelsnr: 4, aktivitetStatus: 'FL' },
       ],
     },
   ],
@@ -254,7 +254,7 @@ describe('<VurderMottarYtelseForm>', () => {
       { andelsnr: andel3.andelsnr, fastsattBelop: 20000 },
     ];
     const faktaOmBeregning = {
-      faktaOmBeregningTilfeller: tilfeller.map(kode => ({ kode })),
+      faktaOmBeregningTilfeller: tilfeller,
       vurderMottarYtelse: {
         erFrilanser: false,
         arbeidstakerAndelerUtenIM,
@@ -296,7 +296,7 @@ describe('<VurderMottarYtelseForm>', () => {
       { andelsnr: andel3.andelsnr, fastsattBelop: 0 },
     ];
     const faktaOmBeregning = {
-      faktaOmBeregningTilfeller: tilfeller.map(kode => ({ kode })),
+      faktaOmBeregningTilfeller: tilfeller,
       vurderMottarYtelse: {
         erFrilanser: false,
         arbeidstakerAndelerUtenIM,
@@ -335,7 +335,7 @@ describe('<VurderMottarYtelseForm>', () => {
     const tilfeller = [faktaOmBeregningTilfelle.VURDER_NYOPPSTARTET_FL, faktaOmBeregningTilfelle.VURDER_MOTTAR_YTELSE];
     const inntektPrMnd = [{ andelsnr: 4, fastsattBelop: 10000, aktivitetStatus: 'FL' }];
     const faktaOmBeregning = {
-      faktaOmBeregningTilfeller: tilfeller.map(kode => ({ kode })),
+      faktaOmBeregningTilfeller: tilfeller,
       vurderMottarYtelse: {
         erFrilanser: true,
         arbeidstakerAndelerUtenIM: [],
@@ -372,7 +372,7 @@ describe('<VurderMottarYtelseForm>', () => {
       { andelsnr: 4, fastsattBelop: 10000, aktivitetStatus: 'FL' },
     ];
     const faktaOmBeregning = {
-      faktaOmBeregningTilfeller: tilfeller.map(kode => ({ kode })),
+      faktaOmBeregningTilfeller: tilfeller,
       vurderMottarYtelse: {
         erFrilanser: true,
         arbeidstakerAndelerUtenIM,
@@ -422,7 +422,7 @@ describe('<VurderMottarYtelseForm>', () => {
       { andelsnr: andel3.andelsnr, fastsattBelop: 20000 },
     ];
     const faktaOmBeregning = {
-      faktaOmBeregningTilfeller: tilfeller.map(kode => ({ kode })),
+      faktaOmBeregningTilfeller: tilfeller,
       vurderMottarYtelse: {
         erFrilanser: false,
         arbeidstakerAndelerUtenIM,
@@ -452,7 +452,7 @@ describe('<VurderMottarYtelseForm>', () => {
     ];
     const inntektPrMnd = [{ andelsnr: 4, fastsattBelop: 10000, aktivitetStatus: 'FL' }];
     const faktaOmBeregning = {
-      faktaOmBeregningTilfeller: tilfeller.map(kode => ({ kode })),
+      faktaOmBeregningTilfeller: tilfeller,
       vurderMottarYtelse: {
         erFrilanser: true,
         arbeidstakerAndelerUtenIM: [],

@@ -70,7 +70,7 @@ const getFaktaPanels = (
   erOverstyrer,
   fieldArrayID,
   vilkaarPeriodeFieldArrayIndex
-  ) => {
+) => {
   const faktaPanels = [];
   let hasShownPanel = false;
   tilfeller.forEach(tilfelle => {
@@ -332,8 +332,7 @@ const buildInitialValuesForTilfeller = (props, beregningsgrunnlag) => ({
 
 const getFaktaOmBeregningTilfellerKoder = faktaOmBeregning =>
   faktaOmBeregning && faktaOmBeregning.faktaOmBeregningTilfeller
-    ? faktaOmBeregning.faktaOmBeregningTilfeller.map(({ kode }) => kode)
-    : [];
+    ? faktaOmBeregning.faktaOmBeregningTilfeller : [];
 
 const mapStateToBuildInitialValuesProps = createStructuredSelector({
   beregningsgrunnlag: (ownProps, beregningsgrunnlag) => beregningsgrunnlag,

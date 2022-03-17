@@ -49,7 +49,7 @@ NyIArbeidslivetSNForm.buildInitialValues = beregningsgrunnlag => {
     periode => periode.beregningsgrunnlagPrStatusOgAndel,
   );
   const snAndeler = flatten(alleAndeler).filter(
-    andel => andel.aktivitetStatus.kode === aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE,
+    andel => andel.aktivitetStatus === aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE,
   );
   if (snAndeler.length > 0) {
     initialValues[radioGroupFieldName] = snAndeler[0].erNyIArbeidslivet;

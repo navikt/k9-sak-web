@@ -19,9 +19,7 @@ describe('<VurderEtterlonnSluttpakkeForm>', () => {
   });
   it('Skal teste at buildInitialvalues bygges korrekt når det er tidligere fastsatt etterlønn eller sluttpakke', () => {
     const ap = {
-      status: {
-        kode: 'OPPRETTET',
-      },
+      status: 'OPPRETTET',
     };
     const bg = {
       beregningsgrunnlagPeriode: [
@@ -29,9 +27,7 @@ describe('<VurderEtterlonnSluttpakkeForm>', () => {
           beregningsgrunnlagPrStatusOgAndel: [
             {
               arbeidsforhold: {
-                arbeidsforholdType: {
-                  kode: 'ETTERLØNN_SLUTTPAKKE',
-                },
+                arbeidsforholdType: 'ETTERLØNN_SLUTTPAKKE',
               },
               beregnetPrAar: 120000,
             },
@@ -48,9 +44,7 @@ describe('<VurderEtterlonnSluttpakkeForm>', () => {
 
   it('Skal teste at buildInitialvalues bygges korrekt når det ikke er tidligere fastsatt etterlønn eller sluttpakke', () => {
     const ap = {
-      status: {
-        kode: 'OPPRETTET',
-      },
+      status: 'OPPRETTET',
     };
     const bg = {
       beregningsgrunnlagPeriode: [
@@ -58,9 +52,7 @@ describe('<VurderEtterlonnSluttpakkeForm>', () => {
           beregningsgrunnlagPrStatusOgAndel: [
             {
               arbeidsforhold: {
-                arbeidsforholdType: {
-                  kode: 'ETTERLØNN_SLUTTPAKKE',
-                },
+                arbeidsforholdType: 'ETTERLØNN_SLUTTPAKKE',
               },
               beregnetPrAar: null,
             },

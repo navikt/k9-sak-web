@@ -51,7 +51,7 @@ NyoppstartetFLForm.buildInitialValues = beregningsgrunnlag => {
   const alleAndeler = beregningsgrunnlag.beregningsgrunnlagPeriode.map(
     periode => periode.beregningsgrunnlagPrStatusOgAndel,
   );
-  const flAndeler = flatten(alleAndeler).filter(andel => andel.aktivitetStatus.kode === aktivitetStatus.FRILANSER);
+  const flAndeler = flatten(alleAndeler).filter(andel => andel.aktivitetStatus === aktivitetStatus.FRILANSER);
   if (flAndeler.length > 0) {
     initialValues[erNyoppstartetFLField] = flAndeler[0].erNyoppstartet;
   }
@@ -60,7 +60,7 @@ NyoppstartetFLForm.buildInitialValues = beregningsgrunnlag => {
 
 NyoppstartetFLForm.transformValues = (values, inntektPrMnd, faktaOmBeregning, fastsatteAndelsnr) => {
   const tilfeller = faktaOmBeregning.faktaOmBeregningTilfeller ? faktaOmBeregning.faktaOmBeregningTilfeller : [];
-  if (!tilfeller.map(({ kode }) => kode).includes(faktaOmBeregningTilfelle.VURDER_NYOPPSTARTET_FL)) {
+  if (!tilfeller.includes(faktaOmBeregningTilfelle.VURDER_NYOPPSTARTET_FL)) {
     return {};
   }
   if (!inntektPrMnd || inntektPrMnd.length === 0) {

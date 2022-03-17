@@ -7,7 +7,7 @@ import { Normaltekst } from 'nav-frontend-typografi';
 export const transformValuesForATFLISammeOrg = (inntektVerdier, faktaOmBeregning, fastsatteAndelsnr) => {
   const tilfeller = faktaOmBeregning?.faktaOmBeregningTilfeller ? faktaOmBeregning.faktaOmBeregningTilfeller : [];
   if (
-    tilfeller.map(({ kode }) => kode).includes(faktaOmBeregningTilfelle.VURDER_AT_OG_FL_I_SAMME_ORGANISASJON) &&
+    tilfeller.includes(faktaOmBeregningTilfelle.VURDER_AT_OG_FL_I_SAMME_ORGANISASJON) &&
     inntektVerdier
   ) {
     const andelsliste = inntektVerdier
@@ -43,8 +43,7 @@ export const transformValuesForATFLISammeOrg = (inntektVerdier, faktaOmBeregning
 const harRiktigTilfelle = beregningsgrunnlag =>
   beregningsgrunnlag?.faktaOmBeregning?.faktaOmBeregningTilfeller
     ? beregningsgrunnlag.faktaOmBeregning.faktaOmBeregningTilfeller
-        .map(({ kode }) => kode)
-        .includes(faktaOmBeregningTilfelle.VURDER_AT_OG_FL_I_SAMME_ORGANISASJON)
+      .includes(faktaOmBeregningTilfelle.VURDER_AT_OG_FL_I_SAMME_ORGANISASJON)
     : false;
 
 export const ATFLSammeOrgTekst = ({ beregningsgrunnlag, manglerInntektsmelding }) => {

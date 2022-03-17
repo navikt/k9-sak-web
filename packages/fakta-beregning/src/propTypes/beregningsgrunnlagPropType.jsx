@@ -1,5 +1,4 @@
 import PropTypes from 'prop-types';
-import { kodeverkObjektPropType } from '@fpsak-frontend/prop-types';
 import beregningAvklaringsbehovPropType from './beregningAvklaringsbehovPropType';
 
 const beregningsgrunnlagArbeidsforholdProptype = PropTypes.exact({
@@ -7,21 +6,21 @@ const beregningsgrunnlagArbeidsforholdProptype = PropTypes.exact({
   startdato: PropTypes.string,
   opphoersdato: PropTypes.string,
   arbeidsforholdId: PropTypes.string,
-  arbeidsforholdType: kodeverkObjektPropType,
+  arbeidsforholdType: PropTypes.string,
 });
 
 const faktaOmBeregningAndelPropType = PropTypes.exact({
   arbeidsforhold: beregningsgrunnlagArbeidsforholdProptype,
   andelsnr: PropTypes.number,
-  inntektskategori: kodeverkObjektPropType,
-  aktivitetStatus: kodeverkObjektPropType,
+  inntektskategori: PropTypes.string,
+  aktivitetStatus: PropTypes.string,
 });
 
 const andelForFaktaOmBeregningPropType = PropTypes.exact({
   arbeidsforhold: beregningsgrunnlagArbeidsforholdProptype,
   andelsnr: PropTypes.number,
-  inntektskategori: kodeverkObjektPropType,
-  aktivitetStatus: kodeverkObjektPropType,
+  inntektskategori: PropTypes.string,
+  aktivitetStatus: PropTypes.string,
   belopReadOnly: PropTypes.number,
   fastsattBelop: PropTypes.number,
   skalKunneEndreAktivitet: PropTypes.bool.isRequired,
@@ -48,7 +47,7 @@ export const avklarAktiviteterPropType = PropTypes.exact({
           fom: PropTypes.string.isRequired,
           tom: PropTypes.string,
           arbeidsforholdId: PropTypes.string,
-          arbeidsforholdType: kodeverkObjektPropType.isRequired,
+          arbeidsforholdType: PropTypes.string.isRequired,
           aktørIdString: PropTypes.string,
         }),
       ),
@@ -75,15 +74,15 @@ const beregningsgrunnlagPropType = PropTypes.exact({
   avklaringsbehov: PropTypes.arrayOf(beregningAvklaringsbehovPropType).isRequired,
   aktivitetStatus: PropTypes.arrayOf(
     PropTypes.exact({
-      aktivitetStatus: kodeverkObjektPropType,
+      aktivitetStatus: PropTypes.string,
     }),
   ),
   beregningsgrunnlagPeriode: PropTypes.arrayOf(
     PropTypes.exact({
       beregningsgrunnlagPrStatusOgAndel: PropTypes.arrayOf(
         PropTypes.exact({
-          aktivitetStatus: kodeverkObjektPropType,
-          arbeidsforholdType: kodeverkObjektPropType,
+          aktivitetStatus: PropTypes.string,
+          arbeidsforholdType: PropTypes.string,
           beregnetPrAar: PropTypes.number,
           arbeidsforholdId: PropTypes.string,
           erNyIArbeidslivet: PropTypes.bool,

@@ -7,7 +7,7 @@ const aktivitet1 = {
   fom: '2019-01-01',
   tom: null,
   skalBrukes: null,
-  arbeidsforholdType: { kode: 'ARBEID', navn: 'Arbeid', kodeverk: 'OPPTJENING_AKTIVITET_TYPE' },
+  arbeidsforholdType: 'ARBEID',
 };
 
 const aktivitet2 = {
@@ -16,7 +16,7 @@ const aktivitet2 = {
   fom: '2019-01-01',
   tom: '2019-02-02',
   skalBrukes: true,
-  arbeidsforholdType: { kode: 'ARBEID', navn: 'Arbeid', kodeverk: 'OPPTJENING_AKTIVITET_TYPE' },
+  arbeidsforholdType: 'ARBEID',
 };
 
 const aktivitet3 = {
@@ -25,12 +25,12 @@ const aktivitet3 = {
   fom: '2019-01-01',
   tom: '2019-02-02',
   skalBrukes: false,
-  arbeidsforholdType: { kode: 'ARBEID', navn: 'Arbeid', kodeverk: 'OPPTJENING_AKTIVITET_TYPE' },
+  arbeidsforholdType: 'ARBEID',
 };
 
 const aktivitetAAP = {
   arbeidsgiverIdent: null,
-  arbeidsforholdType: { kode: 'AAP', navn: 'Arbeidsavklaringspenger', kodeverk: 'OPPTJENING_AKTIVITET_TYPE' },
+  arbeidsforholdType: 'AAP',
   fom: '2019-01-01',
   tom: '2020-02-02',
   skalBrukes: null,

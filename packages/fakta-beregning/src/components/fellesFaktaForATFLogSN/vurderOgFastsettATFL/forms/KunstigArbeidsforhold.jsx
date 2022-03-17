@@ -2,8 +2,8 @@ import organisasjonstyper from '@fpsak-frontend/kodeverk/src/organisasjonstype';
 import faktaOmBeregningTilfelle from '@fpsak-frontend/kodeverk/src/faktaOmBeregningTilfelle';
 
 const harAndelKunstigArbeidsforhold = (andel) => andel.arbeidsforhold
-&& andel.arbeidsforhold.organisasjonstype
-&& andel.arbeidsforhold.organisasjonstype.kode === organisasjonstyper.KUNSTIG;
+  && andel.arbeidsforhold.organisasjonstype
+  && andel.arbeidsforhold.organisasjonstype === organisasjonstyper.KUNSTIG;
 
 export const harKunstigArbeidsforhold = (tilfeller, beregningsgrunnlag) => {
   if (tilfeller.includes(faktaOmBeregningTilfelle.FASTSETT_MAANEDSLONN_ARBEIDSTAKER_UTEN_INNTEKTSMELDING)) {
@@ -15,6 +15,6 @@ export const harKunstigArbeidsforhold = (tilfeller, beregningsgrunnlag) => {
 
 export const harFieldKunstigArbeidsforhold = (field, bg) => bg.beregningsgrunnlagPeriode[0].beregningsgrunnlagPrStatusOgAndel
   .find((andel) => (andel.andelsnr === field.andelsnr || andel.andelsnr === field.andelsnrRef)
-&& andel.arbeidsforhold
-&& andel.arbeidsforhold.organisasjonstype
-&& andel.arbeidsforhold.organisasjonstype.kode === organisasjonstyper.KUNSTIG) !== undefined;
+    && andel.arbeidsforhold
+    && andel.arbeidsforhold.organisasjonstype
+    && andel.arbeidsforhold.organisasjonstype === organisasjonstyper.KUNSTIG) !== undefined;

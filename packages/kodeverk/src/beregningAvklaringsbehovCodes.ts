@@ -33,11 +33,11 @@ const løsesIBeregningspunkt = [
 
 const avklaringsbehovIsOfType =
   (validAksjonspunktCodes: string[]) =>
-  (aksjonspunktCode: string): boolean =>
-    validAksjonspunktCodes.includes(aksjonspunktCode);
+    (aksjonspunktCode: string): boolean =>
+      validAksjonspunktCodes.includes(aksjonspunktCode);
 
 export const harAvklaringsbehov = (avklaringsbehovCode: string, avklaringsbehov: BeregningAvklaringsbehov[]): boolean =>
-  avklaringsbehov.some(ap => ap.definisjon.kode === avklaringsbehovCode);
+  avklaringsbehov.some(ap => ap.definisjon === avklaringsbehovCode);
 
 export const isBGAksjonspunktSomGirFritekstfelt = avklaringsbehovIsOfType(
   beregningsgrunnlagFritekstfeltIVedtakAksjonspunkt,

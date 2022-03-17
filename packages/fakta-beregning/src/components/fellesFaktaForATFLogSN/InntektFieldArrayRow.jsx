@@ -119,7 +119,7 @@ export const AndelRowImpl = ({
             type="button"
             onClick={() => removeAndel()}
             title={intl.formatMessage({ id: 'BeregningInfoPanel.FordelingBG.FjernAndel' })}
-            />
+          />
         )}
       </TableColumn>
     </TableRow>

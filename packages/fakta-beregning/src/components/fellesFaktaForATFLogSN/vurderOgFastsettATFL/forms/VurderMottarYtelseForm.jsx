@@ -180,7 +180,7 @@ const transformValuesFrilans = (
   const skalFastsetteInntektFrilans = values[finnFrilansFieldName()];
   if (skalFastsetteInntektFrilans) {
     const frilansAndel = beregningsgrunnlag.beregningsgrunnlagPeriode[0].beregningsgrunnlagPrStatusOgAndel.find(
-      andel => andel.aktivitetStatus.kode === aktivitetStatus.FRILANSER,
+      andel => andel.aktivitetStatus === aktivitetStatus.FRILANSER,
     );
     if (!fastsatteAndelsnr.includes(frilansAndel.andelsnr) && frilansMottarYtelse(values)) {
       const frilansInntekt = inntektVerdier.find(field => field.andelsnr === frilansAndel.andelsnr);
@@ -261,7 +261,7 @@ VurderMottarYtelseForm.transformValues = (
 ) => {
   const faktaOmBeregningTilfeller = [];
   const aktiveTilfeller = faktaOmBeregning.faktaOmBeregningTilfeller ? faktaOmBeregning.faktaOmBeregningTilfeller : [];
-  if (!aktiveTilfeller.map(({ kode }) => kode).includes(faktaOmBeregningTilfelle.VURDER_MOTTAR_YTELSE)) {
+  if (!aktiveTilfeller.includes(faktaOmBeregningTilfelle.VURDER_MOTTAR_YTELSE)) {
     return {};
   }
   return {

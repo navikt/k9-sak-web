@@ -19,14 +19,14 @@ export const lagAktivitetFieldId = aktivitet => {
     }
     return aktivitet.arbeidsgiverIdent + aktivitet.fom.replace('.', '');
   }
-  return aktivitet.arbeidsforholdType.kode + aktivitet.fom.replace('.', '');
+  return aktivitet.arbeidsforholdType + aktivitet.fom.replace('.', '');
 };
 
 export const skalVurdereAktivitet = (aktivitet, skalOverstyre, harAvklaringsbehov) => {
   if (!skalOverstyre && !harAvklaringsbehov) {
     return false;
   }
-  if (aktivitet.arbeidsforholdType && aktivitet.arbeidsforholdType.kode === opptjeningAktivitetTyper.AAP) {
+  if (aktivitet.arbeidsforholdType && aktivitet.arbeidsforholdType === opptjeningAktivitetTyper.AAP) {
     return false;
   }
   return true;
@@ -55,26 +55,26 @@ const lagTableRow = (
     </TableColumn>
     {(erOverstyrt || harAvklaringsbehov) && (
       <>
-    <TableColumn className={styles.radioMiddle}>
-      <RadioGroupField
-        name={`${fieldArrayID}.${lagAktivitetFieldId(aktivitet)}.skalBrukes`}
-        readOnly={readOnly || !skalVurdereAktivitet(aktivitet, erOverstyrt, harAvklaringsbehov)}
-      >
-        {[<RadioOption key={`${lagAktivitetFieldId(aktivitet)}.bruk`} value />]}
-      </RadioGroupField>
-    </TableColumn>
-    <TableColumn className={styles.radioMiddle}>
-      <RadioGroupField
-        name={`${fieldArrayID}.${lagAktivitetFieldId(aktivitet)}.skalBrukes`}
-        readOnly={readOnly || !skalVurdereAktivitet(aktivitet, erOverstyrt, harAvklaringsbehov)}
-      >
-        {[<RadioOption key={`${lagAktivitetFieldId(aktivitet)}.ikkeBruk`} value={false} />]}
-      </RadioGroupField>
-    </TableColumn>
-    {isAvklaringsbehovClosed && readOnly && (
-      <TableColumn>{skalVurdereAktivitet(aktivitet, erOverstyrt, harAvklaringsbehov) && <EditedIcon />}</TableColumn>
-    )}
-    </>)}
+        <TableColumn className={styles.radioMiddle}>
+          <RadioGroupField
+            name={`${fieldArrayID}.${lagAktivitetFieldId(aktivitet)}.skalBrukes`}
+            readOnly={readOnly || !skalVurdereAktivitet(aktivitet, erOverstyrt, harAvklaringsbehov)}
+          >
+            {[<RadioOption key={`${lagAktivitetFieldId(aktivitet)}.bruk`} value />]}
+          </RadioGroupField>
+        </TableColumn>
+        <TableColumn className={styles.radioMiddle}>
+          <RadioGroupField
+            name={`${fieldArrayID}.${lagAktivitetFieldId(aktivitet)}.skalBrukes`}
+            readOnly={readOnly || !skalVurdereAktivitet(aktivitet, erOverstyrt, harAvklaringsbehov)}
+          >
+            {[<RadioOption key={`${lagAktivitetFieldId(aktivitet)}.ikkeBruk`} value={false} />]}
+          </RadioGroupField>
+        </TableColumn>
+        {isAvklaringsbehovClosed && readOnly && (
+          <TableColumn>{skalVurdereAktivitet(aktivitet, erOverstyrt, harAvklaringsbehov) && <EditedIcon />}</TableColumn>
+        )}
+      </>)}
   </TableRow>
 );
 
@@ -88,8 +88,8 @@ const getHeaderTextCodes = (erOverstyrt, harAvklaringsbehov) => {
     ];
   }
   return [
-  'VurderAktiviteterTabell.Header.Aktivitet',
-  'VurderAktiviteterTabell.Header.Periode',
+    'VurderAktiviteterTabell.Header.Aktivitet',
+    'VurderAktiviteterTabell.Header.Periode',
   ];
 }
 
@@ -97,28 +97,28 @@ const finnHeading = (aktiviteter, erOverstyrt, skjaeringstidspunkt) => {
   if (erOverstyrt) {
     return (
       <Element>
-      <FormattedMessage
-        id="VurderAktiviteterTabell.Overstyrt.Overskrift"
-        values={{ skjaeringstidspunkt: moment(skjaeringstidspunkt, 'YYYY-MM-DD').format(DDMMYYYY_DATE_FORMAT) }}
-      />
+        <FormattedMessage
+          id="VurderAktiviteterTabell.Overstyrt.Overskrift"
+          values={{ skjaeringstidspunkt: moment(skjaeringstidspunkt, 'YYYY-MM-DD').format(DDMMYYYY_DATE_FORMAT) }}
+        />
       </Element>
     );
   }
   const harAAP = aktiviteter.some(
-    aktivitet => aktivitet.arbeidsforholdType && aktivitet.arbeidsforholdType.kode === opptjeningAktivitetTyper.AAP,
+    aktivitet => aktivitet.arbeidsforholdType && aktivitet.arbeidsforholdType === opptjeningAktivitetTyper.AAP,
   );
   const harVentelonnVartpenger = aktiviteter.some(
     aktivitet =>
       aktivitet.arbeidsforholdType &&
-      aktivitet.arbeidsforholdType.kode === opptjeningAktivitetTyper.VENTELØNN_VARTPENGER,
+      aktivitet.arbeidsforholdType === opptjeningAktivitetTyper.VENTELØNN_VARTPENGER,
   );
   if (harAAP) {
     return (
       <Element>
-      <FormattedMessage
-        id="VurderAktiviteterTabell.FullAAPKombinert.Overskrift"
-        values={{ skjaeringstidspunkt: moment(skjaeringstidspunkt, 'YYYY-MM-DD').format(DDMMYYYY_DATE_FORMAT) }}
-      />
+        <FormattedMessage
+          id="VurderAktiviteterTabell.FullAAPKombinert.Overskrift"
+          values={{ skjaeringstidspunkt: moment(skjaeringstidspunkt, 'YYYY-MM-DD').format(DDMMYYYY_DATE_FORMAT) }}
+        />
       </Element>
 
     );
@@ -126,10 +126,10 @@ const finnHeading = (aktiviteter, erOverstyrt, skjaeringstidspunkt) => {
   if (harVentelonnVartpenger) {
     return (
       <Element>
-      <FormattedMessage
-        id="VurderAktiviteterTabell.VentelonnVartpenger.Overskrift"
-        values={{ skjaeringstidspunkt: moment(skjaeringstidspunkt, 'YYYY-MM-DD').format(DDMMYYYY_DATE_FORMAT) }}
-      />
+        <FormattedMessage
+          id="VurderAktiviteterTabell.VentelonnVartpenger.Overskrift"
+          values={{ skjaeringstidspunkt: moment(skjaeringstidspunkt, 'YYYY-MM-DD').format(DDMMYYYY_DATE_FORMAT) }}
+        />
       </Element>
     );
   }
@@ -211,7 +211,7 @@ VurderAktiviteterTabell.transformValues = (values, aktiviteter) =>
       arbeidsforholdRef: aktivitet.arbeidsforholdId,
       fom: aktivitet.fom,
       tom: aktivitet.tom,
-      opptjeningAktivitetType: aktivitet.arbeidsforholdType ? aktivitet.arbeidsforholdType.kode : null,
+      opptjeningAktivitetType: aktivitet.arbeidsforholdType ? aktivitet.arbeidsforholdType : null,
       arbeidsgiverIdentifikator: aktivitet.arbeidsgiverIdent,
       skalBrukes: values[lagAktivitetFieldId(aktivitet)].skalBrukes,
     }));

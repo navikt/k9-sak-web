@@ -52,7 +52,7 @@ VurderEtterlonnSluttpakkeForm.buildInitialValues = (beregningsgrunnlag) => {
   const relevanteAndeler = beregningsgrunnlag.beregningsgrunnlagPeriode
     .flatMap(periode => periode.beregningsgrunnlagPrStatusOgAndel)
     .filter(
-      ({ arbeidsforhold }) => arbeidsforhold && arbeidsforhold.arbeidsforholdType.kode === OAType.ETTERLONN_SLUTTPAKKE,
+      ({ arbeidsforhold }) => arbeidsforhold && arbeidsforhold.arbeidsforholdType === OAType.ETTERLONN_SLUTTPAKKE,
     );
   if (relevanteAndeler.length > 0) {
     initialValues[harEtterlonnSluttpakkeField] = !!relevanteAndeler[0].beregnetPrAar && relevanteAndeler[0].beregnetPrAar > 0;
@@ -68,7 +68,7 @@ const finnEtterlønnSluttpakkeAndel = faktaOmBeregning => {
     andel =>
       andel.arbeidsforhold &&
       andel.arbeidsforhold.arbeidsforholdType &&
-      andel.arbeidsforhold.arbeidsforholdType.kode === OAType.ETTERLONN_SLUTTPAKKE,
+      andel.arbeidsforhold.arbeidsforholdType === OAType.ETTERLONN_SLUTTPAKKE,
   );
 
   return etterlønnSluttpakkeAndel ? etterlønnSluttpakkeAndel.andelsnr : undefined;

@@ -62,22 +62,22 @@ export const erAvklartAktivitetEndret = createSelector(
     getFormValuesAktivitetList,
     getFormInitialValuesAktivitetList,
   ],
-  (alleBeregningsgrunnlag, valuesList, initialValuesList) => 
-  alleBeregningsgrunnlag.some((bg, index) => harEndringIAvklaring(
-    bg.avklaringsbehov, 
-    getAvklarAktiviteter(bg), 
-    valuesList[index],
-    initialValuesList[index]))
+  (alleBeregningsgrunnlag, valuesList, initialValuesList) =>
+    alleBeregningsgrunnlag.some((bg, index) => harEndringIAvklaring(
+      bg.avklaringsbehov,
+      getAvklarAktiviteter(bg),
+      valuesList[index],
+      initialValuesList[index]))
 );
 
 const getHelpTextsAvklarAktiviteter = createSelector([ownProps => ownProps.beregningsgrunnlag.avklaringsbehov], avklaringsbehov =>
   harAvklaringsbehov(AVKLAR_AKTIVITETER, avklaringsbehov)
     ? [
-        <FormattedMessage
-          key="VurderFaktaForBeregningen"
-          id="BeregningInfoPanel.AksjonspunktHelpText.VurderAktiviteter"
-        />,
-      ]
+      <FormattedMessage
+        key="VurderFaktaForBeregningen"
+        id="BeregningInfoPanel.AksjonspunktHelpText.VurderAktiviteter"
+      />,
+    ]
     : [],
 );
 
@@ -134,8 +134,8 @@ export class AvklareAktiviteterPanelImpl extends Component {
       alleBeregningsgrunnlag,
     } = this.props;
     const initialValues = {
-      [fieldArrayName]: alleBeregningsgrunnlag.map(beregningsgrunnlag => 
-        buildInitialValuesAvklarAktiviteter(beregningsgrunnlag, 
+      [fieldArrayName]: alleBeregningsgrunnlag.map(beregningsgrunnlag =>
+        buildInitialValuesAvklarAktiviteter(beregningsgrunnlag,
           this.props),
       ),
       aktivtBeregningsgrunnlagIndex,
@@ -246,12 +246,12 @@ export const transformValues = (values) => {
     });
   if (harOverstyrt) {
     // K9-sak støtter i dag kun overstyring av ein periode om gangen
-    return løsteGrunnlag.map(gr => 
-      ({
-        kode: OVERSTYRING_AV_BEREGNINGSAKTIVITETER,
-        begrunnelse: beg === undefined ? null : beg,
-        ...gr,
-      }));
+    return løsteGrunnlag.map(gr =>
+    ({
+      kode: OVERSTYRING_AV_BEREGNINGSAKTIVITETER,
+      begrunnelse: beg === undefined ? null : beg,
+      ...gr,
+    }));
   }
   return [
     {
@@ -269,19 +269,19 @@ const getIsAvklaringsbehovClosed = createSelector([ownProps => ownProps.beregnin
   const relevantOpenAbs = alleAb
     .filter(
       ab =>
-        ab.definisjon.kode === avklaringsbehovCodes.AVKLAR_AKTIVITETER ||
-        ab.definisjon.kode === avklaringsbehovCodes.OVERSTYRING_AV_BEREGNINGSAKTIVITETER,
+        ab.definisjon === avklaringsbehovCodes.AVKLAR_AKTIVITETER ||
+        ab.definisjon === avklaringsbehovCodes.OVERSTYRING_AV_BEREGNINGSAKTIVITETER,
     )
-    .filter(ap => isAvklaringsbehovOpen(ap.status.kode));
+    .filter(ap => isAvklaringsbehovOpen(ap.status));
   return relevantOpenAbs.length === 0;
 });
 
-const getAvklaringsbehov= avklaringsbehov => avklaringsbehov
-    .find(
-      ab =>
-        ab.definisjon.kode === avklaringsbehovCodes.AVKLAR_AKTIVITETER ||
-        ab.definisjon.kode === avklaringsbehovCodes.OVERSTYRING_AV_BEREGNINGSAKTIVITETER,
-    );
+const getAvklaringsbehov = avklaringsbehov => avklaringsbehov
+  .find(
+    ab =>
+      ab.definisjon === avklaringsbehovCodes.AVKLAR_AKTIVITETER ||
+      ab.definisjon === avklaringsbehovCodes.OVERSTYRING_AV_BEREGNINGSAKTIVITETER,
+  );
 
 const mapStateToPropsFactory = (initialState, initialProps) => {
   const aktivtBg = initialProps.alleBeregningsgrunnlag
@@ -311,9 +311,9 @@ const mapStateToPropsFactory = (initialState, initialProps) => {
       avklarAktiviteter: getAvklarAktiviteter(ownProps.beregningsgrunnlag),
       hasBegrunnelse: initialValues && !!initialValues[BEGRUNNELSE_AVKLARE_AKTIVITETER_NAME],
       erBgOverstyrt: erOverstyringAvAktivtBeregningsgrunnlag(state, ownProps),
-      erOverstyrt: !!values && 
-              !!values[ownProps.aktivtBeregningsgrunnlagIndex] && 
-              values[ownProps.aktivtBeregningsgrunnlagIndex][MANUELL_OVERSTYRING_FIELD],
+      erOverstyrt: !!values &&
+        !!values[ownProps.aktivtBeregningsgrunnlagIndex] &&
+        values[ownProps.aktivtBeregningsgrunnlagIndex][MANUELL_OVERSTYRING_FIELD],
 
     };
   };

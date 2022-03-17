@@ -17,9 +17,8 @@ const byggListeSomStreng = listeMedStrenger => {
     return `${listeMedStrenger[0]} og ${listeMedStrenger[1]}`;
   }
   if (listeMedStrenger.length > 2) {
-    return `${listeMedStrenger.splice(0, listeMedStrenger.length - 1).join(', ')} og ${
-      listeMedStrenger[listeMedStrenger.length - 1]
-    }`;
+    return `${listeMedStrenger.splice(0, listeMedStrenger.length - 1).join(', ')} og ${listeMedStrenger[listeMedStrenger.length - 1]
+      }`;
   }
   return '';
 };
