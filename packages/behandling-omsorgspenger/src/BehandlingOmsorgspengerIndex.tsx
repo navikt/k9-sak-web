@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useCallback } from 'react';
 
-import { LoadingPanel, usePrevious } from '@fpsak-frontend/shared-components';
+import { LoadingPanel } from '@fpsak-frontend/shared-components';
 import { Rettigheter, ReduxFormStateCleaner, useSetBehandlingVedEndring } from '@k9-sak-web/behandling-felles';
 import {
   Behandling,
@@ -8,12 +8,10 @@ import {
   FeatureToggles,
   Fagsak,
   FagsakPerson,
-  ArbeidsgiverOpplysningerWrapper, Dokument,
+  ArbeidsgiverOpplysningerWrapper,
 } from '@k9-sak-web/types';
 import { RestApiState, useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
 
-import useBehandlingEndret from "@k9-sak-web/sak-app/src/behandling/useBehandlingEndret";
-import { K9sakApiKeys, restApiHooks } from "@k9-sak-web/sak-app/src/data/k9sakApi";
 import {
   restApiOmsorgHooks,
   requestOmsorgApi,
@@ -32,7 +30,6 @@ const omsorgspengerData = [
   { key: OmsorgspengerBehandlingApiKeys.SIMULERING_RESULTAT },
   { key: OmsorgspengerBehandlingApiKeys.FORBRUKTE_DAGER },
   { key: OmsorgspengerBehandlingApiKeys.OVERLAPPENDE_YTELSER },
-  { key: OmsorgspengerBehandlingApiKeys.HENT_SAKSBEHANDLERE },
 ];
 
 interface OwnProps {
@@ -71,24 +68,12 @@ const BehandlingOmsorgspengerIndex = ({
   setRequestPendingMessage,
   featureToggles,
 }: OwnProps) => {
-  const forrigeSaksnummer = usePrevious(fagsak.saksnummer);
   const [nyOgForrigeBehandling, setBehandlinger] = useState<{ current?: Behandling; previous?: Behandling }>({
     current: undefined,
     previous: undefined,
   });
   const behandling = nyOgForrigeBehandling.current;
   const forrigeBehandling = nyOgForrigeBehandling.previous;
-
-  const erBehandlingEndretFraUndefined = useBehandlingEndret(behandlingId, behandling?.versjon);
-  const { data: alleDokumenter = [] } = restApiHooks.useRestApi<Dokument[]>(
-    K9sakApiKeys.ALL_DOCUMENTS,
-    { saksnummer: fagsak.saksnummer },
-    {
-      updateTriggers: [behandlingId, behandling?.versjon],
-      suspendRequest: forrigeSaksnummer && erBehandlingEndretFraUndefined,
-      keepData: true,
-    },
-  );
 
   const setBehandling = useCallback(nyBehandling => {
     requestOmsorgApi.resetCache();
@@ -193,7 +178,6 @@ const BehandlingOmsorgspengerIndex = ({
         setBehandling={setBehandling}
         arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysninger ? arbeidsgiverOpplysninger.arbeidsgivere : {}}
         featureToggles={featureToggles}
-        dokumenter={alleDokumenter}
       />
     </>
   );
