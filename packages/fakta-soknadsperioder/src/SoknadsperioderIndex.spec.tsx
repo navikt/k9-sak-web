@@ -91,12 +91,12 @@ describe('<SøknadsperioderIndex>', () => {
     expect(datoFørNavigering).toBeInTheDocument();
 
     userEvent.click(zoomInnKnapp);
-    const datoEtterZoomInn = screen.getByText('11. oktober 2021 - 11. januar 2022');
+    const datoEtterZoomInn = screen.getByText('11. november 2021 - 11. april 2022');
     expect(datoEtterZoomInn).toBeInTheDocument();
 
     userEvent.click(zoomUtKnapp);
     userEvent.click(zoomUtKnapp);
-    const datoEtterZoomUt = screen.getByText('11. juli 2021 - 11. april 2022');
+    const datoEtterZoomUt = screen.getByText('11. september 2021 - 11. april 2022');
     expect(datoEtterZoomUt).toBeInTheDocument();
   });
 });
