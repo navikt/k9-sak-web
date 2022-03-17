@@ -69,17 +69,16 @@ const Dekorator = ({
   );
 
   const { removeErrorMessages } = useRestApiErrorDispatcher();
+
   return (
-    <>
-      <HeaderWithErrorPanel
-        navAnsattName={navAnsatt?.navn}
-        navBrukernavn={navAnsatt?.brukernavn}
-        removeErrorMessage={removeErrorMessages}
-        errorMessages={hideErrorMessages ? EMPTY_ARRAY : resolvedErrorMessages}
-        setSiteHeight={setSiteHeight}
-        getPathToFplos={getPathToFplos}
-      />
-    </>
+    <HeaderWithErrorPanel
+      navAnsattName={navAnsatt?.navn}
+      navBrukernavn={navAnsatt?.brukernavn}
+      removeErrorMessage={removeErrorMessages}
+      errorMessages={hideErrorMessages ? EMPTY_ARRAY : resolvedErrorMessages}
+      setSiteHeight={setSiteHeight}
+      getPathToFplos={getPathToFplos}
+    />
   );
 };
 
