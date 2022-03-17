@@ -156,8 +156,12 @@ const HeaderWithErrorPanel = ({
                 <Endringslogg
                   userId={navBrukernavn}
                   appId="K9_SAK"
-                  appName="k9-sak-web"
-                  backendUrl={isInDevelopmentMode() ? 'https://familie-endringslogg.dev.intern.nav.no' : 'https://familie-endringslogg.intern.nav.no'}
+                  appName="K9 Sak"
+                  backendUrl={
+                    isInDevelopmentMode()
+                      ? 'https://familie-endringslogg.dev.intern.nav.no'
+                      : 'https://familie-endringslogg.intern.nav.no'
+                  }
                   stil="lys"
                   alignLeft
                 />
