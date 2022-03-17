@@ -16,18 +16,18 @@ const intl = createIntl(
 
 interface OwnProps {
   documents: Dokument[];
-  selectDocumentCallback: (e: React.SyntheticEvent, id: number, dokument: Dokument) => void;
   behandlingId?: number;
   fagsakPerson?: FagsakPerson;
+  saksnummer: number;
 }
 
-const DokumenterSakIndex = ({ documents, selectDocumentCallback, behandlingId, fagsakPerson }: OwnProps) => (
+const DokumenterSakIndex = ({ documents, behandlingId, fagsakPerson, saksnummer }: OwnProps) => (
   <RawIntlProvider value={intl}>
     <DocumentList
       documents={documents}
-      selectDocumentCallback={selectDocumentCallback}
       behandlingId={behandlingId}
       fagsakPerson={fagsakPerson}
+      saksnummer={saksnummer}
     />
   </RawIntlProvider>
 );

@@ -39,6 +39,9 @@ const avklaringsbehovIsOfType =
 export const harAvklaringsbehov = (avklaringsbehovCode: string, avklaringsbehov: BeregningAvklaringsbehov[]): boolean =>
   avklaringsbehov.some(ap => ap.definisjon.kode === avklaringsbehovCode);
 
+export const harAvklaringsbehovSomKanLøses = (avklaringsbehovCode: string, avklaringsbehov: BeregningAvklaringsbehov[]): boolean =>
+  avklaringsbehov.some(ap => ap.definisjon.kode === avklaringsbehovCode && ap.kanLoses);
+
 export const isBGAksjonspunktSomGirFritekstfelt = avklaringsbehovIsOfType(
   beregningsgrunnlagFritekstfeltIVedtakAksjonspunkt,
 );

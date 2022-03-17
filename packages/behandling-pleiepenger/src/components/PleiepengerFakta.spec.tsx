@@ -159,7 +159,7 @@ describe('<PleiepengerFakta>', () => {
         setBehandling={sinon.spy()}
         arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
         dokumenter={[]}
-        featureToggles={{}}
+        featureToggles={{ UTENLANDSOPPHOLD: true }}
       />,
     );
 
@@ -199,6 +199,11 @@ describe('<PleiepengerFakta>', () => {
         erAktiv: false,
         harAksjonspunkt: false,
         tekst: 'Inntekt og ytelser',
+      },
+      {
+        erAktiv: false,
+        harAksjonspunkt: false,
+        tekst: 'Utenlandsopphold',
       },
     ]);
   });

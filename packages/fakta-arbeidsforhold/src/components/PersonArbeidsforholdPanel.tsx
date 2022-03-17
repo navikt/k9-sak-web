@@ -167,7 +167,7 @@ export class PersonArbeidsforholdPanelImpl extends Component<Props, OwnState> {
     const { arbeidsforhold } = this.props;
 
     const handlingType = values.arbeidsforholdHandlingField;
-    const lagtTilAvSaksbehandler = handlingType === arbeidsforholdHandlingType.LAGT_TIL_AV_SAKSBEHANDLER;
+    const lagtTilAvSaksbehandler = handlingType === arbeidsforholdHandlingType.BASERT_PÅ_INNTEKTSMELDING;
 
     if (lagtTilAvSaksbehandler) {
       if (!values.kilde.map(k => k.kode).includes(arbeidsforholdKilder.SAKSBEHANDLER)) {

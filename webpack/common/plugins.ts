@@ -5,10 +5,23 @@ import CircularDependencyPlugin from 'circular-dependency-plugin';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import CopyWebpackPlugin from 'copy-webpack-plugin';
+import ESLintPlugin from 'eslint-webpack-plugin';
+import { IS_DEV } from '../constants';
 
 import { PUBLIC_ROOT, LANG_DIR } from '../paths';
 
+const PACKAGES_DIR = path.resolve(__dirname, '../packages');
+
 export default [
+  new ESLintPlugin({
+    context: PACKAGES_DIR,
+    extensions: ['tsx', 'ts'],
+    failOnWarning: false,
+    failOnError: !IS_DEV,
+    fix: IS_DEV,
+    overrideConfigFile: path.resolve(__dirname, IS_DEV ? '../../eslint/eslintrc.dev.js' : '../../eslint/eslintrc.prod.js'),
+    // cache: true,
+  }),
   new MiniCssExtractPlugin({
     filename: 'style_[contenthash].css',
     ignoreOrder: true,
@@ -25,6 +38,7 @@ export default [
         to: 'sprak/[name][ext]',
         force: true,
         transform: {
+          transformer: (content, path) => content,
           cache: {
             keys: {
               key: '[contenthash]',

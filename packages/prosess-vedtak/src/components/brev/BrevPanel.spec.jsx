@@ -3,9 +3,8 @@ import { expect } from 'chai';
 import React from 'react';
 import { shallow } from 'enzyme/build';
 import { AlertStripeInfo } from 'nav-frontend-alertstriper';
-import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
 import dokumentMalType from '@fpsak-frontend/kodeverk/src/dokumentMalType';
-import { SelectField } from '@fpsak-frontend/form';
+import SelectFieldFormik from '@fpsak-frontend/form/src/SelectFieldFormik';
 import vedtaksbrevtype from '@fpsak-frontend/kodeverk/src/vedtaksbrevtype';
 
 import { BrevPanel } from './BrevPanel';
@@ -37,7 +36,7 @@ describe('<BrevPanel>', () => {
         beregningErManueltFastsatt={false}
         dokumentdata={{}}
         tilgjengeligeVedtaksbrev={automatiskInnvilgelsebrevTilgjengelig}
-        informasjonsbehovValues={{}}
+        informasjonsbehovValues={[]}
         skalBrukeOverstyrendeFritekstBrev={false}
         begrunnelse=""
         previewCallback={sinon.spy()}
@@ -46,7 +45,7 @@ describe('<BrevPanel>', () => {
         overskrift={null}
         behandlingResultat={null}
         overstyrtMottaker={null}
-        formProps={reduxFormPropsMock}
+        formikProps={{}}
       />,
     );
 
@@ -64,7 +63,7 @@ describe('<BrevPanel>', () => {
         beregningErManueltFastsatt={false}
         dokumentdata={{}}
         tilgjengeligeVedtaksbrev={alleTilgjengeligeVedtaksbrev}
-        informasjonsbehovValues={{}}
+        informasjonsbehovValues={[]}
         skalBrukeOverstyrendeFritekstBrev
         begrunnelse=""
         previewCallback={sinon.spy()}
@@ -73,7 +72,7 @@ describe('<BrevPanel>', () => {
         overskrift={null}
         behandlingResultat={null}
         overstyrtMottaker={null}
-        formProps={reduxFormPropsMock}
+        formikProps={{}}
       />,
     );
 
@@ -91,7 +90,7 @@ describe('<BrevPanel>', () => {
         beregningErManueltFastsatt={false}
         dokumentdata={{}}
         tilgjengeligeVedtaksbrev={fritekstbrevTilgjenglig}
-        informasjonsbehovValues={{}}
+        informasjonsbehovValues={[]}
         skalBrukeOverstyrendeFritekstBrev={false}
         begrunnelse=""
         previewCallback={sinon.spy()}
@@ -100,7 +99,7 @@ describe('<BrevPanel>', () => {
         overskrift={null}
         behandlingResultat={null}
         overstyrtMottaker={null}
-        formProps={reduxFormPropsMock}
+        formikProps={{}}
       />,
     );
 
@@ -118,7 +117,7 @@ describe('<BrevPanel>', () => {
         beregningErManueltFastsatt={false}
         dokumentdata={{}}
         tilgjengeligeVedtaksbrev={ingenTilgjengeligeVedtaksbrev}
-        informasjonsbehovValues={{}}
+        informasjonsbehovValues={[]}
         skalBrukeOverstyrendeFritekstBrev={false}
         begrunnelse=""
         previewCallback={sinon.spy()}
@@ -127,7 +126,7 @@ describe('<BrevPanel>', () => {
         overskrift={null}
         behandlingResultat={null}
         overstyrtMottaker={null}
-        formProps={reduxFormPropsMock}
+        formikProps={{}}
       />,
     );
     expect(wrapper.find(InformasjonsbehovAutomatiskVedtaksbrev)).to.have.length(0);
@@ -158,7 +157,7 @@ describe('<BrevPanel>', () => {
             },
           ],
         }}
-        informasjonsbehovValues={{}}
+        informasjonsbehovValues={[]}
         skalBrukeOverstyrendeFritekstBrev={false}
         begrunnelse=""
         previewCallback={sinon.spy()}
@@ -167,11 +166,11 @@ describe('<BrevPanel>', () => {
         overskrift={null}
         behandlingResultat={null}
         overstyrtMottaker={null}
-        formProps={reduxFormPropsMock}
+        formikProps={{}}
       />,
     );
 
-    expect(wrapper.find(SelectField)).to.have.length(1);
+    expect(wrapper.find(SelectFieldFormik)).to.have.length(1);
     expect(wrapper.find(VedtakPreviewLink)).to.have.length(1);
     expect(wrapper.find(FritekstBrevPanel)).to.have.length(0);
   });

@@ -1,4 +1,7 @@
 {
+    "HelpText.Aksjonspunkt": "Aksjonspunkt",
+    "HelpText.Aksjonspunkt.BehandletAksjonspunkt": "Behandlet aksjonspunkt: ",
+
     "OverstyrInputForm.Aksjonspunkt": "Vurder inntekt og søknadsopplysninger ved direkte overgang fra infotrygd. Dette aksjonspunktet krever spesielle rettigheter.",
     "OverstyrInputForm.InntektFeltTypeFeil": "Inntekt må være et tall",
     "OverstyrInputForm.InntektFeltPakrevdFeil": "Inntektsbeløp må fylles ut",

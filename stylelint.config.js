@@ -1,5 +1,6 @@
 module.exports = {
   plugins: ['stylelint-order'],
+  customSyntax: 'postcss-less',
   rules: {
     'at-rule-empty-line-before': [
       'always',
@@ -9,7 +10,6 @@ module.exports = {
       },
     ],
     'order/order': ['custom-properties', 'declarations'],
-    'order/properties-alphabetical-order': true,
     'max-line-length': 160,
     'at-rule-name-case': 'lower',
     'at-rule-name-space-after': 'always-single-line',
@@ -38,7 +38,6 @@ module.exports = {
         ignore: ['after-comment', 'inside-single-line-block'],
       },
     ],
-    'declaration-no-important': true,
     'declaration-block-no-duplicate-properties': true,
     'declaration-bang-space-after': 'never',
     'declaration-bang-space-before': 'always',

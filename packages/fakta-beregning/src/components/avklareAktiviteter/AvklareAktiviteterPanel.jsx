@@ -1,5 +1,5 @@
 import { behandlingForm, getBehandlingFormPrefix } from '@fpsak-frontend/form';
-import avklaringsbehovCodes, { harAvklaringsbehov } from '@fpsak-frontend/kodeverk/src/beregningAvklaringsbehovCodes';
+import avklaringsbehovCodes, { harAvklaringsbehov, harAvklaringsbehovSomKanLøses } from '@fpsak-frontend/kodeverk/src/beregningAvklaringsbehovCodes';
 import { isAvklaringsbehovOpen } from '@fpsak-frontend/kodeverk/src/beregningAvklaringsbehovStatus';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import PropTypes from 'prop-types';
@@ -202,7 +202,7 @@ AvklareAktiviteterPanelImpl.defaultProps = {
 };
 
 const skalKunneLoseAvklaringsbehov = (skalOverstyre, avklaringsbehov, erTilVurdering) =>
-  (skalOverstyre || harAvklaringsbehov(AVKLAR_AKTIVITETER, avklaringsbehov)) && erTilVurdering;
+  (skalOverstyre || harAvklaringsbehovSomKanLøses(AVKLAR_AKTIVITETER, avklaringsbehov)) && erTilVurdering;
 
 const validate = values => {
   const fieldArrayList = values[fieldArrayName];
@@ -224,7 +224,7 @@ const validate = values => {
   return errors;
 };
 
-export const transformValues = (values, behandlingResultatPerioder, aktivtBg) => {
+export const transformValues = (values) => {
   const fieldArrayList = values[fieldArrayName];
   const harOverstyrt = fieldArrayList.some(currentFormValues => currentFormValues[MANUELL_OVERSTYRING_FIELD]);
   const beg = values[BEGRUNNELSE_AVKLARE_AKTIVITETER_NAME];
@@ -239,12 +239,9 @@ export const transformValues = (values, behandlingResultatPerioder, aktivtBg) =>
         currentFormValues,
         avklarAktiviteter.aktiviteterTomDatoMapping,
       );
-      const vilkarPeriode = behandlingResultatPerioder.find(
-        ({periode}) => periode.fom === aktivtBg.skjæringstidspunkt,
-      );
       return {
         ...vurderAktiviteterTransformed,
-        periode: vilkarPeriode.periode,
+        periode: currentFormValues.periode,
       };
     });
   if (harOverstyrt) {
@@ -291,7 +288,7 @@ const mapStateToPropsFactory = (initialState, initialProps) => {
     ? initialProps.alleBeregningsgrunnlag[initialProps.aktivtBeregningsgrunnlagIndex]
     : initialProps.beregningsgrunnlag;
   const onSubmit = vals =>
-    initialProps.submitCallback(transformValues(vals, initialProps.behandlingResultatPerioder, aktivtBg));
+    initialProps.submitCallback(transformValues(vals));
   return (state, ownProps) => {
     const values = getFormValuesAktivitetList(state, ownProps);
 

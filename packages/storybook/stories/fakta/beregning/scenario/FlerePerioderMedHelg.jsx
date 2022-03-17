@@ -18,7 +18,8 @@ export const beregningsgrunnlag = [
         "status": {
           "kode": "OPPR",
           "kodeverk": "AKSJONSPUNKT_STATUS"
-        }
+        },
+        "kanLoses": true
       }
     ],
     "skjaeringstidspunktBeregning": "2021-06-28",

@@ -53,6 +53,8 @@ spec:
       value: "http://k9-klage.k9saksbehandling"
     - name: APP_URL_K9TILBAKE
       value: "http://k9-tilbake.default"
+    - name: APP_URL_K9FORDEL
+      value: "http://k9-fordel.k9saksbehandling"
     # setter denne til å peke på k9-sak, inntil diagnosekode-apiinstansen er oppe i prod
     - name: APP_DIAGNOSEKODER
       value: "http://diagnosekode-api/diagnosekoder/"
@@ -84,4 +86,11 @@ spec:
       value: "true"
     - name: TILBAKE
       value: "true"
-
+    - name: BEHANDLINGSVELGER_NY
+      value: "false"
+    - name: FAKTA_SOKNADSPERIODER
+      value: "false"
+    - name: UTENLANDSOPPHOLD
+      value: "false"
+    - name: SOKNADPERIODESTRIPE
+      value: "false"

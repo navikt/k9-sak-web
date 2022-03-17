@@ -18,6 +18,7 @@ import {
 } from '@k9-sak-web/types';
 import moment from 'moment';
 import React, { useState } from 'react';
+import Punsjstripe from '@k9-sak-web/behandling-felles/src/components/punsjstripe/Punsjstripe';
 import { Arbeidstype } from '../types/Arbeidstype';
 import FetchedData from '../types/fetchedDataTsType';
 import AndreSakerPåSøkerStripe from './AndreSakerPåSøkerStripe';
@@ -154,6 +155,7 @@ const PleiepengerSluttfasePaneler = ({
         featureToggles={featureToggles}
         setBeregningErBehandlet={setBeregningErBehandlet}
       />
+      <Punsjstripe behandlingUuid={behandling?.uuid} />
       <AndreSakerPåSøkerStripe søkerIdent={fagsakPerson.personnummer} saksnummer={fagsak.saksnummer} />
       <PleiepengerSluttfaseFakta
         behandling={behandling}

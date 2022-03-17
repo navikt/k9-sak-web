@@ -476,49 +476,81 @@ export const visOverlappendeYtelser = () => {
   const overlappendeYtelser = [
     {
       "ytelseType": {
-        "kode": "SP",
+        "kode": "PSB",
         "kodeverk": "FAGSAK_YTELSE"
       },
       "kilde": {
         "kode": "INFOTRYGD",
         "kodeverk": "FAGSYSTEM"
       },
+      "saksnummer": null,
       "overlappendePerioder": [
         {
-          "fom": "2021-08-18",
-          "tom": "2021-08-20"
-        },
-        {
-          "fom": "2021-08-23",
-          "tom": "2021-08-27"
-        },
-        {
-          "fom": "2021-08-30",
-          "tom": "2021-08-31"
+          "fom": "2022-02-07",
+          "tom": "2022-02-10"
         }
       ]
     },
     {
       "ytelseType": {
-        "kode": "SP",
+        "kode": "PSB",
         "kodeverk": "FAGSAK_YTELSE"
       },
       "kilde": {
         "kode": "INFOTRYGD",
         "kodeverk": "FAGSYSTEM"
       },
+      "saksnummer": null,
       "overlappendePerioder": [
         {
-          "fom": "2021-08-15",
-          "tom": "2021-08-19"
+          "fom": "2022-01-03",
+          "tom": "2022-01-07"
         },
         {
-          "fom": "2021-08-21",
-          "tom": "2021-08-27"
+          "fom": "2022-01-10",
+          "tom": "2022-01-12"
+        }
+      ]
+    },
+    {
+      "ytelseType": {
+        "kode": "PSB",
+        "kodeverk": "FAGSAK_YTELSE"
+      },
+      "kilde": {
+        "kode": "INFOTRYGD",
+        "kodeverk": "FAGSYSTEM"
+      },
+      "saksnummer": null,
+      "overlappendePerioder": [
+        {
+          "fom": "2022-01-24",
+          "tom": "2022-01-28"
         },
         {
-          "fom": "2021-09-01",
-          "tom": "2021-08-09"
+          "fom": "2022-01-31",
+          "tom": "2022-01-31"
+        }
+      ]
+    },
+    {
+      "ytelseType": {
+        "kode": "PSB",
+        "kodeverk": "FAGSAK_YTELSE"
+      },
+      "kilde": {
+        "kode": "INFOTRYGD",
+        "kodeverk": "FAGSYSTEM"
+      },
+      "saksnummer": null,
+      "overlappendePerioder": [
+        {
+          "fom": "2022-02-21",
+          "tom": "2022-02-25"
+        },
+        {
+          "fom": "2022-02-28",
+          "tom": "2022-02-28"
         }
       ]
     }

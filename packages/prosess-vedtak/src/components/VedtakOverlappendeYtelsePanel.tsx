@@ -7,6 +7,7 @@ import { AlleKodeverk, OverlappendePeriode } from '@k9-sak-web/types';
 import { BorderBox } from '@fpsak-frontend/shared-components';
 import { EtikettInfo, EtikettFokus } from 'nav-frontend-etiketter';
 import styles from './VedtakOverlappendeYtelsePanel.less';
+import { sorterOverlappendeRader } from '../utils/periodeUtils';
 
 interface Props {
     overlappendeYtelser: any;
@@ -37,7 +38,7 @@ const VedtakOverlappendeYtelsePanel: React.FC<Props & WrappedComponentProps> = (
     /**
      * Set opp radene som brukes i Tidslinjen
      */
-    const rader = overlappendeYtelser.map((rad, radIndex): TidslinjeRad<OverlappendePeriode> => ({
+    const usorterteRader = overlappendeYtelser.map((rad, radIndex): TidslinjeRad<OverlappendePeriode> => ({
         id: `rad-${radIndex}`,
         perioder: rad.overlappendePerioder.map((periode, periodeIndex) => ({
             fom: periode.fom,
@@ -50,6 +51,12 @@ const VedtakOverlappendeYtelsePanel: React.FC<Props & WrappedComponentProps> = (
             }
         })),
     }));
+
+    /**
+     * Sorter radene slik at raden som har en periode med den tidligeste datoen sorteres øverst
+     * for å unngå "rotete" pølsefest
+     */
+    const rader = sorterOverlappendeRader(usorterteRader);
 
     /**
      * Sett opp korresponderende rader til sidekolonnen
@@ -67,7 +74,6 @@ const VedtakOverlappendeYtelsePanel: React.FC<Props & WrappedComponentProps> = (
 
     return <>
         <BorderBox>
-
             {overlappendeYtelser && overlappendeYtelser.length > 0 && <Tidslinje
                 rader={rader}
                 velgPeriode={velgPeriodeHandler}

@@ -44,6 +44,15 @@ const utledHjemler = fagsak => {
         { kode: '9', navn: 'Kapittel 9' },
       ];
 
+    case fagsakYtelseType.PLEIEPENGER_SLUTTFASE:
+      return [
+        { kode: '9-2', navn: '§ 9-2' },
+        { kode: '9-3', navn: '§ 9-3' },
+        { kode: '9-13', navn: '§ 9-13' },
+        { kode: '22-13', navn: '§ 22-13' },
+        { kode: '9', navn: 'Kapittel 9' },
+      ];
+
     default:
       return [];
   }
