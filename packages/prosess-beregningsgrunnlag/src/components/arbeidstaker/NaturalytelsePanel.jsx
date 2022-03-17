@@ -84,10 +84,7 @@ const harBortfalteNaturalytelser = allePerioder => {
         andel.bortfaltNaturalytelse !== 0,
     ),
   );
-  if (!naturalYtelseAndel || naturalYtelseAndel.length < 1) {
-    return false;
-  }
-  return true;
+  return naturalYtelseAndel && naturalYtelseAndel.length;
 };
 export const createNaturalytelseTableData = (allePerioder, arbeidsgiverOpplysningerPerId) => {
   if (!allePerioder || allePerioder.length < 1) {
