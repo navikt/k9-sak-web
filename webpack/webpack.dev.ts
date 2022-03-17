@@ -1,6 +1,5 @@
 import webpack from 'webpack';
 import ReactRefreshWebpackPlugin from '@pmmmwh/react-refresh-webpack-plugin';
-require('dotenv').config();
 
 import { PUBLIC_ROOT, APP_DIR } from './paths';
 
