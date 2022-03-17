@@ -143,7 +143,8 @@ const HeaderWithErrorPanel = ({
   return (
     <div
       ref={fixedHeaderRef}
-      className={[styles.container, isInDevelopmentMode() ? styles.container_dev : ''].join(' ')}    >
+      className={[styles.container, isInDevelopmentMode() ? styles.container_dev : ''].join(' ')}
+    >
       <RawIntlProvider value={intl}>
         <div ref={wrapperRef}>
           <Header
@@ -151,7 +152,7 @@ const HeaderWithErrorPanel = ({
             titleHref={getHeaderTitleHref(getPathToFplos)}
           >
             {navBrukernavn && (
-              <div className={styles['endringslogg-container'] }>
+              <div className={styles['endringslogg-container']}>
                 <Endringslogg
                   userId={navBrukernavn}
                   appId="K9_SAK"
