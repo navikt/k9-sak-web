@@ -41,7 +41,6 @@
     "@formatjs/intl-numberformat": "^7.4.0",
     "@navikt/ds-css": "^0.12.11",
     "@navikt/ds-react": "^0.14.11",
-    "@navikt/familie-endringslogg": "^2.0.0",
     "@navikt/k9-react-components": "^0.1.19",
     "@sentry/browser": "^6.16.1",
     "@storybook/testing-react": "^1.2.3",
