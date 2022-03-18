@@ -210,7 +210,7 @@ server {
   }
 
   location  "/k9/endringslogg/" {
-    proxy_set_header Host	$http_host;
+    proxy_ssl_server_name on;
     proxy_pass "${ENDRINGSLOGG_URL}";
     proxy_intercept_errors on;
     error_page 401 = @401_json;
