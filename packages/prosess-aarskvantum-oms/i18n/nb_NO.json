@@ -60,8 +60,6 @@
   "Uttaksplan.DelvisFravær": "Delvis fravær ({timer}t)",
   "Uttaksplan.DelvisFraværMedDager": "Delvis fravær ({dager}d {timer}t)",
   "Uttaksplan.FulltFravær": "Fullt fravær ({dager}d)",
-  "Uttaksplan.Arbeidsgiver": "Arbeidsgiver",
-  "Uttaksplan.Søker": "Søker",
   "Uttaksplan.IngenUttaksplaner": "Fant ingen uttaksplaner",
   "INNVILGET_ORDINÆR": "Ordinært",
   "INNVILGET_DOKUMENTERT": "Dokumentert",
