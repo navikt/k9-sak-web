@@ -1,7 +1,7 @@
 // eslint-disable max-len
 export const beregningsgrunnlag = [
     {
-      "avklaringsbehov": [{"definisjon": { "kode" : '5058' }, "status": { "kode": 'OPPR'}}],
+      "avklaringsbehov": [{"definisjon": { "kode" : '5058' }, "status": { "kode": 'OPPR'}, "kanLoses": true}],
       "skjaeringstidspunktBeregning": "2020-03-01",
       "skjæringstidspunkt": "2020-03-01",
       "aktivitetStatus": [
