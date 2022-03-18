@@ -1,6 +1,7 @@
 import React, { useState, useCallback, useEffect, useRef, RefObject } from 'react';
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 import { BoxedListWithLinks, Header, Popover, SystemButton, UserPanel } from '@navikt/k9-react-components';
+import Endringslogg from '@navikt/familie-endringslogg';
 
 import { AINNTEKT_URL, AAREG_URL, RETTSKILDE_URL, SYSTEMRUTINE_URL } from '@k9-sak-web/konstanter';
 
@@ -61,6 +62,7 @@ const getHeaderTitleHref = getPathToFplos => {
 
 interface OwnProps {
   navAnsattName?: string;
+  navBrukernavn?: string;
   removeErrorMessage: () => void;
   errorMessages?: Feilmelding[];
   setSiteHeight: (height: number) => void;
@@ -99,6 +101,7 @@ const lenkerFormatertForBoxedList = [
  */
 const HeaderWithErrorPanel = ({
   navAnsattName = '',
+  navBrukernavn,
   removeErrorMessage,
   errorMessages = [],
   setSiteHeight,
@@ -148,6 +151,18 @@ const HeaderWithErrorPanel = ({
             title={intl.formatMessage({ id: 'HeaderWithErrorPanel.Ytelse' })}
             titleHref={getHeaderTitleHref(getPathToFplos)}
           >
+            {navBrukernavn && (
+              <div className={styles['endringslogg-container']}>
+                <Endringslogg
+                  userId={navBrukernavn}
+                  appId="K9_SAK"
+                  appName="k9-sak-web"
+                  backendUrl={process.env.ENDRINGSLOGG_URL}
+                  stil="lys"
+                  alignLeft
+                />
+              </div>
+            )}
             <Popover
               popperIsVisible={erLenkepanelApent}
               renderArrowElement
