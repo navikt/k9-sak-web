@@ -151,13 +151,18 @@ const HeaderWithErrorPanel = ({
             title={intl.formatMessage({ id: 'HeaderWithErrorPanel.Ytelse' })}
             titleHref={getHeaderTitleHref(getPathToFplos)}
           >
+            {/*
+            Går mot en backend som foreldrepenger styrer.
+            https://github.com/navikt/familie-endringslogg
+            For å nå backend lokalt må man være tilkoblet naisdevice og kjøre opp k9-sak-web på port 8000 pga CORS
+            */}
             {navBrukernavn && (
               <div className={styles['endringslogg-container']}>
                 <Endringslogg
                   userId={navBrukernavn}
                   appId="K9_SAK"
-                  appName="k9-sak-web"
-                  backendUrl={process.env.ENDRINGSLOGG_URL}
+                  appName="K9 Sak"
+                  backendUrl="/k9/endringslogg/"
                   stil="lys"
                   alignLeft
                 />

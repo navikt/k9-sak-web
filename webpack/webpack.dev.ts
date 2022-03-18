@@ -30,7 +30,6 @@ export default {
     new ReactRefreshWebpackPlugin(),
     new webpack.EnvironmentPlugin({
       MSW_MODE: 'development',
-      ENDRINGSLOGG_URL: ' https://familie-endringslogg.dev.intern.nav.no',
     }),
   ],
   optimization: {
