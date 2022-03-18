@@ -25,6 +25,7 @@ export type Fagsak = Readonly<{
   kanRevurderingOpprettes: boolean;
   skalBehandlesAvInfotrygd: boolean;
   dekningsgrad: number;
+  erPbSak?: boolean;
 }>;
 
 export default Fagsak;

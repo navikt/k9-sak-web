@@ -1,12 +1,13 @@
 import React from 'react';
-import { FormattedMessage, injectIntl } from 'react-intl';
-import PropTypes from 'prop-types';
+import { FormattedMessage, injectIntl, IntlShape } from 'react-intl';
 import { Column, Row } from 'nav-frontend-grid';
 import { Heading } from '@navikt/ds-react';
+import { FormikProps, FormikValues } from 'formik';
 
 import { hasValidText, maxLength, minLength, required } from '@fpsak-frontend/utils';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
-import TextAreaFormik from '../../../form/src/TextAreaFormik';
+import TextAreaFormik from '@fpsak-frontend/form/src/TextAreaFormik';
+import InkluderKalenderCheckbox from './InkluderKalenderCheckbox';
 
 import styles from './vedtakForm.less';
 import PreviewLink from './PreviewLink';
@@ -15,7 +16,15 @@ const maxLength200 = maxLength(200);
 const maxLength100000 = maxLength(100000);
 const minLength3 = minLength(3);
 
-const FritekstBrevPanel = ({ previewBrev, readOnly, harAutomatiskVedtaksbrev, intl }) => {
+interface OwnProps {
+  previewBrev: () => void;
+  readOnly: boolean;
+  harAutomatiskVedtaksbrev: boolean;
+  intl: IntlShape;
+  formikProps: FormikProps<FormikValues>;
+}
+
+const FritekstBrevPanel = ({ previewBrev, readOnly, harAutomatiskVedtaksbrev, intl, formikProps }: OwnProps) => {
   const { formatMessage } = intl;
   return (
     <>
@@ -38,7 +47,7 @@ const FritekstBrevPanel = ({ previewBrev, readOnly, harAutomatiskVedtaksbrev, in
       {!harAutomatiskVedtaksbrev && <VerticalSpacer sixteenPx />}
       <Row>
         <Column xs="12">
-          <Heading size="small" level={2}>
+          <Heading size="small" level="2">
             <FormattedMessage id="VedtakForm.Brev" />
           </Heading>
         </Column>
@@ -50,7 +59,6 @@ const FritekstBrevPanel = ({ previewBrev, readOnly, harAutomatiskVedtaksbrev, in
             label={formatMessage({ id: 'VedtakForm.Overskrift' })}
             validate={[required, minLength3, maxLength200, hasValidText]}
             maxLength={200}
-            maxRows={1}
             readOnly={readOnly}
           />
         </Column>
@@ -67,15 +75,18 @@ const FritekstBrevPanel = ({ previewBrev, readOnly, harAutomatiskVedtaksbrev, in
           />
         </Column>
       </Row>
+      <Row>
+        <Column xs="12">
+          <InkluderKalenderCheckbox
+            intl={intl}
+            setFieldValue={formikProps.setFieldValue}
+            skalBrukeOverstyrendeFritekstBrev={formikProps.values.skalBrukeOverstyrendeFritekstBrev}
+            disabled={readOnly}
+          />
+        </Column>
+      </Row>
     </>
   );
-};
-
-FritekstBrevPanel.propTypes = {
-  readOnly: PropTypes.bool.isRequired,
-  previewBrev: PropTypes.func.isRequired,
-  harAutomatiskVedtaksbrev: PropTypes.bool.isRequired,
-  intl: PropTypes.shape(),
 };
 
 FritekstBrevPanel.defaultProps = {};

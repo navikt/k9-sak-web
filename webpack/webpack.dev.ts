@@ -25,7 +25,14 @@ export default {
   resolve,
   externals,
   cache,
-  plugins: [...plugins, new ReactRefreshWebpackPlugin(), new webpack.EnvironmentPlugin({ MSW_MODE: 'development' })],
+  plugins: [
+    ...plugins,
+    new ReactRefreshWebpackPlugin(),
+    new webpack.EnvironmentPlugin({
+      MSW_MODE: 'development',
+      ENDRINGSLOGG_URL: ' https://familie-endringslogg.dev.intern.nav.no',
+    }),
+  ],
   optimization: {
     moduleIds: 'named',
     splitChunks: {

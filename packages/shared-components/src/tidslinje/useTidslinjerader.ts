@@ -101,9 +101,15 @@ export const useTidslinjerader = (
     [rader, startDato, sluttDato],
   );
 
-const tidligsteDato = (tidligst: Date, periode: Periode) => (periode.fom < tidligst ? periode.fom : tidligst);
+const tidligsteDato = (tidligst: Date, periode: Periode) => periode.fom < tidligst ? periode.fom : tidligst;
+const senesteDato = (senest: Date, periode: Periode) => periode.tom > senest ? periode.tom : senest;
 
 const tidligsteFomDato = (rader: Periode[][]) => rader.flat().reduce(tidligsteDato, new Date());
 
+const senesteTomDato = (rader: Periode[][]) => rader.flat().reduce(senesteDato, null);
+
 export const useTidligsteDato = ({ startDato, rader }: TidslinjeProps) =>
   startDato ? dayjs(startDato) : dayjs(tidligsteFomDato(rader.map(rad => rad.perioder)));
+
+export const useSenesteDato = ({ sluttDato, rader }: TidslinjeProps) =>
+  sluttDato ? dayjs(sluttDato) : dayjs(senesteTomDato(rader.map(rad => rad.perioder)));

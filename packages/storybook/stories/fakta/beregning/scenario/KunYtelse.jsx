@@ -92,7 +92,7 @@ export const beregningsgrunnlag = [
     vilkårsperiodeFom: '2020-05-18',
   },
   {
-    avklaringsbehov: [{definisjon: { kode : '5058' }, status: { kode: 'OPPR'}}],
+    avklaringsbehov: [{definisjon: { kode : '5058' }, status: { kode: 'OPPR'}, kanLoses: true}],
     skjaeringstidspunktBeregning: '2020-06-04',
     skjæringstidspunkt: '2020-06-04',
     aktivitetStatus: [{ kode: 'KUN_YTELSE', kodeverk: 'AKTIVITET_STATUS' }],
