@@ -24,6 +24,7 @@ function lagDokumentdata(aksjonspunktModell) {
       [dokumentdatatype.FRITEKSTBREV]: {
         brødtekst: aksjonspunktModell.fritekstbrev?.brødtekst,
         overskrift: aksjonspunktModell.fritekstbrev?.overskrift,
+        inkluderKalender: aksjonspunktModell.fritekstbrev?.inkluderKalender,
       },
       ...(aksjonspunktModell.overstyrtMottaker
         ? { [dokumentdatatype.OVERSTYRT_MOTTAKER]: aksjonspunktModell.overstyrtMottaker }

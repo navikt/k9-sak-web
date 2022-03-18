@@ -12,6 +12,10 @@ dayjs.locale('nb');
 const formatertDag = (dato: Dayjs): string => dato.format('DD.MM');
 
 const formatertMåned = (dato: Dayjs): string => {
+  if (dato.month() === 0) {
+    const månedLabel = dato.format('MMM YYYY').replace('.', '');
+    return månedLabel[0].toUpperCase().concat(månedLabel.slice(1, 8));
+  }
   const månedLabel = dato.format('MMM');
   return månedLabel[0].toUpperCase().concat(månedLabel.slice(1, 3));
 };

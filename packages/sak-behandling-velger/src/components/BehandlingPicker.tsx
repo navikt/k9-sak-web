@@ -127,7 +127,7 @@ const BehandlingPicker = ({
   const [activeFilters, setActiveFilters] = useState([]);
 
   useEffect(() => {
-    if (!previousBehandlingId && behandlingId) {
+    if (previousBehandlingId !== behandlingId) {
       setValgtBehandlingId(behandlingId);
     }
   }, [behandlingId]);

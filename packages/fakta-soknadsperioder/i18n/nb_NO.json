@@ -5,11 +5,12 @@
   "Soknadsperioder.Rad.EndringerFraSøker": "Endringer fra søker",
   "Soknadsperioder.Rad.EndringerPgaAnnenPart": "Endringer pga. annen part",
   "Soknadsperioder.Rad.NyInntektsmelding": "Ny inntektsmelding",
-  "Soknadsperioder.Rad.BerørtPeriode": "Berørt periode",
+  "Soknadsperioder.Rad.TilstøtendePeriode": "Tilstøtende periode",
   "Soknadsperioder.Rad.TrukketKrav": "Trukket krav",
   "Soknadsperioder.Rad.GRegulering": "G-regulering",
   "Soknadsperioder.Rad.ManuellRevurdering": "Manuell revurdering",
   "Soknadsperioder.Skala.SkalaForVisning": "Velg skala for visning",
+  "Soknadsperioder.Skala.3mnd": "3 mnd",
   "Soknadsperioder.Skala.6mnd": "6 mnd",
   "Soknadsperioder.Skala.1år": "1 år",
   "Soknadsperioder.Skala.3år": "3 år",
@@ -17,5 +18,7 @@
   "Soknadsperioder.Status.AvslåttPeriode": "Avslått periode",
   "Soknadsperioder.Status.TilBehandling": "Til behandling",
   "Soknadsperioder.SøknadMedDato": "Søknad {dato}",
-  "Soknadsperioder.Søknadsperioder": "Søknadsperioder"
+  "Soknadsperioder.Søknadsperioder": "Søknadsperioder",
+  "Soknadsperioder.Zoom.Forstørre": "Forstørre",
+  "Soknadsperioder.Zoom.Forminske": "Forminske"
 }
