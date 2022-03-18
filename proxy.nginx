@@ -209,7 +209,7 @@ server {
     error_page 504 = @504_json;
   }
 
-  location  "/k9/endringslogg/ {
+  location  "/k9/endringslogg/" {
     proxy_set_header Host	$http_host;
     proxy_pass "${ENDRINGSLOGG_URL}";
     proxy_intercept_errors on;
