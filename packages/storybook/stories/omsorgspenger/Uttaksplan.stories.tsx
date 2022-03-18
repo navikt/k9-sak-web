@@ -15,7 +15,6 @@ import {
 import { Rammevedtak, RammevedtakEnum } from '@k9-sak-web/types/src/omsorgspenger/Rammevedtak';
 import Aktivitet from '@k9-sak-web/prosess-aarskvantum-oms/src/dto/Aktivitet';
 import { FraværÅrsakEnum } from '@k9-sak-web/types/src/omsorgspenger/Uttaksperiode';
-import AvvikIMType from "@k9-sak-web/prosess-aarskvantum-oms/src/dto/AvvikIMType";
 import ÅrskvantumForbrukteDager from '../../../prosess-aarskvantum-oms/src/dto/ÅrskvantumForbrukteDager';
 import alleKodeverk from '../mocks/alleKodeverk.json';
 import withReduxProvider from '../../decorators/withRedux';
@@ -68,7 +67,6 @@ const innvilgetPeriodeMedAvvik: Uttaksperiode = {
   periode: '2020-04-01/2020-04-19',
   utbetalingsgrad: 100,
   hjemler: ['FTRL_9_5__1', 'FTRL_9_5__3', 'FTRL_9_3__1', 'FTRL_9_6__1'],
-  avvikImSøknad: AvvikIMType.SØKNAD_UTEN_MATCHENDE_IM
 };
 
 const nullFravær: Uttaksperiode = {

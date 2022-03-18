@@ -17,7 +17,6 @@ import styles from './aktivitetTabell.less';
 import NøkkeltallContainer, { Nokkeltalltype } from './nokkeltall/NokkeltallContainer';
 import Utfall from './Utfall';
 import { durationTilTimerMed7ogEnHalvTimesDagsbasis } from './utils';
-import AvvikIMType from '../dto/AvvikIMType';
 
 interface AktivitetTabellProps {
   behandlingUuid: string;
@@ -141,14 +140,7 @@ const AktivitetTabell = ({
   const skalÅrsakVises =
     uttaksperioder.find(periode => periode.fraværÅrsak !== FraværÅrsakEnum.UDEFINERT) !== undefined;
 
-  const skalAvvikVises =
-    uttaksperioder.find(uttaksperiode => uttaksperiode.avvikImSøknad &&
-      (uttaksperiode.avvikImSøknad === AvvikIMType.SØKNAD_UTEN_MATCHENDE_IM || uttaksperiode.avvikImSøknad === AvvikIMType.IM_REFUSJONSKRAV_TRUMFER_SØKNAD),
-    ) !== undefined;
-
-  let antallKolonner = 5;
-  if(skalÅrsakVises){ antallKolonner += 1; }
-  if(skalAvvikVises){ antallKolonner += 1; }
+  const antallKolonner = skalÅrsakVises ? 6 : 5;
 
   enum Fanenavn {
     VILKAR,
@@ -178,11 +170,6 @@ const AktivitetTabell = ({
                 <FormattedMessage id="Uttaksplan.Årsak" />
               </th>
             )}
-            {skalAvvikVises && (
-              <th>
-                <FormattedMessage id="Uttaksplan.Til" />
-              </th>
-            )}
             <th>
               <FormattedMessage id="Uttaksplan.Utbetalingsgrad" />
             </th>
@@ -205,7 +192,6 @@ const AktivitetTabell = ({
               hjemler,
               nøkkeltall,
               fraværÅrsak,
-              avvikImSøknad
             },
             index,
           ) => {
@@ -310,14 +296,6 @@ const AktivitetTabell = ({
                   </td>
                   <td>{formaterFravær(periode, delvisFravær)}</td>
                   {skalÅrsakVises && <td>{formaterFraværsårsak(fraværÅrsak)}</td>}
-                  {skalAvvikVises && <td>
-                    {avvikImSøknad
-                    && avvikImSøknad.length > 0
-                    && (avvikImSøknad === AvvikIMType.SØKNAD_UTEN_MATCHENDE_IM || avvikImSøknad === AvvikIMType.IM_REFUSJONSKRAV_TRUMFER_SØKNAD)
-                      ? <FormattedMessage id="Uttaksplan.Arbeidsgiver"/>
-                      : <FormattedMessage id="Uttaksplan.Søker"/>
-                    }
-                  </td>}
                   <td>{`${utbetalingsgrad}%`}</td>
                   <td>
                     <button className={styles.utvidelsesknapp} onClick={() => velgPeriode(index)} type="button">
