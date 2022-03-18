@@ -19,7 +19,7 @@ export type Adresser = { [key in OpplysningAdresseType]?: string };
 
 const getAddresses = (addresses: PersonopplysningAdresse[] = []): Adresser =>
   addresses.reduce<Adresser>((acc, address) => {
-    if (!address.adresseType || address.adresseType.kode === OpplysningAdresseType.UKJENT) {
+    if (!address.adresseType || address.adresseType === OpplysningAdresseType.UKJENT) {
       return {
         ...acc,
         [OpplysningAdresseType.BOSTEDSADRESSE]: 'UKJENT',
@@ -36,7 +36,7 @@ const getAddresses = (addresses: PersonopplysningAdresse[] = []): Adresser =>
     const country = address.land !== landkoder.NORGE ? address.land : undefined;
     return {
       ...acc,
-      [address.adresseType.kode]: constructAddress(
+      [address.adresseType]: constructAddress(
         currentAddress,
         address.postNummer,
         address.poststed,

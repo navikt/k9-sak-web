@@ -66,28 +66,28 @@ export const BostedSokerView = ({
         {getPersonstatus(personopplysninger) && (
           <div className={styles.etikettMargin}>
             <Etikettfokus
-              className={getPersonstatus(personopplysninger).kode === personstatusType.DOD ? styles.dodEtikett : ''}
+              className={getPersonstatus(personopplysninger) === personstatusType.DOD ? styles.dodEtikett : ''}
               type="fokus"
               typo="undertekst"
               title={intl.formatMessage({ id: 'Personstatus.Hjelpetekst' })}
             >
-              {getPersonstatus(personopplysninger).kode === personstatusType.UDEFINERT
+              {getPersonstatus(personopplysninger) === personstatusType.UDEFINERT
                 ? intl.formatMessage({ id: 'Personstatus.Ukjent' })
-                : personstatusTypes.find(s => s.kode === getPersonstatus(personopplysninger).kode).navn}
+                : personstatusTypes.find(s => s.kode === getPersonstatus(personopplysninger)).navn}
             </Etikettfokus>
           </div>
         )}
         {personopplysninger.sivilstand && (
           <div className={styles.etikettMargin}>
             <Etikettfokus type="fokus" typo="undertekst" title={intl.formatMessage({ id: 'Sivilstand.Hjelpetekst' })}>
-              {sivilstandTypes.find(s => s.kode === personopplysninger.sivilstand.kode).navn}
+              {sivilstandTypes.find(s => s.kode === personopplysninger.sivilstand).navn}
             </Etikettfokus>
           </div>
         )}
-        {personopplysninger.region && personopplysninger.region.kode !== Region.UDEFINERT && (
+        {personopplysninger.region && personopplysninger.region !== Region.UDEFINERT && (
           <div className={styles.etikettMargin}>
             <Etikettfokus type="fokus" typo="undertekst" title={intl.formatMessage({ id: 'BostedSokerView.Region' })}>
-              {regionTypes.find(r => r.kode === personopplysninger.region.kode).navn}
+              {regionTypes.find(r => r.kode === personopplysninger.region).navn}
             </Etikettfokus>
           </div>
         )}

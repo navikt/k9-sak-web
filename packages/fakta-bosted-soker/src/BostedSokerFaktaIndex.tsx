@@ -21,7 +21,7 @@ export type BostedSokerPersonopplysninger = {
   navn: string;
   adresser: [
     {
-      adresseType: KodeverkMedNavn;
+      adresseType: string;
       adresselinje1: string;
       adresselinje2?: string;
       adresselinje3?: string;
@@ -30,11 +30,11 @@ export type BostedSokerPersonopplysninger = {
       land?: string;
     },
   ];
-  sivilstand: KodeverkMedNavn;
-  region: KodeverkMedNavn;
-  personstatus: KodeverkMedNavn;
+  sivilstand: string;
+  region: string;
+  personstatus: string;
   avklartPersonstatus: {
-    overstyrtPersonstatus: KodeverkMedNavn;
+    overstyrtPersonstatus: string;
   };
 };
 
