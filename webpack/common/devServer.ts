@@ -128,5 +128,11 @@ export default {
       changeOrigin: true,
       pathRewrite: { '^/k9/microfrontend/psb-inntektsmelding': '' },
     },
+    '/k9/endringslogg/**': {
+      target: process.env.ENDRINGSLOGG_URL ,
+      secure: false,
+      changeOrigin: true,
+      pathRewrite: { '^/k9/endringslogg': '' },
+    },
   },
 };
