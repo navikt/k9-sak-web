@@ -1,16 +1,8 @@
 import hide from '@fpsak-frontend/assets/images/hide.svg';
 import show from '@fpsak-frontend/assets/images/show.svg';
 import { Image, Table, TableRow } from '@fpsak-frontend/shared-components/index';
-import { calcDays, convertHoursToDays, utledArbeidsforholdNavn } from '@fpsak-frontend/utils';
-import {
-  ArbeidsforholdV2,
-  ArbeidsgiverOpplysningerPerId,
-  KodeverkMedNavn,
-  Utfalltype,
-  Uttaksperiode,
-  Vilkår,
-  VilkårEnum,
-} from '@k9-sak-web/types';
+import { calcDays, convertHoursToDays, formatereLukketPeriode, utledArbeidsforholdNavn } from '@fpsak-frontend/utils';
+import { ArbeidsforholdV2, ArbeidsgiverOpplysningerPerId, KodeverkMedNavn, Utfalltype, Uttaksperiode, Vilkår, VilkårEnum } from '@k9-sak-web/types';
 import NavFrontendChevron from 'nav-frontend-chevron';
 import Hjelpetekst from 'nav-frontend-hjelpetekst';
 import Panel from 'nav-frontend-paneler';
@@ -24,7 +16,7 @@ import stjerneImg from '@fpsak-frontend/assets/images/stjerne.svg';
 import styles from './aktivitetTabell.less';
 import NøkkeltallContainer, { Nokkeltalltype } from './nokkeltall/NokkeltallContainer';
 import Utfall from './Utfall';
-import { durationTilTimerMed7ogEnHalvTimesDagsbasis, formatDate } from './utils';
+import { durationTilTimerMed7ogEnHalvTimesDagsbasis } from './utils';
 
 interface AktivitetTabellProps {
   behandlingUuid: string;
@@ -34,11 +26,6 @@ interface AktivitetTabellProps {
   uttaksperioder: Uttaksperiode[];
   aktivitetsstatuser: KodeverkMedNavn[];
 }
-
-const periodevisning = (periode: string): string => {
-  const [fom, tom] = periode.split('/');
-  return `${formatDate(fom)} - ${formatDate(tom)}`;
-};
 
 export const antallDager = (periode: string): string => {
   const [fom, tom] = periode.split('/');
@@ -298,7 +285,7 @@ const AktivitetTabell = ({
                           tooltip={<FormattedMessage id="Uttaksplan.GjeldendeBehandling" />}
                         />
                       )}
-                      {periodevisning(periode)}
+                      {formatereLukketPeriode(periode)}
                     </Normaltekst>
                   </td>
                   <td>
