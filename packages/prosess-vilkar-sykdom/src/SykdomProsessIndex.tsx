@@ -66,7 +66,7 @@ const SykdomProsessIndex = ({ perioder, panelTittelKode }: SykdomProsessIndexPro
   if(panelTittelKode === 'Behandlingspunkt.LivetsSluttfase'){
     lovReferanse = '§ 9-13'
   }
-  
+
   return (
     <RawIntlProvider value={intl}>
       <div className={mainContainerClassnames}>
@@ -74,7 +74,7 @@ const SykdomProsessIndex = ({ perioder, panelTittelKode }: SykdomProsessIndexPro
           <div className={styles.sideMenuContainer}>
             <SideMenu
               links={perioder.map((currentPeriode, currentPeriodeIndex) => ({
-                active: perioder.indexOf(activePeriode) === currentPeriodeIndex,
+                active: perioder.findIndex((p) => JSON.stringify(p) === JSON.stringify(activePeriode)) === currentPeriodeIndex,
                 label: `${dateFormat(perioder[currentPeriodeIndex].periode.fom)} - ${dateFormat(
                   perioder[currentPeriodeIndex].periode.tom,
                 )}`,
