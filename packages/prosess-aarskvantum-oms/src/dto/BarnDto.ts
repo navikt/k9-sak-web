@@ -9,6 +9,7 @@ interface BarnDto {
   fødselsdato?: string;
   dødsdato?: string;
   harSammeBosted: boolean;
+  deltBostedPerioder?: string[];
   barnType: BarnType;
 }
 
