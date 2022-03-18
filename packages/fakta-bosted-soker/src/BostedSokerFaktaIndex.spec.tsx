@@ -15,16 +15,8 @@ describe('<BostedSokerFaktaIndex>', () => {
         personopplysninger={
           {
             navn: 'Espen Utvikler',
-            adresser: [
-              {
-                adresseType: {
-                  kode: opplysningAdresseType.BOSTEDSADRESSE,
-                },
-              },
-            ],
-            personstatus: {
-              kode: personstatusType.BOSATT,
-            },
+            adresser: [{ adresseType: opplysningAdresseType.BOSTEDSADRESSE },],
+            personstatus: personstatusType.BOSATT,
           } as BostedSokerPersonopplysninger
         }
         alleKodeverk={{}}
