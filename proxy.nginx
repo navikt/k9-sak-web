@@ -1,6 +1,7 @@
 # Trenger ikke accesslogger på NAIS siden dette er innebygd i platformen
 access_log off;
 error_log /dev/stdout info;
+error_log /var/log/nginx/error.log info;
 charset utf-8;
 
 client_body_buffer_size 20M; # Default er satt veldig lavt. Får problemer med enkelte dokument queries.
@@ -210,7 +211,7 @@ server {
   }
 
   location  "/k9/endringslogg/" {
-    proxy_set_header Host	$http_host;
+    proxy_ssl_server_name on;
     proxy_pass "${ENDRINGSLOGG_URL}";
     proxy_intercept_errors on;
     error_page 401 = @401_json;
