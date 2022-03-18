@@ -57,18 +57,6 @@ const innvilgetPeriode: Uttaksperiode = {
   hjemler: ['FTRL_9_5__1', 'FTRL_9_5__3', 'FTRL_9_3__1', 'FTRL_9_6__1'],
 };
 
-const innvilgetPeriodeMedAvvik: Uttaksperiode = {
-  utfall: UtfallEnum.INNVILGET,
-  fraværÅrsak: FraværÅrsakEnum.ORDINÆRT_FRAVÆR,
-  vurderteVilkår: {
-    vilkår: vilkårInnvilget,
-  },
-  delvisFravær: 'P2DT4H30M',
-  periode: '2020-04-01/2020-04-19',
-  utbetalingsgrad: 100,
-  hjemler: ['FTRL_9_5__1', 'FTRL_9_5__3', 'FTRL_9_3__1', 'FTRL_9_6__1'],
-};
-
 const nullFravær: Uttaksperiode = {
   utfall: UtfallEnum.INNVILGET,
   fraværÅrsak: FraværÅrsakEnum.ORDINÆRT_FRAVÆR,
@@ -158,7 +146,7 @@ const behandling = {
   versjon: 1,
 } as Behandling;
 
-const aksjonspunkterForSteg = [] as Aksjonspunkt[];
+const aksjonspunkterForSteg = [{}] as Aksjonspunkt[];
 
 const arbeidsforhold = [
   {
@@ -215,20 +203,6 @@ export const behandletAksjonspunkt = () => (
     isAksjonspunktOpen={false}
     submitCallback={action('bekreft')}
     aksjonspunkterForSteg={[{ begrunnelse: 'fordi' }] as Aksjonspunkt[]}
-    arbeidsforhold={arbeidsforhold}
-    fullUttaksplan={{ aktiviteter: [] }}
-    arbeidsgiverOpplysningerPerId={arbeidsgivere}
-  />
-);
-
-export const uttakMedAvvik = () => (
-  <ÅrskvantumIndex
-    årskvantum={årskvantumMedPerioder([innvilgetPeriodeMedAvvik, avslåttPeriode])}
-    alleKodeverk={alleKodeverk as any}
-    behandling={behandling}
-    isAksjonspunktOpen
-    submitCallback={action('bekreft')}
-    aksjonspunkterForSteg={aksjonspunkterForSteg}
     arbeidsforhold={arbeidsforhold}
     fullUttaksplan={{ aktiviteter: [] }}
     arbeidsgiverOpplysningerPerId={arbeidsgivere}
