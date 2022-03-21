@@ -7,7 +7,7 @@ import { formPropTypes, FieldArray } from 'redux-form';
 import { AksjonspunktHelpTextTemp, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { isAvklaringsbehovOpen } from '@fpsak-frontend/kodeverk/src/beregningAvklaringsbehovStatus';
 import { behandlingForm } from '@fpsak-frontend/form';
-import avklaringsbehovCodes, { harAvklaringsbehov } from '@fpsak-frontend/kodeverk/src/beregningAvklaringsbehovCodes';
+import avklaringsbehovCodes, { harAvklaringsbehov, harAvklaringsbehovSomKanLøses } from '@fpsak-frontend/kodeverk/src/beregningAvklaringsbehovCodes';
 import { FaktaBegrunnelseTextField, FaktaSubmitButton } from '@k9-sak-web/fakta-felles';
 
 import FaktaForATFLOgSNPanel, {
@@ -83,7 +83,7 @@ const harTilfeller = beregningsgrunnlag =>
   beregningsgrunnlag.faktaOmBeregning.faktaOmBeregningTilfeller.length > 0;
 
 const måVurderes = (avklaringsbehov, erTilVurdering) =>
-!!avklaringsbehov && harAvklaringsbehov(VURDER_FAKTA_FOR_ATFL_SN, avklaringsbehov) && erTilVurdering;
+!!avklaringsbehov && harAvklaringsbehovSomKanLøses(VURDER_FAKTA_FOR_ATFL_SN, avklaringsbehov) && erTilVurdering;
 
 
 const fieldArrayName = 'vurderFaktaListe';

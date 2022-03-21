@@ -1,7 +1,7 @@
 // eslint-disable-next-line max-len
 export const beregningsgrunnlag = [
   {
-    avklaringsbehov: [{definisjon: { kode : '5058' }, status: { kode: 'UTFO'}}],
+    avklaringsbehov: [{definisjon: { kode : '5058' }, status: { kode: 'UTFO'}, kanLoses: true}],
     skjaeringstidspunktBeregning: '2020-03-04',
     skjæringstidspunkt: '2020-03-04',
     aktivitetStatus: [{ kode: 'KUN_YTELSE', kodeverk: 'AKTIVITET_STATUS' }],

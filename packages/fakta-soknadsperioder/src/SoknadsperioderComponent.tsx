@@ -1,76 +1,90 @@
 import { Tidslinje } from '@fpsak-frontend/shared-components';
-import { useTidligsteDato } from '@fpsak-frontend/shared-components/src/tidslinje/useTidslinjerader';
+import HorisontalNavigering from '@fpsak-frontend/shared-components/src/tidslinje/HorisontalNavigering';
+import { useSenesteDato } from '@fpsak-frontend/shared-components/src/tidslinje/useTidslinjerader';
+import { KodeverkMedNavn } from '@k9-sak-web/types';
 import BehandlingPerioderårsakMedVilkår, {
   DokumenterTilBehandling,
-} from '@k9-sak-web/types/src/behandlingPerioderårsakMedVilkår';
+} from '@k9-sak-web/types/src/behandlingPerioderarsakMedVilkar';
 import { PeriodStatus, Tidslinjeskala } from '@k9-sak-web/types/src/tidslinje';
 import { dateStringSorter } from '@navikt/k9-date-utils';
-import dayjs from 'dayjs';
+import dayjs, { Dayjs } from 'dayjs';
 import { Normaltekst } from 'nav-frontend-typografi';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useIntl } from 'react-intl';
+import { Period } from '@navikt/k9-period-utils';
 import CheckIcon from './icons/CheckIcon';
 import RejectedIcon from './icons/RejectedIcon';
 import SaksbehandlerIcon from './icons/SaksbehandlerIcon';
+import ZoomInIcon from './icons/ZoomInIcon';
+import ZoomOutIcon from './icons/ZoomOutIcon';
 import styles from './soknadsperioderComponent.less';
 import Periode from './types/Periode';
 
+const sortertePerioderPåFomDato = (behandlingPerioderårsakMedVilkår: BehandlingPerioderårsakMedVilkår) =>
+  [...behandlingPerioderårsakMedVilkår.perioderMedÅrsak.perioderMedÅrsak].sort((a, b) =>
+    dateStringSorter(a.periode.fom, b.periode.fom),
+  );
+
+const getPerioderMedÅrsak = (årsak: string, behandlingPerioderårsakMedVilkår: BehandlingPerioderårsakMedVilkår) =>
+  sortertePerioderPåFomDato(behandlingPerioderårsakMedVilkår)
+    .filter(periode => periode.årsaker.includes(årsak))
+    .map(periode => ({ periode: periode.periode }));
+
+const harPeriodeoverlapp = (relevantePerioder, periodeFraDokument) =>
+  relevantePerioder.some(relevantPeriode =>
+    new Period(relevantPeriode.periode.fom, relevantPeriode.periode.tom).covers(
+      new Period(periodeFraDokument.periode.fom, periodeFraDokument.periode.tom),
+    ),
+  );
+
+const lagPerioderFraDokumenter = (
+  dokumenterTilBehandling: DokumenterTilBehandling[],
+  relevantePerioder: {
+    periode: Periode;
+  }[],
+  intl,
+) =>
+  dokumenterTilBehandling
+    .filter(({ søktePerioder }) =>
+      søktePerioder.some(periodeFraDokument => harPeriodeoverlapp(relevantePerioder, periodeFraDokument)),
+    )
+    .map(({ innsendingsTidspunkt, søktePerioder }) => ({
+      perioder: søktePerioder
+        .filter(periodeFraDokument => harPeriodeoverlapp(relevantePerioder, periodeFraDokument))
+        .map(søktPeriode => ({
+          periode: { fom: søktPeriode.periode.fom, tom: søktPeriode.periode.tom },
+        })),
+      radLabel: intl.formatMessage(
+        {
+          id: 'Soknadsperioder.SøknadMedDato',
+        },
+        {
+          dato: dayjs(innsendingsTidspunkt).format('DD.MM.YYYY').toString(),
+        },
+      ),
+      radClassname: styles.dokumentrad,
+      emptyRowClassname: styles.grayRow,
+    }));
+
+const getExpanderbarRadStyles = (flag: boolean) =>
+  `${styles.ekspanderbarRad} ${flag ? styles['ekspanderbarRad--active'] : ''}`;
+
 interface SoknadsperioderComponentProps {
   behandlingPerioderårsakMedVilkår: BehandlingPerioderårsakMedVilkår;
+  kodeverk: KodeverkMedNavn[];
 }
 
 const SoknadsperioderComponent = (props: SoknadsperioderComponentProps) => {
-  const { behandlingPerioderårsakMedVilkår } = props;
+  const { behandlingPerioderårsakMedVilkår, kodeverk } = props;
   const [tidslinjeSkala, setTidslinjeSkala] = useState<Tidslinjeskala>(6);
   const [expandPerioderTilBehandling, setExpandPerioderTilBehandling] = useState(true);
   const [expandSøknaderOmNyPeriode, setExpandSøknaderOmNyPeriode] = useState(false);
   const [expandEndringerFraSøker, setExpandEndringerFraSøker] = useState(false);
   const [expandTrukketKrav, setExpandTrukketKrav] = useState(false);
+  const [navigasjonFomDato, setNavigasjonFomDato] = useState(undefined);
   const intl = useIntl();
-  const sortertePerioderPåFomDato = () =>
-    [...behandlingPerioderårsakMedVilkår.perioderMedÅrsak.perioderMedÅrsak].sort((a, b) =>
-      dateStringSorter(a.periode.fom, b.periode.fom),
-    );
 
-  const getPerioderMedÅrsak = (årsak: string) =>
-    sortertePerioderPåFomDato()
-      .filter(periode => periode.årsaker.includes(årsak))
-      .map(periode => ({ periode: periode.periode }));
-
-  const finnRelevantePerioderFraDokumenter = (
-    dokumenterTilBehandling: DokumenterTilBehandling[],
-    førstegangsvurderingsperioder: {
-      periode: Periode;
-    }[],
-  ) =>
-    dokumenterTilBehandling
-      .filter(({ søktePerioder }) =>
-        søktePerioder.some(søktPeriode =>
-          førstegangsvurderingsperioder.some(
-            førstegangsvurderingsperiode =>
-              førstegangsvurderingsperiode.periode.fom === søktPeriode.periode.fom &&
-              førstegangsvurderingsperiode.periode.tom === søktPeriode.periode.tom,
-          ),
-        ),
-      )
-      .map(({ innsendingsTidspunkt, søktePerioder }) => ({
-        perioder: søktePerioder.map(søktPeriode => ({
-          periode: { fom: søktPeriode.periode.fom, tom: søktPeriode.periode.tom },
-        })),
-        radLabel: intl.formatMessage(
-          {
-            id: 'Soknadsperioder.SøknadMedDato',
-          },
-          {
-            dato: dayjs(innsendingsTidspunkt).format('DD.MM.YYYY').toString(),
-          },
-        ),
-        radClassname: styles.dokumentrad,
-        emptyRowClassname: styles.grayRow,
-      }));
-
-  const getExpanderbarRadStyles = (flag: boolean) =>
-    `${styles.ekspanderbarRad} ${flag ? styles['ekspanderbarRad--active'] : ''}`;
+  const getNavnFraKodeverk = (kode: string) => kodeverk.find(kv => kv.kode === kode)?.navn;
 
   /** TODO: Hallvard: Denne bør refaktoreres */
   const getPerioderGruppertPåÅrsak = (): {
@@ -84,8 +98,9 @@ const SoknadsperioderComponent = (props: SoknadsperioderComponentProps) => {
     emptyRowClassname?: string;
     onClick?: () => void;
   }[] => {
+    const vedtakshistorikkLabel = intl.formatMessage({ id: 'Soknadsperioder.Rad.Vedtakshistorikk' });
     const vedtakshistorikk = {
-      radLabel: intl.formatMessage({ id: 'Soknadsperioder.Rad.Vedtakshistorikk' }),
+      radLabel: vedtakshistorikkLabel,
       perioder: behandlingPerioderårsakMedVilkår.forrigeVedtak.map(periode => ({
         periode: periode.periode,
         status: periode.utfall.kode === 'OPPFYLT' ? ('suksess' as PeriodStatus) : 'feil',
@@ -94,22 +109,24 @@ const SoknadsperioderComponent = (props: SoknadsperioderComponentProps) => {
       radClassname: styles.vedtakhistorikkRad,
     };
 
+    const perioderTilBehandlingLabel = intl.formatMessage({ id: 'Soknadsperioder.Rad.PerioderTilBehandling' });
     const perioderTilBehandling = {
-      radLabel: intl.formatMessage({ id: 'Soknadsperioder.Rad.PerioderTilBehandling' }),
+      radLabel: perioderTilBehandlingLabel,
       perioder: behandlingPerioderårsakMedVilkår.perioderMedÅrsak.perioderTilVurdering.map(periode => ({ periode })),
       radClassname: `${styles.perdioderTilBehandlingRad} ${getExpanderbarRadStyles(expandPerioderTilBehandling)}`,
       onClick: () => setExpandPerioderTilBehandling(!expandPerioderTilBehandling),
     };
 
-    const førstegangsvurderingsperioder = getPerioderMedÅrsak('FØRSTEGANGSVURDERING');
-    const søknaderTilhørendeFørstegangsvurderinger = finnRelevantePerioderFraDokumenter(
+    const førstegangsvurderingsperioder = getPerioderMedÅrsak('FØRSTEGANGSVURDERING', behandlingPerioderårsakMedVilkår);
+    const søknaderTilhørendeFørstegangsvurderinger = lagPerioderFraDokumenter(
       behandlingPerioderårsakMedVilkår.perioderMedÅrsak.dokumenterTilBehandling,
       førstegangsvurderingsperioder,
+      intl,
     );
     const hasSøknaderTilhørendeFørstegangsvurderinger = søknaderTilhørendeFørstegangsvurderinger.length > 0;
     const søknadOmNyPeriode = [
       {
-        radLabel: intl.formatMessage({ id: 'Soknadsperioder.Rad.SøknadOmNyPeriode' }),
+        radLabel: getNavnFraKodeverk('FØRSTEGANGSVURDERING'),
         perioder: førstegangsvurderingsperioder,
         onClick: hasSøknaderTilhørendeFørstegangsvurderinger
           ? () => setExpandSøknaderOmNyPeriode(!expandSøknaderOmNyPeriode)
@@ -121,16 +138,17 @@ const SoknadsperioderComponent = (props: SoknadsperioderComponentProps) => {
       ...søknaderTilhørendeFørstegangsvurderinger.filter(() => expandSøknaderOmNyPeriode),
     ];
 
-    const endringerFraSøkerPerioder = getPerioderMedÅrsak('ENDRING_FRA_BRUKER');
-    const søknaderTilhørendeEndringerFraSøker = finnRelevantePerioderFraDokumenter(
+    const endringerFraSøkerPerioder = getPerioderMedÅrsak('ENDRING_FRA_BRUKER', behandlingPerioderårsakMedVilkår);
+    const søknaderTilhørendeEndringerFraSøker = lagPerioderFraDokumenter(
       behandlingPerioderårsakMedVilkår.perioderMedÅrsak.dokumenterTilBehandling,
       endringerFraSøkerPerioder,
+      intl,
     );
     const hasSøknaderTilhørendeEringerFraSøker = søknaderTilhørendeEndringerFraSøker.length > 0;
 
     const endringerFraSøker = [
       {
-        radLabel: intl.formatMessage({ id: 'Soknadsperioder.Rad.EndringerFraSøker' }),
+        radLabel: getNavnFraKodeverk('ENDRING_FRA_BRUKER'),
         perioder: endringerFraSøkerPerioder,
         onClick: hasSøknaderTilhørendeEringerFraSøker
           ? () => setExpandEndringerFraSøker(!expandEndringerFraSøker)
@@ -140,31 +158,56 @@ const SoknadsperioderComponent = (props: SoknadsperioderComponentProps) => {
       ...søknaderTilhørendeEndringerFraSøker.filter(() => expandEndringerFraSøker),
     ];
 
-    const endringerPgaAnnenPart = {
-      radLabel: intl.formatMessage({ id: 'Soknadsperioder.Rad.EndringerPgaAnnenPart' }),
-      perioder: getPerioderMedÅrsak('REVURDERER_ENDRING_FRA_ANNEN_PART'),
+    const revurdererEndringerPgaAnnenPart = {
+      radLabel: getNavnFraKodeverk('REVURDERER_ENDRING_FRA_ANNEN_PART'),
+      perioder: getPerioderMedÅrsak('REVURDERER_ENDRING_FRA_ANNEN_PART', behandlingPerioderårsakMedVilkår),
+    };
+
+    const revurdererEtablertTilsynEndringFraAnnenOmsorgsperson = {
+      radLabel: getNavnFraKodeverk('REVURDERER_ETABLERT_TILSYN_ENDRING_FRA_ANNEN_OMSORGSPERSON'),
+      perioder: getPerioderMedÅrsak(
+        'REVURDERER_ETABLERT_TILSYN_ENDRING_FRA_ANNEN_OMSORGSPERSON',
+        behandlingPerioderårsakMedVilkår,
+      ),
+    };
+
+    const revurdererSykdomEndringFraAnnenOmsorgsperson = {
+      radLabel: getNavnFraKodeverk('REVURDERER_SYKDOM_ENDRING_FRA_ANNEN_OMSORGSPERSON'),
+      perioder: getPerioderMedÅrsak(
+        'REVURDERER_SYKDOM_ENDRING_FRA_ANNEN_OMSORGSPERSON',
+        behandlingPerioderårsakMedVilkår,
+      ),
+    };
+
+    const revurdererNattevåkBeredskapEndringFraAnnenOmsorgsperson = {
+      radLabel: getNavnFraKodeverk('REVURDERER_NATTEVÅKBEREDSKAP_ENDRING_FRA_ANNEN_OMSORGSPERSON'),
+      perioder: getPerioderMedÅrsak(
+        'REVURDERER_NATTEVÅKBEREDSKAP_ENDRING_FRA_ANNEN_OMSORGSPERSON',
+        behandlingPerioderårsakMedVilkår,
+      ),
     };
 
     const revurdererNyInntektsmelding = {
-      radLabel: intl.formatMessage({ id: 'Soknadsperioder.Rad.NyInntektsmelding' }),
-      perioder: getPerioderMedÅrsak('REVURDERER_NY_INNTEKTSMELDING'),
+      radLabel: getNavnFraKodeverk('REVURDERER_NY_INNTEKTSMELDING'),
+      perioder: getPerioderMedÅrsak('REVURDERER_NY_INNTEKTSMELDING', behandlingPerioderårsakMedVilkår),
     };
 
     const revurdererBerørtPeriode = {
-      radLabel: intl.formatMessage({ id: 'Soknadsperioder.Rad.BerørtPeriode' }),
-      perioder: getPerioderMedÅrsak('REVURDERER_BERØRT_PERIODE'),
+      radLabel: getNavnFraKodeverk('REVURDERER_BERØRT_PERIODE'),
+      perioder: getPerioderMedÅrsak('REVURDERER_BERØRT_PERIODE', behandlingPerioderårsakMedVilkår),
     };
 
-    const trukketKravPerioder = getPerioderMedÅrsak('TRUKKET_KRAV');
-    const søknaderTilhørendeTrukketKrav = finnRelevantePerioderFraDokumenter(
+    const trukketKravPerioder = getPerioderMedÅrsak('TRUKKET_KRAV', behandlingPerioderårsakMedVilkår);
+    const søknaderTilhørendeTrukketKrav = lagPerioderFraDokumenter(
       behandlingPerioderårsakMedVilkår.perioderMedÅrsak.dokumenterTilBehandling,
       trukketKravPerioder,
+      intl,
     );
     const hasSøknaderTilhørendeTrukketKrav = søknaderTilhørendeTrukketKrav.length > 0;
 
     const trukketKrav = [
       {
-        radLabel: intl.formatMessage({ id: 'Soknadsperioder.Rad.TrukketKrav' }),
+        radLabel: getNavnFraKodeverk('TRUKKET_KRAV'),
         perioder: trukketKravPerioder,
         onClick: hasSøknaderTilhørendeTrukketKrav ? () => setExpandTrukketKrav(!expandTrukketKrav) : undefined,
         radClassname: hasSøknaderTilhørendeTrukketKrav ? getExpanderbarRadStyles(expandTrukketKrav) : '',
@@ -173,12 +216,12 @@ const SoknadsperioderComponent = (props: SoknadsperioderComponentProps) => {
     ];
 
     const gRegulering = {
-      radLabel: intl.formatMessage({ id: 'Soknadsperioder.Rad.GRegulering' }),
-      perioder: getPerioderMedÅrsak('G_REGULERING'),
+      radLabel: getNavnFraKodeverk('G_REGULERING'),
+      perioder: getPerioderMedÅrsak('G_REGULERING', behandlingPerioderårsakMedVilkår),
     };
     const revurdererManuellRevurdering = {
-      radLabel: intl.formatMessage({ id: 'Soknadsperioder.Rad.ManuellRevurdering' }),
-      perioder: getPerioderMedÅrsak('MANUELT_REVURDERER_PERIODE'),
+      radLabel: getNavnFraKodeverk('MANUELT_REVURDERER_PERIODE'),
+      perioder: getPerioderMedÅrsak('MANUELT_REVURDERER_PERIODE', behandlingPerioderårsakMedVilkår),
     };
 
     return [
@@ -186,14 +229,26 @@ const SoknadsperioderComponent = (props: SoknadsperioderComponentProps) => {
       perioderTilBehandling,
       ...søknadOmNyPeriode,
       ...endringerFraSøker,
-      endringerPgaAnnenPart,
+      revurdererEndringerPgaAnnenPart,
+      revurdererEtablertTilsynEndringFraAnnenOmsorgsperson,
+      revurdererSykdomEndringFraAnnenOmsorgsperson,
+      revurdererNattevåkBeredskapEndringFraAnnenOmsorgsperson,
       revurdererNyInntektsmelding,
       revurdererBerørtPeriode,
       ...trukketKrav,
       gRegulering,
       revurdererManuellRevurdering,
-    ];
+    ].filter(radGruppertPåÅrsak => {
+      if (
+        radGruppertPåÅrsak.radLabel === vedtakshistorikkLabel ||
+        radGruppertPåÅrsak.radLabel === perioderTilBehandlingLabel
+      ) {
+        return true;
+      }
+      return radGruppertPåÅrsak.perioder.length > 0;
+    });
   };
+
   const getRader = () =>
     getPerioderGruppertPåÅrsak().map(rad => ({
       onClick: rad.onClick,
@@ -209,26 +264,22 @@ const SoknadsperioderComponent = (props: SoknadsperioderComponentProps) => {
       })),
     }));
 
-  const getSkalaRadio = (label: string, value: Tidslinjeskala) => (
-    <>
-      <input
-        className={styles.skalaRadioInput}
-        id={label}
-        onChange={() => setTidslinjeSkala(value)}
-        type="radio"
-        name="skala"
-        value={value}
-      />
-      <label
-        htmlFor={label}
-        className={`${styles.skalaRadioLabel} ${tidslinjeSkala === value ? styles['skalaRadioLabel--selected'] : ''}`}
-      >
-        <Normaltekst>{label}</Normaltekst>
-      </label>
-    </>
-  );
+  const getSenesteTom = () => useSenesteDato({ sluttDato: undefined, rader: getRader() });
+  const subtractMonthsFromDate = (dateToSubtractFrom, numberOfMonthsToSubtract) =>
+    dayjs(dateToSubtractFrom).subtract(numberOfMonthsToSubtract, 'months').toDate();
 
-  const startDato = useTidligsteDato({ startDato: undefined, rader: getRader() }).startOf('month').toDate();
+  const updateNavigasjonFomDato = (antallMånederFraSluttdato: number) => {
+    const senesteTom = getSenesteTom();
+    const fomDato = subtractMonthsFromDate(senesteTom, antallMånederFraSluttdato);
+    setNavigasjonFomDato(fomDato);
+  };
+
+  useEffect(() => {
+    if (getRader().length > 0) {
+      updateNavigasjonFomDato(6);
+    }
+  }, [behandlingPerioderårsakMedVilkår]);
+
   const filtrerteRader = getRader().filter((rad, index) => {
     if ((!expandPerioderTilBehandling && index <= 1) || expandPerioderTilBehandling) {
       return true;
@@ -236,20 +287,72 @@ const SoknadsperioderComponent = (props: SoknadsperioderComponentProps) => {
     return false;
   });
 
+  const updateZoom = (zoomValue: number, zoomIn?: boolean) => {
+    if (zoomIn) {
+      const senesteTom = getSenesteTom();
+      const nyTom = dayjs(navigasjonFomDato).add(zoomValue + 1, 'months');
+      if (nyTom.isSameOrAfter(senesteTom)) {
+        setNavigasjonFomDato(subtractMonthsFromDate(senesteTom, zoomValue)); // For å forhindre at horisontal navigasjon viser forbi seneste dato fra periodene
+      } else {
+        setNavigasjonFomDato(dayjs(navigasjonFomDato).add(1, 'months'));
+      }
+    } else {
+      setNavigasjonFomDato(dayjs(navigasjonFomDato).subtract(1, 'months'));
+    }
+    setTidslinjeSkala(zoomValue);
+  };
+
+  const updateHorisontalNavigering = (nyFomDato: Dayjs) => {
+    if (nyFomDato.add(tidslinjeSkala, 'months').isSameOrAfter(getSenesteTom())) {
+      const senesteTom = getSenesteTom();
+      setNavigasjonFomDato(subtractMonthsFromDate(senesteTom, tidslinjeSkala));
+    } else {
+      setNavigasjonFomDato(nyFomDato.toDate());
+    }
+  };
+
   return (
     <div className={styles.soknadsperioder}>
       <div className={styles.flexContainer}>
         <h1 className={styles.heading}>{intl.formatMessage({ id: 'Soknadsperioder.Søknadsperioder' })}</h1>
-        <div className={styles.skalavelgerContainer}>
-          <fieldset>
-            <legend>{intl.formatMessage({ id: 'Soknadsperioder.Skala.SkalaForVisning' })}</legend>
-            {getSkalaRadio(intl.formatMessage({ id: 'Soknadsperioder.Skala.6mnd' }), 6)}
-            {getSkalaRadio(intl.formatMessage({ id: 'Soknadsperioder.Skala.1år' }), 12)}
-            {getSkalaRadio(intl.formatMessage({ id: 'Soknadsperioder.Skala.3år' }), 36)}
-          </fieldset>
+        <div className={styles.navigasjonContainer}>
+          <HorisontalNavigering
+            tidslinjeSkala={tidslinjeSkala}
+            rader={getRader()}
+            navigasjonFomDato={navigasjonFomDato}
+            updateHorisontalNavigering={updateHorisontalNavigering}
+          />
+          <div className={styles.skalavelgerContainer}>
+            <button
+              onClick={() => {
+                if (tidslinjeSkala > 1) {
+                  updateZoom(tidslinjeSkala - 1, true);
+                }
+              }}
+              type="button"
+              className={styles.zoomButton}
+              disabled={tidslinjeSkala === 1}
+            >
+              <ZoomInIcon />
+              <Normaltekst>{intl.formatMessage({ id: 'Soknadsperioder.Zoom.Forstørre' })}</Normaltekst>
+            </button>
+            <button
+              onClick={() => {
+                if (tidslinjeSkala < 36) {
+                  updateZoom(tidslinjeSkala + 1);
+                }
+              }}
+              type="button"
+              className={styles.zoomButton}
+              disabled={tidslinjeSkala === 36}
+            >
+              <ZoomOutIcon />
+              <Normaltekst>{intl.formatMessage({ id: 'Soknadsperioder.Zoom.Forminske' })}</Normaltekst>
+            </button>
+          </div>
         </div>
       </div>
-      <Tidslinje rader={filtrerteRader} tidslinjeSkala={tidslinjeSkala} startDato={startDato} />
+      <Tidslinje rader={filtrerteRader} tidslinjeSkala={tidslinjeSkala} startDato={navigasjonFomDato} />
       <div className={styles.legendContainer}>
         <Normaltekst>
           <CheckIcon />

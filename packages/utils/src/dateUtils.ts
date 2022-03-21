@@ -159,3 +159,11 @@ export const getRangeOfMonths = (fom, tom) => {
 
 export const isValidDate = date => moment(date, ISO_DATE_FORMAT).isValid();
 export const visningsdato = date => moment(date, ISO_DATE_FORMAT).format(DDMMYYYY_DATE_FORMAT);
+
+export const formatDate = (date: string): string => moment(date, ISO_DATE_FORMAT).format(DDMMYYYY_DATE_FORMAT);
+
+// Eksempel på lukket periode fra Årskvantum: 2022-02-07/2022-02-08
+export const formatereLukketPeriode = (periode: string): string => {
+  const [fom, tom] = periode.split('/');
+  return `${formatDate(fom)} - ${formatDate(tom)}`;
+}

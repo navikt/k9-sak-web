@@ -44,6 +44,9 @@ const BehandlingSelected: React.FC<BehandlingSelectedProps> = props => {
     }
     const funnedeÅrsaker: string[] = [];
     const unikeÅrsaker = behandlingsårsaker.filter(årsak => {
+      if (årsak === 'Tilstøtende periode') {
+        return false;
+      }
       const erDuplikat = funnedeÅrsaker.includes(årsak);
       funnedeÅrsaker.push(årsak);
       return !erDuplikat;
