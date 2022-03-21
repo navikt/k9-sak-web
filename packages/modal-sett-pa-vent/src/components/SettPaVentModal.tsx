@@ -1,20 +1,18 @@
-import React from 'react';
-import { connect } from 'react-redux';
-import moment from 'moment';
-import { FormattedMessage, injectIntl, WrappedComponentProps } from 'react-intl';
-import { formValueSelector, reduxForm, InjectedFormProps } from 'redux-form';
-import { Column, Container, Row } from 'nav-frontend-grid';
-import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
-import { Normaltekst } from 'nav-frontend-typografi';
-import Modal from 'nav-frontend-modal';
-
-import { Image, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import innvilgetImageUrl from '@fpsak-frontend/assets/images/innvilget_valgt.svg';
 import { DatepickerField, SelectField } from '@fpsak-frontend/form';
-import { ariaCheck, dateAfterOrEqualToToday, hasValidDate, required, dateBeforeToday } from '@fpsak-frontend/utils';
-import { KodeverkMedNavn } from '@k9-sak-web/types';
 import venteArsakType from '@fpsak-frontend/kodeverk/src/venteArsakType';
-
+import { Image, VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { ariaCheck, dateAfterOrEqualToToday, dateBeforeToday, hasValidDate, required } from '@fpsak-frontend/utils';
+import { KodeverkMedNavn } from '@k9-sak-web/types';
+import moment from 'moment';
+import { Container } from 'nav-frontend-grid';
+import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
+import Modal from 'nav-frontend-modal';
+import { Element, Normaltekst } from 'nav-frontend-typografi';
+import React from 'react';
+import { FormattedMessage, injectIntl, WrappedComponentProps } from 'react-intl';
+import { connect } from 'react-redux';
+import { formValueSelector, InjectedFormProps, reduxForm } from 'redux-form';
 import styles from './settPaVentModal.less';
 
 const initFrist = (): string => {
@@ -136,36 +134,34 @@ export const SettPaVentModal = ({
       >
         <Container fluid data-testid="SettPaVentModal">
           <form onSubmit={handleSubmit} name="ventModalForm" data-testid="ventModalForm">
-            <Row>
-              <Column xs="1">
-                <Image
-                  className={styles.image}
-                  alt={intl.formatMessage({ id: 'SettPaVentModal.PaVent' })}
-                  src={innvilgetImageUrl}
-                />
-                <div className={styles.divider} />
-              </Column>
-              <Column xs="7">
-                <div className={styles.label}>
-                  <Normaltekst className={styles.label}>
-                    <FormattedMessage id={getPaVentText(originalVentearsak, hasManualPaVent, frist)} />
-                  </Normaltekst>
-                </div>
-              </Column>
-              {(hasManualPaVent || frist) && (
-                <Column xs="2">
+            <div className={styles.topContainer}>
+              <Image
+                className={styles.image}
+                alt={intl.formatMessage({ id: 'SettPaVentModal.PaVent' })}
+                src={innvilgetImageUrl}
+              />
+              <div className={styles.divider} />
+              <div className={styles.calendarContainer}>
+                <Normaltekst className={styles.label}>
+                  <FormattedMessage id={getPaVentText(originalVentearsak, hasManualPaVent, frist)} />
+                </Normaltekst>
+                {(hasManualPaVent || frist) && (
                   <div className={styles.datePicker}>
-                    <DatepickerField name="frist" validate={[required, hasValidDate, dateAfterOrEqualToToday]} data-testid="datofelt" />
+                    <DatepickerField
+                      name="frist"
+                      validate={[required, hasValidDate, dateAfterOrEqualToToday]}
+                      data-testid="datofelt"
+                    />
                   </div>
-                </Column>
-              )}
-            </Row>
-            <Row className={styles.marginTop}>
-              <Column xs="1" />
-              <Column xs="11">
+                )}
+              </div>
+            </div>
+
+            <div className={styles.contentContainer}>
+              <div className={styles.flexContainer}>
                 <SelectField
                   name="ventearsak"
-                  label={intl.formatMessage({ id: 'SettPaVentModal.Arsak' })}
+                  label={<Element>{intl.formatMessage({ id: 'SettPaVentModal.HvaVenterViPa' })}</Element>}
                   placeholder={intl.formatMessage({ id: 'SettPaVentModal.SelectPlaceholder' })}
                   validate={[required]}
                   selectValues={ventearsaker
@@ -178,25 +174,16 @@ export const SettPaVentModal = ({
                         {va.navn}
                       </option>
                     ))}
-                  bredde="xxl"
+                  bredde="xxxl"
                   readOnly={!hasManualPaVent}
                 />
-              </Column>
-            </Row>
-            {visBrevErBestilt && (
-              <Row>
-                <Column xs="1" />
-                <Column xs="11">
-                  <Normaltekst>
-                    <FormattedMessage id="SettPaVentModal.BrevBlirBestilt" />
-                  </Normaltekst>
-                </Column>
-              </Row>
-            )}
-            <Row>
-              <Column xs="1" />
-              <Column xs="11">
-                {hasManualPaVent && <Normaltekst>{intl.formatMessage({ id: 'SettPaVentModal.EndreFrist' })}</Normaltekst>}
+              </div>
+              {visBrevErBestilt && (
+                <Normaltekst>
+                  <FormattedMessage id="SettPaVentModal.BrevBlirBestilt" />
+                </Normaltekst>
+              )}
+              <div className={styles.flexContainer}>
                 {!hasManualPaVent && showFristenTekst && (
                   <Normaltekst>
                     <FormattedMessage id="SettPaVentModal.UtløptFrist" />
@@ -204,12 +191,8 @@ export const SettPaVentModal = ({
                     <FormattedMessage id="SettPaVentModal.HenleggeSaken" />
                   </Normaltekst>
                 )}
-              </Column>
-            </Row>
-            <VerticalSpacer eightPx />
-            <Row>
-              <Column xs="6" />
-              <Column>
+              </div>
+              <div className={styles.buttonContainer}>
                 <Hovedknapp
                   mini
                   htmlType={hovedKnappenType(venteArsakHasChanged, fristHasChanged) ? 'submit' : 'button'}
@@ -217,15 +200,15 @@ export const SettPaVentModal = ({
                   onClick={showAvbryt ? ariaCheck : cancelEvent}
                   disabled={isButtonDisabled(frist, showAvbryt, venteArsakHasChanged, fristHasChanged, hasManualPaVent)}
                 >
-                  <FormattedMessage id="SettPaVentModal.Ok" />
+                  <FormattedMessage id="SettPaVentModal.SettPaVent" />
                 </Hovedknapp>
                 {(!hasManualPaVent || showAvbryt || !visBrevErBestilt) && (
                   <Knapp htmlType="button" mini onClick={cancelEvent} className={styles.cancelButton}>
-                    <FormattedMessage id={hasManualPaVent ? 'SettPaVentModal.Avbryt' : 'SettPaVentModal.Lukk'} />
+                    <FormattedMessage id="SettPaVentModal.Lukk" />
                   </Knapp>
                 )}
-              </Column>
-            </Row>
+              </div>
+            </div>
           </form>
         </Container>
       </Modal>
