@@ -54,6 +54,8 @@ spec:
       value: "http://k9-klage.k9saksbehandling"
     - name: APP_URL_K9TILBAKE
       value: "http://k9-tilbake.default"
+    - name: APP_URL_K9FORDEL
+      value: "http://k9-fordel.k9saksbehandling"
     - name: APP_DIAGNOSEKODER
       value: "http://diagnosekode-api/diagnosekoder/"
     - name: MEDISINSK_VILKAR_FRONTEND_URL
@@ -70,6 +72,8 @@ spec:
       value: "https://psb-etablert-tilsyn-frontend.dev.adeo.no/"
     - name: PSB_OM_BARNET_FRONTEND_URL
       value: "https://psb-om-barnet-frontend.dev.adeo.no/"
+    - name: ENDRINGSLOGG_URL
+      value: "https://familie-endringslogg.dev.intern.nav.no/"
 
    # Feature-flag
     - name: KLAGE_KABAL

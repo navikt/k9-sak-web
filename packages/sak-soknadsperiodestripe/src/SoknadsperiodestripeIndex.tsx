@@ -1,5 +1,5 @@
 import React from 'react';
-import BehandlingPerioderårsakMedVilkår from '@k9-sak-web/types/src/behandlingPerioderårsakMedVilkår';
+import BehandlingPerioderårsakMedVilkår from '@k9-sak-web/types/src/behandlingPerioderarsakMedVilkar';
 import { RawIntlProvider, createIntlCache, createIntl } from 'react-intl';
 import Soknadsperiodestripe from './Soknadsperiodestripe';
 import messages from '../i18n/nb_NO.json';

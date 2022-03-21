@@ -73,7 +73,7 @@ export type PeriodStatus =
   | 'feilRevurder'
   | 'inaktiv'
   | 'ukjent';
-export type Tidslinjeskala = 6 | 12 | 24 | 36;
+export type Tidslinjeskala = number;
 export type Percentage = number;
 
 export interface Positioned {

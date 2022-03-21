@@ -1,5 +1,5 @@
 import { behandlingForm, getBehandlingFormPrefix } from '@fpsak-frontend/form';
-import avklaringsbehovCodes, { harAvklaringsbehov } from '@fpsak-frontend/kodeverk/src/beregningAvklaringsbehovCodes';
+import avklaringsbehovCodes, { harAvklaringsbehov, harAvklaringsbehovSomKanLøses } from '@fpsak-frontend/kodeverk/src/beregningAvklaringsbehovCodes';
 import { isAvklaringsbehovOpen } from '@fpsak-frontend/kodeverk/src/beregningAvklaringsbehovStatus';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import PropTypes from 'prop-types';
@@ -202,7 +202,7 @@ AvklareAktiviteterPanelImpl.defaultProps = {
 };
 
 const skalKunneLoseAvklaringsbehov = (skalOverstyre, avklaringsbehov, erTilVurdering) =>
-  (skalOverstyre || harAvklaringsbehov(AVKLAR_AKTIVITETER, avklaringsbehov)) && erTilVurdering;
+  (skalOverstyre || harAvklaringsbehovSomKanLøses(AVKLAR_AKTIVITETER, avklaringsbehov)) && erTilVurdering;
 
 const validate = values => {
   const fieldArrayList = values[fieldArrayName];

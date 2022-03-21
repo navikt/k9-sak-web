@@ -21,6 +21,7 @@ import styles from './BrevPanel.less';
 import InformasjonsbehovAutomatiskVedtaksbrev from './InformasjonsbehovAutomatiskVedtaksbrev';
 import FritekstBrevPanel from '../FritekstBrevPanel';
 import { VedtakPreviewLink } from '../PreviewLink';
+import { fieldnames } from '../../konstanter';
 
 const kanResultatForhåndsvises = behandlingResultat => {
   if (!behandlingResultat) {
@@ -38,7 +39,13 @@ const getManuellBrevCallback =
   e => {
     if (formProps.isValid) {
       previewCallback({
-        dokumentdata: { fritekstbrev: { brødtekst: brødtekst || ' ', overskrift: overskrift || ' ' } },
+        dokumentdata: {
+          fritekstbrev: {
+            brødtekst: brødtekst || ' ',
+            overskrift: overskrift || ' ',
+            inkluderKalender: formProps.values[fieldnames.INKLUDER_KALENDER_VED_OVERSTYRING] || false,
+          },
+        },
         // Bruker FRITKS som fallback til lenken ikke vises for avsluttede behandlinger
         dokumentMal: tilgjengeligeVedtaksbrev?.vedtaksbrevmaler?.[vedtaksbrevtype.FRITEKST] ?? dokumentMalType.FRITKS,
         ...(overstyrtMottaker ? { overstyrtMottaker: safeJSONParse(overstyrtMottaker) } : {}),
@@ -120,6 +127,7 @@ export const BrevPanel = props => {
     behandlingResultat,
     overstyrtMottaker,
     formikProps,
+    ytelseTypeKode,
   } = props;
 
   const automatiskBrevCallback = getPreviewAutomatiskBrevCallback({
@@ -157,8 +165,11 @@ export const BrevPanel = props => {
       <FritekstBrevPanel
         readOnly={readOnly}
         sprakkode={sprakkode}
+        intl={intl}
         previewBrev={automatiskBrevUtenValideringCallback}
         harAutomatiskVedtaksbrev={harAutomatiskVedtaksbrev}
+        formikProps={formikProps}
+        ytelseTypeKode={ytelseTypeKode}
       />
       <VedtakPreviewLink previewCallback={manuellBrevCallback} />
     </>
@@ -234,6 +245,7 @@ BrevPanel.propTypes = {
   personopplysninger: PropTypes.shape(),
   arbeidsgiverOpplysningerPerId: PropTypes.shape(),
   formikProps: PropTypes.shape().isRequired,
+  ytelseTypeKode: PropTypes.string,
 };
 
 BrevPanel.defaultProps = {

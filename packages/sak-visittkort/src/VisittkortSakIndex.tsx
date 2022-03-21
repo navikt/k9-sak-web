@@ -25,6 +25,7 @@ interface OwnProps {
   harTilbakekrevingVerge?: boolean;
   relaterteFagsaker?: RelatertFagsak;
   direkteOvergangFraInfotrygd?: OvergangFraInfotrygd;
+  erPbSak?: boolean;
 }
 
 const VisittkortSakIndex = ({
@@ -35,6 +36,7 @@ const VisittkortSakIndex = ({
   harTilbakekrevingVerge,
   relaterteFagsaker,
   direkteOvergangFraInfotrygd,
+  erPbSak,
 }: OwnProps) => (
   <RawIntlProvider value={intl}>
     <VisittkortPanel
@@ -45,6 +47,7 @@ const VisittkortSakIndex = ({
       harTilbakekrevingVerge={harTilbakekrevingVerge}
       relaterteFagsaker={relaterteFagsaker}
       direkteOvergangFraInfotrygd={direkteOvergangFraInfotrygd}
+      erPbSak={erPbSak}
     />
   </RawIntlProvider>
 );

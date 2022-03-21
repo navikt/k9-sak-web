@@ -134,29 +134,33 @@ const Tidslinje = ({
   if (!rader) throw new Error('Tidslinjen mangler rader.');
 
   const direction = retning === 'stigende' ? 'left' : 'right';
-  const start = useTidligsteDato({ startDato, rader }).startOf('month');
+  const start = useTidligsteDato({ startDato, rader });
   const endInclusive = dayjs(start).add(tidslinjeSkala, 'month').endOf('day');
   const rows = useTidslinjerader(rader, start, endInclusive, direction);
   const getPins = () => {
-    const monthPins = [{ date: start.toDate(), classname: '' }];
-    if (tidslinjeSkala === 6) {
-      for (let x = 0; x <= 6; x += 1) {
-        const currentMonth = start.add(x, 'month');
+    const monthPins = [];
+    if (tidslinjeSkala >= 4 && tidslinjeSkala <= 6) {
+      for (let x = 0; x <= tidslinjeSkala; x += 1) {
+        const currentMonth = start.startOf('month').add(x, 'month');
         const interval = currentMonth.daysInMonth() / 4;
-        if (x !== 6) {
-          for (let y = 1; y < 4; y += 1) {
+        for (let y = 1; y < 4; y += 1) {
+          const skipWeek =
+            (x === 0 && start.date() > interval * y) || (x === tidslinjeSkala && endInclusive.date() < interval * y);
+          if (!skipWeek) {
             monthPins.push({
               date: currentMonth.add(Math.ceil(interval * y), 'day').toDate(),
               classname: styles.weekPin,
             });
           }
         }
-        monthPins.push({
-          date: start.add(x, 'month').startOf('month').toDate(),
-          classname: '',
-        });
+        if (x > 0 || (x === 0 && start.date() === 0)) {
+          monthPins.push({
+            date: start.add(x, 'month').startOf('month').toDate(),
+            classname: '',
+          });
+        }
       }
-    } else {
+    } else if (tidslinjeSkala > 6) {
       for (let index = 1; index <= tidslinjeSkala; index += 1) {
         monthPins.push({ date: start.add(index, 'month').startOf('month').toDate(), classname: '' });
       }
