@@ -1,6 +1,11 @@
 import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import VisittkortSakIndex from '@fpsak-frontend/sak-visittkort';
-import { DataFetchPendingModal, LoadingPanel, Punsjstripe } from '@fpsak-frontend/shared-components';
+import {
+  AndreSakerPåSøkerStripe,
+  DataFetchPendingModal,
+  LoadingPanel,
+  Punsjstripe,
+} from '@fpsak-frontend/shared-components';
 import { RestApiState } from '@k9-sak-web/rest-api-hooks';
 import Soknadsperiodestripe from '@k9-sak-web/sak-soknadsperiodestripe';
 import {
@@ -199,7 +204,7 @@ const FagsakIndex = () => {
 
   const harVerge = behandling ? behandling.harVerge : false;
   const showSøknadsperiodestripe = featureToggles?.SOKNADPERIODESTRIPE && erPleiepengerSyktBarn(fagsak);
-  const showPunsjstripe = erPleiepengerSyktBarn(fagsak) || erPleiepengerLivetsSluttfase(fagsak);
+  const showPunsjOgFagsakPåSøkerStripe = erPleiepengerSyktBarn(fagsak) || erPleiepengerLivetsSluttfase(fagsak);
   return (
     <>
       <FagsakGrid
@@ -271,7 +276,16 @@ const FagsakIndex = () => {
                 direkteOvergangFraInfotrygd={direkteOvergangFraInfotrygd}
                 erPbSak={fagsak.erPbSak}
               />
-              {showPunsjstripe && <Punsjstripe behandlingUuid={behandling?.uuid} pathToLos={getPathToFplos()} />}
+              {showPunsjOgFagsakPåSøkerStripe && (
+                <>
+                  {behandling && <Punsjstripe behandlingUuid={behandling?.uuid} pathToLos={getPathToFplos()} />}
+                  <AndreSakerPåSøkerStripe
+                    søkerIdent={fagsakPerson.personnummer}
+                    saksnummer={fagsak.saksnummer}
+                    fagsakYtelseType={fagsak.sakstype.kode}
+                  />
+                </>
+              )}
               {showSøknadsperiodestripe && (
                 <Soknadsperiodestripe behandlingPerioderMedVilkår={behandlingPerioderMedVilkår} />
               )}
