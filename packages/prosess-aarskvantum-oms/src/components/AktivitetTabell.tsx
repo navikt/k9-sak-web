@@ -1,7 +1,7 @@
 import hide from '@fpsak-frontend/assets/images/hide.svg';
 import show from '@fpsak-frontend/assets/images/show.svg';
 import { Image, Table, TableRow } from '@fpsak-frontend/shared-components/index';
-import { calcDays, convertHoursToDays, utledArbeidsforholdNavn } from '@fpsak-frontend/utils';
+import { calcDays, convertHoursToDays, formatereLukketPeriode, utledArbeidsforholdNavn } from '@fpsak-frontend/utils';
 import { ArbeidsforholdV2, ArbeidsgiverOpplysningerPerId, KodeverkMedNavn, Utfalltype, Uttaksperiode, Vilkår, VilkårEnum } from '@k9-sak-web/types';
 import NavFrontendChevron from 'nav-frontend-chevron';
 import Hjelpetekst from 'nav-frontend-hjelpetekst';
