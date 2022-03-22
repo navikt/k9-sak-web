@@ -43,6 +43,8 @@ const erTilbakekreving = (behandlingType: Kodeverk): boolean =>
     BehandlingType.TILBAKEKREVING_REVURDERING === behandlingType.kode);
 
 const erPleiepengerSyktBarn = (fagsak: Fagsak) => fagsak?.sakstype?.kode === fagsakYtelseType.PLEIEPENGER;
+const erPleiepengerLivetsSluttfase = (fagsak: Fagsak) =>
+  fagsak?.sakstype?.kode === fagsakYtelseType.PLEIEPENGER_SLUTTFASE;
 
 /**
  * FagsakIndex
@@ -197,6 +199,7 @@ const FagsakIndex = () => {
 
   const harVerge = behandling ? behandling.harVerge : false;
   const showSøknadsperiodestripe = featureToggles?.SOKNADPERIODESTRIPE && erPleiepengerSyktBarn(fagsak);
+  const showPunsjstripe = erPleiepengerSyktBarn(fagsak) || erPleiepengerLivetsSluttfase(fagsak);
   return (
     <>
       <FagsakGrid
@@ -268,7 +271,7 @@ const FagsakIndex = () => {
                 direkteOvergangFraInfotrygd={direkteOvergangFraInfotrygd}
                 erPbSak={fagsak.erPbSak}
               />
-              <Punsjstripe behandlingUuid={behandling?.uuid} pathToLos={getPathToFplos()} />
+              {showPunsjstripe && <Punsjstripe behandlingUuid={behandling?.uuid} pathToLos={getPathToFplos()} />}
               {showSøknadsperiodestripe && (
                 <Soknadsperiodestripe behandlingPerioderMedVilkår={behandlingPerioderMedVilkår} />
               )}
