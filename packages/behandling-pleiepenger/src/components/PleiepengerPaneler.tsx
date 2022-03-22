@@ -25,7 +25,6 @@ import ArbeidsgiverMedManglendePerioderListe from './ArbeidsgiverMedManglendePer
 import DataFetcher from './DataFetcher';
 import PleiepengerFakta from './PleiepengerFakta';
 import PleiepengerProsess from './PleiepengerProsess';
-import Punsjstripe from './Punsjstripe';
 
 interface OwnProps {
   fetchedData: FetchedData;
@@ -136,6 +135,7 @@ const PleiepengerPaneler = ({
           )}
         />
       )}
+
       <PleiepengerProsess
         data={fetchedData}
         fagsak={fagsak}
@@ -155,7 +155,6 @@ const PleiepengerPaneler = ({
         featureToggles={featureToggles}
         setBeregningErBehandlet={setBeregningErBehandlet}
       />
-      <Punsjstripe behandlingUuid={behandling?.uuid} />
       <AndreSakerPåSøkerStripe søkerIdent={fagsakPerson.personnummer} saksnummer={fagsak.saksnummer} />
       <PleiepengerFakta
         behandling={behandling}
@@ -174,7 +173,6 @@ const PleiepengerPaneler = ({
         dokumenter={dokumenter}
         featureToggles={featureToggles}
         beregningErBehandlet={beregningErBehandlet}
-
       />
     </>
   );
