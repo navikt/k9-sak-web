@@ -5,15 +5,15 @@ import { Fagsak } from '@k9-sak-web/types';
 import { AlertStripeFeil, AlertStripeInfo } from 'nav-frontend-alertstriper';
 import Lenke from 'nav-frontend-lenker';
 import React, { useEffect } from 'react';
-import FagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import styles from './andreSakerPåSøkerStripe.less';
 
 interface Props {
   søkerIdent: string;
   saksnummer: string;
+  fagsakYtelseType: string;
 }
 
-const AndreSakerPåSøkerStripe: React.FC<Props> = ({ søkerIdent, saksnummer }) => {
+const AndreSakerPåSøkerStripe: React.FC<Props> = ({ søkerIdent, saksnummer, fagsakYtelseType }) => {
   const {
     startRequest: searchFagsaker,
     data: fagsaker = [],
@@ -22,7 +22,7 @@ const AndreSakerPåSøkerStripe: React.FC<Props> = ({ søkerIdent, saksnummer })
   } = restApiHooks.useRestApiRunner<Fagsak[]>(K9sakApiKeys.MATCH_FAGSAK);
   useEffect(() => {
     searchFagsaker({
-      ytelseType: FagsakYtelseType.PLEIEPENGER,
+      ytelseType: fagsakYtelseType,
       bruker: søkerIdent,
     });
   }, []);
