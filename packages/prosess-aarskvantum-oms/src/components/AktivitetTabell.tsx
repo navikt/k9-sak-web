@@ -16,7 +16,7 @@ import stjerneImg from '@fpsak-frontend/assets/images/stjerne.svg';
 import styles from './aktivitetTabell.less';
 import NøkkeltallContainer, { Nokkeltalltype } from './nokkeltall/NokkeltallContainer';
 import Utfall from './Utfall';
-import { durationTilTimerMed7ogEnHalvTimesDagsbasis, formatDate } from './utils';
+import { durationTilTimerMed7ogEnHalvTimesDagsbasis } from './utils';
 
 interface AktivitetTabellProps {
   behandlingUuid: string;
@@ -26,11 +26,6 @@ interface AktivitetTabellProps {
   uttaksperioder: Uttaksperiode[];
   aktivitetsstatuser: KodeverkMedNavn[];
 }
-
-const periodevisning = (periode: string): string => {
-  const [fom, tom] = periode.split('/');
-  return `${formatDate(fom)} - ${formatDate(tom)}`;
-};
 
 export const antallDager = (periode: string): string => {
   const [fom, tom] = periode.split('/');
@@ -290,7 +285,7 @@ const AktivitetTabell = ({
                           tooltip={<FormattedMessage id="Uttaksplan.GjeldendeBehandling" />}
                         />
                       )}
-                      {periodevisning(periode)}
+                      {formatereLukketPeriode(periode)}
                     </Normaltekst>
                   </td>
                   <td>
