@@ -22,9 +22,12 @@ const KartleggePropertyTilUtvidetRettMikrofrontendKomponent = (
   const { aksjonspunkter, isAksjonspunktOpen } = aksjonspunktInformasjon;
   const { vilkar, status } = vilkarInformasjon;
 
+  // I utvidet rett finns det en aksjonspunkt (9013) og tre ulike vilkår (alene om omsorg, kronisk syk og midlertidig alene).
+  // Hver behandling får ned det aktuelle vilkåret hit med kun en periode.
+
   const aksjonspunkt = aksjonspunkter[0];
-  const vilkarKnyttetTilAksjonspunkt = vilkar[0];
-  const eksistererAksjonspunktOgVilkar = aksjonspunkt && vilkarKnyttetTilAksjonspunkt;
+  const vilkaret = vilkar[0];
+  const eksistererAksjonspunktOgVilkar = aksjonspunkt && vilkar;
 
   if (eksistererAksjonspunktOgVilkar) {
     const skalVilkarsUtfallVises = behandling.status.kode === behandlingStatus.AVSLUTTET;
@@ -38,7 +41,7 @@ const KartleggePropertyTilUtvidetRettMikrofrontendKomponent = (
           behandlingsID,
           aksjonspunktLost,
           lesemodus,
-          vilkarKnyttetTilAksjonspunkt,
+          vilkar: vilkaret,
           aksjonspunkt,
           skalVilkarsUtfallVises,
           submitCallback,
@@ -50,19 +53,20 @@ const KartleggePropertyTilUtvidetRettMikrofrontendKomponent = (
           behandlingsID,
           aksjonspunktLost,
           lesemodus,
-          vilkarKnyttetTilAksjonspunkt,
+          vilkar: vilkaret,
           status,
           aksjonspunkt,
           skalVilkarsUtfallVises,
           submitCallback,
           soknad,
         });
+
       case FagsakYtelseType.OMSORGSPENGER_ALENE_OM_OMSORGEN:
         return AleneOmOmsorgenObjektTilMikrofrontend({
           behandling,
           aksjonspunktLost,
           lesemodus,
-          vilkarKnyttetTilAksjonspunkt,
+          vilkar: vilkaret,
           status,
           aksjonspunkt,
           skalVilkarsUtfallVises,
