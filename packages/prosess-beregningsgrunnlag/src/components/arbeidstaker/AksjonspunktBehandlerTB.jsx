@@ -142,8 +142,7 @@ export const createTableData = createSelector(
     // Oppretter element for redigerbar periode
     const arbeidstakerAndeler = findArbeidstakerAndeler(kopiAvPeriode);
     arbeidstakerAndeler.forEach(andel => {
-      const mapKey = createArbeidsforholdMapKey(andel.arbeidsforhold, arbeidsgiverOpplysningerPerId);
-      const mapValue = arbeidsforholdPeriodeMap[mapKey];
+      const mapKey = createArbeidsforholdMapKey(andel.arbeidsforhold);
       const newMapValue = createMapValueObject();
       newMapValue.tabellInnhold =
         andel.overstyrtPrAar !== undefined && andel.overstyrtPrAar !== null
@@ -152,8 +151,7 @@ export const createTableData = createSelector(
       newMapValue.erTidsbegrenset = false;
       newMapValue.isEditable = true;
       newMapValue.inputfieldKey = createInputFieldKey(andel, kopiAvPeriode);
-      mapValue.push(newMapValue);
-      arbeidsforholdPeriodeMap[mapKey] = mapValue;
+      arbeidsforholdPeriodeMap[mapKey].push(newMapValue);
     });
     return arbeidsforholdPeriodeMap;
   },
@@ -340,7 +338,10 @@ const mapStateToProps = (state, ownProps) => {
 
 const AksjonspunktBehandlerTidsbegrenset = connect(mapStateToProps)(AksjonspunktBehandlerTidsbegrensetImpl);
 
-AksjonspunktBehandlerTidsbegrenset.buildInitialValues = allePerioder => {
+AksjonspunktBehandlerTidsbegrenset.buildInitialValues = (allePerioder, avklaringsbehov) => {
+  if (finnAvklaringsbehovForFastsettBgTidsbegrensetAT(avklaringsbehov) === undefined) {
+    return {};
+  }
   const initialValues = {};
   const relevantPeriode = finnPeriodeEtterOpphørAvTidsbegrensetArbeid(allePerioder);
   const arbeidstakerAndeler = relevantPeriode.beregningsgrunnlagPrStatusOgAndel.filter(
@@ -353,7 +354,7 @@ AksjonspunktBehandlerTidsbegrenset.buildInitialValues = allePerioder => {
   return initialValues;
 };
 
-AksjonspunktBehandlerTidsbegrenset.transformValues = (values, perioder) => {
+const lagListeForArbeidstakerandeler = (values, perioder) => {
   const relevantPeriode = finnPeriodeEtterOpphørAvTidsbegrensetArbeid(perioder);
   const arbeidstakerAndeler = relevantPeriode.beregningsgrunnlagPrStatusOgAndel.filter(
     andel => andel.aktivitetStatus.kode === aktivitetStatus.ARBEIDSTAKER,
@@ -372,5 +373,14 @@ AksjonspunktBehandlerTidsbegrenset.transformValues = (values, perioder) => {
     fastsatteTidsbegrensedeAndeler,
   }];
 };
+
+
+AksjonspunktBehandlerTidsbegrenset.transformValues = (values, allePerioder) => ({
+  kode: FASTSETT_BEREGNINGSGRUNNLAG_TIDSBEGRENSET_ARBEIDSFORHOLD,
+  begrunnelse: values.ATFLVurdering,
+  fastsatteTidsbegrensedePerioder: lagListeForArbeidstakerandeler(values, allePerioder),
+  // Virker kanskje litt rart at frilans settes her, men dette er egentlig ikkje eit reint arbeidstakeraksjonspunkt
+  frilansInntekt: values.inntektFrilanser !== undefined ? removeSpacesFromNumber(values.inntektFrilanser) : null,
+});
 
 export default injectIntl(AksjonspunktBehandlerTidsbegrenset);
