@@ -222,6 +222,7 @@ export const VedtakForm = ({
               readOnly={readOnly}
               overlappendeYtelser={overlappendeYtelser}
               alleKodeverk={alleKodeverk}
+              viseFlereSjekkbokserForBrev={kanHaFritekstbrev(tilgjengeligeVedtaksbrev) && kanHindreUtsending(tilgjengeligeVedtaksbrev)}
             >
               <div className={styles.knappContainer}>
                 {kanHaFritekstbrev(tilgjengeligeVedtaksbrev) && (
