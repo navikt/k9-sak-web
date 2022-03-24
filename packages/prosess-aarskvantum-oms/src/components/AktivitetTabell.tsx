@@ -17,6 +17,7 @@ import styles from './aktivitetTabell.less';
 import NøkkeltallContainer, { Nokkeltalltype } from './nokkeltall/NokkeltallContainer';
 import Utfall from './Utfall';
 import { durationTilTimerMed7ogEnHalvTimesDagsbasis } from './utils';
+import AvvikIMType from '../dto/AvvikIMType';
 
 interface AktivitetTabellProps {
   behandlingUuid: string;
@@ -140,7 +141,26 @@ const AktivitetTabell = ({
   const skalÅrsakVises =
     uttaksperioder.find(periode => periode.fraværÅrsak !== FraværÅrsakEnum.UDEFINERT) !== undefined;
 
-  const antallKolonner = skalÅrsakVises ? 6 : 5;
+  const skalAvvikVises =
+    uttaksperioder.find(uttaksperiode => uttaksperiode.avvikImSøknad &&
+      (uttaksperiode.avvikImSøknad === AvvikIMType.SØKNAD_UTEN_MATCHENDE_IM || uttaksperiode.avvikImSøknad === AvvikIMType.IM_REFUSJONSKRAV_TRUMFER_SØKNAD),
+    ) !== undefined;
+
+  const hentTekstIdForAvvik = (avvikImSøknad: string): string => {
+    const harAvvikRelevantType = avvikImSøknad === AvvikIMType.SØKNAD_UTEN_MATCHENDE_IM
+      || avvikImSøknad === AvvikIMType.IM_REFUSJONSKRAV_TRUMFER_SØKNAD;
+
+    if (avvikImSøknad && avvikImSøknad.length && harAvvikRelevantType) {
+      return avvikImSøknad === AvvikIMType.SØKNAD_UTEN_MATCHENDE_IM
+        ? 'Uttaksplan.AvvikSoknadIM.UtenMatchendeIM'
+        : 'Uttaksplan.AvvikSoknadIM.RefusjonskravTrumfer';
+    }
+    return 'Uttaksplan.AvvikSoknadIM.IkkeAvvik'
+  }
+
+  let antallKolonner = 5;
+  if(skalÅrsakVises){ antallKolonner += 1; }
+  if(skalAvvikVises){ antallKolonner += 1; }
 
   enum Fanenavn {
     VILKAR,
@@ -170,6 +190,11 @@ const AktivitetTabell = ({
                 <FormattedMessage id="Uttaksplan.Årsak" />
               </th>
             )}
+            {skalAvvikVises && (
+              <th>
+                <FormattedMessage id="Uttaksplan.Avvik" />
+              </th>
+            )}
             <th>
               <FormattedMessage id="Uttaksplan.Utbetalingsgrad" />
             </th>
@@ -192,6 +217,7 @@ const AktivitetTabell = ({
               hjemler,
               nøkkeltall,
               fraværÅrsak,
+              avvikImSøknad
             },
             index,
           ) => {
@@ -296,6 +322,7 @@ const AktivitetTabell = ({
                   </td>
                   <td>{formaterFravær(periode, delvisFravær)}</td>
                   {skalÅrsakVises && <td>{formaterFraværsårsak(fraværÅrsak)}</td>}
+                  {skalAvvikVises && <td><FormattedMessage id={hentTekstIdForAvvik(avvikImSøknad)} /></td>}
                   <td>{`${utbetalingsgrad}%`}</td>
                   <td>
                     <button className={styles.utvidelsesknapp} onClick={() => velgPeriode(index)} type="button">

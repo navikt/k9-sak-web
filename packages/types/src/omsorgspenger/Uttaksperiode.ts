@@ -42,6 +42,7 @@ export type Uttaksperiode = {
   hjemler: string[];
   nøkkeltall?: Nøkkeltall;
   opprinneligBehandlingUuid?: string;
+  avvikImSøknad?: string;
 };
 
 export type Nøkkeltall = {
