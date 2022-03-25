@@ -17,6 +17,11 @@ import behandlingArsakType from '@fpsak-frontend/kodeverk/src/behandlingArsakTyp
 import { KodeverkMedNavn, Kodeverk } from '@k9-sak-web/types';
 
 import styles from './nyBehandlingModal.less';
+import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
+import {
+  manuelleRevurderingsArsaker,
+  manuelleRevurderingsArsakerForPleiepengerLivetsSluttfase,
+} from '../revurderingsarsaker';
 
 const createOptions = (
   bt: KodeverkMedNavn,
@@ -182,24 +187,12 @@ const formName = 'NyBehandlingModal';
 
 // TODO Denne inndelinga burde vel flyttast til DB (KODELISTE.EKSTRA_DATA)?
 
-const manuelleRevurderingsArsaker = [
-  behandlingArsakType.BEREEGNINGSGRUNNLAG,
-  behandlingArsakType.MEDLEMSKAP,
-  behandlingArsakType.OPPTJENING,
-  behandlingArsakType.FORDELING,
-  behandlingArsakType.INNTEKT,
-  behandlingArsakType.DØD,
-  behandlingArsakType.SØKERS_RELASJON,
-  behandlingArsakType.SØKNADSFRIST,
-  behandlingArsakType.KLAGE_U_INNTK,
-  behandlingArsakType.KLAGE_M_INNTK,
-  behandlingArsakType.ANNET,
-  behandlingArsakType.FEIL_I_LOVANDVENDELSE,
-  behandlingArsakType.FEIL_ELLER_ENDRET_FAKTA,
-  behandlingArsakType.FEIL_REGELVERKSFORSTAELSE,
-  behandlingArsakType.FEIL_PROSESSUELL,
-  behandlingArsakType.ETTER_KLAGE,
-];
+const hentManuelleRevurderingsArsakerForFagytelsetype = (fagYtelseType: string): string[] => {
+  switch (fagYtelseType) {
+    case fagsakYtelseType.PLEIEPENGER_SLUTTFASE: return manuelleRevurderingsArsakerForPleiepengerLivetsSluttfase;
+    default: return manuelleRevurderingsArsaker;
+  }
+};
 
 const unntakVurderingsArsaker = [behandlingArsakType.UNNT_GENERELL, behandlingArsakType.ANNET];
 
@@ -215,9 +208,10 @@ export const getBehandlingAarsaker = createSelector(
   [
     (_state, ownProps: PureOwnProps) => ownProps.revurderingArsaker,
     (_state, ownProps: PureOwnProps) => ownProps.tilbakekrevingRevurderingArsaker,
+    (_state, ownProps: PureOwnProps) => ownProps.ytelseType,
     state => formValueSelector(formName)(state, 'behandlingType'),
   ],
-  (alleRevurderingArsaker, alleTilbakekrevingRevurderingArsaker, valgtBehandlingType) => {
+  (alleRevurderingArsaker, alleTilbakekrevingRevurderingArsaker, ytelseType, valgtBehandlingType, ) => {
     if (valgtBehandlingType === bType.TILBAKEKREVING_REVURDERING) {
       return tilbakekrevingRevurderingArsaker
         .map(ar => alleTilbakekrevingRevurderingArsaker.find(el => el.kode === ar))
@@ -226,7 +220,7 @@ export const getBehandlingAarsaker = createSelector(
     // TODO lage en egen for UNNTAK når vi vet hvilke det skal være
     if (valgtBehandlingType === bType.REVURDERING) {
       return alleRevurderingArsaker
-        .filter(bat => manuelleRevurderingsArsaker.indexOf(bat.kode) > -1)
+        .filter(bat => hentManuelleRevurderingsArsakerForFagytelsetype(ytelseType.kode).indexOf(bat.kode) > -1)
         .sort((bat1, bat2) => bat1.navn.localeCompare(bat2.navn));
     }
 
