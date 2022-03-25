@@ -86,7 +86,7 @@ const AleneOmOmsorgenObjektTilMikrofrontend = ({
 
   const vilkaretVurderesManuelltMedAksjonspunkt = aksjonspunkt && vilkar && aksjonspunkt.definisjon.kode === aksjonspunktCodes.UTVIDET_RETT;
   // Vilkåret kan kun bli automatisk innvilget. Dersom det blir automatiskt avslått resulterer det i manuell vurdering via aksjonspunkt.
-  const vilkaretErAutomatiskInnvilget = !aksjonspunkt && vilkar && vilkar.perioder[0]?.vilkarStatus.kode !== vilkarUtfallType.OPPFYLT;
+  const vilkaretErAutomatiskInnvilget = !aksjonspunkt && vilkar && vilkar.perioder[0]?.vilkarStatus.kode === vilkarUtfallType.OPPFYLT;
 
   if (vilkaretVurderesManuelltMedAksjonspunkt) {
     return {
