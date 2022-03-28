@@ -11,7 +11,7 @@ interface OwnProps {
   behandlingsID: string;
   aksjonspunktLost: boolean;
   lesemodus: boolean;
-  vilkar: Vilkar;
+  vilkarKnyttetTilAksjonspunkt: Vilkar;
   status: string;
   aksjonspunkt: Aksjonspunkt;
   skalVilkarsUtfallVises: boolean;
@@ -73,7 +73,7 @@ const MidlertidigAleneObjektTilMikrofrontend = ({
   behandlingsID,
   aksjonspunktLost,
   lesemodus,
-  vilkar,
+  vilkarKnyttetTilAksjonspunkt,
   status,
   aksjonspunkt,
   skalVilkarsUtfallVises,
@@ -96,12 +96,12 @@ const MidlertidigAleneObjektTilMikrofrontend = ({
       vedtakFattetVilkarOppfylt: skalVilkarsUtfallVises,
       informasjonOmVilkar: generereInfoForVurdertVilkar(
         skalVilkarsUtfallVises,
-        vilkar,
+        vilkarKnyttetTilAksjonspunkt,
         aksjonspunkt.begrunnelse,
         'Utvidet Rett',
       ),
       informasjonTilLesemodus: formatereLesemodusObjektForMidlertidigAlene(
-        vilkar,
+        vilkarKnyttetTilAksjonspunkt,
         aksjonspunkt,
         status,
       ),
