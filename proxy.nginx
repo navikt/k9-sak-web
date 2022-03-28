@@ -219,6 +219,11 @@ server {
     error_page 504 = @504_json;
   }
 
+  location  "/k9/test/" {
+    proxy_ssl_server_name on;
+    proxy_pass "${ENDRINGSLOGG_URL}";
+  }
+
   # If no asset matches, send it to your javascript app. Hopefully it's a route in the app!
   location @rewrites {
     rewrite ^(.+)$ "/k9/web/index.html" last;
