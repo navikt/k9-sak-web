@@ -1,8 +1,12 @@
 import React from 'react';
 import { useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
+import { MicroFrontend } from '@fpsak-frontend/utils';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
-import { MicroFrontend, httpErrorHandler, findEndpointsForMicrofrontend, SimpleEndpoints, findAksjonspunkt } from '@fpsak-frontend/utils';
+import findEndpointsForMicrofrontend from '../microfrontend/utils/findEndpointsForMicrofrontend';
+import SimpleEndpoints from '../microfrontend/types/SimpleEndpoints';
+import findAksjonspunkt from '../microfrontend/utils/findAksjonspunkt';
+import httpErrorHandler from '../microfrontend/utils/httpErrorHandler';
 
 const initializeMedisinskVilkår = (
   elementId,
