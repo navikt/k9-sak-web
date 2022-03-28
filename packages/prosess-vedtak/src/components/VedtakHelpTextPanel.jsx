@@ -33,14 +33,12 @@ const findHelpTexts = (intl, aksjonspunktKoder) => {
  * Det er i denne filen teksten vises ... 
  */
 
-export const VedtakHelpTextPanelImpl = ({ intl, readOnly, aksjonspunktKoder, viseFlereSjekkbokserForBrev }) => {
+export const VedtakHelpTextPanelImpl = ({ intl, readOnly, aksjonspunktKoder }) => {
   const helpTexts = findHelpTexts(intl, aksjonspunktKoder);
   if (!readOnly && helpTexts.length > 0) {
     return (
       <>
-        <div className={viseFlereSjekkbokserForBrev ? styles.begrensMaksBredde : null}>
-          <AksjonspunktHelpTextTemp isAksjonspunktOpen>{helpTexts}</AksjonspunktHelpTextTemp>
-        </div>
+        <AksjonspunktHelpTextTemp isAksjonspunktOpen>{helpTexts}</AksjonspunktHelpTextTemp>
         <VerticalSpacer eightPx />
         {aksjonspunktKoder &&
           aksjonspunktKoder.includes(aksjonspunktCodes.KONTROLLER_REVURDERINGSBEHANDLING_VARSEL_VED_UGUNST) && (
@@ -68,7 +66,6 @@ VedtakHelpTextPanelImpl.propTypes = {
   intl: PropTypes.shape().isRequired,
   readOnly: PropTypes.bool.isRequired,
   aksjonspunktKoder: PropTypes.arrayOf(PropTypes.string).isRequired,
-  viseFlereSjekkbokserForBrev: PropTypes.bool,
 };
 
 export default injectIntl(VedtakHelpTextPanelImpl);
