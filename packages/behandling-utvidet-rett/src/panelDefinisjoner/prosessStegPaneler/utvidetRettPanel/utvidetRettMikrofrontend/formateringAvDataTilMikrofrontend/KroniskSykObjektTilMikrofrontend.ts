@@ -14,7 +14,7 @@ interface OwnProps {
   behandlingsID: string;
   aksjonspunktLost: boolean;
   lesemodus: boolean;
-  vilkar: Vilkar;
+  vilkarKnyttetTilAksjonspunkt: Vilkar;
   aksjonspunkt: Aksjonspunkt;
   skalVilkarsUtfallVises: boolean;
   submitCallback;
@@ -73,7 +73,7 @@ const KroniskSykObjektTilMikrofrontend = ({
   behandlingsID,
   aksjonspunktLost,
   lesemodus,
-  vilkar,
+  vilkarKnyttetTilAksjonspunkt,
   aksjonspunkt,
   skalVilkarsUtfallVises,
   submitCallback,
@@ -85,11 +85,11 @@ const KroniskSykObjektTilMikrofrontend = ({
     aksjonspunktLost,
     lesemodus,
     soknadsdato: soknad.soknadsdato,
-    informasjonTilLesemodus: formatereLesemodusObjektForKroniskSyk(vilkar, aksjonspunkt),
+    informasjonTilLesemodus: formatereLesemodusObjektForKroniskSyk(vilkarKnyttetTilAksjonspunkt, aksjonspunkt),
     vedtakFattetVilkarOppfylt: skalVilkarsUtfallVises,
     informasjonOmVilkar: generereInfoForVurdertVilkar(
       skalVilkarsUtfallVises,
-      vilkar,
+      vilkarKnyttetTilAksjonspunkt,
       aksjonspunkt.begrunnelse,
       'Utvidet Rett',
     ),
@@ -101,7 +101,7 @@ const KroniskSykObjektTilMikrofrontend = ({
           harDokumentasjonOgFravaerRisiko,
           avslagsArsakErIkkeRiskioFraFravaer,
           fraDato || soknad.soknadsdato,
-          vilkar,
+          vilkarKnyttetTilAksjonspunkt,
         ),
       ]);
     },
