@@ -3,5 +3,4 @@ export interface InformasjonOmVurdertVilkar {
   navnPåAksjonspunkt: string;
   vilkarOppfylt: boolean;
   vilkar: string;
-  periode?: string;
 }
