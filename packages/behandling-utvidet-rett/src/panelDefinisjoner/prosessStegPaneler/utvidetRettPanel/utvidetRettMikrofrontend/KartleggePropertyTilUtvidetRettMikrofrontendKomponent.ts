@@ -28,9 +28,8 @@ const KartleggePropertyTilUtvidetRettMikrofrontendKomponent = (
   const aksjonspunkt = aksjonspunkter[0];
   const vilkaret = vilkar[0];
   const eksistererAksjonspunktOgVilkar = aksjonspunkt && vilkar;
-  const eksistererVilkarForAutomatiskInnvilgetAleneOmOmsorgen = fagsaksType === FagsakYtelseType.OMSORGSPENGER_ALENE_OM_OMSORGEN && vilkar;
 
-  if (eksistererAksjonspunktOgVilkar || eksistererVilkarForAutomatiskInnvilgetAleneOmOmsorgen) {
+  if (eksistererAksjonspunktOgVilkar) {
     const skalVilkarsUtfallVises = behandling.status.kode === behandlingStatus.AVSLUTTET;
     const lesemodus = isReadOnly || !isAksjonspunktOpen;
     const aksjonspunktLost = behandling.status.kode === behandlingStatus.BEHANDLING_UTREDES && !isAksjonspunktOpen;
