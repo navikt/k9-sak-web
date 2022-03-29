@@ -30,5 +30,9 @@
   {
     "key": "SOKNADPERIODESTRIPE",
     "value": "${SOKNADPERIODESTRIPE}"
+  },
+  {
+    "key": "UTTAK_AVVIK",
+    "value": "${UTTAK_AVVIK}"
   }
 ]

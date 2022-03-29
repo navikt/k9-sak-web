@@ -2,7 +2,16 @@ import hide from '@fpsak-frontend/assets/images/hide.svg';
 import show from '@fpsak-frontend/assets/images/show.svg';
 import { Image, Table, TableRow } from '@fpsak-frontend/shared-components/index';
 import { calcDays, convertHoursToDays, formatereLukketPeriode, utledArbeidsforholdNavn } from '@fpsak-frontend/utils';
-import { ArbeidsforholdV2, ArbeidsgiverOpplysningerPerId, KodeverkMedNavn, Utfalltype, Uttaksperiode, Vilkår, VilkårEnum } from '@k9-sak-web/types';
+import {
+  ArbeidsforholdV2,
+  ArbeidsgiverOpplysningerPerId,
+  FeatureToggles,
+  KodeverkMedNavn,
+  Utfalltype,
+  Uttaksperiode,
+  Vilkår,
+  VilkårEnum,
+} from '@k9-sak-web/types';
 import NavFrontendChevron from 'nav-frontend-chevron';
 import Hjelpetekst from 'nav-frontend-hjelpetekst';
 import Panel from 'nav-frontend-paneler';
@@ -26,6 +35,7 @@ interface AktivitetTabellProps {
   arbeidsforholdtypeKode: string;
   uttaksperioder: Uttaksperiode[];
   aktivitetsstatuser: KodeverkMedNavn[];
+  featureToggles: FeatureToggles;
 }
 
 export const antallDager = (periode: string): string => {
@@ -87,6 +97,7 @@ const AktivitetTabell = ({
   arbeidsforholdtypeKode,
   uttaksperioder,
   aktivitetsstatuser,
+  featureToggles
 }: AktivitetTabellProps) => {
   const [valgtPeriodeIndex, velgPeriodeIndex] = useState<number>();
   const [valgteDetaljfaner, velgDetaljfaner] = useState<number[]>();
@@ -141,7 +152,7 @@ const AktivitetTabell = ({
   const skalÅrsakVises =
     uttaksperioder.find(periode => periode.fraværÅrsak !== FraværÅrsakEnum.UDEFINERT) !== undefined;
 
-  const skalAvvikVises =
+  const skalAvvikVises = featureToggles?.UTTAK_AVVIK &&
     uttaksperioder.find(uttaksperiode => uttaksperiode.avvikImSøknad &&
       (uttaksperiode.avvikImSøknad === AvvikIMType.SØKNAD_UTEN_MATCHENDE_IM || uttaksperiode.avvikImSøknad === AvvikIMType.IM_REFUSJONSKRAV_TRUMFER_SØKNAD),
     ) !== undefined;

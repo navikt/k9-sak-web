@@ -33,6 +33,10 @@ const featureToggles = [
     key: 'SOKNADPERIODESTRIPE',
     value: process.env.SOKNADPERIODESTRIPE,
   },
+  {
+    key: 'UTTAK_AVVIK',
+    value: process.env.UTTAK_AVVIK,
+  },
 ];
 
 module.exports = function (app) {

@@ -4,7 +4,7 @@ import Tabs from 'nav-frontend-tabs';
 import { Undertittel } from 'nav-frontend-typografi';
 import { Image } from '@fpsak-frontend/shared-components/index';
 import kalender from '@fpsak-frontend/assets/images/calendar_filled.svg';
-import { KodeverkMedNavn, ArbeidsforholdV2, ArbeidsgiverOpplysningerPerId } from '@k9-sak-web/types';
+import { KodeverkMedNavn, ArbeidsforholdV2, ArbeidsgiverOpplysningerPerId, FeatureToggles } from '@k9-sak-web/types';
 import { AlertStripeInfo } from 'nav-frontend-alertstriper';
 import { joinNonNullStrings } from '@fpsak-frontend/utils';
 import Aktivitet from '../dto/Aktivitet';
@@ -19,6 +19,7 @@ interface UttaksplanProps {
   aktivitetsstatuser: KodeverkMedNavn[];
   arbeidsforhold: ArbeidsforholdV2[];
   arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysningerPerId;
+  featureToggles: FeatureToggles;
 }
 
 const mapAktiviteterTilTabell = (
@@ -27,6 +28,7 @@ const mapAktiviteterTilTabell = (
   aktivitetsstatuser: KodeverkMedNavn[],
   alleArbeidsforhold: ArbeidsforholdV2[],
   arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysningerPerId,
+  featureToggles: FeatureToggles
 ) => {
   if (!aktiviteter.length) {
     return <FormattedMessage id="Uttaksplan.IngenUttaksplaner" />;
@@ -46,6 +48,7 @@ const mapAktiviteterTilTabell = (
         uttaksperioder={uttaksperioder}
         aktivitetsstatuser={aktivitetsstatuser}
         key={joinNonNullStrings(Object.values(arbeidsforhold))}
+        featureToggles={featureToggles}
       />
     );
   });
@@ -59,6 +62,7 @@ const Uttaksplan = ({
   aktiv,
   arbeidsforhold,
   arbeidsgiverOpplysningerPerId,
+  featureToggles
 }: UttaksplanProps) => {
   const [valgtTabIndex, setValgtTabIndex] = useState<number>(0);
 
@@ -89,6 +93,7 @@ const Uttaksplan = ({
           aktivitetsstatuser,
           arbeidsforhold,
           arbeidsgiverOpplysningerPerId,
+          featureToggles
         )}
       {valgtTabIndex === 1 &&
         mapAktiviteterTilTabell(
@@ -97,6 +102,7 @@ const Uttaksplan = ({
           aktivitetsstatuser,
           arbeidsforhold,
           arbeidsgiverOpplysningerPerId,
+          featureToggles
         )}
     </div>
   );

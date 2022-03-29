@@ -96,3 +96,5 @@ spec:
       value: "false"
     - name: SOKNADPERIODESTRIPE
       value: "false"
+    - name: UTTAK_AVVIK
+      value: "false"
