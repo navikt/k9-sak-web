@@ -2,14 +2,23 @@ import innvilgetImageUrl from '@fpsak-frontend/assets/images/innvilget_valgt.svg
 import { DatepickerField, SelectField } from '@fpsak-frontend/form';
 import venteArsakType from '@fpsak-frontend/kodeverk/src/venteArsakType';
 import { Image, VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { ariaCheck, dateAfterOrEqualToToday, dateBeforeToday, hasValidDate, required } from '@fpsak-frontend/utils';
-import { KodeverkMedNavn } from '@k9-sak-web/types';
+import {
+  ariaCheck,
+  dateAfterOrEqualToToday,
+  dateBeforeToday,
+  formatDate,
+  hasValidDate,
+  required,
+} from '@fpsak-frontend/utils';
+import { getPathToFplos } from '@k9-sak-web/sak-app/src/app/paths';
+import { KodeverkMedNavn, Venteaarsak } from '@k9-sak-web/types';
 import moment from 'moment';
 import { Container } from 'nav-frontend-grid';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 import Modal from 'nav-frontend-modal';
-import { Element, Normaltekst } from 'nav-frontend-typografi';
-import React from 'react';
+import { Normaltekst, Element } from 'nav-frontend-typografi';
+import React, { useState } from 'react';
+import { Select as NavSelect } from 'nav-frontend-skjema';
 import { FormattedMessage, injectIntl, WrappedComponentProps } from 'react-intl';
 import { connect } from 'react-redux';
 import { formValueSelector, InjectedFormProps, reduxForm } from 'redux-form';
@@ -21,13 +30,19 @@ const initFrist = (): string => {
   return date.toISOString().substr(0, 10);
 };
 
+const venterEtterlysInntektsmeldingKode = 'VENTER_ETTERLYS_IM';
+
 const isButtonDisabled = (
   frist: string,
   showAvbryt: boolean,
   venteArsakHasChanged: boolean,
   fristHasChanged: boolean,
   hasManualPaVent: boolean,
+  erVenterEtterlysInntektsmelding: boolean,
 ): boolean => {
+  if (erVenterEtterlysInntektsmelding) {
+    return false;
+  }
   const dateNotValid = !!hasValidDate(frist) || !!dateAfterOrEqualToToday(frist);
   const defaultOptions = (!hasManualPaVent || showAvbryt) && !venteArsakHasChanged && !fristHasChanged;
   return defaultOptions || dateNotValid;
@@ -36,30 +51,36 @@ const isButtonDisabled = (
 const hovedKnappenType = (venteArsakHasChanged: boolean, fristHasChanged: boolean): boolean =>
   venteArsakHasChanged || fristHasChanged;
 
-const getPaVentText = (originalVentearsak: string, hasManualPaVent: boolean, frist: string): string => {
+const getPaVentText = (
+  originalVentearsak: string,
+  hasManualPaVent: boolean,
+  frist: string,
+  originalFrist: string,
+  showEndreFrist: boolean,
+) => {
   if (originalVentearsak) {
-    return hasManualPaVent || frist ? 'SettPaVentModal.ErSettPaVent' : 'SettPaVentModal.ErPaVentUtenFrist';
-  }
-  return hasManualPaVent || frist ? 'SettPaVentModal.SettesPaVent' : 'SettPaVentModal.SettesPaVentUtenFrist';
-};
+    if (originalVentearsak === venterEtterlysInntektsmeldingKode && originalFrist && !showEndreFrist) {
+      return (
+        <FormattedMessage
+          id="SettPaVentModal.EtterlysningAvInntektsmeldingErSendt"
+          values={{ date: formatDate(originalFrist) }}
+        />
+      );
+    }
 
-const manuelleVenteArsaker = [
-  venteArsakType.AVV_DOK,
-  venteArsakType.UTV_FRIST,
-  venteArsakType.AVV_RESPONS_REVURDERING,
-  venteArsakType.FOR_TIDLIG_SOKNAD,
-  venteArsakType.VENT_PÅ_NY_INNTEKTSMELDING_MED_GYLDIG_ARB_ID,
-  venteArsakType.ANKE_VENTER_PAA_MERKNADER_FRA_BRUKER,
-  venteArsakType.ANKE_OVERSENDT_TIL_TRYGDERETTEN,
-  venteArsakType.VENT_OPDT_INNTEKTSMELDING,
-  venteArsakType.VENT_OPPTJENING_OPPLYSNINGER,
-  venteArsakType.UTVIDET_TILSVAR_FRIST,
-  venteArsakType.ENDRE_TILKJENT_YTELSE,
-  venteArsakType.VENT_PÅ_MULIG_MOTREGNING,
-  venteArsakType.VENT_MANGL_FUNKSJ_SAKSBEHANDLER,
-  venteArsakType.VENTER_SVAR_PORTEN,
-  venteArsakType.VENTER_SVAR_TEAMS,
-];
+    return hasManualPaVent || frist ? (
+      <FormattedMessage id="SettPaVentModal.ErSettPaVent" />
+    ) : (
+      <FormattedMessage id="SettPaVentModal.ErPaVentUtenFrist" />
+    );
+  }
+
+  return hasManualPaVent || frist ? (
+    <FormattedMessage id="SettPaVentModal.SettesPaVent" />
+  ) : (
+    <FormattedMessage id="SettPaVentModal.SettesPaVentUtenFrist" />
+  );
+};
 
 const automatiskeVentearsakerForTilbakekreving = [
   venteArsakType.VENT_PÅ_BRUKERTILBAKEMELDING,
@@ -77,7 +98,7 @@ type FormValues = {
 interface PureOwnProps {
   cancelEvent: () => void;
   showModal: boolean;
-  ventearsaker: KodeverkMedNavn[];
+  ventearsaker: Venteaarsak[];
   erTilbakekreving: boolean;
   visBrevErBestilt?: boolean;
   hasManualPaVent: boolean;
@@ -109,6 +130,7 @@ export const SettPaVentModal = ({
 }: PureOwnProps & Partial<MappedOwnProps> & WrappedComponentProps & InjectedFormProps) => {
   const venteArsakHasChanged = !(originalVentearsak === ventearsak || (!ventearsak && !originalVentearsak));
   const fristHasChanged = !(originalFrist === frist || (!frist && !originalFrist));
+  const [showEndreFrist, setShowEndreFrist] = useState(hasManualPaVent || !!frist);
 
   const showAvbryt = !(originalFrist === frist && !venteArsakHasChanged);
   const erFristenUtløpt =
@@ -117,8 +139,47 @@ export const SettPaVentModal = ({
       (originalFrist !== undefined && dateBeforeToday(originalFrist) === null));
   const erVenterPaKravgrunnlag = ventearsak === venteArsakType.VENT_PÅ_TILBAKEKREVINGSGRUNNLAG;
   const showFristenTekst = erTilbakekreving && erFristenUtløpt && erVenterPaKravgrunnlag;
+  const erVenterEtterlysInntektsmelding = originalVentearsak === venterEtterlysInntektsmeldingKode;
+  const showSelect = erVenterEtterlysInntektsmelding ? !showEndreFrist : true;
+
+  const toggleEndreFrist = () => setShowEndreFrist(!showEndreFrist);
 
   Modal.setAppElement(document.body);
+
+  const getHovedknappTekst = () => {
+    if (erVenterEtterlysInntektsmelding && !showEndreFrist) {
+      return <FormattedMessage id="SettPaVentModal.Ok" />;
+    }
+
+    if (erVenterEtterlysInntektsmelding && showEndreFrist) {
+      return <FormattedMessage id="SettPaVentModal.EndreFrist" />;
+    }
+
+    return <FormattedMessage id="SettPaVentModal.SettPaVent" />;
+  };
+
+  const goToLos = () => {
+    const path = getPathToFplos();
+    window.location.assign(path);
+  };
+
+  const getHovedknappOnClick = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    if (erVenterEtterlysInntektsmelding) {
+      toggleEndreFrist();
+    }
+    if (erVenterEtterlysInntektsmelding && !showEndreFrist) {
+      event.stopPropagation();
+      event.preventDefault();
+      return goToLos();
+    }
+    if (showAvbryt) {
+      return ariaCheck();
+    }
+    if (!erVenterEtterlysInntektsmelding) {
+      return cancelEvent();
+    }
+    return null;
+  };
 
   return (
     <>
@@ -143,9 +204,9 @@ export const SettPaVentModal = ({
               <div className={styles.divider} />
               <div className={styles.calendarContainer}>
                 <Normaltekst className={styles.label}>
-                  <FormattedMessage id={getPaVentText(originalVentearsak, hasManualPaVent, frist)} />
+                  {getPaVentText(originalVentearsak, hasManualPaVent, frist, originalFrist, showEndreFrist)}
                 </Normaltekst>
-                {(hasManualPaVent || frist) && (
+                {showEndreFrist && (
                   <div className={styles.datePicker}>
                     <DatepickerField
                       name="frist"
@@ -158,26 +219,32 @@ export const SettPaVentModal = ({
             </div>
 
             <div className={styles.contentContainer}>
-              <div className={styles.flexContainer}>
-                <SelectField
-                  name="ventearsak"
-                  label={<Element>{intl.formatMessage({ id: 'SettPaVentModal.HvaVenterViPa' })}</Element>}
-                  placeholder={intl.formatMessage({ id: 'SettPaVentModal.SelectPlaceholder' })}
-                  validate={[required]}
-                  selectValues={ventearsaker
-                    .filter(va =>
-                      erTilbakekreving ? inkluderVentearsak(va, ventearsak) : manuelleVenteArsaker.includes(va.kode),
-                    )
-                    .sort((v1, v2) => v1.navn.localeCompare(v2.navn))
-                    .map(va => (
-                      <option key={va.kode} value={va.kode}>
-                        {va.navn}
-                      </option>
-                    ))}
-                  bredde="xxxl"
-                  readOnly={!hasManualPaVent}
-                />
-              </div>
+              {showSelect && (
+                <div className={styles.flexContainer}>
+                  {erVenterEtterlysInntektsmelding ? (
+                    <NavSelect className={styles.disabledNavSelect} disabled>
+                      <option value="">Inntektsmelding</option>
+                    </NavSelect>
+                  ) : (
+                    <SelectField
+                      name="ventearsak"
+                      label={<Element>{intl.formatMessage({ id: 'SettPaVentModal.HvaVenterViPa' })}</Element>}
+                      placeholder={intl.formatMessage({ id: 'SettPaVentModal.SelectPlaceholder' })}
+                      validate={[required]}
+                      selectValues={ventearsaker
+                        .filter(va => (erTilbakekreving ? inkluderVentearsak(va, ventearsak) : va.kanVelges === 'true'))
+                        .sort((v1, v2) => v1.navn.localeCompare(v2.navn))
+                        .map(va => (
+                          <option key={va.kode} value={va.kode}>
+                            {va.navn}
+                          </option>
+                        ))}
+                      bredde="xxxl"
+                      readOnly={!hasManualPaVent}
+                    />
+                  )}
+                </div>
+              )}
               {visBrevErBestilt && (
                 <Normaltekst>
                   <FormattedMessage id="SettPaVentModal.BrevBlirBestilt" />
@@ -192,19 +259,35 @@ export const SettPaVentModal = ({
                   </Normaltekst>
                 )}
               </div>
-              <div className={styles.buttonContainer}>
+              <div className={showSelect ? styles.buttonContainer : ''}>
                 <Hovedknapp
                   mini
                   htmlType={hovedKnappenType(venteArsakHasChanged, fristHasChanged) ? 'submit' : 'button'}
                   className={styles.button}
-                  onClick={showAvbryt ? ariaCheck : cancelEvent}
-                  disabled={isButtonDisabled(frist, showAvbryt, venteArsakHasChanged, fristHasChanged, hasManualPaVent)}
+                  onClick={event => getHovedknappOnClick(event)}
+                  disabled={isButtonDisabled(
+                    frist,
+                    showAvbryt,
+                    venteArsakHasChanged,
+                    fristHasChanged,
+                    hasManualPaVent,
+                    erVenterEtterlysInntektsmelding,
+                  )}
                 >
-                  <FormattedMessage id="SettPaVentModal.SettPaVent" />
+                  {getHovedknappTekst()}
                 </Hovedknapp>
                 {(!hasManualPaVent || showAvbryt || !visBrevErBestilt) && (
-                  <Knapp htmlType="button" mini onClick={cancelEvent} className={styles.cancelButton}>
-                    <FormattedMessage id="SettPaVentModal.Lukk" />
+                  <Knapp
+                    htmlType="button"
+                    mini
+                    onClick={!showEndreFrist ? toggleEndreFrist : cancelEvent}
+                    className={styles.cancelButton}
+                  >
+                    {showEndreFrist ? (
+                      <FormattedMessage id="SettPaVentModal.Lukk" />
+                    ) : (
+                      <FormattedMessage id="SettPaVentModal.EndreFrist" />
+                    )}
                   </Knapp>
                 )}
               </div>

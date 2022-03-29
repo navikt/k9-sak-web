@@ -1,10 +1,8 @@
+import SettPaVentModalIndex from '@k9-sak-web/modal-sett-pa-vent';
+import { Venteaarsak } from '@k9-sak-web/types';
 import React, { useCallback } from 'react';
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 import { useNavigate } from 'react-router-dom';
-
-import { KodeverkMedNavn } from '@k9-sak-web/types';
-import SettPaVentModalIndex from '@k9-sak-web/modal-sett-pa-vent';
-
 import messages from '../i18n/nb_NO.json';
 
 const cache = createIntlCache();
@@ -28,7 +26,7 @@ interface OwnProps {
     frist: string;
     ventearsak: string;
   }) => void;
-  ventearsaker: KodeverkMedNavn[];
+  ventearsaker: Venteaarsak[];
   lukkModal: () => void;
   erTilbakekreving: boolean;
 }

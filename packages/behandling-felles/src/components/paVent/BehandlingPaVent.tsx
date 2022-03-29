@@ -1,17 +1,15 @@
-import React, { useState, useMemo, useCallback, useEffect } from 'react';
-
-import SettPaVentModalIndex from '@k9-sak-web/modal-sett-pa-vent';
-import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
-import { Behandling, Aksjonspunkt, KodeverkMedNavn } from '@k9-sak-web/types';
-
+import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
+import SettPaVentModalIndex from '@k9-sak-web/modal-sett-pa-vent';
+import { Aksjonspunkt, Behandling, Venteaarsak } from '@k9-sak-web/types';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import SettPaVentParams from '../../types/settPaVentParamsTsType';
 
 interface BehandlingPaVentProps {
   behandling: Behandling;
   aksjonspunkter: Aksjonspunkt[];
-  kodeverk: { [key: string]: KodeverkMedNavn[] };
+  kodeverk: { [key: string]: Venteaarsak[] };
   settPaVent: (params: SettPaVentParams) => Promise<any>;
   hentBehandling: ({ behandlingId: number }, keepData: boolean) => Promise<any>;
   erTilbakekreving?: boolean;

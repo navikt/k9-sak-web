@@ -1,10 +1,8 @@
+import { Venteaarsak } from '@k9-sak-web/types';
 import React from 'react';
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
-
-import { KodeverkMedNavn } from '@k9-sak-web/types';
-
-import SettPaVentModal from './components/SettPaVentModal';
 import messages from '../i18n/nb_NO.json';
+import SettPaVentModal from './components/SettPaVentModal';
 
 const cache = createIntlCache();
 
@@ -20,7 +18,7 @@ interface OwnProps {
   cancelEvent: () => void;
   submitCallback: (formData: any) => void;
   showModal: boolean;
-  ventearsaker: KodeverkMedNavn[];
+  ventearsaker: Venteaarsak[];
   frist?: string;
   ventearsak?: string;
   visBrevErBestilt?: boolean;
