@@ -45,7 +45,7 @@ describe('<BrevPanel>', () => {
         overskrift={null}
         behandlingResultat={null}
         overstyrtMottaker={null}
-        formikProps={{}}
+        formikProps={{values: []}}
       />,
     );
 
@@ -72,7 +72,7 @@ describe('<BrevPanel>', () => {
         overskrift={null}
         behandlingResultat={null}
         overstyrtMottaker={null}
-        formikProps={{}}
+        formikProps={{values: []}}
       />,
     );
 
@@ -99,7 +99,7 @@ describe('<BrevPanel>', () => {
         overskrift={null}
         behandlingResultat={null}
         overstyrtMottaker={null}
-        formikProps={{}}
+        formikProps={{values: []}}
       />,
     );
 
@@ -126,7 +126,7 @@ describe('<BrevPanel>', () => {
         overskrift={null}
         behandlingResultat={null}
         overstyrtMottaker={null}
-        formikProps={{}}
+        formikProps={{values: []}}
       />,
     );
     expect(wrapper.find(InformasjonsbehovAutomatiskVedtaksbrev)).to.have.length(0);
@@ -166,7 +166,7 @@ describe('<BrevPanel>', () => {
         overskrift={null}
         behandlingResultat={null}
         overstyrtMottaker={null}
-        formikProps={{}}
+        formikProps={{values: []}}
       />,
     );
 
