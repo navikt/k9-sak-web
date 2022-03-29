@@ -124,6 +124,7 @@ const lagPeriode = () => ({
   andelerLagtTilManueltIForrige: [],
 });
 const lagBeregningsgrunnlag = (avvikPromille, årsinntektVisningstall, sammenligningSum, dekningsgrad, tilfeller) => ({
+  vilkårsperiodeFom: '2019-09-16',
   beregningsgrunnlagPeriode: [lagPeriode()],
   sammenligningsgrunnlag: {
     avvikPromille,
@@ -272,7 +273,6 @@ describe('<BeregningForm>', () => {
     );
     const aksjonspunktBehandler = wrapper.find(AksjonspunktBehandler);
     expect(aksjonspunktBehandler.props().readOnly).to.have.equal(false);
-    expect(aksjonspunktBehandler.props().tidsBegrensetInntekt).to.have.equal(false);
     const expectedPerioder = lagPeriode();
     expect(aksjonspunktBehandler.props().allePerioder[0]).to.eql(expectedPerioder);
     expect(aksjonspunktBehandler.props().avklaringsbehov).to.eql(avklaringsbehovListe);
@@ -424,13 +424,21 @@ describe('<BeregningForm>', () => {
     expect(result[0].kode).to.have.equal('5049');
   });
   it('skal teste buildInitialValues', () => {
-    const avklaringsbehov = [apFastsettBgTidsbegrensetArbeidsforhold];
+    const avklaringsbehov = [];
     const beregningsgrunnlag = lagBeregningsgrunnlag(0, 120000, 100000, 100, []);
 
-    const actualValues = buildInitialValuesForBeregningrunnlag(beregningsgrunnlag, avklaringsbehov);
+    beregningsgrunnlag.avklaringsbehov = avklaringsbehov;
+    const bgVilkar= {
+      perioder: [
+        {
+          fom: beregningsgrunnlag.vilkårsperiodeFom
+        }
+      ]
+    };
+
+    const actualValues = buildInitialValuesForBeregningrunnlag(beregningsgrunnlag, bgVilkar);
     const expectedValues = {
-      ATFLVurdering: undefined,
-      undefined: '',
+      ATFLVurdering: "",
       erTilVurdering: false,
       skjæringstidspunkt: undefined,
       avklaringsbehov,

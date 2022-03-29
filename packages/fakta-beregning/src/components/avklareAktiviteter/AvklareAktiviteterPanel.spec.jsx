@@ -48,7 +48,7 @@ const alleKodeverk = {
   ],
 };
 
-const apsAvklarAktiviteter = [{ definisjon: { kode: AVKLAR_AKTIVITETER } }];
+const apsAvklarAktiviteter = [{ definisjon: { kode: AVKLAR_AKTIVITETER }, kanLoses: true }];
 
 const lagStateMedAvklarAktitiveter = (
   avklarAktiviteter,

@@ -19,6 +19,8 @@ export {
   visningsdato,
   isValidDate,
   convertHoursToDays,
+  formatereLukketPeriode,
+  formatDate
 } from './src/dateUtils';
 export { default as decodeHtmlEntity } from './src/decodeHtmlEntity';
 export { fodselsnummerPattern, isValidFodselsnummer } from './src/fodselsnummerUtils';

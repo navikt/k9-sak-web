@@ -11,6 +11,7 @@ import dayjs, { Dayjs } from 'dayjs';
 import { Normaltekst } from 'nav-frontend-typografi';
 import React, { useEffect, useState } from 'react';
 import { useIntl } from 'react-intl';
+import { Period } from '@navikt/k9-period-utils';
 import CheckIcon from './icons/CheckIcon';
 import RejectedIcon from './icons/RejectedIcon';
 import SaksbehandlerIcon from './icons/SaksbehandlerIcon';
@@ -30,10 +31,10 @@ const getPerioderMedÅrsak = (årsak: string, behandlingPerioderårsakMedVilkår
     .map(periode => ({ periode: periode.periode }));
 
 const harPeriodeoverlapp = (relevantePerioder, periodeFraDokument) =>
-  relevantePerioder.some(
-    relevantePeriode =>
-      relevantePeriode.periode.fom === periodeFraDokument.periode.fom &&
-      relevantePeriode.periode.tom === periodeFraDokument.periode.tom,
+  relevantePerioder.some(relevantPeriode =>
+    new Period(relevantPeriode.periode.fom, relevantPeriode.periode.tom).covers(
+      new Period(periodeFraDokument.periode.fom, periodeFraDokument.periode.tom),
+    ),
   );
 
 const lagPerioderFraDokumenter = (
@@ -286,10 +287,17 @@ const SoknadsperioderComponent = (props: SoknadsperioderComponentProps) => {
     return false;
   });
 
-  const updateZoom = (zoomValue: number) => {
-    const senesteTom = getSenesteTom();
-    if (dayjs(navigasjonFomDato).add(zoomValue, 'months').isSameOrAfter(senesteTom)) {
-      setNavigasjonFomDato(subtractMonthsFromDate(senesteTom, zoomValue));
+  const updateZoom = (zoomValue: number, zoomIn?: boolean) => {
+    if (zoomIn) {
+      const senesteTom = getSenesteTom();
+      const nyTom = dayjs(navigasjonFomDato).add(zoomValue + 1, 'months');
+      if (nyTom.isSameOrAfter(senesteTom)) {
+        setNavigasjonFomDato(subtractMonthsFromDate(senesteTom, zoomValue)); // For å forhindre at horisontal navigasjon viser forbi seneste dato fra periodene
+      } else {
+        setNavigasjonFomDato(dayjs(navigasjonFomDato).add(1, 'months'));
+      }
+    } else {
+      setNavigasjonFomDato(dayjs(navigasjonFomDato).subtract(1, 'months'));
     }
     setTidslinjeSkala(zoomValue);
   };
@@ -317,28 +325,26 @@ const SoknadsperioderComponent = (props: SoknadsperioderComponentProps) => {
           <div className={styles.skalavelgerContainer}>
             <button
               onClick={() => {
-                if (tidslinjeSkala < 4) {
-                  updateZoom(1);
-                } else {
-                  updateZoom(tidslinjeSkala - 3);
+                if (tidslinjeSkala > 1) {
+                  updateZoom(tidslinjeSkala - 1, true);
                 }
               }}
               type="button"
               className={styles.zoomButton}
+              disabled={tidslinjeSkala === 1}
             >
               <ZoomInIcon />
               <Normaltekst>{intl.formatMessage({ id: 'Soknadsperioder.Zoom.Forstørre' })}</Normaltekst>
             </button>
             <button
               onClick={() => {
-                if (tidslinjeSkala > 33) {
-                  updateZoom(36);
-                } else {
-                  updateZoom(tidslinjeSkala + 3);
+                if (tidslinjeSkala < 36) {
+                  updateZoom(tidslinjeSkala + 1);
                 }
               }}
               type="button"
               className={styles.zoomButton}
+              disabled={tidslinjeSkala === 36}
             >
               <ZoomOutIcon />
               <Normaltekst>{intl.formatMessage({ id: 'Soknadsperioder.Zoom.Forminske' })}</Normaltekst>
