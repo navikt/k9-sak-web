@@ -7,7 +7,7 @@ import { Normaltekst, Undertittel } from 'nav-frontend-typografi';
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import styles from './behandlingPickerItemContent.less';
-import { getFormattedSøknadserioder, getStatusIcon } from './behandlingVelgerUtils';
+import { getFormattedSøknadserioder, getStatusIcon, getStatusText } from './behandlingVelgerUtils';
 
 const getAutomatiskRevurderingText = () => <span className={styles.smallerUndertittel}>(automatisk behandlet)</span>;
 
@@ -17,6 +17,7 @@ interface OwnProps {
   erAutomatiskRevurdering: boolean;
   behandlingTypeNavn: string;
   søknadsperioder: Periode[];
+  erFerdigstilt: boolean;
 }
 
 /**
@@ -30,6 +31,7 @@ const BehandlingPickerItemContent: React.FC<OwnProps> = ({
   erAutomatiskRevurdering,
   behandlingTypeNavn,
   søknadsperioder,
+  erFerdigstilt,
 }) => (
   <Panel className={erAutomatiskRevurdering ? styles.indent : ''} border>
     <div className={styles.behandlingPicker}>
@@ -48,10 +50,11 @@ const BehandlingPickerItemContent: React.FC<OwnProps> = ({
           {søknadsperioder?.length > 0 && <Normaltekst>{getFormattedSøknadserioder(søknadsperioder)}</Normaltekst>}
         </div>
         <div className={styles.resultContainer}>
-          {getStatusIcon(behandlingsresultatTypeKode, styles.utfallImage)}
+          {getStatusIcon(behandlingsresultatTypeKode, styles.utfallImage, erFerdigstilt)}
           <Normaltekst>
             <FormattedMessage id="BehandlingPickerItemContent.Resultat" />
-            {`: ${behandlingsresultatTypeKode ? behandlingsresultatTypeNavn : '-'}`}
+            {`: `}
+            {getStatusText(behandlingsresultatTypeKode, behandlingsresultatTypeNavn, erFerdigstilt)}
           </Normaltekst>
         </div>
       </div>
