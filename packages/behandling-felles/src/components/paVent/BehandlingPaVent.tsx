@@ -48,6 +48,14 @@ const BehandlingPaVent = ({
     [aksjonspunkter],
   );
 
+  const ventearsakVariant = useMemo(
+    () =>
+      (aksjonspunkter || [])
+        .filter(ap => isAksjonspunktOpen(ap.status.kode))
+        .find(ap => ap.definisjon.kode === aksjonspunktCodes.AUTO_MANUELT_SATT_PÅ_VENT)?.venteårsakVariant,
+    [aksjonspunkter],
+  );
+
   if (!skalViseModal) {
     return null;
   }
@@ -61,6 +69,7 @@ const BehandlingPaVent = ({
       hasManualPaVent={erManueltSattPaVent}
       ventearsaker={kodeverk[kodeverkTyper.VENT_AARSAK]}
       erTilbakekreving={erTilbakekreving}
+      ventearsakVariant={ventearsakVariant}
       showModal
     />
   );

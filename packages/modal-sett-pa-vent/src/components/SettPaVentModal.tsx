@@ -1,5 +1,5 @@
 import innvilgetImageUrl from '@fpsak-frontend/assets/images/innvilget_valgt.svg';
-import { DatepickerField, SelectField } from '@fpsak-frontend/form';
+import { DatepickerField, SelectField, TextAreaField } from '@fpsak-frontend/form';
 import venteArsakType from '@fpsak-frontend/kodeverk/src/venteArsakType';
 import { Image, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import {
@@ -8,6 +8,8 @@ import {
   dateBeforeToday,
   formatDate,
   hasValidDate,
+  hasValidText,
+  maxLength,
   required,
 } from '@fpsak-frontend/utils';
 import { getPathToFplos } from '@k9-sak-web/sak-app/src/app/paths';
@@ -30,6 +32,12 @@ const initFrist = (): string => {
   return date.toISOString().substr(0, 10);
 };
 
+const venterårsakerMedKommentarmulighet = [
+  'VENTER_SVAR_PORTEN',
+  'VENTER_SVAR_TEAMS',
+  'VENT_MANGL_FUNKSJ_SAKSBEHANDLER',
+];
+
 const venterEtterlysInntektsmeldingKode = 'VENTER_ETTERLYS_IM';
 
 const isButtonDisabled = (
@@ -38,18 +46,23 @@ const isButtonDisabled = (
   venteArsakHasChanged: boolean,
   fristHasChanged: boolean,
   hasManualPaVent: boolean,
+  ventearsakVariantHasChanged: boolean,
   erVenterEtterlysInntektsmelding: boolean,
 ): boolean => {
   if (erVenterEtterlysInntektsmelding) {
     return false;
   }
   const dateNotValid = !!hasValidDate(frist) || !!dateAfterOrEqualToToday(frist);
-  const defaultOptions = (!hasManualPaVent || showAvbryt) && !venteArsakHasChanged && !fristHasChanged;
+  const defaultOptions =
+    (!hasManualPaVent || showAvbryt) && !venteArsakHasChanged && !fristHasChanged && !ventearsakVariantHasChanged;
   return defaultOptions || dateNotValid;
 };
 
-const hovedKnappenType = (venteArsakHasChanged: boolean, fristHasChanged: boolean): boolean =>
-  venteArsakHasChanged || fristHasChanged;
+const hovedKnappenType = (
+  venteArsakHasChanged: boolean,
+  fristHasChanged: boolean,
+  ventearsakVariantHasChanged: boolean,
+): boolean => venteArsakHasChanged || fristHasChanged || ventearsakVariantHasChanged;
 
 const getPaVentText = (
   originalVentearsak: string,
@@ -93,6 +106,7 @@ const inkluderVentearsak = (ventearsak: KodeverkMedNavn, valgtVentearsak?: strin
 type FormValues = {
   frist?: string;
   ventearsak?: string;
+  ventearsakVariant?: string;
 };
 
 interface PureOwnProps {
@@ -104,6 +118,7 @@ interface PureOwnProps {
   hasManualPaVent: boolean;
   frist?: string;
   ventearsak?: string;
+  ventearsakVariant?: string;
 }
 
 interface MappedOwnProps {
@@ -112,6 +127,8 @@ interface MappedOwnProps {
   originalFrist?: string;
   originalVentearsak?: string;
   initialValues: FormValues;
+  ventearsakVariant?: string;
+  originalVentearsakVariant?: string;
 }
 
 export const SettPaVentModal = ({
@@ -127,12 +144,18 @@ export const SettPaVentModal = ({
   originalVentearsak,
   visBrevErBestilt = false,
   hasManualPaVent,
+  ventearsakVariant,
+  originalVentearsakVariant,
 }: PureOwnProps & Partial<MappedOwnProps> & WrappedComponentProps & InjectedFormProps) => {
   const venteArsakHasChanged = !(originalVentearsak === ventearsak || (!ventearsak && !originalVentearsak));
+  const ventearsakVariantHasChanged =
+    (!originalVentearsakVariant && !!ventearsakVariant) ||
+    (originalVentearsakVariant && originalVentearsakVariant !== ventearsakVariant);
+
   const fristHasChanged = !(originalFrist === frist || (!frist && !originalFrist));
   const [showEndreFrist, setShowEndreFrist] = useState(hasManualPaVent || !!frist);
 
-  const showAvbryt = !(originalFrist === frist && !venteArsakHasChanged);
+  const showAvbryt = !(originalFrist === frist && !venteArsakHasChanged && !ventearsakVariantHasChanged);
   const erFristenUtløpt =
     erTilbakekreving &&
     ((frist !== undefined && dateBeforeToday(frist) === null) ||
@@ -141,6 +164,7 @@ export const SettPaVentModal = ({
   const showFristenTekst = erTilbakekreving && erFristenUtløpt && erVenterPaKravgrunnlag;
   const erVenterEtterlysInntektsmelding = originalVentearsak === venterEtterlysInntektsmeldingKode;
   const showSelect = erVenterEtterlysInntektsmelding ? !showEndreFrist : true;
+  const showKommentarInput = venterårsakerMedKommentarmulighet.includes(ventearsak);
 
   const toggleEndreFrist = () => setShowEndreFrist(!showEndreFrist);
 
@@ -220,7 +244,7 @@ export const SettPaVentModal = ({
 
             <div className={styles.contentContainer}>
               {showSelect && (
-                <div className={styles.flexContainer}>
+                <div className={styles.selectContainer}>
                   {erVenterEtterlysInntektsmelding ? (
                     <NavSelect className={styles.disabledNavSelect} disabled>
                       <option value="">Inntektsmelding</option>
@@ -245,6 +269,20 @@ export const SettPaVentModal = ({
                   )}
                 </div>
               )}
+              {showKommentarInput && (
+                <TextAreaField
+                  name="ventearsakVariant"
+                  maxLength={200}
+                  readOnly={!hasManualPaVent}
+                  validate={[hasValidText, maxLength(200)]}
+                  label={
+                    <div className={styles.commentInputLabel}>
+                      <Element>{intl.formatMessage({ id: 'SettPaVentModal.Kommentar' })}</Element>
+                      <span>({intl.formatMessage({ id: 'SettPaVentModal.Valgfritt' })})</span>
+                    </div>
+                  }
+                />
+              )}
               {visBrevErBestilt && (
                 <Normaltekst>
                   <FormattedMessage id="SettPaVentModal.BrevBlirBestilt" />
@@ -262,7 +300,11 @@ export const SettPaVentModal = ({
               <div className={showSelect ? styles.buttonContainer : ''}>
                 <Hovedknapp
                   mini
-                  htmlType={hovedKnappenType(venteArsakHasChanged, fristHasChanged) ? 'submit' : 'button'}
+                  htmlType={
+                    hovedKnappenType(venteArsakHasChanged, fristHasChanged, ventearsakVariantHasChanged)
+                      ? 'submit'
+                      : 'button'
+                  }
                   className={styles.button}
                   onClick={event => getHovedknappOnClick(event)}
                   disabled={isButtonDisabled(
@@ -271,6 +313,7 @@ export const SettPaVentModal = ({
                     venteArsakHasChanged,
                     fristHasChanged,
                     hasManualPaVent,
+                    ventearsakVariantHasChanged,
                     erVenterEtterlysInntektsmelding,
                   )}
                 >
@@ -302,14 +345,17 @@ export const SettPaVentModal = ({
 const buildInitialValues = (initialProps: PureOwnProps): FormValues => ({
   ventearsak: initialProps.ventearsak,
   frist: initialProps.frist || initialProps.hasManualPaVent === false ? initialProps.frist : initFrist(),
+  ventearsakVariant: initialProps.ventearsakVariant,
 });
 
 const mapStateToProps = (state, initialOwnProps: PureOwnProps): MappedOwnProps => ({
   initialValues: buildInitialValues(initialOwnProps),
   frist: formValueSelector('settPaVentModalForm')(state, 'frist'),
   ventearsak: formValueSelector('settPaVentModalForm')(state, 'ventearsak'),
+  ventearsakVariant: formValueSelector('settPaVentModalForm')(state, 'ventearsakVariant'),
   originalFrist: initialOwnProps.frist,
   originalVentearsak: initialOwnProps.ventearsak,
+  originalVentearsakVariant: initialOwnProps.ventearsakVariant,
 });
 
 export default connect(mapStateToProps)(

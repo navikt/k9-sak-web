@@ -24,6 +24,7 @@ interface OwnProps {
   visBrevErBestilt?: boolean;
   hasManualPaVent: boolean;
   erTilbakekreving?: boolean;
+  ventearsakVariant?: string;
 }
 
 const SettPaVentModalIndex = ({
@@ -36,6 +37,7 @@ const SettPaVentModalIndex = ({
   visBrevErBestilt,
   hasManualPaVent,
   erTilbakekreving,
+  ventearsakVariant,
 }: OwnProps) => (
   <RawIntlProvider value={intl}>
     <SettPaVentModal
@@ -48,6 +50,7 @@ const SettPaVentModalIndex = ({
       visBrevErBestilt={visBrevErBestilt}
       hasManualPaVent={hasManualPaVent}
       erTilbakekreving={erTilbakekreving}
+      ventearsakVariant={ventearsakVariant}
     />
   </RawIntlProvider>
 );

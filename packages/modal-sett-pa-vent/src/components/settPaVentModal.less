@@ -54,6 +54,12 @@
   display: flex;
 }
 
+.selectContainer {
+  :global .selectContainer {
+    width: 100%;
+  }
+}
+
 .calendarContainer {
   align-items: baseline;
   display: flex;
@@ -74,4 +80,14 @@
 
 .disabledNavSelect {
   width: 100%;
+}
+
+.commentInputLabel {
+  margin-top: 1.8125rem;
+  display: flex;
+  align-items: center;
+
+  span {
+    margin-left: 0.25rem;
+  }
 }

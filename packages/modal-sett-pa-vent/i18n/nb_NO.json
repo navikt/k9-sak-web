@@ -17,5 +17,7 @@
   "SettPaVentModal.HenleggeSaken": "Kontroller hvorfor Økonomi ikke har dannet et kravgrunnlag.\n Dersom det feilutbetalte beløpet er bortfalt skal saken henlegges.\nFor mer informasjon, se rutine under tilbakekreving.",
   "SettPaVentModal.HvaVenterViPa": "Hva venter vi på?",
   "SettPaVentModal.EndreFrist": "Endre frist",
-  "SettPaVentModal.EtterlysningAvInntektsmeldingErSendt": "Etterlysning av inntektsmelding er sendt og behandlingen er satt på vent til {date}. Du kommer nå tilbake til LOS."
+  "SettPaVentModal.EtterlysningAvInntektsmeldingErSendt": "Etterlysning av inntektsmelding er sendt og behandlingen er satt på vent til {date}. Du kommer nå tilbake til LOS.",
+  "SettPaVentModal.Kommentar": "Kommentar",
+  "SettPaVentModal.Valgfritt": "valgfritt"
 }

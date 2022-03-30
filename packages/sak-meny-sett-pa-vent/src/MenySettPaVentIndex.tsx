@@ -48,6 +48,7 @@ const MenySettPaVentIndex = ({
         behandlingId,
         frist: formValues.frist,
         ventearsak: formValues.ventearsak,
+        ventearsakVariant: formValues.ventearsakVariant,
       };
       settBehandlingPaVent(values);
 
