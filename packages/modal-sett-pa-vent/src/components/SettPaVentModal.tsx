@@ -261,7 +261,7 @@ export const SettPaVentModal = ({
                             {va.navn}
                           </option>
                         ))}
-                      bredde="xxxl"
+                      bredde="xxl"
                       readOnly={!hasManualPaVent}
                     />
                   )}

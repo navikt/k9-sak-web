@@ -27,6 +27,7 @@ const ventearsaker = [
     kode: venteArsakType.UTV_FRIST,
     kodeverk: 'VENT_ARSAK_TYPE',
     navn: 'Utvid frist',
+    kanVelges: 'true',
   },
 ];
 
