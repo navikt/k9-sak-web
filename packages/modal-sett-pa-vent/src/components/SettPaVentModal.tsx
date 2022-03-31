@@ -33,6 +33,7 @@ const initFrist = (): string => {
 };
 
 const venterårsakerMedKommentarmulighet = [
+  'ANNET',
   'VENTER_SVAR_PORTEN',
   'VENTER_SVAR_TEAMS',
   'VENT_MANGL_FUNKSJ_SAKSBEHANDLER',
