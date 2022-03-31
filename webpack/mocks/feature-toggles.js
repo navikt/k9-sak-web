@@ -22,10 +22,6 @@ const featureToggles = [
     value: process.env.BEHANDLINGSVELGER_NY,
   },
   {
-    key: 'FAKTA_SOKNADSPERIODER',
-    value: process.env.FAKTA_SOKNADSPERIODER,
-  },
-  {
     key: 'UTENLANDSOPPHOLD',
     value: process.env.UTENLANDSOPPHOLD,
   },
