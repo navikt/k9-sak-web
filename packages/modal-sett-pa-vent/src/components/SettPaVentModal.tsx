@@ -43,18 +43,15 @@ const venterEtterlysInntektsmeldingKode = 'VENTER_ETTERLYS_IM';
 const isButtonDisabled = (
   frist: string,
   showAvbryt: boolean,
-  venteArsakHasChanged: boolean,
-  fristHasChanged: boolean,
   hasManualPaVent: boolean,
-  ventearsakVariantHasChanged: boolean,
   erVenterEtterlysInntektsmelding: boolean,
+  formHasChanges: boolean,
 ): boolean => {
   if (erVenterEtterlysInntektsmelding) {
     return false;
   }
   const dateNotValid = !!hasValidDate(frist) || !!dateAfterOrEqualToToday(frist);
-  const defaultOptions =
-    (!hasManualPaVent || showAvbryt) && !venteArsakHasChanged && !fristHasChanged && !ventearsakVariantHasChanged;
+  const defaultOptions = (!hasManualPaVent || showAvbryt) && !formHasChanges;
   return defaultOptions || dateNotValid;
 };
 
@@ -156,6 +153,7 @@ export const SettPaVentModal = ({
   const [showEndreFrist, setShowEndreFrist] = useState(hasManualPaVent || !!frist);
 
   const showAvbryt = !(originalFrist === frist && !venteArsakHasChanged && !ventearsakVariantHasChanged);
+  const formHasChanges = fristHasChanged || venteArsakHasChanged || ventearsakVariantHasChanged;
   const erFristenUtløpt =
     erTilbakekreving &&
     ((frist !== undefined && dateBeforeToday(frist) === null) ||
@@ -310,11 +308,9 @@ export const SettPaVentModal = ({
                   disabled={isButtonDisabled(
                     frist,
                     showAvbryt,
-                    venteArsakHasChanged,
-                    fristHasChanged,
                     hasManualPaVent,
-                    ventearsakVariantHasChanged,
                     erVenterEtterlysInntektsmelding,
+                    formHasChanges,
                   )}
                 >
                   {getHovedknappTekst()}
