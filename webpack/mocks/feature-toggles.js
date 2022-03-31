@@ -18,10 +18,6 @@ const featureToggles = [
     value: process.env.UNNTAKSBEHANDLING,
   },
   {
-    key: 'BEHANDLINGSVELGER_NY',
-    value: process.env.BEHANDLINGSVELGER_NY,
-  },
-  {
     key: 'UTENLANDSOPPHOLD',
     value: process.env.UTENLANDSOPPHOLD,
   },
