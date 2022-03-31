@@ -162,7 +162,7 @@ const HeaderWithErrorPanel = ({
                   userId={navBrukernavn}
                   appId="K9_SAK"
                   appName="K9 Sak"
-                  backendUrl="/k9/endringslogg/"
+                  backendUrl="/k9/endringslogg"
                   stil="lys"
                   alignLeft
                 />

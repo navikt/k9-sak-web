@@ -20,7 +20,6 @@ import moment from 'moment';
 import React, { useState } from 'react';
 import { Arbeidstype } from '../types/Arbeidstype';
 import FetchedData from '../types/fetchedDataTsType';
-import AndreSakerPåSøkerStripe from './AndreSakerPåSøkerStripe';
 import ArbeidsgiverMedManglendePerioderListe from './ArbeidsgiverMedManglendePerioderListe';
 import DataFetcher from './DataFetcher';
 import PleiepengerFakta from './PleiepengerFakta';
@@ -155,7 +154,6 @@ const PleiepengerPaneler = ({
         featureToggles={featureToggles}
         setBeregningErBehandlet={setBeregningErBehandlet}
       />
-      <AndreSakerPåSøkerStripe søkerIdent={fagsakPerson.personnummer} saksnummer={fagsak.saksnummer} />
       <PleiepengerFakta
         behandling={behandling}
         data={fetchedData}
