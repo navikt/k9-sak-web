@@ -16,10 +16,6 @@
     "value": "${UNNTAKSBEHANDLING}"
   },
   {
-    "key": "BEHANDLINGSVELGER_NY",
-    "value": "${BEHANDLINGSVELGER_NY}"
-  },
-  {
     "key": "FAKTA_SOKNADSPERIODER",
     "value": "${FAKTA_SOKNADSPERIODER}"
   },
