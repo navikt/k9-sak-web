@@ -9,7 +9,7 @@ import { NavAnsatt } from '@k9-sak-web/types';
 import { K9sakApiKeys, restApiHooks } from '../../data/k9sakApi';
 import ErrorFormatter from '../feilhandtering/ErrorFormatter';
 import ErrorMessage from '../feilhandtering/ErrorMessage';
-import { getPathToFplos } from '../paths';
+import { getPathToFplos, getPathToK9Punsj } from '../paths';
 
 type QueryStrings = {
   errorcode?: string;
@@ -78,6 +78,7 @@ const Dekorator = ({
       errorMessages={hideErrorMessages ? EMPTY_ARRAY : resolvedErrorMessages}
       setSiteHeight={setSiteHeight}
       getPathToFplos={getPathToFplos}
+      getPathToK9Punsj={getPathToK9Punsj}
     />
   );
 };

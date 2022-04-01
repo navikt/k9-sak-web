@@ -14,6 +14,7 @@
   "BehandlingPickerItemContent.Behandling.Innvilget": "Innvilget",
   "BehandlingPickerItemContent.Behandling.Avslaatt": "Avslått",
   "BehandlingPickerItemContent.Behandling.Henlagt": "Henlagt",
+  "BehandlingPickerItemContent.Behandling.IkkeFastsatt": "Ikke fastsatt",
   "BehandlingPickerItemContent.Behandling.Aapne": "Åpne",
   "BehandlingPickerItemContent.Kalender": "Kalender",
   "BehandlingPickerItemContent.BehandlingTypeNavn.Viderebehandling": "Viderebehandling",
@@ -21,7 +22,7 @@
 
   "BehandlingList.ZeroBehandlinger": "Ingen behandlinger er opprettet",
 
-  "Behandlingspunkt.ÅrsakerForBehandling": "Årsaker for behandling:",
+  "Behandlingspunkt.ÅrsakerForVurdering": "Årsaker for vurdering av perioder:",
   "Behandlingspunkt.Årsak.ManglerFødselsdato": "Mangler fødselsdato",
   "Behandlingspunkt.Årsak.AvvikAntallBarn": "Avvik antall barn",
   "Behandlingspunkt.Årsak.FeilLovanvendelse": "Feil lovanvendelse",

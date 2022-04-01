@@ -15,6 +15,7 @@ describe('<BehandlingPickerItemContent>', () => {
         behandlingsresultatTypeKode="INNVILGET"
         erAutomatiskRevurdering={false}
         søknadsperioder={[{ fom: '2022-01-01', tom: '2022-01-18' }]}
+        erFerdigstilt
       />,
     );
     expect(wrapper.find(Panel)).toHaveLength(1);
@@ -29,6 +30,7 @@ describe('<BehandlingPickerItemContent>', () => {
         behandlingsresultatTypeKode="INNVILGET"
         erAutomatiskRevurdering={false}
         søknadsperioder={[{ fom: '2022-01-01', tom: '2022-01-18' }]}
+        erFerdigstilt
       />,
     );
 
