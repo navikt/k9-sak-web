@@ -7,6 +7,7 @@ import { FaktaPanelDef } from '@k9-sak-web/behandling-felles';
 import { Fagsak, Behandling } from '@k9-sak-web/types';
 
 import MedisinskVilkår from '../../components/MedisinskVilkår';
+import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 
 class MedisinskVilkarFaktaPanelDef2 extends FaktaPanelDef {
   getUrlKode = () => faktaPanelCodes.MEDISINSKVILKAAR_V2;
@@ -19,9 +20,10 @@ class MedisinskVilkarFaktaPanelDef2 extends FaktaPanelDef {
 
   getKomponent = props => <MedisinskVilkår {...props} />;
 
-  getData = ({ hentSaksbehandlere, fagsak }) => ({
+  getData = ({ hentSaksbehandlere, fagsak, behandling }) => ({
     saksbehandlere: hentSaksbehandlere?.saksbehandlere,
-    erFagytelsetypeLivetsSluttfase: fagsak.sakstype.kode === fagsakYtelseType.PLEIEPENGER_SLUTTFASE
+    fagsakYtelseType: fagsak.sakstype.kode,
+    behandlingType: behandling.type.kode,
   });
 
   getOverstyrVisningAvKomponent = ({ fagsak, behandling }: { fagsak: Fagsak; behandling: Behandling }) => {

@@ -17,7 +17,8 @@ const initializeMedisinskVilkår = (
   readOnly,
   visFortsettknapp,
   saksbehandlere,
-  erFagytelsetypeLivetsSluttfase
+  fagsakYtelseType,
+  behandlingType
 ) => {
   (window as any).renderMedisinskVilkarApp(elementId, {
     httpErrorHandler: httpErrorHandlerFn,
@@ -27,12 +28,21 @@ const initializeMedisinskVilkår = (
     readOnly,
     visFortsettknapp,
     saksbehandlere,
-    erFagytelsetypeLivetsSluttfase,
+    fagsakYtelseType,
+    behandlingType
   });
 };
 
 const medisinskVilkårAppID = 'medisinskVilkårApp';
-export default ({ behandling: { links, uuid }, submitCallback, aksjonspunkter, readOnly, saksbehandlere, erFagytelsetypeLivetsSluttfase }) => {
+export default ({
+  behandling: { links, uuid },
+  submitCallback,
+  aksjonspunkter,
+  readOnly,
+  saksbehandlere,
+  fagsakYtelseType,
+  behandlingType,
+}) => {
   const { addErrorMessage } = useRestApiErrorDispatcher();
   const httpErrorHandlerCaller = (status: number, locationHeader?: string) =>
     httpErrorHandler(status, addErrorMessage, locationHeader);
@@ -48,7 +58,6 @@ export default ({ behandling: { links, uuid }, submitCallback, aksjonspunkter, r
     ]);
 
   const harAksjonspunkt = !!medisinskVilkårAksjonspunktkode;
-
   return (
     <MicroFrontend
       id={medisinskVilkårAppID}
@@ -78,7 +87,8 @@ export default ({ behandling: { links, uuid }, submitCallback, aksjonspunkter, r
           readOnly || !harAksjonspunkt,
           visFortsettknapp,
           saksbehandlere || {},
-          erFagytelsetypeLivetsSluttfase
+          fagsakYtelseType,
+          behandlingType,
         )
       }
     />
