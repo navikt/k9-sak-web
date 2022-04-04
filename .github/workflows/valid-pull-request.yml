@@ -20,7 +20,7 @@ jobs:
         uses: actions/cache@v3
         id: cache-jest-cache
         with:
-          path: ~/.jest-cache
+          path: ~/.jest_cache
           key: ${{ runner.os }}-jest
 
       - name: Installere dependencies
