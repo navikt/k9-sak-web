@@ -34,4 +34,4 @@ jobs:
           NODE_AUTH_TOKEN: ${{ secrets.READER_TOKEN }}
 
       - name: Tester, typescript-sjekk og linting
-        run: yarn test:all --runInBand && yarn ts-check && yarn less:lint
+        run: yarn test:all --maxWorkers=2 && yarn ts-check && yarn less:lint
