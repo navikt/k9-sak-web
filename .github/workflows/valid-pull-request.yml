@@ -16,6 +16,13 @@ jobs:
           scope: '@navikt'
           cache: 'yarn'
 
+      - name: Cache Jest cache
+        uses: actions/cache@v3
+        id: cache-jest-cache
+        with:
+          path: .jest-cache
+          key: ${{ runner.os }}-jest
+
       - name: Installere dependencies
         run: yarn install --ignore-optional --no-progress --frozen-lockfile
         env:
