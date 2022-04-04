@@ -9,7 +9,16 @@ import { FormattedMessage } from 'react-intl';
 import styles from './behandlingPickerItemContent.less';
 import { getFormattedSøknadserioder, getStatusIcon, getStatusText } from './behandlingVelgerUtils';
 
-const getAutomatiskRevurderingText = () => <span className={styles.smallerUndertittel}>(automatisk behandlet)</span>;
+const getAutomatiskRevurderingText = () => (
+  <span className={styles.smallerUndertittel}>
+    (<FormattedMessage id="BehandlingPickerItemContent.AutomatiskBehandlet" />)
+  </span>
+);
+const getUnntaksløypeText = () => (
+  <span className={styles.smallerUndertittel}>
+    (<FormattedMessage id="BehandlingPickerItemContent.Unntaksløype" />)
+  </span>
+);
 
 interface OwnProps {
   behandlingsresultatTypeKode?: string;
@@ -18,6 +27,7 @@ interface OwnProps {
   behandlingTypeNavn: string;
   søknadsperioder: Periode[];
   erFerdigstilt: boolean;
+  erUnntaksløype: boolean;
 }
 
 /**
@@ -32,6 +42,7 @@ const BehandlingPickerItemContent: React.FC<OwnProps> = ({
   behandlingTypeNavn,
   søknadsperioder,
   erFerdigstilt,
+  erUnntaksløype,
 }) => (
   <Panel className={erAutomatiskRevurdering ? styles.indent : ''} border>
     <div className={styles.behandlingPicker}>
@@ -39,6 +50,7 @@ const BehandlingPickerItemContent: React.FC<OwnProps> = ({
         <Undertittel>
           {behandlingTypeNavn}
           {erAutomatiskRevurdering ? getAutomatiskRevurderingText() : ''}
+          {erUnntaksløype ? getUnntaksløypeText() : ''}
         </Undertittel>
         <div className={styles.dateContainer}>
           <Image
