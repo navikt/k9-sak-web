@@ -205,7 +205,6 @@ describe('<PleiepengerFakta>', () => {
         harAksjonspunkt: false,
         tekst: 'Utenlandsopphold',
       },
-      { erAktiv: false, harAksjonspunkt: false, tekst: 'Søknadsperioder' },
     ]);
   });
 
