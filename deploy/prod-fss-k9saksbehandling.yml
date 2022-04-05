@@ -88,8 +88,6 @@ spec:
       value: "true"
     - name: TILBAKE
       value: "true"
-    - name: FAKTA_SOKNADSPERIODER
-      value: "false"
     - name: UTENLANDSOPPHOLD
       value: "false"
     - name: SOKNADPERIODESTRIPE
