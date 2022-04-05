@@ -7,11 +7,11 @@ import BehandlingPerioderårsakMedVilkår, {
 } from '@k9-sak-web/types/src/behandlingPerioderarsakMedVilkar';
 import { PeriodStatus, Tidslinjeskala } from '@k9-sak-web/types/src/tidslinje';
 import { dateStringSorter } from '@navikt/k9-date-utils';
-import { Period } from '@navikt/k9-period-utils';
 import dayjs, { Dayjs } from 'dayjs';
 import { Normaltekst } from 'nav-frontend-typografi';
 import React, { useEffect, useState } from 'react';
 import { useIntl } from 'react-intl';
+import { Period } from '@navikt/k9-period-utils';
 import CheckIcon from './icons/CheckIcon';
 import RejectedIcon from './icons/RejectedIcon';
 import SaksbehandlerIcon from './icons/SaksbehandlerIcon';
@@ -20,15 +20,16 @@ import ZoomOutIcon from './icons/ZoomOutIcon';
 import styles from './soknadsperioderComponent.less';
 import Periode from './types/Periode';
 
-const getPerioderMedÅrsak = (årsak: string, behandlingPerioderårsakMedVilkår: BehandlingPerioderårsakMedVilkår) => {
-  const årsakMedPerioder = behandlingPerioderårsakMedVilkår.perioderMedÅrsak.årsakMedPerioder.find(
-    årsakPerioder => årsakPerioder.årsak === årsak,
+const sortertePerioderPåFomDato = (behandlingPerioderårsakMedVilkår: BehandlingPerioderårsakMedVilkår) =>
+  [...behandlingPerioderårsakMedVilkår.perioderMedÅrsak.perioderMedÅrsak].sort((a, b) =>
+    dateStringSorter(a.periode.fom, b.periode.fom),
   );
-  if (årsakMedPerioder) {
-    return årsakMedPerioder.perioder.sort((a, b) => dateStringSorter(a.fom, b.fom)).map(periode => ({ periode }));
-  }
-  return [];
-};
+
+const getPerioderMedÅrsak = (årsak: string, behandlingPerioderårsakMedVilkår: BehandlingPerioderårsakMedVilkår) =>
+  sortertePerioderPåFomDato(behandlingPerioderårsakMedVilkår)
+    .filter(periode => periode.årsaker.includes(årsak))
+    .map(periode => ({ periode: periode.periode }));
+
 const harPeriodeoverlapp = (relevantePerioder, periodeFraDokument) =>
   relevantePerioder.some(relevantPeriode =>
     new Period(relevantPeriode.periode.fom, relevantPeriode.periode.tom).covers(
@@ -73,7 +74,7 @@ interface SoknadsperioderComponentProps {
   kodeverk: KodeverkMedNavn[];
 }
 
-const SoknadsperioderComponent = (props: SoknadsperioderComponentProps) => {
+const SoknadsperioderComponentOld = (props: SoknadsperioderComponentProps) => {
   const { behandlingPerioderårsakMedVilkår, kodeverk } = props;
   const [tidslinjeSkala, setTidslinjeSkala] = useState<Tidslinjeskala>(6);
   const [expandPerioderTilBehandling, setExpandPerioderTilBehandling] = useState(true);
@@ -369,4 +370,4 @@ const SoknadsperioderComponent = (props: SoknadsperioderComponentProps) => {
     </div>
   );
 };
-export default SoknadsperioderComponent;
+export default SoknadsperioderComponentOld;

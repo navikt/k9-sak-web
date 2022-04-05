@@ -18,6 +18,10 @@ const featureToggles = [
     value: process.env.UNNTAKSBEHANDLING,
   },
   {
+    key: 'FAKTA_SOKNADSPERIODER',
+    value: process.env.FAKTA_SOKNADSPERIODER,
+  },
+  {
     key: 'UTENLANDSOPPHOLD',
     value: process.env.UTENLANDSOPPHOLD,
   },
