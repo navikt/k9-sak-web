@@ -12,11 +12,11 @@ interface BarnInputProps {
 
 const BarnInformasjonVisning = ({ barnet }: BarnInputProps) => {
   const { harSammeBosted, dødsdato, barnType, deltBostedPerioder } = barnet.barnRelevantIBehandling;
-  const skalViseSammeBostedUtenPerioder = typeof harSammeBosted !== 'undefined' && typeof deltBostedPerioder === 'undefined';
-  const skalViseSammeBostedMedPerioder = typeof harSammeBosted !== 'undefined' && typeof deltBostedPerioder !== 'undefined'
+  const skalViseDeltBostedMedPerioder = deltBostedPerioder && deltBostedPerioder.length;
+
   return (
     <div>
-      {skalViseSammeBostedUtenPerioder && (
+      {harSammeBosted && (
         <Normaltekst>
           <FormattedMessage
             id={harSammeBosted ? 'FaktaBarn.BorMedSøker' : 'FaktaBarn.BorIkkeMedSøker'}
@@ -25,7 +25,7 @@ const BarnInformasjonVisning = ({ barnet }: BarnInputProps) => {
         </Normaltekst>
       )}
 
-      {skalViseSammeBostedMedPerioder && <>
+      {skalViseDeltBostedMedPerioder && <>
         <Normaltekst>
           <FormattedMessage id="FaktaBarn.DeltBostedMedPerioder" />
         </Normaltekst>
