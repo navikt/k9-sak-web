@@ -7,7 +7,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Slash command dispatch
-        uses: peter-evans/slash-command-dispatch@v2.3.0
+        uses: peter-evans/slash-command-dispatch@v3
         with:
           token: ${{ secrets.GA_P_TOKEN }}
           commands: promote
