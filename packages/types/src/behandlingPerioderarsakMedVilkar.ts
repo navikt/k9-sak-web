@@ -22,6 +22,7 @@ export interface Utfall {
 export interface PerioderMedÅrsak {
   perioderTilVurdering: Periode[];
   perioderMedÅrsak: PerioderMedÅrsakElement[];
+  årsakMedPerioder: ÅrsakMedPerioder[];
   dokumenterTilBehandling: DokumenterTilBehandling[];
 }
 
@@ -42,6 +43,11 @@ export interface SøktePerioder {
 export interface PerioderMedÅrsakElement {
   periode: Periode;
   årsaker: string[];
+}
+
+export interface ÅrsakMedPerioder {
+  årsak: string;
+  perioder: Periode[];
 }
 
 export default BehandlingPerioderårsakMedVilkår;
