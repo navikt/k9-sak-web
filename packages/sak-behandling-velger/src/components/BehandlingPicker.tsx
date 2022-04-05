@@ -87,6 +87,7 @@ const renderListItems = ({
             erAutomatiskRevurdering={erAutomatiskBehandlet(behandling)}
             søknadsperioder={alleSøknadsperioder.find(periode => periode.id === behandling.id)?.perioder}
             erFerdigstilt={!!behandling.avsluttet}
+            erUnntaksløype={behandling.type.kode === behandlingType.UNNTAK}
           />
         </NavLink>
       </li>

@@ -7,7 +7,6 @@ import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import BehandlingVelgerSakIndex from '@k9-sak-web/sak-behandling-velger';
 import { Behandling, Kodeverk, Fagsak } from '@k9-sak-web/types';
 
-
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import relasjonsRolleType from '@fpsak-frontend/kodeverk/src/relasjonsRolleType';
 import fagsakStatus from '@fpsak-frontend/kodeverk/src/fagsakStatus';
@@ -204,7 +203,6 @@ export const visPanelForValgAvBehandlinger = () => {
         toggleShowAll={() => toggleVisAlle(!visAlle)}
         getKodeverkFn={getKodeverkFn}
         fagsak={fagsak}
-        featureToggles={{}}
       />
     </div>
   );

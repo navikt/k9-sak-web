@@ -32,6 +32,20 @@ describe('<SøknadsperioderIndex>', () => {
             ],
           },
         ],
+        årsakMedPerioder: [
+          {
+            årsak: 'FØRSTEGANGSVURDERING',
+            perioder: [{ fom: '2022-01-11', tom: '2022-02-11' }],
+          },
+          {
+            årsak: 'REVURDERER_BERØRT_PERIODE',
+            perioder: [{ fom: '2022-02-12', tom: '2022-04-11' }],
+          },
+          {
+            årsak: 'REVURDERER_ETABLERT_TILSYN_ENDRING_FRA_ANNEN_OMSORGSPERSON',
+            perioder: [{ fom: '2022-02-12', tom: '2022-04-11' }],
+          },
+        ],
       },
       periodeMedUtfall: [
         {

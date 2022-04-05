@@ -1,8 +1,8 @@
-import { BehandlingAppKontekst, Kodeverk, KodeverkMedNavn, Fagsak, FeatureToggles } from '@k9-sak-web/types';
+import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
+import { BehandlingAppKontekst, Fagsak, Kodeverk, KodeverkMedNavn } from '@k9-sak-web/types';
 import { Location } from 'history';
 import React from 'react';
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
-import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import messages from '../i18n/nb_NO.json';
 import BehandlingPicker from './components/BehandlingPicker';
 import BehandlingPickerOld from './components/BehandlingPickerOld';
@@ -26,7 +26,6 @@ interface OwnProps {
   showAll: boolean;
   toggleShowAll: () => void;
   fagsak: Fagsak;
-  featureToggles: FeatureToggles;
 }
 
 const BehandlingVelgerSakIndex = ({
@@ -38,14 +37,12 @@ const BehandlingVelgerSakIndex = ({
   showAll,
   toggleShowAll,
   fagsak,
-  featureToggles,
 }: OwnProps) => {
   const skalViseGammelBehandlingsvelger =
     fagsak.sakstype.kode === fagsakYtelseType.FRISINN ||
     fagsak.sakstype.kode === fagsakYtelseType.OMSORGSPENGER_ALENE_OM_OMSORGEN ||
     fagsak.sakstype.kode === fagsakYtelseType.OMSORGSPENGER_KRONISK_SYKT_BARN ||
-    fagsak.sakstype.kode === fagsakYtelseType.OMSORGSPENGER_MIDLERTIDIG_ALENE ||
-    !featureToggles?.BEHANDLINGSVELGER_NY;
+    fagsak.sakstype.kode === fagsakYtelseType.OMSORGSPENGER_MIDLERTIDIG_ALENE;
   return (
     <RawIntlProvider value={intl}>
       {skalViseGammelBehandlingsvelger ? (

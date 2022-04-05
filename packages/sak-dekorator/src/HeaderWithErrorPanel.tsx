@@ -67,30 +67,8 @@ interface OwnProps {
   errorMessages?: Feilmelding[];
   setSiteHeight: (height: number) => void;
   getPathToFplos: () => void;
+  getPathToK9Punsj: () => string | null;
 }
-
-const lenkerFormatertForBoxedList = [
-  {
-    name: intl.formatMessage({ id: 'HeaderWithErrorPanel.AInntekt' }),
-    href: AINNTEKT_URL,
-    isExternal: true,
-  },
-  {
-    name: intl.formatMessage({ id: 'HeaderWithErrorPanel.AAReg' }),
-    href: AAREG_URL,
-    isExternal: true,
-  },
-  {
-    name: intl.formatMessage({ id: 'HeaderWithErrorPanel.Rettskilde' }),
-    href: RETTSKILDE_URL,
-    isExternal: true,
-  },
-  {
-    name: intl.formatMessage({ id: 'HeaderWithErrorPanel.Systemrutine' }),
-    href: SYSTEMRUTINE_URL,
-    isExternal: true,
-  },
-];
 
 /**
  * HeaderWithErrorPanel
@@ -106,6 +84,7 @@ const HeaderWithErrorPanel = ({
   errorMessages = [],
   setSiteHeight,
   getPathToFplos,
+  getPathToK9Punsj,
 }: OwnProps) => {
   const [erLenkepanelApent, setLenkePanelApent] = useState(false);
   const wrapperRef = useOutsideClickEvent(erLenkepanelApent, setLenkePanelApent);
@@ -114,6 +93,34 @@ const HeaderWithErrorPanel = ({
   useEffect(() => {
     setSiteHeight(fixedHeaderRef.current.clientHeight);
   }, [errorMessages.length]);
+
+  const lenkerFormatertForBoxedList = [
+    {
+      name: intl.formatMessage({ id: 'HeaderWithErrorPanel.AInntekt' }),
+      href: AINNTEKT_URL,
+      isExternal: true,
+    },
+    {
+      name: intl.formatMessage({ id: 'HeaderWithErrorPanel.AAReg' }),
+      href: AAREG_URL,
+      isExternal: true,
+    },
+    {
+      name: intl.formatMessage({ id: 'HeaderWithErrorPanel.Rettskilde' }),
+      href: RETTSKILDE_URL,
+      isExternal: true,
+    },
+    {
+      name: intl.formatMessage({ id: 'HeaderWithErrorPanel.Systemrutine' }),
+      href: SYSTEMRUTINE_URL,
+      isExternal: true,
+    },
+    {
+      name: intl.formatMessage({ id: 'HeaderWithErrorPanel.Punsj' }),
+      href: getPathToK9Punsj(),
+      isExternal: true,
+    },
+  ];
 
   const popperPropsChildren = useCallback(
     () => (
