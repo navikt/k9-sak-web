@@ -228,9 +228,7 @@ export const skalFastsetteInntektForSN = createSelector(
 
 // Skal redigere inntektskategori
 
-export const skalRedigereInntektskategoriForAndel = (values, beregningsgrunnlag) => andel => {
-  return erAndelKunstigArbeidsforhold(andel, beregningsgrunnlag);
-};
+export const skalRedigereInntektskategoriForAndel = (values, beregningsgrunnlag) => andel => erAndelKunstigArbeidsforhold(andel, beregningsgrunnlag);
 
 export const getSkalRedigereInntektskategori = createSelector(
   [getFormValuesForBeregning, (state, ownProps) => ownProps.beregningsgrunnlag],
