@@ -21,7 +21,9 @@ jobs:
         id: cache-jest-cache
         with:
           path: jest_cache
-          key: ${{ runner.os }}-jest
+          key: ${{ runner.os }}-${{ hashFiles('**/jest_cache') }}-jest
+          restore-keys: |
+            ${{ runner.os }}-
 
       - name: Installere dependencies
         run: yarn install --ignore-optional --no-progress --frozen-lockfile
