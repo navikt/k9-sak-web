@@ -20,7 +20,7 @@ const initializeOmsorgsdagerFrontend = (elementId, { submitCallback, behandling,
 export default ({submitCallback, behandling, saerligSmittevernAp, aktiviteter})  => {
   const saerligSmittvernhensynVilkårAppID = 'saerligSmittvernhensyn';
   const erIProduksjon = sjekkHvisErIProduksjon();
-  const path = erIProduksjon ? 'prod' : 'dev';
+  const path = erIProduksjon ? 'prod' : '1';
 
   // Kode til mikrofrontenden -> https://github.com/navikt/omsorgsdager-frontend/blob/main/src/ui/components/korrigere-perioder/KorrigerePerioder.tsx
   return (
