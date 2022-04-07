@@ -24,7 +24,7 @@ const initializeUtvidetRettVilkar = (
 export default props => {
   const utvidetRettVilkårAppID = 'utvidetRettApp';
   const erIProduksjon = sjekkHvisErIProduksjon();
-  const path = erIProduksjon ? 'prod' : 'dev';
+  const path = erIProduksjon ? 'prod' : '1';
 
   return (
     <MicroFrontend
