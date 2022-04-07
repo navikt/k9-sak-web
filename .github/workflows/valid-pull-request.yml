@@ -17,9 +17,15 @@ jobs:
           cache: 'yarn'
 
       - name: Installere dependencies
-        run: yarn install --ignore-optional --no-progress --frozen-lockfile
+        run: yarn install --prefer-offline --ignore-optional --no-progress --frozen-lockfile
         env:
           NODE_AUTH_TOKEN: ${{ secrets.READER_TOKEN }}
 
-      - name: Tester, typescript-sjekk og linting
-        run: yarn test:all --maxWorkers=2 && yarn ts-check && yarn less:lint
+      - name: Kjører tester
+        run: yarn test:all --maxWorkers=2
+
+      - name: Typescript-sjekk
+        run: yarn ts-check
+
+      - name: Linting
+        run: yarn less:lint

@@ -1,6 +1,5 @@
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
-import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import {
   BehandlingAppKontekst,
   BehandlingPerioder,
@@ -14,7 +13,7 @@ import { Tilbakeknapp } from 'nav-frontend-ikonknapper';
 import { Normaltekst, Undertittel } from 'nav-frontend-typografi';
 import React, { ReactElement, useEffect, useRef, useState } from 'react';
 import { FormattedMessage, IntlShape, useIntl } from 'react-intl';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import BehandlingFilter, { automatiskBehandling } from './BehandlingFilter';
 import styles from './behandlingPicker.less';
 import BehandlingPickerItemContent from './BehandlingPickerItemContent';
@@ -122,9 +121,18 @@ const BehandlingPicker = ({
   getBehandlingLocation,
   getKodeverkFn,
 }: OwnProps) => {
+  const navigate = useNavigate();
+  const finnÅpenBehandling = () => {
+    const åpenBehandling = behandlinger.find(behandling => behandling.status.kode !== behandlingStatus.AVSLUTTET);
+    if (åpenBehandling) {
+      navigate(getBehandlingLocation(åpenBehandling.id));
+    }
+    return åpenBehandling?.id;
+  };
+
   const intl = useIntl();
-  const [valgtBehandlingId, setValgtBehandlingId] = useState(behandlingId);
-  const previousBehandlingId = usePrevious(behandlingId);
+  const [valgtBehandlingId, setValgtBehandlingId] = useState(behandlingId || finnÅpenBehandling());
+  const previousBehandlingId = usePrevious(behandlingId || finnÅpenBehandling());
   const [søknadsperioder, setSøknadsperioder] = useState<Array<PerioderMedBehandlingsId>>([]);
   const [activeFilters, setActiveFilters] = useState([]);
 
