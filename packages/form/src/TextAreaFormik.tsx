@@ -21,7 +21,7 @@ interface TextAreaFieldProps {
   formik?: FormikState<any>;
 }
 
-const renderTextarea = ({ field: { value, name }, form, label, maxLength, badges, touched, error, intl }) => {
+const renderTextarea = ({ field: { value, name }, form, label, maxLength, badges, touched, error, intl, disabled }) => {
   const { id, ...intlParams } = error ?? {};
 
   return (
@@ -40,6 +40,7 @@ const renderTextarea = ({ field: { value, name }, form, label, maxLength, badges
           value={value}
           onChange={form.handleChange(name)}
           onBlur={form.handleBlur(name)}
+          disabled={disabled}
           label={label}
           error={touched && error ? intl.formatMessage({ id }, { ...intlParams }) : null}
           maxLength={maxLength}
@@ -60,7 +61,7 @@ const TextAreaFormik = ({ name, label, validate, readOnly, formik, ...otherProps
       error={getIn(formik.errors, name)}
       touched={getIn(formik.touched, name)}
       {...otherProps}
-      readOnly={readOnly}
+      disabled={readOnly}
       readOnlyHideEmpty
       autoComplete="off"
       type="textarea"
