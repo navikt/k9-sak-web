@@ -18,6 +18,19 @@ describe('Soknadsperiodestripe skal formatere perioder', () => {
           },
         ],
         dokumenterTilBehandling: [],
+        årsakMedPerioder: [
+          {
+            årsak: 'REVURDERER_BERØRT_PERIODE',
+            perioder: [
+              { fom: '2022-01-05', tom: '2022-02-05' },
+              { fom: '2022-02-06', tom: '2022-04-05' },
+            ],
+          },
+          {
+            årsak: 'REVURDERER_ETABLERT_TILSYN_ENDRING_FRA_ANNEN_OMSORGSPERSON',
+            perioder: [{ fom: '2022-02-06', tom: '2022-04-05' }],
+          },
+        ],
       },
       periodeMedUtfall: [
         {
@@ -72,6 +85,12 @@ describe('Soknadsperiodestripe skal formatere perioder', () => {
             ],
           },
         ],
+        årsakMedPerioder: [
+          {
+            årsak: 'FØRSTEGANGSVURDERING',
+            perioder: [{ fom: '2022-01-05', tom: '2022-04-05' }],
+          },
+        ],
       },
       periodeMedUtfall: [
         {
@@ -114,6 +133,12 @@ describe('Soknadsperiodestripe skal formatere perioder', () => {
             ],
           },
         ],
+        årsakMedPerioder: [
+          {
+            årsak: 'FØRSTEGANGSVURDERING',
+            perioder: [{ fom: '2022-01-05', tom: '2022-04-05' }],
+          },
+        ],
       },
       periodeMedUtfall: [
         {
@@ -150,6 +175,19 @@ describe('Soknadsperiodestripe skal ha navigasjon', () => {
           },
         ],
         dokumenterTilBehandling: [],
+        årsakMedPerioder: [
+          {
+            årsak: 'REVURDERER_BERØRT_PERIODE',
+            perioder: [
+              { fom: '2022-01-11', tom: '2022-02-11' },
+              { fom: '2022-02-12', tom: '2022-04-11' },
+            ],
+          },
+          {
+            årsak: 'REVURDERER_ETABLERT_TILSYN_ENDRING_FRA_ANNEN_OMSORGSPERSON',
+            perioder: [{ fom: '2022-02-12', tom: '2022-04-11' }],
+          },
+        ],
       },
       periodeMedUtfall: [
         {

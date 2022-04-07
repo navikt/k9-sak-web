@@ -8,7 +8,7 @@ import { Element, Normaltekst, Undertittel } from 'nav-frontend-typografi';
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import styles from './behandlingSelected.less';
-import { getFormattedSøknadserioder, getStatusIcon } from './behandlingVelgerUtils';
+import { getFormattedSøknadserioder, getStatusIcon, getStatusText } from './behandlingVelgerUtils';
 
 const cx = classnames.bind(styles);
 interface BehandlingSelectedProps {
@@ -34,6 +34,8 @@ const BehandlingSelected: React.FC<BehandlingSelectedProps> = props => {
     søknadsperioder,
   } = props;
 
+  const erFerdigstilt = !!avsluttetDato;
+
   const containerCls = cx('behandlingSelectedContainer', {
     aapen: !behandlingsresultatTypeKode || behandlingsresultatTypeKode === behandlingResultatType.IKKE_FASTSATT,
   });
@@ -54,7 +56,7 @@ const BehandlingSelected: React.FC<BehandlingSelectedProps> = props => {
     return (
       <div className={styles.årsakerContainer}>
         <Undertittel tag="h3" className={styles.font18}>
-          <FormattedMessage id="Behandlingspunkt.ÅrsakerForBehandling" />
+          <FormattedMessage id="Behandlingspunkt.ÅrsakerForVurdering" />
         </Undertittel>
         <ul className={styles.årsakerList}>
           {unikeÅrsaker.map((årsak, index) => (
@@ -83,8 +85,10 @@ const BehandlingSelected: React.FC<BehandlingSelectedProps> = props => {
             {søknadsperioder?.length > 0 && <Normaltekst>{getFormattedSøknadserioder(søknadsperioder)}</Normaltekst>}
           </div>
           <div className={`${styles.resultContainer} ${styles.marginTop8}`}>
-            {getStatusIcon(behandlingsresultatTypeKode, styles.utfallImage)}
-            <Normaltekst>{behandlingsresultatTypeKode ? behandlingsresultatTypeNavn : '-'}</Normaltekst>
+            {getStatusIcon(behandlingsresultatTypeKode, styles.utfallImage, erFerdigstilt)}
+            <Normaltekst>
+              {getStatusText(behandlingsresultatTypeKode, behandlingsresultatTypeNavn, erFerdigstilt)}
+            </Normaltekst>
           </div>
         </div>
         <div className={styles.marginTop2}>

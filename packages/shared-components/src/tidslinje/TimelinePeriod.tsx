@@ -1,6 +1,7 @@
 import classNames from 'classnames';
 import React, { CSSProperties, RefObject, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { PositionedPeriod } from '@k9-sak-web/types/src/tidslinje';
+import { ContentWithTooltip } from '@navikt/k9-react-components';
 import styles from './TimelinePeriod.less';
 import Tooltip from './Tooltip';
 
@@ -27,6 +28,12 @@ const ariaLabel = (period: PositionedPeriod): string => {
   const start = period.start.format('DD.MM.YYYY');
   const end = period.endInclusive.format('DD.MM.YYYY');
   return `${period.status} fra ${start} til og med ${end}`;
+};
+
+const periodTooltip = (period: PositionedPeriod): string => {
+  const fom = period.start.format('DD. MMMM YYYY');
+  const tom = period.endInclusive.format('DD. MMMM YYYY');
+  return `Periode: ${fom} - ${tom}`;
 };
 
 const style = (period: PositionedPeriod): CSSProperties => ({
@@ -63,8 +70,15 @@ const ClickablePeriod = ({ buttonRef, period, className, onSelectPeriod }: Click
 };
 
 const NonClickablePeriod = ({ divRef, period, className }: NonClickablePeriodProps) => (
-  <div ref={divRef} className={className} aria-label={ariaLabel(period)} style={style(period)}>
-    {period.infoPin && <div className={styles.infoPin} />}
+  <div
+    ref={divRef}
+    className={`${styles.nonClickablePeriod} ${className}`}
+    aria-label={ariaLabel(period)}
+    style={style(period)}
+  >
+    <ContentWithTooltip tooltipText={periodTooltip(period)}>
+      {period.infoPin && <div className={styles.infoPin} />}
+    </ContentWithTooltip>
   </div>
 );
 

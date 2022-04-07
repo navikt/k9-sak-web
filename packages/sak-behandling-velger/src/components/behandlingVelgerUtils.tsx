@@ -28,7 +28,18 @@ export const getFormattedSøknadserioder = (søknadsperioder: Periode[]) =>
     );
   });
 
-export const getStatusIcon = (behandlingsresultatTypeKode: string, className: string) => {
+export const getStatusIcon = (behandlingsresultatTypeKode: string, className: string, erFerdigstilt?: boolean) => {
+  if (behandlingsresultatTypeKode === behandlingResultatType.IKKE_FASTSATT || !erFerdigstilt) {
+    return (
+      <Image
+        className={className}
+        src={advarselImg}
+        tooltip={<FormattedMessage id="BehandlingPickerItemContent.Behandling.UnderBehandling" />}
+        alignTooltipLeft
+      />
+    );
+  }
+
   if (behandlingsresultatTypeKode === behandlingResultatType.INNVILGET) {
     return (
       <Image
@@ -51,18 +62,22 @@ export const getStatusIcon = (behandlingsresultatTypeKode: string, className: st
     );
   }
 
-  if (behandlingsresultatTypeKode === behandlingResultatType.IKKE_FASTSATT) {
-    return (
-      <Image
-        className={className}
-        src={advarselImg}
-        tooltip={<FormattedMessage id="BehandlingPickerItemContent.Behandling.UnderBehandling" />}
-        alignTooltipLeft
-      />
-    );
+  return null;
+};
+
+export const getStatusText = (
+  behandlingsresultatTypeKode: string,
+  behandlingsresultatTypeNavn: string,
+  erFerdigstilt: boolean,
+) => {
+  if (!erFerdigstilt) {
+    return <FormattedMessage id="BehandlingPickerItemContent.Behandling.IkkeFastsatt" />;
+  }
+  if (behandlingsresultatTypeKode) {
+    return behandlingsresultatTypeNavn;
   }
 
-  return null;
+  return '-';
 };
 
 export const sortBehandlinger = (behandlinger: BehandlingAppKontekst[]): BehandlingAppKontekst[] =>
