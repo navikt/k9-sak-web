@@ -96,6 +96,7 @@ const PleiepengerPaneler = ({
         kodeverk={alleKodeverk}
         settPaVent={settPaVent}
         hentBehandling={hentBehandling}
+        featureToggles={featureToggles}
       />
       {harOpprettetAksjonspunkt9203 && (
         <DataFetcher

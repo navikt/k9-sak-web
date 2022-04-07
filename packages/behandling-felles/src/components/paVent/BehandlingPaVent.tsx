@@ -2,7 +2,7 @@ import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import SettPaVentModalIndex from '@k9-sak-web/modal-sett-pa-vent';
-import { Aksjonspunkt, Behandling, Venteaarsak } from '@k9-sak-web/types';
+import { Aksjonspunkt, Behandling, Venteaarsak, FeatureToggles } from '@k9-sak-web/types';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import SettPaVentParams from '../../types/settPaVentParamsTsType';
 
@@ -13,6 +13,7 @@ interface BehandlingPaVentProps {
   settPaVent: (params: SettPaVentParams) => Promise<any>;
   hentBehandling: ({ behandlingId: number }, keepData: boolean) => Promise<any>;
   erTilbakekreving?: boolean;
+  featureToggles?: FeatureToggles;
 }
 
 const BehandlingPaVent = ({
@@ -22,6 +23,7 @@ const BehandlingPaVent = ({
   settPaVent,
   hentBehandling,
   erTilbakekreving,
+  featureToggles,
 }: BehandlingPaVentProps) => {
   const [skalViseModal, setVisModal] = useState(behandling.behandlingPaaVent);
   const skjulModal = useCallback(() => setVisModal(false), []);
@@ -70,6 +72,7 @@ const BehandlingPaVent = ({
       ventearsaker={kodeverk[kodeverkTyper.VENT_AARSAK]}
       erTilbakekreving={erTilbakekreving}
       ventearsakVariant={ventearsakVariant}
+      featureToggles={featureToggles}
       showModal
     />
   );

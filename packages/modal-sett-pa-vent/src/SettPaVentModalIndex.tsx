@@ -1,8 +1,9 @@
-import { Venteaarsak } from '@k9-sak-web/types';
+import { Venteaarsak, FeatureToggles } from '@k9-sak-web/types';
 import React from 'react';
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 import messages from '../i18n/nb_NO.json';
 import SettPaVentModal from './components/SettPaVentModal';
+import SettPaVentModalOld from './components/old/SettPaVentModal';
 
 const cache = createIntlCache();
 
@@ -25,6 +26,7 @@ interface OwnProps {
   hasManualPaVent: boolean;
   erTilbakekreving?: boolean;
   ventearsakVariant?: string;
+  featureToggles?: FeatureToggles;
 }
 
 const SettPaVentModalIndex = ({
@@ -38,20 +40,35 @@ const SettPaVentModalIndex = ({
   hasManualPaVent,
   erTilbakekreving,
   ventearsakVariant,
+  featureToggles,
 }: OwnProps) => (
   <RawIntlProvider value={intl}>
-    <SettPaVentModal
-      cancelEvent={cancelEvent}
-      onSubmit={submitCallback}
-      showModal={showModal}
-      ventearsaker={ventearsaker}
-      frist={frist}
-      ventearsak={ventearsak}
-      visBrevErBestilt={visBrevErBestilt}
-      hasManualPaVent={hasManualPaVent}
-      erTilbakekreving={erTilbakekreving}
-      ventearsakVariant={ventearsakVariant}
-    />
+    {featureToggles?.SETT_PAA_VENT_MODAL ? (
+      <SettPaVentModal
+        cancelEvent={cancelEvent}
+        onSubmit={submitCallback}
+        showModal={showModal}
+        ventearsaker={ventearsaker}
+        frist={frist}
+        ventearsak={ventearsak}
+        visBrevErBestilt={visBrevErBestilt}
+        hasManualPaVent={hasManualPaVent}
+        erTilbakekreving={erTilbakekreving}
+        ventearsakVariant={ventearsakVariant}
+      />
+    ) : (
+      <SettPaVentModalOld
+        cancelEvent={cancelEvent}
+        onSubmit={submitCallback}
+        showModal={showModal}
+        ventearsaker={ventearsaker}
+        frist={frist}
+        ventearsak={ventearsak}
+        visBrevErBestilt={visBrevErBestilt}
+        hasManualPaVent={hasManualPaVent}
+        erTilbakekreving={erTilbakekreving}
+      />
+    )}
   </RawIntlProvider>
 );
 

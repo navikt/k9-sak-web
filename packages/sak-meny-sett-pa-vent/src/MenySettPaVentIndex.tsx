@@ -1,5 +1,5 @@
 import SettPaVentModalIndex from '@k9-sak-web/modal-sett-pa-vent';
-import { Venteaarsak } from '@k9-sak-web/types';
+import { Venteaarsak, FeatureToggles } from '@k9-sak-web/types';
 import React, { useCallback } from 'react';
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 import { useNavigate } from 'react-router-dom';
@@ -29,6 +29,7 @@ interface OwnProps {
   ventearsaker: Venteaarsak[];
   lukkModal: () => void;
   erTilbakekreving: boolean;
+  featureToggles?: FeatureToggles;
 }
 
 const MenySettPaVentIndex = ({
@@ -38,6 +39,7 @@ const MenySettPaVentIndex = ({
   ventearsaker,
   lukkModal,
   erTilbakekreving,
+  featureToggles
 }: OwnProps) => {
   const navigate = useNavigate();
 
@@ -67,6 +69,7 @@ const MenySettPaVentIndex = ({
         ventearsaker={ventearsaker}
         erTilbakekreving={erTilbakekreving}
         hasManualPaVent
+        featureToggles={featureToggles}
       />
     </RawIntlProvider>
   );

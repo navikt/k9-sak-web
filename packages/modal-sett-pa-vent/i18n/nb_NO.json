@@ -13,6 +13,7 @@
   "SettPaVentModal.Lukk": "Lukk",
   "SettPaVentModal.BrevBlirBestilt": "Brevet blir bestilt",
   "SettPaVentModal.Arsak": "Årsak",
+  "SettPaVentModal.DuKanEndreFrist": "Du kan endre frist eller årsak før du fortsetter",
   "SettPaVentModal.UtløptFrist": "OBS! Fristen på denne behandlingen er utløpt!",
   "SettPaVentModal.HenleggeSaken": "Kontroller hvorfor Økonomi ikke har dannet et kravgrunnlag.\n Dersom det feilutbetalte beløpet er bortfalt skal saken henlegges.\nFor mer informasjon, se rutine under tilbakekreving.",
   "SettPaVentModal.HvaVenterViPa": "Hva venter vi på?",
