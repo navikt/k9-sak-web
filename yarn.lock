@@ -2521,13 +2521,6 @@
   dependencies:
     uuid "^8.3.2"
 
-"@navikt/ds-icons@^0.8.7", "@navikt/ds-icons@^0.8.9":
-  version "0.8.9"
-  resolved "https://npm.pkg.github.com/download/@navikt/ds-icons/0.8.9/16dc7cd63102dc20306a842543a75679b690da99b646c02f1a948e6d51ebc888#af1674af64be0385e2aa8f60e067763940d9a194"
-  integrity sha512-DiOlktF+vO4EiVE6vjkoYTvwxD6fqChtR7NB9nxrJy73L3YwbD9IHHyERSjiqeX3lCig6kcnXqLgtoWLrRxjPg==
-  dependencies:
-    uuid "^8.3.2"
-
 "@navikt/ds-react@0.17.8":
   version "0.17.8"
   resolved "https://npm.pkg.github.com/download/@navikt/ds-react/0.17.8/46c607125cce50c6fd37eb808eef411b8d0692e868508b81d9c8854ea0961422#8147f9accf7f170bee3683e9dbc6d20a4d1b2977"
@@ -2552,24 +2545,6 @@
     "@material-ui/core" "^4.12.3"
     "@navikt/ds-icons" "^0.7.3"
     "@popperjs/core" "^2.10.1"
-    classnames "^2.2.6"
-    react-collapse "^5.1.0"
-    react-merge-refs "^1.1.0"
-    react-modal "3.14.3"
-    react-popper "^2.2.5"
-    uuid "^8.3.2"
-
-"@navikt/ds-react@^0.17.19":
-  version "0.17.21"
-  resolved "https://npm.pkg.github.com/download/@navikt/ds-react/0.17.21/3fe4f85d9d2b8356f5553dfaba81e13cf574f1db00dd62172b95d171bf798f3c#ca0975a07fee8565b73875da40101c3a54d6ed56"
-  integrity sha512-49HS49bR7fd5rg7GqGRDnIb9ANo2uNw8+KdEVXL66ScNAxm/hQo9NUw/F68uxMkbkU9JLG7skOieyD0qHO62qw==
-  dependencies:
-    "@floating-ui/react-dom" "0.6.0"
-    "@material-ui/core" "^4.12.3"
-    "@navikt/ds-icons" "^0.8.9"
-    "@popperjs/core" "^2.10.1"
-    "@radix-ui/react-tabs" "0.1.5"
-    "@radix-ui/react-toggle-group" "0.1.5"
     classnames "^2.2.6"
     react-collapse "^5.1.0"
     react-merge-refs "^1.1.0"
@@ -2675,19 +2650,7 @@
     "@navikt/k9-array-utils" "^0.0.1"
     "@navikt/k9-date-utils" "^0.0.5"
 
-"@navikt/k9-react-components@^0.1.14", "@navikt/k9-react-components@^0.1.19":
-  version "0.1.20"
-  resolved "https://npm.pkg.github.com/download/@navikt/k9-react-components/0.1.20/bd1eef89843144178b8175060fbe2f9cfad8fd6e825ed133e84421b2e8977d8e#3f2a2e5ed89f44786ee8ede211e3cc8db241dadc"
-  integrity sha512-YxStVvBl9YYGBKWbZ3ANe1P4GHQR79lxA9hsN6IrvzcWhCnx9pbUu6cVNQYq8eSzRdH+3owbVpEHwxFlazro8Q==
-  dependencies:
-    "@navikt/ds-css" "^0.16.15"
-    "@navikt/ds-icons" "^0.8.7"
-    "@navikt/ds-react" "^0.17.19"
-    "@navikt/k9-bem-utils" "^1.0.1"
-    "@navikt/k9-date-utils" "^0.0.7"
-    "@navikt/k9-period-utils" "^0.0.10"
-
-"@navikt/k9-react-components@^0.1.20":
+"@navikt/k9-react-components@^0.1.14", "@navikt/k9-react-components@^0.1.19", "@navikt/k9-react-components@^0.1.20":
   version "0.1.20"
   resolved "https://npm.pkg.github.com/download/@navikt/k9-react-components/0.1.20/bd1eef89843144178b8175060fbe2f9cfad8fd6e825ed133e84421b2e8977d8e#3f2a2e5ed89f44786ee8ede211e3cc8db241dadc"
   integrity sha512-YxStVvBl9YYGBKWbZ3ANe1P4GHQR79lxA9hsN6IrvzcWhCnx9pbUu6cVNQYq8eSzRdH+3owbVpEHwxFlazro8Q==
@@ -3186,28 +3149,21 @@
   dependencies:
     type-detect "4.0.8"
 
-"@sinonjs/fake-timers@>=5":
+"@sinonjs/fake-timers@>=5", "@sinonjs/fake-timers@^9.0.0":
   version "9.1.1"
   resolved "https://registry.yarnpkg.com/@sinonjs/fake-timers/-/fake-timers-9.1.1.tgz#7b698e0b9d12d93611f06ee143c30ced848e2840"
   integrity sha512-Wp5vwlZ0lOqpSYGKqr53INws9HLkt6JDc/pDZcPf7bchQnrXJMXPns8CXx0hFikMSGSWfvtvvpb2gtMVfkWagA==
   dependencies:
     "@sinonjs/commons" "^1.7.0"
 
-"@sinonjs/fake-timers@^7.1.2":
-  version "7.1.2"
-  resolved "https://registry.yarnpkg.com/@sinonjs/fake-timers/-/fake-timers-7.1.2.tgz#2524eae70c4910edccf99b2f4e6efc5894aff7b5"
-  integrity sha512-iQADsW4LBMISqZ6Ci1dupJL9pprqwcVFTcOsEmQOEhW+KLCVn/Y4Jrvg2k19fIHCp+iFprriYPTdRcQR8NbUPg==
-  dependencies:
-    "@sinonjs/commons" "^1.7.0"
-
-"@sinonjs/fake-timers@^8.0.1", "@sinonjs/fake-timers@^8.1.0":
+"@sinonjs/fake-timers@^8.0.1":
   version "8.1.0"
   resolved "https://registry.yarnpkg.com/@sinonjs/fake-timers/-/fake-timers-8.1.0.tgz#3fdc2b6cb58935b21bfb8d1625eb1300484316e7"
   integrity sha512-OAPJUAtgeINhh/TAlUID4QTs53Njm7xzddaVlEs/SXwgtiD1tW22zAB/W1wdqfrpmikgaWQ9Fw6Ws+hsiRm5Vg==
   dependencies:
     "@sinonjs/commons" "^1.7.0"
 
-"@sinonjs/samsam@^6.0.2":
+"@sinonjs/samsam@^6.1.1":
   version "6.1.1"
   resolved "https://registry.yarnpkg.com/@sinonjs/samsam/-/samsam-6.1.1.tgz#627f7f4cbdb56e6419fa2c1a3e4751ce4f6a00b1"
   integrity sha512-cZ7rKJTLiE7u7Wi/v9Hc2fs3Ucc3jrWeMgPHbbTCeVAB2S0wOBbYlkJVeNSL04i7fdhT8wIbDq1zhC/PXTD2SA==
@@ -13711,7 +13667,7 @@ nice-try@^1.0.4:
   resolved "https://registry.yarnpkg.com/nice-try/-/nice-try-1.0.5.tgz#a3378a7696ce7d223e88fc9b764bd7ef1089e366"
   integrity sha512-1nh45deeb5olNY7eX82BkPO7SSxR5SSYJiPTrTdFUVYwAl8CKMA5N9PjTYkHiRjisVcxcQ1HXdLhx2qxxJzLNQ==
 
-nise@^5.1.0:
+nise@^5.1.1:
   version "5.1.1"
   resolved "https://registry.yarnpkg.com/nise/-/nise-5.1.1.tgz#ac4237e0d785ecfcb83e20f389185975da5c31f3"
   integrity sha512-yr5kW2THW1AkxVmCnKEh4nbYkJdB3I7LUkiUgOvEkOp414mc2UMaHMA7pjq1nYowhdoJZGwEKGaQVbxfpWj10A==
@@ -16845,28 +16801,16 @@ signal-exit@^3.0.0, signal-exit@^3.0.2, signal-exit@^3.0.3, signal-exit@^3.0.7:
   resolved "https://registry.yarnpkg.com/signal-exit/-/signal-exit-3.0.7.tgz#a9a1767f8af84155114eaabd73f99273c8f59ad9"
   integrity sha512-wnD2ZE+l+SPC/uoS0vXeE9L1+0wuaMqKlfz9AMUo38JsyLSBWSFcHR1Rri62LZc12vLr1gb3jl7iwQhgwpAbGQ==
 
-sinon@^11.1.2:
-  version "11.1.2"
-  resolved "https://registry.yarnpkg.com/sinon/-/sinon-11.1.2.tgz#9e78850c747241d5c59d1614d8f9cbe8840e8674"
-  integrity sha512-59237HChms4kg7/sXhiRcUzdSkKuydDeTiamT/jesUVHshBgL8XAmhgFo0GfK6RruMDM/iRSij1EybmMog9cJw==
+sinon@^13.0.1:
+  version "13.0.1"
+  resolved "https://registry.yarnpkg.com/sinon/-/sinon-13.0.1.tgz#2a568beca2084c48985dd98e276e065c81738e3c"
+  integrity sha512-8yx2wIvkBjIq/MGY1D9h1LMraYW+z1X0mb648KZnKSdvLasvDu7maa0dFaNYdTDczFgbjNw2tOmWdTk9saVfwQ==
   dependencies:
     "@sinonjs/commons" "^1.8.3"
-    "@sinonjs/fake-timers" "^7.1.2"
-    "@sinonjs/samsam" "^6.0.2"
+    "@sinonjs/fake-timers" "^9.0.0"
+    "@sinonjs/samsam" "^6.1.1"
     diff "^5.0.0"
-    nise "^5.1.0"
-    supports-color "^7.2.0"
-
-sinon@^12.0.1:
-  version "12.0.1"
-  resolved "https://registry.yarnpkg.com/sinon/-/sinon-12.0.1.tgz#331eef87298752e1b88a662b699f98e403c859e9"
-  integrity sha512-iGu29Xhym33ydkAT+aNQFBINakjq69kKO6ByPvTsm3yyIACfyQttRTP03aBP/I8GfhFmLzrnKwNNkr0ORb1udg==
-  dependencies:
-    "@sinonjs/commons" "^1.8.3"
-    "@sinonjs/fake-timers" "^8.1.0"
-    "@sinonjs/samsam" "^6.0.2"
-    diff "^5.0.0"
-    nise "^5.1.0"
+    nise "^5.1.1"
     supports-color "^7.2.0"
 
 sisteransi@^1.0.5:
@@ -18422,11 +18366,6 @@ use-composed-ref@^1.0.0:
   integrity sha512-6+X1FLlIcjvFMAeAD/hcxDT8tmyrWnbSPMU0EnxQuDLIxokuFzWliXBiYZuGIx+mrAMLBw0WFfCkaPw8ebzAhw==
 
 use-isomorphic-layout-effect@^1.0.0, use-isomorphic-layout-effect@^1.1.1:
-  version "1.1.2"
-  resolved "https://registry.yarnpkg.com/use-isomorphic-layout-effect/-/use-isomorphic-layout-effect-1.1.2.tgz#497cefb13d863d687b08477d9e5a164ad8c1a6fb"
-  integrity sha512-49L8yCO3iGT/ZF9QttjwLF/ZD9Iwto5LnH5LmEdk/6cFmXddqi2ulF0edxTwjj+7mqvpVVGQWvbXZdn32wRSHA==
-
-use-isomorphic-layout-effect@^1.1.1:
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/use-isomorphic-layout-effect/-/use-isomorphic-layout-effect-1.1.2.tgz#497cefb13d863d687b08477d9e5a164ad8c1a6fb"
   integrity sha512-49L8yCO3iGT/ZF9QttjwLF/ZD9Iwto5LnH5LmEdk/6cFmXddqi2ulF0edxTwjj+7mqvpVVGQWvbXZdn32wRSHA==
