@@ -234,6 +234,16 @@ const skjermlenkeCodes = {
     faktaNavn: faktaPanelCodes.ETABLERT_TILSYN,
     punktNavn: '',
   },
+  INFOTRYGD_MIGRERING: {
+    kode: 'INFOTRYGD_MIGRERING',
+    faktaNavn: faktaPanelCodes.INFOTRYGDMIGRERING,
+    punktNavn: '',
+  },
+  OVERSTYR_INPUT_BEREGNING: {
+    kode: 'OVERSTYR_INPUT_BEREGNING',
+    faktaNavn: faktaPanelCodes.OVERSTYRING,
+    punktNavn: '',
+  },
 };
 
 export default skjermlenkeCodes;
