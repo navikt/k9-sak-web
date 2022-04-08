@@ -106,6 +106,8 @@ interface OwnProps {
   noExistingBehandlinger: boolean;
   getKodeverkFn: (kodeverk: Kodeverk, behandlingType?: Kodeverk) => KodeverkMedNavn;
   behandlingId?: number;
+  createLocationForSkjermlenke: (behandlingLocation: Location, skjermlenkeCode: string) => Location;
+
 }
 
 const behandlingPerioderÅrsakRel = 'behandling-perioder-årsak-med-vilkår';
@@ -120,6 +122,7 @@ const BehandlingPicker = ({
   behandlinger,
   getBehandlingLocation,
   getKodeverkFn,
+  createLocationForSkjermlenke
 }: OwnProps) => {
   const navigate = useNavigate();
   const finnÅpenBehandling = () => {
@@ -277,6 +280,7 @@ const BehandlingPicker = ({
             behandlingTypeNavn={getBehandlingNavn(valgtBehandling, getKodeverkFn, intl)}
             behandlingTypeKode={valgtBehandling.type.kode}
             søknadsperioder={søknadsperioder.find(periode => periode.id === valgtBehandling.id)?.perioder}
+            createLocationForSkjermlenke={createLocationForSkjermlenke}
           />
         </>
       )}
