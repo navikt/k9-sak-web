@@ -2521,6 +2521,13 @@
   dependencies:
     uuid "^8.3.2"
 
+"@navikt/ds-icons@^0.8.7", "@navikt/ds-icons@^0.8.9":
+  version "0.8.9"
+  resolved "https://npm.pkg.github.com/download/@navikt/ds-icons/0.8.9/16dc7cd63102dc20306a842543a75679b690da99b646c02f1a948e6d51ebc888#af1674af64be0385e2aa8f60e067763940d9a194"
+  integrity sha512-DiOlktF+vO4EiVE6vjkoYTvwxD6fqChtR7NB9nxrJy73L3YwbD9IHHyERSjiqeX3lCig6kcnXqLgtoWLrRxjPg==
+  dependencies:
+    uuid "^8.3.2"
+
 "@navikt/ds-react@0.17.8":
   version "0.17.8"
   resolved "https://npm.pkg.github.com/download/@navikt/ds-react/0.17.8/46c607125cce50c6fd37eb808eef411b8d0692e868508b81d9c8854ea0961422#8147f9accf7f170bee3683e9dbc6d20a4d1b2977"
@@ -2545,6 +2552,24 @@
     "@material-ui/core" "^4.12.3"
     "@navikt/ds-icons" "^0.7.3"
     "@popperjs/core" "^2.10.1"
+    classnames "^2.2.6"
+    react-collapse "^5.1.0"
+    react-merge-refs "^1.1.0"
+    react-modal "3.14.3"
+    react-popper "^2.2.5"
+    uuid "^8.3.2"
+
+"@navikt/ds-react@^0.17.19":
+  version "0.17.21"
+  resolved "https://npm.pkg.github.com/download/@navikt/ds-react/0.17.21/3fe4f85d9d2b8356f5553dfaba81e13cf574f1db00dd62172b95d171bf798f3c#ca0975a07fee8565b73875da40101c3a54d6ed56"
+  integrity sha512-49HS49bR7fd5rg7GqGRDnIb9ANo2uNw8+KdEVXL66ScNAxm/hQo9NUw/F68uxMkbkU9JLG7skOieyD0qHO62qw==
+  dependencies:
+    "@floating-ui/react-dom" "0.6.0"
+    "@material-ui/core" "^4.12.3"
+    "@navikt/ds-icons" "^0.8.9"
+    "@popperjs/core" "^2.10.1"
+    "@radix-ui/react-tabs" "0.1.5"
+    "@radix-ui/react-toggle-group" "0.1.5"
     classnames "^2.2.6"
     react-collapse "^5.1.0"
     react-merge-refs "^1.1.0"
@@ -2651,6 +2676,18 @@
     "@navikt/k9-date-utils" "^0.0.5"
 
 "@navikt/k9-react-components@^0.1.14", "@navikt/k9-react-components@^0.1.19":
+  version "0.1.20"
+  resolved "https://npm.pkg.github.com/download/@navikt/k9-react-components/0.1.20/bd1eef89843144178b8175060fbe2f9cfad8fd6e825ed133e84421b2e8977d8e#3f2a2e5ed89f44786ee8ede211e3cc8db241dadc"
+  integrity sha512-YxStVvBl9YYGBKWbZ3ANe1P4GHQR79lxA9hsN6IrvzcWhCnx9pbUu6cVNQYq8eSzRdH+3owbVpEHwxFlazro8Q==
+  dependencies:
+    "@navikt/ds-css" "^0.16.15"
+    "@navikt/ds-icons" "^0.8.7"
+    "@navikt/ds-react" "^0.17.19"
+    "@navikt/k9-bem-utils" "^1.0.1"
+    "@navikt/k9-date-utils" "^0.0.7"
+    "@navikt/k9-period-utils" "^0.0.10"
+
+"@navikt/k9-react-components@^0.1.20":
   version "0.1.20"
   resolved "https://npm.pkg.github.com/download/@navikt/k9-react-components/0.1.20/bd1eef89843144178b8175060fbe2f9cfad8fd6e825ed133e84421b2e8977d8e#3f2a2e5ed89f44786ee8ede211e3cc8db241dadc"
   integrity sha512-YxStVvBl9YYGBKWbZ3ANe1P4GHQR79lxA9hsN6IrvzcWhCnx9pbUu6cVNQYq8eSzRdH+3owbVpEHwxFlazro8Q==
@@ -18385,6 +18422,11 @@ use-composed-ref@^1.0.0:
   integrity sha512-6+X1FLlIcjvFMAeAD/hcxDT8tmyrWnbSPMU0EnxQuDLIxokuFzWliXBiYZuGIx+mrAMLBw0WFfCkaPw8ebzAhw==
 
 use-isomorphic-layout-effect@^1.0.0, use-isomorphic-layout-effect@^1.1.1:
+  version "1.1.2"
+  resolved "https://registry.yarnpkg.com/use-isomorphic-layout-effect/-/use-isomorphic-layout-effect-1.1.2.tgz#497cefb13d863d687b08477d9e5a164ad8c1a6fb"
+  integrity sha512-49L8yCO3iGT/ZF9QttjwLF/ZD9Iwto5LnH5LmEdk/6cFmXddqi2ulF0edxTwjj+7mqvpVVGQWvbXZdn32wRSHA==
+
+use-isomorphic-layout-effect@^1.1.1:
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/use-isomorphic-layout-effect/-/use-isomorphic-layout-effect-1.1.2.tgz#497cefb13d863d687b08477d9e5a164ad8c1a6fb"
   integrity sha512-49L8yCO3iGT/ZF9QttjwLF/ZD9Iwto5LnH5LmEdk/6cFmXddqi2ulF0edxTwjj+7mqvpVVGQWvbXZdn32wRSHA==
