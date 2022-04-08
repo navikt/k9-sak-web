@@ -120,7 +120,7 @@ const BehandlingSelected: React.FC<BehandlingSelectedProps> = props => {
         className={styles.faktapanelLenke}
       >
         <Normaltekst>
-          <FormattedMessage id="Behandlingspunkt.BehandlingSelected.SePeriodeoversiktForBehandling" />
+          <FormattedMessage id="Behandlingspunkt.BehandlingSelected.SøknadsperioderMedÅrsakerForBehandling" />
         </Normaltekst>
       </NavLink>
     </div>
