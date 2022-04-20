@@ -12,7 +12,7 @@ interface BarnInputProps {
 
 const BarnInformasjonVisning = ({ barnet }: BarnInputProps) => {
   const { harSammeBosted, dødsdato, barnType, deltBostedPerioder } = barnet.barnRelevantIBehandling;
-  const skalViseDeltBostedMedPerioder = deltBostedPerioder && deltBostedPerioder.length;
+  const skalViseDeltBostedMedPerioder = deltBostedPerioder && deltBostedPerioder.length > 0;
 
   return (
     <div>
