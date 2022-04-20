@@ -1,6 +1,11 @@
 import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import VisittkortSakIndex from '@fpsak-frontend/sak-visittkort';
-import { DataFetchPendingModal, LoadingPanel } from '@fpsak-frontend/shared-components';
+import {
+  AndreSakerPåSøkerStripe,
+  DataFetchPendingModal,
+  LoadingPanel,
+  Punsjstripe,
+} from '@fpsak-frontend/shared-components';
 import { RestApiState } from '@k9-sak-web/rest-api-hooks';
 import Soknadsperiodestripe from '@k9-sak-web/sak-soknadsperiodestripe';
 import {
@@ -19,7 +24,13 @@ import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import OvergangFraInfotrygd from '../../../types/src/overgangFraInfotrygd';
 import RelatertFagsak from '../../../types/src/relatertFagsak';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { behandlingerRoutePath, erBehandlingValgt, erUrlUnderBehandling, pathToMissingPage } from '../app/paths';
+import {
+  behandlingerRoutePath,
+  erBehandlingValgt,
+  erUrlUnderBehandling,
+  getPathToFplos,
+  pathToMissingPage,
+} from '../app/paths';
 import useTrackRouteParam from '../app/useTrackRouteParam';
 import BehandlingerIndex from '../behandling/BehandlingerIndex';
 import BehandlingRettigheter from '../behandling/behandlingRettigheterTsType';
@@ -37,6 +48,8 @@ const erTilbakekreving = (behandlingType: Kodeverk): boolean =>
     BehandlingType.TILBAKEKREVING_REVURDERING === behandlingType.kode);
 
 const erPleiepengerSyktBarn = (fagsak: Fagsak) => fagsak?.sakstype?.kode === fagsakYtelseType.PLEIEPENGER;
+const erPleiepengerLivetsSluttfase = (fagsak: Fagsak) =>
+  fagsak?.sakstype?.kode === fagsakYtelseType.PLEIEPENGER_SLUTTFASE;
 
 /**
  * FagsakIndex
@@ -191,6 +204,7 @@ const FagsakIndex = () => {
 
   const harVerge = behandling ? behandling.harVerge : false;
   const showSøknadsperiodestripe = featureToggles?.SOKNADPERIODESTRIPE && erPleiepengerSyktBarn(fagsak);
+  const showPunsjOgFagsakPåSøkerStripe = erPleiepengerSyktBarn(fagsak) || erPleiepengerLivetsSluttfase(fagsak);
   return (
     <>
       <FagsakGrid
@@ -262,6 +276,16 @@ const FagsakIndex = () => {
                 direkteOvergangFraInfotrygd={direkteOvergangFraInfotrygd}
                 erPbSak={fagsak.erPbSak}
               />
+              {showPunsjOgFagsakPåSøkerStripe && (
+                <>
+                  {behandling && <Punsjstripe behandlingUuid={behandling?.uuid} pathToLos={getPathToFplos()} />}
+                  <AndreSakerPåSøkerStripe
+                    søkerIdent={fagsakPerson.personnummer}
+                    saksnummer={fagsak.saksnummer}
+                    fagsakYtelseType={fagsak.sakstype.kode}
+                  />
+                </>
+              )}
               {showSøknadsperiodestripe && (
                 <Soknadsperiodestripe behandlingPerioderMedVilkår={behandlingPerioderMedVilkår} />
               )}

@@ -267,7 +267,7 @@ export const buildInitialValuesForBeregningrunnlag = (beregningsgrunnlag, bgVilk
     erTilVurdering: erBGTilVurdering(bgVilkar, beregningsgrunnlag) && harAvklaringsbehovIPanel(avklaringsbehov),
     skjæringstidspunkt: beregningsgrunnlag.skjæringstidspunkt,
     ...Beregningsgrunnlag.buildInitialValues(avklaringsbehov),
-    ...AksjonspunktBehandlerTB.buildInitialValues(allePerioder),
+    ...AksjonspunktBehandlerTB.buildInitialValues(allePerioder, avklaringsbehov),
     ...AksjonspunktBehandlerFL.buildInitialValues(frilanserAndeler),
     ...VurderOgFastsettSN.buildInitialValues(selvstendigNaeringAndeler, avklaringsbehov),
     ...GrunnlagForAarsinntektPanelAT.buildInitialValues(arbeidstakerAndeler),

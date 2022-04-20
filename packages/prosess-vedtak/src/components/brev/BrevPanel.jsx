@@ -127,6 +127,7 @@ export const BrevPanel = props => {
     behandlingResultat,
     overstyrtMottaker,
     formikProps,
+    ytelseTypeKode,
   } = props;
 
   const automatiskBrevCallback = getPreviewAutomatiskBrevCallback({
@@ -162,12 +163,13 @@ export const BrevPanel = props => {
   const fritekstbrev = harFritekstbrev && (
     <>
       <FritekstBrevPanel
-        readOnly={readOnly}
+        readOnly={readOnly || formikProps.values[fieldnames.SKAL_HINDRE_UTSENDING_AV_BREV]}
         sprakkode={sprakkode}
         intl={intl}
         previewBrev={automatiskBrevUtenValideringCallback}
         harAutomatiskVedtaksbrev={harAutomatiskVedtaksbrev}
         formikProps={formikProps}
+        ytelseTypeKode={ytelseTypeKode}
       />
       <VedtakPreviewLink previewCallback={manuellBrevCallback} />
     </>
@@ -177,7 +179,7 @@ export const BrevPanel = props => {
     <>
       <InformasjonsbehovAutomatiskVedtaksbrev
         intl={intl}
-        readOnly={readOnly}
+        readOnly={readOnly || formikProps.values[fieldnames.SKAL_HINDRE_UTSENDING_AV_BREV]}
         sprakkode={sprakkode}
         begrunnelse={begrunnelse}
         informasjonsbehovVedtaksbrev={informasjonsbehovVedtaksbrev}
@@ -243,6 +245,7 @@ BrevPanel.propTypes = {
   personopplysninger: PropTypes.shape(),
   arbeidsgiverOpplysningerPerId: PropTypes.shape(),
   formikProps: PropTypes.shape().isRequired,
+  ytelseTypeKode: PropTypes.string,
 };
 
 BrevPanel.defaultProps = {

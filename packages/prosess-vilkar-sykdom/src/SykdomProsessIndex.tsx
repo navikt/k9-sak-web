@@ -11,6 +11,7 @@ import classNames from 'classnames/bind';
 import { Element, Undertekst, Undertittel } from 'nav-frontend-typografi';
 import React from 'react';
 import { createIntl, createIntlCache, FormattedMessage, RawIntlProvider } from 'react-intl';
+import isEqual from 'lodash.isequal';
 import Vilkarperiode from '../../types/src/vilkarperiode';
 import messages from '../i18n/nb_NO.json';
 import styles from './sykdomProsessIndex.less';
@@ -66,7 +67,7 @@ const SykdomProsessIndex = ({ perioder, panelTittelKode }: SykdomProsessIndexPro
   if(panelTittelKode === 'Behandlingspunkt.LivetsSluttfase'){
     lovReferanse = '§ 9-13'
   }
-  
+
   return (
     <RawIntlProvider value={intl}>
       <div className={mainContainerClassnames}>
@@ -74,7 +75,7 @@ const SykdomProsessIndex = ({ perioder, panelTittelKode }: SykdomProsessIndexPro
           <div className={styles.sideMenuContainer}>
             <SideMenu
               links={perioder.map((currentPeriode, currentPeriodeIndex) => ({
-                active: perioder.indexOf(activePeriode) === currentPeriodeIndex,
+                active: perioder.findIndex((p) => isEqual(p, activePeriode)) === currentPeriodeIndex,
                 label: `${dateFormat(perioder[currentPeriodeIndex].periode.fom)} - ${dateFormat(
                   perioder[currentPeriodeIndex].periode.tom,
                 )}`,

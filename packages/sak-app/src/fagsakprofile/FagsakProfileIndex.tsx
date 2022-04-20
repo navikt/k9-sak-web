@@ -8,15 +8,14 @@ import {
   ArbeidsgiverOpplysningerPerId,
   BehandlingAppKontekst,
   Fagsak,
-  FeatureToggles,
   KodeverkMedNavn,
   Personopplysninger,
   Risikoklassifisering,
 } from '@k9-sak-web/types';
 import { Location } from 'history';
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { Navigate, useLocation, useMatch } from 'react-router-dom';
-import { getLocationWithDefaultProsessStegAndFakta, pathToBehandling, pathToBehandlinger } from '../app/paths';
+import { createLocationForSkjermlenke, getLocationWithDefaultProsessStegAndFakta, pathToBehandling, pathToBehandlinger } from '../app/paths';
 import BehandlingRettigheter from '../behandling/behandlingRettigheterTsType';
 import BehandlingMenuIndex, { BehandlendeEnheter } from '../behandlingmenu/BehandlingMenuIndex';
 import { K9sakApiKeys, requestApi, restApiHooks } from '../data/k9sakApi';
@@ -89,18 +88,6 @@ export const FagsakProfileIndex = ({
     ytelseType: fagsak.sakstype.kode,
   });
 
-  const featureTogglesData = restApiHooks.useGlobalStateRestApiData<{ key: string; value: string }[]>(
-    K9sakApiKeys.FEATURE_TOGGLE,
-  );
-  const featureToggles = useMemo<FeatureToggles>(
-    () =>
-      featureTogglesData.reduce((acc, curr) => {
-        acc[curr.key] = `${curr.value}`.toLowerCase() === 'true';
-        return acc;
-      }, {}),
-    [featureTogglesData],
-  );
-
   useEffect(() => {
     setShowAll(!behandlingId);
   }, [behandlingId]);
@@ -168,7 +155,7 @@ export const FagsakProfileIndex = ({
               showAll={showAll}
               toggleShowAll={toggleShowAll}
               fagsak={fagsak}
-              featureToggles={featureToggles}
+              createLocationForSkjermlenke={createLocationForSkjermlenke}
             />
           )}
         />

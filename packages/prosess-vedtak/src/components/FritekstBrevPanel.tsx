@@ -22,9 +22,17 @@ interface OwnProps {
   harAutomatiskVedtaksbrev: boolean;
   intl: IntlShape;
   formikProps: FormikProps<FormikValues>;
+  ytelseTypeKode: string;
 }
 
-const FritekstBrevPanel = ({ previewBrev, readOnly, harAutomatiskVedtaksbrev, intl, formikProps }: OwnProps) => {
+const FritekstBrevPanel = ({
+  previewBrev,
+  readOnly,
+  harAutomatiskVedtaksbrev,
+  intl,
+  formikProps,
+  ytelseTypeKode,
+}: OwnProps) => {
   const { formatMessage } = intl;
   return (
     <>
@@ -75,16 +83,18 @@ const FritekstBrevPanel = ({ previewBrev, readOnly, harAutomatiskVedtaksbrev, in
           />
         </Column>
       </Row>
-      <Row>
-        <Column xs="12">
-          <InkluderKalenderCheckbox
-            intl={intl}
-            setFieldValue={formikProps.setFieldValue}
-            skalBrukeOverstyrendeFritekstBrev={formikProps.values.skalBrukeOverstyrendeFritekstBrev}
-            disabled={readOnly}
-          />
-        </Column>
-      </Row>
+      {ytelseTypeKode === 'PSB' && (
+        <Row>
+          <Column xs="12">
+            <InkluderKalenderCheckbox
+              intl={intl}
+              setFieldValue={formikProps.setFieldValue}
+              skalBrukeOverstyrendeFritekstBrev={formikProps.values.skalBrukeOverstyrendeFritekstBrev}
+              disabled={readOnly}
+            />
+          </Column>
+        </Row>
+      )}
     </>
   );
 };
