@@ -1,151 +1,282 @@
-import React, { useState } from 'react';
-import { withKnobs, object, number, boolean } from '@storybook/addon-knobs';
-
+/* eslint-disable max-len */
+import fagsakStatus from '@fpsak-frontend/kodeverk/src/fagsakStatus';
+import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
-import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
-import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
+import relasjonsRolleType from '@fpsak-frontend/kodeverk/src/relasjonsRolleType';
 import BehandlingVelgerSakIndex from '@k9-sak-web/sak-behandling-velger';
-import { Behandling, Kodeverk } from '@k9-sak-web/types';
-
+import { Behandling, Fagsak, Kodeverk } from '@k9-sak-web/types';
+import { boolean, number, object, withKnobs } from '@storybook/addon-knobs';
+import React, { useState } from 'react';
 import withReduxAndRouterProvider from '../../decorators/withReduxAndRouter';
-
 import alleKodeverk from '../mocks/alleKodeverk.json';
-
-const BEHANDLING_TYPE_KODEVERK = 'BEHANDLING_TYPE';
-const BEHANDLING_STATUS_KODEVERK = 'BEHANDLING_STATUS';
 
 const behandlinger = [
   {
-    id: 1,
-    versjon: 2,
-    type: {
-      kode: behandlingType.FORSTEGANGSSOKNAD,
-      kodeverk: BEHANDLING_TYPE_KODEVERK,
-    },
-    status: {
-      kode: behandlingStatus.AVSLUTTET,
-      kodeverk: BEHANDLING_STATUS_KODEVERK,
-    },
-    sprakkode: {
-      kode: 'NB',
-      kodeverk: '',
-    },
-    opprettet: '2017-08-02T00:54:25.455',
-    avsluttet: '2017-08-03T00:54:25.455',
-    endret: '2017-08-03T00:54:25.455',
-    behandlendeEnhetId: '4812',
-    behandlendeEnhetNavn: 'NAV Familie- og pensjonsytelser Bergen',
-    links: [],
-    gjeldendeVedtak: false,
-    behandlingPaaVent: false,
-    behandlingHenlagt: false,
-    behandlingKoet: false,
-    toTrinnsBehandling: false,
-    behandlingÅrsaker: [],
-    behandlingsresultat: {
-      type: {
-        kode: 'AVSLÅTT',
-        kodeverk: 'BEHANDLING_RESULTAT_TYPE',
+    ansvarligSaksbehandler: 'beslut',
+    avsluttet: '2021-12-20T09:23:01',
+    behandlendeEnhetId: '4409',
+    behandlendeEnhetNavn: 'NAV Arbeid og ytelser Arendal',
+    behandlingÅrsaker: [
+      {
+        erAutomatiskRevurdering: false,
+        behandlingArsakType: { kode: 'RE-END-INNTEKTSMELD', kodeverk: 'BEHANDLING_AARSAK' },
+        manueltOpprettet: false,
       },
-    },
-  },
-  {
-    id: 2,
-    versjon: 2,
-    type: {
-      kode: behandlingType.DOKUMENTINNSYN,
-      kodeverk: BEHANDLING_TYPE_KODEVERK,
-    },
-    status: {
-      kode: behandlingStatus.OPPRETTET,
-      kodeverk: BEHANDLING_STATUS_KODEVERK,
-    },
-    sprakkode: {
-      kode: 'NB',
-      kodeverk: '',
-    },
-    opprettet: '2017-08-02T00:54:25.455',
-    avsluttet: '2017-08-03T00:54:25.455',
-    endret: '2017-08-03T00:54:25.455',
-    behandlendeEnhetId: '4812',
-    behandlendeEnhetNavn: 'NAV Familie- og pensjonsytelser Bergen',
-    links: [],
-    gjeldendeVedtak: true,
-    behandlingPaaVent: false,
-    behandlingHenlagt: false,
+    ],
     behandlingKoet: false,
-    toTrinnsBehandling: false,
-    behandlingArsaker: [],
+    behandlingPaaVent: false,
+    behandlingsfristTid: '2022-01-31',
     behandlingsresultat: {
+      erRevurderingMedUendretUtfall: false,
       type: {
         kode: 'INNVILGET',
+        erHenleggelse: false,
+        behandlingsresultatHenlagt: false,
+        behandlingsresultatOpphørt: false,
+        behandlingsresultatIkkeEndret: false,
         kodeverk: 'BEHANDLING_RESULTAT_TYPE',
+        behandlingHenlagt: false,
       },
+      vilkårResultat: {
+        MEDLEMSKAPSVILKÅRET: [
+          {
+            periode: { fom: '2021-10-25', tom: '2021-12-25' },
+            avslagsårsak: null,
+            utfall: { kode: '-', kodeverk: 'VILKAR_UTFALL_TYPE' },
+          },
+        ],
+        MEDISINSKEVILKÅR_UNDER_18_ÅR: [
+          {
+            periode: { fom: '2021-10-25', tom: '2021-12-25' },
+            avslagsårsak: null,
+            utfall: { kode: '-', kodeverk: 'VILKAR_UTFALL_TYPE' },
+          },
+        ],
+        OPPTJENINGSPERIODEVILKÅR: [
+          {
+            periode: { fom: '2021-10-25', tom: '2021-12-25' },
+            avslagsårsak: null,
+            utfall: { kode: '-', kodeverk: 'VILKAR_UTFALL_TYPE' },
+          },
+        ],
+        ALDERSVILKÅR: [
+          {
+            periode: { fom: '2021-10-25', tom: '2021-12-25' },
+            avslagsårsak: { kode: '-', kodeverk: 'AVSLAGSARSAK' },
+            utfall: { kode: '-', kodeverk: 'VILKAR_UTFALL_TYPE' },
+          },
+        ],
+        SØKNADSFRIST: [
+          {
+            periode: { fom: '2021-10-25', tom: '2021-12-25' },
+            avslagsårsak: { kode: '-', kodeverk: 'AVSLAGSARSAK' },
+            utfall: { kode: '-', kodeverk: 'VILKAR_UTFALL_TYPE' },
+          },
+        ],
+        BEREGNINGSGRUNNLAGVILKÅR: [
+          {
+            periode: { fom: '2021-10-25', tom: '2021-12-25' },
+            avslagsårsak: null,
+            utfall: { kode: '-', kodeverk: 'VILKAR_UTFALL_TYPE' },
+          },
+        ],
+        OPPTJENINGSVILKÅRET: [
+          {
+            periode: { fom: '2021-10-25', tom: '2021-12-25' },
+            avslagsårsak: null,
+            utfall: { kode: '-', kodeverk: 'VILKAR_UTFALL_TYPE' },
+          },
+        ],
+        OMSORGEN_FOR: [
+          {
+            periode: { fom: '2021-10-25', tom: '2021-12-25' },
+            avslagsårsak: null,
+            utfall: { kode: '-', kodeverk: 'VILKAR_UTFALL_TYPE' },
+          },
+        ],
+      },
+      vedtaksdato: '2021-12-20',
     },
+    behandlingResultatType: {
+      kode: 'INNVILGET',
+      erHenleggelse: false,
+      behandlingsresultatHenlagt: false,
+      behandlingsresultatOpphørt: false,
+      behandlingsresultatIkkeEndret: false,
+      kodeverk: 'BEHANDLING_RESULTAT_TYPE',
+      behandlingHenlagt: false,
+    },
+    endret: '2021-12-20T09:23:01.248',
+    endretAvBrukernavn: 'vtp',
+    erPaaVent: false,
+    fagsakId: 999951,
+    førsteÅrsak: {
+      erAutomatiskRevurdering: false,
+      behandlingArsakType: { kode: 'RE-END-INNTEKTSMELD', kodeverk: 'BEHANDLING_AARSAK' },
+      manueltOpprettet: false,
+    },
+    gjeldendeVedtak: true,
+    id: 999955,
+    links: [],
+    opprettet: '2021-12-20T09:22:38',
+    originalVedtaksDato: '2021-12-20',
+    sprakkode: { kode: 'NB', kodeverk: 'SPRAAK_KODE' },
+    status: { kode: 'AVSLU', kodeverk: 'BEHANDLING_STATUS' },
+    toTrinnsBehandling: false,
+    type: { kode: 'BT-004', kodeverk: 'BEHANDLING_TYPE' },
+    uuid: 'ca887118-87b1-4afd-a886-b0503d3fc787',
+    behandlingHenlagt: false,
+    versjon: 102,
   },
   {
-    id: 3,
-    versjon: 2,
-    type: {
-      kode: behandlingType.REVURDERING,
-      kodeverk: BEHANDLING_TYPE_KODEVERK,
-    },
-    status: {
-      kode: behandlingStatus.OPPRETTET,
-      kodeverk: BEHANDLING_STATUS_KODEVERK,
-    },
-    sprakkode: {
-      kode: 'NB',
-      kodeverk: '',
-    },
-    opprettet: '2017-08-02T00:54:25.455',
-    behandlendeEnhetId: '4812',
-    behandlendeEnhetNavn: 'NAV Familie- og pensjonsytelser Bergen',
-    links: [],
-    gjeldendeVedtak: false,
-    behandlingPaaVent: false,
-    behandlingHenlagt: false,
+    ansvarligSaksbehandler: 'saksbeh',
+    avsluttet: '2021-12-20T09:22:36',
+    behandlendeEnhetId: '4409',
+    behandlendeEnhetNavn: 'NAV Arbeid og ytelser Arendal',
+    behandlingÅrsaker: [
+      {
+        erAutomatiskRevurdering: false,
+        behandlingArsakType: { kode: 'RE_ANNEN_SAK', kodeverk: 'BEHANDLING_AARSAK' },
+        manueltOpprettet: false,
+      },
+      {
+        erAutomatiskRevurdering: true,
+        behandlingArsakType: { kode: 'RE-END-INNTEKTSMELD', kodeverk: 'BEHANDLING_AARSAK' },
+        manueltOpprettet: false,
+      },
+    ],
     behandlingKoet: false,
-    toTrinnsBehandling: false,
-    behandlingArsaker: [],
-  },
-  {
-    id: 4,
-    versjon: 2,
-    type: {
-      kode: behandlingType.FORSTEGANGSSOKNAD,
-      kodeverk: BEHANDLING_TYPE_KODEVERK,
-    },
-    status: {
-      kode: behandlingStatus.AVSLUTTET,
-      kodeverk: BEHANDLING_STATUS_KODEVERK,
-    },
-    sprakkode: {
-      kode: 'NB',
-      kodeverk: '',
-    },
-    opprettet: '2017-08-02T00:54:25.455',
-    avsluttet: '2017-08-03T00:54:25.455',
-    endret: '2017-08-03T00:54:25.455',
-    behandlendeEnhetId: '4812',
-    behandlendeEnhetNavn: 'NAV Familie- og pensjonsytelser Bergen',
-    links: [],
-    gjeldendeVedtak: false,
     behandlingPaaVent: false,
-    behandlingHenlagt: false,
-    behandlingKoet: false,
-    toTrinnsBehandling: false,
-    behandlingArsaker: [],
+    behandlingsfristTid: '2022-01-31',
     behandlingsresultat: {
+      erRevurderingMedUendretUtfall: false,
       type: {
-        kode: 'HENLAGT_SØKNAD_TRUKKET',
+        kode: 'INNVILGET',
+        erHenleggelse: false,
+        behandlingsresultatHenlagt: false,
+        behandlingsresultatOpphørt: false,
+        behandlingsresultatIkkeEndret: false,
         kodeverk: 'BEHANDLING_RESULTAT_TYPE',
+        behandlingHenlagt: false,
       },
+      vilkårResultat: {
+        MEDLEMSKAPSVILKÅRET: [
+          {
+            periode: { fom: '2021-10-25', tom: '2021-12-25' },
+            avslagsårsak: null,
+            utfall: { kode: '-', kodeverk: 'VILKAR_UTFALL_TYPE' },
+          },
+        ],
+        MEDISINSKEVILKÅR_UNDER_18_ÅR: [
+          {
+            periode: { fom: '2021-10-25', tom: '2021-12-25' },
+            avslagsårsak: null,
+            utfall: { kode: '-', kodeverk: 'VILKAR_UTFALL_TYPE' },
+          },
+        ],
+        OPPTJENINGSPERIODEVILKÅR: [
+          {
+            periode: { fom: '2021-10-25', tom: '2021-12-25' },
+            avslagsårsak: null,
+            utfall: { kode: '-', kodeverk: 'VILKAR_UTFALL_TYPE' },
+          },
+        ],
+        ALDERSVILKÅR: [
+          {
+            periode: { fom: '2021-10-25', tom: '2021-12-25' },
+            avslagsårsak: { kode: '-', kodeverk: 'AVSLAGSARSAK' },
+            utfall: { kode: '-', kodeverk: 'VILKAR_UTFALL_TYPE' },
+          },
+        ],
+        SØKNADSFRIST: [
+          {
+            periode: { fom: '2021-10-25', tom: '2021-12-25' },
+            avslagsårsak: { kode: '-', kodeverk: 'AVSLAGSARSAK' },
+            utfall: { kode: '-', kodeverk: 'VILKAR_UTFALL_TYPE' },
+          },
+        ],
+        BEREGNINGSGRUNNLAGVILKÅR: [
+          {
+            periode: { fom: '2021-10-25', tom: '2021-12-25' },
+            avslagsårsak: null,
+            utfall: { kode: '-', kodeverk: 'VILKAR_UTFALL_TYPE' },
+          },
+        ],
+        OPPTJENINGSVILKÅRET: [
+          {
+            periode: { fom: '2021-10-25', tom: '2021-12-25' },
+            avslagsårsak: null,
+            utfall: { kode: '-', kodeverk: 'VILKAR_UTFALL_TYPE' },
+          },
+        ],
+        OMSORGEN_FOR: [
+          {
+            periode: { fom: '2021-10-25', tom: '2021-12-25' },
+            avslagsårsak: null,
+            utfall: { kode: '-', kodeverk: 'VILKAR_UTFALL_TYPE' },
+          },
+        ],
+      },
+      vedtaksdato: '2021-12-20',
     },
+    behandlingResultatType: {
+      kode: 'INNVILGET',
+      erHenleggelse: false,
+      behandlingsresultatHenlagt: false,
+      behandlingsresultatOpphørt: false,
+      behandlingsresultatIkkeEndret: false,
+      kodeverk: 'BEHANDLING_RESULTAT_TYPE',
+      behandlingHenlagt: false,
+    },
+    endret: '2021-12-20T09:22:36.118',
+    endretAvBrukernavn: 'vtp',
+    erPaaVent: false,
+    fagsakId: 999951,
+    førsteÅrsak: {
+      erAutomatiskRevurdering: false,
+      behandlingArsakType: { kode: 'RE-END-INNTEKTSMELD', kodeverk: 'BEHANDLING_AARSAK' },
+      manueltOpprettet: false,
+    },
+    gjeldendeVedtak: false,
+    id: 999951,
+    links: [],
+    opprettet: '2021-12-20T09:21:41',
+    originalVedtaksDato: '2021-12-20',
+    sprakkode: { kode: 'NB', kodeverk: 'SPRAAK_KODE' },
+    status: { kode: 'AVSLU', kodeverk: 'BEHANDLING_STATUS' },
+    toTrinnsBehandling: true,
+    type: { kode: 'BT-002', kodeverk: 'BEHANDLING_TYPE' },
+    uuid: 'e10e066e-3ccd-4f2f-ac46-9e271c0c89ee',
+    behandlingHenlagt: false,
+    versjon: 118,
   },
 ];
 
+const fagsak = {
+  saksnummer: '35425245',
+  sakstype: {
+    kode: fagsakYtelseType.PLEIEPENGER,
+    kodeverk: '',
+  },
+  relasjonsRolleType: {
+    kode: relasjonsRolleType.MOR,
+    kodeverk: '',
+  },
+  status: {
+    kode: fagsakStatus.UNDER_BEHANDLING,
+    kodeverk: '',
+  },
+  barnFodt: '2020-01-01',
+  opprettet: '2020-01-01',
+  endret: '2020-01-01',
+  antallBarn: 1,
+  kanRevurderingOpprettes: false,
+  skalBehandlesAvInfotrygd: false,
+  dekningsgrad: 100,
+} as Fagsak;
+
 const locationMock = {
+  key: '1',
   pathname: 'test',
   search: 'test',
   state: {},
@@ -176,6 +307,8 @@ export const visPanelForValgAvBehandlinger = () => {
         showAll={visAlle}
         toggleShowAll={() => toggleVisAlle(!visAlle)}
         getKodeverkFn={getKodeverkFn}
+        fagsak={fagsak}
+        createLocationForSkjermlenke={() => locationMock}
       />
     </div>
   );

@@ -1,6 +1,7 @@
 import React, { useMemo } from 'react';
 import { injectIntl, IntlShape, WrappedComponentProps } from 'react-intl';
 
+import Endringslogg from '@navikt/familie-endringslogg';
 import HeaderWithErrorPanel, { Feilmelding } from '@fpsak-frontend/sak-dekorator';
 import { useRestApiError, useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
 import { NavAnsatt } from '@k9-sak-web/types';
@@ -8,7 +9,7 @@ import { NavAnsatt } from '@k9-sak-web/types';
 import { K9sakApiKeys, restApiHooks } from '../../data/k9sakApi';
 import ErrorFormatter from '../feilhandtering/ErrorFormatter';
 import ErrorMessage from '../feilhandtering/ErrorMessage';
-import { getPathToFplos } from '../paths';
+import { getPathToFplos, getPathToK9Punsj } from '../paths';
 
 type QueryStrings = {
   errorcode?: string;
@@ -72,10 +73,12 @@ const Dekorator = ({
   return (
     <HeaderWithErrorPanel
       navAnsattName={navAnsatt?.navn}
+      navBrukernavn={navAnsatt?.brukernavn}
       removeErrorMessage={removeErrorMessages}
       errorMessages={hideErrorMessages ? EMPTY_ARRAY : resolvedErrorMessages}
       setSiteHeight={setSiteHeight}
       getPathToFplos={getPathToFplos}
+      getPathToK9Punsj={getPathToK9Punsj}
     />
   );
 };

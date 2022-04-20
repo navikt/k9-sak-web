@@ -7,12 +7,13 @@ import Uttak from '../../components/Uttak';
 import { PleiepengerBehandlingApiKeys } from '../../data/pleiepengerBehandlingApi';
 
 class PanelDef extends ProsessStegPanelDef {
-  getKomponent = ({ behandling, uttaksperioder, arbeidsgiverOpplysningerPerId, aksjonspunkter }) => (
+  getKomponent = ({ behandling, uttaksperioder, arbeidsgiverOpplysningerPerId, aksjonspunkter, alleKodeverk }) => (
     <Uttak
       uuid={behandling.uuid}
       uttaksperioder={uttaksperioder}
       arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
       aksjonspunkter={aksjonspunkter}
+      alleKodeverk={alleKodeverk}
     />
   );
 
@@ -36,9 +37,10 @@ class PanelDef extends ProsessStegPanelDef {
 
   getEndepunkter = () => [PleiepengerBehandlingApiKeys.ARBEIDSFORHOLD];
 
-  getData = ({ uttak, arbeidsgiverOpplysningerPerId }) => ({
+  getData = ({ uttak, arbeidsgiverOpplysningerPerId, alleKodeverk }) => ({
     uttaksperioder: uttak?.perioder,
     arbeidsgiverOpplysningerPerId,
+    alleKodeverk,
   });
 }
 

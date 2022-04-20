@@ -21,15 +21,19 @@ describe('<ForeldelsePeriodeForm>', () => {
         foreldelseVurderingTyper={[{
           kode: foreldelseVurderingType.IKKE_VURDERT,
           navn: 'IKKE_VURDERT',
+          kodeverk: '',
         }, {
           kode: foreldelseVurderingType.FORELDET,
           navn: 'FORELDET',
+          kodeverk: '',
         }, {
           kode: foreldelseVurderingType.IKKE_FORELDET,
           navn: 'IKKE_FORELDET',
+          kodeverk: '',
         }, {
           kode: foreldelseVurderingType.TILLEGGSFRIST,
           navn: 'TILLEGGSFRIST',
+          kodeverk: '',
         }]}
         setNestePeriode={sinon.spy()}
         setForrigePeriode={sinon.spy()}

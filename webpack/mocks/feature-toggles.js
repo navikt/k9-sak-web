@@ -17,6 +17,14 @@ const featureToggles = [
     key: 'UNNTAKSBEHANDLING',
     value: process.env.UNNTAKSBEHANDLING,
   },
+  {
+    key: 'UTENLANDSOPPHOLD',
+    value: process.env.UTENLANDSOPPHOLD,
+  },
+  {
+    key: 'SOKNADPERIODESTRIPE',
+    value: process.env.SOKNADPERIODESTRIPE,
+  },
 ];
 
 module.exports = function (app) {

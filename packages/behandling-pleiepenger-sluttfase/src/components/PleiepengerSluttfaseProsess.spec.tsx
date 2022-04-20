@@ -218,6 +218,14 @@ describe('< PleiepengerSluttfaseProsess>', () => {
         usePartialStatus: false,
       },
       {
+        isActive: false,
+        isDisabled: false,
+        isFinished: false,
+        labelId: 'Behandlingspunkt.InngangsvilkarForts',
+        type: 'default',
+        usePartialStatus: false
+      },
+      {
         labelId: 'Behandlingspunkt.Beregning',
         isActive: false,
         isDisabled: false,
@@ -287,7 +295,7 @@ describe('< PleiepengerSluttfaseProsess>', () => {
 
     const meny = wrapper.find(ProsessStegContainer);
 
-    meny.prop('velgProsessStegPanelCallback')(2);
+    meny.prop('velgProsessStegPanelCallback')(3);
 
     const opppdaterKall = oppdaterProsessStegOgFaktaPanelIUrl.getCalls();
     expect(opppdaterKall).toHaveLength(1);

@@ -49,7 +49,7 @@ const VedtakProsessIndex = ({
   dokumentdataHente,
   fritekstdokumenter,
   lagreDokumentdata,
-  overlappendeYtelser
+  overlappendeYtelser,
 }) => (
   <RawIntlProvider value={intl}>
     <VedtakPanels
@@ -84,7 +84,8 @@ const VedtakProsessIndex = ({
       dokumentdata={dokumentdataHente}
       fritekstdokumenter={fritekstdokumenter}
       lagreDokumentdata={lagreDokumentdata}
-      overlappendeYtelser={overlappendeYtelser} />
+      overlappendeYtelser={overlappendeYtelser}
+    />
   </RawIntlProvider>
 );
 
@@ -104,7 +105,7 @@ VedtakProsessIndex.propTypes = {
   ytelseTypeKode: PropTypes.string.isRequired,
   employeeHasAccess: PropTypes.bool.isRequired,
   alleKodeverk: PropTypes.shape().isRequired,
-  personopplysninger: PropTypes.shape().isRequired,
+  personopplysninger: PropTypes.shape(),
   arbeidsgiverOpplysningerPerId: PropTypes.shape().isRequired,
   beregningsgrunnlag: PropTypes.arrayOf(vedtakBeregningsgrunnlagPropType),
   vedtakVarsel: vedtakVarselPropType,

@@ -1,6 +1,7 @@
 import React, { useState, useCallback, useEffect, useRef, RefObject } from 'react';
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 import { BoxedListWithLinks, Header, Popover, SystemButton, UserPanel } from '@navikt/k9-react-components';
+import Endringslogg from '@navikt/familie-endringslogg';
 
 import { AINNTEKT_URL, AAREG_URL, RETTSKILDE_URL, SYSTEMRUTINE_URL } from '@k9-sak-web/konstanter';
 
@@ -61,34 +62,13 @@ const getHeaderTitleHref = getPathToFplos => {
 
 interface OwnProps {
   navAnsattName?: string;
+  navBrukernavn?: string;
   removeErrorMessage: () => void;
   errorMessages?: Feilmelding[];
   setSiteHeight: (height: number) => void;
   getPathToFplos: () => void;
+  getPathToK9Punsj: () => string | null;
 }
-
-const lenkerFormatertForBoxedList = [
-  {
-    name: intl.formatMessage({ id: 'HeaderWithErrorPanel.AInntekt' }),
-    href: AINNTEKT_URL,
-    isExternal: true,
-  },
-  {
-    name: intl.formatMessage({ id: 'HeaderWithErrorPanel.AAReg' }),
-    href: AAREG_URL,
-    isExternal: true,
-  },
-  {
-    name: intl.formatMessage({ id: 'HeaderWithErrorPanel.Rettskilde' }),
-    href: RETTSKILDE_URL,
-    isExternal: true,
-  },
-  {
-    name: intl.formatMessage({ id: 'HeaderWithErrorPanel.Systemrutine' }),
-    href: SYSTEMRUTINE_URL,
-    isExternal: true,
-  },
-];
 
 /**
  * HeaderWithErrorPanel
@@ -99,10 +79,12 @@ const lenkerFormatertForBoxedList = [
  */
 const HeaderWithErrorPanel = ({
   navAnsattName = '',
+  navBrukernavn,
   removeErrorMessage,
   errorMessages = [],
   setSiteHeight,
   getPathToFplos,
+  getPathToK9Punsj,
 }: OwnProps) => {
   const [erLenkepanelApent, setLenkePanelApent] = useState(false);
   const wrapperRef = useOutsideClickEvent(erLenkepanelApent, setLenkePanelApent);
@@ -111,6 +93,34 @@ const HeaderWithErrorPanel = ({
   useEffect(() => {
     setSiteHeight(fixedHeaderRef.current.clientHeight);
   }, [errorMessages.length]);
+
+  const lenkerFormatertForBoxedList = [
+    {
+      name: intl.formatMessage({ id: 'HeaderWithErrorPanel.AInntekt' }),
+      href: AINNTEKT_URL,
+      isExternal: true,
+    },
+    {
+      name: intl.formatMessage({ id: 'HeaderWithErrorPanel.AAReg' }),
+      href: AAREG_URL,
+      isExternal: true,
+    },
+    {
+      name: intl.formatMessage({ id: 'HeaderWithErrorPanel.Rettskilde' }),
+      href: RETTSKILDE_URL,
+      isExternal: true,
+    },
+    {
+      name: intl.formatMessage({ id: 'HeaderWithErrorPanel.Systemrutine' }),
+      href: SYSTEMRUTINE_URL,
+      isExternal: true,
+    },
+    {
+      name: intl.formatMessage({ id: 'HeaderWithErrorPanel.Punsj' }),
+      href: getPathToK9Punsj(),
+      isExternal: true,
+    },
+  ];
 
   const popperPropsChildren = useCallback(
     () => (
@@ -148,6 +158,23 @@ const HeaderWithErrorPanel = ({
             title={intl.formatMessage({ id: 'HeaderWithErrorPanel.Ytelse' })}
             titleHref={getHeaderTitleHref(getPathToFplos)}
           >
+            {/*
+            Går mot en backend som foreldrepenger styrer.
+            https://github.com/navikt/familie-endringslogg
+            For å nå backend lokalt må man være tilkoblet naisdevice og kjøre opp k9-sak-web på port 8000 pga CORS
+            */}
+            {navBrukernavn && (
+              <div className={styles['endringslogg-container']}>
+                <Endringslogg
+                  userId={navBrukernavn}
+                  appId="K9_SAK"
+                  appName="K9 Sak"
+                  backendUrl="/k9/endringslogg"
+                  stil="lys"
+                  alignLeft
+                />
+              </div>
+            )}
             <Popover
               popperIsVisible={erLenkepanelApent}
               renderArrowElement

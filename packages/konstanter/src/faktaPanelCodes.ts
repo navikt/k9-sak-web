@@ -28,7 +28,9 @@ const faktaPanelCodes = {
   OPPLYSNINGER_FRA_SØKNADEN: 'opplysninger-fra-soknaden',
   ETABLERT_TILSYN: 'etablert-tilsyn',
   OM_BARNET: 'om-barnet',
-  OM_PLEIETRENGENDE: 'om-pleietrengende'
+  OM_PLEIETRENGENDE: 'om-pleietrengende',
+  UTENLANDSOPPHOLD: 'utenlandsopphold',
+  SOKNADSPERIODER: 'soknadsperioder',
 };
 
 export default faktaPanelCodes;

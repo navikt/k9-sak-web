@@ -1,4 +1,5 @@
 const path = require('path');
+const ESLintPlugin = require('eslint-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const PACKAGES_DIR = path.resolve(__dirname, '../packages');
 const CORE_DIR = path.resolve(__dirname, '../node_modules');
@@ -30,26 +31,14 @@ module.exports = {
       return data;
     });
 
-    config.devtool = configType === 'DEVELOPMENT' ? 'eval-cheap-source-map' : 'source-map';
+    config.devtool = configType === 'DEVELOPMENT' ? 'inline-source-map' : 'source-map';
 
     // Make whatever fine-grained changes you need
     config.module.rules = config.module.rules.concat(
       {
         test: /\.(t|j)sx?$/,
-        enforce: 'pre',
-        loader: 'eslint-loader',
-        options: {
-          failOnWarning: false,
-          failOnError: false,
-          configFile: path.resolve(__dirname, '../eslint/eslintrc.dev.js'),
-          fix: true,
-          cache: true,
-        },
-        include: [PACKAGES_DIR],
-      },
-      {
-        test: /\.(t|j)sx?$/,
         use: [
+          { loader: 'cache-loader' },
           {
             loader: 'thread-loader',
             options: {
@@ -172,7 +161,17 @@ module.exports = {
       }),
     );
 
-    config.resolve.extensions.push('.less');
+    config.plugins.push(new ESLintPlugin({
+      context: PACKAGES_DIR,
+      extensions: ['.js', '.jsx', '.ts', '.tsx'],
+      failOnWarning: false,
+      failOnError: !(configType === 'DEVELOPMENT'),
+      fix: (configType === 'DEVELOPMENT'),
+      overrideConfigFile: path.resolve(__dirname, (configType === 'DEVELOPMENT') ? '../eslint/eslintrc.dev.js' : '../eslint/eslintrc.prod.js'),
+      cache: true,
+    }));
+
+    config.resolve.extensions.push('.ts', '.tsx', '.less');
 
     // Return the altered config
     return config;
