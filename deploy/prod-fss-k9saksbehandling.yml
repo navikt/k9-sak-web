@@ -89,6 +89,6 @@ spec:
     - name: TILBAKE
       value: "true"
     - name: UTENLANDSOPPHOLD
-      value: "false"
+      value: "true"
     - name: SOKNADPERIODESTRIPE
       value: "false"

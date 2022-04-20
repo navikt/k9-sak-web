@@ -84,7 +84,7 @@ button.periode {
 }
 
 .advarsel {
-  .colors(#FFECCC, #D47B00, #FFECCC);
+  .colors(#FFECCC, #D47B00, #ffa733);
 }
 
 button.advarsel {
@@ -92,7 +92,7 @@ button.advarsel {
 }
 
 .feil {
-  .colors(#EFA89D, #BA3A26, #EFA89D);
+  .colors(#EFA89D, #BA3A26, #a13a28);
 }
 
 .feilRevurder {
@@ -112,7 +112,7 @@ button.inaktiv {
 }
 
 .suksess {
-  .colors(#99dead, #06893a, #99dead);
+  .colors(#99dead, #06893a, #1c6937);
 }
 
 .suksessRevurder {
@@ -146,4 +146,15 @@ button.suksess {
 
 .usynlig {
   display: none;
+}
+
+.nonClickablePeriod {
+  :global(.contentWithTooltip) {
+    height: 100%;
+    width: 100%;
+  }
+
+  :global(.contentWithTooltip__tooltipText) {
+    padding: 0.25rem 1rem;
+  }
 }

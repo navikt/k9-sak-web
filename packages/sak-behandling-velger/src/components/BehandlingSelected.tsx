@@ -2,11 +2,14 @@ import calendarImg from '@fpsak-frontend/assets/images/calendar-2.svg';
 import behandlingResultatType from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import { DateLabel, Image } from '@fpsak-frontend/shared-components';
+import { skjermlenkeCodes } from '@k9-sak-web/konstanter';
 import { Periode } from '@k9-sak-web/types';
 import classnames from 'classnames/bind';
+import { Location } from 'history';
 import { Element, Normaltekst, Undertittel } from 'nav-frontend-typografi';
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
+import { NavLink, useLocation } from 'react-router-dom';
 import styles from './behandlingSelected.less';
 import { getFormattedSøknadserioder, getStatusIcon, getStatusText } from './behandlingVelgerUtils';
 
@@ -20,6 +23,7 @@ interface BehandlingSelectedProps {
   behandlingTypeNavn: string;
   søknadsperioder: Periode[];
   behandlingTypeKode: string;
+  createLocationForSkjermlenke: (behandlingLocation: Location, skjermlenkeCode: string) => Location;
 }
 
 const BehandlingSelected: React.FC<BehandlingSelectedProps> = props => {
@@ -32,7 +36,10 @@ const BehandlingSelected: React.FC<BehandlingSelectedProps> = props => {
     behandlingTypeNavn,
     opprettetDato,
     søknadsperioder,
+    createLocationForSkjermlenke,
   } = props;
+
+  const location = useLocation();
 
   const erFerdigstilt = !!avsluttetDato;
 
@@ -107,6 +114,15 @@ const BehandlingSelected: React.FC<BehandlingSelectedProps> = props => {
         </div>
       </div>
       {getÅrsakerForBehandling()}
+      <NavLink
+        to={createLocationForSkjermlenke(location as Location, skjermlenkeCodes.FAKTA_OM_SOKNADSPERIODER.kode)}
+        onClick={() => window.scroll(0, 0)}
+        className={styles.faktapanelLenke}
+      >
+        <Normaltekst>
+          <FormattedMessage id="Behandlingspunkt.BehandlingSelected.SøknadsperioderMedÅrsakerForBehandling" />
+        </Normaltekst>
+      </NavLink>
     </div>
   );
 };

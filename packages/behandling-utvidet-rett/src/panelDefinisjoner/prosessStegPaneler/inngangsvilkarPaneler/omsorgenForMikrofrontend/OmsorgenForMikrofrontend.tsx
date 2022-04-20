@@ -38,7 +38,7 @@ const initializeOmsorgenForVilkar = (
 export default props => {
   const omsorgenForVilkårAppID = 'omsorgenForRettApp';
   const erIProduksjon = sjekkHvisErIProduksjon();
-  const path = erIProduksjon ? 'prod' : 'dev';
+  const path = erIProduksjon ? 'prod' : '1';
 
     return (
       <MicroFrontend

@@ -234,6 +234,20 @@ const skjermlenkeCodes = {
     faktaNavn: faktaPanelCodes.ETABLERT_TILSYN,
     punktNavn: '',
   },
+  FAKTA_OM_SOKNADSPERIODER: {
+    kode: 'FAKTA_OM_SOKNADSPERIODER',
+    faktaNavn: faktaPanelCodes.SOKNADSPERIODER,
+  },
+  INFOTRYGD_MIGRERING: {
+    kode: 'INFOTRYGD_MIGRERING',
+    faktaNavn: faktaPanelCodes.INFOTRYGDMIGRERING,
+    punktNavn: '',
+  },
+  OVERSTYR_INPUT_BEREGNING: {
+    kode: 'OVERSTYR_INPUT_BEREGNING',
+    faktaNavn: faktaPanelCodes.OVERSTYRING,
+    punktNavn: '',
+  },
 };
 
 export default skjermlenkeCodes;

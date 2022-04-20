@@ -26,6 +26,7 @@ interface OwnProps {
   showAll: boolean;
   toggleShowAll: () => void;
   fagsak: Fagsak;
+  createLocationForSkjermlenke: (behandlingLocation: Location, skjermlenkeCode: string) => Location;
 }
 
 const BehandlingVelgerSakIndex = ({
@@ -37,6 +38,7 @@ const BehandlingVelgerSakIndex = ({
   showAll,
   toggleShowAll,
   fagsak,
+  createLocationForSkjermlenke
 }: OwnProps) => {
   const skalViseGammelBehandlingsvelger =
     fagsak.sakstype.kode === fagsakYtelseType.FRISINN ||
@@ -62,6 +64,7 @@ const BehandlingVelgerSakIndex = ({
           noExistingBehandlinger={noExistingBehandlinger}
           getKodeverkFn={getKodeverkFn}
           behandlingId={behandlingId}
+          createLocationForSkjermlenke={createLocationForSkjermlenke}
         />
       )}
     </RawIntlProvider>
