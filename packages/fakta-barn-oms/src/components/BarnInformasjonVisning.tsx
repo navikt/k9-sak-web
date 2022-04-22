@@ -12,18 +12,17 @@ interface BarnInputProps {
 
 const BarnInformasjonVisning = ({ barnet }: BarnInputProps) => {
   const { harSammeBosted, dødsdato, barnType, deltBostedPerioder } = barnet.barnRelevantIBehandling;
-  const skalViseDeltBostedMedPerioder = deltBostedPerioder && deltBostedPerioder.length;
+  const skalViseDeltBostedMedPerioder = deltBostedPerioder && deltBostedPerioder.length > 0;
 
   return (
     <div>
-      {harSammeBosted && (
-        <Normaltekst>
-          <FormattedMessage
-            id={harSammeBosted ? 'FaktaBarn.BorMedSøker' : 'FaktaBarn.BorIkkeMedSøker'}
-            values={{ b: chunks => <b>{chunks}</b> }}
-          />
-        </Normaltekst>
-      )}
+      <Normaltekst>
+        <FormattedMessage
+          id={harSammeBosted ? 'FaktaBarn.BorMedSøker' : 'FaktaBarn.BorIkkeMedSøker'}
+          values={{ b: chunks => <b>{chunks}</b> }}
+        />
+      </Normaltekst>
+
 
       {skalViseDeltBostedMedPerioder && <>
         <Normaltekst>
