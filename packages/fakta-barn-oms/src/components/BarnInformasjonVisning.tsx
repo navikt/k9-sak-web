@@ -16,12 +16,12 @@ const BarnInformasjonVisning = ({ barnet }: BarnInputProps) => {
 
   return (
     <div>
-      <Normaltekst>
+      {typeof harSammeBosted !== 'undefined' && <Normaltekst>
         <FormattedMessage
           id={harSammeBosted ? 'FaktaBarn.BorMedSøker' : 'FaktaBarn.BorIkkeMedSøker'}
           values={{ b: chunks => <b>{chunks}</b> }}
         />
-      </Normaltekst>
+      </Normaltekst>}
 
 
       {skalViseDeltBostedMedPerioder && <>
