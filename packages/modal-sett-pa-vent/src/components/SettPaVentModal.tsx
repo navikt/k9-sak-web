@@ -152,7 +152,7 @@ export const SettPaVentModal = ({
                   </Normaltekst>
                 </div>
               </Column>
-              {(hasManualPaVent || frist) && (
+              {(hasManualPaVent || originalFrist) && (
                 <Column xs="2">
                   <div className={styles.datePicker}>
                     <DatepickerField name="frist" validate={[required, hasValidDate, dateAfterOrEqualToToday]} data-testid="datofelt" />
