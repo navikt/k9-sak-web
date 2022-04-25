@@ -146,6 +146,7 @@ describe('<SettPaVentModal>', () => {
         showModal
         cancelEvent={sinon.spy()}
         frist="2015-10-10"
+        originalFrist='2015-10-10'
         ventearsaker={[]}
         hasManualPaVent={false}
         erTilbakekreving={false}

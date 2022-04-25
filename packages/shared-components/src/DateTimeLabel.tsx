@@ -18,12 +18,14 @@ interface OwnProps {
  */
 const DateTimeLabel = ({ dateTimeString, useNewFormat = false }: OwnProps) => {
   const date = new Date(dateTimeString);
+  const hours = String(date.getHours()).padStart(2, '0');
+  const minutes = String(date.getMinutes()).padStart(2, '0');
   return (
     <>
       <FormattedDate day="2-digit" month="2-digit" year="numeric" value={date} />
       {!useNewFormat && (
         <>
-          -<span>{`${date.getHours()}:${date.getMinutes()}`}</span>
+          -<span>{`${hours}:${minutes}`}</span>
         </>
       )}
       {useNewFormat && (
