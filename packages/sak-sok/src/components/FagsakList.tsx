@@ -8,7 +8,7 @@ import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 
 import styles from './fagsakList.less';
 
-const headerTextCodes = ['FagsakList.Saksnummer', 'FagsakList.Sakstype', 'FagsakList.Status', 'FagsakList.BarnFodt'];
+const headerTextCodes = ['FagsakList.Saksnummer', 'FagsakList.Sakstype', 'FagsakList.Status'];
 const lagFagsakSortObj = (fagsak: Fagsak) => ({
   avsluttet: fagsak.status.kode === fagsakStatus.AVSLUTTET,
   endret: fagsak.endret ? fagsak.endret : fagsak.opprettet,
@@ -58,7 +58,6 @@ const FagsakList = ({ fagsaker, selectFagsakCallback, alleKodeverk }: OwnProps) 
           <TableColumn>{fagsak.saksnummer}</TableColumn>
           <TableColumn>{getKodeverknavn(fagsak.sakstype)}</TableColumn>
           <TableColumn>{getKodeverknavn(fagsak.status)}</TableColumn>
-          <TableColumn>{fagsak.barnFodt ? <DateLabel dateString={fagsak.barnFodt} /> : null}</TableColumn>
         </TableRow>
       ))}
     </Table>

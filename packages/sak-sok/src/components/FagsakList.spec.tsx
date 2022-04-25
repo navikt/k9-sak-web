@@ -59,7 +59,7 @@ describe('<FagsakList>', () => {
     dekningsgrad: 100,
   } as Fagsak;
 
-  const headerTextCodes = ['FagsakList.Saksnummer', 'FagsakList.Sakstype', 'FagsakList.Status', 'FagsakList.BarnFodt'];
+  const headerTextCodes = ['FagsakList.Saksnummer', 'FagsakList.Sakstype', 'FagsakList.Status'];
 
   it('skal vise en tabell med en rad og tilhørende kolonnedata', () => {
     const clickFunction = sinon.spy();
