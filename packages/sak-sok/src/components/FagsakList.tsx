@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { DateLabel, Table, TableColumn, TableRow } from '@fpsak-frontend/shared-components';
+import { Table, TableColumn, TableRow } from '@fpsak-frontend/shared-components';
 import { Fagsak, KodeverkMedNavn } from '@k9-sak-web/types';
 import fagsakStatus from '@fpsak-frontend/kodeverk/src/fagsakStatus';
 import { getKodeverknavnFn } from '@fpsak-frontend/utils';
