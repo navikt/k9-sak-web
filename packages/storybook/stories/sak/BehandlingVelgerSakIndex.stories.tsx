@@ -308,6 +308,7 @@ export const visPanelForValgAvBehandlinger = () => {
         toggleShowAll={() => toggleVisAlle(!visAlle)}
         getKodeverkFn={getKodeverkFn}
         fagsak={fagsak}
+        createLocationForSkjermlenke={() => locationMock}
       />
     </div>
   );
