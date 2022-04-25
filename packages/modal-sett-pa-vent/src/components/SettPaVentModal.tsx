@@ -151,7 +151,7 @@ export const SettPaVentModal = ({
     (originalVentearsakVariant && originalVentearsakVariant !== ventearsakVariant);
 
   const fristHasChanged = !(originalFrist === frist || (!frist && !originalFrist));
-  const [showEndreFrist, setShowEndreFrist] = useState(hasManualPaVent || !!frist);
+  const [showEndreFrist, setShowEndreFrist] = useState(hasManualPaVent || !!originalFrist);
 
   const showAvbryt = !(originalFrist === frist && !venteArsakHasChanged && !ventearsakVariantHasChanged);
   const formHasChanges = fristHasChanged || venteArsakHasChanged || ventearsakVariantHasChanged;

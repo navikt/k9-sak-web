@@ -22,7 +22,7 @@ jobs:
           NODE_AUTH_TOKEN: ${{ secrets.READER_TOKEN }}
 
       - name: Kjører tester
-        run: yarn test:all --maxWorkers=2
+        run: yarn test:all --maxWorkers=2 --silent
 
       - name: Typescript-sjekk
         run: yarn ts-check

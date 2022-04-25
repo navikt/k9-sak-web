@@ -152,7 +152,7 @@ export const SettPaVentModalOld = ({
                   </Normaltekst>
                 </div>
               </Column>
-              {(hasManualPaVent || frist) && (
+              {(hasManualPaVent || originalFrist) && (
                 <Column xs="2">
                   <div className={styles.datePicker}>
                     <DatepickerField
