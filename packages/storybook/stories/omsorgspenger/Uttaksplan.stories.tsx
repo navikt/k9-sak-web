@@ -146,7 +146,7 @@ const behandling = {
   versjon: 1,
 } as Behandling;
 
-const aksjonspunkterForSteg = [{}] as Aksjonspunkt[];
+const aksjonspunkterForSteg = [{ status: { kode: '' }, definisjon: { kode: '9003' } }] as Aksjonspunkt[];
 
 const arbeidsforhold = [
   {
@@ -220,6 +220,36 @@ export const aksjonspunktAvslåttePerioder = () => (
     arbeidsforhold={arbeidsforhold}
     fullUttaksplan={{ aktiviteter: [] }}
     arbeidsgiverOpplysningerPerId={arbeidsgivere}
+  />
+);
+
+export const aksjonspunktUtenFosterbarn = () => (
+  <ÅrskvantumIndex
+    årskvantum={årskvantumMedPerioder([avslåttPeriode, avslåttPeriode])}
+    alleKodeverk={alleKodeverk as any}
+    behandling={behandling}
+    isAksjonspunktOpen
+    submitCallback={action('bekreft')}
+    aksjonspunkterForSteg={aksjonspunkterForSteg}
+    arbeidsforhold={arbeidsforhold}
+    fullUttaksplan={{ aktiviteter: [] }}
+    arbeidsgiverOpplysningerPerId={arbeidsgivere}
+    fosterbarn={[]}
+  />
+);
+
+export const aksjonspunktMedFosterbarn = () => (
+  <ÅrskvantumIndex
+    årskvantum={årskvantumMedPerioder([avslåttPeriode, avslåttPeriode])}
+    alleKodeverk={alleKodeverk as any}
+    behandling={behandling}
+    isAksjonspunktOpen
+    submitCallback={action('bekreft')}
+    aksjonspunkterForSteg={aksjonspunkterForSteg}
+    arbeidsforhold={arbeidsforhold}
+    fullUttaksplan={{ aktiviteter: [] }}
+    arbeidsgiverOpplysningerPerId={arbeidsgivere}
+    fosterbarn={['12345678901', '10987654321']}
   />
 );
 

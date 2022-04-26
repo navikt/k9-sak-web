@@ -131,4 +131,43 @@ describe('<AksjonspunktForm>', () => {
       ]);
     });
   });
+
+  describe('fosterbarn', () => {
+    it('uten fosterbarn', () => {
+      const utenFosterbarn: FormValues = {
+        valg: 'reBehandling',
+        begrunnelse: 'Ja.',
+        fosterbarn: []
+      };
+
+      const rebehandlingDto = transformValues(utenFosterbarn);
+
+      expect(rebehandlingDto).toEqual([
+        {
+          fortsettBehandling: false,
+          begrunnelse: utenFosterbarn.begrunnelse,
+          kode: aksjonspunktCodes.VURDER_ÅRSKVANTUM_KVOTE,
+          fosterbarn: []
+        },
+      ]);
+
+      const medFosterbarn: FormValues = {
+        valg: 'fortsett',
+        begrunnelse: 'Ja.',
+        fosterbarn: ['12345678910', '10987654321']
+      };
+
+      const fortsettDto = transformValues(medFosterbarn);
+
+      expect(fortsettDto).toEqual([
+        {
+          fortsettBehandling: true,
+          begrunnelse: medFosterbarn.begrunnelse,
+          kode: aksjonspunktCodes.VURDER_ÅRSKVANTUM_KVOTE,
+          fosterbarn: ['12345678910', '10987654321']
+        },
+      ]);
+    });
+  });
+
 });
