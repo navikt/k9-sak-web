@@ -36,7 +36,7 @@ class PanelDef extends ProsessStegPanelDef {
     aksjonspunkterForSteg,
     uttaksperioder: forbrukteDager?.sisteUttaksplan?.aktiviteter?.flatMap(aktivitet => aktivitet.uttaksperioder),
     arbeidsgiverOpplysningerPerId,
-    fosterbarn: fosterbarn.fosterbarn,
+    fosterbarn: (fosterbarn) ? fosterbarn.fosterbarn : [],
   });
 }
 
