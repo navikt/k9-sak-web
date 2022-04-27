@@ -223,7 +223,7 @@ export const aksjonspunktAvslåttePerioder = () => (
   />
 );
 
-export const aksjonspunktUtenFosterbarn = () => (
+export const aksjonspunktFosterbarnUten = () => (
   <ÅrskvantumIndex
     årskvantum={årskvantumMedPerioder([avslåttPeriode, avslåttPeriode])}
     alleKodeverk={alleKodeverk as any}
@@ -238,7 +238,7 @@ export const aksjonspunktUtenFosterbarn = () => (
   />
 );
 
-export const aksjonspunktMedFosterbarn = () => (
+export const aksjonspunktFosterbarnMed = () => (
   <ÅrskvantumIndex
     årskvantum={årskvantumMedPerioder([avslåttPeriode, avslåttPeriode])}
     alleKodeverk={alleKodeverk as any}
