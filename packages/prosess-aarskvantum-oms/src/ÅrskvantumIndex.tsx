@@ -17,7 +17,6 @@ import Uttaksplan from './components/Uttaksplan';
 import AksjonspunktForm from './components/AksjonspunktForm';
 import Aktivitet from './dto/Aktivitet';
 import SaerligeSmittevernhensynMikrofrontend from './components/saerlige-smittevernhensyn/SaerligeSmittevernhensynMikrofrontend';
-import AksjonspunktForm2 from './components/AksjonspunktForm2';
 
 const cache = createIntlCache();
 
