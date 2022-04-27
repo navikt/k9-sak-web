@@ -1,14 +1,17 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import { FormattedMessage } from 'react-intl';
-import { connect } from 'react-redux';
-import { formPropTypes, FieldArray } from 'redux-form';
+import {FormattedMessage} from 'react-intl';
+import {connect} from 'react-redux';
+import {FieldArray, formPropTypes} from 'redux-form';
 
-import { AksjonspunktHelpTextTemp, VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { isAvklaringsbehovOpen } from '@fpsak-frontend/kodeverk/src/beregningAvklaringsbehovStatus';
-import { behandlingForm } from '@fpsak-frontend/form';
-import avklaringsbehovCodes, { harAvklaringsbehov, harAvklaringsbehovSomKanLøses } from '@fpsak-frontend/kodeverk/src/beregningAvklaringsbehovCodes';
-import { FaktaBegrunnelseTextField, FaktaSubmitButton } from '@k9-sak-web/fakta-felles';
+import {AksjonspunktHelpTextTemp, VerticalSpacer} from '@fpsak-frontend/shared-components';
+import {isAvklaringsbehovOpen} from '@fpsak-frontend/kodeverk/src/beregningAvklaringsbehovStatus';
+import {behandlingForm} from '@fpsak-frontend/form';
+import avklaringsbehovCodes, {
+  harAvklaringsbehov,
+  harAvklaringsbehovSomKanLøses
+} from '@fpsak-frontend/kodeverk/src/beregningAvklaringsbehovCodes';
+import {FaktaBegrunnelseTextField, FaktaSubmitButton} from '@k9-sak-web/fakta-felles';
 
 import FaktaForATFLOgSNPanel, {
   getBuildInitialValuesFaktaForATFLOgSN,
@@ -17,9 +20,9 @@ import FaktaForATFLOgSNPanel, {
 } from './FaktaForATFLOgSNPanel';
 import beregningsgrunnlagPropType from '../../propTypes/beregningsgrunnlagPropType';
 
-import { erAvklartAktivitetEndret } from '../avklareAktiviteter/AvklareAktiviteterPanel';
-import { formNameVurderFaktaBeregning } from '../BeregningFormUtils';
-import { erOverstyring, erOverstyringAvBeregningsgrunnlag } from './BgFordelingUtils';
+import {erAvklartAktivitetEndret} from '../avklareAktiviteter/AvklareAktiviteterPanel';
+import {formNameVurderFaktaBeregning} from '../BeregningFormUtils';
+import {erOverstyring, erOverstyringAvBeregningsgrunnlag} from './BgFordelingUtils';
 
 const {
   VURDER_FAKTA_FOR_ATFL_SN,
@@ -185,9 +188,9 @@ export class VurderFaktaBeregningPanelImpl extends Component {
       state: { submitEnabled },
     } = this;
 
-    const avklaringsbehov = Array.isArray(alleBeregningsgrunnlag) ? 
+    const avklaringsbehov = Array.isArray(alleBeregningsgrunnlag) ?
     alleBeregningsgrunnlag.flatMap((bg) => bg.avklaringsbehov) : alleBeregningsgrunnlag.avklaringsbehov;
-    
+
     return (
       <>
         {!(
@@ -243,7 +246,7 @@ VurderFaktaBeregningPanelImpl.propTypes = {
   ...formPropTypes,
 };
 
-const mapGrunnlagsliste = (fieldArrayList, alleBeregningsgrunnlag, behandlingResultatPerioder) => 
+const mapGrunnlagsliste = (fieldArrayList, alleBeregningsgrunnlag, behandlingResultatPerioder) =>
   fieldArrayList
   .map((currentFormValues, index) => {
     if ((måVurderes(alleBeregningsgrunnlag[index].avklaringsbehov, currentFormValues.erTilVurdering) || erOverstyring(currentFormValues))
@@ -262,25 +265,27 @@ const mapGrunnlagsliste = (fieldArrayList, alleBeregningsgrunnlag, behandlingRes
 
 export const transformValuesVurderFaktaBeregning = (values, alleBeregningsgrunnlag, behandlingResultatPerioder) => {
   const fieldArrayList = values[fieldArrayName];
-  const harOverstyring = fieldArrayList.some(currentFormValues => erOverstyring(currentFormValues));
   const beg = values[BEGRUNNELSE_FAKTA_TILFELLER_NAME];
-  if (!harOverstyring && alleBeregningsgrunnlag.some(harTilfeller)) {
-    return [
+  const apForSubmit = [];
+  if (fieldArrayList.some(currentFormValues => !erOverstyring(currentFormValues)) && alleBeregningsgrunnlag.some(harTilfeller)) {
+    const fieldsUtenOverstyring = fieldArrayList.filter(currentFormValues => !erOverstyring(currentFormValues));
+    apForSubmit.push(
       {
         kode: VURDER_FAKTA_FOR_ATFL_SN,
-        grunnlag: mapGrunnlagsliste(fieldArrayList, alleBeregningsgrunnlag, behandlingResultatPerioder),
+        grunnlag: mapGrunnlagsliste(fieldsUtenOverstyring, alleBeregningsgrunnlag, behandlingResultatPerioder),
         begrunnelse: beg,
-      },
-    ];
+      }
+      );
   }
-  if (harOverstyring) {
-    return mapGrunnlagsliste(fieldArrayList, alleBeregningsgrunnlag, behandlingResultatPerioder).map(gr => ({
+  if (fieldArrayList.some(currentFormValues => erOverstyring(currentFormValues))) {
+    const fieldsMedOverstyring = fieldArrayList.filter(currentFormValues => erOverstyring(currentFormValues));
+    mapGrunnlagsliste(fieldsMedOverstyring, alleBeregningsgrunnlag, behandlingResultatPerioder).map(gr => ({
       kode: OVERSTYRING_AV_BEREGNINGSGRUNNLAG,
       begrunnelse: beg,
       ...gr,
-    }));
+    })).forEach(a => apForSubmit.push(a));
   }
-  return [];
+  return apForSubmit;
 };
 
 export const validateVurderFaktaBeregning = values => {
@@ -323,9 +328,9 @@ const mapStateToPropsFactory = (initialState, initialProps) => {
   return (state, ownProps) => {
     const { alleBeregningsgrunnlag, aktivtBeregningsgrunnlagIndex, behandlingResultatPerioder } = ownProps;
     const initialValues = buildInitialValues(
-      ownProps, 
-      alleBeregningsgrunnlag, 
-      aktivtBeregningsgrunnlagIndex, 
+      ownProps,
+      alleBeregningsgrunnlag,
+      aktivtBeregningsgrunnlagIndex,
       behandlingResultatPerioder);
     return {
       initialValues,
