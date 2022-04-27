@@ -149,6 +149,7 @@ describe('<SettPaVentModal>', () => {
         ventearsaker={[]}
         hasManualPaVent={false}
         erTilbakekreving={false}
+        originalFrist="2015-10-10"
         {...reduxFormPropsMock}
       />,
     );
