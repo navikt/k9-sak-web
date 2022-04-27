@@ -1,6 +1,7 @@
 import classNames from 'classnames';
 import React, { CSSProperties, RefObject, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { PositionedPeriod } from '@k9-sak-web/types/src/tidslinje';
+import { ContentWithTooltip } from '@navikt/k9-react-components';
 import styles from './TimelinePeriod.less';
 import Tooltip from './Tooltip';
 
@@ -27,6 +28,12 @@ const ariaLabel = (period: PositionedPeriod): string => {
   const start = period.start.format('DD.MM.YYYY');
   const end = period.endInclusive.format('DD.MM.YYYY');
   return `${period.status} fra ${start} til og med ${end}`;
+};
+
+const periodTooltip = (period: PositionedPeriod): string => {
+  const fom = period.start.format('DD. MMMM YYYY');
+  const tom = period.endInclusive.format('DD. MMMM YYYY');
+  return `Periode: ${fom} - ${tom}`;
 };
 
 const style = (period: PositionedPeriod): CSSProperties => ({
@@ -62,11 +69,33 @@ const ClickablePeriod = ({ buttonRef, period, className, onSelectPeriod }: Click
   );
 };
 
-const NonClickablePeriod = ({ divRef, period, className }: NonClickablePeriodProps) => (
-  <div ref={divRef} className={className} aria-label={ariaLabel(period)} style={style(period)}>
-    {period.infoPin && <div className={styles.infoPin} />}
-  </div>
-);
+const tooltipShouldBeLeftAligned = tooltipXAxisPosition => {
+  const bodyWidth = document.body.getBoundingClientRect().width;
+  return bodyWidth - tooltipXAxisPosition < 300;
+};
+
+const NonClickablePeriod = ({ divRef, period, className }: NonClickablePeriodProps) => {
+  const [xPosition, setXPosition] = useState(0);
+
+  useLayoutEffect(() => {
+    setXPosition(divRef?.current?.getBoundingClientRect().x);
+  }, [divRef.current]);
+
+  return (
+    <div
+      ref={divRef}
+      className={`${styles.nonClickablePeriod} ${
+        tooltipShouldBeLeftAligned(xPosition) ? styles.tooltipLeft : ''
+      } ${className}`}
+      aria-label={ariaLabel(period)}
+      style={style(period)}
+    >
+      <ContentWithTooltip tooltipText={periodTooltip(period)}>
+        {period.infoPin && <div className={styles.infoPin} />}
+      </ContentWithTooltip>
+    </div>
+  );
+};
 
 const TimelinePeriod = ({ period, onSelectPeriod, active }: TimelinePeriodProps) => {
   const ref = useRef<HTMLButtonElement | HTMLDivElement>(null);
@@ -101,7 +130,6 @@ const TimelinePeriod = ({ period, onSelectPeriod, active }: TimelinePeriodProps)
   useEffect(() => {
     if (active) ref.current?.focus();
   }, [active]);
-
   return onSelectPeriod ? (
     <ClickablePeriod
       buttonRef={ref as RefObject<HTMLButtonElement>}
