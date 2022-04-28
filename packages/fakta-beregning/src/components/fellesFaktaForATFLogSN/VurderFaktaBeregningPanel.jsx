@@ -66,7 +66,7 @@ const isAvklaringsbehovClosed = alleAb => {
 const lagHelpTextsForFakta = () => {
   const helpTexts = [];
   helpTexts.push(
-    <FormattedMessage key="VurderFaktaForBeregningen" id="BeregningInfoPanel.AksjonspunktHelpText.FaktaOmBeregning" />,
+    <FormattedMessage key="VurderFaktaForBeregningen" id="BeregningInfoPanel.AksjonspunktHelpText.FaktaOmBeregning"/>,
   );
   return helpTexts;
 };
@@ -105,7 +105,7 @@ export class VurderFaktaBeregningPanelImpl extends Component {
   }
 
   componentDidMount() {
-    const { submitEnabled } = this.state;
+    const {submitEnabled} = this.state;
     if (!submitEnabled) {
       this.setState({
         submitEnabled: true,
@@ -113,7 +113,7 @@ export class VurderFaktaBeregningPanelImpl extends Component {
     }
   }
 
-  renderVurderFaktaBeregningPanel = ({ fields }) => {
+  renderVurderFaktaBeregningPanel = ({fields}) => {
     const {
       props: {
         aktivtBeregningsgrunnlagIndex,
@@ -184,7 +184,7 @@ export class VurderFaktaBeregningPanelImpl extends Component {
         readOnly,
         ...formProps
       },
-      state: { submitEnabled },
+      state: {submitEnabled},
     } = this;
 
     const avklaringsbehov = Array.isArray(alleBeregningsgrunnlag) ?
@@ -325,7 +325,7 @@ const mapStateToPropsFactory = (initialState, initialProps) => {
       ),
     );
   return (state, ownProps) => {
-    const { alleBeregningsgrunnlag, aktivtBeregningsgrunnlagIndex, behandlingResultatPerioder } = ownProps;
+    const {alleBeregningsgrunnlag, aktivtBeregningsgrunnlagIndex, behandlingResultatPerioder} = ownProps;
     const initialValues = buildInitialValues(
       ownProps,
       alleBeregningsgrunnlag,
