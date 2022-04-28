@@ -49,7 +49,7 @@ describe('<AksjonspunktForm>', () => {
         },
       ];
       const wrapper = shallowWithIntl(
-        <FormContent {...reduxFormPropsMock} aktiviteter={aktiviteter} isAksjonspunktOpen />,
+        <FormContent {...reduxFormPropsMock} aktiviteter={aktiviteter} isAksjonspunktOpen fosterbarn={[]} />,
       );
 
       const checkbox = wrapper.find(CheckboxField);
@@ -71,7 +71,7 @@ describe('<AksjonspunktForm>', () => {
         },
       ];
       const wrapper = shallowWithIntl(
-        <FormContent {...reduxFormPropsMock} aktiviteter={aktiviteter} isAksjonspunktOpen />,
+        <FormContent {...reduxFormPropsMock} aktiviteter={aktiviteter} isAksjonspunktOpen fosterbarn={[]} />,
       );
 
       const checkbox = wrapper.find(CheckboxField);
@@ -140,9 +140,9 @@ describe('<AksjonspunktForm>', () => {
         fosterbarn: []
       };
 
-      const rebehandlingDto = transformValues(utenFosterbarn);
+      const utenFosterbarnDto = transformValues(utenFosterbarn);
 
-      expect(rebehandlingDto).toEqual([
+      expect(utenFosterbarnDto).toEqual([
         {
           fortsettBehandling: false,
           begrunnelse: utenFosterbarn.begrunnelse,
@@ -157,9 +157,9 @@ describe('<AksjonspunktForm>', () => {
         fosterbarn: ['12345678910', '10987654321']
       };
 
-      const fortsettDto = transformValues(medFosterbarn);
+      const medFosterbarnDto = transformValues(medFosterbarn);
 
-      expect(fortsettDto).toEqual([
+      expect(medFosterbarnDto).toEqual([
         {
           fortsettBehandling: true,
           begrunnelse: medFosterbarn.begrunnelse,
