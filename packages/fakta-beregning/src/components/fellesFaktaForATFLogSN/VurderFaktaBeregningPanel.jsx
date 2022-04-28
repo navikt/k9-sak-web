@@ -1,17 +1,17 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import {FormattedMessage} from 'react-intl';
-import {connect} from 'react-redux';
-import {FieldArray, formPropTypes} from 'redux-form';
+import { FormattedMessage } from 'react-intl';
+import { connect } from 'react-redux';
+import { FieldArray, formPropTypes } from 'redux-form';
 
-import {AksjonspunktHelpTextTemp, VerticalSpacer} from '@fpsak-frontend/shared-components';
-import {isAvklaringsbehovOpen} from '@fpsak-frontend/kodeverk/src/beregningAvklaringsbehovStatus';
-import {behandlingForm} from '@fpsak-frontend/form';
+import { AksjonspunktHelpTextTemp, VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { isAvklaringsbehovOpen } from '@fpsak-frontend/kodeverk/src/beregningAvklaringsbehovStatus';
+import { behandlingForm } from '@fpsak-frontend/form';
 import avklaringsbehovCodes, {
   harAvklaringsbehov,
   harAvklaringsbehovSomKanLøses
 } from '@fpsak-frontend/kodeverk/src/beregningAvklaringsbehovCodes';
-import {FaktaBegrunnelseTextField, FaktaSubmitButton} from '@k9-sak-web/fakta-felles';
+import { FaktaBegrunnelseTextField, FaktaSubmitButton } from '@k9-sak-web/fakta-felles';
 
 import FaktaForATFLOgSNPanel, {
   getBuildInitialValuesFaktaForATFLOgSN,
@@ -20,9 +20,9 @@ import FaktaForATFLOgSNPanel, {
 } from './FaktaForATFLOgSNPanel';
 import beregningsgrunnlagPropType from '../../propTypes/beregningsgrunnlagPropType';
 
-import {erAvklartAktivitetEndret} from '../avklareAktiviteter/AvklareAktiviteterPanel';
-import {formNameVurderFaktaBeregning} from '../BeregningFormUtils';
-import {erOverstyring, erOverstyringAvBeregningsgrunnlag} from './BgFordelingUtils';
+import { erAvklartAktivitetEndret } from '../avklareAktiviteter/AvklareAktiviteterPanel';
+import { formNameVurderFaktaBeregning } from '../BeregningFormUtils';
+import { erOverstyring, erOverstyringAvBeregningsgrunnlag } from './BgFordelingUtils';
 
 const {
   VURDER_FAKTA_FOR_ATFL_SN,
@@ -66,7 +66,7 @@ const isAvklaringsbehovClosed = alleAb => {
 const lagHelpTextsForFakta = () => {
   const helpTexts = [];
   helpTexts.push(
-    <FormattedMessage key="VurderFaktaForBeregningen" id="BeregningInfoPanel.AksjonspunktHelpText.FaktaOmBeregning"/>,
+    <FormattedMessage key="VurderFaktaForBeregningen" id="BeregningInfoPanel.AksjonspunktHelpText.FaktaOmBeregning" />,
   );
   return helpTexts;
 };
@@ -105,7 +105,7 @@ export class VurderFaktaBeregningPanelImpl extends Component {
   }
 
   componentDidMount() {
-    const {submitEnabled} = this.state;
+    const { submitEnabled } = this.state;
     if (!submitEnabled) {
       this.setState({
         submitEnabled: true,
@@ -113,7 +113,7 @@ export class VurderFaktaBeregningPanelImpl extends Component {
     }
   }
 
-  renderVurderFaktaBeregningPanel = ({fields}) => {
+  renderVurderFaktaBeregningPanel = ({ fields }) => {
     const {
       props: {
         aktivtBeregningsgrunnlagIndex,
@@ -184,7 +184,7 @@ export class VurderFaktaBeregningPanelImpl extends Component {
         readOnly,
         ...formProps
       },
-      state: {submitEnabled},
+      state: { submitEnabled },
     } = this;
 
     const avklaringsbehov = Array.isArray(alleBeregningsgrunnlag) ?
@@ -325,7 +325,7 @@ const mapStateToPropsFactory = (initialState, initialProps) => {
       ),
     );
   return (state, ownProps) => {
-    const {alleBeregningsgrunnlag, aktivtBeregningsgrunnlagIndex, behandlingResultatPerioder} = ownProps;
+    const { alleBeregningsgrunnlag, aktivtBeregningsgrunnlagIndex, behandlingResultatPerioder } = ownProps;
     const initialValues = buildInitialValues(
       ownProps,
       alleBeregningsgrunnlag,
