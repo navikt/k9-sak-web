@@ -249,7 +249,10 @@ export const aksjonspunktFosterbarnMed = () => (
     arbeidsforhold={arbeidsforhold}
     fullUttaksplan={{ aktiviteter: [] }}
     arbeidsgiverOpplysningerPerId={arbeidsgivere}
-    fosterbarn={['12345678901', '10987654321']}
+    fosterbarn={[
+      { fnr: '12345678910', navn: 'Dole Duck', fødselsdato: '12.34.5678' },
+      { fnr: '10987654321', navn: "Doffen Duck", fødselsdato: '10.98.7654' }
+    ]}
   />
 );
 

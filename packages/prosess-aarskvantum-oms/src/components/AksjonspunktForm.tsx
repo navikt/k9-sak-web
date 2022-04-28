@@ -13,12 +13,7 @@ import { Aksjonspunkt, UtfallEnum, VurderteVilkår, VilkårEnum } from '@k9-sak-
 import { Delete } from "@navikt/ds-icons";
 import styles from './aksjonspunktForm.less';
 import Aktivitet from '../dto/Aktivitet';
-
-type fosterbarnDto = {
-  fnr: string;
-  navn: string;
-  fødselsdato: string;
-};
+import { fosterbarnDto } from '../dto/FosterbarnDto';
 
 interface AksjonspunktFormImplProps {
   aktiviteter: Aktivitet[];
@@ -57,7 +52,7 @@ export const FormContent = ({ handleSubmit, aktiviteter = [], isAksjonspunktOpen
 
   const harUavklartePerioder = uavklartePerioder.length > 0;
 
-  const RenderFosterbarn = ({ fields }) => (
+  const RenderFosterbarn = ({ fields, fosterbarn }) => (
     <>
       {fields.length > 0 && (
         <>
@@ -187,7 +182,7 @@ export const FormContent = ({ handleSubmit, aktiviteter = [], isAksjonspunktOpen
         <FieldArray
           name="fosterbarn"
           component={RenderFosterbarn}
-          props=""
+          fosterbarn={fosterbarn}
         />
       </BorderBox>
 
