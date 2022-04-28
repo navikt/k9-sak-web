@@ -30,7 +30,6 @@ import {
 } from '@fpsak-frontend/form/src/behandlingForm';
 import advarselIcon from '@fpsak-frontend/assets/images/advarsel.svg';
 import { DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils';
-import beregningsgrunnlagAksjonspunkterPropType from '../propTypes/beregningsgrunnlagAksjonspunkterPropType';
 import beregningsgrunnlagBehandlingPropType from '../propTypes/beregningsgrunnlagBehandlingPropType';
 import beregningsgrunnlagPropType from '../propTypes/beregningsgrunnlagPropType';
 import beregningsgrunnlagVilkarPropType from '../propTypes/beregningsgrunnlagVilkarPropType';
@@ -103,12 +102,9 @@ const lagMenyProps = (kronologiskeGrunnlag, bgVilkår) => {
   return menyProps;
 };
 
-const finnAvklaringsbehov = (aksjonspunkter, beregningsgrunnlag) => {
-  if (beregningsgrunnlag.avklaringsbehov) {
-    return beregningsgrunnlag.avklaringsbehov.filter(ab => isBeregningAvklaringsbehov(ab.definisjon.kode));
-  }
-  return aksjonspunkter;
-}
+const finnAvklaringsbehov = (beregningsgrunnlag) => beregningsgrunnlag.avklaringsbehov.filter(ab => isBeregningAvklaringsbehov(ab.definisjon.kode))
+
+const harAvklaringsbehovSomkanLøses = (beregningsgrunnlag) => beregningsgrunnlag.avklaringsbehov.some(ab => isBeregningAvklaringsbehov(ab.definisjon.kode) && ab.kanLoses)
 
 /**
  * BeregningFP
@@ -123,7 +119,6 @@ export const BeregningFP = props => {
   const {
     behandling,
     beregningsgrunnlag,
-    gjeldendeAksjonspunkter,
     submitCallback,
     readOnly,
     readOnlySubmitButton,
@@ -146,7 +141,7 @@ export const BeregningFP = props => {
     return visningForManglendeBG();
   }
 
-  const avklaringsbehov = finnAvklaringsbehov(gjeldendeAksjonspunkter, aktivtBeregningsgrunnlag);
+  const avklaringsbehov = finnAvklaringsbehov(aktivtBeregningsgrunnlag);
   const menyProps = lagMenyProps(kronologiskeGrunnlag, vilkaarBG);
 
   const mainContainerClassnames = cx('mainContainer', { 'mainContainer--withSideMenu': skalBrukeSidemeny });
@@ -159,7 +154,7 @@ export const BeregningFP = props => {
           <SideMenu
             links={kronologiskeGrunnlag.map((currentBeregningsgrunnlag, currentBeregningsgrunnlagIndex) => ({
               iconSrc: menyProps[currentBeregningsgrunnlagIndex].skalVurderes &&
-              finnAvklaringsbehov(gjeldendeAksjonspunkter, beregningsgrunnlag[currentBeregningsgrunnlagIndex]).length > 0 ? advarselIcon : null,
+              harAvklaringsbehovSomkanLøses(beregningsgrunnlag[currentBeregningsgrunnlagIndex]) ? advarselIcon : null,
               active: aktivtBeregningsgrunnlagIndeks === currentBeregningsgrunnlagIndex,
               label: `${intl.formatMessage({ id: 'Sidemeny.Beregningsgrunnlag' })} ${
                 menyProps[currentBeregningsgrunnlagIndex].stp
@@ -219,10 +214,7 @@ BeregningFP.propTypes = {
   beregningsgrunnlag: PropTypes.arrayOf(beregningsgrunnlagPropType),
   vilkar: PropTypes.arrayOf(beregningsgrunnlagVilkarPropType).isRequired,
   behandling: beregningsgrunnlagBehandlingPropType,
-  // eslint-disable-next-line
   handleSubmit: PropTypes.any.isRequired,
-  // eslint-disable-next-line
-  gjeldendeAksjonspunkter: PropTypes.arrayOf(beregningsgrunnlagAksjonspunkterPropType).isRequired,
   intl: PropTypes.shape().isRequired,
 };
 
@@ -230,29 +222,34 @@ BeregningFP.defaultProps = {
   beregningsgrunnlag: undefined,
 };
 
-const formaterAksjonspunkter = (aksjonspunkter, perioder) =>
-  aksjonspunkter.map((aksjonspunkt) => {
-    const { kode } = aksjonspunkt;
-    return {
-      '@type': kode,
-      kode,
-      begrunnelse: aksjonspunkt.begrunnelse,
-      grunnlag: [
-        {
-          ...aksjonspunkt,
-          periode: perioder.find(p => p.periode.fom === aksjonspunkt.skjæringstidspunkt).periode,
-        },
-      ],
-    };
-  });
+const initAksjonspunktData = (aksjonspunktData) => ({
+  '@type': aksjonspunktData.kode,
+  kode: aksjonspunktData.kode,
+  begrunnelse: aksjonspunktData.begrunnelse,
+  grunnlag: [],
+});
 
-const harAvklaringsbehovIPanel = (avklaringsbehov) => avklaringsbehov.some(ab => isBeregningAvklaringsbehov(ab.definisjon.kode));
+const mapTilSubmitGrunnlagsdata = (aksjonspunktData, perioder) => ({
+  ...aksjonspunktData,
+  periode: perioder.find(p => p.periode.fom === aksjonspunktData.skjæringstidspunkt).periode,
+});
 
-export const buildInitialValuesForBeregningrunnlag = (beregningsgrunnlag, gjeldendeAksjonspunkter, bgVilkar) => {
+const formaterAksjonspunkter = (aksjonspunkter, perioder) => {
+  const gruppertPrKode = aksjonspunkter.reduce((gruppert, aksjonspunktData) => {
+    gruppert[aksjonspunktData.kode] = gruppert[aksjonspunktData.kode] ?? initAksjonspunktData(aksjonspunktData);
+    gruppert[aksjonspunktData.kode].grunnlag.push(mapTilSubmitGrunnlagsdata(aksjonspunktData, perioder));
+    return gruppert;
+  }, {});
+  return Object.values(gruppertPrKode);
+}
+
+const harAvklaringsbehovIPanel = (avklaringsbehov) => avklaringsbehov.some(ab => isBeregningAvklaringsbehov(ab.definisjon.kode) && ab.kanLoses);
+
+export const buildInitialValuesForBeregningrunnlag = (beregningsgrunnlag, bgVilkar) => {
   if (!beregningsgrunnlag || !beregningsgrunnlag.beregningsgrunnlagPeriode) {
     return undefined;
   }
-  const avklaringsbehov = finnAvklaringsbehov(gjeldendeAksjonspunkter, beregningsgrunnlag);
+  const avklaringsbehov = finnAvklaringsbehov(beregningsgrunnlag);
   const allePerioder = beregningsgrunnlag.beregningsgrunnlagPeriode;
   const alleAndelerIForstePeriode = beregningsgrunnlag.beregningsgrunnlagPeriode[0].beregningsgrunnlagPrStatusOgAndel;
   const arbeidstakerAndeler = alleAndelerIForstePeriode.filter(
@@ -270,7 +267,7 @@ export const buildInitialValuesForBeregningrunnlag = (beregningsgrunnlag, gjelde
     erTilVurdering: erBGTilVurdering(bgVilkar, beregningsgrunnlag) && harAvklaringsbehovIPanel(avklaringsbehov),
     skjæringstidspunkt: beregningsgrunnlag.skjæringstidspunkt,
     ...Beregningsgrunnlag.buildInitialValues(avklaringsbehov),
-    ...AksjonspunktBehandlerTB.buildInitialValues(allePerioder),
+    ...AksjonspunktBehandlerTB.buildInitialValues(allePerioder, avklaringsbehov),
     ...AksjonspunktBehandlerFL.buildInitialValues(frilanserAndeler),
     ...VurderOgFastsettSN.buildInitialValues(selvstendigNaeringAndeler, avklaringsbehov),
     ...GrunnlagForAarsinntektPanelAT.buildInitialValues(arbeidstakerAndeler),
@@ -278,9 +275,9 @@ export const buildInitialValuesForBeregningrunnlag = (beregningsgrunnlag, gjelde
   return initialValues;
 };
 
-export const buildInitialValues = (beregningsgrunnlag, gjeldendeAksjonspunkter, bgVilkar) =>
+export const buildInitialValues = (beregningsgrunnlag, bgVilkar) =>
   beregningsgrunnlag.map(currentBeregningsgrunnlag =>
-    buildInitialValuesForBeregningrunnlag(currentBeregningsgrunnlag, gjeldendeAksjonspunkter, bgVilkar),
+    buildInitialValuesForBeregningrunnlag(currentBeregningsgrunnlag, bgVilkar),
   );
 
 // Kun eksportert for test
@@ -310,20 +307,17 @@ export const transformValues = (values, alleBeregningsgrunnlag, vilkar) => {
 }
 
 const mapStateToPropsFactory = (initialState, initialOwnProps) => {
-  const { aksjonspunkter, submitCallback, beregningsgrunnlag, vilkar } = initialOwnProps;
-  const gjeldendeAksjonspunkter = getAksjonspunkterForBeregning(aksjonspunkter);
+  const { submitCallback, beregningsgrunnlag, vilkar } = initialOwnProps;
   const onSubmit = values => submitCallback(transformValues(values, beregningsgrunnlag, vilkar));
   return (state, ownProps) => ({
     onSubmit,
     initialValues: {
       beregningsgrunnlagListe: buildInitialValues(
         ownProps.beregningsgrunnlag,
-        ownProps.aksjonspunkter,
         getBGVilkar(ownProps.vilkar)
         ),
     },
     fieldArrayID: ownProps.fieldArrayID,
-    gjeldendeAksjonspunkter,
   });
 };
 

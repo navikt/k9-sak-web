@@ -9,7 +9,7 @@ metadata:
     nais.io/run-as-user: "101" # Fix permissions for nginx
     nais.io/read-only-file-system: "false" # Fix permissions for nginx
 spec:
-  image: { { image } }
+  image: {{ image }}
   port: 9000
   sessionAffinity: ClientIP
   team: k9saksbehandling
@@ -53,6 +53,8 @@ spec:
       value: "http://k9-klage.k9saksbehandling"
     - name: APP_URL_K9TILBAKE
       value: "http://k9-tilbake.default"
+    - name: APP_URL_K9FORDEL
+      value: "http://k9-fordel.k9saksbehandling"
     # setter denne til å peke på k9-sak, inntil diagnosekode-apiinstansen er oppe i prod
     - name: APP_DIAGNOSEKODER
       value: "http://diagnosekode-api/diagnosekoder/"
@@ -70,6 +72,8 @@ spec:
       value: "https://psb-etablert-tilsyn-frontend.intern.nav.no/"
     - name: PSB_OM_BARNET_FRONTEND_URL
       value: "https://psb-om-barnet-frontend.intern.nav.no/"
+    - name: ENDRINGSLOGG_URL
+      value: "https://familie-endringslogg.intern.nav.no/"
 
     # Feature-flag
     - name: KLAGE_KABAL
@@ -84,9 +88,7 @@ spec:
       value: "true"
     - name: TILBAKE
       value: "true"
-    - name: BEHANDLINGSVELGER_NY
-      value: "false"
-    - name: FAKTA_SOKNADSPERIODER
-      value: "false"
     - name: UTENLANDSOPPHOLD
+      value: "true"
+    - name: SOKNADPERIODESTRIPE
       value: "false"

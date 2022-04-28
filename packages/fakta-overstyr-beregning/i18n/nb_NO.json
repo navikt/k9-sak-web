@@ -1,4 +1,6 @@
 {
+    "HelpText.Aksjonspunkt": "Aksjonspunkt",
+    "HelpText.Aksjonspunkt.BehandletAksjonspunkt": "Behandlet aksjonspunkt: ",
     "OverstyrInputForm.Aksjonspunkt": "Vurder inntekt og søknadsopplysninger ved direkte overgang fra infotrygd. Dette aksjonspunktet krever spesielle rettigheter.",
     "OverstyrInputForm.InntektFeltTypeFeil": "Inntekt må være et tall",
     "OverstyrInputForm.InntektFeltPakrevdFeil": "Inntektsbeløp må fylles ut",
@@ -11,7 +13,7 @@
     "OverstyrInputForm.FirmaHeader": "Arbeidsgiver",
     "OverstyrInputForm.InntektPrAar": "Inntekt pr. år",
     "OverstyrInputForm.RefusjonPrAar": "Refusjon pr. år",
-    "OverstyrInputForm.OpphorRefusjon": "Refusjon opphører (dd-mm-åååå)",
+    "OverstyrInputForm.OpphorRefusjon": "Siste dag med refusjon (dd-mm-åååå)",
     "OverstyrInputForm.OpphorRefusjonPlaceholder": "dd-mm-åååå",
     "OverstyrInputForm.MaVareDato": "Refusjon opphører må være en gyldig dato",
     "OverstyrInputForm.UkjentFirma": "Ukjent arbeidsgiver",

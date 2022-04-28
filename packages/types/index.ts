@@ -61,6 +61,8 @@ export type { default as Arbeidsgiver } from './src/arbeidsgiverTsType';
 export * from './src/utenlandsopphold/utenlandsoppholdTsType';
 export * from './src/overlappendePeriode';
 export * from './src/kodeverk';
+export * from './src/tidslinje';
 export type { default as BehandlingPerioder } from './src/behandlingPerioderType';
 export type { default as PerioderMedBehandlingsId } from './src/PerioderMedBehandlingsId';
 export type { default as PerioderMedAarsak } from './src/PerioderMedAarsak';
+export type { default as BehandlingPerioderårsakMedVilkår } from './src/behandlingPerioderarsakMedVilkar';

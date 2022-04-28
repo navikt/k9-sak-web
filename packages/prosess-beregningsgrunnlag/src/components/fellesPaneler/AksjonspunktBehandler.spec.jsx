@@ -60,7 +60,6 @@ describe('<AksjonspunktBehandler>', () => {
         alleKodeverk={alleKodeverk}
         arbeidsgiverOpplysningerPerId={{}}
         relevanteStatuser={relevanteStatuser}
-        tidsBegrensetInntekt={false}
         fieldArrayID="dummyId"
       />,
     );
@@ -98,7 +97,6 @@ describe('<AksjonspunktBehandler>', () => {
         alleKodeverk={alleKodeverk}
         arbeidsgiverOpplysningerPerId={{}}
         relevanteStatuser={relevanteStatuser}
-        tidsBegrensetInntekt={false}
         intl={intlMock}
         fieldArrayID="dummyId"
       />,
@@ -136,7 +134,6 @@ describe('<AksjonspunktBehandler>', () => {
         alleKodeverk={alleKodeverk}
         arbeidsgiverOpplysningerPerId={{}}
         relevanteStatuser={relevanteStatuser}
-        tidsBegrensetInntekt={false}
         intl={intlMock}
         fieldArrayID="dummyId"
       />,
@@ -162,10 +159,22 @@ describe('<AksjonspunktBehandler>', () => {
     relevanteStatuser.isArbeidstaker = true;
     allePerioder[0].beregningsgrunnlagPrStatusOgAndel[0].aktivitetStatus.kode = 'AT';
     const readOnly = true;
+    const avklaringsbehovTB = [
+      {
+        begrunnelse: null,
+        definisjon: {
+          kode: '5047',
+        },
+        status: {
+          kode: 'OPPR',
+        },
+      },
+    ];
+    
     const wrapper = shallowWithIntl(
       <AksjonspunktBehandler.WrappedComponent
         readOnly={readOnly}
-        avklaringsbehov={avklaringsbehov}
+        avklaringsbehov={avklaringsbehovTB}
         formName={formName}
         behandlingId={1}
         behandlingVersjon={1}
@@ -174,7 +183,6 @@ describe('<AksjonspunktBehandler>', () => {
         alleKodeverk={alleKodeverk}
         arbeidsgiverOpplysningerPerId={{}}
         relevanteStatuser={relevanteStatuser}
-        tidsBegrensetInntekt
         intl={intlMock}
         fieldArrayID="dummyId"
       />,
@@ -225,7 +233,6 @@ describe('<AksjonspunktBehandler>', () => {
         alleKodeverk={alleKodeverk}
         arbeidsgiverOpplysningerPerId={{}}
         relevanteStatuser={relevanteStatuser}
-        tidsBegrensetInntekt={false}
         erNyArbLivet
         intl={intlMock}
         fieldArrayID="dummyId"

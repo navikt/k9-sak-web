@@ -1,39 +1,55 @@
-import React, { useState, useCallback } from 'react';
-import { Route, Navigate, useLocation, Routes } from 'react-router-dom';
-
-import { RestApiState } from '@k9-sak-web/rest-api-hooks';
+import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import VisittkortSakIndex from '@fpsak-frontend/sak-visittkort';
 import {
-  KodeverkMedNavn,
-  Personopplysninger,
+  AndreSakerPåSøkerStripe,
+  DataFetchPendingModal,
+  LoadingPanel,
+  Punsjstripe,
+} from '@fpsak-frontend/shared-components';
+import { RestApiState } from '@k9-sak-web/rest-api-hooks';
+import Soknadsperiodestripe from '@k9-sak-web/sak-soknadsperiodestripe';
+import {
+  ArbeidsgiverOpplysningerWrapper,
+  BehandlingPerioderårsakMedVilkår,
   Fagsak,
   FagsakPerson,
+  FeatureToggles,
   Kodeverk,
-  ArbeidsgiverOpplysningerWrapper,
+  KodeverkMedNavn,
+  Personopplysninger,
 } from '@k9-sak-web/types';
-
-import { LoadingPanel, DataFetchPendingModal } from '@fpsak-frontend/shared-components';
-import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
-
-import BehandlingerIndex from '../behandling/BehandlingerIndex';
-import useBehandlingEndret from '../behandling/useBehandlingEndret';
-import useTrackRouteParam from '../app/useTrackRouteParam';
-import BehandlingSupportIndex from '../behandlingsupport/BehandlingSupportIndex';
-import FagsakProfileIndex from '../fagsakprofile/FagsakProfileIndex';
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { pathToMissingPage, erUrlUnderBehandling, erBehandlingValgt, behandlingerRoutePath } from '../app/paths';
-import FagsakGrid from './components/FagsakGrid';
-import { K9sakApiKeys, restApiHooks } from '../data/k9sakApi';
-import useHentFagsakRettigheter from './useHentFagsakRettigheter';
-import useHentAlleBehandlinger from './useHentAlleBehandlinger';
-import BehandlingRettigheter from '../behandling/behandlingRettigheterTsType';
-import RelatertFagsak from '../../../types/src/relatertFagsak';
+import React, { useCallback, useMemo, useState } from 'react';
+import { Navigate, Route, Routes, useLocation } from 'react-router-dom';
+import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import OvergangFraInfotrygd from '../../../types/src/overgangFraInfotrygd';
+import RelatertFagsak from '../../../types/src/relatertFagsak';
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+import {
+  behandlingerRoutePath,
+  erBehandlingValgt,
+  erUrlUnderBehandling,
+  getPathToFplos,
+  pathToMissingPage,
+} from '../app/paths';
+import useTrackRouteParam from '../app/useTrackRouteParam';
+import BehandlingerIndex from '../behandling/BehandlingerIndex';
+import BehandlingRettigheter from '../behandling/behandlingRettigheterTsType';
+import useBehandlingEndret from '../behandling/useBehandlingEndret';
+import BehandlingSupportIndex from '../behandlingsupport/BehandlingSupportIndex';
+import { K9sakApiKeys, restApiHooks } from '../data/k9sakApi';
+import FagsakProfileIndex from '../fagsakprofile/FagsakProfileIndex';
+import FagsakGrid from './components/FagsakGrid';
+import useHentAlleBehandlinger from './useHentAlleBehandlinger';
+import useHentFagsakRettigheter from './useHentFagsakRettigheter';
 
 const erTilbakekreving = (behandlingType: Kodeverk): boolean =>
   behandlingType &&
   (BehandlingType.TILBAKEKREVING === behandlingType.kode ||
     BehandlingType.TILBAKEKREVING_REVURDERING === behandlingType.kode);
+
+const erPleiepengerSyktBarn = (fagsak: Fagsak) => fagsak?.sakstype?.kode === fagsakYtelseType.PLEIEPENGER;
+const erPleiepengerLivetsSluttfase = (fagsak: Fagsak) =>
+  fagsak?.sakstype?.kode === fagsakYtelseType.PLEIEPENGER_SLUTTFASE;
 
 /**
  * FagsakIndex
@@ -147,6 +163,27 @@ const FagsakIndex = () => {
     },
   );
 
+  const { data: behandlingPerioderMedVilkår } = restApiHooks.useRestApi<BehandlingPerioderårsakMedVilkår>(
+    K9sakApiKeys.BEHANDLING_PERIODER_ÅRSAK_MED_VILKÅR,
+    {},
+    {
+      updateTriggers: [behandlingId, behandlingVersjon],
+      suspendRequest: !behandling || !erPleiepengerSyktBarn(fagsak),
+    },
+  );
+
+  const featureTogglesData = restApiHooks.useGlobalStateRestApiData<{ key: string; value: string }[]>(
+    K9sakApiKeys.FEATURE_TOGGLE,
+  );
+  const featureToggles = useMemo<FeatureToggles>(
+    () =>
+      featureTogglesData?.reduce((acc, curr) => {
+        acc[curr.key] = `${curr.value}`.toLowerCase() === 'true';
+        return acc;
+      }, {}),
+    [featureTogglesData],
+  );
+
   if (!fagsak) {
     if (fagsakState === RestApiState.NOT_STARTED || fagsakState === RestApiState.LOADING) {
       return <LoadingPanel />;
@@ -166,6 +203,8 @@ const FagsakIndex = () => {
   }
 
   const harVerge = behandling ? behandling.harVerge : false;
+  const showSøknadsperiodestripe = featureToggles?.SOKNADPERIODESTRIPE && erPleiepengerSyktBarn(fagsak);
+  const showPunsjOgFagsakPåSøkerStripe = erPleiepengerSyktBarn(fagsak) || erPleiepengerLivetsSluttfase(fagsak);
   return (
     <>
       <FagsakGrid
@@ -173,7 +212,7 @@ const FagsakIndex = () => {
           <Routes>
             <Route
               path={behandlingerRoutePath}
-              element={(
+              element={
                 <BehandlingerIndex
                   fagsak={fagsak}
                   alleBehandlinger={alleBehandlinger}
@@ -181,7 +220,7 @@ const FagsakIndex = () => {
                   setBehandlingIdOgVersjon={setBehandlingIdOgVersjon}
                   setRequestPendingMessage={setRequestPendingMessage}
                 />
-              )}
+              }
             />
           </Routes>
         }
@@ -226,15 +265,31 @@ const FagsakIndex = () => {
           }
 
           return (
-            <VisittkortSakIndex
-              personopplysninger={behandlingPersonopplysninger}
-              alleKodeverk={alleKodeverk}
-              sprakkode={behandling?.sprakkode}
-              fagsakPerson={fagsakPerson || fagsak.person}
-              harTilbakekrevingVerge={erTilbakekreving(behandling?.type) && harVerge}
-              relaterteFagsaker={relaterteFagsaker}
-              direkteOvergangFraInfotrygd={direkteOvergangFraInfotrygd}
-            />
+            <div style={{ overflow: 'hidden' }}>
+              <VisittkortSakIndex
+                personopplysninger={behandlingPersonopplysninger}
+                alleKodeverk={alleKodeverk}
+                sprakkode={behandling?.sprakkode}
+                fagsakPerson={fagsakPerson || fagsak.person}
+                harTilbakekrevingVerge={erTilbakekreving(behandling?.type) && harVerge}
+                relaterteFagsaker={relaterteFagsaker}
+                direkteOvergangFraInfotrygd={direkteOvergangFraInfotrygd}
+                erPbSak={fagsak.erPbSak}
+              />
+              {showPunsjOgFagsakPåSøkerStripe && (
+                <>
+                  {behandling && <Punsjstripe behandlingUuid={behandling?.uuid} pathToLos={getPathToFplos()} />}
+                  <AndreSakerPåSøkerStripe
+                    søkerIdent={fagsakPerson.personnummer}
+                    saksnummer={fagsak.saksnummer}
+                    fagsakYtelseType={fagsak.sakstype.kode}
+                  />
+                </>
+              )}
+              {showSøknadsperiodestripe && (
+                <Soknadsperiodestripe behandlingPerioderMedVilkår={behandlingPerioderMedVilkår} />
+              )}
+            </div>
           );
         }}
       />
