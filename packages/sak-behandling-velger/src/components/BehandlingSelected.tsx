@@ -105,12 +105,14 @@ const BehandlingSelected: React.FC<BehandlingSelectedProps> = props => {
               <DateLabel dateString={opprettetDato} />
             </Normaltekst>
           </div>
-          <div className={`${styles.flexContainer} ${styles.marginTop8}`}>
-            <Element className={styles.marginRight4}>Avsluttet:</Element>
-            <Normaltekst>
-              <DateLabel dateString={avsluttetDato} />
-            </Normaltekst>
-          </div>
+          {avsluttetDato && (
+            <div className={`${styles.flexContainer} ${styles.marginTop8}`}>
+              <Element className={styles.marginRight4}>Avsluttet:</Element>
+              <Normaltekst>
+                <DateLabel dateString={avsluttetDato} />
+              </Normaltekst>
+            </div>
+          )}
         </div>
       </div>
       {getÅrsakerForBehandling()}
