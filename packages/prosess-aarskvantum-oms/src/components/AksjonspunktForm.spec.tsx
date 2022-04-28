@@ -164,10 +164,7 @@ describe('<AksjonspunktForm>', () => {
           fortsettBehandling: true,
           begrunnelse: medFosterbarn.begrunnelse,
           kode: aksjonspunktCodes.VURDER_ÅRSKVANTUM_KVOTE,
-          fosterbarn: [
-            { fnr: '12345678910', navn: 'Dole Duck', fødselsdato: '12.34.5678' },
-            { fnr: '10987654321', navn: "Doffen Duck", fødselsdato: '10.98.7654' }
-          ],
+          fosterbarn: ['12345678910', '10987654321']
         },
       ]);
     });
