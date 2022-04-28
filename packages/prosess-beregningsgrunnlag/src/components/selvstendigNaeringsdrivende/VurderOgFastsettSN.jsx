@@ -111,11 +111,14 @@ const VurderOgFastsettSN = connect(mapStateToPropsFactory)(VurderOgFastsettSNImp
 VurderOgFastsettSN.buildInitialValues = (relevanteAndeler, avklaringsbehov) => {
   if (harAvklaringsbehov(FASTSETT_BEREGNINGSGRUNNLAG_SN_NY_I_ARBEIDSLIVET, avklaringsbehov)) {
     return FastsettSN.buildInitialValuesNyIArbeidslivet(relevanteAndeler, avklaringsbehov);
-  } else if (harAvklaringsbehov(VURDER_VARIG_ENDRET_ELLER_NYOPPSTARTET_NAERING_SELVSTENDIG_NAERINGSDRIVENDE, avklaringsbehov)) {
-    return {
-    ...VurderVarigEndretEllerNyoppstartetSN.buildInitialValues(relevanteAndeler, avklaringsbehov),
-   };
   }
+
+  if (harAvklaringsbehov(VURDER_VARIG_ENDRET_ELLER_NYOPPSTARTET_NAERING_SELVSTENDIG_NAERINGSDRIVENDE, avklaringsbehov)) {
+    return {
+      ...VurderVarigEndretEllerNyoppstartetSN.buildInitialValues(relevanteAndeler, avklaringsbehov),
+    };
+  }
+
   return undefined;
 };
 

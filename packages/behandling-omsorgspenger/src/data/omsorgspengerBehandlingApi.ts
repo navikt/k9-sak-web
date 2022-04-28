@@ -43,6 +43,7 @@ export enum OmsorgspengerBehandlingApiKeys {
   ARBEIDSFORHOLD = 'ARBEIDSFORHOLD',
   OVERLAPPENDE_YTELSER = 'OVERLAPPENDE_YTELSER',
   HENT_SAKSBEHANDLERE = 'HENT_SAKSBEHANDLERE',
+  FOSTERBARN = 'FOSTERBARN',
 }
 
 const endpoints = new RestApiConfigBuilder()
@@ -72,6 +73,7 @@ const endpoints = new RestApiConfigBuilder()
   .withRel('tilgjengelige-vedtaksbrev', OmsorgspengerBehandlingApiKeys.TILGJENGELIGE_VEDTAKSBREV)
   .withRel('overlappende-ytelser', OmsorgspengerBehandlingApiKeys.OVERLAPPENDE_YTELSER)
   .withRel('saksbehandler-info', OmsorgspengerBehandlingApiKeys.HENT_SAKSBEHANDLERE)
+  .withRel('fosterbarn', OmsorgspengerBehandlingApiKeys.FOSTERBARN)
 
   // operasjoner
   .withRel('dokumentdata-lagre', OmsorgspengerBehandlingApiKeys.DOKUMENTDATA_LAGRE)
