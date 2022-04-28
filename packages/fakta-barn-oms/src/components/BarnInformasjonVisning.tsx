@@ -11,21 +11,20 @@ interface BarnInputProps {
 }
 
 const BarnInformasjonVisning = ({ barnet }: BarnInputProps) => {
-  const { harSammeBosted, dødsdato, barnType, deltBostedPerioder } = barnet.barnRelevantIBehandling;
-  const skalViseSammeBostedUtenPerioder = typeof harSammeBosted !== 'undefined' && typeof deltBostedPerioder === 'undefined';
-  const skalViseSammeBostedMedPerioder = typeof harSammeBosted !== 'undefined' && typeof deltBostedPerioder !== 'undefined'
+  const { harSammeBosted, dødsdato, barnType, deltBostedPerioder, sammeBostedPerioder } = barnet.barnRelevantIBehandling;
+  const skalViseDeltBostedMedPerioder = deltBostedPerioder && deltBostedPerioder.length > 0;
+
   return (
     <div>
-      {skalViseSammeBostedUtenPerioder && (
-        <Normaltekst>
-          <FormattedMessage
-            id={harSammeBosted ? 'FaktaBarn.BorMedSøker' : 'FaktaBarn.BorIkkeMedSøker'}
-            values={{ b: chunks => <b>{chunks}</b> }}
-          />
-        </Normaltekst>
-      )}
+      {typeof harSammeBosted !== 'undefined' && <Normaltekst>
+        <FormattedMessage
+          id={harSammeBosted ? 'FaktaBarn.BorMedSøker' : 'FaktaBarn.BorIkkeMedSøker'}
+          values={{ b: chunks => <b>{chunks}</b> }}
+        />
+      </Normaltekst>}
 
-      {skalViseSammeBostedMedPerioder && <>
+
+      {skalViseDeltBostedMedPerioder && <>
         <Normaltekst>
           <FormattedMessage id="FaktaBarn.DeltBostedMedPerioder" />
         </Normaltekst>
@@ -33,6 +32,14 @@ const BarnInformasjonVisning = ({ barnet }: BarnInputProps) => {
         <VerticalSpacer sixteenPx />
       </>
       }
+
+      {sammeBostedPerioder && sammeBostedPerioder.length > 0 && <>
+        <Normaltekst>
+          <FormattedMessage id="FaktaBarn.SammeBostedMedPerioder" />
+        </Normaltekst>
+        {sammeBostedPerioder.map(periode => (<Normaltekst>{formatereLukketPeriode(periode)}</Normaltekst>))}
+        <VerticalSpacer sixteenPx />
+      </>}
 
       {dødsdato && (
         <Normaltekst>

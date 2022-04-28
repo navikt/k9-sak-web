@@ -108,7 +108,7 @@ describe('<FagsakProfileIndex>', () => {
       kodeverk: 'BEHANDLING_TYPE',
     },
     status: {
-      kode: behandlingStatus.OPPRETTET,
+      kode: behandlingStatus.AVSLUTTET,
       kodeverk: 'BEHANDLING_STATUS',
     },
     links: [],

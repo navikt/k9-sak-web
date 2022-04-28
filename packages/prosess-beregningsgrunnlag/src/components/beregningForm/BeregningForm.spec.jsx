@@ -273,7 +273,6 @@ describe('<BeregningForm>', () => {
     );
     const aksjonspunktBehandler = wrapper.find(AksjonspunktBehandler);
     expect(aksjonspunktBehandler.props().readOnly).to.have.equal(false);
-    expect(aksjonspunktBehandler.props().tidsBegrensetInntekt).to.have.equal(false);
     const expectedPerioder = lagPeriode();
     expect(aksjonspunktBehandler.props().allePerioder[0]).to.eql(expectedPerioder);
     expect(aksjonspunktBehandler.props().avklaringsbehov).to.eql(avklaringsbehovListe);
@@ -425,7 +424,7 @@ describe('<BeregningForm>', () => {
     expect(result[0].kode).to.have.equal('5049');
   });
   it('skal teste buildInitialValues', () => {
-    const avklaringsbehov = [apFastsettBgTidsbegrensetArbeidsforhold];
+    const avklaringsbehov = [];
     const beregningsgrunnlag = lagBeregningsgrunnlag(0, 120000, 100000, 100, []);
 
     beregningsgrunnlag.avklaringsbehov = avklaringsbehov;
@@ -439,8 +438,7 @@ describe('<BeregningForm>', () => {
 
     const actualValues = buildInitialValuesForBeregningrunnlag(beregningsgrunnlag, bgVilkar);
     const expectedValues = {
-      ATFLVurdering: undefined,
-      undefined: '',
+      ATFLVurdering: "",
       erTilVurdering: false,
       skjæringstidspunkt: undefined,
       avklaringsbehov,

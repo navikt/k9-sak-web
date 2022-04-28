@@ -4,7 +4,6 @@ import axios, { AxiosResponse } from 'axios';
 import { AlertStripeAdvarsel, AlertStripeFeil } from 'nav-frontend-alertstriper';
 import { Link } from '@navikt/ds-react';
 
-import { getPathToFplos } from '@k9-sak-web/sak-app/src/app/paths';
 import styles from './punsjstripe.less';
 
 export interface PunsjResponse {
@@ -18,9 +17,10 @@ export interface JournalpostIder {
 
 interface PunsjstripeProps {
   behandlingUuid: string;
+  pathToLos: string;
 }
 
-const Punsjstripe: React.FC<PunsjstripeProps> = ({ behandlingUuid }) => {
+const Punsjstripe: React.FC<PunsjstripeProps> = ({ behandlingUuid, pathToLos }) => {
   const [punsjoppgaver, setPunsjoppgaver] = React.useState<PunsjResponse>(null);
   const [error, setError] = React.useState(null);
   React.useEffect(() => {
@@ -51,7 +51,7 @@ const Punsjstripe: React.FC<PunsjstripeProps> = ({ behandlingUuid }) => {
       return (
         <>
           <span>{`Det er 1 uløst oppgave tilknyttet ${subjekt} i Punsj.`}</span>
-          <Link className={styles.oppgaveLenke} href={`${getPathToFplos()}?sok=${journalpostId}`} target="_blank">
+          <Link className={styles.oppgaveLenke} href={`${pathToLos}?sok=${journalpostId}`} target="_blank">
             Gå til oppgave
           </Link>
         </>
@@ -65,7 +65,7 @@ const Punsjstripe: React.FC<PunsjstripeProps> = ({ behandlingUuid }) => {
           Reserver journalposter:
           {journalposter.map(({ journalpostId }, index) => (
             <>
-              <Link className={styles.oppgaveLenke} href={`${getPathToFplos()}?sok=${journalpostId}`} target="_blank">
+              <Link className={styles.oppgaveLenke} href={`${pathToLos}?sok=${journalpostId}`} target="_blank">
                 {`${journalpostId}`}
               </Link>
               {`${flereIListen && journalposter.length !== index + 1 ? ',' : '.'}`}
