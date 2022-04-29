@@ -136,7 +136,7 @@ const skjermlenkeCodes = {
   SOEKNADSFRIST: {
     kode: 'SOEKNADSFRIST',
     faktaNavn: faktaPanelCodes.DEFAULT,
-    punktNavn: prosessStegCodes.SOEKNADSFRIST,
+    punktNavn: prosessStegCodes.INNGANGSVILKAR,
   },
   VEDTAK: {
     kode: 'VEDTAK',
