@@ -1,7 +1,7 @@
 import { SetStateAction } from 'react';
 
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
-import { Aksjonspunkt, Vilkar, Uttaksperiode, UtfallEnum } from '@k9-sak-web/types';
+import { Aksjonspunkt, UtfallEnum, Uttaksperiode, Vilkar } from '@k9-sak-web/types';
 import aksjonspunktStatus, { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 
 import { ProsessStegDef, ProsessStegPanelDef } from './ProsessStegDef';
@@ -29,7 +29,11 @@ const finnStatus = (vilkar: Vilkar[], aksjonspunkter: Aksjonspunkt[]) => {
 const finnErDelvisBehandlet = (vilkar: Vilkar[], uttaksperioder: Uttaksperiode[]) => {
   if (vilkar.length > 0) {
     const vilkarStatusCodes = [];
-    vilkar.forEach(v => v.perioder.forEach(periode => vilkarStatusCodes.push(periode.vilkarStatus.kode)));
+    vilkar.forEach(v => v.perioder.forEach(periode => {
+      if (periode.vurdersIBehandlingen) {
+        vilkarStatusCodes.push(periode.vilkarStatus.kode);
+      }
+    }));
 
     const alleVilkårErIkkeVurdert = vilkarStatusCodes.every(vsc => vsc === vilkarUtfallType.IKKE_VURDERT);
     const alleVilkårErIkkeOppfylt = vilkarStatusCodes.every(vsc => vsc === vilkarUtfallType.IKKE_OPPFYLT);
