@@ -237,6 +237,7 @@ export const BehandlingMenuIndex = ({
               behandlingTypeKode === BehandlingType.TILBAKEKREVING ||
               behandlingTypeKode === BehandlingType.TILBAKEKREVING_REVURDERING
             }
+            featureToggles={featureToggles}
           />
         )),
         new MenyData(behandlingRettigheter?.behandlingKanHenlegges, getHenleggMenytekst()).medModal(lukkModal => (

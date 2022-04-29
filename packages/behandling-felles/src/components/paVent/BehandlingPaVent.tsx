@@ -1,20 +1,19 @@
-import React, { useState, useMemo, useCallback, useEffect } from 'react';
-
-import SettPaVentModalIndex from '@k9-sak-web/modal-sett-pa-vent';
-import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
-import { Behandling, Aksjonspunkt, KodeverkMedNavn } from '@k9-sak-web/types';
-
+import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
+import SettPaVentModalIndex from '@k9-sak-web/modal-sett-pa-vent';
+import { Aksjonspunkt, Behandling, Venteaarsak, FeatureToggles } from '@k9-sak-web/types';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import SettPaVentParams from '../../types/settPaVentParamsTsType';
 
 interface BehandlingPaVentProps {
   behandling: Behandling;
   aksjonspunkter: Aksjonspunkt[];
-  kodeverk: { [key: string]: KodeverkMedNavn[] };
+  kodeverk: { [key: string]: Venteaarsak[] };
   settPaVent: (params: SettPaVentParams) => Promise<any>;
   hentBehandling: ({ behandlingId: number }, keepData: boolean) => Promise<any>;
   erTilbakekreving?: boolean;
+  featureToggles?: FeatureToggles;
 }
 
 const BehandlingPaVent = ({
@@ -24,6 +23,7 @@ const BehandlingPaVent = ({
   settPaVent,
   hentBehandling,
   erTilbakekreving,
+  featureToggles,
 }: BehandlingPaVentProps) => {
   const [skalViseModal, setVisModal] = useState(behandling.behandlingPaaVent);
   const skjulModal = useCallback(() => setVisModal(false), []);
@@ -50,6 +50,14 @@ const BehandlingPaVent = ({
     [aksjonspunkter],
   );
 
+  const ventearsakVariant = useMemo(
+    () =>
+      (aksjonspunkter || [])
+        .filter(ap => isAksjonspunktOpen(ap.status.kode))
+        .find(ap => ap.definisjon.kode === aksjonspunktCodes.AUTO_MANUELT_SATT_PÅ_VENT)?.venteårsakVariant,
+    [aksjonspunkter],
+  );
+
   if (!skalViseModal) {
     return null;
   }
@@ -63,6 +71,8 @@ const BehandlingPaVent = ({
       hasManualPaVent={erManueltSattPaVent}
       ventearsaker={kodeverk[kodeverkTyper.VENT_AARSAK]}
       erTilbakekreving={erTilbakekreving}
+      ventearsakVariant={ventearsakVariant}
+      featureToggles={featureToggles}
       showModal
     />
   );
