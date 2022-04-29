@@ -21,7 +21,7 @@ const data = {
       {
         årsak: 'REVURDERER_BERØRT_PERIODE',
         perioder: [
-          { fom: '2022-01-05', tom: '2022-02-05' },
+          { fom: '2022-01-04', tom: '2022-02-05' },
           { fom: '2022-02-06', tom: '2022-04-05' },
         ],
       },
