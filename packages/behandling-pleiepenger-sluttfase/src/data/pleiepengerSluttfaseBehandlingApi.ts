@@ -52,6 +52,7 @@ export enum PleiepengerSluttfaseBehandlingApiKeys {
   OVERLAPPENDE_YTELSER = 'OVERLAPPENDE_YTELSER',
   HENT_SAKSBEHANDLERE = 'HENT_SAKSBEHANDLERE',
   OM_PLEIETRENGENDE = 'OM_PLEIETRENGENDE',
+  BEHANDLING_PERIODER_ÅRSAK_MED_VILKÅR = 'BEHANDLING_PERIODER_ÅRSAK_MED_VILKÅR',
 }
 
 const endpoints = new RestApiConfigBuilder()
@@ -69,7 +70,10 @@ const endpoints = new RestApiConfigBuilder()
   .withRel('familiehendelse-v2', PleiepengerSluttfaseBehandlingApiKeys.FAMILIEHENDELSE)
   .withRel('soknad', PleiepengerSluttfaseBehandlingApiKeys.SOKNAD)
   .withRel('soknad-original-behandling', PleiepengerSluttfaseBehandlingApiKeys.SOKNAD_ORIGINAL_BEHANDLING)
-  .withRel('familiehendelse-original-behandling', PleiepengerSluttfaseBehandlingApiKeys.FAMILIEHENDELSE_ORIGINAL_BEHANDLING)
+  .withRel(
+    'familiehendelse-original-behandling',
+    PleiepengerSluttfaseBehandlingApiKeys.FAMILIEHENDELSE_ORIGINAL_BEHANDLING,
+  )
   .withRel('soeker-medlemskap-v2', PleiepengerSluttfaseBehandlingApiKeys.MEDLEMSKAP)
   .withRel('uttak-periode-grense', PleiepengerSluttfaseBehandlingApiKeys.UTTAK_PERIODE_GRENSE)
   .withRel('arbeidsforhold-v1', PleiepengerSluttfaseBehandlingApiKeys.ARBEIDSFORHOLD)
@@ -90,6 +94,10 @@ const endpoints = new RestApiConfigBuilder()
   .withRel('overlappende-ytelser', PleiepengerSluttfaseBehandlingApiKeys.OVERLAPPENDE_YTELSER)
   .withRel('saksbehandler-info', PleiepengerSluttfaseBehandlingApiKeys.HENT_SAKSBEHANDLERE)
   .withRel('om-pleietrengende', PleiepengerSluttfaseBehandlingApiKeys.OM_PLEIETRENGENDE)
+  .withRel(
+    'behandling-perioder-årsak-med-vilkår',
+    PleiepengerSluttfaseBehandlingApiKeys.BEHANDLING_PERIODER_ÅRSAK_MED_VILKÅR,
+  )
 
   // operasjoner
   .withRel('dokumentdata-lagre', PleiepengerSluttfaseBehandlingApiKeys.DOKUMENTDATA_LAGRE)
@@ -106,11 +114,17 @@ const endpoints = new RestApiConfigBuilder()
     '/k9/sak/api/behandling/uttak/stonadskontoerGittUttaksperioder',
     PleiepengerSluttfaseBehandlingApiKeys.STONADSKONTOER_GITT_UTTAKSPERIODER,
   )
-  .withPost('/k9/sak/api/behandlinger/bytt-enhet', PleiepengerSluttfaseBehandlingApiKeys.BEHANDLING_NY_BEHANDLENDE_ENHET)
+  .withPost(
+    '/k9/sak/api/behandlinger/bytt-enhet',
+    PleiepengerSluttfaseBehandlingApiKeys.BEHANDLING_NY_BEHANDLENDE_ENHET,
+  )
   .withPost('/k9/sak/api/behandlinger/henlegg', PleiepengerSluttfaseBehandlingApiKeys.HENLEGG_BEHANDLING)
   .withAsyncPost('/k9/sak/api/behandlinger/gjenoppta', PleiepengerSluttfaseBehandlingApiKeys.RESUME_BEHANDLING)
   .withPost('/k9/sak/api/behandlinger/sett-pa-vent', PleiepengerSluttfaseBehandlingApiKeys.BEHANDLING_ON_HOLD)
-  .withPost('/k9/sak/api/behandlinger/opne-for-endringer', PleiepengerSluttfaseBehandlingApiKeys.OPEN_BEHANDLING_FOR_CHANGES)
+  .withPost(
+    '/k9/sak/api/behandlinger/opne-for-endringer',
+    PleiepengerSluttfaseBehandlingApiKeys.OPEN_BEHANDLING_FOR_CHANGES,
+  )
   .withPost('/k9/sak/api/verge/opprett', PleiepengerSluttfaseBehandlingApiKeys.VERGE_OPPRETT)
   .withPost('/k9/sak/api/verge/fjern', PleiepengerSluttfaseBehandlingApiKeys.VERGE_FJERN)
 
