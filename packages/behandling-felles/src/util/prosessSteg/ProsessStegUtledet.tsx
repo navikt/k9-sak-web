@@ -29,7 +29,13 @@ const finnStatus = (vilkar: Vilkar[], aksjonspunkter: Aksjonspunkt[]) => {
 const finnErDelvisBehandlet = (vilkar: Vilkar[], uttaksperioder: Uttaksperiode[]) => {
   if (vilkar.length > 0) {
     const vilkarStatusCodes = [];
-    vilkar.forEach(v => v.perioder.forEach(periode => vilkarStatusCodes.push(periode.vilkarStatus.kode)));
+    vilkar.forEach(v =>
+      v.perioder.filter(periode =>
+        periode.vurdersIBehandlingen
+      ).forEach(periode =>
+        vilkarStatusCodes.push(periode.vilkarStatus.kode)
+      )
+    );
 
     const alleVilkårErIkkeVurdert = vilkarStatusCodes.every(vsc => vsc === vilkarUtfallType.IKKE_VURDERT);
     const alleVilkårErIkkeOppfylt = vilkarStatusCodes.every(vsc => vsc === vilkarUtfallType.IKKE_OPPFYLT);
@@ -52,7 +58,7 @@ const finnErDelvisBehandlet = (vilkar: Vilkar[], uttaksperioder: Uttaksperiode[]
   let formatertUttaksperioder = uttaksperioder;
 
   // uttak må sjekke uttaksperioder i tillegg
-  if(typeof uttaksperioder === 'object'){
+  if (typeof uttaksperioder === 'object') {
     formatertUttaksperioder = Object.values(uttaksperioder);
   }
 
