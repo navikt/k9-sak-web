@@ -47,8 +47,6 @@ export const VedtakOpphorRevurderingPanelImpl = ({ intl, opphoersdato, revurderi
       </Normaltekst>
     )}
     <VerticalSpacer sixteenPx />
-    <Undertekst>{intl.formatMessage({ id: 'VedtakForm.RevurderingFP.Aarsak' })}</Undertekst>
-    {revurderingsAarsakString !== undefined && <Normaltekst>{revurderingsAarsakString}</Normaltekst>}
   </div>
 );
 
