@@ -8,11 +8,18 @@ import { ProsessStegDef, ProsessStegPanelDef } from './ProsessStegDef';
 
 const finnStatus = (vilkar: Vilkar[], aksjonspunkter: Aksjonspunkt[]) => {
   if (vilkar.length > 0) {
+
     const vilkarStatusCodes = [];
-    vilkar.forEach(v => v.perioder.forEach(periode => vilkarStatusCodes.push(periode.vilkarStatus.kode)));
+    vilkar.forEach(v => v.perioder.filter(
+      periode => periode.vurdersIBehandlingen
+    ).forEach(
+      periode => vilkarStatusCodes.push(periode.vilkarStatus.kode))
+    );
+
     if (vilkarStatusCodes.every(vsc => vsc === vilkarUtfallType.IKKE_VURDERT)) {
       return vilkarUtfallType.IKKE_VURDERT;
     }
+
     return vilkarStatusCodes.some(vsc => vsc === vilkarUtfallType.OPPFYLT)
       ? vilkarUtfallType.OPPFYLT
       : vilkarUtfallType.IKKE_OPPFYLT;
