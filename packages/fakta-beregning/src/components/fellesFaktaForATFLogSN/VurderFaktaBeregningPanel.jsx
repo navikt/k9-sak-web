@@ -245,10 +245,10 @@ VurderFaktaBeregningPanelImpl.propTypes = {
   ...formPropTypes,
 };
 
-const mapGrunnlagsliste = (fieldArrayList, alleBeregningsgrunnlag, behandlingResultatPerioder) =>
+const mapGrunnlagsliste = (fieldArrayList, behandlingResultatPerioder) =>
   fieldArrayList
-    .map((currentFormValues, index) => {
-      if ((måVurderes(alleBeregningsgrunnlag[index].avklaringsbehov, currentFormValues.erTilVurdering) || erOverstyring(currentFormValues))
+    .map((currentFormValues) => {
+      if ((måVurderes(currentFormValues.avklaringsbehov, currentFormValues.erTilVurdering) || erOverstyring(currentFormValues))
         && currentFormValues.erTilVurdering) {
         const faktaBeregningValues = currentFormValues;
         const stpOpptjening = faktaBeregningValues.faktaOmBeregning.avklarAktiviteter.skjæringstidspunkt;
@@ -271,14 +271,14 @@ export const transformValuesVurderFaktaBeregning = (values, alleBeregningsgrunnl
     apForSubmit.push(
       {
         kode: VURDER_FAKTA_FOR_ATFL_SN,
-        grunnlag: mapGrunnlagsliste(fieldsUtenOverstyring, alleBeregningsgrunnlag, behandlingResultatPerioder),
+        grunnlag: mapGrunnlagsliste(fieldsUtenOverstyring, behandlingResultatPerioder),
         begrunnelse: beg,
       }
     );
   }
   if (fieldArrayList.some(currentFormValues => erOverstyring(currentFormValues))) {
     const fieldsMedOverstyring = fieldArrayList.filter(currentFormValues => erOverstyring(currentFormValues));
-    mapGrunnlagsliste(fieldsMedOverstyring, alleBeregningsgrunnlag, behandlingResultatPerioder).map(gr => ({
+    mapGrunnlagsliste(fieldsMedOverstyring, behandlingResultatPerioder).map(gr => ({
       kode: OVERSTYRING_AV_BEREGNINGSGRUNNLAG,
       begrunnelse: beg,
       ...gr,
