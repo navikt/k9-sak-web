@@ -49,7 +49,7 @@ describe('<AksjonspunktForm>', () => {
         },
       ];
       const wrapper = shallowWithIntl(
-        <FormContent {...reduxFormPropsMock} aktiviteter={aktiviteter} isAksjonspunktOpen />,
+        <FormContent {...reduxFormPropsMock} aktiviteter={aktiviteter} isAksjonspunktOpen fosterbarn={[]} />,
       );
 
       const checkbox = wrapper.find(CheckboxField);
@@ -71,7 +71,7 @@ describe('<AksjonspunktForm>', () => {
         },
       ];
       const wrapper = shallowWithIntl(
-        <FormContent {...reduxFormPropsMock} aktiviteter={aktiviteter} isAksjonspunktOpen />,
+        <FormContent {...reduxFormPropsMock} aktiviteter={aktiviteter} isAksjonspunktOpen fosterbarn={[]} />,
       );
 
       const checkbox = wrapper.find(CheckboxField);
@@ -131,4 +131,43 @@ describe('<AksjonspunktForm>', () => {
       ]);
     });
   });
+
+  describe('fosterbarn', () => {
+    it('uten fosterbarn', () => {
+      const utenFosterbarn: FormValues = {
+        valg: 'reBehandling',
+        begrunnelse: 'Ja.',
+        fosterbarn: []
+      };
+
+      const utenFosterbarnDto = transformValues(utenFosterbarn);
+
+      expect(utenFosterbarnDto).toEqual([
+        {
+          fortsettBehandling: false,
+          begrunnelse: utenFosterbarn.begrunnelse,
+          kode: aksjonspunktCodes.VURDER_ÅRSKVANTUM_KVOTE,
+          fosterbarn: []
+        },
+      ]);
+
+      const medFosterbarn: FormValues = {
+        valg: 'fortsett',
+        begrunnelse: 'Ja.',
+        fosterbarn: ['12345678910', '10987654321']
+      };
+
+      const medFosterbarnDto = transformValues(medFosterbarn);
+
+      expect(medFosterbarnDto).toEqual([
+        {
+          fortsettBehandling: true,
+          begrunnelse: medFosterbarn.begrunnelse,
+          kode: aksjonspunktCodes.VURDER_ÅRSKVANTUM_KVOTE,
+          fosterbarn: ['12345678910', '10987654321']
+        },
+      ]);
+    });
+  });
+
 });
