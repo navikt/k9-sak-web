@@ -21,8 +21,12 @@ jobs:
         env:
           NODE_AUTH_TOKEN: ${{ secrets.READER_TOKEN }}
 
+      - name: Get number of CPU cores
+        id: cpu-cores
+        uses: SimenB/github-actions-cpu-cores@v1
+
       - name: Kjører tester
-        run: yarn test:all --maxWorkers=2 --silent
+        run: yarn jest --max-workers ${{ steps.cpu-cores.outputs.count }} --silent
 
       - name: Typescript-sjekk
         run: yarn ts-check
