@@ -1,14 +1,13 @@
 import HeaderWithErrorPanel, { Feilmelding } from '@fpsak-frontend/sak-dekorator';
+import { AAREG_URL, AINNTEKT_URL } from '@k9-sak-web/konstanter';
 import { useRestApiError, useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
 import { NavAnsatt } from '@k9-sak-web/types';
 import React, { useMemo } from 'react';
 import { injectIntl, IntlShape, WrappedComponentProps } from 'react-intl';
-import { useLocation } from 'react-router-dom';
-import { AINNTEKT_URL, AAREG_URL } from '@k9-sak-web/konstanter';
 import { K9sakApiKeys, restApiHooks } from '../../data/k9sakApi';
 import ErrorFormatter from '../feilhandtering/ErrorFormatter';
 import ErrorMessage from '../feilhandtering/ErrorMessage';
-import { InitLinks } from '../initLinks';
+import InitLinks from '../initLinks';
 import { getPathToFplos, getPathToK9Punsj } from '../paths';
 
 type QueryStrings = {
@@ -51,6 +50,7 @@ interface OwnProps {
   hideErrorMessages?: boolean;
   setSiteHeight: (headerHeight: number) => void;
   initFetch: InitLinks;
+  pathname: string;
 }
 
 const Dekorator = ({
@@ -58,12 +58,12 @@ const Dekorator = ({
   queryStrings,
   setSiteHeight,
   initFetch,
+  pathname,
   hideErrorMessages = false,
 }: OwnProps & WrappedComponentProps) => {
   const navAnsatt = restApiHooks.useGlobalStateRestApiData<NavAnsatt>(K9sakApiKeys.NAV_ANSATT);
-  const location = useLocation();
-  const fagsakFraUrl = location.pathname.split('/fagsak/')[1].split('/')[0];
-  const isFagsakFraUrlValid = fagsakFraUrl.match(/^[A-Z0-9]{5}$/);
+  const fagsakFraUrl = pathname.split('/fagsak/')[1]?.split('/')[0];
+  const isFagsakFraUrlValid = fagsakFraUrl?.match(/^[A-Z0-9]{5}$/);
 
   const getAinntektPath = () => {
     const ainntektPath = initFetch.sakLinks.find(saklink => saklink.rel === 'ainntekt-redirect')?.href;

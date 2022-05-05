@@ -18,7 +18,7 @@ import Dekorator from './components/Dekorator';
 
 import '@fpsak-frontend/assets/styles/global.less';
 import '@navikt/ds-css';
-import { InitLinks } from './useHentInitLenker';
+import InitLinks from './initLinks';
 
 const EMPTY_ARRAY = [];
 
@@ -75,6 +75,7 @@ const AppIndex = () => {
             queryStrings={queryStrings}
             setSiteHeight={setSiteHeight}
             initFetch={initFetch}
+            pathname={location.pathname}
           />
           {shouldRenderHome && <Home headerHeight={headerHeight} />}
           {forbiddenErrors.length > 0 && <ForbiddenPage />}

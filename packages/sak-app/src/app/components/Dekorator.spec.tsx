@@ -3,7 +3,6 @@ import { intlMock, shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-e
 import * as useRestApiError from '@k9-sak-web/rest-api-hooks/src/error/useRestApiError';
 import EventType from '@k9-sak-web/rest-api/src/requestApi/eventType';
 import React from 'react';
-import { MemoryRouter } from 'react-router-dom';
 import sinon from 'sinon';
 import { K9sakApiKeys, requestApi } from '../../data/k9sakApi';
 import Dekorator from './Dekorator';
@@ -45,15 +44,13 @@ describe('<Dekorator>', () => {
     requestApi.mock(K9sakApiKeys.NAV_ANSATT, navAnsatt);
 
     const wrapper = shallowWithIntl(
-      <MemoryRouter initialEntries={['/test']}>
-        <Dekorator.WrappedComponent
-          intl={intlMock}
-          queryStrings={{}}
-          setSiteHeight={sinon.spy()}
-          initFetch={initFetch}
-        />
-        ,
-      </MemoryRouter>,
+      <Dekorator.WrappedComponent
+        intl={intlMock}
+        queryStrings={{}}
+        setSiteHeight={sinon.spy()}
+        initFetch={initFetch}
+        pathname="/fagsak/ABC39/"
+      />,
     );
     const header = wrapper.find(HeaderWithErrorPanel);
     expect(header.length).toBe(1);
@@ -75,6 +72,7 @@ describe('<Dekorator>', () => {
         queryStrings={{}}
         setSiteHeight={sinon.spy()}
         initFetch={initFetch}
+        pathname="test"
       />,
     );
     const header = wrapper.find(HeaderWithErrorPanel);
