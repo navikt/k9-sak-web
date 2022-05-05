@@ -65,12 +65,12 @@ const Dekorator = ({
 
   const getAinntektPath = () => {
     const ainntektPath = initFetch.sakLinks.find(saklink => saklink.rel === 'ainntekt-redirect')?.href;
-    return `${ainntektPath}?=${fagsakFraUrl}`;
+    return `${ainntektPath}?saksnummer=${fagsakFraUrl}`;
   };
 
   const getAaregPath = () => {
     const aaregPath = initFetch.sakLinks.find(saklink => saklink.rel === 'arbeidstaker-redirect')?.href;
-    return `${aaregPath}?=${fagsakFraUrl}`;
+    return `${aaregPath}?saksnummer=${fagsakFraUrl}`;
   };
 
   const errorMessages = useRestApiError() || EMPTY_ARRAY;
