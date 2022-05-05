@@ -28,6 +28,7 @@ afterEach(() => {
 describe('<AppIndex>', () => {
   it('skal vise hjem-skjermbilde', () => {
     requestApi.mock(K9sakApiKeys.NAV_ANSATT, { navn: 'Peder' });
+    requestApi.mock(K9sakApiKeys.INIT_FETCH, { sakLinks: [] });
     mockUseLocationValue.pathname = 'test';
     const wrapper = shallow(<AppIndex />);
     expect(wrapper.find(Dekorator)).toHaveLength(1);
@@ -36,6 +37,7 @@ describe('<AppIndex>', () => {
 
   it('skal vise query-feilmelding', () => {
     requestApi.mock(K9sakApiKeys.NAV_ANSATT, { navn: 'Peder' });
+    requestApi.mock(K9sakApiKeys.INIT_FETCH, { sakLinks: [] });
     mockUseLocationValue.search = '?errormessage=Det+finnes+ingen+sak+med+denne+referansen%3A+266';
     const wrapper = shallow(<AppIndex />);
     const headerComp = wrapper.find(Dekorator);
