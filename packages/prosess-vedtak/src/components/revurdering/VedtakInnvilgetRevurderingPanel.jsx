@@ -49,7 +49,6 @@ export const VedtakInnvilgetRevurderingPanelImpl = ({
   intl,
   ytelseTypeKode,
   konsekvenserForYtelsen,
-  revurderingsAarsakString,
   tilbakekrevingText,
   alleKodeverk,
   bgPeriodeMedAvslagsårsak,
@@ -72,8 +71,6 @@ export const VedtakInnvilgetRevurderingPanelImpl = ({
             {bgPeriodeMedAvslagsårsak && <Undertekst>{lagPeriodevisning(bgPeriodeMedAvslagsårsak)}</Undertekst>}
           </Undertekst>
           <VerticalSpacer sixteenPx />
-          <Normaltekst>{intl.formatMessage({ id: 'VedtakForm.RevurderingFP.Aarsak' })}</Normaltekst>
-          {revurderingsAarsakString !== undefined && <Undertekst>{revurderingsAarsakString}</Undertekst>}
         </div>
       )}
     </>
@@ -84,7 +81,6 @@ VedtakInnvilgetRevurderingPanelImpl.propTypes = {
   intl: PropTypes.shape().isRequired,
   ytelseTypeKode: PropTypes.string.isRequired,
   konsekvenserForYtelsen: PropTypes.arrayOf(PropTypes.shape()),
-  revurderingsAarsakString: PropTypes.string,
   tilbakekrevingText: PropTypes.string,
   alleKodeverk: PropTypes.shape().isRequired,
   bgPeriodeMedAvslagsårsak: PropTypes.shape(),
