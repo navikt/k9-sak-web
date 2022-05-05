@@ -6,16 +6,16 @@ import { Normaltekst } from 'nav-frontend-typografi';
 
 import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
 import { DatepickerField, SelectField } from '@fpsak-frontend/form';
-import shallowWithIntl, { intlMock } from '../../i18n/index';
+import shallowWithIntl, { intlMock } from '../../../i18n/index';
 
-import { SettPaVentModal } from './SettPaVentModal';
+import { SettPaVentModalOld } from './SettPaVentModal';
 
 describe('<SettPaVentModal>', () => {
   it('skal rendre åpen modal', () => {
     const cancelEventCallback = sinon.spy();
 
     const wrapper = shallowWithIntl(
-      <SettPaVentModal
+      <SettPaVentModalOld
         intl={intlMock}
         cancelEvent={cancelEventCallback}
         frist="frist"
@@ -40,7 +40,7 @@ describe('<SettPaVentModal>', () => {
 
   it('skal ikke disable knapp for lagring når frist er en gyldig fremtidig dato', () => {
     const wrapper = shallowWithIntl(
-      <SettPaVentModal
+      <SettPaVentModalOld
         intl={intlMock}
         showModal
         cancelEvent={sinon.spy()}
@@ -61,7 +61,7 @@ describe('<SettPaVentModal>', () => {
 
   it('skal disable knapp for lagring når frist er en ugyldig dato', () => {
     const wrapper = shallowWithIntl(
-      <SettPaVentModal
+      <SettPaVentModalOld
         intl={intlMock}
         showModal
         cancelEvent={sinon.spy()}
@@ -82,7 +82,7 @@ describe('<SettPaVentModal>', () => {
 
   it('skal disable knapp for lagring når frist er en historisk dato', () => {
     const wrapper = shallowWithIntl(
-      <SettPaVentModal
+      <SettPaVentModalOld
         intl={intlMock}
         showModal
         cancelEvent={sinon.spy()}
@@ -103,7 +103,7 @@ describe('<SettPaVentModal>', () => {
 
   it('skal være obligatorisk å velge årsak', () => {
     const wrapper = shallowWithIntl(
-      <SettPaVentModal
+      <SettPaVentModalOld
         intl={intlMock}
         showModal
         cancelEvent={sinon.spy()}
@@ -123,7 +123,7 @@ describe('<SettPaVentModal>', () => {
 
   it('skal ikke vise frist-input når behandling automatisk er satt på vent uten frist', () => {
     const wrapper = shallowWithIntl(
-      <SettPaVentModal
+      <SettPaVentModalOld
         intl={intlMock}
         showModal
         cancelEvent={sinon.spy()}
@@ -141,15 +141,15 @@ describe('<SettPaVentModal>', () => {
 
   it('skal vise frist-input når behandling automatisk er satt på vent med frist', () => {
     const wrapper = shallowWithIntl(
-      <SettPaVentModal
+      <SettPaVentModalOld
         intl={intlMock}
         showModal
         cancelEvent={sinon.spy()}
         frist="2015-10-10"
-        originalFrist='2015-10-10'
         ventearsaker={[]}
         hasManualPaVent={false}
         erTilbakekreving={false}
+        originalFrist="2015-10-10"
         {...reduxFormPropsMock}
       />,
     );
@@ -159,7 +159,7 @@ describe('<SettPaVentModal>', () => {
 
   it('skal vise årsak-input som readonly når behandling automatisk er satt på vent', () => {
     const wrapper = shallowWithIntl(
-      <SettPaVentModal
+      <SettPaVentModalOld
         intl={intlMock}
         showModal
         cancelEvent={sinon.spy()}
@@ -176,7 +176,7 @@ describe('<SettPaVentModal>', () => {
 
   it('skal vise fristen tekst for tilbakekreving behandling venter på kravgrunnlag og fristen er utløpt', () => {
     const wrapper = shallowWithIntl(
-      <SettPaVentModal
+      <SettPaVentModalOld
         intl={intlMock}
         showModal
         cancelEvent={sinon.spy()}

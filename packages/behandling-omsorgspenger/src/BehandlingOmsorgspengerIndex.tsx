@@ -33,6 +33,7 @@ const omsorgspengerData = [
   { key: OmsorgspengerBehandlingApiKeys.FORBRUKTE_DAGER },
   { key: OmsorgspengerBehandlingApiKeys.OVERLAPPENDE_YTELSER },
   { key: OmsorgspengerBehandlingApiKeys.HENT_SAKSBEHANDLERE },
+  { key: OmsorgspengerBehandlingApiKeys.FOSTERBARN },
 ];
 
 interface OwnProps {

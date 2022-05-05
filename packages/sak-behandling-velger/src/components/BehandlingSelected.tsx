@@ -1,6 +1,7 @@
 import calendarImg from '@fpsak-frontend/assets/images/calendar-2.svg';
 import behandlingResultatType from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
+import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import { DateLabel, Image } from '@fpsak-frontend/shared-components';
 import { skjermlenkeCodes } from '@k9-sak-web/konstanter';
 import { Periode } from '@k9-sak-web/types';
@@ -24,6 +25,7 @@ interface BehandlingSelectedProps {
   søknadsperioder: Periode[];
   behandlingTypeKode: string;
   createLocationForSkjermlenke: (behandlingLocation: Location, skjermlenkeCode: string) => Location;
+  sakstypeKode: string;
 }
 
 const BehandlingSelected: React.FC<BehandlingSelectedProps> = props => {
@@ -37,6 +39,7 @@ const BehandlingSelected: React.FC<BehandlingSelectedProps> = props => {
     opprettetDato,
     søknadsperioder,
     createLocationForSkjermlenke,
+    sakstypeKode,
   } = props;
 
   const location = useLocation();
@@ -77,6 +80,10 @@ const BehandlingSelected: React.FC<BehandlingSelectedProps> = props => {
     );
   };
 
+  const ytelserMedFaktapanelSøknadsperioder = [fagsakYtelseType.PLEIEPENGER, fagsakYtelseType.PLEIEPENGER_SLUTTFASE];
+
+  const visLenkeTilFaktapanel = ytelserMedFaktapanelSøknadsperioder.includes(sakstypeKode);
+
   return (
     <div data-testid="behandlingSelected" className={containerCls}>
       <Undertittel>{behandlingTypeNavn}</Undertittel>
@@ -105,24 +112,28 @@ const BehandlingSelected: React.FC<BehandlingSelectedProps> = props => {
               <DateLabel dateString={opprettetDato} />
             </Normaltekst>
           </div>
-          <div className={`${styles.flexContainer} ${styles.marginTop8}`}>
-            <Element className={styles.marginRight4}>Avsluttet:</Element>
-            <Normaltekst>
-              <DateLabel dateString={avsluttetDato} />
-            </Normaltekst>
-          </div>
+          {avsluttetDato && (
+            <div className={`${styles.flexContainer} ${styles.marginTop8}`}>
+              <Element className={styles.marginRight4}>Avsluttet:</Element>
+              <Normaltekst>
+                <DateLabel dateString={avsluttetDato} />
+              </Normaltekst>
+            </div>
+          )}
         </div>
       </div>
       {getÅrsakerForBehandling()}
-      <NavLink
-        to={createLocationForSkjermlenke(location as Location, skjermlenkeCodes.FAKTA_OM_SOKNADSPERIODER.kode)}
-        onClick={() => window.scroll(0, 0)}
-        className={styles.faktapanelLenke}
-      >
-        <Normaltekst>
-          <FormattedMessage id="Behandlingspunkt.BehandlingSelected.SøknadsperioderMedÅrsakerForBehandling" />
-        </Normaltekst>
-      </NavLink>
+      {visLenkeTilFaktapanel && (
+        <NavLink
+          to={createLocationForSkjermlenke(location as Location, skjermlenkeCodes.FAKTA_OM_SOKNADSPERIODER.kode)}
+          onClick={() => window.scroll(0, 0)}
+          className={styles.faktapanelLenke}
+        >
+          <Normaltekst>
+            <FormattedMessage id="Behandlingspunkt.BehandlingSelected.SøknadsperioderMedÅrsakerForBehandling" />
+          </Normaltekst>
+        </NavLink>
+      )}
     </div>
   );
 };
