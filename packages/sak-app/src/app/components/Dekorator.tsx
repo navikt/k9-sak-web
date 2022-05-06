@@ -63,7 +63,7 @@ const Dekorator = ({
 }: OwnProps & WrappedComponentProps) => {
   const navAnsatt = restApiHooks.useGlobalStateRestApiData<NavAnsatt>(K9sakApiKeys.NAV_ANSATT);
   const fagsakFraUrl = pathname.split('/fagsak/')[1]?.split('/')[0];
-  const isFagsakFraUrlValid = fagsakFraUrl?.match(/^[a-zA-Z0-9]{1,19}$/);
+  const isFagsakFraUrlValid = fagsakFraUrl?.match(/^[A-Z0-9]{5}$/);
 
   const getAinntektPath = () => {
     const ainntektPath = initFetch.sakLinks.find(saklink => saklink.rel === 'ainntekt-redirect')?.href;
