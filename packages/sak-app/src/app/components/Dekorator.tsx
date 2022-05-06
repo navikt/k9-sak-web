@@ -7,7 +7,6 @@ import { injectIntl, IntlShape, WrappedComponentProps } from 'react-intl';
 import { K9sakApiKeys, restApiHooks } from '../../data/k9sakApi';
 import ErrorFormatter from '../feilhandtering/ErrorFormatter';
 import ErrorMessage from '../feilhandtering/ErrorMessage';
-import InitLinks from '../initLinks';
 import { getPathToFplos, getPathToK9Punsj } from '../paths';
 
 type QueryStrings = {
@@ -49,7 +48,6 @@ interface OwnProps {
   queryStrings: QueryStrings;
   hideErrorMessages?: boolean;
   setSiteHeight: (headerHeight: number) => void;
-  initFetch: InitLinks;
   pathname: string;
 }
 
@@ -57,7 +55,6 @@ const Dekorator = ({
   intl,
   queryStrings,
   setSiteHeight,
-  initFetch,
   pathname,
   hideErrorMessages = false,
 }: OwnProps & WrappedComponentProps) => {
@@ -66,16 +63,16 @@ const Dekorator = ({
   const isFagsakFraUrlValid = fagsakFraUrl?.match(/^[a-zA-Z0-9]{1,19}$/);
 
   const getAinntektPath = () => {
-    const ainntektPath = initFetch.sakLinks.find(saklink => saklink.rel === 'ainntekt-redirect')?.href;
-    if (!ainntektPath || !isFagsakFraUrlValid) {
+    const ainntektPath = '/k9/sak/api/register/redirect-to/a-inntekt';
+    if (!isFagsakFraUrlValid) {
       return AINNTEKT_URL;
     }
     return `${ainntektPath}?saksnummer=${fagsakFraUrl}`;
   };
 
   const getAaregPath = () => {
-    const aaregPath = initFetch.sakLinks.find(saklink => saklink.rel === 'arbeidstaker-redirect')?.href;
-    if (!aaregPath || !isFagsakFraUrlValid) {
+    const aaregPath = '/k9/sak/api/register/redirect-to/aa-reg';
+    if (!isFagsakFraUrlValid) {
       return AAREG_URL;
     }
     return `${aaregPath}?saksnummer=${fagsakFraUrl}`;

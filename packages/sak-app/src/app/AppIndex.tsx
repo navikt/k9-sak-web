@@ -18,7 +18,6 @@ import Dekorator from './components/Dekorator';
 
 import '@fpsak-frontend/assets/styles/global.less';
 import '@navikt/ds-css';
-import InitLinks from './initLinks';
 
 const EMPTY_ARRAY = [];
 
@@ -34,7 +33,6 @@ const AppIndex = () => {
   const [hasCrashed, setCrashed] = useState(false);
 
   const navAnsatt = restApiHooks.useGlobalStateRestApiData<NavAnsatt>(K9sakApiKeys.NAV_ANSATT);
-  const initFetch = restApiHooks.useGlobalStateRestApiData<InitLinks>(K9sakApiKeys.INIT_FETCH);
 
   useEffect(() => {
     if (navAnsatt?.funksjonellTid) {
@@ -74,7 +72,6 @@ const AppIndex = () => {
             hideErrorMessages={hasForbiddenOrUnauthorizedErrors}
             queryStrings={queryStrings}
             setSiteHeight={setSiteHeight}
-            initFetch={initFetch}
             pathname={location.pathname}
           />
           {shouldRenderHome && <Home headerHeight={headerHeight} />}
