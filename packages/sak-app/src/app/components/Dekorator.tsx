@@ -1,13 +1,14 @@
-import HeaderWithErrorPanel, { Feilmelding } from '@fpsak-frontend/sak-dekorator';
-import { AAREG_URL, AINNTEKT_URL } from '@k9-sak-web/konstanter';
-import { useRestApiError, useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
-import { NavAnsatt } from '@k9-sak-web/types';
 import React, { useMemo } from 'react';
 import { injectIntl, IntlShape, WrappedComponentProps } from 'react-intl';
+
+import Endringslogg from '@navikt/familie-endringslogg';
+import HeaderWithErrorPanel, { Feilmelding } from '@fpsak-frontend/sak-dekorator';
+import { useRestApiError, useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
+import { NavAnsatt } from '@k9-sak-web/types';
+
 import { K9sakApiKeys, restApiHooks } from '../../data/k9sakApi';
 import ErrorFormatter from '../feilhandtering/ErrorFormatter';
 import ErrorMessage from '../feilhandtering/ErrorMessage';
-import InitLinks from '../initLinks';
 import { getPathToFplos, getPathToK9Punsj } from '../paths';
 
 type QueryStrings = {
@@ -49,37 +50,15 @@ interface OwnProps {
   queryStrings: QueryStrings;
   hideErrorMessages?: boolean;
   setSiteHeight: (headerHeight: number) => void;
-  initFetch: InitLinks;
-  pathname: string;
 }
 
 const Dekorator = ({
   intl,
   queryStrings,
   setSiteHeight,
-  initFetch,
-  pathname,
   hideErrorMessages = false,
 }: OwnProps & WrappedComponentProps) => {
   const navAnsatt = restApiHooks.useGlobalStateRestApiData<NavAnsatt>(K9sakApiKeys.NAV_ANSATT);
-  const fagsakFraUrl = pathname.split('/fagsak/')[1]?.split('/')[0];
-  const isFagsakFraUrlValid = fagsakFraUrl?.match(/^[A-Z0-9]{5}$/);
-
-  const getAinntektPath = () => {
-    const ainntektPath = initFetch.sakLinks.find(saklink => saklink.rel === 'ainntekt-redirect')?.href;
-    if (!ainntektPath || !isFagsakFraUrlValid) {
-      return AINNTEKT_URL;
-    }
-    return `${ainntektPath}?saksnummer=${fagsakFraUrl}`;
-  };
-
-  const getAaregPath = () => {
-    const aaregPath = initFetch.sakLinks.find(saklink => saklink.rel === 'arbeidstaker-redirect')?.href;
-    if (!aaregPath || !isFagsakFraUrlValid) {
-      return AAREG_URL;
-    }
-    return `${aaregPath}?saksnummer=${fagsakFraUrl}`;
-  };
 
   const errorMessages = useRestApiError() || EMPTY_ARRAY;
   const formaterteFeilmeldinger = useMemo(() => new ErrorFormatter().format(errorMessages), [errorMessages]);
@@ -100,8 +79,6 @@ const Dekorator = ({
       setSiteHeight={setSiteHeight}
       getPathToFplos={getPathToFplos}
       getPathToK9Punsj={getPathToK9Punsj}
-      ainntektPath={getAinntektPath()}
-      aaregPath={getAaregPath()}
     />
   );
 };
