@@ -94,7 +94,7 @@ const OverstyrBeregningFaktaForm = ({
         ap.definisjon.kode === aksjonspunktCodes.OVERSTYR_BEREGNING_INPUT).status.kode);
 
     /**
-     * Formik liker ikke null i value feltene, null verdier kan forekomme fra backend. 
+     * Formik liker ikke null i value feltene, null verdier kan forekomme fra backend.
      * "Oversetter" null verdier i skjemafeltene til en tom streng
      */
     const behandleOverstyrInputBeregning = (input: OverstyrInputBeregningDto[]): OverstyrInputBeregningDto[] => input.map((periode) => (
@@ -103,8 +103,8 @@ const OverstyrBeregningFaktaForm = ({
                 {
                     ...aktivitet,
                     "inntektPrAar": aktivitet.inntektPrAar || '',
-                    "refusjonPrAar": aktivitet.refusjonPrAar || '',
-                    "opphørRefusjon": aktivitet.opphørRefusjon || '',
+                    "refusjonPrAar": aktivitet.skalKunneEndreRefusjon !== false ? aktivitet.refusjonPrAar || '' : '',
+                    "opphørRefusjon": aktivitet.skalKunneEndreRefusjon !== false ? aktivitet.opphørRefusjon || '' : ''
                 }
             )) // end of periode.aktivitetliste.map((aktivitet) => {})
         } // end of periode objekt
@@ -173,7 +173,7 @@ const OverstyrBeregningFaktaForm = ({
                                                                 'OverstyrInputForm.OpphorRefusjon',
                                                             ]}>
                                                                 {aktivitetliste.map((aktivitet, aktivitetIndex) => {
-                                                                    const { arbeidsgiverAktørId, arbeidsgiverOrgnr } = aktivitet;
+                                                                    const { arbeidsgiverAktørId, arbeidsgiverOrgnr, skalKunneEndreRefusjon } = aktivitet;
                                                                     const firmaNavn = utledFirmaNavn((arbeidsgiverAktørId) || arbeidsgiverOrgnr);
                                                                     return (
                                                                         <OverstyrBeregningAktivitetForm
@@ -181,6 +181,7 @@ const OverstyrBeregningFaktaForm = ({
                                                                             periodeIndex={periodeIndex}
                                                                             aktivitetIndex={aktivitetIndex}
                                                                             firmaNavn={firmaNavn}
+                                                                            skalKunneEndreRefusjon={skalKunneEndreRefusjon !== false}
                                                                             readOnly={readOnly} />
                                                                     )
                                                                 }
