@@ -266,8 +266,8 @@ export const transformValuesVurderFaktaBeregning = (values, alleBeregningsgrunnl
   const fieldArrayList = values[fieldArrayName];
   const beg = values[BEGRUNNELSE_FAKTA_TILFELLER_NAME];
   const apForSubmit = [];
-  if (fieldArrayList.some(currentFormValues => !erOverstyring(currentFormValues)) && alleBeregningsgrunnlag.some(harTilfeller)) {
-    const fieldsUtenOverstyring = fieldArrayList.filter(currentFormValues => !erOverstyring(currentFormValues));
+  if (fieldArrayList.some(currentFormValues => !erOverstyring(currentFormValues) && måVurderes(currentFormValues.avklaringsbehov, currentFormValues.erTilVurdering)) && alleBeregningsgrunnlag.some(harTilfeller)) {
+    const fieldsUtenOverstyring = fieldArrayList.filter(currentFormValues => !erOverstyring(currentFormValues) && måVurderes(currentFormValues.avklaringsbehov, currentFormValues.erTilVurdering));
     apForSubmit.push(
       {
         kode: VURDER_FAKTA_FOR_ATFL_SN,
