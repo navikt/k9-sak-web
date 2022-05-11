@@ -50,7 +50,10 @@ const OverstyrBeregningFaktaForm = ({
             .max(100000000, intl.formatMessage({ id: 'OverstyrInputForm.InntektFeltMax' })),
         refusjonPrAar: Yup.number()
             .typeError(intl.formatMessage({ id: 'OverstyrInputForm.RefusjonFeltTypeFeil' }))
-            .required(intl.formatMessage({ id: 'OverstyrInputForm.RefusjonFeltPakrevdFeil' }))
+            .when("skalKunneEndreRefusjon", {
+              is: true,
+              then: (schema) => schema.required(intl.formatMessage({ id: 'OverstyrInputForm.InntektFeltPakrevdFeil' }))
+            })
             .min(0, intl.formatMessage({ id: 'OverstyrInputForm.RefusjonFeltMin' }))
             .max(100000000, intl.formatMessage({ id: 'OverstyrInputForm.RefusjonFeltMax' })),
         opphørRefusjon: Yup.date()
@@ -104,7 +107,8 @@ const OverstyrBeregningFaktaForm = ({
                     ...aktivitet,
                     "inntektPrAar": aktivitet.inntektPrAar || '',
                     "refusjonPrAar": aktivitet.skalKunneEndreRefusjon !== false ? aktivitet.refusjonPrAar || '' : '',
-                    "opphørRefusjon": aktivitet.skalKunneEndreRefusjon !== false ? aktivitet.opphørRefusjon || '' : ''
+                    "opphørRefusjon": aktivitet.skalKunneEndreRefusjon !== false ? aktivitet.opphørRefusjon || '' : '',
+                    "skalKunneEndreRefusjon": aktivitet.skalKunneEndreRefusjon !== false,
                 }
             )) // end of periode.aktivitetliste.map((aktivitet) => {})
         } // end of periode objekt
