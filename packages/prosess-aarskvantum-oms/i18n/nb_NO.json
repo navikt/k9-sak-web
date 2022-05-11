@@ -103,6 +103,7 @@
   "ValidationMessage.InvalidValue": "Feltet må fylles ut",
   "ValidationMessage.MinLength": "Du må skrive minst {length} tegn",
   "ValidationMessage.MaxLength": "Du kan skrive maksimalt {length} tegn",
+  "ValidationMessage.InvalidFodselsnummer": "Fødselsnummer er ikke gyldig",
   "Nøkkeltall.Heading": "Nøkkeltall for uttak",
   "Nøkkeltall.VisUtregninger": "Vis alle utregninger",
   "Nøkkeltall.SkjulUtregninger": "Skjul alle utregninger",

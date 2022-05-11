@@ -80,7 +80,9 @@ const BehandlingSelected: React.FC<BehandlingSelectedProps> = props => {
     );
   };
 
-  const visLenkeTilFaktapanel = sakstypeKode === fagsakYtelseType.PLEIEPENGER;
+  const ytelserMedFaktapanelSøknadsperioder = [fagsakYtelseType.PLEIEPENGER, fagsakYtelseType.PLEIEPENGER_SLUTTFASE];
+
+  const visLenkeTilFaktapanel = ytelserMedFaktapanelSøknadsperioder.includes(sakstypeKode);
 
   return (
     <div data-testid="behandlingSelected" className={containerCls}>

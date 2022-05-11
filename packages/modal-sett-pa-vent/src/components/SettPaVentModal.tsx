@@ -151,7 +151,10 @@ export const SettPaVentModal = ({
     (originalVentearsakVariant && originalVentearsakVariant !== ventearsakVariant);
 
   const fristHasChanged = !(originalFrist === frist || (!frist && !originalFrist));
-  const [showEndreFrist, setShowEndreFrist] = useState(hasManualPaVent || !!originalFrist);
+  const erVenterEtterlysInntektsmelding = originalVentearsak === venterEtterlysInntektsmeldingKode;
+  const [showEndreFrist, setShowEndreFrist] = useState(
+    erVenterEtterlysInntektsmelding ? false : hasManualPaVent || !!originalFrist,
+  );
 
   const showAvbryt = !(originalFrist === frist && !venteArsakHasChanged && !ventearsakVariantHasChanged);
   const formHasChanges = fristHasChanged || venteArsakHasChanged || ventearsakVariantHasChanged;
@@ -161,7 +164,6 @@ export const SettPaVentModal = ({
       (originalFrist !== undefined && dateBeforeToday(originalFrist) === null));
   const erVenterPaKravgrunnlag = ventearsak === venteArsakType.VENT_PÅ_TILBAKEKREVINGSGRUNNLAG;
   const showFristenTekst = erTilbakekreving && erFristenUtløpt && erVenterPaKravgrunnlag;
-  const erVenterEtterlysInntektsmelding = originalVentearsak === venterEtterlysInntektsmeldingKode;
   const showSelect = erVenterEtterlysInntektsmelding ? !showEndreFrist : true;
   const showKommentarInput = venterårsakerMedKommentarmulighet.includes(ventearsak);
 
@@ -209,7 +211,7 @@ export const SettPaVentModal = ({
       <Modal
         className={`${styles.modal} ${styles.settPaVentModal}`}
         isOpen={showModal}
-        closeButton={false}
+        closeButton
         contentLabel={intl.formatMessage({
           id: originalVentearsak ? 'SettPaVentModal.ModalDescriptionErPaVent' : 'SettPaVentModal.ModalDescription',
         })}
