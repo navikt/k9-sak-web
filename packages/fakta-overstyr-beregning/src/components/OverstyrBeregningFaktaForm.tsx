@@ -106,8 +106,8 @@ const OverstyrBeregningFaktaForm = ({
                 {
                     ...aktivitet,
                     "inntektPrAar": aktivitet.inntektPrAar || '',
-                    "refusjonPrAar": aktivitet.skalKunneEndreRefusjon !== false ? aktivitet.refusjonPrAar || '' : '',
-                    "opphørRefusjon": aktivitet.skalKunneEndreRefusjon !== false ? aktivitet.opphørRefusjon || '' : '',
+                    "refusjonPrAar": aktivitet.refusjonPrAar || '',
+                    "opphørRefusjon": aktivitet.opphørRefusjon || '',
                     "skalKunneEndreRefusjon": aktivitet.skalKunneEndreRefusjon !== false,
                 }
             )) // end of periode.aktivitetliste.map((aktivitet) => {})
