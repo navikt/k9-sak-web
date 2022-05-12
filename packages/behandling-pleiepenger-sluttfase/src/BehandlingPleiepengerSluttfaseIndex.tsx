@@ -15,7 +15,7 @@ import { RestApiState, useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-ho
 
 import { K9sakApiKeys, restApiHooks } from '@k9-sak-web/sak-app/src/data/k9sakApi';
 import useBehandlingEndret from '@k9-sak-web/sak-app/src/behandling/useBehandlingEndret';
-import {createIntl, createIntlCache, RawIntlProvider} from "react-intl";
+import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 import messages from '../i18n/nb_NO.json';
 
 import {
@@ -115,7 +115,9 @@ const BehandlingPleiepengerSluttfaseIndex = ({
     startRequest: hentBehandling,
     data: behandlingRes,
     state: behandlingState,
-  } = restApiPleiepengerSluttfaseHooks.useRestApiRunner<Behandling>(PleiepengerSluttfaseBehandlingApiKeys.BEHANDLING_PP);
+  } = restApiPleiepengerSluttfaseHooks.useRestApiRunner<Behandling>(
+    PleiepengerSluttfaseBehandlingApiKeys.BEHANDLING_PP,
+  );
   useSetBehandlingVedEndring(behandlingRes, setBehandling);
 
   const { addErrorMessage } = useRestApiErrorDispatcher();
@@ -205,7 +207,6 @@ const BehandlingPleiepengerSluttfaseIndex = ({
           oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
           oppdaterBehandlingVersjon={oppdaterBehandlingVersjon}
           settPaVent={settPaVent}
-          hentBehandling={hentBehandling}
           opneSokeside={opneSokeside}
           hasFetchError={behandlingState === RestApiState.ERROR}
           setBehandling={setBehandling}

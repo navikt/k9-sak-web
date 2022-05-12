@@ -294,7 +294,7 @@ export const SettPaVentModal = ({
                       : 'button'
                   }
                   className={styles.button}
-                  onClick={event => getHovedknappOnClick(event)}
+                  onClick={getHovedknappOnClick}
                   disabled={isButtonDisabled(
                     frist,
                     showAvbryt,

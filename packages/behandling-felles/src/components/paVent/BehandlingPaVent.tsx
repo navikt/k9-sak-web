@@ -12,7 +12,6 @@ interface BehandlingPaVentProps {
   aksjonspunkter: Aksjonspunkt[];
   kodeverk: { [key: string]: Venteaarsak[] };
   settPaVent: (params: SettPaVentParams) => Promise<any>;
-  hentBehandling: ({ behandlingId: number }, keepData: boolean) => Promise<any>;
   erTilbakekreving?: boolean;
   featureToggles?: FeatureToggles;
 }
@@ -22,7 +21,6 @@ const BehandlingPaVent = ({
   aksjonspunkter,
   kodeverk,
   settPaVent,
-  hentBehandling,
   erTilbakekreving,
   featureToggles,
 }: BehandlingPaVentProps) => {
