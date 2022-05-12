@@ -9952,18 +9952,18 @@ flush-write-stream@^1.0.0:
     readable-stream "^2.3.6"
 
 focus-trap-react@^8.6.0:
-  version "8.9.2"
-  resolved "https://registry.yarnpkg.com/focus-trap-react/-/focus-trap-react-8.9.2.tgz#af19c6d65bedeba925859d7ec51c41d8d2c30855"
-  integrity sha512-m6TQQHLcqkisc6Qq92q1yYzzOaxo34Szh5FQOXzky7028PXFEhuUxScTbT7EG9qL0QG7B+oR2ZbxyU0lK4kIwQ==
+  version "8.11.1"
+  resolved "https://registry.yarnpkg.com/focus-trap-react/-/focus-trap-react-8.11.1.tgz#dabda599f6834b8f55368494525167fa0128007c"
+  integrity sha512-ZFElB120Ntdxnq0aSWnzQqQ5QY1XUt8T1yuud/BIYAriMTWvyQghsk558ASSSV0iflaUgFQNRjKq3IEFEjGQGA==
   dependencies:
-    focus-trap "^6.7.3"
+    focus-trap "^6.9.1"
 
-focus-trap@^6.7.3:
-  version "6.7.3"
-  resolved "https://registry.yarnpkg.com/focus-trap/-/focus-trap-6.7.3.tgz#b5dc195b49c90001f08a63134471d1e6dd381ddd"
-  integrity sha512-8xCEKndV4KrseGhFKKKmczVA14yx1/hnmFICPOjcFjToxCJYj/NHH43tPc3YE/PLnLRNZoFug0EcWkGQde/miQ==
+focus-trap@^6.9.1:
+  version "6.9.2"
+  resolved "https://registry.yarnpkg.com/focus-trap/-/focus-trap-6.9.2.tgz#a9ef72847869bd2cbf62cb930aaf8e138fef1ca9"
+  integrity sha512-gBEuXOPNOKPrLdZpMFUSTyIo1eT2NSZRrwZ9r/0Jqw5tmT3Yvxfmu8KBHw8xW2XQkw6E/JoG+OlEq7UDtSUNgw==
   dependencies:
-    tabbable "^5.2.1"
+    tabbable "^5.3.2"
 
 follow-redirects@^1.0.0, follow-redirects@^1.14.7:
   version "1.14.9"
@@ -13850,9 +13850,9 @@ natural-compare@^1.4.0:
   integrity sha1-Sr6/7tdUHywnrPspvbvRXI1bpPc=
 
 nav-datovelger@^12.1.2:
-  version "12.1.2"
-  resolved "https://registry.yarnpkg.com/nav-datovelger/-/nav-datovelger-12.1.2.tgz#cdf1b702526eed29a7203831cd4809161479615d"
-  integrity sha512-Lh0fTX4rc2FeQbdL3y5kI2YsMkl1IFRwLUUMrgTQO/gFelw6PvW47wxV1ZJlcAZAJjc/w/M4w86dKRrh80aYhw==
+  version "12.5.0"
+  resolved "https://registry.yarnpkg.com/nav-datovelger/-/nav-datovelger-12.5.0.tgz#4ba62549145c29d3f73186f4016acd37bde792ed"
+  integrity sha512-ySekEZCl+6eyEhMFwJ6+KGLcqke+yEOatsCcPFdZzQ8gm3F6lIpcP+WTCjgLtBH8kJysjhQYHVmeLMUDqHZUsg==
   dependencies:
     focus-trap-react "^8.6.0"
 
@@ -18129,10 +18129,10 @@ synchronous-promise@^2.0.15:
   resolved "https://registry.yarnpkg.com/synchronous-promise/-/synchronous-promise-2.0.15.tgz#07ca1822b9de0001f5ff73595f3d08c4f720eb8e"
   integrity sha512-k8uzYIkIVwmT+TcglpdN50pS2y1BDcUnBPK9iJeGu0Pl1lOI8pD6wtzgw91Pjpe+RxtTncw32tLxs/R0yNL2Mg==
 
-tabbable@^5.2.1:
-  version "5.2.1"
-  resolved "https://registry.yarnpkg.com/tabbable/-/tabbable-5.2.1.tgz#e3fda7367ddbb172dcda9f871c0fdb36d1c4cd9c"
-  integrity sha512-40pEZ2mhjaZzK0BnI+QGNjJO8UYx9pP5v7BGe17SORTO0OEuuaAwQTkAp8whcZvqon44wKFOikD+Al11K3JICQ==
+tabbable@^5.3.2:
+  version "5.3.2"
+  resolved "https://registry.yarnpkg.com/tabbable/-/tabbable-5.3.2.tgz#66d6119ee8a533634c3f17deb0caa1c379e36ac7"
+  integrity sha512-6G/8EWRFx8CiSe2++/xHhXkmCRq2rHtDtZbQFHx34cvDfZzIBfvwG9zGUNTWMXWLCYvDj3aQqOzdl3oCxKuBkQ==
 
 table@^6.8.0:
   version "6.8.0"
