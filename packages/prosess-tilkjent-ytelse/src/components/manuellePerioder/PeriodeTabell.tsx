@@ -224,6 +224,7 @@ export const PeriodeTabell = ({
         openSlettPeriodeModalCallback={openSlettPeriodeModalCallback}
         updatePeriode={updatePeriode}
         editPeriode={editPeriode}
+        // @ts-ignore
         cleaningUpForm={cleaningUpForm}
         cancelEditPeriode={cancelEditPeriode}
         isAnyFormOpen={isAnyFormOpen}
