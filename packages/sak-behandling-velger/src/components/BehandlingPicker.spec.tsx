@@ -71,6 +71,7 @@ describe('<BehandlingPicker>', () => {
             getBehandlingLocation={() => locationMock}
             getKodeverkFn={sinon.spy()}
             createLocationForSkjermlenke={() => locationMock}
+            sakstypeKode="PSB"
           />
         </BrowserRouter>,
         {
@@ -121,6 +122,7 @@ describe('<BehandlingPicker>', () => {
             getBehandlingLocation={() => locationMock}
             getKodeverkFn={sinon.spy()}
             createLocationForSkjermlenke={() => locationMock}
+            sakstypeKode="PSB"
           />
         </BrowserRouter>,
         {
@@ -220,6 +222,7 @@ describe('<BehandlingPicker>', () => {
             getKodeverkFn={() => ({ navn: 'test', kode: 'test', kodeverk: 'test' })}
             behandlingId={1}
             createLocationForSkjermlenke={() => locationMock}
+            sakstypeKode="PSB"
           />
         </BrowserRouter>,
         {
