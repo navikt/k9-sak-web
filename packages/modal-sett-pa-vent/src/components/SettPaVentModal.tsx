@@ -12,15 +12,15 @@ import {
   maxLength,
   required,
 } from '@fpsak-frontend/utils';
-import { getPathToFplos } from '@k9-sak-web/sak-app/src/app/paths';
+import { goToLos } from '@k9-sak-web/sak-app/src/app/paths';
 import { KodeverkMedNavn, Venteaarsak } from '@k9-sak-web/types';
 import moment from 'moment';
 import { Container } from 'nav-frontend-grid';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 import Modal from 'nav-frontend-modal';
-import { Normaltekst, Element } from 'nav-frontend-typografi';
-import React, { useState } from 'react';
 import { Select as NavSelect } from 'nav-frontend-skjema';
+import { Element, Normaltekst } from 'nav-frontend-typografi';
+import React, { useState } from 'react';
 import { FormattedMessage, injectIntl, WrappedComponentProps } from 'react-intl';
 import { connect } from 'react-redux';
 import { formValueSelector, InjectedFormProps, reduxForm } from 'redux-form';
@@ -151,7 +151,10 @@ export const SettPaVentModal = ({
     (originalVentearsakVariant && originalVentearsakVariant !== ventearsakVariant);
 
   const fristHasChanged = !(originalFrist === frist || (!frist && !originalFrist));
-  const [showEndreFrist, setShowEndreFrist] = useState(hasManualPaVent || !!originalFrist);
+  const erVenterEtterlysInntektsmelding = originalVentearsak === venterEtterlysInntektsmeldingKode;
+  const [showEndreFrist, setShowEndreFrist] = useState(
+    erVenterEtterlysInntektsmelding ? false : hasManualPaVent || !!originalFrist,
+  );
 
   const showAvbryt = !(originalFrist === frist && !venteArsakHasChanged && !ventearsakVariantHasChanged);
   const formHasChanges = fristHasChanged || venteArsakHasChanged || ventearsakVariantHasChanged;
@@ -161,7 +164,6 @@ export const SettPaVentModal = ({
       (originalFrist !== undefined && dateBeforeToday(originalFrist) === null));
   const erVenterPaKravgrunnlag = ventearsak === venteArsakType.VENT_PÅ_TILBAKEKREVINGSGRUNNLAG;
   const showFristenTekst = erTilbakekreving && erFristenUtløpt && erVenterPaKravgrunnlag;
-  const erVenterEtterlysInntektsmelding = originalVentearsak === venterEtterlysInntektsmeldingKode;
   const showSelect = erVenterEtterlysInntektsmelding ? !showEndreFrist : true;
   const showKommentarInput = venterårsakerMedKommentarmulighet.includes(ventearsak);
 
@@ -181,27 +183,14 @@ export const SettPaVentModal = ({
     return <FormattedMessage id="SettPaVentModal.SettPaVent" />;
   };
 
-  const goToLos = () => {
-    const path = getPathToFplos();
-    window.location.assign(path);
-  };
-
-  const getHovedknappOnClick = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-    if (erVenterEtterlysInntektsmelding) {
+  const getHovedknappOnClick = () => {
+    if (erVenterEtterlysInntektsmelding && showEndreFrist) {
       toggleEndreFrist();
+    } else if (showAvbryt) {
+      ariaCheck();
+    } else {
+      goToLos();
     }
-    if (erVenterEtterlysInntektsmelding && !showEndreFrist) {
-      event.stopPropagation();
-      event.preventDefault();
-      return goToLos();
-    }
-    if (showAvbryt) {
-      return ariaCheck();
-    }
-    if (!erVenterEtterlysInntektsmelding) {
-      return cancelEvent();
-    }
-    return null;
   };
 
   return (
@@ -209,7 +198,7 @@ export const SettPaVentModal = ({
       <Modal
         className={`${styles.modal} ${styles.settPaVentModal}`}
         isOpen={showModal}
-        closeButton={false}
+        closeButton
         contentLabel={intl.formatMessage({
           id: originalVentearsak ? 'SettPaVentModal.ModalDescriptionErPaVent' : 'SettPaVentModal.ModalDescription',
         })}
@@ -305,7 +294,7 @@ export const SettPaVentModal = ({
                       : 'button'
                   }
                   className={styles.button}
-                  onClick={event => getHovedknappOnClick(event)}
+                  onClick={getHovedknappOnClick}
                   disabled={isButtonDisabled(
                     frist,
                     showAvbryt,

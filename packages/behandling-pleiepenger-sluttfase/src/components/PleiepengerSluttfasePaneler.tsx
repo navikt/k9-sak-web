@@ -37,7 +37,6 @@ interface OwnProps {
   oppdaterProsessStegOgFaktaPanelIUrl: (punktnavn?: string, faktanavn?: string) => void;
   oppdaterBehandlingVersjon: (versjon: number) => void;
   settPaVent: (params: SettPaVentParams) => Promise<any>;
-  hentBehandling: ({ behandlingId: number }, keepData: boolean) => Promise<any>;
   opneSokeside: () => void;
   hasFetchError: boolean;
   setBehandling: (behandling: Behandling) => void;
@@ -74,7 +73,6 @@ const PleiepengerSluttfasePaneler = ({
   valgtFaktaSteg,
   oppdaterBehandlingVersjon,
   settPaVent,
-  hentBehandling,
   opneSokeside,
   hasFetchError,
   setBehandling,
@@ -95,7 +93,6 @@ const PleiepengerSluttfasePaneler = ({
         aksjonspunkter={fetchedData?.aksjonspunkter}
         kodeverk={alleKodeverk}
         settPaVent={settPaVent}
-        hentBehandling={hentBehandling}
       />
       {harOpprettetAksjonspunkt9203 && (
         <DataFetcher

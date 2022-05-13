@@ -168,7 +168,7 @@ const FagsakIndex = () => {
     {},
     {
       updateTriggers: [behandlingId, behandlingVersjon],
-      suspendRequest: !behandling || !erPleiepengerSyktBarn(fagsak),
+      suspendRequest: !behandling || (!erPleiepengerSyktBarn(fagsak) && !erPleiepengerLivetsSluttfase(fagsak)),
     },
   );
 
@@ -203,7 +203,8 @@ const FagsakIndex = () => {
   }
 
   const harVerge = behandling ? behandling.harVerge : false;
-  const showSøknadsperiodestripe = featureToggles?.SOKNADPERIODESTRIPE && erPleiepengerSyktBarn(fagsak);
+  const showSøknadsperiodestripe =
+    featureToggles?.SOKNADPERIODESTRIPE && (erPleiepengerSyktBarn(fagsak) || erPleiepengerLivetsSluttfase(fagsak));
   const showPunsjOgFagsakPåSøkerStripe = erPleiepengerSyktBarn(fagsak) || erPleiepengerLivetsSluttfase(fagsak);
   return (
     <>

@@ -26,7 +26,6 @@ interface OwnProps {
   oppdaterProsessStegOgFaktaPanelIUrl: (punktnavn?: string, faktanavn?: string) => void;
   oppdaterBehandlingVersjon: (versjon: number) => void;
   settPaVent: (params: SettPaVentParams) => Promise<any>;
-  hentBehandling: ({ behandlingId: number }, keepData: boolean) => Promise<any>;
   opneSokeside: () => void;
   hasFetchError: boolean;
   setBehandling: (behandling: Behandling) => void;
@@ -51,7 +50,6 @@ const FrisinnPaneler = ({
   valgtFaktaSteg,
   oppdaterBehandlingVersjon,
   settPaVent,
-  hentBehandling,
   opneSokeside,
   hasFetchError,
   featureToggles,
@@ -67,7 +65,6 @@ const FrisinnPaneler = ({
         aksjonspunkter={fetchedData?.aksjonspunkter}
         kodeverk={alleKodeverk}
         settPaVent={settPaVent}
-        hentBehandling={hentBehandling}
       />
       <FrisinnProsess
         data={fetchedData}
