@@ -52,6 +52,7 @@ const overstyrInputBeregningEnPeriodeNæringOgArbeid: OverstyrInputBeregningDto[
         inntektPrAar: null,
         refusjonPrAar: null,
         opphørRefusjon: null,
+        skalKunneEndreRefusjon: false
       },
     ],
   },
@@ -76,6 +77,7 @@ const overstyrInputBeregningToPerioder: OverstyrInputBeregningDto[] = [
         inntektPrAar: null,
         refusjonPrAar: null,
         opphørRefusjon: null,
+        skalKunneEndreRefusjon: true
       },
     ],
   },
@@ -88,6 +90,7 @@ const overstyrInputBeregningToPerioder: OverstyrInputBeregningDto[] = [
         inntektPrAar: null,
         refusjonPrAar: null,
         opphørRefusjon: null,
+        skalKunneEndreRefusjon: false
       },
     ],
   },

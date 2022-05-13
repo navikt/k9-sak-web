@@ -36,7 +36,7 @@ export const usePositionAndSize = ({
       width: 0,
       display: 'none',
     };
-  } else if (horizontalPosition < 0) {
+  } if (horizontalPosition < 0) {
     return {
       [direction]: 0,
       width: `${adjustedWidth}%`,
