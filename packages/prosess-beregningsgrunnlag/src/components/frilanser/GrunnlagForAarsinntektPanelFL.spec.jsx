@@ -17,7 +17,6 @@ const periode = {
       elementNavn: 'arbeidsgiver 1',
       beregnetPrAar: 200000,
       overstyrtPrAar: 100,
-      beregningsgrunnlagFom: '2019-06-01',
       arbeidsforhold: {
         startdato: null,
       },
@@ -62,11 +61,9 @@ describe('<GrunnlagForAarsinntektPanelFL>', () => {
     );
     const rows = wrapper.find('Row');
     const ledeTextStart = rows.at(0).find('MemoizedFormattedMessage');
-    const ledeTextStartDato = rows.at(0).find('DateLabel');
 
     expect(rows).to.have.length(3);
     expect(ledeTextStart.get(0).props.id).to.equal('Beregningsgrunnlag.AarsinntektPanel.FrilansStartDato2');
-    expect(ledeTextStartDato.dateString).to.equal(periode.beregningsgrunnlagPrStatusOgAndel.beregningsgrunnlagFom);
 
     const ledeText = rows.at(2).find('MemoizedFormattedMessage');
     const mndAndelFL = rows.at(2).find('Normaltekst');
