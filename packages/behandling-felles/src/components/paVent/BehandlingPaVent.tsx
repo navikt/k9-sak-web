@@ -2,7 +2,8 @@ import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import SettPaVentModalIndex from '@k9-sak-web/modal-sett-pa-vent';
-import { Aksjonspunkt, Behandling, Venteaarsak, FeatureToggles } from '@k9-sak-web/types';
+import { goToLos } from '@k9-sak-web/sak-app/src/app/paths';
+import { Aksjonspunkt, Behandling, FeatureToggles, Venteaarsak } from '@k9-sak-web/types';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import SettPaVentParams from '../../types/settPaVentParamsTsType';
 
@@ -11,7 +12,6 @@ interface BehandlingPaVentProps {
   aksjonspunkter: Aksjonspunkt[];
   kodeverk: { [key: string]: Venteaarsak[] };
   settPaVent: (params: SettPaVentParams) => Promise<any>;
-  hentBehandling: ({ behandlingId: number }, keepData: boolean) => Promise<any>;
   erTilbakekreving?: boolean;
   featureToggles?: FeatureToggles;
 }
@@ -21,7 +21,6 @@ const BehandlingPaVent = ({
   aksjonspunkter,
   kodeverk,
   settPaVent,
-  hentBehandling,
   erTilbakekreving,
   featureToggles,
 }: BehandlingPaVentProps) => {
@@ -38,7 +37,7 @@ const BehandlingPaVent = ({
         ...formData,
         behandlingId: behandling.id,
         behandlingVersjon: behandling.versjon,
-      }).then(() => hentBehandling({ behandlingId: behandling.id }, false)),
+      }).then(() => goToLos()),
     [behandling.versjon],
   );
 
