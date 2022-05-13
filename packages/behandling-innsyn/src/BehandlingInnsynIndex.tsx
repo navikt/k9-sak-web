@@ -130,7 +130,6 @@ const BehandlingInnsynIndex = ({
         oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
         oppdaterBehandlingVersjon={oppdaterBehandlingVersjon}
         settPaVent={settPaVent}
-        hentBehandling={hentBehandling}
         opneSokeside={opneSokeside}
         setBehandling={setBehandling}
         featureToggles={featureToggles}

@@ -38,7 +38,7 @@ const BehandlingVelgerSakIndex = ({
   showAll,
   toggleShowAll,
   fagsak,
-  createLocationForSkjermlenke
+  createLocationForSkjermlenke,
 }: OwnProps) => {
   const skalViseGammelBehandlingsvelger =
     fagsak.sakstype.kode === fagsakYtelseType.FRISINN ||
@@ -65,6 +65,7 @@ const BehandlingVelgerSakIndex = ({
           getKodeverkFn={getKodeverkFn}
           behandlingId={behandlingId}
           createLocationForSkjermlenke={createLocationForSkjermlenke}
+          sakstypeKode={fagsak.sakstype.kode}
         />
       )}
     </RawIntlProvider>

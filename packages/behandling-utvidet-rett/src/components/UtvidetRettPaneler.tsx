@@ -17,7 +17,6 @@ const UtvidetRettPaneler = ({
   valgtFaktaSteg,
   oppdaterBehandlingVersjon,
   settPaVent,
-  hentBehandling,
   opneSokeside,
   hasFetchError,
   featureToggles,
@@ -33,7 +32,6 @@ const UtvidetRettPaneler = ({
         aksjonspunkter={fetchedData?.aksjonspunkter}
         kodeverk={alleKodeverk}
         settPaVent={settPaVent}
-        hentBehandling={hentBehandling}
       />
       <UtvidetRettProsess
         data={fetchedData}

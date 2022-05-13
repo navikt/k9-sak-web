@@ -148,7 +148,6 @@ const BehandlingKlageIndex = ({
         oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
         oppdaterBehandlingVersjon={oppdaterBehandlingVersjon}
         settPaVent={settPaVent}
-        hentBehandling={hentBehandling}
         opneSokeside={opneSokeside}
         alleBehandlinger={alleBehandlinger}
         arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysninger ? arbeidsgiverOpplysninger.arbeidsgivere : {}}

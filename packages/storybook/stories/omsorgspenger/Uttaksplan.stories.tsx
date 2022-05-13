@@ -146,7 +146,7 @@ const behandling = {
   versjon: 1,
 } as Behandling;
 
-const aksjonspunkterForSteg = [{}] as Aksjonspunkt[];
+const aksjonspunkterForSteg = [{ status: { kode: '' }, definisjon: { kode: '9003' } }] as Aksjonspunkt[];
 
 const arbeidsforhold = [
   {
@@ -220,6 +220,39 @@ export const aksjonspunktAvslåttePerioder = () => (
     arbeidsforhold={arbeidsforhold}
     fullUttaksplan={{ aktiviteter: [] }}
     arbeidsgiverOpplysningerPerId={arbeidsgivere}
+  />
+);
+
+export const aksjonspunktFosterbarnUten = () => (
+  <ÅrskvantumIndex
+    årskvantum={årskvantumMedPerioder([avslåttPeriode, avslåttPeriode])}
+    alleKodeverk={alleKodeverk as any}
+    behandling={behandling}
+    isAksjonspunktOpen
+    submitCallback={action('bekreft')}
+    aksjonspunkterForSteg={aksjonspunkterForSteg}
+    arbeidsforhold={arbeidsforhold}
+    fullUttaksplan={{ aktiviteter: [] }}
+    arbeidsgiverOpplysningerPerId={arbeidsgivere}
+    fosterbarn={[]}
+  />
+);
+
+export const aksjonspunktFosterbarnMed = () => (
+  <ÅrskvantumIndex
+    årskvantum={årskvantumMedPerioder([avslåttPeriode, avslåttPeriode])}
+    alleKodeverk={alleKodeverk as any}
+    behandling={behandling}
+    isAksjonspunktOpen
+    submitCallback={action('bekreft')}
+    aksjonspunkterForSteg={aksjonspunkterForSteg}
+    arbeidsforhold={arbeidsforhold}
+    fullUttaksplan={{ aktiviteter: [] }}
+    arbeidsgiverOpplysningerPerId={arbeidsgivere}
+    fosterbarn={[
+      { fnr: '12345678910', navn: 'Dole Duck', fødselsdato: '12.34.5678' },
+      { fnr: '10987654321', navn: "Doffen Duck", fødselsdato: '10.98.7654' }
+    ]}
   />
 );
 

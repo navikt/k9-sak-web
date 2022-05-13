@@ -25,6 +25,10 @@ const featureToggles = [
     key: 'SOKNADPERIODESTRIPE',
     value: process.env.SOKNADPERIODESTRIPE,
   },
+  {
+    key: 'SETT_PAA_VENT_MODAL',
+    value: process.env.SETT_PAA_VENT_MODAL,
+  },
 ];
 
 module.exports = function (app) {

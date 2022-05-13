@@ -14,6 +14,7 @@ interface Props {
     periodeIndex: number;
     aktivitetIndex: number;
     firmaNavn: string;
+    skalKunneEndreRefusjon: boolean;
     readOnly: boolean;
 }
 
@@ -22,6 +23,7 @@ const OverstyrBeregningAktivitetForm: React.FC<Props & WrappedComponentProps> = 
     periodeIndex,
     aktivitetIndex,
     firmaNavn,
+    skalKunneEndreRefusjon,
     readOnly,
     intl
 }) => {
@@ -72,7 +74,7 @@ const OverstyrBeregningAktivitetForm: React.FC<Props & WrappedComponentProps> = 
                         maxLength={10}
                         value={parseCurrencyInput(field.value)}
                         feil={meta.touched && meta.error ? meta.error : false}
-                        disabled={readOnly}
+                        disabled={readOnly || !skalKunneEndreRefusjon}
                     />)}
                 </Field>
             </TableColumn>
@@ -92,7 +94,7 @@ const OverstyrBeregningAktivitetForm: React.FC<Props & WrappedComponentProps> = 
                                         setFieldTouched(field.name, true);
                                         setFieldValue(field.name, value);
                                     }}
-                                    disabled={(tallverdi <= 0 || !tallverdi || readOnly)}
+                                    disabled={(tallverdi <= 0 || !tallverdi || readOnly || !skalKunneEndreRefusjon)}
                                 />
                                 {(meta.touched && meta.error) && (<p className={styles.errorText}>{meta.error}</p>)}
                             </>
