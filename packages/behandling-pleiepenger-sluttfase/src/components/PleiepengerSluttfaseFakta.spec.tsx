@@ -17,12 +17,15 @@ import sivilstandType from '@fpsak-frontend/kodeverk/src/sivilstandType';
 import opplysningAdresseType from '@fpsak-frontend/kodeverk/src/opplysningAdresseType';
 import PleiepengerSluttfaseFakta from './PleiepengerSluttfaseFakta';
 import FetchedData from '../types/fetchedDataTsType';
-import { PleiepengerSluttfaseBehandlingApiKeys, requestPleiepengerSluttfaseApi } from '../data/pleiepengerSluttfaseBehandlingApi';
+import {
+  PleiepengerSluttfaseBehandlingApiKeys,
+  requestPleiepengerSluttfaseApi,
+} from '../data/pleiepengerSluttfaseBehandlingApi';
 
 describe('<PleiepengerSluttfaseFakta>', () => {
   const fagsak = {
     saksnummer: '123456',
-    sakstype: { kode: fagsakYtelseType.PLEIEPENGER, kodeverk: 'test' },
+    sakstype: { kode: fagsakYtelseType.PLEIEPENGER_SLUTTFASE, kodeverk: 'test' },
     status: { kode: fagsakStatus.UNDER_BEHANDLING, kodeverk: 'test' },
   } as Fagsak;
   const fagsakPerson = {
@@ -168,7 +171,7 @@ describe('<PleiepengerSluttfaseFakta>', () => {
       {
         erAktiv: false,
         harAksjonspunkt: false,
-        tekst: "OmPleietrengendeInfoPanel.Title"
+        tekst: 'Om pleietrengende',
       },
       {
         erAktiv: true,
@@ -190,11 +193,15 @@ describe('<PleiepengerSluttfaseFakta>', () => {
         harAksjonspunkt: false,
         tekst: 'Inntekt og ytelser',
       },
+      {
+        erAktiv: false,
+        harAksjonspunkt: false,
+        tekst: 'Søknadsperioder',
+      },
     ]);
   });
 
   it('skal oppdatere url ved valg av faktapanel', () => {
-
     const oppdaterProsessStegOgFaktaPanelIUrl = sinon.spy();
     const fetchedData: Partial<FetchedData> = {
       aksjonspunkter,

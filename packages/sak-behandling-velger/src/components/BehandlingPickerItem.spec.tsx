@@ -37,6 +37,7 @@ describe('<BehandlingPickerItem>', () => {
     search: 'test',
     state: {},
     hash: 'test',
+    key: 'test',
   };
 
   const getKodeverkFn = () => ({

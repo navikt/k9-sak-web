@@ -4,7 +4,7 @@ export const validateAll = (valideringsfunksjoner, value) => {
   const errorList = valideringsfunksjoner.map(func => func(value)).find(Boolean);
 
   if (Array.isArray(errorList) && errorList.length) {
-    return errorList[0];
+    return Object.assign({}, ...errorList);
   }
   return null;
 };

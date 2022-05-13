@@ -14,8 +14,8 @@ import {
 } from '@k9-sak-web/types';
 import { Location } from 'history';
 import React, { useCallback, useEffect, useState } from 'react';
-import { Redirect, useLocation, useRouteMatch } from 'react-router-dom';
-import { getLocationWithDefaultProsessStegAndFakta, pathToBehandling, pathToBehandlinger } from '../app/paths';
+import { Navigate, useLocation, useMatch } from 'react-router-dom';
+import { createLocationForSkjermlenke, getLocationWithDefaultProsessStegAndFakta, pathToBehandling, pathToBehandlinger } from '../app/paths';
 import BehandlingRettigheter from '../behandling/behandlingRettigheterTsType';
 import BehandlingMenuIndex, { BehandlendeEnheter } from '../behandlingmenu/BehandlingMenuIndex';
 import { K9sakApiKeys, requestApi, restApiHooks } from '../data/k9sakApi';
@@ -92,8 +92,8 @@ export const FagsakProfileIndex = ({
     setShowAll(!behandlingId);
   }, [behandlingId]);
 
-  const match = useRouteMatch();
-  const shouldRedirectToBehandlinger = match.isExact;
+  const match = useMatch('/fagsak/:saksnummer/');
+  const shouldRedirectToBehandlinger = !!match;
 
   const location = useLocation();
   const getBehandlingLocation = useCallback(
@@ -118,7 +118,7 @@ export const FagsakProfileIndex = ({
     <div className={styles.panelPadding}>
       {!harHentetBehandlinger && <LoadingPanel />}
       {harHentetBehandlinger && shouldRedirectToBehandlinger && (
-        <Redirect to={findPathToBehandling(fagsak.saksnummer, location, alleBehandlinger)} />
+        <Navigate to={findPathToBehandling(fagsak.saksnummer, location, alleBehandlinger)} />
       )}
       {harHentetBehandlinger && !shouldRedirectToBehandlinger && (
         <FagsakProfilSakIndex
@@ -155,6 +155,7 @@ export const FagsakProfileIndex = ({
               showAll={showAll}
               toggleShowAll={toggleShowAll}
               fagsak={fagsak}
+              createLocationForSkjermlenke={createLocationForSkjermlenke}
             />
           )}
         />

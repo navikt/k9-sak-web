@@ -20,12 +20,10 @@ import moment from 'moment';
 import React, { useState } from 'react';
 import { Arbeidstype } from '../types/Arbeidstype';
 import FetchedData from '../types/fetchedDataTsType';
-import AndreSakerPåSøkerStripe from './AndreSakerPåSøkerStripe';
 import ArbeidsgiverMedManglendePerioderListe from './ArbeidsgiverMedManglendePerioderListe';
 import DataFetcher from './DataFetcher';
 import PleiepengerFakta from './PleiepengerFakta';
 import PleiepengerProsess from './PleiepengerProsess';
-import Punsjstripe from './Punsjstripe';
 
 interface OwnProps {
   fetchedData: FetchedData;
@@ -39,7 +37,6 @@ interface OwnProps {
   oppdaterProsessStegOgFaktaPanelIUrl: (punktnavn?: string, faktanavn?: string) => void;
   oppdaterBehandlingVersjon: (versjon: number) => void;
   settPaVent: (params: SettPaVentParams) => Promise<any>;
-  hentBehandling: ({ behandlingId: number }, keepData: boolean) => Promise<any>;
   opneSokeside: () => void;
   hasFetchError: boolean;
   setBehandling: (behandling: Behandling) => void;
@@ -76,7 +73,6 @@ const PleiepengerPaneler = ({
   valgtFaktaSteg,
   oppdaterBehandlingVersjon,
   settPaVent,
-  hentBehandling,
   opneSokeside,
   hasFetchError,
   setBehandling,
@@ -97,7 +93,7 @@ const PleiepengerPaneler = ({
         aksjonspunkter={fetchedData?.aksjonspunkter}
         kodeverk={alleKodeverk}
         settPaVent={settPaVent}
-        hentBehandling={hentBehandling}
+        featureToggles={featureToggles}
       />
       {harOpprettetAksjonspunkt9203 && (
         <DataFetcher
@@ -136,6 +132,7 @@ const PleiepengerPaneler = ({
           )}
         />
       )}
+
       <PleiepengerProsess
         data={fetchedData}
         fagsak={fagsak}
@@ -155,8 +152,6 @@ const PleiepengerPaneler = ({
         featureToggles={featureToggles}
         setBeregningErBehandlet={setBeregningErBehandlet}
       />
-      <Punsjstripe behandlingUuid={behandling?.uuid} />
-      <AndreSakerPåSøkerStripe søkerIdent={fagsakPerson.personnummer} saksnummer={fagsak.saksnummer} />
       <PleiepengerFakta
         behandling={behandling}
         data={fetchedData}
@@ -174,7 +169,6 @@ const PleiepengerPaneler = ({
         dokumenter={dokumenter}
         featureToggles={featureToggles}
         beregningErBehandlet={beregningErBehandlet}
-
       />
     </>
   );

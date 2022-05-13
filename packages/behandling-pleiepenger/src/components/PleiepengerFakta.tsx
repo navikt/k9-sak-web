@@ -58,7 +58,7 @@ const PleiepengerFakta = ({
   arbeidsgiverOpplysningerPerId,
   dokumenter,
   featureToggles,
-  beregningErBehandlet
+  beregningErBehandlet,
 }: OwnProps & WrappedComponentProps) => {
   const { aksjonspunkter, ...rest } = data;
   const { addErrorMessage } = useRestApiErrorDispatcher();
@@ -88,6 +88,7 @@ const PleiepengerFakta = ({
     aksjonspunkter,
     valgtFaktaSteg,
     intl,
+    featureToggles,
   );
 
   faktaHooks.useFaktaAksjonspunktNotifikator(faktaPaneler, setApentFaktaPanel, behandling.versjon);
@@ -131,7 +132,7 @@ const PleiepengerFakta = ({
               submitCallback: bekreftAksjonspunktCallback,
               ...valgtPanel.getKomponentData(rettigheter, dataTilUtledingAvPleiepengerPaneler, hasFetchError),
               dokumenter,
-              beregningErBehandlet
+              beregningErBehandlet,
             })}
           </ErrorBoundary>
         )}

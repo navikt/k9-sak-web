@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useMemo, useRef } from 'react';
 import moment from 'moment';
-import { useHistory, useLocation } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import BehandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
@@ -106,7 +106,7 @@ export const BehandlingMenuIndex = ({
 }: OwnProps) => {
   const behandling = alleBehandlinger.find(b => b.id === behandlingId);
 
-  const { push: pushLocation } = useHistory();
+  const navigate = useNavigate();
   const location = useLocation();
 
   const ref = useRef<number>();
@@ -114,7 +114,7 @@ export const BehandlingMenuIndex = ({
     // Når antallet har endret seg er det laget en ny behandling og denne må da velges
     if (ref.current > 0) {
       const pathname = pathToBehandling(fagsak.saksnummer, findNewBehandlingId(alleBehandlinger));
-      pushLocation(getLocationWithDefaultProsessStegAndFakta({ ...location, pathname }));
+      navigate(getLocationWithDefaultProsessStegAndFakta({ ...location, pathname }));
     }
 
     ref.current = alleBehandlinger.length;
@@ -209,11 +209,11 @@ export const BehandlingMenuIndex = ({
   const vergeMenyvalg = behandlingRettigheter?.vergeBehandlingsmeny;
   const fjernVergeFn =
     vergeMenyvalg === VergeBehandlingmenyValg.FJERN
-      ? fjernVerge(location, pushLocation, fagsak.saksnummer, behandlingId, behandlingVersjon)
+      ? fjernVerge(location, navigate, fagsak.saksnummer, behandlingId, behandlingVersjon)
       : undefined;
   const opprettVergeFn =
     vergeMenyvalg === VergeBehandlingmenyValg.OPPRETT
-      ? opprettVerge(location, pushLocation, fagsak.saksnummer, behandlingId, behandlingVersjon)
+      ? opprettVerge(location, navigate, fagsak.saksnummer, behandlingId, behandlingVersjon)
       : undefined;
   return (
     <MenySakIndex
@@ -237,6 +237,7 @@ export const BehandlingMenuIndex = ({
               behandlingTypeKode === BehandlingType.TILBAKEKREVING ||
               behandlingTypeKode === BehandlingType.TILBAKEKREVING_REVURDERING
             }
+            featureToggles={featureToggles}
           />
         )),
         new MenyData(behandlingRettigheter?.behandlingKanHenlegges, getHenleggMenytekst()).medModal(lukkModal => (

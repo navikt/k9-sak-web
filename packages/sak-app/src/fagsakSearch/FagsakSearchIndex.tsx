@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import { errorOfType, ErrorTypes, getErrorResponseData } from '@k9-sak-web/rest-api';
 import { Fagsak, KodeverkMedNavn } from '@k9-sak-web/types';
@@ -22,9 +22,9 @@ const FagsakSearchIndex = () => {
     K9sakApiKeys.KODEVERK,
   );
 
-  const history = useHistory();
+  const navigate = useNavigate();
   const goToFagsak = (saksnummer: string) => {
-    history.push(pathToFagsak(saksnummer));
+    navigate(pathToFagsak(saksnummer));
   };
 
   const {

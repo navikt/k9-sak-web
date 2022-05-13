@@ -21,6 +21,7 @@ import styles from './BrevPanel.less';
 import InformasjonsbehovAutomatiskVedtaksbrev from './InformasjonsbehovAutomatiskVedtaksbrev';
 import FritekstBrevPanel from '../FritekstBrevPanel';
 import { VedtakPreviewLink } from '../PreviewLink';
+import { fieldnames } from '../../konstanter';
 
 const kanResultatForhåndsvises = behandlingResultat => {
   if (!behandlingResultat) {
@@ -38,7 +39,13 @@ const getManuellBrevCallback =
   e => {
     if (formProps.isValid) {
       previewCallback({
-        dokumentdata: { fritekstbrev: { brødtekst: brødtekst || ' ', overskrift: overskrift || ' ' } },
+        dokumentdata: {
+          fritekstbrev: {
+            brødtekst: brødtekst || ' ',
+            overskrift: overskrift || ' ',
+            inkluderKalender: formProps.values[fieldnames.INKLUDER_KALENDER_VED_OVERSTYRING] || false,
+          },
+        },
         // Bruker FRITKS som fallback til lenken ikke vises for avsluttede behandlinger
         dokumentMal: tilgjengeligeVedtaksbrev?.vedtaksbrevmaler?.[vedtaksbrevtype.FRITEKST] ?? dokumentMalType.FRITKS,
         ...(overstyrtMottaker ? { overstyrtMottaker: safeJSONParse(overstyrtMottaker) } : {}),
@@ -56,7 +63,12 @@ const automatiskVedtaksbrevParams = ({
   tilgjengeligeVedtaksbrev,
   informasjonsbehovValues,
 }) => ({
-  dokumentdata: { fritekst: fritekst || ' ', redusertUtbetalingÅrsaker, ...informasjonsbehovValues },
+  dokumentdata: {
+    fritekst: fritekst || ' ',
+    redusertUtbetalingÅrsaker,
+    ...Object.assign({}, ...informasjonsbehovValues),
+  },
+
   // Bruker UTLED som fallback til lenken ikke vises for avsluttede behandlinger
   dokumentMal: tilgjengeligeVedtaksbrev?.vedtaksbrevmaler?.[vedtaksbrevtype.AUTOMATISK] ?? dokumentMalType.UTLED,
   ...(overstyrtMottaker ? { overstyrtMottaker: safeJSONParse(overstyrtMottaker) } : {}),
@@ -115,6 +127,7 @@ export const BrevPanel = props => {
     behandlingResultat,
     overstyrtMottaker,
     formikProps,
+    ytelseTypeKode,
   } = props;
 
   const automatiskBrevCallback = getPreviewAutomatiskBrevCallback({
@@ -150,10 +163,13 @@ export const BrevPanel = props => {
   const fritekstbrev = harFritekstbrev && (
     <>
       <FritekstBrevPanel
-        readOnly={readOnly}
+        readOnly={readOnly || formikProps.values[fieldnames.SKAL_HINDRE_UTSENDING_AV_BREV]}
         sprakkode={sprakkode}
+        intl={intl}
         previewBrev={automatiskBrevUtenValideringCallback}
         harAutomatiskVedtaksbrev={harAutomatiskVedtaksbrev}
+        formikProps={formikProps}
+        ytelseTypeKode={ytelseTypeKode}
       />
       <VedtakPreviewLink previewCallback={manuellBrevCallback} />
     </>
@@ -163,7 +179,7 @@ export const BrevPanel = props => {
     <>
       <InformasjonsbehovAutomatiskVedtaksbrev
         intl={intl}
-        readOnly={readOnly}
+        readOnly={readOnly || formikProps.values[fieldnames.SKAL_HINDRE_UTSENDING_AV_BREV]}
         sprakkode={sprakkode}
         begrunnelse={begrunnelse}
         informasjonsbehovVedtaksbrev={informasjonsbehovVedtaksbrev}
@@ -177,7 +193,7 @@ export const BrevPanel = props => {
       ? fritekstbrev
       : automatiskbrev;
   return (
-    <div data-testid='brevpanel'>
+    <div data-testid="brevpanel">
       {harAlternativeMottakere && (
         <Row>
           <Column xs="12">
@@ -229,6 +245,7 @@ BrevPanel.propTypes = {
   personopplysninger: PropTypes.shape(),
   arbeidsgiverOpplysningerPerId: PropTypes.shape(),
   formikProps: PropTypes.shape().isRequired,
+  ytelseTypeKode: PropTypes.string,
 };
 
 BrevPanel.defaultProps = {

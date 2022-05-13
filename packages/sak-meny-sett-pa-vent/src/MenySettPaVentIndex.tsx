@@ -1,10 +1,8 @@
+import SettPaVentModalIndex from '@k9-sak-web/modal-sett-pa-vent';
+import { goToLos } from '@k9-sak-web/sak-app/src/app/paths';
+import { FeatureToggles, Venteaarsak } from '@k9-sak-web/types';
 import React, { useCallback } from 'react';
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
-import { useHistory } from 'react-router-dom';
-
-import { KodeverkMedNavn } from '@k9-sak-web/types';
-import SettPaVentModalIndex from '@k9-sak-web/modal-sett-pa-vent';
-
 import messages from '../i18n/nb_NO.json';
 
 const cache = createIntlCache();
@@ -27,10 +25,11 @@ interface OwnProps {
     behandlingId: number;
     frist: string;
     ventearsak: string;
-  }) => void;
-  ventearsaker: KodeverkMedNavn[];
+  }) => Promise<any>;
+  ventearsaker: Venteaarsak[];
   lukkModal: () => void;
   erTilbakekreving: boolean;
+  featureToggles?: FeatureToggles;
 }
 
 const MenySettPaVentIndex = ({
@@ -40,9 +39,8 @@ const MenySettPaVentIndex = ({
   ventearsaker,
   lukkModal,
   erTilbakekreving,
+  featureToggles,
 }: OwnProps) => {
-  const history = useHistory();
-
   const submit = useCallback(
     formValues => {
       const values = {
@@ -50,11 +48,9 @@ const MenySettPaVentIndex = ({
         behandlingId,
         frist: formValues.frist,
         ventearsak: formValues.ventearsak,
+        ventearsakVariant: formValues.ventearsakVariant,
       };
-      settBehandlingPaVent(values);
-
-      // lukkModal();
-      history.push('/');
+      settBehandlingPaVent(values).then(() => goToLos());
     },
     [behandlingId, behandlingVersjon],
   );
@@ -68,6 +64,7 @@ const MenySettPaVentIndex = ({
         ventearsaker={ventearsaker}
         erTilbakekreving={erTilbakekreving}
         hasManualPaVent
+        featureToggles={featureToggles}
       />
     </RawIntlProvider>
   );

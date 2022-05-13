@@ -8,6 +8,7 @@ import {
   Fagsak,
   FagsakPerson,
   ArbeidsgiverOpplysningerPerId,
+  Dokument,
 } from '@k9-sak-web/types';
 
 import OmsorgspengerProsess from './OmsorgspengerProsess';
@@ -26,12 +27,12 @@ interface OwnProps {
   oppdaterProsessStegOgFaktaPanelIUrl: (punktnavn?: string, faktanavn?: string) => void;
   oppdaterBehandlingVersjon: (versjon: number) => void;
   settPaVent: (params: SettPaVentParams) => Promise<any>;
-  hentBehandling: ({ behandlingId: number }, keepData: boolean) => Promise<any>;
   opneSokeside: () => void;
   hasFetchError: boolean;
   featureToggles: FeatureToggles;
   setBehandling: (behandling: Behandling) => void;
   arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysningerPerId;
+  dokumenter: Dokument[];
 }
 
 interface FaktaPanelInfo {
@@ -51,12 +52,12 @@ const OmsorgspengerPaneler = ({
   valgtFaktaSteg,
   oppdaterBehandlingVersjon,
   settPaVent,
-  hentBehandling,
   opneSokeside,
   hasFetchError,
   featureToggles,
   setBehandling,
   arbeidsgiverOpplysningerPerId,
+  dokumenter,
 }: OwnProps) => {
   const [apentFaktaPanelInfo, setApentFaktaPanel] = useState<FaktaPanelInfo>();
 
@@ -67,7 +68,6 @@ const OmsorgspengerPaneler = ({
         aksjonspunkter={fetchedData?.aksjonspunkter}
         kodeverk={alleKodeverk}
         settPaVent={settPaVent}
-        hentBehandling={hentBehandling}
       />
       <OmsorgspengerProsess
         data={fetchedData}
@@ -102,6 +102,7 @@ const OmsorgspengerPaneler = ({
         setBehandling={setBehandling}
         arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
         featureToggles={featureToggles}
+        dokumenter={dokumenter}
       />
     </>
   );

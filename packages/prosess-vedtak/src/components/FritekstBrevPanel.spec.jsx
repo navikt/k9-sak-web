@@ -17,8 +17,8 @@ describe('<FritekstBrevPanel>', () => {
         intl={intlMock}
         previewBrev={eventCallback}
         readOnly
-        sprakkode={sprakkode}
         harAutomatiskVedtaksbrev
+        formikProps={{ values: {} }}
       />,
     );
 
@@ -35,8 +35,8 @@ describe('<FritekstBrevPanel>', () => {
         intl={intlMock}
         previewBrev={eventCallback}
         readOnly={false}
-        sprakkode={sprakkode}
         harAutomatiskVedtaksbrev
+        formikProps={{ values: {} }}
       />,
     );
 

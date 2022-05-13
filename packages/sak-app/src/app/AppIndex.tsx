@@ -17,7 +17,7 @@ import Home from './components/Home';
 import Dekorator from './components/Dekorator';
 
 import '@fpsak-frontend/assets/styles/global.less';
-import '@navikt/ds-css'
+import '@navikt/ds-css';
 
 const EMPTY_ARRAY = [];
 
@@ -72,6 +72,7 @@ const AppIndex = () => {
             hideErrorMessages={hasForbiddenOrUnauthorizedErrors}
             queryStrings={queryStrings}
             setSiteHeight={setSiteHeight}
+            pathname={location.pathname}
           />
           {shouldRenderHome && <Home headerHeight={headerHeight} />}
           {forbiddenErrors.length > 0 && <ForbiddenPage />}

@@ -22,7 +22,6 @@ const intl = createIntl(
 const BeregningsgrunnlagProsessIndex = ({
   behandling,
   beregningsgrunnlag,
-  aksjonspunkter,
   submitCallback,
   isReadOnly,
   readOnlySubmitButton,
@@ -37,7 +36,6 @@ const BeregningsgrunnlagProsessIndex = ({
       <BeregningFP2
         behandling={behandling}
         beregningsgrunnlag={beregningsgrunnlag}
-        aksjonspunkter={aksjonspunkter}
         submitCallback={submitCallback}
         readOnly={isReadOnly}
         readOnlySubmitButton={readOnlySubmitButton}

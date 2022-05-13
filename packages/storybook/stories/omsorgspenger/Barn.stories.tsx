@@ -26,6 +26,7 @@ const barn: BarnDto[] = [
     personIdent: '05051952104',
     fødselsdato: '2019-05-05',
     harSammeBosted: true,
+    deltBostedPerioder: ["2022-02-07/2022-02-08", "2022-02-07/2022-02-08"],
     dødsdato: '2020-03-03',
     barnType: BarnType.FOSTERBARN,
   },
