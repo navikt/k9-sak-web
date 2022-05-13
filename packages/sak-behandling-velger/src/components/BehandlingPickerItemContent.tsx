@@ -7,9 +7,18 @@ import { Normaltekst, Undertittel } from 'nav-frontend-typografi';
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import styles from './behandlingPickerItemContent.less';
-import { getFormattedSøknadserioder, getStatusIcon } from './behandlingVelgerUtils';
+import { getFormattedSøknadserioder, getStatusIcon, getStatusText } from './behandlingVelgerUtils';
 
-const getAutomatiskRevurderingText = () => <span className={styles.smallerUndertittel}>(automatisk behandlet)</span>;
+const getAutomatiskRevurderingText = () => (
+  <span className={styles.smallerUndertittel}>
+    (<FormattedMessage id="BehandlingPickerItemContent.AutomatiskBehandlet" />)
+  </span>
+);
+const getUnntaksløypeText = () => (
+  <span className={styles.smallerUndertittel}>
+    (<FormattedMessage id="BehandlingPickerItemContent.Unntaksløype" />)
+  </span>
+);
 
 interface OwnProps {
   behandlingsresultatTypeKode?: string;
@@ -17,6 +26,8 @@ interface OwnProps {
   erAutomatiskRevurdering: boolean;
   behandlingTypeNavn: string;
   søknadsperioder: Periode[];
+  erFerdigstilt: boolean;
+  erUnntaksløype: boolean;
 }
 
 /**
@@ -30,6 +41,8 @@ const BehandlingPickerItemContent: React.FC<OwnProps> = ({
   erAutomatiskRevurdering,
   behandlingTypeNavn,
   søknadsperioder,
+  erFerdigstilt,
+  erUnntaksløype,
 }) => (
   <Panel className={erAutomatiskRevurdering ? styles.indent : ''} border>
     <div className={styles.behandlingPicker}>
@@ -37,6 +50,7 @@ const BehandlingPickerItemContent: React.FC<OwnProps> = ({
         <Undertittel>
           {behandlingTypeNavn}
           {erAutomatiskRevurdering ? getAutomatiskRevurderingText() : ''}
+          {erUnntaksløype ? getUnntaksløypeText() : ''}
         </Undertittel>
         <div className={styles.dateContainer}>
           <Image
@@ -48,10 +62,11 @@ const BehandlingPickerItemContent: React.FC<OwnProps> = ({
           {søknadsperioder?.length > 0 && <Normaltekst>{getFormattedSøknadserioder(søknadsperioder)}</Normaltekst>}
         </div>
         <div className={styles.resultContainer}>
-          {getStatusIcon(behandlingsresultatTypeKode, styles.utfallImage)}
+          {getStatusIcon(behandlingsresultatTypeKode, styles.utfallImage, erFerdigstilt)}
           <Normaltekst>
             <FormattedMessage id="BehandlingPickerItemContent.Resultat" />
-            {`: ${behandlingsresultatTypeKode ? behandlingsresultatTypeNavn : '-'}`}
+            {`: `}
+            {getStatusText(behandlingsresultatTypeKode, behandlingsresultatTypeNavn, erFerdigstilt)}
           </Normaltekst>
         </div>
       </div>

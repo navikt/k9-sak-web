@@ -37,17 +37,9 @@ import VedtakRevurderingSubmitPanel from './revurdering/VedtakRevurderingSubmitP
 import VedtakSubmit from './VedtakSubmit';
 import vedtakVarselPropType from '../propTypes/vedtakVarselPropType';
 import LagreFormikStateLokalt from './LagreFormikStateLokalt';
+import { fieldnames } from '../konstanter';
 
 const isVedtakSubmission = true;
-
-const fieldnames = {
-  SKAL_BRUKE_OVERSTYRENDE_FRITEKST_BREV: 'skalBrukeOverstyrendeFritekstBrev',
-  SKAL_HINDRE_UTSENDING_AV_BREV: 'skalHindreUtsendingAvBrev',
-  OVERSKRIFT: 'overskrift',
-  BRØDTEKST: 'brødtekst',
-  OVERSTYRT_MOTTAKER: 'overstyrtMottaker',
-  BEGRUNNELSE: 'begrunnelse',
-};
 
 const transformRedusertUtbetalingÅrsaker = formikValues =>
   Object.values(redusertUtbetalingArsak).filter(name =>
@@ -119,6 +111,7 @@ export const VedtakForm = ({
           ? {
               brødtekst: values?.[fieldnames.BRØDTEKST],
               overskrift: values?.[fieldnames.OVERSKRIFT],
+              inkluderKalender: values?.[fieldnames.INKLUDER_KALENDER_VED_OVERSTYRING],
             }
           : {},
         skalBrukeOverstyrendeFritekstBrev: values?.[fieldnames.SKAL_BRUKE_OVERSTYRENDE_FRITEKST_BREV],
@@ -138,22 +131,23 @@ export const VedtakForm = ({
       .filter(ap => ap.kanLoses)
       .map(aksjonspunkt => {
         const tranformedValues = {
-        kode: aksjonspunkt.definisjon.kode,
-        begrunnelse: values?.[fieldnames.BEGRUNNELSE],
-        overstyrtMottaker: safeJSONParse(values?.[fieldnames.OVERSTYRT_MOTTAKER]),
-        fritekstbrev: {
-          brødtekst: values?.[fieldnames.BRØDTEKST],
-          overskrift: values?.[fieldnames.OVERSKRIFT],
-        },
-        skalBrukeOverstyrendeFritekstBrev: values?.[fieldnames.SKAL_BRUKE_OVERSTYRENDE_FRITEKST_BREV],
-        skalUndertrykkeBrev: values?.[fieldnames.SKAL_HINDRE_UTSENDING_AV_BREV],
-        isVedtakSubmission,
-        tilgjengeligeVedtaksbrev,
-        }
+          kode: aksjonspunkt.definisjon.kode,
+          begrunnelse: values?.[fieldnames.BEGRUNNELSE],
+          overstyrtMottaker: safeJSONParse(values?.[fieldnames.OVERSTYRT_MOTTAKER]),
+          fritekstbrev: {
+            brødtekst: values?.[fieldnames.BRØDTEKST],
+            overskrift: values?.[fieldnames.OVERSKRIFT],
+            inkluderKalender: values?.[fieldnames.INKLUDER_KALENDER_VED_OVERSTYRING],
+          },
+          skalBrukeOverstyrendeFritekstBrev: values?.[fieldnames.SKAL_BRUKE_OVERSTYRENDE_FRITEKST_BREV],
+          skalUndertrykkeBrev: values?.[fieldnames.SKAL_HINDRE_UTSENDING_AV_BREV],
+          isVedtakSubmission,
+          tilgjengeligeVedtaksbrev,
+        };
         if (aksjonspunkt.definisjon.kode === aksjonspunktCodes.FORESLA_VEDTAK_MANUELT) {
-          tranformedValues.redusertUtbetalingÅrsaker = transformRedusertUtbetalingÅrsaker(values)
+          tranformedValues.redusertUtbetalingÅrsaker = transformRedusertUtbetalingÅrsaker(values);
         }
-        return tranformedValues
+        return tranformedValues;
       });
 
   const createPayload = harPotensieltFlereInformasjonsbehov(informasjonsbehovVedtaksbrev)
@@ -183,6 +177,8 @@ export const VedtakForm = ({
         (harMellomLagretMedIngenBrev(dokumentdata, vedtakVarsel) &&
           kanHindreUtsending(tilgjengeligeVedtaksbrev) &&
           !harMellomlagretFritekstbrev(dokumentdata, vedtakVarsel)),
+      [fieldnames.INKLUDER_KALENDER_VED_OVERSTYRING]:
+        dokumentdata?.[dokumentdatatype.FRITEKSTBREV]?.inkluderKalender || false,
       [fieldnames.OVERSKRIFT]: decodeHtmlEntity(dokumentdata?.[dokumentdatatype.FRITEKSTBREV]?.overskrift) || '',
       [fieldnames.BRØDTEKST]: decodeHtmlEntity(dokumentdata?.[dokumentdatatype.FRITEKSTBREV]?.brødtekst) || '',
       [fieldnames.OVERSTYRT_MOTTAKER]: JSON.stringify(dokumentdata?.[dokumentdatatype.OVERSTYRT_MOTTAKER]),
@@ -200,9 +196,9 @@ export const VedtakForm = ({
     if (harRedusertUtbetaling) {
       return readOnly
         ? vedtakVarsel?.redusertUtbetalingÅrsaker
-        : transformRedusertUtbetalingÅrsaker(formikProps.values)
+        : transformRedusertUtbetalingÅrsaker(formikProps.values);
     }
-    return null
+    return null;
   };
 
   return (
@@ -222,6 +218,7 @@ export const VedtakForm = ({
               readOnly={readOnly}
               overlappendeYtelser={overlappendeYtelser}
               alleKodeverk={alleKodeverk}
+              viseFlereSjekkbokserForBrev={kanHaFritekstbrev(tilgjengeligeVedtaksbrev) && kanHindreUtsending(tilgjengeligeVedtaksbrev)}
             >
               <div className={styles.knappContainer}>
                 {kanHaFritekstbrev(tilgjengeligeVedtaksbrev) && (
@@ -344,6 +341,7 @@ export const VedtakForm = ({
                   lagreDokumentdata={lagreDokumentdata}
                   brødtekst={formikProps.values.brødtekst}
                   overskrift={formikProps.values.overskrift}
+                  inkluderKalender={formikProps.values[fieldnames.INKLUDER_KALENDER_VED_OVERSTYRING]}
                 />
               ) : (
                 <VedtakRevurderingSubmitPanel

@@ -12,6 +12,9 @@ describe('<HeaderWithErrorPanel>', () => {
         removeErrorMessage={() => undefined}
         setSiteHeight={() => undefined}
         getPathToFplos={() => undefined}
+        getPathToK9Punsj={() => undefined}
+        ainntektPath="test"
+        aaregPath="test"
       />,
     );
     const header = wrapper.find(Header);

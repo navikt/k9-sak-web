@@ -17,6 +17,9 @@ export const visDekoratorUtenFeilmeldinger = () => (
       removeErrorMessage={() => undefined}
       setSiteHeight={() => undefined}
       getPathToFplos={() => undefined}
+      getPathToK9Punsj={() => undefined}
+      ainntektPath="test"
+      aaregPath="test"
     />
   </div>
 );
@@ -31,6 +34,9 @@ export const visDekoratorMedFeilmeldinger = () => {
         setSiteHeight={() => undefined}
         getPathToFplos={() => undefined}
         errorMessages={errorMessages}
+        getPathToK9Punsj={() => undefined}
+        ainntektPath="test"
+        aaregPath="test"
       />
     </div>
   );

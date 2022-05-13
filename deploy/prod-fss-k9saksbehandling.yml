@@ -72,6 +72,8 @@ spec:
       value: "https://psb-etablert-tilsyn-frontend.intern.nav.no/"
     - name: PSB_OM_BARNET_FRONTEND_URL
       value: "https://psb-om-barnet-frontend.intern.nav.no/"
+    - name: ENDRINGSLOGG_URL
+      value: "https://familie-endringslogg.intern.nav.no/"
 
     # Feature-flag
     - name: KLAGE_KABAL
@@ -86,11 +88,9 @@ spec:
       value: "true"
     - name: TILBAKE
       value: "true"
-    - name: BEHANDLINGSVELGER_NY
-      value: "false"
-    - name: FAKTA_SOKNADSPERIODER
-      value: "false"
     - name: UTENLANDSOPPHOLD
-      value: "false"
+      value: "true"
     - name: SOKNADPERIODESTRIPE
+      value: "false"
+    - name: SETT_PAA_VENT_MODAL
       value: "false"

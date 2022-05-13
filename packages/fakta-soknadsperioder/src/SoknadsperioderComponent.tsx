@@ -7,6 +7,7 @@ import BehandlingPerioderårsakMedVilkår, {
 } from '@k9-sak-web/types/src/behandlingPerioderarsakMedVilkar';
 import { PeriodStatus, Tidslinjeskala } from '@k9-sak-web/types/src/tidslinje';
 import { dateStringSorter } from '@navikt/k9-date-utils';
+import { Period } from '@navikt/k9-period-utils';
 import dayjs, { Dayjs } from 'dayjs';
 import { Normaltekst } from 'nav-frontend-typografi';
 import React, { useEffect, useState } from 'react';
@@ -19,21 +20,20 @@ import ZoomOutIcon from './icons/ZoomOutIcon';
 import styles from './soknadsperioderComponent.less';
 import Periode from './types/Periode';
 
-const sortertePerioderPåFomDato = (behandlingPerioderårsakMedVilkår: BehandlingPerioderårsakMedVilkår) =>
-  [...behandlingPerioderårsakMedVilkår.perioderMedÅrsak.perioderMedÅrsak].sort((a, b) =>
-    dateStringSorter(a.periode.fom, b.periode.fom),
+const getPerioderMedÅrsak = (årsak: string, behandlingPerioderårsakMedVilkår: BehandlingPerioderårsakMedVilkår) => {
+  const årsakMedPerioder = behandlingPerioderårsakMedVilkår.perioderMedÅrsak.årsakMedPerioder.find(
+    årsakPerioder => årsakPerioder.årsak === årsak,
   );
-
-const getPerioderMedÅrsak = (årsak: string, behandlingPerioderårsakMedVilkår: BehandlingPerioderårsakMedVilkår) =>
-  sortertePerioderPåFomDato(behandlingPerioderårsakMedVilkår)
-    .filter(periode => periode.årsaker.includes(årsak))
-    .map(periode => ({ periode: periode.periode }));
-
+  if (årsakMedPerioder) {
+    return årsakMedPerioder.perioder.sort((a, b) => dateStringSorter(a.fom, b.fom)).map(periode => ({ periode }));
+  }
+  return [];
+};
 const harPeriodeoverlapp = (relevantePerioder, periodeFraDokument) =>
-  relevantePerioder.some(
-    relevantePeriode =>
-      relevantePeriode.periode.fom === periodeFraDokument.periode.fom &&
-      relevantePeriode.periode.tom === periodeFraDokument.periode.tom,
+  relevantePerioder.some(relevantPeriode =>
+    new Period(relevantPeriode.periode.fom, relevantPeriode.periode.tom).covers(
+      new Period(periodeFraDokument.periode.fom, periodeFraDokument.periode.tom),
+    ),
   );
 
 const lagPerioderFraDokumenter = (
@@ -223,6 +223,16 @@ const SoknadsperioderComponent = (props: SoknadsperioderComponentProps) => {
       perioder: getPerioderMedÅrsak('MANUELT_REVURDERER_PERIODE', behandlingPerioderårsakMedVilkår),
     };
 
+    const utsattBehandling = {
+      radLabel: getNavnFraKodeverk('UTSATT_BEHANDLING'),
+      perioder: getPerioderMedÅrsak('UTSATT_BEHANDLING', behandlingPerioderårsakMedVilkår),
+    };
+
+    const gjenopptarUtsattBehandling = {
+      radLabel: getNavnFraKodeverk('GJENOPPTAR_UTSATT_BEHANDLING'),
+      perioder: getPerioderMedÅrsak('GJENOPPTAR_UTSATT_BEHANDLING', behandlingPerioderårsakMedVilkår),
+    };
+
     return [
       vedtakshistorikk,
       perioderTilBehandling,
@@ -237,6 +247,8 @@ const SoknadsperioderComponent = (props: SoknadsperioderComponentProps) => {
       ...trukketKrav,
       gRegulering,
       revurdererManuellRevurdering,
+      utsattBehandling,
+      gjenopptarUtsattBehandling,
     ].filter(radGruppertPåÅrsak => {
       if (
         radGruppertPåÅrsak.radLabel === vedtakshistorikkLabel ||
@@ -286,10 +298,17 @@ const SoknadsperioderComponent = (props: SoknadsperioderComponentProps) => {
     return false;
   });
 
-  const updateZoom = (zoomValue: number) => {
-    const senesteTom = getSenesteTom();
-    if (dayjs(navigasjonFomDato).add(zoomValue, 'months').isSameOrAfter(senesteTom)) {
-      setNavigasjonFomDato(subtractMonthsFromDate(senesteTom, zoomValue));
+  const updateZoom = (zoomValue: number, zoomIn?: boolean) => {
+    if (zoomIn) {
+      const senesteTom = getSenesteTom();
+      const nyTom = dayjs(navigasjonFomDato).add(zoomValue + 1, 'months');
+      if (nyTom.isSameOrAfter(senesteTom)) {
+        setNavigasjonFomDato(subtractMonthsFromDate(senesteTom, zoomValue)); // For å forhindre at horisontal navigasjon viser forbi seneste dato fra periodene
+      } else {
+        setNavigasjonFomDato(dayjs(navigasjonFomDato).add(1, 'months'));
+      }
+    } else {
+      setNavigasjonFomDato(dayjs(navigasjonFomDato).subtract(1, 'months'));
     }
     setTidslinjeSkala(zoomValue);
   };
@@ -317,28 +336,26 @@ const SoknadsperioderComponent = (props: SoknadsperioderComponentProps) => {
           <div className={styles.skalavelgerContainer}>
             <button
               onClick={() => {
-                if (tidslinjeSkala < 4) {
-                  updateZoom(1);
-                } else {
-                  updateZoom(tidslinjeSkala - 3);
+                if (tidslinjeSkala > 1) {
+                  updateZoom(tidslinjeSkala - 1, true);
                 }
               }}
               type="button"
               className={styles.zoomButton}
+              disabled={tidslinjeSkala === 1}
             >
               <ZoomInIcon />
               <Normaltekst>{intl.formatMessage({ id: 'Soknadsperioder.Zoom.Forstørre' })}</Normaltekst>
             </button>
             <button
               onClick={() => {
-                if (tidslinjeSkala > 33) {
-                  updateZoom(36);
-                } else {
-                  updateZoom(tidslinjeSkala + 3);
+                if (tidslinjeSkala < 36) {
+                  updateZoom(tidslinjeSkala + 1);
                 }
               }}
               type="button"
               className={styles.zoomButton}
+              disabled={tidslinjeSkala === 36}
             >
               <ZoomOutIcon />
               <Normaltekst>{intl.formatMessage({ id: 'Soknadsperioder.Zoom.Forminske' })}</Normaltekst>

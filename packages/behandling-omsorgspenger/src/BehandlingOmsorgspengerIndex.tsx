@@ -8,12 +8,13 @@ import {
   FeatureToggles,
   Fagsak,
   FagsakPerson,
-  ArbeidsgiverOpplysningerWrapper, Dokument,
+  ArbeidsgiverOpplysningerWrapper,
+  Dokument,
 } from '@k9-sak-web/types';
 import { RestApiState, useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
 
-import useBehandlingEndret from "@k9-sak-web/sak-app/src/behandling/useBehandlingEndret";
-import { K9sakApiKeys, restApiHooks } from "@k9-sak-web/sak-app/src/data/k9sakApi";
+import useBehandlingEndret from '@k9-sak-web/sak-app/src/behandling/useBehandlingEndret';
+import { K9sakApiKeys, restApiHooks } from '@k9-sak-web/sak-app/src/data/k9sakApi';
 import {
   restApiOmsorgHooks,
   requestOmsorgApi,
@@ -33,6 +34,7 @@ const omsorgspengerData = [
   { key: OmsorgspengerBehandlingApiKeys.FORBRUKTE_DAGER },
   { key: OmsorgspengerBehandlingApiKeys.OVERLAPPENDE_YTELSER },
   { key: OmsorgspengerBehandlingApiKeys.HENT_SAKSBEHANDLERE },
+  { key: OmsorgspengerBehandlingApiKeys.FOSTERBARN },
 ];
 
 interface OwnProps {
@@ -187,7 +189,6 @@ const BehandlingOmsorgspengerIndex = ({
         oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
         oppdaterBehandlingVersjon={oppdaterBehandlingVersjon}
         settPaVent={settPaVent}
-        hentBehandling={hentBehandling}
         opneSokeside={opneSokeside}
         hasFetchError={behandlingState === RestApiState.ERROR}
         setBehandling={setBehandling}

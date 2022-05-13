@@ -17,6 +17,19 @@ const data = {
       },
     ],
     dokumenterTilBehandling: [],
+    årsakMedPerioder: [
+      {
+        årsak: 'REVURDERER_BERØRT_PERIODE',
+        perioder: [
+          { fom: '2022-01-04', tom: '2022-02-05' },
+          { fom: '2022-02-06', tom: '2022-04-05' },
+        ],
+      },
+      {
+        årsak: 'REVURDERER_ETABLERT_TILSYN_ENDRING_FRA_ANNEN_OMSORGSPERSON',
+        perioder: [{ fom: '2022-02-06', tom: '2022-04-05' }],
+      },
+    ],
   },
   periodeMedUtfall: [
     {

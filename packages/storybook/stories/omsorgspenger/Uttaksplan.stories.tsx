@@ -15,7 +15,6 @@ import {
 import { Rammevedtak, RammevedtakEnum } from '@k9-sak-web/types/src/omsorgspenger/Rammevedtak';
 import Aktivitet from '@k9-sak-web/prosess-aarskvantum-oms/src/dto/Aktivitet';
 import { FraværÅrsakEnum } from '@k9-sak-web/types/src/omsorgspenger/Uttaksperiode';
-import AvvikIMType from "@k9-sak-web/prosess-aarskvantum-oms/src/dto/AvvikIMType";
 import ÅrskvantumForbrukteDager from '../../../prosess-aarskvantum-oms/src/dto/ÅrskvantumForbrukteDager';
 import alleKodeverk from '../mocks/alleKodeverk.json';
 import withReduxProvider from '../../decorators/withRedux';
@@ -56,19 +55,6 @@ const innvilgetPeriode: Uttaksperiode = {
   periode: '2020-04-01/2020-04-19',
   utbetalingsgrad: 100,
   hjemler: ['FTRL_9_5__1', 'FTRL_9_5__3', 'FTRL_9_3__1', 'FTRL_9_6__1'],
-};
-
-const innvilgetPeriodeMedAvvik: Uttaksperiode = {
-  utfall: UtfallEnum.INNVILGET,
-  fraværÅrsak: FraværÅrsakEnum.ORDINÆRT_FRAVÆR,
-  vurderteVilkår: {
-    vilkår: vilkårInnvilget,
-  },
-  delvisFravær: 'P2DT4H30M',
-  periode: '2020-04-01/2020-04-19',
-  utbetalingsgrad: 100,
-  hjemler: ['FTRL_9_5__1', 'FTRL_9_5__3', 'FTRL_9_3__1', 'FTRL_9_6__1'],
-  avvikImSøknad: AvvikIMType.SØKNAD_UTEN_MATCHENDE_IM
 };
 
 const nullFravær: Uttaksperiode = {
@@ -160,7 +146,7 @@ const behandling = {
   versjon: 1,
 } as Behandling;
 
-const aksjonspunkterForSteg = [] as Aksjonspunkt[];
+const aksjonspunkterForSteg = [{ status: { kode: '' }, definisjon: { kode: '9003' } }] as Aksjonspunkt[];
 
 const arbeidsforhold = [
   {
@@ -223,20 +209,6 @@ export const behandletAksjonspunkt = () => (
   />
 );
 
-export const uttakMedAvvik = () => (
-  <ÅrskvantumIndex
-    årskvantum={årskvantumMedPerioder([innvilgetPeriodeMedAvvik, avslåttPeriode])}
-    alleKodeverk={alleKodeverk as any}
-    behandling={behandling}
-    isAksjonspunktOpen
-    submitCallback={action('bekreft')}
-    aksjonspunkterForSteg={aksjonspunkterForSteg}
-    arbeidsforhold={arbeidsforhold}
-    fullUttaksplan={{ aktiviteter: [] }}
-    arbeidsgiverOpplysningerPerId={arbeidsgivere}
-  />
-);
-
 export const aksjonspunktAvslåttePerioder = () => (
   <ÅrskvantumIndex
     årskvantum={årskvantumMedPerioder([avslåttPeriode, avslåttPeriode])}
@@ -248,6 +220,39 @@ export const aksjonspunktAvslåttePerioder = () => (
     arbeidsforhold={arbeidsforhold}
     fullUttaksplan={{ aktiviteter: [] }}
     arbeidsgiverOpplysningerPerId={arbeidsgivere}
+  />
+);
+
+export const aksjonspunktFosterbarnUten = () => (
+  <ÅrskvantumIndex
+    årskvantum={årskvantumMedPerioder([avslåttPeriode, avslåttPeriode])}
+    alleKodeverk={alleKodeverk as any}
+    behandling={behandling}
+    isAksjonspunktOpen
+    submitCallback={action('bekreft')}
+    aksjonspunkterForSteg={aksjonspunkterForSteg}
+    arbeidsforhold={arbeidsforhold}
+    fullUttaksplan={{ aktiviteter: [] }}
+    arbeidsgiverOpplysningerPerId={arbeidsgivere}
+    fosterbarn={[]}
+  />
+);
+
+export const aksjonspunktFosterbarnMed = () => (
+  <ÅrskvantumIndex
+    årskvantum={årskvantumMedPerioder([avslåttPeriode, avslåttPeriode])}
+    alleKodeverk={alleKodeverk as any}
+    behandling={behandling}
+    isAksjonspunktOpen
+    submitCallback={action('bekreft')}
+    aksjonspunkterForSteg={aksjonspunkterForSteg}
+    arbeidsforhold={arbeidsforhold}
+    fullUttaksplan={{ aktiviteter: [] }}
+    arbeidsgiverOpplysningerPerId={arbeidsgivere}
+    fosterbarn={[
+      { fnr: '12345678910', navn: 'Dole Duck', fødselsdato: '12.34.5678' },
+      { fnr: '10987654321', navn: "Doffen Duck", fødselsdato: '10.98.7654' }
+    ]}
   />
 );
 

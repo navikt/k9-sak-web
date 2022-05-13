@@ -1,3 +1,4 @@
+import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import { renderWithIntl } from '@fpsak-frontend/utils-test/src/test-utils';
 import { BehandlingAppKontekst } from '@k9-sak-web/types';
 import { screen, waitFor } from '@testing-library/react';
@@ -20,8 +21,8 @@ describe('<BehandlingPicker>', () => {
       kodeverk: '',
     },
     status: {
-      kode: 'FVED',
-      kodeverk: '',
+      kode: behandlingStatus.AVSLUTTET,
+      kodeverk: 'BEHANDLING_STATUS',
     },
     opprettet: '15.10.2017',
     behandlendeEnhetId: '1242424',
@@ -63,12 +64,16 @@ describe('<BehandlingPicker>', () => {
         },
       });
       renderWithIntl(
-        <BehandlingPicker
-          noExistingBehandlinger
-          behandlinger={[]}
-          getBehandlingLocation={() => locationMock}
-          getKodeverkFn={sinon.spy()}
-        />,
+        <BrowserRouter>
+          <BehandlingPicker
+            noExistingBehandlinger
+            behandlinger={[]}
+            getBehandlingLocation={() => locationMock}
+            getKodeverkFn={sinon.spy()}
+            createLocationForSkjermlenke={() => locationMock}
+            sakstypeKode="PSB"
+          />
+        </BrowserRouter>,
         {
           locale: 'nb-NO',
           messages,
@@ -116,6 +121,8 @@ describe('<BehandlingPicker>', () => {
             behandlinger={behandlinger as BehandlingAppKontekst[]}
             getBehandlingLocation={() => locationMock}
             getKodeverkFn={sinon.spy()}
+            createLocationForSkjermlenke={() => locationMock}
+            sakstypeKode="PSB"
           />
         </BrowserRouter>,
         {
@@ -214,6 +221,8 @@ describe('<BehandlingPicker>', () => {
             getBehandlingLocation={() => locationMock}
             getKodeverkFn={() => ({ navn: 'test', kode: 'test', kodeverk: 'test' })}
             behandlingId={1}
+            createLocationForSkjermlenke={() => locationMock}
+            sakstypeKode="PSB"
           />
         </BrowserRouter>,
         {

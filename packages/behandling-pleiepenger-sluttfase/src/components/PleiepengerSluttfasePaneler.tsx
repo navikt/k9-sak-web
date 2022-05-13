@@ -18,10 +18,8 @@ import {
 } from '@k9-sak-web/types';
 import moment from 'moment';
 import React, { useState } from 'react';
-import Punsjstripe from '@k9-sak-web/behandling-felles/src/components/punsjstripe/Punsjstripe';
 import { Arbeidstype } from '../types/Arbeidstype';
 import FetchedData from '../types/fetchedDataTsType';
-import AndreSakerPåSøkerStripe from './AndreSakerPåSøkerStripe';
 import ArbeidsgiverMedManglendePerioderListe from './ArbeidsgiverMedManglendePerioderListe';
 import DataFetcher from './DataFetcher';
 import PleiepengerSluttfaseFakta from './PleiepengerSluttfaseFakta';
@@ -39,7 +37,6 @@ interface OwnProps {
   oppdaterProsessStegOgFaktaPanelIUrl: (punktnavn?: string, faktanavn?: string) => void;
   oppdaterBehandlingVersjon: (versjon: number) => void;
   settPaVent: (params: SettPaVentParams) => Promise<any>;
-  hentBehandling: ({ behandlingId: number }, keepData: boolean) => Promise<any>;
   opneSokeside: () => void;
   hasFetchError: boolean;
   setBehandling: (behandling: Behandling) => void;
@@ -76,7 +73,6 @@ const PleiepengerSluttfasePaneler = ({
   valgtFaktaSteg,
   oppdaterBehandlingVersjon,
   settPaVent,
-  hentBehandling,
   opneSokeside,
   hasFetchError,
   setBehandling,
@@ -97,7 +93,6 @@ const PleiepengerSluttfasePaneler = ({
         aksjonspunkter={fetchedData?.aksjonspunkter}
         kodeverk={alleKodeverk}
         settPaVent={settPaVent}
-        hentBehandling={hentBehandling}
       />
       {harOpprettetAksjonspunkt9203 && (
         <DataFetcher
@@ -155,8 +150,6 @@ const PleiepengerSluttfasePaneler = ({
         featureToggles={featureToggles}
         setBeregningErBehandlet={setBeregningErBehandlet}
       />
-      <Punsjstripe behandlingUuid={behandling?.uuid} />
-      <AndreSakerPåSøkerStripe søkerIdent={fagsakPerson.personnummer} saksnummer={fagsak.saksnummer} />
       <PleiepengerSluttfaseFakta
         behandling={behandling}
         data={fetchedData}
@@ -174,7 +167,6 @@ const PleiepengerSluttfasePaneler = ({
         dokumenter={dokumenter}
         featureToggles={featureToggles}
         beregningErBehandlet={beregningErBehandlet}
-
       />
     </>
   );

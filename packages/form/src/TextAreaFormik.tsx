@@ -12,17 +12,18 @@ import formikStyles from './TextAreaFormik.less';
 interface TextAreaFieldProps {
   name: string;
   label: LabelType;
-  validate?: ((value: any) => string | null)[];
+  validate?: ((value: string) => null | any)[];
   readOnly?: boolean;
   dataId?: string;
   textareaClass?: string;
   maxLength?: number;
   placeholder?: string;
-  formik: FormikState<any>;
+  formik?: FormikState<any>;
 }
 
-const renderTextarea = ({ field: { value, name }, form, label, maxLength, badges, touched, error }) => {
-  const intl = useIntl();
+const renderTextarea = ({ field: { value, name }, form, label, maxLength, badges, touched, error, intl, disabled }) => {
+  const { id, ...intlParams } = error ?? {};
+
   return (
     <div className={badges ? styles.textAreaFieldWithBadges : null}>
       {badges && (
@@ -35,33 +36,39 @@ const renderTextarea = ({ field: { value, name }, form, label, maxLength, badges
         </div>
       )}
       <div className={formikStyles.label}>
-      <Textarea
-        value={value}
-        onChange={form.handleChange(name)}
-        label={label}
-        error={touched && error ? intl.formatMessage(error) : null}
-        maxLength={maxLength}
-      />
+        <Textarea
+          value={value}
+          onChange={form.handleChange(name)}
+          onBlur={form.handleBlur(name)}
+          disabled={disabled}
+          label={label}
+          error={touched && error ? intl.formatMessage({ id }, { ...intlParams }) : null}
+          maxLength={maxLength}
+        />
       </div>
     </div>
   );
 };
 
-const TextAreaFormik = ({ name, label, validate, readOnly, formik, ...otherProps }: TextAreaFieldProps) => (
-  <FormikField
-    name={name}
-    validate={value => validateAll(validate, value)}
-    component={readOnly ? ReadOnlyField : renderTextarea}
-    label={label}
-    error={getIn(formik.errors, name)}
-    touched={getIn(formik.touched, name)}
-    {...otherProps}
-    readOnly={readOnly}
-    readOnlyHideEmpty
-    autoComplete="off"
-    type="textarea"
-  />
-);
+const TextAreaFormik = ({ name, label, validate, readOnly, formik, ...otherProps }: TextAreaFieldProps) => {
+  const intl = useIntl();
+  return (
+    <FormikField
+      name={name}
+      validate={value => validateAll(validate, value)}
+      component={readOnly ? ReadOnlyField : renderTextarea}
+      label={label}
+      error={getIn(formik.errors, name)}
+      touched={getIn(formik.touched, name)}
+      {...otherProps}
+      disabled={readOnly}
+      readOnlyHideEmpty
+      autoComplete="off"
+      type="textarea"
+      intl={intl}
+    />
+  );
+};
 
 TextAreaFormik.defaultProps = {
   validate: null,
