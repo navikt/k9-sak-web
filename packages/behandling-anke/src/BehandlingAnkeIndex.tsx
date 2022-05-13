@@ -132,7 +132,6 @@ const BehandlingAnkeIndex = ({
         oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
         oppdaterBehandlingVersjon={oppdaterBehandlingVersjon}
         settPaVent={settPaVent}
-        hentBehandling={hentBehandling}
         opneSokeside={opneSokeside}
         alleBehandlinger={alleBehandlinger}
         setBehandling={setBehandling}

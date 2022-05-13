@@ -70,6 +70,7 @@ describe('<VurderFaktaBeregningPanel>', () => {
     };
     const values = {
       vurderFaktaListe: [{
+        avklaringsbehov: [{ definisjon: { kode: VURDER_FAKTA_FOR_ATFL_SN }, kanLoses: true }],
         faktaOmBeregning,
         manuellOverstyringRapportertInntekt: true,
         inntektFieldArray: [
@@ -79,6 +80,7 @@ describe('<VurderFaktaBeregningPanel>', () => {
         tilfeller: faktaOmBeregning.faktaOmBeregningTilfeller
       },
       {
+        avklaringsbehov: [{ definisjon: { kode: VURDER_FAKTA_FOR_ATFL_SN }, kanLoses: true }],
         faktaOmBeregning: faktaOmBeregning2,
         manuellOverstyringRapportertInntekt: false,
         erTilVurdering: true,
@@ -86,6 +88,7 @@ describe('<VurderFaktaBeregningPanel>', () => {
         mottarYtelseField_frilans: false
       },
       {
+        avklaringsbehov: [{ definisjon: { kode: VURDER_FAKTA_FOR_ATFL_SN }, kanLoses: true }],
         faktaOmBeregning: faktaOmBeregning3,
         manuellOverstyringRapportertInntekt: true,
         inntektFieldArray: [

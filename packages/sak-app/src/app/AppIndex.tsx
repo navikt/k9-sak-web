@@ -72,6 +72,7 @@ const AppIndex = () => {
             hideErrorMessages={hasForbiddenOrUnauthorizedErrors}
             queryStrings={queryStrings}
             setSiteHeight={setSiteHeight}
+            pathname={location.pathname}
           />
           {shouldRenderHome && <Home headerHeight={headerHeight} />}
           {forbiddenErrors.length > 0 && <ForbiddenPage />}
