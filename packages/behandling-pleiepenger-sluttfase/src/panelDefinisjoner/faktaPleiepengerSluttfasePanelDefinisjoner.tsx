@@ -7,7 +7,8 @@ import InntektsmeldingFaktaPanelDef from './faktaPaneler/InntektsmeldingFaktaPan
 import FordelBeregningPanelDef from './faktaPaneler/FordelBeregningPanelDef';
 import InntektOgYtelserFaktaPanelDef from './faktaPaneler/InntektOgYtelserFaktaPanelDef';
 import OverstyrBeregningFaktaPanelDef from './faktaPaneler/OverstyrBeregningFaktaPanelDef';
-import OmPleietrengendeFaktaPanelDef from "./faktaPaneler/OmPleietrengendeFaktaPanelDef";
+import OmPleietrengendeFaktaPanelDef from './faktaPaneler/OmPleietrengendeFaktaPanelDef';
+import SoknadsperioderFaktaPanelDef from './faktaPaneler/SoknadsperioderFaktaPanelDef';
 
 const faktaPanelDefinisjoner = [
   new OmPleietrengendeFaktaPanelDef(),
@@ -20,6 +21,7 @@ const faktaPanelDefinisjoner = [
   new BeregningFaktaPanelDef(),
   new FordelBeregningPanelDef(),
   new InntektOgYtelserFaktaPanelDef(),
+  new SoknadsperioderFaktaPanelDef(),
 ];
 
 export default faktaPanelDefinisjoner;

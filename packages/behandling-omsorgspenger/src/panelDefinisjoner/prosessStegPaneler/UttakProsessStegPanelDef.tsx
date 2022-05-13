@@ -31,11 +31,12 @@ class PanelDef extends ProsessStegPanelDef {
     return allePerioderAvslått ? vilkarUtfallType.IKKE_OPPFYLT : vilkarUtfallType.OPPFYLT;
   };
 
-  getData = ({ forbrukteDager, aksjonspunkterForSteg, arbeidsgiverOpplysningerPerId }) => ({
+  getData = ({ forbrukteDager, aksjonspunkterForSteg, arbeidsgiverOpplysningerPerId, fosterbarn }) => ({
     årskvantum: forbrukteDager,
     aksjonspunkterForSteg,
     uttaksperioder: forbrukteDager?.sisteUttaksplan?.aktiviteter?.flatMap(aktivitet => aktivitet.uttaksperioder),
     arbeidsgiverOpplysningerPerId,
+    fosterbarn: (fosterbarn) ? fosterbarn.fosterbarn : [],
   });
 }
 

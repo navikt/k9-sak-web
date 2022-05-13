@@ -16,15 +16,15 @@
     "value": "${UNNTAKSBEHANDLING}"
   },
   {
-    "key": "FAKTA_SOKNADSPERIODER",
-    "value": "${FAKTA_SOKNADSPERIODER}"
-  },
-  {
     "key": "UTENLANDSOPPHOLD",
     "value": "${UTENLANDSOPPHOLD}"
   },
   {
     "key": "SOKNADPERIODESTRIPE",
     "value": "${SOKNADPERIODESTRIPE}"
+  },
+  {
+    "key": "SETT_PAA_VENT_MODAL",
+    "value": "${SETT_PAA_VENT_MODAL}"
   }
 ]

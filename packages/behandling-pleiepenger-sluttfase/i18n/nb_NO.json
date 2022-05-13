@@ -8,7 +8,6 @@
   "MainSideMenu.Heading": "Saksopplysninger",
   "OpptjeningInfoPanel.KontrollerFaktaForOpptjening": "Opptjening",
   "InntektsmeldingInfoPanel.Title": "Inntektsmelding",
-
   "Behandlingspunkt.LivetsSluttfase": "Livets sluttfase",
   "Behandlingspunkt.Inngangsvilkar": "Inngangsvilkår",
   "Behandlingspunkt.InngangsvilkarForts": "Inngangsvilkår Fortsettelse",
@@ -18,14 +17,15 @@
   "Behandlingspunkt.TilkjentYtelse": "Tilkjent ytelse",
   "Behandlingspunkt.Soknadsfristvilkaret": "Søknadsfrist",
   "Behandlingspunkt.Avregning": "Simulering",
-  "Behandlingspunkt.InngangsvilkarForts" : "Inngangsvilkår Fortsettelse",
-
   "ProsessStegIkkeBehandletPanel.IkkeBehandlet": "Dette steget er ikke behandlet",
-
   "OmPleietrengendeInfoPanel.Title": "Om pleietrengende",
-
   "FatterVedtakStatusModal.SendtBeslutter": "Forslag til vedtak er sendt til beslutter",
   "FatterVedtakStatusModal.ModalDescriptionPleiepenger": "Pleiepenger i livets sluttfase er avslått.",
   "FatterVedtakStatusModal.GoToSearchPage": "Du kommer nå til forsiden.",
-  "FatterVedtakStatusModal.Ok": "OK"
+  "FatterVedtakStatusModal.Ok": "OK",
+  "IverksetterVedtakStatusModal.Innvilget": "Innvilget",
+  "IverksetterVedtakStatusModal.Ok": "Ok",
+  "HelpText.Aksjonspunkt": "Aksjonspunkt",
+  "SoknadsperioderPanel.Soknadsperioder": "Søknadsperioder",
+  "FordelBeregningsgrunnlag.Title": "Fordeling"
 }

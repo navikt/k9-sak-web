@@ -255,15 +255,13 @@ export const AksjonspunktBehandlerTidsbegrensetImpl = ({
   isAvklaringsbehovClosed,
   bruttoPrPeriodeList,
   fieldArrayID,
-}) => {
-  return (
+}) => (
     <table className={styles.inntektTableTB}>
       <tbody>
         {createRows(tableData, readOnly, isAvklaringsbehovClosed, bruttoPrPeriodeList, fieldArrayID)}
       </tbody>
     </table>
   );
-};
 
 AksjonspunktBehandlerTidsbegrensetImpl.propTypes = {
   readOnly: PropTypes.bool.isRequired,
@@ -332,7 +330,7 @@ const mapStateToProps = (state, ownProps) => {
     tableData: createTableData(state, ownProps),
     isAvklaringsbehovClosed: getIsAvklaringsbehovClosed(state, ownProps),
     bruttoPrPeriodeList: mapDataFraStateTilPeriodeliste(state, allePerioder,  behandlingId, behandlingVersjon, formName, fieldArrayID),
-    fieldArrayID: fieldArrayID,
+    fieldArrayID,
   };
 };
 

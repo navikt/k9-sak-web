@@ -40,7 +40,6 @@ const AvviksopplysningerFL = ({
   }
   const avvikFL = sammenligningsGrunnlagFL.avvikProsent !== undefined ? sammenligningsGrunnlagFL.avvikProsent : '';
   const avvikRoundedFL = avvikFL ? parseFloat((avvikFL.toFixed(1))) : 0;
-  const sammenligningsgrunnlagSumFL = sammenligningsGrunnlagFL.rapportertPrAar;
   const { differanseBeregnet } = sammenligningsGrunnlagFL;
   const visPaneler = {
     visAT: false,
@@ -48,7 +47,7 @@ const AvviksopplysningerFL = ({
     visSN: false,
   };
 
-  if (sammenligningsgrunnlagSumFL) {
+  if (sammenligningsGrunnlagFL.rapportertPrAar || sammenligningsGrunnlagFL.rapportertPrAar === 0) {
     return (
       <AvvikopplysningerATFL
         beregnetAarsinntekt={beregnetAarsinntekt}
@@ -56,7 +55,7 @@ const AvviksopplysningerFL = ({
         differanseBeregnet={differanseBeregnet}
         relevanteStatuser={relevanteStatuser}
         visPanel={visPaneler}
-        sammenligningsgrunnlagSum={sammenligningsgrunnlagSumFL}
+        sammenligningsgrunnlagSum={sammenligningsGrunnlagFL.rapportertPrAar}
       />
     );
   }
