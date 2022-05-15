@@ -68,6 +68,7 @@ const OmsorgspengerPaneler = ({
         aksjonspunkter={fetchedData?.aksjonspunkter}
         kodeverk={alleKodeverk}
         settPaVent={settPaVent}
+        featureToggles={featureToggles}
       />
       <OmsorgspengerProsess
         data={fetchedData}
