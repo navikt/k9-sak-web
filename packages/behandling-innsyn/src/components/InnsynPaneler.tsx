@@ -43,6 +43,7 @@ const InnsynPaneler = ({
       aksjonspunkter={fetchedData?.aksjonspunkter}
       kodeverk={kodeverk}
       settPaVent={settPaVent}
+      featureToggles={featureToggles}
     />
     <InnsynProsess
       fagsak={fagsak}

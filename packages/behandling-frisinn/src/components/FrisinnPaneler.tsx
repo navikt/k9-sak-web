@@ -65,6 +65,7 @@ const FrisinnPaneler = ({
         aksjonspunkter={fetchedData?.aksjonspunkter}
         kodeverk={alleKodeverk}
         settPaVent={settPaVent}
+        featureToggles={featureToggles}
       />
       <FrisinnProsess
         data={fetchedData}

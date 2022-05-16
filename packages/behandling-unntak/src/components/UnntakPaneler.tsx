@@ -65,6 +65,7 @@ const UnntakPaneler = ({
         aksjonspunkter={fetchedData?.aksjonspunkter}
         kodeverk={alleKodeverk}
         settPaVent={settPaVent}
+        featureToggles={featureToggles}
       />
       <UnntakProsess
         data={fetchedData}
