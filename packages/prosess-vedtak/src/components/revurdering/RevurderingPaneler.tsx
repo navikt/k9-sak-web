@@ -9,7 +9,7 @@ import { isAvslag, isInnvilget, isOpphor } from '@fpsak-frontend/kodeverk/src/be
 import { redusertUtbetalingArsakType } from '@fpsak-frontend/prosess-vedtak/src/kodeverk/redusertUtbetalingArsak';
 import BehandlingArsakType from '@fpsak-frontend/kodeverk/src/behandlingArsakType';
 import { getKodeverknavnFn } from '@fpsak-frontend/utils';
-import { Aksjonspunkt, Kodeverk, KodeverkMedNavn, Vilkar } from '../../../../types';
+import { Aksjonspunkt, Kodeverk, KodeverkMedNavn, Vilkar } from '@k9-sak-web/types';
 import VedtakInnvilgetRevurderingPanel from './VedtakInnvilgetRevurderingPanel';
 import VedtakAvslagRevurderingPanel from './VedtakAvslagRevurderingPanel';
 import VedtakOpphorRevurderingPanel from './VedtakOpphorRevurderingPanel';

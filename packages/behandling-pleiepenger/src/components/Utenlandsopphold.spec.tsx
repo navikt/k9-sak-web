@@ -4,9 +4,10 @@ import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
 import { renderWithIntl } from '@fpsak-frontend/utils-test/src/test-utils';
+// eslint-disable-next-line import/no-relative-packages
+import utenlandsoppholdMock, { utenlandsoppholdÅrsakMock } from '../../../mocks/mockdata/utenlandsoppholdMock';
 
 import Utenlandsopphold from './Utenlandsopphold';
-import utenlandsoppholdMock, { utenlandsoppholdÅrsakMock } from '../../../mocks/mockdata/utenlandsoppholdMock';
 
 describe('Utenlandsopphold', () => {
   test('har utenlandsopphold som tittel', () => {

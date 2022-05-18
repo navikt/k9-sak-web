@@ -15,7 +15,7 @@ import {
 import { Rammevedtak, RammevedtakEnum } from '@k9-sak-web/types/src/omsorgspenger/Rammevedtak';
 import Aktivitet from '@k9-sak-web/prosess-aarskvantum-oms/src/dto/Aktivitet';
 import { FraværÅrsakEnum } from '@k9-sak-web/types/src/omsorgspenger/Uttaksperiode';
-import ÅrskvantumForbrukteDager from '../../../prosess-aarskvantum-oms/src/dto/ÅrskvantumForbrukteDager';
+import ÅrskvantumForbrukteDager from '@k9-sak-web/prosess-aarskvantum-oms/src/dto/ÅrskvantumForbrukteDager';
 import alleKodeverk from '../mocks/alleKodeverk.json';
 import withReduxProvider from '../../decorators/withRedux';
 

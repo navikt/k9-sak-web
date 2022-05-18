@@ -6,7 +6,7 @@ import useGlobalStateRestApiData from '@k9-sak-web/rest-api-hooks/src/global-dat
 import HistorikkAktor from '@fpsak-frontend/kodeverk/src/historikkAktor';
 import navBrukerKjonn from '@fpsak-frontend/kodeverk/src/navBrukerKjonn';
 import { Kodeverk, SaksbehandlereInfo } from '@k9-sak-web/types';
-import { K9sakApiKeys } from '../../../../../sak-app/src/data/k9sakApi';
+import { K9sakApiKeys } from '@k9-sak-web/sak-app/src/data/k9sakApi';
 
 import styles from './snakkebobleContainer.less';
 

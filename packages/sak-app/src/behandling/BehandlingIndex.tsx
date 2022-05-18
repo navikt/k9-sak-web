@@ -19,6 +19,7 @@ import {
 } from '@k9-sak-web/types';
 
 import { erFagytelseTypeUtvidetRett } from '@k9-sak-web/behandling-utvidet-rett/src/utils/utvidetRettHjelpfunksjoner';
+import BehandlingPleiepengerSluttfaseIndex from '@k9-sak-web/behandling-pleiepenger-sluttfase/src/BehandlingPleiepengerSluttfaseIndex';
 import useTrackRouteParam from '../app/useTrackRouteParam';
 import getAccessRights from '../app/util/access';
 import {
@@ -30,7 +31,6 @@ import {
 import { K9sakApiKeys, requestApi, restApiHooks, LinkCategory } from '../data/k9sakApi';
 import behandlingEventHandler from './BehandlingEventHandler';
 import ErrorBoundary from '../app/ErrorBoundary';
-import BehandlingPleiepengerSluttfaseIndex from '../../../behandling-pleiepenger-sluttfase/src/BehandlingPleiepengerSluttfaseIndex';
 
 const BehandlingPleiepengerIndex = React.lazy(() => import('@k9-sak-web/behandling-pleiepenger'));
 const BehandlingOmsorgspengerIndex = React.lazy(() => import('@k9-sak-web/behandling-omsorgspenger'));
