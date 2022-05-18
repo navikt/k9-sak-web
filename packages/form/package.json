@@ -13,7 +13,7 @@
     "lodash.throttle": "^4.1.1",
     "moment": "^2.29.1",
     "nav-frontend-core": "6.0.1",
-    "nav-frontend-etiketter": "3.0.1",
+    "nav-frontend-etiketter": "3.0.2",
     "nav-frontend-etiketter-style": "2.0.1",
     "nav-frontend-js-utils": "1.0.20",
     "nav-frontend-lukknapp": "2.0.1",
