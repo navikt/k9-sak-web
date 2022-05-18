@@ -206,26 +206,24 @@ export const MessagesImpl = ({
             </>
           )}
           {brevmalkode === dokumentMalType.GENERELT_FRITEKSTBREV && (
-            <>
-              <div className='input--xxl'>
-                <VerticalSpacer eightPx />
-                <InputField
-                  name='fritekstbrev.overskrift'
-                  label={intl.formatMessage({ id: 'Messages.FritekstTittel' })}
-                  validate={[required, minLength3, maxLength200, hasValidText]}
-                  maxLength={200}
-                />
+            <div className='input--xxl'>
+              <VerticalSpacer eightPx />
+              <InputField
+                name='fritekstbrev.overskrift'
+                label={intl.formatMessage({ id: 'Messages.FritekstTittel' })}
+                validate={[required, minLength3, maxLength200, hasValidText]}
+                maxLength={200}
+              />
 
-                <VerticalSpacer eightPx />
-                <TextAreaField
-                  name='fritekstbrev.brødtekst'
-                  label={intl.formatMessage({ id: 'Messages.Fritekst' })}
-                  validate={[required, minLength3, maxLength100000, hasValidText]}
-                  maxLength={100000}
-                  badges={[{ type: 'fokus', textId: languageCode, title: 'Messages.Beskrivelse' }]}
-                />
-              </div>
-            </>
+              <VerticalSpacer eightPx />
+              <TextAreaField
+                name='fritekstbrev.brødtekst'
+                label={intl.formatMessage({ id: 'Messages.Fritekst' })}
+                validate={[required, minLength3, maxLength100000, hasValidText]}
+                maxLength={100000}
+                badges={[{ type: 'fokus', textId: languageCode, title: 'Messages.Beskrivelse' }]}
+              />
+            </div>
           )}
           <VerticalSpacer eightPx />
           <div className={styles.buttonRow}>

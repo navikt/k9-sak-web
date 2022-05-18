@@ -75,20 +75,18 @@ export const KlageVurderingRadioOptionsNfp = ({
 
   return (
     <div>
-      <>
-        <RadioGroupField
-          name="klageVurdering"
-          validate={[required]}
-          readOnly={readOnly}
-          className={readOnly ? styles.selectReadOnly : null}
-        >
-          <RadioOption value={klageVurderingType.MEDHOLD_I_KLAGE} label={{ id: 'Klage.ResolveKlage.ChangeVedtak' }} />
-          <RadioOption
-            value={klageVurderingType.STADFESTE_YTELSESVEDTAK}
-            label={{ id: 'Klage.ResolveKlage.KeepVedtakNfp' }}
-          />
-        </RadioGroupField>
-      </>
+      <RadioGroupField
+        name="klageVurdering"
+        validate={[required]}
+        readOnly={readOnly}
+        className={readOnly ? styles.selectReadOnly : null}
+      >
+        <RadioOption value={klageVurderingType.MEDHOLD_I_KLAGE} label={{ id: 'Klage.ResolveKlage.ChangeVedtak' }} />
+        <RadioOption
+          value={klageVurderingType.STADFESTE_YTELSESVEDTAK}
+          label={{ id: 'Klage.ResolveKlage.KeepVedtakNfp' }}
+        />
+      </RadioGroupField>
       {klageVurdering === klageVurderingType.MEDHOLD_I_KLAGE && (
         <ArrowBox className={readOnly ? styles.selectReadOnly : null}>
           <SelectField

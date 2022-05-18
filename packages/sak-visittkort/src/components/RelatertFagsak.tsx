@@ -40,19 +40,17 @@ const RelatertFagsak = ({ relaterteFagsaker }: RelatertFagsakProps) => {
       );
     }
     return (
-      <>
-        <NavSelect
-          label="Velg relatert søker"
-          onChange={e => setValgtSøkerIdent(e.target.value)}
-          className={styles.relatertFagsak__søkerSelect}
-        >
-          {relaterteSøkere.map(søker => (
-            <option key={søker.søkerIdent} value={søker.søkerIdent}>
-              {søker.søkerNavn} {behandlingsstatus(søker)}
-            </option>
-          ))}
-        </NavSelect>
-      </>
+      <NavSelect
+        label="Velg relatert søker"
+        onChange={e => setValgtSøkerIdent(e.target.value)}
+        className={styles.relatertFagsak__søkerSelect}
+      >
+        {relaterteSøkere.map(søker => (
+          <option key={søker.søkerIdent} value={søker.søkerIdent}>
+            {søker.søkerNavn} {behandlingsstatus(søker)}
+          </option>
+        ))}
+      </NavSelect>
     );
   };
 

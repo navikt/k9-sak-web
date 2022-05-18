@@ -252,22 +252,20 @@ export const ActivityPanel = ({
       />
     </>
     {!shouldDisablePeriodpicker(hasAksjonspunkt, initialValues) && (
-      <>
-        <FlexContainer>
-          <FlexRow className={styles.buttonContainer}>
-            <FlexColumn>
-              <Hovedknapp mini htmlType="button" onClick={handleSubmit} disabled={pristine}>
-                <FormattedMessage id="ActivityPanel.Oppdater" />
-              </Hovedknapp>
-            </FlexColumn>
-            <FlexColumn>
-              <Knapp mini htmlType="button" onClick={cancelSelectedOpptjeningActivity}>
-                <FormattedMessage id="ActivityPanel.Avbryt" />
-              </Knapp>
-            </FlexColumn>
-          </FlexRow>
-        </FlexContainer>
-      </>
+      <FlexContainer>
+        <FlexRow className={styles.buttonContainer}>
+          <FlexColumn>
+            <Hovedknapp mini htmlType="button" onClick={handleSubmit} disabled={pristine}>
+              <FormattedMessage id="ActivityPanel.Oppdater" />
+            </Hovedknapp>
+          </FlexColumn>
+          <FlexColumn>
+            <Knapp mini htmlType="button" onClick={cancelSelectedOpptjeningActivity}>
+              <FormattedMessage id="ActivityPanel.Avbryt" />
+            </Knapp>
+          </FlexColumn>
+        </FlexRow>
+      </FlexContainer>
     )}
   </FaktaGruppe>
 );

@@ -21,16 +21,14 @@ const HistorikkMalType1 = ({ historikkinnslag, getKodeverknavn, saksnummer }: Hi
       {historikkinnslagDeler[0].begrunnelseFritekst && (
         <BubbleText bodyText={historikkinnslagDeler[0].begrunnelseFritekst} />
       )}
-      <>
-        {dokumentLinks &&
-          dokumentLinks.map(dokumentLenke => (
-            <HistorikkDokumentLenke
-              key={`${dokumentLenke.tag}@${dokumentLenke.url}`}
-              dokumentLenke={dokumentLenke}
-              saksnummer={saksnummer}
-            />
-          ))}
-      </>
+      {dokumentLinks &&
+        dokumentLinks.map(dokumentLenke => (
+          <HistorikkDokumentLenke
+            key={`${dokumentLenke.tag}@${dokumentLenke.url}`}
+            dokumentLenke={dokumentLenke}
+            saksnummer={saksnummer}
+          />
+        ))}
     </>
   );
 };

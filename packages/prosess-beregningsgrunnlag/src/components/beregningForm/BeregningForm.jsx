@@ -185,10 +185,10 @@ const sjekkErMidlertidigInaktiv = beregningsgrunnlag =>
   beregningsgrunnlag.aktivitetStatus.some(a => a.kode === aktivitetStatus.MIDLERTIDIG_INAKTIV);
 
 const sjekkLonnsendringSisteTreMan = (beregningsgrunnlag) =>
-    beregningsgrunnlag.faktaOmBeregning
-    && beregningsgrunnlag.faktaOmBeregning.saksopplysninger
-    && beregningsgrunnlag.faktaOmBeregning.saksopplysninger.arbeidsforholdMedLønnsendring
-    && beregningsgrunnlag.faktaOmBeregning.saksopplysninger.arbeidsforholdMedLønnsendring.length > 0;
+  beregningsgrunnlag.faktaOmBeregning
+  && beregningsgrunnlag.faktaOmBeregning.saksopplysninger
+  && beregningsgrunnlag.faktaOmBeregning.saksopplysninger.arbeidsforholdMedLønnsendring
+  && beregningsgrunnlag.faktaOmBeregning.saksopplysninger.arbeidsforholdMedLønnsendring.length > 0;
 
 // ----------------------------------------------------- ------------------------------------- //
 // Component : BeregningFormImpl
@@ -246,22 +246,20 @@ export const BeregningFormImpl = ({
             lonnsendringSisteTreMan={lonnsendringSisteTreMan}
           />
           {relevanteStatuser.skalViseBeregningsgrunnlag && (
-            <>
-              <Beregningsgrunnlag
-                relevanteStatuser={relevanteStatuser}
-                readOnly={readOnly}
-                submitCallback={submitCallback}
-                readOnlySubmitButton={readOnlySubmitButton}
-                formName={formName}
-                allePerioder={beregningsgrunnlagPeriode}
-                behandlingId={behandling.id}
-                behandlingVersjon={behandling.versjon}
-                alleKodeverk={alleKodeverk}
-                arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
-                sammenligningsGrunnlagInntekter={beregningsgrunnlag.sammenligningsgrunnlagInntekter}
-                skjeringstidspunktDato={skjaeringstidspunktBeregning}
-              />
-            </>
+            <Beregningsgrunnlag
+              relevanteStatuser={relevanteStatuser}
+              readOnly={readOnly}
+              submitCallback={submitCallback}
+              readOnlySubmitButton={readOnlySubmitButton}
+              formName={formName}
+              allePerioder={beregningsgrunnlagPeriode}
+              behandlingId={behandling.id}
+              behandlingVersjon={behandling.versjon}
+              alleKodeverk={alleKodeverk}
+              arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
+              sammenligningsGrunnlagInntekter={beregningsgrunnlag.sammenligningsgrunnlagInntekter}
+              skjeringstidspunktDato={skjaeringstidspunktBeregning}
+            />
           )}
         </Column>
         <Column xs="12" md="6">

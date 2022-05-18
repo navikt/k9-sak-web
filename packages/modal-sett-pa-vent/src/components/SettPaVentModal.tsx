@@ -194,137 +194,135 @@ export const SettPaVentModal = ({
   };
 
   return (
-    <>
-      <Modal
-        className={`${styles.modal} ${styles.settPaVentModal}`}
-        isOpen={showModal}
-        closeButton
-        contentLabel={intl.formatMessage({
-          id: originalVentearsak ? 'SettPaVentModal.ModalDescriptionErPaVent' : 'SettPaVentModal.ModalDescription',
-        })}
-        onRequestClose={cancelEvent}
-        shouldCloseOnOverlayClick={false}
-      >
-        <Container fluid data-testid="SettPaVentModal">
-          <form onSubmit={handleSubmit} name="ventModalForm" data-testid="ventModalForm">
-            <div className={styles.topContainer}>
-              <Image
-                className={styles.image}
-                alt={intl.formatMessage({ id: 'SettPaVentModal.PaVent' })}
-                src={innvilgetImageUrl}
-              />
-              <div className={styles.divider} />
-              <div className={styles.calendarContainer}>
-                <Normaltekst className={styles.label}>
-                  {getPaVentText(originalVentearsak, hasManualPaVent, frist, originalFrist, showEndreFrist)}
-                </Normaltekst>
-                {showEndreFrist && (
-                  <div className={styles.datePicker}>
-                    <DatepickerField
-                      name="frist"
-                      validate={[required, hasValidDate, dateAfterOrEqualToToday]}
-                      data-testid="datofelt"
-                    />
-                  </div>
-                )}
-              </div>
-            </div>
-
-            <div className={styles.contentContainer}>
-              {showSelect && (
-                <div className={styles.selectContainer}>
-                  {erVenterEtterlysInntektsmelding ? (
-                    <NavSelect className={styles.disabledNavSelect} disabled>
-                      <option value="">Inntektsmelding</option>
-                    </NavSelect>
-                  ) : (
-                    <SelectField
-                      name="ventearsak"
-                      label={<Element>{intl.formatMessage({ id: 'SettPaVentModal.HvaVenterViPa' })}</Element>}
-                      placeholder={intl.formatMessage({ id: 'SettPaVentModal.SelectPlaceholder' })}
-                      validate={[required]}
-                      selectValues={ventearsaker
-                        .filter(va => (erTilbakekreving ? inkluderVentearsak(va, ventearsak) : va.kanVelges === 'true'))
-                        .sort((v1, v2) => v1.navn.localeCompare(v2.navn))
-                        .map(va => (
-                          <option key={va.kode} value={va.kode}>
-                            {va.navn}
-                          </option>
-                        ))}
-                      bredde="xxl"
-                      readOnly={!hasManualPaVent}
-                    />
-                  )}
+    <Modal
+      className={`${styles.modal} ${styles.settPaVentModal}`}
+      isOpen={showModal}
+      closeButton
+      contentLabel={intl.formatMessage({
+        id: originalVentearsak ? 'SettPaVentModal.ModalDescriptionErPaVent' : 'SettPaVentModal.ModalDescription',
+      })}
+      onRequestClose={cancelEvent}
+      shouldCloseOnOverlayClick={false}
+    >
+      <Container fluid data-testid="SettPaVentModal">
+        <form onSubmit={handleSubmit} name="ventModalForm" data-testid="ventModalForm">
+          <div className={styles.topContainer}>
+            <Image
+              className={styles.image}
+              alt={intl.formatMessage({ id: 'SettPaVentModal.PaVent' })}
+              src={innvilgetImageUrl}
+            />
+            <div className={styles.divider} />
+            <div className={styles.calendarContainer}>
+              <Normaltekst className={styles.label}>
+                {getPaVentText(originalVentearsak, hasManualPaVent, frist, originalFrist, showEndreFrist)}
+              </Normaltekst>
+              {showEndreFrist && (
+                <div className={styles.datePicker}>
+                  <DatepickerField
+                    name="frist"
+                    validate={[required, hasValidDate, dateAfterOrEqualToToday]}
+                    data-testid="datofelt"
+                  />
                 </div>
               )}
-              {showKommentarInput && (
-                <TextAreaField
-                  name="ventearsakVariant"
-                  maxLength={200}
-                  readOnly={!hasManualPaVent}
-                  validate={[hasValidText, maxLength(200)]}
-                  label={
-                    <div className={styles.commentInputLabel}>
-                      <Element>{intl.formatMessage({ id: 'SettPaVentModal.Kommentar' })}</Element>
-                      <span>({intl.formatMessage({ id: 'SettPaVentModal.Valgfritt' })})</span>
-                    </div>
-                  }
-                />
-              )}
-              {visBrevErBestilt && (
+            </div>
+          </div>
+
+          <div className={styles.contentContainer}>
+            {showSelect && (
+              <div className={styles.selectContainer}>
+                {erVenterEtterlysInntektsmelding ? (
+                  <NavSelect className={styles.disabledNavSelect} disabled>
+                    <option value="">Inntektsmelding</option>
+                  </NavSelect>
+                ) : (
+                  <SelectField
+                    name="ventearsak"
+                    label={<Element>{intl.formatMessage({ id: 'SettPaVentModal.HvaVenterViPa' })}</Element>}
+                    placeholder={intl.formatMessage({ id: 'SettPaVentModal.SelectPlaceholder' })}
+                    validate={[required]}
+                    selectValues={ventearsaker
+                      .filter(va => (erTilbakekreving ? inkluderVentearsak(va, ventearsak) : va.kanVelges === 'true'))
+                      .sort((v1, v2) => v1.navn.localeCompare(v2.navn))
+                      .map(va => (
+                        <option key={va.kode} value={va.kode}>
+                          {va.navn}
+                        </option>
+                      ))}
+                    bredde="xxl"
+                    readOnly={!hasManualPaVent}
+                  />
+                )}
+              </div>
+            )}
+            {showKommentarInput && (
+              <TextAreaField
+                name="ventearsakVariant"
+                maxLength={200}
+                readOnly={!hasManualPaVent}
+                validate={[hasValidText, maxLength(200)]}
+                label={
+                  <div className={styles.commentInputLabel}>
+                    <Element>{intl.formatMessage({ id: 'SettPaVentModal.Kommentar' })}</Element>
+                    <span>({intl.formatMessage({ id: 'SettPaVentModal.Valgfritt' })})</span>
+                  </div>
+                }
+              />
+            )}
+            {visBrevErBestilt && (
+              <Normaltekst>
+                <FormattedMessage id="SettPaVentModal.BrevBlirBestilt" />
+              </Normaltekst>
+            )}
+            <div className={styles.flexContainer}>
+              {!hasManualPaVent && showFristenTekst && (
                 <Normaltekst>
-                  <FormattedMessage id="SettPaVentModal.BrevBlirBestilt" />
+                  <FormattedMessage id="SettPaVentModal.UtløptFrist" />
+                  <VerticalSpacer eightPx />
+                  <FormattedMessage id="SettPaVentModal.HenleggeSaken" />
                 </Normaltekst>
               )}
-              <div className={styles.flexContainer}>
-                {!hasManualPaVent && showFristenTekst && (
-                  <Normaltekst>
-                    <FormattedMessage id="SettPaVentModal.UtløptFrist" />
-                    <VerticalSpacer eightPx />
-                    <FormattedMessage id="SettPaVentModal.HenleggeSaken" />
-                  </Normaltekst>
-                )}
-              </div>
-              <div className={showSelect ? styles.buttonContainer : ''}>
-                <Hovedknapp
-                  mini
-                  htmlType={
-                    hovedKnappenType(venteArsakHasChanged, fristHasChanged, ventearsakVariantHasChanged)
-                      ? 'submit'
-                      : 'button'
-                  }
-                  className={styles.button}
-                  onClick={getHovedknappOnClick}
-                  disabled={isButtonDisabled(
-                    frist,
-                    showAvbryt,
-                    hasManualPaVent,
-                    erVenterEtterlysInntektsmelding,
-                    formHasChanges,
-                  )}
-                >
-                  {getHovedknappTekst()}
-                </Hovedknapp>
-                {(!hasManualPaVent || showAvbryt || !visBrevErBestilt) && (
-                  <Knapp
-                    htmlType="button"
-                    mini
-                    onClick={!showEndreFrist ? toggleEndreFrist : cancelEvent}
-                    className={styles.cancelButton}
-                  >
-                    {showEndreFrist ? (
-                      <FormattedMessage id="SettPaVentModal.Lukk" />
-                    ) : (
-                      <FormattedMessage id="SettPaVentModal.EndreFrist" />
-                    )}
-                  </Knapp>
-                )}
-              </div>
             </div>
-          </form>
-        </Container>
-      </Modal>
-    </>
+            <div className={showSelect ? styles.buttonContainer : ''}>
+              <Hovedknapp
+                mini
+                htmlType={
+                  hovedKnappenType(venteArsakHasChanged, fristHasChanged, ventearsakVariantHasChanged)
+                    ? 'submit'
+                    : 'button'
+                }
+                className={styles.button}
+                onClick={getHovedknappOnClick}
+                disabled={isButtonDisabled(
+                  frist,
+                  showAvbryt,
+                  hasManualPaVent,
+                  erVenterEtterlysInntektsmelding,
+                  formHasChanges,
+                )}
+              >
+                {getHovedknappTekst()}
+              </Hovedknapp>
+              {(!hasManualPaVent || showAvbryt || !visBrevErBestilt) && (
+                <Knapp
+                  htmlType="button"
+                  mini
+                  onClick={!showEndreFrist ? toggleEndreFrist : cancelEvent}
+                  className={styles.cancelButton}
+                >
+                  {showEndreFrist ? (
+                    <FormattedMessage id="SettPaVentModal.Lukk" />
+                  ) : (
+                    <FormattedMessage id="SettPaVentModal.EndreFrist" />
+                  )}
+                </Knapp>
+              )}
+            </div>
+          </div>
+        </form>
+      </Container>
+    </Modal>
   );
 };
 

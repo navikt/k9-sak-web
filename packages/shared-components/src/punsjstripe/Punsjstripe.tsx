@@ -77,12 +77,10 @@ const Punsjstripe: React.FC<PunsjstripeProps> = ({ behandlingUuid, pathToLos }) 
   };
 
   return (
-    <>
-      <AlertStripeAdvarsel>
-        <div>{getUløsteOppgaverText(journalpostIder, 'søkeren')}</div>
-        <div className="marginTop">{getUløsteOppgaverText(journalpostIderBarn, 'barnet')}</div>
-      </AlertStripeAdvarsel>
-    </>
+    <AlertStripeAdvarsel>
+      <div>{getUløsteOppgaverText(journalpostIder, 'søkeren')}</div>
+      <div className="marginTop">{getUløsteOppgaverText(journalpostIderBarn, 'barnet')}</div>
+    </AlertStripeAdvarsel>
   );
 };
 export default Punsjstripe;

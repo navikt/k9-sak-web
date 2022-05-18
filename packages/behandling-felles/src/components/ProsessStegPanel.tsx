@@ -91,6 +91,7 @@ const ProsessStegPanel = ({
   const delPaneler = valgtProsessSteg.getDelPaneler();
 
   return (
+    // eslint-disable-next-line react/jsx-no-useless-fragment
     <>
       {valgtProsessSteg.getErStegBehandlet() && (
         <MargMarkering

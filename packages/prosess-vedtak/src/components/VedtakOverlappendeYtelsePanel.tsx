@@ -72,7 +72,7 @@ const VedtakOverlappendeYtelsePanel: React.FC<Props & WrappedComponentProps> = (
         setValgtPeriode(raden.perioder.find((periode) => periode.id === eventProps.items[0]));
     };
 
-    return <>
+    return (
         <BorderBox>
             {overlappendeYtelser && overlappendeYtelser.length > 0 && <Tidslinje
                 rader={rader}
@@ -102,7 +102,7 @@ const VedtakOverlappendeYtelsePanel: React.FC<Props & WrappedComponentProps> = (
             )}
 
         </BorderBox>
-    </>;
+    );
 }
 
 export default injectIntl(VedtakOverlappendeYtelsePanel);

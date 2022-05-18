@@ -104,7 +104,8 @@ const lagMenyProps = (kronologiskeGrunnlag, bgVilkår) => {
 
 const finnAvklaringsbehov = (beregningsgrunnlag) => beregningsgrunnlag.avklaringsbehov.filter(ab => isBeregningAvklaringsbehov(ab.definisjon.kode))
 
-const harAvklaringsbehovSomkanLøses = (beregningsgrunnlag) => beregningsgrunnlag.avklaringsbehov.some(ab => isBeregningAvklaringsbehov(ab.definisjon.kode) && ab.kanLoses)
+const harAvklaringsbehovSomkanLøses = (beregningsgrunnlag) =>
+  beregningsgrunnlag.avklaringsbehov.some(ab => isBeregningAvklaringsbehov(ab.definisjon.kode) && ab.kanLoses)
 
 /**
  * BeregningFP

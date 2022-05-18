@@ -137,15 +137,13 @@ const MellomLagreBrev = ({
     );
   }
   return (
-    <>
-      <Row>
-        <Column xs="12">
-          <VerticalSpacer sixteenPx />
-          {submitKnapp}
-          <VerticalSpacer sixteenPx />
-        </Column>
-      </Row>
-    </>
+    <Row>
+      <Column xs="12">
+        <VerticalSpacer sixteenPx />
+        {submitKnapp}
+        <VerticalSpacer sixteenPx />
+      </Column>
+    </Row>
   );
 };
 

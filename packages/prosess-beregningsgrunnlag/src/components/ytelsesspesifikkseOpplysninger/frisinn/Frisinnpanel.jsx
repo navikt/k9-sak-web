@@ -14,27 +14,25 @@ import beregningsgrunnlagBehandlingPropType from '../../../propTypes/beregningsg
 const erDagsatsBeregnet = bg => bg.beregningsgrunnlagPeriode.some(p => p.dagsats || p.dagsats === 0);
 
 const Frisinnpanel = ({ beregningsgrunnlag, behandling }) => (
-  <>
-    <div className={styles.aksjonspunktBehandlerContainer}>
-      <Panel>
-        <Undertittel>
-          <FormattedMessage id="Beregningsgrunnlag.Frisinn.Tittel" />
-        </Undertittel>
-        <VerticalSpacer sixteenPx />
-        <Søknadsopplysninger beregningsgrunnlag={beregningsgrunnlag} />
-        <VerticalSpacer sixteenPx />
-        <Inntektsopplysninger beregningsgrunnlag={beregningsgrunnlag} />
-        <VerticalSpacer sixteenPx />
-        {erDagsatsBeregnet(beregningsgrunnlag) && (
-          <>
-            <Grenseverdi beregningsgrunnlag={beregningsgrunnlag} behandling={behandling} />
-            <VerticalSpacer sixteenPx />
-            <Beregningsresultat beregningsgrunnlag={beregningsgrunnlag} behandling={behandling} />
-          </>
-        )}
-      </Panel>
-    </div>
-  </>
+  <div className={styles.aksjonspunktBehandlerContainer}>
+    <Panel>
+      <Undertittel>
+        <FormattedMessage id="Beregningsgrunnlag.Frisinn.Tittel" />
+      </Undertittel>
+      <VerticalSpacer sixteenPx />
+      <Søknadsopplysninger beregningsgrunnlag={beregningsgrunnlag} />
+      <VerticalSpacer sixteenPx />
+      <Inntektsopplysninger beregningsgrunnlag={beregningsgrunnlag} />
+      <VerticalSpacer sixteenPx />
+      {erDagsatsBeregnet(beregningsgrunnlag) && (
+        <>
+          <Grenseverdi beregningsgrunnlag={beregningsgrunnlag} behandling={behandling} />
+          <VerticalSpacer sixteenPx />
+          <Beregningsresultat beregningsgrunnlag={beregningsgrunnlag} behandling={behandling} />
+        </>
+      )}
+    </Panel>
+  </div>
 );
 Frisinnpanel.propTypes = {
   beregningsgrunnlag: beregningsgrunnlagPropType.isRequired,

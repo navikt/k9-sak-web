@@ -202,16 +202,14 @@ const HistorikkMalType5 = ({
         {historikkinnslagDel.aarsak && <Normaltekst>{getKodeverknavn(historikkinnslagDel.aarsak)}</Normaltekst>}
         {historikkinnslagDel.begrunnelse && <BubbleText bodyText={getKodeverknavn(historikkinnslagDel.begrunnelse)} />}
         {historikkinnslagDel.begrunnelseFritekst && <BubbleText bodyText={historikkinnslagDel.begrunnelseFritekst} />}
-        <>
-          {historikkinnslag.dokumentLinks &&
-            historikkinnslag.dokumentLinks.map(dokumentLenke => (
-              <HistorikkDokumentLenke
-                key={`${dokumentLenke.tag}@${dokumentLenke.url}`}
-                dokumentLenke={dokumentLenke}
-                saksnummer={saksnummer}
-              />
-            ))}
-        </>
+        {historikkinnslag.dokumentLinks &&
+          historikkinnslag.dokumentLinks.map(dokumentLenke => (
+            <HistorikkDokumentLenke
+              key={`${dokumentLenke.tag}@${dokumentLenke.url}`}
+              dokumentLenke={dokumentLenke}
+              saksnummer={saksnummer}
+            />
+          ))}
 
         {historikkinnslagDelIndex < historikkinnslag.historikkinnslagDeler.length - 1 && <VerticalSpacer sixteenPx />}
       </div>
