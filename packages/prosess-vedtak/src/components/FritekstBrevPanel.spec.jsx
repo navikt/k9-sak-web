@@ -8,9 +8,6 @@ import PreviewLink from './PreviewLink';
 
 describe('<FritekstBrevPanel>', () => {
   const eventCallback = sinon.spy();
-  const sprakkode = {
-    kode: 'EN',
-  };
   it('skal vise alle felter i readonly modus, men ikke autobrev link', () => {
     const wrapper = shallowWithIntl(
       <FritekstBrevPanel.WrappedComponent

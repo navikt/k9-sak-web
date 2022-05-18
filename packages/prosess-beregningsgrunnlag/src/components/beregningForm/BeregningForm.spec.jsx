@@ -57,18 +57,6 @@ const apFastsettBgSnNyIArbeidslivet = {
   kanLoses: true,
   erAktivt: true,
 };
-const apFastsettBgTidsbegrensetArbeidsforhold = {
-  definisjon: {
-    kode: avklaringsbehovCodes.FASTSETT_BEREGNINGSGRUNNLAG_TIDSBEGRENSET_ARBEIDSFORHOLD,
-    navn: 'apNavn5',
-  },
-  status: {
-    kode: 'OPPR',
-    navn: 'statusNavn5',
-  },
-  kanLoses: true,
-  erAktivt: true,
-};
 
 const avklaringsbehovListe = [apFastsettBgATFL];
 

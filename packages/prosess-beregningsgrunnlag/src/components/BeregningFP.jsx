@@ -59,9 +59,6 @@ const visningForManglendeBG = () => (
   </>
 );
 
-const getAksjonspunkterForBeregning = aksjonspunkter =>
-  aksjonspunkter ? aksjonspunkter.filter(ap => isBeregningAvklaringsbehov(ap.definisjon.kode)) : [];
-  
 const getRelevanteStatuser = bg =>
   bg && bg.aktivitetStatus
     ? {
