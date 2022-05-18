@@ -33,6 +33,7 @@ const DateLabel = ({ dateString }: OwnProps) => {
     return null;
   }
   const formatedDate = format(zonedTimeToUtc(date, 'Europe/Oslo'), 'dd.MM.yyyy');
+  // eslint-disable-next-line react/jsx-no-useless-fragment
   return <>{formatedDate}</>;
 };
 

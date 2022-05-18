@@ -33,7 +33,7 @@ const {
 
 
 const findAvklaringsbehovMedBegrunnelse = alleBeregningsgrunnlag => {
-  const alleAvklaringsbehov = alleBeregningsgrunnlag.flatMap(({avklaringsbehov}) => avklaringsbehov);
+  const alleAvklaringsbehov = alleBeregningsgrunnlag.flatMap(({ avklaringsbehov }) => avklaringsbehov);
   if (alleAvklaringsbehov.some(ab => ab.definisjon.kode === OVERSTYRING_AV_BEREGNINGSGRUNNLAG)) {
     return alleAvklaringsbehov.find(
       ab => ab.definisjon.kode === OVERSTYRING_AV_BEREGNINGSGRUNNLAG && ab.begrunnelse !== null,
@@ -66,14 +66,14 @@ const isAvklaringsbehovClosed = alleAb => {
 const lagHelpTextsForFakta = () => {
   const helpTexts = [];
   helpTexts.push(
-    <FormattedMessage key="VurderFaktaForBeregningen" id="BeregningInfoPanel.AksjonspunktHelpText.FaktaOmBeregning"/>,
+    <FormattedMessage key="VurderFaktaForBeregningen" id="BeregningInfoPanel.AksjonspunktHelpText.FaktaOmBeregning" />,
   );
   return helpTexts;
 };
 
 const hasOpenAvklaringsbehov = (kode, alleBeregningsgrunnlag) => {
   if (Array.isArray(alleBeregningsgrunnlag)) {
-    return alleBeregningsgrunnlag.flatMap(({avklaringsbehov}) => avklaringsbehov)
+    return alleBeregningsgrunnlag.flatMap(({ avklaringsbehov }) => avklaringsbehov)
       .some(ab => ab.definisjon.kode === kode && isAvklaringsbehovOpen(ab.status.kode));
   }
   return alleBeregningsgrunnlag.avklaringsbehov
@@ -105,7 +105,7 @@ export class VurderFaktaBeregningPanelImpl extends Component {
   }
 
   componentDidMount() {
-    const {submitEnabled} = this.state;
+    const { submitEnabled } = this.state;
     if (!submitEnabled) {
       this.setState({
         submitEnabled: true,
@@ -113,7 +113,7 @@ export class VurderFaktaBeregningPanelImpl extends Component {
     }
   }
 
-  renderVurderFaktaBeregningPanel = ({fields}) => {
+  renderVurderFaktaBeregningPanel = ({ fields }) => {
     const {
       props: {
         aktivtBeregningsgrunnlagIndex,
@@ -144,30 +144,30 @@ export class VurderFaktaBeregningPanelImpl extends Component {
 
     return fields.map(
       (field, index) =>
-        (<div key={field} style={{display: index === aktivtBeregningsgrunnlagIndex ? 'block' : 'none'}}>
-            {måVurderes(fields.get(index).avklaringsbehov, fields.get(index).erTilVurdering) && (
-              <AksjonspunktHelpTextTemp
-                isAksjonspunktOpen={!isAvklaringsbehovClosed(fields.get(index).avklaringsbehov)}>
-                {lagHelpTextsForFakta()}
-              </AksjonspunktHelpTextTemp>
-            )}
-            <VerticalSpacer twentyPx/>
-            <FaktaForATFLOgSNPanel
-              readOnly={readOnly || !fields.get(index).erTilVurdering}
-              isAvklaringsbehovClosed={isAvklaringsbehovClosed(fields.get(index).avklaringsbehov) && fields.get(index).erTilVurdering}
-              avklaringsbehov={fields.get(index).avklaringsbehov}
-              behandlingId={behandlingId}
-              behandlingVersjon={behandlingVersjon}
-              beregningsgrunnlag={alleBeregningsgrunnlag[index]}
-              alleKodeverk={alleKodeverk}
-              arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
-              erOverstyrer={erOverstyrer}
-              fieldArrayID={field}
-              vilkaarPeriodeFieldArrayIndex={index}
-            />
-            <VerticalSpacer twentyPx/>
-          </div>
-        ),
+      (<div key={field} style={{ display: index === aktivtBeregningsgrunnlagIndex ? 'block' : 'none' }}>
+        {måVurderes(fields.get(index).avklaringsbehov, fields.get(index).erTilVurdering) && (
+          <AksjonspunktHelpTextTemp
+            isAksjonspunktOpen={!isAvklaringsbehovClosed(fields.get(index).avklaringsbehov)}>
+            {lagHelpTextsForFakta()}
+          </AksjonspunktHelpTextTemp>
+        )}
+        <VerticalSpacer twentyPx />
+        <FaktaForATFLOgSNPanel
+          readOnly={readOnly || !fields.get(index).erTilVurdering}
+          isAvklaringsbehovClosed={isAvklaringsbehovClosed(fields.get(index).avklaringsbehov) && fields.get(index).erTilVurdering}
+          avklaringsbehov={fields.get(index).avklaringsbehov}
+          behandlingId={behandlingId}
+          behandlingVersjon={behandlingVersjon}
+          beregningsgrunnlag={alleBeregningsgrunnlag[index]}
+          alleKodeverk={alleKodeverk}
+          arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
+          erOverstyrer={erOverstyrer}
+          fieldArrayID={field}
+          vilkaarPeriodeFieldArrayIndex={index}
+        />
+        <VerticalSpacer twentyPx />
+      </div>
+      ),
     );
   };
 
@@ -184,45 +184,46 @@ export class VurderFaktaBeregningPanelImpl extends Component {
         readOnly,
         ...formProps
       },
-      state: {submitEnabled},
+      state: { submitEnabled },
     } = this;
 
     const avklaringsbehov = Array.isArray(alleBeregningsgrunnlag) ?
       alleBeregningsgrunnlag.flatMap((bg) => bg.avklaringsbehov) : alleBeregningsgrunnlag.avklaringsbehov;
 
     return (
+      // eslint-disable-next-line react/jsx-no-useless-fragment
       <>
         {!(
           hasOpenAvklaringsbehov(AVKLAR_AKTIVITETER, alleBeregningsgrunnlag) ||
           hasOpenAvklaringsbehov(OVERSTYRING_AV_BEREGNINGSAKTIVITETER, alleBeregningsgrunnlag)
         ) && (
-          <form onSubmit={formProps.handleSubmit}>
-            <FieldArray name={fieldArrayName} component={this.renderVurderFaktaBeregningPanel}/>
-            {(harAvklaringsbehov(VURDER_FAKTA_FOR_ATFL_SN, avklaringsbehov) || erOverstyrt) && (
-              <>
-                <FaktaBegrunnelseTextField
-                  name={BEGRUNNELSE_FAKTA_TILFELLER_NAME}
-                  isSubmittable={submittable}
-                  isReadOnly={readOnly}
-                  hasBegrunnelse={hasBegrunnelse}
-                />
-                <VerticalSpacer twentyPx/>
-                <FaktaSubmitButton
-                  formName={formProps.form}
-                  isSubmittable={
-                    submittable &&
-                    submitEnabled &&
-                    harIkkeEndringerIAvklarAktiviteterMedFlereAvklaringsbehov(verdiForAvklarAktivitetErEndret, avklaringsbehov)
-                  }
-                  isReadOnly={readOnly}
-                  hasOpenAksjonspunkter={!isAvklaringsbehovClosed(avklaringsbehov)}
-                  behandlingId={behandlingId}
-                  behandlingVersjon={behandlingVersjon}
-                />
-              </>
-            )}
-          </form>
-        )}
+            <form onSubmit={formProps.handleSubmit}>
+              <FieldArray name={fieldArrayName} component={this.renderVurderFaktaBeregningPanel} />
+              {(harAvklaringsbehov(VURDER_FAKTA_FOR_ATFL_SN, avklaringsbehov) || erOverstyrt) && (
+                <>
+                  <FaktaBegrunnelseTextField
+                    name={BEGRUNNELSE_FAKTA_TILFELLER_NAME}
+                    isSubmittable={submittable}
+                    isReadOnly={readOnly}
+                    hasBegrunnelse={hasBegrunnelse}
+                  />
+                  <VerticalSpacer twentyPx />
+                  <FaktaSubmitButton
+                    formName={formProps.form}
+                    isSubmittable={
+                      submittable &&
+                      submitEnabled &&
+                      harIkkeEndringerIAvklarAktiviteterMedFlereAvklaringsbehov(verdiForAvklarAktivitetErEndret, avklaringsbehov)
+                    }
+                    isReadOnly={readOnly}
+                    hasOpenAksjonspunkter={!isAvklaringsbehovClosed(avklaringsbehov)}
+                    behandlingId={behandlingId}
+                    behandlingVersjon={behandlingVersjon}
+                  />
+                </>
+              )}
+            </form>
+          )}
       </>
     );
   }
@@ -266,8 +267,15 @@ export const transformValuesVurderFaktaBeregning = (values, alleBeregningsgrunnl
   const fieldArrayList = values[fieldArrayName];
   const beg = values[BEGRUNNELSE_FAKTA_TILFELLER_NAME];
   const apForSubmit = [];
-  if (fieldArrayList.some(currentFormValues => !erOverstyring(currentFormValues) && måVurderes(currentFormValues.avklaringsbehov, currentFormValues.erTilVurdering)) && alleBeregningsgrunnlag.some(harTilfeller)) {
-    const fieldsUtenOverstyring = fieldArrayList.filter(currentFormValues => !erOverstyring(currentFormValues) && måVurderes(currentFormValues.avklaringsbehov, currentFormValues.erTilVurdering));
+  if (
+    fieldArrayList.some(
+      currentFormValues => !erOverstyring(currentFormValues) && måVurderes(currentFormValues.avklaringsbehov, currentFormValues.erTilVurdering)
+    ) && alleBeregningsgrunnlag.some(harTilfeller)
+  ) {
+    const fieldsUtenOverstyring = fieldArrayList.filter(
+      currentFormValues => !erOverstyring(currentFormValues) && måVurderes(currentFormValues.avklaringsbehov, currentFormValues.erTilVurdering)
+    );
+
     apForSubmit.push(
       {
         kode: VURDER_FAKTA_FOR_ATFL_SN,
@@ -303,7 +311,7 @@ export const validateVurderFaktaBeregning = values => {
 
 export const buildInitialValues = (ownProps, alleBeregningsgrunnlag, aktivtBeregningsgrunnlagIndex, behandlingResultatPerioder) => ({
   [fieldArrayName]: alleBeregningsgrunnlag.map(beregningsgrunnlag => ({
-    erTilVurdering: behandlingResultatPerioder.find(({periode}) => periode.fom === beregningsgrunnlag.vilkårsperiodeFom).vurdersIBehandlingen,
+    erTilVurdering: behandlingResultatPerioder.find(({ periode }) => periode.fom === beregningsgrunnlag.vilkårsperiodeFom).vurdersIBehandlingen,
     avklaringsbehov: beregningsgrunnlag.avklaringsbehov,
     ...getBuildInitialValuesFaktaForATFLOgSN(ownProps, beregningsgrunnlag)(),
   })),
@@ -325,7 +333,7 @@ const mapStateToPropsFactory = (initialState, initialProps) => {
       ),
     );
   return (state, ownProps) => {
-    const {alleBeregningsgrunnlag, aktivtBeregningsgrunnlagIndex, behandlingResultatPerioder} = ownProps;
+    const { alleBeregningsgrunnlag, aktivtBeregningsgrunnlagIndex, behandlingResultatPerioder } = ownProps;
     const initialValues = buildInitialValues(
       ownProps,
       alleBeregningsgrunnlag,

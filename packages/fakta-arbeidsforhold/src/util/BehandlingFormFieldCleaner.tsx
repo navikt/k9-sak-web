@@ -75,6 +75,7 @@ export class BehandlingFormFieldCleaner extends Component<PureOwnProps & MappedO
 
   render() {
     const { children } = this.props;
+    // eslint-disable-next-line react/jsx-no-useless-fragment
     return <>{children}</>;
   }
 }

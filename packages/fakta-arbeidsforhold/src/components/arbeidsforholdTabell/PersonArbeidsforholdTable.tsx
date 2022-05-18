@@ -25,6 +25,7 @@ const headerColumnContent = [
   <FormattedMessage key={3} id="PersonArbeidsforholdTable.Kilde" values={{ br: <br /> }} />,
   <FormattedMessage key={4} id="PersonArbeidsforholdTable.Stillingsprosent" values={{ br: <br /> }} />,
   <FormattedMessage key={5} id="PersonArbeidsforholdTable.MottattDato" values={{ br: <br /> }} />,
+  // eslint-disable-next-line react/jsx-no-useless-fragment
   <></>,
 ];
 

@@ -11,6 +11,7 @@ describe('<IngenArbeidsforholdRegistrert>', () => {
     <span>PersonArbeidsforholdTable.Kilde</span>,
     <span>PersonArbeidsforholdTable.Stillingsprosent</span>,
     <span>PersonArbeidsforholdTable.MottattDato</span>,
+    // eslint-disable-next-line react/jsx-no-useless-fragment
     <></>,
   ];
   it('Skal sjekke at IngenArbeidsforholdRegistrert rendrer korrekt', () => {

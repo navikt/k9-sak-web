@@ -48,10 +48,10 @@ const ProsessStegPanel = ({
 
   const panelKeys = valgtProsessSteg
     ? valgtProsessSteg
-        .getDelPaneler()[0]
-        .getProsessStegDelPanelDef()
-        .getEndepunkter(featureToggles)
-        .map(e => ({ key: e }))
+      .getDelPaneler()[0]
+      .getProsessStegDelPanelDef()
+      .getEndepunkter(featureToggles)
+      .map(e => ({ key: e }))
     : [];
 
   const suspendRequest = !!(

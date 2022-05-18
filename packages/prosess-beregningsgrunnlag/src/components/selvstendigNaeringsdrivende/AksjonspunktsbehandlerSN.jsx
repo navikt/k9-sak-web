@@ -28,6 +28,7 @@ const AksjonspunktBehandlerSN = ({
   endretTekst,
   fieldArrayID,
 }) => (
+  // eslint-disable-next-line react/jsx-no-useless-fragment
   <>
     {skalFastsetteSN(avklaringsbehov) && (
       <VurderOgFastsettSN2

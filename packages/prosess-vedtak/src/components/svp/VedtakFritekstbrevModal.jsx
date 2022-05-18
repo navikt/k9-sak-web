@@ -43,8 +43,9 @@ export const VedtakFritekstbrevModal = ({
   const fritektsbrevRequired = isFritekstbrevRequired(readOnly, behandlingsresultat, erSVP);
   const [showModal, settShowModal] = useState(fritektsbrevRequired);
   return (
+    // eslint-disable-next-line react/jsx-no-useless-fragment
     <>
-      { fritektsbrevRequired && (
+      {fritektsbrevRequired && (
         <Modal
           className={styles.modal}
           isOpen={showModal}
