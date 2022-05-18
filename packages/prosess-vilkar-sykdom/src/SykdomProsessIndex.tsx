@@ -64,7 +64,7 @@ const SykdomProsessIndex = ({ perioder, panelTittelKode }: SykdomProsessIndexPro
     lovReferanse = '§ 9-10 tredje ledd (over 18 år)';
   }
 
-  if(panelTittelKode === 'Behandlingspunkt.LivetsSluttfase'){
+  if (panelTittelKode === 'Behandlingspunkt.LivetsSluttfase') {
     lovReferanse = '§ 9-13'
   }
 

@@ -62,18 +62,18 @@ const visningForManglendeBG = () => (
 const getRelevanteStatuser = bg =>
   bg && bg.aktivitetStatus
     ? {
-        isArbeidstaker: bg.aktivitetStatus.some(({ kode }) => isStatusArbeidstakerOrKombinasjon(kode)),
-        isFrilanser: bg.aktivitetStatus.some(({ kode }) => isStatusFrilanserOrKombinasjon(kode)),
-        isSelvstendigNaeringsdrivende: bg.aktivitetStatus.some(({ kode }) => isStatusSNOrKombinasjon(kode)),
-        harAndreTilstotendeYtelser: bg.aktivitetStatus.some(({ kode }) => isStatusTilstotendeYtelse(kode)),
-        harDagpengerEllerAAP: bg.aktivitetStatus.some(({ kode }) => isStatusDagpengerOrAAP(kode)),
-        isAAP: bg.aktivitetStatus.some(({ kode }) => kode === aktivitetStatus.ARBEIDSAVKLARINGSPENGER),
-        isDagpenger: bg.aktivitetStatus.some(({ kode }) => isStatusDagpenger(kode)),
-        skalViseBeregningsgrunnlag: bg.aktivitetStatus && bg.aktivitetStatus.length > 0,
-        isKombinasjonsstatus:
-          bg.aktivitetStatus.some(({ kode }) => isStatusKombinasjon(kode)) || bg.aktivitetStatus.length > 1,
-        isMilitaer: bg.aktivitetStatus.some(({ kode }) => isStatusMilitaer(kode)),
-      }
+      isArbeidstaker: bg.aktivitetStatus.some(({ kode }) => isStatusArbeidstakerOrKombinasjon(kode)),
+      isFrilanser: bg.aktivitetStatus.some(({ kode }) => isStatusFrilanserOrKombinasjon(kode)),
+      isSelvstendigNaeringsdrivende: bg.aktivitetStatus.some(({ kode }) => isStatusSNOrKombinasjon(kode)),
+      harAndreTilstotendeYtelser: bg.aktivitetStatus.some(({ kode }) => isStatusTilstotendeYtelse(kode)),
+      harDagpengerEllerAAP: bg.aktivitetStatus.some(({ kode }) => isStatusDagpengerOrAAP(kode)),
+      isAAP: bg.aktivitetStatus.some(({ kode }) => kode === aktivitetStatus.ARBEIDSAVKLARINGSPENGER),
+      isDagpenger: bg.aktivitetStatus.some(({ kode }) => isStatusDagpenger(kode)),
+      skalViseBeregningsgrunnlag: bg.aktivitetStatus && bg.aktivitetStatus.length > 0,
+      isKombinasjonsstatus:
+        bg.aktivitetStatus.some(({ kode }) => isStatusKombinasjon(kode)) || bg.aktivitetStatus.length > 1,
+      isMilitaer: bg.aktivitetStatus.some(({ kode }) => isStatusMilitaer(kode)),
+    }
     : null;
 
 const getBGVilkar = vilkar =>
@@ -152,11 +152,10 @@ export const BeregningFP = props => {
           <SideMenu
             links={kronologiskeGrunnlag.map((currentBeregningsgrunnlag, currentBeregningsgrunnlagIndex) => ({
               iconSrc: menyProps[currentBeregningsgrunnlagIndex].skalVurderes &&
-              harAvklaringsbehovSomkanLøses(beregningsgrunnlag[currentBeregningsgrunnlagIndex]) ? advarselIcon : null,
+                harAvklaringsbehovSomkanLøses(beregningsgrunnlag[currentBeregningsgrunnlagIndex]) ? advarselIcon : null,
               active: aktivtBeregningsgrunnlagIndeks === currentBeregningsgrunnlagIndex,
-              label: `${intl.formatMessage({ id: 'Sidemeny.Beregningsgrunnlag' })} ${
-                menyProps[currentBeregningsgrunnlagIndex].stp
-              }`,
+              label: `${intl.formatMessage({ id: 'Sidemeny.Beregningsgrunnlag' })} ${menyProps[currentBeregningsgrunnlagIndex].stp
+                }`,
             }))}
             onClick={setAktivtBeregningsgrunnlagIndeks}
             theme="arrow"
@@ -301,7 +300,7 @@ export const transformValues = (values, alleBeregningsgrunnlag, vilkar) => {
 
       return transformedValues;
     });
-    return formaterAksjonspunkter(alleAksjonspunkter, getBGVilkar(vilkar).perioder);
+  return formaterAksjonspunkter(alleAksjonspunkter, getBGVilkar(vilkar).perioder);
 }
 
 const mapStateToPropsFactory = (initialState, initialOwnProps) => {
@@ -313,7 +312,7 @@ const mapStateToPropsFactory = (initialState, initialOwnProps) => {
       beregningsgrunnlagListe: buildInitialValues(
         ownProps.beregningsgrunnlag,
         getBGVilkar(ownProps.vilkar)
-        ),
+      ),
     },
     fieldArrayID: ownProps.fieldArrayID,
   });

@@ -50,26 +50,26 @@ const formatName = (bpName = ''): string => replaceNorwegianCharacters(bpName.to
 
 const getOppdaterProsessStegOgFaktaPanelIUrl =
   (location: Location, navigate: NavigateFunction) =>
-  (prosessStegId: string, faktaPanelId: string): void => {
-    let newLocation;
-    if (prosessStegId === 'default') {
-      newLocation = getLocationWithDefaultProsessStegAndFakta(location);
-    } else if (prosessStegId) {
-      newLocation = getProsessStegLocation(location)(formatName(prosessStegId));
-    } else {
-      newLocation = getProsessStegLocation(location)(null);
-    }
+    (prosessStegId: string, faktaPanelId: string): void => {
+      let newLocation;
+      if (prosessStegId === 'default') {
+        newLocation = getLocationWithDefaultProsessStegAndFakta(location);
+      } else if (prosessStegId) {
+        newLocation = getProsessStegLocation(location)(formatName(prosessStegId));
+      } else {
+        newLocation = getProsessStegLocation(location)(null);
+      }
 
-    if (faktaPanelId === 'default') {
-      newLocation = getFaktaLocation(newLocation)('default');
-    } else if (faktaPanelId) {
-      newLocation = getFaktaLocation(newLocation)(formatName(faktaPanelId));
-    } else {
-      newLocation = getFaktaLocation(newLocation)(null);
-    }
+      if (faktaPanelId === 'default') {
+        newLocation = getFaktaLocation(newLocation)('default');
+      } else if (faktaPanelId) {
+        newLocation = getFaktaLocation(newLocation)(formatName(faktaPanelId));
+      } else {
+        newLocation = getFaktaLocation(newLocation)(null);
+      }
 
-    navigate(newLocation);
-  };
+      navigate(newLocation);
+    };
 
 interface OwnProps {
   setBehandlingIdOgVersjon: (behandlingId: number, behandlingVersjon: number) => void;

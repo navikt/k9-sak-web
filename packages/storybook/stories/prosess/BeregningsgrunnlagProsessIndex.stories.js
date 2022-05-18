@@ -60,7 +60,7 @@ const vilkarMedUtfall = (kode, fomArray) => [
       kodeverk: 'vilkarType',
     },
     perioder: fomArray.map(fom => ({
-      periode: { fom, tom: null},
+      periode: { fom, tom: null },
       vilkarStatus: {
         kode,
         kodeverk: 'vilkarStatus',
@@ -198,7 +198,7 @@ const lagStatus = kode => ({
 
 const lagBG = (perioder, statuser, sammenligningsgrunnlagPrStatus, avklaringsbehov, grunnbeløp = 99858) => {
   const beregningsgrunnlag = {
-    avklaringsbehov: avklaringsbehov == undefined ? [] : avklaringsbehov,
+    avklaringsbehov: avklaringsbehov === undefined ? [] : avklaringsbehov,
     skjaeringstidspunktBeregning: '2019-09-16',
     skjæringstidspunkt: '2019-09-16',
     vilkårsperiodeFom: '2019-09-16',
@@ -217,7 +217,7 @@ const lagBG = (perioder, statuser, sammenligningsgrunnlagPrStatus, avklaringsbeh
     ledetekstBrutto: 'Brutto beregningsgrunnlag',
     ledetekstAvkortet: 'Avkortet beregningsgrunnlag (6G=599148)',
     ledetekstRedusert: 'Redusert beregningsgrunnlag (100%)',
-    halvG: grunnbeløp/2,
+    halvG: grunnbeløp / 2,
     faktaOmBeregning: {
       kortvarigeArbeidsforhold: null,
       frilansAndel: null,
@@ -1057,7 +1057,13 @@ export const tidsbegrensetArbeidsforholdMedAvvik = () => {
   ];
   const statuser = [lagStatus('AT_FL')];
   const sammenligningsgrunnlagPrStatus = [lagSammenligningsGrunnlag(sammenligningType.ATFLSN, 474257, 26.2, 77059)];
-  const bg = lagBG(perioder, statuser, sammenligningsgrunnlagPrStatus, lagAPMedKode(aksjonspunktCodes.FASTSETT_BEREGNINGSGRUNNLAG_TIDSBEGRENSET_ARBEIDSFORHOLD));
+  const bg = lagBG(
+    perioder,
+    statuser,
+    sammenligningsgrunnlagPrStatus,
+    lagAPMedKode(aksjonspunktCodes.FASTSETT_BEREGNINGSGRUNNLAG_TIDSBEGRENSET_ARBEIDSFORHOLD)
+  );
+
   return (
     <BeregningsgrunnlagProsessIndex
       behandling={behandling}
@@ -1554,7 +1560,13 @@ export const tidsbegrensetArbeidsforholdMedAksjonspunktkSide7 = () => {
   ];
   const statuser = [lagStatus('AT')];
   const sammenligningsgrunnlagPrStatus = [lagSammenligningsGrunnlag(sammenligningType.ATFLSN, 404257, 36.4, 147059)];
-  const bg = lagBG(perioder, statuser, sammenligningsgrunnlagPrStatus, lagAPMedKode(aksjonspunktCodes.FASTSETT_BEREGNINGSGRUNNLAG_TIDSBEGRENSET_ARBEIDSFORHOLD));
+  const bg = lagBG(
+    perioder,
+    statuser,
+    sammenligningsgrunnlagPrStatus,
+    lagAPMedKode(aksjonspunktCodes.FASTSETT_BEREGNINGSGRUNNLAG_TIDSBEGRENSET_ARBEIDSFORHOLD)
+  );
+
   return (
     <BeregningsgrunnlagProsessIndex
       behandling={behandling}
@@ -3002,7 +3014,7 @@ export const arbeidstakerMedAvvikOgKunEttGrunnlagKanLøses = () => {
   ap1[0].begrunnelse =
     'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.' +
     ' Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.';
-    ap1[0].status.kode = 'UTFO';
+  ap1[0].status.kode = 'UTFO';
   const bg1 = lagBG(perioder, statuser, sammenligningsgrunnlagPrStatus, ap1);
   const bg2 = lagBG(perioder, statuser, sammenligningsgrunnlagPrStatus, lagAPMedKode(aksjonspunktCodes.FASTSETT_BEREGNINGSGRUNNLAG_ARBEIDSTAKER_FRILANS));
 

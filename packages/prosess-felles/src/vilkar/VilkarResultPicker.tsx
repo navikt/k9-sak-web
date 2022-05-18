@@ -130,9 +130,9 @@ VilkarResultPicker.transformValues = (values: FormValues) =>
   values.erVilkarOk
     ? { erVilkarOk: values.erVilkarOk }
     : {
-        erVilkarOk: values.erVilkarOk,
-        avslagskode: values.avslagCode,
-        avslagDato: values.avslagDato,
-      };
+      erVilkarOk: values.erVilkarOk,
+      avslagskode: values.avslagCode,
+      avslagDato: values.avslagDato,
+    };
 
 export default VilkarResultPicker;

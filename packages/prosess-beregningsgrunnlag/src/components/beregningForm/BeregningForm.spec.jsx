@@ -416,7 +416,7 @@ describe('<BeregningForm>', () => {
     const beregningsgrunnlag = lagBeregningsgrunnlag(0, 120000, 100000, 100, []);
 
     beregningsgrunnlag.avklaringsbehov = avklaringsbehov;
-    const bgVilkar= {
+    const bgVilkar = {
       perioder: [
         {
           fom: beregningsgrunnlag.vilkårsperiodeFom
