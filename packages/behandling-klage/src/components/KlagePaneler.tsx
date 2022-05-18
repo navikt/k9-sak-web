@@ -62,6 +62,7 @@ const KlagePaneler = ({
       aksjonspunkter={fetchedData?.aksjonspunkter}
       kodeverk={kodeverk}
       settPaVent={settPaVent}
+      featureToggles={featureToggles}
     />
     <KlageProsess
       data={fetchedData}
