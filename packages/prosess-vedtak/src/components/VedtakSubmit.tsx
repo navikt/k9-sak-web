@@ -4,7 +4,7 @@ import behandlingStatusCode from '@fpsak-frontend/kodeverk/src/behandlingStatus'
 import { useIntl } from 'react-intl';
 
 import { Column, Row } from 'nav-frontend-grid';
-import { Button } from '@navikt/ds-react';
+import { Button, Alert } from '@navikt/ds-react';
 import { Aksjonspunkt } from '@k9-sak-web/types';
 import { DokumentDataType, LagreDokumentdataType } from '@k9-sak-web/types/src/dokumentdata';
 import MellomLagreBrev from './brev/MellomLagreBrev';
@@ -23,6 +23,7 @@ interface Props {
   inkluderKalender: boolean;
   dokumentdata: DokumentDataType;
   lagreDokumentdata: LagreDokumentdataType;
+  errorOnSubmit?: string;
 }
 
 const kanSendesTilGodkjenning = behandlingStatusKode =>
@@ -40,6 +41,7 @@ export default function VedtakSubmit({
   overskrift,
   brødtekst,
   inkluderKalender,
+  errorOnSubmit,
 }: Props): JSX.Element {
   const intl = useIntl();
 
@@ -68,6 +70,7 @@ export default function VedtakSubmit({
       <Column xs="12">
         {!readOnly && (
           <>
+            {errorOnSubmit && <Alert variant="error">{errorOnSubmit}</Alert>}
             <MellomLagreBrev
               lagreDokumentdata={lagreDokumentdata}
               dokumentdata={dokumentdata}

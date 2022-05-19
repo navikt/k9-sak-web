@@ -12,19 +12,13 @@ import {
 import { Fagsak, Kodeverk, KodeverkMedNavn, Behandling, FagsakPerson } from '@k9-sak-web/types';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 
-import lagForhåndsvisRequest from '@fpsak-frontend/utils/src/formidlingUtils';
+import { getForhandsvisCallback } from '@fpsak-frontend/utils/src/formidlingUtils';
 import AnkeBehandlingModal from './AnkeBehandlingModal';
 import prosessStegPanelDefinisjoner from '../panelDefinisjoner/prosessStegAnkePanelDefinisjoner';
 import FetchedData from '../types/fetchedDataTsType';
 import { restApiAnkeHooks, AnkeBehandlingApiKeys } from '../data/ankeBehandlingApi';
 
 import '@fpsak-frontend/assets/styles/arrowForProcessMenu.less';
-
-const forhandsvis = data => {
-  if (URL.createObjectURL) {
-    window.open(URL.createObjectURL(data));
-  }
-};
 
 interface OwnProps {
   data: FetchedData;
@@ -61,12 +55,6 @@ const saveAnkeText =
     } else {
       lagreAnkeVurdering(data);
     }
-  };
-
-const previewCallback =
-  (forhandsvisMelding, fagsak: Fagsak, fagsakPerson: FagsakPerson, behandling: Behandling) => parametre => {
-    const request = lagForhåndsvisRequest(behandling, fagsak, fagsakPerson, parametre);
-    return forhandsvisMelding(request).then(response => forhandsvis(response));
   };
 
 const getLagringSideeffekter =
@@ -136,7 +124,7 @@ const AnkeProsess = ({
     saveAnke: useCallback(saveAnkeText(lagreAnkeVurdering, lagreReapneAnkeVurdering, behandling, data.aksjonspunkter), [
       behandling.versjon,
     ]),
-    previewCallback: useCallback(previewCallback(forhandsvisMelding, fagsak, fagsakPerson, behandling), [
+    previewCallback: useCallback(getForhandsvisCallback(forhandsvisMelding, fagsak, fagsakPerson, behandling), [
       behandling.versjon,
     ]),
     ...data,

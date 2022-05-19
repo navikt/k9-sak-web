@@ -2,7 +2,7 @@ import React from 'react';
 import { createSelector } from 'reselect';
 import { injectIntl, IntlShape } from 'react-intl';
 import { connect } from 'react-redux';
-import { Button } from '@navikt/ds-react';
+import { Button, Alert } from '@navikt/ds-react';
 
 import klageBehandlingArsakType from '@fpsak-frontend/kodeverk/src/behandlingArsakType';
 import behandlingStatusCode from '@fpsak-frontend/kodeverk/src/behandlingStatus';
@@ -28,6 +28,7 @@ interface OwnProps {
   dokumentdata: DokumentDataType;
   lagreDokumentdata: LagreDokumentdataType;
   aksjonspunkter: Aksjonspunkt[];
+  errorOnSubmit: string;
 }
 
 export const submitKnappTekst = aksjonspunkter =>
@@ -49,6 +50,7 @@ export const VedtakRevurderingSubmitPanelImpl = ({
   overskrift,
   brødtekst,
   aksjonspunkter,
+  errorOnSubmit,
 }: OwnProps): JSX.Element => {
   const onClick = event =>
     !harRedusertUtbetaling || Object.values(redusertUtbetalingArsak).some(a => !!formikValues[a])
@@ -81,6 +83,7 @@ export const VedtakRevurderingSubmitPanelImpl = ({
       <div className={styles.margin} />
       {!readOnly && (
         <>
+          {errorOnSubmit && <Alert variant="error">{errorOnSubmit}</Alert>}
           <MellomLagreBrev
             lagreDokumentdata={lagreDokumentdata}
             dokumentdata={dokumentdata}

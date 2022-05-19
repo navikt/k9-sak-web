@@ -10,18 +10,12 @@ import {
   useSetBehandlingVedEndring,
 } from '@k9-sak-web/behandling-felles';
 import { Fagsak, KodeverkMedNavn, Behandling, FeatureToggles, FagsakPerson } from '@k9-sak-web/types';
-import lagForhåndsvisRequest from '@fpsak-frontend/utils/src/formidlingUtils';
+import { getForhandsvisCallback } from '@fpsak-frontend/utils/src/formidlingUtils';
 
 import prosessStegPanelDefinisjoner from '../panelDefinisjoner/prosessStegInnsynPanelDefinisjoner';
 import { restApiInnsynHooks, InnsynBehandlingApiKeys } from '../data/innsynBehandlingApi';
 import FetchedData from '../types/fetchedDataTsType';
 import '@fpsak-frontend/assets/styles/arrowForProcessMenu.less';
-
-const forhandsvis = data => {
-  if (URL.createObjectURL) {
-    window.open(URL.createObjectURL(data));
-  }
-};
 
 interface OwnProps {
   data: FetchedData;
@@ -37,12 +31,6 @@ interface OwnProps {
   setBehandling: (behandling: Behandling) => void;
   featureToggles: FeatureToggles;
 }
-
-const previewCallback =
-  (forhandsvisMelding, fagsak: Fagsak, fagsakPerson: FagsakPerson, behandling: Behandling) => parametre => {
-    const request = lagForhåndsvisRequest(behandling, fagsak, fagsakPerson, parametre);
-    return forhandsvisMelding(request).then(response => forhandsvis(response));
-  };
 
 const getLagringSideeffekter =
   (toggleIverksetterVedtakModal, toggleOppdatereFagsakContext, oppdaterProsessStegOgFaktaPanelIUrl) =>
@@ -94,7 +82,7 @@ const InnsynProsess = ({
   const dataTilUtledingAvFpPaneler = {
     alleDokumenter: data.innsynDokumenter,
     innsyn: data.innsyn,
-    previewCallback: useCallback(previewCallback(forhandsvisMelding, fagsak, fagsakPerson, behandling), [
+    previewCallback: useCallback(getForhandsvisCallback(forhandsvisMelding, fagsak, fagsakPerson, behandling), [
       behandling.versjon,
     ]),
     ...data,

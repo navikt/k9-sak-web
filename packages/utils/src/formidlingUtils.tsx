@@ -122,4 +122,22 @@ export const lagForhåndsvisRequest = (
   ...data,
 });
 
+export const forhandsvis = data => {
+  if (URL.createObjectURL) {
+    window.open(URL.createObjectURL(data));
+  }
+};
+
+export const getForhandsvisCallback =
+  (
+    forhandsvisMelding: (data: any) => Promise<any>,
+    fagsak: Fagsak,
+    fagsakPerson: FagsakPerson,
+    behandling: Behandling,
+  ) =>
+  (parametre: any, ikkeAapneINyttVindu: boolean) => {
+    const request = lagForhåndsvisRequest(behandling, fagsak, fagsakPerson, parametre);
+    return forhandsvisMelding(request).then(response => (ikkeAapneINyttVindu ? response : forhandsvis(response)));
+  };
+
 export default lagForhåndsvisRequest;

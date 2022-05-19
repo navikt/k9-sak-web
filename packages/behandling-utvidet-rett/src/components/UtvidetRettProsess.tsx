@@ -11,21 +11,15 @@ import {
   lagDokumentdata,
   useSetBehandlingVedEndring,
 } from '@k9-sak-web/behandling-felles';
-import { Fagsak, FagsakPerson, Behandling } from '@k9-sak-web/types';
+import { Fagsak, Behandling } from '@k9-sak-web/types';
 
-import lagForhåndsvisRequest from '@fpsak-frontend/utils/src/formidlingUtils';
+import {getForhandsvisCallback, forhandsvis} from '@fpsak-frontend/utils/src/formidlingUtils';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import fagsakYtelseType from "@fpsak-frontend/kodeverk/src/fagsakYtelseType";
 import { restApiUtvidetRettHooks, UtvidetRettBehandlingApiKeys } from '../data/utvidetRettBehandlingApi';
 import prosessStegUtvidetRettPanelDefinisjoner from '../panelDefinisjoner/prosessStegUtvidetRettPanelDefinisjoner';
 import '@fpsak-frontend/assets/styles/arrowForProcessMenu.less';
 import { ProsessProps } from '../types/ProsessProps';
-
-const forhandsvis = (data: any) => {
-  if (URL.createObjectURL) {
-    window.open(URL.createObjectURL(data));
-  }
-};
 
 const getForhandsvisTilbakeCallback =
   (forhandsvisTilbakekrevingMelding: (data: any) => Promise<any>, fagsak: Fagsak, behandling: Behandling) =>
@@ -39,18 +33,6 @@ const getForhandsvisTilbakeCallback =
         saksnummer,
       };
       return forhandsvisTilbakekrevingMelding(data).then(response => forhandsvis(response));
-    };
-
-const getForhandsvisCallback =
-  (
-    forhandsvisMelding: (data: any) => Promise<any>,
-    fagsak: Fagsak,
-    fagsakPerson: FagsakPerson,
-    behandling: Behandling,
-  ) =>
-    (data: any) => {
-      const request = lagForhåndsvisRequest(behandling, fagsak, fagsakPerson, data);
-      return forhandsvisMelding(request).then(response => forhandsvis(response));
     };
 
 const getLagringSideeffekter =

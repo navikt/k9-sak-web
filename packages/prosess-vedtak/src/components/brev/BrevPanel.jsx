@@ -13,9 +13,8 @@ import {
 import { Column, Row } from 'nav-frontend-grid';
 import SelectFieldFormik from '@fpsak-frontend/form/src/SelectFieldFormik';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { safeJSONParse, required } from '@fpsak-frontend/utils';
+import { required } from '@fpsak-frontend/utils';
 
-import dokumentMalType from '@fpsak-frontend/kodeverk/src/dokumentMalType';
 import vedtaksbrevtype from '@fpsak-frontend/kodeverk/src/vedtaksbrevtype';
 import styles from './BrevPanel.less';
 import InformasjonsbehovAutomatiskVedtaksbrev from './InformasjonsbehovAutomatiskVedtaksbrev';
@@ -34,80 +33,6 @@ const kanResultatForhåndsvises = behandlingResultat => {
   return type.kode !== 'ENDRING_I_FORDELING_AV_YTELSEN' && type.kode !== 'INGEN_ENDRING';
 };
 
-const getManuellBrevCallback =
-  ({ brødtekst, overskrift, overstyrtMottaker, formProps, previewCallback, tilgjengeligeVedtaksbrev }) =>
-  e => {
-    if (formProps.isValid) {
-      previewCallback({
-        dokumentdata: {
-          fritekstbrev: {
-            brødtekst: brødtekst || ' ',
-            overskrift: overskrift || ' ',
-            inkluderKalender: formProps.values[fieldnames.INKLUDER_KALENDER_VED_OVERSTYRING] || false,
-          },
-        },
-        // Bruker FRITKS som fallback til lenken ikke vises for avsluttede behandlinger
-        dokumentMal: tilgjengeligeVedtaksbrev?.vedtaksbrevmaler?.[vedtaksbrevtype.FRITEKST] ?? dokumentMalType.FRITKS,
-        ...(overstyrtMottaker ? { overstyrtMottaker: safeJSONParse(overstyrtMottaker) } : {}),
-      });
-    } else {
-      formProps.submit();
-    }
-    e.preventDefault();
-  };
-
-const automatiskVedtaksbrevParams = ({
-  fritekst,
-  redusertUtbetalingÅrsaker,
-  overstyrtMottaker,
-  tilgjengeligeVedtaksbrev,
-  informasjonsbehovValues,
-}) => ({
-  dokumentdata: {
-    fritekst: fritekst || ' ',
-    redusertUtbetalingÅrsaker,
-    ...Object.assign({}, ...informasjonsbehovValues),
-  },
-
-  // Bruker UTLED som fallback til lenken ikke vises for avsluttede behandlinger
-  dokumentMal: tilgjengeligeVedtaksbrev?.vedtaksbrevmaler?.[vedtaksbrevtype.AUTOMATISK] ?? dokumentMalType.UTLED,
-  ...(overstyrtMottaker ? { overstyrtMottaker: safeJSONParse(overstyrtMottaker) } : {}),
-});
-
-const getPreviewAutomatiskBrevCallbackUtenValidering =
-  ({ fritekst, redusertUtbetalingÅrsaker, overstyrtMottaker, previewCallback, tilgjengeligeVedtaksbrev }) =>
-  e => {
-    previewCallback(
-      automatiskVedtaksbrevParams({ fritekst, redusertUtbetalingÅrsaker, overstyrtMottaker, tilgjengeligeVedtaksbrev }),
-    );
-    e.preventDefault();
-  };
-
-const getPreviewAutomatiskBrevCallback =
-  ({
-    fritekst,
-    redusertUtbetalingÅrsaker,
-    overstyrtMottaker,
-    formProps,
-    previewCallback,
-    tilgjengeligeVedtaksbrev,
-    informasjonsbehovValues,
-  }) =>
-  e => {
-    e.preventDefault();
-    if (formProps.isValid) {
-      previewCallback(
-        automatiskVedtaksbrevParams({
-          fritekst,
-          redusertUtbetalingÅrsaker,
-          overstyrtMottaker,
-          tilgjengeligeVedtaksbrev,
-          informasjonsbehovValues,
-        }),
-      );
-    }
-  };
-
 export const BrevPanel = props => {
   const {
     intl,
@@ -117,44 +42,15 @@ export const BrevPanel = props => {
     arbeidsgiverOpplysningerPerId,
     tilgjengeligeVedtaksbrev,
     informasjonsbehovVedtaksbrev,
-    informasjonsbehovValues,
     skalBrukeOverstyrendeFritekstBrev,
     begrunnelse,
-    previewCallback,
-    redusertUtbetalingÅrsaker,
-    brødtekst,
-    overskrift,
     behandlingResultat,
-    overstyrtMottaker,
     formikProps,
     ytelseTypeKode,
+    automatiskBrevUtenValideringCallback,
+    manuellBrevCallback,
+    automatiskBrevCallback,
   } = props;
-
-  const automatiskBrevCallback = getPreviewAutomatiskBrevCallback({
-    fritekst: begrunnelse,
-    redusertUtbetalingÅrsaker,
-    overstyrtMottaker,
-    formProps: formikProps,
-    previewCallback,
-    tilgjengeligeVedtaksbrev,
-    informasjonsbehovValues,
-  });
-  const automatiskBrevUtenValideringCallback = getPreviewAutomatiskBrevCallbackUtenValidering({
-    fritekst: begrunnelse,
-    redusertUtbetalingÅrsaker,
-    overstyrtMottaker,
-    previewCallback,
-    tilgjengeligeVedtaksbrev,
-  });
-
-  const manuellBrevCallback = getManuellBrevCallback({
-    brødtekst,
-    overskrift,
-    overstyrtMottaker,
-    formProps: formikProps,
-    previewCallback,
-    tilgjengeligeVedtaksbrev,
-  });
 
   const harAutomatiskVedtaksbrev = kanHaAutomatiskVedtaksbrev(tilgjengeligeVedtaksbrev);
   const harFritekstbrev = kanHaFritekstbrev(tilgjengeligeVedtaksbrev);
@@ -234,24 +130,19 @@ BrevPanel.propTypes = {
   informasjonsbehovVedtaksbrev: PropTypes.shape({
     informasjonsbehov: PropTypes.arrayOf(PropTypes.shape({ type: PropTypes.string })),
   }),
-  informasjonsbehovValues: PropTypes.arrayOf(PropTypes.string).isRequired,
   skalBrukeOverstyrendeFritekstBrev: PropTypes.bool.isRequired,
-  previewCallback: PropTypes.func.isRequired,
-  redusertUtbetalingÅrsaker: PropTypes.arrayOf(PropTypes.string),
-  brødtekst: PropTypes.string,
-  overskrift: PropTypes.string,
-  overstyrtMottaker: PropTypes.string,
   behandlingResultat: PropTypes.shape(),
   personopplysninger: PropTypes.shape(),
   arbeidsgiverOpplysningerPerId: PropTypes.shape(),
   formikProps: PropTypes.shape().isRequired,
   ytelseTypeKode: PropTypes.string,
+  automatiskBrevUtenValideringCallback: PropTypes.func,
+  automatiskBrevCallback: PropTypes.func,
+  manuellBrevCallback: PropTypes.func,
 };
 
 BrevPanel.defaultProps = {
   begrunnelse: null,
-  brødtekst: null,
-  overskrift: null,
 };
 
 export default injectIntl(BrevPanel);

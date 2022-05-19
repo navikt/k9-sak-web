@@ -10,6 +10,7 @@ import { isAvslag, isDelvisInnvilget, isInnvilget } from '@fpsak-frontend/kodeve
 import { dokumentdatatype } from '@k9-sak-web/konstanter';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { VedtakFormContext } from '@k9-sak-web/behandling-felles/src/components/ProsessStegContainer';
+import dokumentMalType from '@fpsak-frontend/kodeverk/src/dokumentMalType';
 
 import { safeJSONParse, decodeHtmlEntity } from '@fpsak-frontend/utils';
 import {
@@ -78,6 +79,7 @@ export const VedtakForm = ({
   behandlingArsaker,
 }) => {
   const [erSendtInnUtenArsaker, setErSendtInnUtenArsaker] = useState(false);
+  const [errorOnSubmit, setErrorOnSubmit] = useState('');
   const vedtakContext = useContext(VedtakFormContext);
   const onToggleOverstyring = (e, setFieldValue) => {
     const kommendeVerdi = e.target.checked;
@@ -192,23 +194,120 @@ export const VedtakForm = ({
     ],
   );
 
-  const redusertUtbetalingÅrsaker = formikProps => {
+  const redusertUtbetalingÅrsaker = values => {
     if (harRedusertUtbetaling) {
-      return readOnly
-        ? vedtakVarsel?.redusertUtbetalingÅrsaker
-        : transformRedusertUtbetalingÅrsaker(formikProps.values);
+      return readOnly ? vedtakVarsel?.redusertUtbetalingÅrsaker : transformRedusertUtbetalingÅrsaker(values);
     }
     return null;
   };
 
+  const getManuellBrevCallback =
+    formikValues =>
+    ({ ikkeAapneINyttVindu } = { ikkeAapneINyttVindu: false }) =>
+    e => {
+      const response = previewCallback(
+        {
+          dokumentdata: {
+            fritekstbrev: {
+              brødtekst: formikValues[fieldnames.BRØDTEKST] || ' ',
+              overskrift: formikValues[fieldnames.OVERSKRIFT] || ' ',
+              inkluderKalender: formikValues[fieldnames.INKLUDER_KALENDER_VED_OVERSTYRING] || false,
+            },
+          },
+          // Bruker FRITKS som fallback til lenken ikke vises for avsluttede behandlinger
+          dokumentMal: tilgjengeligeVedtaksbrev?.vedtaksbrevmaler?.[vedtaksbrevtype.FRITEKST] ?? dokumentMalType.FRITKS,
+          ...(formikValues[fieldnames.OVERSTYRT_MOTTAKER]
+            ? { overstyrtMottaker: safeJSONParse(formikValues[fieldnames.OVERSTYRT_MOTTAKER]) }
+            : {}),
+        },
+        ikkeAapneINyttVindu,
+      );
+      e?.preventDefault();
+      return response;
+    };
+
+  const automatiskVedtaksbrevParams = ({ fritekst, overstyrtMottaker, informasjonsbehovValues, årsaker }) => ({
+    dokumentdata: {
+      fritekst: fritekst || ' ',
+      redusertUtbetalingÅrsaker: årsaker,
+      ...Object.assign({}, ...informasjonsbehovValues),
+    },
+
+    // Bruker UTLED som fallback til lenken ikke vises for avsluttede behandlinger
+    dokumentMal: tilgjengeligeVedtaksbrev?.vedtaksbrevmaler?.[vedtaksbrevtype.AUTOMATISK] ?? dokumentMalType.UTLED,
+    ...(overstyrtMottaker ? { overstyrtMottaker: safeJSONParse(overstyrtMottaker) } : {}),
+  });
+
+  const getPreviewAutomatiskBrevCallback =
+    ({ fritekst, overstyrtMottaker, informasjonsbehovValues }) =>
+    formikProps =>
+    e => {
+      e.preventDefault();
+      if (formikProps.isValid) {
+        previewCallback(
+          automatiskVedtaksbrevParams({
+            fritekst,
+            redusertUtbetalingÅrsaker,
+            overstyrtMottaker,
+            tilgjengeligeVedtaksbrev,
+            informasjonsbehovValues,
+          }),
+        );
+      }
+    };
+
+  const getPreviewAutomatiskBrevCallbackUtenValidering =
+    formikValues =>
+    ({ ikkeAapneINyttVindu } = { ikkeAapneINyttVindu: false }) =>
+    e => {
+      const response = previewCallback(
+        automatiskVedtaksbrevParams({
+          fritekst: formikValues[fieldnames.fritekst],
+          årsaker: redusertUtbetalingÅrsaker(formikValues),
+          overstyrtMottaker: formikValues[fieldnames.OVERSTYRT_MOTTAKER],
+          informasjonsbehovValues: filterInformasjonsbehov(formikValues, aktiverteInformasjonsbehov),
+        }),
+        ikkeAapneINyttVindu,
+      );
+      e?.preventDefault();
+      return response;
+    };
+
+  const submit = async values => {
+    const manueltBrev = values[fieldnames.SKAL_BRUKE_OVERSTYRENDE_FRITEKST_BREV];
+    const hindreUtsending = values[fieldnames.SKAL_HINDRE_UTSENDING_AV_BREV];
+
+    if (manueltBrev) {
+      try {
+        await getManuellBrevCallback(values)({ ikkeAapneINyttVindu: true })();
+        submitCallback(createPayload(values));
+      } catch (e) {
+        setErrorOnSubmit('Noe gikk galt ved innsending.');
+        return;
+      }
+    }
+
+    if (hindreUtsending) {
+      submitCallback(createPayload(values));
+      return;
+    }
+
+    if (!hindreUtsending && !manueltBrev) {
+      try {
+        await getPreviewAutomatiskBrevCallbackUtenValidering(values)({ ikkeAapneINyttVindu: true })();
+        submitCallback(createPayload(values));
+      } catch (e) {
+        setErrorOnSubmit('Noe gikk galt ved innsending.');
+        return;
+      }
+    }
+
+    setErrorOnSubmit('');
+  };
+
   return (
     <>
-      <Formik
-        initialValues={{ ...initialValues, ...vedtakContext?.vedtakFormState }}
-        onSubmit={values => {
-          submitCallback(createPayload(values));
-        }}
-      >
+      <Formik initialValues={{ ...initialValues, ...vedtakContext?.vedtakFormState }} onSubmit={submit}>
         {formikProps => (
           <form>
             <LagreFormikStateLokalt />
@@ -330,6 +429,11 @@ export const VedtakForm = ({
                 dokumentdata={dokumentdata}
                 lagreDokumentdata={lagreDokumentdata}
                 ytelseTypeKode={ytelseTypeKode}
+                automatiskBrevCallback={getPreviewAutomatiskBrevCallback(formikProps.values)(formikProps)}
+                automatiskBrevUtenValideringCallback={getPreviewAutomatiskBrevCallbackUtenValidering(
+                  formikProps.values,
+                )()}
+                manuellBrevCallback={getManuellBrevCallback(formikProps.values)()}
               />
               {!erRevurdering ? (
                 <VedtakSubmit
@@ -344,6 +448,7 @@ export const VedtakForm = ({
                   brødtekst={formikProps.values.brødtekst}
                   overskrift={formikProps.values.overskrift}
                   inkluderKalender={formikProps.values[fieldnames.INKLUDER_KALENDER_VED_OVERSTYRING]}
+                  errorOnSubmit={errorOnSubmit}
                 />
               ) : (
                 <VedtakRevurderingSubmitPanel
@@ -361,6 +466,7 @@ export const VedtakForm = ({
                   overskrift={formikProps.values.overskrift}
                   visFeilmeldingFordiArsakerMangler={() => setErSendtInnUtenArsaker(true)}
                   aksjonspunkter={aksjonspunkter}
+                  errorOnSubmit={errorOnSubmit}
                 />
               )}
             </VedtakAksjonspunktPanel>
