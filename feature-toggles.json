@@ -22,9 +22,5 @@
   {
     "key": "SOKNADPERIODESTRIPE",
     "value": "${SOKNADPERIODESTRIPE}"
-  },
-  {
-    "key": "SETT_PAA_VENT_MODAL",
-    "value": "${SETT_PAA_VENT_MODAL}"
   }
 ]
