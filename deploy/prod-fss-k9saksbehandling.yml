@@ -90,5 +90,3 @@ spec:
       value: "true"
     - name: UTENLANDSOPPHOLD
       value: "true"
-    - name: SETT_PAA_VENT_MODAL
-      value: "false"

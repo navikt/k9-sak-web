@@ -21,10 +21,6 @@ const featureToggles = [
     key: 'UTENLANDSOPPHOLD',
     value: process.env.UTENLANDSOPPHOLD,
   },
-  {
-    key: 'SETT_PAA_VENT_MODAL',
-    value: process.env.SETT_PAA_VENT_MODAL,
-  },
 ];
 
 module.exports = function (app) {

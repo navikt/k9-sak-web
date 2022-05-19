@@ -18,9 +18,5 @@
   {
     "key": "UTENLANDSOPPHOLD",
     "value": "${UTENLANDSOPPHOLD}"
-  },
-  {
-    "key": "SETT_PAA_VENT_MODAL",
-    "value": "${SETT_PAA_VENT_MODAL}"
   }
 ]
