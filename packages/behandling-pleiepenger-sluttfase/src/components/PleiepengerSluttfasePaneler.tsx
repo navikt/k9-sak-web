@@ -93,7 +93,6 @@ const PleiepengerSluttfasePaneler = ({
         aksjonspunkter={fetchedData?.aksjonspunkter}
         kodeverk={alleKodeverk}
         settPaVent={settPaVent}
-        featureToggles={featureToggles}
       />
       {harOpprettetAksjonspunkt9203 && (
         <DataFetcher
