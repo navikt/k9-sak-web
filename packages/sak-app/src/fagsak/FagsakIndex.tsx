@@ -1,4 +1,5 @@
 import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
+import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import VisittkortSakIndex from '@fpsak-frontend/sak-visittkort';
 import {
   AndreSakerPåSøkerStripe,
@@ -13,14 +14,12 @@ import {
   BehandlingPerioderårsakMedVilkår,
   Fagsak,
   FagsakPerson,
-  FeatureToggles,
   Kodeverk,
   KodeverkMedNavn,
   Personopplysninger,
 } from '@k9-sak-web/types';
-import React, { useCallback, useMemo, useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { Navigate, Route, Routes, useLocation } from 'react-router-dom';
-import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import OvergangFraInfotrygd from '../../../types/src/overgangFraInfotrygd';
 import RelatertFagsak from '../../../types/src/relatertFagsak';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -172,18 +171,6 @@ const FagsakIndex = () => {
     },
   );
 
-  const featureTogglesData = restApiHooks.useGlobalStateRestApiData<{ key: string; value: string }[]>(
-    K9sakApiKeys.FEATURE_TOGGLE,
-  );
-  const featureToggles = useMemo<FeatureToggles>(
-    () =>
-      featureTogglesData?.reduce((acc, curr) => {
-        acc[curr.key] = `${curr.value}`.toLowerCase() === 'true';
-        return acc;
-      }, {}),
-    [featureTogglesData],
-  );
-
   if (!fagsak) {
     if (fagsakState === RestApiState.NOT_STARTED || fagsakState === RestApiState.LOADING) {
       return <LoadingPanel />;
@@ -203,7 +190,7 @@ const FagsakIndex = () => {
   }
 
   const harVerge = behandling ? behandling.harVerge : false;
-  const showSøknadsperiodestripe = featureToggles?.SOKNADPERIODESTRIPE && erPleiepengerSyktBarn(fagsak);
+  const showSøknadsperiodestripe = erPleiepengerSyktBarn(fagsak);
   const showPunsjOgFagsakPåSøkerStripe = erPleiepengerSyktBarn(fagsak) || erPleiepengerLivetsSluttfase(fagsak);
   return (
     <>
