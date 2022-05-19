@@ -1475,14 +1475,6 @@
     "@floating-ui/dom" "^0.4.0"
     use-isomorphic-layout-effect "^1.1.1"
 
-"@formatjs/ecma402-abstract@1.11.3":
-  version "1.11.3"
-  resolved "https://registry.yarnpkg.com/@formatjs/ecma402-abstract/-/ecma402-abstract-1.11.3.tgz#f25276dfd4ef3dac90da667c3961d8aa9732e384"
-  integrity sha512-kP/Buv5vVFMAYLHNvvUzr0lwRTU0u2WTy44Tqwku1X3C3lJ5dKqDCYVqA8wL+Y19Bq+MwHgxqd5FZJRCIsLRyQ==
-  dependencies:
-    "@formatjs/intl-localematcher" "0.2.24"
-    tslib "^2.1.0"
-
 "@formatjs/ecma402-abstract@1.11.4":
   version "1.11.4"
   resolved "https://registry.yarnpkg.com/@formatjs/ecma402-abstract/-/ecma402-abstract-1.11.4.tgz#b962dfc4ae84361f9f08fbce411b4e4340930eda"
@@ -1515,13 +1507,13 @@
     "@formatjs/ecma402-abstract" "1.11.4"
     tslib "^2.1.0"
 
-"@formatjs/intl-datetimeformat@^4.5.0":
-  version "4.5.2"
-  resolved "https://registry.yarnpkg.com/@formatjs/intl-datetimeformat/-/intl-datetimeformat-4.5.2.tgz#e9d21044cf0b98d12e5aa6d48863cc6d027d9117"
-  integrity sha512-3480L9EOR7iu7/FWP7LsBoK0BRZAsUVKRjLbkMbHQ/VCMctJNcfackVEXlQRjxr7tzgxfxv6hfxHmht8JaSHIw==
+"@formatjs/intl-datetimeformat@^5.0.2":
+  version "5.0.2"
+  resolved "https://registry.yarnpkg.com/@formatjs/intl-datetimeformat/-/intl-datetimeformat-5.0.2.tgz#11bf5814416c03f544e0b118789fb1497b815566"
+  integrity sha512-yk7CItBMgtUsub123+iqOfXoqG6JHJIl3Pke7eOYb7QFAPsOZliAJb2i0+Tr1FXWcm1PdWZVHEv6C2l4nEmQdw==
   dependencies:
-    "@formatjs/ecma402-abstract" "1.11.3"
-    "@formatjs/intl-localematcher" "0.2.24"
+    "@formatjs/ecma402-abstract" "1.11.4"
+    "@formatjs/intl-localematcher" "0.2.25"
     tslib "^2.1.0"
 
 "@formatjs/intl-displaynames@5.4.3":
@@ -1540,13 +1532,6 @@
   dependencies:
     "@formatjs/ecma402-abstract" "1.11.4"
     "@formatjs/intl-localematcher" "0.2.25"
-    tslib "^2.1.0"
-
-"@formatjs/intl-localematcher@0.2.24":
-  version "0.2.24"
-  resolved "https://registry.yarnpkg.com/@formatjs/intl-localematcher/-/intl-localematcher-0.2.24.tgz#b49fd753c0f54421f26a3c1d0e9cf98a3966e78f"
-  integrity sha512-K/HRGo6EMnCbhpth/y3u4rW4aXkmQNqRe1L2G+Y5jNr3v0gYhvaucV8WixNju/INAMbPBlbsRBRo/nfjnoOnxQ==
-  dependencies:
     tslib "^2.1.0"
 
 "@formatjs/intl-localematcher@0.2.25":
@@ -18507,10 +18492,10 @@ typescript-tuple@^2.2.1:
   dependencies:
     typescript-compare "^0.0.2"
 
-typescript@4.5.4:
-  version "4.5.4"
-  resolved "https://registry.yarnpkg.com/typescript/-/typescript-4.5.4.tgz#a17d3a0263bf5c8723b9c52f43c5084edf13c2e8"
-  integrity sha512-VgYs2A2QIRuGphtzFV7aQJduJ2gyfTljngLzjpfW9FoYZF6xuw1W0vW9ghCKLfcWrCFxK81CSGRAvS1pn4fIUg==
+typescript@4.6.4:
+  version "4.6.4"
+  resolved "https://registry.yarnpkg.com/typescript/-/typescript-4.6.4.tgz#caa78bbc3a59e6a5c510d35703f6a09877ce45e9"
+  integrity sha512-9ia/jWHIEbo49HfjrLGfKbZSuWo9iTMwXO+Ca3pRsSpbsMbc7/IU8NKdCZVRRBafVPGnoJeFL76ZOAA84I9fEg==
 
 uglify-js@^3.1.4:
   version "3.15.5"
