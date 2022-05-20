@@ -83,7 +83,7 @@
     "@svgr/webpack": "^6.2.0",
     "@testing-library/dom": "^8.11.2",
     "@testing-library/jest-dom": "^5.16.1",
-    "@testing-library/react": "^12.1.2",
+    "@testing-library/react": "^12.1.5",
     "@testing-library/user-event": "^13.5.0",
     "@types/chai": "^4.3.0",
     "@types/enzyme": "^3.10.11",
