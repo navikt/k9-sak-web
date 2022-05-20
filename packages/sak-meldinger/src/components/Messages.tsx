@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { createSelector } from 'reselect';
 import { connect } from 'react-redux';
 import { InjectedFormProps } from 'redux-form';
@@ -7,8 +7,24 @@ import classNames from 'classnames';
 import { Hovedknapp } from 'nav-frontend-knapper';
 
 import dokumentMalType from '@fpsak-frontend/kodeverk/src/dokumentMalType';
-import { ArbeidsgiverOpplysningerPerId, Brevmal, Brevmaler, Kodeverk, KodeverkMedNavn, Mottaker, Personopplysninger } from '@k9-sak-web/types';
-import { ariaCheck, getLanguageCodeFromSprakkode, hasValidText, maxLength, minLength, required, safeJSONParse } from '@fpsak-frontend/utils';
+import {
+  ArbeidsgiverOpplysningerPerId,
+  Brevmal,
+  Brevmaler,
+  Kodeverk,
+  KodeverkMedNavn,
+  Mottaker,
+  Personopplysninger,
+} from '@k9-sak-web/types';
+import {
+  ariaCheck,
+  getLanguageCodeFromSprakkode,
+  hasValidText,
+  maxLength,
+  minLength,
+  required,
+  safeJSONParse,
+} from '@fpsak-frontend/utils';
 import { lagVisningsnavnForMottaker } from '@fpsak-frontend/utils/src/formidlingUtils';
 import ugunstAarsakTyper from '@fpsak-frontend/kodeverk/src/ugunstAarsakTyper';
 import { behandlingForm, behandlingFormValueSelector, SelectField, TextAreaField } from '@fpsak-frontend/form';
@@ -16,6 +32,7 @@ import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 
 import InputField from '@fpsak-frontend/form/src/InputField';
 import { Fritekstbrev } from '@k9-sak-web/types/src/formidlingTsType';
+import getAxiosHttpClientApi from '@k9-sak-web/rest-api/src/axios/getAxiosHttpClientApi';
 import styles from './messages.less';
 
 const maxLength4000 = maxLength(4000);
@@ -37,6 +54,7 @@ const showFritekst = (brevmalkode?: string, arsakskode?: string): boolean =>
   brevmalkode === dokumentMalType.KORRIGVARS ||
   brevmalkode === dokumentMalType.FRITKS ||
   brevmalkode === dokumentMalType.VARSEL_OM_TILBAKEKREVING ||
+  brevmalkode === dokumentMalType.INNHENT_MEDISINSKE_OPPLYSNINGER ||
   (brevmalkode === dokumentMalType.REVURDERING_DOK && arsakskode === ugunstAarsakTyper.ANNET);
 
 interface PureOwnProps {
@@ -59,7 +77,7 @@ interface MappedOwnProps {
   fritekst?: string;
   arsakskode?: string;
   fritekstbrev?: Fritekstbrev;
-
+  valgtMedisinType?: string;
 }
 
 const formName = 'Messages';
@@ -92,6 +110,7 @@ export const MessagesImpl = ({
   overstyrtMottaker,
   brevmalkode,
   fritekst,
+  valgtMedisinType,
   arsakskode,
   personopplysninger,
   arbeidsgiverOpplysningerPerId,
@@ -99,8 +118,9 @@ export const MessagesImpl = ({
   ...formProps
 }: PureOwnProps & MappedOwnProps & WrappedComponentProps & InjectedFormProps) => {
   if (!sprakKode) {
-    return null;
+    return null
   }
+  const [medisinskeTyper, setMedisinskeTyper] = useState<{ tittel: string; fritekst: string}[]>([]);
 
   const previewMessage = e => {
     e.preventDefault();
@@ -124,9 +144,50 @@ export const MessagesImpl = ({
 
   const tmpls: Brevmal[] = transformTemplates(templates);
 
+  const hentBrevmalForMedisinskeOpplysninger = () => {
+    const urlTilHentingAvMedicinskeTyper = tmpls.find(brevmal => brevmal.kode === dokumentMalType.INNHENT_MEDISINSKE_OPPLYSNINGER)?.malinnhold_link;
+
+    if(urlTilHentingAvMedicinskeTyper){
+      const hentMedisinskeOpplysninger = async () => {
+        try {
+            const response = await getAxiosHttpClientApi().getAsync(urlTilHentingAvMedicinskeTyper, null);
+
+            const { data } = response;
+
+            setMedisinskeTyper(data);
+        } catch(err) {
+          // Avklar med Kaja hvis vi skal vise feil via eksisterende rigg, mindre feilmelding eller ikke noe alls
+          console.log('ERROR', err);
+        }
+      }
+      hentMedisinskeOpplysninger()
+    }
+  }
+
   useEffect(() => {
     // Tilbakestill valgt mottaker hvis brukeren skifter mal og valgt mottakere ikke er tilgjengelig på ny mal.
+
     if (brevmalkode) {
+      // Avklar med Kaja hvis det er OK att vi clear:er fritekst vid brevmalskodebytte og hvis validate={[]} ska vara på medisinsk type field
+      // Resetter fritekst hver gang bruker endrer brevmalskode
+      formProps.change(
+        'fritekst',
+        ''
+      );
+
+      if(brevmalkode === dokumentMalType.INNHENT_MEDISINSKE_OPPLYSNINGER){
+        hentBrevmalForMedisinskeOpplysninger();
+
+        const alternativ = medisinskeTyper.find((alt => valgtMedisinType === alt.tittel));
+
+         if(alternativ){
+          formProps.change(
+        'fritekst',
+          alternativ.fritekst
+        );
+        }
+      }
+
       formProps.change(
         'overstyrtMottaker',
         recipients.some(recipient => JSON.stringify(recipient) === overstyrtMottaker)
@@ -134,7 +195,7 @@ export const MessagesImpl = ({
           : JSON.stringify(recipients[0]),
       );
     }
-  }, [brevmalkode]);
+  }, [brevmalkode, valgtMedisinType]);
 
   return (
     <form onSubmit={handleSubmit} data-testid="MessagesForm">
@@ -153,6 +214,23 @@ export const MessagesImpl = ({
             ))}
             bredde="xxl"
           />
+          {brevmalkode === dokumentMalType.INNHENT_MEDISINSKE_OPPLYSNINGER && medisinskeTyper && medisinskeTyper.length > 0 && (
+            <>
+              <VerticalSpacer eightPx />
+              <SelectField
+                name="valgtMedisinType"
+                label={intl.formatMessage({ id: 'Messages.TypeAvDokumentasjon' })}
+                validate={[]}
+                placeholder={intl.formatMessage({ id: 'Messages.VelgTypeAvDokumentasjon' })}
+                selectValues={medisinskeTyper.map(alternativ => (
+                  <option key={alternativ.tittel} value={alternativ.tittel}>
+                    {alternativ.tittel}
+                  </option>
+                ))}
+                bredde="xxl"
+              />
+            </>
+          )}
           {recipients.length > 0 && (
             <>
               <VerticalSpacer eightPx />
@@ -299,6 +377,7 @@ const mapStateToPropsFactory = (_initialState, initialOwnProps: PureOwnProps) =>
     ...behandlingFormValueSelector(formName, ownProps.behandlingId, ownProps.behandlingVersjon)(
       state,
       'overstyrtMottaker',
+      'valgtMedisinType',
       'brevmalkode',
       'fritekst',
       'arsakskode',

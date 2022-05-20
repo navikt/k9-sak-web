@@ -7,6 +7,7 @@ export interface Brevmal {
   navn: string;
   kode?: string;
   tilgjengelig?: boolean;
+  malinnhold_link?: string;
   mottakere?: Mottaker[];
 }
 
