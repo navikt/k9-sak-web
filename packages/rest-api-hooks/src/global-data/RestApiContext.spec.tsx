@@ -1,3 +1,4 @@
+/* eslint-disable class-methods-use-this */
 import React, { useEffect } from 'react';
 import { mount } from 'enzyme';
 import sinon from 'sinon';

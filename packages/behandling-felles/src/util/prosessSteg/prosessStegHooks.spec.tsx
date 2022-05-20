@@ -1,3 +1,4 @@
+/* eslint-disable class-methods-use-this */
 import React from 'react';
 import sinon from 'sinon';
 import { shallow } from 'enzyme';
@@ -252,7 +253,7 @@ describe('<prosessStegHooks>', () => {
 
     const lagreAksjonspunkter = sinon.stub();
     lagreAksjonspunkter.returns(Promise.resolve());
-    const lagringSideEffectsCallback = () => () => {};
+    const lagringSideEffectsCallback = () => () => { };
 
     const wrapper = testHook(() =>
       prosessStegHooks.useBekreftAksjonspunkt(

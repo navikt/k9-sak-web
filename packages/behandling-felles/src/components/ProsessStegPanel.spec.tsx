@@ -1,3 +1,4 @@
+/* eslint-disable class-methods-use-this */
 import React from 'react';
 import { shallow } from 'enzyme';
 import sinon from 'sinon';
