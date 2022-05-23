@@ -8,17 +8,16 @@ export default function LagreFormikStateLokalt() {
   const vedtakContext = useContext(VedtakFormContext);
 
   const { values }: { values: FormikValues } = useFormikContext();
-  const verdierSomSkalBeholdesVedNavigasjonVekkFraVedtak = [
-    fieldnames.OVERSKRIFT,
-    fieldnames.BRØDTEKST,
-    fieldnames.OVERSTYRT_MOTTAKER,
-    fieldnames.BEGRUNNELSE,
+  const verdierSomIkkeSkalBeholdesVedNavigasjonVekkFraVedtak = [
+    fieldnames.SKAL_BRUKE_OVERSTYRENDE_FRITEKST_BREV,
+    fieldnames.INKLUDER_KALENDER_VED_OVERSTYRING,
+    fieldnames.SKAL_HINDRE_UTSENDING_AV_BREV,
   ];
   useEffect(
     () => () => {
       vedtakContext?.setVedtakFormState(
         Object.keys(values)
-          .filter(key => verdierSomSkalBeholdesVedNavigasjonVekkFraVedtak.includes(key))
+          .filter(key => !verdierSomIkkeSkalBeholdesVedNavigasjonVekkFraVedtak.includes(key))
           .reduce((obj, key) => ({ ...obj, [key]: values[key] }), {}),
       );
     },
