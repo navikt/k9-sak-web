@@ -172,7 +172,7 @@ export const MessagesImpl = ({
       // Resetter fritekst hver gang bruker endrer brevmalskode
       formProps.change(
         'fritekst',
-        ''
+        null,
       );
 
       if(brevmalkode === dokumentMalType.INNHENT_MEDISINSKE_OPPLYSNINGER){
