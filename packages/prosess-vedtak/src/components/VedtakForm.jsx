@@ -204,7 +204,7 @@ export const VedtakForm = ({
   return (
     <>
       <Formik
-        initialValues={vedtakContext?.vedtakFormState || initialValues}
+        initialValues={{ ...initialValues, ...vedtakContext?.vedtakFormState }}
         onSubmit={values => {
           submitCallback(createPayload(values));
         }}
@@ -218,7 +218,9 @@ export const VedtakForm = ({
               readOnly={readOnly}
               overlappendeYtelser={overlappendeYtelser}
               alleKodeverk={alleKodeverk}
-              viseFlereSjekkbokserForBrev={kanHaFritekstbrev(tilgjengeligeVedtaksbrev) && kanHindreUtsending(tilgjengeligeVedtaksbrev)}
+              viseFlereSjekkbokserForBrev={
+                kanHaFritekstbrev(tilgjengeligeVedtaksbrev) && kanHindreUtsending(tilgjengeligeVedtaksbrev)
+              }
             >
               <div className={styles.knappContainer}>
                 {kanHaFritekstbrev(tilgjengeligeVedtaksbrev) && (
