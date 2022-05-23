@@ -238,23 +238,20 @@ export const VedtakForm = ({
     ...(overstyrtMottaker ? { overstyrtMottaker: safeJSONParse(overstyrtMottaker) } : {}),
   });
 
-  const getPreviewAutomatiskBrevCallback =
-    ({ fritekst, overstyrtMottaker, informasjonsbehovValues }) =>
-    formikProps =>
-    e => {
-      e.preventDefault();
-      if (formikProps.isValid) {
-        previewCallback(
-          automatiskVedtaksbrevParams({
-            fritekst,
-            redusertUtbetalingÅrsaker,
-            overstyrtMottaker,
-            tilgjengeligeVedtaksbrev,
-            informasjonsbehovValues,
-          }),
-        );
-      }
-    };
+  const getPreviewAutomatiskBrevCallback = formikProps => e => {
+    const { values: formikValues } = formikProps;
+    e.preventDefault();
+    if (formikProps.isValid) {
+      previewCallback(
+        automatiskVedtaksbrevParams({
+          fritekst: formikValues[fieldnames.fritekst],
+          årsaker: redusertUtbetalingÅrsaker(formikValues),
+          overstyrtMottaker: formikValues[fieldnames.OVERSTYRT_MOTTAKER],
+          informasjonsbehovValues: filterInformasjonsbehov(formikValues, aktiverteInformasjonsbehov),
+        }),
+      );
+    }
+  };
 
   const getPreviewAutomatiskBrevCallbackUtenValidering =
     formikValues =>
@@ -429,7 +426,7 @@ export const VedtakForm = ({
                 dokumentdata={dokumentdata}
                 lagreDokumentdata={lagreDokumentdata}
                 ytelseTypeKode={ytelseTypeKode}
-                automatiskBrevCallback={getPreviewAutomatiskBrevCallback(formikProps.values)(formikProps)}
+                automatiskBrevCallback={getPreviewAutomatiskBrevCallback(formikProps)}
                 automatiskBrevUtenValideringCallback={getPreviewAutomatiskBrevCallbackUtenValidering(
                   formikProps.values,
                 )()}
