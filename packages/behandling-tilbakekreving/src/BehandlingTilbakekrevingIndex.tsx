@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useCallback } from 'react';
 
 import { ReduxFormStateCleaner, Rettigheter, useSetBehandlingVedEndring } from '@k9-sak-web/behandling-felles';
-import { KodeverkMedNavn, Behandling, Fagsak, FagsakPerson, FeatureToggles } from '@k9-sak-web/types';
+import { KodeverkMedNavn, Behandling, Fagsak, FagsakPerson } from '@k9-sak-web/types';
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
 import { RestApiState, useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
 
@@ -37,7 +37,6 @@ interface OwnProps {
   harApenRevurdering: boolean;
   kodeverk: { [key: string]: KodeverkMedNavn[] };
   setRequestPendingMessage: (message: string) => void;
-  featureToggles: FeatureToggles;
 }
 
 const BehandlingTilbakekrevingIndex = ({
@@ -54,7 +53,6 @@ const BehandlingTilbakekrevingIndex = ({
   valgtFaktaSteg,
   harApenRevurdering,
   setRequestPendingMessage,
-  featureToggles,
 }: OwnProps) => {
   const [nyOgForrigeBehandling, setBehandlinger] = useState<{ current?: Behandling; previous?: Behandling }>({
     current: undefined,
@@ -160,7 +158,6 @@ const BehandlingTilbakekrevingIndex = ({
         harApenRevurdering={harApenRevurdering}
         hasFetchError={behandlingState === RestApiState.ERROR}
         setBehandling={setBehandling}
-        featureToggles={featureToggles}
       />
     </>
   );
