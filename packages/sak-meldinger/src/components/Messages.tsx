@@ -157,7 +157,7 @@ export const MessagesImpl = ({
 
     if(urlTilHentingAvMedicinskeTyper){
       requestMessagesApi.setLinks([{
-        href: 'urlTilHentingAvMedicinskeTyper',
+        href: urlTilHentingAvMedicinskeTyper,
         rel: 'fritekstbrevmaler-medisinske-opplysninger',
         type: 'GET'
       }]);
