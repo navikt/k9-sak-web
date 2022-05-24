@@ -32,8 +32,9 @@ import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 
 import InputField from '@fpsak-frontend/form/src/InputField';
 import { Fritekstbrev } from '@k9-sak-web/types/src/formidlingTsType';
-import getAxiosHttpClientApi from '@k9-sak-web/rest-api/src/axios/getAxiosHttpClientApi';
+import { useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
 import styles from './messages.less';
+import { MessagesApiKeys, requestMessagesApi, restApiMessagesHooks } from '../data/messagesApi';
 
 const maxLength4000 = maxLength(4000);
 const maxLength100000 = maxLength(100000);
@@ -120,7 +121,9 @@ export const MessagesImpl = ({
   if (!sprakKode) {
     return null
   }
-  const [medisinskeTyper, setMedisinskeTyper] = useState<{ tittel: string; fritekst: string}[]>([]);
+
+  const { addErrorMessage } = useRestApiErrorDispatcher();
+  requestMessagesApi.setAddErrorMessageHandler(addErrorMessage);
 
   const previewMessage = e => {
     e.preventDefault();
@@ -144,56 +147,55 @@ export const MessagesImpl = ({
 
   const tmpls: Brevmal[] = transformTemplates(templates);
 
+  const {
+    startRequest: hentFritekstMaler,
+    data: fritekstMaler,
+  } = restApiMessagesHooks.useRestApiRunner<{ tittel: string; fritekst: string}[]>(MessagesApiKeys.HENT_FRITEKSTBREVMALER_TIL_TYPEN_AV_MEDISINSKE_OPPLYSNINGER);
+
   const hentBrevmalForMedisinskeOpplysninger = () => {
     const urlTilHentingAvMedicinskeTyper = tmpls.find(brevmal => brevmal.kode === dokumentMalType.INNHENT_MEDISINSKE_OPPLYSNINGER)?.malinnhold_link;
 
     if(urlTilHentingAvMedicinskeTyper){
-      const hentMedisinskeOpplysninger = async () => {
-        try {
-            const response = await getAxiosHttpClientApi().getAsync(urlTilHentingAvMedicinskeTyper, null);
-
-            const { data } = response;
-
-            setMedisinskeTyper(data);
-        } catch(err) {
-          // Avklar med Kaja hvis vi skal vise feil via eksisterende rigg, mindre feilmelding eller ikke noe alls
-          console.log('ERROR', err);
-        }
-      }
-      hentMedisinskeOpplysninger()
+      requestMessagesApi.setLinks([{
+        href: 'urlTilHentingAvMedicinskeTyper',
+        rel: 'fritekstbrevmaler-medisinske-opplysninger',
+        type: 'GET'
+      }]);
     }
+
+    return hentFritekstMaler();
   }
 
   useEffect(() => {
-    // Tilbakestill valgt mottaker hvis brukeren skifter mal og valgt mottakere ikke er tilgjengelig på ny mal.
-
     if (brevmalkode) {
-      // Avklar med Kaja hvis det er OK att vi clear:er fritekst vid brevmalskodebytte og hvis validate={[]} ska vara på medisinsk type field
       // Resetter fritekst hver gang bruker endrer brevmalskode
       formProps.change(
         'fritekst',
         null,
       );
 
-      if(brevmalkode === dokumentMalType.INNHENT_MEDISINSKE_OPPLYSNINGER){
-        hentBrevmalForMedisinskeOpplysninger();
-
-        const alternativ = medisinskeTyper.find((alt => valgtMedisinType === alt.tittel));
-
-         if(alternativ){
-          formProps.change(
-        'fritekst',
-          alternativ.fritekst
-        );
-        }
-      }
-
+      // Tilbakestill valgt mottaker hvis brukeren skifter mal og valgt mottakere ikke er tilgjengelig på ny mal.
       formProps.change(
         'overstyrtMottaker',
         recipients.some(recipient => JSON.stringify(recipient) === overstyrtMottaker)
           ? overstyrtMottaker
           : JSON.stringify(recipients[0]),
       );
+
+      if (brevmalkode === dokumentMalType.INNHENT_MEDISINSKE_OPPLYSNINGER) {
+        hentBrevmalForMedisinskeOpplysninger().then((brevmalerForMedisinskeOpplysninger) => {
+
+          const fritekstBrevmal = brevmalerForMedisinskeOpplysninger.find((alt => valgtMedisinType === alt.tittel));
+
+          if (fritekstBrevmal) {
+            formProps.change(
+              'fritekst',
+              fritekstBrevmal.fritekst
+            );
+          }
+          // Catch er tom fordi error message skal håndteres av requestMessagesApi.
+        }).catch(() => {});
+      }
     }
   }, [brevmalkode, valgtMedisinType]);
 
@@ -214,7 +216,7 @@ export const MessagesImpl = ({
             ))}
             bredde="xxl"
           />
-          {brevmalkode === dokumentMalType.INNHENT_MEDISINSKE_OPPLYSNINGER && medisinskeTyper && medisinskeTyper.length > 0 && (
+          {brevmalkode === dokumentMalType.INNHENT_MEDISINSKE_OPPLYSNINGER && fritekstMaler && fritekstMaler.length > 0 && (
             <>
               <VerticalSpacer eightPx />
               <SelectField
@@ -222,7 +224,7 @@ export const MessagesImpl = ({
                 label={intl.formatMessage({ id: 'Messages.TypeAvDokumentasjon' })}
                 validate={[]}
                 placeholder={intl.formatMessage({ id: 'Messages.VelgTypeAvDokumentasjon' })}
-                selectValues={medisinskeTyper.map(alternativ => (
+                selectValues={fritekstMaler.map(alternativ => (
                   <option key={alternativ.tittel} value={alternativ.tittel}>
                     {alternativ.tittel}
                   </option>
