@@ -130,7 +130,6 @@ describe('BehandlingMenuIndex', () => {
     expect(screen.queryByText('Sett behandlingen på vent')).not.toBeVisible();
     expect(screen.queryByText('Henlegg behandlingen og avslutt')).not.toBeVisible();
     expect(screen.queryByText('Endre behandlende enhet')).not.toBeVisible();
-    expect(screen.queryByText('Åpne behandling for endringer')).not.toBeVisible();
     expect(screen.queryByText('Opprett ny behandling')).not.toBeVisible();
     expect(screen.queryByText('Opprett verge/fullmektig')).not.toBeVisible();
 
@@ -145,7 +144,6 @@ describe('BehandlingMenuIndex', () => {
     expect(screen.queryByRole('button', { name: 'Sett behandlingen på vent' })).toBeVisible();
     expect(screen.queryByRole('button', { name: 'Henlegg behandlingen og avslutt' })).toBeVisible();
     expect(screen.queryByRole('button', { name: 'Endre behandlende enhet' })).toBeVisible();
-    expect(screen.queryByRole('button', { name: 'Åpne behandling for endringer' })).toBeVisible();
     expect(screen.queryByRole('button', { name: 'Opprett ny behandling' })).toBeVisible();
     expect(screen.queryByRole('button', { name: 'Opprett verge/fullmektig' })).toBeVisible();
   });

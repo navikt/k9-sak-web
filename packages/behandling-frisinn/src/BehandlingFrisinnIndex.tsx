@@ -96,9 +96,6 @@ const BehandlingFrisinnIndex = ({
     FrisinnBehandlingApiKeys.HENLEGG_BEHANDLING,
   );
   const { startRequest: settPaVent } = restApiFrisinnHooks.useRestApiRunner(FrisinnBehandlingApiKeys.UPDATE_ON_HOLD);
-  const { startRequest: opneBehandlingForEndringer } = restApiFrisinnHooks.useRestApiRunner(
-    FrisinnBehandlingApiKeys.OPEN_BEHANDLING_FOR_CHANGES,
-  );
   const { startRequest: lagreRisikoklassifiseringAksjonspunkt } = restApiFrisinnHooks.useRestApiRunner(
     FrisinnBehandlingApiKeys.SAVE_AKSJONSPUNKT,
   );
@@ -110,10 +107,6 @@ const BehandlingFrisinnIndex = ({
       taBehandlingAvVent: params =>
         taBehandlingAvVent(params).then(behandlingResTaAvVent => setBehandling(behandlingResTaAvVent)),
       henleggBehandling: params => henleggBehandling(params),
-      opneBehandlingForEndringer: params =>
-        opneBehandlingForEndringer(params).then(behandlingResOpneForEndring =>
-          setBehandling(behandlingResOpneForEndring),
-        ),
       lagreRisikoklassifiseringAksjonspunkt: params => lagreRisikoklassifiseringAksjonspunkt(params),
     });
 

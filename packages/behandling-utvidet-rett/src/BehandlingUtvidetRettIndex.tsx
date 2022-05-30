@@ -98,9 +98,6 @@ const BehandlingUtvidetRettIndex = ({
   const { startRequest: taBehandlingAvVent } = restApiUtvidetRettHooks.useRestApiRunner<Behandling>(
     UtvidetRettBehandlingApiKeys.RESUME_BEHANDLING,
   );
-  const { startRequest: opneBehandlingForEndringer } = restApiUtvidetRettHooks.useRestApiRunner(
-    UtvidetRettBehandlingApiKeys.OPEN_BEHANDLING_FOR_CHANGES,
-  );
   const { startRequest: settPaVent } = restApiUtvidetRettHooks.useRestApiRunner(
     UtvidetRettBehandlingApiKeys.UPDATE_ON_HOLD,
   );
@@ -124,10 +121,6 @@ const BehandlingUtvidetRettIndex = ({
       opprettVerge: params =>
         opprettVerge(params).then(behandlingResOpprettVerge => setBehandling(behandlingResOpprettVerge)),
       fjernVerge: params => fjernVerge(params).then(behandlingResFjernVerge => setBehandling(behandlingResFjernVerge)),
-      opneBehandlingForEndringer: params =>
-        opneBehandlingForEndringer(params).then(behandlingResOpneForEndring =>
-          setBehandling(behandlingResOpneForEndring),
-        ),
       lagreRisikoklassifiseringAksjonspunkt: params => lagreRisikoklassifiseringAksjonspunkt(params),
     });
 
