@@ -1,3 +1,5 @@
+import { Link } from '@k9-sak-web/rest-api';
+
 export type Mottaker = {
   id: string;
   type: string;
@@ -7,7 +9,7 @@ export interface Brevmal {
   navn: string;
   kode?: string;
   tilgjengelig?: boolean;
-  malinnhold_link?: string;
+  linker?: Link;
   mottakere?: Mottaker[];
 }
 
