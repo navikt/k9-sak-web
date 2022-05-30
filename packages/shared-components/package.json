@@ -39,7 +39,7 @@
     "nav-frontend-typografi-style": "2.0.1",
     "react": "^17.0.2",
     "react-day-picker": "^7.4.10",
-    "react-intl": "^5.25.1",
+    "react-intl": "^6.0.3",
     "react-modal": "3.14.4",
     "react-redux": "^7.2.6",
     "redux-form": "^8.3.8"
