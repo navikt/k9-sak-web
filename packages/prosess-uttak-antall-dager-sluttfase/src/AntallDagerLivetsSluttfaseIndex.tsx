@@ -32,15 +32,12 @@ const AntallDagerLivetsSluttfaseIndex = ({
   const maxAntallDager = 60;
   const antallDagerGjenstar = maxAntallDager - (kvoteInfo.totaltForbruktKvote);
 
-  const gronneDager = () => {
-    if (kvoteInfo.totaltForbruktKvote <= maxAntallDager) return kvoteInfo.totaltForbruktKvote;
-    return 0;
-  }
-
-  const guleDager = () => {
-    if (kvoteInfo.totaltForbruktKvote > maxAntallDager) return maxAntallDager;
-    return 0;
-  }
+  /*
+   * Når totalt antall forbrukte dager er 60 eller mindre, vises de som grønn pølse
+   * Om totalt antall forbrukte dager er over 60, vises de som oransje/gul pølse
+   * */
+  const antallForbrukteDagerInnenforKvote = kvoteInfo.totaltForbruktKvote <= maxAntallDager ? kvoteInfo.totaltForbruktKvote : 0;
+  const antallFrobrukteDagerVedOverforbruk = kvoteInfo.totaltForbruktKvote > maxAntallDager ? maxAntallDager : 0;
 
   return <RawIntlProvider value={intl}>
     <div className={styles.antallDagerLivetsSluttfaseIndexContainer}>
@@ -60,8 +57,8 @@ const AntallDagerLivetsSluttfaseIndex = ({
       <Fremdriftslinje
         max={maxAntallDager}
         totalBreddeProsent={100}
-        antallGrønnBar={gronneDager()}
-        antallGulBar={guleDager()}
+        antallGrønnBar={antallForbrukteDagerInnenforKvote}
+        antallGulBar={antallFrobrukteDagerVedOverforbruk}
       />
       <VerticalSpacer fourPx />
       <p>
