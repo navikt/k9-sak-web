@@ -8,7 +8,7 @@ export enum MessagesApiKeys {
 }
 
 const endpoints = new RestApiConfigBuilder()
-  .withRel('fritekstbrevmaler-medisinske-opplysninger', MessagesApiKeys.HENT_FRITEKSTBREVMALER_TIL_TYPEN_AV_MEDISINSKE_OPPLYSNINGER)
+  .withRel('malinnhold', MessagesApiKeys.HENT_FRITEKSTBREVMALER_TIL_TYPEN_AV_MEDISINSKE_OPPLYSNINGER)
   .build();
 
 export const requestMessagesApi = createRequestApi(endpoints);

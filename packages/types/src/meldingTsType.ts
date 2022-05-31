@@ -9,7 +9,7 @@ export interface Brevmal {
   navn: string;
   kode?: string;
   tilgjengelig?: boolean;
-  linker?: Link;
+  linker?: Link[];
   mottakere?: Mottaker[];
 }
 

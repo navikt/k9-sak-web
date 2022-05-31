@@ -153,10 +153,10 @@ export const MessagesImpl = ({
   } = restApiMessagesHooks.useRestApiRunner<{ tittel: string; fritekst: string}[]>(MessagesApiKeys.HENT_FRITEKSTBREVMALER_TIL_TYPEN_AV_MEDISINSKE_OPPLYSNINGER);
 
   const hentBrevmalForMedisinskeOpplysninger = () => {
-    const urlTilHentingAvMedisinskeTyper = tmpls.find(brevmal => brevmal.kode === dokumentMalType.INNHENT_MEDISINSKE_OPPLYSNINGER)?.linker;
+    const urlsTilHentingAvMedisinskeTyper = tmpls.find(brevmal => brevmal.kode === dokumentMalType.INNHENT_MEDISINSKE_OPPLYSNINGER)?.linker;
 
-    if(urlTilHentingAvMedisinskeTyper){
-      requestMessagesApi.setLinks([urlTilHentingAvMedisinskeTyper]);
+    if(urlsTilHentingAvMedisinskeTyper){
+      requestMessagesApi.setLinks(urlsTilHentingAvMedisinskeTyper);
     }
 
     return hentFritekstMaler();
