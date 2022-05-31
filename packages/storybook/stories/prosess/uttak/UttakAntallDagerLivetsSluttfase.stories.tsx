@@ -11,11 +11,25 @@ export default {
 
 const kvoteInfo: KvoteInfo = {
   maxDato: '2021-02-20',
-  forbruktKvoteHittil: 2,
-  forbruktKvoteDenneBehandlingen: 3
+  totaltForbruktKvote: 20,
 };
 
 export const antallDagerLivetsSluttfaseIndex = () =>
-  <AntallDagerLivetsSluttfaseIndex
-    kvoteInfo={kvoteInfo}
-  />;
+  <>
+    <hr />
+    <h3>Forbruk: 20 dager</h3>
+    <AntallDagerLivetsSluttfaseIndex
+      kvoteInfo={kvoteInfo}
+    />
+    <hr />
+    <h3>Forbruk: 60 dager</h3>
+    <AntallDagerLivetsSluttfaseIndex
+      kvoteInfo={{ ...kvoteInfo, totaltForbruktKvote: 60 }}
+    />
+    <hr />
+    <h3>Forbruk: 70 dager</h3>
+    <AntallDagerLivetsSluttfaseIndex
+      kvoteInfo={{ ...kvoteInfo, totaltForbruktKvote: 70 }}
+    />
+  </>
+  ;
