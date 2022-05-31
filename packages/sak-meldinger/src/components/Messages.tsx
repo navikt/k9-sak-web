@@ -119,7 +119,7 @@ export const MessagesImpl = ({
   ...formProps
 }: PureOwnProps & MappedOwnProps & WrappedComponentProps & InjectedFormProps) => {
   if (!sprakKode) {
-    return null
+    return null;
   }
 
   const { addErrorMessage } = useRestApiErrorDispatcher();
