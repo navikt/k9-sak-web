@@ -152,14 +152,15 @@ export const MessagesImpl = ({
     data: fritekstMaler,
   } = restApiMessagesHooks.useRestApiRunner<{ tittel: string; fritekst: string}[]>(MessagesApiKeys.HENT_FRITEKSTBREVMALER_TIL_TYPEN_AV_MEDISINSKE_OPPLYSNINGER);
 
-  const hentBrevmalForMedisinskeOpplysninger = () => {
+  const oppdaterAPILinkerForHentingAvMedisinskeTyper = () => {
     const urlsTilHentingAvMedisinskeTyper = tmpls.find(brevmal => brevmal.kode === dokumentMalType.INNHENT_MEDISINSKE_OPPLYSNINGER)?.linker;
 
     if(urlsTilHentingAvMedisinskeTyper){
       requestMessagesApi.setLinks(urlsTilHentingAvMedisinskeTyper);
-    }
 
-    return hentFritekstMaler();
+      return true;
+    }
+    return false;
   }
 
   useEffect(() => {
@@ -179,7 +180,11 @@ export const MessagesImpl = ({
       );
 
       if (brevmalkode === dokumentMalType.INNHENT_MEDISINSKE_OPPLYSNINGER) {
-        hentBrevmalForMedisinskeOpplysninger().then((brevmalerForMedisinskeOpplysninger) => {
+        const erAPIOppdatertMedLinker = oppdaterAPILinkerForHentingAvMedisinskeTyper();
+
+        if (!erAPIOppdatertMedLinker) return
+
+        hentFritekstMaler().then((brevmalerForMedisinskeOpplysninger) => {
 
           const fritekstBrevmal = brevmalerForMedisinskeOpplysninger.find((alt => valgtMedisinType === alt.tittel));
 
