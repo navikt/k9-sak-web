@@ -97,9 +97,6 @@ const BehandlingUnntakIndex = ({
     UnntakBehandlingApiKeys.HENLEGG_BEHANDLING,
   );
   const { startRequest: settPaVent } = restApiUnntakHooks.useRestApiRunner(UnntakBehandlingApiKeys.UPDATE_ON_HOLD);
-  const { startRequest: opneBehandlingForEndringer } = restApiUnntakHooks.useRestApiRunner(
-    UnntakBehandlingApiKeys.OPEN_BEHANDLING_FOR_CHANGES,
-  );
   const { startRequest: opprettVerge } = restApiUnntakHooks.useRestApiRunner(UnntakBehandlingApiKeys.VERGE_OPPRETT);
   const { startRequest: fjernVerge } = restApiUnntakHooks.useRestApiRunner(UnntakBehandlingApiKeys.VERGE_FJERN);
   const { startRequest: lagreRisikoklassifiseringAksjonspunkt } = restApiUnntakHooks.useRestApiRunner(
@@ -113,10 +110,6 @@ const BehandlingUnntakIndex = ({
       taBehandlingAvVent: params =>
         taBehandlingAvVent(params).then(behandlingResTaAvVent => setBehandling(behandlingResTaAvVent)),
       henleggBehandling: params => henleggBehandling(params),
-      opneBehandlingForEndringer: params =>
-        opneBehandlingForEndringer(params).then(behandlingResOpneForEndring =>
-          setBehandling(behandlingResOpneForEndring),
-        ),
       opprettVerge: params =>
         opprettVerge(params).then(behandlingResOpprettVerge => setBehandling(behandlingResOpprettVerge)),
       fjernVerge: params => fjernVerge(params).then(behandlingResFjernVerge => setBehandling(behandlingResFjernVerge)),

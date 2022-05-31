@@ -26,7 +26,6 @@ export enum FrisinnBehandlingApiKeys {
   HENLEGG_BEHANDLING = 'HENLEGG_BEHANDLING',
   RESUME_BEHANDLING = 'RESUME_BEHANDLING',
   BEHANDLING_ON_HOLD = 'BEHANDLING_ON_HOLD',
-  OPEN_BEHANDLING_FOR_CHANGES = 'OPEN_BEHANDLING_FOR_CHANGES',
   VEDTAK_VARSEL = 'VEDTAK_VARSEL',
   OPPGITT_OPPTJENING = 'OPPGITT_OPPTJENING',
   TILGJENGELIGE_VEDTAKSBREV = 'TILGJENGELIGE_VEDTAKSBREV',
@@ -66,7 +65,6 @@ const endpoints = new RestApiConfigBuilder()
   .withPost('/k9/sak/api/behandlinger/henlegg', FrisinnBehandlingApiKeys.HENLEGG_BEHANDLING)
   .withAsyncPost('/k9/sak/api/behandlinger/gjenoppta', FrisinnBehandlingApiKeys.RESUME_BEHANDLING)
   .withPost('/k9/sak/api/behandlinger/sett-pa-vent', FrisinnBehandlingApiKeys.BEHANDLING_ON_HOLD)
-  .withPost('/k9/sak/api/behandlinger/opne-for-endringer', FrisinnBehandlingApiKeys.OPEN_BEHANDLING_FOR_CHANGES)
 
   /* FPTILBAKE */
   .withPost(

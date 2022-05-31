@@ -20,8 +20,6 @@ class BehandlingEventHandler {
 
   henleggBehandling = params => this.handler.henleggBehandling(params);
 
-  opneBehandlingForEndringer = params => this.handler.opneBehandlingForEndringer(params);
-
   opprettVerge = params => this.handler.opprettVerge(params);
 
   fjernVerge = params => this.handler.fjernVerge(params);
