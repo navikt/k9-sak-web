@@ -7,6 +7,7 @@ import React from 'react';
 const initializeUttak = (
   elementId,
   uttaksperioder,
+  utsattePerioder,
   behandlingUuid: string,
   arbeidsforhold: ArbeidsgiverOpplysningerPerId,
   aksjonspunktkoder: string[],
@@ -14,6 +15,7 @@ const initializeUttak = (
 ) => {
   (window as any).renderUttakApp(elementId, {
     uttaksperioder,
+    utsattePerioder,
     aktivBehandlingUuid: behandlingUuid,
     arbeidsforhold,
     aksjonspunktkoder,
@@ -25,13 +27,21 @@ const initializeUttak = (
 interface UttakProps {
   uuid: string;
   uttaksperioder: any;
+  utsattePerioder: string[];
   arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysningerPerId;
   aksjonspunkter: Aksjonspunkt[];
   alleKodeverk: AlleKodeverk;
 }
 
 const uttakAppID = 'uttakApp';
-export default ({ uuid, uttaksperioder, arbeidsgiverOpplysningerPerId, aksjonspunkter, alleKodeverk }: UttakProps) => {
+export default ({
+  uuid,
+  uttaksperioder,
+  utsattePerioder,
+  arbeidsgiverOpplysningerPerId,
+  aksjonspunkter,
+  alleKodeverk,
+}: UttakProps) => {
   const relevanteAksjonspunkter = [aksjonspunktCodes.VENT_ANNEN_PSB_SAK];
   const funnedeRelevanteAksjonspunkter = aksjonspunkter.filter(aksjonspunkt =>
     relevanteAksjonspunkter.some(relevantAksjonspunkt => relevantAksjonspunkt === aksjonspunkt.definisjon.kode),
@@ -49,6 +59,7 @@ export default ({ uuid, uttaksperioder, arbeidsgiverOpplysningerPerId, aksjonspu
         initializeUttak(
           uttakAppID,
           uttaksperioder,
+          utsattePerioder,
           uuid,
           arbeidsgiverOpplysningerPerId,
           funnedeRelevanteAksjonspunktkoder,
