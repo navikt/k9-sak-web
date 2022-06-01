@@ -11,9 +11,6 @@ import MenyVergeIndex, { getMenytekst as getVergeMenytekst } from '@fpsak-fronte
 import MenyTaAvVentIndex, { getMenytekst as getTaAvVentMenytekst } from '@fpsak-frontend/sak-meny-ta-av-vent';
 import MenySettPaVentIndex, { getMenytekst as getSettPaVentMenytekst } from '@fpsak-frontend/sak-meny-sett-pa-vent';
 import MenyHenleggIndex, { getMenytekst as getHenleggMenytekst } from '@fpsak-frontend/sak-meny-henlegg';
-import MenyApneForEndringerIndex, {
-  getMenytekst as getApneForEndringerMenytekst,
-} from '@fpsak-frontend/sak-meny-apne-for-endringer';
 import MenyNyBehandlingIndex, {
   getMenytekst as getNyBehandlingMenytekst,
 } from '@fpsak-frontend/sak-meny-ny-behandling';
@@ -32,7 +29,6 @@ import KlagePart from '@k9-sak-web/behandling-klage/src/types/klagePartTsType';
 import {
   fjernVerge,
   nyBehandlendeEnhet,
-  openBehandlingForChanges,
   opprettVerge,
   resumeBehandling,
   setBehandlingOnHold,
@@ -267,16 +263,6 @@ export const BehandlingMenuIndex = ({
             lukkModal={lukkModal}
           />
         )),
-        new MenyData(behandlingRettigheter?.behandlingKanOpnesForEndringer, getApneForEndringerMenytekst()).medModal(
-          lukkModal => (
-            <MenyApneForEndringerIndex
-              behandlingId={behandlingId}
-              behandlingVersjon={behandlingVersjon}
-              apneBehandlingForEndringer={openBehandlingForChanges}
-              lukkModal={lukkModal}
-            />
-          ),
-        ),
         new MenyData(!sakRettigheter.sakSkalTilInfotrygd, getNyBehandlingMenytekst()).medModal(lukkModal => (
           <MenyNyBehandlingIndex
             saksnummer={fagsak.saksnummer}
