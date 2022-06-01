@@ -70,13 +70,13 @@ describe('<MenySettPaVentIndex>', () => {
     /**
      * Velg en venteårsak
      */
-    const venteArsakFelt = screen.getByLabelText('Årsak');
+    const venteArsakFelt = screen.getByLabelText('Hva venter vi på?');
     userEvent.selectOptions(venteArsakFelt, venteArsakType.UTV_FRIST);
 
     /**
      * Ssubmit
      */
-    userEvent.click(screen.getByText(/OK/i));
+    userEvent.click(screen.getByText(/Sett på vent/i));
 
     expect(settBehandlingPaVent).toHaveBeenCalledWith({
       behandlingVersjon: 1,

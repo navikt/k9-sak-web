@@ -122,9 +122,6 @@ const BehandlingPleiepengerIndex = ({
   const { startRequest: settPaVent } = restApiPleiepengerHooks.useRestApiRunner(
     PleiepengerBehandlingApiKeys.UPDATE_ON_HOLD,
   );
-  const { startRequest: opneBehandlingForEndringer } = restApiPleiepengerHooks.useRestApiRunner(
-    PleiepengerBehandlingApiKeys.OPEN_BEHANDLING_FOR_CHANGES,
-  );
   const { startRequest: opprettVerge } = restApiPleiepengerHooks.useRestApiRunner(
     PleiepengerBehandlingApiKeys.VERGE_OPPRETT,
   );
@@ -142,10 +139,6 @@ const BehandlingPleiepengerIndex = ({
       taBehandlingAvVent: params =>
         taBehandlingAvVent(params).then(behandlingResTaAvVent => setBehandling(behandlingResTaAvVent)),
       henleggBehandling: params => henleggBehandling(params),
-      opneBehandlingForEndringer: params =>
-        opneBehandlingForEndringer(params).then(behandlingResOpneForEndring =>
-          setBehandling(behandlingResOpneForEndring),
-        ),
       opprettVerge: params =>
         opprettVerge(params).then(behandlingResOpprettVerge => setBehandling(behandlingResOpprettVerge)),
       fjernVerge: params => fjernVerge(params).then(behandlingResFjernVerge => setBehandling(behandlingResFjernVerge)),

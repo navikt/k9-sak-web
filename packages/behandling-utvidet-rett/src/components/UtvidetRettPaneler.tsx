@@ -32,7 +32,6 @@ const UtvidetRettPaneler = ({
         aksjonspunkter={fetchedData?.aksjonspunkter}
         kodeverk={alleKodeverk}
         settPaVent={settPaVent}
-        featureToggles={featureToggles}
       />
       <UtvidetRettProsess
         data={fetchedData}

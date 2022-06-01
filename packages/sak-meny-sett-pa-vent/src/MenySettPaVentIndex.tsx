@@ -1,6 +1,6 @@
 import SettPaVentModalIndex from '@k9-sak-web/modal-sett-pa-vent';
 import { goToLos } from '@k9-sak-web/sak-app/src/app/paths';
-import { FeatureToggles, Venteaarsak } from '@k9-sak-web/types';
+import { Venteaarsak } from '@k9-sak-web/types';
 import React, { useCallback } from 'react';
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 import messages from '../i18n/nb_NO.json';
@@ -29,7 +29,6 @@ interface OwnProps {
   ventearsaker: Venteaarsak[];
   lukkModal: () => void;
   erTilbakekreving: boolean;
-  featureToggles?: FeatureToggles;
 }
 
 const MenySettPaVentIndex = ({
@@ -39,7 +38,6 @@ const MenySettPaVentIndex = ({
   ventearsaker,
   lukkModal,
   erTilbakekreving,
-  featureToggles,
 }: OwnProps) => {
   const submit = useCallback(
     formValues => {
@@ -64,7 +62,6 @@ const MenySettPaVentIndex = ({
         ventearsaker={ventearsaker}
         erTilbakekreving={erTilbakekreving}
         hasManualPaVent
-        featureToggles={featureToggles}
       />
     </RawIntlProvider>
   );
