@@ -4,7 +4,7 @@ import { FormattedMessage } from 'react-intl';
 import { behandlingForm } from '@fpsak-frontend/form/src/behandlingForm';
 import { connect } from 'react-redux';
 import { InjectedFormProps, ConfigProps, SubmitHandler, FieldArray } from 'redux-form';
-import { minLength, maxLength, required, hasValidText, hasValidValue } from '@fpsak-frontend/utils';
+import { minLength, maxLength, required, hasValidText, hasValidValue, hasValidFodselsnummer } from '@fpsak-frontend/utils';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 import { CheckboxField, InputField, RadioGroupField, RadioOption, TextAreaField } from '@fpsak-frontend/form/index';
 import { Element } from 'nav-frontend-typografi';
@@ -80,7 +80,7 @@ export const FormContent = ({ handleSubmit, aktiviteter = [], isAksjonspunktOpen
                       type="text"
                       size={11}
                       bredde='S'
-                      validate={[required, minLength(11), maxLength(11)]}
+                      validate={[required, minLength(11), maxLength(11), hasValidFodselsnummer]}
                       maxLength={11}
                       readOnly={!isAksjonspunktOpen} />
                   </TableColumn>

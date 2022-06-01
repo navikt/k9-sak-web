@@ -223,6 +223,16 @@ const SoknadsperioderComponent = (props: SoknadsperioderComponentProps) => {
       perioder: getPerioderMedÅrsak('MANUELT_REVURDERER_PERIODE', behandlingPerioderårsakMedVilkår),
     };
 
+    const utsattBehandling = {
+      radLabel: getNavnFraKodeverk('UTSATT_BEHANDLING'),
+      perioder: getPerioderMedÅrsak('UTSATT_BEHANDLING', behandlingPerioderårsakMedVilkår),
+    };
+
+    const gjenopptarUtsattBehandling = {
+      radLabel: getNavnFraKodeverk('GJENOPPTAR_UTSATT_BEHANDLING'),
+      perioder: getPerioderMedÅrsak('GJENOPPTAR_UTSATT_BEHANDLING', behandlingPerioderårsakMedVilkår),
+    };
+
     return [
       vedtakshistorikk,
       perioderTilBehandling,
@@ -237,6 +247,8 @@ const SoknadsperioderComponent = (props: SoknadsperioderComponentProps) => {
       ...trukketKrav,
       gRegulering,
       revurdererManuellRevurdering,
+      utsattBehandling,
+      gjenopptarUtsattBehandling,
     ].filter(radGruppertPåÅrsak => {
       if (
         radGruppertPåÅrsak.radLabel === vedtakshistorikkLabel ||

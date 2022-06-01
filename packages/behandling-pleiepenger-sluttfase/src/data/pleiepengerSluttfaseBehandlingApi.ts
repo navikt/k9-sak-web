@@ -36,7 +36,6 @@ export enum PleiepengerSluttfaseBehandlingApiKeys {
   HENLEGG_BEHANDLING = 'HENLEGG_BEHANDLING',
   RESUME_BEHANDLING = 'RESUME_BEHANDLING',
   BEHANDLING_ON_HOLD = 'BEHANDLING_ON_HOLD',
-  OPEN_BEHANDLING_FOR_CHANGES = 'OPEN_BEHANDLING_FOR_CHANGES',
   VERGE_OPPRETT = 'VERGE_OPPRETT',
   VERGE_FJERN = 'VERGE_FJERN',
   SYKDOM = 'SYKDOM',
@@ -121,10 +120,6 @@ const endpoints = new RestApiConfigBuilder()
   .withPost('/k9/sak/api/behandlinger/henlegg', PleiepengerSluttfaseBehandlingApiKeys.HENLEGG_BEHANDLING)
   .withAsyncPost('/k9/sak/api/behandlinger/gjenoppta', PleiepengerSluttfaseBehandlingApiKeys.RESUME_BEHANDLING)
   .withPost('/k9/sak/api/behandlinger/sett-pa-vent', PleiepengerSluttfaseBehandlingApiKeys.BEHANDLING_ON_HOLD)
-  .withPost(
-    '/k9/sak/api/behandlinger/opne-for-endringer',
-    PleiepengerSluttfaseBehandlingApiKeys.OPEN_BEHANDLING_FOR_CHANGES,
-  )
   .withPost('/k9/sak/api/verge/opprett', PleiepengerSluttfaseBehandlingApiKeys.VERGE_OPPRETT)
   .withPost('/k9/sak/api/verge/fjern', PleiepengerSluttfaseBehandlingApiKeys.VERGE_FJERN)
 

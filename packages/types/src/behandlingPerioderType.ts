@@ -1,5 +1,6 @@
 import Periode from './periodeTsType';
 import PerioderMedAarsak from './PerioderMedAarsak';
+
 export default interface BehandlingPerioderType {
   perioderMedÅrsak: {
     perioderTilVurdering: Periode[];

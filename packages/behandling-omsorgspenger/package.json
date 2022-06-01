@@ -35,7 +35,7 @@
     "@k9-sak-web/types": "1.0.0",
     "nav-frontend-popover": "^2.0.3",
     "react": "^17.0.2",
-    "react-intl": "^5.24.3",
+    "react-intl": "^5.25.1",
     "react-redux": "^7.2.6",
     "redux": "^4.1.2",
     "redux-form": "^8.3.8",

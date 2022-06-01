@@ -92,5 +92,3 @@ spec:
       value: "true"
     - name: SOKNADPERIODESTRIPE
       value: "true"
-    - name: SETT_PAA_VENT_MODAL
-      value: "true"

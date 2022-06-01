@@ -1,15 +1,11 @@
-import React, { useState, useCallback, useEffect, useRef, RefObject } from 'react';
-import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
-import { BoxedListWithLinks, Header, Popover, SystemButton, UserPanel } from '@navikt/k9-react-components';
+import { RETTSKILDE_URL, SYSTEMRUTINE_URL } from '@k9-sak-web/konstanter';
 import Endringslogg from '@navikt/familie-endringslogg';
-
-import { AINNTEKT_URL, AAREG_URL, RETTSKILDE_URL, SYSTEMRUTINE_URL } from '@k9-sak-web/konstanter';
-
+import { BoxedListWithLinks, Header, Popover, SystemButton, UserPanel } from '@navikt/k9-react-components';
+import React, { RefObject, useCallback, useEffect, useRef, useState } from 'react';
+import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
+import messages from '../i18n/nb_NO.json';
 import ErrorMessagePanel from './ErrorMessagePanel';
 import Feilmelding from './feilmeldingTsType';
-
-import messages from '../i18n/nb_NO.json';
-
 import styles from './headerWithErrorPanel.less';
 
 const cache = createIntlCache();
@@ -68,6 +64,8 @@ interface OwnProps {
   setSiteHeight: (height: number) => void;
   getPathToFplos: () => void;
   getPathToK9Punsj: () => string | null;
+  ainntektPath: string;
+  aaregPath: string;
 }
 
 /**
@@ -85,6 +83,8 @@ const HeaderWithErrorPanel = ({
   setSiteHeight,
   getPathToFplos,
   getPathToK9Punsj,
+  ainntektPath,
+  aaregPath,
 }: OwnProps) => {
   const [erLenkepanelApent, setLenkePanelApent] = useState(false);
   const wrapperRef = useOutsideClickEvent(erLenkepanelApent, setLenkePanelApent);
@@ -97,12 +97,12 @@ const HeaderWithErrorPanel = ({
   const lenkerFormatertForBoxedList = [
     {
       name: intl.formatMessage({ id: 'HeaderWithErrorPanel.AInntekt' }),
-      href: AINNTEKT_URL,
+      href: ainntektPath,
       isExternal: true,
     },
     {
       name: intl.formatMessage({ id: 'HeaderWithErrorPanel.AAReg' }),
-      href: AAREG_URL,
+      href: aaregPath,
       isExternal: true,
     },
     {

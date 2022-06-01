@@ -108,3 +108,8 @@ export const redirectToLogin = () => {
   }
   return undefined;
 };
+
+export const goToLos = () => {
+  const path = getPathToFplos();
+  window.location.assign(path);
+};

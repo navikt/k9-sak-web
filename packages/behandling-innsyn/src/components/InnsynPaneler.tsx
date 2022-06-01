@@ -17,7 +17,6 @@ interface OwnProps {
   oppdaterProsessStegOgFaktaPanelIUrl: (punktnavn?: string, faktanavn?: string) => void;
   oppdaterBehandlingVersjon: (versjon: number) => void;
   settPaVent: (params: SettPaVentParams) => Promise<any>;
-  hentBehandling: (params: { behandlingId: number }, keepData: boolean) => Promise<any>;
   opneSokeside: () => void;
   setBehandling: (behandling: Behandling) => void;
   featureToggles: FeatureToggles;
@@ -34,7 +33,6 @@ const InnsynPaneler = ({
   oppdaterProsessStegOgFaktaPanelIUrl,
   oppdaterBehandlingVersjon,
   settPaVent,
-  hentBehandling,
   opneSokeside,
   setBehandling,
   featureToggles,
@@ -45,7 +43,6 @@ const InnsynPaneler = ({
       aksjonspunkter={fetchedData?.aksjonspunkter}
       kodeverk={kodeverk}
       settPaVent={settPaVent}
-      hentBehandling={hentBehandling}
     />
     <InnsynProsess
       fagsak={fagsak}

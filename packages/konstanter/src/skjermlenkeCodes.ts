@@ -121,7 +121,7 @@ const skjermlenkeCodes = {
   PUNKT_FOR_MEDLEMSKAP: {
     kode: 'PUNKT_FOR_MEDLEMSKAP',
     faktaNavn: faktaPanelCodes.DEFAULT,
-    punktNavn: prosessStegCodes.INNGANGSVILKAR,
+    punktNavn: prosessStegCodes.OPPTJENING,
   },
   PUNKT_FOR_OMSORG: {
     kode: 'PUNKT_FOR_OMSORG',
@@ -131,7 +131,7 @@ const skjermlenkeCodes = {
   PUNKT_FOR_OPPTJENING: {
     kode: 'PUNKT_FOR_OPPTJENING',
     faktaNavn: faktaPanelCodes.DEFAULT,
-    punktNavn: prosessStegCodes.INNGANGSVILKAR,
+    punktNavn: prosessStegCodes.OPPTJENING,
   },
   SOEKNADSFRIST: {
     kode: 'SOEKNADSFRIST',

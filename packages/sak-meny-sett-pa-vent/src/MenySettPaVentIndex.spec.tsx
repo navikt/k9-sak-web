@@ -36,7 +36,7 @@ const testDato = add(new Date(), { months: 2, days: 1 });
 describe('<MenySettPaVentIndex>', () => {
   it('skal vise modal og velge å åpne ta behandling av vent', async () => {
     const lukkModalCallback = jest.fn();
-    const settBehandlingPaVent = jest.fn();
+    const settBehandlingPaVent = jest.fn(() => Promise.resolve());
 
     render(
       <Provider store={createStore(combineReducers({ form: formReducer }))}>
@@ -70,13 +70,13 @@ describe('<MenySettPaVentIndex>', () => {
     /**
      * Velg en venteårsak
      */
-     const venteArsakFelt = screen.getByLabelText('Årsak');
+    const venteArsakFelt = screen.getByLabelText('Hva venter vi på?');
     userEvent.selectOptions(venteArsakFelt, venteArsakType.UTV_FRIST);
 
     /**
      * Ssubmit
      */
-    userEvent.click(screen.getByText(/OK/i));
+    userEvent.click(screen.getByText(/Sett på vent/i));
 
     expect(settBehandlingPaVent).toHaveBeenCalledWith({
       behandlingVersjon: 1,

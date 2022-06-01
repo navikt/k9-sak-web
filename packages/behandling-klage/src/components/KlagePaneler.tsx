@@ -25,7 +25,6 @@ interface OwnProps {
   oppdaterProsessStegOgFaktaPanelIUrl: (punktnavn?: string, faktanavn?: string) => void;
   oppdaterBehandlingVersjon: (versjon: number) => void;
   settPaVent: (params: SettPaVentParams) => Promise<any>;
-  hentBehandling: (params: { behandlingId: number }, keepData: boolean) => Promise<any>;
   opneSokeside: () => void;
   alleBehandlinger: {
     id: number;
@@ -51,7 +50,6 @@ const KlagePaneler = ({
   oppdaterProsessStegOgFaktaPanelIUrl,
   oppdaterBehandlingVersjon,
   settPaVent,
-  hentBehandling,
   opneSokeside,
   alleBehandlinger,
   arbeidsgiverOpplysningerPerId,
@@ -64,7 +62,6 @@ const KlagePaneler = ({
       aksjonspunkter={fetchedData?.aksjonspunkter}
       kodeverk={kodeverk}
       settPaVent={settPaVent}
-      hentBehandling={hentBehandling}
     />
     <KlageProsess
       data={fetchedData}

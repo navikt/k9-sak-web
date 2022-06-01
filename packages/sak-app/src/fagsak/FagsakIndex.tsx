@@ -203,8 +203,7 @@ const FagsakIndex = () => {
   }
 
   const harVerge = behandling ? behandling.harVerge : false;
-  const showSøknadsperiodestripe =
-    featureToggles?.SOKNADPERIODESTRIPE && (erPleiepengerSyktBarn(fagsak) || erPleiepengerLivetsSluttfase(fagsak));
+  const showSøknadsperiodestripe = featureToggles?.SOKNADPERIODESTRIPE && erPleiepengerSyktBarn(fagsak);
   const showPunsjOgFagsakPåSøkerStripe = erPleiepengerSyktBarn(fagsak) || erPleiepengerLivetsSluttfase(fagsak);
   return (
     <>

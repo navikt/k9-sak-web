@@ -11,7 +11,6 @@ export const resumeBehandling = (params: any) => behandlingEventHandler.taBehand
 
 export const nyBehandlendeEnhet = (params: any) => behandlingEventHandler.endreBehandlendeEnhet(params);
 
-export const openBehandlingForChanges = (params: any) => behandlingEventHandler.opneBehandlingForEndringer(params);
 
 export const opprettVerge = (
   location: Location,
