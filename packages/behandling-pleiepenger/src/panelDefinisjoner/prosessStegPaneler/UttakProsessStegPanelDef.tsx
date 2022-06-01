@@ -31,7 +31,12 @@ class PanelDef extends ProsessStegPanelDef {
 
   getOverstyrtStatus = props => {
     const { uttak } = props;
-    if (!uttak || (uttak.uttaksplan?.perioder && Object.keys(uttak.uttaksplan.perioder).length === 0)) {
+    if (
+      !uttak ||
+      !uttak.uttaksplan ||
+      !uttak.uttaksplan.perioder ||
+      (uttak.uttaksplan.perioder && Object.keys(uttak.uttaksplan.perioder).length === 0)
+    ) {
       return vilkarUtfallType.IKKE_VURDERT;
     }
     const uttaksperiodeKeys = Object.keys(uttak.uttaksplan.perioder);
