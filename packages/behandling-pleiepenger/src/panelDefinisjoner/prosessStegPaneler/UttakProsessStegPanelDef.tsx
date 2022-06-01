@@ -7,10 +7,18 @@ import Uttak from '../../components/Uttak';
 import { PleiepengerBehandlingApiKeys } from '../../data/pleiepengerBehandlingApi';
 
 class PanelDef extends ProsessStegPanelDef {
-  getKomponent = ({ behandling, uttaksperioder, arbeidsgiverOpplysningerPerId, aksjonspunkter, alleKodeverk }) => (
+  getKomponent = ({
+    behandling,
+    uttaksperioder,
+    utsattePerioder,
+    arbeidsgiverOpplysningerPerId,
+    aksjonspunkter,
+    alleKodeverk,
+  }) => (
     <Uttak
       uuid={behandling.uuid}
       uttaksperioder={uttaksperioder}
+      utsattePerioder={utsattePerioder}
       arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
       aksjonspunkter={aksjonspunkter}
       alleKodeverk={alleKodeverk}
@@ -23,12 +31,12 @@ class PanelDef extends ProsessStegPanelDef {
 
   getOverstyrtStatus = props => {
     const { uttak } = props;
-    if (!uttak || (uttak?.perioder && Object.keys(uttak.perioder).length === 0)) {
+    if (!uttak || (uttak.uttaksplan?.perioder && Object.keys(uttak.uttaksplan.perioder).length === 0)) {
       return vilkarUtfallType.IKKE_VURDERT;
     }
-    const uttaksperiodeKeys = Object.keys(uttak.perioder);
+    const uttaksperiodeKeys = Object.keys(uttak.uttaksplan.perioder);
 
-    if (uttaksperiodeKeys.every(key => uttak.perioder[key].utfall === vilkarUtfallType.IKKE_OPPFYLT)) {
+    if (uttaksperiodeKeys.every(key => uttak.uttaksplan.perioder[key].utfall === vilkarUtfallType.IKKE_OPPFYLT)) {
       return vilkarUtfallType.IKKE_OPPFYLT;
     }
 
@@ -38,7 +46,8 @@ class PanelDef extends ProsessStegPanelDef {
   getEndepunkter = () => [PleiepengerBehandlingApiKeys.ARBEIDSFORHOLD];
 
   getData = ({ uttak, arbeidsgiverOpplysningerPerId, alleKodeverk }) => ({
-    uttaksperioder: uttak?.perioder,
+    uttaksperioder: uttak?.uttaksplan.perioder,
+    utsattePerioder: uttak?.utsattePerioder,
     arbeidsgiverOpplysningerPerId,
     alleKodeverk,
   });
