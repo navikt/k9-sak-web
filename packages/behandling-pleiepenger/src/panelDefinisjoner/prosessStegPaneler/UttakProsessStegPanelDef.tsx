@@ -51,7 +51,7 @@ class PanelDef extends ProsessStegPanelDef {
   getEndepunkter = () => [PleiepengerBehandlingApiKeys.ARBEIDSFORHOLD];
 
   getData = ({ uttak, arbeidsgiverOpplysningerPerId, alleKodeverk }) => ({
-    uttaksperioder: uttak?.uttaksplan.perioder,
+    uttaksperioder: uttak?.uttaksplan?.perioder,
     utsattePerioder: uttak?.utsattePerioder,
     arbeidsgiverOpplysningerPerId,
     alleKodeverk,
