@@ -15,6 +15,7 @@ const lagBeregningsgrunnlag = (ferdigstilt, beregnetPrAar, sammenligningSum, avv
   const beregningsgrunnlag = {
     avklaringsbehov,
     halvG: 30000,
+    vilkårsperiodeFom: '2020-01-01',
     ledetekstBrutto: 'Brutto tekst',
     ledetekstAvkortet: 'Avkortet tekst',
     ledetekstRedusert: 'Redusert tekst',
@@ -60,6 +61,14 @@ const vilkar = [
       kode: vilkarUtfallType.OPPFYLT,
     },
   },
+];
+
+const beregningKoblingerTilVurdering = [
+  {
+    skjæringstidspunkt: '2020-01-01',
+    referanse: 'htfse-324-sfe3332',
+    erForlengelse: false
+  }
 ];
 
 
@@ -130,7 +139,7 @@ describe('<BeregningFP>', () => {
   it('skal teste at det bygges korrekte initialvalues med beregnetAvvikPromille lik NULL', () => {
     const initialValues = buildInitialValuesForBeregningrunnlag(
       lagBeregningsgrunnlag(true, 100000, 100000, null, gjeldendeAksjonspunkter),
-      vilkar);
+      beregningKoblingerTilVurdering);
     expect(initialValues.avklaringsbehov).to.eql(gjeldendeAksjonspunkter);
     expect(initialValues.relevanteStatuser.isArbeidstaker).to.eql(true);
     expect(initialValues.relevanteStatuser.isSelvstendigNaeringsdrivende).to.eql(true);
@@ -151,6 +160,7 @@ describe('<BeregningFP>', () => {
         readOnlySubmitButton
         intl={intlMock}
         handleSubmit={() => { }}
+        beregningKoblingerTilVurdering={beregningKoblingerTilVurdering}
       />,
     );
     const beregningForm = wrapper.find(BeregningForm2);
@@ -173,6 +183,7 @@ describe('<BeregningFP>', () => {
         readOnlySubmitButton
         intl={intlMock}
         handleSubmit={() => { }}
+        beregningKoblingerTilVurdering={beregningKoblingerTilVurdering}
       />,
     );
     const beregningForm = wrapper.find(FieldArray);
