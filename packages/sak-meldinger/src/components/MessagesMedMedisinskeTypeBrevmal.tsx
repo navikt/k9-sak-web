@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { createSelector } from 'reselect';
 import { connect } from 'react-redux';
 import { InjectedFormProps } from 'redux-form';
@@ -7,8 +7,24 @@ import classNames from 'classnames';
 import { Hovedknapp } from 'nav-frontend-knapper';
 
 import dokumentMalType from '@fpsak-frontend/kodeverk/src/dokumentMalType';
-import { ArbeidsgiverOpplysningerPerId, Brevmal, Brevmaler, Kodeverk, KodeverkMedNavn, Mottaker, Personopplysninger } from '@k9-sak-web/types';
-import { ariaCheck, getLanguageCodeFromSprakkode, hasValidText, maxLength, minLength, required, safeJSONParse } from '@fpsak-frontend/utils';
+import {
+  ArbeidsgiverOpplysningerPerId,
+  Brevmal,
+  Brevmaler,
+  Kodeverk,
+  KodeverkMedNavn,
+  Mottaker,
+  Personopplysninger,
+} from '@k9-sak-web/types';
+import {
+  ariaCheck,
+  getLanguageCodeFromSprakkode,
+  hasValidText,
+  maxLength,
+  minLength,
+  required,
+  safeJSONParse,
+} from '@fpsak-frontend/utils';
 import { lagVisningsnavnForMottaker } from '@fpsak-frontend/utils/src/formidlingUtils';
 import ugunstAarsakTyper from '@fpsak-frontend/kodeverk/src/ugunstAarsakTyper';
 import { behandlingForm, behandlingFormValueSelector, SelectField, TextAreaField } from '@fpsak-frontend/form';
@@ -16,7 +32,9 @@ import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 
 import InputField from '@fpsak-frontend/form/src/InputField';
 import { Fritekstbrev } from '@k9-sak-web/types/src/formidlingTsType';
+import { useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
 import styles from './messages.less';
+import { MessagesApiKeys, requestMessagesApi, restApiMessagesHooks } from '../data/messagesApi';
 
 const maxLength4000 = maxLength(4000);
 const maxLength100000 = maxLength(100000);
@@ -37,6 +55,7 @@ const showFritekst = (brevmalkode?: string, arsakskode?: string): boolean =>
   brevmalkode === dokumentMalType.KORRIGVARS ||
   brevmalkode === dokumentMalType.FRITKS ||
   brevmalkode === dokumentMalType.VARSEL_OM_TILBAKEKREVING ||
+  brevmalkode === dokumentMalType.INNHENT_MEDISINSKE_OPPLYSNINGER ||
   (brevmalkode === dokumentMalType.REVURDERING_DOK && arsakskode === ugunstAarsakTyper.ANNET);
 
 interface PureOwnProps {
@@ -59,7 +78,7 @@ interface MappedOwnProps {
   fritekst?: string;
   arsakskode?: string;
   fritekstbrev?: Fritekstbrev;
-
+  valgtMedisinType?: string;
 }
 
 const formName = 'Messages';
@@ -67,7 +86,7 @@ const RECIPIENT = { id: 'Bruker', type: '' };
 
 const createValidateRecipient = recipients => value =>
   value === JSON.stringify(RECIPIENT) ||
-  (Array.isArray(recipients) && recipients.some(recipient => JSON.stringify(recipient) === value))
+    (Array.isArray(recipients) && recipients.some(recipient => JSON.stringify(recipient) === value))
     ? undefined
     : [{ id: 'ValidationMessage.InvalidRecipient' }];
 
@@ -82,25 +101,29 @@ const transformTemplates = templates =>
  * Presentasjonskomponent. Gir mulighet for å forhåndsvise og sende brev. Mottaker og brevtype velges fra predefinerte lister,
  * og fritekst som skal flettes inn i brevet skrives inn i et eget felt.
  */
-export const MessagesImpl = ({
-                               intl,
-                               templates,
-                               causes = [],
-                               previewCallback,
-                               handleSubmit,
-                               sprakKode,
-                               overstyrtMottaker,
-                               brevmalkode,
-                               fritekst,
-                               arsakskode,
-                               personopplysninger,
-                               arbeidsgiverOpplysningerPerId,
-                               fritekstbrev,
-                               ...formProps
-                             }: PureOwnProps & MappedOwnProps & WrappedComponentProps & InjectedFormProps) => {
+export const MessagesMedMedisinskeTypeBrevmalImpl = ({
+  intl,
+  templates,
+  causes = [],
+  previewCallback,
+  handleSubmit,
+  sprakKode,
+  overstyrtMottaker,
+  brevmalkode,
+  fritekst,
+  valgtMedisinType,
+  arsakskode,
+  personopplysninger,
+  arbeidsgiverOpplysningerPerId,
+  fritekstbrev,
+  ...formProps
+}: PureOwnProps & MappedOwnProps & WrappedComponentProps & InjectedFormProps) => {
   if (!sprakKode) {
     return null;
   }
+
+  const { addErrorMessage } = useRestApiErrorDispatcher();
+  requestMessagesApi.setAddErrorMessageHandler(addErrorMessage);
 
   const previewMessage = e => {
     e.preventDefault();
@@ -124,17 +147,58 @@ export const MessagesImpl = ({
 
   const tmpls: Brevmal[] = transformTemplates(templates);
 
+  const {
+    startRequest: hentFritekstMaler,
+    data: fritekstMaler,
+  } = restApiMessagesHooks.useRestApiRunner<{ tittel: string; fritekst: string}[]>(MessagesApiKeys.HENT_FRITEKSTBREVMALER_TIL_TYPEN_AV_MEDISINSKE_OPPLYSNINGER);
+
+  const oppdaterAPILinkerForHentingAvMedisinskeTyper = () => {
+    const urlsTilHentingAvMedisinskeTyper = tmpls.find(brevmal => brevmal.kode === dokumentMalType.INNHENT_MEDISINSKE_OPPLYSNINGER)?.linker;
+
+    if(urlsTilHentingAvMedisinskeTyper){
+      requestMessagesApi.setLinks(urlsTilHentingAvMedisinskeTyper);
+
+      return true;
+    }
+    return false;
+  }
+
   useEffect(() => {
-    // Tilbakestill valgt mottaker hvis brukeren skifter mal og valgt mottakere ikke er tilgjengelig på ny mal.
     if (brevmalkode) {
+      // Resetter fritekst hver gang bruker endrer brevmalskode
+      formProps.change(
+        'fritekst',
+        null,
+      );
+
+      // Tilbakestill valgt mottaker hvis brukeren skifter mal og valgt mottakere ikke er tilgjengelig på ny mal.
       formProps.change(
         'overstyrtMottaker',
         recipients.some(recipient => JSON.stringify(recipient) === overstyrtMottaker)
           ? overstyrtMottaker
           : JSON.stringify(recipients[0]),
       );
+
+      if (brevmalkode === dokumentMalType.INNHENT_MEDISINSKE_OPPLYSNINGER) {
+        const erAPIOppdatertMedLinker = oppdaterAPILinkerForHentingAvMedisinskeTyper();
+
+        if (!erAPIOppdatertMedLinker) return
+
+        hentFritekstMaler().then((brevmalerForMedisinskeOpplysninger) => {
+
+          const fritekstBrevmal = brevmalerForMedisinskeOpplysninger.find((alt => valgtMedisinType === alt.tittel));
+
+          if (fritekstBrevmal) {
+            formProps.change(
+              'fritekst',
+              fritekstBrevmal.fritekst
+            );
+          }
+          // Catch er tom fordi error message skal håndteres av requestMessagesApi.
+        }).catch(() => {});
+      }
     }
-  }, [brevmalkode]);
+  }, [brevmalkode, valgtMedisinType]);
 
   return (
     <form onSubmit={handleSubmit} data-testid="MessagesForm">
@@ -153,6 +217,23 @@ export const MessagesImpl = ({
             ))}
             bredde="xxl"
           />
+          {brevmalkode === dokumentMalType.INNHENT_MEDISINSKE_OPPLYSNINGER && fritekstMaler && fritekstMaler.length > 0 && (
+            <>
+              <VerticalSpacer eightPx />
+              <SelectField
+                name="valgtMedisinType"
+                label={intl.formatMessage({ id: 'Messages.TypeAvDokumentasjon' })}
+                validate={[]}
+                placeholder={intl.formatMessage({ id: 'Messages.VelgTypeAvDokumentasjon' })}
+                selectValues={fritekstMaler.map(alternativ => (
+                  <option key={alternativ.tittel} value={alternativ.tittel}>
+                    {alternativ.tittel}
+                  </option>
+                ))}
+                bredde="xxl"
+              />
+            </>
+          )}
           {recipients.length > 0 && (
             <>
               <VerticalSpacer eightPx />
@@ -299,6 +380,7 @@ const mapStateToPropsFactory = (_initialState, initialOwnProps: PureOwnProps) =>
     ...behandlingFormValueSelector(formName, ownProps.behandlingId, ownProps.behandlingVersjon)(
       state,
       'overstyrtMottaker',
+      'valgtMedisinType',
       'brevmalkode',
       'fritekst',
       'arsakskode',
@@ -311,10 +393,10 @@ const mapStateToPropsFactory = (_initialState, initialOwnProps: PureOwnProps) =>
   });
 };
 
-const Messages = connect(mapStateToPropsFactory)(
+const MessagesMedMedisinskeTypeBrevmal = connect(mapStateToPropsFactory)(
   behandlingForm({
     form: formName,
-  })(injectIntl(MessagesImpl)),
+  })(injectIntl(MessagesMedMedisinskeTypeBrevmalImpl)),
 );
 
-export default Messages;
+export default MessagesMedMedisinskeTypeBrevmal;

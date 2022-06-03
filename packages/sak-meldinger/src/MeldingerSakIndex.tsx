@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 
 import {
@@ -8,12 +8,15 @@ import {
   ArbeidsgiverOpplysningerPerId,
   Brevmaler,
   Brevmal,
-  Mottaker,
+  Mottaker, FeatureToggles,
 } from '@k9-sak-web/types';
 
 import { Fritekstbrev } from '@k9-sak-web/types/src/formidlingTsType';
+import { restApiHooks } from '@k9-sak-web/sak-app/src/data/k9sakApi';
 import Messages, { FormValues } from './components/Messages';
 import messages from '../i18n/nb_NO.json';
+import MessagesMedMedisinskeTypeBrevmal from './components/MessagesMedMedisinskeTypeBrevmal';
+import { MessagesApiKeys } from './data/messagesApi';
 
 const cache = createIntlCache();
 
@@ -49,21 +52,48 @@ const MeldingerSakIndex = ({
   revurderingVarslingArsak,
   personopplysninger,
   arbeidsgiverOpplysningerPerId,
-}: OwnProps) => (
-  <RawIntlProvider value={intl}>
-    <Messages
-      submitCallback={submitCallback}
-      templates={templates}
-      sprakKode={sprakKode}
-      previewCallback={previewCallback}
-      behandlingId={behandlingId}
-      behandlingVersjon={behandlingVersjon}
-      isKontrollerRevurderingApOpen={isKontrollerRevurderingApOpen}
-      revurderingVarslingArsak={revurderingVarslingArsak}
-      personopplysninger={personopplysninger}
-      arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
-    />
-  </RawIntlProvider>
-);
+}: OwnProps) => {
+
+  const featureTogglesData = restApiHooks.useGlobalStateRestApiData<{ key: string; value: string }[]>(
+    MessagesApiKeys.FEATURE_TOGGLE,
+  );
+  const featureToggles = useMemo<FeatureToggles>(
+    () =>
+      featureTogglesData?.reduce((acc, curr) => {
+        acc[curr.key] = `${curr.value}`.toLowerCase() === 'true';
+        return acc;
+      }, {}),
+    [featureTogglesData]);
+
+  return (<RawIntlProvider value={intl}>
+    {featureToggles?.TYPE_MEDISINSKE_OPPLYSNINGER_BREV
+      ? <MessagesMedMedisinskeTypeBrevmal
+        submitCallback={submitCallback}
+        templates={templates}
+        sprakKode={sprakKode}
+        previewCallback={previewCallback}
+        behandlingId={behandlingId}
+        behandlingVersjon={behandlingVersjon}
+        isKontrollerRevurderingApOpen={isKontrollerRevurderingApOpen}
+        revurderingVarslingArsak={revurderingVarslingArsak}
+        personopplysninger={personopplysninger}
+        arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
+      />
+      : <Messages
+        submitCallback={submitCallback}
+        templates={templates}
+        sprakKode={sprakKode}
+        previewCallback={previewCallback}
+        behandlingId={behandlingId}
+        behandlingVersjon={behandlingVersjon}
+        isKontrollerRevurderingApOpen={isKontrollerRevurderingApOpen}
+        revurderingVarslingArsak={revurderingVarslingArsak}
+        personopplysninger={personopplysninger}
+        arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
+      />
+    }
+
+  </RawIntlProvider>);
+};
 
 export default MeldingerSakIndex;
