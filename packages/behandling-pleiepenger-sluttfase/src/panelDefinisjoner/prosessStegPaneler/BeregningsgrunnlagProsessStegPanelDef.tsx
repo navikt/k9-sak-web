@@ -5,9 +5,12 @@ import BeregningsgrunnlagProsessIndex from '@fpsak-frontend/prosess-beregningsgr
 import { prosessStegCodes } from '@k9-sak-web/konstanter';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { ProsessStegDef, ProsessStegPanelDef } from '@k9-sak-web/behandling-felles';
+import { PleiepengerSluttfaseBehandlingApiKeys } from "@k9-sak-web/behandling-pleiepenger-sluttfase/src/data/pleiepengerSluttfaseBehandlingApi";
 
 class PanelDef extends ProsessStegPanelDef {
   getKomponent = props => <BeregningsgrunnlagProsessIndex {...props} />;
+
+  getEndepunkter = () => [PleiepengerSluttfaseBehandlingApiKeys.BEREGNINGREFERANSER_TIL_VURDERING];
 
   getAksjonspunktKoder = () => [
     aksjonspunktCodes.FASTSETT_BEREGNINGSGRUNNLAG_ARBEIDSTAKER_FRILANS,
@@ -21,10 +24,11 @@ class PanelDef extends ProsessStegPanelDef {
 
   getOverstyrVisningAvKomponent = () => true;
 
-  getData = ({ fagsak, beregningsgrunnlag, arbeidsgiverOpplysningerPerId }) => ({
+  getData = ({ fagsak, beregningsgrunnlag, arbeidsgiverOpplysningerPerId, beregningKoblingerTilVurdering }) => ({
     fagsak,
     beregningsgrunnlag,
     arbeidsgiverOpplysningerPerId,
+    beregningKoblingerTilVurdering
   });
 }
 
