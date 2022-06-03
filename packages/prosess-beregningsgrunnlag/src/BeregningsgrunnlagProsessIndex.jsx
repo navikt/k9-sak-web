@@ -8,6 +8,7 @@ import BeregningFP2 from './components/BeregningFP';
 import messages from '../i18n/nb_NO.json';
 import beregningsgrunnlagPropType from './propTypes/beregningsgrunnlagPropType';
 import { BeregningContext } from './beregningContext';
+import beregningKoblingPropType from "./propTypes/beregningKoblingPropType";
 
 const cache = createIntlCache();
 
@@ -19,20 +20,23 @@ const intl = createIntl(
   cache,
 );
 
-const BeregningsgrunnlagProsessIndex = ({
-  behandling,
-  beregningsgrunnlag,
-  submitCallback,
-  isReadOnly,
-  readOnlySubmitButton,
-  vilkar,
-  alleKodeverk,
-  arbeidsgiverOpplysningerPerId,
-  fagsak,
-  beregningErBehandlet
-}) => (
+const BeregningsgrunnlagProsessIndex = (
+  {
+    behandling,
+    beregningsgrunnlag,
+    submitCallback,
+    isReadOnly,
+    readOnlySubmitButton,
+    vilkar,
+    alleKodeverk,
+    arbeidsgiverOpplysningerPerId,
+    fagsak,
+    beregningErBehandlet,
+    beregningKoblingerTilVurdering,
+  }
+) => (
   <RawIntlProvider value={intl}>
-    <BeregningContext.Provider value={{ fagsakYtelseType: fagsak?.fagsakYtelseType }}>
+    <BeregningContext.Provider value={{fagsakYtelseType: fagsak?.fagsakYtelseType}}>
       <BeregningFP2
         behandling={behandling}
         beregningsgrunnlag={beregningsgrunnlag}
@@ -45,6 +49,7 @@ const BeregningsgrunnlagProsessIndex = ({
         behandlingId={behandling.id}
         behandlingVersjon={behandling.versjon}
         beregningErBehandlet={beregningErBehandlet}
+        beregningKoblingerTilVurdering={beregningKoblingerTilVurdering}
       />
     </BeregningContext.Provider>
   </RawIntlProvider>
@@ -62,6 +67,7 @@ BeregningsgrunnlagProsessIndex.propTypes = {
   arbeidsgiverOpplysningerPerId: PropTypes.shape().isRequired,
   fagsak: PropTypes.shape().isRequired,
   beregningErBehandlet: PropTypes.bool,
+  beregningKoblingerTilVurdering: PropTypes.arrayOf(PropTypes.shape(beregningKoblingPropType)).isRequired,
 };
 
 BeregningsgrunnlagProsessIndex.defaultProps = {
