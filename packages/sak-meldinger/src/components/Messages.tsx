@@ -67,7 +67,7 @@ const RECIPIENT = { id: 'Bruker', type: '' };
 
 const createValidateRecipient = recipients => value =>
   value === JSON.stringify(RECIPIENT) ||
-  (Array.isArray(recipients) && recipients.some(recipient => JSON.stringify(recipient) === value))
+    (Array.isArray(recipients) && recipients.some(recipient => JSON.stringify(recipient) === value))
     ? undefined
     : [{ id: 'ValidationMessage.InvalidRecipient' }];
 
@@ -83,21 +83,21 @@ const transformTemplates = templates =>
  * og fritekst som skal flettes inn i brevet skrives inn i et eget felt.
  */
 export const MessagesImpl = ({
-                               intl,
-                               templates,
-                               causes = [],
-                               previewCallback,
-                               handleSubmit,
-                               sprakKode,
-                               overstyrtMottaker,
-                               brevmalkode,
-                               fritekst,
-                               arsakskode,
-                               personopplysninger,
-                               arbeidsgiverOpplysningerPerId,
-                               fritekstbrev,
-                               ...formProps
-                             }: PureOwnProps & MappedOwnProps & WrappedComponentProps & InjectedFormProps) => {
+  intl,
+  templates,
+  causes = [],
+  previewCallback,
+  handleSubmit,
+  sprakKode,
+  overstyrtMottaker,
+  brevmalkode,
+  fritekst,
+  arsakskode,
+  personopplysninger,
+  arbeidsgiverOpplysningerPerId,
+  fritekstbrev,
+  ...formProps
+}: PureOwnProps & MappedOwnProps & WrappedComponentProps & InjectedFormProps) => {
   if (!sprakKode) {
     return null;
   }
