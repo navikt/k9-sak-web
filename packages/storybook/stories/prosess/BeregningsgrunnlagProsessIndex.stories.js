@@ -60,7 +60,7 @@ const vilkarMedUtfall = (kode, fomArray) => [
       kodeverk: 'vilkarType',
     },
     perioder: fomArray.map(fom => ({
-      periode: { fom, tom: null},
+      periode: {fom, tom: null},
       vilkarStatus: {
         kode,
         kodeverk: 'vilkarStatus',
@@ -69,6 +69,12 @@ const vilkarMedUtfall = (kode, fomArray) => [
     })),
   },
 ];
+
+const lagKoblingTilVurdering = (fomArray, forlengelseMap= {}) => fomArray.map(stp => ({
+  skjæringstidspunkt: stp,
+  referanse: 'ht43-fwse34-23423dwa',
+  erForlengelse: forlengelseMap[stp] ? forlengelseMap[stp] : false
+}));
 
 const lagArbeidsforhold = (
   arbeidsgiverId,
@@ -189,19 +195,19 @@ const lagPeriodeMedDagsats = (andelsliste, dagsats) => lagPeriode(andelsliste, d
 const lagStandardPeriode = andelsliste => lagPeriode(andelsliste, null, standardFom, standardTom, []);
 
 const lagTidsbegrensetPeriode = (andelsliste, fom, tom) =>
-  lagPeriode(andelsliste, null, fom, tom, [{ kode: periodeAarsak.ARBEIDSFORHOLD_AVSLUTTET }]);
+  lagPeriode(andelsliste, null, fom, tom, [{kode: periodeAarsak.ARBEIDSFORHOLD_AVSLUTTET}]);
 
 const lagStatus = kode => ({
   kode,
   kodeverk: 'AKTIVITET_STATUS',
 });
 
-const lagBG = (perioder, statuser, sammenligningsgrunnlagPrStatus, avklaringsbehov, grunnbeløp = 99858) => {
+const lagBG = (perioder, statuser, sammenligningsgrunnlagPrStatus, avklaringsbehov, skjæringstidspunkt = '2019-09-16', grunnbeløp = 99858) => {
   const beregningsgrunnlag = {
     avklaringsbehov: avklaringsbehov == undefined ? [] : avklaringsbehov,
-    skjaeringstidspunktBeregning: '2019-09-16',
-    skjæringstidspunkt: '2019-09-16',
-    vilkårsperiodeFom: '2019-09-16',
+    skjaeringstidspunktBeregning: skjæringstidspunkt,
+    skjæringstidspunkt,
+    vilkårsperiodeFom: skjæringstidspunkt,
     aktivitetStatus: statuser,
     beregningsgrunnlagPeriode: perioder,
     dekningsgrad: 80,
@@ -217,7 +223,7 @@ const lagBG = (perioder, statuser, sammenligningsgrunnlagPrStatus, avklaringsbeh
     ledetekstBrutto: 'Brutto beregningsgrunnlag',
     ledetekstAvkortet: 'Avkortet beregningsgrunnlag (6G=599148)',
     ledetekstRedusert: 'Redusert beregningsgrunnlag (100%)',
-    halvG: grunnbeløp/2,
+    halvG: grunnbeløp / 2,
     faktaOmBeregning: {
       kortvarigeArbeidsforhold: null,
       frilansAndel: null,
@@ -446,6 +452,10 @@ export const arbeidstakerUtenAvvik = () => {
       ])}
       alleKodeverk={alleKodeverk}
       arbeidsgiverOpplysningerPerId={arbeidsgivere}
+      beregningKoblingerTilVurdering={lagKoblingTilVurdering([
+        bg.skjaeringstidspunktBeregning,
+        bg.skjaeringstidspunktBeregning,
+      ])}
     />
   );
 };
@@ -477,6 +487,10 @@ export const brukersAndelUtenAvvik = () => {
       ])}
       alleKodeverk={alleKodeverk}
       arbeidsgiverOpplysningerPerId={arbeidsgivere}
+      beregningKoblingerTilVurdering={lagKoblingTilVurdering([
+        bg.skjaeringstidspunktBeregning,
+        bg.skjaeringstidspunktBeregning,
+      ])}
     />
   );
 };
@@ -504,6 +518,10 @@ export const arbeidstakerMedAvvik = () => {
         bg.skjaeringstidspunktBeregning,
         bg.skjaeringstidspunktBeregning,
       ])}
+      beregningKoblingerTilVurdering={lagKoblingTilVurdering([
+        bg.skjaeringstidspunktBeregning,
+        bg.skjaeringstidspunktBeregning,
+      ])}
       alleKodeverk={alleKodeverk}
       arbeidsgiverOpplysningerPerId={arbeidsgivere}
     />
@@ -525,6 +543,10 @@ export const militær = () => {
       readOnlySubmitButton={false}
       isAksjonspunktOpen={false}
       vilkar={vilkarMedUtfall(vilkarUtfallType.OPPFYLT, [
+        bg.skjaeringstidspunktBeregning,
+        bg.skjaeringstidspunktBeregning,
+      ])}
+      beregningKoblingerTilVurdering={lagKoblingTilVurdering([
         bg.skjaeringstidspunktBeregning,
         bg.skjaeringstidspunktBeregning,
       ])}
@@ -558,7 +580,7 @@ export const selvstendigNæringsdrivende = () => {
       regnskapsførerNavn: 'Regnskapsfører Regn S. Fører',
       regnskapsførerTlf: '99999999',
       utenlandskvirksomhetsnavn: null,
-      virksomhetType: { kode: 'ANNEN', kodeverk: 'VIRKSOMHET_TYPE' },
+      virksomhetType: {kode: 'ANNEN', kodeverk: 'VIRKSOMHET_TYPE'},
     },
     {
       begrunnelse: 'Endringsbeskrivelse',
@@ -571,7 +593,7 @@ export const selvstendigNæringsdrivende = () => {
       opphoersdato: '201-03-01',
       orgnr: '910909077',
       utenlandskvirksomhetsnavn: null,
-      virksomhetType: { kode: 'JORDBRUK_SKOGBRUK', kodeverk: 'VIRKSOMHET_TYPE' },
+      virksomhetType: {kode: 'JORDBRUK_SKOGBRUK', kodeverk: 'VIRKSOMHET_TYPE'},
       virksomhetNavn: 'Navn Navnesen',
     },
   ];
@@ -1023,6 +1045,10 @@ export const selvstendigNæringsdrivende = () => {
       ]}
       alleKodeverk={alleKodeverk}
       arbeidsgiverOpplysningerPerId={arbeidsgivere}
+      beregningKoblingerTilVurdering={lagKoblingTilVurdering([
+        '2020-04-27',
+        '2020-05-04',
+      ])}
     />
   );
 };
@@ -1053,7 +1079,7 @@ export const tidsbegrensetArbeidsforholdMedAvvik = () => {
   const perioder = [
     lagPeriode(andeler, undefined, '2019-09-16', '2019-09-29', []),
     lagTidsbegrensetPeriode(andeler, '2019-09-30', '2019-10-15'),
-    lagPeriode(andeler, undefined, '2019-10-15', null, [{ kode: periodeAarsak.ARBEIDSFORHOLD_AVSLUTTET }]),
+    lagPeriode(andeler, undefined, '2019-10-15', null, [{kode: periodeAarsak.ARBEIDSFORHOLD_AVSLUTTET}]),
   ];
   const statuser = [lagStatus('AT_FL')];
   const sammenligningsgrunnlagPrStatus = [lagSammenligningsGrunnlag(sammenligningType.ATFLSN, 474257, 26.2, 77059)];
@@ -1073,6 +1099,10 @@ export const tidsbegrensetArbeidsforholdMedAvvik = () => {
       ])}
       alleKodeverk={alleKodeverk}
       arbeidsgiverOpplysningerPerId={arbeidsgivere}
+      beregningKoblingerTilVurdering={lagKoblingTilVurdering([
+        bg.skjaeringstidspunktBeregning,
+        bg.skjaeringstidspunktBeregning,
+      ])}
     />
   );
 };
@@ -1109,6 +1139,10 @@ export const arbeidstakerFrilanserOgSelvstendigNæringsdrivende = () => {
       ])}
       alleKodeverk={alleKodeverk}
       arbeidsgiverOpplysningerPerId={arbeidsgivere}
+      beregningKoblingerTilVurdering={lagKoblingTilVurdering([
+        bg.skjaeringstidspunktBeregning,
+        bg.skjaeringstidspunktBeregning,
+      ])}
     />
   );
 };
@@ -1127,17 +1161,17 @@ export const naturalYtelse = () => {
   andel3.dekningsgrad = 80;
   delete andel1.bortfaltNaturalytelse;
   const statuser = [lagStatus('AT')];
-  const periode1 = lagPeriode([{ ...andel1 }, { ...andel2 }, { ...andel3 }], 4432, '2019-03-21', '2019-05-31', [
-    { kode: periodeAarsak.NATURALYTELSE_BORTFALT },
+  const periode1 = lagPeriode([{...andel1}, {...andel2}, {...andel3}], 4432, '2019-03-21', '2019-05-31', [
+    {kode: periodeAarsak.NATURALYTELSE_BORTFALT},
   ]);
   andel1.bortfaltNaturalytelse = 1231;
   delete andel2.bortfaltNaturalytelse;
   delete andel3.bortfaltNaturalytelse;
-  const periode2 = lagPeriode([{ ...andel1 }, { ...andel2 }, { ...andel3 }], 2432, '2019-06-01', '2019-07-30', [
-    { kode: periodeAarsak.NATURALYTELSE_BORTFALT },
+  const periode2 = lagPeriode([{...andel1}, {...andel2}, {...andel3}], 2432, '2019-06-01', '2019-07-30', [
+    {kode: periodeAarsak.NATURALYTELSE_BORTFALT},
   ]);
-  const periode3 = lagPeriode([{ ...andel1 }, { ...andel2 }, { ...andel3 }], 3432, '2019-08-01', '2019-09-30', [
-    { kode: periodeAarsak.ARBEIDSFORHOLD_AVSLUTTET },
+  const periode3 = lagPeriode([{...andel1}, {...andel2}, {...andel3}], 3432, '2019-08-01', '2019-09-30', [
+    {kode: periodeAarsak.ARBEIDSFORHOLD_AVSLUTTET},
   ]);
 
   const perioder = [periode1, periode2, periode3];
@@ -1164,6 +1198,10 @@ export const naturalYtelse = () => {
       ])}
       alleKodeverk={alleKodeverk}
       arbeidsgiverOpplysningerPerId={arbeidsgivere}
+      beregningKoblingerTilVurdering={lagKoblingTilVurdering([
+        bg.skjaeringstidspunktBeregning,
+        bg.skjaeringstidspunktBeregning,
+      ])}
     />
   );
 };
@@ -1196,6 +1234,10 @@ export const arbeidstakerDagpengerOgSelvstendigNæringsdrivende = () => {
       ])}
       alleKodeverk={alleKodeverk}
       arbeidsgiverOpplysningerPerId={arbeidsgivere}
+      beregningKoblingerTilVurdering={lagKoblingTilVurdering([
+        bg.skjaeringstidspunktBeregning,
+        bg.skjaeringstidspunktBeregning,
+      ])}
     />
   );
 };
@@ -1224,7 +1266,7 @@ export const arbeidstakerOgSelvstendigNæringsdrivendeUtenAkjsonspunkt = () => {
       regnskapsførerNavn: 'Regnar Regnskap',
       regnskapsførerTlf: '99999999',
       utenlandskvirksomhetsnavn: null,
-      virksomhetType: { kode: 'ANNEN', kodeverk: 'VIRKSOMHET_TYPE' },
+      virksomhetType: {kode: 'ANNEN', kodeverk: 'VIRKSOMHET_TYPE'},
       kode: 'ANNEN',
       kodeverk: 'VIRKSOMHET_TYPE',
     },
@@ -1248,6 +1290,10 @@ export const arbeidstakerOgSelvstendigNæringsdrivendeUtenAkjsonspunkt = () => {
       ])}
       alleKodeverk={alleKodeverk}
       arbeidsgiverOpplysningerPerId={arbeidsgivere}
+      beregningKoblingerTilVurdering={lagKoblingTilVurdering([
+        bg.skjaeringstidspunktBeregning,
+        bg.skjaeringstidspunktBeregning,
+      ])}
     />
   );
 };
@@ -1282,7 +1328,7 @@ export const arbeidstakerOgFrilansOgSelvstendigNæringsdrivendeMedAksjonspunktBe
       regnskapsførerNavn: 'Regnar Regnskap',
       regnskapsførerTlf: '99999999',
       utenlandskvirksomhetsnavn: null,
-      virksomhetType: { kode: 'ANNEN', kodeverk: 'VIRKSOMHET_TYPE' },
+      virksomhetType: {kode: 'ANNEN', kodeverk: 'VIRKSOMHET_TYPE'},
       kode: 'ANNEN',
       kodeverk: 'VIRKSOMHET_TYPE',
     },
@@ -1311,6 +1357,10 @@ export const arbeidstakerOgFrilansOgSelvstendigNæringsdrivendeMedAksjonspunktBe
       ])}
       alleKodeverk={alleKodeverk}
       arbeidsgiverOpplysningerPerId={arbeidsgivere}
+      beregningKoblingerTilVurdering={lagKoblingTilVurdering([
+        bg.skjaeringstidspunktBeregning,
+        bg.skjaeringstidspunktBeregning,
+      ])}
     />
   );
 };
@@ -1343,7 +1393,7 @@ export const arbeidstakerDagpengerOgSelvstendigNæringsdrivendeUtenAksjonspunkt 
       regnskapsførerNavn: 'Regnar Regnskap',
       regnskapsførerTlf: '99999999',
       utenlandskvirksomhetsnavn: null,
-      virksomhetType: { kode: 'DAGMAMMA', kodeverk: 'VIRKSOMHET_TYPE' },
+      virksomhetType: {kode: 'DAGMAMMA', kodeverk: 'VIRKSOMHET_TYPE'},
       kode: 'ANNEN',
       kodeverk: 'VIRKSOMHET_TYPE',
     },
@@ -1367,6 +1417,10 @@ export const arbeidstakerDagpengerOgSelvstendigNæringsdrivendeUtenAksjonspunkt 
       ])}
       alleKodeverk={alleKodeverk}
       arbeidsgiverOpplysningerPerId={arbeidsgivere}
+      beregningKoblingerTilVurdering={lagKoblingTilVurdering([
+        bg.skjaeringstidspunktBeregning,
+        bg.skjaeringstidspunktBeregning,
+      ])}
     />
   );
 };
@@ -1419,6 +1473,10 @@ export const arbeidstakerMed3Arbeidsforhold2ISammeOrganisasjonSide3 = () => {
       ])}
       alleKodeverk={alleKodeverk}
       arbeidsgiverOpplysningerPerId={arbeidsgivere}
+      beregningKoblingerTilVurdering={lagKoblingTilVurdering([
+        bg.skjaeringstidspunktBeregning,
+        bg.skjaeringstidspunktBeregning,
+      ])}
     />
   );
 };
@@ -1457,6 +1515,10 @@ export const arbeidstakerAvslagHalvGSide4 = () => {
       ])}
       alleKodeverk={alleKodeverk}
       arbeidsgiverOpplysningerPerId={arbeidsgivere}
+      beregningKoblingerTilVurdering={lagKoblingTilVurdering([
+        bg.skjaeringstidspunktBeregning,
+        bg.skjaeringstidspunktBeregning,
+      ])}
     />
   );
 };
@@ -1491,6 +1553,10 @@ export const arbeidstakerMedAksjonspunktSide5 = () => {
       ])}
       alleKodeverk={alleKodeverk}
       arbeidsgiverOpplysningerPerId={arbeidsgivere}
+      beregningKoblingerTilVurdering={lagKoblingTilVurdering([
+        bg.skjaeringstidspunktBeregning,
+        bg.skjaeringstidspunktBeregning,
+      ])}
     />
   );
 };
@@ -1526,6 +1592,10 @@ export const arbeidstakerMedAksjonspunktBehandletSide6 = () => {
       ])}
       alleKodeverk={alleKodeverk}
       arbeidsgiverOpplysningerPerId={arbeidsgivere}
+      beregningKoblingerTilVurdering={lagKoblingTilVurdering([
+        bg.skjaeringstidspunktBeregning,
+        bg.skjaeringstidspunktBeregning,
+      ])}
     />
   );
 };
@@ -1570,6 +1640,10 @@ export const tidsbegrensetArbeidsforholdMedAksjonspunktkSide7 = () => {
       ])}
       alleKodeverk={alleKodeverk}
       arbeidsgiverOpplysningerPerId={arbeidsgivere}
+      beregningKoblingerTilVurdering={lagKoblingTilVurdering([
+        bg.skjaeringstidspunktBeregning,
+        bg.skjaeringstidspunktBeregning,
+      ])}
     />
   );
 };
@@ -1638,6 +1712,10 @@ export const tidsbegrensetArbeidsforholdMedAksjonspunktBehandletSide7 = () => {
       ])}
       alleKodeverk={alleKodeverk}
       arbeidsgiverOpplysningerPerId={arbeidsgivere}
+      beregningKoblingerTilVurdering={lagKoblingTilVurdering([
+        bg.skjaeringstidspunktBeregning,
+        bg.skjaeringstidspunktBeregning,
+      ])}
     />
   );
 };
@@ -1664,6 +1742,10 @@ export const FrilansSide8 = () => {
       ])}
       alleKodeverk={alleKodeverk}
       arbeidsgiverOpplysningerPerId={arbeidsgivere}
+      beregningKoblingerTilVurdering={lagKoblingTilVurdering([
+        bg.skjaeringstidspunktBeregning,
+        bg.skjaeringstidspunktBeregning,
+      ])}
     />
   );
 };
@@ -1690,6 +1772,10 @@ export const FrilansMedAksjonspunktSide9 = () => {
       ])}
       alleKodeverk={alleKodeverk}
       arbeidsgiverOpplysningerPerId={arbeidsgivere}
+      beregningKoblingerTilVurdering={lagKoblingTilVurdering([
+        bg.skjaeringstidspunktBeregning,
+        bg.skjaeringstidspunktBeregning,
+      ])}
     />
   );
 };
@@ -1718,6 +1804,10 @@ export const arbeidstakerFrilansMedAksjonspunktSide10 = () => {
       ])}
       alleKodeverk={alleKodeverk}
       arbeidsgiverOpplysningerPerId={arbeidsgivere}
+      beregningKoblingerTilVurdering={lagKoblingTilVurdering([
+        bg.skjaeringstidspunktBeregning,
+        bg.skjaeringstidspunktBeregning,
+      ])}
     />
   );
 };
@@ -1755,6 +1845,10 @@ export const arbeidstakerFrilansMedAksjonspunktBehandletSide11 = () => {
       ])}
       alleKodeverk={alleKodeverk}
       arbeidsgiverOpplysningerPerId={arbeidsgivere}
+      beregningKoblingerTilVurdering={lagKoblingTilVurdering([
+        bg.skjaeringstidspunktBeregning,
+        bg.skjaeringstidspunktBeregning,
+      ])}
     />
   );
 };
@@ -1784,7 +1878,7 @@ export const SelvstendigNæringsdrivendeUtenVarigEndringIkkeNyoppstartetSide12 =
       regnskapsførerNavn: 'Regnar Regnskap',
       regnskapsførerTlf: '99999999',
       utenlandskvirksomhetsnavn: null,
-      virksomhetType: { kode: 'ANNEN', kodeverk: 'VIRKSOMHET_TYPE' },
+      virksomhetType: {kode: 'ANNEN', kodeverk: 'VIRKSOMHET_TYPE'},
       kode: 'ANNEN',
       kodeverk: 'VIRKSOMHET_TYPE',
     },
@@ -1808,6 +1902,10 @@ export const SelvstendigNæringsdrivendeUtenVarigEndringIkkeNyoppstartetSide12 =
       ])}
       alleKodeverk={alleKodeverk}
       arbeidsgiverOpplysningerPerId={arbeidsgivere}
+      beregningKoblingerTilVurdering={lagKoblingTilVurdering([
+        bg.skjaeringstidspunktBeregning,
+        bg.skjaeringstidspunktBeregning,
+      ])}
     />
   );
 };
@@ -1839,7 +1937,7 @@ export const SelvstendigNæringsdrivendeMedVarigEndringSide13 = () => {
       regnskapsførerNavn: 'Regnar Regnskap',
       regnskapsførerTlf: '99999999',
       utenlandskvirksomhetsnavn: null,
-      virksomhetType: { kode: 'ANNEN', kodeverk: 'VIRKSOMHET_TYPE' },
+      virksomhetType: {kode: 'ANNEN', kodeverk: 'VIRKSOMHET_TYPE'},
       virksomhetNavn: 'Jensen frisør og hudpleie',
       kode: 'ANNEN',
       kodeverk: 'VIRKSOMHET_TYPE',
@@ -1855,7 +1953,7 @@ export const SelvstendigNæringsdrivendeMedVarigEndringSide13 = () => {
       opphoersdato: '2010-03-01',
       orgnr: '910909077',
       utenlandskvirksomhetsnavn: null,
-      virksomhetType: { kode: 'JORDBRUK_SKOGBRUK', kodeverk: 'VIRKSOMHET_TYPE' },
+      virksomhetType: {kode: 'JORDBRUK_SKOGBRUK', kodeverk: 'VIRKSOMHET_TYPE'},
       virksomhetNavn: 'Berit Jensen',
     },
   ];
@@ -1878,6 +1976,10 @@ export const SelvstendigNæringsdrivendeMedVarigEndringSide13 = () => {
       ])}
       alleKodeverk={alleKodeverk}
       arbeidsgiverOpplysningerPerId={arbeidsgivere}
+      beregningKoblingerTilVurdering={lagKoblingTilVurdering([
+        bg.skjaeringstidspunktBeregning,
+        bg.skjaeringstidspunktBeregning,
+      ])}
     />
   );
 };
@@ -1909,7 +2011,7 @@ export const SelvstendigNæringsdrivendeMedVarigEndringMedAksjonspunktSide14 = (
       regnskapsførerNavn: 'Regnar Regnskap',
       regnskapsførerTlf: '99999999',
       utenlandskvirksomhetsnavn: null,
-      virksomhetType: { kode: 'ANNEN', kodeverk: 'VIRKSOMHET_TYPE' },
+      virksomhetType: {kode: 'ANNEN', kodeverk: 'VIRKSOMHET_TYPE'},
       kode: 'ANNEN',
       kodeverk: 'VIRKSOMHET_TYPE',
     },
@@ -1937,6 +2039,10 @@ export const SelvstendigNæringsdrivendeMedVarigEndringMedAksjonspunktSide14 = (
       ])}
       alleKodeverk={alleKodeverk}
       arbeidsgiverOpplysningerPerId={arbeidsgivere}
+      beregningKoblingerTilVurdering={lagKoblingTilVurdering([
+        bg.skjaeringstidspunktBeregning,
+        bg.skjaeringstidspunktBeregning,
+      ])}
     />
   );
 };
@@ -1968,7 +2074,7 @@ export const SelvstendigNæringsdrivendeMedVarigEndringMedAksjonspunktUtførtSid
       regnskapsførerNavn: 'Regnar Regnskap',
       regnskapsførerTlf: '99999999',
       utenlandskvirksomhetsnavn: null,
-      virksomhetType: { kode: 'ANNEN', kodeverk: 'VIRKSOMHET_TYPE' },
+      virksomhetType: {kode: 'ANNEN', kodeverk: 'VIRKSOMHET_TYPE'},
       kode: 'ANNEN',
       kodeverk: 'VIRKSOMHET_TYPE',
     },
@@ -1999,6 +2105,10 @@ export const SelvstendigNæringsdrivendeMedVarigEndringMedAksjonspunktUtførtSid
       ])}
       alleKodeverk={alleKodeverk}
       arbeidsgiverOpplysningerPerId={arbeidsgivere}
+      beregningKoblingerTilVurdering={lagKoblingTilVurdering([
+        bg.skjaeringstidspunktBeregning,
+        bg.skjaeringstidspunktBeregning,
+      ])}
     />
   );
 };
@@ -2028,7 +2138,7 @@ export const SelvstendigNæringsdrivendeNyoppstartetMedAksjonspunktSide16 = () =
       regnskapsførerNavn: 'Regnar Regnskap',
       regnskapsførerTlf: '99999999',
       utenlandskvirksomhetsnavn: null,
-      virksomhetType: { kode: 'ANNEN', kodeverk: 'VIRKSOMHET_TYPE' },
+      virksomhetType: {kode: 'ANNEN', kodeverk: 'VIRKSOMHET_TYPE'},
       kode: 'ANNEN',
       kodeverk: 'VIRKSOMHET_TYPE',
     },
@@ -2056,6 +2166,98 @@ export const SelvstendigNæringsdrivendeNyoppstartetMedAksjonspunktSide16 = () =
       ])}
       alleKodeverk={alleKodeverk}
       arbeidsgiverOpplysningerPerId={arbeidsgivere}
+      beregningKoblingerTilVurdering={lagKoblingTilVurdering([
+        bg.skjaeringstidspunktBeregning,
+        bg.skjaeringstidspunktBeregning,
+      ])}
+    />
+  );
+};
+export const SelvstendigNæringsdrivendeNyoppstartetMedAksjonspunktMedForlengelse = () => {
+  const stp1 = '2020-01-01';
+  const stp2 = '2020-06-01';
+
+  // STP 1 FORLENGELSELSE
+  const andeler = [lagAndel('SN', 531000, 531000, undefined, true)];
+  const pgi = lagPGIVerdier();
+  andeler[0].pgiVerdier = pgi;
+  andeler[0].pgiSnitt = 174544;
+  andeler[0].overstyrtPrAar = 522864;
+  const perioder = [lagPeriodeMedDagsats(andeler, null, stp1, '9999-12-31')];
+  perioder[0].bruttoInkludertBortfaltNaturalytelsePrAar = andeler[0].pgiSnitt;
+  delete perioder[0].redusertPrAar;
+  delete perioder[0].avkortetPrAar;
+
+  const statuser = [lagStatus('SN')];
+  const næringer = [
+    {
+      begrunnelse: '',
+      endringsdato: '2019-05-01',
+      erNyIArbeidslivet: false,
+      erNyoppstartet: true,
+      erVarigEndret: false,
+      kanRegnskapsførerKontaktes: false,
+      oppgittInntekt: 350000,
+      oppstartsdato: '2019-05-01',
+      orgnr: '910909088',
+      regnskapsførerNavn: 'Regnar Regnskap',
+      regnskapsførerTlf: '99999999',
+      utenlandskvirksomhetsnavn: null,
+      virksomhetType: {kode: 'ANNEN', kodeverk: 'VIRKSOMHET_TYPE'},
+      kode: 'ANNEN',
+      kodeverk: 'VIRKSOMHET_TYPE',
+    },
+  ];
+  andeler[0].næringer = næringer;
+  const sammenligningsgrunnlagPrStatus = [lagSammenligningsGrunnlag(sammenligningType.ATFLSN, 350000, 50.1, -113871)];
+  const ap = lagAPMedKode(
+    aksjonspunktCodes.VURDER_VARIG_ENDRET_ELLER_NYOPPSTARTET_NAERING_SELVSTENDIG_NAERINGSDRIVENDE,
+  );
+  ap[0].status.kode = 'UTFO';
+  ap[0].begrunnelse = "En skikkelig god begrunnelse";
+  const bg1 = lagBG(perioder, statuser, sammenligningsgrunnlagPrStatus, ap, stp1);
+  bg1.dekningsgrad = 100;
+
+
+  // STP 2
+  const andeler2 = [lagAndel('SN', 531000, undefined, undefined, true)];
+  andeler2[0].pgiVerdier = pgi;
+  andeler2[0].pgiSnitt = 174544;
+  andeler2[0].overstyrtPrAar = 522864;
+  const perioder2 = [lagPeriodeMedDagsats(andeler2, null, stp2, '9999-12-31')];
+  perioder2[0].bruttoInkludertBortfaltNaturalytelsePrAar = andeler2[0].pgiSnitt;
+  delete perioder2[0].redusertPrAar;
+  delete perioder2[0].avkortetPrAar;
+  andeler2[0].næringer = næringer;
+  const ap2 = lagAPMedKode(
+    aksjonspunktCodes.VURDER_VARIG_ENDRET_ELLER_NYOPPSTARTET_NAERING_SELVSTENDIG_NAERINGSDRIVENDE,
+  );
+  const bg2 = lagBG(perioder2, statuser, sammenligningsgrunnlagPrStatus, ap2, stp2);
+  bg2.dekningsgrad = 100;
+
+  return (
+    <BeregningsgrunnlagProsessIndex
+      behandling={behandling}
+      beregningsgrunnlag={[bg1, bg2]}
+      aksjonspunkter={ap}
+      submitCallback={action('button-click')}
+      isReadOnly={false}
+      readOnlySubmitButton={false}
+      isAksjonspunktOpen={false}
+      vilkar={vilkarMedUtfall(vilkarUtfallType.IKKE_VURDERT, [
+        stp1,
+        stp2
+      ])}
+      alleKodeverk={alleKodeverk}
+      arbeidsgiverOpplysningerPerId={arbeidsgivere}
+      beregningKoblingerTilVurdering={lagKoblingTilVurdering([
+        stp1,
+        stp2,
+      ],
+        {
+          [stp1] : true,
+          [stp2] : false
+        })}
     />
   );
 };
@@ -2086,7 +2288,7 @@ export const SelvstendigNæringsdrivendeNyINæringslivetMedAksjonspunktSide17 = 
       regnskapsførerNavn: 'Regnar Regnskap',
       regnskapsførerTlf: '99999999',
       utenlandskvirksomhetsnavn: null,
-      virksomhetType: { kode: 'ANNEN', kodeverk: 'VIRKSOMHET_TYPE' },
+      virksomhetType: {kode: 'ANNEN', kodeverk: 'VIRKSOMHET_TYPE'},
       kode: 'ANNEN',
       kodeverk: 'VIRKSOMHET_TYPE',
     },
@@ -2112,6 +2314,10 @@ export const SelvstendigNæringsdrivendeNyINæringslivetMedAksjonspunktSide17 = 
       ])}
       alleKodeverk={alleKodeverk}
       arbeidsgiverOpplysningerPerId={arbeidsgivere}
+      beregningKoblingerTilVurdering={lagKoblingTilVurdering([
+        bg.skjaeringstidspunktBeregning,
+        bg.skjaeringstidspunktBeregning,
+      ])}
     />
   );
 };
@@ -2140,7 +2346,7 @@ export const arbeidstakerOgSelvstendigNæringsdrivendeSnStorreEnnAtOgStorreEnn6g
       regnskapsførerNavn: 'Regnar Regnskap',
       regnskapsførerTlf: '99999999',
       utenlandskvirksomhetsnavn: null,
-      virksomhetType: { kode: 'ANNEN', kodeverk: 'VIRKSOMHET_TYPE' },
+      virksomhetType: {kode: 'ANNEN', kodeverk: 'VIRKSOMHET_TYPE'},
       kode: 'ANNEN',
       kodeverk: 'VIRKSOMHET_TYPE',
     },
@@ -2164,6 +2370,10 @@ export const arbeidstakerOgSelvstendigNæringsdrivendeSnStorreEnnAtOgStorreEnn6g
       ])}
       alleKodeverk={alleKodeverk}
       arbeidsgiverOpplysningerPerId={arbeidsgivere}
+      beregningKoblingerTilVurdering={lagKoblingTilVurdering([
+        bg.skjaeringstidspunktBeregning,
+        bg.skjaeringstidspunktBeregning,
+      ])}
     />
   );
 };
@@ -2193,7 +2403,7 @@ export const arbeidstakerOgSelvstendigNæringsdrivendeSnMindreEnnAtOgStorreEnn6g
       regnskapsførerNavn: 'Regnar Regnskap',
       regnskapsførerTlf: '99999999',
       utenlandskvirksomhetsnavn: null,
-      virksomhetType: { kode: 'ANNEN', kodeverk: 'VIRKSOMHET_TYPE' },
+      virksomhetType: {kode: 'ANNEN', kodeverk: 'VIRKSOMHET_TYPE'},
       kode: 'ANNEN',
       kodeverk: 'VIRKSOMHET_TYPE',
     },
@@ -2217,6 +2427,10 @@ export const arbeidstakerOgSelvstendigNæringsdrivendeSnMindreEnnAtOgStorreEnn6g
       ])}
       alleKodeverk={alleKodeverk}
       arbeidsgiverOpplysningerPerId={arbeidsgivere}
+      beregningKoblingerTilVurdering={lagKoblingTilVurdering([
+        bg.skjaeringstidspunktBeregning,
+        bg.skjaeringstidspunktBeregning,
+      ])}
     />
   );
 };
@@ -2245,7 +2459,7 @@ export const arbeidstakerOgSelvstendigNæringsdrivendeMedAPVarigEndringSide20 = 
       regnskapsførerNavn: 'Regnar Regnskap',
       regnskapsførerTlf: '99999999',
       utenlandskvirksomhetsnavn: null,
-      virksomhetType: { kode: 'ANNEN', kodeverk: 'VIRKSOMHET_TYPE' },
+      virksomhetType: {kode: 'ANNEN', kodeverk: 'VIRKSOMHET_TYPE'},
       kode: 'ANNEN',
       kodeverk: 'VIRKSOMHET_TYPE',
     },
@@ -2273,6 +2487,10 @@ export const arbeidstakerOgSelvstendigNæringsdrivendeMedAPVarigEndringSide20 = 
       ])}
       alleKodeverk={alleKodeverk}
       arbeidsgiverOpplysningerPerId={arbeidsgivere}
+      beregningKoblingerTilVurdering={lagKoblingTilVurdering([
+        bg.skjaeringstidspunktBeregning,
+        bg.skjaeringstidspunktBeregning,
+      ])}
     />
   );
 };
@@ -2304,7 +2522,7 @@ export const arbeidstakerOgSelvstendigNæringsdrivendeMedVarigEndringApBehandlet
       regnskapsførerNavn: 'Regnar Regnskap',
       regnskapsførerTlf: '99999999',
       utenlandskvirksomhetsnavn: null,
-      virksomhetType: { kode: 'ANNEN', kodeverk: 'VIRKSOMHET_TYPE' },
+      virksomhetType: {kode: 'ANNEN', kodeverk: 'VIRKSOMHET_TYPE'},
       kode: 'ANNEN',
       kodeverk: 'VIRKSOMHET_TYPE',
     },
@@ -2333,6 +2551,10 @@ export const arbeidstakerOgSelvstendigNæringsdrivendeMedVarigEndringApBehandlet
       ])}
       alleKodeverk={alleKodeverk}
       arbeidsgiverOpplysningerPerId={arbeidsgivere}
+      beregningKoblingerTilVurdering={lagKoblingTilVurdering([
+        bg.skjaeringstidspunktBeregning,
+        bg.skjaeringstidspunktBeregning,
+      ])}
     />
   );
 };
@@ -2364,7 +2586,7 @@ export const arbeidstakerOgSelvstendigNæringsdrivendeAtStorreEnnSNMedVarigEndri
       regnskapsførerNavn: 'Regnar Regnskap',
       regnskapsførerTlf: '99999999',
       utenlandskvirksomhetsnavn: null,
-      virksomhetType: { kode: 'ANNEN', kodeverk: 'VIRKSOMHET_TYPE' },
+      virksomhetType: {kode: 'ANNEN', kodeverk: 'VIRKSOMHET_TYPE'},
       kode: 'ANNEN',
       kodeverk: 'VIRKSOMHET_TYPE',
     },
@@ -2393,6 +2615,10 @@ export const arbeidstakerOgSelvstendigNæringsdrivendeAtStorreEnnSNMedVarigEndri
       ])}
       alleKodeverk={alleKodeverk}
       arbeidsgiverOpplysningerPerId={arbeidsgivere}
+      beregningKoblingerTilVurdering={lagKoblingTilVurdering([
+        bg.skjaeringstidspunktBeregning,
+        bg.skjaeringstidspunktBeregning,
+      ])}
     />
   );
 };
@@ -2424,7 +2650,7 @@ export const arbeidstakerOgSelvstendigNæringsdrivendeAtStorreEnnSNSide22 = () =
       regnskapsførerNavn: 'Regnar Regnskap',
       regnskapsførerTlf: '99999999',
       utenlandskvirksomhetsnavn: null,
-      virksomhetType: { kode: 'ANNEN', kodeverk: 'VIRKSOMHET_TYPE' },
+      virksomhetType: {kode: 'ANNEN', kodeverk: 'VIRKSOMHET_TYPE'},
       kode: 'ANNEN',
       kodeverk: 'VIRKSOMHET_TYPE',
     },
@@ -2449,6 +2675,10 @@ export const arbeidstakerOgSelvstendigNæringsdrivendeAtStorreEnnSNSide22 = () =
       ])}
       alleKodeverk={alleKodeverk}
       arbeidsgiverOpplysningerPerId={arbeidsgivere}
+      beregningKoblingerTilVurdering={lagKoblingTilVurdering([
+        bg.skjaeringstidspunktBeregning,
+        bg.skjaeringstidspunktBeregning,
+      ])}
     />
   );
 };
@@ -2480,7 +2710,7 @@ export const arbeidstakerFrilansOgSelvstendigNæringsdrivendeMedApOgVarigEndring
       regnskapsførerNavn: 'Regnar Regnskap',
       regnskapsførerTlf: '99999999',
       utenlandskvirksomhetsnavn: null,
-      virksomhetType: { kode: 'ANNEN', kodeverk: 'VIRKSOMHET_TYPE' },
+      virksomhetType: {kode: 'ANNEN', kodeverk: 'VIRKSOMHET_TYPE'},
       kode: 'ANNEN',
       kodeverk: 'VIRKSOMHET_TYPE',
     },
@@ -2508,6 +2738,10 @@ export const arbeidstakerFrilansOgSelvstendigNæringsdrivendeMedApOgVarigEndring
       ])}
       alleKodeverk={alleKodeverk}
       arbeidsgiverOpplysningerPerId={arbeidsgivere}
+      beregningKoblingerTilVurdering={lagKoblingTilVurdering([
+        bg.skjaeringstidspunktBeregning,
+        bg.skjaeringstidspunktBeregning,
+      ])}
     />
   );
 };
@@ -2548,7 +2782,7 @@ export const arbeidstakerFrilansOgSelvstendigNæringsdrivendeMedApOgVarigEndring
       regnskapsførerTlf: '99999999',
       utenlandskvirksomhetsnavn: null,
       virksomhetNavn: 'Jensen frisør og hudpleie',
-      virksomhetType: { kode: 'ANNEN', kodeverk: 'VIRKSOMHET_TYPE' },
+      virksomhetType: {kode: 'ANNEN', kodeverk: 'VIRKSOMHET_TYPE'},
       kode: 'ANNEN',
       kodeverk: 'VIRKSOMHET_TYPE',
     },
@@ -2579,6 +2813,10 @@ export const arbeidstakerFrilansOgSelvstendigNæringsdrivendeMedApOgVarigEndring
       ])}
       alleKodeverk={alleKodeverk}
       arbeidsgiverOpplysningerPerId={arbeidsgivere}
+      beregningKoblingerTilVurdering={lagKoblingTilVurdering([
+        bg.skjaeringstidspunktBeregning,
+        bg.skjaeringstidspunktBeregning,
+      ])}
     />
   );
 };
@@ -2619,7 +2857,7 @@ export const arbeidstakerFrilansOgSelvstendigNæringsdrivendeMedAPVarigEndringSn
       regnskapsførerTlf: '99999999',
       utenlandskvirksomhetsnavn: null,
       virksomhetNavn: 'Jensen frisør og hudpleie',
-      virksomhetType: { kode: 'ANNEN', kodeverk: 'VIRKSOMHET_TYPE' },
+      virksomhetType: {kode: 'ANNEN', kodeverk: 'VIRKSOMHET_TYPE'},
       kode: 'ANNEN',
       kodeverk: 'VIRKSOMHET_TYPE',
     },
@@ -2650,6 +2888,10 @@ export const arbeidstakerFrilansOgSelvstendigNæringsdrivendeMedAPVarigEndringSn
       ])}
       alleKodeverk={alleKodeverk}
       arbeidsgiverOpplysningerPerId={arbeidsgivere}
+      beregningKoblingerTilVurdering={lagKoblingTilVurdering([
+        bg.skjaeringstidspunktBeregning,
+        bg.skjaeringstidspunktBeregning,
+      ])}
     />
   );
 };
@@ -2676,6 +2918,10 @@ export const YtelseFraNavSide26 = () => {
       ])}
       alleKodeverk={alleKodeverk}
       arbeidsgiverOpplysningerPerId={arbeidsgivere}
+      beregningKoblingerTilVurdering={lagKoblingTilVurdering([
+        bg.skjaeringstidspunktBeregning,
+        bg.skjaeringstidspunktBeregning,
+      ])}
     />
   );
 };
@@ -2702,6 +2948,10 @@ export const arbeidstakerOgAAPMedAksjonspunktSide27 = () => {
       ])}
       alleKodeverk={alleKodeverk}
       arbeidsgiverOpplysningerPerId={arbeidsgivere}
+      beregningKoblingerTilVurdering={lagKoblingTilVurdering([
+        bg.skjaeringstidspunktBeregning,
+        bg.skjaeringstidspunktBeregning,
+      ])}
     />
   );
 };
@@ -2738,6 +2988,10 @@ export const arbeidstakerOgAAPMedAksjonspunktOppfyltSide27 = () => {
       ])}
       alleKodeverk={alleKodeverk}
       arbeidsgiverOpplysningerPerId={arbeidsgivere}
+      beregningKoblingerTilVurdering={lagKoblingTilVurdering([
+        bg.skjaeringstidspunktBeregning,
+        bg.skjaeringstidspunktBeregning,
+      ])}
     />
   );
 };
@@ -2774,6 +3028,10 @@ export const frilansDagpengerOgSelvstendigNæringsdrivendeSide29 = () => {
       ])}
       alleKodeverk={alleKodeverk}
       arbeidsgiverOpplysningerPerId={arbeidsgivere}
+      beregningKoblingerTilVurdering={lagKoblingTilVurdering([
+        bg.skjaeringstidspunktBeregning,
+        bg.skjaeringstidspunktBeregning,
+      ])}
     />
   );
 };
@@ -2809,6 +3067,10 @@ export const frilansDagpengerOgSelvstendigNæringsdrivendeFnOgDpOverstigerSNSide
       ])}
       alleKodeverk={alleKodeverk}
       arbeidsgiverOpplysningerPerId={arbeidsgivere}
+      beregningKoblingerTilVurdering={lagKoblingTilVurdering([
+        bg.skjaeringstidspunktBeregning,
+        bg.skjaeringstidspunktBeregning,
+      ])}
     />
   );
 };
@@ -2843,6 +3105,10 @@ export const ArbeidstagerDagpengerOgSelvstendigNæringsdrivendeATOgDpOverstigerS
       ])}
       alleKodeverk={alleKodeverk}
       arbeidsgiverOpplysningerPerId={arbeidsgivere}
+      beregningKoblingerTilVurdering={lagKoblingTilVurdering([
+        bg.skjaeringstidspunktBeregning,
+        bg.skjaeringstidspunktBeregning,
+      ])}
     />
   );
 };
@@ -2869,7 +3135,7 @@ export const frilansDagpengerOgSelvstendigNæringsdrivendeMedAksjonspunktSide31 
       regnskapsførerNavn: 'Regnar Regnskap',
       regnskapsførerTlf: '99999999',
       utenlandskvirksomhetsnavn: null,
-      virksomhetType: { kode: 'ANNEN', kodeverk: 'VIRKSOMHET_TYPE' },
+      virksomhetType: {kode: 'ANNEN', kodeverk: 'VIRKSOMHET_TYPE'},
       kode: 'ANNEN',
       kodeverk: 'VIRKSOMHET_TYPE',
     },
@@ -2901,6 +3167,10 @@ export const frilansDagpengerOgSelvstendigNæringsdrivendeMedAksjonspunktSide31 
       ])}
       alleKodeverk={alleKodeverk}
       arbeidsgiverOpplysningerPerId={arbeidsgivere}
+      beregningKoblingerTilVurdering={lagKoblingTilVurdering([
+        bg.skjaeringstidspunktBeregning,
+        bg.skjaeringstidspunktBeregning,
+      ])}
     />
   );
 };
@@ -2928,6 +3198,10 @@ export const militærOgSiviltjenesteSide33 = () => {
       ])}
       alleKodeverk={alleKodeverk}
       arbeidsgiverOpplysningerPerId={arbeidsgivere}
+      beregningKoblingerTilVurdering={lagKoblingTilVurdering([
+        bg.skjaeringstidspunktBeregning,
+        bg.skjaeringstidspunktBeregning,
+      ])}
     />
   );
 };
@@ -2957,6 +3231,10 @@ export const midlertidigInaktivAvslagEnG = () => {
       ])}
       alleKodeverk={alleKodeverk}
       arbeidsgiverOpplysningerPerId={arbeidsgivere}
+      beregningKoblingerTilVurdering={lagKoblingTilVurdering([
+        bg.skjaeringstidspunktBeregning,
+        bg.skjaeringstidspunktBeregning,
+      ])}
     />
   );
 };
@@ -2985,6 +3263,10 @@ export const arbeidstakerUtenAvvikMedLonnsendringSisteTreMan = () => {
       ])}
       alleKodeverk={alleKodeverk}
       arbeidsgiverOpplysningerPerId={arbeidsgivere}
+      beregningKoblingerTilVurdering={lagKoblingTilVurdering([
+        bg.skjaeringstidspunktBeregning,
+        bg.skjaeringstidspunktBeregning,
+      ])}
     />
   );
 };
@@ -3002,7 +3284,7 @@ export const arbeidstakerMedAvvikOgKunEttGrunnlagKanLøses = () => {
   ap1[0].begrunnelse =
     'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.' +
     ' Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.';
-    ap1[0].status.kode = 'UTFO';
+  ap1[0].status.kode = 'UTFO';
   const bg1 = lagBG(perioder, statuser, sammenligningsgrunnlagPrStatus, ap1);
   const bg2 = lagBG(perioder, statuser, sammenligningsgrunnlagPrStatus, lagAPMedKode(aksjonspunktCodes.FASTSETT_BEREGNINGSGRUNNLAG_ARBEIDSTAKER_FRILANS));
 
@@ -3023,6 +3305,10 @@ export const arbeidstakerMedAvvikOgKunEttGrunnlagKanLøses = () => {
       ])}
       alleKodeverk={alleKodeverk}
       arbeidsgiverOpplysningerPerId={arbeidsgivere}
+      beregningKoblingerTilVurdering={lagKoblingTilVurdering([
+        bg.skjaeringstidspunktBeregning,
+        bg.skjaeringstidspunktBeregning,
+      ])}
     />
   );
 };
