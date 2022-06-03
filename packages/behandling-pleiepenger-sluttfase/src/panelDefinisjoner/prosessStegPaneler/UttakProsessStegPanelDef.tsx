@@ -59,7 +59,7 @@ class PanelDef extends ProsessStegPanelDef {
   getData = ({ uttak, arbeidsgiverOpplysningerPerId, fagsak }) => ({
     uttaksperioder: uttak?.uttaksplan?.perioder,
     utsattePerioder: uttak?.utsattePerioder,
-    kvoteInfo: uttak?.kvoteInfo,
+    kvoteInfo: uttak?.uttaksplan?.kvoteInfo,
     arbeidsgiverOpplysningerPerId,
     erFagytelsetypeLivetsSluttfase: fagsak.sakstype.kode === fagsakYtelseType.PLEIEPENGER_SLUTTFASE,
   });
