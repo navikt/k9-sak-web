@@ -1,143 +1,266 @@
-
 {
   "12345678": {
     "erPrivatPerson": false,
     "referanse": "12345678",
     "identifikator": "12345678",
     "navn": "A.Bedriften",
-    "fødselsdato": null
+    "fødselsdato": null,
+    "arbeidsforholdreferanser": [
+      {
+        "internArbeidsforholdId": "aaaaa-bbbbb",
+        "eksternArbeidsforholdId": "dette-er-eksternReferanse"
+      }
+    ]
   },
   "12345679": {
     "erPrivatPerson": false,
     "referanse": "12345679",
     "identifikator": "12345679",
     "navn": "A.Bedriften2",
-    "fødselsdato": null
+    "fødselsdato": null,
+    "arbeidsforholdreferanser": [
+      {
+        "internArbeidsforholdId": "aaaaa-bbbbb",
+        "eksternArbeidsforholdId": "dette-er-eksternReferanse"
+      }
+    ]
   },
   "12345671": {
     "erPrivatPerson": false,
     "referanse": "12345671",
     "identifikator": "12345671",
     "navn": "A.Bedriften3",
-    "fødselsdato": null
+    "fødselsdato": null,
+    "arbeidsforholdreferanser": [
+      {
+        "internArbeidsforholdId": "4406bf62-ecb5-42b4-9896-28c78858190a",
+        "eksternArbeidsforholdId": "0060-0004-20210816"
+      },
+      {
+        "internArbeidsforholdId": "837771f8-4853-4070-a10f-9aef023951c9",
+        "eksternArbeidsforholdId": "0060-0003-20210816"
+      }
+    ]
   },
   "795349533": {
     "erPrivatPerson": false,
     "referanse": "795349533",
     "identifikator": "795349533",
     "navn": "A.Bedriften4",
-    "fødselsdato": null
+    "fødselsdato": null,
+    "arbeidsforholdreferanser": [
+      {
+        "internArbeidsforholdId": "aaaaa-bbbbb",
+        "eksternArbeidsforholdId": "dette-er-eksternReferanse"
+      }
+    ]
   },
   "123456789": {
     "erPrivatPerson": false,
     "referanse": "123456789",
     "identifikator": "123456789",
     "navn": "A.Bedriften5",
-    "fødselsdato": null
+    "fødselsdato": null,
+    "arbeidsforholdreferanser": [
+      {
+        "internArbeidsforholdId": "aaaaa-bbbbb",
+        "eksternArbeidsforholdId": "dette-er-eksternReferanse"
+      }
+    ]
   },
   "910909088": {
     "erPrivatPerson": false,
     "referanse": "910909088",
     "identifikator": "910909088",
     "navn": "A.BEDRIFT AS",
-    "fødselsdato": null
+    "fødselsdato": null,
+    "arbeidsforholdreferanser": [
+      {
+        "internArbeidsforholdId": "aaaaa-bbbbb",
+        "eksternArbeidsforholdId": "dette-er-eksternReferanse"
+      }
+    ]
   },
   "9109090881": {
     "erPrivatPerson": false,
     "referanse": "9109090881",
     "identifikator": "9109090881",
     "navn": "a.BEDRIFT AS 1",
-    "fødselsdato": null
+    "fødselsdato": null,
+    "arbeidsforholdreferanser": [
+      {
+        "internArbeidsforholdId": "aaaaa-bbbbb",
+        "eksternArbeidsforholdId": "dette-er-eksternReferanse"
+      }
+    ]
   },
   "9109090882": {
     "erPrivatPerson": false,
     "referanse": "9109090882",
     "identifikator": "9109090882",
     "navn": "a.BEDRIFT AS 2",
-    "fødselsdato": null
+    "fødselsdato": null,
+    "arbeidsforholdreferanser": [
+      {
+        "internArbeidsforholdId": "aaaaa-bbbbb",
+        "eksternArbeidsforholdId": "dette-er-eksternReferanse"
+      }
+    ]
   },
   "9109090883": {
     "erPrivatPerson": false,
     "referanse": "9109090883",
     "identifikator": "9109090883",
     "navn": "a.BEDRIFT AS 3",
-    "fødselsdato": null
+    "fødselsdato": null,
+    "arbeidsforholdreferanser": [
+      {
+        "internArbeidsforholdId": "aaaaa-bbbbb",
+        "eksternArbeidsforholdId": "dette-er-eksternReferanse"
+      }
+    ]
   },
   "11212": {
     "erPrivatPerson": false,
     "referanse": "11212",
     "identifikator": "11212",
     "navn": "A.BEDRIFT AS",
-    "fødselsdato": null
+    "fødselsdato": null,
+    "arbeidsforholdreferanser": [
+      {
+        "internArbeidsforholdId": "aaaaa-bbbbb",
+        "eksternArbeidsforholdId": "dette-er-eksternReferanse"
+      }
+    ]
   },
   "999999999": {
     "erPrivatPerson": false,
     "referanse": "999999999",
     "identifikator": "999999999",
     "navn": "A.BEDRIFT AS",
-    "fødselsdato": null
+    "fødselsdato": null,
+    "arbeidsforholdreferanser": [
+      {
+        "internArbeidsforholdId": "aaaaa-bbbbb",
+        "eksternArbeidsforholdId": "dette-er-eksternReferanse"
+      }
+    ]
   },
   "973861778": {
     "erPrivatPerson": false,
     "referanse": "973861778",
     "identifikator": "973861778",
     "navn": "A.EQUINOR ASA AVD STATOIL SOKKELVIRKSOMHET",
-    "fødselsdato": null
+    "fødselsdato": null,
+    "arbeidsforholdreferanser": [
+      {
+        "internArbeidsforholdId": "aaaaa-bbbbb",
+        "eksternArbeidsforholdId": "dette-er-eksternReferanse"
+      }
+    ]
   },
   "987654321": {
     "erPrivatPerson": false,
     "referanse": "987654321",
     "identifikator": "987654321",
     "navn": "A.Andeby bank",
-    "fødselsdato": null
+    "fødselsdato": null,
+    "arbeidsforholdreferanser": [
+      {
+        "internArbeidsforholdId": "aaaaa-bbbbb",
+        "eksternArbeidsforholdId": "dette-er-eksternReferanse"
+      }
+    ]
   },
   "9478541223": {
     "erPrivatPerson": false,
     "referanse": "9478541223",
     "identifikator": "9478541223",
     "navn": "A.Gardslien transport og Gardiner AS",
-    "fødselsdato": null
+    "fødselsdato": null,
+    "arbeidsforholdreferanser": [
+      {
+        "internArbeidsforholdId": "aaaaa-bbbbb",
+        "eksternArbeidsforholdId": "dette-er-eksternReferanse"
+      }
+    ]
   },
   "9478541255": {
     "erPrivatPerson": false,
     "referanse": "9478541255",
     "identifikator": "9478541255",
     "navn": "A.Aldersheimen Omsorg",
-    "fødselsdato": null
+    "fødselsdato": null,
+    "arbeidsforholdreferanser": [
+      {
+        "internArbeidsforholdId": "aaaaa-bbbbb",
+        "eksternArbeidsforholdId": "dette-er-eksternReferanse"
+      }
+    ]
   },
   "93178545": {
     "erPrivatPerson": false,
     "referanse": "93178545",
     "identifikator": "93178545",
     "navn": "A.Svaneby sykehjem",
-    "fødselsdato": null
+    "fødselsdato": null,
+    "arbeidsforholdreferanser": [
+      {
+        "internArbeidsforholdId": "aaaaa-bbbbb",
+        "eksternArbeidsforholdId": "dette-er-eksternReferanse"
+      }
+    ]
   },
   "0239748027348": {
     "erPrivatPerson": true,
     "referanse": "0239748027348",
     "identifikator": "0239748027348",
     "navn": "Ola Nordmann",
-    "fødselsdato": "1982.02.20"
+    "fødselsdato": "1982.02.20",
+    "arbeidsforholdreferanser": [
+      {
+        "internArbeidsforholdId": "aaaaa-bbbbb",
+        "eksternArbeidsforholdId": "dette-er-eksternReferanse"
+      }
+    ]
   },
   "543512141411": {
     "erPrivatPerson": true,
     "referanse": "543512141411",
     "identifikator": "543512141411",
     "navn": "Kari Nordmann",
-    "fødselsdato": "1979.03.20"
+    "fødselsdato": "1979.03.20",
+    "arbeidsforholdreferanser": [
+      {
+        "internArbeidsforholdId": "aaaaa-bbbbb",
+        "eksternArbeidsforholdId": "dette-er-eksternReferanse"
+      }
+    ]
   },
   "73232523223": {
     "erPrivatPerson": true,
     "referanse": "73232523223",
     "identifikator": "73232523223",
     "navn": "Donald Duck",
-    "fødselsdato": "1955.12.12"
+    "fødselsdato": "1955.12.12",
+    "arbeidsforholdreferanser": [
+      {
+        "internArbeidsforholdId": "aaaaa-bbbbb",
+        "eksternArbeidsforholdId": "dette-er-eksternReferanse"
+      }
+    ]
   },
   "6456223432": {
     "erPrivatPerson": true,
     "referanse": "6456223432",
     "identifikator": "6456223432",
     "navn": "Dolly Duck",
-    "fødselsdato": "1955.12.13"
+    "fødselsdato": "1955.12.13",
+    "arbeidsforholdreferanser": [
+      {
+        "internArbeidsforholdId": "aaaaa-bbbbb",
+        "eksternArbeidsforholdId": "dette-er-eksternReferanse"
+      }
+    ]
   }
 }
