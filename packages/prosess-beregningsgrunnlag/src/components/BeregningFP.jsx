@@ -80,16 +80,16 @@ const getRelevanteStatuser = bg =>
 const getBGVilkar = vilkar =>
   vilkar ? vilkar.find(v => v.vilkarType && v.vilkarType.kode === vilkarType.BEREGNINGSGRUNNLAGVILKARET) : undefined;
 
-const erBGTilVurdering = (beregningKoblingerTilVurdering, beregningsgrunnlag) => {
+const erBGTilVurdering = (beregningreferanserTilVurdering, beregningsgrunnlag) => {
   const vilårsperiodeFom = beregningsgrunnlag.vilkårsperiodeFom;
-  return beregningKoblingerTilVurdering.some((kobling) => kobling.skjæringstidspunkt === vilårsperiodeFom && !kobling.erForlengelse)
+  return beregningreferanserTilVurdering.some((kobling) => kobling.skjæringstidspunkt === vilårsperiodeFom && !kobling.erForlengelse)
 };
 
-const lagMenyProps = (kronologiskeGrunnlag, beregningKoblingerTilVurdering) => {
+const lagMenyProps = (kronologiskeGrunnlag, beregningreferanserTilVurdering) => {
   const menyProps = {};
   kronologiskeGrunnlag.forEach((gr, index) => {
     menyProps[index] = {
-      skalVurderes: erBGTilVurdering(beregningKoblingerTilVurdering, gr),
+      skalVurderes: erBGTilVurdering(beregningreferanserTilVurdering, gr),
       stp: moment(gr.skjæringstidspunkt).format(DDMMYYYY_DATE_FORMAT),
     };
   });
@@ -123,7 +123,7 @@ export const BeregningFP = props => {
     // eslint-disable-next-line
     initialValues,
     intl,
-    beregningKoblingerTilVurdering,
+    beregningreferanserTilVurdering,
   } = props;
   const skalBrukeSidemeny = beregningsgrunnlag.length > 1;
   const kronologiskeGrunnlag = beregningsgrunnlag.sort(
@@ -137,7 +137,7 @@ export const BeregningFP = props => {
   }
 
   const avklaringsbehov = finnAvklaringsbehov(aktivtBeregningsgrunnlag);
-  const menyProps = lagMenyProps(kronologiskeGrunnlag, beregningKoblingerTilVurdering);
+  const menyProps = lagMenyProps(kronologiskeGrunnlag, beregningreferanserTilVurdering);
 
   const mainContainerClassnames = cx('mainContainer', { 'mainContainer--withSideMenu': skalBrukeSidemeny });
   const harAvklaringsbehov = avklaringsbehov.length > 0;
@@ -172,7 +172,7 @@ export const BeregningFP = props => {
               submitCallback,
               readOnlySubmitButton,
               behandling,
-              readOnly: readOnly || !erBGTilVurdering(beregningKoblingerTilVurdering, aktivtBeregningsgrunnlag),
+              readOnly: readOnly || !erBGTilVurdering(beregningreferanserTilVurdering, aktivtBeregningsgrunnlag),
               vilkaarBG,
               alleKodeverk,
               arbeidsgiverOpplysningerPerId,
@@ -211,7 +211,7 @@ BeregningFP.propTypes = {
   behandling: beregningsgrunnlagBehandlingPropType,
   handleSubmit: PropTypes.any.isRequired,
   intl: PropTypes.shape().isRequired,
-  beregningKoblingerTilVurdering: PropTypes.arrayOf(PropTypes.shape(beregningKoblingPropType)).isRequired,
+  beregningreferanserTilVurdering: PropTypes.arrayOf(PropTypes.shape(beregningKoblingPropType)).isRequired,
 };
 
 BeregningFP.defaultProps = {
@@ -241,7 +241,7 @@ const formaterAksjonspunkter = (aksjonspunkter, perioder) => {
 
 const harAvklaringsbehovIPanel = (avklaringsbehov) => avklaringsbehov.some(ab => isBeregningAvklaringsbehov(ab.definisjon.kode));
 
-export const buildInitialValuesForBeregningrunnlag = (beregningsgrunnlag, beregningKoblingerTilVurdering) => {
+export const buildInitialValuesForBeregningrunnlag = (beregningsgrunnlag, beregningreferanserTilVurdering) => {
   if (!beregningsgrunnlag || !beregningsgrunnlag.beregningsgrunnlagPeriode) {
     return undefined;
   }
@@ -260,7 +260,7 @@ export const buildInitialValuesForBeregningrunnlag = (beregningsgrunnlag, beregn
   const initialValues = {
     relevanteStatuser: getRelevanteStatuser(beregningsgrunnlag),
     avklaringsbehov,
-    erTilVurdering: erBGTilVurdering(beregningKoblingerTilVurdering, beregningsgrunnlag) && harAvklaringsbehovIPanel(avklaringsbehov),
+    erTilVurdering: erBGTilVurdering(beregningreferanserTilVurdering, beregningsgrunnlag) && harAvklaringsbehovIPanel(avklaringsbehov),
     skjæringstidspunkt: beregningsgrunnlag.skjæringstidspunkt,
     ...Beregningsgrunnlag.buildInitialValues(avklaringsbehov),
     ...AksjonspunktBehandlerTB.buildInitialValues(allePerioder, avklaringsbehov),
@@ -271,9 +271,9 @@ export const buildInitialValuesForBeregningrunnlag = (beregningsgrunnlag, beregn
   return initialValues;
 };
 
-export const buildInitialValues = (beregningsgrunnlag, beregningKoblingerTilVurdering) =>
+export const buildInitialValues = (beregningsgrunnlag, beregningreferanserTilVurdering) =>
   beregningsgrunnlag.map(currentBeregningsgrunnlag =>
-    buildInitialValuesForBeregningrunnlag(currentBeregningsgrunnlag, beregningKoblingerTilVurdering),
+    buildInitialValuesForBeregningrunnlag(currentBeregningsgrunnlag, beregningreferanserTilVurdering),
   );
 
 // Kun eksportert for test
@@ -303,14 +303,14 @@ export const transformValues = (values, alleBeregningsgrunnlag, vilkar) => {
 }
 
 const mapStateToPropsFactory = (initialState, initialOwnProps) => {
-  const { submitCallback, beregningsgrunnlag, vilkar, beregningKoblingerTilVurdering } = initialOwnProps;
+  const { submitCallback, beregningsgrunnlag, vilkar, beregningreferanserTilVurdering } = initialOwnProps;
   const onSubmit = values => submitCallback(transformValues(values, beregningsgrunnlag, vilkar));
   return (state, ownProps) => ({
     onSubmit,
     initialValues: {
       beregningsgrunnlagListe: buildInitialValues(
         ownProps.beregningsgrunnlag,
-        beregningKoblingerTilVurdering
+        beregningreferanserTilVurdering
         ),
     },
     fieldArrayID: ownProps.fieldArrayID,

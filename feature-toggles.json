@@ -22,5 +22,9 @@
   {
     "key": "SOKNADPERIODESTRIPE",
     "value": "${SOKNADPERIODESTRIPE}"
+  },
+  {
+    "key": "TYPE_MEDISINSKE_OPPLYSNINGER_BREV",
+    "value": "${TYPE_MEDISINSKE_OPPLYSNINGER_BREV}"
   }
 ]

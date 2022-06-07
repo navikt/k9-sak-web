@@ -32,7 +32,7 @@ const BeregningsgrunnlagProsessIndex = (
     arbeidsgiverOpplysningerPerId,
     fagsak,
     beregningErBehandlet,
-    beregningKoblingerTilVurdering,
+    beregningreferanserTilVurdering,
   }
 ) => (
   <RawIntlProvider value={intl}>
@@ -49,7 +49,7 @@ const BeregningsgrunnlagProsessIndex = (
         behandlingId={behandling.id}
         behandlingVersjon={behandling.versjon}
         beregningErBehandlet={beregningErBehandlet}
-        beregningKoblingerTilVurdering={beregningKoblingerTilVurdering}
+        beregningreferanserTilVurdering={beregningreferanserTilVurdering}
       />
     </BeregningContext.Provider>
   </RawIntlProvider>
@@ -67,7 +67,7 @@ BeregningsgrunnlagProsessIndex.propTypes = {
   arbeidsgiverOpplysningerPerId: PropTypes.shape().isRequired,
   fagsak: PropTypes.shape().isRequired,
   beregningErBehandlet: PropTypes.bool,
-  beregningKoblingerTilVurdering: PropTypes.arrayOf(PropTypes.shape(beregningKoblingPropType)).isRequired,
+  beregningreferanserTilVurdering: PropTypes.arrayOf(PropTypes.shape(beregningKoblingPropType)).isRequired,
 };
 
 BeregningsgrunnlagProsessIndex.defaultProps = {
