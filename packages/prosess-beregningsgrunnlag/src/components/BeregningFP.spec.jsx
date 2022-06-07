@@ -63,7 +63,7 @@ const vilkar = [
   },
 ];
 
-const beregningKoblingerTilVurdering = [
+const beregningreferanserTilVurdering = [
   {
     skjæringstidspunkt: '2020-01-01',
     referanse: 'htfse-324-sfe3332',
@@ -139,7 +139,7 @@ describe('<BeregningFP>', () => {
   it('skal teste at det bygges korrekte initialvalues med beregnetAvvikPromille lik NULL', () => {
     const initialValues = buildInitialValuesForBeregningrunnlag(
       lagBeregningsgrunnlag(true, 100000, 100000, null, gjeldendeAksjonspunkter),
-      beregningKoblingerTilVurdering);
+      beregningreferanserTilVurdering);
     expect(initialValues.avklaringsbehov).to.eql(gjeldendeAksjonspunkter);
     expect(initialValues.relevanteStatuser.isArbeidstaker).to.eql(true);
     expect(initialValues.relevanteStatuser.isSelvstendigNaeringsdrivende).to.eql(true);
@@ -160,7 +160,7 @@ describe('<BeregningFP>', () => {
         readOnlySubmitButton
         intl={intlMock}
         handleSubmit={() => { }}
-        beregningKoblingerTilVurdering={beregningKoblingerTilVurdering}
+        beregningreferanserTilVurdering={beregningreferanserTilVurdering}
       />,
     );
     const beregningForm = wrapper.find(BeregningForm2);
@@ -183,7 +183,7 @@ describe('<BeregningFP>', () => {
         readOnlySubmitButton
         intl={intlMock}
         handleSubmit={() => { }}
-        beregningKoblingerTilVurdering={beregningKoblingerTilVurdering}
+        beregningreferanserTilVurdering={beregningreferanserTilVurdering}
       />,
     );
     const beregningForm = wrapper.find(FieldArray);
