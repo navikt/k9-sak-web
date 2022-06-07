@@ -93,4 +93,4 @@ spec:
     - name: SOKNADPERIODESTRIPE
       value: "false"
     - name: TYPE_MEDISINSKE_OPPLYSNINGER_BREV
-      value: "false"
+      value: "true"
