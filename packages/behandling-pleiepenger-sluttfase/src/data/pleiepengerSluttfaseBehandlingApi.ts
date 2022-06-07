@@ -1,4 +1,4 @@
-import { RestApiConfigBuilder, createRequestApi } from '@k9-sak-web/rest-api';
+import { createRequestApi, RestApiConfigBuilder } from '@k9-sak-web/rest-api';
 import { RestApiHooks } from '@k9-sak-web/rest-api-hooks';
 
 // NB! ALDRI BRUK DETTE UTENFOR DENNE BEHANDLINGSPAKKEN
@@ -52,6 +52,7 @@ export enum PleiepengerSluttfaseBehandlingApiKeys {
   HENT_SAKSBEHANDLERE = 'HENT_SAKSBEHANDLERE',
   OM_PLEIETRENGENDE = 'OM_PLEIETRENGENDE',
   BEHANDLING_PERIODER_ÅRSAK_MED_VILKÅR = 'BEHANDLING_PERIODER_ÅRSAK_MED_VILKÅR',
+  BEREGNINGREFERANSER_TIL_VURDERING = 'BEREGNINGREFERANSER_TIL_VURDERING',
 }
 
 const endpoints = new RestApiConfigBuilder()
@@ -86,7 +87,7 @@ const endpoints = new RestApiConfigBuilder()
   .withRel('sykdom', PleiepengerSluttfaseBehandlingApiKeys.SYKDOM)
   .withRel('tilgjengelige-vedtaksbrev', PleiepengerSluttfaseBehandlingApiKeys.TILGJENGELIGE_VEDTAKSBREV)
   .withRel('informasjonsbehov-vedtaksbrev', PleiepengerSluttfaseBehandlingApiKeys.INFORMASJONSBEHOV_VEDTAKSBREV)
-  .withRel('pleiepenger-sykt-barn-uttaksplan', PleiepengerSluttfaseBehandlingApiKeys.UTTAK)
+  .withRel('pleiepenger-uttaksplan-med-utsatt', PleiepengerSluttfaseBehandlingApiKeys.UTTAK)
   .withRel('pleiepenger-fritekstdokumenter', PleiepengerSluttfaseBehandlingApiKeys.FRITEKSTDOKUMENTER)
   .withRel('inntekt', PleiepengerSluttfaseBehandlingApiKeys.INNTEKT_OG_YTELSER)
   .withRel('overstyr-input-beregning', PleiepengerSluttfaseBehandlingApiKeys.OVERSTYR_INPUT_BEREGNING)
@@ -97,6 +98,7 @@ const endpoints = new RestApiConfigBuilder()
     'behandling-perioder-årsak-med-vilkår',
     PleiepengerSluttfaseBehandlingApiKeys.BEHANDLING_PERIODER_ÅRSAK_MED_VILKÅR,
   )
+  .withRel('beregning-koblinger-til-vurdering', PleiepengerSluttfaseBehandlingApiKeys.BEREGNINGREFERANSER_TIL_VURDERING)
 
   // operasjoner
   .withRel('dokumentdata-lagre', PleiepengerSluttfaseBehandlingApiKeys.DOKUMENTDATA_LAGRE)
@@ -127,7 +129,7 @@ const endpoints = new RestApiConfigBuilder()
   .withPost(
     '/k9/tilbake/api/dokument/forhandsvis-varselbrev',
     PleiepengerSluttfaseBehandlingApiKeys.PREVIEW_TILBAKEKREVING_MESSAGE,
-    { isResponseBlob: true },
+    {isResponseBlob: true},
   )
 
   /* K9FORMIDLING */
