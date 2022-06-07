@@ -416,7 +416,7 @@ describe('<BeregningForm>', () => {
     const beregningsgrunnlag = lagBeregningsgrunnlag(0, 120000, 100000, 100, []);
 
     beregningsgrunnlag.avklaringsbehov = avklaringsbehov;
-    const beregningKoblingerTilVurdering= [
+    const beregningreferanserTilVurdering= [
         {
           skjæringstidspunkt: beregningsgrunnlag.vilkårsperiodeFom,
           referanse: '32423-fs34-wrj2i',
@@ -424,7 +424,7 @@ describe('<BeregningForm>', () => {
         }
       ];
 
-    const actualValues = buildInitialValuesForBeregningrunnlag(beregningsgrunnlag, beregningKoblingerTilVurdering);
+    const actualValues = buildInitialValuesForBeregningrunnlag(beregningsgrunnlag, beregningreferanserTilVurdering);
     const expectedValues = {
       ATFLVurdering: "",
       erTilVurdering: false,
@@ -451,7 +451,7 @@ describe('<BeregningForm>', () => {
     const beregningsgrunnlag = lagBeregningsgrunnlag(0, 120000, 100000, 100, []);
 
     beregningsgrunnlag.avklaringsbehov = avklaringsbehov;
-    const beregningKoblingerTilVurdering= [
+    const beregningreferanserTilVurdering= [
       {
         skjæringstidspunkt: beregningsgrunnlag.vilkårsperiodeFom,
         referanse: '32423-fs34-wrj2i',
@@ -459,7 +459,7 @@ describe('<BeregningForm>', () => {
       }
     ];
 
-    const actualValues = buildInitialValuesForBeregningrunnlag(beregningsgrunnlag, beregningKoblingerTilVurdering);
+    const actualValues = buildInitialValuesForBeregningrunnlag(beregningsgrunnlag, beregningreferanserTilVurdering);
     const expectedValues = {
       ATFLVurdering: "En fin begrunnelse",
       erTilVurdering: true,
@@ -486,7 +486,7 @@ describe('<BeregningForm>', () => {
     const beregningsgrunnlag = lagBeregningsgrunnlag(0, 120000, 100000, 100, []);
 
     beregningsgrunnlag.avklaringsbehov = avklaringsbehov;
-    const beregningKoblingerTilVurdering= [
+    const beregningreferanserTilVurdering= [
       {
         skjæringstidspunkt: beregningsgrunnlag.vilkårsperiodeFom,
         referanse: '32423-fs34-wrj2i',
@@ -494,7 +494,7 @@ describe('<BeregningForm>', () => {
       }
     ];
 
-    const actualValues = buildInitialValuesForBeregningrunnlag(beregningsgrunnlag, beregningKoblingerTilVurdering);
+    const actualValues = buildInitialValuesForBeregningrunnlag(beregningsgrunnlag, beregningreferanserTilVurdering);
     const expectedValues = {
       ATFLVurdering: "En fin begrunnelse",
       erTilVurdering: false,
@@ -521,9 +521,9 @@ describe('<BeregningForm>', () => {
     const beregningsgrunnlag = lagBeregningsgrunnlag(0, 120000, 100000, 100, []);
 
     beregningsgrunnlag.avklaringsbehov = avklaringsbehov;
-    const beregningKoblingerTilVurdering= [];
+    const beregningreferanserTilVurdering= [];
 
-    const actualValues = buildInitialValuesForBeregningrunnlag(beregningsgrunnlag, beregningKoblingerTilVurdering);
+    const actualValues = buildInitialValuesForBeregningrunnlag(beregningsgrunnlag, beregningreferanserTilVurdering);
     const expectedValues = {
       ATFLVurdering: "En fin begrunnelse",
       erTilVurdering: false,
