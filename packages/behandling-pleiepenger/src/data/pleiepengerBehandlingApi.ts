@@ -52,6 +52,8 @@ export enum PleiepengerBehandlingApiKeys {
   HENT_SAKSBEHANDLERE = 'HENT_SAKSBEHANDLERE',
   UTENLANDSOPPHOLD = 'UTENLANDSOPPHOLD',
   BEHANDLING_PERIODER_ÅRSAK_MED_VILKÅR = 'BEHANDLING_PERIODER_ÅRSAK_MED_VILKÅR',
+  BEREGNINGREFERANSER_TIL_VURDERING = 'BEREGNINGREFERANSER_TIL_VURDERING',
+
 }
 
 const endpoints = new RestApiConfigBuilder()
@@ -83,7 +85,7 @@ const endpoints = new RestApiConfigBuilder()
   .withRel('sykdom', PleiepengerBehandlingApiKeys.SYKDOM)
   .withRel('tilgjengelige-vedtaksbrev', PleiepengerBehandlingApiKeys.TILGJENGELIGE_VEDTAKSBREV)
   .withRel('informasjonsbehov-vedtaksbrev', PleiepengerBehandlingApiKeys.INFORMASJONSBEHOV_VEDTAKSBREV)
-  .withRel('pleiepenger-sykt-barn-uttaksplan', PleiepengerBehandlingApiKeys.UTTAK)
+  .withRel('pleiepenger-uttaksplan-med-utsatt', PleiepengerBehandlingApiKeys.UTTAK)
   .withRel('pleiepenger-fritekstdokumenter', PleiepengerBehandlingApiKeys.FRITEKSTDOKUMENTER)
   .withRel('inntekt', PleiepengerBehandlingApiKeys.INNTEKT_OG_YTELSER)
   .withRel('overstyr-input-beregning', PleiepengerBehandlingApiKeys.OVERSTYR_INPUT_BEREGNING)
@@ -91,6 +93,7 @@ const endpoints = new RestApiConfigBuilder()
   .withRel('saksbehandler-info', PleiepengerBehandlingApiKeys.HENT_SAKSBEHANDLERE)
   .withRel('utenlandsopphold', PleiepengerBehandlingApiKeys.UTENLANDSOPPHOLD)
   .withRel('behandling-perioder-årsak-med-vilkår', PleiepengerBehandlingApiKeys.BEHANDLING_PERIODER_ÅRSAK_MED_VILKÅR)
+  .withRel('beregning-koblinger-til-vurdering', PleiepengerBehandlingApiKeys.BEREGNINGREFERANSER_TIL_VURDERING)
 
   // operasjoner
   .withRel('dokumentdata-lagre', PleiepengerBehandlingApiKeys.DOKUMENTDATA_LAGRE)
