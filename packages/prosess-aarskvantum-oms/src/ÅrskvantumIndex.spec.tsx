@@ -44,6 +44,7 @@ const arbeidsgivere = {
     referanse: '999',
     identifikator: '999',
     navn: 'Bedrift AS',
+    arbeidsforholdreferanser: [],
   },
 };
 

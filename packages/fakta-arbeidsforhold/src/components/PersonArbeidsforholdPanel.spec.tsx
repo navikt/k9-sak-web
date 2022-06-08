@@ -11,6 +11,12 @@ const arbeidsgiverOpplysningerPerId = {
     navn: 'Svendsen Eksos',
     fødselsdato: null,
     erPrivatPerson: true,
+    arbeidsforholdreferanser: [
+      {
+        eksternArbeidsforholdId: '1231-2345',
+        internArbeidsforholdId: '1231-2345',
+      }
+    ]
   },
   2345678: {
     identifikator: '2345678',
@@ -18,6 +24,7 @@ const arbeidsgiverOpplysningerPerId = {
     navn: 'Nav',
     fødselsdato: null,
     erPrivatPerson: true,
+    arbeidsforholdreferanser: []
   },
 };
 

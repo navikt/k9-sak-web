@@ -134,6 +134,7 @@ describe('<PleiepengerSluttfaseFakta>', () => {
       erPrivatPerson: false,
       identifikator: 'testId',
       navn: 'testNavn',
+      arbeidsforholdreferanser: []
     },
   };
 

@@ -21,6 +21,7 @@ const arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysningerPerId = {
     navn: 'BEDRIFT AS',
     fødselsdato: null,
     erPrivatPerson: false,
+    arbeidsforholdreferanser: []
   },
   '910909081': {
     identifikator: '910909081',
@@ -28,6 +29,8 @@ const arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysningerPerId = {
     navn: 'ANNEN BEDRIFT AS',
     fødselsdato: null,
     erPrivatPerson: false,
+    arbeidsforholdreferanser: []
+
   },
 };
 
