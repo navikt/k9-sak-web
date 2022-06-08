@@ -60,7 +60,7 @@ const vilkarMedUtfall = (kode, fomArray) => [
       kodeverk: 'vilkarType',
     },
     perioder: fomArray.map(fom => ({
-      periode: {fom, tom: null},
+      periode: { fom, tom: null },
       vilkarStatus: {
         kode,
         kodeverk: 'vilkarStatus',
@@ -204,7 +204,6 @@ const lagStatus = kode => ({
 
 const lagBG = (perioder, statuser, sammenligningsgrunnlagPrStatus, avklaringsbehov, skjæringstidspunkt = '2019-09-16', grunnbeløp = 99858) => {
   const beregningsgrunnlag = {
-    avklaringsbehov: avklaringsbehov == undefined ? [] : avklaringsbehov,
     skjaeringstidspunktBeregning: skjæringstidspunkt,
     skjæringstidspunkt,
     vilkårsperiodeFom: skjæringstidspunkt,
@@ -1083,7 +1082,13 @@ export const tidsbegrensetArbeidsforholdMedAvvik = () => {
   ];
   const statuser = [lagStatus('AT_FL')];
   const sammenligningsgrunnlagPrStatus = [lagSammenligningsGrunnlag(sammenligningType.ATFLSN, 474257, 26.2, 77059)];
-  const bg = lagBG(perioder, statuser, sammenligningsgrunnlagPrStatus, lagAPMedKode(aksjonspunktCodes.FASTSETT_BEREGNINGSGRUNNLAG_TIDSBEGRENSET_ARBEIDSFORHOLD));
+  const bg = lagBG(
+    perioder,
+    statuser,
+    sammenligningsgrunnlagPrStatus,
+    lagAPMedKode(aksjonspunktCodes.FASTSETT_BEREGNINGSGRUNNLAG_TIDSBEGRENSET_ARBEIDSFORHOLD)
+  );
+
   return (
     <BeregningsgrunnlagProsessIndex
       behandling={behandling}
@@ -1624,7 +1629,13 @@ export const tidsbegrensetArbeidsforholdMedAksjonspunktkSide7 = () => {
   ];
   const statuser = [lagStatus('AT')];
   const sammenligningsgrunnlagPrStatus = [lagSammenligningsGrunnlag(sammenligningType.ATFLSN, 404257, 36.4, 147059)];
-  const bg = lagBG(perioder, statuser, sammenligningsgrunnlagPrStatus, lagAPMedKode(aksjonspunktCodes.FASTSETT_BEREGNINGSGRUNNLAG_TIDSBEGRENSET_ARBEIDSFORHOLD));
+  const bg = lagBG(
+    perioder,
+    statuser,
+    sammenligningsgrunnlagPrStatus,
+    lagAPMedKode(aksjonspunktCodes.FASTSETT_BEREGNINGSGRUNNLAG_TIDSBEGRENSET_ARBEIDSFORHOLD)
+  );
+
   return (
     <BeregningsgrunnlagProsessIndex
       behandling={behandling}

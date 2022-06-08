@@ -54,61 +54,59 @@ export const OverforingerFaktaFormImpl = ({
     ].length > 0;
 
   return (
-    <>
-      <Seksjon bakgrunn="grå" title={{ id: 'FaktaRammevedtak.Overføringer.Tittel' }} imgSrc={transferIcon} medMarg>
-        {detFinnesOverføringer ? (
-          <>
-            <FlexRow spaceBetween>
-              <FastBreddeAligner
-                rad={{ padding: '0 0 0 1em' }}
-                kolonner={[
-                  {
-                    width: '225px',
-                    id: 'overføring.tittel.totalt',
-                    content: (
-                      <Element>
-                        <FormattedMessage id="FaktaRammevedtak.Overføringer.Totalt" />
-                      </Element>
-                    ),
-                  },
-                  {
-                    width: '150px',
-                    id: 'overføring.tittel.type',
-                    content: (
-                      <Element>
-                        <FormattedMessage id="FaktaRammevedtak.Overføringer.Type" />
-                      </Element>
-                    ),
-                  },
-                ]}
-              />
-              <Hjelpetekst>
-                <FormattedMessage id="FaktaRammevedtak.Overføringer.Hjelpetekst" values={{ br: <br /> }} />
-              </Hjelpetekst>
-            </FlexRow>
-            <OverføringsdagerPanelgruppe
-              overføringer={overføringFår}
-              fordelinger={fordelingFår}
-              koronaoverføringer={koronaoverføringFår}
-              retning={OverføringsretningEnum.INN}
-              behandlingId={behandlingId}
-              behandlingVersjon={behandlingVersjon}
+    <Seksjon bakgrunn="grå" title={{ id: 'FaktaRammevedtak.Overføringer.Tittel' }} imgSrc={transferIcon} medMarg>
+      {detFinnesOverføringer ? (
+        <>
+          <FlexRow spaceBetween>
+            <FastBreddeAligner
+              rad={{ padding: '0 0 0 1em' }}
+              kolonner={[
+                {
+                  width: '225px',
+                  id: 'overføring.tittel.totalt',
+                  content: (
+                    <Element>
+                      <FormattedMessage id="FaktaRammevedtak.Overføringer.Totalt" />
+                    </Element>
+                  ),
+                },
+                {
+                  width: '150px',
+                  id: 'overføring.tittel.type',
+                  content: (
+                    <Element>
+                      <FormattedMessage id="FaktaRammevedtak.Overføringer.Type" />
+                    </Element>
+                  ),
+                },
+              ]}
             />
-            <VerticalSpacer thirtyTwoPx />
-            <OverføringsdagerPanelgruppe
-              overføringer={overføringGir}
-              fordelinger={fordelingGir}
-              koronaoverføringer={koronaoverføringGir}
-              retning={OverføringsretningEnum.UT}
-              behandlingId={behandlingId}
-              behandlingVersjon={behandlingVersjon}
-            />
-          </>
-        ) : (
-          <FormattedMessage id="FaktaRammevedtak.Overføringer.IngenOverføringer" />
-        )}
-      </Seksjon>
-    </>
+            <Hjelpetekst>
+              <FormattedMessage id="FaktaRammevedtak.Overføringer.Hjelpetekst" values={{ br: <br /> }} />
+            </Hjelpetekst>
+          </FlexRow>
+          <OverføringsdagerPanelgruppe
+            overføringer={overføringFår}
+            fordelinger={fordelingFår}
+            koronaoverføringer={koronaoverføringFår}
+            retning={OverføringsretningEnum.INN}
+            behandlingId={behandlingId}
+            behandlingVersjon={behandlingVersjon}
+          />
+          <VerticalSpacer thirtyTwoPx />
+          <OverføringsdagerPanelgruppe
+            overføringer={overføringGir}
+            fordelinger={fordelingGir}
+            koronaoverføringer={koronaoverføringGir}
+            retning={OverføringsretningEnum.UT}
+            behandlingId={behandlingId}
+            behandlingVersjon={behandlingVersjon}
+          />
+        </>
+      ) : (
+        <FormattedMessage id="FaktaRammevedtak.Overføringer.IngenOverføringer" />
+      )}
+    </Seksjon>
   );
 };
 

@@ -80,16 +80,14 @@ export const VedtakRevurderingSubmitPanelImpl = ({
     <div>
       <div className={styles.margin} />
       {!readOnly && (
-        <>
-          <MellomLagreBrev
-            lagreDokumentdata={lagreDokumentdata}
-            dokumentdata={dokumentdata}
-            overskrift={overskrift}
-            inkluderKalender={formikValues[fieldnames.INKLUDER_KALENDER_VED_OVERSTYRING]}
-            brødtekst={brødtekst}
-            submitKnapp={submitKnapp}
-          />
-        </>
+        <MellomLagreBrev
+          lagreDokumentdata={lagreDokumentdata}
+          dokumentdata={dokumentdata}
+          overskrift={overskrift}
+          inkluderKalender={formikValues[fieldnames.INKLUDER_KALENDER_VED_OVERSTYRING]}
+          brødtekst={brødtekst}
+          submitKnapp={submitKnapp}
+        />
       )}
     </div>
   );

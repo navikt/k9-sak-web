@@ -19,6 +19,7 @@ import {
 } from '@k9-sak-web/types';
 
 import { erFagytelseTypeUtvidetRett } from '@k9-sak-web/behandling-utvidet-rett/src/utils/utvidetRettHjelpfunksjoner';
+import BehandlingPleiepengerSluttfaseIndex from '@k9-sak-web/behandling-pleiepenger-sluttfase/src/BehandlingPleiepengerSluttfaseIndex';
 import useTrackRouteParam from '../app/useTrackRouteParam';
 import getAccessRights from '../app/util/access';
 import {
@@ -30,7 +31,6 @@ import {
 import { K9sakApiKeys, requestApi, restApiHooks, LinkCategory } from '../data/k9sakApi';
 import behandlingEventHandler from './BehandlingEventHandler';
 import ErrorBoundary from '../app/ErrorBoundary';
-import BehandlingPleiepengerSluttfaseIndex from '../../../behandling-pleiepenger-sluttfase/src/BehandlingPleiepengerSluttfaseIndex';
 
 const BehandlingPleiepengerIndex = React.lazy(() => import('@k9-sak-web/behandling-pleiepenger'));
 const BehandlingOmsorgspengerIndex = React.lazy(() => import('@k9-sak-web/behandling-omsorgspenger'));
@@ -50,26 +50,26 @@ const formatName = (bpName = ''): string => replaceNorwegianCharacters(bpName.to
 
 const getOppdaterProsessStegOgFaktaPanelIUrl =
   (location: Location, navigate: NavigateFunction) =>
-  (prosessStegId: string, faktaPanelId: string): void => {
-    let newLocation;
-    if (prosessStegId === 'default') {
-      newLocation = getLocationWithDefaultProsessStegAndFakta(location);
-    } else if (prosessStegId) {
-      newLocation = getProsessStegLocation(location)(formatName(prosessStegId));
-    } else {
-      newLocation = getProsessStegLocation(location)(null);
-    }
+    (prosessStegId: string, faktaPanelId: string): void => {
+      let newLocation;
+      if (prosessStegId === 'default') {
+        newLocation = getLocationWithDefaultProsessStegAndFakta(location);
+      } else if (prosessStegId) {
+        newLocation = getProsessStegLocation(location)(formatName(prosessStegId));
+      } else {
+        newLocation = getProsessStegLocation(location)(null);
+      }
 
-    if (faktaPanelId === 'default') {
-      newLocation = getFaktaLocation(newLocation)('default');
-    } else if (faktaPanelId) {
-      newLocation = getFaktaLocation(newLocation)(formatName(faktaPanelId));
-    } else {
-      newLocation = getFaktaLocation(newLocation)(null);
-    }
+      if (faktaPanelId === 'default') {
+        newLocation = getFaktaLocation(newLocation)('default');
+      } else if (faktaPanelId) {
+        newLocation = getFaktaLocation(newLocation)(formatName(faktaPanelId));
+      } else {
+        newLocation = getFaktaLocation(newLocation)(null);
+      }
 
-    navigate(newLocation);
-  };
+      navigate(newLocation);
+    };
 
 interface OwnProps {
   setBehandlingIdOgVersjon: (behandlingId: number, behandlingVersjon: number) => void;

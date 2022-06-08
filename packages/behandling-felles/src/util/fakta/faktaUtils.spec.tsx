@@ -1,3 +1,4 @@
+/* eslint-disable class-methods-use-this */
 import React from 'react';
 import sinon from 'sinon';
 import { IntlShape } from 'react-intl';

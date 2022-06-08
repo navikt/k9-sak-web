@@ -52,7 +52,7 @@ export const FormContent = ({ handleSubmit, aktiviteter = [], isAksjonspunktOpen
 
   const harUavklartePerioder = uavklartePerioder.length > 0;
 
-  const RenderFosterbarn = ({ fields, fosterbarn }) => (
+  const RenderFosterbarn = ({ fields, barn }) => (
     <>
       {fields.length > 0 && (
         <>
@@ -67,7 +67,7 @@ export const FormContent = ({ handleSubmit, aktiviteter = [], isAksjonspunktOpen
               </TableColumn>
             </TableRow>
             {fields.map((field, index) => {
-              const fosterbarnObj = fosterbarn[index];
+              const fosterbarnObj = barn[index];
               const navn = (fosterbarnObj && fosterbarnObj.navn) ? fosterbarnObj.navn : `Fosterbarn ${index + 1}`;
               return (
                 <TableRow>
@@ -182,7 +182,7 @@ export const FormContent = ({ handleSubmit, aktiviteter = [], isAksjonspunktOpen
         <FieldArray
           name="fosterbarn"
           component={RenderFosterbarn}
-          fosterbarn={fosterbarn}
+          barn={fosterbarn}
         />
       </BorderBox>
 
