@@ -16,7 +16,7 @@ const HistorikkMalType1 = ({ historikkinnslag, getKodeverknavn, saksnummer }: Hi
         </Element>
       )}
       {historikkinnslagDeler[0].begrunnelse && (
-        <BubbleText bodyText={getKodeverknavn(historikkinnslagDeler[0].begrunnelse)} cutOffLength={70} />
+        <BubbleText bodyText={getKodeverknavn(historikkinnslagDeler[0].begrunnelse)} />
       )}
       {historikkinnslagDeler[0].begrunnelseFritekst && (
         <BubbleText bodyText={historikkinnslagDeler[0].begrunnelseFritekst} />

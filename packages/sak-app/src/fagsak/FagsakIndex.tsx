@@ -278,7 +278,9 @@ const FagsakIndex = () => {
               />
               {showPunsjOgFagsakPåSøkerStripe && (
                 <>
-                  {behandling && <Punsjstripe behandlingUuid={behandling?.uuid} pathToLos={getPathToFplos()} />}
+                  {behandling && !erTilbakekreving(behandling.type) && (
+                    <Punsjstripe behandlingUuid={behandling.uuid} pathToLos={getPathToFplos()} />
+                  )}
                   <AndreSakerPåSøkerStripe
                     søkerIdent={fagsakPerson.personnummer}
                     saksnummer={fagsak.saksnummer}

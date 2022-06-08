@@ -83,6 +83,7 @@ describe('<MeldingIndex>', () => {
     requestApi.mock(K9sakApiKeys.KODEVERK, kodeverk);
     requestApi.mock(K9sakApiKeys.HAR_APENT_KONTROLLER_REVURDERING_AP, true);
     requestApi.mock(K9sakApiKeys.BREVMALER, templates);
+    requestApi.mock(K9sakApiKeys.FEATURE_TOGGLE, [{TYPE_MEDISINSKE_OPPLYSNINGER_BREV: true}]);
 
     render(
       <Provider store={createStore(combineReducers({ form: formReducer }))}>
@@ -106,6 +107,7 @@ describe('<MeldingIndex>', () => {
     requestApi.mock(K9sakApiKeys.HAR_APENT_KONTROLLER_REVURDERING_AP, true);
     requestApi.mock(K9sakApiKeys.BREVMALER, templates);
     requestApi.mock(K9sakApiKeys.PREVIEW_MESSAGE_FORMIDLING, {});
+    requestApi.mock(K9sakApiKeys.FEATURE_TOGGLE, [{TYPE_MEDISINSKE_OPPLYSNINGER_BREV: true}]);
 
     render(
       <Provider store={createStore(combineReducers({ form: formReducer }))}>
@@ -137,6 +139,7 @@ describe('<MeldingIndex>', () => {
     requestApi.mock(K9sakApiKeys.HAR_APENT_KONTROLLER_REVURDERING_AP, true);
     requestApi.mock(K9sakApiKeys.BREVMALER, templates);
     requestApi.mock(K9sakApiKeys.SUBMIT_MESSAGE);
+    requestApi.mock(K9sakApiKeys.FEATURE_TOGGLE, [{TYPE_MEDISINSKE_OPPLYSNINGER_BREV: true}]);
 
     render(
       <Provider store={createStore(combineReducers({ form: formReducer }))}>
@@ -182,6 +185,7 @@ describe('<MeldingIndex>', () => {
     requestApi.mock(K9sakApiKeys.HAR_APENT_KONTROLLER_REVURDERING_AP, true);
     requestApi.mock(K9sakApiKeys.BREVMALER, templates);
     requestApi.mock(K9sakApiKeys.SUBMIT_MESSAGE);
+    requestApi.mock(K9sakApiKeys.FEATURE_TOGGLE, [{TYPE_MEDISINSKE_OPPLYSNINGER_BREV: true}]);
 
     render(
       <Provider store={createStore(combineReducers({ form: formReducer }))}>
@@ -225,6 +229,7 @@ describe('<MeldingIndex>', () => {
     requestApi.mock(K9sakApiKeys.HAR_APENT_KONTROLLER_REVURDERING_AP, true);
     requestApi.mock(K9sakApiKeys.BREVMALER, templates);
     requestApi.mock(K9sakApiKeys.SUBMIT_MESSAGE);
+    requestApi.mock(K9sakApiKeys.FEATURE_TOGGLE, [{TYPE_MEDISINSKE_OPPLYSNINGER_BREV: true}]);
 
     render(
       <Provider store={createStore(combineReducers({ form: formReducer }))}>
@@ -270,6 +275,7 @@ describe('<MeldingIndex>', () => {
     requestApi.mock(K9sakApiKeys.HAR_APENT_KONTROLLER_REVURDERING_AP, true);
     requestApi.mock(K9sakApiKeys.BREVMALER, templates);
     requestApi.mock(K9sakApiKeys.SUBMIT_MESSAGE);
+    requestApi.mock(K9sakApiKeys.FEATURE_TOGGLE, [{TYPE_MEDISINSKE_OPPLYSNINGER_BREV: true}]);
 
     render(
       <Provider store={createStore(combineReducers({ form: formReducer }))}>
@@ -317,6 +323,7 @@ describe('<MeldingIndex>', () => {
     requestApi.mock(K9sakApiKeys.HAR_APENT_KONTROLLER_REVURDERING_AP, true);
     requestApi.mock(K9sakApiKeys.BREVMALER, templates);
     requestApi.mock(K9sakApiKeys.SUBMIT_MESSAGE);
+    requestApi.mock(K9sakApiKeys.FEATURE_TOGGLE, [{TYPE_MEDISINSKE_OPPLYSNINGER_BREV: true}]);
 
     render(
       <Provider store={createStore(combineReducers({ form: formReducer }))}>

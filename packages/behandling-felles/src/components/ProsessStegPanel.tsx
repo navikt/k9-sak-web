@@ -106,12 +106,12 @@ const ProsessStegPanel = ({
               {harHentetData && (
                 <>
                   {delPaneler[0].getProsessStegDelPanelDef().getKomponent({
-                    ...data,
                     behandling,
                     featureToggles,
                     alleKodeverk,
                     submitCallback: bekreftAksjonspunktCallback,
                     ...delPaneler[0].getKomponentData(),
+                    ...data,
                   })}
                 </>
               )}
