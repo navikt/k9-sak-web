@@ -4,11 +4,11 @@ import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 import { ArbeidsgiverOpplysningerPerId, Kodeverk, KodeverkMedNavn, Personopplysninger } from '@k9-sak-web/types';
 
 import KlagePart from '@k9-sak-web/behandling-klage/src/types/klagePartTsType';
+import { safeJSONParse } from '@fpsak-frontend/utils';
 import HenleggBehandlingModal from './components/HenleggBehandlingModal';
 import HenlagtBehandlingModal from './components/HenlagtBehandlingModal';
 
 import messages from '../i18n/nb_NO.json';
-import { safeJSONParse } from '../../utils';
 
 const cache = createIntlCache();
 

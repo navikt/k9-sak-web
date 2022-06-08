@@ -21,8 +21,8 @@ import {
 import React, { useCallback, useMemo, useState } from 'react';
 import { Navigate, Route, Routes, useLocation } from 'react-router-dom';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
-import OvergangFraInfotrygd from '../../../types/src/overgangFraInfotrygd';
-import RelatertFagsak from '../../../types/src/relatertFagsak';
+import OvergangFraInfotrygd from '@k9-sak-web/types/src/overgangFraInfotrygd';
+import RelatertFagsak from '@k9-sak-web/types/src/relatertFagsak';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import {
   behandlingerRoutePath,

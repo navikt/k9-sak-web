@@ -2,10 +2,10 @@ import React from 'react';
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 
 import { Kodeverk, KodeverkMedNavn, Personopplysninger, FagsakPerson, RelatertFagsak } from '@k9-sak-web/types';
+import OvergangFraInfotrygd from '@k9-sak-web/types/src/overgangFraInfotrygd';
 
 import VisittkortPanel from './components/VisittkortPanel';
 import messages from '../i18n/nb_NO.json';
-import OvergangFraInfotrygd from '../../types/src/overgangFraInfotrygd';
 
 const cache = createIntlCache();
 

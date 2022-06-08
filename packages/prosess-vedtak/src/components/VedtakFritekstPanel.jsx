@@ -4,7 +4,7 @@ import { Column, Row } from 'nav-frontend-grid';
 
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { decodeHtmlEntity, getLanguageFromSprakkode, hasValidText, maxLength, minLength } from '@fpsak-frontend/utils';
-import TextAreaFormik from '../../../form/src/TextAreaFormik';
+import TextAreaFormik from '@fpsak-frontend/form/src/TextAreaFormik';
 
 import styles from './vedtakAvslagPanel.less';
 

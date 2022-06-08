@@ -55,24 +55,25 @@ export const VedtakInnvilgetRevurderingPanelImpl = ({
 }) => {
   const getKodeverknavn = getKodeverknavnFn(alleKodeverk, kodeverkTyper);
   return (
+    // eslint-disable-next-line react/jsx-no-useless-fragment
     <>
       {(ytelseTypeKode === fagsakYtelseType.OMSORGSPENGER ||
         ytelseTypeKode === fagsakYtelseType.FRISINN ||
         ytelseTypeKode === fagsakYtelseType.PLEIEPENGER) && (
-        <div data-testid='innvilgetRevurdering'>
-          <Normaltekst>{intl.formatMessage({ id: 'VedtakForm.Resultat' })}</Normaltekst>
-          <Undertekst>
-            {lagKonsekvensForYtelsenTekst(konsekvenserForYtelsen, getKodeverknavn)}
-            {lagKonsekvensForYtelsenTekst(konsekvenserForYtelsen, getKodeverknavn) !== '' && tilbakekrevingText && '. '}
-            {tilbakekrevingText &&
-              intl.formatMessage({
-                id: tilbakekrevingText,
-              })}
-            {bgPeriodeMedAvslagsårsak && <Undertekst>{lagPeriodevisning(bgPeriodeMedAvslagsårsak)}</Undertekst>}
-          </Undertekst>
-          <VerticalSpacer sixteenPx />
-        </div>
-      )}
+          <div data-testid='innvilgetRevurdering'>
+            <Normaltekst>{intl.formatMessage({ id: 'VedtakForm.Resultat' })}</Normaltekst>
+            <Undertekst>
+              {lagKonsekvensForYtelsenTekst(konsekvenserForYtelsen, getKodeverknavn)}
+              {lagKonsekvensForYtelsenTekst(konsekvenserForYtelsen, getKodeverknavn) !== '' && tilbakekrevingText && '. '}
+              {tilbakekrevingText &&
+                intl.formatMessage({
+                  id: tilbakekrevingText,
+                })}
+              {bgPeriodeMedAvslagsårsak && <Undertekst>{lagPeriodevisning(bgPeriodeMedAvslagsårsak)}</Undertekst>}
+            </Undertekst>
+            <VerticalSpacer sixteenPx />
+          </div>
+        )}
     </>
   );
 };
