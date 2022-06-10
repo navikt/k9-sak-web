@@ -137,9 +137,6 @@ const BehandlingPleiepengerSluttfaseIndex = ({
   const { startRequest: settPaVent } = restApiPleiepengerSluttfaseHooks.useRestApiRunner(
     PleiepengerSluttfaseBehandlingApiKeys.UPDATE_ON_HOLD,
   );
-  const { startRequest: opneBehandlingForEndringer } = restApiPleiepengerSluttfaseHooks.useRestApiRunner(
-    PleiepengerSluttfaseBehandlingApiKeys.OPEN_BEHANDLING_FOR_CHANGES,
-  );
   const { startRequest: opprettVerge } = restApiPleiepengerSluttfaseHooks.useRestApiRunner(
     PleiepengerSluttfaseBehandlingApiKeys.VERGE_OPPRETT,
   );
@@ -157,10 +154,6 @@ const BehandlingPleiepengerSluttfaseIndex = ({
       taBehandlingAvVent: params =>
         taBehandlingAvVent(params).then(behandlingResTaAvVent => setBehandling(behandlingResTaAvVent)),
       henleggBehandling: params => henleggBehandling(params),
-      opneBehandlingForEndringer: params =>
-        opneBehandlingForEndringer(params).then(behandlingResOpneForEndring =>
-          setBehandling(behandlingResOpneForEndring),
-        ),
       opprettVerge: params =>
         opprettVerge(params).then(behandlingResOpprettVerge => setBehandling(behandlingResOpprettVerge)),
       fjernVerge: params => fjernVerge(params).then(behandlingResFjernVerge => setBehandling(behandlingResFjernVerge)),

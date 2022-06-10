@@ -65,6 +65,7 @@ export const ProsessStegSubmitButton = ({
   text,
   isPeriodisertFormComplete,
 }: Partial<PureOwnProps> & MappedOwnProps) => (
+  // eslint-disable-next-line react/jsx-no-useless-fragment
   <>
     {!isReadOnly && (
       <Hovedknapp

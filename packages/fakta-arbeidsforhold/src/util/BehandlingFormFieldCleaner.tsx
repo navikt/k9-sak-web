@@ -9,15 +9,15 @@ import { getBehandlingFormName } from '@fpsak-frontend/form';
 const findAllNames = children =>
   children
     ? React.Children.map(children, child => {
-        let all = [];
-        if (child && child.props && child.props.children) {
-          all = findAllNames(child.props.children);
-        }
-        if (child && child.props && child.props.name) {
-          all.push(child.props.name);
-        }
-        return all;
-      })
+      let all = [];
+      if (child && child.props && child.props.children) {
+        all = findAllNames(child.props.children);
+      }
+      if (child && child.props && child.props.name) {
+        all.push(child.props.name);
+      }
+      return all;
+    })
     : [];
 
 interface PureOwnProps {
@@ -75,6 +75,7 @@ export class BehandlingFormFieldCleaner extends Component<PureOwnProps & MappedO
 
   render() {
     const { children } = this.props;
+    // eslint-disable-next-line react/jsx-no-useless-fragment
     return <>{children}</>;
   }
 }

@@ -35,12 +35,28 @@ const arbeidsgiverOpplysningerPerId = {
     referanse: '3284788923',
     navn: 'Virksomheten',
     fødselsdato: null,
+    arbeidsforholdreferanser: [
+      {
+        internArbeidsforholdId: '321378huda7e2',
+        eksternArbeidsforholdId: 'fjiseoijfsof'
+      }
+    ]
   },
   843597943435: {
     identifikator: '843597943435',
     referanse: '843597943435',
     navn: 'Virksomheten2',
     fødselsdato: null,
+    arbeidsforholdreferanser: [
+      {
+        internArbeidsforholdId: 'jjisefoosfe',
+        eksternArbeidsforholdId: 'rg31241234324'
+      },
+      {
+        internArbeidsforholdId: '5465465464',
+        eksternArbeidsforholdId: 'grd4r2r3w'
+      }
+    ]
   },
 };
 

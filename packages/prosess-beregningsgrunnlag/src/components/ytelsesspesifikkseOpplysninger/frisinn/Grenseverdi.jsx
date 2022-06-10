@@ -18,22 +18,20 @@ import beregningsgrunnlagBehandlingPropType from '../../../propTypes/beregningsg
 const førsteDato = moment('2020-04-01');
 
 const lagGrenseveriPeriode = (originaltInntektstak, annenInntektIkkeSøktFor, utregnetInntektstak) => (
-  <>
-    <Row>
-      <Column xs="10">
-        <FormattedMessage
-          id="Beregningsgrunnlag.Frisinn.Inntektstak"
-          values={{
-            grenseverdi: formatCurrencyNoKr(originaltInntektstak),
-            annenInntekt: formatCurrencyNoKr(annenInntektIkkeSøktFor),
-          }}
-        />
-      </Column>
-      <Column xs="2">
-        <Normaltekst>{formatCurrencyNoKr(utregnetInntektstak)}</Normaltekst>
-      </Column>
-    </Row>
-  </>
+  <Row>
+    <Column xs="10">
+      <FormattedMessage
+        id="Beregningsgrunnlag.Frisinn.Inntektstak"
+        values={{
+          grenseverdi: formatCurrencyNoKr(originaltInntektstak),
+          annenInntekt: formatCurrencyNoKr(annenInntektIkkeSøktFor),
+        }}
+      />
+    </Column>
+    <Column xs="2">
+      <Normaltekst>{formatCurrencyNoKr(utregnetInntektstak)}</Normaltekst>
+    </Column>
+  </Row>
 );
 
 const overlapperMedFrisinnPeriode = (bgPeriode, frisinnPerioder) => {

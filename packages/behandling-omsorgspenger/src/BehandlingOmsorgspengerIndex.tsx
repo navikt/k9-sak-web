@@ -122,9 +122,7 @@ const BehandlingOmsorgspengerIndex = ({
   const { startRequest: settPaVent } = restApiOmsorgHooks.useRestApiRunner(
     OmsorgspengerBehandlingApiKeys.UPDATE_ON_HOLD,
   );
-  const { startRequest: opneBehandlingForEndringer } = restApiOmsorgHooks.useRestApiRunner(
-    OmsorgspengerBehandlingApiKeys.OPEN_BEHANDLING_FOR_CHANGES,
-  );
+
   const { startRequest: opprettVerge } = restApiOmsorgHooks.useRestApiRunner(
     OmsorgspengerBehandlingApiKeys.VERGE_OPPRETT,
   );
@@ -140,10 +138,6 @@ const BehandlingOmsorgspengerIndex = ({
       taBehandlingAvVent: params =>
         taBehandlingAvVent(params).then(behandlingResTaAvVent => setBehandling(behandlingResTaAvVent)),
       henleggBehandling: params => henleggBehandling(params),
-      opneBehandlingForEndringer: params =>
-        opneBehandlingForEndringer(params).then(behandlingResOpneForEndring =>
-          setBehandling(behandlingResOpneForEndring),
-        ),
       opprettVerge: params =>
         opprettVerge(params).then(behandlingResOpprettVerge => setBehandling(behandlingResOpprettVerge)),
       fjernVerge: params => fjernVerge(params).then(behandlingResFjernVerge => setBehandling(behandlingResFjernVerge)),

@@ -1,4 +1,4 @@
-import { RestApiConfigBuilder, createRequestApi } from '@k9-sak-web/rest-api';
+import { createRequestApi, RestApiConfigBuilder } from '@k9-sak-web/rest-api';
 import { RestApiHooks } from '@k9-sak-web/rest-api-hooks';
 
 // NB! ALDRI BRUK DETTE UTENFOR DENNE BEHANDLINGSPAKKEN
@@ -36,7 +36,6 @@ export enum PleiepengerSluttfaseBehandlingApiKeys {
   HENLEGG_BEHANDLING = 'HENLEGG_BEHANDLING',
   RESUME_BEHANDLING = 'RESUME_BEHANDLING',
   BEHANDLING_ON_HOLD = 'BEHANDLING_ON_HOLD',
-  OPEN_BEHANDLING_FOR_CHANGES = 'OPEN_BEHANDLING_FOR_CHANGES',
   VERGE_OPPRETT = 'VERGE_OPPRETT',
   VERGE_FJERN = 'VERGE_FJERN',
   SYKDOM = 'SYKDOM',
@@ -53,6 +52,7 @@ export enum PleiepengerSluttfaseBehandlingApiKeys {
   HENT_SAKSBEHANDLERE = 'HENT_SAKSBEHANDLERE',
   OM_PLEIETRENGENDE = 'OM_PLEIETRENGENDE',
   BEHANDLING_PERIODER_ÅRSAK_MED_VILKÅR = 'BEHANDLING_PERIODER_ÅRSAK_MED_VILKÅR',
+  BEREGNINGREFERANSER_TIL_VURDERING = 'BEREGNINGREFERANSER_TIL_VURDERING',
 }
 
 const endpoints = new RestApiConfigBuilder()
@@ -87,7 +87,7 @@ const endpoints = new RestApiConfigBuilder()
   .withRel('sykdom', PleiepengerSluttfaseBehandlingApiKeys.SYKDOM)
   .withRel('tilgjengelige-vedtaksbrev', PleiepengerSluttfaseBehandlingApiKeys.TILGJENGELIGE_VEDTAKSBREV)
   .withRel('informasjonsbehov-vedtaksbrev', PleiepengerSluttfaseBehandlingApiKeys.INFORMASJONSBEHOV_VEDTAKSBREV)
-  .withRel('pleiepenger-sykt-barn-uttaksplan', PleiepengerSluttfaseBehandlingApiKeys.UTTAK)
+  .withRel('pleiepenger-uttaksplan-med-utsatt', PleiepengerSluttfaseBehandlingApiKeys.UTTAK)
   .withRel('pleiepenger-fritekstdokumenter', PleiepengerSluttfaseBehandlingApiKeys.FRITEKSTDOKUMENTER)
   .withRel('inntekt', PleiepengerSluttfaseBehandlingApiKeys.INNTEKT_OG_YTELSER)
   .withRel('overstyr-input-beregning', PleiepengerSluttfaseBehandlingApiKeys.OVERSTYR_INPUT_BEREGNING)
@@ -98,6 +98,7 @@ const endpoints = new RestApiConfigBuilder()
     'behandling-perioder-årsak-med-vilkår',
     PleiepengerSluttfaseBehandlingApiKeys.BEHANDLING_PERIODER_ÅRSAK_MED_VILKÅR,
   )
+  .withRel('beregning-koblinger-til-vurdering', PleiepengerSluttfaseBehandlingApiKeys.BEREGNINGREFERANSER_TIL_VURDERING)
 
   // operasjoner
   .withRel('dokumentdata-lagre', PleiepengerSluttfaseBehandlingApiKeys.DOKUMENTDATA_LAGRE)
@@ -121,10 +122,6 @@ const endpoints = new RestApiConfigBuilder()
   .withPost('/k9/sak/api/behandlinger/henlegg', PleiepengerSluttfaseBehandlingApiKeys.HENLEGG_BEHANDLING)
   .withAsyncPost('/k9/sak/api/behandlinger/gjenoppta', PleiepengerSluttfaseBehandlingApiKeys.RESUME_BEHANDLING)
   .withPost('/k9/sak/api/behandlinger/sett-pa-vent', PleiepengerSluttfaseBehandlingApiKeys.BEHANDLING_ON_HOLD)
-  .withPost(
-    '/k9/sak/api/behandlinger/opne-for-endringer',
-    PleiepengerSluttfaseBehandlingApiKeys.OPEN_BEHANDLING_FOR_CHANGES,
-  )
   .withPost('/k9/sak/api/verge/opprett', PleiepengerSluttfaseBehandlingApiKeys.VERGE_OPPRETT)
   .withPost('/k9/sak/api/verge/fjern', PleiepengerSluttfaseBehandlingApiKeys.VERGE_FJERN)
 
@@ -132,7 +129,7 @@ const endpoints = new RestApiConfigBuilder()
   .withPost(
     '/k9/tilbake/api/dokument/forhandsvis-varselbrev',
     PleiepengerSluttfaseBehandlingApiKeys.PREVIEW_TILBAKEKREVING_MESSAGE,
-    { isResponseBlob: true },
+    {isResponseBlob: true},
   )
 
   /* K9FORMIDLING */

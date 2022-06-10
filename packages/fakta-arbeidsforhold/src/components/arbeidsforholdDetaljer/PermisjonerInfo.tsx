@@ -14,6 +14,7 @@ interface OwnProps {
 }
 
 const PermisjonerInfo = ({ arbeidsforhold }: OwnProps) => (
+  // eslint-disable-next-line react/jsx-no-useless-fragment
   <>
     {arbeidsforhold.permisjoner && arbeidsforhold.permisjoner.length > 0 && (
       <div>

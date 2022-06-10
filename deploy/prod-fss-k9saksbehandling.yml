@@ -92,3 +92,5 @@ spec:
       value: "true"
     - name: SOKNADPERIODESTRIPE
       value: "false"
+    - name: TYPE_MEDISINSKE_OPPLYSNINGER_BREV
+      value: "true"

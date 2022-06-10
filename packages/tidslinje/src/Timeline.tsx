@@ -89,8 +89,7 @@ interface Props {
   currentTime?: DateType;
 }
 
-function Timeline(
-  {
+const Timeline = ({
     initialItems,
     initialGroups,
     options,
@@ -100,8 +99,7 @@ function Timeline(
     currentTime,
     ...rest
   }: Props & TimelineEventsHandlers,
-  ref: ForwardedRef<Partial<VisTimeline>>,
-) {
+  ref: ForwardedRef<Partial<VisTimeline>>) => {
   const el = useRef();
   const timeline = useRef<VisTimeline>();
   const items: DataSet<TimelineItem> = useMemo(() => new DataSet<TimelineItem>(), []);
