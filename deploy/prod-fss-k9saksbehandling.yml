@@ -90,3 +90,5 @@ spec:
       value: "true"
     - name: UTENLANDSOPPHOLD
       value: "true"
+    - name: TYPE_MEDISINSKE_OPPLYSNINGER_BREV
+      value: "true"

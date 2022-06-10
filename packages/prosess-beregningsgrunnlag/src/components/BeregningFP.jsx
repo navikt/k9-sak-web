@@ -42,6 +42,7 @@ import AksjonspunktBehandlerTB from './arbeidstaker/AksjonspunktBehandlerTB';
 import AksjonspunktBehandlerFL from './frilanser/AksjonspunktBehandlerFL';
 import VurderOgFastsettSN from './selvstendigNaeringsdrivende/VurderOgFastsettSN';
 import GrunnlagForAarsinntektPanelAT from './arbeidstaker/GrunnlagForAarsinntektPanelAT';
+import beregningKoblingPropType from "../propTypes/beregningKoblingPropType";
 
 const cx = classNames.bind(styles);
 
@@ -59,43 +60,36 @@ const visningForManglendeBG = () => (
   </>
 );
 
-const getAksjonspunkterForBeregning = aksjonspunkter =>
-  aksjonspunkter ? aksjonspunkter.filter(ap => isBeregningAvklaringsbehov(ap.definisjon.kode)) : [];
-  
 const getRelevanteStatuser = bg =>
   bg && bg.aktivitetStatus
     ? {
-        isArbeidstaker: bg.aktivitetStatus.some(({ kode }) => isStatusArbeidstakerOrKombinasjon(kode)),
-        isFrilanser: bg.aktivitetStatus.some(({ kode }) => isStatusFrilanserOrKombinasjon(kode)),
-        isSelvstendigNaeringsdrivende: bg.aktivitetStatus.some(({ kode }) => isStatusSNOrKombinasjon(kode)),
-        harAndreTilstotendeYtelser: bg.aktivitetStatus.some(({ kode }) => isStatusTilstotendeYtelse(kode)),
-        harDagpengerEllerAAP: bg.aktivitetStatus.some(({ kode }) => isStatusDagpengerOrAAP(kode)),
-        isAAP: bg.aktivitetStatus.some(({ kode }) => kode === aktivitetStatus.ARBEIDSAVKLARINGSPENGER),
-        isDagpenger: bg.aktivitetStatus.some(({ kode }) => isStatusDagpenger(kode)),
-        skalViseBeregningsgrunnlag: bg.aktivitetStatus && bg.aktivitetStatus.length > 0,
-        isKombinasjonsstatus:
-          bg.aktivitetStatus.some(({ kode }) => isStatusKombinasjon(kode)) || bg.aktivitetStatus.length > 1,
-        isMilitaer: bg.aktivitetStatus.some(({ kode }) => isStatusMilitaer(kode)),
-      }
+      isArbeidstaker: bg.aktivitetStatus.some(({ kode }) => isStatusArbeidstakerOrKombinasjon(kode)),
+      isFrilanser: bg.aktivitetStatus.some(({ kode }) => isStatusFrilanserOrKombinasjon(kode)),
+      isSelvstendigNaeringsdrivende: bg.aktivitetStatus.some(({ kode }) => isStatusSNOrKombinasjon(kode)),
+      harAndreTilstotendeYtelser: bg.aktivitetStatus.some(({ kode }) => isStatusTilstotendeYtelse(kode)),
+      harDagpengerEllerAAP: bg.aktivitetStatus.some(({ kode }) => isStatusDagpengerOrAAP(kode)),
+      isAAP: bg.aktivitetStatus.some(({ kode }) => kode === aktivitetStatus.ARBEIDSAVKLARINGSPENGER),
+      isDagpenger: bg.aktivitetStatus.some(({ kode }) => isStatusDagpenger(kode)),
+      skalViseBeregningsgrunnlag: bg.aktivitetStatus && bg.aktivitetStatus.length > 0,
+      isKombinasjonsstatus:
+        bg.aktivitetStatus.some(({ kode }) => isStatusKombinasjon(kode)) || bg.aktivitetStatus.length > 1,
+      isMilitaer: bg.aktivitetStatus.some(({ kode }) => isStatusMilitaer(kode)),
+    }
     : null;
 
 const getBGVilkar = vilkar =>
   vilkar ? vilkar.find(v => v.vilkarType && v.vilkarType.kode === vilkarType.BEREGNINGSGRUNNLAGVILKARET) : undefined;
 
-const erBGTilVurdering = (bgVilkar, beregningsgrunnlag) => {
+const erBGTilVurdering = (beregningreferanserTilVurdering, beregningsgrunnlag) => {
   const vilårsperiodeFom = beregningsgrunnlag.vilkårsperiodeFom;
-  const perioderTilVurdering =
-    bgVilkar && bgVilkar.perioder ? bgVilkar.perioder.filter(periode => !!periode.vurdersIBehandlingen) : [];
-  return perioderTilVurdering.some(
-    vkp => vkp.periode.fom === vilårsperiodeFom,
-  );
+  return beregningreferanserTilVurdering.some((kobling) => kobling.skjæringstidspunkt === vilårsperiodeFom && !kobling.erForlengelse)
 };
 
-const lagMenyProps = (kronologiskeGrunnlag, bgVilkår) => {
+const lagMenyProps = (kronologiskeGrunnlag, beregningreferanserTilVurdering) => {
   const menyProps = {};
   kronologiskeGrunnlag.forEach((gr, index) => {
     menyProps[index] = {
-      skalVurderes: erBGTilVurdering(bgVilkår, gr),
+      skalVurderes: erBGTilVurdering(beregningreferanserTilVurdering, gr),
       stp: moment(gr.skjæringstidspunkt).format(DDMMYYYY_DATE_FORMAT),
     };
   });
@@ -104,7 +98,8 @@ const lagMenyProps = (kronologiskeGrunnlag, bgVilkår) => {
 
 const finnAvklaringsbehov = (beregningsgrunnlag) => beregningsgrunnlag.avklaringsbehov.filter(ab => isBeregningAvklaringsbehov(ab.definisjon.kode))
 
-const harAvklaringsbehovSomkanLøses = (beregningsgrunnlag) => beregningsgrunnlag.avklaringsbehov.some(ab => isBeregningAvklaringsbehov(ab.definisjon.kode) && ab.kanLoses)
+const harAvklaringsbehovSomkanLøses = (beregningsgrunnlag) =>
+  beregningsgrunnlag.avklaringsbehov.some(ab => isBeregningAvklaringsbehov(ab.definisjon.kode) && ab.kanLoses)
 
 /**
  * BeregningFP
@@ -129,6 +124,7 @@ export const BeregningFP = props => {
     // eslint-disable-next-line
     initialValues,
     intl,
+    beregningreferanserTilVurdering,
   } = props;
   const skalBrukeSidemeny = beregningsgrunnlag.length > 1;
   const kronologiskeGrunnlag = beregningsgrunnlag.sort(
@@ -142,7 +138,7 @@ export const BeregningFP = props => {
   }
 
   const avklaringsbehov = finnAvklaringsbehov(aktivtBeregningsgrunnlag);
-  const menyProps = lagMenyProps(kronologiskeGrunnlag, vilkaarBG);
+  const menyProps = lagMenyProps(kronologiskeGrunnlag, beregningreferanserTilVurdering);
 
   const mainContainerClassnames = cx('mainContainer', { 'mainContainer--withSideMenu': skalBrukeSidemeny });
   const harAvklaringsbehov = avklaringsbehov.length > 0;
@@ -154,11 +150,10 @@ export const BeregningFP = props => {
           <SideMenu
             links={kronologiskeGrunnlag.map((currentBeregningsgrunnlag, currentBeregningsgrunnlagIndex) => ({
               iconSrc: menyProps[currentBeregningsgrunnlagIndex].skalVurderes &&
-              harAvklaringsbehovSomkanLøses(beregningsgrunnlag[currentBeregningsgrunnlagIndex]) ? advarselIcon : null,
+                harAvklaringsbehovSomkanLøses(beregningsgrunnlag[currentBeregningsgrunnlagIndex]) ? advarselIcon : null,
               active: aktivtBeregningsgrunnlagIndeks === currentBeregningsgrunnlagIndex,
-              label: `${intl.formatMessage({ id: 'Sidemeny.Beregningsgrunnlag' })} ${
-                menyProps[currentBeregningsgrunnlagIndex].stp
-              }`,
+              label: `${intl.formatMessage({ id: 'Sidemeny.Beregningsgrunnlag' })} ${menyProps[currentBeregningsgrunnlagIndex].stp
+                }`,
             }))}
             onClick={setAktivtBeregningsgrunnlagIndeks}
             theme="arrow"
@@ -177,7 +172,7 @@ export const BeregningFP = props => {
               submitCallback,
               readOnlySubmitButton,
               behandling,
-              readOnly: readOnly || !avklaringsbehov.some(ap => ap.kanLoses !== false),
+              readOnly: readOnly || !erBGTilVurdering(beregningreferanserTilVurdering, aktivtBeregningsgrunnlag),
               vilkaarBG,
               alleKodeverk,
               arbeidsgiverOpplysningerPerId,
@@ -216,6 +211,7 @@ BeregningFP.propTypes = {
   behandling: beregningsgrunnlagBehandlingPropType,
   handleSubmit: PropTypes.any.isRequired,
   intl: PropTypes.shape().isRequired,
+  beregningreferanserTilVurdering: PropTypes.arrayOf(PropTypes.shape(beregningKoblingPropType)).isRequired,
 };
 
 BeregningFP.defaultProps = {
@@ -243,9 +239,9 @@ const formaterAksjonspunkter = (aksjonspunkter, perioder) => {
   return Object.values(gruppertPrKode);
 }
 
-const harAvklaringsbehovIPanel = (avklaringsbehov) => avklaringsbehov.some(ab => isBeregningAvklaringsbehov(ab.definisjon.kode) && ab.kanLoses);
+const harAvklaringsbehovIPanel = (avklaringsbehov) => avklaringsbehov.some(ab => isBeregningAvklaringsbehov(ab.definisjon.kode));
 
-export const buildInitialValuesForBeregningrunnlag = (beregningsgrunnlag, bgVilkar) => {
+export const buildInitialValuesForBeregningrunnlag = (beregningsgrunnlag, beregningreferanserTilVurdering) => {
   if (!beregningsgrunnlag || !beregningsgrunnlag.beregningsgrunnlagPeriode) {
     return undefined;
   }
@@ -264,7 +260,7 @@ export const buildInitialValuesForBeregningrunnlag = (beregningsgrunnlag, bgVilk
   const initialValues = {
     relevanteStatuser: getRelevanteStatuser(beregningsgrunnlag),
     avklaringsbehov,
-    erTilVurdering: erBGTilVurdering(bgVilkar, beregningsgrunnlag) && harAvklaringsbehovIPanel(avklaringsbehov),
+    erTilVurdering: erBGTilVurdering(beregningreferanserTilVurdering, beregningsgrunnlag) && harAvklaringsbehovIPanel(avklaringsbehov),
     skjæringstidspunkt: beregningsgrunnlag.skjæringstidspunkt,
     ...Beregningsgrunnlag.buildInitialValues(avklaringsbehov),
     ...AksjonspunktBehandlerTB.buildInitialValues(allePerioder, avklaringsbehov),
@@ -275,9 +271,9 @@ export const buildInitialValuesForBeregningrunnlag = (beregningsgrunnlag, bgVilk
   return initialValues;
 };
 
-export const buildInitialValues = (beregningsgrunnlag, bgVilkar) =>
+export const buildInitialValues = (beregningsgrunnlag, beregningreferanserTilVurdering) =>
   beregningsgrunnlag.map(currentBeregningsgrunnlag =>
-    buildInitialValuesForBeregningrunnlag(currentBeregningsgrunnlag, bgVilkar),
+    buildInitialValuesForBeregningrunnlag(currentBeregningsgrunnlag, beregningreferanserTilVurdering),
   );
 
 // Kun eksportert for test
@@ -303,18 +299,18 @@ export const transformValues = (values, alleBeregningsgrunnlag, vilkar) => {
 
       return transformedValues;
     });
-    return formaterAksjonspunkter(alleAksjonspunkter, getBGVilkar(vilkar).perioder);
+  return formaterAksjonspunkter(alleAksjonspunkter, getBGVilkar(vilkar).perioder);
 }
 
 const mapStateToPropsFactory = (initialState, initialOwnProps) => {
-  const { submitCallback, beregningsgrunnlag, vilkar } = initialOwnProps;
+  const { submitCallback, beregningsgrunnlag, vilkar, beregningreferanserTilVurdering } = initialOwnProps;
   const onSubmit = values => submitCallback(transformValues(values, beregningsgrunnlag, vilkar));
   return (state, ownProps) => ({
     onSubmit,
     initialValues: {
       beregningsgrunnlagListe: buildInitialValues(
         ownProps.beregningsgrunnlag,
-        getBGVilkar(ownProps.vilkar)
+        beregningreferanserTilVurdering
         ),
     },
     fieldArrayID: ownProps.fieldArrayID,

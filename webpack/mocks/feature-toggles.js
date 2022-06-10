@@ -21,6 +21,10 @@ const featureToggles = [
     key: 'UTENLANDSOPPHOLD',
     value: process.env.UTENLANDSOPPHOLD,
   },
+  {
+    key: 'TYPE_MEDISINSKE_OPPLYSNINGER_BREV',
+    value: process.env.TYPE_MEDISINSKE_OPPLYSNINGER_BREV,
+  },
 ];
 
 module.exports = function (app) {

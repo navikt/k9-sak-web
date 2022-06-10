@@ -25,51 +25,51 @@ interface OwnProps {
 const AntallDagerLivetsSluttfaseIndex = ({
   kvoteInfo
 }: OwnProps) => {
-  if(!kvoteInfo){
+  if (!kvoteInfo) {
     return null;
   }
 
   const maxAntallDager = 60;
-  const antallDagerGjenstår = maxAntallDager - (kvoteInfo.forbruktKvoteHittil + kvoteInfo.forbruktKvoteDenneBehandlingen);
+  const antallDagerGjenstar = maxAntallDager - (kvoteInfo.totaltForbruktKvote);
+
+  /*
+   * Når totalt antall forbrukte dager er 60 eller mindre, vises de som grønn pølse
+   * Om totalt antall forbrukte dager er over 60, vises de som oransje/gul pølse
+   * */
+  const antallForbrukteDagerInnenforKvote = kvoteInfo.totaltForbruktKvote <= maxAntallDager ? kvoteInfo.totaltForbruktKvote : 0;
+  const antallFrobrukteDagerVedOverforbruk = kvoteInfo.totaltForbruktKvote > maxAntallDager ? maxAntallDager : 0;
 
   return <RawIntlProvider value={intl}>
     <div className={styles.antallDagerLivetsSluttfaseIndexContainer}>
       <div className={styles.header}>
-        <h2>{intl.formatMessage({id: 'Titel.UttakAvPleiepenger'})}</h2>
+        <h2>{intl.formatMessage({ id: 'Titel.UttakAvPleiepenger' })}</h2>
         {kvoteInfo.maxDato && <div className={styles.sistePleiedagBoks}>
           <p>
-            {intl.formatMessage({id: 'Underskrift.SistePleiedag'}, {
+            {intl.formatMessage({ id: 'Underskrift.SistePleiedag' }, {
               sistePleiedag: visningsdato(kvoteInfo.maxDato),
               b: (...chunks) => <b>{chunks}</b>
             })}
           </p>
         </div>}
       </div>
-      <VerticalSpacer sixteenPx/>
+      <VerticalSpacer sixteenPx />
 
       <Fremdriftslinje
         max={maxAntallDager}
         totalBreddeProsent={100}
-        antallGrønnBar={kvoteInfo.forbruktKvoteHittil}
-        antallGulBar={kvoteInfo.forbruktKvoteDenneBehandlingen}
+        antallGrønnBar={antallForbrukteDagerInnenforKvote}
+        antallGulBar={antallFrobrukteDagerVedOverforbruk}
       />
-      <VerticalSpacer fourPx/>
+      <VerticalSpacer fourPx />
       <p>
-        {!!kvoteInfo.forbruktKvoteHittil && intl.formatMessage({id: 'Underskrift.TidligereDagerInnvilget'}, {
-          tidligereAntallDagerInnvilget: kvoteInfo.forbruktKvoteHittil,
-          maksAntallDagerInnvilget: maxAntallDager,
+        {!!kvoteInfo.totaltForbruktKvote && intl.formatMessage({ id: 'Underskrift.ForbruktKvote' }, {
+          forbruktKvote: kvoteInfo.totaltForbruktKvote,
+          maksAntallDager: maxAntallDager,
           b: (...chunks) => <b>{chunks}</b>
-        }) }
+        })}
 
-        {!!kvoteInfo.forbruktKvoteDenneBehandlingen && intl.formatMessage({id: 'Underskrift.DagerInnvilget'}, {
-          antallDagerInnvilget: kvoteInfo.forbruktKvoteDenneBehandlingen,
-          maksAntallDagerInnvilget: maxAntallDager,
-          b: (...chunks) => <b>{chunks}</b>
-        }) }
-
-        {!!kvoteInfo.forbruktKvoteDenneBehandlingen && intl.formatMessage({id: 'Underskrift.AntallDagerGjennstar'}, {
-          antallDagerGjennstar: antallDagerGjenstår > 0 ? antallDagerGjenstår : 0,
-          maksAntallDagerInnvilget: maxAntallDager,
+        {antallDagerGjenstar > 0 && intl.formatMessage({ id: 'Underskrift.AntallDagerGjenstar' }, {
+          antallDagerGjenstar,
           b: (...chunks) => <b>{chunks}</b>
         })}
       </p>

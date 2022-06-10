@@ -13,13 +13,13 @@ import {
   FagsakPerson,
   RelatertFagsak as RelatertFagsakType,
 } from '@k9-sak-web/types';
+import OvergangFraInfotrygd from '@k9-sak-web/types/src/overgangFraInfotrygd';
 
 import VisittkortDetaljerPopup from './VisittkortDetaljerPopup';
 import VisittkortLabels from './VisittkortLabels';
 
 import styles from './visittkortPanel.less';
 import RelatertFagsak from './RelatertFagsak';
-import OvergangFraInfotrygd from '../../../types/src/overgangFraInfotrygd';
 
 const utledKjonn = (kjonn: Kodeverk): Gender => {
   if (kjonn.kode === navBrukerKjonn.KVINNE) {

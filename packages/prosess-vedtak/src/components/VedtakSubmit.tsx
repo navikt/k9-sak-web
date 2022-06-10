@@ -67,16 +67,14 @@ export default function VedtakSubmit({
     <Row>
       <Column xs="12">
         {!readOnly && (
-          <>
-            <MellomLagreBrev
-              lagreDokumentdata={lagreDokumentdata}
-              dokumentdata={dokumentdata}
-              overskrift={overskrift}
-              inkluderKalender={inkluderKalender}
-              brødtekst={brødtekst}
-              submitKnapp={submitKnapp}
-            />
-          </>
+          <MellomLagreBrev
+            lagreDokumentdata={lagreDokumentdata}
+            dokumentdata={dokumentdata}
+            overskrift={overskrift}
+            inkluderKalender={inkluderKalender}
+            brødtekst={brødtekst}
+            submitKnapp={submitKnapp}
+          />
         )}
       </Column>
     </Row>

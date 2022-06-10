@@ -37,16 +37,14 @@ interface BehandlingfilterProps {
   onFilterChange: (value: string) => void;
 }
 
-function ChevronWithText({ chevronDirection, onClick, text }: ChevronWithTextProps): JSX.Element {
-  return (
+const ChevronWithText = ({ chevronDirection, onClick, text }: ChevronWithTextProps): JSX.Element => (
     <button type="button" className={styles.chevronDropdown__toggleButton} onClick={onClick}>
       <Element className={styles.chevronDropdown__toggleButton__text}>{text}</Element>
       <Chevron type={chevronDirection} />
     </button>
-  );
-}
+  )
 
-function BehandlingFilter({ text, filters, activeFilters, onFilterChange }: BehandlingfilterProps): JSX.Element {
+const BehandlingFilter = ({ text, filters, activeFilters, onFilterChange }: BehandlingfilterProps): JSX.Element => {
   const wrapperRef = useRef(null);
   const [open, setOpen] = useState(false);
   useEffect(() => {

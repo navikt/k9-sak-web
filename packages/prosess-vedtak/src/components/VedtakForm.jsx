@@ -159,6 +159,9 @@ export const VedtakForm = ({
   const aktiverteInformasjonsbehov = (informasjonsbehovVedtaksbrev?.informasjonsbehov || []).filter(
     ({ type }) => type === 'FRITEKST',
   );
+
+  const harFritekstILokalState =
+    vedtakContext?.vedtakFormState?.brødtekst || vedtakContext?.vedtakFormState?.overskrift;
   const mellomlagredeInformasjonsbehov = aktiverteInformasjonsbehov.map(informasjonsbehov => ({
     [informasjonsbehov.kode]: dokumentdata?.[informasjonsbehov.kode] || '',
   }));
@@ -169,6 +172,7 @@ export const VedtakForm = ({
       [fieldnames.SKAL_BRUKE_OVERSTYRENDE_FRITEKST_BREV]:
         kanKunVelge(tilgjengeligeVedtaksbrev, vedtaksbrevtype.FRITEKST) ||
         (harMellomlagretFritekstbrev(dokumentdata, vedtakVarsel) && kanHaFritekstbrev(tilgjengeligeVedtaksbrev)) ||
+        (harFritekstILokalState && kanHaFritekstbrev(tilgjengeligeVedtaksbrev)) ||
         (kanHaFritekstbrev(tilgjengeligeVedtaksbrev) &&
           !kanHaAutomatiskVedtaksbrev(tilgjengeligeVedtaksbrev) &&
           !harMellomLagretMedIngenBrev(dokumentdata, vedtakVarsel)),
@@ -202,170 +206,168 @@ export const VedtakForm = ({
   };
 
   return (
-    <>
-      <Formik
-        initialValues={vedtakContext?.vedtakFormState || initialValues}
-        onSubmit={values => {
-          submitCallback(createPayload(values));
-        }}
-      >
-        {formikProps => (
-          <form>
-            <LagreFormikStateLokalt />
-            <VedtakAksjonspunktPanel
-              behandlingStatusKode={behandlingStatus?.kode}
-              aksjonspunktKoder={aksjonspunkter.map(ap => ap.definisjon.kode)}
-              readOnly={readOnly}
-              overlappendeYtelser={overlappendeYtelser}
-              alleKodeverk={alleKodeverk}
-              viseFlereSjekkbokserForBrev={kanHaFritekstbrev(tilgjengeligeVedtaksbrev) && kanHindreUtsending(tilgjengeligeVedtaksbrev)}
-            >
-              <div className={styles.knappContainer}>
-                {kanHaFritekstbrev(tilgjengeligeVedtaksbrev) && (
-                  <Checkbox
-                    checked={formikProps.values.skalBrukeOverstyrendeFritekstBrev}
-                    onChange={e => onToggleOverstyring(e, formikProps.setFieldValue)}
-                    disabled={
-                      readOnly ||
-                      kanKunVelge(tilgjengeligeVedtaksbrev, vedtaksbrevtype.FRITEKST) ||
-                      (formikProps.values.skalBrukeOverstyrendeFritekstBrev &&
-                        !kanHaAutomatiskVedtaksbrev(tilgjengeligeVedtaksbrev))
-                    }
-                    value={fieldnames.SKAL_BRUKE_OVERSTYRENDE_FRITEKST_BREV}
-                    size="small"
-                  >
-                    {intl.formatMessage({ id: 'VedtakForm.ManuellOverstyring' })}
-                  </Checkbox>
-                )}
-                {kanHindreUtsending(tilgjengeligeVedtaksbrev) && (
-                  <Checkbox
-                    onChange={e => onToggleHindreUtsending(e, formikProps.setFieldValue)}
-                    disabled={
-                      readOnly ||
-                      kanKunVelge(tilgjengeligeVedtaksbrev, vedtaksbrevtype.INGEN) ||
-                      (formikProps.values.skalHindreUtsendingAvBrev &&
-                        !kanHaAutomatiskVedtaksbrev(tilgjengeligeVedtaksbrev))
-                    }
-                    checked={formikProps.values.skalHindreUtsendingAvBrev}
-                    value={fieldnames.SKAL_HINDRE_UTSENDING_AV_BREV}
-                    size="small"
-                  >
-                    {intl.formatMessage({ id: 'VedtakForm.HindreUtsending' })}
-                  </Checkbox>
-                )}
-              </div>
-              {!erRevurdering ? (
-                <>
-                  {fritekstdokumenter?.length > 0 && (
-                    <UstrukturerteDokumenter fritekstdokumenter={fritekstdokumenter} />
-                  )}
-
-                  {(isInnvilget(behandlingresultat.type.kode) || isDelvisInnvilget(behandlingresultat.type.kode)) && (
-                    <VedtakInnvilgetPanel
-                      intl={intl}
-                      behandlingsresultat={behandlingresultat}
-                      ytelseTypeKode={ytelseTypeKode}
-                      tilbakekrevingvalg={tilbakekrevingvalg}
-                      simuleringResultat={simuleringResultat}
-                      alleKodeverk={alleKodeverk}
-                    />
-                  )}
-
-                  {isAvslag(behandlingresultat.type.kode) && (
-                    <VedtakAvslagPanel
-                      aksjonspunkter={aksjonspunkter}
-                      behandlingsresultat={behandlingresultat}
-                      ytelseTypeKode={ytelseTypeKode}
-                      alleKodeverk={alleKodeverk}
-                      tilbakekrevingvalg={tilbakekrevingvalg}
-                      simuleringResultat={simuleringResultat}
-                      vilkar={vilkar}
-                    />
-                  )}
-                </>
-              ) : (
-                <RevurderingPaneler
-                  ytelseTypeKode={ytelseTypeKode}
-                  behandlingresultat={behandlingresultat}
-                  resultatstruktur={resultatstruktur}
-                  tilbakekrevingvalg={tilbakekrevingvalg}
-                  simuleringResultat={simuleringResultat}
-                  alleKodeverk={alleKodeverk}
-                  resultatstrukturOriginalBehandling={resultatstrukturOriginalBehandling}
-                  bgPeriodeMedAvslagsårsak={bgPeriodeMedAvslagsårsak}
-                  behandlingStatusKode={behandlingStatus?.kode}
-                  vilkar={vilkar}
-                  aksjonspunkter={aksjonspunkter}
-                  sprakkode={sprakkode}
-                  readOnly={readOnly}
-                  vedtakVarsel={vedtakVarsel}
-                  medlemskapFom={medlemskapFom}
-                  harRedusertUtbetaling={harRedusertUtbetaling}
-                  redusertUtbetalingArsak={redusertUtbetalingArsak}
-                  formikValues={formikProps.values}
-                  erSendtInnUtenArsaker={erSendtInnUtenArsaker}
-                  behandlingArsaker={behandlingArsaker}
-                />
+    <Formik
+      initialValues={{ ...initialValues, ...vedtakContext?.vedtakFormState }}
+      onSubmit={values => {
+        submitCallback(createPayload(values));
+      }}
+    >
+      {formikProps => (
+        <form>
+          <LagreFormikStateLokalt />
+          <VedtakAksjonspunktPanel
+            behandlingStatusKode={behandlingStatus?.kode}
+            aksjonspunktKoder={aksjonspunkter.map(ap => ap.definisjon.kode)}
+            readOnly={readOnly}
+            overlappendeYtelser={overlappendeYtelser}
+            alleKodeverk={alleKodeverk}
+            viseFlereSjekkbokserForBrev={
+              kanHaFritekstbrev(tilgjengeligeVedtaksbrev) && kanHindreUtsending(tilgjengeligeVedtaksbrev)
+            }
+          >
+            <div className={styles.knappContainer}>
+              {kanHaFritekstbrev(tilgjengeligeVedtaksbrev) && (
+                <Checkbox
+                  checked={formikProps.values.skalBrukeOverstyrendeFritekstBrev}
+                  onChange={e => onToggleOverstyring(e, formikProps.setFieldValue)}
+                  disabled={
+                    readOnly ||
+                    kanKunVelge(tilgjengeligeVedtaksbrev, vedtaksbrevtype.FRITEKST) ||
+                    (formikProps.values.skalBrukeOverstyrendeFritekstBrev &&
+                      !kanHaAutomatiskVedtaksbrev(tilgjengeligeVedtaksbrev))
+                  }
+                  value={fieldnames.SKAL_BRUKE_OVERSTYRENDE_FRITEKST_BREV}
+                  size="small"
+                >
+                  {intl.formatMessage({ id: 'VedtakForm.ManuellOverstyring' })}
+                </Checkbox>
               )}
+              {kanHindreUtsending(tilgjengeligeVedtaksbrev) && (
+                <Checkbox
+                  onChange={e => onToggleHindreUtsending(e, formikProps.setFieldValue)}
+                  disabled={
+                    readOnly ||
+                    kanKunVelge(tilgjengeligeVedtaksbrev, vedtaksbrevtype.INGEN) ||
+                    (formikProps.values.skalHindreUtsendingAvBrev &&
+                      !kanHaAutomatiskVedtaksbrev(tilgjengeligeVedtaksbrev))
+                  }
+                  checked={formikProps.values.skalHindreUtsendingAvBrev}
+                  value={fieldnames.SKAL_HINDRE_UTSENDING_AV_BREV}
+                  size="small"
+                >
+                  {intl.formatMessage({ id: 'VedtakForm.HindreUtsending' })}
+                </Checkbox>
+              )}
+            </div>
+            {!erRevurdering ? (
+              <>
+                {fritekstdokumenter?.length > 0 && <UstrukturerteDokumenter fritekstdokumenter={fritekstdokumenter} />}
 
-              <BrevPanel
-                intl={intl}
-                readOnly={readOnly}
+                {(isInnvilget(behandlingresultat.type.kode) || isDelvisInnvilget(behandlingresultat.type.kode)) && (
+                  <VedtakInnvilgetPanel
+                    intl={intl}
+                    behandlingsresultat={behandlingresultat}
+                    ytelseTypeKode={ytelseTypeKode}
+                    tilbakekrevingvalg={tilbakekrevingvalg}
+                    simuleringResultat={simuleringResultat}
+                    alleKodeverk={alleKodeverk}
+                  />
+                )}
+
+                {isAvslag(behandlingresultat.type.kode) && (
+                  <VedtakAvslagPanel
+                    aksjonspunkter={aksjonspunkter}
+                    behandlingsresultat={behandlingresultat}
+                    ytelseTypeKode={ytelseTypeKode}
+                    alleKodeverk={alleKodeverk}
+                    tilbakekrevingvalg={tilbakekrevingvalg}
+                    simuleringResultat={simuleringResultat}
+                    vilkar={vilkar}
+                  />
+                )}
+              </>
+            ) : (
+              <RevurderingPaneler
+                ytelseTypeKode={ytelseTypeKode}
+                behandlingresultat={behandlingresultat}
+                resultatstruktur={resultatstruktur}
+                tilbakekrevingvalg={tilbakekrevingvalg}
+                simuleringResultat={simuleringResultat}
+                alleKodeverk={alleKodeverk}
+                resultatstrukturOriginalBehandling={resultatstrukturOriginalBehandling}
+                bgPeriodeMedAvslagsårsak={bgPeriodeMedAvslagsårsak}
+                behandlingStatusKode={behandlingStatus?.kode}
+                vilkar={vilkar}
+                aksjonspunkter={aksjonspunkter}
                 sprakkode={sprakkode}
-                personopplysninger={personopplysninger}
-                arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
-                tilgjengeligeVedtaksbrev={tilgjengeligeVedtaksbrev}
-                informasjonsbehovVedtaksbrev={informasjonsbehovVedtaksbrev}
-                informasjonsbehovValues={filterInformasjonsbehov(formikProps.values, aktiverteInformasjonsbehov)}
-                skalBrukeOverstyrendeFritekstBrev={formikProps.values.skalBrukeOverstyrendeFritekstBrev}
-                redusertUtbetalingÅrsaker={redusertUtbetalingÅrsaker(formikProps)}
-                begrunnelse={formikProps.values.begrunnelse}
-                previewCallback={previewCallback}
-                brødtekst={formikProps.values.brødtekst}
-                overskrift={formikProps.values.overskrift}
-                overstyrtMottaker={formikProps.values.overstyrtMottaker}
-                formikProps={formikProps}
+                readOnly={readOnly}
+                vedtakVarsel={vedtakVarsel}
+                medlemskapFom={medlemskapFom}
+                harRedusertUtbetaling={harRedusertUtbetaling}
+                redusertUtbetalingArsak={redusertUtbetalingArsak}
+                formikValues={formikProps.values}
+                erSendtInnUtenArsaker={erSendtInnUtenArsaker}
+                behandlingArsaker={behandlingArsaker}
+              />
+            )}
+
+            <BrevPanel
+              intl={intl}
+              readOnly={readOnly}
+              sprakkode={sprakkode}
+              personopplysninger={personopplysninger}
+              arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
+              tilgjengeligeVedtaksbrev={tilgjengeligeVedtaksbrev}
+              informasjonsbehovVedtaksbrev={informasjonsbehovVedtaksbrev}
+              informasjonsbehovValues={filterInformasjonsbehov(formikProps.values, aktiverteInformasjonsbehov)}
+              skalBrukeOverstyrendeFritekstBrev={formikProps.values.skalBrukeOverstyrendeFritekstBrev}
+              redusertUtbetalingÅrsaker={redusertUtbetalingÅrsaker(formikProps)}
+              begrunnelse={formikProps.values.begrunnelse}
+              previewCallback={previewCallback}
+              brødtekst={formikProps.values.brødtekst}
+              overskrift={formikProps.values.overskrift}
+              overstyrtMottaker={formikProps.values.overstyrtMottaker}
+              formikProps={formikProps}
+              dokumentdata={dokumentdata}
+              lagreDokumentdata={lagreDokumentdata}
+              ytelseTypeKode={ytelseTypeKode}
+            />
+            {!erRevurdering ? (
+              <VedtakSubmit
+                behandlingStatusKode={behandlingStatus?.kode}
+                readOnly={readOnly}
+                behandlingPaaVent={behandlingPaaVent}
+                isSubmitting={formikProps.isSubmitting}
+                aksjonspunkter={aksjonspunkter}
+                handleSubmit={formikProps.handleSubmit}
                 dokumentdata={dokumentdata}
                 lagreDokumentdata={lagreDokumentdata}
-                ytelseTypeKode={ytelseTypeKode}
+                brødtekst={formikProps.values.brødtekst}
+                overskrift={formikProps.values.overskrift}
+                inkluderKalender={formikProps.values[fieldnames.INKLUDER_KALENDER_VED_OVERSTYRING]}
               />
-              {!erRevurdering ? (
-                <VedtakSubmit
-                  behandlingStatusKode={behandlingStatus?.kode}
-                  readOnly={readOnly}
-                  behandlingPaaVent={behandlingPaaVent}
-                  isSubmitting={formikProps.isSubmitting}
-                  aksjonspunkter={aksjonspunkter}
-                  handleSubmit={formikProps.handleSubmit}
-                  dokumentdata={dokumentdata}
-                  lagreDokumentdata={lagreDokumentdata}
-                  brødtekst={formikProps.values.brødtekst}
-                  overskrift={formikProps.values.overskrift}
-                  inkluderKalender={formikProps.values[fieldnames.INKLUDER_KALENDER_VED_OVERSTYRING]}
-                />
-              ) : (
-                <VedtakRevurderingSubmitPanel
-                  formikValues={formikProps.values}
-                  isSubmitting={formikProps.isSubmitting}
-                  skalBrukeOverstyrendeFritekstBrev={formikProps.values.skalBrukeOverstyrendeFritekstBrev}
-                  handleSubmit={formikProps.handleSubmit}
-                  ytelseTypeKode={ytelseTypeKode}
-                  readOnly={readOnly}
-                  behandlingStatusKode={behandlingStatus?.kode}
-                  harRedusertUtbetaling={harRedusertUtbetaling}
-                  dokumentdata={dokumentdata}
-                  lagreDokumentdata={lagreDokumentdata}
-                  brødtekst={formikProps.values.brødtekst}
-                  overskrift={formikProps.values.overskrift}
-                  visFeilmeldingFordiArsakerMangler={() => setErSendtInnUtenArsaker(true)}
-                  aksjonspunkter={aksjonspunkter}
-                />
-              )}
-            </VedtakAksjonspunktPanel>
-          </form>
-        )}
-      </Formik>
-    </>
+            ) : (
+              <VedtakRevurderingSubmitPanel
+                formikValues={formikProps.values}
+                isSubmitting={formikProps.isSubmitting}
+                skalBrukeOverstyrendeFritekstBrev={formikProps.values.skalBrukeOverstyrendeFritekstBrev}
+                handleSubmit={formikProps.handleSubmit}
+                ytelseTypeKode={ytelseTypeKode}
+                readOnly={readOnly}
+                behandlingStatusKode={behandlingStatus?.kode}
+                harRedusertUtbetaling={harRedusertUtbetaling}
+                dokumentdata={dokumentdata}
+                lagreDokumentdata={lagreDokumentdata}
+                brødtekst={formikProps.values.brødtekst}
+                overskrift={formikProps.values.overskrift}
+                visFeilmeldingFordiArsakerMangler={() => setErSendtInnUtenArsaker(true)}
+                aksjonspunkter={aksjonspunkter}
+              />
+            )}
+          </VedtakAksjonspunktPanel>
+        </form>
+      )}
+    </Formik>
   );
 };
 

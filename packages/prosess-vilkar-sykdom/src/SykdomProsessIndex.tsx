@@ -12,7 +12,7 @@ import { Element, Undertekst, Undertittel } from 'nav-frontend-typografi';
 import React from 'react';
 import { createIntl, createIntlCache, FormattedMessage, RawIntlProvider } from 'react-intl';
 import isEqual from 'lodash.isequal';
-import Vilkarperiode from '../../types/src/vilkarperiode';
+import Vilkarperiode from '@k9-sak-web/types/src/vilkarperiode';
 import messages from '../i18n/nb_NO.json';
 import styles from './sykdomProsessIndex.less';
 
@@ -64,7 +64,7 @@ const SykdomProsessIndex = ({ perioder, panelTittelKode }: SykdomProsessIndexPro
     lovReferanse = '§ 9-10 tredje ledd (over 18 år)';
   }
 
-  if(panelTittelKode === 'Behandlingspunkt.LivetsSluttfase'){
+  if (panelTittelKode === 'Behandlingspunkt.LivetsSluttfase') {
     lovReferanse = '§ 9-13'
   }
 

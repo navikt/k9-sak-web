@@ -102,6 +102,7 @@ describe('<OmsorgspengerProsess>', () => {
       erPrivatPerson: false,
       identifikator: 'testId',
       navn: 'testNavn',
+      arbeidsforholdreferanser: []
     },
   };
 

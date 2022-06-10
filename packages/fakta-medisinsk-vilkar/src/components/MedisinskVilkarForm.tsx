@@ -84,100 +84,98 @@ export const MedisinskVilkarFormImpl = ({
   }, []);
 
   return (
-    <>
-      <form className={styles.form} onSubmit={handleSubmit}>
-        <div className={styles.headingContainer}>
-          <Systemtittel>
-            <FormattedMessage id="MedisinskVilkarForm.Fakta" />
-          </Systemtittel>
-        </div>
-        <div className={styles.fieldContainerLarge}>
-          <Legeerklaering readOnly={readOnly} />
-        </div>
-        <div className={styles.fieldContainerSmall}>
-          <DatepickerField
-            name={MedisinskVilkårConsts.LEGEERKLÆRING_FOM}
-            validate={[required, hasValidDate]}
-            readOnly={readOnly}
-            label={
-              <Label
-                input={{ id: 'MedisinskVilkarForm.Legeerklæring.Perioder', args: {} }}
-                typographyElement={Element}
-                intl={intl}
-              />
-            }
-            disabledDays={{
-              before: moment(periodeTilVurdering.fom).toDate(),
-              after: moment(periodeTilVurdering.tom).toDate(),
-            }}
-            dataId="legeerklaeringsdato"
-          />
-        </div>
-        <div className={styles.fieldContainerLarge}>
-          <DiagnosekodeSelector initialDiagnosekodeValue={diagnosekode} readOnly={readOnly} />
-        </div>
+    <form className={styles.form} onSubmit={handleSubmit}>
+      <div className={styles.headingContainer}>
+        <Systemtittel>
+          <FormattedMessage id="MedisinskVilkarForm.Fakta" />
+        </Systemtittel>
+      </div>
+      <div className={styles.fieldContainerLarge}>
+        <Legeerklaering readOnly={readOnly} />
+      </div>
+      <div className={styles.fieldContainerSmall}>
+        <DatepickerField
+          name={MedisinskVilkårConsts.LEGEERKLÆRING_FOM}
+          validate={[required, hasValidDate]}
+          readOnly={readOnly}
+          label={
+            <Label
+              input={{ id: 'MedisinskVilkarForm.Legeerklæring.Perioder', args: {} }}
+              typographyElement={Element}
+              intl={intl}
+            />
+          }
+          disabledDays={{
+            before: moment(periodeTilVurdering.fom).toDate(),
+            after: moment(periodeTilVurdering.tom).toDate(),
+          }}
+          dataId="legeerklaeringsdato"
+        />
+      </div>
+      <div className={styles.fieldContainerLarge}>
+        <DiagnosekodeSelector initialDiagnosekodeValue={diagnosekode} readOnly={readOnly} />
+      </div>
 
-        <div className={styles.fieldContainerLarge}>
-          <Element>
-            <FormattedMessage id="MedisinskVilkarForm.Innlagt" />
-          </Element>
-          <PeriodpickerField
-            names={[
-              `${MedisinskVilkårConsts.INNLEGGELSESPERIODE}.fom`,
-              `${MedisinskVilkårConsts.INNLEGGELSESPERIODE}.tom`,
-            ]}
-            validate={[required, hasValidDate, dateRangesNotOverlapping]}
-            readOnly={readOnly}
-            label={{ id: 'MedisinskVilkarForm.Periode' }}
-            disabledDays={{
-              before: moment(periodeTilVurdering.fom).toDate(),
-              after: moment(periodeTilVurdering.tom).toDate(),
-            }}
-            dataId="sykehusInnlagtDato"
-            ariaLabel={intl.formatMessage({ id: 'MedisinskVilkarForm.Innlagt' })}
-          />
-        </div>
-        {!showVilkaarsvurdering && !readOnly && (
-          <Hovedknapp
-            className={styles.fortsettTilVilkaarButton}
-            mini
-            onClick={handleFortsettTilVilkaarButtonClick}
-            data-id="fortsettTilVilkaarsvurdering"
-          >
-            <FormattedMessage id="MedisinskVilkarForm.FortsettTilVilkaarsvurdering" />
-          </Hovedknapp>
-        )}
+      <div className={styles.fieldContainerLarge}>
+        <Element>
+          <FormattedMessage id="MedisinskVilkarForm.Innlagt" />
+        </Element>
+        <PeriodpickerField
+          names={[
+            `${MedisinskVilkårConsts.INNLEGGELSESPERIODE}.fom`,
+            `${MedisinskVilkårConsts.INNLEGGELSESPERIODE}.tom`,
+          ]}
+          validate={[required, hasValidDate, dateRangesNotOverlapping]}
+          readOnly={readOnly}
+          label={{ id: 'MedisinskVilkarForm.Periode' }}
+          disabledDays={{
+            before: moment(periodeTilVurdering.fom).toDate(),
+            after: moment(periodeTilVurdering.tom).toDate(),
+          }}
+          dataId="sykehusInnlagtDato"
+          ariaLabel={intl.formatMessage({ id: 'MedisinskVilkarForm.Innlagt' })}
+        />
+      </div>
+      {!showVilkaarsvurdering && !readOnly && (
+        <Hovedknapp
+          className={styles.fortsettTilVilkaarButton}
+          mini
+          onClick={handleFortsettTilVilkaarButtonClick}
+          data-id="fortsettTilVilkaarsvurdering"
+        >
+          <FormattedMessage id="MedisinskVilkarForm.FortsettTilVilkaarsvurdering" />
+        </Hovedknapp>
+      )}
 
-        <div className={!showVilkaarsvurdering && !readOnly ? styles.hideVilkaarsVurdering : ''}>
-          <div className={styles.vilkarsContainer}>
-            <div className={styles.headingContainer}>
-              <Systemtittel>
-                <FormattedMessage id="MedisinskVilkarForm.Vilkår" />
-              </Systemtittel>
-            </div>
-            <div className={styles.fieldContainerLarge}>
-              <KontinuerligTilsynOgPleie
-                readOnly={readOnly}
-                periodeTilVurdering={periodeTilVurdering}
-                behandlingId={behandlingId}
-                behandlingVersjon={behandlingVersjon}
-                formName={formName}
-                getAksjonspunktHelpText={getAksjonspunktHelpText}
-              />
-            </div>
+      <div className={!showVilkaarsvurdering && !readOnly ? styles.hideVilkaarsVurdering : ''}>
+        <div className={styles.vilkarsContainer}>
+          <div className={styles.headingContainer}>
+            <Systemtittel>
+              <FormattedMessage id="MedisinskVilkarForm.Vilkår" />
+            </Systemtittel>
           </div>
-
-          <MedisinskVilkarFormButtons
-            behandlingId={behandlingId}
-            behandlingVersjon={behandlingVersjon}
-            form={form}
-            harApneAksjonspunkter={harApneAksjonspunkter}
-            readOnly={readOnly}
-            submittable={submittable}
-          />
+          <div className={styles.fieldContainerLarge}>
+            <KontinuerligTilsynOgPleie
+              readOnly={readOnly}
+              periodeTilVurdering={periodeTilVurdering}
+              behandlingId={behandlingId}
+              behandlingVersjon={behandlingVersjon}
+              formName={formName}
+              getAksjonspunktHelpText={getAksjonspunktHelpText}
+            />
+          </div>
         </div>
-      </form>
-    </>
+
+        <MedisinskVilkarFormButtons
+          behandlingId={behandlingId}
+          behandlingVersjon={behandlingVersjon}
+          form={form}
+          harApneAksjonspunkter={harApneAksjonspunkter}
+          readOnly={readOnly}
+          submittable={submittable}
+        />
+      </div>
+    </form>
   );
 };
 
@@ -197,27 +195,27 @@ const transformValues = (values: TransformValues, periodeTilVurdering: Periode, 
   pleiebehov: isHeleSokandsperiodenInnlegelse(values.innleggelsesperiode, periodeTilVurdering)
     ? {}
     : {
-        perioderMedKontinuerligTilsynOgPleie: values.perioderMedKontinuerligTilsynOgPleie
-          ?.filter(
-            periodeMedKontinuerligTilsynOgPleie =>
-              periodeMedKontinuerligTilsynOgPleie.harBehovForKontinuerligTilsynOgPleie &&
-              !!periodeMedKontinuerligTilsynOgPleie.fom &&
-              !!periodeMedKontinuerligTilsynOgPleie.tom,
-          )
-          .map(periodeMedKontinuerligTilsynOgPleie => ({
-            periode: {
-              fom: periodeMedKontinuerligTilsynOgPleie.fom,
-              tom: periodeMedKontinuerligTilsynOgPleie.tom,
-            },
-            begrunnelse: periodeMedKontinuerligTilsynOgPleie.begrunnelse,
-            årsaksammenheng: periodeMedKontinuerligTilsynOgPleie.sammenhengMellomSykdomOgTilsyn,
-            årsaksammenhengBegrunnelse: periodeMedKontinuerligTilsynOgPleie.sammenhengMellomSykdomOgTilsynBegrunnelse,
-          })),
-        perioderMedUtvidetKontinuerligTilsynOgPleie:
-          values.perioderMedKontinuerligTilsynOgPleie?.length > 0
-            ? getPerioderMedUtvidetKontinuerligTilsynOgPleie(values)
-            : undefined,
-      },
+      perioderMedKontinuerligTilsynOgPleie: values.perioderMedKontinuerligTilsynOgPleie
+        ?.filter(
+          periodeMedKontinuerligTilsynOgPleie =>
+            periodeMedKontinuerligTilsynOgPleie.harBehovForKontinuerligTilsynOgPleie &&
+            !!periodeMedKontinuerligTilsynOgPleie.fom &&
+            !!periodeMedKontinuerligTilsynOgPleie.tom,
+        )
+        .map(periodeMedKontinuerligTilsynOgPleie => ({
+          periode: {
+            fom: periodeMedKontinuerligTilsynOgPleie.fom,
+            tom: periodeMedKontinuerligTilsynOgPleie.tom,
+          },
+          begrunnelse: periodeMedKontinuerligTilsynOgPleie.begrunnelse,
+          årsaksammenheng: periodeMedKontinuerligTilsynOgPleie.sammenhengMellomSykdomOgTilsyn,
+          årsaksammenhengBegrunnelse: periodeMedKontinuerligTilsynOgPleie.sammenhengMellomSykdomOgTilsynBegrunnelse,
+        })),
+      perioderMedUtvidetKontinuerligTilsynOgPleie:
+        values.perioderMedKontinuerligTilsynOgPleie?.length > 0
+          ? getPerioderMedUtvidetKontinuerligTilsynOgPleie(values)
+          : undefined,
+    },
 });
 
 const buildInitialValues = createSelector(

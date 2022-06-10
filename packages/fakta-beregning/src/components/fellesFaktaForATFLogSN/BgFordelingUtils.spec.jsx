@@ -64,9 +64,21 @@ const alleKodeverk = {
 const arbeidsgiverOpplysningerPerId = {
   1231414: {
     navn: 'Arbeidsgiveren',
+    arbeidsforholdreferanser: [],
   },
   3284788923: {
     navn: 'Virksomheten',
+    arbeidsforholdreferanser: [
+      {
+        internArbeidsforholdId: '321378huda7e2',
+        eksternArbeidsforholdId: '321378huda7e2',
+
+      },
+      {
+        internArbeidsforholdId: '6765756g5',
+        eksternArbeidsforholdId: '98ujruih32'
+      }
+    ],
   },
 };
 
