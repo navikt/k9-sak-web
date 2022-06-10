@@ -22,10 +22,7 @@ const konverterKodeverkTilKode = (data: any, erTilbakekreving: boolean, debug: b
     }
   });
 
-
 }
-
-
 
 /**
  * getAxiosHttpClientApi
