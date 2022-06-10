@@ -109,10 +109,10 @@ export const VedtakForm = ({
         overstyrtMottaker: safeJSONParse(values?.[fieldnames.OVERSTYRT_MOTTAKER]),
         fritekstbrev: values?.[fieldnames.SKAL_BRUKE_OVERSTYRENDE_FRITEKST_BREV]
           ? {
-            brødtekst: values?.[fieldnames.BRØDTEKST],
-            overskrift: values?.[fieldnames.OVERSKRIFT],
-            inkluderKalender: values?.[fieldnames.INKLUDER_KALENDER_VED_OVERSTYRING],
-          }
+              brødtekst: values?.[fieldnames.BRØDTEKST],
+              overskrift: values?.[fieldnames.OVERSKRIFT],
+              inkluderKalender: values?.[fieldnames.INKLUDER_KALENDER_VED_OVERSTYRING],
+            }
           : {},
         skalBrukeOverstyrendeFritekstBrev: values?.[fieldnames.SKAL_BRUKE_OVERSTYRENDE_FRITEKST_BREV],
         skalUndertrykkeBrev: values?.[fieldnames.SKAL_HINDRE_UTSENDING_AV_BREV],
@@ -159,6 +159,9 @@ export const VedtakForm = ({
   const aktiverteInformasjonsbehov = (informasjonsbehovVedtaksbrev?.informasjonsbehov || []).filter(
     ({ type }) => type === 'FRITEKST',
   );
+
+  const harFritekstILokalState =
+    vedtakContext?.vedtakFormState?.brødtekst || vedtakContext?.vedtakFormState?.overskrift;
   const mellomlagredeInformasjonsbehov = aktiverteInformasjonsbehov.map(informasjonsbehov => ({
     [informasjonsbehov.kode]: dokumentdata?.[informasjonsbehov.kode] || '',
   }));
@@ -169,6 +172,7 @@ export const VedtakForm = ({
       [fieldnames.SKAL_BRUKE_OVERSTYRENDE_FRITEKST_BREV]:
         kanKunVelge(tilgjengeligeVedtaksbrev, vedtaksbrevtype.FRITEKST) ||
         (harMellomlagretFritekstbrev(dokumentdata, vedtakVarsel) && kanHaFritekstbrev(tilgjengeligeVedtaksbrev)) ||
+        (harFritekstILokalState && kanHaFritekstbrev(tilgjengeligeVedtaksbrev)) ||
         (kanHaFritekstbrev(tilgjengeligeVedtaksbrev) &&
           !kanHaAutomatiskVedtaksbrev(tilgjengeligeVedtaksbrev) &&
           !harMellomLagretMedIngenBrev(dokumentdata, vedtakVarsel)),
@@ -203,7 +207,7 @@ export const VedtakForm = ({
 
   return (
     <Formik
-      initialValues={vedtakContext?.vedtakFormState || initialValues}
+      initialValues={{ ...initialValues, ...vedtakContext?.vedtakFormState }}
       onSubmit={values => {
         submitCallback(createPayload(values));
       }}
@@ -217,7 +221,9 @@ export const VedtakForm = ({
             readOnly={readOnly}
             overlappendeYtelser={overlappendeYtelser}
             alleKodeverk={alleKodeverk}
-            viseFlereSjekkbokserForBrev={kanHaFritekstbrev(tilgjengeligeVedtaksbrev) && kanHindreUtsending(tilgjengeligeVedtaksbrev)}
+            viseFlereSjekkbokserForBrev={
+              kanHaFritekstbrev(tilgjengeligeVedtaksbrev) && kanHindreUtsending(tilgjengeligeVedtaksbrev)
+            }
           >
             <div className={styles.knappContainer}>
               {kanHaFritekstbrev(tilgjengeligeVedtaksbrev) && (
@@ -255,9 +261,7 @@ export const VedtakForm = ({
             </div>
             {!erRevurdering ? (
               <>
-                {fritekstdokumenter?.length > 0 && (
-                  <UstrukturerteDokumenter fritekstdokumenter={fritekstdokumenter} />
-                )}
+                {fritekstdokumenter?.length > 0 && <UstrukturerteDokumenter fritekstdokumenter={fritekstdokumenter} />}
 
                 {(isInnvilget(behandlingresultat.type.kode) || isDelvisInnvilget(behandlingresultat.type.kode)) && (
                   <VedtakInnvilgetPanel
