@@ -160,7 +160,6 @@ export const VedtakForm = ({
     ({ type }) => type === 'FRITEKST',
   );
 
-  //
   const harFritekstILokalState =
     vedtakContext?.vedtakFormState?.brødtekst || vedtakContext?.vedtakFormState?.overskrift;
   const mellomlagredeInformasjonsbehov = aktiverteInformasjonsbehov.map(informasjonsbehov => ({
