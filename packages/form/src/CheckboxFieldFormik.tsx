@@ -10,7 +10,7 @@ import { validateAll } from './formikUtils';
 interface CheckboxFieldProps {
   name: string;
   label: LabelType;
-  validate?: ((value: string) => boolean | undefined)[] | ((value: string) => boolean | undefined);
+  validate?: ((value: string) => string | undefined)[] | ((value: string) => string | undefined);
   disabled?: boolean;
 }
 
