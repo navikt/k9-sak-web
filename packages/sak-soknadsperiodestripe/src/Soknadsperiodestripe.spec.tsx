@@ -235,11 +235,11 @@ describe('Soknadsperiodestripe skal ha navigasjon', () => {
     const datoEtterNavigering1år = screen.getByText('11. oktober 2020 - 11. oktober 2021');
     expect(datoEtterNavigering1år).toBeInTheDocument();
 
-    const skala2år = screen.getByLabelText('2 år');
-    userEvent.click(skala2år);
+    const skala3mnd = screen.getByLabelText('3 mnd');
+    userEvent.click(skala3mnd);
     expect(datoFørNavigering).toBeInTheDocument();
     userEvent.click(navigerBakoverKnapp);
-    const datoEtterNavigering2år = screen.getByText('11. oktober 2019 - 11. oktober 2021');
-    expect(datoEtterNavigering2år).toBeInTheDocument();
+    const datoEtterNavigering3mnd = screen.getByText('11. desember 2021 - 11. mars 2022');
+    expect(datoEtterNavigering3mnd).toBeInTheDocument();
   });
 });

@@ -197,9 +197,9 @@ const Soknadsperiodestripe: React.FC<SoknadsperiodestripeProps> = ({ behandlingP
         <div className={styles.skalavelgerContainer}>
           <fieldset>
             <legend>{intl.formatMessage({ id: 'Soknadsperioder.Skala.SkalaForVisning' })}</legend>
+            {getSkalaRadio(intl.formatMessage({ id: 'Soknadsperioder.Skala.3mnd' }), 3)}
             {getSkalaRadio(intl.formatMessage({ id: 'Soknadsperioder.Skala.6mnd' }), 6)}
             {getSkalaRadio(intl.formatMessage({ id: 'Soknadsperioder.Skala.1år' }), 12)}
-            {getSkalaRadio(intl.formatMessage({ id: 'Soknadsperioder.Skala.2år' }), 24)}
           </fieldset>
         </div>,
         portalRoot,
