@@ -1,6 +1,5 @@
 import CheckboxFieldFormik from '@fpsak-frontend/form/src/CheckboxFieldFormik';
 import TextAreaFormik from '@fpsak-frontend/form/src/TextAreaFormik';
-import { hasValidText, maxLength, minLength, required } from '@fpsak-frontend/utils';
 import { Modal } from '@navikt/ds-react';
 import { Form, Formik } from 'formik';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
@@ -10,9 +9,6 @@ import React from 'react';
 import { useIntl } from 'react-intl';
 import * as Yup from 'yup';
 import styles from './markerBehandlingModal.less';
-
-const maxLength100000 = maxLength(100000);
-const minLength3 = minLength(3);
 
 interface PureOwnProps {
   brukHastekøMarkering?: boolean;
