@@ -74,6 +74,8 @@ spec:
       value: "https://psb-om-barnet-frontend.intern.nav.no/"
     - name: ENDRINGSLOGG_URL
       value: "https://familie-endringslogg.intern.nav.no/"
+    - name: APP_URL_K9LOS
+      value: "http://k9-los-api.k9saksbehandling"
 
     # Feature-flag
     - name: KLAGE_KABAL
