@@ -74,7 +74,7 @@ export const visVedtakspanelDerKlageErVurdertAvNfp = () => (
     behandling={behandling}
     klageVurdering={object('klageVurdering', {
       klageVurderingResultatNK: {
-        klageVurdertAv: 'NFP',
+        klageVurdertAv: 'NAY',
         klageVurdering: klageVurderingCodes.AVVIS_KLAGE,
         fritekstTilBrev: 'test',
         klageMedholdArsakNavn: 'TEST',
@@ -102,7 +102,7 @@ export const visVedtakspanelDerKlageErVurdertAvNfpVurder5034 = () => (
     behandling={behandling}
     klageVurdering={object('klageVurdering', {
       klageVurderingResultatNK: {
-        klageVurdertAv: 'NFP',
+        klageVurdertAv: 'NAY',
         klageVurdering: klageVurderingCodes.AVVIS_KLAGE,
         fritekstTilBrev: 'test',
         klageMedholdArsakNavn: 'TEST',
