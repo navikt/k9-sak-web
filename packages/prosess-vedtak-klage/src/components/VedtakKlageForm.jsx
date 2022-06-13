@@ -113,7 +113,7 @@ export const VedtakKlageFormImpl = ({
           />
         )}
 
-        {klageresultat.klageVurdertAv === 'NFP' && (
+        {klageresultat.klageVurdertAv === 'NAY' && (
           <VedtakKlageSubmitPanel
             begrunnelse={fritekstTilBrev}
             klageResultat={klageresultat}
