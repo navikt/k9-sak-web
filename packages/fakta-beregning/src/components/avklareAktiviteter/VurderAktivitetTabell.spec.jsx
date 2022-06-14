@@ -13,7 +13,7 @@ const aktivitet1 = {
     fom: '2019-01-01',
     tom: null,
     skalBrukes: null,
-    arbeidsforholdType: {kode: 'ARBEID', kodeverk: 'OPPTJENING_AKTIVITET_TYPE'},
+    arbeidsforholdType: opptjeningAktivitetType.ARBEID,
 };
 
 const aktivitet2 = {
@@ -23,7 +23,7 @@ const aktivitet2 = {
     fom: '2019-01-01',
     tom: '2019-02-02',
     skalBrukes: true,
-    arbeidsforholdType: {kode: 'ARBEID', kodeverk: 'OPPTJENING_AKTIVITET_TYPE'},
+    arbeidsforholdType: opptjeningAktivitetType.ARBEID,
 };
 
 const aktivitet3 = {
@@ -33,12 +33,12 @@ const aktivitet3 = {
     fom: '2019-01-01',
     tom: '2019-02-02',
     skalBrukes: false,
-    arbeidsforholdType: {kode: 'ARBEID', kodeverk: 'OPPTJENING_AKTIVITET_TYPE'},
+    arbeidsforholdType: opptjeningAktivitetType.ARBEID,
 };
 
 const aktivitetAAP = {
     arbeidsgiverIdent: null,
-    arbeidsforholdType: {kode: opptjeningAktivitetType.AAP, kodeverk: 'OPPTJENING_AKTIVITET_TYPE'},
+    arbeidsforholdType: opptjeningAktivitetType.AAP,
     fom: '2019-01-01',
     tom: '2020-02-02',
     skalBrukes: null,
@@ -46,7 +46,7 @@ const aktivitetAAP = {
 
 const aktivitetVentelonnVartpenger = {
     arbeidsgiverIdent: null,
-    arbeidsforholdType: {kode: 'VENTELØNN_VARTPENGER', kodeverk: 'OPPTJENING_AKTIVITET_TYPE'},
+    arbeidsforholdType: opptjeningAktivitetType.VENTELØNN_VARTPENGER,
     fom: '2019-01-01',
     tom: '2020-02-02',
     skalBrukes: null,
@@ -112,6 +112,7 @@ const alleKodeverk = {
 };
 
 describe('<VurderAktiviteterTabell>', () => {
+
     it('skal vise tabell', () => {
         const wrapper = shallow(
             <VurderAktiviteterTabell
@@ -316,10 +317,10 @@ describe('<VurderAktiviteterTabell>', () => {
 
     it('skal transform values', () => {
         const values = {};
-        values[id1] = {skalBrukes: true};
-        values[id2] = {skalBrukes: false};
-        values[id3] = {skalBrukes: false};
-        values[idAAP] = {skalBrukes: true};
+        values[id1] = { skalBrukes: true };
+        values[id2] = { skalBrukes: false };
+        values[id3] = { skalBrukes: false };
+        values[idAAP] = { skalBrukes: true };
         const transformed = VurderAktiviteterTabell.transformValues(values, aktiviteter);
         expect(transformed.length).to.equal(2);
         expect(transformed[0].arbeidsforholdRef).to.equal(aktivitet2.arbeidsforholdId);

@@ -1,12 +1,8 @@
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
-import {
-  BehandlingAppKontekst,
-  BehandlingPerioder,
-  Kodeverk,
-  KodeverkMedNavn,
-  PerioderMedBehandlingsId,
-} from '@k9-sak-web/types';
+import KodeverkType from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
+import { BehandlingAppKontekst, BehandlingPerioder, Kodeverk, KodeverkMedNavn } from '@k9-sak-web/types';
+import PerioderMedBehandlingsId from '@k9-sak-web/types/src/PerioderMedBehandlingsId';
 import axios from 'axios';
 import { Location } from 'history';
 import { Tilbakeknapp } from 'nav-frontend-ikonknapper';
@@ -22,22 +18,18 @@ import { sortBehandlinger } from './behandlingVelgerUtils';
 
 const getBehandlingNavn = (
   behandling: BehandlingAppKontekst,
-  getKodeverkFn: (kodeverk: Kodeverk, behandlingType?: Kodeverk) => KodeverkMedNavn,
+  getKodeverkFn: (kode: string, kodeverk: KodeverkType, behandlingType?: string) => KodeverkMedNavn,
   intl: IntlShape,
 ) => {
-  if (
-    behandling.type.kode === behandlingType.FORSTEGANGSSOKNAD ||
-    behandling.type.kode === behandlingType.KLAGE ||
-    behandling.type.kode === behandlingType.TILBAKEKREVING
-  ) {
-    return getKodeverkFn(behandling.type, behandling.type).navn;
+  if (behandling.type === behandlingType.FORSTEGANGSSOKNAD || behandling.type === behandlingType.KLAGE) {
+    return getKodeverkFn(behandling.type, KodeverkType.BEHANDLING_TYPE, behandling.type).navn;
   }
 
   return intl.formatMessage({ id: 'BehandlingPickerItemContent.BehandlingTypeNavn.Viderebehandling' });
 };
 
 const erAutomatiskBehandlet = (behandling: BehandlingAppKontekst) =>
-  !behandling.ansvarligSaksbehandler && behandling.status.kode === behandlingStatus.AVSLUTTET;
+  !behandling.ansvarligSaksbehandler && behandling.status === behandlingStatus.AVSLUTTET;
 
 const renderListItems = ({
   behandlinger,
@@ -50,7 +42,7 @@ const renderListItems = ({
 }: {
   behandlinger: BehandlingAppKontekst[];
   getBehandlingLocation: (behandlingId: number) => Location;
-  getKodeverkFn: (kodeverk: Kodeverk, behandlingType?: Kodeverk) => KodeverkMedNavn;
+  getKodeverkFn: (kode: string, kodeverk: KodeverkType, behandlingType?: string) => KodeverkMedNavn;
   setValgtBehandlingId;
   intl: IntlShape;
   alleSøknadsperioder: PerioderMedBehandlingsId[];
@@ -64,7 +56,7 @@ const renderListItems = ({
       if (activeFilters.includes(automatiskBehandling)) {
         return erAutomatiskBehandlet(behandling);
       }
-      return activeFilters.includes(behandling.type.kode);
+      return activeFilters.includes(behandling.type);
     })
     .map(behandling => (
       <li data-testid="BehandlingPickerItem" key={behandling.id}>
@@ -77,7 +69,7 @@ const renderListItems = ({
             behandlingTypeNavn={getBehandlingNavn(behandling, getKodeverkFn, intl)}
             behandlingsresultatTypeNavn={
               behandling.behandlingsresultat
-                ? getKodeverkFn(behandling.behandlingsresultat.type, behandling.type).navn
+                ? getKodeverkFn(behandling.behandlingsresultat.type.kode, KodeverkType.BEHANDLING_RESULTAT_TYPE, behandling.type).navn
                 : undefined
             }
             behandlingsresultatTypeKode={
@@ -86,7 +78,7 @@ const renderListItems = ({
             erAutomatiskRevurdering={erAutomatiskBehandlet(behandling)}
             søknadsperioder={alleSøknadsperioder.find(periode => periode.id === behandling.id)?.perioder}
             erFerdigstilt={!!behandling.avsluttet}
-            erUnntaksløype={behandling.type.kode === behandlingType.UNNTAK}
+            erUnntaksløype={behandling.type === behandlingType.UNNTAK}
           />
         </NavLink>
       </li>
@@ -104,7 +96,7 @@ interface OwnProps {
   behandlinger: BehandlingAppKontekst[];
   getBehandlingLocation: (behandlingId: number) => Location;
   noExistingBehandlinger: boolean;
-  getKodeverkFn: (kodeverk: Kodeverk, behandlingType?: Kodeverk) => KodeverkMedNavn;
+  getKodeverkFn: (kode: string, kodeverk: KodeverkType, behandlingType?: string) => KodeverkMedNavn;
   behandlingId?: number;
   createLocationForSkjermlenke: (behandlingLocation: Location, skjermlenkeCode: string) => Location;
   sakstypeKode: string;
@@ -127,7 +119,7 @@ const BehandlingPicker = ({
 }: OwnProps) => {
   const navigate = useNavigate();
   const finnÅpenBehandling = () => {
-    const åpenBehandling = behandlinger.find(behandling => behandling.status.kode !== behandlingStatus.AVSLUTTET);
+    const åpenBehandling = behandlinger.find(behandling => behandling.status !== behandlingStatus.AVSLUTTET);
     if (åpenBehandling) {
       navigate(getBehandlingLocation(åpenBehandling.id));
     }
@@ -186,9 +178,9 @@ const BehandlingPicker = ({
   const getFilterListe = () => {
     const filterListe = [];
     behandlinger.forEach(behandling => {
-      if (!filterListe.some(filter => filter.value === behandling.type.kode)) {
+      if (!filterListe.some(filter => filter.value === behandling.type)) {
         filterListe.push({
-          value: behandling.type.kode,
+          value: behandling.type,
           label: getBehandlingNavn(behandling, getKodeverkFn, intl),
         });
       }
@@ -212,7 +204,7 @@ const BehandlingPicker = ({
       periode.årsaker.forEach(årsak => {
         // TODO: try/catch skal ikke være nødvendig etter at backend har lagt inn alle behandlingsårsaker
         try {
-          årsaker.push(getKodeverkFn({ kode: årsak, kodeverk: 'ÅRSAK_TIL_VURDERING' }).navn);
+          årsaker.push(getKodeverkFn(årsak, KodeverkType.ÅRSAK_TIL_VURDERING).navn);
         } catch {
           årsaker.push(årsak);
         }
@@ -223,6 +215,7 @@ const BehandlingPicker = ({
 
   return (
     <div className={styles.behandlingPicker} data-testid="BehandlingPicker">
+      her er vi
       {valgtBehandlingId && (
         <Tilbakeknapp className={styles.backButton} onClick={() => setValgtBehandlingId(undefined)}>
           <FormattedMessage id="Behandlingspunkt.Behandling.SeAlle" />
@@ -270,7 +263,7 @@ const BehandlingPicker = ({
           avsluttetDato={valgtBehandling.avsluttet}
           behandlingsresultatTypeNavn={
             valgtBehandling.behandlingsresultat
-              ? getKodeverkFn(valgtBehandling.behandlingsresultat.type, valgtBehandling.type).navn
+              ? getKodeverkFn(valgtBehandling.behandlingsresultat.type.kode, KodeverkType.BEHANDLING_RESULTAT_TYPE, valgtBehandling.type).navn
               : undefined
           }
           behandlingsresultatTypeKode={
@@ -278,7 +271,7 @@ const BehandlingPicker = ({
           }
           behandlingsårsaker={getÅrsaksliste()}
           behandlingTypeNavn={getBehandlingNavn(valgtBehandling, getKodeverkFn, intl)}
-          behandlingTypeKode={valgtBehandling.type.kode}
+          behandlingTypeKode={valgtBehandling.type}
           søknadsperioder={søknadsperioder.find(periode => periode.id === valgtBehandling.id)?.perioder}
           createLocationForSkjermlenke={createLocationForSkjermlenke}
           sakstypeKode={sakstypeKode}

@@ -27,7 +27,7 @@ const defaultBGFordeling = (aktivitetStatuser, alleKodeverk) => ({
   andel: getKodeverknavnFn(
     alleKodeverk,
     kodeverkTyper,
-  )(aktivitetStatuser.filter(({ kode }) => kode === aktivitetStatus.BRUKERS_ANDEL)[0]),
+  )(aktivitetStatuser.filter((kode) => kode === aktivitetStatus.BRUKERS_ANDEL)[0]),
   fastsattBelop: '',
   inntektskategori: '',
   nyAndel: true,
@@ -111,12 +111,12 @@ const createBruttoBGSummaryRow = (sumFordeling, readOnly) => (
       <FormattedMessage id="BeregningInfoPanel.FordelingBG.Sum" />
     </TableColumn>
     <TableColumn className={readOnly ? styles.leftAlign : styles.rightAlign}>
-    <ReadOnlyField
-          input={{value : sumFordeling }}
-          type="text"
-          parse={parseCurrencyInput}
-          readOnly
-        />
+      <ReadOnlyField
+        input={{ value: sumFordeling }}
+        type="text"
+        parse={parseCurrencyInput}
+        readOnly
+      />
     </TableColumn>
     <TableColumn />
   </TableRow>

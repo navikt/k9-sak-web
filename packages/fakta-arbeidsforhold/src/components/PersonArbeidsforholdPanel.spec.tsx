@@ -45,22 +45,9 @@ describe('<PersonArbeidsforholdPanel>', () => {
         tom: '2018-10-10',
       },
     ],
-    kilde: [
-      {
-        kode: 'INNTEKT',
-        kodeverk: '',
-      },
-    ],
-    handlingType: {
-      kode: 'BRUK',
-      kodeverk: 'ARBEIDSFORHOLD_HANDLING_TYPE',
-    },
-    aksjonspunktÅrsaker: [
-      {
-        kode: 'INNTEKTSMELDING_UTEN_ARBEIDSFORHOLD',
-        kodeverk: 'ARBEIDSFORHOLD_AKSJONSPUNKT_ÅRSAKER',
-      },
-    ],
+    kilde: ['INNTEKT'],
+    handlingType: 'BRUK',
+    aksjonspunktÅrsaker: ['INNTEKTSMELDING_UTEN_ARBEIDSFORHOLD'],
     inntektsmeldinger: [],
   };
 

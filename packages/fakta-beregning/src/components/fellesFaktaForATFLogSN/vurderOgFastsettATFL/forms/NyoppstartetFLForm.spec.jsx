@@ -25,7 +25,7 @@ describe('<NyoppstartetFLForm>', () => {
   });
 
   const faktaOmBeregning = {
-    faktaOmBeregningTilfeller: [{ kode: faktaOmBeregningTilfelle.VURDER_NYOPPSTARTET_FL }],
+    faktaOmBeregningTilfeller: [faktaOmBeregningTilfelle.VURDER_NYOPPSTARTET_FL],
   };
 
   it('skal teste at transformValues gir korrekt output', () => {
@@ -84,9 +84,7 @@ describe('<NyoppstartetFLForm>', () => {
         {
           beregningsgrunnlagPrStatusOgAndel: [
             {
-              aktivitetStatus: {
-                kode: aktivitetStatus.FRILANSER,
-              },
+              aktivitetStatus: aktivitetStatus.FRILANSER,
               erNyoppstartet: true,
             },
           ],

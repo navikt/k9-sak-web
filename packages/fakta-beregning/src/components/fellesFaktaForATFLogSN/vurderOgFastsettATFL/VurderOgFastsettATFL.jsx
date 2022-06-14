@@ -269,9 +269,7 @@ const transformValuesForAksjonspunkt = (
   faktaOmBeregning,
   beregningsgrunnlag,
 ) => {
-  const tilfeller = faktaOmBeregning.faktaOmBeregningTilfeller
-    ? faktaOmBeregning.faktaOmBeregningTilfeller.map(({ kode }) => kode)
-    : [];
+  const tilfeller = faktaOmBeregning.faktaOmBeregningTilfeller ? faktaOmBeregning.faktaOmBeregningTilfeller : [];
   let transformed = { faktaOmBeregningTilfeller: [] };
   if (tilfeller.length > 0) {
     const allInntektErFastsatt = false;
@@ -414,7 +412,7 @@ const getSkalViseTabell = createSelector(
     if (
       beregningsgrunnlag &&
       beregningsgrunnlag.beregningsgrunnlagPeriode[0].beregningsgrunnlagPrStatusOgAndel.some(
-        andel => andel.aktivitetStatus.kode !== aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE,
+        andel => andel.aktivitetStatus !== aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE,
       )
     ) {
       return !tilfeller.includes(faktaOmBeregningTilfelle.FASTSETT_BG_KUN_YTELSE);

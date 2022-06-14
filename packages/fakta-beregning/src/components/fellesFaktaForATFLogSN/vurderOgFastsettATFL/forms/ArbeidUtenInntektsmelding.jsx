@@ -5,10 +5,9 @@ import { harFieldKunstigArbeidsforhold } from './KunstigArbeidsforhold';
 import { harLønnsendring } from './LonnsendringTekst';
 
 
-const harIkkeRelevantTilfelle = (tilfeller) => !tilfeller.map(({ kode }) => kode)
-.includes(faktaOmBeregningTilfelle.FASTSETT_MAANEDSLONN_ARBEIDSTAKER_UTEN_INNTEKTSMELDING)
-&& !tilfeller.map(({ kode }) => kode)
-  .includes(faktaOmBeregningTilfelle.VURDER_LONNSENDRING);
+const harIkkeRelevantTilfelle = (tilfeller) => !tilfeller
+  .includes(faktaOmBeregningTilfelle.FASTSETT_MAANEDSLONN_ARBEIDSTAKER_UTEN_INNTEKTSMELDING)
+  && !tilfeller.includes(faktaOmBeregningTilfelle.VURDER_LONNSENDRING);
 
 const harIkkeSattInntekt = (inntektVerdier) => inntektVerdier === null;
 

@@ -30,28 +30,28 @@ const arbeidsforhold3 = {
 };
 
 const andel = {
-  aktivitetStatus: { kode: aktivitetStatus.ARBEIDSTAKER, navn: 'Arbeidstaker' },
+  aktivitetStatus: aktivitetStatus.ARBEIDSTAKER,
   andelsnr: 1,
   inntektPrMnd: 25000,
   arbeidsforhold,
 };
 
 const andel2 = {
-  aktivitetStatus: { kode: aktivitetStatus.ARBEIDSTAKER, navn: 'Arbeidstaker' },
+  aktivitetStatus: aktivitetStatus.ARBEIDSTAKER,
   andelsnr: 2,
   inntektPrMnd: 25000,
   arbeidsforhold: arbeidsforhold2,
 };
 
 const andel3 = {
-  aktivitetStatus: { kode: aktivitetStatus.ARBEIDSTAKER, navn: 'Arbeidstaker' },
+  aktivitetStatus: aktivitetStatus.ARBEIDSTAKER,
   andelsnr: 3,
   inntektPrMnd: 25000,
   arbeidsforhold: arbeidsforhold3,
 };
 
 const frilansAndel = {
-  aktivitetStatus: { kode: aktivitetStatus.FRILANSER, navn: 'Frilans' },
+  aktivitetStatus: aktivitetStatus.FRILANSER,
   andelsnr: 4,
 };
 

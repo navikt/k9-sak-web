@@ -34,12 +34,12 @@ const {
 
 const findAvklaringsbehovMedBegrunnelse = alleBeregningsgrunnlag => {
   const alleAvklaringsbehov = alleBeregningsgrunnlag.flatMap(({ avklaringsbehov }) => avklaringsbehov);
-  if (alleAvklaringsbehov.some(ab => ab.definisjon.kode === OVERSTYRING_AV_BEREGNINGSGRUNNLAG)) {
+  if (alleAvklaringsbehov.some(ab => ab.definisjon === OVERSTYRING_AV_BEREGNINGSGRUNNLAG)) {
     return alleAvklaringsbehov.find(
-      ab => ab.definisjon.kode === OVERSTYRING_AV_BEREGNINGSGRUNNLAG && ab.begrunnelse !== null,
+      ab => ab.definisjon === OVERSTYRING_AV_BEREGNINGSGRUNNLAG && ab.begrunnelse !== null,
     );
   }
-  return alleAvklaringsbehov.find(ab => ab.definisjon.kode === VURDER_FAKTA_FOR_ATFL_SN && ab.begrunnelse !== null);
+  return alleAvklaringsbehov.find(ab => ab.definisjon === VURDER_FAKTA_FOR_ATFL_SN && ab.begrunnelse !== null);
 };
 
 export const BEGRUNNELSE_FAKTA_TILFELLER_NAME = 'begrunnelseFaktaTilfeller';
@@ -57,10 +57,10 @@ export const harIkkeEndringerIAvklarAktiviteterMedFlereAvklaringsbehov = (verdiF
 const isAvklaringsbehovClosed = alleAb => {
   const relevantAp = alleAb.filter(
     ab =>
-      ab.definisjon.kode === VURDER_FAKTA_FOR_ATFL_SN ||
-      ab.definisjon.kode === OVERSTYRING_AV_BEREGNINGSGRUNNLAG,
+      ab.definisjon === VURDER_FAKTA_FOR_ATFL_SN ||
+      ab.definisjon === OVERSTYRING_AV_BEREGNINGSGRUNNLAG,
   );
-  return relevantAp.length === 0 ? false : relevantAp.some(ap => !isAvklaringsbehovOpen(ap.status.kode));
+  return relevantAp.length === 0 ? false : relevantAp.some(ap => !isAvklaringsbehovOpen(ap.status));
 };
 
 const lagHelpTextsForFakta = () => {
@@ -74,10 +74,10 @@ const lagHelpTextsForFakta = () => {
 const hasOpenAvklaringsbehov = (kode, alleBeregningsgrunnlag) => {
   if (Array.isArray(alleBeregningsgrunnlag)) {
     return alleBeregningsgrunnlag.flatMap(({ avklaringsbehov }) => avklaringsbehov)
-      .some(ab => ab.definisjon.kode === kode && isAvklaringsbehovOpen(ab.status.kode));
+      .some(ab => ab.definisjon === kode && isAvklaringsbehovOpen(ab.status));
   }
   return alleBeregningsgrunnlag.avklaringsbehov
-    .some(ab => ab.definisjon.kode === kode && isAvklaringsbehovOpen(ab.status.kode));
+    .some(ab => ab.definisjon === kode && isAvklaringsbehovOpen(ab.status));
 }
 
 const harTilfeller = beregningsgrunnlag =>
@@ -146,8 +146,7 @@ export class VurderFaktaBeregningPanelImpl extends Component {
       (field, index) =>
       (<div key={field} style={{ display: index === aktivtBeregningsgrunnlagIndex ? 'block' : 'none' }}>
         {måVurderes(fields.get(index).avklaringsbehov, fields.get(index).erTilVurdering) && (
-          <AksjonspunktHelpTextTemp
-            isAksjonspunktOpen={!isAvklaringsbehovClosed(fields.get(index).avklaringsbehov)}>
+          <AksjonspunktHelpTextTemp isAksjonspunktOpen={!isAvklaringsbehovClosed(fields.get(index).avklaringsbehov)}>
             {lagHelpTextsForFakta()}
           </AksjonspunktHelpTextTemp>
         )}

@@ -62,8 +62,8 @@ const getUuidForSisteLukkedeForsteEllerRevurd = (behandlinger: BehandlingAppKont
   const behandling = behandlinger.find(
     b =>
       b.gjeldendeVedtak &&
-      b.status.kode === BehandlingStatus.AVSLUTTET &&
-      (b.type.kode === BehandlingType.FORSTEGANGSSOKNAD || b.type.kode === BehandlingType.REVURDERING),
+      b.status === BehandlingStatus.AVSLUTTET &&
+      (b.type === BehandlingType.FORSTEGANGSSOKNAD || b.type === BehandlingType.REVURDERING),
   );
   return behandling ? behandling.uuid : undefined;
 };
@@ -200,7 +200,7 @@ export const BehandlingMenuIndex = ({
   }
 
   const erPaVent = behandling ? behandling.behandlingPaaVent : false;
-  const behandlingTypeKode = behandling ? behandling.type.kode : undefined;
+  const behandlingTypeKode = behandling ? behandling.type : undefined;
 
   const vergeMenyvalg = behandlingRettigheter?.vergeBehandlingsmeny;
   const fjernVergeFn =

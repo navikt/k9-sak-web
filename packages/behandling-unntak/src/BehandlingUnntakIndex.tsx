@@ -4,10 +4,10 @@ import { Rettigheter, ReduxFormStateCleaner, useSetBehandlingVedEndring } from '
 import {
   Fagsak,
   Behandling,
-  KodeverkMedNavn,
   FeatureToggles,
   FagsakPerson,
   ArbeidsgiverOpplysningerWrapper,
+  KodeverkMedNavn,
 } from '@k9-sak-web/types';
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
 import { RestApiState, useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';

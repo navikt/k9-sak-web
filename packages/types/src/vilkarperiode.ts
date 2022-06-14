@@ -1,13 +1,12 @@
-import Kodeverk from './kodeverkTsType';
 
 export type Vilkarperiode = Readonly<{
   avslagKode?: string;
   begrunnelse?: string;
   vurdersIBehandlingen?: boolean;
-  merknad?: Kodeverk;
+  merknad?: string;
   merknadParametere: { [name: string]: string };
   periode: { fom: string; tom: string };
-  vilkarStatus: Kodeverk;
+  vilkarStatus: string;
 }>;
 
 export default Vilkarperiode;

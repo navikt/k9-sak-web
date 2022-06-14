@@ -5,7 +5,7 @@ export type BeregningResultatPeriode = {
     fom: string;
     tom: string;
   };
-  vurdering: Kodeverk;
+  vurdering: string;
   feilutbetaltBeløp: number;
   andelAvBeløp: number;
   renterProsent: number;
@@ -21,7 +21,7 @@ export type BeregningResultatPeriode = {
 
 export type BeregningsresultatTilbakekreving = {
   beregningResultatPerioder: BeregningResultatPeriode[];
-  vedtakResultatType: Kodeverk;
+  vedtakResultatType: string;
 };
 
 export default BeregningsresultatTilbakekreving;

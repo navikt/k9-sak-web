@@ -2,9 +2,9 @@ import KodeverkMedNavn from '../kodeverkMedNavnTsType';
 import Kodeverk from '../kodeverkTsType';
 
 type Utenlandsopphold = {
-  region: Kodeverk;
+  region: string;
   periode: string;
-  landkode: KodeverkMedNavn;
+  landkode: string;
   årsak?: string;
 };
 

@@ -8,15 +8,15 @@ const faktaOmBeregningAndel1 = {
   andelsnr: 1,
   fastsattBelopPrMnd: null,
   lagtTilAvSaksbehandler: false,
-  inntektskategori: { kode: inntektskategorier.UDEFINERT },
-  aktivitetStatus: { kode: 'BA' },
+  inntektskategori: inntektskategorier.UDEFINERT,
+  aktivitetStatus: 'BA',
 };
 const faktaOmBeregningAndel2 = {
   andelsnr: 2,
   fastsattBelopPrMnd: 10000,
   lagtTilAvSaksbehandler: true,
-  inntektskategori: { kode: inntektskategorier.ARBEIDSTAKER },
-  aktivitetStatus: { kode: 'BA' },
+  inntektskategori: inntektskategorier.ARBEIDSTAKER,
+  aktivitetStatus: 'BA',
 };
 const faktaOmBeregningAndeler = [faktaOmBeregningAndel1, faktaOmBeregningAndel2];
 describe('<KunYtelsePanel>', () => {
@@ -55,15 +55,15 @@ describe('<KunYtelsePanel>', () => {
       andelsnr: 1,
       fastsattBelopPrMnd: null,
       lagtTilAvSaksbehandler: false,
-      inntektskategori: { kode: inntektskategorier.UDEFINERT },
-      aktivitetStatus: { kode: 'BA' },
+      inntektskategori: inntektskategorier.UDEFINERT,
+      aktivitetStatus: 'BA',
     };
     const andel2 = {
       andelsnr: 2,
       fastsattBelopPrMnd: 10000,
       lagtTilAvSaksbehandler: true,
-      inntektskategori: { kode: inntektskategorier.ARBEIDSTAKER },
-      aktivitetStatus: { kode: 'BA' },
+      inntektskategori: inntektskategorier.ARBEIDSTAKER,
+      aktivitetStatus: 'BA',
     };
     const kunYtelse = {
       andeler: [andel1, andel2],

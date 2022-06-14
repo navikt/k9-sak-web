@@ -18,9 +18,9 @@ class PanelDef extends ProsessStegPanelDef {
   getKomponent = (props: Props) => {
     const { vilkar } = props;
     const vilkårPleietrengendeUnder18år = vilkar.find(
-      v => v.vilkarType.kode === vilkarType.MEDISINSKEVILKÅR_UNDER_18_ÅR,
+      v => v.vilkarType === vilkarType.MEDISINSKEVILKÅR_UNDER_18_ÅR,
     );
-    const vilkårPleietrengendeOver18år = vilkar.find(v => v.vilkarType.kode === vilkarType.MEDISINSKEVILKÅR_18_ÅR);
+    const vilkårPleietrengendeOver18år = vilkar.find(v => v.vilkarType === vilkarType.MEDISINSKEVILKÅR_18_ÅR);
     const perioderUnder18 = vilkårPleietrengendeUnder18år?.perioder.map(periode => ({
       ...periode,
       pleietrengendeErOver18år: false,

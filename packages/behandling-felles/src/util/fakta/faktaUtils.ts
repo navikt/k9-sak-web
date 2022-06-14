@@ -18,8 +18,8 @@ export const utledFaktaPaneler = (
   aksjonspunkter: Aksjonspunkt[],
   featureToggles?: FeatureToggles,
 ): FaktaPanelUtledet[] => {
-  const utvidetEkstraPanelData = {...ekstraPanelData, rettigheter};
-  const apCodes = aksjonspunkter.map(ap => ap.definisjon.kode);
+  const utvidetEkstraPanelData = { ...ekstraPanelData, rettigheter };
+  const apCodes = aksjonspunkter.map(ap => ap.definisjon);
   return faktaPanelDefinisjoner
     .filter(panelDef => panelDef.skalVisePanel(apCodes, utvidetEkstraPanelData, featureToggles))
     .map(panelDef => new FaktaPanelUtledet(panelDef, behandling, aksjonspunkter));
@@ -42,7 +42,7 @@ export const formaterPanelerForSidemeny = (
   valgtFaktaPanelKode: string,
 ): FaktaPanelMenyRad[] =>
   faktaPaneler.map(panel => ({
-    tekst: intl.formatMessage({id: panel.getTekstKode()}),
+    tekst: intl.formatMessage({ id: panel.getTekstKode() }),
     erAktiv: panel.getUrlKode() === valgtFaktaPanelKode,
     harAksjonspunkt: panel.getHarApneAksjonspunkter(),
   }));
@@ -68,12 +68,12 @@ export const getBekreftAksjonspunktCallback =
         behandlingVersjon: behandling.versjon,
       };
 
-      if (model && model.some(({kode}) => overstyringApCodes.includes(kode))) {
+      if (model && model.some(({ kode }) => overstyringApCodes.includes(kode))) {
         return lagreOverstyrteAksjonspunkter(
           {
             ...params,
-            overstyrteAksjonspunktDtoer: model.filter(({kode}) => overstyringApCodes.includes(kode)),
-            bekreftedeAksjonspunktDtoer: model.filter(({kode}) => !overstyringApCodes.includes(kode)),
+            overstyrteAksjonspunktDtoer: model.filter(({ kode }) => overstyringApCodes.includes(kode)),
+            bekreftedeAksjonspunktDtoer: model.filter(({ kode }) => !overstyringApCodes.includes(kode)),
           },
           true,
         ).then(() => oppdaterProsessStegOgFaktaPanelIUrl(DEFAULT_PROSESS_STEG_KODE, DEFAULT_FAKTA_KODE));

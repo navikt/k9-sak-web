@@ -34,7 +34,7 @@ import styles from './personArbeidsforholdPanel.less';
 // -------------------------------------------------------------------------------------------------------------
 
 const cleanUpArbeidsforhold = (newValues, originalValues) => {
-  if (newValues.handlingType.kode !== arbeidsforholdHandlingType.BRUK) {
+  if (newValues.handlingType !== arbeidsforholdHandlingType.BRUK) {
     return {
       ...newValues,
       tomDato: originalValues.tomDato,
@@ -170,8 +170,8 @@ export class PersonArbeidsforholdPanelImpl extends Component<Props, OwnState> {
     const lagtTilAvSaksbehandler = handlingType === arbeidsforholdHandlingType.BASERT_PÅ_INNTEKTSMELDING;
 
     if (lagtTilAvSaksbehandler) {
-      if (!values.kilde.map(k => k.kode).includes(arbeidsforholdKilder.SAKSBEHANDLER)) {
-        values.kilde.push({ kode: arbeidsforholdKilder.SAKSBEHANDLER });
+      if (!values.kilde.map(k => k).includes(arbeidsforholdKilder.SAKSBEHANDLER)) {
+        values.kilde.push(arbeidsforholdKilder.SAKSBEHANDLER);
       }
     }
 
@@ -271,11 +271,11 @@ export class PersonArbeidsforholdPanelImpl extends Component<Props, OwnState> {
                         {intl.formatMessage(
                           erValgt
                             ? {
-                                id: 'PersonArbeidsforholdPanel.LukkArbeidsforhold',
-                              }
+                              id: 'PersonArbeidsforholdPanel.LukkArbeidsforhold',
+                            }
                             : {
-                                id: 'PersonArbeidsforholdPanel.VisArbeidsforhold',
-                              },
+                              id: 'PersonArbeidsforholdPanel.VisArbeidsforhold',
+                            },
                         )}
                       </Normaltekst>
                       <Image className={erValgt ? styles.chevronOpp : styles.chevronNed} src={chevronIkonUrl} alt="" />

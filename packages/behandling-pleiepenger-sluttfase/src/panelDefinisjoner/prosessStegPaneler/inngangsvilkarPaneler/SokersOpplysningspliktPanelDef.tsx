@@ -26,9 +26,9 @@ class SokersOpplysningspliktPanelDef extends ProsessStegPanelDef {
   getVilkarKoder = () => [vilkarType.SOKERSOPPLYSNINGSPLIKT];
 
   getOverstyrVisningAvKomponent = ({ behandling, aksjonspunkterForSteg }) => {
-    const isRevurdering = behandlingType.REVURDERING === behandling.type.kode;
+    const isRevurdering = behandlingType.REVURDERING === behandling.type;
     const hasAp = aksjonspunkterForSteg.some(
-      ap => ap.definisjon.kode === aksjonspunktCodes.SOKERS_OPPLYSNINGSPLIKT_MANU,
+      ap => ap.definisjon === aksjonspunktCodes.SOKERS_OPPLYSNINGSPLIKT_MANU,
     );
     return !(isRevurdering && !hasAp);
   };

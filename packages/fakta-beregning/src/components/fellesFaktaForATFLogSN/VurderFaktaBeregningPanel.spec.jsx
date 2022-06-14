@@ -131,25 +131,25 @@ describe('<VurderFaktaBeregningPanel>', () => {
   });
 
   it('skal returnere true for endring i avklar med kun avklar aksjonspunkt', () => {
-    const aps = [{ definisjon: { kode: AVKLAR_AKTIVITETER } }];
+    const aps = [{ definisjon: AVKLAR_AKTIVITETER }];
     const knappSkalKunneTrykkes = harIkkeEndringerIAvklarAktiviteterMedFlereAvklaringsbehov(true, aps);
     expect(knappSkalKunneTrykkes).to.equal(true);
   });
 
   it('skal returnere false for endring i avklar med to avklaringsbehov', () => {
-    const aps = [{ definisjon: { kode: AVKLAR_AKTIVITETER } }, { definisjon: { kode: VURDER_FAKTA_FOR_ATFL_SN } }];
+    const aps = [{ definisjon: AVKLAR_AKTIVITETER }, { definisjon: VURDER_FAKTA_FOR_ATFL_SN }];
     const knappSkalKunneTrykkes = harIkkeEndringerIAvklarAktiviteterMedFlereAvklaringsbehov(true, aps);
     expect(knappSkalKunneTrykkes).to.equal(false);
   });
 
   it('skal returnere true for ingen endring i avklar med VURDER_FAKTA_FOR_ATFL_SN', () => {
-    const aps = [{ definisjon: { kode: VURDER_FAKTA_FOR_ATFL_SN } }];
+    const aps = [{ definisjon: VURDER_FAKTA_FOR_ATFL_SN }];
     const knappSkalKunneTrykkes = harIkkeEndringerIAvklarAktiviteterMedFlereAvklaringsbehov(false, aps);
     expect(knappSkalKunneTrykkes).to.equal(true);
   });
 
   it('skal returnere true for ingen endring i avklar med to avklaringsbehov', () => {
-    const aps = [{ definisjon: { kode: AVKLAR_AKTIVITETER } }, { definisjon: { kode: VURDER_FAKTA_FOR_ATFL_SN } }];
+    const aps = [{ definisjon: AVKLAR_AKTIVITETER }, { definisjon: VURDER_FAKTA_FOR_ATFL_SN }];
     const knappSkalKunneTrykkes = harIkkeEndringerIAvklarAktiviteterMedFlereAvklaringsbehov(false, aps);
     expect(knappSkalKunneTrykkes).to.equal(true);
   });

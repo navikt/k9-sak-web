@@ -16,8 +16,8 @@ import shallowWithIntl, { intlMock } from '../../../i18n';
 
 const avklaringsbehov = [
   {
-    definisjon: { kode: avklaringsbehovCodes.VURDER_FAKTA_FOR_ATFL_SN },
-    status: { kode: 'OPPR' },
+    definisjon: avklaringsbehovCodes.VURDER_FAKTA_FOR_ATFL_SN,
+    status: 'OPPR',
   },
 ];
 

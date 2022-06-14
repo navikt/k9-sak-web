@@ -37,7 +37,7 @@ export const AddAndelButtonImpl = ({
   <Row className={styles.buttonRow}>
     <Column xs="3">
       {// eslint-disable-next-line jsx-a11y/click-events-have-key-events
-        }
+      }
       <div
         id="leggTilAndelDiv"
         onClick={() => {

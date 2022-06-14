@@ -45,15 +45,15 @@ const ManglerSøknadForm = ({
         begrunnelse: Yup.string().required(intl.formatMessage({ id: 'ManglerSøknadForm.BegrunnelseErPåkrevd' })),
     });
 
-    const utledBegrunnelse = () => aksjonspunkter.find((ap) => ap.definisjon.kode === aksjonspunktCodes.MANGLER_KOMPLETT_SØKNAD
-    || ap.definisjon.kode === aksjonspunktCodes.MANGLER_KOMPLETT_SØKNAD_ANNEN_PART).begrunnelse || ''
+    const utledBegrunnelse = () => aksjonspunkter.find((ap) => ap.definisjon === aksjonspunktCodes.MANGLER_KOMPLETT_SØKNAD
+        || ap.definisjon === aksjonspunktCodes.MANGLER_KOMPLETT_SØKNAD_ANNEN_PART).begrunnelse || ''
 
-    const erAksjonspunktÅpent = () => isAksjonspunktOpen(aksjonspunkter.find((ap) => ap.definisjon.kode === aksjonspunktCodes.MANGLER_KOMPLETT_SØKNAD
-    || ap.definisjon.kode === aksjonspunktCodes.MANGLER_KOMPLETT_SØKNAD_ANNEN_PART).status.kode);
+    const erAksjonspunktÅpent = () => isAksjonspunktOpen(aksjonspunkter.find((ap) => ap.definisjon === aksjonspunktCodes.MANGLER_KOMPLETT_SØKNAD
+        || ap.definisjon === aksjonspunktCodes.MANGLER_KOMPLETT_SØKNAD_ANNEN_PART).status);
 
 
-    const manglerSøknadForPeriode = () => aksjonspunkter.some((ap) => ap.definisjon.kode === aksjonspunktCodes.MANGLER_KOMPLETT_SØKNAD);
-    const manglerSøknadAnnenPart = () => aksjonspunkter.some((ap) => ap.definisjon.kode === aksjonspunktCodes.MANGLER_KOMPLETT_SØKNAD_ANNEN_PART);
+    const manglerSøknadForPeriode = () => aksjonspunkter.some((ap) => ap.definisjon === aksjonspunktCodes.MANGLER_KOMPLETT_SØKNAD);
+    const manglerSøknadAnnenPart = () => aksjonspunkter.some((ap) => ap.definisjon === aksjonspunktCodes.MANGLER_KOMPLETT_SØKNAD_ANNEN_PART);
 
 
     const initialValues: ManglerSøknadDto = {
@@ -82,12 +82,12 @@ const ManglerSøknadForm = ({
                 initialValues={initialValues}
                 onSubmit={values => {
                     if (!readOnly && submittable) submitCallback(
-                        aksjonspunkter.filter((ap) => ap.definisjon.kode === aksjonspunktCodes.MANGLER_KOMPLETT_SØKNAD
-                        || ap.definisjon.kode === aksjonspunktCodes.MANGLER_KOMPLETT_SØKNAD_ANNEN_PART)
-                        .map(ap => ({
-                            kode: ap.definisjon.kode,
-                            begrunnelse: values.begrunnelse
-                        })));
+                        aksjonspunkter.filter((ap) => ap.definisjon === aksjonspunktCodes.MANGLER_KOMPLETT_SØKNAD
+                            || ap.definisjon === aksjonspunktCodes.MANGLER_KOMPLETT_SØKNAD_ANNEN_PART)
+                            .map(ap => ({
+                                kode: ap.definisjon,
+                                begrunnelse: values.begrunnelse
+                            })));
                 }}
                 validationSchema={validationSchema}
                 validateOnBlur

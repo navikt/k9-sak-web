@@ -22,14 +22,14 @@ export type FeilutbetalingFakta = {
     aktuellFeilUtbetaltBeløp: number;
     tidligereVarseltBeløp?: number;
     behandlingÅrsaker?: {
-      behandlingArsakType: Kodeverk;
+      behandlingArsakType: string;
     }[];
     behandlingsresultat?: {
-      type: Kodeverk;
-      konsekvenserForYtelsen: Kodeverk[];
+      type: string;
+      konsekvenserForYtelsen: string[];
     };
     tilbakekrevingValg?: {
-      videreBehandling: Kodeverk;
+      videreBehandling: string;
     };
     datoForRevurderingsvedtak: string;
     begrunnelse?: string;

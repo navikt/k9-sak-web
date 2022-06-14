@@ -13,7 +13,7 @@ const finnStatus = (vilkar: Vilkar[], aksjonspunkter: Aksjonspunkt[]) => {
     vilkar.forEach(v => v.perioder.filter(
       periode => periode.vurdersIBehandlingen
     ).forEach(
-      periode => vilkarStatusCodes.push(periode.vilkarStatus.kode))
+      periode => vilkarStatusCodes.push(periode.vilkarStatus))
     );
 
     if (vilkarStatusCodes.every(vsc => vsc === vilkarUtfallType.IKKE_VURDERT)) {
@@ -26,7 +26,7 @@ const finnStatus = (vilkar: Vilkar[], aksjonspunkter: Aksjonspunkt[]) => {
   }
 
   if (aksjonspunkter.length > 0) {
-    return aksjonspunkter.some(ap => isAksjonspunktOpen(ap.status.kode))
+    return aksjonspunkter.some(ap => isAksjonspunktOpen(ap.status))
       ? vilkarUtfallType.IKKE_VURDERT
       : vilkarUtfallType.OPPFYLT;
   }
@@ -36,12 +36,10 @@ const finnStatus = (vilkar: Vilkar[], aksjonspunkter: Aksjonspunkt[]) => {
 const finnErDelvisBehandlet = (vilkar: Vilkar[], uttaksperioder: Uttaksperiode[]) => {
   if (vilkar.length > 0) {
     const vilkarStatusCodes = [];
-    vilkar.forEach(v =>
-      v.perioder.filter(periode =>
-        periode.vurdersIBehandlingen
-      ).forEach(periode =>
-        vilkarStatusCodes.push(periode.vilkarStatus.kode)
-      )
+    vilkar.forEach(v => v.perioder.filter(
+      periode => periode.vurdersIBehandlingen
+    ).forEach(
+      periode => vilkarStatusCodes.push(periode.vilkarStatus))
     );
 
     const alleVilkårErIkkeVurdert = vilkarStatusCodes.every(vsc => vsc === vilkarUtfallType.IKKE_VURDERT);
@@ -143,17 +141,17 @@ export class ProsessStegPanelUtledet {
 
   public getAksjonspunktHjelpetekster = () => {
     const opneAksjonspunkter = this.getAksjonspunkterForPanel().filter(
-      ap => ap.status.kode === aksjonspunktStatus.OPPRETTET && ap.kanLoses,
+      ap => ap.status === aksjonspunktStatus.OPPRETTET && ap.kanLoses,
     );
     const indekser = opneAksjonspunkter.map(a =>
-      this.prosessStegPanelDef.getAksjonspunktKoder().findIndex(ac => a.definisjon.kode === ac),
+      this.prosessStegPanelDef.getAksjonspunktKoder().findIndex(ac => a.definisjon === ac),
     );
     return this.prosessStegPanelDef.getAksjonspunktTekstkoder().filter((a, index) => indekser.includes(index));
   };
 
   public getErAksjonspunktOpen = (): boolean => {
     const opneAksjonspunkter = this.getAksjonspunkterForPanel().filter(
-      ap => ap.status.kode === aksjonspunktStatus.OPPRETTET && ap.kanLoses,
+      ap => ap.status === aksjonspunktStatus.OPPRETTET && ap.kanLoses,
     );
     return (
       this.prosessStegPanelDef.getAksjonspunktKoder().some(a => this.overstyrteAksjonspunktKoder.includes(a)) ||

@@ -3,7 +3,7 @@ import Vilkarperiode from './vilkarperiode';
 
 export type Vilkar = Readonly<{
   lovReferanse?: string;
-  vilkarType: Kodeverk;
+  vilkarType: string;
   perioder: Vilkarperiode[];
   overstyrbar: boolean;
 }>;

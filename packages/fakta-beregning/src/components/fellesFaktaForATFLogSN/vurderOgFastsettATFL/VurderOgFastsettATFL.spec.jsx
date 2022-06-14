@@ -30,8 +30,8 @@ const lagBeregningsgrunnlag = andeler => ({
     {
       beregningsgrunnlagPrStatusOgAndel: andeler.map(andel => ({
         andelsnr: andel.andelsnr,
-        aktivitetStatus: { kode: andel.aktivitetStatus },
-        inntektskategori: { kode: andel.inntektskategori },
+        aktivitetStatus: andel.aktivitetStatus,
+        inntektskategori: andel.inntektskategori,
         erNyoppstartet: andel.erNyoppstartet,
       })),
     },
@@ -44,7 +44,7 @@ const lagFaktaOmBeregning = (
   arbeidstakerOgFrilanserISammeOrganisasjonListe,
   vurderMottarYtelse = {},
 ) => ({
-  faktaOmBeregningTilfeller: tilfeller.map(kode => ({ kode })),
+  faktaOmBeregningTilfeller: tilfeller,
   arbeidsforholdMedLønnsendringUtenIM,
   arbeidstakerOgFrilanserISammeOrganisasjonListe,
   vurderMottarYtelse,
@@ -52,8 +52,8 @@ const lagFaktaOmBeregning = (
 
 const lagAndel = (andelsnr, aktivitetStatus, inntektskategori) => ({
   andelsnr,
-  aktivitetStatus: { kode: aktivitetStatus, kodeverk: 'AKTIVITET_STATUS' },
-  inntektskategori: { kode: inntektskategori, kodeverk: 'INNTEKTSKATEGORI' },
+  aktivitetStatus,
+  inntektskategori,
 });
 
 const lagAndelValues = (
@@ -139,8 +139,10 @@ describe('<VurderOgFastsettATFL>', () => {
         erOverstyrer={false}
         beregningsgrunnlag={beregningsgrunnlag}
         fieldArrayID="dummyId"
+        vilkaarPeriodeFieldArrayIndex={0}
       />,
     );
+
     const inntektstabellPanel = wrapper.find(InntektstabellPanel);
     const lonnsendringForm = inntektstabellPanel.find(LonnsendringTekst);
     expect(lonnsendringForm.length).to.equal(1);

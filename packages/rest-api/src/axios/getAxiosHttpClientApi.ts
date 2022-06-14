@@ -1,6 +1,28 @@
+import { AxiosResponse } from 'axios';
+import { erTilbakekreving } from 'prosess-formkrav/src/components/FormkravKlageFormNfp';
 import axiosEtag from './axiosEtag';
 
 import initRestMethods from './initRestMethods';
+
+const konverterKodeverkTilKode = (data: any, erTilbakekreving: boolean, debug: boolean = false) => {
+  if (data === undefined || data === null) {
+    return;
+  }
+  const lengdeKodeverkObject = erTilbakekreving ? 3 : 2;
+
+  Object.keys(data).forEach((key) => {
+    if (data[key]?.kode) {
+      const antallAttr = Object.keys(data[key]).length;
+      if ((data[key]?.kodeverk && antallAttr === lengdeKodeverkObject) || antallAttr === 1) {
+        data[key] = data[key].kode;
+      }
+    }
+    if (typeof data[key] === 'object' && data[key] !== null) {
+      konverterKodeverkTilKode(data[key], erTilbakekreving, debug);
+    }
+  });
+
+}
 
 /**
  * getAxiosHttpClientApi
@@ -15,6 +37,14 @@ const getAxiosHttpClientApi = () => {
     const config = { ...c };
     config.headers['Nav-Callid'] = navCallId;
     return config;
+  });
+
+  axiosInstance.interceptors.response.use((response: AxiosResponse): any => {
+    if (response.status === 200 && response.config.url.includes('/api/') && !response.config.url.includes('/api/kodeverk')) {
+      const erTilbakekreving = response.config.url.includes('/k9tilbake/api');
+      konverterKodeverkTilKode(response.data, erTilbakekreving);
+    }
+    return response;
   });
 
   const restMethods = initRestMethods(axiosInstance);

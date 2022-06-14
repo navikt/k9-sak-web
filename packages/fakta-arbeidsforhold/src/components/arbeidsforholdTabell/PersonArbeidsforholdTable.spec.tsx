@@ -24,22 +24,9 @@ describe('<PersonArbeidsforholdTable>', () => {
         tom: '2018-10-10',
       },
     ],
-    kilde: [
-      {
-        kode: 'INNTEKT',
-        kodeverk: '',
-      },
-    ],
-    handlingType: {
-      kode: 'BRUK',
-      kodeverk: 'ARBEIDSFORHOLD_HANDLING_TYPE',
-    },
-    aksjonspunktÅrsaker: [
-      {
-        kode: 'INNTEKTSMELDING_UTEN_ARBEIDSFORHOLD',
-        kodeverk: 'ARBEIDSFORHOLD_AKSJONSPUNKT_ÅRSAKER',
-      },
-    ],
+    kilde: ['INNTEKT'],
+    handlingType: 'BRUK',
+    aksjonspunktÅrsaker: ['INNTEKTSMELDING_UTEN_ARBEIDSFORHOLD'],
     inntektsmeldinger: [],
     yrkestittel: 'Vaktmester',
     stillingsprosent: 80,
@@ -61,22 +48,9 @@ describe('<PersonArbeidsforholdTable>', () => {
         tom: '2018-10-10',
       },
     ],
-    kilde: [
-      {
-        kode: 'INNTEKT',
-        kodeverk: '',
-      },
-    ],
-    handlingType: {
-      kode: 'BRUK',
-      kodeverk: 'ARBEIDSFORHOLD_HANDLING_TYPE',
-    },
-    aksjonspunktÅrsaker: [
-      {
-        kode: 'INNTEKTSMELDING_UTEN_ARBEIDSFORHOLD',
-        kodeverk: 'ARBEIDSFORHOLD_AKSJONSPUNKT_ÅRSAKER',
-      },
-    ],
+    kilde: ['INNTEKT'],
+    handlingType: 'BRUK',
+    aksjonspunktÅrsaker: ['INNTEKTSMELDING_UTEN_ARBEIDSFORHOLD'],
     inntektsmeldinger: [],
   };
 
@@ -160,10 +134,7 @@ describe('<PersonArbeidsforholdTable>', () => {
   it('skal ikke vise ikon for at arbeidsforholdet er i bruk', () => {
     const newArbeidsforhold = {
       ...arbeidsforhold,
-      handlingType: {
-        kode: arbeidsforholdHandlingType.IKKE_BRUK,
-        kodeverk: '',
-      },
+      handlingType: arbeidsforholdHandlingType.IKKE_BRUK,
       aksjonspunktÅrsaker: [],
     };
     const wrapper = mountWithIntl(
@@ -187,10 +158,7 @@ describe('<PersonArbeidsforholdTable>', () => {
   it('skal vise ikon for at arbeidsforholdet er i bruk', () => {
     const newArbeidsforhold = {
       ...arbeidsforhold,
-      handlingType: {
-        kode: arbeidsforholdHandlingType.BRUK,
-        kodeverk: '',
-      },
+      handlingType: arbeidsforholdHandlingType.BRUK,
       aksjonspunktÅrsaker: [],
     };
 
@@ -253,10 +221,7 @@ describe('<PersonArbeidsforholdTable>', () => {
   it('skal vise riktig utledet yrkestittel når lagt til av saksbehandler', () => {
     const endretArbeidsforhold = {
       ...arbeidsforhold,
-      handlingType: {
-        kode: arbeidsforholdHandlingType.BASERT_PÅ_INNTEKTSMELDING,
-        kodeverk: '',
-      },
+      handlingType: arbeidsforholdHandlingType.BASERT_PÅ_INNTEKTSMELDING,
       yrkestittel: 'Lærer',
     };
     const wrapper = mountWithIntl(

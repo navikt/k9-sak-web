@@ -8,8 +8,8 @@ import {
 } from './BeregningFormUtils';
 
 const { VURDER_FAKTA_FOR_ATFL_SN, AVKLAR_AKTIVITETER } = avklaringsbehovCodes;
-const fellesAksjonspunkt = { definisjon: { kode: VURDER_FAKTA_FOR_ATFL_SN } };
-const avklarAktiviteterAksjonspunkt = { definisjon: { kode: AVKLAR_AKTIVITETER } };
+const fellesAksjonspunkt = { definisjon: VURDER_FAKTA_FOR_ATFL_SN };
+const avklarAktiviteterAksjonspunkt = { definisjon: AVKLAR_AKTIVITETER };
 const avklaringsbehov = [fellesAksjonspunkt, avklarAktiviteterAksjonspunkt];
 
 const behandlingProps = {

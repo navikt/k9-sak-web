@@ -3,6 +3,7 @@ import { BehandlingAppKontekst, Fagsak, Kodeverk, KodeverkMedNavn } from '@k9-sa
 import { Location } from 'history';
 import React from 'react';
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
+import KodeverkType from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import messages from '../i18n/nb_NO.json';
 import BehandlingPicker from './components/BehandlingPicker';
 import BehandlingPickerOld from './components/BehandlingPickerOld';
@@ -22,7 +23,7 @@ interface OwnProps {
   getBehandlingLocation: (behandlingId: number) => Location;
   noExistingBehandlinger: boolean;
   behandlingId?: number;
-  getKodeverkFn: (kodeverk: Kodeverk, behandlingType?: Kodeverk) => KodeverkMedNavn;
+  getKodeverkFn: (kode: string, kodeverk: KodeverkType, behandlingType?: string) => KodeverkMedNavn;
   showAll: boolean;
   toggleShowAll: () => void;
   fagsak: Fagsak;
@@ -41,10 +42,10 @@ const BehandlingVelgerSakIndex = ({
   createLocationForSkjermlenke,
 }: OwnProps) => {
   const skalViseGammelBehandlingsvelger =
-    fagsak.sakstype.kode === fagsakYtelseType.FRISINN ||
-    fagsak.sakstype.kode === fagsakYtelseType.OMSORGSPENGER_ALENE_OM_OMSORGEN ||
-    fagsak.sakstype.kode === fagsakYtelseType.OMSORGSPENGER_KRONISK_SYKT_BARN ||
-    fagsak.sakstype.kode === fagsakYtelseType.OMSORGSPENGER_MIDLERTIDIG_ALENE;
+    fagsak.sakstype === fagsakYtelseType.FRISINN ||
+    fagsak.sakstype === fagsakYtelseType.OMSORGSPENGER_ALENE_OM_OMSORGEN ||
+    fagsak.sakstype === fagsakYtelseType.OMSORGSPENGER_KRONISK_SYKT_BARN ||
+    fagsak.sakstype === fagsakYtelseType.OMSORGSPENGER_MIDLERTIDIG_ALENE;
   return (
     <RawIntlProvider value={intl}>
       {skalViseGammelBehandlingsvelger ? (
@@ -65,7 +66,7 @@ const BehandlingVelgerSakIndex = ({
           getKodeverkFn={getKodeverkFn}
           behandlingId={behandlingId}
           createLocationForSkjermlenke={createLocationForSkjermlenke}
-          sakstypeKode={fagsak.sakstype.kode}
+          sakstypeKode={fagsak.sakstype}
         />
       )}
     </RawIntlProvider>

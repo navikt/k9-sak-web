@@ -93,12 +93,12 @@ const createAndelerTableRows = (
   return rows;
 };
 
-const createBruttoBGSummaryRow = (fields, 
-  readOnly, 
-  beregningsgrunnlag, 
+const createBruttoBGSummaryRow = (fields,
+  readOnly,
+  beregningsgrunnlag,
   behandlingId,
-   behandlingVersjon,
-   vilkaarPeriodeFieldArrayIndex,) => (
+  behandlingVersjon,
+  vilkaarPeriodeFieldArrayIndex,) => (
   <SummaryRow
     readOnly={readOnly}
     key="summaryRow"
@@ -151,12 +151,12 @@ export const InntektFieldArrayImpl = ({
   if (tablerows.length === 0) {
     return null;
   }
-  tablerows.push(createBruttoBGSummaryRow(fields, 
-    readOnly, 
-    beregningsgrunnlag, 
-    behandlingId, 
+  tablerows.push(createBruttoBGSummaryRow(fields,
+    readOnly,
+    beregningsgrunnlag,
+    behandlingId,
     behandlingVersjon,
-    vilkaarPeriodeFieldArrayIndex,));
+    vilkaarPeriodeFieldArrayIndex));
   return (
     <NavFieldGroup errorMessage={getErrorMessage(meta, intl, isBeregningFormDirty)}>
       <Table
@@ -201,17 +201,17 @@ const InntektFieldArray = injectIntl(InntektFieldArrayImpl);
 InntektFieldArray.transformValues = values =>
   values
     ? values
-        .filter(({ skalRedigereInntekt }) => skalRedigereInntekt)
-        .map(fieldValue => ({
-          andelsnr: fieldValue.andelsnr,
-          fastsattBelop: removeSpacesFromNumber(fieldValue.fastsattBelop),
-          inntektskategori: fieldValue.inntektskategori,
-          nyAndel: fieldValue.nyAndel,
-          lagtTilAvSaksbehandler: fieldValue.lagtTilAvSaksbehandler,
-          aktivitetStatus: fieldValue.aktivitetStatus,
-          arbeidsforholdId: fieldValue.arbeidsforholdId,
-          arbeidsgiverIdent: fieldValue.arbeidsgiverIdent,
-        }))
+      .filter(({ skalRedigereInntekt }) => skalRedigereInntekt)
+      .map(fieldValue => ({
+        andelsnr: fieldValue.andelsnr,
+        fastsattBelop: removeSpacesFromNumber(fieldValue.fastsattBelop),
+        inntektskategori: fieldValue.inntektskategori,
+        nyAndel: fieldValue.nyAndel,
+        lagtTilAvSaksbehandler: fieldValue.lagtTilAvSaksbehandler,
+        aktivitetStatus: fieldValue.aktivitetStatus,
+        arbeidsforholdId: fieldValue.arbeidsforholdId,
+        arbeidsgiverIdent: fieldValue.arbeidsgiverIdent,
+      }))
     : null;
 
 const mapAndelToSortedObject = ({ andel, inntektskategori }) => ({ andelsinfo: andel, inntektskategori });
@@ -251,9 +251,8 @@ InntektFieldArray.buildInitialValues = (andeler, alleKodeverk, arbeidsgiverOpply
 export const mapStateToProps = (state, ownProps) => {
   const isBeregningFormDirty = isFormDirty(state, ownProps);
   const skalFastsetteSN = skalFastsetteInntektForSN(state, ownProps);
-  const tilfeller = ownProps.beregningsgrunnlag.faktaOmBeregning.faktaOmBeregningTilfeller
-    ? ownProps.beregningsgrunnlag.faktaOmBeregning.faktaOmBeregningTilfeller.map(({ kode }) => kode)
-    : [];
+  const tilfeller = ownProps.beregningsgrunnlag.faktaOmBeregning.faktaOmBeregningTilfeller || [];
+
   return {
     skalFastsetteSN,
     isBeregningFormDirty,

@@ -15,7 +15,7 @@ class BarnFaktaPanelDef extends FaktaPanelDef {
   getData = ({ personopplysninger, fagsak, rammevedtak }) => ({
     personopplysninger,
     rammevedtak: rammevedtak?.rammevedtak || [],
-    fagsaksType: fagsak.sakstype.kode,
+    fagsaksType: fagsak.sakstype,
   });
 }
 export default BarnFaktaPanelDef;

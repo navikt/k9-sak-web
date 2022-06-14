@@ -16,8 +16,8 @@ import shallowWithIntl, { intlMock } from '../../../i18n';
 
 const avklaringsbehov = [
   {
-    definisjon: { kode: avklaringsbehovCodes.VURDER_FAKTA_FOR_ATFL_SN },
-    status: { kode: 'OPPR' },
+    definisjon: avklaringsbehovCodes.VURDER_FAKTA_FOR_ATFL_SN,
+    status: 'OPPR',
   },
 ];
 
@@ -55,12 +55,13 @@ const ownProps = {
   alleKodeverk,
   arbeidsgiverOpplysningerPerId: {},
   isAvklaringsbehovClosed: false,
+  vilkaarPeriodeFieldArrayIndex: 0,
 };
 
 describe('<InntektFieldArray>', () => {
   it('skal mappe state til props for ikkje kun ytelse', () => {
     const faktaOmBeregning = {
-      faktaOmBeregningTilfeller: [{ kode: faktaOmBeregningTilfelle.VURDER_AT_OG_FL_I_SAMME_ORGANISASJON }],
+      faktaOmBeregningTilfeller: [faktaOmBeregningTilfelle.VURDER_AT_OG_FL_I_SAMME_ORGANISASJON],
     };
     const bg = {
       beregningsgrunnlagPeriode: [{}],
@@ -74,7 +75,7 @@ describe('<InntektFieldArray>', () => {
 
   it('skal mappe state til props for kun ytelse', () => {
     const faktaOmBeregning = {
-      faktaOmBeregningTilfeller: [{ kode: faktaOmBeregningTilfelle.FASTSETT_BG_KUN_YTELSE }],
+      faktaOmBeregningTilfeller: [faktaOmBeregningTilfelle.FASTSETT_BG_KUN_YTELSE],
     };
     const bg = {
       beregningsgrunnlagPeriode: [{}],
@@ -101,7 +102,7 @@ describe('<InntektFieldArray>', () => {
   const fields = new MockFieldsWithContent('fieldArrayName', [andelField]);
 
   const faktaOmBeregning = {
-    faktaOmBeregningTilfeller: [{ kode: faktaOmBeregningTilfelle.VURDER_AT_OG_FL_I_SAMME_ORGANISASJON }],
+    faktaOmBeregningTilfeller: [faktaOmBeregningTilfelle.VURDER_AT_OG_FL_I_SAMME_ORGANISASJON],
   };
   const initial = {};
   initial.fieldArrayName = [andelField];

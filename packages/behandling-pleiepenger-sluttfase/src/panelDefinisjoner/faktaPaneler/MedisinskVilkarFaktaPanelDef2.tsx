@@ -21,12 +21,12 @@ class MedisinskVilkarFaktaPanelDef2 extends FaktaPanelDef {
 
   getData = ({ hentSaksbehandlere, fagsak, behandling }) => ({
     saksbehandlere: hentSaksbehandlere?.saksbehandlere,
-    fagsakYtelseType: fagsak.sakstype.kode,
-    behandlingType: behandling.type.kode,
+    fagsakYtelseType: fagsak.sakstype,
+    behandlingType: behandling.type,
   });
 
   getOverstyrVisningAvKomponent = ({ fagsak, behandling }: { fagsak: Fagsak; behandling: Behandling }) => {
-    const erPleiepengesak = fagsak.sakstype.kode === fagsakYtelseType.PLEIEPENGER_SLUTTFASE;
+    const erPleiepengesak = fagsak.sakstype === fagsakYtelseType.PLEIEPENGER_SLUTTFASE;
     const søknadsfristErIkkeUnderVurdering = behandling.stegTilstand?.stegType?.kode !== 'VURDER_SØKNADSFRIST';
     return erPleiepengesak && søknadsfristErIkkeUnderVurdering;
   };

@@ -27,13 +27,13 @@ import { FrisinnBehandlingApiKeys, requestFrisinnApi } from '../data/frisinnBeha
 describe('<FrisinnProsess>', () => {
   const fagsak = {
     saksnummer: '123456',
-    sakstype: { kode: fagsakYtelseType.FORELDREPENGER, kodeverk: 'test' },
-    status: { kode: fagsakStatus.UNDER_BEHANDLING, kodeverk: 'test' },
+    sakstype: fagsakYtelseType.FORELDREPENGER,
+    status: fagsakStatus.UNDER_BEHANDLING,
   } as Fagsak;
 
   const fagsakPerson = {
     alder: 30,
-    personstatusType: { kode: personstatusType.BOSATT, kodeverk: 'test' },
+    personstatusType: personstatusType.BOSATT,
     erDod: false,
     erKvinne: true,
     navn: 'Espen Utvikler',
@@ -42,8 +42,8 @@ describe('<FrisinnProsess>', () => {
   const behandling = {
     id: 1,
     versjon: 2,
-    status: { kode: behandlingStatus.BEHANDLING_UTREDES, kodeverk: 'test' },
-    type: { kode: behandlingType.FORSTEGANGSSOKNAD, kodeverk: 'test' },
+    status: behandlingStatus.BEHANDLING_UTREDES,
+    type: behandlingType.FORSTEGANGSSOKNAD,
     behandlingPaaVent: false,
     taskStatus: {
       readOnly: false,
@@ -63,19 +63,19 @@ describe('<FrisinnProsess>', () => {
   };
   const aksjonspunkter = [
     {
-      definisjon: { kode: aksjonspunktCodes.AUTOMATISK_MARKERING_AV_UTENLANDSSAK, kodeverk: 'test' },
-      status: { kode: aksjonspunktStatus.OPPRETTET, kodeverk: 'test' },
+      definisjon: aksjonspunktCodes.AUTOMATISK_MARKERING_AV_UTENLANDSSAK,
+      status: aksjonspunktStatus.OPPRETTET,
       kanLoses: true,
       erAktivt: true,
     },
   ];
   const vilkar = [
     {
-      vilkarType: { kode: vilkarType.MEDLEMSKAPSVILKARET, kodeverk: 'test' },
+      vilkarType: vilkarType.MEDLEMSKAPSVILKARET,
       overstyrbar: true,
       perioder: [
         {
-          vilkarStatus: { kode: vilkarUtfallType.IKKE_VURDERT, kodeverk: 'test' },
+          vilkarStatus: vilkarUtfallType.IKKE_VURDERT,
           merknadParametere: {
             antattGodkjentArbeid: 'P0D',
             antattOpptjeningAktivitetTidslinje: 'LocalDateTimeline<0 [0]> = []',
@@ -194,15 +194,15 @@ describe('<FrisinnProsess>', () => {
   it('skal vise fatter vedtak modal etter lagring når aksjonspunkt er FORESLA_VEDTAK og så lukke denne og gå til søkeside', async () => {
     const vedtakAksjonspunkter = [
       {
-        definisjon: { kode: aksjonspunktCodes.FORESLA_VEDTAK, kodeverk: 'test' },
-        status: { kode: aksjonspunktStatus.OPPRETTET, kodeverk: 'test' },
+        definisjon: aksjonspunktCodes.FORESLA_VEDTAK,
+        status: aksjonspunktStatus.OPPRETTET,
         kanLoses: true,
         erAktivt: true,
       },
     ];
     const vedtakBehandling = {
       ...behandling,
-      status: { kode: behandlingStatus.FATTER_VEDTAK, kodeverk: 'test' },
+      status: behandlingStatus.FATTER_VEDTAK,
     };
 
     const opneSokeside = sinon.spy();
@@ -256,8 +256,8 @@ describe('<FrisinnProsess>', () => {
   it('skal vise iverksetter vedtak modal etter lagring når aksjonspunkt er FATTER_VEDTAK og så lukke denne og gå til søkeside', async () => {
     const vedtakAksjonspunkter = [
       {
-        definisjon: { kode: aksjonspunktCodes.FATTER_VEDTAK, kodeverk: 'test' },
-        status: { kode: aksjonspunktStatus.OPPRETTET, kodeverk: 'test' },
+        definisjon: aksjonspunktCodes.FATTER_VEDTAK,
+        status: aksjonspunktStatus.OPPRETTET,
         kanLoses: true,
         erAktivt: true,
       },
@@ -314,8 +314,8 @@ describe('<FrisinnProsess>', () => {
   it('skal gå til søkeside når en har revurderingsaksjonspunkt', async () => {
     const vedtakAksjonspunkter = [
       {
-        definisjon: { kode: aksjonspunktCodes.VARSEL_REVURDERING_MANUELL, kodeverk: 'test' },
-        status: { kode: aksjonspunktStatus.OPPRETTET, kodeverk: 'test' },
+        definisjon: aksjonspunktCodes.VARSEL_REVURDERING_MANUELL,
+        status: aksjonspunktStatus.OPPRETTET,
         kanLoses: true,
         erAktivt: true,
       },

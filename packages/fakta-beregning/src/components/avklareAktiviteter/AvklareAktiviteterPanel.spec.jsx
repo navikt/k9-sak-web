@@ -48,7 +48,7 @@ const alleKodeverk = {
   ],
 };
 
-const apsAvklarAktiviteter = [{ definisjon: { kode: AVKLAR_AKTIVITETER }, kanLoses: true }];
+const apsAvklarAktiviteter = [{ definisjon: AVKLAR_AKTIVITETER, kanLoses: true }];
 
 const lagStateMedAvklarAktitiveter = (
   avklarAktiviteter,
@@ -73,7 +73,7 @@ const aktivitet1 = {
   fom: '2019-01-01',
   tom: null,
   skalBrukes: null,
-  arbeidsforholdType: { kode: 'ARBEID', navn: 'Arbeid', kodeverk: 'OPPTJENING_AKTIVITET_TYPE' },
+  arbeidsforholdType: 'ARBEID',
 };
 
 const aktivitet2 = {
@@ -82,7 +82,7 @@ const aktivitet2 = {
   fom: '2019-01-01',
   tom: '2019-02-02',
   skalBrukes: true,
-  arbeidsforholdType: { kode: 'ARBEID', navn: 'Arbeid', kodeverk: 'OPPTJENING_AKTIVITET_TYPE' },
+  arbeidsforholdType: 'ARBEID',
 };
 
 const aktivitet3 = {
@@ -91,12 +91,12 @@ const aktivitet3 = {
   fom: '2019-01-01',
   tom: '2019-02-02',
   skalBrukes: false,
-  arbeidsforholdType: { kode: 'ARBEID', navn: 'Arbeid', kodeverk: 'OPPTJENING_AKTIVITET_TYPE' },
+  arbeidsforholdType: 'ARBEID',
 };
 
 const aktivitetAAP = {
   arbeidsgiverIdent: null,
-  arbeidsforholdType: { kode: 'AAP', navn: 'Arbeidsavklaringspenger', kodeverk: 'OPPTJENING_AKTIVITET_TYPE' },
+  arbeidsforholdType: 'AAP',
   fom: '2019-01-01',
   tom: '2020-02-02',
   skalBrukes: null,
@@ -135,7 +135,7 @@ describe('<AvklareAktiviteterPanel>', () => {
     const avklarAktiviteter = {
       aktiviteterTomDatoMapping: [{ tom: '2019-02-02', aktiviteter }],
     };
-    const avklaringsbehov = [{ definisjon: { kode: AVKLAR_AKTIVITETER }, status: { kode: 'OPPR' } }];
+    const avklaringsbehov = [{ definisjon: AVKLAR_AKTIVITETER, status: 'OPPR' }];
     const beregningsgrunnlag = {
       skjæringstidspunkt: '2019-02-02',
       vilkårsperiodeFom: '2019-02-02',
@@ -170,11 +170,12 @@ describe('<AvklareAktiviteterPanel>', () => {
         beregningsgrunnlag={beregningsgrunnlag}
         behandlingResultatPerioder={[{ periode: { fom: '2019-02-02' }, vurdersIBehandlingen: true }]}
         alleBeregningsgrunnlag={[beregningsgrunnlag]}
-        fields={new MockFieldsWithContent('avklareAktiviteterListe', [{erTilVurdering: true}])}
+        fields={new MockFieldsWithContent('avklareAktiviteterListe', [{ erTilVurdering: true }])}
         formValues={[]}
         {...behandlingProps}
       />,
     );
+
     const vurderAktivitetPanel = wrapper.find(VurderAktiviteterPanel);
     expect(vurderAktivitetPanel).has.length(1);
   });
@@ -216,7 +217,7 @@ describe('<AvklareAktiviteterPanel>', () => {
         behandlingResultatPerioder={[{ periode: { fom: '2019-02-02' }, vurdersIBehandlingen: true }]}
         aktivtBeregningsgrunnlagIndex={0}
         reduxFormInitialize={sinon.spy()}
-        fields={new MockFieldsWithContent('avklareAktiviteterListe', [{erTilVurdering: true}])}
+        fields={new MockFieldsWithContent('avklareAktiviteterListe', [{ erTilVurdering: true }])}
         formValues={[]}
         {...behandlingProps}
       />,
@@ -229,7 +230,7 @@ describe('<AvklareAktiviteterPanel>', () => {
     const avklarAktiviteter = {
       aktiviteterTomDatoMapping: [{ tom: '2019-02-02', aktiviteter }],
     };
-    const avklaringsbehov = [{ definisjon: { kode: OVERSTYRING_AV_BEREGNINGSAKTIVITETER }, status: { kode: 'OPPR' } }];
+    const avklaringsbehov = [{ definisjon: OVERSTYRING_AV_BEREGNINGSAKTIVITETER, status: 'OPPR' }];
 
     const wrapper = shallow(
       <AvklareAktiviteterPanelContent.WrappedComponent
@@ -263,7 +264,7 @@ describe('<AvklareAktiviteterPanel>', () => {
         }}
         behandlingResultatPerioder={[{ periode: { fom: '2019-02-02' }, vurdersIBehandlingen: true }]}
         reduxFormInitialize={sinon.spy()}
-        fields={new MockFieldsWithContent('avklareAktiviteterListe', [{erTilVurdering: true}])}
+        fields={new MockFieldsWithContent('avklareAktiviteterListe', [{ erTilVurdering: true }])}
         formValues={[]}
         {...behandlingProps}
       />,
@@ -276,7 +277,7 @@ describe('<AvklareAktiviteterPanel>', () => {
     const avklarAktiviteter = {
       aktiviteterTomDatoMapping: [{ tom: '2019-02-02', aktiviteter }],
     };
-    const avklaringsbehov = [{ definisjon: { kode: OVERSTYRING_AV_BEREGNINGSAKTIVITETER }, status: { kode: 'OPPR' } }];
+    const avklaringsbehov = [{ definisjon: OVERSTYRING_AV_BEREGNINGSAKTIVITETER, status: 'OPPR' }];
 
     const wrapper = shallow(
       <AvklareAktiviteterPanelContent.WrappedComponent
@@ -308,7 +309,7 @@ describe('<AvklareAktiviteterPanel>', () => {
         behandlingFormPrefix="test"
         alleKodeverk={alleKodeverk}
         arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
-        fields={new MockFieldsWithContent('avklareAktiviteterListe', [{erTilVurdering: true}])}
+        fields={new MockFieldsWithContent('avklareAktiviteterListe', [{ erTilVurdering: true }])}
         formValues={[]}
         reduxFormInitialize={sinon.spy()}
         {...behandlingProps}
@@ -323,8 +324,8 @@ describe('<AvklareAktiviteterPanel>', () => {
       aktiviteterTomDatoMapping: [{ tom: '2019-02-02', aktiviteter }],
     };
     const avklaringsbehov = [
-      { definisjon: { kode: AVKLAR_AKTIVITETER }, status: { kode: 'UTFO' } },
-      { definisjon: { kode: VURDER_FAKTA_FOR_ATFL_SN }, status: { kode: 'OPPR' } },
+      { definisjon: AVKLAR_AKTIVITETER, status: 'UTFO' },
+      { definisjon: VURDER_FAKTA_FOR_ATFL_SN, status: 'OPPR' },
     ];
 
     const beregningsgrunnlag = {
@@ -361,7 +362,7 @@ describe('<AvklareAktiviteterPanel>', () => {
         alleKodeverk={alleKodeverk}
         arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
         reduxFormInitialize={sinon.spy()}
-        fields={new MockFieldsWithContent('avklareAktiviteterListe', [{erTilVurdering: true}])}
+        fields={new MockFieldsWithContent('avklareAktiviteterListe', [{ erTilVurdering: true }])}
         formValues={[]}
         {...behandlingProps}
       />,
@@ -376,7 +377,7 @@ describe('<AvklareAktiviteterPanel>', () => {
     const avklarAktiviteter = {
       aktiviteterTomDatoMapping: [{ tom: '2019-02-02', aktiviteter }],
     };
-    const avklaringsbehov = [{ definisjon: { kode: AVKLAR_AKTIVITETER }, status: { kode: 'UTFO' } }];
+    const avklaringsbehov = [{ definisjon: AVKLAR_AKTIVITETER, status: 'UTFO' }];
     const wrapper = shallow(
       <AvklareAktiviteterPanelContent.WrappedComponent
         {...reduxFormPropsMock}
@@ -409,7 +410,7 @@ describe('<AvklareAktiviteterPanel>', () => {
         alleKodeverk={alleKodeverk}
         arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
         reduxFormInitialize={sinon.spy()}
-        fields={new MockFieldsWithContent('avklareAktiviteterListe', [{ erTilVurdering: true}])}
+        fields={new MockFieldsWithContent('avklareAktiviteterListe', [{ erTilVurdering: true }])}
         formValues={[]}
         {...behandlingProps}
       />,
@@ -458,7 +459,7 @@ describe('<AvklareAktiviteterPanel>', () => {
         alleKodeverk={alleKodeverk}
         arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
         reduxFormInitialize={sinon.spy()}
-        fields={new MockFieldsWithContent('avklareAktiviteterListe', [{erTilVurdering: true}])}
+        fields={new MockFieldsWithContent('avklareAktiviteterListe', [{ erTilVurdering: true }])}
         formValues={[]}
         {...behandlingProps}
       />,
@@ -473,7 +474,7 @@ describe('<AvklareAktiviteterPanel>', () => {
     const avklarAktiviteter = {
       aktiviteterTomDatoMapping: [{ tom: '2019-02-02', aktiviteter }],
     };
-    const avklaringsbehov = [{ definisjon: { kode: AVKLAR_AKTIVITETER }, status: { kode: 'OPPR' } }];
+    const avklaringsbehov = [{ definisjon: AVKLAR_AKTIVITETER, status: 'OPPR' }];
     const wrapper = shallow(
       <AvklareAktiviteterPanelContent.WrappedComponent
         {...reduxFormPropsMock}
@@ -506,7 +507,7 @@ describe('<AvklareAktiviteterPanel>', () => {
         alleKodeverk={alleKodeverk}
         arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
         reduxFormInitialize={sinon.spy()}
-        fields={new MockFieldsWithContent('avklareAktiviteterListe', [{erTilVurdering: true}])}
+        fields={new MockFieldsWithContent('avklareAktiviteterListe', [{ erTilVurdering: true }])}
         formValues={[]}
         {...behandlingProps}
       />,
@@ -521,7 +522,7 @@ describe('<AvklareAktiviteterPanel>', () => {
     const avklarAktiviteter = {
       aktiviteterTomDatoMapping: [{ tom: '2019-02-02', aktiviteter }],
     };
-    const avklaringsbehov = [{ definisjon: { kode: OVERSTYRING_AV_BEREGNINGSAKTIVITETER }, status: { kode: 'OPPR' } }];
+    const avklaringsbehov = [{ definisjon: OVERSTYRING_AV_BEREGNINGSAKTIVITETER, status: 'OPPR' }];
     const wrapper = shallow(
       <AvklareAktiviteterPanelContent.WrappedComponent
         {...reduxFormPropsMock}
@@ -553,7 +554,7 @@ describe('<AvklareAktiviteterPanel>', () => {
         behandlingFormPrefix="test"
         alleKodeverk={alleKodeverk}
         arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
-        fields={new MockFieldsWithContent('avklareAktiviteterListe', [{erTilVurdering: true}])}
+        fields={new MockFieldsWithContent('avklareAktiviteterListe', [{ erTilVurdering: true }])}
         formValues={[]}
         reduxFormInitialize={sinon.spy()}
         {...behandlingProps}
@@ -570,7 +571,7 @@ describe('<AvklareAktiviteterPanel>', () => {
       aktiviteterTomDatoMapping: [{ tom: '2019-02-02', aktiviteter }],
     };
 
-    const beregningsgrunnlag = { 
+    const beregningsgrunnlag = {
       avklaringsbehov: apsAvklarAktiviteter,
       faktaOmBeregning: { avklarAktiviteter },
       skjæringstidspunkt: '2019-02-02',
@@ -578,7 +579,7 @@ describe('<AvklareAktiviteterPanel>', () => {
     };
     const initialValues = buildInitialValuesAvklarAktiviteter(beregningsgrunnlag, {
       aktivtBeregningsgrunnlagIndex: 1,
-      behandlingResultatPerioder: [{ periode: {fom : '2019-02-02' }, vurdersIBehandlingen: true }]
+      behandlingResultatPerioder: [{ periode: { fom: '2019-02-02' }, vurdersIBehandlingen: true }]
     });
     expect(initialValues !== null).to.equal(true);
     expect(initialValues[MANUELL_OVERSTYRING_FIELD]).to.equal(false);
@@ -590,7 +591,7 @@ describe('<AvklareAktiviteterPanel>', () => {
     };
     const aps = [];
     const initialValues = buildInitialValuesAvklarAktiviteter(
-      { 
+      {
         avklaringsbehov: aps,
         faktaOmBeregning: { avklarAktiviteter },
         skjæringstidspunkt: '2019-02-02',
@@ -598,7 +599,7 @@ describe('<AvklareAktiviteterPanel>', () => {
       },
       {
         aktivtBeregningsgrunnlagIndex: 1,
-        behandlingResultatPerioder: [{ periode: {fom : '2019-02-02' }, vurdersIBehandlingen:true }]
+        behandlingResultatPerioder: [{ periode: { fom: '2019-02-02' }, vurdersIBehandlingen: true }]
       },
     );
     expect(initialValues !== null).to.equal(true);
@@ -609,9 +610,9 @@ describe('<AvklareAktiviteterPanel>', () => {
     const avklarAktiviteter = {
       aktiviteterTomDatoMapping: [{ tom: '2019-02-02', aktiviteter }],
     };
-    const aps = [{ definisjon: { kode: OVERSTYRING_AV_BEREGNINGSAKTIVITETER } }];
+    const aps = [{ definisjon: OVERSTYRING_AV_BEREGNINGSAKTIVITETER }];
     const initialValues = buildInitialValuesAvklarAktiviteter(
-      { 
+      {
         avklaringsbehov: aps,
         faktaOmBeregning: { avklarAktiviteter },
         skjæringstidspunkt: '2019-02-02',
@@ -619,7 +620,7 @@ describe('<AvklareAktiviteterPanel>', () => {
       },
       {
         aktivtBeregningsgrunnlagIndex: 1,
-        behandlingResultatPerioder: [{ periode: {fom : '2019-02-02' }, vurdersIBehandlingen:true }]
+        behandlingResultatPerioder: [{ periode: { fom: '2019-02-02' }, vurdersIBehandlingen: true }]
       },
     );
     expect(initialValues !== null).to.equal(true);
@@ -631,9 +632,11 @@ describe('<AvklareAktiviteterPanel>', () => {
       aktiviteterTomDatoMapping: [{ tom: '2019-02-02', aktiviteter }],
     };
     const values = {
-      avklareAktiviteterListe: [{ avklarAktiviteter, avklaringsbehov: apsAvklarAktiviteter, 
+      avklareAktiviteterListe: [{
+        avklarAktiviteter, avklaringsbehov: apsAvklarAktiviteter,
         erTilVurdering: true,
-        periode: { fom: '2019-02-02', tom: '2019-02-05' } }],
+        periode: { fom: '2019-02-02', tom: '2019-02-05' }
+      }],
       avklarAktiviteter,
     };
     values.avklareAktiviteterListe[0][id1] = { skalBrukes: false };
@@ -653,8 +656,10 @@ describe('<AvklareAktiviteterPanel>', () => {
     };
     const aps = [];
     const values = {
-      avklareAktiviteterListe: [{ avklarAktiviteter, avklaringsbehov: aps, erTilVurdering: true, 
-        periode: { fom: '2019-02-02', tom: '2019-02-05' }  }],
+      avklareAktiviteterListe: [{
+        avklarAktiviteter, avklaringsbehov: aps, erTilVurdering: true,
+        periode: { fom: '2019-02-02', tom: '2019-02-05' }
+      }],
       avklarAktiviteter,
     };
     values.avklareAktiviteterListe[0][id1] = { skalBrukes: null };
@@ -691,7 +696,7 @@ describe('<AvklareAktiviteterPanel>', () => {
     const state = lagStateMedAvklarAktitiveter(avklarAktiviteter, values, initial);
     const erAvklartOgIkkeEndret = erAvklartAktivitetEndret(state, {
       ...behandlingProps,
-      alleBeregningsgrunnlag: [ { avklaringsbehov: apsAvklarAktiviteter, faktaOmBeregning: { avklarAktiviteter } } ],
+      alleBeregningsgrunnlag: [{ avklaringsbehov: apsAvklarAktiviteter, faktaOmBeregning: { avklarAktiviteter } }],
     });
     expect(erAvklartOgIkkeEndret).to.equal(true);
   });
@@ -715,7 +720,7 @@ describe('<AvklareAktiviteterPanel>', () => {
     const state = lagStateMedAvklarAktitiveter(avklarAktiviteter, values, initial);
     const erAvklartOgIkkeEndret = erAvklartAktivitetEndret(state, {
       ...behandlingProps,
-      alleBeregningsgrunnlag: [ { avklaringsbehov: apsAvklarAktiviteter, faktaOmBeregning: { avklarAktiviteter } } ],
+      alleBeregningsgrunnlag: [{ avklaringsbehov: apsAvklarAktiviteter, faktaOmBeregning: { avklarAktiviteter } }],
     });
     expect(erAvklartOgIkkeEndret).to.equal(true);
   });
@@ -739,7 +744,7 @@ describe('<AvklareAktiviteterPanel>', () => {
     const state = lagStateMedAvklarAktitiveter(avklarAktiviteter, values, initial);
     const erAvklartOgIkkeEndret = erAvklartAktivitetEndret(state, {
       ...behandlingProps,
-      alleBeregningsgrunnlag: [ { avklaringsbehov: apsAvklarAktiviteter, faktaOmBeregning: { avklarAktiviteter } } ],
+      alleBeregningsgrunnlag: [{ avklaringsbehov: apsAvklarAktiviteter, faktaOmBeregning: { avklarAktiviteter } }],
     });
     expect(erAvklartOgIkkeEndret).to.equal(true);
   });
@@ -757,7 +762,7 @@ describe('<AvklareAktiviteterPanel>', () => {
     const state = lagStateMedAvklarAktitiveter(avklarAktiviteter, values, values);
     const erAvklartOgIkkeEndret = erAvklartAktivitetEndret(state, {
       ...behandlingProps,
-      alleBeregningsgrunnlag: [ { avklaringsbehov: apsAvklarAktiviteter, faktaOmBeregning: { avklarAktiviteter } } ],
+      alleBeregningsgrunnlag: [{ avklaringsbehov: apsAvklarAktiviteter, faktaOmBeregning: { avklarAktiviteter } }],
     });
     expect(erAvklartOgIkkeEndret).to.equal(false);
   });

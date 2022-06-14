@@ -12,35 +12,35 @@ import styles from './snakkebobleContainer.less';
 
 const cx = classNames.bind(styles);
 
-const pilHøyre = (aktoer: Kodeverk): boolean =>
-  aktoer.kode !== HistorikkAktor.SOKER && aktoer.kode !== HistorikkAktor.ARBEIDSGIVER;
+const pilHøyre = (aktoer: string): boolean =>
+  aktoer !== HistorikkAktor.SOKER && aktoer !== HistorikkAktor.ARBEIDSGIVER;
 
 const formatDate = (date: string): string =>
   `${date.substring(8, 10)}.${date.substring(5, 7)}.${date.substring(0, 4)} - ${date.substring(11, 16)}`;
 
-const snakkebobleIkonCls = (aktoer: Kodeverk, kjoennKode: string): string =>
+const snakkebobleIkonCls = (aktoer: string, kjoennKode: string): string =>
   cx('snakkeboble__ikon', {
-    'snakkeboble__ikon--saksbehandler': aktoer.kode === HistorikkAktor.SAKSBEHANDLER,
+    'snakkeboble__ikon--saksbehandler': aktoer === HistorikkAktor.SAKSBEHANDLER,
     'snakkeboble__ikon--brukerMann': HistorikkAktor.SOKER && kjoennKode === navBrukerKjonn.MANN,
     'snakkeboble__ikon--brukerKvinne': HistorikkAktor.SOKER && kjoennKode === navBrukerKjonn.KVINNE,
-    'snakkeboble__ikon--beslutter': aktoer.kode === HistorikkAktor.BESLUTTER,
-    'snakkeboble__ikon--losningen': aktoer.kode === HistorikkAktor.VEDTAKSLOSNINGEN,
-    'snakkeboble__ikon--ekstern': aktoer.kode === HistorikkAktor.ARBEIDSGIVER,
+    'snakkeboble__ikon--beslutter': aktoer === HistorikkAktor.BESLUTTER,
+    'snakkeboble__ikon--losningen': aktoer === HistorikkAktor.VEDTAKSLOSNINGEN,
+    'snakkeboble__ikon--ekstern': aktoer === HistorikkAktor.ARBEIDSGIVER,
   });
 
-const snakkeboblePanelCls = (aktoer: Kodeverk) =>
+const snakkeboblePanelCls = (aktoer: string) =>
   cx('snakkeboble__panel snakkeboble-panel', {
-    snakkeboble__saksbehandler: aktoer.kode === HistorikkAktor.SAKSBEHANDLER,
-    snakkeboble__beslutter: aktoer.kode === HistorikkAktor.BESLUTTER,
-    snakkeboble__losningen: aktoer.kode === HistorikkAktor.VEDTAKSLOSNINGEN,
-    snakkeboble__ekstern: aktoer.kode === HistorikkAktor.ARBEIDSGIVER,
-    snakkeboble__bruker: aktoer.kode === HistorikkAktor.SOKER,
+    snakkeboble__saksbehandler: aktoer === HistorikkAktor.SAKSBEHANDLER,
+    snakkeboble__beslutter: aktoer === HistorikkAktor.BESLUTTER,
+    snakkeboble__losningen: aktoer === HistorikkAktor.VEDTAKSLOSNINGEN,
+    snakkeboble__ekstern: aktoer === HistorikkAktor.ARBEIDSGIVER,
+    snakkeboble__bruker: aktoer === HistorikkAktor.SOKER,
   });
 
 interface OwnProps {
   dato: string;
-  aktoer: Kodeverk;
-  kjoenn?: Kodeverk;
+  aktoer: string;
+  kjoenn?: string;
   rolleNavn?: string;
   opprettetAv: string;
   children: React.ReactElement;
@@ -56,7 +56,7 @@ const SnakkebobleContainer = ({ dato, aktoer, rolleNavn = '', kjoenn, opprettetA
       className={`snakkeboble__kompakt ${snakkeboblePanelCls(aktoer)}`}
       topp={`${formatDate(dato)} // ${rolleNavn} ${saksbehandlernavn || opprettetAv || ''}`}
       pilHoyre={pilHøyre(aktoer)}
-      ikonClass={snakkebobleIkonCls(aktoer, kjoenn?.kode)}
+      ikonClass={snakkebobleIkonCls(aktoer, kjoenn)}
     >
       {children}
     </Snakkeboble>

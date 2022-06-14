@@ -43,21 +43,21 @@ interface OwnProps {
 
 const getLagringSideeffekter =
   (toggleFatterVedtakModal, toggleOppdatereFagsakContext, oppdaterProsessStegOgFaktaPanelIUrl) =>
-  async aksjonspunktModels => {
-    const isFatterVedtakAp = aksjonspunktModels.some(ap => ap.kode === aksjonspunktCodesTilbakekreving.FORESLA_VEDTAK);
-    if (isFatterVedtakAp) {
-      toggleOppdatereFagsakContext(false);
-    }
-
-    // Returner funksjon som blir kjørt etter lagring av aksjonspunkt(er)
-    return () => {
+    async aksjonspunktModels => {
+      const isFatterVedtakAp = aksjonspunktModels.some(ap => ap.kode === aksjonspunktCodesTilbakekreving.FORESLA_VEDTAK);
       if (isFatterVedtakAp) {
-        toggleFatterVedtakModal(true);
-      } else {
-        oppdaterProsessStegOgFaktaPanelIUrl('default', 'default');
+        toggleOppdatereFagsakContext(false);
       }
+
+      // Returner funksjon som blir kjørt etter lagring av aksjonspunkt(er)
+      return () => {
+        if (isFatterVedtakAp) {
+          toggleFatterVedtakModal(true);
+        } else {
+          oppdaterProsessStegOgFaktaPanelIUrl('default', 'default');
+        }
+      };
     };
-  };
 
 const TilbakekrevingProsess = ({
   data,

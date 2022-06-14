@@ -42,8 +42,8 @@ const BehandlingPaVent = ({
   const erManueltSattPaVent = useMemo(
     () =>
       (aksjonspunkter || [])
-        .filter(ap => isAksjonspunktOpen(ap.status.kode))
-        .some(ap => ap.definisjon.kode === aksjonspunktCodes.AUTO_MANUELT_SATT_PÅ_VENT),
+        .filter(ap => isAksjonspunktOpen(ap.status))
+        .some(ap => ap.definisjon === aksjonspunktCodes.AUTO_MANUELT_SATT_PÅ_VENT),
     [aksjonspunkter],
   );
 

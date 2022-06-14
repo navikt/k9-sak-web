@@ -1,7 +1,7 @@
 const harOpprettetAksjonspunkt = (aksjonspunkter, aksjonspunktKode: number) =>
   aksjonspunkter.some(aksjonspunkt => {
-    const erSammeAksjonspunkt = +aksjonspunkt.definisjon.kode === aksjonspunktKode;
-    const aksjonspunktetErOpprettet = aksjonspunkt.status.kode === 'OPPR';
+    const erSammeAksjonspunkt = +aksjonspunkt.definisjon === aksjonspunktKode;
+    const aksjonspunktetErOpprettet = aksjonspunkt.status === 'OPPR';
     return erSammeAksjonspunkt && aksjonspunktetErOpprettet;
   });
 

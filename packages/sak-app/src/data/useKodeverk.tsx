@@ -1,26 +1,25 @@
-import { KodeverkMedNavn, Kodeverk } from '@k9-sak-web/types';
+import { KodeverkMedNavn, Kodeverk, AlleKodeverk } from '@k9-sak-web/types';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 
 import { K9sakApiKeys, restApiHooks } from './k9sakApi';
+import KodeverkType from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 
 /**
  * Hook som henter kodeverk knyttet til behandlingstype
  */
-export function useKodeverk<T = KodeverkMedNavn>(behandlingType: Kodeverk): { [key: string]: T[] } {
-  const alleKodeverkK9Sak = restApiHooks.useGlobalStateRestApiData<{ [key: string]: T[] }>(K9sakApiKeys.KODEVERK);
-  const alleKodeverkTilbake = restApiHooks.useGlobalStateRestApiData<{ [key: string]: T[] }>(
-    K9sakApiKeys.KODEVERK_TILBAKE,
-  );
-  const alleKlageKodeverk = restApiHooks.useGlobalStateRestApiData<{ [key: string]: T[] }>(K9sakApiKeys.KODEVERK_KLAGE);
+export function useKodeverk(behandlingType: string) {
+  const alleKodeverkK9Sak = restApiHooks.useGlobalStateRestApiData(K9sakApiKeys.KODEVERK);
+  const alleKodeverkTilbake = restApiHooks.useGlobalStateRestApiData(K9sakApiKeys.KODEVERK_TILBAKE);
+  const alleKlageKodeverk = restApiHooks.useGlobalStateRestApiData(K9sakApiKeys.KODEVERK_KLAGE);
 
   if (
-    BehandlingType.TILBAKEKREVING === behandlingType?.kode ||
-    BehandlingType.TILBAKEKREVING_REVURDERING === behandlingType?.kode
+    BehandlingType.TILBAKEKREVING === behandlingType ||
+    BehandlingType.TILBAKEKREVING_REVURDERING === behandlingType
   ) {
     return alleKodeverkTilbake;
   }
-  return BehandlingType.KLAGE === behandlingType?.kode ? alleKlageKodeverk : alleKodeverkK9Sak;
+  return behandlingType === BehandlingType.KLAGE ? alleKlageKodeverk : alleKodeverkK9Sak;
 }
 
 /**
@@ -28,7 +27,7 @@ export function useKodeverk<T = KodeverkMedNavn>(behandlingType: Kodeverk): { [k
  * må @see useGlobalStateRestApi først brukes for å hente data fra backend
  */
 export function useFpSakKodeverk<T = KodeverkMedNavn>(kodeverkType: string): T[] {
-  const alleKodeverk = restApiHooks.useGlobalStateRestApiData<{ [key: string]: T[] }>(K9sakApiKeys.KODEVERK);
+  const alleKodeverk = restApiHooks.useGlobalStateRestApiData(K9sakApiKeys.KODEVERK);
   return alleKodeverk[kodeverkType];
 }
 
@@ -45,21 +44,18 @@ export function useFpTilbakeKodeverk<T = KodeverkMedNavn>(kodeverkType: string):
  * Hook som brukes når en har behov for å slå opp navn-attributtet til et bestemt kodeverk. For å kunne bruke denne
  * må @see useGlobalStateRestApi først brukes for å hente data fra backend
  */
-export function useFpSakKodeverkMedNavn<T = KodeverkMedNavn>(kodeverkOjekt: Kodeverk, undertype?: string): T {
-  const kodeverkType = kodeverkTyper[kodeverkOjekt.kodeverk];
-  let kodeverkForType = useFpSakKodeverk<T>(kodeverkType);
+export function useFpSakKodeverkMedNavn(kode: string, kodeverk: KodeverkType, undertype?: string) {
+  let kodeverkForType = useFpSakKodeverk<KodeverkMedNavn>(kodeverk);
 
   if (!kodeverkForType || kodeverkForType.length === 0) {
-    throw Error(`Det finnes ingen kodeverk for type ${kodeverkType} med kode ${kodeverkOjekt.kode}`);
+    throw Error(`Det finnes ingen kodeverk for type ${kodeverk} med kode ${kode}`);
   }
 
   if (undertype) {
     kodeverkForType = kodeverkForType[undertype];
   }
 
-  // @ts-ignore Fiks dette
-  const kodeverk = kodeverkForType.find(k => k.kode === kodeverkOjekt.kode);
-  return kodeverk;
+  return kodeverkForType.find(k => k.kode === kode);
 }
 
 /**
@@ -78,25 +74,18 @@ export function useGetKodeverkFn() {
   );
 
   return (
-    kodeverkOjekt: Kodeverk,
-    behandlingType: Kodeverk = { kode: BehandlingType.FORSTEGANGSSOKNAD, kodeverk: 'DUMMY' },
+    kode: string,
+    kodeverk: KodeverkType,
+    behandlingType: string = BehandlingType.FORSTEGANGSSOKNAD,
   ) => {
-    const kodeverkType = kodeverkTyper[kodeverkOjekt.kodeverk];
 
-    let kodeverkForType = alleK9SakKodeverk[kodeverkType];
-    if (
-      behandlingType.kode === BehandlingType.TILBAKEKREVING ||
-      behandlingType.kode === BehandlingType.TILBAKEKREVING_REVURDERING
-    ) {
-      kodeverkForType = alleTilbakeKodeverk[kodeverkType];
-    } else if (behandlingType.kode === BehandlingType.KLAGE) {
-      kodeverkForType = alleKlageKodeverk[kodeverkType];
-    }
+    const kodeverkForType = (behandlingType === BehandlingType.TILBAKEKREVING || behandlingType === BehandlingType.TILBAKEKREVING_REVURDERING)
+      ? alleTilbakeKodeverk[kodeverk] : alleK9SakKodeverk[kodeverk];
 
     if (!kodeverkForType || kodeverkForType.length === 0) {
-      throw Error(`Det finnes ingen kodeverk for type ${kodeverkType} med kode ${kodeverkOjekt.kode}`);
+      throw Error(`Det finnes ingen kodeverk for type ${kodeverk} med kode ${kode}`);
     }
-    const kodeverk = kodeverkForType.find(k => k.kode === kodeverkOjekt.kode);
-    return kodeverk;
+
+    return kodeverkForType.find(k => k.kode === kode);
   };
 }

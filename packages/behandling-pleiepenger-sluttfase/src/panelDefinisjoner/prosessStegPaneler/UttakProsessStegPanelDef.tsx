@@ -16,19 +16,18 @@ class PanelDef extends ProsessStegPanelDef {
     kvoteInfo,
     arbeidsgiverOpplysningerPerId,
     aksjonspunkter,
-    erFagytelsetypeLivetsSluttfase,
-  }) => (
-    <>
-      <AntallDagerLivetsSluttfaseIndex kvoteInfo={kvoteInfo} />
-      <Uttak
-        uuid={behandling.uuid}
-        uttaksperioder={uttaksperioder}
-        utsattePerioder={utsattePerioder}
-        arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
-        aksjonspunkter={aksjonspunkter}
-        erFagytelsetypeLivetsSluttfase={erFagytelsetypeLivetsSluttfase}
-      />
-    </>
+    erFagytelsetypeLivetsSluttfase
+  }) => (<>
+    <AntallDagerLivetsSluttfaseIndex kvoteInfo={kvoteInfo} />
+    <Uttak
+      uuid={behandling.uuid}
+      uttaksperioder={uttaksperioder}
+      utsattePerioder={utsattePerioder}
+      arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
+      aksjonspunkter={aksjonspunkter}
+      erFagytelsetypeLivetsSluttfase={erFagytelsetypeLivetsSluttfase}
+    />
+  </>
   );
 
   getAksjonspunktKoder = () => [aksjonspunktCodes.VENT_ANNEN_PSB_SAK];
@@ -61,7 +60,7 @@ class PanelDef extends ProsessStegPanelDef {
     utsattePerioder: uttak?.utsattePerioder,
     kvoteInfo: uttak?.uttaksplan?.kvoteInfo,
     arbeidsgiverOpplysningerPerId,
-    erFagytelsetypeLivetsSluttfase: fagsak.sakstype.kode === fagsakYtelseType.PLEIEPENGER_SLUTTFASE,
+    erFagytelsetypeLivetsSluttfase: fagsak.sakstype === fagsakYtelseType.PLEIEPENGER_SLUTTFASE
   });
 }
 

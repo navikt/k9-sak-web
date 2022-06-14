@@ -85,7 +85,7 @@ const PersonArbeidsforholdTable = ({
             a.stillingsprosent !== undefined && a.stillingsprosent !== null ? `${a.stillingsprosent.toFixed(2)} %` : '';
           const yrkestittel = utledArbeidsforholdYrkestittel(a);
           const kilde =
-            Array.isArray(a.kilde) && (a.kilde.length > 1 ? a.kilde.map(k => k.kode).join(', ') : a.kilde[0].kode);
+            Array.isArray(a.kilde) && (a.kilde.length > 1 ? a.kilde.map(k => k).join(', ') : a.kilde[0]);
           const erValgt = selectedArbeidsforhold === a;
           const harPermisjoner = Array.isArray(a.permisjoner) && a.permisjoner.length > 0;
           const harPerioder = Array.isArray(a.perioder) && a.perioder.length > 0;
@@ -141,7 +141,7 @@ const PersonArbeidsforholdTable = ({
                   </TableColumn>
                 )}
                 <TableColumn>
-                  {a.handlingType && a.handlingType.kode === arbeidsforholdHandlingType.BRUK && !harAksjonspunkt && (
+                  {a.handlingType && a.handlingType === arbeidsforholdHandlingType.BRUK && !harAksjonspunkt && (
                     <Image
                       src={erIBrukImageUrl}
                       alt={intl.formatMessage({ id: 'PersonArbeidsforholdTable.ErIBruk' })}

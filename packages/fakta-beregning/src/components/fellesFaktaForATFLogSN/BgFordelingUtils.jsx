@@ -17,8 +17,8 @@ import { MANUELL_OVERSTYRING_BEREGNINGSGRUNNLAG_FIELD } from './InntektstabellPa
 export const INNTEKT_FIELD_ARRAY_NAME = 'inntektFieldArray';
 
 const preutfyllInntektskategori = andel =>
-  andel.inntektskategori && andel.inntektskategori.kode !== inntektskategorier.UDEFINERT
-    ? andel.inntektskategori.kode
+  andel.inntektskategori && andel.inntektskategori !== inntektskategorier.UDEFINERT
+    ? andel.inntektskategori
     : '';
 
 export const setArbeidsforholdInitialValues = andel => ({
@@ -30,16 +30,16 @@ export const setArbeidsforholdInitialValues = andel => ({
 });
 
 const createAndelnavn = (andel, alleKodeverk, arbeidsgiverOpplysningerPerId, erKunYtelse) => {
-  if (!andel.aktivitetStatus || andel.aktivitetStatus.kode === aktivitetStatus.UDEFINERT) {
+  if (!andel.aktivitetStatus || andel.aktivitetStatus === aktivitetStatus.UDEFINERT) {
     return '';
   }
-  if (erKunYtelse && andel.aktivitetStatus.kode === aktivitetStatus.BRUKERS_ANDEL) {
+  if (erKunYtelse && andel.aktivitetStatus === aktivitetStatus.BRUKERS_ANDEL) {
     return 'Ytelse';
   }
-  if (andel.aktivitetStatus.kode === aktivitetStatus.ARBEIDSTAKER && andel.arbeidsforhold) {
+  if (andel.aktivitetStatus === aktivitetStatus.ARBEIDSTAKER && andel.arbeidsforhold) {
     return createVisningsnavnForAktivitet(andel.arbeidsforhold, alleKodeverk, arbeidsgiverOpplysningerPerId);
   }
-  return getKodeverknavnFn(alleKodeverk, kodeverkTyper)(andel.aktivitetStatus);
+  return getKodeverknavnFn(alleKodeverk)(andel.aktivitetStatus, kodeverkTyper.AKTIVITET_STATUS);
 };
 
 export const setGenerellAndelsinfo = (
@@ -49,7 +49,7 @@ export const setGenerellAndelsinfo = (
   erKunYtelse = false,
 ) => ({
   andel: createAndelnavn(andel, alleKodeverk, arbeidsgiverOpplysningerPerId, erKunYtelse),
-  aktivitetStatus: andel.aktivitetStatus.kode,
+  aktivitetStatus: andel.aktivitetStatus,
   andelsnr: andel.andelsnr,
   nyAndel: false,
   inntektskategori: preutfyllInntektskategori(andel),
@@ -57,7 +57,7 @@ export const setGenerellAndelsinfo = (
 });
 
 export const setGenerellAndelsinfoUtenNavn = andel => ({
-  aktivitetStatus: andel.aktivitetStatus.kode,
+  aktivitetStatus: andel.aktivitetStatus,
   andelsnr: andel.andelsnr,
   nyAndel: false,
   inntektskategori: preutfyllInntektskategori(andel),
@@ -79,11 +79,11 @@ const erArbeidstakerUtenInntektsmeldingOgFrilansISammeOrganisasjon = (field, fak
 const erArbeidstaker = field =>
   field.aktivitetStatus &&
   (field.aktivitetStatus === aktivitetStatus.ARBEIDSTAKER ||
-    field.aktivitetStatus.kode === aktivitetStatus.ARBEIDSTAKER);
+    field.aktivitetStatus === aktivitetStatus.ARBEIDSTAKER);
 
 const erFrilanser = field =>
   field.aktivitetStatus &&
-  (field.aktivitetStatus === aktivitetStatus.FRILANSER || field.aktivitetStatus.kode === aktivitetStatus.FRILANSER);
+  (field.aktivitetStatus === aktivitetStatus.FRILANSER || field.aktivitetStatus === aktivitetStatus.FRILANSER);
 
 // Nyoppstartet frilanser
 
@@ -122,7 +122,7 @@ const sokerMottarYtelseForAndel = (values, field, faktaOmBeregning, beregningsgr
 
 // Etterlønn / sluttpakke
 const andelErEtterlønnSluttpakkeOgSkalFastsettes = (andel, values) => {
-  if (andel.arbeidsforholdType && andel.arbeidsforholdType.kode === OAType.ETTERLONN_SLUTTPAKKE) {
+  if (andel.arbeidsforholdType && andel.arbeidsforholdType === OAType.ETTERLONN_SLUTTPAKKE) {
     return values[harEtterlonnSluttpakkeField];
   }
   return false;
@@ -137,7 +137,7 @@ const erAndelKunstigArbeidsforhold = (andel, beregningsgrunnlag) => {
       a.arbeidsforhold &&
       a.arbeidsforhold.arbeidsgiverIdent === andel.arbeidsgiverIdent &&
       a.arbeidsforhold.organisasjonstype &&
-      a.arbeidsforhold.organisasjonstype.kode === organisasjonstyper.KUNSTIG,
+      a.arbeidsforhold.organisasjonstype === organisasjonstyper.KUNSTIG,
   );
   return lagtTilAvBruker !== undefined;
 };
@@ -147,7 +147,7 @@ const erAndelKunstigArbeidsforhold = (andel, beregningsgrunnlag) => {
 const harKunYtelse = faktaOmBeregning =>
   !!faktaOmBeregning?.faktaOmBeregningTilfeller &&
   faktaOmBeregning.faktaOmBeregningTilfeller.find(
-    ({ kode }) => kode === faktaOmBeregningTilfelle.FASTSETT_BG_KUN_YTELSE,
+    (kode) => kode === faktaOmBeregningTilfelle.FASTSETT_BG_KUN_YTELSE,
   ) !== undefined;
 
 const skalKunneOverstigeRapportertInntektOgTotaltBeregningsgrunnlag = (
@@ -189,12 +189,12 @@ const skalKunneEndreTotaltBeregningsgrunnlag = (values, faktaOmBeregning, beregn
 
 export const erOverstyring = values => !!values && values[MANUELL_OVERSTYRING_BEREGNINGSGRUNNLAG_FIELD] === true;
 
-export const erOverstyringAvBeregningsgrunnlag = createSelector([getFormValuesFaktaList], 
+export const erOverstyringAvBeregningsgrunnlag = createSelector([getFormValuesFaktaList],
   (faktaList) => faktaList.some(erOverstyring));
 
 export const erOverstyringAvAktivtBeregningsgrunnlag = createSelector(
-    [getFormValuesFaktaList, (state, ownProps) => ownProps.aktivtBeregningsgrunnlagIndex], 
-    (faktaList, index) => erOverstyring(faktaList[index]));
+  [getFormValuesFaktaList, (state, ownProps) => ownProps.aktivtBeregningsgrunnlagIndex],
+  (faktaList, index) => erOverstyring(faktaList[index]));
 
 export const skalRedigereInntektForAndel = (values, faktaOmBeregning, beregningsgrunnlag) => andel =>
   erOverstyring(values) ||

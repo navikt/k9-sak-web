@@ -93,9 +93,9 @@ const UnntakFakta = ({
 
   const endepunkter = valgtPanel
     ? valgtPanel
-        .getPanelDef()
-        .getEndepunkter()
-        .map(e => ({ key: e }))
+      .getPanelDef()
+      .getEndepunkter()
+      .map(e => ({ key: e }))
     : [];
   // TODO type FetchedData er feil her
   const { data: faktaData, state } = restApiUnntakHooks.useMultipleRestApi<FetchedData>(endepunkter, {

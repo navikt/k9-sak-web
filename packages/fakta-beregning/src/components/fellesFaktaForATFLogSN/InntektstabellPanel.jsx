@@ -89,7 +89,7 @@ const getSkalKunneOverstyre = createSelector(
   [ownProps => ownProps.erOverstyrer, ownProps => ownProps.avklaringsbehov],
   (erOverstyrer, avklaringsbehov) =>
     erOverstyrer &&
-    !avklaringsbehov.some(ab => ab.definisjon.kode === AVKLAR_AKTIVITETER && isAvklaringsbehovOpen(ab.status.kode)),
+    !avklaringsbehov.some(ab => ab.definisjon === AVKLAR_AKTIVITETER && isAvklaringsbehovOpen(ab.status)),
 );
 
 const mapStateToProps = (state, ownProps) => ({

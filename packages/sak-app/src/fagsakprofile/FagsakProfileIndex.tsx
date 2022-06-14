@@ -8,11 +8,11 @@ import {
   ArbeidsgiverOpplysningerPerId,
   BehandlingAppKontekst,
   Fagsak,
-  KodeverkMedNavn,
   Personopplysninger,
   Risikoklassifisering,
 } from '@k9-sak-web/types';
 import { Location } from 'history';
+import KodeverkType from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import React, { useCallback, useEffect, useState } from 'react';
 import { Navigate, useLocation, useMatch } from 'react-router-dom';
 import { createLocationForSkjermlenke, getLocationWithDefaultProsessStegAndFakta, pathToBehandling, pathToBehandlinger } from '../app/paths';
@@ -64,8 +64,8 @@ export const FagsakProfileIndex = ({
 
   const getKodeverkFn = useGetKodeverkFn();
 
-  const fagsakStatusMedNavn = useFpSakKodeverkMedNavn<KodeverkMedNavn>(fagsak.status);
-  const fagsakYtelseTypeMedNavn = useFpSakKodeverkMedNavn<KodeverkMedNavn>(fagsak.sakstype);
+  const fagsakStatusMedNavn = useFpSakKodeverkMedNavn(fagsak.status, KodeverkType.FAGSAK_STATUS);
+  const fagsakYtelseTypeMedNavn = useFpSakKodeverkMedNavn(fagsak.sakstype, KodeverkType.FAGSAK_YTELSE);
 
   const { data: risikoAksjonspunkt, state: risikoAksjonspunktState } = restApiHooks.useRestApi<Aksjonspunkt>(
     K9sakApiKeys.RISIKO_AKSJONSPUNKT,
@@ -85,7 +85,7 @@ export const FagsakProfileIndex = ({
   );
 
   const { data: behandlendeEnheter } = restApiHooks.useRestApi<BehandlendeEnheter>(K9sakApiKeys.BEHANDLENDE_ENHETER, {
-    ytelseType: fagsak.sakstype.kode,
+    ytelseType: fagsak.sakstype,
   });
 
   useEffect(() => {
@@ -130,7 +130,7 @@ export const FagsakProfileIndex = ({
             if (!fagsakRettigheter || !behandlendeEnheter) {
               return <LoadingPanel />;
             }
-            return (
+            return (<>
               <BehandlingMenuIndex
                 fagsak={fagsak}
                 alleBehandlinger={alleBehandlinger}
@@ -143,6 +143,7 @@ export const FagsakProfileIndex = ({
                 personopplysninger={personopplysninger}
                 arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
               />
+            </>
             );
           }}
           renderBehandlingVelger={() => (

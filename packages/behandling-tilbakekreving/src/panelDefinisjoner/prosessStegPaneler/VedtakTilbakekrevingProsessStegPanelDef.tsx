@@ -19,7 +19,7 @@ class PanelDef extends ProsessStegPanelDef {
       return vilkarUtfallType.IKKE_VURDERT;
     }
     const { vedtakResultatType } = beregningsresultat;
-    return vedtakResultatType.kode === VedtakResultatType.INGEN_TILBAKEBETALING
+    return vedtakResultatType === VedtakResultatType.INGEN_TILBAKEBETALING
       ? vilkarUtfallType.IKKE_OPPFYLT
       : vilkarUtfallType.OPPFYLT;
   };

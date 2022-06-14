@@ -3,7 +3,7 @@ import Kodeverk from './kodeverkTsType';
 export type Inntektsmelding = Readonly<{
   journalpostId?: string;
   mottattTidspunkt?: string;
-  status?: Kodeverk;
+  status?: string;
   begrunnelse?: string;
 }>;
 

@@ -1,10 +1,10 @@
-import {Aksjonspunkt, Behandling, Vilkar} from '@k9-sak-web/types';
-import {FormState} from '@fpsak-frontend/form/index';
+import { Aksjonspunkt, Behandling, Vilkar } from '@k9-sak-web/types';
+import { FormState } from '@fpsak-frontend/form/index';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import BehandlingType from "@fpsak-frontend/kodeverk/src/behandlingType";
 import aksjonspunktCodes from "@fpsak-frontend/kodeverk/src/aksjonspunktCodes";
 import UtvidetRettMikrofrontendVisning from '../../../../../types/MikrofrontendKomponenter';
-import {generereInfoForVurdertVilkar} from '../../../UtvidetRettOmsorgenForMikrofrontendFelles';
+import { generereInfoForVurdertVilkar } from '../../../UtvidetRettOmsorgenForMikrofrontendFelles';
 import UtvidetRettSoknad from '../../../../../types/UtvidetRettSoknad';
 import {
   AleneOmOmsorgenAksjonspunktObjekt,
@@ -26,7 +26,7 @@ interface OwnProps {
 }
 
 const formatereLesemodusObjekt = (vilkar: Vilkar, aksjonspunkt: Aksjonspunkt, status: string) => {
-  if (vilkar.perioder[0].vilkarStatus.kode !== vilkarUtfallType.IKKE_VURDERT) {
+  if (vilkar.perioder[0].vilkarStatus !== vilkarUtfallType.IKKE_VURDERT) {
     return {
       begrunnelse: aksjonspunkt.begrunnelse,
       vilkarOppfylt: status === vilkarUtfallType.OPPFYLT,
@@ -79,14 +79,14 @@ const AleneOmOmsorgenObjektTilMikrofrontend = ({
   submitCallback,
   soknad,
 }: OwnProps) => {
-  const erBehandlingRevurdering: boolean = behandling.type.kode === BehandlingType.REVURDERING;
+  const erBehandlingRevurdering: boolean = behandling.type === BehandlingType.REVURDERING;
   const angittBarn = soknad.angittePersoner.filter(person => person.rolle === 'BARN');
   const barnetsFodselsdato = new Date(angittBarn[0].fødselsdato);
   const åretBarnetFyller18 = `${barnetsFodselsdato.getFullYear() + 18}-12-31`;
 
-  const vilkaretVurderesManuelltMedAksjonspunkt = aksjonspunkt && vilkar && aksjonspunkt.definisjon.kode === aksjonspunktCodes.UTVIDET_RETT;
+  const vilkaretVurderesManuelltMedAksjonspunkt = aksjonspunkt && vilkar && aksjonspunkt.definisjon === aksjonspunktCodes.UTVIDET_RETT;
   // Vilkåret kan kun bli automatisk innvilget. Dersom det blir automatiskt avslått resulterer det i manuell vurdering via aksjonspunkt.
-  const vilkaretErAutomatiskInnvilget = !aksjonspunkt && vilkar && vilkar.perioder[0]?.vilkarStatus.kode === vilkarUtfallType.OPPFYLT;
+  const vilkaretErAutomatiskInnvilget = !aksjonspunkt && vilkar && vilkar.perioder[0]?.vilkarStatus === vilkarUtfallType.OPPFYLT;
 
   if (vilkaretVurderesManuelltMedAksjonspunkt) {
     return {
@@ -105,10 +105,10 @@ const AleneOmOmsorgenObjektTilMikrofrontend = ({
           'Utvidet Rett',
         ),
         informasjonTilLesemodus: formatereLesemodusObjekt(vilkar, aksjonspunkt, status),
-        losAksjonspunkt: ({begrunnelse, vilkarOppfylt, fraDato, tilDato}) => {
+        losAksjonspunkt: ({ begrunnelse, vilkarOppfylt, fraDato, tilDato }) => {
           submitCallback([
             formatereLosAksjonspunktObjekt(
-              aksjonspunkt.definisjon.kode,
+              aksjonspunkt.definisjon,
               begrunnelse,
               vilkarOppfylt,
               fraDato,

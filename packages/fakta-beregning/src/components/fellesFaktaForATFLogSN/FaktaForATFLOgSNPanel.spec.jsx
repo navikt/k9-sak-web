@@ -16,10 +16,8 @@ const { VURDER_FAKTA_FOR_ATFL_SN } = avklaringsbehovCodes;
 
 const avklaringsbehov = [
   {
-    definisjon: {
-      kode: VURDER_FAKTA_FOR_ATFL_SN,
-    },
-    status: { kode: 'OPPR' },
+    definisjon: VURDER_FAKTA_FOR_ATFL_SN,
+    status: 'OPPR',
   },
 ];
 
@@ -30,8 +28,8 @@ const lagBeregningsgrunnlag = andeler => ({
     {
       beregningsgrunnlagPrStatusOgAndel: andeler.map(andel => ({
         andelsnr: andel.andelsnr,
-        aktivitetStatus: { kode: andel.aktivitetStatus },
-        inntektskategori: { kode: andel.inntektskategori },
+        aktivitetStatus: andel.aktivitetStatus,
+        inntektskategori: andel.inntektskategori,
         erNyoppstartet: andel.erNyoppstartet,
       })),
     },
@@ -57,6 +55,7 @@ describe('<FaktaForATFLOgSNPanel>', () => {
         behandlingVersjon={1}
         behandlingId={1}
         erOverstyrer={false}
+        vilkaarPeriodeFieldArrayIndex={0}
       />,
     );
     const tidsbegrensetArbeidsforhold = wrapper.find(TidsbegrensetArbeidsforholdForm);
@@ -80,6 +79,7 @@ describe('<FaktaForATFLOgSNPanel>', () => {
         behandlingVersjon={1}
         behandlingId={1}
         erOverstyrer={false}
+        vilkaarPeriodeFieldArrayIndex={0}
       />,
     );
     const nyIArbeidslivet = wrapper.find(NyIArbeidslivetSNForm);
@@ -103,6 +103,7 @@ describe('<FaktaForATFLOgSNPanel>', () => {
         behandlingVersjon={1}
         behandlingId={1}
         erOverstyrer={false}
+        vilkaarPeriodeFieldArrayIndex={0}
       />,
     );
     const vurderATFL = wrapper.find(VurderOgFastsettATFL);
@@ -128,10 +129,7 @@ describe('<FaktaForATFLOgSNPanel>', () => {
 
     const forholdMedLonnsendringUtenIM = {
       andelsnr: 2,
-      inntektskategori: {
-        kode: 'ARBEIDSTAKER',
-        navn: 'Arbeidstaker',
-      },
+      inntektskategori: 'ARBEIDSTAKER',
       arbeidsforhold: {
         arbeidsgiverId: '123',
         arbeidsforholdId: 'abc',
@@ -151,11 +149,11 @@ describe('<FaktaForATFLOgSNPanel>', () => {
       arbeidsforholdType: {
         navn: 'Frilans',
       },
-      aktivitetStatus: { kode: aktivitetStatus.FRILANSER },
+      aktivitetStatus: aktivitetStatus.FRILANSER,
     };
 
     const faktaOmBeregning = {
-      faktaOmBeregningTilfeller: aktivePaneler.map(kode => ({ kode })),
+      faktaOmBeregningTilfeller: aktivePaneler,
       arbeidsforholdMedLønnsendringUtenIM: [forholdMedLonnsendringUtenIM],
       arbeidstakerOgFrilanserISammeOrganisasjonListe: [forholdMedAtOgFl],
       frilansAndel,

@@ -1,8 +1,7 @@
-import Kodeverk from '../kodeverkTsType';
 
 type BeregningAvklaringsbehov = Readonly<{
-  definisjon: Kodeverk;
-  status: Kodeverk;
+  definisjon: string;
+  status: string;
   begrunnelse?: string;
   kanLoses: boolean;
 }>;

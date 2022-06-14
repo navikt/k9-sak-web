@@ -2,12 +2,12 @@ import React, { useState } from 'react';
 
 import { Rettigheter, BehandlingPaVent, SettPaVentParams } from '@k9-sak-web/behandling-felles';
 import {
-  KodeverkMedNavn,
   Behandling,
   FeatureToggles,
   FagsakPerson,
   Fagsak,
   ArbeidsgiverOpplysningerPerId,
+  KodeverkMedNavn,
 } from '@k9-sak-web/types';
 
 import UnntakProsess from './UnntakProsess';

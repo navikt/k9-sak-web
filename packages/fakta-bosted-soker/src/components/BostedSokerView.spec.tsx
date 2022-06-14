@@ -17,32 +17,17 @@ describe('<BostedsokerView>', () => {
     navn: 'Espen Utvikler',
     adresser: [
       {
-        adresseType: {
-          kode: opplysningAdresseType.POSTADRESSE,
-          navn: 'Bostedsadresse',
-        },
+        adresseType: opplysningAdresseType.POSTADRESSE,
         adresselinje1: 'Vei 1',
         postNummer: '1000',
         poststed: 'Oslo',
       },
     ],
-    sivilstand: {
-      kode: sivilstandType.UGIFT,
-      navn: 'Ugift',
-    },
-    region: {
-      kode: 'NORDEN',
-      navn: 'Norden',
-    },
-    personstatus: {
-      kode: 'BOSA',
-      navn: 'Bosatt',
-    },
+    sivilstand: sivilstandType.UGIFT,
+    region: 'NORDEN',
+    personstatus: 'BOSA',
     avklartPersonstatus: {
-      overstyrtPersonstatus: {
-        kode: personstatusType.BOSATT,
-        navn: 'Bosatt',
-      },
+      overstyrtPersonstatus: personstatusType.BOSATT,
     },
   } as BostedSokerPersonopplysninger;
 
@@ -129,10 +114,7 @@ describe('<BostedsokerView>', () => {
 
   it('skal vise ukjent når personstatus ukjent', () => {
     soker.avklartPersonstatus = null;
-    soker.personstatus = {
-      navn: '',
-      kode: '-',
-    } as KodeverkMedNavn;
+    soker.personstatus = '-' as string;
 
     const wrapper = shallowWithIntl(
       <BostedSokerView

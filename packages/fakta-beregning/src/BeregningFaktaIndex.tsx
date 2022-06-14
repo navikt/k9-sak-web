@@ -71,8 +71,8 @@ const lagLabel = (bg, vilkårsperioder) => {
 const harAvklaringsbehovIPanel = avklaringsbehov => {
   const harBehovForAvklaring = !!avklaringsbehov;
   if (harBehovForAvklaring) {
-    const harVurderFaktaAksjonspunkt = avklaringsbehov.some(ap => ap.definisjon.kode === VURDER_FAKTA_FOR_ATFL_SN && ap.kanLoses !== false);
-    const harAvklarAktiviteterAP = avklaringsbehov.some(ap => ap.definisjon.kode === AVKLAR_AKTIVITETER && ap.kanLoses !== false);
+    const harVurderFaktaAksjonspunkt = avklaringsbehov.some(ap => ap.definisjon === VURDER_FAKTA_FOR_ATFL_SN && ap.kanLoses !== false);
+    const harAvklarAktiviteterAP = avklaringsbehov.some(ap => ap.definisjon === AVKLAR_AKTIVITETER && ap.kanLoses !== false);
     return harVurderFaktaAksjonspunkt || harAvklarAktiviteterAP;
   }
   return false;
@@ -99,7 +99,7 @@ const BeregningFaktaIndex = ({
   const [aktivtBeregningsgrunnlagIndeks, setAktivtBeregningsgrunnlagIndeks] = useState(0);
   const aktivtBeregningsgrunnlag = beregningsgrunnlag[aktivtBeregningsgrunnlagIndeks];
   const beregningsgrunnlagVilkår = vilkar.find(
-    vilkår => vilkår?.vilkarType?.kode === vilkarType.BEREGNINGSGRUNNLAGVILKARET,
+    vilkår => vilkår?.vilkarType === vilkarType.BEREGNINGSGRUNNLAGVILKARET,
   );
   if (beregningErBehandlet === false && !aksjonspunkter.length) {
     return <>Beregningssteget er ikke behandlet.</>;
@@ -110,7 +110,7 @@ const BeregningFaktaIndex = ({
   }
 
   const aktiveAvklaringsBehov = aktivtBeregningsgrunnlag.avklaringsbehov;
-  const relevanteLøsbareAvklaringsbehov = aktiveAvklaringsBehov.filter(ap => relevanteKoder.includes(ap.definisjon.kode) && ap.kanLoses !== false)
+  const relevanteLøsbareAvklaringsbehov = aktiveAvklaringsBehov.filter(ap => relevanteKoder.includes(ap.definisjon) && ap.kanLoses !== false)
   const vilkårsperioder = beregningsgrunnlagVilkår.perioder;
 
   const avklarAktiviteterReadOnly = readOnly || ((relevanteLøsbareAvklaringsbehov.length === 0 ||
