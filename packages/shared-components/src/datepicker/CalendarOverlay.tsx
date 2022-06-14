@@ -9,7 +9,7 @@ import getPackageIntl from '../../i18n/getPackageIntl';
 const getRelatedTarget = (e: React.FocusEvent) => Promise.resolve(e.relatedTarget);
 
 interface OwnProps {
-  onDayChange: (selectedDay: Date) => void;
+  onDayChange: (selectedDay: Date, modifiers: any) => void;
   className: string;
   dayPickerClassName: string;
   elementIsCalendarButton: (target: EventTarget) => boolean;
