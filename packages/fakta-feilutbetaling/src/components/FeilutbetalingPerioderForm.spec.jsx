@@ -39,15 +39,9 @@ describe('<FeilutbetalingPerioderFormImpl>', () => {
       {
         kodeverk: 'MEDLEMSKAP_VILKAARET_TYPE',
         årsak: 'Medlemskapsvilkåret §14-2',
-        hendelseType: {
-          kode: 'MEDLEMSKAP_VILKAARET_TYPE',
-        },
+        hendelseType: 'MEDLEMSKAP_VILKAARET_TYPE',
         hendelseUndertyper: [
-          {
-            kodeverk: 'MEDLEMSKAP_VILKAAR',
-            underÅrsak: 'Utvandret – fødsel',
-            underÅrsakKode: 'UTVANDRET_FODSEL',
-          },
+          { hendelseType: 'UTVANDRET_FODSEL', },
         ],
       },
     ];

@@ -1,5 +1,3 @@
-import Kodeverk from './kodeverkTsType';
-
 export type FeilutbetalingFakta = {
   behandlingFakta?: {
     perioder?: {

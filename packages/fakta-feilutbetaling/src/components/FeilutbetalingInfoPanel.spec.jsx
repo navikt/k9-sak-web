@@ -29,9 +29,7 @@ const feilutbetalingFakta = {
     ],
   },
   antallBarn: 1,
-  soknadType: {
-    kode: soknadType.FODSEL,
-  },
+  soknadType: soknadType.FODSEL,
   totalPeriodeFom: '2019-01-01',
   totalPeriodeTom: '2019-01-02',
   aktuellFeilUtbetaltBeløp: 10000,
@@ -43,35 +41,16 @@ const feilutbetalingFakta = {
       belop: 1000,
     },
   ],
-  behandlingÅrsaker: [
-    {
-      behandlingArsakType: {
-        kode: behandlingArsakType.FEIL_I_LOVANDVENDELSE,
-        kodeverk: BEHANDLING_AARSAK_KODEVERK,
-      },
-    },
-  ],
+  behandlingÅrsaker: [{ behandlingArsakType: behandlingArsakType.FEIL_I_LOVANDVENDELSE, },],
   behandlingsresultat: {
-    type: {
-      kode: behandlingResultatType.INNVILGET,
-      kodeverk: BEHANDLING_RESULTAT_TYPE_KODEVERK,
-    },
+    type: behandlingResultatType.INNVILGET,
     konsekvenserForYtelsen: [
-      {
-        kode: konsekvensForYtelsen.FORELDREPENGER_OPPHØRER,
-        kodeverk: KONSEKVENS_FOR_YTELSEN_KODEVERK,
-      },
-      {
-        kode: konsekvensForYtelsen.ENDRING_I_BEREGNING,
-        kodeverk: KONSEKVENS_FOR_YTELSEN_KODEVERK,
-      },
+      konsekvensForYtelsen.FORELDREPENGER_OPPHØRER,
+      konsekvensForYtelsen.ENDRING_I_BEREGNING, ,
     ],
   },
   tilbakekrevingValg: {
-    videreBehandling: {
-      kode: tilbakekrevingVidereBehandling.TILBAKEKR_INNTREKK,
-      kodeverk: TILBAKEKR_VIDERE_BEH_KODEVERK,
-    },
+    videreBehandling: tilbakekrevingVidereBehandling.TILBAKEKR_INNTREKK,
   },
   datoForRevurderingsvedtak: '2019-01-01',
 };

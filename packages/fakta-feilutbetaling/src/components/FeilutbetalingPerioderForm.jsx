@@ -4,13 +4,14 @@ import moment from 'moment';
 import PropTypes from 'prop-types';
 
 import { TableColumn, TableRow } from '@fpsak-frontend/shared-components';
-import { DDMMYYYY_DATE_FORMAT, required } from '@fpsak-frontend/utils';
+import { DDMMYYYY_DATE_FORMAT, getKodeverknavnFn, required } from '@fpsak-frontend/utils';
 import { SelectField, behandlingFormValueSelector } from '@fpsak-frontend/form';
 
 import styles from './feilutbetalingPerioderTable.less';
+import KodeverkType from 'kodeverk/src/kodeverkTyper';
 
 const getHendelseUndertyper = (årsakNavn, årsaker) => {
-  const årsak = årsaker.find(a => a.hendelseType.kode === årsakNavn);
+  const årsak = årsaker.find(a => a.hendelseType === årsakNavn);
   return årsak && årsak.hendelseUndertyper.length > 0 ? årsak.hendelseUndertyper : null;
 };
 
@@ -22,6 +23,7 @@ export const FeilutbetalingPerioderFormImpl = ({
   readOnly,
   onChangeÅrsak,
   onChangeUnderÅrsak,
+  getKodeverknavn,
 }) => {
   const hendelseUndertyper = getHendelseUndertyper(årsak, årsaker);
   return (
@@ -33,8 +35,8 @@ export const FeilutbetalingPerioderFormImpl = ({
         <SelectField
           name={`perioder.${elementId}.årsak`}
           selectValues={årsaker.map(a => (
-            <option key={a.hendelseType.kode} value={a.hendelseType.kode}>
-              {a.hendelseType.navn}
+            <option key={a.hendelseType} value={a.hendelseType}>
+              {getKodeverknavn(a.hendelseType, KodeverkType.HENDELSE_TYPE)}
             </option>
           ))}
           validate={[required]}
@@ -47,8 +49,8 @@ export const FeilutbetalingPerioderFormImpl = ({
           <SelectField
             name={`perioder.${elementId}.${årsak}.underÅrsak`}
             selectValues={hendelseUndertyper.map(a => (
-              <option key={a.kode} value={a.kode}>
-                {a.navn}
+              <option key={a} value={a}>
+                {getKodeverknavn(a.hendelseType, KodeverkType.HENDELSE_UNDERTYPE)}
               </option>
             ))}
             validate={[required]}
@@ -76,6 +78,7 @@ FeilutbetalingPerioderFormImpl.propTypes = {
   readOnly: PropTypes.bool.isRequired,
   onChangeÅrsak: PropTypes.func.isRequired,
   onChangeUnderÅrsak: PropTypes.func.isRequired,
+  getKodeverknavn: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state, ownProps) => ({

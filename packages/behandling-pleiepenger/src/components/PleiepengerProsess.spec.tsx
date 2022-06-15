@@ -155,10 +155,7 @@ describe('<PleiepengerProsess>', () => {
       0: '2019-01-01',
     } as Record<number, string>,
     antallBarn: 1,
-    soknadType: {
-      kode: soknadType.FODSEL,
-      kodeverk: 'test',
-    },
+    soknadType: soknadType.FODSEL,
   } as Soknad;
 
   const arbeidsgiverOpplysningerPerId = {
