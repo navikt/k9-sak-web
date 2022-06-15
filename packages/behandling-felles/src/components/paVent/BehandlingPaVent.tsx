@@ -50,8 +50,8 @@ const BehandlingPaVent = ({
   const ventearsakVariant = useMemo(
     () =>
       (aksjonspunkter || [])
-        .filter(ap => isAksjonspunktOpen(ap.status.kode))
-        .find(ap => ap.definisjon.kode === aksjonspunktCodes.AUTO_MANUELT_SATT_PÅ_VENT)?.venteårsakVariant,
+        .filter(ap => isAksjonspunktOpen(ap.status))
+        .find(ap => ap.definisjon === aksjonspunktCodes.AUTO_MANUELT_SATT_PÅ_VENT)?.venteårsakVariant,
     [aksjonspunkter],
   );
 

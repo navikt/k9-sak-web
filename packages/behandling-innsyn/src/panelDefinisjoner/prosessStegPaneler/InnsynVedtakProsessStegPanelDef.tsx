@@ -9,7 +9,7 @@ import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { ProsessStegDef, ProsessStegPanelDef } from '@k9-sak-web/behandling-felles';
 
 const getVedtakStatus = (innsynResultatType, aksjonspunkter) => {
-  const harApentAksjonpunkt = aksjonspunkter.some(ap => ap.status.kode === aksjonspunktStatus.OPPRETTET);
+  const harApentAksjonpunkt = aksjonspunkter.some(ap => ap.status === aksjonspunktStatus.OPPRETTET);
   if (aksjonspunkter.length === 0 || harApentAksjonpunkt) {
     return vilkarUtfallType.IKKE_VURDERT;
   }

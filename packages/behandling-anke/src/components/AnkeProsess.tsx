@@ -53,8 +53,8 @@ const saveAnkeText =
     };
 
     const getForeslaVedtakAp = aksjonspunkter
-      .filter(ap => ap.status.kode === aksjonspunktStatus.OPPRETTET)
-      .filter(ap => ap.definisjon.kode === aksjonspunktCodes.FORESLA_VEDTAK);
+      .filter(ap => ap.status === aksjonspunktStatus.OPPRETTET)
+      .filter(ap => ap.definisjon === aksjonspunktCodes.FORESLA_VEDTAK);
 
     if (getForeslaVedtakAp.length === 1) {
       lagreReapneAnkeVurdering(data);
@@ -71,32 +71,32 @@ const previewCallback =
 
 const getLagringSideeffekter =
   (toggleIverksetterVedtakModal, toggleAnkeModal, toggleOppdatereFagsakContext, oppdaterProsessStegOgFaktaPanelIUrl) =>
-  async aksjonspunktModels => {
-    const skalTilMedunderskriver = aksjonspunktModels.some(
-      apValue => apValue.kode === aksjonspunktCodes.FORESLA_VEDTAK,
-    );
-    const skalFerdigstilles = aksjonspunktModels.some(
-      apValue => apValue.kode === aksjonspunktCodes.VEDTAK_UTEN_TOTRINNSKONTROLL,
-    );
-    const erManuellVurderingAvAnke = aksjonspunktModels.some(
-      apValue => apValue.kode === aksjonspunktCodes.MANUELL_VURDERING_AV_ANKE_MERKNADER,
-    );
+    async aksjonspunktModels => {
+      const skalTilMedunderskriver = aksjonspunktModels.some(
+        apValue => apValue.kode === aksjonspunktCodes.FORESLA_VEDTAK,
+      );
+      const skalFerdigstilles = aksjonspunktModels.some(
+        apValue => apValue.kode === aksjonspunktCodes.VEDTAK_UTEN_TOTRINNSKONTROLL,
+      );
+      const erManuellVurderingAvAnke = aksjonspunktModels.some(
+        apValue => apValue.kode === aksjonspunktCodes.MANUELL_VURDERING_AV_ANKE_MERKNADER,
+      );
 
-    if (skalTilMedunderskriver || skalFerdigstilles || erManuellVurderingAvAnke) {
-      toggleOppdatereFagsakContext(false);
-    }
-
-    // Returner funksjon som blir kjørt etter lagring av aksjonspunkt(er)
-    return () => {
-      if (skalTilMedunderskriver || skalFerdigstilles) {
-        toggleAnkeModal(true);
-      } else if (erManuellVurderingAvAnke) {
-        toggleIverksetterVedtakModal(true);
-      } else {
-        oppdaterProsessStegOgFaktaPanelIUrl('default', 'default');
+      if (skalTilMedunderskriver || skalFerdigstilles || erManuellVurderingAvAnke) {
+        toggleOppdatereFagsakContext(false);
       }
+
+      // Returner funksjon som blir kjørt etter lagring av aksjonspunkt(er)
+      return () => {
+        if (skalTilMedunderskriver || skalFerdigstilles) {
+          toggleAnkeModal(true);
+        } else if (erManuellVurderingAvAnke) {
+          toggleIverksetterVedtakModal(true);
+        } else {
+          oppdaterProsessStegOgFaktaPanelIUrl('default', 'default');
+        }
+      };
     };
-  };
 
 const AnkeProsess = ({
   data,
@@ -175,8 +175,8 @@ const AnkeProsess = ({
     () =>
       data.aksjonspunkter.some(
         ap =>
-          ap.definisjon.kode === aksjonspunktCodes.VEDTAK_UTEN_TOTRINNSKONTROLL &&
-          ap.status.kode === aksjonspunktStatus.UTFORT,
+          ap.definisjon === aksjonspunktCodes.VEDTAK_UTEN_TOTRINNSKONTROLL &&
+          ap.status === aksjonspunktStatus.UTFORT,
       ),
     [behandling.versjon],
   );

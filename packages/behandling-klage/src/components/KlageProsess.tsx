@@ -65,8 +65,8 @@ const saveKlageText =
     };
 
     const getForeslaVedtakAp = aksjonspunkter
-      .filter(ap => ap.status.kode === aksjonspunktStatus.OPPRETTET)
-      .filter(ap => ap.definisjon.kode === aksjonspunktCodes.FORESLA_VEDTAK);
+      .filter(ap => ap.status === aksjonspunktStatus.OPPRETTET)
+      .filter(ap => ap.definisjon === aksjonspunktCodes.FORESLA_VEDTAK);
 
     if (getForeslaVedtakAp.length === 1) {
       return lagreReapneKlageVurdering(data);
@@ -82,41 +82,41 @@ const previewCallback =
     behandling: Behandling,
     valgtPartMedKlagerett: KlagePart,
   ) =>
-  parametre => {
-    const request = lagForhåndsvisRequest(behandling, fagsak, fagsakPerson, {
-      ...parametre,
-      overstyrtMottaker: valgtPartMedKlagerett && valgtPartMedKlagerett.identifikasjon,
-    });
-    return forhandsvisMelding(request).then(response => forhandsvis(response));
-  };
+    parametre => {
+      const request = lagForhåndsvisRequest(behandling, fagsak, fagsakPerson, {
+        ...parametre,
+        overstyrtMottaker: valgtPartMedKlagerett && valgtPartMedKlagerett.identifikasjon,
+      });
+      return forhandsvisMelding(request).then(response => forhandsvis(response));
+    };
 
 const getLagringSideeffekter =
   (toggleFatterVedtakModal, toggleKlageModal, toggleOppdatereFagsakContext, oppdaterProsessStegOgFaktaPanelIUrl) =>
-  async aksjonspunktModels => {
-    const skalByttTilKlageinstans = aksjonspunktModels.some(
-      apValue =>
-        apValue.kode === aksjonspunktCodes.BEHANDLE_KLAGE_NFP &&
-        apValue.klageVurdering === klageVurderingKodeverk.STADFESTE_YTELSESVEDTAK,
-    );
-    const erVedtakAp =
-      aksjonspunktModels[0].kode === aksjonspunktCodes.FORESLA_VEDTAK ||
-      aksjonspunktModels[0].kode === aksjonspunktCodes.VEDTAK_UTEN_TOTRINNSKONTROLL;
+    async aksjonspunktModels => {
+      const skalByttTilKlageinstans = aksjonspunktModels.some(
+        apValue =>
+          apValue.kode === aksjonspunktCodes.BEHANDLE_KLAGE_NFP &&
+          apValue.klageVurdering === klageVurderingKodeverk.STADFESTE_YTELSESVEDTAK,
+      );
+      const erVedtakAp =
+        aksjonspunktModels[0].kode === aksjonspunktCodes.FORESLA_VEDTAK ||
+        aksjonspunktModels[0].kode === aksjonspunktCodes.VEDTAK_UTEN_TOTRINNSKONTROLL;
 
-    if (skalByttTilKlageinstans || erVedtakAp) {
-      toggleOppdatereFagsakContext(false);
-    }
-
-    // Returner funksjon som blir kjørt etter lagring av aksjonspunkt(er)
-    return () => {
-      if (skalByttTilKlageinstans) {
-        toggleKlageModal(true);
-      } else if (erVedtakAp) {
-        toggleFatterVedtakModal(true);
-      } else {
-        oppdaterProsessStegOgFaktaPanelIUrl('default', 'default');
+      if (skalByttTilKlageinstans || erVedtakAp) {
+        toggleOppdatereFagsakContext(false);
       }
+
+      // Returner funksjon som blir kjørt etter lagring av aksjonspunkt(er)
+      return () => {
+        if (skalByttTilKlageinstans) {
+          toggleKlageModal(true);
+        } else if (erVedtakAp) {
+          toggleFatterVedtakModal(true);
+        } else {
+          oppdaterProsessStegOgFaktaPanelIUrl('default', 'default');
+        }
+      };
     };
-  };
 
 const KlageProsess = ({
   data,

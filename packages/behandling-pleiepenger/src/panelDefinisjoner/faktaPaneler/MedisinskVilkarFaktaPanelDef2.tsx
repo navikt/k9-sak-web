@@ -21,8 +21,8 @@ class MedisinskVilkarFaktaPanelDef2 extends FaktaPanelDef {
 
   getData = ({ hentSaksbehandlere, fagsak, behandling }) => ({
     saksbehandlere: hentSaksbehandlere?.saksbehandlere,
-    fagsakYtelseType: fagsak.sakstype.kode,
-    behandlingType: behandling.type.kode,
+    fagsakYtelseType: fagsak.sakstype,
+    behandlingType: behandling.type,
   });
 
   getOverstyrVisningAvKomponent = ({ fagsak, behandling }: { fagsak: Fagsak; behandling: Behandling }) => {
