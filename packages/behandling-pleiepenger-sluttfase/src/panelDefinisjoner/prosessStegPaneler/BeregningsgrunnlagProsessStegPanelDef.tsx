@@ -2,12 +2,30 @@ import React from 'react';
 
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 import BeregningsgrunnlagProsessIndex from '@fpsak-frontend/prosess-beregningsgrunnlag';
+import { BeregningsgrunnlagProsessIndex as BeregningsgrunnlagProsessIndexNy } from '@navikt/ft-prosess-beregningsgrunnlag';
 import { prosessStegCodes } from '@k9-sak-web/konstanter';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { ProsessStegDef, ProsessStegPanelDef } from '@k9-sak-web/behandling-felles';
 
 class PanelDef extends ProsessStegPanelDef {
-  getKomponent = props => <BeregningsgrunnlagProsessIndex {...props} />;
+
+    getKomponent = (props) => {
+        if (props.featureToggles["NY_BEREGNING_PROSESS_ENABLED"]) {
+            const bgVilkaret = props.vilkar.find(v => v.vilkarType === vilkarType.BEREGNINGSGRUNNLAGVILKARET);
+            return (<BeregningsgrunnlagProsessIndexNy
+                beregningsgrunnlagsvilkar={bgVilkaret}
+                beregningsgrunnlagListe={props.beregningsgrunnlag}
+                submitCallback={props.submitCallback}
+                isReadOnly={props.isReadOnly}
+                readOnlySubmitButton={props.isReadOnly}
+                alleKodeverk={props.alleKodeverk}
+                arbeidsgiverOpplysningerPerId={props.arbeidsgiverOpplysningerPerId}
+                formData={null}
+                setFormData={() => {}}
+            />);
+        }
+        return (<BeregningsgrunnlagProsessIndex {...props} />);
+    }
 
   getAksjonspunktKoder = () => [
     aksjonspunktCodes.FASTSETT_BEREGNINGSGRUNNLAG_ARBEIDSTAKER_FRILANS,
@@ -17,24 +35,24 @@ class PanelDef extends ProsessStegPanelDef {
     aksjonspunktCodes.FASTSETT_BEREGNINGSGRUNNLAG_SN_NY_I_ARBEIDSLIVET,
   ];
 
-  getVilkarKoder = () => [vilkarType.BEREGNINGSGRUNNLAGVILKARET];
+    getVilkarKoder = () => [vilkarType.BEREGNINGSGRUNNLAGVILKARET];
 
-  getOverstyrVisningAvKomponent = () => true;
+    getOverstyrVisningAvKomponent = () => true;
 
-  getData = ({ fagsak, beregningsgrunnlag, arbeidsgiverOpplysningerPerId, beregningreferanserTilVurdering }) => ({
-    fagsak,
-    beregningsgrunnlag,
-    arbeidsgiverOpplysningerPerId,
-    beregningreferanserTilVurdering
-  });
+    getData = ({fagsak, beregningsgrunnlag, arbeidsgiverOpplysningerPerId, beregningreferanserTilVurdering}) => ({
+        fagsak,
+        beregningsgrunnlag,
+        arbeidsgiverOpplysningerPerId,
+        beregningreferanserTilVurdering
+    });
 }
 
 class BeregningsgrunnlagProsessStegPanelDef extends ProsessStegDef {
-  getUrlKode = () => prosessStegCodes.BEREGNINGSGRUNNLAG;
+    getUrlKode = () => prosessStegCodes.BEREGNINGSGRUNNLAG;
 
-  getTekstKode = () => 'Behandlingspunkt.Beregning';
+    getTekstKode = () => 'Behandlingspunkt.Beregning';
 
-  getPanelDefinisjoner = () => [new PanelDef()];
+    getPanelDefinisjoner = () => [new PanelDef()];
 }
 
 export default BeregningsgrunnlagProsessStegPanelDef;

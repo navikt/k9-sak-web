@@ -96,3 +96,5 @@ spec:
       value: "true"
     - name: LOS_MARKER_BEHANDLING
       value: "false"
+    - name: NY_BEREGNING_PROSESS_ENABLED
+      value: "false"
