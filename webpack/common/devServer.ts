@@ -134,10 +134,5 @@ export default {
       changeOrigin: true,
       pathRewrite: { '^/k9/endringslogg': '' },
     },
-    '/k9/los/**': {
-      target: process.env.APP_URL_K9LOS || 'http://localhost:8686',
-      secure: false,
-      changeOrigin: !!process.env.APP_URL_K9LOS,
-    },
   },
 };
