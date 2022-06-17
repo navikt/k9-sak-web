@@ -20,15 +20,25 @@ interface OwnProps {
   lukkModal: () => void;
   brukHastekøMarkering?: boolean;
   brukVanskeligKøMarkering?: boolean;
+  markerBehandling: (values: any) => Promise<any>;
+  behandlingUuid: string;
 }
 
-const MenyMarkerBehandling = ({ lukkModal, brukHastekøMarkering, brukVanskeligKøMarkering }: OwnProps) => {
+const MenyMarkerBehandling = ({
+  lukkModal,
+  brukHastekøMarkering,
+  brukVanskeligKøMarkering,
+  markerBehandling,
+  behandlingUuid,
+}: OwnProps) => {
   return (
     <RawIntlProvider value={intl}>
       <MarkerBehandlingModal
         lukkModal={lukkModal}
         brukHastekøMarkering={brukHastekøMarkering}
         brukVanskeligKøMarkering={brukVanskeligKøMarkering}
+        markerBehandling={markerBehandling}
+        behandlingUuid={behandlingUuid}
       />
     </RawIntlProvider>
   );

@@ -46,8 +46,8 @@ interface OwnProps {
   valgtFaktaSteg?: string;
   oppdaterBehandlingVersjon: (versjon: number) => void;
   behandlingEventHandler: {
-    setHandler: (events: { [key: string]: (params: any) => Promise<any> }) => void;
-    clear: () => void;
+    setHandler: (events: { [key: string]: (params: any) => Promise<any> }) => void,
+    clear: () => void,
   };
   opneSokeside: () => void;
   featureToggles: FeatureToggles;
@@ -74,7 +74,7 @@ const BehandlingPleiepengerIndex = ({
 }: OwnProps) => {
   const forrigeSaksnummer = usePrevious(fagsak.saksnummer);
 
-  const [nyOgForrigeBehandling, setBehandlinger] = useState<{ current?: Behandling; previous?: Behandling }>({
+  const [nyOgForrigeBehandling, setBehandlinger] = useState<{ current?: Behandling, previous?: Behandling }>({
     current: undefined,
     previous: undefined,
   });
@@ -131,6 +131,9 @@ const BehandlingPleiepengerIndex = ({
   const { startRequest: lagreRisikoklassifiseringAksjonspunkt } = restApiPleiepengerHooks.useRestApiRunner(
     PleiepengerBehandlingApiKeys.SAVE_AKSJONSPUNKT,
   );
+  const { startRequest: markerBehandling } = restApiPleiepengerHooks.useRestApiRunner(
+    PleiepengerBehandlingApiKeys.LOS_LAGRE_MERKNAD,
+  );
 
   useEffect(() => {
     behandlingEventHandler.setHandler({
@@ -143,6 +146,7 @@ const BehandlingPleiepengerIndex = ({
         opprettVerge(params).then(behandlingResOpprettVerge => setBehandling(behandlingResOpprettVerge)),
       fjernVerge: params => fjernVerge(params).then(behandlingResFjernVerge => setBehandling(behandlingResFjernVerge)),
       lagreRisikoklassifiseringAksjonspunkt: params => lagreRisikoklassifiseringAksjonspunkt(params),
+      markerBehandling: params => markerBehandling(params),
     });
 
     requestPleiepengerApi.setRequestPendingHandler(setRequestPendingMessage);

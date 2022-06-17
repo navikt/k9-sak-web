@@ -1,5 +1,6 @@
 import CheckboxFieldFormik from '@fpsak-frontend/form/src/CheckboxFieldFormik';
 import TextAreaFormik from '@fpsak-frontend/form/src/TextAreaFormik';
+import { goToLos } from '@k9-sak-web/sak-app/src/app/paths';
 import { Modal } from '@navikt/ds-react';
 import { Form, Formik } from 'formik';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
@@ -14,12 +15,16 @@ interface PureOwnProps {
   brukHastekøMarkering?: boolean;
   brukVanskeligKøMarkering?: boolean;
   lukkModal: () => void;
+  markerBehandling: (values: any) => Promise<any>;
+  behandlingUuid: string;
 }
 
 const MarkerBehandlingModal: React.FC<PureOwnProps> = ({
   brukHastekøMarkering,
   brukVanskeligKøMarkering,
   lukkModal,
+  markerBehandling,
+  behandlingUuid,
 }) => {
   const intl = useIntl();
   if (!brukHastekøMarkering && !brukVanskeligKøMarkering) {
@@ -46,15 +51,13 @@ const MarkerBehandlingModal: React.FC<PureOwnProps> = ({
         initialValues={{ markerSomHastesak: false, markerSomVanskelig: false, begrunnelse: '' }}
         validationSchema={MarkerBehandlingSchema}
         onSubmit={(values, actions) => {
-          alert(JSON.stringify(values, null, 2));
           actions.setSubmitting(false);
           const transformedValues = {
-            begrunnelse: values.begrunnelse,
-            markerSomHastesak: brukHastekøMarkering ? true : undefined,
-            markerSomVanskelig: brukVanskeligKøMarkering ? true : undefined,
+            behandlingUuid,
+            fritekst: values.begrunnelse,
+            merknadKoder: brukHastekøMarkering ? ['HASTESAK'] : [],
           };
-
-          // goToLos()
+          markerBehandling(transformedValues).then(() => goToLos());
         }}
       >
         {formikProps => (

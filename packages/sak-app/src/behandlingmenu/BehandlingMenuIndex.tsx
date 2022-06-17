@@ -2,6 +2,7 @@ import BehandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import MenySakIndex, { MenyData } from '@fpsak-frontend/sak-meny';
+import MenyEndreBehandlendeEnhetIndex, { getMenytekst } from '@fpsak-frontend/sak-meny-endre-enhet';
 import MenyHenleggIndex, { getMenytekst as getHenleggMenytekst } from '@fpsak-frontend/sak-meny-henlegg';
 import MenyNyBehandlingIndex, {
   getMenytekst as getNyBehandlingMenytekst,
@@ -35,6 +36,8 @@ import { useVisForhandsvisningAvMelding } from '../data/useVisForhandsvisningAvM
 import SakRettigheter from '../fagsak/sakRettigheterTsType';
 import {
   fjernVerge,
+  nyBehandlendeEnhet,
+  markerBehandling,
   opprettVerge,
   resumeBehandling,
   setBehandlingOnHold,
@@ -235,7 +238,12 @@ export const BehandlingMenuIndex = ({
           />
         )),
         new MenyData(true, getMenytekstMarkerBehandling()).medModal(lukkModal => (
-          <MenyMarkerBehandling lukkModal={lukkModal} brukHastekøMarkering />
+          <MenyMarkerBehandling
+            behandlingUuid={behandling?.uuid}
+            markerBehandling={markerBehandling}
+            lukkModal={lukkModal}
+            brukHastekøMarkering
+          />
         )),
         new MenyData(behandlingRettigheter?.behandlingKanHenlegges, getHenleggMenytekst()).medModal(lukkModal => (
           <MenyHenleggIndex
@@ -252,6 +260,17 @@ export const BehandlingMenuIndex = ({
             personopplysninger={personopplysninger}
             arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
             hentMottakere={hentMottakere}
+          />
+        )),
+        new MenyData(behandlingRettigheter?.behandlingKanBytteEnhet, getMenytekst()).medModal(lukkModal => (
+          <MenyEndreBehandlendeEnhetIndex
+            behandlingId={behandlingId}
+            behandlingVersjon={behandlingVersjon}
+            behandlendeEnhetId={behandling?.behandlendeEnhetId}
+            behandlendeEnhetNavn={behandling?.behandlendeEnhetNavn}
+            nyBehandlendeEnhet={nyBehandlendeEnhet}
+            behandlendeEnheter={behandlendeEnheter}
+            lukkModal={lukkModal}
           />
         )),
         new MenyData(!sakRettigheter.sakSkalTilInfotrygd, getNyBehandlingMenytekst()).medModal(lukkModal => (
