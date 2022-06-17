@@ -13,9 +13,9 @@ export default {
 };
 
 export const visMenyMarkerBehandlingHastekø = () => (
-  <MenyMarkerBehandling brukHastekøMarkering lukkModal={action('button-click')} />
+  <MenyMarkerBehandling behandlingUuid='123' markerBehandling={() => null} brukHastekøMarkering lukkModal={action('button-click')} />
 );
 
 export const visMenyMarkerBehandlingVanskeligKø = () => (
-  <MenyMarkerBehandling brukVanskeligKøMarkering lukkModal={action('button-click')} />
+  <MenyMarkerBehandling behandlingUuid='123' markerBehandling={() => null} brukVanskeligKøMarkering lukkModal={action('button-click')} />
 );

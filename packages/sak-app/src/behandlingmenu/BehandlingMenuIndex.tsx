@@ -237,7 +237,7 @@ export const BehandlingMenuIndex = ({
             }
           />
         )),
-        new MenyData(true, getMenytekstMarkerBehandling()).medModal(lukkModal => (
+         new MenyData(featureToggles?.LOS_MARKER_BEHANDLING, getMenytekstMarkerBehandling()).medModal(lukkModal => (
           <MenyMarkerBehandling
             behandlingUuid={behandling?.uuid}
             markerBehandling={markerBehandling}
