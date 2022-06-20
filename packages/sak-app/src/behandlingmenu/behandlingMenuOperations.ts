@@ -11,8 +11,6 @@ export const resumeBehandling = (params: any) => behandlingEventHandler.taBehand
 
 export const nyBehandlendeEnhet = (params: any) => behandlingEventHandler.endreBehandlendeEnhet(params);
 
-export const markerBehandling = (params: any) => behandlingEventHandler.markerBehandling(params);
-
 export const opprettVerge =
   (location: Location, push, saksnummer: string, behandlingId: number, versjon: number) => () =>
     behandlingEventHandler
