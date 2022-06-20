@@ -9,16 +9,7 @@ import beregningsgrunnlagAndeltyper from '@fpsak-frontend/kodeverk/src/beregning
 import RenderFordelBGFieldArray, { lagBelopKolonne, RenderFordelBGFieldArrayImpl } from './RenderFordelBGFieldArray';
 import shallowWithIntl, { intlMock } from '../../../i18n';
 
-const inntektskategorier = [
-  {
-    kode: 'ARBEIDSTAKER',
-    navn: 'Arbeidstaker',
-  },
-  {
-    kode: 'SELVSTENDIG_NÆRINGSDRIVENDE',
-    navn: 'Selvstendig næringsdrivende',
-  },
-];
+const inntektskategorier = ['ARBEIDSTAKER', 'SELVSTENDIG_NÆRINGSDRIVENDE'];
 
 const getKodeverknavn = () => undefined;
 

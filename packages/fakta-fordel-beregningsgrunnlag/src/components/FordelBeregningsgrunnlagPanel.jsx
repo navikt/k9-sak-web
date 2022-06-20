@@ -15,10 +15,10 @@ const harFordelInfo = bg => (bg && bg.faktaOmFordeling ? !!bg.faktaOmFordeling.f
 const harRefusjonInfo = bg => !!(bg && bg.refusjonTilVurdering);
 
 const getFordelAvklaringsbehov = avklaringsbehov =>
-avklaringsbehov ? avklaringsbehov.find(ab => ab.definisjon.kode === FORDEL_BEREGNINGSGRUNNLAG) : undefined;
+  avklaringsbehov ? avklaringsbehov.find(ab => ab.definisjon === FORDEL_BEREGNINGSGRUNNLAG) : undefined;
 
 const getRefusjonAvklaringsbehov = avklaringsbehov =>
-avklaringsbehov ? avklaringsbehov.find(ab => ab.definisjon.kode === VURDER_REFUSJON_BERGRUNN) : undefined;
+  avklaringsbehov ? avklaringsbehov.find(ab => ab.definisjon === VURDER_REFUSJON_BERGRUNN) : undefined;
 
 /**
  * FordelBeregningsgrunnlagPanel
@@ -69,9 +69,9 @@ export class FordelBeregningsgrunnlagPanel extends Component {
     const skalViseFordeling = fordelAP && harFordelInfo(beregningsgrunnlag);
     const skalViseRefusjon = refusjonAP && harRefusjonInfo(beregningsgrunnlag);
     return (
-    <>
-      {skalViseRefusjon && (
-        <VurderEndringRefusjonForm
+      <>
+        {skalViseRefusjon && (
+          <VurderEndringRefusjonForm
             submitEnabled={submitEnabled}
             submittable={submittable}
             readOnly={readOnly}

@@ -152,7 +152,7 @@ FordelBeregningsgrunnlagForm.buildInitialValues = (bg, getKodeverknavn, arbeidsg
   if (!fordelBGPerioder) {
     return initialValues;
   }
-  const harKunYtelse = bg.aktivitetStatus.some(status => status.kode === aktivitetStatuser.KUN_YTELSE);
+  const harKunYtelse = bg.aktivitetStatus.some(status => status === aktivitetStatuser.KUN_YTELSE);
   const bgPerioder = bg.beregningsgrunnlagPeriode;
   slåSammenPerioder(fordelBGPerioder, bgPerioder).forEach((periode, index) => {
     const bgPeriode = finnRiktigBgPeriode(periode, bgPerioder);

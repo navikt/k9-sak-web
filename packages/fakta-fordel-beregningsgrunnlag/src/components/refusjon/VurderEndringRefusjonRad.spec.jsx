@@ -3,10 +3,7 @@ import { shallow } from 'enzyme';
 import { VurderEndringRefusjonRadImpl } from './VurderEndringRefusjonRad';
 
 const lagAndel = (skalKunneFastsetteDelvisRefusjon, agOrgnr, arbId, dato) => ({
-  aktivitetStatus: {
-    kode: 'AT',
-    kodeverk: 'test',
-  },
+  aktivitetStatus: 'AT',
   nyttRefusjonskravFom: dato,
   arbeidsgiver: {
     arbeidsgiverOrgnr: agOrgnr,

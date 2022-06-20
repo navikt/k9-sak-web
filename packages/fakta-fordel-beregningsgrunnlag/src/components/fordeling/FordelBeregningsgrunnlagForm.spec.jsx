@@ -43,21 +43,21 @@ const andel2 = {
 
 const arbeidsforhold1 = {
   arbeidsforholdId: null,
-  arbeidsforholdType: { kode: 'ARBEID', kodeverk: 'OPPTJENING_AKTIVITET_TYPE' },
+  arbeidsforholdType: 'ARBEID', //, kodeverk: 'OPPTJENING_AKTIVITET_TYPE' },
   arbeidsgiverIdent: '914555825',
   belopFraInntektsmeldingPrMnd: 41667,
   opphoersdato: '2019-06-01',
-  organisasjonstype: { kode: 'VIRKSOMHET', kodeverk: 'ORGANISASJONSTYPE' },
+  organisasjonstype: 'VIRKSOMHET', // kodeverk: 'ORGANISASJONSTYPE' },
   refusjonPrAar: 500004,
   startdato: '2016-08-01',
 };
 
 const arbeidsforhold2 = {
   arbeidsforholdId: 'd0101e6c-c54a-4db2-ac91-f5b0d86a6d3e',
-  arbeidsforholdType: { kode: 'ARBEID', kodeverk: 'OPPTJENING_AKTIVITET_TYPE' },
+  arbeidsforholdType: 'ARBEID', // kodeverk: 'OPPTJENING_AKTIVITET_TYPE' },
   arbeidsgiverIdent: '996607852',
   belopFraInntektsmeldingPrMnd: 41667,
-  organisasjonstype: { kode: 'VIRKSOMHET', kodeverk: 'ORGANISASJONSTYPE' },
+  organisasjonstype: 'VIRKSOMHET', // kodeverk: 'ORGANISASJONSTYPE' },
   refusjonPrAar: 500004,
   startdato: '2019-06-02',
 };
@@ -78,20 +78,20 @@ const arbeidsgiverOpplysningerPerId = {
 };
 
 const fordelAndel = {
-  aktivitetStatus: { kode: 'AT', kodeverk: 'AKTIVITET_STATUS' },
+  aktivitetStatus: 'AT', // kodeverk: 'AKTIVITET_STATUS' },
   andelIArbeid: [0],
   andelsnr: 1,
   arbeidsforhold: arbeidsforhold1,
-  inntektskategori: { kode: 'ARBEIDSTAKER', kodeverk: 'INNTEKTSKATEGORI' },
+  inntektskategori: 'ARBEIDSTAKER', // kodeverk: 'INNTEKTSKATEGORI' },
   nyttArbeidsforhold: false,
 };
 
 const fordelAndel2 = {
-  aktivitetStatus: { kode: 'AT', kodeverk: 'AKTIVITET_STATUS' },
+  aktivitetStatus: 'AT', // kodeverk: 'AKTIVITET_STATUS' },
   andelIArbeid: [0],
   andelsnr: 2,
   arbeidsforhold: arbeidsforhold2,
-  inntektskategori: { kode: '-', kodeverk: 'INNTEKTSKATEGORI' },
+  inntektskategori: '-', // kodeverk: 'INNTEKTSKATEGORI' },
   nyttArbeidsforhold: true,
 };
 
@@ -99,20 +99,20 @@ describe('<FordelBeregningsgrunnlagForm>', () => {
   it('skal vise 2 perioder', () => {
     const bgAndel1 = {
       andelsnr: 1,
-      aktivitetStatus: { kode: 'AT', kodeverk: 'AKTIVITET_STATUS' },
+      aktivitetStatus: 'AT', // kodeverk: 'AKTIVITET_STATUS' },
       arbeidsforhold: arbeidsforhold1,
       beregnetPrAar: 500004,
       bruttoPrAar: 500004,
-      inntektskategori: { kode: 'ARBEIDSTAKER', kodeverk: 'INNTEKTSKATEGORI' },
+      inntektskategori: 'ARBEIDSTAKER', // kodeverk: 'INNTEKTSKATEGORI' },
     };
 
     const bgAndel2 = {
-      aktivitetStatus: { kode: 'AT', kodeverk: 'AKTIVITET_STATUS' },
+      aktivitetStatus: 'AT', // kodeverk: 'AKTIVITET_STATUS' },
       andelsnr: 2,
       arbeidsforhold: arbeidsforhold2,
       beregnetPrAar: null,
       bruttoPrAar: null,
-      inntektskategori: { kode: '-', kodeverk: 'INNTEKTSKATEGORI' },
+      inntektskategori: '-', // kodeverk: 'INNTEKTSKATEGORI' },
     };
 
     const periode1 = {
@@ -148,7 +148,7 @@ describe('<FordelBeregningsgrunnlagForm>', () => {
       beregnetPrAar: 500004,
       beregningsgrunnlagPeriodeFom: '2019-04-01',
       beregningsgrunnlagPeriodeTom: '2019-06-01',
-      periodeAarsaker: [{ kode: 'NATURALYTELSE_BORTFALT', kodeverk: 'PERIODE_AARSAK' }],
+      periodeAarsaker: ['NATURALYTELSE_BORTFALT'], //, kodeverk: 'PERIODE_AARSAK' }
       beregningsgrunnlagPrStatusOgAndel: [bgAndel1],
     };
     const bgPeriode3 = {
@@ -156,14 +156,14 @@ describe('<FordelBeregningsgrunnlagForm>', () => {
       beregnetPrAar: 500004,
       beregningsgrunnlagPeriodeFom: '2019-06-02',
       beregningsgrunnlagPeriodeTom: null,
-      periodeAarsaker: [{ kode: 'ENDRING_I_REFUSJONSKRAV', kodeverk: 'PERIODE_AARSAK' }],
+      periodeAarsaker: ['ENDRING_I_REFUSJONSKRAV'], //, kodeverk: 'PERIODE_AARSAK' }
       beregningsgrunnlagPrStatusOgAndel: [bgAndel1, bgAndel2],
     };
     const perioder = [periode1, periode2, periode3];
     const bgPerioder = [bgPeriode1, bgPeriode2, bgPeriode3];
 
     const bg = {
-      aktivitetStatus: [{ kode: 'AT', kodeverk: 'AKTIVITET_STATUS' }],
+      aktivitetStatus: ['AT'], // , kodeverk: 'AKTIVITET_STATUS' }
       beregningsgrunnlagPeriode: bgPerioder,
       skjaeringstidspunktBeregning: '2019-03-30',
       faktaOmFordeling: {
@@ -173,10 +173,7 @@ describe('<FordelBeregningsgrunnlagForm>', () => {
       },
     };
 
-    const bt = {
-      kode: 'BT-003',
-      kodeverk: 'BEHANDLING_TYPE',
-    };
+    const bt = 'BT-003'; //,kodeverk: 'BEHANDLING_TYPE',};
 
     const wrapper = shallow(
       <FordelBeregningsgrunnlagForm
@@ -261,7 +258,7 @@ describe('<FordelBeregningsgrunnlagForm>', () => {
           beregningsgrunnlagPrStatusOgAndel: [],
         },
         {
-          periodeAarsaker: [{ kode: periodeAarsak.ENDRING_I_REFUSJONSKRAV }],
+          periodeAarsaker: [periodeAarsak.ENDRING_I_REFUSJONSKRAV],
           beregningsgrunnlagPeriodeFom: '2018-07-02',
           beregningsgrunnlagPrStatusOgAndel: [],
         },
@@ -303,7 +300,7 @@ describe('<FordelBeregningsgrunnlagForm>', () => {
       {
         beregningsgrunnlagPeriodeFom: '2018-06-02',
         beregningsgrunnlagPeriodeTom: null,
-        periodeAarsaker: [{ kode: periodeAarsak.ENDRING_I_REFUSJONSKRAV }],
+        periodeAarsaker: [periodeAarsak.ENDRING_I_REFUSJONSKRAV],
       },
     ];
     const fordelBGPerioder = [
@@ -347,17 +344,17 @@ describe('<FordelBeregningsgrunnlagForm>', () => {
       {
         beregningsgrunnlagPeriodeFom: '2018-01-01',
         beregningsgrunnlagPeriodeTom: '2018-06-01',
-        periodeAarsaker: [{ kode: periodeAarsak.ENDRING_I_REFUSJONSKRAV }],
+        periodeAarsaker: [periodeAarsak.ENDRING_I_REFUSJONSKRAV],
       },
       {
         beregningsgrunnlagPeriodeFom: '2018-06-02',
         beregningsgrunnlagPeriodeTom: '2018-10-01',
-        periodeAarsaker: [{ kode: periodeAarsak.NATURALYTELSE_TILKOMMER }],
+        periodeAarsaker: [periodeAarsak.NATURALYTELSE_TILKOMMER],
       },
       {
         beregningsgrunnlagPeriodeFom: '2018-10-02',
         beregningsgrunnlagPeriodeTom: null,
-        periodeAarsaker: [{ kode: periodeAarsak.REFUSJON_OPPHOERER }],
+        periodeAarsaker: [periodeAarsak.REFUSJON_OPPHOERER],
       },
     ];
     const fordelBGPerioder = [
@@ -426,12 +423,12 @@ describe('<FordelBeregningsgrunnlagForm>', () => {
       {
         beregningsgrunnlagPeriodeFom: '2018-06-02',
         beregningsgrunnlagPeriodeTom: '2018-10-01',
-        periodeAarsaker: [{ kode: periodeAarsak.ENDRING_I_REFUSJONSKRAV }],
+        periodeAarsaker: [periodeAarsak.ENDRING_I_REFUSJONSKRAV],
       },
       {
         beregningsgrunnlagPeriodeFom: '2018-10-02',
         beregningsgrunnlagPeriodeTom: null,
-        periodeAarsaker: [{ kode: periodeAarsak.NATURALYTELSE_TILKOMMER }],
+        periodeAarsaker: [periodeAarsak.NATURALYTELSE_TILKOMMER],
       },
     ];
     const fordelBGPerioder = [
@@ -501,17 +498,17 @@ describe('<FordelBeregningsgrunnlagForm>', () => {
       {
         beregningsgrunnlagPeriodeFom: '2018-06-02',
         beregningsgrunnlagPeriodeTom: '2018-10-01',
-        periodeAarsaker: [{ kode: periodeAarsak.ENDRING_I_REFUSJONSKRAV }],
+        periodeAarsaker: [periodeAarsak.ENDRING_I_REFUSJONSKRAV],
       },
       {
         beregningsgrunnlagPeriodeFom: '2018-10-02',
         beregningsgrunnlagPeriodeTom: '2018-11-01',
-        periodeAarsaker: [{ kode: periodeAarsak.NATURALYTELSE_TILKOMMER }],
+        periodeAarsaker: [periodeAarsak.NATURALYTELSE_TILKOMMER],
       },
       {
         beregningsgrunnlagPeriodeFom: '2018-11-02',
         beregningsgrunnlagPeriodeTom: null,
-        periodeAarsaker: [{ kode: periodeAarsak.REFUSJON_OPPHOERER }],
+        periodeAarsaker: [periodeAarsak.REFUSJON_OPPHOERER],
       },
     ];
     const fordelBGPerioder = [

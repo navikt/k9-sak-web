@@ -1,8 +1,8 @@
 import { expect } from 'chai';
 import { AAP_ARBEIDSGIVER_KEY, lagTotalInntektArbeidsforholdList } from './TotalbelopPrArbeidsgiverError';
 
-const getKodeverknavn = kodeverk => {
-  if (kodeverk.kode === 'AAP') {
+const getKodeverknavn = (kode, kodeverk) => {
+  if (kode === 'AAP') {
     return 'Arbeidsavklaringspenger';
   }
   return '';
@@ -51,7 +51,7 @@ describe('<TotalbelopPrArbeidsgiverError>', () => {
   it('skal lage liste for AAP og arbeidsgiver som søker refusjon som overstiger beregningsgrunnlag', () => {
     const andeler = [
       {
-        arbeidsforholdType: { kode: 'AAP' },
+        arbeidsforholdType: 'AAP',
         fastsattBelop: '10 000',
         beregningsgrunnlagPrAar: '20 000',
         inntektskategori: 'ARBEIDSAVKLARINGSPENGER',

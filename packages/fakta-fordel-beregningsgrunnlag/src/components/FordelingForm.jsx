@@ -22,7 +22,7 @@ const { FORDEL_BEREGNINGSGRUNNLAG } = avklaringsbehovCodes;
 const FORM_NAME_FORDEL_BEREGNING = 'fordelBeregningsgrunnlagForm';
 
 const findAvklaringsbehovMedBegrunnelse = avklaringsbehov =>
-  avklaringsbehov.find(ab => ab.definisjon.kode === FORDEL_BEREGNINGSGRUNNLAG && ab.begrunnelse !== null);
+  avklaringsbehov.find(ab => ab.definisjon === FORDEL_BEREGNINGSGRUNNLAG && ab.begrunnelse !== null);
 
 const BEGRUNNELSE_FORDELING_NAME = 'begrunnelseFordeling';
 
@@ -167,13 +167,13 @@ const kreverManuellBehandlingFn = bg => {
 const mapGrunnlagsliste = (fieldArrayList, alleBeregningsgrunnlag, vilkårsperioder) =>
   fieldArrayList
     .map((currentFormValues, index) => {
-        const bg = alleBeregningsgrunnlag[index];
-        const stpOpptjening = bg.faktaOmBeregning.avklarAktiviteter.skjæringstidspunkt;
-        const vilkarPeriode = vilkårsperioder.find(periode => periode.periode.fom === stpOpptjening);
-        return {
-          periode: vilkarPeriode.periode,
-          ...FordelBeregningsgrunnlagForm.transformValues(currentFormValues, bg),
-        };
+      const bg = alleBeregningsgrunnlag[index];
+      const stpOpptjening = bg.faktaOmBeregning.avklarAktiviteter.skjæringstidspunkt;
+      const vilkarPeriode = vilkårsperioder.find(periode => periode.periode.fom === stpOpptjening);
+      return {
+        periode: vilkarPeriode.periode,
+        ...FordelBeregningsgrunnlagForm.transformValues(currentFormValues, bg),
+      };
     });
 
 export const transformValuesFordelBeregning = createSelector(
@@ -190,7 +190,7 @@ export const transformValuesFordelBeregning = createSelector(
       return [
         {
           begrunnelse,
-          kode: FORDEL_BEREGNINGSGRUNNLAG,
+          kode: FORDEL_BEREGNINGSGRUNNLAG, // TODO: Usikker på om denne skal gjøres om eller ikke
           grunnlag: mapGrunnlagsliste(fieldArrayList, alleBeregningsgrunnlag, vilkårsperioder),
         },
       ];
@@ -239,18 +239,18 @@ export const getValidationFordelBeregning = createSelector(
     }
     const errors = {};
     errors[fieldArrayName] = fieldArrayList
-    .filter((currentFormValues, index) => kreverManuellBehandlingFn(alleBeregningsgrunnlag[index]))
-    .map((currentFormValues, index) => {
-      const bg = alleBeregningsgrunnlag[index];
-      return {
-        ...FordelBeregningsgrunnlagForm.validate(
-          currentFormValues,
-          bg,
-          getKodeverknavnFn(alleKodeverk, kodeverkTyper),
-          arbeidsgiverOpplysningerPerId,
-        ),
-      };
-    });
+      .filter((currentFormValues, index) => kreverManuellBehandlingFn(alleBeregningsgrunnlag[index]))
+      .map((currentFormValues, index) => {
+        const bg = alleBeregningsgrunnlag[index];
+        return {
+          ...FordelBeregningsgrunnlagForm.validate(
+            currentFormValues,
+            bg,
+            getKodeverknavnFn(alleKodeverk, kodeverkTyper),
+            arbeidsgiverOpplysningerPerId,
+          ),
+        };
+      });
     return errors;
   },
 );
@@ -258,8 +258,8 @@ export const getValidationFordelBeregning = createSelector(
 const mapStateToPropsFactory = (initialState, initialOwnProps) => {
   const onSubmit = values => initialOwnProps.submitCallback(transformValuesFordelBeregning(initialOwnProps)(values));
   return (state, ownProps) => {
-    const relevantAb = ownProps.avklaringsbehov.find(ab => ab.definisjon.kode === FORDEL_BEREGNINGSGRUNNLAG);
-    const isAvklaringsbehovClosed = !isAvklaringsbehovOpen(relevantAb.status.kode);
+    const relevantAb = ownProps.avklaringsbehov.find(ab => ab.definisjon === FORDEL_BEREGNINGSGRUNNLAG);
+    const isAvklaringsbehovClosed = !isAvklaringsbehovOpen(relevantAb.status);
     const initialValues = buildInitialValuesFordelBeregning(ownProps);
     const hasBegrunnelse = initialValues && !!initialValues[BEGRUNNELSE_FORDELING_NAME];
     return {

@@ -2,10 +2,7 @@ import { transformValues } from './VurderEndringRefusjonPanel';
 import { lagNøkkelDelvisRefusjon, lagNøkkelRefusjonsstart } from './VurderEndringRefusjonRad';
 
 const lagAndel = (agNavn, agOrgnr, arbId, dato) => ({
-  aktivitetStatus: {
-    kode: 'AT',
-    kodeverk: 'test',
-  },
+  aktivitetStatus: 'AT',
   nyttRefusjonskravFom: dato,
   arbeidsgiver: {
     arbeidsgiverOrgnr: agOrgnr,

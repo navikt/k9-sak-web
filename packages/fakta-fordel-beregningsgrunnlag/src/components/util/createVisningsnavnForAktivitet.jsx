@@ -1,4 +1,5 @@
 import { DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils';
+import KodeverkType from 'kodeverk/src/kodeverkTyper';
 import moment from 'moment';
 
 const getEndCharFromId = id => (id ? `...${id.substring(id.length - 4, id.length)}` : '');
@@ -10,7 +11,7 @@ const createVisningsnavnForAktivitet = (aktivitet, getKodeverknavn, arbeidsgiver
       : '';
 
   if (!arbeidsgiverNavn) {
-    return aktivitet.arbeidsforholdType ? getKodeverknavn(aktivitet.arbeidsforholdType) : '';
+    return aktivitet.arbeidsforholdType ? getKodeverknavn(aktivitet.arbeidsforholdType, KodeverkType.OPPTJENING_AKTIVITET_TYPE) : '';
   }
 
   return `${arbeidsgiverNavn} (${aktivitet.arbeidsgiverIdent})${getEndCharFromId(aktivitet.eksternArbeidsforholdId)}`;

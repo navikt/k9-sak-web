@@ -5,43 +5,43 @@ import slåSammenPerioder from './SlåSammenPerioder';
 
 const arbeidsforhold1 = {
   arbeidsforholdId: null,
-  arbeidsforholdType: { kode: 'ARBEID', kodeverk: 'OPPTJENING_AKTIVITET_TYPE' },
+  arbeidsforholdType: 'ARBEID',
   arbeidsgiverIdent: '914555825',
   belopFraInntektsmeldingPrMnd: 41667,
   opphoersdato: '2019-06-01',
-  organisasjonstype: { kode: 'VIRKSOMHET', kodeverk: 'ORGANISASJONSTYPE' },
+  organisasjonstype: 'VIRKSOMHET',
   refusjonPrAar: 500004,
   startdato: '2016-08-01',
 };
 
 
 const fordelAndel = {
-  aktivitetStatus: { kode: 'AT', kodeverk: 'AKTIVITET_STATUS' },
+  aktivitetStatus: 'AT',
   andelIArbeid: [0],
   andelsnr: 1,
   arbeidsforhold: arbeidsforhold1,
-  inntektskategori: { kode: 'ARBEIDSTAKER', kodeverk: 'INNTEKTSKATEGORI' },
+  inntektskategori: 'ARBEIDSTAKER',
   nyttArbeidsforhold: false,
 };
 
 const arbeidsforhold2 = {
-    arbeidsforholdId: 'd0101e6c-c54a-4db2-ac91-f5b0d86a6d3e',
-    arbeidsforholdType: { kode: 'ARBEID', kodeverk: 'OPPTJENING_AKTIVITET_TYPE' },
-    arbeidsgiverIdent: '996607852',
-    belopFraInntektsmeldingPrMnd: 41667,
-    organisasjonstype: { kode: 'VIRKSOMHET', kodeverk: 'ORGANISASJONSTYPE' },
-    refusjonPrAar: 500004,
-    startdato: '2019-06-02',
-  };
-  
-  const fordelAndel2 = {
-    aktivitetStatus: { kode: 'AT', kodeverk: 'AKTIVITET_STATUS' },
-    andelIArbeid: [0],
-    andelsnr: 2,
-    arbeidsforhold: arbeidsforhold2,
-    inntektskategori: { kode: '-', kodeverk: 'INNTEKTSKATEGORI' },
-    nyttArbeidsforhold: true,
-  };
+  arbeidsforholdId: 'd0101e6c-c54a-4db2-ac91-f5b0d86a6d3e',
+  arbeidsforholdType: 'ARBEID',
+  arbeidsgiverIdent: '996607852',
+  belopFraInntektsmeldingPrMnd: 41667,
+  organisasjonstype: 'VIRKSOMHET',
+  refusjonPrAar: 500004,
+  startdato: '2019-06-02',
+};
+
+const fordelAndel2 = {
+  aktivitetStatus: 'AT',
+  andelIArbeid: [0],
+  andelsnr: 2,
+  arbeidsforhold: arbeidsforhold2,
+  inntektskategori: '-',
+  nyttArbeidsforhold: true,
+};
 
 
 describe('<FordelBeregningsgrunnlagForm>', () => {
@@ -87,12 +87,12 @@ describe('<FordelBeregningsgrunnlagForm>', () => {
       {
         beregningsgrunnlagPeriodeFom: '01-01-2019',
         beregningsgrunnlagPeriodeTom: '01-02-2019',
-        periodeAarsaker: [{ kode: periodeAarsak.ENDRING_I_REFUSJONSKRAV }],
+        periodeAarsaker: [periodeAarsak.ENDRING_I_REFUSJONSKRAV],
       },
       {
         beregningsgrunnlagPeriodeFom: '02-02-2019',
         beregningsgrunnlagPeriodeTom: null,
-        periodeAarsaker: [{ kode: periodeAarsak.NATURALYTELSE_TILKOMMER }],
+        periodeAarsaker: [periodeAarsak.NATURALYTELSE_TILKOMMER],
       },
     ];
     const nyePerioder = slåSammenPerioder(perioder, bgPerioder);
@@ -120,12 +120,12 @@ describe('<FordelBeregningsgrunnlagForm>', () => {
       {
         beregningsgrunnlagPeriodeFom: '01-01-2019',
         beregningsgrunnlagPeriodeTom: '01-02-2019',
-        periodeAarsaker: [{ kode: periodeAarsak.ENDRING_I_REFUSJONSKRAV }],
+        periodeAarsaker: [periodeAarsak.ENDRING_I_REFUSJONSKRAV],
       },
       {
         beregningsgrunnlagPeriodeFom: '02-02-2019',
         beregningsgrunnlagPeriodeTom: null,
-        periodeAarsaker: [{ kode: periodeAarsak.NATURALYTELSE_BORTFALT }],
+        periodeAarsaker: [periodeAarsak.NATURALYTELSE_BORTFALT],
       },
     ];
     const nyePerioder = slåSammenPerioder(perioder, bgPerioder);
@@ -154,13 +154,13 @@ describe('<FordelBeregningsgrunnlagForm>', () => {
         beregningsgrunnlagPeriodeFom: '01-01-2019',
         beregningsgrunnlagPeriodeTom: '01-02-2019',
         bruttoPrAar: 120000,
-        periodeAarsaker: [{ kode: periodeAarsak.ENDRING_I_REFUSJONSKRAV }],
+        periodeAarsaker: [periodeAarsak.ENDRING_I_REFUSJONSKRAV],
       },
       {
         beregningsgrunnlagPeriodeFom: '02-02-2019',
         beregningsgrunnlagPeriodeTom: null,
         bruttoPrAar: 120000,
-        periodeAarsaker: [{ kode: periodeAarsak.ARBEIDSFORHOLD_AVSLUTTET }],
+        periodeAarsaker: [periodeAarsak.ARBEIDSFORHOLD_AVSLUTTET],
       },
     ];
     const nyePerioder = slåSammenPerioder(perioder, bgPerioder);
@@ -189,13 +189,13 @@ describe('<FordelBeregningsgrunnlagForm>', () => {
         beregningsgrunnlagPeriodeFom: '01-01-2019',
         beregningsgrunnlagPeriodeTom: '01-02-2019',
         bruttoPrAar: 120000,
-        periodeAarsaker: [{ kode: periodeAarsak.ENDRING_I_REFUSJONSKRAV }],
+        periodeAarsaker: [periodeAarsak.ENDRING_I_REFUSJONSKRAV],
       },
       {
         beregningsgrunnlagPeriodeFom: '02-02-2019',
         beregningsgrunnlagPeriodeTom: null,
         bruttoPrAar: 130000,
-        periodeAarsaker: [{ kode: periodeAarsak.ARBEIDSFORHOLD_AVSLUTTET }],
+        periodeAarsaker: [periodeAarsak.ARBEIDSFORHOLD_AVSLUTTET],
       },
     ];
     const nyePerioder = slåSammenPerioder(perioder, bgPerioder);
@@ -226,13 +226,13 @@ describe('<FordelBeregningsgrunnlagForm>', () => {
         beregningsgrunnlagPeriodeFom: '01-01-2019',
         beregningsgrunnlagPeriodeTom: '01-02-2019',
         bruttoPrAar: 120000,
-        periodeAarsaker: [{ kode: periodeAarsak.ENDRING_I_REFUSJONSKRAV }],
+        periodeAarsaker: [periodeAarsak.ENDRING_I_REFUSJONSKRAV],
       },
       {
         beregningsgrunnlagPeriodeFom: '02-02-2019',
         beregningsgrunnlagPeriodeTom: null,
         bruttoPrAar: 120000,
-        periodeAarsaker: [{ kode: periodeAarsak.REFUSJON_OPPHOERER }],
+        periodeAarsaker: [periodeAarsak.REFUSJON_OPPHOERER],
       },
     ];
     const nyePerioder = slåSammenPerioder(perioder, bgPerioder);
@@ -269,7 +269,7 @@ describe('<FordelBeregningsgrunnlagForm>', () => {
         beregningsgrunnlagPeriodeFom: '02-02-2019',
         beregningsgrunnlagPeriodeTom: null,
         bruttoPrAar: 120000,
-        periodeAarsaker: [{ kode: periodeAarsak.ENDRING_I_REFUSJONSKRAV }],
+        periodeAarsaker: [periodeAarsak.ENDRING_I_REFUSJONSKRAV],
       },
     ];
     const nyePerioder = slåSammenPerioder(perioder, bgPerioder);
@@ -306,7 +306,7 @@ describe('<FordelBeregningsgrunnlagForm>', () => {
       {
         beregningsgrunnlagPeriodeFom: '02-02-2019',
         beregningsgrunnlagPeriodeTom: null,
-        periodeAarsaker: [{ kode: periodeAarsak.ENDRING_I_AKTIVITETER_SØKT_FOR }],
+        periodeAarsaker: [periodeAarsak.ENDRING_I_AKTIVITETER_SØKT_FOR],
         bruttoPrAar: 500_000,
       },
     ];
@@ -327,7 +327,7 @@ describe('<FordelBeregningsgrunnlagForm>', () => {
       {
         fom: '02-02-2019',
         tom: null,
-        fordelBeregningsgrunnlagAndeler: [{...fordelAndel, refusjonskravPrAar: 100_000}],
+        fordelBeregningsgrunnlagAndeler: [{ ...fordelAndel, refusjonskravPrAar: 100_000 }],
         harPeriodeAarsakGraderingEllerRefusjon: true,
       },
     ];
@@ -341,7 +341,7 @@ describe('<FordelBeregningsgrunnlagForm>', () => {
       {
         beregningsgrunnlagPeriodeFom: '02-02-2019',
         beregningsgrunnlagPeriodeTom: null,
-        periodeAarsaker: [{ kode: periodeAarsak.ENDRING_I_AKTIVITETER_SØKT_FOR }],
+        periodeAarsaker: [periodeAarsak.ENDRING_I_AKTIVITETER_SØKT_FOR],
         bruttoPrAar: 500_000,
       },
     ];
@@ -378,7 +378,7 @@ describe('<FordelBeregningsgrunnlagForm>', () => {
       {
         beregningsgrunnlagPeriodeFom: '02-02-2019',
         beregningsgrunnlagPeriodeTom: null,
-        periodeAarsaker: [{ kode: periodeAarsak.ENDRING_I_AKTIVITETER_SØKT_FOR }],
+        periodeAarsaker: [periodeAarsak.ENDRING_I_AKTIVITETER_SØKT_FOR],
         bruttoPrAar: 200_000,
       },
     ];
@@ -409,13 +409,13 @@ describe('<FordelBeregningsgrunnlagForm>', () => {
       {
         beregningsgrunnlagPeriodeFom: '01-01-2019',
         beregningsgrunnlagPeriodeTom: '01-02-2019',
-        periodeAarsaker: [{ kode: periodeAarsak.ENDRING_I_AKTIVITETER_SØKT_FOR }],
+        periodeAarsaker: [periodeAarsak.ENDRING_I_AKTIVITETER_SØKT_FOR],
         bruttoPrAar: 500_000,
       },
       {
         beregningsgrunnlagPeriodeFom: '02-02-2019',
         beregningsgrunnlagPeriodeTom: null,
-        periodeAarsaker: [{ kode: periodeAarsak.ENDRING_I_AKTIVITETER_SØKT_FOR }],
+        periodeAarsaker: [periodeAarsak.ENDRING_I_AKTIVITETER_SØKT_FOR],
         bruttoPrAar: 500_000,
       },
     ];

@@ -56,8 +56,8 @@ const lagArbeidstakerAndelEtterStp = (
   andelIArbeid,
 ) => ({
   arbeidsforhold: arbeidsforholdEtterStp,
-  aktivitetStatus: { kode: aktivitetStatuser.ARBEIDSTAKER, navn: 'Arbeidstaker' },
-  inntektskategori: { kode: 'ARBEIDSTAKER' },
+  aktivitetStatus: aktivitetStatuser.ARBEIDSTAKER,
+  inntektskategori: 'ARBEIDSTAKER',
   andelIArbeid,
   andelsnr,
   lagtTilAvSaksbehandler,
@@ -70,14 +70,14 @@ const lagArbeidstakerAndelEtterStp = (
   nyttArbeidsforhold: true,
 });
 
-const getKodeverknavn = kodeverk => {
-  if (kodeverk.kode === aktivitetStatuser.ARBEIDSTAKER) {
+const getKodeverknavn = (kode, kodeverk) => {
+  if (kode === aktivitetStatuser.ARBEIDSTAKER) {
     return 'Arbeidstaker';
   }
-  if (kodeverk.kode === aktivitetStatuser.FRILANSER) {
+  if (kode === aktivitetStatuser.FRILANSER) {
     return 'Frilanser';
   }
-  if (kodeverk.kode === aktivitetStatuser.SELVSTENDIG_NAERINGSDRIVENDE) {
+  if (kode === aktivitetStatuser.SELVSTENDIG_NAERINGSDRIVENDE) {
     return 'Selvstendig næringsdrivende';
   }
   return '';
@@ -95,8 +95,8 @@ const lagArbeidstakerAndel = (
   andelIArbeid,
 ) => ({
   arbeidsforhold,
-  aktivitetStatus: { kode: aktivitetStatuser.ARBEIDSTAKER, navn: 'Arbeidstaker' },
-  inntektskategori: { kode: 'ARBEIDSTAKER' },
+  aktivitetStatus: aktivitetStatuser.ARBEIDSTAKER,
+  inntektskategori: 'ARBEIDSTAKER',
   andelIArbeid,
   andelsnr,
   lagtTilAvSaksbehandler,
@@ -117,8 +117,8 @@ const lagSNAndel = (
   andelIArbeid,
 ) => ({
   arbeidsforhold,
-  aktivitetStatus: { kode: aktivitetStatuser.SELVSTENDIG_NAERINGSDRIVENDE, navn: 'Selvstendig næringsdrivende' },
-  inntektskategori: { kode: 'SN' },
+  aktivitetStatus: aktivitetStatuser.SELVSTENDIG_NAERINGSDRIVENDE,
+  inntektskategori: 'SN',
   andelIArbeid,
   andelsnr,
   lagtTilAvSaksbehandler,
@@ -138,8 +138,8 @@ const lagFLAndel = (
   fastsattForrigePrAar,
   andelIArbeid,
 ) => ({
-  aktivitetStatus: { kode: aktivitetStatuser.FRILANSER, navn: 'Frilanser' },
-  inntektskategori: { kode: 'SN' },
+  aktivitetStatus: aktivitetStatuser.FRILANSER,
+  inntektskategori: 'SN',
   andelIArbeid,
   andelsnr,
   lagtTilAvSaksbehandler,
@@ -172,7 +172,7 @@ describe('<FordelBeregningsgrunnlagPeriodePanel>', () => {
       beregningsgrunnlagPrStatusOgAndel: [
         {
           andelsnr: 1,
-          aktivitetStatus: { kode: aktivitetStatuser.ARBEIDSTAKER },
+          aktivitetStatus: aktivitetStatuser.ARBEIDSTAKER,
           belopPrAarEtterAOrdningen: 100,
           arbeidsforhold,
           beregnetPrAar: 10000,
@@ -180,7 +180,7 @@ describe('<FordelBeregningsgrunnlagPeriodePanel>', () => {
         },
         {
           andelsnr: 2,
-          aktivitetStatus: { kode: aktivitetStatuser.ARBEIDSTAKER },
+          aktivitetStatus: aktivitetStatuser.ARBEIDSTAKER,
           belopPrAarEtterAOrdningen: 100,
           arbeidsforhold,
           beregnetPrAar: 10000,
@@ -189,7 +189,7 @@ describe('<FordelBeregningsgrunnlagPeriodePanel>', () => {
         },
         {
           andelsnr: 3,
-          aktivitetStatus: { kode: aktivitetStatuser.ARBEIDSTAKER },
+          aktivitetStatus: aktivitetStatuser.ARBEIDSTAKER,
           belopPrAarEtterAOrdningen: 100,
           arbeidsforhold,
           beregnetPrAar: 10000,
@@ -198,7 +198,7 @@ describe('<FordelBeregningsgrunnlagPeriodePanel>', () => {
         },
         {
           andelsnr: 4,
-          aktivitetStatus: { kode: aktivitetStatuser.ARBEIDSTAKER },
+          aktivitetStatus: aktivitetStatuser.ARBEIDSTAKER,
           belopPrAarEtterAOrdningen: 1000,
           arbeidsforhold,
           beregnetPrAar: 1000,
@@ -207,7 +207,7 @@ describe('<FordelBeregningsgrunnlagPeriodePanel>', () => {
         },
         {
           andelsnr: 5,
-          aktivitetStatus: { kode: aktivitetStatuser.ARBEIDSTAKER },
+          aktivitetStatus: aktivitetStatuser.ARBEIDSTAKER,
           belopPrAarEtterAOrdningen: 1000,
           arbeidsforhold: arbeidsforholdEtterStp,
           beregnetPrAar: null,
@@ -216,24 +216,24 @@ describe('<FordelBeregningsgrunnlagPeriodePanel>', () => {
         },
         {
           andelsnr: 6,
-          aktivitetStatus: { kode: aktivitetStatuser.SELVSTENDIG_NAERINGSDRIVENDE },
+          aktivitetStatus: aktivitetStatuser.SELVSTENDIG_NAERINGSDRIVENDE,
           beregnetPrAar: 10000,
           overstyrtPrAar: null,
           bruttoPrAar: 10000,
         },
         {
           andelsnr: 7,
-          aktivitetStatus: { kode: aktivitetStatuser.ARBEIDSTAKER },
+          aktivitetStatus: aktivitetStatuser.ARBEIDSTAKER,
           arbeidsforhold: arbeidsforhold2,
           belopPrAarEtterAOrdningen: 40000,
           beregnetPrAar: 1000,
           overstyrtPrAar: null,
           bruttoPrAar: 1000,
         },
-        { andelsnr: 8, aktivitetStatus: { kode: aktivitetStatuser.FRILANSER }, belopPrAarEtterAOrdningen: null },
+        { andelsnr: 8, aktivitetStatus: aktivitetStatuser.FRILANSER, belopPrAarEtterAOrdningen: null },
         {
           andelsnr: 9,
-          aktivitetStatus: { kode: aktivitetStatuser.FRILANSER },
+          aktivitetStatus: aktivitetStatuser.FRILANSER,
           belopPrAarEtterAOrdningen: null,
           beregnetPrAar: 0,
         },

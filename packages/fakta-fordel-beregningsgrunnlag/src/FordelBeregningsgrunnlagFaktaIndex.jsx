@@ -37,8 +37,8 @@ const lagLabel = (bg, vilkårsperioder) => {
   return `${moment(stpOpptjening).format(DDMMYYYY_DATE_FORMAT)}`;
 };
 
-const kreverManuellBehandlingFn = bg => bg.avklaringsbehov.some(a => a.definisjon.kode === VURDER_REFUSJON_BERGRUNN
-  || a.definisjon.kode === FORDEL_BEREGNINGSGRUNNLAG);
+const kreverManuellBehandlingFn = bg => bg.avklaringsbehov.some(a => a.definisjon === VURDER_REFUSJON_BERGRUNN
+  || a.definisjon === FORDEL_BEREGNINGSGRUNNLAG);
 
 
 const finnAvklaringsbehov = (aksjonspunkter, beregningsgrunnlag) => {

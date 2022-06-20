@@ -2,25 +2,19 @@ import { expect } from 'chai';
 import createVisningsnavnForAktivitet from './createVisningsnavnForAktivitet';
 
 const andelUtenNavn = {
-  arbeidsforholdType: {
-    kode: 'A',
-  },
+  arbeidsforholdType: 'A',
   arbeidsforholdId: '123',
   arbeidsgiverIdent: '111',
   eksternArbeidsforholdId: '09876',
 };
 
 const andelUtenArbeidsforholdId = {
-  arbeidsforholdType: {
-    kode: 'A',
-  },
+  arbeidsforholdType: 'A',
   arbeidsgiverIdent: '321',
 };
 
 const andelMedAlt = {
-  arbeidsforholdType: {
-    kode: 'A',
-  },
+  arbeidsforholdType: 'A',
   arbeidsgiverIdent: '321',
   arbeidsforholdId: '999888777',
   eksternArbeidsforholdId: '56789',
@@ -35,7 +29,7 @@ const arbeidsgiverOpplysningerPerId = {
   },
 };
 
-const getKodeverknavn = kodeverk => (kodeverk.kode === 'A' ? 'Arbeidstaker' : '');
+const getKodeverknavn = (kode, kodeverk) => (kode === 'A' ? 'Arbeidstaker' : '');
 
 describe('visningsnavnHelper', () => {
   it('skal lage visningsnavn når vi mangler data for arbeidsgivere', () => {

@@ -319,26 +319,26 @@ const buildInitialValues = createSelector([ownProps => ownProps.feilutbetalingFa
     begrunnelse: decodeHtmlEntity(begrunnelse),
     perioder: Array.isArray(perioder)
       ? perioder
-          .sort((a, b) => moment(a.fom) - moment(b.fom))
-          .map(p => {
-            const { fom, tom, feilutbetalingÅrsakDto } = p;
+        .sort((a, b) => moment(a.fom) - moment(b.fom))
+        .map(p => {
+          const { fom, tom, feilutbetalingÅrsakDto } = p;
 
-            const period = { fom, tom };
+          const period = { fom, tom };
 
-            if (!feilutbetalingÅrsakDto) {
-              return period;
-            }
+          if (!feilutbetalingÅrsakDto) {
+            return period;
+          }
 
-            const { hendelseType, hendelseUndertype } = feilutbetalingÅrsakDto;
+          const { hendelseType, hendelseUndertype } = feilutbetalingÅrsakDto;
 
-            return {
-              ...period,
-              årsak: hendelseType.kode,
-              [hendelseType.kode]: {
-                underÅrsak: hendelseUndertype ? hendelseUndertype.kode : null,
-              },
-            };
-          })
+          return {
+            ...period,
+            årsak: hendelseType,
+            [hendelseType]: {
+              underÅrsak: hendelseUndertype ? hendelseUndertype : null,
+            },
+          };
+        })
       : [],
   };
 });
@@ -349,25 +349,25 @@ const getSortedFeilutbetalingArsaker = createSelector(
     const { hendelseTyper } = feilutbetalingArsaker;
     return Array.isArray(hendelseTyper)
       ? hendelseTyper.sort((ht1, ht2) => {
-          const hendelseType1 = ht1.hendelseType.navn;
-          const hendelseType2 = ht2.hendelseType.navn;
-          const hendelseType1ErParagraf = hendelseType1.startsWith('§');
-          const hendelseType2ErParagraf = hendelseType2.startsWith('§');
-          const ht1v = hendelseType1ErParagraf ? hendelseType1.replace(/\D/g, '') : hendelseType1;
-          const ht2v = hendelseType2ErParagraf ? hendelseType2.replace(/\D/g, '') : hendelseType2;
-          return hendelseType1ErParagraf && hendelseType2ErParagraf ? ht1v - ht2v : ht1v.localeCompare(ht2v);
-        })
+        const hendelseType1 = ht1.hendelseType.navn;
+        const hendelseType2 = ht2.hendelseType.navn;
+        const hendelseType1ErParagraf = hendelseType1.startsWith('§');
+        const hendelseType2ErParagraf = hendelseType2.startsWith('§');
+        const ht1v = hendelseType1ErParagraf ? hendelseType1.replace(/\D/g, '') : hendelseType1;
+        const ht2v = hendelseType2ErParagraf ? hendelseType2.replace(/\D/g, '') : hendelseType2;
+        return hendelseType1ErParagraf && hendelseType2ErParagraf ? ht1v - ht2v : ht1v.localeCompare(ht2v);
+      })
       : [];
   },
 );
 
 const transformValues = (values, aksjonspunkter, årsaker) => {
-  const apCode = aksjonspunkter.find(ap => ap.definisjon.kode === feilutbetalingAksjonspunkter[0]);
+  const apCode = aksjonspunkter.find(ap => ap.definisjon === feilutbetalingAksjonspunkter[0]);
 
   const feilutbetalingFakta = values.perioder.map(periode => {
-    const feilutbetalingÅrsak = årsaker.find(el => el.hendelseType.kode === periode.årsak);
+    const feilutbetalingÅrsak = årsaker.find(el => el.hendelseType === periode.årsak);
     const findUnderÅrsakObjekt = underÅrsak =>
-      feilutbetalingÅrsak.hendelseUndertyper.find(el => el.kode === underÅrsak);
+      feilutbetalingÅrsak.hendelseUndertyper.find(el => el === underÅrsak);
     const feilutbetalingUnderÅrsak = periode[periode.årsak]
       ? findUnderÅrsakObjekt(periode[periode.årsak].underÅrsak)
       : false;
@@ -384,7 +384,7 @@ const transformValues = (values, aksjonspunkter, årsaker) => {
 
   return [
     {
-      kode: apCode.definisjon.kode,
+      kode: apCode.definisjon,
       begrunnelse: values.begrunnelse,
       feilutbetalingFakta,
     },

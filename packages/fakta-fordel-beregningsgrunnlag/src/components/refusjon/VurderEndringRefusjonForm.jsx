@@ -20,9 +20,9 @@ const FORM_NAME = 'VURDER_REFUSJON_BERGRUNN_FORM';
 const fieldArrayName = 'vurderEndringRefusjonListe';
 
 const { VURDER_REFUSJON_BERGRUNN } = avklaringsbehovCodes;
-  
+
 const findAvklaringsbehovMedBegrunnelse = avklaringsbehov =>
-  avklaringsbehov.find(ab => ab.definisjon.kode === VURDER_REFUSJON_BERGRUNN && ab.begrunnelse !== null);
+  avklaringsbehov.find(ab => ab.definisjon === VURDER_REFUSJON_BERGRUNN && ab.begrunnelse !== null);
 
 /**
  * VurderEndringRefusjonForm
@@ -32,65 +32,65 @@ const findAvklaringsbehovMedBegrunnelse = avklaringsbehov =>
  * Formen består av et fieldArray som mounter fields per beregningsgrunnlag ved flere vilkårsperioder
  * 
  */
- const VurderEndringRefusjonFormImpl = ({
-    readOnly,
-    submittable,
-    hasBegrunnelse,
-    submitEnabled,
-    behandlingId,
-    behandlingVersjon,
-    alleBeregningsgrunnlag,
-    arbeidsgiverOpplysningerPerId,
-    avklaringsbehov,
-    aktivtBeregningsgrunnlagIndex,
-    ...formProps
-  }) => (
-    <form onSubmit={formProps.handleSubmit}>
-      <FieldArray
-        name={fieldArrayName}
-        component={VurderRefusjonFieldArrayComponent}
-        readOnly={readOnly}
-        alleBeregningsgrunnlag={alleBeregningsgrunnlag}
-        arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
-        aktivtBeregningsgrunnlagIndex={aktivtBeregningsgrunnlagIndex}
-      />
-      <VerticalSpacer twentyPx />
-        <FaktaBegrunnelseTextField
-        name={BEGRUNNELSE_FIELD}
-        isSubmittable={submittable}
-        isReadOnly={readOnly}
-        hasBegrunnelse={hasBegrunnelse}
-        />
-        <VerticalSpacer twentyPx />
-        <FaktaSubmitButton
-        formName={formProps.form}
-        isSubmittable={submittable && submitEnabled}
-        isReadOnly={readOnly}
-        hasOpenAksjonspunkter={!isAvklaringsbehovOpen(avklaringsbehov)}
-        behandlingId={behandlingId}
-        behandlingVersjon={behandlingVersjon}
-        />
-    </form>
-  );
-  
-  VurderEndringRefusjonFormImpl.propTypes = {
-    submitCallback: PropTypes.func.isRequired,
-    readOnly: PropTypes.bool.isRequired,
-    submittable: PropTypes.bool.isRequired,
-    submitEnabled: PropTypes.bool.isRequired,
-    hasBegrunnelse: PropTypes.bool.isRequired,
-    behandlingId: PropTypes.number.isRequired,
-    behandlingVersjon: PropTypes.number.isRequired,
-    alleBeregningsgrunnlag: PropTypes.arrayOf(beregningsgrunnlagPropType).isRequired,
-    alleKodeverk: PropTypes.shape().isRequired,
-    arbeidsgiverOpplysningerPerId: PropTypes.shape().isRequired,
-    avklaringsbehov: PropTypes.arrayOf(beregningAvklaringsbehovPropType).isRequired,
-    aktivtBeregningsgrunnlagIndex: PropTypes.number.isRequired,
-    ...formPropTypes,
-  };
+const VurderEndringRefusjonFormImpl = ({
+  readOnly,
+  submittable,
+  hasBegrunnelse,
+  submitEnabled,
+  behandlingId,
+  behandlingVersjon,
+  alleBeregningsgrunnlag,
+  arbeidsgiverOpplysningerPerId,
+  avklaringsbehov,
+  aktivtBeregningsgrunnlagIndex,
+  ...formProps
+}) => (
+  <form onSubmit={formProps.handleSubmit}>
+    <FieldArray
+      name={fieldArrayName}
+      component={VurderRefusjonFieldArrayComponent}
+      readOnly={readOnly}
+      alleBeregningsgrunnlag={alleBeregningsgrunnlag}
+      arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
+      aktivtBeregningsgrunnlagIndex={aktivtBeregningsgrunnlagIndex}
+    />
+    <VerticalSpacer twentyPx />
+    <FaktaBegrunnelseTextField
+      name={BEGRUNNELSE_FIELD}
+      isSubmittable={submittable}
+      isReadOnly={readOnly}
+      hasBegrunnelse={hasBegrunnelse}
+    />
+    <VerticalSpacer twentyPx />
+    <FaktaSubmitButton
+      formName={formProps.form}
+      isSubmittable={submittable && submitEnabled}
+      isReadOnly={readOnly}
+      hasOpenAksjonspunkter={!isAvklaringsbehovOpen(avklaringsbehov)}
+      behandlingId={behandlingId}
+      behandlingVersjon={behandlingVersjon}
+    />
+  </form>
+);
+
+VurderEndringRefusjonFormImpl.propTypes = {
+  submitCallback: PropTypes.func.isRequired,
+  readOnly: PropTypes.bool.isRequired,
+  submittable: PropTypes.bool.isRequired,
+  submitEnabled: PropTypes.bool.isRequired,
+  hasBegrunnelse: PropTypes.bool.isRequired,
+  behandlingId: PropTypes.number.isRequired,
+  behandlingVersjon: PropTypes.number.isRequired,
+  alleBeregningsgrunnlag: PropTypes.arrayOf(beregningsgrunnlagPropType).isRequired,
+  alleKodeverk: PropTypes.shape().isRequired,
+  arbeidsgiverOpplysningerPerId: PropTypes.shape().isRequired,
+  avklaringsbehov: PropTypes.arrayOf(beregningAvklaringsbehovPropType).isRequired,
+  aktivtBeregningsgrunnlagIndex: PropTypes.number.isRequired,
+  ...formPropTypes,
+};
 
 
-  
+
 export const transformValues = createSelector(
   [
     ownProps => ownProps.alleBeregningsgrunnlag,
@@ -150,5 +150,5 @@ const VurderEndringRefusjonForm = connect(mapStateToPropsFactory)(
   behandlingForm({ form: FORM_NAME })(VurderEndringRefusjonFormImpl),
 );
 
-  
-  export default VurderEndringRefusjonForm;
+
+export default VurderEndringRefusjonForm;
