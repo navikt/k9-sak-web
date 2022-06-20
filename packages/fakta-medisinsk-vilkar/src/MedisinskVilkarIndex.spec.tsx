@@ -12,10 +12,7 @@ describe('<MedisinskVilkarIndex>', () => {
     const behandling: Partial<Behandling> = {
       id: 1,
       versjon: 1,
-      sprakkode: {
-        kode: 'NO',
-        kodeverk: '',
-      },
+      sprakkode: 'NO',
     };
 
     const sykdom: Partial<Sykdom> = {

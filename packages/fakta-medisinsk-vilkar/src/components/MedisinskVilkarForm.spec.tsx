@@ -14,15 +14,15 @@ import MedisinskVilkarFormButtons from './MedisinskVilkarFormButtons';
 
 const aksjonspunkter = [
   {
-    definisjon: { kode: '9001', kodeverk: 'AKSJONSPUNKT_DEF' },
-    status: { kode: 'UTFO', kodeverk: 'AKSJONSPUNKT_STATUS' },
+    definisjon: '9001',
+    status: 'UTFO',
     begrunnelse: 'placeholder',
-    vilkarType: { kode: 'PSB_VK_2_a', kodeverk: 'VILKAR_TYPE' },
+    vilkarType: 'PSB_VK_2_a',
     toTrinnsBehandling: true,
     toTrinnsBehandlingGodkjent: null,
     vurderPaNyttArsaker: null,
     besluttersBegrunnelse: null,
-    aksjonspunktType: { kode: 'MANU', kodeverk: 'AKSJONSPUNKT_TYPE' },
+    aksjonspunktType: 'MANU',
     kanLoses: true,
     erAktivt: true,
     fristTid: null,
