@@ -1,24 +1,22 @@
-import React from 'react';
-import { FormattedMessage } from 'react-intl';
-import moment from 'moment';
-import { PersonCard, Gender } from '@navikt/k9-react-components';
-
-import { DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils/src/formats';
-import { FlexColumn, FlexContainer, FlexRow } from '@fpsak-frontend/shared-components';
 import navBrukerKjonn from '@fpsak-frontend/kodeverk/src/navBrukerKjonn';
+import { FlexColumn, FlexContainer, FlexRow } from '@fpsak-frontend/shared-components';
+import { DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils/src/formats';
 import {
+  FagsakPerson,
   KodeverkMedNavn,
   Personopplysninger,
-  FagsakPerson,
   RelatertFagsak as RelatertFagsakType,
 } from '@k9-sak-web/types';
 import OvergangFraInfotrygd from '@k9-sak-web/types/src/overgangFraInfotrygd';
-
+import { Tag } from '@navikt/ds-react';
+import { Gender, PersonCard } from '@navikt/k9-react-components';
+import moment from 'moment';
+import React from 'react';
+import { FormattedMessage } from 'react-intl';
+import RelatertFagsak from './RelatertFagsak';
 import VisittkortDetaljerPopup from './VisittkortDetaljerPopup';
 import VisittkortLabels from './VisittkortLabels';
-
 import styles from './visittkortPanel.less';
-import RelatertFagsak from './RelatertFagsak';
 
 const utledKjonn = (kjonn: string): Gender => {
   if (kjonn === navBrukerKjonn.KVINNE) {
@@ -36,6 +34,7 @@ interface OwnProps {
   relaterteFagsaker: RelatertFagsakType;
   direkteOvergangFraInfotrygd?: OvergangFraInfotrygd;
   erPbSak?: boolean;
+  erHastesak?: boolean;
 }
 
 const VisittkortPanel = ({
@@ -47,6 +46,7 @@ const VisittkortPanel = ({
   relaterteFagsaker,
   direkteOvergangFraInfotrygd,
   erPbSak,
+  erHastesak,
 }: OwnProps) => {
   if (!personopplysninger && !harTilbakekrevingVerge) {
     return (
@@ -154,6 +154,15 @@ const VisittkortPanel = ({
                   <p className={styles.pbSakLabel}>
                     <FormattedMessage id="VisittkortPanel.PB" />
                   </p>
+                </div>
+              </FlexColumn>
+            )}
+            {erHastesak && (
+              <FlexColumn>
+                <div className={styles.flexContainer}>
+                  <Tag className={styles.hastesak} variant="error" size="small">
+                    <FormattedMessage id="VisittkortPanel.Hastesak" />
+                  </Tag>
                 </div>
               </FlexColumn>
             )}

@@ -26,5 +26,9 @@
   {
     "key": "TYPE_MEDISINSKE_OPPLYSNINGER_BREV",
     "value": "${TYPE_MEDISINSKE_OPPLYSNINGER_BREV}"
+  },
+  {
+    "key": "LOS_MARKER_BEHANDLING",
+    "value": "${LOS_MARKER_BEHANDLING}"
   }
 ]

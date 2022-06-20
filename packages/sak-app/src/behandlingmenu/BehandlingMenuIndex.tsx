@@ -1,19 +1,19 @@
-import React, { useCallback, useEffect, useMemo, useRef } from 'react';
-import moment from 'moment';
-import { useNavigate, useLocation } from 'react-router-dom';
-
-import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import BehandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
+import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import MenySakIndex, { MenyData } from '@fpsak-frontend/sak-meny';
 import MenyEndreBehandlendeEnhetIndex, { getMenytekst } from '@fpsak-frontend/sak-meny-endre-enhet';
-import MenyVergeIndex, { getMenytekst as getVergeMenytekst } from '@fpsak-frontend/sak-meny-verge';
-import MenyTaAvVentIndex, { getMenytekst as getTaAvVentMenytekst } from '@fpsak-frontend/sak-meny-ta-av-vent';
-import MenySettPaVentIndex, { getMenytekst as getSettPaVentMenytekst } from '@fpsak-frontend/sak-meny-sett-pa-vent';
 import MenyHenleggIndex, { getMenytekst as getHenleggMenytekst } from '@fpsak-frontend/sak-meny-henlegg';
 import MenyNyBehandlingIndex, {
   getMenytekst as getNyBehandlingMenytekst,
 } from '@fpsak-frontend/sak-meny-ny-behandling';
+import MenySettPaVentIndex, { getMenytekst as getSettPaVentMenytekst } from '@fpsak-frontend/sak-meny-sett-pa-vent';
+import MenyTaAvVentIndex, { getMenytekst as getTaAvVentMenytekst } from '@fpsak-frontend/sak-meny-ta-av-vent';
+import MenyVergeIndex, { getMenytekst as getVergeMenytekst } from '@fpsak-frontend/sak-meny-verge';
+import KlagePart from '@k9-sak-web/behandling-klage/src/types/klagePartTsType';
+import MenyMarkerBehandling, {
+  getMenytekst as getMenytekstMarkerBehandling,
+} from '@k9-sak-web/sak-meny-marker-behandling';
 import {
   ArbeidsgiverOpplysningerPerId,
   BehandlingAppKontekst,
@@ -21,11 +21,20 @@ import {
   FagsakPerson,
   FeatureToggles,
   KodeverkMedNavn,
+  MerknadFraLos,
   NavAnsatt,
   Personopplysninger,
 } from '@k9-sak-web/types';
-
-import KlagePart from '@k9-sak-web/behandling-klage/src/types/klagePartTsType';
+import moment from 'moment';
+import React, { useCallback, useEffect, useMemo, useRef } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
+import ApplicationContextPath from '../app/ApplicationContextPath';
+import { getLocationWithDefaultProsessStegAndFakta, getPathToFplos, pathToBehandling } from '../app/paths';
+import useGetEnabledApplikasjonContext from '../app/useGetEnabledApplikasjonContext';
+import BehandlingRettigheter, { VergeBehandlingmenyValg } from '../behandling/behandlingRettigheterTsType';
+import { K9sakApiKeys, restApiHooks } from '../data/k9sakApi';
+import { useVisForhandsvisningAvMelding } from '../data/useVisForhandsvisningAvMelding';
+import SakRettigheter from '../fagsak/sakRettigheterTsType';
 import {
   fjernVerge,
   nyBehandlendeEnhet,
@@ -34,14 +43,7 @@ import {
   setBehandlingOnHold,
   shelveBehandling,
 } from './behandlingMenuOperations';
-import { getLocationWithDefaultProsessStegAndFakta, pathToBehandling, getPathToFplos } from '../app/paths';
-import { useVisForhandsvisningAvMelding } from '../data/useVisForhandsvisningAvMelding';
-import { K9sakApiKeys, restApiHooks } from '../data/k9sakApi';
-import useGetEnabledApplikasjonContext from '../app/useGetEnabledApplikasjonContext';
-import ApplicationContextPath from '../app/ApplicationContextPath';
 import MenyKodeverk from './MenyKodeverk';
-import BehandlingRettigheter, { VergeBehandlingmenyValg } from '../behandling/behandlingRettigheterTsType';
-import SakRettigheter from '../fagsak/sakRettigheterTsType';
 
 const BEHANDLINGSTYPER_SOM_SKAL_KUNNE_OPPRETTES = [
   BehandlingType.FORSTEGANGSSOKNAD,
@@ -157,6 +159,10 @@ export const BehandlingMenuIndex = ({
   );
   const { startRequest: hentMottakere } = restApiHooks.useRestApiRunner<KlagePart[]>(K9sakApiKeys.PARTER_MED_KLAGERETT);
 
+  const { startRequest: markerBehandling } = restApiHooks.useRestApiRunner(K9sakApiKeys.LOS_LAGRE_MERKNAD);
+
+  const merknaderFraLos = restApiHooks.useGlobalStateRestApiData<MerknadFraLos>(K9sakApiKeys.LOS_HENTE_MERKNAD);
+
   // FIX remove this when unntaksløype er lansert
   const featureTogglesData = restApiHooks.useGlobalStateRestApiData<{ key: string; value: string }[]>(
     K9sakApiKeys.FEATURE_TOGGLE,
@@ -233,6 +239,15 @@ export const BehandlingMenuIndex = ({
               behandlingTypeKode === BehandlingType.TILBAKEKREVING ||
               behandlingTypeKode === BehandlingType.TILBAKEKREVING_REVURDERING
             }
+          />
+        )),
+        new MenyData(featureToggles?.LOS_MARKER_BEHANDLING, getMenytekstMarkerBehandling()).medModal(lukkModal => (
+          <MenyMarkerBehandling
+            behandlingUuid={behandling?.uuid}
+            markerBehandling={markerBehandling}
+            lukkModal={lukkModal}
+            brukHastekøMarkering
+            merknaderFraLos={merknaderFraLos}
           />
         )),
         new MenyData(behandlingRettigheter?.behandlingKanHenlegges, getHenleggMenytekst()).medModal(lukkModal => (

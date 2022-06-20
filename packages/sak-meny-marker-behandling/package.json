@@ -1,0 +1,25 @@
+{
+  "name": "@k9-sak-web/sak-meny-marker-behandling",
+  "version": "1.0.0",
+  "module": "index.jsx",
+  "license": "MIT",
+  "private": true,
+  "dependencies": {
+    "@fpsak-frontend/assets": "1.0.0",
+    "@fpsak-frontend/form": "1.0.0",
+    "@fpsak-frontend/shared-components": "1.0.0",
+    "@fpsak-frontend/utils": "1.0.0",
+    "@k9-sak-web/types": "1.0.0",
+    "@navikt/ds-react": "0.19.8",
+    "formik": "^2.2.9",
+    "nav-frontend-core": "6.0.1",
+    "nav-frontend-knapper": "3.1.2",
+    "nav-frontend-knapper-style": "2.1.1",
+    "nav-frontend-skjema": "4.0.5",
+    "nav-frontend-typografi": "4.0.1",
+    "nav-frontend-typografi-style": "2.0.1",
+    "react": "^17.0.2",
+    "react-intl": "^5.25.1",
+    "yup": "0.32.11"
+  }
+}
