@@ -5,12 +5,9 @@ import BeregningsgrunnlagProsessIndex from '@fpsak-frontend/prosess-beregningsgr
 import { prosessStegCodes } from '@k9-sak-web/konstanter';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { ProsessStegDef, ProsessStegPanelDef } from '@k9-sak-web/behandling-felles';
-import { FrisinnBehandlingApiKeys } from "@k9-sak-web/behandling-frisinn/src/data/frisinnBehandlingApi";
 
 class PanelDef extends ProsessStegPanelDef {
   getKomponent = props => <BeregningsgrunnlagProsessIndex {...props} />;
-
-  getEndepunkter = () => [FrisinnBehandlingApiKeys.BEREGNINGREFERANSER_TIL_VURDERING];
 
   getAksjonspunktKoder = () => [
     aksjonspunktCodes.FASTSETT_BEREGNINGSGRUNNLAG_ARBEIDSTAKER_FRILANS,
