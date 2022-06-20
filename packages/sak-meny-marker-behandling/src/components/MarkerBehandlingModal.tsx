@@ -33,7 +33,7 @@ const MarkerBehandlingModal: React.FC<PureOwnProps> = ({
   if (!brukHastekøMarkering && !brukVanskeligKøMarkering) {
     return null;
   }
-
+  Modal.setAppElement(document.body);
   const MarkerBehandlingSchema = Yup.object().shape({
     markerSomHastesak: brukHastekøMarkering
       ? Yup.boolean().required('ValidationMessage.MustBeChecked').oneOf([true], 'ValidationMessage.MustBeChecked')
@@ -63,7 +63,14 @@ const MarkerBehandlingModal: React.FC<PureOwnProps> = ({
   };
 
   return (
-    <Modal className={styles.modal} open closeButton onClose={lukkModal} shouldCloseOnOverlayClick={false}>
+    <Modal
+      className={styles.modal}
+      open
+      closeButton
+      onClose={lukkModal}
+      shouldCloseOnOverlayClick={false}
+      aria-label="Modal for markering av behandling"
+    >
       <h3 className={`${styles.tittel} typo-systemtittel`}>Marker behandling og send til egen kø</h3>
       <Formik
         initialValues={buildInitialValues()}
