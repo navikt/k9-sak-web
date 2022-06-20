@@ -30,6 +30,7 @@ const omsorgspengerData = [
   { key: OmsorgspengerBehandlingApiKeys.SOKNAD },
   { key: OmsorgspengerBehandlingApiKeys.BEREGNINGSRESULTAT_UTBETALING },
   { key: OmsorgspengerBehandlingApiKeys.BEREGNINGSGRUNNLAG },
+  { key: OmsorgspengerBehandlingApiKeys.BEREGNINGREFERANSER_TIL_VURDERING },
   { key: OmsorgspengerBehandlingApiKeys.SIMULERING_RESULTAT },
   { key: OmsorgspengerBehandlingApiKeys.FORBRUKTE_DAGER },
   { key: OmsorgspengerBehandlingApiKeys.OVERLAPPENDE_YTELSER },
