@@ -1,6 +1,7 @@
 import CheckboxFieldFormik from '@fpsak-frontend/form/src/CheckboxFieldFormik';
 import TextAreaFormik from '@fpsak-frontend/form/src/TextAreaFormik';
 import { goToLos } from '@k9-sak-web/sak-app/src/app/paths';
+import { MerknadFraLos } from '@k9-sak-web/types';
 import { Modal } from '@navikt/ds-react';
 import { Form, Formik } from 'formik';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
@@ -17,6 +18,7 @@ interface PureOwnProps {
   lukkModal: () => void;
   markerBehandling: (values: any) => Promise<any>;
   behandlingUuid: string;
+  merknaderFraLos: MerknadFraLos;
 }
 
 const MarkerBehandlingModal: React.FC<PureOwnProps> = ({
@@ -25,6 +27,7 @@ const MarkerBehandlingModal: React.FC<PureOwnProps> = ({
   lukkModal,
   markerBehandling,
   behandlingUuid,
+  merknaderFraLos,
 }) => {
   const intl = useIntl();
   if (!brukHastekøMarkering && !brukVanskeligKøMarkering) {
@@ -44,11 +47,26 @@ const MarkerBehandlingModal: React.FC<PureOwnProps> = ({
       .max(100000, { id: 'ValidationMessage.Max100000Char' }),
   });
 
+  const buildInitialValues = () => {
+    if (merknaderFraLos) {
+      return {
+        markerSomHastesak: true,
+        markerSomVanskelig: false,
+        begrunnelse: merknaderFraLos.fritekst,
+      };
+    }
+    return {
+      markerSomHastesak: false,
+      markerSomVanskelig: false,
+      begrunnelse: '',
+    };
+  };
+
   return (
     <Modal className={styles.modal} open closeButton onClose={lukkModal} shouldCloseOnOverlayClick={false}>
       <h3 className={`${styles.tittel} typo-systemtittel`}>Marker behandling og send til egen kø</h3>
       <Formik
-        initialValues={{ markerSomHastesak: false, markerSomVanskelig: false, begrunnelse: '' }}
+        initialValues={buildInitialValues()}
         validationSchema={MarkerBehandlingSchema}
         onSubmit={(values, actions) => {
           actions.setSubmitting(false);

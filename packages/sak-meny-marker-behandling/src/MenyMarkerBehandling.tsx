@@ -1,4 +1,5 @@
 /* eslint-disable arrow-body-style */
+import { MerknadFraLos } from '@k9-sak-web/types';
 import React from 'react';
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 import messages from '../i18n/nb_NO.json';
@@ -22,6 +23,7 @@ interface OwnProps {
   brukVanskeligKøMarkering?: boolean;
   markerBehandling: (values: any) => Promise<any>;
   behandlingUuid: string;
+  merknaderFraLos: MerknadFraLos;
 }
 
 const MenyMarkerBehandling = ({
@@ -30,6 +32,7 @@ const MenyMarkerBehandling = ({
   brukVanskeligKøMarkering,
   markerBehandling,
   behandlingUuid,
+  merknaderFraLos,
 }: OwnProps) => {
   return (
     <RawIntlProvider value={intl}>
@@ -39,6 +42,7 @@ const MenyMarkerBehandling = ({
         brukVanskeligKøMarkering={brukVanskeligKøMarkering}
         markerBehandling={markerBehandling}
         behandlingUuid={behandlingUuid}
+        merknaderFraLos={merknaderFraLos}
       />
     </RawIntlProvider>
   );

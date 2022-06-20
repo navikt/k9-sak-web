@@ -16,6 +16,7 @@ import {
   FeatureToggles,
   Kodeverk,
   KodeverkMedNavn,
+  MerknadFraLos,
   Personopplysninger,
 } from '@k9-sak-web/types';
 import React, { useCallback, useMemo, useState } from 'react';
@@ -184,6 +185,17 @@ const FagsakIndex = () => {
     [featureTogglesData],
   );
 
+  const { data: merknaderFraLos } = restApiHooks.useGlobalStateRestApi<MerknadFraLos>(
+    K9sakApiKeys.LOS_HENTE_MERKNAD,
+    {},
+    {
+      updateTriggers: [!behandling],
+      suspendRequest: !behandling || !featureToggles?.LOS_MARKER_BEHANDLING,
+    },
+  );
+
+  const erHastesak = merknaderFraLos && merknaderFraLos.merknadKoder?.includes('HASTESAK');
+
   if (!fagsak) {
     if (fagsakState === RestApiState.NOT_STARTED || fagsakState === RestApiState.LOADING) {
       return <LoadingPanel />;
@@ -275,6 +287,7 @@ const FagsakIndex = () => {
                 relaterteFagsaker={relaterteFagsaker}
                 direkteOvergangFraInfotrygd={direkteOvergangFraInfotrygd}
                 erPbSak={fagsak.erPbSak}
+                erHastesak={erHastesak}
               />
               {showPunsjOgFagsakPåSøkerStripe && (
                 <>

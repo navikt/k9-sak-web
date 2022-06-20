@@ -21,6 +21,7 @@ import {
   FagsakPerson,
   FeatureToggles,
   KodeverkMedNavn,
+  MerknadFraLos,
   NavAnsatt,
   Personopplysninger,
 } from '@k9-sak-web/types';
@@ -37,7 +38,6 @@ import SakRettigheter from '../fagsak/sakRettigheterTsType';
 import {
   fjernVerge,
   nyBehandlendeEnhet,
-  markerBehandling,
   opprettVerge,
   resumeBehandling,
   setBehandlingOnHold,
@@ -73,8 +73,8 @@ const getUuidForSisteLukkedeForsteEllerRevurd = (behandlinger: BehandlingAppKont
 const EMPTY_ARRAY = [];
 
 export type BehandlendeEnheter = {
-  enhetId: string,
-  enhetNavn: string,
+  enhetId: string;
+  enhetNavn: string;
 }[];
 
 interface OwnProps {
@@ -159,8 +159,12 @@ export const BehandlingMenuIndex = ({
   );
   const { startRequest: hentMottakere } = restApiHooks.useRestApiRunner<KlagePart[]>(K9sakApiKeys.PARTER_MED_KLAGERETT);
 
+  const { startRequest: markerBehandling } = restApiHooks.useRestApiRunner(K9sakApiKeys.LOS_LAGRE_MERKNAD);
+
+  const merknaderFraLos = restApiHooks.useGlobalStateRestApiData<MerknadFraLos>(K9sakApiKeys.LOS_HENTE_MERKNAD);
+
   // FIX remove this when unntaksløype er lansert
-  const featureTogglesData = restApiHooks.useGlobalStateRestApiData<{ key: string, value: string }[]>(
+  const featureTogglesData = restApiHooks.useGlobalStateRestApiData<{ key: string; value: string }[]>(
     K9sakApiKeys.FEATURE_TOGGLE,
   );
   const featureToggles = useMemo<FeatureToggles>(
@@ -237,12 +241,13 @@ export const BehandlingMenuIndex = ({
             }
           />
         )),
-         new MenyData(featureToggles?.LOS_MARKER_BEHANDLING, getMenytekstMarkerBehandling()).medModal(lukkModal => (
+        new MenyData(featureToggles?.LOS_MARKER_BEHANDLING, getMenytekstMarkerBehandling()).medModal(lukkModal => (
           <MenyMarkerBehandling
             behandlingUuid={behandling?.uuid}
             markerBehandling={markerBehandling}
             lukkModal={lukkModal}
             brukHastekøMarkering
+            merknaderFraLos={merknaderFraLos}
           />
         )),
         new MenyData(behandlingRettigheter?.behandlingKanHenlegges, getHenleggMenytekst()).medModal(lukkModal => (

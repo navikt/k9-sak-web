@@ -53,8 +53,6 @@ export enum PleiepengerBehandlingApiKeys {
   UTENLANDSOPPHOLD = 'UTENLANDSOPPHOLD',
   BEHANDLING_PERIODER_ÅRSAK_MED_VILKÅR = 'BEHANDLING_PERIODER_ÅRSAK_MED_VILKÅR',
   BEREGNINGREFERANSER_TIL_VURDERING = 'BEREGNINGREFERANSER_TIL_VURDERING',
-  LOS_LAGRE_MERKNAD = 'LOS_LAGRE_MERKNAD',
-  LOS_HENTE_MERKNAD = 'LOS_HENTE_MERKNAD',
 }
 
 const endpoints = new RestApiConfigBuilder()
@@ -99,8 +97,6 @@ const endpoints = new RestApiConfigBuilder()
   // operasjoner
   .withRel('dokumentdata-lagre', PleiepengerBehandlingApiKeys.DOKUMENTDATA_LAGRE)
   .withRel('dokumentdata-hente', PleiepengerBehandlingApiKeys.DOKUMENTDATA_HENTE)
-  .withRel('los-lagre-merknad', PleiepengerBehandlingApiKeys.LOS_LAGRE_MERKNAD)
-  .withRel('los-hente-merknad', PleiepengerBehandlingApiKeys.LOS_HENTE_MERKNAD)
 
   // TODO Flytt alle endepunkter under til backend på same måte som i fp-frontend
   .withPost('/k9/sak/api/behandlinger/endre-pa-vent', PleiepengerBehandlingApiKeys.UPDATE_ON_HOLD)
