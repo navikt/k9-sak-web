@@ -10,6 +10,7 @@ import { Element, Normaltekst } from 'nav-frontend-typografi';
 import React from 'react';
 import { useIntl } from 'react-intl';
 import * as Yup from 'yup';
+import Merknadkode from '../Merknadkode';
 import styles from './markerBehandlingModal.less';
 
 interface PureOwnProps {
@@ -80,7 +81,7 @@ const MarkerBehandlingModal: React.FC<PureOwnProps> = ({
           const transformedValues = {
             behandlingUuid,
             fritekst: values.begrunnelse,
-            merknadKoder: brukHastekøMarkering ? ['HASTESAK'] : [],
+            merknadKoder: brukHastekøMarkering ? [Merknadkode.HASTESAK] : [],
           };
           markerBehandling(transformedValues).then(() => goToLos());
         }}
