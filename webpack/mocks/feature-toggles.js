@@ -29,6 +29,10 @@ const featureToggles = [
     key: 'TYPE_MEDISINSKE_OPPLYSNINGER_BREV',
     value: process.env.TYPE_MEDISINSKE_OPPLYSNINGER_BREV,
   },
+  {
+    key: 'LOS_MARKER_BEHANDLING',
+    value: process.env.LOS_MARKER_BEHANDLING,
+  },
 ];
 
 module.exports = function (app) {

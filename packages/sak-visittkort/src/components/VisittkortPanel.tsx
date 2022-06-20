@@ -36,6 +36,7 @@ interface OwnProps {
   relaterteFagsaker: RelatertFagsakType;
   direkteOvergangFraInfotrygd?: OvergangFraInfotrygd;
   erPbSak?: boolean;
+  erHastesak?: boolean;
 }
 
 const VisittkortPanel = ({
@@ -47,6 +48,7 @@ const VisittkortPanel = ({
   relaterteFagsaker,
   direkteOvergangFraInfotrygd,
   erPbSak,
+  erHastesak,
 }: OwnProps) => {
   if (!personopplysninger && !harTilbakekrevingVerge) {
     return (
@@ -153,6 +155,11 @@ const VisittkortPanel = ({
             {erUtenlandssak && (
               <TagContainer tagVariant="success">
                 <FormattedMessage id="VisittkortPanel.Utenlandssak" />
+              </TagContainer>
+            )}
+            {erHastesak && (
+              <TagContainer tagVariant="error">
+                <FormattedMessage id="VisittkortPanel.Hastesak" />
               </TagContainer>
             )}
           </div>

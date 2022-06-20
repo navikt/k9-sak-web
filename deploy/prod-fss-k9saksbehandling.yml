@@ -94,3 +94,5 @@ spec:
       value: "false"
     - name: TYPE_MEDISINSKE_OPPLYSNINGER_BREV
       value: "true"
+    - name: LOS_MARKER_BEHANDLING
+      value: "false"

@@ -287,8 +287,7 @@ export const MessagesMedMedisinskeTypeBrevmalImpl = ({
             </>
           )}
           {brevmalkode === dokumentMalType.GENERELT_FRITEKSTBREV && (
-            <>
-              <div className='input--xxl'>
+            <div className='input--xxl'>
                 <VerticalSpacer eightPx />
                 <InputField
                   name='fritekstbrev.overskrift'
@@ -306,7 +305,6 @@ export const MessagesMedMedisinskeTypeBrevmalImpl = ({
                   badges={[{ type: 'fokus', textId: languageCode, title: 'Messages.Beskrivelse' }]}
                 />
               </div>
-            </>
           )}
           <VerticalSpacer eightPx />
           <div className={styles.buttonRow}>

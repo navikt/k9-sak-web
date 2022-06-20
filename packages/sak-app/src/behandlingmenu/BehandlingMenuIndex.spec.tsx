@@ -85,6 +85,7 @@ describe('BehandlingMenuIndex', () => {
     requestApi.mock(K9sakApiKeys.KODEVERK_KLAGE, {});
     requestApi.mock(K9sakApiKeys.KAN_TILBAKEKREVING_OPPRETTES, false);
     requestApi.mock(K9sakApiKeys.KAN_TILBAKEKREVING_REVURDERING_OPPRETTES, false);
+    requestApi.mock(K9sakApiKeys.LOS_HENTE_MERKNAD, false);
 
     const sakRettigheter = {
       sakSkalTilInfotrygd: false,
@@ -120,7 +121,7 @@ describe('BehandlingMenuIndex', () => {
             },
           ]}
         />
-      </MemoryRouter>
+      </MemoryRouter>,
     );
 
     const knapp = await screen.findByRole('button', { name: 'Behandlingsmeny' });
@@ -130,6 +131,7 @@ describe('BehandlingMenuIndex', () => {
     expect(screen.queryByText('Sett behandlingen på vent')).not.toBeVisible();
     expect(screen.queryByText('Henlegg behandlingen og avslutt')).not.toBeVisible();
     expect(screen.queryByText('Endre behandlende enhet')).not.toBeVisible();
+    // expect(screen.queryByText('Marker behandling')).not.toBeVisible();
     expect(screen.queryByText('Opprett ny behandling')).not.toBeVisible();
     expect(screen.queryByText('Opprett verge/fullmektig')).not.toBeVisible();
 
@@ -144,6 +146,7 @@ describe('BehandlingMenuIndex', () => {
     expect(screen.queryByRole('button', { name: 'Sett behandlingen på vent' })).toBeVisible();
     expect(screen.queryByRole('button', { name: 'Henlegg behandlingen og avslutt' })).toBeVisible();
     expect(screen.queryByRole('button', { name: 'Endre behandlende enhet' })).toBeVisible();
+    // expect(screen.queryByRole('button', { name: 'Marker behandling' })).toBeVisible();
     expect(screen.queryByRole('button', { name: 'Opprett ny behandling' })).toBeVisible();
     expect(screen.queryByRole('button', { name: 'Opprett verge/fullmektig' })).toBeVisible();
   });
