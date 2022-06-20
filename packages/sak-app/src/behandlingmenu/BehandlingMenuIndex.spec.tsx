@@ -85,6 +85,7 @@ describe('BehandlingMenuIndex', () => {
     requestApi.mock(K9sakApiKeys.KODEVERK_KLAGE, {});
     requestApi.mock(K9sakApiKeys.KAN_TILBAKEKREVING_OPPRETTES, false);
     requestApi.mock(K9sakApiKeys.KAN_TILBAKEKREVING_REVURDERING_OPPRETTES, false);
+    requestApi.mock(K9sakApiKeys.LOS_HENTE_MERKNAD, false);
 
     const sakRettigheter = {
       sakSkalTilInfotrygd: false,
@@ -120,7 +121,7 @@ describe('BehandlingMenuIndex', () => {
             },
           ]}
         />
-      </MemoryRouter>
+      </MemoryRouter>,
     );
 
     const knapp = await screen.findByRole('button', { name: 'Behandlingsmeny' });
