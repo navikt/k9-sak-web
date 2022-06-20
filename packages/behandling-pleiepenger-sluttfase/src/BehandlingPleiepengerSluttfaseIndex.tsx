@@ -33,6 +33,7 @@ const pleiepengerData = [
   { key: PleiepengerSluttfaseBehandlingApiKeys.SOKNAD },
   { key: PleiepengerSluttfaseBehandlingApiKeys.BEREGNINGSRESULTAT_UTBETALING },
   { key: PleiepengerSluttfaseBehandlingApiKeys.BEREGNINGSGRUNNLAG },
+  { key: PleiepengerSluttfaseBehandlingApiKeys.BEREGNINGREFERANSER_TIL_VURDERING },
   { key: PleiepengerSluttfaseBehandlingApiKeys.SIMULERING_RESULTAT },
   { key: PleiepengerSluttfaseBehandlingApiKeys.UTTAK },
   { key: PleiepengerSluttfaseBehandlingApiKeys.OVERLAPPENDE_YTELSER },

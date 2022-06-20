@@ -22,6 +22,7 @@ const frisinnData = [
   { key: FrisinnBehandlingApiKeys.PERSONOPPLYSNINGER },
   { key: FrisinnBehandlingApiKeys.BEREGNINGSRESULTAT_UTBETALT },
   { key: FrisinnBehandlingApiKeys.BEREGNINGSGRUNNLAG },
+  { key: FrisinnBehandlingApiKeys.BEREGNINGREFERANSER_TIL_VURDERING },
   { key: FrisinnBehandlingApiKeys.SIMULERING_RESULTAT },
 ];
 
