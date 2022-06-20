@@ -25,8 +25,6 @@ class BehandlingEventHandler {
   fjernVerge = params => this.handler.fjernVerge(params);
 
   lagreRisikoklassifiseringAksjonspunkt = params => this.handler.lagreRisikoklassifiseringAksjonspunkt(params);
-  
-  markerBehandling = params => this.handler.markerBehandling(params);
 }
 
 export default new BehandlingEventHandler();
