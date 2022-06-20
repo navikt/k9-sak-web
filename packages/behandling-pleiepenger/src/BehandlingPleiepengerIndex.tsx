@@ -30,6 +30,7 @@ const pleiepengerData = [
   { key: PleiepengerBehandlingApiKeys.SOKNAD },
   { key: PleiepengerBehandlingApiKeys.BEREGNINGSRESULTAT_UTBETALING },
   { key: PleiepengerBehandlingApiKeys.BEREGNINGSGRUNNLAG },
+  { key: PleiepengerBehandlingApiKeys.BEREGNINGREFERANSER_TIL_VURDERING },
   { key: PleiepengerBehandlingApiKeys.SIMULERING_RESULTAT },
   { key: PleiepengerBehandlingApiKeys.UTTAK },
   { key: PleiepengerBehandlingApiKeys.OVERLAPPENDE_YTELSER },
