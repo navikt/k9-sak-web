@@ -1,4 +1,5 @@
 import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
+import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import VisittkortSakIndex from '@fpsak-frontend/sak-visittkort';
 import {
   AndreSakerPåSøkerStripe,
@@ -7,6 +8,7 @@ import {
   Punsjstripe,
 } from '@fpsak-frontend/shared-components';
 import { RestApiState } from '@k9-sak-web/rest-api-hooks';
+import { Merknadkode } from '@k9-sak-web/sak-meny-marker-behandling';
 import Soknadsperiodestripe from '@k9-sak-web/sak-soknadsperiodestripe';
 import {
   ArbeidsgiverOpplysningerWrapper,
@@ -16,13 +18,13 @@ import {
   FeatureToggles,
   Kodeverk,
   KodeverkMedNavn,
+  MerknadFraLos,
   Personopplysninger,
 } from '@k9-sak-web/types';
-import React, { useCallback, useMemo, useState } from 'react';
-import { Navigate, Route, Routes, useLocation } from 'react-router-dom';
-import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import OvergangFraInfotrygd from '@k9-sak-web/types/src/overgangFraInfotrygd';
 import RelatertFagsak from '@k9-sak-web/types/src/relatertFagsak';
+import React, { useCallback, useMemo, useState } from 'react';
+import { Navigate, Route, Routes, useLocation } from 'react-router-dom';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import {
   behandlingerRoutePath,
@@ -184,6 +186,17 @@ const FagsakIndex = () => {
     [featureTogglesData],
   );
 
+  const { data: merknaderFraLos } = restApiHooks.useGlobalStateRestApi<MerknadFraLos>(
+    K9sakApiKeys.LOS_HENTE_MERKNAD,
+    {},
+    {
+      updateTriggers: [!behandling],
+      suspendRequest: !behandling || !featureToggles?.LOS_MARKER_BEHANDLING,
+    },
+  );
+
+  const erHastesak = merknaderFraLos && merknaderFraLos.merknadKoder?.includes(Merknadkode.HASTESAK);
+
   if (!fagsak) {
     if (fagsakState === RestApiState.NOT_STARTED || fagsakState === RestApiState.LOADING) {
       return <LoadingPanel />;
@@ -275,6 +288,7 @@ const FagsakIndex = () => {
                 relaterteFagsaker={relaterteFagsaker}
                 direkteOvergangFraInfotrygd={direkteOvergangFraInfotrygd}
                 erPbSak={fagsak.erPbSak}
+                erHastesak={erHastesak}
               />
               {showPunsjOgFagsakPåSøkerStripe && (
                 <>
