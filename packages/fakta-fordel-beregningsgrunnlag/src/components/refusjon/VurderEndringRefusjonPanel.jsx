@@ -20,7 +20,7 @@ const {
 } = aksjonspunktCodes;
 
 const finnAksjonspunkt = (avklaringsbehov) => (avklaringsbehov
-  ? avklaringsbehov.find((ap) => ap.definisjon.kode === VURDER_REFUSJON_BERGRUNN) : undefined);
+  ? avklaringsbehov.find((ap) => ap.definisjon === VURDER_REFUSJON_BERGRUNN) : undefined);
 
 const lagRadNøkkel = (andel) => {
   if (andel.arbeidsgiver.arbeidsgiverAktørId) {
@@ -38,7 +38,7 @@ export const VurderEndringRefusjonPanelImpl = ({
 }) => {
   const { andeler } = beregningsgrunnlag.refusjonTilVurdering;
   const ap = finnAksjonspunkt(avklaringsbehov);
-  const erAksjonspunktÅpent = ap ? isAvklaringsbehovOpen(ap.status.kode) : false;
+  const erAksjonspunktÅpent = ap ? isAvklaringsbehovOpen(ap.status) : false;
   return (
     <>
       <AksjonspunktHelpTextTemp isAksjonspunktOpen={erAksjonspunktÅpent}>
@@ -49,7 +49,7 @@ export const VurderEndringRefusjonPanelImpl = ({
         <Undertittel><FormattedMessage id="BeregningInfoPanel.RefusjonBG.Tittel" /></Undertittel>
         <VerticalSpacer sixteenPx />
         <TidligereUtbetalinger beregningsgrunnlag={beregningsgrunnlag} arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId} />
-        { andeler.map((andel) => (
+        {andeler.map((andel) => (
           <VurderEndringRefusjonRad
             fieldId={fieldId}
             refusjonAndel={andel}

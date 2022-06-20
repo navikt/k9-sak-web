@@ -485,7 +485,7 @@ RenderFordelBGFieldArray.validate = (
 
 const mapStateToPropsFactory = (initialState, initialOwnProps) => {
   const { behandlingType } = initialOwnProps;
-  const erRevurdering = behandlingType ? behandlingType.kode === bt.REVURDERING : false;
+  const erRevurdering = behandlingType ? behandlingType === bt.REVURDERING : false;
   const inntektskategoriKoder = initialOwnProps.alleKodeverk[kodeverkTyper.INNTEKTSKATEGORI];
   const getKodeverknavn = getKodeverknavnFn(initialOwnProps.alleKodeverk, kodeverkTyper);
   return (state, ownProps) => ({
@@ -494,7 +494,7 @@ const mapStateToPropsFactory = (initialState, initialOwnProps) => {
     getKodeverknavn,
     arbeidsforholdList: getUniqueListOfArbeidsforhold(ownProps),
     harKunYtelse: initialOwnProps.beregningsgrunnlag.aktivitetStatus.some(
-      status => status.kode === aktivitetStatuser.KUN_YTELSE,
+      status => status === aktivitetStatuser.KUN_YTELSE,
     ),
   });
 };
