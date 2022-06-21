@@ -33,5 +33,6 @@ export { default as LeggTilKnapp } from './src/LeggTilKnapp';
 export { default as FaktaGruppe } from './src/FaktaGruppe';
 export { default as usePrevious } from './src/hooks/componentHooks';
 export { default as Tidslinje } from './src/tidslinje/Tidslinje';
+export { default as TidslinjeZoom } from './src/tidslinje/TidslinjeZoom';
 export { default as Punsjstripe } from './src/punsjstripe/Punsjstripe';
 export { default as AndreSakerPåSøkerStripe } from './src/andreSakerPaSokerStripe/AndreSakerPåSøkerStripe';

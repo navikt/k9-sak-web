@@ -6,16 +6,17 @@
 }
 
 .navigasjonButton {
+  align-items: center;
   width: 24px;
   height: 24px;
   border: 2px solid #3e3832;
   border-radius: 50%;
   cursor: pointer;
   background-color: white;
-  background-repeat: no-repeat;
-  background-position: 50%;
+  display: flex;
+  justify-content: center;
   margin-right: 0.875rem;
-  padding: 0;
+  padding: 0 0.0625rem 0 0;
 
   &:hover,
   &:focus {
@@ -25,14 +26,12 @@
 
 .navigasjonButtonLeft {
   .navigasjonButton();
-
-  background-image: url("data:image/svg+xml,%3Csvg width='8' height='11' viewBox='0 0 8 11' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M0.792316 5.7085L5.79232 0.458496L7.20898 1.91683L3.41732 5.7085L7.20898 9.50016L5.79232 10.9585L0.792316 5.7085Z' fill='%233E3832'/%3E%3C/svg%3E%0A");
 }
 
 .navigasjonButtonRight {
   .navigasjonButton();
 
-  background-image: url("data:image/svg+xml,%3Csvg width='14' height='14' viewBox='0 0 14 14' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M10.2077 6.7085L5.20768 11.9585L3.79102 10.5002L7.58268 6.7085L3.79102 2.91683L5.20768 1.4585L10.2077 6.7085Z' fill='%233E3832'/%3E%3C/svg%3E%0A");
+  transform: rotate(180deg);
 
   &:disabled {
     opacity: 0.2;

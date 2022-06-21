@@ -19,6 +19,6 @@
   "Soknadsperioder.Status.TilBehandling": "Til behandling",
   "Soknadsperioder.SøknadMedDato": "Søknad {dato}",
   "Soknadsperioder.Søknadsperioder": "Søknadsperioder",
-  "Soknadsperioder.Zoom.Forstørre": "Forstørre",
-  "Soknadsperioder.Zoom.Forminske": "Forminske"
+  "TidslinjeZoom.Forstørre": "Forstørre",
+  "TidslinjeZoom.Forminske": "Forminske"
 }
