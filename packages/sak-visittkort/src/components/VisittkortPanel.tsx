@@ -1,4 +1,5 @@
 import navBrukerKjonn from '@fpsak-frontend/kodeverk/src/navBrukerKjonn';
+import personstatusType from '@fpsak-frontend/kodeverk/src/personstatusType';
 import { FlexColumn, FlexContainer, FlexRow } from '@fpsak-frontend/shared-components';
 import { DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils/src/formats';
 import {
@@ -9,12 +10,12 @@ import {
   RelatertFagsak as RelatertFagsakType,
 } from '@k9-sak-web/types';
 import OvergangFraInfotrygd from '@k9-sak-web/types/src/overgangFraInfotrygd';
-import { Tag } from '@navikt/ds-react';
 import { Gender, PersonCard } from '@navikt/k9-react-components';
 import moment from 'moment';
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import RelatertFagsak from './RelatertFagsak';
+import TagContainer from './TagContainer';
 import VisittkortDetaljerPopup from './VisittkortDetaljerPopup';
 import VisittkortLabels from './VisittkortLabels';
 import styles from './visittkortPanel.less';
@@ -79,6 +80,7 @@ const VisittkortPanel = ({
   const annenPart = typeof personopplysninger.annenPart !== 'undefined' ? personopplysninger.annenPart : null;
   const barnSoktFor = personopplysninger.barnSoktFor?.length > 0 ? personopplysninger.barnSoktFor : null;
   const erDirekteOvergangFraInfotrygd = direkteOvergangFraInfotrygd?.skjæringstidspunkter?.length > 0;
+  const erUtenlandssak = personopplysninger?.pleietrengendePart?.personstatus?.kode === personstatusType.AKTIVT;
 
   return (
     <div className={styles.container}>
@@ -141,31 +143,24 @@ const VisittkortPanel = ({
                 </FlexColumn>
               ))}
             {erDirekteOvergangFraInfotrygd && (
-              <FlexColumn>
-                <div className={styles.flexContainer}>
-                  <p className={styles.overgangFraInfotrygdLabel}>
-                    <FormattedMessage id="VisittkortPanel.FraInfotrygd" />
-                  </p>
-                </div>
-              </FlexColumn>
+              <TagContainer tagVariant="info">
+                <FormattedMessage id="VisittkortPanel.FraInfotrygd" />
+              </TagContainer>
             )}
             {erPbSak && (
-              <FlexColumn>
-                <div className={styles.flexContainer}>
-                  <p className={styles.pbSakLabel}>
-                    <FormattedMessage id="VisittkortPanel.PB" />
-                  </p>
-                </div>
-              </FlexColumn>
+              <TagContainer tagVariant="warning">
+                <FormattedMessage id="VisittkortPanel.PB" />
+              </TagContainer>
+            )}
+            {erUtenlandssak && (
+              <TagContainer tagVariant="success">
+                <FormattedMessage id="VisittkortPanel.Utenlandssak" />
+              </TagContainer>
             )}
             {erHastesak && (
-              <FlexColumn>
-                <div className={styles.flexContainer}>
-                  <Tag className={styles.hastesak} variant="error" size="small">
-                    <FormattedMessage id="VisittkortPanel.Hastesak" />
-                  </Tag>
-                </div>
-              </FlexColumn>
+              <TagContainer tagVariant="error">
+                <FormattedMessage id="VisittkortPanel.Hastesak" />
+              </TagContainer>
             )}
           </div>
           <div id="visittkort-portal" />
