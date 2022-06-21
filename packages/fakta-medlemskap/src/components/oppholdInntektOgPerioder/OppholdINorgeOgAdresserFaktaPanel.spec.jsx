@@ -26,10 +26,7 @@ describe('<OppholdINorgeOgAdresserFaktaPanel>', () => {
       personopplysning: {
         navn: 'Espen Utvikler',
         adresser: [],
-        personstatus: {
-          kode: 'UTVANDRET',
-          navn: 'Utvandret',
-        },
+        personstatus: personstatusType.UTVANDRET,
       },
     },
     {
@@ -37,10 +34,7 @@ describe('<OppholdINorgeOgAdresserFaktaPanel>', () => {
       personopplysning: {
         navn: 'Petra Tester',
         adresser: [],
-        personstatus: {
-          kode: 'UTVANDRET',
-          navn: 'Utvandret',
-        },
+        personstatus: personstatusType.UTVANDRET,
       },
     },
   ];
@@ -87,10 +81,7 @@ describe('<OppholdINorgeOgAdresserFaktaPanel>', () => {
         personopplysning: {
           navn: 'Espen Utvikler',
           adresser: [],
-          personstatus: {
-            kode: 'UTVANDRET',
-            navn: 'Utvandret',
-          },
+          personstatus: personstatusType.UTVANDRET,
         },
       },
       {
@@ -98,10 +89,7 @@ describe('<OppholdINorgeOgAdresserFaktaPanel>', () => {
         personopplysning: {
           navn: 'Petra Tester',
           adresser: [],
-          personstatus: {
-            kode: 'UTVANDRET',
-            navn: 'Utvandret',
-          },
+          personstatus: personstatusType.UTVANDRET,
         },
       },
     ];
@@ -131,45 +119,30 @@ describe('<OppholdINorgeOgAdresserFaktaPanel>', () => {
       personopplysninger: {
         navn: 'Espen Utvikler',
         personstatus: {
-          personstatus: {
-            kode: 'UTVANDRET',
-            navn: 'Utvandret',
-          },
+          personstatus: personstatusType.UTVANDRET,
         },
         avklartPersonstatus: {
-          overstyrtPersonstatus: {
-            kode: personstatusType.BOSATT,
-            navn: 'Bosatt',
-          },
+          overstyrtPersonstatus: personstatusType.BOSATT,
         },
         adresser: [
           {
             adresselinje1: 'Vei 1',
             postNummer: '1000',
             poststed: 'Oslo',
-            opplysningAdresseType: {
-              kode: opplysningAdresseType.POSTADRESSE,
-              navn: 'Bostedsadresse',
-            },
+            opplysningAdresseType: opplysningAdresseType.POSTADRESSE,
           },
         ],
         annenPart: {
           navn: 'Petra Tester',
           personstatus: {
-            personstatus: {
-              kode: 'UTVANDRET',
-              navn: 'Utvandret',
-            },
+            personstatus: personstatusType.UTVANDRET,
           },
           adresser: [
             {
               adresselinje1: 'Vei 2',
               postNummer: '2000',
               poststed: 'Stockholm',
-              opplysningAdresseType: {
-                kode: opplysningAdresseType.UTENLANDSK_POSTADRESSE,
-                navn: 'Bostedsadresse',
-              },
+              opplysningAdresseType: opplysningAdresseType.UTENLANDSK_POSTADRESSE,
             },
           ],
         },
@@ -178,12 +151,8 @@ describe('<OppholdINorgeOgAdresserFaktaPanel>', () => {
 
     const aksjonspunkter = [
       {
-        definisjon: {
-          kode: aksjonspunktCodes.AVKLAR_OM_BRUKER_ER_BOSATT,
-        },
-        status: {
-          kode: aksjonspunktStatus.OPPRETTET,
-        },
+        definisjon: aksjonspunktCodes.AVKLAR_OM_BRUKER_ER_BOSATT,
+        status: aksjonspunktStatus.OPPRETTET,
       },
     ];
     const soknad = {
@@ -199,45 +168,30 @@ describe('<OppholdINorgeOgAdresserFaktaPanel>', () => {
           personopplysning: {
             navn: 'Espen Utvikler',
             personstatus: {
-              personstatus: {
-                kode: 'UTVANDRET',
-                navn: 'Utvandret',
-              },
+              personstatus: personstatusType.UTVANDRET,
             },
             avklartPersonstatus: {
-              overstyrtPersonstatus: {
-                kode: personstatusType.BOSATT,
-                navn: 'Bosatt',
-              },
+              overstyrtPersonstatus: personstatusType.BOSATT,
             },
             adresser: [
               {
                 adresselinje1: 'Vei 1',
                 postNummer: '1000',
                 poststed: 'Oslo',
-                opplysningAdresseType: {
-                  kode: opplysningAdresseType.POSTADRESSE,
-                  navn: 'Bostedsadresse',
-                },
+                opplysningAdresseType: opplysningAdresseType.POSTADRESSE,
               },
             ],
             annenPart: {
               navn: 'Petra Tester',
               personstatus: {
-                personstatus: {
-                  kode: 'UTVANDRET',
-                  navn: 'Utvandret',
-                },
+                personstatus: personstatusType.UTVANDRET,
               },
               adresser: [
                 {
                   adresselinje1: 'Vei 2',
                   postNummer: '2000',
                   poststed: 'Stockholm',
-                  opplysningAdresseType: {
-                    kode: opplysningAdresseType.UTENLANDSK_POSTADRESSE,
-                    navn: 'Bostedsadresse',
-                  },
+                  opplysningAdresseType: opplysningAdresseType.UTENLANDSK_POSTADRESSE,
                 },
               ],
             },
@@ -248,20 +202,14 @@ describe('<OppholdINorgeOgAdresserFaktaPanel>', () => {
           personopplysning: {
             navn: 'Petra Tester',
             personstatus: {
-              personstatus: {
-                kode: 'UTVANDRET',
-                navn: 'Utvandret',
-              },
+              personstatus: personstatusType.UTVANDRET,
             },
             adresser: [
               {
                 adresselinje1: 'Vei 2',
                 postNummer: '2000',
                 poststed: 'Stockholm',
-                opplysningAdresseType: {
-                  kode: opplysningAdresseType.UTENLANDSK_POSTADRESSE,
-                  navn: 'Bostedsadresse',
-                },
+                opplysningAdresseType: opplysningAdresseType.UTENLANDSK_POSTADRESSE,
               },
             ],
           },

@@ -22,13 +22,8 @@ describe('<MedlemskapInfoPanel>', () => {
         alleMerknaderFraBeslutter={{}}
         behandlingId={1}
         behandlingVersjon={1}
-        behandlingType={{
-          kode: 'Test',
-          kodeverk: 'test',
-        }}
-        behandlingStatus={{
-          kode: behandlingStatus.BEHANDLING_UTREDES,
-        }}
+        behandlingType={'Test'}
+        behandlingStatus={behandlingStatus.BEHANDLING_UTREDES}
         soknad={{}}
         alleKodeverk={{}}
         medlemskap={{}}
@@ -53,13 +48,8 @@ describe('<MedlemskapInfoPanel>', () => {
         alleMerknaderFraBeslutter={{}}
         behandlingId={1}
         behandlingVersjon={1}
-        behandlingType={{
-          kode: 'test',
-          kodeverk: 'test',
-        }}
-        behandlingStatus={{
-          kode: behandlingStatus.BEHANDLING_UTREDES,
-        }}
+        behandlingType={'test'}
+        behandlingStatus={behandlingStatus.BEHANDLING_UTREDES}
         soknad={{}}
         alleKodeverk={{}}
         medlemskap={{}}

@@ -19,16 +19,7 @@ describe('<PerioderMedMedlemskapFaktaPanel>', () => {
         beslutningsdato: '2016-10-16',
       },
     ];
-    const manuelleVurderingstyper = [
-      {
-        kode: 'test1',
-        navn: 'navn1',
-      },
-      {
-        kode: 'test2',
-        navn: 'navn2',
-      },
-    ];
+    const manuelleVurderingstyper = ['test1', 'test2'];
 
     const wrapper = shallowWithIntl(
       <UndecoratedForm
@@ -169,23 +160,15 @@ describe('<PerioderMedMedlemskapFaktaPanel>', () => {
       {
         fom: '2016-01-15',
         tom: '2016-10-15',
-        dekningType: {
-          kode: 'DEK_TYPE',
-        },
-        medlemskapType: {
-          kode: 'M_STATUS',
-        },
+        dekningType: 'DEK_TYPE',
+        medlemskapType: 'M_STATUS',
         beslutningsdato: '2016-10-16',
       },
       {
         fom: '2017-01-15',
         tom: '2017-10-15',
-        dekningType: {
-          kode: 'DEK_TYPE2',
-        },
-        medlemskapType: {
-          kode: 'M_STATUS2',
-        },
+        dekningType: 'DEK_TYPE2',
+        medlemskapType: 'M_STATUS2',
         beslutningsdato: '2017-10-16',
       },
     ];
@@ -198,12 +181,8 @@ describe('<PerioderMedMedlemskapFaktaPanel>', () => {
 
     const aksjonspunkter = [
       {
-        definisjon: {
-          kode: aksjonspunktCodes.AVKLAR_OM_BRUKER_HAR_GYLDIG_PERIODE,
-        },
-        status: {
-          kode: aksjonspunktStatus.OPPRETTET,
-        },
+        definisjon: aksjonspunktCodes.AVKLAR_OM_BRUKER_HAR_GYLDIG_PERIODE,
+        status: aksjonspunktStatus.OPPRETTET,
       },
     ];
     const getKodeverknavn = (kode, kodeverk) => {
