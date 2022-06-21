@@ -1,5 +1,5 @@
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
-import { Tidslinje } from '@fpsak-frontend/shared-components';
+import { Tidslinje, TidslinjeZoom } from '@fpsak-frontend/shared-components';
 import HorisontalNavigering from '@fpsak-frontend/shared-components/src/tidslinje/HorisontalNavigering';
 import { useSenesteDato } from '@fpsak-frontend/shared-components/src/tidslinje/useTidslinjerader';
 import BehandlingPerioderårsakMedVilkår, {
@@ -10,9 +10,7 @@ import { PeriodStatus, Tidslinjeskala } from '@k9-sak-web/types/src/tidslinje';
 import { getPeriodDifference, Period } from '@navikt/k9-period-utils';
 import dayjs from 'dayjs';
 import 'dayjs/locale/nb';
-import { Normaltekst } from 'nav-frontend-typografi';
 import React, { useEffect, useMemo, useState } from 'react';
-import ReactDOM from 'react-dom';
 import { useIntl } from 'react-intl';
 import styles from './soknadsperiodestripe.less';
 
@@ -123,12 +121,6 @@ export const formaterPerioder = (behandlingPerioderMedVilkår: BehandlingPeriode
 
 const Soknadsperiodestripe: React.FC<SoknadsperiodestripeProps> = ({ behandlingPerioderMedVilkår }) => {
   const intl = useIntl();
-  let portalRoot = document.getElementById('visittkort-portal');
-  if (!portalRoot) {
-    portalRoot = document.createElement('div');
-    portalRoot.setAttribute('id', 'visittkort-portal');
-    document.body.appendChild(portalRoot);
-  }
 
   const formatertePerioder = useMemo(
     () => formaterPerioder(behandlingPerioderMedVilkår),
@@ -164,53 +156,49 @@ const Soknadsperiodestripe: React.FC<SoknadsperiodestripeProps> = ({ behandlingP
     return null;
   }
 
-  const updateSkala = (value: Tidslinjeskala) => {
-    setTidslinjeSkala(value);
-    updateNavigasjonFomDato(value);
-  };
+  const subtractMonthsFromDate = (dateToSubtractFrom, numberOfMonthsToSubtract) =>
+    dayjs(dateToSubtractFrom).subtract(numberOfMonthsToSubtract, 'months').toDate();
 
-  const getSkalaRadio = (label: string, value: Tidslinjeskala) => {
-    const id = `soknadsperiodestripe_${label}`;
-    return (
-      <>
-        <input
-          className={styles.skalaRadioInput}
-          id={id}
-          onChange={() => updateSkala(value)}
-          type="radio"
-          name="soknadsperiodestripe_skala"
-          value={value}
-        />
-        <label
-          htmlFor={id}
-          className={`${styles.skalaRadioLabel} ${tidslinjeSkala === value ? styles['skalaRadioLabel--selected'] : ''}`}
-        >
-          <Normaltekst>{label}</Normaltekst>
-        </label>
-      </>
-    );
+  const updateZoom = (zoomValue: number, zoomIn?: boolean) => {
+    if (zoomIn) {
+      const senesteTom = getSenesteTom();
+      const nyTom = dayjs(navigasjonFomDato).add(zoomValue + 1, 'months');
+      if (nyTom.isSameOrAfter(senesteTom)) {
+        setNavigasjonFomDato(subtractMonthsFromDate(senesteTom, zoomValue)); // For å forhindre at horisontal navigasjon viser forbi seneste dato fra periodene
+      } else {
+        setNavigasjonFomDato(dayjs(navigasjonFomDato).add(1, 'months'));
+      }
+    } else {
+      setNavigasjonFomDato(dayjs(navigasjonFomDato).subtract(1, 'months'));
+    }
+    setTidslinjeSkala(zoomValue);
   };
 
   return (
     <div className={styles.container}>
-      {ReactDOM.createPortal(
-        <div className={styles.skalavelgerContainer}>
-          <fieldset>
-            <legend>{intl.formatMessage({ id: 'Soknadsperioder.Skala.SkalaForVisning' })}</legend>
-            {getSkalaRadio(intl.formatMessage({ id: 'Soknadsperioder.Skala.3mnd' }), 3)}
-            {getSkalaRadio(intl.formatMessage({ id: 'Soknadsperioder.Skala.6mnd' }), 6)}
-            {getSkalaRadio(intl.formatMessage({ id: 'Soknadsperioder.Skala.1år' }), 12)}
-          </fieldset>
-        </div>,
-        portalRoot,
-      )}
       <Tidslinje rader={rader} tidslinjeSkala={tidslinjeSkala} startDato={navigasjonFomDato} />
-      <HorisontalNavigering
-        tidslinjeSkala={tidslinjeSkala}
-        rader={rader}
-        navigasjonFomDato={navigasjonFomDato}
-        updateHorisontalNavigering={setNavigasjonFomDato}
-      />
+      <div className={styles.navigasjonContainer}>
+        <HorisontalNavigering
+          tidslinjeSkala={tidslinjeSkala}
+          rader={rader}
+          navigasjonFomDato={navigasjonFomDato}
+          updateHorisontalNavigering={setNavigasjonFomDato}
+        />
+        <TidslinjeZoom
+          disabledZoomIn={tidslinjeSkala === 1}
+          disabledZoomOut={tidslinjeSkala === 36}
+          handleZoomIn={() => {
+            if (tidslinjeSkala > 1) {
+              updateZoom(tidslinjeSkala - 1, true);
+            }
+          }}
+          handleZoomOut={() => {
+            if (tidslinjeSkala < 36) {
+              updateZoom(tidslinjeSkala + 1);
+            }
+          }}
+        />
+      </div>
     </div>
   );
 };

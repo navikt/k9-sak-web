@@ -1,0 +1,38 @@
+.skalavelgerContainer {
+  display: flex;
+  justify-content: flex-end;
+
+  fieldset {
+    border: none;
+    display: flex;
+    padding: 0;
+  }
+
+  legend {
+    clip: rect(1px, 1px, 1px, 1px);
+    height: 1px;
+    overflow: hidden;
+    position: absolute;
+    white-space: nowrap;
+    width: 1px;
+  }
+}
+
+.zoomButton {
+  align-items: center;
+  border: none;
+  background: none;
+  display: flex;
+  padding: 0;
+  margin-left: 1rem;
+  cursor: pointer;
+
+  svg {
+    margin-right: 0.375rem;
+  }
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: default;
+  }
+}

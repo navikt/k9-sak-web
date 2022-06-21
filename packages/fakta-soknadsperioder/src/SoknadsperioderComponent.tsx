@@ -1,4 +1,4 @@
-import { Tidslinje } from '@fpsak-frontend/shared-components';
+import { Tidslinje, TidslinjeZoom } from '@fpsak-frontend/shared-components';
 import HorisontalNavigering from '@fpsak-frontend/shared-components/src/tidslinje/HorisontalNavigering';
 import { useSenesteDato } from '@fpsak-frontend/shared-components/src/tidslinje/useTidslinjerader';
 import { KodeverkMedNavn } from '@k9-sak-web/types';
@@ -15,8 +15,6 @@ import { useIntl } from 'react-intl';
 import CheckIcon from './icons/CheckIcon';
 import RejectedIcon from './icons/RejectedIcon';
 import SaksbehandlerIcon from './icons/SaksbehandlerIcon';
-import ZoomInIcon from './icons/ZoomInIcon';
-import ZoomOutIcon from './icons/ZoomOutIcon';
 import styles from './soknadsperioderComponent.less';
 import Periode from './types/Periode';
 
@@ -333,34 +331,20 @@ const SoknadsperioderComponent = (props: SoknadsperioderComponentProps) => {
             navigasjonFomDato={navigasjonFomDato}
             updateHorisontalNavigering={updateHorisontalNavigering}
           />
-          <div className={styles.skalavelgerContainer}>
-            <button
-              onClick={() => {
-                if (tidslinjeSkala > 1) {
-                  updateZoom(tidslinjeSkala - 1, true);
-                }
-              }}
-              type="button"
-              className={styles.zoomButton}
-              disabled={tidslinjeSkala === 1}
-            >
-              <ZoomInIcon />
-              <Normaltekst>{intl.formatMessage({ id: 'Soknadsperioder.Zoom.Forstørre' })}</Normaltekst>
-            </button>
-            <button
-              onClick={() => {
-                if (tidslinjeSkala < 36) {
-                  updateZoom(tidslinjeSkala + 1);
-                }
-              }}
-              type="button"
-              className={styles.zoomButton}
-              disabled={tidslinjeSkala === 36}
-            >
-              <ZoomOutIcon />
-              <Normaltekst>{intl.formatMessage({ id: 'Soknadsperioder.Zoom.Forminske' })}</Normaltekst>
-            </button>
-          </div>
+          <TidslinjeZoom
+            disabledZoomIn={tidslinjeSkala === 1}
+            disabledZoomOut={tidslinjeSkala === 36}
+            handleZoomIn={() => {
+              if (tidslinjeSkala > 1) {
+                updateZoom(tidslinjeSkala - 1, true);
+              }
+            }}
+            handleZoomOut={() => {
+              if (tidslinjeSkala < 36) {
+                updateZoom(tidslinjeSkala + 1);
+              }
+            }}
+          />
         </div>
       </div>
       <Tidslinje rader={filtrerteRader} tidslinjeSkala={tidslinjeSkala} startDato={navigasjonFomDato} />

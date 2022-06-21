@@ -224,22 +224,19 @@ describe('Soknadsperiodestripe skal ha navigasjon', () => {
     const datoEtterNavigering6mnd = screen.getByText('11. april 2021 - 11. oktober 2021');
     expect(datoEtterNavigering6mnd).toBeInTheDocument();
   });
-  it('skal ha knapper for å endre skala', async () => {
+  it('skal ha knapper for zoom', async () => {
+    const zoomInnKnapp = screen.getByRole('button', { name: 'Forstørre' });
+    const zoomUtKnapp = screen.getByRole('button', { name: 'Forminske' });
     const datoFørNavigering = screen.getByText('11. oktober 2021 - 11. april 2022');
-    const navigerBakoverKnapp = screen.getByLabelText('Naviger tidslinje bakover i tid');
-
-    const skala1år = screen.getByLabelText('1 år');
-    userEvent.click(skala1år);
     expect(datoFørNavigering).toBeInTheDocument();
-    userEvent.click(navigerBakoverKnapp);
-    const datoEtterNavigering1år = screen.getByText('11. oktober 2020 - 11. oktober 2021');
-    expect(datoEtterNavigering1år).toBeInTheDocument();
 
-    const skala3mnd = screen.getByLabelText('3 mnd');
-    userEvent.click(skala3mnd);
-    expect(datoFørNavigering).toBeInTheDocument();
-    userEvent.click(navigerBakoverKnapp);
-    const datoEtterNavigering3mnd = screen.getByText('11. desember 2021 - 11. mars 2022');
-    expect(datoEtterNavigering3mnd).toBeInTheDocument();
+    userEvent.click(zoomInnKnapp);
+    const datoEtterZoomInn = screen.getByText('11. november 2021 - 11. april 2022');
+    expect(datoEtterZoomInn).toBeInTheDocument();
+
+    userEvent.click(zoomUtKnapp);
+    userEvent.click(zoomUtKnapp);
+    const datoEtterZoomUt = screen.getByText('11. september 2021 - 11. april 2022');
+    expect(datoEtterZoomUt).toBeInTheDocument();
   });
 });
