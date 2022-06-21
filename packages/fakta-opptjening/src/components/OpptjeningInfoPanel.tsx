@@ -112,7 +112,7 @@ export const buildInitialValues = createSelector(
           id: index + 1,
         })),
       aksjonspunkt:
-        aksjonspunkter.filter(ap => ap.definisjon.kode === aksjonspunktCodes.VURDER_PERIODER_MED_OPPTJENING) || null,
+        aksjonspunkter.filter(ap => ap.definisjon === aksjonspunktCodes.VURDER_PERIODER_MED_OPPTJENING) || null,
       fastsattOpptjening,
     },
 );
@@ -157,7 +157,7 @@ const transformValues = (values: Values) => ({
         ),
       )
       .map(oa => omit(oa, 'id')),
-  kode: values.aksjonspunkt[0].definisjon.kode,
+  kode: values.aksjonspunkt[0].definisjon,
   begrunnelse: '',
 });
 

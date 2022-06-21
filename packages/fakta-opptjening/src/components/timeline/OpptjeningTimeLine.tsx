@@ -53,7 +53,7 @@ const createItems = (
     end: moment(`${ap.opptjeningTom} 23:59`),
     group: groups.find(
       g =>
-        g.aktivitetTypeKode === ap.aktivitetType.kode &&
+        g.aktivitetTypeKode === ap.aktivitetType &&
         g.arbeidsforholdRef === ap.arbeidsforholdRef &&
         g.oppdragsgiverOrg === ap.oppdragsgiverOrg,
     ).id,
@@ -68,7 +68,7 @@ const createGroups = (opptjeningPeriods: OpptjeningAktivitet[], opptjeningAktivi
   const duplicatesRemoved = opptjeningPeriods.reduce((accPeriods: OpptjeningAktivitet[], period) => {
     const hasPeriod = accPeriods.some(
       p =>
-        p.aktivitetType.kode === period.aktivitetType.kode &&
+        p.aktivitetType === period.aktivitetType &&
         p.arbeidsforholdRef === period.arbeidsforholdRef &&
         p.oppdragsgiverOrg === period.oppdragsgiverOrg,
     );
@@ -77,8 +77,8 @@ const createGroups = (opptjeningPeriods: OpptjeningAktivitet[], opptjeningAktivi
   }, []);
   return duplicatesRemoved.map((activity, index) => ({
     id: index + 1,
-    content: opptjeningAktivitetTypes.find(oat => oat.kode === activity.aktivitetType.kode).navn,
-    aktivitetTypeKode: activity.aktivitetType.kode,
+    content: opptjeningAktivitetTypes.find(oat => oat.kode === activity.aktivitetType).navn,
+    aktivitetTypeKode: activity.aktivitetType,
     arbeidsforholdRef: activity.arbeidsforholdRef,
     oppdragsgiverOrg: activity.oppdragsgiverOrg,
   }));
