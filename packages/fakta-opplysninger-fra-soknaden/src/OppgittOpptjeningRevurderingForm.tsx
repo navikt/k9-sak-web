@@ -73,13 +73,13 @@ const transformValues = (
       førSøkerPerioden: {
         oppgittEgenNæring: skalOppgiNæringsinntektFørSøknadsperioden
           ? [
-              {
-                periode: lagPeriodeForOppgittEgenNæringFørSøkerperioden(formValues, opplysningerFraSøknaden),
-                bruttoInntekt: {
-                  verdi: +egenNæringBruttoInntekt,
-                },
+            {
+              periode: lagPeriodeForOppgittEgenNæringFørSøkerperioden(formValues, opplysningerFraSøknaden),
+              bruttoInntekt: {
+                verdi: +egenNæringBruttoInntekt,
               },
-            ]
+            },
+          ]
           : null,
         oppgittFrilans: opplysningerFraSøknaden.førSøkerPerioden.oppgittFrilans,
       },
@@ -142,15 +142,15 @@ const OppgittOpptjeningRevurderingForm = (props: Partial<Props> & InjectedFormPr
         </Knapp>
       )}
       <div className={styles.tabsContainer}>
-      <TabsPure
-        tabs={oppgittOpptjening.måneder.map((currentOppgittOpptjening, currentOppgittOpptjeningIndex) => ({
-          aktiv: activeTab === currentOppgittOpptjeningIndex,
-          label: `${dateFormat(currentOppgittOpptjening.måned.fom)} - ${dateFormat(
-            currentOppgittOpptjening.måned.tom,
-          )}`,
-        }))}
-        onChange={(e, clickedIndex) => setActiveTab(clickedIndex)}
-      />
+        <TabsPure
+          tabs={oppgittOpptjening.måneder.map((currentOppgittOpptjening, currentOppgittOpptjeningIndex) => ({
+            aktiv: activeTab === currentOppgittOpptjeningIndex,
+            label: `${dateFormat(currentOppgittOpptjening.måned.fom)} - ${dateFormat(
+              currentOppgittOpptjening.måned.tom,
+            )}`,
+          }))}
+          onChange={(e, clickedIndex) => setActiveTab(clickedIndex)}
+        />
       </div>
       <div className={styles.tabContent}>
         <FieldArray
@@ -245,7 +245,7 @@ const buildInitialValues = (values: OpplysningerFraSøknaden, aksjonspunkter: Ak
     : false;
 
   const aksjonspunkt = aksjonspunkter.find(
-    ap => ap.definisjon.kode === aksjonspunktCodes.OVERSTYRING_FRISINN_OPPGITT_OPPTJENING,
+    ap => ap.definisjon === aksjonspunktCodes.OVERSTYRING_FRISINN_OPPGITT_OPPTJENING,
   );
 
   return {
