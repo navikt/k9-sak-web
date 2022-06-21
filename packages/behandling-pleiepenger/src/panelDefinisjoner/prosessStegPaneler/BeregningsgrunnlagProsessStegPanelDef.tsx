@@ -2,7 +2,7 @@ import React from 'react';
 
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 import BeregningsgrunnlagProsessIndex from '@fpsak-frontend/prosess-beregningsgrunnlag';
-import { BeregningsgrunnlagProsessIndex as BeregningsgrunnlagProsessIndexNy } from '@navikt/ft-prosess-beregningsgrunnlag';
+import BeregningsgrunnlagProsessIndexNy from '@navikt/ft-prosess-beregningsgrunnlag';
 import { prosessStegCodes } from '@k9-sak-web/konstanter';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { ProsessStegDef, ProsessStegPanelDef } from '@k9-sak-web/behandling-felles';
@@ -26,8 +26,6 @@ class PanelDef extends ProsessStegPanelDef {
     }
     return (<BeregningsgrunnlagProsessIndex {...props} />);
   }
-
-  getKomponent = props => <BeregningsgrunnlagProsessIndex {...props} />;
 
   getAksjonspunktKoder = () => [
     aksjonspunktCodes.FASTSETT_BEREGNINGSGRUNNLAG_ARBEIDSTAKER_FRILANS,
