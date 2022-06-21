@@ -23,6 +23,7 @@ import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { DDMMYYYY_DATE_FORMAT, required } from '@fpsak-frontend/utils';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import { createSelector } from 'reselect';
+import KodeverkType from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 
 const headerTextCodes = [
   'PerioderMedMedlemskapFaktaPanel.Period',
@@ -170,17 +171,17 @@ PerioderMedMedlemskapFaktaPanel.buildInitialValues = (
     .map(i => ({
       fom: i.fom,
       tom: i.tom,
-      dekning: i.dekningType ? getKodeverknavn(i.dekningType) : '',
-      status: getKodeverknavn(i.medlemskapType),
+      dekning: i.dekningType ? getKodeverknavn(i.dekningType, KodeverkType.MEDLEMSKAP_DEKNING) : '',
+      status: getKodeverknavn(i.medlemskapType, KodeverkType.MEDLEMSKAP_TYPE),
       beslutningsdato: i.beslutningsdato,
     }))
     .sort((p1, p2) => new Date(p1.fom).getTime() - new Date(p2.fom).getTime());
   const filteredAp = aksjonspunkter.filter(
     ap =>
-      periode.aksjonspunkter.includes(ap.definisjon.kode) ||
+      periode.aksjonspunkter.includes(ap.definisjon) ||
       (periode.aksjonspunkter.length > 0 &&
         periode.aksjonspunkter.includes(aksjonspunktCodes.AVKLAR_OM_BRUKER_HAR_GYLDIG_PERIODE) &&
-        ap.definisjon.kode === aksjonspunktCodes.AVKLAR_FORTSATT_MEDLEMSKAP),
+        ap.definisjon === aksjonspunktCodes.AVKLAR_FORTSATT_MEDLEMSKAP),
   );
 
   return {
@@ -188,14 +189,14 @@ PerioderMedMedlemskapFaktaPanel.buildInitialValues = (
     medlemskapManuellVurderingType: periode.medlemskapManuellVurderingType,
     fodselsdato: soknad && soknad.fodselsdatoer ? Object.values(soknad.fodselsdatoer)[0] : undefined,
     hasPeriodeAksjonspunkt: filteredAp.length > 0,
-    isPeriodAksjonspunktClosed: filteredAp.some(ap => !isAksjonspunktOpen(ap.status.kode)),
+    isPeriodAksjonspunktClosed: filteredAp.some(ap => !isAksjonspunktOpen(ap.status)),
   };
 };
 
 PerioderMedMedlemskapFaktaPanel.transformValues = (values, manuellVurderingTyper) => ({
   kode: aksjonspunktCodes.AVKLAR_OM_BRUKER_HAR_GYLDIG_PERIODE,
   medlemskapManuellVurderingType: manuellVurderingTyper.find(
-    m => m.kode === values.medlemskapManuellVurderingType.kode,
+    m => m.kode === values.medlemskapManuellVurderingType,
   ),
 });
 

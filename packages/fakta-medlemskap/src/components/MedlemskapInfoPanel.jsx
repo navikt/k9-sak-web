@@ -12,7 +12,7 @@ const { OVERSTYR_AVKLAR_STARTDATO } = aksjonspunktCodes;
 
 const avklarStartdatoAp = [OVERSTYR_AVKLAR_STARTDATO];
 
-const hasOpen = aksjonspunkt => aksjonspunkt && isAksjonspunktOpen(aksjonspunkt.status.kode);
+const hasOpen = aksjonspunkt => aksjonspunkt && isAksjonspunktOpen(aksjonspunkt.status);
 
 /**
  * MedlemskapInfoPanel
@@ -33,9 +33,9 @@ const MedlemskapInfoPanel = ({
   medlemskap,
   fagsakPerson,
 }) => {
-  const avklarStartdatoOverstyring = aksjonspunkter.find(ap => ap.definisjon.kode === OVERSTYR_AVKLAR_STARTDATO);
+  const avklarStartdatoOverstyring = aksjonspunkter.find(ap => ap.definisjon === OVERSTYR_AVKLAR_STARTDATO);
   const aksjonspunkterMinusAvklarStartDato = useMemo(
-    () => aksjonspunkter.filter(ap => !avklarStartdatoAp.includes(ap.definisjon.kode)),
+    () => aksjonspunkter.filter(ap => !avklarStartdatoAp.includes(ap.definisjon)),
     [aksjonspunkter],
   );
 

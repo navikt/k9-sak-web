@@ -206,17 +206,17 @@ describe('<PerioderMedMedlemskapFaktaPanel>', () => {
         },
       },
     ];
-    const getKodeverknavn = kodeverk => {
-      if (kodeverk.kode === 'DEK_TYPE') {
+    const getKodeverknavn = (kode, kodeverk) => {
+      if (kode === 'DEK_TYPE') {
         return 'testdekning';
       }
-      if (kodeverk.kode === 'DEK_TYPE2') {
+      if (kode === 'DEK_TYPE2') {
         return 'testdekning2017';
       }
-      if (kodeverk.kode === 'M_STATUS') {
+      if (kode === 'M_STATUS') {
         return 'testStatus';
       }
-      if (kodeverk.kode === 'M_STATUS2') {
+      if (kode === 'M_STATUS2') {
         return 'testStatus2017';
       }
       return '';

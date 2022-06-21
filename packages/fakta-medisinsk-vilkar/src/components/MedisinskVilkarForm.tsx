@@ -222,7 +222,7 @@ const buildInitialValues = createSelector(
   [(props: { sykdom: Sykdom }) => props.sykdom, (props: { aksjonspunkter: Aksjonspunkt[] }) => props.aksjonspunkter],
   (sykdom, aksjonspunkter) => {
     const legeerklæring = sykdom?.legeerklæringer?.[0];
-    const aksjonspunkt = aksjonspunkter?.find(ap => ap.definisjon.kode === aksjonspunktCodes.MEDISINSK_VILKAAR);
+    const aksjonspunkt = aksjonspunkter?.find(ap => ap.definisjon === aksjonspunktCodes.MEDISINSK_VILKAAR);
     const harTidligereBehandling = !!legeerklæring;
     if (!harTidligereBehandling) {
       return {};
