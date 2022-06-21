@@ -6,6 +6,7 @@ import BeregningsgrunnlagProsessIndexNy from '@navikt/ft-prosess-beregningsgrunn
 import { prosessStegCodes } from '@k9-sak-web/konstanter';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { ProsessStegDef, ProsessStegPanelDef } from '@k9-sak-web/behandling-felles';
+import { konverterKodeverkTilKode } from "@fpsak-frontend/utils";
 
 class PanelDef extends ProsessStegPanelDef {
 
@@ -13,13 +14,13 @@ class PanelDef extends ProsessStegPanelDef {
     if (props.featureToggles.NY_BEREGNING_PROSESS_ENABLED) {
       const bgVilkaret = props.vilkar.find(v => v.vilkarType.kode === vilkarType.BEREGNINGSGRUNNLAGVILKARET);
       return (<BeregningsgrunnlagProsessIndexNy
-          beregningsgrunnlagsvilkar={bgVilkaret}
-          beregningsgrunnlagListe={props.beregningsgrunnlag}
+          beregningsgrunnlagsvilkar={konverterKodeverkTilKode(bgVilkaret)}
+          beregningsgrunnlagListe={konverterKodeverkTilKode(props.beregningsgrunnlag)}
           submitCallback={props.submitCallback}
           isReadOnly={props.isReadOnly}
           readOnlySubmitButton={props.isReadOnly}
-          alleKodeverk={props.alleKodeverk}
-          arbeidsgiverOpplysningerPerId={props.arbeidsgiverOpplysningerPerId}
+          alleKodeverk={konverterKodeverkTilKode(props.alleKodeverk)}
+          arbeidsgiverOpplysningerPerId={konverterKodeverkTilKode(props.arbeidsgiverOpplysningerPerId)}
           formData={null}
           setFormData={() => {}}
       />);

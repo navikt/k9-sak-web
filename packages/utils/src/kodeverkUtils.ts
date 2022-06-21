@@ -22,3 +22,28 @@ export const getKodeverknavnFn = (
   kodeverkTyper: { [key: string]: string },
 ) => (kodeverkOjekt: Kodeverk, undertype?: string) =>
   getKodeverknavnFraKode(alleKodeverk, kodeverkTyper[kodeverkOjekt.kodeverk], kodeverkOjekt.kode, undertype);
+
+
+export const konverterKodeverkTilKode = (data: any, erTilbakekreving = false) => {
+  if (data === undefined || data === null) {
+    return data;
+  }
+  const lengdeKodeverkObject = erTilbakekreving ? 3 : 2;
+
+  const result = { ...data };
+
+  Object.keys(result).forEach((key) => {
+    if (result[key]?.kode) {
+      const antallAttr = Object.keys(data[key]).length;
+      if ((result[key]?.kodeverk && antallAttr === lengdeKodeverkObject) || antallAttr === 1) {
+        result[key] = result[key].kode;
+      }
+    }
+    if (typeof data[key] === 'object' && data[key] !== null) {
+      result[key] = konverterKodeverkTilKode(data[key], erTilbakekreving);
+    }
+  });
+
+  return result;
+
+}
