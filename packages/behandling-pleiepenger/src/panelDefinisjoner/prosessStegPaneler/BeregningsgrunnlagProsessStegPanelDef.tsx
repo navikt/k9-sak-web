@@ -10,8 +10,8 @@ import { ProsessStegDef, ProsessStegPanelDef } from '@k9-sak-web/behandling-fell
 class PanelDef extends ProsessStegPanelDef {
 
   getKomponent = (props) => {
-    if (props.featureToggles["NY_BEREGNING_PROSESS_ENABLED"]) {
-      const bgVilkaret = props.vilkar.find(v => v.vilkarType === vilkarType.BEREGNINGSGRUNNLAGVILKARET);
+    if (props.featureToggles.NY_BEREGNING_PROSESS_ENABLED) {
+      const bgVilkaret = props.vilkar.find(v => v.vilkarType.kode === vilkarType.BEREGNINGSGRUNNLAGVILKARET);
       return (<BeregningsgrunnlagProsessIndexNy
           beregningsgrunnlagsvilkar={bgVilkaret}
           beregningsgrunnlagListe={props.beregningsgrunnlag}
