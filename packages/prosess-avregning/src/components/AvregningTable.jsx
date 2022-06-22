@@ -83,7 +83,7 @@ const createColumns = (perioder, rangeOfMonths, nextPeriod) => {
 };
 
 const tableTitle = mottaker =>
-  mottaker.mottakerType.kode === mottakerTyper.ARBG ? (
+  mottaker.mottakerType === mottakerTyper.ARBG ? (
     <Normaltekst className={styles.tableTitle}>{`${mottaker.mottakerNavn} (${mottaker.mottakerNummer})`}</Normaltekst>
   ) : null;
 
@@ -101,7 +101,7 @@ const avvikBruker = (ingenPerioderMedAvvik, mottakerTypeKode) =>
 const getPeriodeFom = (periodeFom, nesteUtbPeriodeFom) => periodeFom || nesteUtbPeriodeFom;
 const getPeriod = (ingenPerioderMedAvvik, periodeFom, mottaker) =>
   getRangeOfMonths(
-    avvikBruker(ingenPerioderMedAvvik, mottaker.mottakerType.kode)
+    avvikBruker(ingenPerioderMedAvvik, mottaker.mottakerType)
       ? moment(mottaker.nesteUtbPeriode.tom).subtract(1, 'months')
       : getPeriodeFom(periodeFom, mottaker.nesteUtbPeriode.fom),
     mottaker.nesteUtbPeriode.tom,
@@ -145,7 +145,7 @@ const AvregningTable = ({ simuleringResultat, toggleDetails, showDetails, ingenP
                         key={`rowIndex${fagIndex + 1}${rowIndex + 1}`}
                       >
                         <TableColumn>
-                          <FormattedMessage id={`Avregning.${fagOmråde.fagOmrådeKode.kode}.${rad.feltnavn}`} />
+                          <FormattedMessage id={`Avregning.${fagOmråde.fagOmrådeKode}.${rad.feltnavn}`} />
                         </TableColumn>
                         {createColumns(rad.resultaterPerMåned, rangeOfMonths, nesteMåned)}
                       </TableRow>

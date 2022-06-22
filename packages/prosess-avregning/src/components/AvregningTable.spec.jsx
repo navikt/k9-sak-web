@@ -11,14 +11,10 @@ const simuleringResultat = {
 const mottaker = {
   mottakerNavn: '',
   mottakerNummer: '',
-  mottakerType: {
-    kode: '',
-  },
+  mottakerType: '',
   resultatPerFagområde: [
     {
-      fagOmrådeKode: {
-        kode: '',
-      },
+      fagOmrådeKode: '',
       rader: [
         {
           feltnavn: '',
@@ -85,9 +81,7 @@ describe('<AvregningTable>', () => {
     const arbeidsgiver = {
       mottakerNavn: 'Statoil',
       mottakerNummer: '1234567',
-      mottakerType: {
-        kode: 'ARBG_ORG',
-      },
+      mottakerType: 'ARBG_ORG',
     };
     const props = {
       ...mockProps,

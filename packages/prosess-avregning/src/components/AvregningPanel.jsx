@@ -298,31 +298,31 @@ export const transformValues = (values, ap) => {
 
   return videreBehandling.endsWith(IKKE_SEND)
     ? {
-        ...info,
-        videreBehandling: tilbakekrevingVidereBehandling.TILBAKEKR_OPPRETT,
-      }
+      ...info,
+      videreBehandling: tilbakekrevingVidereBehandling.TILBAKEKR_OPPRETT,
+    }
     : {
-        ...info,
-        varseltekst,
-      };
+      ...info,
+      varseltekst,
+    };
 };
 
 const buildInitialValues = createSelector(
   [(state, ownProps) => ownProps.tilbakekrevingvalg, (state, ownProps) => ownProps.aksjonspunkter],
   (tilbakekrevingvalg, aksjonspunkter) => {
-    const aksjonspunkt = aksjonspunkter.find(ap => simuleringAksjonspunkter.includes(ap.definisjon.kode));
+    const aksjonspunkt = aksjonspunkter.find(ap => simuleringAksjonspunkter.includes(ap.definisjon));
     if (!aksjonspunkt || !tilbakekrevingvalg) {
       return undefined;
     }
 
     const harTypeIkkeSendt =
       !tilbakekrevingvalg.varseltekst &&
-      tilbakekrevingvalg.videreBehandling.kode === tilbakekrevingVidereBehandling.TILBAKEKR_OPPRETT;
+      tilbakekrevingvalg.videreBehandling === tilbakekrevingVidereBehandling.TILBAKEKR_OPPRETT;
 
     return {
       videreBehandling: harTypeIkkeSendt
-        ? tilbakekrevingvalg.videreBehandling.kode + IKKE_SEND
-        : tilbakekrevingvalg.videreBehandling.kode,
+        ? tilbakekrevingvalg.videreBehandling + IKKE_SEND
+        : tilbakekrevingvalg.videreBehandling,
       varseltekst: tilbakekrevingvalg.varseltekst,
       begrunnelse: aksjonspunkt.begrunnelse,
     };
@@ -342,10 +342,10 @@ const mapStateToPropsFactory = (initialState, ownPropsStatic) => {
       fagsak,
       featureToggles,
     } = ownProps;
-    const erFrisinn = fagsakYtelseType.FRISINN === fagsak.sakstype?.kode;
+    const erFrisinn = fagsakYtelseType.FRISINN === fagsak.sakstype;
     const hasOpenTilbakekrevingsbehandling =
       tilbakekrevingvalg !== undefined &&
-      tilbakekrevingvalg.videreBehandling.kode === tilbakekrevingVidereBehandling.TILBAKEKR_OPPDATER;
+      tilbakekrevingvalg.videreBehandling === tilbakekrevingVidereBehandling.TILBAKEKR_OPPDATER;
     return {
       varseltekst: behandlingFormValueSelector(formName, behandlingId, behandlingVersjon)(state, 'varseltekst'),
       initialValues: buildInitialValues(state, ownProps),
