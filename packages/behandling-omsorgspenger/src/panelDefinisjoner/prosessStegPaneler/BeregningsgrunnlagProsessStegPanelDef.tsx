@@ -6,18 +6,16 @@ import BeregningsgrunnlagProsessIndexNy from '@navikt/ft-prosess-beregningsgrunn
 import { prosessStegCodes } from '@k9-sak-web/konstanter';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { ProsessStegDef, ProsessStegPanelDef } from '@k9-sak-web/behandling-felles';
-import { konverterKodeverkTilKode } from "@fpsak-frontend/utils";
-import { Vilkar } from "@k9-sak-web/types";
+import { konverterKodeverkTilKode } from '@fpsak-frontend/utils';
+import { Vilkar } from '@k9-sak-web/types';
 
 class PanelDef extends ProsessStegPanelDef {
-
-  getKomponent = (props) => {
+  getKomponent = props => {
     if (props.featureToggles.NY_BEREGNING_PROSESS_ENABLED) {
+      const bgVilkaret = { ...props.vilkar.find(v => v.vilkarType.kode === vilkarType.BEREGNINGSGRUNNLAGVILKARET) };
 
-
-      const bgVilkaret = { ...props.vilkar.find(v => v.vilkarType === vilkarType.BEREGNINGSGRUNNLAGVILKARET)};
-
-      return (<BeregningsgrunnlagProsessIndexNy
+      return (
+        <BeregningsgrunnlagProsessIndexNy
           beregningsgrunnlagsvilkar={konverterKodeverkTilKode(bgVilkaret)}
           beregningsgrunnlagListe={konverterKodeverkTilKode(props.beregningsgrunnlag)}
           submitCallback={props.submitCallback}
@@ -27,10 +25,11 @@ class PanelDef extends ProsessStegPanelDef {
           arbeidsgiverOpplysningerPerId={konverterKodeverkTilKode(props.arbeidsgiverOpplysningerPerId)}
           formData={null}
           setFormData={() => {}}
-      />);
+        />
+      );
     }
-    return (<BeregningsgrunnlagProsessIndex {...props} />);
-  }
+    return <BeregningsgrunnlagProsessIndex {...props} />;
+  };
 
   getAksjonspunktKoder = () => [
     aksjonspunktCodes.FASTSETT_BEREGNINGSGRUNNLAG_ARBEIDSTAKER_FRILANS,
@@ -44,11 +43,11 @@ class PanelDef extends ProsessStegPanelDef {
 
   getOverstyrVisningAvKomponent = () => true;
 
-  getData = ({fagsak, beregningsgrunnlag, arbeidsgiverOpplysningerPerId, beregningreferanserTilVurdering}) => ({
+  getData = ({ fagsak, beregningsgrunnlag, arbeidsgiverOpplysningerPerId, beregningreferanserTilVurdering }) => ({
     fagsak,
     beregningsgrunnlag,
     arbeidsgiverOpplysningerPerId,
-    beregningreferanserTilVurdering
+    beregningreferanserTilVurdering,
   });
 }
 
