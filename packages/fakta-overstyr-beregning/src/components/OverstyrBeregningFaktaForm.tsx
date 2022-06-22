@@ -99,10 +99,10 @@ const OverstyrBeregningFaktaForm = ({
     return (firma) ? firma.navn : intl.formatMessage({ id: 'OverstyrInputForm.UkjentFirma' });
   }
 
-  const utledBegrunnelse = () => aksjonspunkter.find((ap) => ap.definisjon.kode === aksjonspunktCodes.OVERSTYR_BEREGNING_INPUT).begrunnelse || ''
+  const utledBegrunnelse = () => aksjonspunkter.find((ap) => ap.definisjon === aksjonspunktCodes.OVERSTYR_BEREGNING_INPUT).begrunnelse || ''
 
   const erAksjonspunktÅpent = () => isAksjonspunktOpen(aksjonspunkter.find((ap) =>
-    ap.definisjon.kode === aksjonspunktCodes.OVERSTYR_BEREGNING_INPUT).status.kode);
+    ap.definisjon === aksjonspunktCodes.OVERSTYR_BEREGNING_INPUT).status);
 
   /**
    * Formik liker ikke null i value feltene, null verdier kan forekomme fra backend.
