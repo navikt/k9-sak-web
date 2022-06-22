@@ -102,8 +102,8 @@ const SoknadsperioderComponent = (props: SoknadsperioderComponentProps) => {
       radLabel: vedtakshistorikkLabel,
       perioder: behandlingPerioderårsakMedVilkår.forrigeVedtak.map(periode => ({
         periode: periode.periode,
-        status: periode.utfall.kode === 'OPPFYLT' ? ('suksess' as PeriodStatus) : 'feil',
-        classname: `${periode.utfall.kode === 'OPPFYLT' ? styles.suksess : styles.feil}`,
+        status: periode.utfall === 'OPPFYLT' ? ('suksess' as PeriodStatus) : 'feil',
+        classname: `${periode.utfall === 'OPPFYLT' ? styles.suksess : styles.feil}`,
       })),
       radClassname: styles.vedtakhistorikkRad,
     };

@@ -13,7 +13,7 @@ describe('<OpptjeningFaktaForm>', () => {
   const opptjeningActivities = [
     {
       id: 1,
-      aktivitetType: { kode: OAType.ARBEID, navn: 'ARBEID' },
+      aktivitetType: OAType.ARBEID,
       opptjeningFom: '2017-06-01',
       opptjeningTom: '2017-07-10',
       arbeidsgiver: 'Andersen Transport AS',
@@ -26,7 +26,7 @@ describe('<OpptjeningFaktaForm>', () => {
     },
     {
       id: 2,
-      aktivitetType: { kode: OAType.NARING, navn: 'NARING' },
+      aktivitetType: OAType.NARING,
       opptjeningFom: '2017-07-15',
       opptjeningTom: '2017-08-15',
       arbeidsgiver: 'Andersen Transport AS',

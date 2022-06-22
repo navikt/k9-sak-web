@@ -50,17 +50,17 @@ describe('<SøknadsperioderIndex>', () => {
       periodeMedUtfall: [
         {
           periode: { fom: '2022-01-11', tom: '2022-04-11' },
-          utfall: { kode: 'IKKE_VURDERT', kodeverk: 'VILKAR_UTFALL_TYPE' },
+          utfall: 'IKKE_VURDERT',
         },
       ],
       forrigeVedtak: [
         {
           periode: { fom: '2022-01-11', tom: '2022-02-11' },
-          utfall: { kode: 'OPPFYLT', kodeverk: 'VILKAR_UTFALL_TYPE' },
+          utfall: 'OPPFYLT',
         },
         {
           periode: { fom: '2022-02-14', tom: '2022-04-11' },
-          utfall: { kode: 'IKKE_OPPFYLT', kodeverk: 'VILKAR_UTFALL_TYPE' },
+          utfall: 'IKKE_OPPFYLT',
         },
       ],
     };

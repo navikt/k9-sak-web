@@ -6,17 +6,12 @@ interface BehandlingPerioderårsakMedVilkår {
 
 export interface PeriodeMedUtfall {
   periode: Periode;
-  utfall: Utfall;
+  utfall: string;
 }
 
 export interface Periode {
   fom: string;
   tom: string;
-}
-
-export interface Utfall {
-  kode: string;
-  kodeverk: string;
 }
 
 export interface PerioderMedÅrsak {
