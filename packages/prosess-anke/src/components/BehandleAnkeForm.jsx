@@ -102,7 +102,7 @@ const canPreview = (begrunnelse, fritekstTilBrev) =>
   begrunnelse && begrunnelse.length > 0 && fritekstTilBrev && fritekstTilBrev.length > 0;
 const formatDate = date => (date ? moment(date, ISO_DATE_FORMAT).format(DDMMYYYY_DATE_FORMAT) : '-');
 const formatBehandling = b =>
-  `${formatDate(b.opprettet)} - ${formatBehandlingType(b.type.kode)} - ${formatBehandlingStatus(b.status.kode)}`;
+  `${formatDate(b.opprettet)} - ${formatBehandlingType(b.type)} - ${formatBehandlingStatus(b.status)}`;
 const formatId = b => {
   if (b === null) {
     return IKKE_PAA_ANKET_BEHANDLING_ID;
@@ -141,7 +141,7 @@ const SKAL_REALITETSBEHANDLES = {
   NEI: false,
 };
 
-const filtrerKlage = (behandlinger = []) => behandlinger.filter(b => b.type.kode === behandlingType.KLAGE);
+const filtrerKlage = (behandlinger = []) => behandlinger.filter(b => b.type === behandlingType.KLAGE);
 
 /**
  * Presentasjonskomponent. Setter opp aksjonspunktet for behandling.
@@ -363,12 +363,8 @@ BehandleAnkeFormImpl.propTypes = {
     PropTypes.shape({
       id: PropTypes.number,
       opprettet: PropTypes.string,
-      type: PropTypes.shape({
-        kode: PropTypes.string,
-      }),
-      status: PropTypes.shape({
-        kode: PropTypes.string,
-      }),
+      type: PropTypes.string,
+      status: PropTypes.string,
     }),
   ).isRequired,
   ...formPropTypes,
@@ -424,7 +420,7 @@ export const transformValues = (values, aksjonspunktCode) => ({
 const formName = 'BehandleAnkeForm';
 
 const mapStateToPropsFactory = (initialState, initialOwnProps) => {
-  const aksjonspunktCode = initialOwnProps.aksjonspunkter[0].definisjon.kode;
+  const aksjonspunktCode = initialOwnProps.aksjonspunkter[0].definisjon;
   const onSubmit = values => initialOwnProps.submitCallback([transformValues(values, aksjonspunktCode)]);
   return (state, ownProps) => ({
     aksjonspunktCode,
