@@ -2,37 +2,21 @@ import PropTypes from 'prop-types';
 
 const personopplysningPropType = PropTypes.shape({
   nummer: PropTypes.number,
-  navBrukerKjonn: PropTypes.shape({
-    kode: PropTypes.string.isRequired,
-  }).isRequired,
-  statsborgerskap: PropTypes.shape({
-    kode: PropTypes.string.isRequired,
-  }).isRequired,
+  navBrukerKjonn: PropTypes.string.isRequired,
+  statsborgerskap: PropTypes.string.isRequired,
   avklartPersonstatus: PropTypes.shape({
-    orginalPersonstatus: PropTypes.shape({
-      kode: PropTypes.string.isRequired,
-    }),
-    overstyrtPersonstatus: PropTypes.shape({
-      kode: PropTypes.string.isRequired,
-    }).isRequired,
+    orginalPersonstatus: PropTypes.string.isRequired,
+    overstyrtPersonstatus: PropTypes.string.isRequired,
   }),
-  personstatus: PropTypes.shape({
-    kode: PropTypes.string.isRequired,
-  }).isRequired,
-  diskresjonskode: PropTypes.shape({
-    kode: PropTypes.string.isRequired,
-  }).isRequired,
-  sivilstand: PropTypes.shape({
-    kode: PropTypes.string.isRequired,
-  }).isRequired,
+  personstatus: PropTypes.string.isRequired,
+  diskresjonskode: PropTypes.string.isRequired,
+  sivilstand: PropTypes.string.isRequired,
   aktoerId: PropTypes.string.isRequired,
   navn: PropTypes.string.isRequired,
   dodsdato: PropTypes.string,
   fodselsdato: PropTypes.string,
   adresser: PropTypes.arrayOf(PropTypes.shape({
-    adresseType: PropTypes.shape({
-      kode: PropTypes.string.isRequired,
-    }),
+    adresseType: PropTypes.string.isRequired,
     adresselinje1: PropTypes.string,
     adresselinje2: PropTypes.string,
     adresselinje3: PropTypes.string,
@@ -43,9 +27,7 @@ const personopplysningPropType = PropTypes.shape({
 
   })),
   fnr: PropTypes.string,
-  region: PropTypes.shape({
-    kode: PropTypes.string.isRequired,
-  }).isRequired,
+  region: PropTypes.string.isRequired,
   annenPart: PropTypes.shape(),
   barn: PropTypes.arrayOf(PropTypes.shape()),
   harVerge: PropTypes.bool,

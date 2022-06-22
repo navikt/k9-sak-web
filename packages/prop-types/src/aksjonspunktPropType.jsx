@@ -1,25 +1,17 @@
 import PropTypes from 'prop-types';
 
 const aksjonspunktPropType = PropTypes.shape({
-  definisjon: PropTypes.shape({
-    kode: PropTypes.string.isRequired,
-  }).isRequired,
-  status: PropTypes.shape({
-    kode: PropTypes.string.isRequired,
-  }).isRequired,
+  definisjon: PropTypes.string.isRequired,
+  status: PropTypes.string.isRequired,
   begrunnelse: PropTypes.string,
-  vilkarType: PropTypes.shape({
-    kode: PropTypes.string.isRequired,
-  }),
+  vilkarType: PropTypes.string.isRequired,
   toTrinnsBehandling: PropTypes.bool,
   toTrinnsBehandlingGodkjent: PropTypes.bool,
   vurderPaNyttArsaker: PropTypes.arrayOf(PropTypes.shape({
     kode: PropTypes.string,
   })),
   besluttersBegrunnelse: PropTypes.string,
-  aksjonspunktType: PropTypes.shape({
-    kode: PropTypes.string.isRequired,
-  }),
+  aksjonspunktType: PropTypes.string.isRequired,
   kanLoses: PropTypes.bool.isRequired,
   erAktivt: PropTypes.bool.isRequired,
 });
