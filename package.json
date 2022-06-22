@@ -138,7 +138,7 @@
     "less-loader": "^11.0.0",
     "lint-staged": "^12.4.1",
     "mini-css-extract-plugin": "^2.5.2",
-    "msw": "^0.36.4",
+    "msw": "^0.42.1",
     "prettier": "^2.5.1",
     "raf": "^3.4.1",
     "react-refresh": "^0.11.0",
