@@ -4,73 +4,38 @@ const utenlandsopphold = {
   perioder: [
     {
       periode: `${dayjs().subtract(7, 'day').format('YYYY-MM-DD')}/${dayjs().format('YYYY-MM-DD')}`,
-      landkode: {
-        kode: 'LUX',
-        navn: 'LUX',
-        kodeverk: 'LANDKODER',
-      },
-      region: {
-        kode: 'EOS',
-        kodeverk: 'REGION',
-      },
+      landkode: 'LUX',
+      region: 'EOS',
       årsak: null,
     },
     {
       periode: `${dayjs().subtract(15, 'day').format('YYYY-MM-DD')}/${dayjs().subtract(8, 'day').format('YYYY-MM-DD')}`,
-      landkode: {
-        kode: 'CHN',
-        navn: 'CHN',
-        kodeverk: 'LANDKODER',
-      },
-      region: {
-        kode: 'ANNET',
-        kodeverk: 'REGION',
-      },
+      landkode: 'CHN',
+      region: 'ANNET',
       årsak: 'INGEN',
     },
     {
       periode: `${dayjs().subtract(22, 'day').format('YYYY-MM-DD')}/${dayjs()
         .subtract(16, 'day')
         .format('YYYY-MM-DD')}`,
-      landkode: {
-        kode: 'MOZ',
-        navn: 'MOZ',
-        kodeverk: 'LANDKODER',
-      },
-      region: {
-        kode: 'ANNET',
-        kodeverk: 'REGION',
-      },
+      landkode: 'MOZ',
+      region: 'ANNET',
       årsak: 'BARNET_INNLAGT_I_HELSEINSTITUSJON_DEKKET_ETTER_AVTALE_MED_ET_ANNET_LAND_OM_TRYGD',
     },
     {
       periode: `${dayjs().subtract(30, 'day').format('YYYY-MM-DD')}/${dayjs()
         .subtract(23, 'day')
         .format('YYYY-MM-DD')}`,
-      landkode: {
-        kode: 'FIN',
-        navn: 'FIN',
-        kodeverk: 'LANDKODER',
-      },
-      region: {
-        kode: 'NORDEN',
-        kodeverk: 'REGION',
-      },
+      landkode: 'FIN',
+      region: 'NORDEN',
       årsak: null,
     },
     {
       periode: `${dayjs().subtract(38, 'day').format('YYYY-MM-DD')}/${dayjs()
         .subtract(31, 'day')
         .format('YYYY-MM-DD')}`,
-      landkode: {
-        kode: 'TUR',
-        navn: 'TUR',
-        kodeverk: 'LANDKODER',
-      },
-      region: {
-        kode: 'ANNET',
-        kodeverk: 'REGION',
-      },
+      landkode: 'TUR',
+      region: 'ANNET',
       årsak: 'BARNET_INNLAGT_I_HELSEINSTITUSJON_FOR_NORSK_OFFENTLIG_REGNING',
     },
   ],
