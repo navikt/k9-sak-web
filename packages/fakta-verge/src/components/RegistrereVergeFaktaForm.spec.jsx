@@ -54,7 +54,7 @@ describe('<RegistrereVergeFaktaForm>', () => {
       gyldigFom: '2017',
       gyldigTom: '2018',
       fnr: '1234',
-      vergeType: { kode: vergeType.BARN },
+      vergeType: vergeType.BARN,
     };
 
     const initialValues = RegistrereVergeFaktaForm.buildInitialValues(verge);

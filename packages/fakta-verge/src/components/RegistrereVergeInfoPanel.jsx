@@ -87,12 +87,12 @@ const buildInitialValues = createSelector(
       verge && verge.begrunnelse
         ? decodeHtmlEntity(verge.begrunnelse)
         : FaktaBegrunnelseTextField.buildInitialValues(
-            aksjonspunkter.filter(ap => ap.definisjon.kode === aksjonspunktCodes.AVKLAR_VERGE)[0],
-          ).begrunnelse,
+          aksjonspunkter.filter(ap => ap.definisjon === aksjonspunktCodes.AVKLAR_VERGE)[0],
+        ).begrunnelse,
   }),
 );
 
-const transformValues = values => ({ begrunnelse: values.begrunnelse, kode: aksjonspunktCodes.AVKLAR_VERGE});
+const transformValues = values => ({ begrunnelse: values.begrunnelse, kode: aksjonspunktCodes.AVKLAR_VERGE });
 
 const FORM_NAVN = 'RegistrereVergeInfoPanel';
 
