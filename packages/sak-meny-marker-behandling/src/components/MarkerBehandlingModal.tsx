@@ -3,10 +3,10 @@ import TextAreaFormik from '@fpsak-frontend/form/src/TextAreaFormik';
 import { goToLos } from '@k9-sak-web/sak-app/src/app/paths';
 import { MerknadFraLos } from '@k9-sak-web/types';
 import { Button, ErrorMessage, Modal } from '@navikt/ds-react';
-import { Form, Formik } from 'formik';
+import { Form, Formik, FormikProps } from 'formik';
 import { CheckboxGruppe } from 'nav-frontend-skjema';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
-import React from 'react';
+import React, { useRef, useState } from 'react';
 import { useIntl } from 'react-intl';
 import * as Yup from 'yup';
 import Merknadkode from '../Merknadkode';
@@ -21,6 +21,12 @@ interface PureOwnProps {
   merknaderFraLos: MerknadFraLos;
 }
 
+interface FormValues {
+  markerSomHastesak: boolean;
+  markerSomVanskelig: boolean;
+  begrunnelse: string;
+}
+
 const MarkerBehandlingModal: React.FC<PureOwnProps> = ({
   brukHastekøMarkering,
   brukVanskeligKøMarkering,
@@ -30,6 +36,7 @@ const MarkerBehandlingModal: React.FC<PureOwnProps> = ({
   merknaderFraLos,
 }) => {
   const intl = useIntl();
+  const [showIngenEndringerError, setShowIngenEndringerError] = useState(false);
   if (!brukHastekøMarkering && !brukVanskeligKøMarkering) {
     return null;
   }
@@ -37,17 +44,21 @@ const MarkerBehandlingModal: React.FC<PureOwnProps> = ({
   const MarkerBehandlingSchema = Yup.object().shape({
     markerSomHastesak: brukHastekøMarkering ? Yup.boolean() : undefined,
     markerSomVanskelig: brukVanskeligKøMarkering ? Yup.boolean() : undefined,
-    begrunnelse: Yup.string()
-      .required({ id: 'ValidationMessage.NotEmpty' })
-      .min(3, { id: 'ValidationMessage.Min3Char' })
-      .max(100000, { id: 'ValidationMessage.Max100000Char' }),
+    begrunnelse: Yup.string().when(['markerSomHastesak', 'markerSomVanskelig'], {
+      is: (markerSomHastesak, markerSomVanskelig) => markerSomHastesak === true || markerSomVanskelig === true,
+      then: Yup.string()
+        .required({ id: 'ValidationMessage.NotEmpty' })
+        .min(3, { id: 'ValidationMessage.Min3Char' })
+        .max(100000, { id: 'ValidationMessage.Max100000Char' }),
+    }),
   });
+  const formRef = useRef<FormikProps<FormValues>>();
 
-  const buildInitialValues = () => {
+  const buildInitialValues = (): FormValues => {
     if (merknaderFraLos) {
       return {
-        markerSomHastesak: true,
-        markerSomVanskelig: false,
+        markerSomHastesak: merknaderFraLos.merknadKoder?.includes[Merknadkode.HASTESAK],
+        markerSomVanskelig: merknaderFraLos.merknadKoder?.includes[Merknadkode.VANSKELIG_SAK],
         begrunnelse: merknaderFraLos.fritekst,
       };
     }
@@ -56,6 +67,26 @@ const MarkerBehandlingModal: React.FC<PureOwnProps> = ({
       markerSomVanskelig: false,
       begrunnelse: '',
     };
+  };
+
+  const formHasChanges = () => {
+    const initialValues = buildInitialValues();
+    const formKeys = Object.keys(initialValues);
+    let hasChanges = false;
+    if (formRef && formRef.current && formRef.current.values) {
+      formKeys.forEach(key => {
+        const inkluderBegrunnelse =
+          key === 'begrunnelse' &&
+          (formRef.current.values.markerSomHastesak || formRef.current.values.markerSomVanskelig);
+
+        if (key !== 'begrunnelse' || inkluderBegrunnelse) {
+          if (formRef.current.values[key] !== initialValues[key] && !hasChanges) {
+            hasChanges = true;
+          }
+        }
+      });
+    }
+    return hasChanges;
   };
 
   return (
@@ -69,25 +100,31 @@ const MarkerBehandlingModal: React.FC<PureOwnProps> = ({
     >
       <h3 className={`${styles.tittel} typo-systemtittel`}>Marker behandling og send til egen kø</h3>
       <Formik
+        innerRef={formRef}
         initialValues={buildInitialValues()}
         validationSchema={MarkerBehandlingSchema}
         onSubmit={(values, actions) => {
           actions.setSubmitting(false);
-          const getMerknadKode = () => {
-            if (values.markerSomHastesak) {
-              return [Merknadkode.HASTESAK];
-            }
-            if (values.markerSomVanskelig) {
-              return [Merknadkode.VANSKELIG_SAK];
-            }
-            return [];
-          };
-          const transformedValues = {
-            behandlingUuid,
-            fritekst: values.markerSomHastesak || values.markerSomVanskelig ? values.begrunnelse : undefined,
-            merknadKoder: getMerknadKode(),
-          };
-          markerBehandling(transformedValues).then(() => goToLos());
+          if (formHasChanges()) {
+            setShowIngenEndringerError(false);
+            const getMerknadKode = () => {
+              if (values.markerSomHastesak) {
+                return [Merknadkode.HASTESAK];
+              }
+              if (values.markerSomVanskelig) {
+                return [Merknadkode.VANSKELIG_SAK];
+              }
+              return [];
+            };
+            const transformedValues = {
+              behandlingUuid,
+              fritekst: values.markerSomHastesak || values.markerSomVanskelig ? values.begrunnelse : undefined,
+              merknadKoder: getMerknadKode(),
+            };
+            markerBehandling(transformedValues).then(() => goToLos());
+          } else {
+            setShowIngenEndringerError(true);
+          }
         }}
       >
         {formikProps => (
@@ -134,7 +171,7 @@ const MarkerBehandlingModal: React.FC<PureOwnProps> = ({
                 />
               </div>
             )}
-            {!formikProps.dirty && formikProps.submitCount > 0 && (
+            {showIngenEndringerError && (
               <ErrorMessage className={styles.errorMessage}>
                 {intl.formatMessage({ id: 'ValidationMessage.ManglendeEndringerError' })}
               </ErrorMessage>
