@@ -2,9 +2,8 @@ import CheckboxFieldFormik from '@fpsak-frontend/form/src/CheckboxFieldFormik';
 import TextAreaFormik from '@fpsak-frontend/form/src/TextAreaFormik';
 import { goToLos } from '@k9-sak-web/sak-app/src/app/paths';
 import { MerknadFraLos } from '@k9-sak-web/types';
-import { Modal } from '@navikt/ds-react';
+import { Button, ErrorMessage, Modal } from '@navikt/ds-react';
 import { Form, Formik } from 'formik';
-import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 import { CheckboxGruppe } from 'nav-frontend-skjema';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
 import React from 'react';
@@ -36,12 +35,8 @@ const MarkerBehandlingModal: React.FC<PureOwnProps> = ({
   }
   Modal.setAppElement(document.body);
   const MarkerBehandlingSchema = Yup.object().shape({
-    markerSomHastesak: brukHastekøMarkering
-      ? Yup.boolean().required('ValidationMessage.MustBeChecked').oneOf([true], 'ValidationMessage.MustBeChecked')
-      : undefined,
-    markerSomVanskelig: brukVanskeligKøMarkering
-      ? Yup.boolean().required('ValidationMessage.MustBeChecked').oneOf([true], 'ValidationMessage.MustBeChecked')
-      : undefined,
+    markerSomHastesak: brukHastekøMarkering ? Yup.boolean() : undefined,
+    markerSomVanskelig: brukVanskeligKøMarkering ? Yup.boolean() : undefined,
     begrunnelse: Yup.string()
       .required({ id: 'ValidationMessage.NotEmpty' })
       .min(3, { id: 'ValidationMessage.Min3Char' })
@@ -78,10 +73,19 @@ const MarkerBehandlingModal: React.FC<PureOwnProps> = ({
         validationSchema={MarkerBehandlingSchema}
         onSubmit={(values, actions) => {
           actions.setSubmitting(false);
+          const getMerknadKode = () => {
+            if (values.markerSomHastesak) {
+              return [Merknadkode.HASTESAK];
+            }
+            if (values.markerSomVanskelig) {
+              return [Merknadkode.VANSKELIG_SAK];
+            }
+            return [];
+          };
           const transformedValues = {
             behandlingUuid,
-            fritekst: values.begrunnelse,
-            merknadKoder: brukHastekøMarkering ? [Merknadkode.HASTESAK] : [],
+            fritekst: values.markerSomHastesak || values.markerSomVanskelig ? values.begrunnelse : undefined,
+            merknadKoder: getMerknadKode(),
           };
           markerBehandling(transformedValues).then(() => goToLos());
         }}
@@ -130,9 +134,18 @@ const MarkerBehandlingModal: React.FC<PureOwnProps> = ({
                 />
               </div>
             )}
+            {!formikProps.dirty && formikProps.submitCount > 0 && (
+              <ErrorMessage className={styles.errorMessage}>
+                {intl.formatMessage({ id: 'ValidationMessage.ManglendeEndringerError' })}
+              </ErrorMessage>
+            )}
             <div className={styles.buttonContainer}>
-              <Hovedknapp className={styles.submitButton}>Lagre, gå til LOS</Hovedknapp>
-              <Knapp onClick={lukkModal}>Lukk</Knapp>
+              <Button variant="primary" size="small" className={styles.submitButton}>
+                Lagre, gå til LOS
+              </Button>
+              <Button variant="secondary" size="small" onClick={lukkModal}>
+                Lukk
+              </Button>
             </div>
           </Form>
         )}
