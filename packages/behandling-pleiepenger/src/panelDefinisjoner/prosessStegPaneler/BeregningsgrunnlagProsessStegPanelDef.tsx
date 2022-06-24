@@ -1,59 +1,77 @@
 import React from 'react';
 
+
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 import BeregningsgrunnlagProsessIndex from '@fpsak-frontend/prosess-beregningsgrunnlag';
-import BeregningsgrunnlagProsessIndexNy from '@navikt/ft-prosess-beregningsgrunnlag';
 import { prosessStegCodes } from '@k9-sak-web/konstanter';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { ProsessStegDef, ProsessStegPanelDef } from '@k9-sak-web/behandling-felles';
+import { ProsessStegDef, ProsessStegPanelDef, DynamicLoader } from '@k9-sak-web/behandling-felles';
 import { konverterKodeverkTilKode } from "@fpsak-frontend/utils";
+import { RawIntlProvider } from "react-intl";
+import { createIntl } from "@navikt/ft-utils";
+import '@navikt/ft-prosess-beregningsgrunnlag/dist/style.css';
+
+import messages from '../../../i18n/nb_NO.json';
+
+const intl = createIntl(messages);
+
+const ProsessBeregningsgrunnlag = React.lazy(() => import('@navikt/ft-prosess-beregningsgrunnlag'));
+
+const enableFederation = process.env.ENABLE_FEDERATION === 'TRUE';
+
+const ProsessBeregningsgrunnlagMF = !enableFederation ? undefined
+    // eslint-disable-next-line import/no-unresolved
+    : () => import('ft_prosess_beregningsgrunnlag/ProsessBeregningsgrunnlag');
 
 class PanelDef extends ProsessStegPanelDef {
 
-  getKomponent = (props) => {
-    if (props.featureToggles.NY_BEREGNING_PROSESS_ENABLED) {
-      const bgVilkaret = props.vilkar.find(v => v.vilkarType.kode === vilkarType.BEREGNINGSGRUNNLAGVILKARET);
-      return (<BeregningsgrunnlagProsessIndexNy
-          beregningsgrunnlagsvilkar={konverterKodeverkTilKode(bgVilkaret)}
-          beregningsgrunnlagListe={konverterKodeverkTilKode(props.beregningsgrunnlag)}
-          submitCallback={props.submitCallback}
-          isReadOnly={props.isReadOnly}
-          readOnlySubmitButton={props.isReadOnly}
-          alleKodeverk={konverterKodeverkTilKode(props.alleKodeverk)}
-          arbeidsgiverOpplysningerPerId={konverterKodeverkTilKode(props.arbeidsgiverOpplysningerPerId)}
-          formData={null}
-          setFormData={() => {}}
-      />);
+    getKomponent = (props) => {
+        if (props.featureToggles.NY_BEREGNING_PROSESS_ENABLED || true) {
+            const deepCopyProps = JSON.parse(JSON.stringify(props));
+            konverterKodeverkTilKode(deepCopyProps);
+            const bgVilkaret = deepCopyProps.vilkar.find(v => v.vilkarType === vilkarType.BEREGNINGSGRUNNLAGVILKARET);
+            return (
+                <RawIntlProvider value={intl}>
+                    <DynamicLoader<React.ComponentProps<typeof ProsessBeregningsgrunnlag>>
+                        packageCompFn={() => import('@navikt/ft-prosess-beregningsgrunnlag')}
+                        federatedCompFn={ProsessBeregningsgrunnlagMF}
+                        {...props}
+                        beregningsgrunnlagsvilkar={bgVilkaret}
+                        beregningsgrunnlagListe={deepCopyProps.beregningsgrunnlag}
+                        arbeidsgiverOpplysningerPerId={deepCopyProps.arbeidsgiverOpplysningerPerId}
+                        submitCallback={props.submitCallback}
+                    />
+                </RawIntlProvider>);
+        }
+        return (<BeregningsgrunnlagProsessIndex {...props} />);
     }
-    return (<BeregningsgrunnlagProsessIndex {...props} />);
-  }
 
-  getAksjonspunktKoder = () => [
-    aksjonspunktCodes.FASTSETT_BEREGNINGSGRUNNLAG_ARBEIDSTAKER_FRILANS,
-    aksjonspunktCodes.VURDER_VARIG_ENDRET_ELLER_NYOPPSTARTET_NAERING_SELVSTENDIG_NAERINGSDRIVENDE,
-    aksjonspunktCodes.FASTSETT_BRUTTO_BEREGNINGSGRUNNLAG_SELVSTENDIG_NAERINGSDRIVENDE,
-    aksjonspunktCodes.FASTSETT_BEREGNINGSGRUNNLAG_TIDSBEGRENSET_ARBEIDSFORHOLD,
-    aksjonspunktCodes.FASTSETT_BEREGNINGSGRUNNLAG_SN_NY_I_ARBEIDSLIVET,
-  ];
+    getAksjonspunktKoder = () => [
+        aksjonspunktCodes.FASTSETT_BEREGNINGSGRUNNLAG_ARBEIDSTAKER_FRILANS,
+        aksjonspunktCodes.VURDER_VARIG_ENDRET_ELLER_NYOPPSTARTET_NAERING_SELVSTENDIG_NAERINGSDRIVENDE,
+        aksjonspunktCodes.FASTSETT_BRUTTO_BEREGNINGSGRUNNLAG_SELVSTENDIG_NAERINGSDRIVENDE,
+        aksjonspunktCodes.FASTSETT_BEREGNINGSGRUNNLAG_TIDSBEGRENSET_ARBEIDSFORHOLD,
+        aksjonspunktCodes.FASTSETT_BEREGNINGSGRUNNLAG_SN_NY_I_ARBEIDSLIVET,
+    ];
 
-  getVilkarKoder = () => [vilkarType.BEREGNINGSGRUNNLAGVILKARET];
+    getVilkarKoder = () => [vilkarType.BEREGNINGSGRUNNLAGVILKARET];
 
-  getOverstyrVisningAvKomponent = () => true;
+    getOverstyrVisningAvKomponent = () => true;
 
-  getData = ({ fagsak, beregningsgrunnlag, arbeidsgiverOpplysningerPerId, beregningreferanserTilVurdering }) => ({
-    fagsak,
-    beregningsgrunnlag,
-    arbeidsgiverOpplysningerPerId,
-    beregningreferanserTilVurdering
-  });
+    getData = ({fagsak, beregningsgrunnlag, arbeidsgiverOpplysningerPerId, beregningreferanserTilVurdering}) => ({
+        fagsak,
+        beregningsgrunnlag,
+        arbeidsgiverOpplysningerPerId,
+        beregningreferanserTilVurdering
+    });
 }
 
 class BeregningsgrunnlagProsessStegPanelDef extends ProsessStegDef {
-  getUrlKode = () => prosessStegCodes.BEREGNINGSGRUNNLAG;
+    getUrlKode = () => prosessStegCodes.BEREGNINGSGRUNNLAG;
 
-  getTekstKode = () => 'Behandlingspunkt.Beregning';
+    getTekstKode = () => 'Behandlingspunkt.Beregning';
 
-  getPanelDefinisjoner = () => [new PanelDef()];
+    getPanelDefinisjoner = () => [new PanelDef()];
 }
 
 export default BeregningsgrunnlagProsessStegPanelDef;

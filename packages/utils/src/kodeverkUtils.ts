@@ -26,24 +26,20 @@ export const getKodeverknavnFn = (
 
 export const konverterKodeverkTilKode = (data: any, erTilbakekreving = false) => {
   if (data === undefined || data === null) {
-    return data;
+    return;
   }
   const lengdeKodeverkObject = erTilbakekreving ? 3 : 2;
 
-  const result = { ...data };
-
-  Object.keys(result).forEach((key) => {
-    if (result[key]?.kode) {
+  Object.keys(data).forEach((key) => {
+    if (data[key]?.kode) {
       const antallAttr = Object.keys(data[key]).length;
-      if ((result[key]?.kodeverk && antallAttr === lengdeKodeverkObject) || antallAttr === 1) {
-        result[key] = result[key].kode;
+      if ((data[key]?.kodeverk && (antallAttr === lengdeKodeverkObject || data[key]?.kodeverk === 'AVKLARINGSBEHOV_DEF')) || antallAttr === 1 ) {
+        data[key] = data[key].kode;
       }
     }
     if (typeof data[key] === 'object' && data[key] !== null) {
-      result[key] = konverterKodeverkTilKode(data[key], erTilbakekreving);
+      konverterKodeverkTilKode(data[key], erTilbakekreving);
     }
   });
-
-  return result;
 
 }
