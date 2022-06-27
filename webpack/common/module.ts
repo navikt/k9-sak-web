@@ -19,9 +19,7 @@ const babelRules = {
     {
       loader: 'babel-loader',
       options: {
-        // envName: IS_DEV ? 'development' : 'production',
-        // cacheDirectory: true,
-        plugins: [IS_DEV && require.resolve('react-refresh/babel')].filter(Boolean),
+        cacheDirectory: true,
       },
     },
   ],

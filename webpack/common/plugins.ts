@@ -16,10 +16,8 @@ const { ModuleFederationPlugin } = webpack.container;
 const PACKAGES_DIR = path.resolve(__dirname, '../packages');
 const deps = pck.dependencies;
 
-const enableFederation = process.env.ENABLE_FEDERATION === 'TRUE';
 const isDev = process.env.NODE_ENV === 'development';
 
-console.log(enableFederation);
 
 const pluginConfig = [
   new ESLintPlugin({
@@ -62,10 +60,10 @@ const pluginConfig = [
   new CircularDependencyPlugin({
     exclude: /node_modules/,
     failOnError: true,
-  }),
+  })
 ]
 
-if (enableFederation) {
+if (isDev) {
   // @ts-ignore
   pluginConfig.push(new ModuleFederationPlugin({
     name: "ft_frontend_saksbehandling",

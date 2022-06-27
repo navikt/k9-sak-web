@@ -17,7 +17,7 @@ const intl = createIntl(messages);
 
 const ProsessBeregningsgrunnlag = React.lazy(() => import('@navikt/ft-prosess-beregningsgrunnlag'));
 
-const enableFederation = process.env.ENABLE_FEDERATION === 'TRUE';
+const enableFederation = process.env.NODE_ENV === 'development';
 
 const ProsessBeregningsgrunnlagMF = !enableFederation ? undefined
     // eslint-disable-next-line import/no-unresolved
@@ -40,8 +40,11 @@ class PanelDef extends ProsessStegPanelDef {
                         beregningsgrunnlagListe={deepCopyProps.beregningsgrunnlag}
                         arbeidsgiverOpplysningerPerId={deepCopyProps.arbeidsgiverOpplysningerPerId}
                         submitCallback={props.submitCallback}
+                        formData={props.formData}
+                        setFormData={props.setFormData}
                     />
-                </RawIntlProvider>);
+                </RawIntlProvider>
+            );
         }
         return (<BeregningsgrunnlagProsessIndex {...props} />);
     }

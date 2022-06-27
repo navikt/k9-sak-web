@@ -1,5 +1,4 @@
 import webpack from 'webpack';
-import ReactRefreshWebpackPlugin from '@pmmmwh/react-refresh-webpack-plugin';
 
 import { PUBLIC_ROOT, APP_DIR } from './paths';
 
@@ -27,7 +26,6 @@ export default {
   cache,
   plugins: [
     ...plugins,
-    new ReactRefreshWebpackPlugin(),
     new webpack.EnvironmentPlugin({
       MSW_MODE: 'development',
     }),
