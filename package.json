@@ -30,7 +30,8 @@
     "remove-node-modules": "find . -name \"node_modules\" -exec rm -rf '{}' +",
     "lint:config": "node -e 'console.dir(require(\"./.eslintrc.js\"))'",
     "storybook": "start-storybook -p 9001",
-    "deploy-storybook": "build-storybook -o .static_storybook && storybook-to-ghpages --existing-output-dir=.static_storybook"
+    "deploy-storybook": "build-storybook -o .static_storybook && storybook-to-ghpages --existing-output-dir=.static_storybook",
+    "prepare": "husky install"
   },
   "workspaces": [
     "packages/*"
@@ -172,5 +173,10 @@
   },
   "msw": {
     "workerDirectory": "public"
+  },
+  "lint-staged": {
+    "*.{ts,tsx,js,jsx}": "eslint --cache --fix",
+    "*.css": "stylelint --fix",
+    "*.{js,css,md}": "prettier --write"
   }
 }
