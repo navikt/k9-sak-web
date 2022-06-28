@@ -7,13 +7,7 @@ import { prosessStegCodes } from '@k9-sak-web/konstanter';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { ProsessStegDef, ProsessStegPanelDef, DynamicLoader } from '@k9-sak-web/behandling-felles';
 import { konverterKodeverkTilKode } from "@fpsak-frontend/utils";
-import { RawIntlProvider } from "react-intl";
-import { createIntl } from "@navikt/ft-utils";
 import '@navikt/ft-prosess-beregningsgrunnlag/dist/style.css';
-
-import messages from '../../../i18n/nb_NO.json';
-
-const intl = createIntl(messages);
 
 const ProsessBeregningsgrunnlag = React.lazy(() => import('@navikt/ft-prosess-beregningsgrunnlag'));
 
@@ -31,19 +25,17 @@ class PanelDef extends ProsessStegPanelDef {
             konverterKodeverkTilKode(deepCopyProps);
             const bgVilkaret = deepCopyProps.vilkar.find(v => v.vilkarType === vilkarType.BEREGNINGSGRUNNLAGVILKARET);
             return (
-                <RawIntlProvider value={intl}>
-                    <DynamicLoader<React.ComponentProps<typeof ProsessBeregningsgrunnlag>>
-                        packageCompFn={() => import('@navikt/ft-prosess-beregningsgrunnlag')}
-                        federatedCompFn={ProsessBeregningsgrunnlagMF}
-                        {...props}
-                        beregningsgrunnlagsvilkar={bgVilkaret}
-                        beregningsgrunnlagListe={deepCopyProps.beregningsgrunnlag}
-                        arbeidsgiverOpplysningerPerId={deepCopyProps.arbeidsgiverOpplysningerPerId}
-                        submitCallback={props.submitCallback}
-                        formData={props.formData}
-                        setFormData={props.setFormData}
-                    />
-                </RawIntlProvider>
+                <DynamicLoader<React.ComponentProps<typeof ProsessBeregningsgrunnlag>>
+                    packageCompFn={() => import('@navikt/ft-prosess-beregningsgrunnlag')}
+                    federatedCompFn={ProsessBeregningsgrunnlagMF}
+                    {...props}
+                    beregningsgrunnlagsvilkar={bgVilkaret}
+                    beregningsgrunnlagListe={deepCopyProps.beregningsgrunnlag}
+                    arbeidsgiverOpplysningerPerId={deepCopyProps.arbeidsgiverOpplysningerPerId}
+                    submitCallback={props.submitCallback}
+                    formData={props.formData}
+                    setFormData={props.setFormData}
+                />
             );
         }
         return (<BeregningsgrunnlagProsessIndex {...props} />);

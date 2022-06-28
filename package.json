@@ -21,6 +21,7 @@
     "lint:fix": "eslint --fix --cache packages --ext .ts,.tsx,.js,.jsx",
     "less:lint": "stylelint \"packages/**/*.less\"",
     "dev": "cross-env NODE_ENV=development APP_URL_K9FORMIDLING=http://localhost:8060/rest/dummy webpack serve --config webpack/webpack.dev.ts",
+    "dev-lokal": "cross-env NODE_ENV=development APP_URL_SAK=http://k9-sak:8080 APP_URL_K9OPPDRAG=http://k9-oppdrag:8070 APP_URL_K9FORMIDLING=http://localhost:8060/rest/dummy webpack serve --config webpack/webpack.dev.ts",
     "dev-med-formidling": "cross-env NODE_ENV=development webpack serve --config webpack/webpack.dev.ts",
     "build": "cross-env NODE_ENV=production webpack --config webpack/webpack.prod.ts",
     "lerna": "lerna",
