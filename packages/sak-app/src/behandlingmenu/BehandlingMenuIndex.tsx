@@ -44,6 +44,7 @@ import {
   shelveBehandling,
 } from './behandlingMenuOperations';
 import MenyKodeverk from './MenyKodeverk';
+import BehandlingMenuVeiledervisning from './BehandlingMenuVeiledervisning';
 
 const BEHANDLINGSTYPER_SOM_SKAL_KUNNE_OPPRETTES = [
   BehandlingType.FORSTEGANGSSOKNAD,
@@ -202,7 +203,14 @@ export const BehandlingMenuIndex = ({
   const previewHenleggBehandling = useVisForhandsvisningAvMelding(behandling, fagsak);
 
   if (navAnsatt.kanVeilede) {
-    return null;
+    return (
+      <BehandlingMenuVeiledervisning
+        behandlingUuid={behandling?.uuid}
+        featureToggles={featureToggles}
+        markerBehandling={markerBehandling}
+        merknaderFraLos={merknaderFraLos}
+      />
+    );
   }
 
   const erPaVent = behandling ? behandling.behandlingPaaVent : false;
