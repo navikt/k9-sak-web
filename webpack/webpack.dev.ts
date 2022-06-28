@@ -26,6 +26,7 @@ export default {
   cache,
   plugins: [
     ...plugins,
+    new webpack.HotModuleReplacementPlugin(),
     new webpack.EnvironmentPlugin({
       MSW_MODE: 'development',
     }),
