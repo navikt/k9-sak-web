@@ -6,14 +6,22 @@ import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import CopyWebpackPlugin from 'copy-webpack-plugin';
 import ESLintPlugin from 'eslint-webpack-plugin';
-import { IS_DEV } from '../constants';
 
+import { IS_DEV } from '../constants';
+import pck from '../../package.json';
 import { PUBLIC_ROOT, LANG_DIR } from '../paths';
 
-const PACKAGES_DIR = path.resolve(__dirname, '../packages');
+const { ModuleFederationPlugin } = webpack.container;
 
-export default [
+const PACKAGES_DIR = path.resolve(__dirname, '../packages');
+const deps = pck.dependencies;
+
+const isDev = process.env.NODE_ENV === 'development';
+
+
+const pluginConfig = [
   new ESLintPlugin({
+    lintDirtyModulesOnly: isDev,
     context: PACKAGES_DIR,
     extensions: ['tsx', 'ts'],
     failOnWarning: false,
@@ -53,4 +61,22 @@ export default [
     exclude: /node_modules/,
     failOnError: true,
   }),
-];
+  new ModuleFederationPlugin({
+    name: "ft_frontend_saksbehandling",
+    remotes: {
+      ft_prosess_beregningsgrunnlag: 'ft_prosess_beregningsgrunnlag@http://localhost:9008/remoteEntry.js?[(new Date).getTime()]',
+    },
+    shared: {
+      react: {
+        singleton: true,
+        requiredVersion: deps.react,
+      },
+      "react-dom": {
+        singleton: true,
+        requiredVersion: deps["react-dom"],
+      },
+    },
+  })
+]
+
+export default pluginConfig;

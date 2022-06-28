@@ -119,6 +119,6 @@ export { findAksjonspunkt } from './src/micro-frontends/findAksjonspunkt';
 export type { SimpleEndpoints } from './src/micro-frontends/types/SimpleEndpoints';
 export type { SimpleLink } from './src/micro-frontends/types/SimpleLink';
 
-export { getKodeverknavnFn } from './src/kodeverkUtils';
+export { getKodeverknavnFn, konverterKodeverkTilKode } from './src/kodeverkUtils';
 export { joinNonNullStrings, safeJSONParse } from './src/stringUtils';
 export type { Adresser } from './src/getAddresses';

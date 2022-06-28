@@ -30,5 +30,9 @@
   {
     "key": "LOS_MARKER_BEHANDLING",
     "value": "${LOS_MARKER_BEHANDLING}"
+  },
+  {
+    "key": "NY_BEREGNING_PROSESS_ENABLED",
+    "value": "${NY_BEREGNING_PROSESS_ENABLED}"
   }
 ]
