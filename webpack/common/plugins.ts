@@ -60,12 +60,8 @@ const pluginConfig = [
   new CircularDependencyPlugin({
     exclude: /node_modules/,
     failOnError: true,
-  })
-]
-
-if (isDev) {
-  // @ts-ignore
-  pluginConfig.push(new ModuleFederationPlugin({
+  }),
+  new ModuleFederationPlugin({
     name: "ft_frontend_saksbehandling",
     remotes: {
       ft_prosess_beregningsgrunnlag: 'ft_prosess_beregningsgrunnlag@http://localhost:9008/remoteEntry.js?[(new Date).getTime()]',
@@ -80,7 +76,7 @@ if (isDev) {
         requiredVersion: deps["react-dom"],
       },
     },
-  }))
-}
+  })
+]
 
 export default pluginConfig;

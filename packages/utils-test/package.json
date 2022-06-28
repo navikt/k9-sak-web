@@ -10,6 +10,6 @@
     "@wojtekmaj/enzyme-adapter-react-17": "^0.6.6",
     "enzyme": "^3.11.0",
     "react": "^17.0.2",
-    "react-intl": "^5.24.3"
+    "react-intl": "6.0.4"
   }
 }
