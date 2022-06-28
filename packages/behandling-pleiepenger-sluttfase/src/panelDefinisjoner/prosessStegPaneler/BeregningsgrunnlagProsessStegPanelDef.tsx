@@ -2,28 +2,39 @@ import React from 'react';
 
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 import BeregningsgrunnlagProsessIndex from '@fpsak-frontend/prosess-beregningsgrunnlag';
-import BeregningsgrunnlagProsessIndexNy from '@navikt/ft-prosess-beregningsgrunnlag';
 import { prosessStegCodes } from '@k9-sak-web/konstanter';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { ProsessStegDef, ProsessStegPanelDef } from '@k9-sak-web/behandling-felles';
+import { ProsessStegDef, ProsessStegPanelDef, DynamicLoader } from '@k9-sak-web/behandling-felles';
 import { konverterKodeverkTilKode } from "@fpsak-frontend/utils";
+import '@navikt/ft-prosess-beregningsgrunnlag/dist/style.css';
 
+const ProsessBeregningsgrunnlag = React.lazy(() => import('@navikt/ft-prosess-beregningsgrunnlag'));
+
+const enableFederation = process.env.NODE_ENV === 'development';
+
+const ProsessBeregningsgrunnlagMF = !enableFederation ? undefined
+    // eslint-disable-next-line import/no-unresolved
+    : () => import('ft_prosess_beregningsgrunnlag/ProsessBeregningsgrunnlag');
 class PanelDef extends ProsessStegPanelDef {
 
     getKomponent = (props) => {
-        if (props.featureToggles.NY_BEREGNING_PROSESS_ENABLED) {
-            const bgVilkaret = props.vilkar.find(v => v.vilkarType.kode === vilkarType.BEREGNINGSGRUNNLAGVILKARET);
-            return (<BeregningsgrunnlagProsessIndexNy
-                beregningsgrunnlagsvilkar={konverterKodeverkTilKode(bgVilkaret)}
-                beregningsgrunnlagListe={konverterKodeverkTilKode(props.beregningsgrunnlag)}
-                submitCallback={props.submitCallback}
-                isReadOnly={props.isReadOnly}
-                readOnlySubmitButton={props.isReadOnly}
-                alleKodeverk={konverterKodeverkTilKode(props.alleKodeverk)}
-                arbeidsgiverOpplysningerPerId={konverterKodeverkTilKode(props.arbeidsgiverOpplysningerPerId)}
-                formData={null}
-                setFormData={() => {}}
-            />);
+        if (props.featureToggles.NY_BEREGNING_PROSESS_ENABLED || true) {
+            const deepCopyProps = JSON.parse(JSON.stringify(props));
+            konverterKodeverkTilKode(deepCopyProps);
+            const bgVilkaret = deepCopyProps.vilkar.find(v => v.vilkarType === vilkarType.BEREGNINGSGRUNNLAGVILKARET);
+            return (
+                <DynamicLoader<React.ComponentProps<typeof ProsessBeregningsgrunnlag>>
+                    packageCompFn={() => import('@navikt/ft-prosess-beregningsgrunnlag')}
+                    federatedCompFn={ProsessBeregningsgrunnlagMF}
+                    {...props}
+                    beregningsgrunnlagsvilkar={bgVilkaret}
+                    beregningsgrunnlagListe={deepCopyProps.beregningsgrunnlag}
+                    arbeidsgiverOpplysningerPerId={deepCopyProps.arbeidsgiverOpplysningerPerId}
+                    submitCallback={props.submitCallback}
+                    formData={props.formData}
+                    setFormData={props.setFormData}
+                />
+            );
         }
         return (<BeregningsgrunnlagProsessIndex {...props} />);
     }
