@@ -8,16 +8,11 @@ import CopyWebpackPlugin from 'copy-webpack-plugin';
 import ESLintPlugin from 'eslint-webpack-plugin';
 
 import { IS_DEV } from '../constants';
-import pck from '../../package.json';
 import { PUBLIC_ROOT, LANG_DIR } from '../paths';
 
-const { ModuleFederationPlugin } = webpack.container;
-
 const PACKAGES_DIR = path.resolve(__dirname, '../packages');
-const deps = pck.dependencies;
 
 const isDev = process.env.NODE_ENV === 'development';
-
 
 const pluginConfig = [
   new ESLintPlugin({
@@ -27,7 +22,10 @@ const pluginConfig = [
     failOnWarning: false,
     failOnError: !IS_DEV,
     fix: IS_DEV,
-    overrideConfigFile: path.resolve(__dirname, IS_DEV ? '../../eslint/eslintrc.dev.js' : '../../eslint/eslintrc.prod.js'),
+    overrideConfigFile: path.resolve(
+      __dirname,
+      IS_DEV ? '../../eslint/eslintrc.dev.js' : '../../eslint/eslintrc.prod.js',
+    ),
     // cache: true,
   }),
   new MiniCssExtractPlugin({
@@ -61,22 +59,6 @@ const pluginConfig = [
     exclude: /node_modules/,
     failOnError: true,
   }),
-  new ModuleFederationPlugin({
-    name: "ft_frontend_saksbehandling",
-    remotes: {
-      ft_prosess_beregningsgrunnlag: 'ft_prosess_beregningsgrunnlag@http://localhost:9008/remoteEntry.js?[(new Date).getTime()]',
-    },
-    shared: {
-      react: {
-        singleton: true,
-        requiredVersion: deps.react,
-      },
-      "react-dom": {
-        singleton: true,
-        requiredVersion: deps["react-dom"],
-      },
-    },
-  })
-]
+];
 
 export default pluginConfig;
