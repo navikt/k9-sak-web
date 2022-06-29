@@ -6,6 +6,7 @@ import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import CopyWebpackPlugin from 'copy-webpack-plugin';
 import ESLintPlugin from 'eslint-webpack-plugin';
+import ExternalTemplateRemotesPlugin from 'external-remotes-plugin';
 
 import { IS_DEV } from '../constants';
 import { PUBLIC_ROOT, LANG_DIR } from '../paths';
@@ -59,6 +60,7 @@ const pluginConfig = [
     exclude: /node_modules/,
     failOnError: true,
   }),
+  new ExternalTemplateRemotesPlugin(),
 ];
 
 export default pluginConfig;
