@@ -33,7 +33,7 @@ const finnAndelerSomSkalVises = (andeler, statuser) => {
   }
 
   return andeler
-    .filter(andel => statuser.includes(andel.aktivitetStatus.kode))
+    .filter(andel => statuser.includes(andel.aktivitetStatus))
     .filter(andel => andelErIkkeTilkommetEllerLagtTilAvSBH(andel));
 };
 const beregnAarsintektForAktivitetStatus = (alleAndelerIForstePeriode, statuser) => {

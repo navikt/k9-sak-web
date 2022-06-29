@@ -153,12 +153,12 @@ VurderVarigEndretEllerNyoppstartetSN.buildInitialValues = (relevanteAndeler, avk
     return undefined;
   }
   const snAndel = relevanteAndeler.find(
-    andel => andel.aktivitetStatus.kode === aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE,
+    andel => andel.aktivitetStatus === aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE,
   );
   const varigEndretNaeringAP = avklaringsbehov.find(
-    ap => ap.definisjon.kode === VURDER_VARIG_ENDRET_ELLER_NYOPPSTARTET_NAERING_SELVSTENDIG_NAERINGSDRIVENDE,
+    ap => ap.definisjon === VURDER_VARIG_ENDRET_ELLER_NYOPPSTARTET_NAERING_SELVSTENDIG_NAERINGSDRIVENDE,
   );
-  const varigEndringValg = isAvklaringsbehovOpen(varigEndretNaeringAP.status.kode)
+  const varigEndringValg = isAvklaringsbehovOpen(varigEndretNaeringAP.status)
     ? undefined
     : verdiErSatt(snAndel.overstyrtPrAar);
   if (varigEndretNaeringAP) {

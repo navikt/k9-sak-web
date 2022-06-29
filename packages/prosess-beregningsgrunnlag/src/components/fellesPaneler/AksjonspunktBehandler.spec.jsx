@@ -20,10 +20,7 @@ const allePerioder = [
     beregningsgrunnlagPrStatusOgAndel: [
       {
         beregnetPrAar: 360000,
-        aktivitetStatus: {
-          kode: 'AT',
-          kodeverk: 'AKTIVITET_STATUS',
-        },
+        aktivitetStatus: 'AT',
         skalFastsetteGrunnlag: true,
       },
     ],
@@ -33,19 +30,15 @@ const formName = 'BeregningForm';
 const avklaringsbehov = [
   {
     begrunnelse: null,
-    definisjon: {
-      kode: '5038',
-    },
-    status: {
-      kode: 'OPPR',
-    },
+    definisjon: '5038',
+    status: 'OPPR',
   },
 ];
 
 describe('<AksjonspunktBehandler>', () => {
   it('Skal teste at riktig componenter blir renderet for FL readOnly', () => {
     relevanteStatuser.isFrilanser = true;
-    allePerioder[0].beregningsgrunnlagPrStatusOgAndel[0].aktivitetStatus.kode = 'FL';
+    allePerioder[0].beregningsgrunnlagPrStatusOgAndel[0].aktivitetStatus = 'FL';
     const readOnly = true;
     const wrapper = shallowWithIntl(
       <AksjonspunktBehandler.WrappedComponent
@@ -83,7 +76,7 @@ describe('<AksjonspunktBehandler>', () => {
 
   it('Skal teste at submitButton blir rendret riktig når readOnly=false', () => {
     relevanteStatuser.isFrilanser = true;
-    allePerioder[0].beregningsgrunnlagPrStatusOgAndel[0].aktivitetStatus.kode = 'FL';
+    allePerioder[0].beregningsgrunnlagPrStatusOgAndel[0].aktivitetStatus = 'FL';
     const readOnly = false;
     const wrapper = shallowWithIntl(
       <AksjonspunktBehandler.WrappedComponent
@@ -120,7 +113,7 @@ describe('<AksjonspunktBehandler>', () => {
     relevanteStatuser.isFrilanser = false;
     relevanteStatuser.isSelvstendigNaeringsdrivende = false;
     relevanteStatuser.isArbeidstaker = true;
-    allePerioder[0].beregningsgrunnlagPrStatusOgAndel[0].aktivitetStatus.kode = 'AT';
+    allePerioder[0].beregningsgrunnlagPrStatusOgAndel[0].aktivitetStatus = 'AT';
     const readOnly = true;
     const wrapper = shallowWithIntl(
       <AksjonspunktBehandler.WrappedComponent
@@ -157,20 +150,16 @@ describe('<AksjonspunktBehandler>', () => {
     relevanteStatuser.isFrilanser = false;
     relevanteStatuser.isSelvstendigNaeringsdrivende = false;
     relevanteStatuser.isArbeidstaker = true;
-    allePerioder[0].beregningsgrunnlagPrStatusOgAndel[0].aktivitetStatus.kode = 'AT';
+    allePerioder[0].beregningsgrunnlagPrStatusOgAndel[0].aktivitetStatus = 'AT';
     const readOnly = true;
     const avklaringsbehovTB = [
       {
         begrunnelse: null,
-        definisjon: {
-          kode: '5047',
-        },
-        status: {
-          kode: 'OPPR',
-        },
+        definisjon: '5047',
+        status: 'OPPR',
       },
     ];
-    
+
     const wrapper = shallowWithIntl(
       <AksjonspunktBehandler.WrappedComponent
         readOnly={readOnly}
@@ -207,9 +196,7 @@ describe('<AksjonspunktBehandler>', () => {
     relevanteStatuser.isSelvstendigNaeringsdrivende = true;
     relevanteStatuser.isArbeidstaker = false;
     const snPeriode = {
-      aktivitetStatus: {
-        kode: aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE,
-      },
+      aktivitetStatus: aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE,
       næringer: [
         {
           erVarigEndret: false,

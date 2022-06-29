@@ -49,11 +49,11 @@ export const FastsettSN = ({
 }) => {
   const harGammeltAPFastsettBrutto = avklaringsbehov
     ? avklaringsbehov.find(
-        ap => ap.definisjon.kode === FASTSETT_BRUTTO_BEREGNINGSGRUNNLAG_SELVSTENDIG_NAERINGSDRIVENDE,
-      )
+      ap => ap.definisjon === FASTSETT_BRUTTO_BEREGNINGSGRUNNLAG_SELVSTENDIG_NAERINGSDRIVENDE,
+    )
     : false;
   const harAPSNNyiArbLiv = avklaringsbehov
-    ? avklaringsbehov.find(ap => ap.definisjon.kode === FASTSETT_BEREGNINGSGRUNNLAG_SN_NY_I_ARBEIDSLIVET)
+    ? avklaringsbehov.find(ap => ap.definisjon === FASTSETT_BEREGNINGSGRUNNLAG_SN_NY_I_ARBEIDSLIVET)
     : false;
 
   return (
@@ -124,10 +124,10 @@ FastsettSN.buildInitialValuesNyIArbeidslivet = (relevanteAndeler, avklaringsbeho
     return undefined;
   }
   const snAndel = relevanteAndeler.find(
-    andel => andel.aktivitetStatus.kode === aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE,
+    andel => andel.aktivitetStatus === aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE,
   );
   const nyIArbeidslivetAP = avklaringsbehov.find(
-    ap => ap.definisjon.kode === FASTSETT_BEREGNINGSGRUNNLAG_SN_NY_I_ARBEIDSLIVET,
+    ap => ap.definisjon === FASTSETT_BEREGNINGSGRUNNLAG_SN_NY_I_ARBEIDSLIVET,
   );
   return {
     [fastsettInntektFieldname]: snAndel ? formatCurrencyNoKr(snAndel.overstyrtPrAar) : undefined,

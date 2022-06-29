@@ -86,7 +86,7 @@ const søkerHarOppgittInntekt = naring => naring.oppgittInntekt || naring.oppgit
 
 export const NaeringsopplysningsPanel = ({ alleAndelerIForstePeriode, intl }) => {
   const snAndel = alleAndelerIForstePeriode.find(
-    andel => andel.aktivitetStatus.kode === aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE,
+    andel => andel.aktivitetStatus === aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE,
   );
   const userIdent = null; // TODO denne må hentes fra brukerID enten fra brukerObjectet eller på beregningsgrunnlag må avklares
   if (!snAndel.næringer) {

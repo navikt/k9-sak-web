@@ -20,8 +20,8 @@ const finnSnAvklaringsbehov = avklaringsbehov =>
   avklaringsbehov &&
   avklaringsbehov.find(
     ab =>
-      ab.definisjon.kode === VURDER_VARIG_ENDRET_ELLER_NYOPPSTARTET_NAERING_SELVSTENDIG_NAERINGSDRIVENDE ||
-      ab.definisjon.kode === FASTSETT_BEREGNINGSGRUNNLAG_SN_NY_I_ARBEIDSLIVET,
+      ab.definisjon === VURDER_VARIG_ENDRET_ELLER_NYOPPSTARTET_NAERING_SELVSTENDIG_NAERINGSDRIVENDE ||
+      ab.definisjon === FASTSETT_BEREGNINGSGRUNNLAG_SN_NY_I_ARBEIDSLIVET,
   );
 
 /**
@@ -101,7 +101,7 @@ const mapStateToPropsFactory = (initialState, ownPropsStatic) => {
       ownProps.behandlingId,
       ownProps.behandlingVersjon,
     )(state, `${ownProps.fieldArrayID}.erVarigEndretNaering`),
-    isAvklaringsbehovClosed: !isAvklaringsbehovOpen(avklaringsbehovSN.status.kode),
+    isAvklaringsbehovClosed: !isAvklaringsbehovOpen(avklaringsbehovSN.status),
     fieldArrayID: ownProps.fieldArrayID,
   });
 };

@@ -35,12 +35,12 @@ const thirdCol = {
 
 
 const mockTableData = {
-    '123dette-er-en-arbeidsforholdid': [firstCol, secondCol, thirdCol],
+  '123dette-er-en-arbeidsforholdid': [firstCol, secondCol, thirdCol],
 };
 
 const mockbruttoPerodeList = [
   { brutto: 560500, periodeFom: '2019-09-16', periodeTom: '2019-09-29' },
-  { brutto: 0,  periodeFom: '2019-09-30', periodeTom: '9999-12-31'},
+  { brutto: 0, periodeFom: '2019-09-30', periodeTom: '9999-12-31' },
 ];
 
 const beregnetPrAarAndelEn = 250000;
@@ -56,9 +56,7 @@ const beregningsgrunnlagPerioder = [
     beregningsgrunnlagPeriodeTom: '2018-06-30',
     beregningsgrunnlagPrStatusOgAndel: [
       {
-        aktivitetStatus: {
-          kode: aktivitetStatus.ARBEIDSTAKER,
-        },
+        aktivitetStatus: aktivitetStatus.ARBEIDSTAKER,
         erTidsbegrensetArbeidsforhold: true,
         beregnetPrAar: beregnetPrAarAndelEn,
         overstyrtPrAar: null,
@@ -70,9 +68,7 @@ const beregningsgrunnlagPerioder = [
         andelsnr: 1,
       },
       {
-        aktivitetStatus: {
-          kode: aktivitetStatus.ARBEIDSTAKER,
-        },
+        aktivitetStatus: aktivitetStatus.ARBEIDSTAKER,
         erTidsbegrensetArbeidsforhold: true,
         beregnetPrAar: beregnetPrAarAndelTo,
         overstyrtPrAar: null,
@@ -86,14 +82,12 @@ const beregningsgrunnlagPerioder = [
     ],
   },
   {
-    periodeAarsaker: [{ kode: periodeAarsak.ARBEIDSFORHOLD_AVSLUTTET }],
+    periodeAarsaker: [periodeAarsak.ARBEIDSFORHOLD_AVSLUTTET],
     beregningsgrunnlagPeriodeFom: '2018-07-01',
     beregningsgrunnlagPeriodeTom: '2018-07-31',
     beregningsgrunnlagPrStatusOgAndel: [
       {
-        aktivitetStatus: {
-          kode: aktivitetStatus.ARBEIDSTAKER,
-        },
+        aktivitetStatus: aktivitetStatus.ARBEIDSTAKER,
         erTidsbegrensetArbeidsforhold: true,
         beregnetPrAar: beregnetPrAarAndelEn,
         overstyrtPrAar: overstyrtPrAarAndelEn,
@@ -105,9 +99,7 @@ const beregningsgrunnlagPerioder = [
         andelsnr: 1,
       },
       {
-        aktivitetStatus: {
-          kode: aktivitetStatus.ARBEIDSTAKER,
-        },
+        aktivitetStatus: aktivitetStatus.ARBEIDSTAKER,
         erTidsbegrensetArbeidsforhold: true,
         beregnetPrAar: beregnetPrAarAndelTo,
         overstyrtPrAar: overstyrtPrAarAndelTo,
@@ -121,13 +113,11 @@ const beregningsgrunnlagPerioder = [
     ],
   },
   {
-    periodeAarsaker: [{ kode: periodeAarsak.ARBEIDSFORHOLD_AVSLUTTET }],
+    periodeAarsaker: [periodeAarsak.ARBEIDSFORHOLD_AVSLUTTET],
     beregningsgrunnlagPeriodeFom: '2018-08-01',
     beregningsgrunnlagPrStatusOgAndel: [
       {
-        aktivitetStatus: {
-          kode: aktivitetStatus.ARBEIDSTAKER,
-        },
+        aktivitetStatus: aktivitetStatus.ARBEIDSTAKER,
         erTidsbegrensetArbeidsforhold: true,
         beregnetPrAar: beregnetPrAarAndelEn,
         overstyrtPrAar: overstyrtPrAarAndelEn,
@@ -139,9 +129,7 @@ const beregningsgrunnlagPerioder = [
         andelsnr: 1,
       },
       {
-        aktivitetStatus: {
-          kode: aktivitetStatus.ARBEIDSTAKER,
-        },
+        aktivitetStatus: aktivitetStatus.ARBEIDSTAKER,
         erTidsbegrensetArbeidsforhold: true,
         beregnetPrAar: beregnetPrAarAndelTo,
         overstyrtPrAar: overstyrtPrAarAndelTo,
@@ -155,13 +143,11 @@ const beregningsgrunnlagPerioder = [
     ],
   },
   {
-    periodeAarsaker: [{ kode: periodeAarsak.REFUSJON_OPPHOERER }],
+    periodeAarsaker: [periodeAarsak.REFUSJON_OPPHOERER],
     beregningsgrunnlagPeriodeFom: '2019-01-01',
     beregningsgrunnlagPrStatusOgAndel: [
       {
-        aktivitetStatus: {
-          kode: aktivitetStatus.ARBEIDSTAKER,
-        },
+        aktivitetStatus: aktivitetStatus.ARBEIDSTAKER,
         erTidsbegrensetArbeidsforhold: true,
         beregnetPrAar: beregnetPrAarAndelEn,
         overstyrtPrAar: overstyrtPrAarAndelEn,
@@ -173,9 +159,7 @@ const beregningsgrunnlagPerioder = [
         andelsnr: 1,
       },
       {
-        aktivitetStatus: {
-          kode: aktivitetStatus.ARBEIDSTAKER,
-        },
+        aktivitetStatus: aktivitetStatus.ARBEIDSTAKER,
         erTidsbegrensetArbeidsforhold: true,
         beregnetPrAar: beregnetPrAarAndelTo,
         overstyrtPrAar: overstyrtPrAarAndelTo,
@@ -245,23 +229,19 @@ describe('<AksjonspunktBehandlerTidsbegrenset>', () => {
   it('Skal teste at initial values bygges korrekt', () => {
     const korrektApApent = [
       {
-        definisjon: {
-          kode: avklaringsbehovCodes.FASTSETT_BEREGNINGSGRUNNLAG_TIDSBEGRENSET_ARBEIDSFORHOLD,
-        },
-        status: {
-          kode: avklaringsbehovStatus.OPPRETTET,
-        },
+        definisjon: avklaringsbehovCodes.FASTSETT_BEREGNINGSGRUNNLAG_TIDSBEGRENSET_ARBEIDSFORHOLD,
+        status: avklaringsbehovStatus.OPPRETTET,
       },
     ];
     const expectedInitialValues = {};
-      expectedInitialValues[keyForPeriodeOgAndel(1, 0)] = formatCurrencyNoKr(overstyrtPrAarAndelEn);
+    expectedInitialValues[keyForPeriodeOgAndel(1, 0)] = formatCurrencyNoKr(overstyrtPrAarAndelEn);
     expectedInitialValues[keyForPeriodeOgAndel(1, 1)] = formatCurrencyNoKr(overstyrtPrAarAndelTo);
     const initialValues = AksjonspunktBehandlerTidsbegrenset.buildInitialValues(beregningsgrunnlagPerioder, korrektApApent);
     expect(initialValues).to.eql(expectedInitialValues);
   });
   it(
     'Skal teste at selector lager forventet objekt ut av en liste med beregningsgrunnlagperioder ' +
-      'som inneholder kortvarige arbeidsforhold når vi har aksjonspunkt',
+    'som inneholder kortvarige arbeidsforhold når vi har aksjonspunkt',
     () => {
       const expectedResultObjectWhenWeHaveAksjonspunkt = {
         '123dette-er-en-arbeidsforholdsid': [
@@ -317,22 +297,14 @@ describe('<AksjonspunktBehandlerTidsbegrenset>', () => {
   it('Skal teste at selector henter ut om aksjonspunktet er lukket eller ikke', () => {
     const korrektApLukket = [
       {
-        definisjon: {
-          kode: avklaringsbehovCodes.FASTSETT_BEREGNINGSGRUNNLAG_TIDSBEGRENSET_ARBEIDSFORHOLD,
-        },
-        status: {
-          kode: avklaringsbehovStatus.UTFORT,
-        },
+        definisjon: avklaringsbehovCodes.FASTSETT_BEREGNINGSGRUNNLAG_TIDSBEGRENSET_ARBEIDSFORHOLD,
+        status: avklaringsbehovStatus.UTFORT,
       },
     ];
     const korrektApApent = [
       {
-        definisjon: {
-          kode: avklaringsbehovCodes.FASTSETT_BEREGNINGSGRUNNLAG_TIDSBEGRENSET_ARBEIDSFORHOLD,
-        },
-        status: {
-          kode: avklaringsbehovStatus.OPPRETTET,
-        },
+        definisjon: avklaringsbehovCodes.FASTSETT_BEREGNINGSGRUNNLAG_TIDSBEGRENSET_ARBEIDSFORHOLD,
+        status: avklaringsbehovStatus.OPPRETTET,
       },
     ];
     const selectorDataLukket = getIsAvklaringsbehovClosed.resultFunc(korrektApLukket);
@@ -348,24 +320,24 @@ describe('<AksjonspunktBehandlerTidsbegrenset>', () => {
     formValues[keyForPeriodeOgAndel(1, 1)] = '250 000';
     const expectedTransformedValues = {
       fastsatteTidsbegrensedePerioder: [
-      {
-        periodeFom: beregningsgrunnlagPerioder[1].beregningsgrunnlagPeriodeFom,
-        periodeTom: beregningsgrunnlagPerioder[2].beregningsgrunnlagPeriodeTom,
-        fastsatteTidsbegrensedeAndeler: [
-          {
-            andelsnr: 1,
-            bruttoFastsattInntekt: 100000,
-          },
-          {
-            andelsnr: 2,
-            bruttoFastsattInntekt: 250000,
-          },
-        ],
-      }
-    ],
-    kode: avklaringsbehovCodes.FASTSETT_BEREGNINGSGRUNNLAG_TIDSBEGRENSET_ARBEIDSFORHOLD,
-    begrunnelse: "Alt ser greit ut.",
-    frilansInntekt: 120000,
+        {
+          periodeFom: beregningsgrunnlagPerioder[1].beregningsgrunnlagPeriodeFom,
+          periodeTom: beregningsgrunnlagPerioder[2].beregningsgrunnlagPeriodeTom,
+          fastsatteTidsbegrensedeAndeler: [
+            {
+              andelsnr: 1,
+              bruttoFastsattInntekt: 100000,
+            },
+            {
+              andelsnr: 2,
+              bruttoFastsattInntekt: 250000,
+            },
+          ],
+        }
+      ],
+      kode: avklaringsbehovCodes.FASTSETT_BEREGNINGSGRUNNLAG_TIDSBEGRENSET_ARBEIDSFORHOLD,
+      begrunnelse: "Alt ser greit ut.",
+      frilansInntekt: 120000,
     };
     const transformedValues = AksjonspunktBehandlerTidsbegrenset.transformValues(
       formValues,
@@ -377,12 +349,8 @@ describe('<AksjonspunktBehandlerTidsbegrenset>', () => {
   it('Skal teste buildInitialValues metode', () => {
     const korrektApApent = [
       {
-        definisjon: {
-          kode: avklaringsbehovCodes.FASTSETT_BEREGNINGSGRUNNLAG_TIDSBEGRENSET_ARBEIDSFORHOLD,
-        },
-        status: {
-          kode: avklaringsbehovStatus.OPPRETTET,
-        },
+        definisjon: avklaringsbehovCodes.FASTSETT_BEREGNINGSGRUNNLAG_TIDSBEGRENSET_ARBEIDSFORHOLD,
+        status: avklaringsbehovStatus.OPPRETTET,
       },
     ];
     const expectedInitialValues = {};

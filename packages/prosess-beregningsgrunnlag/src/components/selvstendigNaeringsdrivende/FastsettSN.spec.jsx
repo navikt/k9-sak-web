@@ -7,19 +7,13 @@ import FastsettSN, { FastsettSN as UnwrappedForm, begrunnelseFieldname, fastsett
 import shallowWithIntl, { intlMock } from '../../../i18n';
 
 const mockAvklaringsbehovMedKodeOgStatus = (apKode, begrunnelse) => ({
-  definisjon: {
-    kode: apKode,
-  },
-  status: {
-    kode: 'OPPR',
-  },
+  definisjon: apKode,
+  status: 'OPPR',
   begrunnelse,
 });
 
 const lagAndel = (status, fastsattBelop) => ({
-  aktivitetStatus: {
-    kode: status,
-  },
+  aktivitetStatus: status,
   beregnetPrAar: 200000,
   overstyrtPrAar: fastsattBelop,
   beregningsperiodeFom: '2015-01-01',

@@ -14,19 +14,13 @@ import shallowWithIntl, { intlMock } from '../../../i18n';
 const { VURDER_VARIG_ENDRET_ELLER_NYOPPSTARTET_NAERING_SELVSTENDIG_NAERINGSDRIVENDE } = avklaringsbehovCodes;
 
 const mockAvklaringsbehovMedKodeOgStatus = (apKode, begrunnelse, status) => ({
-  definisjon: {
-    kode: apKode,
-  },
-  status: {
-    kode: status,
-  },
+  definisjon: apKode,
+  status: status,
   begrunnelse,
 });
 
 const lagAndel = (status, fastsattBelop) => ({
-  aktivitetStatus: {
-    kode: status,
-  },
+  aktivitetStatus: status,
   beregnetPrAar: 200000,
   overstyrtPrAar: fastsattBelop,
   beregningsperiodeFom: '2015-01-01',

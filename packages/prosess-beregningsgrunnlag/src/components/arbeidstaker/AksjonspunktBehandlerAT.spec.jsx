@@ -10,10 +10,7 @@ const alleKodeverk = {
 };
 
 const mockAndel = (arbeidsgiverIdent, overstyrtPrAar, beregnetPrAar, skalFastsetteGrunnlag) => ({
-  aktivitetStatus: {
-    kode: aktivitetStatus.ARBEIDSTAKER,
-    kodeverk: 'test',
-  },
+  aktivitetStatus: aktivitetStatus.ARBEIDSTAKER,
   arbeidsforhold: {
     arbeidsgiverIdent,
     eksternArbeidsforholdId: '345678',
@@ -56,8 +53,7 @@ describe('<AksjonspunktBehandlerAT>', () => {
     andeler.forEach((andel, index) => {
       const arbeidsgiverNavn = rows.at(index).find('Normaltekst');
       expect(arbeidsgiverNavn.at(0).childAt(0).text()).to.equal(
-        `${arbeidsgiverOpplysningerPerId[andel.arbeidsforhold.arbeidsgiverIdent].navn} (${
-          andel.arbeidsforhold.arbeidsgiverIdent
+        `${arbeidsgiverOpplysningerPerId[andel.arbeidsforhold.arbeidsgiverIdent].navn} (${andel.arbeidsforhold.arbeidsgiverIdent
         })...5678`,
       );
       const inputField = rows.first().find('InputField');
@@ -83,8 +79,7 @@ describe('<AksjonspunktBehandlerAT>', () => {
     andeler.forEach((andel, index) => {
       const arbeidsgiverNavn = rows.at(index).find('Normaltekst');
       expect(arbeidsgiverNavn.at(0).childAt(0).text()).to.equal(
-        `${arbeidsgiverOpplysningerPerId[andel.arbeidsforhold.arbeidsgiverIdent].navn} (${
-          andel.arbeidsforhold.arbeidsgiverIdent
+        `${arbeidsgiverOpplysningerPerId[andel.arbeidsforhold.arbeidsgiverIdent].navn} (${andel.arbeidsforhold.arbeidsgiverIdent
         })...5678`,
       );
       const inputField = rows.first().find('InputField');

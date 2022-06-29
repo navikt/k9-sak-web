@@ -72,7 +72,7 @@ const createInntektRows = pgiVerdier => (
  */
 export const GrunnlagForAarsinntektPanelSN = ({ alleAndeler }) => {
   const snAndel = alleAndeler.find(
-    andel => andel.aktivitetStatus.kode === aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE,
+    andel => andel.aktivitetStatus === aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE,
   );
   if (!snAndel) {
     return null;

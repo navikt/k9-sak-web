@@ -49,7 +49,7 @@ const lagBeskrivelseMedBeløpRad = (tekstId, beløp) => (
 );
 
 const lagRedusertBGRad = (tekstIdRedusert, beløpÅRedusere, tekstIdLøpende, løpendeBeløp, gjeldendeDekningsgrad) => {
-  const multiplikator = gjeldendeDekningsgrad/100;
+  const multiplikator = gjeldendeDekningsgrad / 100;
   const redusert = beløpÅRedusere * multiplikator;
   return (
     <>
@@ -90,11 +90,11 @@ const lagPeriodeblokk = (bgperiode, ytelsegrunnlag, frilansGrunnlag, næringGrun
   if (!andelerDetErSøktOm || andelerDetErSøktOm.length < 1) {
     return null;
   }
-  const beregningsgrunnlagFL = andelerDetErSøktOm.some(p => p.statusSøktFor.kode === aktivitetStatus.FRILANSER)
+  const beregningsgrunnlagFL = andelerDetErSøktOm.some(p => p.statusSøktFor === aktivitetStatus.FRILANSER)
     ? frilansGrunnlag
     : null;
   const beregningsgrunnlagSN = andelerDetErSøktOm.some(
-    p => p.statusSøktFor.kode === aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE,
+    p => p.statusSøktFor === aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE,
   )
     ? næringGrunnlag
     : null;

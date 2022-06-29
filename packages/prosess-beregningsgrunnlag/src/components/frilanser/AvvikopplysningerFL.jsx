@@ -29,13 +29,13 @@ const AvviksopplysningerFL = ({
     );
   }
   const sammenligningsGrunnlagFL = sammenligningsgrunnlagPrStatus
-    ? sammenligningsgrunnlagPrStatus.find((status) => status.sammenligningsgrunnlagType.kode === sammenligningType.FL
-      || status.sammenligningsgrunnlagType.kode === sammenligningType.ATFLSN)
+    ? sammenligningsgrunnlagPrStatus.find((status) => status.sammenligningsgrunnlagType === sammenligningType.FL
+      || status.sammenligningsgrunnlagType === sammenligningType.ATFLSN)
     : undefined;
   if (!sammenligningsGrunnlagFL) {
     return null;
   }
-  if (kombinasjonsstatusATFL && sammenligningsgrunnlagPrStatus.find((status) => status.sammenligningsgrunnlagType.kode === sammenligningType.ATFLSN)) {
+  if (kombinasjonsstatusATFL && sammenligningsgrunnlagPrStatus.find((status) => status.sammenligningsgrunnlagType === sammenligningType.ATFLSN)) {
     return null;
   }
   const avvikFL = sammenligningsGrunnlagFL.avvikProsent !== undefined ? sammenligningsGrunnlagFL.avvikProsent : '';

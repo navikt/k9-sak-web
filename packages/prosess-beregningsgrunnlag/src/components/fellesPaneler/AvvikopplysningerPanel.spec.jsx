@@ -28,10 +28,7 @@ const allePerioder = [
     beregningsgrunnlagPrStatusOgAndel: [
       {
         beregnetPrAar: 360000,
-        aktivitetStatus: {
-          kode: 'AT',
-          kodeverk: 'AKTIVITET_STATUS',
-        },
+        aktivitetStatus: 'AT',
       },
     ],
   },
@@ -78,9 +75,7 @@ describe('<Avviksopplysninger>', () => {
     relevanteStatuser.isArbeidstaker = false;
     relevanteStatuser.isSelvstendigNaeringsdrivende = true;
     const snPeriode = {
-      aktivitetStatus: {
-        kode: aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE,
-      },
+      aktivitetStatus: aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE,
       næringer: [
         {
           erVarigEndret: false,

@@ -9,10 +9,7 @@ import NaeringsopplysningsPanel from './NaeringsOpplysningsPanel';
 import shallowWithIntl, { intlMock } from '../../../i18n';
 
 const andelerForstePeriode = {
-  aktivitetStatus: {
-    kode: aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE,
-    kodeverk: 'AKTIVITET_STATUS',
-  },
+  aktivitetStatus: aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE,
   næringer: [
     {
       begrunnelse: 'Endringsbeskrivelse',
@@ -29,10 +26,7 @@ const andelerForstePeriode = {
       regnskapsførerNavn: 'Regnar Regnskap',
       regnskapsførerTlf: '99999999',
       utenlandskvirksomhetsnavn: null,
-      virksomhetType: {
-        kode: 'ANNEN',
-        kodeverk: 'VIRKSOMHET_TYPE',
-      },
+      virksomhetType: 'ANNEN',
     },
   ],
 };

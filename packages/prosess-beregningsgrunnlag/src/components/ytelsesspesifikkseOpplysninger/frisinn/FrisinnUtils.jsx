@@ -6,7 +6,7 @@ const finnSamletBruttoForStatus = (andeler, status) => {
     return 0;
   }
   const inntekt = andeler
-    .filter(a => a.aktivitetStatus.kode === status)
+    .filter(a => a.aktivitetStatus === status)
     .map(({ bruttoPrAar }) => bruttoPrAar)
     .reduce((sum, brutto) => sum + brutto, 0);
   if (!inntekt || inntekt === 0) {
@@ -40,7 +40,7 @@ const finnFrisinnAndelerISøknadsperiodeForStatus = (status, bgPeriode, ytelsegr
     if (!periodeVedSisteDagIApril) {
       return null;
     }
-    return periodeVedSisteDagIApril.frisinnAndeler.filter(andel => andel.statusSøktFor.kode === status);
+    return periodeVedSisteDagIApril.frisinnAndeler.filter(andel => andel.statusSøktFor === status);
   }
   const sisteDatoIMåned = moment(bgPeriode.beregningsgrunnlagPeriodeTom).endOf('month');
   const periodeVedSisteDagIMnd = frisinnPerioder.find(
@@ -49,7 +49,7 @@ const finnFrisinnAndelerISøknadsperiodeForStatus = (status, bgPeriode, ytelsegr
   if (!periodeVedSisteDagIMnd) {
     return null;
   }
-  return periodeVedSisteDagIMnd.frisinnAndeler.filter(andel => andel.statusSøktFor.kode === status);
+  return periodeVedSisteDagIMnd.frisinnAndeler.filter(andel => andel.statusSøktFor === status);
 };
 
 export const erSøktForAndelISøknadsperiode = (status, bgPeriode, ytelsegrunnlag) => {
@@ -93,7 +93,7 @@ export const finnFrisinnperioderSomSkalVises = (beregningsgrunnlag, behandling) 
   if (behandling && behandling.behandlingÅrsaker && frisinnPerioder.length > 1) {
     const årsaker = behandling.behandlingÅrsaker;
     const eropprettetGrunetEndring = årsaker.some(
-      årsak => årsak.behandlingArsakType.kode === behandlingArsakType.RE_ENDRING_FRA_BRUKER,
+      årsak => årsak.behandlingArsakType === behandlingArsakType.RE_ENDRING_FRA_BRUKER,
     );
     if (eropprettetGrunetEndring) {
       // Skal kun vise siste søknadsperiode

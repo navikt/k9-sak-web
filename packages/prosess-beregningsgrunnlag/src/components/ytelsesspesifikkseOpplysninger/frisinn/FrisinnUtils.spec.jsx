@@ -10,9 +10,7 @@ const lagBgPeriode = (beregningsgrunnlagPeriodeFom, beregningsgrunnlagPeriodeTom
 
 const lagFrisinnAndel = (status, beløp) => ({
   oppgittInntekt: beløp,
-  statusSøktFor: {
-    kode: status,
-  },
+  statusSøktFor: status,
 });
 
 const lagFrisinnPeriode = (fom, tom, frisinnAndeler) => ({
@@ -43,10 +41,7 @@ const lagBehandling = kode => ({
       manueltOpprettet: false,
     },
   ],
-  sprakkode: {
-    kode: 'NB',
-    kodeverk: 'Språkkode',
-  },
+  sprakkode: 'NB',
 });
 
 describe('<FrisinnUtils>', () => {

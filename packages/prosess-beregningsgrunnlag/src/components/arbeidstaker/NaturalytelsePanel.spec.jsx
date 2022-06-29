@@ -8,35 +8,25 @@ import NaturalytelsePanel, { createNaturalytelseTableData } from './Naturalytels
 
 const bgPerioder = [
   {
-    periodeAarsaker: [
-      {
-        kode: periodeAarsak.UDEFINERT,
-      },
-    ],
+    periodeAarsaker: [periodeAarsak.UDEFINERT],
     beregningsgrunnlagPeriodeFom: '2018-06-01',
     beregningsgrunnlagPrStatusOgAndel: [
       {
-        aktivitetStatus: {
-          kode: aktivitetStatus.ARBEIDSTAKER,
-        },
+        aktivitetStatus: aktivitetStatus.ARBEIDSTAKER,
         arbeidsforhold: {
           arbeidsgiverIdent: '123',
           arbeidsforholdId: '123',
         },
       },
       {
-        aktivitetStatus: {
-          kode: aktivitetStatus.ARBEIDSTAKER,
-        },
+        aktivitetStatus: aktivitetStatus.ARBEIDSTAKER,
         arbeidsforhold: {
           arbeidsgiverIdent: '456',
           arbeidsforholdId: '456',
         },
       },
       {
-        aktivitetStatus: {
-          kode: aktivitetStatus.ARBEIDSTAKER,
-        },
+        aktivitetStatus: aktivitetStatus.ARBEIDSTAKER,
         arbeidsforhold: {
           arbeidsgiverIdent: '789',
           arbeidsforholdId: '789',
@@ -45,26 +35,18 @@ const bgPerioder = [
     ],
   },
   {
-    periodeAarsaker: [
-      {
-        kode: periodeAarsak.NATURALYTELSE_BORTFALT,
-      },
-    ],
+    periodeAarsaker: [periodeAarsak.NATURALYTELSE_BORTFALT],
     beregningsgrunnlagPeriodeFom: '2018-07-01',
     beregningsgrunnlagPrStatusOgAndel: [
       {
-        aktivitetStatus: {
-          kode: aktivitetStatus.ARBEIDSTAKER,
-        },
+        aktivitetStatus: aktivitetStatus.ARBEIDSTAKER,
         arbeidsforhold: {
           arbeidsgiverIdent: '123',
           arbeidsforholdId: '123',
         },
       },
       {
-        aktivitetStatus: {
-          kode: aktivitetStatus.ARBEIDSTAKER,
-        },
+        aktivitetStatus: aktivitetStatus.ARBEIDSTAKER,
         bortfaltNaturalytelse: 10000,
         arbeidsforhold: {
           arbeidsgiverIdent: '456',
@@ -72,9 +54,7 @@ const bgPerioder = [
         },
       },
       {
-        aktivitetStatus: {
-          kode: aktivitetStatus.ARBEIDSTAKER,
-        },
+        aktivitetStatus: aktivitetStatus.ARBEIDSTAKER,
         bortfaltNaturalytelse: 70000,
         arbeidsforhold: {
           arbeidsgiverIdent: '789',
@@ -84,26 +64,18 @@ const bgPerioder = [
     ],
   },
   {
-    periodeAarsaker: [
-      {
-        kode: periodeAarsak.ARBEIDSFORHOLD_AVSLUTTET,
-      },
-    ],
+    periodeAarsaker: [periodeAarsak.ARBEIDSFORHOLD_AVSLUTTET],
     beregningsgrunnlagPeriodeFom: '2018-08-01',
     beregningsgrunnlagPrStatusOgAndel: [
       {
-        aktivitetStatus: {
-          kode: aktivitetStatus.ARBEIDSTAKER,
-        },
+        aktivitetStatus: aktivitetStatus.ARBEIDSTAKER,
         arbeidsforhold: {
           arbeidsgiverIdent: '123',
           arbeidsforholdId: '123',
         },
       },
       {
-        aktivitetStatus: {
-          kode: aktivitetStatus.ARBEIDSTAKER,
-        },
+        aktivitetStatus: aktivitetStatus.ARBEIDSTAKER,
         bortfaltNaturalytelse: 70000,
         arbeidsforhold: {
           arbeidsgiverIdent: '456',
@@ -111,9 +83,7 @@ const bgPerioder = [
         },
       },
       {
-        aktivitetStatus: {
-          kode: aktivitetStatus.ARBEIDSTAKER,
-        },
+        aktivitetStatus: aktivitetStatus.ARBEIDSTAKER,
         bortfaltNaturalytelse: 10000,
         arbeidsforhold: {
           arbeidsgiverIdent: '789',
@@ -123,18 +93,12 @@ const bgPerioder = [
     ],
   },
   {
-    periodeAarsaker: [
-      {
-        kode: periodeAarsak.NATURALYTELSE_BORTFALT,
-      },
-    ],
+    periodeAarsaker: [periodeAarsak.NATURALYTELSE_BORTFALT],
     beregningsgrunnlagPeriodeFom: '2018-09-01',
     beregningsgrunnlagPeriodeTom: '2018-12-01',
     beregningsgrunnlagPrStatusOgAndel: [
       {
-        aktivitetStatus: {
-          kode: aktivitetStatus.ARBEIDSTAKER,
-        },
+        aktivitetStatus: aktivitetStatus.ARBEIDSTAKER,
         bortfaltNaturalytelse: 50000,
         arbeidsforhold: {
           arbeidsgiverIdent: '123',
@@ -142,18 +106,14 @@ const bgPerioder = [
         },
       },
       {
-        aktivitetStatus: {
-          kode: aktivitetStatus.ARBEIDSTAKER,
-        },
+        aktivitetStatus: aktivitetStatus.ARBEIDSTAKER,
         arbeidsforhold: {
           arbeidsgiverIdent: '456',
           arbeidsforholdId: '456',
         },
       },
       {
-        aktivitetStatus: {
-          kode: aktivitetStatus.ARBEIDSTAKER,
-        },
+        aktivitetStatus: aktivitetStatus.ARBEIDSTAKER,
         arbeidsforhold: {
           arbeidsgiverIdent: '789',
           arbeidsforholdId: '789',
@@ -227,7 +187,7 @@ describe('<NaturalytelsePanel>', () => {
 
   it(
     'Skal teste at selector lager forventet objekt ut av en liste med ' +
-      'beregningsgrunnlagperioder som inneholder naturalytelser',
+    'beregningsgrunnlagperioder som inneholder naturalytelser',
     () => {
       const expectedReturnObject = {
         arbeidsforholdPeriodeMap: {

@@ -10,26 +10,17 @@ const aapInntekt = 300000;
 const aapNavn = 'Beregningsgrunnlag.TilstottendeYtelse.AAP';
 const dagpengerNavn = 'Beregningsgrunnlag.TilstottendeYtelse.Dagpenger';
 const dpAndel = {
-  aktivitetStatus: {
-    kode: aktivitetStatus.DAGPENGER,
-    navn: dagpengerNavn,
-  },
+  aktivitetStatus: aktivitetStatus.DAGPENGER,
   beregnetPrAar: dagpengerInntekt,
   elementNavn: dagpengerNavn,
 };
 const aapAndel = {
-  aktivitetStatus: {
-    kode: aktivitetStatus.ARBEIDSAVKLARINGSPENGER,
-    navn: aapNavn,
-  },
+  aktivitetStatus: aktivitetStatus.ARBEIDSAVKLARINGSPENGER,
   beregnetPrAar: aapInntekt,
   elementNavn: aapNavn,
 };
 const urelatertAndel = {
-  aktivitetStatus: {
-    kode: aktivitetStatus.FRILANSER,
-    navn: 'Frilanser',
-  },
+  aktivitetStatus: aktivitetStatus.FRILANSER,
   beregnetPrAar: aapInntekt,
 };
 const relevanteStatuser = (erSN, erKombo) => ({

@@ -15,12 +15,8 @@ const {
 } = avklaringsbehovCodes;
 
 const mockAvklaringsbehovMedKodeOgStatus = (apKode, begrunnelse, status) => ({
-  definisjon: {
-    kode: apKode,
-  },
-  status: {
-    kode: status,
-  },
+  definisjon: apKode,
+  status: status,
   begrunnelse,
   kanLoses: true,
   erAktivt: true,

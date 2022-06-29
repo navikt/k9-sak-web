@@ -10,9 +10,7 @@ const beregningsgrunnlagperioder = {
   beregnetPrAar: 300000,
   beregningsgrunnlagPrStatusOgAndel: [
     {
-      aktivitetStatus: {
-        kode: aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE,
-      },
+      aktivitetStatus: aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE,
       elementNavn: 'arbeidsgiver 1',
       beregnetPrAar: 200000,
       overstyrtPrAar: 100,

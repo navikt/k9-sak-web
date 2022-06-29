@@ -5,16 +5,10 @@ import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import { createBeregningTableData } from './BeregningsresultatTable';
 
 const vilkaarBG = {
-  vilkarType: {
-    kode: 'FP_VK_41',
-    kodeverk: 'vilkarType',
-  },
+  vilkarType: 'FP_VK_41',
   perioder: [
     {
-      vilkarStatus: {
-        kode: vilkarUtfallType.IKKE_VURDERT,
-        kodeverk: 'VILKAR_UTFALL_TYPE',
-      },
+      vilkarStatus: vilkarUtfallType.IKKE_VURDERT,
     },
   ],
 };
@@ -30,10 +24,7 @@ const mockPeriode = () => [
     dagsats: 1385,
     beregningsgrunnlagPrStatusOgAndel: [
       {
-        aktivitetStatus: {
-          kode: 'AT',
-          kodeverk: 'AKTIVITET_STATUS',
-        },
+        aktivitetStatus: 'AT',
         avkortetPrAar: 360001,
         overstyrtPrAar: undefined,
         bruttoPrAar: 300001,
@@ -47,10 +38,7 @@ const mockPeriode = () => [
   },
 ];
 const flAndel = {
-  aktivitetStatus: {
-    kode: aktivitetStatus.FRILANSER,
-    kodeverk: 'AKTIVITET_STATUS',
-  },
+  aktivitetStatus: aktivitetStatus.FRILANSER,
   avkortetPrAar: 140250,
   bruttoPrAar: 140250,
   redusertPrAar: 140250,
@@ -61,7 +49,7 @@ describe('<BeregningsresultatTable>', () => {
   it('Skal teste at create table returnerer riktig data ved AT og dekningsgrad 80', () => {
     const beregningsgrunnlagPerioder = mockPeriode();
     const dekningsgrad = 80;
-    const aktivitetStatusList = [{ kode: 'AT', kodeverk: 'AKTIVITET_STATUS' }];
+    const aktivitetStatusList = ['AT'];
     const selectorData = createBeregningTableData.resultFunc(
       beregningsgrunnlagPerioder,
       aktivitetStatusList,
@@ -82,8 +70,8 @@ describe('<BeregningsresultatTable>', () => {
   it('Skal teste at create table returnerer riktig data ved AT vilkartype OPPFYLT', () => {
     const beregningsgrunnlagPerioder = mockPeriode();
     const dekningsgrad = 100;
-    const aktivitetStatusList = [{ kode: 'AT', kodeverk: 'AKTIVITET_STATUS' }];
-    vilkaarBG.perioder[0].vilkarStatus.kode = vilkarUtfallType.OPPFYLT;
+    const aktivitetStatusList = ['AT'];
+    vilkaarBG.perioder[0].vilkarStatus = vilkarUtfallType.OPPFYLT;
     beregningsgrunnlagPerioder[0].beregningsgrunnlagPrStatusOgAndel[0].skalFastsetteGrunnlag = false;
     const selectorData = createBeregningTableData.resultFunc(
       beregningsgrunnlagPerioder,
@@ -101,11 +89,11 @@ describe('<BeregningsresultatTable>', () => {
     });
   });
   it('Skal teste at create table returnerer en at rad ved Brukers Andel', () => {
-    vilkaarBG.perioder[0].vilkarStatus.kode = vilkarUtfallType.IKKE_VURDERT;
+    vilkaarBG.perioder[0].vilkarStatus = vilkarUtfallType.IKKE_VURDERT;
     const beregningsgrunnlagPerioder = mockPeriode();
     const dekningsgrad = 80;
-    const aktivitetStatusList = [{ kode: 'BA', kodeverk: 'AKTIVITET_STATUS' }];
-    beregningsgrunnlagPerioder[0].beregningsgrunnlagPrStatusOgAndel[0].aktivitetStatus.kode = 'BA';
+    const aktivitetStatusList = ['BA'];
+    beregningsgrunnlagPerioder[0].beregningsgrunnlagPrStatusOgAndel[0].aktivitetStatus = 'BA';
     const selectorData = createBeregningTableData.resultFunc(
       beregningsgrunnlagPerioder,
       aktivitetStatusList,
@@ -126,10 +114,7 @@ describe('<BeregningsresultatTable>', () => {
   it('Skal teste at create table returnerer returnerer riktig ved AT FL', () => {
     const beregningsgrunnlagPerioder = mockPeriode();
     const dekningsgrad = 80;
-    const aktivitetStatusList = [
-      { kode: 'AT', kodeverk: 'AKTIVITET_STATUS' },
-      { kode: 'FL', kodeverk: 'AKTIVITET_STATUS' },
-    ];
+    const aktivitetStatusList = ['AT', 'FL'];
     beregningsgrunnlagPerioder[0].beregningsgrunnlagPrStatusOgAndel.push(flAndel);
     const selectorData = createBeregningTableData.resultFunc(
       beregningsgrunnlagPerioder,
@@ -159,18 +144,12 @@ describe('<BeregningsresultatTable>', () => {
     });
   });
   it('Skal teste at create table returnerer riktig ved AT < SN', () => {
-    vilkaarBG.perioder[0].vilkarStatus.kode = vilkarUtfallType.IKKE_VURDERT;
+    vilkaarBG.perioder[0].vilkarStatus = vilkarUtfallType.IKKE_VURDERT;
     const beregningsgrunnlagPerioder = mockPeriode();
     const dekningsgrad = 80;
-    const aktivitetStatusList = [
-      { kode: 'AT', kodeverk: 'AKTIVITET_STATUS' },
-      { kode: 'SN', kodeverk: 'AKTIVITET_STATUS' },
-    ];
+    const aktivitetStatusList = ['AT', 'SN'];
     const snAndel = {
-      aktivitetStatus: {
-        kode: aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE,
-        kodeverk: 'AKTIVITET_STATUS',
-      },
+      aktivitetStatus: aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE,
       avkortetPrAar: 599985,
       bruttoPrAar: 754985,
       pgiSnitt: 754985,
@@ -202,15 +181,9 @@ describe('<BeregningsresultatTable>', () => {
   it('Skal teste at create table returnerer riktig ved AT > SN', () => {
     const beregningsgrunnlagPerioder = mockPeriode();
     const dekningsgrad = 80;
-    const aktivitetStatusList = [
-      { kode: 'AT', kodeverk: 'AKTIVITET_STATUS' },
-      { kode: 'SN', kodeverk: 'AKTIVITET_STATUS' },
-    ];
+    const aktivitetStatusList = ['AT', 'SN'];
     const snAndel = {
-      aktivitetStatus: {
-        kode: aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE,
-        kodeverk: 'AKTIVITET_STATUS',
-      },
+      aktivitetStatus: aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE,
       bruttoPrAar: 0,
       pgiSnitt: 254985,
     };
@@ -242,19 +215,12 @@ describe('<BeregningsresultatTable>', () => {
     });
   });
   it('Skal teste at create table returnerer riktig data ved AT FL SN med redusert og avkortet', () => {
-    vilkaarBG.perioder[0].vilkarStatus.kode = vilkarUtfallType.OPPFYLT;
+    vilkaarBG.perioder[0].vilkarStatus = vilkarUtfallType.OPPFYLT;
     const beregningsgrunnlagPerioder = mockPeriode();
     const dekningsgrad = 80;
-    const aktivitetStatusList = [
-      { kode: aktivitetStatus.ARBEIDSTAKER, kodeverk: 'AKTIVITET_STATUS' },
-      { kode: aktivitetStatus.FRILANSER, kodeverk: 'AKTIVITET_STATUS' },
-      { kode: aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE, kodeverk: 'AKTIVITET_STATUS' },
-    ];
+    const aktivitetStatusList = [aktivitetStatus.ARBEIDSTAKER, aktivitetStatus.FRILANSER, aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE];
     const snAndel = {
-      aktivitetStatus: {
-        kode: aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE,
-        kodeverk: 'AKTIVITET_STATUS',
-      },
+      aktivitetStatus: aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE,
       avkortetPrAar: 599985,
       bruttoPrAar: 754985,
       pgiSnitt: 754985,
@@ -300,19 +266,12 @@ describe('<BeregningsresultatTable>', () => {
   });
 
   it('Skal teste at create table returnerer riktig data ved AT FL > SN med redusert og avkortet', () => {
-    vilkaarBG.perioder[0].vilkarStatus.kode = vilkarUtfallType.OPPFYLT;
+    vilkaarBG.perioder[0].vilkarStatus = vilkarUtfallType.OPPFYLT;
     const beregningsgrunnlagPerioder = mockPeriode();
     const dekningsgrad = 80;
-    const aktivitetStatusList = [
-      { kode: aktivitetStatus.ARBEIDSTAKER, kodeverk: 'AKTIVITET_STATUS' },
-      { kode: aktivitetStatus.FRILANSER, kodeverk: 'AKTIVITET_STATUS' },
-      { kode: aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE, kodeverk: 'AKTIVITET_STATUS' },
-    ];
+    const aktivitetStatusList = [aktivitetStatus.ARBEIDSTAKER, aktivitetStatus.FRILANSER, aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE];
     const snAndel = {
-      aktivitetStatus: {
-        kode: aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE,
-        kodeverk: 'AKTIVITET_STATUS',
-      },
+      aktivitetStatus: aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE,
       avkortetPrAar: 0,
       bruttoPrAar: 0,
       pgiSnitt: 154985,
@@ -362,17 +321,10 @@ describe('<BeregningsresultatTable>', () => {
   it('Skal teste at create table returnerer riktig data ved DP FL SN', () => {
     const beregningsgrunnlagPerioder = mockPeriode();
     const dekningsgrad = 80;
-    const aktivitetStatusList = [
-      { kode: 'DP', kodeverk: 'AKTIVITET_STATUS' },
-      { kode: 'FL', kodeverk: 'AKTIVITET_STATUS' },
-      { kode: 'SN', kodeverk: 'AKTIVITET_STATUS' },
-    ];
+    const aktivitetStatusList = ['DP', 'FL', 'SN',];
 
     const snAndel = {
-      aktivitetStatus: {
-        kode: 'SN',
-        kodeverk: 'AKTIVITET_STATUS',
-      },
+      aktivitetStatus: 'SN',
       avkortetPrAar: 599985,
       bruttoPrAar: 754985,
       pgiSnitt: 754985,
@@ -383,7 +335,7 @@ describe('<BeregningsresultatTable>', () => {
     beregningsgrunnlagPerioder[0].beregningsgrunnlagPrStatusOgAndel.push(snAndel);
     beregningsgrunnlagPerioder[0].beregningsgrunnlagPrStatusOgAndel[0].bruttoPrAar = 123000;
     beregningsgrunnlagPerioder[0].beregningsgrunnlagPrStatusOgAndel[1].bruttoPrAar = 223000;
-    beregningsgrunnlagPerioder[0].beregningsgrunnlagPrStatusOgAndel[0].aktivitetStatus.kode = aktivitetStatus.DAGPENGER;
+    beregningsgrunnlagPerioder[0].beregningsgrunnlagPrStatusOgAndel[0].aktivitetStatus = aktivitetStatus.DAGPENGER;
     const selectorData = createBeregningTableData.resultFunc(
       beregningsgrunnlagPerioder,
       aktivitetStatusList,
@@ -413,17 +365,10 @@ describe('<BeregningsresultatTable>', () => {
   it('Skal teste at create table returnerer riktig data ved DP + FL > SN', () => {
     const beregningsgrunnlagPerioder = mockPeriode();
     const dekningsgrad = 80;
-    const aktivitetStatusList = [
-      { kode: 'DP', kodeverk: 'AKTIVITET_STATUS' },
-      { kode: 'FL', kodeverk: 'AKTIVITET_STATUS' },
-      { kode: 'SN', kodeverk: 'AKTIVITET_STATUS' },
-    ];
+    const aktivitetStatusList = ['DP', 'FL', 'SN'];
 
     const snAndel = {
-      aktivitetStatus: {
-        kode: 'SN',
-        kodeverk: 'AKTIVITET_STATUS',
-      },
+      aktivitetStatus: 'SN',
       avkortetPrAar: 360003,
       bruttoPrAar: 300003,
       pgiSnitt: 300033,
@@ -431,7 +376,7 @@ describe('<BeregningsresultatTable>', () => {
     };
     beregningsgrunnlagPerioder[0].beregningsgrunnlagPrStatusOgAndel.push(flAndel);
     beregningsgrunnlagPerioder[0].beregningsgrunnlagPrStatusOgAndel.push(snAndel);
-    beregningsgrunnlagPerioder[0].beregningsgrunnlagPrStatusOgAndel[0].aktivitetStatus.kode = aktivitetStatus.DAGPENGER;
+    beregningsgrunnlagPerioder[0].beregningsgrunnlagPrStatusOgAndel[0].aktivitetStatus = aktivitetStatus.DAGPENGER;
     const selectorData = createBeregningTableData.resultFunc(
       beregningsgrunnlagPerioder,
       aktivitetStatusList,
@@ -459,25 +404,15 @@ describe('<BeregningsresultatTable>', () => {
   it('Skal teste at create table returnerer riktig data ved AT + DP > SN', () => {
     const beregningsgrunnlagPerioder = mockPeriode();
     const dekningsgrad = 80;
-    const aktivitetStatusList = [
-      { kode: 'AT', kodeverk: 'AKTIVITET_STATUS' },
-      { kode: 'DP', kodeverk: 'AKTIVITET_STATUS' },
-      { kode: 'SN', kodeverk: 'AKTIVITET_STATUS' },
-    ];
+    const aktivitetStatusList = ['AT', 'DP', 'SN'];
     const dpAndel = {
-      aktivitetStatus: {
-        kode: 'DP',
-        kodeverk: 'AKTIVITET_STATUS',
-      },
+      aktivitetStatus: 'DP',
       avkortetPrAar: 360002,
       bruttoPrAar: 300002,
       redusertPrAar: 360002,
     };
     const snAndel = {
-      aktivitetStatus: {
-        kode: 'SN',
-        kodeverk: 'AKTIVITET_STATUS',
-      },
+      aktivitetStatus: 'SN',
       avkortetPrAar: 360003,
       bruttoPrAar: 300003,
       pgiSnitt: 300033,
@@ -510,15 +445,9 @@ describe('<BeregningsresultatTable>', () => {
   it('Skal teste at create table returnerer returnerer riktig ved AT AAP', () => {
     const beregningsgrunnlagPerioder = mockPeriode();
     const dekningsgrad = 80;
-    const aktivitetStatusList = [
-      { kode: 'AT', kodeverk: 'AKTIVITET_STATUS' },
-      { kode: 'AAP', kodeverk: 'AKTIVITET_STATUS' },
-    ];
+    const aktivitetStatusList = ['AT', 'AAP'];
     const aapAndel = {
-      aktivitetStatus: {
-        kode: 'AAP',
-        kodeverk: 'AKTIVITET_STATUS',
-      },
+      aktivitetStatus: 'AAP',
       avkortetPrAar: 360003,
       bruttoPrAar: 300003,
       pgiSnitt: 300033,
@@ -554,10 +483,7 @@ describe('<BeregningsresultatTable>', () => {
   it('Skal teste at create table returnerer returnerer riktig ved AT med naturalytelse', () => {
     const beregningsgrunnlagPerioder = mockPeriode();
     const dekningsgrad = 80;
-    const aktivitetStatusList = [
-      { kode: 'AT', kodeverk: 'AKTIVITET_STATUS' },
-      { kode: 'AAP', kodeverk: 'AKTIVITET_STATUS' },
-    ];
+    const aktivitetStatusList = ['AT', 'AAP'];
     beregningsgrunnlagPerioder[0].beregningsgrunnlagPrStatusOgAndel[0].arbeidsforhold = {
       naturalytelseBortfaltPrÅr: 48000,
     };
@@ -601,10 +527,7 @@ describe('<BeregningsresultatTable>', () => {
         dagsats: 0,
         beregningsgrunnlagPrStatusOgAndel: [
           {
-            aktivitetStatus: {
-              kode: 'AT',
-              kodeverk: 'AKTIVITET_STATUS',
-            },
+            aktivitetStatus: 'AT',
             avkortetPrAar: 360000,
             overstyrtPrAar: undefined,
             bruttoPrAar: 300001,
@@ -618,7 +541,7 @@ describe('<BeregningsresultatTable>', () => {
       },
     ];
     const dekningsgrad = 100;
-    const aktivitetStatusList = [{ kode: 'AT', kodeverk: 'AKTIVITET_STATUS' }];
+    const aktivitetStatusList = ['AT'];
     const selectorData = createBeregningTableData.resultFunc(
       beregningsgrunnlagPerioder,
       aktivitetStatusList,
@@ -644,10 +567,7 @@ describe('<BeregningsresultatTable>', () => {
         dagsats: 0,
         beregningsgrunnlagPrStatusOgAndel: [
           {
-            aktivitetStatus: {
-              kode: 'AT',
-              kodeverk: 'AKTIVITET_STATUS',
-            },
+            aktivitetStatus: 'AT',
             avkortetPrAar: 594738,
             overstyrtPrAar: undefined,
             bruttoPrAar: 800000,
@@ -661,7 +581,7 @@ describe('<BeregningsresultatTable>', () => {
       },
     ];
     const dekningsgrad = 100;
-    const aktivitetStatusList = [{ kode: 'AT', kodeverk: 'AKTIVITET_STATUS' }];
+    const aktivitetStatusList = ['AT'];
     const selectorData = createBeregningTableData.resultFunc(
       beregningsgrunnlagPerioder,
       aktivitetStatusList,

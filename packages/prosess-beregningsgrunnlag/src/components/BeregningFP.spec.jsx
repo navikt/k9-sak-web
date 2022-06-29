@@ -25,26 +25,11 @@ const lagBeregningsgrunnlag = (ferdigstilt, beregnetPrAar, sammenligningSum, avv
       avvikPromille,
       rapportertPrAar: sammenligningSum,
     },
-    aktivitetStatus: [
-      {
-        kode: aktivitetStatus.KOMBINERT_AT_SN,
-        navn: 'Arbeidstaker',
-        kodeverk: 'test',
-      },
-    ],
+    aktivitetStatus: [aktivitetStatus.KOMBINERT_AT_SN],
     beregningsgrunnlagPeriode: [
       {
         dagsats: ferdigstilt ? 1500 : undefined,
-        beregningsgrunnlagPrStatusOgAndel: [
-          {
-            aktivitetStatus:
-            {
-              kode: aktivitetStatus.KOMBINERT_AT_SN,
-              navn: 'Arbeidstaker',
-              kodeverk: 'test',
-            }
-          }
-        ]
+        beregningsgrunnlagPrStatusOgAndel: [{ aktivitetStatus: aktivitetStatus.KOMBINERT_AT_SN }]
       },
     ],
   };
@@ -53,13 +38,8 @@ const lagBeregningsgrunnlag = (ferdigstilt, beregnetPrAar, sammenligningSum, avv
 
 const vilkar = [
   {
-    vilkarType: {
-      kode: 'FP_VK_41',
-      kodeverk: '',
-    },
-    vilkarStatus: {
-      kode: vilkarUtfallType.OPPFYLT,
-    },
+    vilkarType: 'FP_VK_41',
+    vilkarStatus: vilkarUtfallType.OPPFYLT,
   },
 ];
 
@@ -76,17 +56,9 @@ const gjeldendeAksjonspunkter = [
   {
     id: 55,
     erAktivt: true,
-    definisjon: {
-      kode: aksjonspunktCodes.FASTSETT_BEREGNINGSGRUNNLAG_ARBEIDSTAKER_FRILANS,
-      navn: 'Fastsett varig brutto beregning ATFL',
-      kodeverk: '',
-    },
+    definisjon: aksjonspunktCodes.FASTSETT_BEREGNINGSGRUNNLAG_ARBEIDSTAKER_FRILANS,
     toTrinnsBehandling: false,
-    status: {
-      kode: 'OPPR',
-      navn: 'Opprettet',
-      kodeverk: '',
-    },
+    status: 'OPPR',
     begrunnelse: 'begrunnelse arbeidstaker/frilans',
     vilkarType: null,
     kanLoses: true,
@@ -97,10 +69,7 @@ const behandling = {
   id: 1,
   versjon: 1,
   venteArsakKode: '-',
-  sprakkode: {
-    kode: 'NB',
-    kodeverk: 'Språkode',
-  },
+  sprakkode: 'NB',
 };
 
 const alleKodeverk = {
@@ -113,15 +82,9 @@ describe('<BeregningFP>', () => {
       {
         id: 55,
         erAktivt: true,
-        definisjon: {
-          kode: aksjonspunktCodes.FASTSETT_BEREGNINGSGRUNNLAG_ARBEIDSTAKER_FRILANS,
-          navn: 'Fastsett varig brutto beregning ATFL',
-        },
+        definisjon: aksjonspunktCodes.FASTSETT_BEREGNINGSGRUNNLAG_ARBEIDSTAKER_FRILANS,
         toTrinnsBehandling: false,
-        status: {
-          kode: 'OPPR',
-          navn: 'Opprettet',
-        },
+        status: 'OPPR',
         begrunnelse: 'En litt spesiell begrunnelse',
         vilkarType: null,
         kanLoses: true,

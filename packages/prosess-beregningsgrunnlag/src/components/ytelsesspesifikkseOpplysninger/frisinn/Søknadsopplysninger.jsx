@@ -28,9 +28,9 @@ const lagPerioderadMedTekst = (tekstId, fom, tom) => (
 
 const lagSøktYtelseRadPeriode = periode => {
   const snAndel = periode.frisinnAndeler.find(
-    andel => andel.statusSøktFor.kode === aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE,
+    andel => andel.statusSøktFor === aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE,
   );
-  const flAndel = periode.frisinnAndeler.find(andel => andel.statusSøktFor.kode === aktivitetStatus.FRILANSER);
+  const flAndel = periode.frisinnAndeler.find(andel => andel.statusSøktFor === aktivitetStatus.FRILANSER);
   return (
     <div key={periode.fom}>
       {flAndel && lagPerioderadMedTekst('Beregningsgrunnlag.Søknad.SøktYtelseFL', periode.fom, periode.tom)}

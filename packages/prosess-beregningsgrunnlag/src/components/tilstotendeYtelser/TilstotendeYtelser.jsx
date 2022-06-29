@@ -11,23 +11,23 @@ import beregningStyles from '../beregningsgrunnlagPanel/beregningsgrunnlag.less'
 import AvsnittSkiller from '../redesign/AvsnittSkiller';
 
 export const getTekstForAndelBruktIBeregning = andel => {
-  if (andel.aktivitetStatus.kode === aktivitetStatus.DAGPENGER) {
+  if (andel.aktivitetStatus === aktivitetStatus.DAGPENGER) {
     return 'Beregningsgrunnlag.TilstottendeYtelse.Dagpenger';
   }
-  if (andel.aktivitetStatus.kode === aktivitetStatus.SYKEPENGER_AV_DAGPENGER) {
+  if (andel.aktivitetStatus === aktivitetStatus.SYKEPENGER_AV_DAGPENGER) {
     return 'Beregningsgrunnlag.TilstottendeYtelse.SykepengerAvDagpenger';
   }
-  if (andel.aktivitetStatus.kode === aktivitetStatus.PLEIEPENGER_AV_DAGPENGER) {
+  if (andel.aktivitetStatus === aktivitetStatus.PLEIEPENGER_AV_DAGPENGER) {
     return 'Beregningsgrunnlag.TilstottendeYtelse.PleiepengerAvDagpenger';
   }
-  if (andel.aktivitetStatus.kode === aktivitetStatus.ARBEIDSAVKLARINGSPENGER) {
+  if (andel.aktivitetStatus === aktivitetStatus.ARBEIDSAVKLARINGSPENGER) {
     return 'Beregningsgrunnlag.TilstottendeYtelse.AAP';
   }
   return '';
 };
 
 const TilstotendeYtelser2 = ({ alleAndeler, relevanteStatuser }) => {
-  const relevanteAndeler = alleAndeler.filter(andel => isStatusDagpengerOrAAP(andel.aktivitetStatus.kode));
+  const relevanteAndeler = alleAndeler.filter(andel => isStatusDagpengerOrAAP(andel.aktivitetStatus));
   const harFlereYtelser = relevanteAndeler.length > 1;
 
   return (
@@ -58,7 +58,7 @@ const TilstotendeYtelser2 = ({ alleAndeler, relevanteStatuser }) => {
 
       <>
         {relevanteAndeler.map((andel, index) => (
-          <div key={andel.aktivitetStatus.kode.concat('_'.concat(index))}>
+          <div key={andel.aktivitetStatus.concat('_'.concat(index))}>
             <Row>
               <Column xs="4">
                 <Element>

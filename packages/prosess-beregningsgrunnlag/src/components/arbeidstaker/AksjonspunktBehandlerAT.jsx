@@ -24,7 +24,7 @@ const finnAndelerSomSkalVisesAT = andeler => {
     return [];
   }
   return andeler
-    .filter(andel => andel.aktivitetStatus.kode === aktivitetStatus.ARBEIDSTAKER)
+    .filter(andel => andel.aktivitetStatus === aktivitetStatus.ARBEIDSTAKER)
     .filter(andel => andel.skalFastsetteGrunnlag === true)
     .filter(andel => andelErIkkeTilkommetEllerLagtTilAvSBH(andel));
 };

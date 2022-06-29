@@ -78,7 +78,7 @@ const getRelevanteStatuser = bg =>
     : null;
 
 const getBGVilkar = vilkar =>
-  vilkar ? vilkar.find(v => v.vilkarType && v.vilkarType.kode === vilkarType.BEREGNINGSGRUNNLAGVILKARET) : undefined;
+  vilkar ? vilkar.find(v => v.vilkarType && v.vilkarType === vilkarType.BEREGNINGSGRUNNLAGVILKARET) : undefined;
 
 const erBGTilVurdering = (beregningreferanserTilVurdering, beregningsgrunnlag) => {
   const vilårsperiodeFom = beregningsgrunnlag.vilkårsperiodeFom;
@@ -96,10 +96,10 @@ const lagMenyProps = (kronologiskeGrunnlag, beregningreferanserTilVurdering) => 
   return menyProps;
 };
 
-const finnAvklaringsbehov = (beregningsgrunnlag) => beregningsgrunnlag.avklaringsbehov.filter(ab => isBeregningAvklaringsbehov(ab.definisjon.kode))
+const finnAvklaringsbehov = (beregningsgrunnlag) => beregningsgrunnlag.avklaringsbehov.filter(ab => isBeregningAvklaringsbehov(ab.definisjon))
 
 const harAvklaringsbehovSomkanLøses = (beregningsgrunnlag) =>
-  beregningsgrunnlag.avklaringsbehov.some(ab => isBeregningAvklaringsbehov(ab.definisjon.kode) && ab.kanLoses)
+  beregningsgrunnlag.avklaringsbehov.some(ab => isBeregningAvklaringsbehov(ab.definisjon) && ab.kanLoses)
 
 /**
  * BeregningFP
@@ -239,7 +239,7 @@ const formaterAksjonspunkter = (aksjonspunkter, perioder) => {
   return Object.values(gruppertPrKode);
 }
 
-const harAvklaringsbehovIPanel = (avklaringsbehov) => avklaringsbehov.some(ab => isBeregningAvklaringsbehov(ab.definisjon.kode));
+const harAvklaringsbehovIPanel = (avklaringsbehov) => avklaringsbehov.some(ab => isBeregningAvklaringsbehov(ab.definisjon));
 
 export const buildInitialValuesForBeregningrunnlag = (beregningsgrunnlag, beregningreferanserTilVurdering) => {
   if (!beregningsgrunnlag || !beregningsgrunnlag.beregningsgrunnlagPeriode) {
@@ -249,13 +249,13 @@ export const buildInitialValuesForBeregningrunnlag = (beregningsgrunnlag, beregn
   const allePerioder = beregningsgrunnlag.beregningsgrunnlagPeriode;
   const alleAndelerIForstePeriode = beregningsgrunnlag.beregningsgrunnlagPeriode[0].beregningsgrunnlagPrStatusOgAndel;
   const arbeidstakerAndeler = alleAndelerIForstePeriode.filter(
-    andel => andel.aktivitetStatus.kode === aktivitetStatus.ARBEIDSTAKER,
+    andel => andel.aktivitetStatus === aktivitetStatus.ARBEIDSTAKER,
   );
   const frilanserAndeler = alleAndelerIForstePeriode.filter(
-    andel => andel.aktivitetStatus.kode === aktivitetStatus.FRILANSER,
+    andel => andel.aktivitetStatus === aktivitetStatus.FRILANSER,
   );
   const selvstendigNaeringAndeler = alleAndelerIForstePeriode.filter(
-    andel => andel.aktivitetStatus.kode === aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE,
+    andel => andel.aktivitetStatus === aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE,
   );
   const initialValues = {
     relevanteStatuser: getRelevanteStatuser(beregningsgrunnlag),
@@ -311,7 +311,7 @@ const mapStateToPropsFactory = (initialState, initialOwnProps) => {
       beregningsgrunnlagListe: buildInitialValues(
         ownProps.beregningsgrunnlag,
         beregningreferanserTilVurdering
-        ),
+      ),
     },
     fieldArrayID: ownProps.fieldArrayID,
   });

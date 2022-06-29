@@ -38,17 +38,17 @@ const finnATFLVurderingLabel = avklaringsbehov => {
 const finnGjeldendeAvklaringsbehov = (avklaringsbehov, erNyiArbeidslivet, erSNellerFL) => {
   if (erSNellerFL) {
     return avklaringsbehov.find(
-      ap => ap.definisjon.kode === avklaringsbehovCodes.FASTSETT_BEREGNINGSGRUNNLAG_ARBEIDSTAKER_FRILANS,
+      ap => ap.definisjon === avklaringsbehovCodes.FASTSETT_BEREGNINGSGRUNNLAG_ARBEIDSTAKER_FRILANS,
     );
   }
   if (erNyiArbeidslivet) {
     return avklaringsbehov.find(
-      ap => ap.definisjon.kode === avklaringsbehovCodes.FASTSETT_BEREGNINGSGRUNNLAG_SN_NY_I_ARBEIDSLIVET,
+      ap => ap.definisjon === avklaringsbehovCodes.FASTSETT_BEREGNINGSGRUNNLAG_SN_NY_I_ARBEIDSLIVET,
     );
   }
   return avklaringsbehov.find(
     ap =>
-      ap.definisjon.kode ===
+      ap.definisjon ===
       avklaringsbehovCodes.VURDER_VARIG_ENDRET_ELLER_NYOPPSTARTET_NAERING_SELVSTENDIG_NAERINGSDRIVENDE,
   );
 };
@@ -89,13 +89,13 @@ const AksjonspunktBehandler = ({
   let visFL = false;
   let visAT = false;
   const snAndel = alleAndelerIForstePeriode.find(
-    andel => andel.aktivitetStatus && andel.aktivitetStatus.kode === aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE,
+    andel => andel.aktivitetStatus && andel.aktivitetStatus === aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE,
   );
   const flAndel = alleAndelerIForstePeriode.find(
-    andel => andel.aktivitetStatus && andel.aktivitetStatus.kode === aktivitetStatus.FRILANSER,
+    andel => andel.aktivitetStatus && andel.aktivitetStatus === aktivitetStatus.FRILANSER,
   );
   const atAndel = alleAndelerIForstePeriode.find(
-    andel => andel.aktivitetStatus && andel.aktivitetStatus.kode === aktivitetStatus.ARBEIDSTAKER,
+    andel => andel.aktivitetStatus && andel.aktivitetStatus === aktivitetStatus.ARBEIDSTAKER,
   );
   if (flAndel) {
     visFL = flAndel.skalFastsetteGrunnlag;
@@ -112,7 +112,7 @@ const AksjonspunktBehandler = ({
     return null;
   }
   const harTidsbegrensetArbeidsforholdMedAvvik = avklaringsbehov.find(
-    ab => ab.definisjon.kode === avklaringsbehovCodes.FASTSETT_BEREGNINGSGRUNNLAG_TIDSBEGRENSET_ARBEIDSFORHOLD
+    ab => ab.definisjon === avklaringsbehovCodes.FASTSETT_BEREGNINGSGRUNNLAG_TIDSBEGRENSET_ARBEIDSFORHOLD
   );
   if (!relevanteStatuser.isSelvstendigNaeringsdrivende) {
     return (

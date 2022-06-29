@@ -10,10 +10,7 @@ import GrunnlagForAarsinntektPanelAT, {
 } from './GrunnlagForAarsinntektPanelAT';
 
 const mockAndel = (arbeidsgiverIdent, overstyrtPrAar, beregnetPrAar, erTilkommetAndel) => ({
-  aktivitetStatus: {
-    kode: aktivitetStatus.ARBEIDSTAKER,
-    kodeverk: 'test',
-  },
+  aktivitetStatus: aktivitetStatus.ARBEIDSTAKER,
   arbeidsforhold: {
     arbeidsgiverIdent,
     eksternArbeidsforholdId: '345678',

@@ -17,10 +17,10 @@ const AvviksopplysningerAT = ({
 }) => {
   const sammenligningsGrunnlagAT = sammenligningsgrunnlagPrStatus
     ? sammenligningsgrunnlagPrStatus.find(
-        status =>
-          (status.sammenligningsgrunnlagType && status.sammenligningsgrunnlagType.kode === sammenligningType.AT) ||
-          (status.sammenligningsgrunnlagType && status.sammenligningsgrunnlagType.kode === sammenligningType.ATFLSN),
-      )
+      status =>
+        (status.sammenligningsgrunnlagType && status.sammenligningsgrunnlagType === sammenligningType.AT) ||
+        (status.sammenligningsgrunnlagType && status.sammenligningsgrunnlagType === sammenligningType.ATFLSN),
+    )
     : undefined;
   if (!sammenligningsGrunnlagAT) {
     return null;

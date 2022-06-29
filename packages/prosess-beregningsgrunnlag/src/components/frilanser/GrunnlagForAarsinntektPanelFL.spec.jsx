@@ -11,9 +11,7 @@ const periode = {
   bruttoPrAar: 300000,
   beregningsgrunnlagPrStatusOgAndel: [
     {
-      aktivitetStatus: {
-        kode: aktivitetStatus.FRILANSER,
-      },
+      aktivitetStatus: aktivitetStatus.FRILANSER,
       elementNavn: 'arbeidsgiver 1',
       beregnetPrAar: 200000,
       overstyrtPrAar: 100,

@@ -7,7 +7,7 @@ import { Normaltekst } from 'nav-frontend-typografi';
 import { getKodeverknavnFn } from '@fpsak-frontend/utils';
 import { DateLabel, FlexContainer, FlexColumn, FlexRow, VerticalSpacer } from '@fpsak-frontend/shared-components';
 
-import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
+import KodeverkType from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 
 import { EtikettInfo } from 'nav-frontend-etiketter';
 
@@ -19,11 +19,11 @@ import AvsnittSkiller from '../redesign/AvsnittSkiller';
 const createStatusEtiketter = (listeMedStatuser, getKodeverknavn) => {
   const statusList = [];
   const unikeStatuser = listeMedStatuser.filter(
-    (status, index, self) => index === self.findIndex(t => t.kode === status.kode),
+    (status, index, self) => index === self.findIndex(t => t === status),
   );
   unikeStatuser.forEach(status => {
-    const statusName = getKodeverknavn(status);
-    statusList.push({ visningsNavn: statusName, kode: status.kode, className: `statusFarge${status.kode}` });
+    const statusName = getKodeverknavn(status, KodeverkType.AKTIVITET_STATUS);
+    statusList.push({ visningsNavn: statusName, kode: status, className: `statusFarge${status}` });
   });
   statusList.sort((a, b) => (a.visningsNavn > b.visningsNavn ? 1 : -1));
   return (
@@ -46,11 +46,11 @@ const createStatusEtiketter = (listeMedStatuser, getKodeverknavn) => {
 export const SkjeringspunktOgStatusPanelImpl = ({ skjeringstidspunktDato, aktivitetStatusList, getKodeverknavn, lonnsendringSisteTreMan }) => {
   const textIdsTilBlaBoksMedCheckmarkListe = [];
 
-  if(lonnsendringSisteTreMan){
+  if (lonnsendringSisteTreMan) {
     textIdsTilBlaBoksMedCheckmarkListe.push("Beregningsgrunnlag.Skjeringstidspunkt.LonnsendringSisteTreMan");
   }
 
-  return(
+  return (
     <>
       <AvsnittSkiller luftUnder leftPanel />
       <div className={beregningStyles.panelLeft}>
@@ -91,7 +91,7 @@ SkjeringspunktOgStatusPanelImpl.propTypes = {
 };
 
 const mapStateToProps = (state, ownProps) => {
-  const getKodeverknavn = getKodeverknavnFn(ownProps.alleKodeverk, kodeverkTyper);
+  const getKodeverknavn = getKodeverknavnFn(ownProps.alleKodeverk);
   return {
     getKodeverknavn,
   };

@@ -43,7 +43,7 @@ const {
 
 
 const findAksjonspunktHelpTekst = (gjeldendeAvklaringsbehov, erVarigEndring, erNyoppstartet) => {
-  switch (gjeldendeAvklaringsbehov.definisjon.kode) {
+  switch (gjeldendeAvklaringsbehov.definisjon) {
     case FASTSETT_BEREGNINGSGRUNNLAG_ARBEIDSTAKER_FRILANS:
       return 'Beregningsgrunnlag.Helptext.Arbeidstaker2';
     case VURDER_VARIG_ENDRET_ELLER_NYOPPSTARTET_NAERING_SELVSTENDIG_NAERINGSDRIVENDE:
@@ -69,10 +69,10 @@ const lagAksjonspunktViser = (avklaringsbehov, avvikProsent, alleAndelerIForsteP
   if (avklaringsbehov === undefined || avklaringsbehov === null) {
     return undefined;
   }
-  const apneAvklaringsbehov = avklaringsbehov.filter(ab => isAvklaringsbehovOpen(ab.status.kode));
+  const apneAvklaringsbehov = avklaringsbehov.filter(ab => isAvklaringsbehovOpen(ab.status));
   const erDetMinstEttApentAvklaringsbehov = apneAvklaringsbehov.length > 0;
   const snAndel = alleAndelerIForstePeriode.find(
-    andel => andel.aktivitetStatus.kode === aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE,
+    andel => andel.aktivitetStatus === aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE,
   );
   const erVarigEndring = snAndel && snAndel.næringer && snAndel.næringer.some(naring => naring.erVarigEndret === true);
   const erNyoppstartet = snAndel && snAndel.næringer && snAndel.næringer.some(naring => naring.erNyoppstartet === true);
@@ -83,7 +83,7 @@ const lagAksjonspunktViser = (avklaringsbehov, avvikProsent, alleAndelerIForsteP
           <AksjonspunktHelpTextHTML>
             {apneAvklaringsbehov.map(ap => (
               <FormattedMessage
-                key={ap.definisjon.kode}
+                key={ap.definisjon}
                 id={findAksjonspunktHelpTekst(ap, erVarigEndring, erNyoppstartet)}
                 values={{ verdi: avvikProsent, b: chunks => <b>{chunks}</b>, br: <br /> }}
               />
@@ -182,7 +182,7 @@ const sjekkOmOmsorgspengegrunnlagOgSettAvviksvurdering = beregningsgrunnlag => {
 };
 
 const sjekkErMidlertidigInaktiv = beregningsgrunnlag =>
-  beregningsgrunnlag.aktivitetStatus.some(a => a.kode === aktivitetStatus.MIDLERTIDIG_INAKTIV);
+  beregningsgrunnlag.aktivitetStatus.some(a => a === aktivitetStatus.MIDLERTIDIG_INAKTIV);
 
 const sjekkLonnsendringSisteTreMan = (beregningsgrunnlag) =>
   beregningsgrunnlag.faktaOmBeregning

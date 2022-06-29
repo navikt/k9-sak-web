@@ -14,9 +14,7 @@ import YtelserFraInfotrygd from '../tilstotendeYtelser/YtelserFraInfotrygd';
 import MilitaerPanel from '../militær/MilitaerPanel';
 
 const arbeidstakerAndel = {
-  aktivitetStatus: {
-    kode: aktivitetStatus.ARBEIDSTAKER,
-  },
+  aktivitetStatus: aktivitetStatus.ARBEIDSTAKER,
   elementNavn: 'arbeidsgiver 1',
   beregnetPrAar: 100000,
   overstyrtPrAar: 150000,
@@ -24,9 +22,7 @@ const arbeidstakerAndel = {
   beregningsperiodeTom: '2015-01-01',
 };
 const frilanserAndel = {
-  aktivitetStatus: {
-    kode: aktivitetStatus.FRILANSER,
-  },
+  aktivitetStatus: aktivitetStatus.FRILANSER,
   elementNavn: 'frilansinntekt',
   beregnetPrAar: 200000,
   overstyrtPrAar: 250000,
@@ -34,51 +30,37 @@ const frilanserAndel = {
   beregningsperiodeTom: '2016-01-01',
 };
 const tyAndel = {
-  aktivitetStatus: {
-    kode: aktivitetStatus.KUN_YTELSE,
-  },
+  aktivitetStatus: aktivitetStatus.KUN_YTELSE,
   beregnetPrAar: 300000,
   beregningsperiodeFom: '2016-01-01',
   beregningsperiodeTom: '2017-01-01',
 };
 const dagpengerAndel = {
-  aktivitetStatus: {
-    kode: aktivitetStatus.DAGPENGER,
-  },
+  aktivitetStatus: aktivitetStatus.DAGPENGER,
   beregnetPrAar: 300000,
   beregningsperiodeFom: '2016-01-01',
   beregningsperiodeTom: '2017-01-01',
 };
 const aapAndel = {
-  aktivitetStatus: {
-    kode: aktivitetStatus.ARBEIDSAVKLARINGSPENGER,
-  },
+  aktivitetStatus: aktivitetStatus.ARBEIDSAVKLARINGSPENGER,
   beregnetPrAar: 300000,
   beregningsperiodeFom: '2016-01-01',
   beregningsperiodeTom: '2017-01-01',
 };
 const militaerAndel = {
-  aktivitetStatus: {
-    kode: aktivitetStatus.MILITAER_ELLER_SIVIL,
-  },
+  aktivitetStatus: aktivitetStatus.MILITAER_ELLER_SIVIL,
   beregnetPrAar: 300000,
 };
 const lagPerioderMedAndeler = andelListe => [
   {
     bruttoPrAar: 200000,
-    periodeAarsaker: [
-      {
-        kode: periodeAarsak.UDEFINERT,
-      },
-    ],
+    periodeAarsaker: [periodeAarsak.UDEFINERT],
     beregningsgrunnlagPrStatusOgAndel: andelListe,
   },
 ];
 
 const selvstedigNaeringsdrivendeAndel = {
-  aktivitetStatus: {
-    kode: aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE,
-  },
+  aktivitetStatus: aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE,
   elementNavn: 'pensjonsgivende inntekt',
   beregnetPrAar: 300000,
   overstyrtPrAar: 350000,
@@ -88,15 +70,9 @@ const selvstedigNaeringsdrivendeAndel = {
 const atflAksjonspunkt = {
   id: 55,
   erAktivt: true,
-  definisjon: {
-    kode: avklaringsbehovCodes.FASTSETT_BEREGNINGSGRUNNLAG_ARBEIDSTAKER_FRILANS,
-    navn: 'Fastsett varig brutto beregning ATFL',
-  },
+  definisjon: avklaringsbehovCodes.FASTSETT_BEREGNINGSGRUNNLAG_ARBEIDSTAKER_FRILANS,
   toTrinnsBehandling: false,
-  status: {
-    kode: 'OPPR',
-    navn: 'Opprettet',
-  },
+  status: 'OPPR',
   begrunnelse: 'begrunnelse arbeidstaker/frilans',
   vilkarType: null,
   kanLoses: true,
@@ -104,15 +80,9 @@ const atflAksjonspunkt = {
 const selvstendigAksjonspunkt = {
   id: 55,
   erAktivt: true,
-  definisjon: {
-    kode: avklaringsbehovCodes.VURDER_VARIG_ENDRET_ELLER_NYOPPSTARTET_NAERING_SELVSTENDIG_NAERINGSDRIVENDE,
-    navn: 'Fastsett varig brutto beregning SN',
-  },
+  definisjon: avklaringsbehovCodes.VURDER_VARIG_ENDRET_ELLER_NYOPPSTARTET_NAERING_SELVSTENDIG_NAERINGSDRIVENDE,
   toTrinnsBehandling: false,
-  status: {
-    kode: 'OPPR',
-    navn: 'Opprettet',
-  },
+  status: 'OPPR',
   begrunnelse: 'begrunnelse selvstendig',
   vilkarType: null,
   kanLoses: true,
@@ -120,15 +90,9 @@ const selvstendigAksjonspunkt = {
 const selvstendigNyIArbAksjonspunkt = {
   id: 55,
   erAktivt: true,
-  definisjon: {
-    kode: avklaringsbehovCodes.FASTSETT_BEREGNINGSGRUNNLAG_SN_NY_I_ARBEIDSLIVET,
-    navn: 'Fastsett varig brutto beregning SN',
-  },
+  definisjon: avklaringsbehovCodes.FASTSETT_BEREGNINGSGRUNNLAG_SN_NY_I_ARBEIDSLIVET,
   toTrinnsBehandling: false,
-  status: {
-    kode: 'OPPR',
-    navn: 'Opprettet',
-  },
+  status: 'OPPR',
   begrunnelse: 'begrunnelse selvstendig',
   vilkarType: null,
   kanLoses: true,

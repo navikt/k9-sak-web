@@ -12,21 +12,12 @@ const behandling = {
   id: 1,
   versjon: 1,
   venteArsakKode: venteArsakType.VENT_GRADERING_UTEN_BEREGNINGSGRUNNLAG,
-  sprakkode: {
-    kode: '-',
-    kodeverk: 'SPRAAK_KODE',
-  },
+  sprakkode: '-',
 };
 const vilkarMedUtfall = kode => [
   {
-    vilkarType: {
-      kode: vilkarType.BEREGNINGSGRUNNLAGVILKARET,
-      kodeverk: 'vilkarType',
-    },
-    vilkarStatus: {
-      kode,
-      kodeverk: 'vilkarStatus',
-    },
+    vilkarType: vilkarType.BEREGNINGSGRUNNLAGVILKARET,
+    vilkarStatus: kode,
   },
 ];
 const lagPeriode = () => ({
@@ -37,14 +28,7 @@ const lagPeriode = () => ({
   bruttoInkludertBortfaltNaturalytelsePrAar: 360000,
   avkortetPrAar: 360000,
   redusertPrAar: 360000,
-  beregningsgrunnlagPrStatusOgAndel: [
-    {
-      aktivitetStatus: {
-        kode: 'AT',
-        kodeverk: 'AKTIVITET_STATUS',
-      },
-    },
-  ],
+  beregningsgrunnlagPrStatusOgAndel: [{ aktivitetStatus: 'AT' }],
   andelerLagtTilManueltIForrige: [],
 });
 const lagBeregningsgrunnlag = (avvikPromille, årsinntektVisningstall, sammenligningSum, dekningsgrad, tilfeller) => ({
@@ -58,11 +42,7 @@ const lagBeregningsgrunnlag = (avvikPromille, årsinntektVisningstall, sammenlig
   faktaOmBeregning: {
     faktaOmBeregningTilfeller: tilfeller,
   },
-  aktivitetStatus: [
-    {
-      kode: 'UDEFINERT',
-    },
-  ],
+  aktivitetStatus: ['UDEFINERT'],
 });
 const sammenligningsgrunnlag = kode => ({
   sammenligningsgrunnlagFom: '2018-09-01',
@@ -70,9 +50,7 @@ const sammenligningsgrunnlag = kode => ({
   rapportertPrAar: 330000,
   avvikPromille: 275,
   avvikProsent: 27.5,
-  sammenligningsgrunnlagType: {
-    kode,
-  },
+  sammenligningsgrunnlagType: kode,
   differanseBeregnet: 12100,
 });
 const alleKodeverk = {

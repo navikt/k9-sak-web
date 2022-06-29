@@ -25,7 +25,7 @@ const månedsinntekt = årsinntekt => {
  * Vises også hvis status er en kombinasjonsstatus som inkluderer frilanser.
  */
 export const GrunnlagForAarsinntektPanelFL = ({ alleAndeler }) => {
-  const relevanteAndeler = alleAndeler.filter(andel => andel.aktivitetStatus.kode === aktivitetStatus.FRILANSER);
+  const relevanteAndeler = alleAndeler.filter(andel => andel.aktivitetStatus === aktivitetStatus.FRILANSER);
   const beregnetAarsinntekt = relevanteAndeler[0].beregnetPrAar;
   const startDato = relevanteAndeler[0].arbeidsforhold.startdato;
   const userIdent = null; // TODO denne må hentes fra brukerID enten fra brukerObjectet eller på beregningsgrunnlag må avklares

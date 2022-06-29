@@ -127,8 +127,8 @@ const lagTabellRader = (periodeData, ikkeVurdert) => {
 };
 const lagTabellRaderIkkeOppfylt = (listofAndeler, intl, key, grunnlagsdata) => {
   let ytelsetype = 'pleiepenger';
-  const {fagsakYtelseType, grunnbeløp, erMidlertidigInaktiv } = grunnlagsdata;
-  if (fagsakYtelseType?.kode === 'OMP') {
+  const { fagsakYtelseType, grunnbeløp, erMidlertidigInaktiv } = grunnlagsdata;
+  if (fagsakYtelseType === 'OMP') {
     ytelsetype = 'omsorgspenger';
   }
   return (
@@ -139,17 +139,19 @@ const lagTabellRaderIkkeOppfylt = (listofAndeler, intl, key, grunnlagsdata) => {
         <Image
           className={styles.avslaat_icon}
           alt={intl.formatMessage(
-            { id: erMidlertidigInaktiv ? 
-              'Beregningsgrunnlag.BeregningTable.VilkarIkkeOppfyltMidlertidigInaktiv' :
-            'Beregningsgrunnlag.BeregningTable.VilkarIkkeOppfylt2' },
+            {
+              id: erMidlertidigInaktiv ?
+                'Beregningsgrunnlag.BeregningTable.VilkarIkkeOppfyltMidlertidigInaktiv' :
+                'Beregningsgrunnlag.BeregningTable.VilkarIkkeOppfylt2'
+            },
             { ytelseType: ytelsetype, grunnbeløp: formatCurrencyNoKr(grunnbeløp), b: chunks => <b>{chunks}</b> },
           )}
           src={avslaatIkonUrl}
         />
         <FormattedMessage
-          id={erMidlertidigInaktiv ? 
+          id={erMidlertidigInaktiv ?
             'Beregningsgrunnlag.BeregningTable.VilkarIkkeOppfyltMidlertidigInaktiv' :
-          'Beregningsgrunnlag.BeregningTable.VilkarIkkeOppfylt2'}
+            'Beregningsgrunnlag.BeregningTable.VilkarIkkeOppfylt2'}
           values={{ grunnbeløp: formatCurrencyNoKr(grunnbeløp), ytelseType: ytelsetype, b: chunks => <b>{chunks}</b> }}
         />
       </Normaltekst>
@@ -184,10 +186,10 @@ const createPeriodeResultat = (
 ) => {
   const key = lagKeyForPeriode(periodeData.dagsatser[0], periodeData.headers[0]);
   const ikkeOppfylt = !!(
-    vilkaarBG && vilkaarBG.perioder.every(periode => periode.vilkarStatus.kode === vilkarUtfallType.IKKE_OPPFYLT)
+    vilkaarBG && vilkaarBG.perioder.every(periode => periode.vilkarStatus === vilkarUtfallType.IKKE_OPPFYLT)
   );
   const ikkeVurdert = !!(
-    vilkaarBG && vilkaarBG.perioder.every(periode => periode.vilkarStatus.kode === vilkarUtfallType.IKKE_VURDERT)
+    vilkaarBG && vilkaarBG.perioder.every(periode => periode.vilkarStatus === vilkarUtfallType.IKKE_VURDERT)
   );
   return (
     <React.Fragment key={`Wr${key}`}>
@@ -197,14 +199,14 @@ const createPeriodeResultat = (
     </React.Fragment>
   );
 };
-const BeregningsresutatPanel = ({ intl, vilkaarBG, periodeResultatTabeller, 
+const BeregningsresutatPanel = ({ intl, vilkaarBG, periodeResultatTabeller,
   halvGVerdi, erMidlertidigInaktiv }) => {
   const skalLagePeriodeHeaders = periodeResultatTabeller.length > 1;
   const context = useContext(BeregningContext);
 
   const grunnlagsdata = {
     fagsakYtelseType: context?.fagsakYtelseType,
-    grunnbeløp: halvGVerdi*2,
+    grunnbeløp: halvGVerdi * 2,
     erMidlertidigInaktiv,
   };
 

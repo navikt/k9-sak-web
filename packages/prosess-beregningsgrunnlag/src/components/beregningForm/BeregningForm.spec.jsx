@@ -20,40 +20,22 @@ import BeregningsresultatTable from '../beregningsresultatPanel/Beregningsresult
 import { buildInitialValuesForBeregningrunnlag } from '../BeregningFP';
 
 const apFastsettBgATFL = {
-  definisjon: {
-    kode: avklaringsbehovCodes.FASTSETT_BEREGNINGSGRUNNLAG_ARBEIDSTAKER_FRILANS,
-    navn: 'apNavn1',
-  },
-  status: {
-    kode: 'OPPR',
-    navn: 'statusNavn1',
-  },
+  definisjon: avklaringsbehovCodes.FASTSETT_BEREGNINGSGRUNNLAG_ARBEIDSTAKER_FRILANS,
+  status: 'OPPR',
   kanLoses: false,
   erAktivt: false,
 };
 
 const apVurderVarigEndretEllerNyoppstartetSN = {
-  definisjon: {
-    kode: avklaringsbehovCodes.VURDER_VARIG_ENDRET_ELLER_NYOPPSTARTET_NAERING_SELVSTENDIG_NAERINGSDRIVENDE,
-    navn: 'apNavn3',
-  },
-  status: {
-    kode: 'OPPR',
-    navn: 'statusNavn3',
-  },
+  definisjon: avklaringsbehovCodes.VURDER_VARIG_ENDRET_ELLER_NYOPPSTARTET_NAERING_SELVSTENDIG_NAERINGSDRIVENDE,
+  status: 'OPPR',
   kanLoses: true,
   erAktivt: true,
 };
 
 const apFastsettBgSnNyIArbeidslivet = {
-  definisjon: {
-    kode: avklaringsbehovCodes.FASTSETT_BEREGNINGSGRUNNLAG_SN_NY_I_ARBEIDSLIVET,
-    navn: 'apNavn4',
-  },
-  status: {
-    kode: 'OPPR',
-    navn: 'statusNavn4',
-  },
+  definisjon: avklaringsbehovCodes.FASTSETT_BEREGNINGSGRUNNLAG_SN_NY_I_ARBEIDSLIVET,
+  status: 'OPPR',
   kanLoses: true,
   erAktivt: true,
 };
@@ -62,9 +44,7 @@ const avklaringsbehovListe = [apFastsettBgATFL];
 
 const atAndel = [
   {
-    aktivitetStatus: {
-      kode: aktivitetStatus.ARBEIDSTAKER,
-    },
+    aktivitetStatus: aktivitetStatus.ARBEIDSTAKER,
     elementNavn: 'arbeidsgiver 1',
     beregnetPrAar: 200000,
     overstyrtPrAar: 100,
@@ -74,9 +54,7 @@ const atAndel = [
 
 const allAndeler = [
   {
-    aktivitetStatus: {
-      kode: aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE,
-    },
+    aktivitetStatus: aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE,
     elementNavn: 'arbeidsgiver 1',
     beregnetPrAar: 200000,
     overstyrtPrAar: 100,
@@ -101,14 +79,7 @@ const lagPeriode = () => ({
   bruttoInkludertBortfaltNaturalytelsePrAar: 360000,
   avkortetPrAar: 360000,
   redusertPrAar: 360000,
-  beregningsgrunnlagPrStatusOgAndel: [
-    {
-      aktivitetStatus: {
-        kode: 'AT',
-        kodeverk: 'AKTIVITET_STATUS',
-      },
-    },
-  ],
+  beregningsgrunnlagPrStatusOgAndel: [{ aktivitetStatus: 'AT' }],
   andelerLagtTilManueltIForrige: [],
 });
 const lagBeregningsgrunnlag = (avvikPromille, årsinntektVisningstall, sammenligningSum, dekningsgrad, tilfeller) => ({
@@ -123,23 +94,15 @@ const lagBeregningsgrunnlag = (avvikPromille, årsinntektVisningstall, sammenlig
   faktaOmBeregning: {
     faktaOmBeregningTilfeller: tilfeller,
   },
-  aktivitetStatus: [
-    {
-      kode: 'AT',
-    },
-  ],
+  aktivitetStatus: ['AT'],
 });
 const alleKodeverk = {
   test: 'test',
 };
 const mockVilkar = [
   {
-    vilkarType: {
-      kode: 'FP_VK_41',
-    },
-    vilkarStatus: {
-      kode: vilkarUtfallType.OPPFYLT,
-    },
+    vilkarType: 'FP_VK_41',
+    vilkarStatus: vilkarUtfallType.OPPFYLT,
   },
 ];
 const sammenligningsgrunnlag = kode => ({
@@ -157,14 +120,11 @@ const behandling = {
   id: 1,
   versjon: 1,
   behandlingÅrsaker: [],
-  sprakkode: {
-    kode: 'NB',
-    kodeverk: 'Språkkode',
-  },
+  sprakkode: 'NB',
 };
 
 const getBGVilkar = vilkar =>
-  vilkar ? vilkar.find(v => v.vilkarType && v.vilkarType.kode === vilkarType.BEREGNINGSGRUNNLAGVILKARET) : undefined;
+  vilkar ? vilkar.find(v => v.vilkarType && v.vilkarType === vilkarType.BEREGNINGSGRUNNLAGVILKARET) : undefined;
 describe('<BeregningForm>', () => {
   it('skal teste at AvviksopplysningerPanel får korrekte props fra BeregningFP', () => {
     const beregningsgrunnlag = lagBeregningsgrunnlag(0, 100000, 100000, 100, []);
@@ -234,10 +194,7 @@ describe('<BeregningForm>', () => {
     );
     const skjeringspunktOgStatusPanel = wrapper.find(SkjeringspunktOgStatusPanel2);
     expect(skjeringspunktOgStatusPanel.props().aktivitetStatusList).to.deep.equal([
-      {
-        kode: 'AT',
-        kodeverk: 'AKTIVITET_STATUS',
-      },
+      'AT',
     ]);
   });
 
@@ -416,13 +373,13 @@ describe('<BeregningForm>', () => {
     const beregningsgrunnlag = lagBeregningsgrunnlag(0, 120000, 100000, 100, []);
 
     beregningsgrunnlag.avklaringsbehov = avklaringsbehov;
-    const beregningreferanserTilVurdering= [
-        {
-          skjæringstidspunkt: beregningsgrunnlag.vilkårsperiodeFom,
-          referanse: '32423-fs34-wrj2i',
-          erForlengelse: false,
-        }
-      ];
+    const beregningreferanserTilVurdering = [
+      {
+        skjæringstidspunkt: beregningsgrunnlag.vilkårsperiodeFom,
+        referanse: '32423-fs34-wrj2i',
+        erForlengelse: false,
+      }
+    ];
 
     const actualValues = buildInitialValuesForBeregningrunnlag(beregningsgrunnlag, beregningreferanserTilVurdering);
     const expectedValues = {
@@ -451,7 +408,7 @@ describe('<BeregningForm>', () => {
     const beregningsgrunnlag = lagBeregningsgrunnlag(0, 120000, 100000, 100, []);
 
     beregningsgrunnlag.avklaringsbehov = avklaringsbehov;
-    const beregningreferanserTilVurdering= [
+    const beregningreferanserTilVurdering = [
       {
         skjæringstidspunkt: beregningsgrunnlag.vilkårsperiodeFom,
         referanse: '32423-fs34-wrj2i',
@@ -486,7 +443,7 @@ describe('<BeregningForm>', () => {
     const beregningsgrunnlag = lagBeregningsgrunnlag(0, 120000, 100000, 100, []);
 
     beregningsgrunnlag.avklaringsbehov = avklaringsbehov;
-    const beregningreferanserTilVurdering= [
+    const beregningreferanserTilVurdering = [
       {
         skjæringstidspunkt: beregningsgrunnlag.vilkårsperiodeFom,
         referanse: '32423-fs34-wrj2i',
@@ -521,7 +478,7 @@ describe('<BeregningForm>', () => {
     const beregningsgrunnlag = lagBeregningsgrunnlag(0, 120000, 100000, 100, []);
 
     beregningsgrunnlag.avklaringsbehov = avklaringsbehov;
-    const beregningreferanserTilVurdering= [];
+    const beregningreferanserTilVurdering = [];
 
     const actualValues = buildInitialValuesForBeregningrunnlag(beregningsgrunnlag, beregningreferanserTilVurdering);
     const expectedValues = {

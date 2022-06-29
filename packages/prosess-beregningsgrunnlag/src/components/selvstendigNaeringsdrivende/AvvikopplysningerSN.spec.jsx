@@ -20,9 +20,7 @@ const sammenligningsgrunnlag = kode => ({
 const forstePeriode = [
   {
     pgiSnitt: 100,
-    aktivitetStatus: {
-      kode: aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE,
-    },
+    aktivitetStatus: aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE,
     næringer: [
       {
         erVarigEndret: false,

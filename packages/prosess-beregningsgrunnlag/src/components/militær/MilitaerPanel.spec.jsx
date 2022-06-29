@@ -9,9 +9,7 @@ const periode = {
   bruttoPrAar: 300000,
   beregningsgrunnlagPrStatusOgAndel: [
     {
-      aktivitetStatus: {
-        kode: aktivitetStatus.MILITAER_ELLER_SIVIL,
-      },
+      aktivitetStatus: aktivitetStatus.MILITAER_ELLER_SIVIL,
       beregnetPrAar: 290000,
     },
   ],

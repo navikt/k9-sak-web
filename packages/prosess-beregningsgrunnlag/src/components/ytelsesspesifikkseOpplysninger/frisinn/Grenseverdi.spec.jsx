@@ -16,9 +16,7 @@ const lagBgPeriode = (fom, tom, andeler) => ({
 
 const lagFrisinnAndel = (status, beløp) => ({
   oppgittInntekt: beløp,
-  statusSøktFor: {
-    kode: status,
-  },
+  statusSøktFor: status,
 });
 
 const lagFrisinnPeriode = (fom, tom, frisinnAndeler) => ({
@@ -32,9 +30,7 @@ const lagFrisinngrunnlag = frisinnPerioder => ({
 });
 
 const lagBGAndel = (status, brutto) => ({
-  aktivitetStatus: {
-    kode: status,
-  },
+  aktivitetStatus: status,
   bruttoPrAar: brutto,
 });
 
@@ -60,10 +56,7 @@ const behandling = {
   id: 1,
   versjon: 1,
   behandlingÅrsaker: [],
-  sprakkode: {
-    kode: 'NB',
-    kodeverk: 'Språkkode',
-  },
+  sprakkode: 'NB',
 };
 
 describe('<Grenseverdi>', () => {
