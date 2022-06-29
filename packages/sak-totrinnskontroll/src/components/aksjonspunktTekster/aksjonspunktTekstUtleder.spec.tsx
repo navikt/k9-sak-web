@@ -43,7 +43,7 @@ describe('aksjonspunktTekstUtleder', () => {
 
   it('skal vise korrekt tekst for aksjonspunkt 6003', () => {
     const aksjonspunkt = {
-      aksjonspunktKode: aksjonspunktCodes.OVERSTYR_FODSELSVILKAR,
+      aksjonspunktKode: aksjonspunktCodes.OVERSTYR_OMSORGEN_FOR,
       besluttersBegrunnelse: 'begrunnelse',
       totrinnskontrollGodkjent: false,
     } as TotrinnskontrollAksjonspunkt;
