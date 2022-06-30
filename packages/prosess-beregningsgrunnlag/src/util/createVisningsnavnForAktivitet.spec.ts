@@ -1,16 +1,12 @@
 import createVisningsnavnForAktivitet from './createVisningsnavnForAktivitet';
 
 const andelUtenArbeidsforholdId = {
-  arbeidsforholdType: {
-    kode: 'A',
-  },
+  arbeidsforholdType: 'A',
   arbeidsgiverIdent: '321',
 };
 
 const andelMedAlt = {
-  arbeidsforholdType: {
-    kode: 'A',
-  },
+  arbeidsforholdType: 'A',
   arbeidsgiverIdent: '321',
   arbeidsforholdId: '999888777',
   eksternArbeidsforholdId: '56789',

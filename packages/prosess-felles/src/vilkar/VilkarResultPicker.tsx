@@ -118,7 +118,7 @@ VilkarResultPicker.buildInitialValues = (
   aksjonspunkter: Aksjonspunkt[],
   status: string,
 ): FormValues => {
-  const isOpenAksjonspunkt = aksjonspunkter.some(ap => isAksjonspunktOpen(ap.status.kode));
+  const isOpenAksjonspunkt = aksjonspunkter.some(ap => isAksjonspunktOpen(ap.status));
   const erVilkarOk = isOpenAksjonspunkt ? undefined : vilkarUtfallType.OPPFYLT === status;
   return {
     erVilkarOk,

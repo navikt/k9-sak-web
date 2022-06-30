@@ -19,7 +19,7 @@ import beregningStyles from '../beregningsgrunnlagPanel/beregningsgrunnlag.less'
 export const MilitaerPanel = ({
   alleAndeler,
 }) => {
-  const relevanteAndeler = alleAndeler.filter((andel) => andel.aktivitetStatus.kode === aktivitetStatus.MILITAER_ELLER_SIVIL);
+  const relevanteAndeler = alleAndeler.filter((andel) => andel.aktivitetStatus === aktivitetStatus.MILITAER_ELLER_SIVIL);
   const beregnetAarsinntekt = relevanteAndeler && relevanteAndeler.length > 0 ? relevanteAndeler[0].beregnetPrAar : '';
   return (
     <>

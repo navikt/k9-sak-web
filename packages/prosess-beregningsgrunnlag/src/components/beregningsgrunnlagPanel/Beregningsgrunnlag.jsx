@@ -41,8 +41,8 @@ const finnAvklaringsbehovForATFL = avklaringsbehov =>
   avklaringsbehov &&
   avklaringsbehov.find(
     ap =>
-      ap.definisjon.kode === FASTSETT_BEREGNINGSGRUNNLAG_ARBEIDSTAKER_FRILANS ||
-      ap.definisjon.kode === FASTSETT_BEREGNINGSGRUNNLAG_TIDSBEGRENSET_ARBEIDSFORHOLD,
+      ap.definisjon === FASTSETT_BEREGNINGSGRUNNLAG_ARBEIDSTAKER_FRILANS ||
+      ap.definisjon === FASTSETT_BEREGNINGSGRUNNLAG_TIDSBEGRENSET_ARBEIDSFORHOLD,
   );
 
 const finnAlleAndelerIFørstePeriode = allePerioder => {
