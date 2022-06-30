@@ -12,7 +12,7 @@ import SoknadsfristVilkarDokument from './SoknadsfristVilkarDokument';
 import { SoknadsfristVilkarForm } from './SoknadsfristVilkarForm';
 
 const periode = {
-  vilkarStatus: { kode: vilkarUtfallType.IKKE_OPPFYLT, kodeverk: 'test' },
+  vilkarStatus: vilkarUtfallType.IKKE_OPPFYLT,
   vurdersIBehandlingen: true,
   periode: {
     fom: '2020-02-20',
@@ -26,7 +26,7 @@ const dokumenter = [
     status: [
       {
         periode: { fom: '2020-02-20', tom: '2020-02-25' },
-        status: { kode: vilkarUtfallType.IKKE_OPPFYLT, kodeverk: 'test' },
+        status: vilkarUtfallType.IKKE_OPPFYLT,
       },
     ],
     innsendingstidspunkt: '2020-06-01',
@@ -39,7 +39,7 @@ const dokumenter = [
     status: [
       {
         periode: { fom: '2020-02-26', tom: '2020-02-27' },
-        status: { kode: vilkarUtfallType.IKKE_OPPFYLT, kodeverk: 'test' },
+        status: vilkarUtfallType.IKKE_OPPFYLT,
       },
     ],
     innsendingstidspunkt: '2020-06-01',

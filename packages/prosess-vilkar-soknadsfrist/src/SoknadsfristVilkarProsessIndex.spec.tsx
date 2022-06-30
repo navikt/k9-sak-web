@@ -38,10 +38,7 @@ describe('<SoknadsfristVilkarForm>', () => {
                   fom: '2020-03-01',
                   tom: '2020-04-01',
                 },
-                vilkarStatus: {
-                  kode: 'test',
-                  kodeverk: 'test',
-                },
+                vilkarStatus: 'test',
                 avslagKode: 'test',
                 vurdersIBehandlingen: true,
                 merknadParametere: {
@@ -50,10 +47,7 @@ describe('<SoknadsfristVilkarForm>', () => {
               },
             ],
             overstyrbar: true,
-            vilkarType: {
-              kode: 'test',
-              kodeverk: 'test',
-            },
+            vilkarType: 'test',
           },
         ]}
         soknadsfristStatus={soknadsfristStatus}
@@ -91,10 +85,7 @@ describe('<SoknadsfristVilkarForm>', () => {
                   fom: '2020-03-01',
                   tom: '2020-04-01',
                 },
-                vilkarStatus: {
-                  kode: 'test',
-                  kodeverk: 'test',
-                },
+                vilkarStatus: 'test',
                 avslagKode: 'test',
                 vurdersIBehandlingen: true,
                 merknadParametere: {
@@ -106,10 +97,7 @@ describe('<SoknadsfristVilkarForm>', () => {
                   fom: '2020-03-01',
                   tom: '2020-04-01',
                 },
-                vilkarStatus: {
-                  kode: 'test',
-                  kodeverk: 'test',
-                },
+                vilkarStatus: 'test',
                 avslagKode: 'test',
                 vurdersIBehandlingen: false,
                 merknadParametere: {
@@ -118,10 +106,7 @@ describe('<SoknadsfristVilkarForm>', () => {
               },
             ],
             overstyrbar: true,
-            vilkarType: {
-              kode: 'test',
-              kodeverk: 'test',
-            },
+            vilkarType: 'test',
           },
         ]}
         soknadsfristStatus={soknadsfristStatus}

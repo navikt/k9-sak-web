@@ -74,7 +74,7 @@ const SoknadsfristVilkarProsessIndex = ({
     }
   }, [activeTab, visAllePerioder]);
 
-  if(perioder.length === 0){
+  if (perioder.length === 0) {
     return null;
   }
 
@@ -82,35 +82,35 @@ const SoknadsfristVilkarProsessIndex = ({
 
   const harÅpentAksjonspunkt = aksjonspunkter.some(
     ap =>
-      ap.definisjon.kode === aksjonspunktCodes.KONTROLLER_OPPLYSNINGER_OM_SØKNADSFRIST &&
-      !(ap.status.kode === aksjonspunktStatus.OPPRETTET && !ap.kanLoses),
+      ap.definisjon === aksjonspunktCodes.KONTROLLER_OPPLYSNINGER_OM_SØKNADSFRIST &&
+      !(ap.status === aksjonspunktStatus.OPPRETTET && !ap.kanLoses),
   );
 
   const dokumenterSomSkalVurderes = Array.isArray(soknadsfristStatus?.dokumentStatus)
     ? soknadsfristStatus.dokumentStatus.filter(dok =>
-        dok.status.some(status => {
-          const erOppfyllt = status.status.kode === vilkarUtfallType.OPPFYLT;
-          const avklartEllerOverstyrt = dok.overstyrteOpplysninger || dok.avklarteOpplysninger;
+      dok.status.some(status => {
+        const erOppfyllt = status.status === vilkarUtfallType.OPPFYLT;
+        const avklartEllerOverstyrt = dok.overstyrteOpplysninger || dok.avklarteOpplysninger;
 
-          if (erOppfyllt && !avklartEllerOverstyrt) {
-            return false;
-          }
+        if (erOppfyllt && !avklartEllerOverstyrt) {
+          return false;
+        }
 
-          const statusPeriodeFom = moment(status.periode.fom);
-          const statusPeriodeTom = moment(status.periode.tom);
+        const statusPeriodeFom = moment(status.periode.fom);
+        const statusPeriodeTom = moment(status.periode.tom);
 
-          return perioder.some(vilkårPeriode => {
-            const vilkårPeriodeFom = moment(vilkårPeriode.periode.fom);
-            const vilkårPeriodeTom = moment(vilkårPeriode.periode.tom);
+        return perioder.some(vilkårPeriode => {
+          const vilkårPeriodeFom = moment(vilkårPeriode.periode.fom);
+          const vilkårPeriodeTom = moment(vilkårPeriode.periode.tom);
 
-            return (
-              utledInnsendtSoknadsfrist(dok.innsendingstidspunkt, false) > vilkårPeriodeFom &&
-              ((vilkårPeriodeFom >= statusPeriodeFom && vilkårPeriodeFom <= statusPeriodeTom) ||
-                (vilkårPeriodeTom >= statusPeriodeFom && vilkårPeriodeTom <= statusPeriodeTom))
-            );
-          });
-        }),
-      )
+          return (
+            utledInnsendtSoknadsfrist(dok.innsendingstidspunkt, false) > vilkårPeriodeFom &&
+            ((vilkårPeriodeFom >= statusPeriodeFom && vilkårPeriodeFom <= statusPeriodeTom) ||
+              (vilkårPeriodeTom >= statusPeriodeFom && vilkårPeriodeTom <= statusPeriodeTom))
+          );
+        });
+      }),
+    )
     : [];
 
   const activePeriodeFom = moment(activePeriode.periode.fom);
@@ -132,21 +132,21 @@ const SoknadsfristVilkarProsessIndex = ({
   return (
     <RawIntlProvider value={intl}>
       <div className={cx('mainContainer--withSideMenu')}>
-          <div className={styles.sideMenuContainer}>
-            <SideMenu
-              links={perioder.map(({ periode, vilkarStatus }, index) => ({
-                active: activeTab === index,
-                label: `${dateFormat(periode.fom)} - ${dateFormat(periode.tom)}`,
-                iconSrc:
-                  (erOverstyrt || harÅpentAksjonspunkt) && vilkarStatus.kode !== vilkarUtfallType.OPPFYLT
-                    ? advarselIcon
-                    : null,
-              }))}
-              onClick={setActiveTab}
-              theme="arrow"
-              heading={intl.formatMessage({ id: 'Sidemeny.Perioder' })}
-            />
-          </div>
+        <div className={styles.sideMenuContainer}>
+          <SideMenu
+            links={perioder.map(({ periode, vilkarStatus }, index) => ({
+              active: activeTab === index,
+              label: `${dateFormat(periode.fom)} - ${dateFormat(periode.tom)}`,
+              iconSrc:
+                (erOverstyrt || harÅpentAksjonspunkt) && vilkarStatus !== vilkarUtfallType.OPPFYLT
+                  ? advarselIcon
+                  : null,
+            }))}
+            onClick={setActiveTab}
+            theme="arrow"
+            heading={intl.formatMessage({ id: 'Sidemeny.Perioder' })}
+          />
+        </div>
         <div className={styles.contentContainer}>
           <SoknadsfristVilkarHeader
             aksjonspunkter={aksjonspunkter}
@@ -156,7 +156,7 @@ const SoknadsfristVilkarProsessIndex = ({
             overrideReadOnly={overrideReadOnly || dokumenterSomSkalVurderes.length === 0}
             overstyringApKode={aksjonspunktCodes.OVERSTYR_SOKNADSFRISTVILKAR}
             panelTittelKode={panelTittelKode}
-            status={activePeriode.vilkarStatus.kode}
+            status={activePeriode.vilkarStatus}
             toggleOverstyring={toggleOverstyring}
           />
           <SoknadsfristVilkarForm
@@ -169,7 +169,7 @@ const SoknadsfristVilkarProsessIndex = ({
             overrideReadOnly={overrideReadOnly}
             kanOverstyreAccess={kanOverstyreAccess}
             toggleOverstyring={toggleOverstyring}
-            status={activePeriode.vilkarStatus.kode}
+            status={activePeriode.vilkarStatus}
             panelTittelKode={panelTittelKode}
             lovReferanse={activeVilkår.lovReferanse ?? lovReferanse}
             alleDokumenter={dokumenterSomSkalVurderes}
