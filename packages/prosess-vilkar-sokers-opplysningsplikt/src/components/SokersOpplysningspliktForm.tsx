@@ -18,6 +18,7 @@ import { RadioGroupField, RadioOption, behandlingForm, behandlingFormValueSelect
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import dokumentTypeId from '@fpsak-frontend/kodeverk/src/dokumentTypeId';
 import { Aksjonspunkt, Behandling, Kodeverk, KodeverkMedNavn, ManglendeVedleggSoknad, Soknad } from '@k9-sak-web/types';
+import KodeverkType from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 
 const formName = 'SokersOpplysningspliktForm';
 
@@ -87,7 +88,7 @@ interface PureOwnProps {
 }
 
 interface MappedOwnProps {
-  getKodeverknavn: (kodeverk: Kodeverk, undertype?: string) => string;
+  getKodeverknavn: (kode: string, kodeverk: KodeverkType, undertype?: string) => string;
   hasSoknad: boolean;
   originalErVilkarOk: boolean;
   dokumentTypeIds: KodeverkMedNavn[];
@@ -145,12 +146,12 @@ export const SokersOpplysningspliktFormImpl = ({
               {manglendeVedlegg.map(vedlegg => (
                 <TableRow
                   key={
-                    vedlegg.dokumentType.kode + (vedlegg.arbeidsgiver ? vedlegg.arbeidsgiver.organisasjonsnummer : '')
+                    vedlegg.dokumentType + (vedlegg.arbeidsgiver ? vedlegg.arbeidsgiver.organisasjonsnummer : '')
                   }
                 >
-                  <TableColumn>{dokumentTypeIds.find(dti => dti.kode === vedlegg.dokumentType.kode).navn}</TableColumn>
+                  <TableColumn>{dokumentTypeIds.find(dti => dti.kode === vedlegg.dokumentType).navn}</TableColumn>
                   <TableColumn>
-                    {vedlegg.dokumentType.kode === dokumentTypeId.INNTEKTSMELDING &&
+                    {vedlegg.dokumentType === dokumentTypeId.INNTEKTSMELDING &&
                       formatArbeidsgiver(vedlegg.arbeidsgiver)}
                   </TableColumn>
                 </TableRow>
@@ -184,7 +185,7 @@ export const SokersOpplysningspliktFormImpl = ({
           <>
             <VerticalSpacer sixteenPx />
             <Normaltekst>
-              {getKodeverknavn(behandlingsresultat.avslagsarsak, vilkarType.SOKERSOPPLYSNINGSPLIKT)}
+              {getKodeverknavn(behandlingsresultat.avslagsarsak, KodeverkType.AVSLAGSARSAK)}
             </Normaltekst>
           </>
         )}
@@ -196,8 +197,8 @@ export const SokersOpplysningspliktFormImpl = ({
 export const getSortedManglendeVedlegg = createSelector([(ownProps: PureOwnProps) => ownProps.soknad], soknad =>
   soknad && soknad.manglendeVedlegg
     ? soknad.manglendeVedlegg
-        .slice()
-        .sort(mv1 => (mv1.dokumentType.kode === dokumentTypeId.DOKUMENTASJON_AV_TERMIN_ELLER_FØDSEL ? 1 : -1))
+      .slice()
+      .sort(mv1 => (mv1.dokumentType === dokumentTypeId.DOKUMENTASJON_AV_TERMIN_ELLER_FØDSEL ? 1 : -1))
     : [],
 );
 
@@ -222,11 +223,11 @@ export const buildInitialValues = createSelector(
   ],
   (manglendeVedlegg, soknadExists, status, aksjonspunkter): FormValues => {
     const aksjonspunkt = aksjonspunkter.length > 0 ? aksjonspunkter[0] : undefined;
-    const isOpenAksjonspunkt = aksjonspunkt && isAksjonspunktOpen(aksjonspunkt.status.kode);
+    const isOpenAksjonspunkt = aksjonspunkt && isAksjonspunktOpen(aksjonspunkt.status);
     const isVilkarGodkjent = soknadExists && vilkarUtfallType.OPPFYLT === status;
 
     const inntektsmeldingerSomIkkeKommer = manglendeVedlegg
-      .filter(mv => mv.dokumentType.kode === dokumentTypeId.INNTEKTSMELDING)
+      .filter(mv => mv.dokumentType === dokumentTypeId.INNTEKTSMELDING)
       .reduce(
         (acc, mv) => ({
           ...acc,
@@ -238,7 +239,7 @@ export const buildInitialValues = createSelector(
     return {
       inntektsmeldingerSomIkkeKommer,
       erVilkarOk: isOpenAksjonspunkt && soknadExists ? undefined : isVilkarGodkjent,
-      aksjonspunktKode: aksjonspunkt ? aksjonspunkt.definisjon.kode : aksjonspunktCodes.SOKERS_OPPLYSNINGSPLIKT_OVST,
+      aksjonspunktKode: aksjonspunkt ? aksjonspunkt.definisjon : aksjonspunktCodes.SOKERS_OPPLYSNINGSPLIKT_OVST,
       hasAksjonspunkt: aksjonspunkt !== undefined,
       ...ProsessStegBegrunnelseTextField.buildInitialValues(aksjonspunkter),
     };
@@ -247,7 +248,7 @@ export const buildInitialValues = createSelector(
 
 const transformValues = (values: FormValues, manglendeVedlegg: ManglendeVedleggSoknad[]) => {
   const arbeidsgivere = manglendeVedlegg
-    .filter(mv => mv.dokumentType.kode === dokumentTypeId.INNTEKTSMELDING)
+    .filter(mv => mv.dokumentType === dokumentTypeId.INNTEKTSMELDING)
     .map(mv => mv.arbeidsgiver);
   return {
     kode: values.aksjonspunktKode,
@@ -270,8 +271,8 @@ const submitSelector = createSelector(
 );
 
 const mapStateToPropsFactory = (_initialState, initialOwnProps: PureOwnProps) => {
-  const getKodeverknavn = getKodeverknavnFn(initialOwnProps.alleKodeverk, kodeverkTyper);
-  const isOpenAksjonspunkt = initialOwnProps.aksjonspunkter.some(ap => isAksjonspunktOpen(ap.status.kode));
+  const getKodeverknavn = getKodeverknavnFn(initialOwnProps.alleKodeverk);
+  const isOpenAksjonspunkt = initialOwnProps.aksjonspunkter.some(ap => isAksjonspunktOpen(ap.status));
   const erVilkarOk = isOpenAksjonspunkt ? undefined : vilkarUtfallType.OPPFYLT === initialOwnProps.status;
 
   return (state, ownProps: PureOwnProps): MappedOwnProps => {

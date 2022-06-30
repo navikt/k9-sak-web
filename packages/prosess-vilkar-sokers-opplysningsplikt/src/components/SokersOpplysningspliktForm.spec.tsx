@@ -20,10 +20,7 @@ describe('<SokersOpplysningspliktForm>', () => {
   it('skal vise tabell med manglende vedlegg', () => {
     const manglendeVedlegg = [
       {
-        dokumentType: {
-          kode: dokumentTypeId.INNTEKTSMELDING,
-          kodeverk: '',
-        },
+        dokumentType: dokumentTypeId.INNTEKTSMELDING,
         arbeidsgiver: {
           organisasjonsnummer: '973861778',
           navn: 'Statoil Asaavd Statoil Sokkelvirksomhet',
@@ -31,10 +28,7 @@ describe('<SokersOpplysningspliktForm>', () => {
         brukerHarSagtAtIkkeKommer: false,
       },
       {
-        dokumentType: {
-          kode: dokumentTypeId.DOKUMENTASJON_AV_TERMIN_ELLER_FØDSEL,
-          kodeverk: '',
-        },
+        dokumentType: dokumentTypeId.DOKUMENTASJON_AV_TERMIN_ELLER_FØDSEL,
         arbeidsgiver: null,
         brukerHarSagtAtIkkeKommer: null,
       },
@@ -130,18 +124,12 @@ describe('<SokersOpplysningspliktForm>', () => {
     it('skal sortere manglende vedlegg', () => {
       const manglendeVedlegg = [
         {
-          dokumentType: {
-            kode: dokumentTypeId.DOKUMENTASJON_AV_TERMIN_ELLER_FØDSEL,
-            kodeverk: '',
-          },
+          dokumentType: dokumentTypeId.DOKUMENTASJON_AV_TERMIN_ELLER_FØDSEL,
           arbeidsgiver: null,
           brukerHarSagtAtIkkeKommer: null,
         },
         {
-          dokumentType: {
-            kode: dokumentTypeId.INNTEKTSMELDING,
-            kodeverk: '',
-          },
+          dokumentType: dokumentTypeId.INNTEKTSMELDING,
           arbeidsgiver: {
             organisasjonsnummer: '973861778',
           },
@@ -159,10 +147,7 @@ describe('<SokersOpplysningspliktForm>', () => {
     it('skal sette opp formens initielle verdier', () => {
       const manglendeVedlegg = [
         {
-          dokumentType: {
-            kode: dokumentTypeId.INNTEKTSMELDING,
-            kodeverk: '',
-          },
+          dokumentType: dokumentTypeId.INNTEKTSMELDING,
           arbeidsgiver: {
             organisasjonsnummer: '973861778',
           },
