@@ -37,6 +37,10 @@ const featureToggles = [
     key: 'NY_BEREGNING_PROSESS_ENABLED',
     value: process.env.NY_BEREGNING_PROSESS_ENABLED,
   },
+  {
+    key: 'NY_BEREGNING_FAKTA_ENABLED',
+    value: process.env.NY_BEREGNING_FAKTA_ENABLED,
+  },
 ];
 
 module.exports = function (app) {

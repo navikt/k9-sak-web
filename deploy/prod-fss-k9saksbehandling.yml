@@ -98,3 +98,5 @@ spec:
       value: "false"
     - name: NY_BEREGNING_PROSESS_ENABLED
       value: "false"
+    - name: NY_BEREGNING_FAKTA_ENABLED
+      value: "false"
