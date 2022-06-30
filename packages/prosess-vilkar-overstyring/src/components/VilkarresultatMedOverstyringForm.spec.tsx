@@ -32,10 +32,7 @@ describe('<VilkarresultatMedOverstyringForm>', () => {
         }}
         behandlingId={1}
         behandlingVersjon={2}
-        behandlingType={{
-          kode: behandlingType.FORSTEGANGSSOKNAD,
-          kodeverk: '',
-        }}
+        behandlingType={behandlingType.FORSTEGANGSSOKNAD}
         medlemskapFom="10.10.2010"
         status=""
         submitCallback={() => undefined}

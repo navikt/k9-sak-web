@@ -38,11 +38,11 @@ interface VilkarresultatMedOverstyringFormProps {
   aksjonspunkter: Aksjonspunkt[];
   avslagsarsaker: KodeverkMedNavn[];
   behandlingsresultat: {
-    type: Kodeverk;
+    type: string;
   };
   behandlingId: number;
   behandlingVersjon: number;
-  behandlingType: Kodeverk;
+  behandlingType: string;
   customVilkarIkkeOppfyltText?: CustomVilkarText;
   customVilkarOppfyltText?: CustomVilkarText;
   erMedlemskapsPanel: boolean;
@@ -182,7 +182,7 @@ const buildInitialValues = createSelector(
     (ownProps: VilkarresultatMedOverstyringFormProps) => ownProps.periode,
   ],
   (avslagKode, aksjonspunkter, status, overstyringApKode, periode) => {
-    const aksjonspunkt = aksjonspunkter.find(ap => ap.definisjon.kode === overstyringApKode);
+    const aksjonspunkt = aksjonspunkter.find(ap => ap.definisjon === overstyringApKode);
     return {
       isOverstyrt: aksjonspunkt !== undefined,
       ...VilkarresultatMedBegrunnelse.buildInitialValues(
@@ -196,10 +196,10 @@ const buildInitialValues = createSelector(
   },
 );
 
-const getCustomVilkarText = (medlemskapFom: string, behandlingType: Kodeverk, erOppfylt: boolean) => {
+const getCustomVilkarText = (medlemskapFom: string, behandlingType: string, erOppfylt: boolean) => {
   const customVilkarText = { id: '', values: null };
   const isBehandlingRevurderingFortsattMedlemskap =
-    behandlingType.kode === BehandlingType.REVURDERING && !!medlemskapFom;
+    behandlingType === BehandlingType.REVURDERING && !!medlemskapFom;
   if (isBehandlingRevurderingFortsattMedlemskap) {
     customVilkarText.id = erOppfylt
       ? 'VilkarResultPicker.VilkarOppfyltRevurderingFom'
@@ -239,10 +239,10 @@ const mapStateToPropsFactory = (_initialState, initialOwnProps: VilkarresultatMe
   return (state, ownProps) => {
     const { behandlingId, behandlingVersjon, aksjonspunkter, erOverstyrt, overrideReadOnly } = ownProps;
 
-    const aksjonspunkt = aksjonspunkter.find(ap => ap.definisjon.kode === overstyringApKode);
+    const aksjonspunkt = aksjonspunkter.find(ap => ap.definisjon === overstyringApKode);
     const isSolvable =
       aksjonspunkt !== undefined
-        ? !(aksjonspunkt.status.kode === aksjonspunktStatus.OPPRETTET && !aksjonspunkt.kanLoses)
+        ? !(aksjonspunkt.status === aksjonspunktStatus.OPPRETTET && !aksjonspunkt.kanLoses)
         : false;
 
     const initialValues = buildInitialValues(ownProps);

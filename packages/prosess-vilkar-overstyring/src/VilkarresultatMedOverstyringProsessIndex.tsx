@@ -72,7 +72,7 @@ const VilkarresultatMedOverstyringProsessIndex = ({
     }
   }, [activeTab, visAllePerioder]);
 
-  if(perioder.length === 0){
+  if (perioder.length === 0) {
     return null;
   }
 
@@ -81,17 +81,17 @@ const VilkarresultatMedOverstyringProsessIndex = ({
   return (
     <RawIntlProvider value={intl}>
       <div className={cx('mainContainer--withSideMenu')}>
-          <div className={styles.sideMenuContainer}>
-            <SideMenu
-              links={perioder.map((periode, index) => ({
-                active: activeTab === index,
-                label: `${dateFormat(periode.periode.fom)} - ${dateFormat(periode.periode.tom)}`,
-              }))}
-              onClick={setActiveTab}
-              theme="arrow"
-              heading={intl.formatMessage({ id: 'Sidemeny.Perioder' })}
-            />
-          </div>
+        <div className={styles.sideMenuContainer}>
+          <SideMenu
+            links={perioder.map((periode, index) => ({
+              active: activeTab === index,
+              label: `${dateFormat(periode.periode.fom)} - ${dateFormat(periode.periode.tom)}`,
+            }))}
+            onClick={setActiveTab}
+            theme="arrow"
+            heading={intl.formatMessage({ id: 'Sidemeny.Perioder' })}
+          />
+        </div>
         <div className={styles.contentContainer}>
           <VilkarresultatMedOverstyringHeader
             aksjonspunkter={aksjonspunkter}
@@ -101,7 +101,7 @@ const VilkarresultatMedOverstyringProsessIndex = ({
             overrideReadOnly={overrideReadOnly}
             overstyringApKode={overstyringApKode}
             panelTittelKode={panelTittelKode}
-            status={activePeriode.vilkarStatus.kode}
+            status={activePeriode.vilkarStatus}
             toggleOverstyring={toggleOverstyring}
           />
           <VilkarresultatMedOverstyringForm
@@ -117,7 +117,7 @@ const VilkarresultatMedOverstyringProsessIndex = ({
             kanOverstyreAccess={kanOverstyreAccess}
             toggleOverstyring={toggleOverstyring}
             avslagsarsaker={avslagsarsaker}
-            status={activePeriode.vilkarStatus.kode}
+            status={activePeriode.vilkarStatus}
             erOverstyrt={erOverstyrt}
             panelTittelKode={panelTittelKode}
             overstyringApKode={overstyringApKode}
