@@ -3,7 +3,7 @@ import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 const totrinnskontrollaksjonspunktTextCodes = {
   [aksjonspunktCodes.OVERSTYR_ADOPSJONSVILKAR]: 'ToTrinnsForm.Adopsjon.VilkarOverstyrt',
 
-  [aksjonspunktCodes.OVERSTYR_FODSELSVILKAR]: 'ToTrinnsForm.Fødsel.VilkarOverstyrt',
+  [aksjonspunktCodes.OVERSTYR_OMSORGEN_FOR]: 'ToTrinnsForm.Fødsel.VilkarOverstyrt',
 
   [aksjonspunktCodes.AVKLAR_AKTIVITETER]: 'ToTrinnsForm.Beregning.AvklarAktiviteter',
   [aksjonspunktCodes.OVERSTYRING_AV_BEREGNINGSAKTIVITETER]: 'ToTrinnsForm.Beregning.OverstyrtBeregningsaktiviteter',

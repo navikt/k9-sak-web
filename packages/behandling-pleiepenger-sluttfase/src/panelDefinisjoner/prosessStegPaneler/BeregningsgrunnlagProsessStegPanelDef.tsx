@@ -10,12 +10,11 @@ import '@navikt/ft-prosess-beregningsgrunnlag/dist/style.css';
 
 const ProsessBeregningsgrunnlag = React.lazy(() => import('@navikt/ft-prosess-beregningsgrunnlag'));
 
-const enableFederation = process.env.NODE_ENV === 'development';
-
-const ProsessBeregningsgrunnlagMF = !enableFederation
-  ? undefined
-  : // eslint-disable-next-line import/no-unresolved
-    () => import('ft_prosess_beregningsgrunnlag/ProsessBeregningsgrunnlag');
+const ProsessBeregningsgrunnlagMF =
+  process.env.NODE_ENV !== 'development'
+    ? undefined
+    : // eslint-disable-next-line import/no-unresolved
+      () => import('ft_prosess_beregningsgrunnlag/ProsessBeregningsgrunnlag');
 
 class PanelDef extends ProsessStegPanelDef {
   // eslint-disable-next-line class-methods-use-this
