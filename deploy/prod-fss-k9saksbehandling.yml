@@ -95,6 +95,6 @@ spec:
     - name: TYPE_MEDISINSKE_OPPLYSNINGER_BREV
       value: "true"
     - name: LOS_MARKER_BEHANDLING
-      value: "false"
+      value: "true"
     - name: NY_BEREGNING_PROSESS_ENABLED
       value: "false"
