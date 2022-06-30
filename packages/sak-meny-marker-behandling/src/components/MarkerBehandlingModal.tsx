@@ -1,6 +1,6 @@
 import CheckboxFieldFormik from '@fpsak-frontend/form/src/CheckboxFieldFormik';
 import TextAreaFormik from '@fpsak-frontend/form/src/TextAreaFormik';
-import { goToLos } from '@k9-sak-web/sak-app/src/app/paths';
+import { goToSearch, goToLos } from '@k9-sak-web/sak-app/src/app/paths';
 import { MerknadFraLos } from '@k9-sak-web/types';
 import { Button, ErrorMessage, Modal } from '@navikt/ds-react';
 import { Form, Formik, FormikProps } from 'formik';
@@ -19,6 +19,7 @@ interface PureOwnProps {
   markerBehandling: (values: any) => Promise<any>;
   behandlingUuid: string;
   merknaderFraLos: MerknadFraLos;
+  erVeileder?: boolean;
 }
 
 interface FormValues {
@@ -34,6 +35,7 @@ const MarkerBehandlingModal: React.FC<PureOwnProps> = ({
   markerBehandling,
   behandlingUuid,
   merknaderFraLos,
+  erVeileder,
 }) => {
   const intl = useIntl();
   const [showIngenEndringerError, setShowIngenEndringerError] = useState(false);
@@ -121,7 +123,13 @@ const MarkerBehandlingModal: React.FC<PureOwnProps> = ({
               fritekst: values.markerSomHastesak || values.markerSomVanskelig ? values.begrunnelse : undefined,
               merknadKoder: getMerknadKode(),
             };
-            markerBehandling(transformedValues).then(() => goToLos());
+            markerBehandling(transformedValues).then(() => {
+              if (erVeileder) {
+                goToSearch();
+              } else {
+                goToLos();
+              }
+            });
           } else {
             setShowIngenEndringerError(true);
           }
@@ -178,7 +186,7 @@ const MarkerBehandlingModal: React.FC<PureOwnProps> = ({
             )}
             <div className={styles.buttonContainer}>
               <Button variant="primary" size="small" className={styles.submitButton}>
-                Lagre, gå til LOS
+                {erVeileder ? 'Lagre, gå til forsiden' : 'Lagre, gå til LOS'}
               </Button>
               <Button variant="secondary" size="small" onClick={lukkModal}>
                 Lukk

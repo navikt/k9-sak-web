@@ -24,6 +24,7 @@ interface OwnProps {
   markerBehandling: (values: any) => Promise<any>;
   behandlingUuid: string;
   merknaderFraLos: MerknadFraLos;
+  erVeileder?: boolean;
 }
 
 const MenyMarkerBehandling = ({
@@ -33,6 +34,7 @@ const MenyMarkerBehandling = ({
   markerBehandling,
   behandlingUuid,
   merknaderFraLos,
+  erVeileder,
 }: OwnProps) => {
   return (
     <RawIntlProvider value={intl}>
@@ -43,6 +45,7 @@ const MenyMarkerBehandling = ({
         markerBehandling={markerBehandling}
         behandlingUuid={behandlingUuid}
         merknaderFraLos={merknaderFraLos}
+        erVeileder={erVeileder}
       />
     </RawIntlProvider>
   );
