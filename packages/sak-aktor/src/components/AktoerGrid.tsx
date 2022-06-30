@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { FormattedMessage } from 'react-intl';
 import Lenkepanel from 'nav-frontend-lenkepanel';
 
-import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
+import KodeverkType from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { getKodeverknavnFn } from '@fpsak-frontend/utils';
 import VisittkortSakIndex from '@fpsak-frontend/sak-visittkort';
 import { Fagsak, FagsakPerson, KodeverkMedNavn } from '@k9-sak-web/types';
@@ -20,7 +20,7 @@ interface OwnProps {
 }
 
 const AktoerGrid = ({ aktorInfo, alleKodeverk, finnPathToFagsak }: OwnProps) => {
-  const getKodeverknavn = getKodeverknavnFn(alleKodeverk, kodeverkTyper);
+  const getKodeverknavn = getKodeverknavnFn(alleKodeverk);
 
   return (
     <>
@@ -38,9 +38,9 @@ const AktoerGrid = ({ aktorInfo, alleKodeverk, finnPathToFagsak }: OwnProps) => 
               href="#"
               tittelProps="normaltekst"
             >
-              {getKodeverknavn(fagsak.sakstype)}
+              {getKodeverknavn(fagsak.sakstype, KodeverkType.FAGSAK_YTELSE)}
               {` (${fagsak.saksnummer}) `}
-              {getKodeverknavn(fagsak.status)}
+              {getKodeverknavn(fagsak.status, KodeverkType.FAGSAK_STATUS)}
             </Lenkepanel>
           ))
         ) : (
