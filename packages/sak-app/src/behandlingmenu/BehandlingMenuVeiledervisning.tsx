@@ -34,6 +34,7 @@ const BehandlingMenuVeiledervisning: React.FC<VeiledervisningProps> = ({
           lukkModal={() => setVisMarkerBehandlingModal(!visMarkerBehandlingModal)}
           brukHastekøMarkering
           merknaderFraLos={merknaderFraLos}
+          erVeileder
         />
       )}
     </>

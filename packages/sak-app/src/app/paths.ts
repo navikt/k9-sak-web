@@ -113,3 +113,7 @@ export const goToLos = () => {
   const path = getPathToFplos();
   window.location.assign(path);
 };
+
+export const goToSearch = () => {
+  window.location.assign('/k9/web');
+};
