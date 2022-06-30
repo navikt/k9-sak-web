@@ -128,7 +128,6 @@ const HistorikkIndex = ({ saksnummer, behandlingId, behandlingVersjon }: OwnProp
         }
         return (
           <HistorikkSakIndex
-            key={innslag.opprettetTidspunkt + innslag.type.kode}
             historikkinnslag={innslag}
             saksnummer={saksnummer}
             alleKodeverk={alleKodeverk}

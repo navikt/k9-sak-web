@@ -27,10 +27,7 @@ jest.mock('react-router-dom', () => ({
 describe('<TotrinnskontrollIndex>', () => {
   const fagsak = {
     saksnummer: '1',
-    sakstype: {
-      kode: fagsakYtelseType.FORELDREPENGER,
-      kodeverk: '',
-    },
+    sakstype: fagsakYtelseType.FORELDREPENGER,
     person: {
       aktørId: '123',
     },
@@ -40,15 +37,9 @@ describe('<TotrinnskontrollIndex>', () => {
     {
       id: 1234,
       versjon: 123,
-      type: {
-        kode: behandlingType.FORSTEGANGSSOKNAD,
-        kodeverk: '',
-      },
+      type: behandlingType.FORSTEGANGSSOKNAD,
       opprettet: '‎29.08.‎2017‎ ‎09‎:‎54‎:‎22',
-      status: {
-        kode: 'FVED',
-        kodeverk: 'BEHANDLING_STATUS',
-      },
+      status: 'FVED',
       toTrinnsBehandling: true,
       ansvarligSaksbehandler: 'Espen Utvikler',
       behandlingÅrsaker: [],

@@ -27,34 +27,26 @@ describe('<HistorikkIndex>', () => {
       {
         opprettetTidspunkt: '2019-01-01',
         historikkinnslagDeler: [],
-        type: {
-          kode: 'Test fpsak 1',
-        },
+        type: 'Test fpsak 1',
       },
       {
         opprettetTidspunkt: '2019-01-06',
         historikkinnslagDeler: [],
-        type: {
-          kode: 'Test fpsak 2',
-        },
+        type: 'Test fpsak 2',
       },
     ]);
     requestApi.mock(K9sakApiKeys.HISTORY_TILBAKE, [
       {
         opprettetTidspunkt: '2019-01-04',
         historikkinnslagDeler: [],
-        type: {
-          kode: 'Test fptilbake',
-        },
+        type: 'Test fptilbake',
       },
     ]);
     requestApi.mock(K9sakApiKeys.HISTORY_KLAGE, [
       {
         opprettetTidspunkt: '2018-01-04',
         historikkinnslagDeler: [],
-        type: {
-          kode: 'Test fptilbake',
-        },
+        type: 'Test fptilbake',
       },
     ]);
 

@@ -18,7 +18,7 @@ interface OwnProps {
   totrinnskontrollSkjermlenkeContext: TotrinnskontrollSkjermlenkeContext[];
   erForeldrepengerFagsak: boolean;
   behandlingKlageVurdering?: KlageVurdering;
-  behandlingStatus: Kodeverk;
+  behandlingStatus: string;
   erTilbakekreving: boolean;
   arbeidsforholdHandlingTyper: KodeverkMedNavn[];
   skjemalenkeTyper: KodeverkMedNavn[];

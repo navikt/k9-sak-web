@@ -31,17 +31,17 @@ const getLagreFunksjon =
     setVisBeslutterModal: (visModal: boolean) => void,
     godkjennTotrinnsaksjonspunkter: (params: any) => Promise<any>,
   ) =>
-  (totrinnskontrollData: Values) => {
-    const params = {
-      saksnummer,
-      behandlingId,
-      behandlingVersjon,
-      bekreftedeAksjonspunktDtoer: [totrinnskontrollData.fatterVedtakAksjonspunktDto],
+    (totrinnskontrollData: Values) => {
+      const params = {
+        saksnummer,
+        behandlingId,
+        behandlingVersjon,
+        bekreftedeAksjonspunktDtoer: [totrinnskontrollData.fatterVedtakAksjonspunktDto],
+      };
+      setAlleAksjonspunktTilGodkjent(totrinnskontrollData.erAlleAksjonspunktGodkjent);
+      setVisBeslutterModal(true);
+      return godkjennTotrinnsaksjonspunkter(params);
     };
-    setAlleAksjonspunktTilGodkjent(totrinnskontrollData.erAlleAksjonspunktGodkjent);
-    setVisBeslutterModal(true);
-    return godkjennTotrinnsaksjonspunkter(params);
-  };
 
 interface OwnProps {
   fagsak: Fagsak;
@@ -67,22 +67,22 @@ const TotrinnskontrollIndex = ({ fagsak, alleBehandlinger, behandlingId, behandl
 
   const alleKodeverk = useKodeverk(behandling.type);
 
-  const erInnsynBehandling = behandling.type.kode === BehandlingType.DOKUMENTINNSYN;
+  const erInnsynBehandling = behandling.type === BehandlingType.DOKUMENTINNSYN;
 
   const { data: totrinnArsaker } = restApiHooks.useRestApi<TotrinnskontrollSkjermlenkeContext[]>(
     K9sakApiKeys.TOTRINNSAKSJONSPUNKT_ARSAKER,
     undefined,
     {
-      updateTriggers: [behandlingId, behandling.status.kode],
-      suspendRequest: !!erInnsynBehandling || behandling.status.kode !== BehandlingStatus.FATTER_VEDTAK,
+      updateTriggers: [behandlingId, behandling.status],
+      suspendRequest: !!erInnsynBehandling || behandling.status !== BehandlingStatus.FATTER_VEDTAK,
     },
   );
   const { data: totrinnArsakerReadOnly } = restApiHooks.useRestApi<TotrinnskontrollSkjermlenkeContext[]>(
     K9sakApiKeys.TOTRINNSAKSJONSPUNKT_ARSAKER_READONLY,
     undefined,
     {
-      updateTriggers: [behandlingId, behandling.status.kode],
-      suspendRequest: !!erInnsynBehandling || behandling.status.kode !== BehandlingStatus.BEHANDLING_UTREDES,
+      updateTriggers: [behandlingId, behandling.status],
+      suspendRequest: !!erInnsynBehandling || behandling.status !== BehandlingStatus.BEHANDLING_UTREDES,
     },
   );
 

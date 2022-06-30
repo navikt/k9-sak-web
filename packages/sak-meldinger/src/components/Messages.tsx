@@ -45,7 +45,7 @@ interface PureOwnProps {
   behandlingVersjon: number;
   previewCallback: (overstyrtMottaker: Mottaker, brevmalkode: string, fritekst: string, fritekstbrev?: Fritekstbrev) => void;
   templates: Brevmaler | Brevmal[];
-  sprakKode?: Kodeverk;
+  sprakKode?: string;
   revurderingVarslingArsak: KodeverkMedNavn[];
   isKontrollerRevurderingApOpen?: boolean;
   personopplysninger?: Personopplysninger;

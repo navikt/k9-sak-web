@@ -64,7 +64,7 @@ interface PureOwnProps {
   behandlingVersjon: number;
   previewCallback: (overstyrtMottaker: Mottaker, brevmalkode: string, fritekst: string, fritekstbrev?: Fritekstbrev) => void;
   templates: Brevmaler | Brevmal[];
-  sprakKode?: Kodeverk;
+  sprakKode?: string;
   revurderingVarslingArsak: KodeverkMedNavn[];
   isKontrollerRevurderingApOpen?: boolean;
   personopplysninger?: Personopplysninger;
@@ -150,12 +150,12 @@ export const MessagesMedMedisinskeTypeBrevmalImpl = ({
   const {
     startRequest: hentFritekstMaler,
     data: fritekstMaler,
-  } = restApiMessagesHooks.useRestApiRunner<{ tittel: string; fritekst: string}[]>(MessagesApiKeys.HENT_FRITEKSTBREVMALER_TIL_TYPEN_AV_MEDISINSKE_OPPLYSNINGER);
+  } = restApiMessagesHooks.useRestApiRunner<{ tittel: string; fritekst: string }[]>(MessagesApiKeys.HENT_FRITEKSTBREVMALER_TIL_TYPEN_AV_MEDISINSKE_OPPLYSNINGER);
 
   const oppdaterAPILinkerForHentingAvMedisinskeTyper = () => {
     const urlsTilHentingAvMedisinskeTyper = tmpls.find(brevmal => brevmal.kode === dokumentMalType.INNHENT_MEDISINSKE_OPPLYSNINGER)?.linker;
 
-    if(urlsTilHentingAvMedisinskeTyper){
+    if (urlsTilHentingAvMedisinskeTyper) {
       requestMessagesApi.setLinks(urlsTilHentingAvMedisinskeTyper);
 
       return true;
@@ -195,7 +195,7 @@ export const MessagesMedMedisinskeTypeBrevmalImpl = ({
             );
           }
           // Catch er tom fordi error message skal håndteres av requestMessagesApi.
-        }).catch(() => {});
+        }).catch(() => { });
       }
     }
   }, [brevmalkode, valgtMedisinType]);

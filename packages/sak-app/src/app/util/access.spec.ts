@@ -11,8 +11,7 @@ const forEachFagsakAndBehandlingStatus = callback =>
   );
 
 const getTestName = (accessName, expected, fagsakStatus, behandlingStatus): string =>
-  `skal${
-    expected ? '' : ' ikke'
+  `skal${expected ? '' : ' ikke'
   } ha ${accessName} når fagsakStatus er '${fagsakStatus}' og behandlingStatus er '${behandlingStatus}'`;
 
 describe('access', () => {
@@ -21,14 +20,14 @@ describe('access', () => {
 
   describe('writeAccess', () => {
     const validFagsakStatuser = [fagsakStatusCode.OPPRETTET, fagsakStatusCode.UNDER_BEHANDLING];
-    const validFagsakStatus = { kode: validFagsakStatuser[0], kodeverk: '' };
+    const validFagsakStatus = validFagsakStatuser[0];
 
     const validBehandlingStatuser = [behandlingStatusCode.OPPRETTET, behandlingStatusCode.BEHANDLING_UTREDES];
-    const validBehandlingStatus = { kode: validBehandlingStatuser[0], kodeverk: '' };
-    const validBehandlingTyper = { kode: BehandlingType.FORSTEGANGSSOKNAD, kodeverk: '' };
+    const validBehandlingStatus = validBehandlingStatuser[0];
+    const validBehandlingTyper = BehandlingType.FORSTEGANGSSOKNAD;
 
-    const behandlingstypeSomIkkeErKlage = { kode: BehandlingType.FORSTEGANGSSOKNAD, kodeverk: '' };
-    const klage = { kode: BehandlingType.KLAGE, kodeverk: '' };
+    const behandlingstypeSomIkkeErKlage = BehandlingType.FORSTEGANGSSOKNAD;
+    const klage = BehandlingType.KLAGE;
 
     it('saksbehandler skal ha skrivetilgang', () => {
       const accessForSaksbehandler = writeAccess(behandlingstypeSomIkkeErKlage)(
@@ -61,8 +60,8 @@ describe('access', () => {
       it(`${getTestName('skrivetilgang', expected, fagsakStatus, behandlingStatus)}`, () => {
         const access = writeAccess(behandlingstype)(
           saksbehandlerAnsatt,
-          { kode: fagsakStatus, kodeverk: '' },
-          { kode: behandlingStatus, kodeverk: '' },
+          fagsakStatus,
+          behandlingStatus,
           validBehandlingTyper,
         );
 
@@ -73,11 +72,11 @@ describe('access', () => {
 
   describe('kanOverstyreAccess', () => {
     const validFagsakStatuser = [fagsakStatusCode.UNDER_BEHANDLING];
-    const validFagsakStatus = { kode: validFagsakStatuser[0], kodeverk: '' };
+    const validFagsakStatus = validFagsakStatuser[0];
 
     const validBehandlingStatuser = [behandlingStatusCode.BEHANDLING_UTREDES];
-    const validBehandlingStatus = { kode: validBehandlingStatuser[0], kodeverk: '' };
-    const validBehandlingTyper = { kode: BehandlingType.FORSTEGANGSSOKNAD, kodeverk: '' };
+    const validBehandlingStatus = validBehandlingStatuser[0];
+    const validBehandlingTyper = BehandlingType.FORSTEGANGSSOKNAD;
 
     const saksbehandlerOgOverstyrerAnsatt = { ...saksbehandlerAnsatt, kanOverstyre: true };
     const veilederOgOverstyrerAnsatt = { ...veilederAnsatt, kanOverstyre: false };
@@ -135,8 +134,8 @@ describe('access', () => {
       it(getTestName('tilgang til å overstyre', expected, fagsakStatus, behandlingStatus), () => {
         const access = kanOverstyreAccess(
           saksbehandlerOgOverstyrerAnsatt,
-          { kode: fagsakStatus, kodeverk: '' },
-          { kode: behandlingStatus, kodeverk: '' },
+          fagsakStatus,
+          behandlingStatus,
           validBehandlingTyper,
         );
 

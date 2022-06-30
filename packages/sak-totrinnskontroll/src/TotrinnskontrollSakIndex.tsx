@@ -61,7 +61,7 @@ interface OwnProps {
   behandling: BehandlingAppKontekst;
   totrinnskontrollSkjermlenkeContext: TotrinnskontrollSkjermlenkeContext[];
   location: Location;
-  fagsakYtelseType: Kodeverk;
+  fagsakYtelseType: string;
   behandlingKlageVurdering?: KlageVurdering;
   alleKodeverk: { [key: string]: KodeverkMedNavn[] };
   readOnly: boolean;
@@ -81,8 +81,8 @@ const TotrinnskontrollSakIndex = ({
   createLocationForSkjermlenke,
 }: OwnProps) => {
   const erTilbakekreving =
-    BehandlingType.TILBAKEKREVING === behandling.type.kode ||
-    BehandlingType.TILBAKEKREVING_REVURDERING === behandling.type.kode;
+    BehandlingType.TILBAKEKREVING === behandling.type ||
+    BehandlingType.TILBAKEKREVING_REVURDERING === behandling.type;
 
   const submitHandler = useCallback(
     (values: FormValues) => {
@@ -113,8 +113,8 @@ const TotrinnskontrollSakIndex = ({
     () =>
       erTilbakekreving
         ? sorterteSkjermlenkeCodesForTilbakekreving
-            .map(s => totrinnskontrollSkjermlenkeContext.find(el => el.skjermlenkeType === s.kode))
-            .filter(s => s)
+          .map(s => totrinnskontrollSkjermlenkeContext.find(el => el.skjermlenkeType === s.kode))
+          .filter(s => s)
         : totrinnskontrollSkjermlenkeContext,
     [erTilbakekreving, totrinnskontrollSkjermlenkeContext],
   );
@@ -124,7 +124,7 @@ const TotrinnskontrollSakIndex = ({
     [location],
   );
 
-  const erStatusFatterVedtak = behandling.status.kode === BehandlingStatus.FATTER_VEDTAK;
+  const erStatusFatterVedtak = behandling.status === BehandlingStatus.FATTER_VEDTAK;
   const skjemalenkeTyper = alleKodeverk[kodeverkTyper.SKJERMLENKE_TYPE];
   const arbeidsforholdHandlingTyper = alleKodeverk[kodeverkTyper.ARBEIDSFORHOLD_HANDLING_TYPE];
   const vurderArsaker = alleKodeverk[kodeverkTyper.VURDER_AARSAK];
@@ -139,7 +139,7 @@ const TotrinnskontrollSakIndex = ({
           totrinnskontrollSkjermlenkeContext={sorterteTotrinnskontrollSkjermlenkeContext}
           readOnly={readOnly}
           onSubmit={submitHandler}
-          erForeldrepengerFagsak={fagsakYtelseType.kode === FagsakYtelseType.FORELDREPENGER}
+          erForeldrepengerFagsak={fagsakYtelseType === FagsakYtelseType.FORELDREPENGER}
           behandlingKlageVurdering={behandlingKlageVurdering}
           arbeidsforholdHandlingTyper={arbeidsforholdHandlingTyper}
           skjemalenkeTyper={skjemalenkeTyper}
@@ -150,7 +150,7 @@ const TotrinnskontrollSakIndex = ({
       {!erStatusFatterVedtak && (
         <TotrinnskontrollSaksbehandlerPanel
           totrinnskontrollSkjermlenkeContext={sorterteTotrinnskontrollSkjermlenkeContext}
-          erForeldrepengerFagsak={fagsakYtelseType.kode === FagsakYtelseType.FORELDREPENGER}
+          erForeldrepengerFagsak={fagsakYtelseType === FagsakYtelseType.FORELDREPENGER}
           behandlingKlageVurdering={behandlingKlageVurdering}
           behandlingStatus={behandling.status}
           erTilbakekreving={erTilbakekreving}

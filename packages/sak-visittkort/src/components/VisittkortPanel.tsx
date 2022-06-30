@@ -21,17 +21,17 @@ import VisittkortLabels from './VisittkortLabels';
 import styles from './visittkortPanel.less';
 import RelatertFagsak from './RelatertFagsak';
 
-const utledKjonn = (kjonn: Kodeverk): Gender => {
-  if (kjonn.kode === navBrukerKjonn.KVINNE) {
+const utledKjonn = (kjonn: string): Gender => {
+  if (kjonn === navBrukerKjonn.KVINNE) {
     return Gender.female;
   }
-  return kjonn.kode === navBrukerKjonn.MANN ? Gender.male : Gender.unknown;
+  return kjonn === navBrukerKjonn.MANN ? Gender.male : Gender.unknown;
 };
 
 interface OwnProps {
   fagsakPerson: FagsakPerson;
   alleKodeverk: { [key: string]: KodeverkMedNavn[] };
-  sprakkode?: Kodeverk;
+  sprakkode?: string;
   personopplysninger?: Personopplysninger;
   harTilbakekrevingVerge?: boolean;
   relaterteFagsaker: RelatertFagsakType;

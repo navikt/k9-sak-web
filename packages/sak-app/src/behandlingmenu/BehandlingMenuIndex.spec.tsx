@@ -27,14 +27,8 @@ const navAnsatt = {
 
 const fagsak = {
   saksnummer: '123',
-  sakstype: {
-    kode: fagsakYtelseType.FORELDREPENGER,
-    kodeverk: 'BEHANDLING_TYPE',
-  },
-  status: {
-    kode: fagsakStatus.UNDER_BEHANDLING,
-    kodeverk: '',
-  },
+  sakstype: fagsakYtelseType.FORELDREPENGER,
+  status: fagsakStatus.UNDER_BEHANDLING,
   skalBehandlesAvInfotrygd: false,
 };
 
@@ -46,14 +40,8 @@ const alleBehandlinger = [
     behandlingKoet: false,
     behandlingPaaVent: false,
     kanHenleggeBehandling: true,
-    type: {
-      kode: behandlingType.REVURDERING,
-      kodeverk: 'BEHANDLING_TYPE',
-    },
-    status: {
-      kode: behandlingStatus.BEHANDLING_UTREDES,
-      kodeverk: 'BEHANDLING_STATUS',
-    },
+    type: behandlingType.REVURDERING,
+    status: behandlingStatus.BEHANDLING_UTREDES,
     behandlendeEnhetId: '2323',
     behandlendeEnhetNavn: 'NAV Viken',
   },

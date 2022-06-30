@@ -24,9 +24,7 @@ const lagRisikoklassifisering = kode => ({
   },
   medlFaresignaler: undefined,
   iayFaresignaler: undefined,
-  status: {
-    kode: aksjonspunktStatus.UTFORT,
-  },
+  status: aksjonspunktStatus.UTFORT,
 });
 
 jest.mock('react-router-dom', () => ({
@@ -44,14 +42,8 @@ jest.mock('react-router-dom', () => ({
 describe('<FagsakProfileIndex>', () => {
   const fagsak = {
     saksnummer: '123',
-    sakstype: {
-      kode: fagsakYtelseType.FORELDREPENGER,
-      kodeverk: 'FAGSAK_YTELSE',
-    },
-    status: {
-      kode: fagsakStatus.OPPRETTET,
-      kodeverk: 'FAGSAK_STATUS',
-    },
+    sakstype: fagsakYtelseType.FORELDREPENGER,
+    status: fagsakStatus.OPPRETTET,
   };
 
   const alleKodeverk = {
@@ -103,14 +95,8 @@ describe('<FagsakProfileIndex>', () => {
   };
 
   const behandling = {
-    type: {
-      kode: behandlingType.FORSTEGANGSSOKNAD,
-      kodeverk: 'BEHANDLING_TYPE',
-    },
-    status: {
-      kode: behandlingStatus.AVSLUTTET,
-      kodeverk: 'BEHANDLING_STATUS',
-    },
+    type: behandlingType.FORSTEGANGSSOKNAD,
+    status: behandlingStatus.AVSLUTTET,
     links: [],
     behandlendeEnhetId: 'test',
     behandlendeEnhetNavn: 'NAV Viken',
@@ -140,10 +126,7 @@ describe('<FagsakProfileIndex>', () => {
   const revurdering: BehandlingAppKontekst = {
     ...behandling,
     id: 2,
-    type: {
-      kode: behandlingType.REVURDERING,
-      kodeverk: 'BEHANDLING_TYPE',
-    },
+    type: behandlingType.REVURDERING,
     behandlingsresultat: {
       type: {
         kode: behandlingResultatType.INNVILGET,

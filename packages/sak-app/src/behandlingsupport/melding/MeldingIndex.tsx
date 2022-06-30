@@ -42,7 +42,7 @@ const getSubmitCallback =
         values.brevmalkode === dokumentMalType.INNOPP ||
         values.brevmalkode === dokumentMalType.FORLENGET_DOK ||
         values.brevmalkode === dokumentMalType.FORLENGET_MEDL_DOK;
-      const erTilbakekreving = erTilbakekrevingType({ kode: behandlingTypeKode });
+      const erTilbakekreving = erTilbakekrevingType(behandlingTypeKode);
 
       setShowMessageModal(!isInnhentEllerForlenget);
 
@@ -76,7 +76,7 @@ const getPreviewCallback =
     fetchPreview: (erHenleggelse: boolean, data: any) => void,
   ) =>
     (overstyrtMottaker: Mottaker, dokumentMal: string, fritekst: string, fritekstbrev?: Fritekstbrev) => {
-      const data = erTilbakekrevingType({ kode: behandlingTypeKode })
+      const data = erTilbakekrevingType(behandlingTypeKode)
         ? {
           fritekst: fritekst || ' ',
           brevmalkode: dokumentMal,
@@ -140,7 +140,7 @@ const MeldingIndex = ({
   const submitCallback = useCallback(
     getSubmitCallback(
       setShowMessageModal,
-      behandling.type.kode,
+      behandling.type,
       behandlingId,
       behandling.uuid,
       submitMessage,
@@ -173,7 +173,7 @@ const MeldingIndex = ({
   const fetchPreview = useVisForhandsvisningAvMelding(behandling, fagsak);
 
   const previewCallback = useCallback(
-    getPreviewCallback(behandling.type.kode, behandling.uuid, fagsak.sakstype, fetchPreview),
+    getPreviewCallback(behandling.type, behandling.uuid, fagsak.sakstype, fetchPreview),
     [behandlingId, behandlingVersjon],
   );
 
@@ -237,8 +237,8 @@ const MeldingIndex = ({
           ventearsaker={ventearsaker}
           hasManualPaVent={false}
           erTilbakekreving={
-            behandling.type.kode === BehandlingType.TILBAKEKREVING ||
-            behandling.type.kode === BehandlingType.TILBAKEKREVING_REVURDERING
+            behandling.type === BehandlingType.TILBAKEKREVING ||
+            behandling.type === BehandlingType.TILBAKEKREVING_REVURDERING
           }
         />
       )}

@@ -10,7 +10,7 @@ import { getPathToFplos } from '../../app/paths';
 
 interface OwnProps {
   behandling: BehandlingAppKontekst;
-  fagsakYtelseType: Kodeverk;
+  fagsakYtelseType: string;
   allAksjonspunktApproved: boolean;
   erKlageWithKA: boolean;
 }

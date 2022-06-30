@@ -19,7 +19,7 @@ interface OwnProps {
   behandling: BehandlingAppKontekst;
   closeEvent: () => void;
   allAksjonspunktApproved: boolean;
-  fagsakYtelseType: Kodeverk;
+  fagsakYtelseType: string;
   erKlageWithKA?: boolean;
   harSammeResultatSomOriginalBehandling?: boolean;
 }
@@ -39,8 +39,8 @@ const FatterVedtakTotrinnskontrollModalSakIndex = ({
       fagsakYtelseType={fagsakYtelseType}
       erKlageWithKA={erKlageWithKA}
       behandlingsresultat={behandling.behandlingsresultat}
-      behandlingStatusKode={behandling.status.kode}
-      behandlingTypeKode={behandling.type.kode}
+      behandlingStatusKode={behandling.status}
+      behandlingTypeKode={behandling.type}
       harSammeResultatSomOriginalBehandling={harSammeResultatSomOriginalBehandling}
     />
   </RawIntlProvider>

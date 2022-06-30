@@ -42,14 +42,14 @@ import FagsakGrid from './components/FagsakGrid';
 import useHentAlleBehandlinger from './useHentAlleBehandlinger';
 import useHentFagsakRettigheter from './useHentFagsakRettigheter';
 
-const erTilbakekreving = (behandlingType: Kodeverk): boolean =>
+const erTilbakekreving = (behandlingType: string): boolean =>
   behandlingType &&
-  (BehandlingType.TILBAKEKREVING === behandlingType.kode ||
-    BehandlingType.TILBAKEKREVING_REVURDERING === behandlingType.kode);
+  (BehandlingType.TILBAKEKREVING === behandlingType ||
+    BehandlingType.TILBAKEKREVING_REVURDERING === behandlingType);
 
-const erPleiepengerSyktBarn = (fagsak: Fagsak) => fagsak?.sakstype?.kode === fagsakYtelseType.PLEIEPENGER;
+const erPleiepengerSyktBarn = (fagsak: Fagsak) => fagsak?.sakstype ? === fagsakYtelseType.PLEIEPENGER;
 const erPleiepengerLivetsSluttfase = (fagsak: Fagsak) =>
-  fagsak?.sakstype?.kode === fagsakYtelseType.PLEIEPENGER_SLUTTFASE;
+  fagsak?.sakstype ? === fagsakYtelseType.PLEIEPENGER_SLUTTFASE;
 
 /**
  * FagsakIndex
@@ -284,7 +284,7 @@ const FagsakIndex = () => {
                   <AndreSakerPåSøkerStripe
                     søkerIdent={fagsakPerson.personnummer}
                     saksnummer={fagsak.saksnummer}
-                    fagsakYtelseType={fagsak.sakstype.kode}
+                    fagsakYtelseType={fagsak.sakstype}
                   />
                 </>
               )}

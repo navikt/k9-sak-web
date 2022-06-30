@@ -31,7 +31,7 @@ const intl = createIntl(
 interface OwnProps {
   submitCallback: (values: FormValues) => void;
   templates: Brevmaler | Brevmal[];
-  sprakKode: Kodeverk;
+  sprakKode: string;
   previewCallback: (mottaker: string | Mottaker, brevmalkode: string, fritekst: string, fritekstbrev?: Fritekstbrev) => void;
   behandlingId: number;
   behandlingVersjon: number;

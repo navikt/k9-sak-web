@@ -39,7 +39,7 @@ interface OwnProps {
   opneSokeside: () => void;
   alleBehandlinger: {
     id: number;
-    type: Kodeverk;
+    type: string;
     avsluttet?: string;
   }[];
   setBehandling: (behandling: Behandling) => void;

@@ -15,14 +15,8 @@ describe('<BeslutterModalIndex>', () => {
     id: 1,
     versjon: 2,
     behandlingsresultat: {},
-    type: {
-      kode: behandlingType.FORSTEGANGSSOKNAD,
-      kodeverk: '',
-    },
-    status: {
-      kode: behandlingStatus.OPPRETTET,
-      kodeverk: '',
-    },
+    type: behandlingType.FORSTEGANGSSOKNAD,
+    status: behandlingStatus.OPPRETTET,
   } as Behandling;
 
   it('skal vise modal når beslutter godkjenner', () => {
@@ -33,10 +27,7 @@ describe('<BeslutterModalIndex>', () => {
     const wrapper = shallow(
       <BeslutterModalIndex
         behandling={behandling}
-        fagsakYtelseType={{
-          kode: fagsakYtelseType.FORELDREPENGER,
-          kodeverk: '',
-        }}
+        fagsakYtelseType={fagsakYtelseType.FORELDREPENGER}
         allAksjonspunktApproved={false}
         erKlageWithKA={false}
       />,
@@ -56,10 +47,7 @@ describe('<BeslutterModalIndex>', () => {
     const wrapper = shallow(
       <BeslutterModalIndex
         behandling={behandling}
-        fagsakYtelseType={{
-          kode: fagsakYtelseType.FORELDREPENGER,
-          kodeverk: '',
-        }}
+        fagsakYtelseType={fagsakYtelseType.FORELDREPENGER}
         allAksjonspunktApproved={false}
         erKlageWithKA={false}
       />,

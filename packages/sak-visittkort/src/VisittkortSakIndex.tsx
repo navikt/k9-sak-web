@@ -19,7 +19,7 @@ const intl = createIntl(
 
 interface OwnProps {
   fagsakPerson: FagsakPerson;
-  sprakkode?: Kodeverk;
+  sprakkode?: string;
   alleKodeverk: { [key: string]: KodeverkMedNavn[] };
   personopplysninger?: Personopplysninger;
   harTilbakekrevingVerge?: boolean;

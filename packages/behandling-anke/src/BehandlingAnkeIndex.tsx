@@ -31,7 +31,7 @@ interface OwnProps {
   opneSokeside: () => void;
   alleBehandlinger: {
     id: number;
-    type: Kodeverk;
+    type: string;
     avsluttet?: string;
   }[];
   setRequestPendingMessage: (message: string) => void;
