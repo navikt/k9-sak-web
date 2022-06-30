@@ -28,7 +28,7 @@ describe('<VilkarresultatMedOverstyringForm>', () => {
         erOverstyrt
         aksjonspunkter={[]}
         behandlingsresultat={{
-          type: { kode: 'test', kodeverk: 'test' },
+          type: 'test',
         }}
         behandlingId={1}
         behandlingVersjon={2}

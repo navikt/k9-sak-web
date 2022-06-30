@@ -41,10 +41,7 @@ describe('<VilkarresultatMedOverstyringForm>', () => {
                   fom: '2020-03-01',
                   tom: '2020-04-01',
                 },
-                vilkarStatus: {
-                  kode: 'test',
-                  kodeverk: 'test',
-                },
+                vilkarStatus: 'test',
                 avslagKode: 'test',
                 vurdersIBehandlingen: true,
                 merknadParametere: {
@@ -53,10 +50,7 @@ describe('<VilkarresultatMedOverstyringForm>', () => {
               },
             ],
             overstyrbar: true,
-            vilkarType: {
-              kode: 'test',
-              kodeverk: 'test',
-            },
+            vilkarType: 'test',
           },
         ]}
         visAllePerioder={false}
@@ -100,10 +94,7 @@ describe('<VilkarresultatMedOverstyringForm>', () => {
                   fom: '2020-03-01',
                   tom: '2020-04-01',
                 },
-                vilkarStatus: {
-                  kode: 'test',
-                  kodeverk: 'test',
-                },
+                vilkarStatus: 'test',
                 avslagKode: 'test',
                 vurdersIBehandlingen: true,
                 merknadParametere: {
@@ -115,10 +106,7 @@ describe('<VilkarresultatMedOverstyringForm>', () => {
                   fom: '2020-03-01',
                   tom: '2020-04-01',
                 },
-                vilkarStatus: {
-                  kode: 'test',
-                  kodeverk: 'test',
-                },
+                vilkarStatus: 'test',
                 avslagKode: 'test',
                 vurdersIBehandlingen: false,
                 merknadParametere: {
@@ -127,10 +115,7 @@ describe('<VilkarresultatMedOverstyringForm>', () => {
               },
             ],
             overstyrbar: true,
-            vilkarType: {
-              kode: 'test',
-              kodeverk: 'test',
-            },
+            vilkarType: 'test',
           },
         ]}
         visAllePerioder={false}
