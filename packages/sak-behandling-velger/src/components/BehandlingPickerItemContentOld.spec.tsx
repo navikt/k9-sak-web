@@ -46,10 +46,7 @@ describe('<BehandlingPickerItemContent>', () => {
 
   it('skal vise årsak for revurdering', () => {
     const førsteÅrsak = {
-      behandlingArsakType: {
-        kode: '-',
-        kodeverk: '',
-      },
+      behandlingArsakType: '-',
       erAutomatiskRevurdering: false,
       manueltOpprettet: false,
     };

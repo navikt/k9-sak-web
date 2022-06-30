@@ -11,14 +11,8 @@ describe('<BehandlingPickerItem>', () => {
   const behandlingTemplate = {
     id: 1,
     versjon: 123,
-    type: {
-      kode: '',
-      kodeverk: '',
-    },
-    status: {
-      kode: 'FVED',
-      kodeverk: '',
-    },
+    type: '',
+    status: 'FVED',
     opprettet: '15.10.2017',
     behandlendeEnhetId: '1242424',
     behandlendeEnhetNavn: 'test',

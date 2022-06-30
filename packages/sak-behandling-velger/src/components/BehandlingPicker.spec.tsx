@@ -16,14 +16,8 @@ const mockedAxios = axios as jest.Mocked<typeof axios>;
 describe('<BehandlingPicker>', () => {
   const behandlingTemplate = {
     versjon: 123,
-    type: {
-      kode: '',
-      kodeverk: '',
-    },
-    status: {
-      kode: behandlingStatus.AVSLUTTET,
-      kodeverk: 'BEHANDLING_STATUS',
-    },
+    type: '',
+    status: behandlingStatus.AVSLUTTET,
     opprettet: '15.10.2017',
     behandlendeEnhetId: '1242424',
     behandlendeEnhetNavn: 'test',
@@ -183,7 +177,7 @@ describe('<BehandlingPicker>', () => {
         behandlingÅrsaker: [
           {
             erAutomatiskRevurdering: false,
-            behandlingArsakType: { kode: 'RE_ANNEN_SAK', kodeverk: 'BEHANDLING_AARSAK' },
+            behandlingArsakType: 'RE_ANNEN_SAK',
             manueltOpprettet: false,
           },
         ],
