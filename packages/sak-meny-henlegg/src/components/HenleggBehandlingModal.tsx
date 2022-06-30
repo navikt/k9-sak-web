@@ -35,24 +35,24 @@ const previewHenleggBehandlingDoc =
     behandlingType?: Kodeverk,
     valgtMottaker?: KlagePart,
   ) =>
-  (e: React.MouseEvent | React.KeyboardEvent): void => {
-    // TODO Hardkoda verdiar. Er dette eit kodeverk?
-    const data = erTilbakekrevingType(behandlingType)
-      ? {
+    (e: React.MouseEvent | React.KeyboardEvent): void => {
+      // TODO Hardkoda verdiar. Er dette eit kodeverk?
+      const data = erTilbakekrevingType(behandlingType)
+        ? {
           ytelseType,
           dokumentMal: 'HENLEG',
           fritekst,
           mottaker: 'Søker',
           behandlingId,
         }
-      : {
+        : {
           dokumentMal: dokumentMalType.HENLEGG_BEHANDLING_DOK,
           dokumentdata: { fritekst: fritekst || ' ' },
           overstyrtMottaker: valgtMottaker?.identifikasjon,
         };
-    previewHenleggBehandling(true, data);
-    e.preventDefault();
-  };
+      previewHenleggBehandling(true, data);
+      e.preventDefault();
+    };
 
 const showHenleggelseFritekst = (behandlingTypeKode: string, årsakKode?: string): boolean =>
   BehandlingType.TILBAKEKREVING_REVURDERING === behandlingTypeKode &&
@@ -90,6 +90,7 @@ const henleggArsakerPerBehandlingType = {
     behandlingResultatType.HENLAGT_SOKNAD_TRUKKET,
     behandlingResultatType.HENLAGT_FEILOPPRETTET,
   ],
+  [BehandlingType.UNNTAK]: [behandlingResultatType.HENLAGT_FEILOPPRETTET, behandlingResultatType.HENLAGT_SOKNAD_TRUKKET]
 };
 
 export const getHenleggArsaker = (

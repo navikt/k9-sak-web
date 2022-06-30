@@ -21,6 +21,7 @@ const arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysningerPerId = {
     navn: 'BEDRIFT AS',
     fødselsdato: null,
     erPrivatPerson: false,
+    arbeidsforholdreferanser: []
   },
   '910909081': {
     identifikator: '910909081',
@@ -28,6 +29,8 @@ const arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysningerPerId = {
     navn: 'ANNEN BEDRIFT AS',
     fødselsdato: null,
     erPrivatPerson: false,
+    arbeidsforholdreferanser: []
+
   },
 };
 
@@ -51,7 +54,9 @@ const overstyrInputBeregningEnPeriodeNæringOgArbeid: OverstyrInputBeregningDto[
         arbeidsgiverAktørId: null,
         inntektPrAar: null,
         refusjonPrAar: null,
+        startdatoRefusjon: null,
         opphørRefusjon: null,
+        skalKunneEndreRefusjon: false
       },
     ],
   },
@@ -75,7 +80,9 @@ const overstyrInputBeregningToPerioder: OverstyrInputBeregningDto[] = [
         arbeidsgiverAktørId: null,
         inntektPrAar: null,
         refusjonPrAar: null,
+        startdatoRefusjon: null,
         opphørRefusjon: null,
+        skalKunneEndreRefusjon: true
       },
     ],
   },
@@ -87,7 +94,9 @@ const overstyrInputBeregningToPerioder: OverstyrInputBeregningDto[] = [
         arbeidsgiverAktørId: null,
         inntektPrAar: null,
         refusjonPrAar: null,
+        startdatoRefusjon: null,
         opphørRefusjon: null,
+        skalKunneEndreRefusjon: false
       },
     ],
   },

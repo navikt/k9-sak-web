@@ -1,7 +1,6 @@
 interface KvoteInfo {
   maxDato?: string;
-  forbruktKvoteHittil: number;
-  forbruktKvoteDenneBehandlingen: number;
+  totaltForbruktKvote: number;
 }
 
 export default KvoteInfo;

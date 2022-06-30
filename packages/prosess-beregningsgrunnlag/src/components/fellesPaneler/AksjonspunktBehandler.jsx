@@ -111,7 +111,9 @@ const AksjonspunktBehandler = ({
   if (!avklaringsbehov || avklaringsbehov.length === 0) {
     return null;
   }
-  const harTidsbegrensetArbeidsforholdMedAvvik = avklaringsbehov.find(ab => ab.definisjon.kode === avklaringsbehovCodes.FASTSETT_BEREGNINGSGRUNNLAG_TIDSBEGRENSET_ARBEIDSFORHOLD);
+  const harTidsbegrensetArbeidsforholdMedAvvik = avklaringsbehov.find(
+    ab => ab.definisjon.kode === avklaringsbehovCodes.FASTSETT_BEREGNINGSGRUNNLAG_TIDSBEGRENSET_ARBEIDSFORHOLD
+  );
   if (!relevanteStatuser.isSelvstendigNaeringsdrivende) {
     return (
       <div className={readOnly ? '' : styles.aksjonspunktBehandlerContainer}>

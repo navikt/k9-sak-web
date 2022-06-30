@@ -6,20 +6,27 @@ import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import CopyWebpackPlugin from 'copy-webpack-plugin';
 import ESLintPlugin from 'eslint-webpack-plugin';
-import { IS_DEV } from '../constants';
+import ExternalTemplateRemotesPlugin from 'external-remotes-plugin';
 
+import { IS_DEV } from '../constants';
 import { PUBLIC_ROOT, LANG_DIR } from '../paths';
 
 const PACKAGES_DIR = path.resolve(__dirname, '../packages');
 
-export default [
+const isDev = process.env.NODE_ENV === 'development';
+
+const pluginConfig = [
   new ESLintPlugin({
+    lintDirtyModulesOnly: isDev,
     context: PACKAGES_DIR,
     extensions: ['tsx', 'ts'],
     failOnWarning: false,
     failOnError: !IS_DEV,
     fix: IS_DEV,
-    overrideConfigFile: path.resolve(__dirname, IS_DEV ? '../../eslint/eslintrc.dev.js' : '../../eslint/eslintrc.prod.js'),
+    overrideConfigFile: path.resolve(
+      __dirname,
+      IS_DEV ? '../../eslint/eslintrc.dev.js' : '../../eslint/eslintrc.prod.js',
+    ),
     // cache: true,
   }),
   new MiniCssExtractPlugin({
@@ -53,4 +60,7 @@ export default [
     exclude: /node_modules/,
     failOnError: true,
   }),
+  new ExternalTemplateRemotesPlugin(),
 ];
+
+export default pluginConfig;

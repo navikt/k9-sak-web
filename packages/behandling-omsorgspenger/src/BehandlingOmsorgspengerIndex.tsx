@@ -8,12 +8,13 @@ import {
   FeatureToggles,
   Fagsak,
   FagsakPerson,
-  ArbeidsgiverOpplysningerWrapper, Dokument,
+  ArbeidsgiverOpplysningerWrapper,
+  Dokument,
 } from '@k9-sak-web/types';
 import { RestApiState, useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
 
-import useBehandlingEndret from "@k9-sak-web/sak-app/src/behandling/useBehandlingEndret";
-import { K9sakApiKeys, restApiHooks } from "@k9-sak-web/sak-app/src/data/k9sakApi";
+import useBehandlingEndret from '@k9-sak-web/sak-app/src/behandling/useBehandlingEndret';
+import { K9sakApiKeys, restApiHooks } from '@k9-sak-web/sak-app/src/data/k9sakApi';
 import {
   restApiOmsorgHooks,
   requestOmsorgApi,
@@ -29,10 +30,12 @@ const omsorgspengerData = [
   { key: OmsorgspengerBehandlingApiKeys.SOKNAD },
   { key: OmsorgspengerBehandlingApiKeys.BEREGNINGSRESULTAT_UTBETALING },
   { key: OmsorgspengerBehandlingApiKeys.BEREGNINGSGRUNNLAG },
+  { key: OmsorgspengerBehandlingApiKeys.BEREGNINGREFERANSER_TIL_VURDERING },
   { key: OmsorgspengerBehandlingApiKeys.SIMULERING_RESULTAT },
   { key: OmsorgspengerBehandlingApiKeys.FORBRUKTE_DAGER },
   { key: OmsorgspengerBehandlingApiKeys.OVERLAPPENDE_YTELSER },
   { key: OmsorgspengerBehandlingApiKeys.HENT_SAKSBEHANDLERE },
+  { key: OmsorgspengerBehandlingApiKeys.FOSTERBARN },
 ];
 
 interface OwnProps {
@@ -120,9 +123,7 @@ const BehandlingOmsorgspengerIndex = ({
   const { startRequest: settPaVent } = restApiOmsorgHooks.useRestApiRunner(
     OmsorgspengerBehandlingApiKeys.UPDATE_ON_HOLD,
   );
-  const { startRequest: opneBehandlingForEndringer } = restApiOmsorgHooks.useRestApiRunner(
-    OmsorgspengerBehandlingApiKeys.OPEN_BEHANDLING_FOR_CHANGES,
-  );
+
   const { startRequest: opprettVerge } = restApiOmsorgHooks.useRestApiRunner(
     OmsorgspengerBehandlingApiKeys.VERGE_OPPRETT,
   );
@@ -138,10 +139,6 @@ const BehandlingOmsorgspengerIndex = ({
       taBehandlingAvVent: params =>
         taBehandlingAvVent(params).then(behandlingResTaAvVent => setBehandling(behandlingResTaAvVent)),
       henleggBehandling: params => henleggBehandling(params),
-      opneBehandlingForEndringer: params =>
-        opneBehandlingForEndringer(params).then(behandlingResOpneForEndring =>
-          setBehandling(behandlingResOpneForEndring),
-        ),
       opprettVerge: params =>
         opprettVerge(params).then(behandlingResOpprettVerge => setBehandling(behandlingResOpprettVerge)),
       fjernVerge: params => fjernVerge(params).then(behandlingResFjernVerge => setBehandling(behandlingResFjernVerge)),
@@ -187,7 +184,6 @@ const BehandlingOmsorgspengerIndex = ({
         oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
         oppdaterBehandlingVersjon={oppdaterBehandlingVersjon}
         settPaVent={settPaVent}
-        hentBehandling={hentBehandling}
         opneSokeside={opneSokeside}
         hasFetchError={behandlingState === RestApiState.ERROR}
         setBehandling={setBehandling}

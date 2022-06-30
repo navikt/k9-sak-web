@@ -56,7 +56,6 @@
   "VedtakForm.Resultat.EndretTilkjentYtelse": "Endret beregnet stønad",
   "VedtakForm.KontrollerRevurderingsbehandling": "Vurder varsel ved vedtak til ugunst",
   "VedtakForm.UttaksperioderIkkeGyldig": "Søker har ikke noen gyldig uttaksperiode",
-  "VedtakForm.RevurderingFP.Aarsak": "Årsak til revurdering",
   "VedtakForm.Revurdering.OpphoererDato": "{ytelse} opphører f.o.m. {dato}",
   "VedtakForm.Revurdering.Opphoerer": "{ytelse} opphører",
   "VedtakForm.ManuellOverstyring": "Overstyr automatisk brev",

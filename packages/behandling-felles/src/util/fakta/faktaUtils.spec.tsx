@@ -1,3 +1,4 @@
+/* eslint-disable class-methods-use-this */
 import React from 'react';
 import sinon from 'sinon';
 import { IntlShape } from 'react-intl';
@@ -273,6 +274,7 @@ describe('<faktaUtils>', () => {
       saksnummer: fagsak.saksnummer,
       behandlingId: behandling.id,
       behandlingVersjon: behandling.versjon,
+      bekreftedeAksjonspunktDtoer: [],
       overstyrteAksjonspunktDtoer: [
         {
           '@type': aksjonspunkter[0].kode,
@@ -287,4 +289,61 @@ describe('<faktaUtils>', () => {
     expect(opppdaterKall[0].args[0]).toEqual(DEFAULT_FAKTA_KODE);
     expect(opppdaterKall[0].args[0]).toEqual(DEFAULT_PROSESS_STEG_KODE);
   });
+
+
+  it('skal lagre både overstyrt og vanlig aksjonspunkt', async () => {
+    const oppdaterProsessStegOgFaktaPanelIUrl = sinon.spy();
+    const lagreAksjonspunkter = sinon.spy();
+    const lagreOverstyrteAksjonspunkter = sinon.stub();
+    lagreOverstyrteAksjonspunkter.returns(Promise.resolve());
+    const overstyringApCodes = [aksjonspunktCodes.OVERSTYRING_AV_BEREGNINGSGRUNNLAG];
+
+    const callback = getBekreftAksjonspunktCallback(
+      fagsak,
+      behandling as Behandling,
+      oppdaterProsessStegOgFaktaPanelIUrl,
+      overstyringApCodes,
+      lagreAksjonspunkter,
+      lagreOverstyrteAksjonspunkter,
+    );
+
+    const aksjonspunkter = [
+      {
+        kode: aksjonspunktCodes.OVERSTYRING_AV_BEREGNINGSGRUNNLAG,
+      },
+      {
+        kode: aksjonspunktCodes.VURDER_FAKTA_FOR_ATFL_SN,
+      },
+    ];
+
+    await callback(aksjonspunkter);
+
+    const requestKall = lagreOverstyrteAksjonspunkter.getCalls();
+    expect(requestKall).toHaveLength(1);
+    expect(requestKall[0].args).toHaveLength(2);
+    expect(requestKall[0].args[0]).toEqual({
+      saksnummer: fagsak.saksnummer,
+      behandlingId: behandling.id,
+      behandlingVersjon: behandling.versjon,
+      overstyrteAksjonspunktDtoer: [
+        {
+          '@type': aksjonspunkter[0].kode,
+          kode: aksjonspunkter[0].kode,
+        },
+      ],
+      bekreftedeAksjonspunktDtoer: [
+        {
+          '@type': aksjonspunkter[1].kode,
+          kode: aksjonspunkter[1].kode,
+        },
+      ],
+    });
+
+    const opppdaterKall = oppdaterProsessStegOgFaktaPanelIUrl.getCalls();
+    expect(opppdaterKall).toHaveLength(1);
+    expect(opppdaterKall[0].args).toHaveLength(2);
+    expect(opppdaterKall[0].args[0]).toEqual(DEFAULT_FAKTA_KODE);
+    expect(opppdaterKall[0].args[0]).toEqual(DEFAULT_PROSESS_STEG_KODE);
+  });
+
 });

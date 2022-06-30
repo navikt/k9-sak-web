@@ -5,7 +5,7 @@ import sinon from 'sinon';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import fagsakStatus from '@fpsak-frontend/kodeverk/src/fagsakStatus';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
-import { Table, TableRow, DateLabel } from '@fpsak-frontend/shared-components';
+import { Table } from '@fpsak-frontend/shared-components';
 import { Fagsak, KodeverkMedNavn } from '@k9-sak-web/types';
 
 import FagsakList from './FagsakList';

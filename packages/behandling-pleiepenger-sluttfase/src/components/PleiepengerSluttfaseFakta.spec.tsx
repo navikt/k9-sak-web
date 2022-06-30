@@ -17,7 +17,10 @@ import sivilstandType from '@fpsak-frontend/kodeverk/src/sivilstandType';
 import opplysningAdresseType from '@fpsak-frontend/kodeverk/src/opplysningAdresseType';
 import PleiepengerSluttfaseFakta from './PleiepengerSluttfaseFakta';
 import FetchedData from '../types/fetchedDataTsType';
-import { PleiepengerSluttfaseBehandlingApiKeys, requestPleiepengerSluttfaseApi } from '../data/pleiepengerSluttfaseBehandlingApi';
+import {
+  PleiepengerSluttfaseBehandlingApiKeys,
+  requestPleiepengerSluttfaseApi,
+} from '../data/pleiepengerSluttfaseBehandlingApi';
 
 describe('<PleiepengerSluttfaseFakta>', () => {
   const fagsak = {
@@ -131,6 +134,7 @@ describe('<PleiepengerSluttfaseFakta>', () => {
       erPrivatPerson: false,
       identifikator: 'testId',
       navn: 'testNavn',
+      arbeidsforholdreferanser: []
     },
   };
 
@@ -168,7 +172,7 @@ describe('<PleiepengerSluttfaseFakta>', () => {
       {
         erAktiv: false,
         harAksjonspunkt: false,
-        tekst: "Om pleietrengende",
+        tekst: 'Om pleietrengende',
       },
       {
         erAktiv: true,
@@ -181,20 +185,24 @@ describe('<PleiepengerSluttfaseFakta>', () => {
         tekst: 'LivetsSluttfasePanel.LivetsSluttfase',
       },
       {
-        "erAktiv": false,
-        "harAksjonspunkt": false,
-        "tekst": "Inntektsmelding"
+        erAktiv: false,
+        harAksjonspunkt: false,
+        tekst: 'Inntektsmelding',
       },
       {
         erAktiv: false,
         harAksjonspunkt: false,
         tekst: 'Inntekt og ytelser',
       },
+      {
+        erAktiv: false,
+        harAksjonspunkt: false,
+        tekst: 'Søknadsperioder',
+      },
     ]);
   });
 
   it('skal oppdatere url ved valg av faktapanel', () => {
-
     const oppdaterProsessStegOgFaktaPanelIUrl = sinon.spy();
     const fetchedData: Partial<FetchedData> = {
       aksjonspunkter,

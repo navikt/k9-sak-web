@@ -33,7 +33,7 @@ describe('<SettPaVentModal>', () => {
     const modal = wrapper.find(Modal);
     expect(modal).toHaveLength(1);
     expect(modal.prop('isOpen')).toBe(true);
-    expect(modal.prop('closeButton')).toBe(false);
+    expect(modal.prop('closeButton')).toBe(true);
     expect(modal.prop('contentLabel')).toEqual('Behandlingen er satt på vent');
     expect(modal.prop('onRequestClose')).toEqual(cancelEventCallback);
   });
@@ -146,7 +146,7 @@ describe('<SettPaVentModal>', () => {
         showModal
         cancelEvent={sinon.spy()}
         frist="2015-10-10"
-        originalFrist='2015-10-10'
+        originalFrist="2015-10-10"
         ventearsaker={[]}
         hasManualPaVent={false}
         erTilbakekreving={false}

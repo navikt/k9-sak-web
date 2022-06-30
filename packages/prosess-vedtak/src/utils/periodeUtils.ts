@@ -1,8 +1,8 @@
 import { isBefore, parse } from "date-fns";
 
 import Periode from '@fpsak-frontend/tidslinje/src/components/pleiepenger/types/Periode';
+import TidslinjeRad from "@fpsak-frontend/tidslinje/src/components/pleiepenger/types/TidslinjeRad";
 import { OverlappendePeriode } from '@k9-sak-web/types';
-import TidslinjeRad from "tidslinje/src/components/pleiepenger/types/TidslinjeRad";
 
 /**
  * Hjelperfunksjon for å sortere periodene i radene til tidslinjen, ref. sorterOverlappendeRader

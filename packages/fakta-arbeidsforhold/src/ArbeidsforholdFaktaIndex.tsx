@@ -2,9 +2,9 @@ import React from 'react';
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 import ArbeidsforholdV2 from '@k9-sak-web/types/src/arbeidsforholdV2TsType';
 import { ArbeidsgiverOpplysningerPerId, Behandling, KodeverkMedNavn } from '@k9-sak-web/types';
+import StandardFaktaProps from '@k9-sak-web/fakta-felles/standardFaktaPropsTsType';
 import ArbeidsforholdInfoPanel from './components/ArbeidsforholdInfoPanel';
 import messages from '../i18n/nb_NO.json';
-import StandardFaktaProps from '../../fakta-felles/standardFaktaPropsTsType';
 
 const cache = createIntlCache();
 

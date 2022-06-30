@@ -91,6 +91,7 @@ describe('<FrisinnProsess>', () => {
       erPrivatPerson: false,
       identifikator: 'testId',
       navn: 'testNavn',
+      arbeidsforholdreferanser: []
     },
   };
 

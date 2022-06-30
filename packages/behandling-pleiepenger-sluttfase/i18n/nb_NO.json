@@ -25,5 +25,7 @@
   "FatterVedtakStatusModal.Ok": "OK",
   "IverksetterVedtakStatusModal.Innvilget": "Innvilget",
   "IverksetterVedtakStatusModal.Ok": "Ok",
-  "HelpText.Aksjonspunkt": "Aksjonspunkt"
+  "HelpText.Aksjonspunkt": "Aksjonspunkt",
+  "SoknadsperioderPanel.Soknadsperioder": "Søknadsperioder",
+  "FordelBeregningsgrunnlag.Title": "Fordeling"
 }

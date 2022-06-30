@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { prosessStegCodes } from '@k9-sak-web/konstanter';
 import { FadingPanel, LoadingPanel } from '@fpsak-frontend/shared-components';
@@ -77,6 +77,13 @@ const ProsessStegPanel = ({
     valgtProsessSteg,
   );
 
+  const [formData, setFormData] = useState({});
+  useEffect(() => {
+    if (formData) {
+      setFormData(undefined);
+    }
+  }, [behandling.versjon]);
+
   if (erHenlagtOgVedtakStegValgt) {
     return <BehandlingHenlagtPanel />;
   }
@@ -91,6 +98,7 @@ const ProsessStegPanel = ({
   const delPaneler = valgtProsessSteg.getDelPaneler();
 
   return (
+    // eslint-disable-next-line react/jsx-no-useless-fragment
     <>
       {valgtProsessSteg.getErStegBehandlet() && (
         <MargMarkering
@@ -105,12 +113,14 @@ const ProsessStegPanel = ({
               {harHentetData && (
                 <>
                   {delPaneler[0].getProsessStegDelPanelDef().getKomponent({
-                    ...data,
                     behandling,
                     featureToggles,
                     alleKodeverk,
+                    formData,
+                    setFormData,
                     submitCallback: bekreftAksjonspunktCallback,
                     ...delPaneler[0].getKomponentData(),
+                    ...data,
                   })}
                 </>
               )}

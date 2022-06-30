@@ -26,6 +26,7 @@ const createHeaderRow = () => (
   </Row>
 );
 const createSumRow = pgiSnitt => (
+  // eslint-disable-next-line react/jsx-no-useless-fragment
   <>
     {pgiSnitt !== undefined && (
       <>

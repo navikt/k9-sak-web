@@ -2,10 +2,10 @@ import React from 'react';
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 
 import { Kodeverk, KodeverkMedNavn, Personopplysninger, FagsakPerson, RelatertFagsak } from '@k9-sak-web/types';
+import OvergangFraInfotrygd from '@k9-sak-web/types/src/overgangFraInfotrygd';
 
 import VisittkortPanel from './components/VisittkortPanel';
 import messages from '../i18n/nb_NO.json';
-import OvergangFraInfotrygd from '../../types/src/overgangFraInfotrygd';
 
 const cache = createIntlCache();
 
@@ -26,6 +26,7 @@ interface OwnProps {
   relaterteFagsaker?: RelatertFagsak;
   direkteOvergangFraInfotrygd?: OvergangFraInfotrygd;
   erPbSak?: boolean;
+  erHastesak?: boolean;
 }
 
 const VisittkortSakIndex = ({
@@ -37,6 +38,7 @@ const VisittkortSakIndex = ({
   relaterteFagsaker,
   direkteOvergangFraInfotrygd,
   erPbSak,
+  erHastesak,
 }: OwnProps) => (
   <RawIntlProvider value={intl}>
     <VisittkortPanel
@@ -48,6 +50,7 @@ const VisittkortSakIndex = ({
       relaterteFagsaker={relaterteFagsaker}
       direkteOvergangFraInfotrygd={direkteOvergangFraInfotrygd}
       erPbSak={erPbSak}
+      erHastesak={erHastesak}
     />
   </RawIntlProvider>
 );

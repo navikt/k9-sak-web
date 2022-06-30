@@ -11,28 +11,21 @@ export const resumeBehandling = (params: any) => behandlingEventHandler.taBehand
 
 export const nyBehandlendeEnhet = (params: any) => behandlingEventHandler.endreBehandlendeEnhet(params);
 
-export const openBehandlingForChanges = (params: any) => behandlingEventHandler.opneBehandlingForEndringer(params);
-
-export const opprettVerge = (
-  location: Location,
-  push,
-  saksnummer: string,
-  behandlingId: number,
-  versjon: number,
-) => () =>
-  behandlingEventHandler
-    .opprettVerge({
-      behandlingId,
-      behandlingVersjon: versjon,
-    })
-    .then(() =>
-      push(
-        getLocationWithDefaultProsessStegAndFakta({
-          ...location,
-          pathname: pathToBehandling(saksnummer, behandlingId),
-        }),
-      ),
-    );
+export const opprettVerge =
+  (location: Location, push, saksnummer: string, behandlingId: number, versjon: number) => () =>
+    behandlingEventHandler
+      .opprettVerge({
+        behandlingId,
+        behandlingVersjon: versjon,
+      })
+      .then(() =>
+        push(
+          getLocationWithDefaultProsessStegAndFakta({
+            ...location,
+            pathname: pathToBehandling(saksnummer, behandlingId),
+          }),
+        ),
+      );
 
 export const fjernVerge = (location: Location, push, saksnummer: string, behandlingId: number, versjon: number) => () =>
   behandlingEventHandler

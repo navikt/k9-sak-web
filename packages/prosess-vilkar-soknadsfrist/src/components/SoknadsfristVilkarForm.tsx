@@ -167,7 +167,7 @@ export const SoknadsfristVilkarForm = ({
             </FlexContainer>
           )}
           {harÅpentAksjonspunkt && !erOverstyrt && (
-            <Hovedknapp mini spinner={submitting} disabled={invalid || submitting || pristine}>
+            <Hovedknapp mini spinner={submitting} disabled={invalid || submitting}>
               <FormattedMessage id="SoknadsfristVilkarForm.ConfirmInformation" />
             </Hovedknapp>
           )}

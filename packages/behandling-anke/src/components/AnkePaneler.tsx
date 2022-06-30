@@ -17,7 +17,6 @@ interface OwnProps {
   oppdaterProsessStegOgFaktaPanelIUrl: (punktnavn?: string, faktanavn?: string) => void;
   oppdaterBehandlingVersjon: (versjon: number) => void;
   settPaVent: (params: SettPaVentParams) => Promise<any>;
-  hentBehandling: (params: { behandlingId: number }, keepData: boolean) => Promise<any>;
   setBehandling: (behandling: Behandling) => void;
   opneSokeside: () => void;
   alleBehandlinger: {
@@ -38,7 +37,6 @@ const AnkePaneler = ({
   oppdaterProsessStegOgFaktaPanelIUrl,
   oppdaterBehandlingVersjon,
   settPaVent,
-  hentBehandling,
   opneSokeside,
   alleBehandlinger,
   setBehandling,
@@ -49,7 +47,6 @@ const AnkePaneler = ({
       aksjonspunkter={fetchedData?.aksjonspunkter}
       kodeverk={alleKodeverk}
       settPaVent={settPaVent}
-      hentBehandling={hentBehandling}
     />
     <AnkeProsess
       data={fetchedData}

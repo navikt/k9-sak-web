@@ -14,6 +14,7 @@ describe('lagVisningsnavnForKlagepart', () => {
         navn: 'Svendsen Eksos',
         fødselsdato: null,
         erPrivatPerson: false,
+        arbeidsforholdreferanser: []
       },
     };
 
@@ -40,6 +41,7 @@ describe('lagVisningsnavnForKlagepart', () => {
         navn: 'Svendsen Eksos',
         fødselsdato: null,
         erPrivatPerson: false,
+        arbeidsforholdreferanser: []
       },
     };
 
@@ -66,6 +68,7 @@ describe('lagVisningsnavnForKlagepart', () => {
         navn: 'Svendsen Eksos',
         fødselsdato: null,
         erPrivatPerson: false,
+        arbeidsforholdreferanser: []
       },
     };
 

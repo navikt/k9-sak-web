@@ -51,7 +51,7 @@ const aksjonspunktCodes = {
   VURDER_FEILUTBETALING: '5084',
   VURDER_TILBAKETREKK: '5090',
   SOKERS_OPPLYSNINGSPLIKT_OVST: '6002',
-  OVERSTYR_FODSELSVILKAR: '6003',
+  OVERSTYR_OMSORGEN_FOR: '6003',
   OVERSTYR_ADOPSJONSVILKAR: '6004',
   OVERSTYR_MEDLEMSKAPSVILKAR: '6005',
   OVERSTYR_SOKNADSFRISTVILKAR: '6006',
@@ -119,8 +119,8 @@ const beregningAksjonspunkter = [
 
 const aksjonspunktIsOfType =
   (validAksjonspunktCodes: string[]) =>
-    (aksjonspunktCode: string): boolean =>
-      validAksjonspunktCodes.includes(aksjonspunktCode);
+  (aksjonspunktCode: string): boolean =>
+    validAksjonspunktCodes.includes(aksjonspunktCode);
 
 export const hasAksjonspunkt = (aksjonspunktCode: string, aksjonspunkter: Aksjonspunkt[]): boolean =>
   aksjonspunkter.some(ap => ap.definisjon.kode === aksjonspunktCode);

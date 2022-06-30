@@ -13,11 +13,18 @@ export default {
   decorators: [withKnobs, withReduxAndRouterProvider],
 };
 
+const promiseAction =
+  msg =>
+  (...args) => {
+    action(msg)(...args);
+    return Promise.resolve();
+  };
+
 export const visMenyForÅSetteBehandlingPåVent = () => (
   <MenySettPaVentIndex
     behandlingId={1}
     behandlingVersjon={2}
-    settBehandlingPaVent={action('button-click')}
+    settBehandlingPaVent={promiseAction('button-click')}
     ventearsaker={[
       {
         kode: venteArsakType.AVV_DOK,

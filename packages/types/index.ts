@@ -66,3 +66,5 @@ export type { default as BehandlingPerioder } from './src/behandlingPerioderType
 export type { default as PerioderMedBehandlingsId } from './src/PerioderMedBehandlingsId';
 export type { default as PerioderMedAarsak } from './src/PerioderMedAarsak';
 export type { default as BehandlingPerioderårsakMedVilkår } from './src/behandlingPerioderarsakMedVilkar';
+export type { default as Venteaarsak } from './src/venteaarsakTsType';
+export type { default as MerknadFraLos } from './src/merknadFraLos';

@@ -14,7 +14,7 @@
         "nav-datovelger": "^12.1.2",
         "nav-frontend-alertstriper": "4.0.1",
         "nav-frontend-core": "6.0.1",
-        "nav-frontend-etiketter": "3.0.1",
+        "nav-frontend-etiketter": "3.0.2",
         "nav-frontend-grid": "2.0.1",
         "nav-frontend-grid-style": "1.0.2",
         "nav-frontend-knapper": "3.1.2",
@@ -22,7 +22,7 @@
         "nav-frontend-typografi": "4.0.1",
         "nav-frontend-typografi-style": "2.0.1",
         "react": "^17.0.2",
-        "react-intl": "^5.24.3",
+        "react-intl": "6.0.4",
         "yup": "^0.32.11"
     },
     "devDependencies": {

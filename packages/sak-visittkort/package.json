@@ -15,10 +15,10 @@
     "@navikt/k9-bem-utils": "^1.0.1",
     "@navikt/k9-date-utils": "^0.0.6",
     "@navikt/k9-period-utils": "^0.0.8",
-    "@navikt/k9-react-components": "^0.1.14",
-    "dayjs": "^1.10.5",
+    "@navikt/k9-react-components": "^0.1.21",
+    "dayjs": "^1.11.2",
     "moment": "^2.29.1",
-    "nav-frontend-etiketter": "3.0.1",
+    "nav-frontend-etiketter": "3.0.2",
     "nav-frontend-etiketter-style": "2.0.1",
     "nav-frontend-ikonknapper": "^2.1.2",
     "nav-frontend-lenker": "2.0.1",
@@ -26,6 +26,6 @@
     "nav-frontend-typografi": "4.0.1",
     "nav-frontend-typografi-style": "2.0.1",
     "react": "^17.0.2",
-    "react-intl": "^5.24.3"
+    "react-intl": "6.0.4"
   }
 }

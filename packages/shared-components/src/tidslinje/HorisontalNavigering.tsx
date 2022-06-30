@@ -4,6 +4,7 @@ import React from 'react';
 import styles from './horisontalNavigering.less';
 import Rad from './Rad';
 import { useSenesteDato } from './useTidslinjerader';
+import NavigateArrowIcon from './icons/NavigateArrowIcon';
 
 interface HorisontalNavigeringProps {
   tidslinjeSkala: number;
@@ -52,14 +53,18 @@ const HorisontalNavigering: React.FC<HorisontalNavigeringProps> = ({
         className={styles.navigasjonButtonLeft}
         aria-label="Naviger tidslinje bakover i tid"
         type="button"
-      />
+      >
+        <NavigateArrowIcon />
+      </button>
       <button
         onClick={() => updateNavigasjon()}
         className={styles.navigasjonButtonRight}
         aria-label="Naviger tidslinje fremover i tid"
         type="button"
         disabled={disableNavigasjonTomButton()}
-      />
+      >
+        <NavigateArrowIcon />
+      </button>
       <Normaltekst className={styles.navigasjonDatoContainer}>{formatNavigasjonsdato()}</Normaltekst>
     </div>
   );

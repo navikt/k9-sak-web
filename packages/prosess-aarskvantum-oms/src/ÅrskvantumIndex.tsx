@@ -17,6 +17,7 @@ import Uttaksplan from './components/Uttaksplan';
 import AksjonspunktForm from './components/AksjonspunktForm';
 import Aktivitet from './dto/Aktivitet';
 import SaerligeSmittevernhensynMikrofrontend from './components/saerlige-smittevernhensyn/SaerligeSmittevernhensynMikrofrontend';
+import { fosterbarnDto } from './dto/FosterbarnDto';
 
 const cache = createIntlCache();
 
@@ -40,6 +41,7 @@ interface ÅrsakvantumIndexProps {
   aksjonspunkterForSteg?: Aksjonspunkt[];
   arbeidsforhold: ArbeidsforholdV2[];
   arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysningerPerId;
+  fosterbarn?: fosterbarnDto[];
 }
 
 const ÅrskvantumIndex = ({
@@ -52,6 +54,7 @@ const ÅrskvantumIndex = ({
   aksjonspunkterForSteg = [],
   arbeidsforhold = [],
   arbeidsgiverOpplysningerPerId,
+  fosterbarn
 }: ÅrsakvantumIndexProps) => {
   const { sisteUttaksplan } = årskvantum;
   const aktivitetsstatuser = alleKodeverk[kodeverkTyper.AKTIVITET_STATUS];
@@ -85,6 +88,7 @@ const ÅrskvantumIndex = ({
           submitCallback={submitCallback}
           aksjonspunkterForSteg={aksjonspunkter}
           isAksjonspunktOpen={isAksjonspunktOpen && !visAPVurderÅrskvantumDokIOmsorgsdagerFrontend}
+          fosterbarn={fosterbarn}
         />
       )}
 

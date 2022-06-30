@@ -49,33 +49,31 @@ export const VedtakInnvilgetRevurderingPanelImpl = ({
   intl,
   ytelseTypeKode,
   konsekvenserForYtelsen,
-  revurderingsAarsakString,
   tilbakekrevingText,
   alleKodeverk,
   bgPeriodeMedAvslagsårsak,
 }) => {
   const getKodeverknavn = getKodeverknavnFn(alleKodeverk, kodeverkTyper);
   return (
+    // eslint-disable-next-line react/jsx-no-useless-fragment
     <>
       {(ytelseTypeKode === fagsakYtelseType.OMSORGSPENGER ||
         ytelseTypeKode === fagsakYtelseType.FRISINN ||
         ytelseTypeKode === fagsakYtelseType.PLEIEPENGER) && (
-        <div data-testid='innvilgetRevurdering'>
-          <Normaltekst>{intl.formatMessage({ id: 'VedtakForm.Resultat' })}</Normaltekst>
-          <Undertekst>
-            {lagKonsekvensForYtelsenTekst(konsekvenserForYtelsen, getKodeverknavn)}
-            {lagKonsekvensForYtelsenTekst(konsekvenserForYtelsen, getKodeverknavn) !== '' && tilbakekrevingText && '. '}
-            {tilbakekrevingText &&
-              intl.formatMessage({
-                id: tilbakekrevingText,
-              })}
-            {bgPeriodeMedAvslagsårsak && <Undertekst>{lagPeriodevisning(bgPeriodeMedAvslagsårsak)}</Undertekst>}
-          </Undertekst>
-          <VerticalSpacer sixteenPx />
-          <Normaltekst>{intl.formatMessage({ id: 'VedtakForm.RevurderingFP.Aarsak' })}</Normaltekst>
-          {revurderingsAarsakString !== undefined && <Undertekst>{revurderingsAarsakString}</Undertekst>}
-        </div>
-      )}
+          <div data-testid='innvilgetRevurdering'>
+            <Normaltekst>{intl.formatMessage({ id: 'VedtakForm.Resultat' })}</Normaltekst>
+            <Undertekst>
+              {lagKonsekvensForYtelsenTekst(konsekvenserForYtelsen, getKodeverknavn)}
+              {lagKonsekvensForYtelsenTekst(konsekvenserForYtelsen, getKodeverknavn) !== '' && tilbakekrevingText && '. '}
+              {tilbakekrevingText &&
+                intl.formatMessage({
+                  id: tilbakekrevingText,
+                })}
+              {bgPeriodeMedAvslagsårsak && <Undertekst>{lagPeriodevisning(bgPeriodeMedAvslagsårsak)}</Undertekst>}
+            </Undertekst>
+            <VerticalSpacer sixteenPx />
+          </div>
+        )}
     </>
   );
 };
@@ -84,7 +82,6 @@ VedtakInnvilgetRevurderingPanelImpl.propTypes = {
   intl: PropTypes.shape().isRequired,
   ytelseTypeKode: PropTypes.string.isRequired,
   konsekvenserForYtelsen: PropTypes.arrayOf(PropTypes.shape()),
-  revurderingsAarsakString: PropTypes.string,
   tilbakekrevingText: PropTypes.string,
   alleKodeverk: PropTypes.shape().isRequired,
   bgPeriodeMedAvslagsårsak: PropTypes.shape(),

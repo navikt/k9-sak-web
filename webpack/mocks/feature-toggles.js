@@ -25,6 +25,18 @@ const featureToggles = [
     key: 'SOKNADPERIODESTRIPE',
     value: process.env.SOKNADPERIODESTRIPE,
   },
+  {
+    key: 'TYPE_MEDISINSKE_OPPLYSNINGER_BREV',
+    value: process.env.TYPE_MEDISINSKE_OPPLYSNINGER_BREV,
+  },
+  {
+    key: 'LOS_MARKER_BEHANDLING',
+    value: process.env.LOS_MARKER_BEHANDLING,
+  },
+  {
+    key: 'NY_BEREGNING_PROSESS_ENABLED',
+    value: process.env.NY_BEREGNING_PROSESS_ENABLED,
+  },
 ];
 
 module.exports = function (app) {

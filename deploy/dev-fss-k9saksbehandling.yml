@@ -92,3 +92,9 @@ spec:
       value: "true"
     - name: SOKNADPERIODESTRIPE
       value: "true"
+    - name: TYPE_MEDISINSKE_OPPLYSNINGER_BREV
+      value: "true"
+    - name: LOS_MARKER_BEHANDLING
+      value: "true"
+    - name: NY_BEREGNING_PROSESS_ENABLED
+      value: "true"

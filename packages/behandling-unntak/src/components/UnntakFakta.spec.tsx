@@ -119,6 +119,7 @@ describe('<UnntakFakta>', () => {
       erPrivatPerson: false,
       identifikator: 'testId',
       navn: 'testNavn',
+      arbeidsforholdreferanser: []
     },
   };
 

@@ -107,7 +107,7 @@ interface OwnProps {
   getKodeverkFn: (kodeverk: Kodeverk, behandlingType?: Kodeverk) => KodeverkMedNavn;
   behandlingId?: number;
   createLocationForSkjermlenke: (behandlingLocation: Location, skjermlenkeCode: string) => Location;
-
+  sakstypeKode: string;
 }
 
 const behandlingPerioderÅrsakRel = 'behandling-perioder-årsak-med-vilkår';
@@ -122,7 +122,8 @@ const BehandlingPicker = ({
   behandlinger,
   getBehandlingLocation,
   getKodeverkFn,
-  createLocationForSkjermlenke
+  createLocationForSkjermlenke,
+  sakstypeKode,
 }: OwnProps) => {
   const navigate = useNavigate();
   const finnÅpenBehandling = () => {
@@ -264,25 +265,24 @@ const BehandlingPicker = ({
         </>
       )}
       {valgtBehandling && (
-        <>
-          <BehandlingSelected
-            opprettetDato={valgtBehandling.opprettet}
-            avsluttetDato={valgtBehandling.avsluttet}
-            behandlingsresultatTypeNavn={
-              valgtBehandling.behandlingsresultat
-                ? getKodeverkFn(valgtBehandling.behandlingsresultat.type, valgtBehandling.type).navn
-                : undefined
-            }
-            behandlingsresultatTypeKode={
-              valgtBehandling.behandlingsresultat ? valgtBehandling.behandlingsresultat.type.kode : undefined
-            }
-            behandlingsårsaker={getÅrsaksliste()}
-            behandlingTypeNavn={getBehandlingNavn(valgtBehandling, getKodeverkFn, intl)}
-            behandlingTypeKode={valgtBehandling.type.kode}
-            søknadsperioder={søknadsperioder.find(periode => periode.id === valgtBehandling.id)?.perioder}
-            createLocationForSkjermlenke={createLocationForSkjermlenke}
-          />
-        </>
+        <BehandlingSelected
+          opprettetDato={valgtBehandling.opprettet}
+          avsluttetDato={valgtBehandling.avsluttet}
+          behandlingsresultatTypeNavn={
+            valgtBehandling.behandlingsresultat
+              ? getKodeverkFn(valgtBehandling.behandlingsresultat.type, valgtBehandling.type).navn
+              : undefined
+          }
+          behandlingsresultatTypeKode={
+            valgtBehandling.behandlingsresultat ? valgtBehandling.behandlingsresultat.type.kode : undefined
+          }
+          behandlingsårsaker={getÅrsaksliste()}
+          behandlingTypeNavn={getBehandlingNavn(valgtBehandling, getKodeverkFn, intl)}
+          behandlingTypeKode={valgtBehandling.type.kode}
+          søknadsperioder={søknadsperioder.find(periode => periode.id === valgtBehandling.id)?.perioder}
+          createLocationForSkjermlenke={createLocationForSkjermlenke}
+          sakstypeKode={sakstypeKode}
+        />
       )}
     </div>
   );
