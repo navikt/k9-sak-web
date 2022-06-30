@@ -60,16 +60,16 @@ const ÅrskvantumIndex = ({
   const aktivitetsstatuser = alleKodeverk[kodeverkTyper.AKTIVITET_STATUS];
 
   const apForVurderÅrskvantumDok: Aksjonspunkt = aksjonspunkterForSteg.find(
-    ap => ap.definisjon.kode === aksjonspunktCodes.VURDER_ÅRSKVANTUM_DOK,
+    ap => ap.definisjon === aksjonspunktCodes.VURDER_ÅRSKVANTUM_DOK,
   );
   const aksjonspunkter: Aksjonspunkt[] = aksjonspunkterForSteg.filter(
-    ap => ap.definisjon.kode !== aksjonspunktCodes.VURDER_ÅRSKVANTUM_DOK,
+    ap => ap.definisjon !== aksjonspunktCodes.VURDER_ÅRSKVANTUM_DOK,
   );
-  const åpenAksjonspunkt = aksjonspunkter.find(ap => ap.status.kode !== aksjonspunktStatus.UTFORT) !== undefined;
+  const åpenAksjonspunkt = aksjonspunkter.find(ap => ap.status !== aksjonspunktStatus.UTFORT) !== undefined;
 
   const visAPVurderÅrskvantumDokIOmsorgsdagerFrontend =
     apForVurderÅrskvantumDok !== undefined &&
-    (!åpenAksjonspunkt || apForVurderÅrskvantumDok.status.kode === aksjonspunktStatus.UTFORT);
+    (!åpenAksjonspunkt || apForVurderÅrskvantumDok.status === aksjonspunktStatus.UTFORT);
 
   const propsTilMikrofrontend = {
     submitCallback,

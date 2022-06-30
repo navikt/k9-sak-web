@@ -55,14 +55,8 @@ describe('<ÅrskvantumIndex>', () => {
         årskvantum={årskvantum}
         aksjonspunkterForSteg={[
           {
-            definisjon: {
-              kode: '',
-              kodeverk: '',
-            },
-            status: {
-              kode: '',
-              kodeverk: '',
-            },
+            definisjon: '',
+            status: '',
             kanLoses: true,
             erAktivt: true,
           },
