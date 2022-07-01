@@ -10,7 +10,7 @@ import {
   RelatertFagsak as RelatertFagsakType,
 } from '@k9-sak-web/types';
 import OvergangFraInfotrygd from '@k9-sak-web/types/src/overgangFraInfotrygd';
-import { Gender, PersonCard } from '@navikt/ft-plattform-komponenter';
+import { Gender, PersonCard } from '@navikt/k9-react-components';
 import moment from 'moment';
 import React from 'react';
 import { FormattedMessage } from 'react-intl';

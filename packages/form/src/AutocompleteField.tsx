@@ -2,7 +2,7 @@ import React from 'react';
 import { Element } from 'nav-frontend-typografi';
 import { Field, WrappedFieldInputProps } from 'redux-form';
 // eslint-disable-next-line import/no-named-default
-import { Autocomplete as NAPAutocomplete } from '@navikt/ft-plattform-komponenter';
+import { Autocomplete as NAPAutocomplete } from '@navikt/k9-react-components';
 import ReadOnlyField from './ReadOnlyField';
 import styles from './autocompleteField.less';
 

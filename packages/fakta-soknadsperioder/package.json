@@ -8,7 +8,7 @@
     "@fpsak-frontend/kodeverk": "1.0.0",
     "@fpsak-frontend/shared-components": "1.0.0",
     "@fpsak-frontend/utils": "1.0.0",
-    "@navikt/k9-date-utils": "0.0.8",
+    "@navikt/k9-date-utils": "0.0.6",
     "nav-frontend-core": "6.0.1",
     "nav-frontend-knapper": "3.1.2",
     "nav-frontend-knapper-style": "2.1.1",
