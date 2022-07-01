@@ -6,7 +6,7 @@ import FlexRow from '@fpsak-frontend/shared-components/src/flexGrid/FlexRow';
 import Image from '@fpsak-frontend/shared-components/src/Image';
 import VerticalSpacer from '@fpsak-frontend/shared-components/src/VerticalSpacer';
 import { dateFormat } from '@fpsak-frontend/utils';
-import { SideMenu } from '@navikt/ft-plattform-komponenter';
+import { SideMenu } from '@navikt/k9-react-components';
 import classNames from 'classnames/bind';
 import { Element, Undertekst, Undertittel } from 'nav-frontend-typografi';
 import React from 'react';
@@ -65,7 +65,7 @@ const SykdomProsessIndex = ({ perioder, panelTittelKode }: SykdomProsessIndexPro
   }
 
   if (panelTittelKode === 'Behandlingspunkt.LivetsSluttfase') {
-    lovReferanse = '§ 9-13';
+    lovReferanse = '§ 9-13'
   }
 
   return (
@@ -75,7 +75,7 @@ const SykdomProsessIndex = ({ perioder, panelTittelKode }: SykdomProsessIndexPro
           <div className={styles.sideMenuContainer}>
             <SideMenu
               links={perioder.map((currentPeriode, currentPeriodeIndex) => ({
-                active: perioder.findIndex(p => isEqual(p, activePeriode)) === currentPeriodeIndex,
+                active: perioder.findIndex((p) => isEqual(p, activePeriode)) === currentPeriodeIndex,
                 label: `${dateFormat(perioder[currentPeriodeIndex].periode.fom)} - ${dateFormat(
                   perioder[currentPeriodeIndex].periode.tom,
                 )}`,

@@ -1,6 +1,6 @@
 import { RETTSKILDE_URL, SYSTEMRUTINE_URL } from '@k9-sak-web/konstanter';
 import Endringslogg from '@navikt/familie-endringslogg';
-import { BoxedListWithLinks, Header, Popover, SystemButton, UserPanel } from '@navikt/ft-plattform-komponenter';
+import { BoxedListWithLinks, Header, Popover, SystemButton, UserPanel } from '@navikt/k9-react-components';
 import React, { RefObject, useCallback, useEffect, useRef, useState } from 'react';
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 import messages from '../i18n/nb_NO.json';

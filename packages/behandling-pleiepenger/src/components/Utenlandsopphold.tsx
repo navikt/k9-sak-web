@@ -4,7 +4,7 @@ import { Alert, Heading } from '@navikt/ds-react';
 import Ekspanderbartpanel from 'nav-frontend-ekspanderbartpanel';
 
 import { KodeverkMedNavn, UtenlandsoppholdPerioder } from '@k9-sak-web/types';
-import { PeriodList } from '@navikt/ft-plattform-komponenter';
+import { PeriodList } from '@navikt/k9-react-components';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 
 import countries from 'i18n-iso-countries';
@@ -13,13 +13,13 @@ import styles from './utenlandsopphold.less';
 
 countries.registerLocale(norwegianLocale);
 
-const Utenlandsopphold = ({
+export default function Utenlandsopphold({
   utenlandsopphold,
   kodeverk,
 }: {
   utenlandsopphold: UtenlandsoppholdPerioder;
   kodeverk: { UtenlandsoppholdÅrsak: KodeverkMedNavn[] };
-}) => {
+}) {
   const finnÅrsaker = (periode, erEØS) => {
     if (erEØS) {
       return 'Periode telles ikke.';
@@ -90,6 +90,4 @@ const Utenlandsopphold = ({
       )}
     </div>
   );
-};
-
-export default Utenlandsopphold;
+}

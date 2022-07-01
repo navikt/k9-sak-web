@@ -11,7 +11,7 @@ import aktivitetStatus, {
 } from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { SideMenu } from '@navikt/ft-plattform-komponenter';
+import { SideMenu } from '@navikt/k9-react-components';
 import classNames from 'classnames/bind';
 import { Column, Row } from 'nav-frontend-grid';
 import { Undertittel } from 'nav-frontend-typografi';
@@ -42,7 +42,7 @@ import AksjonspunktBehandlerTB from './arbeidstaker/AksjonspunktBehandlerTB';
 import AksjonspunktBehandlerFL from './frilanser/AksjonspunktBehandlerFL';
 import VurderOgFastsettSN from './selvstendigNaeringsdrivende/VurderOgFastsettSN';
 import GrunnlagForAarsinntektPanelAT from './arbeidstaker/GrunnlagForAarsinntektPanelAT';
-import beregningKoblingPropType from '../propTypes/beregningKoblingPropType';
+import beregningKoblingPropType from "../propTypes/beregningKoblingPropType";
 
 const cx = classNames.bind(styles);
 
@@ -82,9 +82,7 @@ const getBGVilkar = vilkar =>
 
 const erBGTilVurdering = (beregningreferanserTilVurdering, beregningsgrunnlag) => {
   const vilårsperiodeFom = beregningsgrunnlag.vilkårsperiodeFom;
-  return beregningreferanserTilVurdering.some(
-    kobling => kobling.skjæringstidspunkt === vilårsperiodeFom && !kobling.erForlengelse,
-  );
+  return beregningreferanserTilVurdering.some((kobling) => kobling.skjæringstidspunkt === vilårsperiodeFom && !kobling.erForlengelse)
 };
 
 const lagMenyProps = (kronologiskeGrunnlag, beregningreferanserTilVurdering) => {
@@ -223,7 +221,7 @@ BeregningFP.defaultProps = {
   beregningsgrunnlag: undefined,
 };
 
-const initAksjonspunktData = aksjonspunktData => ({
+const initAksjonspunktData = (aksjonspunktData) => ({
   '@type': aksjonspunktData.kode,
   kode: aksjonspunktData.kode,
   begrunnelse: aksjonspunktData.begrunnelse,
@@ -242,7 +240,7 @@ const formaterAksjonspunkter = (aksjonspunkter, perioder) => {
     return gruppert;
   }, {});
   return Object.values(gruppertPrKode);
-};
+}
 
 const harAvklaringsbehovIPanel = (avklaringsbehov) => avklaringsbehov.some(ab => isBeregningAvklaringsbehov(ab.definisjon));
 
@@ -265,9 +263,7 @@ export const buildInitialValuesForBeregningrunnlag = (beregningsgrunnlag, beregn
   const initialValues = {
     relevanteStatuser: getRelevanteStatuser(beregningsgrunnlag),
     avklaringsbehov,
-    erTilVurdering:
-      erBGTilVurdering(beregningreferanserTilVurdering, beregningsgrunnlag) &&
-      harAvklaringsbehovIPanel(avklaringsbehov),
+    erTilVurdering: erBGTilVurdering(beregningreferanserTilVurdering, beregningsgrunnlag) && harAvklaringsbehovIPanel(avklaringsbehov),
     skjæringstidspunkt: beregningsgrunnlag.skjæringstidspunkt,
     ...Beregningsgrunnlag.buildInitialValues(avklaringsbehov),
     ...AksjonspunktBehandlerTB.buildInitialValues(allePerioder, avklaringsbehov),
@@ -286,11 +282,13 @@ export const buildInitialValues = (beregningsgrunnlag, beregningreferanserTilVur
 // Kun eksportert for test
 export const transformValues = (values, alleBeregningsgrunnlag, vilkar) => {
   const fieldArrayValuesList = values.beregningsgrunnlagListe;
-  const alleAksjonspunkter = fieldArrayValuesList.flatMap(
-    (currentBeregningsgrunnlagSkjemaverdier, currentBeregningsgrunnlagIndex) => {
+  const alleAksjonspunkter = fieldArrayValuesList
+    .flatMap((currentBeregningsgrunnlagSkjemaverdier, currentBeregningsgrunnlagIndex) => {
       // Indeks i visning må vere lik indeks i array alleBeregningsgrunnlag
       const opprinneligBeregningsgrunnlag = alleBeregningsgrunnlag[currentBeregningsgrunnlagIndex];
-      const allePerioder = opprinneligBeregningsgrunnlag ? opprinneligBeregningsgrunnlag.beregningsgrunnlagPeriode : [];
+      const allePerioder = opprinneligBeregningsgrunnlag
+        ? opprinneligBeregningsgrunnlag.beregningsgrunnlagPeriode
+        : [];
       const alleAndelerIForstePeriode =
         allePerioder && allePerioder.length > 0 ? allePerioder[0].beregningsgrunnlagPrStatusOgAndel : [];
       if (!currentBeregningsgrunnlagSkjemaverdier.erTilVurdering) {
@@ -303,10 +301,9 @@ export const transformValues = (values, alleBeregningsgrunnlag, vilkar) => {
       );
 
       return transformedValues;
-    },
-  );
+    });
   return formaterAksjonspunkter(alleAksjonspunkter, getBGVilkar(vilkar).perioder);
-};
+}
 
 const mapStateToPropsFactory = (initialState, initialOwnProps) => {
   const { submitCallback, beregningsgrunnlag, vilkar, beregningreferanserTilVurdering } = initialOwnProps;
