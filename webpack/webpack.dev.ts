@@ -35,6 +35,8 @@ export default {
       remotes: {
         ft_prosess_beregningsgrunnlag:
           'ft_prosess_beregningsgrunnlag@http://localhost:9008/remoteEntry.js?[(new Date).getTime()]',
+        ft_fakta_fordel_beregningsgrunnlag:
+          'ft_fakta_fordel_beregningsgrunnlag@http://localhost:9007/remoteEntry.js?[(new Date).getTime()]',
       },
       shared: {
         react: {
