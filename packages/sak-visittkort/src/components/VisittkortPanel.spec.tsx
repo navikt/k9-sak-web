@@ -1,5 +1,5 @@
 import React from 'react';
-import { PersonCard, Gender } from '@navikt/k9-react-components';
+import { PersonCard, Gender } from '@navikt/ft-plattform-komponenter';
 
 import { FlexContainer } from '@fpsak-frontend/shared-components';
 import navBrukerKjonn from '@fpsak-frontend/kodeverk/src/navBrukerKjonn';

@@ -1,5 +1,5 @@
 import { SetStateAction } from 'react';
-import { ProcessMenuStepType } from '@navikt/k9-react-components';
+import { ProcessMenuStepType } from '@navikt/ft-plattform-komponenter';
 
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import aksjonspunktType from '@fpsak-frontend/kodeverk/src/aksjonspunktType';

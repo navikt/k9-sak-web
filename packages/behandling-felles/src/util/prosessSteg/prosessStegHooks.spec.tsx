@@ -2,7 +2,7 @@
 import React from 'react';
 import sinon from 'sinon';
 import { shallow } from 'enzyme';
-import { ProcessMenuStepType } from '@navikt/k9-react-components';
+import { ProcessMenuStepType } from '@navikt/ft-plattform-komponenter';
 
 import { prosessStegCodes } from '@k9-sak-web/konstanter';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
@@ -253,7 +253,7 @@ describe('<prosessStegHooks>', () => {
 
     const lagreAksjonspunkter = sinon.stub();
     lagreAksjonspunkter.returns(Promise.resolve());
-    const lagringSideEffectsCallback = () => () => { };
+    const lagringSideEffectsCallback = () => () => {};
 
     const wrapper = testHook(() =>
       prosessStegHooks.useBekreftAksjonspunkt(
