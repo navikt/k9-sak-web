@@ -5,7 +5,7 @@ import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import FordelBeregningIndex from '@fpsak-frontend/fakta-fordel-beregningsgrunnlag';
 import { DynamicLoader, FaktaPanelDef } from '@k9-sak-web/behandling-felles';
 import { konverterKodeverkTilKode } from '@fpsak-frontend/utils';
-import '@navikt/ft-prosess-beregningsgrunnlag/dist/style.css';
+import '@navikt/ft-fakta-fordel-beregningsgrunnlag/dist/style.css';
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 
 const FaktaFordelBeregningsgrunnlag = React.lazy(() => import('@navikt/ft-fakta-fordel-beregningsgrunnlag'));
