@@ -15,34 +15,22 @@ describe('<MenyNyBehandlingIndex>', () => {
 
     const behandlingOppretting = [
       {
-        behandlingType: {
-          kode: behandlingType.FORSTEGANGSSOKNAD,
-          kodeverk: '',
-        },
+        behandlingType: behandlingType.FORSTEGANGSSOKNAD,
         kanOppretteBehandling: true,
       },
       {
-        behandlingType: {
-          kode: behandlingType.REVURDERING,
-          kodeverk: '',
-        },
+        behandlingType: behandlingType.REVURDERING,
         kanOppretteBehandling: true,
       },
     ];
 
     const wrapper = shallowWithIntl(
       <MenyNyBehandlingIndex
-        ytelseType={{
-          kode: fagsakYtelseType.FORELDREPENGER,
-          kodeverk: 'FAGSAK_YTELSE_TYPE',
-        }}
+        ytelseType={fagsakYtelseType.FORELDREPENGER}
         saksnummer="123"
         behandlingId={3}
         behandlingVersjon={1}
-        behandlingType={{
-          kode: behandlingType.FORSTEGANGSSOKNAD,
-          kodeverk: 'BEHANDLING_TYPE',
-        }}
+        behandlingType={behandlingType.FORSTEGANGSSOKNAD}
         lagNyBehandling={lagNyBehandlingCallback}
         behandlingOppretting={behandlingOppretting}
         behandlingstyper={[]}
@@ -64,10 +52,7 @@ describe('<MenyNyBehandlingIndex>', () => {
     expect(modal).toHaveLength(1);
     modal.prop('submitCallback')({
       behandlingType: behandlingType.FORSTEGANGSSOKNAD,
-      fagsakYtelseType: {
-        kode: fagsakYtelseType.FORELDREPENGER,
-        kodeverk: '',
-      },
+      fagsakYtelseType: fagsakYtelseType.FORELDREPENGER,
     });
 
     const kall = lagNyBehandlingCallback.getCalls();
@@ -77,10 +62,7 @@ describe('<MenyNyBehandlingIndex>', () => {
     expect(kall[0].args[1]).toEqual({
       saksnummer: '123',
       behandlingType: behandlingType.FORSTEGANGSSOKNAD,
-      fagsakYtelseType: {
-        kode: fagsakYtelseType.FORELDREPENGER,
-        kodeverk: '',
-      },
+      fagsakYtelseType: fagsakYtelseType.FORELDREPENGER,
     });
 
     expect(lukkModalCallback.getCalls()).toHaveLength(1);

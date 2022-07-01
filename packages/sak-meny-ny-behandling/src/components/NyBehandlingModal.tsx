@@ -32,7 +32,7 @@ const createOptions = (
 };
 
 export type BehandlingOppretting = Readonly<{
-  behandlingType: Kodeverk;
+  behandlingType: string;
   kanOppretteBehandling: boolean;
 }>;
 
@@ -43,7 +43,7 @@ export type FormValues = {
 };
 
 interface PureOwnProps {
-  ytelseType: Kodeverk;
+  ytelseType: string;
   saksnummer: number;
   cancelEvent: () => void;
   submitCallback: (
@@ -283,9 +283,9 @@ const mapStateToPropsFactory = (initialState, initialOwnProps: PureOwnProps) => 
     const klageOnlyValues =
       values?.behandlingType === bType.KLAGE
         ? {
-            aktørId: initialOwnProps.aktorId,
-            behandlendeEnhetId: initialOwnProps.gjeldendeVedtakBehandlendeEnhetId,
-          }
+          aktørId: initialOwnProps.aktorId,
+          behandlendeEnhetId: initialOwnProps.gjeldendeVedtakBehandlendeEnhetId,
+        }
         : {};
     initialOwnProps.submitCallback({
       ...values,
@@ -303,8 +303,8 @@ const mapStateToPropsFactory = (initialState, initialOwnProps: PureOwnProps) => 
     valgtBehandlingTypeKode: formValueSelector(formName)(state, 'behandlingType'),
     erTilbakekreving:
       ownProps.behandlingType &&
-      (ownProps.behandlingType.kode === bType.TILBAKEKREVING ||
-        ownProps.behandlingType.kode === bType.TILBAKEKREVING_REVURDERING),
+      (ownProps.behandlingType === bType.TILBAKEKREVING ||
+        ownProps.behandlingType === bType.TILBAKEKREVING_REVURDERING),
   });
 };
 
