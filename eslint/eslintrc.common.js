@@ -18,12 +18,7 @@ const config = {
 
   plugins: ['jest', 'jest-dom', '@typescript-eslint'],
 
-  extends: [
-    'airbnb',
-    'plugin:@typescript-eslint/recommended',
-    'plugin:jest/recommended',
-    'prettier',
-  ],
+  extends: ['airbnb', 'plugin:@typescript-eslint/recommended', 'plugin:jest/recommended', 'prettier'],
 
   parserOptions: {
     sourceType: 'module',
@@ -55,11 +50,17 @@ const config = {
     'function-paren-newline': OFF,
     'function-call-argument-newline': OFF,
     'no-restricted-exports': OFF,
-    'import/no-extraneous-dependencies': ['error', { devDependencies: ['**/*.spec.ts', '**/*.spec.tsx', '**/*.stories.tsx'] }],
-    'react/function-component-definition': ['error', {
-      namedComponents: 'arrow-function',
-      unnamedComponents: 'arrow-function',
-    }],
+    'import/no-extraneous-dependencies': [
+      'error',
+      { devDependencies: ['**/*.spec.ts', '**/*.spec.tsx', '**/*.stories.tsx'] },
+    ],
+    'react/function-component-definition': [
+      'error',
+      {
+        namedComponents: 'arrow-function',
+        unnamedComponents: 'arrow-function',
+      },
+    ],
 
     // note you must disable the base rule as it can report incorrect errors
     'no-use-before-define': OFF,
@@ -82,6 +83,7 @@ const config = {
     '@typescript-eslint/no-explicit-any': OFF,
     '@typescript-eslint/ban-ts-comment': OFF,
     '@typescript-eslint/explicit-module-boundary-types': OFF,
+    'class-methods-use-this': 1,
 
     // TODO Desse kan vel fjernast?
     '@typescript-eslint/indent': OFF,
