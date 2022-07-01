@@ -249,7 +249,7 @@ const kanOppretteBehandlingstype = (
   behandlingOppretting: BehandlingOppretting[],
   behandlingTypeKode: string,
 ): boolean =>
-  behandlingOppretting.some(bo => bo.behandlingType.kode === behandlingTypeKode && bo.kanOppretteBehandling);
+  behandlingOppretting.some(bo => bo.behandlingType === behandlingTypeKode && bo.kanOppretteBehandling);
 
 export const getEnabledBehandlingstyper = createSelector(
   [

@@ -461,24 +461,15 @@ describe('<NyBehandlingModal>', () => {
 
     const behandlingOppretting = [
       {
-        behandlingType: {
-          kode: behandlingType.FORSTEGANGSSOKNAD,
-          kodeverk: '',
-        },
+        behandlingType: behandlingType.FORSTEGANGSSOKNAD,
         kanOppretteBehandling: true,
       },
       {
-        behandlingType: {
-          kode: behandlingType.REVURDERING,
-          kodeverk: '',
-        },
+        behandlingType: behandlingType.REVURDERING,
         kanOppretteBehandling: true,
       },
       {
-        behandlingType: {
-          kode: behandlingType.KLAGE,
-          kodeverk: '',
-        },
+        behandlingType: behandlingType.KLAGE,
         kanOppretteBehandling: true,
       },
     ];
@@ -527,24 +518,15 @@ describe('<NyBehandlingModal>', () => {
 
     const behandlingOppretting = [
       {
-        behandlingType: {
-          kode: behandlingType.FORSTEGANGSSOKNAD,
-          kodeverk: '',
-        },
+        behandlingType: behandlingType.FORSTEGANGSSOKNAD,
         kanOppretteBehandling: true,
       },
       {
-        behandlingType: {
-          kode: behandlingType.REVURDERING,
-          kodeverk: '',
-        },
+        behandlingType: behandlingType.REVURDERING,
         kanOppretteBehandling: true,
       },
       {
-        behandlingType: {
-          kode: behandlingType.KLAGE,
-          kodeverk: '',
-        },
+        behandlingType: behandlingType.KLAGE,
         kanOppretteBehandling: true,
       },
     ];
