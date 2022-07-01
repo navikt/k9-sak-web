@@ -4,11 +4,12 @@ import { Location } from 'history';
 import { Element } from 'nav-frontend-typografi';
 import { Kodeverk } from '@k9-sak-web/types';
 import { scrollUp } from './historikkUtils';
+import KodeverkType from 'kodeverk/src/kodeverkTyper';
 
 interface SkjermlenkeProps {
-  skjermlenke?: Kodeverk;
+  skjermlenke?: string;
   behandlingLocation?: Location;
-  getKodeverknavn?: (kodeverkObjekt: Kodeverk, undertype?: string) => string;
+  getKodeverknavn?: (kode: string, kodeverk: KodeverkType, undertype?: string) => string;
   scrollUpOnClick?: boolean;
   createLocationForSkjermlenke: (behandlingLocation: Location, skjermlenkeKode: string) => Location;
 }
@@ -26,10 +27,10 @@ const Skjermlenke = ({
   return (
     <Element>
       <NavLink
-        to={createLocationForSkjermlenke(behandlingLocation, skjermlenke.kode)}
+        to={createLocationForSkjermlenke(behandlingLocation, skjermlenke)}
         onClick={scrollUpOnClick && scrollUp}
       >
-        {getKodeverknavn(skjermlenke)}
+        {getKodeverknavn(skjermlenke, KodeverkType.SKJERMLENKE_TYPE)}
       </NavLink>
     </Element>
   );

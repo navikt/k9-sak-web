@@ -9,6 +9,7 @@ import historikkOpplysningTypeCodes from '../../kodeverk/historikkOpplysningType
 import historikkEndretFeltType from '../../kodeverk/historikkEndretFeltType';
 import Skjermlenke from './felles/Skjermlenke';
 import HistorikkMal from '../HistorikkMalTsType';
+import KodeverkType from 'kodeverk/src/kodeverkTyper';
 
 export const HistorikkMalTypeTilbakekreving = ({
   historikkinnslag,
@@ -32,18 +33,18 @@ export const HistorikkMalTypeTilbakekreving = ({
       {historikkinnslagDeler.map(historikkinnslagDel => {
         const { opplysninger, endredeFelter, begrunnelseFritekst } = historikkinnslagDel;
         const periodeFom = opplysninger.find(
-          o => o.opplysningType.kode === historikkOpplysningTypeCodes.PERIODE_FOM.kode,
+          o => o.opplysningType === historikkOpplysningTypeCodes.PERIODE_FOM.kode,
         ).tilVerdi;
         const periodeTom = opplysninger.find(
-          o => o.opplysningType.kode === historikkOpplysningTypeCodes.PERIODE_TOM.kode,
+          o => o.opplysningType === historikkOpplysningTypeCodes.PERIODE_TOM.kode,
         ).tilVerdi;
         const begrunnelse = decodeHtmlEntity(
           opplysninger.find(
-            o => o.opplysningType.kode === historikkOpplysningTypeCodes.TILBAKEKREVING_OPPFYLT_BEGRUNNELSE.kode,
+            o => o.opplysningType === historikkOpplysningTypeCodes.TILBAKEKREVING_OPPFYLT_BEGRUNNELSE.kode,
           ).tilVerdi,
         );
         const sarligGrunnerBegrunnelseFelt = opplysninger.find(
-          o => o.opplysningType.kode === historikkOpplysningTypeCodes.SÆRLIG_GRUNNER_BEGRUNNELSE.kode,
+          o => o.opplysningType === historikkOpplysningTypeCodes.SÆRLIG_GRUNNER_BEGRUNNELSE.kode,
         );
         const sarligGrunnerBegrunnelse =
           sarligGrunnerBegrunnelseFelt !== undefined
@@ -63,22 +64,22 @@ export const HistorikkMalTypeTilbakekreving = ({
               endredeFelter.map((felt, index) => {
                 const { endretFeltNavn, fraVerdi, tilVerdi } = felt;
 
-                const visBelopTilbakekreves = historikkEndretFeltType.BELOEP_TILBAKEKREVES === endretFeltNavn.kode;
-                const visProsentverdi = historikkEndretFeltType.ANDEL_TILBAKEKREVES === endretFeltNavn.kode;
-                const visIleggRenter = historikkEndretFeltType.ILEGG_RENTER === endretFeltNavn.kode;
+                const visBelopTilbakekreves = historikkEndretFeltType.BELOEP_TILBAKEKREVES === endretFeltNavn;
+                const visProsentverdi = historikkEndretFeltType.ANDEL_TILBAKEKREVES === endretFeltNavn;
+                const visIleggRenter = historikkEndretFeltType.ILEGG_RENTER === endretFeltNavn;
                 if ((visBelopTilbakekreves || visProsentverdi || visIleggRenter) && !tilVerdi) {
                   return null;
                 }
 
                 const visBegrunnelse =
-                  historikkEndretFeltType.ER_VILKARENE_TILBAKEKREVING_OPPFYLT === endretFeltNavn.kode;
+                  historikkEndretFeltType.ER_VILKARENE_TILBAKEKREVING_OPPFYLT === endretFeltNavn;
                 const formatertFraVerdi = visProsentverdi && fraVerdi ? `${fraVerdi}%` : fraVerdi;
                 const formatertTilVerdi = visProsentverdi && tilVerdi ? `${tilVerdi}%` : tilVerdi;
                 const visAktsomhetBegrunnelse = begrunnelseFritekst && index === endredeFelter.length - 1;
                 const visSarligGrunnerBegrunnelse = sarligGrunnerBegrunnelse && index === endredeFelter.length - 1;
 
                 return (
-                  <React.Fragment key={endretFeltNavn.kode}>
+                  <React.Fragment key={endretFeltNavn}>
                     {visBegrunnelse && begrunnelse}
                     {visBegrunnelse && <VerticalSpacer eightPx />}
                     {visAktsomhetBegrunnelse && decodeHtmlEntity(begrunnelseFritekst)}
@@ -91,7 +92,7 @@ export const HistorikkMalTypeTilbakekreving = ({
                             : 'Historikk.Template.Tilbakekreving.FieldSetTo'
                         }
                         values={{
-                          navn: getKodeverknavn(endretFeltNavn),
+                          navn: getKodeverknavn(endretFeltNavn, KodeverkType.HISTORIKK_ENDRET_FELT_TYPE),
                           fraVerdi: formatertFraVerdi,
                           tilVerdi: formatertTilVerdi,
                           b: chunks => <b>{chunks}</b>,

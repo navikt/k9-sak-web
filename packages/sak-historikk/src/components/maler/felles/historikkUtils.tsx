@@ -11,12 +11,13 @@ import historikkResultatTypeCodes from '../../../kodeverk/historikkResultatTypeC
 import historikkEndretFeltVerdiTypeCodes from '../../../kodeverk/historikkEndretFeltVerdiTypeCodes';
 import historikkEndretFeltTypeCodes from '../../../kodeverk/historikkEndretFeltTypeCodes';
 import historikkOpplysningTypeCodes from '../../../kodeverk/historikkOpplysningTypeCodes';
+import KodeverkType from 'kodeverk/src/kodeverkTyper';
 
 export const findIdForOpplysningCode = (opplysning: HistorikkInnslagOpplysning): string => {
   if (!opplysning) {
     return null;
   }
-  const typeKode = opplysning.opplysningType.kode;
+  const typeKode = opplysning.opplysningType;
   const opplysningCode = historikkOpplysningTypeCodes[typeKode];
   if (!opplysningCode) {
     return `OpplysningTypeCode ${typeKode} finnes ikke-LEGG DET INN`;
@@ -27,18 +28,18 @@ export const findIdForOpplysningCode = (opplysning: HistorikkInnslagOpplysning):
 export const findResultatText = (
   resultat: string,
   intl: IntlShape,
-  getKodeverknavn: (kodeverk: Kodeverk) => string,
+  getKodeverknavn: (kode: string, kodeverk: KodeverkType) => string,
 ): string => {
   if (!resultat) {
     return null;
   }
 
-  const historikkResultatNavn = getKodeverknavn({ kode: resultat, kodeverk: 'HISTORIKK_RESULTAT_TYPE' });
+  const historikkResultatNavn = getKodeverknavn(resultat, KodeverkType.HISTORIKK_RESULTAT_TYPE);
   if (historikkResultatNavn) {
     return historikkResultatNavn;
   }
 
-  const vedtakResultatNavn = getKodeverknavn({ kode: resultat, kodeverk: 'VEDTAK_RESULTAT_TYPE' });
+  const vedtakResultatNavn = getKodeverknavn(resultat, KodeverkType.VEDTAK_RESULTAT_TYPE);
   if (vedtakResultatNavn) {
     return vedtakResultatNavn;
   }
@@ -53,15 +54,15 @@ export const findResultatText = (
 
 export const findHendelseText = (
   hendelse: HistorikkinnslagDel['hendelse'],
-  getKodeverknavn: (kodeverk: Kodeverk) => string,
+  getKodeverknavn: (kode: string, kodeverk: KodeverkType) => string,
 ): string => {
   if (!hendelse) {
     return undefined;
   }
   if (hendelse.verdi === null) {
-    return getKodeverknavn(hendelse.navn);
+    return getKodeverknavn(hendelse.navn, KodeverkType.HISTORIKKINNSLAG_TYPE);
   }
-  return `${getKodeverknavn(hendelse.navn)} ${hendelse.verdi}`;
+  return `${getKodeverknavn(hendelse.navn, KodeverkType.HISTORIKKINNSLAG_TYPE)} ${hendelse.verdi}`;
 };
 
 const convertToBoolean = (verdi: boolean): string => (verdi === true ? 'Ja' : 'Nei');
@@ -70,7 +71,7 @@ export const findEndretFeltVerdi = (
   endretFelt: HistorikkinnslagEndretFelt,
   verdi: string | number | boolean,
   intl: IntlShape,
-  getKodeverknavn: (kodeverk: Kodeverk) => string,
+  getKodeverknavn: (kode: string, kodeverk: KodeverkType) => string,
 ): string | number => {
   if (verdi === null) {
     return null;
@@ -79,15 +80,12 @@ export const findEndretFeltVerdi = (
     return convertToBoolean(verdi);
   }
   if (endretFelt.klTilVerdi !== null) {
-    const historikkFeltVerdiNavn = getKodeverknavn({
-      kode: verdi as string,
-      kodeverk: 'HISTORIKK_ENDRET_FELT_VERDI_TYPE',
-    });
+    const historikkFeltVerdiNavn = getKodeverknavn(verdi as string, KodeverkType.HISTORIKK_ENDRET_FELT_VERDI_TYPE);
     if (historikkFeltVerdiNavn) {
       return historikkFeltVerdiNavn;
     }
 
-    const historikkFeltNavn = getKodeverknavn({ kode: verdi as string, kodeverk: 'HISTORIKK_ENDRET_FELT_TYPE' });
+    const historikkFeltNavn = getKodeverknavn(verdi as string, KodeverkType.HISTORIKK_ENDRET_FELT_TYPE);
     if (historikkFeltNavn) {
       return historikkFeltNavn;
     }
@@ -102,7 +100,7 @@ export const findEndretFeltVerdi = (
 };
 
 export const findEndretFeltNavn = (endretFelt: HistorikkinnslagEndretFelt, intl: IntlShape): string => {
-  const navnCode = endretFelt.endretFeltNavn.kode;
+  const navnCode = endretFelt.endretFeltNavn;
   const endretFeltNavnType = historikkEndretFeltTypeCodes[navnCode];
   if (!endretFeltNavnType) {
     return `EndretFeltTypeCode ${navnCode} finnes ikke-LEGG DET INN`;
@@ -110,11 +108,11 @@ export const findEndretFeltNavn = (endretFelt: HistorikkinnslagEndretFelt, intl:
   const fieldId = endretFeltNavnType.feltId;
   return endretFelt.navnVerdi !== null
     ? intl.formatMessage(
-        { id: fieldId },
-        {
-          value: endretFelt.navnVerdi,
-        },
-      )
+      { id: fieldId },
+      {
+        value: endretFelt.navnVerdi,
+      },
+    )
     : intl.formatMessage({ id: fieldId });
 };
 

@@ -52,6 +52,7 @@ enum KodeverkType {
   HISTORIKK_AKTOER = 'HistorikkAktør',
   HISTORIKK_AVKLART_SOEKNADSPERIODE_TYPE = 'HistorikkAvklartSoeknadsperiodeType',
   HISTORIKK_RESULTAT_TYPE = 'HistorikkResultatType',
+  HISTORIKK_BEGRUNNELSE_TYPE = "HistorikkBegrunnelseType",
   BEHANDLING_STATUS = 'BehandlingStatus',
   FAR_SOEKER_TYPE = 'FarSøkerType',
   MEDLEMSKAP_DEKNING = 'MedlemskapDekningType',

@@ -11,6 +11,7 @@ import HistorikkMal from '../HistorikkMalTsType';
 import Skjermlenke from './felles/Skjermlenke';
 
 import styles from './historikkMalType.less';
+import KodeverkType from 'kodeverk/src/kodeverkTyper';
 
 const getSplitPeriods = (endredeFelter: HistorikkinnslagEndretFelt[]): string => {
   let text = '';
@@ -49,7 +50,7 @@ const HistorikkMalType9 = ({
               createLocationForSkjermlenke={createLocationForSkjermlenke}
             />
           )}
-          {historikkinnslagDel.endredeFelter && historikkinnslag.type.kode === historikkinnslagType.OVST_UTTAK_SPLITT && (
+          {historikkinnslagDel.endredeFelter && historikkinnslag.type === historikkinnslagType.OVST_UTTAK_SPLITT && (
             <FormattedMessage
               id="Historikk.Template.9"
               values={{
@@ -63,7 +64,7 @@ const HistorikkMalType9 = ({
           )}
 
           {historikkinnslagDel.endredeFelter &&
-            historikkinnslag.type.kode === historikkinnslagType.FASTSATT_UTTAK_SPLITT && (
+            historikkinnslag.type === historikkinnslagType.FASTSATT_UTTAK_SPLITT && (
               <FormattedMessage
                 id="Historikk.Template.9.ManuellVurdering"
                 values={{
@@ -76,7 +77,7 @@ const HistorikkMalType9 = ({
               />
             )}
 
-          {historikkinnslag.type.kode === historikkinnslagType.TILBAKEKR_VIDEREBEHANDLING &&
+          {historikkinnslag.type === historikkinnslagType.TILBAKEKR_VIDEREBEHANDLING &&
             historikkinnslagDel.endredeFelter &&
             historikkinnslagDel.endredeFelter
               .filter(endretFelt => endretFelt.tilVerdi !== tilbakekrevingVidereBehandling.TILBAKEKR_INNTREKK)
@@ -85,7 +86,7 @@ const HistorikkMalType9 = ({
                   <FormattedMessage
                     id="Historikk.Template.9.TilbakekrViderebehandling"
                     values={{
-                      felt: getKodeverknavn(endretFelt.endretFeltNavn),
+                      felt: getKodeverknavn(endretFelt.endretFeltNavn, KodeverkType.HISTORIKK_ENDRET_FELT_TYPE),
                       verdi: findEndretFeltVerdi(endretFelt, endretFelt.tilVerdi, intl, getKodeverknavn),
                       b: chunks => <b>{chunks}</b>,
                     }}
@@ -93,7 +94,7 @@ const HistorikkMalType9 = ({
                 </div>
               ))}
           {historikkinnslagDel.begrunnelse && (
-            <BubbleText bodyText={getKodeverknavn(historikkinnslagDel.begrunnelse)} />
+            <BubbleText bodyText={getKodeverknavn(historikkinnslagDel.begrunnelse, KodeverkType.BEHANDLING_AARSAK)} />
           )}
           {historikkinnslagDel.begrunnelseFritekst && <BubbleText bodyText={historikkinnslagDel.begrunnelseFritekst} />}
         </div>

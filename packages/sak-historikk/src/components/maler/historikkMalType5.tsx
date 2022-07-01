@@ -18,6 +18,7 @@ import HistorikkDokumentLenke from './felles/HistorikkDokumentLenke';
 import BubbleText from './felles/bubbleText';
 import HistorikkMal from '../HistorikkMalTsType';
 import Skjermlenke from './felles/Skjermlenke';
+import KodeverkType from 'kodeverk/src/kodeverkTyper';
 
 function isGjeldendeFraUtenEndredeFelter(historikkinnslagDel: HistorikkinnslagDel): boolean {
   return historikkinnslagDel.gjeldendeFra && !historikkinnslagDel.endredeFelter;
@@ -65,7 +66,7 @@ const lagGjeldendeFraInnslag = (historikkinnslagDel: HistorikkinnslagDel): React
 const lageElementInnhold = (
   historikkDel: HistorikkinnslagDel,
   intl: IntlShape,
-  getKodeverknavn: (kodeverk: Kodeverk) => string,
+  getKodeverknavn: (kode: string, kodeverk: KodeverkType) => string,
 ): string[] => {
   const list = [];
   if (historikkDel.hendelse) {
@@ -80,7 +81,7 @@ const lageElementInnhold = (
 const formatChangedField = (
   endretFelt: HistorikkinnslagEndretFelt,
   intl: IntlShape,
-  getKodeverknavn: (kodeverk: Kodeverk) => string,
+  getKodeverknavn: (kode: string, kodeverk: KodeverkType) => string,
 ): ReactNode => {
   const fieldName = findEndretFeltNavn(endretFelt, intl);
   const fromValue = findEndretFeltVerdi(endretFelt, endretFelt.fraVerdi, intl, getKodeverknavn);
@@ -88,7 +89,7 @@ const formatChangedField = (
 
   if (
     endretFelt.fraVerdi !== null &&
-    endretFelt.endretFeltNavn.kode !== historikkEndretFeltTypeCodes.FORDELING_FOR_NY_ANDEL.kode
+    endretFelt.endretFeltNavn !== historikkEndretFeltTypeCodes.FORDELING_FOR_NY_ANDEL.kode
   ) {
     return (
       <FormattedMessage
@@ -117,7 +118,7 @@ const formatChangedField = (
 const lagTemaHeadingId = (historikkinnslagDel: HistorikkinnslagDel): ReactNode => {
   const { tema } = historikkinnslagDel;
   if (tema) {
-    const heading = historikkEndretFeltTypeHeadingCodes[tema.endretFeltNavn.kode];
+    const heading = historikkEndretFeltTypeHeadingCodes[tema.endretFeltNavn];
     if (heading && tema.navnVerdi) {
       return (
         <FormattedMessage
@@ -132,10 +133,10 @@ const lagTemaHeadingId = (historikkinnslagDel: HistorikkinnslagDel): ReactNode =
 
 const lagSoeknadsperiode = (
   soeknadsperiode: HistorikkinnslagDel['soeknadsperiode'],
-  getKodeverknavn: (kodeverk: Kodeverk) => string,
+  getKodeverknavn: (kode: string, kodeverk: KodeverkType) => string,
 ): ReactNode => (
   <>
-    <b>{getKodeverknavn(soeknadsperiode.soeknadsperiodeType)}</b>
+    <b>{getKodeverknavn(soeknadsperiode.soeknadsperiodeType, KodeverkType.HISTORIKK_OPPLYSNING_TYPE)}</b>
     {soeknadsperiode.navnVerdi && (
       <>
         <br />
@@ -195,12 +196,12 @@ const HistorikkMalType5 = ({
             <FormattedMessage
               id={findIdForOpplysningCode(opplysning)}
               values={{ antallBarn: opplysning.tilVerdi, b: chunks => <b>{chunks}</b>, br: <br /> }}
-              key={`${getKodeverknavn(opplysning.opplysningType)}@${opplysning.tilVerdi}`}
+              key={`${getKodeverknavn(opplysning.opplysningType, KodeverkType.HISTORIKK_OPPLYSNING_TYPE)}@${opplysning.tilVerdi}`}
             />
           ))}
 
-        {historikkinnslagDel.aarsak && <Normaltekst>{getKodeverknavn(historikkinnslagDel.aarsak)}</Normaltekst>}
-        {historikkinnslagDel.begrunnelse && <BubbleText bodyText={getKodeverknavn(historikkinnslagDel.begrunnelse)} />}
+        {historikkinnslagDel.aarsak && <Normaltekst>{getKodeverknavn(historikkinnslagDel.aarsak, KodeverkType.VENT_AARSAK)}</Normaltekst>}
+        {historikkinnslagDel.begrunnelse && <BubbleText bodyText={getKodeverknavn(historikkinnslagDel.begrunnelse, KodeverkType.BEHANDLING_AARSAK)} />}
         {historikkinnslagDel.begrunnelseFritekst && <BubbleText bodyText={historikkinnslagDel.begrunnelseFritekst} />}
         {historikkinnslag.dokumentLinks &&
           historikkinnslag.dokumentLinks.map(dokumentLenke => (

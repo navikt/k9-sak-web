@@ -26,14 +26,14 @@ describe('historikkUtils', () => {
     const historikkResultatNavn = findResultatText(
       noenKodeverk.HistorikkResultatType[0].kode,
       intlMock,
-      getKodeverknavnFn(noenKodeverk, kodeverkTyper),
+      getKodeverknavnFn(noenKodeverk),
     );
     expect(historikkResultatNavn).toEqual(noenKodeverk.HistorikkResultatType[0].navn);
 
     const vedtakResultatNavn = findResultatText(
       noenKodeverk.VedtakResultatType[0].kode,
       intlMock,
-      getKodeverknavnFn(noenKodeverk, kodeverkTyper),
+      getKodeverknavnFn(noenKodeverk),
     );
     expect(vedtakResultatNavn).toEqual(noenKodeverk.VedtakResultatType[0].navn);
   });
@@ -42,7 +42,7 @@ describe('historikkUtils', () => {
     const historikkResultatNavn = findResultatText(
       'FULL_TILBAKEBETALING',
       intlMock,
-      getKodeverknavnFn(noenKodeverk, kodeverkTyper),
+      getKodeverknavnFn(noenKodeverk),
     );
     expect(historikkResultatNavn).toEqual('Full tilbakebetaling');
   });

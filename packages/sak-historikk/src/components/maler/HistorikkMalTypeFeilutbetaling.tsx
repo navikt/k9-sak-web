@@ -11,41 +11,43 @@ import historikkEndretFeltTypeCodes from '../../kodeverk/historikkEndretFeltType
 import BubbleText from './felles/bubbleText';
 import Skjermlenke from './felles/Skjermlenke';
 import HistorikkMal from '../HistorikkMalTsType';
+import KodeverkType from 'kodeverk/src/kodeverkTyper';
+
+const finnKodeverkType = (kodeverk: string): KodeverkType => KodeverkType[kodeverk];
 
 const finnFomOpplysning = (opplysninger: HistorikkinnslagDel['opplysninger']): string => {
-  const found = opplysninger.find(o => o.opplysningType.kode === historikkOpplysningTypeCodes.PERIODE_FOM.kode);
+  const found = opplysninger.find(o => o.opplysningType === historikkOpplysningTypeCodes.PERIODE_FOM.kode);
   return found.tilVerdi;
 };
 
 const finnTomOpplysning = (opplysninger: HistorikkinnslagDel['opplysninger']): string => {
-  const found = opplysninger.find(o => o.opplysningType.kode === historikkOpplysningTypeCodes.PERIODE_TOM.kode);
+  const found = opplysninger.find(o => o.opplysningType === historikkOpplysningTypeCodes.PERIODE_TOM.kode);
   return found.tilVerdi;
 };
 
 const buildEndretFeltText = (
   endredeFelter: HistorikkinnslagDel['endredeFelter'],
-  getKodeverknavn: (kodeverk: Kodeverk) => string,
+  getKodeverknavn: (kode: string, kodeverk: KodeverkType) => string,
 ): ReactNode => {
   const årsakFelt = endredeFelter.filter(
-    felt => felt.endretFeltNavn.kode === historikkEndretFeltTypeCodes.FAKTA_OM_FEILUTBETALING_AARSAK.kode,
+    felt => felt.endretFeltNavn === historikkEndretFeltTypeCodes.FAKTA_OM_FEILUTBETALING_AARSAK.kode,
   )[0];
   const underÅrsakFelt = endredeFelter.filter(
-    felt => felt.endretFeltNavn.kode === historikkEndretFeltTypeCodes.FAKTA_OM_FEILUTBETALING_UNDERAARSAK.kode,
+    felt => felt.endretFeltNavn === historikkEndretFeltTypeCodes.FAKTA_OM_FEILUTBETALING_UNDERAARSAK.kode,
   )[0];
   const underÅrsakFraVerdi = underÅrsakFelt
-    ? getKodeverknavn({ kode: underÅrsakFelt.fraVerdi as string, kodeverk: underÅrsakFelt.klFraVerdi })
+    ? getKodeverknavn(underÅrsakFelt.fraVerdi as string, finnKodeverkType(underÅrsakFelt.klFraVerdi))
     : null;
   const underÅrsakTilVerdi = underÅrsakFelt
-    ? getKodeverknavn({ kode: underÅrsakFelt.tilVerdi as string, kodeverk: underÅrsakFelt.klTilVerdi })
+    ? getKodeverknavn(underÅrsakFelt.tilVerdi as string, finnKodeverkType(underÅrsakFelt.klTilVerdi))
     : null;
   const endret = endredeFelter.filter(felt => felt.fraVerdi !== null).length > 0;
 
-  const tilVerdiNavn = getKodeverknavn({ kode: årsakFelt.tilVerdi as string, kodeverk: årsakFelt.klTilVerdi });
+  const tilVerdiNavn = getKodeverknavn(årsakFelt.tilVerdi as string, finnKodeverkType(årsakFelt.klTilVerdi));
   if (endret) {
     const årsakVerdi = årsakFelt.fraVerdi ? årsakFelt.fraVerdi : årsakFelt.tilVerdi;
-    const fraVerdi = `${getKodeverknavn({ kode: årsakVerdi as string, kodeverk: årsakFelt.klFraVerdi })} ${
-      underÅrsakFraVerdi ? `(${underÅrsakFraVerdi})` : ''
-    }`;
+    const fraVerdi = `${getKodeverknavn(årsakVerdi as string, finnKodeverkType(årsakFelt.klFraVerdi))} ${underÅrsakFraVerdi ? `(${underÅrsakFraVerdi})` : ''
+      }`;
     const tilVerdi = `${tilVerdiNavn} ${underÅrsakTilVerdi ? `(${underÅrsakTilVerdi})` : ''}`;
     return (
       <FormattedMessage

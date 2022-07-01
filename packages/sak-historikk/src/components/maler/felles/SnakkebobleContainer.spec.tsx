@@ -11,8 +11,8 @@ import SnakkebobleContainer from './SnakkebobleContainer';
 describe('SnakkebobleContainer', () => {
   it('skal vise opp boble med korrekt class', () => {
     const opprettetTidspunkt = '2017-12-10';
-    const aktoer = { kode: HistorikkAktor.SAKSBEHANDLER, navn: 'Saksbehandler', kodeverk: '' };
-    const kjoenn = { kode: navBrukerKjonn.KVINNE, kodeverk: '' };
+    const aktoer = HistorikkAktor.SAKSBEHANDLER;
+    const kjoenn = navBrukerKjonn.KVINNE;
 
     const wrapper = shallow(
       <SnakkebobleContainer
@@ -34,8 +34,8 @@ describe('SnakkebobleContainer', () => {
 
   it('skal innehalla korrekt type, id og tidpunkt', () => {
     const opprettetTidspunkt = '2017-12-10';
-    const aktoer = { kode: HistorikkAktor.SAKSBEHANDLER, kodeverk: '' };
-    const kjoenn = { kode: navBrukerKjonn.KVINNE, kodeverk: '' };
+    const aktoer = HistorikkAktor.SAKSBEHANDLER;
+    const kjoenn = navBrukerKjonn.KVINNE;
 
     const wrapper = shallow(
       <SnakkebobleContainer

@@ -7,52 +7,42 @@ import { Historikkinnslag, HistorikkinnslagDel } from '@k9-sak-web/types';
 
 import historikkOpplysningTypeCodes from '../../kodeverk/historikkOpplysningTypeCodes';
 import HistorikkMalTypeForeldelse from './HistorikkMalTypeForeldelse';
+import KodeverkType from 'kodeverk/src/kodeverkTyper';
 
 describe('HistorikkMalTypeForeldelse', () => {
   it('skal vise alle historikkelement korrekt', () => {
     const historikkinnslagDeler = [
       {
-        skjermlenke: {
-          kode: 'FORELDELSE',
-        },
+        skjermlenke: 'FORELDELSE',
         endredeFelter: [
           {
-            endretFeltNavn: {
-              kode: 'feltkode',
-            },
+            endretFeltNavn: 'feltkode',
             fraVerdi: 'gammel verdi',
             tilVerdi: 'ny verdi',
           },
           {
-            endretFeltNavn: {
-              kode: 'Anna feltkode',
-            },
+            endretFeltNavn: 'Anna feltkode',
             tilVerdi: 'ny verdi 2',
           },
         ],
         opplysninger: [
           {
-            opplysningType: {
-              kode: historikkOpplysningTypeCodes.PERIODE_FOM.kode,
-              kodeverk: '',
-            },
+            opplysningType: historikkOpplysningTypeCodes.PERIODE_FOM.kode,
             tilVerdi: '10.10.2018',
           },
           {
-            opplysningType: {
-              kode: historikkOpplysningTypeCodes.PERIODE_TOM.kode,
-              tilVerdi: '10.12.2018',
-            },
+            opplysningType: historikkOpplysningTypeCodes.PERIODE_TOM.kode,
+            tilVerdi: '10.12.2018',
           },
         ],
       },
     ] as HistorikkinnslagDel[];
 
-    const getKodeverknavn = kodeverk => {
-      if (kodeverk.kode === 'feltkode') {
+    const getKodeverknavn = (kode: string, kodeverk: KodeverkType) => {
+      if (kode === 'feltkode') {
         return 'testing';
       }
-      if (kodeverk.kode === 'Anna feltkode') {
+      if (kode === 'Anna feltkode') {
         return 'testing 2';
       }
       return '';
