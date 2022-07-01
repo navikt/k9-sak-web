@@ -9,7 +9,7 @@
     "@fpsak-frontend/kodeverk": "1.0.0",
     "@fpsak-frontend/shared-components": "1.0.0",
     "@fpsak-frontend/utils": "1.0.0",
-    "@navikt/k9-react-components": "^0.1.21",
+    "@navikt/k9-react-components": "0.2.2",
     "classnames": "^2.3.1",
     "lodash.isequal": "^4.5.0",
     "nav-frontend-core": "6.0.1",

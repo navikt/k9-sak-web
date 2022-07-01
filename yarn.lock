@@ -2974,11 +2974,6 @@
   resolved "https://npm.pkg.github.com/download/@navikt/ds-css/0.12.14/eddf4260846dfc796969d1f49b4e9a5c57a5885be5581cf866c0473fea805515#aca0a842945776c3215722cf1030d63f09cbdba3"
   integrity sha512-ew7ROTVVR1W6DS2hhHv2bQ/FBUD6/d0scjq7io/bhTfhNv/SdqIpJmfjdXW5aQHScLHxx/nfEaIufpVorxrQ0w==
 
-"@navikt/ds-css@^0.16.15":
-  version "0.16.17"
-  resolved "https://npm.pkg.github.com/download/@navikt/ds-css/0.16.17/2dcf733af4b0f506c6a777a88290f25dbccace6d3f307c3a0fc8dce068f358ad#a25ca3801587894b120bae02f21c9d96c8b4d6ee"
-  integrity sha512-Pp1HW4JwUdolJNqg09xG+8qMGvQPNzfa1Dl0zD2o0DUN/r2X9/FaQd4dat7wk7xwgyeynOaGAjpoJXZwO71Blw==
-
 "@navikt/ds-css@^0.16.3":
   version "0.16.21"
   resolved "https://npm.pkg.github.com/download/@navikt/ds-css/0.16.21/d8f34cfa67882eddd09a7f05170f3d1d173fe45fa11c143f857319b6a57f00f2#b793f900f3148a048180423052480c04be239e68"
@@ -2988,6 +2983,11 @@
   version "0.18.16"
   resolved "https://npm.pkg.github.com/download/@navikt/ds-css/0.18.16/e8179ea6fa2a1ec425f4786ff2daa7716ec49e0eb4f160f983fdbc537d7c8603#f28ae0cc6916d2a22ccbc42f2ed7936fc6b4a7e1"
   integrity sha512-6BEnsGn5OnVRarIR9TrIUg/oEvK2MKW1vdVvcoMoGvtkDug1MSgmdxefmFLrJMR6FceTo6pUtsVkWvf51cenRQ==
+
+"@navikt/ds-css@^0.18.7":
+  version "0.18.24"
+  resolved "https://npm.pkg.github.com/download/@navikt/ds-css/0.18.24/4395bb3effcbbb84656a3b39381e079afda70301e362028ef18bae2cc3aa75d1#27cdcdb1d03eb127982dbf2228c192f1243c23bb"
+  integrity sha512-AOfH1cVNH3EnUSZCvgRlfkmfO0ys7x+yg1cDnLwsCAcRd9xJQghB+joWGQvj0FFpPOyPt9XLaBzwEFRSoVB/PA==
 
 "@navikt/ds-icons@^0.7.3":
   version "0.7.3"
@@ -3010,7 +3010,14 @@
   dependencies:
     uuid "^8.3.2"
 
-"@navikt/ds-icons@^0.8.6", "@navikt/ds-icons@^0.8.7", "@navikt/ds-icons@^0.8.9":
+"@navikt/ds-icons@^0.8.18":
+  version "0.8.18"
+  resolved "https://npm.pkg.github.com/download/@navikt/ds-icons/0.8.18/f7bec9bc829cf3f0e5399150d357e411f0e0b3f3ca29706f1967fc6258969999#94db590d5a169cd3ffeb7489ace0568ce92d60bc"
+  integrity sha512-pruwrqnjX9TOnGliVg9HM5g0vvAaBvwPHDlNdJB3xQRoSd+lh2X6f1QuPjsJj7bISFaxCcXJlq4QON3+d3VJlA==
+  dependencies:
+    uuid "^8.3.2"
+
+"@navikt/ds-icons@^0.8.6":
   version "0.8.9"
   resolved "https://npm.pkg.github.com/download/@navikt/ds-icons/0.8.9/16dc7cd63102dc20306a842543a75679b690da99b646c02f1a948e6d51ebc888#af1674af64be0385e2aa8f60e067763940d9a194"
   integrity sha512-DiOlktF+vO4EiVE6vjkoYTvwxD6fqChtR7NB9nxrJy73L3YwbD9IHHyERSjiqeX3lCig6kcnXqLgtoWLrRxjPg==
@@ -3078,24 +3085,6 @@
     react-popper "^2.2.5"
     uuid "^8.3.2"
 
-"@navikt/ds-react@^0.17.19":
-  version "0.17.21"
-  resolved "https://npm.pkg.github.com/download/@navikt/ds-react/0.17.21/3fe4f85d9d2b8356f5553dfaba81e13cf574f1db00dd62172b95d171bf798f3c#ca0975a07fee8565b73875da40101c3a54d6ed56"
-  integrity sha512-49HS49bR7fd5rg7GqGRDnIb9ANo2uNw8+KdEVXL66ScNAxm/hQo9NUw/F68uxMkbkU9JLG7skOieyD0qHO62qw==
-  dependencies:
-    "@floating-ui/react-dom" "0.6.0"
-    "@material-ui/core" "^4.12.3"
-    "@navikt/ds-icons" "^0.8.9"
-    "@popperjs/core" "^2.10.1"
-    "@radix-ui/react-tabs" "0.1.5"
-    "@radix-ui/react-toggle-group" "0.1.5"
-    classnames "^2.2.6"
-    react-collapse "^5.1.0"
-    react-merge-refs "^1.1.0"
-    react-modal "3.14.3"
-    react-popper "^2.2.5"
-    uuid "^8.3.2"
-
 "@navikt/ds-react@^0.17.27":
   version "0.17.27"
   resolved "https://npm.pkg.github.com/download/@navikt/ds-react/0.17.27/cadcae82d4fb79e1628615597583f09184424cffb63e24eec0e50c899c16a8a6#d826baf51bb8693b30ce0f84de041eb97bb6eeed"
@@ -3140,6 +3129,24 @@
     "@floating-ui/react-dom" "0.6.0"
     "@material-ui/core" "^4.12.3"
     "@navikt/ds-icons" "^0.8.17"
+    "@popperjs/core" "^2.10.1"
+    "@radix-ui/react-tabs" "0.1.5"
+    "@radix-ui/react-toggle-group" "0.1.5"
+    classnames "^2.2.6"
+    react-collapse "^5.1.0"
+    react-merge-refs "^1.1.0"
+    react-modal "3.14.3"
+    react-popper "^2.2.5"
+    uuid "^8.3.2"
+
+"@navikt/ds-react@^0.19.8":
+  version "0.19.18"
+  resolved "https://npm.pkg.github.com/download/@navikt/ds-react/0.19.18/ebaccefdd6440d9ee3becf7a78f64470cc1a525445d8770444674be29032b44b#9a0e5226f9d1a5766abffa81e56075ebc3119058"
+  integrity sha512-KgYOJkq5cNa4qefMiePs+ABmBr1RC8zW16UDM57PUo0+g/X+ga3ZmwG6HU9Nmfmz0Zpx21FxdB1khUoBTxnIJA==
+  dependencies:
+    "@floating-ui/react-dom" "0.6.0"
+    "@material-ui/core" "^4.12.3"
+    "@navikt/ds-icons" "^0.8.18"
     "@popperjs/core" "^2.10.1"
     "@radix-ui/react-tabs" "0.1.5"
     "@radix-ui/react-toggle-group" "0.1.5"
@@ -3461,56 +3468,30 @@
   resolved "https://npm.pkg.github.com/download/@navikt/k9-bem-utils/1.0.1/1c8b370a7f8e822ffffeff6fa566af9a025692ae3fd258c7a4e4c0d67cd52ea1#451f330cbf3636c6406468c157468ea07dfb3b10"
   integrity sha512-DRV0rm6NDyAIosWGeMk0RlfUciUNIdD4AxpnGYOpqJCTIoCJHxLtzwRa1Zv15LEX5BHDWbiDYF5ZxDFhfE4yBg==
 
-"@navikt/k9-date-utils@0.0.6", "@navikt/k9-date-utils@^0.0.6":
-  version "0.0.6"
-  resolved "https://npm.pkg.github.com/download/@navikt/k9-date-utils/0.0.6/73b5b9ef333f21f0cbdfec2e20d70b7b8f7cb1bf04b6ddc46188418cedc31f1d#af9bc93a6ff9cf212f7ebdc6c4fc0b6d6c7e14d3"
-  integrity sha512-Z2sz3wcYyFQm3oCo7aoWhS+fQd69vWzWqPumvkR3FJmmmRxnKnIos2mpeCN5WA1fJgRv1YihYQNSlWbplZ/UxQ==
-
-"@navikt/k9-date-utils@^0.0.5":
-  version "0.0.5"
-  resolved "https://npm.pkg.github.com/download/@navikt/k9-date-utils/0.0.5/62215107bf7c1a3b45d5d5a569773bcf94696b98620199aaeb79d11601c047cf#38418e62899fe77647cc4a3ac60ada6ddf0ce3b1"
-  integrity sha512-JkJGDvvIiYnPb5hejxoOOd14xY9NqXP6kuGodQ7zRxo7qmUBHXX8cmZgNIP0uMofMSnN1LIobCI4lmChbKpPnw==
-
-"@navikt/k9-date-utils@^0.0.7":
-  version "0.0.7"
-  resolved "https://npm.pkg.github.com/download/@navikt/k9-date-utils/0.0.7/688e8bc182d7a9e51fe38fe8e581d612afb68fc28b851c8362a964a9459c941d#6746de030c07a9ca51f6b32ee13db0318cf2e104"
-  integrity sha512-285HkuHGp4qTCRSx95uXq3shOae8MqifZ1l1AZ/WZQmzotcBUPEa7QQVNSE8lvf4zk0xkfyoA/XACX8JCHW5Uw==
-
-"@navikt/k9-period-utils@0.0.9":
-  version "0.0.9"
-  resolved "https://npm.pkg.github.com/download/@navikt/k9-period-utils/0.0.9/2ea3871d6717a79e328067e6795882a027116f3c7f33c2791705ea273141fdf7#12f36361860dcc0b100d6c0aa873b26f596859a6"
-  integrity sha512-/SWmrGXv5fUwzbP0+jUokDn/SDKsFXiD0V/RsODjLHMbiUZM3c27kaVtrBaiYwKSnGMGmaIP6ITzh9cG8rXqEw==
-  dependencies:
-    "@navikt/k9-array-utils" "^0.0.1"
-    "@navikt/k9-date-utils" "^0.0.6"
-
-"@navikt/k9-period-utils@^0.0.10":
-  version "0.0.10"
-  resolved "https://npm.pkg.github.com/download/@navikt/k9-period-utils/0.0.10/517957a0412ddd4c41a44160da697e102aa793b40403e9be272cb57257686506#3d223937e0798dbffb972bc267133f21b054b3a8"
-  integrity sha512-0Q3MG50hk5kG264+AOxTWOGmU97uRPdOZwvhburSY1b9Bw+MvJ5nTJj5Wy8PXbCsgcOt1EoGWoPkNGK+WfaQlg==
-  dependencies:
-    "@navikt/k9-array-utils" "^0.0.1"
-    "@navikt/k9-date-utils" "^0.0.7"
-
-"@navikt/k9-period-utils@^0.0.8":
+"@navikt/k9-date-utils@0.0.8", "@navikt/k9-date-utils@^0.0.8":
   version "0.0.8"
-  resolved "https://npm.pkg.github.com/download/@navikt/k9-period-utils/0.0.8/c07eb6e3a075b5231d5b1fd31be5ab30a39ae597036aabaad4ae787ead613784#60afc63f2f24498c10a6fabac8d7cb2875d3ce57"
-  integrity sha512-ZmUbuaDwiwO9oBnu01jKkZzq/ABgT7538pXEb1fSmCIrdBF1Xd/iXOKtFlbejj/wa6IR8PKtIR2sgt3rqYDr4g==
+  resolved "https://npm.pkg.github.com/download/@navikt/k9-date-utils/0.0.8/853f1aecd15b45b4982708babfac49868671f2797814e0d2d80d4fe0efa50871#06cfdda433652b39c1c4f2457463fc91dabd0d58"
+  integrity sha512-k6kJtGyReu3ZAUwi5/8eNQyQHQgPyHYO1fuOuvsrcXv4KoU33d2tO/+QHvMyVW3qKyTJGURKT1tN8mqpAAajsQ==
+
+"@navikt/k9-period-utils@0.0.11", "@navikt/k9-period-utils@^0.0.11":
+  version "0.0.11"
+  resolved "https://npm.pkg.github.com/download/@navikt/k9-period-utils/0.0.11/87e82ad6ac4cb0ed970b8985678695eaf029e0d7274b1735984f4fb9f6cee35f#90faf1570b80935de3dfc7f3cf1ddec07316a983"
+  integrity sha512-kwt+6617GfJkjlZPT/qMTXXWa/bb31+A/3uhToLNHmkBpQdpBZqXsy0/+u22c3gTyS5895O+VM4r3w6g2oumag==
   dependencies:
     "@navikt/k9-array-utils" "^0.0.1"
-    "@navikt/k9-date-utils" "^0.0.5"
+    "@navikt/k9-date-utils" "^0.0.8"
 
-"@navikt/k9-react-components@^0.1.21":
-  version "0.1.21"
-  resolved "https://npm.pkg.github.com/download/@navikt/k9-react-components/0.1.21/189271809bca759438fffe292c17ee51438209ec1781d54d54037f72ca97d2ea#438b48336d78cd2aa412c2e01bcaa867c3b0957c"
-  integrity sha512-93w6iBgbKxLlItROakGr0yGDCVuS1EMl/X8sz6BTzZ3lTvuImS3FLJiMlOgym82w7gukIWQLBOrBPxvKKTe++w==
+"@navikt/k9-react-components@0.2.2":
+  version "0.2.2"
+  resolved "https://npm.pkg.github.com/download/@navikt/k9-react-components/0.2.2/df25488c2fdc0c90ee08caddc7ccb614ae0dbe6e5c50d026b850828601225a8f#feb344db29f2c6773bdf611ab5c95bf4110dbb55"
+  integrity sha512-2jTfFjLXA3tuoDq6UjwGWPZRq0mx/QIXzHKGQGuFXpvleMfdJ4fF25H94CxNkBrhjtXGp33eAIIh6vpfY16W4w==
   dependencies:
-    "@navikt/ds-css" "^0.16.15"
-    "@navikt/ds-icons" "^0.8.7"
-    "@navikt/ds-react" "^0.17.19"
+    "@navikt/ds-css" "^0.18.7"
+    "@navikt/ds-icons" "^0.8.17"
+    "@navikt/ds-react" "^0.19.8"
     "@navikt/k9-bem-utils" "^1.0.1"
-    "@navikt/k9-date-utils" "^0.0.7"
-    "@navikt/k9-period-utils" "^0.0.10"
+    "@navikt/k9-date-utils" "^0.0.8"
+    "@navikt/k9-period-utils" "^0.0.11"
 
 "@nodelib/fs.scandir@2.1.5":
   version "2.1.5"
@@ -7345,15 +7326,14 @@ browserify-zlib@^0.2.0:
     pako "~1.0.5"
 
 browserslist@^4.0.0, browserslist@^4.12.0, browserslist@^4.14.5, browserslist@^4.16.5, browserslist@^4.16.6, browserslist@^4.20.2, browserslist@^4.20.3:
-  version "4.20.3"
-  resolved "https://registry.yarnpkg.com/browserslist/-/browserslist-4.20.3.tgz#eb7572f49ec430e054f56d52ff0ebe9be915f8bf"
-  integrity sha512-NBhymBQl1zM0Y5dQT/O+xiLP9/rzOIQdKM/eMJBAq7yBgaB6krIYLGejrwVYnSHZdqjscB1SPuAjHwxjvN6Wdg==
+  version "4.21.1"
+  resolved "https://registry.yarnpkg.com/browserslist/-/browserslist-4.21.1.tgz#c9b9b0a54c7607e8dc3e01a0d311727188011a00"
+  integrity sha512-Nq8MFCSrnJXSc88yliwlzQe3qNe3VntIjhsArW9IJOEPSHNx23FalwApUVbzAWABLhYJJ7y8AynWI/XM8OdfjQ==
   dependencies:
-    caniuse-lite "^1.0.30001332"
-    electron-to-chromium "^1.4.118"
-    escalade "^3.1.1"
-    node-releases "^2.0.3"
-    picocolors "^1.0.0"
+    caniuse-lite "^1.0.30001359"
+    electron-to-chromium "^1.4.172"
+    node-releases "^2.0.5"
+    update-browserslist-db "^1.0.4"
 
 bser@2.1.1:
   version "2.1.1"
@@ -7615,10 +7595,15 @@ caniuse-lite@^1.0.0:
   resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001325.tgz#2b4ad19b77aa36f61f2eaf72e636d7481d55e606"
   integrity sha512-sB1bZHjseSjDtijV1Hb7PB2Zd58Kyx+n/9EotvZ4Qcz2K3d0lWB8dB4nb8wN/TsOGFq3UuAm0zQZNQ4SoR7TrQ==
 
-caniuse-lite@^1.0.30001109, caniuse-lite@^1.0.30001332:
+caniuse-lite@^1.0.30001109:
   version "1.0.30001344"
   resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001344.tgz#8a1e7fdc4db9c2ec79a05e9fd68eb93a761888bb"
   integrity sha512-0ZFjnlCaXNOAYcV7i+TtdKBp0L/3XEU2MF/x6Du1lrh+SRX4IfzIVL4HNJg5pB2PmFb8rszIGyOvsZnqqRoc2g==
+
+caniuse-lite@^1.0.30001359:
+  version "1.0.30001361"
+  resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001361.tgz#ba2adb2527566fb96f3ac7c67698ae7fc495a28d"
+  integrity sha512-ybhCrjNtkFji1/Wto6SSJKkWk6kZgVQsDq5QI83SafsF6FXv2JB4df9eEdH6g8sdGgqTXrFLjAxqBGgYoU3azQ==
 
 capture-exit@^2.0.0:
   version "2.0.0"
@@ -9455,10 +9440,10 @@ ee-first@1.1.1:
   resolved "https://registry.yarnpkg.com/ee-first/-/ee-first-1.1.1.tgz#590c61156b0ae2f4f0255732a158b266bc56b21d"
   integrity sha512-WMwm9LhRUo+WUaRN+vRuETqG89IgZphVSNkdFgeb6sS/E4OrDIN7t48CAewSHXc6C8lefD8KKfr5vY61brQlow==
 
-electron-to-chromium@^1.4.118:
-  version "1.4.137"
-  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.4.137.tgz#186180a45617283f1c012284458510cd99d6787f"
-  integrity sha512-0Rcpald12O11BUogJagX3HsCN3FE83DSqWjgXoHo5a72KUKMSfI39XBgJpgNNxS9fuGzytaFjE06kZkiVFy2qA==
+electron-to-chromium@^1.4.172:
+  version "1.4.176"
+  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.4.176.tgz#61ab2a1de3b5072ee31881a937c08ac6780d1cfa"
+  integrity sha512-92JdgyRlcNDwuy75MjuFSb3clt6DGJ2IXSpg0MCjKd3JV9eSmuUAIyWiGAp/EtT0z2D4rqbYqThQLV90maH3Zw==
 
 elliptic@^6.5.3:
   version "6.5.4"
@@ -14805,7 +14790,7 @@ node-libs-browser@^2.2.1:
     util "^0.11.0"
     vm-browserify "^1.0.1"
 
-node-releases@^2.0.3:
+node-releases@^2.0.5:
   version "2.0.5"
   resolved "https://registry.yarnpkg.com/node-releases/-/node-releases-2.0.5.tgz#280ed5bc3eba0d96ce44897d8aee478bfb3d9666"
   integrity sha512-U9h1NLROZTq9uE1SNffn6WuPDg8icmi3ns4rEl/oTfIle4iLjTliCzgTsbaIFMq/Xn078/lfY/BL0GWZ+psK4Q==
@@ -19433,6 +19418,14 @@ upath@^2.0.1:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/upath/-/upath-2.0.1.tgz#50c73dea68d6f6b990f51d279ce6081665d61a8b"
   integrity sha512-1uEe95xksV1O0CYKXo8vQvN1JEbtJp7lb7C5U9HMsIp6IVwntkH/oNUzyVNQSd4S1sYk2FpSSW44FqMc8qee5w==
+
+update-browserslist-db@^1.0.4:
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/update-browserslist-db/-/update-browserslist-db-1.0.4.tgz#dbfc5a789caa26b1db8990796c2c8ebbce304824"
+  integrity sha512-jnmO2BEGUjsMOe/Fg9u0oczOe/ppIDZPebzccl1yDWGLFP16Pa1/RM5wEoKYPG2zstNcDuAStejyxsOuKINdGA==
+  dependencies:
+    escalade "^3.1.1"
+    picocolors "^1.0.0"
 
 update-notifier@^5.0.1:
   version "5.1.0"
