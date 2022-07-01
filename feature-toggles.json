@@ -34,5 +34,9 @@
   {
     "key": "NY_BEREGNING_PROSESS_ENABLED",
     "value": "${NY_BEREGNING_PROSESS_ENABLED}"
+  },
+  {
+    "key": "NY_BEREGNING_FAKTA_FORDEL_ENABLED",
+    "value": "${NY_BEREGNING_FAKTA_FORDEL_ENABLED}"
   }
 ]

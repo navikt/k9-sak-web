@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { injectIntl, WrappedComponentProps } from 'react-intl';
 import { Rettigheter, SideMenuWrapper, faktaHooks, useSetBehandlingVedEndring } from '@k9-sak-web/behandling-felles';
@@ -8,7 +8,8 @@ import {
   Fagsak,
   FagsakPerson,
   KodeverkMedNavn,
-  FeatureToggles, Dokument,
+  FeatureToggles,
+  Dokument,
 } from '@k9-sak-web/types';
 import ac from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
@@ -55,7 +56,7 @@ const OmsorgspengerFakta = ({
   setBehandling,
   arbeidsgiverOpplysningerPerId,
   featureToggles,
-  dokumenter
+  dokumenter,
 }: OwnProps & WrappedComponentProps) => {
   const { aksjonspunkter, ...rest } = data;
   const { addErrorMessage } = useRestApiErrorDispatcher();
@@ -113,6 +114,13 @@ const OmsorgspengerFakta = ({
     isCachingOn: true,
   });
 
+  const [formData, setFormData] = useState({});
+  useEffect(() => {
+    if (formData) {
+      setFormData(undefined);
+    }
+  }, [behandling.versjon]);
+
   if (sidemenyPaneler.length > 0) {
     const isLoading = state === RestApiState.NOT_STARTED || state === RestApiState.LOADING;
     return (
@@ -124,6 +132,8 @@ const OmsorgspengerFakta = ({
               ...faktaData,
               behandling,
               alleKodeverk,
+              formData,
+              setFormData,
               submitCallback: bekreftAksjonspunktCallback,
               ...valgtPanel.getKomponentData(rettigheter, dataTilUtledingAvOmsorgPaneler, hasFetchError),
               dokumenter,
