@@ -8,7 +8,7 @@
     "@fpsak-frontend/assets": "1.0.0",
     "@fpsak-frontend/shared-components": "1.0.0",
     "@fpsak-frontend/utils": "1.0.0",
-    "@navikt/k9-react-components": "^0.1.21",
+    "@navikt/ft-plattform-komponenter": "1.0.19",
     "classnames": "^2.3.1",
     "lodash.throttle": "^4.1.1",
     "moment": "^2.29.1",
