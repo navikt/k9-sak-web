@@ -38,18 +38,9 @@ const alleKodeverk = {
 describe('<FagsakList>', () => {
   const fagsak = {
     saksnummer: '12345',
-    sakstype: {
-      kode: 'ES',
-      kodeverk: FAGSAK_YTELSE_KODEVERK,
-    },
-    relasjonsRolleType: {
-      kode: 'TEST',
-      kodeverk: '',
-    },
-    status: {
-      kode: 'UBEH',
-      kodeverk: FAGSAK_STATUS_KODEVERK,
-    },
+    sakstype: 'ES',
+    relasjonsRolleType: 'TEST',
+    status: 'UBEH',
     barnFodt: null,
     opprettet: '2019-02-17T13:49:18.645',
     endret: '2019-02-17T13:49:18.645',
@@ -67,7 +58,7 @@ describe('<FagsakList>', () => {
       <FagsakList
         fagsaker={[fagsak]}
         selectFagsakCallback={clickFunction}
-        alleKodeverk={alleKodeverk as { [key: string]: [KodeverkMedNavn] }}
+        alleKodeverk={alleKodeverk as { [key: string]: KodeverkMedNavn[] }}
       />,
     );
 
@@ -88,14 +79,8 @@ describe('<FagsakList>', () => {
   it('skal sortere søkeresultat der avsluttede skal vises sist, mens sist endrede skal vises først', () => {
     const fagsak2 = {
       saksnummer: 23456,
-      sakstype: {
-        kode: 'ES',
-        kodeverk: FAGSAK_YTELSE_KODEVERK,
-      },
-      status: {
-        kode: 'UBEH',
-        kodeverk: FAGSAK_STATUS_KODEVERK,
-      },
+      sakstype: 'ES',
+      status: 'UBEH',
       barnFodt: null,
       opprettet: '2019-02-18T13:49:18.645',
       endret: '2019-02-18T13:49:18.645',
@@ -103,14 +88,8 @@ describe('<FagsakList>', () => {
     };
     const fagsak3 = {
       saksnummer: 34567,
-      sakstype: {
-        kode: 'ES',
-        kodeverk: FAGSAK_YTELSE_KODEVERK,
-      },
-      status: {
-        kode: 'AVSLU',
-        kodeverk: FAGSAK_STATUS_KODEVERK,
-      },
+      sakstype: 'ES',
+      status: 'AVSLU',
       barnFodt: null,
       opprettet: '2019-02-18T13:49:18.645',
       endret: '2019-02-18T13:49:18.645',
@@ -122,7 +101,7 @@ describe('<FagsakList>', () => {
       <FagsakList
         fagsaker={fagsaker as Fagsak[]}
         selectFagsakCallback={() => true}
-        alleKodeverk={alleKodeverk as { [key: string]: [KodeverkMedNavn] }}
+        alleKodeverk={alleKodeverk as { [key: string]: KodeverkMedNavn[] }}
       />,
     );
 

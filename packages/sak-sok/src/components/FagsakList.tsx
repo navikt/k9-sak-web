@@ -7,17 +7,18 @@ import { getKodeverknavnFn } from '@fpsak-frontend/utils';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 
 import styles from './fagsakList.less';
+import KodeverkType from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 
 const headerTextCodes = ['FagsakList.Saksnummer', 'FagsakList.Sakstype', 'FagsakList.Status'];
 const lagFagsakSortObj = (fagsak: Fagsak) => ({
-  avsluttet: fagsak.status.kode === fagsakStatus.AVSLUTTET,
+  avsluttet: fagsak.status === fagsakStatus.AVSLUTTET,
   endret: fagsak.endret ? fagsak.endret : fagsak.opprettet,
 });
 
 interface OwnProps {
   fagsaker: Fagsak[];
   selectFagsakCallback: (e: React.SyntheticEvent, saksnummer: string) => void;
-  alleKodeverk: { [key: string]: [KodeverkMedNavn] };
+  alleKodeverk: { [key: string]: KodeverkMedNavn[] };
 }
 
 /**
@@ -26,7 +27,7 @@ interface OwnProps {
  * Presentasjonskomponent. Formaterer fagsak-søkeresultatet for visning i tabell. Sortering av fagsakene blir håndtert her.
  */
 const FagsakList = ({ fagsaker, selectFagsakCallback, alleKodeverk }: OwnProps) => {
-  const getKodeverknavn = getKodeverknavnFn(alleKodeverk, kodeverkTyper);
+  const getKodeverknavn = getKodeverknavnFn(alleKodeverk);
   const sortedFagsaker = fagsaker.sort((fagsak1, fagsak2) => {
     const a = lagFagsakSortObj(fagsak1);
     const b = lagFagsakSortObj(fagsak2);
@@ -56,8 +57,8 @@ const FagsakList = ({ fagsaker, selectFagsakCallback, alleKodeverk }: OwnProps) 
           onKeyDown={selectFagsakCallback}
         >
           <TableColumn>{fagsak.saksnummer}</TableColumn>
-          <TableColumn>{getKodeverknavn(fagsak.sakstype)}</TableColumn>
-          <TableColumn>{getKodeverknavn(fagsak.status)}</TableColumn>
+          <TableColumn>{getKodeverknavn(fagsak.sakstype, KodeverkType.FAGSAK_YTELSE)}</TableColumn>
+          <TableColumn>{getKodeverknavn(fagsak.status, KodeverkType.FAGSAK_STATUS)}</TableColumn>
         </TableRow>
       ))}
     </Table>

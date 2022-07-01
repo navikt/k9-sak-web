@@ -1,4 +1,4 @@
-import { KodeverkMedNavn, Kodeverk } from '@k9-sak-web/types';
+import { KodeverkMedNavn } from '@k9-sak-web/types';
 import KodeverkType from 'kodeverk/src/kodeverkTyper';
 
 export const getKodeverknavnFraKode = (
