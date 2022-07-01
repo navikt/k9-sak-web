@@ -4,10 +4,7 @@ import { Normaltekst } from 'nav-frontend-typografi';
 import Faresignaler from './Faresignaler';
 
 const mockRisikoklassifisering = (medlSignaler, iaySignaler) => ({
-  kontrollresultat: {
-    kode: 'HOY',
-    kodeverk: 'Kontrollresultat',
-  },
+  kontrollresultat: 'HOY',
   medlFaresignaler: {
     faresignaler: medlSignaler,
   },

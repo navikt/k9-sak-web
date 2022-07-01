@@ -72,7 +72,7 @@ export const AvklarFaresignalerForm = ({ readOnly, aksjonspunkt, ...formProps }:
             validate={[required]}
             direction="vertical"
             readOnly={readOnly}
-            isEdited={!isAksjonspunktOpen(aksjonspunkt.status.kode)}
+            isEdited={!isAksjonspunktOpen(aksjonspunkt.status)}
           >
             <RadioOption label={<FormattedMessage id="Risikopanel.Form.Innvirkning" />} value />
             <RadioOption label={<FormattedMessage id="Risikopanel.Form.IngenInnvirkning" />} value={false} />
@@ -101,7 +101,7 @@ export const buildInitialValues = createSelector(
     if (aksjonspunkt && aksjonspunkt.begrunnelse && risikoklassifisering && risikoklassifisering.faresignalVurdering) {
       return {
         [begrunnelseFieldName]: aksjonspunkt.begrunnelse,
-        [radioFieldName]: risikoklassifisering.faresignalVurdering.kode === faresignalVurdering.INNVIRKNING,
+        [radioFieldName]: risikoklassifisering.faresignalVurdering === faresignalVurdering.INNVIRKNING,
       };
     }
     return undefined;

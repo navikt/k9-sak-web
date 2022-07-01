@@ -32,7 +32,7 @@ const HoyRisikoPanel = ({
   submitCallback,
 }: OwnProps) => (
   <Panel>
-    {aksjonspunkt && aksjonspunkt.status.kode === aksjonspunktStatus.OPPRETTET && (
+    {aksjonspunkt && aksjonspunkt.status === aksjonspunktStatus.OPPRETTET && (
       <>
         <AksjonspunktHelpTextHTML>
           <FormattedMessage id="Risikopanel.Panel.Tittel" />

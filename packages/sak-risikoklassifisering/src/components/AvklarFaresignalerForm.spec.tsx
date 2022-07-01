@@ -15,28 +15,16 @@ import {
 } from './AvklarFaresignalerForm';
 
 const mockAksjonspunkt = (status, begrunnelse) => ({
-  definisjon: {
-    kode: '5095',
-    kodeverk: '',
-  },
-  status: {
-    kode: status,
-    kodeverk: '',
-  },
+  definisjon: '5095',
+  status: status,
   begrunnelse,
   kanLoses: true,
   erAktivt: true,
 });
 
 const mockRisikoklassifisering = kode => ({
-  kontrollresultat: {
-    kode: 'HOY',
-    kodeverk: 'Kontrollresultat',
-  },
-  faresignalVurdering: {
-    kode,
-    kodeverk: 'Faresignalvurdering',
-  },
+  kontrollresultat: 'HOY',
+  faresignalVurdering: kode,
   medlFaresignaler: undefined,
   iayFaresignaler: undefined,
 });
