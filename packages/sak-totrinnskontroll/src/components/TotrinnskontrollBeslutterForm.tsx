@@ -12,7 +12,6 @@ import { VerticalSpacer, AksjonspunktHelpTextHTML } from '@fpsak-frontend/shared
 import { behandlingForm, behandlingFormValueSelector } from '@fpsak-frontend/form';
 import {
   Behandling,
-  Kodeverk,
   KodeverkMedNavn,
   KlageVurdering,
   TotrinnskontrollAksjonspunkt,
@@ -144,18 +143,18 @@ const validate = (values: FormValues) => {
   };
 };
 
-const finnArsaker = (vurderPaNyttArsaker: Kodeverk[]) =>
+const finnArsaker = (vurderPaNyttArsaker: string[]) =>
   vurderPaNyttArsaker.reduce((acc, arsak) => {
-    if (arsak.kode === vurderPaNyttArsakType.FEIL_FAKTA) {
+    if (arsak === vurderPaNyttArsakType.FEIL_FAKTA) {
       return { ...acc, feilFakta: true };
     }
-    if (arsak.kode === vurderPaNyttArsakType.FEIL_LOV) {
+    if (arsak === vurderPaNyttArsakType.FEIL_LOV) {
       return { ...acc, feilLov: true };
     }
-    if (arsak.kode === vurderPaNyttArsakType.FEIL_REGEL) {
+    if (arsak === vurderPaNyttArsakType.FEIL_REGEL) {
       return { ...acc, feilRegel: true };
     }
-    if (arsak.kode === vurderPaNyttArsakType.ANNET) {
+    if (arsak === vurderPaNyttArsakType.ANNET) {
       return { ...acc, annet: true };
     }
     return {};

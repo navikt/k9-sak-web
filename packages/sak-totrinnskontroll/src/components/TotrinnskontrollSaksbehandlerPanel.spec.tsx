@@ -99,10 +99,7 @@ describe('<TotrinnskontrollSaksbehandlerPanel>', () => {
       <TotrinnskontrollSaksbehandlerPanel
         totrinnskontrollSkjermlenkeContext={totrinnskontrollSkjermlenkeContext}
         erForeldrepengerFagsak
-        behandlingStatus={{
-          kode: behandlingStatus.BEHANDLING_UTREDES,
-          kodeverk: '',
-        }}
+        behandlingStatus={behandlingStatus.BEHANDLING_UTREDES}
         arbeidsforholdHandlingTyper={[]}
         erTilbakekreving={false}
         vurderArsaker={[]}

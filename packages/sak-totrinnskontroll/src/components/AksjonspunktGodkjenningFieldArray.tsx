@@ -5,7 +5,7 @@ import { NavLink } from 'react-router-dom';
 import { Location } from 'history';
 import { Undertekst, Normaltekst } from 'nav-frontend-typografi';
 
-import { Kodeverk, KodeverkMedNavn, KlageVurdering, TotrinnskontrollSkjermlenkeContext } from '@k9-sak-web/types';
+import { KodeverkMedNavn, KlageVurdering, TotrinnskontrollSkjermlenkeContext } from '@k9-sak-web/types';
 import { CheckboxField, NavFieldGroup, TextAreaField, RadioGroupField, RadioOption } from '@fpsak-frontend/form';
 import { ArrowBox, FlexColumn, FlexContainer, FlexRow } from '@fpsak-frontend/shared-components';
 import { hasValidText, maxLength, minLength, required } from '@fpsak-frontend/utils';
@@ -36,7 +36,7 @@ interface OwnProps {
   klageKA?: boolean;
   erForeldrepengerFagsak: boolean;
   klagebehandlingVurdering?: KlageVurdering;
-  behandlingStatus: Kodeverk;
+  behandlingStatus: string;
   arbeidsforholdHandlingTyper: KodeverkMedNavn[];
   erTilbakekreving: boolean;
   skjemalenkeTyper: KodeverkMedNavn[];

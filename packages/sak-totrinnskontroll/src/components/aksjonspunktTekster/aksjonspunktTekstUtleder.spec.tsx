@@ -17,7 +17,7 @@ const medholdIKlage = {
 };
 const oppheveYtelsesVedtak = { klageVurdering: klageVurderingCodes.OPPHEVE_YTELSESVEDTAK };
 const avvistKlage = { klageVurdering: klageVurderingCodes.AVVIS_KLAGE };
-const behandlingStatusFVED = { kode: behandlingStatusCodes.FATTER_VEDTAK, kodeverk: '' };
+const behandlingStatusFVED = behandlingStatusCodes.FATTER_VEDTAK;
 const stadfesteKlage = { klageVurdering: klageVurderingCodes.STADFESTE_YTELSESVEDTAK };
 
 const arbeidsforholdHandlingTyper = [
@@ -267,7 +267,7 @@ describe('aksjonspunktTekstUtleder', () => {
   });
   it('skal vise korrekt tekst for aksjonspunkt 5080 når søker er i permisjon, skal kun vise tekst om permisjon', () => {
     const arbeidforholdDto = {
-      arbeidsforholdHandlingType: { kode: arbeidsforholdHandlingType.BRUK },
+      arbeidsforholdHandlingType: arbeidsforholdHandlingType.BRUK,
       brukPermisjon: true,
     } as TotrinnskontrollArbeidsforhold;
     const messages = getFaktaOmArbeidsforholdMessages(arbeidforholdDto, arbeidsforholdHandlingTyper);
@@ -276,7 +276,7 @@ describe('aksjonspunktTekstUtleder', () => {
   });
   it('skal vise korrekt tekst for aksjonspunkt 5080 når søker ikke er i permisjon, skal ikke vise tekst for bruk', () => {
     const arbeidforholdDto = {
-      arbeidsforholdHandlingType: { kode: arbeidsforholdHandlingType.BRUK },
+      arbeidsforholdHandlingType: arbeidsforholdHandlingType.BRUK,
       brukPermisjon: false,
     } as TotrinnskontrollArbeidsforhold;
     const messages = getFaktaOmArbeidsforholdMessages(arbeidforholdDto, arbeidsforholdHandlingTyper);
@@ -285,7 +285,7 @@ describe('aksjonspunktTekstUtleder', () => {
   });
   it('skal vise korrekt tekst for aksjonspunkt 5080 når søker ikke er i permisjon sammen med en annen handling som ikke er bruk', () => {
     const arbeidforholdDto = {
-      arbeidsforholdHandlingType: { kode: arbeidsforholdHandlingType.BRUK_UTEN_INNTEKTSMELDING },
+      arbeidsforholdHandlingType: arbeidsforholdHandlingType.BRUK_UTEN_INNTEKTSMELDING,
       brukPermisjon: false,
     } as TotrinnskontrollArbeidsforhold;
     const messages = getFaktaOmArbeidsforholdMessages(arbeidforholdDto, arbeidsforholdHandlingTyper);
@@ -408,7 +408,7 @@ describe('aksjonspunktTekstUtleder', () => {
 
   it('skal vise korrekt tekst for aksjonspunkt 5058 vurder tidsbegrenset', () => {
     const beregningDto = {
-      faktaOmBeregningTilfeller: [{ kode: faktaOmBeregningTilfelle.VURDER_TIDSBEGRENSET_ARBEIDSFORHOLD }],
+      faktaOmBeregningTilfeller: [faktaOmBeregningTilfelle.VURDER_TIDSBEGRENSET_ARBEIDSFORHOLD],
     };
     const aksjonspunkt = {
       aksjonspunktKode: aksjonspunktCodes.VURDER_FAKTA_FOR_ATFL_SN,
@@ -421,7 +421,7 @@ describe('aksjonspunktTekstUtleder', () => {
   });
   it('skal vise korrekt tekst for aksjonspunkt 5058 ATFL i samme org', () => {
     const beregningDto = {
-      faktaOmBeregningTilfeller: [{ kode: faktaOmBeregningTilfelle.VURDER_AT_OG_FL_I_SAMME_ORGANISASJON }],
+      faktaOmBeregningTilfeller: [faktaOmBeregningTilfelle.VURDER_AT_OG_FL_I_SAMME_ORGANISASJON],
     };
     const aksjonspunkt = {
       aksjonspunktKode: aksjonspunktCodes.VURDER_FAKTA_FOR_ATFL_SN,
@@ -434,7 +434,7 @@ describe('aksjonspunktTekstUtleder', () => {
   });
   it('skal vise korrekte tekster for kombinasjon av aksjonspunkt 5058', () => {
     const beregningDto = {
-      faktaOmBeregningTilfeller: [{ kode: faktaOmBeregningTilfelle.VURDER_TIDSBEGRENSET_ARBEIDSFORHOLD }],
+      faktaOmBeregningTilfeller: [faktaOmBeregningTilfelle.VURDER_TIDSBEGRENSET_ARBEIDSFORHOLD],
     };
     const aksjonspunkt = {
       aksjonspunktKode: aksjonspunktCodes.VURDER_FAKTA_FOR_ATFL_SN,
@@ -454,19 +454,13 @@ describe('aksjonspunktTekstUtleder', () => {
         navn: 'COLOR LINE CREW AS',
         organisasjonsnummer: '973135678',
         arbeidsforholdId: 'e3602f7b-bf36-40d4-8e3a-22333daf664b',
-        arbeidsforholdHandlingType: {
-          kode: 'BRUK_UTEN_INNTEKTSMELDING',
-          kodeverk: 'ARBEIDSFORHOLD_HANDLING_TYPE',
-        },
+        arbeidsforholdHandlingType: 'BRUK_UTEN_INNTEKTSMELDING',
       },
       {
         navn: 'SESAM AS',
         organisasjonsnummer: '976037286',
         arbeidsforholdId: null,
-        arbeidsforholdHandlingType: {
-          kode: 'IKKE_BRUK',
-          kodeverk: 'ARBEIDSFORHOLD_HANDLING_TYPE',
-        },
+        arbeidsforholdHandlingType: 'IKKE_BRUK',
       },
     ];
 

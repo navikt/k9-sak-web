@@ -8,7 +8,7 @@ import { Image } from '@fpsak-frontend/shared-components';
 import checkImg from '@fpsak-frontend/assets/images/check.svg';
 import avslattImg from '@fpsak-frontend/assets/images/avslaatt.svg';
 import { decodeHtmlEntity } from '@fpsak-frontend/utils';
-import { Kodeverk, KodeverkMedNavn, KlageVurdering, TotrinnskontrollSkjermlenkeContext } from '@k9-sak-web/types';
+import { KodeverkMedNavn, KlageVurdering, TotrinnskontrollSkjermlenkeContext } from '@k9-sak-web/types';
 
 import getAksjonspunkttekst from './aksjonspunktTekster/aksjonspunktTekstUtleder';
 
@@ -95,11 +95,11 @@ const TotrinnskontrollSaksbehandlerPanel = ({
                     ) : (
                       <div className={styles.approvalItem}>
                         {aksjonspunkt.vurderPaNyttArsaker.map(item => (
-                          <div key={`${item.kode}${aksjonspunkt.aksjonspunktKode}`}>
+                          <div key={`${item}${aksjonspunkt.aksjonspunktKode}`}>
                             <span>
                               <Image src={avslattImg} className={styles.image} />
                             </span>
-                            <span>{vurderArsaker.find(arsak => item.kode === arsak.kode).navn}</span>
+                            <span>{vurderArsaker.find(arsak => item === arsak.kode).navn}</span>
                           </div>
                         ))}
                       </div>

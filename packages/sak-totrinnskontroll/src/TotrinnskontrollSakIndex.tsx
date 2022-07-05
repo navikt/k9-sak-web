@@ -12,7 +12,6 @@ import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import aksjonspunktCodesTilbakekreving from '@fpsak-frontend/kodeverk/src/aksjonspunktCodesTilbakekreving';
 import {
   BehandlingAppKontekst,
-  Kodeverk,
   KodeverkMedNavn,
   KlageVurdering,
   TotrinnskontrollSkjermlenkeContext,

@@ -20,10 +20,7 @@ describe('<FatterVedtakApprovalModal>', () => {
         allAksjonspunktApproved
         behandlingStatusKode={behandlingStatus.FATTER_VEDTAK}
         behandlingTypeKode={BehandlingType.KLAGE}
-        fagsakYtelseType={{
-          kode: fagsakYtelseType.FORELDREPENGER,
-          kodeverk: '',
-        }}
+        fagsakYtelseType={fagsakYtelseType.FORELDREPENGER}
         erKlageWithKA
       />,
     );
@@ -45,10 +42,7 @@ describe('<FatterVedtakApprovalModal>', () => {
         allAksjonspunktApproved
         behandlingStatusKode={behandlingStatus.FATTER_VEDTAK}
         behandlingTypeKode={BehandlingType.FORSTEGANGSSOKNAD}
-        fagsakYtelseType={{
-          kode: fagsakYtelseType.ENGANGSSTONAD,
-          kodeverk: '',
-        }}
+        fagsakYtelseType={fagsakYtelseType.ENGANGSSTONAD}
         erKlageWithKA
       />,
     );
@@ -72,10 +66,7 @@ describe('<FatterVedtakApprovalModal>', () => {
         allAksjonspunktApproved
         behandlingStatusKode={behandlingStatus.FATTER_VEDTAK}
         behandlingTypeKode={BehandlingType.FORSTEGANGSSOKNAD}
-        fagsakYtelseType={{
-          kode: fagsakYtelseType.FORELDREPENGER,
-          kodeverk: '',
-        }}
+        fagsakYtelseType={fagsakYtelseType.FORELDREPENGER}
         erKlageWithKA
       />,
     );
@@ -99,10 +90,7 @@ describe('<FatterVedtakApprovalModal>', () => {
         allAksjonspunktApproved
         behandlingStatusKode={behandlingStatus.FATTER_VEDTAK}
         behandlingTypeKode={BehandlingType.FORSTEGANGSSOKNAD}
-        fagsakYtelseType={{
-          kode: fagsakYtelseType.OMSORGSPENGER_KRONISK_SYKT_BARN,
-          kodeverk: '',
-        }}
+        fagsakYtelseType={fagsakYtelseType.OMSORGSPENGER_KRONISK_SYKT_BARN}
         erKlageWithKA
       />,
     );
