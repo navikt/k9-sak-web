@@ -100,3 +100,5 @@ spec:
       value: "true"
     - name: NY_BEREGNING_FAKTA_ENABLED
       value: "true"
+    - name: NY_BEREGNING_FAKTA_FORDEL_ENABLED
+      value: "true"

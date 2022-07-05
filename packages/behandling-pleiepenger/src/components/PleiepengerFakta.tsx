@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { injectIntl, WrappedComponentProps } from 'react-intl';
 import { Rettigheter, SideMenuWrapper, faktaHooks, useSetBehandlingVedEndring } from '@k9-sak-web/behandling-felles';
@@ -117,6 +117,13 @@ const PleiepengerFakta = ({
     isCachingOn: true,
   });
 
+  const [formData, setFormData] = useState({});
+  useEffect(() => {
+    if (formData) {
+      setFormData(undefined);
+    }
+  }, [behandling.versjon]);
+
   if (sidemenyPaneler.length > 0) {
     const isLoading = state === RestApiState.NOT_STARTED || state === RestApiState.LOADING;
     return (
@@ -133,6 +140,8 @@ const PleiepengerFakta = ({
               ...valgtPanel.getKomponentData(rettigheter, dataTilUtledingAvPleiepengerPaneler, hasFetchError),
               dokumenter,
               beregningErBehandlet,
+              formData,
+              setFormData,
             })}
           </ErrorBoundary>
         )}
