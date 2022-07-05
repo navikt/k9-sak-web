@@ -23,7 +23,7 @@ class BeregningFaktaPanelDef extends FaktaPanelDef {
   getAksjonspunktKoder = () => [aksjonspunktCodes.VURDER_FAKTA_FOR_ATFL_SN];
 
   getKomponent = props => {
-    if (props.featureToggles.NY_BEREGNING_FAKTA_ENABLED) {
+    if (props.featureToggles?.NY_BEREGNING_FAKTA_ENABLED) {
       const deepCopyProps = JSON.parse(JSON.stringify(props));
       konverterKodeverkTilKode(deepCopyProps);
       const bgVilkaret = deepCopyProps.vilkar.find(v => v.vilkarType === vilkarType.BEREGNINGSGRUNNLAGVILKARET);
