@@ -99,6 +99,6 @@ spec:
     - name: NY_BEREGNING_PROSESS_ENABLED
       value: "true"
     - name: NY_BEREGNING_FAKTA_ENABLED
-      value: "true"
+      value: "false"
     - name: NY_BEREGNING_FAKTA_FORDEL_ENABLED
       value: "true"
