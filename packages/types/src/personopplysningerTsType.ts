@@ -1,4 +1,3 @@
-import Kodeverk from './kodeverkTsType';
 
 export type PersonopplysningAdresse = Readonly<{
   adresseType?: string;

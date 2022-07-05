@@ -3,13 +3,14 @@ import { injectIntl, FormattedMessage, WrappedComponentProps } from 'react-intl'
 import { EtikettInfo } from 'nav-frontend-etiketter';
 import { Normaltekst, Element } from 'nav-frontend-typografi';
 
-import { Kodeverk, KodeverkMedNavn, Personopplysninger } from '@k9-sak-web/types';
+import { KodeverkMedNavn, Personopplysninger } from '@k9-sak-web/types';
 import { FlexColumn, FlexContainer, FlexRow, VerticalSpacer, Tooltip } from '@fpsak-frontend/shared-components';
-import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
+
 import opplysningAdresseType from '@fpsak-frontend/kodeverk/src/opplysningAdresseType';
 import { getKodeverknavnFn, getLanguageFromSprakkode, getAddresses, Adresser } from '@fpsak-frontend/utils';
 
 import styles from './visittkortDetaljerPopup.less';
+import KodeverkType from 'kodeverk/src/kodeverkTyper';
 
 const borSokerMedBarnet = (adresser: Adresser, personopplysningerForBarn: Personopplysninger[] = []): boolean =>
   personopplysningerForBarn.some(
@@ -18,7 +19,7 @@ const borSokerMedBarnet = (adresser: Adresser, personopplysningerForBarn: Person
       getAddresses(barn.adresser)[opplysningAdresseType.BOSTEDSADRESSE],
   );
 
-const findPersonStatus = (personopplysning: Personopplysninger): Kodeverk => {
+const findPersonStatus = (personopplysning: Personopplysninger): string => {
   if (personopplysning.avklartPersonstatus) {
     return personopplysning.avklartPersonstatus.overstyrtPersonstatus;
   }
@@ -28,7 +29,7 @@ const findPersonStatus = (personopplysning: Personopplysninger): Kodeverk => {
 interface OwnProps {
   personopplysninger: Personopplysninger;
   alleKodeverk: { [key: string]: KodeverkMedNavn[] };
-  sprakkode?: Kodeverk;
+  sprakkode?: string;
 }
 
 const VisittkortDetaljerPopup = ({
@@ -37,7 +38,7 @@ const VisittkortDetaljerPopup = ({
   alleKodeverk,
   sprakkode,
 }: OwnProps & WrappedComponentProps) => {
-  const getKodeverknavn = getKodeverknavnFn(alleKodeverk, kodeverkTyper);
+  const getKodeverknavn = getKodeverknavnFn(alleKodeverk);
   const adresser = useMemo(() => getAddresses(personopplysninger.adresser), [personopplysninger.adresser]);
   const borMedBarnet = useMemo(() => borSokerMedBarnet(adresser, personopplysninger.barnSoktFor), [personopplysninger]);
   const midlertidigAdresse = adresser[opplysningAdresseType.NORSK_NAV_TILLEGGSADRESSE]
@@ -55,7 +56,7 @@ const VisittkortDetaljerPopup = ({
                 alignBottom
               >
                 <EtikettInfo className={styles.etikett} typo="undertekst">
-                  {getKodeverknavn(personopplysninger.region)}
+                  {getKodeverknavn(personopplysninger.region, KodeverkType.REGION)}
                 </EtikettInfo>
               </Tooltip>
             </FlexColumn>
@@ -66,7 +67,7 @@ const VisittkortDetaljerPopup = ({
               alignBottom
             >
               <EtikettInfo className={styles.etikett} typo="undertekst">
-                {getKodeverknavn(findPersonStatus(personopplysninger))}
+                {getKodeverknavn(findPersonStatus(personopplysninger), KodeverkType.PERSONSTATUS_TYPE)}
               </EtikettInfo>
             </Tooltip>
           </FlexColumn>
@@ -77,7 +78,7 @@ const VisittkortDetaljerPopup = ({
                 alignBottom
               >
                 <EtikettInfo className={styles.etikett} typo="undertekst">
-                  {getKodeverknavn(personopplysninger.sivilstand)}
+                  {getKodeverknavn(personopplysninger.sivilstand, KodeverkType.SIVILSTAND_TYPE)}
                 </EtikettInfo>
               </Tooltip>
             </FlexColumn>

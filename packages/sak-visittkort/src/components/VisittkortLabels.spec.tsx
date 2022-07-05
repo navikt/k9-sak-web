@@ -15,52 +15,25 @@ import VisittkortLabels from './VisittkortLabels';
 describe('<VisittkortLabels>', () => {
   const personopplysningerSoker = {
     fodselsdato: '1990-01-01',
-    navBrukerKjonn: {
-      kode: navBrukerKjonn.KVINNE,
-      kodeverk: 'NAV_BRUKER_KJONN',
-    },
-    statsborgerskap: {
-      kode: 'NORSK',
-      kodeverk: 'STATSBORGERSKAP',
-    },
+    navBrukerKjonn: navBrukerKjonn.KVINNE,
+    statsborgerskap: 'NORSK',
     avklartPersonstatus: {
-      orginalPersonstatus: {
-        kode: personstatusType.BOSATT,
-        kodeverk: 'PERSONSTATUS_TYPE',
-      },
-      overstyrtPersonstatus: {
-        kode: personstatusType.BOSATT,
-        kodeverk: 'PERSONSTATUS_TYPE',
-      },
+      orginalPersonstatus: personstatusType.BOSATT,
+      overstyrtPersonstatus: personstatusType.BOSATT,
     },
-    personstatus: {
-      kode: personstatusType.BOSATT,
-      kodeverk: 'PERSONSTATUS_TYPE',
-    },
-    diskresjonskode: {
-      kode: diskresjonskodeType.KLIENT_ADRESSE,
-      kodeverk: 'DISKRESJONSKODE_TYPE',
-    },
-    sivilstand: {
-      kode: sivilstandType.SAMBOER,
-      kodeverk: 'SIVILSTAND_TYPE',
-    },
+    personstatus: personstatusType.BOSATT,
+    diskresjonskode: diskresjonskodeType.KLIENT_ADRESSE,
+    sivilstand: sivilstandType.SAMBOER,
     aktoerId: '24sedfs32',
     navn: 'Olga Utvikler',
     adresser: [
       {
-        adresseType: {
-          kode: opplysningAdresseType.BOSTEDSADRESSE,
-          kodeverk: 'ADRESSE_TYPE',
-        },
+        adresseType: opplysningAdresseType.BOSTEDSADRESSE,
         adresselinje1: 'Oslo',
       },
     ],
     fnr: '98773895',
-    region: {
-      kode: region.NORDEN,
-      kodeverk: 'REGION',
-    },
+    region: region.NORDEN,
     barn: [],
   };
 
@@ -95,10 +68,7 @@ describe('<VisittkortLabels>', () => {
         intl={intlMock}
         personopplysninger={{
           ...personopplysningerSoker,
-          diskresjonskode: {
-            kode: diskresjonskodeType.KODE6,
-            kodeverk: '',
-          },
+          diskresjonskode: diskresjonskodeType.KODE6,
         }}
       />,
     );
@@ -115,10 +85,7 @@ describe('<VisittkortLabels>', () => {
         intl={intlMock}
         personopplysninger={{
           ...personopplysningerSoker,
-          diskresjonskode: {
-            kode: diskresjonskodeType.KODE7,
-            kodeverk: '',
-          },
+          diskresjonskode: diskresjonskodeType.KODE7,
         }}
       />,
     );
