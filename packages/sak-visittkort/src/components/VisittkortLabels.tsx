@@ -37,23 +37,23 @@ const VisittkortLabels = ({
         </Tooltip>
       )}
       {personopplysninger &&
-        personopplysninger.diskresjonskode ? === diskresjonskodeType.KODE6 &&
+        personopplysninger.diskresjonskode === diskresjonskodeType.KODE6 &&
         !personopplysninger.dodsdato && (
-        <Tooltip content={intl.formatMessage({ id: 'VisittkortLabels.Diskresjon6Tittel' })} alignBottom>
-          <EtikettAdvarsel className={styles.etikett}>
-            <FormattedMessage id="VisittkortLabels.Diskresjon6" />
-          </EtikettAdvarsel>
-        </Tooltip>
-      )}
+          <Tooltip content={intl.formatMessage({ id: 'VisittkortLabels.Diskresjon6Tittel' })} alignBottom>
+            <EtikettAdvarsel className={styles.etikett}>
+              <FormattedMessage id="VisittkortLabels.Diskresjon6" />
+            </EtikettAdvarsel>
+          </Tooltip>
+        )}
       {personopplysninger &&
-        personopplysninger.diskresjonskode ? === diskresjonskodeType.KODE7 &&
+        personopplysninger.diskresjonskode === diskresjonskodeType.KODE7 &&
         !personopplysninger.dodsdato && (
-        <Tooltip content={intl.formatMessage({ id: 'VisittkortLabels.Diskresjon7Tittel' })} alignBottom>
-          <EtikettFokus className={styles.etikett}>
-            <FormattedMessage id="VisittkortLabels.Diskresjon7" />
-          </EtikettFokus>
-        </Tooltip>
-      )}
+          <Tooltip content={intl.formatMessage({ id: 'VisittkortLabels.Diskresjon7Tittel' })} alignBottom>
+            <EtikettFokus className={styles.etikett}>
+              <FormattedMessage id="VisittkortLabels.Diskresjon7" />
+            </EtikettFokus>
+          </Tooltip>
+        )}
       {harVerge && (
         <Tooltip content={intl.formatMessage({ id: 'VisittkortLabels.VergeTittel' })} alignBottom>
           <EtikettInfo className={styles.etikett}>
