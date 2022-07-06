@@ -66,7 +66,7 @@ const OpptjeningVilkarProsessIndex = ({
   }, [activeTab, visAllePerioder]);
 
 
-  if(perioder.length === 0){
+  if (perioder.length === 0) {
     return null;
   }
   const activePeriode = perioder.length === 1 ? perioder[0] : perioder[activeTab];
@@ -75,26 +75,26 @@ const OpptjeningVilkarProsessIndex = ({
   return (
     <RawIntlProvider value={intl}>
       <div className={cx('mainContainer--withSideMenu')}>
-          <div className={styles.sideMenuContainer}>
-            <SideMenu
-              links={perioder.map(({ periode, vilkarStatus }, index) => ({
-                active: activeTab === index,
-                label: `${dateFormat(periode.fom)} - ${dateFormat(periode.tom)}`,
-                iconSrc:
-                  isAksjonspunktOpen && vilkarStatus.kode === vilkarUtfallType.IKKE_VURDERT ? advarselIcon : null,
-              }))}
-              onClick={setActiveTab}
-              theme="arrow"
-              heading={intl.formatMessage({ id: 'Sidemeny.Perioder' })}
-            />
-          </div>
+        <div className={styles.sideMenuContainer}>
+          <SideMenu
+            links={perioder.map(({ periode, vilkarStatus }, index) => ({
+              active: activeTab === index,
+              label: `${dateFormat(periode.fom)} - ${dateFormat(periode.tom)}`,
+              iconSrc:
+                isAksjonspunktOpen && vilkarStatus === vilkarUtfallType.IKKE_VURDERT ? advarselIcon : null,
+            }))}
+            onClick={setActiveTab}
+            theme="arrow"
+            heading={intl.formatMessage({ id: 'Sidemeny.Perioder' })}
+          />
+        </div>
         <div className={styles.contentContainer}>
           <OpptjeningVilkarForm
             behandlingId={behandling.id}
             behandlingVersjon={behandling.versjon}
-            status={activePeriode.vilkarStatus.kode}
+            status={activePeriode.vilkarStatus}
             lovReferanse={lovReferanse}
-            fagsakType={fagsak.sakstype.kode}
+            fagsakType={fagsak.sakstype}
             aksjonspunkter={aksjonspunkter}
             submitCallback={submitCallback}
             readOnly={isReadOnly}

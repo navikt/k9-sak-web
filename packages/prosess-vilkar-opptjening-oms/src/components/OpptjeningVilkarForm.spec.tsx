@@ -17,7 +17,7 @@ const periode = {
     antattOpptjeningAktivitetTidslinje: 'LocalDateTimeline<2020-03-27, 2020-04-04 [1]> = [[2020-03-27, 2020-04-04]]',
   },
   periode: { fom: '2020-04-24', tom: '2020-04-24' },
-  vilkarStatus: { kode: 'IKKE_OPPFYLT', kodeverk: 'VILKAR_UTFALL_TYPE' },
+  vilkarStatus: 'IKKE_OPPFYLT',
   vurdersIBehandlingen: true,
 };
 
@@ -34,12 +34,8 @@ describe('<OpptjeningVilkarForm>', () => {
         aksjonspunkter={
           [
             {
-              definisjon: {
-                kode: aksjonspunktCodes.SVANGERSKAPSVILKARET,
-              },
-              status: {
-                kode: aksjonspunktStatus.OPPRETTET,
-              },
+              definisjon: aksjonspunktCodes.SVANGERSKAPSVILKARET,
+              status: aksjonspunktStatus.OPPRETTET,
               begrunnelse: undefined,
             },
           ] as Aksjonspunkt[]

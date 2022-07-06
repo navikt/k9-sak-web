@@ -52,7 +52,7 @@ interface StateProps {
 }
 
 const hentErVilkarOK = (aksjonspunkter: Aksjonspunkt[], vilkårPerioder: Vilkarperiode[], periodeIndex: number, status: string) => {
-  const isOpenAksjonspunkt = aksjonspunkter.some(ap => isAksjonspunktOpen(ap.status.kode));
+  const isOpenAksjonspunkt = aksjonspunkter.some(ap => isAksjonspunktOpen(ap.status));
   return isOpenAksjonspunkt && vilkårPerioder[periodeIndex].vurdersIBehandlingen ? undefined : vilkarUtfallType.OPPFYLT === status;
 }
 
@@ -109,10 +109,10 @@ export const OpptjeningVilkarAksjonspunktPanelImpl = ({
     const skjæringstidspunkt = dayjs(opptjening.fastsattOpptjening.opptjeningTom).add(1, 'day').format("YYYY-MM-DD");
 
     const vurderesOpptjeningsaktivitetIBehandling = vilkårPerioder.find(
-      ({periode}) => periode.fom === skjæringstidspunkt
+      ({ periode }) => periode.fom === skjæringstidspunkt
     )?.vurdersIBehandlingen;
 
-    if(!vurderesOpptjeningsaktivitetIBehandling){
+    if (!vurderesOpptjeningsaktivitetIBehandling) {
       return false;
     }
 
@@ -149,8 +149,8 @@ export const OpptjeningVilkarAksjonspunktPanelImpl = ({
         <Hjelpetekst type={PopoverOrientering.UnderHoyre}>
           <FormattedMessage id="OpptjeningVilkarAksjonspunktPanel.VurderingHjelpetekst" values={{
             b: (...chunks) => <b>{chunks}</b>,
-           linebreak: <br />
-          }}/>
+            linebreak: <br />
+          }} />
         </Hjelpetekst>
       </div>
 
@@ -200,11 +200,11 @@ const transformValues = (
   })),
   opptjeningPerioder: Array.isArray(opptjeninger)
     ? opptjeninger.map(opptjening => ({
-        fom: opptjening.fastsattOpptjening.opptjeningFom,
-        tom: opptjening.fastsattOpptjening.opptjeningTom,
-      }))
+      fom: opptjening.fastsattOpptjening.opptjeningFom,
+      tom: opptjening.fastsattOpptjening.opptjeningTom,
+    }))
     : [],
-  ...{ kode: Array.isArray(aksjonspunkter) && aksjonspunkter.length ? aksjonspunkter[0].definisjon.kode : null },
+  ...{ kode: Array.isArray(aksjonspunkter) && aksjonspunkter.length ? aksjonspunkter[0].definisjon : null },
 });
 
 const mapStateToPropsFactory = (initialState, initialOwnProps: OpptjeningVilkarAksjonspunktPanelImplProps) => {
