@@ -107,22 +107,24 @@ const PleiepengerPaneler = ({
                   {hasError && <p>Noe gikk galt under henting av perioder</p>}
                   {!isLoading && !hasError && (
                     <ArbeidsgiverMedManglendePerioderListe
-                      arbeidsgivereMedPerioder={data.mangler?.map(mangel => ({
-                        arbeidsgiverNavn: arbeidsgiverOpplysningerUtil.finnArbeidsgiversNavn(
-                          mangel.arbeidsgiver.organisasjonsnummer || mangel.arbeidsgiver.aktørId,
-                        ),
-                        organisasjonsnummer: mangel.arbeidsgiver.organisasjonsnummer,
-                        perioder: mangel.manglendePerioder.map(periode => {
-                          const [fom, tom] = periode.split('/');
-                          const formattedFom = moment(fom, 'YYYY-MM-DD').format('DD.MM.YYYY');
-                          const formattedTom = moment(tom, 'YYYY-MM-DD').format('DD.MM.YYYY');
-                          return `${formattedFom} - ${formattedTom}`;
-                        }),
-                        arbeidstype: mangel.arbeidsgiver?.type,
-                        personIdentifikator:
-                          arbeidsgiverOpplysningerUtil.arbeidsgiverOpplysningerPerId[mangel.arbeidsgiver?.aktørId]
-                            ?.personIdentifikator,
-                      }))}
+                      arbeidsgivereMedPerioder={data.mangler
+                        ?.filter(mangel => mangel.manglendePerioder?.length > 0)
+                        .map(mangel => ({
+                          arbeidsgiverNavn: arbeidsgiverOpplysningerUtil.finnArbeidsgiversNavn(
+                            mangel.arbeidsgiver.organisasjonsnummer || mangel.arbeidsgiver.aktørId,
+                          ),
+                          organisasjonsnummer: mangel.arbeidsgiver.organisasjonsnummer,
+                          perioder: mangel.manglendePerioder.map(periode => {
+                            const [fom, tom] = periode.split('/');
+                            const formattedFom = moment(fom, 'YYYY-MM-DD').format('DD.MM.YYYY');
+                            const formattedTom = moment(tom, 'YYYY-MM-DD').format('DD.MM.YYYY');
+                            return `${formattedFom} - ${formattedTom}`;
+                          }),
+                          arbeidstype: mangel.arbeidsgiver?.type,
+                          personIdentifikator:
+                            arbeidsgiverOpplysningerUtil.arbeidsgiverOpplysningerPerId[mangel.arbeidsgiver?.aktørId]
+                              ?.personIdentifikator,
+                        }))}
                     />
                   )}
                 </div>
