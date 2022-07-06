@@ -15,9 +15,7 @@ import alleKodeverk from '../mocks/alleKodeverk.json';
 const behandling = {
   id: 1,
   versjon: 1,
-  type: {
-    kode: behandlingType.FORSTEGANGSSOKNAD,
-  },
+  type: behandlingType.FORSTEGANGSSOKNAD,
   behandlingPaaVent: false,
   status: behandlingStatus.OPPRETTET,
 };
@@ -40,9 +38,7 @@ const soknad = {
 const arbeidsforhold = [
   {
     arbeidsgiverReferanse: '12345678',
-    kilde: {
-      kode: '-',
-    },
+    kilde: '-',
   },
 ];
 const medlemskap = {
@@ -68,18 +64,9 @@ const medlemskap = {
     {
       fom: '2019-01-01',
       tom: '2021-10-13',
-      medlemskapType: {
-        kode: 'AVKLARES',
-        kodeverk: 'MEDLEMSKAP_TYPE',
-      },
-      dekningType: {
-        kode: 'OPPHOR',
-        kodeverk: 'MEDLEMSKAP_DEKNING',
-      },
-      kildeType: {
-        kode: 'FS22',
-        kodeverk: 'MEDLEMSKAP_KILDE',
-      },
+      medlemskapType: 'AVKLARES',
+      dekningType: 'OPPHOR',
+      kildeType: 'FS22',
       beslutningsdato: null,
     },
   ],
@@ -91,42 +78,20 @@ const medlemskap = {
         aktoerId: '1615078487209',
         diskresjonskode: null,
         nummer: null,
-        navBrukerKjonn: {
-          kode: 'K',
-          kodeverk: 'BRUKER_KJOENN',
-        },
-        statsborgerskap: {
-          kode: 'NOR',
-          kodeverk: 'LANDKODER',
-          navn: 'Norge',
-        },
+        navBrukerKjonn: 'K',
+        statsborgerskap: 'NOR',
         avklartPersonstatus: {
-          orginalPersonstatus: {
-            kode: 'BOSA',
-            kodeverk: 'PERSONSTATUS_TYPE',
-          },
-          overstyrtPersonstatus: {
-            kode: 'BOSA',
-            kodeverk: 'PERSONSTATUS_TYPE',
-          },
+          orginalPersonstatus: 'BOSA',
+          overstyrtPersonstatus: 'BOSA',
         },
-        personstatus: {
-          kode: 'BOSA',
-          kodeverk: 'PERSONSTATUS_TYPE',
-        },
-        sivilstand: {
-          kode: 'UGIF',
-          kodeverk: 'SIVILSTAND_TYPE',
-        },
+        personstatus: 'BOSA',
+        sivilstand: 'UGIF',
         navn: 'Mygg Robust',
         dodsdato: null,
         fodselsdato: '1966-08-02',
         adresser: [
           {
-            adresseType: {
-              kode: 'BOSTEDSADRESSE',
-              kodeverk: 'ADRESSE_TYPE',
-            },
+            adresseType: 'BOSTEDSADRESSE',
             mottakerNavn: 'Mygg Robust',
             adresselinje1: 'Skogvegen 3',
             adresselinje2: null,
@@ -136,10 +101,7 @@ const medlemskap = {
             land: 'NOR',
           },
         ],
-        region: {
-          kode: 'NORDEN',
-          kodeverk: 'REGION',
-        },
+        region: 'NORDEN',
         annenPart: null,
         ektefelle: null,
         barn: [],
@@ -163,41 +125,19 @@ const medlemskap = {
         aktoerId: '1615078487209',
         diskresjonskode: null,
         nummer: null,
-        navBrukerKjonn: {
-          kode: 'K',
-          kodeverk: 'BRUKER_KJOENN',
-        },
-        statsborgerskap: {
-          kode: 'NOR',
-          kodeverk: 'LANDKODER',
-          navn: 'Norge',
-        },
+        navBrukerKjonn: 'K',
+        statsborgerskap: 'NOR',
         avklartPersonstatus: {
-          orginalPersonstatus: {
-            kode: 'BOSA',
-            kodeverk: 'PERSONSTATUS_TYPE',
-          },
-          overstyrtPersonstatus: {
-            kode: 'BOSA',
-            kodeverk: 'PERSONSTATUS_TYPE',
-          },
+          orginalPersonstatus: 'BOSA',
+          overstyrtPersonstatus: 'BOSA',
         },
-        personstatus: {
-          kode: 'BOSA',
-          kodeverk: 'PERSONSTATUS_TYPE',
-        },
-        sivilstand: {
-          kode: 'UGIF',
-          kodeverk: 'SIVILSTAND_TYPE',
-        },
+        personstatus: 'BOSA',
+        sivilstand: 'UGIF',
         navn: 'Mygg Robust',
         dodsdato: null,
         fodselsdato: '1966-08-02',
         adresser: [],
-        region: {
-          kode: 'NORDEN',
-          kodeverk: 'REGION',
-        },
+        region: 'NORDEN',
         annenPart: null,
         ektefelle: null,
         barn: [],
@@ -236,12 +176,8 @@ export const visAksjonspunktForAvklaringAvStartdatoForForeldrepengerperioden = (
     arbeidsforhold={object('arbeidsforhold', arbeidsforhold)}
     aksjonspunkter={[
       {
-        definisjon: {
-          kode: aksjonspunktCodes.AVKLAR_STARTDATO_FOR_FORELDREPENGERPERIODEN,
-        },
-        status: {
-          kode: aksjonspunktStatus.OPPRETTET,
-        },
+        definisjon: aksjonspunktCodes.AVKLAR_STARTDATO_FOR_FORELDREPENGERPERIODEN,
+        status: aksjonspunktStatus.OPPRETTET,
         begrunnelse: undefined,
         kanLoses: true,
         erAktivt: true,
@@ -272,45 +208,29 @@ export const visAksjonspunktForAlleAndreMedlemskapsaksjonspunkter = () => (
     arbeidsforhold={object('arbeidsforhold', arbeidsforhold)}
     aksjonspunkter={[
       {
-        definisjon: {
-          kode: aksjonspunktCodes.AVKLAR_OM_BRUKER_ER_BOSATT,
-        },
-        status: {
-          kode: aksjonspunktStatus.OPPRETTET,
-        },
+        definisjon: aksjonspunktCodes.AVKLAR_OM_BRUKER_ER_BOSATT,
+        status: aksjonspunktStatus.OPPRETTET,
         begrunnelse: undefined,
         kanLoses: true,
         erAktivt: true,
       },
       {
-        definisjon: {
-          kode: aksjonspunktCodes.AVKLAR_FORTSATT_MEDLEMSKAP,
-        },
-        status: {
-          kode: aksjonspunktStatus.OPPRETTET,
-        },
+        definisjon: aksjonspunktCodes.AVKLAR_FORTSATT_MEDLEMSKAP,
+        status: aksjonspunktStatus.OPPRETTET,
         begrunnelse: undefined,
         kanLoses: true,
         erAktivt: true,
       },
       {
-        definisjon: {
-          kode: aksjonspunktCodes.AVKLAR_OM_BRUKER_HAR_GYLDIG_PERIODE,
-        },
-        status: {
-          kode: aksjonspunktStatus.OPPRETTET,
-        },
+        definisjon: aksjonspunktCodes.AVKLAR_OM_BRUKER_HAR_GYLDIG_PERIODE,
+        status: aksjonspunktStatus.OPPRETTET,
         begrunnelse: undefined,
         kanLoses: true,
         erAktivt: true,
       },
       {
-        definisjon: {
-          kode: aksjonspunktCodes.AVKLAR_OPPHOLDSRETT,
-        },
-        status: {
-          kode: aksjonspunktStatus.OPPRETTET,
-        },
+        definisjon: aksjonspunktCodes.AVKLAR_OPPHOLDSRETT,
+        status: aksjonspunktStatus.OPPRETTET,
         begrunnelse: undefined,
         kanLoses: true,
         erAktivt: true,

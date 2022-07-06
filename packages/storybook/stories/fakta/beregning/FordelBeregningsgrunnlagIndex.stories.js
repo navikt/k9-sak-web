@@ -31,9 +31,7 @@ export default {
 const lagBehandling = perioder => ({
   id: 1,
   versjon: 1,
-  type: {
-    kode: 'BT-003',
-  },
+  type: 'BT-003',
   behandlingsresultat: {
     vilkårResultat: {
       BEREGNINGSGRUNNLAGVILKÅR: perioder.map(p => ({
@@ -51,12 +49,8 @@ const merknaderFraBeslutter = {
 
 const fordelAP = [
   {
-    definisjon: {
-      kode: aksjonspunktCodes.FORDEL_BEREGNINGSGRUNNLAG,
-    },
-    status: {
-      kode: 'OPPR',
-    },
+    definisjon: aksjonspunktCodes.FORDEL_BEREGNINGSGRUNNLAG,
+    status: 'OPPR',
     begrunnelse: null,
     erAktivt: true,
     kanLoses: true,
@@ -65,12 +59,8 @@ const fordelAP = [
 
 const fordelAvklaringsbehov = [
   {
-    definisjon: {
-      kode: aksjonspunktCodes.FORDEL_BEREGNINGSGRUNNLAG,
-    },
-    status: {
-      kode: 'OPPR',
-    },
+    definisjon: aksjonspunktCodes.FORDEL_BEREGNINGSGRUNNLAG,
+    status: 'OPPR',
     begrunnelse: null,
   },
 ];
@@ -78,10 +68,7 @@ const fordelAvklaringsbehov = [
 const lagBGAndel = (andelsnr, aktivitetstatuskode, beregnet) => ({
   beregningsgrunnlagTom: '2019-08-31',
   beregningsgrunnlagFom: '2019-06-01',
-  aktivitetStatus: {
-    kode: aktivitetstatuskode,
-    kodeverk: 'AKTIVITET_STATUS',
-  },
+  aktivitetStatus: aktivitetstatuskode,
   beregningsperiodeFom: '2019-06-01',
   beregningsperiodeTom: '2019-08-31',
   beregnetPrAar: beregnet,
@@ -89,10 +76,7 @@ const lagBGAndel = (andelsnr, aktivitetstatuskode, beregnet) => ({
   overstyrtPrAar: null,
   bruttoPrAar: beregnet,
   andelsnr,
-  inntektskategori: {
-    kode: 'ARBEIDSTAKER',
-    kodeverk: 'INNTEKTSKATEGORI',
-  },
+  inntektskategori: 'ARBEIDSTAKER',
   fordeltPrAar: null,
   erTilkommetAndel: false,
 });
@@ -147,10 +131,7 @@ const lagBG = (perioder, faktaOmFordeling) => {
                 fom: '2018-10-09',
                 tom: '9999-12-31',
                 arbeidsforholdId: '2a3c0f5c-3d70-447a-b0d7-cd242d5155bb',
-                arbeidsforholdType: {
-                  kode: 'ARBEID',
-                  kodeverk: 'OPPTJENING_AKTIVITET_TYPE',
-                },
+                arbeidsforholdType: 'ARBEID',
                 aktørId: null,
                 skalBrukes: null,
               },
@@ -162,14 +143,8 @@ const lagBG = (perioder, faktaOmFordeling) => {
         {
           belopReadOnly: 30000,
           fastsattBelop: null,
-          inntektskategori: {
-            kode: 'ARBEIDSTAKER',
-            kodeverk: 'INNTEKTSKATEGORI',
-          },
-          aktivitetStatus: {
-            kode: 'AT',
-            kodeverk: 'AKTIVITET_STATUS',
-          },
+          inntektskategori: 'ARBEIDSTAKER',
+          aktivitetStatus: 'AT',
           refusjonskrav: 30000,
           visningsnavn: 'BEDRIFT AS (910909088) ...55bb',
           arbeidsforhold: {
@@ -177,17 +152,11 @@ const lagBG = (perioder, faktaOmFordeling) => {
             startdato: '2018-10-09',
             opphoersdato: null,
             arbeidsforholdId: '2a3c0f5c-3d70-447a-b0d7-cd242d5155bb',
-            arbeidsforholdType: {
-              kode: 'ARBEID',
-              kodeverk: 'OPPTJENING_AKTIVITET_TYPE',
-            },
+            arbeidsforholdType: 'ARBEID',
             aktørId: null,
             refusjonPrAar: null,
             belopFraInntektsmeldingPrMnd: 30000,
-            organisasjonstype: {
-              kode: 'VIRKSOMHET',
-              kodeverk: 'ORGANISASJONSTYPE',
-            },
+            organisasjonstype: 'VIRKSOMHET',
             naturalytelseBortfaltPrÅr: null,
             naturalytelseTilkommetPrÅr: null,
           },
@@ -199,10 +168,7 @@ const lagBG = (perioder, faktaOmFordeling) => {
       vurderMilitaer: null,
       refusjonskravSomKommerForSentListe: null,
     },
-    hjemmel: {
-      kode: 'F_14_7_8_30',
-      kodeverk: 'BG_HJEMMEL',
-    },
+    hjemmel: 'F_14_7_8_30',
     faktaOmFordeling,
     årsinntektVisningstall: 360000,
   };
@@ -219,20 +185,14 @@ const lagFaktaOmFordeling = (arbfor, perioder) => ({
 const lagArbforTilFordeling = (arbGiverId, arbId, refKrav, refKravFom) => ({
   aktørId: null,
   arbeidsforholdId: arbId,
-  arbeidsforholdType: {
-    kode: 'ARBEID',
-    kodeverk: 'OPPTJENING_AKTIVITET_TYPE',
-  },
+  arbeidsforholdType: 'ARBEID',
   arbeidsgiverIdent: arbGiverId,
   belopFraInntektsmeldingPrMnd: null,
   eksternArbeidsforholdId: 'ARB001-001',
   naturalytelseBortfaltPrÅr: null,
   naturalytelseTilkommetPrÅr: null,
   opphoersdato: '2020-10-27',
-  organisasjonstype: {
-    kode: 'VIRKSOMHET',
-    kodeverk: 'ORGANISASJONSTYPE',
-  },
+  organisasjonstype: 'VIRKSOMHET',
   perioderMedGraderingEllerRefusjon: [
     {
       erRefusjon: true,
@@ -315,21 +275,21 @@ const lagArbeidsforhold = (arbeidsgiverIdent, arbeidsforholdId, refKrav) => ({
 });
 
 export const flerePerioderMedHelg = () => (
-    <FordelBeregningsgrunnlagFaktaIndex
-      behandling={lagBehandling([{ fom: '2021-06-28' }])}
-      alleKodeverk={alleKodeverk}
-      arbeidsgiverOpplysningerPerId={arbeidsgivere}
-      alleMerknaderFraBeslutter={{
-        [aksjonspunktCodes.FORDEL_BEREGNINGSGRUNNLAG]: object('merknaderFraBeslutter', merknaderFraBeslutter),
-      }}
-      submitCallback={action('button-click')}
-      readOnly={false}
-      beregningsgrunnlag={bgMedHelg}
-      aksjonspunkter={fordelAP}
-      harApneAksjonspunkter={boolean('harApneAksjonspunkter', true)}
-      submittable={boolean('submittable', true)}
-    />
-  );
+  <FordelBeregningsgrunnlagFaktaIndex
+    behandling={lagBehandling([{ fom: '2021-06-28' }])}
+    alleKodeverk={alleKodeverk}
+    arbeidsgiverOpplysningerPerId={arbeidsgivere}
+    alleMerknaderFraBeslutter={{
+      [aksjonspunktCodes.FORDEL_BEREGNINGSGRUNNLAG]: object('merknaderFraBeslutter', merknaderFraBeslutter),
+    }}
+    submitCallback={action('button-click')}
+    readOnly={false}
+    beregningsgrunnlag={bgMedHelg}
+    aksjonspunkter={fordelAP}
+    harApneAksjonspunkter={boolean('harApneAksjonspunkter', true)}
+    submittable={boolean('submittable', true)}
+  />
+);
 
 
 export const aapOgRefusjon = () => {
@@ -423,7 +383,7 @@ export const skalSlåSammenNaturalytelseperioder = () => {
       submittable={boolean('submittable', true)}
     />
   );
-  
+
 };
 
 export const viseVurderTilkommetRefusjonskrav = () => (
@@ -445,11 +405,11 @@ export const viseVurderTilkommetRefusjonskrav = () => (
 
 export const skalVurdereTilkommetØktRefusjonPåTidligereInnvilgetDelvisRefusjon = () => (
   <FordelBeregningsgrunnlagFaktaIndex
-  behandling={lagBehandling([{ fom: '2020-06-01' }])}
-  alleKodeverk={alleKodeverk}
-  alleMerknaderFraBeslutter={{
-    [aksjonspunktCodes.VURDER_REFUSJON_BERGRUNN]: object('merknaderFraBeslutter', merknaderFraBeslutter),
-  }}
+    behandling={lagBehandling([{ fom: '2020-06-01' }])}
+    alleKodeverk={alleKodeverk}
+    alleMerknaderFraBeslutter={{
+      [aksjonspunktCodes.VURDER_REFUSJON_BERGRUNN]: object('merknaderFraBeslutter', merknaderFraBeslutter),
+    }}
     submitCallback={action('button-click')}
     readOnly={false}
     beregningsgrunnlag={[vurderDelvisRefBG]}

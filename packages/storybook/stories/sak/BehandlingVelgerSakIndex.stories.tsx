@@ -29,7 +29,7 @@ const behandlinger = [
     behandlingsresultat: {
       erRevurderingMedUendretUtfall: false,
       type: {
-        kode: 'INNVILGET',
+        kode: 'INNVILGET', //#kodeverk
         erHenleggelse: false,
         behandlingsresultatHenlagt: false,
         behandlingsresultatOpphørt: false,
@@ -98,7 +98,7 @@ const behandlinger = [
       vedtaksdato: '2021-12-20',
     },
     behandlingResultatType: {
-      kode: 'INNVILGET',
+      kode: 'INNVILGET', //#kodeverk
       erHenleggelse: false,
       behandlingsresultatHenlagt: false,
       behandlingsresultatOpphørt: false,
@@ -151,7 +151,7 @@ const behandlinger = [
     behandlingsresultat: {
       erRevurderingMedUendretUtfall: false,
       type: {
-        kode: 'INNVILGET',
+        kode: 'INNVILGET', //#kodeverk
         erHenleggelse: false,
         behandlingsresultatHenlagt: false,
         behandlingsresultatOpphørt: false,
@@ -220,7 +220,7 @@ const behandlinger = [
       vedtaksdato: '2021-12-20',
     },
     behandlingResultatType: {
-      kode: 'INNVILGET',
+      kode: 'INNVILGET', //#kodeverk
       erHenleggelse: false,
       behandlingsresultatHenlagt: false,
       behandlingsresultatOpphørt: false,

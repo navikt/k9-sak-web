@@ -30,9 +30,7 @@ const opptjeningNårEnHarAksjonspunkt = {
   },
   opptjeningAktivitetList: [
     {
-      aktivitetType: {
-        kode: opptjeningAktivitetType.NARING,
-      },
+      aktivitetType: opptjeningAktivitetType.NARING,
       originalFom: null,
       originalTom: null,
       opptjeningFom: '1995-09-14',
@@ -52,9 +50,7 @@ const opptjeningNårEnHarAksjonspunkt = {
       begrunnelse: null,
     },
     {
-      aktivitetType: {
-        kode: opptjeningAktivitetType.ARBEID,
-      },
+      aktivitetType: opptjeningAktivitetType.ARBEID,
       originalFom: null,
       originalTom: null,
       opptjeningFom: '2018-01-01',
@@ -90,9 +86,7 @@ const opptjeningUtenAksjonspunkt = {
     {
       opptjeningFom: '2017-01-01',
       opptjeningTom: '9999-12-31',
-      aktivitetType: {
-        kode: opptjeningAktivitetType.ARBEID,
-      },
+      aktivitetType: opptjeningAktivitetType.ARBEID,
       arbeidsforholdRef: 'bf623ff9-6ffb-4a81-b9f1-2648e5530a47',
       arbeidsgiver: 'EQUINOR ASA AVD STATOIL SOKKELVIRKSOMHET',
       arbeidsgiverIdentifikator: '973861778',
@@ -106,9 +100,7 @@ const opptjeningUtenAksjonspunkt = {
     {
       opptjeningFom: '2017-01-01',
       opptjeningTom: '9999-12-31',
-      aktivitetType: {
-        kode: opptjeningAktivitetType.DAGPENGER,
-      },
+      aktivitetType: opptjeningAktivitetType.DAGPENGER,
       arbeidsforholdRef: 'bf623ff9-6ffb-4a81-b9f1-2648e5530a47',
       arbeidsgiver: 'EQUINOR ASA AVD STATOIL SOKKELVIRKSOMHET',
       arbeidsgiverIdentifikator: '973861778',
@@ -139,14 +131,8 @@ export const visAksjonspunktForOpptjeningsvilkåret = () => (
     opptjening={object('opptjening', opptjeningNårEnHarAksjonspunkt)}
     aksjonspunkter={[
       {
-        definisjon: {
-          kode: aksjonspunktCodes.VURDER_PERIODER_MED_OPPTJENING,
-          kodeverk: '',
-        },
-        status: {
-          kode: aksjonspunktStatus.OPPRETTET,
-          kodeverk: '',
-        },
+        definisjon: aksjonspunktCodes.VURDER_PERIODER_MED_OPPTJENING,
+        status: aksjonspunktStatus.OPPRETTET,
         begrunnelse: undefined,
         kanLoses: true,
         erAktivt: true,

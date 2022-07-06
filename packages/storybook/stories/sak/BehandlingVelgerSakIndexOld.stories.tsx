@@ -46,7 +46,7 @@ const behandlinger = [
     behandlingÅrsaker: [],
     behandlingsresultat: {
       type: {
-        kode: 'AVSLÅTT',
+        kode: 'AVSLÅTT', //#kodeverk
         kodeverk: 'BEHANDLING_RESULTAT_TYPE',
       },
     },
@@ -80,7 +80,7 @@ const behandlinger = [
     behandlingArsaker: [],
     behandlingsresultat: {
       type: {
-        kode: 'INNVILGET',
+        kode: 'INNVILGET', //#kodeverk
         kodeverk: 'BEHANDLING_RESULTAT_TYPE',
       },
     },
@@ -140,7 +140,7 @@ const behandlinger = [
     behandlingArsaker: [],
     behandlingsresultat: {
       type: {
-        kode: 'HENLAGT_SØKNAD_TRUKKET',
+        kode: 'HENLAGT_SØKNAD_TRUKKET', //#kodeverk
         kodeverk: 'BEHANDLING_RESULTAT_TYPE',
       },
     },

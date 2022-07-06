@@ -13,15 +13,9 @@ const behandling = {
 
 const aksjonspunkter = [
   {
-    definisjon: {
-      kode: '8004',
-      kodeverk: 'AKSJONSPUNKT_DEFINISJON',
-    },
+    definisjon: '8004',
     begrunnelse: 'Dette akjsonspunktet har blitt løst tidligere',
-    status: {
-      kode: 'OPPR',
-      kodeverk: 'AKSJONSPUNKT_STATUS',
-    },
+    status: 'OPPR',
     kanLoses: true,
     erAktivt: true,
   },

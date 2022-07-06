@@ -16,12 +16,8 @@ const behandling = {
 };
 
 const aksjonspunkter = [{
-  definisjon: {
-    kode: aksjonspunktCodes.AVKLAR_VERGE,
-  },
-  status: {
-    kode: aksjonspunktStatus.OPPRETTET,
-  },
+  definisjon: aksjonspunktCodes.AVKLAR_VERGE,
+  status: aksjonspunktStatus.OPPRETTET,
   begrunnelse: undefined,
   kanLoses: true,
   erAktivt: true,

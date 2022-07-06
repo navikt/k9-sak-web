@@ -13,26 +13,15 @@ import alleKodeverk from '../mocks/alleKodeverk.json';
 const personopplysninger = {
   navn: 'Espen Utvikler',
   adresser: [{
-    adresseType: {
-      kode: opplysningAdresseType.BOSTEDSADRESSE,
-    },
+    adresseType: opplysningAdresseType.BOSTEDSADRESSE,
     adresselinje1: 'Sentrum',
     adresselinje2: '1010',
     adresselinje3: 'Oslo',
     land: landkoder.NORGE,
   }],
-  sivilstand: {
-    kode: sivilstandType.UOPPGITT,
-    kodeverk: 'SIVILSTAND_TYPE',
-  },
-  region: {
-    kode: region.NORDEN,
-    kodeverk: 'REGION',
-  },
-  personstatus: {
-    kode: personstatusType.BOSATT,
-    kodeverk: 'PERSONSTATUS_TYPE',
-  },
+  sivilstand: sivilstandType.UOPPGITT,
+  region: region.NORDEN,
+  personstatus: personstatusType.BOSATT,
 };
 
 export default {

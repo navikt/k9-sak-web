@@ -39,7 +39,7 @@ const behandling = {
       kode: 'FRITEKST',
     },
     type: {
-      kode: behandlingResultatType.INNVILGET,
+      kode: behandlingResultatType.INNVILGET, //#kodeverk
     },
   },
   behandlingPaaVent: false,
@@ -105,7 +105,7 @@ export const visDelvisInnvilgetForOmsorgspenger = () => (
           kode: 'FRITEKST',
         },
         type: {
-          kode: behandlingResultatType.DELVIS_INNVILGET,
+          kode: behandlingResultatType.DELVIS_INNVILGET, //#kodeverk
         },
       },
     }}
@@ -133,7 +133,7 @@ export const visAvslagForForeldrepenger = () => (
           kode: 'FRITEKST',
         },
         type: {
-          kode: behandlingResultatType.AVSLATT,
+          kode: behandlingResultatType.AVSLATT, //#kodeverk
         },
         avslagsarsak: {
           kode: avslagsarsakCodes.INGEN_BEREGNINGSREGLER,
@@ -202,7 +202,7 @@ export const visModalForObligatoriskFritekstbrevForSvangerskapspenger = () => (
           kode: 'FRITEKST',
         },
         type: {
-          kode: behandlingResultatType.AVSLATT,
+          kode: behandlingResultatType.AVSLATT, //#kodeverk
         },
         avslagsarsak: {
           kode: avslagsarsakCodes.INGEN_BEREGNINGSREGLER,
@@ -319,7 +319,7 @@ export const visInnvilgetForForeldrepengerRevurdering = () => (
           kode: 'FRITEKST',
         },
         type: {
-          kode: behandlingResultatType.INNVILGET,
+          kode: behandlingResultatType.INNVILGET, //#kodeverk
         },
       },
     }}
@@ -368,7 +368,7 @@ export const visOpphørtForForeldrepengerRevurdering = () => (
           kode: 'FRITEKST',
         },
         type: {
-          kode: behandlingResultatType.OPPHOR,
+          kode: behandlingResultatType.OPPHOR, //#kodeverk
         },
       },
     }}
@@ -422,7 +422,7 @@ export const visAvslåttForEngangsstønadRevurdering = () => (
           kode: 'FRITEKST',
         },
         type: {
-          kode: behandlingResultatType.AVSLATT,
+          kode: behandlingResultatType.AVSLATT, //#kodeverk
         },
         avslagsarsak: {
           kode: avslagsarsakCodes.INGEN_BEREGNINGSREGLER,
@@ -567,7 +567,7 @@ export const visOverlappendeYtelser = () => {
           kode: 'FRITEKST',
         },
         type: {
-          kode: behandlingResultatType.INNVILGET,
+          kode: behandlingResultatType.INNVILGET, //#kodeverk
         },
         avslagsarsak: {
           kode: avslagsarsakCodes.INGEN_BEREGNINGSREGLER,

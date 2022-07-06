@@ -82,12 +82,8 @@ export const visAksjonspunktForAvklaringAvArbeidsforhold = () => (
     ])}
     aksjonspunkter={[
       {
-        definisjon: {
-          kode: aksjonspunktCodes.AVKLAR_ARBEIDSFORHOLD,
-        },
-        status: {
-          kode: aksjonspunktStatus.OPPRETTET,
-        },
+        definisjon: aksjonspunktCodes.AVKLAR_ARBEIDSFORHOLD,
+        status: aksjonspunktStatus.OPPRETTET,
         begrunnelse: undefined,
         kanLoses: true,
         erAktivt: true,
@@ -110,12 +106,8 @@ export const visAksjonspunktForIngenArbeidsforholdRegistrert = () => (
     arbeidsforhold={object('arbeidsforhold', [])}
     aksjonspunkter={[
       {
-        definisjon: {
-          kode: aksjonspunktCodes.AVKLAR_ARBEIDSFORHOLD,
-        },
-        status: {
-          kode: aksjonspunktStatus.OPPRETTET,
-        },
+        definisjon: aksjonspunktCodes.AVKLAR_ARBEIDSFORHOLD,
+        status: aksjonspunktStatus.OPPRETTET,
         begrunnelse: undefined,
         kanLoses: true,
         erAktivt: true,
@@ -156,9 +148,7 @@ export const visPanelForPermisjon = () => (
         tilVurdering: true,
         permisjoner: [
           {
-            type: {
-              kode: 'PERMISJON',
-            },
+            type: 'PERMISJON',
             permisjonFom: '2018-10-10',
             permisjonTom: '2019-10-10',
             permisjonsprosent: 100,
@@ -169,12 +159,8 @@ export const visPanelForPermisjon = () => (
     ])}
     aksjonspunkter={[
       {
-        definisjon: {
-          kode: aksjonspunktCodes.AVKLAR_ARBEIDSFORHOLD,
-        },
-        status: {
-          kode: aksjonspunktStatus.OPPRETTET,
-        },
+        definisjon: aksjonspunktCodes.AVKLAR_ARBEIDSFORHOLD,
+        status: aksjonspunktStatus.OPPRETTET,
         begrunnelse: undefined,
         kanLoses: true,
         erAktivt: true,
@@ -200,18 +186,14 @@ export const visPanelForFlerePermisjoner = () => (
         tilVurdering: true,
         permisjoner: [
           {
-            type: {
-              kode: 'PERMISJON',
-            },
+            type: 'PERMISJON',
             permisjonFom: '2015-01-01',
             permisjonTom: undefined,
             permisjonsprosent: 100,
             permisjonsÅrsak: 'aarsak',
           },
           {
-            type: {
-              kode: 'PERMISJON',
-            },
+            type: 'PERMISJON',
             permisjonFom: '2017-01-01',
             permisjonTom: '2019-01-01',
             permisjonsprosent: 100,
@@ -222,12 +204,8 @@ export const visPanelForFlerePermisjoner = () => (
     ])}
     aksjonspunkter={[
       {
-        definisjon: {
-          kode: aksjonspunktCodes.AVKLAR_ARBEIDSFORHOLD,
-        },
-        status: {
-          kode: aksjonspunktStatus.OPPRETTET,
-        },
+        definisjon: aksjonspunktCodes.AVKLAR_ARBEIDSFORHOLD,
+        status: aksjonspunktStatus.OPPRETTET,
         begrunnelse: undefined,
         kanLoses: true,
         erAktivt: true,

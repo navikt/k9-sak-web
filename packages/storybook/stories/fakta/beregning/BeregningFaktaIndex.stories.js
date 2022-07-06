@@ -44,12 +44,8 @@ const skjæringstidspunkt = '2020-01-01';
 
 const OPPRETTET_FAKTA_AVKLARING = [
     {
-        definisjon: {
-            kode: aksjonspunktCodes.VURDER_FAKTA_FOR_ATFL_SN,
-        },
-        status: {
-            kode: aksjonspunktStatus.OPPRETTET,
-        },
+        definisjon: aksjonspunktCodes.VURDER_FAKTA_FOR_ATFL_SN,
+        status: aksjonspunktStatus.OPPRETTET,
         begrunnelse: undefined,
         kanLoses: true,
         erAktivt: true,
@@ -76,8 +72,8 @@ const behandling = {
 
 const lagVilkår = (fomDatoer) => [
     {
-        vilkarType: {kode: "FP_VK_41"},
-        perioder: fomDatoer.map(fom => ({periode: {fom}, vurdersIBehandlingen: true}))
+        vilkarType: "FP_VK_41",
+        perioder: fomDatoer.map(fom => ({ periode: { fom }, vurdersIBehandlingen: true }))
     }];
 
 
@@ -147,12 +143,12 @@ const lagBeregningsgrunnlag = (andeler, faktaOmBeregning, avklaringsbehov) => ({
     faktaOmBeregning,
 });
 
-const mapTilKodeliste = arrayOfCodes => arrayOfCodes.map(kode => ({kode}));
+const mapTilKodeliste = arrayOfCodes => arrayOfCodes.map(kode => ({ kode }));
 
 const lagAndel = (andelsnr, aktivitetStatus, inntektskategori) => ({
     andelsnr,
-    aktivitetStatus: {kode: aktivitetStatus, kodeverk: 'AKTIVITET_STATUS'},
-    inntektskategori: {kode: inntektskategori, kodeverk: 'INNTEKTSKATEGORI'},
+    aktivitetStatus: aktivitetStatus,
+    inntektskategori: inntektskategori,
 });
 
 const standardFaktaArbeidstakerAndel = {
@@ -164,7 +160,7 @@ const standardFaktaArbeidstakerAndel = {
         arbeidsforholdId: null,
         startdato: '01.01.2019',
         opphoersdato: null,
-        arbeidsforholdType: {kode: opptjeningAktivitetType.ARBEID, kodeverk: 'OPPTJENING_AKTIVITET_TYPE'},
+        arbeidsforholdType: opptjeningAktivitetType.ARBEID,
     },
 };
 const standardFaktaArbeidstakerAndel2 = {
@@ -177,7 +173,7 @@ const standardFaktaArbeidstakerAndel2 = {
         arbeidsforholdId: null,
         startdato: '01.01.2019',
         opphoersdato: '01.01.2020',
-        arbeidsforholdType: {kode: opptjeningAktivitetType.ARBEID, kodeverk: 'OPPTJENING_AKTIVITET_TYPE'},
+        arbeidsforholdType: opptjeningAktivitetType.ARBEID,
     },
 };
 const tidsbegrensetFaktaArbeidstakerAndel = {
@@ -190,7 +186,7 @@ const tidsbegrensetFaktaArbeidstakerAndel = {
         arbeidsforholdId: null,
         startdato: '01.09.2019',
         opphoersdato: '01.01.2020',
-        arbeidsforholdType: {kode: opptjeningAktivitetType.ARBEID, kodeverk: 'OPPTJENING_AKTIVITET_TYPE'},
+        arbeidsforholdType: opptjeningAktivitetType.ARBEID,
     },
 };
 const etterlønnSluttpakkeFaktaArbeidstakerAndel = {
@@ -203,7 +199,7 @@ const etterlønnSluttpakkeFaktaArbeidstakerAndel = {
         arbeidsforholdId: null,
         startdato: '01.09.2019',
         opphoersdato: null,
-        arbeidsforholdType: {kode: opptjeningAktivitetType.ETTERLONN_SLUTTPAKKE, kodeverk: 'OPPTJENING_AKTIVITET_TYPE'},
+        arbeidsforholdType: opptjeningAktivitetType.ETTERLONN_SLUTTPAKKE,
     },
 };
 
@@ -300,10 +296,10 @@ export const KunYtelsePåSkjæringstidspunktetMedVurderingKunISistePeriode = () 
         beregningsgrunnlag={bgKunYtelseVurderingEnPeriode}
         vilkar={[
             {
-                vilkarType: {kode: "FP_VK_41"},
+                vilkarType: "FP_VK_41",
                 perioder: [
-                    {periode: {fom: bgKunYtelseVurderingEnPeriode[0].skjæringstidspunkt}, vurdersIBehandlingen: false},
-                    {periode: {fom: bgKunYtelseVurderingEnPeriode[1].skjæringstidspunkt}, vurdersIBehandlingen: true},],
+                    { periode: { fom: bgKunYtelseVurderingEnPeriode[0].skjæringstidspunkt }, vurdersIBehandlingen: false },
+                    { periode: { fom: bgKunYtelseVurderingEnPeriode[1].skjæringstidspunkt }, vurdersIBehandlingen: true },],
             }]}
         erOverstyrer
         alleKodeverk={alleKodeverk}
@@ -357,7 +353,7 @@ export const ArbeidOgDagpenger = () => (
 
 export const AvklarAktiviteterFullAAPOgAndreAktiviteter = () => {
     const aapAktivitet = {
-        arbeidsforholdType: {kode: opptjeningAktivitetType.AAP, kodeverk: 'OPPTJENING_AKTIVITET_TYPE'},
+        arbeidsforholdType: opptjeningAktivitetType.AAP,
         fom: '01-01-2019',
         tom: '01-04-2020',
     };
@@ -369,12 +365,8 @@ export const AvklarAktiviteterFullAAPOgAndreAktiviteter = () => {
     const aktiviteter = [aapAktivitet, arbeidsAktivitet];
     const avklaringsbehov = [
         {
-            definisjon: {
-                kode: aksjonspunktCodes.AVKLAR_AKTIVITETER,
-            },
-            status: {
-                kode: aksjonspunktStatus.OPPRETTET,
-            },
+            definisjon: aksjonspunktCodes.AVKLAR_AKTIVITETER,
+            status: aksjonspunktStatus.OPPRETTET,
             begrunnelse: undefined,
             kanLoses: true,
             erAktivt: true,
@@ -408,7 +400,7 @@ export const AvklarAktiviteterFullAAPOgAndreAktiviteter = () => {
 
 export const AvklartAktiviteterMedAksjonspunktIFaktaAvklaring = () => {
     const aapAktivitet = {
-        arbeidsforholdType: {kode: opptjeningAktivitetType.AAP, kodeverk: 'OPPTJENING_AKTIVITET_TYPE'},
+        arbeidsforholdType: opptjeningAktivitetType.AAP,
         fom: '01-01-2019',
         tom: '01-04-2020',
     };
@@ -452,23 +444,15 @@ export const AvklartAktiviteterMedAksjonspunktIFaktaAvklaring = () => {
     };
     const avklaringsbehov = [
         {
-            definisjon: {
-                kode: aksjonspunktCodes.AVKLAR_AKTIVITETER,
-            },
-            status: {
-                kode: aksjonspunktStatus.UTFORT,
-            },
+            definisjon: aksjonspunktCodes.AVKLAR_AKTIVITETER,
+            status: aksjonspunktStatus.UTFORT,
             begrunnelse: 'En begrunnelse for at arbeidsforholdet var gyldig.',
             kanLoses: true,
             erAktivt: true,
         },
         {
-            definisjon: {
-                kode: aksjonspunktCodes.VURDER_FAKTA_FOR_ATFL_SN,
-            },
-            status: {
-                kode: aksjonspunktStatus.OPPRETTET,
-            },
+            definisjon: aksjonspunktCodes.VURDER_FAKTA_FOR_ATFL_SN,
+            status: aksjonspunktStatus.OPPRETTET,
             begrunnelse: undefined,
             kanLoses: true,
             erAktivt: true,
@@ -873,7 +857,7 @@ export const SelvstendigNæringNyIArbeidslivet = () => {
 
 export const KombinasjonstestForFaktapanel = () => {
     const aapAktivitet = {
-        arbeidsforholdType: {kode: opptjeningAktivitetType.AAP, kodeverk: 'OPPTJENING_AKTIVITET_TYPE'},
+        arbeidsforholdType: opptjeningAktivitetType.AAP,
         fom: '01-01-2019',
         tom: '01-04-2020',
     };
@@ -896,7 +880,7 @@ export const KombinasjonstestForFaktapanel = () => {
         skalBrukes: true,
     };
     const næringAktivitet = {
-        arbeidsforholdType: {kode: opptjeningAktivitetType.NARING, kodeverk: 'OPPTJENING_AKTIVITET_TYPE'},
+        arbeidsforholdType: opptjeningAktivitetType.NARING,
         fom: '01-01-2019',
         tom: '01-04-2020',
         skalBrukes: true,
@@ -908,16 +892,13 @@ export const KombinasjonstestForFaktapanel = () => {
         skalBrukes: true,
     };
     const frilansAktivitet = {
-        arbeidsforholdType: {kode: opptjeningAktivitetType.FRILANS, kodeverk: 'OPPTJENING_AKTIVITET_TYPE'},
+        arbeidsforholdType: opptjeningAktivitetType.FRILANS,
         fom: '01-01-2019',
         tom: '01-04-2020',
         skalBrukes: true,
     };
     const militærAktivitet = {
-        arbeidsforholdType: {
-            kode: opptjeningAktivitetType.MILITAR_ELLER_SIVILTJENESTE,
-            kodeverk: 'OPPTJENING_AKTIVITET_TYPE',
-        },
+        arbeidsforholdType: opptjeningAktivitetType.MILITAR_ELLER_SIVILTJENESTE,
         fom: '01-01-2019',
         tom: '01-04-2020',
         skalBrukes: true,
