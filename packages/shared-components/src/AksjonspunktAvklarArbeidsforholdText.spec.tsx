@@ -16,12 +16,7 @@ describe('<AksjonspunktAvklarArbeidsforholdText>', () => {
             arbeidsforhold: {
               eksternArbeidsforholdId: '5678',
             },
-            aksjonspunktÅrsaker: [
-              {
-                kode: 'INNTEKTSMELDING_UTEN_ARBEIDSFORHOLD',
-                kodeverk: 'ARBEIDSFORHOLD_AKSJONSPUNKT_ÅRSAKER',
-              },
-            ],
+            aksjonspunktÅrsaker: ['INNTEKTSMELDING_UTEN_ARBEIDSFORHOLD'],
           } as ArbeidsforholdV2
         }
       />,
@@ -39,12 +34,7 @@ describe('<AksjonspunktAvklarArbeidsforholdText>', () => {
         intl={intlMock}
         arbeidsforhold={
           {
-            aksjonspunktÅrsaker: [
-              {
-                kode: 'OVERGANG_ARBEIDSFORHOLDS_ID_UNDER_YTELSE',
-                kodeverk: 'ARBEIDSFORHOLD_AKSJONSPUNKT_ÅRSAKER',
-              },
-            ],
+            aksjonspunktÅrsaker: ['OVERGANG_ARBEIDSFORHOLDS_ID_UNDER_YTELSE'],
           } as ArbeidsforholdV2
         }
       />,

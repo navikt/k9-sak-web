@@ -22,11 +22,10 @@ const utledAksjonspunktText = (arbeidsforhold, imUtenArbeidsforhold) => {
       <FormattedMessage
         id="HelpText.FinnesIkkeIRegisteret"
         values={{
-          yrkestittel: `${arbeidsforhold.yrkestittel}(${
-            arbeidsforhold.arbeidsforhold.eksternArbeidsforholdId
-              ? arbeidsforhold.arbeidsforhold.eksternArbeidsforholdId
-              : ''
-          })`,
+          yrkestittel: `${arbeidsforhold.yrkestittel}(${arbeidsforhold.arbeidsforhold.eksternArbeidsforholdId
+            ? arbeidsforhold.arbeidsforhold.eksternArbeidsforholdId
+            : ''
+            })`,
         }}
       />
     );
@@ -43,10 +42,8 @@ const utledAksjonspunktText = (arbeidsforhold, imUtenArbeidsforhold) => {
 
 const AksjonspunktAvklarArbeidsforholdText = ({ intl, arbeidsforhold }: OwnProps & WrappedComponentProps) => {
   const overgangArbeidsforholdsId = arbeidsforhold.aksjonspunktÅrsaker
-    .map(k => k.kode)
     .includes(aksjonspunktÅrsaker.OVERGANG_ARBEIDSFORHOLDS_ID_UNDER_YTELSE);
   const imUtenArbeidsforhold = arbeidsforhold.aksjonspunktÅrsaker
-    .map(k => k.kode)
     .includes(aksjonspunktÅrsaker.INNTEKTSMELDING_UTEN_ARBEIDSFORHOLD);
   return (
     <FlexContainer>

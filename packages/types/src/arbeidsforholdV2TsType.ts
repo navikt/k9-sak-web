@@ -1,4 +1,3 @@
-import Kodeverk from './kodeverkTsType';
 import ArbeidsforholdId from './arbeidsforholdIdTsType';
 import Arbeidsgiver from './arbeidsgiverTsType';
 import Periode from './periodeTsType';
