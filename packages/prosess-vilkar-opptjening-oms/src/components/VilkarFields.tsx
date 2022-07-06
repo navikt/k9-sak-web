@@ -45,7 +45,7 @@ export const VilkarFields = ({
   const erOppfyltText = <FormattedMessage id="OpptjeningVilkarAksjonspunktPanel.ErOppfylt" />;
 
   const hent847Text = () => {
-    switch(erVilkarOk){
+    switch (erVilkarOk) {
       case midlertidigInaktiv.TYPE_A: return <FormattedMessage id="OpptjeningVilkarAksjonspunktPanel.Er847A" />;
       case midlertidigInaktiv.TYPE_B: return <FormattedMessage id="OpptjeningVilkarAksjonspunktPanel.Er847B" />;
       default: return <FormattedMessage id="OpptjeningVilkarAksjonspunktPanel.Er847" />;
@@ -130,16 +130,16 @@ VilkarFields.buildInitialValues = (
   vilkårPerioder: Vilkarperiode[],
   erVilkarOk: boolean,
 ): FormValues => ({
-    erVilkarOk,
-    vilkarFields: Array.isArray(vilkårPerioder)
-      ? vilkårPerioder.map(periode => ({
-          begrunnelse: periode.begrunnelse,
-          vurdersIBehandlingen: periode.vurdersIBehandlingen,
-          erVilkarOk: Object.values(midlertidigInaktiv).includes(periode.merknad?.kode)
-            ? periode.merknad.kode
-            : periode.vilkarStatus.kode === vilkarUtfallType.OPPFYLT,
-        }))
-      : [],
-  });
+  erVilkarOk,
+  vilkarFields: Array.isArray(vilkårPerioder)
+    ? vilkårPerioder.map(periode => ({
+      begrunnelse: periode.begrunnelse,
+      vurdersIBehandlingen: periode.vurdersIBehandlingen,
+      erVilkarOk: Object.values(midlertidigInaktiv).includes(periode.merknad)
+        ? periode.merknad
+        : periode.vilkarStatus === vilkarUtfallType.OPPFYLT,
+    }))
+    : [],
+});
 
 export default VilkarFields;
