@@ -1,16 +1,30 @@
 import React, { useMemo } from 'react';
-import { AksjonspunktHelpTextTemp, BorderBox, Table, TableColumn, TableRow, VerticalSpacer } from '@fpsak-frontend/shared-components';
+import {
+  AksjonspunktHelpTextTemp,
+  BorderBox,
+  Table,
+  TableColumn,
+  TableRow,
+  VerticalSpacer,
+} from '@fpsak-frontend/shared-components';
 import { FormattedMessage } from 'react-intl';
 import { behandlingForm } from '@fpsak-frontend/form/src/behandlingForm';
 import { connect } from 'react-redux';
 import { InjectedFormProps, ConfigProps, SubmitHandler, FieldArray } from 'redux-form';
-import { minLength, maxLength, required, hasValidText, hasValidValue, hasValidFodselsnummer } from '@fpsak-frontend/utils';
+import {
+  minLength,
+  maxLength,
+  required,
+  hasValidText,
+  hasValidValue,
+  hasValidFodselsnummer,
+} from '@fpsak-frontend/utils';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 import { CheckboxField, InputField, RadioGroupField, RadioOption, TextAreaField } from '@fpsak-frontend/form/index';
 import { Element } from 'nav-frontend-typografi';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { Aksjonspunkt, UtfallEnum, VurderteVilkår, VilkårEnum } from '@k9-sak-web/types';
-import { Delete } from "@navikt/ds-icons";
+import { Delete } from '@navikt/ds-icons';
 import styles from './aksjonspunktForm.less';
 import Aktivitet from '../dto/Aktivitet';
 import { fosterbarnDto } from '../dto/FosterbarnDto';
@@ -19,6 +33,7 @@ interface AksjonspunktFormImplProps {
   aktiviteter: Aktivitet[];
   isAksjonspunktOpen: boolean;
   fosterbarn: fosterbarnDto[];
+  aksjonspunktKode: string;
 }
 
 interface FormContentProps {
@@ -26,6 +41,7 @@ interface FormContentProps {
   aktiviteter: Aktivitet[];
   isAksjonspunktOpen: boolean;
   fosterbarn: fosterbarnDto[];
+  aksjonspunktKode: string;
 }
 
 const årskvantumAksjonspunktFormName = 'årskvantumAksjonspunktFormName';
@@ -40,8 +56,24 @@ const vilkårHarOverlappendePerioderIInfotrygd = (vurderteVilkår: VurderteVilk�
     ([vilkår, utfall]) => vilkår === VilkårEnum.NOK_DAGER && utfall === UtfallEnum.UAVKLART,
   );
 
-export const FormContent = ({ handleSubmit, aktiviteter = [], isAksjonspunktOpen, fosterbarn }: FormContentProps) => {
+const utledAksjonspunktKode = (aksjonspunkter: Aksjonspunkt[]) => {
+  // 9014 skal ha presedens
+  if (aksjonspunkter.find(ap => ap.definisjon.kode === aksjonspunktCodes.ÅRSKVANTUM_FOSTERBARN))
+    return aksjonspunktCodes.ÅRSKVANTUM_FOSTERBARN;
 
+  if (aksjonspunkter.find(ap => ap.definisjon.kode === aksjonspunktCodes.VURDER_ÅRSKVANTUM_KVOTE))
+    return aksjonspunktCodes.VURDER_ÅRSKVANTUM_KVOTE;
+
+  return null;
+};
+
+export const FormContent = ({
+  handleSubmit,
+  aktiviteter = [],
+  isAksjonspunktOpen,
+  fosterbarn,
+  aksjonspunktKode,
+}: FormContentProps) => {
   const uavklartePerioder = useMemo(
     () =>
       aktiviteter
@@ -59,33 +91,33 @@ export const FormContent = ({ handleSubmit, aktiviteter = [], isAksjonspunktOpen
           <Table>
             <TableRow isHeader>
               <TableColumn />
-              <TableColumn>
-                Fødselsnummer
-              </TableColumn>
-              <TableColumn className={styles.sentrert}>
-                Fjern
-              </TableColumn>
+              <TableColumn>Fødselsnummer</TableColumn>
+              <TableColumn className={styles.sentrert}>Fjern</TableColumn>
             </TableRow>
             {fields.map((field, index) => {
               const fosterbarnObj = barn[index];
-              const navn = (fosterbarnObj && fosterbarnObj.navn) ? fosterbarnObj.navn : `Fosterbarn ${index + 1}`;
+              const navn = fosterbarnObj && fosterbarnObj.navn ? fosterbarnObj.navn : `Fosterbarn ${index + 1}`;
               return (
                 <TableRow>
-                  <TableColumn className={styles.vertikaltSentrert}>
-                    {navn}
-                  </TableColumn>
+                  <TableColumn className={styles.vertikaltSentrert}>{navn}</TableColumn>
                   <TableColumn className={styles.vertikaltSentrert}>
                     <InputField
                       name={field}
                       type="text"
                       size={11}
-                      bredde='S'
+                      bredde="S"
                       validate={[required, minLength(11), maxLength(11), hasValidFodselsnummer]}
                       maxLength={11}
-                      readOnly={!isAksjonspunktOpen} />
+                      readOnly={!isAksjonspunktOpen}
+                    />
                   </TableColumn>
                   <TableColumn className={`${styles.sentrert} ${styles.vertikaltSentrert}`}>
-                    <Knapp type='flat' htmlType='button' onClick={() => fields.remove(index)} disabled={!isAksjonspunktOpen}>
+                    <Knapp
+                      type="flat"
+                      htmlType="button"
+                      onClick={() => fields.remove(index)}
+                      disabled={!isAksjonspunktOpen}
+                    >
                       <Delete />
                     </Knapp>
                   </TableColumn>
@@ -96,12 +128,9 @@ export const FormContent = ({ handleSubmit, aktiviteter = [], isAksjonspunktOpen
           <VerticalSpacer eightPx />
         </>
       )}
-      <Knapp
-        type="flat"
-        htmlType="button"
-        onClick={() => fields.push('')}
-        mini
-      >Legg til fosterbarn</Knapp>
+      <Knapp type="flat" htmlType="button" onClick={() => fields.push('')} mini>
+        Legg til fosterbarn
+      </Knapp>
     </>
   );
 
@@ -151,7 +180,16 @@ export const FormContent = ({ handleSubmit, aktiviteter = [], isAksjonspunktOpen
   return (
     <>
       <AksjonspunktHelpTextTemp isAksjonspunktOpen={isAksjonspunktOpen}>
-        {[<FormattedMessage key={1} id="Årskvantum.Aksjonspunkt.Avslått" />]}
+        {[
+          <FormattedMessage
+            key={1}
+            id={
+              aksjonspunktKode === '9014'
+                ? 'Årskvantum.Aksjonspunkt.Avslått.Fosterbarn'
+                : 'Årskvantum.Aksjonspunkt.Avslått'
+            }
+          />,
+        ]}
       </AksjonspunktHelpTextTemp>
       <VerticalSpacer sixteenPx />
       {isAksjonspunktOpen && (
@@ -179,11 +217,7 @@ export const FormContent = ({ handleSubmit, aktiviteter = [], isAksjonspunktOpen
       <VerticalSpacer sixteenPx />
 
       <BorderBox>
-        <FieldArray
-          name="fosterbarn"
-          component={RenderFosterbarn}
-          barn={fosterbarn}
-        />
+        <FieldArray name="fosterbarn" component={RenderFosterbarn} barn={fosterbarn} />
       </BorderBox>
 
       <VerticalSpacer sixteenPx />
@@ -203,7 +237,8 @@ const AksjonspunktFormImpl = ({
   aktiviteter,
   handleSubmit,
   isAksjonspunktOpen,
-  fosterbarn
+  fosterbarn,
+  aksjonspunktKode,
 }: AksjonspunktFormImplProps & InjectedFormProps) => (
   <form onSubmit={handleSubmit}>
     <div className={styles.graBoks}>
@@ -212,6 +247,7 @@ const AksjonspunktFormImpl = ({
         aktiviteter={aktiviteter}
         isAksjonspunktOpen={isAksjonspunktOpen}
         fosterbarn={fosterbarn}
+        aksjonspunktKode={aksjonspunktKode}
       />
     </div>
   </form>
@@ -239,16 +275,20 @@ export const begrunnelseUavklartePerioder = 'Rammemeldinger er oppdatert i Infot
  * Skal ikke be saksbehandler om begrunnelse hvis uavklarte perioder, men backend krvever det.
  * Hardkoder derfor begrunnelsen i de tilfellene.
  * */
-export const transformValues = ({ begrunnelse = begrunnelseUavklartePerioder, valg, bekreftInfotrygd, fosterbarn }: FormValues) => {
+export const transformValues = (
+  { begrunnelse = begrunnelseUavklartePerioder, valg, bekreftInfotrygd, fosterbarn }: FormValues,
+  kode: string,
+) => {
   if (bekreftInfotrygd || valg === valgValues.reBehandling) {
-    return [{ kode: aksjonspunktCodes.VURDER_ÅRSKVANTUM_KVOTE, begrunnelse, fortsettBehandling: false, fosterbarn }];
+    return [{ kode, begrunnelse, fortsettBehandling: false, fosterbarn }];
   }
-  return [{ kode: aksjonspunktCodes.VURDER_ÅRSKVANTUM_KVOTE, begrunnelse, fortsettBehandling: true, fosterbarn }];
+  return [{ kode, begrunnelse, fortsettBehandling: true, fosterbarn }];
 };
 
 const mapStateToPropsFactory = (_initialState, initialProps: AksjonspunktFormProps) => {
-  const { submitCallback } = initialProps;
-  const onSubmit = (formValues: FormValues) => submitCallback(transformValues(formValues));
+  const { submitCallback, aksjonspunkterForSteg: aksjonspunkter } = initialProps;
+  const aksjonspunktKode = utledAksjonspunktKode(aksjonspunkter);
+  const onSubmit = (formValues: FormValues) => submitCallback(transformValues(formValues, aksjonspunktKode));
 
   return (
     state,
@@ -258,7 +298,8 @@ const mapStateToPropsFactory = (_initialState, initialProps: AksjonspunktFormPro
     aktiviteter,
     isAksjonspunktOpen,
     initialValues: { begrunnelse: aksjonspunkterForSteg[0]?.begrunnelse, fosterbarn: fosterbarn.map(barn => barn.fnr) },
-    fosterbarn
+    fosterbarn,
+    aksjonspunktKode,
   });
 };
 

@@ -2,6 +2,7 @@
   "Årskvantum.Aksjonspunkt.Uavklart.UidentifiserteRammemeldinger": "Det finnes uavklarte perioder som følge av rammemeldinger som ikke kan tolkes. Korriger disse i Infotrygd. Det kan i tillegg finnes overlappende perioder i Infotrygd",
   "Årskvantum.Aksjonspunkt.Uavklart.OverlappInfotrygd": "Det finnes overlappende perioder i Infotrygd. Annuller perioden i Infotrygd og kjør behandlingen på nytt.",
   "Årskvantum.Aksjonspunkt.Avslått": "Det finnes avslåtte perioder. Korriger eller legg til rammemeldinger i Infotrygd, eller fortsett dersom avslåtte perioder er korrekt",
+  "Årskvantum.Aksjonspunkt.Avslått.Fosterbarn": "Denne teksten må byttes",
   "Årskvantum.Aksjonspunkt.Avslått.Valg": "Valg",
   "Årskvantum.Aksjonspunkt.Avslått.ReBehandling": "Rammemelding eller fosterbarn er endret eller lagt til",
   "Årskvantum.Aksjonspunkt.Avslått.Fortsett": "Fortsett uten endring, avslåtte perioder er korrekt",
