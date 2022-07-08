@@ -5,7 +5,7 @@ import { CheckboxField, RadioOption } from '@fpsak-frontend/form/index';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { FraværÅrsakEnum } from '@k9-sak-web/types/src/omsorgspenger/Uttaksperiode';
 import { shallowWithIntl } from '../../i18n';
-import { begrunnelseUavklartePerioder, FormContent, FormValues, transformValues } from './AksjonspunktForm';
+import { begrunnelseUavklartePerioder, FormContent, FormValues, transformValues } from './AksjonspunktForm9014';
 
 import Aktivitet from '../dto/Aktivitet';
 

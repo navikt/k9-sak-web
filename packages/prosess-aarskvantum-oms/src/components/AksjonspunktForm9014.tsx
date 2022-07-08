@@ -33,6 +33,7 @@ interface AksjonspunktFormImplProps {
   aktiviteter: Aktivitet[];
   isAksjonspunktOpen: boolean;
   fosterbarn: fosterbarnDto[];
+  aksjonspunktKode: string;
 }
 
 interface FormContentProps {
@@ -40,6 +41,7 @@ interface FormContentProps {
   aktiviteter: Aktivitet[];
   isAksjonspunktOpen: boolean;
   fosterbarn: fosterbarnDto[];
+  aksjonspunktKode: string;
 }
 
 const årskvantumAksjonspunktFormName = 'årskvantumAksjonspunktFormName';
@@ -54,7 +56,24 @@ const vilkårHarOverlappendePerioderIInfotrygd = (vurderteVilkår: VurderteVilk�
     ([vilkår, utfall]) => vilkår === VilkårEnum.NOK_DAGER && utfall === UtfallEnum.UAVKLART,
   );
 
-export const FormContent = ({ handleSubmit, aktiviteter = [], isAksjonspunktOpen, fosterbarn }: FormContentProps) => {
+const utledAksjonspunktKode = (aksjonspunkter: Aksjonspunkt[]) => {
+  // 9014 skal ha presedens
+  if (aksjonspunkter.find(ap => ap.definisjon.kode === aksjonspunktCodes.ÅRSKVANTUM_FOSTERBARN))
+    return aksjonspunktCodes.ÅRSKVANTUM_FOSTERBARN;
+
+  if (aksjonspunkter.find(ap => ap.definisjon.kode === aksjonspunktCodes.VURDER_ÅRSKVANTUM_KVOTE))
+    return aksjonspunktCodes.VURDER_ÅRSKVANTUM_KVOTE;
+
+  return null;
+};
+
+export const FormContent = ({
+  handleSubmit,
+  aktiviteter = [],
+  isAksjonspunktOpen,
+  fosterbarn,
+  aksjonspunktKode,
+}: FormContentProps) => {
   const uavklartePerioder = useMemo(
     () =>
       aktiviteter
@@ -161,7 +180,16 @@ export const FormContent = ({ handleSubmit, aktiviteter = [], isAksjonspunktOpen
   return (
     <>
       <AksjonspunktHelpTextTemp isAksjonspunktOpen={isAksjonspunktOpen}>
-        {[<FormattedMessage key={1} id="Årskvantum.Aksjonspunkt.Avslått" />]}
+        {[
+          <FormattedMessage
+            key={1}
+            id={
+              aksjonspunktKode === '9014'
+                ? 'Årskvantum.Aksjonspunkt.Avslått.Fosterbarn'
+                : 'Årskvantum.Aksjonspunkt.Avslått'
+            }
+          />,
+        ]}
       </AksjonspunktHelpTextTemp>
       <VerticalSpacer sixteenPx />
       {isAksjonspunktOpen && (
@@ -210,6 +238,7 @@ const AksjonspunktFormImpl = ({
   handleSubmit,
   isAksjonspunktOpen,
   fosterbarn,
+  aksjonspunktKode,
 }: AksjonspunktFormImplProps & InjectedFormProps) => (
   <form onSubmit={handleSubmit}>
     <div className={styles.graBoks}>
@@ -218,6 +247,7 @@ const AksjonspunktFormImpl = ({
         aktiviteter={aktiviteter}
         isAksjonspunktOpen={isAksjonspunktOpen}
         fosterbarn={fosterbarn}
+        aksjonspunktKode={aksjonspunktKode}
       />
     </div>
   </form>
@@ -245,21 +275,20 @@ export const begrunnelseUavklartePerioder = 'Rammemeldinger er oppdatert i Infot
  * Skal ikke be saksbehandler om begrunnelse hvis uavklarte perioder, men backend krvever det.
  * Hardkoder derfor begrunnelsen i de tilfellene.
  * */
-export const transformValues = ({
-  begrunnelse = begrunnelseUavklartePerioder,
-  valg,
-  bekreftInfotrygd,
-  fosterbarn,
-}: FormValues) => {
+export const transformValues = (
+  { begrunnelse = begrunnelseUavklartePerioder, valg, bekreftInfotrygd, fosterbarn }: FormValues,
+  kode: string,
+) => {
   if (bekreftInfotrygd || valg === valgValues.reBehandling) {
-    return [{ kode: aksjonspunktCodes.VURDER_ÅRSKVANTUM_KVOTE, begrunnelse, fortsettBehandling: false, fosterbarn }];
+    return [{ kode, begrunnelse, fortsettBehandling: false, fosterbarn }];
   }
-  return [{ kode: aksjonspunktCodes.VURDER_ÅRSKVANTUM_KVOTE, begrunnelse, fortsettBehandling: true, fosterbarn }];
+  return [{ kode, begrunnelse, fortsettBehandling: true, fosterbarn }];
 };
 
 const mapStateToPropsFactory = (_initialState, initialProps: AksjonspunktFormProps) => {
-  const { submitCallback } = initialProps;
-  const onSubmit = (formValues: FormValues) => submitCallback(transformValues(formValues));
+  const { submitCallback, aksjonspunkterForSteg: aksjonspunkter } = initialProps;
+  const aksjonspunktKode = utledAksjonspunktKode(aksjonspunkter);
+  const onSubmit = (formValues: FormValues) => submitCallback(transformValues(formValues, aksjonspunktKode));
 
   return (
     state,
@@ -270,6 +299,7 @@ const mapStateToPropsFactory = (_initialState, initialProps: AksjonspunktFormPro
     isAksjonspunktOpen,
     initialValues: { begrunnelse: aksjonspunkterForSteg[0]?.begrunnelse, fosterbarn: fosterbarn.map(barn => barn.fnr) },
     fosterbarn,
+    aksjonspunktKode,
   });
 };
 
