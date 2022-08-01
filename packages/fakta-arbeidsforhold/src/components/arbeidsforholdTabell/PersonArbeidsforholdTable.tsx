@@ -20,7 +20,7 @@ import PersonArbeidsforholdDetailForm from '../arbeidsforholdDetaljer/PersonArbe
 import PermisjonerInfo from '../arbeidsforholdDetaljer/PermisjonerInfo';
 
 const headerColumnContent = [
-  <FormattedMessage key={1} id="PersonArbeidsforholdTable.Yrkestittel" values={{ br: <br /> }} />,
+  <FormattedMessage key={1} id="PersonArbeidsforholdTable.ArbeidsforholdId" values={{ br: <br /> }} />,
   <FormattedMessage key={2} id="PersonArbeidsforholdTable.Periode" values={{ br: <br /> }} />,
   <FormattedMessage key={3} id="PersonArbeidsforholdTable.Kilde" values={{ br: <br /> }} />,
   <FormattedMessage key={4} id="PersonArbeidsforholdTable.Stillingsprosent" values={{ br: <br /> }} />,
@@ -83,7 +83,7 @@ const PersonArbeidsforholdTable = ({
         alleArbeidsforhold.map(a => {
           const stillingsprosent =
             a.stillingsprosent !== undefined && a.stillingsprosent !== null ? `${a.stillingsprosent.toFixed(2)} %` : '';
-          const yrkestittel = utledArbeidsforholdYrkestittel(a);
+          const arbeidsforholdId = a.arbeidsforhold.eksternArbeidsforholdId || '';
           const kilde =
             Array.isArray(a.kilde) && (a.kilde.length > 1 ? a.kilde.map(k => k.kode).join(', ') : a.kilde[0].kode);
           const erValgt = selectedArbeidsforhold === a;
@@ -102,7 +102,7 @@ const PersonArbeidsforholdTable = ({
                 isApLeftBorder={harAksjonspunkt}
               >
                 <TableColumn>
-                  <Normaltekst>{decodeHtmlEntity(yrkestittel)}</Normaltekst>
+                  <Normaltekst>{decodeHtmlEntity(arbeidsforholdId)}</Normaltekst>
                 </TableColumn>
                 <TableColumn>
                   <Normaltekst>
