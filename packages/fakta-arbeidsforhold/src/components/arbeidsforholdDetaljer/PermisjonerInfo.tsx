@@ -3,8 +3,8 @@ import { FormattedMessage } from 'react-intl';
 import { Normaltekst } from 'nav-frontend-typografi';
 
 import { VerticalSpacer, PeriodLabel } from '@fpsak-frontend/shared-components';
-
 import ArbeidsforholdV2 from '@k9-sak-web/types/src/arbeidsforholdV2TsType';
+
 import styles from './permisjonPeriode.less';
 
 const utledPeriodeLabelKey = (id, index) => id + index;
