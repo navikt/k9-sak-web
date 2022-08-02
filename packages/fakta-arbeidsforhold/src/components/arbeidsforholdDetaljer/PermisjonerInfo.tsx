@@ -9,6 +9,15 @@ import styles from './permisjonPeriode.less';
 
 const utledPeriodeLabelKey = (id, index) => id + index;
 
+const permisjonstyper = {
+  PERMISJON_MED_FORELDREPENGER: 'Permisjon med foreldrepenger',
+  PERMISJON: 'Permisjon',
+  UTDANNINGSPERMISJON: 'Utdanningspermisjon',
+  VELFERDSPERMISJON: 'Velferdspermisjon',
+  PERMITTERING: 'Permittering',
+  PERMISJON_VED_MILITÆRTJENESTE: 'Permisjon ved militærtjeneste',
+};
+
 interface OwnProps {
   arbeidsforhold: ArbeidsforholdV2;
 }
@@ -22,7 +31,7 @@ const PermisjonerInfo = ({ arbeidsforhold }: OwnProps) => (
         {arbeidsforhold.permisjoner.map((permisjon, index) => (
           <div>
             <VerticalSpacer sixteenPx />
-            <div className={styles.container} key={utledPeriodeLabelKey(arbeidsforhold.id, index)}>
+            <div key={utledPeriodeLabelKey(arbeidsforhold.id, index)}>
               <Normaltekst>
                 <FormattedMessage id="PersonArbeidsforholdDetailForm.PermisjonPeriode" />
               </Normaltekst>
@@ -32,11 +41,13 @@ const PermisjonerInfo = ({ arbeidsforhold }: OwnProps) => (
                   dateStringTom={permisjon.permisjonTom ? permisjon.permisjonTom : ''}
                 />
               </div>
-              <Normaltekst className={styles.div}>
+              <Normaltekst>
                 <FormattedMessage id="PersonArbeidsforholdDetailForm.Permisjonype" />
               </Normaltekst>
-              <Normaltekst className={styles.type}>{permisjon.type.kode}</Normaltekst>
-              <Normaltekst className={styles.div}>
+              <Normaltekst className={styles.type}>
+                {permisjon.type.kode === '-' ? 'Ukjent' : permisjonstyper[permisjon.type.kode]}
+              </Normaltekst>
+              <Normaltekst>
                 <FormattedMessage id="PersonArbeidsforholdDetailForm.Prosent" />
               </Normaltekst>
               <Normaltekst className={styles.type}>{permisjon.permisjonsprosent}</Normaltekst>
