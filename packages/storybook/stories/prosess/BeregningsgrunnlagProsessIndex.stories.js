@@ -49,7 +49,7 @@ const lagAPMedKode = kode => [
     begrunnelse: null,
     endretAv: 'B123456',
     endretTidspunkt: '2020-01-20',
-    kanLoses: true
+    kanLoses: true,
   },
 ];
 
@@ -65,16 +65,17 @@ const vilkarMedUtfall = (kode, fomArray) => [
         kode,
         kodeverk: 'vilkarStatus',
       },
-      vurdersIBehandlingen: true
+      vurdersIBehandlingen: true,
     })),
   },
 ];
 
-const lagKoblingTilVurdering = (fomArray, forlengelseMap = {}) => fomArray.map(stp => ({
-  skjæringstidspunkt: stp,
-  referanse: 'ht43-fwse34-23423dwa',
-  erForlengelse: forlengelseMap[stp] ? forlengelseMap[stp] : false
-}));
+const lagKoblingTilVurdering = (fomArray, forlengelseMap = {}) =>
+  fomArray.map(stp => ({
+    skjæringstidspunkt: stp,
+    referanse: 'ht43-fwse34-23423dwa',
+    erForlengelse: forlengelseMap[stp] ? forlengelseMap[stp] : false,
+  }));
 
 const lagArbeidsforhold = (
   arbeidsgiverId,
@@ -202,8 +203,16 @@ const lagStatus = kode => ({
   kodeverk: 'AKTIVITET_STATUS',
 });
 
-const lagBG = (perioder, statuser, sammenligningsgrunnlagPrStatus, avklaringsbehov, skjæringstidspunkt = '2019-09-16', grunnbeløp = 99858) => {
+const lagBG = (
+  perioder,
+  statuser,
+  sammenligningsgrunnlagPrStatus,
+  avklaringsbehov = [],
+  skjæringstidspunkt = '2019-09-16',
+  grunnbeløp = 99858,
+) => {
   const beregningsgrunnlag = {
+    avklaringsbehov,
     skjaeringstidspunktBeregning: skjæringstidspunkt,
     skjæringstidspunkt,
     vilkårsperiodeFom: skjæringstidspunkt,
@@ -294,7 +303,7 @@ const lagBG = (perioder, statuser, sammenligningsgrunnlagPrStatus, avklaringsbeh
       refusjonskravSomKommerForSentListe: null,
       saksopplysninger: {
         arbeidsforholdMedLønnsendring: [],
-      }
+      },
     },
     hjemmel: {
       kode: 'F_14_7_8_30',
@@ -502,7 +511,12 @@ export const arbeidstakerMedAvvik = () => {
   const sammenligningsgrunnlagPrStatus = [
     lagSammenligningsGrunnlag(sammenligningType.ATFLSN, 474257, 25.009999999, -79059),
   ];
-  const bg = lagBG(perioder, statuser, sammenligningsgrunnlagPrStatus, lagAPMedKode(aksjonspunktCodes.FASTSETT_BEREGNINGSGRUNNLAG_ARBEIDSTAKER_FRILANS));
+  const bg = lagBG(
+    perioder,
+    statuser,
+    sammenligningsgrunnlagPrStatus,
+    lagAPMedKode(aksjonspunktCodes.FASTSETT_BEREGNINGSGRUNNLAG_ARBEIDSTAKER_FRILANS),
+  );
   delete bg.sammenligningsgrunnlagInntekter;
   return (
     <BeregningsgrunnlagProsessIndex
@@ -619,8 +633,8 @@ export const selvstendigNæringsdrivende = () => {
               status: {
                 kode: 'OPPR',
                 kodeverk: 'AVKLARINGSBEHOV_STATUS',
-              }
-            }
+              },
+            },
           ],
           skjaeringstidspunktBeregning: '2020-04-27',
           skjæringstidspunkt: '2020-04-27',
@@ -1044,10 +1058,7 @@ export const selvstendigNæringsdrivende = () => {
       ]}
       alleKodeverk={alleKodeverk}
       arbeidsgiverOpplysningerPerId={arbeidsgivere}
-      beregningreferanserTilVurdering={lagKoblingTilVurdering([
-        '2020-04-27',
-        '2020-05-04',
-      ])}
+      beregningreferanserTilVurdering={lagKoblingTilVurdering(['2020-04-27', '2020-05-04'])}
     />
   );
 };
@@ -1086,7 +1097,7 @@ export const tidsbegrensetArbeidsforholdMedAvvik = () => {
     perioder,
     statuser,
     sammenligningsgrunnlagPrStatus,
-    lagAPMedKode(aksjonspunktCodes.FASTSETT_BEREGNINGSGRUNNLAG_TIDSBEGRENSET_ARBEIDSFORHOLD)
+    lagAPMedKode(aksjonspunktCodes.FASTSETT_BEREGNINGSGRUNNLAG_TIDSBEGRENSET_ARBEIDSFORHOLD),
   );
 
   return (
@@ -1124,9 +1135,12 @@ export const arbeidstakerFrilanserOgSelvstendigNæringsdrivende = () => {
   const perioder = [lagStandardPeriode(andeler)];
   const statuser = [lagStatus('AT_FL_SN')];
   const sammenligningsgrunnlagPrStatus = [lagSammenligningsGrunnlag(sammenligningType.ATFLSN, 474257, 26.2, 77059)];
-  const bg = lagBG(perioder, statuser, sammenligningsgrunnlagPrStatus, lagAPMedKode(
-    aksjonspunktCodes.VURDER_VARIG_ENDRET_ELLER_NYOPPSTARTET_NAERING_SELVSTENDIG_NAERINGSDRIVENDE,
-  ));
+  const bg = lagBG(
+    perioder,
+    statuser,
+    sammenligningsgrunnlagPrStatus,
+    lagAPMedKode(aksjonspunktCodes.VURDER_VARIG_ENDRET_ELLER_NYOPPSTARTET_NAERING_SELVSTENDIG_NAERINGSDRIVENDE),
+  );
   return (
     <BeregningsgrunnlagProsessIndex
       behandling={behandling}
@@ -1340,9 +1354,12 @@ export const arbeidstakerOgFrilansOgSelvstendigNæringsdrivendeMedAksjonspunktBe
   ];
   andeler[0].næringer = næringer;
   const sammenligningsgrunnlagPrStatus = [lagSammenligningsGrunnlag(sammenligningType.ATFLSN, 474257, 26.2, -77059)];
-  const bg = lagBG(perioder, statuser, sammenligningsgrunnlagPrStatus, lagAPMedKode(
-    aksjonspunktCodes.VURDER_VARIG_ENDRET_ELLER_NYOPPSTARTET_NAERING_SELVSTENDIG_NAERINGSDRIVENDE,
-  ));
+  const bg = lagBG(
+    perioder,
+    statuser,
+    sammenligningsgrunnlagPrStatus,
+    lagAPMedKode(aksjonspunktCodes.VURDER_VARIG_ENDRET_ELLER_NYOPPSTARTET_NAERING_SELVSTENDIG_NAERINGSDRIVENDE),
+  );
   bg.dekningsgrad = 80;
   return (
     <BeregningsgrunnlagProsessIndex
@@ -1542,7 +1559,12 @@ export const arbeidstakerMedAksjonspunktSide5 = () => {
   const perioder = [lagStandardPeriode(andeler)];
   const statuser = [lagStatus('AT')];
   const sammenligningsgrunnlagPrStatus = [lagSammenligningsGrunnlag(sammenligningType.AT, 169647, 105.4, 178929)];
-  const bg = lagBG(perioder, statuser, sammenligningsgrunnlagPrStatus, lagAPMedKode(aksjonspunktCodes.FASTSETT_BEREGNINGSGRUNNLAG_ARBEIDSTAKER_FRILANS));
+  const bg = lagBG(
+    perioder,
+    statuser,
+    sammenligningsgrunnlagPrStatus,
+    lagAPMedKode(aksjonspunktCodes.FASTSETT_BEREGNINGSGRUNNLAG_ARBEIDSTAKER_FRILANS),
+  );
   return (
     <BeregningsgrunnlagProsessIndex
       behandling={behandling}
@@ -1633,7 +1655,7 @@ export const tidsbegrensetArbeidsforholdMedAksjonspunktkSide7 = () => {
     perioder,
     statuser,
     sammenligningsgrunnlagPrStatus,
-    lagAPMedKode(aksjonspunktCodes.FASTSETT_BEREGNINGSGRUNNLAG_TIDSBEGRENSET_ARBEIDSFORHOLD)
+    lagAPMedKode(aksjonspunktCodes.FASTSETT_BEREGNINGSGRUNNLAG_TIDSBEGRENSET_ARBEIDSFORHOLD),
   );
 
   return (
@@ -1767,7 +1789,12 @@ export const FrilansMedAksjonspunktSide9 = () => {
   const perioder = [lagStandardPeriode(andeler)];
   const statuser = [lagStatus('FL')];
   const sammenligningsgrunnlagPrStatus = [lagSammenligningsGrunnlag(sammenligningType.FL, 504257, 33.1, 167000)];
-  const bg = lagBG(perioder, statuser, sammenligningsgrunnlagPrStatus, lagAPMedKode(aksjonspunktCodes.FASTSETT_BEREGNINGSGRUNNLAG_ARBEIDSTAKER_FRILANS));
+  const bg = lagBG(
+    perioder,
+    statuser,
+    sammenligningsgrunnlagPrStatus,
+    lagAPMedKode(aksjonspunktCodes.FASTSETT_BEREGNINGSGRUNNLAG_ARBEIDSTAKER_FRILANS),
+  );
   return (
     <BeregningsgrunnlagProsessIndex
       behandling={behandling}
@@ -2029,9 +2056,12 @@ export const SelvstendigNæringsdrivendeMedVarigEndringMedAksjonspunktSide14 = (
   ];
   andeler[0].næringer = næringer;
   const sammenligningsgrunnlagPrStatus = [lagSammenligningsGrunnlag(sammenligningType.ATFLSN, 900000, 29.9, -268871)];
-  const bg = lagBG(perioder, statuser, sammenligningsgrunnlagPrStatus, lagAPMedKode(
-    aksjonspunktCodes.VURDER_VARIG_ENDRET_ELLER_NYOPPSTARTET_NAERING_SELVSTENDIG_NAERINGSDRIVENDE,
-  ));
+  const bg = lagBG(
+    perioder,
+    statuser,
+    sammenligningsgrunnlagPrStatus,
+    lagAPMedKode(aksjonspunktCodes.VURDER_VARIG_ENDRET_ELLER_NYOPPSTARTET_NAERING_SELVSTENDIG_NAERINGSDRIVENDE),
+  );
   bg.dekningsgrad = 100;
   return (
     <BeregningsgrunnlagProsessIndex
@@ -2229,7 +2259,6 @@ export const SelvstendigNæringsdrivendeNyoppstartetMedAksjonspunktMedForlengels
   const bg1 = lagBG(perioder, statuser, sammenligningsgrunnlagPrStatus, ap, stp1);
   bg1.dekningsgrad = 100;
 
-
   // STP 2
   const andeler2 = [lagAndel('SN', 531000, undefined, undefined, true)];
   andeler2[0].pgiVerdier = pgi;
@@ -2255,20 +2284,13 @@ export const SelvstendigNæringsdrivendeNyoppstartetMedAksjonspunktMedForlengels
       isReadOnly={false}
       readOnlySubmitButton={false}
       isAksjonspunktOpen={false}
-      vilkar={vilkarMedUtfall(vilkarUtfallType.IKKE_VURDERT, [
-        stp1,
-        stp2
-      ])}
+      vilkar={vilkarMedUtfall(vilkarUtfallType.IKKE_VURDERT, [stp1, stp2])}
       alleKodeverk={alleKodeverk}
       arbeidsgiverOpplysningerPerId={arbeidsgivere}
-      beregningreferanserTilVurdering={lagKoblingTilVurdering([
-        stp1,
-        stp2,
-      ],
-        {
-          [stp1]: true,
-          [stp2]: false
-        })}
+      beregningreferanserTilVurdering={lagKoblingTilVurdering([stp1, stp2], {
+        [stp1]: true,
+        [stp2]: false,
+      })}
     />
   );
 };
@@ -2477,9 +2499,12 @@ export const arbeidstakerOgSelvstendigNæringsdrivendeMedAPVarigEndringSide20 = 
   ];
   andeler[0].næringer = næringer;
   const sammenligningsgrunnlagPrStatus = [lagSammenligningsGrunnlag(sammenligningType.ATFLSN, 900000, 29.9, -268871)];
-  const bg = lagBG(perioder, statuser, sammenligningsgrunnlagPrStatus, lagAPMedKode(
-    aksjonspunktCodes.VURDER_VARIG_ENDRET_ELLER_NYOPPSTARTET_NAERING_SELVSTENDIG_NAERINGSDRIVENDE,
-  ));
+  const bg = lagBG(
+    perioder,
+    statuser,
+    sammenligningsgrunnlagPrStatus,
+    lagAPMedKode(aksjonspunktCodes.VURDER_VARIG_ENDRET_ELLER_NYOPPSTARTET_NAERING_SELVSTENDIG_NAERINGSDRIVENDE),
+  );
   delete bg.dekningsgrad;
   return (
     <BeregningsgrunnlagProsessIndex
@@ -2728,9 +2753,12 @@ export const arbeidstakerFrilansOgSelvstendigNæringsdrivendeMedApOgVarigEndring
   ];
   andeler[0].næringer = næringer;
   const sammenligningsgrunnlagPrStatus = [lagSammenligningsGrunnlag(sammenligningType.ATFLSN, 900000, 29.9, -268871)];
-  const bg = lagBG(perioder, statuser, sammenligningsgrunnlagPrStatus, lagAPMedKode(
-    aksjonspunktCodes.VURDER_VARIG_ENDRET_ELLER_NYOPPSTARTET_NAERING_SELVSTENDIG_NAERINGSDRIVENDE,
-  ));
+  const bg = lagBG(
+    perioder,
+    statuser,
+    sammenligningsgrunnlagPrStatus,
+    lagAPMedKode(aksjonspunktCodes.VURDER_VARIG_ENDRET_ELLER_NYOPPSTARTET_NAERING_SELVSTENDIG_NAERINGSDRIVENDE),
+  );
   delete bg.dekningsgrad;
   return (
     <BeregningsgrunnlagProsessIndex
@@ -3290,14 +3318,19 @@ export const arbeidstakerMedAvvikOgKunEttGrunnlagKanLøses = () => {
   const sammenligningsgrunnlagPrStatus = [
     lagSammenligningsGrunnlag(sammenligningType.ATFLSN, 474257, 25.009999999, -79059),
   ];
-  const ap1 = lagAPMedKode(aksjonspunktCodes.FASTSETT_BEREGNINGSGRUNNLAG_ARBEIDSTAKER_FRILANS)
+  const ap1 = lagAPMedKode(aksjonspunktCodes.FASTSETT_BEREGNINGSGRUNNLAG_ARBEIDSTAKER_FRILANS);
   ap1[0].kanLoses = false;
   ap1[0].begrunnelse =
     'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.' +
     ' Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.';
   ap1[0].status = 'UTFO';
   const bg1 = lagBG(perioder, statuser, sammenligningsgrunnlagPrStatus, ap1);
-  const bg2 = lagBG(perioder, statuser, sammenligningsgrunnlagPrStatus, lagAPMedKode(aksjonspunktCodes.FASTSETT_BEREGNINGSGRUNNLAG_ARBEIDSTAKER_FRILANS));
+  const bg2 = lagBG(
+    perioder,
+    statuser,
+    sammenligningsgrunnlagPrStatus,
+    lagAPMedKode(aksjonspunktCodes.FASTSETT_BEREGNINGSGRUNNLAG_ARBEIDSTAKER_FRILANS),
+  );
 
   delete bg1.sammenligningsgrunnlagInntekter;
   delete bg2.sammenligningsgrunnlagInntekter;
@@ -3317,8 +3350,8 @@ export const arbeidstakerMedAvvikOgKunEttGrunnlagKanLøses = () => {
       alleKodeverk={alleKodeverk}
       arbeidsgiverOpplysningerPerId={arbeidsgivere}
       beregningreferanserTilVurdering={lagKoblingTilVurdering([
-        bg.skjaeringstidspunktBeregning,
-        bg.skjaeringstidspunktBeregning,
+        bg1.skjaeringstidspunktBeregning,
+        bg2.skjaeringstidspunktBeregning,
       ])}
     />
   );
