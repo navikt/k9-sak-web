@@ -207,11 +207,12 @@ const lagBG = (
   perioder,
   statuser,
   sammenligningsgrunnlagPrStatus,
-  avklaringsbehov,
+  avklaringsbehov = [],
   skjæringstidspunkt = '2019-09-16',
   grunnbeløp = 99858,
 ) => {
   const beregningsgrunnlag = {
+    avklaringsbehov,
     skjaeringstidspunktBeregning: skjæringstidspunkt,
     skjæringstidspunkt,
     vilkårsperiodeFom: skjæringstidspunkt,
