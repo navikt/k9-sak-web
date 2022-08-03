@@ -68,3 +68,4 @@ export type { default as PerioderMedAarsak } from './src/PerioderMedAarsak';
 export type { default as BehandlingPerioderårsakMedVilkår } from './src/behandlingPerioderarsakMedVilkar';
 export type { default as Venteaarsak } from './src/venteaarsakTsType';
 export type { default as MerknadFraLos } from './src/merknadFraLos';
+export type { default as BeregningReferanse } from './src/beregning/beregningReferanseTsType';

@@ -4,8 +4,8 @@ import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 import BeregningsgrunnlagProsessIndex from '@fpsak-frontend/prosess-beregningsgrunnlag';
 import { prosessStegCodes } from '@k9-sak-web/konstanter';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { ProsessStegDef, ProsessStegPanelDef, DynamicLoader } from '@k9-sak-web/behandling-felles';
-import { konverterKodeverkTilKode } from '@fpsak-frontend/utils';
+import { DynamicLoader, ProsessStegDef, ProsessStegPanelDef } from '@k9-sak-web/behandling-felles';
+import { konverterKodeverkTilKode, mapVilkar } from '@fpsak-frontend/utils';
 import '@navikt/ft-prosess-beregningsgrunnlag/dist/style.css';
 
 const ProsessBeregningsgrunnlag = React.lazy(() => import('@navikt/ft-prosess-beregningsgrunnlag'));
@@ -28,7 +28,7 @@ class PanelDef extends ProsessStegPanelDef {
           packageCompFn={() => import('@navikt/ft-prosess-beregningsgrunnlag')}
           federatedCompFn={ProsessBeregningsgrunnlagMF}
           {...props}
-          beregningsgrunnlagsvilkar={bgVilkaret}
+          beregningsgrunnlagsvilkar={mapVilkar(bgVilkaret, props.beregningreferanserTilVurdering)}
           beregningsgrunnlagListe={deepCopyProps.beregningsgrunnlag}
           arbeidsgiverOpplysningerPerId={deepCopyProps.arbeidsgiverOpplysningerPerId}
           submitCallback={props.submitCallback}
