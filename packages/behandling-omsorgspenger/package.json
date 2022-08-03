@@ -35,7 +35,7 @@
     "@k9-sak-web/types": "1.0.0",
     "@navikt/ft-fakta-beregning": "2.1.3",
     "@navikt/ft-fakta-fordel-beregningsgrunnlag": "2.0.4",
-    "@navikt/ft-prosess-beregningsgrunnlag": "2.0.14",
+    "@navikt/ft-prosess-beregningsgrunnlag": "2.1.0",
     "nav-frontend-popover": "^2.0.3",
     "react": "^17.0.2",
     "react-intl": "6.0.4",
