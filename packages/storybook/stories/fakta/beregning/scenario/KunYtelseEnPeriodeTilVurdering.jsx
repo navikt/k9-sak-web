@@ -113,7 +113,7 @@ export const beregningsgrunnlag = [
             fastsattAvSaksbehandler: true,
             lagtTilAvSaksbehandler: false,
             erTilkommetAndel: false,
-            beregnetPrAar: null
+            beregnetPrAar: null,
           },
         ],
       },
@@ -183,29 +183,30 @@ export const beregningsgrunnlag = [
   },
 ];
 
-const vilkår = [{
-  vilkarType: "FP_VK_41",
-  avslagKode: null,
-  merknadParametere: {},
-  vilkarStatus: 'IKKE_VURDERT',
-  periode: {
-    fom: beregningsgrunnlag[0].skjaeringstidspunktBeregning,
-    tom: beregningsgrunnlag[0].skjaeringstidspunktBeregning,
+const vilkår = [
+  {
+    vilkarType: 'FP_VK_41',
+    avslagKode: null,
+    merknadParametere: {},
+    vilkarStatus: 'IKKE_VURDERT',
+    periode: {
+      fom: beregningsgrunnlag[0].skjaeringstidspunktBeregning,
+      tom: beregningsgrunnlag[0].skjaeringstidspunktBeregning,
+    },
+    begrunnelse: null,
+    vurderesIBehandlingen: false,
   },
-  begrunnelse: null,
-  vurdersIBehandlingen: false,
-},
-{
-  avslagKode: null,
-  merknadParametere: {},
-  vilkarStatus: 'IKKE_VURDERT',
-  periode: {
-    fom: beregningsgrunnlag[1].skjaeringstidspunktBeregning,
-    tom: beregningsgrunnlag[1].skjaeringstidspunktBeregning,
+  {
+    avslagKode: null,
+    merknadParametere: {},
+    vilkarStatus: 'IKKE_VURDERT',
+    periode: {
+      fom: beregningsgrunnlag[1].skjaeringstidspunktBeregning,
+      tom: beregningsgrunnlag[1].skjaeringstidspunktBeregning,
+    },
+    begrunnelse: null,
+    vurderesIBehandlingen: true,
   },
-  begrunnelse: null,
-  vurdersIBehandlingen: true,
-},
 ];
 
 export const behandling = {

@@ -192,7 +192,7 @@ export const vilkår = beregningsgrunnlag.map((bg, index) => ({
     tom: beregningsgrunnlag.length === index ? null : beregningsgrunnlag[index].skjaeringstidspunktBeregning,
   },
   begrunnelse: null,
-  vurdersIBehandlingen: true,
+  vurderesIBehandlingen: true,
 }));
 
 export const behandling = {

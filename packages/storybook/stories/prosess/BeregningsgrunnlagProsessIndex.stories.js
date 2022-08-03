@@ -65,7 +65,7 @@ const vilkarMedUtfall = (kode, fomArray) => [
         kode,
         kodeverk: 'vilkarStatus',
       },
-      vurdersIBehandlingen: true,
+      vurderesIBehandlingen: true,
     })),
   },
 ];
@@ -1037,7 +1037,7 @@ export const selvstendigNæringsdrivende = () => {
                 tom: '2020-04-27',
               },
               begrunnelse: null,
-              vurdersIBehandlingen: true,
+              vurderesIBehandlingen: true,
             },
             {
               avslagKode: null,
@@ -1051,7 +1051,7 @@ export const selvstendigNæringsdrivende = () => {
                 tom: '2020-05-04',
               },
               begrunnelse: null,
-              vurdersIBehandlingen: true,
+              vurderesIBehandlingen: true,
             },
           ],
         },

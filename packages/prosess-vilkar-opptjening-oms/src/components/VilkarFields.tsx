@@ -36,7 +36,7 @@ export const VilkarFields = ({
   fieldPrefix,
   erVilkarOk,
   readOnly,
-  skalValgMidlertidigInaktivTypeBVises
+  skalValgMidlertidigInaktivTypeBVises,
 }: VilkarFieldsProps & Partial<FormValues>) => {
   const intl = useIntl();
   const erIkkeOppfyltText = (
@@ -46,9 +46,12 @@ export const VilkarFields = ({
 
   const hent847Text = () => {
     switch (erVilkarOk) {
-      case midlertidigInaktiv.TYPE_A: return <FormattedMessage id="OpptjeningVilkarAksjonspunktPanel.Er847A" />;
-      case midlertidigInaktiv.TYPE_B: return <FormattedMessage id="OpptjeningVilkarAksjonspunktPanel.Er847B" />;
-      default: return <FormattedMessage id="OpptjeningVilkarAksjonspunktPanel.Er847" />;
+      case midlertidigInaktiv.TYPE_A:
+        return <FormattedMessage id="OpptjeningVilkarAksjonspunktPanel.Er847A" />;
+      case midlertidigInaktiv.TYPE_B:
+        return <FormattedMessage id="OpptjeningVilkarAksjonspunktPanel.Er847B" />;
+      default:
+        return <FormattedMessage id="OpptjeningVilkarAksjonspunktPanel.Er847" />;
     }
   };
 
@@ -108,13 +111,15 @@ export const VilkarFields = ({
                     />
                   </FlexRow>
                 ) : null}
-                {skalValgMidlertidigInaktivTypeBVises && <FlexRow spaceBetween={false}>
-                  <RadioOption
-                    label={{ id: 'OpptjeningVilkarAksjonspunktPanel.MidlertidigInaktivB' }}
-                    value={midlertidigInaktiv.TYPE_B}
-                    {...optionProps}
-                  />
-                </FlexRow>}
+                {skalValgMidlertidigInaktivTypeBVises && (
+                  <FlexRow spaceBetween={false}>
+                    <RadioOption
+                      label={{ id: 'OpptjeningVilkarAksjonspunktPanel.MidlertidigInaktivB' }}
+                      value={midlertidigInaktiv.TYPE_B}
+                      {...optionProps}
+                    />
+                  </FlexRow>
+                )}
               </FlexColumn>
             </FlexContainer>
           )}
@@ -134,7 +139,7 @@ VilkarFields.buildInitialValues = (
   vilkarFields: Array.isArray(vilkårPerioder)
     ? vilkårPerioder.map(periode => ({
       begrunnelse: periode.begrunnelse,
-      vurdersIBehandlingen: periode.vurdersIBehandlingen,
+      vurderesIBehandlingen: periode.vurderesIBehandlingen,
       erVilkarOk: Object.values(midlertidigInaktiv).includes(periode.merknad)
         ? periode.merknad
         : periode.vilkarStatus === vilkarUtfallType.OPPFYLT,

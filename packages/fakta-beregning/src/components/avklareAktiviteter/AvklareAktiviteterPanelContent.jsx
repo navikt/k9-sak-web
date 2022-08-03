@@ -19,12 +19,7 @@ export const MANUELL_OVERSTYRING_FIELD = 'manuellOverstyringBeregningAktiviteter
 
 const { AVKLAR_AKTIVITETER, OVERSTYRING_AV_BEREGNINGSAKTIVITETER } = avklaringsbehovCodes;
 
-const buildInitialValues = (
-  avklaringsbehov,
-  avklarAktiviteter,
-  aktivtBeregningsgrunnlagIndex,
-  vilkårsperiode,
-) => {
+const buildInitialValues = (avklaringsbehov, avklarAktiviteter, aktivtBeregningsgrunnlagIndex, vilkårsperiode) => {
   const harAvklarAksjonspunkt = harAvklaringsbehov(AVKLAR_AKTIVITETER, avklaringsbehov);
   const erOverstyrt = harAvklaringsbehov(OVERSTYRING_AV_BEREGNINGSAKTIVITETER, avklaringsbehov);
   let initialValues = {};
@@ -37,7 +32,7 @@ const buildInitialValues = (
   }
   return {
     periode: vilkårsperiode.periode,
-    erTilVurdering: vilkårsperiode.vurdersIBehandlingen,
+    erTilVurdering: vilkårsperiode.vurderesIBehandlingen,
     [MANUELL_OVERSTYRING_FIELD]: erOverstyrt,
     avklaringsbehov,
     avklarAktiviteter,
@@ -56,7 +51,8 @@ export const buildInitialValuesAvklarAktiviteter = createSelector(
     beregningsgrunnlag => beregningsgrunnlag.avklaringsbehov,
     beregningsgrunnlag => getAvklarAktiviteter(beregningsgrunnlag),
     (beregningsgrunnlag, ownProps) => ownProps.aktivtBeregningsgrunnlagIndex,
-    (beregningsgrunnlag, ownProps) => ownProps.behandlingResultatPerioder.find(({ periode }) => periode.fom === beregningsgrunnlag.vilkårsperiodeFom),
+    (beregningsgrunnlag, ownProps) =>
+      ownProps.behandlingResultatPerioder.find(({ periode }) => periode.fom === beregningsgrunnlag.vilkårsperiodeFom),
   ],
   buildInitialValues,
 );
@@ -97,9 +93,10 @@ const AvklareAktiviteterPanelContent = props => {
     arbeidsgiverOpplysningerPerId,
     ...formProps
   } = props;
-  const avklarAktiviteter = getAvklarAktiviteter(beregningsgrunnlag)
+  const avklarAktiviteter = getAvklarAktiviteter(beregningsgrunnlag);
   const skalViseSubmitknappInneforBorderBox =
-    (harAndreAvklaringsbehovIPanel || erOverstyrt || erBgOverstyrt) && !hasOpenBehovForAvklaringAvAktiviteter(avklaringsbehov);
+    (harAndreAvklaringsbehovIPanel || erOverstyrt || erBgOverstyrt) &&
+    !hasOpenBehovForAvklaringAvAktiviteter(avklaringsbehov);
 
   const harFlereBeregningsgrunnlag = Array.isArray(alleBeregningsgrunnlag);
 
@@ -115,10 +112,9 @@ const AvklareAktiviteterPanelContent = props => {
     }
   }
 
-  return fields.map(
-    (field, index) =>
-    (<div key={field} style={{ display: index === aktivtBeregningsgrunnlagIndex ? 'block' : 'none' }}>
-      {((kanOverstyre || erOverstyrt) && fields.get(index).erTilVurdering) && (
+  return fields.map((field, index) => (
+    <div key={field} style={{ display: index === aktivtBeregningsgrunnlagIndex ? 'block' : 'none' }}>
+      {(kanOverstyre || erOverstyrt) && fields.get(index).erTilVurdering && (
         <div className={styles.rightAligned}>
           <CheckboxField
             key="manuellOverstyring"
@@ -131,25 +127,28 @@ const AvklareAktiviteterPanelContent = props => {
       )}
       {(harAvklaringsbehov(AVKLAR_AKTIVITETER, avklaringsbehov) || kanOverstyre || erOverstyrt) && (
         <div>
-          {(harAvklaringsbehov(AVKLAR_AKTIVITETER, avklaringsbehov) && fields.get(index).erTilVurdering) && (
+          {harAvklaringsbehov(AVKLAR_AKTIVITETER, avklaringsbehov) && fields.get(index).erTilVurdering && (
             <AksjonspunktHelpTextTemp isAksjonspunktOpen={!isAvklaringsbehovClosed}>
               {helpText}
             </AksjonspunktHelpTextTemp>
           )}
-          {(erOverstyrt && fields.get(index).erTilVurdering) && (
+          {erOverstyrt && fields.get(index).erTilVurdering && (
             <Element>
               <FormattedMessage id="AvklareAktiviteter.OverstyrerAktivitetAdvarsel" />
             </Element>
-          )}
+          )
+          }
 
-          {formProps.error && (
-            <>
-              <VerticalSpacer sixteenPx />
-              <AlertStripe type="feil">
-                <FormattedMessage id={formProps.error} />
-              </AlertStripe>
-            </>
-          )}
+          {
+            formProps.error && (
+              <>
+                <VerticalSpacer sixteenPx />
+                <AlertStripe type="feil">
+                  <FormattedMessage id={formProps.error} />
+                </AlertStripe>
+              </>
+            )
+          }
 
           <VerticalSpacer twentyPx />
           <BorderBox>
@@ -193,14 +192,13 @@ const AvklareAktiviteterPanelContent = props => {
               </>
             )}
           </BorderBox>
-          {!skalViseSubmitknappInneforBorderBox &&
+          {
+            !skalViseSubmitknappInneforBorderBox &&
             skalViseSubmitKnappEllerBegrunnelse(avklaringsbehov, erOverstyrt, fields.get(index).erTilVurdering) && (
               <>
                 <VerticalSpacer twentyPx />
                 <FaktaSubmitButton
-                  buttonText={
-                    erOverstyrt ? intl.formatMessage({ id: 'AvklarAktivitetPanel.OverstyrText' }) : undefined
-                  }
+                  buttonText={erOverstyrt ? intl.formatMessage({ id: 'AvklarAktivitetPanel.OverstyrText' }) : undefined}
                   formName={formProps.form}
                   isSubmittable={submittable && submitEnabled && !formProps.error}
                   isReadOnly={readOnly}
@@ -209,12 +207,12 @@ const AvklareAktiviteterPanelContent = props => {
                   behandlingVersjon={behandlingVersjon}
                 />
               </>
-            )}
-        </div>
+            )
+          }
+        </div >
       )}
-    </div>
-    ),
-  );
+    </div >
+  ));
 };
 
 export default injectIntl(AvklareAktiviteterPanelContent);

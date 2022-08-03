@@ -50,10 +50,12 @@ const {
   AVKLAR_AKTIVITETER,
 } = avklaringsbehovCodes;
 
-const relevanteKoder = [VURDER_FAKTA_FOR_ATFL_SN,
+const relevanteKoder = [
+  VURDER_FAKTA_FOR_ATFL_SN,
   OVERSTYRING_AV_BEREGNINGSAKTIVITETER,
   OVERSTYRING_AV_BEREGNINGSGRUNNLAG,
-  AVKLAR_AKTIVITETER];
+  AVKLAR_AKTIVITETER,
+];
 
 const lagLabel = (bg, vilkårsperioder) => {
   const stpOpptjening = bg.faktaOmBeregning.avklarAktiviteter.skjæringstidspunkt;
@@ -71,8 +73,12 @@ const lagLabel = (bg, vilkårsperioder) => {
 const harAvklaringsbehovIPanel = avklaringsbehov => {
   const harBehovForAvklaring = !!avklaringsbehov;
   if (harBehovForAvklaring) {
-    const harVurderFaktaAksjonspunkt = avklaringsbehov.some(ap => ap.definisjon === VURDER_FAKTA_FOR_ATFL_SN && ap.kanLoses !== false);
-    const harAvklarAktiviteterAP = avklaringsbehov.some(ap => ap.definisjon === AVKLAR_AKTIVITETER && ap.kanLoses !== false);
+    const harVurderFaktaAksjonspunkt = avklaringsbehov.some(
+      ap => ap.definisjon === VURDER_FAKTA_FOR_ATFL_SN && ap.kanLoses !== false,
+    );
+    const harAvklarAktiviteterAP = avklaringsbehov.some(
+      ap => ap.definisjon === AVKLAR_AKTIVITETER && ap.kanLoses !== false,
+    );
     return harVurderFaktaAksjonspunkt || harAvklarAktiviteterAP;
   }
   return false;
@@ -80,7 +86,7 @@ const harAvklaringsbehovIPanel = avklaringsbehov => {
 
 const skalVurderes = (bg, vilkårsperioder) =>
   harAvklaringsbehovIPanel(bg.avklaringsbehov) &&
-  vilkårsperioder.find(({ periode }) => periode.fom === bg.vilkårsperiodeFom).vurdersIBehandlingen;
+  vilkårsperioder.find(({ periode }) => periode.fom === bg.vilkårsperiodeFom).vurderesIBehandlingen;
 
 const BeregningFaktaIndex = ({
   vilkar,
@@ -110,13 +116,21 @@ const BeregningFaktaIndex = ({
   }
 
   const aktiveAvklaringsBehov = aktivtBeregningsgrunnlag.avklaringsbehov;
-  const relevanteLøsbareAvklaringsbehov = aktiveAvklaringsBehov.filter(ap => relevanteKoder.includes(ap.definisjon) && ap.kanLoses !== false)
+  const relevanteLøsbareAvklaringsbehov = aktiveAvklaringsBehov.filter(
+    ap => relevanteKoder.includes(ap.definisjon) && ap.kanLoses !== false,
+  );
   const vilkårsperioder = beregningsgrunnlagVilkår.perioder;
 
-  const avklarAktiviteterReadOnly = readOnly || ((relevanteLøsbareAvklaringsbehov.length === 0 ||
-    harAvklaringsbehov(OVERSTYRING_AV_BEREGNINGSAKTIVITETER, aktiveAvklaringsBehov)) && !erOverstyrer)
-  const avklarFaktaBeregningReadOnly = readOnly || ((relevanteLøsbareAvklaringsbehov.length === 0 ||
-    harAvklaringsbehov(OVERSTYRING_AV_BEREGNINGSGRUNNLAG, aktiveAvklaringsBehov)) && !erOverstyrer)
+  const avklarAktiviteterReadOnly =
+    readOnly ||
+    ((relevanteLøsbareAvklaringsbehov.length === 0 ||
+      harAvklaringsbehov(OVERSTYRING_AV_BEREGNINGSAKTIVITETER, aktiveAvklaringsBehov)) &&
+      !erOverstyrer);
+  const avklarFaktaBeregningReadOnly =
+    readOnly ||
+    ((relevanteLøsbareAvklaringsbehov.length === 0 ||
+      harAvklaringsbehov(OVERSTYRING_AV_BEREGNINGSGRUNNLAG, aktiveAvklaringsBehov)) &&
+      !erOverstyrer);
   return (
     <RawIntlProvider value={intl}>
       {skalBrukeTabs && (
