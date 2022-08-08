@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
-import { injectIntl, WrappedComponentProps } from 'react-intl';
+import { injectIntl, WrappedComponentProps, RawIntlProvider } from 'react-intl';
 import { Rettigheter, SideMenuWrapper, faktaHooks, useSetBehandlingVedEndring } from '@k9-sak-web/behandling-felles';
 import {
   KodeverkMedNavn,
@@ -87,7 +87,6 @@ const PleiepengerFakta = ({
     rettigheter,
     aksjonspunkter,
     valgtFaktaSteg,
-    intl,
     featureToggles,
   );
 
@@ -131,18 +130,20 @@ const PleiepengerFakta = ({
         {valgtPanel && isLoading && <LoadingPanel />}
         {valgtPanel && !isLoading && (
           <ErrorBoundary errorMessageCallback={addErrorMessage}>
-            {valgtPanel.getPanelDef().getKomponent({
-              ...faktaData,
-              behandling,
-              alleKodeverk,
-              featureToggles,
-              submitCallback: bekreftAksjonspunktCallback,
-              ...valgtPanel.getKomponentData(rettigheter, dataTilUtledingAvPleiepengerPaneler, hasFetchError),
-              dokumenter,
-              beregningErBehandlet,
-              formData,
-              setFormData,
-            })}
+            <RawIntlProvider value={intl}>
+              {valgtPanel.getPanelDef().getKomponent({
+                ...faktaData,
+                behandling,
+                alleKodeverk,
+                featureToggles,
+                submitCallback: bekreftAksjonspunktCallback,
+                ...valgtPanel.getKomponentData(rettigheter, dataTilUtledingAvPleiepengerPaneler, hasFetchError),
+                dokumenter,
+                beregningErBehandlet,
+                formData,
+                setFormData,
+              })}
+            </RawIntlProvider>
           </ErrorBoundary>
         )}
       </SideMenuWrapper>
