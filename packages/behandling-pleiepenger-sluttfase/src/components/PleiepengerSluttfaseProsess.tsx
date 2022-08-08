@@ -25,7 +25,10 @@ import lagForhåndsvisRequest from '@fpsak-frontend/utils/src/formidlingUtils';
 
 import prosessStegPanelDefinisjoner from '../panelDefinisjoner/prosessStegPleiepengerSluttfasePanelDefinisjoner';
 import FetchedData from '../types/fetchedDataTsType';
-import { restApiPleiepengerSluttfaseHooks, PleiepengerSluttfaseBehandlingApiKeys } from '../data/pleiepengerSluttfaseBehandlingApi';
+import {
+  restApiPleiepengerSluttfaseHooks,
+  PleiepengerSluttfaseBehandlingApiKeys,
+} from '../data/pleiepengerSluttfaseBehandlingApi';
 
 import '@fpsak-frontend/assets/styles/arrowForProcessMenu.less';
 
@@ -84,7 +87,6 @@ const getLagringSideeffekter =
   (
     toggleIverksetterVedtakModal,
     toggleFatterVedtakModal,
-    toggleOppdatereFagsakContext,
     oppdaterProsessStegOgFaktaPanelIUrl,
     opneSokeside,
     lagreDokumentdata,
@@ -103,11 +105,6 @@ const getLagringSideeffekter =
       );
     const visFatterVedtakModal =
       aksjonspunktModels[0].isVedtakSubmission && aksjonspunktModels[0].kode === aksjonspunktCodes.FORESLA_VEDTAK;
-    const isVedtakAp = aksjonspunktModels.some(a => a.isVedtakSubmission);
-
-    if (visIverksetterVedtakModal || visFatterVedtakModal || erRevurderingsaksjonspunkt || isVedtakAp) {
-      toggleOppdatereFagsakContext(false);
-    }
 
     if (aksjonspunktModels[0].isVedtakSubmission) {
       const dokumentdata = lagDokumentdata(aksjonspunktModels[0]);
@@ -147,21 +144,23 @@ const PleiepengerSluttfaseProsess = ({
   featureToggles,
   setBeregningErBehandlet,
 }: OwnProps) => {
-  const toggleSkalOppdatereFagsakContext = prosessStegHooks.useOppdateringAvBehandlingsversjon(
-    behandling.versjon,
-    oppdaterBehandlingVersjon,
-  );
+  prosessStegHooks.useOppdateringAvBehandlingsversjon(behandling.versjon, oppdaterBehandlingVersjon);
 
   const { startRequest: lagreAksjonspunkter, data: apBehandlingRes } =
-    restApiPleiepengerSluttfaseHooks.useRestApiRunner<Behandling>(PleiepengerSluttfaseBehandlingApiKeys.SAVE_AKSJONSPUNKT);
+    restApiPleiepengerSluttfaseHooks.useRestApiRunner<Behandling>(
+      PleiepengerSluttfaseBehandlingApiKeys.SAVE_AKSJONSPUNKT,
+    );
   const { startRequest: lagreOverstyrteAksjonspunkter, data: apOverstyrtBehandlingRes } =
-    restApiPleiepengerSluttfaseHooks.useRestApiRunner<Behandling>(PleiepengerSluttfaseBehandlingApiKeys.SAVE_OVERSTYRT_AKSJONSPUNKT);
+    restApiPleiepengerSluttfaseHooks.useRestApiRunner<Behandling>(
+      PleiepengerSluttfaseBehandlingApiKeys.SAVE_OVERSTYRT_AKSJONSPUNKT,
+    );
   const { startRequest: forhandsvisMelding } = restApiPleiepengerSluttfaseHooks.useRestApiRunner(
     PleiepengerSluttfaseBehandlingApiKeys.PREVIEW_MESSAGE,
   );
-  const { startRequest: forhandsvisTilbakekrevingMelding } = restApiPleiepengerSluttfaseHooks.useRestApiRunner<Behandling>(
-    PleiepengerSluttfaseBehandlingApiKeys.PREVIEW_TILBAKEKREVING_MESSAGE,
-  );
+  const { startRequest: forhandsvisTilbakekrevingMelding } =
+    restApiPleiepengerSluttfaseHooks.useRestApiRunner<Behandling>(
+      PleiepengerSluttfaseBehandlingApiKeys.PREVIEW_TILBAKEKREVING_MESSAGE,
+    );
   const { startRequest: lagreDokumentdata } = restApiPleiepengerSluttfaseHooks.useRestApiRunner<Behandling>(
     PleiepengerSluttfaseBehandlingApiKeys.DOKUMENTDATA_LAGRE,
   );
@@ -207,7 +206,6 @@ const PleiepengerSluttfaseProsess = ({
   const lagringSideeffekterCallback = getLagringSideeffekter(
     toggleIverksetterVedtakModal,
     toggleFatterVedtakModal,
-    toggleSkalOppdatereFagsakContext,
     oppdaterProsessStegOgFaktaPanelIUrl,
     opneSokeside,
     lagreDokumentdata,

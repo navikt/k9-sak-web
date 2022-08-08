@@ -70,8 +70,7 @@ const previewCallback =
   };
 
 const getLagringSideeffekter =
-  (toggleIverksetterVedtakModal, toggleAnkeModal, toggleOppdatereFagsakContext, oppdaterProsessStegOgFaktaPanelIUrl) =>
-  async aksjonspunktModels => {
+  (toggleIverksetterVedtakModal, toggleAnkeModal, oppdaterProsessStegOgFaktaPanelIUrl) => async aksjonspunktModels => {
     const skalTilMedunderskriver = aksjonspunktModels.some(
       apValue => apValue.kode === aksjonspunktCodes.FORESLA_VEDTAK,
     );
@@ -81,10 +80,6 @@ const getLagringSideeffekter =
     const erManuellVurderingAvAnke = aksjonspunktModels.some(
       apValue => apValue.kode === aksjonspunktCodes.MANUELL_VURDERING_AV_ANKE_MERKNADER,
     );
-
-    if (skalTilMedunderskriver || skalFerdigstilles || erManuellVurderingAvAnke) {
-      toggleOppdatereFagsakContext(false);
-    }
 
     // Returner funksjon som blir kjørt etter lagring av aksjonspunkt(er)
     return () => {
@@ -112,10 +107,7 @@ const AnkeProsess = ({
   alleBehandlinger,
   setBehandling,
 }: OwnProps) => {
-  const toggleSkalOppdatereFagsakContext = prosessStegHooks.useOppdateringAvBehandlingsversjon(
-    behandling.versjon,
-    oppdaterBehandlingVersjon,
-  );
+  prosessStegHooks.useOppdateringAvBehandlingsversjon(behandling.versjon, oppdaterBehandlingVersjon);
 
   const { startRequest: lagreAksjonspunkter, data: apBehandlingRes } = restApiAnkeHooks.useRestApiRunner<Behandling>(
     AnkeBehandlingApiKeys.SAVE_AKSJONSPUNKT,
@@ -158,7 +150,6 @@ const AnkeProsess = ({
   const lagringSideeffekterCallback = getLagringSideeffekter(
     toggleIverksetterVedtakModal,
     toggleAnkeModal,
-    toggleSkalOppdatereFagsakContext,
     oppdaterProsessStegOgFaktaPanelIUrl,
   );
 

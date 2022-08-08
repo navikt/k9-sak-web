@@ -42,12 +42,8 @@ interface OwnProps {
 }
 
 const getLagringSideeffekter =
-  (toggleFatterVedtakModal, toggleOppdatereFagsakContext, oppdaterProsessStegOgFaktaPanelIUrl) =>
-  async aksjonspunktModels => {
+  (toggleFatterVedtakModal, oppdaterProsessStegOgFaktaPanelIUrl) => async aksjonspunktModels => {
     const isFatterVedtakAp = aksjonspunktModels.some(ap => ap.kode === aksjonspunktCodesTilbakekreving.FORESLA_VEDTAK);
-    if (isFatterVedtakAp) {
-      toggleOppdatereFagsakContext(false);
-    }
 
     // Returner funksjon som blir kjørt etter lagring av aksjonspunkt(er)
     return () => {
@@ -119,7 +115,6 @@ const TilbakekrevingProsess = ({
   const [visFatterVedtakModal, toggleFatterVedtakModal] = useState(false);
   const lagringSideeffekterCallback = getLagringSideeffekter(
     toggleFatterVedtakModal,
-    toggleSkalOppdatereFagsakContext,
     oppdaterProsessStegOgFaktaPanelIUrl,
   );
 
