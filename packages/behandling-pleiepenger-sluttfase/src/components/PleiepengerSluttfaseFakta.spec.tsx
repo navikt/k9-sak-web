@@ -134,7 +134,7 @@ describe('<PleiepengerSluttfaseFakta>', () => {
       erPrivatPerson: false,
       identifikator: 'testId',
       navn: 'testNavn',
-      arbeidsforholdreferanser: []
+      arbeidsforholdreferanser: [],
     },
   };
 
@@ -172,32 +172,32 @@ describe('<PleiepengerSluttfaseFakta>', () => {
       {
         erAktiv: false,
         harAksjonspunkt: false,
-        tekst: 'Om pleietrengende',
+        tekstKode: 'OmPleietrengendeInfoPanel.Title',
       },
       {
         erAktiv: true,
         harAksjonspunkt: true,
-        tekst: 'Arbeidsforhold',
+        tekstKode: 'ArbeidsforholdInfoPanel.Title',
       },
       {
         erAktiv: false,
         harAksjonspunkt: false,
-        tekst: 'LivetsSluttfasePanel.LivetsSluttfase',
+        tekstKode: 'LivetsSluttfasePanel.LivetsSluttfase',
       },
       {
         erAktiv: false,
         harAksjonspunkt: false,
-        tekst: 'Inntektsmelding',
+        tekstKode: 'InntektsmeldingInfoPanel.Title',
       },
       {
         erAktiv: false,
         harAksjonspunkt: false,
-        tekst: 'Inntekt og ytelser',
+        tekstKode: 'InntektOgYtelser.Title',
       },
       {
         erAktiv: false,
         harAksjonspunkt: false,
-        tekst: 'Søknadsperioder',
+        tekstKode: 'SoknadsperioderPanel.Soknadsperioder',
       },
     ]);
   });

@@ -131,7 +131,7 @@ describe('<PleiepengerFakta>', () => {
       erPrivatPerson: false,
       identifikator: 'testId',
       navn: 'testNavn',
-      arbeidsforholdreferanser: []
+      arbeidsforholdreferanser: [],
     },
   };
 
@@ -169,44 +169,44 @@ describe('<PleiepengerFakta>', () => {
       {
         erAktiv: false,
         harAksjonspunkt: false,
-        tekst: 'Om barnet',
+        tekstKode: 'OmBarnetInfoPanel.Title',
       },
       {
         erAktiv: true,
         harAksjonspunkt: true,
-        tekst: 'Arbeidsforhold',
+        tekstKode: 'ArbeidsforholdInfoPanel.Title',
       },
       {
         erAktiv: false,
         harAksjonspunkt: false,
-        tekst: 'Omsorgen for',
+        tekstKode: 'OmsorgenForInfoPanel.Title',
       },
       {
         erAktiv: false,
         harAksjonspunkt: false,
-        tekst: 'Sykdom',
+        tekstKode: 'MedisinskVilkarPanel.MedisinskVilkar',
       },
       {
         erAktiv: false,
         harAksjonspunkt: false,
-        tekst: 'Etablert tilsyn',
+        tekstKode: 'EtablertTilsynInfoPanel.Title',
       },
       {
         erAktiv: false,
         harAksjonspunkt: false,
-        tekst: 'Inntektsmelding',
+        tekstKode: 'InntektsmeldingInfoPanel.Title',
       },
       {
         erAktiv: false,
         harAksjonspunkt: false,
-        tekst: 'Inntekt og ytelser',
+        tekstKode: 'InntektOgYtelser.Title',
       },
       {
         erAktiv: false,
         harAksjonspunkt: false,
-        tekst: 'Utenlandsopphold',
+        tekstKode: 'UtenlandsoppholdInfoPanel.Title',
       },
-      { erAktiv: false, harAksjonspunkt: false, tekst: 'Søknadsperioder' },
+      { erAktiv: false, harAksjonspunkt: false, tekstKode: 'SoknadsperioderPanel.Soknadsperioder' },
     ]);
   });
 

@@ -131,7 +131,7 @@ describe('<TilbakekrevingFakta>', () => {
       {
         erAktiv: true,
         harAksjonspunkt: true,
-        tekst: 'Feilutbetaling',
+        tekstKode: 'TilbakekrevingFakta.FaktaFeilutbetaling',
       },
     ]);
   });

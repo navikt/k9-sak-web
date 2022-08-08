@@ -129,7 +129,7 @@ describe('<OmsorgspengerFakta>', () => {
       erPrivatPerson: false,
       identifikator: 'testId',
       navn: 'testNavn',
-      arbeidsforholdreferanser: []
+      arbeidsforholdreferanser: [],
     },
   };
 
@@ -167,12 +167,12 @@ describe('<OmsorgspengerFakta>', () => {
       {
         erAktiv: true,
         harAksjonspunkt: true,
-        tekst: 'Arbeidsforhold',
+        tekstKode: 'ArbeidsforholdInfoPanel.Title',
       },
       {
         erAktiv: false,
         harAksjonspunkt: false,
-        tekst: 'Inntekt og ytelser',
+        tekstKode: 'InntektOgYtelser.Title',
       },
     ]);
   });

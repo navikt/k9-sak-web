@@ -120,7 +120,7 @@ describe('<FrisinnFakta>', () => {
       erPrivatPerson: false,
       identifikator: 'testId',
       navn: 'testNavn',
-      arbeidsforholdreferanser: []
+      arbeidsforholdreferanser: [],
     },
   };
 
@@ -155,12 +155,12 @@ describe('<FrisinnFakta>', () => {
       {
         erAktiv: true,
         harAksjonspunkt: false,
-        tekst: 'Inntekt og ytelser',
+        tekstKode: 'InntektOgYtelser.Title',
       },
       {
         erAktiv: false,
         harAksjonspunkt: false,
-        tekst: 'Søknaden',
+        tekstKode: 'OpplysningerFraSoknaden.Title',
       },
     ]);
   });

@@ -39,12 +39,12 @@ describe('<UtvidetRettFakta>', () => {
     );
 
     const panel = wrapper.find(SideMenuWrapper);
-    expect(panel.prop('paneler')[0].tekst).toEqual('Barn');
+    expect(panel.prop('paneler')[0].tekstKode).toEqual('FaktaBarn.Title');
     expect(panel.prop('paneler')).toEqual([
       {
         erAktiv: true,
         harAksjonspunkt: false,
-        tekst: 'Barn',
+        tekstKode: 'FaktaBarn.Title',
       },
     ]);
   });
