@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 
-import { injectIntl, WrappedComponentProps } from 'react-intl';
 import { Rettigheter, SideMenuWrapper, faktaHooks, useSetBehandlingVedEndring } from '@k9-sak-web/behandling-felles';
 import {
   KodeverkMedNavn,
@@ -45,7 +44,6 @@ interface OwnProps {
 }
 
 const PleiepengerSluttfaseFakta = ({
-  intl,
   data,
   behandling,
   fagsak,
@@ -62,7 +60,7 @@ const PleiepengerSluttfaseFakta = ({
   dokumenter,
   featureToggles,
   beregningErBehandlet,
-}: OwnProps & WrappedComponentProps) => {
+}: OwnProps) => {
   const { aksjonspunkter, ...rest } = data;
   const { addErrorMessage } = useRestApiErrorDispatcher();
 
@@ -156,4 +154,4 @@ const PleiepengerSluttfaseFakta = ({
   return null;
 };
 
-export default injectIntl(PleiepengerSluttfaseFakta);
+export default PleiepengerSluttfaseFakta;

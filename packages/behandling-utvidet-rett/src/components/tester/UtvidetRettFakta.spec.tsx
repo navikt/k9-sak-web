@@ -1,6 +1,6 @@
 import React from 'react';
 import sinon from 'sinon';
-import { intlMock, shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
+import { shallow } from 'enzyme';
 import { SideMenuWrapper } from '@k9-sak-web/behandling-felles';
 import { Behandling } from '@k9-sak-web/types';
 import UtvidetRettFakta from '../UtvidetRettFakta';
@@ -18,9 +18,8 @@ describe('<UtvidetRettFakta>', () => {
       rammevedtak,
     };
 
-    const wrapper = shallowWithIntl(
-      <UtvidetRettFakta.WrappedComponent
-        intl={intlMock}
+    const wrapper = shallow(
+      <UtvidetRettFakta
         data={fetchedData as FetchedData}
         behandling={behandling as Behandling}
         fagsak={fagsak}
@@ -57,9 +56,8 @@ describe('<UtvidetRettFakta>', () => {
       rammevedtak,
     };
 
-    const wrapper = shallowWithIntl(
-      <UtvidetRettFakta.WrappedComponent
-        intl={intlMock}
+    const wrapper = shallow(
+      <UtvidetRettFakta
         data={fetchedData as FetchedData}
         behandling={behandling as Behandling}
         fagsak={fagsak}
@@ -94,9 +92,8 @@ describe('<UtvidetRettFakta>', () => {
       rammevedtak,
     };
 
-    const wrapper = shallowWithIntl(
-      <UtvidetRettFakta.WrappedComponent
-        intl={intlMock}
+    const wrapper = shallow(
+      <UtvidetRettFakta
         data={fetchedData as FetchedData}
         behandling={behandling as Behandling}
         fagsak={fagsak}

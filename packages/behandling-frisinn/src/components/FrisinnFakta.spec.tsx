@@ -1,7 +1,7 @@
 import React from 'react';
 import sinon from 'sinon';
+import { shallow } from 'enzyme';
 
-import { shallowWithIntl, intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import { SideMenuWrapper } from '@k9-sak-web/behandling-felles';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
@@ -131,9 +131,8 @@ describe('<FrisinnFakta>', () => {
       vilkar,
       personopplysninger: soker,
     };
-    const wrapper = shallowWithIntl(
-      <FrisinnFakta.WrappedComponent
-        intl={intlMock}
+    const wrapper = shallow(
+      <FrisinnFakta
         data={fetchedData as FetchedData}
         behandling={behandling as Behandling}
         fagsak={fagsak}
@@ -173,9 +172,8 @@ describe('<FrisinnFakta>', () => {
       vilkar,
     };
 
-    const wrapper = shallowWithIntl(
-      <FrisinnFakta.WrappedComponent
-        intl={intlMock}
+    const wrapper = shallow(
+      <FrisinnFakta
         data={fetchedData as FetchedData}
         behandling={behandling as Behandling}
         fagsak={fagsak}

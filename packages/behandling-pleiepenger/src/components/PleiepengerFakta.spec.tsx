@@ -1,8 +1,8 @@
 import React from 'react';
 import sinon from 'sinon';
+import { shallow } from 'enzyme';
 
 import ArbeidsforholdFaktaIndex from '@fpsak-frontend/fakta-arbeidsforhold';
-import { shallowWithIntl, intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import { SideMenuWrapper } from '@k9-sak-web/behandling-felles';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
@@ -143,9 +143,8 @@ describe('<PleiepengerFakta>', () => {
       personopplysninger: soker,
     };
 
-    const wrapper = shallowWithIntl(
-      <ForeldrepengerFakta.WrappedComponent
-        intl={intlMock}
+    const wrapper = shallow(
+      <ForeldrepengerFakta
         data={fetchedData as FetchedData}
         behandling={behandling as Behandling}
         fagsak={fagsak}
@@ -219,9 +218,8 @@ describe('<PleiepengerFakta>', () => {
       vilkar,
     };
 
-    const wrapper = shallowWithIntl(
-      <ForeldrepengerFakta.WrappedComponent
-        intl={intlMock}
+    const wrapper = shallow(
+      <ForeldrepengerFakta
         data={fetchedData as FetchedData}
         behandling={behandling as Behandling}
         fagsak={fagsak}
@@ -258,9 +256,8 @@ describe('<PleiepengerFakta>', () => {
       aksjonspunkter,
       vilkar,
     };
-    const wrapper = shallowWithIntl(
-      <ForeldrepengerFakta.WrappedComponent
-        intl={intlMock}
+    const wrapper = shallow(
+      <ForeldrepengerFakta
         data={fetchedData as FetchedData}
         behandling={behandling as Behandling}
         fagsak={fagsak}
