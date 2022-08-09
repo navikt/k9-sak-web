@@ -1,8 +1,8 @@
 import React from 'react';
 import sinon from 'sinon';
+import { shallow } from 'enzyme';
 
 import foreldelseVurderingType from '@fpsak-frontend/kodeverk/src/foreldelseVurderingType';
-import { shallowWithIntl, intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import { SideMenuWrapper } from '@k9-sak-web/behandling-felles';
 import { Behandling, Fagsak } from '@k9-sak-web/types';
 import aksjonspunktCodesTilbakekreving from '@fpsak-frontend/kodeverk/src/aksjonspunktCodesTilbakekreving';
@@ -106,9 +106,8 @@ describe('<TilbakekrevingFakta>', () => {
 
   it('skal rendre faktapaneler og sidemeny korrekt', () => {
     requestTilbakekrevingApi.mock(TilbakekrevingBehandlingApiKeys.FEILUTBETALING_AARSAK, []);
-    const wrapper = shallowWithIntl(
-      <TilbakekrevingFakta.WrappedComponent
-        intl={intlMock}
+    const wrapper = shallow(
+      <TilbakekrevingFakta
         data={{
           aksjonspunkter,
           perioderForeldelse,
@@ -131,7 +130,7 @@ describe('<TilbakekrevingFakta>', () => {
       {
         erAktiv: true,
         harAksjonspunkt: true,
-        tekst: 'Feilutbetaling',
+        tekstKode: 'TilbakekrevingFakta.FaktaFeilutbetaling',
       },
     ]);
   });
@@ -139,9 +138,8 @@ describe('<TilbakekrevingFakta>', () => {
   it('skal oppdatere url ved valg av faktapanel', () => {
     requestTilbakekrevingApi.mock(TilbakekrevingBehandlingApiKeys.FEILUTBETALING_AARSAK, []);
     const oppdaterProsessStegOgFaktaPanelIUrl = sinon.spy();
-    const wrapper = shallowWithIntl(
-      <TilbakekrevingFakta.WrappedComponent
-        intl={intlMock}
+    const wrapper = shallow(
+      <TilbakekrevingFakta
         data={{
           aksjonspunkter,
           perioderForeldelse,
