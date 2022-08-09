@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 
-import { injectIntl, WrappedComponentProps, RawIntlProvider } from 'react-intl';
 import { Rettigheter, SideMenuWrapper, faktaHooks, useSetBehandlingVedEndring } from '@k9-sak-web/behandling-felles';
 import {
   KodeverkMedNavn,
@@ -42,7 +41,6 @@ interface OwnProps {
 }
 
 const PleiepengerFakta = ({
-  intl,
   data,
   behandling,
   fagsak,
@@ -59,7 +57,7 @@ const PleiepengerFakta = ({
   dokumenter,
   featureToggles,
   beregningErBehandlet,
-}: OwnProps & WrappedComponentProps) => {
+}: OwnProps) => {
   const { aksjonspunkter, ...rest } = data;
   const { addErrorMessage } = useRestApiErrorDispatcher();
 
@@ -130,20 +128,18 @@ const PleiepengerFakta = ({
         {valgtPanel && isLoading && <LoadingPanel />}
         {valgtPanel && !isLoading && (
           <ErrorBoundary errorMessageCallback={addErrorMessage}>
-            <RawIntlProvider value={intl}>
-              {valgtPanel.getPanelDef().getKomponent({
-                ...faktaData,
-                behandling,
-                alleKodeverk,
-                featureToggles,
-                submitCallback: bekreftAksjonspunktCallback,
-                ...valgtPanel.getKomponentData(rettigheter, dataTilUtledingAvPleiepengerPaneler, hasFetchError),
-                dokumenter,
-                beregningErBehandlet,
-                formData,
-                setFormData,
-              })}
-            </RawIntlProvider>
+            {valgtPanel.getPanelDef().getKomponent({
+              ...faktaData,
+              behandling,
+              alleKodeverk,
+              featureToggles,
+              submitCallback: bekreftAksjonspunktCallback,
+              ...valgtPanel.getKomponentData(rettigheter, dataTilUtledingAvPleiepengerPaneler, hasFetchError),
+              dokumenter,
+              beregningErBehandlet,
+              formData,
+              setFormData,
+            })}
           </ErrorBoundary>
         )}
       </SideMenuWrapper>
@@ -152,4 +148,4 @@ const PleiepengerFakta = ({
   return null;
 };
 
-export default injectIntl(PleiepengerFakta);
+export default PleiepengerFakta;
