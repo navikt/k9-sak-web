@@ -91,7 +91,6 @@ describe('<faktaHooks>', () => {
         rettigheter,
         aksjonspunkter,
         valgtFaktaSteg,
-        intl,
       ),
     );
     const [faktaPaneler, valgtPanel, formaterteFaktaPaneler] = Object.values(wrapper.find('div').props()).reduce(
@@ -118,7 +117,7 @@ describe('<faktaHooks>', () => {
       {
         erAktiv: true,
         harAksjonspunkt: true,
-        tekst: 'ArbeidsforholdInfoPanel.Title',
+        tekstKode: 'ArbeidsforholdInfoPanel.Title',
       },
     ]);
   });

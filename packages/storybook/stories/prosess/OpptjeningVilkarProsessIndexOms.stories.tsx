@@ -122,7 +122,7 @@ export const visPanelForÅpentAksjonspunkt = () => (
               tom: '2020-04-27',
             },
             begrunnelse: null,
-            vurdersIBehandlingen: true,
+            vurderesIBehandlingen: true,
             merknad: {
               kode: '7847B',
               kodeverk: 'VILKAR_UTFALL_MERKNAD',
@@ -189,7 +189,7 @@ export const visPanelForNårEnIkkeHarAksjonspunkt = () => (
               tom: '2020-04-27',
             },
             begrunnelse: null,
-            vurdersIBehandlingen: true,
+            vurderesIBehandlingen: true,
             merknad: {
               kode: '1035',
               kodeverk: 'VILKAR_UTFALL_MERKNAD',
