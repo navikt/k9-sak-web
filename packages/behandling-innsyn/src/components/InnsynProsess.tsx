@@ -45,8 +45,13 @@ const previewCallback =
   };
 
 const getLagringSideeffekter =
-  (toggleIverksetterVedtakModal, oppdaterProsessStegOgFaktaPanelIUrl) => async aksjonspunktModels => {
+  (toggleIverksetterVedtakModal, toggleOppdatereFagsakContext, oppdaterProsessStegOgFaktaPanelIUrl) =>
+  async aksjonspunktModels => {
     const isVedtak = aksjonspunktModels.some(a => a.kode === aksjonspunktCodes.FORESLA_VEDTAK);
+
+    if (isVedtak) {
+      toggleOppdatereFagsakContext(false);
+    }
 
     // Returner funksjon som blir kjørt etter lagring av aksjonspunkt(er)
     return () => {
@@ -109,6 +114,7 @@ const InnsynProsess = ({
   const [visIverksetterVedtakModal, toggleIverksetterVedtakModal] = useState(false);
   const lagringSideeffekterCallback = getLagringSideeffekter(
     toggleIverksetterVedtakModal,
+    toggleSkalOppdatereFagsakContext,
     oppdaterProsessStegOgFaktaPanelIUrl,
   );
 

@@ -83,6 +83,7 @@ const getLagringSideeffekter =
   (
     toggleIverksetterVedtakModal,
     toggleFatterVedtakModal,
+    toggleOppdatereFagsakContext,
     oppdaterProsessStegOgFaktaPanelIUrl,
     opneSokeside,
     lagreDokumentdata,
@@ -103,6 +104,10 @@ const getLagringSideeffekter =
       ].includes(aksjonspunktModels[0].kode);
     const visFatterVedtakModal =
       aksjonspunktModels[0].isVedtakSubmission && aksjonspunktModels[0].kode === aksjonspunktCodes.FORESLA_VEDTAK;
+
+    if (erRevurderingsaksjonspunkt) {
+      toggleOppdatereFagsakContext(false);
+    }
 
     if (aksjonspunktModels[0].isVedtakSubmission) {
       const dokumentdata = lagDokumentdata(aksjonspunktModels[0]);
@@ -195,6 +200,7 @@ const OmsorgspengerProsess = ({
   const lagringSideeffekterCallback = getLagringSideeffekter(
     toggleIverksetterVedtakModal,
     toggleFatterVedtakModal,
+    toggleSkalOppdatereFagsakContext,
     oppdaterProsessStegOgFaktaPanelIUrl,
     opneSokeside,
     lagreDokumentdata,

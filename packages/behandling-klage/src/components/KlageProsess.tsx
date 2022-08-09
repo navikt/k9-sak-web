@@ -91,7 +91,8 @@ const previewCallback =
   };
 
 const getLagringSideeffekter =
-  (toggleFatterVedtakModal, toggleKlageModal, oppdaterProsessStegOgFaktaPanelIUrl) => async aksjonspunktModels => {
+  (toggleFatterVedtakModal, toggleKlageModal, toggleOppdatereFagsakContext, oppdaterProsessStegOgFaktaPanelIUrl) =>
+  async aksjonspunktModels => {
     const skalByttTilKlageinstans = aksjonspunktModels.some(
       apValue =>
         apValue.kode === aksjonspunktCodes.BEHANDLE_KLAGE_NFP &&
@@ -100,6 +101,10 @@ const getLagringSideeffekter =
     const erVedtakAp =
       aksjonspunktModels[0].kode === aksjonspunktCodes.FORESLA_VEDTAK ||
       aksjonspunktModels[0].kode === aksjonspunktCodes.VEDTAK_UTEN_TOTRINNSKONTROLL;
+
+    if (skalByttTilKlageinstans || erVedtakAp) {
+      toggleOppdatereFagsakContext(false);
+    }
 
     // Returner funksjon som blir kjørt etter lagring av aksjonspunkt(er)
     return () => {
@@ -181,6 +186,7 @@ const KlageProsess = ({
   const lagringSideeffekterCallback = getLagringSideeffekter(
     toggleFatterVedtakModal,
     toggleKlageModal,
+    toggleSkalOppdatereFagsakContext,
     oppdaterProsessStegOgFaktaPanelIUrl,
   );
 

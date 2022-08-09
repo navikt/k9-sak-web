@@ -84,6 +84,7 @@ const getLagringSideeffekter =
   (
     toggleIverksetterVedtakModal,
     toggleFatterVedtakModal,
+    toggleOppdatereFagsakContext,
     oppdaterProsessStegOgFaktaPanelIUrl,
     opneSokeside,
     lagreDokumentdata,
@@ -102,6 +103,11 @@ const getLagringSideeffekter =
       );
     const visFatterVedtakModal =
       aksjonspunktModels[0].isVedtakSubmission && aksjonspunktModels[0].kode === aksjonspunktCodes.FORESLA_VEDTAK;
+    const isVedtakAp = aksjonspunktModels.some(a => a.isVedtakSubmission);
+
+    if (visIverksetterVedtakModal || visFatterVedtakModal || erRevurderingsaksjonspunkt || isVedtakAp) {
+      toggleOppdatereFagsakContext(false);
+    }
 
     if (aksjonspunktModels[0].isVedtakSubmission) {
       const dokumentdata = lagDokumentdata(aksjonspunktModels[0]);
@@ -196,6 +202,7 @@ const UnntakProsess = ({
   const lagringSideeffekterCallback = getLagringSideeffekter(
     toggleIverksetterVedtakModal,
     toggleFatterVedtakModal,
+    toggleSkalOppdatereFagsakContext,
     oppdaterProsessStegOgFaktaPanelIUrl,
     opneSokeside,
     lagreDokumentdata,

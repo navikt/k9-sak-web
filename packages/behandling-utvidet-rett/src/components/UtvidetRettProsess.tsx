@@ -57,6 +57,7 @@ const getLagringSideeffekter =
   (
     toggleIverksetterVedtakModal,
     toggleFatterVedtakModal,
+    toggleOppdatereFagsakContext,
     oppdaterProsessStegOgFaktaPanelIUrl,
     opneSokeside,
     lagreDokumentdata,
@@ -75,6 +76,10 @@ const getLagringSideeffekter =
       );
     const visFatterVedtakModal =
       aksjonspunktModels[0].isVedtakSubmission && aksjonspunktModels[0].kode === aksjonspunktCodes.FORESLA_VEDTAK;
+
+    if (erRevurderingsaksjonspunkt) {
+      toggleOppdatereFagsakContext(false);
+    }
 
     if (aksjonspunktModels[0].isVedtakSubmission) {
       const dokumentdata = lagDokumentdata(aksjonspunktModels[0]);
@@ -113,8 +118,10 @@ const UtvidetRettProsess = ({
   featureToggles,
   arbeidsgiverOpplysningerPerId,
 }: ProsessProps) => {
-  prosessStegHooks.useOppdateringAvBehandlingsversjon(behandling.versjon, oppdaterBehandlingVersjon);
-
+  const toggleSkalOppdatereFagsakContext = prosessStegHooks.useOppdateringAvBehandlingsversjon(
+    behandling.versjon,
+    oppdaterBehandlingVersjon,
+  );
   const { startRequest: lagreDokumentdata } = restApiUtvidetRettHooks.useRestApiRunner<Behandling>(
     UtvidetRettBehandlingApiKeys.DOKUMENTDATA_LAGRE,
   );
@@ -150,6 +157,7 @@ const UtvidetRettProsess = ({
   const lagringSideeffekterCallback = getLagringSideeffekter(
     toggleIverksetterVedtakModal,
     toggleFatterVedtakModal,
+    toggleSkalOppdatereFagsakContext,
     oppdaterProsessStegOgFaktaPanelIUrl,
     opneSokeside,
     lagreDokumentdata,

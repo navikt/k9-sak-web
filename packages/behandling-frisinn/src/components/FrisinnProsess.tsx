@@ -80,7 +80,13 @@ const getForhandsvisFptilbakeCallback =
   };
 
 const getLagringSideeffekter =
-  (toggleIverksetterVedtakModal, toggleFatterVedtakModal, oppdaterProsessStegOgFaktaPanelIUrl, opneSokeside) =>
+  (
+    toggleIverksetterVedtakModal,
+    toggleFatterVedtakModal,
+    toggleOppdatereFagsakContext,
+    oppdaterProsessStegOgFaktaPanelIUrl,
+    opneSokeside,
+  ) =>
   async aksjonspunktModels => {
     const erRevurderingsaksjonspunkt = aksjonspunktModels.some(
       apModel =>
@@ -95,6 +101,11 @@ const getLagringSideeffekter =
       );
     const visFatterVedtakModal =
       aksjonspunktModels[0].isVedtakSubmission && aksjonspunktModels[0].kode === aksjonspunktCodes.FORESLA_VEDTAK;
+    const isVedtakAp = aksjonspunktModels.some(a => a.isVedtakSubmission);
+
+    if (visIverksetterVedtakModal || visFatterVedtakModal || erRevurderingsaksjonspunkt || isVedtakAp) {
+      toggleOppdatereFagsakContext(false);
+    }
 
     // Returner funksjon som blir kjørt etter lagring av aksjonspunkt(er)
     return () => {
@@ -128,7 +139,10 @@ const FrisinnProsess = ({
   arbeidsgiverOpplysningerPerId,
   featureToggles,
 }: OwnProps) => {
-  prosessStegHooks.useOppdateringAvBehandlingsversjon(behandling.versjon, oppdaterBehandlingVersjon);
+  const toggleSkalOppdatereFagsakContext = prosessStegHooks.useOppdateringAvBehandlingsversjon(
+    behandling.versjon,
+    oppdaterBehandlingVersjon,
+  );
 
   const { startRequest: lagreAksjonspunkter, data: apBehandlingRes } = restApiFrisinnHooks.useRestApiRunner<Behandling>(
     FrisinnBehandlingApiKeys.SAVE_AKSJONSPUNKT,
@@ -177,6 +191,7 @@ const FrisinnProsess = ({
   const lagringSideeffekterCallback = getLagringSideeffekter(
     toggleIverksetterVedtakModal,
     toggleFatterVedtakModal,
+    toggleSkalOppdatereFagsakContext,
     oppdaterProsessStegOgFaktaPanelIUrl,
     opneSokeside,
   );
