@@ -95,11 +95,17 @@ const getLagringSideeffekter =
           apModel.kode === aksjonspunktCodes.VARSEL_REVURDERING_ETTERKONTROLL) &&
         apModel.sendVarsel,
     );
-    const visIverksetterVedtakModal =
-      aksjonspunktModels[0].isVedtakSubmission &&
-      [aksjonspunktCodes.VEDTAK_UTEN_TOTRINNSKONTROLL, aksjonspunktCodes.FATTER_VEDTAK].includes(
-        aksjonspunktModels[0].kode,
-      );
+
+    const visIverksetterVedtakModal = aksjonspunktModels.some(
+      aksjonspunkt =>
+        aksjonspunkt.isVedtakSubmission &&
+        [
+          aksjonspunktCodes.VEDTAK_UTEN_TOTRINNSKONTROLL,
+          aksjonspunktCodes.FATTER_VEDTAK,
+          aksjonspunktCodes.FORESLA_VEDTAK_MANUELT,
+        ].includes(aksjonspunkt.kode),
+    );
+
     const visFatterVedtakModal =
       aksjonspunktModels[0].isVedtakSubmission && aksjonspunktModels[0].kode === aksjonspunktCodes.FORESLA_VEDTAK;
 
