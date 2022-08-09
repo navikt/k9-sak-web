@@ -1,6 +1,4 @@
 import React, { useEffect, useState } from 'react';
-
-import { injectIntl, WrappedComponentProps } from 'react-intl';
 import { Rettigheter, SideMenuWrapper, faktaHooks, useSetBehandlingVedEndring } from '@k9-sak-web/behandling-felles';
 import {
   ArbeidsgiverOpplysningerPerId,
@@ -41,7 +39,6 @@ interface OwnProps {
 }
 
 const OmsorgspengerFakta = ({
-  intl,
   data,
   behandling,
   fagsak,
@@ -57,7 +54,7 @@ const OmsorgspengerFakta = ({
   arbeidsgiverOpplysningerPerId,
   featureToggles,
   dokumenter,
-}: OwnProps & WrappedComponentProps) => {
+}: OwnProps) => {
   const { aksjonspunkter, ...rest } = data;
   const { addErrorMessage } = useRestApiErrorDispatcher();
 
@@ -86,7 +83,6 @@ const OmsorgspengerFakta = ({
     rettigheter,
     aksjonspunkter,
     valgtFaktaSteg,
-    intl,
   );
 
   faktaHooks.useFaktaAksjonspunktNotifikator(faktaPaneler, setApentFaktaPanel, behandling.versjon);
@@ -146,4 +142,4 @@ const OmsorgspengerFakta = ({
   return null;
 };
 
-export default injectIntl(OmsorgspengerFakta);
+export default OmsorgspengerFakta;

@@ -1,5 +1,3 @@
-import { IntlShape } from 'react-intl';
-
 import { Aksjonspunkt, Behandling, Fagsak, FeatureToggles } from '@k9-sak-web/types';
 
 import Rettigheter from '../../types/rettigheterTsType';
@@ -37,12 +35,11 @@ export const finnValgtPanel = (faktaPaneler: FaktaPanelUtledet[], valgtFaktaPane
 };
 
 export const formaterPanelerForSidemeny = (
-  intl: IntlShape,
   faktaPaneler: FaktaPanelUtledet[],
   valgtFaktaPanelKode: string,
 ): FaktaPanelMenyRad[] =>
   faktaPaneler.map(panel => ({
-    tekst: intl.formatMessage({ id: panel.getTekstKode() }),
+    tekstKode: panel.getTekstKode(),
     erAktiv: panel.getUrlKode() === valgtFaktaPanelKode,
     harAksjonspunkt: panel.getHarApneAksjonspunkter(),
   }));

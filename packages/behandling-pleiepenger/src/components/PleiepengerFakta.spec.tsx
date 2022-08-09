@@ -1,8 +1,8 @@
 import React from 'react';
 import sinon from 'sinon';
+import { shallow } from 'enzyme';
 
 import ArbeidsforholdFaktaIndex from '@fpsak-frontend/fakta-arbeidsforhold';
-import { shallowWithIntl, intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import { SideMenuWrapper } from '@k9-sak-web/behandling-felles';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
@@ -104,7 +104,7 @@ describe('<PleiepengerFakta>', () => {
       erPrivatPerson: false,
       identifikator: 'testId',
       navn: 'testNavn',
-      arbeidsforholdreferanser: []
+      arbeidsforholdreferanser: [],
     },
   };
 
@@ -116,9 +116,8 @@ describe('<PleiepengerFakta>', () => {
       personopplysninger: soker,
     };
 
-    const wrapper = shallowWithIntl(
-      <ForeldrepengerFakta.WrappedComponent
-        intl={intlMock}
+    const wrapper = shallow(
+      <ForeldrepengerFakta
         data={fetchedData as FetchedData}
         behandling={behandling as Behandling}
         fagsak={fagsak}
@@ -142,44 +141,44 @@ describe('<PleiepengerFakta>', () => {
       {
         erAktiv: false,
         harAksjonspunkt: false,
-        tekst: 'Om barnet',
+        tekstKode: 'OmBarnetInfoPanel.Title',
       },
       {
         erAktiv: true,
         harAksjonspunkt: true,
-        tekst: 'Arbeidsforhold',
+        tekstKode: 'ArbeidsforholdInfoPanel.Title',
       },
       {
         erAktiv: false,
         harAksjonspunkt: false,
-        tekst: 'Omsorgen for',
+        tekstKode: 'OmsorgenForInfoPanel.Title',
       },
       {
         erAktiv: false,
         harAksjonspunkt: false,
-        tekst: 'Sykdom',
+        tekstKode: 'MedisinskVilkarPanel.MedisinskVilkar',
       },
       {
         erAktiv: false,
         harAksjonspunkt: false,
-        tekst: 'Etablert tilsyn',
+        tekstKode: 'EtablertTilsynInfoPanel.Title',
       },
       {
         erAktiv: false,
         harAksjonspunkt: false,
-        tekst: 'Inntektsmelding',
+        tekstKode: 'InntektsmeldingInfoPanel.Title',
       },
       {
         erAktiv: false,
         harAksjonspunkt: false,
-        tekst: 'Inntekt og ytelser',
+        tekstKode: 'InntektOgYtelser.Title',
       },
       {
         erAktiv: false,
         harAksjonspunkt: false,
-        tekst: 'Utenlandsopphold',
+        tekstKode: 'UtenlandsoppholdInfoPanel.Title',
       },
-      { erAktiv: false, harAksjonspunkt: false, tekst: 'Søknadsperioder' },
+      { erAktiv: false, harAksjonspunkt: false, tekstKode: 'SoknadsperioderPanel.Soknadsperioder' },
     ]);
   });
 
@@ -192,9 +191,8 @@ describe('<PleiepengerFakta>', () => {
       vilkar,
     };
 
-    const wrapper = shallowWithIntl(
-      <ForeldrepengerFakta.WrappedComponent
-        intl={intlMock}
+    const wrapper = shallow(
+      <ForeldrepengerFakta
         data={fetchedData as FetchedData}
         behandling={behandling as Behandling}
         fagsak={fagsak}
@@ -231,9 +229,8 @@ describe('<PleiepengerFakta>', () => {
       aksjonspunkter,
       vilkar,
     };
-    const wrapper = shallowWithIntl(
-      <ForeldrepengerFakta.WrappedComponent
-        intl={intlMock}
+    const wrapper = shallow(
+      <ForeldrepengerFakta
         data={fetchedData as FetchedData}
         behandling={behandling as Behandling}
         fagsak={fagsak}
