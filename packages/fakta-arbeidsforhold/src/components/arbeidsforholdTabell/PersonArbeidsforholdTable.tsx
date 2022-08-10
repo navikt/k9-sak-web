@@ -7,7 +7,7 @@ import erIBrukImageUrl from '@fpsak-frontend/assets/images/innvilget_hover.svg';
 import chevronIkonUrl from '@fpsak-frontend/assets/images/pil_ned.svg';
 import FlexRow from '@fpsak-frontend/shared-components/src/flexGrid/FlexRow';
 import arbeidsforholdHandlingType from '@fpsak-frontend/kodeverk/src/arbeidsforholdHandlingType';
-import { arbeidsforholdHarAksjonspunktÅrsak, getEndCharFromId } from '@fpsak-frontend/utils/src/arbeidsforholdUtils';
+import { arbeidsforholdHarAksjonspunktÅrsak } from '@fpsak-frontend/utils/src/arbeidsforholdUtils';
 import ArbeidsforholdV2 from '@k9-sak-web/types/src/arbeidsforholdV2TsType';
 import { KodeverkMedNavn } from '@k9-sak-web/types';
 import IngenArbeidsforholdRegistrert from './IngenArbeidsforholdRegistrert';
@@ -99,7 +99,7 @@ const PersonArbeidsforholdTable = ({
                 isApLeftBorder={harAksjonspunkt}
               >
                 <TableColumn>
-                  <Normaltekst>{getEndCharFromId(decodeHtmlEntity(arbeidsforholdId))}</Normaltekst>
+                  <Normaltekst>{decodeHtmlEntity(arbeidsforholdId)}</Normaltekst>
                 </TableColumn>
                 <TableColumn>
                   <Normaltekst>

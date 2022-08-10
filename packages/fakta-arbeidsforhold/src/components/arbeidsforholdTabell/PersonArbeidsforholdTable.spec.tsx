@@ -103,7 +103,9 @@ describe('<PersonArbeidsforholdTable>', () => {
     expect(row1.prop('isSelected')).toBe(true);
     const colsRow1 = row1.find(TableColumn);
     expect(colsRow1).toHaveLength(6);
-    expect(colsRow1.first().childAt(0).childAt(0).text()).toEqual('...2345');
+    expect(colsRow1.first().childAt(0).childAt(0).text()).toEqual(
+      arbeidsforhold2.arbeidsforhold.eksternArbeidsforholdId,
+    );
     expect(colsRow1.at(1).find(PeriodLabel)).toHaveLength(1);
     expect(colsRow1.at(3).childAt(0).childAt(0).text()).toEqual('80.00 %');
 
@@ -273,7 +275,7 @@ describe('<PersonArbeidsforholdTable>', () => {
     );
     const tableRow = wrapper.find(TableRow).at(0);
     const tekst = tableRow.find(Normaltekst).at(0);
-    expect(tekst.childAt(0).text()).toEqual('...2345');
+    expect(tekst.childAt(0).text()).toEqual(arbeidsforhold2.arbeidsforhold.eksternArbeidsforholdId);
   });
 
   it('skal vise tom dato', () => {
