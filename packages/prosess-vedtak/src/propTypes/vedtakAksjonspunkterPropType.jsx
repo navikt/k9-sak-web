@@ -1,9 +1,10 @@
 import PropTypes from 'prop-types';
 
-import { kodeverkObjektPropType } from '@fpsak-frontend/prop-types';
-
 const vedtakAksjonspunkterPropType = PropTypes.shape({
-  definisjon: kodeverkObjektPropType.isRequired,
+  definisjon: PropTypes.shape({
+    kode: PropTypes.string.isRequired,
+    kodeverk: PropTypes.string.isRequired,
+  }),
   begrunnelse: PropTypes.string,
   kanLoses: PropTypes.bool.isRequired,
   erAktivt: PropTypes.bool.isRequired,

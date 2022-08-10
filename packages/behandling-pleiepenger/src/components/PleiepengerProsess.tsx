@@ -84,7 +84,6 @@ const getLagringSideeffekter =
   (
     toggleIverksetterVedtakModal,
     toggleFatterVedtakModal,
-    toggleOppdatereFagsakContext,
     oppdaterProsessStegOgFaktaPanelIUrl,
     opneSokeside,
     lagreDokumentdata,
@@ -96,18 +95,19 @@ const getLagringSideeffekter =
             apModel.kode === aksjonspunktCodes.VARSEL_REVURDERING_ETTERKONTROLL) &&
           apModel.sendVarsel,
       );
-      const visIverksetterVedtakModal =
-        aksjonspunktModels[0].isVedtakSubmission &&
-        [aksjonspunktCodes.VEDTAK_UTEN_TOTRINNSKONTROLL, aksjonspunktCodes.FATTER_VEDTAK].includes(
-          aksjonspunktModels[0].kode,
-        );
+
+      const visIverksetterVedtakModal = aksjonspunktModels.some(
+        aksjonspunkt =>
+          aksjonspunkt.isVedtakSubmission &&
+          [
+            aksjonspunktCodes.VEDTAK_UTEN_TOTRINNSKONTROLL,
+            aksjonspunktCodes.FATTER_VEDTAK,
+            aksjonspunktCodes.FORESLA_VEDTAK_MANUELT,
+          ].includes(aksjonspunkt.kode),
+      );
+
       const visFatterVedtakModal =
         aksjonspunktModels[0].isVedtakSubmission && aksjonspunktModels[0].kode === aksjonspunktCodes.FORESLA_VEDTAK;
-      const isVedtakAp = aksjonspunktModels.some(a => a.isVedtakSubmission);
-
-      if (visIverksetterVedtakModal || visFatterVedtakModal || erRevurderingsaksjonspunkt || isVedtakAp) {
-        toggleOppdatereFagsakContext(false);
-      }
 
       if (aksjonspunktModels[0].isVedtakSubmission) {
         const dokumentdata = lagDokumentdata(aksjonspunktModels[0]);
@@ -125,8 +125,9 @@ const getLagringSideeffekter =
         } else {
           oppdaterProsessStegOgFaktaPanelIUrl('default', 'default');
         }
+
       };
-    };
+    }
 
 const PleiepengerProsess = ({
   data,
@@ -147,10 +148,7 @@ const PleiepengerProsess = ({
   featureToggles,
   setBeregningErBehandlet,
 }: OwnProps) => {
-  const toggleSkalOppdatereFagsakContext = prosessStegHooks.useOppdateringAvBehandlingsversjon(
-    behandling.versjon,
-    oppdaterBehandlingVersjon,
-  );
+  prosessStegHooks.useOppdateringAvBehandlingsversjon(behandling.versjon, oppdaterBehandlingVersjon);
 
   const { startRequest: lagreAksjonspunkter, data: apBehandlingRes } =
     restApiPleiepengerHooks.useRestApiRunner<Behandling>(PleiepengerBehandlingApiKeys.SAVE_AKSJONSPUNKT);
@@ -207,7 +205,6 @@ const PleiepengerProsess = ({
   const lagringSideeffekterCallback = getLagringSideeffekter(
     toggleIverksetterVedtakModal,
     toggleFatterVedtakModal,
-    toggleSkalOppdatereFagsakContext,
     oppdaterProsessStegOgFaktaPanelIUrl,
     opneSokeside,
     lagreDokumentdata,
