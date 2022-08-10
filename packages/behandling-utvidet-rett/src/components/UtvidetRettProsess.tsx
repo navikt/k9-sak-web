@@ -15,7 +15,7 @@ import { Fagsak, FagsakPerson, Behandling } from '@k9-sak-web/types';
 
 import lagForhåndsvisRequest from '@fpsak-frontend/utils/src/formidlingUtils';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
-import fagsakYtelseType from "@fpsak-frontend/kodeverk/src/fagsakYtelseType";
+import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import { restApiUtvidetRettHooks, UtvidetRettBehandlingApiKeys } from '../data/utvidetRettBehandlingApi';
 import prosessStegUtvidetRettPanelDefinisjoner from '../panelDefinisjoner/prosessStegUtvidetRettPanelDefinisjoner';
 import '@fpsak-frontend/assets/styles/arrowForProcessMenu.less';
@@ -29,17 +29,17 @@ const forhandsvis = (data: any) => {
 
 const getForhandsvisTilbakeCallback =
   (forhandsvisTilbakekrevingMelding: (data: any) => Promise<any>, fagsak: Fagsak, behandling: Behandling) =>
-    (mottaker: string, brevmalkode: string, fritekst: string, saksnummer: string) => {
-      const data = {
-        behandlingUuid: behandling.uuid,
-        fagsakYtelseType: fagsak.sakstype,
-        varseltekst: fritekst || '',
-        mottaker,
-        brevmalkode,
-        saksnummer,
-      };
-      return forhandsvisTilbakekrevingMelding(data).then(response => forhandsvis(response));
+  (mottaker: string, brevmalkode: string, fritekst: string, saksnummer: string) => {
+    const data = {
+      behandlingUuid: behandling.uuid,
+      fagsakYtelseType: fagsak.sakstype,
+      varseltekst: fritekst || '',
+      mottaker,
+      brevmalkode,
+      saksnummer,
     };
+    return forhandsvisTilbakekrevingMelding(data).then(response => forhandsvis(response));
+  };
 
 const getForhandsvisCallback =
   (
@@ -48,10 +48,10 @@ const getForhandsvisCallback =
     fagsakPerson: FagsakPerson,
     behandling: Behandling,
   ) =>
-    (data: any) => {
-      const request = lagForhåndsvisRequest(behandling, fagsak, fagsakPerson, data);
-      return forhandsvisMelding(request).then(response => forhandsvis(response));
-    };
+  (data: any) => {
+    const request = lagForhåndsvisRequest(behandling, fagsak, fagsakPerson, data);
+    return forhandsvisMelding(request).then(response => forhandsvis(response));
+  };
 
 const getLagringSideeffekter =
   (
@@ -62,43 +62,43 @@ const getLagringSideeffekter =
     opneSokeside,
     lagreDokumentdata,
   ) =>
-    async aksjonspunktModels => {
-      const erRevurderingsaksjonspunkt = aksjonspunktModels.some(
-        apModel =>
-          (apModel.kode === aksjonspunktCodes.VARSEL_REVURDERING_MANUELL ||
-            apModel.kode === aksjonspunktCodes.VARSEL_REVURDERING_ETTERKONTROLL) &&
-          apModel.sendVarsel,
+  async aksjonspunktModels => {
+    const erRevurderingsaksjonspunkt = aksjonspunktModels.some(
+      apModel =>
+        (apModel.kode === aksjonspunktCodes.VARSEL_REVURDERING_MANUELL ||
+          apModel.kode === aksjonspunktCodes.VARSEL_REVURDERING_ETTERKONTROLL) &&
+        apModel.sendVarsel,
+    );
+    const visIverksetterVedtakModal =
+      aksjonspunktModels[0].isVedtakSubmission &&
+      [aksjonspunktCodes.VEDTAK_UTEN_TOTRINNSKONTROLL, aksjonspunktCodes.FATTER_VEDTAK].includes(
+        aksjonspunktModels[0].kode,
       );
-      const visIverksetterVedtakModal =
-        aksjonspunktModels[0].isVedtakSubmission &&
-        [aksjonspunktCodes.VEDTAK_UTEN_TOTRINNSKONTROLL, aksjonspunktCodes.FATTER_VEDTAK].includes(
-          aksjonspunktModels[0].kode,
-        );
-      const visFatterVedtakModal =
-        aksjonspunktModels[0].isVedtakSubmission && aksjonspunktModels[0].kode === aksjonspunktCodes.FORESLA_VEDTAK;
+    const visFatterVedtakModal =
+      aksjonspunktModels[0].isVedtakSubmission && aksjonspunktModels[0].kode === aksjonspunktCodes.FORESLA_VEDTAK;
 
-      if (erRevurderingsaksjonspunkt) {
-        toggleOppdatereFagsakContext(false);
+    if (erRevurderingsaksjonspunkt) {
+      toggleOppdatereFagsakContext(false);
+    }
+
+    if (aksjonspunktModels[0].isVedtakSubmission) {
+      const dokumentdata = lagDokumentdata(aksjonspunktModels[0]);
+      if (dokumentdata) await lagreDokumentdata(dokumentdata);
+    }
+
+    // Returner funksjon som blir kjørt etter lagring av aksjonspunkt(er)
+    return () => {
+      if (visFatterVedtakModal) {
+        toggleFatterVedtakModal(true);
+      } else if (visIverksetterVedtakModal) {
+        toggleIverksetterVedtakModal(true);
+      } else if (erRevurderingsaksjonspunkt) {
+        opneSokeside();
+      } else {
+        oppdaterProsessStegOgFaktaPanelIUrl('default', 'default');
       }
-
-      if (aksjonspunktModels[0].isVedtakSubmission) {
-        const dokumentdata = lagDokumentdata(aksjonspunktModels[0]);
-        if (dokumentdata) await lagreDokumentdata(dokumentdata);
-      }
-
-      // Returner funksjon som blir kjørt etter lagring av aksjonspunkt(er)
-      return () => {
-        if (visFatterVedtakModal) {
-          toggleFatterVedtakModal(true);
-        } else if (visIverksetterVedtakModal) {
-          toggleIverksetterVedtakModal(true);
-        } else if (erRevurderingsaksjonspunkt) {
-          opneSokeside();
-        } else {
-          oppdaterProsessStegOgFaktaPanelIUrl('default', 'default');
-        }
-      };
     };
+  };
 
 const UtvidetRettProsess = ({
   data,

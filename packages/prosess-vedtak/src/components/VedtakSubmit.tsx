@@ -28,7 +28,7 @@ interface Props {
 const kanSendesTilGodkjenning = behandlingStatusKode =>
   behandlingStatusKode === behandlingStatusCode.BEHANDLING_UTREDES;
 
-export default function VedtakSubmit({
+const VedtakSubmit = ({
   behandlingStatusKode,
   readOnly,
   behandlingPaaVent,
@@ -40,7 +40,7 @@ export default function VedtakSubmit({
   overskrift,
   brødtekst,
   inkluderKalender,
-}: Props): JSX.Element {
+}: Props): JSX.Element => {
   const intl = useIntl();
 
   const submitKnapp = (
@@ -79,4 +79,6 @@ export default function VedtakSubmit({
       </Column>
     </Row>
   );
-}
+};
+
+export default VedtakSubmit;
