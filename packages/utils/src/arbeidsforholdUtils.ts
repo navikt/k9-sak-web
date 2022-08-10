@@ -1,6 +1,6 @@
 import { ArbeidsforholdV2, ArbeidsgiverOpplysningerPerId } from '@k9-sak-web/types';
 
-const getEndCharFromId = id => (id ? `...${id.substring(id.length - 4, id.length)}` : '');
+export const getEndCharFromId = id => (id ? `...${id.substring(id.length - 4, id.length)}` : '');
 
 export const utledArbeidsforholdNavn = (
   arbeidsforhold: ArbeidsforholdV2,

@@ -7,10 +7,7 @@ import erIBrukImageUrl from '@fpsak-frontend/assets/images/innvilget_hover.svg';
 import chevronIkonUrl from '@fpsak-frontend/assets/images/pil_ned.svg';
 import FlexRow from '@fpsak-frontend/shared-components/src/flexGrid/FlexRow';
 import arbeidsforholdHandlingType from '@fpsak-frontend/kodeverk/src/arbeidsforholdHandlingType';
-import {
-  utledArbeidsforholdYrkestittel,
-  arbeidsforholdHarAksjonspunktÅrsak,
-} from '@fpsak-frontend/utils/src/arbeidsforholdUtils';
+import { arbeidsforholdHarAksjonspunktÅrsak, getEndCharFromId } from '@fpsak-frontend/utils/src/arbeidsforholdUtils';
 import ArbeidsforholdV2 from '@k9-sak-web/types/src/arbeidsforholdV2TsType';
 import { KodeverkMedNavn } from '@k9-sak-web/types';
 import IngenArbeidsforholdRegistrert from './IngenArbeidsforholdRegistrert';
@@ -83,7 +80,7 @@ const PersonArbeidsforholdTable = ({
         alleArbeidsforhold.map(a => {
           const stillingsprosent =
             a.stillingsprosent !== undefined && a.stillingsprosent !== null ? `${a.stillingsprosent.toFixed(2)} %` : '';
-          const arbeidsforholdId = a.arbeidsforhold.eksternArbeidsforholdId || '';
+          const arbeidsforholdId = a.arbeidsforhold.eksternArbeidsforholdId;
           const kilde =
             Array.isArray(a.kilde) && (a.kilde.length > 1 ? a.kilde.map(k => k.kode).join(', ') : a.kilde[0].kode);
           const erValgt = selectedArbeidsforhold === a;
@@ -102,7 +99,7 @@ const PersonArbeidsforholdTable = ({
                 isApLeftBorder={harAksjonspunkt}
               >
                 <TableColumn>
-                  <Normaltekst>{decodeHtmlEntity(arbeidsforholdId)}</Normaltekst>
+                  <Normaltekst>{getEndCharFromId(decodeHtmlEntity(arbeidsforholdId))}</Normaltekst>
                 </TableColumn>
                 <TableColumn>
                   <Normaltekst>
