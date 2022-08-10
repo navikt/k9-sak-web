@@ -123,8 +123,9 @@ const PersonArbeidsforholdTable = ({
                     </Normaltekst>
                   )}
                 </TableColumn>
-                {!harAksjonspunkt && harPermisjoner && (
-                  <TableColumn className={styles.aksjonspunktColumn}>
+
+                <TableColumn className={styles.aksjonspunktColumn}>
+                  {!harAksjonspunkt && harPermisjoner ? (
                     <button className={styles.knappContainer} type="button" onClick={() => setValgtArbeidsforhold(a)}>
                       <Normaltekst className={styles.visLukkPermisjon}>
                         {intl.formatMessage(
@@ -135,8 +136,10 @@ const PersonArbeidsforholdTable = ({
                       </Normaltekst>
                       <Image className={erValgt ? styles.chevronOpp : styles.chevronNed} src={chevronIkonUrl} alt="" />
                     </button>
-                  </TableColumn>
-                )}
+                  ) : (
+                    ''
+                  )}
+                </TableColumn>
                 <TableColumn>
                   {a.handlingType && a.handlingType.kode === arbeidsforholdHandlingType.BRUK && !harAksjonspunkt && (
                     <Image
