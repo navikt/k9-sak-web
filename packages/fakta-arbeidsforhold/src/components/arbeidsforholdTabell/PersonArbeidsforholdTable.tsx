@@ -162,7 +162,7 @@ const PersonArbeidsforholdTable = ({
               )}
               {erValgt && visPermisjon(a) && (
                 <FlexRow>
-                  <PermisjonerInfo arbeidsforhold={a} />
+                  <PermisjonerInfo arbeidsforhold={a} alleKodeverk={alleKodeverk} />
                 </FlexRow>
               )}
             </Fragment>
