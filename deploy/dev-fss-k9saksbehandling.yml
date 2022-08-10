@@ -103,4 +103,4 @@ spec:
     - name: NY_BEREGNING_FAKTA_FORDEL_ENABLED
       value: "true"
     - name: AKSJONSPUNKT_9014
-      calue: "true"
+      value: "true"
