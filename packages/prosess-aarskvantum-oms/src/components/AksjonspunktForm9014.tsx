@@ -202,8 +202,24 @@ export const FormContent = ({
             </Element>
           }
         >
-          <RadioOption value={valgValues.reBehandling} label={{ id: 'Årskvantum.Aksjonspunkt.Avslått.ReBehandling' }} />
-          <RadioOption value={valgValues.fortsett} label={{ id: 'Årskvantum.Aksjonspunkt.Avslått.Fortsett' }} />
+          <RadioOption
+            value={valgValues.reBehandling}
+            label={{
+              id:
+                aksjonspunktKode === '9014'
+                  ? 'Årskvantum.Aksjonspunkt.Avslått.ReBehandling.Fosterbarn'
+                  : 'Årskvantum.Aksjonspunkt.Avslått.ReBehandling',
+            }}
+          />
+          <RadioOption
+            value={valgValues.fortsett}
+            label={{
+              id:
+                aksjonspunktKode === '9014'
+                  ? 'Årskvantum.Aksjonspunkt.Avslått.Fortsett.Fosterbarn'
+                  : 'Årskvantum.Aksjonspunkt.Avslått.Fortsett',
+            }}
+          />
         </RadioGroupField>
       )}
       <TextAreaField
