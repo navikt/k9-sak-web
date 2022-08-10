@@ -49,7 +49,7 @@ const lagAPMedKode = kode => [
     begrunnelse: null,
     endretAv: 'B123456',
     endretTidspunkt: '2020-01-20',
-    kanLoses: true
+    kanLoses: true,
   },
 ];
 
@@ -65,16 +65,17 @@ const vilkarMedUtfall = (kode, fomArray) => [
         kode,
         kodeverk: 'vilkarStatus',
       },
-      vurdersIBehandlingen: true
+      vurderesIBehandlingen: true,
     })),
   },
 ];
 
-const lagKoblingTilVurdering = (fomArray, forlengelseMap= {}) => fomArray.map(stp => ({
-  skjæringstidspunkt: stp,
-  referanse: 'ht43-fwse34-23423dwa',
-  erForlengelse: forlengelseMap[stp] ? forlengelseMap[stp] : false
-}));
+const lagKoblingTilVurdering = (fomArray, forlengelseMap = {}) =>
+  fomArray.map(stp => ({
+    skjæringstidspunkt: stp,
+    referanse: 'ht43-fwse34-23423dwa',
+    erForlengelse: forlengelseMap[stp] ? forlengelseMap[stp] : false,
+  }));
 
 const lagArbeidsforhold = (
   arbeidsgiverId,
@@ -195,15 +196,23 @@ const lagPeriodeMedDagsats = (andelsliste, dagsats) => lagPeriode(andelsliste, d
 const lagStandardPeriode = andelsliste => lagPeriode(andelsliste, null, standardFom, standardTom, []);
 
 const lagTidsbegrensetPeriode = (andelsliste, fom, tom) =>
-  lagPeriode(andelsliste, null, fom, tom, [{kode: periodeAarsak.ARBEIDSFORHOLD_AVSLUTTET}]);
+  lagPeriode(andelsliste, null, fom, tom, [{ kode: periodeAarsak.ARBEIDSFORHOLD_AVSLUTTET }]);
 
 const lagStatus = kode => ({
   kode,
   kodeverk: 'AKTIVITET_STATUS',
 });
 
-const lagBG = (perioder, statuser, sammenligningsgrunnlagPrStatus, avklaringsbehov, skjæringstidspunkt = '2019-09-16', grunnbeløp = 99858) => {
+const lagBG = (
+  perioder,
+  statuser,
+  sammenligningsgrunnlagPrStatus,
+  avklaringsbehov = [],
+  skjæringstidspunkt = '2019-09-16',
+  grunnbeløp = 99858,
+) => {
   const beregningsgrunnlag = {
+    avklaringsbehov,
     skjaeringstidspunktBeregning: skjæringstidspunkt,
     skjæringstidspunkt,
     vilkårsperiodeFom: skjæringstidspunkt,
@@ -294,7 +303,7 @@ const lagBG = (perioder, statuser, sammenligningsgrunnlagPrStatus, avklaringsbeh
       refusjonskravSomKommerForSentListe: null,
       saksopplysninger: {
         arbeidsforholdMedLønnsendring: [],
-      }
+      },
     },
     hjemmel: {
       kode: 'F_14_7_8_30',
@@ -502,7 +511,12 @@ export const arbeidstakerMedAvvik = () => {
   const sammenligningsgrunnlagPrStatus = [
     lagSammenligningsGrunnlag(sammenligningType.ATFLSN, 474257, 25.009999999, -79059),
   ];
-  const bg = lagBG(perioder, statuser, sammenligningsgrunnlagPrStatus, lagAPMedKode(aksjonspunktCodes.FASTSETT_BEREGNINGSGRUNNLAG_ARBEIDSTAKER_FRILANS));
+  const bg = lagBG(
+    perioder,
+    statuser,
+    sammenligningsgrunnlagPrStatus,
+    lagAPMedKode(aksjonspunktCodes.FASTSETT_BEREGNINGSGRUNNLAG_ARBEIDSTAKER_FRILANS),
+  );
   delete bg.sammenligningsgrunnlagInntekter;
   return (
     <BeregningsgrunnlagProsessIndex
@@ -579,7 +593,7 @@ export const selvstendigNæringsdrivende = () => {
       regnskapsførerNavn: 'Regnskapsfører Regn S. Fører',
       regnskapsførerTlf: '99999999',
       utenlandskvirksomhetsnavn: null,
-      virksomhetType: {kode: 'ANNEN', kodeverk: 'VIRKSOMHET_TYPE'},
+      virksomhetType: { kode: 'ANNEN', kodeverk: 'VIRKSOMHET_TYPE' },
     },
     {
       begrunnelse: 'Endringsbeskrivelse',
@@ -592,7 +606,7 @@ export const selvstendigNæringsdrivende = () => {
       opphoersdato: '201-03-01',
       orgnr: '910909077',
       utenlandskvirksomhetsnavn: null,
-      virksomhetType: {kode: 'JORDBRUK_SKOGBRUK', kodeverk: 'VIRKSOMHET_TYPE'},
+      virksomhetType: { kode: 'JORDBRUK_SKOGBRUK', kodeverk: 'VIRKSOMHET_TYPE' },
       virksomhetNavn: 'Navn Navnesen',
     },
   ];
@@ -619,8 +633,8 @@ export const selvstendigNæringsdrivende = () => {
               status: {
                 kode: 'OPPR',
                 kodeverk: 'AVKLARINGSBEHOV_STATUS',
-              }
-            }
+              },
+            },
           ],
           skjaeringstidspunktBeregning: '2020-04-27',
           skjæringstidspunkt: '2020-04-27',
@@ -1023,7 +1037,7 @@ export const selvstendigNæringsdrivende = () => {
                 tom: '2020-04-27',
               },
               begrunnelse: null,
-              vurdersIBehandlingen: true,
+              vurderesIBehandlingen: true,
             },
             {
               avslagKode: null,
@@ -1037,17 +1051,14 @@ export const selvstendigNæringsdrivende = () => {
                 tom: '2020-05-04',
               },
               begrunnelse: null,
-              vurdersIBehandlingen: true,
+              vurderesIBehandlingen: true,
             },
           ],
         },
       ]}
       alleKodeverk={alleKodeverk}
       arbeidsgiverOpplysningerPerId={arbeidsgivere}
-      beregningreferanserTilVurdering={lagKoblingTilVurdering([
-        '2020-04-27',
-        '2020-05-04',
-      ])}
+      beregningreferanserTilVurdering={lagKoblingTilVurdering(['2020-04-27', '2020-05-04'])}
     />
   );
 };
@@ -1078,7 +1089,7 @@ export const tidsbegrensetArbeidsforholdMedAvvik = () => {
   const perioder = [
     lagPeriode(andeler, undefined, '2019-09-16', '2019-09-29', []),
     lagTidsbegrensetPeriode(andeler, '2019-09-30', '2019-10-15'),
-    lagPeriode(andeler, undefined, '2019-10-15', null, [{kode: periodeAarsak.ARBEIDSFORHOLD_AVSLUTTET}]),
+    lagPeriode(andeler, undefined, '2019-10-15', null, [{ kode: periodeAarsak.ARBEIDSFORHOLD_AVSLUTTET }]),
   ];
   const statuser = [lagStatus('AT_FL')];
   const sammenligningsgrunnlagPrStatus = [lagSammenligningsGrunnlag(sammenligningType.ATFLSN, 474257, 26.2, 77059)];
@@ -1086,7 +1097,7 @@ export const tidsbegrensetArbeidsforholdMedAvvik = () => {
     perioder,
     statuser,
     sammenligningsgrunnlagPrStatus,
-    lagAPMedKode(aksjonspunktCodes.FASTSETT_BEREGNINGSGRUNNLAG_TIDSBEGRENSET_ARBEIDSFORHOLD)
+    lagAPMedKode(aksjonspunktCodes.FASTSETT_BEREGNINGSGRUNNLAG_TIDSBEGRENSET_ARBEIDSFORHOLD),
   );
 
   return (
@@ -1124,9 +1135,12 @@ export const arbeidstakerFrilanserOgSelvstendigNæringsdrivende = () => {
   const perioder = [lagStandardPeriode(andeler)];
   const statuser = [lagStatus('AT_FL_SN')];
   const sammenligningsgrunnlagPrStatus = [lagSammenligningsGrunnlag(sammenligningType.ATFLSN, 474257, 26.2, 77059)];
-  const bg = lagBG(perioder, statuser, sammenligningsgrunnlagPrStatus, lagAPMedKode(
-    aksjonspunktCodes.VURDER_VARIG_ENDRET_ELLER_NYOPPSTARTET_NAERING_SELVSTENDIG_NAERINGSDRIVENDE,
-  ));
+  const bg = lagBG(
+    perioder,
+    statuser,
+    sammenligningsgrunnlagPrStatus,
+    lagAPMedKode(aksjonspunktCodes.VURDER_VARIG_ENDRET_ELLER_NYOPPSTARTET_NAERING_SELVSTENDIG_NAERINGSDRIVENDE),
+  );
   return (
     <BeregningsgrunnlagProsessIndex
       behandling={behandling}
@@ -1166,17 +1180,17 @@ export const naturalYtelse = () => {
   andel3.dekningsgrad = 80;
   delete andel1.bortfaltNaturalytelse;
   const statuser = [lagStatus('AT')];
-  const periode1 = lagPeriode([{...andel1}, {...andel2}, {...andel3}], 4432, '2019-03-21', '2019-05-31', [
-    {kode: periodeAarsak.NATURALYTELSE_BORTFALT},
+  const periode1 = lagPeriode([{ ...andel1 }, { ...andel2 }, { ...andel3 }], 4432, '2019-03-21', '2019-05-31', [
+    { kode: periodeAarsak.NATURALYTELSE_BORTFALT },
   ]);
   andel1.bortfaltNaturalytelse = 1231;
   delete andel2.bortfaltNaturalytelse;
   delete andel3.bortfaltNaturalytelse;
-  const periode2 = lagPeriode([{...andel1}, {...andel2}, {...andel3}], 2432, '2019-06-01', '2019-07-30', [
-    {kode: periodeAarsak.NATURALYTELSE_BORTFALT},
+  const periode2 = lagPeriode([{ ...andel1 }, { ...andel2 }, { ...andel3 }], 2432, '2019-06-01', '2019-07-30', [
+    { kode: periodeAarsak.NATURALYTELSE_BORTFALT },
   ]);
-  const periode3 = lagPeriode([{...andel1}, {...andel2}, {...andel3}], 3432, '2019-08-01', '2019-09-30', [
-    {kode: periodeAarsak.ARBEIDSFORHOLD_AVSLUTTET},
+  const periode3 = lagPeriode([{ ...andel1 }, { ...andel2 }, { ...andel3 }], 3432, '2019-08-01', '2019-09-30', [
+    { kode: periodeAarsak.ARBEIDSFORHOLD_AVSLUTTET },
   ]);
 
   const perioder = [periode1, periode2, periode3];
@@ -1271,7 +1285,7 @@ export const arbeidstakerOgSelvstendigNæringsdrivendeUtenAkjsonspunkt = () => {
       regnskapsførerNavn: 'Regnar Regnskap',
       regnskapsførerTlf: '99999999',
       utenlandskvirksomhetsnavn: null,
-      virksomhetType: {kode: 'ANNEN', kodeverk: 'VIRKSOMHET_TYPE'},
+      virksomhetType: { kode: 'ANNEN', kodeverk: 'VIRKSOMHET_TYPE' },
       kode: 'ANNEN',
       kodeverk: 'VIRKSOMHET_TYPE',
     },
@@ -1333,16 +1347,19 @@ export const arbeidstakerOgFrilansOgSelvstendigNæringsdrivendeMedAksjonspunktBe
       regnskapsførerNavn: 'Regnar Regnskap',
       regnskapsførerTlf: '99999999',
       utenlandskvirksomhetsnavn: null,
-      virksomhetType: {kode: 'ANNEN', kodeverk: 'VIRKSOMHET_TYPE'},
+      virksomhetType: { kode: 'ANNEN', kodeverk: 'VIRKSOMHET_TYPE' },
       kode: 'ANNEN',
       kodeverk: 'VIRKSOMHET_TYPE',
     },
   ];
   andeler[0].næringer = næringer;
   const sammenligningsgrunnlagPrStatus = [lagSammenligningsGrunnlag(sammenligningType.ATFLSN, 474257, 26.2, -77059)];
-  const bg = lagBG(perioder, statuser, sammenligningsgrunnlagPrStatus, lagAPMedKode(
-    aksjonspunktCodes.VURDER_VARIG_ENDRET_ELLER_NYOPPSTARTET_NAERING_SELVSTENDIG_NAERINGSDRIVENDE,
-  ));
+  const bg = lagBG(
+    perioder,
+    statuser,
+    sammenligningsgrunnlagPrStatus,
+    lagAPMedKode(aksjonspunktCodes.VURDER_VARIG_ENDRET_ELLER_NYOPPSTARTET_NAERING_SELVSTENDIG_NAERINGSDRIVENDE),
+  );
   bg.dekningsgrad = 80;
   return (
     <BeregningsgrunnlagProsessIndex
@@ -1398,7 +1415,7 @@ export const arbeidstakerDagpengerOgSelvstendigNæringsdrivendeUtenAksjonspunkt 
       regnskapsførerNavn: 'Regnar Regnskap',
       regnskapsførerTlf: '99999999',
       utenlandskvirksomhetsnavn: null,
-      virksomhetType: {kode: 'DAGMAMMA', kodeverk: 'VIRKSOMHET_TYPE'},
+      virksomhetType: { kode: 'DAGMAMMA', kodeverk: 'VIRKSOMHET_TYPE' },
       kode: 'ANNEN',
       kodeverk: 'VIRKSOMHET_TYPE',
     },
@@ -1542,7 +1559,12 @@ export const arbeidstakerMedAksjonspunktSide5 = () => {
   const perioder = [lagStandardPeriode(andeler)];
   const statuser = [lagStatus('AT')];
   const sammenligningsgrunnlagPrStatus = [lagSammenligningsGrunnlag(sammenligningType.AT, 169647, 105.4, 178929)];
-  const bg = lagBG(perioder, statuser, sammenligningsgrunnlagPrStatus, lagAPMedKode(aksjonspunktCodes.FASTSETT_BEREGNINGSGRUNNLAG_ARBEIDSTAKER_FRILANS));
+  const bg = lagBG(
+    perioder,
+    statuser,
+    sammenligningsgrunnlagPrStatus,
+    lagAPMedKode(aksjonspunktCodes.FASTSETT_BEREGNINGSGRUNNLAG_ARBEIDSTAKER_FRILANS),
+  );
   return (
     <BeregningsgrunnlagProsessIndex
       behandling={behandling}
@@ -1633,7 +1655,7 @@ export const tidsbegrensetArbeidsforholdMedAksjonspunktkSide7 = () => {
     perioder,
     statuser,
     sammenligningsgrunnlagPrStatus,
-    lagAPMedKode(aksjonspunktCodes.FASTSETT_BEREGNINGSGRUNNLAG_TIDSBEGRENSET_ARBEIDSFORHOLD)
+    lagAPMedKode(aksjonspunktCodes.FASTSETT_BEREGNINGSGRUNNLAG_TIDSBEGRENSET_ARBEIDSFORHOLD),
   );
 
   return (
@@ -1767,7 +1789,12 @@ export const FrilansMedAksjonspunktSide9 = () => {
   const perioder = [lagStandardPeriode(andeler)];
   const statuser = [lagStatus('FL')];
   const sammenligningsgrunnlagPrStatus = [lagSammenligningsGrunnlag(sammenligningType.FL, 504257, 33.1, 167000)];
-  const bg = lagBG(perioder, statuser, sammenligningsgrunnlagPrStatus, lagAPMedKode(aksjonspunktCodes.FASTSETT_BEREGNINGSGRUNNLAG_ARBEIDSTAKER_FRILANS));
+  const bg = lagBG(
+    perioder,
+    statuser,
+    sammenligningsgrunnlagPrStatus,
+    lagAPMedKode(aksjonspunktCodes.FASTSETT_BEREGNINGSGRUNNLAG_ARBEIDSTAKER_FRILANS),
+  );
   return (
     <BeregningsgrunnlagProsessIndex
       behandling={behandling}
@@ -1889,7 +1916,7 @@ export const SelvstendigNæringsdrivendeUtenVarigEndringIkkeNyoppstartetSide12 =
       regnskapsførerNavn: 'Regnar Regnskap',
       regnskapsførerTlf: '99999999',
       utenlandskvirksomhetsnavn: null,
-      virksomhetType: {kode: 'ANNEN', kodeverk: 'VIRKSOMHET_TYPE'},
+      virksomhetType: { kode: 'ANNEN', kodeverk: 'VIRKSOMHET_TYPE' },
       kode: 'ANNEN',
       kodeverk: 'VIRKSOMHET_TYPE',
     },
@@ -1948,7 +1975,7 @@ export const SelvstendigNæringsdrivendeMedVarigEndringSide13 = () => {
       regnskapsførerNavn: 'Regnar Regnskap',
       regnskapsførerTlf: '99999999',
       utenlandskvirksomhetsnavn: null,
-      virksomhetType: {kode: 'ANNEN', kodeverk: 'VIRKSOMHET_TYPE'},
+      virksomhetType: { kode: 'ANNEN', kodeverk: 'VIRKSOMHET_TYPE' },
       virksomhetNavn: 'Jensen frisør og hudpleie',
       kode: 'ANNEN',
       kodeverk: 'VIRKSOMHET_TYPE',
@@ -1964,7 +1991,7 @@ export const SelvstendigNæringsdrivendeMedVarigEndringSide13 = () => {
       opphoersdato: '2010-03-01',
       orgnr: '910909077',
       utenlandskvirksomhetsnavn: null,
-      virksomhetType: {kode: 'JORDBRUK_SKOGBRUK', kodeverk: 'VIRKSOMHET_TYPE'},
+      virksomhetType: { kode: 'JORDBRUK_SKOGBRUK', kodeverk: 'VIRKSOMHET_TYPE' },
       virksomhetNavn: 'Berit Jensen',
     },
   ];
@@ -2022,16 +2049,19 @@ export const SelvstendigNæringsdrivendeMedVarigEndringMedAksjonspunktSide14 = (
       regnskapsførerNavn: 'Regnar Regnskap',
       regnskapsførerTlf: '99999999',
       utenlandskvirksomhetsnavn: null,
-      virksomhetType: {kode: 'ANNEN', kodeverk: 'VIRKSOMHET_TYPE'},
+      virksomhetType: { kode: 'ANNEN', kodeverk: 'VIRKSOMHET_TYPE' },
       kode: 'ANNEN',
       kodeverk: 'VIRKSOMHET_TYPE',
     },
   ];
   andeler[0].næringer = næringer;
   const sammenligningsgrunnlagPrStatus = [lagSammenligningsGrunnlag(sammenligningType.ATFLSN, 900000, 29.9, -268871)];
-  const bg = lagBG(perioder, statuser, sammenligningsgrunnlagPrStatus, lagAPMedKode(
-    aksjonspunktCodes.VURDER_VARIG_ENDRET_ELLER_NYOPPSTARTET_NAERING_SELVSTENDIG_NAERINGSDRIVENDE,
-  ));
+  const bg = lagBG(
+    perioder,
+    statuser,
+    sammenligningsgrunnlagPrStatus,
+    lagAPMedKode(aksjonspunktCodes.VURDER_VARIG_ENDRET_ELLER_NYOPPSTARTET_NAERING_SELVSTENDIG_NAERINGSDRIVENDE),
+  );
   bg.dekningsgrad = 100;
   return (
     <BeregningsgrunnlagProsessIndex
@@ -2085,7 +2115,7 @@ export const SelvstendigNæringsdrivendeMedVarigEndringMedAksjonspunktUtførtSid
       regnskapsførerNavn: 'Regnar Regnskap',
       regnskapsførerTlf: '99999999',
       utenlandskvirksomhetsnavn: null,
-      virksomhetType: {kode: 'ANNEN', kodeverk: 'VIRKSOMHET_TYPE'},
+      virksomhetType: { kode: 'ANNEN', kodeverk: 'VIRKSOMHET_TYPE' },
       kode: 'ANNEN',
       kodeverk: 'VIRKSOMHET_TYPE',
     },
@@ -2149,7 +2179,7 @@ export const SelvstendigNæringsdrivendeNyoppstartetMedAksjonspunktSide16 = () =
       regnskapsførerNavn: 'Regnar Regnskap',
       regnskapsførerTlf: '99999999',
       utenlandskvirksomhetsnavn: null,
-      virksomhetType: {kode: 'ANNEN', kodeverk: 'VIRKSOMHET_TYPE'},
+      virksomhetType: { kode: 'ANNEN', kodeverk: 'VIRKSOMHET_TYPE' },
       kode: 'ANNEN',
       kodeverk: 'VIRKSOMHET_TYPE',
     },
@@ -2214,7 +2244,7 @@ export const SelvstendigNæringsdrivendeNyoppstartetMedAksjonspunktMedForlengels
       regnskapsførerNavn: 'Regnar Regnskap',
       regnskapsførerTlf: '99999999',
       utenlandskvirksomhetsnavn: null,
-      virksomhetType: {kode: 'ANNEN', kodeverk: 'VIRKSOMHET_TYPE'},
+      virksomhetType: { kode: 'ANNEN', kodeverk: 'VIRKSOMHET_TYPE' },
       kode: 'ANNEN',
       kodeverk: 'VIRKSOMHET_TYPE',
     },
@@ -2225,10 +2255,9 @@ export const SelvstendigNæringsdrivendeNyoppstartetMedAksjonspunktMedForlengels
     aksjonspunktCodes.VURDER_VARIG_ENDRET_ELLER_NYOPPSTARTET_NAERING_SELVSTENDIG_NAERINGSDRIVENDE,
   );
   ap[0].status.kode = 'UTFO';
-  ap[0].begrunnelse = "En skikkelig god begrunnelse";
+  ap[0].begrunnelse = 'En skikkelig god begrunnelse';
   const bg1 = lagBG(perioder, statuser, sammenligningsgrunnlagPrStatus, ap, stp1);
   bg1.dekningsgrad = 100;
-
 
   // STP 2
   const andeler2 = [lagAndel('SN', 531000, undefined, undefined, true)];
@@ -2255,20 +2284,13 @@ export const SelvstendigNæringsdrivendeNyoppstartetMedAksjonspunktMedForlengels
       isReadOnly={false}
       readOnlySubmitButton={false}
       isAksjonspunktOpen={false}
-      vilkar={vilkarMedUtfall(vilkarUtfallType.IKKE_VURDERT, [
-        stp1,
-        stp2
-      ])}
+      vilkar={vilkarMedUtfall(vilkarUtfallType.IKKE_VURDERT, [stp1, stp2])}
       alleKodeverk={alleKodeverk}
       arbeidsgiverOpplysningerPerId={arbeidsgivere}
-      beregningreferanserTilVurdering={lagKoblingTilVurdering([
-        stp1,
-        stp2,
-      ],
-        {
-          [stp1] : true,
-          [stp2] : false
-        })}
+      beregningreferanserTilVurdering={lagKoblingTilVurdering([stp1, stp2], {
+        [stp1]: true,
+        [stp2]: false,
+      })}
     />
   );
 };
@@ -2299,7 +2321,7 @@ export const SelvstendigNæringsdrivendeNyINæringslivetMedAksjonspunktSide17 = 
       regnskapsførerNavn: 'Regnar Regnskap',
       regnskapsførerTlf: '99999999',
       utenlandskvirksomhetsnavn: null,
-      virksomhetType: {kode: 'ANNEN', kodeverk: 'VIRKSOMHET_TYPE'},
+      virksomhetType: { kode: 'ANNEN', kodeverk: 'VIRKSOMHET_TYPE' },
       kode: 'ANNEN',
       kodeverk: 'VIRKSOMHET_TYPE',
     },
@@ -2357,7 +2379,7 @@ export const arbeidstakerOgSelvstendigNæringsdrivendeSnStorreEnnAtOgStorreEnn6g
       regnskapsførerNavn: 'Regnar Regnskap',
       regnskapsførerTlf: '99999999',
       utenlandskvirksomhetsnavn: null,
-      virksomhetType: {kode: 'ANNEN', kodeverk: 'VIRKSOMHET_TYPE'},
+      virksomhetType: { kode: 'ANNEN', kodeverk: 'VIRKSOMHET_TYPE' },
       kode: 'ANNEN',
       kodeverk: 'VIRKSOMHET_TYPE',
     },
@@ -2414,7 +2436,7 @@ export const arbeidstakerOgSelvstendigNæringsdrivendeSnMindreEnnAtOgStorreEnn6g
       regnskapsførerNavn: 'Regnar Regnskap',
       regnskapsførerTlf: '99999999',
       utenlandskvirksomhetsnavn: null,
-      virksomhetType: {kode: 'ANNEN', kodeverk: 'VIRKSOMHET_TYPE'},
+      virksomhetType: { kode: 'ANNEN', kodeverk: 'VIRKSOMHET_TYPE' },
       kode: 'ANNEN',
       kodeverk: 'VIRKSOMHET_TYPE',
     },
@@ -2470,16 +2492,19 @@ export const arbeidstakerOgSelvstendigNæringsdrivendeMedAPVarigEndringSide20 = 
       regnskapsførerNavn: 'Regnar Regnskap',
       regnskapsførerTlf: '99999999',
       utenlandskvirksomhetsnavn: null,
-      virksomhetType: {kode: 'ANNEN', kodeverk: 'VIRKSOMHET_TYPE'},
+      virksomhetType: { kode: 'ANNEN', kodeverk: 'VIRKSOMHET_TYPE' },
       kode: 'ANNEN',
       kodeverk: 'VIRKSOMHET_TYPE',
     },
   ];
   andeler[0].næringer = næringer;
   const sammenligningsgrunnlagPrStatus = [lagSammenligningsGrunnlag(sammenligningType.ATFLSN, 900000, 29.9, -268871)];
-  const bg = lagBG(perioder, statuser, sammenligningsgrunnlagPrStatus, lagAPMedKode(
-    aksjonspunktCodes.VURDER_VARIG_ENDRET_ELLER_NYOPPSTARTET_NAERING_SELVSTENDIG_NAERINGSDRIVENDE,
-  ));
+  const bg = lagBG(
+    perioder,
+    statuser,
+    sammenligningsgrunnlagPrStatus,
+    lagAPMedKode(aksjonspunktCodes.VURDER_VARIG_ENDRET_ELLER_NYOPPSTARTET_NAERING_SELVSTENDIG_NAERINGSDRIVENDE),
+  );
   delete bg.dekningsgrad;
   return (
     <BeregningsgrunnlagProsessIndex
@@ -2533,7 +2558,7 @@ export const arbeidstakerOgSelvstendigNæringsdrivendeMedVarigEndringApBehandlet
       regnskapsførerNavn: 'Regnar Regnskap',
       regnskapsførerTlf: '99999999',
       utenlandskvirksomhetsnavn: null,
-      virksomhetType: {kode: 'ANNEN', kodeverk: 'VIRKSOMHET_TYPE'},
+      virksomhetType: { kode: 'ANNEN', kodeverk: 'VIRKSOMHET_TYPE' },
       kode: 'ANNEN',
       kodeverk: 'VIRKSOMHET_TYPE',
     },
@@ -2597,7 +2622,7 @@ export const arbeidstakerOgSelvstendigNæringsdrivendeAtStorreEnnSNMedVarigEndri
       regnskapsførerNavn: 'Regnar Regnskap',
       regnskapsførerTlf: '99999999',
       utenlandskvirksomhetsnavn: null,
-      virksomhetType: {kode: 'ANNEN', kodeverk: 'VIRKSOMHET_TYPE'},
+      virksomhetType: { kode: 'ANNEN', kodeverk: 'VIRKSOMHET_TYPE' },
       kode: 'ANNEN',
       kodeverk: 'VIRKSOMHET_TYPE',
     },
@@ -2661,7 +2686,7 @@ export const arbeidstakerOgSelvstendigNæringsdrivendeAtStorreEnnSNSide22 = () =
       regnskapsførerNavn: 'Regnar Regnskap',
       regnskapsførerTlf: '99999999',
       utenlandskvirksomhetsnavn: null,
-      virksomhetType: {kode: 'ANNEN', kodeverk: 'VIRKSOMHET_TYPE'},
+      virksomhetType: { kode: 'ANNEN', kodeverk: 'VIRKSOMHET_TYPE' },
       kode: 'ANNEN',
       kodeverk: 'VIRKSOMHET_TYPE',
     },
@@ -2721,16 +2746,19 @@ export const arbeidstakerFrilansOgSelvstendigNæringsdrivendeMedApOgVarigEndring
       regnskapsførerNavn: 'Regnar Regnskap',
       regnskapsførerTlf: '99999999',
       utenlandskvirksomhetsnavn: null,
-      virksomhetType: {kode: 'ANNEN', kodeverk: 'VIRKSOMHET_TYPE'},
+      virksomhetType: { kode: 'ANNEN', kodeverk: 'VIRKSOMHET_TYPE' },
       kode: 'ANNEN',
       kodeverk: 'VIRKSOMHET_TYPE',
     },
   ];
   andeler[0].næringer = næringer;
   const sammenligningsgrunnlagPrStatus = [lagSammenligningsGrunnlag(sammenligningType.ATFLSN, 900000, 29.9, -268871)];
-  const bg = lagBG(perioder, statuser, sammenligningsgrunnlagPrStatus, lagAPMedKode(
-    aksjonspunktCodes.VURDER_VARIG_ENDRET_ELLER_NYOPPSTARTET_NAERING_SELVSTENDIG_NAERINGSDRIVENDE,
-  ));
+  const bg = lagBG(
+    perioder,
+    statuser,
+    sammenligningsgrunnlagPrStatus,
+    lagAPMedKode(aksjonspunktCodes.VURDER_VARIG_ENDRET_ELLER_NYOPPSTARTET_NAERING_SELVSTENDIG_NAERINGSDRIVENDE),
+  );
   delete bg.dekningsgrad;
   return (
     <BeregningsgrunnlagProsessIndex
@@ -2793,7 +2821,7 @@ export const arbeidstakerFrilansOgSelvstendigNæringsdrivendeMedApOgVarigEndring
       regnskapsførerTlf: '99999999',
       utenlandskvirksomhetsnavn: null,
       virksomhetNavn: 'Jensen frisør og hudpleie',
-      virksomhetType: {kode: 'ANNEN', kodeverk: 'VIRKSOMHET_TYPE'},
+      virksomhetType: { kode: 'ANNEN', kodeverk: 'VIRKSOMHET_TYPE' },
       kode: 'ANNEN',
       kodeverk: 'VIRKSOMHET_TYPE',
     },
@@ -2868,7 +2896,7 @@ export const arbeidstakerFrilansOgSelvstendigNæringsdrivendeMedAPVarigEndringSn
       regnskapsførerTlf: '99999999',
       utenlandskvirksomhetsnavn: null,
       virksomhetNavn: 'Jensen frisør og hudpleie',
-      virksomhetType: {kode: 'ANNEN', kodeverk: 'VIRKSOMHET_TYPE'},
+      virksomhetType: { kode: 'ANNEN', kodeverk: 'VIRKSOMHET_TYPE' },
       kode: 'ANNEN',
       kodeverk: 'VIRKSOMHET_TYPE',
     },
@@ -3146,7 +3174,7 @@ export const frilansDagpengerOgSelvstendigNæringsdrivendeMedAksjonspunktSide31 
       regnskapsførerNavn: 'Regnar Regnskap',
       regnskapsførerTlf: '99999999',
       utenlandskvirksomhetsnavn: null,
-      virksomhetType: {kode: 'ANNEN', kodeverk: 'VIRKSOMHET_TYPE'},
+      virksomhetType: { kode: 'ANNEN', kodeverk: 'VIRKSOMHET_TYPE' },
       kode: 'ANNEN',
       kodeverk: 'VIRKSOMHET_TYPE',
     },
@@ -3290,14 +3318,19 @@ export const arbeidstakerMedAvvikOgKunEttGrunnlagKanLøses = () => {
   const sammenligningsgrunnlagPrStatus = [
     lagSammenligningsGrunnlag(sammenligningType.ATFLSN, 474257, 25.009999999, -79059),
   ];
-  const ap1 = lagAPMedKode(aksjonspunktCodes.FASTSETT_BEREGNINGSGRUNNLAG_ARBEIDSTAKER_FRILANS)
+  const ap1 = lagAPMedKode(aksjonspunktCodes.FASTSETT_BEREGNINGSGRUNNLAG_ARBEIDSTAKER_FRILANS);
   ap1[0].kanLoses = false;
   ap1[0].begrunnelse =
     'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.' +
     ' Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.';
   ap1[0].status.kode = 'UTFO';
   const bg1 = lagBG(perioder, statuser, sammenligningsgrunnlagPrStatus, ap1);
-  const bg2 = lagBG(perioder, statuser, sammenligningsgrunnlagPrStatus, lagAPMedKode(aksjonspunktCodes.FASTSETT_BEREGNINGSGRUNNLAG_ARBEIDSTAKER_FRILANS));
+  const bg2 = lagBG(
+    perioder,
+    statuser,
+    sammenligningsgrunnlagPrStatus,
+    lagAPMedKode(aksjonspunktCodes.FASTSETT_BEREGNINGSGRUNNLAG_ARBEIDSTAKER_FRILANS),
+  );
 
   delete bg1.sammenligningsgrunnlagInntekter;
   delete bg2.sammenligningsgrunnlagInntekter;
@@ -3317,8 +3350,8 @@ export const arbeidstakerMedAvvikOgKunEttGrunnlagKanLøses = () => {
       alleKodeverk={alleKodeverk}
       arbeidsgiverOpplysningerPerId={arbeidsgivere}
       beregningreferanserTilVurdering={lagKoblingTilVurdering([
-        bg.skjaeringstidspunktBeregning,
-        bg.skjaeringstidspunktBeregning,
+        bg1.skjaeringstidspunktBeregning,
+        bg2.skjaeringstidspunktBeregning,
       ])}
     />
   );

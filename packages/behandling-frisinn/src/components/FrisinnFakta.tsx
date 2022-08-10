@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { injectIntl, WrappedComponentProps } from 'react-intl';
 
 import { Rettigheter, SideMenuWrapper, faktaHooks, useSetBehandlingVedEndring } from '@k9-sak-web/behandling-felles';
 import { KodeverkMedNavn, Behandling, Fagsak, FagsakPerson, ArbeidsgiverOpplysningerPerId } from '@k9-sak-web/types';
@@ -31,7 +30,6 @@ interface OwnProps {
 }
 
 const FrisinnFakta = ({
-  intl,
   data,
   behandling,
   fagsak,
@@ -45,7 +43,7 @@ const FrisinnFakta = ({
   setApentFaktaPanel,
   setBehandling,
   arbeidsgiverOpplysningerPerId,
-}: OwnProps & WrappedComponentProps) => {
+}: OwnProps) => {
   const { aksjonspunkter, ...rest } = data;
   const { addErrorMessage } = useRestApiErrorDispatcher();
 
@@ -74,7 +72,6 @@ const FrisinnFakta = ({
     rettigheter,
     aksjonspunkter,
     valgtFaktaSteg,
-    intl,
   );
 
   faktaHooks.useFaktaAksjonspunktNotifikator(faktaPaneler, setApentFaktaPanel, behandling.versjon);
@@ -134,4 +131,4 @@ const FrisinnFakta = ({
   return null;
 };
 
-export default injectIntl(FrisinnFakta);
+export default FrisinnFakta;
