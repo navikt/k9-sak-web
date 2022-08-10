@@ -21,7 +21,6 @@ const useFaktaPaneler = (
   rettigheter: Rettigheter,
   aksjonspunkter: Aksjonspunkt[],
   valgtFaktaPanelKode: string,
-  intl: IntlShape,
   featureToggles?: FeatureToggles,
 ): [FaktaPanelUtledet[], FaktaPanelUtledet, FaktaPanelMenyRad[]] => {
   const faktaPaneler = useMemo(
@@ -36,7 +35,7 @@ const useFaktaPaneler = (
 
   const urlCode = valgtPanel ? valgtPanel.getUrlKode() : undefined;
   const sidemenyPaneler = useMemo(
-    () => formaterPanelerForSidemeny(intl, faktaPaneler, urlCode),
+    () => formaterPanelerForSidemeny(faktaPaneler, urlCode),
     [behandling.versjon, urlCode],
   );
 

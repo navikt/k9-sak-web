@@ -46,7 +46,7 @@ describe('<VilkarresultatMedOverstyringForm>', () => {
                   kodeverk: 'test',
                 },
                 avslagKode: 'test',
-                vurdersIBehandlingen: true,
+                vurderesIBehandlingen: true,
                 merknadParametere: {
                   test: 'test',
                 },
@@ -105,7 +105,7 @@ describe('<VilkarresultatMedOverstyringForm>', () => {
                   kodeverk: 'test',
                 },
                 avslagKode: 'test',
-                vurdersIBehandlingen: true,
+                vurderesIBehandlingen: true,
                 merknadParametere: {
                   test: 'test',
                 },
@@ -120,7 +120,7 @@ describe('<VilkarresultatMedOverstyringForm>', () => {
                   kodeverk: 'test',
                 },
                 avslagKode: 'test',
-                vurdersIBehandlingen: false,
+                vurderesIBehandlingen: false,
                 merknadParametere: {
                   test: 'test',
                 },

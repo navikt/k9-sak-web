@@ -23,7 +23,7 @@ const SideMenuWrapper = ({ intl, paneler, onClick, children }: OwnProps & Wrappe
           <SideMenu
             heading={intl.formatMessage({ id: 'MainSideMenu.Heading' })}
             links={paneler.map(panel => ({
-              label: panel.tekst,
+              label: intl.formatMessage({ id: panel.tekstKode }),
               active: panel.erAktiv,
               iconSrc: panel.harAksjonspunkt ? advarselIkonUrl : undefined,
               iconAltText: panel.harAksjonspunkt ? intl.formatMessage({ id: 'HelpText.Aksjonspunkt' }) : undefined,

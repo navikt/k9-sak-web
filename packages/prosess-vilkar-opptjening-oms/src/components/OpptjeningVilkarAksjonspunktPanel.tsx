@@ -13,11 +13,10 @@ import { Element } from 'nav-frontend-typografi';
 import Hjelpetekst from 'nav-frontend-hjelpetekst';
 import { PopoverOrientering } from 'nav-frontend-popover';
 
-import dayjs from "dayjs";
+import dayjs from 'dayjs';
 import isBetween from 'dayjs/plugin/isBetween';
 import VilkarFields, { midlertidigInaktiv } from './VilkarFields';
 import styles from './OpptjeningVilkarAksjonspunktPanel.less';
-
 
 dayjs.extend(isBetween);
 
@@ -27,7 +26,7 @@ interface VilkårField {
   erVilkarOk: string | boolean;
   begrunnelse: string;
   innvilgelseMerknadKode: string;
-  vurdersIBehandlingen: boolean;
+  vurderesIBehandlingen: boolean;
 }
 
 interface OpptjeningVilkarAksjonspunktPanelImplProps {
@@ -51,10 +50,17 @@ interface StateProps {
   erVilkarOk: string | boolean;
 }
 
-const hentErVilkarOK = (aksjonspunkter: Aksjonspunkt[], vilkårPerioder: Vilkarperiode[], periodeIndex: number, status: string) => {
+const hentErVilkarOK = (
+  aksjonspunkter: Aksjonspunkt[],
+  vilkårPerioder: Vilkarperiode[],
+  periodeIndex: number,
+  status: string,
+) => {
   const isOpenAksjonspunkt = aksjonspunkter.some(ap => isAksjonspunktOpen(ap.status.kode));
-  return isOpenAksjonspunkt && vilkårPerioder[periodeIndex].vurdersIBehandlingen ? undefined : vilkarUtfallType.OPPFYLT === status;
-}
+  return isOpenAksjonspunkt && vilkårPerioder[periodeIndex].vurderesIBehandlingen
+    ? undefined
+    : vilkarUtfallType.OPPFYLT === status;
+};
 
 /**
  * OpptjeningVilkarAksjonspunktPanel
@@ -92,7 +98,10 @@ export const OpptjeningVilkarAksjonspunktPanelImpl = ({
   const isFormComplete = () => {
     const isAllTabsCreated = Array.isArray(vilkårPerioder) && vilkårPerioder.length === vilkarFields?.length;
     return isAllTabsCreated
-      ? !vilkarFields.some(vilkarField => vilkarField.vurdersIBehandlingen && (!vilkarField.begrunnelse || vilkarField.erVilkarOk === undefined))
+      ? !vilkarFields.some(
+          vilkarField =>
+            vilkarField.vurderesIBehandlingen && (!vilkarField.begrunnelse || vilkarField.erVilkarOk === undefined),
+        )
       : false;
   };
 
@@ -105,32 +114,41 @@ export const OpptjeningVilkarAksjonspunktPanelImpl = ({
   const erPleiepenger = fagsakType === FagsakYtelseType.PLEIEPENGER;
   const originalErVilkarOk = hentErVilkarOK(aksjonspunkter, vilkårPerioder, periodeIndex, status);
 
-  const finnesOpptjeningsaktiviteterVidOpptjeningTom: boolean = !erPleiepenger ? true : opptjeninger.some(opptjening => {
-    const skjæringstidspunkt = dayjs(opptjening.fastsattOpptjening.opptjeningTom).add(1, 'day').format("YYYY-MM-DD");
+  const finnesOpptjeningsaktiviteterVidOpptjeningTom: boolean = !erPleiepenger
+    ? true
+    : opptjeninger.some(opptjening => {
+        const skjæringstidspunkt = dayjs(opptjening.fastsattOpptjening.opptjeningTom)
+          .add(1, 'day')
+          .format('YYYY-MM-DD');
 
-    const vurderesOpptjeningsaktivitetIBehandling = vilkårPerioder.find(
-      ({periode}) => periode.fom === skjæringstidspunkt
-    )?.vurdersIBehandlingen;
+        const vurderesOpptjeningsaktivitetIBehandling = vilkårPerioder.find(
+          ({ periode }) => periode.fom === skjæringstidspunkt,
+        )?.vurderesIBehandlingen;
 
-    if(!vurderesOpptjeningsaktivitetIBehandling){
-      return false;
-    }
+        if (!vurderesOpptjeningsaktivitetIBehandling) {
+          return false;
+        }
 
-    return opptjening.opptjeningAktivitetList.some(opptjeningAktivitet =>
-      // Siste argument ("[]") til isBetween inkluderer start og sluttdato
-      dayjs(skjæringstidspunkt).isBetween(opptjeningAktivitet.opptjeningFom, opptjeningAktivitet.opptjeningTom, null, "[]")
-    );
-  });
+        return opptjening.opptjeningAktivitetList.some(opptjeningAktivitet =>
+          // Siste argument ("[]") til isBetween inkluderer start og sluttdato
+          dayjs(skjæringstidspunkt).isBetween(
+            opptjeningAktivitet.opptjeningFom,
+            opptjeningAktivitet.opptjeningTom,
+            null,
+            '[]',
+          ),
+        );
+      });
 
   return (
     <ProsessPanelTemplate
       title={intl.formatMessage({ id: 'OpptjeningVilkarAksjonspunktPanel.Opptjeningsvilkaret' })}
-      isAksjonspunktOpen={isApOpen && vilkårPerioder[periodeIndex].vurdersIBehandlingen}
+      isAksjonspunktOpen={isApOpen && vilkårPerioder[periodeIndex].vurderesIBehandlingen}
       formName={formProps.form}
       handleSubmit={formProps.handleSubmit}
       isDirty={dirty}
-      readOnlySubmitButton={readOnlySubmitButton || !vilkårPerioder[periodeIndex].vurdersIBehandlingen}
-      readOnly={readOnly || !vilkårPerioder[periodeIndex].vurdersIBehandlingen}
+      readOnlySubmitButton={readOnlySubmitButton || !vilkårPerioder[periodeIndex].vurderesIBehandlingen}
+      readOnly={readOnly || !vilkårPerioder[periodeIndex].vurderesIBehandlingen}
       lovReferanse={lovReferanse}
       behandlingId={behandlingId}
       behandlingVersjon={behandlingVersjon}
@@ -147,17 +165,20 @@ export const OpptjeningVilkarAksjonspunktPanelImpl = ({
           )}
         </Element>
         <Hjelpetekst type={PopoverOrientering.UnderHoyre}>
-          <FormattedMessage id="OpptjeningVilkarAksjonspunktPanel.VurderingHjelpetekst" values={{
-            b: (...chunks) => <b>{chunks}</b>,
-           linebreak: <br />
-          }}/>
+          <FormattedMessage
+            id="OpptjeningVilkarAksjonspunktPanel.VurderingHjelpetekst"
+            values={{
+              b: (...chunks) => <b>{chunks}</b>,
+              linebreak: <br />,
+            }}
+          />
         </Hjelpetekst>
       </div>
 
       <VilkarFields
         erOmsorgspenger={erOmsorgspenger}
-        erVilkarOk={vilkårPerioder[periodeIndex].vurdersIBehandlingen ? erVilkarOk : originalErVilkarOk}
-        readOnly={readOnly || !vilkårPerioder[periodeIndex].vurdersIBehandlingen}
+        erVilkarOk={vilkårPerioder[periodeIndex].vurderesIBehandlingen ? erVilkarOk : originalErVilkarOk}
+        readOnly={readOnly || !vilkårPerioder[periodeIndex].vurderesIBehandlingen}
         fieldPrefix={`vilkarFields[${periodeIndex}]`}
         skalValgMidlertidigInaktivTypeBVises={finnesOpptjeningsaktiviteterVidOpptjeningTom}
       />
@@ -173,7 +194,11 @@ export const buildInitialValues = createSelector(
     (ownProps: OpptjeningVilkarAksjonspunktPanelImplProps) => ownProps.periodeIndex,
   ],
   (aksjonspunkter, vilkårPerioder, status, periodeIndex) => ({
-    ...VilkarFields.buildInitialValues(aksjonspunkter, vilkårPerioder, hentErVilkarOK(aksjonspunkter, vilkårPerioder, periodeIndex, status)),
+    ...VilkarFields.buildInitialValues(
+      aksjonspunkter,
+      vilkårPerioder,
+      hentErVilkarOK(aksjonspunkter, vilkårPerioder, periodeIndex, status),
+    ),
     ...ProsessStegBegrunnelseTextField.buildInitialValues(aksjonspunkter),
   }),
 );
