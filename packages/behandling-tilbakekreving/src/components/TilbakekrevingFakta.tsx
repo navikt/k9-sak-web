@@ -1,6 +1,4 @@
 import React from 'react';
-
-import { injectIntl, WrappedComponentProps } from 'react-intl';
 import { SideMenuWrapper, faktaHooks, Rettigheter, useSetBehandlingVedEndring } from '@k9-sak-web/behandling-felles';
 import { KodeverkMedNavn, Behandling, Fagsak } from '@k9-sak-web/types';
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
@@ -27,7 +25,6 @@ interface OwnProps {
 }
 
 const TilbakekrevingFakta = ({
-  intl,
   data,
   fagsak,
   behandling,
@@ -38,14 +35,13 @@ const TilbakekrevingFakta = ({
   valgtFaktaSteg,
   hasFetchError,
   setBehandling,
-}: OwnProps & WrappedComponentProps) => {
+}: OwnProps) => {
   const { aksjonspunkter, perioderForeldelse, beregningsresultat, feilutbetalingFakta } = data;
   const { addErrorMessage } = useRestApiErrorDispatcher();
 
   const { startRequest: lagreAksjonspunkter, data: apBehandlingRes } =
     restApiTilbakekrevingHooks.useRestApiRunner<Behandling>(TilbakekrevingBehandlingApiKeys.SAVE_AKSJONSPUNKT);
   useSetBehandlingVedEndring(apBehandlingRes, setBehandling);
-
 
   const dataTilUtledingAvTilbakekrevingPaneler = {
     fagsak,
@@ -63,7 +59,6 @@ const TilbakekrevingFakta = ({
     rettigheter,
     aksjonspunkter,
     valgtFaktaSteg,
-    intl,
   );
 
   const [velgFaktaPanelCallback, bekreftAksjonspunktCallback] = faktaHooks.useCallbacks(
@@ -111,4 +106,4 @@ const TilbakekrevingFakta = ({
   return null;
 };
 
-export default injectIntl(TilbakekrevingFakta);
+export default TilbakekrevingFakta;

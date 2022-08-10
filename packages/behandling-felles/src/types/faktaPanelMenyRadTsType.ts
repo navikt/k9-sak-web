@@ -1,5 +1,5 @@
 interface FaktaPanelMenyRad {
-  tekst: string;
+  tekstKode: string;
   erAktiv: boolean;
   harAksjonspunkt: boolean;
 }

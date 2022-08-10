@@ -92,7 +92,7 @@ export const beregningsgrunnlag = [
     vilkårsperiodeFom: '2020-05-18',
   },
   {
-    avklaringsbehov: [{definisjon: { kode : '5058' }, status: { kode: 'OPPR'}, kanLoses: true}],
+    avklaringsbehov: [{ definisjon: { kode: '5058' }, status: { kode: 'OPPR' }, kanLoses: true }],
     skjaeringstidspunktBeregning: '2020-06-04',
     skjæringstidspunkt: '2020-06-04',
     aktivitetStatus: [{ kode: 'KUN_YTELSE', kodeverk: 'AKTIVITET_STATUS' }],
@@ -183,7 +183,7 @@ export const beregningsgrunnlag = [
 ];
 
 export const vilkår = beregningsgrunnlag.map((bg, index) => ({
-  vilkarType: { kode: "FP_VK_41" },
+  vilkarType: { kode: 'FP_VK_41' },
   avslagKode: null,
   merknadParametere: {},
   vilkarStatus: { kode: 'IKKE_VURDERT', kodeverk: 'VILKAR_UTFALL_TYPE' },
@@ -192,7 +192,7 @@ export const vilkår = beregningsgrunnlag.map((bg, index) => ({
     tom: beregningsgrunnlag.length === index ? null : beregningsgrunnlag[index].skjaeringstidspunktBeregning,
   },
   begrunnelse: null,
-  vurdersIBehandlingen: true,
+  vurderesIBehandlingen: true,
 }));
 
 export const behandling = {

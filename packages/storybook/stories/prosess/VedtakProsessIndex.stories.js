@@ -454,147 +454,147 @@ export const visAvslåttForEngangsstønadRevurdering = () => (
 
 export const visOverlappendeYtelser = () => {
   const aksjonspunkt5040 = {
-    "aksjonspunktType": { "kode": "MANU", "kodeverk": "AKSJONSPUNKT_TYPE" },
-    "begrunnelse": null,
-    "besluttersBegrunnelse": null,
-    "definisjon": {
-      "skalAvbrytesVedTilbakeføring": true,
-      "kode": "5040",
-      "kodeverk": "AKSJONSPUNKT_DEF"
+    aksjonspunktType: { kode: 'MANU', kodeverk: 'AKSJONSPUNKT_TYPE' },
+    begrunnelse: null,
+    besluttersBegrunnelse: null,
+    definisjon: {
+      kode: '5040',
+      kodeverk: 'AKSJONSPUNKT_DEF',
     },
-    "erAktivt": true,
-    "fristTid": null,
-    "kanLoses": true,
-    "status": { "kode": "OPPR", "kodeverk": "AKSJONSPUNKT_STATUS" },
-    "toTrinnsBehandling": false,
-    "toTrinnsBehandlingGodkjent": null,
-    "vilkarType": null,
-    "vurderPaNyttArsaker": null,
-    "venteårsak": { "kode": "-", "kodeverk": "VENT_AARSAK" }
-  }
+    erAktivt: true,
+    fristTid: null,
+    kanLoses: true,
+    status: { kode: 'OPPR', kodeverk: 'AKSJONSPUNKT_STATUS' },
+    toTrinnsBehandling: false,
+    toTrinnsBehandlingGodkjent: null,
+    vilkarType: null,
+    vurderPaNyttArsaker: null,
+    venteårsak: { kode: '-', kodeverk: 'VENT_AARSAK' },
+  };
 
   const overlappendeYtelser = [
     {
-      "ytelseType": {
-        "kode": "PSB",
-        "kodeverk": "FAGSAK_YTELSE"
+      ytelseType: {
+        kode: 'PSB',
+        kodeverk: 'FAGSAK_YTELSE',
       },
-      "kilde": {
-        "kode": "INFOTRYGD",
-        "kodeverk": "FAGSYSTEM"
+      kilde: {
+        kode: 'INFOTRYGD',
+        kodeverk: 'FAGSYSTEM',
       },
-      "saksnummer": null,
-      "overlappendePerioder": [
+      saksnummer: null,
+      overlappendePerioder: [
         {
-          "fom": "2022-02-07",
-          "tom": "2022-02-10"
-        }
-      ]
+          fom: '2022-02-07',
+          tom: '2022-02-10',
+        },
+      ],
     },
     {
-      "ytelseType": {
-        "kode": "PSB",
-        "kodeverk": "FAGSAK_YTELSE"
+      ytelseType: {
+        kode: 'PSB',
+        kodeverk: 'FAGSAK_YTELSE',
       },
-      "kilde": {
-        "kode": "INFOTRYGD",
-        "kodeverk": "FAGSYSTEM"
+      kilde: {
+        kode: 'INFOTRYGD',
+        kodeverk: 'FAGSYSTEM',
       },
-      "saksnummer": null,
-      "overlappendePerioder": [
+      saksnummer: null,
+      overlappendePerioder: [
         {
-          "fom": "2022-01-03",
-          "tom": "2022-01-07"
+          fom: '2022-01-03',
+          tom: '2022-01-07',
         },
         {
-          "fom": "2022-01-10",
-          "tom": "2022-01-12"
-        }
-      ]
+          fom: '2022-01-10',
+          tom: '2022-01-12',
+        },
+      ],
     },
     {
-      "ytelseType": {
-        "kode": "PSB",
-        "kodeverk": "FAGSAK_YTELSE"
+      ytelseType: {
+        kode: 'PSB',
+        kodeverk: 'FAGSAK_YTELSE',
       },
-      "kilde": {
-        "kode": "INFOTRYGD",
-        "kodeverk": "FAGSYSTEM"
+      kilde: {
+        kode: 'INFOTRYGD',
+        kodeverk: 'FAGSYSTEM',
       },
-      "saksnummer": null,
-      "overlappendePerioder": [
+      saksnummer: null,
+      overlappendePerioder: [
         {
-          "fom": "2022-01-24",
-          "tom": "2022-01-28"
+          fom: '2022-01-24',
+          tom: '2022-01-28',
         },
         {
-          "fom": "2022-01-31",
-          "tom": "2022-01-31"
-        }
-      ]
+          fom: '2022-01-31',
+          tom: '2022-01-31',
+        },
+      ],
     },
     {
-      "ytelseType": {
-        "kode": "PSB",
-        "kodeverk": "FAGSAK_YTELSE"
+      ytelseType: {
+        kode: 'PSB',
+        kodeverk: 'FAGSAK_YTELSE',
       },
-      "kilde": {
-        "kode": "INFOTRYGD",
-        "kodeverk": "FAGSYSTEM"
+      kilde: {
+        kode: 'INFOTRYGD',
+        kodeverk: 'FAGSYSTEM',
       },
-      "saksnummer": null,
-      "overlappendePerioder": [
+      saksnummer: null,
+      overlappendePerioder: [
         {
-          "fom": "2022-02-21",
-          "tom": "2022-02-25"
+          fom: '2022-02-21',
+          tom: '2022-02-25',
         },
         {
-          "fom": "2022-02-28",
-          "tom": "2022-02-28"
-        }
-      ]
-    }
+          fom: '2022-02-28',
+          tom: '2022-02-28',
+        },
+      ],
+    },
   ];
 
-  return <VedtakProsessIndex
-    behandling={{
-      ...behandling,
-      type: {
-        kode: behandlingType.OMSORGSPENGER,
-      },
-      behandlingsresultat: {
-        vedtaksbrev: {
-          kode: 'FRITEKST',
-        },
+  return (
+    <VedtakProsessIndex
+      behandling={{
+        ...behandling,
         type: {
-          kode: behandlingResultatType.INNVILGET,
+          kode: behandlingType.OMSORGSPENGER,
         },
-        avslagsarsak: {
-          kode: avslagsarsakCodes.INGEN_BEREGNINGSREGLER,
-          kodeverk: kodeverkTyper.AVSLAGSARSAK,
+        behandlingsresultat: {
+          vedtaksbrev: {
+            kode: 'FRITEKST',
+          },
+          type: {
+            kode: behandlingResultatType.INNVILGET,
+          },
+          avslagsarsak: {
+            kode: avslagsarsakCodes.INGEN_BEREGNINGSREGLER,
+            kodeverk: kodeverkTyper.AVSLAGSARSAK,
+          },
         },
-      },
-
-    }}
-    vilkar={[
-      {
-        ...vilkar[0],
-        vilkarStatus: {
-          kode: vilkarUtfallType.IKKE_OPPFYLT,
+      }}
+      vilkar={[
+        {
+          ...vilkar[0],
+          vilkarStatus: {
+            kode: vilkarUtfallType.IKKE_OPPFYLT,
+          },
         },
-      },
-    ]}
-    beregningresultatEngangsstonad={resultatstruktur}
-    sendVarselOmRevurdering={boolean('sendVarselOmRevurdering', false)}
-    resultatstrukturOriginalBehandling={resultatstrukturOriginalBehandling}
-    medlemskap={{ fom: '2019-01-01' }}
-    aksjonspunkter={[aksjonspunkt5040]}
-    ytelseType={{ kode: fagsakYtelseType.ENGANGSSTONAD }}
-    employeeHasAccess={boolean('employeeHasAccess', false)}
-    isReadOnly={boolean('isReadOnly', false)}
-    previewCallback={action('button-click')}
-    submitCallback={action('button-click')}
-    alleKodeverk={alleKodeverk}
-    overlappendeYtelser={overlappendeYtelser}
-  />;
-}
+      ]}
+      beregningresultatEngangsstonad={resultatstruktur}
+      sendVarselOmRevurdering={boolean('sendVarselOmRevurdering', false)}
+      resultatstrukturOriginalBehandling={resultatstrukturOriginalBehandling}
+      medlemskap={{ fom: '2019-01-01' }}
+      aksjonspunkter={[aksjonspunkt5040]}
+      ytelseType={{ kode: fagsakYtelseType.ENGANGSSTONAD }}
+      employeeHasAccess={boolean('employeeHasAccess', false)}
+      isReadOnly={boolean('isReadOnly', false)}
+      previewCallback={action('button-click')}
+      submitCallback={action('button-click')}
+      alleKodeverk={alleKodeverk}
+      overlappendeYtelser={overlappendeYtelser}
+    />
+  );
+};
