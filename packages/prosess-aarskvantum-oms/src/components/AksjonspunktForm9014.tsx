@@ -98,7 +98,7 @@ export const FormContent = ({
               const fosterbarnObj = barn[index];
               const navn = fosterbarnObj && fosterbarnObj.navn ? fosterbarnObj.navn : `Fosterbarn ${index + 1}`;
               return (
-                <TableRow>
+                <TableRow key={`${navn}`}>
                   <TableColumn className={styles.vertikaltSentrert}>{navn}</TableColumn>
                   <TableColumn className={styles.vertikaltSentrert}>
                     <InputField
