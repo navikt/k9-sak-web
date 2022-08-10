@@ -155,7 +155,7 @@ describe('<PersonArbeidsforholdTable>', () => {
       />,
     );
     const cols = wrapper.find(TableColumn);
-    expect(cols).toHaveLength(6);
+    expect(cols).toHaveLength(7);
     expect(wrapper.find(DateLabel).prop('dateString')).toEqual('2018-05-05');
   });
 
