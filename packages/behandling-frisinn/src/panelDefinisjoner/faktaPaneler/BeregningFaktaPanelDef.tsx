@@ -31,12 +31,15 @@ class BeregningFaktaPanelDef extends FaktaPanelDef {
         <DynamicLoader<React.ComponentProps<typeof FaktaBeregningsgrunnlag>>
           packageCompFn={() => import('@navikt/ft-fakta-beregning')}
           federatedCompFn={FaktaBeregningsgrunnlagMF}
-          {...props}
           arbeidsgiverOpplysningerPerId={deepCopyProps.arbeidsgiverOpplysningerPerId}
           submitCallback={props.submitCallback}
           formData={props.formData}
           setFormData={props.setFormData}
           vilkar={bgVilkaret}
+          alleKodeverk={deepCopyProps.alleKodeverk}
+          erOverstyrer={false}
+          submittable={deepCopyProps.submittable}
+          readOnly={deepCopyProps.isReadOnly}
         />
       );
     }
