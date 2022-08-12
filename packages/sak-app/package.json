@@ -30,7 +30,7 @@
     "@fpsak-frontend/utils": "1.0.0",
     "@navikt/ft-plattform-komponenter": "1.0.28",
     "@navikt/ft-ui-komponenter": "1.0.31",
-    "@navikt/ft-fakta-beregning": "2.1.9",
+    "@navikt/ft-fakta-beregning": "2.1.11",
     "@navikt/ft-prosess-beregningsgrunnlag": "2.2.2",
     "@navikt/ft-form-hooks": "1.0.22",
     "@k9-sak-web/behandling-anke": "1.0.0",
