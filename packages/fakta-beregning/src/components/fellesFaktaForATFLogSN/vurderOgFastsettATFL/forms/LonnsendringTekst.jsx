@@ -5,7 +5,6 @@ import { Normaltekst } from 'nav-frontend-typografi';
 import beregningsgrunnlagPropType from '../../../../propTypes/beregningsgrunnlagPropType';
 import { createVisningsnavnForAktivitet } from '../../../ArbeidsforholdHelper';
 
-
 const byggListeSomStreng = listeMedStrenger => {
   if (listeMedStrenger.length === 0) {
     return '';
@@ -25,11 +24,11 @@ const byggListeSomStreng = listeMedStrenger => {
 
 const finnArbeidsforholdString = (beregningsgrunnlag, arbeidsgiverOpplysningerPerId, alleKodeverk) => {
   const arbMedLønnsendring = beregningsgrunnlag.faktaOmBeregning.arbeidsforholdMedLønnsendringUtenIM;
-  const visningsliste = arbMedLønnsendring.map(a => createVisningsnavnForAktivitet(a.arbeidsforhold, alleKodeverk, arbeidsgiverOpplysningerPerId));
+  const visningsliste = arbMedLønnsendring.map(a =>
+    createVisningsnavnForAktivitet(a.arbeidsforhold, alleKodeverk, arbeidsgiverOpplysningerPerId),
+  );
   return byggListeSomStreng(visningsliste);
-}
-
-
+};
 
 /**
  * LonnsendringForm
@@ -40,13 +39,14 @@ const finnArbeidsforholdString = (beregningsgrunnlag, arbeidsgiverOpplysningerPe
  * Denne komponenten kan vise intektstabell under radioknappene dersom skalViseInntektstabell er satt
  */
 
-
 const LonnsendringTekst = ({ beregningsgrunnlag, arbeidsgiverOpplysningerPerId, alleKodeverk }) => (
   <div>
     <Normaltekst>
       <FormattedMessage
         id="BeregningInfoPanel.VurderOgFastsettATFL.Lonnsendring"
-        values={{ arbeidsforhold: finnArbeidsforholdString(beregningsgrunnlag, arbeidsgiverOpplysningerPerId, alleKodeverk) }}
+        values={{
+          arbeidsforhold: finnArbeidsforholdString(beregningsgrunnlag, arbeidsgiverOpplysningerPerId, alleKodeverk),
+        }}
       />
     </Normaltekst>
   </div>
@@ -59,6 +59,7 @@ LonnsendringTekst.propTypes = {
 };
 
 export const harLønnsendring = (field, faktaOmBeregning) =>
+  !!faktaOmBeregning.arbeidsforholdMedLønnsendringUtenIM &&
   faktaOmBeregning.arbeidsforholdMedLønnsendringUtenIM.find(
     andel => andel.andelsnr === field.andelsnr || andel.andelsnr === field.andelsnrRef,
   ) !== undefined;
