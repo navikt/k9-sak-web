@@ -76,8 +76,10 @@ describe('<PersonArbeidsforholdTable>', () => {
     const row1 = rows.at(0);
     expect(row1.prop('isSelected')).toBe(true);
     const colsRow1 = row1.find(TableColumn);
-    expect(colsRow1).toHaveLength(6);
-    expect(colsRow1.first().childAt(0).childAt(0).text()).toEqual('Vaktmester (...2345)');
+    expect(colsRow1).toHaveLength(7);
+    expect(colsRow1.first().childAt(0).childAt(0).text()).toEqual(
+      arbeidsforhold.arbeidsforhold.eksternArbeidsforholdId,
+    );
     expect(colsRow1.at(1).find(PeriodLabel)).toHaveLength(1);
     expect(colsRow1.at(3).childAt(0).childAt(0).text()).toEqual('80.00 %');
 
@@ -101,7 +103,7 @@ describe('<PersonArbeidsforholdTable>', () => {
 
     const cols = wrapper.find(TableColumn);
 
-    expect(cols).toHaveLength(6);
+    expect(cols).toHaveLength(7);
     expect(cols.at(4).children()).toHaveLength(0);
   });
 
@@ -127,7 +129,7 @@ describe('<PersonArbeidsforholdTable>', () => {
       />,
     );
     const cols = wrapper.find(TableColumn);
-    expect(cols).toHaveLength(6);
+    expect(cols).toHaveLength(7);
     expect(wrapper.find(DateLabel).prop('dateString')).toEqual('2018-05-05');
   });
 
@@ -151,7 +153,7 @@ describe('<PersonArbeidsforholdTable>', () => {
     );
 
     const cols = wrapper.find(TableColumn);
-    expect(cols).toHaveLength(6);
+    expect(cols).toHaveLength(7);
     expect(cols.last().children()).toHaveLength(0);
   });
 
@@ -176,7 +178,7 @@ describe('<PersonArbeidsforholdTable>', () => {
     );
 
     const cols = wrapper.find(TableColumn);
-    expect(cols).toHaveLength(6);
+    expect(cols).toHaveLength(7);
     expect(cols.last().find(Image)).toHaveLength(1);
   });
 
@@ -218,7 +220,7 @@ describe('<PersonArbeidsforholdTable>', () => {
     expect(tableRow.props().model.stillingsprosent).toEqual(0);
   });
 
-  it('skal vise riktig utledet yrkestittel når lagt til av saksbehandler', () => {
+  it('skal vise arbeidsforholdId når lagt til av saksbehandler', () => {
     const endretArbeidsforhold = {
       ...arbeidsforhold,
       handlingType: arbeidsforholdHandlingType.BASERT_PÅ_INNTEKTSMELDING,
@@ -238,7 +240,7 @@ describe('<PersonArbeidsforholdTable>', () => {
     );
     const tableRow = wrapper.find(TableRow).at(0);
     const tekst = tableRow.find(Normaltekst).at(0);
-    expect(tekst.childAt(0).text()).toEqual('Lærer (...2345)');
+    expect(tekst.childAt(0).text()).toEqual(endretArbeidsforhold.arbeidsforhold.eksternArbeidsforholdId);
   });
 
   it('skal vise tom dato', () => {

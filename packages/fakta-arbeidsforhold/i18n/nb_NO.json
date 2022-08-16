@@ -2,7 +2,7 @@
   "PersonArbeidsforholdPanel.ArbeidsforholdHeader": "Aktive arbeidsforhold",
   "PersonArbeidsforholdPanel.LukkArbeidsforhold": "Lukk arbeidsforhold",
   "PersonArbeidsforholdPanel.VisArbeidsforhold": "Vis arbeidsforhold",
-  "PersonArbeidsforholdTable.Yrkestittel": "{br}Yrkestittel",
+  "PersonArbeidsforholdTable.ArbeidsforholdId": "{br}Arbeidsforhold-ID",
   "PersonArbeidsforholdTable.Periode": "{br}Periode",
   "PersonArbeidsforholdTable.Kilde": "{br}Kilde",
   "PersonArbeidsforholdTable.Stillingsprosent": "{br}Stillingsprosent",
