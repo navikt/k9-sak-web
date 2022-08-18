@@ -106,7 +106,7 @@
     "@wojtekmaj/enzyme-adapter-react-17": "^0.6.6",
     "axios-mock-adapter": "^1.21.2",
     "babel-jest": "^27.4.6",
-    "babel-loader": "^8.2.3",
+    "babel-loader": "^8.2.5",
     "body-parser": "^1.19.1",
     "cache-loader": "^4.1.0",
     "chai": "^4.2.0",
