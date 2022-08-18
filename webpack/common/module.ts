@@ -9,6 +9,7 @@ import { IS_DEV } from '../constants';
 const babelRules = {
   test: /\.(t|j)sx?$/,
   use: [
+    { loader: 'cache-loader' },
     {
       loader: 'thread-loader',
       options: {
