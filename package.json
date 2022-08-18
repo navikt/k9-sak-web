@@ -38,7 +38,7 @@
     "packages/*"
   ],
   "dependencies": {
-    "@babel/runtime": "^7.16.7",
+    "@babel/runtime": "^7.18.9",
     "@formatjs/intl-datetimeformat": "^5.0.2",
     "@formatjs/intl-numberformat": "^7.4.0",
     "@navikt/ds-css": "^0.12.11",
@@ -65,13 +65,13 @@
     "react-router-dom": "6.3.0"
   },
   "devDependencies": {
-    "@babel/core": "^7.16.7",
-    "@babel/eslint-parser": "^7.16.5",
+    "@babel/core": "^7.18.10",
+    "@babel/eslint-parser": "^7.18.9",
     "@babel/helper-regex": "^7.10.5",
-    "@babel/preset-env": "^7.16.8",
-    "@babel/preset-react": "^7.17.12",
-    "@babel/preset-typescript": "^7.16.7",
-    "@babel/register": "^7.16.9",
+    "@babel/preset-env": "^7.18.10",
+    "@babel/preset-react": "^7.18.6",
+    "@babel/preset-typescript": "^7.18.6",
+    "@babel/register": "^7.18.9",
     "@commercetools/enzyme-extensions": "^5.0.0",
     "@pmmmwh/react-refresh-webpack-plugin": "^0.5.4",
     "@storybook/addon-actions": "^6.5.6",
@@ -106,7 +106,7 @@
     "@wojtekmaj/enzyme-adapter-react-17": "^0.6.6",
     "axios-mock-adapter": "^1.20.0",
     "babel-jest": "^27.4.6",
-    "babel-loader": "^8.2.3",
+    "babel-loader": "^8.2.5",
     "body-parser": "^1.19.1",
     "cache-loader": "^4.1.0",
     "chai": "^4.2.0",
@@ -155,9 +155,9 @@
     "thread-loader": "^3.0.4",
     "type-fest": "^2.9.0",
     "typescript": "4.6.4",
-    "webpack": "5.73.0",
+    "webpack": "5.74.0",
     "webpack-cli": "4.10.0",
-    "webpack-dev-server": "4.9.2",
+    "webpack-dev-server": "4.10.0",
     "webpack-merge": "5.8.0"
   },
   "resolutions": {
