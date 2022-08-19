@@ -51,7 +51,7 @@ const AldersVilkarProsessIndex = ({
   const relevantAksjonspunkt: Aksjonspunkt = aksjonspunkter.find(
     ap => ap.definisjon.kode === aksjonspunktCodes.ALDERSVILKÅR,
   );
-  const begrunnelseTekst = relevantAksjonspunkt.begrunnelse ? relevantAksjonspunkt.begrunnelse : '';
+  const begrunnelseTekst = relevantAksjonspunkt.begrunnelse || '';
 
   useEffect(() => {
     if (lesemodus) setRedigering(false);

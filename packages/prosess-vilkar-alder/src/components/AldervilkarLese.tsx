@@ -1,7 +1,6 @@
 import React from 'react';
 import { FormattedMessage, injectIntl, WrappedComponentProps } from 'react-intl';
 
-import Lenke from 'nav-frontend-lenker';
 import styleLesemodus from './AldersvilkarLese.less';
 
 type Props = {
@@ -39,14 +38,9 @@ const AldersvilkarLese = ({
         </p>
         {aksjonspunktLost && (
           <div className={styleLesemodus.redigerVurderingTekst}>
-            <Lenke
-              href="#"
-              onClick={e => {
-                handleKlikk(e);
-              }}
-            >
+            <button type="button" onClick={e => handleKlikk(e)}>
               <FormattedMessage id="AlderVilkar.Lese.Rediger" />
-            </Lenke>
+            </button>
           </div>
         )}
       </div>

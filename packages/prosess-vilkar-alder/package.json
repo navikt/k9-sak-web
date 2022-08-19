@@ -12,7 +12,7 @@
     "@navikt/ft-form-hooks": "^1.0.37",
     "nav-frontend-core": "6.0.1",
     "nav-frontend-grid": "2.0.1",
-    "nav-frontend-lenker": "2.0.1",
+    "nav-frontend-knapper": "3.1.2",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-hook-form": "7.34.1",
