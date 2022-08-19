@@ -4,12 +4,15 @@ import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import { Behandling } from '@k9-sak-web/types';
 import fagsakTsType from '@k9-sak-web/types/src/fagsakTsType';
 import { FormStateType } from '@fpsak-frontend/form/src/types/FormStateType';
+import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 import UtvidetRettMikrofrontendVisning from '../../../../types/MikrofrontendKomponenter';
 import { generereInfoForVurdertVilkar } from '../../UtvidetRettOmsorgenForMikrofrontendFelles';
 import { OmsorgenForProps } from '../../../../types/utvidetRettMikrofrontend/OmsorgProps';
 import { InformasjonTilLesemodus } from '../../../../types/utvidetRettMikrofrontend/informasjonTilLesemodus';
-import { AksjonspunktInformasjon, VilkarInformasjon, } from '../../../../types/utvidetRettMikrofrontend/KartleggePropertyTilMikrofrontendTypes';
-import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
+import {
+  AksjonspunktInformasjon,
+  VilkarInformasjon,
+} from '../../../../types/utvidetRettMikrofrontend/KartleggePropertyTilMikrofrontendTypes';
 
 interface PropTypes {
   isReadOnly: boolean;
@@ -32,7 +35,7 @@ const KartleggePropertyTilOmsorgenForMikrofrontendKomponent = ({
   vilkarInformasjon,
   fagsaksType,
   FormState,
-  harBarnSoktForRammevedtakOmKroniskSyk
+  harBarnSoktForRammevedtakOmKroniskSyk,
 }: PropTypes) => {
   const { aksjonspunkter, isAksjonspunktOpen } = aksjonspunktInformasjon;
   const { vilkar, status } = vilkarInformasjon;
@@ -46,7 +49,8 @@ const KartleggePropertyTilOmsorgenForMikrofrontendKomponent = ({
 
   const vilkaretVurderesManuelltMedAksjonspunkt = aksjonspunkt && omsorgenForVilkar;
   // Vilkåret kan kun bli automatisk innvilget. Dersom det blir automatiskt avslått resulterer det i manuell vurdering via aksjonspunkt.
-  const vilkaretErAutomatiskInnvilget = !aksjonspunkt && omsorgenForVilkar && omsorgenForVilkar.perioder[0]?.vilkarStatus === vilkarUtfallType.OPPFYLT;
+  const vilkaretErAutomatiskInnvilget =
+    !aksjonspunkt && omsorgenForVilkar && omsorgenForVilkar.perioder[0]?.vilkarStatus === vilkarUtfallType.OPPFYLT;
 
   if (vilkaretVurderesManuelltMedAksjonspunkt) {
     const skalVilkarsUtfallVises = behandling.status === behandlingStatus.AVSLUTTET;
@@ -83,7 +87,7 @@ const KartleggePropertyTilOmsorgenForMikrofrontendKomponent = ({
         },
         formState: FormState,
       } as OmsorgenForProps,
-    }
+    };
   }
 
   if (vilkaretErAutomatiskInnvilget) {
@@ -96,15 +100,10 @@ const KartleggePropertyTilOmsorgenForMikrofrontendKomponent = ({
         barn: angitteBarn.map(barn => barn.personIdent),
         harBarnSoktForRammevedtakOmKroniskSyk,
         vedtakFattetVilkarOppfylt: true,
-        informasjonOmVilkar: generereInfoForVurdertVilkar(
-          true,
-          omsorgenForVilkar,
-          '',
-          'Omsorgen for',
-        ),
+        informasjonOmVilkar: generereInfoForVurdertVilkar(true, omsorgenForVilkar, '', 'Omsorgen for'),
         formState: FormState,
       } as OmsorgenForProps,
-    }
+    };
   }
 
   return {};
