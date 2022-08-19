@@ -236,7 +236,10 @@ export class PersonArbeidsforholdPanelImpl extends Component<Props, OwnState> {
 
     return (
       <>
-        <FaktaGruppe merknaderFraBeslutter={alleMerknaderFraBeslutter[aksjonspunktCodes.AVKLAR_ARBEIDSFORHOLD]}>
+        <FaktaGruppe
+          className={styles.container}
+          merknaderFraBeslutter={alleMerknaderFraBeslutter[aksjonspunktCodes.AVKLAR_ARBEIDSFORHOLD]}
+        >
           {unikeArbeidsgivere.map(a => {
             const arbeidsforholdPerArbeidsgiver = arbeidsforhold.filter(af => af.arbeidsgiver.arbeidsgiverOrgnr === a);
 

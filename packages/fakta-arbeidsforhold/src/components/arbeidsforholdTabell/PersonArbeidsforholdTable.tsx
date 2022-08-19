@@ -7,10 +7,7 @@ import erIBrukImageUrl from '@fpsak-frontend/assets/images/innvilget_hover.svg';
 import chevronIkonUrl from '@fpsak-frontend/assets/images/pil_ned.svg';
 import FlexRow from '@fpsak-frontend/shared-components/src/flexGrid/FlexRow';
 import arbeidsforholdHandlingType from '@fpsak-frontend/kodeverk/src/arbeidsforholdHandlingType';
-import {
-  utledArbeidsforholdYrkestittel,
-  arbeidsforholdHarAksjonspunktÅrsak,
-} from '@fpsak-frontend/utils/src/arbeidsforholdUtils';
+import { arbeidsforholdHarAksjonspunktÅrsak } from '@fpsak-frontend/utils/src/arbeidsforholdUtils';
 import ArbeidsforholdV2 from '@k9-sak-web/types/src/arbeidsforholdV2TsType';
 import { KodeverkMedNavn } from '@k9-sak-web/types';
 import IngenArbeidsforholdRegistrert from './IngenArbeidsforholdRegistrert';
@@ -20,7 +17,7 @@ import PersonArbeidsforholdDetailForm from '../arbeidsforholdDetaljer/PersonArbe
 import PermisjonerInfo from '../arbeidsforholdDetaljer/PermisjonerInfo';
 
 const headerColumnContent = [
-  <FormattedMessage key={1} id="PersonArbeidsforholdTable.Yrkestittel" values={{ br: <br /> }} />,
+  <FormattedMessage key={1} id="PersonArbeidsforholdTable.ArbeidsforholdId" values={{ br: <br /> }} />,
   <FormattedMessage key={2} id="PersonArbeidsforholdTable.Periode" values={{ br: <br /> }} />,
   <FormattedMessage key={3} id="PersonArbeidsforholdTable.Kilde" values={{ br: <br /> }} />,
   <FormattedMessage key={4} id="PersonArbeidsforholdTable.Stillingsprosent" values={{ br: <br /> }} />,
@@ -83,7 +80,7 @@ const PersonArbeidsforholdTable = ({
         alleArbeidsforhold.map(a => {
           const stillingsprosent =
             a.stillingsprosent !== undefined && a.stillingsprosent !== null ? `${a.stillingsprosent.toFixed(2)} %` : '';
-          const yrkestittel = utledArbeidsforholdYrkestittel(a);
+          const arbeidsforholdId = a.arbeidsforhold.eksternArbeidsforholdId;
           const kilde =
             Array.isArray(a.kilde) && (a.kilde.length > 1 ? a.kilde.map(k => k.kode).join(', ') : a.kilde[0].kode);
           const erValgt = selectedArbeidsforhold === a;
@@ -102,7 +99,7 @@ const PersonArbeidsforholdTable = ({
                 isApLeftBorder={harAksjonspunkt}
               >
                 <TableColumn>
-                  <Normaltekst>{decodeHtmlEntity(yrkestittel)}</Normaltekst>
+                  <Normaltekst>{decodeHtmlEntity(arbeidsforholdId)}</Normaltekst>
                 </TableColumn>
                 <TableColumn>
                   <Normaltekst>
@@ -126,8 +123,9 @@ const PersonArbeidsforholdTable = ({
                     </Normaltekst>
                   )}
                 </TableColumn>
-                {!harAksjonspunkt && harPermisjoner && (
-                  <TableColumn className={styles.aksjonspunktColumn}>
+
+                <TableColumn className={styles.aksjonspunktColumn}>
+                  {!harAksjonspunkt && harPermisjoner ? (
                     <button className={styles.knappContainer} type="button" onClick={() => setValgtArbeidsforhold(a)}>
                       <Normaltekst className={styles.visLukkPermisjon}>
                         {intl.formatMessage(
@@ -138,8 +136,10 @@ const PersonArbeidsforholdTable = ({
                       </Normaltekst>
                       <Image className={erValgt ? styles.chevronOpp : styles.chevronNed} src={chevronIkonUrl} alt="" />
                     </button>
-                  </TableColumn>
-                )}
+                  ) : (
+                    ''
+                  )}
+                </TableColumn>
                 <TableColumn>
                   {a.handlingType && a.handlingType.kode === arbeidsforholdHandlingType.BRUK && !harAksjonspunkt && (
                     <Image
@@ -165,7 +165,7 @@ const PersonArbeidsforholdTable = ({
               )}
               {erValgt && visPermisjon(a) && (
                 <FlexRow>
-                  <PermisjonerInfo arbeidsforhold={a} />
+                  <PermisjonerInfo arbeidsforhold={a} alleKodeverk={alleKodeverk} />
                 </FlexRow>
               )}
             </Fragment>
