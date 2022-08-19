@@ -164,7 +164,10 @@ const UtvidetRettProsess = ({
   );
 
   const [prosessStegPaneler, valgtPanel, formaterteProsessStegPaneler] = prosessStegHooks.useProsessStegPaneler(
-    prosessStegUtvidetRettPanelDefinisjoner(fagsak.sakstype.kode === fagsakYtelseType.OMSORGSPENGER_ALENE_OM_OMSORGEN),
+    prosessStegUtvidetRettPanelDefinisjoner(
+      fagsak.sakstype.kode === fagsakYtelseType.OMSORGSPENGER_ALENE_OM_OMSORGEN,
+      featureToggles,
+    ),
     dataTilUtledingAvFpPaneler,
     fagsak,
     rettigheter,
