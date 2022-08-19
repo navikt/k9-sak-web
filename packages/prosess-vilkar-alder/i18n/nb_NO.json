@@ -1,0 +1,15 @@
+{
+  "HelpText.Aksjonspunkt": "Aksjonspunkt",
+  "AlderVilkar.Hjelpetekst": "Vurder om aldersvilkåret er oppfylt",
+  "AlderVilkar.KroniskSyk": "Er barnet kronisk syk?",
+  "AlderVilkar.KroniskSyk.Ja": "Ja",
+  "AlderVilkar.KroniskSyk.Nei": "Nei",
+  "AlderVilkar.Bekreft": "Bekreft og fortsett",
+  "AlderVilkar.Lese.Etikett.Aksjonspunkt": "Behandlet aksjonspunkt:",
+  "AlderVilkar.Lese.Etikett.Vurdering": "Vurdering",
+  "AlderVilkar.Lese.Etikett.KroniskSyk": "Er barnet under 13 eller er kronisk syk",
+  "AlderVilkar.Lese.KroniskSyk": "Vurder om barnet er under 13 eller er kronisk syk",
+  "AlderVilkar.Lese.Rediger": "Rediger vurdering",
+  "AlderVilkar.Lese.Etikett.Opplysninger": "Opplysninger fra søknaden:",
+  "AlderVilkar.Lese.Etikett.Barn": "Søkers barn"
+}
