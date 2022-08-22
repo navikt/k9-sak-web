@@ -177,21 +177,18 @@ describe('<faktaUtils>', () => {
       new FaktaPanelUtledet(panelDef, behandling, aksjonspunkter),
       new FaktaPanelUtledet(panelDef2, behandling, []),
     ];
-    const intl = {
-      formatMessage: o => o.id,
-    } as IntlShape;
     const valgtFaktaPanelKode = paneler[0].getUrlKode();
 
-    const formatertePaneler = formaterPanelerForSidemeny(intl, paneler, valgtFaktaPanelKode);
+    const formatertePaneler = formaterPanelerForSidemeny(paneler, valgtFaktaPanelKode);
 
     expect(formatertePaneler).toEqual([
       {
-        tekst: paneler[0].getTekstKode(),
+        tekstKode: paneler[0].getTekstKode(),
         erAktiv: true,
         harAksjonspunkt: true,
       },
       {
-        tekst: paneler[1].getTekstKode(),
+        tekstKode: paneler[1].getTekstKode(),
         erAktiv: false,
         harAksjonspunkt: false,
       },
@@ -290,7 +287,6 @@ describe('<faktaUtils>', () => {
     expect(opppdaterKall[0].args[0]).toEqual(DEFAULT_PROSESS_STEG_KODE);
   });
 
-
   it('skal lagre både overstyrt og vanlig aksjonspunkt', async () => {
     const oppdaterProsessStegOgFaktaPanelIUrl = sinon.spy();
     const lagreAksjonspunkter = sinon.spy();
@@ -345,5 +341,4 @@ describe('<faktaUtils>', () => {
     expect(opppdaterKall[0].args[0]).toEqual(DEFAULT_FAKTA_KODE);
     expect(opppdaterKall[0].args[0]).toEqual(DEFAULT_PROSESS_STEG_KODE);
   });
-
 });

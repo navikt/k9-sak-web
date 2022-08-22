@@ -12,6 +12,7 @@ const vilkarType = {
   UTVIDETRETTVILKARET: 'K9_VK_9_6',
   OMP_OMSORGENFORVILKARET: 'K9_VK_1',
   PLEIEPENGER_LIVETS_SLUTTFASE: 'K9_VK_16',
+  ALDERSVILKAR_BARN: 'K9_VK_5_3',
 };
 
 export default vilkarType;

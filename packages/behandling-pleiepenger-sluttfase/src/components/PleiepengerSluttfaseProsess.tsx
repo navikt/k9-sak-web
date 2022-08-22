@@ -25,7 +25,10 @@ import lagForhåndsvisRequest from '@fpsak-frontend/utils/src/formidlingUtils';
 
 import prosessStegPanelDefinisjoner from '../panelDefinisjoner/prosessStegPleiepengerSluttfasePanelDefinisjoner';
 import FetchedData from '../types/fetchedDataTsType';
-import { restApiPleiepengerSluttfaseHooks, PleiepengerSluttfaseBehandlingApiKeys } from '../data/pleiepengerSluttfaseBehandlingApi';
+import {
+  restApiPleiepengerSluttfaseHooks,
+  PleiepengerSluttfaseBehandlingApiKeys,
+} from '../data/pleiepengerSluttfaseBehandlingApi';
 
 import '@fpsak-frontend/assets/styles/arrowForProcessMenu.less';
 
@@ -153,15 +156,20 @@ const PleiepengerSluttfaseProsess = ({
   );
 
   const { startRequest: lagreAksjonspunkter, data: apBehandlingRes } =
-    restApiPleiepengerSluttfaseHooks.useRestApiRunner<Behandling>(PleiepengerSluttfaseBehandlingApiKeys.SAVE_AKSJONSPUNKT);
+    restApiPleiepengerSluttfaseHooks.useRestApiRunner<Behandling>(
+      PleiepengerSluttfaseBehandlingApiKeys.SAVE_AKSJONSPUNKT,
+    );
   const { startRequest: lagreOverstyrteAksjonspunkter, data: apOverstyrtBehandlingRes } =
-    restApiPleiepengerSluttfaseHooks.useRestApiRunner<Behandling>(PleiepengerSluttfaseBehandlingApiKeys.SAVE_OVERSTYRT_AKSJONSPUNKT);
+    restApiPleiepengerSluttfaseHooks.useRestApiRunner<Behandling>(
+      PleiepengerSluttfaseBehandlingApiKeys.SAVE_OVERSTYRT_AKSJONSPUNKT,
+    );
   const { startRequest: forhandsvisMelding } = restApiPleiepengerSluttfaseHooks.useRestApiRunner(
     PleiepengerSluttfaseBehandlingApiKeys.PREVIEW_MESSAGE,
   );
-  const { startRequest: forhandsvisTilbakekrevingMelding } = restApiPleiepengerSluttfaseHooks.useRestApiRunner<Behandling>(
-    PleiepengerSluttfaseBehandlingApiKeys.PREVIEW_TILBAKEKREVING_MESSAGE,
-  );
+  const { startRequest: forhandsvisTilbakekrevingMelding } =
+    restApiPleiepengerSluttfaseHooks.useRestApiRunner<Behandling>(
+      PleiepengerSluttfaseBehandlingApiKeys.PREVIEW_TILBAKEKREVING_MESSAGE,
+    );
   const { startRequest: lagreDokumentdata } = restApiPleiepengerSluttfaseHooks.useRestApiRunner<Behandling>(
     PleiepengerSluttfaseBehandlingApiKeys.DOKUMENTDATA_LAGRE,
   );

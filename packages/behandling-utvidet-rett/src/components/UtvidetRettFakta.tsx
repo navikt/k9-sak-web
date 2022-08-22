@@ -1,5 +1,4 @@
 import React from 'react';
-import { injectIntl, WrappedComponentProps } from 'react-intl';
 import { SideMenuWrapper, faktaHooks, useSetBehandlingVedEndring } from '@k9-sak-web/behandling-felles';
 import { Behandling } from '@k9-sak-web/types';
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
@@ -11,7 +10,6 @@ import FetchedData from '../types/fetchedDataTsType';
 import { FaktaProps } from '../types/FaktaProps';
 
 const UtvidetRettFakta = ({
-  intl,
   data,
   behandling,
   fagsak,
@@ -26,7 +24,7 @@ const UtvidetRettFakta = ({
   setBehandling,
   featureToggles,
   arbeidsgiverOpplysningerPerId,
-}: FaktaProps & WrappedComponentProps) => {
+}: FaktaProps) => {
   const { aksjonspunkter, ...rest } = data;
   const { addErrorMessage } = useRestApiErrorDispatcher();
 
@@ -50,7 +48,6 @@ const UtvidetRettFakta = ({
     rettigheter,
     aksjonspunkter,
     valgtFaktaSteg,
-    intl,
   );
 
   faktaHooks.useFaktaAksjonspunktNotifikator(faktaPaneler, setApentFaktaPanel, behandling.versjon);
@@ -99,4 +96,4 @@ const UtvidetRettFakta = ({
   return null;
 };
 
-export default injectIntl(UtvidetRettFakta);
+export default UtvidetRettFakta;

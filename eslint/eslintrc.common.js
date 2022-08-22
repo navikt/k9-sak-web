@@ -83,7 +83,7 @@ const config = {
     '@typescript-eslint/no-explicit-any': OFF,
     '@typescript-eslint/ban-ts-comment': OFF,
     '@typescript-eslint/explicit-module-boundary-types': OFF,
-    'class-methods-use-this': 1,
+    'class-methods-use-this': OFF,
 
     // TODO Desse kan vel fjernast?
     '@typescript-eslint/indent': OFF,

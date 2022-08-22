@@ -45,6 +45,14 @@ const featureToggles = [
     key: 'NY_BEREGNING_FAKTA_FORDEL_ENABLED',
     value: process.env.NY_BEREGNING_FAKTA_FORDEL_ENABLED,
   },
+  {
+    key: 'AKSJONSPUNKT_9014',
+    value: process.env.AKSJONSPUNKT_9014,
+  },
+  {
+    key: 'AKSJONSPUNKT_9015',
+    value: process.env.AKSJONSPUNKT_9015,
+  },
 ];
 
 module.exports = function (app) {

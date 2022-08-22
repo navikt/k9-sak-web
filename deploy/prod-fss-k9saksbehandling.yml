@@ -102,3 +102,7 @@ spec:
       value: "false"
     - name: NY_BEREGNING_FAKTA_FORDEL_ENABLED
       value: "false"
+    - name: AKSJONSPUNKT_9014
+      value: "false"
+    - name: AKSJONSPUNKT_9015
+      value: "false"

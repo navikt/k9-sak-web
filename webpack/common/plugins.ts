@@ -8,16 +8,14 @@ import CopyWebpackPlugin from 'copy-webpack-plugin';
 import ESLintPlugin from 'eslint-webpack-plugin';
 import ExternalTemplateRemotesPlugin from 'external-remotes-plugin';
 
-import { IS_DEV } from '../constants';
+import { IS_DEV, IS_PROD } from '../constants';
 import { PUBLIC_ROOT, LANG_DIR } from '../paths';
 
 const PACKAGES_DIR = path.resolve(__dirname, '../packages');
 
-const isDev = process.env.NODE_ENV === 'development';
-
 const pluginConfig = [
   new ESLintPlugin({
-    lintDirtyModulesOnly: isDev,
+    lintDirtyModulesOnly: IS_DEV,
     context: PACKAGES_DIR,
     extensions: ['tsx', 'ts'],
     failOnWarning: false,
@@ -56,11 +54,13 @@ const pluginConfig = [
     ],
   }),
   new webpack.ContextReplacementPlugin(/moment[\/\\]locale$/, /nb/),
-  new CircularDependencyPlugin({
-    exclude: /node_modules/,
-    failOnError: true,
-  }),
+  IS_PROD
+    ? new CircularDependencyPlugin({
+        exclude: /node_modules/,
+        failOnError: true,
+      })
+    : false,
   new ExternalTemplateRemotesPlugin(),
-];
+].filter(Boolean);
 
 export default pluginConfig;

@@ -29,3 +29,6 @@ jobs:
 
       - name: Linting
         run: yarn less:lint
+
+      - name: Bygge dist
+        run: yarn build

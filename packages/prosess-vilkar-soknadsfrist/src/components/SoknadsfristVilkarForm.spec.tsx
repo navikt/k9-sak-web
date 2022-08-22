@@ -13,7 +13,7 @@ import { SoknadsfristVilkarForm } from './SoknadsfristVilkarForm';
 
 const periode = {
   vilkarStatus: { kode: vilkarUtfallType.IKKE_OPPFYLT, kodeverk: 'test' },
-  vurdersIBehandlingen: true,
+  vurderesIBehandlingen: true,
   periode: {
     fom: '2020-02-20',
     tom: '2020-02-25',
