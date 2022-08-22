@@ -49,6 +49,10 @@ const featureToggles = [
     key: 'AKSJONSPUNKT_9014',
     value: process.env.AKSJONSPUNKT_9014,
   },
+  {
+    key: 'AKSJONSPUNKT_9015',
+    value: process.env.AKSJONSPUNKT_9015,
+  },
 ];
 
 module.exports = function (app) {

@@ -17,7 +17,7 @@ const { ModuleFederationPlugin } = webpack.container;
 
 export default {
   mode: 'development',
-  devtool: 'inline-source-map',
+  devtool: 'eval-cheap-module-source-map',
   entry: [APP_DIR + '/index.tsx'],
   output: {
     path: PUBLIC_ROOT,
@@ -50,7 +50,6 @@ export default {
         },
       },
     }),
-    new webpack.HotModuleReplacementPlugin(),
     new webpack.EnvironmentPlugin({
       MSW_MODE: 'development',
     }),

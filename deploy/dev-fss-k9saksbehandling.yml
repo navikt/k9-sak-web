@@ -104,3 +104,5 @@ spec:
       value: "true"
     - name: AKSJONSPUNKT_9014
       value: "true"
+    - name: AKSJONSPUNKT_9015
+      value: "true"
