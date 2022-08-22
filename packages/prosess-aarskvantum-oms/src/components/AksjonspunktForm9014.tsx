@@ -34,7 +34,6 @@ interface FormContentProps {
   valgValue: string;
   fosterbarnValue: fosterbarnDto[];
   initialValues: { begrunnelse: string; fosterbarn: fosterbarnDto[] } | any;
-  pristine: boolean;
   dirty: boolean;
 }
 
@@ -70,7 +69,6 @@ export const FormContent = ({
   valgValue,
   fosterbarnValue,
   initialValues,
-  pristine,
   dirty,
 }: FormContentProps) => {
   const uavklartePerioder = useMemo(
@@ -273,7 +271,6 @@ const AksjonspunktFormImpl = ({
         valgValue={valgValue}
         fosterbarnValue={fosterbarnValue}
         initialValues={initialValues}
-        pristine={pristine}
         dirty={dirty}
       />
     </div>
