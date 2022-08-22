@@ -177,7 +177,6 @@ export const FormContent = ({
         >
           <RadioOption
             value={valgValues.reBehandling}
-            // disabled={true}
             label={{
               id:
                 aksjonspunktKode === '9014'
@@ -257,7 +256,6 @@ const AksjonspunktFormImpl = ({
   valgValue,
   fosterbarnValue,
   initialValues,
-  pristine,
   dirty,
 }: AksjonspunktFormImplProps & InjectedFormProps) => (
   <form onSubmit={handleSubmit}>
