@@ -3,6 +3,8 @@
   "Årskvantum.Aksjonspunkt.Uavklart.OverlappInfotrygd": "Det finnes overlappende perioder i Infotrygd. Annuller perioden i Infotrygd og kjør behandlingen på nytt.",
   "Årskvantum.Aksjonspunkt.Avslått": "Det finnes avslåtte perioder. Korriger eller legg til rammemeldinger i Infotrygd, eller fortsett dersom avslåtte perioder er korrekt",
   "Årskvantum.Aksjonspunkt.Avslått.Fosterbarn": "Det er registrert fosterbarn i Infotrygd. Vurder om søker har omsorg for fosterbarn.",
+  "Årskvantum.Aksjonspunkt.Avslått.Fosterbarn.KanIkkeFortsette": "For å fortsette uten endring må det ikke ha blitt gjort endringer i listen over fosterbarn.",
+  "Årskvantum.Aksjonspunkt.Avslått.Fosterbarn.KanIkkeRebehandle": "For å kunne behandle endring av fosterbarn må listen over fosterbarn ha blitt endret.",
   "Årskvantum.Aksjonspunkt.Avslått.Valg": "Valg",
   "Årskvantum.Aksjonspunkt.Avslått.ReBehandling": "Rammemelding eller fosterbarn er endret eller lagt til",
   "Årskvantum.Aksjonspunkt.Avslått.ReBehandling.Fosterbarn": "Fosterbarn er lagt til",
