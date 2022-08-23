@@ -76,6 +76,7 @@ const velgHistorikkMal = (histType: string) => {
     case historikkinnslagType.NY_GRUNNLAG_MOTTATT:
       return HistorikkMalType6;
     case historikkinnslagType.OVERSTYRT:
+    case historikkinnslagType.FJERNET_OVERSTYRING:
       return HistorikkMalType7;
     case historikkinnslagType.OPPTJENING:
       return HistorikkMalType8;

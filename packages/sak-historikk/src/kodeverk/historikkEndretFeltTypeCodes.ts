@@ -188,6 +188,10 @@ const historikkEndretFeltTypeCodes = {
     kode: 'OVERSTYRT_BEREGNING',
     feltId: 'Historikk.Template.7.OverstyrtBeregning',
   },
+  FJERNET_OVERSTYRING: {
+    kode: 'FJERNET_OVERSTYRING',
+    feltId: 'Historikk.Template.7.AvbruttOverstyring',
+  },
   OVERSTYRT_VURDERING: {
     kode: 'OVERSTYRT_VURDERING',
     feltId: 'Historikk.Template.7.OverstyrtVilkar',
