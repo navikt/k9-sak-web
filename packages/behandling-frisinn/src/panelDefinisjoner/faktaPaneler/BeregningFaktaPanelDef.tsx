@@ -40,6 +40,8 @@ class BeregningFaktaPanelDef extends FaktaPanelDef {
           erOverstyrer={false}
           submittable={deepCopyProps.submittable}
           readOnly={deepCopyProps.isReadOnly}
+          skalKunneOverstyreAktiviteter={false}
+          skalKunneAvbryteOverstyring
         />
       );
     }

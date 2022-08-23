@@ -15,11 +15,25 @@ const FaktaBeregningsgrunnlagMF =
     : // eslint-disable-next-line import/no-unresolved
       () => import('ft_fakta_beregning/FaktaBeregning');
 
+const transformVedOverstyring = aksjonspunktData =>
+  aksjonspunktData.flatMap(data => {
+    if (data.kode === aksjonspunktCodes.OVERSTYRING_AV_BEREGNINGSGRUNNLAG) {
+      return data.grunnlag.map(gr => ({
+        kode: data.kode,
+        ...gr,
+      }));
+    }
+    return data;
+  });
+
 class BeregningFaktaPanelDef extends FaktaPanelDef {
+  // eslint-disable-next-line class-methods-use-this
   getUrlKode = () => faktaPanelCodes.BEREGNING;
 
+  // eslint-disable-next-line class-methods-use-this
   getTekstKode = () => 'BeregningInfoPanel.Title';
 
+  // eslint-disable-next-line class-methods-use-this
   getAksjonspunktKoder = () => [
     aksjonspunktCodes.VURDER_FAKTA_FOR_ATFL_SN,
     aksjonspunktCodes.AVKLAR_AKTIVITETER,
@@ -27,6 +41,7 @@ class BeregningFaktaPanelDef extends FaktaPanelDef {
     aksjonspunktCodes.OVERSTYRING_AV_BEREGNINGSGRUNNLAG,
   ];
 
+  // eslint-disable-next-line class-methods-use-this
   getKomponent = props => {
     if (props.featureToggles?.NY_BEREGNING_FAKTA_ENABLED) {
       const deepCopyProps = JSON.parse(JSON.stringify(props));
@@ -39,10 +54,12 @@ class BeregningFaktaPanelDef extends FaktaPanelDef {
           {...deepCopyProps}
           beregningsgrunnlag={deepCopyProps.beregningsgrunnlag}
           arbeidsgiverOpplysningerPerId={deepCopyProps.arbeidsgiverOpplysningerPerId}
-          submitCallback={props.submitCallback}
+          submitCallback={aksjonspunktData => props.submitCallback(transformVedOverstyring(aksjonspunktData))}
           formData={props.formData}
           setFormData={props.setFormData}
           vilkar={bgVilkaret}
+          skalKunneOverstyreAktiviteter={false}
+          skalKunneAvbryteOverstyring
         />
       );
     }
@@ -50,8 +67,10 @@ class BeregningFaktaPanelDef extends FaktaPanelDef {
     return <BeregningFaktaIndex {...props} />;
   };
 
+  // eslint-disable-next-line class-methods-use-this
   getOverstyrVisningAvKomponent = ({ beregningsgrunnlag }) => beregningsgrunnlag;
 
+  // eslint-disable-next-line class-methods-use-this
   getData = ({ rettigheter, beregningsgrunnlag, arbeidsgiverOpplysningerPerId, vilkar, beregningErBehandlet }) => ({
     erOverstyrer: rettigheter.kanOverstyreAccess.isEnabled,
     beregningsgrunnlag,
