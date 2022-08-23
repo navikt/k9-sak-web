@@ -11,7 +11,7 @@ import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 
-import hentAktivePerioderFraVilkar from "@fpsak-frontend/utils/src/hentAktivePerioderFraVilkar";
+import hentAktivePerioderFraVilkar from '@fpsak-frontend/utils/src/hentAktivePerioderFraVilkar';
 import SoknadsfristVilkarForm from './components/SoknadsfristVilkarForm';
 import SoknadsfristVilkarHeader from './components/SoknadsfristVilkarHeader';
 import { utledInnsendtSoknadsfrist } from './utils';
@@ -74,9 +74,20 @@ const SoknadsfristVilkarProsessIndex = ({
     }
   }, [activeTab, visAllePerioder]);
 
-  if(perioder.length === 0){
+  if (perioder.length === 0) {
     return null;
   }
+
+  useEffect(() => {
+    if (perioder.length > 1) {
+      const førsteIkkeVurdertPeriodeIndex = perioder.findIndex(
+        periode => periode.vurderesIBehandlingen && periode.vilkarStatus.kode === vilkarUtfallType.IKKE_VURDERT,
+      );
+      if (førsteIkkeVurdertPeriodeIndex >= 0) {
+        setActiveTab(førsteIkkeVurdertPeriodeIndex);
+      }
+    }
+  }, []);
 
   const activePeriode = perioder.length === 1 ? perioder[0] : perioder[activeTab];
 
@@ -132,21 +143,21 @@ const SoknadsfristVilkarProsessIndex = ({
   return (
     <RawIntlProvider value={intl}>
       <div className={cx('mainContainer--withSideMenu')}>
-          <div className={styles.sideMenuContainer}>
-            <SideMenu
-              links={perioder.map(({ periode, vilkarStatus }, index) => ({
-                active: activeTab === index,
-                label: `${dateFormat(periode.fom)} - ${dateFormat(periode.tom)}`,
-                iconSrc:
-                  (erOverstyrt || harÅpentAksjonspunkt) && vilkarStatus.kode !== vilkarUtfallType.OPPFYLT
-                    ? advarselIcon
-                    : null,
-              }))}
-              onClick={setActiveTab}
-              theme="arrow"
-              heading={intl.formatMessage({ id: 'Sidemeny.Perioder' })}
-            />
-          </div>
+        <div className={styles.sideMenuContainer}>
+          <SideMenu
+            links={perioder.map(({ periode, vilkarStatus }, index) => ({
+              active: activeTab === index,
+              label: `${dateFormat(periode.fom)} - ${dateFormat(periode.tom)}`,
+              iconSrc:
+                (erOverstyrt || harÅpentAksjonspunkt) && vilkarStatus.kode !== vilkarUtfallType.OPPFYLT
+                  ? advarselIcon
+                  : null,
+            }))}
+            onClick={setActiveTab}
+            theme="arrow"
+            heading={intl.formatMessage({ id: 'Sidemeny.Perioder' })}
+          />
+        </div>
         <div className={styles.contentContainer}>
           <SoknadsfristVilkarHeader
             aksjonspunkter={aksjonspunkter}
