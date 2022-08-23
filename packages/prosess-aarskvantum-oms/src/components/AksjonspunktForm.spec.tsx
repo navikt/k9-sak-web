@@ -55,6 +55,8 @@ describe('<AksjonspunktForm>', () => {
           isAksjonspunktOpen
           fosterbarn={[]}
           aksjonspunktKode={aksjonspunktCodes.VURDER_ÅRSKVANTUM_KVOTE}
+          valgValue={null}
+          fosterbarnValue={[]}
         />,
       );
 
@@ -83,6 +85,8 @@ describe('<AksjonspunktForm>', () => {
           isAksjonspunktOpen
           fosterbarn={[]}
           aksjonspunktKode={aksjonspunktCodes.VURDER_ÅRSKVANTUM_KVOTE}
+          valgValue={null}
+          fosterbarnValue={[]}
         />,
       );
 

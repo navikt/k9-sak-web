@@ -3735,18 +3735,18 @@
   resolved "https://npm.pkg.github.com/download/@navikt/fnrvalidator/1.3.0/57e0b0b2bfe6ba79ad3c33dc6529c51ca8d573ca8cdd4c4dd3d3aa59446fe56f#8cea6bae592f772d07efebe9a5ab7179552e1d6f"
   integrity sha512-k1MEZ8xwxtmY570gB+BF38kr9Xta1KIcx0yUExHQZWIsD1PNGSVagoriRTxqGyyTTkt4ajk1Z18WPfWX7rtpgQ==
 
-"@navikt/ft-fakta-beregning@2.1.13":
-  version "2.1.13"
-  resolved "https://npm.pkg.github.com/download/@navikt/ft-fakta-beregning/2.1.13/d5dc52b5b50e801428202c194088c8d37b8e82a6a085d4b972eec99f607ec6f8#77a4f8b8871672d0c0193bb88ff43f4314ebb1b0"
-  integrity sha512-f8V3z0NfYJO3qSTon3ujo7tPNH5fwERvjcfUM2BfbrwWfWejV3YiiQ5frP2UkX8M1TU0ZdIBohMGcZ183vfJaQ==
+"@navikt/ft-fakta-beregning@2.1.15":
+  version "2.1.15"
+  resolved "https://npm.pkg.github.com/download/@navikt/ft-fakta-beregning/2.1.15/4c9b27b789eea2093d5fa37ec912c914584f6f16#4c9b27b789eea2093d5fa37ec912c914584f6f16"
+  integrity sha512-erGaajWsyOP+UGoEl44lVS17fwvcWfol877EJs6qnB2vm+LCpDTYtmReS1r+9o0yOzW7XR/iP6v8BWxxK5hQug==
   dependencies:
-    "@navikt/ft-form-hooks" "^1.0.36"
-    "@navikt/ft-form-validators" "^1.0.25"
+    "@navikt/ft-form-hooks" "^1.0.38"
+    "@navikt/ft-form-validators" "^1.0.27"
     "@navikt/ft-kodeverk" "^1.0.16"
     "@navikt/ft-konstanter" "^1.0.11"
-    "@navikt/ft-types" "^1.0.24"
-    "@navikt/ft-ui-komponenter" "^1.0.33"
-    "@navikt/ft-utils" "^1.0.30"
+    "@navikt/ft-types" "^1.0.26"
+    "@navikt/ft-ui-komponenter" "^1.0.35"
+    "@navikt/ft-utils" "^1.0.32"
     core-js "3.24.1"
     dayjs "1.11.5"
     nav-frontend-alertstriper "4.0.2"
@@ -3766,36 +3766,37 @@
     react-hook-form "7.34.1"
     react-intl "6.0.5"
 
-"@navikt/ft-fakta-fordel-beregningsgrunnlag@2.0.18":
-  version "2.0.18"
-  resolved "https://npm.pkg.github.com/download/@navikt/ft-fakta-fordel-beregningsgrunnlag/2.0.18/e9ad4f0eedafaa09bcb10cc231a245b63c48ba55b5c895579d9353bebd4faf4c#0574f734cde8c5251556414a7a6cf64121bd29f7"
-  integrity sha512-gLPFqy86eflZXMgy3uahfcdDQLJVUIuogTssZqy21EPbLR7TnyzUYHcT/DzhQ1njZmkFnBEzx/DJwRtK61YjTQ==
+"@navikt/ft-fakta-fordel-beregningsgrunnlag@2.0.12":
+  version "2.0.12"
+  resolved "https://npm.pkg.github.com/download/@navikt/ft-fakta-fordel-beregningsgrunnlag/2.0.12/64337ffd0135086d23b3e40f1ef8677eb689d83d#64337ffd0135086d23b3e40f1ef8677eb689d83d"
+  integrity sha512-pNpREx8Q/Ak7gpATsevtg4rkQ6midyzBodPx3dcoUjsimZGw0JNUUUW0RC/JhvyfEhoQU+Mp/Ub01/jwOAba4A==
   dependencies:
-    "@navikt/ft-form-hooks" "^1.0.38"
-    "@navikt/ft-form-validators" "^1.0.27"
-    "@navikt/ft-kodeverk" "^1.0.16"
-    "@navikt/ft-types" "^1.0.26"
-    "@navikt/ft-ui-komponenter" "^1.0.35"
-    "@navikt/ft-utils" "^1.0.32"
+    "@navikt/ft-form-hooks" "^1.0.35"
+    "@navikt/ft-form-validators" "^1.0.24"
+    "@navikt/ft-kodeverk" "^1.0.15"
+    "@navikt/ft-types" "^1.0.23"
+    "@navikt/ft-ui-komponenter" "^1.0.32"
+    "@navikt/ft-utils" "^1.0.29"
     classnames "2.3.1"
     core-js "3.24.1"
-    dayjs "1.11.5"
+    dayjs "1.11.4"
+    moment "2.29.4"
     nav-frontend-core "6.0.1"
-    nav-frontend-ekspanderbartpanel "4.0.4"
-    nav-frontend-ekspanderbartpanel-style "2.0.2"
-    nav-frontend-grid "2.0.2"
-    nav-frontend-grid-style "1.0.3"
-    nav-frontend-knapper "3.1.3"
-    nav-frontend-knapper-style "2.1.2"
+    nav-frontend-ekspanderbartpanel "4.0.3"
+    nav-frontend-ekspanderbartpanel-style "2.0.1"
+    nav-frontend-grid "2.0.1"
+    nav-frontend-grid-style "1.0.2"
+    nav-frontend-knapper "3.1.2"
+    nav-frontend-knapper-style "2.1.1"
     nav-frontend-tabs "^2.0.2"
     nav-frontend-tabs-style "^2.0.1"
-    nav-frontend-typografi "4.0.2"
-    nav-frontend-typografi-style "2.0.2"
+    nav-frontend-typografi "4.0.1"
+    nav-frontend-typografi-style "2.0.1"
     react "17.0.2"
-    react-hook-form "7.34.1"
+    react-hook-form "7.34.0"
     react-intl "6.0.5"
 
-"@navikt/ft-form-hooks@1.0.38", "@navikt/ft-form-hooks@^1.0.36", "@navikt/ft-form-hooks@^1.0.37", "@navikt/ft-form-hooks@^1.0.38":
+"@navikt/ft-form-hooks@1.0.38", "@navikt/ft-form-hooks@^1.0.35", "@navikt/ft-form-hooks@^1.0.37", "@navikt/ft-form-hooks@^1.0.38":
   version "1.0.38"
   resolved "https://npm.pkg.github.com/download/@navikt/ft-form-hooks/1.0.38/62911a3773812e309b28849de3ff92fe03d6ed7d88817f29dfd6301791eea04c#6ff3840a59255a2675b1b95bee9b6ad44dc9469e"
   integrity sha512-POLD5ic5el5BdNgTiQDePFF3mcrwpfu3sCy7AUc61SF+MtVqDnDx0CNJOAZUCU5t76K/GfLndXfWtaQ7FJjhjQ==
@@ -3825,7 +3826,7 @@
     react "17.0.2"
     react-hook-form "7.34.1"
 
-"@navikt/ft-form-validators@^1.0.25", "@navikt/ft-form-validators@^1.0.27":
+"@navikt/ft-form-validators@^1.0.24", "@navikt/ft-form-validators@^1.0.27":
   version "1.0.27"
   resolved "https://npm.pkg.github.com/download/@navikt/ft-form-validators/1.0.27/f9157c99bca7d7925d61accc4be9c687093c59f12ae475eced7d36ffb8d11b95#81b18012f48be31f8f1652ae995083d9d940a5fc"
   integrity sha512-mToHpPXFUue+z/+wJFT6DJk8666I9wH3XpOoEyiMgKKXSRLU7JFppIVlGA1tuGPbJbf80l6zW2AbFreBS5pTlg==
@@ -3833,7 +3834,7 @@
     "@navikt/ft-utils" "^1.0.32"
     moment "2.29.4"
 
-"@navikt/ft-kodeverk@^1.0.16":
+"@navikt/ft-kodeverk@^1.0.15", "@navikt/ft-kodeverk@^1.0.16":
   version "1.0.16"
   resolved "https://npm.pkg.github.com/download/@navikt/ft-kodeverk/1.0.16/aee48d8d097c9a2827259874ab86d4578871bb93445408ec145625c7a73634c1#4c8a7e12bad9f98a58cda9e100f01567c6cc2327"
   integrity sha512-PnRuOWyEuImz4C9tpYDNXyi0tsWytF/6J+20gNu3siAYamyiFxOcIE0tI1orXyIM1LlMQIJtIgCEubwbiZvqEg==
@@ -3892,14 +3893,14 @@
     react-hook-form "7.34.1"
     react-intl "6.0.5"
 
-"@navikt/ft-types@1.0.26", "@navikt/ft-types@^1.0.24", "@navikt/ft-types@^1.0.26":
+"@navikt/ft-types@1.0.26", "@navikt/ft-types@^1.0.23", "@navikt/ft-types@^1.0.26":
   version "1.0.26"
   resolved "https://npm.pkg.github.com/download/@navikt/ft-types/1.0.26/2f27a571d8da9576252801541166947583cfcfce9ff649d2714dc80174281c9e#aaca66541b67e57a370608df4130d056563d433e"
   integrity sha512-hRgG+IYyXa1fSt5bARZIsmuJ8FtOc6jvH3x2+u78z9HjwodJCpvQsjj4PmITCrMSsl9lN0kwfRr6+UarX2pA8g==
   dependencies:
     "@navikt/ft-kodeverk" "^1.0.16"
 
-"@navikt/ft-ui-komponenter@1.0.35", "@navikt/ft-ui-komponenter@^1.0.33", "@navikt/ft-ui-komponenter@^1.0.35":
+"@navikt/ft-ui-komponenter@1.0.35", "@navikt/ft-ui-komponenter@^1.0.32", "@navikt/ft-ui-komponenter@^1.0.35":
   version "1.0.35"
   resolved "https://npm.pkg.github.com/download/@navikt/ft-ui-komponenter/1.0.35/91406419d3cd72392ca74bba543cae4c04ed76a60803df9108b956334edddecb#f4afd1ee9a994d5c339edc47602b22e028da6acd"
   integrity sha512-hBNDwbpvjrOueUMNi7hcUGGO/JCHyWbIVcxI0IIgFWrrYrMYXlK0JEawuOLsn0QuPFf7H1G43NUJUOVWLivg4A==
@@ -3934,7 +3935,7 @@
     react-intl "6.0.5"
     react-modal "3.15.1"
 
-"@navikt/ft-utils@^1.0.30", "@navikt/ft-utils@^1.0.32":
+"@navikt/ft-utils@^1.0.29", "@navikt/ft-utils@^1.0.32":
   version "1.0.32"
   resolved "https://npm.pkg.github.com/download/@navikt/ft-utils/1.0.32/d69982345db7ff6912ec024989bc3b3ff76a4d6fe936fa6bc1aec64ad88d9c1b#478c35f86b048c11f1f0e258c9720b6352a57a9f"
   integrity sha512-ki5KhBLYxk6b+ZwpOiTEAiTU9pLG5IgZu4G45/IsQYzIE3RP/1mGIdd5dq4PpvcnOl1lpZS0NFkEPtjJYGv15A==
@@ -6922,12 +6923,7 @@ acorn@^7.1.1, acorn@^7.4.1:
   resolved "https://registry.yarnpkg.com/acorn/-/acorn-7.4.1.tgz#feaed255973d2e77555b83dbc08851a6c63520fa"
   integrity sha512-nQyp0o1/mNdbTO1PO6kHkwSrmgZ0MT/jCCpNiwbUjGoRN4dlBhqJtoQuCnEOKzgTVwg0ZWiCoQy6SxMebQVh8A==
 
-acorn@^8.2.4:
-  version "8.7.0"
-  resolved "https://registry.yarnpkg.com/acorn/-/acorn-8.7.0.tgz#90951fde0f8f09df93549481e5fc141445b791cf"
-  integrity sha512-V/LGr1APy+PXIwKebEWrkZPwoeoF+w1jiOBUmuxuiUIaOHtob8Qc9BTrYo7VuI5fR8tqsy+buA2WFooR5olqvQ==
-
-acorn@^8.4.1, acorn@^8.5.0, acorn@^8.7.1:
+acorn@^8.2.4, acorn@^8.4.1, acorn@^8.5.0, acorn@^8.7.1:
   version "8.7.1"
   resolved "https://registry.yarnpkg.com/acorn/-/acorn-8.7.1.tgz#0197122c843d1bf6d0a5e83220a788f278f63c30"
   integrity sha512-Xx54uLJQZ19lKygFXOWsscKUbsBZW0CPykPhVQdhIeIwrbPmJzqeASDInc8nKBnp/JT6igTs82qPXz069H8I/A==
@@ -9600,6 +9596,11 @@ dateformat@^3.0.0:
   version "3.0.3"
   resolved "https://registry.yarnpkg.com/dateformat/-/dateformat-3.0.3.tgz#a6e37499a4d9a9cf85ef5872044d62901c9889ae"
   integrity sha512-jyCETtSl3VMZMWeRo7iY1FL19ges1t55hMo5yaam4Jrsm5EPL89UQkoQRyiI+Yf4k8r2ZpdngkV8hr1lIdjb3Q==
+
+dayjs@1.11.4:
+  version "1.11.4"
+  resolved "https://registry.yarnpkg.com/dayjs/-/dayjs-1.11.4.tgz#3b3c10ca378140d8917e06ebc13a4922af4f433e"
+  integrity sha512-Zj/lPM5hOvQ1Bf7uAvewDaUcsJoI6JmNqmHhHl3nyumwe0XHwt8sWdOVAPACJzCebL8gQCi+K49w7iKWnGwX9g==
 
 dayjs@1.11.5, dayjs@^1.11.5:
   version "1.11.5"
@@ -15142,10 +15143,20 @@ nav-frontend-core@6.0.1, nav-frontend-core@^6.0.1:
   resolved "https://registry.yarnpkg.com/nav-frontend-core/-/nav-frontend-core-6.0.1.tgz#81feef412890cb84074d329a2e3a8b6bca4ba314"
   integrity sha512-zFAPRXgmS3Nhu5SyafsTnCFg2/PEbrUF+g1xGo+pKIxGfJgCeLi47gPSe7Kjeh3IwIo0ex3cA7tfbUIWOY65dQ==
 
+nav-frontend-ekspanderbartpanel-style@2.0.1:
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/nav-frontend-ekspanderbartpanel-style/-/nav-frontend-ekspanderbartpanel-style-2.0.1.tgz#dcba50be930eabace6ac2ba73b296d19cf756051"
+  integrity sha512-TpkisCN9nb+x8mVcGe37xH/8RXWjrOpnx+KGnvwDkYaQ8j3OL82eSmy/zdWQVeBCSuKYLzhQKA5k6+gCbPKh1w==
+
 nav-frontend-ekspanderbartpanel-style@2.0.2:
   version "2.0.2"
   resolved "https://registry.yarnpkg.com/nav-frontend-ekspanderbartpanel-style/-/nav-frontend-ekspanderbartpanel-style-2.0.2.tgz#a78c610ccacc408a59406981f62254b8b5949964"
   integrity sha512-p2enXZfqvM+mXMcyG5ASonQ79Pz3h0x3RN7Bncsp1PSspDrj2uBJvyfD0y/SwLMlo04yH8Gm5JMAeP1q/wqhwg==
+
+nav-frontend-ekspanderbartpanel@4.0.3:
+  version "4.0.3"
+  resolved "https://registry.yarnpkg.com/nav-frontend-ekspanderbartpanel/-/nav-frontend-ekspanderbartpanel-4.0.3.tgz#bc123763fd1036e2480a19773b8e3842ff6650ad"
+  integrity sha512-ftV8/G8WyrAUT2Hu4ohJKJwVx3XQkCCnPw6vVcwBmOu+jaiMVgj5WGn94ES+BDLHDWOeSzuZod7T72M1vKKkuQ==
 
 nav-frontend-ekspanderbartpanel@4.0.4:
   version "4.0.4"
@@ -15162,10 +15173,20 @@ nav-frontend-etiketter@3.0.3:
   resolved "https://registry.yarnpkg.com/nav-frontend-etiketter/-/nav-frontend-etiketter-3.0.3.tgz#c328bd5d37a005ccdf37ab05db4c7726b3f14f3f"
   integrity sha512-gyAgEgoQyC/pwO5r1l7tHsaehxQlzykIif2CQQ+THcx0Lw1Use/wwyyP7Xm8J4caE/VvTloWPM0zoclKvHvqKQ==
 
+nav-frontend-grid-style@1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/nav-frontend-grid-style/-/nav-frontend-grid-style-1.0.2.tgz#f0b05032686c5479af17a7707637188928a3c830"
+  integrity sha512-1oJoWseUfTuCV7dIvFjuyPq2QKaKQqn6P8OEKHiYCwujO3voBNAxUsuXuhpXWsaWchH8P4IeffeK2+ue7YyCKg==
+
 nav-frontend-grid-style@1.0.3:
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/nav-frontend-grid-style/-/nav-frontend-grid-style-1.0.3.tgz#17d37ec96fbeb63d4055ee1b8493731cc1241e4e"
   integrity sha512-SgTt3/JegDtTEUGGO2xrx6/frn+Eh2SS1oOGgeln98rUBlHPSOg1fyD44NlyA1lIqhHfYsMgN67ykrZByhVMjA==
+
+nav-frontend-grid@2.0.1:
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/nav-frontend-grid/-/nav-frontend-grid-2.0.1.tgz#ec27ae2c3c6682ffeb7f6e1ca21d13344eb557dd"
+  integrity sha512-vBOcgYJ3OOV0Xf/xUirdH+DrN5hBO1CG4xMVjB0elusu1WKBVqLOfKuYCkinzjXE98NwI+6s2DMIxNYDswgsSg==
 
 nav-frontend-grid@2.0.2:
   version "2.0.2"
@@ -15199,10 +15220,20 @@ nav-frontend-js-utils@1.0.20, nav-frontend-js-utils@^1.0.20:
   dependencies:
     lodash.throttle "^4.1.1"
 
+nav-frontend-knapper-style@2.1.1:
+  version "2.1.1"
+  resolved "https://registry.yarnpkg.com/nav-frontend-knapper-style/-/nav-frontend-knapper-style-2.1.1.tgz#ab55c1915651ab3a656d40b88e001e02d368a1ed"
+  integrity sha512-JP0ktCIGYNlDLdvsOlAphACa8v5/ITIW9hFsTFFvaSo3RHCrAKu7/uYu+Lad1mNaZyr4xb3AbcgFBQfERxfL6g==
+
 nav-frontend-knapper-style@2.1.2:
   version "2.1.2"
   resolved "https://registry.yarnpkg.com/nav-frontend-knapper-style/-/nav-frontend-knapper-style-2.1.2.tgz#692e51f77a15bbb5ca0423aafcea479df5961108"
   integrity sha512-OOJhbhMhRNsv7qS8iFMFWc03zrSK5l8e3x64UrMGyku6IgO7dmX7DtzUuOR74f9lDOBiwWDk8i/gnx3mX0t5/Q==
+
+nav-frontend-knapper@3.1.2:
+  version "3.1.2"
+  resolved "https://registry.yarnpkg.com/nav-frontend-knapper/-/nav-frontend-knapper-3.1.2.tgz#18f4ed49f778d8cc55d44a4086b54e7087b07af4"
+  integrity sha512-IR+0lz1ir14FnLx6rZNA3DH6DUAUlN1MK/cwg7syDx1v0qh1wMHjv9GI85ciP0WW65W2zBo2fDjRMA7IlHB2wA==
 
 nav-frontend-knapper@3.1.3, nav-frontend-knapper@^3.1.3:
   version "3.1.3"
@@ -15329,12 +15360,24 @@ nav-frontend-tabs@^2.0.2:
   resolved "https://registry.yarnpkg.com/nav-frontend-tabs/-/nav-frontend-tabs-2.0.2.tgz#54a3f327cc9c09dedc143ecd94d4eb616f9ffd27"
   integrity sha512-HDyMuMayhKZDID2whJLT77nNfEtGY8wN3DgEkGMitwv+j64p54DVAO6OplwrZhusqCQ2vRkKGQ58NSFDmnD8gw==
 
+nav-frontend-typografi-style@2.0.1:
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/nav-frontend-typografi-style/-/nav-frontend-typografi-style-2.0.1.tgz#6522b2f8b007535831ec003008823fbd508f90b8"
+  integrity sha512-9vb94WbB4+w30ZNg3/AqgK/fsduU5eqlkY5kXTPGcRcvHpf9l8/nfQI3aD0xSETw8q8zVOwHT00XPc4jkPK9WA==
+  dependencies:
+    nav-frontend-core "^6.0.1"
+
 nav-frontend-typografi-style@2.0.2:
   version "2.0.2"
   resolved "https://registry.yarnpkg.com/nav-frontend-typografi-style/-/nav-frontend-typografi-style-2.0.2.tgz#03d39354b9c5af483a76672bb98761c432579496"
   integrity sha512-/vKawzUV29g2iDxAEBA535l0WdUGKcCF4dzoqAKdcTv6M8Y7ypJiV1U7d2PieRKgCINH7bINoBAKEOXQw1Kl2Q==
   dependencies:
     nav-frontend-core "^6.0.1"
+
+nav-frontend-typografi@4.0.1:
+  version "4.0.1"
+  resolved "https://registry.yarnpkg.com/nav-frontend-typografi/-/nav-frontend-typografi-4.0.1.tgz#dee38984be84bc472e1ee3b726fa69b8f0b363b9"
+  integrity sha512-zJrvysIWqZm0HSJqqgc1G5Lqr8bLO16B9Pg/FW7+mJQGGz/iqPhX5vvIFTXqAlXVo95qImoZ72uiWiHHRdGhPQ==
 
 nav-frontend-typografi@4.0.2:
   version "4.0.2"
@@ -17335,6 +17378,11 @@ react-fast-compare@^3.0.1:
   version "3.2.0"
   resolved "https://registry.yarnpkg.com/react-fast-compare/-/react-fast-compare-3.2.0.tgz#641a9da81b6a6320f270e89724fb45a0b39e43bb"
   integrity sha512-rtGImPZ0YyLrscKI9xTpV8psd6I8VAtjKCzQDlzyDvqJA8XOW78TXYQwNRNd8g8JZnDu8q9Fu/1v4HPAVwVdHA==
+
+react-hook-form@7.34.0:
+  version "7.34.0"
+  resolved "https://registry.yarnpkg.com/react-hook-form/-/react-hook-form-7.34.0.tgz#22883b5e014e5c5e35f3061d0e3862153b0df2ec"
+  integrity sha512-s0/TJ09NVlEk2JPp3yit1WnMuPNBXFmUKEQPulgDi9pYBw/ZmmAFHe6AXWq73Y+kp8ye4OcMf0Jv+i/qLPektg==
 
 react-hook-form@7.34.1:
   version "7.34.1"
@@ -19544,9 +19592,9 @@ terser-webpack-plugin@^5.3.5:
     terser "^5.14.1"
 
 terser@^4.1.2, terser@^4.6.3:
-  version "4.8.0"
-  resolved "https://registry.yarnpkg.com/terser/-/terser-4.8.0.tgz#63056343d7c70bb29f3af665865a46fe03a0df17"
-  integrity sha512-EAPipTNeWsb/3wLPeup1tVPaXfIaU68xMnVdPafIL1TV05OhASArYyIfFvnvJCNrR2NIOvDVNNTFRa+Re2MWyw==
+  version "4.8.1"
+  resolved "https://registry.yarnpkg.com/terser/-/terser-4.8.1.tgz#a00e5634562de2239fd404c649051bf6fc21144f"
+  integrity sha512-4GnLC0x667eJG0ewJTa6z/yXrbLGv80D9Ru6HIpCQmO+Q4PfEtBFi0ObSckqwL6VyQv/7ENJieXHo2ANmdQwgw==
   dependencies:
     commander "^2.20.0"
     source-map "~0.6.1"
