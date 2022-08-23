@@ -58,6 +58,7 @@ class BeregningFaktaPanelDef extends FaktaPanelDef {
           formData={props.formData}
           setFormData={props.setFormData}
           vilkar={bgVilkaret}
+          skalKunneOverstyreAktiviteter={false}
           skalKunneAvbryteOverstyring
         />
       );
