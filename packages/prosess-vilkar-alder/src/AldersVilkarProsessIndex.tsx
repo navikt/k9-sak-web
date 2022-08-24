@@ -78,6 +78,7 @@ const AldersVilkarProsessIndex = ({
           angitteBarn={angitteBarn}
           aksjonspunktLost={aksjonspunktLost}
           vilkarOppfylt={vilkarOppfylt}
+          isReadOnly={isReadOnly}
         />
       )}
     </RawIntlProvider>

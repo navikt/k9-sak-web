@@ -9,6 +9,7 @@ type Props = {
   aksjonspunktLost: boolean;
   vilkarOppfylt: boolean;
   begrunnelseTekst: string;
+  isReadOnly: boolean;
 };
 
 const AldersvilkarLese = ({
@@ -17,6 +18,7 @@ const AldersvilkarLese = ({
   aksjonspunktLost,
   vilkarOppfylt,
   begrunnelseTekst,
+  isReadOnly,
   intl,
 }: Props & WrappedComponentProps) => {
   const sokersBarn = angitteBarn ? angitteBarn.map(barn => barn.personIdent).join(', ') : '';
@@ -36,7 +38,7 @@ const AldersvilkarLese = ({
           </b>{' '}
           <FormattedMessage id="AlderVilkar.Lese.KroniskSyk" />
         </p>
-        {aksjonspunktLost && (
+        {aksjonspunktLost && !isReadOnly && (
           <div className={styleLesemodus.redigerVurderingTekst}>
             <button type="button" onClick={e => handleKlikk(e)}>
               <FormattedMessage id="AlderVilkar.Lese.Rediger" />
