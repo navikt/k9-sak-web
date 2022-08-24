@@ -63,11 +63,12 @@ const AldersVilkarProsessIndex = ({
       {redigering ? (
         <AksjonspunktBox erAksjonspunktApent={redigering}>
           <AldersvilkarForm
-            relevantAksjonspunkt={relevantAksjonspunkt}
             submitCallback={submitCallback}
             begrunnelseTekst={begrunnelseTekst}
             erVilkaretOk={vilkarOppfylt}
             erVurdert={erVurdert}
+            deaktiverRedigering={setRedigering}
+            lesemodus={lesemodus}
           />
         </AksjonspunktBox>
       ) : (

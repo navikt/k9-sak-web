@@ -3,12 +3,13 @@ import { useForm } from 'react-hook-form';
 import { AksjonspunktHelpTextTemp, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { FormattedMessage, injectIntl, WrappedComponentProps } from 'react-intl';
 
-import { Aksjonspunkt } from '@k9-sak-web/types';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { Column, Row } from 'nav-frontend-grid';
-import { Hovedknapp } from 'nav-frontend-knapper';
+import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 import { Form, RadioGroupPanel, TextAreaField } from '@navikt/ft-form-hooks';
 import { maxLength, minLength, required } from '@navikt/ft-form-validators';
+
+import styleAldersvilkarForm from './AldersvilkarForm.less';
 
 type Inputs = {
   begrunnelse: string;
@@ -16,18 +17,21 @@ type Inputs = {
 };
 
 type Props = {
-  relevantAksjonspunkt: Aksjonspunkt;
+  deaktiverRedigering: (boolean) => void;
   submitCallback: (any) => void;
   begrunnelseTekst: string;
   erVilkaretOk: boolean | null;
   erVurdert: boolean;
+  lesemodus: boolean;
 };
 
 const AldersvilkarForm = ({
+  deaktiverRedigering,
   submitCallback,
   begrunnelseTekst,
   erVilkaretOk,
   erVurdert,
+  lesemodus,
   intl,
 }: Props & WrappedComponentProps) => {
   const minLength3 = minLength(3);
@@ -72,6 +76,15 @@ const AldersvilkarForm = ({
         <Hovedknapp htmlType="submit">
           <FormattedMessage id="AlderVilkar.Bekreft" />
         </Hovedknapp>
+        {lesemodus && (
+          <Knapp
+            className={styleAldersvilkarForm.avbrytRedigering}
+            type="fare"
+            onClick={() => deaktiverRedigering(false)}
+          >
+            Avbryt redigering
+          </Knapp>
+        )}
       </Row>
     </Form>
   );
