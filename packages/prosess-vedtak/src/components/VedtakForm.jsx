@@ -78,6 +78,10 @@ export const VedtakForm = ({
   behandlingArsaker,
 }) => {
   const [erSendtInnUtenArsaker, setErSendtInnUtenArsaker] = useState(false);
+  const [harVurdertOverlappendeYtelse, setHarVurdertOverlappendeYtelse] = useState(false);
+  const måVurdereOverlappendeYtelse = aksjonspunkter.some(
+    aksjonspunkt => aksjonspunkt.definisjon.kode === aksjonspunktCodes.VURDERE_OVERLAPPENDE_YTELSER_FØR_VEDTAK,
+  );
   const vedtakContext = useContext(VedtakFormContext);
   const onToggleOverstyring = (e, setFieldValue) => {
     const kommendeVerdi = e.target.checked;
@@ -208,8 +212,12 @@ export const VedtakForm = ({
   return (
     <Formik
       initialValues={{ ...initialValues, ...vedtakContext?.vedtakFormState }}
-      onSubmit={values => {
-        submitCallback(createPayload(values));
+      onSubmit={(values, actions) => {
+        if ((måVurdereOverlappendeYtelse && harVurdertOverlappendeYtelse) || !måVurdereOverlappendeYtelse) {
+          submitCallback(createPayload(values));
+        } else {
+          actions.setSubmitting(false);
+        }
       }}
     >
       {formikProps => (
@@ -224,6 +232,8 @@ export const VedtakForm = ({
             viseFlereSjekkbokserForBrev={
               kanHaFritekstbrev(tilgjengeligeVedtaksbrev) && kanHindreUtsending(tilgjengeligeVedtaksbrev)
             }
+            harVurdertOverlappendeYtelse={harVurdertOverlappendeYtelse}
+            setHarVurdertOverlappendeYtelse={setHarVurdertOverlappendeYtelse}
           >
             <div className={styles.knappContainer}>
               {kanHaFritekstbrev(tilgjengeligeVedtaksbrev) && (

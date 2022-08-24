@@ -25,6 +25,7 @@ interface TidslinjeProps<Periodeinfo> {
   valgtPeriode?: Periode<Periodeinfo>;
   setTimelineRef?: (timelineRef: any) => void;
   sideContentRader?: ReactNode[];
+  withBorder?: boolean;
 }
 
 const momentDate = dateString => moment(dateString, ISO_DATE_FORMAT);
@@ -90,6 +91,7 @@ const Tidslinje = ({
   valgtPeriode,
   setTimelineRef,
   sideContentRader,
+  withBorder,
 }: TidslinjeProps<any>) => {
   const timelineRef = useRef();
 
@@ -122,7 +124,7 @@ const Tidslinje = ({
 
   if (sideContentRader) {
     return (
-      <div className={styles.timelineContainer}>
+      <div className={`${styles.timelineContainer} ${withBorder ? styles['timelineContainer--border'] : ''}`}>
         <FlexRow>
           <div className={styles.timelineIkonContainer}>{sideContentRader}</div>
           {timeline}
@@ -132,7 +134,7 @@ const Tidslinje = ({
   }
 
   return (
-    <div className={styles.timelineContainer}>
+    <div className={`${styles.timelineContainer} ${withBorder ? styles['timelineContainer--border'] : ''}`}>
       <Row>
         <Column xs="1">
           <div className={styles.timelineIkonContainer}>
