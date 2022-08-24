@@ -5,12 +5,13 @@ import { behandlingForm, getBehandlingFormName } from '@fpsak-frontend/form/src/
 import { connect } from 'react-redux';
 import { InjectedFormProps, ConfigProps, SubmitHandler, FieldArray, formValueSelector } from 'redux-form';
 import { minLength, maxLength, required, hasValidText, hasValidValue } from '@fpsak-frontend/utils';
-import { Hovedknapp } from 'nav-frontend-knapper';
+import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 import { CheckboxField, RadioGroupField, RadioOption, TextAreaField } from '@fpsak-frontend/form/index';
 import { Element } from 'nav-frontend-typografi';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { Aksjonspunkt, UtfallEnum, VurderteVilkår, VilkårEnum } from '@k9-sak-web/types';
 import AlertStripe from 'nav-frontend-alertstriper';
+import { Modal } from '@navikt/ds-react';
 import styles from './aksjonspunktForm.less';
 import Aktivitet from '../dto/Aktivitet';
 import { fosterbarnDto } from '../dto/FosterbarnDto';
@@ -35,6 +36,7 @@ interface FormContentProps {
   fosterbarnValue: fosterbarnDto[];
   initialValues: { begrunnelse: string; fosterbarn: fosterbarnDto[] } | any;
   dirty: boolean;
+  reset: () => void;
 }
 
 const årskvantumAksjonspunktFormName = 'årskvantumAksjonspunktFormName';
@@ -70,7 +72,9 @@ export const FormContent = ({
   fosterbarnValue,
   initialValues,
   dirty,
+  reset,
 }: FormContentProps) => {
+  Modal.setAppElement(document.body);
   const uavklartePerioder = useMemo(
     () =>
       aktiviteter
@@ -82,9 +86,20 @@ export const FormContent = ({
   const [kanFortsette, setKanFortsette] = useState<boolean>(true);
   const [kanRebehandle, setKanRebehandle] = useState<boolean>(true);
   const [kanFullføre, setKanFullføre] = useState<boolean>(false);
+  const [vistNullstillAdvarsel, setVisNullstillAdvarsel] = useState<boolean>(false);
+
+  const handleNullstill = () => {
+    reset();
+    setVisNullstillAdvarsel(false);
+  };
 
   useEffect(() => {
-    const fosterbarnEndret = JSON.stringify(initialValues.fosterbarn) !== JSON.stringify(fosterbarnValue);
+    let fosterbarnEndret = false;
+
+    if (fosterbarnValue && initialValues.fosterbarn) {
+      fosterbarnEndret =
+        JSON.stringify([...initialValues.fosterbarn].sort()) !== JSON.stringify([...fosterbarnValue].sort());
+    }
 
     if (fosterbarnEndret) {
       setKanRebehandle(true);
@@ -240,9 +255,29 @@ export const FormContent = ({
             <Hovedknapp onClick={handleSubmit} htmlType="submit" disabled={!kanFullføre}>
               <FormattedMessage id="Årskvantum.Aksjonspunkt.Avslått.Bekreft" />
             </Hovedknapp>
+            <Knapp type="fare" htmlType="button" onClick={() => setVisNullstillAdvarsel(true)} disabled={!dirty}>
+              <FormattedMessage id="Årskvantum.Aksjonspunkt.Avslått.Fosterbarn.NullstillKnapp" />
+            </Knapp>
           </div>
         </>
       )}
+
+      <Modal open={vistNullstillAdvarsel} onClose={() => setVisNullstillAdvarsel(false)} closeButton={false}>
+        <div className={styles.modalInnhold}>
+          <AlertStripe type="advarsel">
+            <FormattedMessage id="Årskvantum.Aksjonspunkt.Avslått.Fosterbarn.BekreftNullstillTekst" />
+          </AlertStripe>
+          <VerticalSpacer thirtyTwoPx />
+          <div className={styles.spaceBetween}>
+            <Knapp type="hoved" onClick={() => setVisNullstillAdvarsel(false)}>
+              Avbryt
+            </Knapp>
+            <Knapp type="fare" onClick={() => handleNullstill()}>
+              Nullstill skjemaet
+            </Knapp>
+          </div>
+        </div>
+      </Modal>
     </>
   );
 };
@@ -257,6 +292,7 @@ const AksjonspunktFormImpl = ({
   fosterbarnValue,
   initialValues,
   dirty,
+  reset,
 }: AksjonspunktFormImplProps & InjectedFormProps) => (
   <form onSubmit={handleSubmit}>
     <div className={styles.graBoks}>
@@ -270,6 +306,7 @@ const AksjonspunktFormImpl = ({
         fosterbarnValue={fosterbarnValue}
         initialValues={initialValues}
         dirty={dirty}
+        reset={reset}
       />
     </div>
   </form>
