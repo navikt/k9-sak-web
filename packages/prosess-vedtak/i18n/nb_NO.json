@@ -31,6 +31,7 @@
   "VedtakForm.FritekstBrevIkkeLagret": "Du har gjort endringer i brevet, men endringene er foreløpig ikke lagret. Trykk på \"Lagre\" for å lagre endringene uten å sende til godkjenning eller fatte vedtak.",
   "VedtakForm.FritekstBrevLagret": "Endringene i brevet er lagret",
   "VedtakForm.TilGodkjenning": "Til godkjenning",
+  "VedtakForm.SendTilBeslutter": "Send til beslutter",
   "VedtakForm.FattVedtak": "Fatt vedtak",
   "VedtakForm.ForhandvisBrev": "Forhåndsvis brev",
   "VedtakForm.beregnetTilkjentYtelse": "Beregnet engangsstønad",

@@ -2,7 +2,7 @@ import React, { useState, useContext } from 'react';
 import PropTypes from 'prop-types';
 import { Formik } from 'formik';
 import { injectIntl } from 'react-intl';
-import { Checkbox } from '@navikt/ds-react';
+import { Checkbox, Label } from '@navikt/ds-react';
 
 import { kodeverkObjektPropType } from '@fpsak-frontend/prop-types';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
@@ -223,19 +223,11 @@ export const VedtakForm = ({
       {formikProps => (
         <form>
           <LagreFormikStateLokalt />
-          <VedtakAksjonspunktPanel
-            behandlingStatusKode={behandlingStatus?.kode}
-            aksjonspunktKoder={aksjonspunkter.map(ap => ap.definisjon.kode)}
-            readOnly={readOnly}
-            overlappendeYtelser={overlappendeYtelser}
-            alleKodeverk={alleKodeverk}
-            viseFlereSjekkbokserForBrev={
-              kanHaFritekstbrev(tilgjengeligeVedtaksbrev) && kanHindreUtsending(tilgjengeligeVedtaksbrev)
-            }
-            harVurdertOverlappendeYtelse={harVurdertOverlappendeYtelse}
-            setHarVurdertOverlappendeYtelse={setHarVurdertOverlappendeYtelse}
-          >
-            <div className={styles.knappContainer}>
+          <div className={styles.knappContainer}>
+            <fieldset>
+              <Label size="small" as="legend">
+                Valg for brev
+              </Label>
               {kanHaFritekstbrev(tilgjengeligeVedtaksbrev) && (
                 <Checkbox
                   checked={formikProps.values.skalBrukeOverstyrendeFritekstBrev}
@@ -247,7 +239,7 @@ export const VedtakForm = ({
                       !kanHaAutomatiskVedtaksbrev(tilgjengeligeVedtaksbrev))
                   }
                   value={fieldnames.SKAL_BRUKE_OVERSTYRENDE_FRITEKST_BREV}
-                  size="small"
+                  size="medium"
                 >
                   {intl.formatMessage({ id: 'VedtakForm.ManuellOverstyring' })}
                 </Checkbox>
@@ -263,12 +255,25 @@ export const VedtakForm = ({
                   }
                   checked={formikProps.values.skalHindreUtsendingAvBrev}
                   value={fieldnames.SKAL_HINDRE_UTSENDING_AV_BREV}
-                  size="small"
+                  size="medium"
                 >
                   {intl.formatMessage({ id: 'VedtakForm.HindreUtsending' })}
                 </Checkbox>
               )}
-            </div>
+            </fieldset>
+          </div>
+          <VedtakAksjonspunktPanel
+            behandlingStatusKode={behandlingStatus?.kode}
+            aksjonspunktKoder={aksjonspunkter.map(ap => ap.definisjon.kode)}
+            readOnly={readOnly}
+            overlappendeYtelser={overlappendeYtelser}
+            alleKodeverk={alleKodeverk}
+            viseFlereSjekkbokserForBrev={
+              kanHaFritekstbrev(tilgjengeligeVedtaksbrev) && kanHindreUtsending(tilgjengeligeVedtaksbrev)
+            }
+            harVurdertOverlappendeYtelse={harVurdertOverlappendeYtelse}
+            setHarVurdertOverlappendeYtelse={setHarVurdertOverlappendeYtelse}
+          >
             {!erRevurdering ? (
               <>
                 {fritekstdokumenter?.length > 0 && <UstrukturerteDokumenter fritekstdokumenter={fritekstdokumenter} />}

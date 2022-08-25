@@ -170,7 +170,9 @@ export const BrevPanel = props => {
         formikProps={formikProps}
         ytelseTypeKode={ytelseTypeKode}
       />
-      <VedtakPreviewLink previewCallback={manuellBrevCallback} />
+      <div className={styles.previewLinkContainer}>
+        <VedtakPreviewLink previewCallback={manuellBrevCallback} />
+      </div>
     </>
   );
 
@@ -183,7 +185,11 @@ export const BrevPanel = props => {
         begrunnelse={begrunnelse}
         informasjonsbehovVedtaksbrev={informasjonsbehovVedtaksbrev}
       />
-      {kanResultatForhåndsvises(behandlingResultat) && <VedtakPreviewLink previewCallback={automatiskBrevCallback} />}
+      {kanResultatForhåndsvises(behandlingResultat) && (
+        <div className={styles.previewLinkContainer}>
+          <VedtakPreviewLink previewCallback={automatiskBrevCallback} />
+        </div>
+      )}
     </>
   );
 

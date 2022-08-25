@@ -1,8 +1,8 @@
 import behandlingStatusCode from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import AlleKodeverk from '@k9-sak-web/types/src/kodeverk';
+import { Heading } from '@navikt/ds-react';
 import { Column, Row } from 'nav-frontend-grid';
-import { Undertittel } from 'nav-frontend-typografi';
 import React from 'react';
 import { injectIntl, IntlShape } from 'react-intl';
 import VedtakHelpTextPanel from './VedtakHelpTextPanel';
@@ -39,9 +39,9 @@ export const VedtakAksjonspunktPanelImpl: React.FC<Props> = ({
 }) => (
   <Row>
     <Column xs="8">
-      <Undertittel data-testid="vedtakAksjonspunktPanel">
+      <Heading level="2" size="medium" data-testid="vedtakAksjonspunktPanel">
         {intl.formatMessage({ id: getTextCode(behandlingStatusKode) })}
-      </Undertittel>
+      </Heading>
       <VerticalSpacer twentyPx />
       <VedtakHelpTextPanel
         aksjonspunktKoder={aksjonspunktKoder}

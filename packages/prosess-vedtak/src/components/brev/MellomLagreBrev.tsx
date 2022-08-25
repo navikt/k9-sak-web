@@ -116,7 +116,7 @@ const MellomLagreBrev = ({
               </AlertStripe>
               <VerticalSpacer sixteenPx />
               {submitKnapp}
-              <Button type="button" variant="tertiary" size="medium" onClick={onMellomlagreClick} disabled={erTekstLik}>
+              <Button type="button" variant="secondary" size="small" onClick={onMellomlagreClick} disabled={erTekstLik}>
                 {intl.formatMessage({ id: 'VedtakForm.FritekstBrevLagre' })}
               </Button>
               <VerticalSpacer sixteenPx />
