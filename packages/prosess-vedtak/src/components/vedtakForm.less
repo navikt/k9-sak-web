@@ -58,13 +58,14 @@
 }
 
 .knappContainer {
-  position: absolute;
-  right: 4.375rem;
-  top: 6.625rem;
   border: none;
   background: #e6f0ff;
   border-radius: 4px;
   padding: 1.4375rem 1.75rem 0.9375rem;
+  max-height: 9.875rem;
+  order: 1;
+  margin-top: 4.125rem;
+  margin-right: 30px;
 
   fieldset {
     border: none;
@@ -83,6 +84,11 @@
 
 form {
   font-size: 14px;
+}
+
+.form {
+  display: flex;
+  justify-content: space-between;
 }
 
 .previewLink {
@@ -105,4 +111,8 @@ form {
 
 .textAreaContainer {
   margin-top: 1.5625rem;
+}
+
+.aksjonspunktContainer {
+  flex: 1 1 auto;
 }

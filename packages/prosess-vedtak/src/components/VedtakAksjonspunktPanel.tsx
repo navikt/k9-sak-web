@@ -1,6 +1,6 @@
 import behandlingStatusCode from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
-import AlleKodeverk from '@k9-sak-web/types/src/kodeverk';
+import { KodeverkMedNavn } from '@k9-sak-web/types';
 import { Heading } from '@navikt/ds-react';
 import { Column, Row } from 'nav-frontend-grid';
 import React from 'react';
@@ -19,7 +19,7 @@ interface Props {
   aksjonspunktKoder: string[];
   readOnly: boolean;
   overlappendeYtelser;
-  alleKodeverk: AlleKodeverk;
+  alleKodeverk: { [key: string]: KodeverkMedNavn[] };
   viseFlereSjekkbokserForBrev: boolean;
   harVurdertOverlappendeYtelse: boolean;
   setHarVurdertOverlappendeYtelse: (harVurdertOverlappendeYtelse: boolean) => void;

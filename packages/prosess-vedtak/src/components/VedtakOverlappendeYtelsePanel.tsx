@@ -3,7 +3,7 @@ import { BorderBox, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import Tidslinje from '@fpsak-frontend/tidslinje/src/components/pleiepenger/Tidslinje';
 import Periode from '@fpsak-frontend/tidslinje/src/components/pleiepenger/types/Periode';
 import TidslinjeRad from '@fpsak-frontend/tidslinje/src/components/pleiepenger/types/TidslinjeRad';
-import { AlleKodeverk, OverlappendePeriode } from '@k9-sak-web/types';
+import { KodeverkMedNavn, OverlappendePeriode } from '@k9-sak-web/types';
 import { Accordion, Alert, BodyLong, Checkbox, CheckboxGroup, Heading } from '@navikt/ds-react';
 import { useFormikContext } from 'formik';
 import { EtikettFokus, EtikettInfo } from 'nav-frontend-etiketter';
@@ -14,7 +14,7 @@ import styles from './VedtakOverlappendeYtelsePanel.less';
 
 interface Props {
   overlappendeYtelser: any;
-  alleKodeverk: AlleKodeverk;
+  alleKodeverk: { [key: string]: KodeverkMedNavn[] };
   aksjonspunktKoder: string[];
   harVurdertOverlappendeYtelse: boolean;
   setHarVurdertOverlappendeYtelse: (harVurdertOverlappendeYtelse: boolean) => void;
