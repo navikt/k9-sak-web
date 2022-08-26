@@ -24,6 +24,7 @@
     "dev-lokal": "cross-env NODE_ENV=development APP_URL_SAK=http://k9-sak:8080 APP_URL_K9OPPDRAG=http://k9-oppdrag:8070 APP_URL_K9FORMIDLING_DD=http://k9-formidling-dokumentdata:8294 APP_URL_K9FORMIDLING=http://k9-formidling:8290 webpack serve --config webpack/webpack.dev.ts",
     "dev-med-formidling": "cross-env NODE_ENV=development webpack serve --config webpack/webpack.dev.ts",
     "build": "cross-env NODE_ENV=production webpack --config webpack/webpack.prod.ts",
+    "build-ci": "cross-env NODE_ENV=development webpack --env ci='true' --config webpack/webpack.dev.ts",
     "lerna": "lerna",
     "lerna:publish": "(lerna updated && lerna publish --cd-version patch --yes -m \"publish [ci skip]\") || echo \"Ingen endringer avslutter OK\"",
     "up": "docker-compose up -d --remove-orphans --build",
