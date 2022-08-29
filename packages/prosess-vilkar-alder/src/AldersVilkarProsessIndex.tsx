@@ -68,6 +68,7 @@ const AldersVilkarProsessIndex = ({
             begrunnelseTekst={begrunnelseTekst}
             erVilkaretOk={vilkarOppfylt}
             erVurdert={erVurdert}
+            angitteBarn={angitteBarn}
           />
         </AksjonspunktBox>
       ) : (
