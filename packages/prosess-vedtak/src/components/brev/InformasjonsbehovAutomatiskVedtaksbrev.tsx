@@ -34,15 +34,17 @@ const InformasjonsbehovAutomatiskVedtaksbrev: React.FC<Props> = ({
 
   return (
     <>
-      <Heading className={styles.heading} level="3" size="small">
-        {intl.formatMessage({ id: 'InformasjonsbehovAutomatiskVedtaksbrev.Fritekstbeskrivelse' })}
-      </Heading>
       {!readOnly && (
-        <Alert className={styles.alert} variant="warning" size="small">
-          {intl.formatMessage({ id: 'InformasjonsbehovAutomatiskVedtaksbrev.SupplerMedFritekst' })}
-        </Alert>
+        <>
+          <Heading className={styles.heading} level="3" size="small">
+            {intl.formatMessage({ id: 'InformasjonsbehovAutomatiskVedtaksbrev.Fritekstbeskrivelse' })}
+          </Heading>
+          <Alert className={styles.alert} variant="warning" size="small">
+            {intl.formatMessage({ id: 'InformasjonsbehovAutomatiskVedtaksbrev.SupplerMedFritekst' })}
+          </Alert>
+        </>
       )}
-      <div className={styles.textAreaContainer}>
+      <div className={readOnly ? '' : styles.textAreaContainer}>
         {aktiverteInformasjonsbehov.map(behov => (
           <VedtakFritekstPanel
             key={behov.kode}

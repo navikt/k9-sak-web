@@ -1,14 +1,16 @@
-import avslagsarsakCodes from '@fpsak-frontend/kodeverk/src/avslagsarsakCodes';
-import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
+import React from 'react';
+import PropTypes from 'prop-types';
+import { FormattedMessage, injectIntl } from 'react-intl';
+import { connect } from 'react-redux';
+import moment from 'moment';
+import { Normaltekst, Undertekst } from 'nav-frontend-typografi';
+
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { DDMMYYYY_DATE_FORMAT, getKodeverknavnFn } from '@fpsak-frontend/utils';
-import { BodyShort, Label } from '@navikt/ds-react';
-import moment from 'moment';
-import PropTypes from 'prop-types';
-import React from 'react';
-import { FormattedMessage, injectIntl } from 'react-intl';
-import { connect } from 'react-redux';
+import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
+
+import avslagsarsakCodes from '@fpsak-frontend/kodeverk/src/avslagsarsakCodes';
 import { findTilbakekrevingText } from '../VedtakHelper';
 
 const mapFraAvslagskodeTilTekst = kode => {
@@ -59,20 +61,16 @@ export const VedtakInnvilgetRevurderingPanelImpl = ({
         ytelseTypeKode === fagsakYtelseType.FRISINN ||
         ytelseTypeKode === fagsakYtelseType.PLEIEPENGER) && (
         <div data-testid="innvilgetRevurdering">
-          <Label size="small" as="p">
-            {intl.formatMessage({ id: 'VedtakForm.Resultat' })}
-          </Label>
-          <BodyShort size="small">
+          <Normaltekst>{intl.formatMessage({ id: 'VedtakForm.Resultat' })}</Normaltekst>
+          <Undertekst>
             {lagKonsekvensForYtelsenTekst(konsekvenserForYtelsen, getKodeverknavn)}
             {lagKonsekvensForYtelsenTekst(konsekvenserForYtelsen, getKodeverknavn) !== '' && tilbakekrevingText && '. '}
             {tilbakekrevingText &&
               intl.formatMessage({
                 id: tilbakekrevingText,
               })}
-            {bgPeriodeMedAvslagsårsak && (
-              <BodyShort size="small">{lagPeriodevisning(bgPeriodeMedAvslagsårsak)}</BodyShort>
-            )}
-          </BodyShort>
+            {bgPeriodeMedAvslagsårsak && <Undertekst>{lagPeriodevisning(bgPeriodeMedAvslagsårsak)}</Undertekst>}
+          </Undertekst>
           <VerticalSpacer sixteenPx />
         </div>
       )}

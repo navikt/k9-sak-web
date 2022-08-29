@@ -4,7 +4,7 @@ import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import { VedtakOpphorRevurderingPanelImpl } from './VedtakOpphorRevurderingPanel';
-import shallowWithIntl, { intlMock } from '../../../i18n';
+import shallowWithIntl, { intlMock } from '../../../../i18n';
 
 describe('<VedtakOpphorRevurderingPanel>', () => {
   it('skal rendre opphørpanel med avslagsårsak', () => {
@@ -46,8 +46,12 @@ describe('<VedtakOpphorRevurderingPanel>', () => {
       />,
     );
 
-    const textFields = wrapper.find('ForwardRef');
-    expect(textFields.first().childAt(0).text()).to.eql('Resultat');
+    const undertekstFields = wrapper.find('Undertekst');
+    expect(undertekstFields).to.have.length(1);
+    expect(undertekstFields.first().childAt(0).text()).to.eql('Resultat');
+
+    const normaltekstFields = wrapper.find('Normaltekst');
+    expect(normaltekstFields).to.have.length(1);
   });
   it('skal rendre opphørpanel med avslagsårsak før svangerskapspenger', () => {
     const vilkar = [
@@ -88,7 +92,11 @@ describe('<VedtakOpphorRevurderingPanel>', () => {
       />,
     );
 
-    const textFields = wrapper.find('ForwardRef');
-    expect(textFields.first().childAt(0).text()).to.eql('Resultat');
+    const undertekstFields = wrapper.find('Undertekst');
+    expect(undertekstFields).to.have.length(1);
+    expect(undertekstFields.first().childAt(0).text()).to.eql('Resultat');
+
+    const normaltekstFields = wrapper.find('Normaltekst');
+    expect(normaltekstFields).to.have.length(1);
   });
 });

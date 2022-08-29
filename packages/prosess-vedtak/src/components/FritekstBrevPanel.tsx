@@ -39,7 +39,7 @@ const FritekstBrevPanel = ({
       {!harAutomatiskVedtaksbrev && <VerticalSpacer sixteenPx />}
       <Row>
         <Column xs="12">
-          <Heading size="small" level="2">
+          <Heading className={styles.brevHeading} size="small" level="2">
             <FormattedMessage id="VedtakForm.Brev" />
           </Heading>
         </Column>
@@ -69,7 +69,7 @@ const FritekstBrevPanel = ({
           </Alert>
         </div>
       )}
-      <div className={styles.brevFormContainer}>
+      <div className={readOnly ? '' : styles.brevFormContainer}>
         <Row>
           <Column xs="12">
             <TextAreaFormik
@@ -81,7 +81,7 @@ const FritekstBrevPanel = ({
             />
           </Column>
         </Row>
-        <div className={styles.textAreaContainer}>
+        <div className={readOnly ? styles['textAreaContainer--readOnly'] : styles.textAreaContainer}>
           <Row>
             <Column xs="12">
               <TextAreaFormik
@@ -95,7 +95,7 @@ const FritekstBrevPanel = ({
           </Row>
         </div>
         {ytelseTypeKode === 'PSB' && (
-          <div className={styles.textAreaContainer}>
+          <div className={readOnly ? styles['textAreaContainer--readOnly'] : styles.textAreaContainer}>
             <Row>
               <Column xs="12">
                 <InkluderKalenderCheckbox

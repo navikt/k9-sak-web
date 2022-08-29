@@ -1,7 +1,7 @@
+import { getKodeverknavnFn } from '@fpsak-frontend/utils';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { getKodeverknavnFn } from '@fpsak-frontend/utils';
-import { BodyShort, Label } from '@navikt/ds-react';
+import { Normaltekst, Undertekst } from 'nav-frontend-typografi';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { injectIntl } from 'react-intl';
@@ -20,19 +20,15 @@ export const VedtakAvslagPanelImpl = ({
   const getKodeverknavn = getKodeverknavnFn(alleKodeverk, kodeverkTyper);
   return (
     <div>
-      <Label size="small" as="p" data-testid="avslaatt">
-        {intl.formatMessage({ id: 'VedtakForm.Resultat' })}
-      </Label>
-      <BodyShort size="small">
+      <Undertekst data-testid="avslaatt">{intl.formatMessage({ id: 'VedtakForm.Resultat' })}</Undertekst>
+      <Normaltekst>
         {intl.formatMessage({ id: findAvslagResultatText(behandlingsresultat.type.kode, ytelseTypeKode) })}
         {tilbakekrevingText && `. ${intl.formatMessage({ id: tilbakekrevingText })}`}
-      </BodyShort>
+      </Normaltekst>
       <VerticalSpacer sixteenPx />
 
       <div>
-        <Label size="small" as="p">
-          {intl.formatMessage({ id: 'VedtakForm.ArsakTilAvslag' })}
-        </Label>
+        <Undertekst>{intl.formatMessage({ id: 'VedtakForm.ArsakTilAvslag' })}</Undertekst>
         <AvslagsårsakListe vilkar={vilkar} getKodeverknavn={getKodeverknavn} />
         <VerticalSpacer sixteenPx />
       </div>

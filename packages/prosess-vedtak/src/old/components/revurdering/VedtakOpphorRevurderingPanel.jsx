@@ -1,13 +1,14 @@
-import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
-import { VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils';
-import { BodyShort, Label } from '@navikt/ds-react';
-import moment from 'moment';
-import PropTypes from 'prop-types';
 import React from 'react';
+import PropTypes from 'prop-types';
+import moment from 'moment';
 import { injectIntl } from 'react-intl';
 import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
+import { Normaltekst, Undertekst } from 'nav-frontend-typografi';
+
+import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
+import { DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils';
+import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 
 const ytelseNavnMap = kode => {
   switch (kode) {
@@ -24,28 +25,26 @@ const ytelseNavnMap = kode => {
 
 export const VedtakOpphorRevurderingPanelImpl = ({ intl, opphoersdato, ytelseTypeKode }) => (
   <div data-testid="opphorRevurdering">
-    <Label size="small" as="p">
-      {intl.formatMessage({ id: 'VedtakForm.Resultat' })}
-    </Label>
+    <Undertekst>{intl.formatMessage({ id: 'VedtakForm.Resultat' })}</Undertekst>
     {opphoersdato && (
-      <BodyShort size="small">
+      <Normaltekst>
         {intl.formatMessage(
           {
             id: 'VedtakForm.Revurdering.OpphoererDato',
           },
           { ytelse: ytelseNavnMap(ytelseTypeKode), dato: moment(opphoersdato).format(DDMMYYYY_DATE_FORMAT) },
         )}
-      </BodyShort>
+      </Normaltekst>
     )}
     {!opphoersdato && (
-      <BodyShort size="small">
+      <Normaltekst>
         {intl.formatMessage(
           {
             id: 'VedtakForm.Revurdering.Opphoerer',
           },
           { ytelse: ytelseNavnMap(ytelseTypeKode) },
         )}
-      </BodyShort>
+      </Normaltekst>
     )}
     <VerticalSpacer sixteenPx />
   </div>

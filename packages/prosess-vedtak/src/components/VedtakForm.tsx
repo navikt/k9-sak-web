@@ -291,45 +291,47 @@ export const VedtakForm: React.FC<Props> = ({
       {formikProps => (
         <form className={styles.form}>
           <LagreFormikStateLokalt />
-          <div className={styles.knappContainer}>
-            <fieldset>
-              <Label size="small" as="legend">
-                Valg for brev
-              </Label>
-              {kanHaFritekstbrev(tilgjengeligeVedtaksbrev) && (
-                <Checkbox
-                  checked={formikProps.values.skalBrukeOverstyrendeFritekstBrev}
-                  onChange={e => onToggleOverstyring(e, formikProps.setFieldValue)}
-                  disabled={
-                    readOnly ||
-                    kanKunVelge(tilgjengeligeVedtaksbrev, vedtaksbrevtype.FRITEKST) ||
-                    (formikProps.values.skalBrukeOverstyrendeFritekstBrev &&
-                      !kanHaAutomatiskVedtaksbrev(tilgjengeligeVedtaksbrev))
-                  }
-                  value={fieldnames.SKAL_BRUKE_OVERSTYRENDE_FRITEKST_BREV}
-                  size="medium"
-                >
-                  {intl.formatMessage({ id: 'VedtakForm.ManuellOverstyring' })}
-                </Checkbox>
-              )}
-              {kanHindreUtsending(tilgjengeligeVedtaksbrev) && (
-                <Checkbox
-                  onChange={e => onToggleHindreUtsending(e, formikProps.setFieldValue)}
-                  disabled={
-                    readOnly ||
-                    kanKunVelge(tilgjengeligeVedtaksbrev, vedtaksbrevtype.INGEN) ||
-                    (formikProps.values.skalHindreUtsendingAvBrev &&
-                      !kanHaAutomatiskVedtaksbrev(tilgjengeligeVedtaksbrev))
-                  }
-                  checked={formikProps.values.skalHindreUtsendingAvBrev}
-                  value={fieldnames.SKAL_HINDRE_UTSENDING_AV_BREV}
-                  size="medium"
-                >
-                  {intl.formatMessage({ id: 'VedtakForm.HindreUtsending' })}
-                </Checkbox>
-              )}
-            </fieldset>
-          </div>
+          {(kanHaFritekstbrev(tilgjengeligeVedtaksbrev) || kanHindreUtsending(tilgjengeligeVedtaksbrev)) && (
+            <div className={styles.knappContainer}>
+              <fieldset>
+                <Label size="small" as="legend">
+                  Valg for brev
+                </Label>
+                {kanHaFritekstbrev(tilgjengeligeVedtaksbrev) && (
+                  <Checkbox
+                    checked={formikProps.values.skalBrukeOverstyrendeFritekstBrev}
+                    onChange={e => onToggleOverstyring(e, formikProps.setFieldValue)}
+                    disabled={
+                      readOnly ||
+                      kanKunVelge(tilgjengeligeVedtaksbrev, vedtaksbrevtype.FRITEKST) ||
+                      (formikProps.values.skalBrukeOverstyrendeFritekstBrev &&
+                        !kanHaAutomatiskVedtaksbrev(tilgjengeligeVedtaksbrev))
+                    }
+                    value={fieldnames.SKAL_BRUKE_OVERSTYRENDE_FRITEKST_BREV}
+                    size="medium"
+                  >
+                    {intl.formatMessage({ id: 'VedtakForm.ManuellOverstyring' })}
+                  </Checkbox>
+                )}
+                {kanHindreUtsending(tilgjengeligeVedtaksbrev) && (
+                  <Checkbox
+                    onChange={e => onToggleHindreUtsending(e, formikProps.setFieldValue)}
+                    disabled={
+                      readOnly ||
+                      kanKunVelge(tilgjengeligeVedtaksbrev, vedtaksbrevtype.INGEN) ||
+                      (formikProps.values.skalHindreUtsendingAvBrev &&
+                        !kanHaAutomatiskVedtaksbrev(tilgjengeligeVedtaksbrev))
+                    }
+                    checked={formikProps.values.skalHindreUtsendingAvBrev}
+                    value={fieldnames.SKAL_HINDRE_UTSENDING_AV_BREV}
+                    size="medium"
+                  >
+                    {intl.formatMessage({ id: 'VedtakForm.HindreUtsending' })}
+                  </Checkbox>
+                )}
+              </fieldset>
+            </div>
+          )}
           <div className={styles.aksjonspunktContainer}>
             <VedtakAksjonspunktPanel
               behandlingStatusKode={behandlingStatus?.kode}

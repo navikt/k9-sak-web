@@ -1,15 +1,17 @@
-import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
-import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
-import { VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { getKodeverknavnFn } from '@fpsak-frontend/utils';
-import { BodyShort, Label } from '@navikt/ds-react';
-import PropTypes from 'prop-types';
 import React from 'react';
-import { injectIntl } from 'react-intl';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import vedtakResultType from '../../kodeverk/vedtakResultType';
+import { injectIntl } from 'react-intl';
+import { Normaltekst, Undertekst } from 'nav-frontend-typografi';
+
+import { VerticalSpacer } from '@fpsak-frontend/shared-components';
+
+import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
+import { getKodeverknavnFn } from '@fpsak-frontend/utils';
+import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
+import vedtakResultType from '../../../kodeverk/vedtakResultType';
+import { findTilbakekrevingText, findAvslagResultatText } from '../VedtakHelper';
 import AvslagsårsakListe from '../AvslagsårsakListe';
-import { findAvslagResultatText, findTilbakekrevingText } from '../VedtakHelper';
 
 export const isNewBehandlingResult = (beregningResultat, originaltBeregningResultat) => {
   const vedtakResult = beregningResultat ? vedtakResultType.INNVILGET : vedtakResultType.AVSLAG;
@@ -45,26 +47,22 @@ export const VedtakAvslagRevurderingPanelImpl = ({
   const getKodeverknavn = getKodeverknavnFn(alleKodeverk, kodeverkTyper);
   return (
     <div>
-      <Label size="small" as="p">
-        {intl.formatMessage({ id: 'VedtakForm.Resultat' })}
-      </Label>
+      <Undertekst>{intl.formatMessage({ id: 'VedtakForm.Resultat' })}</Undertekst>
       {(ytelseTypeKode === fagsakYtelseType.FRISINN || ytelseTypeKode === fagsakYtelseType.OMSORGSPENGER) && (
-        <BodyShort size="small">
+        <Normaltekst>
           {intl.formatMessage({ id: findAvslagResultatText(undefined, ytelseTypeKode) })}
           {tilbakekrevingText && `. ${intl.formatMessage({ id: tilbakekrevingText })}`}
-        </BodyShort>
+        </Normaltekst>
       )}
       {ytelseTypeKode !== fagsakYtelseType.FRISINN && ytelseTypeKode !== fagsakYtelseType.OMSORGSPENGER && (
-        <BodyShort size="small">
+        <Normaltekst>
           {intl.formatMessage({ id: resultText(beregningResultat, originaltBeregningResultat) })}
           {tilbakekrevingText && `. ${intl.formatMessage({ id: tilbakekrevingText })}`}
-        </BodyShort>
+        </Normaltekst>
       )}
       <div>
         <VerticalSpacer sixteenPx />
-        <Label size="small" as="p">
-          {intl.formatMessage({ id: 'VedtakForm.ArsakTilAvslag' })}
-        </Label>
+        <Undertekst>{intl.formatMessage({ id: 'VedtakForm.ArsakTilAvslag' })}</Undertekst>
         <AvslagsårsakListe vilkar={vilkar} getKodeverknavn={getKodeverknavn} />
         <VerticalSpacer sixteenPx />
       </div>
