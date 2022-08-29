@@ -14,10 +14,8 @@
   "Historikk.godkjentKomplett": "Er godkjent",
   "Historikk.ikkeGodkjentKomplett": "Må vurderes på nytt",
   "Historikk.FinnerIngenMal": "Kan ikke finne mal for dette historikkinnslaget",
-
   "BubbleText.LukkeTekstfelt": "Lukke tekstfelt",
   "BubbleText.ApneTekstfelt": "Åpne tekstfelt",
-
   "Historikk.Utgått": "{tag} (utgått)",
   "Historikk.Template.5.ChangedFromTo": "<b>{fieldName}</b> endret fra {fromValue} til <b>{toValue}</b>",
   "Historikk.Template.5.FieldSetTo": "<b>{fieldName}</b> er satt til <b>{value}</b>.",
@@ -52,7 +50,6 @@
   "HistorikkAksjonpunktMapping.AnnenForeldersStonadGjelderSammeBarn": "Avklar om pleiepenger utbetalt til annen forelder gjelder samme barn",
   "Historikk.Fodselsdato": "Når ble barnet født?",
   "Historikk.Vedtak.Fritekstbrev": "Fritekstbrev",
-
   "HistorikkAarsak.AvvDok": "Avventer dokumentasjon",
   "HistorikkAarsak.AvvFodsel": "Avventer fødsel",
   "HistorikkAarsak.UtvFrist": "Søker har bedt om utvidet frist",
@@ -129,6 +126,8 @@
   "HistorikkBegrunnelse.ReTilstøtendeYtelseInnvilget": "Tilstøtende ytelse innvilget",
   "HistorikkBegrunnelse.ReEndrinBeregningsgrunnlag": "Endring i beregningsgrunnlag",
   "HistorikkBegrunnelse.ReTilstøtendeYtelseOpphørt": "Tilstøtende ytelse opphørt",
+  "HistorikkEndretFelt.AldersvilkarBarn": "Aldersvilkåret barn",
+  "HistorikkEndretFelt.IkkeVurdert": "Ikke vurdert",
   "HistorikkEndretFelt.Adopsjonsvilkaret": "Adopsjonsvilkåret",
   "HistorikkEndretFelt.Arbeidsforhold": "Arbeidsforhold hos {value}",
   "HistorikkEndretFelt.Aktivitet": "Aktivitet {value}",
@@ -315,7 +314,6 @@
   "HistorikkEndretFelt.BrukerErUnderTvungenForvaltning": "Søker er under tvungen forvaltning",
   "HistorikkEndretFelt.TilkjentYtelse": "Tilkjent ytelse",
   "HistorikkEndretFelt.Kompletthet": "Avklart behovet for inntektsmelding til inntektsgrunnlaget for {value}",
-
   "HistorikkEndretFeltVerdiType.AdoptererAlene": "adopterer alene",
   "HistorikkEndretFeltVerdiType.AdoptererIkkeAlene": "adopterer ikke alene",
   "HistorikkEndretFeltVerdiType.Aleneomsorg": "Søker har aleneomsorg for barnet",
@@ -457,8 +455,7 @@
   "HistorikkEndretFeltVerdiType.Soker": "Søker",
   "HistorikkEndretFeltVerdiType.Fortsett": "benytter a-ordning som inntektsgrunnlag der hvor det mangler inntektsmeldinger",
   "HistorikkEndretFeltVerdiType.ManglendeGrunnlag": "ikke tilstrekkelig inntektsgrunnlag",
-
-
+  "HistorikkEndretFeltVerdiType.IkkeVurdert": "Ikke vurdert",
   "HistorikkEndretFeltHeading.FordelingForNyAndel": "<b>Det er lagt til ny aktivitet:</b> {br}<b>{value}</b>: Fordeling for ",
   "HistorikkEndretFeltHeading.FordelingForAndel": "Fordeling for <b>{value}</b>:",
   "HistorikkResultat.FullTilbakebetaling": "Full tilbakebetaling",
@@ -466,7 +463,6 @@
   "HistorikkResultat.IngenTilbakebetaling": "Ingen tilbakebetaling",
   "HistorikkResultat.MigrertFraInfotrygd": "Behandling gjelder flytting av sak fra Infotrygd",
   "HistorikkResultat.MigrertFraInfotrygdFjernet": "Behandling gjelder ikke lenger flytting av sak fra Infotrygd",
-
   "Historikk.TermindatoFaktaForm.ApplicationInformation": "Opplysninger om termin oppgitt i søknaden",
   "Historikk.DokumentasjonFaktaForm.ApplicationInformation": "Adopsjonsopplysninger fra søknad",
   "Historikk.EktefelleFaktaForm.ApplicationInformation": "Ektefelles/samboers barn",
