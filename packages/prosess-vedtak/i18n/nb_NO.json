@@ -133,5 +133,8 @@
   "SakGårIkkeTilBeslutterModal.BrevBlirIkkeSendt": "Brev blir sendt direkte til søker",
   "SakGårIkkeTilBeslutterModal.FattVedtak": "Fatt vedtak",
   "SakGårIkkeTilBeslutterModal.Avbryt": "Avbryt",
-  "SakGårIkkeTilBeslutterModal.ModalAriaLabel": "Modal, sak går ikke til beslutter"
+  "SakGårIkkeTilBeslutterModal.ModalAriaLabel": "Modal, sak går ikke til beslutter",
+  "InformasjonsbehovAutomatiskVedtaksbrev.Fritekstbeskrivelse": "Fritekstbeskrivelse",
+  "InformasjonsbehovAutomatiskVedtaksbrev.SupplerMedFritekst": "Suppler med fritekst i henhold til skjønnsmessig vurdering.",
+  "InformasjonsbehovAutomatiskVedtaksbrev.IkkeRelevantMedFritekst": "Det er ikke relevant med fritekstbeskrivelse i brevet"
 }

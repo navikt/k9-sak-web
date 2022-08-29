@@ -114,7 +114,7 @@ const VedtakOverlappendeYtelsePanel: React.FC<Props & WrappedComponentProps> = (
             {getTidslinje()}
             <VerticalSpacer twentyPx />
             <CheckboxGroup
-              legend="Hei"
+              legend="Bekreft at overlappende ytelser er sjekket og fulgt opp"
               hideLegend
               error={submitCount > 0 && !harVurdertOverlappendeYtelse ? 'Du må bekrefte for å gå videre' : ''}
             >
@@ -132,7 +132,7 @@ const VedtakOverlappendeYtelsePanel: React.FC<Props & WrappedComponentProps> = (
           <Alert variant="info" size="medium">
             <Accordion className={styles.accordion}>
               <Accordion.Item>
-                <Accordion.Header>
+                <Accordion.Header type="button">
                   <Heading spacing size="small" level="3">
                     Hvilke ytelser går det automatisk melding?
                   </Heading>
