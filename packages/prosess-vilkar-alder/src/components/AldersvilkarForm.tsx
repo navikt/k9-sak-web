@@ -55,7 +55,7 @@ const AldersvilkarForm = ({
       </Row>
       <VerticalSpacer sixteenPx />
       <Row>
-        <div className={`${style.opplysninger}`}>
+        <div className={style.opplysninger}>
           <p className="label">Opplysninger fra søknaden:</p>
           {angitteBarn.map(barn => (
             <p key={barn.personIdent}>{barn.personIdent}</p>
