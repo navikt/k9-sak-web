@@ -2,7 +2,7 @@ import webpack from 'webpack';
 
 import { PUBLIC_ROOT, APP_DIR } from './paths';
 
-import module from './common/module';
+import modules from './common/module';
 import resolve from './common/resolve';
 import externals from './common/externals';
 import cache from './common/cache';
@@ -15,21 +15,21 @@ import { PUBLIC_PATH } from './constants';
 const deps = pck.dependencies;
 const { ModuleFederationPlugin } = webpack.container;
 
-export default {
+module.exports = env => ({
   mode: 'development',
   devtool: 'eval-cheap-module-source-map',
   entry: [APP_DIR + '/index.tsx'],
   output: {
-    path: PUBLIC_ROOT,
+    path: PUBLIC_ROOT + '/src',
     publicPath: PUBLIC_PATH,
     filename: '[name].js',
   },
-  module,
+  module: modules,
   resolve,
   externals,
   cache,
   plugins: [
-    ...plugins,
+    ...plugins(env),
     new ModuleFederationPlugin({
       name: 'ft_frontend_saksbehandling',
       remotes: {
@@ -61,4 +61,4 @@ export default {
     },
   },
   devServer,
-};
+});
