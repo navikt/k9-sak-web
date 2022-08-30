@@ -607,3 +607,51 @@ export const visOverlappendeYtelser = () => {
     />
   );
 };
+
+export const brevMedFritekstfelt = () => (
+  <VedtakProsessIndex
+    behandling={behandling}
+    vilkar={[]}
+    beregningresultatEngangsstonad={resultatstruktur}
+    sendVarselOmRevurdering={boolean('sendVarselOmRevurdering', false)}
+    resultatstrukturOriginalBehandling={resultatstrukturOriginalBehandling}
+    medlemskap={{ fom: '2019-01-01' }}
+    aksjonspunkter={[]}
+    ytelseType={{ kode: fagsakYtelseType.PLEIEPENGER }}
+    employeeHasAccess={boolean('employeeHasAccess', true)}
+    isReadOnly={boolean('isReadOnly', false)}
+    previewCallback={action('button-click')}
+    submitCallback={action('button-click')}
+    alleKodeverk={alleKodeverk}
+    informasjonsbehovVedtaksbrev={{
+      informasjonsbehov: [
+        {
+          kode: 'TOM_BEKREFTELSE',
+          beskrivelse: 'Tomt informasjonsbehov som kun krever en bekreftekse av saksbehandler',
+          type: 'UKJENT',
+        },
+        {
+          kode: 'FRITEKSTVEDTAKSBREV',
+          beskrivelse: 'Fritekstvedtaksbrev',
+          type: 'FRITEKSTBREV',
+        },
+        {
+          kode: 'REVURDERING_ENDRING',
+          beskrivelse:
+            'Fritekstbeskrivelse av endringsvedtaket. Hvor opplysningene kommer fra, hva slags nye opplysninger og hvilke perioder de gjelder',
+          type: 'FRITEKST',
+        },
+      ],
+      mangler: ['REVURDERING_ENDRING'],
+    }}
+    fritekstdokumenter={[]}
+    tilgjengeligeVedtaksbrev={{
+      alternativeMottakere: [],
+      vedtaksbrevmaler: {
+        FRITEKST: 'FRITKS',
+        AUTOMATISK: 'ENDRING',
+        INGEN: null,
+      },
+    }}
+  />
+);

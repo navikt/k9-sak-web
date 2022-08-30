@@ -32,7 +32,7 @@ interface OwnProps {
 
 export const submitKnappTekst = aksjonspunkter =>
   aksjonspunkter && aksjonspunkter.some(ap => ap.erAktivt === true && ap.toTrinnsBehandling === true)
-    ? 'VedtakForm.TilGodkjenning'
+    ? 'VedtakForm.SendTilBeslutter'
     : 'VedtakForm.FattVedtak';
 
 export const VedtakRevurderingSubmitPanelImpl = ({
@@ -65,6 +65,7 @@ export const VedtakRevurderingSubmitPanelImpl = ({
       onClick={onClick}
       disabled={isSubmitting}
       loading={isSubmitting}
+      size="small"
     >
       {intl.formatMessage({
         id: submitKnappTekstID,

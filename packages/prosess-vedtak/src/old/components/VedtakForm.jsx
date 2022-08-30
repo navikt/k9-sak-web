@@ -24,7 +24,7 @@ import {
   harMellomlagretRedusertUtbetalingArsak,
 } from '@fpsak-frontend/utils/src/formidlingUtils';
 import vedtaksbrevtype from '@fpsak-frontend/kodeverk/src/vedtaksbrevtype';
-import vedtakVilkarPropType from '../propTypes/vedtakVilkarPropType';
+import vedtakVilkarPropType from '../../propTypes/vedtakVilkarPropType';
 import VedtakInnvilgetPanel from './VedtakInnvilgetPanel';
 import VedtakAvslagPanel from './VedtakAvslagPanel';
 import VedtakAksjonspunktPanel from './VedtakAksjonspunktPanel';
@@ -32,12 +32,12 @@ import styles from './vedtakForm.less';
 import BrevPanel from './brev/BrevPanel';
 import UstrukturerteDokumenter from './UstrukturerteDokumenter';
 import RevurderingPaneler from './revurdering/RevurderingPaneler';
-import redusertUtbetalingArsak from '../kodeverk/redusertUtbetalingArsak';
+import redusertUtbetalingArsak from '../../kodeverk/redusertUtbetalingArsak';
 import VedtakRevurderingSubmitPanel from './revurdering/VedtakRevurderingSubmitPanel';
 import VedtakSubmit from './VedtakSubmit';
-import vedtakVarselPropType from '../propTypes/vedtakVarselPropType';
+import vedtakVarselPropType from '../../propTypes/vedtakVarselPropType';
 import LagreFormikStateLokalt from './LagreFormikStateLokalt';
-import { fieldnames } from '../konstanter';
+import { fieldnames } from '../../konstanter';
 
 const isVedtakSubmission = true;
 
