@@ -58,13 +58,13 @@ interface OwnProps {
   vedtakVarsel: any;
   medlemskapFom: string;
   harRedusertUtbetaling: boolean;
-  redusertUtbetalingArsak: redusertUtbetalingArsakType;
+  redusertUtbetalingArsak: string[];
   formikValues: any;
   erSendtInnUtenArsaker: boolean;
   behandlingArsaker: any;
 }
 
-export default function RevurderingPaneler({
+const RevurderingPaneler = ({
   ytelseTypeKode,
   behandlingresultat,
   resultatstruktur,
@@ -85,7 +85,7 @@ export default function RevurderingPaneler({
   formikValues,
   erSendtInnUtenArsaker,
   behandlingArsaker,
-}: OwnProps): JSX.Element {
+}: OwnProps): JSX.Element => {
   const intl = useIntl();
 
   const behandlingArsakstyper =
@@ -150,4 +150,6 @@ export default function RevurderingPaneler({
       )}
     </Row>
   );
-}
+};
+
+export default RevurderingPaneler;

@@ -16,6 +16,10 @@ const historikkEndretFeltTypeCodes = {
     kode: 'AKTIVITET_PERIODE',
     feltId: 'HistorikkEndretFelt.AktivitetPeriode',
   },
+  ALDERSVILKAR_BARN: {
+    kode: 'ALDERSVILKAR_BARN',
+    feltId: 'HistorikkEndretFelt.AldersvilkarBarn',
+  },
   ALENE_OM_OMSORG: {
     kode: 'ALENE_OM_OMSORG',
     feltId: 'HistorikkEndretFelt.AleneOmOmsorgen',

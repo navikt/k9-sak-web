@@ -26,7 +26,7 @@ export default {
   },
   cache,
   module,
-  plugins,
+  plugins: plugins(),
   externals,
   resolve,
   optimization: {
