@@ -50,11 +50,12 @@ const VedtakSubmit = ({
       disabled={behandlingPaaVent || isSubmitting}
       loading={isSubmitting}
       onClick={handleSubmit}
+      size="small"
     >
       {intl.formatMessage({
         id:
           aksjonspunkter && aksjonspunkter.some(ap => ap.erAktivt === true && ap.toTrinnsBehandling === true)
-            ? 'VedtakForm.TilGodkjenning'
+            ? 'VedtakForm.SendTilBeslutter'
             : 'VedtakForm.FattVedtak',
       })}
     </Button>

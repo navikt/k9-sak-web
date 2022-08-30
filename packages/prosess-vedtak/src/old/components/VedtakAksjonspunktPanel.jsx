@@ -23,13 +23,19 @@ export const VedtakAksjonspunktPanelImpl = ({
   readOnly,
   overlappendeYtelser,
   alleKodeverk,
-  viseFlereSjekkbokserForBrev
+  viseFlereSjekkbokserForBrev,
 }) => (
   <Row>
     <Column xs="8">
-      <Undertittel data-testid='vedtakAksjonspunktPanel'>{intl.formatMessage({ id: getTextCode(behandlingStatusKode) })}</Undertittel>
+      <Undertittel data-testid="vedtakAksjonspunktPanel">
+        {intl.formatMessage({ id: getTextCode(behandlingStatusKode) })}
+      </Undertittel>
       <VerticalSpacer twentyPx />
-      <VedtakHelpTextPanel aksjonspunktKoder={aksjonspunktKoder} readOnly={readOnly} viseFlereSjekkbokserForBrev={viseFlereSjekkbokserForBrev} />
+      <VedtakHelpTextPanel
+        aksjonspunktKoder={aksjonspunktKoder}
+        readOnly={readOnly}
+        viseFlereSjekkbokserForBrev={viseFlereSjekkbokserForBrev}
+      />
       {overlappendeYtelser && overlappendeYtelser.length > 0 && (
         <VedtakOverlappendeYtelsePanel alleKodeverk={alleKodeverk} overlappendeYtelser={overlappendeYtelser} />
       )}

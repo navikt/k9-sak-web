@@ -31,6 +31,7 @@
   "VedtakForm.FritekstBrevIkkeLagret": "Du har gjort endringer i brevet, men endringene er foreløpig ikke lagret. Trykk på \"Lagre\" for å lagre endringene uten å sende til godkjenning eller fatte vedtak.",
   "VedtakForm.FritekstBrevLagret": "Endringene i brevet er lagret",
   "VedtakForm.TilGodkjenning": "Til godkjenning",
+  "VedtakForm.SendTilBeslutter": "Send til beslutter",
   "VedtakForm.FattVedtak": "Fatt vedtak",
   "VedtakForm.ForhandvisBrev": "Forhåndsvis brev",
   "VedtakForm.beregnetTilkjentYtelse": "Beregnet engangsstønad",
@@ -127,5 +128,13 @@
   "ValidationMessage.UtsettelseUtenFullArbeid": "Søker har ikke 100% stilling, vurder om perioden kan utsettes.",
   "ValidationMessage.MerEn100Prosent": "Samlet utbetalingsgrad og andel i arbeid bør ikke overskride 100%.",
   "ValidationMessage.MerEn100ProsentOgOgyldigUtsettlse": "Samlet utbetalingsgrad og andel i arbeid bør ikke overskride 100%. Søker har ikke 100% stilling, vurder om perioden kan utsettes.",
-  "ValidationMessage.InvalidOrganisasjonsnummer": "Ugyldig organisasjonsnummer."
+  "ValidationMessage.InvalidOrganisasjonsnummer": "Ugyldig organisasjonsnummer.",
+  "SakGårIkkeTilBeslutterModal.IngenToTrinnskontroll": "Denne behandlingen har ikke totrinnskontroll.",
+  "SakGårIkkeTilBeslutterModal.BrevBlirIkkeSendt": "Brev blir sendt direkte til søker",
+  "SakGårIkkeTilBeslutterModal.FattVedtak": "Fatt vedtak",
+  "SakGårIkkeTilBeslutterModal.Avbryt": "Avbryt",
+  "SakGårIkkeTilBeslutterModal.ModalAriaLabel": "Modal, sak går ikke til beslutter",
+  "InformasjonsbehovAutomatiskVedtaksbrev.Fritekstbeskrivelse": "Fritekstbeskrivelse",
+  "InformasjonsbehovAutomatiskVedtaksbrev.SupplerMedFritekst": "Suppler med fritekst i henhold til skjønnsmessig vurdering.",
+  "InformasjonsbehovAutomatiskVedtaksbrev.IkkeRelevantMedFritekst": "Det er ikke relevant med fritekstbeskrivelse i brevet"
 }

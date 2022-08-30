@@ -106,3 +106,5 @@ spec:
       value: "false"
     - name: AKSJONSPUNKT_9015
       value: "false"
+    - name: NY_PROSESS_VEDTAK_ENABLED
+      value: "false"
