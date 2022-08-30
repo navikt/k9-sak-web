@@ -1,7 +1,7 @@
 import React from 'react';
 import { FormattedMessage, injectIntl, IntlShape } from 'react-intl';
 import { Column, Row } from 'nav-frontend-grid';
-import { Heading } from '@navikt/ds-react';
+import { Alert, Heading } from '@navikt/ds-react';
 import { FormikProps, FormikValues } from 'formik';
 
 import { hasValidText, maxLength, minLength, required } from '@fpsak-frontend/utils';
@@ -35,67 +35,81 @@ const FritekstBrevPanel = ({
 }: OwnProps) => {
   const { formatMessage } = intl;
   return (
-    <>
-      {!readOnly && harAutomatiskVedtaksbrev && (
-        <div className={styles.automatiskBrev}>
-          <Row>
-            <Column xs="12">
-              <FormattedMessage id="VedtakForm.AutomatiskBrev" />
-            </Column>
-          </Row>
-          <Row>
-            <Column xs="6">
-              <PreviewLink previewCallback={previewBrev}>
-                <FormattedMessage id="VedtakForm.AutomatiskBrev.Lenke" />
-              </PreviewLink>
-            </Column>
-          </Row>
-        </div>
-      )}
+    <div className={styles.fritekstbrevPanel}>
       {!harAutomatiskVedtaksbrev && <VerticalSpacer sixteenPx />}
       <Row>
         <Column xs="12">
-          <Heading size="small" level="2">
+          <Heading className={styles.brevHeading} size="small" level="2">
             <FormattedMessage id="VedtakForm.Brev" />
           </Heading>
         </Column>
       </Row>
-      <Row>
-        <Column xs="12">
-          <TextAreaFormik
-            name="overskrift"
-            label={formatMessage({ id: 'VedtakForm.Overskrift' })}
-            validate={[required, minLength3, maxLength200, hasValidText]}
-            maxLength={200}
-            readOnly={readOnly}
-          />
-        </Column>
-      </Row>
-      <VerticalSpacer sixteenPx />
-      <Row>
-        <Column xs="12">
-          <TextAreaFormik
-            name="brødtekst"
-            label={formatMessage({ id: 'VedtakForm.Innhold' })}
-            validate={[required, minLength3, maxLength100000, hasValidText]}
-            maxLength={100000}
-            readOnly={readOnly}
-          />
-        </Column>
-      </Row>
-      {ytelseTypeKode === 'PSB' && (
+      {!readOnly && harAutomatiskVedtaksbrev && (
+        <div className={styles.brevAlertContainer}>
+          <Alert variant="info" size="small">
+            <Row>
+              <Column xs="12">
+                <FormattedMessage id="VedtakForm.AutomatiskBrev" />
+              </Column>
+            </Row>
+            <Row>
+              <Column xs="6">
+                <PreviewLink previewCallback={previewBrev} noIcon>
+                  <FormattedMessage id="VedtakForm.AutomatiskBrev.Lenke" />
+                </PreviewLink>
+              </Column>
+            </Row>
+          </Alert>
+        </div>
+      )}
+      {!readOnly && !harAutomatiskVedtaksbrev && (
+        <div className={styles.brevAlertContainer}>
+          <Alert variant="info" size="small">
+            Denne type behandling har ingen automatisk brev.
+          </Alert>
+        </div>
+      )}
+      <div className={readOnly ? '' : styles.brevFormContainer}>
         <Row>
           <Column xs="12">
-            <InkluderKalenderCheckbox
-              intl={intl}
-              setFieldValue={formikProps.setFieldValue}
-              skalBrukeOverstyrendeFritekstBrev={formikProps.values.skalBrukeOverstyrendeFritekstBrev}
-              disabled={readOnly}
+            <TextAreaFormik
+              name="overskrift"
+              label={formatMessage({ id: 'VedtakForm.Overskrift' })}
+              validate={[required, minLength3, maxLength200, hasValidText]}
+              maxLength={200}
+              readOnly={readOnly}
             />
           </Column>
         </Row>
-      )}
-    </>
+        <div className={readOnly ? styles['textAreaContainer--readOnly'] : styles.textAreaContainer}>
+          <Row>
+            <Column xs="12">
+              <TextAreaFormik
+                name="brødtekst"
+                label={formatMessage({ id: 'VedtakForm.Innhold' })}
+                validate={[required, minLength3, maxLength100000, hasValidText]}
+                maxLength={100000}
+                readOnly={readOnly}
+              />
+            </Column>
+          </Row>
+        </div>
+        {ytelseTypeKode === 'PSB' && (
+          <div className={readOnly ? styles['textAreaContainer--readOnly'] : styles.textAreaContainer}>
+            <Row>
+              <Column xs="12">
+                <InkluderKalenderCheckbox
+                  intl={intl}
+                  setFieldValue={formikProps.setFieldValue}
+                  skalBrukeOverstyrendeFritekstBrev={formikProps.values.skalBrukeOverstyrendeFritekstBrev}
+                  disabled={readOnly}
+                />
+              </Column>
+            </Row>
+          </div>
+        )}
+      </div>
+    </div>
   );
 };
 

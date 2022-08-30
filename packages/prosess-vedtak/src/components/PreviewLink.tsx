@@ -1,27 +1,48 @@
-import {FormattedMessage} from "react-intl";
+import { Findout } from '@navikt/ds-icons';
+import { Button } from '@navikt/ds-react';
 import classNames from 'classnames';
-import React, {ReactNode} from 'react';
+import React, { ReactNode } from 'react';
+import { FormattedMessage } from 'react-intl';
 import styles from './vedtakForm.less';
 
 interface PreviewLinkProps {
   previewCallback: (event: React.SyntheticEvent) => void;
   children: ReactNode;
+  noIcon?: boolean;
 }
 
-const PreviewLink = ({ previewCallback, children }: PreviewLinkProps) => (
-  <a
-    href=""
-    onClick={previewCallback}
-    onKeyDown={e => (e.keyCode === 13 ? previewCallback(e) : null)}
-    className={classNames(styles.previewLink, 'lenke lenke--frittstaende')}
-  >
-    {children}
-  </a>
-);
+const PreviewLink = ({ previewCallback, children, noIcon }: PreviewLinkProps) => {
+  if (noIcon) {
+    return (
+      <Button
+        variant="tertiary"
+        size="small"
+        onClick={previewCallback}
+        onKeyDown={e => (e.keyCode === 13 ? previewCallback(e) : null)}
+        className={classNames(styles.previewLink, styles['previewLink--noIcon'])}
+      >
+        {children}
+      </Button>
+    );
+  }
+  return (
+    <Button
+      variant="tertiary"
+      size="small"
+      icon={<Findout aria-hidden />}
+      onClick={previewCallback}
+      onKeyDown={e => (e.keyCode === 13 ? previewCallback(e) : null)}
+      className={classNames(styles.previewLink)}
+    >
+      {children}
+    </Button>
+  );
+};
 
-export const VedtakPreviewLink = ({previewCallback}) =>
-  (<PreviewLink previewCallback={previewCallback}>
-    <FormattedMessage id="VedtakForm.ForhandvisBrev"/>
-  </PreviewLink>);
+export const VedtakPreviewLink = ({ previewCallback }) => (
+  <PreviewLink previewCallback={previewCallback}>
+    <FormattedMessage id="VedtakForm.ForhandvisBrev" />
+  </PreviewLink>
+);
 
 export default PreviewLink;

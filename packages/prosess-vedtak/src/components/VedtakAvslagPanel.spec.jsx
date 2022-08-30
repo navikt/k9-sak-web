@@ -111,13 +111,9 @@ describe('<VedtakAvslagPanel>', () => {
       />,
     );
 
-    const undertekstFields = wrapper.find('Undertekst');
-    expect(undertekstFields).to.have.length(2);
-    expect(undertekstFields.first().childAt(0).text()).to.eql('Resultat');
-
-    const normaltekstFields = wrapper.find('Normaltekst');
-    expect(normaltekstFields).to.have.length(1);
-    expect(normaltekstFields.first().childAt(0).text()).to.eql('Pleiepenger er avslått');
+    const textFields = wrapper.find('ForwardRef');
+    expect(textFields.first().childAt(0).text()).to.eql('Resultat');
+    expect(textFields.at(1).childAt(0).text()).to.eql('Pleiepenger er avslått');
 
     expect(wrapper.find(VedtakFritekstPanel)).to.have.length(0);
   });
@@ -136,13 +132,9 @@ describe('<VedtakAvslagPanel>', () => {
       />,
     );
 
-    const undertekstFields = wrapper.find('Undertekst');
-    expect(undertekstFields).to.have.length(2);
-    expect(undertekstFields.first().childAt(0).text()).to.eql('Resultat');
-
-    const normaltekstFields = wrapper.find('Normaltekst');
-    expect(normaltekstFields).to.have.length(1);
-    expect(normaltekstFields.first().childAt(0).text()).to.eql('Omsorgspenger er avslått');
+    const textFields = wrapper.find('ForwardRef');
+    expect(textFields.first().childAt(0).text()).to.eql('Resultat');
+    expect(textFields.at(1).childAt(0).text()).to.eql('Omsorgspenger er avslått');
 
     expect(wrapper.find(VedtakFritekstPanel)).to.have.length(0);
   });
@@ -161,13 +153,9 @@ describe('<VedtakAvslagPanel>', () => {
       />,
     );
 
-    const undertekstFields = wrapper.find('Undertekst');
-    expect(undertekstFields).to.have.length(2);
-    expect(undertekstFields.first().childAt(0).text()).to.eql('Resultat');
-
-    const normaltekstFields = wrapper.find('Normaltekst');
-    expect(normaltekstFields).to.have.length(1);
-    expect(normaltekstFields.first().childAt(0).text()).to.eql('Ekstra omsorgsdager er avslått');
+    const textFields = wrapper.find('ForwardRef');
+    expect(textFields.first().childAt(0).text()).to.eql('Resultat');
+    expect(textFields.at(1).childAt(0).text()).to.eql('Ekstra omsorgsdager er avslått');
 
     expect(wrapper.find(VedtakFritekstPanel)).to.have.length(0);
   });
@@ -186,13 +174,9 @@ describe('<VedtakAvslagPanel>', () => {
       />,
     );
 
-    const undertekstFields = wrapper.find('Undertekst');
-    expect(undertekstFields).to.have.length(2);
-    expect(undertekstFields.first().childAt(0).text()).to.eql('Resultat');
-
-    const normaltekstFields = wrapper.find('Normaltekst');
-    expect(normaltekstFields).to.have.length(1);
-    expect(normaltekstFields.first().childAt(0).text()).to.eql('Ekstra omsorgsdager er avslått');
+    const textFields = wrapper.find('ForwardRef');
+    expect(textFields.first().childAt(0).text()).to.eql('Resultat');
+    expect(textFields.at(1).childAt(0).text()).to.eql('Ekstra omsorgsdager er avslått');
 
     expect(wrapper.find(VedtakFritekstPanel)).to.have.length(0);
   });

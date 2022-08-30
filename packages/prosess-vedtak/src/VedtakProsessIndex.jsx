@@ -1,7 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
-import VedtakPanels from './components/VedtakPanels';
+import VedtakPanelsOld from './old/components/VedtakPanels';
+import VedtakPanelsNew from './components/VedtakPanels';
 import messages from '../i18n/nb_NO.json';
 import vedtakBehandlingPropType from './propTypes/vedtakBehandlingPropType';
 import vedtakBeregningsresultatPropType from './propTypes/vedtakBeregningsresultatPropType';
@@ -50,42 +51,80 @@ const VedtakProsessIndex = ({
   fritekstdokumenter,
   lagreDokumentdata,
   overlappendeYtelser,
+  featureToggles,
 }) => (
   <RawIntlProvider value={intl}>
-    <VedtakPanels
-      behandlingId={behandling.id}
-      behandlingVersjon={behandling.versjon}
-      behandlingTypeKode={behandling.type.kode}
-      behandlingStatus={behandling.status}
-      sprakkode={behandling.sprakkode}
-      behandlingresultat={behandling.behandlingsresultat}
-      behandlingPaaVent={behandling.behandlingPaaVent}
-      behandlingArsaker={behandling.behandlingÅrsaker}
-      beregningsgrunnlag={beregningsgrunnlag}
-      vilkar={vilkar}
-      tilbakekrevingvalg={tilbakekrevingvalg}
-      simuleringResultat={simuleringResultat}
-      resultatstruktur={beregningresultatForeldrepenger}
-      sendVarselOmRevurdering={sendVarselOmRevurdering}
-      resultatstrukturOriginalBehandling={beregningsresultatOriginalBehandling}
-      medlemskapFom={medlemskap ? medlemskap.fom : undefined}
-      aksjonspunkter={aksjonspunkter}
-      ytelseTypeKode={ytelseTypeKode}
-      employeeHasAccess={employeeHasAccess}
-      readOnly={isReadOnly}
-      previewCallback={previewCallback}
-      submitCallback={submitCallback}
-      alleKodeverk={alleKodeverk}
-      personopplysninger={personopplysninger}
-      arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
-      vedtakVarsel={vedtakVarsel}
-      tilgjengeligeVedtaksbrev={tilgjengeligeVedtaksbrev}
-      informasjonsbehovVedtaksbrev={informasjonsbehovVedtaksbrev}
-      dokumentdata={dokumentdataHente}
-      fritekstdokumenter={fritekstdokumenter}
-      lagreDokumentdata={lagreDokumentdata}
-      overlappendeYtelser={overlappendeYtelser}
-    />
+    {featureToggles?.NY_PROSESS_VEDTAK_ENABLED ? (
+      <VedtakPanelsNew
+        behandlingId={behandling.id}
+        behandlingVersjon={behandling.versjon}
+        behandlingTypeKode={behandling.type.kode}
+        behandlingStatus={behandling.status}
+        sprakkode={behandling.sprakkode}
+        behandlingresultat={behandling.behandlingsresultat}
+        behandlingPaaVent={behandling.behandlingPaaVent}
+        behandlingArsaker={behandling.behandlingÅrsaker}
+        beregningsgrunnlag={beregningsgrunnlag}
+        vilkar={vilkar}
+        tilbakekrevingvalg={tilbakekrevingvalg}
+        simuleringResultat={simuleringResultat}
+        resultatstruktur={beregningresultatForeldrepenger}
+        sendVarselOmRevurdering={sendVarselOmRevurdering}
+        resultatstrukturOriginalBehandling={beregningsresultatOriginalBehandling}
+        medlemskapFom={medlemskap ? medlemskap.fom : undefined}
+        aksjonspunkter={aksjonspunkter}
+        ytelseTypeKode={ytelseTypeKode}
+        employeeHasAccess={employeeHasAccess}
+        readOnly={isReadOnly}
+        previewCallback={previewCallback}
+        submitCallback={submitCallback}
+        alleKodeverk={alleKodeverk}
+        personopplysninger={personopplysninger}
+        arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
+        vedtakVarsel={vedtakVarsel}
+        tilgjengeligeVedtaksbrev={tilgjengeligeVedtaksbrev}
+        informasjonsbehovVedtaksbrev={informasjonsbehovVedtaksbrev}
+        dokumentdata={dokumentdataHente}
+        fritekstdokumenter={fritekstdokumenter}
+        lagreDokumentdata={lagreDokumentdata}
+        overlappendeYtelser={overlappendeYtelser}
+      />
+    ) : (
+      <VedtakPanelsOld
+        behandlingId={behandling.id}
+        behandlingVersjon={behandling.versjon}
+        behandlingTypeKode={behandling.type.kode}
+        behandlingStatus={behandling.status}
+        sprakkode={behandling.sprakkode}
+        behandlingresultat={behandling.behandlingsresultat}
+        behandlingPaaVent={behandling.behandlingPaaVent}
+        behandlingArsaker={behandling.behandlingÅrsaker}
+        beregningsgrunnlag={beregningsgrunnlag}
+        vilkar={vilkar}
+        tilbakekrevingvalg={tilbakekrevingvalg}
+        simuleringResultat={simuleringResultat}
+        resultatstruktur={beregningresultatForeldrepenger}
+        sendVarselOmRevurdering={sendVarselOmRevurdering}
+        resultatstrukturOriginalBehandling={beregningsresultatOriginalBehandling}
+        medlemskapFom={medlemskap ? medlemskap.fom : undefined}
+        aksjonspunkter={aksjonspunkter}
+        ytelseTypeKode={ytelseTypeKode}
+        employeeHasAccess={employeeHasAccess}
+        readOnly={isReadOnly}
+        previewCallback={previewCallback}
+        submitCallback={submitCallback}
+        alleKodeverk={alleKodeverk}
+        personopplysninger={personopplysninger}
+        arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
+        vedtakVarsel={vedtakVarsel}
+        tilgjengeligeVedtaksbrev={tilgjengeligeVedtaksbrev}
+        informasjonsbehovVedtaksbrev={informasjonsbehovVedtaksbrev}
+        dokumentdata={dokumentdataHente}
+        fritekstdokumenter={fritekstdokumenter}
+        lagreDokumentdata={lagreDokumentdata}
+        overlappendeYtelser={overlappendeYtelser}
+      />
+    )}
   </RawIntlProvider>
 );
 
@@ -117,6 +156,7 @@ VedtakProsessIndex.propTypes = {
   fritekstdokumenter: PropTypes.arrayOf(PropTypes.shape()),
   lagreDokumentdata: PropTypes.func.isRequired,
   overlappendeYtelser: PropTypes.arrayOf(PropTypes.shape()),
+  featureToggles: PropTypes.shape(),
 };
 
 VedtakProsessIndex.defaultProps = {
