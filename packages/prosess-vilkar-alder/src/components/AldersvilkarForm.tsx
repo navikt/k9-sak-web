@@ -56,19 +56,31 @@ const AldersvilkarForm = ({
       <VerticalSpacer sixteenPx />
       <Row>
         <div className={style.opplysninger}>
-          <p className="label">Opplysninger fra søknaden:</p>
+          <p className="label">
+            <FormattedMessage id="AlderVilkar.Lese.Etikett.Opplysninger" />
+          </p>
+          <b>
+            <FormattedMessage id="AlderVilkar.Lese.Etikett.Barn" />
+          </b>
           {angitteBarn.map(barn => (
-            <p key={barn.personIdent}>{barn.personIdent}</p>
+            <p className={style.barn} key={barn.personIdent}>
+              {barn.personIdent}
+            </p>
           ))}
         </div>
       </Row>
-      <Row>
-        <TextAreaField label="Begrunnelse" name="begrunnelse" validate={[required, minLength3, maxLength2000]} />
+      <Row className={style.vurdering}>
+        <TextAreaField
+          label={intl.formatMessage({ id: 'AlderVilkar.Lese.KroniskSyk' })}
+          name="begrunnelse"
+          validate={[required, minLength3, maxLength2000]}
+        />
       </Row>
       <VerticalSpacer sixteenPx />
       <Row>
         <Column>
           <RadioGroupPanel
+            isHorizontal
             label={<FormattedMessage id="AlderVilkar.KroniskSyk" />}
             name="erVilkarOk"
             validate={[required]}
