@@ -51,21 +51,20 @@ const AldersVilkarProsessIndex = ({
   );
   const skalVilkarsUtfallVises = behandling.status.kode === behandlingStatus.AVSLUTTET;
   const vilkaretErAutomatiskInnvilget =
-    !relevantAksjonspunkt && aldersVilkarBarn && periode[0]?.vilkarStatus.kode === vilkarUtfallType.OPPFYLT;
+    !relevantAksjonspunkt && aldersVilkarBarn && periode?.vilkarStatus.kode === vilkarUtfallType.OPPFYLT;
   let begrunnelseTekst = '';
   if (!vilkaretErAutomatiskInnvilget) begrunnelseTekst = relevantAksjonspunkt?.begrunnelse || '';
 
   return (
     <RawIntlProvider value={intl}>
-      {vilkaretErAutomatiskInnvilget ||
-        (skalVilkarsUtfallVises && (
-          <AldersVilkarStatus
-            vilkarOppfylt={vilkarOppfylt}
-            vilkarReferanse={aldersVilkarBarn.lovReferanse}
-            periode={formatereLukketPeriode(`${periode.periode.fom}/${periode.periode.tom}`)}
-            begrunnelse={begrunnelseTekst}
-          />
-        ))}
+      {(vilkaretErAutomatiskInnvilget || skalVilkarsUtfallVises) && (
+        <AldersVilkarStatus
+          vilkarOppfylt={vilkarOppfylt}
+          vilkarReferanse={aldersVilkarBarn.lovReferanse}
+          periode={formatereLukketPeriode(`${periode.periode.fom}/${periode.periode.tom}`)}
+          begrunnelse={begrunnelseTekst}
+        />
+      )}
       {!vilkaretErAutomatiskInnvilget && relevantAksjonspunkt && (
         <AldersVilkarAP
           behandling={behandling}
