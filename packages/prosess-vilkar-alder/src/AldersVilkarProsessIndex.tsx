@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
@@ -6,10 +6,10 @@ import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 import { Aksjonspunkt, Behandling, Vilkar } from '@k9-sak-web/types';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { AksjonspunktBox } from '@fpsak-frontend/shared-components';
-import AldersvilkarForm from './components/AldersvilkarForm';
-import AldersvilkarLese from './components/AldervilkarLese';
+import { formatereLukketPeriode } from '@fpsak-frontend/utils';
 import messages from '../i18n/nb_NO.json';
+import AldersVilkarAP from './components/AldersvilkarAP';
+import AldersVilkarStatus from './components/AldersvilkarStatus';
 
 const cache = createIntlCache();
 
@@ -42,42 +42,42 @@ const AldersVilkarProsessIndex = ({
   vilkar,
   status,
 }: AldersVilkarProsessIndexProps) => {
-  const [redigering, setRedigering] = useState<boolean>(false);
-  const vilkaret = vilkar.find(v => v.vilkarType.kode === vilkarType.ALDERSVILKAR_BARN);
-  const erVurdert = vilkaret.perioder[0].vilkarStatus.kode !== vilkarUtfallType.IKKE_VURDERT;
+  const aldersVilkarBarn = vilkar.find(v => v.vilkarType.kode === vilkarType.ALDERSVILKAR_BARN);
+  const periode = aldersVilkarBarn.perioder[0];
+  const erVurdert = periode.vilkarStatus.kode !== vilkarUtfallType.IKKE_VURDERT;
   const vilkarOppfylt = erVurdert ? status === vilkarUtfallType.OPPFYLT : false;
-  const lesemodus = isReadOnly || !isAksjonspunktOpen;
-  const aksjonspunktLost = behandling.status.kode === behandlingStatus.BEHANDLING_UTREDES && !isAksjonspunktOpen;
   const relevantAksjonspunkt: Aksjonspunkt = aksjonspunkter.find(
     ap => ap.definisjon.kode === aksjonspunktCodes.ALDERSVILKÅR,
   );
-  const begrunnelseTekst = relevantAksjonspunkt.begrunnelse || '';
-
-  useEffect(() => {
-    if (lesemodus) setRedigering(false);
-    else if (relevantAksjonspunkt.kanLoses) setRedigering(true);
-  }, [lesemodus, relevantAksjonspunkt.kanLoses]);
+  const skalVilkarsUtfallVises = behandling.status.kode === behandlingStatus.AVSLUTTET;
+  const vilkaretErAutomatiskInnvilget =
+    !relevantAksjonspunkt && aldersVilkarBarn && periode[0]?.vilkarStatus.kode === vilkarUtfallType.OPPFYLT;
+  let begrunnelseTekst = '';
+  if (!vilkaretErAutomatiskInnvilget) begrunnelseTekst = relevantAksjonspunkt?.begrunnelse || '';
 
   return (
     <RawIntlProvider value={intl}>
-      {redigering ? (
-        <AksjonspunktBox erAksjonspunktApent={redigering}>
-          <AldersvilkarForm
-            relevantAksjonspunkt={relevantAksjonspunkt}
-            submitCallback={submitCallback}
-            begrunnelseTekst={begrunnelseTekst}
-            erVilkaretOk={vilkarOppfylt}
-            erVurdert={erVurdert}
-            angitteBarn={angitteBarn}
+      {vilkaretErAutomatiskInnvilget ||
+        (skalVilkarsUtfallVises && (
+          <AldersVilkarStatus
+            vilkarOppfylt={vilkarOppfylt}
+            vilkarReferanse={aldersVilkarBarn.lovReferanse}
+            periode={formatereLukketPeriode(`${periode.periode.fom}/${periode.periode.tom}`)}
+            begrunnelse={begrunnelseTekst}
           />
-        </AksjonspunktBox>
-      ) : (
-        <AldersvilkarLese
-          aktiverRedigering={setRedigering}
-          begrunnelseTekst={begrunnelseTekst}
+        ))}
+      {!vilkaretErAutomatiskInnvilget && relevantAksjonspunkt && (
+        <AldersVilkarAP
+          behandling={behandling}
+          submitCallback={submitCallback}
+          relevantAksjonspunkt={relevantAksjonspunkt}
+          isReadOnly={isReadOnly}
           angitteBarn={angitteBarn}
-          aksjonspunktLost={aksjonspunktLost}
+          isAksjonspunktOpen={isAksjonspunktOpen}
+          status={status}
+          erVurdert={erVurdert}
           vilkarOppfylt={vilkarOppfylt}
+          begrunnelseTekst={begrunnelseTekst}
         />
       )}
     </RawIntlProvider>
