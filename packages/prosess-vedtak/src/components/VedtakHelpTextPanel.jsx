@@ -13,9 +13,6 @@ const findHelpTexts = (intl, aksjonspunktKoder) => {
   if (aksjonspunktKoder && aksjonspunktKoder.includes(aksjonspunktCodes.VURDERE_ANNEN_YTELSE)) {
     helpTexts.push(intl.formatMessage({ id: 'VedtakForm.VurderAnnenYtelse' }));
   }
-  if (aksjonspunktKoder && aksjonspunktKoder.includes(aksjonspunktCodes.VURDERE_OVERLAPPENDE_YTELSER_FØR_VEDTAK)) {
-    helpTexts.push(intl.formatMessage({ id: 'VedtakForm.VurderOverlappendeYtelserFørVedtak' }));
-  }
   if (aksjonspunktKoder && aksjonspunktKoder.includes(aksjonspunktCodes.VURDERE_DOKUMENT)) {
     helpTexts.push(intl.formatMessage({ id: 'VedtakForm.VurderDokument' }));
   }
@@ -30,7 +27,7 @@ const findHelpTexts = (intl, aksjonspunktKoder) => {
 };
 
 /**
- * Det er i denne filen teksten vises ... 
+ * Det er i denne filen teksten vises ...
  */
 
 export const VedtakHelpTextPanelImpl = ({ intl, readOnly, aksjonspunktKoder, viseFlereSjekkbokserForBrev }) => {

@@ -53,6 +53,10 @@ const featureToggles = [
     key: 'AKSJONSPUNKT_9015',
     value: process.env.AKSJONSPUNKT_9015,
   },
+  {
+    key: 'NY_PROSESS_VEDTAK_ENABLED',
+    value: process.env.NY_PROSESS_VEDTAK_ENABLED,
+  },
 ];
 
 module.exports = function (app) {

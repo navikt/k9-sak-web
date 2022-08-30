@@ -5,7 +5,7 @@ import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import ForhåndsvisRequest from '@k9-sak-web/types/src/formidlingTsType';
 import { dokumentdatatype } from '@k9-sak-web/konstanter';
 
-interface TilgjengeligeVedtaksbrev {
+export interface TilgjengeligeVedtaksbrev {
   begrunnelse: string;
   alternativeMottakere: Array<{
     id: string;

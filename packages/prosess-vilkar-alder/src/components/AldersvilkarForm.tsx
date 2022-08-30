@@ -10,6 +10,8 @@ import { Hovedknapp } from 'nav-frontend-knapper';
 import { Form, RadioGroupPanel, TextAreaField } from '@navikt/ft-form-hooks';
 import { maxLength, minLength, required } from '@navikt/ft-form-validators';
 
+import style from './AldersvilkarForm.less';
+
 type Inputs = {
   begrunnelse: string;
   erVilkarOk: string;
@@ -21,6 +23,7 @@ type Props = {
   begrunnelseTekst: string;
   erVilkaretOk: boolean | null;
   erVurdert: boolean;
+  angitteBarn: { personIdent: string }[];
 };
 
 const AldersvilkarForm = ({
@@ -28,6 +31,7 @@ const AldersvilkarForm = ({
   begrunnelseTekst,
   erVilkaretOk,
   erVurdert,
+  angitteBarn,
   intl,
 }: Props & WrappedComponentProps) => {
   const minLength3 = minLength(3);
@@ -50,6 +54,14 @@ const AldersvilkarForm = ({
         </AksjonspunktHelpTextTemp>
       </Row>
       <VerticalSpacer sixteenPx />
+      <Row>
+        <div className={style.opplysninger}>
+          <p className="label">Opplysninger fra søknaden:</p>
+          {angitteBarn.map(barn => (
+            <p key={barn.personIdent}>{barn.personIdent}</p>
+          ))}
+        </div>
+      </Row>
       <Row>
         <TextAreaField label="Begrunnelse" name="begrunnelse" validate={[required, minLength3, maxLength2000]} />
       </Row>

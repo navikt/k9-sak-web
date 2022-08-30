@@ -50,5 +50,9 @@
   {
     "key": "AKSJONSPUNKT_9015",
     "value": "${AKSJONSPUNKT_9015}"
+  },
+  {
+    "key": "NY_PROSESS_VEDTAK_ENABLED",
+    "value": "${NY_PROSESS_VEDTAK_ENABLED}"
   }
 ]

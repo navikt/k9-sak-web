@@ -162,7 +162,7 @@ describe('<VedtakRevurderingForm>', () => {
     expect(screen.queryByText('VedtakForm.ArsakTilAvslag')).not.toBeInTheDocument();
 
     const submitknapp = screen.getByRole('button');
-    expect(submitknapp).toHaveTextContent('VedtakForm.TilGodkjenning');
+    expect(submitknapp).toHaveTextContent('VedtakForm.SendTilBeslutter');
     expect(screen.getByTestId('brevpanel')).toBeInTheDocument();
   });
 

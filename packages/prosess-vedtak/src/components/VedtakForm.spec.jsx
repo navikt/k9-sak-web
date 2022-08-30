@@ -193,7 +193,7 @@ describe('<VedtakForm>', () => {
       />,
     );
     const fattVedtakButton = screen.getByRole('button');
-    expect(fattVedtakButton).toHaveTextContent('VedtakForm.TilGodkjenning');
+    expect(fattVedtakButton).toHaveTextContent('VedtakForm.SendTilBeslutter');
   });
 
   it('skal ikke vise knapper for å avslutt behandling når behandlingen er avvist med årsakkode 1099', () => {
@@ -249,7 +249,7 @@ describe('<VedtakForm>', () => {
     );
 
     const fattVedtakButton = screen.getByRole('button');
-    expect(fattVedtakButton).toHaveTextContent('VedtakForm.TilGodkjenning');
+    expect(fattVedtakButton).toHaveTextContent('VedtakForm.SendTilBeslutter');
   });
 
   it('skal vise knapper for å fatte vedtak når foreslå avslag', () => {

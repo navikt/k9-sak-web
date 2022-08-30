@@ -8,7 +8,7 @@ describe('<VedtakRevurderingSubmitPanel>', () => {
       { kode: '5027', erAktivt: true, toTrinnsBehandling: true },
     ];
     const tekstId = submitKnappTekst(aksjonspunkter);
-    expect(tekstId).to.equal('VedtakForm.TilGodkjenning');
+    expect(tekstId).to.equal('VedtakForm.SendTilBeslutter');
   });
 
   it('knapp skal vise fatt vedtak tekst når det finnes inaktive aksjonspunkter som skal til totrinn', () => {

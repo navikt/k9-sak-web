@@ -1,27 +1,26 @@
-import React from 'react';
-import { AlertStripeInfo } from 'nav-frontend-alertstriper';
-import { injectIntl } from 'react-intl';
-import PropTypes from 'prop-types';
+import SelectFieldFormik from '@fpsak-frontend/form/src/SelectFieldFormik';
+import dokumentMalType from '@fpsak-frontend/kodeverk/src/dokumentMalType';
+import vedtaksbrevtype from '@fpsak-frontend/kodeverk/src/vedtaksbrevtype';
+import { VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { required, safeJSONParse } from '@fpsak-frontend/utils';
 import {
   finnesTilgjengeligeVedtaksbrev,
   kanHaAutomatiskVedtaksbrev,
   kanHaFritekstbrev,
-  kanOverstyreMottakere,
   kanKunVelge,
+  kanOverstyreMottakere,
   lagVisningsnavnForMottaker,
 } from '@fpsak-frontend/utils/src/formidlingUtils';
+import { Alert } from '@navikt/ds-react';
 import { Column, Row } from 'nav-frontend-grid';
-import SelectFieldFormik from '@fpsak-frontend/form/src/SelectFieldFormik';
-import { VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { safeJSONParse, required } from '@fpsak-frontend/utils';
-
-import dokumentMalType from '@fpsak-frontend/kodeverk/src/dokumentMalType';
-import vedtaksbrevtype from '@fpsak-frontend/kodeverk/src/vedtaksbrevtype';
-import styles from './BrevPanel.less';
-import InformasjonsbehovAutomatiskVedtaksbrev from './InformasjonsbehovAutomatiskVedtaksbrev';
+import PropTypes from 'prop-types';
+import React from 'react';
+import { injectIntl } from 'react-intl';
+import { fieldnames } from '../../konstanter';
 import FritekstBrevPanel from '../FritekstBrevPanel';
 import { VedtakPreviewLink } from '../PreviewLink';
-import { fieldnames } from '../../konstanter';
+import styles from './BrevPanel.less';
+import InformasjonsbehovAutomatiskVedtaksbrev from './InformasjonsbehovAutomatiskVedtaksbrev';
 
 const kanResultatForhåndsvises = behandlingResultat => {
   if (!behandlingResultat) {
@@ -171,7 +170,9 @@ export const BrevPanel = props => {
         formikProps={formikProps}
         ytelseTypeKode={ytelseTypeKode}
       />
-      <VedtakPreviewLink previewCallback={manuellBrevCallback} />
+      <div className={styles.previewLinkContainer}>
+        <VedtakPreviewLink previewCallback={manuellBrevCallback} />
+      </div>
     </>
   );
 
@@ -184,7 +185,11 @@ export const BrevPanel = props => {
         begrunnelse={begrunnelse}
         informasjonsbehovVedtaksbrev={informasjonsbehovVedtaksbrev}
       />
-      {kanResultatForhåndsvises(behandlingResultat) && <VedtakPreviewLink previewCallback={automatiskBrevCallback} />}
+      {kanResultatForhåndsvises(behandlingResultat) && (
+        <div className={styles.previewLinkContainer}>
+          <VedtakPreviewLink previewCallback={automatiskBrevCallback} />
+        </div>
+      )}
     </>
   );
 
@@ -217,9 +222,9 @@ export const BrevPanel = props => {
       {finnesTilgjengeligeVedtaksbrev(tilgjengeligeVedtaksbrev) ? (
         brevpanel
       ) : (
-        <AlertStripeInfo className={styles.infoIkkeVedtaksbrev}>
+        <Alert variant="info" size="medium" className={styles.infoIkkeVedtaksbrev}>
           {intl.formatMessage({ id: 'VedtakForm.IkkeVedtaksbrev' })}
-        </AlertStripeInfo>
+        </Alert>
       )}
     </div>
   );

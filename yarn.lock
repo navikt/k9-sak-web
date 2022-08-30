@@ -3587,10 +3587,10 @@
   resolved "https://npm.pkg.github.com/download/@navikt/ds-css/0.18.29/e2b5a8c6467711da51bf92e998000632f2ee3687ba9d14f7433ac9fb6a18758e#c8727d6240f87bdc41d83d1306b34ab892afbd96"
   integrity sha512-nzJvSI5AYEYJhWqvYuWqnDWDpMkaPAfY/uL/4LLkdpsgyOnOfcLbZu3jrXMVrKMvpD2AKYNSDSG7f/r6bA+jpg==
 
-"@navikt/ds-css@^1.0.2":
-  version "1.0.2"
-  resolved "https://npm.pkg.github.com/download/@navikt/ds-css/1.0.2/ac56c76348a4ca809a9bda7bf42f4aabbf17613f7d885f9f3ad284140f833f36#411b1e6f149b0833f4c5247f1aec89f88ebf00ec"
-  integrity sha512-BCD8lj5XKPyIlQXd4071Wl+/LpCiMkofPbFSgV+ewp2sfEDhPTYkupMbArn4kC0k5iJ3ksj0AXCk3QKquUIS6w==
+"@navikt/ds-css@^1.2.2":
+  version "1.2.2"
+  resolved "https://npm.pkg.github.com/download/@navikt/ds-css/1.2.2/fbdebefdca818e14168b839b2347b53f3d237116#fbdebefdca818e14168b839b2347b53f3d237116"
+  integrity sha512-kfYpbkM4ACjDUQdEd1kKQEK0N+8dpjNzrrB7iAQnjzvdX3XFBmuQKF3iPKvc1PkIKwWp9n/ihzBp23UHY0tWWw==
 
 "@navikt/ds-icons@^0.8.11", "@navikt/ds-icons@^0.8.12", "@navikt/ds-icons@^0.8.4":
   version "0.8.12"
@@ -3613,10 +3613,10 @@
   dependencies:
     uuid "^8.3.2"
 
-"@navikt/ds-icons@^1.0.2":
-  version "1.0.2"
-  resolved "https://npm.pkg.github.com/download/@navikt/ds-icons/1.0.2/67dbdc6f97cae3848ed0b6b8d10ef5adc12ce598a76a93c66c34d1d330a07b74#4ca74e4f1a687f35fd67d2d7e70ef0762f3edace"
-  integrity sha512-WdmEfgZ32bhnLBiKUOnKysgU4aDYrPAa29DqSxlZqZ9cgYGdd/Wbmmr3ZGsLjxlrhY6qX5s9S22x0mwmHr7kvA==
+"@navikt/ds-icons@^1.2.2":
+  version "1.2.2"
+  resolved "https://npm.pkg.github.com/download/@navikt/ds-icons/1.2.2/bd11ddbc62f64c8dbb7a271deb4db868bf3dd6fd#bd11ddbc62f64c8dbb7a271deb4db868bf3dd6fd"
+  integrity sha512-EJNuBCdwJm8KhqbMp02U5q+JSgsIagOvrP/WWy+ykqwMVtGd8oIEqWiG7+EeuwURhfoV7aw4Ed1mZs7cK95wDQ==
 
 "@navikt/ds-react-internal@^0.12.8":
   version "0.12.30"
@@ -3629,18 +3629,6 @@
     classnames "^2.3.1"
     copy-to-clipboard "^3.3.1"
     react-merge-refs "^1.1.0"
-
-"@navikt/ds-react@1.0.2", "@navikt/ds-react@^1.0.2":
-  version "1.0.2"
-  resolved "https://npm.pkg.github.com/download/@navikt/ds-react/1.0.2/ebca16331982ef12ccce8a3a99d24eb2f3bd7e5ba18e356f84cc21612b428d09#3a497dd44b0d6544980bdfc8558e1589ef63d40c"
-  integrity sha512-0Sl+QJ8OE2ttEvT0fHZTiBlI8bF9z3dSjawkHSmlxuhZZltX+Cy2hdlrnqysIxcjYmnffScYV36d9TMJKDnU5Q==
-  dependencies:
-    "@floating-ui/react-dom-interactions" "0.9.2"
-    "@navikt/ds-icons" "^1.0.2"
-    "@radix-ui/react-tabs" "1.0.0"
-    "@radix-ui/react-toggle-group" "1.0.0"
-    clsx "^1.1.1"
-    react-modal "3.15.1"
 
 "@navikt/ds-react@^0.17.19":
   version "0.17.21"
@@ -3714,6 +3702,18 @@
     react-popper "^2.2.5"
     uuid "^8.3.2"
 
+"@navikt/ds-react@^1.2.2":
+  version "1.2.2"
+  resolved "https://npm.pkg.github.com/download/@navikt/ds-react/1.2.2/25080deeb91e4a22039319ca9939fc69a85e42c9#25080deeb91e4a22039319ca9939fc69a85e42c9"
+  integrity sha512-g6BRyRf8BtnYLtEy6ZoEKfr40MRhJPJk+GQl3v0V3dw4dASrI1MWDoNTLpSrO0PT+rCX2AOBu+LsEmFulyl2AA==
+  dependencies:
+    "@floating-ui/react-dom-interactions" "0.9.2"
+    "@navikt/ds-icons" "^1.2.2"
+    "@radix-ui/react-tabs" "1.0.0"
+    "@radix-ui/react-toggle-group" "1.0.0"
+    clsx "^1.1.1"
+    react-modal "3.15.1"
+
 "@navikt/familie-endringslogg@^2.0.0":
   version "2.0.2"
   resolved "https://npm.pkg.github.com/download/@navikt/familie-endringslogg/2.0.2/8feffd7b9fd4e73b49f0f40004ff7f2009925fb34fada239c7658d8af5a5f03b#0839eb0c099c23bc779312a3c8bfb5251a83f746"
@@ -3729,6 +3729,11 @@
     classnames "^2.2.6"
     react-modal "^3.14.4"
     react-transition-group "^4.4.2"
+
+"@navikt/fnrvalidator@1.1.4":
+  version "1.1.4"
+  resolved "https://npm.pkg.github.com/download/@navikt/fnrvalidator/1.1.4/b2ce64cb24b3726f715eee110f9f3fde37b907f7#b2ce64cb24b3726f715eee110f9f3fde37b907f7"
+  integrity sha512-EZBwlNhp886E57GuknLB6G9Bnv4nl+e5K12B/2BeLpWZENxCmcQ+5oFvIThvEsU+LVOdfJxxGOxSvrwe5ZB3pQ==
 
 "@navikt/fnrvalidator@1.3.0":
   version "1.3.0"
@@ -7169,9 +7174,9 @@ argparse@^2.0.1:
   integrity sha512-8+9WqebbFzpX9OR+Wa6O29asIogeRMzcGtAINdpMHHyAg10f05aSFVBbcEqGf/PXw1EjAZ+q2/bEBg3DvurK3Q==
 
 aria-hidden@^1.1.3:
-  version "1.2.0"
-  resolved "https://registry.yarnpkg.com/aria-hidden/-/aria-hidden-1.2.0.tgz#5c6fdae120da4237c4023422b695d9de91f0e4d5"
-  integrity sha512-gk7QBfz7M9dMK6xZmlCZkR0wqGe9ojBmYHCAZUhdvdYpfY1BLnnLDxdNGzxXhPAtbr09FZS3exsZhX9ELnJJ0w==
+  version "1.2.1"
+  resolved "https://registry.yarnpkg.com/aria-hidden/-/aria-hidden-1.2.1.tgz#ad8c1edbde360b454eb2bf717ea02da00bfee0f8"
+  integrity sha512-PN344VAf9j1EAi+jyVHOJ8XidQdPVssGco39eNcsGdM4wcsILtxrKLkbuiMfLWYROK1FjRQasMWCBttrhjnr6A==
   dependencies:
     tslib "^2.0.0"
 
