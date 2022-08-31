@@ -11,6 +11,7 @@ import messages from '../i18n/nb_NO.json';
 import VurderFaktaBeregningPanel from './components/fellesFaktaForATFLogSN/VurderFaktaBeregningPanel';
 import beregningBehandlingPropType from './propTypes/beregningBehandlingPropType';
 import beregningsgrunnlagPropType from './propTypes/beregningsgrunnlagPropType';
+import beregningKoblingPropType from './propTypes/beregningKoblingPropType';
 import AvklareAktiviteterPanel from './components/avklareAktiviteter/AvklareAktiviteterPanel';
 import styles from './beregningFaktaIndex.less';
 
@@ -29,6 +30,7 @@ const BeregningFaktaIndexPropTypes = {
   vilkar: PropTypes.any.isRequired,
   beregningErBehandlet: PropTypes.bool,
   aksjonspunkter: PropTypes.any,
+  beregningreferanserTilVurdering: PropTypes.arrayOf(beregningKoblingPropType).isRequired,
 };
 
 type OwnProps = PropTypes.InferProps<typeof BeregningFaktaIndexPropTypes>;
@@ -84,9 +86,16 @@ const harAvklaringsbehovIPanel = avklaringsbehov => {
   return false;
 };
 
-const skalVurderes = (bg, vilkårsperioder) =>
-  harAvklaringsbehovIPanel(bg.avklaringsbehov) &&
-  vilkårsperioder.find(({ periode }) => periode.fom === bg.vilkårsperiodeFom).vurderesIBehandlingen;
+function erTilVurderingOgIkkeForlengelse(beregningreferanserTilVurdering, bg) {
+  return beregningreferanserTilVurdering.some(r => !r.erForlengelse && r.skjæringstidspunkt === bg.vilkårsperiodeFom);
+}
+
+const skalVurderes = (bg, beregningreferanserTilVurdering) =>
+  harAvklaringsbehovIPanel(bg.avklaringsbehov) && erTilVurderingOgIkkeForlengelse(beregningreferanserTilVurdering, bg);
+
+function kanLøseMinstEtt(aktiveAvklaringsBehov) {
+  return aktiveAvklaringsBehov.some(ap => relevanteKoder.includes(ap.definisjon.kode) && ap.kanLoses !== false);
+}
 
 const BeregningFaktaIndex = ({
   vilkar,
@@ -100,6 +109,7 @@ const BeregningFaktaIndex = ({
   arbeidsgiverOpplysningerPerId,
   beregningErBehandlet,
   aksjonspunkter,
+  beregningreferanserTilVurdering,
 }: OwnProps) => {
   const skalBrukeTabs = beregningsgrunnlag.length > 1;
   const [aktivtBeregningsgrunnlagIndeks, setAktivtBeregningsgrunnlagIndeks] = useState(0);
@@ -116,21 +126,19 @@ const BeregningFaktaIndex = ({
   }
 
   const aktiveAvklaringsBehov = aktivtBeregningsgrunnlag.avklaringsbehov;
-  const relevanteLøsbareAvklaringsbehov = aktiveAvklaringsBehov.filter(
-    ap => relevanteKoder.includes(ap.definisjon.kode) && ap.kanLoses !== false,
-  );
+  const skalKunneLøseAvklaring =
+    erTilVurderingOgIkkeForlengelse(beregningreferanserTilVurdering, aktivtBeregningsgrunnlag) &&
+    kanLøseMinstEtt(aktiveAvklaringsBehov);
   const vilkårsperioder = beregningsgrunnlagVilkår.perioder;
 
   const avklarAktiviteterReadOnly =
     readOnly ||
-    ((relevanteLøsbareAvklaringsbehov.length === 0 ||
-      harAvklaringsbehov(OVERSTYRING_AV_BEREGNINGSAKTIVITETER, aktiveAvklaringsBehov)) &&
-      !erOverstyrer);
+    !skalKunneLøseAvklaring ||
+    (harAvklaringsbehov(OVERSTYRING_AV_BEREGNINGSAKTIVITETER, aktiveAvklaringsBehov) && !erOverstyrer);
   const avklarFaktaBeregningReadOnly =
     readOnly ||
-    ((relevanteLøsbareAvklaringsbehov.length === 0 ||
-      harAvklaringsbehov(OVERSTYRING_AV_BEREGNINGSGRUNNLAG, aktiveAvklaringsBehov)) &&
-      !erOverstyrer);
+    !skalKunneLøseAvklaring ||
+    (harAvklaringsbehov(OVERSTYRING_AV_BEREGNINGSGRUNNLAG, aktiveAvklaringsBehov) && !erOverstyrer);
   return (
     <RawIntlProvider value={intl}>
       {skalBrukeTabs && (
@@ -139,7 +147,9 @@ const BeregningFaktaIndex = ({
             tabs={beregningsgrunnlag.map((currentBeregningsgrunnlag, currentBeregningsgrunnlagIndex) => ({
               aktiv: aktivtBeregningsgrunnlagIndeks === currentBeregningsgrunnlagIndex,
               label: lagLabel(currentBeregningsgrunnlag, vilkårsperioder),
-              className: skalVurderes(currentBeregningsgrunnlag, vilkårsperioder) ? 'harAksjonspunkt' : '',
+              className: skalVurderes(currentBeregningsgrunnlag, beregningreferanserTilVurdering)
+                ? 'harAksjonspunkt'
+                : '',
             }))}
             onChange={(e, clickedIndex) => setAktivtBeregningsgrunnlagIndeks(clickedIndex)}
           />
