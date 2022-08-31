@@ -232,7 +232,9 @@ const transformValues = (values, alleDokumenter, apKode, periodeFom, periodeTom)
     const fraDato = (() => {
       switch (krav.erVilkarOk) {
         case true:
-          return dokumentStatus.status[0]?.periode.fom;
+          return dokumentStatus.status.reduce((acc, curr) =>
+            !acc || moment(curr.periode.fom) < moment(acc) ? curr.periode.fom : acc,
+          );
 
         case DELVIS_OPPFYLT:
           return krav.fraDato;
