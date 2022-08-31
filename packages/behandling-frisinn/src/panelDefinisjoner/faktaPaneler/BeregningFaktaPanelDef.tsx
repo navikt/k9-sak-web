@@ -4,7 +4,7 @@ import { faktaPanelCodes } from '@k9-sak-web/konstanter';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import BeregningFaktaIndex from '@fpsak-frontend/fakta-beregning';
 import { FaktaPanelDef, DynamicLoader } from '@k9-sak-web/behandling-felles';
-import { konverterKodeverkTilKode } from '@fpsak-frontend/utils';
+import { konverterKodeverkTilKode, mapVilkar } from '@fpsak-frontend/utils';
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 
 const FaktaBeregningsgrunnlag = React.lazy(() => import('@navikt/ft-fakta-beregning'));
@@ -35,7 +35,7 @@ class BeregningFaktaPanelDef extends FaktaPanelDef {
           submitCallback={props.submitCallback}
           formData={props.formData}
           setFormData={props.setFormData}
-          vilkar={bgVilkaret}
+          vilkar={mapVilkar(bgVilkaret, props.beregningreferanserTilVurdering)}
           alleKodeverk={deepCopyProps.alleKodeverk}
           erOverstyrer={false}
           submittable={deepCopyProps.submittable}
@@ -51,11 +51,12 @@ class BeregningFaktaPanelDef extends FaktaPanelDef {
 
   getOverstyrVisningAvKomponent = ({ beregningsgrunnlag }) => !!beregningsgrunnlag;
 
-  getData = ({ beregningsgrunnlag, arbeidsgiverOpplysningerPerId, vilkar }) => ({
+  getData = ({ beregningsgrunnlag, arbeidsgiverOpplysningerPerId, vilkar, beregningreferanserTilVurdering }) => ({
     erOverstyrer: false,
     beregningsgrunnlag: beregningsgrunnlag ? [beregningsgrunnlag[0]] : [], // FRISINN skal kun vise ett beregningsgrunnlag
     arbeidsgiverOpplysningerPerId,
     vilkar,
+    beregningreferanserTilVurdering,
   });
 }
 

@@ -72,6 +72,7 @@ export const faktaOmBeregningPropType = PropTypes.exact({
 
 const beregningsgrunnlagPropType = PropTypes.exact({
   avklaringsbehov: PropTypes.arrayOf(beregningAvklaringsbehovPropType).isRequired,
+  vilkårsperiodeFom: PropTypes.string.isRequired,
   aktivitetStatus: PropTypes.arrayOf(
     PropTypes.exact({
       aktivitetStatus: PropTypes.string,
