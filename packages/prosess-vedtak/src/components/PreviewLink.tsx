@@ -20,6 +20,7 @@ const PreviewLink = ({ previewCallback, children, noIcon }: PreviewLinkProps) =>
         onClick={previewCallback}
         onKeyDown={e => (e.keyCode === 13 ? previewCallback(e) : null)}
         className={classNames(styles.previewLink, styles['previewLink--noIcon'])}
+        type="button"
       >
         {children}
       </Button>
@@ -33,6 +34,7 @@ const PreviewLink = ({ previewCallback, children, noIcon }: PreviewLinkProps) =>
       onClick={previewCallback}
       onKeyDown={e => (e.keyCode === 13 ? previewCallback(e) : null)}
       className={classNames(styles.previewLink)}
+      type="button"
     >
       {children}
     </Button>

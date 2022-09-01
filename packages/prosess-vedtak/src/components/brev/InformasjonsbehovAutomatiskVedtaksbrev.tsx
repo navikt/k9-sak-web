@@ -1,4 +1,4 @@
-import CheckboxFieldFormik from '@fpsak-frontend/form/src/CheckboxFieldFormik';
+import { CheckboxGroupFormik } from '@fpsak-frontend/form';
 import { Kodeverk } from '@k9-sak-web/types';
 import { Alert, Heading } from '@navikt/ds-react';
 import { useFormikContext } from 'formik';
@@ -32,6 +32,12 @@ const InformasjonsbehovAutomatiskVedtaksbrev: React.FC<Props> = ({
   const aktiverteInformasjonsbehov =
     (informasjonsbehovVedtaksbrev?.informasjonsbehov || []).filter(({ type }) => type === 'FRITEKST') ?? [];
 
+  if (aktiverteInformasjonsbehov.length === 0) {
+    return null;
+  }
+
+  const harBegrunnelse = aktiverteInformasjonsbehov.some(behov => values[behov.kode]?.length > 0);
+
   return (
     <>
       {!readOnly && (
@@ -58,16 +64,24 @@ const InformasjonsbehovAutomatiskVedtaksbrev: React.FC<Props> = ({
         ))}
         {!readOnly && (
           <div className={styles.checkbox}>
-            <CheckboxFieldFormik
-              label={{ id: 'InformasjonsbehovAutomatiskVedtaksbrev.IkkeRelevantMedFritekst' }}
+            <CheckboxGroupFormik
               name="ikkeRelevantMedFritekst"
-              validate={value => {
-                const harBegrunnelse = aktiverteInformasjonsbehov.some(behov => values[behov.kode]?.length > 0);
-                if (!harBegrunnelse && !value) {
-                  return 'Du må bekrefte at det ikke er relevant med fritekstbeskrivelse i brevet';
-                }
-                return null;
-              }}
+              legend={intl.formatMessage({ id: 'InformasjonsbehovAutomatiskVedtaksbrev.ErDetRelevantMedFritekst' })}
+              hideLegend
+              checkboxes={[
+                {
+                  value: 'ikkeRelevantMedFritekst',
+                  label: intl.formatMessage({ id: 'InformasjonsbehovAutomatiskVedtaksbrev.IkkeRelevantMedFritekst' }),
+                },
+              ]}
+              validate={[
+                value => {
+                  if (!harBegrunnelse && (!value || value.length === 0)) {
+                    return [intl.formatMessage({ id: 'ValidationMessage.BekreftIkkeRelevantFritekst' })];
+                  }
+                  return null;
+                },
+              ]}
             />
           </div>
         )}
