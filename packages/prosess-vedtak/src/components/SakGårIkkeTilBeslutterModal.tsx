@@ -20,10 +20,10 @@ const SakGårIkkeTilBeslutterModal = ({ onClose, onSubmit }) => {
           </div>
         </Alert>
         <div className={styles.buttonContainer}>
-          <Button className={styles.submitButton} variant="primary" onClick={onSubmit} size="small">
+          <Button className={styles.submitButton} variant="primary" onClick={onSubmit} size="small" type="button">
             {intl.formatMessage({ id: 'SakGårIkkeTilBeslutterModal.FattVedtak' })}
           </Button>
-          <Button variant="secondary" onClick={onClose} size="small">
+          <Button variant="secondary" onClick={onClose} size="small" type="button">
             {intl.formatMessage({ id: 'SakGårIkkeTilBeslutterModal.Avbryt' })}
           </Button>
         </div>

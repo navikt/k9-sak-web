@@ -129,6 +129,7 @@
   "ValidationMessage.MerEn100Prosent": "Samlet utbetalingsgrad og andel i arbeid bør ikke overskride 100%.",
   "ValidationMessage.MerEn100ProsentOgOgyldigUtsettlse": "Samlet utbetalingsgrad og andel i arbeid bør ikke overskride 100%. Søker har ikke 100% stilling, vurder om perioden kan utsettes.",
   "ValidationMessage.InvalidOrganisasjonsnummer": "Ugyldig organisasjonsnummer.",
+  "ValidationMessage.BekreftIkkeRelevantFritekst": "Du må bekrefte at det ikke er relevant med fritekstbeskrivelse i brevet",
   "SakGårIkkeTilBeslutterModal.IngenToTrinnskontroll": "Denne behandlingen har ikke totrinnskontroll.",
   "SakGårIkkeTilBeslutterModal.BrevBlirIkkeSendt": "Brev blir sendt direkte til søker",
   "SakGårIkkeTilBeslutterModal.FattVedtak": "Fatt vedtak",
@@ -136,5 +137,6 @@
   "SakGårIkkeTilBeslutterModal.ModalAriaLabel": "Modal, sak går ikke til beslutter",
   "InformasjonsbehovAutomatiskVedtaksbrev.Fritekstbeskrivelse": "Fritekstbeskrivelse",
   "InformasjonsbehovAutomatiskVedtaksbrev.SupplerMedFritekst": "Suppler med fritekst i henhold til skjønnsmessig vurdering.",
-  "InformasjonsbehovAutomatiskVedtaksbrev.IkkeRelevantMedFritekst": "Det er ikke relevant med fritekstbeskrivelse i brevet"
+  "InformasjonsbehovAutomatiskVedtaksbrev.IkkeRelevantMedFritekst": "Det er ikke relevant med fritekstbeskrivelse i brevet",
+  "InformasjonsbehovAutomatiskVedtaksbrev.ErDetRelevantMedFritekst": "Er det relevant med fritekstbeskrivelse i brevet?"
 }
