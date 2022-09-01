@@ -579,9 +579,32 @@ describe('<AvklareAktiviteterPanel>', () => {
     const initialValues = buildInitialValuesAvklarAktiviteter(beregningsgrunnlag, {
       aktivtBeregningsgrunnlagIndex: 1,
       behandlingResultatPerioder: [{ periode: { fom: '2019-02-02' }, vurderesIBehandlingen: true }],
+      beregningreferanserTilVurdering: [{ skjæringstidspunkt: '2019-02-02', erForlengelse: false }],
     });
     expect(initialValues !== null).to.equal(true);
     expect(initialValues[MANUELL_OVERSTYRING_FIELD]).to.equal(false);
+    expect(initialValues.erTilVurdering).to.equal(true);
+  });
+
+  it('skal teste at initial values blir bygget for forlengelse', () => {
+    const avklarAktiviteter = {
+      aktiviteterTomDatoMapping: [{ tom: '2019-02-02', aktiviteter }],
+    };
+
+    const beregningsgrunnlag = {
+      avklaringsbehov: apsAvklarAktiviteter,
+      faktaOmBeregning: { avklarAktiviteter },
+      skjæringstidspunkt: '2019-02-02',
+      vilkårsperiodeFom: '2019-02-02',
+    };
+    const initialValues = buildInitialValuesAvklarAktiviteter(beregningsgrunnlag, {
+      aktivtBeregningsgrunnlagIndex: 1,
+      behandlingResultatPerioder: [{ periode: { fom: '2019-02-02' }, vurderesIBehandlingen: true }],
+      beregningreferanserTilVurdering: [{ skjæringstidspunkt: '2019-02-02', erForlengelse: true }],
+    });
+    expect(initialValues !== null).to.equal(true);
+    expect(initialValues[MANUELL_OVERSTYRING_FIELD]).to.equal(false);
+    expect(initialValues.erTilVurdering).to.equal(false);
   });
 
   it('skal teste at initial values blir bygget uten aksjonspunkt', () => {
@@ -599,6 +622,7 @@ describe('<AvklareAktiviteterPanel>', () => {
       {
         aktivtBeregningsgrunnlagIndex: 1,
         behandlingResultatPerioder: [{ periode: { fom: '2019-02-02' }, vurderesIBehandlingen: true }],
+        beregningreferanserTilVurdering: [{ skjæringstidspunkt: '2019-02-02', erForlengelse: false }],
       },
     );
     expect(initialValues !== null).to.equal(true);
@@ -620,6 +644,7 @@ describe('<AvklareAktiviteterPanel>', () => {
       {
         aktivtBeregningsgrunnlagIndex: 1,
         behandlingResultatPerioder: [{ periode: { fom: '2019-02-02' }, vurderesIBehandlingen: true }],
+        beregningreferanserTilVurdering: [{ skjæringstidspunkt: '2019-02-02', erForlengelse: false }],
       },
     );
     expect(initialValues !== null).to.equal(true);
