@@ -51,6 +51,7 @@ const VedtakSubmit = ({
       loading={isSubmitting}
       onClick={handleSubmit}
       size="small"
+      type="submit"
     >
       {intl.formatMessage({
         id:
