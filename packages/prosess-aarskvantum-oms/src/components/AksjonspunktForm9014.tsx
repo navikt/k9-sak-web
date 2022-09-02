@@ -196,7 +196,6 @@ export const FormContent = ({
         maxLength={1500}
         readOnly={!isAksjonspunktOpen}
       />
-
       <VerticalSpacer sixteenPx />
 
       {!erÅF ||
