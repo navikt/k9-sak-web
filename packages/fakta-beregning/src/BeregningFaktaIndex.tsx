@@ -171,6 +171,7 @@ const BeregningFaktaIndex = ({
           aktivtBeregningsgrunnlagIndex={aktivtBeregningsgrunnlagIndeks}
           alleBeregningsgrunnlag={beregningsgrunnlag}
           arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
+          beregningreferanserTilVurdering={beregningreferanserTilVurdering}
         />
         <VerticalSpacer thirtyTwoPx />
         <VurderFaktaBeregningPanel
@@ -186,6 +187,7 @@ const BeregningFaktaIndex = ({
           alleBeregningsgrunnlag={beregningsgrunnlag}
           aktivtBeregningsgrunnlagIndex={aktivtBeregningsgrunnlagIndeks}
           arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
+          beregningreferanserTilVurdering={beregningreferanserTilVurdering}
         />
       </div>
     </RawIntlProvider>

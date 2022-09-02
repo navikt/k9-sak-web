@@ -327,12 +327,12 @@ export const buildInitialValues = (
   ownProps,
   alleBeregningsgrunnlag,
   aktivtBeregningsgrunnlagIndex,
-  behandlingResultatPerioder,
+  beregningreferanserTilVurdering,
 ) => ({
   [fieldArrayName]: alleBeregningsgrunnlag.map(beregningsgrunnlag => ({
-    erTilVurdering: behandlingResultatPerioder.find(
-      ({ periode }) => periode.fom === beregningsgrunnlag.vilkårsperiodeFom,
-    ).vurderesIBehandlingen,
+    erTilVurdering: beregningreferanserTilVurdering.some(
+      r => r.skjæringstidspunkt === beregningsgrunnlag.vilkårsperiodeFom && !r.erForlengelse,
+    ),
     avklaringsbehov: beregningsgrunnlag.avklaringsbehov,
     ...getBuildInitialValuesFaktaForATFLOgSN(ownProps, beregningsgrunnlag)(),
   })),
@@ -354,12 +354,12 @@ const mapStateToPropsFactory = (initialState, initialProps) => {
       ),
     );
   return (state, ownProps) => {
-    const { alleBeregningsgrunnlag, aktivtBeregningsgrunnlagIndex, behandlingResultatPerioder } = ownProps;
+    const { alleBeregningsgrunnlag, aktivtBeregningsgrunnlagIndex, beregningreferanserTilVurdering } = ownProps;
     const initialValues = buildInitialValues(
       ownProps,
       alleBeregningsgrunnlag,
       aktivtBeregningsgrunnlagIndex,
-      behandlingResultatPerioder,
+      beregningreferanserTilVurdering,
     );
     return {
       initialValues,
