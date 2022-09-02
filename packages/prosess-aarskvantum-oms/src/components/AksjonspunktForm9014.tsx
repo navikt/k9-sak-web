@@ -303,7 +303,7 @@ export const begrunnelseUavklartePerioder = 'Rammemeldinger er oppdatert i Infot
 export const transformValues = (
   { begrunnelse = begrunnelseUavklartePerioder, valg, bekreftInfotrygd, fosterbarn }: FormValues,
   kode: string,
-  initialFosterbarn: fosterbarnDto[] = [],
+  initialFosterbarn: string[] = [],
 ) => {
   if (kode === aksjonspunktCodes.ÅRSKVANTUM_FOSTERBARN && valg === valgValues.fortsett) {
     return [{ kode, begrunnelse, fortsettBehandling: true, fosterbarn: initialFosterbarn }];
@@ -320,7 +320,13 @@ const mapStateToPropsFactory = (_initialState, initialProps: AksjonspunktFormPro
   const { submitCallback, aksjonspunkterForSteg: aksjonspunkter } = initialProps;
   const aksjonspunktKode = utledAksjonspunktKode(aksjonspunkter);
   const onSubmit = (formValues: FormValues) =>
-    submitCallback(transformValues(formValues, aksjonspunktKode, initialProps.fosterbarn));
+    submitCallback(
+      transformValues(
+        formValues,
+        aksjonspunktKode,
+        initialProps.fosterbarn.map(barn => barn.fnr),
+      ),
+    );
   const { behandlingId, behandlingVersjon } = initialProps;
   const formNavn = getBehandlingFormName(behandlingId, behandlingVersjon, årskvantumAksjonspunktFormName);
 
