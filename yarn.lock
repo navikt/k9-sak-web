@@ -3770,17 +3770,17 @@
   resolved "https://npm.pkg.github.com/download/@navikt/fnrvalidator/1.3.0/57e0b0b2bfe6ba79ad3c33dc6529c51ca8d573ca8cdd4c4dd3d3aa59446fe56f#8cea6bae592f772d07efebe9a5ab7179552e1d6f"
   integrity sha512-k1MEZ8xwxtmY570gB+BF38kr9Xta1KIcx0yUExHQZWIsD1PNGSVagoriRTxqGyyTTkt4ajk1Z18WPfWX7rtpgQ==
 
-"@navikt/ft-fakta-beregning@2.1.16":
-  version "2.1.16"
-  resolved "https://npm.pkg.github.com/download/@navikt/ft-fakta-beregning/2.1.16/c3a37736faa54f19d1f755ad92c7d34e85da89fa#c3a37736faa54f19d1f755ad92c7d34e85da89fa"
-  integrity sha512-xFEhcT1BHzmtArOQAwJmLYElbAa1aBexKRy8pr/7Yw/1Nu7OVwZJZxom6AukDUlSfYUuI7ycA/YMOQheCXgAEw==
+"@navikt/ft-fakta-beregning@2.1.17":
+  version "2.1.17"
+  resolved "https://npm.pkg.github.com/download/@navikt/ft-fakta-beregning/2.1.17/953c278d03e2f1ddd4116747ef05ec7a05cb3560#953c278d03e2f1ddd4116747ef05ec7a05cb3560"
+  integrity sha512-087DtWIcDLHtMmNGHw99kMt4SJ8BMXu/dQhEItc9ZzpmRx3WAp1zpRc5ebYEq/jK+PJXycF6Ir/Okxmtiw5TLQ==
   dependencies:
-    "@navikt/ft-form-hooks" "^1.0.39"
+    "@navikt/ft-form-hooks" "^1.0.40"
     "@navikt/ft-form-validators" "^1.0.28"
     "@navikt/ft-kodeverk" "^1.0.17"
     "@navikt/ft-konstanter" "^1.0.12"
     "@navikt/ft-types" "^1.0.27"
-    "@navikt/ft-ui-komponenter" "^1.0.36"
+    "@navikt/ft-ui-komponenter" "^1.0.37"
     "@navikt/ft-utils" "^1.0.33"
     core-js "3.25.0"
     dayjs "1.11.5"
@@ -3801,16 +3801,16 @@
     react-hook-form "7.34.2"
     react-intl "6.1.0"
 
-"@navikt/ft-fakta-fordel-beregningsgrunnlag@2.0.19":
-  version "2.0.19"
-  resolved "https://npm.pkg.github.com/download/@navikt/ft-fakta-fordel-beregningsgrunnlag/2.0.19/0b68f377ea930738422b8274f2181c6f9020ad89#0b68f377ea930738422b8274f2181c6f9020ad89"
-  integrity sha512-aILrlyGGBvvi7vcxjWd6i4QT5V6vOBlOrf+K3YePpZKvhHyoi8aDfutTJzdMppzb/9JUzrj8S7b0GCKUUGAzXQ==
+"@navikt/ft-fakta-fordel-beregningsgrunnlag@2.0.20":
+  version "2.0.20"
+  resolved "https://npm.pkg.github.com/download/@navikt/ft-fakta-fordel-beregningsgrunnlag/2.0.20/89534ed014749ca24b3f86410074659e9c3f40e7#89534ed014749ca24b3f86410074659e9c3f40e7"
+  integrity sha512-ifHvrKsTt8j/xoLnO7gSJO2X4vtY5qIje3W9dtKQd9AnfX2xD8gDWd4Q5nDgNgnGY2CZwWnjP6TCFaeE3dwQ1A==
   dependencies:
-    "@navikt/ft-form-hooks" "^1.0.39"
+    "@navikt/ft-form-hooks" "^1.0.40"
     "@navikt/ft-form-validators" "^1.0.28"
     "@navikt/ft-kodeverk" "^1.0.17"
     "@navikt/ft-types" "^1.0.27"
-    "@navikt/ft-ui-komponenter" "^1.0.36"
+    "@navikt/ft-ui-komponenter" "^1.0.37"
     "@navikt/ft-utils" "^1.0.33"
     classnames "2.3.1"
     core-js "3.25.0"
@@ -3830,14 +3830,14 @@
     react-hook-form "7.34.2"
     react-intl "6.1.0"
 
-"@navikt/ft-form-hooks@1.0.39", "@navikt/ft-form-hooks@^1.0.39":
-  version "1.0.39"
-  resolved "https://npm.pkg.github.com/download/@navikt/ft-form-hooks/1.0.39/9517c8efbccff9f92d90800eca9d9916972bb22d#9517c8efbccff9f92d90800eca9d9916972bb22d"
-  integrity sha512-At4Sqg6e5XLhUiGMztz/NYiOSjJlGFQaB90dW6NaRj7JOyOn1xDNBPVhjTCLLE0cJBsoHz0hm9ECKGJDt2yYuQ==
+"@navikt/ft-form-hooks@1.0.40", "@navikt/ft-form-hooks@^1.0.40":
+  version "1.0.40"
+  resolved "https://npm.pkg.github.com/download/@navikt/ft-form-hooks/1.0.40/b3974ab28bcdf982b2e64b5a7bfcaa7a53dc3e10#b3974ab28bcdf982b2e64b5a7bfcaa7a53dc3e10"
+  integrity sha512-GdOsxUwiPg7pireGwwhOolay6CPHEhb/69nGzmimBsCBelrV77Zf7Wy+FFzEai0JklJch7QnPLEnrPZzzoCqAA==
   dependencies:
     "@navikt/ft-form-validators" "^1.0.28"
     "@navikt/ft-types" "^1.0.27"
-    "@navikt/ft-ui-komponenter" "^1.0.36"
+    "@navikt/ft-ui-komponenter" "^1.0.37"
     "@navikt/ft-utils" "^1.0.33"
     classnames "2.3.1"
     dayjs "1.11.5"
@@ -3888,17 +3888,17 @@
     "@navikt/ds-react" "^1.2.4"
     "@navikt/ft-utils" "^1.0.33"
 
-"@navikt/ft-prosess-beregningsgrunnlag@2.3.7":
-  version "2.3.7"
-  resolved "https://npm.pkg.github.com/download/@navikt/ft-prosess-beregningsgrunnlag/2.3.7/de1528e90266c9b1b43ec6d84a1362566e675aee#de1528e90266c9b1b43ec6d84a1362566e675aee"
-  integrity sha512-q2Empfyk4/dGPKjBWJYqPIbin3kctuJawUOJF/VXJDcKwcLRZkLAkqayfPGjd++Xnfsa+K5qKCIjVMjG7OzgGw==
+"@navikt/ft-prosess-beregningsgrunnlag@2.3.8":
+  version "2.3.8"
+  resolved "https://npm.pkg.github.com/download/@navikt/ft-prosess-beregningsgrunnlag/2.3.8/5fe9ef61be33161e1c2bf8be313692ce71a87213#5fe9ef61be33161e1c2bf8be313692ce71a87213"
+  integrity sha512-DBSnn2ilc2h8FD8jOnlxdZV2uG3FxCz8QdlU/4kox0raE0GW2tSja0VmXyXgB7/CJsFfTnEbFHWkoW9kHCFxew==
   dependencies:
-    "@navikt/ft-form-hooks" "^1.0.39"
+    "@navikt/ft-form-hooks" "^1.0.40"
     "@navikt/ft-form-validators" "^1.0.28"
     "@navikt/ft-kodeverk" "^1.0.17"
     "@navikt/ft-plattform-komponenter" "^1.0.33"
     "@navikt/ft-types" "^1.0.27"
-    "@navikt/ft-ui-komponenter" "^1.0.36"
+    "@navikt/ft-ui-komponenter" "^1.0.37"
     "@navikt/ft-utils" "^1.0.33"
     classnames "2.3.1"
     dayjs "1.11.5"
@@ -3934,10 +3934,10 @@
   dependencies:
     "@navikt/ft-kodeverk" "^1.0.17"
 
-"@navikt/ft-ui-komponenter@1.0.36", "@navikt/ft-ui-komponenter@^1.0.36":
-  version "1.0.36"
-  resolved "https://npm.pkg.github.com/download/@navikt/ft-ui-komponenter/1.0.36/f10f1c354ec2fc99d6d0320a04e1479b3d43f2f7#f10f1c354ec2fc99d6d0320a04e1479b3d43f2f7"
-  integrity sha512-9EX6AuKaASAMVzZHAQsIWgebrQw+2gNGE2hHE+xeMVO1Ns2ljlPoWcYNYovS818MX00l3dJ/VbjKfWdEKrM28g==
+"@navikt/ft-ui-komponenter@1.0.37", "@navikt/ft-ui-komponenter@^1.0.37":
+  version "1.0.37"
+  resolved "https://npm.pkg.github.com/download/@navikt/ft-ui-komponenter/1.0.37/038ca6bc29291c9a418488a4c278c6380089b96f#038ca6bc29291c9a418488a4c278c6380089b96f"
+  integrity sha512-Om1OyDrNMEz/rgZYTS7Oz7YHgBLxeFjvOqdFI06Du+52k2lAtFTsFVpingrMeAzlIlbdU4UUfdYH72FNUZYGFw==
   dependencies:
     "@navikt/fnrvalidator" "1.3.0"
     "@navikt/ft-utils" "^1.0.33"
@@ -6272,16 +6272,7 @@
   dependencies:
     "@types/react" "*"
 
-"@types/react@*", "@types/react@16 || 17 || 18":
-  version "18.0.18"
-  resolved "https://registry.yarnpkg.com/@types/react/-/react-18.0.18.tgz#9f16f33d57bc5d9dca848d12c3572110ff9429ac"
-  integrity sha512-6hI08umYs6NaiHFEEGioXnxJ+oEhY3eRz8VCUaudZmGdtvPviCJB8mgaMxaDWAdPSYd4eFavrPk2QIolwbLYrg==
-  dependencies:
-    "@types/prop-types" "*"
-    "@types/scheduler" "*"
-    csstype "^3.0.2"
-
-"@types/react@^17", "@types/react@^17.0.38", "@types/react@^17.0.39":
+"@types/react@*", "@types/react@16 || 17 || 18", "@types/react@^17", "@types/react@^17.0.38", "@types/react@^17.0.39":
   version "17.0.45"
   resolved "https://registry.yarnpkg.com/@types/react/-/react-17.0.45.tgz#9b3d5b661fd26365fefef0e766a1c6c30ccf7b3f"
   integrity sha512-YfhQ22Lah2e3CHPsb93tRwIGNiSwkuz1/blk4e6QrWS0jQzCSNbGLtOEYhPg02W0yGTTmpajp7dCTbBAMN3qsg==
