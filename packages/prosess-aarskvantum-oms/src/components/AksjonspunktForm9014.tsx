@@ -198,20 +198,19 @@ export const FormContent = ({
       />
       <VerticalSpacer sixteenPx />
 
-      {!erÅF ||
-        (valgValue === valgValues.reBehandling && (
-          <>
-            <BorderBox>
-              <FieldArray
-                name="fosterbarn"
-                component={FosterbarnForm}
-                barn={fosterbarn}
-                isAksjonspunktOpen={isAksjonspunktOpen}
-              />
-            </BorderBox>
-            <VerticalSpacer sixteenPx />
-          </>
-        ))}
+      {(!erÅF || valgValue === valgValues.reBehandling) && (
+        <>
+          <BorderBox>
+            <FieldArray
+              name="fosterbarn"
+              component={FosterbarnForm}
+              barn={fosterbarn}
+              isAksjonspunktOpen={isAksjonspunktOpen}
+            />
+          </BorderBox>
+          <VerticalSpacer sixteenPx />
+        </>
+      )}
 
       {erÅF && (valgValue === valgValues.fortsett || !valgValue) && initialValues.fosterbarn.length > 0 && (
         <>
