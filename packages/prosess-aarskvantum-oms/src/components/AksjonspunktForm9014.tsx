@@ -196,23 +196,21 @@ export const FormContent = ({
         maxLength={1500}
         readOnly={!isAksjonspunktOpen}
       />
-
       <VerticalSpacer sixteenPx />
 
-      {!erÅF ||
-        (valgValue === valgValues.reBehandling && (
-          <>
-            <BorderBox>
-              <FieldArray
-                name="fosterbarn"
-                component={FosterbarnForm}
-                barn={fosterbarn}
-                isAksjonspunktOpen={isAksjonspunktOpen}
-              />
-            </BorderBox>
-            <VerticalSpacer sixteenPx />
-          </>
-        ))}
+      {isAksjonspunktOpen && (!erÅF || valgValue === valgValues.reBehandling) && (
+        <>
+          <BorderBox>
+            <FieldArray
+              name="fosterbarn"
+              component={FosterbarnForm}
+              barn={fosterbarn}
+              isAksjonspunktOpen={isAksjonspunktOpen}
+            />
+          </BorderBox>
+          <VerticalSpacer sixteenPx />
+        </>
+      )}
 
       {erÅF && (valgValue === valgValues.fortsett || !valgValue) && initialValues.fosterbarn.length > 0 && (
         <>
