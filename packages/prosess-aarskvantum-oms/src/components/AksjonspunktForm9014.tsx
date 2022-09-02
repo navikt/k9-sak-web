@@ -198,7 +198,7 @@ export const FormContent = ({
       />
       <VerticalSpacer sixteenPx />
 
-      {(!erÅF || valgValue === valgValues.reBehandling) && (
+      {isAksjonspunktOpen && (!erÅF || valgValue === valgValues.reBehandling) && (
         <>
           <BorderBox>
             <FieldArray
