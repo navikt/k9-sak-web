@@ -4,7 +4,7 @@ import { faktaPanelCodes } from '@k9-sak-web/konstanter';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import BeregningFaktaIndex from '@fpsak-frontend/fakta-beregning';
 import { DynamicLoader, FaktaPanelDef } from '@k9-sak-web/behandling-felles';
-import { konverterKodeverkTilKode, mapVilkar } from '@fpsak-frontend/utils';
+import { konverterKodeverkTilKode, mapVilkar, transformBeregningValues } from '@fpsak-frontend/utils';
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 
 const FaktaBeregningsgrunnlag = React.lazy(() => import('@navikt/ft-fakta-beregning'));
@@ -14,17 +14,6 @@ const FaktaBeregningsgrunnlagMF =
     ? undefined
     : // eslint-disable-next-line import/no-unresolved
       () => import('ft_fakta_beregning/FaktaBeregning');
-
-const transformVedOverstyring = aksjonspunktData =>
-  aksjonspunktData.flatMap(data => {
-    if (data.kode === aksjonspunktCodes.OVERSTYRING_AV_BEREGNINGSGRUNNLAG) {
-      return data.grunnlag.map(gr => ({
-        kode: data.kode,
-        ...gr,
-      }));
-    }
-    return data;
-  });
 
 class BeregningFaktaPanelDef extends FaktaPanelDef {
   // eslint-disable-next-line class-methods-use-this
@@ -54,7 +43,7 @@ class BeregningFaktaPanelDef extends FaktaPanelDef {
           {...deepCopyProps}
           beregningsgrunnlag={deepCopyProps.beregningsgrunnlag}
           arbeidsgiverOpplysningerPerId={deepCopyProps.arbeidsgiverOpplysningerPerId}
-          submitCallback={aksjonspunktData => props.submitCallback(transformVedOverstyring(aksjonspunktData))}
+          submitCallback={aksjonspunktData => props.submitCallback(transformBeregningValues(aksjonspunktData))}
           formData={props.formData}
           setFormData={props.setFormData}
           vilkar={mapVilkar(bgVilkaret, props.beregningreferanserTilVurdering)}

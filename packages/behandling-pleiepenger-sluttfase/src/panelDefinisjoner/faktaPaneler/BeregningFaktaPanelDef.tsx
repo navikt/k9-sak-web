@@ -3,8 +3,8 @@ import React from 'react';
 import { faktaPanelCodes } from '@k9-sak-web/konstanter';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import BeregningFaktaIndex from '@fpsak-frontend/fakta-beregning';
-import { FaktaPanelDef, DynamicLoader } from '@k9-sak-web/behandling-felles';
-import { konverterKodeverkTilKode, mapVilkar } from '@fpsak-frontend/utils';
+import { DynamicLoader, FaktaPanelDef } from '@k9-sak-web/behandling-felles';
+import { konverterKodeverkTilKode, mapVilkar, transformBeregningValues } from '@fpsak-frontend/utils';
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 
 const FaktaBeregningsgrunnlag = React.lazy(() => import('@navikt/ft-fakta-beregning'));
@@ -38,7 +38,7 @@ class BeregningFaktaPanelDef extends FaktaPanelDef {
           federatedCompFn={FaktaBeregningsgrunnlagMF}
           {...props}
           arbeidsgiverOpplysningerPerId={deepCopyProps.arbeidsgiverOpplysningerPerId}
-          submitCallback={props.submitCallback}
+          submitCallback={aksjonspunktData => props.submitCallback(transformBeregningValues(aksjonspunktData))}
           formData={props.formData}
           setFormData={props.setFormData}
           vilkar={mapVilkar(bgVilkaret, props.beregningreferanserTilVurdering)}

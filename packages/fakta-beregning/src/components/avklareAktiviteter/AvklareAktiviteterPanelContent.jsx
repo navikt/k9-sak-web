@@ -19,7 +19,13 @@ export const MANUELL_OVERSTYRING_FIELD = 'manuellOverstyringBeregningAktiviteter
 
 const { AVKLAR_AKTIVITETER, OVERSTYRING_AV_BEREGNINGSAKTIVITETER } = avklaringsbehovCodes;
 
-const buildInitialValues = (avklaringsbehov, avklarAktiviteter, aktivtBeregningsgrunnlagIndex, vilkårsperiode) => {
+const buildInitialValues = (
+  avklaringsbehov,
+  avklarAktiviteter,
+  aktivtBeregningsgrunnlagIndex,
+  periode,
+  erTilVurdering,
+) => {
   const harAvklarAksjonspunkt = harAvklaringsbehov(AVKLAR_AKTIVITETER, avklaringsbehov);
   const erOverstyrt = harAvklaringsbehov(OVERSTYRING_AV_BEREGNINGSAKTIVITETER, avklaringsbehov);
   let initialValues = {};
@@ -31,9 +37,9 @@ const buildInitialValues = (avklaringsbehov, avklarAktiviteter, aktivtBeregnings
     );
   }
   return {
-    periode: vilkårsperiode.periode,
-    erTilVurdering: vilkårsperiode.vurderesIBehandlingen,
     [MANUELL_OVERSTYRING_FIELD]: erOverstyrt,
+    periode,
+    erTilVurdering,
     avklaringsbehov,
     avklarAktiviteter,
     ...initialValues,
@@ -52,7 +58,12 @@ export const buildInitialValuesAvklarAktiviteter = createSelector(
     beregningsgrunnlag => getAvklarAktiviteter(beregningsgrunnlag),
     (beregningsgrunnlag, ownProps) => ownProps.aktivtBeregningsgrunnlagIndex,
     (beregningsgrunnlag, ownProps) =>
-      ownProps.behandlingResultatPerioder.find(({ periode }) => periode.fom === beregningsgrunnlag.vilkårsperiodeFom),
+      ownProps.behandlingResultatPerioder.find(({ periode }) => periode.fom === beregningsgrunnlag.vilkårsperiodeFom)
+        .periode,
+    (beregningsgrunnlag, ownProps) =>
+      ownProps.beregningreferanserTilVurdering.some(
+        r => r.skjæringstidspunkt === beregningsgrunnlag.vilkårsperiodeFom && !r.erForlengelse,
+      ),
   ],
   buildInitialValues,
 );
