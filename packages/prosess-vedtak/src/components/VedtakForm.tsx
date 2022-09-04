@@ -143,20 +143,24 @@ export const VedtakForm: React.FC<Props> = ({
   );
   const vedtakContext = useContext(VedtakFormContext);
   const onToggleOverstyring = (e, setFieldValue) => {
-    const kommendeVerdi = e.target.checked;
-    setFieldValue(fieldnames.SKAL_BRUKE_OVERSTYRENDE_FRITEKST_BREV, kommendeVerdi);
-
-    if (kommendeVerdi) {
+    const isChecked = e.target.checked;
+    setFieldValue(fieldnames.SKAL_BRUKE_OVERSTYRENDE_FRITEKST_BREV, isChecked);
+    if (isChecked) {
       setFieldValue(fieldnames.SKAL_HINDRE_UTSENDING_AV_BREV, false);
+    } else {
+      setFieldValue(fieldnames.BRØDTEKST, '');
+      setFieldValue(fieldnames.OVERSKRIFT, '');
     }
   };
 
   const onToggleHindreUtsending = (e, setFieldValue) => {
-    const kommendeVerdi = e.target.checked;
-    setFieldValue(fieldnames.SKAL_HINDRE_UTSENDING_AV_BREV, kommendeVerdi);
+    const isChecked = e.target.checked;
+    setFieldValue(fieldnames.SKAL_HINDRE_UTSENDING_AV_BREV, isChecked);
 
-    if (kommendeVerdi) {
+    if (isChecked) {
       setFieldValue(fieldnames.SKAL_BRUKE_OVERSTYRENDE_FRITEKST_BREV, false);
+      setFieldValue(fieldnames.BRØDTEKST, '');
+      setFieldValue(fieldnames.OVERSKRIFT, '');
     }
   };
 

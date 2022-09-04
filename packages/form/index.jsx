@@ -9,6 +9,8 @@ export { default as RadioOption } from './src/RadioOption';
 export { default as SelectField } from './src/SelectField';
 export { default as SelectFieldFormik } from './src/SelectFieldFormik';
 export { default as TextAreaField } from './src/TextAreaField';
+export { default as TextFieldFormik } from './src/TextFieldFormik';
+export { default as TextAreaFormik } from './src/TextAreaFormik';
 export { default as PeriodpickerField } from './src/PeriodpickerField';
 export { default as AutocompleteField } from './src/AutocompleteField';
 export { default as CheckboxGroupFormik } from './src/CheckboxGroupFormik';

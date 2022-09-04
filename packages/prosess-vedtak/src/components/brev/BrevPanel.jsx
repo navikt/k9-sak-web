@@ -60,7 +60,7 @@ const automatiskVedtaksbrevParams = ({
   redusertUtbetalingÅrsaker,
   overstyrtMottaker,
   tilgjengeligeVedtaksbrev,
-  informasjonsbehovValues,
+  informasjonsbehovValues = [],
 }) => ({
   dokumentdata: {
     fritekst: fritekst || ' ',
@@ -161,35 +161,33 @@ export const BrevPanel = props => {
 
   const fritekstbrev = harFritekstbrev && (
     <>
-      <FritekstBrevPanel
-        readOnly={readOnly || formikProps.values[fieldnames.SKAL_HINDRE_UTSENDING_AV_BREV]}
-        sprakkode={sprakkode}
-        intl={intl}
-        previewBrev={automatiskBrevUtenValideringCallback}
-        harAutomatiskVedtaksbrev={harAutomatiskVedtaksbrev}
-        formikProps={formikProps}
-        ytelseTypeKode={ytelseTypeKode}
-      />
-      <div className={styles.previewLinkContainer}>
-        <VedtakPreviewLink previewCallback={manuellBrevCallback} />
+      <div className={styles.brevContainer}>
+        <FritekstBrevPanel
+          readOnly={readOnly || formikProps.values[fieldnames.SKAL_HINDRE_UTSENDING_AV_BREV]}
+          sprakkode={sprakkode}
+          intl={intl}
+          previewBrev={automatiskBrevUtenValideringCallback}
+          harAutomatiskVedtaksbrev={harAutomatiskVedtaksbrev}
+          formikProps={formikProps}
+          ytelseTypeKode={ytelseTypeKode}
+        />
       </div>
+      <VedtakPreviewLink previewCallback={manuellBrevCallback} />
     </>
   );
 
   const automatiskbrev = harAutomatiskVedtaksbrev && (
     <>
-      <InformasjonsbehovAutomatiskVedtaksbrev
-        intl={intl}
-        readOnly={readOnly || formikProps.values[fieldnames.SKAL_HINDRE_UTSENDING_AV_BREV]}
-        sprakkode={sprakkode}
-        begrunnelse={begrunnelse}
-        informasjonsbehovVedtaksbrev={informasjonsbehovVedtaksbrev}
-      />
-      {kanResultatForhåndsvises(behandlingResultat) && (
-        <div className={styles.previewLinkContainer}>
-          <VedtakPreviewLink previewCallback={automatiskBrevCallback} />
-        </div>
-      )}
+      <div className={styles.brevContainer}>
+        <InformasjonsbehovAutomatiskVedtaksbrev
+          intl={intl}
+          readOnly={readOnly || formikProps.values[fieldnames.SKAL_HINDRE_UTSENDING_AV_BREV]}
+          sprakkode={sprakkode}
+          begrunnelse={begrunnelse}
+          informasjonsbehovVedtaksbrev={informasjonsbehovVedtaksbrev}
+        />
+      </div>
+      {kanResultatForhåndsvises(behandlingResultat) && <VedtakPreviewLink previewCallback={automatiskBrevCallback} />}
     </>
   );
 
