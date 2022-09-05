@@ -5,7 +5,7 @@ import { EtikettFokus } from 'nav-frontend-etiketter';
 import { useIntl } from 'react-intl';
 import LabelType from './LabelType';
 import ReadOnlyField from './ReadOnlyField';
-import styles from './textAreaFormik.less';
+import styles from './TextAreaFormik.less';
 import { validateAll } from './formikUtils';
 
 interface TextAreaFieldProps {
