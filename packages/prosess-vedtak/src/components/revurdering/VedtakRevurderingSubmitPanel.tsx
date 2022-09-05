@@ -60,7 +60,7 @@ export const VedtakRevurderingSubmitPanelImpl = ({
   const submitKnapp = (
     <Button
       variant="primary"
-      type="submit"
+      type="button"
       className={styles.mainButton}
       onClick={onClick}
       disabled={isSubmitting}

@@ -644,5 +644,6 @@ export const brevMedFritekstfelt = () => (
         INGEN: null,
       },
     }}
+    featureToggles={{ NY_PROSESS_VEDTAK_ENABLED: true }}
   />
 );

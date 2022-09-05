@@ -6,6 +6,7 @@ import React from 'react';
 import { IntlShape } from 'react-intl';
 import VedtakFritekstPanel from '../VedtakFritekstPanel';
 import styles from './informasjonsbehovAutomatiskVedtaksbrev.less';
+import InformasjonsbehovKode from './InformasjonsbehovKode';
 
 interface InformasjonsbehovVedtaksbrev {
   informasjonsbehov: { kode: string; beskrivelse: string; type: string }[];
@@ -38,6 +39,23 @@ const InformasjonsbehovAutomatiskVedtaksbrev: React.FC<Props> = ({
 
   const harBegrunnelse = aktiverteInformasjonsbehov.some(behov => values[behov.kode]?.length > 0);
 
+  const getAksjonspunktInfoboks = () => {
+    let tekst = '';
+    if (informasjonsbehovVedtaksbrev.mangler.includes(InformasjonsbehovKode.BEREGNING_SKJONNSMESSIG)) {
+      tekst = intl.formatMessage({ id: 'InformasjonsbehovAutomatiskVedtaksbrev.SupplerMedFritekstSkjønnsmessig' });
+    } else if (informasjonsbehovVedtaksbrev.mangler.includes(InformasjonsbehovKode.REVURDERING_ENDRING)) {
+      tekst = intl.formatMessage({ id: 'InformasjonsbehovAutomatiskVedtaksbrev.SupplerMedFritekstEndring' });
+    } else {
+      return null;
+    }
+
+    return (
+      <Alert className={styles.alert} variant="warning" size="small">
+        {tekst}
+      </Alert>
+    );
+  };
+
   return (
     <>
       {!readOnly && (
@@ -45,9 +63,7 @@ const InformasjonsbehovAutomatiskVedtaksbrev: React.FC<Props> = ({
           <Heading className={styles.heading} level="3" size="small">
             {intl.formatMessage({ id: 'InformasjonsbehovAutomatiskVedtaksbrev.Fritekstbeskrivelse' })}
           </Heading>
-          <Alert className={styles.alert} variant="warning" size="small">
-            {intl.formatMessage({ id: 'InformasjonsbehovAutomatiskVedtaksbrev.SupplerMedFritekst' })}
-          </Alert>
+          {getAksjonspunktInfoboks()}
         </>
       )}
       <div className={readOnly ? '' : styles.textAreaContainer}>

@@ -1,16 +1,16 @@
-import React from 'react';
-import { FormattedMessage, injectIntl, IntlShape } from 'react-intl';
-import { Column, Row } from 'nav-frontend-grid';
 import { Alert, Heading } from '@navikt/ds-react';
 import { FormikProps, FormikValues } from 'formik';
+import { Column, Row } from 'nav-frontend-grid';
+import React from 'react';
+import { FormattedMessage, injectIntl, IntlShape } from 'react-intl';
 
-import { hasValidText, maxLength, minLength, required } from '@fpsak-frontend/utils';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
-import TextAreaFormik from '@fpsak-frontend/form/src/TextAreaFormik';
+import { hasValidText, maxLength, minLength, required } from '@fpsak-frontend/utils';
+import { TextAreaFormik, TextFieldFormik } from '@fpsak-frontend/form';
 import InkluderKalenderCheckbox from './InkluderKalenderCheckbox';
 
-import styles from './vedtakForm.less';
 import PreviewLink from './PreviewLink';
+import styles from './vedtakForm.less';
 
 const maxLength200 = maxLength(200);
 const maxLength100000 = maxLength(100000);
@@ -34,6 +34,7 @@ const FritekstBrevPanel = ({
   ytelseTypeKode,
 }: OwnProps) => {
   const { formatMessage } = intl;
+
   return (
     <div className={styles.fritekstbrevPanel}>
       {!harAutomatiskVedtaksbrev && <VerticalSpacer sixteenPx />}
@@ -72,7 +73,7 @@ const FritekstBrevPanel = ({
       <div className={readOnly ? '' : styles.brevFormContainer}>
         <Row>
           <Column xs="12">
-            <TextAreaFormik
+            <TextFieldFormik
               name="overskrift"
               label={formatMessage({ id: 'VedtakForm.Overskrift' })}
               validate={[required, minLength3, maxLength200, hasValidText]}
