@@ -14,7 +14,7 @@ interface TextFieldFormikProps {
   dataId?: string;
   maxLength?: number;
   placeholder?: string;
-  formik: FormikState<any>;
+  formik?: FormikState<any>;
 }
 
 const renderTextField = ({ field: { value, name }, form, label, maxLength, touched, error, intl, disabled }) => {
