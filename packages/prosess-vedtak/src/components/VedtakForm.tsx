@@ -138,18 +138,13 @@ export const VedtakForm: React.FC<Props> = ({
   const [erSendtInnUtenArsaker, setErSendtInnUtenArsaker] = useState(false);
   const [harVurdertOverlappendeYtelse, setHarVurdertOverlappendeYtelse] = useState(false);
   const [visSakGårIkkeTilBeslutterModal, setVisSakGårIkkeTilBeslutterModal] = useState(false);
-  const måVurdereOverlappendeYtelse = aksjonspunkter.some(
-    aksjonspunkt => aksjonspunkt.definisjon.kode === aksjonspunktCodes.VURDERE_OVERLAPPENDE_YTELSER_FØR_VEDTAK,
-  );
+  const harOverlappendeYtelser = overlappendeYtelser && overlappendeYtelser.length > 0;
   const vedtakContext = useContext(VedtakFormContext);
   const onToggleOverstyring = (e, setFieldValue) => {
     const isChecked = e.target.checked;
     setFieldValue(fieldnames.SKAL_BRUKE_OVERSTYRENDE_FRITEKST_BREV, isChecked);
     if (isChecked) {
       setFieldValue(fieldnames.SKAL_HINDRE_UTSENDING_AV_BREV, false);
-    } else {
-      setFieldValue(fieldnames.BRØDTEKST, '');
-      setFieldValue(fieldnames.OVERSKRIFT, '');
     }
   };
 
@@ -159,8 +154,6 @@ export const VedtakForm: React.FC<Props> = ({
 
     if (isChecked) {
       setFieldValue(fieldnames.SKAL_BRUKE_OVERSTYRENDE_FRITEKST_BREV, false);
-      setFieldValue(fieldnames.BRØDTEKST, '');
-      setFieldValue(fieldnames.OVERSKRIFT, '');
     }
   };
 
@@ -285,7 +278,7 @@ export const VedtakForm: React.FC<Props> = ({
     <Formik
       initialValues={{ ...initialValues, ...vedtakContext?.vedtakFormState }}
       onSubmit={(values, actions) => {
-        if ((måVurdereOverlappendeYtelse && harVurdertOverlappendeYtelse) || !måVurdereOverlappendeYtelse) {
+        if ((harOverlappendeYtelser && harVurdertOverlappendeYtelse) || !harOverlappendeYtelser) {
           submitCallback(createPayload(values));
         } else {
           actions.setSubmitting(false);
@@ -443,7 +436,7 @@ export const VedtakForm: React.FC<Props> = ({
                   formikValues={formikProps.values}
                   isSubmitting={formikProps.isSubmitting}
                   skalBrukeOverstyrendeFritekstBrev={formikProps.values.skalBrukeOverstyrendeFritekstBrev}
-                  handleSubmit={erToTrinn ? formikProps.handleSubmit : () => setVisSakGårIkkeTilBeslutterModal(true)}
+                  handleSubmit={erToTrinn ? formikProps.handleSubmit : handleErToTrinnSubmit}
                   ytelseTypeKode={ytelseTypeKode}
                   readOnly={readOnly}
                   behandlingStatusKode={behandlingStatus?.kode}
