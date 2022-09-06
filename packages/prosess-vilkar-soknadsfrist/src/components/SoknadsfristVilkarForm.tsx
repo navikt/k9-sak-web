@@ -232,8 +232,9 @@ const transformValues = (values, alleDokumenter, apKode, periodeFom, periodeTom)
     const fraDato = (() => {
       switch (krav.erVilkarOk) {
         case true:
-          return dokumentStatus.status.reduce((acc, curr) =>
-            !acc || moment(curr.periode.fom).isBefore(moment(acc)) ? curr.periode.fom : acc,
+          return dokumentStatus.status.reduce(
+            (acc, curr) => (!acc || moment(curr.periode.fom).isBefore(moment(acc)) ? curr.periode.fom : acc),
+            dokumentStatus.status[0].periode.fom,
           );
 
         case DELVIS_OPPFYLT:
@@ -243,7 +244,6 @@ const transformValues = (values, alleDokumenter, apKode, periodeFom, periodeTom)
           return utledInnsendtSoknadsfrist(dokumentStatus.innsendingstidspunkt);
       }
     })();
-
     return {
       ...krav,
       erVilkarOk,
