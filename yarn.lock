@@ -3888,10 +3888,10 @@
     "@navikt/ds-react" "^1.2.4"
     "@navikt/ft-utils" "^1.0.33"
 
-"@navikt/ft-prosess-beregningsgrunnlag@2.3.9":
-  version "2.3.9"
-  resolved "https://npm.pkg.github.com/download/@navikt/ft-prosess-beregningsgrunnlag/2.3.9/bbfd23a4a2eb912a90b9845017175a88626d2c4f#bbfd23a4a2eb912a90b9845017175a88626d2c4f"
-  integrity sha512-s0cM+ODziEhcwHeNSzGEu055p0Xq77V9igXbWey9ISsrv27ZOPLtWwYmyJ8z/A97q+t6zziGR9jyxikypRHLkw==
+"@navikt/ft-prosess-beregningsgrunnlag@2.3.10":
+  version "2.3.10"
+  resolved "https://npm.pkg.github.com/download/@navikt/ft-prosess-beregningsgrunnlag/2.3.10/3dbbf0fb4b803138b34e4cdd4af1a3f8c13f040e#3dbbf0fb4b803138b34e4cdd4af1a3f8c13f040e"
+  integrity sha512-7PbCr2EK7wy0V7FlTTZnj7rDuRBp0BNk0jcLY21nkXMmhbwtOE4L4kGSGoOix70EI18qv5TR/IhSvFmN8Xs/4w==
   dependencies:
     "@navikt/ft-form-hooks" "^1.0.40"
     "@navikt/ft-form-validators" "^1.0.28"
