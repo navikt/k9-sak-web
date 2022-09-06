@@ -595,6 +595,7 @@ export const visOverlappendeYtelser = () => {
       submitCallback={action('button-click')}
       alleKodeverk={alleKodeverk}
       overlappendeYtelser={overlappendeYtelser}
+      featureToggles={{ NY_PROSESS_VEDTAK_ENABLED: true }}
     />
   );
 };

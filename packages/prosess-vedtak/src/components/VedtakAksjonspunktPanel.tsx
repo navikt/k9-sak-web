@@ -50,7 +50,6 @@ export const VedtakAksjonspunktPanelImpl: React.FC<Props> = ({
       />
       {overlappendeYtelser && overlappendeYtelser.length > 0 && (
         <VedtakOverlappendeYtelsePanel
-          aksjonspunktKoder={aksjonspunktKoder}
           alleKodeverk={alleKodeverk}
           overlappendeYtelser={overlappendeYtelser}
           harVurdertOverlappendeYtelse={harVurdertOverlappendeYtelse}
