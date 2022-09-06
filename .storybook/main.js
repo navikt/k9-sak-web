@@ -160,16 +160,6 @@ module.exports = {
       }),
     );
 
-    config.plugins.push(new ESLintPlugin({
-      context: PACKAGES_DIR,
-      extensions: ['.js', '.jsx', '.ts', '.tsx'],
-      failOnWarning: false,
-      failOnError: !(configType === 'DEVELOPMENT'),
-      fix: (configType === 'DEVELOPMENT'),
-      overrideConfigFile: path.resolve(__dirname, (configType === 'DEVELOPMENT') ? '../eslint/eslintrc.dev.js' : '../eslint/eslintrc.prod.js'),
-      cache: true,
-    }));
-
     config.resolve.extensions.push('.ts', '.tsx', '.less');
 
     // Return the altered config

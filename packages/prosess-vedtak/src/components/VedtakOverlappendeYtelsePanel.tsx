@@ -1,4 +1,3 @@
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { BorderBox, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import Tidslinje from '@fpsak-frontend/tidslinje/src/components/pleiepenger/Tidslinje';
 import Periode from '@fpsak-frontend/tidslinje/src/components/pleiepenger/types/Periode';
@@ -15,7 +14,6 @@ import styles from './VedtakOverlappendeYtelsePanel.less';
 interface Props {
   overlappendeYtelser: any;
   alleKodeverk: { [key: string]: KodeverkMedNavn[] };
-  aksjonspunktKoder: string[];
   harVurdertOverlappendeYtelse: boolean;
   setHarVurdertOverlappendeYtelse: (harVurdertOverlappendeYtelse: boolean) => void;
 }
@@ -24,7 +22,6 @@ const VedtakOverlappendeYtelsePanel: React.FC<Props & WrappedComponentProps> = (
   overlappendeYtelser,
   alleKodeverk,
   intl,
-  aksjonspunktKoder,
   harVurdertOverlappendeYtelse,
   setHarVurdertOverlappendeYtelse,
 }) => {
@@ -98,55 +95,46 @@ const VedtakOverlappendeYtelsePanel: React.FC<Props & WrappedComponentProps> = (
       />
     );
 
-  const harAksjonspunkt =
-    aksjonspunktKoder && aksjonspunktKoder.includes(aksjonspunktCodes.VURDERE_OVERLAPPENDE_YTELSER_FØR_VEDTAK);
-
   return (
     <>
-      {harAksjonspunkt && (
-        <>
-          <Alert className={styles.aksjonspunktAlert} variant="warning" size="medium">
-            <Heading spacing size="small" level="3">
-              Søker har overlappende ytelser
-            </Heading>
-            <BodyLong>Vurder om overlappende ytelser gir konsekvens for vedtak</BodyLong>
-            <VerticalSpacer twentyPx />
-            {getTidslinje()}
-            <VerticalSpacer twentyPx />
-            <CheckboxGroup
-              legend="Bekreft at overlappende ytelser er sjekket og fulgt opp"
-              hideLegend
-              error={submitCount > 0 && !harVurdertOverlappendeYtelse ? 'Du må bekrefte for å gå videre' : ''}
-            >
-              <Checkbox
-                checked={harVurdertOverlappendeYtelse}
-                onChange={() => setHarVurdertOverlappendeYtelse(!harVurdertOverlappendeYtelse)}
-                size="small"
-                error={submitCount > 0 && !harVurdertOverlappendeYtelse}
-                value="harVurdertOverlappendeYtelse"
-              >
-                Jeg bekrefter å ha sjekket og fulgt opp overlappende ytelser
-              </Checkbox>
-            </CheckboxGroup>
-          </Alert>
-          <Alert variant="info" size="medium">
-            <Accordion className={styles.accordion}>
-              <Accordion.Item>
-                <Accordion.Header type="button">
-                  <Heading spacing size="small" level="3">
-                    Hvilke ytelser går det automatisk melding?
-                  </Heading>
-                </Accordion.Header>
-                <Accordion.Content>
-                  <BodyLong>Nå kan du sende inn søknaden.</BodyLong>
-                </Accordion.Content>
-              </Accordion.Item>
-            </Accordion>
-          </Alert>
-        </>
-      )}
-
-      {!harAksjonspunkt && getTidslinje()}
+      <Alert className={styles.aksjonspunktAlert} variant="warning" size="medium">
+        <Heading spacing size="small" level="3">
+          Søker har overlappende ytelser
+        </Heading>
+        <BodyLong>Vurder om overlappende ytelser gir konsekvens for vedtak</BodyLong>
+        <VerticalSpacer twentyPx />
+        {getTidslinje()}
+        <VerticalSpacer twentyPx />
+        <CheckboxGroup
+          legend="Bekreft at overlappende ytelser er sjekket og fulgt opp"
+          hideLegend
+          error={submitCount > 0 && !harVurdertOverlappendeYtelse ? 'Du må bekrefte for å gå videre' : ''}
+        >
+          <Checkbox
+            checked={harVurdertOverlappendeYtelse}
+            onChange={() => setHarVurdertOverlappendeYtelse(!harVurdertOverlappendeYtelse)}
+            size="small"
+            error={submitCount > 0 && !harVurdertOverlappendeYtelse}
+            value="harVurdertOverlappendeYtelse"
+          >
+            Jeg bekrefter å ha sjekket og fulgt opp overlappende ytelser
+          </Checkbox>
+        </CheckboxGroup>
+      </Alert>
+      <Alert variant="info" size="medium">
+        <Accordion className={styles.accordion}>
+          <Accordion.Item>
+            <Accordion.Header type="button">
+              <Heading spacing size="small" level="3">
+                Hvilke ytelser går det automatisk melding?
+              </Heading>
+            </Accordion.Header>
+            <Accordion.Content>
+              <BodyLong>Nå kan du sende inn søknaden.</BodyLong>
+            </Accordion.Content>
+          </Accordion.Item>
+        </Accordion>
+      </Alert>
 
       {valgtPeriode && (
         <BorderBox>

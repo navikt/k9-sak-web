@@ -66,7 +66,7 @@ const FritekstBrevPanel = ({
       {!readOnly && !harAutomatiskVedtaksbrev && (
         <div className={styles.brevAlertContainer}>
           <Alert variant="info" size="small">
-            Denne type behandling har ingen automatisk brev.
+            Denne type behandling er det ikke utviklet automatisk brev for enda.
           </Alert>
         </div>
       )}

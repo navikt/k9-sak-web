@@ -5,6 +5,8 @@ import { Button } from '@navikt/ds-react';
 import { Column, Row } from 'nav-frontend-grid';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { DokumentDataType, LagreDokumentdataType } from '@k9-sak-web/types/src/dokumentdata';
+import { useFormikContext } from 'formik';
+import { fieldnames } from '../../konstanter';
 
 /**
  * Noen typer brukt i denne komponenten, burde flyttes når fler av komponentene blir refaktorert til typescript
@@ -55,6 +57,7 @@ const MellomLagreBrev = ({
   const [originalBrev, setOriginalBrev] = useState(undefined);
   const [erTekstLik, setErTekstLik] = useState(false);
   const [erTekstEndret, setErTekstEndret] = useState(false);
+  const { values } = useFormikContext();
 
   /**
    * @param {string} overskriftStreng
@@ -104,6 +107,8 @@ const MellomLagreBrev = ({
     }
   }, [originalBrev, overskrift, brødtekst, inkluderKalender]);
 
+  const visningForBrevIkkeLagret = values[fieldnames.SKAL_BRUKE_OVERSTYRENDE_FRITEKST_BREV] === true;
+
   if (erTekstEndret && (overskrift || brødtekst || inkluderKalender)) {
     return (
       <Row>
@@ -111,14 +116,26 @@ const MellomLagreBrev = ({
           {!erTekstLik && (
             <>
               <VerticalSpacer sixteenPx />
-              <AlertStripe type="advarsel" form="inline">
-                {intl.formatMessage({ id: 'VedtakForm.FritekstBrevIkkeLagret' })}
-              </AlertStripe>
-              <VerticalSpacer sixteenPx />
+              {visningForBrevIkkeLagret && (
+                <>
+                  <AlertStripe type="advarsel" form="inline">
+                    {intl.formatMessage({ id: 'VedtakForm.FritekstBrevIkkeLagret' })}
+                  </AlertStripe>
+                  <VerticalSpacer sixteenPx />
+                </>
+              )}
               {submitKnapp}
-              <Button type="button" variant="secondary" size="small" onClick={onMellomlagreClick} disabled={erTekstLik}>
-                {intl.formatMessage({ id: 'VedtakForm.FritekstBrevLagre' })}
-              </Button>
+              {visningForBrevIkkeLagret && (
+                <Button
+                  type="button"
+                  variant="secondary"
+                  size="small"
+                  onClick={onMellomlagreClick}
+                  disabled={erTekstLik}
+                >
+                  {intl.formatMessage({ id: 'VedtakForm.FritekstBrevLagre' })}
+                </Button>
+              )}
               <VerticalSpacer sixteenPx />
             </>
           )}
