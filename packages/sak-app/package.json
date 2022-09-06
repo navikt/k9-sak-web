@@ -51,7 +51,7 @@
     "@navikt/ft-fakta-beregning": "2.1.18",
     "@navikt/ft-form-hooks": "1.0.40",
     "@navikt/ft-plattform-komponenter": "1.0.33",
-    "@navikt/ft-prosess-beregningsgrunnlag": "2.3.9",
+    "@navikt/ft-prosess-beregningsgrunnlag": "2.3.10",
     "@navikt/ft-ui-komponenter": "1.0.37",
     "@sentry/browser": "^6.16.1",
     "axios": "0.27.2",
