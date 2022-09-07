@@ -97,11 +97,11 @@ spec:
     - name: LOS_MARKER_BEHANDLING
       value: "true"
     - name: NY_BEREGNING_PROSESS_ENABLED
-      value: "false"
+      value: "true"
     - name: NY_BEREGNING_FAKTA_ENABLED
-      value: "false"
+      value: "true"
     - name: NY_BEREGNING_FAKTA_FORDEL_ENABLED
-      value: "false"
+      value: "true"
     - name: AKSJONSPUNKT_9014
       value: "false"
     - name: AKSJONSPUNKT_9015
