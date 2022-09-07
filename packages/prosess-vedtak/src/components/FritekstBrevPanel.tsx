@@ -17,7 +17,7 @@ const maxLength100000 = maxLength(100000);
 const minLength3 = minLength(3);
 
 interface OwnProps {
-  previewBrev: () => void;
+  previewBrev: (e: any) => void;
   readOnly: boolean;
   harAutomatiskVedtaksbrev: boolean;
   intl: IntlShape;
