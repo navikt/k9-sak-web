@@ -9,13 +9,14 @@ interface SelectFieldProps {
   name: string;
   selectValues: any[];
   label: LabelType;
-  validate?: ((value: any) => string | null)[];
+  validate?: ((value: string) => null | any)[];
   readOnly?: boolean;
   placeholder?: string;
   hideValueOnDisable?: boolean;
   bredde?: string;
   disabled?: boolean;
   onChange?: (elmt: ReactNode, value: any) => void;
+  className?: string;
 }
 
 /* eslint-disable-next-line react/prop-types */

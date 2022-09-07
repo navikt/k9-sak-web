@@ -19,7 +19,7 @@ import { VedtakFormContext } from '@k9-sak-web/behandling-felles/src/components/
 import { dokumentdatatype } from '@k9-sak-web/konstanter';
 import {
   Aksjonspunkt,
-  ArbeidsgiverOpplysninger,
+  ArbeidsgiverOpplysningerPerId,
   Behandlingsresultat,
   BehandlingStatusType,
   Kodeverk,
@@ -29,7 +29,7 @@ import {
 } from '@k9-sak-web/types';
 import { DokumentDataType, LagreDokumentdataType } from '@k9-sak-web/types/src/dokumentdata';
 import { Checkbox, Label, Modal } from '@navikt/ds-react';
-import { Formik } from 'formik';
+import { Formik, FormikProps } from 'formik';
 import React, { useContext, useEffect, useState } from 'react';
 import { injectIntl, IntlShape } from 'react-intl';
 import redusertUtbetalingArsak from '../kodeverk/redusertUtbetalingArsak';
@@ -45,6 +45,7 @@ import VedtakAvslagPanel from './VedtakAvslagPanel';
 import styles from './vedtakForm.less';
 import VedtakInnvilgetPanel from './VedtakInnvilgetPanel';
 import VedtakSubmit from './VedtakSubmit';
+import { InformasjonsbehovVedtaksbrev } from './brev/InformasjonsbehovAutomatiskVedtaksbrev';
 
 const isVedtakSubmission = true;
 
@@ -65,7 +66,7 @@ interface Props {
   ytelseTypeKode: string;
   alleKodeverk: { [key: string]: KodeverkMedNavn[] };
   personopplysninger: Personopplysninger;
-  arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysninger;
+  arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysningerPerId;
   tilbakekrevingvalg: {
     videreBehandling: {
       kode: string;
@@ -73,7 +74,7 @@ interface Props {
   };
   vilkar: Vilkar[];
   tilgjengeligeVedtaksbrev: TilgjengeligeVedtaksbrev;
-  informasjonsbehovVedtaksbrev: { informasjonsbehov: { kode: string; type: string }[] };
+  informasjonsbehovVedtaksbrev: InformasjonsbehovVedtaksbrev;
   dokumentdata: DokumentDataType;
   fritekstdokumenter: UstrukturerteDokumenterType[];
   vedtakVarsel: {
@@ -85,7 +86,7 @@ interface Props {
     skjæringstidspunkt: {
       dato: string;
     };
-    redusertUtbetalingÅrsaker: object[];
+    redusertUtbetalingÅrsaker: string[];
     vedtaksbrev: Kodeverk;
     vedtaksdato: string;
   };
@@ -269,9 +270,13 @@ export const VedtakForm: React.FC<Props> = ({
 
   const erToTrinn = aksjonspunkter && aksjonspunkter.some(ap => ap.erAktivt === true && ap.toTrinnsBehandling === true);
 
-  const handleErToTrinnSubmit = event => {
-    event.preventDefault();
-    setVisSakGårIkkeTilBeslutterModal(true);
+  const handleErEntrinnSubmit = (event, formikProps: FormikProps<any>) => {
+    if (formikProps.values[fieldnames.SKAL_HINDRE_UTSENDING_AV_BREV]) {
+      formikProps.handleSubmit();
+    } else {
+      event.preventDefault();
+      setVisSakGårIkkeTilBeslutterModal(true);
+    }
   };
 
   return (
@@ -397,7 +402,6 @@ export const VedtakForm: React.FC<Props> = ({
               )}
 
               <BrevPanel
-                intl={intl}
                 readOnly={readOnly}
                 sprakkode={sprakkode}
                 personopplysninger={personopplysninger}
@@ -413,9 +417,8 @@ export const VedtakForm: React.FC<Props> = ({
                 overskrift={formikProps.values.overskrift}
                 overstyrtMottaker={formikProps.values.overstyrtMottaker}
                 formikProps={formikProps}
-                dokumentdata={dokumentdata}
-                lagreDokumentdata={lagreDokumentdata}
                 ytelseTypeKode={ytelseTypeKode}
+                behandlingResultat={behandlingresultat}
               />
               {!erRevurdering ? (
                 <VedtakSubmit
@@ -424,7 +427,9 @@ export const VedtakForm: React.FC<Props> = ({
                   behandlingPaaVent={behandlingPaaVent}
                   isSubmitting={formikProps.isSubmitting}
                   aksjonspunkter={aksjonspunkter}
-                  handleSubmit={erToTrinn ? formikProps.handleSubmit : handleErToTrinnSubmit}
+                  handleSubmit={
+                    erToTrinn ? formikProps.handleSubmit : event => handleErEntrinnSubmit(event, formikProps)
+                  }
                   dokumentdata={dokumentdata}
                   lagreDokumentdata={lagreDokumentdata}
                   brødtekst={formikProps.values.brødtekst}
@@ -436,7 +441,9 @@ export const VedtakForm: React.FC<Props> = ({
                   formikValues={formikProps.values}
                   isSubmitting={formikProps.isSubmitting}
                   skalBrukeOverstyrendeFritekstBrev={formikProps.values.skalBrukeOverstyrendeFritekstBrev}
-                  handleSubmit={erToTrinn ? formikProps.handleSubmit : handleErToTrinnSubmit}
+                  handleSubmit={
+                    erToTrinn ? formikProps.handleSubmit : event => handleErEntrinnSubmit(event, formikProps)
+                  }
                   ytelseTypeKode={ytelseTypeKode}
                   readOnly={readOnly}
                   behandlingStatusKode={behandlingStatus?.kode}

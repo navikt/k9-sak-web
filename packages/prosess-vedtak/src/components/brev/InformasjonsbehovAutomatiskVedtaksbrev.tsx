@@ -8,7 +8,7 @@ import VedtakFritekstPanel from '../VedtakFritekstPanel';
 import styles from './informasjonsbehovAutomatiskVedtaksbrev.less';
 import InformasjonsbehovKode from './InformasjonsbehovKode';
 
-interface InformasjonsbehovVedtaksbrev {
+export interface InformasjonsbehovVedtaksbrev {
   informasjonsbehov: { kode: string; beskrivelse: string; type: string }[];
   mangler: string[];
 }

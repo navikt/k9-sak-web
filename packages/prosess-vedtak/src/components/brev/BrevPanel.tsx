@@ -10,17 +10,21 @@ import {
   kanKunVelge,
   kanOverstyreMottakere,
   lagVisningsnavnForMottaker,
+  TilgjengeligeVedtaksbrev,
 } from '@fpsak-frontend/utils/src/formidlingUtils';
+import { ArbeidsgiverOpplysningerPerId, Behandlingsresultat, Kodeverk, Personopplysninger } from '@k9-sak-web/types';
 import { Alert } from '@navikt/ds-react';
+import { FormikProps } from 'formik';
 import { Column, Row } from 'nav-frontend-grid';
-import PropTypes from 'prop-types';
 import React from 'react';
-import { injectIntl } from 'react-intl';
+import { injectIntl, IntlShape } from 'react-intl';
 import { fieldnames } from '../../konstanter';
 import FritekstBrevPanel from '../FritekstBrevPanel';
 import { VedtakPreviewLink } from '../PreviewLink';
 import styles from './BrevPanel.less';
-import InformasjonsbehovAutomatiskVedtaksbrev from './InformasjonsbehovAutomatiskVedtaksbrev';
+import InformasjonsbehovAutomatiskVedtaksbrev, {
+  InformasjonsbehovVedtaksbrev,
+} from './InformasjonsbehovAutomatiskVedtaksbrev';
 
 const kanResultatForhåndsvises = behandlingResultat => {
   if (!behandlingResultat) {
@@ -34,7 +38,21 @@ const kanResultatForhåndsvises = behandlingResultat => {
 };
 
 const getManuellBrevCallback =
-  ({ brødtekst, overskrift, overstyrtMottaker, formProps, previewCallback, tilgjengeligeVedtaksbrev }) =>
+  ({
+    brødtekst,
+    overskrift,
+    overstyrtMottaker,
+    formProps,
+    previewCallback,
+    tilgjengeligeVedtaksbrev,
+  }: {
+    brødtekst: string;
+    overskrift: string;
+    overstyrtMottaker: boolean;
+    formProps: FormikProps<any>;
+    previewCallback: (dokument: any) => void;
+    tilgjengeligeVedtaksbrev: TilgjengeligeVedtaksbrev;
+  }) =>
   e => {
     if (formProps.isValid) {
       previewCallback({
@@ -50,7 +68,7 @@ const getManuellBrevCallback =
         ...(overstyrtMottaker ? { overstyrtMottaker: safeJSONParse(overstyrtMottaker) } : {}),
       });
     } else {
-      formProps.submit();
+      formProps.submitForm();
     }
     e.preventDefault();
   };
@@ -107,7 +125,28 @@ const getPreviewAutomatiskBrevCallback =
     }
   };
 
-export const BrevPanel = props => {
+interface BrevPanelProps {
+  intl: IntlShape;
+  readOnly: boolean;
+  sprakkode: Kodeverk;
+  personopplysninger: Personopplysninger;
+  arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysningerPerId;
+  tilgjengeligeVedtaksbrev: TilgjengeligeVedtaksbrev;
+  informasjonsbehovVedtaksbrev: InformasjonsbehovVedtaksbrev;
+  informasjonsbehovValues: any[];
+  skalBrukeOverstyrendeFritekstBrev: boolean;
+  begrunnelse: string;
+  previewCallback: (event: React.SyntheticEvent<Element, Event>) => void;
+  redusertUtbetalingÅrsaker: string[];
+  brødtekst: string;
+  overskrift: string;
+  behandlingResultat: Behandlingsresultat;
+  overstyrtMottaker: boolean;
+  formikProps: FormikProps<any>;
+  ytelseTypeKode: string;
+}
+
+export const BrevPanel: React.FC<BrevPanelProps> = props => {
   const {
     intl,
     readOnly,
@@ -157,15 +196,14 @@ export const BrevPanel = props => {
 
   const harAutomatiskVedtaksbrev = kanHaAutomatiskVedtaksbrev(tilgjengeligeVedtaksbrev);
   const harFritekstbrev = kanHaFritekstbrev(tilgjengeligeVedtaksbrev);
-  const harAlternativeMottakere = kanOverstyreMottakere(tilgjengeligeVedtaksbrev);
+  const harAlternativeMottakere =
+    kanOverstyreMottakere(tilgjengeligeVedtaksbrev) && !formikProps.values[fieldnames.SKAL_HINDRE_UTSENDING_AV_BREV];
 
   const fritekstbrev = harFritekstbrev && (
     <>
       <div className={styles.brevContainer}>
         <FritekstBrevPanel
           readOnly={readOnly || formikProps.values[fieldnames.SKAL_HINDRE_UTSENDING_AV_BREV]}
-          sprakkode={sprakkode}
-          intl={intl}
           previewBrev={automatiskBrevUtenValideringCallback}
           harAutomatiskVedtaksbrev={harAutomatiskVedtaksbrev}
           formikProps={formikProps}
@@ -226,35 +264,6 @@ export const BrevPanel = props => {
       )}
     </div>
   );
-};
-
-BrevPanel.propTypes = {
-  intl: PropTypes.shape().isRequired,
-  sprakkode: PropTypes.shape().isRequired,
-  readOnly: PropTypes.bool.isRequired,
-  begrunnelse: PropTypes.string,
-  tilgjengeligeVedtaksbrev: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.string), PropTypes.shape()]),
-  informasjonsbehovVedtaksbrev: PropTypes.shape({
-    informasjonsbehov: PropTypes.arrayOf(PropTypes.shape({ type: PropTypes.string })),
-  }),
-  informasjonsbehovValues: PropTypes.arrayOf(PropTypes.string).isRequired,
-  skalBrukeOverstyrendeFritekstBrev: PropTypes.bool.isRequired,
-  previewCallback: PropTypes.func.isRequired,
-  redusertUtbetalingÅrsaker: PropTypes.arrayOf(PropTypes.string),
-  brødtekst: PropTypes.string,
-  overskrift: PropTypes.string,
-  overstyrtMottaker: PropTypes.string,
-  behandlingResultat: PropTypes.shape(),
-  personopplysninger: PropTypes.shape(),
-  arbeidsgiverOpplysningerPerId: PropTypes.shape(),
-  formikProps: PropTypes.shape().isRequired,
-  ytelseTypeKode: PropTypes.string,
-};
-
-BrevPanel.defaultProps = {
-  begrunnelse: null,
-  brødtekst: null,
-  overskrift: null,
 };
 
 export default injectIntl(BrevPanel);
