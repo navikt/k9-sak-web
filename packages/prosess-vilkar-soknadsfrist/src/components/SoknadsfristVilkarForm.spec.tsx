@@ -66,7 +66,7 @@ describe('<SoknadsfristVilkarForm>', () => {
         aksjonspunkter={[]}
         status={vilkarUtfallType.IKKE_OPPFYLT}
         submitCallback={() => undefined}
-        dokumenterIAktivPeriode={dokumenter}
+        dokumenter={dokumenter}
         alleDokumenter={dokumenter}
         periode={periode}
         isSolvable
