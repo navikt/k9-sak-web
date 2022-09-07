@@ -52,7 +52,7 @@ interface SoknadsfristVilkarFormProps {
   invalid: boolean;
   toggleOverstyring: (overstyrtPanel: SetStateAction<string[]>) => void;
   alleDokumenter?: DokumentStatus[];
-  dokumenterIAktivPeriode?: DokumentStatus[];
+  dokumenter?: DokumentStatus[];
 }
 
 interface StateProps {
@@ -80,7 +80,7 @@ export const SoknadsfristVilkarForm = ({
   pristine,
   invalid,
   alleDokumenter,
-  dokumenterIAktivPeriode,
+  dokumenter,
 }: SoknadsfristVilkarFormProps & StateProps & InjectedFormProps) => {
   const toggleAv = () => {
     reset();
@@ -89,7 +89,7 @@ export const SoknadsfristVilkarForm = ({
 
   return (
     <form onSubmit={handleSubmit}>
-      {(erOverstyrt || harAksjonspunkt) && dokumenterIAktivPeriode.length > 0 && (
+      {(erOverstyrt || harAksjonspunkt) && dokumenter.length > 0 && (
         <AksjonspunktBox
           className={styles.aksjonspunktMargin}
           erAksjonspunktApent={erOverstyrt || harÅpentAksjonspunkt}
@@ -105,10 +105,11 @@ export const SoknadsfristVilkarForm = ({
               </Element>
             ))}
           <VerticalSpacer eightPx />
-          {Array.isArray(dokumenterIAktivPeriode) && dokumenterIAktivPeriode.length > 0 ? (
-            dokumenterIAktivPeriode.map((dokument, index) => (
+          {Array.isArray(alleDokumenter) && alleDokumenter.length > 0 ? (
+            alleDokumenter.map((dokument, index) => (
               <SoknadsfristVilkarDokument
                 key={dokument.journalpostId}
+                erAktivtDokument={dokumenter.findIndex(d => d.journalpostId === dokument.journalpostId) > -1}
                 skalViseBegrunnelse={erOverstyrt || harAksjonspunkt}
                 readOnly={isReadOnly || (!erOverstyrt && !harÅpentAksjonspunkt)}
                 erVilkarOk={erVilkarOk}

@@ -30,6 +30,7 @@ interface SoknadsfristVilkarDokumentProps {
   erVilkarOk?: boolean | string;
   readOnly: boolean;
   skalViseBegrunnelse?: boolean;
+  erAktivtDokument: boolean;
   dokument: DokumentStatus;
   dokumentIndex: number;
 }
@@ -46,6 +47,7 @@ export const SoknadsfristVilkarDokument = ({
   erVilkarOk,
   readOnly,
   skalViseBegrunnelse,
+  erAktivtDokument,
   dokument,
   dokumentIndex,
 }: SoknadsfristVilkarDokumentProps) => {
@@ -68,7 +70,7 @@ export const SoknadsfristVilkarDokument = ({
   const isAtmostDate = useCallback(v => dateBeforeOrEqual(maxDate)(v), [maxDate]);
 
   return (
-    <div>
+    <div style={{ display: erAktivtDokument ? 'block' : 'none' }}>
       <p>
         {dokument.type} innsendt {formatDate(dokument.innsendingstidspunkt)}{' '}
         <small>(journalpostId: {dokument.journalpostId})</small>
