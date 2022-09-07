@@ -11,7 +11,7 @@ import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 
-import hentAktivePerioderFraVilkar from "@fpsak-frontend/utils/src/hentAktivePerioderFraVilkar";
+import hentAktivePerioderFraVilkar from '@fpsak-frontend/utils/src/hentAktivePerioderFraVilkar';
 import SoknadsfristVilkarForm from './components/SoknadsfristVilkarForm';
 import SoknadsfristVilkarHeader from './components/SoknadsfristVilkarHeader';
 import { utledInnsendtSoknadsfrist } from './utils';
@@ -173,7 +173,7 @@ const SoknadsfristVilkarProsessIndex = ({
             panelTittelKode={panelTittelKode}
             lovReferanse={activeVilkår.lovReferanse ?? lovReferanse}
             alleDokumenter={dokumenterSomSkalVurderes}
-            dokumenter={dokumenterIAktivPeriode}
+            dokumenterIAktivPeriode={dokumenterIAktivPeriode}
             periode={activePeriode}
           />
         </div>
