@@ -52,7 +52,6 @@ jobs:
 
       - name: Bygg og laste opp docker-image
         run: |
-          docker pull nginx:1.17.8-alpine
           docker build --tag ${IMAGE_BASE}:${TAG} --tag ${IMAGE_BASE}:latest --label "version=${TAG}" .
           docker push ${IMAGE_BASE} --all-tags
 
