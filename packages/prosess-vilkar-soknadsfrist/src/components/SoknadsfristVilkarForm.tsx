@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { InjectedFormProps } from 'redux-form';
 import { createSelector } from 'reselect';
 import { FormattedMessage } from 'react-intl';
+import hash from 'object-hash';
 
 import advarselIkonUrl from '@fpsak-frontend/assets/images/advarsel_ny.svg';
 import { behandlingForm, behandlingFormValueSelector } from '@fpsak-frontend/form';
@@ -105,17 +106,21 @@ export const SoknadsfristVilkarForm = ({
               </Element>
             ))}
           <VerticalSpacer eightPx />
-          {Array.isArray(dokumenterIAktivPeriode) && dokumenterIAktivPeriode.length > 0 ? (
-            dokumenterIAktivPeriode.map((dokument, index) => (
-              <SoknadsfristVilkarDokument
-                key={dokument.journalpostId}
-                skalViseBegrunnelse={erOverstyrt || harAksjonspunkt}
-                readOnly={isReadOnly || (!erOverstyrt && !harÅpentAksjonspunkt)}
-                erVilkarOk={erVilkarOk}
-                dokumentIndex={index}
-                dokument={dokument}
-              />
-            ))
+          {Array.isArray(alleDokumenter) && alleDokumenter.length > 0 ? (
+            alleDokumenter.map((dokument, index) => {
+              const documentHash = hash(dokument);
+              return (
+                <SoknadsfristVilkarDokument
+                  key={documentHash}
+                  erAktivtDokument={dokumenterIAktivPeriode.findIndex(d => hash(d) === documentHash) > -1}
+                  skalViseBegrunnelse={erOverstyrt || harAksjonspunkt}
+                  readOnly={isReadOnly || (!erOverstyrt && !harÅpentAksjonspunkt)}
+                  erVilkarOk={erVilkarOk}
+                  dokumentIndex={index}
+                  dokument={dokument}
+                />
+              );
+            })
           ) : (
             <FormattedMessage id="SoknadsfristVilkarForm.IngenDokumenter" />
           )}

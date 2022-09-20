@@ -32,6 +32,7 @@ interface SoknadsfristVilkarDokumentProps {
   skalViseBegrunnelse?: boolean;
   dokument: DokumentStatus;
   dokumentIndex: number;
+  erAktivtDokument: boolean;
 }
 
 export const DELVIS_OPPFYLT = 'DELVIS_OPPFYLT';
@@ -47,6 +48,7 @@ export const SoknadsfristVilkarDokument = ({
   readOnly,
   skalViseBegrunnelse,
   dokument,
+  erAktivtDokument,
   dokumentIndex,
 }: SoknadsfristVilkarDokumentProps) => {
   const intl = useIntl();
@@ -68,7 +70,7 @@ export const SoknadsfristVilkarDokument = ({
   const isAtmostDate = useCallback(v => dateBeforeOrEqual(maxDate)(v), [maxDate]);
 
   return (
-    <div>
+    <div style={{ display: erAktivtDokument ? 'block' : 'none' }}>
       <p>
         {dokument.type} innsendt {formatDate(dokument.innsendingstidspunkt)}{' '}
         <small>(journalpostId: {dokument.journalpostId})</small>
