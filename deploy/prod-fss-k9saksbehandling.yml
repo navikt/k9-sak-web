@@ -11,7 +11,6 @@ metadata:
 spec:
   image: {{ image }}
   port: 9000
-  sessionAffinity: ClientIP
   team: k9saksbehandling
   liveness:
     path: /isAlive
