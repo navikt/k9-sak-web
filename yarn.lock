@@ -3881,7 +3881,28 @@
     react-hook-form "7.34.2"
     react-intl "6.1.0"
 
-"@navikt/ft-form-hooks@1.0.40", "@navikt/ft-form-hooks@^1.0.40":
+"@navikt/ft-form-hooks@2.0.4", "@navikt/ft-form-hooks@^2.0.4":
+  version "2.0.4"
+  resolved "https://npm.pkg.github.com/download/@navikt/ft-form-hooks/2.0.4/45e08c81ffedef14d9283dd33c8761ffc366fe11#45e08c81ffedef14d9283dd33c8761ffc366fe11"
+  integrity sha512-QgnaqNB38kQDhWGslphS0EF3x6aC2MC6rih5UCFSnqsApUqdigIyFwYNw7FGj+c4qLEWEzZh6dvhG4ed3N/lAw==
+  dependencies:
+    "@navikt/ds-css" "^1.3.0"
+    "@navikt/ds-react" "^1.3.0"
+    "@navikt/ft-form-validators" "^1.0.30"
+    "@navikt/ft-types" "^1.0.28"
+    "@navikt/ft-ui-komponenter" "^1.1.4"
+    "@navikt/ft-utils" "^1.1.1"
+    classnames "2.3.2"
+    dayjs "1.11.5"
+    lodash.throttle "4.1.1"
+    nav-datovelger "12.6.0"
+    nav-frontend-core "6.0.1"
+    nav-frontend-grid "2.0.2"
+    nav-frontend-grid-style "1.0.3"
+    react "18.2.0"
+    react-hook-form "7.35.0"
+
+"@navikt/ft-form-hooks@^1.0.40":
   version "1.0.40"
   resolved "https://npm.pkg.github.com/download/@navikt/ft-form-hooks/1.0.40/b3974ab28bcdf982b2e64b5a7bfcaa7a53dc3e10#b3974ab28bcdf982b2e64b5a7bfcaa7a53dc3e10"
   integrity sha512-GdOsxUwiPg7pireGwwhOolay6CPHEhb/69nGzmimBsCBelrV77Zf7Wy+FFzEai0JklJch7QnPLEnrPZzzoCqAA==
@@ -3910,27 +3931,6 @@
     nav-frontend-typografi-style "2.0.2"
     react "18.2.0"
     react-hook-form "7.34.2"
-
-"@navikt/ft-form-hooks@^2.0.4":
-  version "2.0.4"
-  resolved "https://npm.pkg.github.com/download/@navikt/ft-form-hooks/2.0.4/45e08c81ffedef14d9283dd33c8761ffc366fe11#45e08c81ffedef14d9283dd33c8761ffc366fe11"
-  integrity sha512-QgnaqNB38kQDhWGslphS0EF3x6aC2MC6rih5UCFSnqsApUqdigIyFwYNw7FGj+c4qLEWEzZh6dvhG4ed3N/lAw==
-  dependencies:
-    "@navikt/ds-css" "^1.3.0"
-    "@navikt/ds-react" "^1.3.0"
-    "@navikt/ft-form-validators" "^1.0.30"
-    "@navikt/ft-types" "^1.0.28"
-    "@navikt/ft-ui-komponenter" "^1.1.4"
-    "@navikt/ft-utils" "^1.1.1"
-    classnames "2.3.2"
-    dayjs "1.11.5"
-    lodash.throttle "4.1.1"
-    nav-datovelger "12.6.0"
-    nav-frontend-core "6.0.1"
-    nav-frontend-grid "2.0.2"
-    nav-frontend-grid-style "1.0.3"
-    react "18.2.0"
-    react-hook-form "7.35.0"
 
 "@navikt/ft-form-validators@^1.0.28":
   version "1.0.28"
