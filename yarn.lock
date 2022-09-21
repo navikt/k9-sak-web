@@ -3819,10 +3819,10 @@
   resolved "https://npm.pkg.github.com/download/@navikt/fnrvalidator/1.3.3/8414963a30e59e3056c9befea7bb022498a2a742#8414963a30e59e3056c9befea7bb022498a2a742"
   integrity sha512-GsLa9ioYPGsDMBHcgKUNoYbZor09KyFIqSaWy8jy1I7f06q6DgUhdpZuRTHLVRCPjWqF2aLzKtvAfrw5dSeakg==
 
-"@navikt/ft-fakta-beregning@2.2.6":
-  version "2.2.6"
-  resolved "https://npm.pkg.github.com/download/@navikt/ft-fakta-beregning/2.2.6/ad787a792a147d1613d4b213f5a3a07d95eda37c#ad787a792a147d1613d4b213f5a3a07d95eda37c"
-  integrity sha512-8iMJ6bxSQarTJ+sV8jIrnC+j1/4PLj6xDd5Nhy254h9J+saSrbeKR48V0Mea+SzpUQzbwLml419Xms32mIVvkQ==
+"@navikt/ft-fakta-beregning@2.2.7":
+  version "2.2.7"
+  resolved "https://npm.pkg.github.com/download/@navikt/ft-fakta-beregning/2.2.7/24e76b3f6eb2ccddcfd55f093b13627bb007cd42#24e76b3f6eb2ccddcfd55f093b13627bb007cd42"
+  integrity sha512-bx6JtC7dIFoUUEygzMvq77F8+TP8k3Go8PCiIUhFeJT92Sou1FhNfXtCyNC3LyaP/UBYiUlKL9T3K9GuNzHXpw==
   dependencies:
     "@navikt/ds-css" "^1.3.0"
     "@navikt/ds-react" "^1.3.0"
