@@ -8,6 +8,7 @@ metadata:
   annotations:
     nais.io/run-as-user: "101" # Fix permissions for nginx
     nais.io/read-only-file-system: "false" # Fix permissions for nginx
+    nginx.ingress.kubernetes.io/proxy-buffer-size: "16k"
 spec:
   image: {{ image }}
   port: 9000
