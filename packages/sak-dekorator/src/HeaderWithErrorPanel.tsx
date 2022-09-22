@@ -48,7 +48,7 @@ const useOutsideClickEvent = (
 
 const isRunningOnLocalhost = () => window.location.hostname === 'localhost';
 const isInDevelopmentMode = () =>
-  window.location.hostname === 'localhost' || window.location.hostname === 'app-q1.adeo.no';
+  window.location.hostname === 'localhost' || window.location.hostname === 'app-q1.adeo.no' || window.location.hostname === 'k9.dev.intern.nav.no';
 const getHeaderTitleHref = getPathToFplos => {
   if (!isRunningOnLocalhost()) {
     return getPathToFplos() || '/k9/web';
