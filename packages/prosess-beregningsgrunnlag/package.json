@@ -18,7 +18,7 @@
     "@navikt/k9-date-utils": "^0.0.8",
     "@navikt/k9-period-utils": "^0.0.12",
     "@navikt/k9-react-components": "^0.1.21",
-    "classnames": "^2.3.1",
+    "classnames": "^2.3.2",
     "moment": "^2.29.4",
     "nav-frontend-chevron": "1.0.30",
     "nav-frontend-core": "6.0.1",
@@ -37,7 +37,7 @@
     "react": "^17.0.2",
     "react-collapse": "5.1.1",
     "react-intl": "6.1.0",
-    "react-redux": "^8.0.2",
+    "react-redux": "^8.0.4",
     "react-vis": "^1.11.7",
     "redux": "^4.1.2",
     "redux-form": "^8.3.8",
@@ -47,6 +47,6 @@
     "@fpsak-frontend/utils-test": "1.0.0",
     "chai": "^4.2.0",
     "enzyme": "^3.11.0",
-    "sinon": "^12.0.1"
+    "sinon": "^14.0.0"
   }
 }
