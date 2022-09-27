@@ -219,7 +219,7 @@ export class ProsessStegUtledet {
 
   public getTekstKode = (): string => this.prosessStegDef.getTekstKode();
 
-  public getErStegDelvisBehandlet = (): boolean => this.paneler.every(p => p.getErDelvisBehandlet());
+  public getErStegDelvisBehandlet = (): boolean => this.paneler.some(p => p.getErDelvisBehandlet());
 
   private harMinstEttDelPanelStatus = (vuType: string): boolean => this.paneler.some(p => p.getStatus() === vuType);
 
