@@ -139,5 +139,9 @@
   "InformasjonsbehovAutomatiskVedtaksbrev.SupplerMedFritekstSkjønnsmessig": "Suppler med fritekst i henhold til skjønnsmessig vurdering.",
   "InformasjonsbehovAutomatiskVedtaksbrev.SupplerMedFritekstEndring": "Suppler med fritekst i henhold til endringsvedtaket.",
   "InformasjonsbehovAutomatiskVedtaksbrev.IkkeRelevantMedFritekst": "Det er ikke relevant med fritekstbeskrivelse i brevet",
-  "InformasjonsbehovAutomatiskVedtaksbrev.ErDetRelevantMedFritekst": "Er det relevant med fritekstbeskrivelse i brevet?"
+  "InformasjonsbehovAutomatiskVedtaksbrev.ErDetRelevantMedFritekst": "Er det relevant med fritekstbeskrivelse i brevet?",
+  "RedigeringAvFritekstBrev.Lagre": "Lagre endringer",
+  "RedigeringAvFritekstBrev.Rediger": "Rediger fritekstbrev",
+  "RedigeringAvFritekstBrev.Avbryt": "Avbryt",
+  "RedigeringAvFritekstBrev.Infotekst": "Gjør ønskede endringer i brevet endenfor. Redigering er begrenset til området markert i oransje."
 }
