@@ -54,6 +54,10 @@ const FritekstBrevPanel = ({
     await lagreDokumentdata(request);
   };
 
+  const setFritekstOriginalHtmlVerdi = (html: string) => {
+    formikProps.setFieldValue(fieldnames.ORIGINAL_HTML, html);
+  };
+
   return (
     <div className={styles.fritekstbrevPanel}>
       {!harAutomatiskVedtaksbrev && <VerticalSpacer sixteenPx />}
@@ -125,6 +129,7 @@ const FritekstBrevPanel = ({
           <FritekstRedigering
             handleSubmit={handleFritekstSubmit}
             hentFritekstbrevHtmlCallback={hentFritekstbrevHtmlCallback}
+            setFieldValue={formikProps.setFieldValue}
             readOnly={readOnly}
             tilgjengeligeVedtaksbrev={tilgjengeligeVedtaksbrev}
             dokumentdata={dokumentdata}

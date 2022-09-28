@@ -9,6 +9,8 @@ import AlertStripe from 'nav-frontend-alertstriper';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { DokumentDataType, LagreDokumentdataType } from '@k9-sak-web/types/src/dokumentdata';
 import {
+  kanHaFritekstbrev,
+  kanHaManueltFritekstbrev,
   TilgjengeligeVedtaksbrev,
   TilgjengeligeVedtaksbrevMedMaler,
   VedtaksbrevMal,
@@ -96,9 +98,7 @@ const MellomLagreBrev = ({
    */
   const onMellomlagreClick = async event => {
     event.stopPropagation();
-    if (dokumentdata.FRITEKSTBREV || brødtekst.length > 0) {
-      await lagreDokumentdata({ ...dokumentdata, FRITEKSTBREV: { brødtekst, overskrift } });
-    } else {
+    if (kanHaManueltFritekstbrev(tilgjengeligeVedtaksbrev)) {
       const redigerbarDokumentmal: VedtaksbrevMal = tilgjengeligeVedtaksbrev.maler.find(
         vb => vb.dokumentMalType === dokumentMalType.MANUELL,
       );
@@ -111,7 +111,10 @@ const MellomLagreBrev = ({
           inkluderKalender,
         }),
       );
+    } else if (kanHaFritekstbrev(tilgjengeligeVedtaksbrev)) {
+      await lagreDokumentdata({ ...dokumentdata, FRITEKSTBREV: { brødtekst, overskrift } });
     }
+
     setOriginalBrev(brevTilStreng(overskrift, brødtekst, redigertHtml));
     setOriginalInkluderKalender(inkluderKalender);
   };
