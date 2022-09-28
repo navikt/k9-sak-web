@@ -22,6 +22,7 @@ export enum TilbakekrevingBehandlingApiKeys {
   BEREGNE_BELØP = 'BEREGNE_BELØP',
   TILBAKE_KODEVERK = 'TILBAKE_KODEVERK',
   PREVIEW_VEDTAKSBREV = 'PREVIEW_VEDTAKSBREV',
+  HENT_FRITEKSTBREV_HTML = 'HENT_FRITEKSTBREV_HTML',
   VERGE = 'VERGE',
   VERGE_OPPRETT = 'VERGE_OPPRETT',
   VERGE_FJERN = 'VERGE_FJERN',
@@ -57,6 +58,7 @@ const endpoints = new RestApiConfigBuilder()
   .withPost('/k9/tilbake/api/dokument/forhandsvis-vedtaksbrev', TilbakekrevingBehandlingApiKeys.PREVIEW_VEDTAKSBREV, {
     isResponseBlob: true,
   })
+  .withPost('/k9/formidling/api/brev/html', TilbakekrevingBehandlingApiKeys.HENT_FRITEKSTBREV_HTML)
 
   .build();
 
