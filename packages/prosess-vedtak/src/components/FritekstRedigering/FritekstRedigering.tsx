@@ -20,10 +20,12 @@ import {
 import styles from './RedigerFritekstbrev.less';
 
 import FritekstEditor from './FritekstEditor';
+import { fieldnames } from '../../konstanter';
 
 interface ownProps {
   handleSubmit: (html: string, request: any) => void;
   hentFritekstbrevHtmlCallback: (parameters: any) => string;
+  setFieldValue: (field: string, value: any, shouldValidate?: boolean) => void;
   tilgjengeligeVedtaksbrev: TilgjengeligeVedtaksbrev & TilgjengeligeVedtaksbrevMedMaler;
   readOnly: boolean;
   dokumentdata: DokumentDataType;
@@ -34,6 +36,7 @@ interface ownProps {
 const FritekstRedigering = ({
   handleSubmit,
   hentFritekstbrevHtmlCallback,
+  setFieldValue,
   tilgjengeligeVedtaksbrev,
   readOnly,
   dokumentdata,
@@ -58,6 +61,7 @@ const FritekstRedigering = ({
   const hentFritekstbrevMal = async () => {
     const request = { dokumentMal: redigerbarDokumentmal.redigerbarMalType };
     const responseHtml = await hentFritekstbrevHtmlCallback(request);
+    setFieldValue(fieldnames.REDIGERT_MAL, redigerbarDokumentmal.redigerbarMalType);
 
     setBrevStiler(utledStiler(responseHtml));
     setPrefiksInnhold(utledPrefiksInnhold(responseHtml));
@@ -65,6 +69,7 @@ const FritekstRedigering = ({
 
     const originalHtmlStreng = utledRedigerbartInnhold(responseHtml);
     setOriginalHtml(originalHtmlStreng);
+    setFieldValue(fieldnames.ORIGINAL_HTML, originalHtmlStreng);
 
     if (innholdTilRedigering) await setRedigerbartInnhold(innholdTilRedigering);
     else await setRedigerbartInnhold(originalHtmlStreng);
