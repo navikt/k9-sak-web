@@ -13,7 +13,6 @@ import {
   VedtaksbrevMal,
 } from '@fpsak-frontend/utils/src/formidlingUtils';
 import { DokumentDataType } from '@k9-sak-web/types/src/dokumentdata';
-import dokumentMalType from '@fpsak-frontend/kodeverk/src/dokumentMalType';
 
 import InkluderKalenderCheckbox from './InkluderKalenderCheckbox';
 
