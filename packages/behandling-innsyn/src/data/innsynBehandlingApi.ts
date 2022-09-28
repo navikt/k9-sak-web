@@ -16,6 +16,7 @@ export enum InnsynBehandlingApiKeys {
   SAVE_AKSJONSPUNKT = 'SAVE_AKSJONSPUNKT',
   PREVIEW_MESSAGE = 'PREVIEW_MESSAGE',
   INNSYN_DOKUMENTER = 'INNSYN_DOKUMENTER',
+  HENT_FRITEKSTBREV_HTML = 'HENT_FRITEKSTBREV_HTML',
 }
 
 const endpoints = new RestApiConfigBuilder()
@@ -37,6 +38,7 @@ const endpoints = new RestApiConfigBuilder()
 
   /* FPFORMIDLING */
   .withPost('/k9/formidling/api/brev/forhaandsvis', InnsynBehandlingApiKeys.PREVIEW_MESSAGE, { isResponseBlob: true })
+  .withPost('/k9/formidling/api/brev/html', InnsynBehandlingApiKeys.HENT_FRITEKSTBREV_HTML)
   .build();
 
 export const requestInnsynApi = createRequestApi(endpoints);
