@@ -72,7 +72,10 @@ const FritekstRedigering = ({
     setFieldValue(fieldnames.ORIGINAL_HTML, originalHtmlStreng);
 
     if (innholdTilRedigering) await setRedigerbartInnhold(innholdTilRedigering);
-    else await setRedigerbartInnhold(originalHtmlStreng);
+    else {
+      setFieldValue(fieldnames.REDIGERT_HTML, originalHtmlStreng);
+      await setRedigerbartInnhold(originalHtmlStreng);
+    }
 
     setRedigerbartInnholdKlart(true);
   };

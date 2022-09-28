@@ -7,8 +7,13 @@ import { FormattedMessage, injectIntl, IntlShape } from 'react-intl';
 import { VerticalSpacer, useFeatureToggles } from '@fpsak-frontend/shared-components';
 import { hasValidText, maxLength, minLength, required } from '@fpsak-frontend/utils';
 import { TextAreaFormik, TextFieldFormik } from '@fpsak-frontend/form';
-import { kanHaManueltFritekstbrev, TilgjengeligeVedtaksbrev } from '@fpsak-frontend/utils/src/formidlingUtils';
+import {
+  kanHaManueltFritekstbrev,
+  TilgjengeligeVedtaksbrev,
+  VedtaksbrevMal,
+} from '@fpsak-frontend/utils/src/formidlingUtils';
 import { DokumentDataType } from '@k9-sak-web/types/src/dokumentdata';
+import dokumentMalType from '@fpsak-frontend/kodeverk/src/dokumentMalType';
 
 import InkluderKalenderCheckbox from './InkluderKalenderCheckbox';
 
@@ -52,10 +57,6 @@ const FritekstBrevPanel = ({
   const handleFritekstSubmit = async (html: string, request) => {
     formikProps.setFieldValue(fieldnames.REDIGERT_HTML, html);
     await lagreDokumentdata(request);
-  };
-
-  const setFritekstOriginalHtmlVerdi = (html: string) => {
-    formikProps.setFieldValue(fieldnames.ORIGINAL_HTML, html);
   };
 
   return (
