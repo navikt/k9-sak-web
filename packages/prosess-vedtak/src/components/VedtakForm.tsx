@@ -180,6 +180,14 @@ export const VedtakForm: React.FC<Props> = ({
               inkluderKalender: values?.[fieldnames.INKLUDER_KALENDER_VED_OVERSTYRING],
             }
           : {},
+        redigertbrev: values?.[fieldnames.SKAL_BRUKE_OVERSTYRENDE_FRITEKST_BREV]
+          ? {
+              originalHtml: values?.[fieldnames.ORIGINAL_HTML],
+              redigertHtml: values?.[fieldnames.REDIGERT_HTML],
+              inkluderKalender: values?.[fieldnames.INKLUDER_KALENDER_VED_OVERSTYRING],
+              redigertMal: values?.[fieldnames.REDIGERT_MAL],
+            }
+          : {},
         skalBrukeOverstyrendeFritekstBrev: values?.[fieldnames.SKAL_BRUKE_OVERSTYRENDE_FRITEKST_BREV],
         skalUndertrykkeBrev: values?.[fieldnames.SKAL_HINDRE_UTSENDING_AV_BREV],
         isVedtakSubmission,
@@ -204,6 +212,12 @@ export const VedtakForm: React.FC<Props> = ({
             brødtekst: values?.[fieldnames.BRØDTEKST],
             overskrift: values?.[fieldnames.OVERSKRIFT],
             inkluderKalender: values?.[fieldnames.INKLUDER_KALENDER_VED_OVERSTYRING],
+          },
+          redigertbrev: {
+            originalHtml: values?.[fieldnames.ORIGINAL_HTML],
+            redigertHtml: values?.[fieldnames.REDIGERT_HTML],
+            inkluderKalender: values?.[fieldnames.INKLUDER_KALENDER_VED_OVERSTYRING],
+            redigertMal: values?.[fieldnames.REDIGERT_MAL],
           },
           skalBrukeOverstyrendeFritekstBrev: values?.[fieldnames.SKAL_BRUKE_OVERSTYRENDE_FRITEKST_BREV],
           skalUndertrykkeBrev: values?.[fieldnames.SKAL_HINDRE_UTSENDING_AV_BREV],
