@@ -136,7 +136,7 @@ VedtakKlageFormImpl.propTypes = {
   behandlingsResultatTekst: PropTypes.string,
   klageVurdering: PropTypes.shape().isRequired,
   previewVedtakCallback: PropTypes.func.isRequired,
-  avvistArsaker: PropTypes.arrayOf(PropTypes.object),
+  avvistArsaker: PropTypes.arrayOf(PropTypes.shape()),
   omgjortAarsak: PropTypes.string,
   fritekstTilBrev: PropTypes.string,
   behandlingsresultat: PropTypes.shape(),
@@ -227,8 +227,8 @@ export const getIsOpphevOgHjemsend = createSelector(
 const getÅpneAksjonspunktKoder = createSelector([ownProps => ownProps.aksjonspunkter], aksjonspunkter =>
   Array.isArray(aksjonspunkter)
     ? aksjonspunkter
-      .filter(ap => ap.status.kode === aksjonspunktStatus.OPPRETTET && ap.kanLoses)
-      .map(ap => ap.definisjon.kode)
+        .filter(ap => ap.status.kode === aksjonspunktStatus.OPPRETTET && ap.kanLoses)
+        .map(ap => ap.definisjon.kode)
     : [],
 );
 
