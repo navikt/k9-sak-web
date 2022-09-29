@@ -107,3 +107,5 @@ spec:
       value: "false"
     - name: NY_PROSESS_VEDTAK_ENABLED
       value: "false"
+    - name: FRITEKST_REDIGERING
+      value: "false"

@@ -7,6 +7,7 @@ import { Button } from '@navikt/ds-react';
 import klageBehandlingArsakType from '@fpsak-frontend/kodeverk/src/behandlingArsakType';
 import behandlingStatusCode from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import { Aksjonspunkt } from '@k9-sak-web/types';
+import { TilgjengeligeVedtaksbrev, TilgjengeligeVedtaksbrevMedMaler } from '@fpsak-frontend/utils/src/formidlingUtils';
 
 import { DokumentDataType, LagreDokumentdataType } from '@k9-sak-web/types/src/dokumentdata';
 import MellomLagreBrev from '../brev/MellomLagreBrev';
@@ -28,6 +29,7 @@ interface OwnProps {
   dokumentdata: DokumentDataType;
   lagreDokumentdata: LagreDokumentdataType;
   aksjonspunkter: Aksjonspunkt[];
+  tilgjengeligeVedtaksbrev: TilgjengeligeVedtaksbrev & TilgjengeligeVedtaksbrevMedMaler;
 }
 
 export const submitKnappTekst = aksjonspunkter =>
@@ -49,6 +51,7 @@ export const VedtakRevurderingSubmitPanelImpl = ({
   overskrift,
   brødtekst,
   aksjonspunkter,
+  tilgjengeligeVedtaksbrev,
 }: OwnProps): JSX.Element => {
   const onClick = event =>
     !harRedusertUtbetaling || Object.values(redusertUtbetalingArsak).some(a => !!formikValues[a])
@@ -88,6 +91,9 @@ export const VedtakRevurderingSubmitPanelImpl = ({
           inkluderKalender={formikValues[fieldnames.INKLUDER_KALENDER_VED_OVERSTYRING]}
           brødtekst={brødtekst}
           submitKnapp={submitKnapp}
+          redigertHtml={formikValues[fieldnames.REDIGERT_HTML]}
+          originalHtml={formikValues[fieldnames.ORIGINAL_HTML]}
+          tilgjengeligeVedtaksbrev={tilgjengeligeVedtaksbrev}
         />
       )}
     </div>

@@ -10,7 +10,7 @@ import {
   useSetBehandlingVedEndring,
 } from '@k9-sak-web/behandling-felles';
 import { Fagsak, KodeverkMedNavn, Behandling, FeatureToggles, FagsakPerson } from '@k9-sak-web/types';
-import lagForhåndsvisRequest from '@fpsak-frontend/utils/src/formidlingUtils';
+import lagForhåndsvisRequest, { bestemAvsenderApp } from '@fpsak-frontend/utils/src/formidlingUtils';
 
 import prosessStegPanelDefinisjoner from '../panelDefinisjoner/prosessStegInnsynPanelDefinisjoner';
 import { restApiInnsynHooks, InnsynBehandlingApiKeys } from '../data/innsynBehandlingApi';
@@ -43,6 +43,23 @@ const previewCallback =
     const request = lagForhåndsvisRequest(behandling, fagsak, fagsakPerson, parametre);
     return forhandsvisMelding(request).then(response => forhandsvis(response));
   };
+
+const getHentFritekstbrevHtmlCallback =
+  (
+    hentFriteksbrevHtml: (data: any) => Promise<any>,
+    behandling: Behandling,
+    fagsak: Fagsak,
+    fagsakPerson: FagsakPerson,
+  ) =>
+  (parameters: any) =>
+    hentFriteksbrevHtml({
+      ...parameters,
+      eksternReferanse: behandling.uuid,
+      ytelseType: fagsak.sakstype,
+      saksnummer: fagsak.saksnummer,
+      aktørId: fagsakPerson.aktørId,
+      avsenderApplikasjon: bestemAvsenderApp(behandling.type.kode),
+    });
 
 const getLagringSideeffekter =
   (toggleIverksetterVedtakModal, toggleOppdatereFagsakContext, oppdaterProsessStegOgFaktaPanelIUrl) =>
@@ -88,6 +105,9 @@ const InnsynProsess = ({
   const { startRequest: forhandsvisMelding } = restApiInnsynHooks.useRestApiRunner(
     InnsynBehandlingApiKeys.PREVIEW_MESSAGE,
   );
+  const { startRequest: hentFriteksbrevHtml } = restApiInnsynHooks.useRestApiRunner(
+    InnsynBehandlingApiKeys.HENT_FRITEKSTBREV_HTML,
+  );
 
   useSetBehandlingVedEndring(apBehandlingRes, setBehandling);
 
@@ -97,6 +117,10 @@ const InnsynProsess = ({
     previewCallback: useCallback(previewCallback(forhandsvisMelding, fagsak, fagsakPerson, behandling), [
       behandling.versjon,
     ]),
+    hentFritekstbrevHtmlCallback: useCallback(
+      getHentFritekstbrevHtmlCallback(hentFriteksbrevHtml, behandling, fagsak, fagsakPerson),
+      [behandling.versjon],
+    ),
     ...data,
   };
   const [prosessStegPaneler, valgtPanel, formaterteProsessStegPaneler] = prosessStegHooks.useProsessStegPaneler(

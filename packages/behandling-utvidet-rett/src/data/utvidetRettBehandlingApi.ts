@@ -27,6 +27,7 @@ export enum UtvidetRettBehandlingApiKeys {
   TILGJENGELIGE_VEDTAKSBREV = 'TILGJENGELIGE_VEDTAKSBREV',
   DOKUMENTDATA_LAGRE = 'DOKUMENTDATA_LAGRE',
   DOKUMENTDATA_HENTE = 'DOKUMENTDATA_HENTE',
+  HENT_FRITEKSTBREV_HTML = 'HENT_FRITEKSTBREV_HTML',
   OMSORGEN_FOR = 'OMSORGEN_FOR',
 }
 
@@ -72,6 +73,7 @@ const endpoints = new RestApiConfigBuilder()
   .withPost('/k9/formidling/api/brev/forhaandsvis', UtvidetRettBehandlingApiKeys.PREVIEW_MESSAGE, {
     isResponseBlob: true,
   })
+  .withPost('/k9/formidling/api/brev/html', UtvidetRettBehandlingApiKeys.HENT_FRITEKSTBREV_HTML)
 
   .build();
 
