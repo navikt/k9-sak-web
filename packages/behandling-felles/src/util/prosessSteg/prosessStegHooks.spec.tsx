@@ -131,9 +131,11 @@ describe('<prosessStegHooks>', () => {
         apentFaktaPanelInfo,
       ),
     );
+    const dataValues: any[] = wrapper.find('div').prop('data-values');
+
     // @ts-ignore
     const [prosessStegPaneler, valgtPanel, formaterteProsessStegPaneler] = Object.values({
-      ...wrapper.find('div').prop('data-values'),
+      ...dataValues,
       // @ts-ignore
     }).reduce((acc, value) => [...acc, value], []);
 
@@ -253,7 +255,7 @@ describe('<prosessStegHooks>', () => {
 
     const lagreAksjonspunkter = sinon.stub();
     lagreAksjonspunkter.returns(Promise.resolve());
-    const lagringSideEffectsCallback = () => () => { };
+    const lagringSideEffectsCallback = () => () => {};
 
     const wrapper = testHook(() =>
       prosessStegHooks.useBekreftAksjonspunkt(

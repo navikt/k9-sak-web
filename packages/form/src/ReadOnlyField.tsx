@@ -9,7 +9,7 @@ export interface ReadOnlyFieldProps {
   label?: LabelType;
   input?: { value: string | number };
   isEdited?: boolean;
-  type: string;
+  type?: string;
   renderReadOnlyValue?: (value: any) => any;
   field?: { value: string | number };
 }
