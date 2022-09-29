@@ -45,7 +45,6 @@ export const ReadOnlyField = ({
 ReadOnlyField.defaultProps = {
   label: undefined,
   isEdited: false,
-  type: undefined,
 };
 
 export default ReadOnlyField;

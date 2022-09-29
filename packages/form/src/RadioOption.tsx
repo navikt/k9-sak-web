@@ -59,14 +59,11 @@ export const RadioOption = ({
 
 RadioOption.defaultProps = {
   name: '',
-  label: undefined,
   className: '',
   disabled: false,
   groupDisabled: false,
   actualValue: undefined,
   onChange: () => undefined,
-  children: undefined,
-  style: undefined,
   manualHideChildren: false,
 };
 
