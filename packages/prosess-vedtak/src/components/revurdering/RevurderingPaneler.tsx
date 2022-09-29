@@ -6,7 +6,6 @@ import { Column, Row } from 'nav-frontend-grid';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import { isAvslag, isInnvilget, isOpphor } from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
-import { redusertUtbetalingArsakType } from '@fpsak-frontend/prosess-vedtak/src/kodeverk/redusertUtbetalingArsak';
 import BehandlingArsakType from '@fpsak-frontend/kodeverk/src/behandlingArsakType';
 import { getKodeverknavnFn } from '@fpsak-frontend/utils';
 import { Aksjonspunkt, Kodeverk, KodeverkMedNavn, Vilkar } from '@k9-sak-web/types';
