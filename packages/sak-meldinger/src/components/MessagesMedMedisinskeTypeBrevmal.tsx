@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { createSelector } from 'reselect';
 import { connect } from 'react-redux';
 import { InjectedFormProps } from 'redux-form';
@@ -62,7 +62,12 @@ interface PureOwnProps {
   submitCallback: (values: FormValues) => void;
   behandlingId: number;
   behandlingVersjon: number;
-  previewCallback: (overstyrtMottaker: Mottaker, brevmalkode: string, fritekst: string, fritekstbrev?: Fritekstbrev) => void;
+  previewCallback: (
+    overstyrtMottaker: Mottaker,
+    brevmalkode: string,
+    fritekst: string,
+    fritekstbrev?: Fritekstbrev,
+  ) => void;
   templates: Brevmaler | Brevmal[];
   sprakKode?: string;
   revurderingVarslingArsak: KodeverkMedNavn[];
@@ -134,7 +139,7 @@ export const MessagesMedMedisinskeTypeBrevmalImpl = ({
         : undefined,
       brevmalkode,
       fritekst,
-      fritekstbrev
+      fritekstbrev,
     );
   };
 
@@ -147,13 +152,14 @@ export const MessagesMedMedisinskeTypeBrevmalImpl = ({
 
   const tmpls: Brevmal[] = transformTemplates(templates);
 
-  const {
-    startRequest: hentFritekstMaler,
-    data: fritekstMaler,
-  } = restApiMessagesHooks.useRestApiRunner<{ tittel: string; fritekst: string }[]>(MessagesApiKeys.HENT_FRITEKSTBREVMALER_TIL_TYPEN_AV_MEDISINSKE_OPPLYSNINGER);
+  const { startRequest: hentFritekstMaler, data: fritekstMaler } = restApiMessagesHooks.useRestApiRunner<
+    { tittel: string; fritekst: string }[]
+  >(MessagesApiKeys.HENT_FRITEKSTBREVMALER_TIL_TYPEN_AV_MEDISINSKE_OPPLYSNINGER);
 
   const oppdaterAPILinkerForHentingAvMedisinskeTyper = () => {
-    const urlsTilHentingAvMedisinskeTyper = tmpls.find(brevmal => brevmal.kode === dokumentMalType.INNHENT_MEDISINSKE_OPPLYSNINGER)?.linker;
+    const urlsTilHentingAvMedisinskeTyper = tmpls.find(
+      brevmal => brevmal.kode === dokumentMalType.INNHENT_MEDISINSKE_OPPLYSNINGER,
+    )?.linker;
 
     if (urlsTilHentingAvMedisinskeTyper) {
       requestMessagesApi.setLinks(urlsTilHentingAvMedisinskeTyper);
@@ -161,15 +167,12 @@ export const MessagesMedMedisinskeTypeBrevmalImpl = ({
       return true;
     }
     return false;
-  }
+  };
 
   useEffect(() => {
     if (brevmalkode) {
       // Resetter fritekst hver gang bruker endrer brevmalskode
-      formProps.change(
-        'fritekst',
-        null,
-      );
+      formProps.change('fritekst', null);
 
       // Tilbakestill valgt mottaker hvis brukeren skifter mal og valgt mottakere ikke er tilgjengelig på ny mal.
       formProps.change(
@@ -182,20 +185,18 @@ export const MessagesMedMedisinskeTypeBrevmalImpl = ({
       if (brevmalkode === dokumentMalType.INNHENT_MEDISINSKE_OPPLYSNINGER) {
         const erAPIOppdatertMedLinker = oppdaterAPILinkerForHentingAvMedisinskeTyper();
 
-        if (!erAPIOppdatertMedLinker) return
+        if (!erAPIOppdatertMedLinker) return;
 
-        hentFritekstMaler().then((brevmalerForMedisinskeOpplysninger) => {
+        hentFritekstMaler()
+          .then(brevmalerForMedisinskeOpplysninger => {
+            const fritekstBrevmal = brevmalerForMedisinskeOpplysninger.find(alt => valgtMedisinType === alt.tittel);
 
-          const fritekstBrevmal = brevmalerForMedisinskeOpplysninger.find((alt => valgtMedisinType === alt.tittel));
-
-          if (fritekstBrevmal) {
-            formProps.change(
-              'fritekst',
-              fritekstBrevmal.fritekst
-            );
-          }
-          // Catch er tom fordi error message skal håndteres av requestMessagesApi.
-        }).catch(() => { });
+            if (fritekstBrevmal) {
+              formProps.change('fritekst', fritekstBrevmal.fritekst);
+            }
+            // Catch er tom fordi error message skal håndteres av requestMessagesApi.
+          })
+          .catch(() => { });
       }
     }
   }, [brevmalkode, valgtMedisinType]);
@@ -217,23 +218,25 @@ export const MessagesMedMedisinskeTypeBrevmalImpl = ({
             ))}
             bredde="xxl"
           />
-          {brevmalkode === dokumentMalType.INNHENT_MEDISINSKE_OPPLYSNINGER && fritekstMaler && fritekstMaler.length > 0 && (
-            <>
-              <VerticalSpacer eightPx />
-              <SelectField
-                name="valgtMedisinType"
-                label={intl.formatMessage({ id: 'Messages.TypeAvDokumentasjon' })}
-                validate={[]}
-                placeholder={intl.formatMessage({ id: 'Messages.VelgTypeAvDokumentasjon' })}
-                selectValues={fritekstMaler.map(alternativ => (
-                  <option key={alternativ.tittel} value={alternativ.tittel}>
-                    {alternativ.tittel}
-                  </option>
-                ))}
-                bredde="xxl"
-              />
-            </>
-          )}
+          {brevmalkode === dokumentMalType.INNHENT_MEDISINSKE_OPPLYSNINGER &&
+            fritekstMaler &&
+            fritekstMaler.length > 0 && (
+              <>
+                <VerticalSpacer eightPx />
+                <SelectField
+                  name="valgtMedisinType"
+                  label={intl.formatMessage({ id: 'Messages.TypeAvDokumentasjon' })}
+                  validate={[]}
+                  placeholder={intl.formatMessage({ id: 'Messages.VelgTypeAvDokumentasjon' })}
+                  selectValues={fritekstMaler.map(alternativ => (
+                    <option key={alternativ.tittel} value={alternativ.tittel}>
+                      {alternativ.tittel}
+                    </option>
+                  ))}
+                  bredde="xxl"
+                />
+              </>
+            )}
           {recipients.length > 0 && (
             <>
               <VerticalSpacer eightPx />
@@ -287,24 +290,24 @@ export const MessagesMedMedisinskeTypeBrevmalImpl = ({
             </>
           )}
           {brevmalkode === dokumentMalType.GENERELT_FRITEKSTBREV && (
-            <div className='input--xxl'>
-                <VerticalSpacer eightPx />
-                <InputField
-                  name='fritekstbrev.overskrift'
-                  label={intl.formatMessage({ id: 'Messages.FritekstTittel' })}
-                  validate={[required, minLength3, maxLength200, hasValidText]}
-                  maxLength={200}
-                />
+            <div className="input--xxl">
+              <VerticalSpacer eightPx />
+              <InputField
+                name="fritekstbrev.overskrift"
+                label={intl.formatMessage({ id: 'Messages.FritekstTittel' })}
+                validate={[required, minLength3, maxLength200, hasValidText]}
+                maxLength={200}
+              />
 
-                <VerticalSpacer eightPx />
-                <TextAreaField
-                  name='fritekstbrev.brødtekst'
-                  label={intl.formatMessage({ id: 'Messages.Fritekst' })}
-                  validate={[required, minLength3, maxLength100000, hasValidText]}
-                  maxLength={100000}
-                  badges={[{ type: 'fokus', textId: languageCode, title: 'Messages.Beskrivelse' }]}
-                />
-              </div>
+              <VerticalSpacer eightPx />
+              <TextAreaField
+                name="fritekstbrev.brødtekst"
+                label={intl.formatMessage({ id: 'Messages.Fritekst' })}
+                validate={[required, minLength3, maxLength100000, hasValidText]}
+                maxLength={100000}
+                badges={[{ type: 'fokus', textId: languageCode, title: 'Messages.Beskrivelse' }]}
+              />
+            </div>
           )}
           <VerticalSpacer eightPx />
           <div className={styles.buttonRow}>
@@ -347,7 +350,7 @@ const buildInitalValues = (templates: Brevmaler | Brevmal[], isKontrollerRevurde
     overstyrtMottaker,
     // overstyrtMottaker: null,
     fritekst: null,
-    fritekstbrev: null
+    fritekstbrev: null,
     // arsakskode: null,
   };
 
@@ -383,7 +386,7 @@ const mapStateToPropsFactory = (_initialState, initialOwnProps: PureOwnProps) =>
       'fritekst',
       'arsakskode',
       'fritekstbrev.overskrift',
-      'fritekstbrev.brødtekst'
+      'fritekstbrev.brødtekst',
     ),
     causes: getfilteredCauses(ownProps),
     initialValues: buildInitalValues(ownProps.templates, ownProps.isKontrollerRevurderingApOpen),

@@ -11,6 +11,7 @@ import {
   Rettigheter,
   useSetBehandlingVedEndring,
 } from '@k9-sak-web/behandling-felles';
+import { bestemAvsenderApp } from '@fpsak-frontend/utils/src/formidlingUtils';
 import { KodeverkMedNavn, Behandling, Fagsak, FagsakPerson } from '@k9-sak-web/types';
 
 import { restApiTilbakekrevingHooks, TilbakekrevingBehandlingApiKeys } from '../data/tilbakekrevingBehandlingApi';
@@ -40,6 +41,23 @@ interface OwnProps {
   harApenRevurdering: boolean;
   setBehandling: (behandling: Behandling) => void;
 }
+
+const getHentFritekstbrevHtmlCallback =
+  (
+    hentFriteksbrevHtml: (data: any) => Promise<any>,
+    behandling: Behandling,
+    fagsak: Fagsak,
+    fagsakPerson: FagsakPerson,
+  ) =>
+  (parameters: any) =>
+    hentFriteksbrevHtml({
+      ...parameters,
+      eksternReferanse: behandling.uuid,
+      ytelseType: fagsak.sakstype,
+      saksnummer: fagsak.saksnummer,
+      aktørId: fagsakPerson.aktørId,
+      avsenderApplikasjon: bestemAvsenderApp(behandling.type.kode),
+    });
 
 const getLagringSideeffekter =
   (toggleFatterVedtakModal, toggleOppdatereFagsakContext, oppdaterProsessStegOgFaktaPanelIUrl) =>
@@ -90,6 +108,9 @@ const TilbakekrevingProsess = ({
   const { startRequest: forhandsvisVedtaksbrev } = restApiTilbakekrevingHooks.useRestApiRunner(
     TilbakekrevingBehandlingApiKeys.PREVIEW_VEDTAKSBREV,
   );
+  const { startRequest: hentFriteksbrevHtml } = restApiTilbakekrevingHooks.useRestApiRunner(
+    TilbakekrevingBehandlingApiKeys.HENT_FRITEKSTBREV_HTML,
+  );
 
   const fetchPreviewVedtaksbrev = useCallback(
     param => forhandsvisVedtaksbrev(param).then(response => forhandsvis(response)),
@@ -100,6 +121,10 @@ const TilbakekrevingProsess = ({
     fagsakPerson,
     beregnBelop,
     fetchPreviewVedtaksbrev,
+    hentFritekstbrevHtmlCallback: useCallback(
+      getHentFritekstbrevHtmlCallback(hentFriteksbrevHtml, behandling, fagsak, fagsakPerson),
+      [behandling.versjon],
+    ),
     ...data,
   };
   const [prosessStegPaneler, valgtPanel, formaterteProsessStegPaneler] = prosessStegHooks.useProsessStegPaneler(

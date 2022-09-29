@@ -28,10 +28,11 @@ class PanelDef extends ProsessStegPanelDef {
 
   getAksjonspunktKoder = () => [aksjonspunktCodes.FORESLA_VEDTAK];
 
-  getData = ({ innsyn, alleDokumenter, fagsak, previewCallback, aksjonspunkter }) => ({
+  getData = ({ innsyn, alleDokumenter, fagsak, previewCallback, hentFritekstbrevHtmlCallback, aksjonspunkter }) => ({
     innsyn,
     alleDokumenter,
     previewCallback,
+    hentFritekstbrevHtmlCallback,
     aksjonspunkter,
     saksnummer: fagsak.saksnummer,
   });

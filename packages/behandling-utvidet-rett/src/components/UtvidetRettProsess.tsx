@@ -13,7 +13,7 @@ import {
 } from '@k9-sak-web/behandling-felles';
 import { Fagsak, FagsakPerson, Behandling } from '@k9-sak-web/types';
 
-import lagForhåndsvisRequest from '@fpsak-frontend/utils/src/formidlingUtils';
+import lagForhåndsvisRequest, { bestemAvsenderApp } from '@fpsak-frontend/utils/src/formidlingUtils';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import { restApiUtvidetRettHooks, UtvidetRettBehandlingApiKeys } from '../data/utvidetRettBehandlingApi';
@@ -26,6 +26,23 @@ const forhandsvis = (data: any) => {
     window.open(URL.createObjectURL(data));
   }
 };
+
+const getHentFritekstbrevHtmlCallback =
+  (
+    hentFriteksbrevHtml: (data: any) => Promise<any>,
+    behandling: Behandling,
+    fagsak: Fagsak,
+    fagsakPerson: FagsakPerson,
+  ) =>
+  (parameters: any) =>
+    hentFriteksbrevHtml({
+      ...parameters,
+      eksternReferanse: behandling.uuid,
+      ytelseType: fagsak.sakstype,
+      saksnummer: fagsak.saksnummer,
+      aktørId: fagsakPerson.aktørId,
+      avsenderApplikasjon: bestemAvsenderApp(behandling.type.kode),
+    });
 
 const getForhandsvisTilbakeCallback =
   (forhandsvisTilbakekrevingMelding: (data: any) => Promise<any>, fagsak: Fagsak, behandling: Behandling) =>
@@ -128,6 +145,9 @@ const UtvidetRettProsess = ({
   const { startRequest: forhandsvisMelding } = restApiUtvidetRettHooks.useRestApiRunner(
     UtvidetRettBehandlingApiKeys.PREVIEW_MESSAGE,
   );
+  const { startRequest: hentFriteksbrevHtml } = restApiUtvidetRettHooks.useRestApiRunner(
+    UtvidetRettBehandlingApiKeys.HENT_FRITEKSTBREV_HTML,
+  );
 
   const { startRequest: lagreAksjonspunkter, data: apBehandlingRes } =
     restApiUtvidetRettHooks.useRestApiRunner<Behandling>(UtvidetRettBehandlingApiKeys.SAVE_AKSJONSPUNKT);
@@ -143,6 +163,10 @@ const UtvidetRettProsess = ({
     ]),
     previewFptilbakeCallback: useCallback(
       getForhandsvisTilbakeCallback(forhandsvisTilbakekrevingMelding, fagsak, behandling),
+      [behandling.versjon],
+    ),
+    hentFritekstbrevHtmlCallback: useCallback(
+      getHentFritekstbrevHtmlCallback(hentFriteksbrevHtml, behandling, fagsak, fagsakPerson),
       [behandling.versjon],
     ),
     alleKodeverk,

@@ -21,7 +21,7 @@ import {
   ArbeidsgiverOpplysningerPerId,
 } from '@k9-sak-web/types';
 
-import lagForhåndsvisRequest from '@fpsak-frontend/utils/src/formidlingUtils';
+import lagForhåndsvisRequest, { bestemAvsenderApp } from '@fpsak-frontend/utils/src/formidlingUtils';
 import prosessStegPanelDefinisjoner from '../panelDefinisjoner/prosessStegOmsorgspengerPanelDefinisjoner';
 import FetchedData from '../types/fetchedDataTsType';
 import { restApiOmsorgHooks, OmsorgspengerBehandlingApiKeys } from '../data/omsorgspengerBehandlingApi';
@@ -78,6 +78,23 @@ const getForhandsvisTilbakeCallback =
     };
     return forhandsvisTilbakekrevingMelding(data).then(response => forhandsvis(response));
   };
+
+const getHentFritekstbrevHtmlCallback =
+  (
+    hentFriteksbrevHtml: (data: any) => Promise<any>,
+    behandling: Behandling,
+    fagsak: Fagsak,
+    fagsakPerson: FagsakPerson,
+  ) =>
+  (parameters: any) =>
+    hentFriteksbrevHtml({
+      ...parameters,
+      eksternReferanse: behandling.uuid,
+      ytelseType: fagsak.sakstype,
+      saksnummer: fagsak.saksnummer,
+      aktørId: fagsakPerson.aktørId,
+      avsenderApplikasjon: bestemAvsenderApp(behandling.type.kode),
+    });
 
 const getLagringSideeffekter =
   (
@@ -165,6 +182,9 @@ const OmsorgspengerProsess = ({
   const { startRequest: lagreDokumentdata } = restApiOmsorgHooks.useRestApiRunner<Behandling>(
     OmsorgspengerBehandlingApiKeys.DOKUMENTDATA_LAGRE,
   );
+  const { startRequest: hentFriteksbrevHtml } = restApiOmsorgHooks.useRestApiRunner(
+    OmsorgspengerBehandlingApiKeys.HENT_FRITEKSTBREV_HTML,
+  );
   useSetBehandlingVedEndring(apBehandlingRes, setBehandling);
   useSetBehandlingVedEndring(apOverstyrtBehandlingRes, setBehandling);
 
@@ -175,6 +195,10 @@ const OmsorgspengerProsess = ({
     ]),
     previewFptilbakeCallback: useCallback(
       getForhandsvisTilbakeCallback(forhandsvisTilbakekrevingMelding, fagsak, behandling),
+      [behandling.versjon],
+    ),
+    hentFritekstbrevHtmlCallback: useCallback(
+      getHentFritekstbrevHtmlCallback(hentFriteksbrevHtml, behandling, fagsak, fagsakPerson),
       [behandling.versjon],
     ),
     alleKodeverk,

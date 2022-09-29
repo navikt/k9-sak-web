@@ -21,7 +21,7 @@ import {
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import klageVurderingKodeverk from '@fpsak-frontend/kodeverk/src/klageVurdering';
 
-import lagForhåndsvisRequest from '@fpsak-frontend/utils/src/formidlingUtils';
+import lagForhåndsvisRequest, { bestemAvsenderApp } from '@fpsak-frontend/utils/src/formidlingUtils';
 import KlageBehandlingModal from './KlageBehandlingModal';
 import prosessStegPanelDefinisjoner from '../panelDefinisjoner/prosessStegKlagePanelDefinisjoner';
 import FetchedData from '../types/fetchedDataTsType';
@@ -90,6 +90,23 @@ const previewCallback =
       return forhandsvisMelding(request).then(response => forhandsvis(response));
     };
 
+const getHentFritekstbrevHtmlCallback =
+  (
+    hentFriteksbrevHtml: (data: any) => Promise<any>,
+    behandling: Behandling,
+    fagsak: Fagsak,
+    fagsakPerson: FagsakPerson,
+  ) =>
+  (parameters: any) =>
+    hentFriteksbrevHtml({
+      ...parameters,
+      eksternReferanse: behandling.uuid,
+      ytelseType: fagsak.sakstype,
+      saksnummer: fagsak.saksnummer,
+      aktørId: fagsakPerson.aktørId,
+      avsenderApplikasjon: bestemAvsenderApp(behandling.type.kode),
+    });
+
 const getLagringSideeffekter =
   (toggleFatterVedtakModal, toggleKlageModal, toggleOppdatereFagsakContext, oppdaterProsessStegOgFaktaPanelIUrl) =>
     async aksjonspunktModels => {
@@ -145,6 +162,9 @@ const KlageProsess = ({
   const { startRequest: forhandsvisMelding } = restApiKlageHooks.useRestApiRunner(
     KlageBehandlingApiKeys.PREVIEW_MESSAGE,
   );
+  const { startRequest: hentFriteksbrevHtml } = restApiKlageHooks.useRestApiRunner(
+    KlageBehandlingApiKeys.HENT_FRITEKSTBREV_HTML,
+  );
   const { startRequest: lagreKlageVurdering } = restApiKlageHooks.useRestApiRunner(
     KlageBehandlingApiKeys.SAVE_KLAGE_VURDERING,
   );
@@ -164,6 +184,10 @@ const KlageProsess = ({
     ),
     previewCallback: useCallback(
       previewCallback(forhandsvisMelding, fagsak, fagsakPerson, behandling, data.valgtPartMedKlagerett),
+      [behandling.versjon],
+    ),
+    hentFritekstbrevHtmlCallback: useCallback(
+      getHentFritekstbrevHtmlCallback(hentFriteksbrevHtml, behandling, fagsak, fagsakPerson),
       [behandling.versjon],
     ),
     featureToggles,

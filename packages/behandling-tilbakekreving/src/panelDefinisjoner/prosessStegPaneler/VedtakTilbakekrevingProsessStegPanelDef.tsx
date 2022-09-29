@@ -28,11 +28,12 @@ class PanelDef extends ProsessStegPanelDef {
 
   getEndepunkter = () => [TilbakekrevingBehandlingApiKeys.VEDTAKSBREV];
 
-  getData = ({ behandling, beregningsresultat, fetchPreviewVedtaksbrev }) => ({
+  getData = ({ behandling, beregningsresultat, fetchPreviewVedtaksbrev, hentFritekstbrevHtmlCallback }) => ({
     beregningsresultat,
     fetchPreviewVedtaksbrev,
     aksjonspunktKodeForeslaVedtak: aksjonspunktCodesTilbakekreving.FORESLA_VEDTAK,
     isBehandlingHenlagt: behandling.behandlingHenlagt,
+    hentFritekstbrevHtmlCallback,
   });
 }
 

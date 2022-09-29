@@ -5,6 +5,16 @@ import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import ForhåndsvisRequest from '@k9-sak-web/types/src/formidlingTsType';
 import { dokumentdatatype } from '@k9-sak-web/konstanter';
 
+export interface VedtaksbrevMal {
+  dokumentMalType: string;
+  redigerbarMalType: string;
+  vedtaksbrev: string;
+}
+
+export interface TilgjengeligeVedtaksbrevMedMaler {
+  maler?: VedtaksbrevMal[];
+}
+
 export interface TilgjengeligeVedtaksbrev {
   begrunnelse: string;
   alternativeMottakere: Array<{
@@ -54,12 +64,18 @@ export function kanHaFritekstbrev(tilgjengeligeVedtaksbrev: TilgjengeligeVedtaks
   return vedtaksbrevmaler(tilgjengeligeVedtaksbrev).some(vb => vb === vedtaksbrevtype.FRITEKST);
 }
 
+export function kanHaManueltFritekstbrev(tilgjengeligeVedtaksbrev: TilgjengeligeVedtaksbrev): boolean {
+  return vedtaksbrevmaler(tilgjengeligeVedtaksbrev).some(vb => vb === vedtaksbrevtype.MANUELL);
+}
+
 export function kanHindreUtsending(tilgjengeligeVedtaksbrev: TilgjengeligeVedtaksbrev): boolean {
   return vedtaksbrevmaler(tilgjengeligeVedtaksbrev).some(vb => vb === vedtaksbrevtype.INGEN);
 }
 
 export function kanKunVelge(tilgjengeligeVedtaksbrev: TilgjengeligeVedtaksbrev, brevtype): boolean {
   const vedtaksbrev = vedtaksbrevmaler(tilgjengeligeVedtaksbrev);
+  // console.log("kan kun velge", vedtaksbrev);
+  // console.log("kan kun velge", vedtaksbrev.every(vb => vb === brevtype));
   return vedtaksbrev.length > 0 && vedtaksbrev.every(vb => vb === brevtype);
 }
 
@@ -67,6 +83,13 @@ export function harMellomlagretFritekstbrev(dokumentdata, vedtakVarsel): boolean
   return (
     (dokumentdata?.[dokumentdatatype.VEDTAKSBREV_TYPE] ?? vedtakVarsel?.vedtaksbrev.kode) ===
       vedtaksbrevtype.FRITEKST || !!dokumentdata?.[dokumentdatatype.FRITEKSTBREV]
+  );
+}
+
+export function harMellomlagretRedigertFritekstbrev(dokumentdata, vedtakVarsel): boolean {
+  return (
+    (dokumentdata?.[dokumentdatatype.VEDTAKSBREV_TYPE] ?? vedtakVarsel?.vedtaksbrev.kode) === vedtaksbrevtype.MANUELL ||
+    !!dokumentdata?.[dokumentdatatype.REDIGERTBREV]
   );
 }
 
@@ -121,5 +144,7 @@ export const lagForhåndsvisRequest = (
   avsenderApplikasjon: bestemAvsenderApp(behandling.type.kode),
   ...data,
 });
+
+// export const lagHentFritekstbrevHtmlRequest = (): HentFritekstbrevHtmlRequest => ()
 
 export default lagForhåndsvisRequest;
