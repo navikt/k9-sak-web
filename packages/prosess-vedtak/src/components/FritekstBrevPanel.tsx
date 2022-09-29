@@ -4,13 +4,19 @@ import { Column, Row } from 'nav-frontend-grid';
 import React from 'react';
 import { FormattedMessage, injectIntl, IntlShape } from 'react-intl';
 
-import { VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { VerticalSpacer, useFeatureToggles } from '@fpsak-frontend/shared-components';
 import { hasValidText, maxLength, minLength, required } from '@fpsak-frontend/utils';
 import { TextAreaFormik, TextFieldFormik } from '@fpsak-frontend/form';
+import { kanHaManueltFritekstbrev, TilgjengeligeVedtaksbrev } from '@fpsak-frontend/utils/src/formidlingUtils';
+import { DokumentDataType } from '@k9-sak-web/types/src/dokumentdata';
+
 import InkluderKalenderCheckbox from './InkluderKalenderCheckbox';
 
 import PreviewLink from './PreviewLink';
 import styles from './vedtakForm.less';
+import FritekstRedigering from './FritekstRedigering/FritekstRedigering';
+
+import { fieldnames } from '../konstanter';
 
 const maxLength200 = maxLength(200);
 const maxLength100000 = maxLength(100000);
@@ -18,22 +24,35 @@ const minLength3 = minLength(3);
 
 interface OwnProps {
   previewBrev: (e: any) => void;
+  lagreDokumentdata: (any) => void;
+  hentFritekstbrevHtmlCallback: (parameters: any) => any;
   readOnly: boolean;
   harAutomatiskVedtaksbrev: boolean;
+  tilgjengeligeVedtaksbrev: TilgjengeligeVedtaksbrev;
   intl: IntlShape;
   formikProps: FormikProps<FormikValues>;
-  ytelseTypeKode: string;
+  dokumentdata: DokumentDataType;
 }
 
 const FritekstBrevPanel = ({
   previewBrev,
+  lagreDokumentdata,
+  hentFritekstbrevHtmlCallback,
   readOnly,
   harAutomatiskVedtaksbrev,
+  tilgjengeligeVedtaksbrev,
   intl,
   formikProps,
-  ytelseTypeKode,
+  dokumentdata,
 }: OwnProps) => {
   const { formatMessage } = intl;
+  const [featureToggles] = useFeatureToggles();
+  const kanRedigereFritekstbrev = kanHaManueltFritekstbrev(tilgjengeligeVedtaksbrev);
+
+  const handleFritekstSubmit = async (html: string, request) => {
+    formikProps.setFieldValue(fieldnames.REDIGERT_HTML, html);
+    await lagreDokumentdata(request);
+  };
 
   return (
     <div className={styles.fritekstbrevPanel}>
@@ -70,32 +89,50 @@ const FritekstBrevPanel = ({
           </Alert>
         </div>
       )}
-      <div className={readOnly ? '' : styles.brevFormContainer}>
-        <Row>
-          <Column xs="12">
-            <TextFieldFormik
-              name="overskrift"
-              label={formatMessage({ id: 'VedtakForm.Overskrift' })}
-              validate={[required, minLength3, maxLength200, hasValidText]}
-              maxLength={200}
-              readOnly={readOnly}
-            />
-          </Column>
-        </Row>
-        <div className={readOnly ? styles['textAreaContainer--readOnly'] : styles.textAreaContainer}>
-          <Row>
-            <Column xs="12">
-              <TextAreaFormik
-                name="brødtekst"
-                label={formatMessage({ id: 'VedtakForm.Innhold' })}
-                validate={[required, minLength3, maxLength100000, hasValidText]}
-                maxLength={100000}
-                readOnly={readOnly}
-              />
-            </Column>
-          </Row>
-        </div>
-        {ytelseTypeKode === 'PSB' && (
+
+      {!featureToggles.FRITEKST_REDIGERING ||
+        (!kanRedigereFritekstbrev && (
+          <div className={readOnly ? '' : styles.brevFormContainer}>
+            <Row>
+              <Column xs="12">
+                <TextFieldFormik
+                  name="overskrift"
+                  label={formatMessage({ id: 'VedtakForm.Overskrift' })}
+                  validate={[required, minLength3, maxLength200, hasValidText]}
+                  maxLength={200}
+                  readOnly={readOnly}
+                />
+              </Column>
+            </Row>
+            <div className={readOnly ? styles['textAreaContainer--readOnly'] : styles.textAreaContainer}>
+              <Row>
+                <Column xs="12">
+                  <TextAreaFormik
+                    name="brødtekst"
+                    label={formatMessage({ id: 'VedtakForm.Innhold' })}
+                    validate={[required, minLength3, maxLength100000, hasValidText]}
+                    maxLength={100000}
+                    readOnly={readOnly}
+                  />
+                </Column>
+              </Row>
+            </div>
+          </div>
+        ))}
+
+      {kanRedigereFritekstbrev && formikProps.values.skalBrukeOverstyrendeFritekstBrev && (
+        <div className={readOnly ? '' : styles.brevFormContainer}>
+          <FritekstRedigering
+            handleSubmit={handleFritekstSubmit}
+            hentFritekstbrevHtmlCallback={hentFritekstbrevHtmlCallback}
+            setFieldValue={formikProps.setFieldValue}
+            readOnly={readOnly}
+            tilgjengeligeVedtaksbrev={tilgjengeligeVedtaksbrev}
+            dokumentdata={dokumentdata}
+            innholdTilRedigering={formikProps.values[fieldnames.REDIGERT_HTML]}
+            inkluderKalender={formikProps.values[fieldnames.INKLUDER_KALENDER_VED_OVERSTYRING]}
+          />
+
           <div className={readOnly ? styles['textAreaContainer--readOnly'] : styles.textAreaContainer}>
             <Row>
               <Column xs="12">
@@ -108,8 +145,8 @@ const FritekstBrevPanel = ({
               </Column>
             </Row>
           </div>
-        )}
-      </div>
+        </div>
+      )}
     </div>
   );
 };

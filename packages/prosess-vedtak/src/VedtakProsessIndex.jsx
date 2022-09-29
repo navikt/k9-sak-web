@@ -38,6 +38,7 @@ const VedtakProsessIndex = ({
   aksjonspunkter,
   isReadOnly,
   previewCallback,
+  hentFritekstbrevHtmlCallback,
   submitCallback,
   ytelseTypeKode,
   employeeHasAccess,
@@ -77,6 +78,7 @@ const VedtakProsessIndex = ({
         employeeHasAccess={employeeHasAccess}
         readOnly={isReadOnly}
         previewCallback={previewCallback}
+        hentFritekstbrevHtmlCallback={hentFritekstbrevHtmlCallback}
         submitCallback={submitCallback}
         alleKodeverk={alleKodeverk}
         personopplysninger={personopplysninger}
@@ -157,6 +159,7 @@ VedtakProsessIndex.propTypes = {
   lagreDokumentdata: PropTypes.func.isRequired,
   overlappendeYtelser: PropTypes.arrayOf(PropTypes.shape()),
   featureToggles: PropTypes.shape(),
+  hentFritekstbrevHtmlCallback: PropTypes.func.isRequired,
 };
 
 VedtakProsessIndex.defaultProps = {

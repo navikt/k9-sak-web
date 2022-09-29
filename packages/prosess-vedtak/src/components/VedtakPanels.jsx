@@ -21,6 +21,7 @@ import vedtakVarselPropType from '../propTypes/vedtakVarselPropType';
 const VedtakPanels = ({
   readOnly,
   previewCallback,
+  hentFritekstbrevHtmlCallback,
   submitCallback,
   behandlingTypeKode,
   behandlingId,
@@ -65,6 +66,7 @@ const VedtakPanels = ({
       submitCallback={submitCallback}
       readOnly={readOnly}
       previewCallback={previewCallback}
+      hentFritekstbrevHtmlCallback={hentFritekstbrevHtmlCallback}
       behandlingId={behandlingId}
       behandlingVersjon={behandlingVersjon}
       behandlingresultat={behandlingresultat}
@@ -131,6 +133,7 @@ VedtakPanels.propTypes = {
   fritekstdokumenter: PropTypes.arrayOf(PropTypes.shape()),
   lagreDokumentdata: PropTypes.func.isRequired,
   overlappendeYtelser: PropTypes.arrayOf(PropTypes.shape()),
+  hentFritekstbrevHtmlCallback: PropTypes.func.isRequired,
 };
 
 VedtakPanels.defaultProps = {

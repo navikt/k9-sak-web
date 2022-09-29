@@ -40,6 +40,7 @@ export enum PleiepengerSluttfaseBehandlingApiKeys {
   VERGE_FJERN = 'VERGE_FJERN',
   SYKDOM = 'SYKDOM',
   TILGJENGELIGE_VEDTAKSBREV = 'TILGJENGELIGE_VEDTAKSBREV',
+  HENT_FRITEKSTBREV_HTML = 'HENT_FRITEKSTBREV_HTML',
   INFORMASJONSBEHOV_VEDTAKSBREV = 'INFORMASJONSBEHOV_VEDTAKSBREV',
   DOKUMENTDATA_LAGRE = 'DOKUMENTDATA_LAGRE',
   DOKUMENTDATA_HENTE = 'DOKUMENTDATA_HENTE',
@@ -129,13 +130,14 @@ const endpoints = new RestApiConfigBuilder()
   .withPost(
     '/k9/tilbake/api/dokument/forhandsvis-varselbrev',
     PleiepengerSluttfaseBehandlingApiKeys.PREVIEW_TILBAKEKREVING_MESSAGE,
-    {isResponseBlob: true},
+    { isResponseBlob: true },
   )
 
   /* K9FORMIDLING */
   .withPost('/k9/formidling/api/brev/forhaandsvis', PleiepengerSluttfaseBehandlingApiKeys.PREVIEW_MESSAGE, {
     isResponseBlob: true,
   })
+  .withPost('/k9/formidling/api/brev/html', PleiepengerSluttfaseBehandlingApiKeys.HENT_FRITEKSTBREV_HTML)
 
   .build();
 
