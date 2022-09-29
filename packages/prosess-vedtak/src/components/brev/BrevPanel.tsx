@@ -238,7 +238,7 @@ export const BrevPanel: React.FC<BrevPanelProps> = props => {
       <div className={styles.brevContainer}>
         <FritekstBrevPanel
           readOnly={readOnly || formikProps.values[fieldnames.SKAL_HINDRE_UTSENDING_AV_BREV]}
-          previewBrev={automatiskBrevUtenValideringCallback}
+          previewBrev={manuellBrevCallback}
           hentFritekstbrevHtmlCallback={hentHtmlMalCallback}
           harAutomatiskVedtaksbrev={harAutomatiskVedtaksbrev}
           tilgjengeligeVedtaksbrev={tilgjengeligeVedtaksbrev}

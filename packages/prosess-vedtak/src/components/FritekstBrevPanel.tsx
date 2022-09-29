@@ -12,7 +12,7 @@ import { DokumentDataType } from '@k9-sak-web/types/src/dokumentdata';
 
 import InkluderKalenderCheckbox from './InkluderKalenderCheckbox';
 
-import PreviewLink from './PreviewLink';
+// import PreviewLink from './PreviewLink';
 import styles from './vedtakForm.less';
 import FritekstRedigering from './FritekstRedigering/FritekstRedigering';
 
@@ -72,13 +72,13 @@ const FritekstBrevPanel = ({
                 <FormattedMessage id="VedtakForm.AutomatiskBrev" />
               </Column>
             </Row>
-            <Row>
+            {/* <Row>
               <Column xs="6">
                 <PreviewLink previewCallback={previewBrev} noIcon>
                   <FormattedMessage id="VedtakForm.AutomatiskBrev.Lenke" />
                 </PreviewLink>
               </Column>
-            </Row>
+            </Row> */}
           </Alert>
         </div>
       )}
@@ -126,6 +126,7 @@ const FritekstBrevPanel = ({
             handleSubmit={handleFritekstSubmit}
             hentFritekstbrevHtmlCallback={hentFritekstbrevHtmlCallback}
             setFieldValue={formikProps.setFieldValue}
+            previewBrev={previewBrev}
             readOnly={readOnly}
             tilgjengeligeVedtaksbrev={tilgjengeligeVedtaksbrev}
             dokumentdata={dokumentdata}

@@ -6,10 +6,12 @@ import { FormattedMessage, injectIntl, WrappedComponentProps } from 'react-intl'
 import EditorJSWrapper from './EditorJSWrapper';
 
 import styles from './RedigerFritekstbrev.less';
+import PreviewLink from '../PreviewLink';
 
 interface ownProps {
   handleSubmit: (value: string) => void;
   lukkEditor: () => void;
+  previewBrev: (event: React.SyntheticEvent) => void;
   readOnly: boolean;
   redigerbartInnholdKlart: boolean;
   redigerbartInnhold: string;
@@ -18,9 +20,12 @@ interface ownProps {
   brevStiler: string;
 }
 
+const editor = new EditorJSWrapper();
+
 const FritekstEditor = ({
   handleSubmit,
   lukkEditor,
+  previewBrev,
   readOnly,
   redigerbartInnholdKlart,
   redigerbartInnhold,
@@ -31,7 +36,6 @@ const FritekstEditor = ({
   useEffect(() => {
     Modal.setAppElement(document.body);
   }, []);
-  const editor = new EditorJSWrapper();
 
   const lastEditor = async () => {
     await editor.init({ holder: 'rediger-brev' });
@@ -74,11 +78,16 @@ const FritekstEditor = ({
       </div>
       <footer>
         <div className={styles.knapper}>
-          <Button variant="tertiary" onClick={lukkEditor}>
-            <FormattedMessage id="RedigeringAvFritekstBrev.Avbryt" />
-          </Button>
+          <PreviewLink previewCallback={previewBrev}>
+            <FormattedMessage id="VedtakForm.ForhandvisBrev" />
+          </PreviewLink>
+        </div>
+        <div className={styles.knapper}>
           <Button variant="primary" onClick={handleLagre} disabled={!redigerbartInnholdKlart || readOnly}>
             <FormattedMessage id="RedigeringAvFritekstBrev.Lagre" />
+          </Button>
+          <Button variant="tertiary" onClick={lukkEditor}>
+            <FormattedMessage id="RedigeringAvFritekstBrev.Avbryt" />
           </Button>
         </div>
       </footer>
