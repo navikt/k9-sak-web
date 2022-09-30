@@ -3,7 +3,7 @@ import { ProcessMenuStepType } from '@navikt/k9-react-components';
 
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import aksjonspunktType from '@fpsak-frontend/kodeverk/src/aksjonspunktType';
-import { Behandling, Aksjonspunkt, Vilkar, Fagsak } from '@k9-sak-web/types';
+import { Behandling, Aksjonspunkt, Vilkar, Fagsak, FeatureToggles } from '@k9-sak-web/types';
 
 import readOnlyUtils from '../readOnlyUtils';
 import ProsessStegMenyRad from '../../types/prosessStegMenyRadTsType';
@@ -108,6 +108,7 @@ const finnProsessmenyType = (status: string, harApentAksjonspunkt: boolean): Pro
 export const formaterPanelerForProsessmeny = (
   prosessStegPaneler: ProsessStegUtledet[],
   valgtProsessStegPanelKode?: string,
+  featureToggles?: FeatureToggles,
 ): ProsessStegMenyRad[] =>
   prosessStegPaneler.map(panel => {
     const type = finnProsessmenyType(panel.getStatus(), panel.getErAksjonspunktOpen());
@@ -116,7 +117,7 @@ export const formaterPanelerForProsessmeny = (
       isActive: panel.getUrlKode() === valgtProsessStegPanelKode,
       isDisabled: false,
       isFinished: type === ProcessMenuStepType.success,
-      usePartialStatus: panel.getErStegDelvisBehandlet() || false,
+      usePartialStatus: panel.getErStegDelvisBehandlet(featureToggles) || false,
       type,
     };
   });

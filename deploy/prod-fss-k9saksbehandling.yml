@@ -109,3 +109,5 @@ spec:
       value: "false"
     - name: FRITEKST_REDIGERING
       value: "false"
+    - name: FIKS_DELVIS_PROSESSTEG
+      value: "false"

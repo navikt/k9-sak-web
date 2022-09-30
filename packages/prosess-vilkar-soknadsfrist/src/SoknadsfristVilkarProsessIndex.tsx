@@ -83,7 +83,8 @@ const SoknadsfristVilkarProsessIndex = ({
   const harÅpentAksjonspunkt = aksjonspunkter.some(
     ap =>
       ap.definisjon === aksjonspunktCodes.KONTROLLER_OPPLYSNINGER_OM_SØKNADSFRIST &&
-      !(ap.status === aksjonspunktStatus.OPPRETTET && !ap.kanLoses),
+      ap.status === aksjonspunktStatus.OPPRETTET &&
+      ap.kanLoses,
   );
 
   const dokumenterSomSkalVurderes = Array.isArray(soknadsfristStatus?.dokumentStatus)

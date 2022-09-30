@@ -1,23 +1,24 @@
 /* eslint-disable class-methods-use-this */
+import { ProcessMenuStepType } from '@navikt/k9-react-components';
+import { shallow } from 'enzyme';
 import React from 'react';
 import sinon from 'sinon';
-import { shallow } from 'enzyme';
-import { ProcessMenuStepType } from '@navikt/k9-react-components';
 
-import { prosessStegCodes } from '@k9-sak-web/konstanter';
-import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
-import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
-import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
-import { Behandling, Fagsak } from '@k9-sak-web/types';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
+import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
+import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import fagsakStatus from '@fpsak-frontend/kodeverk/src/fagsakStatus';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
+import { prosessStegCodes } from '@k9-sak-web/konstanter';
+import { Behandling, Fagsak } from '@k9-sak-web/types';
 
+import { K9sakApiKeys, requestApi } from '@k9-sak-web/sak-app/src/data/k9sakApi';
 import { ProsessStegDef, ProsessStegPanelDef } from './ProsessStegDef';
-import { ProsessStegUtledet, ProsessStegPanelUtledet } from './ProsessStegUtledet';
 import prosessStegHooks from './prosessStegHooks';
+import { ProsessStegPanelUtledet, ProsessStegUtledet } from './ProsessStegUtledet';
 
 const HookWrapper = ({ callback }) => <div data-values={callback()} />;
 
@@ -96,6 +97,7 @@ describe('<prosessStegHooks>', () => {
   }
 
   it('skal utlede prosesstegpaneler, valgt panel og paneler formatert for meny', () => {
+    requestApi.mock(K9sakApiKeys.FEATURE_TOGGLE, []);
     const ekstraPanelData = {
       soknad: 'test_soknad',
     };
@@ -153,6 +155,7 @@ describe('<prosessStegHooks>', () => {
   });
 
   it('skal velge første prosess-steg', () => {
+    requestApi.mock(K9sakApiKeys.FEATURE_TOGGLE, []);
     const isReadOnlyCheck = () => false;
     const toggleOverstyring = () => undefined;
     const stegDef = new OpplysningspliktProsessStegPanelDef();
@@ -194,6 +197,7 @@ describe('<prosessStegHooks>', () => {
   });
 
   it('skal skjule prosess-steg når en velger steg som allerede vises', () => {
+    requestApi.mock(K9sakApiKeys.FEATURE_TOGGLE, []);
     const isReadOnlyCheck = () => false;
     const toggleOverstyring = () => undefined;
     const stegDef = new OpplysningspliktProsessStegPanelDef();
@@ -235,6 +239,7 @@ describe('<prosessStegHooks>', () => {
   });
 
   it('skal bekrefte aksjonspunkt', async () => {
+    requestApi.mock(K9sakApiKeys.FEATURE_TOGGLE, []);
     const isReadOnlyCheck = () => false;
     const toggleOverstyring = () => undefined;
     const stegDef = new OpplysningspliktProsessStegPanelDef();
@@ -253,7 +258,7 @@ describe('<prosessStegHooks>', () => {
 
     const lagreAksjonspunkter = sinon.stub();
     lagreAksjonspunkter.returns(Promise.resolve());
-    const lagringSideEffectsCallback = () => () => { };
+    const lagringSideEffectsCallback = () => () => {};
 
     const wrapper = testHook(() =>
       prosessStegHooks.useBekreftAksjonspunkt(

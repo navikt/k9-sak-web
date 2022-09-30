@@ -1,28 +1,29 @@
+import { shallow } from 'enzyme';
 import React from 'react';
 import sinon from 'sinon';
-import { shallow } from 'enzyme';
 
-import { Behandling, Fagsak } from '@k9-sak-web/types';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
+import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
+import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
+import fagsakStatus from '@fpsak-frontend/kodeverk/src/fagsakStatus';
+import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
+import personstatusType from '@fpsak-frontend/kodeverk/src/personstatusType';
+import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
+import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import {
-  ProsessStegPanel,
   FatterVedtakStatusModal,
   IverksetterVedtakStatusModal,
   ProsessStegContainer,
+  ProsessStegPanel,
 } from '@k9-sak-web/behandling-felles';
-import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
-import fagsakStatus from '@fpsak-frontend/kodeverk/src/fagsakStatus';
-import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
-import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
-import personstatusType from '@fpsak-frontend/kodeverk/src/personstatusType';
-import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
-import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
+import { Behandling, Fagsak } from '@k9-sak-web/types';
 
+import { K9sakApiKeys, requestApi } from '@k9-sak-web/sak-app/src/data/k9sakApi';
+import { requestUnntakApi, UnntakBehandlingApiKeys } from '../data/unntakBehandlingApi';
 import FetchedData from '../types/fetchedDataTsType';
 import UnntakProsess from './UnntakProsess';
-import { requestUnntakApi, UnntakBehandlingApiKeys } from '../data/unntakBehandlingApi';
 
 describe('<UnntakProsess>', () => {
   const fagsak = {
@@ -91,7 +92,7 @@ describe('<UnntakProsess>', () => {
       erPrivatPerson: false,
       identifikator: 'testId',
       navn: 'testNavn',
-      arbeidsforholdreferanser: []
+      arbeidsforholdreferanser: [],
     },
   };
 
@@ -192,6 +193,7 @@ describe('<UnntakProsess>', () => {
   });
 
   it('skal vise fatter vedtak modal etter lagring når aksjonspunkt er FORESLA_VEDTAK og så lukke denne og gå til søkeside', async () => {
+    requestApi.mock(K9sakApiKeys.FEATURE_TOGGLE, []);
     const vedtakAksjonspunkter = [
       {
         definisjon: aksjonspunktCodes.FORESLA_VEDTAK,
@@ -256,6 +258,7 @@ describe('<UnntakProsess>', () => {
   });
 
   it('skal vise iverksetter vedtak modal etter lagring når aksjonspunkt er FATTER_VEDTAK og så lukke denne og gå til søkeside', async () => {
+    requestApi.mock(K9sakApiKeys.FEATURE_TOGGLE, []);
     const vedtakAksjonspunkter = [
       {
         definisjon: aksjonspunktCodes.FATTER_VEDTAK,
@@ -316,6 +319,7 @@ describe('<UnntakProsess>', () => {
   });
 
   it('skal gå til søkeside når en har revurderingsaksjonspunkt', async () => {
+    requestApi.mock(K9sakApiKeys.FEATURE_TOGGLE, []);
     const vedtakAksjonspunkter = [
       {
         definisjon: aksjonspunktCodes.VARSEL_REVURDERING_MANUELL,

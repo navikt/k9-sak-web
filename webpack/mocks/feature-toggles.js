@@ -61,6 +61,10 @@ const featureToggles = [
     key: 'FRITEKST_REDIGERING',
     value: process.env.FRITEKST_REDIGERING,
   },
+  {
+    key: 'FIKS_DELVIS_PROSESSTEG',
+    value: process.env.FIKS_DELVIS_PROSESSTEG,
+  },
 ];
 
 module.exports = function (app) {

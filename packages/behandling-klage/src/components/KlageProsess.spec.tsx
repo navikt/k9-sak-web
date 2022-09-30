@@ -1,17 +1,18 @@
+import { shallow } from 'enzyme';
 import React from 'react';
 import sinon from 'sinon';
-import { shallow } from 'enzyme';
 
-import { ProsessStegContainer } from '@k9-sak-web/behandling-felles';
-import { Behandling, Fagsak, KlageVurdering } from '@k9-sak-web/types';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
-import fagsakStatus from '@fpsak-frontend/kodeverk/src/fagsakStatus';
-import personstatusType from '@fpsak-frontend/kodeverk/src/personstatusType';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import fagsakStatus from '@fpsak-frontend/kodeverk/src/fagsakStatus';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
+import personstatusType from '@fpsak-frontend/kodeverk/src/personstatusType';
+import { ProsessStegContainer } from '@k9-sak-web/behandling-felles';
+import { Behandling, Fagsak, KlageVurdering } from '@k9-sak-web/types';
 
+import { K9sakApiKeys, requestApi } from '@k9-sak-web/sak-app/src/data/k9sakApi';
 import KlageProsess from './KlageProsess';
 
 describe('<KlageProsess>', () => {
@@ -127,6 +128,7 @@ describe('<KlageProsess>', () => {
   // });
 
   it('skal vise alle aktuelle prosessSteg i meny (frisinn)', () => {
+    requestApi.mock(K9sakApiKeys.FEATURE_TOGGLE, []);
     const wrapper = shallow(
       <KlageProsess
         data={{ aksjonspunkter, klageVurdering }}
@@ -192,6 +194,7 @@ describe('<KlageProsess>', () => {
   });
 
   it('skal sette nytt valgt prosessSteg ved trykk i meny (frisinn)', () => {
+    requestApi.mock(K9sakApiKeys.FEATURE_TOGGLE, []);
     const oppdaterProsessStegOgFaktaPanelIUrl = sinon.spy();
     const wrapper = shallow(
       <KlageProsess
