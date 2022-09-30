@@ -11,7 +11,8 @@ import PreviewLink from '../PreviewLink';
 interface ownProps {
   handleSubmit: (value: string) => void;
   lukkEditor: () => void;
-  previewBrev: (event: React.SyntheticEvent) => void;
+  handleForhåndsvis: (event: React.SyntheticEvent, html: string) => void;
+  oppdaterFormFelt: (html: string) => void;
   readOnly: boolean;
   redigerbartInnholdKlart: boolean;
   redigerbartInnhold: string;
@@ -26,6 +27,8 @@ const FritekstEditor = ({
   handleSubmit,
   lukkEditor,
   previewBrev,
+  handleForhåndsvis,
+  oppdaterFormFelt,
   readOnly,
   redigerbartInnholdKlart,
   redigerbartInnhold,
@@ -33,14 +36,17 @@ const FritekstEditor = ({
   suffiksInnhold,
   brevStiler,
 }: ownProps & WrappedComponentProps) => {
-  useEffect(() => {
-    Modal.setAppElement(document.body);
-  }, []);
-
   const lastEditor = async () => {
     await editor.init({ holder: 'rediger-brev' });
     await editor.importer(redigerbartInnhold);
+    const html = await editor.lagre();
+    oppdaterFormFelt(html);
   };
+
+  useEffect(() => {
+    Modal.setAppElement(document.body);
+    lastEditor();
+  }, []);
 
   useEffect(() => {
     if (redigerbartInnholdKlart && !editor.harEditor()) {
@@ -51,6 +57,11 @@ const FritekstEditor = ({
   const handleLagre = async () => {
     const html = await editor.lagre();
     handleSubmit(html);
+  };
+
+  const onForhåndsvis = async e => {
+    const html = await editor.lagre();
+    handleForhåndsvis(e, html);
   };
 
   return (
@@ -78,7 +89,7 @@ const FritekstEditor = ({
       </div>
       <footer>
         <div className={styles.knapper}>
-          <PreviewLink previewCallback={previewBrev}>
+          <PreviewLink previewCallback={onForhåndsvis}>
             <FormattedMessage id="VedtakForm.ForhandvisBrev" />
           </PreviewLink>
         </div>

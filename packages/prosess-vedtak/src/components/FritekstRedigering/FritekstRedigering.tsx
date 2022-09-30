@@ -108,6 +108,15 @@ const FritekstRedigering = ({
     lukkEditor();
   };
 
+  const handleForhåndsvis = async (e: React.SyntheticEvent, html: string) => {
+    setFieldValue(fieldnames.REDIGERT_HTML, html);
+    previewBrev(e);
+  };
+
+  const oppdaterFormFelt = async (html: string) => {
+    setFieldValue(fieldnames.REDIGERT_HTML, html);
+  };
+
   return (
     <>
       <Button
@@ -125,7 +134,8 @@ const FritekstRedigering = ({
           <FritekstEditor
             handleSubmit={handleLagre}
             lukkEditor={lukkEditor}
-            previewBrev={previewBrev}
+            handleForhåndsvis={handleForhåndsvis}
+            oppdaterFormFelt={oppdaterFormFelt}
             readOnly={readOnly}
             redigerbartInnholdKlart={redigerbartInnholdKlart}
             redigerbartInnhold={redigerbartInnhold}
