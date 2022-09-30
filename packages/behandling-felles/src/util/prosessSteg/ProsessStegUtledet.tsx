@@ -1,7 +1,7 @@
 import { SetStateAction } from 'react';
 
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
-import { Aksjonspunkt, Vilkar, Uttaksperiode, UtfallEnum } from '@k9-sak-web/types';
+import { Aksjonspunkt, Vilkar, Uttaksperiode, UtfallEnum, FeatureToggles } from '@k9-sak-web/types';
 import aksjonspunktStatus, { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 
 import { ProsessStegDef, ProsessStegPanelDef } from './ProsessStegDef';
@@ -219,7 +219,12 @@ export class ProsessStegUtledet {
 
   public getTekstKode = (): string => this.prosessStegDef.getTekstKode();
 
-  public getErStegDelvisBehandlet = (): boolean => this.paneler.every(p => p.getErDelvisBehandlet());
+  public getErStegDelvisBehandlet = (featureToggles?: FeatureToggles): boolean => {
+    if (featureToggles?.FIKS_DELVIS_PROSESSTEG) {
+      return this.paneler.some(p => p.getErDelvisBehandlet());
+    }
+    return this.paneler.every(p => p.getErDelvisBehandlet());
+  };
 
   private harMinstEttDelPanelStatus = (vuType: string): boolean => this.paneler.some(p => p.getStatus() === vuType);
 
