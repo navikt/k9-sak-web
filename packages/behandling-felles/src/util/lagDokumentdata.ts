@@ -23,7 +23,6 @@ function lagDokumentdata(aksjonspunktModell) {
       return {
         [dokumentdatatype.VEDTAKSBREV_TYPE]: vedtaksbrevtype.MANUELL,
         [dokumentdatatype.VEDTAKSBREV_MAL]: vedtaksbrevmaler?.[vedtaksbrevtype.MANUELL],
-        [dokumentdatatype.REDIGERTBREV]: {},
         [dokumentdatatype.REDIGERTBREV]: {
           originalHtml: aksjonspunktModell.redigertbrev?.originalHtml,
           redigertHtml: aksjonspunktModell.redigertbrev?.redigertHtml,
