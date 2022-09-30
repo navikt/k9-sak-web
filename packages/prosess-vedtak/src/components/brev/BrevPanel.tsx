@@ -1,6 +1,7 @@
 import SelectFieldFormik from '@fpsak-frontend/form/src/SelectFieldFormik';
 import dokumentMalType from '@fpsak-frontend/kodeverk/src/dokumentMalType';
 import vedtaksbrevtype from '@fpsak-frontend/kodeverk/src/vedtaksbrevtype';
+
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { required, safeJSONParse, decodeHtmlEntity } from '@fpsak-frontend/utils';
 import {
@@ -15,6 +16,7 @@ import {
 import { DokumentDataType } from '@k9-sak-web/types/src/dokumentdata';
 import { ArbeidsgiverOpplysningerPerId, Behandlingsresultat, Kodeverk, Personopplysninger } from '@k9-sak-web/types';
 import { Alert } from '@navikt/ds-react';
+
 import { FormikProps } from 'formik';
 import { Column, Row } from 'nav-frontend-grid';
 import React from 'react';
@@ -204,14 +206,6 @@ export const BrevPanel: React.FC<BrevPanelProps> = props => {
     previewCallback,
     tilgjengeligeVedtaksbrev,
     informasjonsbehovValues,
-  });
-
-  const automatiskBrevUtenValideringCallback = getPreviewAutomatiskBrevCallbackUtenValidering({
-    fritekst: begrunnelse,
-    redusertUtbetalingÅrsaker,
-    overstyrtMottaker,
-    previewCallback,
-    tilgjengeligeVedtaksbrev,
   });
 
   const hentHtmlMalCallback = getHentHtmlMalCallback({

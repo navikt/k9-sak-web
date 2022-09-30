@@ -72,13 +72,6 @@ const FritekstBrevPanel = ({
                 <FormattedMessage id="VedtakForm.AutomatiskBrev" />
               </Column>
             </Row>
-            {/* <Row>
-              <Column xs="6">
-                <PreviewLink previewCallback={previewBrev} noIcon>
-                  <FormattedMessage id="VedtakForm.AutomatiskBrev.Lenke" />
-                </PreviewLink>
-              </Column>
-            </Row> */}
           </Alert>
         </div>
       )}
