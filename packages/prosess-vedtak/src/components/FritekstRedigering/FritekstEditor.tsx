@@ -26,7 +26,6 @@ const editor = new EditorJSWrapper();
 const FritekstEditor = ({
   handleSubmit,
   lukkEditor,
-  previewBrev,
   handleForhåndsvis,
   oppdaterFormFelt,
   readOnly,
