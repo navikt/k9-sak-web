@@ -29,6 +29,7 @@ interface OwnProps {
   readOnly: boolean;
   harAutomatiskVedtaksbrev: boolean;
   tilgjengeligeVedtaksbrev: TilgjengeligeVedtaksbrev;
+  kanInkludereKalender: boolean;
   intl: IntlShape;
   formikProps: FormikProps<FormikValues>;
   dokumentdata: DokumentDataType;
@@ -41,6 +42,7 @@ const FritekstBrevPanel = ({
   readOnly,
   harAutomatiskVedtaksbrev,
   tilgjengeligeVedtaksbrev,
+  kanInkludereKalender,
   intl,
   formikProps,
   dokumentdata,
@@ -127,18 +129,20 @@ const FritekstBrevPanel = ({
             inkluderKalender={formikProps.values[fieldnames.INKLUDER_KALENDER_VED_OVERSTYRING]}
           />
 
-          <div className={readOnly ? styles['textAreaContainer--readOnly'] : styles.textAreaContainer}>
-            <Row>
-              <Column xs="12">
-                <InkluderKalenderCheckbox
-                  intl={intl}
-                  setFieldValue={formikProps.setFieldValue}
-                  skalBrukeOverstyrendeFritekstBrev={formikProps.values.skalBrukeOverstyrendeFritekstBrev}
-                  disabled={readOnly}
-                />
-              </Column>
-            </Row>
-          </div>
+          {kanInkludereKalender && (
+            <div className={readOnly ? styles['textAreaContainer--readOnly'] : styles.textAreaContainer}>
+              <Row>
+                <Column xs="12">
+                  <InkluderKalenderCheckbox
+                    intl={intl}
+                    setFieldValue={formikProps.setFieldValue}
+                    skalBrukeOverstyrendeFritekstBrev={formikProps.values.skalBrukeOverstyrendeFritekstBrev}
+                    disabled={readOnly}
+                  />
+                </Column>
+              </Row>
+            </div>
+          )}
         </div>
       )}
     </div>

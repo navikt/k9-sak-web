@@ -145,6 +145,7 @@ export const VedtakForm: React.FC<Props> = ({
   const [harVurdertOverlappendeYtelse, setHarVurdertOverlappendeYtelse] = useState(false);
   const [visSakGårIkkeTilBeslutterModal, setVisSakGårIkkeTilBeslutterModal] = useState(false);
   const harOverlappendeYtelser = overlappendeYtelser && overlappendeYtelser.length > 0;
+  const kanInkludereKalender = false;
   const vedtakContext = useContext(VedtakFormContext);
   const onToggleOverstyring = (e, setFieldValue) => {
     const isChecked = e.target.checked;
