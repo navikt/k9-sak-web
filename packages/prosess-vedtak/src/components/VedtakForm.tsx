@@ -493,6 +493,7 @@ export const VedtakForm: React.FC<Props> = ({
                   visFeilmeldingFordiArsakerMangler={() => setErSendtInnUtenArsaker(true)}
                   aksjonspunkter={aksjonspunkter}
                   tilgjengeligeVedtaksbrev={tilgjengeligeVedtaksbrev}
+                  editorHarLagret={editorHarLagret}
                 />
               )}
               {visSakGårIkkeTilBeslutterModal && (
