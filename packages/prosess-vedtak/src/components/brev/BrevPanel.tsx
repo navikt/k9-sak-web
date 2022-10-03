@@ -164,7 +164,7 @@ interface BrevPanelProps {
   ytelseTypeKode: string;
   dokumentdata: DokumentDataType;
   lagreDokumentdata: (any) => void;
-  setEditorHarLagret: boolean;
+  setEditorHarLagret: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export const BrevPanel: React.FC<BrevPanelProps> = props => {
