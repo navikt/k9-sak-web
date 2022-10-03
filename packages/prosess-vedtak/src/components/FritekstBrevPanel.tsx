@@ -70,7 +70,7 @@ const FritekstBrevPanel = ({
         </Column>
       </Row>
       {!readOnly && harAutomatiskVedtaksbrev && (
-        <div className={styles.brevAlertContainer}>
+        <div className={styles.brevAlertContainer} data-testid="harAutomatiskVedtaksbrev">
           <Alert variant="info" size="small">
             <Row>
               <Column xs="12">
@@ -81,7 +81,7 @@ const FritekstBrevPanel = ({
         </div>
       )}
       {!readOnly && !harAutomatiskVedtaksbrev && (
-        <div className={styles.brevAlertContainer}>
+        <div className={styles.brevAlertContainer} data-testid="harIkkeAutomatiskVedtaksbrev">
           <Alert variant="info" size="small">
             Denne type behandling er det ikke utviklet automatisk brev for enda.
           </Alert>
@@ -119,7 +119,7 @@ const FritekstBrevPanel = ({
         ))}
 
       {kanRedigereFritekstbrev && formikProps.values.skalBrukeOverstyrendeFritekstBrev && (
-        <div className={readOnly ? '' : styles.brevFormContainer}>
+        <div className={readOnly ? 'readOnly' : styles.brevFormContainer}>
           <FritekstRedigering
             handleSubmit={handleFritekstSubmit}
             hentFritekstbrevHtmlCallback={hentFritekstbrevHtmlCallback}
