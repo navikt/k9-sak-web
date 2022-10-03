@@ -67,7 +67,9 @@ export const utledSuffiksInnhold = (html: string) => {
 };
 
 export const utledRedigerbartInnhold = (html: string) => {
-  const heleBrevet = new DOMParser().parseFromString(html, 'text/html');
+  // Bruker application/xhtml+xml som datatype, da backend bruker en xhtml parser som
+  // ikke støtter feks. <br> som ikke er self-closing (<br/>)
+  const heleBrevet = new DOMParser().parseFromString(html, 'application/xhtml+xml');
   return heleBrevet.querySelector('[data-editable]').innerHTML;
 };
 
