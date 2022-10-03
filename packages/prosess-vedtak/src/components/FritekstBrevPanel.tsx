@@ -1,6 +1,7 @@
 import { Alert, Heading } from '@navikt/ds-react';
 import { FormikProps, FormikValues } from 'formik';
 import { Column, Row } from 'nav-frontend-grid';
+import AlertStripe from 'nav-frontend-alertstriper';
 import React from 'react';
 import { FormattedMessage, injectIntl, IntlShape } from 'react-intl';
 
@@ -32,6 +33,7 @@ interface OwnProps {
   intl: IntlShape;
   formikProps: FormikProps<FormikValues>;
   dokumentdata: DokumentDataType;
+  setEditorHarLagret: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const FritekstBrevPanel = ({
@@ -45,6 +47,7 @@ const FritekstBrevPanel = ({
   intl,
   formikProps,
   dokumentdata,
+  setEditorHarLagret,
 }: OwnProps) => {
   const { formatMessage } = intl;
   const [featureToggles] = useFeatureToggles();
@@ -53,6 +56,7 @@ const FritekstBrevPanel = ({
   const handleFritekstSubmit = async (html: string, request) => {
     formikProps.setFieldValue(fieldnames.REDIGERT_HTML, html);
     await lagreDokumentdata(request);
+    setEditorHarLagret(true);
   };
 
   return (
