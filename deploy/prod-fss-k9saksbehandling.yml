@@ -111,3 +111,5 @@ spec:
       value: "false"
     - name: FIKS_DELVIS_PROSESSTEG
       value: "false"
+    - name: FIX_SOKNADSFRIST_DOKUMENT_KALENDER
+      value: "false"
