@@ -21,7 +21,7 @@ import {
   FagsakPerson,
   Fagsak,
 } from '@k9-sak-web/types';
-import lagForhåndsvisRequest from '@fpsak-frontend/utils/src/formidlingUtils';
+import lagForhåndsvisRequest, { bestemAvsenderApp } from '@fpsak-frontend/utils/src/formidlingUtils';
 
 import { restApiUnntakHooks, UnntakBehandlingApiKeys } from '../data/unntakBehandlingApi';
 import prosessStegPanelDefinisjoner from '../panelDefinisjoner/prosessStegPanelDefinisjoner';
@@ -53,6 +53,23 @@ interface OwnProps {
   arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysningerPerId;
   featureToggles: FeatureToggles;
 }
+
+const getHentFritekstbrevHtmlCallback =
+  (
+    hentFriteksbrevHtml: (data: any) => Promise<any>,
+    behandling: Behandling,
+    fagsak: Fagsak,
+    fagsakPerson: FagsakPerson,
+  ) =>
+  (parameters: any) =>
+    hentFriteksbrevHtml({
+      ...parameters,
+      eksternReferanse: behandling.uuid,
+      ytelseType: fagsak.sakstype,
+      saksnummer: fagsak.saksnummer,
+      aktørId: fagsakPerson.aktørId,
+      avsenderApplikasjon: bestemAvsenderApp(behandling.type.kode),
+    });
 
 const getForhandsvisCallback =
   (
@@ -165,6 +182,9 @@ const UnntakProsess = ({
   const { startRequest: lagreDokumentdata } = restApiUnntakHooks.useRestApiRunner<Behandling>(
     UnntakBehandlingApiKeys.DOKUMENTDATA_LAGRE,
   );
+  const { startRequest: hentFriteksbrevHtml } = restApiUnntakHooks.useRestApiRunner(
+    UnntakBehandlingApiKeys.HENT_FRITEKSTBREV_HTML,
+  );
 
   useSetBehandlingVedEndring(apBehandlingRes, setBehandling);
   useSetBehandlingVedEndring(apOverstyrtBehandlingRes, setBehandling);
@@ -176,6 +196,10 @@ const UnntakProsess = ({
     ]),
     previewFptilbakeCallback: useCallback(
       getForhandsvisFptilbakeCallback(forhandsvisTilbakekrevingMelding, fagsak, behandling),
+      [behandling.versjon],
+    ),
+    hentFritekstbrevHtmlCallback: useCallback(
+      getHentFritekstbrevHtmlCallback(hentFriteksbrevHtml, behandling, fagsak, fagsakPerson),
       [behandling.versjon],
     ),
     alleKodeverk,

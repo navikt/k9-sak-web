@@ -57,6 +57,14 @@ const featureToggles = [
     key: 'NY_PROSESS_VEDTAK_ENABLED',
     value: process.env.NY_PROSESS_VEDTAK_ENABLED,
   },
+  {
+    key: 'FRITEKST_REDIGERING',
+    value: process.env.FRITEKST_REDIGERING,
+  },
+  {
+    key: 'FIKS_DELVIS_PROSESSTEG',
+    value: process.env.FIKS_DELVIS_PROSESSTEG,
+  },
 ];
 
 module.exports = function (app) {

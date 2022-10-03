@@ -54,5 +54,13 @@
   {
     "key": "NY_PROSESS_VEDTAK_ENABLED",
     "value": "${NY_PROSESS_VEDTAK_ENABLED}"
+  },
+  {
+    "key": "FRITEKST_REDIGERING",
+    "value": "${FRITEKST_REDIGERING}"
+  },
+  {
+    "key": "FIKS_DELVIS_PROSESSTEG",
+    "value": "${FIKS_DELVIS_PROSESSTEG}"
   }
 ]
