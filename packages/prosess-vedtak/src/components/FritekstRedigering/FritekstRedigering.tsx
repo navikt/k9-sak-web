@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { Modal, Button } from '@navikt/ds-react';
 import { FormattedMessage, injectIntl, WrappedComponentProps } from 'react-intl';
+
+import { Modal, Button } from '@navikt/ds-react';
+import { Edit } from '@navikt/ds-icons';
 
 import {
   TilgjengeligeVedtaksbrev,
@@ -26,6 +28,7 @@ interface ownProps {
   handleSubmit: (html: string, request: any) => void;
   hentFritekstbrevHtmlCallback: (parameters: any) => string;
   setFieldValue: (field: string, value: any, shouldValidate?: boolean) => void;
+  previewBrev: (event: React.SyntheticEvent) => void;
   tilgjengeligeVedtaksbrev: TilgjengeligeVedtaksbrev & TilgjengeligeVedtaksbrevMedMaler;
   readOnly: boolean;
   dokumentdata: DokumentDataType;
@@ -37,6 +40,7 @@ const FritekstRedigering = ({
   handleSubmit,
   hentFritekstbrevHtmlCallback,
   setFieldValue,
+  previewBrev,
   tilgjengeligeVedtaksbrev,
   readOnly,
   dokumentdata,
@@ -104,16 +108,34 @@ const FritekstRedigering = ({
     lukkEditor();
   };
 
+  const handleForhåndsvis = (e: React.SyntheticEvent, html: string) => {
+    setFieldValue(fieldnames.REDIGERT_HTML, html);
+    previewBrev(e);
+  };
+
+  const oppdaterFormFelt = (html: string) => {
+    setFieldValue(fieldnames.REDIGERT_HTML, html);
+  };
+
   return (
     <>
-      <Button variant="primary" type="button" onClick={() => setVisRedigering(true)} disabled={readOnly}>
+      <Button
+        variant="secondary"
+        type="button"
+        onClick={() => setVisRedigering(true)}
+        disabled={readOnly}
+        icon={<Edit aria-hidden />}
+        size="small"
+      >
         <FormattedMessage id="RedigeringAvFritekstBrev.Rediger" />
       </Button>
-      <Modal open={visRedigering} onClose={() => setVisRedigering(false)}>
+      <Modal open={visRedigering} onClose={() => setVisRedigering(false)} shouldCloseOnOverlayClick={false}>
         <div className={styles.modalInnehold}>
           <FritekstEditor
             handleSubmit={handleLagre}
             lukkEditor={lukkEditor}
+            handleForhåndsvis={handleForhåndsvis}
+            oppdaterFormFelt={oppdaterFormFelt}
             readOnly={readOnly}
             redigerbartInnholdKlart={redigerbartInnholdKlart}
             redigerbartInnhold={redigerbartInnhold}
