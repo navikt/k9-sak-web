@@ -12,7 +12,6 @@ import { DokumentDataType } from '@k9-sak-web/types/src/dokumentdata';
 
 import InkluderKalenderCheckbox from './InkluderKalenderCheckbox';
 
-// import PreviewLink from './PreviewLink';
 import styles from './vedtakForm.less';
 import FritekstRedigering from './FritekstRedigering/FritekstRedigering';
 
