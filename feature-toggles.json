@@ -62,5 +62,9 @@
   {
     "key": "FIKS_DELVIS_PROSESSTEG",
     "value": "${FIKS_DELVIS_PROSESSTEG}"
+  },
+  {
+    "key": "FIX_SOKNADSFRIST_DOKUMENT_KALENDER",
+    "value": "${FIX_SOKNADSFRIST_DOKUMENT_KALENDER}"
   }
 ]
