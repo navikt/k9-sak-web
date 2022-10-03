@@ -1,6 +1,7 @@
 import { Alert, Heading } from '@navikt/ds-react';
 import { FormikProps, FormikValues } from 'formik';
 import { Column, Row } from 'nav-frontend-grid';
+import AlertStripe from 'nav-frontend-alertstriper';
 import React from 'react';
 import { FormattedMessage, injectIntl, IntlShape } from 'react-intl';
 
@@ -12,7 +13,6 @@ import { DokumentDataType } from '@k9-sak-web/types/src/dokumentdata';
 
 import InkluderKalenderCheckbox from './InkluderKalenderCheckbox';
 
-import PreviewLink from './PreviewLink';
 import styles from './vedtakForm.less';
 import FritekstRedigering from './FritekstRedigering/FritekstRedigering';
 
@@ -29,9 +29,11 @@ interface OwnProps {
   readOnly: boolean;
   harAutomatiskVedtaksbrev: boolean;
   tilgjengeligeVedtaksbrev: TilgjengeligeVedtaksbrev;
+  kanInkludereKalender: boolean;
   intl: IntlShape;
   formikProps: FormikProps<FormikValues>;
   dokumentdata: DokumentDataType;
+  setEditorHarLagret: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const FritekstBrevPanel = ({
@@ -41,9 +43,11 @@ const FritekstBrevPanel = ({
   readOnly,
   harAutomatiskVedtaksbrev,
   tilgjengeligeVedtaksbrev,
+  kanInkludereKalender,
   intl,
   formikProps,
   dokumentdata,
+  setEditorHarLagret,
 }: OwnProps) => {
   const { formatMessage } = intl;
   const [featureToggles] = useFeatureToggles();
@@ -52,6 +56,7 @@ const FritekstBrevPanel = ({
   const handleFritekstSubmit = async (html: string, request) => {
     formikProps.setFieldValue(fieldnames.REDIGERT_HTML, html);
     await lagreDokumentdata(request);
+    setEditorHarLagret(true);
   };
 
   return (
@@ -65,25 +70,18 @@ const FritekstBrevPanel = ({
         </Column>
       </Row>
       {!readOnly && harAutomatiskVedtaksbrev && (
-        <div className={styles.brevAlertContainer}>
+        <div className={styles.brevAlertContainer} data-testid="harAutomatiskVedtaksbrev">
           <Alert variant="info" size="small">
             <Row>
               <Column xs="12">
                 <FormattedMessage id="VedtakForm.AutomatiskBrev" />
               </Column>
             </Row>
-            <Row>
-              <Column xs="6">
-                <PreviewLink previewCallback={previewBrev} noIcon>
-                  <FormattedMessage id="VedtakForm.AutomatiskBrev.Lenke" />
-                </PreviewLink>
-              </Column>
-            </Row>
           </Alert>
         </div>
       )}
       {!readOnly && !harAutomatiskVedtaksbrev && (
-        <div className={styles.brevAlertContainer}>
+        <div className={styles.brevAlertContainer} data-testid="harIkkeAutomatiskVedtaksbrev">
           <Alert variant="info" size="small">
             Denne type behandling er det ikke utviklet automatisk brev for enda.
           </Alert>
@@ -121,11 +119,12 @@ const FritekstBrevPanel = ({
         ))}
 
       {kanRedigereFritekstbrev && formikProps.values.skalBrukeOverstyrendeFritekstBrev && (
-        <div className={readOnly ? '' : styles.brevFormContainer}>
+        <div className={readOnly ? 'readOnly' : styles.brevFormContainer}>
           <FritekstRedigering
             handleSubmit={handleFritekstSubmit}
             hentFritekstbrevHtmlCallback={hentFritekstbrevHtmlCallback}
             setFieldValue={formikProps.setFieldValue}
+            previewBrev={previewBrev}
             readOnly={readOnly}
             tilgjengeligeVedtaksbrev={tilgjengeligeVedtaksbrev}
             dokumentdata={dokumentdata}
@@ -133,18 +132,20 @@ const FritekstBrevPanel = ({
             inkluderKalender={formikProps.values[fieldnames.INKLUDER_KALENDER_VED_OVERSTYRING]}
           />
 
-          <div className={readOnly ? styles['textAreaContainer--readOnly'] : styles.textAreaContainer}>
-            <Row>
-              <Column xs="12">
-                <InkluderKalenderCheckbox
-                  intl={intl}
-                  setFieldValue={formikProps.setFieldValue}
-                  skalBrukeOverstyrendeFritekstBrev={formikProps.values.skalBrukeOverstyrendeFritekstBrev}
-                  disabled={readOnly}
-                />
-              </Column>
-            </Row>
-          </div>
+          {kanInkludereKalender && (
+            <div className={readOnly ? styles['textAreaContainer--readOnly'] : styles.textAreaContainer}>
+              <Row>
+                <Column xs="12">
+                  <InkluderKalenderCheckbox
+                    intl={intl}
+                    setFieldValue={formikProps.setFieldValue}
+                    skalBrukeOverstyrendeFritekstBrev={formikProps.values.skalBrukeOverstyrendeFritekstBrev}
+                    disabled={readOnly}
+                  />
+                </Column>
+              </Row>
+            </div>
+          )}
         </div>
       )}
     </div>

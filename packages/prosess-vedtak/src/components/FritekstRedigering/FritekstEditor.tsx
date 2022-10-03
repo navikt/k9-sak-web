@@ -6,10 +6,13 @@ import { FormattedMessage, injectIntl, WrappedComponentProps } from 'react-intl'
 import EditorJSWrapper from './EditorJSWrapper';
 
 import styles from './RedigerFritekstbrev.less';
+import PreviewLink from '../PreviewLink';
 
 interface ownProps {
   handleSubmit: (value: string) => void;
   lukkEditor: () => void;
+  handleForhåndsvis: (event: React.SyntheticEvent, html: string) => void;
+  oppdaterFormFelt: (html: string) => void;
   readOnly: boolean;
   redigerbartInnholdKlart: boolean;
   redigerbartInnhold: string;
@@ -18,9 +21,13 @@ interface ownProps {
   brevStiler: string;
 }
 
+const editor = new EditorJSWrapper();
+
 const FritekstEditor = ({
   handleSubmit,
   lukkEditor,
+  handleForhåndsvis,
+  oppdaterFormFelt,
   readOnly,
   redigerbartInnholdKlart,
   redigerbartInnhold,
@@ -28,15 +35,17 @@ const FritekstEditor = ({
   suffiksInnhold,
   brevStiler,
 }: ownProps & WrappedComponentProps) => {
-  useEffect(() => {
-    Modal.setAppElement(document.body);
-  }, []);
-  const editor = new EditorJSWrapper();
-
   const lastEditor = async () => {
     await editor.init({ holder: 'rediger-brev' });
     await editor.importer(redigerbartInnhold);
+    const html = await editor.lagre();
+    oppdaterFormFelt(html);
   };
+
+  useEffect(() => {
+    Modal.setAppElement(document.body);
+    lastEditor();
+  }, []);
 
   useEffect(() => {
     if (redigerbartInnholdKlart && !editor.harEditor()) {
@@ -47,6 +56,11 @@ const FritekstEditor = ({
   const handleLagre = async () => {
     const html = await editor.lagre();
     handleSubmit(html);
+  };
+
+  const onForhåndsvis = async e => {
+    const html = await editor.lagre();
+    handleForhåndsvis(e, html);
   };
 
   return (
@@ -74,11 +88,16 @@ const FritekstEditor = ({
       </div>
       <footer>
         <div className={styles.knapper}>
-          <Button variant="tertiary" onClick={lukkEditor}>
-            <FormattedMessage id="RedigeringAvFritekstBrev.Avbryt" />
-          </Button>
+          <PreviewLink previewCallback={onForhåndsvis}>
+            <FormattedMessage id="VedtakForm.ForhandvisBrev" />
+          </PreviewLink>
+        </div>
+        <div className={styles.knapper}>
           <Button variant="primary" onClick={handleLagre} disabled={!redigerbartInnholdKlart || readOnly}>
             <FormattedMessage id="RedigeringAvFritekstBrev.Lagre" />
+          </Button>
+          <Button variant="tertiary" onClick={lukkEditor}>
+            <FormattedMessage id="RedigeringAvFritekstBrev.Avbryt" />
           </Button>
         </div>
       </footer>

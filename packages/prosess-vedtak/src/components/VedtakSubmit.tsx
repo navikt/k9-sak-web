@@ -27,6 +27,7 @@ interface Props {
   dokumentdata: DokumentDataType;
   lagreDokumentdata: LagreDokumentdataType;
   tilgjengeligeVedtaksbrev: TilgjengeligeVedtaksbrev & TilgjengeligeVedtaksbrevMedMaler;
+  editorHarLagret: boolean;
 }
 
 const kanSendesTilGodkjenning = behandlingStatusKode =>
@@ -47,6 +48,7 @@ const VedtakSubmit = ({
   redigertHtml,
   originalHtml,
   tilgjengeligeVedtaksbrev,
+  editorHarLagret,
 }: Props): JSX.Element => {
   const intl = useIntl();
 
@@ -86,6 +88,7 @@ const VedtakSubmit = ({
             originalHtml={originalHtml}
             submitKnapp={submitKnapp}
             tilgjengeligeVedtaksbrev={tilgjengeligeVedtaksbrev}
+            editorHarLagret={editorHarLagret}
           />
         )}
       </Column>
