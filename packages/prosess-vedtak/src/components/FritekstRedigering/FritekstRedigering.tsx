@@ -108,12 +108,12 @@ const FritekstRedigering = ({
     lukkEditor();
   };
 
-  const handleForhåndsvis = async (e: React.SyntheticEvent, html: string) => {
+  const handleForhåndsvis = (e: React.SyntheticEvent, html: string) => {
     setFieldValue(fieldnames.REDIGERT_HTML, html);
     previewBrev(e);
   };
 
-  const oppdaterFormFelt = async (html: string) => {
+  const oppdaterFormFelt = (html: string) => {
     setFieldValue(fieldnames.REDIGERT_HTML, html);
   };
 
