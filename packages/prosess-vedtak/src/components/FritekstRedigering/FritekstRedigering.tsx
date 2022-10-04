@@ -146,6 +146,7 @@ const FritekstRedigering = ({
           size="small"
           type="button"
           onClick={handleTilbakestill}
+          disabled={readOnly}
         >
           Tilbakestill
         </Button>
