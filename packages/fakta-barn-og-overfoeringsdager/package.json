@@ -10,7 +10,7 @@
     "@fpsak-frontend/shared-components": "1.0.0",
     "@fpsak-frontend/utils": "1.0.0",
     "@k9-sak-web/types": "1.0.0",
-    "classnames": "^2.3.1",
+    "classnames": "^2.3.2",
     "just-is-empty": "^3.2.1",
     "moment": "^2.29.4",
     "nav-frontend-alertstriper": "4.0.2",
