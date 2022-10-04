@@ -199,7 +199,6 @@ const MellomLagreBrev = ({
       <Row>
         <Column xs="12">
           <>
-            {editorHarLagret && <>Den har prøvd</>}
             {harEndringer && (
               <>
                 <VerticalSpacer sixteenPx />
