@@ -20,7 +20,7 @@
     "@editorjs/list": "^1.7.0",
     "editorjs-html": "^3.4.2",
     "classnames": "^2.3.2",
-    "date-fns": "^2.29.2",
+    "date-fns": "^2.29.3",
     "formik": "^2.2.9",
     "moment": "^2.29.4",
     "nav-frontend-alertstriper": "^4.0.2",
