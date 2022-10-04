@@ -34,6 +34,7 @@ interface OwnProps {
   formikProps: FormikProps<FormikValues>;
   dokumentdata: DokumentDataType;
   setEditorHarLagret: React.Dispatch<React.SetStateAction<boolean>>;
+  setEditorErTilbakestilt: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const FritekstBrevPanel = ({
@@ -48,6 +49,7 @@ const FritekstBrevPanel = ({
   formikProps,
   dokumentdata,
   setEditorHarLagret,
+  setEditorErTilbakestilt,
 }: OwnProps) => {
   const { formatMessage } = intl;
   const [featureToggles] = useFeatureToggles();
@@ -130,6 +132,7 @@ const FritekstBrevPanel = ({
             dokumentdata={dokumentdata}
             innholdTilRedigering={formikProps.values[fieldnames.REDIGERT_HTML]}
             inkluderKalender={formikProps.values[fieldnames.INKLUDER_KALENDER_VED_OVERSTYRING]}
+            setEditorErTilbakestilt={setEditorErTilbakestilt}
           />
 
           {kanInkludereKalender && (

@@ -35,6 +35,8 @@ interface OwnProps {
   originalHtml: string;
   tilgjengeligeVedtaksbrev: TilgjengeligeVedtaksbrev & TilgjengeligeVedtaksbrevMedMaler;
   editorHarLagret: boolean;
+  editorErTilbakestilt: boolean;
+  setEditorErTilbakestilt: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 /**
@@ -74,6 +76,8 @@ const MellomLagreBrev = ({
   submitKnapp,
   tilgjengeligeVedtaksbrev,
   editorHarLagret,
+  editorErTilbakestilt,
+  setEditorErTilbakestilt,
 }: OwnProps & WrappedComponentProps) => {
   const [originalBrev, setOriginalBrev] = useState(undefined);
   const [originalInkluderKalender, setOriginalInkluderKalender] = useState<boolean>(false);
@@ -121,6 +125,11 @@ const MellomLagreBrev = ({
     setOriginalInkluderKalender(inkluderKalender);
   };
 
+  const onTilbakestiltMellomlagringClick = event => {
+    onMellomlagreClick(event);
+    setEditorErTilbakestilt(false);
+  };
+
   /**
    * Original streng for å se om innholdet i feltene har endret seg
    */
@@ -156,6 +165,22 @@ const MellomLagreBrev = ({
 
   const visningForBrevIkkeLagret = values[fieldnames.SKAL_BRUKE_OVERSTYRENDE_FRITEKST_BREV] === true;
 
+  if (editorErTilbakestilt) {
+    return (
+      <>
+        <VerticalSpacer sixteenPx />
+        <AlertStripe type="advarsel" form="inline">
+          {intl.formatMessage({ id: 'VedtakForm.FritekstTilbakestilt' })}
+        </AlertStripe>
+        {submitKnapp}
+        <Button type="button" variant="secondary" size="small" onClick={onTilbakestiltMellomlagringClick}>
+          {intl.formatMessage({ id: 'VedtakForm.FritekstBrevLagre' })}
+        </Button>
+        <VerticalSpacer sixteenPx />
+      </>
+    );
+  }
+
   if (editorHarLagret && !harEndringer) {
     return (
       <>
@@ -174,7 +199,6 @@ const MellomLagreBrev = ({
       <Row>
         <Column xs="12">
           <>
-            {editorHarLagret && <>Den har prøvd</>}
             {harEndringer && (
               <>
                 <VerticalSpacer sixteenPx />
