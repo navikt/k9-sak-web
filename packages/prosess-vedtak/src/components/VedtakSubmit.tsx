@@ -28,6 +28,8 @@ interface Props {
   lagreDokumentdata: LagreDokumentdataType;
   tilgjengeligeVedtaksbrev: TilgjengeligeVedtaksbrev & TilgjengeligeVedtaksbrevMedMaler;
   editorHarLagret: boolean;
+  editorErTilbakestilt: boolean;
+  setEditorErTilbakestilt: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const kanSendesTilGodkjenning = behandlingStatusKode =>
@@ -49,6 +51,8 @@ const VedtakSubmit = ({
   originalHtml,
   tilgjengeligeVedtaksbrev,
   editorHarLagret,
+  editorErTilbakestilt,
+  setEditorErTilbakestilt,
 }: Props): JSX.Element => {
   const intl = useIntl();
 
@@ -89,6 +93,8 @@ const VedtakSubmit = ({
             submitKnapp={submitKnapp}
             tilgjengeligeVedtaksbrev={tilgjengeligeVedtaksbrev}
             editorHarLagret={editorHarLagret}
+            editorErTilbakestilt={editorErTilbakestilt}
+            setEditorErTilbakestilt={setEditorErTilbakestilt}
           />
         )}
       </Column>
