@@ -140,7 +140,7 @@ const MellomLagreBrev = ({
         setOriginalInkluderKalender(dokumentdata.REDIGERTBREV?.inkluderKalender);
       } else {
         setOriginalBrev(`${dokumentdata.FRITEKSTBREV?.overskrift}-${dokumentdata.FRITEKSTBREV?.brødtekst}`);
-        setOriginalInkluderKalender(dokumentdata.FRITEKSTBREV.inkluderKalender);
+        setOriginalInkluderKalender(dokumentdata.FRITEKSTBREV?.inkluderKalender);
       }
     } else {
       setOriginalBrev('-');
