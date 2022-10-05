@@ -66,8 +66,8 @@ const featureToggles = [
     value: process.env.FIKS_DELVIS_PROSESSTEG,
   },
   {
-    key: 'FIX_SOKNADSFRIST_DOKUMENT_KALENDER',
-    value: process.env.FIX_SOKNADSFRIST_DOKUMENT_KALENDER,
+    key: 'FIX_SOKNADSFRIST_KALENDER_OG_READONLY',
+    value: process.env.FIX_SOKNADSFRIST_KALENDER_OG_READONLY,
   },
 ];
 
