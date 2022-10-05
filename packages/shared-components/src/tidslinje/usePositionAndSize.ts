@@ -1,3 +1,4 @@
+/* eslint-disable import/prefer-default-export */
 import dayjs, { Dayjs } from 'dayjs';
 import { EnkelPeriode } from '@k9-sak-web/types/src/tidslinje';
 import { horizontalPositionAndWidth } from './calc';
@@ -9,7 +10,15 @@ interface UsePositionAndSizeOptions {
   direction: 'left' | 'right';
 }
 
-const constrain = (value: number, min: number, max: number) => (value >= max ? max : value < min ? min : value);
+const constrain = (value: number, min: number, max: number) => {
+  if (value >= max) {
+    return max;
+  }
+  if (value < min) {
+    return min;
+  }
+  return value;
+};
 
 export const usePositionAndSize = ({
   periode,
@@ -23,12 +32,13 @@ export const usePositionAndSize = ({
   const { horizontalPosition, width } = horizontalPositionAndWidth(fom, tom, tidslinjestart, tidslinjeslutt);
   const adjustedHorizontalPosition = constrain(horizontalPosition, 0, 100);
 
-  const adjustedWidth =
-    adjustedHorizontalPosition + width >= 100
-      ? 100 - adjustedHorizontalPosition
-      : adjustedHorizontalPosition + width !== horizontalPosition + width
-      ? width + horizontalPosition
-      : width;
+  let adjustedWidth = width;
+
+  if (adjustedHorizontalPosition + width >= 100) {
+    adjustedWidth = 100 - adjustedHorizontalPosition;
+  } else if (adjustedHorizontalPosition + width !== horizontalPosition + width) {
+    adjustedWidth = width + horizontalPosition;
+  }
 
   if (horizontalPosition >= 100 || adjustedWidth <= 0) {
     return {
@@ -36,7 +46,8 @@ export const usePositionAndSize = ({
       width: 0,
       display: 'none',
     };
-  } if (horizontalPosition < 0) {
+  }
+  if (horizontalPosition < 0) {
     return {
       [direction]: 0,
       width: `${adjustedWidth}%`,

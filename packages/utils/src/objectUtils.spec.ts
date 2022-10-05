@@ -3,11 +3,11 @@ import { diff, isEqual, isObject, isObjectEmpty, notNull } from './objectUtils';
 
 describe('Object-utils', () => {
   it('skal kaste feil når verdi er null', () => {
-    expect(() => notNull(null)).toThrowError('Value is null');
+    expect(() => notNull(null)).toThrow('Value is null');
   });
 
   it('skal kaste feil når verdi er undefined', () => {
-    expect(() => notNull(undefined)).toThrowError('Value is undefined');
+    expect(() => notNull(undefined)).toThrow('Value is undefined');
   });
 
   it('skal returnere verdi når den er ulik null og undefined', () => {

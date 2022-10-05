@@ -3,14 +3,14 @@ import { useIntl } from 'react-intl';
 
 import { Column, Row } from 'nav-frontend-grid';
 
-import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
-import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
-import { isAvslag, isInnvilget, isOpphor } from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
 import BehandlingArsakType from '@fpsak-frontend/kodeverk/src/behandlingArsakType';
+import { isAvslag, isInnvilget, isOpphor } from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
+import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
+import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { getKodeverknavnFn } from '@fpsak-frontend/utils';
 import { Aksjonspunkt, Kodeverk, KodeverkMedNavn, Vilkar } from '@k9-sak-web/types';
-import VedtakInnvilgetRevurderingPanel from './VedtakInnvilgetRevurderingPanel';
 import VedtakAvslagRevurderingPanel from './VedtakAvslagRevurderingPanel';
+import VedtakInnvilgetRevurderingPanel from './VedtakInnvilgetRevurderingPanel';
 import VedtakOpphorRevurderingPanel from './VedtakOpphorRevurderingPanel';
 import VedtakRedusertUtbetalingArsaker from './VedtakRedusertUtbetalingArsaker';
 

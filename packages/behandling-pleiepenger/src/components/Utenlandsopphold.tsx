@@ -13,13 +13,13 @@ import styles from './utenlandsopphold.less';
 
 countries.registerLocale(norwegianLocale);
 
-export default function Utenlandsopphold({
+const Utenlandsopphold = ({
   utenlandsopphold,
   kodeverk,
 }: {
   utenlandsopphold: UtenlandsoppholdPerioder;
   kodeverk: { UtenlandsoppholdÅrsak: KodeverkMedNavn[] };
-}) {
+}) => {
   const finnÅrsaker = (periode, erEØS) => {
     if (erEØS) {
       return 'Periode telles ikke.';
@@ -90,4 +90,6 @@ export default function Utenlandsopphold({
       )}
     </div>
   );
-}
+};
+
+export default Utenlandsopphold;

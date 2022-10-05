@@ -29,10 +29,15 @@ export const konverterKodeverkTilKode = (data: any, erTilbakekreving = false) =>
   }
   const lengdeKodeverkObject = erTilbakekreving ? 3 : 2;
 
-  Object.keys(data).forEach((key) => {
+  Object.keys(data).forEach(key => {
     if (data[key]?.kode) {
       const antallAttr = Object.keys(data[key]).length;
-      if ((data[key]?.kodeverk && (antallAttr === lengdeKodeverkObject || data[key]?.kodeverk === 'AVKLARINGSBEHOV_DEF')) || antallAttr === 1) {
+      if (
+        (data[key]?.kodeverk &&
+          (antallAttr === lengdeKodeverkObject || data[key]?.kodeverk === 'AVKLARINGSBEHOV_DEF')) ||
+        antallAttr === 1
+      ) {
+        // eslint-disable-next-line no-param-reassign
         data[key] = data[key].kode;
       }
     }
@@ -40,5 +45,4 @@ export const konverterKodeverkTilKode = (data: any, erTilbakekreving = false) =>
       konverterKodeverkTilKode(data[key], erTilbakekreving);
     }
   });
-
-}
+};

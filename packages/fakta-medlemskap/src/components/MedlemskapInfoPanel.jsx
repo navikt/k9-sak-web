@@ -40,24 +40,22 @@ const MedlemskapInfoPanel = ({
   );
 
   return (
-    <>
-      {!hasOpen(avklarStartdatoOverstyring) && (
-        <OppholdInntektOgPerioderForm
-          soknad={soknad}
-          readOnly={readOnly}
-          submitCallback={submitCallback}
-          submittable={submittable}
-          aksjonspunkter={aksjonspunkterMinusAvklarStartDato}
-          alleMerknaderFraBeslutter={alleMerknaderFraBeslutter}
-          behandlingId={behandlingId}
-          behandlingVersjon={behandlingVersjon}
-          behandlingType={behandlingType}
-          alleKodeverk={alleKodeverk}
-          medlemskap={medlemskap}
-          fagsakPerson={fagsakPerson}
-        />
-      )}
-    </>
+    !hasOpen(avklarStartdatoOverstyring) && (
+      <OppholdInntektOgPerioderForm
+        soknad={soknad}
+        readOnly={readOnly}
+        submitCallback={submitCallback}
+        submittable={submittable}
+        aksjonspunkter={aksjonspunkterMinusAvklarStartDato}
+        alleMerknaderFraBeslutter={alleMerknaderFraBeslutter}
+        behandlingId={behandlingId}
+        behandlingVersjon={behandlingVersjon}
+        behandlingType={behandlingType}
+        alleKodeverk={alleKodeverk}
+        medlemskap={medlemskap}
+        fagsakPerson={fagsakPerson}
+      />
+    )
   );
 };
 

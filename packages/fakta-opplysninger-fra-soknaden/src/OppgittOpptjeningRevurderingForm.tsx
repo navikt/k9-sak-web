@@ -445,9 +445,9 @@ const mapStateToProps = (_, props) => {
     new Promise((resolve, reject) => {
       const errors = validateForm(formValues, props.oppgittOpptjening);
       if (!errors || Object.keys(errors).length === 0) {
-        return resolve(submitCallback([transformValues(formValues, props.oppgittOpptjening)]));
+        resolve(submitCallback([transformValues(formValues, props.oppgittOpptjening)]));
       }
-      return reject(errors);
+      reject(errors);
     });
   const initialValues = buildInitialValues(oppgittOpptjening, aksjonspunkter);
   const validate = values => {

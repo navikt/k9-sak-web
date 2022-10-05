@@ -42,7 +42,7 @@ import AksjonspunktBehandlerTB from './arbeidstaker/AksjonspunktBehandlerTB';
 import AksjonspunktBehandlerFL from './frilanser/AksjonspunktBehandlerFL';
 import VurderOgFastsettSN from './selvstendigNaeringsdrivende/VurderOgFastsettSN';
 import GrunnlagForAarsinntektPanelAT from './arbeidstaker/GrunnlagForAarsinntektPanelAT';
-import beregningKoblingPropType from "../propTypes/beregningKoblingPropType";
+import beregningKoblingPropType from '../propTypes/beregningKoblingPropType';
 
 const cx = classNames.bind(styles);
 
@@ -82,7 +82,9 @@ const getBGVilkar = vilkar =>
 
 const erBGTilVurdering = (beregningreferanserTilVurdering, beregningsgrunnlag) => {
   const vilårsperiodeFom = beregningsgrunnlag.vilkårsperiodeFom;
-  return beregningreferanserTilVurdering.some((kobling) => kobling.skjæringstidspunkt === vilårsperiodeFom && !kobling.erForlengelse)
+  return beregningreferanserTilVurdering.some(
+    kobling => kobling.skjæringstidspunkt === vilårsperiodeFom && !kobling.erForlengelse,
+  );
 };
 
 const lagMenyProps = (kronologiskeGrunnlag, beregningreferanserTilVurdering) => {
@@ -96,10 +98,11 @@ const lagMenyProps = (kronologiskeGrunnlag, beregningreferanserTilVurdering) => 
   return menyProps;
 };
 
-const finnAvklaringsbehov = (beregningsgrunnlag) => beregningsgrunnlag.avklaringsbehov.filter(ab => isBeregningAvklaringsbehov(ab.definisjon))
+const finnAvklaringsbehov = beregningsgrunnlag =>
+  beregningsgrunnlag.avklaringsbehov.filter(ab => isBeregningAvklaringsbehov(ab.definisjon));
 
-const harAvklaringsbehovSomkanLøses = (beregningsgrunnlag) =>
-  beregningsgrunnlag.avklaringsbehov.some(ab => isBeregningAvklaringsbehov(ab.definisjon) && ab.kanLoses)
+const harAvklaringsbehovSomkanLøses = beregningsgrunnlag =>
+  beregningsgrunnlag.avklaringsbehov.some(ab => isBeregningAvklaringsbehov(ab.definisjon) && ab.kanLoses);
 
 /**
  * BeregningFP
@@ -212,7 +215,7 @@ BeregningFP.propTypes = {
   beregningsgrunnlag: PropTypes.arrayOf(beregningsgrunnlagPropType),
   vilkar: PropTypes.arrayOf(beregningsgrunnlagVilkarPropType).isRequired,
   behandling: beregningsgrunnlagBehandlingPropType,
-  handleSubmit: PropTypes.any.isRequired,
+  handleSubmit: PropTypes.func.isRequired,
   intl: PropTypes.shape().isRequired,
   beregningreferanserTilVurdering: PropTypes.arrayOf(PropTypes.shape(beregningKoblingPropType)).isRequired,
 };
@@ -221,7 +224,7 @@ BeregningFP.defaultProps = {
   beregningsgrunnlag: undefined,
 };
 
-const initAksjonspunktData = (aksjonspunktData) => ({
+const initAksjonspunktData = aksjonspunktData => ({
   '@type': aksjonspunktData.kode,
   kode: aksjonspunktData.kode,
   begrunnelse: aksjonspunktData.begrunnelse,
@@ -235,14 +238,16 @@ const mapTilSubmitGrunnlagsdata = (aksjonspunktData, perioder) => ({
 
 const formaterAksjonspunkter = (aksjonspunkter, perioder) => {
   const gruppertPrKode = aksjonspunkter.reduce((gruppert, aksjonspunktData) => {
+    // eslint-disable-next-line no-param-reassign
     gruppert[aksjonspunktData.kode] = gruppert[aksjonspunktData.kode] ?? initAksjonspunktData(aksjonspunktData);
     gruppert[aksjonspunktData.kode].grunnlag.push(mapTilSubmitGrunnlagsdata(aksjonspunktData, perioder));
     return gruppert;
   }, {});
   return Object.values(gruppertPrKode);
-}
+};
 
-const harAvklaringsbehovIPanel = (avklaringsbehov) => avklaringsbehov.some(ab => isBeregningAvklaringsbehov(ab.definisjon));
+const harAvklaringsbehovIPanel = avklaringsbehov =>
+  avklaringsbehov.some(ab => isBeregningAvklaringsbehov(ab.definisjon));
 
 export const buildInitialValuesForBeregningrunnlag = (beregningsgrunnlag, beregningreferanserTilVurdering) => {
   if (!beregningsgrunnlag || !beregningsgrunnlag.beregningsgrunnlagPeriode) {
@@ -263,7 +268,9 @@ export const buildInitialValuesForBeregningrunnlag = (beregningsgrunnlag, beregn
   const initialValues = {
     relevanteStatuser: getRelevanteStatuser(beregningsgrunnlag),
     avklaringsbehov,
-    erTilVurdering: erBGTilVurdering(beregningreferanserTilVurdering, beregningsgrunnlag) && harAvklaringsbehovIPanel(avklaringsbehov),
+    erTilVurdering:
+      erBGTilVurdering(beregningreferanserTilVurdering, beregningsgrunnlag) &&
+      harAvklaringsbehovIPanel(avklaringsbehov),
     skjæringstidspunkt: beregningsgrunnlag.skjæringstidspunkt,
     ...Beregningsgrunnlag.buildInitialValues(avklaringsbehov),
     ...AksjonspunktBehandlerTB.buildInitialValues(allePerioder, avklaringsbehov),
@@ -282,13 +289,11 @@ export const buildInitialValues = (beregningsgrunnlag, beregningreferanserTilVur
 // Kun eksportert for test
 export const transformValues = (values, alleBeregningsgrunnlag, vilkar) => {
   const fieldArrayValuesList = values.beregningsgrunnlagListe;
-  const alleAksjonspunkter = fieldArrayValuesList
-    .flatMap((currentBeregningsgrunnlagSkjemaverdier, currentBeregningsgrunnlagIndex) => {
+  const alleAksjonspunkter = fieldArrayValuesList.flatMap(
+    (currentBeregningsgrunnlagSkjemaverdier, currentBeregningsgrunnlagIndex) => {
       // Indeks i visning må vere lik indeks i array alleBeregningsgrunnlag
       const opprinneligBeregningsgrunnlag = alleBeregningsgrunnlag[currentBeregningsgrunnlagIndex];
-      const allePerioder = opprinneligBeregningsgrunnlag
-        ? opprinneligBeregningsgrunnlag.beregningsgrunnlagPeriode
-        : [];
+      const allePerioder = opprinneligBeregningsgrunnlag ? opprinneligBeregningsgrunnlag.beregningsgrunnlagPeriode : [];
       const alleAndelerIForstePeriode =
         allePerioder && allePerioder.length > 0 ? allePerioder[0].beregningsgrunnlagPrStatusOgAndel : [];
       if (!currentBeregningsgrunnlagSkjemaverdier.erTilVurdering) {
@@ -301,9 +306,10 @@ export const transformValues = (values, alleBeregningsgrunnlag, vilkar) => {
       );
 
       return transformedValues;
-    });
+    },
+  );
   return formaterAksjonspunkter(alleAksjonspunkter, getBGVilkar(vilkar).perioder);
-}
+};
 
 const mapStateToPropsFactory = (initialState, initialOwnProps) => {
   const { submitCallback, beregningsgrunnlag, vilkar, beregningreferanserTilVurdering } = initialOwnProps;
@@ -311,10 +317,7 @@ const mapStateToPropsFactory = (initialState, initialOwnProps) => {
   return (state, ownProps) => ({
     onSubmit,
     initialValues: {
-      beregningsgrunnlagListe: buildInitialValues(
-        ownProps.beregningsgrunnlag,
-        beregningreferanserTilVurdering
-      ),
+      beregningsgrunnlagListe: buildInitialValues(ownProps.beregningsgrunnlag, beregningreferanserTilVurdering),
     },
     fieldArrayID: ownProps.fieldArrayID,
   });
