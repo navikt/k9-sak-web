@@ -34,6 +34,9 @@ interface OwnProps {
   redigertHtml: string;
   originalHtml: string;
   tilgjengeligeVedtaksbrev: TilgjengeligeVedtaksbrev & TilgjengeligeVedtaksbrevMedMaler;
+  editorHarLagret: boolean;
+  editorErTilbakestilt: boolean;
+  setEditorErTilbakestilt: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 /**
@@ -72,12 +75,14 @@ const MellomLagreBrev = ({
   inkluderKalender,
   submitKnapp,
   tilgjengeligeVedtaksbrev,
+  editorHarLagret,
+  editorErTilbakestilt,
+  setEditorErTilbakestilt,
 }: OwnProps & WrappedComponentProps) => {
   const [originalBrev, setOriginalBrev] = useState(undefined);
   const [originalInkluderKalender, setOriginalInkluderKalender] = useState<boolean>(false);
-  const [erInkluderKalenderLik, setErInkluderKalenderLik] = useState<boolean>(false);
-  const [erTekstLik, setErTekstLik] = useState(false);
-  const [erTekstEndret, setErTekstEndret] = useState(false);
+  const [harEndringer, setHarEndringer] = useState<boolean>(false);
+  const [erMellomlagret, setErMellomlagret] = useState<boolean>(false);
   const { values } = useFormikContext();
 
   /**
@@ -115,8 +120,14 @@ const MellomLagreBrev = ({
       await lagreDokumentdata({ ...dokumentdata, FRITEKSTBREV: { brødtekst, overskrift } });
     }
 
+    setErMellomlagret(true);
     setOriginalBrev(brevTilStreng(overskrift, brødtekst, redigertHtml));
     setOriginalInkluderKalender(inkluderKalender);
+  };
+
+  const onTilbakestiltMellomlagringClick = event => {
+    onMellomlagreClick(event);
+    setEditorErTilbakestilt(false);
   };
 
   /**
@@ -149,60 +160,83 @@ const MellomLagreBrev = ({
         ? null
         : brevTilStreng(overskrift, brødtekst, redigertHtml);
 
-    if (originalBrev !== undefined && brevStreng !== null && originalBrev !== brevStreng) {
-      setErTekstEndret(true);
-      setErTekstLik(false);
-    } else setErTekstLik(false);
-
-    if (originalInkluderKalender !== inkluderKalender) {
-      setErInkluderKalenderLik(false);
-    } else {
-      setErInkluderKalenderLik(true);
-    }
+    setHarEndringer(originalBrev !== brevStreng || originalInkluderKalender !== inkluderKalender);
   }, [originalBrev, originalInkluderKalender, overskrift, brødtekst, inkluderKalender]);
 
   const visningForBrevIkkeLagret = values[fieldnames.SKAL_BRUKE_OVERSTYRENDE_FRITEKST_BREV] === true;
 
-  if ((erTekstEndret || !erInkluderKalenderLik) && (overskrift || brødtekst || redigertHtml || inkluderKalender)) {
+  if (editorErTilbakestilt) {
+    return (
+      <>
+        <VerticalSpacer sixteenPx />
+        <AlertStripe type="advarsel" form="inline">
+          {intl.formatMessage({ id: 'VedtakForm.FritekstTilbakestilt' })}
+        </AlertStripe>
+        {submitKnapp}
+        <Button type="button" variant="secondary" size="small" onClick={onTilbakestiltMellomlagringClick}>
+          {intl.formatMessage({ id: 'VedtakForm.FritekstBrevLagre' })}
+        </Button>
+        <VerticalSpacer sixteenPx />
+      </>
+    );
+  }
+
+  if (editorHarLagret && !harEndringer) {
+    return (
+      <>
+        <VerticalSpacer sixteenPx />
+        <AlertStripe type="suksess" form="inline">
+          {intl.formatMessage({ id: 'VedtakForm.FritekstBrevLagret' })}
+        </AlertStripe>
+        {submitKnapp}
+        <VerticalSpacer sixteenPx />
+      </>
+    );
+  }
+
+  if (erMellomlagret || harEndringer) {
     return (
       <Row>
         <Column xs="12">
-          {!erTekstLik && (
-            <>
-              <VerticalSpacer sixteenPx />
-              {visningForBrevIkkeLagret && (
-                <>
-                  <AlertStripe type="advarsel" form="inline">
-                    {intl.formatMessage({ id: 'VedtakForm.FritekstBrevIkkeLagret' })}
-                  </AlertStripe>
-                  <VerticalSpacer sixteenPx />
-                </>
-              )}
-              {submitKnapp}
-              {visningForBrevIkkeLagret && (
-                <Button
-                  type="button"
-                  variant="secondary"
-                  size="small"
-                  onClick={onMellomlagreClick}
-                  disabled={erTekstLik}
-                >
-                  {intl.formatMessage({ id: 'VedtakForm.FritekstBrevLagre' })}
-                </Button>
-              )}
-              <VerticalSpacer sixteenPx />
-            </>
-          )}
-          {erTekstLik && (
-            <>
-              <VerticalSpacer sixteenPx />
-              <AlertStripe type="suksess" form="inline">
-                {intl.formatMessage({ id: 'VedtakForm.FritekstBrevLagret' })}
-              </AlertStripe>
-              {submitKnapp}
-              <VerticalSpacer sixteenPx />
-            </>
-          )}
+          <>
+            {harEndringer && (
+              <>
+                <VerticalSpacer sixteenPx />
+                {visningForBrevIkkeLagret && (
+                  <>
+                    <AlertStripe type="advarsel" form="inline">
+                      {intl.formatMessage({ id: 'VedtakForm.FritekstBrevIkkeLagret' })}
+                    </AlertStripe>
+                    <VerticalSpacer sixteenPx />
+                  </>
+                )}
+                {submitKnapp}
+                {visningForBrevIkkeLagret && (
+                  <Button
+                    type="button"
+                    variant="secondary"
+                    size="small"
+                    onClick={onMellomlagreClick}
+                    disabled={!harEndringer}
+                  >
+                    {intl.formatMessage({ id: 'VedtakForm.FritekstBrevLagre' })}
+                  </Button>
+                )}
+                <VerticalSpacer sixteenPx />
+              </>
+            )}
+
+            {!harEndringer && (
+              <>
+                <VerticalSpacer sixteenPx />
+                <AlertStripe type="suksess" form="inline">
+                  {intl.formatMessage({ id: 'VedtakForm.FritekstBrevLagret' })}
+                </AlertStripe>
+                {submitKnapp}
+                <VerticalSpacer sixteenPx />
+              </>
+            )}
+          </>
         </Column>
       </Row>
     );

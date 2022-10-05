@@ -30,6 +30,9 @@ interface OwnProps {
   lagreDokumentdata: LagreDokumentdataType;
   aksjonspunkter: Aksjonspunkt[];
   tilgjengeligeVedtaksbrev: TilgjengeligeVedtaksbrev & TilgjengeligeVedtaksbrevMedMaler;
+  editorHarLagret: boolean;
+  editorErTilbakestilt: boolean;
+  setEditorErTilbakestilt: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export const submitKnappTekst = aksjonspunkter =>
@@ -52,6 +55,9 @@ export const VedtakRevurderingSubmitPanelImpl = ({
   brødtekst,
   aksjonspunkter,
   tilgjengeligeVedtaksbrev,
+  editorHarLagret,
+  editorErTilbakestilt,
+  setEditorErTilbakestilt,
 }: OwnProps): JSX.Element => {
   const onClick = event =>
     !harRedusertUtbetaling || Object.values(redusertUtbetalingArsak).some(a => !!formikValues[a])
@@ -94,6 +100,9 @@ export const VedtakRevurderingSubmitPanelImpl = ({
           redigertHtml={formikValues[fieldnames.REDIGERT_HTML]}
           originalHtml={formikValues[fieldnames.ORIGINAL_HTML]}
           tilgjengeligeVedtaksbrev={tilgjengeligeVedtaksbrev}
+          editorHarLagret={editorHarLagret}
+          editorErTilbakestilt={editorErTilbakestilt}
+          setEditorErTilbakestilt={setEditorErTilbakestilt}
         />
       )}
     </div>

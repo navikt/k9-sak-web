@@ -37,13 +37,13 @@ export const utledStiler = (html: string) => {
 };
 
 export const utledPrefiksInnhold = (html: string) => {
-  const heleBrevet = new DOMParser().parseFromString(html, 'text/html');
+  const heleBrevet = new DOMParser().parseFromString(html, 'application/xhtml+xml');
   let funnetRedigerbartInnhold = false;
   const prefiks = [];
   Array.from(heleBrevet.querySelectorAll('body > *')).map(div => {
     if (div.hasAttribute('data-editable')) {
       funnetRedigerbartInnhold = true;
-    } else if (!funnetRedigerbartInnhold) {
+    } else if (!funnetRedigerbartInnhold && !div.hasAttribute('data-hidden')) {
       prefiks.push(div.innerHTML);
     }
     return div;
@@ -52,13 +52,13 @@ export const utledPrefiksInnhold = (html: string) => {
 };
 
 export const utledSuffiksInnhold = (html: string) => {
-  const heleBrevet = new DOMParser().parseFromString(html, 'text/html');
+  const heleBrevet = new DOMParser().parseFromString(html, 'application/xhtml+xml');
   let funnetRedigerbartInnhold = false;
   const suffiks = [];
   Array.from(heleBrevet.querySelectorAll('body > *')).map(div => {
     if (div.hasAttribute('data-editable')) {
       funnetRedigerbartInnhold = true;
-    } else if (funnetRedigerbartInnhold) {
+    } else if (funnetRedigerbartInnhold && !div.hasAttribute('data-hidden')) {
       suffiks.push(div.innerHTML);
     }
     return div;
@@ -67,7 +67,9 @@ export const utledSuffiksInnhold = (html: string) => {
 };
 
 export const utledRedigerbartInnhold = (html: string) => {
-  const heleBrevet = new DOMParser().parseFromString(html, 'text/html');
+  // Bruker application/xhtml+xml som datatype, da backend bruker en xhtml parser som
+  // ikke støtter feks. <br> som ikke er self-closing (<br/>)
+  const heleBrevet = new DOMParser().parseFromString(html, 'application/xhtml+xml');
   return heleBrevet.querySelector('[data-editable]').innerHTML;
 };
 
