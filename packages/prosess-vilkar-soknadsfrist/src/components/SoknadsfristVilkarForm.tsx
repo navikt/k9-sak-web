@@ -1,30 +1,31 @@
-import React, { SetStateAction } from 'react';
 import moment from 'moment';
+import hash from 'object-hash';
+import React, { SetStateAction } from 'react';
+import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import { InjectedFormProps } from 'redux-form';
 import { createSelector } from 'reselect';
-import { FormattedMessage } from 'react-intl';
-import hash from 'object-hash';
 
 import advarselIkonUrl from '@fpsak-frontend/assets/images/advarsel_ny.svg';
 import { behandlingForm, behandlingFormValueSelector } from '@fpsak-frontend/form';
-import { decodeHtmlEntity } from '@fpsak-frontend/utils';
-import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import {
   AksjonspunktBox,
+  AksjonspunktHelpTextTemp,
   EditedIcon,
   FlexColumn,
   FlexContainer,
   FlexRow,
   Image,
   VerticalSpacer,
-  AksjonspunktHelpTextTemp,
+  useFeatureToggles,
 } from '@fpsak-frontend/shared-components';
+import { decodeHtmlEntity } from '@fpsak-frontend/utils';
 import { Aksjonspunkt, DokumentStatus, SubmitCallback } from '@k9-sak-web/types';
 import Vilkarperiode from '@k9-sak-web/types/src/vilkarperiode';
-import { Knapp, Hovedknapp } from 'nav-frontend-knapper';
+import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
 
 import OverstyrBekreftKnappPanel from './OverstyrBekreftKnappPanel';
@@ -87,6 +88,36 @@ export const SoknadsfristVilkarForm = ({
     reset();
     toggleOverstyring(oldArray => oldArray.filter(code => code !== aksjonspunktCodes.OVERSTYR_SOKNADSFRISTVILKAR));
   };
+
+  const [featureToggles] = useFeatureToggles();
+
+  if (
+    featureToggles?.FIX_SOKNADSFRIST_KALENDER_OG_READONLY &&
+    !erOverstyrt &&
+    !harAksjonspunkt &&
+    dokumenterIAktivPeriode.length > 0
+  ) {
+    return (
+      <div>
+        {Array.isArray(alleDokumenter) &&
+          alleDokumenter.length > 0 &&
+          alleDokumenter.map((dokument, index) => {
+            const documentHash = hash(dokument);
+            return (
+              <SoknadsfristVilkarDokument
+                key={documentHash}
+                erAktivtDokument={dokumenterIAktivPeriode.findIndex(d => hash(d) === documentHash) > -1}
+                skalViseBegrunnelse
+                readOnly
+                erVilkarOk={erVilkarOk}
+                dokumentIndex={index}
+                dokument={dokument}
+              />
+            );
+          })}
+      </div>
+    );
+  }
 
   return (
     <form onSubmit={handleSubmit}>

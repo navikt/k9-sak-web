@@ -1,6 +1,8 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 import sinon from 'sinon';
+import { ReactComponent as SendMeldingSvg } from '@fpsak-frontend/assets/images/email-send-1.svg';
+import { ReactComponent as HistorikkSvg } from '@fpsak-frontend/assets/images/synchronize-time.svg';
 
 import { FlexColumn } from '@fpsak-frontend/shared-components';
 
@@ -10,13 +12,17 @@ describe('<TabMeny>', () => {
   it('skal vise tabs der Historikk er valgt og Send melding ikke er valgbar', () => {
     const tabs = [
       {
-        getSvg: (isActive, isDisabled, props) => <div isActive={isActive} isDisabled={isDisabled} {...props} />,
+        getSvg: (isActive, isDisabled, props) => (
+          <HistorikkSvg isActive={isActive} isDisabled={isDisabled} {...props} />
+        ),
         tooltip: 'Historikk',
         isActive: true,
         isDisabled: false,
       },
       {
-        getSvg: (isActive, isDisabled, props) => <div isActive={isActive} isDisabled={isDisabled} {...props} />,
+        getSvg: (isActive, isDisabled, props) => (
+          <SendMeldingSvg isActive={isActive} isDisabled={isDisabled} {...props} />
+        ),
         tooltip: 'Send melding',
         isActive: false,
         isDisabled: true,
@@ -52,13 +58,17 @@ describe('<TabMeny>', () => {
   it('skal velge Send melding ved trykk på knapp', () => {
     const tabs = [
       {
-        getSvg: (isActive, isDisabled, props) => <div isActive={isActive} isDisabled={isDisabled} {...props} />,
+        getSvg: (isActive, isDisabled, props) => (
+          <HistorikkSvg isActive={isActive} isDisabled={isDisabled} {...props} />
+        ),
         tooltip: 'Historikk',
         isActive: false,
         isDisabled: false,
       },
       {
-        getSvg: (isActive, isDisabled, props) => <div isActive={isActive} isDisabled={isDisabled} {...props} />,
+        getSvg: (isActive, isDisabled, props) => (
+          <SendMeldingSvg isActive={isActive} isDisabled={isDisabled} {...props} />
+        ),
         tooltip: 'Send melding',
         isActive: false,
         isDisabled: false,

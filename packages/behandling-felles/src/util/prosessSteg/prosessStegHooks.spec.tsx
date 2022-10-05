@@ -133,9 +133,11 @@ describe('<prosessStegHooks>', () => {
         apentFaktaPanelInfo,
       ),
     );
+    const dataValues: any[] = wrapper.find('div').prop('data-values');
+
     // @ts-ignore
     const [prosessStegPaneler, valgtPanel, formaterteProsessStegPaneler] = Object.values({
-      ...wrapper.find('div').prop('data-values'),
+      ...dataValues,
       // @ts-ignore
     }).reduce((acc, value) => [...acc, value], []);
 

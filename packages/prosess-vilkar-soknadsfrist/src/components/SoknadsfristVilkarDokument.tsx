@@ -69,7 +69,7 @@ export const SoknadsfristVilkarDokument = ({
     [dokument.journalpostId],
   );
   const maxDate = useMemo(() => {
-    if (featureToggles.FIX_SOKNADSFRIST_DOKUMENT_KALENDER) {
+    if (featureToggles?.FIX_SOKNADSFRIST_KALENDER_OG_READONLY) {
       return dokument.status.reduce(
         (acc, curr) => (!acc || moment(curr.periode.tom) > moment(acc) ? curr.periode.tom : acc),
         '',
