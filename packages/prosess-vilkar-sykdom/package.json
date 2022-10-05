@@ -14,6 +14,7 @@
     "lodash.isequal": "^4.5.0",
     "nav-frontend-core": "6.0.1",
     "nav-frontend-spinner": "3.0.1",
+    "nav-frontend-spinner-style": "1.0.2",
     "nav-frontend-typografi": "4.0.2",
     "react": "^17.0.2",
     "react-intl": "6.1.2"
