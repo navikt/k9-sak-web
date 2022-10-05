@@ -1,18 +1,17 @@
 import { useCallback, useEffect, useMemo } from 'react';
-import { IntlShape } from 'react-intl';
 
-import { Behandling, Aksjonspunkt, Fagsak, FeatureToggles } from '@k9-sak-web/types';
+import { Aksjonspunkt, Behandling, Fagsak, FeatureToggles } from '@k9-sak-web/types';
 
+import FaktaPanelMenyRad from '../../types/faktaPanelMenyRadTsType';
+import Rettigheter from '../../types/rettigheterTsType';
+import FaktaPanelDef from './FaktaPanelDef';
+import FaktaPanelUtledet from './FaktaPanelUtledet';
 import {
-  utledFaktaPaneler,
   finnValgtPanel,
   formaterPanelerForSidemeny,
   getBekreftAksjonspunktCallback,
+  utledFaktaPaneler,
 } from './faktaUtils';
-import Rettigheter from '../../types/rettigheterTsType';
-import FaktaPanelMenyRad from '../../types/faktaPanelMenyRadTsType';
-import FaktaPanelDef from './FaktaPanelDef';
-import FaktaPanelUtledet from './FaktaPanelUtledet';
 
 const useFaktaPaneler = (
   faktaPanelDefinisjoner: FaktaPanelDef[],
