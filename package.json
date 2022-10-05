@@ -40,7 +40,7 @@
   ],
   "dependencies": {
     "@babel/runtime": "^7.19.0",
-    "@formatjs/intl-datetimeformat": "^5.0.2",
+    "@formatjs/intl-datetimeformat": "^6.2.0",
     "@formatjs/intl-numberformat": "^7.4.0",
     "@navikt/ds-css": "^1.3.5",
     "@navikt/ds-react": "^1.3.5",
