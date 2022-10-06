@@ -118,7 +118,7 @@ const FritekstRedigering = ({
     setEditorErTilbakestilt(true);
   };
 
-  const handleForhåndsvis = async (e: React.SyntheticEvent, html: string) => previewBrev(e, html);
+  const handleForhåndsvis = (e: React.SyntheticEvent, html: string) => previewBrev(e, html);
 
   const oppdaterFormFelt = (html: string) => setFieldValue(fieldnames.REDIGERT_HTML, html);
 
