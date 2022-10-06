@@ -4,7 +4,7 @@ import { useEffect, useContext } from 'react';
 import { VedtakFormContext } from '@k9-sak-web/behandling-felles/src/components/ProsessStegContainer';
 import { fieldnames } from '../konstanter';
 
-export const LagreFormikStateLokalt = () => {
+const LagreFormikStateLokalt = () => {
   const vedtakContext = useContext(VedtakFormContext);
 
   const { values }: { values: FormikValues } = useFormikContext();
