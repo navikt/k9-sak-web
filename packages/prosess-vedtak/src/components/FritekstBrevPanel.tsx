@@ -23,7 +23,7 @@ const maxLength100000 = maxLength(100000);
 const minLength3 = minLength(3);
 
 interface OwnProps {
-  previewBrev: (e: any) => void;
+  previewBrev: (event: React.SyntheticEvent, html?: string) => void;
   lagreDokumentdata: (any) => void;
   hentFritekstbrevHtmlCallback: (parameters: any) => any;
   readOnly: boolean;
