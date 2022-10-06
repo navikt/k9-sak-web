@@ -9,6 +9,7 @@ import {
   finnesTilgjengeligeVedtaksbrev,
   kanHaAutomatiskVedtaksbrev,
   kanHaFritekstbrev,
+  kanHaManueltFritekstbrev,
   kanKunVelge,
   kanOverstyreMottakere,
   lagVisningsnavnForMottaker,
@@ -57,15 +58,15 @@ const getManuellBrevCallback =
     previewCallback: (dokument: any) => void;
     tilgjengeligeVedtaksbrev: TilgjengeligeVedtaksbrev;
   }) =>
-  e => {
+  (e, redigertHtml = undefined) => {
     if (formProps.isValid) {
-      if (formProps.values[fieldnames.REDIGERT_HTML].length > 0) {
+      if (kanHaManueltFritekstbrev(tilgjengeligeVedtaksbrev)) {
         previewCallback({
           dokumentdata: {
             REDIGERTBREV: {
               redigertMal: formProps.values[fieldnames.REDIGERT_MAL],
               originalHtml: formProps.values[fieldnames.ORIGINAL_HTML],
-              redigertHtml: decodeHtmlEntity(formProps.values[fieldnames.REDIGERT_HTML]),
+              redigertHtml: decodeHtmlEntity(redigertHtml || formProps.values[fieldnames.REDIGERT_HTML]),
               inkluderKalender: formProps.values[fieldnames.INKLUDER_KALENDER_VED_OVERSTYRING] || false,
             },
           },

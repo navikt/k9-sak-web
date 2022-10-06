@@ -28,7 +28,7 @@ interface ownProps {
   handleSubmit: (html: string, request: any) => void;
   hentFritekstbrevHtmlCallback: (parameters: any) => string;
   setFieldValue: (field: string, value: any, shouldValidate?: boolean) => void;
-  previewBrev: (event: React.SyntheticEvent) => void;
+  previewBrev: (event: React.SyntheticEvent, html?: string) => void;
   setEditorErTilbakestilt: React.Dispatch<React.SetStateAction<boolean>>;
   tilgjengeligeVedtaksbrev: TilgjengeligeVedtaksbrev & TilgjengeligeVedtaksbrevMedMaler;
   readOnly: boolean;
@@ -118,14 +118,9 @@ const FritekstRedigering = ({
     setEditorErTilbakestilt(true);
   };
 
-  const handleForhåndsvis = (e: React.SyntheticEvent, html: string) => {
-    setFieldValue(fieldnames.REDIGERT_HTML, html);
-    previewBrev(e);
-  };
+  const handleForhåndsvis = (e: React.SyntheticEvent, html: string) => previewBrev(e, html);
 
-  const oppdaterFormFelt = (html: string) => {
-    setFieldValue(fieldnames.REDIGERT_HTML, html);
-  };
+  const oppdaterFormFelt = (html: string) => setFieldValue(fieldnames.REDIGERT_HTML, html);
 
   return (
     <>
