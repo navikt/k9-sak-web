@@ -1,7 +1,7 @@
 import { shallow } from 'enzyme';
 import React from 'react';
 import sinon from 'sinon';
-import { SideMenu } from '@navikt/k9-react-components';
+import { SideMenu } from '@navikt/ft-plattform-komponenter';
 
 import { Behandling } from '@k9-sak-web/types';
 

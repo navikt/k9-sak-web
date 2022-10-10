@@ -4,7 +4,7 @@ import { Alert, Heading } from '@navikt/ds-react';
 import Ekspanderbartpanel from 'nav-frontend-ekspanderbartpanel';
 
 import { KodeverkMedNavn, UtenlandsoppholdPerioder } from '@k9-sak-web/types';
-import { PeriodList } from '@navikt/k9-react-components';
+import { PeriodList } from '@navikt/ft-plattform-komponenter';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 
 import countries from 'i18n-iso-countries';

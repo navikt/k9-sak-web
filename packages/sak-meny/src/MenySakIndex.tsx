@@ -1,6 +1,6 @@
 import React, { useRef, useEffect, useState, useCallback } from 'react';
 import { FormattedMessage, createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
-import { Popover, BoxedListWithSelection } from '@navikt/k9-react-components';
+import { Popover, BoxedListWithSelection } from '@navikt/ft-plattform-komponenter';
 import { Knapp } from 'nav-frontend-knapper';
 
 import { Image } from '@fpsak-frontend/shared-components';

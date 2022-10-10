@@ -1,6 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import { Header } from '@navikt/k9-react-components';
+import { Header } from '@navikt/ft-plattform-komponenter';
 
 import HeaderWithErrorPanel from './HeaderWithErrorPanel';
 

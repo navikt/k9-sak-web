@@ -1,5 +1,5 @@
 import React from 'react';
-import { Popover } from '@navikt/k9-react-components';
+import { Popover } from '@navikt/ft-plattform-komponenter';
 import { Knapp } from 'nav-frontend-knapper';
 
 import shallowWithIntl from '../i18n/index';

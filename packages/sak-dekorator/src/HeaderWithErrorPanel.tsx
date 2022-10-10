@@ -1,6 +1,6 @@
 import { RETTSKILDE_URL, SYSTEMRUTINE_URL } from '@k9-sak-web/konstanter';
 import Endringslogg from '@navikt/familie-endringslogg';
-import { BoxedListWithLinks, Header, Popover, SystemButton, UserPanel } from '@navikt/k9-react-components';
+import { BoxedListWithLinks, Header, Popover, SystemButton, UserPanel } from '@navikt/ft-plattform-komponenter';
 import React, { RefObject, useCallback, useEffect, useRef, useState } from 'react';
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 import messages from '../i18n/nb_NO.json';
@@ -48,7 +48,9 @@ const useOutsideClickEvent = (
 
 const isRunningOnLocalhost = () => window.location.hostname === 'localhost';
 const isInDevelopmentMode = () =>
-  window.location.hostname === 'localhost' || window.location.hostname === 'app-q1.adeo.no' || window.location.hostname === 'k9.dev.intern.nav.no';
+  window.location.hostname === 'localhost' ||
+  window.location.hostname === 'app-q1.adeo.no' ||
+  window.location.hostname === 'k9.dev.intern.nav.no';
 const getHeaderTitleHref = getPathToFplos => {
   if (!isRunningOnLocalhost()) {
     return getPathToFplos() || '/k9/web';
