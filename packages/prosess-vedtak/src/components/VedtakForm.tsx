@@ -10,6 +10,7 @@ import {
   harMellomlagretRedigertFritekstbrev,
   harMellomlagretRedusertUtbetalingArsak,
   harPotensieltFlereInformasjonsbehov,
+  harSattDokumentdataType,
   kanHaAutomatiskVedtaksbrev,
   kanHaFritekstbrev,
   kanHaManueltFritekstbrev,
@@ -256,13 +257,16 @@ export const VedtakForm: React.FC<Props> = ({
       [fieldnames.SKAL_BRUKE_OVERSTYRENDE_FRITEKST_BREV]:
         kanKunVelge(tilgjengeligeVedtaksbrev, vedtaksbrevtype.FRITEKST) ||
         kanKunVelge(tilgjengeligeVedtaksbrev, vedtaksbrevtype.MANUELL) ||
-        (harMellomlagretFritekstbrev(dokumentdata, vedtakVarsel) && kanHaFritekstbrev(tilgjengeligeVedtaksbrev)) ||
+        (harMellomlagretFritekstbrev(dokumentdata, vedtakVarsel) &&
+          kanHaFritekstbrev(tilgjengeligeVedtaksbrev) &&
+          harSattDokumentdataType(dokumentdata, vedtakVarsel, vedtaksbrevtype.FRITEKST)) ||
         (harFritekstILokalState && kanHaFritekstbrev(tilgjengeligeVedtaksbrev)) ||
         (kanHaFritekstbrev(tilgjengeligeVedtaksbrev) &&
           !kanHaAutomatiskVedtaksbrev(tilgjengeligeVedtaksbrev) &&
           !harMellomLagretMedIngenBrev(dokumentdata, vedtakVarsel)) ||
         (harMellomlagretRedigertFritekstbrev(dokumentdata, vedtakVarsel) &&
-          kanHaManueltFritekstbrev(tilgjengeligeVedtaksbrev)),
+          kanHaManueltFritekstbrev(tilgjengeligeVedtaksbrev) &&
+          harSattDokumentdataType(dokumentdata, vedtakVarsel, vedtaksbrevtype.MANUELL)),
       [fieldnames.SKAL_HINDRE_UTSENDING_AV_BREV]:
         kanKunVelge(tilgjengeligeVedtaksbrev, vedtaksbrevtype.INGEN) ||
         (harMellomLagretMedIngenBrev(dokumentdata, vedtakVarsel) &&

@@ -4,6 +4,7 @@ import avsenderApplikasjon from '@fpsak-frontend/kodeverk/src/avsenderApplikasjo
 import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import ForhåndsvisRequest from '@k9-sak-web/types/src/formidlingTsType';
 import { dokumentdatatype } from '@k9-sak-web/konstanter';
+import { DokumentDataType } from '@k9-sak-web/types/src/dokumentdata';
 
 export interface VedtaksbrevMal {
   dokumentMalType: string;
@@ -74,8 +75,6 @@ export function kanHindreUtsending(tilgjengeligeVedtaksbrev: TilgjengeligeVedtak
 
 export function kanKunVelge(tilgjengeligeVedtaksbrev: TilgjengeligeVedtaksbrev, brevtype): boolean {
   const vedtaksbrev = vedtaksbrevmaler(tilgjengeligeVedtaksbrev);
-  // console.log("kan kun velge", vedtaksbrev);
-  // console.log("kan kun velge", vedtaksbrev.every(vb => vb === brevtype));
   return vedtaksbrev.length > 0 && vedtaksbrev.every(vb => vb === brevtype);
 }
 
@@ -90,6 +89,12 @@ export function harMellomlagretRedigertFritekstbrev(dokumentdata, vedtakVarsel):
   return (
     (dokumentdata?.[dokumentdatatype.VEDTAKSBREV_TYPE] ?? vedtakVarsel?.vedtaksbrev.kode) === vedtaksbrevtype.MANUELL ||
     !!dokumentdata?.[dokumentdatatype.REDIGERTBREV]
+  );
+}
+
+export function harSattDokumentdataType(dokumentdata: DokumentDataType, vedtakVarsel, vedtaksbreType: string): boolean {
+  return (
+    (dokumentdata?.[dokumentdatatype.VEDTAKSBREV_TYPE] ?? vedtakVarsel?.vedtaksbrev.kode) === vedtaksbreType || false
   );
 }
 
