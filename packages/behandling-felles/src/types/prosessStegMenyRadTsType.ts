@@ -1,4 +1,4 @@
-import { ProcessMenuStepType } from '@navikt/k9-react-components';
+import { ProcessMenuStepType } from '@navikt/ft-plattform-komponenter';
 
 interface ProsessStegMenyRad {
   labelId: string;
