@@ -85,13 +85,6 @@ export function harMellomlagretFritekstbrev(dokumentdata, vedtakVarsel): boolean
   );
 }
 
-export function harMellomlagretRedigertFritekstbrev(dokumentdata, vedtakVarsel): boolean {
-  return (
-    (dokumentdata?.[dokumentdatatype.VEDTAKSBREV_TYPE] ?? vedtakVarsel?.vedtaksbrev.kode) === vedtaksbrevtype.MANUELL ||
-    !!dokumentdata?.[dokumentdatatype.REDIGERTBREV]
-  );
-}
-
 export function harSattDokumentdataType(dokumentdata: DokumentDataType, vedtakVarsel, vedtaksbreType: string): boolean {
   return (
     (dokumentdata?.[dokumentdatatype.VEDTAKSBREV_TYPE] ?? vedtakVarsel?.vedtaksbrev.kode) === vedtaksbreType || false
