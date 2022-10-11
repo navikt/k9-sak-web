@@ -11,7 +11,7 @@ import aktivitetStatus, {
 } from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { SideMenu } from '@navikt/k9-react-components';
+import { SideMenu } from '@navikt/ft-plattform-komponenter';
 import classNames from 'classnames/bind';
 import { Column, Row } from 'nav-frontend-grid';
 import { Undertittel } from 'nav-frontend-typografi';

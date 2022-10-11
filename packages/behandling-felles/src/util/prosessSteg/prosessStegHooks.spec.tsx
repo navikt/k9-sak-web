@@ -1,5 +1,5 @@
 /* eslint-disable class-methods-use-this */
-import { ProcessMenuStepType } from '@navikt/k9-react-components';
+import { ProcessMenuStepType } from '@navikt/ft-plattform-komponenter';
 import { shallow } from 'enzyme';
 import React from 'react';
 import sinon from 'sinon';

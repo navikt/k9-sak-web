@@ -50,7 +50,7 @@
     "@k9-sak-web/types": "1.0.0",
     "@navikt/ft-fakta-beregning": "2.2.10",
     "@navikt/ft-form-hooks": "2.0.7",
-    "@navikt/ft-plattform-komponenter": "1.1.7",
+    "@navikt/ft-plattform-komponenter": "1.2.2",
     "@navikt/ft-prosess-beregningsgrunnlag": "2.4.10",
     "@navikt/ft-ui-komponenter": "1.1.7",
     "@sentry/browser": "^6.16.1",
