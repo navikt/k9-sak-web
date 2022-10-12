@@ -173,6 +173,8 @@ export const MessagesMedMedisinskeTypeBrevmalImpl = ({
     if (brevmalkode) {
       // Resetter fritekst hver gang bruker endrer brevmalskode
       formProps.change('fritekst', null);
+      formProps.change('fritekstbrev.overskrift', null);
+      formProps.change('fritekstbrev.brødtekst', null);
 
       // Tilbakestill valgt mottaker hvis brukeren skifter mal og valgt mottakere ikke er tilgjengelig på ny mal.
       formProps.change(
