@@ -43,15 +43,15 @@ describe('<DocumentList>', () => {
     expect(tableRows).toHaveLength(2);
 
     const tableColumnsRow1 = tableRows.first().find(TableColumn);
-    expect(tableColumnsRow1.children()).toHaveLength(3);
+    expect(tableColumnsRow1.children()).toHaveLength(4);
     expect(tableColumnsRow1.at(1).html()).toEqual(
-      '<td class="columnStyle"><a href="/k9/sak/api/dokument/hent-dokument?saksnummer=1&amp;journalpostId=1&amp;dokumentId=1" target="_blank" rel="noopener noreferrer" class="documentAnchor" tabindex="-1"><p class="typo-normal">Terminbekreftelse</p></a></td>',
+      '<td class="columnStyle"><a href="/k9/sak/api/dokument/hent-dokument?saksnummer=1&amp;journalpostId=1&amp;dokumentId=1" target="_blank" rel="noopener noreferrer" class="documentAnchor"><p class="typo-normal">Terminbekreftelse</p></a></td>',
     );
 
     const tableColumnsRow2 = tableRows.last().find(TableColumn);
-    expect(tableColumnsRow2.children()).toHaveLength(3);
+    expect(tableColumnsRow2.children()).toHaveLength(4);
     expect(tableColumnsRow2.at(1).html()).toEqual(
-      '<td class="columnStyle"><a href="/k9/sak/api/dokument/hent-dokument?saksnummer=1&amp;journalpostId=2&amp;dokumentId=2" target="_blank" rel="noopener noreferrer" class="documentAnchor" tabindex="-1"><p class="typo-normal">Førstegangssøknad</p></a></td>',
+      '<td class="columnStyle"><a href="/k9/sak/api/dokument/hent-dokument?saksnummer=1&amp;journalpostId=2&amp;dokumentId=2" target="_blank" rel="noopener noreferrer" class="documentAnchor"><p class="typo-normal">Førstegangssøknad</p></a></td>',
     );
   });
 
