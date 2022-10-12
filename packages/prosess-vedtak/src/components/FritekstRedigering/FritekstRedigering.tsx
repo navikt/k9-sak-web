@@ -77,10 +77,10 @@ const FritekstRedigering = ({
     setOriginalHtml(originalHtmlStreng);
     setFieldValue(fieldnames.ORIGINAL_HTML, originalHtmlStreng);
 
-    if (innholdTilRedigering) await setRedigerbartInnhold(innholdTilRedigering);
+    if (innholdTilRedigering) setRedigerbartInnhold(innholdTilRedigering);
     else {
       setFieldValue(fieldnames.REDIGERT_HTML, originalHtmlStreng);
-      await setRedigerbartInnhold(originalHtmlStreng);
+      setRedigerbartInnhold(originalHtmlStreng);
     }
 
     setRedigerbartInnholdKlart(true);
@@ -129,7 +129,7 @@ const FritekstRedigering = ({
           variant="secondary"
           type="button"
           onClick={() => setVisRedigering(true)}
-          disabled={readOnly}
+          disabled={readOnly || !redigerbartInnholdKlart}
           icon={<Edit aria-hidden />}
           size="small"
         >
