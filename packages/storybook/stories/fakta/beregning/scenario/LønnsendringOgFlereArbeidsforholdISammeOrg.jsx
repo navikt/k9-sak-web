@@ -431,10 +431,10 @@ export const beregningsgrunnlag = [{
 
 
 export const vilkår = beregningsgrunnlag.map((bg, index) => ({
-  vilkarType: { kode: "FP_VK_41" },
+  vilkarType: "FP_VK_41",
   avslagKode: null,
   merknadParametere: {},
-  vilkarStatus: { kode: 'IKKE_VURDERT', kodeverk: 'VILKAR_UTFALL_TYPE' },
+  vilkarStatus: 'IKKE_VURDERT',
   periode: {
     fom: bg.skjaeringstidspunktBeregning,
     tom: beregningsgrunnlag.length === index ? null : beregningsgrunnlag[index].skjaeringstidspunktBeregning,
@@ -446,9 +446,7 @@ export const vilkår = beregningsgrunnlag.map((bg, index) => ({
 export const behandling = {
   id: 1,
   versjon: 1,
-  type: {
-    kode: 'BT-003',
-  },
+  type: 'BT-003',
   behandlingsresultat: {
     vilkårResultat: {
       BEREGNINGSGRUNNLAGVILKÅR: vilkår,

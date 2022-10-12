@@ -1,6 +1,7 @@
 /* eslint-disable max-len */
 import fagsakStatus from '@fpsak-frontend/kodeverk/src/fagsakStatus';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
+import KodeverkType from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import relasjonsRolleType from '@fpsak-frontend/kodeverk/src/relasjonsRolleType';
 import BehandlingVelgerSakIndex from '@k9-sak-web/sak-behandling-velger';
@@ -19,7 +20,7 @@ const behandlinger = [
     behandlingÅrsaker: [
       {
         erAutomatiskRevurdering: false,
-        behandlingArsakType: { kode: 'RE-END-INNTEKTSMELD', kodeverk: 'BEHANDLING_AARSAK' },
+        behandlingArsakType: 'RE-END-INNTEKTSMELD',
         manueltOpprettet: false,
       },
     ],
@@ -29,7 +30,7 @@ const behandlinger = [
     behandlingsresultat: {
       erRevurderingMedUendretUtfall: false,
       type: {
-        kode: 'INNVILGET', //#kodeverk
+        kode: 'INNVILGET', // #kodeverk
         erHenleggelse: false,
         behandlingsresultatHenlagt: false,
         behandlingsresultatOpphørt: false,
@@ -98,7 +99,7 @@ const behandlinger = [
       vedtaksdato: '2021-12-20',
     },
     behandlingResultatType: {
-      kode: 'INNVILGET', //#kodeverk
+      kode: 'INNVILGET', // #kodeverk
       erHenleggelse: false,
       behandlingsresultatHenlagt: false,
       behandlingsresultatOpphørt: false,
@@ -112,7 +113,7 @@ const behandlinger = [
     fagsakId: 999951,
     førsteÅrsak: {
       erAutomatiskRevurdering: false,
-      behandlingArsakType: { kode: 'RE-END-INNTEKTSMELD', kodeverk: 'BEHANDLING_AARSAK' },
+      behandlingArsakType: 'RE-END-INNTEKTSMELD',
       manueltOpprettet: false,
     },
     gjeldendeVedtak: true,
@@ -136,12 +137,12 @@ const behandlinger = [
     behandlingÅrsaker: [
       {
         erAutomatiskRevurdering: false,
-        behandlingArsakType: { kode: 'RE_ANNEN_SAK', kodeverk: 'BEHANDLING_AARSAK' },
+        behandlingArsakType: 'RE_ANNEN_SAK',
         manueltOpprettet: false,
       },
       {
         erAutomatiskRevurdering: true,
-        behandlingArsakType: { kode: 'RE-END-INNTEKTSMELD', kodeverk: 'BEHANDLING_AARSAK' },
+        behandlingArsakType: 'RE-END-INNTEKTSMELD',
         manueltOpprettet: false,
       },
     ],
@@ -151,7 +152,7 @@ const behandlinger = [
     behandlingsresultat: {
       erRevurderingMedUendretUtfall: false,
       type: {
-        kode: 'INNVILGET', //#kodeverk
+        kode: 'INNVILGET', // #kodeverk
         erHenleggelse: false,
         behandlingsresultatHenlagt: false,
         behandlingsresultatOpphørt: false,
@@ -164,63 +165,63 @@ const behandlinger = [
           {
             periode: { fom: '2021-10-25', tom: '2021-12-25' },
             avslagsårsak: null,
-            utfall: { kode: '-', kodeverk: 'VILKAR_UTFALL_TYPE' },
+            utfall: '-',
           },
         ],
         MEDISINSKEVILKÅR_UNDER_18_ÅR: [
           {
             periode: { fom: '2021-10-25', tom: '2021-12-25' },
             avslagsårsak: null,
-            utfall: { kode: '-', kodeverk: 'VILKAR_UTFALL_TYPE' },
+            utfall: '-',
           },
         ],
         OPPTJENINGSPERIODEVILKÅR: [
           {
             periode: { fom: '2021-10-25', tom: '2021-12-25' },
             avslagsårsak: null,
-            utfall: { kode: '-', kodeverk: 'VILKAR_UTFALL_TYPE' },
+            utfall: '-',
           },
         ],
         ALDERSVILKÅR: [
           {
             periode: { fom: '2021-10-25', tom: '2021-12-25' },
             avslagsårsak: { kode: '-', kodeverk: 'AVSLAGSARSAK' },
-            utfall: { kode: '-', kodeverk: 'VILKAR_UTFALL_TYPE' },
+            utfall: '-',
           },
         ],
         SØKNADSFRIST: [
           {
             periode: { fom: '2021-10-25', tom: '2021-12-25' },
             avslagsårsak: { kode: '-', kodeverk: 'AVSLAGSARSAK' },
-            utfall: { kode: '-', kodeverk: 'VILKAR_UTFALL_TYPE' },
+            utfall: '-',
           },
         ],
         BEREGNINGSGRUNNLAGVILKÅR: [
           {
             periode: { fom: '2021-10-25', tom: '2021-12-25' },
             avslagsårsak: null,
-            utfall: { kode: '-', kodeverk: 'VILKAR_UTFALL_TYPE' },
+            utfall: '-',
           },
         ],
         OPPTJENINGSVILKÅRET: [
           {
             periode: { fom: '2021-10-25', tom: '2021-12-25' },
             avslagsårsak: null,
-            utfall: { kode: '-', kodeverk: 'VILKAR_UTFALL_TYPE' },
+            utfall: '-',
           },
         ],
         OMSORGEN_FOR: [
           {
             periode: { fom: '2021-10-25', tom: '2021-12-25' },
             avslagsårsak: null,
-            utfall: { kode: '-', kodeverk: 'VILKAR_UTFALL_TYPE' },
+            utfall: '-',
           },
         ],
       },
       vedtaksdato: '2021-12-20',
     },
     behandlingResultatType: {
-      kode: 'INNVILGET', //#kodeverk
+      kode: 'INNVILGET', // #kodeverk
       erHenleggelse: false,
       behandlingsresultatHenlagt: false,
       behandlingsresultatOpphørt: false,
@@ -234,7 +235,7 @@ const behandlinger = [
     fagsakId: 999951,
     førsteÅrsak: {
       erAutomatiskRevurdering: false,
-      behandlingArsakType: { kode: 'RE-END-INNTEKTSMELD', kodeverk: 'BEHANDLING_AARSAK' },
+      behandlingArsakType: 'RE-END-INNTEKTSMELD',
       manueltOpprettet: false,
     },
     gjeldendeVedtak: false,
@@ -242,10 +243,10 @@ const behandlinger = [
     links: [],
     opprettet: '2021-12-20T09:21:41',
     originalVedtaksDato: '2021-12-20',
-    sprakkode: { kode: 'NB', kodeverk: 'SPRAAK_KODE' },
-    status: { kode: 'AVSLU', kodeverk: 'BEHANDLING_STATUS' },
+    sprakkode: 'NB',
+    status: 'AVSLU',
     toTrinnsBehandling: true,
-    type: { kode: 'BT-002', kodeverk: 'BEHANDLING_TYPE' },
+    type: 'BT-002',
     uuid: 'e10e066e-3ccd-4f2f-ac46-9e271c0c89ee',
     behandlingHenlagt: false,
     versjon: 118,
@@ -254,18 +255,9 @@ const behandlinger = [
 
 const fagsak = {
   saksnummer: '35425245',
-  sakstype: {
-    kode: fagsakYtelseType.PLEIEPENGER,
-    kodeverk: '',
-  },
-  relasjonsRolleType: {
-    kode: relasjonsRolleType.MOR,
-    kodeverk: '',
-  },
-  status: {
-    kode: fagsakStatus.UNDER_BEHANDLING,
-    kodeverk: '',
-  },
+  sakstype: fagsakYtelseType.PLEIEPENGER,
+  relasjonsRolleType: relasjonsRolleType.MOR,
+  status: fagsakStatus.UNDER_BEHANDLING,
   barnFodt: '2020-01-01',
   opprettet: '2020-01-01',
   endret: '2020-01-01',
@@ -283,10 +275,9 @@ const locationMock = {
   hash: 'test',
 };
 
-const getKodeverkFn = (kodeverk: Kodeverk) => {
-  const kodeverkType = kodeverkTyper[kodeverk.kodeverk];
-  const kodeverkForType = alleKodeverk[kodeverkType];
-  return kodeverkForType.find(k => k.kode === kodeverk.kode);
+const getKodeverkFn = (kode: string, kodeverk: KodeverkType) => {
+  const kodeverkForType = alleKodeverk[kodeverk];
+  return kodeverkForType.find(k => k.kode === kode);
 };
 
 export default {

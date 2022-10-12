@@ -38,33 +38,18 @@ const feilutbetalingFakta = {
     tidligereVarseltBeløp: 5000,
     behandlingÅrsaker: [
       {
-        behandlingArsakType: {
-          kode: behandlingArsakType.FEIL_I_LOVANDVENDELSE,
-          kodeverk: BEHANDLING_AARSAK_KODEVERK,
-        },
+        behandlingArsakType: behandlingArsakType.FEIL_I_LOVANDVENDELSE,
       },
     ],
     behandlingsresultat: {
       type: {
-        kode: behandlingResultatType.INNVILGET, //#kodeverk
+        kode: behandlingResultatType.INNVILGET, // #kodeverk
         kodeverk: BEHANDLING_RESULTAT_TYPE_KODEVERK,
       },
-      konsekvenserForYtelsen: [
-        {
-          kode: konsekvensForYtelsen.FORELDREPENGER_OPPHØRER,
-          kodeverk: KONSEKVENS_FOR_YTELSEN_KODEVERK,
-        },
-        {
-          kode: konsekvensForYtelsen.ENDRING_I_BEREGNING,
-          kodeverk: KONSEKVENS_FOR_YTELSEN_KODEVERK,
-        },
-      ],
+      konsekvenserForYtelsen: [konsekvensForYtelsen.FORELDREPENGER_OPPHØRER, konsekvensForYtelsen.ENDRING_I_BEREGNING],
     },
     tilbakekrevingValg: {
-      videreBehandling: {
-        kode: tilbakekrevingVidereBehandling.TILBAKEKR_INNTREKK,
-        kodeverk: TILBAKEKR_VIDERE_BEH_KODEVERK,
-      },
+      videreBehandling: tilbakekrevingVidereBehandling.TILBAKEKR_INNTREKK,
     },
     datoForRevurderingsvedtak: '2019-01-01',
   },
@@ -73,34 +58,16 @@ const feilutbetalingFakta = {
 const feilutbetalingAarsak = {
   hendelseTyper: [
     {
-      hendelseType: {
-        kode: 'OPPTJENING',
-        navn: '§14-6 Opptjening',
-      },
+      hendelseType: 'OPPTJENING',
       hendelseUndertyper: [],
     },
     {
-      hendelseType: {
-        kode: 'ANNET',
-        navn: 'Annet',
-      },
+      hendelseType: 'ANNET',
       hendelseUndertyper: [],
     },
     {
-      hendelseType: {
-        kode: 'MEDLEM',
-        navn: '§14-2 Medlemskap',
-      },
-      hendelseUndertyper: [
-        {
-          kode: 'IKKE_EØS',
-          navn: 'Ikke oppholdsrett EØS',
-        },
-        {
-          kode: 'IKKE_BOSATT',
-          navn: 'Ikke bosatt',
-        },
-      ],
+      hendelseType: 'MEDLEM',
+      hendelseUndertyper: ['IKKE_EØS', 'IKKE_BOSATT'],
     },
   ],
 };

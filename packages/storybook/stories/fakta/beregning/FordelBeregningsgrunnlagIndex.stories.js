@@ -222,25 +222,16 @@ const mapIKKode = bgStatus => {
 };
 
 const lagFordelingsandel = (andelsnr, status, ref, fordelt) => ({
-  aktivitetStatus: {
-    kode: status,
-    kodeverk: 'AKTIVITET_STATUS',
-  },
+  aktivitetStatus: status,
   andelsnr,
   arbeidsforhold: null,
-  arbeidsforholdType: {
-    kode: '-',
-    kodeverk: 'OPPTJENING_AKTIVITET_TYPE',
-  },
+  arbeidsforholdType: '-',
   andelIArbeid: [0],
   belopFraInntektsmeldingPrAar: null,
   fastsattForrigePrAar: null,
   fordelingForrigeBehandlingPrAar: null,
   fordeltPrAar: fordelt,
-  inntektskategori: {
-    kode: mapIKKode(status),
-    kodeverk: 'INNTEKTSKATEGORI',
-  },
+  inntektskategori: mapIKKode(status),
   lagtTilAvSaksbehandler: false,
   nyttArbeidsforhold: false,
   refusjonskravFraInntektsmeldingPrAar: ref,
@@ -260,16 +251,10 @@ const lagArbeidsforhold = (arbeidsgiverIdent, arbeidsforholdId, refKrav) => ({
   startdato: '2018-10-09',
   opphoersdato: null,
   arbeidsforholdId,
-  arbeidsforholdType: {
-    kode: 'ARBEID',
-    kodeverk: 'OPPTJENING_AKTIVITET_TYPE',
-  },
+  arbeidsforholdType: 'ARBEID',
   aktørId: null,
   refusjonPrAar: refKrav,
-  organisasjonstype: {
-    kode: 'VIRKSOMHET',
-    kodeverk: 'ORGANISASJONSTYPE',
-  },
+  organisasjonstype: 'VIRKSOMHET',
   naturalytelseBortfaltPrÅr: null,
   naturalytelseTilkommetPrÅr: null,
 });

@@ -11,21 +11,14 @@ import withReduxProvider from '../../../decorators/withRedux';
 const behandling = {
   id: 1,
   versjon: 1,
-  sprakkode: {
-    kode: 'NO',
-    kodeverk: '',
-  },
+  sprakkode: 'NO',
 } as Behandling;
 
 // FIXME bytt ut med riktig akjsonpunkt når det er klart
 const aksjonspunkter = [
   {
-    definisjon: {
-      kode: aksjonspunktCodes.AVKLAR_STARTDATO_FOR_FORELDREPENGERPERIODEN,
-    },
-    status: {
-      kode: aksjonspunktStatus.OPPRETTET,
-    },
+    definisjon: aksjonspunktCodes.AVKLAR_STARTDATO_FOR_FORELDREPENGERPERIODEN,
+    status: aksjonspunktStatus.OPPRETTET,
     begrunnelse: undefined,
     kanLoses: true,
     erAktivt: true,

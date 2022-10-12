@@ -1,10 +1,10 @@
 // eslint-disable-next-line max-len
 export const beregningsgrunnlag = [
   {
-    avklaringsbehov: [{definisjon: { kode : '5058' }, status: { kode: 'UTFO'}, kanLoses: true}],
+    avklaringsbehov: [{ definisjon: '5058', status: 'UTFO', kanLoses: true }],
     skjaeringstidspunktBeregning: '2020-03-04',
     skjæringstidspunkt: '2020-03-04',
-    aktivitetStatus: [{ kode: 'KUN_YTELSE', kodeverk: 'AKTIVITET_STATUS' }],
+    aktivitetStatus: ['KUN_YTELSE'],
     beregningsgrunnlagPeriode: [
       {
         beregningsgrunnlagPeriodeFom: '2020-03-04',
@@ -16,9 +16,9 @@ export const beregningsgrunnlag = [
         beregningsgrunnlagPrStatusOgAndel: [
           {
             dtoType: 'GENERELL',
-            aktivitetStatus: { kode: 'BA', kodeverk: 'AKTIVITET_STATUS' },
+            aktivitetStatus: 'BA',
             andelsnr: 1,
-            inntektskategori: { kode: '-', kodeverk: 'INNTEKTSKATEGORI' },
+            inntektskategori: '-',
             fastsattAvSaksbehandler: false,
             lagtTilAvSaksbehandler: false,
             erTilkommetAndel: false,
@@ -35,9 +35,9 @@ export const beregningsgrunnlag = [
         andeler: [
           {
             andelsnr: 1,
-            inntektskategori: { kode: '-', kodeverk: 'INNTEKTSKATEGORI' },
-            aktivitetStatus: { kode: 'BA', kodeverk: 'AKTIVITET_STATUS' },
-            kilde: { kode: 'PROSESS_START', kodeverk: 'ANDEL_KILDE' },
+            inntektskategori: '-',
+            aktivitetStatus: 'BA',
+            kilde: 'PROSESS_START',
             lagtTilAvSaksbehandler: false,
             fastsattAvSaksbehandler: false,
             fastsattBelopPrMnd: 10_000,
@@ -45,7 +45,7 @@ export const beregningsgrunnlag = [
         ],
         fodendeKvinneMedDP: false,
       },
-      faktaOmBeregningTilfeller: [{ kode: 'FASTSETT_BG_KUN_YTELSE', kodeverk: 'FAKTA_OM_BEREGNING_TILFELLE' }],
+      faktaOmBeregningTilfeller: ['FASTSETT_BG_KUN_YTELSE'],
       avklarAktiviteter: {
         aktiviteterTomDatoMapping: [
           {
@@ -54,7 +54,7 @@ export const beregningsgrunnlag = [
               {
                 fom: '2019-11-18',
                 tom: '2020-09-27',
-                arbeidsforholdType: { kode: 'FORELDREPENGER', kodeverk: 'OPPTJENING_AKTIVITET_TYPE' },
+                arbeidsforholdType: 'FORELDREPENGER',
               },
             ],
           },
@@ -65,7 +65,7 @@ export const beregningsgrunnlag = [
                 arbeidsgiverIdent: '123456789',
                 fom: '2017-11-01',
                 tom: '2020-05-31',
-                arbeidsforholdType: { kode: 'ARBEID', kodeverk: 'OPPTJENING_AKTIVITET_TYPE' },
+                arbeidsforholdType: 'ARBEID',
               },
             ],
           },
@@ -74,8 +74,8 @@ export const beregningsgrunnlag = [
       },
       andelerForFaktaOmBeregning: [
         {
-          inntektskategori: { kode: '-', kodeverk: 'INNTEKTSKATEGORI' },
-          aktivitetStatus: { kode: 'BA', kodeverk: 'AKTIVITET_STATUS' },
+          inntektskategori: '-',
+          aktivitetStatus: 'BA',
           visningsnavn: 'Brukers andel',
           andelsnr: 1,
           skalKunneEndreAktivitet: false,
@@ -84,7 +84,7 @@ export const beregningsgrunnlag = [
       ],
       vurderMilitaer: {},
     },
-    hjemmel: { kode: '-', kodeverk: 'BG_HJEMMEL' },
+    hjemmel: '-',
     årsinntektVisningstall: 0,
     dekningsgrad: 100,
     ytelsesspesifiktGrunnlag: { ytelsetype: 'OMP', skalAvviksvurdere: true },
@@ -92,10 +92,10 @@ export const beregningsgrunnlag = [
     vilkårsperiodeFom: '2020-03-04',
   },
   {
-    avklaringsbehov: [{definisjon: { kode : '5058' }, status: { kode: 'OPPR'}}],
+    avklaringsbehov: [{ definisjon: '5058', status: 'OPPR' }],
     skjaeringstidspunktBeregning: '2020-06-04',
     skjæringstidspunkt: '2020-06-04',
-    aktivitetStatus: [{ kode: 'KUN_YTELSE', kodeverk: 'AKTIVITET_STATUS' }],
+    aktivitetStatus: ['KUN_YTELSE'],
     beregningsgrunnlagPeriode: [
       {
         beregningsgrunnlagPeriodeFom: '2020-06-04',
@@ -107,9 +107,9 @@ export const beregningsgrunnlag = [
         beregningsgrunnlagPrStatusOgAndel: [
           {
             dtoType: 'GENERELL',
-            aktivitetStatus: { kode: 'BA', kodeverk: 'AKTIVITET_STATUS' },
+            aktivitetStatus: 'BA',
             andelsnr: 1,
-            inntektskategori: { kode: '-', kodeverk: 'INNTEKTSKATEGORI' },
+            inntektskategori: '-',
             fastsattAvSaksbehandler: true,
             lagtTilAvSaksbehandler: false,
             erTilkommetAndel: false,
@@ -126,16 +126,16 @@ export const beregningsgrunnlag = [
         andeler: [
           {
             andelsnr: 1,
-            inntektskategori: { kode: '-', kodeverk: 'INNTEKTSKATEGORI' },
-            aktivitetStatus: { kode: 'BA', kodeverk: 'AKTIVITET_STATUS' },
-            kilde: { kode: 'PROSESS_START', kodeverk: 'ANDEL_KILDE' },
+            inntektskategori: '-',
+            aktivitetStatus: 'BA',
+            kilde: 'PROSESS_START',
             lagtTilAvSaksbehandler: false,
             fastsattAvSaksbehandler: false,
           },
         ],
         fodendeKvinneMedDP: false,
       },
-      faktaOmBeregningTilfeller: [{ kode: 'FASTSETT_BG_KUN_YTELSE', kodeverk: 'FAKTA_OM_BEREGNING_TILFELLE' }],
+      faktaOmBeregningTilfeller: ['FASTSETT_BG_KUN_YTELSE'],
       avklarAktiviteter: {
         aktiviteterTomDatoMapping: [
           {
@@ -144,7 +144,7 @@ export const beregningsgrunnlag = [
               {
                 fom: '2019-11-18',
                 tom: '2020-09-27',
-                arbeidsforholdType: { kode: 'FORELDREPENGER', kodeverk: 'OPPTJENING_AKTIVITET_TYPE' },
+                arbeidsforholdType: 'FORELDREPENGER',
               },
             ],
           },
@@ -155,7 +155,7 @@ export const beregningsgrunnlag = [
                 arbeidsgiverIdent: '123456789',
                 fom: '2017-11-01',
                 tom: '2020-05-31',
-                arbeidsforholdType: { kode: 'ARBEID', kodeverk: 'OPPTJENING_AKTIVITET_TYPE' },
+                arbeidsforholdType: 'ARBEID',
               },
             ],
           },
@@ -164,8 +164,8 @@ export const beregningsgrunnlag = [
       },
       andelerForFaktaOmBeregning: [
         {
-          inntektskategori: { kode: '-', kodeverk: 'INNTEKTSKATEGORI' },
-          aktivitetStatus: { kode: 'BA', kodeverk: 'AKTIVITET_STATUS' },
+          inntektskategori: '-',
+          aktivitetStatus: 'BA',
           visningsnavn: 'Brukers andel',
           andelsnr: 1,
           skalKunneEndreAktivitet: false,
@@ -174,7 +174,7 @@ export const beregningsgrunnlag = [
       ],
       vurderMilitaer: {},
     },
-    hjemmel: { kode: '-', kodeverk: 'BG_HJEMMEL' },
+    hjemmel: '-',
     årsinntektVisningstall: 0,
     dekningsgrad: 100,
     ytelsesspesifiktGrunnlag: { ytelsetype: 'OMP', skalAvviksvurdere: true },
@@ -184,10 +184,10 @@ export const beregningsgrunnlag = [
 ];
 
 const vilkår = [{
-  vilkarType: { kode: "FP_VK_41" },
+  vilkarType: "FP_VK_41",
   avslagKode: null,
   merknadParametere: {},
-  vilkarStatus: { kode: 'IKKE_VURDERT', kodeverk: 'VILKAR_UTFALL_TYPE' },
+  vilkarStatus: 'IKKE_VURDERT',
   periode: {
     fom: beregningsgrunnlag[0].skjaeringstidspunktBeregning,
     tom: beregningsgrunnlag[0].skjaeringstidspunktBeregning,
@@ -198,7 +198,7 @@ const vilkår = [{
 {
   avslagKode: null,
   merknadParametere: {},
-  vilkarStatus: { kode: 'IKKE_VURDERT', kodeverk: 'VILKAR_UTFALL_TYPE' },
+  vilkarStatus: 'IKKE_VURDERT',
   periode: {
     fom: beregningsgrunnlag[1].skjaeringstidspunktBeregning,
     tom: beregningsgrunnlag[1].skjaeringstidspunktBeregning,

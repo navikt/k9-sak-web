@@ -2,13 +2,13 @@
 export const bgUtenDelvisRefusjon = {
   avklaringsbehov: [
     {
-      definisjon: { kode: '5059', kodeverk: 'AKSJONSPUNKT_DEF' },
-      status: { kode: 'OPPR', kodeverk: 'AKSJONSPUNKT_STATUS' },
+      definisjon: '5059',
+      status: 'OPPR',
       kanLoses: true
     }
   ],
   skjaeringstidspunktBeregning: '2020-05-15',
-  vilkårsperiodeFom:  '2020-05-15',
+  vilkårsperiodeFom: '2020-05-15',
   dekningsgrad: null,
   grunnbeløp: null,
   erOverstyrtInntekt: null,
@@ -17,10 +17,7 @@ export const bgUtenDelvisRefusjon = {
   refusjonTilVurdering: {
     andeler: [
       {
-        aktivitetStatus: {
-          kodeverk: 'AKTIVITET_STATUS',
-          kode: 'AT',
-        },
+        aktivitetStatus: 'AT',
         tidligereUtbetalinger: [
           {
             fom: '2020-05-15',
@@ -42,8 +39,8 @@ export const bgUtenDelvisRefusjon = {
 export const bgMedDelvisRefusjon = {
   avklaringsbehov: [
     {
-      definisjon: { kode: '5059', kodeverk: 'AKSJONSPUNKT_DEF' },
-      status: { kode: 'OPPR', kodeverk: 'AKSJONSPUNKT_STATUS' },
+      definisjon: '5059',
+      status: 'OPPR',
     }
   ],
   skjaeringstidspunktBeregning: '2020-06-01',
@@ -56,10 +53,7 @@ export const bgMedDelvisRefusjon = {
   refusjonTilVurdering: {
     andeler: [
       {
-        aktivitetStatus: {
-          kodeverk: 'AKTIVITET_STATUS',
-          kode: 'AT',
-        },
+        aktivitetStatus: 'AKTIVITET_STATUS',
         tidligereUtbetalinger: [
           {
             fom: '2020-05-15',
@@ -81,10 +75,10 @@ export const bgMedDelvisRefusjon = {
 
 export const aksjonspunkt = [
   {
-    definisjon: { kode: '5059', kodeverk: 'AKSJONSPUNKT_DEF' },
-    status: { kode: 'OPPR', kodeverk: 'AKSJONSPUNKT_STATUS' },
+    definisjon: '5059',
+    status: 'OPPR',
     toTrinnsBehandling: true,
-    aksjonspunktType: { kode: 'MANU', kodeverk: 'AKSJONSPUNKT_TYPE' },
+    aksjonspunktType: 'MANU',
     kanLoses: true,
     erAktivt: true,
   }];

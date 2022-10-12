@@ -39,7 +39,7 @@ const behandling = {
       kode: 'FRITEKST',
     },
     type: {
-      kode: behandlingResultatType.INNVILGET, //#kodeverk
+      kode: behandlingResultatType.INNVILGET, // #kodeverk
     },
   },
   behandlingPaaVent: false,
@@ -105,7 +105,7 @@ export const visDelvisInnvilgetForOmsorgspenger = () => (
           kode: 'FRITEKST',
         },
         type: {
-          kode: behandlingResultatType.DELVIS_INNVILGET, //#kodeverk
+          kode: behandlingResultatType.DELVIS_INNVILGET, // #kodeverk
         },
       },
     }}
@@ -133,7 +133,7 @@ export const visAvslagForForeldrepenger = () => (
           kode: 'FRITEKST',
         },
         type: {
-          kode: behandlingResultatType.AVSLATT, //#kodeverk
+          kode: behandlingResultatType.AVSLATT, // #kodeverk
         },
         avslagsarsak: {
           kode: avslagsarsakCodes.INGEN_BEREGNINGSREGLER,
@@ -202,7 +202,7 @@ export const visModalForObligatoriskFritekstbrevForSvangerskapspenger = () => (
           kode: 'FRITEKST',
         },
         type: {
-          kode: behandlingResultatType.AVSLATT, //#kodeverk
+          kode: behandlingResultatType.AVSLATT, // #kodeverk
         },
         avslagsarsak: {
           kode: avslagsarsakCodes.INGEN_BEREGNINGSREGLER,
@@ -319,7 +319,7 @@ export const visInnvilgetForForeldrepengerRevurdering = () => (
           kode: 'FRITEKST',
         },
         type: {
-          kode: behandlingResultatType.INNVILGET, //#kodeverk
+          kode: behandlingResultatType.INNVILGET, // #kodeverk
         },
       },
     }}
@@ -368,7 +368,7 @@ export const visOpphørtForForeldrepengerRevurdering = () => (
           kode: 'FRITEKST',
         },
         type: {
-          kode: behandlingResultatType.OPPHOR, //#kodeverk
+          kode: behandlingResultatType.OPPHOR, // #kodeverk
         },
       },
     }}
@@ -422,7 +422,7 @@ export const visAvslåttForEngangsstønadRevurdering = () => (
           kode: 'FRITEKST',
         },
         type: {
-          kode: behandlingResultatType.AVSLATT, //#kodeverk
+          kode: behandlingResultatType.AVSLATT, // #kodeverk
         },
         avslagsarsak: {
           kode: avslagsarsakCodes.INGEN_BEREGNINGSREGLER,
@@ -556,8 +556,9 @@ export const visOverlappendeYtelser = () => {
     }
   ];
 
-  return <VedtakProsessIndex
-    behandling={{
+  return (
+    <VedtakProsessIndex
+      behandling={{
       ...behandling,
       type: {
         kode: behandlingType.OMSORGSPENGER,
@@ -567,7 +568,7 @@ export const visOverlappendeYtelser = () => {
           kode: 'FRITEKST',
         },
         type: {
-          kode: behandlingResultatType.INNVILGET, //#kodeverk
+          kode: behandlingResultatType.INNVILGET, // #kodeverk
         },
         avslagsarsak: {
           kode: avslagsarsakCodes.INGEN_BEREGNINGSREGLER,
@@ -576,7 +577,7 @@ export const visOverlappendeYtelser = () => {
       },
 
     }}
-    vilkar={[
+      vilkar={[
       {
         ...vilkar[0],
         vilkarStatus: {
@@ -584,17 +585,18 @@ export const visOverlappendeYtelser = () => {
         },
       },
     ]}
-    beregningresultatEngangsstonad={resultatstruktur}
-    sendVarselOmRevurdering={boolean('sendVarselOmRevurdering', false)}
-    resultatstrukturOriginalBehandling={resultatstrukturOriginalBehandling}
-    medlemskap={{ fom: '2019-01-01' }}
-    aksjonspunkter={[aksjonspunkt5040]}
-    ytelseType={{ kode: fagsakYtelseType.ENGANGSSTONAD }}
-    employeeHasAccess={boolean('employeeHasAccess', false)}
-    isReadOnly={boolean('isReadOnly', false)}
-    previewCallback={action('button-click')}
-    submitCallback={action('button-click')}
-    alleKodeverk={alleKodeverk}
-    overlappendeYtelser={overlappendeYtelser}
-  />;
+      beregningresultatEngangsstonad={resultatstruktur}
+      sendVarselOmRevurdering={boolean('sendVarselOmRevurdering', false)}
+      resultatstrukturOriginalBehandling={resultatstrukturOriginalBehandling}
+      medlemskap={{ fom: '2019-01-01' }}
+      aksjonspunkter={[aksjonspunkt5040]}
+      ytelseType={{ kode: fagsakYtelseType.ENGANGSSTONAD }}
+      employeeHasAccess={boolean('employeeHasAccess', false)}
+      isReadOnly={boolean('isReadOnly', false)}
+      previewCallback={action('button-click')}
+      submitCallback={action('button-click')}
+      alleKodeverk={alleKodeverk}
+      overlappendeYtelser={overlappendeYtelser}
+    />
+);
 }

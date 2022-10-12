@@ -136,11 +136,11 @@ const data = {
   periodeMedUtfall: [
     {
       periode: { fom: '2021-11-01', tom: '2022-05-06' },
-      utfall: { kode: 'IKKE_VURDERT', kodeverk: 'VILKAR_UTFALL_TYPE' },
+      utfall: 'IKKE_VURDERT',
     },
   ],
   forrigeVedtak: [
-    { periode: { fom: '2021-11-01', tom: '2022-01-31' }, utfall: { kode: 'OPPFYLT', kodeverk: 'VILKAR_UTFALL_TYPE' } },
+    { periode: { fom: '2021-11-01', tom: '2022-01-31' }, utfall: 'OPPFYLT' },
   ],
 };
 
