@@ -130,6 +130,7 @@ const FritekstRedigering = ({
           type="button"
           onClick={() => setVisRedigering(true)}
           disabled={readOnly || !redigerbartInnholdKlart}
+          loading={!redigerbartInnholdKlart}
           icon={<Edit aria-hidden />}
           size="small"
         >
