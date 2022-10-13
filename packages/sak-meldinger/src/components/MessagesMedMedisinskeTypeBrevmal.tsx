@@ -367,6 +367,10 @@ const transformValues = values => {
     newValues.fritekst = ' ';
   }
 
+  if (values.brevmalkode !== dokumentMalType.GENERELT_FRITEKSTBREV && values.fritekstbrev) {
+    newValues.fritekstbrev = undefined;
+  }
+
   const overstyrtMottaker =
     newValues.overstyrtMottaker && newValues.overstyrtMottaker !== JSON.stringify(RECIPIENT)
       ? safeJSONParse(newValues.overstyrtMottaker)
