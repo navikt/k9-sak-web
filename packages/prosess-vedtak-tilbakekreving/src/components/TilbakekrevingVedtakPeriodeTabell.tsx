@@ -4,7 +4,7 @@ import { Element, Normaltekst } from 'nav-frontend-typografi';
 
 import { formatCurrencyNoKr } from '@fpsak-frontend/utils';
 import { PeriodLabel, Table, TableColumn, TableRow } from '@fpsak-frontend/shared-components';
-import { Kodeverk } from '@k9-sak-web/types';
+import KodeverkType from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 
 import { BeregningResultatPeriode } from '../types/beregningsresultatTilbakekrevingTsType';
 
@@ -22,7 +22,7 @@ const headerTextCodes = [
 
 interface OwnProps {
   perioder: BeregningResultatPeriode[];
-  getKodeverknavn: (kodeverk: Kodeverk) => string;
+  getKodeverknavn: (kode: string, kodeverk: KodeverkType) => string;
 }
 
 const TilbakekrevingVedtakPeriodeTabell = ({ perioder, getKodeverknavn }: OwnProps) => {
@@ -38,7 +38,7 @@ const TilbakekrevingVedtakPeriodeTabell = ({ perioder, getKodeverknavn }: OwnPro
           <Normaltekst>{formatCurrencyNoKr(periode.feilutbetaltBeløp)}</Normaltekst>
         </TableColumn>
         <TableColumn>
-          <Normaltekst>{getKodeverknavn(periode.vurdering)}</Normaltekst>
+          <Normaltekst>{getKodeverknavn(periode.vurdering, KodeverkType.AKTSOMHET)}</Normaltekst>
         </TableColumn>
         <TableColumn>
           <Normaltekst>
