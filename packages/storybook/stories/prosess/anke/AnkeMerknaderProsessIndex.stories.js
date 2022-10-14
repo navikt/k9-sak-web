@@ -14,15 +14,13 @@ const behandling = {
   versjon: 1,
 };
 
-const aksjonspunkter = [{
-  definisjon: {
-    kode: aksjonspunktCodes.MANUELL_VURDERING_AV_ANKE_MERKNADER,
+const aksjonspunkter = [
+  {
+    definisjon: aksjonspunktCodes.MANUELL_VURDERING_AV_ANKE_MERKNADER,
+    status: aksjonspunktStatus.OPPRETTET,
+    begrunnelse: undefined,
   },
-  status: {
-    kode: aksjonspunktStatus.OPPRETTET,
-  },
-  begrunnelse: undefined,
-}];
+];
 
 export default {
   title: 'prosess/anke/prosess-anke-merknader',

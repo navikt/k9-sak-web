@@ -14,9 +14,7 @@ import alleKodeverk from '../../mocks/alleKodeverk.json';
 const behandling = {
   id: 1,
   versjon: 1,
-  sprakkode: {
-    kode: 'NO',
-  },
+  sprakkode: 'NO',
 };
 
 export default {
@@ -46,9 +44,7 @@ export const visPanelForKlagevurderingMedAksjonspunktNk = () => (
     })}
     aksjonspunkter={[
       {
-        definisjon: {
-          kode: aksjonspunktCodes.BEHANDLE_KLAGE_NK,
-        },
+        definisjon: aksjonspunktCodes.BEHANDLE_KLAGE_NK,
       },
     ]}
     saveKlage={action('button-click')}
@@ -63,8 +59,8 @@ export const visPanelForKlagevurderingMedAksjonspunktNk = () => (
 export const visPanelForKlagevurderingMedAksjonspunktNfp = () => (
   <KlagevurderingProsessIndex
     behandling={behandling}
-    // fagsak={{ sakstype: { kode: fagsakYtelseType.OMSORGSPENGER } }}
-    fagsak={{ sakstype: { kode: fagsakYtelseType.PLEIEPENGER } }}
+    // fagsak={{ sakstype: fagsakYtelseType.OMSORGSPENGER }}
+    fagsak={{ sakstype: fagsakYtelseType.PLEIEPENGER }}
     klageVurdering={object('klageVurdering', {
       klageVurderingResultatNK: {
         klageVurdertAv: 'NK',
@@ -83,9 +79,7 @@ export const visPanelForKlagevurderingMedAksjonspunktNfp = () => (
     })}
     aksjonspunkter={[
       {
-        definisjon: {
-          kode: aksjonspunktCodes.BEHANDLE_KLAGE_NFP,
-        },
+        definisjon: aksjonspunktCodes.BEHANDLE_KLAGE_NFP,
       },
     ]}
     saveKlage={action('button-click')}

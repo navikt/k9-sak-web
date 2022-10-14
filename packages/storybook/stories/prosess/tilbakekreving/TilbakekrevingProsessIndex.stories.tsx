@@ -22,19 +22,13 @@ const perioderForeldelse = {
       fom: '2019-01-01',
       tom: '2019-02-02',
       belop: 1000,
-      foreldelseVurderingType: {
-        kode: foreldelseVurderingType.IKKE_FORELDET,
-        kodeverk: 'FORELDELSE_VURDERING',
-      },
+      foreldelseVurderingType: foreldelseVurderingType.IKKE_FORELDET,
     },
     {
       fom: '2019-02-03',
       tom: '2019-04-02',
       belop: 3000,
-      foreldelseVurderingType: {
-        kode: foreldelseVurderingType.FORELDET,
-        kodeverk: 'FORELDELSE_VURDERING',
-      },
+      foreldelseVurderingType: foreldelseVurderingType.FORELDET,
     },
   ],
 } as FeilutbetalingPerioderWrapper;
@@ -47,11 +41,7 @@ const vilkarvurderingsperioder = {
       foreldet: false,
       feilutbetaling: 10,
       årsak: {
-        hendelseType: {
-          kode: 'MEDLEM',
-          kodeverk: '',
-          navn: '§22 Medlemskap',
-        },
+        hendelseType: 'MEDLEM',
       },
       redusertBeloper: [],
       ytelser: [
@@ -183,10 +173,7 @@ export const visAksjonspunktForTilbakekreving = () => (
     aksjonspunkter={
       [
         {
-          definisjon: {
-            kode: aksjonspunktCodesTilbakekreving.VURDER_TILBAKEKREVING,
-            kodeverk: '',
-          },
+          definisjon: aksjonspunktCodesTilbakekreving.VURDER_TILBAKEKREVING,
         },
       ] as Aksjonspunkt[]
     }

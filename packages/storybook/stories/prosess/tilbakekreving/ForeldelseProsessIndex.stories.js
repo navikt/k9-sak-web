@@ -16,19 +16,13 @@ const perioderForeldelse = {
       fom: '2019-01-01',
       tom: '2019-02-02',
       belop: 1000,
-      foreldelseVurderingType: {
-        kode: foreldelseVurderingType.IKKE_FORELDET,
-        kodeverk: 'FORELDELSE_VURDERING',
-      },
+      foreldelseVurderingType: foreldelseVurderingType.IKKE_FORELDET,
     },
     {
       fom: '2019-02-03',
       tom: '2019-04-02',
       belop: 3000,
-      foreldelseVurderingType: {
-        kode: foreldelseVurderingType.FORELDET,
-        kodeverk: 'FORELDELSE_VURDERING',
-      },
+      foreldelseVurderingType: foreldelseVurderingType.FORELDET,
     },
   ],
 };
@@ -76,10 +70,7 @@ export const visAksjonspunktForForeldelse = () => (
     isReadOnly={boolean('readOnly', false)}
     aksjonspunkter={[
       {
-        definisjon: {
-          kode: aksjonspunktCodesTilbakekreving.VURDER_FORELDELSE,
-          kodeverk: '',
-        },
+        definisjon: aksjonspunktCodesTilbakekreving.VURDER_FORELDELSE,
       },
     ]}
     readOnlySubmitButton={boolean('readOnly', false)}

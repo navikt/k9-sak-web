@@ -17,7 +17,7 @@ const behandling = {
   versjon: 1,
   behandlingsresultat: {
     type: {
-      kode: behandlingResultatType.KLAGE_AVVIST, //#kodeverk
+      kode: behandlingResultatType.KLAGE_AVVIST, // #kodeverk
     },
   },
   behandlingPaaVent: false,
@@ -25,12 +25,8 @@ const behandling = {
 
 const aksjonspunkter = [
   {
-    definisjon: {
-      kode: aksjonspunktCodes.FORESLA_VEDTAK,
-    },
-    status: {
-      kode: aksjonspunktStatus.OPPRETTET,
-    },
+    definisjon: aksjonspunktCodes.FORESLA_VEDTAK,
+    status: aksjonspunktStatus.OPPRETTET,
     begrunnelse: undefined,
   },
 ];
@@ -53,12 +49,7 @@ export const visVedtakspanelDerKlageErVurdertAvNk = () => (
         godkjentAvMedunderskriver: false,
       },
       klageFormkravResultatKA: {
-        avvistArsaker: [
-          {
-            kode: 'IKKE_KONKRET',
-            kodeverk: 'KLAGE_AVVIST_AARSAK',
-          },
-        ],
+        avvistArsaker: ['IKKE_KONKRET'],
       },
     })}
     aksjonspunkter={aksjonspunkter}
@@ -81,12 +72,7 @@ export const visVedtakspanelDerKlageErVurdertAvNfp = () => (
         godkjentAvMedunderskriver: false,
       },
       klageFormkravResultatKA: {
-        avvistArsaker: [
-          {
-            kode: 'IKKE_KONKRET',
-            kodeverk: 'KLAGE_AVVIST_AARSAK',
-          },
-        ],
+        avvistArsaker: ['IKKE_KONKRET'],
       },
     })}
     aksjonspunkter={aksjonspunkter}
@@ -109,22 +95,13 @@ export const visVedtakspanelDerKlageErVurdertAvNfpVurder5034 = () => (
         godkjentAvMedunderskriver: false,
       },
       klageFormkravResultatKA: {
-        avvistArsaker: [
-          {
-            kode: 'IKKE_KONKRET',
-            kodeverk: 'KLAGE_AVVIST_AARSAK',
-          },
-        ],
+        avvistArsaker: ['IKKE_KONKRET'],
       },
     })}
     aksjonspunkter={aksjonspunkter.concat([
       {
-        definisjon: {
-          kode: aksjonspunktCodes.VURDERE_DOKUMENT,
-        },
-        status: {
-          kode: aksjonspunktStatus.OPPRETTET,
-        },
+        definisjon: aksjonspunktCodes.VURDERE_DOKUMENT,
+        status: aksjonspunktStatus.OPPRETTET,
         kanLoses: true,
         begrunnelse: undefined,
       },

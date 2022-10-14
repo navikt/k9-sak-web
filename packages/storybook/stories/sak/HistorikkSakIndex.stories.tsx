@@ -7,33 +7,18 @@ import alleKodeverk from '../mocks/alleKodeverk.json';
 const history = [
   {
     behandlingId: 999951,
-    type: {
-      kode: 'NYE_REGOPPLYSNINGER',
-      kodeverk: 'HISTORIKKINNSLAG_TYPE',
-    },
-    aktoer: {
-      kode: 'VL',
-      kodeverk: 'HISTORIKK_AKTOER',
-    },
-    kjoenn: {
-      kode: '-',
-      kodeverk: 'BRUKER_KJOENN',
-    },
+    type: 'NYE_REGOPPLYSNINGER',
+    aktoer: 'VL',
+    kjoenn: '-',
     opprettetAv: 'Srvengangsstonad',
     opprettetTidspunkt: '2019-09-19T12:16:14.499',
     dokumentLinks: [],
     historikkinnslagDeler: [
       {
-        begrunnelse: {
-          kode: 'SAKSBEH_START_PA_NYTT',
-          kodeverk: 'HISTORIKK_BEGRUNNELSE_TYPE',
-        },
+        begrunnelse: 'SAKSBEH_START_PA_NYTT',
         begrunnelseFritekst: null,
         hendelse: {
-          navn: {
-            kode: 'NYE_REGOPPLYSNINGER',
-            kodeverk: 'HISTORIKKINNSLAG_TYPE',
-          },
+          navn: 'NYE_REGOPPLYSNINGER',
           verdi: null,
         },
         opplysninger: null,
@@ -50,18 +35,9 @@ const history = [
   },
   {
     behandlingId: null,
-    type: {
-      kode: 'INNSYN_OPPR',
-      kodeverk: 'HISTORIKKINNSLAG_TYPE',
-    },
-    aktoer: {
-      kode: 'SBH',
-      kodeverk: 'HISTORIKK_AKTOER',
-    },
-    kjoenn: {
-      kode: '-',
-      kodeverk: 'BRUKER_KJOENN',
-    },
+    type: 'INNSYN_OPPR',
+    aktoer: 'SBH',
+    kjoenn: '-',
     opprettetAv: 'Z991110',
     opprettetTidspunkt: '2019-09-18T15:25:31.291',
     dokumentLinks: [],
@@ -70,10 +46,7 @@ const history = [
         begrunnelse: null,
         begrunnelseFritekst: 'Krav om innsyn mottatt 18.09.2019',
         hendelse: {
-          navn: {
-            kode: 'INNSYN_OPPR',
-            kodeverk: 'HISTORIKKINNSLAG_TYPE',
-          },
+          navn: 'INNSYN_OPPR',
           verdi: null,
         },
         opplysninger: null,
@@ -90,18 +63,9 @@ const history = [
   },
   {
     behandlingId: 999952,
-    type: {
-      kode: 'BEH_STARTET',
-      kodeverk: 'HISTORIKKINNSLAG_TYPE',
-    },
-    aktoer: {
-      kode: 'SOKER',
-      kodeverk: 'HISTORIKK_AKTOER',
-    },
-    kjoenn: {
-      kode: 'K',
-      kodeverk: 'BRUKER_KJOENN',
-    },
+    type: 'BEH_STARTET',
+    aktoer: 'SOKER',
+    kjoenn: 'K',
     opprettetAv: 'Srvengangsstonad',
     opprettetTidspunkt: '2019-09-18T13:12:48.874',
     dokumentLinks: [
@@ -118,10 +82,7 @@ const history = [
         begrunnelse: null,
         begrunnelseFritekst: null,
         hendelse: {
-          navn: {
-            kode: 'BEH_STARTET',
-            kodeverk: 'HISTORIKKINNSLAG_TYPE',
-          },
+          navn: 'BEH_STARTET',
           verdi: null,
         },
         opplysninger: null,

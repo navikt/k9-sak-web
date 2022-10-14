@@ -55,34 +55,22 @@ const behandlingstyper = [
 
 const behandlingOppretting = [
   {
-    behandlingType: {
-      kode: behandlingType.FORSTEGANGSSOKNAD,
-      kodeverk: '',
-    },
+    behandlingType: behandlingType.FORSTEGANGSSOKNAD,
     kanOppretteBehandling: true,
   },
   {
-    behandlingType: {
-      kode: behandlingType.REVURDERING,
-      kodeverk: '',
-    },
+    behandlingType: behandlingType.REVURDERING,
     kanOppretteBehandling: true,
   },
 ];
 
 export const visMenyForÅLageNyBehandling = () => (
   <MenyNyBehandlingIndex
-    ytelseType={{
-      kode: fagsakYtelseType.FORELDREPENGER,
-      kodeverk: 'YTELSE_TYPE',
-    }}
+    ytelseType={fagsakYtelseType.FORELDREPENGER}
     saksnummer="123"
     behandlingId={1}
     behandlingVersjon={2}
-    behandlingType={{
-      kode: behandlingType.FORSTEGANGSSOKNAD,
-      kodeverk: 'BEHANDLING_TYPE',
-    }}
+    behandlingType={behandlingType.FORSTEGANGSSOKNAD}
     lagNyBehandling={action('button-click')}
     behandlingstyper={behandlingstyper}
     tilbakekrevingRevurderingArsaker={[]}
@@ -112,17 +100,11 @@ export const visMenyForÅLageNyBehandling = () => (
 
 export const visMenyForÅLageNyTilbakekrevingsbehandling = () => (
   <MenyNyBehandlingIndex
-    ytelseType={{
-      kode: fagsakYtelseType.FORELDREPENGER,
-      kodeverk: 'YTELSE_TYPE',
-    }}
+    ytelseType={fagsakYtelseType.FORELDREPENGER}
     saksnummer="123"
     behandlingId={1}
     behandlingVersjon={2}
-    behandlingType={{
-      kode: behandlingType.FORSTEGANGSSOKNAD,
-      kodeverk: 'BEHANDLING_TYPE',
-    }}
+    behandlingType={behandlingType.FORSTEGANGSSOKNAD}
     lagNyBehandling={action('button-click')}
     behandlingstyper={behandlingstyper}
     tilbakekrevingRevurderingArsaker={[

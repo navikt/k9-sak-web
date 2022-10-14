@@ -2,10 +2,9 @@
 import fagsakStatus from '@fpsak-frontend/kodeverk/src/fagsakStatus';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import KodeverkType from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
-import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import relasjonsRolleType from '@fpsak-frontend/kodeverk/src/relasjonsRolleType';
 import BehandlingVelgerSakIndex from '@k9-sak-web/sak-behandling-velger';
-import { Behandling, Fagsak, Kodeverk } from '@k9-sak-web/types';
+import { Behandling, Fagsak } from '@k9-sak-web/types';
 import { boolean, number, object, withKnobs } from '@storybook/addon-knobs';
 import React, { useState } from 'react';
 import withReduxAndRouterProvider from '../../decorators/withReduxAndRouter';
@@ -43,56 +42,56 @@ const behandlinger = [
           {
             periode: { fom: '2021-10-25', tom: '2021-12-25' },
             avslagsårsak: null,
-            utfall: { kode: '-', kodeverk: 'VILKAR_UTFALL_TYPE' },
+            utfall: '-',
           },
         ],
         MEDISINSKEVILKÅR_UNDER_18_ÅR: [
           {
             periode: { fom: '2021-10-25', tom: '2021-12-25' },
             avslagsårsak: null,
-            utfall: { kode: '-', kodeverk: 'VILKAR_UTFALL_TYPE' },
+            utfall: '-',
           },
         ],
         OPPTJENINGSPERIODEVILKÅR: [
           {
             periode: { fom: '2021-10-25', tom: '2021-12-25' },
             avslagsårsak: null,
-            utfall: { kode: '-', kodeverk: 'VILKAR_UTFALL_TYPE' },
+            utfall: '-',
           },
         ],
         ALDERSVILKÅR: [
           {
             periode: { fom: '2021-10-25', tom: '2021-12-25' },
-            avslagsårsak: { kode: '-', kodeverk: 'AVSLAGSARSAK' },
-            utfall: { kode: '-', kodeverk: 'VILKAR_UTFALL_TYPE' },
+            avslagsårsak: '-',
+            utfall: '-',
           },
         ],
         SØKNADSFRIST: [
           {
             periode: { fom: '2021-10-25', tom: '2021-12-25' },
-            avslagsårsak: { kode: '-', kodeverk: 'AVSLAGSARSAK' },
-            utfall: { kode: '-', kodeverk: 'VILKAR_UTFALL_TYPE' },
+            avslagsårsak: '-',
+            utfall: '-',
           },
         ],
         BEREGNINGSGRUNNLAGVILKÅR: [
           {
             periode: { fom: '2021-10-25', tom: '2021-12-25' },
             avslagsårsak: null,
-            utfall: { kode: '-', kodeverk: 'VILKAR_UTFALL_TYPE' },
+            utfall: '-',
           },
         ],
         OPPTJENINGSVILKÅRET: [
           {
             periode: { fom: '2021-10-25', tom: '2021-12-25' },
             avslagsårsak: null,
-            utfall: { kode: '-', kodeverk: 'VILKAR_UTFALL_TYPE' },
+            utfall: '-',
           },
         ],
         OMSORGEN_FOR: [
           {
             periode: { fom: '2021-10-25', tom: '2021-12-25' },
             avslagsårsak: null,
-            utfall: { kode: '-', kodeverk: 'VILKAR_UTFALL_TYPE' },
+            utfall: '-',
           },
         ],
       },
@@ -121,10 +120,10 @@ const behandlinger = [
     links: [],
     opprettet: '2021-12-20T09:22:38',
     originalVedtaksDato: '2021-12-20',
-    sprakkode: { kode: 'NB', kodeverk: 'SPRAAK_KODE' },
-    status: { kode: 'AVSLU', kodeverk: 'BEHANDLING_STATUS' },
+    sprakkode: 'NB',
+    status: 'AVSLU',
     toTrinnsBehandling: false,
-    type: { kode: 'BT-004', kodeverk: 'BEHANDLING_TYPE' },
+    type: 'BT-004',
     uuid: 'ca887118-87b1-4afd-a886-b0503d3fc787',
     behandlingHenlagt: false,
     versjon: 102,
@@ -185,14 +184,14 @@ const behandlinger = [
         ALDERSVILKÅR: [
           {
             periode: { fom: '2021-10-25', tom: '2021-12-25' },
-            avslagsårsak: { kode: '-', kodeverk: 'AVSLAGSARSAK' },
+            avslagsårsak: '-',
             utfall: '-',
           },
         ],
         SØKNADSFRIST: [
           {
             periode: { fom: '2021-10-25', tom: '2021-12-25' },
-            avslagsårsak: { kode: '-', kodeverk: 'AVSLAGSARSAK' },
+            avslagsårsak: '-',
             utfall: '-',
           },
         ],

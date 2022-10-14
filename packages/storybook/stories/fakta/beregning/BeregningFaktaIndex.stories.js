@@ -69,7 +69,7 @@ const behandling = {
 
 const lagVilkår = fomDatoer => [
   {
-    vilkarType: { kode: 'FP_VK_41' },
+    vilkarType: 'FP_VK_41',
     perioder: fomDatoer.map(fom => ({ periode: { fom }, vurderesIBehandlingen: true })),
   },
 ];
@@ -144,8 +144,8 @@ const mapTilKodeliste = arrayOfCodes => arrayOfCodes.map(kode => ({ kode }));
 
 const lagAndel = (andelsnr, aktivitetStatus, inntektskategori) => ({
   andelsnr,
-  aktivitetStatus: aktivitetStatus,
-  inntektskategori: inntektskategori,
+  aktivitetStatus,
+  inntektskategori,
 });
 
 const standardFaktaArbeidstakerAndel = {

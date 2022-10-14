@@ -34,10 +34,7 @@ export const visPanelForLavRisikoklassifisering = () => (
     behandlingId={1}
     behandlingVersjon={1}
     risikoklassifisering={{
-      kontrollresultat: {
-        kode: kontrollresultatKode.IKKE_HOY,
-        kodeverk: '',
-      },
+      kontrollresultat: kontrollresultatKode.IKKE_HOY,
     }}
     isPanelOpen={boolean('isPanelOpen', false)}
     readOnly={boolean('readOnly', false)}
@@ -52,22 +49,13 @@ export const visPanelForHøyRisikoklassifisering = () => (
     behandlingVersjon={1}
     aksjonspunkt={
       {
-        definisjon: {
-          kode: aksjonspunktCodes.VURDER_FARESIGNALER,
-          kodeverk: '',
-        },
-        status: {
-          kode: aksjonspunktStatus.OPPRETTET,
-          kodeverk: '',
-        },
+        definisjon: aksjonspunktCodes.VURDER_FARESIGNALER,
+        status: aksjonspunktStatus.OPPRETTET,
         begrunnelse: undefined,
       } as Aksjonspunkt
     }
     risikoklassifisering={{
-      kontrollresultat: {
-        kode: kontrollresultatKode.HOY,
-        kodeverk: '',
-      },
+      kontrollresultat: kontrollresultatKode.HOY,
       medlFaresignaler: {
         faresignaler: ['Søker bor hos foreldre'],
       },

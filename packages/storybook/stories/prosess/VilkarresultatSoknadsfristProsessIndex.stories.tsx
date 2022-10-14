@@ -12,11 +12,11 @@ import withReduxProvider from '../../decorators/withRedux';
 
 const vilkarSoknadsfrist = [
   {
-    vilkarType: { kode: vilkarType.SOKNADSFRISTVILKARET, kodeverk: 'test' },
+    vilkarType: vilkarType.SOKNADSFRISTVILKARET,
     overstyrbar: true,
     perioder: [
       {
-        vilkarStatus: { kode: vilkarUtfallType.IKKE_OPPFYLT, kodeverk: 'test' },
+        vilkarStatus: vilkarUtfallType.IKKE_OPPFYLT,
         vurderesIBehandlingen: true,
         periode: {
           fom: '2020-02-20',
@@ -24,7 +24,7 @@ const vilkarSoknadsfrist = [
         },
       },
       {
-        vilkarStatus: { kode: vilkarUtfallType.IKKE_OPPFYLT, kodeverk: 'test' },
+        vilkarStatus: vilkarUtfallType.IKKE_OPPFYLT,
         vurderesIBehandlingen: true,
         periode: {
           fom: '2020-02-26',
@@ -32,7 +32,7 @@ const vilkarSoknadsfrist = [
         },
       },
       {
-        vilkarStatus: { kode: vilkarUtfallType.OPPFYLT, kodeverk: 'test' },
+        vilkarStatus: vilkarUtfallType.OPPFYLT,
         vurderesIBehandlingen: true,
         periode: {
           fom: '2020-02-28',
@@ -50,7 +50,7 @@ const soknadsStatus = {
       status: [
         {
           periode: { fom: '2020-02-20', tom: '2020-02-25' },
-          status: { kode: vilkarUtfallType.IKKE_OPPFYLT, kodeverk: 'test' },
+          status: vilkarUtfallType.IKKE_OPPFYLT,
         },
       ],
       innsendingstidspunkt: '2020-06-01',
@@ -63,7 +63,7 @@ const soknadsStatus = {
       status: [
         {
           periode: { fom: '2020-02-26', tom: '2020-02-27' },
-          status: { kode: vilkarUtfallType.IKKE_OPPFYLT, kodeverk: 'test' },
+          status: vilkarUtfallType.IKKE_OPPFYLT,
         },
       ],
       innsendingstidspunkt: '2020-06-01',
@@ -88,10 +88,7 @@ export const visOverstyringspanelForSoknadsfrist = () => {
         {
           id: 1,
           versjon: 1,
-          type: {
-            kode: behandlingType.FORSTEGANGSSOKNAD,
-            kodeverk: '',
-          },
+          type: behandlingType.FORSTEGANGSSOKNAD,
         } as Behandling
       }
       aksjonspunkter={[]}
@@ -118,10 +115,7 @@ export const visOverstyringspanelForSoknadsfristUtenDokumenter = () => {
         {
           id: 1,
           versjon: 1,
-          type: {
-            kode: behandlingType.FORSTEGANGSSOKNAD,
-            kodeverk: '',
-          },
+          type: behandlingType.FORSTEGANGSSOKNAD,
         } as Behandling
       }
       aksjonspunkter={[]}
@@ -148,24 +142,21 @@ export const visSoknadsfristAksjonspunkt5077 = () => {
         {
           id: 1,
           versjon: 1,
-          type: {
-            kode: behandlingType.FORSTEGANGSSOKNAD,
-            kodeverk: '',
-          },
+          type: behandlingType.FORSTEGANGSSOKNAD,
         } as Behandling
       }
       aksjonspunkter={[
         {
-          aksjonspunktType: { kode: 'MANU', kodeverk: 'AKSJONSPUNKT_TYPE' },
+          aksjonspunktType: 'MANU',
           begrunnelse: null,
           besluttersBegrunnelse: null,
-          definisjon: { kode: '5077', kodeverk: 'AKSJONSPUNKT_DEF' },
+          definisjon: '5077',
           erAktivt: true,
           kanLoses: true,
-          status: { kode: 'OPPR', kodeverk: 'AKSJONSPUNKT_STATUS' },
+          status: 'OPPR',
           toTrinnsBehandling: true,
           toTrinnsBehandlingGodkjent: null,
-          vilkarType: { kode: 'FP_VK_3', kodeverk: 'VILKAR_TYPE' },
+          vilkarType: 'FP_VK_3',
           vurderPaNyttArsaker: null,
         },
       ]}
@@ -183,11 +174,11 @@ export const visSoknadsfristAksjonspunkt5077 = () => {
             status: [
               {
                 periode: { fom: '2021-04-28', tom: '2021-04-30' },
-                status: { kode: 'IKKE_VURDERT', kodeverk: 'VILKAR_UTFALL_TYPE' },
+                status: 'IKKE_VURDERT',
               },
               // {
               //   periode: { fom: '2021-05-01', tom: '2021-05-05' },
-              //   status: { kode: 'OPPFYLT', kodeverk: 'VILKAR_UTFALL_TYPE' },
+              //   status: 'OPPFYLT',
               // },
             ],
             innsendingstidspunkt: '2021-08-19T11:50:21.894',
@@ -200,14 +191,14 @@ export const visSoknadsfristAksjonspunkt5077 = () => {
       panelTittelKode="Inngangsvilkar.Soknadsfrist"
       vilkar={[
         {
-          vilkarType: { kode: 'FP_VK_3', kodeverk: 'VILKAR_TYPE' },
+          vilkarType: 'FP_VK_3',
           lovReferanse: null,
           overstyrbar: true,
           perioder: [
             {
               avslagKode: null,
               merknadParametere: {},
-              vilkarStatus: { kode: 'IKKE_VURDERT', kodeverk: 'VILKAR_UTFALL_TYPE' },
+              vilkarStatus: 'IKKE_VURDERT',
               periode: { fom: '2021-04-28', tom: '2021-04-30' },
               begrunnelse: null,
               vurderesIBehandlingen: true,
@@ -215,7 +206,7 @@ export const visSoknadsfristAksjonspunkt5077 = () => {
             // {
             //   avslagKode: null,
             //   merknadParametere: {},
-            //   vilkarStatus: { kode: 'OPPFYLT', kodeverk: 'VILKAR_UTFALL_TYPE' },
+            //   vilkarStatus: 'OPPFYLT',
             //   periode: { fom: '2021-05-01', tom: '2021-05-05' },
             //   begrunnelse: null,
             //   vurderesIBehandlingen: true,
@@ -236,15 +227,12 @@ export const visSoknadsfristAksjonspunkt5077Delvis = () => {
         {
           id: 1,
           versjon: 1,
-          type: {
-            kode: behandlingType.FORSTEGANGSSOKNAD,
-            kodeverk: '',
-          },
+          type: behandlingType.FORSTEGANGSSOKNAD,
         } as Behandling
       }
       aksjonspunkter={[
         {
-          aksjonspunktType: { kode: 'MANU', kodeverk: 'AKSJONSPUNKT_TYPE' },
+          aksjonspunktType: 'MANU',
           begrunnelse: [
             'jsdfsdf ljksdlkfj sldjf lsdkjf lsjdf\n\n\n',
             'sdsdfs øjjølksdjfølkjsd fjsd s fløskjdflsjd f\n\n\n',
@@ -252,13 +240,13 @@ export const visSoknadsfristAksjonspunkt5077Delvis = () => {
             'sldfj sljfølsjd fløsdlfj øsldjf lsøjdfølsdjfløsjd lsdfs',
           ].join(''),
           besluttersBegrunnelse: null,
-          definisjon: { kode: '5077', kodeverk: 'AKSJONSPUNKT_DEF' },
+          definisjon: '5077',
           erAktivt: true,
           kanLoses: false,
-          status: { kode: 'UTFO', kodeverk: 'AKSJONSPUNKT_STATUS' },
+          status: 'UTFO',
           toTrinnsBehandling: true,
           toTrinnsBehandlingGodkjent: null,
-          vilkarType: { kode: 'FP_VK_3', kodeverk: 'VILKAR_TYPE' },
+          vilkarType: 'FP_VK_3',
           vurderPaNyttArsaker: null,
         },
       ]}
@@ -276,11 +264,11 @@ export const visSoknadsfristAksjonspunkt5077Delvis = () => {
             status: [
               {
                 periode: { fom: '2021-04-26', tom: '2021-04-27' },
-                status: { kode: 'IKKE_OPPFYLT', kodeverk: 'VILKAR_UTFALL_TYPE' },
+                status: 'IKKE_OPPFYLT',
               },
               {
                 periode: { fom: '2021-04-28', tom: '2021-05-06' },
-                status: { kode: 'OPPFYLT', kodeverk: 'VILKAR_UTFALL_TYPE' },
+                status: 'OPPFYLT',
               },
             ],
             innsendingstidspunkt: '2021-08-26T16:17:16.538',
@@ -302,14 +290,14 @@ export const visSoknadsfristAksjonspunkt5077Delvis = () => {
       panelTittelKode="Inngangsvilkar.Soknadsfrist"
       vilkar={[
         {
-          vilkarType: { kode: 'FP_VK_3', kodeverk: 'VILKAR_TYPE' },
+          vilkarType: 'FP_VK_3',
           lovReferanse: null,
           overstyrbar: true,
           perioder: [
             {
               avslagKode: '1007',
               merknadParametere: {},
-              vilkarStatus: { kode: 'IKKE_OPPFYLT', kodeverk: 'VILKAR_UTFALL_TYPE' },
+              vilkarStatus: 'IKKE_OPPFYLT',
               periode: { fom: '2021-04-26', tom: '2021-04-27' },
               begrunnelse: null,
               vurderesIBehandlingen: true,
@@ -317,7 +305,7 @@ export const visSoknadsfristAksjonspunkt5077Delvis = () => {
             {
               avslagKode: null,
               merknadParametere: {},
-              vilkarStatus: { kode: 'OPPFYLT', kodeverk: 'VILKAR_UTFALL_TYPE' },
+              vilkarStatus: 'OPPFYLT',
               periode: { fom: '2021-04-28', tom: '2021-04-30' },
               begrunnelse: null,
               vurderesIBehandlingen: true,
@@ -325,7 +313,7 @@ export const visSoknadsfristAksjonspunkt5077Delvis = () => {
             {
               avslagKode: null,
               merknadParametere: {},
-              vilkarStatus: { kode: 'OPPFYLT', kodeverk: 'VILKAR_UTFALL_TYPE' },
+              vilkarStatus: 'OPPFYLT',
               periode: { fom: '2021-05-01', tom: '2021-05-06' },
               begrunnelse: null,
               vurderesIBehandlingen: true,

@@ -48,16 +48,7 @@ const dataReadOnly = [
         },
         besluttersBegrunnelse: 'asdfa',
         totrinnskontrollGodkjent: false,
-        vurderPaNyttArsaker: [
-          {
-            kode: 'FEIL_REGEL',
-            kodeverk: '',
-          },
-          {
-            kode: 'FEIL_FAKTA',
-            kodeverk: '',
-          },
-        ],
+        vurderPaNyttArsaker: ['FEIL_REGEL', 'FEIL_FAKTA'],
         uttakPerioder: [],
         arbeidsforholdDtos: [],
       },
@@ -76,14 +67,8 @@ const location = {
 const behandling = {
   id: 1,
   versjon: 2,
-  status: {
-    kode: behandlingStatus.FATTER_VEDTAK,
-    kodeverk: '',
-  },
-  type: {
-    kode: behandlingType.FORSTEGANGSSOKNAD,
-    kodeverk: '',
-  },
+  status: behandlingStatus.FATTER_VEDTAK,
+  type: behandlingType.FORSTEGANGSSOKNAD,
   behandlingÅrsaker: [],
   toTrinnsBehandling: true,
 } as Behandling;
@@ -109,10 +94,7 @@ export const visTotrinnskontrollForBeslutter = () => (
       location={location}
       readOnly={boolean('readOnly', false)}
       onSubmit={action('button-click')}
-      fagsakYtelseType={{
-        kode: fagsakYtelseType.FORELDREPENGER,
-        kodeverk: '',
-      }}
+      fagsakYtelseType={fagsakYtelseType.FORELDREPENGER}
       behandlingKlageVurdering={
         {
           klageVurderingResultatNFP: {
@@ -138,19 +120,13 @@ export const visTotrinnskontrollForSaksbehandler = () => (
     <TotrinnskontrollSakIndex
       behandling={{
         ...behandling,
-        status: {
-          kode: behandlingStatus.BEHANDLING_UTREDES,
-          kodeverk: '',
-        },
+        status: behandlingStatus.BEHANDLING_UTREDES,
       }}
       totrinnskontrollSkjermlenkeContext={dataReadOnly}
       location={location}
       readOnly
       onSubmit={action('button-click')}
-      fagsakYtelseType={{
-        kode: fagsakYtelseType.FORELDREPENGER,
-        kodeverk: '',
-      }}
+      fagsakYtelseType={fagsakYtelseType.FORELDREPENGER}
       behandlingKlageVurdering={
         {
           klageVurderingResultatNFP: {

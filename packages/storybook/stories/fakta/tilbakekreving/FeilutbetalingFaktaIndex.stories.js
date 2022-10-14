@@ -125,12 +125,8 @@ export const visAksjonspunktForFeilutbetaling = () => (
     feilutbetalingAarsak={object('feilutbetalingAarsak', feilutbetalingAarsak)}
     aksjonspunkter={[
       {
-        definisjon: {
-          kode: aksjonspunktCodesTilbakekreving.AVKLAR_FAKTA_FOR_FEILUTBETALING,
-        },
-        status: {
-          kode: aksjonspunktStatus.OPPRETTET,
-        },
+        definisjon: aksjonspunktCodesTilbakekreving.AVKLAR_FAKTA_FOR_FEILUTBETALING,
+        status: aksjonspunktStatus.OPPRETTET,
         begrunnelse: undefined,
         kanLoses: true,
         erAktivt: true,

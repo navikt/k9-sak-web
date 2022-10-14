@@ -19,12 +19,8 @@ const behandling = {
       erAutomatiskRevurdering: true,
     },
   ],
-  sprakkode: {
-    kode: 'NN',
-  },
-  type: {
-    kode: behandlingType.FORSTEGANGSSOKNAD,
-  },
+  sprakkode: 'NN',
+  type: behandlingType.FORSTEGANGSSOKNAD,
 };
 
 const familieHendelse = {
@@ -61,12 +57,8 @@ const familiehendelseOriginalBehandling = {
 
 const aksjonspunkter = [
   {
-    definisjon: {
-      kode: aksjonspunktCodes.VARSEL_REVURDERING_MANUELL,
-    },
-    status: {
-      kode: aksjonspunktStatus.OPPRETTET,
-    },
+    definisjon: aksjonspunktCodes.VARSEL_REVURDERING_MANUELL,
+    status: aksjonspunktStatus.OPPRETTET,
     begrunnelse: undefined,
   },
 ];
@@ -97,9 +89,7 @@ export const visForRevurdering = () => (
   <VarselOmRevurderingProsessIndex
     behandling={{
       ...behandling,
-      behandlingType: {
-        kode: behandlingType.REVURDERING,
-      },
+      behandlingType: behandlingType.REVURDERING,
     }}
     familiehendelse={object('familieHendelse', familieHendelse)}
     soknad={object('soknad', soknad)}

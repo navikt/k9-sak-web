@@ -18,15 +18,13 @@ const behandling = {
   behandlingPaaVent: false,
 };
 
-const aksjonspunkter = [{
-  definisjon: {
-    kode: aksjonspunktCodes.VURDER_INNSYN,
+const aksjonspunkter = [
+  {
+    definisjon: aksjonspunktCodes.VURDER_INNSYN,
+    status: aksjonspunktStatus.OPPRETTET,
+    begrunnelse: undefined,
   },
-  status: {
-    kode: aksjonspunktStatus.OPPRETTET,
-  },
-  begrunnelse: undefined,
-}];
+];
 
 export default {
   title: 'prosess/innsyn/prosess-innsyn',
@@ -39,21 +37,25 @@ export const visPanelForVurderingAvInnsyn = () => (
     behandling={behandling}
     innsyn={object('innsyn', {
       dokumenter: [],
-      vedtaksdokumentasjon: [{
-        dokumentId: '1',
-        tittel: behandlingType.FORSTEGANGSSOKNAD,
-        opprettetDato: '2019-01-01',
-      }],
+      vedtaksdokumentasjon: [
+        {
+          dokumentId: '1',
+          tittel: behandlingType.FORSTEGANGSSOKNAD,
+          opprettetDato: '2019-01-01',
+        },
+      ],
     })}
     saksnummer={123434}
     aksjonspunkter={aksjonspunkter}
-    alleDokumenter={[{
-      journalpostId: '2',
-      dokumentId: '3',
-      tittel: 'Dette er et dokument',
-      tidspunkt: '2017-08-02T00:54:25.455',
-      kommunikasjonsretning: kommunikasjonsretning.INN,
-    }]}
+    alleDokumenter={[
+      {
+        journalpostId: '2',
+        dokumentId: '3',
+        tittel: 'Dette er et dokument',
+        tidspunkt: '2017-08-02T00:54:25.455',
+        kommunikasjonsretning: kommunikasjonsretning.INN,
+      },
+    ]}
     alleKodeverk={alleKodeverk}
     submitCallback={action('button-click')}
     readOnly={boolean('readOnly', false)}

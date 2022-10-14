@@ -157,10 +157,7 @@ const beregningsresultat = {
         tom: '2019-01-01',
       },
       feilutbetaltBeløp: 10000,
-      vurdering: {
-        kode: aktsomhet.FORSETT,
-        kodeverk: 'AKTSOMHET',
-      },
+      vurdering: aktsomhet.FORSETT,
       andelAvBeløp: 50,
       renterProsent: 0,
       tilbakekrevingBeløp: 5000,
@@ -172,20 +169,14 @@ const beregningsresultat = {
         tom: '2019-01-01',
       },
       feilutbetaltBeløp: 1000,
-      vurdering: {
-        kode: aktsomhet.FORSETT,
-        kodeverk: 'AKTSOMHET',
-      },
+      vurdering: aktsomhet.FORSETT,
       andelAvBeløp: 50,
       renterProsent: 80,
       tilbakekrevingBeløp: 500,
       tilbakekrevingBeløpEtterSkatt: 400,
     },
   ],
-  vedtakResultatType: {
-    kode: vedtakResultatType.DELVIS_TILBAKEBETALING,
-    kodeverk: 'VEDTAK_RESULTAT_TYPE',
-  },
+  vedtakResultatType: vedtakResultatType.DELVIS_TILBAKEBETALING,
 } as BeregningsresultatTilbakekreving;
 
 const alleKodeverk = {

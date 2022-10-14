@@ -43,9 +43,7 @@ const lagAPMedKode = kode => [
     definisjon: {
       kode,
     },
-    status: {
-      kode: 'OPPR',
-    },
+    status: 'OPPR',
     begrunnelse: null,
     endretAv: 'B123456',
     endretTidspunkt: '2020-01-20',
@@ -55,10 +53,7 @@ const lagAPMedKode = kode => [
 
 const vilkarMedUtfall = (kode, fomArray) => [
   {
-    vilkarType: {
-      kode: vilkarType.BEREGNINGSGRUNNLAGVILKARET,
-      kodeverk: 'vilkarType',
-    },
+    vilkarType: vilkarType.BEREGNINGSGRUNNLAGVILKARET,
     perioder: fomArray.map(fom => ({
       periode: { fom, tom: null },
       vilkarStatus: {
@@ -90,17 +85,11 @@ const lagArbeidsforhold = (
   opphoersdato,
   arbeidsforholdId,
   eksternArbeidsforholdId,
-  arbeidsforholdType: {
-    kode: 'ARBEID',
-    kodeverk: 'OPPTJENING_AKTIVITET_TYPE',
-  },
+  arbeidsforholdType: 'ARBEID',
   aktørId: null,
   refusjonPrAar: 360000,
   belopFraInntektsmeldingPrMnd: 30000,
-  organisasjonstype: {
-    kode: 'VIRKSOMHET',
-    kodeverk: 'ORGANISASJONSTYPE',
-  },
+  organisasjonstype: 'VIRKSOMHET',
   naturalytelseBortfaltPrÅr: null,
   naturalytelseTilkommetPrÅr: null,
   stillingsNavn,
@@ -116,10 +105,7 @@ const lagAndel = (
 ) => ({
   beregningsgrunnlagTom: '2019-08-31',
   beregningsgrunnlagFom: '2019-06-01',
-  aktivitetStatus: {
-    kode: aktivitetstatuskode,
-    kodeverk: 'AKTIVITET_STATUS',
-  },
+  aktivitetStatus: aktivitetstatuskode,
   beregningsperiodeFom: '2019-06-01',
   beregningsperiodeTom: '2019-08-31',
   beregnetPrAar,
@@ -133,26 +119,17 @@ const lagAndel = (
   erNyIArbeidslivet: null,
   lonnsendringIBeregningsperioden: null,
   andelsnr: 1,
-  inntektskategori: {
-    kode: 'ARBEIDSTAKER',
-    kodeverk: 'INNTEKTSKATEGORI',
-  },
+  inntektskategori: 'ARBEIDSTAKER',
   arbeidsforhold: {
     arbeidsgiverId: '910909088',
     startdato: '2018-10-09',
     opphoersdato: null,
     arbeidsforholdId: '2a3c0f5c-3d70-447a-b0d7-cd242d5155bb',
-    arbeidsforholdType: {
-      kode: 'ARBEID',
-      kodeverk: 'OPPTJENING_AKTIVITET_TYPE',
-    },
+    arbeidsforholdType: 'ARBEID',
     aktørId: null,
     refusjonPrAar: 360000,
     belopFraInntektsmeldingPrMnd: 30000,
-    organisasjonstype: {
-      kode: 'VIRKSOMHET',
-      kodeverk: 'ORGANISASJONSTYPE',
-    },
+    organisasjonstype: 'VIRKSOMHET',
     naturalytelseBortfaltPrÅr: null,
     naturalytelseTilkommetPrÅr: null,
   },
@@ -196,7 +173,7 @@ const lagPeriodeMedDagsats = (andelsliste, dagsats) => lagPeriode(andelsliste, d
 const lagStandardPeriode = andelsliste => lagPeriode(andelsliste, null, standardFom, standardTom, []);
 
 const lagTidsbegrensetPeriode = (andelsliste, fom, tom) =>
-  lagPeriode(andelsliste, null, fom, tom, [{ kode: periodeAarsak.ARBEIDSFORHOLD_AVSLUTTET }]);
+  lagPeriode(andelsliste, null, fom, tom, [periodeAarsak.ARBEIDSFORHOLD_AVSLUTTET]);
 
 const lagStatus = kode => ({
   kode,
@@ -250,10 +227,7 @@ const lagBG = (
                 fom: '2018-10-09',
                 tom: '9999-12-31',
                 arbeidsforholdId: '2a3c0f5c-3d70-447a-b0d7-cd242d5155bb',
-                arbeidsforholdType: {
-                  kode: 'ARBEID',
-                  kodeverk: 'OPPTJENING_AKTIVITET_TYPE',
-                },
+                arbeidsforholdType: 'ARBEID',
                 aktørId: null,
                 skalBrukes: null,
               },
@@ -265,14 +239,8 @@ const lagBG = (
         {
           belopReadOnly: 30000,
           fastsattBelop: null,
-          inntektskategori: {
-            kode: 'ARBEIDSTAKER',
-            kodeverk: 'INNTEKTSKATEGORI',
-          },
-          aktivitetStatus: {
-            kode: 'AT',
-            kodeverk: 'AKTIVITET_STATUS',
-          },
+          inntektskategori: 'ARBEIDSTAKER',
+          aktivitetStatus: 'AT',
           refusjonskrav: 30000,
           visningsnavn: 'BEDRIFT AS (910909088) ...55bb',
           arbeidsforhold: {
@@ -280,17 +248,11 @@ const lagBG = (
             startdato: '2018-10-09',
             opphoersdato: null,
             arbeidsforholdId: '2a3c0f5c-3d70-447a-b0d7-cd242d5155bb',
-            arbeidsforholdType: {
-              kode: 'ARBEID',
-              kodeverk: 'OPPTJENING_AKTIVITET_TYPE',
-            },
+            arbeidsforholdType: 'ARBEID',
             aktørId: null,
             refusjonPrAar: null,
             belopFraInntektsmeldingPrMnd: 30000,
-            organisasjonstype: {
-              kode: 'VIRKSOMHET',
-              kodeverk: 'ORGANISASJONSTYPE',
-            },
+            organisasjonstype: 'VIRKSOMHET',
             naturalytelseBortfaltPrÅr: null,
             naturalytelseTilkommetPrÅr: null,
           },
@@ -305,10 +267,7 @@ const lagBG = (
         arbeidsforholdMedLønnsendring: [],
       },
     },
-    hjemmel: {
-      kode: 'F_14_7_8_30',
-      kodeverk: 'BG_HJEMMEL',
-    },
+    hjemmel: 'F_14_7_8_30',
     faktaOmFordeling: null,
     årsinntektVisningstall: 360000,
     sammenligningsgrunnlagInntekter: [
@@ -593,7 +552,7 @@ export const selvstendigNæringsdrivende = () => {
       regnskapsførerNavn: 'Regnskapsfører Regn S. Fører',
       regnskapsførerTlf: '99999999',
       utenlandskvirksomhetsnavn: null,
-      virksomhetType: { kode: 'ANNEN', kodeverk: 'VIRKSOMHET_TYPE' },
+      virksomhetType: 'ANNEN',
     },
     {
       begrunnelse: 'Endringsbeskrivelse',
@@ -606,7 +565,7 @@ export const selvstendigNæringsdrivende = () => {
       opphoersdato: '201-03-01',
       orgnr: '910909077',
       utenlandskvirksomhetsnavn: null,
-      virksomhetType: { kode: 'JORDBRUK_SKOGBRUK', kodeverk: 'VIRKSOMHET_TYPE' },
+      virksomhetType: 'JORDBRUK_SKOGBRUK',
       virksomhetNavn: 'Navn Navnesen',
     },
   ];
@@ -625,25 +584,14 @@ export const selvstendigNæringsdrivende = () => {
           avklaringsbehov: [
             {
               begrunnelse: null,
-              definisjon: {
-                kode: '5039',
-                kodeverk: 'AVKLARINGSBEHOV_DEF',
-              },
+              definisjon: '5039',
               kanLoses: true,
-              status: {
-                kode: 'OPPR',
-                kodeverk: 'AVKLARINGSBEHOV_STATUS',
-              },
+              status: 'OPPR',
             },
           ],
           skjaeringstidspunktBeregning: '2020-04-27',
           skjæringstidspunkt: '2020-04-27',
-          aktivitetStatus: [
-            {
-              kode: 'SN',
-              kodeverk: 'AKTIVITET_STATUS',
-            },
-          ],
+          aktivitetStatus: ['SN'],
           beregningsgrunnlagPeriode: [
             {
               beregningsgrunnlagPeriodeFom: '2020-04-27',
@@ -657,24 +605,15 @@ export const selvstendigNæringsdrivende = () => {
                   dtoType: 'SN',
                   beregningsgrunnlagFom: '2017-01-01',
                   beregningsgrunnlagTom: '2019-12-31',
-                  aktivitetStatus: {
-                    kode: 'SN',
-                    kodeverk: 'AKTIVITET_STATUS',
-                  },
+                  aktivitetStatus: 'SN',
                   beregningsperiodeFom: '2017-01-01',
                   beregningsperiodeTom: '2019-12-31',
                   beregnetPrAar: 208193.35,
                   bruttoPrAar: 208193.35,
                   andelsnr: 1,
-                  inntektskategori: {
-                    kode: 'SELVSTENDIG_NÆRINGSDRIVENDE',
-                    kodeverk: 'INNTEKTSKATEGORI',
-                  },
+                  inntektskategori: 'SELVSTENDIG_NÆRINGSDRIVENDE',
                   arbeidsforhold: {
-                    arbeidsforholdType: {
-                      kode: 'NÆRING',
-                      kodeverk: 'OPPTJENING_AKTIVITET_TYPE',
-                    },
+                    arbeidsforholdType: 'NÆRING',
                   },
                   fastsattAvSaksbehandler: false,
                   lagtTilAvSaksbehandler: false,
@@ -700,14 +639,7 @@ export const selvstendigNæringsdrivende = () => {
                       orgnr: '910909088',
                       erVarigEndret: true,
                       erNyoppstartet: false,
-                      virksomhetType: {
-                        inntektskategori: {
-                          kode: '-',
-                          kodeverk: 'INNTEKTSKATEGORI',
-                        },
-                        kode: 'ANNEN',
-                        kodeverk: 'VIRKSOMHET_TYPE',
-                      },
+                      virksomhetType: 'ANNEN',
                       endringsdato: '2021-05-21',
                       oppstartsdato: '2020-03-27',
                       opphørsdato: '2020-05-27',
@@ -726,10 +658,7 @@ export const selvstendigNæringsdrivende = () => {
             rapportertPrAar: 5000,
             avvikPromille: 975.9838631,
             avvikProsent: 97.59838631,
-            sammenligningsgrunnlagType: {
-              kode: 'SAMMENLIGNING_ATFL_SN',
-              kodeverk: 'SAMMENLIGNINGSGRUNNLAG_TYPE',
-            },
+            sammenligningsgrunnlagType: 'SAMMENLIGNING_ATFL_SN',
             differanseBeregnet: 203193,
           },
           sammenligningsgrunnlagPrStatus: [
@@ -739,10 +668,7 @@ export const selvstendigNæringsdrivende = () => {
               rapportertPrAar: 5000,
               avvikPromille: 975.9838631,
               avvikProsent: 97.59838631,
-              sammenligningsgrunnlagType: {
-                kode: 'SAMMENLIGNING_ATFL_SN',
-                kodeverk: 'SAMMENLIGNINGSGRUNNLAG_TYPE',
-              },
+              sammenligningsgrunnlagType: 'SAMMENLIGNING_ATFL_SN',
               differanseBeregnet: 203193,
             },
           ],
@@ -757,10 +683,7 @@ export const selvstendigNæringsdrivende = () => {
                     {
                       fom: '2020-03-27',
                       tom: '2020-05-27',
-                      arbeidsforholdType: {
-                        kode: 'NÆRING',
-                        kodeverk: 'OPPTJENING_AKTIVITET_TYPE',
-                      },
+                      arbeidsforholdType: 'NÆRING',
                     },
                   ],
                 },
@@ -770,20 +693,11 @@ export const selvstendigNæringsdrivende = () => {
             andelerForFaktaOmBeregning: [
               {
                 fastsattBelop: 17349.4458333333,
-                inntektskategori: {
-                  kode: 'SELVSTENDIG_NÆRINGSDRIVENDE',
-                  kodeverk: 'INNTEKTSKATEGORI',
-                },
-                aktivitetStatus: {
-                  kode: 'SN',
-                  kodeverk: 'AKTIVITET_STATUS',
-                },
+                inntektskategori: 'SELVSTENDIG_NÆRINGSDRIVENDE',
+                aktivitetStatus: 'SN',
                 visningsnavn: 'Næring',
                 arbeidsforhold: {
-                  arbeidsforholdType: {
-                    kode: 'NÆRING',
-                    kodeverk: 'OPPTJENING_AKTIVITET_TYPE',
-                  },
+                  arbeidsforholdType: 'NÆRING',
                 },
                 andelsnr: 1,
                 skalKunneEndreAktivitet: false,
@@ -791,10 +705,7 @@ export const selvstendigNæringsdrivende = () => {
               },
             ],
           },
-          hjemmel: {
-            kode: 'F_9_9_8_35',
-            kodeverk: 'BG_HJEMMEL',
-          },
+          hjemmel: 'F_9_9_8_35',
           årsinntektVisningstall: 208193,
           dekningsgrad: 100,
           ytelsesspesifiktGrunnlag: {
@@ -808,12 +719,7 @@ export const selvstendigNæringsdrivende = () => {
           avklaringsbehov: [],
           skjaeringstidspunktBeregning: '2020-05-04',
           skjæringstidspunkt: '2020-05-04',
-          aktivitetStatus: [
-            {
-              kode: 'SN',
-              kodeverk: 'AKTIVITET_STATUS',
-            },
-          ],
+          aktivitetStatus: ['SN'],
           beregningsgrunnlagPeriode: [
             {
               beregningsgrunnlagPeriodeFom: '2020-05-04',
@@ -827,24 +733,15 @@ export const selvstendigNæringsdrivende = () => {
                   dtoType: 'SN',
                   beregningsgrunnlagFom: '2017-01-01',
                   beregningsgrunnlagTom: '2019-12-31',
-                  aktivitetStatus: {
-                    kode: 'SN',
-                    kodeverk: 'AKTIVITET_STATUS',
-                  },
+                  aktivitetStatus: 'SN',
                   beregningsperiodeFom: '2017-01-01',
                   beregningsperiodeTom: '2019-12-31',
                   beregnetPrAar: 211306.1,
                   bruttoPrAar: 211306.1,
                   andelsnr: 1,
-                  inntektskategori: {
-                    kode: 'SELVSTENDIG_NÆRINGSDRIVENDE',
-                    kodeverk: 'INNTEKTSKATEGORI',
-                  },
+                  inntektskategori: 'SELVSTENDIG_NÆRINGSDRIVENDE',
                   arbeidsforhold: {
-                    arbeidsforholdType: {
-                      kode: 'NÆRING',
-                      kodeverk: 'OPPTJENING_AKTIVITET_TYPE',
-                    },
+                    arbeidsforholdType: 'NÆRING',
                   },
                   fastsattAvSaksbehandler: false,
                   lagtTilAvSaksbehandler: false,
@@ -870,14 +767,7 @@ export const selvstendigNæringsdrivende = () => {
                       orgnr: '910909088',
                       erVarigEndret: true,
                       erNyoppstartet: false,
-                      virksomhetType: {
-                        inntektskategori: {
-                          kode: '-',
-                          kodeverk: 'INNTEKTSKATEGORI',
-                        },
-                        kode: 'ANNEN',
-                        kodeverk: 'VIRKSOMHET_TYPE',
-                      },
+                      virksomhetType: 'ANNEN',
                       endringsdato: '2021-05-21',
                       oppstartsdato: '2020-03-27',
                       opphørsdato: '2020-05-27',
@@ -896,10 +786,7 @@ export const selvstendigNæringsdrivende = () => {
             rapportertPrAar: 5000,
             avvikPromille: 976.3376445,
             avvikProsent: 97.63376445,
-            sammenligningsgrunnlagType: {
-              kode: 'SAMMENLIGNING_ATFL_SN',
-              kodeverk: 'SAMMENLIGNINGSGRUNNLAG_TYPE',
-            },
+            sammenligningsgrunnlagType: 'SAMMENLIGNING_ATFL_SN',
             differanseBeregnet: 206306,
           },
           sammenligningsgrunnlagPrStatus: [
@@ -909,10 +796,7 @@ export const selvstendigNæringsdrivende = () => {
               rapportertPrAar: 5000,
               avvikPromille: 976.3376445,
               avvikProsent: 97.63376445,
-              sammenligningsgrunnlagType: {
-                kode: 'SAMMENLIGNING_ATFL_SN',
-                kodeverk: 'SAMMENLIGNINGSGRUNNLAG_TYPE',
-              },
+              sammenligningsgrunnlagType: 'SAMMENLIGNING_ATFL_SN',
               differanseBeregnet: 206306,
             },
           ],
@@ -927,10 +811,7 @@ export const selvstendigNæringsdrivende = () => {
                     {
                       fom: '2020-03-27',
                       tom: '2020-05-27',
-                      arbeidsforholdType: {
-                        kode: 'NÆRING',
-                        kodeverk: 'OPPTJENING_AKTIVITET_TYPE',
-                      },
+                      arbeidsforholdType: 'NÆRING',
                     },
                   ],
                 },
@@ -940,20 +821,11 @@ export const selvstendigNæringsdrivende = () => {
             andelerForFaktaOmBeregning: [
               {
                 fastsattBelop: 17608.8416666667,
-                inntektskategori: {
-                  kode: 'SELVSTENDIG_NÆRINGSDRIVENDE',
-                  kodeverk: 'INNTEKTSKATEGORI',
-                },
-                aktivitetStatus: {
-                  kode: 'SN',
-                  kodeverk: 'AKTIVITET_STATUS',
-                },
+                inntektskategori: 'SELVSTENDIG_NÆRINGSDRIVENDE',
+                aktivitetStatus: 'SN',
                 visningsnavn: 'Næring',
                 arbeidsforhold: {
-                  arbeidsforholdType: {
-                    kode: 'NÆRING',
-                    kodeverk: 'OPPTJENING_AKTIVITET_TYPE',
-                  },
+                  arbeidsforholdType: 'NÆRING',
                 },
                 andelsnr: 1,
                 skalKunneEndreAktivitet: false,
@@ -961,50 +833,29 @@ export const selvstendigNæringsdrivende = () => {
               },
             ],
           },
-          hjemmel: {
-            kode: 'F_9_9_8_35',
-            kodeverk: 'BG_HJEMMEL',
-          },
+          hjemmel: 'F_9_9_8_35',
           årsinntektVisningstall: 211306,
           dekningsgrad: 100,
-          ytelsesspesifiktGrunnlag: {
-            ytelsetype: 'OMP',
-            skalAvviksvurdere: true,
-          },
+          ytelsesspesifiktGrunnlag: 'OMP',
           erOverstyrtInntekt: false,
           vilkårsperiodeFom: '2020-05-04',
         },
       ]}
       aksjonspunkter={[
         {
-          aksjonspunktType: {
-            kode: 'MANU',
-            kodeverk: 'AKSJONSPUNKT_TYPE',
-          },
+          aksjonspunktType: 'MANU',
           begrunnelse: null,
           besluttersBegrunnelse: null,
-          definisjon: {
-            kode: '5039',
-            kodeverk: 'AKSJONSPUNKT_DEF',
-          },
+          definisjon: '5039',
           erAktivt: true,
           fristTid: null,
           kanLoses: true,
-          status: {
-            kode: 'OPPR',
-            kodeverk: 'AKSJONSPUNKT_STATUS',
-          },
+          status: 'OPPR',
           toTrinnsBehandling: true,
           toTrinnsBehandlingGodkjent: null,
-          vilkarType: {
-            kode: 'FP_VK_41',
-            kodeverk: 'VILKAR_TYPE',
-          },
+          vilkarType: 'FP_VK_41',
           vurderPaNyttArsaker: null,
-          venteårsak: {
-            kode: '-',
-            kodeverk: 'VENT_AARSAK',
-          },
+          venteårsak: '-',
         },
       ]}
       submitCallback={action('button-click')}
@@ -1018,20 +869,14 @@ export const selvstendigNæringsdrivende = () => {
       // ])}
       vilkar={[
         {
-          vilkarType: {
-            kode: 'FP_VK_41',
-            kodeverk: 'VILKAR_TYPE',
-          },
+          vilkarType: 'FP_VK_41',
           lovReferanse: '§ 8',
           overstyrbar: true,
           perioder: [
             {
               avslagKode: null,
               merknadParametere: {},
-              vilkarStatus: {
-                kode: 'IKKE_VURDERT',
-                kodeverk: 'VILKAR_UTFALL_TYPE',
-              },
+              vilkarStatus: 'IKKE_VURDERT',
               periode: {
                 fom: '2020-04-27',
                 tom: '2020-04-27',
@@ -1042,10 +887,7 @@ export const selvstendigNæringsdrivende = () => {
             {
               avslagKode: null,
               merknadParametere: {},
-              vilkarStatus: {
-                kode: 'IKKE_VURDERT',
-                kodeverk: 'VILKAR_UTFALL_TYPE',
-              },
+              vilkarStatus: 'IKKE_VURDERT',
               periode: {
                 fom: '2020-05-04',
                 tom: '2020-05-04',
@@ -1089,7 +931,7 @@ export const tidsbegrensetArbeidsforholdMedAvvik = () => {
   const perioder = [
     lagPeriode(andeler, undefined, '2019-09-16', '2019-09-29', []),
     lagTidsbegrensetPeriode(andeler, '2019-09-30', '2019-10-15'),
-    lagPeriode(andeler, undefined, '2019-10-15', null, [{ kode: periodeAarsak.ARBEIDSFORHOLD_AVSLUTTET }]),
+    lagPeriode(andeler, undefined, '2019-10-15', null, [periodeAarsak.ARBEIDSFORHOLD_AVSLUTTET]),
   ];
   const statuser = [lagStatus('AT_FL')];
   const sammenligningsgrunnlagPrStatus = [lagSammenligningsGrunnlag(sammenligningType.ATFLSN, 474257, 26.2, 77059)];
@@ -1181,16 +1023,16 @@ export const naturalYtelse = () => {
   delete andel1.bortfaltNaturalytelse;
   const statuser = [lagStatus('AT')];
   const periode1 = lagPeriode([{ ...andel1 }, { ...andel2 }, { ...andel3 }], 4432, '2019-03-21', '2019-05-31', [
-    { kode: periodeAarsak.NATURALYTELSE_BORTFALT },
+    periodeAarsak.NATURALYTELSE_BORTFALT,
   ]);
   andel1.bortfaltNaturalytelse = 1231;
   delete andel2.bortfaltNaturalytelse;
   delete andel3.bortfaltNaturalytelse;
   const periode2 = lagPeriode([{ ...andel1 }, { ...andel2 }, { ...andel3 }], 2432, '2019-06-01', '2019-07-30', [
-    { kode: periodeAarsak.NATURALYTELSE_BORTFALT },
+    periodeAarsak.NATURALYTELSE_BORTFALT,
   ]);
   const periode3 = lagPeriode([{ ...andel1 }, { ...andel2 }, { ...andel3 }], 3432, '2019-08-01', '2019-09-30', [
-    { kode: periodeAarsak.ARBEIDSFORHOLD_AVSLUTTET },
+    periodeAarsak.ARBEIDSFORHOLD_AVSLUTTET,
   ]);
 
   const perioder = [periode1, periode2, periode3];
@@ -1285,7 +1127,7 @@ export const arbeidstakerOgSelvstendigNæringsdrivendeUtenAkjsonspunkt = () => {
       regnskapsførerNavn: 'Regnar Regnskap',
       regnskapsførerTlf: '99999999',
       utenlandskvirksomhetsnavn: null,
-      virksomhetType: { kode: 'ANNEN', kodeverk: 'VIRKSOMHET_TYPE' },
+      virksomhetType: 'ANNEN',
       kode: 'ANNEN',
       kodeverk: 'VIRKSOMHET_TYPE',
     },
@@ -1347,7 +1189,7 @@ export const arbeidstakerOgFrilansOgSelvstendigNæringsdrivendeMedAksjonspunktBe
       regnskapsførerNavn: 'Regnar Regnskap',
       regnskapsførerTlf: '99999999',
       utenlandskvirksomhetsnavn: null,
-      virksomhetType: { kode: 'ANNEN', kodeverk: 'VIRKSOMHET_TYPE' },
+      virksomhetType: 'ANNEN',
       kode: 'ANNEN',
       kodeverk: 'VIRKSOMHET_TYPE',
     },
@@ -1415,7 +1257,7 @@ export const arbeidstakerDagpengerOgSelvstendigNæringsdrivendeUtenAksjonspunkt 
       regnskapsførerNavn: 'Regnar Regnskap',
       regnskapsførerTlf: '99999999',
       utenlandskvirksomhetsnavn: null,
-      virksomhetType: { kode: 'DAGMAMMA', kodeverk: 'VIRKSOMHET_TYPE' },
+      virksomhetType: 'DAGMAMMA',
       kode: 'ANNEN',
       kodeverk: 'VIRKSOMHET_TYPE',
     },
@@ -1916,7 +1758,7 @@ export const SelvstendigNæringsdrivendeUtenVarigEndringIkkeNyoppstartetSide12 =
       regnskapsførerNavn: 'Regnar Regnskap',
       regnskapsførerTlf: '99999999',
       utenlandskvirksomhetsnavn: null,
-      virksomhetType: { kode: 'ANNEN', kodeverk: 'VIRKSOMHET_TYPE' },
+      virksomhetType: 'ANNEN',
       kode: 'ANNEN',
       kodeverk: 'VIRKSOMHET_TYPE',
     },
@@ -1975,7 +1817,7 @@ export const SelvstendigNæringsdrivendeMedVarigEndringSide13 = () => {
       regnskapsførerNavn: 'Regnar Regnskap',
       regnskapsførerTlf: '99999999',
       utenlandskvirksomhetsnavn: null,
-      virksomhetType: { kode: 'ANNEN', kodeverk: 'VIRKSOMHET_TYPE' },
+      virksomhetType: 'ANNEN',
       virksomhetNavn: 'Jensen frisør og hudpleie',
       kode: 'ANNEN',
       kodeverk: 'VIRKSOMHET_TYPE',
@@ -1991,7 +1833,7 @@ export const SelvstendigNæringsdrivendeMedVarigEndringSide13 = () => {
       opphoersdato: '2010-03-01',
       orgnr: '910909077',
       utenlandskvirksomhetsnavn: null,
-      virksomhetType: { kode: 'JORDBRUK_SKOGBRUK', kodeverk: 'VIRKSOMHET_TYPE' },
+      virksomhetType: 'JORDBRUK_SKOGBRUK',
       virksomhetNavn: 'Berit Jensen',
     },
   ];
@@ -2049,7 +1891,7 @@ export const SelvstendigNæringsdrivendeMedVarigEndringMedAksjonspunktSide14 = (
       regnskapsførerNavn: 'Regnar Regnskap',
       regnskapsførerTlf: '99999999',
       utenlandskvirksomhetsnavn: null,
-      virksomhetType: { kode: 'ANNEN', kodeverk: 'VIRKSOMHET_TYPE' },
+      virksomhetType: 'ANNEN',
       kode: 'ANNEN',
       kodeverk: 'VIRKSOMHET_TYPE',
     },
@@ -2115,7 +1957,7 @@ export const SelvstendigNæringsdrivendeMedVarigEndringMedAksjonspunktUtførtSid
       regnskapsførerNavn: 'Regnar Regnskap',
       regnskapsførerTlf: '99999999',
       utenlandskvirksomhetsnavn: null,
-      virksomhetType: { kode: 'ANNEN', kodeverk: 'VIRKSOMHET_TYPE' },
+      virksomhetType: 'ANNEN',
       kode: 'ANNEN',
       kodeverk: 'VIRKSOMHET_TYPE',
     },
@@ -2179,7 +2021,7 @@ export const SelvstendigNæringsdrivendeNyoppstartetMedAksjonspunktSide16 = () =
       regnskapsførerNavn: 'Regnar Regnskap',
       regnskapsførerTlf: '99999999',
       utenlandskvirksomhetsnavn: null,
-      virksomhetType: { kode: 'ANNEN', kodeverk: 'VIRKSOMHET_TYPE' },
+      virksomhetType: 'ANNEN',
       kode: 'ANNEN',
       kodeverk: 'VIRKSOMHET_TYPE',
     },
@@ -2244,7 +2086,7 @@ export const SelvstendigNæringsdrivendeNyoppstartetMedAksjonspunktMedForlengels
       regnskapsførerNavn: 'Regnar Regnskap',
       regnskapsførerTlf: '99999999',
       utenlandskvirksomhetsnavn: null,
-      virksomhetType: { kode: 'ANNEN', kodeverk: 'VIRKSOMHET_TYPE' },
+      virksomhetType: 'ANNEN',
       kode: 'ANNEN',
       kodeverk: 'VIRKSOMHET_TYPE',
     },
@@ -2255,7 +2097,7 @@ export const SelvstendigNæringsdrivendeNyoppstartetMedAksjonspunktMedForlengels
     aksjonspunktCodes.VURDER_VARIG_ENDRET_ELLER_NYOPPSTARTET_NAERING_SELVSTENDIG_NAERINGSDRIVENDE,
   );
   ap[0].status = 'UTFO';
-  ap[0].begrunnelse = "En skikkelig god begrunnelse";
+  ap[0].begrunnelse = 'En skikkelig god begrunnelse';
   const bg1 = lagBG(perioder, statuser, sammenligningsgrunnlagPrStatus, ap, stp1);
   bg1.dekningsgrad = 100;
 
@@ -2321,7 +2163,7 @@ export const SelvstendigNæringsdrivendeNyINæringslivetMedAksjonspunktSide17 = 
       regnskapsførerNavn: 'Regnar Regnskap',
       regnskapsførerTlf: '99999999',
       utenlandskvirksomhetsnavn: null,
-      virksomhetType: { kode: 'ANNEN', kodeverk: 'VIRKSOMHET_TYPE' },
+      virksomhetType: 'ANNEN',
       kode: 'ANNEN',
       kodeverk: 'VIRKSOMHET_TYPE',
     },
@@ -2379,7 +2221,7 @@ export const arbeidstakerOgSelvstendigNæringsdrivendeSnStorreEnnAtOgStorreEnn6g
       regnskapsførerNavn: 'Regnar Regnskap',
       regnskapsførerTlf: '99999999',
       utenlandskvirksomhetsnavn: null,
-      virksomhetType: { kode: 'ANNEN', kodeverk: 'VIRKSOMHET_TYPE' },
+      virksomhetType: 'ANNEN',
       kode: 'ANNEN',
       kodeverk: 'VIRKSOMHET_TYPE',
     },
@@ -2436,7 +2278,7 @@ export const arbeidstakerOgSelvstendigNæringsdrivendeSnMindreEnnAtOgStorreEnn6g
       regnskapsførerNavn: 'Regnar Regnskap',
       regnskapsførerTlf: '99999999',
       utenlandskvirksomhetsnavn: null,
-      virksomhetType: { kode: 'ANNEN', kodeverk: 'VIRKSOMHET_TYPE' },
+      virksomhetType: 'ANNEN',
       kode: 'ANNEN',
       kodeverk: 'VIRKSOMHET_TYPE',
     },
@@ -2492,7 +2334,7 @@ export const arbeidstakerOgSelvstendigNæringsdrivendeMedAPVarigEndringSide20 = 
       regnskapsførerNavn: 'Regnar Regnskap',
       regnskapsførerTlf: '99999999',
       utenlandskvirksomhetsnavn: null,
-      virksomhetType: { kode: 'ANNEN', kodeverk: 'VIRKSOMHET_TYPE' },
+      virksomhetType: 'ANNEN',
       kode: 'ANNEN',
       kodeverk: 'VIRKSOMHET_TYPE',
     },
@@ -2558,7 +2400,7 @@ export const arbeidstakerOgSelvstendigNæringsdrivendeMedVarigEndringApBehandlet
       regnskapsførerNavn: 'Regnar Regnskap',
       regnskapsførerTlf: '99999999',
       utenlandskvirksomhetsnavn: null,
-      virksomhetType: { kode: 'ANNEN', kodeverk: 'VIRKSOMHET_TYPE' },
+      virksomhetType: 'ANNEN',
       kode: 'ANNEN',
       kodeverk: 'VIRKSOMHET_TYPE',
     },
@@ -2622,7 +2464,7 @@ export const arbeidstakerOgSelvstendigNæringsdrivendeAtStorreEnnSNMedVarigEndri
       regnskapsførerNavn: 'Regnar Regnskap',
       regnskapsførerTlf: '99999999',
       utenlandskvirksomhetsnavn: null,
-      virksomhetType: { kode: 'ANNEN', kodeverk: 'VIRKSOMHET_TYPE' },
+      virksomhetType: 'ANNEN',
       kode: 'ANNEN',
       kodeverk: 'VIRKSOMHET_TYPE',
     },
@@ -2686,7 +2528,7 @@ export const arbeidstakerOgSelvstendigNæringsdrivendeAtStorreEnnSNSide22 = () =
       regnskapsførerNavn: 'Regnar Regnskap',
       regnskapsførerTlf: '99999999',
       utenlandskvirksomhetsnavn: null,
-      virksomhetType: { kode: 'ANNEN', kodeverk: 'VIRKSOMHET_TYPE' },
+      virksomhetType: 'ANNEN',
       kode: 'ANNEN',
       kodeverk: 'VIRKSOMHET_TYPE',
     },
@@ -2746,7 +2588,7 @@ export const arbeidstakerFrilansOgSelvstendigNæringsdrivendeMedApOgVarigEndring
       regnskapsførerNavn: 'Regnar Regnskap',
       regnskapsførerTlf: '99999999',
       utenlandskvirksomhetsnavn: null,
-      virksomhetType: { kode: 'ANNEN', kodeverk: 'VIRKSOMHET_TYPE' },
+      virksomhetType: 'ANNEN',
       kode: 'ANNEN',
       kodeverk: 'VIRKSOMHET_TYPE',
     },
@@ -2821,7 +2663,7 @@ export const arbeidstakerFrilansOgSelvstendigNæringsdrivendeMedApOgVarigEndring
       regnskapsførerTlf: '99999999',
       utenlandskvirksomhetsnavn: null,
       virksomhetNavn: 'Jensen frisør og hudpleie',
-      virksomhetType: { kode: 'ANNEN', kodeverk: 'VIRKSOMHET_TYPE' },
+      virksomhetType: 'ANNEN',
       kode: 'ANNEN',
       kodeverk: 'VIRKSOMHET_TYPE',
     },
@@ -2896,7 +2738,7 @@ export const arbeidstakerFrilansOgSelvstendigNæringsdrivendeMedAPVarigEndringSn
       regnskapsførerTlf: '99999999',
       utenlandskvirksomhetsnavn: null,
       virksomhetNavn: 'Jensen frisør og hudpleie',
-      virksomhetType: { kode: 'ANNEN', kodeverk: 'VIRKSOMHET_TYPE' },
+      virksomhetType: 'ANNEN',
       kode: 'ANNEN',
       kodeverk: 'VIRKSOMHET_TYPE',
     },
@@ -3174,7 +3016,7 @@ export const frilansDagpengerOgSelvstendigNæringsdrivendeMedAksjonspunktSide31 
       regnskapsførerNavn: 'Regnar Regnskap',
       regnskapsførerTlf: '99999999',
       utenlandskvirksomhetsnavn: null,
-      virksomhetType: { kode: 'ANNEN', kodeverk: 'VIRKSOMHET_TYPE' },
+      virksomhetType: 'ANNEN',
       kode: 'ANNEN',
       kodeverk: 'VIRKSOMHET_TYPE',
     },

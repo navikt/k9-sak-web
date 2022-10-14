@@ -11,17 +11,13 @@ import withReduxProvider from '../../decorators/withRedux';
 
 const fagsak = {
   saksnummer: 123,
-  fagsakYtelseType: {
-    kode: fagsakYtelseType.FORELDREPENGER,
-  },
+  fagsakYtelseType: fagsakYtelseType.FORELDREPENGER,
 };
 
 const behandling = {
   id: 1,
   versjon: 1,
-  sprakkode: {
-    kode: 'NO',
-  },
+  sprakkode: 'NO',
 };
 
 const simuleringResultat = {
@@ -36,20 +32,12 @@ const simuleringResultat = {
     ingenPerioderMedAvvik: false,
     perioderPerMottaker: [
       {
-        mottakerType: {
-          kode: 'BRUKER',
-          navn: null,
-          kodeverk: 'MOTTAKER_TYPE',
-        },
+        mottakerType: 'BRUKER',
         mottakerNummer: null,
         mottakerNavn: null,
         resultatPerFagområde: [
           {
-            fagOmrådeKode: {
-              kode: 'FP',
-              navn: 'Foreldrepenger',
-              kodeverk: 'FAG_OMRAADE_KODE',
-            },
+            fagOmrådeKode: 'FP',
             rader: [
               {
                 feltnavn: 'nyttBeløp',
@@ -178,9 +166,7 @@ export const visAksjonspunktVurderFeilutbetaling = () => (
     behandling={behandling}
     aksjonspunkter={object('aksjonspunkter', [
       {
-        definisjon: {
-          kode: aksjonspunktCodes.VURDER_FEILUTBETALING,
-        },
+        definisjon: aksjonspunktCodes.VURDER_FEILUTBETALING,
         begrunnelse: undefined,
       },
     ])}
@@ -201,9 +187,7 @@ export const visSimuleringspanelUtenAksjonspunkt = () => (
     aksjonspunkter={[]}
     simuleringResultat={object('simuleringResultat', simuleringResultat)}
     tilbakekrevingvalg={object('tilbakekrevingvalg', {
-      videreBehandling: {
-        kode: tilbakekrevingVidereBehandling.TILBAKEKR_OPPDATER,
-      },
+      videreBehandling: tilbakekrevingVidereBehandling.TILBAKEKR_OPPDATER,
       varseltekst: 'varsel-eksempel',
     })}
     submitCallback={action('button-click')}

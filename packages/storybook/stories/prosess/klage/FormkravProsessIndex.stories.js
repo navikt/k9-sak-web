@@ -14,17 +14,13 @@ import alleKodeverk from '../../mocks/alleKodeverk.json';
 const behandling = {
   id: 1,
   versjon: 1,
-  sprakkode: {
-    kode: 'NO',
-  },
+  sprakkode: 'NO',
 };
 
 const avsluttedeBehandlinger = [
   {
     id: 1,
-    type: {
-      kode: behandlingType.FORSTEGANGSSOKNAD,
-    },
+    type: behandlingType.FORSTEGANGSSOKNAD,
     avsluttet: '2017-08-02T00:54:25.455',
   },
 ];
@@ -61,9 +57,7 @@ export const visFormkravPanelForAksjonspunktNfp = () => (
     avsluttedeBehandlinger={avsluttedeBehandlinger}
     aksjonspunkter={[
       {
-        definisjon: {
-          kode: aksjonspunktCodes.VURDERING_AV_FORMKRAV_KLAGE_NFP,
-        },
+        definisjon: aksjonspunktCodes.VURDERING_AV_FORMKRAV_KLAGE_NFP,
       },
     ]}
   />
@@ -95,9 +89,7 @@ export const visFormkravPanelForAksjonspunktKa = () => (
     avsluttedeBehandlinger={avsluttedeBehandlinger}
     aksjonspunkter={[
       {
-        definisjon: {
-          kode: aksjonspunktCodes.VURDERING_AV_FORMKRAV_KLAGE_KA,
-        },
+        definisjon: aksjonspunktCodes.VURDERING_AV_FORMKRAV_KLAGE_KA,
       },
     ]}
   />

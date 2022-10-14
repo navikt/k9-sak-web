@@ -22,9 +22,7 @@ const opptjening = {
         id: 1,
         fom: '2018-01-01',
         tom: '2018-04-04',
-        klasse: {
-          kode: opptjeningAktivitetKlassifisering.BEKREFTET_GODKJENT,
-        },
+        klasse: opptjeningAktivitetKlassifisering.BEKREFTET_GODKJENT,
       },
     ],
     opptjeningFom: '2018-01-01',
@@ -43,9 +41,7 @@ const opptjening2 = {
         id: 1,
         fom: '2018-05-01',
         tom: '2018-09-04',
-        klasse: {
-          kode: opptjeningAktivitetKlassifisering.BEKREFTET_GODKJENT,
-        },
+        klasse: opptjeningAktivitetKlassifisering.BEKREFTET_GODKJENT,
       },
     ],
     opptjeningFom: '2018-02-01',
@@ -61,7 +57,7 @@ const behandlingsresultat = {
         periode: { fom: '2018-01-01', tom: '2018-04-04' },
         fom: '2018-01-01',
         tom: '2018-10-01',
-        utfall: { kode: 'IKKE_VURDERT', kodeverk: 'VILKAR_UTFALL_TYPE' },
+        utfall: 'IKKE_VURDERT',
         kode: 'IKKE_VURDERT',
         kodeverk: 'VILKAR_UTFALL_TYPE',
       },
@@ -70,7 +66,7 @@ const behandlingsresultat = {
         periode: { fom: '2018-05-01', tom: '2018-09-04' },
         fom: '2018-02-01',
         tom: '2018-12-01',
-        utfall: { kode: 'IKKE_VURDERT', kodeverk: 'VILKAR_UTFALL_TYPE' },
+        utfall: 'IKKE_VURDERT',
         kode: 'IKKE_VURDERT',
         kodeverk: 'VILKAR_UTFALL_TYPE',
       },
@@ -99,10 +95,7 @@ export const visPanelForÅpentAksjonspunkt = () => (
     opptjening={opptjeninger}
     vilkar={[
       {
-        vilkarType: {
-          kode: 'FP_VK_23',
-          kodeverk: 'VILKAR_TYPE',
-        },
+        vilkarType: 'FP_VK_23',
         lovReferanse: '§ 9-2 jamfør 8-2',
         overstyrbar: true,
         perioder: [
@@ -113,20 +106,14 @@ export const visPanelForÅpentAksjonspunkt = () => (
               antattOpptjeningAktivitetTidslinje:
                 'LocalDateTimeline<2020-04-17, 2020-04-26 [1]> = [[2020-04-17, 2020-04-26]]',
             },
-            vilkarStatus: {
-              kode: 'OPPFYLT',
-              kodeverk: 'VILKAR_UTFALL_TYPE',
-            },
+            vilkarStatus: 'OPPFYLT',
             periode: {
               fom: '2020-04-27',
               tom: '2020-04-27',
             },
             begrunnelse: null,
             vurderesIBehandlingen: true,
-            merknad: {
-              kode: '7847B',
-              kodeverk: 'VILKAR_UTFALL_MERKNAD',
-            },
+            merknad: '7847B',
           },
         ],
       },
@@ -134,12 +121,8 @@ export const visPanelForÅpentAksjonspunkt = () => (
     aksjonspunkter={
       [
         {
-          definisjon: {
-            kode: aksjonspunktCodes.SVANGERSKAPSVILKARET,
-          },
-          status: {
-            kode: aksjonspunktStatus.OPPRETTET,
-          },
+          definisjon: aksjonspunktCodes.SVANGERSKAPSVILKARET,
+          status: aksjonspunktStatus.OPPRETTET,
           begrunnelse: undefined,
         },
       ] as Aksjonspunkt[]
@@ -166,10 +149,7 @@ export const visPanelForNårEnIkkeHarAksjonspunkt = () => (
     opptjening={opptjening}
     vilkar={[
       {
-        vilkarType: {
-          kode: 'FP_VK_23',
-          kodeverk: 'VILKAR_TYPE',
-        },
+        vilkarType: 'FP_VK_23',
         lovReferanse: '§ 9-2 jamfør 8-2',
         overstyrbar: true,
         perioder: [
@@ -180,20 +160,14 @@ export const visPanelForNårEnIkkeHarAksjonspunkt = () => (
               antattOpptjeningAktivitetTidslinje:
                 'LocalDateTimeline<2020-04-17, 2020-04-26 [1]> = [[2020-04-17, 2020-04-26]]',
             },
-            vilkarStatus: {
-              kode: 'OPPFYLT',
-              kodeverk: 'VILKAR_UTFALL_TYPE',
-            },
+            vilkarStatus: 'OPPFYLT',
             periode: {
               fom: '2020-04-27',
               tom: '2020-04-27',
             },
             begrunnelse: null,
             vurderesIBehandlingen: true,
-            merknad: {
-              kode: '1035',
-              kodeverk: 'VILKAR_UTFALL_MERKNAD',
-            },
+            merknad: '1035',
           },
         ],
       },
