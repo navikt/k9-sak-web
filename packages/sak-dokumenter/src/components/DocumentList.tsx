@@ -122,10 +122,6 @@ const DocumentList = ({
   const makeDocumentURL = (document: Dokument) =>
     `/k9/sak/api/dokument/hent-dokument?saksnummer=${saksnummer}&journalpostId=${document.journalpostId}&dokumentId=${document.dokumentId}`;
 
-  const selectDocument = (_e, _id, document: Dokument): void => {
-    window.open(makeDocumentURL(document), '_blank');
-  };
-
   return (
     <>
       <div className={styles.controlsContainer}>
@@ -152,17 +148,24 @@ const DocumentList = ({
                 key={document.dokumentId}
                 id={document.dokumentId}
                 model={document}
-                onMouseDown={selectDocument}
-                onKeyDown={selectDocument}
+                notFocusable
                 className={isVedtaksdokument(document) ? styles.borderTop : ''}
               >
                 <TableColumn>
-                  <Image
-                    className={styles.image}
-                    src={directionImage}
-                    alt={intl.formatMessage({ id: directionTextCode })}
-                    tooltip={intl.formatMessage({ id: directionTextCode })}
-                  />
+                  <a
+                    className={styles.documentAnchorPlain}
+                    href={makeDocumentURL(document)}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    tabIndex={-1}
+                  >
+                    <Image
+                      className={styles.image}
+                      src={directionImage}
+                      alt={intl.formatMessage({ id: directionTextCode })}
+                      tooltip={intl.formatMessage({ id: directionTextCode })}
+                    />
+                  </a>
                 </TableColumn>
                 <TableColumn>
                   <a
@@ -173,7 +176,6 @@ const DocumentList = ({
                     target="_blank"
                     rel="noopener noreferrer"
                     className={styles.documentAnchor}
-                    tabIndex={-1}
                   >
                     {isVedtaksdokument(document) ? (
                       <Element>{document.tittel}</Element>
@@ -183,21 +185,37 @@ const DocumentList = ({
                   </a>
                 </TableColumn>
                 <TableColumn>
-                  {isTextMoreThan25char(document.gjelderFor) && (
-                    <Tooltip content={<Normaltekst>{document.gjelderFor}</Normaltekst>} alignLeft>
-                      {trimText(document.gjelderFor)}
-                    </Tooltip>
-                  )}
-                  {!isTextMoreThan25char(document.gjelderFor) && document.gjelderFor}
+                  <a
+                    className={styles.documentAnchorPlain}
+                    href={makeDocumentURL(document)}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    tabIndex={-1}
+                  >
+                    {isTextMoreThan25char(document.gjelderFor) && (
+                      <Tooltip content={<Normaltekst>{document.gjelderFor}</Normaltekst>} alignLeft>
+                        {trimText(document.gjelderFor)}
+                      </Tooltip>
+                    )}
+                    {!isTextMoreThan25char(document.gjelderFor) && document.gjelderFor}
+                  </a>
                 </TableColumn>
                 <TableColumn>
-                  {document.tidspunkt ? (
-                    <DateTimeLabel dateTimeString={document.tidspunkt} />
-                  ) : (
-                    <Normaltekst>
-                      <FormattedMessage id="DocumentList.IProduksjon" />
-                    </Normaltekst>
-                  )}
+                  <a
+                    className={styles.documentAnchorPlain}
+                    href={makeDocumentURL(document)}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    tabIndex={-1}
+                  >
+                    {document.tidspunkt ? (
+                      <DateTimeLabel dateTimeString={document.tidspunkt} />
+                    ) : (
+                      <Normaltekst>
+                        <FormattedMessage id="DocumentList.IProduksjon" />
+                      </Normaltekst>
+                    )}
+                  </a>
                 </TableColumn>
               </TableRow>
             );

@@ -133,6 +133,7 @@ const OmsorgspengerFakta = ({
               submitCallback: bekreftAksjonspunktCallback,
               ...valgtPanel.getKomponentData(rettigheter, dataTilUtledingAvOmsorgPaneler, hasFetchError),
               dokumenter,
+              featureToggles,
             })}
           </ErrorBoundary>
         )}{' '}

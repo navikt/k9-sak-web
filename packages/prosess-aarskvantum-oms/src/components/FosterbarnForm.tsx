@@ -5,6 +5,7 @@ import { Knapp } from 'nav-frontend-knapper';
 import { InputField } from '@fpsak-frontend/form/index';
 
 import { Delete } from '@navikt/ds-icons';
+import { FormattedMessage } from 'react-intl';
 import { fosterbarnDto } from '../dto/FosterbarnDto';
 
 import styles from './aksjonspunktForm.less';
@@ -22,8 +23,12 @@ const FosterbarnForm = ({ fields, barn, isAksjonspunktOpen }: Props) => (
         <Table>
           <TableRow isHeader>
             <TableColumn />
-            <TableColumn>Fødselsnummer</TableColumn>
-            <TableColumn className={styles.sentrert}>Fjern</TableColumn>
+            <TableColumn>
+              <FormattedMessage id="Årskvantum.Aksjonspunkt.Avslått.Fosterbarn.Fnr" />
+            </TableColumn>
+            <TableColumn className={styles.sentrert}>
+              <FormattedMessage id="Årskvantum.Aksjonspunkt.Avslått.Fosterbarn.Fjern" />
+            </TableColumn>
           </TableRow>
           {fields.map((field, index) => {
             const fosterbarnObj = barn[index];
@@ -32,7 +37,6 @@ const FosterbarnForm = ({ fields, barn, isAksjonspunktOpen }: Props) => (
               <TableRow key={`${navn}`}>
                 <TableColumn className={styles.vertikaltSentrert}>{navn}</TableColumn>
                 <TableColumn className={styles.vertikaltSentrert}>
-                  {navn}
                   <InputField
                     name={field}
                     type="text"
@@ -61,7 +65,7 @@ const FosterbarnForm = ({ fields, barn, isAksjonspunktOpen }: Props) => (
       </>
     )}
     <Knapp type="flat" htmlType="button" onClick={() => fields.push('')} mini>
-      Legg til fosterbarn
+      <FormattedMessage id="Årskvantum.Aksjonspunkt.Avslått.Fosterbarn.LeggTil" />
     </Knapp>
   </>
 );

@@ -18,6 +18,7 @@ export enum KlageBehandlingApiKeys {
   SAVE_REOPEN_KLAGE_VURDERING = 'SAVE_REOPEN_KLAGE_VURDERING',
   PARTER_MED_KLAGERETT = 'PARTER_MED_KLAGERETT',
   VALGT_PART_MED_KLAGERETT = 'VALGT_PART_MED_KLAGERETT',
+  HENT_FRITEKSTBREV_HTML = 'HENT_FRITEKSTBREV_HTML',
 }
 
 const endpoints = new RestApiConfigBuilder()
@@ -44,6 +45,7 @@ const endpoints = new RestApiConfigBuilder()
 
   /* K9FORMIDLING */
   .withPost('/k9/formidling/api/brev/forhaandsvis', KlageBehandlingApiKeys.PREVIEW_MESSAGE, { isResponseBlob: true })
+  .withPost('/k9/formidling/api/brev/html', KlageBehandlingApiKeys.HENT_FRITEKSTBREV_HTML)
   .build();
 
 export const requestKlageApi = createRequestApi(endpoints);

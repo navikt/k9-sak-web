@@ -3,7 +3,7 @@ import React, { useState, useCallback, useMemo } from 'react';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
-import lagForhåndsvisRequest from '@fpsak-frontend/utils/src/formidlingUtils';
+import lagForhåndsvisRequest, { bestemAvsenderApp } from '@fpsak-frontend/utils/src/formidlingUtils';
 import {
   Rettigheter,
   prosessStegHooks,
@@ -79,6 +79,23 @@ const getForhandsvisFptilbakeCallback =
     return forhandsvisTilbakekrevingMelding(data).then(response => forhandsvis(response));
   };
 
+const getHentFritekstbrevHtmlCallback =
+  (
+    hentFriteksbrevHtml: (data: any) => Promise<any>,
+    behandling: Behandling,
+    fagsak: Fagsak,
+    fagsakPerson: FagsakPerson,
+  ) =>
+  (parameters: any) =>
+    hentFriteksbrevHtml({
+      ...parameters,
+      eksternReferanse: behandling.uuid,
+      ytelseType: fagsak.sakstype,
+      saksnummer: fagsak.saksnummer,
+      aktørId: fagsakPerson.aktørId,
+      avsenderApplikasjon: bestemAvsenderApp(behandling.type.kode),
+    });
+
 const getLagringSideeffekter =
   (
     toggleIverksetterVedtakModal,
@@ -152,6 +169,9 @@ const FrisinnProsess = ({
   const { startRequest: forhandsvisMelding } = restApiFrisinnHooks.useRestApiRunner(
     FrisinnBehandlingApiKeys.PREVIEW_MESSAGE,
   );
+  const { startRequest: hentFriteksbrevHtml } = restApiFrisinnHooks.useRestApiRunner(
+    FrisinnBehandlingApiKeys.HENT_FRITEKSTBREV_HTML,
+  );
   const { startRequest: forhandsvisTilbakekrevingMelding } = restApiFrisinnHooks.useRestApiRunner<Behandling>(
     FrisinnBehandlingApiKeys.PREVIEW_TILBAKEKREVING_MESSAGE,
   );
@@ -165,6 +185,10 @@ const FrisinnProsess = ({
     ]),
     previewFptilbakeCallback: useCallback(
       getForhandsvisFptilbakeCallback(forhandsvisTilbakekrevingMelding, fagsak, behandling),
+      [behandling.versjon],
+    ),
+    hentFritekstbrevHtmlCallback: useCallback(
+      getHentFritekstbrevHtmlCallback(hentFriteksbrevHtml, behandling, fagsak, fagsakPerson),
       [behandling.versjon],
     ),
     fagsakPerson,

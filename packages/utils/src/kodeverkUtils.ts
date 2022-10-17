@@ -17,12 +17,10 @@ export const getKodeverknavnFraKode = (
   const kodeverk = kodeverkForType.find(k => k.kode === kode);
   return kodeverk ? kodeverk.navn : '';
 };
-export const getKodeverknavnFn = (
-  alleKodeverk: { [key: string]: KodeverkMedNavn[] },
-  kodeverkTyper: { [key: string]: string },
-) => (kodeverkOjekt: Kodeverk, undertype?: string) =>
-  getKodeverknavnFraKode(alleKodeverk, kodeverkTyper[kodeverkOjekt.kodeverk], kodeverkOjekt.kode, undertype);
-
+export const getKodeverknavnFn =
+  (alleKodeverk: { [key: string]: KodeverkMedNavn[] }, kodeverkTyper: { [key: string]: string }) =>
+  (kodeverkOjekt: Kodeverk, undertype?: string) =>
+    getKodeverknavnFraKode(alleKodeverk, kodeverkTyper[kodeverkOjekt.kodeverk], kodeverkOjekt.kode, undertype);
 
 export const konverterKodeverkTilKode = (data: any, erTilbakekreving = false) => {
   if (data === undefined || data === null) {
@@ -30,10 +28,15 @@ export const konverterKodeverkTilKode = (data: any, erTilbakekreving = false) =>
   }
   const lengdeKodeverkObject = erTilbakekreving ? 3 : 2;
 
-  Object.keys(data).forEach((key) => {
+  Object.keys(data).forEach(key => {
     if (data[key]?.kode) {
       const antallAttr = Object.keys(data[key]).length;
-      if ((data[key]?.kodeverk && (antallAttr === lengdeKodeverkObject || data[key]?.kodeverk === 'AVKLARINGSBEHOV_DEF')) || antallAttr === 1 ) {
+      if (
+        (data[key]?.kodeverk &&
+          (antallAttr === lengdeKodeverkObject || data[key]?.kodeverk === 'AVKLARINGSBEHOV_DEF')) ||
+        antallAttr === 1
+      ) {
+        // eslint-disable-next-line no-param-reassign
         data[key] = data[key].kode;
       }
     }
@@ -41,5 +44,4 @@ export const konverterKodeverkTilKode = (data: any, erTilbakekreving = false) =>
       konverterKodeverkTilKode(data[key], erTilbakekreving);
     }
   });
-
-}
+};

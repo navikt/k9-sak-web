@@ -8,10 +8,10 @@ metadata:
   annotations:
     nais.io/run-as-user: "101" # Fix permissions for nginx
     nais.io/read-only-file-system: "false" # Fix permissions for nginx
+    nginx.ingress.kubernetes.io/proxy-buffer-size: "16k"
 spec:
   image: {{ image }}
   port: 9000
-  sessionAffinity: ClientIP
   team: k9saksbehandling
   liveness:
     path: /isAlive
@@ -55,9 +55,8 @@ spec:
       value: "http://k9-tilbake.default"
     - name: APP_URL_K9FORDEL
       value: "http://k9-fordel.k9saksbehandling"
-    # setter denne til å peke på k9-sak, inntil diagnosekode-apiinstansen er oppe i prod
     - name: APP_DIAGNOSEKODER
-      value: "http://diagnosekode-api/diagnosekoder/"
+      value: "http://diagnosekode-api.k9saksbehandling/diagnosekoder"
     - name: MEDISINSK_VILKAR_FRONTEND_URL
       value: "https://medisinsk-vilkar-frontend.intern.nav.no/"
     - name: OMSORGSDAGER_FRONTEND_URL
@@ -97,14 +96,20 @@ spec:
     - name: LOS_MARKER_BEHANDLING
       value: "true"
     - name: NY_BEREGNING_PROSESS_ENABLED
-      value: "false"
+      value: "true"
     - name: NY_BEREGNING_FAKTA_ENABLED
-      value: "false"
+      value: "true"
     - name: NY_BEREGNING_FAKTA_FORDEL_ENABLED
-      value: "false"
+      value: "true"
     - name: AKSJONSPUNKT_9014
       value: "false"
     - name: AKSJONSPUNKT_9015
       value: "false"
     - name: NY_PROSESS_VEDTAK_ENABLED
+      value: "false"
+    - name: FRITEKST_REDIGERING
+      value: "false"
+    - name: FIKS_DELVIS_PROSESSTEG
+      value: "false"
+    - name: FIX_SOKNADSFRIST_KALENDER_OG_READONLY
       value: "false"

@@ -9,17 +9,20 @@ import {
   harMellomLagretMedIngenBrev,
   harMellomlagretRedusertUtbetalingArsak,
   harPotensieltFlereInformasjonsbehov,
+  harSattDokumentdataType,
   kanHaAutomatiskVedtaksbrev,
   kanHaFritekstbrev,
+  kanHaManueltFritekstbrev,
   kanHindreUtsending,
   kanKunVelge,
   TilgjengeligeVedtaksbrev,
+  TilgjengeligeVedtaksbrevMedMaler,
 } from '@fpsak-frontend/utils/src/formidlingUtils';
 import { VedtakFormContext } from '@k9-sak-web/behandling-felles/src/components/ProsessStegContainer';
 import { dokumentdatatype } from '@k9-sak-web/konstanter';
 import {
   Aksjonspunkt,
-  ArbeidsgiverOpplysninger,
+  ArbeidsgiverOpplysningerPerId,
   Behandlingsresultat,
   BehandlingStatusType,
   Kodeverk,
@@ -29,7 +32,7 @@ import {
 } from '@k9-sak-web/types';
 import { DokumentDataType, LagreDokumentdataType } from '@k9-sak-web/types/src/dokumentdata';
 import { Checkbox, Label, Modal } from '@navikt/ds-react';
-import { Formik } from 'formik';
+import { Formik, FormikProps } from 'formik';
 import React, { useContext, useEffect, useState } from 'react';
 import { injectIntl, IntlShape } from 'react-intl';
 import redusertUtbetalingArsak from '../kodeverk/redusertUtbetalingArsak';
@@ -45,6 +48,7 @@ import VedtakAvslagPanel from './VedtakAvslagPanel';
 import styles from './vedtakForm.less';
 import VedtakInnvilgetPanel from './VedtakInnvilgetPanel';
 import VedtakSubmit from './VedtakSubmit';
+import { InformasjonsbehovVedtaksbrev } from './brev/InformasjonsbehovAutomatiskVedtaksbrev';
 
 const isVedtakSubmission = true;
 
@@ -60,20 +64,21 @@ interface Props {
   behandlingresultat: Behandlingsresultat;
   behandlingPaaVent: boolean;
   previewCallback: () => void;
+  hentFritekstbrevHtmlCallback: () => void;
   readOnly: boolean;
   sprakkode: Kodeverk;
   ytelseTypeKode: string;
   alleKodeverk: { [key: string]: KodeverkMedNavn[] };
   personopplysninger: Personopplysninger;
-  arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysninger;
+  arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysningerPerId;
   tilbakekrevingvalg: {
     videreBehandling: {
       kode: string;
     };
   };
   vilkar: Vilkar[];
-  tilgjengeligeVedtaksbrev: TilgjengeligeVedtaksbrev;
-  informasjonsbehovVedtaksbrev: { informasjonsbehov: { kode: string; type: string }[] };
+  tilgjengeligeVedtaksbrev: TilgjengeligeVedtaksbrev & TilgjengeligeVedtaksbrevMedMaler;
+  informasjonsbehovVedtaksbrev: InformasjonsbehovVedtaksbrev;
   dokumentdata: DokumentDataType;
   fritekstdokumenter: UstrukturerteDokumenterType[];
   vedtakVarsel: {
@@ -85,7 +90,7 @@ interface Props {
     skjæringstidspunkt: {
       dato: string;
     };
-    redusertUtbetalingÅrsaker: object[];
+    redusertUtbetalingÅrsaker: string[];
     vedtaksbrev: Kodeverk;
     vedtaksdato: string;
   };
@@ -110,6 +115,7 @@ export const VedtakForm: React.FC<Props> = ({
   behandlingPaaVent,
   vedtakVarsel,
   previewCallback,
+  hentFritekstbrevHtmlCallback,
   sprakkode,
   ytelseTypeKode,
   alleKodeverk,
@@ -138,24 +144,23 @@ export const VedtakForm: React.FC<Props> = ({
   const [erSendtInnUtenArsaker, setErSendtInnUtenArsaker] = useState(false);
   const [harVurdertOverlappendeYtelse, setHarVurdertOverlappendeYtelse] = useState(false);
   const [visSakGårIkkeTilBeslutterModal, setVisSakGårIkkeTilBeslutterModal] = useState(false);
-  const måVurdereOverlappendeYtelse = aksjonspunkter.some(
-    aksjonspunkt => aksjonspunkt.definisjon.kode === aksjonspunktCodes.VURDERE_OVERLAPPENDE_YTELSER_FØR_VEDTAK,
-  );
+  const [editorHarLagret, setEditorHarLagret] = useState<boolean>(false);
+  const [editorErTilbakestilt, setEditorErTilbakestilt] = useState<boolean>(false);
+  const harOverlappendeYtelser = overlappendeYtelser && overlappendeYtelser.length > 0;
   const vedtakContext = useContext(VedtakFormContext);
   const onToggleOverstyring = (e, setFieldValue) => {
-    const kommendeVerdi = e.target.checked;
-    setFieldValue(fieldnames.SKAL_BRUKE_OVERSTYRENDE_FRITEKST_BREV, kommendeVerdi);
-
-    if (kommendeVerdi) {
+    const isChecked = e.target.checked;
+    setFieldValue(fieldnames.SKAL_BRUKE_OVERSTYRENDE_FRITEKST_BREV, isChecked);
+    if (isChecked) {
       setFieldValue(fieldnames.SKAL_HINDRE_UTSENDING_AV_BREV, false);
     }
   };
 
   const onToggleHindreUtsending = (e, setFieldValue) => {
-    const kommendeVerdi = e.target.checked;
-    setFieldValue(fieldnames.SKAL_HINDRE_UTSENDING_AV_BREV, kommendeVerdi);
+    const isChecked = e.target.checked;
+    setFieldValue(fieldnames.SKAL_HINDRE_UTSENDING_AV_BREV, isChecked);
 
-    if (kommendeVerdi) {
+    if (isChecked) {
       setFieldValue(fieldnames.SKAL_BRUKE_OVERSTYRENDE_FRITEKST_BREV, false);
     }
   };
@@ -175,6 +180,14 @@ export const VedtakForm: React.FC<Props> = ({
               brødtekst: values?.[fieldnames.BRØDTEKST],
               overskrift: values?.[fieldnames.OVERSKRIFT],
               inkluderKalender: values?.[fieldnames.INKLUDER_KALENDER_VED_OVERSTYRING],
+            }
+          : {},
+        redigertbrev: values?.[fieldnames.SKAL_BRUKE_OVERSTYRENDE_FRITEKST_BREV]
+          ? {
+              originalHtml: values?.[fieldnames.ORIGINAL_HTML],
+              redigertHtml: values?.[fieldnames.REDIGERT_HTML],
+              inkluderKalender: values?.[fieldnames.INKLUDER_KALENDER_VED_OVERSTYRING],
+              redigertMal: values?.[fieldnames.REDIGERT_MAL],
             }
           : {},
         skalBrukeOverstyrendeFritekstBrev: values?.[fieldnames.SKAL_BRUKE_OVERSTYRENDE_FRITEKST_BREV],
@@ -201,6 +214,12 @@ export const VedtakForm: React.FC<Props> = ({
             brødtekst: values?.[fieldnames.BRØDTEKST],
             overskrift: values?.[fieldnames.OVERSKRIFT],
             inkluderKalender: values?.[fieldnames.INKLUDER_KALENDER_VED_OVERSTYRING],
+          },
+          redigertbrev: {
+            originalHtml: values?.[fieldnames.ORIGINAL_HTML],
+            redigertHtml: values?.[fieldnames.REDIGERT_HTML],
+            inkluderKalender: values?.[fieldnames.INKLUDER_KALENDER_VED_OVERSTYRING],
+            redigertMal: values?.[fieldnames.REDIGERT_MAL],
           },
           skalBrukeOverstyrendeFritekstBrev: values?.[fieldnames.SKAL_BRUKE_OVERSTYRENDE_FRITEKST_BREV],
           skalUndertrykkeBrev: values?.[fieldnames.SKAL_HINDRE_UTSENDING_AV_BREV],
@@ -236,20 +255,29 @@ export const VedtakForm: React.FC<Props> = ({
     {
       [fieldnames.SKAL_BRUKE_OVERSTYRENDE_FRITEKST_BREV]:
         kanKunVelge(tilgjengeligeVedtaksbrev, vedtaksbrevtype.FRITEKST) ||
-        (harMellomlagretFritekstbrev(dokumentdata, vedtakVarsel) && kanHaFritekstbrev(tilgjengeligeVedtaksbrev)) ||
+        kanKunVelge(tilgjengeligeVedtaksbrev, vedtaksbrevtype.MANUELL) ||
+        (kanHaFritekstbrev(tilgjengeligeVedtaksbrev) &&
+          harSattDokumentdataType(dokumentdata, vedtakVarsel, vedtaksbrevtype.FRITEKST)) ||
         (harFritekstILokalState && kanHaFritekstbrev(tilgjengeligeVedtaksbrev)) ||
         (kanHaFritekstbrev(tilgjengeligeVedtaksbrev) &&
           !kanHaAutomatiskVedtaksbrev(tilgjengeligeVedtaksbrev) &&
-          !harMellomLagretMedIngenBrev(dokumentdata, vedtakVarsel)),
+          !harMellomLagretMedIngenBrev(dokumentdata, vedtakVarsel)) ||
+        (kanHaManueltFritekstbrev(tilgjengeligeVedtaksbrev) &&
+          harSattDokumentdataType(dokumentdata, vedtakVarsel, vedtaksbrevtype.MANUELL)),
       [fieldnames.SKAL_HINDRE_UTSENDING_AV_BREV]:
         kanKunVelge(tilgjengeligeVedtaksbrev, vedtaksbrevtype.INGEN) ||
         (harMellomLagretMedIngenBrev(dokumentdata, vedtakVarsel) &&
           kanHindreUtsending(tilgjengeligeVedtaksbrev) &&
           !harMellomlagretFritekstbrev(dokumentdata, vedtakVarsel)),
       [fieldnames.INKLUDER_KALENDER_VED_OVERSTYRING]:
-        dokumentdata?.[dokumentdatatype.FRITEKSTBREV]?.inkluderKalender || false,
+        dokumentdata?.[dokumentdatatype.FRITEKSTBREV]?.inkluderKalender ||
+        dokumentdata?.[dokumentdatatype.REDIGERTBREV]?.inkluderKalender ||
+        false,
       [fieldnames.OVERSKRIFT]: decodeHtmlEntity(dokumentdata?.[dokumentdatatype.FRITEKSTBREV]?.overskrift) || '',
       [fieldnames.BRØDTEKST]: decodeHtmlEntity(dokumentdata?.[dokumentdatatype.FRITEKSTBREV]?.brødtekst) || '',
+      [fieldnames.REDIGERT_HTML]: dokumentdata?.[dokumentdatatype.REDIGERTBREV]?.redigertHtml || '',
+      [fieldnames.ORIGINAL_HTML]: dokumentdata?.[dokumentdatatype.REDIGERTBREV]?.originalHtml || '',
+      [fieldnames.REDIGERT_MAL]: dokumentdata?.[dokumentdatatype.REDIGERTBREV]?.redigertMal || '',
       [fieldnames.OVERSTYRT_MOTTAKER]: JSON.stringify(dokumentdata?.[dokumentdatatype.OVERSTYRT_MOTTAKER]),
       [fieldnames.BEGRUNNELSE]: dokumentdata?.[dokumentdatatype.BEREGNING_FRITEKST],
     },
@@ -272,16 +300,20 @@ export const VedtakForm: React.FC<Props> = ({
 
   const erToTrinn = aksjonspunkter && aksjonspunkter.some(ap => ap.erAktivt === true && ap.toTrinnsBehandling === true);
 
-  const handleErToTrinnSubmit = event => {
-    event.preventDefault();
-    setVisSakGårIkkeTilBeslutterModal(true);
+  const handleErEntrinnSubmit = (event, formikProps: FormikProps<any>) => {
+    if (formikProps.values[fieldnames.SKAL_HINDRE_UTSENDING_AV_BREV]) {
+      formikProps.handleSubmit();
+    } else {
+      event.preventDefault();
+      setVisSakGårIkkeTilBeslutterModal(true);
+    }
   };
 
   return (
     <Formik
       initialValues={{ ...initialValues, ...vedtakContext?.vedtakFormState }}
       onSubmit={(values, actions) => {
-        if ((måVurdereOverlappendeYtelse && harVurdertOverlappendeYtelse) || !måVurdereOverlappendeYtelse) {
+        if ((harOverlappendeYtelser && harVurdertOverlappendeYtelse) || !harOverlappendeYtelser) {
           submitCallback(createPayload(values));
         } else {
           actions.setSubmitting(false);
@@ -400,7 +432,6 @@ export const VedtakForm: React.FC<Props> = ({
               )}
 
               <BrevPanel
-                intl={intl}
                 readOnly={readOnly}
                 sprakkode={sprakkode}
                 personopplysninger={personopplysninger}
@@ -412,13 +443,17 @@ export const VedtakForm: React.FC<Props> = ({
                 redusertUtbetalingÅrsaker={redusertUtbetalingÅrsaker(formikProps)}
                 begrunnelse={formikProps.values.begrunnelse}
                 previewCallback={previewCallback}
+                hentFritekstbrevHtmlCallback={hentFritekstbrevHtmlCallback}
                 brødtekst={formikProps.values.brødtekst}
                 overskrift={formikProps.values.overskrift}
                 overstyrtMottaker={formikProps.values.overstyrtMottaker}
                 formikProps={formikProps}
+                ytelseTypeKode={ytelseTypeKode}
+                behandlingResultat={behandlingresultat}
                 dokumentdata={dokumentdata}
                 lagreDokumentdata={lagreDokumentdata}
-                ytelseTypeKode={ytelseTypeKode}
+                setEditorHarLagret={setEditorHarLagret}
+                setEditorErTilbakestilt={setEditorErTilbakestilt}
               />
               {!erRevurdering ? (
                 <VedtakSubmit
@@ -427,19 +462,29 @@ export const VedtakForm: React.FC<Props> = ({
                   behandlingPaaVent={behandlingPaaVent}
                   isSubmitting={formikProps.isSubmitting}
                   aksjonspunkter={aksjonspunkter}
-                  handleSubmit={erToTrinn ? formikProps.handleSubmit : handleErToTrinnSubmit}
+                  handleSubmit={
+                    erToTrinn ? formikProps.handleSubmit : event => handleErEntrinnSubmit(event, formikProps)
+                  }
                   dokumentdata={dokumentdata}
                   lagreDokumentdata={lagreDokumentdata}
                   brødtekst={formikProps.values.brødtekst}
                   overskrift={formikProps.values.overskrift}
+                  redigertHtml={formikProps.values.redigertHtml}
+                  originalHtml={formikProps.values.originalHtml}
                   inkluderKalender={formikProps.values[fieldnames.INKLUDER_KALENDER_VED_OVERSTYRING]}
+                  tilgjengeligeVedtaksbrev={tilgjengeligeVedtaksbrev}
+                  editorHarLagret={editorHarLagret}
+                  editorErTilbakestilt={editorErTilbakestilt}
+                  setEditorErTilbakestilt={setEditorErTilbakestilt}
                 />
               ) : (
                 <VedtakRevurderingSubmitPanel
                   formikValues={formikProps.values}
                   isSubmitting={formikProps.isSubmitting}
                   skalBrukeOverstyrendeFritekstBrev={formikProps.values.skalBrukeOverstyrendeFritekstBrev}
-                  handleSubmit={erToTrinn ? formikProps.handleSubmit : () => setVisSakGårIkkeTilBeslutterModal(true)}
+                  handleSubmit={
+                    erToTrinn ? formikProps.handleSubmit : event => handleErEntrinnSubmit(event, formikProps)
+                  }
                   ytelseTypeKode={ytelseTypeKode}
                   readOnly={readOnly}
                   behandlingStatusKode={behandlingStatus?.kode}
@@ -448,8 +493,14 @@ export const VedtakForm: React.FC<Props> = ({
                   lagreDokumentdata={lagreDokumentdata}
                   brødtekst={formikProps.values.brødtekst}
                   overskrift={formikProps.values.overskrift}
+                  redigertHtml={formikProps.values.redigertHtml}
+                  originalHtml={formikProps.values.originalHtml}
                   visFeilmeldingFordiArsakerMangler={() => setErSendtInnUtenArsaker(true)}
                   aksjonspunkter={aksjonspunkter}
+                  tilgjengeligeVedtaksbrev={tilgjengeligeVedtaksbrev}
+                  editorHarLagret={editorHarLagret}
+                  editorErTilbakestilt={editorErTilbakestilt}
+                  setEditorErTilbakestilt={setEditorErTilbakestilt}
                 />
               )}
               {visSakGårIkkeTilBeslutterModal && (

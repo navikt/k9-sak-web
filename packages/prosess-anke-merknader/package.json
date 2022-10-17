@@ -11,22 +11,22 @@
     "@fpsak-frontend/shared-components": "1.0.0",
     "@fpsak-frontend/utils": "1.0.0",
     "@k9-sak-web/prosess-felles": "1.0.0",
-    "classnames": "^2.3.1",
-    "nav-frontend-grid": "2.0.1",
-    "nav-frontend-grid-style": "1.0.2",
-    "nav-frontend-typografi": "4.0.1",
-    "nav-frontend-typografi-style": "2.0.1",
+    "classnames": "^2.3.2",
+    "nav-frontend-grid": "2.0.2",
+    "nav-frontend-grid-style": "1.0.3",
+    "nav-frontend-typografi": "4.0.2",
+    "nav-frontend-typografi-style": "2.0.2",
     "prop-types": "^15.8.1",
     "react": "^17.0.2",
-    "react-intl": "6.0.5",
-    "react-redux": "^8.0.2",
+    "react-intl": "6.1.2",
+    "react-redux": "^8.0.4",
     "redux": "^4.1.2",
     "redux-form": "^8.3.8",
-    "reselect": "^4.1.5"
+    "reselect": "^4.1.6"
   },
   "devDependencies": {
     "chai": "^4.2.0",
     "enzyme": "^3.11.0",
-    "sinon": "^12.0.1"
+    "sinon": "^14.0.1"
   }
 }

@@ -122,7 +122,7 @@ VurderMottarYtelseFormImpl.propTypes = {
   readOnly: PropTypes.bool.isRequired,
   isAvklaringsbehovClosed: PropTypes.bool.isRequired,
   tilfeller: PropTypes.arrayOf(PropTypes.string).isRequired,
-  arbeidsforholdUtenIM: PropTypes.arrayOf(PropTypes.object).isRequired,
+  arbeidsforholdUtenIM: PropTypes.arrayOf(PropTypes.shape).isRequired,
   erFrilans: PropTypes.bool.isRequired,
   alleKodeverk: PropTypes.shape().isRequired,
   arbeidsgiverOpplysningerPerId: PropTypes.shape().isRequired,

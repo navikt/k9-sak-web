@@ -33,6 +33,7 @@ const getMethod = (httpClientApi: HttpClientApi, restMethod: string, isResponseB
 const isGetRequest = (restMethod: string): boolean =>
   restMethod === RequestType.GET || restMethod === RequestType.GET_ASYNC;
 
+// eslint-disable-next-line no-promise-executor-return
 const wait = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
 const waitUntilFinished = async (cache: ResponseCache, endpointName: string) => {
   if (cache.isFetching(endpointName)) {

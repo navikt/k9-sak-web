@@ -36,6 +36,7 @@ class PanelDef extends ProsessStegPanelDef {
 
   getData = ({
     previewCallback,
+    hentFritekstbrevHtmlCallback,
     rettigheter,
     aksjonspunkter,
     vilkar,
@@ -46,6 +47,7 @@ class PanelDef extends ProsessStegPanelDef {
     lagreDokumentdata,
   }) => ({
     previewCallback,
+    hentFritekstbrevHtmlCallback,
     aksjonspunkter,
     vilkar,
     simuleringResultat,
