@@ -22,13 +22,13 @@
     "nav-frontend-typografi": "4.0.2",
     "nav-frontend-typografi-style": "2.0.2",
     "react": "^17.0.2",
-    "react-intl": "6.1.0",
-    "styled-components": "^5.3.3",
-    "uuid": "^8.3.2"
+    "react-intl": "6.1.2",
+    "styled-components": "^5.3.6",
+    "uuid": "^9.0.0"
   },
   "devDependencies": {
     "@fpsak-frontend/utils-test": "1.0.0",
     "enzyme": "^3.11.0",
-    "sinon": "^12.0.1"
+    "sinon": "^14.0.1"
   }
 }

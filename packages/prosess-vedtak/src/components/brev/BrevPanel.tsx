@@ -1,19 +1,24 @@
 import SelectFieldFormik from '@fpsak-frontend/form/src/SelectFieldFormik';
 import dokumentMalType from '@fpsak-frontend/kodeverk/src/dokumentMalType';
 import vedtaksbrevtype from '@fpsak-frontend/kodeverk/src/vedtaksbrevtype';
+import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
+
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { required, safeJSONParse } from '@fpsak-frontend/utils';
+import { required, safeJSONParse, decodeHtmlEntity } from '@fpsak-frontend/utils';
 import {
   finnesTilgjengeligeVedtaksbrev,
   kanHaAutomatiskVedtaksbrev,
   kanHaFritekstbrev,
+  kanHaManueltFritekstbrev,
   kanKunVelge,
   kanOverstyreMottakere,
   lagVisningsnavnForMottaker,
   TilgjengeligeVedtaksbrev,
 } from '@fpsak-frontend/utils/src/formidlingUtils';
+import { DokumentDataType } from '@k9-sak-web/types/src/dokumentdata';
 import { ArbeidsgiverOpplysningerPerId, Behandlingsresultat, Kodeverk, Personopplysninger } from '@k9-sak-web/types';
 import { Alert } from '@navikt/ds-react';
+
 import { FormikProps } from 'formik';
 import { Column, Row } from 'nav-frontend-grid';
 import React from 'react';
@@ -53,20 +58,35 @@ const getManuellBrevCallback =
     previewCallback: (dokument: any) => void;
     tilgjengeligeVedtaksbrev: TilgjengeligeVedtaksbrev;
   }) =>
-  e => {
+  (e, redigertHtml = undefined) => {
     if (formProps.isValid) {
-      previewCallback({
-        dokumentdata: {
-          fritekstbrev: {
-            brødtekst: brødtekst || ' ',
-            overskrift: overskrift || ' ',
-            inkluderKalender: formProps.values[fieldnames.INKLUDER_KALENDER_VED_OVERSTYRING] || false,
+      if (kanHaManueltFritekstbrev(tilgjengeligeVedtaksbrev)) {
+        previewCallback({
+          dokumentdata: {
+            REDIGERTBREV: {
+              redigertMal: formProps.values[fieldnames.REDIGERT_MAL],
+              originalHtml: formProps.values[fieldnames.ORIGINAL_HTML],
+              redigertHtml: decodeHtmlEntity(redigertHtml || formProps.values[fieldnames.REDIGERT_HTML]),
+              inkluderKalender: formProps.values[fieldnames.INKLUDER_KALENDER_VED_OVERSTYRING] || false,
+            },
           },
-        },
-        // Bruker FRITKS som fallback til lenken ikke vises for avsluttede behandlinger
-        dokumentMal: tilgjengeligeVedtaksbrev?.vedtaksbrevmaler?.[vedtaksbrevtype.FRITEKST] ?? dokumentMalType.FRITKS,
-        ...(overstyrtMottaker ? { overstyrtMottaker: safeJSONParse(overstyrtMottaker) } : {}),
-      });
+          dokumentMal: tilgjengeligeVedtaksbrev?.vedtaksbrevmaler?.[vedtaksbrevtype.MANUELL] ?? dokumentMalType.MANUELL,
+          ...(overstyrtMottaker ? { overstyrtMottaker: safeJSONParse(overstyrtMottaker) } : {}),
+        });
+      } else {
+        previewCallback({
+          dokumentdata: {
+            fritekstbrev: {
+              brødtekst: brødtekst || ' ',
+              overskrift: overskrift || ' ',
+              inkluderKalender: formProps.values[fieldnames.INKLUDER_KALENDER_VED_OVERSTYRING] || false,
+            },
+          },
+          // Bruker FRITKS som fallback til lenken ikke vises for avsluttede behandlinger
+          dokumentMal: tilgjengeligeVedtaksbrev?.vedtaksbrevmaler?.[vedtaksbrevtype.FRITEKST] ?? dokumentMalType.FRITKS,
+          ...(overstyrtMottaker ? { overstyrtMottaker: safeJSONParse(overstyrtMottaker) } : {}),
+        });
+      }
     } else {
       formProps.submitForm();
     }
@@ -90,15 +110,6 @@ const automatiskVedtaksbrevParams = ({
   dokumentMal: tilgjengeligeVedtaksbrev?.vedtaksbrevmaler?.[vedtaksbrevtype.AUTOMATISK] ?? dokumentMalType.UTLED,
   ...(overstyrtMottaker ? { overstyrtMottaker: safeJSONParse(overstyrtMottaker) } : {}),
 });
-
-const getPreviewAutomatiskBrevCallbackUtenValidering =
-  ({ fritekst, redusertUtbetalingÅrsaker, overstyrtMottaker, previewCallback, tilgjengeligeVedtaksbrev }) =>
-  e => {
-    previewCallback(
-      automatiskVedtaksbrevParams({ fritekst, redusertUtbetalingÅrsaker, overstyrtMottaker, tilgjengeligeVedtaksbrev }),
-    );
-    e.preventDefault();
-  };
 
 const getPreviewAutomatiskBrevCallback =
   ({
@@ -125,6 +136,13 @@ const getPreviewAutomatiskBrevCallback =
     }
   };
 
+const getHentHtmlMalCallback =
+  ({ hentFritekstbrevHtmlCallback }) =>
+  async request => {
+    const response = await hentFritekstbrevHtmlCallback(request);
+    return response;
+  };
+
 interface BrevPanelProps {
   intl: IntlShape;
   readOnly: boolean;
@@ -137,6 +155,7 @@ interface BrevPanelProps {
   skalBrukeOverstyrendeFritekstBrev: boolean;
   begrunnelse: string;
   previewCallback: (event: React.SyntheticEvent<Element, Event>) => void;
+  hentFritekstbrevHtmlCallback: (parameters: any) => any;
   redusertUtbetalingÅrsaker: string[];
   brødtekst: string;
   overskrift: string;
@@ -144,6 +163,10 @@ interface BrevPanelProps {
   overstyrtMottaker: boolean;
   formikProps: FormikProps<any>;
   ytelseTypeKode: string;
+  dokumentdata: DokumentDataType;
+  lagreDokumentdata: (any) => void;
+  setEditorHarLagret: React.Dispatch<React.SetStateAction<boolean>>;
+  setEditorErTilbakestilt: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export const BrevPanel: React.FC<BrevPanelProps> = props => {
@@ -157,15 +180,20 @@ export const BrevPanel: React.FC<BrevPanelProps> = props => {
     informasjonsbehovVedtaksbrev,
     informasjonsbehovValues,
     skalBrukeOverstyrendeFritekstBrev,
+    ytelseTypeKode,
     begrunnelse,
     previewCallback,
+    hentFritekstbrevHtmlCallback,
     redusertUtbetalingÅrsaker,
     brødtekst,
     overskrift,
     behandlingResultat,
     overstyrtMottaker,
     formikProps,
-    ytelseTypeKode,
+    dokumentdata,
+    lagreDokumentdata,
+    setEditorHarLagret,
+    setEditorErTilbakestilt,
   } = props;
 
   const automatiskBrevCallback = getPreviewAutomatiskBrevCallback({
@@ -177,12 +205,9 @@ export const BrevPanel: React.FC<BrevPanelProps> = props => {
     tilgjengeligeVedtaksbrev,
     informasjonsbehovValues,
   });
-  const automatiskBrevUtenValideringCallback = getPreviewAutomatiskBrevCallbackUtenValidering({
-    fritekst: begrunnelse,
-    redusertUtbetalingÅrsaker,
-    overstyrtMottaker,
-    previewCallback,
-    tilgjengeligeVedtaksbrev,
+
+  const hentHtmlMalCallback = getHentHtmlMalCallback({
+    hentFritekstbrevHtmlCallback,
   });
 
   const manuellBrevCallback = getManuellBrevCallback({
@@ -196,6 +221,8 @@ export const BrevPanel: React.FC<BrevPanelProps> = props => {
 
   const harAutomatiskVedtaksbrev = kanHaAutomatiskVedtaksbrev(tilgjengeligeVedtaksbrev);
   const harFritekstbrev = kanHaFritekstbrev(tilgjengeligeVedtaksbrev);
+  const kanInkludereKalender = ytelseTypeKode === fagsakYtelseType.PLEIEPENGER;
+
   const harAlternativeMottakere =
     kanOverstyreMottakere(tilgjengeligeVedtaksbrev) && !formikProps.values[fieldnames.SKAL_HINDRE_UTSENDING_AV_BREV];
 
@@ -204,10 +231,16 @@ export const BrevPanel: React.FC<BrevPanelProps> = props => {
       <div className={styles.brevContainer}>
         <FritekstBrevPanel
           readOnly={readOnly || formikProps.values[fieldnames.SKAL_HINDRE_UTSENDING_AV_BREV]}
-          previewBrev={automatiskBrevUtenValideringCallback}
+          previewBrev={manuellBrevCallback}
+          hentFritekstbrevHtmlCallback={hentHtmlMalCallback}
           harAutomatiskVedtaksbrev={harAutomatiskVedtaksbrev}
+          tilgjengeligeVedtaksbrev={tilgjengeligeVedtaksbrev}
+          kanInkludereKalender={kanInkludereKalender}
           formikProps={formikProps}
-          ytelseTypeKode={ytelseTypeKode}
+          dokumentdata={dokumentdata}
+          lagreDokumentdata={lagreDokumentdata}
+          setEditorHarLagret={setEditorHarLagret}
+          setEditorErTilbakestilt={setEditorErTilbakestilt}
         />
       </div>
       <VedtakPreviewLink previewCallback={manuellBrevCallback} />

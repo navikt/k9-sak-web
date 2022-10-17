@@ -61,11 +61,11 @@
   "VedtakForm.Revurdering.Opphoerer": "{ytelse} opphører",
   "VedtakForm.ManuellOverstyring": "Overstyr automatisk brev",
   "VedtakForm.HindreUtsending": "Hindre utsending av brev",
-  "VedtakForm.InkluderKalenderVedOverstyring": "Inkluder kalender ved overstyring",
+  "VedtakForm.InkluderKalenderVedOverstyring": "Inkluder kalender i brev",
   "VedtakForm.Brev": "Manuelt brev",
   "VedtakForm.Overskrift": "Overskrift",
   "VedtakForm.Innhold": "Innhold i brev til søker",
-  "VedtakForm.AutomatiskBrev": "Innhold fra det automatisk genererte brevet kan kopieres ut og limes inn i det manuelle brevet",
+  "VedtakForm.AutomatiskBrev": "Innhold fra det automatiske brevet kan nå redigeres",
   "VedtakForm.AutomatiskBrev.Lenke": "Forhåndsvis automatisk brev",
   "VedtakForm.SvpFritektsBrevModal.Ok": "Ok",
   "VedtakForm.SvpFritektsBrevModal.IngenAutomatiskVedtaksbrev": "I denne behandlingen er det ikke automatisk vedtaksbrev. Du må velge 'Overstyr automatisk brev' og skrive fritekstbrev.",
@@ -139,5 +139,10 @@
   "InformasjonsbehovAutomatiskVedtaksbrev.SupplerMedFritekstSkjønnsmessig": "Suppler med fritekst i henhold til skjønnsmessig vurdering.",
   "InformasjonsbehovAutomatiskVedtaksbrev.SupplerMedFritekstEndring": "Suppler med fritekst i henhold til endringsvedtaket.",
   "InformasjonsbehovAutomatiskVedtaksbrev.IkkeRelevantMedFritekst": "Det er ikke relevant med fritekstbeskrivelse i brevet",
-  "InformasjonsbehovAutomatiskVedtaksbrev.ErDetRelevantMedFritekst": "Er det relevant med fritekstbeskrivelse i brevet?"
+  "InformasjonsbehovAutomatiskVedtaksbrev.ErDetRelevantMedFritekst": "Er det relevant med fritekstbeskrivelse i brevet?",
+  "RedigeringAvFritekstBrev.Lagre": "Lagre endringer",
+  "RedigeringAvFritekstBrev.Rediger": "Rediger fritekstbrev",
+  "RedigeringAvFritekstBrev.Avbryt": "Avbryt",
+  "RedigeringAvFritekstBrev.Infotekst": "Gjør ønskede endringer i brevet nedenfor. Redigering er begrenset til området markert i oransje.",
+  "VedtakForm.FritekstTilbakestilt": "Brevet er tilbakestilt, men endringene er ikke lagret enda."
 }

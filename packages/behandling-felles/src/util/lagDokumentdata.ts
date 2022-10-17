@@ -1,6 +1,7 @@
 import { dokumentdatatype } from '@k9-sak-web/konstanter';
 import vedtaksbrevtype from '@fpsak-frontend/kodeverk/src/vedtaksbrevtype';
-import { finnesTilgjengeligeVedtaksbrev } from '@fpsak-frontend/utils/src/formidlingUtils';
+import { finnesTilgjengeligeVedtaksbrev, kanHaManueltFritekstbrev } from '@fpsak-frontend/utils/src/formidlingUtils';
+import dokumentMalType from '@fpsak-frontend/kodeverk/src/dokumentMalType';
 
 function lagDokumentdata(aksjonspunktModell) {
   if (
@@ -18,6 +19,22 @@ function lagDokumentdata(aksjonspunktModell) {
     };
   }
   if (aksjonspunktModell.skalBrukeOverstyrendeFritekstBrev) {
+    if (kanHaManueltFritekstbrev(aksjonspunktModell.tilgjengeligeVedtaksbrev)) {
+      return {
+        [dokumentdatatype.VEDTAKSBREV_TYPE]: vedtaksbrevtype.MANUELL,
+        [dokumentdatatype.VEDTAKSBREV_MAL]: vedtaksbrevmaler?.[vedtaksbrevtype.MANUELL],
+        [dokumentdatatype.REDIGERTBREV]: {
+          originalHtml: aksjonspunktModell.redigertbrev?.originalHtml,
+          redigertHtml: aksjonspunktModell.redigertbrev?.redigertHtml,
+          redigertMal: aksjonspunktModell.redigertbrev?.redigertMal,
+          inkluderKalender: aksjonspunktModell.fritekstbrev?.inkluderKalender,
+        },
+        ...(aksjonspunktModell.overstyrtMottaker
+          ? { [dokumentdatatype.OVERSTYRT_MOTTAKER]: aksjonspunktModell.overstyrtMottaker }
+          : {}),
+      };
+    }
+
     return {
       [dokumentdatatype.VEDTAKSBREV_TYPE]: vedtaksbrevtype.FRITEKST,
       [dokumentdatatype.VEDTAKSBREV_MAL]: vedtaksbrevmaler?.[vedtaksbrevtype.FRITEKST],

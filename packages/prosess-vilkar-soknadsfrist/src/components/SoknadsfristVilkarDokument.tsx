@@ -14,7 +14,14 @@ import {
 } from '@fpsak-frontend/utils';
 
 import { DokumentStatus } from '@k9-sak-web/types';
-import { VerticalSpacer, FlexContainer, FlexRow, FlexColumn, Image } from '@fpsak-frontend/shared-components';
+import {
+  VerticalSpacer,
+  FlexContainer,
+  FlexRow,
+  FlexColumn,
+  Image,
+  useFeatureToggles,
+} from '@fpsak-frontend/shared-components';
 import avslattImage from '@fpsak-frontend/assets/images/avslaatt.svg';
 import innvilgetImage from '@fpsak-frontend/assets/images/check.svg';
 
@@ -32,6 +39,7 @@ interface SoknadsfristVilkarDokumentProps {
   skalViseBegrunnelse?: boolean;
   dokument: DokumentStatus;
   dokumentIndex: number;
+  erAktivtDokument: boolean;
 }
 
 export const DELVIS_OPPFYLT = 'DELVIS_OPPFYLT';
@@ -47,10 +55,11 @@ export const SoknadsfristVilkarDokument = ({
   readOnly,
   skalViseBegrunnelse,
   dokument,
+  erAktivtDokument,
   dokumentIndex,
 }: SoknadsfristVilkarDokumentProps) => {
   const intl = useIntl();
-
+  const [featureToggles] = useFeatureToggles();
   const minDate = useMemo(
     () =>
       dokument.status.reduce(
@@ -59,16 +68,21 @@ export const SoknadsfristVilkarDokument = ({
       ),
     [dokument.journalpostId],
   );
-  const maxDate = useMemo(
-    () => utledInnsendtSoknadsfrist(dokument.innsendingstidspunkt),
-    [dokument.innsendingstidspunkt],
-  );
+  const maxDate = useMemo(() => {
+    if (featureToggles?.FIX_SOKNADSFRIST_KALENDER_OG_READONLY) {
+      return dokument.status.reduce(
+        (acc, curr) => (!acc || moment(curr.periode.tom) > moment(acc) ? curr.periode.tom : acc),
+        '',
+      );
+    }
+    return utledInnsendtSoknadsfrist(dokument.innsendingstidspunkt);
+  }, [dokument.innsendingstidspunkt, dokument.journalpostId]);
 
   const isAtleastDate = useCallback(v => dateAfterOrEqual(minDate)(v), [minDate]);
   const isAtmostDate = useCallback(v => dateBeforeOrEqual(maxDate)(v), [maxDate]);
 
   return (
-    <div>
+    <div style={{ display: erAktivtDokument ? 'block' : 'none' }}>
       <p>
         {dokument.type} innsendt {formatDate(dokument.innsendingstidspunkt)}{' '}
         <small>(journalpostId: {dokument.journalpostId})</small>

@@ -1,10 +1,10 @@
 import React, { SetStateAction, useState, useEffect } from 'react';
 import { dateFormat } from '@fpsak-frontend/utils';
 import { Aksjonspunkt, Behandling, KodeverkMedNavn, SubmitCallback, Vilkar } from '@k9-sak-web/types';
-import { SideMenu } from '@navikt/k9-react-components';
+import { SideMenu } from '@navikt/ft-plattform-komponenter';
 import classNames from 'classnames/bind';
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
-import hentAktivePerioderFraVilkar from "@fpsak-frontend/utils/src/hentAktivePerioderFraVilkar";
+import hentAktivePerioderFraVilkar from '@fpsak-frontend/utils/src/hentAktivePerioderFraVilkar';
 import messages from '../i18n/nb_NO.json';
 import VilkarresultatMedOverstyringForm from './components/VilkarresultatMedOverstyringForm';
 import VilkarresultatMedOverstyringHeader from './components/VilkarresultatMedOverstyringHeader';
@@ -72,7 +72,7 @@ const VilkarresultatMedOverstyringProsessIndex = ({
     }
   }, [activeTab, visAllePerioder]);
 
-  if(perioder.length === 0){
+  if (perioder.length === 0) {
     return null;
   }
 
@@ -81,17 +81,17 @@ const VilkarresultatMedOverstyringProsessIndex = ({
   return (
     <RawIntlProvider value={intl}>
       <div className={cx('mainContainer--withSideMenu')}>
-          <div className={styles.sideMenuContainer}>
-            <SideMenu
-              links={perioder.map((periode, index) => ({
-                active: activeTab === index,
-                label: `${dateFormat(periode.periode.fom)} - ${dateFormat(periode.periode.tom)}`,
-              }))}
-              onClick={setActiveTab}
-              theme="arrow"
-              heading={intl.formatMessage({ id: 'Sidemeny.Perioder' })}
-            />
-          </div>
+        <div className={styles.sideMenuContainer}>
+          <SideMenu
+            links={perioder.map((periode, index) => ({
+              active: activeTab === index,
+              label: `${dateFormat(periode.periode.fom)} - ${dateFormat(periode.periode.tom)}`,
+            }))}
+            onClick={setActiveTab}
+            theme="arrow"
+            heading={intl.formatMessage({ id: 'Sidemeny.Perioder' })}
+          />
+        </div>
         <div className={styles.contentContainer}>
           <VilkarresultatMedOverstyringHeader
             aksjonspunkter={aksjonspunkter}

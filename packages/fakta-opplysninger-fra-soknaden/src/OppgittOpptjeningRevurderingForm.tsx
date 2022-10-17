@@ -142,15 +142,15 @@ const OppgittOpptjeningRevurderingForm = (props: Partial<Props> & InjectedFormPr
         </Knapp>
       )}
       <div className={styles.tabsContainer}>
-      <TabsPure
-        tabs={oppgittOpptjening.måneder.map((currentOppgittOpptjening, currentOppgittOpptjeningIndex) => ({
-          aktiv: activeTab === currentOppgittOpptjeningIndex,
-          label: `${dateFormat(currentOppgittOpptjening.måned.fom)} - ${dateFormat(
-            currentOppgittOpptjening.måned.tom,
-          )}`,
-        }))}
-        onChange={(e, clickedIndex) => setActiveTab(clickedIndex)}
-      />
+        <TabsPure
+          tabs={oppgittOpptjening.måneder.map((currentOppgittOpptjening, currentOppgittOpptjeningIndex) => ({
+            aktiv: activeTab === currentOppgittOpptjeningIndex,
+            label: `${dateFormat(currentOppgittOpptjening.måned.fom)} - ${dateFormat(
+              currentOppgittOpptjening.måned.tom,
+            )}`,
+          }))}
+          onChange={(e, clickedIndex) => setActiveTab(clickedIndex)}
+        />
       </div>
       <div className={styles.tabContent}>
         <FieldArray
@@ -445,9 +445,9 @@ const mapStateToProps = (_, props) => {
     new Promise((resolve, reject) => {
       const errors = validateForm(formValues, props.oppgittOpptjening);
       if (!errors || Object.keys(errors).length === 0) {
-        return resolve(submitCallback([transformValues(formValues, props.oppgittOpptjening)]));
+        resolve(submitCallback([transformValues(formValues, props.oppgittOpptjening)]));
       }
-      return reject(errors);
+      reject(errors);
     });
   const initialValues = buildInitialValues(oppgittOpptjening, aksjonspunkter);
   const validate = values => {

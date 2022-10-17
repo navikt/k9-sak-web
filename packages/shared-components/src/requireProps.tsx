@@ -12,10 +12,6 @@ const requireProps = (requiredPropNames: string[], alternative?: ReactNode) => W
   class ComponentWithRequiredProps extends Component {
     static defaultProps = propsWithValue(requiredPropNames, null);
 
-    displayName = `ComponentWithRequiredProps(${WrappedComponent.displayName || WrappedComponent.name || 'Component'})`;
-
-    WrappedComponent = WrappedComponent;
-
     constructor(props) {
       super(props);
       this.missingRequirements = this.missingRequirements.bind(this);

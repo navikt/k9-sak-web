@@ -14,8 +14,13 @@
     "@k9-sak-web/behandling-utvidet-rett": "1.0.0",
     "@k9-sak-web/konstanter": "1.0.0",
     "@k9-sak-web/types": "1.0.0",
-    "classnames": "^2.3.1",
-    "date-fns": "^2.29.2",
+    "@editorjs/editorjs": "^2.25.0",
+    "@editorjs/header": "^2.6.2",
+    "@editorjs/paragraph": "^2.8.0",
+    "@editorjs/list": "^1.7.0",
+    "editorjs-html": "^3.4.2",
+    "classnames": "^2.3.2",
+    "date-fns": "^2.29.3",
     "formik": "^2.2.9",
     "moment": "^2.29.4",
     "nav-frontend-alertstriper": "^4.0.2",
@@ -31,16 +36,17 @@
     "nav-frontend-typografi-style": "2.0.2",
     "prop-types": "^15.8.1",
     "react": "^17.0.2",
-    "react-intl": "6.1.0",
-    "react-redux": "^8.0.2",
+    "react-intl": "6.1.2",
+    "react-redux": "^8.0.4",
     "redux": "^4.1.2",
     "redux-form": "^8.3.8",
-    "reselect": "^4.1.6"
+    "reselect": "^4.1.6",
+    "css-tree": "^2.2.1"
   },
   "devDependencies": {
     "@fpsak-frontend/utils-test": "1.0.0",
     "chai": "^4.2.0",
     "enzyme": "^3.11.0",
-    "sinon": "^12.0.1"
+    "sinon": "^14.0.1"
   }
 }

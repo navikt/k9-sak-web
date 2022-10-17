@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unused-class-component-methods */
 import { Select as NavSelect } from 'nav-frontend-skjema';
 import React, { Component } from 'react';
 

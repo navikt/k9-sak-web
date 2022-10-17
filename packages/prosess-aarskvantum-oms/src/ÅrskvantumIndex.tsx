@@ -1,27 +1,25 @@
-import React, { useMemo } from 'react';
-import { createIntlCache, createIntl, RawIntlProvider } from 'react-intl';
-import {
-  Behandling,
-  KodeverkMedNavn,
-  ArbeidsgiverOpplysningerPerId,
-  Aksjonspunkt,
-  ArbeidsforholdV2,
-  FeatureToggles,
-} from '@k9-sak-web/types';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { useFeatureToggles } from '@fpsak-frontend/shared-components';
+import {
+  Aksjonspunkt,
+  ArbeidsforholdV2,
+  ArbeidsgiverOpplysningerPerId,
+  Behandling,
+  KodeverkMedNavn,
+} from '@k9-sak-web/types';
+import React from 'react';
+import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
-import { K9sakApiKeys, restApiHooks } from '@k9-sak-web/sak-app/src/data/k9sakApi';
 import messages from '../i18n/nb_NO.json';
-import ÅrskvantumForbrukteDager from './dto/ÅrskvantumForbrukteDager';
-import Uttaksplan from './components/Uttaksplan';
-import AksjonspunktForm9014 from './components/AksjonspunktForm9014';
 import AksjonspunktForm from './components/AksjonspunktForm';
-import Aktivitet from './dto/Aktivitet';
+import AksjonspunktForm9014 from './components/AksjonspunktForm9014';
 import SaerligeSmittevernhensynMikrofrontend from './components/saerlige-smittevernhensyn/SaerligeSmittevernhensynMikrofrontend';
+import Uttaksplan from './components/Uttaksplan';
+import Aktivitet from './dto/Aktivitet';
 import { fosterbarnDto } from './dto/FosterbarnDto';
+import ÅrskvantumForbrukteDager from './dto/ÅrskvantumForbrukteDager';
 
 const cache = createIntlCache();
 
