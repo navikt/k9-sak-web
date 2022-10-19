@@ -94,7 +94,7 @@
     "@types/chai": "^4.3.3",
     "@types/enzyme": "^3.10.11",
     "@types/history": "^5.0.0",
-    "@types/jest": "^27.4.0",
+    "@types/jest": "^29.2.0",
     "@types/prop-types": "^15.7.4",
     "@types/react": "^17.0.38",
     "@types/react-collapse": "^5.0.1",
