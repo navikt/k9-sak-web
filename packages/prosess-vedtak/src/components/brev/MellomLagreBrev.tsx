@@ -9,7 +9,7 @@ import AlertStripe from 'nav-frontend-alertstriper';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { DokumentDataType, LagreDokumentdataType } from '@k9-sak-web/types/src/dokumentdata';
 import {
-  kanHaFritekstbrev,
+  kanHaFritekstbrevV1,
   kanHaManueltFritekstbrev,
   TilgjengeligeVedtaksbrev,
   TilgjengeligeVedtaksbrevMedMaler,
@@ -116,7 +116,7 @@ const MellomLagreBrev = ({
           inkluderKalender,
         }),
       );
-    } else if (kanHaFritekstbrev(tilgjengeligeVedtaksbrev)) {
+    } else if (kanHaFritekstbrevV1(tilgjengeligeVedtaksbrev)) {
       await lagreDokumentdata({ ...dokumentdata, FRITEKSTBREV: { brødtekst, overskrift } });
     }
 

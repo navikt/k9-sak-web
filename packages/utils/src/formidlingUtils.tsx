@@ -61,7 +61,7 @@ export function kanHaAutomatiskVedtaksbrev(tilgjengeligeVedtaksbrev: Tilgjengeli
   return vedtaksbrevmaler(tilgjengeligeVedtaksbrev).some(vb => vb === vedtaksbrevtype.AUTOMATISK);
 }
 
-export function kanHaFritekstbrev(tilgjengeligeVedtaksbrev: TilgjengeligeVedtaksbrev): boolean {
+export function kanHaFritekstbrevV1(tilgjengeligeVedtaksbrev: TilgjengeligeVedtaksbrev): boolean {
   return vedtaksbrevmaler(tilgjengeligeVedtaksbrev).some(vb => vb === vedtaksbrevtype.FRITEKST);
 }
 

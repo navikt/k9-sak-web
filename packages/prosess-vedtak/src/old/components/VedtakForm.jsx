@@ -13,7 +13,7 @@ import { VedtakFormContext } from '@k9-sak-web/behandling-felles/src/components/
 
 import { safeJSONParse, decodeHtmlEntity } from '@fpsak-frontend/utils';
 import {
-  kanHaFritekstbrev,
+  kanHaFritekstbrevV1,
   kanKunVelge,
   harMellomlagretFritekstbrev,
   harMellomLagretMedIngenBrev,
@@ -171,9 +171,9 @@ export const VedtakForm = ({
     {
       [fieldnames.SKAL_BRUKE_OVERSTYRENDE_FRITEKST_BREV]:
         kanKunVelge(tilgjengeligeVedtaksbrev, vedtaksbrevtype.FRITEKST) ||
-        (harMellomlagretFritekstbrev(dokumentdata, vedtakVarsel) && kanHaFritekstbrev(tilgjengeligeVedtaksbrev)) ||
-        (harFritekstILokalState && kanHaFritekstbrev(tilgjengeligeVedtaksbrev)) ||
-        (kanHaFritekstbrev(tilgjengeligeVedtaksbrev) &&
+        (harMellomlagretFritekstbrev(dokumentdata, vedtakVarsel) && kanHaFritekstbrevV1(tilgjengeligeVedtaksbrev)) ||
+        (harFritekstILokalState && kanHaFritekstbrevV1(tilgjengeligeVedtaksbrev)) ||
+        (kanHaFritekstbrevV1(tilgjengeligeVedtaksbrev) &&
           !kanHaAutomatiskVedtaksbrev(tilgjengeligeVedtaksbrev) &&
           !harMellomLagretMedIngenBrev(dokumentdata, vedtakVarsel)),
       [fieldnames.SKAL_HINDRE_UTSENDING_AV_BREV]:
@@ -222,11 +222,11 @@ export const VedtakForm = ({
             overlappendeYtelser={overlappendeYtelser}
             alleKodeverk={alleKodeverk}
             viseFlereSjekkbokserForBrev={
-              kanHaFritekstbrev(tilgjengeligeVedtaksbrev) && kanHindreUtsending(tilgjengeligeVedtaksbrev)
+              kanHaFritekstbrevV1(tilgjengeligeVedtaksbrev) && kanHindreUtsending(tilgjengeligeVedtaksbrev)
             }
           >
             <div className={styles.knappContainer}>
-              {kanHaFritekstbrev(tilgjengeligeVedtaksbrev) && (
+              {kanHaFritekstbrevV1(tilgjengeligeVedtaksbrev) && (
                 <Checkbox
                   checked={formikProps.values.skalBrukeOverstyrendeFritekstBrev}
                   onChange={e => onToggleOverstyring(e, formikProps.setFieldValue)}
