@@ -569,7 +569,7 @@ describe('<VedtakForm>', () => {
       />,
       { messages },
     );
-    const overstyringsCheckbox = screen.getByLabelText('Overstyr automatisk brev');
+    const overstyringsCheckbox = screen.getByLabelText(messages['VedtakForm.ManuellOverstyring']);
     expect(overstyringsCheckbox).toBeVisible();
   });
 
@@ -626,7 +626,7 @@ describe('<VedtakForm>', () => {
       />,
       { messages },
     );
-    const overstyringsCheckbox = screen.getByLabelText('Overstyr automatisk brev');
+    const overstyringsCheckbox = screen.getByLabelText(messages['VedtakForm.ManuellOverstyring']);
     const hindreUtsendingCheckbox = screen.getByLabelText('Hindre utsending av brev');
 
     expect(overstyringsCheckbox).toBeDisabled();
@@ -662,7 +662,7 @@ describe('<VedtakForm>', () => {
       />,
       { messages },
     );
-    const overstyringsCheckbox = screen.getByLabelText('Overstyr automatisk brev');
+    const overstyringsCheckbox = screen.getByLabelText(messages['VedtakForm.ManuellOverstyring']);
     const hindreUtsendingCheckbox = screen.getByLabelText('Hindre utsending av brev');
 
     expect(overstyringsCheckbox).toBeChecked();
