@@ -8,7 +8,7 @@ import { required, safeJSONParse, decodeHtmlEntity } from '@fpsak-frontend/utils
 import {
   finnesTilgjengeligeVedtaksbrev,
   kanHaAutomatiskVedtaksbrev,
-  kanHaFritekstbrev,
+  kanHaFritekstbrevV1,
   kanHaManueltFritekstbrev,
   kanKunVelge,
   kanOverstyreMottakere,
@@ -220,7 +220,8 @@ export const BrevPanel: React.FC<BrevPanelProps> = props => {
   });
 
   const harAutomatiskVedtaksbrev = kanHaAutomatiskVedtaksbrev(tilgjengeligeVedtaksbrev);
-  const harFritekstbrev = kanHaFritekstbrev(tilgjengeligeVedtaksbrev);
+  const harFritekstbrev =
+    kanHaFritekstbrevV1(tilgjengeligeVedtaksbrev) || kanHaManueltFritekstbrev(tilgjengeligeVedtaksbrev);
   const kanInkludereKalender = ytelseTypeKode === fagsakYtelseType.PLEIEPENGER;
 
   const harAlternativeMottakere =
