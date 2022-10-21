@@ -1,21 +1,28 @@
-/* eslint-disable react/no-danger */
-import React, { useEffect } from 'react';
+/* eslint-disable react/no-danger, @typescript-eslint/no-this-alias */
+import React, { useCallback, useEffect, useState } from 'react';
+import { API } from '@editorjs/editorjs';
 import { Modal, Button, Alert } from '@navikt/ds-react';
 import { FormattedMessage, injectIntl, WrappedComponentProps } from 'react-intl';
+import { Column, Row } from 'nav-frontend-grid';
 
+import { Cancel } from '@navikt/ds-icons';
 import EditorJSWrapper from './EditorJSWrapper';
+import PreviewLink from '../PreviewLink';
+import InkluderKalenderCheckbox from '../InkluderKalenderCheckbox';
 
 import styles from './RedigerFritekstbrev.less';
-import PreviewLink from '../PreviewLink';
 
 interface ownProps {
   handleSubmit: (value: string) => void;
   lukkEditor: () => void;
   handleForhåndsvis: (event: React.SyntheticEvent, html: string) => void;
   oppdaterFormFelt: (html: string) => void;
+  setFieldValue: (field: string, value: any, shouldValidate?: boolean) => void;
+  skalBrukeOverstyrendeFritekstBrev: boolean;
   readOnly: boolean;
   redigerbartInnholdKlart: boolean;
   redigerbartInnhold: string;
+  originalHtml: string;
   prefiksInnhold: string;
   suffiksInnhold: string;
   brevStiler: string;
@@ -28,15 +35,42 @@ const FritekstEditor = ({
   lukkEditor,
   handleForhåndsvis,
   oppdaterFormFelt,
+  setFieldValue,
+  skalBrukeOverstyrendeFritekstBrev,
   readOnly,
   redigerbartInnholdKlart,
   redigerbartInnhold,
+  originalHtml,
   prefiksInnhold,
   suffiksInnhold,
   brevStiler,
+  intl,
 }: ownProps & WrappedComponentProps) => {
+  const [visAdvarsel, setVisAdvarsel] = useState<boolean>(false);
+
+  const handleLagre = async () => {
+    const html = await editor.lagre();
+    handleSubmit(html);
+  };
+
+  const debounce = funksjon => {
+    let teller;
+    return function lagre(...args) {
+      const context = this;
+      if (teller) clearTimeout(teller);
+      teller = setTimeout(() => {
+        teller = null;
+        funksjon.apply(context, args);
+      }, 1000);
+    };
+  };
+
+  const debouncedLagre = useCallback(debounce(handleLagre), []);
+
+  const onChange = () => debouncedLagre();
+
   const lastEditor = async () => {
-    await editor.init({ holder: 'rediger-brev' });
+    await editor.init({ holder: 'rediger-brev', onChange });
     await editor.importer(redigerbartInnhold);
     const html = await editor.lagre();
     oppdaterFormFelt(html);
@@ -53,9 +87,9 @@ const FritekstEditor = ({
     }
   }, [redigerbartInnholdKlart]);
 
-  const handleLagre = async () => {
-    const html = await editor.lagre();
-    handleSubmit(html);
+  const handleLagreOgLukk = () => {
+    handleLagre();
+    lukkEditor();
   };
 
   const onForhåndsvis = async e => {
@@ -63,8 +97,34 @@ const FritekstEditor = ({
     handleForhåndsvis(e, html);
   };
 
+  const handleTilbakestill = async () => {
+    await editor.importer(originalHtml);
+    setVisAdvarsel(false);
+    handleLagre();
+  };
+
+  const handleSetFieldValue = (name, value) => {
+    setFieldValue(name, value);
+    handleLagre();
+  };
+
   return (
     <>
+      <Modal open={visAdvarsel} onClose={() => setVisAdvarsel(false)} shouldCloseOnOverlayClick={false}>
+        <div className={styles.modalInnehold}>
+          <Alert variant="info">
+            <FormattedMessage id="RedigeringAvFritekstBrev.BekreftTilbakestill" />
+          </Alert>
+          <div className={styles.knapper}>
+            <Button type="button" variant="danger" onClick={handleTilbakestill}>
+              <FormattedMessage id="RedigeringAvFritekstBrev.Tilbakestill" />
+            </Button>
+            <Button type="button" variant="primary" onClick={() => setVisAdvarsel(false)}>
+              <FormattedMessage id="RedigeringAvFritekstBrev.IkkeTilbakestill" />
+            </Button>
+          </div>
+        </div>
+      </Modal>
       <header className={styles.modalHeader}>
         <Alert variant="info">
           <FormattedMessage id="RedigeringAvFritekstBrev.Infotekst" />
@@ -87,17 +147,34 @@ const FritekstEditor = ({
         </div>
       </div>
       <footer>
+        <Row>
+          <Column xs="12">
+            <InkluderKalenderCheckbox
+              intl={intl}
+              setFieldValue={handleSetFieldValue}
+              skalBrukeOverstyrendeFritekstBrev={skalBrukeOverstyrendeFritekstBrev}
+              disabled={readOnly}
+            />
+          </Column>
+        </Row>
         <div className={styles.knapper}>
           <PreviewLink previewCallback={onForhåndsvis}>
             <FormattedMessage id="VedtakForm.ForhandvisBrev" />
           </PreviewLink>
         </div>
         <div className={styles.knapper}>
-          <Button variant="primary" onClick={handleLagre} disabled={!redigerbartInnholdKlart || readOnly}>
+          <Button variant="primary" onClick={handleLagreOgLukk} disabled={!redigerbartInnholdKlart || readOnly}>
             <FormattedMessage id="RedigeringAvFritekstBrev.Lagre" />
           </Button>
-          <Button variant="tertiary" onClick={lukkEditor}>
-            <FormattedMessage id="RedigeringAvFritekstBrev.Avbryt" />
+          <Button
+            variant="tertiary"
+            icon={<Cancel aria-hidden />}
+            type="button"
+            onClick={() => setVisAdvarsel(true)}
+            disabled={readOnly}
+            size="medium"
+          >
+            <FormattedMessage id="RedigeringAvFritekstBrev.Tilbakestill" />
           </Button>
         </div>
       </footer>

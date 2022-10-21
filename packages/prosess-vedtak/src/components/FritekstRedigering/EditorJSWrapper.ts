@@ -1,4 +1,4 @@
-import EditorJS from '@editorjs/editorjs';
+import EditorJS, { API } from '@editorjs/editorjs';
 import Header from '@editorjs/header';
 import Paragraph from '@editorjs/paragraph';
 import List from '@editorjs/list';
@@ -7,7 +7,7 @@ import edjsHTML from 'editorjs-html';
 export default class EditorJSWrapper {
   private editor: EditorJS;
 
-  public async init({ holder }: { holder: string }) {
+  public async init({ holder, onChange }: { holder: string; onChange: (api: API, event: CustomEvent<any>) => void }) {
     const tools = {
       paragraph: {
         class: Paragraph,
@@ -20,8 +20,8 @@ export default class EditorJSWrapper {
         class: Header,
         inlineToolbar: true,
         config: {
-          levels: [3, 2, 1],
-          defaultLevel: 3,
+          levels: [2, 1],
+          defaultLevel: 1,
           preservedBlank: true,
         },
       },
@@ -39,6 +39,7 @@ export default class EditorJSWrapper {
       holder,
       minHeight: 0,
       tools,
+      onChange,
     });
   }
 
@@ -52,6 +53,7 @@ export default class EditorJSWrapper {
   public async importer(html) {
     await this.editor.isReady;
     await this.editor.blocks.renderFromHTML(html);
+    return true;
   }
 
   public async erKlar() {
