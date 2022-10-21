@@ -133,9 +133,10 @@ const FritekstBrevPanel = ({
             innholdTilRedigering={formikProps.values[fieldnames.REDIGERT_HTML]}
             inkluderKalender={formikProps.values[fieldnames.INKLUDER_KALENDER_VED_OVERSTYRING]}
             setEditorErTilbakestilt={setEditorErTilbakestilt}
+            skalBrukeOverstyrendeFritekstBrev={formikProps.values.skalBrukeOverstyrendeFritekstBrev}
           />
 
-          {kanInkludereKalender && (
+          {kanInkludereKalender && !kanRedigereFritekstbrev && (
             <div className={readOnly ? styles['textAreaContainer--readOnly'] : styles.textAreaContainer}>
               <Row>
                 <Column xs="12">
