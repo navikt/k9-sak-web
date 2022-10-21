@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { FormattedMessage, injectIntl, WrappedComponentProps } from 'react-intl';
 
 import { Modal, Button } from '@navikt/ds-react';
-import { Edit, Cancel } from '@navikt/ds-icons';
+import { Edit } from '@navikt/ds-icons';
 
 import {
   TilgjengeligeVedtaksbrev,
@@ -30,6 +30,7 @@ interface ownProps {
   setFieldValue: (field: string, value: any, shouldValidate?: boolean) => void;
   previewBrev: (event: React.SyntheticEvent, html?: string) => void;
   setEditorErTilbakestilt: React.Dispatch<React.SetStateAction<boolean>>;
+  skalBrukeOverstyrendeFritekstBrev: boolean;
   tilgjengeligeVedtaksbrev: TilgjengeligeVedtaksbrev & TilgjengeligeVedtaksbrevMedMaler;
   readOnly: boolean;
   dokumentdata: DokumentDataType;
@@ -42,12 +43,12 @@ const FritekstRedigering = ({
   hentFritekstbrevHtmlCallback,
   setFieldValue,
   previewBrev,
+  skalBrukeOverstyrendeFritekstBrev,
   tilgjengeligeVedtaksbrev,
   readOnly,
   dokumentdata,
   innholdTilRedigering,
   inkluderKalender,
-  setEditorErTilbakestilt,
 }: ownProps & WrappedComponentProps) => {
   useEffect(() => {
     Modal.setAppElement(document.body);
@@ -107,15 +108,7 @@ const FritekstRedigering = ({
         inkluderKalender,
       }),
     );
-    lukkEditor();
-  };
-
-  const handleTilbakestill = () => {
-    setRedigerbartInnholdKlart(false);
-    setFieldValue(fieldnames.REDIGERT_HTML, originalHtml);
-    setRedigerbartInnhold(originalHtml);
-    setRedigerbartInnholdKlart(true);
-    setEditorErTilbakestilt(true);
+    // lukkEditor();
   };
 
   const handleForhåndsvis = (e: React.SyntheticEvent, html: string) => previewBrev(e, html);
@@ -124,29 +117,17 @@ const FritekstRedigering = ({
 
   return (
     <>
-      <div className={styles.knapper}>
-        <Button
-          variant="secondary"
-          type="button"
-          onClick={() => setVisRedigering(true)}
-          disabled={readOnly || !redigerbartInnholdKlart}
-          loading={!redigerbartInnholdKlart}
-          icon={<Edit aria-hidden />}
-          size="small"
-        >
-          <FormattedMessage id="RedigeringAvFritekstBrev.Rediger" />
-        </Button>
-        <Button
-          variant="tertiary"
-          icon={<Cancel aria-hidden />}
-          size="small"
-          type="button"
-          onClick={handleTilbakestill}
-          disabled={readOnly}
-        >
-          Tilbakestill
-        </Button>
-      </div>
+      <Button
+        variant="secondary"
+        type="button"
+        onClick={() => setVisRedigering(true)}
+        disabled={readOnly || !redigerbartInnholdKlart}
+        loading={!redigerbartInnholdKlart}
+        icon={<Edit aria-hidden />}
+        size="small"
+      >
+        <FormattedMessage id="RedigeringAvFritekstBrev.Rediger" />
+      </Button>
       <Modal open={visRedigering} onClose={() => setVisRedigering(false)} shouldCloseOnOverlayClick={false}>
         <div className={styles.modalInnehold}>
           <FritekstEditor
@@ -154,9 +135,12 @@ const FritekstRedigering = ({
             lukkEditor={lukkEditor}
             handleForhåndsvis={handleForhåndsvis}
             oppdaterFormFelt={oppdaterFormFelt}
+            setFieldValue={setFieldValue}
+            skalBrukeOverstyrendeFritekstBrev={skalBrukeOverstyrendeFritekstBrev}
             readOnly={readOnly}
             redigerbartInnholdKlart={redigerbartInnholdKlart}
             redigerbartInnhold={redigerbartInnhold}
+            originalHtml={originalHtml}
             brevStiler={brevStiler}
             prefiksInnhold={prefiksInnhold}
             suffiksInnhold={suffiksInnhold}
