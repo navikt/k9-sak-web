@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import {
   finnesTilgjengeligeVedtaksbrev,
   kanHaAutomatiskVedtaksbrev,
-  kanHaFritekstbrev,
+  kanHaFritekstbrevV1,
   kanOverstyreMottakere,
   kanKunVelge,
   lagVisningsnavnForMottaker,
@@ -157,7 +157,7 @@ export const BrevPanel = props => {
   });
 
   const harAutomatiskVedtaksbrev = kanHaAutomatiskVedtaksbrev(tilgjengeligeVedtaksbrev);
-  const harFritekstbrev = kanHaFritekstbrev(tilgjengeligeVedtaksbrev);
+  const harFritekstbrev = kanHaFritekstbrevV1(tilgjengeligeVedtaksbrev);
   const harAlternativeMottakere = kanOverstyreMottakere(tilgjengeligeVedtaksbrev);
 
   const fritekstbrev = harFritekstbrev && (
