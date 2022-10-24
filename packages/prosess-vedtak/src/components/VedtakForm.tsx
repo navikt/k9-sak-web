@@ -144,8 +144,6 @@ export const VedtakForm: React.FC<Props> = ({
   const [erSendtInnUtenArsaker, setErSendtInnUtenArsaker] = useState(false);
   const [harVurdertOverlappendeYtelse, setHarVurdertOverlappendeYtelse] = useState(false);
   const [visSakGårIkkeTilBeslutterModal, setVisSakGårIkkeTilBeslutterModal] = useState(false);
-  const [editorHarLagret, setEditorHarLagret] = useState<boolean>(false);
-  const [editorErTilbakestilt, setEditorErTilbakestilt] = useState<boolean>(false);
   const harOverlappendeYtelser = overlappendeYtelser && overlappendeYtelser.length > 0;
   const vedtakContext = useContext(VedtakFormContext);
   const onToggleOverstyring = (e, setFieldValue) => {
@@ -452,8 +450,6 @@ export const VedtakForm: React.FC<Props> = ({
                 behandlingResultat={behandlingresultat}
                 dokumentdata={dokumentdata}
                 lagreDokumentdata={lagreDokumentdata}
-                setEditorHarLagret={setEditorHarLagret}
-                setEditorErTilbakestilt={setEditorErTilbakestilt}
               />
               {!erRevurdering ? (
                 <VedtakSubmit
@@ -465,42 +461,19 @@ export const VedtakForm: React.FC<Props> = ({
                   handleSubmit={
                     erToTrinn ? formikProps.handleSubmit : event => handleErEntrinnSubmit(event, formikProps)
                   }
-                  dokumentdata={dokumentdata}
-                  lagreDokumentdata={lagreDokumentdata}
-                  brødtekst={formikProps.values.brødtekst}
-                  overskrift={formikProps.values.overskrift}
-                  redigertHtml={formikProps.values.redigertHtml}
-                  originalHtml={formikProps.values.originalHtml}
-                  inkluderKalender={formikProps.values[fieldnames.INKLUDER_KALENDER_VED_OVERSTYRING]}
-                  tilgjengeligeVedtaksbrev={tilgjengeligeVedtaksbrev}
-                  editorHarLagret={editorHarLagret}
-                  editorErTilbakestilt={editorErTilbakestilt}
-                  setEditorErTilbakestilt={setEditorErTilbakestilt}
                 />
               ) : (
                 <VedtakRevurderingSubmitPanel
                   formikValues={formikProps.values}
                   isSubmitting={formikProps.isSubmitting}
-                  skalBrukeOverstyrendeFritekstBrev={formikProps.values.skalBrukeOverstyrendeFritekstBrev}
                   handleSubmit={
                     erToTrinn ? formikProps.handleSubmit : event => handleErEntrinnSubmit(event, formikProps)
                   }
-                  ytelseTypeKode={ytelseTypeKode}
                   readOnly={readOnly}
                   behandlingStatusKode={behandlingStatus?.kode}
                   harRedusertUtbetaling={harRedusertUtbetaling}
-                  dokumentdata={dokumentdata}
-                  lagreDokumentdata={lagreDokumentdata}
-                  brødtekst={formikProps.values.brødtekst}
-                  overskrift={formikProps.values.overskrift}
-                  redigertHtml={formikProps.values.redigertHtml}
-                  originalHtml={formikProps.values.originalHtml}
                   visFeilmeldingFordiArsakerMangler={() => setErSendtInnUtenArsaker(true)}
                   aksjonspunkter={aksjonspunkter}
-                  tilgjengeligeVedtaksbrev={tilgjengeligeVedtaksbrev}
-                  editorHarLagret={editorHarLagret}
-                  editorErTilbakestilt={editorErTilbakestilt}
-                  setEditorErTilbakestilt={setEditorErTilbakestilt}
                 />
               )}
               {visSakGårIkkeTilBeslutterModal && (

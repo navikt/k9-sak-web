@@ -29,7 +29,6 @@ interface ownProps {
   hentFritekstbrevHtmlCallback: (parameters: any) => string;
   setFieldValue: (field: string, value: any, shouldValidate?: boolean) => void;
   previewBrev: (event: React.SyntheticEvent, html?: string) => void;
-  setEditorErTilbakestilt: React.Dispatch<React.SetStateAction<boolean>>;
   skalBrukeOverstyrendeFritekstBrev: boolean;
   tilgjengeligeVedtaksbrev: TilgjengeligeVedtaksbrev & TilgjengeligeVedtaksbrevMedMaler;
   readOnly: boolean;

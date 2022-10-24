@@ -165,8 +165,6 @@ interface BrevPanelProps {
   ytelseTypeKode: string;
   dokumentdata: DokumentDataType;
   lagreDokumentdata: (any) => void;
-  setEditorHarLagret: React.Dispatch<React.SetStateAction<boolean>>;
-  setEditorErTilbakestilt: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export const BrevPanel: React.FC<BrevPanelProps> = props => {
@@ -192,8 +190,6 @@ export const BrevPanel: React.FC<BrevPanelProps> = props => {
     formikProps,
     dokumentdata,
     lagreDokumentdata,
-    setEditorHarLagret,
-    setEditorErTilbakestilt,
   } = props;
 
   const automatiskBrevCallback = getPreviewAutomatiskBrevCallback({
@@ -239,8 +235,6 @@ export const BrevPanel: React.FC<BrevPanelProps> = props => {
           formikProps={formikProps}
           dokumentdata={dokumentdata}
           lagreDokumentdata={lagreDokumentdata}
-          setEditorHarLagret={setEditorHarLagret}
-          setEditorErTilbakestilt={setEditorErTilbakestilt}
         />
       </div>
       <VedtakPreviewLink previewCallback={manuellBrevCallback} />
