@@ -114,20 +114,28 @@ const FritekstEditor = ({
     <>
       <Modal open={visAdvarsel} onClose={() => setVisAdvarsel(false)} shouldCloseOnOverlayClick={false}>
         <div className={styles.modalInnehold}>
-          <Alert variant="info">
+          <header>
+            <h3>
+              <FormattedMessage id="RedigeringAvFritekstBrev.BekreftTilbakestillTittel" />
+            </h3>
+          </header>
+          <Alert variant="warning">
             <FormattedMessage id="RedigeringAvFritekstBrev.BekreftTilbakestill" />
           </Alert>
           <div className={styles.knapper}>
             <Button type="button" variant="danger" onClick={handleTilbakestill}>
               <FormattedMessage id="RedigeringAvFritekstBrev.Tilbakestill" />
             </Button>
-            <Button type="button" variant="primary" onClick={() => setVisAdvarsel(false)}>
+            <Button type="button" variant="tertiary" onClick={() => setVisAdvarsel(false)}>
               <FormattedMessage id="RedigeringAvFritekstBrev.IkkeTilbakestill" />
             </Button>
           </div>
         </div>
       </Modal>
       <header className={styles.modalHeader}>
+        <h3>
+          <FormattedMessage id="RedigeringAvFritekstBrev.Rediger" />
+        </h3>
         <Alert variant="info">
           <FormattedMessage id="RedigeringAvFritekstBrev.Infotekst" />
         </Alert>
