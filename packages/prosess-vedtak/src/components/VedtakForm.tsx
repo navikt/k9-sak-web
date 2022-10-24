@@ -263,7 +263,10 @@ export const VedtakForm: React.FC<Props> = ({
           !kanHaAutomatiskVedtaksbrev(tilgjengeligeVedtaksbrev) &&
           !harMellomLagretMedIngenBrev(dokumentdata, vedtakVarsel)) ||
         (kanHaManueltFritekstbrev(tilgjengeligeVedtaksbrev) &&
-          harSattDokumentdataType(dokumentdata, vedtakVarsel, vedtaksbrevtype.MANUELL)),
+          harSattDokumentdataType(dokumentdata, vedtakVarsel, vedtaksbrevtype.MANUELL)) ||
+        (kanHaManueltFritekstbrev(tilgjengeligeVedtaksbrev) &&
+          !kanHaAutomatiskVedtaksbrev(tilgjengeligeVedtaksbrev) &&
+          !harMellomLagretMedIngenBrev(dokumentdata, vedtakVarsel)),
       [fieldnames.SKAL_HINDRE_UTSENDING_AV_BREV]:
         kanKunVelge(tilgjengeligeVedtaksbrev, vedtaksbrevtype.INGEN) ||
         (harMellomLagretMedIngenBrev(dokumentdata, vedtakVarsel) &&
@@ -375,7 +378,8 @@ export const VedtakForm: React.FC<Props> = ({
               overlappendeYtelser={overlappendeYtelser}
               alleKodeverk={alleKodeverk}
               viseFlereSjekkbokserForBrev={
-                kanHaFritekstbrevV1(tilgjengeligeVedtaksbrev) && kanHindreUtsending(tilgjengeligeVedtaksbrev)
+                (kanHaFritekstbrevV1(tilgjengeligeVedtaksbrev) || kanHaManueltFritekstbrev(tilgjengeligeVedtaksbrev)) &&
+                kanHindreUtsending(tilgjengeligeVedtaksbrev)
               }
               harVurdertOverlappendeYtelse={harVurdertOverlappendeYtelse}
               setHarVurdertOverlappendeYtelse={setHarVurdertOverlappendeYtelse}
