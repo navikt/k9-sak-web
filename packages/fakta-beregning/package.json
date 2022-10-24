@@ -13,7 +13,7 @@
     "@fpsak-frontend/utils": "1.0.0",
     "@k9-sak-web/fakta-felles": "1.0.0",
     "@k9-sak-web/konstanter": "1.0.0",
-    "core-js": "^3.25.5",
+    "core-js": "^3.26.0",
     "moment": "^2.29.4",
     "nav-frontend-alertstriper": "4.0.2",
     "nav-frontend-alertstriper-style": "3.0.2",
