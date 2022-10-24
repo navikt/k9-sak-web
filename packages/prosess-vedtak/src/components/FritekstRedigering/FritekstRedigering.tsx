@@ -36,6 +36,7 @@ interface ownProps {
   dokumentdata: DokumentDataType;
   innholdTilRedigering: string;
   inkluderKalender: boolean;
+  kanInkludereKalender: boolean;
 }
 
 const FritekstRedigering = ({
@@ -49,6 +50,7 @@ const FritekstRedigering = ({
   dokumentdata,
   innholdTilRedigering,
   inkluderKalender,
+  kanInkludereKalender,
 }: ownProps & WrappedComponentProps) => {
   useEffect(() => {
     Modal.setAppElement(document.body);
@@ -136,6 +138,7 @@ const FritekstRedigering = ({
             handleForhåndsvis={handleForhåndsvis}
             oppdaterFormFelt={oppdaterFormFelt}
             setFieldValue={setFieldValue}
+            kanInkludereKalender={kanInkludereKalender}
             skalBrukeOverstyrendeFritekstBrev={skalBrukeOverstyrendeFritekstBrev}
             readOnly={readOnly}
             redigerbartInnholdKlart={redigerbartInnholdKlart}

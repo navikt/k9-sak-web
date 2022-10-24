@@ -18,6 +18,7 @@ interface ownProps {
   handleForhåndsvis: (event: React.SyntheticEvent, html: string) => void;
   oppdaterFormFelt: (html: string) => void;
   setFieldValue: (field: string, value: any, shouldValidate?: boolean) => void;
+  kanInkludereKalender: boolean;
   skalBrukeOverstyrendeFritekstBrev: boolean;
   readOnly: boolean;
   redigerbartInnholdKlart: boolean;
@@ -36,6 +37,7 @@ const FritekstEditor = ({
   handleForhåndsvis,
   oppdaterFormFelt,
   setFieldValue,
+  kanInkludereKalender,
   skalBrukeOverstyrendeFritekstBrev,
   readOnly,
   redigerbartInnholdKlart,
@@ -147,16 +149,18 @@ const FritekstEditor = ({
         </div>
       </div>
       <footer>
-        <Row>
-          <Column xs="12">
-            <InkluderKalenderCheckbox
-              intl={intl}
-              setFieldValue={handleSetFieldValue}
-              skalBrukeOverstyrendeFritekstBrev={skalBrukeOverstyrendeFritekstBrev}
-              disabled={readOnly}
-            />
-          </Column>
-        </Row>
+        {kanInkludereKalender && (
+          <Row>
+            <Column xs="12">
+              <InkluderKalenderCheckbox
+                intl={intl}
+                setFieldValue={handleSetFieldValue}
+                skalBrukeOverstyrendeFritekstBrev={skalBrukeOverstyrendeFritekstBrev}
+                disabled={readOnly}
+              />
+            </Column>
+          </Row>
+        )}
         <div className={styles.knapper}>
           <PreviewLink previewCallback={onForhåndsvis}>
             <FormattedMessage id="VedtakForm.ForhandvisBrev" />

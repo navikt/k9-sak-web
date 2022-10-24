@@ -134,6 +134,7 @@ const FritekstBrevPanel = ({
             inkluderKalender={formikProps.values[fieldnames.INKLUDER_KALENDER_VED_OVERSTYRING]}
             setEditorErTilbakestilt={setEditorErTilbakestilt}
             skalBrukeOverstyrendeFritekstBrev={formikProps.values.skalBrukeOverstyrendeFritekstBrev}
+            kanInkludereKalender={kanInkludereKalender}
           />
 
           {kanInkludereKalender && !kanRedigereFritekstbrev && (
