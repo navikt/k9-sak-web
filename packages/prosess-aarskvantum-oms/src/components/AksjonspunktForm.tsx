@@ -23,7 +23,7 @@ import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 import { CheckboxField, InputField, RadioGroupField, RadioOption, TextAreaField } from '@fpsak-frontend/form/index';
 import { Element } from 'nav-frontend-typografi';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { Aksjonspunkt, UtfallEnum, VurderteVilkår, VilkårEnum, Uttaksperiode } from '@k9-sak-web/types';
+import { Aksjonspunkt, UtfallEnum, VilkårEnum, Uttaksperiode } from '@k9-sak-web/types';
 import { Delete } from '@navikt/ds-icons';
 import styles from './aksjonspunktForm.less';
 import Aktivitet from '../dto/Aktivitet';
