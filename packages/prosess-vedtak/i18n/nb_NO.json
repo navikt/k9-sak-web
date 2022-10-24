@@ -59,7 +59,7 @@
   "VedtakForm.UttaksperioderIkkeGyldig": "Søker har ikke noen gyldig uttaksperiode",
   "VedtakForm.Revurdering.OpphoererDato": "{ytelse} opphører f.o.m. {dato}",
   "VedtakForm.Revurdering.Opphoerer": "{ytelse} opphører",
-  "VedtakForm.ManuellOverstyring": "Rediger brev",
+  "VedtakForm.ManuellOverstyring": "Rediger automatisk brev",
   "VedtakForm.HindreUtsending": "Hindre utsending av brev",
   "VedtakForm.InkluderKalenderVedOverstyring": "Inkluder kalender i brev",
   "VedtakForm.Brev": "Brev",
