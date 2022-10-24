@@ -95,7 +95,7 @@
     "@types/history": "^5.0.0",
     "@types/jest": "^29.2.0",
     "@types/prop-types": "^15.7.5",
-    "@types/react": "^18.0.21",
+    "@types/react": "^17.0.38",
     "@types/react-collapse": "^5.0.1",
     "@types/react-router-dom": "^5.3.3",
     "@types/redux-form": "^8.3.5",
