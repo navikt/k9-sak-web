@@ -22,6 +22,7 @@ import styles from './aksjonspunktForm.less';
 import Aktivitet from '../dto/Aktivitet';
 import { fosterbarnDto } from '../dto/FosterbarnDto';
 import FosterbarnForm from './FosterbarnForm';
+import hjemmel from "@fpsak-frontend/prosess-uttak/src/components/dto/Hjemmel";
 
 interface AksjonspunktFormImplProps {
   aktiviteter: Aktivitet[];
@@ -79,11 +80,11 @@ export const FormContent = ({
   initialValues,
 }: FormContentProps) => {
   Modal.setAppElement(document.body);
-  const uavklartePerioder = useMemo(
+  const uavklartePerioderPgaInfotrygd = useMemo(
     () =>
       aktiviteter
         .flatMap(({ uttaksperioder }) => uttaksperioder)
-        .filter(({ utfall }) => utfall === UtfallEnum.UAVKLART),
+        .filter(({ utfall, hjemler }) => utfall === UtfallEnum.UAVKLART && !hjemler.some(hjemmelen => hjemmelen === 'FTRL_9_7__4')),
     [aktiviteter],
   );
 
@@ -98,7 +99,7 @@ export const FormContent = ({
     }
   }, [setFosterbarnEndret, fosterbarnValue]);
 
-  const harUavklartePerioder = uavklartePerioder.length > 0;
+  const harUavklartePerioder = uavklartePerioderPgaInfotrygd.length > 0;
 
   const erFosterbarnEndret = value => {
     if (erÅF && value === valgValues.reBehandling && !fosterbarnEndret) {
@@ -108,7 +109,7 @@ export const FormContent = ({
   };
 
   if (harUavklartePerioder) {
-    const harOverlappendePerioderIInfotrygd = uavklartePerioder.some((uttaksperiode) =>
+    const harOverlappendePerioderIInfotrygd = uavklartePerioderPgaInfotrygd.some((uttaksperiode) =>
       vilkårHarOverlappendePerioderIInfotrygd(uttaksperiode),
     );
 
