@@ -147,12 +147,41 @@ const VedtakOverlappendeYtelsePanel: React.FC<Props & WrappedComponentProps> = (
         <Accordion className={styles.accordion}>
           <Accordion.Item>
             <Accordion.Header type="button">
-              <Heading spacing size="small" level="3">
+              <Heading size="xsmall" level="3">
                 Hvilke ytelser går det automatisk melding?
               </Heading>
             </Accordion.Header>
             <Accordion.Content>
-              <BodyLong>Nå kan du sende inn søknaden.</BodyLong>
+              <Heading spacing size="xsmall" level="4">
+                Sykepenger
+              </Heading>
+              <BodyLong spacing>
+                Det opprettes automatisk VKY-oppgave på sykepenger i Gosys hvis det er overlapp med sykepenger i
+                Infotrygd eller Speil.
+              </BodyLong>
+              <Heading spacing size="xsmall" level="4">
+                Foreldrepenger
+              </Heading>
+              <BodyLong spacing>
+                Det opprettes automatisk revurdering ved overlapp mellom pleiepenger og foreldrepenger. Ved overlapp
+                mellom omsorgspenger og pleiepenger i livets sluttfase opprettes det VKY-oppgave i Gosys (denne sjekker
+                jeg ut nærmere med Marte i FP, er usikker på om dette stemmer).
+              </BodyLong>
+              <Heading spacing size="xsmall" level="4">
+                Dagpenger
+              </Heading>
+              <BodyLong spacing>
+                Ved overlapp med dagpenger i Arena opprettes det automatisk oppgave hos NØS om å sette utbetalingen på
+                vent.
+              </BodyLong>
+              <Heading spacing size="xsmall" level="4">
+                Andre ytelser i kapittel 9
+              </Heading>
+              <BodyLong>
+                Det opprettes ingen oppgave i Gosys ved overlapp mot annen ytelse i kapittel 9, verken om utbetalingen
+                er gjort i Infotrygd eller K9. Saksbehandler må vurdere hvilken ytelse som er riktig, og eventuelt endre
+                utbetalingen på overlappende ytelse.
+              </BodyLong>
             </Accordion.Content>
           </Accordion.Item>
         </Accordion>
