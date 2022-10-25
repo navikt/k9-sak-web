@@ -16,7 +16,7 @@ import { Hovedknapp } from 'nav-frontend-knapper';
 import { CheckboxField, RadioGroupField, RadioOption, TextAreaField } from '@fpsak-frontend/form/index';
 import { Element } from 'nav-frontend-typografi';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { Aksjonspunkt, UtfallEnum, VurderteVilkår, VilkårEnum } from '@k9-sak-web/types';
+import { Aksjonspunkt, UtfallEnum, VilkårEnum, Uttaksperiode } from '@k9-sak-web/types';
 import { Modal } from '@navikt/ds-react';
 import styles from './aksjonspunktForm.less';
 import Aktivitet from '../dto/Aktivitet';
@@ -52,10 +52,10 @@ const valgValues = {
   fortsett: 'fortsett',
 };
 
-const vilkårHarOverlappendePerioderIInfotrygd = (vurderteVilkår: VurderteVilkår) =>
-  Object.entries(vurderteVilkår).some(
-    ([vilkår, utfall]) => vilkår === VilkårEnum.NOK_DAGER && utfall === UtfallEnum.UAVKLART,
-  );
+const vilkårHarOverlappendePerioderIInfotrygd = (uttaksperiode: Uttaksperiode) =>
+  Object.entries(uttaksperiode).some(
+    ([vilkår, utfall]) => vilkår === VilkårEnum.NOK_DAGER && utfall === UtfallEnum.UAVKLART)
+  && !uttaksperiode.hjemler.some(hjemmel => hjemmel === 'FTRL_9_7__4');
 
 const utledAksjonspunktKode = (aksjonspunkter: Aksjonspunkt[]) => {
   // 9014 skal ha presedens
@@ -108,8 +108,8 @@ export const FormContent = ({
   };
 
   if (harUavklartePerioder) {
-    const harOverlappendePerioderIInfotrygd = uavklartePerioder.some(({ vurderteVilkår }) =>
-      vilkårHarOverlappendePerioderIInfotrygd(vurderteVilkår.vilkår),
+    const harOverlappendePerioderIInfotrygd = uavklartePerioder.some((uttaksperiode) =>
+      vilkårHarOverlappendePerioderIInfotrygd(uttaksperiode),
     );
 
     return (
