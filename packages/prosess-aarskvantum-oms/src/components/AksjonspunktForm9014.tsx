@@ -53,7 +53,7 @@ const valgValues = {
 };
 
 const vilkårHarOverlappendePerioderIInfotrygd = (uttaksperiode: Uttaksperiode) =>
-  Object.entries(uttaksperiode).some(
+  Object.entries(uttaksperiode.vurderteVilkår).some(
     ([vilkår, utfall]) => vilkår === VilkårEnum.NOK_DAGER && utfall === UtfallEnum.UAVKLART)
   && !uttaksperiode.hjemler.some(hjemmel => hjemmel === 'FTRL_9_7__4');
 
