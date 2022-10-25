@@ -96,3 +96,12 @@ export const lagLagreHtmlDokumentdataRequest = ({
   VEDTAKSBREV_TYPE: redigerbarDokumentmal.vedtaksbrev,
   VEDTAKSBREV_MAL: redigerbarDokumentmal.dokumentMalType,
 });
+
+export const validerManueltRedigertBrev = (html: string): boolean => {
+  const innholdet = document.createElement('div');
+  innholdet.innerHTML = html;
+  const tekst = innholdet.textContent || innholdet.innerText || '';
+  const malInnholdStrenger = ['Fyll inn overskrift', 'Fyll inn brevtekst'];
+  const regex = new RegExp(malInnholdStrenger.join('|'), 'gi');
+  return !regex.test(tekst);
+};

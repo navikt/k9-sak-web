@@ -149,5 +149,6 @@
   "RedigeringAvFritekstBrev.IkkeTilbakestill": "Avbryt",
   "RedigeringAvFritekstBrev.FritekstIkkeAutolagret": "Endringene i brevet er ikke lagret",
   "RedigeringAvFritekstBrev.FritekstAutolagret": "Endringene i brevet er lagret",
+  "RedigeringAvFritekstBrev.ManueltBrevIkkeEndret": "Brevet må redigeres før det kan sendes",
   "VedtakForm.FritekstTilbakestilt": "Brevet er tilbakestilt, men endringene er ikke lagret enda."
 }
