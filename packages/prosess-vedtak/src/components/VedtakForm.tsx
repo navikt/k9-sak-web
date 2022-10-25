@@ -144,6 +144,7 @@ export const VedtakForm: React.FC<Props> = ({
   const [erSendtInnUtenArsaker, setErSendtInnUtenArsaker] = useState(false);
   const [harVurdertOverlappendeYtelse, setHarVurdertOverlappendeYtelse] = useState(false);
   const [visSakGårIkkeTilBeslutterModal, setVisSakGårIkkeTilBeslutterModal] = useState(false);
+
   const harOverlappendeYtelser = overlappendeYtelser && overlappendeYtelser.length > 0;
   const vedtakContext = useContext(VedtakFormContext);
   const onToggleOverstyring = (e, setFieldValue) => {
@@ -465,6 +466,8 @@ export const VedtakForm: React.FC<Props> = ({
                   behandlingPaaVent={behandlingPaaVent}
                   isSubmitting={formikProps.isSubmitting}
                   aksjonspunkter={aksjonspunkter}
+                  redigertHtml={formikProps.values?.redigertHtml}
+                  tilgjengeligeVedtaksbrev={tilgjengeligeVedtaksbrev}
                   handleSubmit={
                     erToTrinn ? formikProps.handleSubmit : event => handleErEntrinnSubmit(event, formikProps)
                   }
