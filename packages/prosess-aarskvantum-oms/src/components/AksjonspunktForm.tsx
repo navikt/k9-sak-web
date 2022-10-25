@@ -51,8 +51,8 @@ const valgValues = {
 
 const vilkårHarOverlappendePerioderIInfotrygd = (uttaksperiode: Uttaksperiode) =>
   Object.entries(uttaksperiode.vurderteVilkår).some(
-    ([vilkår, utfall]) => vilkår === VilkårEnum.NOK_DAGER && utfall === UtfallEnum.UAVKLART)
-  && !uttaksperiode.hjemler.some(hjemmel => hjemmel === 'FTRL_9_7__4');
+    ([vilkår, utfall]) => vilkår === VilkårEnum.NOK_DAGER && utfall === UtfallEnum.UAVKLART,
+  ) && !uttaksperiode.hjemler.some(hjemmel => hjemmel === 'FTRL_9_7__4');
 
 export const FormContent = ({ handleSubmit, aktiviteter = [], isAksjonspunktOpen, fosterbarn }: FormContentProps) => {
   const uavklartePerioder = useMemo(
@@ -116,7 +116,7 @@ export const FormContent = ({ handleSubmit, aktiviteter = [], isAksjonspunktOpen
   );
 
   if (harUavklartePerioder) {
-    const harOverlappendePerioderIInfotrygd = uavklartePerioder.some((uttaksperiode) =>
+    const harOverlappendePerioderIInfotrygd = uavklartePerioder.some(uttaksperiode =>
       vilkårHarOverlappendePerioderIInfotrygd(uttaksperiode),
     );
 

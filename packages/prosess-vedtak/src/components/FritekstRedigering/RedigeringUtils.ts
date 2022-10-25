@@ -40,13 +40,13 @@ export const utledPrefiksInnhold = (html: string) => {
   const heleBrevet = new DOMParser().parseFromString(html, 'application/xhtml+xml');
   let funnetRedigerbartInnhold = false;
   const prefiks = [];
-  Array.from(heleBrevet.querySelectorAll('body > *')).map(div => {
-    if (div.hasAttribute('data-editable')) {
+  Array.from(heleBrevet.querySelectorAll('body > *')).map(el => {
+    if (el.hasAttribute('data-editable')) {
       funnetRedigerbartInnhold = true;
-    } else if (!funnetRedigerbartInnhold && !div.hasAttribute('data-hidden')) {
-      prefiks.push(div.innerHTML);
+    } else if (!funnetRedigerbartInnhold && !el.hasAttribute('data-hidden')) {
+      prefiks.push(el.outerHTML);
     }
-    return div;
+    return el;
   });
   return prefiks.join('');
 };
@@ -55,13 +55,13 @@ export const utledSuffiksInnhold = (html: string) => {
   const heleBrevet = new DOMParser().parseFromString(html, 'application/xhtml+xml');
   let funnetRedigerbartInnhold = false;
   const suffiks = [];
-  Array.from(heleBrevet.querySelectorAll('body > *')).map(div => {
-    if (div.hasAttribute('data-editable')) {
+  Array.from(heleBrevet.querySelectorAll('body > *')).map(el => {
+    if (el.hasAttribute('data-editable')) {
       funnetRedigerbartInnhold = true;
-    } else if (funnetRedigerbartInnhold && !div.hasAttribute('data-hidden')) {
-      suffiks.push(div.innerHTML);
+    } else if (funnetRedigerbartInnhold && !el.hasAttribute('data-hidden')) {
+      suffiks.push(el.outerHTML);
     }
-    return div;
+    return el;
   });
   return suffiks.join('');
 };

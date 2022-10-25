@@ -29,13 +29,13 @@ interface ownProps {
   hentFritekstbrevHtmlCallback: (parameters: any) => string;
   setFieldValue: (field: string, value: any, shouldValidate?: boolean) => void;
   previewBrev: (event: React.SyntheticEvent, html?: string) => void;
-  setEditorErTilbakestilt: React.Dispatch<React.SetStateAction<boolean>>;
   skalBrukeOverstyrendeFritekstBrev: boolean;
   tilgjengeligeVedtaksbrev: TilgjengeligeVedtaksbrev & TilgjengeligeVedtaksbrevMedMaler;
   readOnly: boolean;
   dokumentdata: DokumentDataType;
   innholdTilRedigering: string;
   inkluderKalender: boolean;
+  kanInkludereKalender: boolean;
 }
 
 const FritekstRedigering = ({
@@ -49,6 +49,7 @@ const FritekstRedigering = ({
   dokumentdata,
   innholdTilRedigering,
   inkluderKalender,
+  kanInkludereKalender,
 }: ownProps & WrappedComponentProps) => {
   useEffect(() => {
     Modal.setAppElement(document.body);
@@ -136,6 +137,7 @@ const FritekstRedigering = ({
             handleForhåndsvis={handleForhåndsvis}
             oppdaterFormFelt={oppdaterFormFelt}
             setFieldValue={setFieldValue}
+            kanInkludereKalender={kanInkludereKalender}
             skalBrukeOverstyrendeFritekstBrev={skalBrukeOverstyrendeFritekstBrev}
             readOnly={readOnly}
             redigerbartInnholdKlart={redigerbartInnholdKlart}
