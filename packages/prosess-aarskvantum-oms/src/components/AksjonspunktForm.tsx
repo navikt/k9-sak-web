@@ -55,15 +55,15 @@ const vilkårHarOverlappendePerioderIInfotrygd = (uttaksperiode: Uttaksperiode) 
   ) && !uttaksperiode.hjemler.some(hjemmel => hjemmel === 'FTRL_9_7__4');
 
 export const FormContent = ({ handleSubmit, aktiviteter = [], isAksjonspunktOpen, fosterbarn }: FormContentProps) => {
-  const uavklartePerioder = useMemo(
+  const uavklartePerioderPgaInfotrygd = useMemo(
     () =>
       aktiviteter
         .flatMap(({ uttaksperioder }) => uttaksperioder)
-        .filter(({ utfall }) => utfall === UtfallEnum.UAVKLART),
+        .filter(({ utfall, hjemler }) => utfall === UtfallEnum.UAVKLART && !hjemler.some(hjemmelen => hjemmelen === 'FTRL_9_7__4')),
     [aktiviteter],
   );
 
-  const harUavklartePerioder = uavklartePerioder.length > 0;
+  const harUavklartePerioder = uavklartePerioderPgaInfotrygd.length > 0;
 
   const RenderFosterbarn = ({ fields, barn }) => (
     <>
@@ -116,7 +116,7 @@ export const FormContent = ({ handleSubmit, aktiviteter = [], isAksjonspunktOpen
   );
 
   if (harUavklartePerioder) {
-    const harOverlappendePerioderIInfotrygd = uavklartePerioder.some(uttaksperiode =>
+    const harOverlappendePerioderIInfotrygd = uavklartePerioderPgaInfotrygd.some((uttaksperiode) =>
       vilkårHarOverlappendePerioderIInfotrygd(uttaksperiode),
     );
 
