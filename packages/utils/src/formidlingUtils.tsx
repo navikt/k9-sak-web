@@ -4,6 +4,7 @@ import avsenderApplikasjon from '@fpsak-frontend/kodeverk/src/avsenderApplikasjo
 import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import ForhåndsvisRequest from '@k9-sak-web/types/src/formidlingTsType';
 import { dokumentdatatype } from '@k9-sak-web/konstanter';
+import { DokumentDataType } from '@k9-sak-web/types/src/dokumentdata';
 
 export interface VedtaksbrevMal {
   dokumentMalType: string;
@@ -60,7 +61,7 @@ export function kanHaAutomatiskVedtaksbrev(tilgjengeligeVedtaksbrev: Tilgjengeli
   return vedtaksbrevmaler(tilgjengeligeVedtaksbrev).some(vb => vb === vedtaksbrevtype.AUTOMATISK);
 }
 
-export function kanHaFritekstbrev(tilgjengeligeVedtaksbrev: TilgjengeligeVedtaksbrev): boolean {
+export function kanHaFritekstbrevV1(tilgjengeligeVedtaksbrev: TilgjengeligeVedtaksbrev): boolean {
   return vedtaksbrevmaler(tilgjengeligeVedtaksbrev).some(vb => vb === vedtaksbrevtype.FRITEKST);
 }
 
@@ -74,8 +75,6 @@ export function kanHindreUtsending(tilgjengeligeVedtaksbrev: TilgjengeligeVedtak
 
 export function kanKunVelge(tilgjengeligeVedtaksbrev: TilgjengeligeVedtaksbrev, brevtype): boolean {
   const vedtaksbrev = vedtaksbrevmaler(tilgjengeligeVedtaksbrev);
-  // console.log("kan kun velge", vedtaksbrev);
-  // console.log("kan kun velge", vedtaksbrev.every(vb => vb === brevtype));
   return vedtaksbrev.length > 0 && vedtaksbrev.every(vb => vb === brevtype);
 }
 
@@ -86,10 +85,9 @@ export function harMellomlagretFritekstbrev(dokumentdata, vedtakVarsel): boolean
   );
 }
 
-export function harMellomlagretRedigertFritekstbrev(dokumentdata, vedtakVarsel): boolean {
+export function harSattDokumentdataType(dokumentdata: DokumentDataType, vedtakVarsel, vedtaksbreType: string): boolean {
   return (
-    (dokumentdata?.[dokumentdatatype.VEDTAKSBREV_TYPE] ?? vedtakVarsel?.vedtaksbrev.kode) === vedtaksbrevtype.MANUELL ||
-    !!dokumentdata?.[dokumentdatatype.REDIGERTBREV]
+    (dokumentdata?.[dokumentdatatype.VEDTAKSBREV_TYPE] ?? vedtakVarsel?.vedtaksbrev.kode) === vedtaksbreType || false
   );
 }
 

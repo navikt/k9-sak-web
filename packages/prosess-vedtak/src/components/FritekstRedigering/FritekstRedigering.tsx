@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { Modal, Button } from '@navikt/ds-react';
 import { FormattedMessage, injectIntl, WrappedComponentProps } from 'react-intl';
+
+import { Modal, Button } from '@navikt/ds-react';
+import { Edit } from '@navikt/ds-icons';
 
 import {
   TilgjengeligeVedtaksbrev,
@@ -26,22 +28,28 @@ interface ownProps {
   handleSubmit: (html: string, request: any) => void;
   hentFritekstbrevHtmlCallback: (parameters: any) => string;
   setFieldValue: (field: string, value: any, shouldValidate?: boolean) => void;
+  previewBrev: (event: React.SyntheticEvent, html?: string) => void;
+  skalBrukeOverstyrendeFritekstBrev: boolean;
   tilgjengeligeVedtaksbrev: TilgjengeligeVedtaksbrev & TilgjengeligeVedtaksbrevMedMaler;
   readOnly: boolean;
   dokumentdata: DokumentDataType;
   innholdTilRedigering: string;
   inkluderKalender: boolean;
+  kanInkludereKalender: boolean;
 }
 
 const FritekstRedigering = ({
   handleSubmit,
   hentFritekstbrevHtmlCallback,
   setFieldValue,
+  previewBrev,
+  skalBrukeOverstyrendeFritekstBrev,
   tilgjengeligeVedtaksbrev,
   readOnly,
   dokumentdata,
   innholdTilRedigering,
   inkluderKalender,
+  kanInkludereKalender,
 }: ownProps & WrappedComponentProps) => {
   useEffect(() => {
     Modal.setAppElement(document.body);
@@ -71,10 +79,10 @@ const FritekstRedigering = ({
     setOriginalHtml(originalHtmlStreng);
     setFieldValue(fieldnames.ORIGINAL_HTML, originalHtmlStreng);
 
-    if (innholdTilRedigering) await setRedigerbartInnhold(innholdTilRedigering);
+    if (innholdTilRedigering) setRedigerbartInnhold(innholdTilRedigering);
     else {
       setFieldValue(fieldnames.REDIGERT_HTML, originalHtmlStreng);
-      await setRedigerbartInnhold(originalHtmlStreng);
+      setRedigerbartInnhold(originalHtmlStreng);
     }
 
     setRedigerbartInnholdKlart(true);
@@ -101,22 +109,40 @@ const FritekstRedigering = ({
         inkluderKalender,
       }),
     );
-    lukkEditor();
+    // lukkEditor();
   };
+
+  const handleForhåndsvis = (e: React.SyntheticEvent, html: string) => previewBrev(e, html);
+
+  const oppdaterFormFelt = (html: string) => setFieldValue(fieldnames.REDIGERT_HTML, html);
 
   return (
     <>
-      <Button variant="primary" type="button" onClick={() => setVisRedigering(true)} disabled={readOnly}>
+      <Button
+        variant="secondary"
+        type="button"
+        onClick={() => setVisRedigering(true)}
+        disabled={readOnly || !redigerbartInnholdKlart}
+        loading={!redigerbartInnholdKlart}
+        icon={<Edit aria-hidden />}
+        size="small"
+      >
         <FormattedMessage id="RedigeringAvFritekstBrev.Rediger" />
       </Button>
-      <Modal open={visRedigering} onClose={() => setVisRedigering(false)}>
+      <Modal open={visRedigering} onClose={() => setVisRedigering(false)} shouldCloseOnOverlayClick={false}>
         <div className={styles.modalInnehold}>
           <FritekstEditor
             handleSubmit={handleLagre}
             lukkEditor={lukkEditor}
+            handleForhåndsvis={handleForhåndsvis}
+            oppdaterFormFelt={oppdaterFormFelt}
+            setFieldValue={setFieldValue}
+            kanInkludereKalender={kanInkludereKalender}
+            skalBrukeOverstyrendeFritekstBrev={skalBrukeOverstyrendeFritekstBrev}
             readOnly={readOnly}
             redigerbartInnholdKlart={redigerbartInnholdKlart}
             redigerbartInnhold={redigerbartInnhold}
+            originalHtml={originalHtml}
             brevStiler={brevStiler}
             prefiksInnhold={prefiksInnhold}
             suffiksInnhold={suffiksInnhold}

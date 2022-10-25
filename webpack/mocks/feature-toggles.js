@@ -65,6 +65,10 @@ const featureToggles = [
     key: 'FIKS_DELVIS_PROSESSTEG',
     value: process.env.FIKS_DELVIS_PROSESSTEG,
   },
+  {
+    key: 'FIX_SOKNADSFRIST_KALENDER_OG_READONLY',
+    value: process.env.FIX_SOKNADSFRIST_KALENDER_OG_READONLY,
+  },
 ];
 
 module.exports = function (app) {

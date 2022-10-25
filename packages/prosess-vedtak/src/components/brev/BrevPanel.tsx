@@ -1,12 +1,15 @@
 import SelectFieldFormik from '@fpsak-frontend/form/src/SelectFieldFormik';
 import dokumentMalType from '@fpsak-frontend/kodeverk/src/dokumentMalType';
 import vedtaksbrevtype from '@fpsak-frontend/kodeverk/src/vedtaksbrevtype';
+import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
+
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { required, safeJSONParse, decodeHtmlEntity } from '@fpsak-frontend/utils';
 import {
   finnesTilgjengeligeVedtaksbrev,
   kanHaAutomatiskVedtaksbrev,
-  kanHaFritekstbrev,
+  kanHaFritekstbrevV1,
+  kanHaManueltFritekstbrev,
   kanKunVelge,
   kanOverstyreMottakere,
   lagVisningsnavnForMottaker,
@@ -15,6 +18,7 @@ import {
 import { DokumentDataType } from '@k9-sak-web/types/src/dokumentdata';
 import { ArbeidsgiverOpplysningerPerId, Behandlingsresultat, Kodeverk, Personopplysninger } from '@k9-sak-web/types';
 import { Alert } from '@navikt/ds-react';
+
 import { FormikProps } from 'formik';
 import { Column, Row } from 'nav-frontend-grid';
 import React from 'react';
@@ -54,15 +58,15 @@ const getManuellBrevCallback =
     previewCallback: (dokument: any) => void;
     tilgjengeligeVedtaksbrev: TilgjengeligeVedtaksbrev;
   }) =>
-  e => {
+  (e, redigertHtml = undefined) => {
     if (formProps.isValid) {
-      if (formProps.values[fieldnames.REDIGERT_HTML].length > 0) {
+      if (kanHaManueltFritekstbrev(tilgjengeligeVedtaksbrev)) {
         previewCallback({
           dokumentdata: {
             REDIGERTBREV: {
               redigertMal: formProps.values[fieldnames.REDIGERT_MAL],
               originalHtml: formProps.values[fieldnames.ORIGINAL_HTML],
-              redigertHtml: decodeHtmlEntity(formProps.values[fieldnames.REDIGERT_HTML]),
+              redigertHtml: decodeHtmlEntity(redigertHtml || formProps.values[fieldnames.REDIGERT_HTML]),
               inkluderKalender: formProps.values[fieldnames.INKLUDER_KALENDER_VED_OVERSTYRING] || false,
             },
           },
@@ -106,15 +110,6 @@ const automatiskVedtaksbrevParams = ({
   dokumentMal: tilgjengeligeVedtaksbrev?.vedtaksbrevmaler?.[vedtaksbrevtype.AUTOMATISK] ?? dokumentMalType.UTLED,
   ...(overstyrtMottaker ? { overstyrtMottaker: safeJSONParse(overstyrtMottaker) } : {}),
 });
-
-const getPreviewAutomatiskBrevCallbackUtenValidering =
-  ({ fritekst, redusertUtbetalingÅrsaker, overstyrtMottaker, previewCallback, tilgjengeligeVedtaksbrev }) =>
-  e => {
-    previewCallback(
-      automatiskVedtaksbrevParams({ fritekst, redusertUtbetalingÅrsaker, overstyrtMottaker, tilgjengeligeVedtaksbrev }),
-    );
-    e.preventDefault();
-  };
 
 const getPreviewAutomatiskBrevCallback =
   ({
@@ -183,6 +178,7 @@ export const BrevPanel: React.FC<BrevPanelProps> = props => {
     informasjonsbehovVedtaksbrev,
     informasjonsbehovValues,
     skalBrukeOverstyrendeFritekstBrev,
+    ytelseTypeKode,
     begrunnelse,
     previewCallback,
     hentFritekstbrevHtmlCallback,
@@ -206,14 +202,6 @@ export const BrevPanel: React.FC<BrevPanelProps> = props => {
     informasjonsbehovValues,
   });
 
-  const automatiskBrevUtenValideringCallback = getPreviewAutomatiskBrevCallbackUtenValidering({
-    fritekst: begrunnelse,
-    redusertUtbetalingÅrsaker,
-    overstyrtMottaker,
-    previewCallback,
-    tilgjengeligeVedtaksbrev,
-  });
-
   const hentHtmlMalCallback = getHentHtmlMalCallback({
     hentFritekstbrevHtmlCallback,
   });
@@ -228,7 +216,9 @@ export const BrevPanel: React.FC<BrevPanelProps> = props => {
   });
 
   const harAutomatiskVedtaksbrev = kanHaAutomatiskVedtaksbrev(tilgjengeligeVedtaksbrev);
-  const harFritekstbrev = kanHaFritekstbrev(tilgjengeligeVedtaksbrev);
+  const harFritekstbrev =
+    kanHaFritekstbrevV1(tilgjengeligeVedtaksbrev) || kanHaManueltFritekstbrev(tilgjengeligeVedtaksbrev);
+  const kanInkludereKalender = ytelseTypeKode === fagsakYtelseType.PLEIEPENGER;
 
   const harAlternativeMottakere =
     kanOverstyreMottakere(tilgjengeligeVedtaksbrev) && !formikProps.values[fieldnames.SKAL_HINDRE_UTSENDING_AV_BREV];
@@ -238,10 +228,11 @@ export const BrevPanel: React.FC<BrevPanelProps> = props => {
       <div className={styles.brevContainer}>
         <FritekstBrevPanel
           readOnly={readOnly || formikProps.values[fieldnames.SKAL_HINDRE_UTSENDING_AV_BREV]}
-          previewBrev={automatiskBrevUtenValideringCallback}
+          previewBrev={manuellBrevCallback}
           hentFritekstbrevHtmlCallback={hentHtmlMalCallback}
           harAutomatiskVedtaksbrev={harAutomatiskVedtaksbrev}
           tilgjengeligeVedtaksbrev={tilgjengeligeVedtaksbrev}
+          kanInkludereKalender={kanInkludereKalender}
           formikProps={formikProps}
           dokumentdata={dokumentdata}
           lagreDokumentdata={lagreDokumentdata}

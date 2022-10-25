@@ -5,7 +5,7 @@ import classNames from 'classnames/bind';
 
 import { Aksjonspunkt, DokumentStatus, Behandling, SubmitCallback, Vilkar } from '@k9-sak-web/types';
 import { dateFormat } from '@fpsak-frontend/utils';
-import { SideMenu } from '@navikt/k9-react-components';
+import { SideMenu } from '@navikt/ft-plattform-komponenter';
 import advarselIcon from '@fpsak-frontend/assets/images/advarsel.svg';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';

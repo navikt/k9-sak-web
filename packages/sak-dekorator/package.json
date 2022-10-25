@@ -13,7 +13,7 @@
     "@navikt/k9-bem-utils": "^1.0.1",
     "@navikt/k9-date-utils": "^0.0.8",
     "@navikt/k9-period-utils": "^0.0.12",
-    "@navikt/k9-react-components": "^0.1.21",
+    "@navikt/ft-plattform-komponenter": "1.2.6",
     "nav-frontend-core": "6.0.1",
     "nav-frontend-grid": "2.0.2",
     "nav-frontend-grid-style": "1.0.3",
@@ -26,10 +26,12 @@
     "nav-frontend-modal": "2.0.2",
     "nav-frontend-modal-style": "2.0.2",
     "nav-frontend-paneler-style": "2.0.2",
+    "nav-frontend-spinner": "3.0.1",
+    "nav-frontend-spinner-style": "1.0.2",
     "nav-frontend-typografi": "4.0.2",
     "nav-frontend-typografi-style": "2.0.2",
     "react": "^17.0.2",
-    "react-intl": "6.1.0"
+    "react-intl": "6.1.2"
   },
   "devDependencies": {
     "@fpsak-frontend/utils-test": "1.0.0"
