@@ -1,6 +1,5 @@
 /* eslint-disable react/no-danger, @typescript-eslint/no-this-alias */
 import React, { useCallback, useEffect, useState } from 'react';
-import { API } from '@editorjs/editorjs';
 import { Modal, Button, Alert } from '@navikt/ds-react';
 import { FormattedMessage, injectIntl, WrappedComponentProps } from 'react-intl';
 import { Column, Row } from 'nav-frontend-grid';
