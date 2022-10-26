@@ -476,6 +476,7 @@ export const VedtakForm: React.FC<Props> = ({
                 behandlingResultat={behandlingresultat}
                 dokumentdata={dokumentdata}
                 lagreDokumentdata={lagreDokumentdata}
+                aktiverteInformasjonsbehov={aktiverteInformasjonsbehov}
               />
               {!erRevurdering ? (
                 <VedtakSubmit

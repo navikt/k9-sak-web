@@ -33,6 +33,7 @@ interface OwnProps {
   intl: IntlShape;
   formikProps: FormikProps<FormikValues>;
   dokumentdata: DokumentDataType;
+  dokumentdataInformasjonsbehov: any;
 }
 
 const FritekstBrevPanel = ({
@@ -46,6 +47,7 @@ const FritekstBrevPanel = ({
   intl,
   formikProps,
   dokumentdata,
+  dokumentdataInformasjonsbehov,
 }: OwnProps) => {
   const { formatMessage } = intl;
   const [featureToggles] = useFeatureToggles();
@@ -129,6 +131,7 @@ const FritekstBrevPanel = ({
             inkluderKalender={formikProps.values[fieldnames.INKLUDER_KALENDER_VED_OVERSTYRING]}
             skalBrukeOverstyrendeFritekstBrev={formikProps.values.skalBrukeOverstyrendeFritekstBrev}
             kanInkludereKalender={kanInkludereKalender}
+            dokumentdataInformasjonsbehov={dokumentdataInformasjonsbehov}
           />
 
           {formikProps.errors?.[fieldnames.REDIGERT_HTML] && (
