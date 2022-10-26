@@ -182,7 +182,9 @@ export const VedtakForm = ({
           kanHindreUtsending(tilgjengeligeVedtaksbrev) &&
           !harMellomlagretFritekstbrev(dokumentdata, vedtakVarsel)),
       [fieldnames.INKLUDER_KALENDER_VED_OVERSTYRING]:
-        dokumentdata?.[dokumentdatatype.FRITEKSTBREV]?.inkluderKalender || false,
+        dokumentdata?.[dokumentdatatype.FRITEKSTBREV]?.inkluderKalender ||
+        dokumentdata?.[dokumentdatatype.REDIGERTBREV]?.inkluderKalender ||
+        false,
       [fieldnames.OVERSKRIFT]: decodeHtmlEntity(dokumentdata?.[dokumentdatatype.FRITEKSTBREV]?.overskrift) || '',
       [fieldnames.BRØDTEKST]: decodeHtmlEntity(dokumentdata?.[dokumentdatatype.FRITEKSTBREV]?.brødtekst) || '',
       [fieldnames.OVERSTYRT_MOTTAKER]: JSON.stringify(dokumentdata?.[dokumentdatatype.OVERSTYRT_MOTTAKER]),
