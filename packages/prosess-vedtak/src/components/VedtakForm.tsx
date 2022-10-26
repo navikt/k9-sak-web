@@ -1,3 +1,4 @@
+import * as Yup from 'yup';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { isAvslag, isDelvisInnvilget, isInnvilget } from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
@@ -49,6 +50,7 @@ import styles from './vedtakForm.less';
 import VedtakInnvilgetPanel from './VedtakInnvilgetPanel';
 import VedtakSubmit from './VedtakSubmit';
 import { InformasjonsbehovVedtaksbrev } from './brev/InformasjonsbehovAutomatiskVedtaksbrev';
+import { validerManueltRedigertBrev } from './FritekstRedigering/RedigeringUtils';
 
 const isVedtakSubmission = true;
 
@@ -311,9 +313,25 @@ export const VedtakForm: React.FC<Props> = ({
     }
   };
 
+  const vedtakformPartialValidation = Yup.object().shape({
+    [fieldnames.REDIGERT_HTML]: Yup.string().test(
+      'validate-redigert-html',
+      intl.formatMessage({ id: 'RedigeringAvFritekstBrev.ManueltBrevIkkeEndret' }),
+      value => {
+        if (kanHaManueltFritekstbrev(tilgjengeligeVedtaksbrev)) {
+          return validerManueltRedigertBrev(value);
+        }
+        return true;
+      },
+    ),
+  });
+
   return (
     <Formik
       initialValues={{ ...initialValues, ...vedtakContext?.vedtakFormState }}
+      validationSchema={vedtakformPartialValidation}
+      validateOnMount={false}
+      validateOnChange={false}
       onSubmit={(values, actions) => {
         if ((harOverlappendeYtelser && harVurdertOverlappendeYtelse) || !harOverlappendeYtelser) {
           submitCallback(createPayload(values));
@@ -331,7 +349,7 @@ export const VedtakForm: React.FC<Props> = ({
             <div className={styles.knappContainer}>
               <fieldset>
                 <Label size="small" as="legend">
-                  Valg for brev
+                  {intl.formatMessage({ id: 'VedtakForm.ValgForBrev' })}
                 </Label>
                 {(kanHaFritekstbrevV1(tilgjengeligeVedtaksbrev) ||
                   kanHaManueltFritekstbrev(tilgjengeligeVedtaksbrev)) && (
@@ -458,6 +476,7 @@ export const VedtakForm: React.FC<Props> = ({
                 behandlingResultat={behandlingresultat}
                 dokumentdata={dokumentdata}
                 lagreDokumentdata={lagreDokumentdata}
+                aktiverteInformasjonsbehov={aktiverteInformasjonsbehov}
               />
               {!erRevurdering ? (
                 <VedtakSubmit
@@ -466,8 +485,6 @@ export const VedtakForm: React.FC<Props> = ({
                   behandlingPaaVent={behandlingPaaVent}
                   isSubmitting={formikProps.isSubmitting}
                   aksjonspunkter={aksjonspunkter}
-                  redigertHtml={formikProps.values?.redigertHtml}
-                  tilgjengeligeVedtaksbrev={tilgjengeligeVedtaksbrev}
                   handleSubmit={
                     erToTrinn ? formikProps.handleSubmit : event => handleErEntrinnSubmit(event, formikProps)
                   }
