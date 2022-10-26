@@ -250,7 +250,11 @@ export const BrevPanel: React.FC<BrevPanelProps> = props => {
           dokumentdataInformasjonsbehov={dokumentdataInformasjonsbehov}
         />
       </div>
-      <VedtakPreviewLink previewCallback={manuellBrevCallback} />
+      <VedtakPreviewLink
+        previewCallback={manuellBrevCallback}
+        redigertHtml={formikProps.values?.[fieldnames.REDIGERT_HTML]}
+        intl={intl}
+      />
     </>
   );
 
@@ -265,7 +269,9 @@ export const BrevPanel: React.FC<BrevPanelProps> = props => {
           informasjonsbehovVedtaksbrev={informasjonsbehovVedtaksbrev}
         />
       </div>
-      {kanResultatForhåndsvises(behandlingResultat) && <VedtakPreviewLink previewCallback={automatiskBrevCallback} />}
+      {kanResultatForhåndsvises(behandlingResultat) && (
+        <VedtakPreviewLink previewCallback={automatiskBrevCallback} redigertHtml={false} intl={intl} />
+      )}
     </>
   );
 

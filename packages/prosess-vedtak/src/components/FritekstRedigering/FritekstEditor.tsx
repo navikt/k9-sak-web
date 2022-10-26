@@ -1,5 +1,6 @@
 /* eslint-disable react/no-danger, @typescript-eslint/no-this-alias */
 import React, { useCallback, useEffect, useState } from 'react';
+
 import { Modal, Button, Alert } from '@navikt/ds-react';
 import { FormattedMessage, injectIntl, WrappedComponentProps } from 'react-intl';
 import { Column, Row } from 'nav-frontend-grid';
@@ -11,6 +12,7 @@ import PreviewLink from '../PreviewLink';
 import InkluderKalenderCheckbox from '../InkluderKalenderCheckbox';
 
 import styles from './RedigerFritekstbrev.less';
+import { validerManueltRedigertBrev, validerRedigertHtml } from './RedigeringUtils';
 
 interface ownProps {
   handleSubmit: (value: string) => void;
@@ -49,6 +51,7 @@ const FritekstEditor = ({
   intl,
 }: ownProps & WrappedComponentProps) => {
   const [visAdvarsel, setVisAdvarsel] = useState<boolean>(false);
+  const [visValideringsFeil, setVisValideringsFeil] = useState<boolean>(false);
 
   const handleLagre = async () => {
     const html = await editor.lagre();
@@ -96,7 +99,14 @@ const FritekstEditor = ({
 
   const onForhåndsvis = async e => {
     const html = await editor.lagre();
-    handleForhåndsvis(e, html);
+    const validert = await validerRedigertHtml.isValid(html);
+
+    if (validert) {
+      setVisValideringsFeil(false);
+      handleForhåndsvis(e, html);
+    } else {
+      setVisValideringsFeil(true);
+    }
   };
 
   const handleTilbakestill = async () => {
@@ -174,7 +184,15 @@ const FritekstEditor = ({
         )}
         <Row className={styles.knapper}>
           <Column xs="12">
-            <PreviewLink previewCallback={onForhåndsvis}>
+            {visValideringsFeil && (
+              <>
+                <Alert variant="error">
+                  {intl.formatMessage({ id: 'RedigeringAvFritekstBrev.ManueltBrevIkkeEndret' })}{' '}
+                </Alert>
+                <VerticalSpacer sixteenPx />
+              </>
+            )}
+            <PreviewLink previewCallback={onForhåndsvis} intl={intl}>
               <FormattedMessage id="VedtakForm.ForhandvisBrev" />
             </PreviewLink>
           </Column>
