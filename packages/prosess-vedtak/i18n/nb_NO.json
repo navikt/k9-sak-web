@@ -145,7 +145,7 @@
   "RedigeringAvFritekstBrev.Rediger": "Rediger brev",
   "RedigeringAvFritekstBrev.Infotekst": "Gjør ønskede endringer i brevet nedenfor. Redigering er begrenset til området markert i oransje.",
   "RedigeringAvFritekstBrev.BekreftTilbakestillTittel": "Tilbakestill brev",
-  "RedigeringAvFritekstBrev.BekreftTilbakestill": "Dette vil tilbakestille brevet til det automatiske genererte brevet, er du sikker?",
+  "RedigeringAvFritekstBrev.BekreftTilbakestill": "Alle endringer gjort i brevet vil nå bli slettet. Er du sikker på at du vil tilbakestille brevet?",
   "RedigeringAvFritekstBrev.Tilbakestill": "Tilbakestill",
   "RedigeringAvFritekstBrev.IkkeTilbakestill": "Avbryt",
   "RedigeringAvFritekstBrev.FritekstIkkeAutolagret": "Endringene i brevet er ikke lagret",
