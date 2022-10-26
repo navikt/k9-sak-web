@@ -330,10 +330,11 @@ export const VedtakForm: React.FC<Props> = ({
     <Formik
       initialValues={{ ...initialValues, ...vedtakContext?.vedtakFormState }}
       validationSchema={vedtakformPartialValidation}
+      validateOnMount={false}
+      validateOnChange={false}
       onSubmit={(values, actions) => {
         if ((harOverlappendeYtelser && harVurdertOverlappendeYtelse) || !harOverlappendeYtelser) {
-          console.log('submitting', createPayload(values));
-          // submitCallback(createPayload(values));
+          submitCallback(createPayload(values));
         } else {
           actions.setSubmitting(false);
         }
