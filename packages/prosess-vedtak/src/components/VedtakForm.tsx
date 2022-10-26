@@ -349,7 +349,7 @@ export const VedtakForm: React.FC<Props> = ({
             <div className={styles.knappContainer}>
               <fieldset>
                 <Label size="small" as="legend">
-                  Valg for brev
+                  {intl.formatMessage({ id: 'VedtakForm.ValgForBrev' })}
                 </Label>
                 {(kanHaFritekstbrevV1(tilgjengeligeVedtaksbrev) ||
                   kanHaManueltFritekstbrev(tilgjengeligeVedtaksbrev)) && (

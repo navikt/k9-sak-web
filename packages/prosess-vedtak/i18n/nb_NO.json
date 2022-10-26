@@ -63,6 +63,7 @@
   "VedtakForm.HindreUtsending": "Hindre utsending av brev",
   "VedtakForm.InkluderKalenderVedOverstyring": "Inkluder kalender i brev",
   "VedtakForm.Brev": "Brev",
+  "VedtakForm.ValgForBrev": "Valg for brev",
   "VedtakForm.Overskrift": "Overskrift",
   "VedtakForm.Innhold": "Innhold i brev til søker",
   "VedtakForm.AutomatiskBrev": "Innhold fra det automatiske brevet kan nå redigeres",
