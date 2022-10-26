@@ -17,7 +17,7 @@ interface CheckboxGroupFormikProps {
 }
 
 const CheckboxGroupFormik = ({ name, legend, checkboxes, hideLegend, validate = [] }: CheckboxGroupFormikProps) => {
-  const [field, meta, helpers] = useField({ name, validate: value => validateAll(validate, value, true) });
+  const [, meta, helpers] = useField({ name, validate: value => validateAll(validate, value, true) });
   return (
     <CheckboxGroup
       legend={legend}
