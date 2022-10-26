@@ -109,7 +109,6 @@ const FritekstRedigering = ({
         inkluderKalender,
       }),
     );
-    // lukkEditor();
   };
 
   const handleForhåndsvis = (e: React.SyntheticEvent, html: string) => previewBrev(e, html);
