@@ -225,13 +225,14 @@ export const BrevPanel: React.FC<BrevPanelProps> = props => {
   const harAlternativeMottakere =
     kanOverstyreMottakere(tilgjengeligeVedtaksbrev) && !formikProps.values[fieldnames.SKAL_HINDRE_UTSENDING_AV_BREV];
 
-  const dokumentdataInformasjonsbehov = aktiverteInformasjonsbehov.reduce(
-    (a, v) => ({
-      ...a,
-      [v.kode]: formikProps.values[v.kode],
-    }),
-    {},
-  );
+  const dokumentdataInformasjonsbehov =
+    aktiverteInformasjonsbehov?.reduce(
+      (a, v) => ({
+        ...a,
+        [v.kode]: formikProps.values[v.kode],
+      }),
+      {},
+    ) || [];
 
   const fritekstbrev = harFritekstbrev && (
     <>
