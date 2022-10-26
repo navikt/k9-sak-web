@@ -1,3 +1,4 @@
+import * as Yup from 'yup';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { isAvslag, isDelvisInnvilget, isInnvilget } from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
@@ -49,6 +50,7 @@ import styles from './vedtakForm.less';
 import VedtakInnvilgetPanel from './VedtakInnvilgetPanel';
 import VedtakSubmit from './VedtakSubmit';
 import { InformasjonsbehovVedtaksbrev } from './brev/InformasjonsbehovAutomatiskVedtaksbrev';
+import { validerManueltRedigertBrev } from './FritekstRedigering/RedigeringUtils';
 
 const isVedtakSubmission = true;
 
@@ -311,12 +313,27 @@ export const VedtakForm: React.FC<Props> = ({
     }
   };
 
+  const vedtakformPartialValidation = Yup.object().shape({
+    [fieldnames.REDIGERT_HTML]: Yup.string().test(
+      'validate-redigert-html',
+      intl.formatMessage({ id: 'RedigeringAvFritekstBrev.ManueltBrevIkkeEndret' }),
+      value => {
+        if (kanHaManueltFritekstbrev(tilgjengeligeVedtaksbrev)) {
+          return validerManueltRedigertBrev(value);
+        }
+        return true;
+      },
+    ),
+  });
+
   return (
     <Formik
       initialValues={{ ...initialValues, ...vedtakContext?.vedtakFormState }}
+      validationSchema={vedtakformPartialValidation}
       onSubmit={(values, actions) => {
         if ((harOverlappendeYtelser && harVurdertOverlappendeYtelse) || !harOverlappendeYtelser) {
-          submitCallback(createPayload(values));
+          console.log('submitting', createPayload(values));
+          // submitCallback(createPayload(values));
         } else {
           actions.setSubmitting(false);
         }
@@ -466,8 +483,6 @@ export const VedtakForm: React.FC<Props> = ({
                   behandlingPaaVent={behandlingPaaVent}
                   isSubmitting={formikProps.isSubmitting}
                   aksjonspunkter={aksjonspunkter}
-                  redigertHtml={formikProps.values?.redigertHtml}
-                  tilgjengeligeVedtaksbrev={tilgjengeligeVedtaksbrev}
                   handleSubmit={
                     erToTrinn ? formikProps.handleSubmit : event => handleErEntrinnSubmit(event, formikProps)
                   }

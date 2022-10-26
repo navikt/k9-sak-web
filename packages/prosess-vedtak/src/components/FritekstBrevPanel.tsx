@@ -10,6 +10,7 @@ import { TextAreaFormik, TextFieldFormik } from '@fpsak-frontend/form';
 import { kanHaManueltFritekstbrev, TilgjengeligeVedtaksbrev } from '@fpsak-frontend/utils/src/formidlingUtils';
 import { DokumentDataType } from '@k9-sak-web/types/src/dokumentdata';
 
+import AlertStripe from 'nav-frontend-alertstriper';
 import InkluderKalenderCheckbox from './InkluderKalenderCheckbox';
 
 import styles from './vedtakForm.less';
@@ -129,6 +130,13 @@ const FritekstBrevPanel = ({
             skalBrukeOverstyrendeFritekstBrev={formikProps.values.skalBrukeOverstyrendeFritekstBrev}
             kanInkludereKalender={kanInkludereKalender}
           />
+
+          {formikProps.errors[fieldnames.REDIGERT_HTML] && (
+            <>
+              <VerticalSpacer sixteenPx />
+              <AlertStripe type="feil">{formikProps.errors[fieldnames.REDIGERT_HTML]}</AlertStripe>
+            </>
+          )}
 
           {kanInkludereKalender && !kanRedigereFritekstbrev && (
             <div className={readOnly ? styles['textAreaContainer--readOnly'] : styles.textAreaContainer}>
