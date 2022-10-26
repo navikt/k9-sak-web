@@ -22,7 +22,6 @@ import styles from './aksjonspunktForm.less';
 import Aktivitet from '../dto/Aktivitet';
 import { fosterbarnDto } from '../dto/FosterbarnDto';
 import FosterbarnForm from './FosterbarnForm';
-import hjemmel from "@fpsak-frontend/prosess-uttak/src/components/dto/Hjemmel";
 
 interface AksjonspunktFormImplProps {
   aktiviteter: Aktivitet[];
@@ -55,8 +54,8 @@ const valgValues = {
 
 const vilkårHarOverlappendePerioderIInfotrygd = (uttaksperiode: Uttaksperiode) =>
   Object.entries(uttaksperiode.vurderteVilkår).some(
-    ([vilkår, utfall]) => vilkår === VilkårEnum.NOK_DAGER && utfall === UtfallEnum.UAVKLART)
-  && !uttaksperiode.hjemler.some(hjemmel => hjemmel === 'FTRL_9_7__4');
+    ([vilkår, utfall]) => vilkår === VilkårEnum.NOK_DAGER && utfall === UtfallEnum.UAVKLART,
+  ) && !uttaksperiode.hjemler.some(hjemmel => hjemmel === 'FTRL_9_7__4');
 
 const utledAksjonspunktKode = (aksjonspunkter: Aksjonspunkt[]) => {
   // 9014 skal ha presedens
@@ -84,7 +83,10 @@ export const FormContent = ({
     () =>
       aktiviteter
         .flatMap(({ uttaksperioder }) => uttaksperioder)
-        .filter(({ utfall, hjemler }) => utfall === UtfallEnum.UAVKLART && !hjemler.some(hjemmelen => hjemmelen === 'FTRL_9_7__4')),
+        .filter(
+          ({ utfall, hjemler }) =>
+            utfall === UtfallEnum.UAVKLART && !hjemler.some(hjemmelen => hjemmelen === 'FTRL_9_7__4'),
+        ),
     [aktiviteter],
   );
 
@@ -109,7 +111,7 @@ export const FormContent = ({
   };
 
   if (harUavklartePerioder) {
-    const harOverlappendePerioderIInfotrygd = uavklartePerioderPgaInfotrygd.some((uttaksperiode) =>
+    const harOverlappendePerioderIInfotrygd = uavklartePerioderPgaInfotrygd.some(uttaksperiode =>
       vilkårHarOverlappendePerioderIInfotrygd(uttaksperiode),
     );
 
