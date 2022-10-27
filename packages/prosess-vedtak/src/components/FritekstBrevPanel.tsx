@@ -118,7 +118,7 @@ const FritekstBrevPanel = ({
         ))}
 
       {kanRedigereFritekstbrev && formikProps.values.skalBrukeOverstyrendeFritekstBrev && (
-        <div className={readOnly ? 'readOnly' : styles.brevFormContainer}>
+        <div className={readOnly ? 'readOnly' : styles.manueltBrevFormContainer}>
           <FritekstRedigering
             handleSubmit={handleFritekstSubmit}
             hentFritekstbrevHtmlCallback={hentFritekstbrevHtmlCallback}
