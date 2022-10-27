@@ -40,7 +40,10 @@ class PanelDef extends ProsessStegPanelDef {
           federatedCompFn={ProsessBeregningsgrunnlagMF}
           {...props}
           beregningsgrunnlagsvilkar={mapVilkar(bgVilkaret, props.beregningreferanserTilVurdering)}
-          beregningsgrunnlagListe={deepCopyProps.beregningsgrunnlag}
+          beregningsgrunnlagListe={mapYtelsesSpesifiktGrunnlagForFrisinn(
+            deepCopyProps.beregningsgrunnlag,
+            deepCopyProps.behandling,
+          )}
           arbeidsgiverOpplysningerPerId={deepCopyProps.arbeidsgiverOpplysningerPerId}
           submitCallback={props.submitCallback}
           formData={props.formData}
