@@ -21,15 +21,16 @@ const PreviewLink = ({ previewCallback, redigertHtml = false, children, noIcon, 
   const [visValideringsFeil, setVisValideringsFeil] = useState<boolean>(false);
 
   const onPreview = async e => {
-    if (!redigertHtml) previewCallback(e);
+    if (!redigertHtml) return previewCallback(e);
     const validert = await validerRedigertHtml.isValid(redigertHtml);
 
     if (validert) {
       setVisValideringsFeil(false);
-      previewCallback(e);
-    } else {
-      setVisValideringsFeil(true);
+      return previewCallback(e);
     }
+    setVisValideringsFeil(true);
+
+    return true;
   };
 
   return (

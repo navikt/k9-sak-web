@@ -61,7 +61,7 @@ describe('<FritekstBrevPanel>', () => {
       />,
     );
 
-    expect(wrapper.find('.brevFormContainer')).to.have.length(1);
+    expect(wrapper.find('.manueltBrevFormContainer')).to.have.length(1);
     expect(wrapper.find('[data-testid="harAutomatiskVedtaksbrev"]')).to.have.length(1);
   });
 
@@ -85,7 +85,7 @@ describe('<FritekstBrevPanel>', () => {
       />,
     );
 
-    expect(wrapper.find('.brevFormContainer')).to.have.length(1);
+    expect(wrapper.find('.manueltBrevFormContainer')).to.have.length(1);
     expect(wrapper.find('[data-testid="harIkkeAutomatiskVedtaksbrev"]')).to.have.length(1);
     expect(wrapper.find('[data-testid="harAutomatiskVedtaksbrev"]')).to.have.length(0);
   });

@@ -3,6 +3,7 @@ import { FormattedMessage, injectIntl, WrappedComponentProps } from 'react-intl'
 
 import { Modal, Button } from '@navikt/ds-react';
 import { Edit } from '@navikt/ds-icons';
+import { Row } from 'nav-frontend-grid';
 
 import {
   TilgjengeligeVedtaksbrev,
@@ -126,6 +127,9 @@ const FritekstRedigering = ({
 
   return (
     <>
+      <h3>
+        <FormattedMessage id="RedigeringAvFritekstBrev.RedigerBrevTittel" />
+      </h3>
       <Button
         variant="secondary"
         type="button"
