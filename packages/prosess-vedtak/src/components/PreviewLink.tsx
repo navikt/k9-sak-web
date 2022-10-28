@@ -37,7 +37,9 @@ const PreviewLink = ({ previewCallback, redigertHtml = false, children, noIcon, 
     <>
       {visValideringsFeil && (
         <>
-          <Alert variant="error">{intl.formatMessage({ id: 'RedigeringAvFritekstBrev.ManueltBrevIkkeEndret' })} </Alert>
+          <Alert variant="error">
+            {intl.formatMessage({ id: 'RedigeringAvFritekstBrev.ManueltBrevIkkeEndretForhåndsvis' })}{' '}
+          </Alert>
           <VerticalSpacer sixteenPx />
         </>
       )}

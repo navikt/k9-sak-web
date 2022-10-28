@@ -187,7 +187,9 @@ const FritekstEditor = ({
             {visValideringsFeil && (
               <>
                 <Alert variant="error">
-                  {intl.formatMessage({ id: 'RedigeringAvFritekstBrev.ManueltBrevIkkeEndret' })}{' '}
+                  {intl.formatMessage({
+                    id: 'RedigeringAvFritekstBrev.ManueltBrevIkkeEndretForhåndsvis',
+                  })}{' '}
                 </Alert>
                 <VerticalSpacer sixteenPx />
               </>
