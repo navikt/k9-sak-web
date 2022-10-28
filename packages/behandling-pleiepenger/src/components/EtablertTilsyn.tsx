@@ -61,6 +61,7 @@ export default ({ aksjonspunkter, behandling, readOnly, submitCallback, saksbeha
           httpErrorHandlerCaller,
           findEndpointsForMicrofrontend(behandling.links, [
             { rel: 'pleiepenger-sykt-barn-tilsyn', desiredName: 'tilsyn' },
+            { rel: 'sykdom-vurdering-oversikt-ktp', desiredName: 'sykdom' },
           ]),
           readOnly || !harAksjonspunkt,
           løsBeredskapAksjonspunkt,
