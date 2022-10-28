@@ -182,21 +182,23 @@ const FritekstEditor = ({
             </Column>
           </Row>
         )}
-        <Row className={styles.knapper}>
+        <Row>
           <Column xs="12">
-            {visValideringsFeil && (
-              <>
-                <Alert variant="error">
-                  {intl.formatMessage({
-                    id: 'RedigeringAvFritekstBrev.ManueltBrevIkkeEndretForhåndsvis',
-                  })}{' '}
-                </Alert>
-                <VerticalSpacer sixteenPx />
-              </>
-            )}
-            <PreviewLink previewCallback={onForhåndsvis} intl={intl}>
-              <FormattedMessage id="VedtakForm.ForhandvisBrev" />
-            </PreviewLink>
+            <div className={styles.knapper}>
+              {visValideringsFeil && (
+                <>
+                  <Alert variant="error">
+                    {intl.formatMessage({
+                      id: 'RedigeringAvFritekstBrev.ManueltBrevIkkeEndretForhåndsvis',
+                    })}{' '}
+                  </Alert>
+                  <VerticalSpacer sixteenPx />
+                </>
+              )}
+              <PreviewLink previewCallback={onForhåndsvis} intl={intl}>
+                <FormattedMessage id="VedtakForm.ForhandvisBrev" />
+              </PreviewLink>
+            </div>
           </Column>
         </Row>
         <VerticalSpacer thirtyTwoPx />
