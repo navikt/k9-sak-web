@@ -14,10 +14,18 @@ interface PreviewLinkProps {
   redigertHtml?: string | boolean;
   children: ReactNode;
   noIcon?: boolean;
+  size?: 'small' | 'medium' | 'xsmall';
   intl: IntlShape;
 }
 
-const PreviewLink = ({ previewCallback, redigertHtml = false, children, noIcon, intl }: PreviewLinkProps) => {
+const PreviewLink = ({
+  previewCallback,
+  redigertHtml = false,
+  children,
+  noIcon,
+  size = 'small',
+  intl,
+}: PreviewLinkProps) => {
   const [visValideringsFeil, setVisValideringsFeil] = useState<boolean>(false);
 
   const onPreview = async e => {
@@ -47,7 +55,7 @@ const PreviewLink = ({ previewCallback, redigertHtml = false, children, noIcon, 
       {noIcon && (
         <Button
           variant="tertiary"
-          size="small"
+          size={size}
           onClick={onPreview}
           onKeyDown={e => (e.keyCode === 13 ? previewCallback(e) : null)}
           className={classNames(styles.previewLink, styles['previewLink--noIcon'])}
@@ -60,7 +68,7 @@ const PreviewLink = ({ previewCallback, redigertHtml = false, children, noIcon, 
       {!noIcon && (
         <Button
           variant="tertiary"
-          size="small"
+          size={size}
           icon={<Findout aria-hidden />}
           onClick={onPreview}
           onKeyDown={e => (e.keyCode === 13 ? previewCallback(e) : null)}

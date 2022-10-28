@@ -195,7 +195,7 @@ const FritekstEditor = ({
                   <VerticalSpacer sixteenPx />
                 </>
               )}
-              <PreviewLink previewCallback={onForhåndsvis} intl={intl}>
+              <PreviewLink previewCallback={onForhåndsvis} size="medium" intl={intl}>
                 <FormattedMessage id="VedtakForm.ForhandvisBrev" />
               </PreviewLink>
             </div>
