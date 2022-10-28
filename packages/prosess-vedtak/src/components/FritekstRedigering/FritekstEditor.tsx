@@ -1,16 +1,18 @@
 /* eslint-disable react/no-danger, @typescript-eslint/no-this-alias */
 import React, { useCallback, useEffect, useState } from 'react';
-import { API } from '@editorjs/editorjs';
+
 import { Modal, Button, Alert } from '@navikt/ds-react';
 import { FormattedMessage, injectIntl, WrappedComponentProps } from 'react-intl';
 import { Column, Row } from 'nav-frontend-grid';
 
 import { Cancel } from '@navikt/ds-icons';
+import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import EditorJSWrapper from './EditorJSWrapper';
 import PreviewLink from '../PreviewLink';
 import InkluderKalenderCheckbox from '../InkluderKalenderCheckbox';
 
 import styles from './RedigerFritekstbrev.less';
+import { validerManueltRedigertBrev, validerRedigertHtml } from './RedigeringUtils';
 
 interface ownProps {
   handleSubmit: (value: string) => void;
@@ -49,6 +51,7 @@ const FritekstEditor = ({
   intl,
 }: ownProps & WrappedComponentProps) => {
   const [visAdvarsel, setVisAdvarsel] = useState<boolean>(false);
+  const [visValideringsFeil, setVisValideringsFeil] = useState<boolean>(false);
 
   const handleLagre = async () => {
     const html = await editor.lagre();
@@ -96,7 +99,14 @@ const FritekstEditor = ({
 
   const onForhåndsvis = async e => {
     const html = await editor.lagre();
-    handleForhåndsvis(e, html);
+    const validert = await validerRedigertHtml.isValid(html);
+
+    if (validert) {
+      setVisValideringsFeil(false);
+      handleForhåndsvis(e, html);
+    } else {
+      setVisValideringsFeil(true);
+    }
   };
 
   const handleTilbakestill = async () => {
@@ -113,21 +123,22 @@ const FritekstEditor = ({
   return (
     <>
       <Modal open={visAdvarsel} onClose={() => setVisAdvarsel(false)} shouldCloseOnOverlayClick={false}>
-        <div className={styles.modalInnehold}>
+        <div className={styles.alertModalInnehold}>
           <header>
             <h3>
               <FormattedMessage id="RedigeringAvFritekstBrev.BekreftTilbakestillTittel" />
             </h3>
           </header>
-          <Alert variant="warning">
+          <Alert variant="warning" inline>
             <FormattedMessage id="RedigeringAvFritekstBrev.BekreftTilbakestill" />
           </Alert>
-          <div className={styles.knapper}>
-            <Button type="button" variant="danger" onClick={handleTilbakestill}>
-              <FormattedMessage id="RedigeringAvFritekstBrev.Tilbakestill" />
-            </Button>
+
+          <div className={styles.knapperHoyere}>
             <Button type="button" variant="tertiary" onClick={() => setVisAdvarsel(false)}>
               <FormattedMessage id="RedigeringAvFritekstBrev.IkkeTilbakestill" />
+            </Button>
+            <Button type="button" variant="primary" onClick={handleTilbakestill}>
+              <FormattedMessage id="RedigeringAvFritekstBrev.Tilbakestill" />
             </Button>
           </div>
         </div>
@@ -157,6 +168,7 @@ const FritekstEditor = ({
         </div>
       </div>
       <footer>
+        <VerticalSpacer thirtyTwoPx />
         {kanInkludereKalender && (
           <Row>
             <Column xs="12">
@@ -166,29 +178,50 @@ const FritekstEditor = ({
                 skalBrukeOverstyrendeFritekstBrev={skalBrukeOverstyrendeFritekstBrev}
                 disabled={readOnly}
               />
+              <VerticalSpacer sixteenPx />
             </Column>
           </Row>
         )}
-        <div className={styles.knapper}>
-          <PreviewLink previewCallback={onForhåndsvis}>
-            <FormattedMessage id="VedtakForm.ForhandvisBrev" />
-          </PreviewLink>
-        </div>
-        <div className={styles.knapper}>
-          <Button variant="primary" onClick={handleLagreOgLukk} disabled={!redigerbartInnholdKlart || readOnly}>
-            <FormattedMessage id="RedigeringAvFritekstBrev.Lagre" />
-          </Button>
-          <Button
-            variant="tertiary"
-            icon={<Cancel aria-hidden />}
-            type="button"
-            onClick={() => setVisAdvarsel(true)}
-            disabled={readOnly}
-            size="medium"
-          >
-            <FormattedMessage id="RedigeringAvFritekstBrev.Tilbakestill" />
-          </Button>
-        </div>
+        <Row className={styles.knapper}>
+          <Column xs="12">
+            {visValideringsFeil && (
+              <>
+                <Alert variant="error">
+                  {intl.formatMessage({ id: 'RedigeringAvFritekstBrev.ManueltBrevIkkeEndret' })}{' '}
+                </Alert>
+                <VerticalSpacer sixteenPx />
+              </>
+            )}
+            <PreviewLink previewCallback={onForhåndsvis} intl={intl}>
+              <FormattedMessage id="VedtakForm.ForhandvisBrev" />
+            </PreviewLink>
+          </Column>
+        </Row>
+        <VerticalSpacer thirtyTwoPx />
+        <Row>
+          <Column xs="6">
+            <Button
+              type="button"
+              variant="primary"
+              onClick={handleLagreOgLukk}
+              disabled={!redigerbartInnholdKlart || readOnly}
+            >
+              <FormattedMessage id="RedigeringAvFritekstBrev.Lagre" />
+            </Button>
+          </Column>
+          <Column xs="6" className={styles.hoyere}>
+            <Button
+              variant="tertiary"
+              icon={<Cancel aria-hidden />}
+              type="button"
+              onClick={() => setVisAdvarsel(true)}
+              disabled={readOnly}
+              size="medium"
+            >
+              <FormattedMessage id="RedigeringAvFritekstBrev.Tilbakestill" />
+            </Button>
+          </Column>
+        </Row>
       </footer>
     </>
   );

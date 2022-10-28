@@ -63,6 +63,7 @@
   "VedtakForm.HindreUtsending": "Hindre utsending av brev",
   "VedtakForm.InkluderKalenderVedOverstyring": "Inkluder kalender i brev",
   "VedtakForm.Brev": "Brev",
+  "VedtakForm.ValgForBrev": "Valg for brev",
   "VedtakForm.Overskrift": "Overskrift",
   "VedtakForm.Innhold": "Innhold i brev til søker",
   "VedtakForm.AutomatiskBrev": "Innhold fra det automatiske brevet kan nå redigeres",
@@ -142,12 +143,14 @@
   "InformasjonsbehovAutomatiskVedtaksbrev.ErDetRelevantMedFritekst": "Er det relevant med fritekstbeskrivelse i brevet?",
   "RedigeringAvFritekstBrev.Lagre": "Lagre og lukk",
   "RedigeringAvFritekstBrev.Rediger": "Rediger brev",
+  "RedigeringAvFritekstBrev.RedigerBrevTittel": "Rediger brev til søker",
   "RedigeringAvFritekstBrev.Infotekst": "Gjør ønskede endringer i brevet nedenfor. Redigering er begrenset til området markert i oransje.",
   "RedigeringAvFritekstBrev.BekreftTilbakestillTittel": "Tilbakestill brev",
-  "RedigeringAvFritekstBrev.BekreftTilbakestill": "Dette vil tilbakestille brevet til det automatiske genererte brevet, er du sikker?",
+  "RedigeringAvFritekstBrev.BekreftTilbakestill": "Alle endringer gjort i brevet vil nå bli slettet. Er du sikker på at du vil tilbakestille brevet?",
   "RedigeringAvFritekstBrev.Tilbakestill": "Tilbakestill",
   "RedigeringAvFritekstBrev.IkkeTilbakestill": "Avbryt",
   "RedigeringAvFritekstBrev.FritekstIkkeAutolagret": "Endringene i brevet er ikke lagret",
   "RedigeringAvFritekstBrev.FritekstAutolagret": "Endringene i brevet er lagret",
+  "RedigeringAvFritekstBrev.ManueltBrevIkkeEndret": "Brevet må redigeres før det kan sendes",
   "VedtakForm.FritekstTilbakestilt": "Brevet er tilbakestilt, men endringene er ikke lagret enda."
 }

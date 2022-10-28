@@ -66,7 +66,7 @@ const getManuellBrevCallback =
             REDIGERTBREV: {
               redigertMal: formProps.values[fieldnames.REDIGERT_MAL],
               originalHtml: formProps.values[fieldnames.ORIGINAL_HTML],
-              redigertHtml: decodeHtmlEntity(redigertHtml || formProps.values[fieldnames.REDIGERT_HTML]),
+              redigertHtml: redigertHtml || formProps.values[fieldnames.REDIGERT_HTML],
               inkluderKalender: formProps.values[fieldnames.INKLUDER_KALENDER_VED_OVERSTYRING] || false,
             },
           },
@@ -164,6 +164,7 @@ interface BrevPanelProps {
   formikProps: FormikProps<any>;
   ytelseTypeKode: string;
   dokumentdata: DokumentDataType;
+  aktiverteInformasjonsbehov: any;
   lagreDokumentdata: (any) => void;
 }
 
@@ -189,6 +190,7 @@ export const BrevPanel: React.FC<BrevPanelProps> = props => {
     overstyrtMottaker,
     formikProps,
     dokumentdata,
+    aktiverteInformasjonsbehov,
     lagreDokumentdata,
   } = props;
 
@@ -223,6 +225,15 @@ export const BrevPanel: React.FC<BrevPanelProps> = props => {
   const harAlternativeMottakere =
     kanOverstyreMottakere(tilgjengeligeVedtaksbrev) && !formikProps.values[fieldnames.SKAL_HINDRE_UTSENDING_AV_BREV];
 
+  const dokumentdataInformasjonsbehov =
+    aktiverteInformasjonsbehov?.reduce(
+      (a, v) => ({
+        ...a,
+        [v.kode]: formikProps.values[v.kode],
+      }),
+      {},
+    ) || [];
+
   const fritekstbrev = harFritekstbrev && (
     <>
       <div className={styles.brevContainer}>
@@ -236,9 +247,14 @@ export const BrevPanel: React.FC<BrevPanelProps> = props => {
           formikProps={formikProps}
           dokumentdata={dokumentdata}
           lagreDokumentdata={lagreDokumentdata}
+          dokumentdataInformasjonsbehov={dokumentdataInformasjonsbehov}
         />
       </div>
-      <VedtakPreviewLink previewCallback={manuellBrevCallback} />
+      <VedtakPreviewLink
+        previewCallback={manuellBrevCallback}
+        redigertHtml={formikProps.values?.[fieldnames.REDIGERT_HTML]}
+        intl={intl}
+      />
     </>
   );
 
@@ -253,7 +269,9 @@ export const BrevPanel: React.FC<BrevPanelProps> = props => {
           informasjonsbehovVedtaksbrev={informasjonsbehovVedtaksbrev}
         />
       </div>
-      {kanResultatForhåndsvises(behandlingResultat) && <VedtakPreviewLink previewCallback={automatiskBrevCallback} />}
+      {kanResultatForhåndsvises(behandlingResultat) && (
+        <VedtakPreviewLink previewCallback={automatiskBrevCallback} redigertHtml={false} intl={intl} />
+      )}
     </>
   );
 

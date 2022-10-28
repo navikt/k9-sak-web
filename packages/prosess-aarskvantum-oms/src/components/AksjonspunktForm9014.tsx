@@ -54,8 +54,8 @@ const valgValues = {
 
 const vilkårHarOverlappendePerioderIInfotrygd = (uttaksperiode: Uttaksperiode) =>
   Object.entries(uttaksperiode.vurderteVilkår).some(
-    ([vilkår, utfall]) => vilkår === VilkårEnum.NOK_DAGER && utfall === UtfallEnum.UAVKLART)
-  && !uttaksperiode.hjemler.some(hjemmel => hjemmel === 'FTRL_9_7__4');
+    ([vilkår, utfall]) => vilkår === VilkårEnum.NOK_DAGER && utfall === UtfallEnum.UAVKLART,
+  ) && !uttaksperiode.hjemler.some(hjemmel => hjemmel === 'FTRL_9_7__4');
 
 const utledAksjonspunktKode = (aksjonspunkter: Aksjonspunkt[]) => {
   // 9014 skal ha presedens
@@ -79,11 +79,14 @@ export const FormContent = ({
   initialValues,
 }: FormContentProps) => {
   Modal.setAppElement(document.body);
-  const uavklartePerioder = useMemo(
+  const uavklartePerioderPgaInfotrygd = useMemo(
     () =>
       aktiviteter
         .flatMap(({ uttaksperioder }) => uttaksperioder)
-        .filter(({ utfall }) => utfall === UtfallEnum.UAVKLART),
+        .filter(
+          ({ utfall, hjemler }) =>
+            utfall === UtfallEnum.UAVKLART && !hjemler.some(hjemmelen => hjemmelen === 'FTRL_9_7__4'),
+        ),
     [aktiviteter],
   );
 
@@ -98,7 +101,7 @@ export const FormContent = ({
     }
   }, [setFosterbarnEndret, fosterbarnValue]);
 
-  const harUavklartePerioder = uavklartePerioder.length > 0;
+  const harUavklartePerioder = uavklartePerioderPgaInfotrygd.length > 0;
 
   const erFosterbarnEndret = value => {
     if (erÅF && value === valgValues.reBehandling && !fosterbarnEndret) {
@@ -108,7 +111,7 @@ export const FormContent = ({
   };
 
   if (harUavklartePerioder) {
-    const harOverlappendePerioderIInfotrygd = uavklartePerioder.some((uttaksperiode) =>
+    const harOverlappendePerioderIInfotrygd = uavklartePerioderPgaInfotrygd.some(uttaksperiode =>
       vilkårHarOverlappendePerioderIInfotrygd(uttaksperiode),
     );
 

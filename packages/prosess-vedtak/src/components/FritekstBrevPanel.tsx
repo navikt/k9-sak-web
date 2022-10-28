@@ -10,6 +10,7 @@ import { TextAreaFormik, TextFieldFormik } from '@fpsak-frontend/form';
 import { kanHaManueltFritekstbrev, TilgjengeligeVedtaksbrev } from '@fpsak-frontend/utils/src/formidlingUtils';
 import { DokumentDataType } from '@k9-sak-web/types/src/dokumentdata';
 
+import AlertStripe from 'nav-frontend-alertstriper';
 import InkluderKalenderCheckbox from './InkluderKalenderCheckbox';
 
 import styles from './vedtakForm.less';
@@ -32,6 +33,7 @@ interface OwnProps {
   intl: IntlShape;
   formikProps: FormikProps<FormikValues>;
   dokumentdata: DokumentDataType;
+  dokumentdataInformasjonsbehov: any;
 }
 
 const FritekstBrevPanel = ({
@@ -45,6 +47,7 @@ const FritekstBrevPanel = ({
   intl,
   formikProps,
   dokumentdata,
+  dokumentdataInformasjonsbehov,
 }: OwnProps) => {
   const { formatMessage } = intl;
   const [featureToggles] = useFeatureToggles();
@@ -115,7 +118,7 @@ const FritekstBrevPanel = ({
         ))}
 
       {kanRedigereFritekstbrev && formikProps.values.skalBrukeOverstyrendeFritekstBrev && (
-        <div className={readOnly ? 'readOnly' : styles.brevFormContainer}>
+        <div className={readOnly ? 'readOnly' : styles.manueltBrevFormContainer}>
           <FritekstRedigering
             handleSubmit={handleFritekstSubmit}
             hentFritekstbrevHtmlCallback={hentFritekstbrevHtmlCallback}
@@ -128,7 +131,15 @@ const FritekstBrevPanel = ({
             inkluderKalender={formikProps.values[fieldnames.INKLUDER_KALENDER_VED_OVERSTYRING]}
             skalBrukeOverstyrendeFritekstBrev={formikProps.values.skalBrukeOverstyrendeFritekstBrev}
             kanInkludereKalender={kanInkludereKalender}
+            dokumentdataInformasjonsbehov={dokumentdataInformasjonsbehov}
           />
+
+          {formikProps.errors?.[fieldnames.REDIGERT_HTML] && (
+            <>
+              <VerticalSpacer sixteenPx />
+              <AlertStripe type="feil">{formikProps.errors[fieldnames.REDIGERT_HTML]}</AlertStripe>
+            </>
+          )}
 
           {kanInkludereKalender && !kanRedigereFritekstbrev && (
             <div className={readOnly ? styles['textAreaContainer--readOnly'] : styles.textAreaContainer}>

@@ -3,6 +3,7 @@ import { FormattedMessage, injectIntl, WrappedComponentProps } from 'react-intl'
 
 import { Modal, Button } from '@navikt/ds-react';
 import { Edit } from '@navikt/ds-icons';
+import { Row } from 'nav-frontend-grid';
 
 import {
   TilgjengeligeVedtaksbrev,
@@ -36,6 +37,7 @@ interface ownProps {
   innholdTilRedigering: string;
   inkluderKalender: boolean;
   kanInkludereKalender: boolean;
+  dokumentdataInformasjonsbehov: any;
 }
 
 const FritekstRedigering = ({
@@ -50,6 +52,7 @@ const FritekstRedigering = ({
   innholdTilRedigering,
   inkluderKalender,
   kanInkludereKalender,
+  dokumentdataInformasjonsbehov,
 }: ownProps & WrappedComponentProps) => {
   useEffect(() => {
     Modal.setAppElement(document.body);
@@ -67,7 +70,14 @@ const FritekstRedigering = ({
   const [originalHtml, setOriginalHtml] = useState<string>('');
 
   const hentFritekstbrevMal = async () => {
-    const request = { dokumentMal: redigerbarDokumentmal.redigerbarMalType };
+    const request: { dokumentMal: string; dokumentdata?: any[] } = {
+      dokumentMal: redigerbarDokumentmal.redigerbarMalType,
+    };
+
+    if (dokumentdataInformasjonsbehov) {
+      request.dokumentdata = dokumentdataInformasjonsbehov;
+    }
+
     const responseHtml = await hentFritekstbrevHtmlCallback(request);
     setFieldValue(fieldnames.REDIGERT_MAL, redigerbarDokumentmal.redigerbarMalType);
 
@@ -109,7 +119,6 @@ const FritekstRedigering = ({
         inkluderKalender,
       }),
     );
-    // lukkEditor();
   };
 
   const handleForhåndsvis = (e: React.SyntheticEvent, html: string) => previewBrev(e, html);
@@ -118,6 +127,9 @@ const FritekstRedigering = ({
 
   return (
     <>
+      <h3>
+        <FormattedMessage id="RedigeringAvFritekstBrev.RedigerBrevTittel" />
+      </h3>
       <Button
         variant="secondary"
         type="button"
