@@ -2,7 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { FormattedMessage, injectIntl, WrappedComponentProps } from 'react-intl';
 
 import { Modal, Button } from '@navikt/ds-react';
-import { Edit, Cancel } from '@navikt/ds-icons';
+import { Edit } from '@navikt/ds-icons';
+import { Row } from 'nav-frontend-grid';
 
 import {
   TilgjengeligeVedtaksbrev,
@@ -29,12 +30,14 @@ interface ownProps {
   hentFritekstbrevHtmlCallback: (parameters: any) => string;
   setFieldValue: (field: string, value: any, shouldValidate?: boolean) => void;
   previewBrev: (event: React.SyntheticEvent, html?: string) => void;
-  setEditorErTilbakestilt: React.Dispatch<React.SetStateAction<boolean>>;
+  skalBrukeOverstyrendeFritekstBrev: boolean;
   tilgjengeligeVedtaksbrev: TilgjengeligeVedtaksbrev & TilgjengeligeVedtaksbrevMedMaler;
   readOnly: boolean;
   dokumentdata: DokumentDataType;
   innholdTilRedigering: string;
   inkluderKalender: boolean;
+  kanInkludereKalender: boolean;
+  dokumentdataInformasjonsbehov: any;
 }
 
 const FritekstRedigering = ({
@@ -42,12 +45,14 @@ const FritekstRedigering = ({
   hentFritekstbrevHtmlCallback,
   setFieldValue,
   previewBrev,
+  skalBrukeOverstyrendeFritekstBrev,
   tilgjengeligeVedtaksbrev,
   readOnly,
   dokumentdata,
   innholdTilRedigering,
   inkluderKalender,
-  setEditorErTilbakestilt,
+  kanInkludereKalender,
+  dokumentdataInformasjonsbehov,
 }: ownProps & WrappedComponentProps) => {
   useEffect(() => {
     Modal.setAppElement(document.body);
@@ -65,7 +70,14 @@ const FritekstRedigering = ({
   const [originalHtml, setOriginalHtml] = useState<string>('');
 
   const hentFritekstbrevMal = async () => {
-    const request = { dokumentMal: redigerbarDokumentmal.redigerbarMalType };
+    const request: { dokumentMal: string; dokumentdata?: any[] } = {
+      dokumentMal: redigerbarDokumentmal.redigerbarMalType,
+    };
+
+    if (dokumentdataInformasjonsbehov) {
+      request.dokumentdata = dokumentdataInformasjonsbehov;
+    }
+
     const responseHtml = await hentFritekstbrevHtmlCallback(request);
     setFieldValue(fieldnames.REDIGERT_MAL, redigerbarDokumentmal.redigerbarMalType);
 
@@ -107,15 +119,6 @@ const FritekstRedigering = ({
         inkluderKalender,
       }),
     );
-    lukkEditor();
-  };
-
-  const handleTilbakestill = () => {
-    setRedigerbartInnholdKlart(false);
-    setFieldValue(fieldnames.REDIGERT_HTML, originalHtml);
-    setRedigerbartInnhold(originalHtml);
-    setRedigerbartInnholdKlart(true);
-    setEditorErTilbakestilt(true);
   };
 
   const handleForhåndsvis = (e: React.SyntheticEvent, html: string) => previewBrev(e, html);
@@ -124,29 +127,20 @@ const FritekstRedigering = ({
 
   return (
     <>
-      <div className={styles.knapper}>
-        <Button
-          variant="secondary"
-          type="button"
-          onClick={() => setVisRedigering(true)}
-          disabled={readOnly || !redigerbartInnholdKlart}
-          loading={!redigerbartInnholdKlart}
-          icon={<Edit aria-hidden />}
-          size="small"
-        >
-          <FormattedMessage id="RedigeringAvFritekstBrev.Rediger" />
-        </Button>
-        <Button
-          variant="tertiary"
-          icon={<Cancel aria-hidden />}
-          size="small"
-          type="button"
-          onClick={handleTilbakestill}
-          disabled={readOnly}
-        >
-          Tilbakestill
-        </Button>
-      </div>
+      <h3>
+        <FormattedMessage id="RedigeringAvFritekstBrev.RedigerBrevTittel" />
+      </h3>
+      <Button
+        variant="secondary"
+        type="button"
+        onClick={() => setVisRedigering(true)}
+        disabled={readOnly || !redigerbartInnholdKlart}
+        loading={!redigerbartInnholdKlart}
+        icon={<Edit aria-hidden />}
+        size="small"
+      >
+        <FormattedMessage id="RedigeringAvFritekstBrev.Rediger" />
+      </Button>
       <Modal open={visRedigering} onClose={() => setVisRedigering(false)} shouldCloseOnOverlayClick={false}>
         <div className={styles.modalInnehold}>
           <FritekstEditor
@@ -154,9 +148,13 @@ const FritekstRedigering = ({
             lukkEditor={lukkEditor}
             handleForhåndsvis={handleForhåndsvis}
             oppdaterFormFelt={oppdaterFormFelt}
+            setFieldValue={setFieldValue}
+            kanInkludereKalender={kanInkludereKalender}
+            skalBrukeOverstyrendeFritekstBrev={skalBrukeOverstyrendeFritekstBrev}
             readOnly={readOnly}
             redigerbartInnholdKlart={redigerbartInnholdKlart}
             redigerbartInnhold={redigerbartInnhold}
+            originalHtml={originalHtml}
             brevStiler={brevStiler}
             prefiksInnhold={prefiksInnhold}
             suffiksInnhold={suffiksInnhold}

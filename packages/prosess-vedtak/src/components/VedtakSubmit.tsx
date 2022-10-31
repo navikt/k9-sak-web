@@ -6,9 +6,7 @@ import { useIntl } from 'react-intl';
 import { Column, Row } from 'nav-frontend-grid';
 import { Button } from '@navikt/ds-react';
 import { Aksjonspunkt } from '@k9-sak-web/types';
-import { DokumentDataType, LagreDokumentdataType } from '@k9-sak-web/types/src/dokumentdata';
-import { TilgjengeligeVedtaksbrev, TilgjengeligeVedtaksbrevMedMaler } from '@fpsak-frontend/utils/src/formidlingUtils';
-import MellomLagreBrev from './brev/MellomLagreBrev';
+import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 
 import styles from './vedtakForm.less';
 
@@ -19,17 +17,6 @@ interface Props {
   isSubmitting: boolean;
   aksjonspunkter: Aksjonspunkt[];
   handleSubmit: (e) => void;
-  brødtekst: string;
-  overskrift: string;
-  redigertHtml: string;
-  originalHtml: string;
-  inkluderKalender: boolean;
-  dokumentdata: DokumentDataType;
-  lagreDokumentdata: LagreDokumentdataType;
-  tilgjengeligeVedtaksbrev: TilgjengeligeVedtaksbrev & TilgjengeligeVedtaksbrevMedMaler;
-  editorHarLagret: boolean;
-  editorErTilbakestilt: boolean;
-  setEditorErTilbakestilt: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const kanSendesTilGodkjenning = behandlingStatusKode =>
@@ -42,17 +29,6 @@ const VedtakSubmit = ({
   isSubmitting,
   aksjonspunkter,
   handleSubmit,
-  lagreDokumentdata,
-  dokumentdata,
-  inkluderKalender,
-  overskrift,
-  brødtekst,
-  redigertHtml,
-  originalHtml,
-  tilgjengeligeVedtaksbrev,
-  editorHarLagret,
-  editorErTilbakestilt,
-  setEditorErTilbakestilt,
 }: Props): JSX.Element => {
   const intl = useIntl();
 
@@ -82,20 +58,11 @@ const VedtakSubmit = ({
     <Row>
       <Column xs="12">
         {!readOnly && (
-          <MellomLagreBrev
-            lagreDokumentdata={lagreDokumentdata}
-            dokumentdata={dokumentdata}
-            overskrift={overskrift}
-            inkluderKalender={inkluderKalender}
-            brødtekst={brødtekst}
-            redigertHtml={redigertHtml}
-            originalHtml={originalHtml}
-            submitKnapp={submitKnapp}
-            tilgjengeligeVedtaksbrev={tilgjengeligeVedtaksbrev}
-            editorHarLagret={editorHarLagret}
-            editorErTilbakestilt={editorErTilbakestilt}
-            setEditorErTilbakestilt={setEditorErTilbakestilt}
-          />
+          <>
+            <VerticalSpacer sixteenPx />
+            {submitKnapp}
+            <VerticalSpacer sixteenPx />
+          </>
         )}
       </Column>
     </Row>

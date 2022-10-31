@@ -79,7 +79,7 @@ const VisittkortPanel = ({
   const annenPart = typeof personopplysninger.annenPart !== 'undefined' ? personopplysninger.annenPart : null;
   const barnSoktFor = personopplysninger.barnSoktFor?.length > 0 ? personopplysninger.barnSoktFor : null;
   const erDirekteOvergangFraInfotrygd = direkteOvergangFraInfotrygd?.skjæringstidspunkter?.length > 0;
-  const erUtenlandssak = personopplysninger?.pleietrengendePart?.personstatus?.kode === personstatusType.AKTIVT;
+  const erUtenlandssak = personopplysninger?.pleietrengendePart?.personstatus === personstatusType.AKTIVT;
 
   return (
     <div className={styles.container}>

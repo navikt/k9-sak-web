@@ -29,7 +29,7 @@ const lagBeregningsgrunnlag = (ferdigstilt, beregnetPrAar, sammenligningSum, avv
     beregningsgrunnlagPeriode: [
       {
         dagsats: ferdigstilt ? 1500 : undefined,
-        beregningsgrunnlagPrStatusOgAndel: [{ aktivitetStatus: aktivitetStatus.KOMBINERT_AT_SN }]
+        beregningsgrunnlagPrStatusOgAndel: [{ aktivitetStatus: aktivitetStatus.KOMBINERT_AT_SN }],
       },
     ],
   };
@@ -122,7 +122,7 @@ describe('<BeregningFP>', () => {
         arbeidsgiverOpplysningerPerId={{}}
         readOnlySubmitButton
         intl={intlMock}
-        handleSubmit={() => { }}
+        handleSubmit={() => {}}
         beregningreferanserTilVurdering={beregningreferanserTilVurdering}
       />,
     );
@@ -145,7 +145,7 @@ describe('<BeregningFP>', () => {
         behandling={behandling}
         readOnlySubmitButton
         intl={intlMock}
-        handleSubmit={() => { }}
+        handleSubmit={() => {}}
         beregningreferanserTilVurdering={beregningreferanserTilVurdering}
       />,
     );

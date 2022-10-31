@@ -16,7 +16,7 @@ import { Hovedknapp } from 'nav-frontend-knapper';
 import { CheckboxField, RadioGroupField, RadioOption, TextAreaField } from '@fpsak-frontend/form/index';
 import { Element } from 'nav-frontend-typografi';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { Aksjonspunkt, UtfallEnum, VurderteVilkår, VilkårEnum } from '@k9-sak-web/types';
+import { Aksjonspunkt, UtfallEnum, VilkårEnum, Uttaksperiode } from '@k9-sak-web/types';
 import { Modal } from '@navikt/ds-react';
 import styles from './aksjonspunktForm.less';
 import Aktivitet from '../dto/Aktivitet';
@@ -52,17 +52,17 @@ const valgValues = {
   fortsett: 'fortsett',
 };
 
-const vilkårHarOverlappendePerioderIInfotrygd = (vurderteVilkår: VurderteVilkår) =>
-  Object.entries(vurderteVilkår).some(
+const vilkårHarOverlappendePerioderIInfotrygd = (uttaksperiode: Uttaksperiode) =>
+  Object.entries(uttaksperiode.vurderteVilkår).some(
     ([vilkår, utfall]) => vilkår === VilkårEnum.NOK_DAGER && utfall === UtfallEnum.UAVKLART,
-  );
+  ) && !uttaksperiode.hjemler.some(hjemmel => hjemmel === 'FTRL_9_7__4');
 
 const utledAksjonspunktKode = (aksjonspunkter: Aksjonspunkt[]) => {
   // 9014 skal ha presedens
-  if (aksjonspunkter.find(ap => ap.definisjon.kode === aksjonspunktCodes.ÅRSKVANTUM_FOSTERBARN))
+  if (aksjonspunkter.find(ap => ap.definisjon === aksjonspunktCodes.ÅRSKVANTUM_FOSTERBARN))
     return aksjonspunktCodes.ÅRSKVANTUM_FOSTERBARN;
 
-  if (aksjonspunkter.find(ap => ap.definisjon.kode === aksjonspunktCodes.VURDER_ÅRSKVANTUM_KVOTE))
+  if (aksjonspunkter.find(ap => ap.definisjon === aksjonspunktCodes.VURDER_ÅRSKVANTUM_KVOTE))
     return aksjonspunktCodes.VURDER_ÅRSKVANTUM_KVOTE;
 
   return null;
@@ -79,11 +79,14 @@ export const FormContent = ({
   initialValues,
 }: FormContentProps) => {
   Modal.setAppElement(document.body);
-  const uavklartePerioder = useMemo(
+  const uavklartePerioderPgaInfotrygd = useMemo(
     () =>
       aktiviteter
         .flatMap(({ uttaksperioder }) => uttaksperioder)
-        .filter(({ utfall }) => utfall === UtfallEnum.UAVKLART),
+        .filter(
+          ({ utfall, hjemler }) =>
+            utfall === UtfallEnum.UAVKLART && !hjemler.some(hjemmelen => hjemmelen === 'FTRL_9_7__4'),
+        ),
     [aktiviteter],
   );
 
@@ -98,7 +101,7 @@ export const FormContent = ({
     }
   }, [setFosterbarnEndret, fosterbarnValue]);
 
-  const harUavklartePerioder = uavklartePerioder.length > 0;
+  const harUavklartePerioder = uavklartePerioderPgaInfotrygd.length > 0;
 
   const erFosterbarnEndret = value => {
     if (erÅF && value === valgValues.reBehandling && !fosterbarnEndret) {
@@ -108,8 +111,8 @@ export const FormContent = ({
   };
 
   if (harUavklartePerioder) {
-    const harOverlappendePerioderIInfotrygd = uavklartePerioder.some(({ vurderteVilkår }) =>
-      vilkårHarOverlappendePerioderIInfotrygd(vurderteVilkår.vilkår),
+    const harOverlappendePerioderIInfotrygd = uavklartePerioderPgaInfotrygd.some(uttaksperiode =>
+      vilkårHarOverlappendePerioderIInfotrygd(uttaksperiode),
     );
 
     return (

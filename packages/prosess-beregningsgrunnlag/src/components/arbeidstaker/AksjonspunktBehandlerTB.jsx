@@ -36,8 +36,7 @@ const finnAvklaringsbehovForFastsettBgTidsbegrensetAT = avklaringsbehov =>
   avklaringsbehov.find(ab => ab.definisjon === FASTSETT_BEREGNINGSGRUNNLAG_TIDSBEGRENSET_ARBEIDSFORHOLD);
 
 const harPeriodeArbeidsforholdAvsluttet = periode =>
-  periode.periodeAarsaker !== null &&
-  periode.periodeAarsaker.includes(periodeAarsak.ARBEIDSFORHOLD_AVSLUTTET);
+  periode.periodeAarsaker !== null && periode.periodeAarsaker.includes(periodeAarsak.ARBEIDSFORHOLD_AVSLUTTET);
 
 // Finner sammenslått periode etter opphør av tidsbegrenset arbeid
 const finnPeriodeEtterOpphørAvTidsbegrensetArbeid = allePerioder => {
@@ -65,7 +64,8 @@ const findArbeidstakerAndeler = periode =>
   );
 
 const createArbeidsforholdMapKey = arbeidsforhold =>
-  `${arbeidsforhold.arbeidsgiverIdent}${arbeidsforhold && arbeidsforhold.arbeidsforholdId ? arbeidsforhold.arbeidsforholdId : ''
+  `${arbeidsforhold.arbeidsgiverIdent}${
+    arbeidsforhold && arbeidsforhold.arbeidsforholdId ? arbeidsforhold.arbeidsforholdId : ''
   }`;
 
 // Finner beregnetPrAar for alle andeler, basert på data fra den første perioden
@@ -258,7 +258,7 @@ export const AksjonspunktBehandlerTidsbegrensetImpl = ({
 }) => (
   <table className={styles.inntektTableTB}>
     <tbody>{createRows(tableData, readOnly, isAvklaringsbehovClosed, bruttoPrPeriodeList, fieldArrayID)}</tbody>
-  </table >
+  </table>
 );
 
 AksjonspunktBehandlerTidsbegrensetImpl.propTypes = {

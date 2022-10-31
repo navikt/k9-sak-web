@@ -2,7 +2,12 @@
 @import '@{coreModulePath}nav-frontend-core/less/_variabler';
 
 .modalInnehold {
-  padding: 3em;
+  padding: 0 3em 2em;
+}
+
+.alertModalInnehold {
+  padding: 0 3em 2em;
+  width: 27em;
 }
 
 .modalHeader {
@@ -10,14 +15,31 @@
 }
 
 .knapper {
-  margin: 1.5em 0;
+  margin: 1.5em 0 0;
 
   button {
     margin-right: 1em;
 
+    &:first-child {
+      margin-left: 0;
+    }
+
     &:last-child {
       margin-right: 0;
     }
+  }
+}
+
+.hoyere {
+  text-align: right;
+}
+
+.knapperHoyere {
+  margin: 1.5em 0 0;
+  text-align: right;
+
+  button {
+    margin-left: 1em;
   }
 }
 
@@ -45,4 +67,5 @@
   border-right: 15px solid @navOransjeLighten40;
   margin: 0px -10mm;
   min-width: 202.1mm;
+  box-sizing: content-box;
 }

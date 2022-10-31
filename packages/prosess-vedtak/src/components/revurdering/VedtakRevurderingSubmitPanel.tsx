@@ -9,10 +9,9 @@ import behandlingStatusCode from '@fpsak-frontend/kodeverk/src/behandlingStatus'
 import { Aksjonspunkt } from '@k9-sak-web/types';
 import { TilgjengeligeVedtaksbrev, TilgjengeligeVedtaksbrevMedMaler } from '@fpsak-frontend/utils/src/formidlingUtils';
 
-import { DokumentDataType, LagreDokumentdataType } from '@k9-sak-web/types/src/dokumentdata';
-import MellomLagreBrev from '../brev/MellomLagreBrev';
+import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import redusertUtbetalingArsak from '../../kodeverk/redusertUtbetalingArsak';
-import { fieldnames } from '../../konstanter';
+
 import styles from '../vedtakForm.less';
 
 interface OwnProps {
@@ -24,10 +23,6 @@ interface OwnProps {
   behandlingStatusKode: string;
   isSubmitting: boolean;
   handleSubmit: (event: any) => void;
-  brødtekst: string;
-  overskrift: string;
-  dokumentdata: DokumentDataType;
-  lagreDokumentdata: LagreDokumentdataType;
   aksjonspunkter: Aksjonspunkt[];
   tilgjengeligeVedtaksbrev: TilgjengeligeVedtaksbrev & TilgjengeligeVedtaksbrevMedMaler;
   editorHarLagret: boolean;
@@ -49,10 +44,6 @@ export const VedtakRevurderingSubmitPanelImpl = ({
   behandlingStatusKode,
   isSubmitting,
   handleSubmit,
-  lagreDokumentdata,
-  dokumentdata,
-  overskrift,
-  brødtekst,
   aksjonspunkter,
   tilgjengeligeVedtaksbrev,
   editorHarLagret,
@@ -90,20 +81,11 @@ export const VedtakRevurderingSubmitPanelImpl = ({
     <div>
       <div className={styles.margin} />
       {!readOnly && (
-        <MellomLagreBrev
-          lagreDokumentdata={lagreDokumentdata}
-          dokumentdata={dokumentdata}
-          overskrift={overskrift}
-          inkluderKalender={formikValues[fieldnames.INKLUDER_KALENDER_VED_OVERSTYRING]}
-          brødtekst={brødtekst}
-          submitKnapp={submitKnapp}
-          redigertHtml={formikValues[fieldnames.REDIGERT_HTML]}
-          originalHtml={formikValues[fieldnames.ORIGINAL_HTML]}
-          tilgjengeligeVedtaksbrev={tilgjengeligeVedtaksbrev}
-          editorHarLagret={editorHarLagret}
-          editorErTilbakestilt={editorErTilbakestilt}
-          setEditorErTilbakestilt={setEditorErTilbakestilt}
-        />
+        <>
+          <VerticalSpacer sixteenPx />
+          {submitKnapp}
+          <VerticalSpacer sixteenPx />
+        </>
       )}
     </div>
   );

@@ -1,4 +1,5 @@
 import { parse as cssParse, generate as cssGenerate, walk as cssWalk } from 'css-tree';
+import * as Yup from 'yup';
 
 import { VedtaksbrevMal } from '@fpsak-frontend/utils/src/formidlingUtils';
 import { DokumentDataType } from '@k9-sak-web/types/src/dokumentdata';
@@ -40,13 +41,13 @@ export const utledPrefiksInnhold = (html: string) => {
   const heleBrevet = new DOMParser().parseFromString(html, 'application/xhtml+xml');
   let funnetRedigerbartInnhold = false;
   const prefiks = [];
-  Array.from(heleBrevet.querySelectorAll('body > *')).map(div => {
-    if (div.hasAttribute('data-editable')) {
+  Array.from(heleBrevet.querySelectorAll('body > *')).map(el => {
+    if (el.hasAttribute('data-editable')) {
       funnetRedigerbartInnhold = true;
-    } else if (!funnetRedigerbartInnhold && !div.hasAttribute('data-hidden')) {
-      prefiks.push(div.innerHTML);
+    } else if (!funnetRedigerbartInnhold && !el.hasAttribute('data-hidden')) {
+      prefiks.push(el.outerHTML);
     }
-    return div;
+    return el;
   });
   return prefiks.join('');
 };
@@ -55,13 +56,13 @@ export const utledSuffiksInnhold = (html: string) => {
   const heleBrevet = new DOMParser().parseFromString(html, 'application/xhtml+xml');
   let funnetRedigerbartInnhold = false;
   const suffiks = [];
-  Array.from(heleBrevet.querySelectorAll('body > *')).map(div => {
-    if (div.hasAttribute('data-editable')) {
+  Array.from(heleBrevet.querySelectorAll('body > *')).map(el => {
+    if (el.hasAttribute('data-editable')) {
       funnetRedigerbartInnhold = true;
-    } else if (funnetRedigerbartInnhold && !div.hasAttribute('data-hidden')) {
-      suffiks.push(div.innerHTML);
+    } else if (funnetRedigerbartInnhold && !el.hasAttribute('data-hidden')) {
+      suffiks.push(el.outerHTML);
     }
-    return div;
+    return el;
   });
   return suffiks.join('');
 };
@@ -96,3 +97,16 @@ export const lagLagreHtmlDokumentdataRequest = ({
   VEDTAKSBREV_TYPE: redigerbarDokumentmal.vedtaksbrev,
   VEDTAKSBREV_MAL: redigerbarDokumentmal.dokumentMalType,
 });
+
+export const validerManueltRedigertBrev = (html: string): boolean => {
+  const innholdet = document.createElement('div');
+  innholdet.innerHTML = html;
+  const tekst = innholdet.textContent || innholdet.innerText || '';
+  const malInnholdStrenger = ['Fyll inn overskrift', 'Fyll inn brevtekst'];
+  const regex = new RegExp(malInnholdStrenger.join('|'), 'gi');
+  return !regex.test(tekst);
+};
+
+export const validerRedigertHtml = Yup.string().test('validate-redigert-html', '', value =>
+  validerManueltRedigertBrev(value),
+);

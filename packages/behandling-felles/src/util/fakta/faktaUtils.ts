@@ -53,34 +53,34 @@ export const getBekreftAksjonspunktCallback =
     lagreAksjonspunkter: (params: any, keepData?: boolean) => Promise<any>,
     lagreOverstyrteAksjonspunkter?: (params: any, keepData?: boolean) => Promise<any>,
   ) =>
-    aksjonspunkter => {
-      const model = aksjonspunkter.map(ap => ({
-        '@type': ap.kode,
-        ...ap,
-      }));
+  aksjonspunkter => {
+    const model = aksjonspunkter.map(ap => ({
+      '@type': ap.kode,
+      ...ap,
+    }));
 
-      const params = {
-        saksnummer: fagsak.saksnummer,
-        behandlingId: behandling.id,
-        behandlingVersjon: behandling.versjon,
-      };
+    const params = {
+      saksnummer: fagsak.saksnummer,
+      behandlingId: behandling.id,
+      behandlingVersjon: behandling.versjon,
+    };
 
-      if (model && model.some(({ kode }) => overstyringApCodes.includes(kode))) {
-        return lagreOverstyrteAksjonspunkter(
-          {
-            ...params,
-            overstyrteAksjonspunktDtoer: model.filter(({ kode }) => overstyringApCodes.includes(kode)),
-            bekreftedeAksjonspunktDtoer: model.filter(({ kode }) => !overstyringApCodes.includes(kode)),
-          },
-          true,
-        ).then(() => oppdaterProsessStegOgFaktaPanelIUrl(DEFAULT_PROSESS_STEG_KODE, DEFAULT_FAKTA_KODE));
-      }
-
-      return lagreAksjonspunkter(
+    if (model && model.some(({ kode }) => overstyringApCodes.includes(kode))) {
+      return lagreOverstyrteAksjonspunkter(
         {
           ...params,
-          bekreftedeAksjonspunktDtoer: model,
+          overstyrteAksjonspunktDtoer: model.filter(({ kode }) => overstyringApCodes.includes(kode)),
+          bekreftedeAksjonspunktDtoer: model.filter(({ kode }) => !overstyringApCodes.includes(kode)),
         },
         true,
       ).then(() => oppdaterProsessStegOgFaktaPanelIUrl(DEFAULT_PROSESS_STEG_KODE, DEFAULT_FAKTA_KODE));
-    };
+    }
+
+    return lagreAksjonspunkter(
+      {
+        ...params,
+        bekreftedeAksjonspunktDtoer: model,
+      },
+      true,
+    ).then(() => oppdaterProsessStegOgFaktaPanelIUrl(DEFAULT_PROSESS_STEG_KODE, DEFAULT_FAKTA_KODE));
+  };

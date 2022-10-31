@@ -582,7 +582,6 @@ export const visOverlappendeYtelser = () => {
             },
           },
         },
-
       }}
       vilkar={[
         {

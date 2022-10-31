@@ -99,9 +99,9 @@ export const OpptjeningVilkarAksjonspunktPanelImpl = ({
     const isAllTabsCreated = Array.isArray(vilkårPerioder) && vilkårPerioder.length === vilkarFields?.length;
     return isAllTabsCreated
       ? !vilkarFields.some(
-        vilkarField =>
-          vilkarField.vurderesIBehandlingen && (!vilkarField.begrunnelse || vilkarField.erVilkarOk === undefined),
-      )
+          vilkarField =>
+            vilkarField.vurderesIBehandlingen && (!vilkarField.begrunnelse || vilkarField.erVilkarOk === undefined),
+        )
       : false;
   };
 
@@ -117,28 +117,28 @@ export const OpptjeningVilkarAksjonspunktPanelImpl = ({
   const finnesOpptjeningsaktiviteterVidOpptjeningTom: boolean = !erPleiepenger
     ? true
     : opptjeninger.some(opptjening => {
-      const skjæringstidspunkt = dayjs(opptjening.fastsattOpptjening.opptjeningTom)
-        .add(1, 'day')
-        .format('YYYY-MM-DD');
+        const skjæringstidspunkt = dayjs(opptjening.fastsattOpptjening.opptjeningTom)
+          .add(1, 'day')
+          .format('YYYY-MM-DD');
 
-      const vurderesOpptjeningsaktivitetIBehandling = vilkårPerioder.find(
-        ({ periode }) => periode.fom === skjæringstidspunkt,
-      )?.vurderesIBehandlingen;
+        const vurderesOpptjeningsaktivitetIBehandling = vilkårPerioder.find(
+          ({ periode }) => periode.fom === skjæringstidspunkt,
+        )?.vurderesIBehandlingen;
 
-      if (!vurderesOpptjeningsaktivitetIBehandling) {
-        return false;
-      }
+        if (!vurderesOpptjeningsaktivitetIBehandling) {
+          return false;
+        }
 
-      return opptjening.opptjeningAktivitetList.some(opptjeningAktivitet =>
-        // Siste argument ("[]") til isBetween inkluderer start og sluttdato
-        dayjs(skjæringstidspunkt).isBetween(
-          opptjeningAktivitet.opptjeningFom,
-          opptjeningAktivitet.opptjeningTom,
-          null,
-          '[]',
-        ),
-      );
-    });
+        return opptjening.opptjeningAktivitetList.some(opptjeningAktivitet =>
+          // Siste argument ("[]") til isBetween inkluderer start og sluttdato
+          dayjs(skjæringstidspunkt).isBetween(
+            opptjeningAktivitet.opptjeningFom,
+            opptjeningAktivitet.opptjeningTom,
+            null,
+            '[]',
+          ),
+        );
+      });
 
   return (
     <ProsessPanelTemplate
@@ -172,8 +172,8 @@ export const OpptjeningVilkarAksjonspunktPanelImpl = ({
               linebreak: <br />,
             }}
           />
-        </Hjelpetekst >
-      </div >
+        </Hjelpetekst>
+      </div>
 
       <VilkarFields
         erOmsorgspenger={erOmsorgspenger}
@@ -182,7 +182,7 @@ export const OpptjeningVilkarAksjonspunktPanelImpl = ({
         fieldPrefix={`vilkarFields[${periodeIndex}]`}
         skalValgMidlertidigInaktivTypeBVises={finnesOpptjeningsaktiviteterVidOpptjeningTom}
       />
-    </ProsessPanelTemplate >
+    </ProsessPanelTemplate>
   );
 };
 
@@ -225,9 +225,9 @@ const transformValues = (
   })),
   opptjeningPerioder: Array.isArray(opptjeninger)
     ? opptjeninger.map(opptjening => ({
-      fom: opptjening.fastsattOpptjening.opptjeningFom,
-      tom: opptjening.fastsattOpptjening.opptjeningTom,
-    }))
+        fom: opptjening.fastsattOpptjening.opptjeningFom,
+        tom: opptjening.fastsattOpptjening.opptjeningTom,
+      }))
     : [],
   ...{ kode: Array.isArray(aksjonspunkter) && aksjonspunkter.length ? aksjonspunkter[0].definisjon : null },
 });

@@ -91,7 +91,7 @@ const RECIPIENT = { id: 'Bruker', type: '' };
 
 const createValidateRecipient = recipients => value =>
   value === JSON.stringify(RECIPIENT) ||
-    (Array.isArray(recipients) && recipients.some(recipient => JSON.stringify(recipient) === value))
+  (Array.isArray(recipients) && recipients.some(recipient => JSON.stringify(recipient) === value))
     ? undefined
     : [{ id: 'ValidationMessage.InvalidRecipient' }];
 
@@ -198,7 +198,7 @@ export const MessagesMedMedisinskeTypeBrevmalImpl = ({
             }
             // Catch er tom fordi error message skal håndteres av requestMessagesApi.
           })
-          .catch(() => { });
+          .catch(() => {});
       }
     }
   }, [brevmalkode, valgtMedisinType]);
@@ -365,6 +365,10 @@ const transformValues = values => {
   const newValues = values;
   if (values.brevmalkode === dokumentMalType.REVURDERING_DOK && newValues.arsakskode !== ugunstAarsakTyper.ANNET) {
     newValues.fritekst = ' ';
+  }
+
+  if (values.brevmalkode !== dokumentMalType.GENERELT_FRITEKSTBREV && values.fritekstbrev) {
+    newValues.fritekstbrev = undefined;
   }
 
   const overstyrtMottaker =

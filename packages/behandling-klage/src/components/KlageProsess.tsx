@@ -82,13 +82,30 @@ const previewCallback =
     behandling: Behandling,
     valgtPartMedKlagerett: KlagePart,
   ) =>
-    parametre => {
-      const request = lagForhåndsvisRequest(behandling, fagsak, fagsakPerson, {
-        ...parametre,
-        overstyrtMottaker: valgtPartMedKlagerett && valgtPartMedKlagerett.identifikasjon,
-      });
-      return forhandsvisMelding(request).then(response => forhandsvis(response));
-    };
+  parametre => {
+    const request = lagForhåndsvisRequest(behandling, fagsak, fagsakPerson, {
+      ...parametre,
+      overstyrtMottaker: valgtPartMedKlagerett && valgtPartMedKlagerett.identifikasjon,
+    });
+    return forhandsvisMelding(request).then(response => forhandsvis(response));
+  };
+
+const getHentFritekstbrevHtmlCallback =
+  (
+    hentFriteksbrevHtml: (data: any) => Promise<any>,
+    behandling: Behandling,
+    fagsak: Fagsak,
+    fagsakPerson: FagsakPerson,
+  ) =>
+  (parameters: any) =>
+    hentFriteksbrevHtml({
+      ...parameters,
+      eksternReferanse: behandling.uuid,
+      ytelseType: fagsak.sakstype,
+      saksnummer: fagsak.saksnummer,
+      aktørId: fagsakPerson.aktørId,
+      avsenderApplikasjon: bestemAvsenderApp(behandling.type.kode),
+    });
 
 const getHentFritekstbrevHtmlCallback =
   (
@@ -109,31 +126,31 @@ const getHentFritekstbrevHtmlCallback =
 
 const getLagringSideeffekter =
   (toggleFatterVedtakModal, toggleKlageModal, toggleOppdatereFagsakContext, oppdaterProsessStegOgFaktaPanelIUrl) =>
-    async aksjonspunktModels => {
-      const skalByttTilKlageinstans = aksjonspunktModels.some(
-        apValue =>
-          apValue.kode === aksjonspunktCodes.BEHANDLE_KLAGE_NFP &&
-          apValue.klageVurdering === klageVurderingKodeverk.STADFESTE_YTELSESVEDTAK,
-      );
-      const erVedtakAp =
-        aksjonspunktModels[0].kode === aksjonspunktCodes.FORESLA_VEDTAK ||
-        aksjonspunktModels[0].kode === aksjonspunktCodes.VEDTAK_UTEN_TOTRINNSKONTROLL;
+  async aksjonspunktModels => {
+    const skalByttTilKlageinstans = aksjonspunktModels.some(
+      apValue =>
+        apValue.kode === aksjonspunktCodes.BEHANDLE_KLAGE_NFP &&
+        apValue.klageVurdering === klageVurderingKodeverk.STADFESTE_YTELSESVEDTAK,
+    );
+    const erVedtakAp =
+      aksjonspunktModels[0].kode === aksjonspunktCodes.FORESLA_VEDTAK ||
+      aksjonspunktModels[0].kode === aksjonspunktCodes.VEDTAK_UTEN_TOTRINNSKONTROLL;
 
-      if (skalByttTilKlageinstans || erVedtakAp) {
-        toggleOppdatereFagsakContext(false);
+    if (skalByttTilKlageinstans || erVedtakAp) {
+      toggleOppdatereFagsakContext(false);
+    }
+
+    // Returner funksjon som blir kjørt etter lagring av aksjonspunkt(er)
+    return () => {
+      if (skalByttTilKlageinstans) {
+        toggleKlageModal(true);
+      } else if (erVedtakAp) {
+        toggleFatterVedtakModal(true);
+      } else {
+        oppdaterProsessStegOgFaktaPanelIUrl('default', 'default');
       }
-
-      // Returner funksjon som blir kjørt etter lagring av aksjonspunkt(er)
-      return () => {
-        if (skalByttTilKlageinstans) {
-          toggleKlageModal(true);
-        } else if (erVedtakAp) {
-          toggleFatterVedtakModal(true);
-        } else {
-          oppdaterProsessStegOgFaktaPanelIUrl('default', 'default');
-        }
-      };
     };
+  };
 
 const KlageProsess = ({
   data,

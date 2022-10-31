@@ -1,4 +1,3 @@
-
 export type Vilkarperiode = Readonly<{
   avslagKode?: string;
   begrunnelse?: string;

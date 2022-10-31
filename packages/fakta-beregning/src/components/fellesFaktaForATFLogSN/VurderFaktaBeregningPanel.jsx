@@ -77,9 +77,7 @@ const hasOpenAvklaringsbehov = (kode, alleBeregningsgrunnlag) => {
       .flatMap(({ avklaringsbehov }) => avklaringsbehov)
       .some(ab => ab.definisjon === kode && isAvklaringsbehovOpen(ab.status));
   }
-  return alleBeregningsgrunnlag.avklaringsbehov.some(
-    ab => ab.definisjon === kode && isAvklaringsbehovOpen(ab.status),
-  );
+  return alleBeregningsgrunnlag.avklaringsbehov.some(ab => ab.definisjon === kode && isAvklaringsbehovOpen(ab.status));
 };
 
 const harTilfeller = beregningsgrunnlag =>
@@ -197,36 +195,36 @@ export class VurderFaktaBeregningPanelImpl extends Component {
           hasOpenAvklaringsbehov(AVKLAR_AKTIVITETER, alleBeregningsgrunnlag) ||
           hasOpenAvklaringsbehov(OVERSTYRING_AV_BEREGNINGSAKTIVITETER, alleBeregningsgrunnlag)
         ) && (
-            <form onSubmit={formProps.handleSubmit}>
-              <FieldArray name={fieldArrayName} component={this.renderVurderFaktaBeregningPanel} />
-              {(harAvklaringsbehov(VURDER_FAKTA_FOR_ATFL_SN, avklaringsbehov) || erOverstyrt) && (
-                <>
-                  <FaktaBegrunnelseTextField
-                    name={BEGRUNNELSE_FAKTA_TILFELLER_NAME}
-                    isSubmittable={submittable}
-                    isReadOnly={readOnly}
-                    hasBegrunnelse={hasBegrunnelse}
-                  />
-                  <VerticalSpacer twentyPx />
-                  <FaktaSubmitButton
-                    formName={formProps.form}
-                    isSubmittable={
-                      submittable &&
-                      submitEnabled &&
-                      harIkkeEndringerIAvklarAktiviteterMedFlereAvklaringsbehov(
-                        verdiForAvklarAktivitetErEndret,
-                        avklaringsbehov,
-                      )
-                    }
-                    isReadOnly={readOnly}
-                    hasOpenAksjonspunkter={!isAvklaringsbehovClosed(avklaringsbehov)}
-                    behandlingId={behandlingId}
-                    behandlingVersjon={behandlingVersjon}
-                  />
-                </>
-              )}
-            </form>
-          )}
+          <form onSubmit={formProps.handleSubmit}>
+            <FieldArray name={fieldArrayName} component={this.renderVurderFaktaBeregningPanel} />
+            {(harAvklaringsbehov(VURDER_FAKTA_FOR_ATFL_SN, avklaringsbehov) || erOverstyrt) && (
+              <>
+                <FaktaBegrunnelseTextField
+                  name={BEGRUNNELSE_FAKTA_TILFELLER_NAME}
+                  isSubmittable={submittable}
+                  isReadOnly={readOnly}
+                  hasBegrunnelse={hasBegrunnelse}
+                />
+                <VerticalSpacer twentyPx />
+                <FaktaSubmitButton
+                  formName={formProps.form}
+                  isSubmittable={
+                    submittable &&
+                    submitEnabled &&
+                    harIkkeEndringerIAvklarAktiviteterMedFlereAvklaringsbehov(
+                      verdiForAvklarAktivitetErEndret,
+                      avklaringsbehov,
+                    )
+                  }
+                  isReadOnly={readOnly}
+                  hasOpenAksjonspunkter={!isAvklaringsbehovClosed(avklaringsbehov)}
+                  behandlingId={behandlingId}
+                  behandlingVersjon={behandlingVersjon}
+                />
+              </>
+            )}
+          </form>
+        )}
       </>
     );
   }

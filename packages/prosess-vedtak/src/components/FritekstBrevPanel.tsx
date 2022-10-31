@@ -1,7 +1,6 @@
 import { Alert, Heading } from '@navikt/ds-react';
 import { FormikProps, FormikValues } from 'formik';
 import { Column, Row } from 'nav-frontend-grid';
-import AlertStripe from 'nav-frontend-alertstriper';
 import React from 'react';
 import { FormattedMessage, injectIntl, IntlShape } from 'react-intl';
 
@@ -11,6 +10,7 @@ import { TextAreaFormik, TextFieldFormik } from '@fpsak-frontend/form';
 import { kanHaManueltFritekstbrev, TilgjengeligeVedtaksbrev } from '@fpsak-frontend/utils/src/formidlingUtils';
 import { DokumentDataType } from '@k9-sak-web/types/src/dokumentdata';
 
+import AlertStripe from 'nav-frontend-alertstriper';
 import InkluderKalenderCheckbox from './InkluderKalenderCheckbox';
 
 import styles from './vedtakForm.less';
@@ -33,8 +33,7 @@ interface OwnProps {
   intl: IntlShape;
   formikProps: FormikProps<FormikValues>;
   dokumentdata: DokumentDataType;
-  setEditorHarLagret: React.Dispatch<React.SetStateAction<boolean>>;
-  setEditorErTilbakestilt: React.Dispatch<React.SetStateAction<boolean>>;
+  dokumentdataInformasjonsbehov: any;
 }
 
 const FritekstBrevPanel = ({
@@ -48,8 +47,7 @@ const FritekstBrevPanel = ({
   intl,
   formikProps,
   dokumentdata,
-  setEditorHarLagret,
-  setEditorErTilbakestilt,
+  dokumentdataInformasjonsbehov,
 }: OwnProps) => {
   const { formatMessage } = intl;
   const [featureToggles] = useFeatureToggles();
@@ -58,7 +56,6 @@ const FritekstBrevPanel = ({
   const handleFritekstSubmit = async (html: string, request) => {
     formikProps.setFieldValue(fieldnames.REDIGERT_HTML, html);
     await lagreDokumentdata(request);
-    setEditorHarLagret(true);
   };
 
   return (
@@ -121,7 +118,7 @@ const FritekstBrevPanel = ({
         ))}
 
       {kanRedigereFritekstbrev && formikProps.values.skalBrukeOverstyrendeFritekstBrev && (
-        <div className={readOnly ? 'readOnly' : styles.brevFormContainer}>
+        <div className={readOnly ? 'readOnly' : styles.manueltBrevFormContainer}>
           <FritekstRedigering
             handleSubmit={handleFritekstSubmit}
             hentFritekstbrevHtmlCallback={hentFritekstbrevHtmlCallback}
@@ -132,10 +129,19 @@ const FritekstBrevPanel = ({
             dokumentdata={dokumentdata}
             innholdTilRedigering={formikProps.values[fieldnames.REDIGERT_HTML]}
             inkluderKalender={formikProps.values[fieldnames.INKLUDER_KALENDER_VED_OVERSTYRING]}
-            setEditorErTilbakestilt={setEditorErTilbakestilt}
+            skalBrukeOverstyrendeFritekstBrev={formikProps.values.skalBrukeOverstyrendeFritekstBrev}
+            kanInkludereKalender={kanInkludereKalender}
+            dokumentdataInformasjonsbehov={dokumentdataInformasjonsbehov}
           />
 
-          {kanInkludereKalender && (
+          {formikProps.errors?.[fieldnames.REDIGERT_HTML] && (
+            <>
+              <VerticalSpacer sixteenPx />
+              <AlertStripe type="feil">{formikProps.errors[fieldnames.REDIGERT_HTML]}</AlertStripe>
+            </>
+          )}
+
+          {kanInkludereKalender && !kanRedigereFritekstbrev && (
             <div className={readOnly ? styles['textAreaContainer--readOnly'] : styles.textAreaContainer}>
               <Row>
                 <Column xs="12">

@@ -147,19 +147,16 @@ const AvklareAktiviteterPanelContent = props => {
             <Element>
               <FormattedMessage id="AvklareAktiviteter.OverstyrerAktivitetAdvarsel" />
             </Element>
-          )
-          }
+          )}
 
-          {
-            formProps.error && (
-              <>
-                <VerticalSpacer sixteenPx />
-                <AlertStripe type="feil">
-                  <FormattedMessage id={formProps.error} />
-                </AlertStripe>
-              </>
-            )
-          }
+          {formProps.error && (
+            <>
+              <VerticalSpacer sixteenPx />
+              <AlertStripe type="feil">
+                <FormattedMessage id={formProps.error} />
+              </AlertStripe>
+            </>
+          )}
 
           <VerticalSpacer twentyPx />
           <BorderBox>
@@ -203,8 +200,7 @@ const AvklareAktiviteterPanelContent = props => {
               </>
             )}
           </BorderBox>
-          {
-            !skalViseSubmitknappInneforBorderBox &&
+          {!skalViseSubmitknappInneforBorderBox &&
             skalViseSubmitKnappEllerBegrunnelse(avklaringsbehov, erOverstyrt, fields.get(index).erTilVurdering) && (
               <>
                 <VerticalSpacer twentyPx />
@@ -218,11 +214,10 @@ const AvklareAktiviteterPanelContent = props => {
                   behandlingVersjon={behandlingVersjon}
                 />
               </>
-            )
-          }
-        </div >
+            )}
+        </div>
       )}
-    </div >
+    </div>
   ));
 };
 

@@ -468,7 +468,7 @@ export const beregningsgrunnlag = [
 ];
 
 export const vilkår = beregningsgrunnlag.map((bg, index) => ({
-  vilkarType: "FP_VK_41",
+  vilkarType: 'FP_VK_41',
   avslagKode: null,
   merknadParametere: {},
   vilkarStatus: 'IKKE_VURDERT',
