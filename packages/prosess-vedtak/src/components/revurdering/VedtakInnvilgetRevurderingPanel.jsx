@@ -1,16 +1,14 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { FormattedMessage, injectIntl } from 'react-intl';
-import { connect } from 'react-redux';
-import moment from 'moment';
-import { Normaltekst, Undertekst } from 'nav-frontend-typografi';
-
+import avslagsarsakCodes from '@fpsak-frontend/kodeverk/src/avslagsarsakCodes';
+import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { DDMMYYYY_DATE_FORMAT, getKodeverknavnFn } from '@fpsak-frontend/utils';
-import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
-
-import avslagsarsakCodes from '@fpsak-frontend/kodeverk/src/avslagsarsakCodes';
+import { BodyShort, Label } from '@navikt/ds-react';
+import moment from 'moment';
+import PropTypes from 'prop-types';
+import React from 'react';
+import { FormattedMessage, injectIntl } from 'react-intl';
+import { connect } from 'react-redux';
 import { findTilbakekrevingText } from '../VedtakHelper';
 
 const mapFraAvslagskodeTilTekst = kode => {
@@ -49,31 +47,33 @@ export const VedtakInnvilgetRevurderingPanelImpl = ({
   intl,
   ytelseTypeKode,
   konsekvenserForYtelsen,
-  revurderingsAarsakString,
   tilbakekrevingText,
   alleKodeverk,
   bgPeriodeMedAvslagsårsak,
 }) => {
   const getKodeverknavn = getKodeverknavnFn(alleKodeverk, kodeverkTyper);
   return (
+    // eslint-disable-next-line react/jsx-no-useless-fragment
     <>
       {(ytelseTypeKode === fagsakYtelseType.OMSORGSPENGER ||
         ytelseTypeKode === fagsakYtelseType.FRISINN ||
         ytelseTypeKode === fagsakYtelseType.PLEIEPENGER) && (
-        <div data-testid='innvilgetRevurdering'>
-          <Normaltekst>{intl.formatMessage({ id: 'VedtakForm.Resultat' })}</Normaltekst>
-          <Undertekst>
+        <div data-testid="innvilgetRevurdering">
+          <Label size="small" as="p">
+            {intl.formatMessage({ id: 'VedtakForm.Resultat' })}
+          </Label>
+          <BodyShort size="small">
             {lagKonsekvensForYtelsenTekst(konsekvenserForYtelsen, getKodeverknavn)}
             {lagKonsekvensForYtelsenTekst(konsekvenserForYtelsen, getKodeverknavn) !== '' && tilbakekrevingText && '. '}
             {tilbakekrevingText &&
               intl.formatMessage({
                 id: tilbakekrevingText,
               })}
-            {bgPeriodeMedAvslagsårsak && <Undertekst>{lagPeriodevisning(bgPeriodeMedAvslagsårsak)}</Undertekst>}
-          </Undertekst>
+            {bgPeriodeMedAvslagsårsak && (
+              <BodyShort size="small">{lagPeriodevisning(bgPeriodeMedAvslagsårsak)}</BodyShort>
+            )}
+          </BodyShort>
           <VerticalSpacer sixteenPx />
-          <Normaltekst>{intl.formatMessage({ id: 'VedtakForm.RevurderingFP.Aarsak' })}</Normaltekst>
-          {revurderingsAarsakString !== undefined && <Undertekst>{revurderingsAarsakString}</Undertekst>}
         </div>
       )}
     </>
@@ -84,7 +84,6 @@ VedtakInnvilgetRevurderingPanelImpl.propTypes = {
   intl: PropTypes.shape().isRequired,
   ytelseTypeKode: PropTypes.string.isRequired,
   konsekvenserForYtelsen: PropTypes.arrayOf(PropTypes.shape()),
-  revurderingsAarsakString: PropTypes.string,
   tilbakekrevingText: PropTypes.string,
   alleKodeverk: PropTypes.shape().isRequired,
   bgPeriodeMedAvslagsårsak: PropTypes.shape(),

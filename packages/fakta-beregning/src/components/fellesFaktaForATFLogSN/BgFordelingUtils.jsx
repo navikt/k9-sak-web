@@ -173,10 +173,7 @@ const skalKunneOverstigeRapportertInntektOgTotaltBeregningsgrunnlag = (
   if (erAndelUtenReferanseOgGrunnlagHarAndelForSammeArbeidsgiverMedReferanse(andel, beregningsgrunnlag)) {
     return true;
   }
-  if (andelErEtterlønnSluttpakkeOgSkalFastsettes(andel, values)) {
-    return true;
-  }
-  return false;
+  return andelErEtterlønnSluttpakkeOgSkalFastsettes(andel, values);
 };
 
 const skalKunneEndreTotaltBeregningsgrunnlag = (values, faktaOmBeregning, beregningsgrunnlag) => andel => {
@@ -185,10 +182,7 @@ const skalKunneEndreTotaltBeregningsgrunnlag = (values, faktaOmBeregning, beregn
   ) {
     return true;
   }
-  if (erNyoppstartetFrilanser(andel, values)) {
-    return true;
-  }
-  return false;
+  return erNyoppstartetFrilanser(andel, values);
 };
 
 // Overstyring
@@ -234,12 +228,7 @@ export const skalFastsetteInntektForSN = createSelector(
 
 // Skal redigere inntektskategori
 
-export const skalRedigereInntektskategoriForAndel = (values, beregningsgrunnlag) => andel => {
-  if (erAndelKunstigArbeidsforhold(andel, beregningsgrunnlag)) {
-    return true;
-  }
-  return false;
-};
+export const skalRedigereInntektskategoriForAndel = (values, beregningsgrunnlag) => andel => erAndelKunstigArbeidsforhold(andel, beregningsgrunnlag);
 
 export const getSkalRedigereInntektskategori = createSelector(
   [getFormValuesForBeregning, (state, ownProps) => ownProps.beregningsgrunnlag],

@@ -13,9 +13,6 @@ const findHelpTexts = (intl, aksjonspunktKoder) => {
   if (aksjonspunktKoder && aksjonspunktKoder.includes(aksjonspunktCodes.VURDERE_ANNEN_YTELSE)) {
     helpTexts.push(intl.formatMessage({ id: 'VedtakForm.VurderAnnenYtelse' }));
   }
-  if (aksjonspunktKoder && aksjonspunktKoder.includes(aksjonspunktCodes.VURDERE_OVERLAPPENDE_YTELSER_FØR_VEDTAK)) {
-    helpTexts.push(intl.formatMessage({ id: 'VedtakForm.VurderOverlappendeYtelserFørVedtak' }));
-  }
   if (aksjonspunktKoder && aksjonspunktKoder.includes(aksjonspunktCodes.VURDERE_DOKUMENT)) {
     helpTexts.push(intl.formatMessage({ id: 'VedtakForm.VurderDokument' }));
   }
@@ -30,15 +27,17 @@ const findHelpTexts = (intl, aksjonspunktKoder) => {
 };
 
 /**
- * Det er i denne filen teksten vises ... 
+ * Det er i denne filen teksten vises ...
  */
 
-export const VedtakHelpTextPanelImpl = ({ intl, readOnly, aksjonspunktKoder }) => {
+export const VedtakHelpTextPanelImpl = ({ intl, readOnly, aksjonspunktKoder, viseFlereSjekkbokserForBrev }) => {
   const helpTexts = findHelpTexts(intl, aksjonspunktKoder);
   if (!readOnly && helpTexts.length > 0) {
     return (
       <>
-        <AksjonspunktHelpTextTemp isAksjonspunktOpen>{helpTexts}</AksjonspunktHelpTextTemp>
+        <div className={viseFlereSjekkbokserForBrev ? styles.begrensMaksBredde : null}>
+          <AksjonspunktHelpTextTemp isAksjonspunktOpen>{helpTexts}</AksjonspunktHelpTextTemp>
+        </div>
         <VerticalSpacer eightPx />
         {aksjonspunktKoder &&
           aksjonspunktKoder.includes(aksjonspunktCodes.KONTROLLER_REVURDERINGSBEHANDLING_VARSEL_VED_UGUNST) && (
@@ -66,6 +65,7 @@ VedtakHelpTextPanelImpl.propTypes = {
   intl: PropTypes.shape().isRequired,
   readOnly: PropTypes.bool.isRequired,
   aksjonspunktKoder: PropTypes.arrayOf(PropTypes.string).isRequired,
+  viseFlereSjekkbokserForBrev: PropTypes.bool,
 };
 
 export default injectIntl(VedtakHelpTextPanelImpl);

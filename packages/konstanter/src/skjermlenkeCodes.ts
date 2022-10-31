@@ -121,7 +121,7 @@ const skjermlenkeCodes = {
   PUNKT_FOR_MEDLEMSKAP: {
     kode: 'PUNKT_FOR_MEDLEMSKAP',
     faktaNavn: faktaPanelCodes.DEFAULT,
-    punktNavn: prosessStegCodes.INNGANGSVILKAR,
+    punktNavn: prosessStegCodes.OPPTJENING,
   },
   PUNKT_FOR_OMSORG: {
     kode: 'PUNKT_FOR_OMSORG',
@@ -131,12 +131,12 @@ const skjermlenkeCodes = {
   PUNKT_FOR_OPPTJENING: {
     kode: 'PUNKT_FOR_OPPTJENING',
     faktaNavn: faktaPanelCodes.DEFAULT,
-    punktNavn: prosessStegCodes.INNGANGSVILKAR,
+    punktNavn: prosessStegCodes.OPPTJENING,
   },
   SOEKNADSFRIST: {
     kode: 'SOEKNADSFRIST',
     faktaNavn: faktaPanelCodes.DEFAULT,
-    punktNavn: prosessStegCodes.SOEKNADSFRIST,
+    punktNavn: prosessStegCodes.INNGANGSVILKAR,
   },
   VEDTAK: {
     kode: 'VEDTAK',
@@ -162,6 +162,11 @@ const skjermlenkeCodes = {
     kode: 'FAKTA_OM_OMSORGEN_FOR',
     faktaNavn: faktaPanelCodes.DEFAULT,
     punktNavn: prosessStegCodes.INNGANGSVILKAR,
+  },
+  FAKTA_OM_ALDERSVILKÅR_BARN: {
+    kode: 'FAKTA_OM_ALDERSVILKÅR_BARN',
+    faktaNavn: faktaPanelCodes.DEFAULT,
+    punktNavn: prosessStegCodes.ALDER,
   },
   FAKTA_OM_VERGE: {
     kode: 'FAKTA_OM_VERGE',
@@ -232,6 +237,20 @@ const skjermlenkeCodes = {
   VURDER_NATTEVÅK: {
     kode: 'VURDER_NATTEVÅK',
     faktaNavn: faktaPanelCodes.ETABLERT_TILSYN,
+    punktNavn: '',
+  },
+  FAKTA_OM_SOKNADSPERIODER: {
+    kode: 'FAKTA_OM_SOKNADSPERIODER',
+    faktaNavn: faktaPanelCodes.SOKNADSPERIODER,
+  },
+  INFOTRYGD_MIGRERING: {
+    kode: 'INFOTRYGD_MIGRERING',
+    faktaNavn: faktaPanelCodes.INFOTRYGDMIGRERING,
+    punktNavn: '',
+  },
+  OVERSTYR_INPUT_BEREGNING: {
+    kode: 'OVERSTYR_INPUT_BEREGNING',
+    faktaNavn: faktaPanelCodes.OVERSTYRING,
     punktNavn: '',
   },
 };

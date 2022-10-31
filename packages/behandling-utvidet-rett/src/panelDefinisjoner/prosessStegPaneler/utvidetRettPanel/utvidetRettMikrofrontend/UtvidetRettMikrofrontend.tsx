@@ -1,7 +1,6 @@
 import React from 'react';
 import { MicroFrontend } from '@fpsak-frontend/utils';
 import { FormState } from '@fpsak-frontend/form/index';
-import sjekkHvisErIProduksjon from "@fpsak-frontend/utils/src/micro-frontends/sjekkHvisErIProduksjon";
 import KartleggePropertyTilUtvidetRettMikrofrontendKomponent from './KartleggePropertyTilUtvidetRettMikrofrontendKomponent';
 
 const initializeUtvidetRettVilkar = (
@@ -23,14 +22,12 @@ const initializeUtvidetRettVilkar = (
 
 export default props => {
   const utvidetRettVilkårAppID = 'utvidetRettApp';
-  const erIProduksjon = sjekkHvisErIProduksjon();
-  const path = erIProduksjon ? 'prod' : 'dev';
 
   return (
     <MicroFrontend
       id={utvidetRettVilkårAppID}
-      jsSrc={`/k9/microfrontend/omsorgsdager/${path}/app.js`}
-      stylesheetSrc={`/k9/microfrontend/omsorgsdager/${path}/styles.css`}
+      jsSrc="/k9/microfrontend/omsorgsdager/1/app.js"
+      stylesheetSrc="/k9/microfrontend/omsorgsdager/1/styles.css"
       onReady={() => initializeUtvidetRettVilkar(utvidetRettVilkårAppID, { ...props, FormState })}
     />
   );

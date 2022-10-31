@@ -19,15 +19,11 @@ const utledHjemler = fagsak => {
       return [
         { kode: '9-2', navn: '§ 9-2' },
         { kode: '9-3', navn: '§ 9-3' },
-        // { kode: '9-5/9-6', navn: '9-5/9-6' },
-        // { kode: '9-8/9-9', navn: '9-8/9-9' },
         { kode: '9-10', navn: '§ 9-10' },
         { kode: '9-11', navn: '§ 9-11' },
-        // { kode: '9-13', navn: '9-13' },
-        // { kode: '9-14', navn: '9-14' },
         { kode: '9-15', navn: '§ 9-15' },
+        { kode: '9-16', navn: '§ 9-16' },
         { kode: '22-13', navn: '§ 22-13' },
-        { kode: '9', navn: 'Kapittel 9' },
       ];
 
     case fagsakYtelseType.OMSORGSPENGER:
@@ -41,7 +37,14 @@ const utledHjemler = fagsak => {
         { kode: '9-8', navn: '§ 9-8' },
         { kode: '9-9', navn: '§ 9-9' },
         { kode: '22-13', navn: '§ 22-13' },
-        { kode: '9', navn: 'Kapittel 9' },
+      ];
+
+    case fagsakYtelseType.PLEIEPENGER_SLUTTFASE:
+      return [
+        { kode: '9-2', navn: '§ 9-2' },
+        { kode: '9-3', navn: '§ 9-3' },
+        { kode: '9-13', navn: '§ 9-13' },
+        { kode: '22-13', navn: '§ 22-13' },
       ];
 
     default:
@@ -66,20 +69,18 @@ export const KlageVurderingRadioOptionsNfp = ({
 
   return (
     <div>
-      <>
-        <RadioGroupField
-          name="klageVurdering"
-          validate={[required]}
-          readOnly={readOnly}
-          className={readOnly ? styles.selectReadOnly : null}
-        >
-          <RadioOption value={klageVurderingType.MEDHOLD_I_KLAGE} label={{ id: 'Klage.ResolveKlage.ChangeVedtak' }} />
-          <RadioOption
-            value={klageVurderingType.STADFESTE_YTELSESVEDTAK}
-            label={{ id: 'Klage.ResolveKlage.KeepVedtakNfp' }}
-          />
-        </RadioGroupField>
-      </>
+      <RadioGroupField
+        name="klageVurdering"
+        validate={[required]}
+        readOnly={readOnly}
+        className={readOnly ? styles.selectReadOnly : null}
+      >
+        <RadioOption value={klageVurderingType.MEDHOLD_I_KLAGE} label={{ id: 'Klage.ResolveKlage.ChangeVedtak' }} />
+        <RadioOption
+          value={klageVurderingType.STADFESTE_YTELSESVEDTAK}
+          label={{ id: 'Klage.ResolveKlage.KeepVedtakNfp' }}
+        />
+      </RadioGroupField>
       {klageVurdering === klageVurderingType.MEDHOLD_I_KLAGE && (
         <ArrowBox className={readOnly ? styles.selectReadOnly : null}>
           <SelectField

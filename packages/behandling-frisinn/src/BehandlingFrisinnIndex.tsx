@@ -22,6 +22,7 @@ const frisinnData = [
   { key: FrisinnBehandlingApiKeys.PERSONOPPLYSNINGER },
   { key: FrisinnBehandlingApiKeys.BEREGNINGSRESULTAT_UTBETALT },
   { key: FrisinnBehandlingApiKeys.BEREGNINGSGRUNNLAG },
+  { key: FrisinnBehandlingApiKeys.BEREGNINGREFERANSER_TIL_VURDERING },
   { key: FrisinnBehandlingApiKeys.SIMULERING_RESULTAT },
 ];
 
@@ -96,9 +97,6 @@ const BehandlingFrisinnIndex = ({
     FrisinnBehandlingApiKeys.HENLEGG_BEHANDLING,
   );
   const { startRequest: settPaVent } = restApiFrisinnHooks.useRestApiRunner(FrisinnBehandlingApiKeys.UPDATE_ON_HOLD);
-  const { startRequest: opneBehandlingForEndringer } = restApiFrisinnHooks.useRestApiRunner(
-    FrisinnBehandlingApiKeys.OPEN_BEHANDLING_FOR_CHANGES,
-  );
   const { startRequest: lagreRisikoklassifiseringAksjonspunkt } = restApiFrisinnHooks.useRestApiRunner(
     FrisinnBehandlingApiKeys.SAVE_AKSJONSPUNKT,
   );
@@ -110,10 +108,6 @@ const BehandlingFrisinnIndex = ({
       taBehandlingAvVent: params =>
         taBehandlingAvVent(params).then(behandlingResTaAvVent => setBehandling(behandlingResTaAvVent)),
       henleggBehandling: params => henleggBehandling(params),
-      opneBehandlingForEndringer: params =>
-        opneBehandlingForEndringer(params).then(behandlingResOpneForEndring =>
-          setBehandling(behandlingResOpneForEndring),
-        ),
       lagreRisikoklassifiseringAksjonspunkt: params => lagreRisikoklassifiseringAksjonspunkt(params),
     });
 
@@ -156,7 +150,6 @@ const BehandlingFrisinnIndex = ({
         oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
         oppdaterBehandlingVersjon={oppdaterBehandlingVersjon}
         settPaVent={settPaVent}
-        hentBehandling={hentBehandling}
         opneSokeside={opneSokeside}
         hasFetchError={behandlingState === RestApiState.ERROR}
         setBehandling={setBehandling}

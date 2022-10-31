@@ -154,7 +154,6 @@ const BehandlingTilbakekrevingIndex = ({
         oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
         oppdaterBehandlingVersjon={oppdaterBehandlingVersjon}
         settPaVent={settPaVent}
-        hentBehandling={hentBehandling}
         opneSokeside={opneSokeside}
         harApenRevurdering={harApenRevurdering}
         hasFetchError={behandlingState === RestApiState.ERROR}

@@ -1,4 +1,4 @@
-import { RestApiConfigBuilder, createRequestApi } from '@k9-sak-web/rest-api';
+import { createRequestApi, RestApiConfigBuilder } from '@k9-sak-web/rest-api';
 import { RestApiHooks } from '@k9-sak-web/rest-api-hooks';
 
 // NB! ALDRI BRUK DETTE UTENFOR DENNE BEHANDLINGSPAKKEN
@@ -26,12 +26,13 @@ export enum FrisinnBehandlingApiKeys {
   HENLEGG_BEHANDLING = 'HENLEGG_BEHANDLING',
   RESUME_BEHANDLING = 'RESUME_BEHANDLING',
   BEHANDLING_ON_HOLD = 'BEHANDLING_ON_HOLD',
-  OPEN_BEHANDLING_FOR_CHANGES = 'OPEN_BEHANDLING_FOR_CHANGES',
   VEDTAK_VARSEL = 'VEDTAK_VARSEL',
   OPPGITT_OPPTJENING = 'OPPGITT_OPPTJENING',
   TILGJENGELIGE_VEDTAKSBREV = 'TILGJENGELIGE_VEDTAKSBREV',
   DOKUMENTDATA_LAGRE = 'DOKUMENTDATA_LAGRE',
   DOKUMENTDATA_HENTE = 'DOKUMENTDATA_HENTE',
+  HENT_FRITEKSTBREV_HTML = 'HENT_FRITEKSTBREV_HTML',
+  BEREGNINGREFERANSER_TIL_VURDERING = 'BEREGNINGREFERANSER_TIL_VURDERING',
 }
 
 const endpoints = new RestApiConfigBuilder()
@@ -53,6 +54,7 @@ const endpoints = new RestApiConfigBuilder()
   .withRel('uttak-kontroller-fakta-perioder', FrisinnBehandlingApiKeys.UTTAK_KONTROLLER_FAKTA_PERIODER)
   .withRel('vedtak-varsel', FrisinnBehandlingApiKeys.VEDTAK_VARSEL)
   .withRel('tilgjengelige-vedtaksbrev', FrisinnBehandlingApiKeys.TILGJENGELIGE_VEDTAKSBREV)
+  .withRel('beregning-koblinger-til-vurdering', FrisinnBehandlingApiKeys.BEREGNINGREFERANSER_TIL_VURDERING)
 
   // operasjoner
   .withRel('dokumentdata-lagre', FrisinnBehandlingApiKeys.DOKUMENTDATA_LAGRE)
@@ -66,7 +68,6 @@ const endpoints = new RestApiConfigBuilder()
   .withPost('/k9/sak/api/behandlinger/henlegg', FrisinnBehandlingApiKeys.HENLEGG_BEHANDLING)
   .withAsyncPost('/k9/sak/api/behandlinger/gjenoppta', FrisinnBehandlingApiKeys.RESUME_BEHANDLING)
   .withPost('/k9/sak/api/behandlinger/sett-pa-vent', FrisinnBehandlingApiKeys.BEHANDLING_ON_HOLD)
-  .withPost('/k9/sak/api/behandlinger/opne-for-endringer', FrisinnBehandlingApiKeys.OPEN_BEHANDLING_FOR_CHANGES)
 
   /* FPTILBAKE */
   .withPost(
@@ -77,6 +78,7 @@ const endpoints = new RestApiConfigBuilder()
 
   /* K9FORMIDLING */
   .withPost('/k9/formidling/api/brev/forhaandsvis', FrisinnBehandlingApiKeys.PREVIEW_MESSAGE, { isResponseBlob: true })
+  .withPost('/k9/formidling/api/brev/html', FrisinnBehandlingApiKeys.HENT_FRITEKSTBREV_HTML)
 
   .build();
 

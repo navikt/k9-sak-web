@@ -37,7 +37,6 @@ describe('<BehandlingPaVent>', () => {
         aksjonspunkter={aksjonspunkter}
         kodeverk={kodeverk}
         settPaVent={sinon.spy()}
-        hentBehandling={sinon.spy()}
       />,
     );
 
@@ -56,7 +55,6 @@ describe('<BehandlingPaVent>', () => {
         aksjonspunkter={aksjonspunkter}
         kodeverk={kodeverk}
         settPaVent={sinon.spy()}
-        hentBehandling={sinon.spy()}
       />,
     );
 
@@ -77,7 +75,6 @@ describe('<BehandlingPaVent>', () => {
         aksjonspunkter={aksjonspunkter}
         kodeverk={kodeverk}
         settPaVent={sinon.spy()}
-        hentBehandling={sinon.spy()}
       />,
     );
 
@@ -114,7 +111,6 @@ describe('<BehandlingPaVent>', () => {
         ]}
         kodeverk={kodeverk}
         settPaVent={sinon.spy()}
-        hentBehandling={sinon.spy()}
       />,
     );
 
@@ -123,10 +119,9 @@ describe('<BehandlingPaVent>', () => {
     expect(modal.prop('hasManualPaVent')).toBe(true);
   });
 
-  it('skal oppdatere på-vent-informasjon og så hente behandling på nytt', async () => {
+  it('skal oppdatere på-vent-informasjon', async () => {
     const settPaVentCallback = sinon.stub();
     settPaVentCallback.returns(Promise.resolve());
-    const hentBehandlingCallback = sinon.spy();
 
     const wrapper = shallow(
       <BehandlingPaVent
@@ -139,7 +134,6 @@ describe('<BehandlingPaVent>', () => {
         aksjonspunkter={aksjonspunkter}
         kodeverk={kodeverk}
         settPaVent={settPaVentCallback}
-        hentBehandling={hentBehandlingCallback}
       />,
     );
 
@@ -155,13 +149,5 @@ describe('<BehandlingPaVent>', () => {
       behandlingVersjon: 1,
       dato: '10.10.2019',
     });
-
-    const calls2 = hentBehandlingCallback.getCalls();
-    expect(calls2).toHaveLength(1);
-    expect(calls2[0].args).toHaveLength(2);
-    expect(calls2[0].args[0]).toEqual({
-      behandlingId: 1,
-    });
-    expect(calls2[0].args[1]).toBe(false);
   });
 });

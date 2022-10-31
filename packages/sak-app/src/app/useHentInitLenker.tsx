@@ -1,13 +1,6 @@
 import { RestApiState } from '@k9-sak-web/rest-api-hooks';
-import { Link } from '@k9-sak-web/rest-api';
-
-import { K9sakApiKeys, restApiHooks, requestApi, LinkCategory } from '../data/k9sakApi';
-
-type InitLinks = {
-  links: Link[];
-  toggleLinks: Link[];
-  sakLinks: Link[];
-};
+import { K9sakApiKeys, LinkCategory, requestApi, restApiHooks } from '../data/k9sakApi';
+import InitLinks from './initLinks';
 
 const LINKS_TEMPLATE = {
   links: [],
@@ -16,18 +9,12 @@ const LINKS_TEMPLATE = {
 };
 
 const useHentInitLenker = (): boolean[] => {
-  const {
-    data: initFetchLinksK9Sak = LINKS_TEMPLATE,
-    state: initFetchStateK9Sak,
-  } = restApiHooks.useGlobalStateRestApi<InitLinks>(K9sakApiKeys.INIT_FETCH);
-  const {
-    data: initFetchLinksTilbake = LINKS_TEMPLATE,
-    state: initFetchStateTilbake,
-  } = restApiHooks.useGlobalStateRestApi<InitLinks>(K9sakApiKeys.INIT_FETCH_TILBAKE);
-  const {
-    data: initFetchLinksKlage = LINKS_TEMPLATE,
-    state: initFetchStateKlage,
-  } = restApiHooks.useGlobalStateRestApi<InitLinks>(K9sakApiKeys.INIT_FETCH_KLAGE);
+  const { data: initFetchLinksK9Sak = LINKS_TEMPLATE, state: initFetchStateK9Sak } =
+    restApiHooks.useGlobalStateRestApi<InitLinks>(K9sakApiKeys.INIT_FETCH);
+  const { data: initFetchLinksTilbake = LINKS_TEMPLATE, state: initFetchStateTilbake } =
+    restApiHooks.useGlobalStateRestApi<InitLinks>(K9sakApiKeys.INIT_FETCH_TILBAKE);
+  const { data: initFetchLinksKlage = LINKS_TEMPLATE, state: initFetchStateKlage } =
+    restApiHooks.useGlobalStateRestApi<InitLinks>(K9sakApiKeys.INIT_FETCH_KLAGE);
 
   const harK9sakInitKallFeilet = initFetchStateK9Sak === RestApiState.ERROR;
   const harHentetFerdigInitLenker =

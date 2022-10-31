@@ -27,7 +27,6 @@ const AvviksopplysningerAT = ({
   }
   const avvikAT = sammenligningsGrunnlagAT.avvikProsent;
   const avvikATRounded = avvikAT ? parseFloat(avvikAT.toFixed(1)) : 0;
-  const sammenligningsgrunnlagSumAT = sammenligningsGrunnlagAT.rapportertPrAar;
   const { differanseBeregnet } = sammenligningsGrunnlagAT;
   const kombinasjonsstatusATSN =
     relevanteStatuser.isKombinasjonsstatus &&
@@ -61,7 +60,7 @@ const AvviksopplysningerAT = ({
     );
   }
 
-  if (sammenligningsgrunnlagSumAT) {
+  if (sammenligningsGrunnlagAT.rapportertPrAar || sammenligningsGrunnlagAT.rapportertPrAar === 0) {
     return (
       <AvvikopplysningerATFL
         beregnetAarsinntekt={beregnetAarsinntekt}
@@ -69,7 +68,7 @@ const AvviksopplysningerAT = ({
         differanseBeregnet={differanseBeregnet}
         relevanteStatuser={relevanteStatuser}
         visPanel={visPaneler}
-        sammenligningsgrunnlagSum={sammenligningsgrunnlagSumAT}
+        sammenligningsgrunnlagSum={sammenligningsGrunnlagAT.rapportertPrAar}
         skalViseAvviksprosent={skalViseAvviksprosent}
       />
     );

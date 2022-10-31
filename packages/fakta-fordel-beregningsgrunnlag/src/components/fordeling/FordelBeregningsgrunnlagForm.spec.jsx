@@ -175,6 +175,7 @@ describe('<FordelBeregningsgrunnlagForm>', () => {
 
     const bt = {
       kode: 'BT-003',
+      kodeverk: 'BEHANDLING_TYPE',
     };
 
     const wrapper = shallow(

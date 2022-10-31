@@ -16,6 +16,10 @@ const historikkEndretFeltTypeCodes = {
     kode: 'AKTIVITET_PERIODE',
     feltId: 'HistorikkEndretFelt.AktivitetPeriode',
   },
+  ALDERSVILKAR_BARN: {
+    kode: 'ALDERSVILKAR_BARN',
+    feltId: 'HistorikkEndretFelt.AldersvilkarBarn',
+  },
   ALENE_OM_OMSORG: {
     kode: 'ALENE_OM_OMSORG',
     feltId: 'HistorikkEndretFelt.AleneOmOmsorgen',
@@ -187,6 +191,10 @@ const historikkEndretFeltTypeCodes = {
   OVERSTYRT_BEREGNING: {
     kode: 'OVERSTYRT_BEREGNING',
     feltId: 'Historikk.Template.7.OverstyrtBeregning',
+  },
+  FJERNET_OVERSTYRING: {
+    kode: 'FJERNET_OVERSTYRING',
+    feltId: 'Historikk.Template.7.AvbruttOverstyring',
   },
   OVERSTYRT_VURDERING: {
     kode: 'OVERSTYRT_VURDERING',

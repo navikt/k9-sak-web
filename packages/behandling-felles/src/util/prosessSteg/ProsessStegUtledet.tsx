@@ -1,7 +1,7 @@
 import { SetStateAction } from 'react';
 
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
-import { Aksjonspunkt, Vilkar, Uttaksperiode, UtfallEnum } from '@k9-sak-web/types';
+import { Aksjonspunkt, Vilkar, Uttaksperiode, UtfallEnum, FeatureToggles } from '@k9-sak-web/types';
 import aksjonspunktStatus, { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 
 import { ProsessStegDef, ProsessStegPanelDef } from './ProsessStegDef';
@@ -9,10 +9,16 @@ import { ProsessStegDef, ProsessStegPanelDef } from './ProsessStegDef';
 const finnStatus = (vilkar: Vilkar[], aksjonspunkter: Aksjonspunkt[]) => {
   if (vilkar.length > 0) {
     const vilkarStatusCodes = [];
-    vilkar.forEach(v => v.perioder.forEach(periode => vilkarStatusCodes.push(periode.vilkarStatus.kode)));
+    vilkar.forEach(v =>
+      v.perioder
+        .filter(periode => periode.vurderesIBehandlingen)
+        .forEach(periode => vilkarStatusCodes.push(periode.vilkarStatus.kode)),
+    );
+
     if (vilkarStatusCodes.every(vsc => vsc === vilkarUtfallType.IKKE_VURDERT)) {
       return vilkarUtfallType.IKKE_VURDERT;
     }
+
     return vilkarStatusCodes.some(vsc => vsc === vilkarUtfallType.OPPFYLT)
       ? vilkarUtfallType.OPPFYLT
       : vilkarUtfallType.IKKE_OPPFYLT;
@@ -29,7 +35,11 @@ const finnStatus = (vilkar: Vilkar[], aksjonspunkter: Aksjonspunkt[]) => {
 const finnErDelvisBehandlet = (vilkar: Vilkar[], uttaksperioder: Uttaksperiode[]) => {
   if (vilkar.length > 0) {
     const vilkarStatusCodes = [];
-    vilkar.forEach(v => v.perioder.forEach(periode => vilkarStatusCodes.push(periode.vilkarStatus.kode)));
+    vilkar.forEach(v =>
+      v.perioder
+        .filter(periode => periode.vurderesIBehandlingen)
+        .forEach(periode => vilkarStatusCodes.push(periode.vilkarStatus.kode)),
+    );
 
     const alleVilkårErIkkeVurdert = vilkarStatusCodes.every(vsc => vsc === vilkarUtfallType.IKKE_VURDERT);
     const alleVilkårErIkkeOppfylt = vilkarStatusCodes.every(vsc => vsc === vilkarUtfallType.IKKE_OPPFYLT);
@@ -52,13 +62,17 @@ const finnErDelvisBehandlet = (vilkar: Vilkar[], uttaksperioder: Uttaksperiode[]
   let formatertUttaksperioder = uttaksperioder;
 
   // uttak må sjekke uttaksperioder i tillegg
-  if(typeof uttaksperioder === 'object'){
+  if (typeof uttaksperioder === 'object') {
     formatertUttaksperioder = Object.values(uttaksperioder);
   }
 
   if ((formatertUttaksperioder || []).length > 0) {
-    const alleUttaksperioderAvslått = formatertUttaksperioder.every(p => p.utfall === UtfallEnum.AVSLÅTT || p.utfall === vilkarUtfallType.IKKE_OPPFYLT);
-    const alleUttaksperioderInnvilget = formatertUttaksperioder.every(p => p.utfall === UtfallEnum.INNVILGET || p.utfall === vilkarUtfallType.OPPFYLT);
+    const alleUttaksperioderAvslått = formatertUttaksperioder.every(
+      p => p.utfall === UtfallEnum.AVSLÅTT || p.utfall === vilkarUtfallType.IKKE_OPPFYLT,
+    );
+    const alleUttaksperioderInnvilget = formatertUttaksperioder.every(
+      p => p.utfall === UtfallEnum.INNVILGET || p.utfall === vilkarUtfallType.OPPFYLT,
+    );
 
     if (alleUttaksperioderAvslått || alleUttaksperioderInnvilget) {
       return false;
@@ -205,7 +219,12 @@ export class ProsessStegUtledet {
 
   public getTekstKode = (): string => this.prosessStegDef.getTekstKode();
 
-  public getErStegDelvisBehandlet = (): boolean => this.paneler.every(p => p.getErDelvisBehandlet());
+  public getErStegDelvisBehandlet = (featureToggles?: FeatureToggles): boolean => {
+    if (featureToggles?.FIKS_DELVIS_PROSESSTEG) {
+      return this.paneler.some(p => p.getErDelvisBehandlet());
+    }
+    return this.paneler.every(p => p.getErDelvisBehandlet());
+  };
 
   private harMinstEttDelPanelStatus = (vuType: string): boolean => this.paneler.some(p => p.getStatus() === vuType);
 

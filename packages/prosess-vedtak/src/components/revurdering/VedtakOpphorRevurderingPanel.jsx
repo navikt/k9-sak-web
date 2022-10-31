@@ -1,14 +1,13 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
+import { VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils';
+import { BodyShort, Label } from '@navikt/ds-react';
 import moment from 'moment';
+import PropTypes from 'prop-types';
+import React from 'react';
 import { injectIntl } from 'react-intl';
 import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
-import { Normaltekst, Undertekst } from 'nav-frontend-typografi';
-
-import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
-import { DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils';
-import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 
 const ytelseNavnMap = kode => {
   switch (kode) {
@@ -23,45 +22,43 @@ const ytelseNavnMap = kode => {
   }
 };
 
-export const VedtakOpphorRevurderingPanelImpl = ({ intl, opphoersdato, revurderingsAarsakString, ytelseTypeKode }) => (
+export const VedtakOpphorRevurderingPanelImpl = ({ intl, opphoersdato, ytelseTypeKode }) => (
   <div data-testid="opphorRevurdering">
-    <Undertekst>{intl.formatMessage({ id: 'VedtakForm.Resultat' })}</Undertekst>
+    <Label size="small" as="p">
+      {intl.formatMessage({ id: 'VedtakForm.Resultat' })}
+    </Label>
     {opphoersdato && (
-      <Normaltekst>
+      <BodyShort size="small">
         {intl.formatMessage(
           {
             id: 'VedtakForm.Revurdering.OpphoererDato',
           },
           { ytelse: ytelseNavnMap(ytelseTypeKode), dato: moment(opphoersdato).format(DDMMYYYY_DATE_FORMAT) },
         )}
-      </Normaltekst>
+      </BodyShort>
     )}
     {!opphoersdato && (
-      <Normaltekst>
+      <BodyShort size="small">
         {intl.formatMessage(
           {
             id: 'VedtakForm.Revurdering.Opphoerer',
           },
           { ytelse: ytelseNavnMap(ytelseTypeKode) },
         )}
-      </Normaltekst>
+      </BodyShort>
     )}
     <VerticalSpacer sixteenPx />
-    <Undertekst>{intl.formatMessage({ id: 'VedtakForm.RevurderingFP.Aarsak' })}</Undertekst>
-    {revurderingsAarsakString !== undefined && <Normaltekst>{revurderingsAarsakString}</Normaltekst>}
   </div>
 );
 
 VedtakOpphorRevurderingPanelImpl.propTypes = {
   intl: PropTypes.shape().isRequired,
   opphoersdato: PropTypes.string,
-  revurderingsAarsakString: PropTypes.string,
   ytelseTypeKode: PropTypes.string.isRequired,
 };
 
 VedtakOpphorRevurderingPanelImpl.defaultProps = {
   opphoersdato: '',
-  revurderingsAarsakString: undefined,
 };
 
 const getOpphorsdato = createSelector(

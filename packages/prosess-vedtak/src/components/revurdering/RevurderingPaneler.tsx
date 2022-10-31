@@ -3,15 +3,14 @@ import { useIntl } from 'react-intl';
 
 import { Column, Row } from 'nav-frontend-grid';
 
-import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
-import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
-import { isAvslag, isInnvilget, isOpphor } from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
-import { redusertUtbetalingArsakType } from '@fpsak-frontend/prosess-vedtak/src/kodeverk/redusertUtbetalingArsak';
 import BehandlingArsakType from '@fpsak-frontend/kodeverk/src/behandlingArsakType';
+import { isAvslag, isInnvilget, isOpphor } from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
+import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
+import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { getKodeverknavnFn } from '@fpsak-frontend/utils';
-import { Aksjonspunkt, Kodeverk, KodeverkMedNavn, Vilkar } from '../../../../types';
-import VedtakInnvilgetRevurderingPanel from './VedtakInnvilgetRevurderingPanel';
+import { Aksjonspunkt, Kodeverk, KodeverkMedNavn, Vilkar } from '@k9-sak-web/types';
 import VedtakAvslagRevurderingPanel from './VedtakAvslagRevurderingPanel';
+import VedtakInnvilgetRevurderingPanel from './VedtakInnvilgetRevurderingPanel';
 import VedtakOpphorRevurderingPanel from './VedtakOpphorRevurderingPanel';
 import VedtakRedusertUtbetalingArsaker from './VedtakRedusertUtbetalingArsaker';
 
@@ -58,13 +57,13 @@ interface OwnProps {
   vedtakVarsel: any;
   medlemskapFom: string;
   harRedusertUtbetaling: boolean;
-  redusertUtbetalingArsak: redusertUtbetalingArsakType;
+  redusertUtbetalingArsak: string[];
   formikValues: any;
   erSendtInnUtenArsaker: boolean;
   behandlingArsaker: any;
 }
 
-export default function RevurderingPaneler({
+const RevurderingPaneler = ({
   ytelseTypeKode,
   behandlingresultat,
   resultatstruktur,
@@ -85,7 +84,7 @@ export default function RevurderingPaneler({
   formikValues,
   erSendtInnUtenArsaker,
   behandlingArsaker,
-}: OwnProps): JSX.Element {
+}: OwnProps): JSX.Element => {
   const intl = useIntl();
 
   const behandlingArsakstyper =
@@ -150,4 +149,6 @@ export default function RevurderingPaneler({
       )}
     </Row>
   );
-}
+};
+
+export default RevurderingPaneler;

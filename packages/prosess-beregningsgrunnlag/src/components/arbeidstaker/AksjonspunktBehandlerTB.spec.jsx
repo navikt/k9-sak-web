@@ -21,7 +21,7 @@ const firstCol = {
 
 const secondCol = {
   erTidsbegrenset: false,
-  isEditable: true,
+  isEditable: false,
   tabellInnhold: '100000',
   inputfieldKey: '',
 };
@@ -33,27 +33,14 @@ const thirdCol = {
   inputfieldKey: 'DetteErBareEnTest',
 };
 
-const fourthCol = {
-  erTidsbegrenset: false,
-  isEditable: true,
-  tabellInnhold: '100000',
-  inputfieldKey: 'detteErOgsåBareEnTest',
-};
 
 const mockTableData = {
-  arbeidsforholdPeriodeMap: {
-    arbeidsgiver1: [firstCol, secondCol, thirdCol, fourthCol],
-  },
+    '123dette-er-en-arbeidsforholdid': [firstCol, secondCol, thirdCol],
 };
 
 const mockbruttoPerodeList = [
-  {
-    brutto: 560500,
-    periode: 'beregnetInntekt_2019-09-16_2019-09-29',
-  },
-  { brutto: 0, periode: '2019-09-16_2019-09-29' },
-  { brutto: 0, periode: '2019-09-30_2019-10-15' },
-  { brutto: 0, periode: '2019-10-15_null' },
+  { brutto: 560500, periodeFom: '2019-09-16', periodeTom: '2019-09-29' },
+  { brutto: 0,  periodeFom: '2019-09-30', periodeTom: '9999-12-31'},
 ];
 
 const beregnetPrAarAndelEn = 250000;
@@ -74,10 +61,10 @@ const beregningsgrunnlagPerioder = [
         },
         erTidsbegrensetArbeidsforhold: true,
         beregnetPrAar: beregnetPrAarAndelEn,
-        overstyrtPrAar: overstyrtPrAarAndelEn,
+        overstyrtPrAar: null,
         arbeidsforhold: {
           arbeidsgiverIdent: '123',
-          arbeidsforholdId: '123',
+          arbeidsforholdId: 'dette-er-en-arbeidsforholdsid',
           eksternArbeidsforholdId: '345678',
         },
         andelsnr: 1,
@@ -88,10 +75,10 @@ const beregningsgrunnlagPerioder = [
         },
         erTidsbegrensetArbeidsforhold: true,
         beregnetPrAar: beregnetPrAarAndelTo,
-        overstyrtPrAar: overstyrtPrAarAndelTo,
+        overstyrtPrAar: null,
         arbeidsforhold: {
           arbeidsgiverIdent: '456',
-          arbeidsforholdId: '456',
+          arbeidsforholdId: 'dette-er-en-annen-arbeidsforholdsid',
           eksternArbeidsforholdId: '567890',
         },
         andelsnr: 2,
@@ -112,7 +99,7 @@ const beregningsgrunnlagPerioder = [
         overstyrtPrAar: overstyrtPrAarAndelEn,
         arbeidsforhold: {
           arbeidsgiverIdent: '123',
-          arbeidsforholdId: '123',
+          arbeidsforholdId: 'dette-er-en-arbeidsforholdsid',
           eksternArbeidsforholdId: '345678',
         },
         andelsnr: 1,
@@ -125,7 +112,7 @@ const beregningsgrunnlagPerioder = [
         beregnetPrAar: beregnetPrAarAndelTo,
         overstyrtPrAar: overstyrtPrAarAndelTo,
         arbeidsforhold: {
-          arbeidsforholdId: '456',
+          arbeidsforholdId: 'dette-er-en-annen-arbeidsforholdsid',
           arbeidsgiverIdent: '456',
           eksternArbeidsforholdId: '567890',
         },
@@ -146,7 +133,7 @@ const beregningsgrunnlagPerioder = [
         overstyrtPrAar: overstyrtPrAarAndelEn,
         arbeidsforhold: {
           arbeidsgiverIdent: '123',
-          arbeidsforholdId: '123',
+          arbeidsforholdId: 'dette-er-en-arbeidsforholdsid',
           eksternArbeidsforholdId: '345678',
         },
         andelsnr: 1,
@@ -159,8 +146,8 @@ const beregningsgrunnlagPerioder = [
         beregnetPrAar: beregnetPrAarAndelTo,
         overstyrtPrAar: overstyrtPrAarAndelTo,
         arbeidsforhold: {
-          arbeidsgiverIdent: '123',
-          arbeidsforholdId: '456',
+          arbeidsgiverIdent: '456',
+          arbeidsforholdId: 'dette-er-en-annen-arbeidsforholdsid',
           eksternArbeidsforholdId: '567890',
         },
         andelsnr: 2,
@@ -180,7 +167,7 @@ const beregningsgrunnlagPerioder = [
         overstyrtPrAar: overstyrtPrAarAndelEn,
         arbeidsforhold: {
           arbeidsgiverIdent: '123',
-          arbeidsforholdId: '123',
+          arbeidsforholdId: 'dette-er-en-arbeidsforholdsid',
           eksternArbeidsforholdId: '345678',
         },
         andelsnr: 1,
@@ -193,8 +180,8 @@ const beregningsgrunnlagPerioder = [
         beregnetPrAar: beregnetPrAarAndelTo,
         overstyrtPrAar: overstyrtPrAarAndelTo,
         arbeidsforhold: {
-          arbeidsgiverIdent: '123',
-          arbeidsforholdId: '456',
+          arbeidsgiverIdent: '456',
+          arbeidsforholdId: 'dette-er-en-annen-arbeidsforholdsid',
           eksternArbeidsforholdId: '567890',
         },
         andelsnr: 2,
@@ -236,38 +223,40 @@ describe('<AksjonspunktBehandlerTidsbegrenset>', () => {
         tableData={mockTableData}
         isAvklaringsbehovClosed={false}
         bruttoPrPeriodeList={mockbruttoPerodeList}
-        arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
         fieldArrayID="dummyId"
       />,
     );
-    const dataRows = wrapper.findWhere(node => node.key() === 'arbeidsgiver1');
+    const dataRows = wrapper.findWhere(node => node.key() === '123dette-er-en-arbeidsforholdid');
     const arbeidsgiverNavn = dataRows.first().find('Normaltekst');
     expect(arbeidsgiverNavn.first().childAt(0).text()).to.equal(
-      mockTableData.arbeidsforholdPeriodeMap.arbeidsgiver1[0].tabellInnhold,
+      mockTableData['123dette-er-en-arbeidsforholdid'][0].tabellInnhold,
     );
-    const editableFields = mockTableData.arbeidsforholdPeriodeMap.arbeidsgiver1.filter(
+    const editableFields = mockTableData['123dette-er-en-arbeidsforholdid'].filter(
       periode => periode.isEditable === true,
     );
-    expect(editableFields).to.have.length(mockTableData.arbeidsforholdPeriodeMap.arbeidsgiver1.length - 1);
+    expect(editableFields).to.have.length(1);
     const sumRows = wrapper.find('#bruttoPrPeriodeRad');
     const sumCols = sumRows.first().find('td');
-    expect(sumCols).to.have.length(mockTableData.arbeidsforholdPeriodeMap.arbeidsgiver1.length);
+    expect(sumCols).to.have.length(3);
     expect(sumCols.first().find('MemoizedFormattedMessage').first().props().id).to.equal(
       'Beregningsgrunnlag.AarsinntektPanel.AksjonspunktBehandlerTB.SumPeriode',
     );
   });
   it('Skal teste at initial values bygges korrekt', () => {
+    const korrektApApent = [
+      {
+        definisjon: {
+          kode: avklaringsbehovCodes.FASTSETT_BEREGNINGSGRUNNLAG_TIDSBEGRENSET_ARBEIDSFORHOLD,
+        },
+        status: {
+          kode: avklaringsbehovStatus.OPPRETTET,
+        },
+      },
+    ];
     const expectedInitialValues = {};
-    // Første periode
-    expectedInitialValues[keyForPeriodeOgAndel(0, 0)] = formatCurrencyNoKr(overstyrtPrAarAndelEn);
-    expectedInitialValues[keyForPeriodeOgAndel(0, 1)] = formatCurrencyNoKr(overstyrtPrAarAndelTo);
-    // Andre periode
-    expectedInitialValues[keyForPeriodeOgAndel(1, 0)] = formatCurrencyNoKr(overstyrtPrAarAndelEn);
+      expectedInitialValues[keyForPeriodeOgAndel(1, 0)] = formatCurrencyNoKr(overstyrtPrAarAndelEn);
     expectedInitialValues[keyForPeriodeOgAndel(1, 1)] = formatCurrencyNoKr(overstyrtPrAarAndelTo);
-    // Tredje periode
-    expectedInitialValues[keyForPeriodeOgAndel(2, 0)] = formatCurrencyNoKr(overstyrtPrAarAndelEn);
-    expectedInitialValues[keyForPeriodeOgAndel(2, 1)] = formatCurrencyNoKr(overstyrtPrAarAndelTo);
-    const initialValues = AksjonspunktBehandlerTidsbegrenset.buildInitialValues(beregningsgrunnlagPerioder);
+    const initialValues = AksjonspunktBehandlerTidsbegrenset.buildInitialValues(beregningsgrunnlagPerioder, korrektApApent);
     expect(initialValues).to.eql(expectedInitialValues);
   });
   it(
@@ -275,60 +264,46 @@ describe('<AksjonspunktBehandlerTidsbegrenset>', () => {
       'som inneholder kortvarige arbeidsforhold når vi har aksjonspunkt',
     () => {
       const expectedResultObjectWhenWeHaveAksjonspunkt = {
-        arbeidsforholdPeriodeMap: {
-          arbeidsgiver123: [
-            {
-              erTidsbegrenset: true,
-              isEditable: false,
-              tabellInnhold: 'arbeidsgiver (123)...5678',
-              inputfieldKey: '',
-            },
-            {
-              erTidsbegrenset: false,
-              isEditable: true,
-              tabellInnhold: formatCurrencyNoKr(overstyrtPrAarAndelEn),
-              inputfieldKey: 'inntektField_123_1_2018-06-01',
-            },
-            {
-              erTidsbegrenset: false,
-              isEditable: true,
-              tabellInnhold: formatCurrencyNoKr(overstyrtPrAarAndelEn),
-              inputfieldKey: 'inntektField_123_1_2018-07-01',
-            },
-            {
-              erTidsbegrenset: false,
-              isEditable: true,
-              tabellInnhold: formatCurrencyNoKr(overstyrtPrAarAndelEn),
-              inputfieldKey: 'inntektField_123_1_2018-08-01',
-            },
-          ],
-          arbeidsgiver456: [
-            {
-              erTidsbegrenset: true,
-              isEditable: false,
-              tabellInnhold: 'arbeidsgiver (456)...7890',
-              inputfieldKey: '',
-            },
-            {
-              erTidsbegrenset: false,
-              isEditable: true,
-              tabellInnhold: formatCurrencyNoKr(overstyrtPrAarAndelTo),
-              inputfieldKey: 'inntektField_456_2_2018-06-01',
-            },
-            {
-              erTidsbegrenset: false,
-              isEditable: true,
-              tabellInnhold: formatCurrencyNoKr(overstyrtPrAarAndelTo),
-              inputfieldKey: 'inntektField_456_2_2018-07-01',
-            },
-            {
-              erTidsbegrenset: false,
-              isEditable: true,
-              tabellInnhold: formatCurrencyNoKr(overstyrtPrAarAndelTo),
-              inputfieldKey: 'inntektField_456_2_2018-08-01',
-            },
-          ],
-        },
+        '123dette-er-en-arbeidsforholdsid': [
+          {
+            erTidsbegrenset: true,
+            isEditable: false,
+            tabellInnhold: 'arbeidsgiver (123)...5678',
+            inputfieldKey: '',
+          },
+          {
+            erTidsbegrenset: false,
+            isEditable: false,
+            tabellInnhold: formatCurrencyNoKr(beregnetPrAarAndelEn),
+            inputfieldKey: '',
+          },
+          {
+            erTidsbegrenset: false,
+            isEditable: true,
+            tabellInnhold: formatCurrencyNoKr(overstyrtPrAarAndelEn),
+            inputfieldKey: 'inntektField_123_1_2018-07-01',
+          }
+        ],
+        '456dette-er-en-annen-arbeidsforholdsid': [
+          {
+            erTidsbegrenset: true,
+            isEditable: false,
+            tabellInnhold: 'arbeidsgiver (456)...7890',
+            inputfieldKey: '',
+          },
+          {
+            erTidsbegrenset: false,
+            isEditable: false,
+            tabellInnhold: formatCurrencyNoKr(beregnetPrAarAndelTo),
+            inputfieldKey: '',
+          },
+          {
+            erTidsbegrenset: false,
+            isEditable: true,
+            tabellInnhold: formatCurrencyNoKr(overstyrtPrAarAndelTo),
+            inputfieldKey: 'inntektField_456_2_2018-07-01',
+          }
+        ],
       };
       const selectorData = createTableData.resultFunc(
         beregningsgrunnlagPerioder,
@@ -367,36 +342,15 @@ describe('<AksjonspunktBehandlerTidsbegrenset>', () => {
   });
   it('Skal teste transformValues metode', () => {
     const formValues = {};
-    // Første periode
-    formValues[keyForPeriodeOgAndel(0, 0)] = '100 000';
-    formValues[keyForPeriodeOgAndel(0, 1)] = '200 000';
-
-    // Andre periode
+    formValues.ATFLVurdering = "Alt ser greit ut.";
+    formValues.inntektFrilanser = '120 000';
     formValues[keyForPeriodeOgAndel(1, 0)] = '100 000';
     formValues[keyForPeriodeOgAndel(1, 1)] = '250 000';
-
-    // Tredje periode
-    formValues[keyForPeriodeOgAndel(2, 0)] = '100 000';
-    formValues[keyForPeriodeOgAndel(2, 1)] = '500 000';
-
-    const expectedTransformedValues = [
-      {
-        periodeFom: beregningsgrunnlagPerioder[0].beregningsgrunnlagPeriodeFom,
-        periodeTom: beregningsgrunnlagPerioder[0].beregningsgrunnlagPeriodeTom,
-        fastsatteTidsbegrensedeAndeler: [
-          {
-            andelsnr: 1,
-            bruttoFastsattInntekt: 100000,
-          },
-          {
-            andelsnr: 2,
-            bruttoFastsattInntekt: 200000,
-          },
-        ],
-      },
+    const expectedTransformedValues = {
+      fastsatteTidsbegrensedePerioder: [
       {
         periodeFom: beregningsgrunnlagPerioder[1].beregningsgrunnlagPeriodeFom,
-        periodeTom: beregningsgrunnlagPerioder[1].beregningsgrunnlagPeriodeTom,
+        periodeTom: beregningsgrunnlagPerioder[2].beregningsgrunnlagPeriodeTom,
         fastsatteTidsbegrensedeAndeler: [
           {
             andelsnr: 1,
@@ -407,22 +361,12 @@ describe('<AksjonspunktBehandlerTidsbegrenset>', () => {
             bruttoFastsattInntekt: 250000,
           },
         ],
-      },
-      {
-        periodeFom: beregningsgrunnlagPerioder[2].beregningsgrunnlagPeriodeFom,
-        periodeTom: undefined,
-        fastsatteTidsbegrensedeAndeler: [
-          {
-            andelsnr: 1,
-            bruttoFastsattInntekt: 100000,
-          },
-          {
-            andelsnr: 2,
-            bruttoFastsattInntekt: 500000,
-          },
-        ],
-      },
-    ];
+      }
+    ],
+    kode: avklaringsbehovCodes.FASTSETT_BEREGNINGSGRUNNLAG_TIDSBEGRENSET_ARBEIDSFORHOLD,
+    begrunnelse: "Alt ser greit ut.",
+    frilansInntekt: 120000,
+    };
     const transformedValues = AksjonspunktBehandlerTidsbegrenset.transformValues(
       formValues,
       beregningsgrunnlagPerioder,
@@ -431,18 +375,20 @@ describe('<AksjonspunktBehandlerTidsbegrenset>', () => {
   });
 
   it('Skal teste buildInitialValues metode', () => {
+    const korrektApApent = [
+      {
+        definisjon: {
+          kode: avklaringsbehovCodes.FASTSETT_BEREGNINGSGRUNNLAG_TIDSBEGRENSET_ARBEIDSFORHOLD,
+        },
+        status: {
+          kode: avklaringsbehovStatus.OPPRETTET,
+        },
+      },
+    ];
     const expectedInitialValues = {};
-    // Første periode
-    expectedInitialValues[keyForPeriodeOgAndel(0, 0)] = formatCurrencyNoKr(overstyrtPrAarAndelEn);
-    expectedInitialValues[keyForPeriodeOgAndel(0, 1)] = formatCurrencyNoKr(overstyrtPrAarAndelTo);
-    // Andre periode
     expectedInitialValues[keyForPeriodeOgAndel(1, 0)] = formatCurrencyNoKr(overstyrtPrAarAndelEn);
     expectedInitialValues[keyForPeriodeOgAndel(1, 1)] = formatCurrencyNoKr(overstyrtPrAarAndelTo);
-    // Tredje periode
-    expectedInitialValues[keyForPeriodeOgAndel(2, 0)] = formatCurrencyNoKr(overstyrtPrAarAndelEn);
-    expectedInitialValues[keyForPeriodeOgAndel(2, 1)] = formatCurrencyNoKr(overstyrtPrAarAndelTo);
-
-    const initialValues = AksjonspunktBehandlerTidsbegrenset.buildInitialValues(beregningsgrunnlagPerioder);
+    const initialValues = AksjonspunktBehandlerTidsbegrenset.buildInitialValues(beregningsgrunnlagPerioder, korrektApApent);
     expect(initialValues).is.deep.equal(expectedInitialValues);
   });
 });

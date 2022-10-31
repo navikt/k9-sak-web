@@ -20,7 +20,6 @@ interface OwnProps {
   oppdaterProsessStegOgFaktaPanelIUrl: (punktnavn?: string, faktanavn?: string) => void;
   oppdaterBehandlingVersjon: (versjon: number) => void;
   settPaVent: (params: SettPaVentParams) => Promise<any>;
-  hentBehandling: ({ behandlingId: number }, keepData: boolean) => Promise<any>;
   opneSokeside: () => void;
   harApenRevurdering: boolean;
   hasFetchError: boolean;
@@ -40,7 +39,6 @@ const TilbakekrevingPaneler = ({
   oppdaterProsessStegOgFaktaPanelIUrl,
   oppdaterBehandlingVersjon,
   settPaVent,
-  hentBehandling,
   opneSokeside,
   harApenRevurdering,
   hasFetchError,
@@ -52,7 +50,6 @@ const TilbakekrevingPaneler = ({
       aksjonspunkter={fetchedData?.aksjonspunkter}
       kodeverk={kodeverk}
       settPaVent={settPaVent}
-      hentBehandling={hentBehandling}
       erTilbakekreving
     />
     <TilbakekrevingProsess

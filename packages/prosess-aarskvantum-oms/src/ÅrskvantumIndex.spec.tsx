@@ -1,5 +1,6 @@
 import React from 'react';
 import { Behandling, ArbeidsforholdV2 } from '@k9-sak-web/types';
+import { K9sakApiKeys, requestApi } from '@k9-sak-web/sak-app/src/data/k9sakApi';
 import { shallowWithIntl } from '../i18n';
 import ÅrskvantumIndex from './ÅrskvantumIndex';
 import AksjonspunktForm from './components/AksjonspunktForm';
@@ -44,11 +45,14 @@ const arbeidsgivere = {
     referanse: '999',
     identifikator: '999',
     navn: 'Bedrift AS',
+    arbeidsforholdreferanser: [],
   },
 };
 
 describe('<ÅrskvantumIndex>', () => {
   it('rendrer aksjonspunkt-form hvis det finnes aksjonspunkter', () => {
+    requestApi.mock(K9sakApiKeys.FEATURE_TOGGLE, [{ AKSJONSPUNKT_9014: true }]);
+
     const wrapperAksjonspunkt = shallowWithIntl(
       <ÅrskvantumIndex
         årskvantum={årskvantum}
@@ -80,6 +84,8 @@ describe('<ÅrskvantumIndex>', () => {
   });
 
   it('rendrer ikke aksjonspunkt-form hvis det ikke finnes aksjonspunkter', () => {
+    requestApi.mock(K9sakApiKeys.FEATURE_TOGGLE, [{ AKSJONSPUNKT_9014: true }]);
+
     const wrapperIngenAksjonspunkt = shallowWithIntl(
       <ÅrskvantumIndex
         årskvantum={årskvantum}

@@ -8,10 +8,10 @@ metadata:
   annotations:
     nais.io/run-as-user: "101" # Fix permissions for nginx
     nais.io/read-only-file-system: "false" # Fix permissions for nginx
+    nginx.ingress.kubernetes.io/proxy-buffer-size: "16k"
 spec:
   image: {{ image }}
   port: 9000
-  sessionAffinity: ClientIP
   team: k9saksbehandling
   liveness:
     path: /isAlive
@@ -36,7 +36,7 @@ spec:
       memory: 32Mi
   ingresses:
     - "https://app-q1.adeo.no/k9"
-    # - "https://k9-sak-web.nais.preprod.local/"
+    - "https://k9.dev.intern.nav.no/"
   env:
     - name: APP_NAME
       value: k9-sak-web
@@ -54,8 +54,10 @@ spec:
       value: "http://k9-klage.k9saksbehandling"
     - name: APP_URL_K9TILBAKE
       value: "http://k9-tilbake.default"
+    - name: APP_URL_K9FORDEL
+      value: "http://k9-fordel.k9saksbehandling"
     - name: APP_DIAGNOSEKODER
-      value: "http://diagnosekode-api/diagnosekoder/"
+      value: "http://diagnosekode-api.k9saksbehandling/diagnosekoder"
     - name: MEDISINSK_VILKAR_FRONTEND_URL
       value: "https://medisinsk-vilkar-frontend.dev.adeo.no/"
     - name: OMSORGSDAGER_FRONTEND_URL
@@ -70,6 +72,8 @@ spec:
       value: "https://psb-etablert-tilsyn-frontend.dev.adeo.no/"
     - name: PSB_OM_BARNET_FRONTEND_URL
       value: "https://psb-om-barnet-frontend.dev.adeo.no/"
+    - name: ENDRINGSLOGG_URL
+      value: "https://familie-endringslogg.dev.intern.nav.no/"
 
    # Feature-flag
     - name: KLAGE_KABAL
@@ -84,4 +88,31 @@ spec:
       value: "true"
     - name: TILBAKE
       value: "true"
-
+    - name: UTENLANDSOPPHOLD
+      value: "true"
+    - name: SOKNADPERIODESTRIPE
+      value: "true"
+    - name: TYPE_MEDISINSKE_OPPLYSNINGER_BREV
+      value: "true"
+    - name: LOS_MARKER_BEHANDLING
+      value: "true"
+    - name: NY_BEREGNING_PROSESS_ENABLED
+      value: "true"
+    - name: SPLITTET_SAMMENLINGNING_BEREGNING
+      value: "true"
+    - name: NY_BEREGNING_FAKTA_ENABLED
+      value: "true"
+    - name: NY_BEREGNING_FAKTA_FORDEL_ENABLED
+      value: "true"
+    - name: AKSJONSPUNKT_9014
+      value: "true"
+    - name: AKSJONSPUNKT_9015
+      value: "true"
+    - name: NY_PROSESS_VEDTAK_ENABLED
+      value: "true"
+    - name: FRITEKST_REDIGERING
+      value: "true"
+    - name: FIKS_DELVIS_PROSESSTEG
+      value: "true"
+    - name: FIX_SOKNADSFRIST_KALENDER_OG_READONLY
+      value: "true"

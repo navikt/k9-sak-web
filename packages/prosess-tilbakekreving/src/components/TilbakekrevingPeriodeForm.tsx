@@ -144,20 +144,6 @@ export class TilbakekrevingPeriodeFormImpl extends Component<
     clearFormFields(`${behandlingFormPrefix}.${TILBAKEKREVING_PERIODE_FORM_NAME}`, false, false, ...fields);
   };
 
-  resetAnnetTextField = () => {
-    const {
-      behandlingFormPrefix,
-      clearFields: clearFormFields,
-      valgtVilkarResultatType,
-      handletUaktsomhetGrad,
-      erSerligGrunnAnnetValgt,
-    } = this.props;
-    if (!erSerligGrunnAnnetValgt) {
-      const fields = [`${valgtVilkarResultatType}.${handletUaktsomhetGrad}.annetBegrunnelse`];
-      clearFormFields(`${behandlingFormPrefix}.${TILBAKEKREVING_PERIODE_FORM_NAME}`, false, false, ...fields);
-    }
-  };
-
   saveOrToggleModal = () => {
     const { showModal } = this.state;
     const { data, tilbakekrevSelvOmBeloepErUnder4Rettsgebyr, antallPerioderMedAksjonspunkt, ...formProps } = this.props;

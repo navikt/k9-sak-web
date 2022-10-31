@@ -276,6 +276,7 @@ const fagsak = {
 } as Fagsak;
 
 const locationMock = {
+  key: '1',
   pathname: 'test',
   search: 'test',
   state: {},
@@ -307,6 +308,7 @@ export const visPanelForValgAvBehandlinger = () => {
         toggleShowAll={() => toggleVisAlle(!visAlle)}
         getKodeverkFn={getKodeverkFn}
         fagsak={fagsak}
+        createLocationForSkjermlenke={() => locationMock}
       />
     </div>
   );

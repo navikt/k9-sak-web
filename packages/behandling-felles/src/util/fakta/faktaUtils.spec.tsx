@@ -1,26 +1,26 @@
+/* eslint-disable class-methods-use-this */
 import React from 'react';
 import sinon from 'sinon';
-import { IntlShape } from 'react-intl';
 
-import { Behandling, Fagsak } from '@k9-sak-web/types';
-import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
-import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
-import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
-import { faktaPanelCodes } from '@k9-sak-web/konstanter';
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import ArbeidsforholdFaktaIndex from '@fpsak-frontend/fakta-arbeidsforhold';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
+import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
+import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import fagsakStatus from '@fpsak-frontend/kodeverk/src/fagsakStatus';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
+import { faktaPanelCodes } from '@k9-sak-web/konstanter';
+import { Behandling, Fagsak } from '@k9-sak-web/types';
 
 import FaktaPanelDef from './FaktaPanelDef';
 import FaktaPanelUtledet from './FaktaPanelUtledet';
 import {
-  utledFaktaPaneler,
+  DEFAULT_FAKTA_KODE,
+  DEFAULT_PROSESS_STEG_KODE,
   finnValgtPanel,
   formaterPanelerForSidemeny,
   getBekreftAksjonspunktCallback,
-  DEFAULT_FAKTA_KODE,
-  DEFAULT_PROSESS_STEG_KODE,
+  utledFaktaPaneler,
 } from './faktaUtils';
 
 describe('<faktaUtils>', () => {
@@ -176,21 +176,18 @@ describe('<faktaUtils>', () => {
       new FaktaPanelUtledet(panelDef, behandling, aksjonspunkter),
       new FaktaPanelUtledet(panelDef2, behandling, []),
     ];
-    const intl = {
-      formatMessage: o => o.id,
-    } as IntlShape;
     const valgtFaktaPanelKode = paneler[0].getUrlKode();
 
-    const formatertePaneler = formaterPanelerForSidemeny(intl, paneler, valgtFaktaPanelKode);
+    const formatertePaneler = formaterPanelerForSidemeny(paneler, valgtFaktaPanelKode);
 
     expect(formatertePaneler).toEqual([
       {
-        tekst: paneler[0].getTekstKode(),
+        tekstKode: paneler[0].getTekstKode(),
         erAktiv: true,
         harAksjonspunkt: true,
       },
       {
-        tekst: paneler[1].getTekstKode(),
+        tekstKode: paneler[1].getTekstKode(),
         erAktiv: false,
         harAksjonspunkt: false,
       },
@@ -273,10 +270,66 @@ describe('<faktaUtils>', () => {
       saksnummer: fagsak.saksnummer,
       behandlingId: behandling.id,
       behandlingVersjon: behandling.versjon,
+      bekreftedeAksjonspunktDtoer: [],
       overstyrteAksjonspunktDtoer: [
         {
           '@type': aksjonspunkter[0].kode,
           kode: aksjonspunkter[0].kode,
+        },
+      ],
+    });
+
+    const opppdaterKall = oppdaterProsessStegOgFaktaPanelIUrl.getCalls();
+    expect(opppdaterKall).toHaveLength(1);
+    expect(opppdaterKall[0].args).toHaveLength(2);
+    expect(opppdaterKall[0].args[0]).toEqual(DEFAULT_FAKTA_KODE);
+    expect(opppdaterKall[0].args[0]).toEqual(DEFAULT_PROSESS_STEG_KODE);
+  });
+
+  it('skal lagre både overstyrt og vanlig aksjonspunkt', async () => {
+    const oppdaterProsessStegOgFaktaPanelIUrl = sinon.spy();
+    const lagreAksjonspunkter = sinon.spy();
+    const lagreOverstyrteAksjonspunkter = sinon.stub();
+    lagreOverstyrteAksjonspunkter.returns(Promise.resolve());
+    const overstyringApCodes = [aksjonspunktCodes.OVERSTYRING_AV_BEREGNINGSGRUNNLAG];
+
+    const callback = getBekreftAksjonspunktCallback(
+      fagsak,
+      behandling as Behandling,
+      oppdaterProsessStegOgFaktaPanelIUrl,
+      overstyringApCodes,
+      lagreAksjonspunkter,
+      lagreOverstyrteAksjonspunkter,
+    );
+
+    const aksjonspunkter = [
+      {
+        kode: aksjonspunktCodes.OVERSTYRING_AV_BEREGNINGSGRUNNLAG,
+      },
+      {
+        kode: aksjonspunktCodes.VURDER_FAKTA_FOR_ATFL_SN,
+      },
+    ];
+
+    await callback(aksjonspunkter);
+
+    const requestKall = lagreOverstyrteAksjonspunkter.getCalls();
+    expect(requestKall).toHaveLength(1);
+    expect(requestKall[0].args).toHaveLength(2);
+    expect(requestKall[0].args[0]).toEqual({
+      saksnummer: fagsak.saksnummer,
+      behandlingId: behandling.id,
+      behandlingVersjon: behandling.versjon,
+      overstyrteAksjonspunktDtoer: [
+        {
+          '@type': aksjonspunkter[0].kode,
+          kode: aksjonspunkter[0].kode,
+        },
+      ],
+      bekreftedeAksjonspunktDtoer: [
+        {
+          '@type': aksjonspunkter[1].kode,
+          kode: aksjonspunkter[1].kode,
         },
       ],
     });

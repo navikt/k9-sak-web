@@ -80,7 +80,6 @@ const AksjonspunktBehandler = ({
   alleKodeverk,
   arbeidsgiverOpplysningerPerId,
   relevanteStatuser,
-  tidsBegrensetInntekt,
   fieldArrayID,
 }) => {
   const alleAndelerIForstePeriode = finnAlleAndelerIFørstePeriode(allePerioder);
@@ -112,6 +111,9 @@ const AksjonspunktBehandler = ({
   if (!avklaringsbehov || avklaringsbehov.length === 0) {
     return null;
   }
+  const harTidsbegrensetArbeidsforholdMedAvvik = avklaringsbehov.find(
+    ab => ab.definisjon.kode === avklaringsbehovCodes.FASTSETT_BEREGNINGSGRUNNLAG_TIDSBEGRENSET_ARBEIDSFORHOLD
+  );
   if (!relevanteStatuser.isSelvstendigNaeringsdrivende) {
     return (
       <div className={readOnly ? '' : styles.aksjonspunktBehandlerContainer}>
@@ -124,7 +126,7 @@ const AksjonspunktBehandler = ({
             </Column>
           </Row>
           <VerticalSpacer eightPx />
-          {tidsBegrensetInntekt && (
+          {harTidsbegrensetArbeidsforholdMedAvvik && (
             <AksjonspunktBehandlerTB
               readOnly={readOnly}
               readOnlySubmitButton={readOnlySubmitButton}
@@ -138,7 +140,7 @@ const AksjonspunktBehandler = ({
               fieldArrayID={fieldArrayID}
             />
           )}
-          {!tidsBegrensetInntekt && visAT && (
+          {!harTidsbegrensetArbeidsforholdMedAvvik && visAT && (
             <AksjonspunktBehandlerAT
               readOnly={readOnly}
               allePerioder={allePerioder}
@@ -228,7 +230,6 @@ AksjonspunktBehandler.propTypes = {
   behandlingVersjon: PropTypes.number.isRequired,
   formName: PropTypes.string.isRequired,
   readOnlySubmitButton: PropTypes.bool.isRequired,
-  tidsBegrensetInntekt: PropTypes.bool.isRequired,
   allePerioder: PropTypes.arrayOf(PropTypes.shape()),
   relevanteStatuser: PropTypes.shape().isRequired,
   intl: PropTypes.shape().isRequired,

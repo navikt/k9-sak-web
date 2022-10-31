@@ -6,32 +6,30 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Hente kode
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Sette opp Node
-        uses: actions/setup-node@v2.1.5
+        uses: actions/setup-node@v3
         with:
-          node-version: '16'
+          node-version: '18'
           registry-url: https://npm.pkg.github.com/
           scope: '@navikt'
-
-      - name: Get yarn cache directory path
-        id: yarn-cache-dir-path
-        run: echo "::set-output name=dir::$(yarn cache dir)"
-
-      - name: Cache node modules
-        uses: actions/cache@v2.1.5
-        id: yarn-cache # use this to check for `cache-hit` (`steps.yarn-cache.outputs.cache-hit != 'true'`)
-        with:
-          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
-          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-yarn-
+          cache: 'yarn'
+          always-auth: true
 
       - name: Installere dependencies
-        run: yarn install --ignore-optional --no-progress --frozen-lockfile
+        run: yarn install --prefer-offline --ignore-optional --no-progress --frozen-lockfile
         env:
           NODE_AUTH_TOKEN: ${{ secrets.READER_TOKEN }}
 
-      - name: Tester, typescript-sjekk og linting
-        run: yarn test:all --runInBand && yarn ts-check && yarn less:lint
+      - name: Kjører tester
+        run: yarn test:all --maxWorkers=2 --silent
+
+      - name: Typescript-sjekk
+        run: yarn ts-check
+
+      - name: Linting
+        run: yarn less:lint
+
+      - name: Sjekker at koden bygger
+        run: yarn build-ci

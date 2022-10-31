@@ -865,6 +865,10 @@ const historikkEndretFeltVerdiTypeCodes = {
     kode: 'MANGLENDE_GRUNNLAG',
     verdiId: 'HistorikkEndretFeltVerdiType.ManglendeGrunnlag',
   },
+  IKKE_VURDERT: {
+    kode: 'IKKE_VURDERT',
+    verdiId: 'HistorikkEndretFeltVerdiType.IkkeVurdert',
+  },
 };
 
 export default historikkEndretFeltVerdiTypeCodes;

@@ -58,8 +58,16 @@ export type { default as OvergangFraInfotrygd } from './src/overgangFraInfotrygd
 export type { default as DokumentStatus } from './src/dokumentStatusTsType';
 export type { default as SaksbehandlereInfo } from './src/saksbehandlereInfo';
 export type { default as Arbeidsgiver } from './src/arbeidsgiverTsType';
+export * from './src/utenlandsopphold/utenlandsoppholdTsType';
 export * from './src/overlappendePeriode';
 export * from './src/kodeverk';
+export * from './src/tidslinje';
 export type { default as BehandlingPerioder } from './src/behandlingPerioderType';
 export type { default as PerioderMedBehandlingsId } from './src/PerioderMedBehandlingsId';
 export type { default as PerioderMedAarsak } from './src/PerioderMedAarsak';
+export type { default as BehandlingPerioderårsakMedVilkår } from './src/behandlingPerioderarsakMedVilkar';
+export type { default as Venteaarsak } from './src/venteaarsakTsType';
+export type { default as MerknadFraLos } from './src/merknadFraLos';
+export type { default as BeregningReferanse } from './src/beregning/beregningReferanseTsType';
+export type { default as BehandlingStatusType } from './src/totrinnskontroll/BehandlingStatusType';
+export type { default as Behandlingsresultat } from './src/totrinnskontroll/Behandlingsresultat';

@@ -1,0 +1,51 @@
+@label-width: 25rem;
+
+.tidslinje {
+  position: relative;
+  padding: 0.75rem 0 0;
+  margin: 0 1rem 0 @label-width;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  width: calc(100% - @label-width);
+}
+
+.rader {
+  position: relative;
+  padding: 0;
+}
+
+.emptyRows {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+}
+
+.radContainer {
+  position: relative;
+}
+
+.radLabel {
+  color: #262626;
+  position: absolute;
+  left: -@label-width;
+  top: 0.125rem;
+  margin-left: 0.75rem;
+}
+
+.visuallyhidden {
+  clip: rect(1px, 1px, 1px, 1px);
+  height: 1px;
+  overflow: hidden;
+  position: absolute;
+  white-space: nowrap;
+  width: 1px;
+}
+
+.weekPin {
+  background: none;
+  border: 1px dashed #707070;
+  border-left: none;
+  border-top: none;
+  border-bottom: none;
+}

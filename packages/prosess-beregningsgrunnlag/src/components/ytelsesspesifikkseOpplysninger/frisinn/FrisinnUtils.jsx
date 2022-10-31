@@ -100,12 +100,14 @@ export const finnFrisinnperioderSomSkalVises = (beregningsgrunnlag, behandling) 
       const kronologiskePerioder = [...frisinnPerioder].sort((a, b) => moment(a.fom) - moment(b.fom));
       const sistePeriode = kronologiskePerioder[kronologiskePerioder.length - 1];
       const sisteTom = moment(sistePeriode.tom);
-      if (sisteTom.month() === 3) {
+      if (sisteTom.month() === 3 && sisteTom.year() === 2020) {
+        // Spesialbehandling for første søknadsmåned
         // Returner alle periuoder som starter i mars eller april
         return kronologiskePerioder.filter(p => moment(p.fom).month() === 3 || moment(p.fom).month() === 2);
       }
-      // Returner alle perioder som starter i samme måned
-      return kronologiskePerioder.filter(p => moment(p.fom).month() === sisteTom.month());
+      // Returner alle perioder som starter i samme måned og år
+      return kronologiskePerioder.filter(p => moment(p.fom).month() === sisteTom.month() &&
+        moment(p.fom).year() === sisteTom.year());
     }
   }
   return frisinnPerioder;

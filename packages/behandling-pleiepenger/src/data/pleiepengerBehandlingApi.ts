@@ -10,6 +10,7 @@ export enum PleiepengerBehandlingApiKeys {
   SAVE_OVERSTYRT_AKSJONSPUNKT = 'SAVE_OVERSTYRT_AKSJONSPUNKT',
   PREVIEW_MESSAGE = 'PREVIEW_MESSAGE',
   PREVIEW_TILBAKEKREVING_MESSAGE = 'PREVIEW_TILBAKEKREVING_MESSAGE',
+  HENT_FRITEKSTBREV_HTML = 'HENT_FRITEKSTBREV_HTML',
   STONADSKONTOER_GITT_UTTAKSPERIODER = 'STONADSKONTOER_GITT_UTTAKSPERIODER',
   AKSJONSPUNKTER = 'AKSJONSPUNKTER',
   VILKAR = 'VILKAR',
@@ -36,7 +37,6 @@ export enum PleiepengerBehandlingApiKeys {
   HENLEGG_BEHANDLING = 'HENLEGG_BEHANDLING',
   RESUME_BEHANDLING = 'RESUME_BEHANDLING',
   BEHANDLING_ON_HOLD = 'BEHANDLING_ON_HOLD',
-  OPEN_BEHANDLING_FOR_CHANGES = 'OPEN_BEHANDLING_FOR_CHANGES',
   VERGE_OPPRETT = 'VERGE_OPPRETT',
   VERGE_FJERN = 'VERGE_FJERN',
   SYKDOM = 'SYKDOM',
@@ -51,6 +51,9 @@ export enum PleiepengerBehandlingApiKeys {
   OVERSTYR_INPUT_BEREGNING = 'OVERSTYR_INPUT_BEREGNING',
   OVERLAPPENDE_YTELSER = 'OVERLAPPENDE_YTELSER',
   HENT_SAKSBEHANDLERE = 'HENT_SAKSBEHANDLERE',
+  UTENLANDSOPPHOLD = 'UTENLANDSOPPHOLD',
+  BEHANDLING_PERIODER_ÅRSAK_MED_VILKÅR = 'BEHANDLING_PERIODER_ÅRSAK_MED_VILKÅR',
+  BEREGNINGREFERANSER_TIL_VURDERING = 'BEREGNINGREFERANSER_TIL_VURDERING',
 }
 
 const endpoints = new RestApiConfigBuilder()
@@ -82,12 +85,15 @@ const endpoints = new RestApiConfigBuilder()
   .withRel('sykdom', PleiepengerBehandlingApiKeys.SYKDOM)
   .withRel('tilgjengelige-vedtaksbrev', PleiepengerBehandlingApiKeys.TILGJENGELIGE_VEDTAKSBREV)
   .withRel('informasjonsbehov-vedtaksbrev', PleiepengerBehandlingApiKeys.INFORMASJONSBEHOV_VEDTAKSBREV)
-  .withRel('pleiepenger-sykt-barn-uttaksplan', PleiepengerBehandlingApiKeys.UTTAK)
+  .withRel('pleiepenger-uttaksplan-med-utsatt', PleiepengerBehandlingApiKeys.UTTAK)
   .withRel('pleiepenger-fritekstdokumenter', PleiepengerBehandlingApiKeys.FRITEKSTDOKUMENTER)
   .withRel('inntekt', PleiepengerBehandlingApiKeys.INNTEKT_OG_YTELSER)
   .withRel('overstyr-input-beregning', PleiepengerBehandlingApiKeys.OVERSTYR_INPUT_BEREGNING)
   .withRel('overlappende-ytelser', PleiepengerBehandlingApiKeys.OVERLAPPENDE_YTELSER)
   .withRel('saksbehandler-info', PleiepengerBehandlingApiKeys.HENT_SAKSBEHANDLERE)
+  .withRel('utenlandsopphold', PleiepengerBehandlingApiKeys.UTENLANDSOPPHOLD)
+  .withRel('behandling-perioder-årsak-med-vilkår', PleiepengerBehandlingApiKeys.BEHANDLING_PERIODER_ÅRSAK_MED_VILKÅR)
+  .withRel('beregning-koblinger-til-vurdering', PleiepengerBehandlingApiKeys.BEREGNINGREFERANSER_TIL_VURDERING)
 
   // operasjoner
   .withRel('dokumentdata-lagre', PleiepengerBehandlingApiKeys.DOKUMENTDATA_LAGRE)
@@ -108,7 +114,6 @@ const endpoints = new RestApiConfigBuilder()
   .withPost('/k9/sak/api/behandlinger/henlegg', PleiepengerBehandlingApiKeys.HENLEGG_BEHANDLING)
   .withAsyncPost('/k9/sak/api/behandlinger/gjenoppta', PleiepengerBehandlingApiKeys.RESUME_BEHANDLING)
   .withPost('/k9/sak/api/behandlinger/sett-pa-vent', PleiepengerBehandlingApiKeys.BEHANDLING_ON_HOLD)
-  .withPost('/k9/sak/api/behandlinger/opne-for-endringer', PleiepengerBehandlingApiKeys.OPEN_BEHANDLING_FOR_CHANGES)
   .withPost('/k9/sak/api/verge/opprett', PleiepengerBehandlingApiKeys.VERGE_OPPRETT)
   .withPost('/k9/sak/api/verge/fjern', PleiepengerBehandlingApiKeys.VERGE_FJERN)
 
@@ -123,6 +128,7 @@ const endpoints = new RestApiConfigBuilder()
   .withPost('/k9/formidling/api/brev/forhaandsvis', PleiepengerBehandlingApiKeys.PREVIEW_MESSAGE, {
     isResponseBlob: true,
   })
+  .withPost('/k9/formidling/api/brev/html', PleiepengerBehandlingApiKeys.HENT_FRITEKSTBREV_HTML)
 
   .build();
 

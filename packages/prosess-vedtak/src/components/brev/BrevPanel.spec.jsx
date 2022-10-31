@@ -2,7 +2,7 @@ import sinon from 'sinon';
 import { expect } from 'chai';
 import React from 'react';
 import { shallow } from 'enzyme/build';
-import { AlertStripeInfo } from 'nav-frontend-alertstriper';
+import { Alert } from '@navikt/ds-react';
 import dokumentMalType from '@fpsak-frontend/kodeverk/src/dokumentMalType';
 import SelectFieldFormik from '@fpsak-frontend/form/src/SelectFieldFormik';
 import vedtaksbrevtype from '@fpsak-frontend/kodeverk/src/vedtaksbrevtype';
@@ -45,7 +45,7 @@ describe('<BrevPanel>', () => {
         overskrift={null}
         behandlingResultat={null}
         overstyrtMottaker={null}
-        formikProps={{}}
+        formikProps={{ values: [] }}
       />,
     );
 
@@ -72,7 +72,7 @@ describe('<BrevPanel>', () => {
         overskrift={null}
         behandlingResultat={null}
         overstyrtMottaker={null}
-        formikProps={{}}
+        formikProps={{ values: [] }}
       />,
     );
 
@@ -99,7 +99,7 @@ describe('<BrevPanel>', () => {
         overskrift={null}
         behandlingResultat={null}
         overstyrtMottaker={null}
-        formikProps={{}}
+        formikProps={{ values: [] }}
       />,
     );
 
@@ -126,13 +126,13 @@ describe('<BrevPanel>', () => {
         overskrift={null}
         behandlingResultat={null}
         overstyrtMottaker={null}
-        formikProps={{}}
+        formikProps={{ values: [] }}
       />,
     );
     expect(wrapper.find(InformasjonsbehovAutomatiskVedtaksbrev)).to.have.length(0);
     expect(wrapper.find(VedtakPreviewLink)).to.have.length(0);
     expect(wrapper.find(FritekstBrevPanel)).to.have.length(0);
-    expect(wrapper.find(AlertStripeInfo)).to.have.length(1);
+    expect(wrapper.find(Alert)).to.have.length(1);
   });
 
   it('skal vise valg av mottaker hvis alternative mottakere er definert', () => {
@@ -166,7 +166,7 @@ describe('<BrevPanel>', () => {
         overskrift={null}
         behandlingResultat={null}
         overstyrtMottaker={null}
-        formikProps={{}}
+        formikProps={{ values: [] }}
       />,
     );
 

@@ -1,4 +1,6 @@
+/* eslint-disable class-methods-use-this */
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { ProsessStegPanelDef, ProsessStegOverstyringPanelDef } from '@k9-sak-web/behandling-felles';
 
 class OmsorgenForPanelDef extends ProsessStegPanelDef {
@@ -10,7 +12,7 @@ class OmsorgenForPanelDef extends ProsessStegPanelDef {
 
   getKomponent = props => this.overstyringDef.getKomponent(props);
 
-  getAksjonspunktKoder = () => [];
+  getAksjonspunktKoder = () => [aksjonspunktCodes.OVERSTYR_OMSORGEN_FOR];
 
   getVilkarKoder = () => [vilkarType.OMSORGENFORVILKARET];
 

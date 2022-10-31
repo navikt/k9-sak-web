@@ -5,14 +5,15 @@ import UtvidetRettMikrofrontendPanelDef from './utvidetRettPanel/UtvidetRettMikr
 class UtvidetRettProsessStegPanelDef extends ProsessStegDef {
   erFagytelseTypeAleneOmOmsorgen: boolean;
 
-  constructor(erFagytelseTypeAleneOmOmsorgen){
+  constructor(erFagytelseTypeAleneOmOmsorgen) {
     super();
     this.erFagytelseTypeAleneOmOmsorgen = erFagytelseTypeAleneOmOmsorgen;
   }
 
   getUrlKode = () => prosessStegCodes.UTVIDET_RETT;
 
-  getTekstKode = () => this.erFagytelseTypeAleneOmOmsorgen ? 'Behandlingspunkt.AleneOmOmsorgen' : 'Behandlingspunkt.UtvidetRett';
+  getTekstKode = () =>
+    this.erFagytelseTypeAleneOmOmsorgen ? 'Behandlingspunkt.AleneOmOmsorgen' : 'Behandlingspunkt.UtvidetRett';
 
   getPanelDefinisjoner = () => [new UtvidetRettMikrofrontendPanelDef()];
 }

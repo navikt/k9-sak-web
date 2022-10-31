@@ -8,7 +8,6 @@
   "MainSideMenu.Heading": "Saksopplysninger",
   "OpptjeningInfoPanel.KontrollerFaktaForOpptjening": "Opptjening",
   "InntektsmeldingInfoPanel.Title": "Inntektsmelding",
-
   "Behandlingspunkt.LivetsSluttfase": "Livets sluttfase",
   "Behandlingspunkt.Inngangsvilkar": "Inngangsvilkår",
   "Behandlingspunkt.InngangsvilkarForts": "Inngangsvilkår Fortsettelse",
@@ -18,22 +17,15 @@
   "Behandlingspunkt.TilkjentYtelse": "Tilkjent ytelse",
   "Behandlingspunkt.Soknadsfristvilkaret": "Søknadsfrist",
   "Behandlingspunkt.Avregning": "Simulering",
-
   "ProsessStegIkkeBehandletPanel.IkkeBehandlet": "Dette steget er ikke behandlet",
-
   "OmPleietrengendeInfoPanel.Title": "Om pleietrengende",
-
   "FatterVedtakStatusModal.SendtBeslutter": "Forslag til vedtak er sendt til beslutter",
   "FatterVedtakStatusModal.ModalDescriptionPleiepenger": "Pleiepenger i livets sluttfase er avslått.",
   "FatterVedtakStatusModal.GoToSearchPage": "Du kommer nå til forsiden.",
   "FatterVedtakStatusModal.Ok": "OK",
-
-  "FatterVedtakApprovalModal.ModalDescriptionLivetsSluttfase": "Pleiepenger i livets sluttfase er innvilget og vedtaket blir iverksatt. Du kommer nå til forsiden.",
-  "FatterVedtakApprovalModal.IkkeInnvilgetLivetsSluttfase": "Pleiepenger i livets sluttfase er avslått",
-  "FatterVedtakApprovalModal.OpphortLivetsSluttfase": "Pleiepenger i livet sluttfase er opphørt.",
-  "FatterVedtakApprovalModal.InnvilgetLivetsSluttfase": "Pleiepenger i livets sluttfase er innvilget og vedtaket blir iverksatt",
-
-  "VedtakForm.VilkarStatusDelvisInnvilgetLivetsSluttfase": "Pleiepenger i livets sluttfase er delvis innvilget",
-  "VedtakForm.VilkarStatusInnvilgetLivetsSluttfase": "Pleiepenger i livets sluttfase er innvilget",
-  "VedtakForm.LivetsSluttfaseIkkeInnvilget": "Pleiepenger i livets sluttfase er avslått"
+  "IverksetterVedtakStatusModal.Innvilget": "Innvilget",
+  "IverksetterVedtakStatusModal.Ok": "Ok",
+  "HelpText.Aksjonspunkt": "Aksjonspunkt",
+  "SoknadsperioderPanel.Soknadsperioder": "Søknadsperioder",
+  "FordelBeregningsgrunnlag.Title": "Fordeling"
 }

@@ -11,6 +11,7 @@ import messages from '../i18n/nb_NO.json';
 import VurderFaktaBeregningPanel from './components/fellesFaktaForATFLogSN/VurderFaktaBeregningPanel';
 import beregningBehandlingPropType from './propTypes/beregningBehandlingPropType';
 import beregningsgrunnlagPropType from './propTypes/beregningsgrunnlagPropType';
+import beregningKoblingPropType from './propTypes/beregningKoblingPropType';
 import AvklareAktiviteterPanel from './components/avklareAktiviteter/AvklareAktiviteterPanel';
 import styles from './beregningFaktaIndex.less';
 
@@ -29,6 +30,7 @@ const BeregningFaktaIndexPropTypes = {
   vilkar: PropTypes.any.isRequired,
   beregningErBehandlet: PropTypes.bool,
   aksjonspunkter: PropTypes.any,
+  beregningreferanserTilVurdering: PropTypes.arrayOf(beregningKoblingPropType).isRequired,
 };
 
 type OwnProps = PropTypes.InferProps<typeof BeregningFaktaIndexPropTypes>;
@@ -50,10 +52,12 @@ const {
   AVKLAR_AKTIVITETER,
 } = avklaringsbehovCodes;
 
-const relevanteKoder = [VURDER_FAKTA_FOR_ATFL_SN,
+const relevanteKoder = [
+  VURDER_FAKTA_FOR_ATFL_SN,
   OVERSTYRING_AV_BEREGNINGSAKTIVITETER,
   OVERSTYRING_AV_BEREGNINGSGRUNNLAG,
-  AVKLAR_AKTIVITETER];
+  AVKLAR_AKTIVITETER,
+];
 
 const lagLabel = (bg, vilkårsperioder) => {
   const stpOpptjening = bg.faktaOmBeregning.avklarAktiviteter.skjæringstidspunkt;
@@ -71,16 +75,27 @@ const lagLabel = (bg, vilkårsperioder) => {
 const harAvklaringsbehovIPanel = avklaringsbehov => {
   const harBehovForAvklaring = !!avklaringsbehov;
   if (harBehovForAvklaring) {
-    const harVurderFaktaAksjonspunkt = avklaringsbehov.some(ap => ap.definisjon.kode === VURDER_FAKTA_FOR_ATFL_SN && ap.kanLoses !== false);
-    const harAvklarAktiviteterAP = avklaringsbehov.some(ap => ap.definisjon.kode === AVKLAR_AKTIVITETER && ap.kanLoses !== false);
+    const harVurderFaktaAksjonspunkt = avklaringsbehov.some(
+      ap => ap.definisjon.kode === VURDER_FAKTA_FOR_ATFL_SN && ap.kanLoses !== false,
+    );
+    const harAvklarAktiviteterAP = avklaringsbehov.some(
+      ap => ap.definisjon.kode === AVKLAR_AKTIVITETER && ap.kanLoses !== false,
+    );
     return harVurderFaktaAksjonspunkt || harAvklarAktiviteterAP;
   }
   return false;
 };
 
-const skalVurderes = (bg, vilkårsperioder) =>
-  harAvklaringsbehovIPanel(bg.avklaringsbehov) &&
-  vilkårsperioder.find(({ periode }) => periode.fom === bg.vilkårsperiodeFom).vurdersIBehandlingen;
+function erTilVurderingOgIkkeForlengelse(beregningreferanserTilVurdering, bg) {
+  return beregningreferanserTilVurdering.some(r => !r.erForlengelse && r.skjæringstidspunkt === bg.vilkårsperiodeFom);
+}
+
+const skalVurderes = (bg, beregningreferanserTilVurdering) =>
+  harAvklaringsbehovIPanel(bg.avklaringsbehov) && erTilVurderingOgIkkeForlengelse(beregningreferanserTilVurdering, bg);
+
+function kanLøseMinstEtt(aktiveAvklaringsBehov) {
+  return aktiveAvklaringsBehov.some(ap => relevanteKoder.includes(ap.definisjon.kode) && ap.kanLoses !== false);
+}
 
 const BeregningFaktaIndex = ({
   vilkar,
@@ -94,6 +109,7 @@ const BeregningFaktaIndex = ({
   arbeidsgiverOpplysningerPerId,
   beregningErBehandlet,
   aksjonspunkter,
+  beregningreferanserTilVurdering,
 }: OwnProps) => {
   const skalBrukeTabs = beregningsgrunnlag.length > 1;
   const [aktivtBeregningsgrunnlagIndeks, setAktivtBeregningsgrunnlagIndeks] = useState(0);
@@ -110,13 +126,19 @@ const BeregningFaktaIndex = ({
   }
 
   const aktiveAvklaringsBehov = aktivtBeregningsgrunnlag.avklaringsbehov;
-  const relevanteLøsbareAvklaringsbehov = aktiveAvklaringsBehov.filter(ap => relevanteKoder.includes(ap.definisjon.kode) && ap.kanLoses !== false)
+  const skalKunneLøseAvklaring =
+    erTilVurderingOgIkkeForlengelse(beregningreferanserTilVurdering, aktivtBeregningsgrunnlag) &&
+    kanLøseMinstEtt(aktiveAvklaringsBehov);
   const vilkårsperioder = beregningsgrunnlagVilkår.perioder;
 
-  const avklarAktiviteterReadOnly = readOnly || ((relevanteLøsbareAvklaringsbehov.length === 0 ||
-    harAvklaringsbehov(OVERSTYRING_AV_BEREGNINGSAKTIVITETER, aktiveAvklaringsBehov)) && !erOverstyrer)
-  const avklarFaktaBeregningReadOnly = readOnly || ((relevanteLøsbareAvklaringsbehov.length === 0 ||
-    harAvklaringsbehov(OVERSTYRING_AV_BEREGNINGSGRUNNLAG, aktiveAvklaringsBehov)) && !erOverstyrer)
+  const avklarAktiviteterReadOnly =
+    readOnly ||
+    !skalKunneLøseAvklaring ||
+    (harAvklaringsbehov(OVERSTYRING_AV_BEREGNINGSAKTIVITETER, aktiveAvklaringsBehov) && !erOverstyrer);
+  const avklarFaktaBeregningReadOnly =
+    readOnly ||
+    !skalKunneLøseAvklaring ||
+    (harAvklaringsbehov(OVERSTYRING_AV_BEREGNINGSGRUNNLAG, aktiveAvklaringsBehov) && !erOverstyrer);
   return (
     <RawIntlProvider value={intl}>
       {skalBrukeTabs && (
@@ -125,7 +147,9 @@ const BeregningFaktaIndex = ({
             tabs={beregningsgrunnlag.map((currentBeregningsgrunnlag, currentBeregningsgrunnlagIndex) => ({
               aktiv: aktivtBeregningsgrunnlagIndeks === currentBeregningsgrunnlagIndex,
               label: lagLabel(currentBeregningsgrunnlag, vilkårsperioder),
-              className: skalVurderes(currentBeregningsgrunnlag, vilkårsperioder) ? 'harAksjonspunkt' : '',
+              className: skalVurderes(currentBeregningsgrunnlag, beregningreferanserTilVurdering)
+                ? 'harAksjonspunkt'
+                : '',
             }))}
             onChange={(e, clickedIndex) => setAktivtBeregningsgrunnlagIndeks(clickedIndex)}
           />
@@ -137,7 +161,7 @@ const BeregningFaktaIndex = ({
           harAndreAvklaringsbehovIPanel={harAvklaringsbehov(VURDER_FAKTA_FOR_ATFL_SN, aktiveAvklaringsBehov)}
           submitCallback={submitCallback}
           submittable={submittable}
-          erOverstyrer={erOverstyrer}
+          erOverstyrer={false}
           avklaringsbehov={aktiveAvklaringsBehov}
           alleKodeverk={alleKodeverk}
           behandlingId={behandling.id}
@@ -147,6 +171,7 @@ const BeregningFaktaIndex = ({
           aktivtBeregningsgrunnlagIndex={aktivtBeregningsgrunnlagIndeks}
           alleBeregningsgrunnlag={beregningsgrunnlag}
           arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
+          beregningreferanserTilVurdering={beregningreferanserTilVurdering}
         />
         <VerticalSpacer thirtyTwoPx />
         <VurderFaktaBeregningPanel
@@ -162,6 +187,7 @@ const BeregningFaktaIndex = ({
           alleBeregningsgrunnlag={beregningsgrunnlag}
           aktivtBeregningsgrunnlagIndex={aktivtBeregningsgrunnlagIndeks}
           arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
+          beregningreferanserTilVurdering={beregningreferanserTilVurdering}
         />
       </div>
     </RawIntlProvider>

@@ -1,33 +1,47 @@
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import { MicroFrontend } from '@fpsak-frontend/utils';
-import { Aksjonspunkt, ArbeidsgiverOpplysningerPerId } from '@k9-sak-web/types';
+import { Aksjonspunkt, AlleKodeverk, ArbeidsgiverOpplysningerPerId } from '@k9-sak-web/types';
 import React from 'react';
 
 const initializeUttak = (
   elementId,
   uttaksperioder,
+  utsattePerioder,
   behandlingUuid: string,
   arbeidsforhold: ArbeidsgiverOpplysningerPerId,
   aksjonspunktkoder: string[],
+  kodeverkUtenlandsoppholdÅrsak,
 ) => {
   (window as any).renderUttakApp(elementId, {
     uttaksperioder,
+    utsattePerioder,
     aktivBehandlingUuid: behandlingUuid,
     arbeidsforhold,
     aksjonspunktkoder,
+    erFagytelsetypeLivetsSluttfase: false,
+    kodeverkUtenlandsoppholdÅrsak,
   });
 };
 
 interface UttakProps {
   uuid: string;
   uttaksperioder: any;
+  utsattePerioder: string[];
   arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysningerPerId;
   aksjonspunkter: Aksjonspunkt[];
+  alleKodeverk: AlleKodeverk;
 }
 
 const uttakAppID = 'uttakApp';
-export default ({ uuid, uttaksperioder, arbeidsgiverOpplysningerPerId, aksjonspunkter }: UttakProps) => {
+export default ({
+  uuid,
+  uttaksperioder,
+  utsattePerioder,
+  arbeidsgiverOpplysningerPerId,
+  aksjonspunkter,
+  alleKodeverk,
+}: UttakProps) => {
   const relevanteAksjonspunkter = [aksjonspunktCodes.VENT_ANNEN_PSB_SAK];
   const funnedeRelevanteAksjonspunkter = aksjonspunkter.filter(aksjonspunkt =>
     relevanteAksjonspunkter.some(relevantAksjonspunkt => relevantAksjonspunkt === aksjonspunkt.definisjon.kode),
@@ -45,9 +59,11 @@ export default ({ uuid, uttaksperioder, arbeidsgiverOpplysningerPerId, aksjonspu
         initializeUttak(
           uttakAppID,
           uttaksperioder,
+          utsattePerioder,
           uuid,
           arbeidsgiverOpplysningerPerId,
           funnedeRelevanteAksjonspunktkoder,
+          alleKodeverk?.UtenlandsoppholdÅrsak,
         )
       }
     />

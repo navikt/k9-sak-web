@@ -38,8 +38,8 @@ const harPerioderMedAvsluttedeArbeidsforhold = allePerioder =>
   );
 
 const finnAvklaringsbehovForATFL = avklaringsbehov =>
-avklaringsbehov &&
-avklaringsbehov.find(
+  avklaringsbehov &&
+  avklaringsbehov.find(
     ap =>
       ap.definisjon.kode === FASTSETT_BEREGNINGSGRUNNLAG_ARBEIDSTAKER_FRILANS ||
       ap.definisjon.kode === FASTSETT_BEREGNINGSGRUNNLAG_TIDSBEGRENSET_ARBEIDSFORHOLD,
@@ -68,43 +68,37 @@ const createRelevantePaneler = (
     {relevanteStatuser.isArbeidstaker && (
       <>
         {!harPerioderMedAvsluttedeArbeidsforhold(allePerioder) && (
-          <>
-            <GrunnlagForAarsinntektPanelAT2
-              alleAndeler={alleAndelerIForstePeriode}
-              allePerioder={allePerioder}
-              readOnly={readOnly}
-              isKombinasjonsstatus={relevanteStatuser.isKombinasjonsstatus}
-              alleKodeverk={alleKodeverk}
-              arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
-              behandlingId={behandlingId}
-              behandlingVersjon={behandlingVersjon}
-            />
-          </>
+          <GrunnlagForAarsinntektPanelAT2
+            alleAndeler={alleAndelerIForstePeriode}
+            allePerioder={allePerioder}
+            readOnly={readOnly}
+            isKombinasjonsstatus={relevanteStatuser.isKombinasjonsstatus}
+            alleKodeverk={alleKodeverk}
+            arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
+            behandlingId={behandlingId}
+            behandlingVersjon={behandlingVersjon}
+          />
         )}
         {harPerioderMedAvsluttedeArbeidsforhold(allePerioder) && (
-          <>
-            <GrunnlagForAarsinntektPanelAT2
-              alleAndeler={alleAndelerIForstePeriode}
-              allePerioder={allePerioder}
-              readOnly={readOnly}
-              isKombinasjonsstatus={relevanteStatuser.isKombinasjonsstatus}
-              alleKodeverk={alleKodeverk}
-              arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
-              behandlingId={behandlingId}
-              behandlingVersjon={behandlingVersjon}
-            />
-          </>
+          <GrunnlagForAarsinntektPanelAT2
+            alleAndeler={alleAndelerIForstePeriode}
+            allePerioder={allePerioder}
+            readOnly={readOnly}
+            isKombinasjonsstatus={relevanteStatuser.isKombinasjonsstatus}
+            alleKodeverk={alleKodeverk}
+            arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
+            behandlingId={behandlingId}
+            behandlingVersjon={behandlingVersjon}
+          />
         )}
       </>
     )}
     {relevanteStatuser.isFrilanser && (
-      <>
-        <GrunnlagForAarsinntektPanelFL
-          alleAndeler={alleAndelerIForstePeriode}
-          readOnly={readOnly}
-          isKombinasjonsstatus={relevanteStatuser.isKombinasjonsstatus}
-        />
-      </>
+      <GrunnlagForAarsinntektPanelFL
+        alleAndeler={alleAndelerIForstePeriode}
+        readOnly={readOnly}
+        isKombinasjonsstatus={relevanteStatuser.isKombinasjonsstatus}
+      />
     )}
     {relevanteStatuser.harDagpengerEllerAAP && (
       <div>
@@ -112,14 +106,10 @@ const createRelevantePaneler = (
       </div>
     )}
     {relevanteStatuser.isMilitaer && (
-      <>
-        <MilitaerPanel alleAndeler={alleAndelerIForstePeriode} />
-      </>
+      <MilitaerPanel alleAndeler={alleAndelerIForstePeriode} />
     )}
     {relevanteStatuser.harAndreTilstotendeYtelser && (
-      <>
-        <YtelserFraInfotrygd bruttoPrAar={allePerioder[0].bruttoPrAar} />
-      </>
+      <YtelserFraInfotrygd bruttoPrAar={allePerioder[0].bruttoPrAar} />
     )}
 
     {relevanteStatuser.isSelvstendigNaeringsdrivende && (
@@ -132,13 +122,11 @@ const createRelevantePaneler = (
       sammenligningsGrunnlagInntekter &&
       skjeringstidspunktDato &&
       (relevanteStatuser.isFrilanser || relevanteStatuser.isArbeidstaker) && (
-        <>
-          <SammenlignsgrunnlagAOrdningen
-            sammenligningsGrunnlagInntekter={sammenligningsGrunnlagInntekter}
-            relevanteStatuser={relevanteStatuser}
-            skjeringstidspunktDato={skjeringstidspunktDato}
-          />
-        </>
+        <SammenlignsgrunnlagAOrdningen
+          sammenligningsGrunnlagInntekter={sammenligningsGrunnlagInntekter}
+          relevanteStatuser={relevanteStatuser}
+          skjeringstidspunktDato={skjeringstidspunktDato}
+        />
       )}
   </div>
 );

@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useCallback } from 'react';
 
-import { LoadingPanel } from '@fpsak-frontend/shared-components';
+import { LoadingPanel, usePrevious } from '@fpsak-frontend/shared-components';
 import { Rettigheter, ReduxFormStateCleaner, useSetBehandlingVedEndring } from '@k9-sak-web/behandling-felles';
 import {
   Behandling,
@@ -9,9 +9,12 @@ import {
   Fagsak,
   FagsakPerson,
   ArbeidsgiverOpplysningerWrapper,
+  Dokument,
 } from '@k9-sak-web/types';
 import { RestApiState, useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
 
+import useBehandlingEndret from '@k9-sak-web/sak-app/src/behandling/useBehandlingEndret';
+import { K9sakApiKeys, restApiHooks } from '@k9-sak-web/sak-app/src/data/k9sakApi';
 import {
   restApiOmsorgHooks,
   requestOmsorgApi,
@@ -27,9 +30,12 @@ const omsorgspengerData = [
   { key: OmsorgspengerBehandlingApiKeys.SOKNAD },
   { key: OmsorgspengerBehandlingApiKeys.BEREGNINGSRESULTAT_UTBETALING },
   { key: OmsorgspengerBehandlingApiKeys.BEREGNINGSGRUNNLAG },
+  { key: OmsorgspengerBehandlingApiKeys.BEREGNINGREFERANSER_TIL_VURDERING },
   { key: OmsorgspengerBehandlingApiKeys.SIMULERING_RESULTAT },
   { key: OmsorgspengerBehandlingApiKeys.FORBRUKTE_DAGER },
   { key: OmsorgspengerBehandlingApiKeys.OVERLAPPENDE_YTELSER },
+  { key: OmsorgspengerBehandlingApiKeys.HENT_SAKSBEHANDLERE },
+  { key: OmsorgspengerBehandlingApiKeys.FOSTERBARN },
 ];
 
 interface OwnProps {
@@ -68,12 +74,24 @@ const BehandlingOmsorgspengerIndex = ({
   setRequestPendingMessage,
   featureToggles,
 }: OwnProps) => {
+  const forrigeSaksnummer = usePrevious(fagsak.saksnummer);
   const [nyOgForrigeBehandling, setBehandlinger] = useState<{ current?: Behandling; previous?: Behandling }>({
     current: undefined,
     previous: undefined,
   });
   const behandling = nyOgForrigeBehandling.current;
   const forrigeBehandling = nyOgForrigeBehandling.previous;
+
+  const erBehandlingEndretFraUndefined = useBehandlingEndret(behandlingId, behandling?.versjon);
+  const { data: alleDokumenter = [] } = restApiHooks.useRestApi<Dokument[]>(
+    K9sakApiKeys.ALL_DOCUMENTS,
+    { saksnummer: fagsak.saksnummer },
+    {
+      updateTriggers: [behandlingId, behandling?.versjon],
+      suspendRequest: forrigeSaksnummer && erBehandlingEndretFraUndefined,
+      keepData: true,
+    },
+  );
 
   const setBehandling = useCallback(nyBehandling => {
     requestOmsorgApi.resetCache();
@@ -105,9 +123,7 @@ const BehandlingOmsorgspengerIndex = ({
   const { startRequest: settPaVent } = restApiOmsorgHooks.useRestApiRunner(
     OmsorgspengerBehandlingApiKeys.UPDATE_ON_HOLD,
   );
-  const { startRequest: opneBehandlingForEndringer } = restApiOmsorgHooks.useRestApiRunner(
-    OmsorgspengerBehandlingApiKeys.OPEN_BEHANDLING_FOR_CHANGES,
-  );
+
   const { startRequest: opprettVerge } = restApiOmsorgHooks.useRestApiRunner(
     OmsorgspengerBehandlingApiKeys.VERGE_OPPRETT,
   );
@@ -123,10 +139,6 @@ const BehandlingOmsorgspengerIndex = ({
       taBehandlingAvVent: params =>
         taBehandlingAvVent(params).then(behandlingResTaAvVent => setBehandling(behandlingResTaAvVent)),
       henleggBehandling: params => henleggBehandling(params),
-      opneBehandlingForEndringer: params =>
-        opneBehandlingForEndringer(params).then(behandlingResOpneForEndring =>
-          setBehandling(behandlingResOpneForEndring),
-        ),
       opprettVerge: params =>
         opprettVerge(params).then(behandlingResOpprettVerge => setBehandling(behandlingResOpprettVerge)),
       fjernVerge: params => fjernVerge(params).then(behandlingResFjernVerge => setBehandling(behandlingResFjernVerge)),
@@ -172,12 +184,12 @@ const BehandlingOmsorgspengerIndex = ({
         oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
         oppdaterBehandlingVersjon={oppdaterBehandlingVersjon}
         settPaVent={settPaVent}
-        hentBehandling={hentBehandling}
         opneSokeside={opneSokeside}
         hasFetchError={behandlingState === RestApiState.ERROR}
         setBehandling={setBehandling}
         arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysninger ? arbeidsgiverOpplysninger.arbeidsgivere : {}}
         featureToggles={featureToggles}
+        dokumenter={alleDokumenter}
       />
     </>
   );

@@ -1,9 +1,12 @@
 import Periode from './periodeTsType';
 import PerioderMedAarsak from './PerioderMedAarsak';
+
 export default interface BehandlingPerioderType {
-  perioderTilVurdering: Periode[];
-  perioderMedÅrsak: PerioderMedAarsak[];
-  dokumenterTilBehandling: DokumenterTilBehandling[];
+  perioderMedÅrsak: {
+    perioderTilVurdering: Periode[];
+    perioderMedÅrsak: PerioderMedAarsak[];
+    dokumenterTilBehandling: DokumenterTilBehandling[];
+  };
 }
 
 interface DokumenterTilBehandling {

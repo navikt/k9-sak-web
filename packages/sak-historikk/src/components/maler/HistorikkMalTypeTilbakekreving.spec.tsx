@@ -76,6 +76,7 @@ describe('HistorikkMalTypeTilbakekreving', () => {
       search: 'test',
       state: {},
       hash: 'test',
+      key: 'test',
     };
 
     const wrapper = shallow(

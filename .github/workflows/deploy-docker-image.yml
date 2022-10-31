@@ -7,40 +7,29 @@ on:
       - 'CODEOWNERS'
     branches:
       - master
+
 env:
-  IMAGE_BASE: docker.pkg.github.com/${{ github.repository }}/k9-sak-web
-  IMAGE_BASE_CR: ghcr.io/${{ github.repository }}
-  CLUSTER: dev-fss
-  NAMESPACE: k9saksbehandling
+  IMAGE_BASE: ghcr.io/${{ github.repository }}
+
 jobs:
   deploy-docker-image:
     name: Deploy Docker image
     runs-on: ubuntu-latest
     steps:
       - name: Hente kode
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Sette opp Node
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v3
         with:
-          node-version: '16'
+          node-version: '18'
           registry-url: https://npm.pkg.github.com/
           scope: '@navikt'
+          cache: 'yarn'
+          always-auth: true
 
-      - name: Get yarn cache directory path and set timestamp
-        id: yarn-cache-dir-path
-        run: |
-          echo "::set-output name=dir::$(yarn cache dir)"
-          echo "TIMESTAMP=$(expr $(date +%Y%m%d%H%M%S))" >> $GITHUB_ENV
-
-      - name: Cache node modules
-        uses: actions/cache@v2
-        id: yarn-cache # use this to check for `cache-hit` (`steps.yarn-cache.outputs.cache-hit != 'true'`)
-        with:
-          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
-          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-yarn-
+      - name: Set timestamp
+        run: echo "TIMESTAMP=$(expr $(date +%Y%m%d%H%M%S))" >> $GITHUB_ENV
 
       - name: Installere dependencies
         run: yarn install --ignore-optional --no-progress --frozen-lockfile
@@ -48,26 +37,27 @@ jobs:
           NODE_AUTH_TOKEN: ${{ secrets.READER_TOKEN }}
 
       - name: Tester, typescript-sjekk og linting
-        run: yarn test:all && yarn ts-check && yarn less:lint
+        run: yarn test:all --maxWorkers=2 && yarn ts-check && yarn less:lint
 
       - name: Bygge dist
         run: yarn build
 
-      - name: Sette Docker-navn og -tag
-        run: |
-          echo "TAG=$TIMESTAMP-$(echo $GITHUB_SHA | cut -c1-7)" >> $GITHUB_ENV
+      - name: Sette TAG variable for docker image & deploy issue-info
+        run: echo "TAG=$TIMESTAMP-$(echo $GITHUB_SHA | cut -c1-7)" >> $GITHUB_ENV
+
+      - uses: docker/login-action@v1
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Bygg og laste opp docker-image
         run: |
-          docker pull nginx:1.17.8-alpine
-          docker build --tag ${IMAGE_BASE}:${TAG} --tag ${IMAGE_BASE}:latest --tag ${IMAGE_BASE_CR}:${TAG} --tag ${IMAGE_BASE_CR}:latest --label "version=${TAG}"  .
-          echo "${{ secrets.GITHUB_TOKEN }}" | docker login --username "x-access-token" --password-stdin https://docker.pkg.github.com
-          echo "${{ secrets.GITHUB_TOKEN }}" | docker login --username "x-access-token" --password-stdin ghcr.io
-          docker push ${IMAGE_BASE_CR} --all-tags
+          docker build --tag ${IMAGE_BASE}:${TAG} --tag ${IMAGE_BASE}:latest --label "version=${TAG}" .
           docker push ${IMAGE_BASE} --all-tags
 
       - name: Lukk gamle issues
-        uses: actions/github-script@v5
+        uses: actions/github-script@v6
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
@@ -90,7 +80,7 @@ jobs:
       - name: Opprett deployment issue
         id: createdeployissue
         if: success()
-        uses: actions/github-script@v5
+        uses: actions/github-script@v6
         with:
           github-token: ${{secrets.GITHUB_TOKEN}}
           script: |
@@ -98,7 +88,7 @@ jobs:
               owner: context.issue.owner,
               repo: context.issue.repo,
               labels: ['deployment'],
-              body: 'Kommenter enten "/promote dev-fss k9saksbehandling" eller "/promote prod-fss k9saksbehandling"',
+              body: 'Kommenter enten "/promote dev-fss" eller "/promote prod-fss" for att deploye ${{ github.sha }}',
               title: 'Deploy av ${{ env.TAG }}'})
             .then(response => {
                     core.setOutput('number', response.data.number);
@@ -119,13 +109,11 @@ jobs:
 
       - name: Trigg deploy til dev-fss
         if: success()
-        uses: actions/github-script@v5
+        uses: actions/github-script@v6
         with:
           github-token: ${{secrets.GA_P_TOKEN}}
           script: |
             const issue = { owner: context.issue.owner,
                             repo: context.issue.repo,
                             issue_number: ${{ steps.createdeployissue.outputs.number }} }
-            github.rest.issues.createComment({...issue,
-                                    title: 'Deploy av ${{ env.TAG }}',
-                                    body: '/promote ${{ env.CLUSTER }} ${{ env.NAMESPACE }}'})
+            github.rest.issues.createComment({...issue, body: '/promote dev-fss'})

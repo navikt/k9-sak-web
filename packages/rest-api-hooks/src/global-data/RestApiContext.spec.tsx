@@ -1,3 +1,4 @@
+/* eslint-disable class-methods-use-this */
 import React, { useEffect } from 'react';
 import { mount } from 'enzyme';
 import sinon from 'sinon';
@@ -22,17 +23,17 @@ class RequestApiTestMock extends AbstractRequestApi {
 
   public hasPath = () => true;
 
-  public injectPaths = () => {};
+  public injectPaths = () => { };
 
-  public resetCache = () => {};
+  public resetCache = () => { };
 
   public isMock = () => false;
 
-  public setAddErrorMessageHandler = () => {};
+  public setAddErrorMessageHandler = () => { };
 
-  public setRequestPendingHandler = () => {};
+  public setRequestPendingHandler = () => { };
 
-  public setLinks = () => {};
+  public setLinks = () => { };
 
   public mock = () => {
     throw new Error('Not Implemented');
@@ -69,15 +70,15 @@ describe('<RestApiContext>', () => {
   it('skal utføre restkall og så hente data inn i komponent', async () => {
     const setValue = sinon.spy();
 
-    await act(async () =>
+    await act(async () => {
       mount(
         <RestApiProvider>
           <RestApiErrorProvider>
             <TestGlobalData setValue={setValue} />
           </RestApiErrorProvider>
         </RestApiProvider>,
-      ),
-    );
+      );
+    });
 
     // Må sjekke resultatet via funksjon fordi per i dag blir ikke output fra TestGlobalData korrekt oppdatert
     expect(setValue.calledTwice).toBe(true);

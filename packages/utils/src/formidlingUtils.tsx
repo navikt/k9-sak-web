@@ -4,8 +4,19 @@ import avsenderApplikasjon from '@fpsak-frontend/kodeverk/src/avsenderApplikasjo
 import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import ForhåndsvisRequest from '@k9-sak-web/types/src/formidlingTsType';
 import { dokumentdatatype } from '@k9-sak-web/konstanter';
+import { DokumentDataType } from '@k9-sak-web/types/src/dokumentdata';
 
-interface TilgjengeligeVedtaksbrev {
+export interface VedtaksbrevMal {
+  dokumentMalType: string;
+  redigerbarMalType: string;
+  vedtaksbrev: string;
+}
+
+export interface TilgjengeligeVedtaksbrevMedMaler {
+  maler?: VedtaksbrevMal[];
+}
+
+export interface TilgjengeligeVedtaksbrev {
   begrunnelse: string;
   alternativeMottakere: Array<{
     id: string;
@@ -50,8 +61,12 @@ export function kanHaAutomatiskVedtaksbrev(tilgjengeligeVedtaksbrev: Tilgjengeli
   return vedtaksbrevmaler(tilgjengeligeVedtaksbrev).some(vb => vb === vedtaksbrevtype.AUTOMATISK);
 }
 
-export function kanHaFritekstbrev(tilgjengeligeVedtaksbrev: TilgjengeligeVedtaksbrev): boolean {
+export function kanHaFritekstbrevV1(tilgjengeligeVedtaksbrev: TilgjengeligeVedtaksbrev): boolean {
   return vedtaksbrevmaler(tilgjengeligeVedtaksbrev).some(vb => vb === vedtaksbrevtype.FRITEKST);
+}
+
+export function kanHaManueltFritekstbrev(tilgjengeligeVedtaksbrev: TilgjengeligeVedtaksbrev): boolean {
+  return vedtaksbrevmaler(tilgjengeligeVedtaksbrev).some(vb => vb === vedtaksbrevtype.MANUELL);
 }
 
 export function kanHindreUtsending(tilgjengeligeVedtaksbrev: TilgjengeligeVedtaksbrev): boolean {
@@ -65,7 +80,14 @@ export function kanKunVelge(tilgjengeligeVedtaksbrev: TilgjengeligeVedtaksbrev, 
 
 export function harMellomlagretFritekstbrev(dokumentdata, vedtakVarsel): boolean {
   return (
-    (dokumentdata?.[dokumentdatatype.VEDTAKSBREV_TYPE] ?? vedtakVarsel?.vedtaksbrev.kode) === vedtaksbrevtype.FRITEKST
+    (dokumentdata?.[dokumentdatatype.VEDTAKSBREV_TYPE] ?? vedtakVarsel?.vedtaksbrev.kode) ===
+      vedtaksbrevtype.FRITEKST || !!dokumentdata?.[dokumentdatatype.FRITEKSTBREV]
+  );
+}
+
+export function harSattDokumentdataType(dokumentdata: DokumentDataType, vedtakVarsel, vedtaksbreType: string): boolean {
+  return (
+    (dokumentdata?.[dokumentdatatype.VEDTAKSBREV_TYPE] ?? vedtakVarsel?.vedtaksbrev.kode) === vedtaksbreType || false
   );
 }
 
@@ -120,5 +142,7 @@ export const lagForhåndsvisRequest = (
   avsenderApplikasjon: bestemAvsenderApp(behandling.type.kode),
   ...data,
 });
+
+// export const lagHentFritekstbrevHtmlRequest = (): HentFritekstbrevHtmlRequest => ()
 
 export default lagForhåndsvisRequest;

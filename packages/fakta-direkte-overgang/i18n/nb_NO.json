@@ -1,5 +1,6 @@
 {
     "HelpText.Aksjonspunkt": "Kontroller perioder ved direkte overgang fra infotrygd. Dette aksjonspunktet krever spesielle rettigheter.",
+    "HelpText.Aksjonspunkt.BehandletAksjonspunkt": "Behandlet aksjonspunkt: ",
     "ManglerSøknadForm.Begrunnelse": "Begrunnelse",
     "ManglerSøknadForm.ManglerKomplettSøknad": "Søker har perioder for 2022 i infotrygd. Disse periodene må tas inn før saken kan behandles videre.",
     "ManglerSøknadForm.ManglerKomplettSøknadAnnenPart": "Søknadsperioden overlapper med periode for berørt sak i infotrygd. Disse periodene må tas inn før saken kan behandles videre.",

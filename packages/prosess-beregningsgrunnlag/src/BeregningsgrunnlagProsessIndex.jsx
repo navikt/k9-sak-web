@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 import beregningsgrunnlagBehandlingPropType from './propTypes/beregningsgrunnlagBehandlingPropType';
@@ -8,6 +8,7 @@ import BeregningFP2 from './components/BeregningFP';
 import messages from '../i18n/nb_NO.json';
 import beregningsgrunnlagPropType from './propTypes/beregningsgrunnlagPropType';
 import { BeregningContext } from './beregningContext';
+import beregningKoblingPropType from './propTypes/beregningKoblingPropType';
 
 const cache = createIntlCache();
 
@@ -22,7 +23,6 @@ const intl = createIntl(
 const BeregningsgrunnlagProsessIndex = ({
   behandling,
   beregningsgrunnlag,
-  aksjonspunkter,
   submitCallback,
   isReadOnly,
   readOnlySubmitButton,
@@ -30,27 +30,31 @@ const BeregningsgrunnlagProsessIndex = ({
   alleKodeverk,
   arbeidsgiverOpplysningerPerId,
   fagsak,
-  beregningErBehandlet
-}) => (
-  <RawIntlProvider value={intl}>
-    <BeregningContext.Provider value={{ fagsakYtelseType: fagsak?.fagsakYtelseType }}>
-      <BeregningFP2
-        behandling={behandling}
-        beregningsgrunnlag={beregningsgrunnlag}
-        aksjonspunkter={aksjonspunkter}
-        submitCallback={submitCallback}
-        readOnly={isReadOnly}
-        readOnlySubmitButton={readOnlySubmitButton}
-        vilkar={vilkar}
-        alleKodeverk={alleKodeverk}
-        arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
-        behandlingId={behandling.id}
-        behandlingVersjon={behandling.versjon}
-        beregningErBehandlet={beregningErBehandlet}
-      />
-    </BeregningContext.Provider>
-  </RawIntlProvider>
-);
+  beregningErBehandlet,
+  beregningreferanserTilVurdering,
+}) => {
+  const fagsakYtelseType = useMemo(() => ({ fagsakYtelseType: fagsak?.fagsakYtelseType }), [fagsak]);
+  return (
+    <RawIntlProvider value={intl}>
+      <BeregningContext.Provider value={fagsakYtelseType}>
+        <BeregningFP2
+          behandling={behandling}
+          beregningsgrunnlag={beregningsgrunnlag}
+          submitCallback={submitCallback}
+          readOnly={isReadOnly}
+          readOnlySubmitButton={readOnlySubmitButton}
+          vilkar={vilkar}
+          alleKodeverk={alleKodeverk}
+          arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
+          behandlingId={behandling.id}
+          behandlingVersjon={behandling.versjon}
+          beregningErBehandlet={beregningErBehandlet}
+          beregningreferanserTilVurdering={beregningreferanserTilVurdering}
+        />
+      </BeregningContext.Provider>
+    </RawIntlProvider>
+  );
+};
 
 BeregningsgrunnlagProsessIndex.propTypes = {
   behandling: beregningsgrunnlagBehandlingPropType.isRequired,
@@ -64,6 +68,7 @@ BeregningsgrunnlagProsessIndex.propTypes = {
   arbeidsgiverOpplysningerPerId: PropTypes.shape().isRequired,
   fagsak: PropTypes.shape().isRequired,
   beregningErBehandlet: PropTypes.bool,
+  beregningreferanserTilVurdering: PropTypes.arrayOf(PropTypes.shape(beregningKoblingPropType)).isRequired,
 };
 
 BeregningsgrunnlagProsessIndex.defaultProps = {

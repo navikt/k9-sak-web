@@ -1,18 +1,17 @@
 import { useCallback, useEffect, useMemo } from 'react';
-import { IntlShape } from 'react-intl';
 
-import { Behandling, Aksjonspunkt, Fagsak } from '@k9-sak-web/types';
+import { Aksjonspunkt, Behandling, Fagsak, FeatureToggles } from '@k9-sak-web/types';
 
+import FaktaPanelMenyRad from '../../types/faktaPanelMenyRadTsType';
+import Rettigheter from '../../types/rettigheterTsType';
+import FaktaPanelDef from './FaktaPanelDef';
+import FaktaPanelUtledet from './FaktaPanelUtledet';
 import {
-  utledFaktaPaneler,
   finnValgtPanel,
   formaterPanelerForSidemeny,
   getBekreftAksjonspunktCallback,
+  utledFaktaPaneler,
 } from './faktaUtils';
-import Rettigheter from '../../types/rettigheterTsType';
-import FaktaPanelMenyRad from '../../types/faktaPanelMenyRadTsType';
-import FaktaPanelDef from './FaktaPanelDef';
-import FaktaPanelUtledet from './FaktaPanelUtledet';
 
 const useFaktaPaneler = (
   faktaPanelDefinisjoner: FaktaPanelDef[],
@@ -21,23 +20,23 @@ const useFaktaPaneler = (
   rettigheter: Rettigheter,
   aksjonspunkter: Aksjonspunkt[],
   valgtFaktaPanelKode: string,
-  intl: IntlShape,
+  featureToggles?: FeatureToggles,
 ): [FaktaPanelUtledet[], FaktaPanelUtledet, FaktaPanelMenyRad[]] => {
   const faktaPaneler = useMemo(
-    () => utledFaktaPaneler(faktaPanelDefinisjoner, panelData, behandling, rettigheter, aksjonspunkter),
+    () => utledFaktaPaneler(faktaPanelDefinisjoner, panelData, behandling, rettigheter, aksjonspunkter, featureToggles),
     [behandling.versjon],
   );
 
-  const valgtPanel = useMemo(() => finnValgtPanel(faktaPaneler, valgtFaktaPanelKode), [
-    behandling.versjon,
-    valgtFaktaPanelKode,
-  ]);
+  const valgtPanel = useMemo(
+    () => finnValgtPanel(faktaPaneler, valgtFaktaPanelKode),
+    [behandling.versjon, valgtFaktaPanelKode],
+  );
 
   const urlCode = valgtPanel ? valgtPanel.getUrlKode() : undefined;
-  const sidemenyPaneler = useMemo(() => formaterPanelerForSidemeny(intl, faktaPaneler, urlCode), [
-    behandling.versjon,
-    urlCode,
-  ]);
+  const sidemenyPaneler = useMemo(
+    () => formaterPanelerForSidemeny(faktaPaneler, urlCode),
+    [behandling.versjon, urlCode],
+  );
 
   return [faktaPaneler, valgtPanel, sidemenyPaneler];
 };

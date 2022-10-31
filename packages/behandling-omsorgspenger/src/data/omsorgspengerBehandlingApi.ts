@@ -31,7 +31,6 @@ export enum OmsorgspengerBehandlingApiKeys {
   HENLEGG_BEHANDLING = 'HENLEGG_BEHANDLING',
   RESUME_BEHANDLING = 'RESUME_BEHANDLING',
   BEHANDLING_ON_HOLD = 'BEHANDLING_ON_HOLD',
-  OPEN_BEHANDLING_FOR_CHANGES = 'OPEN_BEHANDLING_FOR_CHANGES',
   VERGE_OPPRETT = 'VERGE_OPPRETT',
   VERGE_FJERN = 'VERGE_FJERN',
   FORBRUKTE_DAGER = 'FORBRUKTE_DAGER',
@@ -40,8 +39,12 @@ export enum OmsorgspengerBehandlingApiKeys {
   TILGJENGELIGE_VEDTAKSBREV = 'TILGJENGELIGE_VEDTAKSBREV',
   DOKUMENTDATA_LAGRE = 'DOKUMENTDATA_LAGRE',
   DOKUMENTDATA_HENTE = 'DOKUMENTDATA_HENTE',
+  HENT_FRITEKSTBREV_HTML = 'HENT_FRITEKSTBREV_HTML',
   ARBEIDSFORHOLD = 'ARBEIDSFORHOLD',
   OVERLAPPENDE_YTELSER = 'OVERLAPPENDE_YTELSER',
+  HENT_SAKSBEHANDLERE = 'HENT_SAKSBEHANDLERE',
+  FOSTERBARN = 'FOSTERBARN',
+  BEREGNINGREFERANSER_TIL_VURDERING = 'BEREGNINGREFERANSER_TIL_VURDERING',
 }
 
 const endpoints = new RestApiConfigBuilder()
@@ -70,6 +73,9 @@ const endpoints = new RestApiConfigBuilder()
   .withRel('inntekt', OmsorgspengerBehandlingApiKeys.INNTEKT_OG_YTELSER)
   .withRel('tilgjengelige-vedtaksbrev', OmsorgspengerBehandlingApiKeys.TILGJENGELIGE_VEDTAKSBREV)
   .withRel('overlappende-ytelser', OmsorgspengerBehandlingApiKeys.OVERLAPPENDE_YTELSER)
+  .withRel('saksbehandler-info', OmsorgspengerBehandlingApiKeys.HENT_SAKSBEHANDLERE)
+  .withRel('fosterbarn', OmsorgspengerBehandlingApiKeys.FOSTERBARN)
+  .withRel('beregning-koblinger-til-vurdering', OmsorgspengerBehandlingApiKeys.BEREGNINGREFERANSER_TIL_VURDERING)
 
   // operasjoner
   .withRel('dokumentdata-lagre', OmsorgspengerBehandlingApiKeys.DOKUMENTDATA_LAGRE)
@@ -90,7 +96,6 @@ const endpoints = new RestApiConfigBuilder()
   .withPost('/k9/sak/api/behandlinger/henlegg', OmsorgspengerBehandlingApiKeys.HENLEGG_BEHANDLING)
   .withAsyncPost('/k9/sak/api/behandlinger/gjenoppta', OmsorgspengerBehandlingApiKeys.RESUME_BEHANDLING)
   .withPost('/k9/sak/api/behandlinger/sett-pa-vent', OmsorgspengerBehandlingApiKeys.BEHANDLING_ON_HOLD)
-  .withPost('/k9/sak/api/behandlinger/opne-for-endringer', OmsorgspengerBehandlingApiKeys.OPEN_BEHANDLING_FOR_CHANGES)
   .withPost('/k9/sak/api/verge/opprett', OmsorgspengerBehandlingApiKeys.VERGE_OPPRETT)
   .withPost('/k9/sak/api/verge/fjern', OmsorgspengerBehandlingApiKeys.VERGE_FJERN)
 
@@ -105,6 +110,7 @@ const endpoints = new RestApiConfigBuilder()
   .withPost('/k9/formidling/api/brev/forhaandsvis', OmsorgspengerBehandlingApiKeys.PREVIEW_MESSAGE, {
     isResponseBlob: true,
   })
+  .withPost('/k9/formidling/api/brev/html', OmsorgspengerBehandlingApiKeys.HENT_FRITEKSTBREV_HTML)
 
   .build();
 

@@ -35,6 +35,7 @@ const utvidetRettTestData = {
       erPrivatPerson: false,
       identifikator: 'test',
       navn: 'test',
+      arbeidsforholdreferanser: []
     },
   },
   behandling: {

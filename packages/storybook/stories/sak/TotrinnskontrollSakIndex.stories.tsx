@@ -66,6 +66,7 @@ const dataReadOnly = [
 ];
 
 const location = {
+  key: '1',
   pathname: '',
   search: '',
   state: {},

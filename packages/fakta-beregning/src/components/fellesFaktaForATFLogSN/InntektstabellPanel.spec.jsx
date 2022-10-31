@@ -56,7 +56,7 @@ describe('<InntektstabellPanel>', () => {
         hjelpeTekstId="hjelpetekst"
         tabell={<span> tabell </span>}
         kanOverstyre
-        avklaringsbehov={[{ definisjon: { kode: OVERSTYRING_AV_BEREGNINGSGRUNNLAG }, status: { kode: 'OPPR' } }]}
+        avklaringsbehov={[{ definisjon: { kode: OVERSTYRING_AV_BEREGNINGSGRUNNLAG, kodeverk: '' }, status: { kode: 'OPPR' } }]}
         readOnly={false}
         erOverstyrt={false}
       >

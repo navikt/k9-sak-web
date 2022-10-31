@@ -24,6 +24,7 @@ const aksjonspunktCodes = {
   MANUELL_VURDERING_AV_ANKE_MERKNADER: '5094',
   FASTSETT_BEREGNINGSGRUNNLAG_ARBEIDSTAKER_FRILANS: '5038',
   VURDER_VARIG_ENDRET_ELLER_NYOPPSTARTET_NAERING_SELVSTENDIG_NAERINGSDRIVENDE: '5039',
+  VURDER_VARIG_ENDRET_ARBEIDSSITUASJON: '5054',
   VURDERE_OVERLAPPENDE_YTELSER_FØR_VEDTAK: '5040',
   FASTSETT_BRUTTO_BEREGNINGSGRUNNLAG_SELVSTENDIG_NAERINGSDRIVENDE: '5042',
   // TODO Fjern dette
@@ -51,7 +52,7 @@ const aksjonspunktCodes = {
   VURDER_FEILUTBETALING: '5084',
   VURDER_TILBAKETREKK: '5090',
   SOKERS_OPPLYSNINGSPLIKT_OVST: '6002',
-  OVERSTYR_FODSELSVILKAR: '6003',
+  OVERSTYR_OMSORGEN_FOR: '6003',
   OVERSTYR_ADOPSJONSVILKAR: '6004',
   OVERSTYR_MEDLEMSKAPSVILKAR: '6005',
   OVERSTYR_SOKNADSFRISTVILKAR: '6006',
@@ -80,6 +81,8 @@ const aksjonspunktCodes = {
   OVERSTYR_BEREGNING_INPUT: '9005',
   MANGLER_KOMPLETT_SØKNAD: '9007',
   MANGLER_KOMPLETT_SØKNAD_ANNEN_PART: '9008',
+  ÅRSKVANTUM_FOSTERBARN: '9014',
+  ALDERSVILKÅR: '9015',
   OMSORGEN_FOR_PLEIEPENGER: '9020',
   NATTEVÅK: '9200',
   BEREDSKAP: '9201',
@@ -111,6 +114,7 @@ const beregningsgrunnlagFritekstfeltIVedtakAksjonspunkt = [
 
 const beregningAksjonspunkter = [
   aksjonspunktCodes.VURDER_VARIG_ENDRET_ELLER_NYOPPSTARTET_NAERING_SELVSTENDIG_NAERINGSDRIVENDE,
+  aksjonspunktCodes.VURDER_VARIG_ENDRET_ARBEIDSSITUASJON,
   aksjonspunktCodes.FASTSETT_BEREGNINGSGRUNNLAG_ARBEIDSTAKER_FRILANS,
   aksjonspunktCodes.FASTSETT_BRUTTO_BEREGNINGSGRUNNLAG_SELVSTENDIG_NAERINGSDRIVENDE,
   aksjonspunktCodes.FASTSETT_BEREGNINGSGRUNNLAG_TIDSBEGRENSET_ARBEIDSFORHOLD,
@@ -119,8 +123,8 @@ const beregningAksjonspunkter = [
 
 const aksjonspunktIsOfType =
   (validAksjonspunktCodes: string[]) =>
-    (aksjonspunktCode: string): boolean =>
-      validAksjonspunktCodes.includes(aksjonspunktCode);
+  (aksjonspunktCode: string): boolean =>
+    validAksjonspunktCodes.includes(aksjonspunktCode);
 
 export const hasAksjonspunkt = (aksjonspunktCode: string, aksjonspunkter: Aksjonspunkt[]): boolean =>
   aksjonspunkter.some(ap => ap.definisjon.kode === aksjonspunktCode);

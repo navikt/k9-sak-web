@@ -6,6 +6,8 @@
   "FaktaBarn.UtvidetRettMidlertidigAlene": "Disse barna er søkerens folkeregistrerte barn",
   "FaktaBarn.BorMedSøker": "Barnet bor med søker",
   "FaktaBarn.BorIkkeMedSøker": "Barnet bor <b>ikke</b> med søker",
+  "FaktaBarn.DeltBostedMedPerioder": "Barnet har delt bosted med søker i følgende perioder:",
+  "FaktaBarn.SammeBostedMedPerioder": "Barnet har samme bosted med søker i følgende perioder:",
   "FaktaBarn.Død": "Barnet døde den {dødsdato}",
   "FaktaBarn.UtenlandskBarn": "Barnet bor i utlandet",
   "FaktaBarn.Fosterbarn": "Barnet er fosterbarn",

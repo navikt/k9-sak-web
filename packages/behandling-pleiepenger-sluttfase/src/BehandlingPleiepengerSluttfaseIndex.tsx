@@ -15,7 +15,7 @@ import { RestApiState, useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-ho
 
 import { K9sakApiKeys, restApiHooks } from '@k9-sak-web/sak-app/src/data/k9sakApi';
 import useBehandlingEndret from '@k9-sak-web/sak-app/src/behandling/useBehandlingEndret';
-import {createIntl, createIntlCache, RawIntlProvider} from "react-intl";
+import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 import messages from '../i18n/nb_NO.json';
 
 import {
@@ -33,6 +33,7 @@ const pleiepengerData = [
   { key: PleiepengerSluttfaseBehandlingApiKeys.SOKNAD },
   { key: PleiepengerSluttfaseBehandlingApiKeys.BEREGNINGSRESULTAT_UTBETALING },
   { key: PleiepengerSluttfaseBehandlingApiKeys.BEREGNINGSGRUNNLAG },
+  { key: PleiepengerSluttfaseBehandlingApiKeys.BEREGNINGREFERANSER_TIL_VURDERING },
   { key: PleiepengerSluttfaseBehandlingApiKeys.SIMULERING_RESULTAT },
   { key: PleiepengerSluttfaseBehandlingApiKeys.UTTAK },
   { key: PleiepengerSluttfaseBehandlingApiKeys.OVERLAPPENDE_YTELSER },
@@ -115,7 +116,9 @@ const BehandlingPleiepengerSluttfaseIndex = ({
     startRequest: hentBehandling,
     data: behandlingRes,
     state: behandlingState,
-  } = restApiPleiepengerSluttfaseHooks.useRestApiRunner<Behandling>(PleiepengerSluttfaseBehandlingApiKeys.BEHANDLING_PP);
+  } = restApiPleiepengerSluttfaseHooks.useRestApiRunner<Behandling>(
+    PleiepengerSluttfaseBehandlingApiKeys.BEHANDLING_PP,
+  );
   useSetBehandlingVedEndring(behandlingRes, setBehandling);
 
   const { addErrorMessage } = useRestApiErrorDispatcher();
@@ -135,9 +138,6 @@ const BehandlingPleiepengerSluttfaseIndex = ({
   const { startRequest: settPaVent } = restApiPleiepengerSluttfaseHooks.useRestApiRunner(
     PleiepengerSluttfaseBehandlingApiKeys.UPDATE_ON_HOLD,
   );
-  const { startRequest: opneBehandlingForEndringer } = restApiPleiepengerSluttfaseHooks.useRestApiRunner(
-    PleiepengerSluttfaseBehandlingApiKeys.OPEN_BEHANDLING_FOR_CHANGES,
-  );
   const { startRequest: opprettVerge } = restApiPleiepengerSluttfaseHooks.useRestApiRunner(
     PleiepengerSluttfaseBehandlingApiKeys.VERGE_OPPRETT,
   );
@@ -155,10 +155,6 @@ const BehandlingPleiepengerSluttfaseIndex = ({
       taBehandlingAvVent: params =>
         taBehandlingAvVent(params).then(behandlingResTaAvVent => setBehandling(behandlingResTaAvVent)),
       henleggBehandling: params => henleggBehandling(params),
-      opneBehandlingForEndringer: params =>
-        opneBehandlingForEndringer(params).then(behandlingResOpneForEndring =>
-          setBehandling(behandlingResOpneForEndring),
-        ),
       opprettVerge: params =>
         opprettVerge(params).then(behandlingResOpprettVerge => setBehandling(behandlingResOpprettVerge)),
       fjernVerge: params => fjernVerge(params).then(behandlingResFjernVerge => setBehandling(behandlingResFjernVerge)),
@@ -205,7 +201,6 @@ const BehandlingPleiepengerSluttfaseIndex = ({
           oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
           oppdaterBehandlingVersjon={oppdaterBehandlingVersjon}
           settPaVent={settPaVent}
-          hentBehandling={hentBehandling}
           opneSokeside={opneSokeside}
           hasFetchError={behandlingState === RestApiState.ERROR}
           setBehandling={setBehandling}

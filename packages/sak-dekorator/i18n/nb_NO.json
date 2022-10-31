@@ -11,6 +11,7 @@
   "HeaderWithErrorPanel.AInntekt": "A-inntekt",
   "HeaderWithErrorPanel.AAReg": "Aa-registeret",
   "HeaderWithErrorPanel.Systemrutine": "Systemrutine",
+  "HeaderWithErrorPanel.Punsj": "Punsj",
 
   "Rest.ErrorMessage.General": "Noe feilet. Feilen kan være forbigående. Prøv å behandle saken litt senere. Om feilen oppstår igjen, meld den inn via porten.",
   "Rest.ErrorMessage.DownTime": "Saksbehandlingsløsningen venter på et annet system som har nedetid nå. Du trenger ikke melde inn en feil, men prøv igjen {date} kl. {time}.\n{message}",

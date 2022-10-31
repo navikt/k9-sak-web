@@ -402,26 +402,5 @@ describe('<Beregningsgrunnlag>', () => {
     const values = Beregningsgrunnlag.buildInitialValues(aksjonspunkter);
     expect(values.ATFLVurdering).to.equal('');
   });
-  it('Skal teste at transformValues gir forventet resultat', () => {
-    const values = {
-      ATFLVurdering: 'aaa',
-      inntektFrilanser: 100,
-    };
-    const transformedValues = Beregningsgrunnlag.transformValues(values, []);
-    expect(transformedValues.kode).to.equal('5047');
-    expect(transformedValues.begrunnelse).to.equal('aaa');
-    expect(transformedValues.fastsatteTidsbegrensedePerioder).to.lengthOf(0);
-    expect(transformedValues.frilansInntekt).to.equal(100);
-  });
-  it('Skal teste at transformValues gir forventet resultat med inntekt undefined', () => {
-    const values = {
-      ATFLVurdering: 'aaa',
-      inntektFrilanser: null,
-    };
-    const transformedValues = Beregningsgrunnlag.transformValues(values, []);
-    expect(transformedValues.kode).to.equal('5047');
-    expect(transformedValues.begrunnelse).to.equal('aaa');
-    expect(transformedValues.fastsatteTidsbegrensedePerioder).to.lengthOf(0);
-    expect(transformedValues.frilansInntekt).to.equal(null);
-  });
+
 });

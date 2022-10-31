@@ -38,6 +38,9 @@
 
   "VisittkortPanel.Ukjent": "Ukjent navn, mangler norsk id-nr",
   "VisittkortPanel.FraInfotrygd": "Fra Infotrygd",
+  "VisittkortPanel.PB": "PB-sak",
+  "VisittkortPanel.Utenlandssak": "Utenlandssak",
+  "VisittkortPanel.Hastesak": "Hastesak",
 
   "Malform.Bokmal": "Bokmål",
   "Malform.Nynorsk": "Nynorsk",

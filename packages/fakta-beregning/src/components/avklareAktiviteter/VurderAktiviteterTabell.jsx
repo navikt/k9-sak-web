@@ -26,10 +26,7 @@ export const skalVurdereAktivitet = (aktivitet, skalOverstyre, harAvklaringsbeho
   if (!skalOverstyre && !harAvklaringsbehov) {
     return false;
   }
-  if (aktivitet.arbeidsforholdType && aktivitet.arbeidsforholdType.kode === opptjeningAktivitetTyper.AAP) {
-    return false;
-  }
-  return true;
+  return !(aktivitet.arbeidsforholdType && aktivitet.arbeidsforholdType.kode === opptjeningAktivitetTyper.AAP);
 };
 
 const lagTableRow = (

@@ -1,19 +1,22 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+import { MemoryRouter } from 'react-router-dom';
+import { reduxForm, reducer as formReducer } from 'redux-form';
+import { Provider } from 'react-redux';
+import { combineReducers, createStore } from 'redux';
 
 import { Fagsak } from '@k9-sak-web/types';
-import FagsakSokSakIndex from '@fpsak-frontend/sak-sok';
 
 import { requestApi, K9sakApiKeys } from '../data/k9sakApi';
 import FagsakSearchIndex from './FagsakSearchIndex';
 
-const mockHistoryPush = jest.fn();
+const mockNavigate = jest.fn();
+const MockForm = reduxForm({ form: 'mock' })(({ children }) => <div>{children}</div>);
 
 jest.mock('react-router-dom', () => ({
   ...(jest.requireActual('react-router-dom') as Record<string, unknown>),
-  useHistory: () => ({
-    push: mockHistoryPush,
-  }),
+  useNavigate: () => mockNavigate,
 }));
 
 describe('<FagsakSearchIndex>', () => {
@@ -38,33 +41,62 @@ describe('<FagsakSearchIndex>', () => {
   };
   const fagsaker = [fagsak, fagsak2];
 
-  it('skal søke opp fagsaker', () => {
+  it('skal søke opp fagsaker', async () => {
     requestApi.mock(K9sakApiKeys.KODEVERK, {});
     requestApi.mock(K9sakApiKeys.SEARCH_FAGSAK, fagsaker);
 
-    const wrapper = shallow(<FagsakSearchIndex />);
+    render(
+      <Provider store={createStore(combineReducers({ form: formReducer }))}>
+        <MockForm>
+          <MemoryRouter>
+            <FagsakSearchIndex />
+          </MemoryRouter>
+        </MockForm>
+      </Provider>
+    );
 
-    const fagsakSearchIndex = wrapper.find(FagsakSokSakIndex);
-    expect(fagsakSearchIndex).toHaveLength(1);
+    expect(await screen.getByTestId('FagsakSearch')).toBeInTheDocument();
+    expect(screen.queryByRole('table')).not.toBeInTheDocument();
 
-    expect(fagsakSearchIndex.prop('fagsaker')).toEqual([]);
+    userEvent.type(screen.getByRole('textbox', { name: 'Saksnummer eller fødselsnummer/D-nummer' }), '12345');
+    userEvent.click(await screen.getByRole('button', { name: 'Søk' }));
 
-    const sok = fagsakSearchIndex.prop('searchFagsakCallback');
-    sok();
-
-    expect(wrapper.find(FagsakSokSakIndex).prop('fagsaker')).toEqual(fagsaker);
+    const reqData = requestApi.getRequestMockData(K9sakApiKeys.SEARCH_FAGSAK);
+    expect(reqData[0].params).toEqual({ searchString: '12345' });
+    expect(screen.queryAllByRole('table').length).toBe(1);
+    expect(screen.queryAllByRole('cell', { name: '12345' }).length).toBe(1);
+    expect(screen.queryAllByRole('cell', { name: '23456' }).length).toBe(1);
   });
 
-  it('skal gå til valgt fagsak', () => {
+
+  it('skal gå til valgt fagsak', async () => {
     requestApi.mock(K9sakApiKeys.KODEVERK, {});
     requestApi.mock(K9sakApiKeys.SEARCH_FAGSAK, fagsaker);
 
-    const wrapper = shallow(<FagsakSearchIndex />);
+    render(
+      <Provider store={createStore(combineReducers({ form: formReducer }))}>
+        <MockForm>
+          <MemoryRouter>
+            <FagsakSearchIndex />
+          </MemoryRouter>
+        </MockForm>
+      </Provider>
+    );
 
-    const fagsakSearchIndex = wrapper.find(FagsakSokSakIndex);
-    const velgFagsak = fagsakSearchIndex.prop('selectFagsakCallback') as (event: any, saksnummer: string) => undefined;
-    velgFagsak('', fagsak.saksnummer);
+    expect(await screen.getByTestId('FagsakSearch')).toBeInTheDocument();
+    expect(screen.queryByRole('table')).not.toBeInTheDocument();
 
-    expect(mockHistoryPush).toHaveBeenCalledWith(`/fagsak/${fagsak.saksnummer}/`);
+    userEvent.type(screen.getByRole('textbox', { name: 'Saksnummer eller fødselsnummer/D-nummer' }), '12345');
+    userEvent.click(await screen.getByRole('button', { name: 'Søk' }));
+
+    const reqData = requestApi.getRequestMockData(K9sakApiKeys.SEARCH_FAGSAK);
+    expect(reqData[0].params).toEqual({ searchString: '12345' });
+    expect(screen.queryAllByRole('table').length).toBe(1);
+    expect(screen.queryAllByRole('cell', { name: '12345' }).length).toBe(1);
+
+    userEvent.click(screen.getByRole('row', { name: '12345' }));
+
+    expect(mockNavigate.mock.calls[0][0]).toBe('/fagsak/12345/');
   });
+
 });

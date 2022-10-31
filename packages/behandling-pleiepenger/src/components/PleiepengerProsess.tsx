@@ -21,7 +21,7 @@ import {
   FagsakPerson,
   ArbeidsgiverOpplysningerPerId,
 } from '@k9-sak-web/types';
-import lagForhåndsvisRequest from '@fpsak-frontend/utils/src/formidlingUtils';
+import lagForhåndsvisRequest, { bestemAvsenderApp } from '@fpsak-frontend/utils/src/formidlingUtils';
 
 import prosessStegPanelDefinisjoner from '../panelDefinisjoner/prosessStegPleiepengerPanelDefinisjoner';
 import FetchedData from '../types/fetchedDataTsType';
@@ -84,7 +84,6 @@ const getLagringSideeffekter =
   (
     toggleIverksetterVedtakModal,
     toggleFatterVedtakModal,
-    toggleOppdatereFagsakContext,
     oppdaterProsessStegOgFaktaPanelIUrl,
     opneSokeside,
     lagreDokumentdata,
@@ -96,18 +95,19 @@ const getLagringSideeffekter =
           apModel.kode === aksjonspunktCodes.VARSEL_REVURDERING_ETTERKONTROLL) &&
         apModel.sendVarsel,
     );
-    const visIverksetterVedtakModal =
-      aksjonspunktModels[0].isVedtakSubmission &&
-      [aksjonspunktCodes.VEDTAK_UTEN_TOTRINNSKONTROLL, aksjonspunktCodes.FATTER_VEDTAK].includes(
-        aksjonspunktModels[0].kode,
-      );
+
+    const visIverksetterVedtakModal = aksjonspunktModels.some(
+      aksjonspunkt =>
+        aksjonspunkt.isVedtakSubmission &&
+        [
+          aksjonspunktCodes.VEDTAK_UTEN_TOTRINNSKONTROLL,
+          aksjonspunktCodes.FATTER_VEDTAK,
+          aksjonspunktCodes.FORESLA_VEDTAK_MANUELT,
+        ].includes(aksjonspunkt.kode),
+    );
+
     const visFatterVedtakModal =
       aksjonspunktModels[0].isVedtakSubmission && aksjonspunktModels[0].kode === aksjonspunktCodes.FORESLA_VEDTAK;
-    const isVedtakAp = aksjonspunktModels.some(a => a.isVedtakSubmission);
-
-    if (visIverksetterVedtakModal || visFatterVedtakModal || erRevurderingsaksjonspunkt || isVedtakAp) {
-      toggleOppdatereFagsakContext(false);
-    }
 
     if (aksjonspunktModels[0].isVedtakSubmission) {
       const dokumentdata = lagDokumentdata(aksjonspunktModels[0]);
@@ -128,6 +128,23 @@ const getLagringSideeffekter =
     };
   };
 
+const getHentFritekstbrevHtmlCallback =
+  (
+    hentFriteksbrevHtml: (data: any) => Promise<any>,
+    behandling: Behandling,
+    fagsak: Fagsak,
+    fagsakPerson: FagsakPerson,
+  ) =>
+  (parameters: any) =>
+    hentFriteksbrevHtml({
+      ...parameters,
+      eksternReferanse: behandling.uuid,
+      ytelseType: fagsak.sakstype,
+      saksnummer: fagsak.saksnummer,
+      aktørId: fagsakPerson.aktørId,
+      avsenderApplikasjon: bestemAvsenderApp(behandling.type.kode),
+    });
+
 const PleiepengerProsess = ({
   data,
   fagsak,
@@ -147,10 +164,7 @@ const PleiepengerProsess = ({
   featureToggles,
   setBeregningErBehandlet,
 }: OwnProps) => {
-  const toggleSkalOppdatereFagsakContext = prosessStegHooks.useOppdateringAvBehandlingsversjon(
-    behandling.versjon,
-    oppdaterBehandlingVersjon,
-  );
+  prosessStegHooks.useOppdateringAvBehandlingsversjon(behandling.versjon, oppdaterBehandlingVersjon);
 
   const { startRequest: lagreAksjonspunkter, data: apBehandlingRes } =
     restApiPleiepengerHooks.useRestApiRunner<Behandling>(PleiepengerBehandlingApiKeys.SAVE_AKSJONSPUNKT);
@@ -165,6 +179,9 @@ const PleiepengerProsess = ({
   const { startRequest: lagreDokumentdata } = restApiPleiepengerHooks.useRestApiRunner<Behandling>(
     PleiepengerBehandlingApiKeys.DOKUMENTDATA_LAGRE,
   );
+  const { startRequest: hentFriteksbrevHtml } = restApiPleiepengerHooks.useRestApiRunner(
+    PleiepengerBehandlingApiKeys.HENT_FRITEKSTBREV_HTML,
+  );
 
   useSetBehandlingVedEndring(apBehandlingRes, setBehandling);
   useSetBehandlingVedEndring(apOverstyrtBehandlingRes, setBehandling);
@@ -176,6 +193,10 @@ const PleiepengerProsess = ({
     ]),
     previewFptilbakeCallback: useCallback(
       getForhandsvisFptilbakeCallback(forhandsvisTilbakekrevingMelding, fagsak, behandling),
+      [behandling.versjon],
+    ),
+    hentFritekstbrevHtmlCallback: useCallback(
+      getHentFritekstbrevHtmlCallback(hentFriteksbrevHtml, behandling, fagsak, fagsakPerson),
       [behandling.versjon],
     ),
     alleKodeverk,
@@ -207,7 +228,6 @@ const PleiepengerProsess = ({
   const lagringSideeffekterCallback = getLagringSideeffekter(
     toggleIverksetterVedtakModal,
     toggleFatterVedtakModal,
-    toggleSkalOppdatereFagsakContext,
     oppdaterProsessStegOgFaktaPanelIUrl,
     opneSokeside,
     lagreDokumentdata,

@@ -19,6 +19,8 @@ export {
   visningsdato,
   isValidDate,
   convertHoursToDays,
+  formatereLukketPeriode,
+  formatDate,
 } from './src/dateUtils';
 export { default as decodeHtmlEntity } from './src/decodeHtmlEntity';
 export { fodselsnummerPattern, isValidFodselsnummer } from './src/fodselsnummerUtils';
@@ -111,7 +113,14 @@ export {
 } from './src/validation/messages';
 
 export { default as MicroFrontend } from './src/micro-frontends/MicroFrontend';
+export { findEndpointsForMicrofrontend } from './src/micro-frontends/findEndpointsForMicrofrontend';
+export { httpErrorHandler } from './src/micro-frontends/httpErrorHandler';
+export { findAksjonspunkt } from './src/micro-frontends/findAksjonspunkt';
+export type { SimpleEndpoints } from './src/micro-frontends/types/SimpleEndpoints';
+export type { SimpleLink } from './src/micro-frontends/types/SimpleLink';
 
-export { getKodeverknavnFn } from './src/kodeverkUtils';
+export { getKodeverknavnFn, konverterKodeverkTilKode } from './src/kodeverkUtils';
 export { joinNonNullStrings, safeJSONParse } from './src/stringUtils';
 export type { Adresser } from './src/getAddresses';
+export { default as mapVilkar } from './src/beregning/VilkarMapper';
+export { default as transformBeregningValues } from './src/beregning/transformValuesBeregning';

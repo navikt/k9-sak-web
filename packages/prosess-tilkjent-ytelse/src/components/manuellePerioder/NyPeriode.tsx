@@ -81,6 +81,7 @@ export const TilkjentYtelseNyPeriode = ({
                     // @ts-ignore
                     component={NyAndel}
                     readOnly={readOnly}
+                    // @ts-ignore
                     andeler={andeler}
                     alleKodeverk={alleKodeverk}
                     arbeidsgivere={arbeidsgivere}

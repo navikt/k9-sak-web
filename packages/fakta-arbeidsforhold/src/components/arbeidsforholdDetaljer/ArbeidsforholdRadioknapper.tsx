@@ -26,7 +26,7 @@ const ArbeidsforholdRadioknapper = ({
   <RadioGroupField name="arbeidsforholdHandlingField" validate={[required]} direction="vertical">
     <RadioOption
       label={{ id: 'PersonArbeidsforholdDetailForm.ArbeidsforholdErAktivt' }}
-      value={arbeidsforholdHandlingType.LAGT_TIL_AV_SAKSBEHANDLER}
+      value={arbeidsforholdHandlingType.BASERT_PÅ_INNTEKTSMELDING}
     >
       <BehandlingFormFieldCleaner
         formName={formName}

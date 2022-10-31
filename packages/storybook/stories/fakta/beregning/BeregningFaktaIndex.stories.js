@@ -1,6 +1,6 @@
 import React from 'react';
 import { action } from '@storybook/addon-actions';
-import { withKnobs, boolean, object } from '@storybook/addon-knobs';
+import { boolean, object, withKnobs } from '@storybook/addon-knobs';
 
 import aktivitetStatuser from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import inntektskategorier from '@fpsak-frontend/kodeverk/src/inntektskategorier';
@@ -12,24 +12,25 @@ import faktaOmBeregningTilfelle from '@fpsak-frontend/kodeverk/src/faktaOmBeregn
 import bgMedArbeidOgDagpenger from './scenario/ArbeidMedDagpengerIOpptjeningsperioden';
 
 import {
+  behandling as behPrivatArbeidsgiver,
   beregningsgrunnlag as bgPrivatArbeidsgiver,
-  behandling as behPrivatArbeidsgiver
 } from './scenario/PrivatpersonOrgOgFrilansISammeOrg';
 
+import {
+  behandling as behLønnsendringOgFlereArbeidsforholdISammeOrg,
+  beregningsgrunnlag as bgLønnsendringOgFlereArbeidsforholdISammeOrg,
+} from './scenario/LønnsendringOgFlereArbeidsforholdISammeOrg';
 
 import {
-  beregningsgrunnlag as bgFlerePerioder,
   behandling as behandlingFlerePerioder,
+  beregningsgrunnlag as bgFlerePerioder,
 } from './scenario/ForSentRefusjonskravFlereBG';
 
-import {
-  beregningsgrunnlag as bgKunYtelse,
-  behandling as behandlingKunYtelse,
-} from './scenario/KunYtelse';
+import { behandling as behandlingKunYtelse, beregningsgrunnlag as bgKunYtelse } from './scenario/KunYtelse';
 
 import {
-  beregningsgrunnlag as bgKunYtelseVurderingEnPeriode,
   behandling as behandlingKunYtelseVurderingEnPeriode,
+  beregningsgrunnlag as bgKunYtelseVurderingEnPeriode,
 } from './scenario/KunYtelseEnPeriodeTilVurdering';
 
 import withReduxProvider from '../../../decorators/withRedux';
@@ -63,24 +64,21 @@ const behandling = {
           periode: {
             fom: skjæringstidspunkt,
           },
-          vurdersIBehandlingen: true,
+          vurderesIBehandlingen: true,
         },
       ],
     },
   },
 };
 
-
-const lagVilkår = (fomDatoer) => [
+const lagVilkår = fomDatoer => [
   {
-    vilkarType: { kode: "FP_VK_41" },
-    perioder: fomDatoer.map(fom => ({ periode: { fom}, vurdersIBehandlingen: true }))
-  }];
+    vilkarType: { kode: 'FP_VK_41' },
+    perioder: fomDatoer.map(fom => ({ periode: { fom }, vurderesIBehandlingen: true })),
+  },
+];
 
-
-const lagVilkårAllePerioderVurderes = (bg) => lagVilkår(bg.map(g => g.skjæringstidspunkt))
-
-
+const lagVilkårAllePerioderVurderes = bg => lagVilkår(bg.map(g => g.skjæringstidspunkt));
 
 const lagBehandling = () => ({
   id: 1,
@@ -100,13 +98,13 @@ const {
   VURDER_SN_NY_I_ARBEIDSLIVET,
 } = faktaOmBeregningTilfelle;
 
-const lagBeregningsgrunnlagAvklarAktiviteter = (aktiviteter, avklaringsbehov) => ({
+const lagBeregningsgrunnlagAvklarAktiviteter = (aktiviteter, avklaringsbehov, stp) => ({
   avklaringsbehov,
-  skjæringstidspunkt,
-  vilkårsperiodeFom:   skjæringstidspunkt,
+  skjæringstidspunkt: stp,
+  vilkårsperiodeFom: stp,
   faktaOmBeregning: {
     avklarAktiviteter: {
-      skjæringstidspunkt,
+      skjæringstidspunkt: stp,
       aktiviteterTomDatoMapping: [
         {
           tom: '01.01.2020',
@@ -118,20 +116,21 @@ const lagBeregningsgrunnlagAvklarAktiviteter = (aktiviteter, avklaringsbehov) =>
   },
 });
 
-const lagAvklaringsbehov = (faktaOmBeregning) => {
+const lagAvklaringsbehov = faktaOmBeregning => {
   if (!faktaOmBeregning) {
     return [];
   }
-  if (faktaOmBeregning.faktaOmBeregningTilfeller  && faktaOmBeregning.faktaOmBeregningTilfeller.length > 0) {
+  if (faktaOmBeregning.faktaOmBeregningTilfeller && faktaOmBeregning.faktaOmBeregningTilfeller.length > 0) {
     return OPPRETTET_FAKTA_AVKLARING;
   }
   return [];
-}
+};
 
 const lagBeregningsgrunnlag = (andeler, faktaOmBeregning, avklaringsbehov) => ({
-  avklaringsbehov: avklaringsbehov === null || avklaringsbehov === undefined  ? lagAvklaringsbehov(faktaOmBeregning) : avklaringsbehov,
+  avklaringsbehov:
+    avklaringsbehov === null || avklaringsbehov === undefined ? lagAvklaringsbehov(faktaOmBeregning) : avklaringsbehov,
   skjæringstidspunkt,
-  vilkårsperiodeFom:   skjæringstidspunkt,
+  vilkårsperiodeFom: skjæringstidspunkt,
   beregningsgrunnlagPeriode: [
     {
       beregningsgrunnlagPrStatusOgAndel: andeler.map(andel => ({
@@ -149,7 +148,7 @@ const mapTilKodeliste = arrayOfCodes => arrayOfCodes.map(kode => ({ kode }));
 
 const lagAndel = (andelsnr, aktivitetStatus, inntektskategori) => ({
   andelsnr,
-  aktivitetStatus: { kode: aktivitetStatus, kodeverk: 'AKTIVITET_STATUS'  },
+  aktivitetStatus: { kode: aktivitetStatus, kodeverk: 'AKTIVITET_STATUS' },
   inntektskategori: { kode: inntektskategori, kodeverk: 'INNTEKTSKATEGORI' },
 });
 
@@ -158,7 +157,7 @@ const standardFaktaArbeidstakerAndel = {
   belopReadOnly: 30000,
   lagtTilAvSaksbehandler: false,
   arbeidsforhold: {
-    arbeidsgiverIdent: '12345678',
+    arbeidsgiverIdent: '123456789',
     arbeidsforholdId: null,
     startdato: '01.01.2019',
     opphoersdato: null,
@@ -241,6 +240,21 @@ export default {
   decorators: [withKnobs, withReduxProvider],
 };
 
+export const LønnsendringOgFlereArbeidsforholdISammeOrg = () => (
+  <BeregningFaktaIndex
+    behandling={behLønnsendringOgFlereArbeidsforholdISammeOrg}
+    beregningsgrunnlag={bgLønnsendringOgFlereArbeidsforholdISammeOrg}
+    vilkar={lagVilkårAllePerioderVurderes(bgLønnsendringOgFlereArbeidsforholdISammeOrg)}
+    erOverstyrer={false}
+    alleKodeverk={alleKodeverk}
+    arbeidsgiverOpplysningerPerId={arbeidsgivere}
+    alleMerknaderFraBeslutter={{}}
+    submitCallback={action('button-click')}
+    readOnly={boolean('readOnly', false)}
+    submittable={boolean('submittable', true)}
+  />
+);
+
 export const PrivatpersonSomArbeidsgiverOgFrilans = () => (
   <BeregningFaktaIndex
     behandling={behPrivatArbeidsgiver}
@@ -258,7 +272,6 @@ export const PrivatpersonSomArbeidsgiverOgFrilans = () => (
     submittable={boolean('submittable', true)}
   />
 );
-
 
 export const KunYtelsePåSkjæringstidspunktet = () => (
   <BeregningFaktaIndex
@@ -283,11 +296,13 @@ export const KunYtelsePåSkjæringstidspunktetMedVurderingKunISistePeriode = () 
     beregningsgrunnlag={bgKunYtelseVurderingEnPeriode}
     vilkar={[
       {
-        vilkarType: { kode: "FP_VK_41" },
+        vilkarType: { kode: 'FP_VK_41' },
         perioder: [
-          { periode: { fom: bgKunYtelseVurderingEnPeriode[0].skjæringstidspunkt}, vurdersIBehandlingen: false },
-          { periode: { fom: bgKunYtelseVurderingEnPeriode[1].skjæringstidspunkt}, vurdersIBehandlingen: true },],
-      }]}
+          { periode: { fom: bgKunYtelseVurderingEnPeriode[0].skjæringstidspunkt }, vurderesIBehandlingen: false },
+          { periode: { fom: bgKunYtelseVurderingEnPeriode[1].skjæringstidspunkt }, vurderesIBehandlingen: true },
+        ],
+      },
+    ]}
     erOverstyrer
     alleKodeverk={alleKodeverk}
     arbeidsgiverOpplysningerPerId={arbeidsgivere}
@@ -299,7 +314,6 @@ export const KunYtelsePåSkjæringstidspunktetMedVurderingKunISistePeriode = () 
     submittable={boolean('submittable', true)}
   />
 );
-
 
 export const ForSentRefusjonskravOgFlerePerioder = () => (
   <BeregningFaktaIndex
@@ -321,10 +335,7 @@ export const ForSentRefusjonskravOgFlerePerioder = () => (
 export const ArbeidOgDagpenger = () => (
   <BeregningFaktaIndex
     behandling={lagBehandling()}
-    beregningsgrunnlag={[
-      Object.assign(object('beregningsgrunnlag', bgMedArbeidOgDagpenger)),
-      Object.assign(object('beregningsgrunnlag', bgMedArbeidOgDagpenger)),
-    ]}
+    beregningsgrunnlag={[bgMedArbeidOgDagpenger, bgMedArbeidOgDagpenger]}
     vilkar={lagVilkår([bgMedArbeidOgDagpenger.skjæringstidspunkt])}
     erOverstyrer
     alleKodeverk={alleKodeverk}
@@ -363,16 +374,16 @@ export const AvklarAktiviteterFullAAPOgAndreAktiviteter = () => {
       erAktivt: true,
     },
   ];
-  const beregningsgrunnlag = lagBeregningsgrunnlagAvklarAktiviteter(aktiviteter, avklaringsbehov);
+
+  const stp = '2020-01-01';
+
+  const beregningsgrunnlag = lagBeregningsgrunnlagAvklarAktiviteter(aktiviteter, avklaringsbehov, stp);
 
   return (
     <BeregningFaktaIndex
       behandling={lagBehandling()}
-      beregningsgrunnlag={[
-        Object.assign(object('beregningsgrunnlag', beregningsgrunnlag)),
-        Object.assign(object('beregningsgrunnlag', beregningsgrunnlag)),
-      ]}
-      vilkar={lagVilkår([skjæringstidspunkt])}
+      beregningsgrunnlag={[beregningsgrunnlag, beregningsgrunnlag]}
+      vilkar={lagVilkår([stp])}
       erOverstyrer={false}
       alleKodeverk={alleKodeverk}
       arbeidsgiverOpplysningerPerId={arbeidsgivere}
@@ -459,7 +470,7 @@ export const AvklartAktiviteterMedAksjonspunktIFaktaAvklaring = () => {
     <BeregningFaktaIndex
       behandling={lagBehandling()}
       vilkar={lagVilkår([skjæringstidspunkt])}
-      beregningsgrunnlag={[object('beregningsgrunnlag', beregningsgrunnlag)]}
+      beregningsgrunnlag={[beregningsgrunnlag]}
       erOverstyrer={false}
       alleKodeverk={alleKodeverk}
       arbeidsgiverOpplysningerPerId={arbeidsgivere}
@@ -479,7 +490,7 @@ export const FrilansOgArbeidsforholdMedLønnendringOgNyoppstartet = () => {
     aktivitetStatus: standardFaktaArbeidstakerAndel.aktivitetStatus,
     inntektskategori: standardFaktaArbeidstakerAndel.inntektskategori,
     arbeidsforhold: standardFaktaArbeidstakerAndel.arbeidsforhold,
-    lonnsendringIBeregningsperioden: true
+    lonnsendringIBeregningsperioden: true,
   };
   const frilansBeregningsgrunnlagAndel = {
     andelsnr: standardFaktaFrilansAndel.andelsnr,
@@ -488,7 +499,7 @@ export const FrilansOgArbeidsforholdMedLønnendringOgNyoppstartet = () => {
     erNyoppstartet: null,
   };
   const andeler = [arbeidstakerBeregningsgrunnlagAndel, frilansBeregningsgrunnlagAndel];
-  const andelerForFaktaOmBeregning = [standardFaktaArbeidstakerAndel, standardFaktaFrilansAndel ];
+  const andelerForFaktaOmBeregning = [standardFaktaArbeidstakerAndel, standardFaktaFrilansAndel];
   const vurderMottarYtelse = {
     erFrilans: true,
     frilansMottarYtelse: null,
@@ -510,7 +521,7 @@ export const FrilansOgArbeidsforholdMedLønnendringOgNyoppstartet = () => {
     <BeregningFaktaIndex
       behandling={behandling}
       vilkar={lagVilkår([skjæringstidspunkt])}
-      beregningsgrunnlag={[object('beregningsgrunnlag', beregningsgrunnlag)]}
+      beregningsgrunnlag={[beregningsgrunnlag]}
       erOverstyrer={false}
       alleKodeverk={alleKodeverk}
       arbeidsgiverOpplysningerPerId={arbeidsgivere}
@@ -556,7 +567,7 @@ export const KunArbeidstakerMedVurderingSentRefusjonskrav = () => {
     <BeregningFaktaIndex
       behandling={behandling}
       vilkar={lagVilkår([skjæringstidspunkt])}
-      beregningsgrunnlag={[object('beregningsgrunnlag', beregningsgrunnlag)]}
+      beregningsgrunnlag={[beregningsgrunnlag]}
       erOverstyrer={false}
       alleKodeverk={alleKodeverk}
       arbeidsgiverOpplysningerPerId={arbeidsgivere}
@@ -605,7 +616,7 @@ export const FrilansOgArbeidsforholdISammeOrganisasjon = () => {
     <BeregningFaktaIndex
       behandling={behandling}
       vilkar={lagVilkår([skjæringstidspunkt])}
-      beregningsgrunnlag={[object('beregningsgrunnlag', beregningsgrunnlag)]}
+      beregningsgrunnlag={[beregningsgrunnlag]}
       erOverstyrer={false}
       alleKodeverk={alleKodeverk}
       arbeidsgiverOpplysningerPerId={arbeidsgivere}
@@ -639,7 +650,7 @@ export const VurderingAvMilitær = () => {
     <BeregningFaktaIndex
       behandling={behandling}
       vilkar={lagVilkår([skjæringstidspunkt])}
-      beregningsgrunnlag={[object('beregningsgrunnlag', beregningsgrunnlag)]}
+      beregningsgrunnlag={[beregningsgrunnlag]}
       erOverstyrer={false}
       alleKodeverk={alleKodeverk}
       arbeidsgiverOpplysningerPerId={arbeidsgivere}
@@ -693,7 +704,7 @@ export const FrilansOgTidsbegrensetArbeidsforholdISammeOrganisasjon = () => {
     <BeregningFaktaIndex
       behandling={behandling}
       vilkar={lagVilkår([skjæringstidspunkt])}
-      beregningsgrunnlag={[object('beregningsgrunnlag', beregningsgrunnlag)]}
+      beregningsgrunnlag={[beregningsgrunnlag]}
       erOverstyrer={false}
       alleKodeverk={alleKodeverk}
       arbeidsgiverOpplysningerPerId={arbeidsgivere}
@@ -729,7 +740,7 @@ export const KunTidsbegrensetArbeidsforhold = () => {
     <BeregningFaktaIndex
       behandling={behandling}
       vilkar={lagVilkår([skjæringstidspunkt])}
-      beregningsgrunnlag={[object('beregningsgrunnlag', beregningsgrunnlag)]}
+      beregningsgrunnlag={[beregningsgrunnlag]}
       erOverstyrer={false}
       alleKodeverk={alleKodeverk}
       arbeidsgiverOpplysningerPerId={arbeidsgivere}
@@ -764,7 +775,7 @@ export const VurderingAvEtterlønnSluttpakke = () => {
     <BeregningFaktaIndex
       behandling={behandling}
       vilkar={lagVilkår([skjæringstidspunkt])}
-      beregningsgrunnlag={[object('beregningsgrunnlag', beregningsgrunnlag)]}
+      beregningsgrunnlag={[beregningsgrunnlag]}
       erOverstyrer={false}
       alleKodeverk={alleKodeverk}
       arbeidsgiverOpplysningerPerId={arbeidsgivere}
@@ -803,7 +814,7 @@ export const FastsettingAvBeregningsgrunnlagForKunYtelse = () => {
     <BeregningFaktaIndex
       behandling={behandling}
       vilkar={lagVilkår([skjæringstidspunkt])}
-      beregningsgrunnlag={[object('beregningsgrunnlag', beregningsgrunnlag)]}
+      beregningsgrunnlag={[beregningsgrunnlag]}
       erOverstyrer={false}
       alleKodeverk={alleKodeverk}
       arbeidsgiverOpplysningerPerId={arbeidsgivere}
@@ -837,7 +848,7 @@ export const SelvstendigNæringNyIArbeidslivet = () => {
     <BeregningFaktaIndex
       behandling={behandling}
       vilkar={lagVilkår([skjæringstidspunkt])}
-      beregningsgrunnlag={[object('beregningsgrunnlag', beregningsgrunnlag)]}
+      beregningsgrunnlag={[beregningsgrunnlag]}
       erOverstyrer={false}
       alleKodeverk={alleKodeverk}
       arbeidsgiverOpplysningerPerId={arbeidsgivere}
@@ -1019,7 +1030,7 @@ export const KombinasjonstestForFaktapanel = () => {
     <BeregningFaktaIndex
       behandling={behandling}
       vilkar={lagVilkår([skjæringstidspunkt])}
-      beregningsgrunnlag={[object('beregningsgrunnlag', beregningsgrunnlag)]}
+      beregningsgrunnlag={[beregningsgrunnlag]}
       erOverstyrer={false}
       alleKodeverk={alleKodeverk}
       arbeidsgiverOpplysningerPerId={arbeidsgivere}
@@ -1079,7 +1090,7 @@ export const OverstyringAvInntekt = () => {
     <BeregningFaktaIndex
       behandling={behandling}
       vilkar={lagVilkår([skjæringstidspunkt])}
-      beregningsgrunnlag={[object('beregningsgrunnlag', beregningsgrunnlag)]}
+      beregningsgrunnlag={[beregningsgrunnlag]}
       erOverstyrer
       alleKodeverk={alleKodeverk}
       arbeidsgiverOpplysningerPerId={arbeidsgivere}

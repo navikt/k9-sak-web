@@ -9,7 +9,7 @@
 }
 
 .mainButton {
-  margin: 12px 16px 12px 0;
+  margin: 12px 1.5625rem 12px 0;
   display: inline;
 }
 
@@ -49,8 +49,12 @@
   width: 100%;
 }
 
-.automatiskBrev {
-  margin: 20px 0;
+.brevAlertContainer {
+  margin: 0.75rem 0;
+}
+
+.brevHeading {
+  margin-bottom: 0.75rem;
 }
 
 .alignRight {
@@ -58,13 +62,71 @@
 }
 
 .knappContainer {
-  margin-top: 20px;
-  position: absolute;
-  right: 0;
-  top: 0;
   border: none;
+  background: #e6f0ff;
+  border-radius: 4px;
+  padding: 1.4375rem 1.75rem 0.9375rem;
+  max-height: 9.875rem;
+  order: 1;
+  margin-top: 4.125rem;
+  margin-right: 30px;
+
+  fieldset {
+    border: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  legend {
+    margin-bottom: 0.25rem;
+  }
+}
+
+.begrensMaksBredde {
+  max-width: 65%;
 }
 
 form {
-  font-size: 14px;
+  font-size: 16px;
+}
+
+.form {
+  display: flex;
+  justify-content: space-between;
+}
+
+.previewLink {
+  margin-left: -0.75rem;
+
+  &--noIcon {
+    text-decoration: underline;
+  }
+}
+
+.fritekstbrevPanel {
+  margin-top: 1.5625rem;
+}
+
+.brevFormContainer {
+  background: #f1f1f1;
+  border-radius: 5px;
+  padding: 1.5rem;
+}
+
+.manueltBrevFormContainer {
+  background: #f1f1f1;
+  border-radius: 5px;
+  padding: 0.3rem 1.3rem 1.3rem;
+}
+
+.textAreaContainer {
+  margin-top: 1.5625rem;
+
+  &--readOnly {
+    margin-top: 1rem;
+  }
+}
+
+.aksjonspunktContainer {
+  flex: 1 1 auto;
 }

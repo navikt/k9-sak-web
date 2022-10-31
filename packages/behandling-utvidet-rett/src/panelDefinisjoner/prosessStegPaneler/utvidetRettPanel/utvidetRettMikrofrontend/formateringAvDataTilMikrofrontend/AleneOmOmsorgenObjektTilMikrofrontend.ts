@@ -2,6 +2,7 @@ import {Aksjonspunkt, Behandling, Vilkar} from '@k9-sak-web/types';
 import {FormState} from '@fpsak-frontend/form/index';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import BehandlingType from "@fpsak-frontend/kodeverk/src/behandlingType";
+import aksjonspunktCodes from "@fpsak-frontend/kodeverk/src/aksjonspunktCodes";
 import UtvidetRettMikrofrontendVisning from '../../../../../types/MikrofrontendKomponenter';
 import {generereInfoForVurdertVilkar} from '../../../UtvidetRettOmsorgenForMikrofrontendFelles';
 import UtvidetRettSoknad from '../../../../../types/UtvidetRettSoknad';
@@ -16,7 +17,7 @@ interface OwnProps {
   behandling: Behandling;
   aksjonspunktLost: boolean;
   lesemodus: boolean;
-  vilkarKnyttetTilAksjonspunkt: Vilkar;
+  vilkar: Vilkar;
   status: string;
   aksjonspunkt: Aksjonspunkt;
   skalVilkarsUtfallVises: boolean;
@@ -71,7 +72,7 @@ const AleneOmOmsorgenObjektTilMikrofrontend = ({
   behandling,
   aksjonspunktLost,
   lesemodus,
-  vilkarKnyttetTilAksjonspunkt,
+  vilkar,
   status,
   aksjonspunkt,
   skalVilkarsUtfallVises,
@@ -83,35 +84,63 @@ const AleneOmOmsorgenObjektTilMikrofrontend = ({
   const barnetsFodselsdato = new Date(angittBarn[0].fødselsdato);
   const åretBarnetFyller18 = `${barnetsFodselsdato.getFullYear() + 18}-12-31`;
 
-  return {
-    visKomponent: UtvidetRettMikrofrontendVisning.VILKAR_ALENE_OM_OMSORGEN,
-    props: {
-      behandlingsID: behandling.id.toString(),
-      lesemodus,
-      aksjonspunktLost,
-      fraDatoFraSoknad: soknad?.søknadsperiode.fom,
-      vedtakFattetVilkarOppfylt: skalVilkarsUtfallVises,
-      erBehandlingstypeRevurdering: erBehandlingRevurdering,
-      informasjonOmVilkar: generereInfoForVurdertVilkar(
-        skalVilkarsUtfallVises,
-        vilkarKnyttetTilAksjonspunkt,
-        aksjonspunkt.begrunnelse,
-        'Utvidet Rett',
-      ),
-      informasjonTilLesemodus: formatereLesemodusObjekt(vilkarKnyttetTilAksjonspunkt, aksjonspunkt, status),
-      losAksjonspunkt: ({ begrunnelse, vilkarOppfylt, fraDato, tilDato }) => {
-        submitCallback([
-          formatereLosAksjonspunktObjekt(
-            aksjonspunkt.definisjon.kode,
-            begrunnelse,
-            vilkarOppfylt,
-            fraDato,
-            erBehandlingRevurdering && !!tilDato ? tilDato : åretBarnetFyller18
-          ),
-        ]);
-      },
-      formState: FormState,
-    } as AleneOmOmsorgenProps,
-  };
+  const vilkaretVurderesManuelltMedAksjonspunkt = aksjonspunkt && vilkar && aksjonspunkt.definisjon.kode === aksjonspunktCodes.UTVIDET_RETT;
+  // Vilkåret kan kun bli automatisk innvilget. Dersom det blir automatiskt avslått resulterer det i manuell vurdering via aksjonspunkt.
+  const vilkaretErAutomatiskInnvilget = !aksjonspunkt && vilkar && vilkar.perioder[0]?.vilkarStatus.kode === vilkarUtfallType.OPPFYLT;
+
+  if (vilkaretVurderesManuelltMedAksjonspunkt) {
+    return {
+      visKomponent: UtvidetRettMikrofrontendVisning.VILKAR_ALENE_OM_OMSORGEN,
+      props: {
+        behandlingsID: behandling.id.toString(),
+        lesemodus,
+        aksjonspunktLost,
+        fraDatoFraSoknad: soknad?.søknadsperiode.fom,
+        vedtakFattetVilkarOppfylt: skalVilkarsUtfallVises,
+        erBehandlingstypeRevurdering: erBehandlingRevurdering,
+        informasjonOmVilkar: generereInfoForVurdertVilkar(
+          skalVilkarsUtfallVises,
+          vilkar,
+          aksjonspunkt.begrunnelse,
+          'Utvidet Rett',
+        ),
+        informasjonTilLesemodus: formatereLesemodusObjekt(vilkar, aksjonspunkt, status),
+        losAksjonspunkt: ({begrunnelse, vilkarOppfylt, fraDato, tilDato}) => {
+          submitCallback([
+            formatereLosAksjonspunktObjekt(
+              aksjonspunkt.definisjon.kode,
+              begrunnelse,
+              vilkarOppfylt,
+              fraDato,
+              erBehandlingRevurdering && !!tilDato ? tilDato : åretBarnetFyller18
+            ),
+          ]);
+        },
+        formState: FormState,
+      } as AleneOmOmsorgenProps,
+    };
+  }
+
+  if (vilkaretErAutomatiskInnvilget) {
+    return {
+      visKomponent: UtvidetRettMikrofrontendVisning.VILKAR_ALENE_OM_OMSORGEN,
+      props: {
+        behandlingsID: behandling.id.toString(),
+        aksjonspunktLost: false,
+        fraDatoFraSoknad: soknad?.søknadsperiode.fom,
+        vedtakFattetVilkarOppfylt: true,
+        erBehandlingstypeRevurdering: erBehandlingRevurdering,
+        informasjonOmVilkar: generereInfoForVurdertVilkar(
+          true,
+          vilkar,
+          '',
+          'Utvidet Rett',
+        ),
+        formState: FormState,
+      } as AleneOmOmsorgenProps,
+    };
+  }
+
+  return {};
 };
 export default AleneOmOmsorgenObjektTilMikrofrontend;

@@ -1,12 +1,11 @@
-import React from 'react';
-import sinon from 'sinon';
-
-import { Normaltekst } from 'nav-frontend-typografi';
-import { Table, TableColumn, TableRow } from '@fpsak-frontend/shared-components';
-import { FormattedMessage } from 'react-intl';
+/* eslint-disable max-len */
 import { Label } from '@fpsak-frontend/form/src/Label';
-import DocumentList from './DocumentList';
+import { Table, TableColumn, TableRow } from '@fpsak-frontend/shared-components';
+import { Normaltekst } from 'nav-frontend-typografi';
+import React from 'react';
+import { FormattedMessage } from 'react-intl';
 import shallowWithIntl, { intlMock } from '../../i18n/index';
+import DocumentList from './DocumentList';
 
 describe('<DocumentList>', () => {
   it('skal vise to dokumenter i liste', () => {
@@ -30,8 +29,8 @@ describe('<DocumentList>', () => {
       <DocumentList.WrappedComponent
         intl={intlMock}
         documents={[document, anotherDocument]}
-        selectDocumentCallback={sinon.spy()}
         behandlingId={1}
+        saksnummer={1}
       />,
     );
 
@@ -44,15 +43,15 @@ describe('<DocumentList>', () => {
     expect(tableRows).toHaveLength(2);
 
     const tableColumnsRow1 = tableRows.first().find(TableColumn);
-    expect(tableColumnsRow1.children()).toHaveLength(3);
+    expect(tableColumnsRow1.children()).toHaveLength(4);
     expect(tableColumnsRow1.at(1).html()).toEqual(
-      '<td class="columnStyle"><p class="typo-normal">Terminbekreftelse</p></td>',
+      '<td class="columnStyle"><a href="/k9/sak/api/dokument/hent-dokument?saksnummer=1&amp;journalpostId=1&amp;dokumentId=1" target="_blank" rel="noopener noreferrer" class="documentAnchor"><p class="typo-normal">Terminbekreftelse</p></a></td>',
     );
 
     const tableColumnsRow2 = tableRows.last().find(TableColumn);
-    expect(tableColumnsRow2.children()).toHaveLength(3);
+    expect(tableColumnsRow2.children()).toHaveLength(4);
     expect(tableColumnsRow2.at(1).html()).toEqual(
-      '<td class="columnStyle"><p class="typo-normal">Førstegangssøknad</p></td>',
+      '<td class="columnStyle"><a href="/k9/sak/api/dokument/hent-dokument?saksnummer=1&amp;journalpostId=2&amp;dokumentId=2" target="_blank" rel="noopener noreferrer" class="documentAnchor"><p class="typo-normal">Førstegangssøknad</p></a></td>',
     );
   });
 
@@ -66,12 +65,7 @@ describe('<DocumentList>', () => {
     };
 
     const wrapper = shallowWithIntl(
-      <DocumentList.WrappedComponent
-        intl={intlMock}
-        documents={[document]}
-        selectDocumentCallback={sinon.spy()}
-        behandlingId={1}
-      />,
+      <DocumentList.WrappedComponent intl={intlMock} documents={[document]} behandlingId={1} saksnummer={1} />,
     );
 
     const formattedMessage = wrapper.find(FormattedMessage).findWhere(n => n.prop('id') === 'DocumentList.IProduksjon');
@@ -80,12 +74,7 @@ describe('<DocumentList>', () => {
 
   it('skal ikke vise tabell når det ikke finnes dokumenter', () => {
     const wrapper = shallowWithIntl(
-      <DocumentList.WrappedComponent
-        intl={intlMock}
-        documents={[]}
-        selectDocumentCallback={sinon.spy()}
-        behandlingId={1}
-      />,
+      <DocumentList.WrappedComponent intl={intlMock} documents={[]} behandlingId={1} saksnummer={1} />,
     );
 
     const label = wrapper.find(Normaltekst);

@@ -454,115 +454,197 @@ export const visAvslåttForEngangsstønadRevurdering = () => (
 
 export const visOverlappendeYtelser = () => {
   const aksjonspunkt5040 = {
-    "aksjonspunktType": { "kode": "MANU", "kodeverk": "AKSJONSPUNKT_TYPE" },
-    "begrunnelse": null,
-    "besluttersBegrunnelse": null,
-    "definisjon": {
-      "skalAvbrytesVedTilbakeføring": true,
-      "kode": "5040",
-      "kodeverk": "AKSJONSPUNKT_DEF"
+    aksjonspunktType: { kode: 'MANU', kodeverk: 'AKSJONSPUNKT_TYPE' },
+    begrunnelse: null,
+    besluttersBegrunnelse: null,
+    definisjon: {
+      kode: '5040',
+      kodeverk: 'AKSJONSPUNKT_DEF',
     },
-    "erAktivt": true,
-    "fristTid": null,
-    "kanLoses": true,
-    "status": { "kode": "OPPR", "kodeverk": "AKSJONSPUNKT_STATUS" },
-    "toTrinnsBehandling": false,
-    "toTrinnsBehandlingGodkjent": null,
-    "vilkarType": null,
-    "vurderPaNyttArsaker": null,
-    "venteårsak": { "kode": "-", "kodeverk": "VENT_AARSAK" }
-  }
+    erAktivt: true,
+    fristTid: null,
+    kanLoses: true,
+    status: { kode: 'OPPR', kodeverk: 'AKSJONSPUNKT_STATUS' },
+    toTrinnsBehandling: false,
+    toTrinnsBehandlingGodkjent: null,
+    vilkarType: null,
+    vurderPaNyttArsaker: null,
+    venteårsak: { kode: '-', kodeverk: 'VENT_AARSAK' },
+  };
 
   const overlappendeYtelser = [
     {
-      "ytelseType": {
-        "kode": "SP",
-        "kodeverk": "FAGSAK_YTELSE"
+      ytelseType: {
+        kode: 'PSB',
+        kodeverk: 'FAGSAK_YTELSE',
       },
-      "kilde": {
-        "kode": "INFOTRYGD",
-        "kodeverk": "FAGSYSTEM"
+      kilde: {
+        kode: 'INFOTRYGD',
+        kodeverk: 'FAGSYSTEM',
       },
-      "overlappendePerioder": [
+      saksnummer: null,
+      overlappendePerioder: [
         {
-          "fom": "2021-08-18",
-          "tom": "2021-08-20"
+          fom: '2022-02-07',
+          tom: '2022-02-10',
         },
-        {
-          "fom": "2021-08-23",
-          "tom": "2021-08-27"
-        },
-        {
-          "fom": "2021-08-30",
-          "tom": "2021-08-31"
-        }
-      ]
+      ],
     },
     {
-      "ytelseType": {
-        "kode": "SP",
-        "kodeverk": "FAGSAK_YTELSE"
+      ytelseType: {
+        kode: 'PSB',
+        kodeverk: 'FAGSAK_YTELSE',
       },
-      "kilde": {
-        "kode": "INFOTRYGD",
-        "kodeverk": "FAGSYSTEM"
+      kilde: {
+        kode: 'INFOTRYGD',
+        kodeverk: 'FAGSYSTEM',
       },
-      "overlappendePerioder": [
+      saksnummer: null,
+      overlappendePerioder: [
         {
-          "fom": "2021-08-15",
-          "tom": "2021-08-19"
+          fom: '2022-01-03',
+          tom: '2022-01-07',
         },
         {
-          "fom": "2021-08-21",
-          "tom": "2021-08-27"
+          fom: '2022-01-10',
+          tom: '2022-01-12',
+        },
+      ],
+    },
+    {
+      ytelseType: {
+        kode: 'PSB',
+        kodeverk: 'FAGSAK_YTELSE',
+      },
+      kilde: {
+        kode: 'INFOTRYGD',
+        kodeverk: 'FAGSYSTEM',
+      },
+      saksnummer: null,
+      overlappendePerioder: [
+        {
+          fom: '2022-01-24',
+          tom: '2022-01-28',
         },
         {
-          "fom": "2021-09-01",
-          "tom": "2021-08-09"
-        }
-      ]
-    }
+          fom: '2022-01-31',
+          tom: '2022-01-31',
+        },
+      ],
+    },
+    {
+      ytelseType: {
+        kode: 'PSB',
+        kodeverk: 'FAGSAK_YTELSE',
+      },
+      kilde: {
+        kode: 'INFOTRYGD',
+        kodeverk: 'FAGSYSTEM',
+      },
+      saksnummer: null,
+      overlappendePerioder: [
+        {
+          fom: '2022-02-21',
+          tom: '2022-02-25',
+        },
+        {
+          fom: '2022-02-28',
+          tom: '2022-02-28',
+        },
+      ],
+    },
   ];
 
-  return <VedtakProsessIndex
-    behandling={{
-      ...behandling,
-      type: {
-        kode: behandlingType.OMSORGSPENGER,
-      },
-      behandlingsresultat: {
-        vedtaksbrev: {
-          kode: 'FRITEKST',
-        },
+  return (
+    <VedtakProsessIndex
+      behandling={{
+        ...behandling,
         type: {
-          kode: behandlingResultatType.INNVILGET,
+          kode: behandlingType.OMSORGSPENGER,
         },
-        avslagsarsak: {
-          kode: avslagsarsakCodes.INGEN_BEREGNINGSREGLER,
-          kodeverk: kodeverkTyper.AVSLAGSARSAK,
+        behandlingsresultat: {
+          vedtaksbrev: {
+            kode: 'FRITEKST',
+          },
+          type: {
+            kode: behandlingResultatType.INNVILGET,
+          },
+          avslagsarsak: {
+            kode: avslagsarsakCodes.INGEN_BEREGNINGSREGLER,
+            kodeverk: kodeverkTyper.AVSLAGSARSAK,
+          },
         },
-      },
+      }}
+      vilkar={[
+        {
+          ...vilkar[0],
+          vilkarStatus: {
+            kode: vilkarUtfallType.IKKE_OPPFYLT,
+          },
+        },
+      ]}
+      beregningresultatEngangsstonad={resultatstruktur}
+      sendVarselOmRevurdering={boolean('sendVarselOmRevurdering', false)}
+      resultatstrukturOriginalBehandling={resultatstrukturOriginalBehandling}
+      medlemskap={{ fom: '2019-01-01' }}
+      aksjonspunkter={[aksjonspunkt5040]}
+      ytelseType={{ kode: fagsakYtelseType.ENGANGSSTONAD }}
+      employeeHasAccess={boolean('employeeHasAccess', false)}
+      isReadOnly={boolean('isReadOnly', false)}
+      previewCallback={action('button-click')}
+      submitCallback={action('button-click')}
+      alleKodeverk={alleKodeverk}
+      overlappendeYtelser={overlappendeYtelser}
+      featureToggles={{ NY_PROSESS_VEDTAK_ENABLED: true }}
+    />
+  );
+};
 
-    }}
-    vilkar={[
-      {
-        ...vilkar[0],
-        vilkarStatus: {
-          kode: vilkarUtfallType.IKKE_OPPFYLT,
-        },
-      },
-    ]}
+export const brevMedFritekstfelt = () => (
+  <VedtakProsessIndex
+    behandling={behandling}
+    vilkar={[]}
     beregningresultatEngangsstonad={resultatstruktur}
     sendVarselOmRevurdering={boolean('sendVarselOmRevurdering', false)}
     resultatstrukturOriginalBehandling={resultatstrukturOriginalBehandling}
     medlemskap={{ fom: '2019-01-01' }}
-    aksjonspunkter={[aksjonspunkt5040]}
-    ytelseType={{ kode: fagsakYtelseType.ENGANGSSTONAD }}
-    employeeHasAccess={boolean('employeeHasAccess', false)}
+    aksjonspunkter={[]}
+    ytelseType={{ kode: fagsakYtelseType.PLEIEPENGER }}
+    employeeHasAccess={boolean('employeeHasAccess', true)}
     isReadOnly={boolean('isReadOnly', false)}
     previewCallback={action('button-click')}
     submitCallback={action('button-click')}
     alleKodeverk={alleKodeverk}
-    overlappendeYtelser={overlappendeYtelser}
-  />;
-}
+    informasjonsbehovVedtaksbrev={{
+      informasjonsbehov: [
+        {
+          kode: 'TOM_BEKREFTELSE',
+          beskrivelse: 'Tomt informasjonsbehov som kun krever en bekreftekse av saksbehandler',
+          type: 'UKJENT',
+        },
+        {
+          kode: 'FRITEKSTVEDTAKSBREV',
+          beskrivelse: 'Fritekstvedtaksbrev',
+          type: 'FRITEKSTBREV',
+        },
+        {
+          kode: 'REVURDERING_ENDRING',
+          beskrivelse:
+            'Fritekstbeskrivelse av endringsvedtaket. Hvor opplysningene kommer fra, hva slags nye opplysninger og hvilke perioder de gjelder',
+          type: 'FRITEKST',
+        },
+      ],
+      mangler: ['REVURDERING_ENDRING'],
+    }}
+    fritekstdokumenter={[]}
+    tilgjengeligeVedtaksbrev={{
+      alternativeMottakere: [],
+      vedtaksbrevmaler: {
+        FRITEKST: 'FRITKS',
+        AUTOMATISK: 'ENDRING',
+        INGEN: null,
+      },
+    }}
+    featureToggles={{ NY_PROSESS_VEDTAK_ENABLED: true }}
+  />
+);

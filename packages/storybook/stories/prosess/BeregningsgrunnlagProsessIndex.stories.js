@@ -49,6 +49,7 @@ const lagAPMedKode = kode => [
     begrunnelse: null,
     endretAv: 'B123456',
     endretTidspunkt: '2020-01-20',
+    kanLoses: true,
   },
 ];
 
@@ -59,15 +60,22 @@ const vilkarMedUtfall = (kode, fomArray) => [
       kodeverk: 'vilkarType',
     },
     perioder: fomArray.map(fom => ({
-      periode: { fom, tom: null},
+      periode: { fom, tom: null },
       vilkarStatus: {
         kode,
         kodeverk: 'vilkarStatus',
       },
-      vurdersIBehandlingen: true
+      vurderesIBehandlingen: true,
     })),
   },
 ];
+
+const lagKoblingTilVurdering = (fomArray, forlengelseMap = {}) =>
+  fomArray.map(stp => ({
+    skjæringstidspunkt: stp,
+    referanse: 'ht43-fwse34-23423dwa',
+    erForlengelse: forlengelseMap[stp] ? forlengelseMap[stp] : false,
+  }));
 
 const lagArbeidsforhold = (
   arbeidsgiverId,
@@ -195,11 +203,19 @@ const lagStatus = kode => ({
   kodeverk: 'AKTIVITET_STATUS',
 });
 
-const lagBG = (perioder, statuser, sammenligningsgrunnlagPrStatus, grunnbeløp = 99858) => {
+const lagBG = (
+  perioder,
+  statuser,
+  sammenligningsgrunnlagPrStatus,
+  avklaringsbehov = [],
+  skjæringstidspunkt = '2019-09-16',
+  grunnbeløp = 99858,
+) => {
   const beregningsgrunnlag = {
-    skjaeringstidspunktBeregning: '2019-09-16',
-    skjæringstidspunkt: '2019-09-16',
-    vilkårsperiodeFom: '2019-09-16',
+    avklaringsbehov,
+    skjaeringstidspunktBeregning: skjæringstidspunkt,
+    skjæringstidspunkt,
+    vilkårsperiodeFom: skjæringstidspunkt,
     aktivitetStatus: statuser,
     beregningsgrunnlagPeriode: perioder,
     dekningsgrad: 80,
@@ -215,7 +231,7 @@ const lagBG = (perioder, statuser, sammenligningsgrunnlagPrStatus, grunnbeløp =
     ledetekstBrutto: 'Brutto beregningsgrunnlag',
     ledetekstAvkortet: 'Avkortet beregningsgrunnlag (6G=599148)',
     ledetekstRedusert: 'Redusert beregningsgrunnlag (100%)',
-    halvG: grunnbeløp/2,
+    halvG: grunnbeløp / 2,
     faktaOmBeregning: {
       kortvarigeArbeidsforhold: null,
       frilansAndel: null,
@@ -287,7 +303,7 @@ const lagBG = (perioder, statuser, sammenligningsgrunnlagPrStatus, grunnbeløp =
       refusjonskravSomKommerForSentListe: null,
       saksopplysninger: {
         arbeidsforholdMedLønnsendring: [],
-      }
+      },
     },
     hjemmel: {
       kode: 'F_14_7_8_30',
@@ -444,6 +460,10 @@ export const arbeidstakerUtenAvvik = () => {
       ])}
       alleKodeverk={alleKodeverk}
       arbeidsgiverOpplysningerPerId={arbeidsgivere}
+      beregningreferanserTilVurdering={lagKoblingTilVurdering([
+        bg.skjaeringstidspunktBeregning,
+        bg.skjaeringstidspunktBeregning,
+      ])}
     />
   );
 };
@@ -475,6 +495,10 @@ export const brukersAndelUtenAvvik = () => {
       ])}
       alleKodeverk={alleKodeverk}
       arbeidsgiverOpplysningerPerId={arbeidsgivere}
+      beregningreferanserTilVurdering={lagKoblingTilVurdering([
+        bg.skjaeringstidspunktBeregning,
+        bg.skjaeringstidspunktBeregning,
+      ])}
     />
   );
 };
@@ -487,7 +511,12 @@ export const arbeidstakerMedAvvik = () => {
   const sammenligningsgrunnlagPrStatus = [
     lagSammenligningsGrunnlag(sammenligningType.ATFLSN, 474257, 25.009999999, -79059),
   ];
-  const bg = lagBG(perioder, statuser, sammenligningsgrunnlagPrStatus);
+  const bg = lagBG(
+    perioder,
+    statuser,
+    sammenligningsgrunnlagPrStatus,
+    lagAPMedKode(aksjonspunktCodes.FASTSETT_BEREGNINGSGRUNNLAG_ARBEIDSTAKER_FRILANS),
+  );
   delete bg.sammenligningsgrunnlagInntekter;
   return (
     <BeregningsgrunnlagProsessIndex
@@ -499,6 +528,10 @@ export const arbeidstakerMedAvvik = () => {
       readOnlySubmitButton={false}
       isAksjonspunktOpen={false}
       vilkar={vilkarMedUtfall(vilkarUtfallType.IKKE_VURDERT, [
+        bg.skjaeringstidspunktBeregning,
+        bg.skjaeringstidspunktBeregning,
+      ])}
+      beregningreferanserTilVurdering={lagKoblingTilVurdering([
         bg.skjaeringstidspunktBeregning,
         bg.skjaeringstidspunktBeregning,
       ])}
@@ -523,6 +556,10 @@ export const militær = () => {
       readOnlySubmitButton={false}
       isAksjonspunktOpen={false}
       vilkar={vilkarMedUtfall(vilkarUtfallType.OPPFYLT, [
+        bg.skjaeringstidspunktBeregning,
+        bg.skjaeringstidspunktBeregning,
+      ])}
+      beregningreferanserTilVurdering={lagKoblingTilVurdering([
         bg.skjaeringstidspunktBeregning,
         bg.skjaeringstidspunktBeregning,
       ])}
@@ -585,6 +622,20 @@ export const selvstendigNæringsdrivende = () => {
       // beregningsgrunnlag={[bg, bg]}
       beregningsgrunnlag={[
         {
+          avklaringsbehov: [
+            {
+              begrunnelse: null,
+              definisjon: {
+                kode: '5039',
+                kodeverk: 'AVKLARINGSBEHOV_DEF',
+              },
+              kanLoses: true,
+              status: {
+                kode: 'OPPR',
+                kodeverk: 'AVKLARINGSBEHOV_STATUS',
+              },
+            },
+          ],
           skjaeringstidspunktBeregning: '2020-04-27',
           skjæringstidspunkt: '2020-04-27',
           aktivitetStatus: [
@@ -754,6 +805,7 @@ export const selvstendigNæringsdrivende = () => {
           vilkårsperiodeFom: '2020-04-27',
         },
         {
+          avklaringsbehov: [],
           skjaeringstidspunktBeregning: '2020-05-04',
           skjæringstidspunkt: '2020-05-04',
           aktivitetStatus: [
@@ -923,9 +975,6 @@ export const selvstendigNæringsdrivende = () => {
           vilkårsperiodeFom: '2020-05-04',
         },
       ]}
-      // aksjonspunkter={lagAPMedKode(
-      //   aksjonspunktCodes.VURDER_VARIG_ENDRET_ELLER_NYOPPSTARTET_NAERING_SELVSTENDIG_NAERINGSDRIVENDE,
-      // )}
       aksjonspunkter={[
         {
           aksjonspunktType: {
@@ -988,7 +1037,7 @@ export const selvstendigNæringsdrivende = () => {
                 tom: '2020-04-27',
               },
               begrunnelse: null,
-              vurdersIBehandlingen: true,
+              vurderesIBehandlingen: true,
             },
             {
               avslagKode: null,
@@ -1002,13 +1051,14 @@ export const selvstendigNæringsdrivende = () => {
                 tom: '2020-05-04',
               },
               begrunnelse: null,
-              vurdersIBehandlingen: true,
+              vurderesIBehandlingen: true,
             },
           ],
         },
       ]}
       alleKodeverk={alleKodeverk}
       arbeidsgiverOpplysningerPerId={arbeidsgivere}
+      beregningreferanserTilVurdering={lagKoblingTilVurdering(['2020-04-27', '2020-05-04'])}
     />
   );
 };
@@ -1043,7 +1093,13 @@ export const tidsbegrensetArbeidsforholdMedAvvik = () => {
   ];
   const statuser = [lagStatus('AT_FL')];
   const sammenligningsgrunnlagPrStatus = [lagSammenligningsGrunnlag(sammenligningType.ATFLSN, 474257, 26.2, 77059)];
-  const bg = lagBG(perioder, statuser, sammenligningsgrunnlagPrStatus);
+  const bg = lagBG(
+    perioder,
+    statuser,
+    sammenligningsgrunnlagPrStatus,
+    lagAPMedKode(aksjonspunktCodes.FASTSETT_BEREGNINGSGRUNNLAG_TIDSBEGRENSET_ARBEIDSFORHOLD),
+  );
+
   return (
     <BeregningsgrunnlagProsessIndex
       behandling={behandling}
@@ -1059,6 +1115,10 @@ export const tidsbegrensetArbeidsforholdMedAvvik = () => {
       ])}
       alleKodeverk={alleKodeverk}
       arbeidsgiverOpplysningerPerId={arbeidsgivere}
+      beregningreferanserTilVurdering={lagKoblingTilVurdering([
+        bg.skjaeringstidspunktBeregning,
+        bg.skjaeringstidspunktBeregning,
+      ])}
     />
   );
 };
@@ -1075,7 +1135,12 @@ export const arbeidstakerFrilanserOgSelvstendigNæringsdrivende = () => {
   const perioder = [lagStandardPeriode(andeler)];
   const statuser = [lagStatus('AT_FL_SN')];
   const sammenligningsgrunnlagPrStatus = [lagSammenligningsGrunnlag(sammenligningType.ATFLSN, 474257, 26.2, 77059)];
-  const bg = lagBG(perioder, statuser, sammenligningsgrunnlagPrStatus);
+  const bg = lagBG(
+    perioder,
+    statuser,
+    sammenligningsgrunnlagPrStatus,
+    lagAPMedKode(aksjonspunktCodes.VURDER_VARIG_ENDRET_ELLER_NYOPPSTARTET_NAERING_SELVSTENDIG_NAERINGSDRIVENDE),
+  );
   return (
     <BeregningsgrunnlagProsessIndex
       behandling={behandling}
@@ -1093,6 +1158,10 @@ export const arbeidstakerFrilanserOgSelvstendigNæringsdrivende = () => {
       ])}
       alleKodeverk={alleKodeverk}
       arbeidsgiverOpplysningerPerId={arbeidsgivere}
+      beregningreferanserTilVurdering={lagKoblingTilVurdering([
+        bg.skjaeringstidspunktBeregning,
+        bg.skjaeringstidspunktBeregning,
+      ])}
     />
   );
 };
@@ -1148,6 +1217,10 @@ export const naturalYtelse = () => {
       ])}
       alleKodeverk={alleKodeverk}
       arbeidsgiverOpplysningerPerId={arbeidsgivere}
+      beregningreferanserTilVurdering={lagKoblingTilVurdering([
+        bg.skjaeringstidspunktBeregning,
+        bg.skjaeringstidspunktBeregning,
+      ])}
     />
   );
 };
@@ -1163,7 +1236,7 @@ export const arbeidstakerDagpengerOgSelvstendigNæringsdrivende = () => {
   andeler[2].pgiSnitt = 154985;
   const statuser = [lagStatus('AT_SN'), lagStatus('DP')];
   const perioder = [lagPeriodeMedDagsats(andeler, 923)];
-  const bg = lagBG(perioder, statuser);
+  const bg = lagBG(perioder, statuser, null);
   bg.dekningsgrad = 80;
   return (
     <BeregningsgrunnlagProsessIndex
@@ -1180,6 +1253,10 @@ export const arbeidstakerDagpengerOgSelvstendigNæringsdrivende = () => {
       ])}
       alleKodeverk={alleKodeverk}
       arbeidsgiverOpplysningerPerId={arbeidsgivere}
+      beregningreferanserTilVurdering={lagKoblingTilVurdering([
+        bg.skjaeringstidspunktBeregning,
+        bg.skjaeringstidspunktBeregning,
+      ])}
     />
   );
 };
@@ -1232,6 +1309,10 @@ export const arbeidstakerOgSelvstendigNæringsdrivendeUtenAkjsonspunkt = () => {
       ])}
       alleKodeverk={alleKodeverk}
       arbeidsgiverOpplysningerPerId={arbeidsgivere}
+      beregningreferanserTilVurdering={lagKoblingTilVurdering([
+        bg.skjaeringstidspunktBeregning,
+        bg.skjaeringstidspunktBeregning,
+      ])}
     />
   );
 };
@@ -1273,7 +1354,12 @@ export const arbeidstakerOgFrilansOgSelvstendigNæringsdrivendeMedAksjonspunktBe
   ];
   andeler[0].næringer = næringer;
   const sammenligningsgrunnlagPrStatus = [lagSammenligningsGrunnlag(sammenligningType.ATFLSN, 474257, 26.2, -77059)];
-  const bg = lagBG(perioder, statuser, sammenligningsgrunnlagPrStatus);
+  const bg = lagBG(
+    perioder,
+    statuser,
+    sammenligningsgrunnlagPrStatus,
+    lagAPMedKode(aksjonspunktCodes.VURDER_VARIG_ENDRET_ELLER_NYOPPSTARTET_NAERING_SELVSTENDIG_NAERINGSDRIVENDE),
+  );
   bg.dekningsgrad = 80;
   return (
     <BeregningsgrunnlagProsessIndex
@@ -1293,6 +1379,10 @@ export const arbeidstakerOgFrilansOgSelvstendigNæringsdrivendeMedAksjonspunktBe
       ])}
       alleKodeverk={alleKodeverk}
       arbeidsgiverOpplysningerPerId={arbeidsgivere}
+      beregningreferanserTilVurdering={lagKoblingTilVurdering([
+        bg.skjaeringstidspunktBeregning,
+        bg.skjaeringstidspunktBeregning,
+      ])}
     />
   );
 };
@@ -1349,6 +1439,10 @@ export const arbeidstakerDagpengerOgSelvstendigNæringsdrivendeUtenAksjonspunkt 
       ])}
       alleKodeverk={alleKodeverk}
       arbeidsgiverOpplysningerPerId={arbeidsgivere}
+      beregningreferanserTilVurdering={lagKoblingTilVurdering([
+        bg.skjaeringstidspunktBeregning,
+        bg.skjaeringstidspunktBeregning,
+      ])}
     />
   );
 };
@@ -1401,6 +1495,10 @@ export const arbeidstakerMed3Arbeidsforhold2ISammeOrganisasjonSide3 = () => {
       ])}
       alleKodeverk={alleKodeverk}
       arbeidsgiverOpplysningerPerId={arbeidsgivere}
+      beregningreferanserTilVurdering={lagKoblingTilVurdering([
+        bg.skjaeringstidspunktBeregning,
+        bg.skjaeringstidspunktBeregning,
+      ])}
     />
   );
 };
@@ -1439,6 +1537,10 @@ export const arbeidstakerAvslagHalvGSide4 = () => {
       ])}
       alleKodeverk={alleKodeverk}
       arbeidsgiverOpplysningerPerId={arbeidsgivere}
+      beregningreferanserTilVurdering={lagKoblingTilVurdering([
+        bg.skjaeringstidspunktBeregning,
+        bg.skjaeringstidspunktBeregning,
+      ])}
     />
   );
 };
@@ -1457,7 +1559,12 @@ export const arbeidstakerMedAksjonspunktSide5 = () => {
   const perioder = [lagStandardPeriode(andeler)];
   const statuser = [lagStatus('AT')];
   const sammenligningsgrunnlagPrStatus = [lagSammenligningsGrunnlag(sammenligningType.AT, 169647, 105.4, 178929)];
-  const bg = lagBG(perioder, statuser, sammenligningsgrunnlagPrStatus);
+  const bg = lagBG(
+    perioder,
+    statuser,
+    sammenligningsgrunnlagPrStatus,
+    lagAPMedKode(aksjonspunktCodes.FASTSETT_BEREGNINGSGRUNNLAG_ARBEIDSTAKER_FRILANS),
+  );
   return (
     <BeregningsgrunnlagProsessIndex
       behandling={behandling}
@@ -1473,6 +1580,10 @@ export const arbeidstakerMedAksjonspunktSide5 = () => {
       ])}
       alleKodeverk={alleKodeverk}
       arbeidsgiverOpplysningerPerId={arbeidsgivere}
+      beregningreferanserTilVurdering={lagKoblingTilVurdering([
+        bg.skjaeringstidspunktBeregning,
+        bg.skjaeringstidspunktBeregning,
+      ])}
     />
   );
 };
@@ -1508,6 +1619,10 @@ export const arbeidstakerMedAksjonspunktBehandletSide6 = () => {
       ])}
       alleKodeverk={alleKodeverk}
       arbeidsgiverOpplysningerPerId={arbeidsgivere}
+      beregningreferanserTilVurdering={lagKoblingTilVurdering([
+        bg.skjaeringstidspunktBeregning,
+        bg.skjaeringstidspunktBeregning,
+      ])}
     />
   );
 };
@@ -1536,7 +1651,13 @@ export const tidsbegrensetArbeidsforholdMedAksjonspunktkSide7 = () => {
   ];
   const statuser = [lagStatus('AT')];
   const sammenligningsgrunnlagPrStatus = [lagSammenligningsGrunnlag(sammenligningType.ATFLSN, 404257, 36.4, 147059)];
-  const bg = lagBG(perioder, statuser, sammenligningsgrunnlagPrStatus);
+  const bg = lagBG(
+    perioder,
+    statuser,
+    sammenligningsgrunnlagPrStatus,
+    lagAPMedKode(aksjonspunktCodes.FASTSETT_BEREGNINGSGRUNNLAG_TIDSBEGRENSET_ARBEIDSFORHOLD),
+  );
+
   return (
     <BeregningsgrunnlagProsessIndex
       behandling={behandling}
@@ -1552,6 +1673,10 @@ export const tidsbegrensetArbeidsforholdMedAksjonspunktkSide7 = () => {
       ])}
       alleKodeverk={alleKodeverk}
       arbeidsgiverOpplysningerPerId={arbeidsgivere}
+      beregningreferanserTilVurdering={lagKoblingTilVurdering([
+        bg.skjaeringstidspunktBeregning,
+        bg.skjaeringstidspunktBeregning,
+      ])}
     />
   );
 };
@@ -1620,6 +1745,10 @@ export const tidsbegrensetArbeidsforholdMedAksjonspunktBehandletSide7 = () => {
       ])}
       alleKodeverk={alleKodeverk}
       arbeidsgiverOpplysningerPerId={arbeidsgivere}
+      beregningreferanserTilVurdering={lagKoblingTilVurdering([
+        bg.skjaeringstidspunktBeregning,
+        bg.skjaeringstidspunktBeregning,
+      ])}
     />
   );
 };
@@ -1646,6 +1775,10 @@ export const FrilansSide8 = () => {
       ])}
       alleKodeverk={alleKodeverk}
       arbeidsgiverOpplysningerPerId={arbeidsgivere}
+      beregningreferanserTilVurdering={lagKoblingTilVurdering([
+        bg.skjaeringstidspunktBeregning,
+        bg.skjaeringstidspunktBeregning,
+      ])}
     />
   );
 };
@@ -1656,7 +1789,12 @@ export const FrilansMedAksjonspunktSide9 = () => {
   const perioder = [lagStandardPeriode(andeler)];
   const statuser = [lagStatus('FL')];
   const sammenligningsgrunnlagPrStatus = [lagSammenligningsGrunnlag(sammenligningType.FL, 504257, 33.1, 167000)];
-  const bg = lagBG(perioder, statuser, sammenligningsgrunnlagPrStatus);
+  const bg = lagBG(
+    perioder,
+    statuser,
+    sammenligningsgrunnlagPrStatus,
+    lagAPMedKode(aksjonspunktCodes.FASTSETT_BEREGNINGSGRUNNLAG_ARBEIDSTAKER_FRILANS),
+  );
   return (
     <BeregningsgrunnlagProsessIndex
       behandling={behandling}
@@ -1672,6 +1810,10 @@ export const FrilansMedAksjonspunktSide9 = () => {
       ])}
       alleKodeverk={alleKodeverk}
       arbeidsgiverOpplysningerPerId={arbeidsgivere}
+      beregningreferanserTilVurdering={lagKoblingTilVurdering([
+        bg.skjaeringstidspunktBeregning,
+        bg.skjaeringstidspunktBeregning,
+      ])}
     />
   );
 };
@@ -1700,6 +1842,10 @@ export const arbeidstakerFrilansMedAksjonspunktSide10 = () => {
       ])}
       alleKodeverk={alleKodeverk}
       arbeidsgiverOpplysningerPerId={arbeidsgivere}
+      beregningreferanserTilVurdering={lagKoblingTilVurdering([
+        bg.skjaeringstidspunktBeregning,
+        bg.skjaeringstidspunktBeregning,
+      ])}
     />
   );
 };
@@ -1713,8 +1859,8 @@ export const arbeidstakerFrilansMedAksjonspunktBehandletSide11 = () => {
     lagSammenligningsGrunnlag(sammenligningType.AT, 474257, 16.2, 77059),
     lagSammenligningsGrunnlag(sammenligningType.FL, 159000, 274.8135, 437000),
   ];
-  const bg = lagBG(perioder, statuser, sammenligningsgrunnlagPrStatus);
   const ap = lagAPMedKode(aksjonspunktCodes.FASTSETT_BEREGNINGSGRUNNLAG_ARBEIDSTAKER_FRILANS);
+  const bg = lagBG(perioder, statuser, sammenligningsgrunnlagPrStatus, ap);
   ap[0].begrunnelse =
     'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.' +
     ' Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.';
@@ -1737,6 +1883,10 @@ export const arbeidstakerFrilansMedAksjonspunktBehandletSide11 = () => {
       ])}
       alleKodeverk={alleKodeverk}
       arbeidsgiverOpplysningerPerId={arbeidsgivere}
+      beregningreferanserTilVurdering={lagKoblingTilVurdering([
+        bg.skjaeringstidspunktBeregning,
+        bg.skjaeringstidspunktBeregning,
+      ])}
     />
   );
 };
@@ -1790,6 +1940,10 @@ export const SelvstendigNæringsdrivendeUtenVarigEndringIkkeNyoppstartetSide12 =
       ])}
       alleKodeverk={alleKodeverk}
       arbeidsgiverOpplysningerPerId={arbeidsgivere}
+      beregningreferanserTilVurdering={lagKoblingTilVurdering([
+        bg.skjaeringstidspunktBeregning,
+        bg.skjaeringstidspunktBeregning,
+      ])}
     />
   );
 };
@@ -1860,6 +2014,10 @@ export const SelvstendigNæringsdrivendeMedVarigEndringSide13 = () => {
       ])}
       alleKodeverk={alleKodeverk}
       arbeidsgiverOpplysningerPerId={arbeidsgivere}
+      beregningreferanserTilVurdering={lagKoblingTilVurdering([
+        bg.skjaeringstidspunktBeregning,
+        bg.skjaeringstidspunktBeregning,
+      ])}
     />
   );
 };
@@ -1898,7 +2056,12 @@ export const SelvstendigNæringsdrivendeMedVarigEndringMedAksjonspunktSide14 = (
   ];
   andeler[0].næringer = næringer;
   const sammenligningsgrunnlagPrStatus = [lagSammenligningsGrunnlag(sammenligningType.ATFLSN, 900000, 29.9, -268871)];
-  const bg = lagBG(perioder, statuser, sammenligningsgrunnlagPrStatus);
+  const bg = lagBG(
+    perioder,
+    statuser,
+    sammenligningsgrunnlagPrStatus,
+    lagAPMedKode(aksjonspunktCodes.VURDER_VARIG_ENDRET_ELLER_NYOPPSTARTET_NAERING_SELVSTENDIG_NAERINGSDRIVENDE),
+  );
   bg.dekningsgrad = 100;
   return (
     <BeregningsgrunnlagProsessIndex
@@ -1917,6 +2080,10 @@ export const SelvstendigNæringsdrivendeMedVarigEndringMedAksjonspunktSide14 = (
       ])}
       alleKodeverk={alleKodeverk}
       arbeidsgiverOpplysningerPerId={arbeidsgivere}
+      beregningreferanserTilVurdering={lagKoblingTilVurdering([
+        bg.skjaeringstidspunktBeregning,
+        bg.skjaeringstidspunktBeregning,
+      ])}
     />
   );
 };
@@ -1955,11 +2122,11 @@ export const SelvstendigNæringsdrivendeMedVarigEndringMedAksjonspunktUtførtSid
   ];
   andeler[0].næringer = næringer;
   const sammenligningsgrunnlagPrStatus = [lagSammenligningsGrunnlag(sammenligningType.ATFLSN, 900000, 29.9, -268871)];
-  const bg = lagBG(perioder, statuser, sammenligningsgrunnlagPrStatus);
-  bg.dekningsgrad = 100;
   const ap = lagAPMedKode(
     aksjonspunktCodes.VURDER_VARIG_ENDRET_ELLER_NYOPPSTARTET_NAERING_SELVSTENDIG_NAERINGSDRIVENDE,
   );
+  const bg = lagBG(perioder, statuser, sammenligningsgrunnlagPrStatus, ap);
+  bg.dekningsgrad = 100;
   ap[0].begrunnelse =
     'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.' +
     ' Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.';
@@ -1979,6 +2146,10 @@ export const SelvstendigNæringsdrivendeMedVarigEndringMedAksjonspunktUtførtSid
       ])}
       alleKodeverk={alleKodeverk}
       arbeidsgiverOpplysningerPerId={arbeidsgivere}
+      beregningreferanserTilVurdering={lagKoblingTilVurdering([
+        bg.skjaeringstidspunktBeregning,
+        bg.skjaeringstidspunktBeregning,
+      ])}
     />
   );
 };
@@ -2015,11 +2186,11 @@ export const SelvstendigNæringsdrivendeNyoppstartetMedAksjonspunktSide16 = () =
   ];
   andeler[0].næringer = næringer;
   const sammenligningsgrunnlagPrStatus = [lagSammenligningsGrunnlag(sammenligningType.ATFLSN, 350000, 50.1, -113871)];
-  const bg = lagBG(perioder, statuser, sammenligningsgrunnlagPrStatus);
-  bg.dekningsgrad = 100;
   const ap = lagAPMedKode(
     aksjonspunktCodes.VURDER_VARIG_ENDRET_ELLER_NYOPPSTARTET_NAERING_SELVSTENDIG_NAERINGSDRIVENDE,
   );
+  const bg = lagBG(perioder, statuser, sammenligningsgrunnlagPrStatus, ap);
+  bg.dekningsgrad = 100;
 
   return (
     <BeregningsgrunnlagProsessIndex
@@ -2036,6 +2207,90 @@ export const SelvstendigNæringsdrivendeNyoppstartetMedAksjonspunktSide16 = () =
       ])}
       alleKodeverk={alleKodeverk}
       arbeidsgiverOpplysningerPerId={arbeidsgivere}
+      beregningreferanserTilVurdering={lagKoblingTilVurdering([
+        bg.skjaeringstidspunktBeregning,
+        bg.skjaeringstidspunktBeregning,
+      ])}
+    />
+  );
+};
+export const SelvstendigNæringsdrivendeNyoppstartetMedAksjonspunktMedForlengelse = () => {
+  const stp1 = '2020-01-01';
+  const stp2 = '2020-06-01';
+
+  // STP 1 FORLENGELSELSE
+  const andeler = [lagAndel('SN', 531000, 531000, undefined, true)];
+  const pgi = lagPGIVerdier();
+  andeler[0].pgiVerdier = pgi;
+  andeler[0].pgiSnitt = 174544;
+  andeler[0].overstyrtPrAar = 522864;
+  const perioder = [lagPeriodeMedDagsats(andeler, null, stp1, '9999-12-31')];
+  perioder[0].bruttoInkludertBortfaltNaturalytelsePrAar = andeler[0].pgiSnitt;
+  delete perioder[0].redusertPrAar;
+  delete perioder[0].avkortetPrAar;
+
+  const statuser = [lagStatus('SN')];
+  const næringer = [
+    {
+      begrunnelse: '',
+      endringsdato: '2019-05-01',
+      erNyIArbeidslivet: false,
+      erNyoppstartet: true,
+      erVarigEndret: false,
+      kanRegnskapsførerKontaktes: false,
+      oppgittInntekt: 350000,
+      oppstartsdato: '2019-05-01',
+      orgnr: '910909088',
+      regnskapsførerNavn: 'Regnar Regnskap',
+      regnskapsførerTlf: '99999999',
+      utenlandskvirksomhetsnavn: null,
+      virksomhetType: { kode: 'ANNEN', kodeverk: 'VIRKSOMHET_TYPE' },
+      kode: 'ANNEN',
+      kodeverk: 'VIRKSOMHET_TYPE',
+    },
+  ];
+  andeler[0].næringer = næringer;
+  const sammenligningsgrunnlagPrStatus = [lagSammenligningsGrunnlag(sammenligningType.ATFLSN, 350000, 50.1, -113871)];
+  const ap = lagAPMedKode(
+    aksjonspunktCodes.VURDER_VARIG_ENDRET_ELLER_NYOPPSTARTET_NAERING_SELVSTENDIG_NAERINGSDRIVENDE,
+  );
+  ap[0].status.kode = 'UTFO';
+  ap[0].begrunnelse = 'En skikkelig god begrunnelse';
+  const bg1 = lagBG(perioder, statuser, sammenligningsgrunnlagPrStatus, ap, stp1);
+  bg1.dekningsgrad = 100;
+
+  // STP 2
+  const andeler2 = [lagAndel('SN', 531000, undefined, undefined, true)];
+  andeler2[0].pgiVerdier = pgi;
+  andeler2[0].pgiSnitt = 174544;
+  andeler2[0].overstyrtPrAar = 522864;
+  const perioder2 = [lagPeriodeMedDagsats(andeler2, null, stp2, '9999-12-31')];
+  perioder2[0].bruttoInkludertBortfaltNaturalytelsePrAar = andeler2[0].pgiSnitt;
+  delete perioder2[0].redusertPrAar;
+  delete perioder2[0].avkortetPrAar;
+  andeler2[0].næringer = næringer;
+  const ap2 = lagAPMedKode(
+    aksjonspunktCodes.VURDER_VARIG_ENDRET_ELLER_NYOPPSTARTET_NAERING_SELVSTENDIG_NAERINGSDRIVENDE,
+  );
+  const bg2 = lagBG(perioder2, statuser, sammenligningsgrunnlagPrStatus, ap2, stp2);
+  bg2.dekningsgrad = 100;
+
+  return (
+    <BeregningsgrunnlagProsessIndex
+      behandling={behandling}
+      beregningsgrunnlag={[bg1, bg2]}
+      aksjonspunkter={ap}
+      submitCallback={action('button-click')}
+      isReadOnly={false}
+      readOnlySubmitButton={false}
+      isAksjonspunktOpen={false}
+      vilkar={vilkarMedUtfall(vilkarUtfallType.IKKE_VURDERT, [stp1, stp2])}
+      alleKodeverk={alleKodeverk}
+      arbeidsgiverOpplysningerPerId={arbeidsgivere}
+      beregningreferanserTilVurdering={lagKoblingTilVurdering([stp1, stp2], {
+        [stp1]: true,
+        [stp2]: false,
+      })}
     />
   );
 };
@@ -2073,9 +2328,9 @@ export const SelvstendigNæringsdrivendeNyINæringslivetMedAksjonspunktSide17 = 
   ];
   andeler[0].næringer = næringer;
   const sammenligningsgrunnlagPrStatus = [lagSammenligningsGrunnlag(sammenligningType.ATFLSN, 300000, 50.1, -113871)];
-  const bg = lagBG(perioder, statuser, sammenligningsgrunnlagPrStatus);
-  bg.dekningsgrad = 100;
   const ap = lagAPMedKode(aksjonspunktCodes.FASTSETT_BEREGNINGSGRUNNLAG_SN_NY_I_ARBEIDSLIVET);
+  const bg = lagBG(perioder, statuser, sammenligningsgrunnlagPrStatus, ap);
+  bg.dekningsgrad = 100;
 
   return (
     <BeregningsgrunnlagProsessIndex
@@ -2092,6 +2347,10 @@ export const SelvstendigNæringsdrivendeNyINæringslivetMedAksjonspunktSide17 = 
       ])}
       alleKodeverk={alleKodeverk}
       arbeidsgiverOpplysningerPerId={arbeidsgivere}
+      beregningreferanserTilVurdering={lagKoblingTilVurdering([
+        bg.skjaeringstidspunktBeregning,
+        bg.skjaeringstidspunktBeregning,
+      ])}
     />
   );
 };
@@ -2144,6 +2403,10 @@ export const arbeidstakerOgSelvstendigNæringsdrivendeSnStorreEnnAtOgStorreEnn6g
       ])}
       alleKodeverk={alleKodeverk}
       arbeidsgiverOpplysningerPerId={arbeidsgivere}
+      beregningreferanserTilVurdering={lagKoblingTilVurdering([
+        bg.skjaeringstidspunktBeregning,
+        bg.skjaeringstidspunktBeregning,
+      ])}
     />
   );
 };
@@ -2197,6 +2460,10 @@ export const arbeidstakerOgSelvstendigNæringsdrivendeSnMindreEnnAtOgStorreEnn6g
       ])}
       alleKodeverk={alleKodeverk}
       arbeidsgiverOpplysningerPerId={arbeidsgivere}
+      beregningreferanserTilVurdering={lagKoblingTilVurdering([
+        bg.skjaeringstidspunktBeregning,
+        bg.skjaeringstidspunktBeregning,
+      ])}
     />
   );
 };
@@ -2232,7 +2499,12 @@ export const arbeidstakerOgSelvstendigNæringsdrivendeMedAPVarigEndringSide20 = 
   ];
   andeler[0].næringer = næringer;
   const sammenligningsgrunnlagPrStatus = [lagSammenligningsGrunnlag(sammenligningType.ATFLSN, 900000, 29.9, -268871)];
-  const bg = lagBG(perioder, statuser, sammenligningsgrunnlagPrStatus);
+  const bg = lagBG(
+    perioder,
+    statuser,
+    sammenligningsgrunnlagPrStatus,
+    lagAPMedKode(aksjonspunktCodes.VURDER_VARIG_ENDRET_ELLER_NYOPPSTARTET_NAERING_SELVSTENDIG_NAERINGSDRIVENDE),
+  );
   delete bg.dekningsgrad;
   return (
     <BeregningsgrunnlagProsessIndex
@@ -2251,6 +2523,10 @@ export const arbeidstakerOgSelvstendigNæringsdrivendeMedAPVarigEndringSide20 = 
       ])}
       alleKodeverk={alleKodeverk}
       arbeidsgiverOpplysningerPerId={arbeidsgivere}
+      beregningreferanserTilVurdering={lagKoblingTilVurdering([
+        bg.skjaeringstidspunktBeregning,
+        bg.skjaeringstidspunktBeregning,
+      ])}
     />
   );
 };
@@ -2289,11 +2565,11 @@ export const arbeidstakerOgSelvstendigNæringsdrivendeMedVarigEndringApBehandlet
   ];
   andeler[0].næringer = næringer;
   const sammenligningsgrunnlagPrStatus = [lagSammenligningsGrunnlag(sammenligningType.ATFLSN, 900000, 29.9, -268871)];
-  const bg = lagBG(perioder, statuser, sammenligningsgrunnlagPrStatus);
-  bg.dekningsgrad = 80;
   const ap = lagAPMedKode(
     aksjonspunktCodes.VURDER_VARIG_ENDRET_ELLER_NYOPPSTARTET_NAERING_SELVSTENDIG_NAERINGSDRIVENDE,
   );
+  const bg = lagBG(perioder, statuser, sammenligningsgrunnlagPrStatus, ap);
+  bg.dekningsgrad = 80;
   ap[0].begrunnelse = 'Endring eller nyoppstartet begrunnelse';
   ap[0].status.kode = 'UTFO';
   return (
@@ -2311,6 +2587,10 @@ export const arbeidstakerOgSelvstendigNæringsdrivendeMedVarigEndringApBehandlet
       ])}
       alleKodeverk={alleKodeverk}
       arbeidsgiverOpplysningerPerId={arbeidsgivere}
+      beregningreferanserTilVurdering={lagKoblingTilVurdering([
+        bg.skjaeringstidspunktBeregning,
+        bg.skjaeringstidspunktBeregning,
+      ])}
     />
   );
 };
@@ -2349,13 +2629,13 @@ export const arbeidstakerOgSelvstendigNæringsdrivendeAtStorreEnnSNMedVarigEndri
   ];
   andeler[0].næringer = næringer;
   const sammenligningsgrunnlagPrStatus = [lagSammenligningsGrunnlag(sammenligningType.ATFLSN, 900000, 29.9, -268871)];
-  const bg = lagBG(perioder, statuser, sammenligningsgrunnlagPrStatus);
-  bg.dekningsgrad = 80;
   const ap = lagAPMedKode(
     aksjonspunktCodes.VURDER_VARIG_ENDRET_ELLER_NYOPPSTARTET_NAERING_SELVSTENDIG_NAERINGSDRIVENDE,
   );
   ap[0].begrunnelse = 'Endring eller nyoppstartet begrunnelse';
   ap[0].status.kode = 'UTFO';
+  const bg = lagBG(perioder, statuser, sammenligningsgrunnlagPrStatus, ap);
+  bg.dekningsgrad = 80;
   return (
     <BeregningsgrunnlagProsessIndex
       behandling={behandling}
@@ -2371,6 +2651,10 @@ export const arbeidstakerOgSelvstendigNæringsdrivendeAtStorreEnnSNMedVarigEndri
       ])}
       alleKodeverk={alleKodeverk}
       arbeidsgiverOpplysningerPerId={arbeidsgivere}
+      beregningreferanserTilVurdering={lagKoblingTilVurdering([
+        bg.skjaeringstidspunktBeregning,
+        bg.skjaeringstidspunktBeregning,
+      ])}
     />
   );
 };
@@ -2427,6 +2711,10 @@ export const arbeidstakerOgSelvstendigNæringsdrivendeAtStorreEnnSNSide22 = () =
       ])}
       alleKodeverk={alleKodeverk}
       arbeidsgiverOpplysningerPerId={arbeidsgivere}
+      beregningreferanserTilVurdering={lagKoblingTilVurdering([
+        bg.skjaeringstidspunktBeregning,
+        bg.skjaeringstidspunktBeregning,
+      ])}
     />
   );
 };
@@ -2465,7 +2753,12 @@ export const arbeidstakerFrilansOgSelvstendigNæringsdrivendeMedApOgVarigEndring
   ];
   andeler[0].næringer = næringer;
   const sammenligningsgrunnlagPrStatus = [lagSammenligningsGrunnlag(sammenligningType.ATFLSN, 900000, 29.9, -268871)];
-  const bg = lagBG(perioder, statuser, sammenligningsgrunnlagPrStatus);
+  const bg = lagBG(
+    perioder,
+    statuser,
+    sammenligningsgrunnlagPrStatus,
+    lagAPMedKode(aksjonspunktCodes.VURDER_VARIG_ENDRET_ELLER_NYOPPSTARTET_NAERING_SELVSTENDIG_NAERINGSDRIVENDE),
+  );
   delete bg.dekningsgrad;
   return (
     <BeregningsgrunnlagProsessIndex
@@ -2484,6 +2777,10 @@ export const arbeidstakerFrilansOgSelvstendigNæringsdrivendeMedApOgVarigEndring
       ])}
       alleKodeverk={alleKodeverk}
       arbeidsgiverOpplysningerPerId={arbeidsgivere}
+      beregningreferanserTilVurdering={lagKoblingTilVurdering([
+        bg.skjaeringstidspunktBeregning,
+        bg.skjaeringstidspunktBeregning,
+      ])}
     />
   );
 };
@@ -2531,8 +2828,6 @@ export const arbeidstakerFrilansOgSelvstendigNæringsdrivendeMedApOgVarigEndring
   ];
   andeler[0].næringer = næringer;
   const sammenligningsgrunnlagPrStatus = [lagSammenligningsGrunnlag(sammenligningType.ATFLSN, 900000, 29.9, -268871)];
-  const bg = lagBG(perioder, statuser, sammenligningsgrunnlagPrStatus);
-  bg.dekningsgrad = 80;
   const ap = lagAPMedKode(
     aksjonspunktCodes.VURDER_VARIG_ENDRET_ELLER_NYOPPSTARTET_NAERING_SELVSTENDIG_NAERINGSDRIVENDE,
   );
@@ -2540,6 +2835,8 @@ export const arbeidstakerFrilansOgSelvstendigNæringsdrivendeMedApOgVarigEndring
     'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.' +
     ' Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.';
   ap[0].status.kode = 'UTFO';
+  const bg = lagBG(perioder, statuser, sammenligningsgrunnlagPrStatus, ap);
+  bg.dekningsgrad = 80;
   return (
     <BeregningsgrunnlagProsessIndex
       behandling={behandling}
@@ -2555,6 +2852,10 @@ export const arbeidstakerFrilansOgSelvstendigNæringsdrivendeMedApOgVarigEndring
       ])}
       alleKodeverk={alleKodeverk}
       arbeidsgiverOpplysningerPerId={arbeidsgivere}
+      beregningreferanserTilVurdering={lagKoblingTilVurdering([
+        bg.skjaeringstidspunktBeregning,
+        bg.skjaeringstidspunktBeregning,
+      ])}
     />
   );
 };
@@ -2602,8 +2903,6 @@ export const arbeidstakerFrilansOgSelvstendigNæringsdrivendeMedAPVarigEndringSn
   ];
   andeler[0].næringer = næringer;
   const sammenligningsgrunnlagPrStatus = [lagSammenligningsGrunnlag(sammenligningType.ATFLSN, 900000, 29.9, -268871)];
-  const bg = lagBG(perioder, statuser, sammenligningsgrunnlagPrStatus);
-  bg.dekningsgrad = 80;
   const ap = lagAPMedKode(
     aksjonspunktCodes.VURDER_VARIG_ENDRET_ELLER_NYOPPSTARTET_NAERING_SELVSTENDIG_NAERINGSDRIVENDE,
   );
@@ -2611,6 +2910,8 @@ export const arbeidstakerFrilansOgSelvstendigNæringsdrivendeMedAPVarigEndringSn
     'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.' +
     ' Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.';
   ap[0].status.kode = 'UTFO';
+  const bg = lagBG(perioder, statuser, sammenligningsgrunnlagPrStatus, ap);
+  bg.dekningsgrad = 80;
   return (
     <BeregningsgrunnlagProsessIndex
       behandling={behandling}
@@ -2626,6 +2927,10 @@ export const arbeidstakerFrilansOgSelvstendigNæringsdrivendeMedAPVarigEndringSn
       ])}
       alleKodeverk={alleKodeverk}
       arbeidsgiverOpplysningerPerId={arbeidsgivere}
+      beregningreferanserTilVurdering={lagKoblingTilVurdering([
+        bg.skjaeringstidspunktBeregning,
+        bg.skjaeringstidspunktBeregning,
+      ])}
     />
   );
 };
@@ -2652,6 +2957,10 @@ export const YtelseFraNavSide26 = () => {
       ])}
       alleKodeverk={alleKodeverk}
       arbeidsgiverOpplysningerPerId={arbeidsgivere}
+      beregningreferanserTilVurdering={lagKoblingTilVurdering([
+        bg.skjaeringstidspunktBeregning,
+        bg.skjaeringstidspunktBeregning,
+      ])}
     />
   );
 };
@@ -2660,8 +2969,8 @@ export const arbeidstakerOgAAPMedAksjonspunktSide27 = () => {
   const perioder = [lagPeriodeMedDagsats(andeler, 1234)];
   const statuser = [lagStatus('AT'), lagStatus('AAP')];
   const sammenligningsgrunnlagPrStatus = [lagSammenligningsGrunnlag(sammenligningType.ATFLSN, 313536, 65.8, -206304)];
-  const bg = lagBG(perioder, statuser, sammenligningsgrunnlagPrStatus);
   const ap = lagAPMedKode(aksjonspunktCodes.FASTSETT_BEREGNINGSGRUNNLAG_ARBEIDSTAKER_FRILANS);
+  const bg = lagBG(perioder, statuser, sammenligningsgrunnlagPrStatus, ap);
 
   return (
     <BeregningsgrunnlagProsessIndex
@@ -2678,6 +2987,10 @@ export const arbeidstakerOgAAPMedAksjonspunktSide27 = () => {
       ])}
       alleKodeverk={alleKodeverk}
       arbeidsgiverOpplysningerPerId={arbeidsgivere}
+      beregningreferanserTilVurdering={lagKoblingTilVurdering([
+        bg.skjaeringstidspunktBeregning,
+        bg.skjaeringstidspunktBeregning,
+      ])}
     />
   );
 };
@@ -2694,11 +3007,11 @@ export const arbeidstakerOgAAPMedAksjonspunktOppfyltSide27 = () => {
   delete perioder[0].redusertPrAar;
   const statuser = [lagStatus('AT'), lagStatus('AAP')];
   const sammenligningsgrunnlagPrStatus = [lagSammenligningsGrunnlag(sammenligningType.ATFLSN, 313536, 65.8, -206304)];
-  const bg = lagBG(perioder, statuser, sammenligningsgrunnlagPrStatus);
-  bg.dekningsgrad = 100;
   const ap = lagAPMedKode(aksjonspunktCodes.FASTSETT_BEREGNINGSGRUNNLAG_ARBEIDSTAKER_FRILANS);
   ap[0].begrunnelse = 'Endring  begrunnelse';
   ap[0].status.kode = 'UTFO';
+  const bg = lagBG(perioder, statuser, sammenligningsgrunnlagPrStatus, ap);
+  bg.dekningsgrad = 100;
   return (
     <BeregningsgrunnlagProsessIndex
       behandling={behandling}
@@ -2714,6 +3027,10 @@ export const arbeidstakerOgAAPMedAksjonspunktOppfyltSide27 = () => {
       ])}
       alleKodeverk={alleKodeverk}
       arbeidsgiverOpplysningerPerId={arbeidsgivere}
+      beregningreferanserTilVurdering={lagKoblingTilVurdering([
+        bg.skjaeringstidspunktBeregning,
+        bg.skjaeringstidspunktBeregning,
+      ])}
     />
   );
 };
@@ -2750,6 +3067,10 @@ export const frilansDagpengerOgSelvstendigNæringsdrivendeSide29 = () => {
       ])}
       alleKodeverk={alleKodeverk}
       arbeidsgiverOpplysningerPerId={arbeidsgivere}
+      beregningreferanserTilVurdering={lagKoblingTilVurdering([
+        bg.skjaeringstidspunktBeregning,
+        bg.skjaeringstidspunktBeregning,
+      ])}
     />
   );
 };
@@ -2785,6 +3106,10 @@ export const frilansDagpengerOgSelvstendigNæringsdrivendeFnOgDpOverstigerSNSide
       ])}
       alleKodeverk={alleKodeverk}
       arbeidsgiverOpplysningerPerId={arbeidsgivere}
+      beregningreferanserTilVurdering={lagKoblingTilVurdering([
+        bg.skjaeringstidspunktBeregning,
+        bg.skjaeringstidspunktBeregning,
+      ])}
     />
   );
 };
@@ -2819,6 +3144,10 @@ export const ArbeidstagerDagpengerOgSelvstendigNæringsdrivendeATOgDpOverstigerS
       ])}
       alleKodeverk={alleKodeverk}
       arbeidsgiverOpplysningerPerId={arbeidsgivere}
+      beregningreferanserTilVurdering={lagKoblingTilVurdering([
+        bg.skjaeringstidspunktBeregning,
+        bg.skjaeringstidspunktBeregning,
+      ])}
     />
   );
 };
@@ -2856,11 +3185,11 @@ export const frilansDagpengerOgSelvstendigNæringsdrivendeMedAksjonspunktSide31 
   perioder[0].bruttoInkludertBortfaltNaturalytelsePrAar = 313128;
   perioder[0].beregnetPrAar = 313128;
   const sammenligningsgrunnlagPrStatus = [lagSammenligningsGrunnlag(sammenligningType.ATFLSN, 57000, 1007.2, -574129)];
-  const bg = lagBG(perioder, statuser, sammenligningsgrunnlagPrStatus);
-  bg.dekningsgrad = 100;
   const ap = lagAPMedKode(
     aksjonspunktCodes.VURDER_VARIG_ENDRET_ELLER_NYOPPSTARTET_NAERING_SELVSTENDIG_NAERINGSDRIVENDE,
   );
+  const bg = lagBG(perioder, statuser, sammenligningsgrunnlagPrStatus, ap);
+  bg.dekningsgrad = 100;
 
   return (
     <BeregningsgrunnlagProsessIndex
@@ -2877,6 +3206,10 @@ export const frilansDagpengerOgSelvstendigNæringsdrivendeMedAksjonspunktSide31 
       ])}
       alleKodeverk={alleKodeverk}
       arbeidsgiverOpplysningerPerId={arbeidsgivere}
+      beregningreferanserTilVurdering={lagKoblingTilVurdering([
+        bg.skjaeringstidspunktBeregning,
+        bg.skjaeringstidspunktBeregning,
+      ])}
     />
   );
 };
@@ -2904,6 +3237,10 @@ export const militærOgSiviltjenesteSide33 = () => {
       ])}
       alleKodeverk={alleKodeverk}
       arbeidsgiverOpplysningerPerId={arbeidsgivere}
+      beregningreferanserTilVurdering={lagKoblingTilVurdering([
+        bg.skjaeringstidspunktBeregning,
+        bg.skjaeringstidspunktBeregning,
+      ])}
     />
   );
 };
@@ -2916,7 +3253,7 @@ export const midlertidigInaktivAvslagEnG = () => {
   const statuser = [lagStatus('MIDL_INAKTIV')];
 
   const sammenligningsgrunnlagPrStatus = [lagSammenligningsGrunnlag(sammenligningType.ATFLSN, -42673, 26.2, -7131)];
-  const bg = lagBG(perioder, statuser, sammenligningsgrunnlagPrStatus, 106399);
+  const bg = lagBG(perioder, statuser, sammenligningsgrunnlagPrStatus, [], 106399);
   bg.dekningsgrad = 100;
   return (
     <BeregningsgrunnlagProsessIndex
@@ -2933,6 +3270,10 @@ export const midlertidigInaktivAvslagEnG = () => {
       ])}
       alleKodeverk={alleKodeverk}
       arbeidsgiverOpplysningerPerId={arbeidsgivere}
+      beregningreferanserTilVurdering={lagKoblingTilVurdering([
+        bg.skjaeringstidspunktBeregning,
+        bg.skjaeringstidspunktBeregning,
+      ])}
     />
   );
 };
@@ -2961,7 +3302,57 @@ export const arbeidstakerUtenAvvikMedLonnsendringSisteTreMan = () => {
       ])}
       alleKodeverk={alleKodeverk}
       arbeidsgiverOpplysningerPerId={arbeidsgivere}
+      beregningreferanserTilVurdering={lagKoblingTilVurdering([
+        bg.skjaeringstidspunktBeregning,
+        bg.skjaeringstidspunktBeregning,
+      ])}
     />
   );
 };
 
+export const arbeidstakerMedAvvikOgKunEttGrunnlagKanLøses = () => {
+  const andeler = [lagAndel('AT', 300000, undefined, false)];
+  andeler[0].skalFastsetteGrunnlag = true;
+  const perioder = [lagStandardPeriode(andeler)];
+  const statuser = [lagStatus('AT')];
+  const sammenligningsgrunnlagPrStatus = [
+    lagSammenligningsGrunnlag(sammenligningType.ATFLSN, 474257, 25.009999999, -79059),
+  ];
+  const ap1 = lagAPMedKode(aksjonspunktCodes.FASTSETT_BEREGNINGSGRUNNLAG_ARBEIDSTAKER_FRILANS);
+  ap1[0].kanLoses = false;
+  ap1[0].begrunnelse =
+    'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.' +
+    ' Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.';
+  ap1[0].status.kode = 'UTFO';
+  const bg1 = lagBG(perioder, statuser, sammenligningsgrunnlagPrStatus, ap1);
+  const bg2 = lagBG(
+    perioder,
+    statuser,
+    sammenligningsgrunnlagPrStatus,
+    lagAPMedKode(aksjonspunktCodes.FASTSETT_BEREGNINGSGRUNNLAG_ARBEIDSTAKER_FRILANS),
+  );
+
+  delete bg1.sammenligningsgrunnlagInntekter;
+  delete bg2.sammenligningsgrunnlagInntekter;
+  return (
+    <BeregningsgrunnlagProsessIndex
+      behandling={behandling}
+      beregningsgrunnlag={[bg1, bg2]}
+      aksjonspunkter={lagAPMedKode(aksjonspunktCodes.FASTSETT_BEREGNINGSGRUNNLAG_ARBEIDSTAKER_FRILANS)}
+      submitCallback={action('button-click')}
+      isReadOnly={false}
+      readOnlySubmitButton={false}
+      isAksjonspunktOpen={false}
+      vilkar={vilkarMedUtfall(vilkarUtfallType.IKKE_VURDERT, [
+        bg1.skjaeringstidspunktBeregning,
+        bg2.skjaeringstidspunktBeregning,
+      ])}
+      alleKodeverk={alleKodeverk}
+      arbeidsgiverOpplysningerPerId={arbeidsgivere}
+      beregningreferanserTilVurdering={lagKoblingTilVurdering([
+        bg1.skjaeringstidspunktBeregning,
+        bg2.skjaeringstidspunktBeregning,
+      ])}
+    />
+  );
+};

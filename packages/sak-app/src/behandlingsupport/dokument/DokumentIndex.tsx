@@ -6,17 +6,6 @@ import React, { useMemo } from 'react';
 import useBehandlingEndret from '../../behandling/useBehandlingEndret';
 import { K9sakApiKeys, restApiHooks } from '../../data/k9sakApi';
 
-// TODO (hb) lag linker, ikke callback
-// TODO (hb) Kan implementeres med spesialisert selector som genererer hrefs til bruk i mapStateToProps
-const selectDocument =
-  (saksNr: number) =>
-  (_e, _id, document: Dokument): void => {
-    window.open(
-      `/k9/sak/api/dokument/hent-dokument?saksnummer=${saksNr}&journalpostId=${document.journalpostId}&dokumentId=${document.dokumentId}`,
-      '_blank',
-    );
-  };
-
 const sorterDokumenter = (dok1: Dokument, dok2: Dokument): number => {
   if (!dok1.tidspunkt) {
     return +1;
@@ -64,9 +53,9 @@ export const DokumentIndex = ({ behandlingId, behandlingVersjon, fagsakPerson, s
   return (
     <DokumenterSakIndex
       documents={sorterteDokumenter}
-      selectDocumentCallback={selectDocument(saksnummer)}
       behandlingId={behandlingId}
       fagsakPerson={fagsakPerson}
+      saksnummer={saksnummer}
     />
   );
 };

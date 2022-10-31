@@ -6,8 +6,6 @@ import avklaringsbehovCodes, { harAvklaringsbehov } from '@fpsak-frontend/kodeve
 import { AksjonspunktHelpTextHTML, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { Column, Row } from 'nav-frontend-grid';
 import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
-import periodeAarsak from '@fpsak-frontend/kodeverk/src/periodeAarsak';
-
 import { Undertittel } from 'nav-frontend-typografi';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import AvviksopplysningerPanel from '../fellesPaneler/AvvikopplysningerPanel';
@@ -19,6 +17,8 @@ import AksjonspunktBehandler from '../fellesPaneler/AksjonspunktBehandler';
 import BeregningsresultatTable from '../beregningsresultatPanel/BeregningsresultatTable';
 
 import AksjonspunktBehandlerAT from '../arbeidstaker/AksjonspunktBehandlerAT';
+import AksjonspunktBehandlerTB from '../arbeidstaker/AksjonspunktBehandlerTB';
+
 import AvsnittSkiller from '../redesign/AvsnittSkiller';
 import YtelsegrunnlagPanel from '../ytelsesspesifikkseOpplysninger/YtelsegrunnlagPanel';
 
@@ -41,12 +41,6 @@ const {
 // Methods
 // ------------------------------------------------------------------------------------------ //
 
-
-const harPerioderMedAvsluttedeArbeidsforhold = allePerioder =>
-  allePerioder.some(
-    ({ periodeAarsaker }) =>
-      periodeAarsaker && periodeAarsaker.some(({ kode }) => kode === periodeAarsak.ARBEIDSFORHOLD_AVSLUTTET),
-  );
 
 const findAksjonspunktHelpTekst = (gjeldendeAvklaringsbehov, erVarigEndring, erNyoppstartet) => {
   switch (gjeldendeAvklaringsbehov.definisjon.kode) {
@@ -115,13 +109,9 @@ export const transformValues = (
   alleAndelerIForstePeriode,
   allePerioder,
 ) => {
-  const harTidsbegrensedeArbeidsforhold = harPerioderMedAvsluttedeArbeidsforhold(allePerioder);
   const aksjonspunkter = [];
   const { skjæringstidspunkt } = values;
-  if (
-    harAvklaringsbehov(FASTSETT_BEREGNINGSGRUNNLAG_ARBEIDSTAKER_FRILANS, values.avklaringsbehov) &&
-    !harTidsbegrensedeArbeidsforhold
-  ) {
+  if (harAvklaringsbehov(FASTSETT_BEREGNINGSGRUNNLAG_ARBEIDSTAKER_FRILANS, values.avklaringsbehov)) {
     return leggPåSkjæringstidspunktPåAksjonspunktListe(
       aksjonspunkter.concat(
         AksjonspunktBehandlerAT.transformValues(values, values.relevanteStatuser, alleAndelerIForstePeriode),
@@ -141,13 +131,9 @@ export const transformValues = (
       skjæringstidspunkt,
     );
   }
-  if (
-    (harAvklaringsbehov(FASTSETT_BEREGNINGSGRUNNLAG_ARBEIDSTAKER_FRILANS, values.avklaringsbehov) ||
-      harAvklaringsbehov(FASTSETT_BEREGNINGSGRUNNLAG_TIDSBEGRENSET_ARBEIDSFORHOLD, values.avklaringsbehov)) &&
-    harTidsbegrensedeArbeidsforhold
-  ) {
+  if (harAvklaringsbehov(FASTSETT_BEREGNINGSGRUNNLAG_TIDSBEGRENSET_ARBEIDSFORHOLD, values.avklaringsbehov)) {
     return leggPåSkjæringstidspunktPåAksjonspunktListe(
-      aksjonspunkter.concat(Beregningsgrunnlag.transformValues(values, allePerioder)),
+      aksjonspunkter.concat(AksjonspunktBehandlerTB.transformValues(values, allePerioder)),
       skjæringstidspunkt,
     );
   }
@@ -199,10 +185,10 @@ const sjekkErMidlertidigInaktiv = beregningsgrunnlag =>
   beregningsgrunnlag.aktivitetStatus.some(a => a.kode === aktivitetStatus.MIDLERTIDIG_INAKTIV);
 
 const sjekkLonnsendringSisteTreMan = (beregningsgrunnlag) =>
-    beregningsgrunnlag.faktaOmBeregning
-    && beregningsgrunnlag.faktaOmBeregning.saksopplysninger
-    && beregningsgrunnlag.faktaOmBeregning.saksopplysninger.arbeidsforholdMedLønnsendring
-    && beregningsgrunnlag.faktaOmBeregning.saksopplysninger.arbeidsforholdMedLønnsendring.length > 0;
+  beregningsgrunnlag.faktaOmBeregning
+  && beregningsgrunnlag.faktaOmBeregning.saksopplysninger
+  && beregningsgrunnlag.faktaOmBeregning.saksopplysninger.arbeidsforholdMedLønnsendring
+  && beregningsgrunnlag.faktaOmBeregning.saksopplysninger.arbeidsforholdMedLønnsendring.length > 0;
 
 // ----------------------------------------------------- ------------------------------------- //
 // Component : BeregningFormImpl
@@ -233,7 +219,6 @@ export const BeregningFormImpl = ({
   const sammenligningsgrunnlagPrStatus = getSammenligningsgrunnlagsPrStatus(beregningsgrunnlag);
   const avvikProsent = getAvviksprosent(sammenligningsgrunnlagPrStatus);
   const aktivitetStatusList = getStatusList(beregningsgrunnlagPeriode);
-  const tidsBegrensetInntekt = harPerioderMedAvsluttedeArbeidsforhold(beregningsgrunnlagPeriode);
   const alleAndelerIForstePeriode = finnAlleAndelerIFørstePeriode(beregningsgrunnlagPeriode);
   const skalViseBeregningsresultat = !harFrisinngrunnlag(beregningsgrunnlag);
   const skalViseAvviksprosent = sjekkOmOmsorgspengegrunnlagOgSettAvviksvurdering(beregningsgrunnlag);
@@ -261,22 +246,20 @@ export const BeregningFormImpl = ({
             lonnsendringSisteTreMan={lonnsendringSisteTreMan}
           />
           {relevanteStatuser.skalViseBeregningsgrunnlag && (
-            <>
-              <Beregningsgrunnlag
-                relevanteStatuser={relevanteStatuser}
-                readOnly={readOnly}
-                submitCallback={submitCallback}
-                readOnlySubmitButton={readOnlySubmitButton}
-                formName={formName}
-                allePerioder={beregningsgrunnlagPeriode}
-                behandlingId={behandling.id}
-                behandlingVersjon={behandling.versjon}
-                alleKodeverk={alleKodeverk}
-                arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
-                sammenligningsGrunnlagInntekter={beregningsgrunnlag.sammenligningsgrunnlagInntekter}
-                skjeringstidspunktDato={skjaeringstidspunktBeregning}
-              />
-            </>
+            <Beregningsgrunnlag
+              relevanteStatuser={relevanteStatuser}
+              readOnly={readOnly}
+              submitCallback={submitCallback}
+              readOnlySubmitButton={readOnlySubmitButton}
+              formName={formName}
+              allePerioder={beregningsgrunnlagPeriode}
+              behandlingId={behandling.id}
+              behandlingVersjon={behandling.versjon}
+              alleKodeverk={alleKodeverk}
+              arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
+              sammenligningsGrunnlagInntekter={beregningsgrunnlag.sammenligningsgrunnlagInntekter}
+              skjeringstidspunktDato={skjaeringstidspunktBeregning}
+            />
           )}
         </Column>
         <Column xs="12" md="6">
@@ -308,7 +291,6 @@ export const BeregningFormImpl = ({
                 arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
                 avklaringsbehov={avklaringsbehov}
                 relevanteStatuser={relevanteStatuser}
-                tidsBegrensetInntekt={tidsBegrensetInntekt}
                 fieldArrayID={fieldArrayID}
               />
             </>

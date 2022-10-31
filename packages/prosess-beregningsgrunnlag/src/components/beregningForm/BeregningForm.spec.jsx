@@ -57,18 +57,6 @@ const apFastsettBgSnNyIArbeidslivet = {
   kanLoses: true,
   erAktivt: true,
 };
-const apFastsettBgTidsbegrensetArbeidsforhold = {
-  definisjon: {
-    kode: avklaringsbehovCodes.FASTSETT_BEREGNINGSGRUNNLAG_TIDSBEGRENSET_ARBEIDSFORHOLD,
-    navn: 'apNavn5',
-  },
-  status: {
-    kode: 'OPPR',
-    navn: 'statusNavn5',
-  },
-  kanLoses: true,
-  erAktivt: true,
-};
 
 const avklaringsbehovListe = [apFastsettBgATFL];
 
@@ -124,6 +112,7 @@ const lagPeriode = () => ({
   andelerLagtTilManueltIForrige: [],
 });
 const lagBeregningsgrunnlag = (avvikPromille, årsinntektVisningstall, sammenligningSum, dekningsgrad, tilfeller) => ({
+  vilkårsperiodeFom: '2019-09-16',
   beregningsgrunnlagPeriode: [lagPeriode()],
   sammenligningsgrunnlag: {
     avvikPromille,
@@ -272,7 +261,6 @@ describe('<BeregningForm>', () => {
     );
     const aksjonspunktBehandler = wrapper.find(AksjonspunktBehandler);
     expect(aksjonspunktBehandler.props().readOnly).to.have.equal(false);
-    expect(aksjonspunktBehandler.props().tidsBegrensetInntekt).to.have.equal(false);
     const expectedPerioder = lagPeriode();
     expect(aksjonspunktBehandler.props().allePerioder[0]).to.eql(expectedPerioder);
     expect(aksjonspunktBehandler.props().avklaringsbehov).to.eql(avklaringsbehovListe);
@@ -423,14 +411,121 @@ describe('<BeregningForm>', () => {
     expect(result).to.have.lengthOf(1);
     expect(result[0].kode).to.have.equal('5049');
   });
-  it('skal teste buildInitialValues', () => {
-    const avklaringsbehov = [apFastsettBgTidsbegrensetArbeidsforhold];
+  it('skal teste buildInitialValues uten aksjonspunkt', () => {
+    const avklaringsbehov = [];
     const beregningsgrunnlag = lagBeregningsgrunnlag(0, 120000, 100000, 100, []);
 
-    const actualValues = buildInitialValuesForBeregningrunnlag(beregningsgrunnlag, avklaringsbehov);
+    beregningsgrunnlag.avklaringsbehov = avklaringsbehov;
+    const beregningreferanserTilVurdering= [
+        {
+          skjæringstidspunkt: beregningsgrunnlag.vilkårsperiodeFom,
+          referanse: '32423-fs34-wrj2i',
+          erForlengelse: false,
+        }
+      ];
+
+    const actualValues = buildInitialValuesForBeregningrunnlag(beregningsgrunnlag, beregningreferanserTilVurdering);
     const expectedValues = {
-      ATFLVurdering: undefined,
-      undefined: '',
+      ATFLVurdering: "",
+      erTilVurdering: false,
+      skjæringstidspunkt: undefined,
+      avklaringsbehov,
+      relevanteStatuser: {
+        isArbeidstaker: true,
+        isFrilanser: false,
+        isSelvstendigNaeringsdrivende: false,
+        harAndreTilstotendeYtelser: false,
+        harDagpengerEllerAAP: false,
+        isAAP: false,
+        isDagpenger: false,
+        skalViseBeregningsgrunnlag: true,
+        isKombinasjonsstatus: false,
+        isMilitaer: false,
+      }
+    };
+    expect(actualValues).to.deep.equal(expectedValues);
+  });
+  it('skal teste buildInitialValues med aksjonspunkt', () => {
+    apFastsettBgATFL.begrunnelse = "En fin begrunnelse";
+    const avklaringsbehov = [apFastsettBgATFL];
+    const beregningsgrunnlag = lagBeregningsgrunnlag(0, 120000, 100000, 100, []);
+
+    beregningsgrunnlag.avklaringsbehov = avklaringsbehov;
+    const beregningreferanserTilVurdering= [
+      {
+        skjæringstidspunkt: beregningsgrunnlag.vilkårsperiodeFom,
+        referanse: '32423-fs34-wrj2i',
+        erForlengelse: false,
+      }
+    ];
+
+    const actualValues = buildInitialValuesForBeregningrunnlag(beregningsgrunnlag, beregningreferanserTilVurdering);
+    const expectedValues = {
+      ATFLVurdering: "En fin begrunnelse",
+      erTilVurdering: true,
+      skjæringstidspunkt: undefined,
+      avklaringsbehov,
+      relevanteStatuser: {
+        isArbeidstaker: true,
+        isFrilanser: false,
+        isSelvstendigNaeringsdrivende: false,
+        harAndreTilstotendeYtelser: false,
+        harDagpengerEllerAAP: false,
+        isAAP: false,
+        isDagpenger: false,
+        skalViseBeregningsgrunnlag: true,
+        isKombinasjonsstatus: false,
+        isMilitaer: false,
+      }
+    };
+    expect(actualValues).to.deep.equal(expectedValues);
+  });
+  it('skal teste buildInitialValues med aksjonspunkt for forlengelse', () => {
+    apFastsettBgATFL.begrunnelse = "En fin begrunnelse";
+    const avklaringsbehov = [apFastsettBgATFL];
+    const beregningsgrunnlag = lagBeregningsgrunnlag(0, 120000, 100000, 100, []);
+
+    beregningsgrunnlag.avklaringsbehov = avklaringsbehov;
+    const beregningreferanserTilVurdering= [
+      {
+        skjæringstidspunkt: beregningsgrunnlag.vilkårsperiodeFom,
+        referanse: '32423-fs34-wrj2i',
+        erForlengelse: true,
+      }
+    ];
+
+    const actualValues = buildInitialValuesForBeregningrunnlag(beregningsgrunnlag, beregningreferanserTilVurdering);
+    const expectedValues = {
+      ATFLVurdering: "En fin begrunnelse",
+      erTilVurdering: false,
+      skjæringstidspunkt: undefined,
+      avklaringsbehov,
+      relevanteStatuser: {
+        isArbeidstaker: true,
+        isFrilanser: false,
+        isSelvstendigNaeringsdrivende: false,
+        harAndreTilstotendeYtelser: false,
+        harDagpengerEllerAAP: false,
+        isAAP: false,
+        isDagpenger: false,
+        skalViseBeregningsgrunnlag: true,
+        isKombinasjonsstatus: false,
+        isMilitaer: false,
+      }
+    };
+    expect(actualValues).to.deep.equal(expectedValues);
+  });
+  it('skal teste buildInitialValues med aksjonspunkt uten kobling til vurdering', () => {
+    apFastsettBgATFL.begrunnelse = "En fin begrunnelse";
+    const avklaringsbehov = [apFastsettBgATFL];
+    const beregningsgrunnlag = lagBeregningsgrunnlag(0, 120000, 100000, 100, []);
+
+    beregningsgrunnlag.avklaringsbehov = avklaringsbehov;
+    const beregningreferanserTilVurdering= [];
+
+    const actualValues = buildInitialValuesForBeregningrunnlag(beregningsgrunnlag, beregningreferanserTilVurdering);
+    const expectedValues = {
+      ATFLVurdering: "En fin begrunnelse",
       erTilVurdering: false,
       skjæringstidspunkt: undefined,
       avklaringsbehov,
