@@ -121,6 +121,9 @@ const VedtakOverlappendeYtelsePanel: React.FC<Props & WrappedComponentProps> = (
           </Checkbox>
         </CheckboxGroup>
       </Alert>
+
+      {/* 
+      Kommenterer ut i påvente av avklart tekst
       <Alert variant="info" size="medium">
         <Accordion className={styles.accordion}>
           <Accordion.Item>
@@ -134,7 +137,7 @@ const VedtakOverlappendeYtelsePanel: React.FC<Props & WrappedComponentProps> = (
             </Accordion.Content>
           </Accordion.Item>
         </Accordion>
-      </Alert>
+      </Alert> */}
 
       {valgtPeriode && (
         <BorderBox>
