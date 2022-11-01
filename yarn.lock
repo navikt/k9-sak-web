@@ -3225,7 +3225,7 @@
     react-hook-form "7.36.1"
     react-intl "6.1.2"
 
-"@navikt/ft-prosess-beregningsgrunnlag_3_0_0@npm:@navikt/ft-prosess-beregningsgrunnlag@3.0.3":
+"@navikt/ft-prosess-beregningsgrunnlag_3_0_0@npm:@navikt/ft-prosess-beregningsgrunnlag@3.0.6":
   version "3.0.0"
   resolved "https://npm.pkg.github.com/download/@navikt/ft-prosess-beregningsgrunnlag/3.0.0/1bf58d8cb3bfc347f1a010b0e689b408c0cde5d4#1bf58d8cb3bfc347f1a010b0e689b408c0cde5d4"
   integrity sha512-qN4mqTgPpAlcJ6RvGH94LPPf8MpB3kJRGDUcJFQ9LDBL5AnR/PmpvlSwlpzxYCTI9irbt9dYeAt1jBPFwN1XJg==
