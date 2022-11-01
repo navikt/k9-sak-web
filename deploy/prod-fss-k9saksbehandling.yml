@@ -1,16 +1,16 @@
-apiVersion: "nais.io/v1alpha1"
-kind: "Application"
+apiVersion: 'nais.io/v1alpha1'
+kind: 'Application'
 metadata:
   name: k9-sak-web
   namespace: k9saksbehandling
   labels:
     team: k9saksbehandling
   annotations:
-    nais.io/run-as-user: "101" # Fix permissions for nginx
-    nais.io/read-only-file-system: "false" # Fix permissions for nginx
-    nginx.ingress.kubernetes.io/proxy-buffer-size: "16k"
+    nais.io/run-as-user: '101' # Fix permissions for nginx
+    nais.io/read-only-file-system: 'false' # Fix permissions for nginx
+    nginx.ingress.kubernetes.io/proxy-buffer-size: '16k'
 spec:
-  image: {{ image }}
+  image: { { image } }
   port: 9000
   team: k9saksbehandling
   liveness:
@@ -35,83 +35,83 @@ spec:
       cpu: 200m
       memory: 32Mi
   ingresses:
-    - "https://app.adeo.no/k9"
+    - 'https://app.adeo.no/k9'
   env:
     - name: APP_NAME
       value: k9-sak-web
     - name: APP_URL
-      value: "http://k9-sak"
+      value: 'http://k9-sak'
     - name: APP_PORT
-      value: "9000"
+      value: '9000'
     - name: APP_URL_K9FORMIDLING
-      value: "http://k9-formidling"
+      value: 'http://k9-formidling'
     - name: APP_URL_K9FORMIDLING_DD
-      value: "http://k9-formidling-dokumentdata.k9saksbehandling"
+      value: 'http://k9-formidling-dokumentdata.k9saksbehandling'
     - name: APP_URL_K9OPPDRAG
-      value: "http://k9-oppdrag.default"
+      value: 'http://k9-oppdrag.default'
     - name: APP_URL_KLAGE
-      value: "http://k9-klage.k9saksbehandling"
+      value: 'http://k9-klage.k9saksbehandling'
     - name: APP_URL_K9TILBAKE
-      value: "http://k9-tilbake.default"
+      value: 'http://k9-tilbake.default'
     - name: APP_URL_K9FORDEL
-      value: "http://k9-fordel.k9saksbehandling"
+      value: 'http://k9-fordel.k9saksbehandling'
     - name: APP_DIAGNOSEKODER
-      value: "http://diagnosekode-api.k9saksbehandling/diagnosekoder"
+      value: 'http://diagnosekode-api.k9saksbehandling/diagnosekoder'
     - name: MEDISINSK_VILKAR_FRONTEND_URL
-      value: "https://medisinsk-vilkar-frontend.intern.nav.no/"
+      value: 'https://medisinsk-vilkar-frontend.intern.nav.no/'
     - name: OMSORGSDAGER_FRONTEND_URL
-      value: "https://omsorgsdager-frontend.intern.nav.no/"
+      value: 'https://omsorgsdager-frontend.intern.nav.no/'
     - name: PSB_UTTAK_FRONTEND_URL
-      value: "https://psb-uttak-frontend.intern.nav.no/"
+      value: 'https://psb-uttak-frontend.intern.nav.no/'
     - name: OMSORGEN_FOR_FRONTEND_URL
-      value: "https://omsorgen-for-frontend.intern.nav.no/"
+      value: 'https://omsorgen-for-frontend.intern.nav.no/'
     - name: PSB_INNTEKTSMELDING_FRONTEND_URL
-      value: "https://psb-inntektsmelding-frontend.intern.nav.no/"
+      value: 'https://psb-inntektsmelding-frontend.intern.nav.no/'
     - name: PSB_ETABLERT_TILSYN_FRONTEND_URL
-      value: "https://psb-etablert-tilsyn-frontend.intern.nav.no/"
+      value: 'https://psb-etablert-tilsyn-frontend.intern.nav.no/'
     - name: PSB_OM_BARNET_FRONTEND_URL
-      value: "https://psb-om-barnet-frontend.intern.nav.no/"
+      value: 'https://psb-om-barnet-frontend.intern.nav.no/'
     - name: ENDRINGSLOGG_URL
-      value: "https://familie-endringslogg.intern.nav.no/"
+      value: 'https://familie-endringslogg.intern.nav.no/'
 
     # Feature-flag
     - name: KLAGE_KABAL
-      value: "true"
+      value: 'true'
     - name: VARSELTEKST
-      value: "true"
+      value: 'true'
     - name: DOKUMENTDATA
-      value: "false"
+      value: 'false'
     - name: UNNTAKSBEHANDLING
-      value: "false"
+      value: 'false'
     - name: KLAGEBEHANDLING
-      value: "true"
+      value: 'true'
     - name: TILBAKE
-      value: "true"
+      value: 'true'
     - name: UTENLANDSOPPHOLD
-      value: "true"
+      value: 'true'
     - name: SOKNADPERIODESTRIPE
-      value: "false"
+      value: 'false'
     - name: TYPE_MEDISINSKE_OPPLYSNINGER_BREV
-      value: "true"
+      value: 'true'
     - name: LOS_MARKER_BEHANDLING
-      value: "true"
+      value: 'true'
     - name: NY_BEREGNING_PROSESS_ENABLED
-      value: "true"
+      value: 'true'
     - name: SPLITTET_SAMMENLINGNING_BEREGNING
-      value: "false"
+      value: 'false'
     - name: NY_BEREGNING_FAKTA_ENABLED
-      value: "true"
+      value: 'true'
     - name: NY_BEREGNING_FAKTA_FORDEL_ENABLED
-      value: "true"
+      value: 'true'
     - name: AKSJONSPUNKT_9014
-      value: "false"
+      value: 'true'
     - name: AKSJONSPUNKT_9015
-      value: "false"
+      value: 'true'
     - name: NY_PROSESS_VEDTAK_ENABLED
-      value: "false"
+      value: 'true'
     - name: FRITEKST_REDIGERING
-      value: "false"
+      value: 'true'
     - name: FIKS_DELVIS_PROSESSTEG
-      value: "false"
+      value: 'false'
     - name: FIX_SOKNADSFRIST_KALENDER_OG_READONLY
-      value: "false"
+      value: 'false'
