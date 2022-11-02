@@ -363,7 +363,7 @@ export const VedtakForm: React.FC<Props> = ({
                         !kanHaAutomatiskVedtaksbrev(tilgjengeligeVedtaksbrev))
                     }
                     value={fieldnames.SKAL_BRUKE_OVERSTYRENDE_FRITEKST_BREV}
-                    size="medium"
+                    size="small"
                   >
                     {intl.formatMessage({ id: 'VedtakForm.ManuellOverstyring' })}
                   </Checkbox>
@@ -379,7 +379,7 @@ export const VedtakForm: React.FC<Props> = ({
                     }
                     checked={formikProps.values.skalHindreUtsendingAvBrev}
                     value={fieldnames.SKAL_HINDRE_UTSENDING_AV_BREV}
-                    size="medium"
+                    size="small"
                   >
                     {intl.formatMessage({ id: 'VedtakForm.HindreUtsending' })}
                   </Checkbox>

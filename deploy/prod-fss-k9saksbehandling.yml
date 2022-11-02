@@ -104,13 +104,13 @@ spec:
     - name: NY_BEREGNING_FAKTA_FORDEL_ENABLED
       value: "true"
     - name: AKSJONSPUNKT_9014
-      value: "false"
+      value: "true"
     - name: AKSJONSPUNKT_9015
-      value: "false"
+      value: "true"
     - name: NY_PROSESS_VEDTAK_ENABLED
-      value: "false"
+      value: "true"
     - name: FRITEKST_REDIGERING
-      value: "false"
+      value: "true"
     - name: FIKS_DELVIS_PROSESSTEG
       value: "false"
     - name: FIX_SOKNADSFRIST_KALENDER_OG_READONLY
