@@ -36,30 +36,35 @@ export const VedtakAksjonspunktPanelImpl: React.FC<Props> = ({
   viseFlereSjekkbokserForBrev,
   harVurdertOverlappendeYtelse,
   setHarVurdertOverlappendeYtelse,
-}) => (
-  <Row>
-    <Column xs="8">
-      <Heading level="2" size="medium" data-testid="vedtakAksjonspunktPanel">
-        {intl.formatMessage({ id: getTextCode(behandlingStatusKode) })}
-      </Heading>
-      <VerticalSpacer twentyPx />
-      <VedtakHelpTextPanel
-        aksjonspunktKoder={aksjonspunktKoder}
-        readOnly={readOnly}
-        viseFlereSjekkbokserForBrev={viseFlereSjekkbokserForBrev}
-      />
-      {overlappendeYtelser && overlappendeYtelser.length > 0 && (
-        <VedtakOverlappendeYtelsePanel
-          alleKodeverk={alleKodeverk}
-          overlappendeYtelser={overlappendeYtelser}
-          harVurdertOverlappendeYtelse={harVurdertOverlappendeYtelse}
-          setHarVurdertOverlappendeYtelse={setHarVurdertOverlappendeYtelse}
-        />
-      )}
-      <VerticalSpacer twentyPx />
-      {children}
-    </Column>
-  </Row>
-);
+}) => {
+  const harOverlappendeYtelser = overlappendeYtelser && overlappendeYtelser.length > 0;
+  return (
+    <Row>
+      <Column xs="8">
+        <Heading level="2" size="medium" data-testid="vedtakAksjonspunktPanel">
+          {intl.formatMessage({ id: getTextCode(behandlingStatusKode) })}
+        </Heading>
+        <VerticalSpacer twentyPx />
+        {!harOverlappendeYtelser && (
+          <VedtakHelpTextPanel
+            aksjonspunktKoder={aksjonspunktKoder}
+            readOnly={readOnly}
+            viseFlereSjekkbokserForBrev={viseFlereSjekkbokserForBrev}
+          />
+        )}
+        {harOverlappendeYtelser && (
+          <VedtakOverlappendeYtelsePanel
+            alleKodeverk={alleKodeverk}
+            overlappendeYtelser={overlappendeYtelser}
+            harVurdertOverlappendeYtelse={harVurdertOverlappendeYtelse}
+            setHarVurdertOverlappendeYtelse={setHarVurdertOverlappendeYtelse}
+          />
+        )}
+        <VerticalSpacer twentyPx />
+        {children}
+      </Column>
+    </Row>
+  );
+};
 
 export default injectIntl(VedtakAksjonspunktPanelImpl);
