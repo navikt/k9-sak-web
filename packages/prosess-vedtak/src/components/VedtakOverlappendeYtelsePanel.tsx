@@ -105,6 +105,28 @@ const VedtakOverlappendeYtelsePanel: React.FC<Props & WrappedComponentProps> = (
         <VerticalSpacer twentyPx />
         {getTidslinje()}
         <VerticalSpacer twentyPx />
+        {valgtPeriode && (
+          <>
+            <BorderBox>
+              <header>Detaljer om periode</header>
+              <div className={styles.periodeDetaljer}>
+                <EtikettFokus className={styles.periodeDetalj}>
+                  <strong>{intl.formatMessage({ id: 'VedtakForm.OverlappendeYtelserKilde' })}</strong>
+                  {utledFagSystem(valgtPeriode.periodeinfo.kilde.kode)}
+                </EtikettFokus>
+                <EtikettInfo className={styles.periodeDetalj}>
+                  <strong>{intl.formatMessage({ id: 'VedtakForm.OverlappendeYtelserYtelse' })}</strong>
+                  {utledYtelseType(valgtPeriode.periodeinfo.ytelseType.kode)}
+                </EtikettInfo>
+                <EtikettInfo className={styles.periodeDetalj}>
+                  <strong>{intl.formatMessage({ id: 'VedtakForm.OverlappendeYtelserPeriode' })}</strong>
+                  {valgtPeriode.fom} - {valgtPeriode.tom}
+                </EtikettInfo>
+              </div>
+            </BorderBox>
+            <VerticalSpacer sixteenPx />
+          </>
+        )}
         <CheckboxGroup
           legend="Bekreft at overlappende ytelser er sjekket og fulgt opp"
           hideLegend
@@ -121,6 +143,9 @@ const VedtakOverlappendeYtelsePanel: React.FC<Props & WrappedComponentProps> = (
           </Checkbox>
         </CheckboxGroup>
       </Alert>
+
+      {/* 
+      Kommenterer ut i påvente av avklart tekst
       <Alert variant="info" size="medium">
         <Accordion className={styles.accordion}>
           <Accordion.Item>
@@ -134,27 +159,7 @@ const VedtakOverlappendeYtelsePanel: React.FC<Props & WrappedComponentProps> = (
             </Accordion.Content>
           </Accordion.Item>
         </Accordion>
-      </Alert>
-
-      {valgtPeriode && (
-        <BorderBox>
-          <header>Detaljer om periode</header>
-          <div className={styles.periodeDetaljer}>
-            <EtikettFokus className={styles.periodeDetalj}>
-              <strong>{intl.formatMessage({ id: 'VedtakForm.OverlappendeYtelserKilde' })}</strong>
-              {utledFagSystem(valgtPeriode.periodeinfo.kilde.kode)}
-            </EtikettFokus>
-            <EtikettInfo className={styles.periodeDetalj}>
-              <strong>{intl.formatMessage({ id: 'VedtakForm.OverlappendeYtelserYtelse' })}</strong>
-              {utledYtelseType(valgtPeriode.periodeinfo.ytelseType.kode)}
-            </EtikettInfo>
-            <EtikettInfo className={styles.periodeDetalj}>
-              <strong>{intl.formatMessage({ id: 'VedtakForm.OverlappendeYtelserPeriode' })}</strong>
-              {valgtPeriode.fom} - {valgtPeriode.tom}
-            </EtikettInfo>
-          </div>
-        </BorderBox>
-      )}
+      </Alert> */}
     </>
   );
 };
