@@ -273,7 +273,10 @@ const FagsakIndex = () => {
             return null;
           }
 
-          if (personopplysningerState === RestApiState.LOADING) {
+          if (
+            personopplysningerState === RestApiState.NOT_STARTED ||
+            personopplysningerState === RestApiState.LOADING
+          ) {
             return <LoadingPanel />;
           }
 
