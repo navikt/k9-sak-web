@@ -35,7 +35,6 @@ interface PureOwnProps {
   behandlingKlageVurdering?: KlageVurdering;
   readOnly: boolean;
   erTilbakekreving: boolean;
-  erForeldrepengerFagsak: boolean;
   arbeidsforholdHandlingTyper: KodeverkMedNavn[];
   skjemalenkeTyper: KodeverkMedNavn[];
   lagLenke: (skjermlenkeCode: string) => Location;
@@ -55,7 +54,6 @@ export const TotrinnskontrollBeslutterForm = ({
   handleSubmit,
   readOnly,
   behandlingKlageVurdering,
-  erForeldrepengerFagsak,
   arbeidsforholdHandlingTyper,
   skjemalenkeTyper,
   erTilbakekreving,
@@ -81,7 +79,6 @@ export const TotrinnskontrollBeslutterForm = ({
       <FieldArray
         name="aksjonspunktGodkjenning"
         component={AksjonspunktGodkjenningFieldArray}
-        erForeldrepengerFagsak={erForeldrepengerFagsak}
         klagebehandlingVurdering={behandlingKlageVurdering}
         behandlingStatus={behandling.status}
         erTilbakekreving={erTilbakekreving}

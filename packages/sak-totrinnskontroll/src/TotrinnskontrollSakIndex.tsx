@@ -5,14 +5,12 @@ import { Location } from 'history';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import BehandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import { skjermlenkeCodes } from '@k9-sak-web/konstanter';
-import FagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import vurderPaNyttArsakType from '@fpsak-frontend/kodeverk/src/vurderPaNyttArsakType';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import aksjonspunktCodesTilbakekreving from '@fpsak-frontend/kodeverk/src/aksjonspunktCodesTilbakekreving';
 import {
   BehandlingAppKontekst,
-  Kodeverk,
   KodeverkMedNavn,
   KlageVurdering,
   TotrinnskontrollSkjermlenkeContext,
@@ -61,7 +59,6 @@ interface OwnProps {
   behandling: BehandlingAppKontekst;
   totrinnskontrollSkjermlenkeContext: TotrinnskontrollSkjermlenkeContext[];
   location: Location;
-  fagsakYtelseType: Kodeverk;
   behandlingKlageVurdering?: KlageVurdering;
   alleKodeverk: { [key: string]: KodeverkMedNavn[] };
   readOnly: boolean;
@@ -73,7 +70,6 @@ const TotrinnskontrollSakIndex = ({
   behandling,
   totrinnskontrollSkjermlenkeContext,
   location,
-  fagsakYtelseType,
   readOnly,
   onSubmit,
   behandlingKlageVurdering,
@@ -139,7 +135,6 @@ const TotrinnskontrollSakIndex = ({
           totrinnskontrollSkjermlenkeContext={sorterteTotrinnskontrollSkjermlenkeContext}
           readOnly={readOnly}
           onSubmit={submitHandler}
-          erForeldrepengerFagsak={fagsakYtelseType.kode === FagsakYtelseType.FORELDREPENGER}
           behandlingKlageVurdering={behandlingKlageVurdering}
           arbeidsforholdHandlingTyper={arbeidsforholdHandlingTyper}
           skjemalenkeTyper={skjemalenkeTyper}
@@ -150,7 +145,6 @@ const TotrinnskontrollSakIndex = ({
       {!erStatusFatterVedtak && (
         <TotrinnskontrollSaksbehandlerPanel
           totrinnskontrollSkjermlenkeContext={sorterteTotrinnskontrollSkjermlenkeContext}
-          erForeldrepengerFagsak={fagsakYtelseType.kode === FagsakYtelseType.FORELDREPENGER}
           behandlingKlageVurdering={behandlingKlageVurdering}
           behandlingStatus={behandling.status}
           erTilbakekreving={erTilbakekreving}
