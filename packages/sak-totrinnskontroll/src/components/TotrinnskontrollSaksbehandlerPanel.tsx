@@ -16,7 +16,6 @@ import styles from './totrinnskontrollSaksbehandlerPanel.less';
 
 interface OwnProps {
   totrinnskontrollSkjermlenkeContext: TotrinnskontrollSkjermlenkeContext[];
-  erForeldrepengerFagsak: boolean;
   behandlingKlageVurdering?: KlageVurdering;
   behandlingStatus: Kodeverk;
   erTilbakekreving: boolean;
@@ -28,7 +27,6 @@ interface OwnProps {
 
 const TotrinnskontrollSaksbehandlerPanel = ({
   totrinnskontrollSkjermlenkeContext,
-  erForeldrepengerFagsak,
   behandlingKlageVurdering,
   behandlingStatus,
   arbeidsforholdHandlingTyper,
@@ -64,7 +62,6 @@ const TotrinnskontrollSaksbehandlerPanel = ({
             </NavLink>
             {aksjonspunkter.map(aksjonspunkt => {
               const aksjonspunktTexts = getAksjonspunkttekst(
-                erForeldrepengerFagsak,
                 behandlingKlageVurdering,
                 behandlingStatus,
                 arbeidsforholdHandlingTyper,
