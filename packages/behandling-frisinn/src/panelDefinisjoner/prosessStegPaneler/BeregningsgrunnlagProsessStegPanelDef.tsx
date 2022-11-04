@@ -9,7 +9,7 @@ import { konverterKodeverkTilKode, mapVilkar } from '@fpsak-frontend/utils';
 
 const ProsessBeregningsgrunnlag = React.lazy(() => import('@navikt/ft-prosess-beregningsgrunnlag'));
 const ProsessBeregningsgrunnlagSplittetSammenligning = React.lazy(
-  () => import('@navikt/ft-prosess-beregningsgrunnlag_3_0_7'),
+  () => import('@navikt/ft-prosess-beregningsgrunnlag_3_0_9'),
 );
 
 const ProsessBeregningsgrunnlagMF =
@@ -36,7 +36,7 @@ class PanelDef extends ProsessStegPanelDef {
       const bgVilkaret = deepCopyProps.vilkar.find(v => v.vilkarType === vilkarType.BEREGNINGSGRUNNLAGVILKARET);
       return (
         <DynamicLoader<React.ComponentProps<typeof ProsessBeregningsgrunnlagSplittetSammenligning>>
-          packageCompFn={() => import('@navikt/ft-prosess-beregningsgrunnlag_3_0_7')}
+          packageCompFn={() => import('@navikt/ft-prosess-beregningsgrunnlag_3_0_9')}
           federatedCompFn={ProsessBeregningsgrunnlagMF}
           {...props}
           beregningsgrunnlagsvilkar={mapVilkar(bgVilkaret, props.beregningreferanserTilVurdering)}
