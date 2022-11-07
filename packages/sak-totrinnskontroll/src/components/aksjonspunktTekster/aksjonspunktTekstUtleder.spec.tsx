@@ -9,6 +9,8 @@ import faktaOmBeregningTilfelle from '@fpsak-frontend/kodeverk/src/faktaOmBeregn
 import arbeidsforholdHandlingType from '@fpsak-frontend/kodeverk/src/arbeidsforholdHandlingType';
 import { KlageVurdering, TotrinnskontrollAksjonspunkt, TotrinnskontrollArbeidsforhold } from '@k9-sak-web/types';
 
+import { Element } from 'nav-frontend-typografi';
+import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import getAksjonspunkttekst, { getFaktaOmArbeidsforholdMessages } from './aksjonspunktTekstUtleder';
 
 const medholdIKlage = {
@@ -36,7 +38,7 @@ describe('aksjonspunktTekstUtleder', () => {
       besluttersBegrunnelse: 'begrunnelse',
       totrinnskontrollGodkjent: false,
     } as TotrinnskontrollAksjonspunkt;
-    const message = getAksjonspunkttekst(true, null, null, null, null, aksjonspunkt);
+    const message = getAksjonspunkttekst(null, null, null, null, aksjonspunkt);
     // @ts-ignore
     expect(message[0].props.id).toEqual('ToTrinnsForm.Adopsjon.VilkarOverstyrt');
   });
@@ -47,7 +49,7 @@ describe('aksjonspunktTekstUtleder', () => {
       besluttersBegrunnelse: 'begrunnelse',
       totrinnskontrollGodkjent: false,
     } as TotrinnskontrollAksjonspunkt;
-    const message = getAksjonspunkttekst(true, null, null, null, null, aksjonspunkt);
+    const message = getAksjonspunkttekst(null, null, null, null, aksjonspunkt);
     // @ts-ignore
     expect(message[0].props.id).toEqual('ToTrinnsForm.Fødsel.VilkarOverstyrt');
   });
@@ -58,7 +60,7 @@ describe('aksjonspunktTekstUtleder', () => {
       besluttersBegrunnelse: 'begrunnelse',
       totrinnskontrollGodkjent: false,
     } as TotrinnskontrollAksjonspunkt;
-    const message = getAksjonspunkttekst(true, null, null, null, null, aksjonspunkt);
+    const message = getAksjonspunkttekst(null, null, null, null, aksjonspunkt);
     // @ts-ignore
     expect(message[0].props.id).toEqual('ToTrinnsForm.Beregning.InntektFastsatt');
   });
@@ -68,7 +70,7 @@ describe('aksjonspunktTekstUtleder', () => {
       besluttersBegrunnelse: 'begrunnelse',
       totrinnskontrollGodkjent: false,
     } as TotrinnskontrollAksjonspunkt;
-    const message = getAksjonspunkttekst(true, null, null, null, null, aksjonspunkt);
+    const message = getAksjonspunkttekst(null, null, null, null, aksjonspunkt);
     // @ts-ignore
     expect(message[0].props.id).toEqual('ToTrinnsForm.Beregning.InntektFastsatt');
   });
@@ -78,7 +80,7 @@ describe('aksjonspunktTekstUtleder', () => {
       besluttersBegrunnelse: 'begrunnelse',
       totrinnskontrollGodkjent: false,
     } as TotrinnskontrollAksjonspunkt;
-    const message = getAksjonspunkttekst(true, null, null, null, null, aksjonspunkt);
+    const message = getAksjonspunkttekst(null, null, null, null, aksjonspunkt);
     // @ts-ignore
     expect(message[0].props.id).toEqual('ToTrinnsForm.Beregning.VilkarOverstyrt');
   });
@@ -88,7 +90,7 @@ describe('aksjonspunktTekstUtleder', () => {
       besluttersBegrunnelse: 'begrunnelse',
       totrinnskontrollGodkjent: false,
     } as TotrinnskontrollAksjonspunkt;
-    const message = getAksjonspunkttekst(true, null, null, null, null, aksjonspunkt);
+    const message = getAksjonspunkttekst(null, null, null, null, aksjonspunkt);
     // @ts-ignore
     expect(message[0].props.id).toEqual('ToTrinnsForm.Beregning.InntektFastsatt');
   });
@@ -99,7 +101,7 @@ describe('aksjonspunktTekstUtleder', () => {
       besluttersBegrunnelse: 'begrunnelse',
       totrinnskontrollGodkjent: false,
     } as TotrinnskontrollAksjonspunkt;
-    const message = getAksjonspunkttekst(true, null, null, null, null, aksjonspunkt);
+    const message = getAksjonspunkttekst(null, null, null, null, aksjonspunkt);
     // @ts-ignore
     expect(message[0].props.id).toEqual('ToTrinnsForm.Soknadsfrist.VilkarOverstyrt');
   });
@@ -110,7 +112,7 @@ describe('aksjonspunktTekstUtleder', () => {
       besluttersBegrunnelse: 'begrunnelse',
       totrinnskontrollGodkjent: false,
     } as TotrinnskontrollAksjonspunkt;
-    const message = getAksjonspunkttekst(true, null, null, null, null, aksjonspunkt);
+    const message = getAksjonspunkttekst(null, null, null, null, aksjonspunkt);
     // @ts-ignore
     expect(message[0].props.id).toEqual('ToTrinnsForm.Medlemskap.VurderGyldigMedlemskap');
   });
@@ -120,7 +122,7 @@ describe('aksjonspunktTekstUtleder', () => {
       besluttersBegrunnelse: 'begrunnelse',
       totrinnskontrollGodkjent: false,
     } as TotrinnskontrollAksjonspunkt;
-    const message = getAksjonspunkttekst(true, null, null, null, null, aksjonspunkt);
+    const message = getAksjonspunkttekst(null, null, null, null, aksjonspunkt);
     // @ts-ignore
     expect(message[0].props.id).toEqual('ToTrinnsForm.Medlemskap.AvklarLovligOpphold');
   });
@@ -130,7 +132,7 @@ describe('aksjonspunktTekstUtleder', () => {
       besluttersBegrunnelse: 'begrunnelse',
       totrinnskontrollGodkjent: false,
     } as TotrinnskontrollAksjonspunkt;
-    const message = getAksjonspunkttekst(true, null, null, null, null, aksjonspunkt);
+    const message = getAksjonspunkttekst(null, null, null, null, aksjonspunkt);
     // @ts-ignore
     expect(message[0].props.id).toEqual('ToTrinnsForm.Medlemskap.VurderSokerBosatt');
   });
@@ -140,7 +142,7 @@ describe('aksjonspunktTekstUtleder', () => {
       besluttersBegrunnelse: 'begrunnelse',
       totrinnskontrollGodkjent: false,
     } as TotrinnskontrollAksjonspunkt;
-    const message = getAksjonspunkttekst(true, null, null, null, null, aksjonspunkt);
+    const message = getAksjonspunkttekst(null, null, null, null, aksjonspunkt);
     // @ts-ignore
     expect(message[0].props.id).toEqual('ToTrinnsForm.Medlemskap.AvklarOppholdsrett');
   });
@@ -150,7 +152,7 @@ describe('aksjonspunktTekstUtleder', () => {
       besluttersBegrunnelse: 'begrunnelse',
       totrinnskontrollGodkjent: false,
     } as TotrinnskontrollAksjonspunkt;
-    const message = getAksjonspunkttekst(true, null, null, null, null, aksjonspunkt);
+    const message = getAksjonspunkttekst(null, null, null, null, aksjonspunkt);
     // @ts-ignore
     expect(message[0].props.id).toEqual('ToTrinnsForm.Medlemskap.VilkarOverstyrt');
   });
@@ -160,9 +162,9 @@ describe('aksjonspunktTekstUtleder', () => {
       aksjonspunktKode: aksjonspunktCodes.VURDER_VARIG_ENDRET_ELLER_NYOPPSTARTET_NAERING_SELVSTENDIG_NAERINGSDRIVENDE,
       besluttersBegrunnelse: 'begrunnelse',
       totrinnskontrollGodkjent: false,
-      beregningDto: { fastsattVarigEndringNaering: true },
+      beregningDtoer: [{ fastsattVarigEndring: true, skjæringstidspunkt: '2022-01-01' }],
     } as TotrinnskontrollAksjonspunkt;
-    const message = getAksjonspunkttekst(true, null, null, null, null, aksjonspunkt);
+    const message = getAksjonspunkttekst(null, null, null, null, aksjonspunkt);
     // @ts-ignore
     expect(message[0].props.id).toEqual('ToTrinnsForm.Beregning.VarigEndring');
   });
@@ -171,99 +173,11 @@ describe('aksjonspunktTekstUtleder', () => {
       aksjonspunktKode: aksjonspunktCodes.VURDER_VARIG_ENDRET_ELLER_NYOPPSTARTET_NAERING_SELVSTENDIG_NAERINGSDRIVENDE,
       besluttersBegrunnelse: 'begrunnelse',
       totrinnskontrollGodkjent: false,
-      beregningDto: { fastsattVarigEndringNaering: false },
+      beregningDtoer: [{ fastsattVarigEndring: false, skjæringstidspunkt: '2022-01-01' }],
     } as TotrinnskontrollAksjonspunkt;
-    const message = getAksjonspunkttekst(true, null, null, null, null, aksjonspunkt);
+    const message = getAksjonspunkttekst(null, null, null, null, aksjonspunkt);
     // @ts-ignore
     expect(message[0].props.id).toEqual('ToTrinnsForm.Beregning.IkkeVarigEndring');
-  });
-
-  it('skal vise korrekt tekst for aksjonspunkt 6008 slettet', () => {
-    const uttakPeriode = {
-      fom: '-',
-      tom: '-',
-      erSlettet: true,
-      erAvklart: false,
-      erLagtTil: false,
-      erEndret: false,
-    };
-    const aksjonspunkt = {
-      aksjonspunktKode: aksjonspunktCodes.OVERSTYRING_AV_UTTAKPERIODER,
-      besluttersBegrunnelse: 'begrunnelse',
-      totrinnskontrollGodkjent: false,
-      beregningDto: { fastsattVarigEndringNaering: false },
-      uttakPerioder: [uttakPeriode],
-    } as TotrinnskontrollAksjonspunkt;
-
-    const message = getAksjonspunkttekst(true, null, null, null, null, aksjonspunkt);
-    // @ts-ignore
-    expect(message[0].props.id).toEqual('ToTrinnsForm.AvklarUttak.PeriodeSlettet');
-  });
-
-  it('skal vise korrekt tekst for aksjonspunkt 6008 lagt til', () => {
-    const uttakPeriode = {
-      fom: '-',
-      tom: '-',
-      erSlettet: false,
-      erAvklart: false,
-      erLagtTil: true,
-      erEndret: false,
-    };
-    const aksjonspunkt = {
-      aksjonspunktKode: aksjonspunktCodes.OVERSTYRING_AV_UTTAKPERIODER,
-      besluttersBegrunnelse: 'begrunnelse',
-      totrinnskontrollGodkjent: false,
-      beregningDto: { fastsattVarigEndringNaering: false },
-      uttakPerioder: [uttakPeriode],
-    } as TotrinnskontrollAksjonspunkt;
-
-    const message = getAksjonspunkttekst(true, null, null, null, null, aksjonspunkt);
-    // @ts-ignore
-    expect(message[0].props.id).toEqual('ToTrinnsForm.AvklarUttak.PeriodeLagtTil');
-  });
-
-  it('skal vise korrekt tekst for aksjonspunkt 6008 endret', () => {
-    const uttakPeriode = {
-      fom: '-',
-      tom: '-',
-      erSlettet: false,
-      erAvklart: false,
-      erLagtTil: false,
-      erEndret: true,
-    };
-    const aksjonspunkt = {
-      aksjonspunktKode: aksjonspunktCodes.OVERSTYRING_AV_UTTAKPERIODER,
-      besluttersBegrunnelse: 'begrunnelse',
-      totrinnskontrollGodkjent: false,
-      beregningDto: { fastsattVarigEndringNaering: false },
-      uttakPerioder: [uttakPeriode],
-    } as TotrinnskontrollAksjonspunkt;
-
-    const message = getAksjonspunkttekst(true, null, null, null, null, aksjonspunkt);
-    // @ts-ignore
-    expect(message[0].props.id).toEqual('ToTrinnsForm.OverstyrUttak.PeriodeEndret');
-  });
-
-  it('skal vise korrekt tekst for aksjonspunkt 6008 avklart', () => {
-    const uttakPeriode = {
-      fom: '-',
-      tom: '-',
-      erSlettet: false,
-      erAvklart: true,
-      erLagtTil: false,
-      erEndret: false,
-    };
-    const aksjonspunkt = {
-      aksjonspunktKode: aksjonspunktCodes.OVERSTYRING_AV_UTTAKPERIODER,
-      besluttersBegrunnelse: 'begrunnelse',
-      totrinnskontrollGodkjent: false,
-      beregningDto: { fastsattVarigEndringNaering: false },
-      uttakPerioder: [uttakPeriode],
-    } as TotrinnskontrollAksjonspunkt;
-
-    const message = getAksjonspunkttekst(true, null, null, null, null, aksjonspunkt);
-    // @ts-ignore
-    expect(message[0].props.id).toEqual('ToTrinnsForm.AvklarUttak.PeriodeAvklart');
   });
   it('skal vise korrekt tekst for aksjonspunkt 5080 når søker er i permisjon, skal kun vise tekst om permisjon', () => {
     const arbeidforholdDto = {
@@ -306,7 +220,7 @@ describe('aksjonspunktTekstUtleder', () => {
     const klagebehandlingVurdering = {
       klageVurderingResultatNFP: medholdIKlage,
     } as KlageVurdering;
-    const message = getAksjonspunkttekst(true, klagebehandlingVurdering, behandlingStatusFVED, [], false, aksjonspunkt);
+    const message = getAksjonspunkttekst(klagebehandlingVurdering, behandlingStatusFVED, [], false, aksjonspunkt);
     // @ts-ignore
     expect(message[0].props.id).toEqual('ToTrinnsForm.Klage.OmgjortTilGunst');
   });
@@ -319,7 +233,7 @@ describe('aksjonspunktTekstUtleder', () => {
     const klagebehandlingVurdering = {
       klageVurderingResultatNK: medholdIKlage,
     } as KlageVurdering;
-    const message = getAksjonspunkttekst(true, klagebehandlingVurdering, behandlingStatusFVED, [], false, aksjonspunkt);
+    const message = getAksjonspunkttekst(klagebehandlingVurdering, behandlingStatusFVED, [], false, aksjonspunkt);
     // @ts-ignore
     expect(message[0].props.id).toEqual('ToTrinnsForm.Klage.OmgjortTilGunst');
   });
@@ -334,7 +248,7 @@ describe('aksjonspunktTekstUtleder', () => {
       besluttersBegrunnelse: 'begrunnelse',
       totrinnskontrollGodkjent: false,
     } as TotrinnskontrollAksjonspunkt;
-    const message = getAksjonspunkttekst(true, klagebehandlingVurdering, behandlingStatusFVED, [], false, aksjonspunkt);
+    const message = getAksjonspunkttekst(klagebehandlingVurdering, behandlingStatusFVED, [], false, aksjonspunkt);
     // @ts-ignore
     expect(message[0].props.id).toEqual('ToTrinnsForm.Klage.OppheveYtelsesVedtak');
   });
@@ -347,7 +261,7 @@ describe('aksjonspunktTekstUtleder', () => {
       besluttersBegrunnelse: 'begrunnelse',
       totrinnskontrollGodkjent: false,
     } as TotrinnskontrollAksjonspunkt;
-    const message = getAksjonspunkttekst(true, klagebehandlingVurdering, behandlingStatusFVED, [], false, aksjonspunkt);
+    const message = getAksjonspunkttekst(klagebehandlingVurdering, behandlingStatusFVED, [], false, aksjonspunkt);
     // @ts-ignore
     expect(message[0].props.id).toEqual('ToTrinnsForm.Klage.OppheveYtelsesVedtak');
   });
@@ -361,7 +275,7 @@ describe('aksjonspunktTekstUtleder', () => {
       besluttersBegrunnelse: 'begrunnelse',
       totrinnskontrollGodkjent: false,
     } as TotrinnskontrollAksjonspunkt;
-    const message = getAksjonspunkttekst(true, klagebehandlingVurdering, behandlingStatusFVED, [], false, aksjonspunkt);
+    const message = getAksjonspunkttekst(klagebehandlingVurdering, behandlingStatusFVED, [], false, aksjonspunkt);
     // @ts-ignore
     expect(message[0].props.id).toEqual('ToTrinnsForm.Klage.Avvist');
   });
@@ -374,7 +288,7 @@ describe('aksjonspunktTekstUtleder', () => {
       besluttersBegrunnelse: 'begrunnelse',
       totrinnskontrollGodkjent: false,
     } as TotrinnskontrollAksjonspunkt;
-    const message = getAksjonspunkttekst(true, klagebehandlingVurdering, behandlingStatusFVED, [], false, aksjonspunkt);
+    const message = getAksjonspunkttekst(klagebehandlingVurdering, behandlingStatusFVED, [], false, aksjonspunkt);
     // @ts-ignore
     expect(message[0].props.id).toEqual('ToTrinnsForm.Klage.Avvist');
   });
@@ -388,7 +302,7 @@ describe('aksjonspunktTekstUtleder', () => {
       besluttersBegrunnelse: 'begrunnelse',
       totrinnskontrollGodkjent: false,
     } as TotrinnskontrollAksjonspunkt;
-    const message = getAksjonspunkttekst(true, klagebehandlingVurdering, behandlingStatusFVED, [], false, aksjonspunkt);
+    const message = getAksjonspunkttekst(klagebehandlingVurdering, behandlingStatusFVED, [], false, aksjonspunkt);
     // @ts-ignore
     expect(message[0].props.id).toEqual('ToTrinnsForm.Klage.StadfesteYtelsesVedtak');
   });
@@ -401,7 +315,7 @@ describe('aksjonspunktTekstUtleder', () => {
       besluttersBegrunnelse: 'begrunnelse',
       totrinnskontrollGodkjent: false,
     } as TotrinnskontrollAksjonspunkt;
-    const message = getAksjonspunkttekst(true, klagebehandlingVurdering, behandlingStatusFVED, [], false, aksjonspunkt);
+    const message = getAksjonspunkttekst(klagebehandlingVurdering, behandlingStatusFVED, [], false, aksjonspunkt);
     // @ts-ignore
     expect(message[0].props.id).toEqual('ToTrinnsForm.Klage.StadfesteYtelsesVedtak');
   });
@@ -409,43 +323,85 @@ describe('aksjonspunktTekstUtleder', () => {
   it('skal vise korrekt tekst for aksjonspunkt 5058 vurder tidsbegrenset', () => {
     const beregningDto = {
       faktaOmBeregningTilfeller: [{ kode: faktaOmBeregningTilfelle.VURDER_TIDSBEGRENSET_ARBEIDSFORHOLD }],
+      skjæringstidspunkt: '2022-01-01',
     };
     const aksjonspunkt = {
       aksjonspunktKode: aksjonspunktCodes.VURDER_FAKTA_FOR_ATFL_SN,
       besluttersBegrunnelse: 'begrunnelse',
       totrinnskontrollGodkjent: false,
-      beregningDto,
+      beregningDtoer: [beregningDto],
     } as TotrinnskontrollAksjonspunkt;
-    const message = getAksjonspunkttekst(true, null, null, null, null, aksjonspunkt);
-    expect(message[0]).toEqual(<FormattedMessage id="ToTrinnsForm.Beregning.VurderTidsbegrensetArbeidsforhold" />);
+    const message = getAksjonspunkttekst(null, null, null, null, aksjonspunkt);
+    expect(message[0]).toEqual(
+      <>
+        <Element>
+          <FormattedMessage
+            id="ToTrinnsForm.Beregning.Tittel"
+            values={{
+              dato: '2022-01-01',
+            }}
+          />
+        </Element>
+        <VerticalSpacer eightPx />
+        {[<FormattedMessage id="ToTrinnsForm.Beregning.VurderTidsbegrensetArbeidsforhold" />]}
+      </>,
+    );
   });
   it('skal vise korrekt tekst for aksjonspunkt 5058 ATFL i samme org', () => {
     const beregningDto = {
       faktaOmBeregningTilfeller: [{ kode: faktaOmBeregningTilfelle.VURDER_AT_OG_FL_I_SAMME_ORGANISASJON }],
+      skjæringstidspunkt: '2022-01-01',
     };
     const aksjonspunkt = {
       aksjonspunktKode: aksjonspunktCodes.VURDER_FAKTA_FOR_ATFL_SN,
       besluttersBegrunnelse: 'begrunnelse',
       totrinnskontrollGodkjent: false,
-      beregningDto,
+      beregningDtoer: [beregningDto],
     } as TotrinnskontrollAksjonspunkt;
-    const message = getAksjonspunkttekst(true, null, null, null, null, aksjonspunkt);
-    expect(message[0]).toEqual(<FormattedMessage id="ToTrinnsForm.Beregning.VurderATFLISammeOrg" />);
+    const message = getAksjonspunkttekst(null, null, null, null, aksjonspunkt);
+    expect(message[0]).toEqual(
+      <>
+        <Element>
+          <FormattedMessage
+            id="ToTrinnsForm.Beregning.Tittel"
+            values={{
+              dato: '2022-01-01',
+            }}
+          />
+        </Element>
+        <VerticalSpacer eightPx />
+        {[<FormattedMessage id="ToTrinnsForm.Beregning.VurderATFLISammeOrg" />]}
+      </>,
+    );
   });
   it('skal vise korrekte tekster for kombinasjon av aksjonspunkt 5058', () => {
     const beregningDto = {
       faktaOmBeregningTilfeller: [{ kode: faktaOmBeregningTilfelle.VURDER_TIDSBEGRENSET_ARBEIDSFORHOLD }],
+      skjæringstidspunkt: '2022-01-01',
     };
     const aksjonspunkt = {
       aksjonspunktKode: aksjonspunktCodes.VURDER_FAKTA_FOR_ATFL_SN,
       besluttersBegrunnelse: 'begrunnelse',
       totrinnskontrollGodkjent: false,
-      beregningDto,
+      beregningDtoer: [beregningDto],
     } as TotrinnskontrollAksjonspunkt;
 
-    const message = getAksjonspunkttekst(true, null, null, null, null, aksjonspunkt);
+    const message = getAksjonspunkttekst(null, null, null, null, aksjonspunkt);
 
-    expect(message[0]).toEqual(<FormattedMessage id="ToTrinnsForm.Beregning.VurderTidsbegrensetArbeidsforhold" />);
+    expect(message[0]).toEqual(
+      <>
+        <Element>
+          <FormattedMessage
+            id="ToTrinnsForm.Beregning.Tittel"
+            values={{
+              dato: '2022-01-01',
+            }}
+          />
+        </Element>
+        <VerticalSpacer eightPx />
+        {[<FormattedMessage id="ToTrinnsForm.Beregning.VurderTidsbegrensetArbeidsforhold" />]}
+      </>,
+    );
   });
 
   it('skal vise korrekt tekst for aksjonspunkt 5080', () => {
@@ -476,7 +432,7 @@ describe('aksjonspunktTekstUtleder', () => {
       arbeidsforholdDtos,
     } as TotrinnskontrollAksjonspunkt;
 
-    const messages = getAksjonspunkttekst(true, null, null, [], false, aksjonspunkt);
+    const messages = getAksjonspunkttekst(null, null, [], false, aksjonspunkt);
     // @ts-ignore
     expect(messages[0].props.children[0].props.id).toEqual('ToTrinnsForm.OpplysningerOmSøker.Arbeidsforhold');
     // @ts-ignore

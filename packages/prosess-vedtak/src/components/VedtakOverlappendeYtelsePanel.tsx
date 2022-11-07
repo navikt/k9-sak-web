@@ -124,7 +124,7 @@ const VedtakOverlappendeYtelsePanel: React.FC<Props & WrappedComponentProps> = (
                 </EtikettInfo>
               </div>
             </BorderBox>
-            <VerticalSpacer twentyPx />
+            <VerticalSpacer sixteenPx />
           </>
         )}
         <CheckboxGroup
@@ -163,8 +163,10 @@ const VedtakOverlappendeYtelsePanel: React.FC<Props & WrappedComponentProps> = (
                 Foreldrepenger
               </Heading>
               <BodyLong spacing>
-                Det opprettes automatisk revurdering ved overlapp mellom pleiepenger og foreldrepenger. Ved overlapp
-                mellom omsorgspenger og pleiepenger i livets sluttfase opprettes det VKY-oppgave i Gosys.
+                Det opprettes automatisk revurdering ved overlapp mellom pleiepenger og foreldrepenger. Ved overlapp med
+                omsorgspenger eller pleiepenger i livets sluttfase må saksbehandler vurdere om overlappet er riktig,
+                f.eks. ved gradert ytelse, og eventuelt sende VKY-oppgave til riktig avdeling hvis FP skal stanses eller
+                endres.
               </BodyLong>
               <Heading spacing size="xsmall" level="4">
                 Dagpenger

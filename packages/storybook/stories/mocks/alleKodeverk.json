@@ -1958,6 +1958,11 @@
   ],
   "SkjermlenkeType": [
     {
+      "kode": "BEREGNING",
+      "navn": "Beregning",
+      "kodeverk": "SKJERMLENKE_TYPE"
+    },
+    {
       "kode": "KLAGE_BEH_NFP",
       "navn": "Klageresultat Vedtaksinstans",
       "kodeverk": "SKJERMLENKE_TYPE"
