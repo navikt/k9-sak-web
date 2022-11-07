@@ -12,7 +12,7 @@ import PreviewLink from '../PreviewLink';
 import InkluderKalenderCheckbox from '../InkluderKalenderCheckbox';
 
 import styles from './RedigerFritekstbrev.less';
-import { validerManueltRedigertBrev, validerRedigertHtml } from './RedigeringUtils';
+import { validerRedigertHtml } from './RedigeringUtils';
 
 interface ownProps {
   handleSubmit: (value: string) => void;
@@ -115,11 +115,6 @@ const FritekstEditor = ({
     handleLagre();
   };
 
-  const handleSetFieldValue = (name, value) => {
-    setFieldValue(name, value);
-    handleLagre();
-  };
-
   return (
     <>
       <Modal open={visAdvarsel} onClose={() => setVisAdvarsel(false)} shouldCloseOnOverlayClick={false}>
@@ -174,7 +169,7 @@ const FritekstEditor = ({
             <Column xs="12">
               <InkluderKalenderCheckbox
                 intl={intl}
-                setFieldValue={handleSetFieldValue}
+                setFieldValue={setFieldValue}
                 skalBrukeOverstyrendeFritekstBrev={skalBrukeOverstyrendeFritekstBrev}
                 disabled={readOnly}
               />
