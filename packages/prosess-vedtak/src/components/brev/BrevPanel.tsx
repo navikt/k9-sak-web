@@ -2,8 +2,8 @@ import SelectFieldFormik from '@fpsak-frontend/form/src/SelectFieldFormik';
 import dokumentMalType from '@fpsak-frontend/kodeverk/src/dokumentMalType';
 import vedtaksbrevtype from '@fpsak-frontend/kodeverk/src/vedtaksbrevtype';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
+import { useFeatureToggles, VerticalSpacer } from '@fpsak-frontend/shared-components';
 
-import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { required, safeJSONParse, decodeHtmlEntity } from '@fpsak-frontend/utils';
 import {
   finnesTilgjengeligeVedtaksbrev,
@@ -194,6 +194,8 @@ export const BrevPanel: React.FC<BrevPanelProps> = props => {
     lagreDokumentdata,
   } = props;
 
+  const [featureToggles] = useFeatureToggles();
+
   const automatiskBrevCallback = getPreviewAutomatiskBrevCallback({
     fritekst: begrunnelse,
     redusertUtbetalingÅrsaker,
@@ -220,7 +222,10 @@ export const BrevPanel: React.FC<BrevPanelProps> = props => {
   const harAutomatiskVedtaksbrev = kanHaAutomatiskVedtaksbrev(tilgjengeligeVedtaksbrev);
   const harFritekstbrev =
     kanHaFritekstbrevV1(tilgjengeligeVedtaksbrev) || kanHaManueltFritekstbrev(tilgjengeligeVedtaksbrev);
-  const kanInkludereKalender = ytelseTypeKode === fagsakYtelseType.PLEIEPENGER;
+
+  const kanInkludereKalender =
+    ytelseTypeKode === fagsakYtelseType.PLEIEPENGER ||
+    (featureToggles.INKLUDER_KALENDER_PILS && fagsakYtelseType.PLEIEPENGER_SLUTTFASE);
 
   const harAlternativeMottakere =
     kanOverstyreMottakere(tilgjengeligeVedtaksbrev) && !formikProps.values[fieldnames.SKAL_HINDRE_UTSENDING_AV_BREV];

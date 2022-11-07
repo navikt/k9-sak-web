@@ -73,6 +73,10 @@ const featureToggles = [
     key: 'FIX_SOKNADSFRIST_KALENDER_OG_READONLY',
     value: process.env.FIX_SOKNADSFRIST_KALENDER_OG_READONLY,
   },
+  {
+    key: 'INKLUDER_KALENDER_PILS',
+    value: process.env.INKLUDER_KALENDER_PILS,
+  },
 ];
 
 module.exports = function (app) {

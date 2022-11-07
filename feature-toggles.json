@@ -70,5 +70,9 @@
   {
     "key": "FIX_SOKNADSFRIST_KALENDER_OG_READONLY",
     "value": "${FIX_SOKNADSFRIST_KALENDER_OG_READONLY}"
+  },
+  {
+    "key": "INKLUDER_KALENDER_PILS",
+    "value": "${INKLUDER_KALENDER_PILS}"
   }
 ]
