@@ -143,23 +143,50 @@ const VedtakOverlappendeYtelsePanel: React.FC<Props & WrappedComponentProps> = (
           </Checkbox>
         </CheckboxGroup>
       </Alert>
-
-      {/* 
-      Kommenterer ut i påvente av avklart tekst
       <Alert variant="info" size="medium">
         <Accordion className={styles.accordion}>
           <Accordion.Item>
             <Accordion.Header type="button">
-              <Heading spacing size="small" level="3">
+              <Heading size="xsmall" level="3">
                 Hvilke ytelser går det automatisk melding?
               </Heading>
             </Accordion.Header>
             <Accordion.Content>
-              <BodyLong>Nå kan du sende inn søknaden.</BodyLong>
+              <Heading spacing size="xsmall" level="4">
+                Sykepenger
+              </Heading>
+              <BodyLong spacing>
+                Det opprettes automatisk VKY-oppgave på sykepenger i Gosys hvis det er overlapp med sykepenger i
+                Infotrygd eller Speil.
+              </BodyLong>
+              <Heading spacing size="xsmall" level="4">
+                Foreldrepenger
+              </Heading>
+              <BodyLong spacing>
+                Det opprettes automatisk revurdering ved overlapp mellom pleiepenger og foreldrepenger. Ved overlapp med
+                omsorgspenger eller pleiepenger i livets sluttfase må saksbehandler vurdere om overlappet er riktig,
+                f.eks. ved gradert ytelse, og eventuelt sende VKY-oppgave til riktig avdeling hvis FP skal stanses eller
+                endres.
+              </BodyLong>
+              <Heading spacing size="xsmall" level="4">
+                Dagpenger
+              </Heading>
+              <BodyLong spacing>
+                Ved overlapp med dagpenger i Arena opprettes det automatisk oppgave hos NØS om å sette utbetalingen på
+                vent.
+              </BodyLong>
+              <Heading spacing size="xsmall" level="4">
+                Andre ytelser i kapittel 9
+              </Heading>
+              <BodyLong>
+                Det opprettes ingen oppgave i Gosys ved overlapp mot annen ytelse i kapittel 9, verken om utbetalingen
+                er gjort i Infotrygd eller K9. Saksbehandler må vurdere hvilken ytelse som er riktig, og eventuelt endre
+                utbetalingen på overlappende ytelse.
+              </BodyLong>
             </Accordion.Content>
           </Accordion.Item>
         </Accordion>
-      </Alert> */}
+      </Alert>
     </>
   );
 };
