@@ -274,7 +274,8 @@ const FagsakIndex = () => {
           }
 
           if (
-            personopplysningerState === RestApiState.NOT_STARTED ||
+            // Unngå å vise Punsjstripe før personopplysningene er lastet
+            (personopplysningerState === RestApiState.NOT_STARTED && !erTilbakekreving(behandling.type)) ||
             personopplysningerState === RestApiState.LOADING
           ) {
             return <LoadingPanel />;
