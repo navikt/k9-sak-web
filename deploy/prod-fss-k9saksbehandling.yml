@@ -115,3 +115,5 @@ spec:
       value: "false"
     - name: FIX_SOKNADSFRIST_KALENDER_OG_READONLY
       value: "false"
+    - name: INKLUDER_KALENDER_PILS
+      value: "false"
