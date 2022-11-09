@@ -152,5 +152,6 @@
   "RedigeringAvFritekstBrev.FritekstIkkeAutolagret": "Endringene i brevet er ikke lagret",
   "RedigeringAvFritekstBrev.FritekstAutolagret": "Endringene i brevet er lagret",
   "RedigeringAvFritekstBrev.ManueltBrevIkkeEndret": "Brevet må redigeres før det kan sendes",
+  "RedigeringAvFritekstBrev.ManueltBrevIkkeEndretForhåndsvis": "Brevet må redigeres før det kan forhåndsvises",
   "VedtakForm.FritekstTilbakestilt": "Brevet er tilbakestilt, men endringene er ikke lagret enda."
 }
