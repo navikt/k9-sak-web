@@ -37,8 +37,8 @@ class PanelDef extends ProsessStegPanelDef {
 
   getOverstyrVisningAvKomponent = () => true;
 
-  getOverstyrtStatus = ({ vilkar, aksjonspunkter, behandling, aksjonspunkterForSteg }) =>
-    findStatusForVedtak(vilkar, aksjonspunkter, aksjonspunkterForSteg, behandling.behandlingsresultat);
+  getOverstyrtStatus = ({ vilkar, aksjonspunkter, behandling, aksjonspunkterForSteg, featureToggles }) =>
+    findStatusForVedtak(vilkar, aksjonspunkter, aksjonspunkterForSteg, behandling.behandlingsresultat, featureToggles);
 
   getData = ({
     previewCallback,
@@ -62,6 +62,8 @@ class PanelDef extends ProsessStegPanelDef {
     arbeidsgiverOpplysningerPerId,
     lagreDokumentdata,
   });
+
+  getId = () => 'VEDTAK';
 }
 
 class VedtakProsessStegPanelDef extends ProsessStegDef {
