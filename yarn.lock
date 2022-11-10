@@ -1665,14 +1665,14 @@
     "@formatjs/ecma402-abstract" "1.13.0"
     tslib "2.4.0"
 
-"@formatjs/intl-datetimeformat@^5.0.2":
-  version "5.0.2"
-  resolved "https://registry.yarnpkg.com/@formatjs/intl-datetimeformat/-/intl-datetimeformat-5.0.2.tgz#11bf5814416c03f544e0b118789fb1497b815566"
-  integrity sha512-yk7CItBMgtUsub123+iqOfXoqG6JHJIl3Pke7eOYb7QFAPsOZliAJb2i0+Tr1FXWcm1PdWZVHEv6C2l4nEmQdw==
+"@formatjs/intl-datetimeformat@^6.3.1":
+  version "6.3.1"
+  resolved "https://registry.yarnpkg.com/@formatjs/intl-datetimeformat/-/intl-datetimeformat-6.3.1.tgz#a5909ee5b6f26572758c2d8e809c7cd888e01b68"
+  integrity sha512-6uJS+ipQo4m8+F8sSbTOd+4osoDe/9V10Me0OYL2jFCgxC/fKemRVqqGccNOg4l3rQghGHnmrsJLsZ1ydBo5LQ==
   dependencies:
-    "@formatjs/ecma402-abstract" "1.11.4"
-    "@formatjs/intl-localematcher" "0.2.25"
-    tslib "^2.1.0"
+    "@formatjs/ecma402-abstract" "1.13.0"
+    "@formatjs/intl-localematcher" "0.2.31"
+    tslib "2.4.0"
 
 "@formatjs/intl-displaynames@6.1.3":
   version "6.1.3"
