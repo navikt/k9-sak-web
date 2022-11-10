@@ -36,10 +36,6 @@
     "value": "${NY_BEREGNING_PROSESS_ENABLED}"
   },
   {
-    "key": "SPLITTET_SAMMENLINGNING_BEREGNING",
-    "value": "${SPLITTET_SAMMENLINGNING_BEREGNING}"
-  },
-  {
     "key": "NY_BEREGNING_FAKTA_ENABLED",
     "value": "${NY_BEREGNING_FAKTA_ENABLED}"
   },
