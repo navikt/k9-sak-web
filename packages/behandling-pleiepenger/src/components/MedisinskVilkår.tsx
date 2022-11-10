@@ -62,8 +62,8 @@ export default ({
   return (
     <MicroFrontend
       id={medisinskVilkårAppID}
-      jsSrc="http://localhost:8081/main.js"
-      stylesheetSrc="http://localhost:8081/styles.css"
+      jsSrc="/k9/microfrontend/medisinsk-vilkar/1/app.js"
+      stylesheetSrc="/k9/microfrontend/medisinsk-vilkar/1/styles.css"
       noCache
       onReady={() =>
         initializeMedisinskVilkår(
