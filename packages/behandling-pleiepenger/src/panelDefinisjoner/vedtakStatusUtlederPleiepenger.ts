@@ -14,16 +14,18 @@ const hasAksjonspunkt = ap => ap.definisjon.kode === aksjonspunktCodes.OVERSTYR_
 
 const isAksjonspunktOpenAndOfType = ap => hasAksjonspunkt(ap) && isAksjonspunktOpen(ap.status.kode);
 
-const findStatusForVedtak = (vilkar, aksjonspunkter, vedtakAksjonspunkter, behandlingsresultat) => {
+const findStatusForVedtak = (vilkar, aksjonspunkter, vedtakAksjonspunkter, behandlingsresultat, featureToggles) => {
   if (vilkar.length === 0) {
     return vilkarUtfallType.IKKE_VURDERT;
   }
 
-  if (
-    hasOnlyClosedAps(aksjonspunkter, vedtakAksjonspunkter) &&
-    vilkar.some(v => v.perioder.some(periode => periode.vilkarStatus.kode === vilkarUtfallType.IKKE_OPPFYLT))
-  ) {
-    return vilkarUtfallType.IKKE_OPPFYLT;
+  if (!featureToggles?.FIKS_DELVIS_PROSESSTEG) {
+    if (
+      hasOnlyClosedAps(aksjonspunkter, vedtakAksjonspunkter) &&
+      vilkar.some(v => v.perioder.some(periode => periode.vilkarStatus.kode === vilkarUtfallType.IKKE_OPPFYLT))
+    ) {
+      return vilkarUtfallType.IKKE_OPPFYLT;
+    }
   }
 
   if (
