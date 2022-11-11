@@ -98,8 +98,6 @@ spec:
       value: "true"
     - name: NY_BEREGNING_PROSESS_ENABLED
       value: "true"
-    - name: SPLITTET_SAMMENLINGNING_BEREGNING
-      value: "true"
     - name: NY_BEREGNING_FAKTA_ENABLED
       value: "true"
     - name: NY_BEREGNING_FAKTA_FORDEL_ENABLED

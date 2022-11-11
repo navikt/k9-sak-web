@@ -8,9 +8,6 @@ import { DynamicLoader, ProsessStegDef, ProsessStegPanelDef } from '@k9-sak-web/
 import { konverterKodeverkTilKode, mapVilkar } from '@fpsak-frontend/utils';
 
 const ProsessBeregningsgrunnlag = React.lazy(() => import('@navikt/ft-prosess-beregningsgrunnlag'));
-const ProsessBeregningsgrunnlagSplittetSammenligning = React.lazy(
-  () => import('@navikt/ft-prosess-beregningsgrunnlag_3_0_9'),
-);
 
 const ProsessBeregningsgrunnlagMF =
   process.env.NODE_ENV !== 'development'
@@ -30,27 +27,6 @@ const mapYtelsesSpesifiktGrunnlagForFrisinn = (beregningsgrunnlag, behandling) =
 class PanelDef extends ProsessStegPanelDef {
   // eslint-disable-next-line class-methods-use-this
   getKomponent = props => {
-    if (props.featureToggles.SPLITTET_SAMMENLINGNING_BEREGNING) {
-      const deepCopyProps = JSON.parse(JSON.stringify(props));
-      konverterKodeverkTilKode(deepCopyProps);
-      const bgVilkaret = deepCopyProps.vilkar.find(v => v.vilkarType === vilkarType.BEREGNINGSGRUNNLAGVILKARET);
-      return (
-        <DynamicLoader<React.ComponentProps<typeof ProsessBeregningsgrunnlagSplittetSammenligning>>
-          packageCompFn={() => import('@navikt/ft-prosess-beregningsgrunnlag_3_0_9')}
-          federatedCompFn={ProsessBeregningsgrunnlagMF}
-          {...props}
-          beregningsgrunnlagsvilkar={mapVilkar(bgVilkaret, props.beregningreferanserTilVurdering)}
-          beregningsgrunnlagListe={mapYtelsesSpesifiktGrunnlagForFrisinn(
-            deepCopyProps.beregningsgrunnlag,
-            deepCopyProps.behandling,
-          )}
-          arbeidsgiverOpplysningerPerId={deepCopyProps.arbeidsgiverOpplysningerPerId}
-          submitCallback={props.submitCallback}
-          formData={props.formData}
-          setFormData={props.setFormData}
-        />
-      );
-    }
     if (props.featureToggles.NY_BEREGNING_PROSESS_ENABLED) {
       const deepCopyProps = JSON.parse(JSON.stringify(props));
       konverterKodeverkTilKode(deepCopyProps);
@@ -59,6 +35,7 @@ class PanelDef extends ProsessStegPanelDef {
         <DynamicLoader<React.ComponentProps<typeof ProsessBeregningsgrunnlag>>
           packageCompFn={() => import('@navikt/ft-prosess-beregningsgrunnlag')}
           federatedCompFn={ProsessBeregningsgrunnlagMF}
+          {...props}
           beregningsgrunnlagsvilkar={mapVilkar(bgVilkaret, props.beregningreferanserTilVurdering)}
           beregningsgrunnlagListe={mapYtelsesSpesifiktGrunnlagForFrisinn(
             deepCopyProps.beregningsgrunnlag,
