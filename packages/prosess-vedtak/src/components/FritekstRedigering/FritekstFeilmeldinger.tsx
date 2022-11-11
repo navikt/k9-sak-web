@@ -1,6 +1,4 @@
-/* eslint-disable react/no-danger, @typescript-eslint/no-this-alias */
 import React from 'react';
-
 import { FormattedMessage, injectIntl } from 'react-intl';
 
 import { Alert } from '@navikt/ds-react';
