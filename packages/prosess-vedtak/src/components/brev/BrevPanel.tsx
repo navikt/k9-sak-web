@@ -276,9 +276,10 @@ export const BrevPanel: React.FC<BrevPanelProps> = props => {
           informasjonsbehovVedtaksbrev={informasjonsbehovVedtaksbrev}
         />
       </div>
-      {kanResultatForhåndsvises(behandlingResultat) && (
-        <VedtakPreviewLink previewCallback={automatiskBrevCallback} redigertHtml={false} intl={intl} />
-      )}
+      {!formikProps.values[fieldnames.SKAL_HINDRE_UTSENDING_AV_BREV] &&
+        kanResultatForhåndsvises(behandlingResultat) && (
+          <VedtakPreviewLink previewCallback={automatiskBrevCallback} redigertHtml={false} intl={intl} />
+        )}
     </>
   );
 
