@@ -153,5 +153,6 @@
   "RedigeringAvFritekstBrev.FritekstAutolagret": "Endringene i brevet er lagret",
   "RedigeringAvFritekstBrev.ManueltBrevIkkeEndret": "Brevet må redigeres før det kan sendes",
   "RedigeringAvFritekstBrev.ManueltBrevIkkeEndretForhåndsvis": "Brevet må redigeres før det kan forhåndsvises",
+  "RedigeringAvFritekstBrev.KommunikasjonsfeilLagre": "Det har oppstått en feil under kommunikasjon med serveren, endringene vil ikke bli lagret. Kopier innholdet i brevet og prøv å last siden på nytt.",
   "VedtakForm.FritekstTilbakestilt": "Brevet er tilbakestilt, men endringene er ikke lagret enda."
 }

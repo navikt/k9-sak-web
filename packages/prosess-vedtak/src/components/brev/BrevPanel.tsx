@@ -255,11 +255,13 @@ export const BrevPanel: React.FC<BrevPanelProps> = props => {
           dokumentdataInformasjonsbehov={dokumentdataInformasjonsbehov}
         />
       </div>
-      <VedtakPreviewLink
-        previewCallback={manuellBrevCallback}
-        redigertHtml={formikProps.values?.[fieldnames.REDIGERT_HTML]}
-        intl={intl}
-      />
+      {!formikProps.values[fieldnames.SKAL_HINDRE_UTSENDING_AV_BREV] && (
+        <VedtakPreviewLink
+          previewCallback={manuellBrevCallback}
+          redigertHtml={formikProps.values?.[fieldnames.REDIGERT_HTML]}
+          intl={intl}
+        />
+      )}
     </>
   );
 
