@@ -3168,7 +3168,7 @@
   resolved "https://npm.pkg.github.com/download/@navikt/ft-konstanter/1.0.14/bcf08512ed17f95d98fe02e062e2a9168d0035a4#bcf08512ed17f95d98fe02e062e2a9168d0035a4"
   integrity sha512-e1JrvZL2pJG424GCsGiR9hkXpyyA7oB+FIGwEWEmxhpIYUskPFLv0Y4gQDd0J49LEzDwBEWGHmIOXQB3HkifXA==
 
-"@navikt/ft-plattform-komponenter@1.3.6":
+"@navikt/ft-plattform-komponenter@1.3.6", "@navikt/ft-plattform-komponenter@^1.3.6":
   version "1.3.6"
   resolved "https://npm.pkg.github.com/download/@navikt/ft-plattform-komponenter/1.3.6/3b2312d2401a207f1120d06afc8fedf3ac668f4d#3b2312d2401a207f1120d06afc8fedf3ac668f4d"
   integrity sha512-QoowZ3vhdSIAtpBEox3Tmku70arIMB8uGGwTHsLdlSlQORRwoobKFSIgNiJJb//6ofN6UPEbd5DXAbF/dsBkbQ==
@@ -3178,27 +3178,17 @@
     "@navikt/ds-react" "^1.5.6"
     "@navikt/ft-utils" "^1.1.7"
 
-"@navikt/ft-plattform-komponenter@^1.3.4":
-  version "1.3.4"
-  resolved "https://npm.pkg.github.com/download/@navikt/ft-plattform-komponenter/1.3.4/6b7259ce97d07dd723877677a9bd207d68395581#6b7259ce97d07dd723877677a9bd207d68395581"
-  integrity sha512-3Vi+Ry6T+YtUIkcoR2vf3PCFGqjKpZuIE3+CXcq1kN/Exc2Y6qKJ4sWumVeXfPWiTb9bxwWCzyF060XvvpQFAA==
-  dependencies:
-    "@navikt/ds-css" "^1.5.6"
-    "@navikt/ds-icons" "^1.5.6"
-    "@navikt/ds-react" "^1.5.6"
-    "@navikt/ft-utils" "^1.1.7"
-
-"@navikt/ft-prosess-beregningsgrunnlag@3.1.8":
-  version "3.1.8"
-  resolved "https://npm.pkg.github.com/download/@navikt/ft-prosess-beregningsgrunnlag/3.1.8/2ecbdafe685110f8c27d90a71b3e9a132bff7c1a#2ecbdafe685110f8c27d90a71b3e9a132bff7c1a"
-  integrity sha512-yrqA5q5mlj0S+NNEH/Y6S65srpI03jpBns3+5NutfXdT3O5y79d3bs6JvCCb7k6RODL0YTzk2X0SDY4ooezyWw==
+"@navikt/ft-prosess-beregningsgrunnlag@3.1.11":
+  version "3.1.11"
+  resolved "https://npm.pkg.github.com/download/@navikt/ft-prosess-beregningsgrunnlag/3.1.11/06aaabe11ce21ab39881be5afb94c46318509a7f#06aaabe11ce21ab39881be5afb94c46318509a7f"
+  integrity sha512-5iNoO6WK790bIbxlOLm+0HNDSHWf1BA3NIXc845+skg9taEWwtR0xj3HlRcX+jFt7ubHf2hvM1qE1tM32QOgpA==
   dependencies:
     "@navikt/ds-css" "^1.5.6"
     "@navikt/ds-react" "^1.5.6"
     "@navikt/ft-form-hooks" "^3.1.2"
     "@navikt/ft-form-validators" "^1.0.36"
     "@navikt/ft-kodeverk" "^1.0.21"
-    "@navikt/ft-plattform-komponenter" "^1.3.4"
+    "@navikt/ft-plattform-komponenter" "^1.3.6"
     "@navikt/ft-types" "^1.0.32"
     "@navikt/ft-ui-komponenter" "^1.2.2"
     "@navikt/ft-utils" "^1.1.7"
