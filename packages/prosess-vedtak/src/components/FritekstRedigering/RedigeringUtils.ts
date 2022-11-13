@@ -112,9 +112,15 @@ export const validerRedigertHtml = Yup.string().test('validate-redigert-html', '
 );
 
 export const harDokumentdataApiFeilmelding = ({ feilmeldinger }: { feilmeldinger: any[] }) =>
-  feilmeldinger.some(
-    feilmelding => !!(feilmelding.feilmelding && feilmelding.feilmelding.includes('/k9/formidling/dokumentdata/api')),
-  );
+  feilmeldinger.some(feilmelding => {
+    if (feilmelding.feilmelding) {
+      return feilmelding.feilmelding.includes('/k9/formidling/dokumentdata/api');
+    }
+    if (feilmelding.message === '') {
+      return feilmelding.message.length < 1;
+    }
+    return false;
+  });
 
 export const harForhandsvisFeilmeldinger = ({ feilmeldinger }: { feilmeldinger: any[] }) =>
   feilmeldinger.some(
