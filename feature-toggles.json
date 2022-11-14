@@ -60,10 +60,6 @@
     "value": "${FRITEKST_REDIGERING}"
   },
   {
-    "key": "FIKS_DELVIS_PROSESSTEG",
-    "value": "${FIKS_DELVIS_PROSESSTEG}"
-  },
-  {
     "key": "FIX_SOKNADSFRIST_KALENDER_OG_READONLY",
     "value": "${FIX_SOKNADSFRIST_KALENDER_OG_READONLY}"
   },
