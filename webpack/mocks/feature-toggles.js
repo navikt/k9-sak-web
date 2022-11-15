@@ -34,10 +34,6 @@ const featureToggles = [
     value: process.env.LOS_MARKER_BEHANDLING,
   },
   {
-    key: 'NY_BEREGNING_FAKTA_ENABLED',
-    value: process.env.NY_BEREGNING_FAKTA_ENABLED,
-  },
-  {
     key: 'NY_BEREGNING_FAKTA_FORDEL_ENABLED',
     value: process.env.NY_BEREGNING_FAKTA_FORDEL_ENABLED,
   },
