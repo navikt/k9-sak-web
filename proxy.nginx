@@ -24,8 +24,8 @@ server {
   server_name  "${APP_HOSTNAME}";
 
   # Proxy headers. Will be overwritten if you set them in blocks.
-  proxy_buffers 16 16k;
-  proxy_buffer_size 16k;
+  proxy_buffers 16 32k;
+  proxy_buffer_size 32k;
   proxy_pass_header       Nav-Callid;
   proxy_set_header        Referer $http_referer;
   proxy_set_header        X-Forwarded-For $proxy_add_x_forwarded_for;
