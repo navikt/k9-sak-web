@@ -10,7 +10,7 @@ import { FormattedMessage } from 'react-intl';
 import { fosterbarnDto } from '../dto/FosterbarnDto';
 
 import styles from './aksjonspunktForm.less';
-import { valgValues } from './AksjonspunktForm9014';
+import { valgValues } from './utils';
 
 interface Props {
   fields: any;

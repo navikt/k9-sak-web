@@ -22,6 +22,7 @@ import styles from './aksjonspunktForm.less';
 import Aktivitet from '../dto/Aktivitet';
 import { fosterbarnDto } from '../dto/FosterbarnDto';
 import FosterbarnForm from './FosterbarnForm';
+import { valgValues } from './utils';
 
 interface AksjonspunktFormImplProps {
   aktiviteter: Aktivitet[];
@@ -44,11 +45,6 @@ interface FormContentProps {
 }
 
 const årskvantumAksjonspunktFormName = 'årskvantumAksjonspunktFormName';
-
-export const valgValues = {
-  reBehandling: 'reBehandling',
-  fortsett: 'fortsett',
-};
 
 const vilkårHarOverlappendePerioderIInfotrygd = (uttaksperiode: Uttaksperiode) =>
   Object.entries(uttaksperiode.vurderteVilkår).some(
