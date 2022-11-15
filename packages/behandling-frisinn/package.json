@@ -13,7 +13,6 @@
     "@fpsak-frontend/fakta-verge": "1.0.0",
     "@fpsak-frontend/kodeverk": "1.0.0",
     "@fpsak-frontend/prosess-avregning": "1.0.0",
-    "@fpsak-frontend/prosess-beregningsgrunnlag": "1.0.0",
     "@fpsak-frontend/prosess-tilkjent-ytelse": "1.0.0",
     "@fpsak-frontend/prosess-vedtak": "1.0.0",
     "@fpsak-frontend/prosess-vilkar-overstyring": "1.0.0",
