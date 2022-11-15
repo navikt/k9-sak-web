@@ -48,7 +48,8 @@ export const findResultatText = (
     return `ResultatTypeCode ${resultat} finnes ikke-LEGG DET INN`;
   }
   const fieldId = resultatCode.feltId;
-  return intl.formatMessage({ id: fieldId }, { b: chunks => <b>{chunks}</b>, br: <br /> }) as string;
+  const msg = intl.formatMessage({ id: fieldId }, { b: chunks => <b>{chunks}</b>, br: <br /> });
+  return msg as string;
 };
 
 export const findHendelseText = (

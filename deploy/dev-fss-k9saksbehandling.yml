@@ -112,8 +112,6 @@ spec:
       value: "true"
     - name: FRITEKST_REDIGERING
       value: "true"
-    - name: FIKS_DELVIS_PROSESSTEG
-      value: "true"
     - name: FIX_SOKNADSFRIST_KALENDER_OG_READONLY
       value: "true"
     - name: INKLUDER_KALENDER_PILS
