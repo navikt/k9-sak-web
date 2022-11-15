@@ -8,7 +8,6 @@
     "@fpsak-frontend/assets": "1.0.0",
     "@fpsak-frontend/fakta-arbeidsforhold": "1.0.0",
     "@fpsak-frontend/fakta-direkte-overgang": "1.0.0",
-    "@fpsak-frontend/fakta-fordel-beregningsgrunnlag": "1.0.0",
     "@fpsak-frontend/fakta-medlemskap": "1.0.0",
     "@fpsak-frontend/fakta-opptjening-oms": "1.0.0",
     "@fpsak-frontend/fakta-overstyr-beregning": "1.0.0",
