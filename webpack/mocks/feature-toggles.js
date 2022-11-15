@@ -34,14 +34,6 @@ const featureToggles = [
     value: process.env.LOS_MARKER_BEHANDLING,
   },
   {
-    key: 'NY_BEREGNING_PROSESS_ENABLED',
-    value: process.env.NY_BEREGNING_PROSESS_ENABLED,
-  },
-  {
-    key: 'NY_BEREGNING_FAKTA_ENABLED',
-    value: process.env.NY_BEREGNING_FAKTA_ENABLED,
-  },
-  {
     key: 'AKSJONSPUNKT_9014',
     value: process.env.AKSJONSPUNKT_9014,
   },
