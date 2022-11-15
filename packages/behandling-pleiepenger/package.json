@@ -7,7 +7,6 @@
   "dependencies": {
     "@fpsak-frontend/assets": "1.0.0",
     "@fpsak-frontend/fakta-arbeidsforhold": "1.0.0",
-    "@fpsak-frontend/fakta-beregning": "1.0.0",
     "@fpsak-frontend/fakta-direkte-overgang": "1.0.0",
     "@fpsak-frontend/fakta-fordel-beregningsgrunnlag": "1.0.0",
     "@fpsak-frontend/fakta-medlemskap": "1.0.0",

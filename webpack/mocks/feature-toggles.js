@@ -38,10 +38,6 @@ const featureToggles = [
     value: process.env.NY_BEREGNING_PROSESS_ENABLED,
   },
   {
-    key: 'NY_BEREGNING_FAKTA_ENABLED',
-    value: process.env.NY_BEREGNING_FAKTA_ENABLED,
-  },
-  {
     key: 'NY_BEREGNING_FAKTA_FORDEL_ENABLED',
     value: process.env.NY_BEREGNING_FAKTA_FORDEL_ENABLED,
   },
