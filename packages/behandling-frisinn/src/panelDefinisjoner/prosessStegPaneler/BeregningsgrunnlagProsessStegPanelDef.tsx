@@ -1,7 +1,6 @@
 import React from 'react';
 
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
-import BeregningsgrunnlagProsessIndex from '@fpsak-frontend/prosess-beregningsgrunnlag';
 import { prosessStegCodes } from '@k9-sak-web/konstanter';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { DynamicLoader, ProsessStegDef, ProsessStegPanelDef } from '@k9-sak-web/behandling-felles';
@@ -27,31 +26,28 @@ const mapYtelsesSpesifiktGrunnlagForFrisinn = (beregningsgrunnlag, behandling) =
 class PanelDef extends ProsessStegPanelDef {
   // eslint-disable-next-line class-methods-use-this
   getKomponent = props => {
-    if (props.featureToggles.NY_BEREGNING_PROSESS_ENABLED) {
-      const deepCopyProps = JSON.parse(JSON.stringify(props));
-      konverterKodeverkTilKode(deepCopyProps);
-      const bgVilkaret = deepCopyProps.vilkar.find(v => v.vilkarType === vilkarType.BEREGNINGSGRUNNLAGVILKARET);
-      return (
-        <DynamicLoader<React.ComponentProps<typeof ProsessBeregningsgrunnlag>>
-          packageCompFn={() => import('@navikt/ft-prosess-beregningsgrunnlag')}
-          federatedCompFn={ProsessBeregningsgrunnlagMF}
-          {...props}
-          beregningsgrunnlagsvilkar={mapVilkar(bgVilkaret, props.beregningreferanserTilVurdering)}
-          beregningsgrunnlagListe={mapYtelsesSpesifiktGrunnlagForFrisinn(
-            deepCopyProps.beregningsgrunnlag,
-            deepCopyProps.behandling,
-          )}
-          arbeidsgiverOpplysningerPerId={deepCopyProps.arbeidsgiverOpplysningerPerId}
-          submitCallback={props.submitCallback}
-          formData={props.formData}
-          setFormData={props.setFormData}
-          readOnlySubmitButton={deepCopyProps.isReadOnly}
-          alleKodeverk={deepCopyProps.alleKodeverk}
-          isReadOnly={deepCopyProps.isReadOnly}
-        />
-      );
-    }
-    return <BeregningsgrunnlagProsessIndex {...props} />;
+    const deepCopyProps = JSON.parse(JSON.stringify(props));
+    konverterKodeverkTilKode(deepCopyProps);
+    const bgVilkaret = deepCopyProps.vilkar.find(v => v.vilkarType === vilkarType.BEREGNINGSGRUNNLAGVILKARET);
+    return (
+      <DynamicLoader<React.ComponentProps<typeof ProsessBeregningsgrunnlag>>
+        packageCompFn={() => import('@navikt/ft-prosess-beregningsgrunnlag')}
+        federatedCompFn={ProsessBeregningsgrunnlagMF}
+        {...props}
+        beregningsgrunnlagsvilkar={mapVilkar(bgVilkaret, props.beregningreferanserTilVurdering)}
+        beregningsgrunnlagListe={mapYtelsesSpesifiktGrunnlagForFrisinn(
+          deepCopyProps.beregningsgrunnlag,
+          deepCopyProps.behandling,
+        )}
+        arbeidsgiverOpplysningerPerId={deepCopyProps.arbeidsgiverOpplysningerPerId}
+        submitCallback={props.submitCallback}
+        formData={props.formData}
+        setFormData={props.setFormData}
+        readOnlySubmitButton={deepCopyProps.isReadOnly}
+        alleKodeverk={deepCopyProps.alleKodeverk}
+        isReadOnly={deepCopyProps.isReadOnly}
+      />
+    );
   };
 
   getAksjonspunktKoder = () => [
