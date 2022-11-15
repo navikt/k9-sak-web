@@ -99,8 +99,6 @@ spec:
       value: "true"
     - name: NY_BEREGNING_FAKTA_ENABLED
       value: "true"
-    - name: NY_BEREGNING_FAKTA_FORDEL_ENABLED
-      value: "true"
     - name: AKSJONSPUNKT_9014
       value: "true"
     - name: AKSJONSPUNKT_9015
