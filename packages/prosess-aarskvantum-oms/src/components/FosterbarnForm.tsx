@@ -3,6 +3,7 @@ import { Table, TableColumn, TableRow, VerticalSpacer } from '@fpsak-frontend/sh
 import { minLength, maxLength, required, hasValidFodselsnummer } from '@fpsak-frontend/utils';
 import { Knapp } from 'nav-frontend-knapper';
 import { InputField } from '@fpsak-frontend/form/index';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 
 import { Delete } from '@navikt/ds-icons';
 import { FormattedMessage } from 'react-intl';
@@ -16,11 +17,14 @@ interface Props {
   barn: fosterbarnDto[];
   isAksjonspunktOpen: boolean;
   valgValue: string;
+  aksjonspunktkode: string;
 }
 
-const FosterbarnForm = ({ fields, barn, isAksjonspunktOpen, valgValue }: Props) => {
+const FosterbarnForm = ({ fields, barn, isAksjonspunktOpen, valgValue, aksjonspunktkode }: Props) => {
   useEffect(() => {
-    if (valgValue === valgValues.reBehandling && fields.length < 1) fields.push('');
+    if (aksjonspunktkode === aksjonspunktCodes.ÅRSKVANTUM_FOSTERBARN) {
+      if (valgValue === valgValues.reBehandling && fields.length < 1) fields.push('');
+    }
   }, [valgValue]);
 
   return (
@@ -59,7 +63,12 @@ const FosterbarnForm = ({ fields, barn, isAksjonspunktOpen, valgValue }: Props) 
                       type="flat"
                       htmlType="button"
                       onClick={() => fields.remove(index)}
-                      disabled={!isAksjonspunktOpen || (index === 0 && fields.length < 2)}
+                      disabled={
+                        !isAksjonspunktOpen ||
+                        (aksjonspunktkode === aksjonspunktCodes.ÅRSKVANTUM_FOSTERBARN &&
+                          index === 0 &&
+                          fields.length < 2)
+                      }
                     >
                       <Delete />
                     </Knapp>

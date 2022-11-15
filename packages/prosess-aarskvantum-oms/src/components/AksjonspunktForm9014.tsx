@@ -190,6 +190,7 @@ export const FormContent = ({
               barn={fosterbarn}
               isAksjonspunktOpen={isAksjonspunktOpen}
               valgValue={valgValue}
+              aksjonspunktkode={aksjonspunktKode}
             />
           </BorderBox>
           <VerticalSpacer sixteenPx />
