@@ -6,7 +6,6 @@ import { Column, Row } from 'nav-frontend-grid';
 import BehandlingArsakType from '@fpsak-frontend/kodeverk/src/behandlingArsakType';
 import { isAvslag, isInnvilget, isOpphor } from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
-import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { getKodeverknavnFn } from '@fpsak-frontend/utils';
 import { Aksjonspunkt, Kodeverk, KodeverkMedNavn, Vilkar } from '@k9-sak-web/types';
 import VedtakAvslagRevurderingPanel from './VedtakAvslagRevurderingPanel';
@@ -89,10 +88,7 @@ const RevurderingPaneler = ({
 
   const behandlingArsakstyper =
     behandlingArsaker && behandlingArsaker.map(({ behandlingArsakType }) => behandlingArsakType);
-  const revurderingsAarsakString = createAarsakString(
-    behandlingArsakstyper,
-    getKodeverknavnFn(alleKodeverk, kodeverkTyper),
-  );
+  const revurderingsAarsakString = createAarsakString(behandlingArsakstyper, getKodeverknavnFn(alleKodeverk));
   return (
     <Row>
       <Column xs={ytelseTypeKode === fagsakYtelseType.FRISINN ? '4' : '12'}>

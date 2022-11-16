@@ -1,6 +1,6 @@
 import { Historikkinnslag } from '@k9-sak-web/types';
 import { Location } from 'history';
-import KodeverkType from 'kodeverk/src/kodeverkTyper';
+import KodeverkType from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 
 interface HistorikkMal {
   historikkinnslag: Historikkinnslag;

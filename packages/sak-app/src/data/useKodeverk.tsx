@@ -1,17 +1,22 @@
-import { KodeverkMedNavn, Kodeverk, AlleKodeverk } from '@k9-sak-web/types';
-import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
+import { KodeverkMedNavn } from '@k9-sak-web/types';
 import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
+import KodeverkType from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 
 import { K9sakApiKeys, restApiHooks } from './k9sakApi';
-import KodeverkType from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 
 /**
  * Hook som henter kodeverk knyttet til behandlingstype
  */
 export function useKodeverk(behandlingType: string) {
-  const alleKodeverkK9Sak = restApiHooks.useGlobalStateRestApiData(K9sakApiKeys.KODEVERK);
-  const alleKodeverkTilbake = restApiHooks.useGlobalStateRestApiData(K9sakApiKeys.KODEVERK_TILBAKE);
-  const alleKlageKodeverk = restApiHooks.useGlobalStateRestApiData(K9sakApiKeys.KODEVERK_KLAGE);
+  const alleKodeverkK9Sak: { [key: string]: KodeverkMedNavn[] } = restApiHooks.useGlobalStateRestApiData(
+    K9sakApiKeys.KODEVERK,
+  );
+  const alleKodeverkTilbake: { [key: string]: KodeverkMedNavn[] } = restApiHooks.useGlobalStateRestApiData(
+    K9sakApiKeys.KODEVERK_TILBAKE,
+  );
+  const alleKlageKodeverk: { [key: string]: KodeverkMedNavn[] } = restApiHooks.useGlobalStateRestApiData(
+    K9sakApiKeys.KODEVERK_KLAGE,
+  );
 
   if (
     BehandlingType.TILBAKEKREVING === behandlingType ||
@@ -73,14 +78,11 @@ export function useGetKodeverkFn() {
     K9sakApiKeys.KODEVERK_KLAGE,
   );
 
-  return (
-    kode: string,
-    kodeverk: KodeverkType,
-    behandlingType: string = BehandlingType.FORSTEGANGSSOKNAD,
-  ) => {
-
-    const kodeverkForType = (behandlingType === BehandlingType.TILBAKEKREVING || behandlingType === BehandlingType.TILBAKEKREVING_REVURDERING)
-      ? alleTilbakeKodeverk[kodeverk] : alleK9SakKodeverk[kodeverk];
+  return (kode: string, kodeverk: KodeverkType, behandlingType: string = BehandlingType.FORSTEGANGSSOKNAD) => {
+    const kodeverkForType =
+      behandlingType === BehandlingType.TILBAKEKREVING || behandlingType === BehandlingType.TILBAKEKREVING_REVURDERING
+        ? alleTilbakeKodeverk[kodeverk]
+        : alleK9SakKodeverk[kodeverk];
 
     if (!kodeverkForType || kodeverkForType.length === 0) {
       throw Error(`Det finnes ingen kodeverk for type ${kodeverk} med kode ${kode}`);

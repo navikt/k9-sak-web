@@ -2,7 +2,8 @@ import React, { ReactNode } from 'react';
 import { FormattedMessage, injectIntl, IntlShape, WrappedComponentProps } from 'react-intl';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
 
-import { HistorikkinnslagEndretFelt, Kodeverk } from '@k9-sak-web/types';
+import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
+import { HistorikkinnslagEndretFelt } from '@k9-sak-web/types';
 
 import {
   findEndretFeltNavn,
@@ -19,7 +20,7 @@ import Skjermlenke from './felles/Skjermlenke';
 const formatChangedField = (
   endretFelt: HistorikkinnslagEndretFelt,
   intl: IntlShape,
-  getKodeverknavn: (kodeverk: Kodeverk) => string,
+  getKodeverknavn: (kode: string, kodeverk: string) => string,
 ): ReactNode => {
   const fieldName = findEndretFeltNavn(endretFelt, intl);
   const sub1 = fieldName.substring(0, fieldName.lastIndexOf(';'));
@@ -97,13 +98,15 @@ const HistorikkMalType7 = ({
           {!!historikkinnslagDel.tema && historikkinnslagDel.tema.navnVerdi !== undefined && (
             <Normaltekst>({historikkinnslagDel.tema.navnVerdi})</Normaltekst>
           )}
-          {historikkinnslagDel.aarsak && <Normaltekst>{getKodeverknavn(historikkinnslagDel.aarsak)}</Normaltekst>}
+          {historikkinnslagDel.aarsak && (
+            <Normaltekst>{getKodeverknavn(historikkinnslagDel.aarsak, kodeverkTyper.VENT_AARSAK)}</Normaltekst>
+          )}
           {historikkinnslagDel.begrunnelse && (
-            <BubbleText bodyText={getKodeverknavn(historikkinnslagDel.begrunnelse)} />
+            <BubbleText
+              bodyText={getKodeverknavn(historikkinnslagDel.begrunnelse, kodeverkTyper.HISTORIKK_BEGRUNNELSE_TYPE)}
+            />
           )}
-          {historikkinnslagDel.begrunnelseFritekst && (
-            <BubbleText bodyText={historikkinnslagDel.begrunnelseFritekst} />
-          )}
+          {historikkinnslagDel.begrunnelseFritekst && <BubbleText bodyText={historikkinnslagDel.begrunnelseFritekst} />}
           {dokumentLinks &&
             dokumentLinks.map(dokumentLenke => (
               <HistorikkDokumentLenke

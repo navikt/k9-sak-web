@@ -1,6 +1,8 @@
 import React from 'react';
 import { FormattedMessage, injectIntl, WrappedComponentProps } from 'react-intl';
+
 import { Element, Normaltekst } from 'nav-frontend-typografi';
+import KodeverkType from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 
 import Skjermlenke from './felles/Skjermlenke';
 import { findHendelseText, findIdForOpplysningCode, findResultatText } from './felles/historikkUtils';
@@ -49,17 +51,14 @@ const HistorikkMalFelles7og8 = ({
 
           {historikkinnslagDel.opplysninger &&
             historikkinnslagDel.opplysninger.map(opplysning => (
-              <FormattedMessage
-                id={findIdForOpplysningCode(opplysning)}
-                values={{ antallBarn: opplysning.tilVerdi }}
-              />
+              <FormattedMessage id={findIdForOpplysningCode(opplysning)} values={{ antallBarn: opplysning.tilVerdi }} />
             ))}
 
-          {historikkinnslagDel.aarsak && <Normaltekst>{getKodeverknavn(historikkinnslagDel.aarsak)}</Normaltekst>}
-          {historikkinnslagDel.begrunnelse && <BubbleText bodyText="" />}
-          {historikkinnslagDel.begrunnelseFritekst && (
-            <BubbleText bodyText={historikkinnslagDel.begrunnelseFritekst} />
+          {historikkinnslagDel.aarsak && (
+            <Normaltekst>{getKodeverknavn(historikkinnslagDel.aarsak, KodeverkType.VENT_AARSAK)}</Normaltekst>
           )}
+          {historikkinnslagDel.begrunnelse && <BubbleText bodyText="" />}
+          {historikkinnslagDel.begrunnelseFritekst && <BubbleText bodyText={historikkinnslagDel.begrunnelseFritekst} />}
           <div>
             {dokumentLinks &&
               dokumentLinks.map(dokumentLenke => (

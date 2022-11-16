@@ -13,7 +13,6 @@ import {
   BehandlingAppKontekst,
   Brevmaler,
   Fagsak,
-  Kodeverk,
   Mottaker,
   Personopplysninger,
 } from '@k9-sak-web/types';
@@ -36,23 +35,23 @@ const getSubmitCallback =
     setShowSettPaVentModal: (erInnhentetEllerForlenget: boolean) => void,
     setSubmitCounter: (fn: (prevValue: number) => number) => void,
   ) =>
-    (values: FormValues) => {
-      const isInnhentEllerForlenget =
-        values.brevmalkode === dokumentMalType.INNHENT_DOK ||
-        values.brevmalkode === dokumentMalType.INNOPP ||
-        values.brevmalkode === dokumentMalType.FORLENGET_DOK ||
-        values.brevmalkode === dokumentMalType.FORLENGET_MEDL_DOK;
-      const erTilbakekreving = erTilbakekrevingType(behandlingTypeKode);
+  (values: FormValues) => {
+    const isInnhentEllerForlenget =
+      values.brevmalkode === dokumentMalType.INNHENT_DOK ||
+      values.brevmalkode === dokumentMalType.INNOPP ||
+      values.brevmalkode === dokumentMalType.FORLENGET_DOK ||
+      values.brevmalkode === dokumentMalType.FORLENGET_MEDL_DOK;
+    const erTilbakekreving = erTilbakekrevingType(behandlingTypeKode);
 
-      setShowMessageModal(!isInnhentEllerForlenget);
+    setShowMessageModal(!isInnhentEllerForlenget);
 
-      const data = erTilbakekreving
-        ? {
+    const data = erTilbakekreving
+      ? {
           behandlingUuid,
           fritekst: values.fritekst,
           brevmalkode: values.brevmalkode,
         }
-        : {
+      : {
           behandlingId,
           overstyrtMottaker: values.overstyrtMottaker,
           brevmalkode: values.brevmalkode,
@@ -60,28 +59,28 @@ const getSubmitCallback =
           arsakskode: values.arsakskode,
           fritekstbrev: values.fritekstbrev,
         };
-      return submitMessage(data)
-        .then(() => resetMessage())
-        .then(() => {
-          setShowSettPaVentModal(isInnhentEllerForlenget);
-          setSubmitCounter(prevValue => prevValue + 1);
-        });
-    };
+    return submitMessage(data)
+      .then(() => resetMessage())
+      .then(() => {
+        setShowSettPaVentModal(isInnhentEllerForlenget);
+        setSubmitCounter(prevValue => prevValue + 1);
+      });
+  };
 
 const getPreviewCallback =
   (
     behandlingTypeKode: string,
     behandlingUuid: string,
-    fagsakYtelseType: Kodeverk,
+    fagsakYtelseType: string,
     fetchPreview: (erHenleggelse: boolean, data: any) => void,
   ) =>
-    (overstyrtMottaker: Mottaker, dokumentMal: string, fritekst: string, fritekstbrev?: Fritekstbrev) => {
-      const data = erTilbakekrevingType(behandlingTypeKode)
-        ? {
+  (overstyrtMottaker: Mottaker, dokumentMal: string, fritekst: string, fritekstbrev?: Fritekstbrev) => {
+    const data = erTilbakekrevingType(behandlingTypeKode)
+      ? {
           fritekst: fritekst || ' ',
           brevmalkode: dokumentMal,
         }
-        : {
+      : {
           overstyrtMottaker,
           dokumentMal,
           dokumentdata: {
@@ -90,8 +89,8 @@ const getPreviewCallback =
               fritekstbrev && Object.values(fritekstbrev).some(x => x === null || x === '') ? null : fritekstbrev,
           },
         };
-      fetchPreview(false, data);
-    };
+    fetchPreview(false, data);
+  };
 
 interface OwnProps {
   fagsak: Fagsak;

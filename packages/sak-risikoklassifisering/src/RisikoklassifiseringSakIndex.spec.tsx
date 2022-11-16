@@ -9,10 +9,7 @@ import IngenRisikoPanel from './components/IngenRisikoPanel';
 import HoyRisikoTittel from './components/HoyRisikoTittel';
 
 const lagRisikoklassifisering = kode => ({
-  kontrollresultat: {
-    kode,
-    kodeverk: 'Kontrollresultat',
-  },
+  kontrollresultat: kode,
   medlFaresignaler: undefined,
   iayFaresignaler: undefined,
 });

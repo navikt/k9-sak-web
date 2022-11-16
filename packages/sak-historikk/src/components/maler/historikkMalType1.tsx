@@ -1,5 +1,7 @@
 import React from 'react';
+
 import { Element } from 'nav-frontend-typografi';
+import KodeverkType from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 
 import BubbleText from './felles/bubbleText';
 import { findHendelseText } from './felles/historikkUtils';
@@ -16,7 +18,9 @@ const HistorikkMalType1 = ({ historikkinnslag, getKodeverknavn, saksnummer }: Hi
         </Element>
       )}
       {historikkinnslagDeler[0].begrunnelse && (
-        <BubbleText bodyText={getKodeverknavn(historikkinnslagDeler[0].begrunnelse)} />
+        <BubbleText
+          bodyText={getKodeverknavn(historikkinnslagDeler[0].begrunnelse, KodeverkType.HISTORIKK_BEGRUNNELSE_TYPE)}
+        />
       )}
       {historikkinnslagDeler[0].begrunnelseFritekst && (
         <BubbleText bodyText={historikkinnslagDeler[0].begrunnelseFritekst} />

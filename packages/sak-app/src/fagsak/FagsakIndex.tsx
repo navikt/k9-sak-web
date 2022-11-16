@@ -16,7 +16,6 @@ import {
   Fagsak,
   FagsakPerson,
   FeatureToggles,
-  Kodeverk,
   KodeverkMedNavn,
   MerknadFraLos,
   Personopplysninger,
@@ -46,12 +45,10 @@ import useHentFagsakRettigheter from './useHentFagsakRettigheter';
 
 const erTilbakekreving = (behandlingType: string): boolean =>
   behandlingType &&
-  (BehandlingType.TILBAKEKREVING === behandlingType ||
-    BehandlingType.TILBAKEKREVING_REVURDERING === behandlingType);
+  (BehandlingType.TILBAKEKREVING === behandlingType || BehandlingType.TILBAKEKREVING_REVURDERING === behandlingType);
 
-const erPleiepengerSyktBarn = (fagsak: Fagsak) => fagsak?.sakstype ? === fagsakYtelseType.PLEIEPENGER;
-const erPleiepengerLivetsSluttfase = (fagsak: Fagsak) =>
-  fagsak?.sakstype ? === fagsakYtelseType.PLEIEPENGER_SLUTTFASE;
+const erPleiepengerSyktBarn = (fagsak: Fagsak) => fagsak?.sakstype === fagsakYtelseType.PLEIEPENGER;
+const erPleiepengerLivetsSluttfase = (fagsak: Fagsak) => fagsak?.sakstype === fagsakYtelseType.PLEIEPENGER_SLUTTFASE;
 
 /**
  * FagsakIndex

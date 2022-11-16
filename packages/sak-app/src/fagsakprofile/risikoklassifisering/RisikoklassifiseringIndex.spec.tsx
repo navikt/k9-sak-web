@@ -9,10 +9,7 @@ import { requestApi, K9sakApiKeys } from '../../data/k9sakApi';
 import RisikoklassifiseringIndex from './RisikoklassifiseringIndex';
 
 const lagRisikoklassifisering = kode => ({
-  kontrollresultat: {
-    kode,
-    kodeverk: 'Kontrollresultat',
-  },
+  kontrollresultat: kode,
   medlFaresignaler: undefined,
   iayFaresignaler: undefined,
 });
@@ -31,13 +28,12 @@ const initialEntries = [
     pathname: '/test/',
     state: {},
     search: '',
-  }
+  },
 ];
 
 const navAnsatt = { navn: 'Ann S. Att', kanSaksbehandle: true };
 
 describe('<RisikoklassifiseringIndex>', () => {
-
   it('skal rendere komponent', async () => {
     requestApi.mock(K9sakApiKeys.NAV_ANSATT, navAnsatt);
 
@@ -50,7 +46,7 @@ describe('<RisikoklassifiseringIndex>', () => {
           behandlingVersjon={1}
           behandlingId={1}
         />
-      </MemoryRouter>
+      </MemoryRouter>,
     );
 
     expect(await screen.queryAllByTestId('HoyRisikoTittel').length).toBe(1);

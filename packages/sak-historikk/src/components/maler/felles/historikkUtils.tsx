@@ -1,17 +1,13 @@
 import React from 'react';
-import {
-  HistorikkinnslagDel,
-  HistorikkInnslagOpplysning,
-  HistorikkinnslagEndretFelt,
-  Kodeverk,
-} from '@k9-sak-web/types';
-
 import { IntlShape } from 'react-intl';
+
+import { HistorikkinnslagDel, HistorikkInnslagOpplysning, HistorikkinnslagEndretFelt } from '@k9-sak-web/types';
+import KodeverkType from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
+
 import historikkResultatTypeCodes from '../../../kodeverk/historikkResultatTypeCodes';
 import historikkEndretFeltVerdiTypeCodes from '../../../kodeverk/historikkEndretFeltVerdiTypeCodes';
 import historikkEndretFeltTypeCodes from '../../../kodeverk/historikkEndretFeltTypeCodes';
 import historikkOpplysningTypeCodes from '../../../kodeverk/historikkOpplysningTypeCodes';
-import KodeverkType from 'kodeverk/src/kodeverkTyper';
 
 export const findIdForOpplysningCode = (opplysning: HistorikkInnslagOpplysning): string => {
   if (!opplysning) {
@@ -108,11 +104,11 @@ export const findEndretFeltNavn = (endretFelt: HistorikkinnslagEndretFelt, intl:
   const fieldId = endretFeltNavnType.feltId;
   return endretFelt.navnVerdi !== null
     ? intl.formatMessage(
-      { id: fieldId },
-      {
-        value: endretFelt.navnVerdi,
-      },
-    )
+        { id: fieldId },
+        {
+          value: endretFelt.navnVerdi,
+        },
+      )
     : intl.formatMessage({ id: fieldId });
 };
 

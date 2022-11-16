@@ -20,10 +20,7 @@ const mockProps = {
 };
 
 describe('<Messages>', () => {
-  const sprakkode = {
-    kode: 'en',
-    kodeverk: 'Engelsk',
-  };
+  const sprakkode = 'en';
 
   const templates = {
     INNHEN: {

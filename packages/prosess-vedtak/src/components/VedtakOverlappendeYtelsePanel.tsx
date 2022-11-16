@@ -142,11 +142,11 @@ const VedtakOverlappendeYtelsePanel: React.FC<Props & WrappedComponentProps> = (
           <div className={styles.periodeDetaljer}>
             <EtikettFokus className={styles.periodeDetalj}>
               <strong>{intl.formatMessage({ id: 'VedtakForm.OverlappendeYtelserKilde' })}</strong>
-              {utledFagSystem(valgtPeriode.periodeinfo.kilde.kode)}
+              {utledFagSystem(valgtPeriode.periodeinfo.kilde)}
             </EtikettFokus>
             <EtikettInfo className={styles.periodeDetalj}>
               <strong>{intl.formatMessage({ id: 'VedtakForm.OverlappendeYtelserYtelse' })}</strong>
-              {utledYtelseType(valgtPeriode.periodeinfo.ytelseType.kode)}
+              {utledYtelseType(valgtPeriode.periodeinfo.ytelseType)}
             </EtikettInfo>
             <EtikettInfo className={styles.periodeDetalj}>
               <strong>{intl.formatMessage({ id: 'VedtakForm.OverlappendeYtelserPeriode' })}</strong>

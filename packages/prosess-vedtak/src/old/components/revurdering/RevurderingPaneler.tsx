@@ -90,10 +90,7 @@ const RevurderingPaneler = ({
 
   const behandlingArsakstyper =
     behandlingArsaker && behandlingArsaker.map(({ behandlingArsakType }) => behandlingArsakType);
-  const revurderingsAarsakString = createAarsakString(
-    behandlingArsakstyper,
-    getKodeverknavnFn(alleKodeverk, kodeverkTyper),
-  );
+  const revurderingsAarsakString = createAarsakString(behandlingArsakstyper, getKodeverknavnFn(alleKodeverk));
   return (
     <Row>
       <Column xs={ytelseTypeKode === fagsakYtelseType.FRISINN ? '4' : '12'}>

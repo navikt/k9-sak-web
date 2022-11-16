@@ -2,7 +2,6 @@ import React from 'react';
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 import { Location } from 'history';
 
-import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { getKodeverknavnFn } from '@fpsak-frontend/utils';
 import { Historikkinnslag, KodeverkMedNavn } from '@k9-sak-web/types';
 
@@ -41,7 +40,7 @@ const HistorikkSakIndex = ({
       historikkinnslag={historikkinnslag}
       saksnummer={saksnummer}
       getBehandlingLocation={getBehandlingLocation}
-      getKodeverknavn={getKodeverknavnFn(alleKodeverk, kodeverkTyper)}
+      getKodeverknavn={getKodeverknavnFn(alleKodeverk)}
       createLocationForSkjermlenke={createLocationForSkjermlenke}
       erTilbakekreving={erTilbakekreving}
     />

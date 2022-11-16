@@ -1,8 +1,9 @@
 import React from 'react';
 import { Location } from 'history';
 
-import { Historikkinnslag, Kodeverk } from '@k9-sak-web/types';
+import { Historikkinnslag } from '@k9-sak-web/types';
 import HistorikkAktor from '@fpsak-frontend/kodeverk/src/historikkAktor';
+import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 
 import historikkinnslagType from '../kodeverk/historikkinnslagType';
 import SnakkebobleContainer from './maler/felles/SnakkebobleContainer';
@@ -24,7 +25,7 @@ import PlaceholderHistorikkMal from './maler/placeholderHistorikkMal';
 const velgHistorikkMal = (histType: string) => {
   // NOSONAR
   switch (
-  histType // NOSONAR
+    histType // NOSONAR
   ) {
     case historikkinnslagType.BEH_GJEN:
     case historikkinnslagType.KOET_BEH_GJEN:
@@ -103,7 +104,7 @@ interface OwnProps {
   historikkinnslag: Historikkinnslag;
   saksnummer?: string;
   getBehandlingLocation: (behandlingId: number) => Location;
-  getKodeverknavn: (kodeverk: string) => string;
+  getKodeverknavn: (kode: string, kodeverk: string) => string;
   createLocationForSkjermlenke: (behandlingLocation: Location, skjermlenkeCode: string) => Location;
   erTilbakekreving: boolean;
 }
@@ -129,7 +130,7 @@ const History = ({
   return (
     <SnakkebobleContainer
       aktoer={historikkinnslag.aktoer}
-      rolleNavn={getKodeverknavn(historikkinnslag.aktoer)}
+      rolleNavn={getKodeverknavn(historikkinnslag.aktoer, kodeverkTyper.HISTORIKK_AKTOER)}
       dato={historikkinnslag.opprettetTidspunkt}
       kjoenn={historikkinnslag.kjoenn}
       opprettetAv={aktorIsSOKER || aktorIsArbeidsgiver || aktorIsVL ? '' : historikkinnslag.opprettetAv}

@@ -56,26 +56,26 @@ const getHentFritekstbrevHtmlCallback =
       ytelseType: fagsak.sakstype,
       saksnummer: fagsak.saksnummer,
       aktørId: fagsakPerson.aktørId,
-      avsenderApplikasjon: bestemAvsenderApp(behandling.type.kode),
+      avsenderApplikasjon: bestemAvsenderApp(behandling.type),
     });
 
 const getLagringSideeffekter =
   (toggleFatterVedtakModal, toggleOppdatereFagsakContext, oppdaterProsessStegOgFaktaPanelIUrl) =>
-    async aksjonspunktModels => {
-      const isFatterVedtakAp = aksjonspunktModels.some(ap => ap.kode === aksjonspunktCodesTilbakekreving.FORESLA_VEDTAK);
-      if (isFatterVedtakAp) {
-        toggleOppdatereFagsakContext(false);
-      }
+  async aksjonspunktModels => {
+    const isFatterVedtakAp = aksjonspunktModels.some(ap => ap.kode === aksjonspunktCodesTilbakekreving.FORESLA_VEDTAK);
+    if (isFatterVedtakAp) {
+      toggleOppdatereFagsakContext(false);
+    }
 
-      // Returner funksjon som blir kjørt etter lagring av aksjonspunkt(er)
-      return () => {
-        if (isFatterVedtakAp) {
-          toggleFatterVedtakModal(true);
-        } else {
-          oppdaterProsessStegOgFaktaPanelIUrl('default', 'default');
-        }
-      };
+    // Returner funksjon som blir kjørt etter lagring av aksjonspunkt(er)
+    return () => {
+      if (isFatterVedtakAp) {
+        toggleFatterVedtakModal(true);
+      } else {
+        oppdaterProsessStegOgFaktaPanelIUrl('default', 'default');
+      }
     };
+  };
 
 const TilbakekrevingProsess = ({
   data,
