@@ -22,10 +22,11 @@ jobs:
       - name: Sette opp Node
         uses: actions/setup-node@v3
         with:
-          node-version: '16'
+          node-version: '18'
           registry-url: https://npm.pkg.github.com/
           scope: '@navikt'
           cache: 'yarn'
+          always-auth: true
 
       - name: Set timestamp
         run: echo "TIMESTAMP=$(expr $(date +%Y%m%d%H%M%S))" >> $GITHUB_ENV
@@ -52,7 +53,6 @@ jobs:
 
       - name: Bygg og laste opp docker-image
         run: |
-          docker pull nginx:1.17.8-alpine
           docker build --tag ${IMAGE_BASE}:${TAG} --tag ${IMAGE_BASE}:latest --label "version=${TAG}" .
           docker push ${IMAGE_BASE} --all-tags
 

@@ -70,7 +70,7 @@ const Table = ({
   const tableRowsWithNoHoverProp = childrenOfTbody =>
     performFunctionOnChildren(
       childrenOfTbody,
-      (row: ReactNode) => React.isValidElement(row) && React.cloneElement(row, { noHover }),
+      (row: ReactNode) => React.isValidElement(row) && React.cloneElement(row as React.ReactElement<any>, { noHover }),
     );
 
   const content = withoutTbody

@@ -5,9 +5,8 @@ import { EtikettFokus } from 'nav-frontend-etiketter';
 import { useIntl } from 'react-intl';
 import LabelType from './LabelType';
 import ReadOnlyField from './ReadOnlyField';
-import styles from './textAreaField.less';
+import styles from './TextAreaFormik.less';
 import { validateAll } from './formikUtils';
-import formikStyles from './TextAreaFormik.less';
 
 interface TextAreaFieldProps {
   name: string;
@@ -35,17 +34,16 @@ const renderTextarea = ({ field: { value, name }, form, label, maxLength, badges
           ))}
         </div>
       )}
-      <div className={formikStyles.label}>
-        <Textarea
-          value={value}
-          onChange={form.handleChange(name)}
-          onBlur={form.handleBlur(name)}
-          disabled={disabled}
-          label={label}
-          error={touched && error ? intl.formatMessage({ id }, { ...intlParams }) : null}
-          maxLength={maxLength}
-        />
-      </div>
+      <Textarea
+        value={value}
+        onChange={form.handleChange(name)}
+        onBlur={form.handleBlur(name)}
+        disabled={disabled}
+        label={label}
+        error={touched && error ? intl.formatMessage({ id }, { ...intlParams }) : null}
+        maxLength={maxLength}
+        size="small"
+      />
     </div>
   );
 };

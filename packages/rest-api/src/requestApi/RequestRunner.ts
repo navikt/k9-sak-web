@@ -10,6 +10,7 @@ const HTTP_ACCEPTED = 202;
 const MAX_POLLING_ATTEMPTS = 150;
 export const REQUEST_POLLING_CANCELLED = 'INTERNAL_CANCELLATION';
 
+// eslint-disable-next-line no-promise-executor-return
 const wait = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
 
 const hasLocationAndStatusDelayedOrHalted = (responseData): boolean =>
@@ -133,7 +134,9 @@ class RequestRunner {
       const { response } = error;
       if (response && response.status === 401 && response.headers && response.headers.location) {
         const currentPath = encodeURIComponent(window.location.pathname + window.location.search);
-        window.location.href = `${response.headers.location}?redirectTo=${currentPath}`;
+        let location = `${response.headers.location}`;
+        let queryParamAddition = location.includes('?') ? '&' : '?';
+        window.location.href = `${location}${queryParamAddition}redirectTo=${currentPath}`;
       }
       new RequestErrorEventHandler(this.notify, this.isPollingRequest).handleError(error);
       throw error;

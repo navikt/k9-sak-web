@@ -21,7 +21,7 @@ import {
   FagsakPerson,
   Fagsak,
 } from '@k9-sak-web/types';
-import lagForhåndsvisRequest from '@fpsak-frontend/utils/src/formidlingUtils';
+import lagForhåndsvisRequest, { bestemAvsenderApp } from '@fpsak-frontend/utils/src/formidlingUtils';
 
 import { restApiUnntakHooks, UnntakBehandlingApiKeys } from '../data/unntakBehandlingApi';
 import prosessStegPanelDefinisjoner from '../panelDefinisjoner/prosessStegPanelDefinisjoner';
@@ -54,6 +54,23 @@ interface OwnProps {
   featureToggles: FeatureToggles;
 }
 
+const getHentFritekstbrevHtmlCallback =
+  (
+    hentFriteksbrevHtml: (data: any) => Promise<any>,
+    behandling: Behandling,
+    fagsak: Fagsak,
+    fagsakPerson: FagsakPerson,
+  ) =>
+  (parameters: any) =>
+    hentFriteksbrevHtml({
+      ...parameters,
+      eksternReferanse: behandling.uuid,
+      ytelseType: fagsak.sakstype,
+      saksnummer: fagsak.saksnummer,
+      aktørId: fagsakPerson.aktørId,
+      avsenderApplikasjon: bestemAvsenderApp(behandling.type.kode),
+    });
+
 const getForhandsvisCallback =
   (
     forhandsvisMelding: (data: any) => Promise<any>,
@@ -61,24 +78,24 @@ const getForhandsvisCallback =
     fagsakPerson: FagsakPerson,
     behandling: Behandling,
   ) =>
-    (parametre: any) => {
-      const request = lagForhåndsvisRequest(behandling, fagsak, fagsakPerson, parametre);
-      return forhandsvisMelding(request).then(response => forhandsvis(response));
-    };
+  (parametre: any) => {
+    const request = lagForhåndsvisRequest(behandling, fagsak, fagsakPerson, parametre);
+    return forhandsvisMelding(request).then(response => forhandsvis(response));
+  };
 
 const getForhandsvisFptilbakeCallback =
   (forhandsvisTilbakekrevingMelding: (data: any) => Promise<any>, fagsak: Fagsak, behandling: Behandling) =>
-    (mottaker: string, brevmalkode: string, fritekst: string, saksnummer: string) => {
-      const data = {
-        behandlingUuid: behandling.uuid,
-        fagsakYtelseType: fagsak.sakstype,
-        varseltekst: fritekst || '',
-        mottaker,
-        brevmalkode,
-        saksnummer,
-      };
-      return forhandsvisTilbakekrevingMelding(data).then(response => forhandsvis(response));
+  (mottaker: string, brevmalkode: string, fritekst: string, saksnummer: string) => {
+    const data = {
+      behandlingUuid: behandling.uuid,
+      fagsakYtelseType: fagsak.sakstype,
+      varseltekst: fritekst || '',
+      mottaker,
+      brevmalkode,
+      saksnummer,
     };
+    return forhandsvisTilbakekrevingMelding(data).then(response => forhandsvis(response));
+  };
 
 const getLagringSideeffekter =
   (
@@ -89,44 +106,44 @@ const getLagringSideeffekter =
     opneSokeside,
     lagreDokumentdata,
   ) =>
-    async aksjonspunktModels => {
-      const erRevurderingsaksjonspunkt = aksjonspunktModels.some(
-        apModel =>
-          (apModel.kode === aksjonspunktCodes.VARSEL_REVURDERING_MANUELL ||
-            apModel.kode === aksjonspunktCodes.VARSEL_REVURDERING_ETTERKONTROLL) &&
-          apModel.sendVarsel,
+  async aksjonspunktModels => {
+    const erRevurderingsaksjonspunkt = aksjonspunktModels.some(
+      apModel =>
+        (apModel.kode === aksjonspunktCodes.VARSEL_REVURDERING_MANUELL ||
+          apModel.kode === aksjonspunktCodes.VARSEL_REVURDERING_ETTERKONTROLL) &&
+        apModel.sendVarsel,
+    );
+    const visIverksetterVedtakModal =
+      aksjonspunktModels[0].isVedtakSubmission &&
+      [aksjonspunktCodes.VEDTAK_UTEN_TOTRINNSKONTROLL, aksjonspunktCodes.FATTER_VEDTAK].includes(
+        aksjonspunktModels[0].kode,
       );
-      const visIverksetterVedtakModal =
-        aksjonspunktModels[0].isVedtakSubmission &&
-        [aksjonspunktCodes.VEDTAK_UTEN_TOTRINNSKONTROLL, aksjonspunktCodes.FATTER_VEDTAK].includes(
-          aksjonspunktModels[0].kode,
-        );
-      const visFatterVedtakModal =
-        aksjonspunktModels[0].isVedtakSubmission && aksjonspunktModels[0].kode === aksjonspunktCodes.FORESLA_VEDTAK;
-      const isVedtakAp = aksjonspunktModels.some(a => a.isVedtakSubmission);
+    const visFatterVedtakModal =
+      aksjonspunktModels[0].isVedtakSubmission && aksjonspunktModels[0].kode === aksjonspunktCodes.FORESLA_VEDTAK;
+    const isVedtakAp = aksjonspunktModels.some(a => a.isVedtakSubmission);
 
-      if (visIverksetterVedtakModal || visFatterVedtakModal || erRevurderingsaksjonspunkt || isVedtakAp) {
-        toggleOppdatereFagsakContext(false);
+    if (visIverksetterVedtakModal || visFatterVedtakModal || erRevurderingsaksjonspunkt || isVedtakAp) {
+      toggleOppdatereFagsakContext(false);
+    }
+
+    if (aksjonspunktModels[0].isVedtakSubmission) {
+      const dokumentdata = lagDokumentdata(aksjonspunktModels[0]);
+      if (dokumentdata) await lagreDokumentdata(dokumentdata);
+    }
+
+    // Returner funksjon som blir kjørt etter lagring av aksjonspunkt(er)
+    return () => {
+      if (visFatterVedtakModal) {
+        toggleFatterVedtakModal(true);
+      } else if (visIverksetterVedtakModal) {
+        toggleIverksetterVedtakModal(true);
+      } else if (erRevurderingsaksjonspunkt) {
+        opneSokeside();
+      } else {
+        oppdaterProsessStegOgFaktaPanelIUrl('default', 'default');
       }
-
-      if (aksjonspunktModels[0].isVedtakSubmission) {
-        const dokumentdata = lagDokumentdata(aksjonspunktModels[0]);
-        if (dokumentdata) await lagreDokumentdata(dokumentdata);
-      }
-
-      // Returner funksjon som blir kjørt etter lagring av aksjonspunkt(er)
-      return () => {
-        if (visFatterVedtakModal) {
-          toggleFatterVedtakModal(true);
-        } else if (visIverksetterVedtakModal) {
-          toggleIverksetterVedtakModal(true);
-        } else if (erRevurderingsaksjonspunkt) {
-          opneSokeside();
-        } else {
-          oppdaterProsessStegOgFaktaPanelIUrl('default', 'default');
-        }
-      };
     };
+  };
 
 const UnntakProsess = ({
   data,
@@ -165,6 +182,9 @@ const UnntakProsess = ({
   const { startRequest: lagreDokumentdata } = restApiUnntakHooks.useRestApiRunner<Behandling>(
     UnntakBehandlingApiKeys.DOKUMENTDATA_LAGRE,
   );
+  const { startRequest: hentFriteksbrevHtml } = restApiUnntakHooks.useRestApiRunner(
+    UnntakBehandlingApiKeys.HENT_FRITEKSTBREV_HTML,
+  );
 
   useSetBehandlingVedEndring(apBehandlingRes, setBehandling);
   useSetBehandlingVedEndring(apOverstyrtBehandlingRes, setBehandling);
@@ -176,6 +196,10 @@ const UnntakProsess = ({
     ]),
     previewFptilbakeCallback: useCallback(
       getForhandsvisFptilbakeCallback(forhandsvisTilbakekrevingMelding, fagsak, behandling),
+      [behandling.versjon],
+    ),
+    hentFritekstbrevHtmlCallback: useCallback(
+      getHentFritekstbrevHtmlCallback(hentFriteksbrevHtml, behandling, fagsak, fagsakPerson),
       [behandling.versjon],
     ),
     alleKodeverk,

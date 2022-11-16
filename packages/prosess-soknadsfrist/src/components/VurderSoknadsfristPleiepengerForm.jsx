@@ -172,10 +172,10 @@ VurderSoknadsfristPleiepengerFormImpl.defaultProps = {
 export const buildInitialValues = createSelector(
   [
     (state, ownProps) => ownProps.aksjonspunkter,
-    (state, ownProps) => ownProps.uttakPeriodeGrense,
     (state, ownProps) => ownProps.mottattDato,
+    (state, ownProps) => ownProps.uttakPeriodeGrense,
   ],
-  (aksjonspunkter, uttaksperiodegrense = {}, mottattDato) => ({
+  (aksjonspunkter, mottattDato, uttaksperiodegrense = {}) => ({
     gyldigSenFremsetting: isAksjonspunktOpen(aksjonspunkter[0].status.kode)
       ? undefined
       : uttaksperiodegrense.mottattDato !== mottattDato,

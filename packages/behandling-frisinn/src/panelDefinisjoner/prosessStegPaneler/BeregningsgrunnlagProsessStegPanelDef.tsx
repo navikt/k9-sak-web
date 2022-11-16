@@ -1,17 +1,59 @@
 import React from 'react';
 
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
-import BeregningsgrunnlagProsessIndex from '@fpsak-frontend/prosess-beregningsgrunnlag';
 import { prosessStegCodes } from '@k9-sak-web/konstanter';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { ProsessStegDef, ProsessStegPanelDef } from '@k9-sak-web/behandling-felles';
+import { DynamicLoader, ProsessStegDef, ProsessStegPanelDef } from '@k9-sak-web/behandling-felles';
+import { konverterKodeverkTilKode, mapVilkar } from '@fpsak-frontend/utils';
+
+const ProsessBeregningsgrunnlag = React.lazy(() => import('@navikt/ft-prosess-beregningsgrunnlag'));
+
+const ProsessBeregningsgrunnlagMF =
+  process.env.NODE_ENV !== 'development'
+    ? undefined
+    : // eslint-disable-next-line import/no-unresolved
+      () => import('ft_prosess_beregningsgrunnlag/ProsessBeregningsgrunnlag');
+
+const mapYtelsesSpesifiktGrunnlagForFrisinn = (beregningsgrunnlag, behandling) =>
+  beregningsgrunnlag.map(bg => ({
+    ...bg,
+    ytelsesspesifiktGrunnlag: {
+      ...bg.ytelsesspesifiktGrunnlag,
+      behandlingÅrsaker: behandling.behandlingÅrsaker.map(({ behandlingArsakType }) => behandlingArsakType),
+    },
+  }));
 
 class PanelDef extends ProsessStegPanelDef {
-  getKomponent = props => <BeregningsgrunnlagProsessIndex {...props} />;
+  // eslint-disable-next-line class-methods-use-this
+  getKomponent = props => {
+    const deepCopyProps = JSON.parse(JSON.stringify(props));
+    konverterKodeverkTilKode(deepCopyProps);
+    const bgVilkaret = deepCopyProps.vilkar.find(v => v.vilkarType === vilkarType.BEREGNINGSGRUNNLAGVILKARET);
+    return (
+      <DynamicLoader<React.ComponentProps<typeof ProsessBeregningsgrunnlag>>
+        packageCompFn={() => import('@navikt/ft-prosess-beregningsgrunnlag')}
+        federatedCompFn={ProsessBeregningsgrunnlagMF}
+        {...props}
+        beregningsgrunnlagsvilkar={mapVilkar(bgVilkaret, props.beregningreferanserTilVurdering)}
+        beregningsgrunnlagListe={mapYtelsesSpesifiktGrunnlagForFrisinn(
+          deepCopyProps.beregningsgrunnlag,
+          deepCopyProps.behandling,
+        )}
+        arbeidsgiverOpplysningerPerId={deepCopyProps.arbeidsgiverOpplysningerPerId}
+        submitCallback={props.submitCallback}
+        formData={props.formData}
+        setFormData={props.setFormData}
+        readOnlySubmitButton={deepCopyProps.isReadOnly}
+        alleKodeverk={deepCopyProps.alleKodeverk}
+        isReadOnly={deepCopyProps.isReadOnly}
+      />
+    );
+  };
 
   getAksjonspunktKoder = () => [
     aksjonspunktCodes.FASTSETT_BEREGNINGSGRUNNLAG_ARBEIDSTAKER_FRILANS,
     aksjonspunktCodes.VURDER_VARIG_ENDRET_ELLER_NYOPPSTARTET_NAERING_SELVSTENDIG_NAERINGSDRIVENDE,
+    aksjonspunktCodes.VURDER_VARIG_ENDRET_ARBEIDSSITUASJON,
     aksjonspunktCodes.FASTSETT_BRUTTO_BEREGNINGSGRUNNLAG_SELVSTENDIG_NAERINGSDRIVENDE,
     aksjonspunktCodes.FASTSETT_BEREGNINGSGRUNNLAG_TIDSBEGRENSET_ARBEIDSFORHOLD,
     aksjonspunktCodes.FASTSETT_BEREGNINGSGRUNNLAG_SN_NY_I_ARBEIDSLIVET,
@@ -25,7 +67,7 @@ class PanelDef extends ProsessStegPanelDef {
     fagsak,
     beregningsgrunnlag: beregningsgrunnlag ? [beregningsgrunnlag[0]] : [],
     arbeidsgiverOpplysningerPerId,
-    beregningreferanserTilVurdering
+    beregningreferanserTilVurdering,
   });
 }
 

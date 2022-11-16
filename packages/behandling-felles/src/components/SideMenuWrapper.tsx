@@ -1,6 +1,6 @@
 import React, { ReactNode } from 'react';
 import { injectIntl, WrappedComponentProps } from 'react-intl';
-import { SideMenu } from '@navikt/k9-react-components';
+import { SideMenu } from '@navikt/ft-plattform-komponenter';
 
 import { FlexColumn, FlexContainer, FlexRow } from '@fpsak-frontend/shared-components';
 import advarselIkonUrl from '@fpsak-frontend/assets/images/advarsel_ny.svg';
@@ -23,7 +23,7 @@ const SideMenuWrapper = ({ intl, paneler, onClick, children }: OwnProps & Wrappe
           <SideMenu
             heading={intl.formatMessage({ id: 'MainSideMenu.Heading' })}
             links={paneler.map(panel => ({
-              label: panel.tekst,
+              label: intl.formatMessage({ id: panel.tekstKode }),
               active: panel.erAktiv,
               iconSrc: panel.harAksjonspunkt ? advarselIkonUrl : undefined,
               iconAltText: panel.harAksjonspunkt ? intl.formatMessage({ id: 'HelpText.Aksjonspunkt' }) : undefined,

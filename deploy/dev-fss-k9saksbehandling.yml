@@ -8,10 +8,12 @@ metadata:
   annotations:
     nais.io/run-as-user: "101" # Fix permissions for nginx
     nais.io/read-only-file-system: "false" # Fix permissions for nginx
+    nginx.ingress.kubernetes.io/proxy-buffer-size: "32k"
+    nginx.ingress.kubernetes.io/proxy-read-timeout: "600"
+    nginx.ingress.kubernetes.io/proxy-send-timeout: "600"
 spec:
   image: {{ image }}
   port: 9000
-  sessionAffinity: ClientIP
   team: k9saksbehandling
   liveness:
     path: /isAlive
@@ -36,7 +38,7 @@ spec:
       memory: 32Mi
   ingresses:
     - "https://app-q1.adeo.no/k9"
-    # - "https://k9-sak-web.nais.preprod.local/"
+    - "https://k9.dev.intern.nav.no/"
   env:
     - name: APP_NAME
       value: k9-sak-web
@@ -57,7 +59,7 @@ spec:
     - name: APP_URL_K9FORDEL
       value: "http://k9-fordel.k9saksbehandling"
     - name: APP_DIAGNOSEKODER
-      value: "http://diagnosekode-api/diagnosekoder/"
+      value: "http://diagnosekode-api.k9saksbehandling/diagnosekoder"
     - name: MEDISINSK_VILKAR_FRONTEND_URL
       value: "https://medisinsk-vilkar-frontend.dev.adeo.no/"
     - name: OMSORGSDAGER_FRONTEND_URL
@@ -96,5 +98,15 @@ spec:
       value: "true"
     - name: LOS_MARKER_BEHANDLING
       value: "true"
-    - name: NY_BEREGNING_PROSESS_ENABLED
+    - name: AKSJONSPUNKT_9014
+      value: "true"
+    - name: AKSJONSPUNKT_9015
+      value: "true"
+    - name: NY_PROSESS_VEDTAK_ENABLED
+      value: "true"
+    - name: FRITEKST_REDIGERING
+      value: "true"
+    - name: FIX_SOKNADSFRIST_KALENDER_OG_READONLY
+      value: "true"
+    - name: INKLUDER_KALENDER_PILS
       value: "true"

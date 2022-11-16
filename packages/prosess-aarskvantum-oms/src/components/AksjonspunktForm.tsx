@@ -1,16 +1,30 @@
 import React, { useMemo } from 'react';
-import { AksjonspunktHelpTextTemp, BorderBox, Table, TableColumn, TableRow, VerticalSpacer } from '@fpsak-frontend/shared-components';
+import {
+  AksjonspunktHelpTextTemp,
+  BorderBox,
+  Table,
+  TableColumn,
+  TableRow,
+  VerticalSpacer,
+} from '@fpsak-frontend/shared-components';
 import { FormattedMessage } from 'react-intl';
 import { behandlingForm } from '@fpsak-frontend/form/src/behandlingForm';
 import { connect } from 'react-redux';
 import { InjectedFormProps, ConfigProps, SubmitHandler, FieldArray } from 'redux-form';
-import { minLength, maxLength, required, hasValidText, hasValidValue, hasValidFodselsnummer } from '@fpsak-frontend/utils';
+import {
+  minLength,
+  maxLength,
+  required,
+  hasValidText,
+  hasValidValue,
+  hasValidFodselsnummer,
+} from '@fpsak-frontend/utils';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 import { CheckboxField, InputField, RadioGroupField, RadioOption, TextAreaField } from '@fpsak-frontend/form/index';
 import { Element } from 'nav-frontend-typografi';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { Aksjonspunkt, UtfallEnum, VurderteVilkår, VilkårEnum } from '@k9-sak-web/types';
-import { Delete } from "@navikt/ds-icons";
+import { Aksjonspunkt, UtfallEnum, VilkårEnum, Uttaksperiode } from '@k9-sak-web/types';
+import { Delete } from '@navikt/ds-icons';
 import styles from './aksjonspunktForm.less';
 import Aktivitet from '../dto/Aktivitet';
 import { fosterbarnDto } from '../dto/FosterbarnDto';
@@ -35,22 +49,21 @@ const valgValues = {
   fortsett: 'fortsett',
 };
 
-const vilkårHarOverlappendePerioderIInfotrygd = (vurderteVilkår: VurderteVilkår) =>
-  Object.entries(vurderteVilkår).some(
+const vilkårHarOverlappendePerioderIInfotrygd = (uttaksperiode: Uttaksperiode) =>
+  Object.entries(uttaksperiode.vurderteVilkår).some(
     ([vilkår, utfall]) => vilkår === VilkårEnum.NOK_DAGER && utfall === UtfallEnum.UAVKLART,
-  );
+  ) && !uttaksperiode.hjemler.some(hjemmel => hjemmel === 'FTRL_9_7__4');
 
 export const FormContent = ({ handleSubmit, aktiviteter = [], isAksjonspunktOpen, fosterbarn }: FormContentProps) => {
-
-  const uavklartePerioder = useMemo(
+  const uavklartePerioderPgaInfotrygd = useMemo(
     () =>
       aktiviteter
         .flatMap(({ uttaksperioder }) => uttaksperioder)
-        .filter(({ utfall }) => utfall === UtfallEnum.UAVKLART),
+        .filter(({ utfall, hjemler }) => utfall === UtfallEnum.UAVKLART && !hjemler.some(hjemmelen => hjemmelen === 'FTRL_9_7__4')),
     [aktiviteter],
   );
 
-  const harUavklartePerioder = uavklartePerioder.length > 0;
+  const harUavklartePerioder = uavklartePerioderPgaInfotrygd.length > 0;
 
   const RenderFosterbarn = ({ fields, barn }) => (
     <>
@@ -59,33 +72,33 @@ export const FormContent = ({ handleSubmit, aktiviteter = [], isAksjonspunktOpen
           <Table>
             <TableRow isHeader>
               <TableColumn />
-              <TableColumn>
-                Fødselsnummer
-              </TableColumn>
-              <TableColumn className={styles.sentrert}>
-                Fjern
-              </TableColumn>
+              <TableColumn>Fødselsnummer</TableColumn>
+              <TableColumn className={styles.sentrert}>Fjern</TableColumn>
             </TableRow>
             {fields.map((field, index) => {
               const fosterbarnObj = barn[index];
-              const navn = (fosterbarnObj && fosterbarnObj.navn) ? fosterbarnObj.navn : `Fosterbarn ${index + 1}`;
+              const navn = fosterbarnObj && fosterbarnObj.navn ? fosterbarnObj.navn : `Fosterbarn ${index + 1}`;
               return (
                 <TableRow>
-                  <TableColumn className={styles.vertikaltSentrert}>
-                    {navn}
-                  </TableColumn>
+                  <TableColumn className={styles.vertikaltSentrert}>{navn}</TableColumn>
                   <TableColumn className={styles.vertikaltSentrert}>
                     <InputField
                       name={field}
                       type="text"
                       size={11}
-                      bredde='S'
+                      bredde="S"
                       validate={[required, minLength(11), maxLength(11), hasValidFodselsnummer]}
                       maxLength={11}
-                      readOnly={!isAksjonspunktOpen} />
+                      readOnly={!isAksjonspunktOpen}
+                    />
                   </TableColumn>
                   <TableColumn className={`${styles.sentrert} ${styles.vertikaltSentrert}`}>
-                    <Knapp type='flat' htmlType='button' onClick={() => fields.remove(index)} disabled={!isAksjonspunktOpen}>
+                    <Knapp
+                      type="flat"
+                      htmlType="button"
+                      onClick={() => fields.remove(index)}
+                      disabled={!isAksjonspunktOpen}
+                    >
                       <Delete />
                     </Knapp>
                   </TableColumn>
@@ -96,18 +109,15 @@ export const FormContent = ({ handleSubmit, aktiviteter = [], isAksjonspunktOpen
           <VerticalSpacer eightPx />
         </>
       )}
-      <Knapp
-        type="flat"
-        htmlType="button"
-        onClick={() => fields.push('')}
-        mini
-      >Legg til fosterbarn</Knapp>
+      <Knapp type="flat" htmlType="button" onClick={() => fields.push('')} mini>
+        Legg til fosterbarn
+      </Knapp>
     </>
   );
 
   if (harUavklartePerioder) {
-    const harOverlappendePerioderIInfotrygd = uavklartePerioder.some(({ vurderteVilkår }) =>
-      vilkårHarOverlappendePerioderIInfotrygd(vurderteVilkår.vilkår),
+    const harOverlappendePerioderIInfotrygd = uavklartePerioderPgaInfotrygd.some((uttaksperiode) =>
+      vilkårHarOverlappendePerioderIInfotrygd(uttaksperiode),
     );
 
     return (
@@ -179,11 +189,7 @@ export const FormContent = ({ handleSubmit, aktiviteter = [], isAksjonspunktOpen
       <VerticalSpacer sixteenPx />
 
       <BorderBox>
-        <FieldArray
-          name="fosterbarn"
-          component={RenderFosterbarn}
-          barn={fosterbarn}
-        />
+        <FieldArray name="fosterbarn" component={RenderFosterbarn} barn={fosterbarn} />
       </BorderBox>
 
       <VerticalSpacer sixteenPx />
@@ -203,7 +209,7 @@ const AksjonspunktFormImpl = ({
   aktiviteter,
   handleSubmit,
   isAksjonspunktOpen,
-  fosterbarn
+  fosterbarn,
 }: AksjonspunktFormImplProps & InjectedFormProps) => (
   <form onSubmit={handleSubmit}>
     <div className={styles.graBoks}>
@@ -239,7 +245,12 @@ export const begrunnelseUavklartePerioder = 'Rammemeldinger er oppdatert i Infot
  * Skal ikke be saksbehandler om begrunnelse hvis uavklarte perioder, men backend krvever det.
  * Hardkoder derfor begrunnelsen i de tilfellene.
  * */
-export const transformValues = ({ begrunnelse = begrunnelseUavklartePerioder, valg, bekreftInfotrygd, fosterbarn }: FormValues) => {
+export const transformValues = ({
+  begrunnelse = begrunnelseUavklartePerioder,
+  valg,
+  bekreftInfotrygd,
+  fosterbarn,
+}: FormValues) => {
   if (bekreftInfotrygd || valg === valgValues.reBehandling) {
     return [{ kode: aksjonspunktCodes.VURDER_ÅRSKVANTUM_KVOTE, begrunnelse, fortsettBehandling: false, fosterbarn }];
   }
@@ -258,7 +269,7 @@ const mapStateToPropsFactory = (_initialState, initialProps: AksjonspunktFormPro
     aktiviteter,
     isAksjonspunktOpen,
     initialValues: { begrunnelse: aksjonspunkterForSteg[0]?.begrunnelse, fosterbarn: fosterbarn.map(barn => barn.fnr) },
-    fosterbarn
+    fosterbarn,
   });
 };
 

@@ -21,10 +21,20 @@ const AndreSakerPåSøkerStripe: React.FC<Props> = ({ søkerIdent, saksnummer, f
     error,
   } = restApiHooks.useRestApiRunner<Fagsak[]>(K9sakApiKeys.MATCH_FAGSAK);
   useEffect(() => {
-    searchFagsaker({
-      ytelseType: fagsakYtelseType,
-      bruker: søkerIdent,
-    });
+    let isMounted = true;
+
+    setTimeout(() => {
+      if (isMounted) {
+        searchFagsaker({
+          ytelseType: fagsakYtelseType,
+          bruker: søkerIdent,
+        });
+      }
+    }, 3 * 1000);
+
+    return () => {
+      isMounted = false;
+    };
   }, []);
 
   if (error) {

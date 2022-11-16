@@ -39,6 +39,7 @@ export enum OmsorgspengerBehandlingApiKeys {
   TILGJENGELIGE_VEDTAKSBREV = 'TILGJENGELIGE_VEDTAKSBREV',
   DOKUMENTDATA_LAGRE = 'DOKUMENTDATA_LAGRE',
   DOKUMENTDATA_HENTE = 'DOKUMENTDATA_HENTE',
+  HENT_FRITEKSTBREV_HTML = 'HENT_FRITEKSTBREV_HTML',
   ARBEIDSFORHOLD = 'ARBEIDSFORHOLD',
   OVERLAPPENDE_YTELSER = 'OVERLAPPENDE_YTELSER',
   HENT_SAKSBEHANDLERE = 'HENT_SAKSBEHANDLERE',
@@ -109,6 +110,7 @@ const endpoints = new RestApiConfigBuilder()
   .withPost('/k9/formidling/api/brev/forhaandsvis', OmsorgspengerBehandlingApiKeys.PREVIEW_MESSAGE, {
     isResponseBlob: true,
   })
+  .withPost('/k9/formidling/api/brev/html', OmsorgspengerBehandlingApiKeys.HENT_FRITEKSTBREV_HTML)
 
   .build();
 

@@ -163,6 +163,11 @@ const skjermlenkeCodes = {
     faktaNavn: faktaPanelCodes.DEFAULT,
     punktNavn: prosessStegCodes.INNGANGSVILKAR,
   },
+  FAKTA_OM_ALDERSVILKÅR_BARN: {
+    kode: 'FAKTA_OM_ALDERSVILKÅR_BARN',
+    faktaNavn: faktaPanelCodes.DEFAULT,
+    punktNavn: prosessStegCodes.ALDER,
+  },
   FAKTA_OM_VERGE: {
     kode: 'FAKTA_OM_VERGE',
     faktaNavn: faktaPanelCodes.VERGE,

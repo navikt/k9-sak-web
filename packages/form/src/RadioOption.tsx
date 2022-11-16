@@ -14,8 +14,8 @@ export interface RadioOptionProps {
   disabled?: boolean;
   groupDisabled?: boolean;
   onChange?: (value: string[] | string | number | boolean) => void;
-  children: ReactNode | ReactNodeArray;
-  style: any;
+  children?: ReactNode | ReactNodeArray;
+  style?: any;
   manualHideChildren?: boolean;
   dataId?: string;
   wrapperClassName?: string;
@@ -59,14 +59,11 @@ export const RadioOption = ({
 
 RadioOption.defaultProps = {
   name: '',
-  label: undefined,
   className: '',
   disabled: false,
   groupDisabled: false,
   actualValue: undefined,
   onChange: () => undefined,
-  children: undefined,
-  style: undefined,
   manualHideChildren: false,
 };
 

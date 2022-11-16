@@ -32,7 +32,27 @@
     "value": "${LOS_MARKER_BEHANDLING}"
   },
   {
-    "key": "NY_BEREGNING_PROSESS_ENABLED",
-    "value": "${NY_BEREGNING_PROSESS_ENABLED}"
+    "key": "AKSJONSPUNKT_9014",
+    "value": "${AKSJONSPUNKT_9014}"
+  },
+  {
+    "key": "AKSJONSPUNKT_9015",
+    "value": "${AKSJONSPUNKT_9015}"
+  },
+  {
+    "key": "NY_PROSESS_VEDTAK_ENABLED",
+    "value": "${NY_PROSESS_VEDTAK_ENABLED}"
+  },
+  {
+    "key": "FRITEKST_REDIGERING",
+    "value": "${FRITEKST_REDIGERING}"
+  },
+  {
+    "key": "FIX_SOKNADSFRIST_KALENDER_OG_READONLY",
+    "value": "${FIX_SOKNADSFRIST_KALENDER_OG_READONLY}"
+  },
+  {
+    "key": "INKLUDER_KALENDER_PILS",
+    "value": "${INKLUDER_KALENDER_PILS}"
   }
 ]

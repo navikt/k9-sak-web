@@ -1,0 +1,18 @@
+{
+  "HelpText.Aksjonspunkt": "Aksjonspunkt",
+  "AlderVilkar.Hjelpetekst": "Vurder om aldersvilkåret er oppfylt. På grunn av barnets alder, må det være innvilget vedtak om at barnet er kronisk syk.",
+  "AlderVilkar.KroniskSyk": "Er aldersvilkåret oppfylt?",
+  "AlderVilkar.KroniskSyk.Ja": "Ja",
+  "AlderVilkar.KroniskSyk.Nei": "Nei",
+  "AlderVilkar.Bekreft": "Bekreft og fortsett",
+  "AlderVilkar.Lese.Etikett.Aksjonspunkt": "Behandlet aksjonspunkt:",
+  "AlderVilkar.Lese.Etikett.Vurdering": "Vurdering",
+  "AlderVilkar.Lese.Etikett.KroniskSyk": "Er aldersvilkåret oppfylt?",
+  "AlderVilkar.Lese.KroniskSyk": "Vurder om aldersvilkåret er oppfylt",
+  "AlderVilkar.Lese.Rediger": "Rediger vurdering",
+  "AlderVilkar.Lese.Etikett.Opplysninger": "Opplysninger fra søknaden:",
+  "AlderVilkar.Lese.Etikett.Barn": "Søkers barn:",
+  "AlderVilkar.Status.Aldersvilkar": "Aldersvilkår",
+  "AlderVilkar.Status.VilkarOppfylt": "Vilkåret er oppfylt",
+  "AlderVilkar.Status.VilkarIkkeOppfylt": "Vilkåret er ikke oppfylt"
+}

@@ -1,6 +1,6 @@
 import React from 'react';
-import NavFrontendSpinner from 'nav-frontend-spinner';
 
+import { Loader } from '@navikt/ds-react';
 import styles from './loadingPanel.less';
 
 /**
@@ -8,6 +8,10 @@ import styles from './loadingPanel.less';
  *
  * Presentasjonskomponent. Viser lasteikon.
  */
-const LoadingPanel = () => <NavFrontendSpinner type="XL" className={styles.container} />;
+const LoadingPanel = () => (
+  <div className={styles.container}>
+    <Loader variant="neutral" size="2xlarge" title="venter..." />
+  </div>
+);
 
 export default LoadingPanel;

@@ -37,6 +37,7 @@ export enum UnntakBehandlingApiKeys {
   TILGJENGELIGE_VEDTAKSBREV = 'TILGJENGELIGE_VEDTAKSBREV',
   DOKUMENTDATA_LAGRE = 'DOKUMENTDATA_LAGRE',
   DOKUMENTDATA_HENTE = 'DOKUMENTDATA_HENTE',
+  HENT_FRITEKSTBREV_HTML = 'HENT_FRITEKSTBREV_HTML',
   ARBEIDSFORHOLD = 'ARBEIDSFORHOLD',
 }
 
@@ -88,6 +89,7 @@ const endpoints = new RestApiConfigBuilder()
 
   /* K9FORMIDLING */
   .withPost('/k9/formidling/api/brev/forhaandsvis', UnntakBehandlingApiKeys.PREVIEW_MESSAGE, { isResponseBlob: true })
+  .withPost('/k9/formidling/api/brev/html', UnntakBehandlingApiKeys.HENT_FRITEKSTBREV_HTML)
 
   .build();
 

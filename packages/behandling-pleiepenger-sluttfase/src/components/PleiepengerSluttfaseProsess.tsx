@@ -21,11 +21,14 @@ import {
   FagsakPerson,
   ArbeidsgiverOpplysningerPerId,
 } from '@k9-sak-web/types';
-import lagForhåndsvisRequest from '@fpsak-frontend/utils/src/formidlingUtils';
+import lagForhåndsvisRequest, { bestemAvsenderApp } from '@fpsak-frontend/utils/src/formidlingUtils';
 
 import prosessStegPanelDefinisjoner from '../panelDefinisjoner/prosessStegPleiepengerSluttfasePanelDefinisjoner';
 import FetchedData from '../types/fetchedDataTsType';
-import { restApiPleiepengerSluttfaseHooks, PleiepengerSluttfaseBehandlingApiKeys } from '../data/pleiepengerSluttfaseBehandlingApi';
+import {
+  restApiPleiepengerSluttfaseHooks,
+  PleiepengerSluttfaseBehandlingApiKeys,
+} from '../data/pleiepengerSluttfaseBehandlingApi';
 
 import '@fpsak-frontend/assets/styles/arrowForProcessMenu.less';
 
@@ -79,6 +82,23 @@ const getForhandsvisFptilbakeCallback =
     };
     return forhandsvisTilbakekrevingMelding(data).then(response => forhandsvis(response));
   };
+
+const getHentFritekstbrevHtmlCallback =
+  (
+    hentFriteksbrevHtml: (data: any) => Promise<any>,
+    behandling: Behandling,
+    fagsak: Fagsak,
+    fagsakPerson: FagsakPerson,
+  ) =>
+  (parameters: any) =>
+    hentFriteksbrevHtml({
+      ...parameters,
+      eksternReferanse: behandling.uuid,
+      ytelseType: fagsak.sakstype,
+      saksnummer: fagsak.saksnummer,
+      aktørId: fagsakPerson.aktørId,
+      avsenderApplikasjon: bestemAvsenderApp(behandling.type.kode),
+    });
 
 const getLagringSideeffekter =
   (
@@ -153,15 +173,23 @@ const PleiepengerSluttfaseProsess = ({
   );
 
   const { startRequest: lagreAksjonspunkter, data: apBehandlingRes } =
-    restApiPleiepengerSluttfaseHooks.useRestApiRunner<Behandling>(PleiepengerSluttfaseBehandlingApiKeys.SAVE_AKSJONSPUNKT);
+    restApiPleiepengerSluttfaseHooks.useRestApiRunner<Behandling>(
+      PleiepengerSluttfaseBehandlingApiKeys.SAVE_AKSJONSPUNKT,
+    );
   const { startRequest: lagreOverstyrteAksjonspunkter, data: apOverstyrtBehandlingRes } =
-    restApiPleiepengerSluttfaseHooks.useRestApiRunner<Behandling>(PleiepengerSluttfaseBehandlingApiKeys.SAVE_OVERSTYRT_AKSJONSPUNKT);
+    restApiPleiepengerSluttfaseHooks.useRestApiRunner<Behandling>(
+      PleiepengerSluttfaseBehandlingApiKeys.SAVE_OVERSTYRT_AKSJONSPUNKT,
+    );
   const { startRequest: forhandsvisMelding } = restApiPleiepengerSluttfaseHooks.useRestApiRunner(
     PleiepengerSluttfaseBehandlingApiKeys.PREVIEW_MESSAGE,
   );
-  const { startRequest: forhandsvisTilbakekrevingMelding } = restApiPleiepengerSluttfaseHooks.useRestApiRunner<Behandling>(
-    PleiepengerSluttfaseBehandlingApiKeys.PREVIEW_TILBAKEKREVING_MESSAGE,
+  const { startRequest: hentFriteksbrevHtml } = restApiPleiepengerSluttfaseHooks.useRestApiRunner(
+    PleiepengerSluttfaseBehandlingApiKeys.HENT_FRITEKSTBREV_HTML,
   );
+  const { startRequest: forhandsvisTilbakekrevingMelding } =
+    restApiPleiepengerSluttfaseHooks.useRestApiRunner<Behandling>(
+      PleiepengerSluttfaseBehandlingApiKeys.PREVIEW_TILBAKEKREVING_MESSAGE,
+    );
   const { startRequest: lagreDokumentdata } = restApiPleiepengerSluttfaseHooks.useRestApiRunner<Behandling>(
     PleiepengerSluttfaseBehandlingApiKeys.DOKUMENTDATA_LAGRE,
   );
@@ -176,6 +204,10 @@ const PleiepengerSluttfaseProsess = ({
     ]),
     previewFptilbakeCallback: useCallback(
       getForhandsvisFptilbakeCallback(forhandsvisTilbakekrevingMelding, fagsak, behandling),
+      [behandling.versjon],
+    ),
+    hentFritekstbrevHtmlCallback: useCallback(
+      getHentFritekstbrevHtmlCallback(hentFriteksbrevHtml, behandling, fagsak, fagsakPerson),
       [behandling.versjon],
     ),
     alleKodeverk,

@@ -6,8 +6,7 @@ import { useIntl } from 'react-intl';
 import { Column, Row } from 'nav-frontend-grid';
 import { Button } from '@navikt/ds-react';
 import { Aksjonspunkt } from '@k9-sak-web/types';
-import { DokumentDataType, LagreDokumentdataType } from '@k9-sak-web/types/src/dokumentdata';
-import MellomLagreBrev from './brev/MellomLagreBrev';
+import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 
 import styles from './vedtakForm.less';
 
@@ -18,29 +17,19 @@ interface Props {
   isSubmitting: boolean;
   aksjonspunkter: Aksjonspunkt[];
   handleSubmit: (e) => void;
-  brødtekst: string;
-  overskrift: string;
-  inkluderKalender: boolean;
-  dokumentdata: DokumentDataType;
-  lagreDokumentdata: LagreDokumentdataType;
 }
 
 const kanSendesTilGodkjenning = behandlingStatusKode =>
   behandlingStatusKode === behandlingStatusCode.BEHANDLING_UTREDES;
 
-export default function VedtakSubmit({
+const VedtakSubmit = ({
   behandlingStatusKode,
   readOnly,
   behandlingPaaVent,
   isSubmitting,
   aksjonspunkter,
   handleSubmit,
-  lagreDokumentdata,
-  dokumentdata,
-  overskrift,
-  brødtekst,
-  inkluderKalender,
-}: Props): JSX.Element {
+}: Props): JSX.Element => {
   const intl = useIntl();
 
   const submitKnapp = (
@@ -50,11 +39,13 @@ export default function VedtakSubmit({
       disabled={behandlingPaaVent || isSubmitting}
       loading={isSubmitting}
       onClick={handleSubmit}
+      size="small"
+      type="button"
     >
       {intl.formatMessage({
         id:
           aksjonspunkter && aksjonspunkter.some(ap => ap.erAktivt === true && ap.toTrinnsBehandling === true)
-            ? 'VedtakForm.TilGodkjenning'
+            ? 'VedtakForm.SendTilBeslutter'
             : 'VedtakForm.FattVedtak',
       })}
     </Button>
@@ -67,16 +58,15 @@ export default function VedtakSubmit({
     <Row>
       <Column xs="12">
         {!readOnly && (
-          <MellomLagreBrev
-            lagreDokumentdata={lagreDokumentdata}
-            dokumentdata={dokumentdata}
-            overskrift={overskrift}
-            inkluderKalender={inkluderKalender}
-            brødtekst={brødtekst}
-            submitKnapp={submitKnapp}
-          />
+          <>
+            <VerticalSpacer sixteenPx />
+            {submitKnapp}
+            <VerticalSpacer sixteenPx />
+          </>
         )}
       </Column>
     </Row>
   );
-}
+};
+
+export default VedtakSubmit;

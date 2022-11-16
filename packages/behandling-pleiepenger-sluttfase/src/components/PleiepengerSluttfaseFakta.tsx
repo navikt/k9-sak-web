@@ -1,6 +1,5 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
-import { injectIntl, WrappedComponentProps } from 'react-intl';
 import { Rettigheter, SideMenuWrapper, faktaHooks, useSetBehandlingVedEndring } from '@k9-sak-web/behandling-felles';
 import {
   KodeverkMedNavn,
@@ -18,7 +17,10 @@ import { RestApiState, useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-ho
 
 import faktaPanelDefinisjoner from '../panelDefinisjoner/faktaPleiepengerSluttfasePanelDefinisjoner';
 import FetchedData from '../types/fetchedDataTsType';
-import { restApiPleiepengerSluttfaseHooks, PleiepengerSluttfaseBehandlingApiKeys } from '../data/pleiepengerSluttfaseBehandlingApi';
+import {
+  restApiPleiepengerSluttfaseHooks,
+  PleiepengerSluttfaseBehandlingApiKeys,
+} from '../data/pleiepengerSluttfaseBehandlingApi';
 
 const overstyringApCodes = [ac.OVERSTYRING_AV_BEREGNINGSAKTIVITETER, ac.OVERSTYRING_AV_BEREGNINGSGRUNNLAG];
 
@@ -42,7 +44,6 @@ interface OwnProps {
 }
 
 const PleiepengerSluttfaseFakta = ({
-  intl,
   data,
   behandling,
   fagsak,
@@ -58,17 +59,21 @@ const PleiepengerSluttfaseFakta = ({
   arbeidsgiverOpplysningerPerId,
   dokumenter,
   featureToggles,
-  beregningErBehandlet
-}: OwnProps & WrappedComponentProps) => {
+  beregningErBehandlet,
+}: OwnProps) => {
   const { aksjonspunkter, ...rest } = data;
   const { addErrorMessage } = useRestApiErrorDispatcher();
 
   const { startRequest: lagreAksjonspunkter, data: apBehandlingRes } =
-    restApiPleiepengerSluttfaseHooks.useRestApiRunner<Behandling>(PleiepengerSluttfaseBehandlingApiKeys.SAVE_AKSJONSPUNKT);
+    restApiPleiepengerSluttfaseHooks.useRestApiRunner<Behandling>(
+      PleiepengerSluttfaseBehandlingApiKeys.SAVE_AKSJONSPUNKT,
+    );
   useSetBehandlingVedEndring(apBehandlingRes, setBehandling);
 
   const { startRequest: lagreOverstyrteAksjonspunkter, data: apOverstyrtBehandlingRes } =
-    restApiPleiepengerSluttfaseHooks.useRestApiRunner<Behandling>(PleiepengerSluttfaseBehandlingApiKeys.SAVE_OVERSTYRT_AKSJONSPUNKT);
+    restApiPleiepengerSluttfaseHooks.useRestApiRunner<Behandling>(
+      PleiepengerSluttfaseBehandlingApiKeys.SAVE_OVERSTYRT_AKSJONSPUNKT,
+    );
   useSetBehandlingVedEndring(apOverstyrtBehandlingRes, setBehandling);
 
   const dataTilUtledingAvPleiepengerPaneler = {
@@ -87,7 +92,6 @@ const PleiepengerSluttfaseFakta = ({
     rettigheter,
     aksjonspunkter,
     valgtFaktaSteg,
-    intl,
   );
 
   faktaHooks.useFaktaAksjonspunktNotifikator(faktaPaneler, setApentFaktaPanel, behandling.versjon);
@@ -116,6 +120,13 @@ const PleiepengerSluttfaseFakta = ({
     isCachingOn: true,
   });
 
+  const [formData, setFormData] = useState({});
+  useEffect(() => {
+    if (formData) {
+      setFormData(undefined);
+    }
+  }, [behandling.versjon]);
+
   if (sidemenyPaneler.length > 0) {
     const isLoading = state === RestApiState.NOT_STARTED || state === RestApiState.LOADING;
     return (
@@ -128,10 +139,12 @@ const PleiepengerSluttfaseFakta = ({
               behandling,
               alleKodeverk,
               featureToggles,
+              formData,
+              setFormData,
               submitCallback: bekreftAksjonspunktCallback,
               ...valgtPanel.getKomponentData(rettigheter, dataTilUtledingAvPleiepengerPaneler, hasFetchError),
               dokumenter,
-              beregningErBehandlet
+              beregningErBehandlet,
             })}
           </ErrorBoundary>
         )}
@@ -141,4 +154,4 @@ const PleiepengerSluttfaseFakta = ({
   return null;
 };
 
-export default injectIntl(PleiepengerSluttfaseFakta);
+export default PleiepengerSluttfaseFakta;

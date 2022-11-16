@@ -30,3 +30,4 @@ tmp/
 node_modules_bak
 .yarn/
 .eslintcache
+public/client/src

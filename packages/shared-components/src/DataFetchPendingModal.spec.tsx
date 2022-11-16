@@ -15,8 +15,7 @@ describe('<DataFetchPendingModal>', () => {
     expect(modal.prop('isOpen')).toBe(true);
     expect(modal.prop('closeButton')).toBe(false);
     expect(modal.prop('contentLabel')).toEqual('test');
-
-    expect(wrapper.find('NavFrontendSpinner')).toHaveLength(1);
+    expect(wrapper.find('ForwardRef')).toHaveLength(1);
   });
 
   it('skal ikke rendre modal før timer har gått ut', () => {

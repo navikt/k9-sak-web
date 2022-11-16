@@ -1,5 +1,4 @@
-import React from 'react';
-import { injectIntl, WrappedComponentProps } from 'react-intl';
+import React, { useEffect, useState } from 'react';
 
 import { Rettigheter, SideMenuWrapper, faktaHooks, useSetBehandlingVedEndring } from '@k9-sak-web/behandling-felles';
 import { KodeverkMedNavn, Behandling, Fagsak, FagsakPerson, ArbeidsgiverOpplysningerPerId } from '@k9-sak-web/types';
@@ -31,7 +30,6 @@ interface OwnProps {
 }
 
 const FrisinnFakta = ({
-  intl,
   data,
   behandling,
   fagsak,
@@ -45,7 +43,7 @@ const FrisinnFakta = ({
   setApentFaktaPanel,
   setBehandling,
   arbeidsgiverOpplysningerPerId,
-}: OwnProps & WrappedComponentProps) => {
+}: OwnProps) => {
   const { aksjonspunkter, ...rest } = data;
   const { addErrorMessage } = useRestApiErrorDispatcher();
 
@@ -74,7 +72,6 @@ const FrisinnFakta = ({
     rettigheter,
     aksjonspunkter,
     valgtFaktaSteg,
-    intl,
   );
 
   faktaHooks.useFaktaAksjonspunktNotifikator(faktaPaneler, setApentFaktaPanel, behandling.versjon);
@@ -103,6 +100,13 @@ const FrisinnFakta = ({
     isCachingOn: true,
   });
 
+  const [formData, setFormData] = useState({});
+  useEffect(() => {
+    if (formData) {
+      setFormData(undefined);
+    }
+  }, [behandling.versjon]);
+
   if (sidemenyPaneler.length > 0) {
     const isLoading = state === RestApiState.NOT_STARTED || state === RestApiState.LOADING;
     return (
@@ -114,6 +118,8 @@ const FrisinnFakta = ({
               ...faktaData,
               behandling,
               alleKodeverk,
+              formData,
+              setFormData,
               submitCallback: bekreftAksjonspunktCallback,
               ...valgtPanel.getKomponentData(rettigheter, dataTilUtledingAvFpPaneler, hasFetchError),
             })}
@@ -125,4 +131,4 @@ const FrisinnFakta = ({
   return null;
 };
 
-export default injectIntl(FrisinnFakta);
+export default FrisinnFakta;

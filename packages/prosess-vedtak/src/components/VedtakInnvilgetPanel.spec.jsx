@@ -32,14 +32,9 @@ describe('<VedtakInnvilgetPanel>', () => {
         beregningErManueltFastsatt={false}
       />,
     );
-
-    const undertekstFields = wrapper.find('Undertekst');
-    expect(undertekstFields).to.have.length(1);
-    expect(undertekstFields.first().childAt(0).text()).to.eql('Resultat');
-
-    const normaltekstFields = wrapper.find('Normaltekst');
-    expect(normaltekstFields).to.have.length(1);
-    expect(normaltekstFields.first().childAt(0).text()).to.eql('Pleiepenger er innvilget');
+    const textFields = wrapper.find('ForwardRef');
+    expect(textFields.first().childAt(0).text()).to.eql('Resultat');
+    expect(textFields.at(1).childAt(0).text()).to.eql('Pleiepenger er innvilget');
 
     const elementFields = wrapper.find('Element');
     expect(elementFields).to.have.length(0);

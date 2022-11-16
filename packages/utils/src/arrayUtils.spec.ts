@@ -26,7 +26,7 @@ describe('arrayUtils', () => {
     });
 
     it('skal kaste feil hvis listene er av ulik lengde', () => {
-      expect(() => zip([1], ['a', 'b'])).toThrowError('Arrays given to zip must be of equal length');
+      expect(() => zip([1], ['a', 'b'])).toThrow('Arrays given to zip must be of equal length');
     });
   });
 

@@ -11,3 +11,29 @@
 .periodeDetalj {
   margin-right: 10px;
 }
+
+.aksjonspunktAlert {
+  margin-bottom: 1.4375rem;
+
+  :global(.navds-alert__wrapper) {
+    flex: 1;
+    max-width: none;
+  }
+}
+
+.accordion {
+  :global(.navds-accordion__header) {
+    border: none;
+    padding: 0;
+  }
+
+  :global(.navds-accordion__header[aria-expanded='true']) {
+    background-color: transparent;
+  }
+
+  :global(.navds-accordion__content) {
+    border: none;
+    margin-top: 1rem;
+    padding: 0;
+  }
+}

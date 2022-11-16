@@ -6,6 +6,7 @@ const dokumentdatatype = {
   VEDTAKSBREV_TYPE: 'VEDTAKSBREV_TYPE',
   VEDTAKSBREV_MAL: 'VEDTAKSBREV_MAL',
   OVERSTYRT_MOTTAKER: 'OVERSTYRT_MOTTAKER',
+  REDIGERTBREV: 'REDIGERTBREV',
 };
 
 export default dokumentdatatype;

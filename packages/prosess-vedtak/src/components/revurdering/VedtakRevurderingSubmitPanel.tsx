@@ -8,10 +8,9 @@ import klageBehandlingArsakType from '@fpsak-frontend/kodeverk/src/behandlingArs
 import behandlingStatusCode from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import { Aksjonspunkt } from '@k9-sak-web/types';
 
-import { DokumentDataType, LagreDokumentdataType } from '@k9-sak-web/types/src/dokumentdata';
-import MellomLagreBrev from '../brev/MellomLagreBrev';
+import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import redusertUtbetalingArsak from '../../kodeverk/redusertUtbetalingArsak';
-import { fieldnames } from '../../konstanter';
+
 import styles from '../vedtakForm.less';
 
 interface OwnProps {
@@ -23,16 +22,12 @@ interface OwnProps {
   behandlingStatusKode: string;
   isSubmitting: boolean;
   handleSubmit: (event: any) => void;
-  brødtekst: string;
-  overskrift: string;
-  dokumentdata: DokumentDataType;
-  lagreDokumentdata: LagreDokumentdataType;
   aksjonspunkter: Aksjonspunkt[];
 }
 
 export const submitKnappTekst = aksjonspunkter =>
   aksjonspunkter && aksjonspunkter.some(ap => ap.erAktivt === true && ap.toTrinnsBehandling === true)
-    ? 'VedtakForm.TilGodkjenning'
+    ? 'VedtakForm.SendTilBeslutter'
     : 'VedtakForm.FattVedtak';
 
 export const VedtakRevurderingSubmitPanelImpl = ({
@@ -44,10 +39,6 @@ export const VedtakRevurderingSubmitPanelImpl = ({
   behandlingStatusKode,
   isSubmitting,
   handleSubmit,
-  lagreDokumentdata,
-  dokumentdata,
-  overskrift,
-  brødtekst,
   aksjonspunkter,
 }: OwnProps): JSX.Element => {
   const onClick = event =>
@@ -65,6 +56,7 @@ export const VedtakRevurderingSubmitPanelImpl = ({
       onClick={onClick}
       disabled={isSubmitting}
       loading={isSubmitting}
+      size="small"
     >
       {intl.formatMessage({
         id: submitKnappTekstID,
@@ -80,14 +72,11 @@ export const VedtakRevurderingSubmitPanelImpl = ({
     <div>
       <div className={styles.margin} />
       {!readOnly && (
-        <MellomLagreBrev
-          lagreDokumentdata={lagreDokumentdata}
-          dokumentdata={dokumentdata}
-          overskrift={overskrift}
-          inkluderKalender={formikValues[fieldnames.INKLUDER_KALENDER_VED_OVERSTYRING]}
-          brødtekst={brødtekst}
-          submitKnapp={submitKnapp}
-        />
+        <>
+          <VerticalSpacer sixteenPx />
+          {submitKnapp}
+          <VerticalSpacer sixteenPx />
+        </>
       )}
     </div>
   );

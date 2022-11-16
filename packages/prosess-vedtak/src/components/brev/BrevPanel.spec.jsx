@@ -2,10 +2,11 @@ import sinon from 'sinon';
 import { expect } from 'chai';
 import React from 'react';
 import { shallow } from 'enzyme/build';
-import { AlertStripeInfo } from 'nav-frontend-alertstriper';
+import { Alert } from '@navikt/ds-react';
 import dokumentMalType from '@fpsak-frontend/kodeverk/src/dokumentMalType';
 import SelectFieldFormik from '@fpsak-frontend/form/src/SelectFieldFormik';
 import vedtaksbrevtype from '@fpsak-frontend/kodeverk/src/vedtaksbrevtype';
+import { K9sakApiKeys, requestApi } from '@k9-sak-web/sak-app/src/data/k9sakApi';
 
 import { BrevPanel } from './BrevPanel';
 import { VedtakPreviewLink } from '../PreviewLink';
@@ -28,6 +29,7 @@ describe('<BrevPanel>', () => {
   const fritekstbrevTilgjenglig = { vedtaksbrevmaler: { [vedtaksbrevtype.FRITEKST]: dokumentMalType.FRITKS } };
 
   it('skal forhåndsvise brev når ingen behandlingsresultat', () => {
+    requestApi.mock(K9sakApiKeys.FEATURE_TOGGLE, []);
     const wrapper = shallow(
       <BrevPanel
         intl={intlMock}
@@ -45,7 +47,7 @@ describe('<BrevPanel>', () => {
         overskrift={null}
         behandlingResultat={null}
         overstyrtMottaker={null}
-        formikProps={{values: []}}
+        formikProps={{ values: [] }}
       />,
     );
 
@@ -55,6 +57,7 @@ describe('<BrevPanel>', () => {
   });
 
   it('skal vise fritekstpanel når overstyrt', () => {
+    requestApi.mock(K9sakApiKeys.FEATURE_TOGGLE, []);
     const wrapper = shallow(
       <BrevPanel
         intl={intlMock}
@@ -72,7 +75,7 @@ describe('<BrevPanel>', () => {
         overskrift={null}
         behandlingResultat={null}
         overstyrtMottaker={null}
-        formikProps={{values: []}}
+        formikProps={{ values: [] }}
       />,
     );
 
@@ -82,6 +85,7 @@ describe('<BrevPanel>', () => {
   });
 
   it('skal vise fritekstpanel selv om ikke overstyrt når fritekst er eneste typen', () => {
+    requestApi.mock(K9sakApiKeys.FEATURE_TOGGLE, []);
     const wrapper = shallow(
       <BrevPanel
         intl={intlMock}
@@ -99,7 +103,7 @@ describe('<BrevPanel>', () => {
         overskrift={null}
         behandlingResultat={null}
         overstyrtMottaker={null}
-        formikProps={{values: []}}
+        formikProps={{ values: [] }}
       />,
     );
 
@@ -109,6 +113,7 @@ describe('<BrevPanel>', () => {
   });
 
   it('skal vise varsel om ingen brev når ingen brev', () => {
+    requestApi.mock(K9sakApiKeys.FEATURE_TOGGLE, []);
     const wrapper = shallow(
       <BrevPanel
         intl={intlMock}
@@ -126,16 +131,17 @@ describe('<BrevPanel>', () => {
         overskrift={null}
         behandlingResultat={null}
         overstyrtMottaker={null}
-        formikProps={{values: []}}
+        formikProps={{ values: [] }}
       />,
     );
     expect(wrapper.find(InformasjonsbehovAutomatiskVedtaksbrev)).to.have.length(0);
     expect(wrapper.find(VedtakPreviewLink)).to.have.length(0);
     expect(wrapper.find(FritekstBrevPanel)).to.have.length(0);
-    expect(wrapper.find(AlertStripeInfo)).to.have.length(1);
+    expect(wrapper.find(Alert)).to.have.length(1);
   });
 
   it('skal vise valg av mottaker hvis alternative mottakere er definert', () => {
+    requestApi.mock(K9sakApiKeys.FEATURE_TOGGLE, []);
     const wrapper = shallow(
       <BrevPanel
         intl={intlMock}
@@ -166,7 +172,7 @@ describe('<BrevPanel>', () => {
         overskrift={null}
         behandlingResultat={null}
         overstyrtMottaker={null}
-        formikProps={{values: []}}
+        formikProps={{ values: [] }}
       />,
     );
 
