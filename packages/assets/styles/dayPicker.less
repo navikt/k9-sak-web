@@ -74,12 +74,13 @@
 }
 
 .DayPicker-NavButton {
-  background: transparent url('./../images/pil-videre.svg') no-repeat center;
+  background: transparent url('./../images/pil-videre.svg') no-repeat center !important;
   background-size: 1.25em 1.25em;
   border: 0;
   cursor: pointer;
   height: 2em;
   position: absolute;
+  margin-top: 0.55em !important;
   width: 2em;
 
   &:focus {
@@ -89,7 +90,7 @@
 
   &:focus,
   &:hover {
-    background-image: url('./../images/pil-videre--hover.svg');
+    filter: invert(1);
   }
 
   &--prev {
