@@ -24,3 +24,8 @@ export const periodeErISmittevernsperioden = (periode: string): boolean => {
 
   return datoErIPerioden(fom) || datoErIPerioden(tom);
 };
+
+export const valgValues = {
+  reBehandling: 'reBehandling',
+  fortsett: 'fortsett',
+};
