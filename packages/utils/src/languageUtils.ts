@@ -16,7 +16,7 @@ export const getLanguageCodeFromSprakkode = sprakkode => {
     return 'Malform.Bokmal';
   }
 
-  switch (sprakkode.kode) {
+  switch (sprakkode) {
     case 'NN':
       return 'Malform.Nynorsk';
     case 'EN':
