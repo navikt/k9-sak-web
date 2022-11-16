@@ -17,7 +17,7 @@ jobs:
           cache: 'npm'
 
       - name: Installere dependencies
-        run: yarn install --prefer-offline --ignore-optional --no-progress --frozen-lockfile
+        run: yarn install --ignore-scripts --prefer-offline --ignore-optional --no-progress --frozen-lockfile
         env:
           NODE_AUTH_TOKEN: ${{ secrets.READER_TOKEN }}
 
