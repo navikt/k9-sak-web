@@ -141,7 +141,7 @@ class Datepicker extends Component<OwnProps, StateProps> {
             disabled={disabled}
           />
         </div>
-        {showCalendar && (
+        {true && (
           <CalendarOverlay
             disabled={disabled}
             value={value}
