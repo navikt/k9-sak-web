@@ -226,11 +226,8 @@ export class ProsessStegUtledet {
   public getTekstKode = (): string => this.prosessStegDef.getTekstKode();
 
   public getErStegDelvisBehandlet = (featureToggles?: FeatureToggles): boolean => {
-    if (featureToggles?.FIKS_DELVIS_PROSESSTEG) {
-      const erVedtak = this.paneler.some(p => p.getId() === 'VEDTAK');
-      return this.paneler.some(p => p.getErDelvisBehandlet(erVedtak));
-    }
-    return this.paneler.every(p => p.getErDelvisBehandlet());
+    const erVedtak = this.paneler.some(p => p.getId() === 'VEDTAK');
+    return this.paneler.some(p => p.getErDelvisBehandlet(erVedtak));
   };
 
   private harMinstEttDelPanelStatus = (vuType: string): boolean => this.paneler.some(p => p.getStatus() === vuType);

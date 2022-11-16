@@ -19,15 +19,6 @@ const findStatusForVedtak = (vilkar, aksjonspunkter, vedtakAksjonspunkter, behan
     return vilkarUtfallType.IKKE_VURDERT;
   }
 
-  if (!featureToggles?.FIKS_DELVIS_PROSESSTEG) {
-    if (
-      hasOnlyClosedAps(aksjonspunkter, vedtakAksjonspunkter) &&
-      vilkar.some(v => v.perioder.some(periode => periode.vilkarStatus.kode === vilkarUtfallType.IKKE_OPPFYLT))
-    ) {
-      return vilkarUtfallType.IKKE_OPPFYLT;
-    }
-  }
-
   if (
     vilkar.some(v => v.perioder.some(periode => periode.vilkarStatus.kode === vilkarUtfallType.IKKE_VURDERT)) ||
     aksjonspunkter.some(isAksjonspunktOpenAndOfType)
