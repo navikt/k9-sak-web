@@ -9,7 +9,7 @@ import { Behandling, KodeverkMedNavn } from '@k9-sak-web/types';
 import { RestApiState } from '@k9-sak-web/rest-api-hooks';
 import { Options, EndpointData, RestApiData } from '@k9-sak-web/rest-api-hooks/src/local-data/useMultipleRestApi';
 
-import hentAktivePerioderFraVilkar from "@fpsak-frontend/utils/src/hentAktivePerioderFraVilkar";
+import hentAktivePerioderFraVilkar from '@fpsak-frontend/utils/src/hentAktivePerioderFraVilkar';
 import { ProsessStegPanelUtledet } from '../util/prosessSteg/ProsessStegUtledet';
 import messages from '../i18n/nb_NO.json';
 
@@ -81,7 +81,9 @@ const InngangsvilkarPanel = ({
     return <LoadingPanel />;
   }
 
-  const perioderFraTidligereBehandlinger = filteredPanels.filter(panel => hentAktivePerioderFraVilkar(panel.vilkar, true).length > 0);
+  const perioderFraTidligereBehandlinger = filteredPanels.filter(
+    panel => hentAktivePerioderFraVilkar(panel.vilkar, true).length > 0,
+  );
 
   return (
     <RawIntlProvider value={intl}>
@@ -91,13 +93,16 @@ const InngangsvilkarPanel = ({
             <AksjonspunktHelpTextHTML>
               {apentFaktaPanelInfo && erIkkeFerdigbehandlet
                 ? [
-                  <>
-                    <FormattedMessage id="InngangsvilkarPanel.AvventerAvklaringAv" />
-                    <a href="" onClick={oppdaterUrl}>
-                      <FormattedMessage id={apentFaktaPanelInfo.textCode} />
-                    </a>
-                  </>,
-                ]
+                    <>
+                      <FormattedMessage
+                        id="InngangsvilkarPanel.AvventerAvklaringAv"
+                        key={apentFaktaPanelInfo.textCode}
+                      />
+                      <a href="" onClick={oppdaterUrl}>
+                        <FormattedMessage id={apentFaktaPanelInfo.textCode} />
+                      </a>
+                    </>,
+                  ]
                 : aksjonspunktTekstKoder.map(kode => <FormattedMessage key={kode} id={kode} />)}
             </AksjonspunktHelpTextHTML>
             <VerticalSpacer thirtyTwoPx />
@@ -106,8 +111,10 @@ const InngangsvilkarPanel = ({
         <Tabs
           tabs={
             perioderFraTidligereBehandlinger.length > 0
-              ? [{ label: <FormattedMessage id="Vilkarsperioder.DenneBehandling" /> },
-              { label: <FormattedMessage id="Vilkarsperioder.HittilIÅr" /> }]
+              ? [
+                  { label: <FormattedMessage id="Vilkarsperioder.DenneBehandling" /> },
+                  { label: <FormattedMessage id="Vilkarsperioder.HittilIÅr" /> },
+                ]
               : [{ label: <FormattedMessage id="Vilkarsperioder.DenneBehandling" /> }]
           }
           onChange={(e, index) => setVisAllePerioder(index === 1)}
