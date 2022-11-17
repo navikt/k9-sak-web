@@ -3,11 +3,11 @@ import { Element, Normaltekst } from 'nav-frontend-typografi';
 
 import { HistorikkInnslagOpplysning, Kodeverk } from '@k9-sak-web/types';
 
+import KodeverkType from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { findHendelseText } from './felles/historikkUtils';
 import HistorikkMal from '../HistorikkMalTsType';
 
 import styles from './historikkMalType.less';
-import KodeverkType from 'kodeverk/src/kodeverkTyper';
 
 const formaterOpplysning = (
   opplysning: HistorikkInnslagOpplysning,
@@ -15,7 +15,9 @@ const formaterOpplysning = (
   getKodeverknavn: (kode: string, kodeverk: KodeverkType) => string,
 ) => (
   <div key={`opplysning${index}`}>
-    <Normaltekst className={styles.keyValuePair}>{getKodeverknavn(opplysning.opplysningType, KodeverkType.HISTORIKK_OPPLYSNING_TYPE)}:</Normaltekst>
+    <Normaltekst className={styles.keyValuePair}>
+      {getKodeverknavn(opplysning.opplysningType, KodeverkType.HISTORIKK_OPPLYSNING_TYPE)}:
+    </Normaltekst>
     &ensp;
     <Element className={styles.keyValuePair}>{opplysning.tilVerdi}</Element>
   </div>

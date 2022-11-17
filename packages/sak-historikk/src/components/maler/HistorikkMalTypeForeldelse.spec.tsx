@@ -5,9 +5,9 @@ import { FormattedMessage } from 'react-intl';
 import { omit } from '@fpsak-frontend/utils';
 import { Historikkinnslag, HistorikkinnslagDel } from '@k9-sak-web/types';
 
+import KodeverkType from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import historikkOpplysningTypeCodes from '../../kodeverk/historikkOpplysningTypeCodes';
 import HistorikkMalTypeForeldelse from './HistorikkMalTypeForeldelse';
-import KodeverkType from 'kodeverk/src/kodeverkTyper';
 
 describe('HistorikkMalTypeForeldelse', () => {
   it('skal vise alle historikkelement korrekt', () => {

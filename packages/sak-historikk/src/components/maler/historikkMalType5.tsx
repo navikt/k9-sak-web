@@ -5,6 +5,7 @@ import { Element, Normaltekst } from 'nav-frontend-typografi';
 import { HistorikkinnslagDel, HistorikkinnslagEndretFelt, Kodeverk } from '@k9-sak-web/types';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 
+import KodeverkType from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import historikkEndretFeltTypeCodes from '../../kodeverk/historikkEndretFeltTypeCodes';
 import historikkEndretFeltTypeHeadingCodes from '../../kodeverk/historikkEndretFeltTypeHeadingCodes';
 import {
@@ -18,7 +19,6 @@ import HistorikkDokumentLenke from './felles/HistorikkDokumentLenke';
 import BubbleText from './felles/bubbleText';
 import HistorikkMal from '../HistorikkMalTsType';
 import Skjermlenke from './felles/Skjermlenke';
-import KodeverkType from 'kodeverk/src/kodeverkTyper';
 
 function isGjeldendeFraUtenEndredeFelter(historikkinnslagDel: HistorikkinnslagDel): boolean {
   return historikkinnslagDel.gjeldendeFra && !historikkinnslagDel.endredeFelter;
@@ -196,12 +196,18 @@ const HistorikkMalType5 = ({
             <FormattedMessage
               id={findIdForOpplysningCode(opplysning)}
               values={{ antallBarn: opplysning.tilVerdi, b: chunks => <b>{chunks}</b>, br: <br /> }}
-              key={`${getKodeverknavn(opplysning.opplysningType, KodeverkType.HISTORIKK_OPPLYSNING_TYPE)}@${opplysning.tilVerdi}`}
+              key={`${getKodeverknavn(opplysning.opplysningType, KodeverkType.HISTORIKK_OPPLYSNING_TYPE)}@${
+                opplysning.tilVerdi
+              }`}
             />
           ))}
 
-        {historikkinnslagDel.aarsak && <Normaltekst>{getKodeverknavn(historikkinnslagDel.aarsak, KodeverkType.VENT_AARSAK)}</Normaltekst>}
-        {historikkinnslagDel.begrunnelse && <BubbleText bodyText={getKodeverknavn(historikkinnslagDel.begrunnelse, KodeverkType.BEHANDLING_AARSAK)} />}
+        {historikkinnslagDel.aarsak && (
+          <Normaltekst>{getKodeverknavn(historikkinnslagDel.aarsak, KodeverkType.VENT_AARSAK)}</Normaltekst>
+        )}
+        {historikkinnslagDel.begrunnelse && (
+          <BubbleText bodyText={getKodeverknavn(historikkinnslagDel.begrunnelse, KodeverkType.BEHANDLING_AARSAK)} />
+        )}
         {historikkinnslagDel.begrunnelseFritekst && <BubbleText bodyText={historikkinnslagDel.begrunnelseFritekst} />}
         {historikkinnslag.dokumentLinks &&
           historikkinnslag.dokumentLinks.map(dokumentLenke => (

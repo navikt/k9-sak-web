@@ -4,11 +4,11 @@ import moment from 'moment';
 import PropTypes from 'prop-types';
 
 import { TableColumn, TableRow } from '@fpsak-frontend/shared-components';
-import { DDMMYYYY_DATE_FORMAT, getKodeverknavnFn, required } from '@fpsak-frontend/utils';
+import { DDMMYYYY_DATE_FORMAT, required } from '@fpsak-frontend/utils';
 import { SelectField, behandlingFormValueSelector } from '@fpsak-frontend/form';
 
+import KodeverkType from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import styles from './feilutbetalingPerioderTable.less';
-import KodeverkType from 'kodeverk/src/kodeverkTyper';
 
 const getHendelseUndertyper = (årsakNavn, årsaker) => {
   const årsak = årsaker.find(a => a.hendelseType === årsakNavn);

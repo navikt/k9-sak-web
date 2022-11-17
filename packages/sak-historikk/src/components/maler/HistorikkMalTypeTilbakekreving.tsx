@@ -5,11 +5,11 @@ import { Normaltekst } from 'nav-frontend-typografi';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 
 import { decodeHtmlEntity } from '@fpsak-frontend/utils';
+import KodeverkType from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import historikkOpplysningTypeCodes from '../../kodeverk/historikkOpplysningTypeCodes';
 import historikkEndretFeltType from '../../kodeverk/historikkEndretFeltType';
 import Skjermlenke from './felles/Skjermlenke';
 import HistorikkMal from '../HistorikkMalTsType';
-import KodeverkType from 'kodeverk/src/kodeverkTyper';
 
 export const HistorikkMalTypeTilbakekreving = ({
   historikkinnslag,
@@ -71,8 +71,7 @@ export const HistorikkMalTypeTilbakekreving = ({
                   return null;
                 }
 
-                const visBegrunnelse =
-                  historikkEndretFeltType.ER_VILKARENE_TILBAKEKREVING_OPPFYLT === endretFeltNavn;
+                const visBegrunnelse = historikkEndretFeltType.ER_VILKARENE_TILBAKEKREVING_OPPFYLT === endretFeltNavn;
                 const formatertFraVerdi = visProsentverdi && fraVerdi ? `${fraVerdi}%` : fraVerdi;
                 const formatertTilVerdi = visProsentverdi && tilVerdi ? `${tilVerdi}%` : tilVerdi;
                 const visAktsomhetBegrunnelse = begrunnelseFritekst && index === endredeFelter.length - 1;

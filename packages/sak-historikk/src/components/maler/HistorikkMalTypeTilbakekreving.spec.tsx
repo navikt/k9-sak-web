@@ -5,10 +5,10 @@ import { FormattedMessage } from 'react-intl';
 import { omit } from '@fpsak-frontend/utils';
 import { Historikkinnslag, HistorikkinnslagDel } from '@k9-sak-web/types';
 
+import KodeverkType from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import historikkOpplysningTypeCodes from '../../kodeverk/historikkOpplysningTypeCodes';
 import historikkEndretFeltType from '../../kodeverk/historikkEndretFeltType';
 import HistorikkMalTypeTilbakekreving from './HistorikkMalTypeTilbakekreving';
-import KodeverkType from 'kodeverk/src/kodeverkTyper';
 
 describe('HistorikkMalTypeTilbakekreving', () => {
   it('skal vise alle historikkelement korrekt', () => {

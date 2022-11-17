@@ -4,10 +4,10 @@ import { Normaltekst } from 'nav-frontend-typografi';
 
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 
+import KodeverkType from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import historikkOpplysningTypeCodes from '../../kodeverk/historikkOpplysningTypeCodes';
 import Skjermlenke from './felles/Skjermlenke';
 import HistorikkMal from '../HistorikkMalTsType';
-import KodeverkType from 'kodeverk/src/kodeverkTyper';
 
 export const HistorikkMalTypeForeldelse = ({
   historikkinnslag,

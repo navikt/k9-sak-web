@@ -1,5 +1,5 @@
 import { KodeverkMedNavn } from '@k9-sak-web/types';
-import KodeverkType from 'kodeverk/src/kodeverkTyper';
+import KodeverkType from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 
 export const getKodeverknavnFraKode = (
   alleKodeverk: { [key: string]: KodeverkMedNavn[] },
@@ -18,9 +18,8 @@ export const getKodeverknavnFraKode = (
   const kodeverk = kodeverkForType.find(k => k.kode === kode);
   return kodeverk ? kodeverk.navn : '';
 };
-export const getKodeverknavnFn = (
-  alleKodeverk: { [key: string]: KodeverkMedNavn[] }
-) => (kode: string, kodeverk: KodeverkType, undertype?: string) =>
+export const getKodeverknavnFn =
+  (alleKodeverk: { [key: string]: KodeverkMedNavn[] }) => (kode: string, kodeverk: KodeverkType, undertype?: string) =>
     getKodeverknavnFraKode(alleKodeverk, kodeverk, kode, undertype);
 
 export const konverterKodeverkTilKode = (data: any, erTilbakekreving = false) => {

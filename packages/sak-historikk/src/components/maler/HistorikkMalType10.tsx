@@ -3,6 +3,7 @@ import { FormattedMessage, injectIntl, IntlShape, WrappedComponentProps } from '
 
 import { HistorikkinnslagDel, HistorikkinnslagEndretFelt, Kodeverk } from '@k9-sak-web/types';
 
+import KodeverkType from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import historikkinnslagType from '../../kodeverk/historikkinnslagType';
 import historikkEndretFeltTypeCodes from '../../kodeverk/historikkEndretFeltTypeCodes';
 import historikkOpplysningTypeCodes from '../../kodeverk/historikkOpplysningTypeCodes';
@@ -11,7 +12,6 @@ import HistorikkDokumentLenke from './felles/HistorikkDokumentLenke';
 import BubbleText from './felles/bubbleText';
 import HistorikkMal from '../HistorikkMalTsType';
 import Skjermlenke from './felles/Skjermlenke';
-import KodeverkType from 'kodeverk/src/kodeverkTyper';
 
 const historikkFromToValues = (
   endretFelt: HistorikkinnslagEndretFelt,
@@ -96,16 +96,12 @@ const formatChangedField = (
 };
 
 const finnFomOpplysning = (opplysninger: HistorikkinnslagDel['opplysninger']): string => {
-  const [found] = opplysninger.filter(
-    o => o.opplysningType === historikkOpplysningTypeCodes.UTTAK_PERIODE_FOM.kode,
-  );
+  const [found] = opplysninger.filter(o => o.opplysningType === historikkOpplysningTypeCodes.UTTAK_PERIODE_FOM.kode);
   return found.tilVerdi;
 };
 
 const finnTomOpplysning = (opplysninger: HistorikkinnslagDel['opplysninger']): string => {
-  const [found] = opplysninger.filter(
-    o => o.opplysningType === historikkOpplysningTypeCodes.UTTAK_PERIODE_TOM.kode,
-  );
+  const [found] = opplysninger.filter(o => o.opplysningType === historikkOpplysningTypeCodes.UTTAK_PERIODE_TOM.kode);
   return found.tilVerdi;
 };
 

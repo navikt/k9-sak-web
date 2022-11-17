@@ -6,12 +6,12 @@ import { HistorikkinnslagDel, Kodeverk } from '@k9-sak-web/types';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 
 import { decodeHtmlEntity } from '@fpsak-frontend/utils';
+import KodeverkType from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import historikkOpplysningTypeCodes from '../../kodeverk/historikkOpplysningTypeCodes';
 import historikkEndretFeltTypeCodes from '../../kodeverk/historikkEndretFeltTypeCodes';
 import BubbleText from './felles/bubbleText';
 import Skjermlenke from './felles/Skjermlenke';
 import HistorikkMal from '../HistorikkMalTsType';
-import KodeverkType from 'kodeverk/src/kodeverkTyper';
 
 const finnKodeverkType = (kodeverk: string): KodeverkType => KodeverkType[kodeverk];
 
@@ -46,8 +46,9 @@ const buildEndretFeltText = (
   const tilVerdiNavn = getKodeverknavn(årsakFelt.tilVerdi as string, finnKodeverkType(årsakFelt.klTilVerdi));
   if (endret) {
     const årsakVerdi = årsakFelt.fraVerdi ? årsakFelt.fraVerdi : årsakFelt.tilVerdi;
-    const fraVerdi = `${getKodeverknavn(årsakVerdi as string, finnKodeverkType(årsakFelt.klFraVerdi))} ${underÅrsakFraVerdi ? `(${underÅrsakFraVerdi})` : ''
-      }`;
+    const fraVerdi = `${getKodeverknavn(årsakVerdi as string, finnKodeverkType(årsakFelt.klFraVerdi))} ${
+      underÅrsakFraVerdi ? `(${underÅrsakFraVerdi})` : ''
+    }`;
     const tilVerdi = `${tilVerdiNavn} ${underÅrsakTilVerdi ? `(${underÅrsakTilVerdi})` : ''}`;
     return (
       <FormattedMessage

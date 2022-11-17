@@ -9,8 +9,8 @@ import { FlexColumn, FlexContainer, FlexRow, VerticalSpacer, Tooltip } from '@fp
 import opplysningAdresseType from '@fpsak-frontend/kodeverk/src/opplysningAdresseType';
 import { getKodeverknavnFn, getLanguageFromSprakkode, getAddresses, Adresser } from '@fpsak-frontend/utils';
 
+import KodeverkType from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import styles from './visittkortDetaljerPopup.less';
-import KodeverkType from 'kodeverk/src/kodeverkTyper';
 
 const borSokerMedBarnet = (adresser: Adresser, personopplysningerForBarn: Personopplysninger[] = []): boolean =>
   personopplysningerForBarn.some(

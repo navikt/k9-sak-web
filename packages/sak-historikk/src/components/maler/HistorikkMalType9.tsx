@@ -4,6 +4,7 @@ import { FormattedMessage, injectIntl, WrappedComponentProps } from 'react-intl'
 import tilbakekrevingVidereBehandling from '@fpsak-frontend/kodeverk/src/tilbakekrevingVidereBehandling';
 import { HistorikkinnslagEndretFelt } from '@k9-sak-web/types';
 
+import KodeverkType from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import historikkinnslagType from '../../kodeverk/historikkinnslagType';
 import { findEndretFeltVerdi } from './felles/historikkUtils';
 import BubbleText from './felles/bubbleText';
@@ -11,7 +12,6 @@ import HistorikkMal from '../HistorikkMalTsType';
 import Skjermlenke from './felles/Skjermlenke';
 
 import styles from './historikkMalType.less';
-import KodeverkType from 'kodeverk/src/kodeverkTyper';
 
 const getSplitPeriods = (endredeFelter: HistorikkinnslagEndretFelt[]): string => {
   let text = '';
@@ -63,19 +63,18 @@ const HistorikkMalType9 = ({
             />
           )}
 
-          {historikkinnslagDel.endredeFelter &&
-            historikkinnslag.type === historikkinnslagType.FASTSATT_UTTAK_SPLITT && (
-              <FormattedMessage
-                id="Historikk.Template.9.ManuellVurdering"
-                values={{
-                  opprinneligPeriode: historikkinnslagDel.endredeFelter[0].fraVerdi,
-                  numberOfPeriods: historikkinnslagDel.endredeFelter.length,
-                  splitPeriods: getSplitPeriods(historikkinnslagDel.endredeFelter),
-                  b: chunks => <b>{chunks}</b>,
-                  br: <br />,
-                }}
-              />
-            )}
+          {historikkinnslagDel.endredeFelter && historikkinnslag.type === historikkinnslagType.FASTSATT_UTTAK_SPLITT && (
+            <FormattedMessage
+              id="Historikk.Template.9.ManuellVurdering"
+              values={{
+                opprinneligPeriode: historikkinnslagDel.endredeFelter[0].fraVerdi,
+                numberOfPeriods: historikkinnslagDel.endredeFelter.length,
+                splitPeriods: getSplitPeriods(historikkinnslagDel.endredeFelter),
+                b: chunks => <b>{chunks}</b>,
+                br: <br />,
+              }}
+            />
+          )}
 
           {historikkinnslag.type === historikkinnslagType.TILBAKEKR_VIDEREBEHANDLING &&
             historikkinnslagDel.endredeFelter &&
