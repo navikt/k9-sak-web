@@ -134,7 +134,9 @@ class RequestRunner {
       const { response } = error;
       if (response && response.status === 401 && response.headers && response.headers.location) {
         const currentPath = encodeURIComponent(window.location.pathname + window.location.search);
-        window.location.href = `${response.headers.location}?redirectTo=${currentPath}`;
+        const location = `${response.headers.location}`;
+        const queryParamAddition = location.includes('?') ? '&' : '?';
+        window.location.href = `${location}${queryParamAddition}redirectTo=${currentPath}`;
       }
       new RequestErrorEventHandler(this.notify, this.isPollingRequest).handleError(error);
       throw error;

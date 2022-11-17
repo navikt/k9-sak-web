@@ -165,8 +165,14 @@ export class ProsessStegPanelUtledet {
   public getErReadOnly = (): boolean =>
     this.isReadOnlyCheck(this.getAksjonspunkterForPanel(), this.getVilkarForPanel());
 
-  public getErDelvisBehandlet = (): boolean => {
-    const { uttaksperioder } = this.getKomponentData();
+  public getErDelvisBehandlet = (erVedtak?: boolean): boolean => {
+    const { uttaksperioder, vilkar } = this.getKomponentData();
+    if (erVedtak) {
+      return (
+        vilkar.some(v => v.perioder.some(periode => periode.vilkarStatus.kode === vilkarUtfallType.IKKE_OPPFYLT)) &&
+        vilkar.some(v => v.perioder.some(periode => periode.vilkarStatus.kode === vilkarUtfallType.OPPFYLT))
+      );
+    }
     return finnErDelvisBehandlet(this.prosessStegPanelDef.finnVilkarForSteg(this.vilkar), uttaksperioder);
   };
 
@@ -220,10 +226,8 @@ export class ProsessStegUtledet {
   public getTekstKode = (): string => this.prosessStegDef.getTekstKode();
 
   public getErStegDelvisBehandlet = (featureToggles?: FeatureToggles): boolean => {
-    if (featureToggles?.FIKS_DELVIS_PROSESSTEG) {
-      return this.paneler.some(p => p.getErDelvisBehandlet());
-    }
-    return this.paneler.every(p => p.getErDelvisBehandlet());
+    const erVedtak = this.paneler.some(p => p.getId() === 'VEDTAK');
+    return this.paneler.some(p => p.getErDelvisBehandlet(erVedtak));
   };
 
   private harMinstEttDelPanelStatus = (vuType: string): boolean => this.paneler.some(p => p.getStatus() === vuType);

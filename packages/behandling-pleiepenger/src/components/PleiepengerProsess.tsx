@@ -242,14 +242,6 @@ const PleiepengerProsess = ({
     valgtPanel,
   );
 
-  const fatterVedtakTextCode = useMemo(
-    () =>
-      valgtPanel && valgtPanel.getStatus() === vilkarUtfallType.OPPFYLT
-        ? 'FatterVedtakStatusModal.SendtBeslutter'
-        : 'FatterVedtakStatusModal.ModalDescriptionPleiepenger',
-    [behandling.versjon],
-  );
-
   return (
     <>
       <IverksetterVedtakStatusModal
@@ -266,7 +258,7 @@ const PleiepengerProsess = ({
           toggleFatterVedtakModal(false);
           opneSokeside();
         }, [])}
-        tekstkode={fatterVedtakTextCode}
+        tekstkode="FatterVedtakStatusModal.ModalDescriptionPleiepenger"
       />
       <ProsessStegContainer
         formaterteProsessStegPaneler={formaterteProsessStegPaneler}

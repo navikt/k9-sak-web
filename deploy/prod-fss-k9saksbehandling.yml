@@ -95,14 +95,6 @@ spec:
       value: "true"
     - name: LOS_MARKER_BEHANDLING
       value: "true"
-    - name: NY_BEREGNING_PROSESS_ENABLED
-      value: "true"
-    - name: SPLITTET_SAMMENLINGNING_BEREGNING
-      value: "false"
-    - name: NY_BEREGNING_FAKTA_ENABLED
-      value: "true"
-    - name: NY_BEREGNING_FAKTA_FORDEL_ENABLED
-      value: "true"
     - name: AKSJONSPUNKT_9014
       value: "true"
     - name: AKSJONSPUNKT_9015
@@ -111,7 +103,7 @@ spec:
       value: "true"
     - name: FRITEKST_REDIGERING
       value: "true"
-    - name: FIKS_DELVIS_PROSESSTEG
-      value: "false"
     - name: FIX_SOKNADSFRIST_KALENDER_OG_READONLY
+      value: "false"
+    - name: INKLUDER_KALENDER_PILS
       value: "false"

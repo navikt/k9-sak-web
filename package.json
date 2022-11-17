@@ -21,7 +21,7 @@
     "lint:fix": "eslint --fix --cache packages --ext .ts,.tsx,.js,.jsx",
     "less:lint": "stylelint \"packages/**/*.less\"",
     "dev": "cross-env NODE_ENV=development APP_URL_K9FORMIDLING=http://localhost:8060/rest/dummy webpack serve --config webpack/webpack.dev.ts",
-    "dev-lokal": "cross-env NODE_ENV=development APP_URL_SAK=http://k9-sak:8080 APP_URL_K9OPPDRAG=http://k9-oppdrag:8070 APP_URL_K9FORMIDLING_DD=http://k9-formidling-dokumentdata:8294 APP_URL_K9FORMIDLING=http://k9-formidling:8290 NY_BEREGNING_FAKTA_ENABLED=true SPLITTET_SAMMENLINGNING_BEREGNING=true webpack serve --config webpack/webpack.dev.ts",
+    "dev-lokal": "cross-env NODE_ENV=development APP_URL_SAK=http://k9-sak:8080 APP_URL_K9OPPDRAG=http://k9-oppdrag:8070 APP_URL_K9FORMIDLING_DD=http://k9-formidling-dokumentdata:8294 APP_URL_K9FORMIDLING=http://k9-formidling:8290 SPLITTET_SAMMENLINGNING_BEREGNING=true webpack serve --config webpack/webpack.dev.ts",
     "dev-med-formidling": "cross-env NODE_ENV=development webpack serve --config webpack/webpack.dev.ts",
     "build": "cross-env NODE_ENV=production webpack --config webpack/webpack.prod.ts",
     "build-ci": "cross-env NODE_ENV=development webpack --env ci='true' --config webpack/webpack.dev.ts",
@@ -42,10 +42,10 @@
     "@babel/runtime": "^7.19.4",
     "@formatjs/intl-datetimeformat": "^5.0.2",
     "@formatjs/intl-numberformat": "^7.4.0",
-    "@navikt/ds-css": "^1.3.28",
-    "@navikt/ds-react": "^1.3.5",
+    "@navikt/ds-css": "^1.5.6",
+    "@navikt/ds-react": "^1.5.6",
     "@navikt/familie-endringslogg": "^2.0.0",
-    "@navikt/ft-plattform-komponenter": "1.2.6",
+    "@navikt/ft-plattform-komponenter": "1.3.6",
     "@sentry/browser": "7.16.0",
     "@storybook/testing-react": "^1.3.0",
     "axios": "0.27.2",
@@ -172,7 +172,8 @@
     "tar": "^6.1.2",
     "trim": "^1.0.1",
     "trim-newlines": "^3.0.1",
-    "@types/react": "^17"
+    "@types/react": "^17",
+    "git-url-parse": "^13.1.0"
   },
   "msw": {
     "workerDirectory": "public"

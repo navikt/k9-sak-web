@@ -40,7 +40,6 @@ describe('<TotrinnskontrollBeslutterForm>', () => {
         readOnly={false}
         erTilbakekreving
         lagLenke={() => location}
-        erForeldrepengerFagsak
         arbeidsforholdHandlingTyper={[]}
         skjemalenkeTyper={[]}
         aksjonspunktGodkjenning={[]}

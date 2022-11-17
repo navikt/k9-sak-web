@@ -2,8 +2,8 @@ import SelectFieldFormik from '@fpsak-frontend/form/src/SelectFieldFormik';
 import dokumentMalType from '@fpsak-frontend/kodeverk/src/dokumentMalType';
 import vedtaksbrevtype from '@fpsak-frontend/kodeverk/src/vedtaksbrevtype';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
+import { useFeatureToggles, VerticalSpacer } from '@fpsak-frontend/shared-components';
 
-import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { required, safeJSONParse, decodeHtmlEntity } from '@fpsak-frontend/utils';
 import {
   finnesTilgjengeligeVedtaksbrev,
@@ -194,6 +194,8 @@ export const BrevPanel: React.FC<BrevPanelProps> = props => {
     lagreDokumentdata,
   } = props;
 
+  const [featureToggles] = useFeatureToggles();
+
   const automatiskBrevCallback = getPreviewAutomatiskBrevCallback({
     fritekst: begrunnelse,
     redusertUtbetalingÅrsaker,
@@ -220,7 +222,10 @@ export const BrevPanel: React.FC<BrevPanelProps> = props => {
   const harAutomatiskVedtaksbrev = kanHaAutomatiskVedtaksbrev(tilgjengeligeVedtaksbrev);
   const harFritekstbrev =
     kanHaFritekstbrevV1(tilgjengeligeVedtaksbrev) || kanHaManueltFritekstbrev(tilgjengeligeVedtaksbrev);
-  const kanInkludereKalender = ytelseTypeKode === fagsakYtelseType.PLEIEPENGER;
+
+  const kanInkludereKalender =
+    ytelseTypeKode === fagsakYtelseType.PLEIEPENGER ||
+    (featureToggles.INKLUDER_KALENDER_PILS && ytelseTypeKode === fagsakYtelseType.PLEIEPENGER_SLUTTFASE);
 
   const harAlternativeMottakere =
     kanOverstyreMottakere(tilgjengeligeVedtaksbrev) && !formikProps.values[fieldnames.SKAL_HINDRE_UTSENDING_AV_BREV];
@@ -250,11 +255,13 @@ export const BrevPanel: React.FC<BrevPanelProps> = props => {
           dokumentdataInformasjonsbehov={dokumentdataInformasjonsbehov}
         />
       </div>
-      <VedtakPreviewLink
-        previewCallback={manuellBrevCallback}
-        redigertHtml={formikProps.values?.[fieldnames.REDIGERT_HTML]}
-        intl={intl}
-      />
+      {!formikProps.values[fieldnames.SKAL_HINDRE_UTSENDING_AV_BREV] && (
+        <VedtakPreviewLink
+          previewCallback={manuellBrevCallback}
+          redigertHtml={formikProps.values?.[fieldnames.REDIGERT_HTML]}
+          intl={intl}
+        />
+      )}
     </>
   );
 
@@ -269,9 +276,10 @@ export const BrevPanel: React.FC<BrevPanelProps> = props => {
           informasjonsbehovVedtaksbrev={informasjonsbehovVedtaksbrev}
         />
       </div>
-      {kanResultatForhåndsvises(behandlingResultat) && (
-        <VedtakPreviewLink previewCallback={automatiskBrevCallback} redigertHtml={false} intl={intl} />
-      )}
+      {!formikProps.values[fieldnames.SKAL_HINDRE_UTSENDING_AV_BREV] &&
+        kanResultatForhåndsvises(behandlingResultat) && (
+          <VedtakPreviewLink previewCallback={automatiskBrevCallback} redigertHtml={false} intl={intl} />
+        )}
     </>
   );
 

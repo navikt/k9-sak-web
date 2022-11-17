@@ -7,7 +7,6 @@
   "dependencies": {
     "@fpsak-frontend/assets": "1.0.0",
     "@fpsak-frontend/fakta-arbeidsforhold": "1.0.0",
-    "@fpsak-frontend/fakta-fordel-beregningsgrunnlag": "1.0.0",
     "@fpsak-frontend/fakta-inntekt-og-ytelser": "1.0.0",
     "@fpsak-frontend/fakta-medlemskap": "1.0.0",
     "@fpsak-frontend/fakta-opptjening-oms": "1.0.0",
@@ -39,7 +38,7 @@
     "nav-frontend-typografi": "4.0.2",
     "nav-frontend-typografi-style": "2.0.2",
     "react": "^17.0.2",
-    "react-intl": "6.1.2",
+    "react-intl": "6.2.1",
     "react-redux": "^8.0.4",
     "redux": "^4.1.2",
     "redux-form": "^8.3.8",

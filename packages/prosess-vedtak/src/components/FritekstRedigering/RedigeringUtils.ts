@@ -110,3 +110,30 @@ export const validerManueltRedigertBrev = (html: string): boolean => {
 export const validerRedigertHtml = Yup.string().test('validate-redigert-html', '', value =>
   validerManueltRedigertBrev(value),
 );
+
+export const harDokumentdataApiFeilmelding = ({ feilmeldinger }: { feilmeldinger: any[] }) =>
+  feilmeldinger.some(feilmelding => {
+    if (feilmelding.feilmelding) {
+      return feilmelding.feilmelding.includes('/k9/formidling/dokumentdata/api');
+    }
+    if (feilmelding.message === '') {
+      return feilmelding.message.length < 1;
+    }
+    return false;
+  });
+
+export const harForhandsvisFeilmeldinger = ({ feilmeldinger }: { feilmeldinger: any[] }) =>
+  feilmeldinger.some(
+    feilmelding =>
+      !!(feilmelding.feilmelding && feilmelding.feilmelding.includes('/k9/formidling/api/brev/forhaandsvis')),
+  );
+
+export const utledForhandsvisFeilmeldinger = ({
+  feilmeldinger,
+}: {
+  feilmeldinger: any[];
+}): { feilmelding: string; type: string }[] =>
+  feilmeldinger.filter(
+    feilmelding =>
+      !!(feilmelding.feilmelding && feilmelding.feilmelding.includes('/k9/formidling/api/brev/forhaandsvis')),
+  );

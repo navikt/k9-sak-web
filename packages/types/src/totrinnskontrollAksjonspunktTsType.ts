@@ -27,6 +27,7 @@ export type OpptjeningAktiviteter = Readonly<{
 export type TotrinnsBeregningDto = Readonly<{
   faktaOmBeregningTilfeller: string[];
   fastsattVarigEndringNaering: boolean;
+  fastsattVarigEndring?: boolean;
   skjæringstidspunkt: string;
 }>;
 
@@ -36,18 +37,8 @@ export type TotrinnskontrollAksjonspunkt = Readonly<{
   besluttersBegrunnelse?: string;
   totrinnskontrollGodkjent?: boolean;
   vurderPaNyttArsaker?: string[];
-  uttakPerioder?: {
-    fom: string;
-    tom: string;
-    typeEndring: TypeEndring;
-    erSlettet: boolean;
-    erAvklart: boolean;
-    erLagtTil: boolean;
-    erEndret: boolean;
-  }[];
   arbeidsforholdDtos?: TotrinnskontrollArbeidsforhold[];
   beregningDtoer?: TotrinnsBeregningDto[];
-  beregningDto?: TotrinnsBeregningDto;
 }>;
 
 export default TotrinnskontrollAksjonspunkt;

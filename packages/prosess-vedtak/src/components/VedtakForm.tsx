@@ -313,14 +313,21 @@ export const VedtakForm: React.FC<Props> = ({
   };
 
   const vedtakformPartialValidation = Yup.object().shape({
-    [fieldnames.REDIGERT_HTML]: Yup.string().test(
-      'validate-redigert-html',
-      intl.formatMessage({ id: 'RedigeringAvFritekstBrev.ManueltBrevIkkeEndret' }),
-      value => {
-        if (kanHaManueltFritekstbrev(tilgjengeligeVedtaksbrev)) {
-          return validerManueltRedigertBrev(value);
-        }
-        return true;
+    [fieldnames.REDIGERT_HTML]: Yup.string().when(
+      [fieldnames.SKAL_BRUKE_OVERSTYRENDE_FRITEKST_BREV, fieldnames.SKAL_HINDRE_UTSENDING_AV_BREV],
+      {
+        is: (overstyr, hindre) => overstyr && !hindre,
+        then: schema =>
+          schema.test(
+            'validate-redigert-html',
+            intl.formatMessage({ id: 'RedigeringAvFritekstBrev.ManueltBrevIkkeEndret' }),
+            value => {
+              if (kanHaManueltFritekstbrev(tilgjengeligeVedtaksbrev)) {
+                return validerManueltRedigertBrev(value);
+              }
+              return true;
+            },
+          ),
       },
     ),
   });

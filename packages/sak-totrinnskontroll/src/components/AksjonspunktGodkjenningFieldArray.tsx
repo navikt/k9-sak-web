@@ -49,7 +49,6 @@ export const AksjonspunktGodkjenningFieldArray = ({
   readOnly,
   showBegrunnelse = false,
   klageKA = false,
-  erForeldrepengerFagsak,
   klagebehandlingVurdering,
   behandlingStatus,
   arbeidsforholdHandlingTyper,
@@ -74,7 +73,6 @@ export const AksjonspunktGodkjenningFieldArray = ({
       const visArsaker = erAnke || erKlageKA || totrinnskontrollGodkjent === false;
 
       const aksjonspunktText = getAksjonspunkttekst(
-        erForeldrepengerFagsak,
         klagebehandlingVurdering,
         behandlingStatus,
         arbeidsforholdHandlingTyper,

@@ -32,22 +32,6 @@
     "value": "${LOS_MARKER_BEHANDLING}"
   },
   {
-    "key": "NY_BEREGNING_PROSESS_ENABLED",
-    "value": "${NY_BEREGNING_PROSESS_ENABLED}"
-  },
-  {
-    "key": "SPLITTET_SAMMENLINGNING_BEREGNING",
-    "value": "${SPLITTET_SAMMENLINGNING_BEREGNING}"
-  },
-  {
-    "key": "NY_BEREGNING_FAKTA_ENABLED",
-    "value": "${NY_BEREGNING_FAKTA_ENABLED}"
-  },
-  {
-    "key": "NY_BEREGNING_FAKTA_FORDEL_ENABLED",
-    "value": "${NY_BEREGNING_FAKTA_FORDEL_ENABLED}"
-  },
-  {
     "key": "AKSJONSPUNKT_9014",
     "value": "${AKSJONSPUNKT_9014}"
   },
@@ -64,11 +48,11 @@
     "value": "${FRITEKST_REDIGERING}"
   },
   {
-    "key": "FIKS_DELVIS_PROSESSTEG",
-    "value": "${FIKS_DELVIS_PROSESSTEG}"
-  },
-  {
     "key": "FIX_SOKNADSFRIST_KALENDER_OG_READONLY",
     "value": "${FIX_SOKNADSFRIST_KALENDER_OG_READONLY}"
+  },
+  {
+    "key": "INKLUDER_KALENDER_PILS",
+    "value": "${INKLUDER_KALENDER_PILS}"
   }
 ]

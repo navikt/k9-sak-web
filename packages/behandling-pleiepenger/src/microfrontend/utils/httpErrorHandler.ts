@@ -9,7 +9,8 @@ const httpErrorHandler = (status: number, errorDispatcher: ErrorDispatcher, loca
   } else if (status === 401) {
     if (locationHeader) {
       const currentPath = encodeURIComponent(window.location.pathname + window.location.search);
-      window.location.href = `${locationHeader}?redirectTo=${currentPath}`;
+      const queryParamAddition = locationHeader.includes('?') ? '&' : '?';
+      window.location.href = `${locationHeader}${queryParamAddition}redirectTo=${currentPath}`;
     } else {
       errorDispatcher({ type: EventType.REQUEST_UNAUTHORIZED });
     }

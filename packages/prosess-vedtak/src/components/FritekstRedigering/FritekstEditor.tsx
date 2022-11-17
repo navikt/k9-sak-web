@@ -1,18 +1,18 @@
 /* eslint-disable react/no-danger, @typescript-eslint/no-this-alias */
 import React, { useCallback, useEffect, useState } from 'react';
-
-import { Modal, Button, Alert } from '@navikt/ds-react';
 import { FormattedMessage, injectIntl, WrappedComponentProps } from 'react-intl';
-import { Column, Row } from 'nav-frontend-grid';
 
+import { Column, Row } from 'nav-frontend-grid';
+import { Modal, Button, Alert } from '@navikt/ds-react';
 import { Cancel } from '@navikt/ds-icons';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import EditorJSWrapper from './EditorJSWrapper';
 import PreviewLink from '../PreviewLink';
 import InkluderKalenderCheckbox from '../InkluderKalenderCheckbox';
+import { validerRedigertHtml } from './RedigeringUtils';
+import FritekstFeilmeldinger from './FritekstFeilmeldinger';
 
 import styles from './RedigerFritekstbrev.less';
-import { validerManueltRedigertBrev, validerRedigertHtml } from './RedigeringUtils';
 
 interface ownProps {
   handleSubmit: (value: string) => void;
@@ -115,11 +115,6 @@ const FritekstEditor = ({
     handleLagre();
   };
 
-  const handleSetFieldValue = (name, value) => {
-    setFieldValue(name, value);
-    handleLagre();
-  };
-
   return (
     <>
       <Modal open={visAdvarsel} onClose={() => setVisAdvarsel(false)} shouldCloseOnOverlayClick={false}>
@@ -150,6 +145,7 @@ const FritekstEditor = ({
         <Alert variant="info">
           <FormattedMessage id="RedigeringAvFritekstBrev.Infotekst" />
         </Alert>
+        <FritekstFeilmeldinger />
       </header>
       <div className={styles.papirWrapper}>
         <div className={styles.papir}>
@@ -174,7 +170,7 @@ const FritekstEditor = ({
             <Column xs="12">
               <InkluderKalenderCheckbox
                 intl={intl}
-                setFieldValue={handleSetFieldValue}
+                setFieldValue={setFieldValue}
                 skalBrukeOverstyrendeFritekstBrev={skalBrukeOverstyrendeFritekstBrev}
                 disabled={readOnly}
               />
@@ -199,6 +195,7 @@ const FritekstEditor = ({
                 <FormattedMessage id="VedtakForm.ForhandvisBrev" />
               </PreviewLink>
             </div>
+            <FritekstFeilmeldinger />
           </Column>
         </Row>
         <VerticalSpacer thirtyTwoPx />

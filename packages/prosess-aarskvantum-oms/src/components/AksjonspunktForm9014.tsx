@@ -22,6 +22,7 @@ import styles from './aksjonspunktForm.less';
 import Aktivitet from '../dto/Aktivitet';
 import { fosterbarnDto } from '../dto/FosterbarnDto';
 import FosterbarnForm from './FosterbarnForm';
+import { valgValues } from './utils';
 
 interface AksjonspunktFormImplProps {
   aktiviteter: Aktivitet[];
@@ -29,7 +30,6 @@ interface AksjonspunktFormImplProps {
   fosterbarn: fosterbarnDto[];
   aksjonspunktKode: string;
   valgValue: string;
-  fosterbarnValue: fosterbarnDto[];
 }
 
 interface FormContentProps {
@@ -39,18 +39,12 @@ interface FormContentProps {
   fosterbarn: fosterbarnDto[];
   aksjonspunktKode: string;
   valgValue: string;
-  fosterbarnValue: fosterbarnDto[];
   initialValues: { begrunnelse: string; fosterbarn: fosterbarnDto[] } | any;
   dirty: boolean;
   reset: () => void;
 }
 
 const årskvantumAksjonspunktFormName = 'årskvantumAksjonspunktFormName';
-
-const valgValues = {
-  reBehandling: 'reBehandling',
-  fortsett: 'fortsett',
-};
 
 const vilkårHarOverlappendePerioderIInfotrygd = (uttaksperiode: Uttaksperiode) =>
   Object.entries(uttaksperiode.vurderteVilkår).some(
@@ -75,7 +69,6 @@ export const FormContent = ({
   fosterbarn,
   aksjonspunktKode,
   valgValue,
-  fosterbarnValue,
   initialValues,
 }: FormContentProps) => {
   Modal.setAppElement(document.body);
@@ -90,25 +83,8 @@ export const FormContent = ({
     [aktiviteter],
   );
 
-  const [fosterbarnEndret, setFosterbarnEndret] = useState<boolean>(false);
   const erÅF = aksjonspunktKode === aksjonspunktCodes.ÅRSKVANTUM_FOSTERBARN;
-
-  useEffect(() => {
-    if (erÅF && fosterbarnValue && initialValues.fosterbarn) {
-      setFosterbarnEndret(
-        JSON.stringify([...initialValues.fosterbarn].sort()) !== JSON.stringify([...fosterbarnValue].sort()),
-      );
-    }
-  }, [setFosterbarnEndret, fosterbarnValue]);
-
   const harUavklartePerioder = uavklartePerioderPgaInfotrygd.length > 0;
-
-  const erFosterbarnEndret = value => {
-    if (erÅF && value === valgValues.reBehandling && !fosterbarnEndret) {
-      return [{ id: 'Årskvantum.Aksjonspunkt.Avslått.Fosterbarn.KanIkkeRebehandle' }];
-    }
-    return undefined;
-  };
 
   if (harUavklartePerioder) {
     const harOverlappendePerioderIInfotrygd = uavklartePerioderPgaInfotrygd.some(uttaksperiode =>
@@ -167,7 +143,7 @@ export const FormContent = ({
       {isAksjonspunktOpen && (
         <RadioGroupField
           name="valg"
-          validate={[required, erFosterbarnEndret]}
+          validate={[required]}
           label={
             <Element>
               <FormattedMessage id="Årskvantum.Aksjonspunkt.Avslått.Valg" />
@@ -209,6 +185,8 @@ export const FormContent = ({
               component={FosterbarnForm}
               barn={fosterbarn}
               isAksjonspunktOpen={isAksjonspunktOpen}
+              valgValue={valgValue}
+              aksjonspunktkode={aksjonspunktKode}
             />
           </BorderBox>
           <VerticalSpacer sixteenPx />
@@ -220,7 +198,9 @@ export const FormContent = ({
           <VerticalSpacer eightPx />
           <Table>
             <TableRow isHeader>
-              <TableColumn>Fosterbarn</TableColumn>
+              <TableColumn>
+                <FormattedMessage id="Årskvantum.Aksjonspunkt.Avslått.FosterbarnTittel" />
+              </TableColumn>
             </TableRow>
             {initialValues.fosterbarn.map((fosterbarnFnr, index) => {
               const fosterbarnObj = fosterbarn.find(barn => barn.fnr === fosterbarnFnr);
@@ -256,7 +236,6 @@ const AksjonspunktFormImpl = ({
   fosterbarn,
   aksjonspunktKode,
   valgValue,
-  fosterbarnValue,
   initialValues,
   dirty,
   reset,
@@ -270,7 +249,6 @@ const AksjonspunktFormImpl = ({
         fosterbarn={fosterbarn}
         aksjonspunktKode={aksjonspunktKode}
         valgValue={valgValue}
-        fosterbarnValue={fosterbarnValue}
         initialValues={initialValues}
         dirty={dirty}
         reset={reset}
@@ -336,7 +314,7 @@ const mapStateToPropsFactory = (_initialState, initialProps: AksjonspunktFormPro
     { aktiviteter, isAksjonspunktOpen, aksjonspunkterForSteg = [], fosterbarn }: AksjonspunktFormProps,
   ): Partial<ConfigProps<FormValues>> & AksjonspunktFormImplProps => {
     const selector = formValueSelector(formNavn);
-    const { valg: valgValue, fosterbarn: fosterbarnValue } = selector(state, 'valg', 'fosterbarn');
+    const { valg: valgValue } = selector(state, 'valg', 'fosterbarn');
 
     return {
       onSubmit,
@@ -349,7 +327,6 @@ const mapStateToPropsFactory = (_initialState, initialProps: AksjonspunktFormPro
       fosterbarn,
       aksjonspunktKode,
       valgValue,
-      fosterbarnValue,
     };
   };
 };

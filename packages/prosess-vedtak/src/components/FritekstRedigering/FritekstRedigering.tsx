@@ -1,9 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { FormattedMessage, injectIntl, WrappedComponentProps } from 'react-intl';
 
 import { Modal, Button } from '@navikt/ds-react';
 import { Edit } from '@navikt/ds-icons';
-import { Row } from 'nav-frontend-grid';
 
 import {
   TilgjengeligeVedtaksbrev,
@@ -60,7 +59,7 @@ const FritekstRedigering = ({
   const redigerbarDokumentmal: VedtaksbrevMal = tilgjengeligeVedtaksbrev.maler.find(
     vb => vb.dokumentMalType === dokumentMalType.MANUELL,
   );
-
+  const firstRender = useRef<boolean>(true);
   const [visRedigering, setVisRedigering] = useState<boolean>(false);
   const [redigerbartInnholdKlart, setRedigerbartInnholdKlart] = useState<boolean>(false);
   const [brevStiler, setBrevStiler] = useState<string>('');
@@ -98,14 +97,6 @@ const FritekstRedigering = ({
     setRedigerbartInnholdKlart(true);
   };
 
-  useEffect(() => {
-    hentFritekstbrevMal();
-  }, []);
-
-  useEffect(() => {
-    if (innholdTilRedigering) setRedigerbartInnhold(innholdTilRedigering);
-  }, [innholdTilRedigering]);
-
   const lukkEditor = () => setVisRedigering(false);
 
   const handleLagre = async html => {
@@ -120,6 +111,18 @@ const FritekstRedigering = ({
       }),
     );
   };
+
+  useEffect(() => {
+    if (!firstRender.current) handleLagre(innholdTilRedigering);
+    else {
+      hentFritekstbrevMal();
+      firstRender.current = false;
+    }
+  }, [firstRender, inkluderKalender]);
+
+  useEffect(() => {
+    if (innholdTilRedigering) setRedigerbartInnhold(innholdTilRedigering);
+  }, [innholdTilRedigering]);
 
   const handleForhåndsvis = (e: React.SyntheticEvent, html: string) => previewBrev(e, html);
 

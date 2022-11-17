@@ -31,17 +31,17 @@ const getLagreFunksjon =
     setVisBeslutterModal: (visModal: boolean) => void,
     godkjennTotrinnsaksjonspunkter: (params: any) => Promise<any>,
   ) =>
-    (totrinnskontrollData: Values) => {
-      const params = {
-        saksnummer,
-        behandlingId,
-        behandlingVersjon,
-        bekreftedeAksjonspunktDtoer: [totrinnskontrollData.fatterVedtakAksjonspunktDto],
-      };
-      setAlleAksjonspunktTilGodkjent(totrinnskontrollData.erAlleAksjonspunktGodkjent);
-      setVisBeslutterModal(true);
-      return godkjennTotrinnsaksjonspunkter(params);
+  (totrinnskontrollData: Values) => {
+    const params = {
+      saksnummer,
+      behandlingId,
+      behandlingVersjon,
+      bekreftedeAksjonspunktDtoer: [totrinnskontrollData.fatterVedtakAksjonspunktDto],
     };
+    setAlleAksjonspunktTilGodkjent(totrinnskontrollData.erAlleAksjonspunktGodkjent);
+    setVisBeslutterModal(true);
+    return godkjennTotrinnsaksjonspunkter(params);
+  };
 
 interface OwnProps {
   fagsak: Fagsak;
@@ -128,7 +128,6 @@ const TotrinnskontrollIndex = ({ fagsak, alleBehandlinger, behandlingId, behandl
         location={location}
         readOnly={brukernavn === behandling.ansvarligSaksbehandler || kanVeilede}
         onSubmit={onSubmit}
-        fagsakYtelseType={fagsak.sakstype}
         alleKodeverk={alleKodeverk}
         behandlingKlageVurdering={totrinnsKlageVurdering}
         createLocationForSkjermlenke={createLocationForSkjermlenke}

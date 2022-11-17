@@ -1,12 +1,10 @@
 import React from 'react';
 import { action } from '@storybook/addon-actions';
-import { withKnobs, boolean } from '@storybook/addon-knobs';
-
-import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
+import { boolean, withKnobs } from '@storybook/addon-knobs';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import TotrinnskontrollSakIndex from '@fpsak-frontend/sak-totrinnskontroll';
-import { Behandling, KlageVurdering } from '@k9-sak-web/types';
+import { Behandling, KlageVurdering, TotrinnskontrollAksjonspunkt } from '@k9-sak-web/types';
 
 import withReduxAndRouterProvider from '../../decorators/withReduxAndRouter';
 
@@ -19,18 +17,78 @@ const data = [
       {
         aksjonspunktKode: '5082',
         opptjeningAktiviteter: [],
-        beregningDto: {
-          fastsattVarigEndringNaering: false,
-          faktaOmBeregningTilfeller: null,
-          skjæringstidspunkt: '2020-01-01',
-        },
+        beregningDtoer: [],
+        besluttersBegrunnelse: null,
+        totrinnskontrollGodkjent: null,
+        vurderPaNyttArsaker: [],
+        uttakPerioder: [],
+        arbeidsforholdDtos: [],
+      } as TotrinnskontrollAksjonspunkt,
+    ],
+  },
+  {
+    skjermlenkeType: 'BEREGNING',
+    totrinnskontrollAksjonspunkter: [
+      {
+        aksjonspunktKode: '5038',
+        opptjeningAktiviteter: [],
+        beregningDtoer: [
+          {
+            fastsattVarigEndringNaering: false,
+            faktaOmBeregningTilfeller: null,
+            skjæringstidspunkt: '2020-01-01',
+          },
+        ],
+        besluttersBegrunnelse: null,
+        totrinnskontrollGodkjent: null,
+        vurderPaNyttArsaker: [],
+        arbeidsforholdDtos: [],
+      },
+      {
+        aksjonspunktKode: '5039',
+        opptjeningAktiviteter: [],
+        beregningDtoer: [
+          {
+            fastsattVarigEndringNaering: true,
+            fastsattVarigEndring: true,
+            faktaOmBeregningTilfeller: null,
+            skjæringstidspunkt: '2020-01-01',
+          },
+          {
+            fastsattVarigEndringNaering: false,
+            fastsattVarigEndring: false,
+            faktaOmBeregningTilfeller: null,
+            skjæringstidspunkt: '2020-02-01',
+          },
+        ],
         besluttersBegrunnelse: null,
         totrinnskontrollGodkjent: null,
         vurderPaNyttArsaker: [],
         uttakPerioder: [],
         arbeidsforholdDtos: [],
       },
-    ],
+    ] as TotrinnskontrollAksjonspunkt[],
+  },
+
+  {
+    skjermlenkeType: 'FAKTA_OM_BEREGNING',
+    totrinnskontrollAksjonspunkter: [
+      {
+        aksjonspunktKode: '5058',
+        opptjeningAktiviteter: [],
+        beregningDtoer: [
+          {
+            fastsattVarigEndringNaering: null,
+            faktaOmBeregningTilfeller: ['VURDER_LØNNSENDRING', 'VURDER_MOTTAR_YTELSE'],
+            skjæringstidspunkt: '2020-01-01',
+          },
+        ],
+        besluttersBegrunnelse: null,
+        totrinnskontrollGodkjent: null,
+        vurderPaNyttArsaker: [],
+        arbeidsforholdDtos: [],
+      },
+    ] as TotrinnskontrollAksjonspunkt[],
   },
 ];
 
@@ -41,11 +99,7 @@ const dataReadOnly = [
       {
         aksjonspunktKode: '5082',
         opptjeningAktiviteter: [],
-        beregningDto: {
-          fastsattVarigEndringNaering: false,
-          faktaOmBeregningTilfeller: [null],
-          skjæringstidspunkt: '2020-01-01',
-        },
+        beregningDtoer: [],
         besluttersBegrunnelse: 'asdfa',
         totrinnskontrollGodkjent: false,
         vurderPaNyttArsaker: ['FEIL_REGEL', 'FEIL_FAKTA'],
@@ -94,7 +148,6 @@ export const visTotrinnskontrollForBeslutter = () => (
       location={location}
       readOnly={boolean('readOnly', false)}
       onSubmit={action('button-click')}
-      fagsakYtelseType={fagsakYtelseType.FORELDREPENGER}
       behandlingKlageVurdering={
         {
           klageVurderingResultatNFP: {
@@ -126,7 +179,6 @@ export const visTotrinnskontrollForSaksbehandler = () => (
       location={location}
       readOnly
       onSubmit={action('button-click')}
-      fagsakYtelseType={fagsakYtelseType.FORELDREPENGER}
       behandlingKlageVurdering={
         {
           klageVurderingResultatNFP: {

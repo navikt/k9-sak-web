@@ -1,21 +1,19 @@
 import React, { ReactNode } from 'react';
-import moment from 'moment';
 import { FormattedMessage } from 'react-intl';
 import { Element } from 'nav-frontend-typografi';
 
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { DDMMYYYY_DATE_FORMAT, ISO_DATE_FORMAT } from '@fpsak-frontend/utils';
 import klageVurderingCodes from '@fpsak-frontend/kodeverk/src/klageVurdering';
 import behandlingStatusCode from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import klageVurderingOmgjoerCodes from '@fpsak-frontend/kodeverk/src/klageVurderingOmgjoer';
-import aksjonspunktCodes, { isUttakAksjonspunkt } from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import arbeidsforholdHandlingType from '@fpsak-frontend/kodeverk/src/arbeidsforholdHandlingType';
 import {
-  KodeverkMedNavn,
   KlageVurdering,
+  KodeverkMedNavn,
+  TotrinnsBeregningDto,
   TotrinnskontrollAksjonspunkt,
   TotrinnskontrollArbeidsforhold,
-  TotrinnsBeregningDto,
 } from '@k9-sak-web/types';
 
 import totrinnskontrollaksjonspunktTextCodes, {
@@ -24,13 +22,40 @@ import totrinnskontrollaksjonspunktTextCodes, {
 import OpptjeningTotrinnText from './OpptjeningTotrinnText';
 import vurderFaktaOmBeregningTotrinnText from '../../VurderFaktaBeregningTotrinnText';
 
-const formatDate = (date?: string) => (date ? moment(date, ISO_DATE_FORMAT).format(DDMMYYYY_DATE_FORMAT) : '-');
-
-const buildVarigEndringBeregningText = (beregningDto: TotrinnskontrollAksjonspunkt['beregningDto']) =>
-  beregningDto?.fastsattVarigEndringNaering ? (
-    <FormattedMessage id="ToTrinnsForm.Beregning.VarigEndring" />
+const buildVarigEndringBeregningText = (beregningDto: TotrinnskontrollAksjonspunkt['beregningDtoer'][number]) =>
+  beregningDto?.fastsattVarigEndringNaering || beregningDto?.fastsattVarigEndring ? (
+    <FormattedMessage
+      id="ToTrinnsForm.Beregning.VarigEndring"
+      values={{
+        dato: beregningDto.skjæringstidspunkt,
+      }}
+    />
   ) : (
-    <FormattedMessage id="ToTrinnsForm.Beregning.IkkeVarigEndring" />
+    <FormattedMessage
+      id="ToTrinnsForm.Beregning.IkkeVarigEndring"
+      values={{
+        dato: beregningDto.skjæringstidspunkt,
+      }}
+    />
+  );
+
+const buildVarigEndretArbeidssituasjonBeregningText = (
+  beregningDto: TotrinnskontrollAksjonspunkt['beregningDtoer'][number],
+) =>
+  beregningDto?.fastsattVarigEndring ? (
+    <FormattedMessage
+      id="ToTrinnsForm.Beregning.VarigEndretArbeidssituasjon"
+      values={{
+        dato: beregningDto.skjæringstidspunkt,
+      }}
+    />
+  ) : (
+    <FormattedMessage
+      id="ToTrinnsForm.Beregning.IkkeVarigEndretArbeidssituasjon"
+      values={{
+        dato: beregningDto.skjæringstidspunkt,
+      }}
+    />
   );
 
 // Eksportert kun for test
@@ -101,34 +126,6 @@ const buildArbeidsforholdText = (
     );
   });
 
-const buildUttakText = (aksjonspunkt: TotrinnskontrollAksjonspunkt): ReactNode[] =>
-  aksjonspunkt.uttakPerioder.map(
-    (uttakperiode): ReactNode => {
-      const fom = formatDate(uttakperiode.fom);
-      const tom = formatDate(uttakperiode.tom);
-      let id;
-
-      if (uttakperiode.erSlettet) {
-        id = 'ToTrinnsForm.AvklarUttak.PeriodeSlettet';
-      } else if (uttakperiode.erLagtTil) {
-        id = 'ToTrinnsForm.AvklarUttak.PeriodeLagtTil';
-      } else if (uttakperiode.erEndret && aksjonspunkt.aksjonspunktKode === aksjonspunktCodes.TILKNYTTET_STORTINGET) {
-        id = 'ToTrinnsForm.ManueltFastsattUttak.PeriodeEndret';
-      } else if (
-        uttakperiode.erEndret &&
-        aksjonspunkt.aksjonspunktKode === aksjonspunktCodes.OVERSTYRING_AV_UTTAKPERIODER
-      ) {
-        id = 'ToTrinnsForm.OverstyrUttak.PeriodeEndret';
-      } else if (uttakperiode.erEndret) {
-        id = 'ToTrinnsForm.AvklarUttak.PeriodeEndret';
-      } else {
-        id = 'ToTrinnsForm.AvklarUttak.PeriodeAvklart';
-      }
-
-      return <FormattedMessage id={id} values={{ a: fom, b: tom }} />;
-    },
-  );
-
 const buildOpptjeningText = (aksjonspunkt: TotrinnskontrollAksjonspunkt): ReactNode[] =>
   aksjonspunkt.opptjeningAktiviteter.map(aktivitet => <OpptjeningTotrinnText aktivitet={aktivitet} />);
 
@@ -143,7 +140,7 @@ const getTextFromTilbakekrevingAksjonspunktkode = (aksjonspunkt: Totrinnskontrol
 };
 
 const lagBgTilfelleTekst = (bg: TotrinnsBeregningDto): ReactNode => {
-  const aksjonspunktTextIds = bg.faktaOmBeregningTilfeller.map((kode) => vurderFaktaOmBeregningTotrinnText[kode]);
+  const aksjonspunktTextIds = bg.faktaOmBeregningTilfeller.map(kode => vurderFaktaOmBeregningTotrinnText[kode]);
   return (
     <>
       <Element>
@@ -160,22 +157,6 @@ const lagBgTilfelleTekst = (bg: TotrinnsBeregningDto): ReactNode => {
       )}
     </>
   );
-};
-
-const getFaktaOmBeregningText = (beregningDto: TotrinnsBeregningDto): ReactNode[] | null => {
-  if (!beregningDto.faktaOmBeregningTilfeller) {
-    return null;
-  }
-  const aksjonspunktTextIds = beregningDto.faktaOmBeregningTilfeller.map(
-    (kode) => vurderFaktaOmBeregningTotrinnText[kode],
-  );
-
-  const filtrerteApTextIds = aksjonspunktTextIds.filter(aksjonspunktTextId => !!aksjonspunktTextId);
-  if (filtrerteApTextIds.length === 0) {
-    return null;
-  }
-
-  return filtrerteApTextIds.map(aksjonspunktTextId => <FormattedMessage id={aksjonspunktTextId} />);
 };
 
 const getFaktaOmBeregningTextFlereGrunnlag = (beregningDtoer: TotrinnsBeregningDto[]): ReactNode[] | null => {
@@ -243,7 +224,6 @@ const erKlageAksjonspunkt = (aksjonspunkt: TotrinnskontrollAksjonspunkt) =>
   aksjonspunkt.aksjonspunktKode === aksjonspunktCodes.VURDERING_AV_FORMKRAV_KLAGE_KA;
 
 const getAksjonspunkttekst = (
-  isForeldrepenger: boolean,
   klagebehandlingVurdering: KlageVurdering,
   behandlingStatus: string,
   arbeidsforholdHandlingTyper: KodeverkMedNavn[],
@@ -257,23 +237,13 @@ const getAksjonspunkttekst = (
     aksjonspunkt.aksjonspunktKode ===
     aksjonspunktCodes.VURDER_VARIG_ENDRET_ELLER_NYOPPSTARTET_NAERING_SELVSTENDIG_NAERINGSDRIVENDE
   ) {
-    return [buildVarigEndringBeregningText(aksjonspunkt.beregningDto)];
+    return aksjonspunkt.beregningDtoer?.map(dto => buildVarigEndringBeregningText(dto));
+  }
+  if (aksjonspunkt.aksjonspunktKode === aksjonspunktCodes.VURDER_VARIG_ENDRET_ARBEIDSSITUASJON) {
+    return aksjonspunkt.beregningDtoer?.map(dto => buildVarigEndretArbeidssituasjonBeregningText(dto));
   }
   if (aksjonspunkt.aksjonspunktKode === aksjonspunktCodes.VURDER_FAKTA_FOR_ATFL_SN) {
-    // TODO Workaround for saker behandlet før TSF-818 ble rettet. Løst så de kan sende tilbake sakene i prod, skal fjernes etter at sakene er rettet
-    if (!aksjonspunkt.beregningDtoer && !aksjonspunkt.beregningDto) {
-      return [<FormattedMessage id="ToTrinnsForm.Beregning.Generell" />];
-    }
-    return aksjonspunkt.beregningDtoer
-      ? getFaktaOmBeregningTextFlereGrunnlag(aksjonspunkt.beregningDtoer)
-      : getFaktaOmBeregningText(aksjonspunkt.beregningDto);
-  }
-  if (
-    isUttakAksjonspunkt(aksjonspunkt.aksjonspunktKode) &&
-    aksjonspunkt.uttakPerioder &&
-    aksjonspunkt.uttakPerioder.length > 0
-  ) {
-    return buildUttakText(aksjonspunkt);
+    return getFaktaOmBeregningTextFlereGrunnlag(aksjonspunkt.beregningDtoer);
   }
 
   if (erKlageAksjonspunkt(aksjonspunkt)) {

@@ -105,6 +105,28 @@ const VedtakOverlappendeYtelsePanel: React.FC<Props & WrappedComponentProps> = (
         <VerticalSpacer twentyPx />
         {getTidslinje()}
         <VerticalSpacer twentyPx />
+        {valgtPeriode && (
+          <>
+            <BorderBox>
+              <header>Detaljer om periode</header>
+              <div className={styles.periodeDetaljer}>
+                <EtikettFokus className={styles.periodeDetalj}>
+                  <strong>{intl.formatMessage({ id: 'VedtakForm.OverlappendeYtelserKilde' })}</strong>
+                  {utledFagSystem(valgtPeriode.periodeinfo.kilde)}
+                </EtikettFokus>
+                <EtikettInfo className={styles.periodeDetalj}>
+                  <strong>{intl.formatMessage({ id: 'VedtakForm.OverlappendeYtelserYtelse' })}</strong>
+                  {utledYtelseType(valgtPeriode.periodeinfo.ytelseType)}
+                </EtikettInfo>
+                <EtikettInfo className={styles.periodeDetalj}>
+                  <strong>{intl.formatMessage({ id: 'VedtakForm.OverlappendeYtelserPeriode' })}</strong>
+                  {valgtPeriode.fom} - {valgtPeriode.tom}
+                </EtikettInfo>
+              </div>
+            </BorderBox>
+            <VerticalSpacer sixteenPx />
+          </>
+        )}
         <CheckboxGroup
           legend="Bekreft at overlappende ytelser er sjekket og fulgt opp"
           hideLegend
@@ -125,36 +147,46 @@ const VedtakOverlappendeYtelsePanel: React.FC<Props & WrappedComponentProps> = (
         <Accordion className={styles.accordion}>
           <Accordion.Item>
             <Accordion.Header type="button">
-              <Heading spacing size="small" level="3">
+              <Heading size="xsmall" level="3">
                 Hvilke ytelser går det automatisk melding?
               </Heading>
             </Accordion.Header>
             <Accordion.Content>
-              <BodyLong>Nå kan du sende inn søknaden.</BodyLong>
+              <Heading spacing size="xsmall" level="4">
+                Sykepenger
+              </Heading>
+              <BodyLong spacing>
+                Det opprettes automatisk VKY-oppgave på sykepenger i Gosys hvis det er overlapp med sykepenger i
+                Infotrygd eller Speil.
+              </BodyLong>
+              <Heading spacing size="xsmall" level="4">
+                Foreldrepenger
+              </Heading>
+              <BodyLong spacing>
+                Det opprettes automatisk revurdering ved overlapp mellom pleiepenger og foreldrepenger. Ved overlapp med
+                omsorgspenger eller pleiepenger i livets sluttfase må saksbehandler vurdere om overlappet er riktig,
+                f.eks. ved gradert ytelse, og eventuelt sende VKY-oppgave til riktig avdeling hvis FP skal stanses eller
+                endres.
+              </BodyLong>
+              <Heading spacing size="xsmall" level="4">
+                Dagpenger
+              </Heading>
+              <BodyLong spacing>
+                Ved overlapp med dagpenger i Arena opprettes det automatisk oppgave hos NØS om å sette utbetalingen på
+                vent.
+              </BodyLong>
+              <Heading spacing size="xsmall" level="4">
+                Andre ytelser i kapittel 9
+              </Heading>
+              <BodyLong>
+                Det opprettes ingen oppgave i Gosys ved overlapp mot annen ytelse i kapittel 9, verken om utbetalingen
+                er gjort i Infotrygd eller K9. Saksbehandler må vurdere hvilken ytelse som er riktig, og eventuelt endre
+                utbetalingen på overlappende ytelse.
+              </BodyLong>
             </Accordion.Content>
           </Accordion.Item>
         </Accordion>
       </Alert>
-
-      {valgtPeriode && (
-        <BorderBox>
-          <header>Detaljer om periode</header>
-          <div className={styles.periodeDetaljer}>
-            <EtikettFokus className={styles.periodeDetalj}>
-              <strong>{intl.formatMessage({ id: 'VedtakForm.OverlappendeYtelserKilde' })}</strong>
-              {utledFagSystem(valgtPeriode.periodeinfo.kilde)}
-            </EtikettFokus>
-            <EtikettInfo className={styles.periodeDetalj}>
-              <strong>{intl.formatMessage({ id: 'VedtakForm.OverlappendeYtelserYtelse' })}</strong>
-              {utledYtelseType(valgtPeriode.periodeinfo.ytelseType)}
-            </EtikettInfo>
-            <EtikettInfo className={styles.periodeDetalj}>
-              <strong>{intl.formatMessage({ id: 'VedtakForm.OverlappendeYtelserPeriode' })}</strong>
-              {valgtPeriode.fom} - {valgtPeriode.tom}
-            </EtikettInfo>
-          </div>
-        </BorderBox>
-      )}
     </>
   );
 };

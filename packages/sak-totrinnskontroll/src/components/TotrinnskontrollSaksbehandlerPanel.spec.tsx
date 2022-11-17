@@ -98,7 +98,6 @@ describe('<TotrinnskontrollSaksbehandlerPanel>', () => {
     const wrapper = shallow(
       <TotrinnskontrollSaksbehandlerPanel
         totrinnskontrollSkjermlenkeContext={totrinnskontrollSkjermlenkeContext}
-        erForeldrepengerFagsak
         behandlingStatus={behandlingStatus.BEHANDLING_UTREDES}
         arbeidsforholdHandlingTyper={[]}
         erTilbakekreving={false}

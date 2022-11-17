@@ -56,7 +56,6 @@ describe('<AksjonspunktForm>', () => {
           fosterbarn={[]}
           aksjonspunktKode={aksjonspunktCodes.VURDER_ÅRSKVANTUM_KVOTE}
           valgValue={null}
-          fosterbarnValue={[]}
         />,
       );
 
@@ -86,7 +85,6 @@ describe('<AksjonspunktForm>', () => {
           fosterbarn={[]}
           aksjonspunktKode={aksjonspunktCodes.VURDER_ÅRSKVANTUM_KVOTE}
           valgValue={null}
-          fosterbarnValue={[]}
         />,
       );
 
