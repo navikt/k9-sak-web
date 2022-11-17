@@ -1,7 +1,6 @@
 /* eslint-disable class-methods-use-this */
 import { shallow } from 'enzyme';
 import React from 'react';
-import { IntlShape } from 'react-intl';
 import sinon from 'sinon';
 
 import ArbeidsforholdFaktaIndex from '@fpsak-frontend/fakta-arbeidsforhold';
@@ -81,7 +80,6 @@ describe('<faktaHooks>', () => {
       },
     ];
     const valgtFaktaSteg = 'default';
-    const intl = { formatMessage: data => data.id } as IntlShape;
 
     const wrapper = testHook(() =>
       faktaHooks.useFaktaPaneler(
