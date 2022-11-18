@@ -1,9 +1,11 @@
-import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
-import { Kodeverk, Vilkar } from '@k9-sak-web/types';
-import { Normaltekst } from 'nav-frontend-typografi';
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
+
+import { Normaltekst } from 'nav-frontend-typografi';
+import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
+import { Vilkar } from '@k9-sak-web/types';
 import Vilkarperiode from '@k9-sak-web/types/src/vilkarperiode';
+import KodeverkType from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 
 const finnUnikeAvslagskoder = (avslåttePerioder: Vilkarperiode[]) => {
   const funnedeAvslagskoder = new Set();
@@ -17,31 +19,30 @@ const finnUnikeAvslagskoder = (avslåttePerioder: Vilkarperiode[]) => {
 
 const visAvslåtteVilkårsperioder = (
   avslåttVilkår: Vilkar,
-  getKodeverknavn: (kodeverkOjekt: Kodeverk, undertype?: string) => void,
+  getKodeverknavn: (kode: string, kodeverk: KodeverkType, undertype?: string) => void,
 ) => {
   const avslåttePerioder = avslåttVilkår.perioder.filter(
-    periode => periode.vilkarStatus.kode === vilkarUtfallType.IKKE_OPPFYLT,
+    periode => periode.vilkarStatus === vilkarUtfallType.IKKE_OPPFYLT,
   );
   const avslåttePerioderMedUnikeAvslagskoder = finnUnikeAvslagskoder(avslåttePerioder);
 
   return avslåttePerioderMedUnikeAvslagskoder.map(avslåttPeriode => (
     <Normaltekst key={avslåttPeriode.avslagKode}>
-      {getKodeverknavn(avslåttVilkår.vilkarType)}:{' '}
-      {getKodeverknavn({ kode: avslåttPeriode.avslagKode, kodeverk: 'AVSLAGSARSAK' }, avslåttVilkår.vilkarType.kode)}
+      {avslåttVilkår.vilkarType && <>{getKodeverknavn(avslåttVilkår.vilkarType, KodeverkType.VILKAR_TYPE)}: </>}
+      {avslåttPeriode.avslagKode && <>{getKodeverknavn(avslåttPeriode.avslagKode, KodeverkType.AVSLAGSARSAK)}</>}
     </Normaltekst>
   ));
 };
 
 interface AvslagsårsakListeProps {
   vilkar: Vilkar[];
-  getKodeverknavn: (kodeverkOjekt: Kodeverk, undertype?: string) => void;
+  getKodeverknavn: (kode: string, kodeverk: KodeverkType, undertype?: string) => void;
 }
 
 const AvslagsårsakListe = ({ vilkar, getKodeverknavn }: AvslagsårsakListeProps) => {
   const avslatteVilkar = vilkar.filter(
     v =>
-      Array.isArray(v.perioder) &&
-      v.perioder.some(periode => periode.vilkarStatus.kode === vilkarUtfallType.IKKE_OPPFYLT),
+      Array.isArray(v.perioder) && v.perioder.some(periode => periode.vilkarStatus === vilkarUtfallType.IKKE_OPPFYLT),
   );
   if (avslatteVilkar.length === 0) {
     return <FormattedMessage id="VedtakForm.UttaksperioderIkkeGyldig" />;

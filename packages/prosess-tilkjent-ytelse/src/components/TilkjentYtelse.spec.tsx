@@ -21,17 +21,11 @@ describe('<TilkjentYtelse>', () => {
               andeler: [
                 {
                   aktørId: '',
-                  arbeidsforholdType: {
-                    kode: '',
-                    kodeverk: '',
-                  },
+                  arbeidsforholdType: '',
                   stillingsprosent: 100,
                   arbeidsgiver: '973861778',
                   arbeidsgiverOrgnr: '',
-                  aktivitetStatus: {
-                    kode: '',
-                    kodeverk: '',
-                  },
+                  aktivitetStatus: '',
                   arbeidsforholdId: '',
                   eksternArbeidsforholdId: '',
                   arbeidsgiverNavn: '',

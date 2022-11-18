@@ -1,14 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
 import moment from 'moment';
-import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
+
 import { Column, Row } from 'nav-frontend-grid';
+import { TabsPure } from 'nav-frontend-tabs';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
 import { Table, TableColumn, TableRow, VerticalSpacer, FloatRight } from '@fpsak-frontend/shared-components';
 import { calcDaysAndWeeksWithWeekends, DDMMYYYY_DATE_FORMAT, getKodeverknavnFn } from '@fpsak-frontend/utils';
 import { TimeLineButton, TimeLineDataContainer } from '@fpsak-frontend/tidslinje';
-import { TabsPure } from 'nav-frontend-tabs';
 import { KodeverkMedNavn, ArbeidsgiverOpplysningerPerId } from '@k9-sak-web/types';
+
 import { createVisningsnavnForAndel, getAktivitet } from './TilkjentYteleseUtils';
 import { PeriodeMedId } from './TilkjentYtelse';
 
@@ -47,7 +48,7 @@ const TilkjentYtelseTimeLineData = ({
   const valgtAndel = andeler[activeTab];
   const numberOfDaysAndWeeks = calcDaysAndWeeksWithWeekends(selectedItemStartDate, selectedItemEndDate);
   const intl = useIntl();
-  const getKodeverknavn = getKodeverknavnFn(alleKodeverk, kodeverkTyper);
+  const getKodeverknavn = getKodeverknavnFn(alleKodeverk);
 
   return (
     <TimeLineDataContainer>

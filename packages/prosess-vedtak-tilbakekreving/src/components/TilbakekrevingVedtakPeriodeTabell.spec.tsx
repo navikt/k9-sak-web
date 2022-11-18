@@ -15,10 +15,7 @@ describe('<TilbakekrevingVedtakPeriodeTabell>', () => {
           tom: '2019-12-10',
         },
         feilutbetaltBeløp: 15430,
-        vurdering: {
-          kode: 'SIMP',
-          kodeverk: 'VURDERING',
-        },
+        vurdering: 'SIMP',
         andelAvBeløp: 100,
         renterProsent: 10,
         tilbakekrevingBeløp: 15430,
@@ -30,10 +27,7 @@ describe('<TilbakekrevingVedtakPeriodeTabell>', () => {
           tom: '2019-06-10',
         },
         feilutbetaltBeløp: 14000,
-        vurdering: {
-          kode: 'SIMP',
-          kodeverk: 'VURDERING',
-        },
+        vurdering: 'SIMP',
         andelAvBeløp: 50,
         tilbakekrevingBeløp: 7000,
         tilbakekrevingBeløpEtterSkatt: 6000,

@@ -117,19 +117,10 @@ describe('<TilbakekrevingForm>', () => {
 
   it('skal lage initial values til form der en har lagret en periode og den andre er foreldet', () => {
     const arsak = {
-      hendelseType: {
-        kode: 'MORS_AKTIVITET_TYPE',
-        kodeverk: 'MORS_AKTIVITET_KRAV',
-      },
-      hendelseUndertype: {
-        kodeverk: 'MORS_AKTIVITET_TYPE',
-        kode: 'IKKE_ARBEIDET_HELTID',
-      },
+      hendelseType: 'MORS_AKTIVITET_TYPE',
+      hendelseUndertype: 'MORS_AKTIVITET_TYPE',
     };
-    const oppfyltValg = {
-      kode: '-',
-      kodeverk: 'VILKAAR_RESULTAT',
-    };
+    const oppfyltValg = '-';
     const ytelser = [
       {
         aktivitet: 'Arbeidstakar',
@@ -222,19 +213,10 @@ describe('<TilbakekrevingForm>', () => {
 
   it('skal lage initial values til form der en har splittet en periode i to', () => {
     const arsak = {
-      hendelseType: {
-        kode: 'MORS_AKTIVITET_TYPE',
-        kodeverk: 'MORS_AKTIVITET_KRAV',
-      },
-      hendelseUndertype: {
-        kodeverk: 'MORS_AKTIVITET_TYPE',
-        kode: 'IKKE_ARBEIDET_HELTID',
-      },
+      hendelseType: 'MORS_AKTIVITET_TYPE',
+      hendelseUndertype: 'MORS_AKTIVITET_TYPE',
     };
-    const oppfyltValg = {
-      kode: '-',
-      kodeverk: 'VILKAAR_RESULTAT',
-    };
+    const oppfyltValg = '-';
     const ytelser = [
       {
         aktivitet: 'Arbeidstakar',

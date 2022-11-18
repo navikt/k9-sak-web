@@ -1,22 +1,20 @@
 import React from 'react';
 import sinon from 'sinon';
+
 import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
 import { RadioOption, TextAreaField } from '@fpsak-frontend/form';
 import { Element } from 'nav-frontend-typografi';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { ProsessStegSubmitButton } from '@k9-sak-web/prosess-felles';
 import { Aksjonspunkt } from '@k9-sak-web/types';
+
 import { buildInitialValues, Tilbaketrekkpanel as UnwrappedForm, transformValues } from './Tilbaketrekkpanel';
 import shallowWithIntl, { intlMock } from '../../../i18n';
 
 const lagAksjonspunktTilbaketrekk = begrunnelse =>
   ({
-    definisjon: {
-      kode: aksjonspunktCodes.VURDER_TILBAKETREKK,
-    },
-    status: {
-      kode: 'OPPR',
-    },
+    definisjon: aksjonspunktCodes.VURDER_TILBAKETREKK,
+    status: 'OPPR',
     begrunnelse,
   } as Aksjonspunkt);
 

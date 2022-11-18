@@ -1,8 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
-import { Undertittel } from 'nav-frontend-typografi';
 import moment from 'moment';
+
+import { Undertittel } from 'nav-frontend-typografi';
 import {
   Aksjonspunkt,
   BeregningsresultatUtbetalt,
@@ -14,8 +15,8 @@ import {
   Soknad,
 } from '@k9-sak-web/types';
 import { DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils';
-
 import aksjonspunktCodes, { hasAksjonspunkt } from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+
 import TilkjentYtelseForm from './manuellePerioder/TilkjentYtelseForm';
 import Tilbaketrekkpanel from './tilbaketrekk/Tilbaketrekkpanel';
 import TilkjentYtelse, { PeriodeMedId } from './TilkjentYtelse';
@@ -126,9 +127,10 @@ export const TilkjentYtelsePanelImpl = ({
   );
 };
 
-const finnTilbaketrekkAksjonspunkt = (alleAksjonspunkter: Aksjonspunkt[]): Aksjonspunkt | undefined => (alleAksjonspunkter
-  ? alleAksjonspunkter.find(ap => ap.definisjon?.kode === aksjonspunktCodes.VURDER_TILBAKETREKK)
-  : undefined);
+const finnTilbaketrekkAksjonspunkt = (alleAksjonspunkter: Aksjonspunkt[]): Aksjonspunkt | undefined =>
+  alleAksjonspunkter
+    ? alleAksjonspunkter.find(ap => ap.definisjon === aksjonspunktCodes.VURDER_TILBAKETREKK)
+    : undefined;
 
 const mapStateToProps = (state, ownProps) => ({
   beregningresultat: ownProps.beregningsresultat,

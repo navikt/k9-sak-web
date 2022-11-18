@@ -1,6 +1,9 @@
 import React from 'react';
 import sinon from 'sinon';
+
+import KodeverkType from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { mountWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
+
 import TilkjentYtelseTimeLineData from './TilkjentYtelseTimelineData';
 import { createVisningsnavnForAndel } from './TilkjentYteleseUtils';
 import { PeriodeMedId } from './TilkjentYtelse';
@@ -9,20 +12,11 @@ import messages from '../../i18n/nb_NO.json';
 const selectedItemDataFL = {
   andeler: [
     {
-      aktivitetStatus: {
-        kode: 'FL',
-        kodeverk: 'AKTIVITET_STATUS',
-      },
-      inntektskategori: {
-        kode: 'ARBEIDSTAKER',
-        kodeverk: 'INNTEKTSKATEGORI',
-      },
+      aktivitetStatus: 'FL',
+      inntektskategori: 'ARBEIDSTAKER',
       aktørId: null,
       arbeidsforholdId: null,
-      arbeidsforholdType: {
-        kode: '-',
-        kodeverk: 'OPPTJENING_AKTIVITET_TYPE',
-      },
+      arbeidsforholdType: '-',
       arbeidsgiverNavn: null,
       arbeidsgiverOrgnr: '',
       eksternArbeidsforholdId: null,
@@ -55,14 +49,14 @@ const selectedItemEndDate = '2020-04-24';
 const callbackForward = sinon.spy();
 const callbackBackward = sinon.spy();
 
-const getKodeverknavn = kodeverk => {
-  if (kodeverk.kode === 'AT') {
+const getKodeverknavn = (kode: string, kodeverk: KodeverkType) => {
+  if (kode === 'AT') {
     return 'Arbeidstaker';
   }
-  if (kodeverk.kode === 'SN') {
+  if (kode === 'SN') {
     return 'Selvstendig næringsdrivende';
   }
-  if (kodeverk.kode === 'FL') {
+  if (kode === 'FL') {
     return 'Frilans';
   }
   return '';

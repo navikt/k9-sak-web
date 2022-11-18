@@ -13,10 +13,7 @@ describe('<TilbakekrevingVedtak>', () => {
     {
       periode: { fom: '2019-10-10', tom: '2019-12-10' },
       feilutbetaltBeløp: 15430,
-      vurdering: {
-        kode: 'SIMP',
-        kodeverk: 'VURDERING',
-      },
+      vurdering: 'SIMP',
       andelAvBeløp: 100,
       renterProsent: 10,
       tilbakekrevingBeløp: 15430,
@@ -24,10 +21,7 @@ describe('<TilbakekrevingVedtak>', () => {
     {
       periode: ['2019-05-10', '2019-06-10'],
       feilutbetaltBeløp: 14000,
-      vurdering: {
-        kode: 'SIMP',
-        kodeverk: 'VURDERING',
-      },
+      vurdering: 'SIMP',
       andelAvBeløp: 50,
       tilbakekrevingBeløp: 7000,
     },
@@ -38,7 +32,7 @@ describe('<TilbakekrevingVedtak>', () => {
       <TilbakekrevingVedtak
         submitCallback={sinon.spy()}
         readOnly={false}
-        resultat={{ kode: 'testresultat', kodeverk: '' }}
+        resultat="testresultat"
         perioder={perioder as BeregningResultatPeriode[]}
         behandlingId={1}
         behandlingUuid="uuid"

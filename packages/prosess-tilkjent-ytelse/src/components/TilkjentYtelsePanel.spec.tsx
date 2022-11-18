@@ -9,12 +9,8 @@ import Tilbaketrekkpanel from './tilbaketrekk/Tilbaketrekkpanel';
 import shallowWithIntl from '../../i18n';
 
 const tilbaketrekkAP = {
-  definisjon: {
-    kode: aksjonspunktCodes.VURDER_TILBAKETREKK,
-  },
-  status: {
-    kode: 'OPPR',
-  },
+  definisjon: aksjonspunktCodes.VURDER_TILBAKETREKK,
+  status: 'OPPR',
   begrunnelse: undefined,
 } as Aksjonspunkt;
 
