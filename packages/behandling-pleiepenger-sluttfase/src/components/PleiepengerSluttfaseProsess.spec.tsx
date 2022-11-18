@@ -159,10 +159,7 @@ describe('< PleiepengerSluttfaseProsess>', () => {
       0: '2019-01-01',
     } as Record<number, string>,
     antallBarn: 1,
-    soknadType: {
-      kode: soknadType.FODSEL,
-      kodeverk: 'test',
-    },
+    soknadType: soknadType.FODSEL,
   } as Soknad;
 
   const arbeidsgiverOpplysningerPerId = {
@@ -201,7 +198,7 @@ describe('< PleiepengerSluttfaseProsess>', () => {
         setBehandling={sinon.spy()}
         arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
         featureToggles={{}}
-        setBeregningErBehandlet={() => { }}
+        setBeregningErBehandlet={() => {}}
       />,
     );
 
@@ -299,7 +296,7 @@ describe('< PleiepengerSluttfaseProsess>', () => {
         setBehandling={sinon.spy()}
         arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
         featureToggles={{}}
-        setBeregningErBehandlet={() => { }}
+        setBeregningErBehandlet={() => {}}
       />,
     );
 
@@ -358,7 +355,7 @@ describe('< PleiepengerSluttfaseProsess>', () => {
         setBehandling={sinon.spy()}
         arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
         featureToggles={{}}
-        setBeregningErBehandlet={() => { }}
+        setBeregningErBehandlet={() => {}}
       />,
     );
 
@@ -419,7 +416,7 @@ describe('< PleiepengerSluttfaseProsess>', () => {
         setBehandling={sinon.spy()}
         arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
         featureToggles={{}}
-        setBeregningErBehandlet={() => { }}
+        setBeregningErBehandlet={() => {}}
       />,
     );
 
@@ -480,7 +477,7 @@ describe('< PleiepengerSluttfaseProsess>', () => {
         setBehandling={sinon.spy()}
         arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
         featureToggles={{}}
-        setBeregningErBehandlet={() => { }}
+        setBeregningErBehandlet={() => {}}
       />,
     );
 
@@ -517,7 +514,7 @@ describe('< PleiepengerSluttfaseProsess>', () => {
         setBehandling={sinon.spy()}
         arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
         featureToggles={{}}
-        setBeregningErBehandlet={() => { }}
+        setBeregningErBehandlet={() => {}}
       />,
     );
 
@@ -557,7 +554,7 @@ describe('< PleiepengerSluttfaseProsess>', () => {
         setBehandling={sinon.spy()}
         arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
         featureToggles={{}}
-        setBeregningErBehandlet={() => { }}
+        setBeregningErBehandlet={() => {}}
       />,
     );
 
@@ -607,7 +604,7 @@ describe('< PleiepengerSluttfaseProsess>', () => {
         setBehandling={sinon.spy()}
         arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
         featureToggles={{}}
-        setBeregningErBehandlet={() => { }}
+        setBeregningErBehandlet={() => {}}
       />,
     );
 

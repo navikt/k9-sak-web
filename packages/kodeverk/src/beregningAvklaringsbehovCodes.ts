@@ -29,24 +29,23 @@ const løsesIBeregningspunkt = [
   avklaringsbehovCodes.FASTSETT_BEREGNINGSGRUNNLAG_SN_NY_I_ARBEIDSLIVET,
 ];
 
-
-
 const avklaringsbehovIsOfType =
   (validAksjonspunktCodes: string[]) =>
-    (aksjonspunktCode: string): boolean =>
-      validAksjonspunktCodes.includes(aksjonspunktCode);
+  (aksjonspunktCode: string): boolean =>
+    validAksjonspunktCodes.includes(aksjonspunktCode);
 
 export const harAvklaringsbehov = (avklaringsbehovCode: string, avklaringsbehov: BeregningAvklaringsbehov[]): boolean =>
   avklaringsbehov.some(ap => ap.definisjon === avklaringsbehovCode);
 
-export const harAvklaringsbehovSomKanLøses = (avklaringsbehovCode: string, avklaringsbehov: BeregningAvklaringsbehov[]): boolean =>
-  avklaringsbehov.some(ap => ap.definisjon.kode === avklaringsbehovCode && ap.kanLoses);
+export const harAvklaringsbehovSomKanLøses = (
+  avklaringsbehovCode: string,
+  avklaringsbehov: BeregningAvklaringsbehov[],
+): boolean => avklaringsbehov.some(ap => ap.definisjon === avklaringsbehovCode && ap.kanLoses);
 
 export const isBGAksjonspunktSomGirFritekstfelt = avklaringsbehovIsOfType(
   beregningsgrunnlagFritekstfeltIVedtakAksjonspunkt,
 );
 
 export const isBeregningAvklaringsbehov = avklaringsbehovIsOfType(løsesIBeregningspunkt);
-
 
 export default avklaringsbehovCodes;

@@ -115,12 +115,8 @@ describe('<VilkarResultPicker>', () => {
   it('skal sette opp initielle verdier', () => {
     const aksjonspunkter = [
       {
-        status: {
-          kode: aksjonspunktStatus.UTFORT,
-        },
-        vilkarType: {
-          kode: vilkarType.MEDISINSKEVILKÅR_UNDER_18_ÅR,
-        },
+        status: aksjonspunktStatus.UTFORT,
+        vilkarType: vilkarType.MEDISINSKEVILKÅR_UNDER_18_ÅR,
       },
     ] as Aksjonspunkt[];
     const intielleVerdier = VilkarResultPicker.buildInitialValues(

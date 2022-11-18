@@ -396,7 +396,7 @@ export const VedtakForm: React.FC<Props> = ({
           <div className={styles.aksjonspunktContainer}>
             <VedtakAksjonspunktPanel
               behandlingStatusKode={behandlingStatus?.kode}
-              aksjonspunktKoder={aksjonspunkter.map(ap => ap.definisjon.kode)}
+              aksjonspunktKoder={aksjonspunkter.map(ap => ap.definisjon)}
               readOnly={readOnly}
               overlappendeYtelser={overlappendeYtelser}
               alleKodeverk={alleKodeverk}

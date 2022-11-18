@@ -6,7 +6,7 @@ import ArbeidsforholdV2 from '@k9-sak-web/types/src/arbeidsforholdV2TsType';
 import { VerticalSpacer, PeriodLabel } from '@fpsak-frontend/shared-components';
 import { KodeverkMedNavn } from '@k9-sak-web/types';
 import { getKodeverknavnFn } from '@fpsak-frontend/utils';
-import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
+import KodeverkType from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 
 import styles from './permisjonPeriode.less';
 
@@ -18,7 +18,7 @@ interface OwnProps {
 }
 
 const PermisjonerInfo = ({ arbeidsforhold, alleKodeverk }: OwnProps) => {
-  const getKodeverknavn = getKodeverknavnFn(alleKodeverk, kodeverkTyper);
+  const getKodeverknavn = getKodeverknavnFn(alleKodeverk);
   return (
     // eslint-disable-next-line react/jsx-no-useless-fragment
     <>
@@ -42,7 +42,7 @@ const PermisjonerInfo = ({ arbeidsforhold, alleKodeverk }: OwnProps) => {
                   <FormattedMessage id="PersonArbeidsforholdDetailForm.Permisjonype" />
                 </Normaltekst>
                 <Normaltekst className={styles.type}>
-                  {permisjon.type.kode === '-' ? 'Ukjent' : getKodeverknavn(permisjon.type)}
+                  {permisjon.type === '-' ? 'Ukjent' : getKodeverknavn(permisjon.type, KodeverkType.PERSONSTATUS_TYPE)}
                 </Normaltekst>
                 <Normaltekst>
                   <FormattedMessage id="PersonArbeidsforholdDetailForm.Prosent" />

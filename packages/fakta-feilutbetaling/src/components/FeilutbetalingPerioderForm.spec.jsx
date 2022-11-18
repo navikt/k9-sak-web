@@ -19,6 +19,7 @@ const mockProps = {
   readOnly: false,
   onChangeÅrsak: sinon.spy(),
   onChangeUnderÅrsak: sinon.spy(),
+  getKodeverknavn: sinon.spy(),
 };
 
 describe('<FeilutbetalingPerioderFormImpl>', () => {
@@ -40,9 +41,7 @@ describe('<FeilutbetalingPerioderFormImpl>', () => {
         kodeverk: 'MEDLEMSKAP_VILKAARET_TYPE',
         årsak: 'Medlemskapsvilkåret §14-2',
         hendelseType: 'MEDLEMSKAP_VILKAARET_TYPE',
-        hendelseUndertyper: [
-          { hendelseType: 'UTVANDRET_FODSEL', },
-        ],
+        hendelseUndertyper: [{ hendelseType: 'UTVANDRET_FODSEL' }],
       },
     ];
     const props = {

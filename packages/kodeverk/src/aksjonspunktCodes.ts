@@ -127,7 +127,7 @@ const aksjonspunktIsOfType =
     validAksjonspunktCodes.includes(aksjonspunktCode);
 
 export const hasAksjonspunkt = (aksjonspunktCode: string, aksjonspunkter: Aksjonspunkt[]): boolean =>
-  aksjonspunkter.some(ap => ap.definisjon.kode === aksjonspunktCode);
+  aksjonspunkter.some(ap => ap.definisjon === aksjonspunktCode);
 
 export const isKlageAksjonspunkt = aksjonspunktIsOfType(klageAksjonspunkter);
 export const isBGAksjonspunktSomGirFritekstfelt = aksjonspunktIsOfType(

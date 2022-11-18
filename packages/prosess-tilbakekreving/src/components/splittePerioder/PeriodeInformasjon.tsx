@@ -59,7 +59,7 @@ const PeriodeInformasjon = ({ fom, tom, feilutbetaling, arsak }: OwnProps) => {
                 </Normaltekst>
               </Column>
               <Column xs="6">
-                {arsak && <Normaltekst className={styles.resultName}>{arsak.hendelseType.navn}</Normaltekst>}
+                {arsak && <Normaltekst className={styles.resultName}>{arsak.hendelseType}</Normaltekst>}
               </Column>
             </Row>
           </div>
