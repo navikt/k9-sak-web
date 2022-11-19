@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 
 import { errorOfType, ErrorTypes, getErrorResponseData } from '@k9-sak-web/rest-api';
 import { Fagsak, KodeverkMedNavn } from '@k9-sak-web/types';
-import { RestApiState } from '@k9-sak-web/rest-api-hooks';
+import { RestApiState, useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
 import FagsakSokSakIndex from '@fpsak-frontend/sak-sok';
 
 import { pathToFagsak } from '../app/paths';
@@ -23,7 +23,9 @@ const FagsakSearchIndex = () => {
   );
 
   const navigate = useNavigate();
+  const { removeErrorMessages } = useRestApiErrorDispatcher();
   const goToFagsak = (saksnummer: string) => {
+    removeErrorMessages();
     navigate(pathToFagsak(saksnummer));
   };
 
