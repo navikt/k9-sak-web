@@ -7,6 +7,7 @@ import { Provider } from 'react-redux';
 import { combineReducers, createStore } from 'redux';
 
 import { Fagsak } from '@k9-sak-web/types';
+import { RestApiErrorProvider } from '@k9-sak-web/rest-api-hooks';
 
 import { requestApi, K9sakApiKeys } from '../data/k9sakApi';
 import FagsakSearchIndex from './FagsakSearchIndex';
@@ -52,7 +53,7 @@ describe('<FagsakSearchIndex>', () => {
             <FagsakSearchIndex />
           </MemoryRouter>
         </MockForm>
-      </Provider>
+      </Provider>,
     );
 
     expect(await screen.getByTestId('FagsakSearch')).toBeInTheDocument();
@@ -68,7 +69,6 @@ describe('<FagsakSearchIndex>', () => {
     expect(screen.queryAllByRole('cell', { name: '23456' }).length).toBe(1);
   });
 
-
   it('skal gå til valgt fagsak', async () => {
     requestApi.mock(K9sakApiKeys.KODEVERK, {});
     requestApi.mock(K9sakApiKeys.SEARCH_FAGSAK, fagsaker);
@@ -77,10 +77,12 @@ describe('<FagsakSearchIndex>', () => {
       <Provider store={createStore(combineReducers({ form: formReducer }))}>
         <MockForm>
           <MemoryRouter>
-            <FagsakSearchIndex />
+            <RestApiErrorProvider>
+              <FagsakSearchIndex />
+            </RestApiErrorProvider>
           </MemoryRouter>
         </MockForm>
-      </Provider>
+      </Provider>,
     );
 
     expect(await screen.getByTestId('FagsakSearch')).toBeInTheDocument();
@@ -98,5 +100,4 @@ describe('<FagsakSearchIndex>', () => {
 
     expect(mockNavigate.mock.calls[0][0]).toBe('/fagsak/12345/');
   });
-
 });
