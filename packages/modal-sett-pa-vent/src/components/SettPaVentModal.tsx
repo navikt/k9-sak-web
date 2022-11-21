@@ -128,7 +128,7 @@ interface MappedOwnProps {
   ventearsakVariant?: string;
   originalVentearsakVariant?: string;
 }
-
+const maxLength200 = maxLength(200);
 export const SettPaVentModal = ({
   intl,
   handleSubmit,
@@ -261,7 +261,7 @@ export const SettPaVentModal = ({
                 name="ventearsakVariant"
                 maxLength={200}
                 readOnly={!hasManualPaVent}
-                validate={[hasValidText, maxLength(200)]}
+                validate={[hasValidText, maxLength200]}
                 label={
                   <div className={styles.commentInputLabel}>
                     <Element>{intl.formatMessage({ id: 'SettPaVentModal.Kommentar' })}</Element>
