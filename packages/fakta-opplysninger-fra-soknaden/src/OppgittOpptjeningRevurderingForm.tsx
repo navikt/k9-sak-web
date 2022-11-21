@@ -266,7 +266,7 @@ const validateSSNForm = (formData, måned: Måned) => {
   const ssnStartdato = formData[SøknadFormValue.SELVSTENDIG_NÆRINGSDRIVENDE_STARTDATO_FOR_SØKNADEN];
   const ssnInntektValidation = [
     required(ssnInntekt),
-    maxValue(99999)(ssnInntekt),
+    maxValue(999999)(ssnInntekt),
     hasValidDecimalMaxNumberOfDecimals(2)(ssnInntekt),
     maxLength(8)(ssnInntekt),
   ];
@@ -291,7 +291,7 @@ const validateSSNForm = (formData, måned: Måned) => {
     const frilansinntekt = formData[SøknadFormValue.FRILANSINNTEKT_I_SØKNADSPERIODE_FOR_SSN];
     const frilansinntektValidation = [
       hasValidDecimalMaxNumberOfDecimals(2)(frilansinntekt),
-      maxValue(99999)(frilansinntekt),
+      maxValue(999999)(frilansinntekt),
       maxLength(8)(frilansinntekt),
     ];
     if (måned.søkerFL) {
@@ -336,7 +336,7 @@ const validateFrilanserForm = (formData, måned: Måned) => {
     const næringsinntektIFrilansperiode = formData[SøknadFormValue.NÆRINGSINNTEKT_I_SØKNADSPERIODE_FOR_FRILANS];
     const næringsinntektValidation = [
       hasValidDecimalMaxNumberOfDecimals(2)(næringsinntektIFrilansperiode),
-      maxValue(99999)(næringsinntektIFrilansperiode),
+      maxValue(999999)(næringsinntektIFrilansperiode),
       maxLength(8)(næringsinntektIFrilansperiode),
     ];
     if (måned.søkerSN) {

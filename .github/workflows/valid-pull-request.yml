@@ -14,7 +14,7 @@ jobs:
           node-version: '18'
           registry-url: 'https://npm.pkg.github.com/'
           scope: '@navikt'
-          cache: 'npm'
+          cache: 'yarn'
 
       - name: Installere dependencies
         run: yarn install --ignore-scripts --prefer-offline --ignore-optional --no-progress --frozen-lockfile
