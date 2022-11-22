@@ -1,7 +1,7 @@
 import KodeverkMedNavn from '../kodeverkMedNavnTsType';
 import Kodeverk from '../kodeverkTsType';
 
-type Utenlandsopphold = {
+export type UtenlandsoppholdType = {
   region: Kodeverk;
   periode: string;
   landkode: KodeverkMedNavn;
@@ -9,7 +9,7 @@ type Utenlandsopphold = {
 };
 
 export type UtenlandsoppholdPerioder = {
-  perioder: Utenlandsopphold[];
+  perioder: UtenlandsoppholdType[];
 };
 
 export default UtenlandsoppholdPerioder;
