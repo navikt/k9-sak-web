@@ -38,6 +38,21 @@ const utenlandsopphold = {
       region: 'ANNET',
       årsak: 'BARNET_INNLAGT_I_HELSEINSTITUSJON_FOR_NORSK_OFFENTLIG_REGNING',
     },
+    {
+      periode: `${dayjs().subtract(45, 'day').format('YYYY-MM-DD')}/${dayjs()
+        .subtract(31, 'day')
+        .format('YYYY-MM-DD')}`,
+      landkode: {
+        kode: 'CHE',
+        navn: 'CHE',
+        kodeverk: 'LANDKODER',
+      },
+      region: {
+        kode: 'ANNET',
+        kodeverk: 'REGION',
+      },
+      årsak: 'INGEN',
+    },
   ],
 };
 

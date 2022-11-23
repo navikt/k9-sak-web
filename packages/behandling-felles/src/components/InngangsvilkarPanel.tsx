@@ -1,9 +1,15 @@
 import React, { useMemo, useCallback, useState } from 'react';
-import { createIntl, createIntlCache, RawIntlProvider, FormattedMessage } from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 import { Column, Row } from 'nav-frontend-grid';
 import Tabs from 'nav-frontend-tabs';
 
-import { FadingPanel, VerticalSpacer, AksjonspunktHelpTextHTML, LoadingPanel } from '@fpsak-frontend/shared-components';
+import {
+  FadingPanel,
+  VerticalSpacer,
+  AksjonspunktHelpTextHTML,
+  LoadingPanel,
+  NestedIntlProvider,
+} from '@fpsak-frontend/shared-components';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import { Behandling, KodeverkMedNavn } from '@k9-sak-web/types';
 import { RestApiState } from '@k9-sak-web/rest-api-hooks';
@@ -14,16 +20,6 @@ import { ProsessStegPanelUtledet } from '../util/prosessSteg/ProsessStegUtledet'
 import messages from '../i18n/nb_NO.json';
 
 import styles from './inngangsvilkarPanel.less';
-
-const cache = createIntlCache();
-
-const intl = createIntl(
-  {
-    locale: 'nb-NO',
-    messages,
-  },
-  cache,
-);
 
 interface OwnProps {
   behandling: Behandling;
@@ -86,7 +82,7 @@ const InngangsvilkarPanel = ({
   );
 
   return (
-    <RawIntlProvider value={intl}>
+    <NestedIntlProvider messages={messages} locale="no">
       <FadingPanel>
         {((apentFaktaPanelInfo && erIkkeFerdigbehandlet) || aksjonspunktTekstKoder.length > 0) && (
           <>
@@ -152,7 +148,7 @@ const InngangsvilkarPanel = ({
           </Column>
         </Row>
       </FadingPanel>
-    </RawIntlProvider>
+    </NestedIntlProvider>
   );
 };
 export default InngangsvilkarPanel;

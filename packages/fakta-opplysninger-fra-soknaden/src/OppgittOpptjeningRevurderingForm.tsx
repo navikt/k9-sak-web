@@ -73,13 +73,13 @@ const transformValues = (
       førSøkerPerioden: {
         oppgittEgenNæring: skalOppgiNæringsinntektFørSøknadsperioden
           ? [
-            {
-              periode: lagPeriodeForOppgittEgenNæringFørSøkerperioden(formValues, opplysningerFraSøknaden),
-              bruttoInntekt: {
-                verdi: +egenNæringBruttoInntekt,
+              {
+                periode: lagPeriodeForOppgittEgenNæringFørSøkerperioden(formValues, opplysningerFraSøknaden),
+                bruttoInntekt: {
+                  verdi: +egenNæringBruttoInntekt,
+                },
               },
-            },
-          ]
+            ]
           : null,
         oppgittFrilans: opplysningerFraSøknaden.førSøkerPerioden.oppgittFrilans,
       },
@@ -268,12 +268,12 @@ const validateSSNForm = (formData, måned: Måned) => {
     required(ssnInntekt),
     maxValue(999999)(ssnInntekt),
     hasValidDecimalMaxNumberOfDecimals(2)(ssnInntekt),
-    maxLength(8)(ssnInntekt),
+    maxLength(9)(ssnInntekt),
   ];
   const ssnStartdatoValidation = [
     required(ssnStartdato),
     hasValidDate(ssnStartdato),
-    maxLength(8)(ssnInntekt),
+    maxLength(9)(ssnInntekt),
     startdatoErISøknadsperiode(ssnStartdato, måned.måned),
   ];
 
@@ -292,7 +292,7 @@ const validateSSNForm = (formData, måned: Måned) => {
     const frilansinntektValidation = [
       hasValidDecimalMaxNumberOfDecimals(2)(frilansinntekt),
       maxValue(999999)(frilansinntekt),
-      maxLength(8)(frilansinntekt),
+      maxLength(9)(frilansinntekt),
     ];
     if (måned.søkerFL) {
       frilansinntektValidation.push(required(frilansinntekt));
@@ -313,8 +313,8 @@ const validateFrilanserForm = (formData, måned: Måned) => {
   const frilansInntektValidation = [
     required(frilansInntekt),
     hasValidDecimalMaxNumberOfDecimals(2)(frilansInntekt),
-    maxValue(99999)(frilansInntekt),
-    maxLength(8)(frilansInntekt),
+    maxValue(999999)(frilansInntekt),
+    maxLength(9)(frilansInntekt),
   ];
   const frilansStartdatoValidation = [
     required(frilansStartdato),
@@ -337,7 +337,7 @@ const validateFrilanserForm = (formData, måned: Måned) => {
     const næringsinntektValidation = [
       hasValidDecimalMaxNumberOfDecimals(2)(næringsinntektIFrilansperiode),
       maxValue(999999)(næringsinntektIFrilansperiode),
-      maxLength(8)(næringsinntektIFrilansperiode),
+      maxLength(9)(næringsinntektIFrilansperiode),
     ];
     if (måned.søkerSN) {
       næringsinntektValidation.push(required(næringsinntektIFrilansperiode));
@@ -354,8 +354,8 @@ const validateFrilanserForm = (formData, måned: Måned) => {
 const validateArbeidstakerInntekt = inntekt => {
   const inntektValidation = [
     hasValidDecimalMaxNumberOfDecimals(2)(inntekt),
-    maxValue(99999)(inntekt),
-    maxLength(8)(inntekt),
+    maxValue(999999)(inntekt),
+    maxLength(9)(inntekt),
   ];
   const inntektError = inntektValidation.find(v => Array.isArray(v));
   if (inntektError !== undefined) {
