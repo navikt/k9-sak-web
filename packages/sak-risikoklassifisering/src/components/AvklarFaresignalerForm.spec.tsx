@@ -16,7 +16,7 @@ import {
 
 const mockAksjonspunkt = (status, begrunnelse) => ({
   definisjon: '5095',
-  status: status,
+  status,
   begrunnelse,
   kanLoses: true,
   erAktivt: true,

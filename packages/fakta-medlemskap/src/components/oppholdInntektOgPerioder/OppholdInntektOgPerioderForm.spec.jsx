@@ -43,6 +43,8 @@ describe('<OppholdInntektOgPerioderForm>', () => {
       toTrinnsBehandlingGodkjent: false,
       kanLoses: true,
       erAktivt: true,
+      vilkarType: '',
+      aksjonspunktType: '',
     };
 
     const wrapper = shallowWithIntl(
@@ -78,6 +80,8 @@ describe('<OppholdInntektOgPerioderForm>', () => {
       toTrinnsBehandlingGodkjent: false,
       kanLoses: true,
       erAktivt: true,
+      vilkarType: '',
+      aksjonspunktType: '',
     };
 
     const wrapper = shallowWithIntl(
@@ -115,6 +119,8 @@ describe('<OppholdInntektOgPerioderForm>', () => {
       toTrinnsBehandlingGodkjent: false,
       kanLoses: true,
       erAktivt: true,
+      vilkarType: '',
+      aksjonspunktType: '',
     };
 
     const wrapper = shallowWithIntl(
@@ -149,6 +155,8 @@ describe('<OppholdInntektOgPerioderForm>', () => {
       toTrinnsBehandlingGodkjent: false,
       kanLoses: true,
       erAktivt: true,
+      vilkarType: '',
+      aksjonspunktType: '',
     };
 
     const wrapper = shallowWithIntl(
@@ -183,6 +191,8 @@ describe('<OppholdInntektOgPerioderForm>', () => {
       toTrinnsBehandlingGodkjent: false,
       kanLoses: true,
       erAktivt: true,
+      vilkarType: '',
+      aksjonspunktType: '',
     };
 
     const wrapper = shallowWithIntl(

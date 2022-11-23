@@ -93,15 +93,12 @@ const InngangsvilkarPanel = ({
             <AksjonspunktHelpTextHTML>
               {apentFaktaPanelInfo && erIkkeFerdigbehandlet
                 ? [
-                    <>
-                      <FormattedMessage
-                        id="InngangsvilkarPanel.AvventerAvklaringAv"
-                        key={apentFaktaPanelInfo.textCode}
-                      />
+                    <React.Fragment key={apentFaktaPanelInfo.textCode}>
+                      <FormattedMessage id="InngangsvilkarPanel.AvventerAvklaringAv" />
                       <a href="" onClick={oppdaterUrl}>
                         <FormattedMessage id={apentFaktaPanelInfo.textCode} />
                       </a>
-                    </>,
+                    </React.Fragment>,
                   ]
                 : aksjonspunktTekstKoder.map(kode => <FormattedMessage key={kode} id={kode} />)}
             </AksjonspunktHelpTextHTML>

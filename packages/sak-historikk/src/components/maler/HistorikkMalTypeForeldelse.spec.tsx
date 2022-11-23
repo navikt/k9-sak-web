@@ -38,6 +38,7 @@ describe('HistorikkMalTypeForeldelse', () => {
       },
     ] as HistorikkinnslagDel[];
 
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const getKodeverknavn = (kode: string, kodeverk: KodeverkType) => {
       if (kode === 'feltkode') {
         return 'testing';

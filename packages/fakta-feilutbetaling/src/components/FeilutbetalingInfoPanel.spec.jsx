@@ -41,13 +41,10 @@ const feilutbetalingFakta = {
       belop: 1000,
     },
   ],
-  behandlingÅrsaker: [{ behandlingArsakType: behandlingArsakType.FEIL_I_LOVANDVENDELSE, },],
+  behandlingÅrsaker: [{ behandlingArsakType: behandlingArsakType.FEIL_I_LOVANDVENDELSE }],
   behandlingsresultat: {
     type: behandlingResultatType.INNVILGET,
-    konsekvenserForYtelsen: [
-      konsekvensForYtelsen.FORELDREPENGER_OPPHØRER,
-      konsekvensForYtelsen.ENDRING_I_BEREGNING, ,
-    ],
+    konsekvenserForYtelsen: [konsekvensForYtelsen.FORELDREPENGER_OPPHØRER, konsekvensForYtelsen.ENDRING_I_BEREGNING],
   },
   tilbakekrevingValg: {
     videreBehandling: tilbakekrevingVidereBehandling.TILBAKEKR_INNTREKK,

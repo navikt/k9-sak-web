@@ -19,7 +19,17 @@ describe('<PerioderMedMedlemskapFaktaPanel>', () => {
         beslutningsdato: '2016-10-16',
       },
     ];
-    const manuelleVurderingstyper = ['test1', 'test2'];
+
+    const manuelleVurderingstyper = [
+      {
+        kode: 'test1',
+        navn: 'navn1',
+      },
+      {
+        kode: 'test2',
+        navn: 'navn2',
+      },
+    ];
 
     const wrapper = shallowWithIntl(
       <UndecoratedForm
@@ -185,6 +195,8 @@ describe('<PerioderMedMedlemskapFaktaPanel>', () => {
         status: aksjonspunktStatus.OPPRETTET,
       },
     ];
+
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const getKodeverknavn = (kode, kodeverk) => {
       if (kode === 'DEK_TYPE') {
         return 'testdekning';

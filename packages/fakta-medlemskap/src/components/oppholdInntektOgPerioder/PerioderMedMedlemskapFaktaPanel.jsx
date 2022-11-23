@@ -23,7 +23,6 @@ import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { DDMMYYYY_DATE_FORMAT, required } from '@fpsak-frontend/utils';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import { createSelector } from 'reselect';
-import KodeverkType from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 
 const headerTextCodes = [
   'PerioderMedMedlemskapFaktaPanel.Period',
@@ -116,7 +115,7 @@ PerioderMedMedlemskapFaktaPanelImpl.propTypes = {
   readOnly: PropTypes.bool.isRequired,
   fixedMedlemskapPerioder: PropTypes.arrayOf(PropTypes.shape()),
   fodselsdato: PropTypes.string,
-  vurderingTypes: PropTypes.arrayOf(PropTypes.shape()).isRequired,
+  vurderingTypes: PropTypes.arrayOf(PropTypes.string).isRequired,
   hasPeriodeAksjonspunkt: PropTypes.bool.isRequired,
   isPeriodAksjonspunktClosed: PropTypes.bool.isRequired,
   alleMerknaderFraBeslutter: PropTypes.shape({
@@ -171,8 +170,8 @@ PerioderMedMedlemskapFaktaPanel.buildInitialValues = (
     .map(i => ({
       fom: i.fom,
       tom: i.tom,
-      dekning: i.dekningType ? getKodeverknavn(i.dekningType, KodeverkType.MEDLEMSKAP_DEKNING) : '',
-      status: getKodeverknavn(i.medlemskapType, KodeverkType.MEDLEMSKAP_TYPE),
+      dekning: i.dekningType ? getKodeverknavn(i.dekningType, kodeverkTyper.MEDLEMSKAP_DEKNING) : '',
+      status: getKodeverknavn(i.medlemskapType, kodeverkTyper.MEDLEMSKAP_TYPE),
       beslutningsdato: i.beslutningsdato,
     }))
     .sort((p1, p2) => new Date(p1.fom).getTime() - new Date(p2.fom).getTime());
@@ -195,9 +194,7 @@ PerioderMedMedlemskapFaktaPanel.buildInitialValues = (
 
 PerioderMedMedlemskapFaktaPanel.transformValues = (values, manuellVurderingTyper) => ({
   kode: aksjonspunktCodes.AVKLAR_OM_BRUKER_HAR_GYLDIG_PERIODE,
-  medlemskapManuellVurderingType: manuellVurderingTyper.find(
-    m => m.kode === values.medlemskapManuellVurderingType,
-  ),
+  medlemskapManuellVurderingType: manuellVurderingTyper.find(m => m.kode === values.medlemskapManuellVurderingType),
 });
 
 export default PerioderMedMedlemskapFaktaPanel;

@@ -48,12 +48,7 @@ describe('<VisittkortPanel>', () => {
 
   it('skal vise enkelt visittkort når en ikke har personopplysninger', () => {
     const wrapper = shallowWithIntl(
-      <VisittkortPanel
-        fagsakPerson={fagsakPerson}
-        alleKodeverk={{}}
-        sprakkode={'NN'}
-        relaterteFagsaker={null}
-      />,
+      <VisittkortPanel fagsakPerson={fagsakPerson} alleKodeverk={{}} sprakkode="NN" relaterteFagsaker={null} />,
     );
 
     expect(wrapper.find(FlexContainer)).toHaveLength(0);
@@ -69,7 +64,7 @@ describe('<VisittkortPanel>', () => {
       <VisittkortPanel
         fagsakPerson={fagsakPerson}
         alleKodeverk={{}}
-        sprakkode={'NN'}
+        sprakkode="NN"
         harTilbakekrevingVerge
         relaterteFagsaker={null}
       />,
@@ -89,7 +84,7 @@ describe('<VisittkortPanel>', () => {
         fagsakPerson={fagsakPerson}
         personopplysninger={personopplysningerSoker}
         alleKodeverk={{}}
-        sprakkode={'NN'}
+        sprakkode="NN"
         relaterteFagsaker={null}
       />,
     );
