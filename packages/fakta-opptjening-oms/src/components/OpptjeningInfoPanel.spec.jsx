@@ -60,7 +60,7 @@ describe('<OpptjeningInfoPanel>', () => {
       opptjeningFom: '2018-01-01',
       opptjeningTom: '2018-10-01',
     };
-    const aksjonspunkter = [{ definisjon: { kode: '5058' }, erAktivt: true, toTrinnsBehandling: false }];
+    const aksjonspunkter = [{ definisjon: '5058', erAktivt: true, toTrinnsBehandling: false }];
     const opptjeningList = [{ opptjeningAktivitetList, fastsattOpptjening }];
 
     const initialValues = buildInitialValues.resultFunc(opptjeningList, aksjonspunkter);
@@ -135,8 +135,8 @@ describe('<OpptjeningInfoPanel>', () => {
       opptjeningTom: '2018-10-01',
     };
     const aksjonspunkter = [
-      { definisjon: { kode: '5051' }, erAktivt: true, toTrinnsBehandling: false },
-      { definisjon: { kode: '5080' }, erAktivt: true, toTrinnsBehandling: false },
+      { definisjon: '5051', erAktivt: true, toTrinnsBehandling: false },
+      { definisjon: '5080', erAktivt: true, toTrinnsBehandling: false },
     ];
     const opptjeningList = [{ opptjeningAktivitetList, fastsattOpptjening }];
 
@@ -144,9 +144,7 @@ describe('<OpptjeningInfoPanel>', () => {
     expect(initialValues).is.eql({
       aksjonspunkter: [
         {
-          definisjon: {
-            kode: '5051',
-          },
+          definisjon: '5051',
           erAktivt: true,
           toTrinnsBehandling: false,
         },

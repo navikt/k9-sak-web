@@ -49,6 +49,7 @@ const selectedItemEndDate = '2020-04-24';
 const callbackForward = sinon.spy();
 const callbackBackward = sinon.spy();
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const getKodeverknavn = (kode: string, kodeverk: KodeverkType) => {
   if (kode === 'AT') {
     return 'Arbeidstaker';

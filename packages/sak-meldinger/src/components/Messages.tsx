@@ -7,8 +7,24 @@ import classNames from 'classnames';
 import { Hovedknapp } from 'nav-frontend-knapper';
 
 import dokumentMalType from '@fpsak-frontend/kodeverk/src/dokumentMalType';
-import { ArbeidsgiverOpplysningerPerId, Brevmal, Brevmaler, Kodeverk, KodeverkMedNavn, Mottaker, Personopplysninger } from '@k9-sak-web/types';
-import { ariaCheck, getLanguageCodeFromSprakkode, hasValidText, maxLength, minLength, required, safeJSONParse } from '@fpsak-frontend/utils';
+import {
+  ArbeidsgiverOpplysningerPerId,
+  Brevmal,
+  Brevmaler,
+  Kodeverk,
+  KodeverkMedNavn,
+  Mottaker,
+  Personopplysninger,
+} from '@k9-sak-web/types';
+import {
+  ariaCheck,
+  getLanguageCodeFromSprakkode,
+  hasValidText,
+  maxLength,
+  minLength,
+  required,
+  safeJSONParse,
+} from '@fpsak-frontend/utils';
 import { lagVisningsnavnForMottaker } from '@fpsak-frontend/utils/src/formidlingUtils';
 import ugunstAarsakTyper from '@fpsak-frontend/kodeverk/src/ugunstAarsakTyper';
 import { behandlingForm, behandlingFormValueSelector, SelectField, TextAreaField } from '@fpsak-frontend/form';
@@ -43,7 +59,12 @@ interface PureOwnProps {
   submitCallback: (values: FormValues) => void;
   behandlingId: number;
   behandlingVersjon: number;
-  previewCallback: (overstyrtMottaker: Mottaker, brevmalkode: string, fritekst: string, fritekstbrev?: Fritekstbrev) => void;
+  previewCallback: (
+    overstyrtMottaker: Mottaker,
+    brevmalkode: string,
+    fritekst: string,
+    fritekstbrev?: Fritekstbrev,
+  ) => void;
   templates: Brevmaler | Brevmal[];
   sprakKode?: string;
   revurderingVarslingArsak: KodeverkMedNavn[];
@@ -59,7 +80,6 @@ interface MappedOwnProps {
   fritekst?: string;
   arsakskode?: string;
   fritekstbrev?: Fritekstbrev;
-
 }
 
 const formName = 'Messages';
@@ -67,7 +87,7 @@ const RECIPIENT = { id: 'Bruker', type: '' };
 
 const createValidateRecipient = recipients => value =>
   value === JSON.stringify(RECIPIENT) ||
-    (Array.isArray(recipients) && recipients.some(recipient => JSON.stringify(recipient) === value))
+  (Array.isArray(recipients) && recipients.some(recipient => JSON.stringify(recipient) === value))
     ? undefined
     : [{ id: 'ValidationMessage.InvalidRecipient' }];
 
@@ -111,7 +131,7 @@ export const MessagesImpl = ({
         : undefined,
       brevmalkode,
       fritekst,
-      fritekstbrev
+      fritekstbrev,
     );
   };
 
@@ -183,7 +203,7 @@ export const MessagesImpl = ({
                 validate={[required]}
                 placeholder={intl.formatMessage({ id: 'Messages.VelgÅrsak' })}
                 selectValues={(causes || []).map(cause => (
-                  <option key={cause.kode} value={cause.kode}>
+                  <option key={`VelgÅrsak-${cause.kode}`} value={cause.kode}>
                     {cause.navn}
                   </option>
                 ))}
@@ -206,10 +226,10 @@ export const MessagesImpl = ({
             </>
           )}
           {brevmalkode === dokumentMalType.GENERELT_FRITEKSTBREV && (
-            <div className='input--xxl'>
+            <div className="input--xxl">
               <VerticalSpacer eightPx />
               <InputField
-                name='fritekstbrev.overskrift'
+                name="fritekstbrev.overskrift"
                 label={intl.formatMessage({ id: 'Messages.FritekstTittel' })}
                 validate={[required, minLength3, maxLength200, hasValidText]}
                 maxLength={200}
@@ -217,7 +237,7 @@ export const MessagesImpl = ({
 
               <VerticalSpacer eightPx />
               <TextAreaField
-                name='fritekstbrev.brødtekst'
+                name="fritekstbrev.brødtekst"
                 label={intl.formatMessage({ id: 'Messages.Fritekst' })}
                 validate={[required, minLength3, maxLength100000, hasValidText]}
                 maxLength={100000}
@@ -266,7 +286,7 @@ const buildInitalValues = (templates: Brevmaler | Brevmal[], isKontrollerRevurde
     overstyrtMottaker,
     // overstyrtMottaker: null,
     fritekst: null,
-    fritekstbrev: null
+    fritekstbrev: null,
     // arsakskode: null,
   };
 
@@ -301,7 +321,7 @@ const mapStateToPropsFactory = (_initialState, initialOwnProps: PureOwnProps) =>
       'fritekst',
       'arsakskode',
       'fritekstbrev.overskrift',
-      'fritekstbrev.brødtekst'
+      'fritekstbrev.brødtekst',
     ),
     causes: getfilteredCauses(ownProps),
     initialValues: buildInitalValues(ownProps.templates, ownProps.isKontrollerRevurderingApOpen),

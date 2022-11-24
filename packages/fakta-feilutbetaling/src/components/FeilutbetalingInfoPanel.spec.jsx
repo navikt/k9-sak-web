@@ -116,7 +116,6 @@ describe('<FeilutbetalingInfoPanel>', () => {
 
     const normaltekstfelter = wrapper.find(Normaltekst);
     expect(normaltekstfelter).length(8);
-
     expect(normaltekstfelter.first().childAt(0).text()).is.eql('01.01.2019 - 02.01.2019');
     expect(normaltekstfelter.at(1).childAt(0).text()).is.eql('10000');
     expect(normaltekstfelter.at(2).childAt(0).text()).is.eql('5000');

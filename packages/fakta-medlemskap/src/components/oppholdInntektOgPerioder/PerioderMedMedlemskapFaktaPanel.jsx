@@ -115,7 +115,7 @@ PerioderMedMedlemskapFaktaPanelImpl.propTypes = {
   readOnly: PropTypes.bool.isRequired,
   fixedMedlemskapPerioder: PropTypes.arrayOf(PropTypes.shape()),
   fodselsdato: PropTypes.string,
-  vurderingTypes: PropTypes.arrayOf(PropTypes.string).isRequired,
+  vurderingTypes: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   hasPeriodeAksjonspunkt: PropTypes.bool.isRequired,
   isPeriodAksjonspunktClosed: PropTypes.bool.isRequired,
   alleMerknaderFraBeslutter: PropTypes.shape({

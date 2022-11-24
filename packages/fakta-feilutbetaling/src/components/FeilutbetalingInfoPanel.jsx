@@ -211,7 +211,7 @@ export class FeilutbetalingInfoPanelImpl extends Component {
                   {feilutbetaling.behandlingÅrsaker && (
                     <Normaltekst className={styles.smallPaddingRight}>
                       {feilutbetaling.behandlingÅrsaker
-                        .map(ba => getFpsakKodeverknavn(ba.behandlingArsakType))
+                        .map(ba => getFpsakKodeverknavn(ba.behandlingArsakType, kodeverkTyper.BEHANDLING_AARSAK))
                         .join(', ')}
                     </Normaltekst>
                   )}
@@ -234,7 +234,10 @@ export class FeilutbetalingInfoPanelImpl extends Component {
                   </Undertekst>
                   {feilutbetaling.behandlingsresultat && (
                     <Normaltekst className={styles.smallPaddingRight}>
-                      {getFpsakKodeverknavn(feilutbetaling.behandlingsresultat.type)}
+                      {getFpsakKodeverknavn(
+                        feilutbetaling.behandlingsresultat.type,
+                        kodeverkTyper.BEHANDLING_RESULTAT_TYPE,
+                      )}
                     </Normaltekst>
                   )}
                 </Column>
@@ -246,7 +249,7 @@ export class FeilutbetalingInfoPanelImpl extends Component {
                     <Normaltekst className={styles.smallPaddingRight}>
                       {feilutbetaling.behandlingsresultat.konsekvenserForYtelsen &&
                         feilutbetaling.behandlingsresultat.konsekvenserForYtelsen
-                          .map(ba => getFpsakKodeverknavn(ba))
+                          .map(ba => getFpsakKodeverknavn(ba, kodeverkTyper.KONSEKVENS_FOR_YTELSEN))
                           .join(', ')}
                     </Normaltekst>
                   )}
@@ -259,7 +262,10 @@ export class FeilutbetalingInfoPanelImpl extends Component {
                   </Undertekst>
                   {feilutbetaling.tilbakekrevingValg && (
                     <Normaltekst className={styles.smallPaddingRight}>
-                      {getKodeverknavn(feilutbetaling.tilbakekrevingValg.videreBehandling)}
+                      {getKodeverknavn(
+                        feilutbetaling.tilbakekrevingValg.videreBehandling,
+                        kodeverkTyper.TILBAKEKR_VIDERE_BEH,
+                      )}
                     </Normaltekst>
                   )}
                 </Column>
@@ -319,26 +325,26 @@ const buildInitialValues = createSelector([ownProps => ownProps.feilutbetalingFa
     begrunnelse: decodeHtmlEntity(begrunnelse),
     perioder: Array.isArray(perioder)
       ? perioder
-        .sort((a, b) => moment(a.fom) - moment(b.fom))
-        .map(p => {
-          const { fom, tom, feilutbetalingÅrsakDto } = p;
+          .sort((a, b) => moment(a.fom) - moment(b.fom))
+          .map(p => {
+            const { fom, tom, feilutbetalingÅrsakDto } = p;
 
-          const period = { fom, tom };
+            const period = { fom, tom };
 
-          if (!feilutbetalingÅrsakDto) {
-            return period;
-          }
+            if (!feilutbetalingÅrsakDto) {
+              return period;
+            }
 
-          const { hendelseType, hendelseUndertype } = feilutbetalingÅrsakDto;
+            const { hendelseType, hendelseUndertype } = feilutbetalingÅrsakDto;
 
-          return {
-            ...period,
-            årsak: hendelseType,
-            [hendelseType]: {
-              underÅrsak: hendelseUndertype ? hendelseUndertype : null,
-            },
-          };
-        })
+            return {
+              ...period,
+              årsak: hendelseType,
+              [hendelseType]: {
+                underÅrsak: hendelseUndertype || null,
+              },
+            };
+          })
       : [],
   };
 });
@@ -349,14 +355,14 @@ const getSortedFeilutbetalingArsaker = createSelector(
     const { hendelseTyper } = feilutbetalingArsaker;
     return Array.isArray(hendelseTyper)
       ? hendelseTyper.sort((ht1, ht2) => {
-        const hendelseType1 = ht1.hendelseType.navn;
-        const hendelseType2 = ht2.hendelseType.navn;
-        const hendelseType1ErParagraf = hendelseType1.startsWith('§');
-        const hendelseType2ErParagraf = hendelseType2.startsWith('§');
-        const ht1v = hendelseType1ErParagraf ? hendelseType1.replace(/\D/g, '') : hendelseType1;
-        const ht2v = hendelseType2ErParagraf ? hendelseType2.replace(/\D/g, '') : hendelseType2;
-        return hendelseType1ErParagraf && hendelseType2ErParagraf ? ht1v - ht2v : ht1v.localeCompare(ht2v);
-      })
+          const hendelseType1 = ht1.hendelseType.navn;
+          const hendelseType2 = ht2.hendelseType.navn;
+          const hendelseType1ErParagraf = hendelseType1.startsWith('§');
+          const hendelseType2ErParagraf = hendelseType2.startsWith('§');
+          const ht1v = hendelseType1ErParagraf ? hendelseType1.replace(/\D/g, '') : hendelseType1;
+          const ht2v = hendelseType2ErParagraf ? hendelseType2.replace(/\D/g, '') : hendelseType2;
+          return hendelseType1ErParagraf && hendelseType2ErParagraf ? ht1v - ht2v : ht1v.localeCompare(ht2v);
+        })
       : [];
   },
 );
@@ -366,8 +372,7 @@ const transformValues = (values, aksjonspunkter, årsaker) => {
 
   const feilutbetalingFakta = values.perioder.map(periode => {
     const feilutbetalingÅrsak = årsaker.find(el => el.hendelseType === periode.årsak);
-    const findUnderÅrsakObjekt = underÅrsak =>
-      feilutbetalingÅrsak.hendelseUndertyper.find(el => el === underÅrsak);
+    const findUnderÅrsakObjekt = underÅrsak => feilutbetalingÅrsak.hendelseUndertyper.find(el => el === underÅrsak);
     const feilutbetalingUnderÅrsak = periode[periode.årsak]
       ? findUnderÅrsakObjekt(periode[periode.årsak].underÅrsak)
       : false;

@@ -47,6 +47,7 @@ describe('HistorikkMalTypeTilbakekreving', () => {
       },
     ] as HistorikkinnslagDel[];
 
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const getKodeverknavn = (kode: string, kodeverk: KodeverkType) => {
       if (kode === historikkEndretFeltType.ER_VILKARENE_TILBAKEKREVING_OPPFYLT) {
         return 'testing';

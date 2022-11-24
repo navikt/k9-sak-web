@@ -1,5 +1,4 @@
 import { getKodeverknavnFn } from '@fpsak-frontend/utils';
-import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { intlMock } from '../../../../i18n/index';
 
 import { findResultatText } from './historikkUtils';
@@ -39,11 +38,7 @@ describe('historikkUtils', () => {
   });
 
   it('findResultatText har fallback for tilbekekrevingskoder', () => {
-    const historikkResultatNavn = findResultatText(
-      'FULL_TILBAKEBETALING',
-      intlMock,
-      getKodeverknavnFn(noenKodeverk),
-    );
+    const historikkResultatNavn = findResultatText('FULL_TILBAKEBETALING', intlMock, getKodeverknavnFn(noenKodeverk));
     expect(historikkResultatNavn).toEqual('Full tilbakebetaling');
   });
 });

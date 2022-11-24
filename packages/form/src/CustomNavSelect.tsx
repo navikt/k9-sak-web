@@ -75,7 +75,7 @@ class CustomNavSelect extends Component<CustomNavSelectProps> {
         disabled={disabled}
       >
         {placeholder && (
-          <option value="" disabled>
+          <option value="" disabled key="placeholder">
             {placeholder}
           </option>
         )}
