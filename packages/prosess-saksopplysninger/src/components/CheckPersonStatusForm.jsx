@@ -118,7 +118,7 @@ CheckPersonStatusFormImpl.defaultProps = {
 
 const getValgtOpplysning = avklartPersonstatus => {
   if (avklartPersonstatus && avklartPersonstatus.overstyrtPersonstatus) {
-    const statusKode = avklartPersonstatus.overstyrtPersonstatus.kode;
+    const statusKode = avklartPersonstatus.overstyrtPersonstatus;
     if (
       statusKode === personstatusType.DOD ||
       statusKode === personstatusType.BOSATT ||
@@ -145,9 +145,9 @@ export const buildInitialValues = createSelector(
     return {
       originalPersonstatusName:
         avklartPersonstatus && avklartPersonstatus.orginalPersonstatus
-          ? getKodeverknavn(avklartPersonstatus.orginalPersonstatus)
-          : getKodeverknavn(personstatus),
-      fortsettBehandling: isAksjonspunktOpen(aksjonspunkt.status.kode) ? undefined : shouldContinueBehandling,
+          ? getKodeverknavn(avklartPersonstatus.orginalPersonstatus, kodeverkTyper.PERSONSTATUS_TYPE)
+          : getKodeverknavn(personstatus, kodeverkTyper.PERSONSTATUS_TYPE),
+      fortsettBehandling: isAksjonspunktOpen(aksjonspunkt.status) ? undefined : shouldContinueBehandling,
       personstatus: getValgtOpplysning(avklartPersonstatus),
       ...ProsessStegBegrunnelseTextField.buildInitialValues(aksjonspunkter),
     };
@@ -168,7 +168,7 @@ const getFilteredKodeverk = createSelector(
 const transformValues = (values, aksjonspunkter) => ({
   fortsettBehandling: values.fortsettBehandling,
   personstatus: values.personstatus,
-  kode: aksjonspunkter[0].definisjon.kode,
+  kode: aksjonspunkter[0].definisjon,
   ...ProsessStegBegrunnelseTextField.transformValues(values),
 });
 

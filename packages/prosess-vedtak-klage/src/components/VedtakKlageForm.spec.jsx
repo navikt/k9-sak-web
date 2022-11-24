@@ -10,10 +10,7 @@ const KLAGE_OMGJORT_TEKST = 'VedtakKlageForm.KlageOmgjortGunst';
 
 describe('<VedtakKlageForm>', () => {
   it('skal vise riktige avvisningsårsaker', () => {
-    const avvistArsaker = [
-      { kode: 'KLAGET_FOR_SENT', kodeverk: 'KLAGE_AVVIST_AARSAK' },
-      { kode: 'KLAGER_IKKE_PART', kodeverk: 'KLAGE_AVVIST_AARSAK' },
-    ];
+    const avvistArsaker = ['KLAGET_FOR_SENT', 'KLAGER_IKKE_PART'];
     const forhandsvisVedtaksbrevFunc = sinon.spy();
     const klageVurderingResultatNFP = {
       klageVurdertAv: 'NAY',

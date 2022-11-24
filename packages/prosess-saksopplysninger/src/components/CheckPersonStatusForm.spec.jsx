@@ -150,29 +150,16 @@ describe('<CheckPersonStatusForm>', () => {
   it('skal sette opp initielle verdier gitt behandling og behandlingspunkt', () => {
     const behandlingHenlagt = true;
     const personopplysning = {
-      personstatus: {
-        kode: 'UKJENT',
-        kodeverk: 'PERSONSTATUS_TYPE',
-      },
+      personstatus: 'UKJENT',
       avklartPersonstatus: {
-        orginalPersonstatus: {
-          kode: 'UKJENT',
-          kodeverk: 'PERSONSTATUS_TYPE',
-        },
-        overstyrtPersonstatus: {
-          kode: personstatusType.BOSATT,
-          kodeverk: 'PERSONSTATUS_TYPE',
-        },
+        orginalPersonstatus: 'UKJENT',
+        overstyrtPersonstatus: personstatusType.BOSATT,
       },
     };
     const aksjonspunkter = [
       {
-        definisjon: {
-          kode: 'test',
-        },
-        status: {
-          kode: aksjonspunktStatus.AVBRUTT,
-        },
+        definisjon: 'test',
+        status: aksjonspunktStatus.AVBRUTT,
         begrunnelse: 'Dette er en begrunnelse',
       },
     ];
@@ -195,29 +182,16 @@ describe('<CheckPersonStatusForm>', () => {
   it('skal fortsette behandlingen når aksjonspunkt er lukket og behandlingsstatus er ulik avsluttet', () => {
     const behandlingHenlagt = false;
     const personopplysning = {
-      personstatus: {
-        kode: 'UKJENT',
-        kodeverk: 'PERSONSTATUS_TYPE',
-      },
+      personstatus: 'UKJENT',
       avklartPersonstatus: {
-        orginalPersonstatus: {
-          kode: 'UKJENT',
-          kodeverk: 'PERSONSTATUS_TYPE',
-        },
-        overstyrtPersonstatus: {
-          kode: personstatusType.BOSATT,
-          kodeverk: 'PERSONSTATUS_TYPE',
-        },
+        orginalPersonstatus: 'UKJENT',
+        overstyrtPersonstatus: personstatusType.BOSATT,
       },
     };
     const aksjonspunkter = [
       {
-        definisjon: {
-          kode: 'test',
-        },
-        status: {
-          kode: aksjonspunktStatus.AVBRUTT,
-        },
+        definisjon: 'test',
+        status: aksjonspunktStatus.AVBRUTT,
         begrunnelse: 'Dette er en begrunnelse',
       },
     ];
@@ -239,20 +213,11 @@ describe('<CheckPersonStatusForm>', () => {
 
   it('skal ikke ha satt verdi for om behandlingen skal fortsette om aksjonspunktet er åpent', () => {
     const behandlingHenlagt = false;
-    const personopplysning = {
-      personstatus: {
-        kode: 'UKJENT',
-        kodeverk: 'PERSONSTATUS_TYPE',
-      },
-    };
+    const personopplysning = { personstatus: 'UKJENT' };
     const aksjonspunkter = [
       {
-        definisjon: {
-          kode: 'test',
-        },
-        status: {
-          kode: aksjonspunktStatus.OPPRETTET,
-        },
+        definisjon: 'test',
+        status: aksjonspunktStatus.OPPRETTET,
         begrunnelse: 'Dette er en begrunnelse',
       },
     ];

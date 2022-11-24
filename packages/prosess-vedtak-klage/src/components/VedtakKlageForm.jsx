@@ -72,7 +72,7 @@ export const VedtakKlageFormImpl = ({
           <div>
             <Undertekst>{intl.formatMessage({ id: 'VedtakKlageForm.ArsakTilAvvisning' })}</Undertekst>
             {avvistArsaker.map(arsak => (
-              <Normaltekst key={arsak.kode}>{kodeverknavn(arsak)}</Normaltekst>
+              <Normaltekst key={arsak}>{kodeverknavn(arsak, kodeverkTyper.KLAGE_AVVIST_AARSAK)}</Normaltekst>
             ))}
             <VerticalSpacer sixteenPx />
           </div>
@@ -136,7 +136,7 @@ VedtakKlageFormImpl.propTypes = {
   behandlingsResultatTekst: PropTypes.string,
   klageVurdering: PropTypes.shape().isRequired,
   previewVedtakCallback: PropTypes.func.isRequired,
-  avvistArsaker: PropTypes.arrayOf(PropTypes.shape()),
+  avvistArsaker: PropTypes.arrayOf(PropTypes.string),
   omgjortAarsak: PropTypes.string,
   fritekstTilBrev: PropTypes.string,
   behandlingsresultat: PropTypes.shape(),
