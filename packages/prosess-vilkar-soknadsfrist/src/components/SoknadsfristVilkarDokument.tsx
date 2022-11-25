@@ -59,7 +59,6 @@ export const SoknadsfristVilkarDokument = ({
   dokumentIndex,
 }: SoknadsfristVilkarDokumentProps) => {
   const intl = useIntl();
-  const [featureToggles] = useFeatureToggles();
   const minDate = useMemo(
     () =>
       dokument.status.reduce(
@@ -68,15 +67,14 @@ export const SoknadsfristVilkarDokument = ({
       ),
     [dokument.journalpostId],
   );
-  const maxDate = useMemo(() => {
-    if (featureToggles?.FIX_SOKNADSFRIST_KALENDER_OG_READONLY) {
-      return dokument.status.reduce(
+  const maxDate = useMemo(
+    () =>
+      dokument.status.reduce(
         (acc, curr) => (!acc || moment(curr.periode.tom) > moment(acc) ? curr.periode.tom : acc),
         '',
-      );
-    }
-    return utledInnsendtSoknadsfrist(dokument.innsendingstidspunkt);
-  }, [dokument.innsendingstidspunkt, dokument.journalpostId]);
+      ),
+    [dokument.innsendingstidspunkt, dokument.journalpostId],
+  );
 
   const isAtleastDate = useCallback(v => dateAfterOrEqual(minDate)(v), [minDate]);
   const isAtmostDate = useCallback(v => dateBeforeOrEqual(maxDate)(v), [maxDate]);

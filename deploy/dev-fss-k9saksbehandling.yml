@@ -77,7 +77,7 @@ spec:
     - name: ENDRINGSLOGG_URL
       value: "https://familie-endringslogg.dev.intern.nav.no/"
 
-   # Feature-flag
+    # Feature-flag
     - name: KLAGE_KABAL
       value: "true"
     - name: VARSELTEKST
@@ -105,8 +105,6 @@ spec:
     - name: NY_PROSESS_VEDTAK_ENABLED
       value: "true"
     - name: FRITEKST_REDIGERING
-      value: "true"
-    - name: FIX_SOKNADSFRIST_KALENDER_OG_READONLY
       value: "true"
     - name: INKLUDER_KALENDER_PILS
       value: "true"
