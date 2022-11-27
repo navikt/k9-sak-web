@@ -138,8 +138,11 @@ describe('<OpplaeringspengerFakta>', () => {
     },
   };
 
-  it('skal rendre faktapaneler og sidemeny korrekt', () => {
+  beforeAll(() => {
     requestOpplaeringspengerApi.mock(OpplaeringspengerBehandlingApiKeys.ARBEIDSFORHOLD, arbeidsforhold);
+  });
+
+  it('skal rendre faktapaneler og sidemeny korrekt', () => {
     const fetchedData: Partial<FetchedData> = {
       aksjonspunkter,
       vilkar,
@@ -213,8 +216,6 @@ describe('<OpplaeringspengerFakta>', () => {
   });
 
   it('skal oppdatere url ved valg av faktapanel', () => {
-    requestOpplaeringspengerApi.mock(OpplaeringspengerBehandlingApiKeys.ARBEIDSFORHOLD, arbeidsforhold);
-
     const oppdaterProsessStegOgFaktaPanelIUrl = sinon.spy();
     const fetchedData: Partial<FetchedData> = {
       aksjonspunkter,
@@ -254,7 +255,6 @@ describe('<OpplaeringspengerFakta>', () => {
   });
 
   it('skal rendre faktapanel korrekt', () => {
-    requestOpplaeringspengerApi.mock(OpplaeringspengerBehandlingApiKeys.ARBEIDSFORHOLD, arbeidsforhold);
     const fetchedData: Partial<FetchedData> = {
       aksjonspunkter,
       vilkar,

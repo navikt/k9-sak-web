@@ -180,6 +180,10 @@ describe('<OpplaeringspengerProsess>', () => {
     soknad,
   };
 
+  beforeAll(() => {
+    requestOpplaeringspengerApi.mock(OpplaeringspengerBehandlingApiKeys.DOKUMENTDATA_LAGRE, undefined);
+  });
+
   it('skal vise alle aktuelle prosessSteg i meny', () => {
     requestApi.mock(K9sakApiKeys.FEATURE_TOGGLE, []);
     const wrapper = shallow(
@@ -326,8 +330,6 @@ describe('<OpplaeringspengerProsess>', () => {
       status: { kode: behandlingStatus.FATTER_VEDTAK, kodeverk: 'test' },
     };
 
-    requestOpplaeringspengerApi.mock(OpplaeringspengerBehandlingApiKeys.DOKUMENTDATA_LAGRE, undefined);
-
     const opneSokeside = sinon.spy();
 
     const customFetchedData: Partial<FetchedData> = {
@@ -388,8 +390,6 @@ describe('<OpplaeringspengerProsess>', () => {
         erAktivt: true,
       },
     ];
-
-    requestOpplaeringspengerApi.mock(OpplaeringspengerBehandlingApiKeys.DOKUMENTDATA_LAGRE, undefined);
 
     const opneSokeside = sinon.spy();
 
