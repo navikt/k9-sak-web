@@ -10,7 +10,7 @@ metadata:
     nais.io/read-only-file-system: "false" # Fix permissions for nginx
     nginx.ingress.kubernetes.io/proxy-buffer-size: "16k"
 spec:
-  image: {{ image }}
+  image: { { image } }
   port: 9000
   team: k9saksbehandling
   liveness:
@@ -104,4 +104,6 @@ spec:
     - name: FRITEKST_REDIGERING
       value: "true"
     - name: INKLUDER_KALENDER_PILS
+      value: "false"
+    - name: OPPLAERINGSPENGER
       value: "false"

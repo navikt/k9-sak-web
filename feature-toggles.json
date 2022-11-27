@@ -54,5 +54,9 @@
   {
     "key": "INKLUDER_KALENDER_PILS",
     "value": "${INKLUDER_KALENDER_PILS}"
+  },
+  {
+    "key": "OPPLAERINGSPENGER",
+    "value": "${OPPLAERINGSPENGER}"
   }
 ]
