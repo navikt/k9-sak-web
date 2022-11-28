@@ -1,0 +1,9 @@
+{
+  "name": "@k9-sak-web/prosess-opplaering",
+  "version": "1.0.0",
+  "module": "index.ts",
+  "license": "MIT",
+  "private": true,
+  "dependencies": {},
+  "devDependencies": {}
+}
