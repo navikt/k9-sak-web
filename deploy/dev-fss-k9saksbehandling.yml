@@ -108,5 +108,3 @@ spec:
       value: "true"
     - name: INKLUDER_KALENDER_PILS
       value: "true"
-    - name: OPPLAERINGSPENGER
-      value: "false"
