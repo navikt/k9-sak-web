@@ -50,5 +50,9 @@
   {
     "key": "FIX_SOKNADSFRIST_KALENDER_OG_READONLY",
     "value": "${FIX_SOKNADSFRIST_KALENDER_OG_READONLY}"
+  },
+  {
+    "key": "OPPLAERINGSPENGER",
+    "value": "${OPPLAERINGSPENGER}"
   }
 ]
