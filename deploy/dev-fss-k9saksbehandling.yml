@@ -106,5 +106,3 @@ spec:
       value: "true"
     - name: FRITEKST_REDIGERING
       value: "true"
-    - name: INKLUDER_KALENDER_PILS
-      value: "true"
