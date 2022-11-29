@@ -1,10 +1,10 @@
 import React from 'react';
 
-import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import { faktaPanelCodes } from '@k9-sak-web/konstanter';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { FaktaPanelDef } from '@k9-sak-web/behandling-felles';
 import FaktaInstitusjon from '@k9-sak-web/fakta-institusjon';
+import { OpplaeringspengerBehandlingApiKeys } from '@k9-sak-web/behandling-opplaeringspenger/src/data/opplaeringspengerBehandlingApi';
 
 class InstitusjonFaktaPanelDef extends FaktaPanelDef {
   getUrlKode = () => faktaPanelCodes.INSTITUSJON;
@@ -13,9 +13,11 @@ class InstitusjonFaktaPanelDef extends FaktaPanelDef {
 
   getAksjonspunktKoder = () => [aksjonspunktCodes.VURDER_INSTITUSJON];
 
-  getEndepunkter = () => [];
+  getEndepunkter = () => [OpplaeringspengerBehandlingApiKeys.INSTITUSJON];
 
-  getKomponent = props => <FaktaInstitusjon />;
+  getKomponent = props => (
+    <FaktaInstitusjon perioder={props.institusjon?.perioder} vurderinger={props.institusjon?.vurderinger} />
+  );
 
   getOverstyrVisningAvKomponent = () => true;
 }

@@ -4,6 +4,9 @@
   "module": "index.ts",
   "license": "MIT",
   "private": true,
-  "dependencies": {},
+  "dependencies": {
+    "@navikt/k9-period-utils": "^0.0.12",
+    "@k9-sak-web/types": "*"
+  },
   "devDependencies": {}
 }

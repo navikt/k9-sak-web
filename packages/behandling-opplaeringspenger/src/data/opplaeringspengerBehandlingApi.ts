@@ -54,6 +54,7 @@ export enum OpplaeringspengerBehandlingApiKeys {
   UTENLANDSOPPHOLD = 'UTENLANDSOPPHOLD',
   BEHANDLING_PERIODER_ÅRSAK_MED_VILKÅR = 'BEHANDLING_PERIODER_ÅRSAK_MED_VILKÅR',
   BEREGNINGREFERANSER_TIL_VURDERING = 'BEREGNINGREFERANSER_TIL_VURDERING',
+  INSTITUSJON = 'INSTITUSJON',
 }
 
 const endpoints = new RestApiConfigBuilder()
@@ -100,6 +101,7 @@ const endpoints = new RestApiConfigBuilder()
     OpplaeringspengerBehandlingApiKeys.BEHANDLING_PERIODER_ÅRSAK_MED_VILKÅR,
   )
   .withRel('beregning-koblinger-til-vurdering', OpplaeringspengerBehandlingApiKeys.BEREGNINGREFERANSER_TIL_VURDERING)
+  .withRel('institusjon', OpplaeringspengerBehandlingApiKeys.INSTITUSJON)
 
   // operasjoner
   .withRel('dokumentdata-lagre', OpplaeringspengerBehandlingApiKeys.DOKUMENTDATA_LAGRE)

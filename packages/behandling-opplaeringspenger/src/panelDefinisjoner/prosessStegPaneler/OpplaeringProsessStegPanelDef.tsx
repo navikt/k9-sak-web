@@ -4,12 +4,13 @@ import { prosessStegCodes } from '@k9-sak-web/konstanter';
 import { ProsessStegDef, ProsessStegPanelDef } from '@k9-sak-web/behandling-felles';
 import OpplaeringIndex from '@k9-sak-web/prosess-opplaering';
 
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { OpplaeringspengerBehandlingApiKeys } from '../../data/opplaeringspengerBehandlingApi';
 
 class PanelDef extends ProsessStegPanelDef {
   getKomponent = props => <OpplaeringIndex />;
 
-  getAksjonspunktKoder = () => [];
+  getAksjonspunktKoder = () => [aksjonspunktCodes.VURDER_INSTITUSJON];
 
   getEndepunkter = () => [];
 
