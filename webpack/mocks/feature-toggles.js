@@ -49,10 +49,6 @@ const featureToggles = [
     key: 'FRITEKST_REDIGERING',
     value: process.env.FRITEKST_REDIGERING,
   },
-  {
-    key: 'INKLUDER_KALENDER_PILS',
-    value: process.env.INKLUDER_KALENDER_PILS,
-  },
 ];
 
 module.exports = function (app) {
