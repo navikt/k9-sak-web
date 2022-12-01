@@ -3,12 +3,15 @@ import React from 'react';
 import {
   ContentWithTooltip,
   GreenCheckIconFilled,
+  IndicatorWithOverlay,
+  InstitutionIcon,
   OnePersonIconGray,
   OnePersonOutlineGray,
   RedCrossIconFilled,
+  WarningIcon,
 } from '@navikt/ft-plattform-komponenter';
 import { Vurderingsresultat, Kilde } from '@k9-sak-web/types';
-import styles from './periodeSomErVurdert.modules.css';
+import styles from './periodeRad.modules.css';
 
 interface OwnProps {
   periode: Period;
@@ -17,7 +20,35 @@ interface OwnProps {
 }
 
 const renderStatusIcon = (resultat: string) => {
-  console.log(resultat);
+  if (resultat === Vurderingsresultat.IKKE_VURDERT) {
+    return (
+      <ContentWithTooltip tooltipText="Perioden må vurderes">
+        <WarningIcon />
+      </ContentWithTooltip>
+    );
+  }
+
+  if (resultat === Vurderingsresultat.OPPFYLT_AUTOMATISK) {
+    return (
+      <ContentWithTooltip tooltipText="Vilkåret er automatisk oppfylt">
+        <IndicatorWithOverlay
+          indicatorRenderer={() => <GreenCheckIconFilled />}
+          overlayRenderer={() => <InstitutionIcon />}
+        />
+      </ContentWithTooltip>
+    );
+  }
+
+  if (resultat === Vurderingsresultat.IKKE_OPPFYLLT_AUTOMATISK) {
+    return (
+      <ContentWithTooltip tooltipText="Vilkåret er automatisk ikke oppfylt">
+        <IndicatorWithOverlay
+          indicatorRenderer={() => <GreenCheckIconFilled />}
+          overlayRenderer={() => <InstitutionIcon />}
+        />
+      </ContentWithTooltip>
+    );
+  }
   if (resultat === Vurderingsresultat.OPPFYLT) {
     return (
       <ContentWithTooltip tooltipText="Vilkåret er oppfylt">
@@ -51,7 +82,7 @@ const renderKildeIcon = (kilde: Kilde) => {
   );
 };
 
-const PeriodeSomErVurdert = ({ periode, resultat, kilde }: OwnProps): JSX.Element => (
+const PeriodeRad = ({ periode, resultat, kilde }: OwnProps): JSX.Element => (
   <div className={styles.vurderingsperiodeElement}>
     <span className={styles.visuallyHidden}>Type</span>
     {renderStatusIcon(resultat)}
@@ -68,4 +99,4 @@ const PeriodeSomErVurdert = ({ periode, resultat, kilde }: OwnProps): JSX.Elemen
   </div>
 );
 
-export default PeriodeSomErVurdert;
+export default PeriodeRad;

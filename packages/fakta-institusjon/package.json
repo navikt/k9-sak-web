@@ -6,7 +6,10 @@
   "private": true,
   "dependencies": {
     "@navikt/k9-period-utils": "^0.0.12",
+    "@navikt/k9-form-utils": "1.1.1",
+    "@navikt/ft-plattform-komponenter": "^1.4.0",
+    "formik": "^2.2.9",
+    "@k9-sak-web/form": "*",
     "@k9-sak-web/types": "*"
-  },
-  "devDependencies": {}
+  }
 }

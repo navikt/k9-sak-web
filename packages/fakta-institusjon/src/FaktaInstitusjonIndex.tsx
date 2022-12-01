@@ -5,11 +5,12 @@ import InstitusjonOversikt from './InstitusjonOversikt';
 interface OwnProps {
   perioder: InstitusjonPeriode[];
   vurderinger: InstitusjonVurdering[];
+  readOnly: boolean;
 }
 
-const FaktaInstitusjonIndex = ({ perioder, vurderinger }: OwnProps) => (
+const FaktaInstitusjonIndex = ({ perioder, vurderinger, readOnly }: OwnProps) => (
   <div>
-    <InstitusjonOversikt perioder={perioder} vurderinger={vurderinger} />
+    <InstitusjonOversikt perioder={perioder} vurderinger={vurderinger} readOnly={readOnly} />
   </div>
 );
 

@@ -1,21 +1,14 @@
 import { Heading } from '@navikt/ds-react';
 import { InteractiveList } from '@navikt/ft-plattform-komponenter';
 import React from 'react';
-import { Period } from '@navikt/k9-period-utils';
-import { InstitusjonPeriode, Vurderingsresultat } from '@k9-sak-web/types';
-import PeriodeSomSkalVurderes from './PeriodeSomSkalVurderes';
-import styles from './InstitusjonNavigation.modules.css';
+import { InstitusjonPeriodeMedResultat } from '@k9-sak-web/types';
 import institusjonStatus from './konstanter';
-import PeriodeSomErVurdert from './PeriodeSomErVurdert';
-
-interface InstitusjonPeriodeMedStatus extends InstitusjonPeriode {
-  periode: Period;
-  resultat: Vurderingsresultat;
-}
+import PeriodeRad from './PeriodeRad';
+import styles from './InstitusjonNavigation.modules.css';
 
 interface OwnProps {
-  perioder: InstitusjonPeriodeMedStatus[];
-  setValgtPeriode: (periode: InstitusjonPeriodeMedStatus) => void;
+  perioder: InstitusjonPeriodeMedResultat[];
+  setValgtPeriode: React.Dispatch<React.SetStateAction<InstitusjonPeriodeMedResultat>>;
 }
 
 const InstitusjonNavigation = ({ perioder, setValgtPeriode }: OwnProps) => {
@@ -24,9 +17,9 @@ const InstitusjonNavigation = ({ perioder, setValgtPeriode }: OwnProps) => {
   const perioderSomErVurdert = perioder.filter(periode => periode.resultat !== institusjonStatus.IKKE_VURDERT);
   const allePerioder = [...perioderTilVurdering, ...perioderSomErVurdert];
   const elements = [
-    ...perioderTilVurdering.map(periode => <PeriodeSomSkalVurderes periode={periode.periode} />),
+    ...perioderTilVurdering.map(periode => <PeriodeRad periode={periode.periode} resultat={periode.resultat} />),
     ...perioderSomErVurdert.map(periode => (
-      <PeriodeSomErVurdert periode={periode.periode} kilde="SØKER" resultat={periode.resultat} />
+      <PeriodeRad periode={periode.periode} kilde="SØKER" resultat={periode.resultat} />
     )),
   ];
   const antallPerioder = elements.length;

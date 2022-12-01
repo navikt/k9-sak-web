@@ -15,9 +15,16 @@ class InstitusjonFaktaPanelDef extends FaktaPanelDef {
 
   getEndepunkter = () => [OpplaeringspengerBehandlingApiKeys.INSTITUSJON];
 
-  getKomponent = props => (
-    <FaktaInstitusjon perioder={props.institusjon?.perioder} vurderinger={props.institusjon?.vurderinger} />
-  );
+  getKomponent = props => {
+    console.log(props.readOnly);
+    return (
+      <FaktaInstitusjon
+        perioder={props.institusjon?.perioder}
+        vurderinger={props.institusjon?.vurderinger}
+        readOnly={props.readOnly}
+      />
+    );
+  };
 
   getOverstyrVisningAvKomponent = () => true;
 }
