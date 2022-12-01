@@ -44,10 +44,9 @@ const InstitusjonOversikt = ({ perioder, vurderinger, readOnly }: OwnProps) => {
   });
 
   const valgtVurdering = vurderingerMappet.find(
-    vurdering => vurdering.journalpostId.journalpostId === valgtPeriode.journalpostId.journalpostId,
+    vurdering => vurdering.journalpostId.journalpostId === valgtPeriode?.journalpostId?.journalpostId,
   );
 
-  console.log(valgtVurdering);
   return (
     <div style={{ fontSize: '16px' }}>
       <Heading style={{ marginBottom: '1.625rem' }} size="small">
