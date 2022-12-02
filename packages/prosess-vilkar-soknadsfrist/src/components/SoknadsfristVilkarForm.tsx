@@ -89,14 +89,7 @@ export const SoknadsfristVilkarForm = ({
     toggleOverstyring(oldArray => oldArray.filter(code => code !== aksjonspunktCodes.OVERSTYR_SOKNADSFRISTVILKAR));
   };
 
-  const [featureToggles] = useFeatureToggles();
-
-  if (
-    featureToggles?.FIX_SOKNADSFRIST_KALENDER_OG_READONLY &&
-    !erOverstyrt &&
-    !harAksjonspunkt &&
-    dokumenterIAktivPeriode.length > 0
-  ) {
+  if (!erOverstyrt && !harAksjonspunkt && dokumenterIAktivPeriode.length > 0) {
     return (
       <div>
         {Array.isArray(alleDokumenter) &&

@@ -15,6 +15,7 @@ import {
   lagLagreHtmlDokumentdataRequest,
   utledPrefiksInnhold,
   utledRedigerbartInnhold,
+  utledSkalInkludereKalender,
   utledStiler,
   utledSuffiksInnhold,
 } from './RedigeringUtils';
@@ -87,6 +88,9 @@ const FritekstRedigering = ({
     const originalHtmlStreng = utledRedigerbartInnhold(responseHtml);
     setOriginalHtml(originalHtmlStreng);
     setFieldValue(fieldnames.ORIGINAL_HTML, originalHtmlStreng);
+
+    const skalInkludereKalender = utledSkalInkludereKalender(responseHtml);
+    setFieldValue(fieldnames.INKLUDER_KALENDER_VED_OVERSTYRING, skalInkludereKalender);
 
     if (innholdTilRedigering) setRedigerbartInnhold(innholdTilRedigering);
     else {

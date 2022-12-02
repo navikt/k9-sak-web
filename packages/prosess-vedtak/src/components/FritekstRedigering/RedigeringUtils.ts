@@ -74,6 +74,11 @@ export const utledRedigerbartInnhold = (html: string) => {
   return heleBrevet.querySelector('[data-editable]').innerHTML;
 };
 
+export const utledSkalInkludereKalender = (html: string) => {
+  const heleBrevet = new DOMParser().parseFromString(html, 'application/xhtml+xml');
+  return !!heleBrevet.querySelector('[data-attachement]');
+};
+
 export const lagLagreHtmlDokumentdataRequest = ({
   dokumentdata,
   redigerbarDokumentmal,

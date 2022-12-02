@@ -9,6 +9,7 @@ const fagsakYtelseType = {
   OMSORGSPENGER_ALENE_OM_OMSORGEN: 'OMP_AO',
   FRISINN: 'FRISINN',
   PLEIEPENGER_SLUTTFASE: 'PPN',
+  OPPLAERINGSPENGER: 'OLP',
 };
 
 export default fagsakYtelseType;
