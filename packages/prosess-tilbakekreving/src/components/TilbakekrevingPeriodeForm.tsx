@@ -139,9 +139,19 @@ export class TilbakekrevingPeriodeFormImpl extends Component<
   };
 
   resetFields = () => {
-    const { behandlingFormPrefix, clearFields: clearFormFields, valgtVilkarResultatType } = this.props;
+    const {
+      behandlingFormPrefix,
+      clearFields: clearFormFields,
+      change: changeValue,
+      valgtVilkarResultatType,
+    } = this.props;
     const fields = [valgtVilkarResultatType];
+
     clearFormFields(`${behandlingFormPrefix}.${TILBAKEKREVING_PERIODE_FORM_NAME}`, false, false, ...fields);
+
+    if (valgtVilkarResultatType === VilkarResultat.FORSTO_BURDE_FORSTAATT) {
+      changeValue(`${VilkarResultat.FORSTO_BURDE_FORSTAATT}.${Aktsomhet.FORSETT}.skalDetTilleggesRenter`, false);
+    }
   };
 
   saveOrToggleModal = () => {
