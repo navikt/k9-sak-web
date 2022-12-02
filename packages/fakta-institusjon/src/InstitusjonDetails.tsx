@@ -1,18 +1,27 @@
-import React from 'react';
-import { InstitusjonVurderingMedPeriode, Vurderingsresultat } from '@k9-sak-web/types';
+import React, { useState } from 'react';
+import { InstitusjonVurderingMedPerioder, Vurderingsresultat } from '@k9-sak-web/types';
 import InstitusjonFerdigVisning from './InstitusjonFerdigVisning';
 import InstitusjonForm from './InstitusjonForm';
 
 interface OwnProps {
-  vurdering: InstitusjonVurderingMedPeriode;
+  vurdering: InstitusjonVurderingMedPerioder;
   readOnly: boolean;
+  løsAksjonspunkt: (payload: any) => void;
 }
 
-const InstitusjonDetails = ({ vurdering, readOnly }: OwnProps) => {
-  if (vurdering.resultat !== Vurderingsresultat.IKKE_VURDERT) {
-    return <InstitusjonFerdigVisning vurdering={vurdering} readOnly={readOnly} />;
+const InstitusjonDetails = ({ vurdering, readOnly, løsAksjonspunkt }: OwnProps) => {
+  const [redigering, setRedigering] = useState(false);
+  if (vurdering.resultat !== Vurderingsresultat.MÅ_VURDERES && !redigering) {
+    return <InstitusjonFerdigVisning vurdering={vurdering} readOnly={readOnly} rediger={() => setRedigering(true)} />;
   }
-  return <InstitusjonForm vurdering={vurdering} readOnly={readOnly} />;
+  return (
+    <InstitusjonForm
+      vurdering={vurdering}
+      readOnly={readOnly}
+      løsAksjonspunkt={løsAksjonspunkt}
+      avbrytRedigering={() => setRedigering(false)}
+    />
+  );
 };
 
 export default InstitusjonDetails;

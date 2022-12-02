@@ -17,8 +17,9 @@ export interface InstitusjonVurdering {
   begrunnelse: string;
   journalpostId: string;
   resultat: Vurderingsresultat;
+  perioder: Periode[];
 }
-export interface InstitusjonVurderingMedPeriode extends InstitusjonVurdering {
-  periode: Period;
+export interface InstitusjonVurderingMedPerioder extends InstitusjonVurdering {
+  perioder: Period[];
   institusjon: string;
 }

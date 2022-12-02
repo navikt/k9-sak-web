@@ -6,11 +6,17 @@ interface OwnProps {
   perioder: InstitusjonPeriode[];
   vurderinger: InstitusjonVurdering[];
   readOnly: boolean;
+  løsAksjonspunkt: (payload: any) => void;
 }
 
-const FaktaInstitusjonIndex = ({ perioder, vurderinger, readOnly }: OwnProps) => (
+const FaktaInstitusjonIndex = ({ perioder, vurderinger, readOnly, løsAksjonspunkt }: OwnProps) => (
   <div>
-    <InstitusjonOversikt perioder={perioder} vurderinger={vurderinger} readOnly={readOnly} />
+    <InstitusjonOversikt
+      perioder={perioder}
+      vurderinger={vurderinger}
+      readOnly={readOnly}
+      løsAksjonspunkt={løsAksjonspunkt}
+    />
   </div>
 );
 

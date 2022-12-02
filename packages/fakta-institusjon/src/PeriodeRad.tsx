@@ -20,7 +20,7 @@ interface OwnProps {
 }
 
 const renderStatusIcon = (resultat: string) => {
-  if (resultat === Vurderingsresultat.IKKE_VURDERT) {
+  if (resultat === Vurderingsresultat.MÅ_VURDERES) {
     return (
       <ContentWithTooltip tooltipText="Perioden må vurderes">
         <WarningIcon />
@@ -28,7 +28,7 @@ const renderStatusIcon = (resultat: string) => {
     );
   }
 
-  if (resultat === Vurderingsresultat.OPPFYLT_AUTOMATISK) {
+  if (resultat === Vurderingsresultat.GODKJENT_AUTOMATISK) {
     return (
       <ContentWithTooltip tooltipText="Vilkåret er automatisk oppfylt">
         <IndicatorWithOverlay
@@ -39,7 +39,7 @@ const renderStatusIcon = (resultat: string) => {
     );
   }
 
-  if (resultat === Vurderingsresultat.IKKE_OPPFYLLT_AUTOMATISK) {
+  if (resultat === Vurderingsresultat.IKKE_GODKJENT_AUTOMATISK) {
     return (
       <ContentWithTooltip tooltipText="Vilkåret er automatisk ikke oppfylt">
         <IndicatorWithOverlay
@@ -49,14 +49,14 @@ const renderStatusIcon = (resultat: string) => {
       </ContentWithTooltip>
     );
   }
-  if (resultat === Vurderingsresultat.OPPFYLT) {
+  if (resultat === Vurderingsresultat.GODKJENT_MANUELT) {
     return (
       <ContentWithTooltip tooltipText="Vilkåret er oppfylt">
         <GreenCheckIconFilled />
       </ContentWithTooltip>
     );
   }
-  if (resultat === Vurderingsresultat.IKKE_OPPFYLT) {
+  if (resultat === Vurderingsresultat.IKKE_GODKJENT_MANUELT) {
     return (
       <ContentWithTooltip tooltipText="Vilkåret er ikke oppfylt">
         <RedCrossIconFilled />

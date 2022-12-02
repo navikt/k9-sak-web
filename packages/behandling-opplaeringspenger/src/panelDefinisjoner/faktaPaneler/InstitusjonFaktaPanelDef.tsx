@@ -15,13 +15,18 @@ class InstitusjonFaktaPanelDef extends FaktaPanelDef {
 
   getEndepunkter = () => [OpplaeringspengerBehandlingApiKeys.INSTITUSJON];
 
+  // eslint-disable-next-line arrow-body-style
   getKomponent = props => {
-    console.log(props.readOnly);
+    const løsAksjonspunkt = vurdering =>
+      props.submitCallback([
+        { kode: aksjonspunktCodes.VURDER_INSTITUSJON, begrunnelse: 'Institusjon er behandlet', ...vurdering },
+      ]);
     return (
       <FaktaInstitusjon
         perioder={props.institusjon?.perioder}
         vurderinger={props.institusjon?.vurderinger}
         readOnly={props.readOnly}
+        løsAksjonspunkt={løsAksjonspunkt}
       />
     );
   };

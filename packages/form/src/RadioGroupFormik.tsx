@@ -19,7 +19,7 @@ const RadioGroupFormik = ({ name, options, legend, children, ...props }: OwnProp
     );
   }
   return (
-    <RadioGroup legend={legend} error={meta.touched && meta.error} {...field} {...props}>
+    <RadioGroup size="small" legend={legend} error={meta.touched && meta.error} {...field} {...props}>
       {options?.map(option => (
         <RadioFormik key={option.value} name={field.name} value={option.value}>
           {option.label}

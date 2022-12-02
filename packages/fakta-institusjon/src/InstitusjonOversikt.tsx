@@ -1,12 +1,7 @@
 import * as React from 'react';
 import { NavigationWithDetailView } from '@navikt/ft-plattform-komponenter';
 import { Heading } from '@navikt/ds-react';
-import {
-  InstitusjonPeriode,
-  InstitusjonPeriodeMedResultat,
-  InstitusjonVurdering,
-  Vurderingsresultat,
-} from '@k9-sak-web/types';
+import { InstitusjonPeriode, InstitusjonPeriodeMedResultat, InstitusjonVurdering } from '@k9-sak-web/types';
 import { Period } from '@navikt/k9-period-utils';
 import InstitusjonNavigation from './InstitusjonNavigation';
 import InstitusjonDetails from './InstitusjonDetails';
@@ -15,20 +10,19 @@ interface OwnProps {
   perioder: InstitusjonPeriode[];
   vurderinger: InstitusjonVurdering[];
   readOnly: boolean;
+  løsAksjonspunkt: (payload: any) => void;
 }
 
-const InstitusjonOversikt = ({ perioder, vurderinger, readOnly }: OwnProps) => {
+const InstitusjonOversikt = ({ perioder, vurderinger, readOnly, løsAksjonspunkt }: OwnProps) => {
   const [valgtPeriode, setValgtPeriode] = React.useState<InstitusjonPeriodeMedResultat>(null);
-
   const perioderMappet = perioder.map(periode => {
     const vurderingForPeriode = vurderinger.find(
       vurdering => vurdering.journalpostId.journalpostId === periode.journalpostId.journalpostId,
     );
-    const resultat = vurderingForPeriode ? vurderingForPeriode.resultat : Vurderingsresultat.IKKE_OPPFYLT;
     return {
       ...periode,
       periode: new Period(periode.periode.fom, periode.periode.tom),
-      resultat,
+      resultat: vurderingForPeriode?.resultat,
     };
   });
 
@@ -38,7 +32,7 @@ const InstitusjonOversikt = ({ perioder, vurderinger, readOnly }: OwnProps) => {
     );
     return {
       ...vurdering,
-      periode: new Period(periodeForVurdering.periode.fom, periodeForVurdering.periode.tom),
+      perioder: vurdering.perioder.map(v => new Period(v.fom, v.tom)),
       institusjon: periodeForVurdering.institusjon,
     };
   });
@@ -56,7 +50,9 @@ const InstitusjonOversikt = ({ perioder, vurderinger, readOnly }: OwnProps) => {
         navigationSection={() => <InstitusjonNavigation perioder={perioderMappet} setValgtPeriode={setValgtPeriode} />}
         showDetailSection
         detailSection={() =>
-          valgtVurdering ? <InstitusjonDetails vurdering={valgtVurdering} readOnly={readOnly} /> : null
+          valgtVurdering ? (
+            <InstitusjonDetails vurdering={valgtVurdering} readOnly={readOnly} løsAksjonspunkt={løsAksjonspunkt} />
+          ) : null
         }
       />
     </div>
