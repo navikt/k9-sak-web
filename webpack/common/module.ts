@@ -123,6 +123,13 @@ const svgExternalRules = {
   include: [MODULES_DIR],
 };
 
+const sourceMaps = {
+  test: /\.js$/,
+  enforce: 'pre',
+  use: ['source-map-loader'],
+  include: [`${MODULES_DIR}/@navikt`],
+};
+
 export default {
-  rules: [babelRules, lessLocalRules, lessExternalRules, assetRules, svgLocalRules, svgExternalRules],
+  rules: [sourceMaps, babelRules, lessLocalRules, lessExternalRules, assetRules, svgLocalRules, svgExternalRules],
 };
