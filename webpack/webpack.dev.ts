@@ -61,4 +61,5 @@ module.exports = env => ({
     },
   },
   devServer,
+  ignoreWarnings: [/Failed to parse source map/],
 });

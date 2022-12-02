@@ -43,4 +43,5 @@ export default {
   stats: {
     children: false,
   },
+  ignoreWarnings: [/Failed to parse source map/],
 };
