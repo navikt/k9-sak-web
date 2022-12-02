@@ -14,7 +14,7 @@
   "TilbakekrevingPeriodeForm.FeilutbetaltBelopEtterbetaling": "Feilutbetalt beløp er redusert med <b>kr. {belop},-</b> på grunn av etterbetaling innen samme periode.",
   "TilbakekrevingPeriodeForm.FeilutbetaltBelopTrekk": "Feilutbetalt beløp er redusert med <b>kr. {belop},-</b> på grunn av trekk.",
   "TilbakekrevingPeriodeForm.Aktsomhet": "Aktsomhet",
-  "TilbakekrevingPeriodeForm.VurderingAktsomhet": "Vurder i hvilken grad mottaker har handlet uaktsomt",
+  "TilbakekrevingPeriodeForm.VurderingAktsomhet": "Vurder hvorfor mottaker burde forstått, må ha forstått eller forsto at utbetalingen skyldtes en feil",
   "TilbakekrevingPeriodeForm.BelopetMottattIGodTro": "Beløpet mottatt i god tro",
   "TilbakekrevingPeriodeForm.VurderingMottattIGodTro": "Begrunn hvorfor mottaker er i god tro",
   "TilbakekrevingPeriodeForm.KopierVilkårsvurdering": "Kopier vilkårsvurdering fra",
@@ -35,7 +35,7 @@
   "AktsomhetReduksjonAvBelopFormPanel.Nei": "Nei",
   "AktsomhetReduksjonAvBelopFormPanel.Ja": "Ja",
 
-  "AktsomhetFormPanel.HandletUaktsomhetGrad": "I hvilken grad har mottaker handlet uaktsomt?",
+  "AktsomhetFormPanel.HandletUaktsomhetGrad": "I hvilken grad burde mottaker forstått at utbetalingen skyldtes en feil?",
   "AktsomhetFormPanel.AktsomhetTyperLabel.SimpelUaktsom": "Burde ha forstått",
   "AktsomhetFormPanel.AktsomhetTyperLabel.GrovtUaktsomt": "Må ha forstått",
   "AktsomhetFormPanel.AktsomhetTyperLabel.Forsett": "Forsto",
