@@ -25,10 +25,9 @@ class MedisinskVilkarFaktaPanelDef2 extends FaktaPanelDef {
     behandlingType: behandling.type.kode,
   });
 
-  getOverstyrVisningAvKomponent = ({ fagsak, behandling }: { fagsak: Fagsak; behandling: Behandling }) => {
-    const erPleiepengesak = fagsak.sakstype.kode === fagsakYtelseType.PLEIEPENGER;
+  getOverstyrVisningAvKomponent = ({ behandling }: { fagsak: Fagsak; behandling: Behandling }) => {
     const søknadsfristErIkkeUnderVurdering = behandling.stegTilstand?.stegType?.kode !== 'VURDER_SØKNADSFRIST';
-    return erPleiepengesak && søknadsfristErIkkeUnderVurdering;
+    return søknadsfristErIkkeUnderVurdering;
   };
 }
 
