@@ -35,7 +35,6 @@ class FordelBeregningPanelDef extends FaktaPanelDef {
         packageCompFn={() => import('@navikt/ft-fakta-fordel-beregningsgrunnlag')}
         federatedCompFn={FaktaFordelBeregningsgrunnlagMF}
         {...props}
-        behandlingType={deepCopyProps.behandling.type}
         beregningsgrunnlagVilkår={bgVilkaret}
         beregningsgrunnlagListe={deepCopyProps.beregningsgrunnlag}
         arbeidsgiverOpplysningerPerId={deepCopyProps.arbeidsgiverOpplysningerPerId}
