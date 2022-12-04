@@ -63,5 +63,6 @@ export default function (env?) {
         })
       : false,
     new ExternalTemplateRemotesPlugin(),
+    new webpack.EnvironmentPlugin({ SENTRY_RELEASE: null }),
   ].filter(Boolean);
 }
