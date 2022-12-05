@@ -21,7 +21,7 @@ async function opprettReleaseTilSentry() {
 
     console.log('Laster opp source maps');
     await cli.releases.uploadSourceMaps(release, {
-      include: ['dist/k9/web'],
+      include: ['k9/web'],
       urlPrefix: '~/k9/web/',
       rewrite: false,
     });

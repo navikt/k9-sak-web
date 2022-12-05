@@ -32,7 +32,7 @@
     "@k9-sak-web/sak-app": "1.0.0",
     "@k9-sak-web/types": "1.0.0",
     "@navikt/ft-fakta-beregning": "2.4.2",
-    "@navikt/ft-fakta-fordel-beregningsgrunnlag": "4.0.2",
+    "@navikt/ft-fakta-fordel-beregningsgrunnlag": "4.0.3",
     "@navikt/ft-prosess-beregningsgrunnlag": "3.3.2",
     "axios": "0.27.2",
     "nav-frontend-alertstriper": "^4.0.2",
