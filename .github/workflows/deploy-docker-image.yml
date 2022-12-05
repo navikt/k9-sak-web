@@ -42,6 +42,11 @@ jobs:
       - name: Bygge dist
         run: yarn build
 
+      - name: Opprett release med Sentry
+        run: yarn sentry-release
+        env:
+          SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
+
       - name: Sette TAG variable for docker image & deploy issue-info
         run: echo "TAG=$TIMESTAMP-$(echo $GITHUB_SHA | cut -c1-7)" >> $GITHUB_ENV
 
@@ -117,8 +122,3 @@ jobs:
                             repo: context.issue.repo,
                             issue_number: ${{ steps.createdeployissue.outputs.number }} }
             github.rest.issues.createComment({...issue, body: '/promote dev-fss'})
-
-      - name: Opprett release med Sentry
-        run: yarn sentry-release
-        env:
-          SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
