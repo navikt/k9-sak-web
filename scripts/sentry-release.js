@@ -1,4 +1,5 @@
-import SentryCli from '@sentry/cli';
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const SentryCli = require('@sentry/cli');
 
 async function opprettReleaseTilSentry() {
   const release = process.env.SENTRY_RELEASE;
