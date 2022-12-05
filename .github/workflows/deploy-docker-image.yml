@@ -107,6 +107,11 @@ jobs:
                       "issue_number": "${{ steps.createdeployissue.outputs.number }}"
                   }}'
 
+      - name: Opprett release med Sentry
+        run: yarn sentry-release
+        env:
+          SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
+
       - name: Trigg deploy til dev-fss
         if: success()
         uses: actions/github-script@v6
