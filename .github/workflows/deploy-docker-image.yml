@@ -107,11 +107,6 @@ jobs:
                       "issue_number": "${{ steps.createdeployissue.outputs.number }}"
                   }}'
 
-      - name: Opprett release med Sentry
-        run: yarn sentry-release
-        env:
-          SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
-
       - name: Trigg deploy til dev-fss
         if: success()
         uses: actions/github-script@v6
@@ -122,3 +117,8 @@ jobs:
                             repo: context.issue.repo,
                             issue_number: ${{ steps.createdeployissue.outputs.number }} }
             github.rest.issues.createComment({...issue, body: '/promote dev-fss'})
+
+      - name: Opprett release med Sentry
+        run: yarn sentry-release
+        env:
+          SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
