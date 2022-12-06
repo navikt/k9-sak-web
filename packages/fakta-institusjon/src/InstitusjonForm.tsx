@@ -25,6 +25,7 @@ interface VurderingAvBeredskapsperioderFormProps {
   avbrytRedigering: () => void;
   readOnly: boolean;
   løsAksjonspunkt: (payload: any) => void;
+  erRedigering: boolean;
 }
 
 interface FormState {
@@ -37,8 +38,8 @@ const InstitusjonForm = ({
   avbrytRedigering,
   readOnly,
   løsAksjonspunkt,
+  erRedigering,
 }: VurderingAvBeredskapsperioderFormProps): JSX.Element => {
-  const [isSubmitting, setIsSubmitting] = React.useState(false);
   const godkjentInstitusjonInitialValue = () => {
     if ([Vurderingsresultat.GODKJENT_AUTOMATISK, Vurderingsresultat.GODKJENT_MANUELT].includes(vurdering.resultat)) {
       return RadioOptions.JA;
@@ -69,10 +70,10 @@ const InstitusjonForm = ({
         initialValues={initialValues}
         onSubmit={values => løsAksjonspunkt(mapValuesTilAksjonspunktPayload(values))}
       >
-        {({ handleSubmit }) => (
+        {({ handleSubmit, isSubmitting }) => (
           <>
             {vurdering.perioder.map(periode => (
-              <div>
+              <div key={periode.prettifyPeriod()}>
                 <Calender /> <span>{periode.prettifyPeriod()}</span>
               </div>
             ))}
@@ -98,6 +99,7 @@ const InstitusjonForm = ({
                   { value: RadioOptions.JA, label: 'Ja' },
                   { value: RadioOptions.NEI, label: 'Nei' },
                 ]}
+                validate={[required]}
                 name={fieldname.GODKJENT_INSTITUSJON}
                 disabled={readOnly}
               />
@@ -108,22 +110,23 @@ const InstitusjonForm = ({
                 type="submit"
                 disabled={isSubmitting}
                 onClick={() => {
-                  setIsSubmitting(true);
                   handleSubmit();
                 }}
               >
                 Bekreft og fortsett
               </Button>
-              <Button
-                size="small"
-                variant="secondary"
-                type="button"
-                disabled={isSubmitting}
-                onClick={avbrytRedigering}
-                style={{ marginLeft: '1rem' }}
-              >
-                Avbryt redigering
-              </Button>
+              {erRedigering && (
+                <Button
+                  size="small"
+                  variant="secondary"
+                  type="button"
+                  disabled={isSubmitting}
+                  onClick={avbrytRedigering}
+                  style={{ marginLeft: '1rem' }}
+                >
+                  Avbryt redigering
+                </Button>
+              )}
             </Box>
           </>
         )}

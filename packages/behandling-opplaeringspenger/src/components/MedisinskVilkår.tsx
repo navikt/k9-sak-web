@@ -62,8 +62,8 @@ export default ({
   return (
     <MicroFrontend
       id={medisinskVilkårAppID}
-      jsSrc="/k9/microfrontend/medisinsk-vilkar/1/app.js"
-      stylesheetSrc="/k9/microfrontend/medisinsk-vilkar/1/styles.css"
+      jsSrc="http://localhost:8081/main.js"
+      stylesheetSrc="http://localhost:8081/styles.css"
       noCache
       onReady={() =>
         initializeMedisinskVilkår(
@@ -72,6 +72,7 @@ export default ({
           findEndpointsForMicrofrontend(links, [
             { rel: 'sykdom-vurdering-oversikt-ktp', desiredName: 'vurderingsoversiktKontinuerligTilsynOgPleie' },
             { rel: 'sykdom-vurdering-oversikt-too', desiredName: 'vurderingsoversiktBehovForToOmsorgspersoner' },
+            { rel: 'sykdom-vurdering-oversikt-lvs', desiredName: 'vurderingsoversiktLangvarigSykdom' },
             { rel: 'sykdom-vurdering-direkte', desiredName: 'hentVurdering' },
             { rel: 'sykdom-vurdering-opprettelse', desiredName: 'opprettVurdering' },
             { rel: 'sykdom-vurdering-endring', desiredName: 'endreVurdering' },

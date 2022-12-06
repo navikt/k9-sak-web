@@ -9,6 +9,7 @@
     "@navikt/k9-form-utils": "1.1.1",
     "@navikt/ft-plattform-komponenter": "^1.4.0",
     "formik": "^2.2.9",
+    "yup": "^0.32.11",
     "@fpsak-frontend/form": "*",
     "@k9-sak-web/types": "*"
   }

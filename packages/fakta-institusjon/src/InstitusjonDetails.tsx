@@ -20,6 +20,7 @@ const InstitusjonDetails = ({ vurdering, readOnly, løsAksjonspunkt }: OwnProps)
       readOnly={readOnly}
       løsAksjonspunkt={løsAksjonspunkt}
       avbrytRedigering={() => setRedigering(false)}
+      erRedigering={redigering}
     />
   );
 };
