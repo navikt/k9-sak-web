@@ -14,7 +14,7 @@ import { Vurderingsresultat, Kilde } from '@k9-sak-web/types';
 import styles from './periodeRad.modules.css';
 
 interface OwnProps {
-  periode: Period;
+  perioder: Period[];
   resultat: string;
   kilde: Kilde;
 }
@@ -82,14 +82,20 @@ const renderKildeIcon = (kilde: Kilde) => {
   );
 };
 
-const PeriodeRad = ({ periode, resultat, kilde }: OwnProps): JSX.Element => (
+const PeriodeRad = ({ perioder, resultat, kilde }: OwnProps): JSX.Element => (
   <div className={styles.vurderingsperiodeElement}>
-    <span className={styles.visuallyHidden}>Type</span>
-    {renderStatusIcon(resultat)}
+    <div>
+      <span className={styles.visuallyHidden}>Type</span>
+      {renderStatusIcon(resultat)}
+    </div>
     <div className={styles.vurderingsperiodeElement__texts}>
       <p className={styles.vurderingsperiodeElement__texts__period}>
-        <span className={styles.visuallyHidden}>Periode</span>
-        {periode.prettifyPeriod()}
+        {perioder.map(v => (
+          <div>
+            <span className={styles.visuallyHidden}>Perioder</span>
+            {v.prettifyPeriod()}
+          </div>
+        ))}
       </p>
     </div>
     <div className={styles.vurderingsperiodeElement__texts__kildeIcon}>

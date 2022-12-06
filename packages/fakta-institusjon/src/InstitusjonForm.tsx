@@ -71,9 +71,11 @@ const InstitusjonForm = ({
       >
         {({ handleSubmit }) => (
           <>
-            <div>
-              <Calender /> <span>{vurdering.perioder.map(periode => periode.prettifyPeriod())}</span>
-            </div>
+            {vurdering.perioder.map(periode => (
+              <div>
+                <Calender /> <span>{periode.prettifyPeriod()}</span>
+              </div>
+            ))}
             <Box marginTop={Margin.xLarge}>
               <LabelledContent
                 label="På hvilken helseinstitusjon eller kompetansesenter foregår opplæringen?"
@@ -82,7 +84,8 @@ const InstitusjonForm = ({
             </Box>
             <Box marginTop={Margin.xLarge}>
               <TextAreaFormik
-                label="Gjør en vurdering av om det er behov for beredskap etter § 9-11, tredje ledd."
+                // eslint-disable-next-line max-len
+                label="Gjør en vurdering av om opplæringen gjennomgås ved en godkjent helseinstitusjon eller et offentlig spesialpedagogisk kompetansesenter som følge av § 9-14, første ledd."
                 name={fieldname.BEGRUNNELSE}
                 validate={[required]}
                 readOnly={readOnly}
@@ -90,7 +93,7 @@ const InstitusjonForm = ({
             </Box>
             <Box marginTop={Margin.xLarge}>
               <RadioGroupFormik
-                legend="Er det behov for beredskap?"
+                legend="Er opplæringen ved godkjent helseinstitusjon eller kompetansesenter?"
                 options={[
                   { value: RadioOptions.JA, label: 'Ja' },
                   { value: RadioOptions.NEI, label: 'Nei' },

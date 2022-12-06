@@ -44,7 +44,7 @@ const getVilkarOkMessage = originalErVilkarOk => {
 };
 
 interface UtvidetVilkarperiode extends Vilkarperiode {
-  pleietrengendeErOver18år: boolean;
+  pleietrengendeErOver18år?: boolean;
 }
 
 interface SykdomProsessIndexProps {
@@ -60,6 +60,8 @@ const SykdomProsessIndex = ({ perioder, panelTittelKode }: SykdomProsessIndexPro
   const skalBrukeSidemeny = perioder.length > 1;
   const mainContainerClassnames = cx('mainContainer', { 'mainContainer--withSideMenu': skalBrukeSidemeny });
   let lovReferanse = '§ 9-10 første og andre ledd, og 9-16 første ledd';
+
+  // TODO lovref opplæring
   if (activePeriode?.pleietrengendeErOver18år) {
     lovReferanse = '§ 9-10 tredje ledd (over 18 år)';
   }

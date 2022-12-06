@@ -5,17 +5,21 @@ import Vurderingsresultat from '../Vurderingsresultat';
 
 export interface InstitusjonPeriode {
   institusjon: string;
-  journalpostId: string;
+  journalpostId: {
+    journalpostId: string;
+  };
   periode: Periode;
 }
 
-export interface InstitusjonPeriodeMedResultat extends InstitusjonPeriode {
-  periode: Period;
+export interface InstitusjonPerioderMedResultat extends InstitusjonPeriode {
+  perioder: Period[];
   resultat: Vurderingsresultat;
 }
 export interface InstitusjonVurdering {
   begrunnelse: string;
-  journalpostId: string;
+  journalpostId: {
+    journalpostId: string;
+  };
   resultat: Vurderingsresultat;
   perioder: Periode[];
 }

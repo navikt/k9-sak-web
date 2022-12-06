@@ -22,9 +22,11 @@ const InstitusjonFerdigVisning = ({ vurdering, readOnly, rediger }: OwnProps) =>
       ) : null
     }
   >
-    <div>
-      <Calender /> <span>{vurdering.perioder.map(periode => periode.prettifyPeriod())}</span>
-    </div>
+    {vurdering.perioder.map(periode => (
+      <div>
+        <Calender /> <span>{periode.prettifyPeriod()}</span>
+      </div>
+    ))}
     <Box marginTop={Margin.xLarge}>
       <LabelledContent
         label="På hvilken helseinstitusjon eller kompetansesenter foregår opplæringen?"

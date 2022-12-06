@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { NavigationWithDetailView } from '@navikt/ft-plattform-komponenter';
 import { Heading } from '@navikt/ds-react';
-import { InstitusjonPeriode, InstitusjonPeriodeMedResultat, InstitusjonVurdering } from '@k9-sak-web/types';
+import { InstitusjonPeriode, InstitusjonPerioderMedResultat, InstitusjonVurdering } from '@k9-sak-web/types';
 import { Period } from '@navikt/k9-period-utils';
 import InstitusjonNavigation from './InstitusjonNavigation';
 import InstitusjonDetails from './InstitusjonDetails';
@@ -13,18 +13,50 @@ interface OwnProps {
   løsAksjonspunkt: (payload: any) => void;
 }
 
-const InstitusjonOversikt = ({ perioder, vurderinger, readOnly, løsAksjonspunkt }: OwnProps) => {
-  const [valgtPeriode, setValgtPeriode] = React.useState<InstitusjonPeriodeMedResultat>(null);
-  const perioderMappet = perioder.map(periode => {
-    const vurderingForPeriode = vurderinger.find(
-      vurdering => vurdering.journalpostId.journalpostId === periode.journalpostId.journalpostId,
+const reducer = (accumulator, currentValue) => {
+  const perioderMedMatchendeJournalpostId = accumulator.find(
+    periode => periode.journalpostId.journalpostId === currentValue.journalpostId.journalpostId,
+  );
+  if (perioderMedMatchendeJournalpostId) {
+    const arrayUtenPeriodeneSomSkalLeggesInn = accumulator.filter(
+      periode => periode.journalpostId.journalpostId !== currentValue.journalpostId.journalpostId,
     );
-    return {
-      ...periode,
-      periode: new Period(periode.periode.fom, periode.periode.tom),
-      resultat: vurderingForPeriode?.resultat,
-    };
-  });
+    return [
+      ...arrayUtenPeriodeneSomSkalLeggesInn,
+      {
+        institusjon: perioderMedMatchendeJournalpostId.institusjon,
+        journalpostId: perioderMedMatchendeJournalpostId.journalpostId,
+        resultat: perioderMedMatchendeJournalpostId.resultat,
+        perioder: [...perioderMedMatchendeJournalpostId.perioder, currentValue.periode],
+      },
+    ];
+  }
+  return [
+    ...accumulator,
+    {
+      institusjon: currentValue.institusjon,
+      journalpostId: currentValue.journalpostId,
+      resultat: currentValue.resultat,
+      perioder: [currentValue.periode],
+    },
+  ];
+};
+
+const InstitusjonOversikt = ({ perioder, vurderinger, readOnly, løsAksjonspunkt }: OwnProps) => {
+  const [valgtPeriode, setValgtPeriode] = React.useState<InstitusjonPerioderMedResultat>(null);
+
+  const perioderMappet = perioder
+    .map(periode => {
+      const vurderingForPeriode = vurderinger.find(
+        vurdering => vurdering.journalpostId.journalpostId === periode.journalpostId.journalpostId,
+      );
+      return {
+        ...periode,
+        periode: new Period(periode.periode.fom, periode.periode.tom),
+        resultat: vurderingForPeriode?.resultat,
+      };
+    })
+    .reduce(reducer, []);
 
   const vurderingerMappet = vurderinger.map(vurdering => {
     const periodeForVurdering = perioder.find(
