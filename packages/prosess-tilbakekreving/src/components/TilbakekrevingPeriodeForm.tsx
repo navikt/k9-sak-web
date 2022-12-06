@@ -138,7 +138,7 @@ export class TilbakekrevingPeriodeFormImpl extends Component<
     andelSomTilbakekreves: undefined,
   };
 
-  resetFields = () => {
+  resetFields = (valgtVerdi: string) => {
     const {
       behandlingFormPrefix,
       clearFields: clearFormFields,
@@ -150,7 +150,15 @@ export class TilbakekrevingPeriodeFormImpl extends Component<
     clearFormFields(`${behandlingFormPrefix}.${TILBAKEKREVING_PERIODE_FORM_NAME}`, false, false, ...fields);
 
     if (valgtVilkarResultatType === VilkarResultat.FORSTO_BURDE_FORSTAATT) {
-      changeValue(`${VilkarResultat.FORSTO_BURDE_FORSTAATT}.${Aktsomhet.FORSETT}.skalDetTilleggesRenter`, false);
+      if (valgtVerdi === Aktsomhet.FORSETT) {
+        changeValue(`${VilkarResultat.FORSTO_BURDE_FORSTAATT}.${Aktsomhet.FORSETT}.skalDetTilleggesRenter`, false);
+      }
+      if (valgtVerdi === Aktsomhet.GROVT_UAKTSOM) {
+        changeValue(
+          `${VilkarResultat.FORSTO_BURDE_FORSTAATT}.${Aktsomhet.GROVT_UAKTSOM}.skalDetTilleggesRenter`,
+          false,
+        );
+      }
     }
   };
 
