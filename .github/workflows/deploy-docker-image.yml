@@ -32,7 +32,7 @@ jobs:
         run: echo "TIMESTAMP=$(expr $(date +%Y%m%d%H%M%S))" >> $GITHUB_ENV
 
       - name: Installere dependencies
-        run: yarn install --ignore-scripts --ignore-optional --no-progress --frozen-lockfile
+        run: HUSKY=0 yarn install --ignore-optional --no-progress --frozen-lockfile
         env:
           NODE_AUTH_TOKEN: ${{ secrets.READER_TOKEN }}
 
@@ -41,6 +41,11 @@ jobs:
 
       - name: Bygge dist
         run: yarn build
+
+      - name: Opprett release med Sentry
+        run: yarn sentry-release
+        env:
+          SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
 
       - name: Sette TAG variable for docker image & deploy issue-info
         run: echo "TAG=$TIMESTAMP-$(echo $GITHUB_SHA | cut -c1-7)" >> $GITHUB_ENV
