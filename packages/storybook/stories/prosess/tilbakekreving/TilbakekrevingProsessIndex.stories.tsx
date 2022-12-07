@@ -106,19 +106,19 @@ const alleKodeverk = {
   [tilbakekrevingKodeverkTyper.VILKAR_RESULTAT]: [
     {
       kode: vilkarResultat.FORSTO_BURDE_FORSTAATT,
-      navn: 'Forsto eller burde forstått',
+      navn: 'Ja, mottaker forsto eller burde forstått at utbetalingen skyldtes en feil (1. ledd, 1. punkt)',
     },
     {
       kode: vilkarResultat.FEIL_OPPLYSNINGER,
-      navn: 'Feil opplysninger',
+      navn: 'Ja, mottaker har forårsaket feilutbetalingen ved forsett eller uaktsomt gitt feilaktige opplysninger (1. ledd, 2 punkt)',
     },
     {
       kode: vilkarResultat.MANGELFULL_OPPLYSNING,
-      navn: 'Mangelfull opplysning',
+      navn: 'Ja, mottaker har forårsaket feilutbetalingen ved forsett eller uaktsomt gitt mangelfulle opplysninger (1. ledd, 2 punkt)',
     },
     {
       kode: vilkarResultat.GOD_TRO,
-      navn: 'God tro',
+      navn: 'Nei, mottaker har mottatt beløpet i god tro (1. ledd)',
     },
   ],
   [tilbakekrevingKodeverkTyper.AKTSOMHET]: [
