@@ -54,7 +54,7 @@ const getDirectionText = (document: Dokument): string => {
 
 const getModiaPath = (fødselsnummer: string) => {
   const { host } = window.location;
-  if (host === 'app-q1.adeo.no') {
+  if (host === 'k9.dev.intern.nav.no') {
     return `https://app-q1.adeo.no/modiapersonoversikt/person/${fødselsnummer}/meldinger/`;
   }
   if (host === 'app.adeo.no') {
