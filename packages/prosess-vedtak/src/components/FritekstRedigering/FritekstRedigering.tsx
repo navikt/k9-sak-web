@@ -89,8 +89,10 @@ const FritekstRedigering = ({
     setOriginalHtml(originalHtmlStreng);
     setFieldValue(fieldnames.ORIGINAL_HTML, originalHtmlStreng);
 
-    const skalInkludereKalender = utledSkalInkludereKalender(responseHtml);
-    setFieldValue(fieldnames.INKLUDER_KALENDER_VED_OVERSTYRING, skalInkludereKalender);
+    if (!dokumentdata?.REDIGERTBREV) {
+      const skalInkludereKalender = utledSkalInkludereKalender(responseHtml);
+      setFieldValue(fieldnames.INKLUDER_KALENDER_VED_OVERSTYRING, skalInkludereKalender);
+    }
 
     if (innholdTilRedigering) setRedigerbartInnhold(innholdTilRedigering);
     else {
@@ -117,8 +119,9 @@ const FritekstRedigering = ({
   };
 
   useEffect(() => {
-    if (!firstRender.current) handleLagre(innholdTilRedigering);
-    else {
+    if (!firstRender.current && redigerbartInnholdKlart) {
+      handleLagre(innholdTilRedigering);
+    } else {
       hentFritekstbrevMal();
       firstRender.current = false;
     }
