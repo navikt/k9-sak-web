@@ -12,28 +12,19 @@ describe('<FormkravKlageForm>', () => {
     {
       id: 1,
       uuid: '1uuid',
-      type: {
-        kode: behandlingType.FORSTEGANGSSOKNAD,
-        kodeverk: 'BEHANDLING_TYPE',
-      },
+      type: behandlingType.FORSTEGANGSSOKNAD,
       avsluttet: '2018-10-25T14:14:15',
     },
     {
       id: 2,
       uuid: '2uuid',
-      type: {
-        kode: behandlingType.REVURDERING,
-        kodeverk: 'BEHANDLING_TYPE',
-      },
+      type: behandlingType.REVURDERING,
       avsluttet: '2018-10-25T14:14:15',
     },
     {
       id: 3,
       uuid: '3uuid',
-      type: {
-        kode: behandlingType.TILBAKEKREVING,
-        kodeverk: 'BEHANDLING_TYPE',
-      },
+      type: behandlingType.TILBAKEKREVING,
       avsluttet: '2020-02-06T14:14:15',
     },
   ];

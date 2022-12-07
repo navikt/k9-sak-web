@@ -40,7 +40,9 @@ const getKlagbareVedtak = (avsluttedeBehandlinger, intl, getKodeverknavn) => {
   return klagBareVedtak.concat(
     avsluttedeBehandlinger.map(behandling => (
       <option key={behandling.uuid} value={`${behandling.uuid}`}>
-        {`${getKodeverknavn(behandling.type)} ${moment(behandling.avsluttet).format(DDMMYYYY_DATE_FORMAT)}`}
+        {`${getKodeverknavn(behandling.type, kodeverkTyper.BEHANDLING_TYPE)} ${moment(behandling.avsluttet).format(
+          DDMMYYYY_DATE_FORMAT,
+        )}`}
       </option>
     )),
   );
@@ -180,9 +182,7 @@ FormkravKlageForm.propTypes = {
   avsluttedeBehandlinger: PropTypes.arrayOf(
     PropTypes.shape({
       id: PropTypes.number.isRequired,
-      type: PropTypes.shape({
-        kode: PropTypes.string.isRequired,
-      }).isRequired,
+      type: PropTypes.string.isRequired,
       avsluttet: PropTypes.string,
       uuid: PropTypes.string.isRequired,
     }),

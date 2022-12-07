@@ -22,18 +22,17 @@ const utledAksjonspunktText = (arbeidsforhold, imUtenArbeidsforhold) => {
       <FormattedMessage
         id="HelpText.FinnesIkkeIRegisteret"
         values={{
-          yrkestittel: `${arbeidsforhold.yrkestittel}(${arbeidsforhold.arbeidsforhold.eksternArbeidsforholdId
-            ? arbeidsforhold.arbeidsforhold.eksternArbeidsforholdId
-            : ''
-            })`,
+          yrkestittel: `${arbeidsforhold.yrkestittel}(${
+            arbeidsforhold.arbeidsforhold.eksternArbeidsforholdId
+              ? arbeidsforhold.arbeidsforhold.eksternArbeidsforholdId
+              : ''
+          })`,
         }}
       />
     );
   }
   if (
-    arbeidsforhold.aksjonspunktÅrsaker.some(
-      a => a.kode === aksjonspunktÅrsaker.OVERGANG_ARBEIDSFORHOLDS_ID_UNDER_YTELSE,
-    )
+    arbeidsforhold.aksjonspunktÅrsaker.some(a => a === aksjonspunktÅrsaker.OVERGANG_ARBEIDSFORHOLDS_ID_UNDER_YTELSE)
   ) {
     return <FormattedMessage id="HelpText.OvergangAbedsforholdsId" />;
   }
@@ -41,10 +40,12 @@ const utledAksjonspunktText = (arbeidsforhold, imUtenArbeidsforhold) => {
 };
 
 const AksjonspunktAvklarArbeidsforholdText = ({ intl, arbeidsforhold }: OwnProps & WrappedComponentProps) => {
-  const overgangArbeidsforholdsId = arbeidsforhold.aksjonspunktÅrsaker
-    .includes(aksjonspunktÅrsaker.OVERGANG_ARBEIDSFORHOLDS_ID_UNDER_YTELSE);
-  const imUtenArbeidsforhold = arbeidsforhold.aksjonspunktÅrsaker
-    .includes(aksjonspunktÅrsaker.INNTEKTSMELDING_UTEN_ARBEIDSFORHOLD);
+  const overgangArbeidsforholdsId = arbeidsforhold.aksjonspunktÅrsaker.includes(
+    aksjonspunktÅrsaker.OVERGANG_ARBEIDSFORHOLDS_ID_UNDER_YTELSE,
+  );
+  const imUtenArbeidsforhold = arbeidsforhold.aksjonspunktÅrsaker.includes(
+    aksjonspunktÅrsaker.INNTEKTSMELDING_UTEN_ARBEIDSFORHOLD,
+  );
   return (
     <FlexContainer>
       <FlexRow>
