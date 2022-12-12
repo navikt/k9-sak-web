@@ -1,26 +1,20 @@
 import React from 'react';
 
-import { prosessStegCodes } from '@k9-sak-web/konstanter';
-import { ProsessStegDef, ProsessStegPanelDef } from '@k9-sak-web/behandling-felles';
-import OpplaeringIndex from '@k9-sak-web/prosess-opplaering';
+import { ProsessStegDef, ProsessStegOverstyringPanelDef, ProsessStegPanelDef } from '@k9-sak-web/behandling-felles';
 
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { OpplaeringspengerBehandlingApiKeys } from '../../data/opplaeringspengerBehandlingApi';
+import { prosessStegCodes } from '@k9-sak-web/konstanter';
 
 class PanelDef extends ProsessStegPanelDef {
-  getKomponent = props => <OpplaeringIndex />;
+  overstyringDef = new ProsessStegOverstyringPanelDef(this);
 
-  getAksjonspunktKoder = () => [aksjonspunktCodes.VURDER_INSTITUSJON];
+  getAksjonspunktKoder = () => [aksjonspunktCodes.VURDER_GJENNOMGÅTT_OPPLÆRING, aksjonspunktCodes.VURDER_NØDVENDIGHET];
 
-  getEndepunkter = () => [];
+  getTekstKode = () => 'Behandlingspunkt.Opplaering';
 
-  getOverstyrVisningAvKomponent = () => true;
+  getKomponent = props => this.overstyringDef.getKomponent(props);
 
-  getData = ({ fagsak, previewFptilbakeCallback, simuleringResultat }) => ({
-    fagsak,
-    previewFptilbakeCallback,
-    simuleringResultat,
-  });
+  getData = data => this.overstyringDef.getData(data);
 }
 
 class OpplaeringProsessStegPanelDef extends ProsessStegDef {
