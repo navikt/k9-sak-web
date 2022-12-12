@@ -1,9 +1,9 @@
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import beregningAvklaringsbehovCodes from '@fpsak-frontend/kodeverk/src/beregningAvklaringsbehovCodes';
 import mapTilAksjonspunktkode from './mapAksjonspunktkoderBeregning';
 
 const transformBeregningValues = aksjonspunktData =>
   aksjonspunktData.flatMap(data => {
-    if (data.kode === aksjonspunktCodes.OVERSTYRING_AV_BEREGNINGSGRUNNLAG) {
+    if (data.kode === beregningAvklaringsbehovCodes.OVERSTYRING_AV_BEREGNINGSGRUNNLAG) {
       return data.grunnlag.map(gr => ({
         kode: mapTilAksjonspunktkode(data.kode),
         ...gr,
