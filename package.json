@@ -149,6 +149,7 @@
     "msw": "0.47.4",
     "prettier": "^2.7.1",
     "raf": "^3.4.1",
+    "react-popper": "^2.2.5",
     "react-test-renderer": "^18.2.0",
     "redux-mock-store": "^1.5.4",
     "sinon": "^14.0.1",
@@ -177,7 +178,9 @@
     "trim": "^1.0.1",
     "trim-newlines": "^3.0.1",
     "@types/react": "^17",
-    "git-url-parse": "^13.1.0"
+    "git-url-parse": "^13.1.0",
+    "@navikt/ds-react": "2.0.8",
+    "@navikt/ds-css": "2.0.8"
   },
   "msw": {
     "workerDirectory": "public"
