@@ -35,7 +35,7 @@
     "@navikt/ft-prosess-beregningsgrunnlag": "4.0.5",
     "nav-frontend-popover": "^2.0.4",
     "react": "^17.0.2",
-    "react-intl": "6.2.1",
+    "react-intl": "6.2.5",
     "react-redux": "^8.0.4",
     "redux": "^4.1.2",
     "redux-form": "^8.3.8",
