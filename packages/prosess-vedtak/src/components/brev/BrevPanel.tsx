@@ -16,7 +16,7 @@ import {
   TilgjengeligeVedtaksbrev,
 } from '@fpsak-frontend/utils/src/formidlingUtils';
 import { DokumentDataType } from '@k9-sak-web/types/src/dokumentdata';
-import { ArbeidsgiverOpplysningerPerId, Behandlingsresultat, Kodeverk, Personopplysninger } from '@k9-sak-web/types';
+import { ArbeidsgiverOpplysningerPerId, Behandlingsresultat, Personopplysninger } from '@k9-sak-web/types';
 import { Alert } from '@navikt/ds-react';
 
 import { FormikProps } from 'formik';
@@ -146,7 +146,7 @@ const getHentHtmlMalCallback =
 interface BrevPanelProps {
   intl: IntlShape;
   readOnly: boolean;
-  sprakkode: Kodeverk;
+  sprakkode: string;
   personopplysninger: Personopplysninger;
   arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysningerPerId;
   tilgjengeligeVedtaksbrev: TilgjengeligeVedtaksbrev;

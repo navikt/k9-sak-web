@@ -12,7 +12,7 @@ import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus'
 import tilbakekrevingVidereBehandling from '@fpsak-frontend/kodeverk/src/tilbakekrevingVidereBehandling';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { TIDENES_ENDE, getKodeverknavnFn } from '@fpsak-frontend/utils';
-import {erFagytelseTypeUtvidetRett} from '@k9-sak-web/behandling-utvidet-rett/src/utils/utvidetRettHjelpfunksjoner';
+import { erFagytelseTypeUtvidetRett } from '@k9-sak-web/behandling-utvidet-rett/src/utils/utvidetRettHjelpfunksjoner';
 
 const tilbakekrevingMedInntrekk = (tilbakekrevingKode, simuleringResultat) =>
   tilbakekrevingKode === tilbakekrevingVidereBehandling.TILBAKEKR_OPPRETT &&
@@ -22,7 +22,7 @@ export const findTilbakekrevingText = createSelector(
   [ownProps => ownProps.simuleringResultat, ownProps => ownProps.tilbakekrevingvalg, ownProps => ownProps.alleKodeverk],
   (simuleringResultat, tilbakekrevingValg, alleKodeverk) => {
     if (tilbakekrevingValg !== null && tilbakekrevingValg !== undefined) {
-      if (tilbakekrevingMedInntrekk(tilbakekrevingValg.videreBehandling.kode, simuleringResultat)) {
+      if (tilbakekrevingMedInntrekk(tilbakekrevingValg.videreBehandling, simuleringResultat)) {
         return 'VedtakForm.TilbakekrInfotrygdOgInntrekk';
       }
       const getKodeverkNavn = getKodeverknavnFn(alleKodeverk, kodeverkTyper);

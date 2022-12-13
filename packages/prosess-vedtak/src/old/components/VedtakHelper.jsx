@@ -22,7 +22,7 @@ export const findTilbakekrevingText = createSelector(
   [ownProps => ownProps.simuleringResultat, ownProps => ownProps.tilbakekrevingvalg, ownProps => ownProps.alleKodeverk],
   (simuleringResultat, tilbakekrevingValg, alleKodeverk) => {
     if (tilbakekrevingValg !== null && tilbakekrevingValg !== undefined) {
-      if (tilbakekrevingMedInntrekk(tilbakekrevingValg.videreBehandling.kode, simuleringResultat)) {
+      if (tilbakekrevingMedInntrekk(tilbakekrevingValg.videreBehandling, simuleringResultat)) {
         return 'VedtakForm.TilbakekrInfotrygdOgInntrekk';
       }
       const getKodeverkNavn = getKodeverknavnFn(alleKodeverk, kodeverkTyper);

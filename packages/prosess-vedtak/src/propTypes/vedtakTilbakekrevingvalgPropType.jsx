@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { kodeverkObjektPropType } from '@fpsak-frontend/prop-types';
 
 const vedtakTilbakekrevingvalgPropType = PropTypes.shape({
-  videreBehandling: kodeverkObjektPropType.isRequired,
+  videreBehandling: PropTypes.string.isRequired,
 });
 
 export default vedtakTilbakekrevingvalgPropType;

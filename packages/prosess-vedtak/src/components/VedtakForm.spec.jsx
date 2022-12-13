@@ -18,16 +18,8 @@ import { VedtakForm } from './VedtakForm';
 import messages from '../../i18n/nb_NO.json';
 
 describe('<VedtakForm>', () => {
-  const sprakkode = {
-    kode: 'NO',
-    kodeverk: '',
-  };
-  const aksjonspunktKoder = [
-    {
-      navn: 'annen ytelse',
-      kode: aksjonspunktCodes.VURDERE_ANNEN_YTELSE,
-    },
-  ];
+  const sprakkode = 'NO';
+  const aksjonspunktKoder = [aksjonspunktCodes.VURDERE_ANNEN_YTELSE];
 
   const ingenTilgjengeligeVedtaksbrev = { vedtaksbrevmaler: [] };
   const alleTilgjengeligeVedtaksbrev = {
@@ -39,7 +31,7 @@ describe('<VedtakForm>', () => {
     },
   };
 
-  const behandlingStatusUtredes = { kode: behandlingStatuser.BEHANDLING_UTREDES };
+  const behandlingStatusUtredes = behandlingStatuser.BEHANDLING_UTREDES;
 
   it('skal vise at vedtak er innvilget, beløp og antall barn når en har et beregningsresultat', () => {
     requestApi.mock(K9sakApiKeys.FEATURE_TOGGLE, [{ FRITEKST_REDIGERING: true }]);
@@ -48,7 +40,7 @@ describe('<VedtakForm>', () => {
     const behandlingsresultat = {
       id: 1,
       type: {
-        kode: BehandlingResultatType.INNVILGET,
+        kode: BehandlingResultatType.INNVILGET, // #kodeverk
         navn: 'test',
       },
     };
@@ -57,9 +49,7 @@ describe('<VedtakForm>', () => {
     const vedtakVarsel = {
       avslagsarsak: null,
       avslagsarsakFritekst: null,
-      vedtaksbrev: {
-        kode: 'FRITEKST',
-      },
+      vedtaksbrev: 'FRITEKST',
     };
 
     renderWithIntlAndReduxForm(
@@ -94,34 +84,23 @@ describe('<VedtakForm>', () => {
     const behandlingsresultat = {
       id: 1,
       type: {
-        kode: BehandlingResultatType.AVSLATT,
+        kode: BehandlingResultatType.AVSLATT, // #kodeverk
         navn: 'test',
       },
     };
     const aksjonspunkter = [
       {
         id: 1,
-        definisjon: {
-          navn: 'annen ytelse',
-          kode: aksjonspunktCodes.VURDERE_ANNEN_YTELSE,
-        },
-        status: {
-          navn: 'Opprettet',
-          kode: aksjonspunktStatus.OPPRETTET,
-        },
+        definisjon: aksjonspunktCodes.VURDERE_ANNEN_YTELSE,
+        status: aksjonspunktStatus.OPPRETTET,
         kanLoses: true,
         erAktivt: true,
       },
     ];
     const vedtakVarsel = {
-      avslagsarsak: {
-        kode: '1019',
-        navn: 'Søkt for sent',
-      },
+      avslagsarsak: '1019',
       avslagsarsakFritekst: null,
-      vedtaksbrev: {
-        kode: 'FRITEKST',
-      },
+      vedtaksbrev: 'FRITEKST',
     };
     renderWithIntlAndReduxForm(
       <VedtakForm
@@ -153,22 +132,13 @@ describe('<VedtakForm>', () => {
     const previewCallback = sinon.spy();
     const behandlingsresultat = {
       id: 1,
-      type: {
-        kode: BehandlingResultatType.INNVILGET,
-        navn: 'test',
-      },
+      type: BehandlingResultatType.INNVILGET,
     };
     const aksjonspunkter = [
       {
         id: 1,
-        definisjon: {
-          navn: 'annen ytelse',
-          kode: aksjonspunktCodes.VURDERE_ANNEN_YTELSE,
-        },
-        status: {
-          navn: 'Opprettet',
-          kode: aksjonspunktStatus.OPPRETTET,
-        },
+        definisjon: aksjonspunktCodes.VURDERE_ANNEN_YTELSE,
+        status: aksjonspunktStatus.OPPRETTET,
         toTrinnsBehandling: true,
         kanLoses: true,
         erAktivt: true,
@@ -177,9 +147,7 @@ describe('<VedtakForm>', () => {
     const vedtakVarsel = {
       avslagsarsak: null,
       avslagsarsakFritekst: null,
-      vedtaksbrev: {
-        kode: 'FRITEKST',
-      },
+      vedtaksbrev: 'FRITEKST',
     };
     renderWithIntlAndReduxForm(
       <VedtakForm
@@ -211,32 +179,24 @@ describe('<VedtakForm>', () => {
     const behandlingsresultat = {
       id: 1,
       type: {
-        kode: BehandlingResultatType.INNVILGET,
+        kode: BehandlingResultatType.INNVILGET, // #kodeverk
         navn: 'test',
       },
     };
     const aksjonspunkter = [
       {
         id: 1,
-        definisjon: {
-          navn: 'annen ytelse',
-          kode: aksjonspunktCodes.VURDERE_ANNEN_YTELSE,
-        },
-        status: {
-          navn: 'Opprettet',
-          kode: aksjonspunktStatus.OPPRETTET,
-        },
+        definisjon: aksjonspunktCodes.VURDERE_ANNEN_YTELSE,
+        status: aksjonspunktStatus.OPPRETTET,
         toTrinnsBehandling: true,
         kanLoses: true,
         erAktivt: true,
       },
     ];
     const vedtakVarsel = {
-      avslagsarsak: { kode: '1099' },
+      avslagsarsak: '1099',
       avslagsarsakFritekst: null,
-      vedtaksbrev: {
-        kode: 'FRITEKST',
-      },
+      vedtaksbrev: 'FRITEKST',
     };
     renderWithIntlAndReduxForm(
       <VedtakForm
@@ -270,35 +230,24 @@ describe('<VedtakForm>', () => {
     const behandlingsresultat = {
       id: 1,
       type: {
-        kode: BehandlingResultatType.AVSLATT,
+        kode: BehandlingResultatType.AVSLATT, // #kodeverk
         navn: 'test',
       },
     };
     const aksjonspunkter = [
       {
         id: 1,
-        definisjon: {
-          navn: 'annen ytelse',
-          kode: aksjonspunktCodes.VURDERE_ANNEN_YTELSE,
-        },
-        status: {
-          navn: 'Opprettet',
-          kode: aksjonspunktStatus.OPPRETTET,
-        },
+        definisjon: aksjonspunktCodes.VURDERE_ANNEN_YTELSE,
+        status: aksjonspunktStatus.OPPRETTET,
         toTrinnsBehandling: false,
         kanLoses: true,
         erAktivt: true,
       },
     ];
     const vedtakVarsel = {
-      avslagsarsak: {
-        kode: '1019',
-        navn: 'Manglende dokumentasjon',
-      },
+      avslagsarsak: '1019',
       avslagsarsakFritekst: null,
-      vedtaksbrev: {
-        kode: 'FRITEKST',
-      },
+      vedtaksbrev: 'FRITEKST',
     };
     renderWithIntlAndReduxForm(
       <VedtakForm
@@ -332,21 +281,15 @@ describe('<VedtakForm>', () => {
     const behandlingsresultat = {
       id: 1,
       type: {
-        kode: BehandlingResultatType.INNVILGET,
+        kode: BehandlingResultatType.INNVILGET, // #kodeverk
         navn: 'test',
       },
     };
     const aksjonspunkter = [
       {
         id: 1,
-        definisjon: {
-          navn: 'annen ytelse',
-          kode: aksjonspunktCodes.VURDERE_ANNEN_YTELSE,
-        },
-        status: {
-          navn: 'Opprettet',
-          kode: aksjonspunktStatus.OPPRETTET,
-        },
+        definisjon: aksjonspunktCodes.VURDERE_ANNEN_YTELSE,
+        status: aksjonspunktStatus.OPPRETTET,
         kanLoses: true,
         erAktivt: true,
       },
@@ -355,14 +298,12 @@ describe('<VedtakForm>', () => {
     const vedtakVarsel = {
       avslagsarsak: null,
       avslagsarsakFritekst: null,
-      vedtaksbrev: {
-        kode: 'FRITEKST',
-      },
+      vedtaksbrev: 'FRITEKST',
     };
     renderWithIntlAndReduxForm(
       <VedtakForm
         intl={intlWithMessages(messages)}
-        behandlingStatus={{ kode: behandlingStatuser.AVSLUTTET }}
+        behandlingStatus={behandlingStatuser.AVSLUTTET}
         behandlingresultat={behandlingsresultat}
         aksjonspunkter={aksjonspunkter}
         behandlingPaaVent={false}
@@ -389,21 +330,15 @@ describe('<VedtakForm>', () => {
     const behandlingsresultat = {
       id: 1,
       type: {
-        kode: BehandlingResultatType.INNVILGET,
+        kode: BehandlingResultatType.INNVILGET, // #kodeverk
         navn: 'test',
       },
     };
     const aksjonspunkter = [
       {
         id: 1,
-        definisjon: {
-          navn: 'annen ytelse',
-          kode: aksjonspunktCodes.VURDERE_ANNEN_YTELSE,
-        },
-        status: {
-          navn: 'Opprettet',
-          kode: aksjonspunktStatus.OPPRETTET,
-        },
+        definisjon: aksjonspunktCodes.VURDERE_ANNEN_YTELSE,
+        status: aksjonspunktStatus.OPPRETTET,
         kanLoses: true,
         erAktivt: true,
       },
@@ -411,16 +346,14 @@ describe('<VedtakForm>', () => {
     const vedtakVarsel = {
       avslagsarsak: null,
       avslagsarsakFritekst: null,
-      vedtaksbrev: {
-        kode: 'FRITEKST',
-      },
+      vedtaksbrev: 'FRITEKST',
     };
     const previewCallback = sinon.spy();
 
     renderWithIntlAndReduxForm(
       <VedtakForm
         intl={intlWithMessages(messages)}
-        behandlingStatus={{ kode: behandlingStatuser.IVERKSETTER_VEDTAK }}
+        behandlingStatus={behandlingStatuser.IVERKSETTER_VEDTAK}
         behandlingresultat={behandlingsresultat}
         aksjonspunkter={aksjonspunkter}
         behandlingPaaVent={false}
@@ -449,21 +382,15 @@ describe('<VedtakForm>', () => {
     const behandlingsresultat = {
       id: 1,
       type: {
-        kode: BehandlingResultatType.INNVILGET,
+        kode: BehandlingResultatType.INNVILGET, // #kodeverk
         navn: 'test',
       },
     };
     const aksjonspunkter = [
       {
         id: 1,
-        definisjon: {
-          navn: 'annen ytelse',
-          kode: aksjonspunktCodes.VURDERE_ANNEN_YTELSE,
-        },
-        status: {
-          navn: 'Opprettet',
-          kode: aksjonspunktStatus.OPPRETTET,
-        },
+        definisjon: aksjonspunktCodes.VURDERE_ANNEN_YTELSE,
+        status: aksjonspunktStatus.OPPRETTET,
         kanLoses: true,
         erAktivt: true,
       },
@@ -471,14 +398,12 @@ describe('<VedtakForm>', () => {
     const vedtakVarsel = {
       avslagsarsak: null,
       avslagsarsakFritekst: null,
-      vedtaksbrev: {
-        kode: 'FRITEKST',
-      },
+      vedtaksbrev: 'FRITEKST',
     };
     renderWithIntlAndReduxForm(
       <VedtakForm
         intl={intlWithMessages(messages)}
-        behandlingStatus={{ kode: behandlingStatuser.FATTER_VEDTAK }}
+        behandlingStatus={behandlingStatuser.FATTER_VEDTAK}
         behandlingresultat={behandlingsresultat}
         aksjonspunkter={aksjonspunkter}
         behandlingPaaVent={false}
@@ -503,22 +428,13 @@ describe('<VedtakForm>', () => {
   const previewCallback = sinon.spy();
   const behandlingsresultat = {
     id: 1,
-    type: {
-      kode: BehandlingResultatType.INNVILGET,
-      navn: 'test',
-    },
+    type: BehandlingResultatType.INNVILGET,
   };
   const aksjonspunkter = [
     {
       id: 1,
-      definisjon: {
-        navn: 'annen ytelse',
-        kode: aksjonspunktCodes.VURDERE_ANNEN_YTELSE,
-      },
-      status: {
-        navn: 'Opprettet',
-        kode: aksjonspunktStatus.OPPRETTET,
-      },
+      definisjon: aksjonspunktCodes.VURDERE_ANNEN_YTELSE,
+      status: aksjonspunktStatus.OPPRETTET,
       kanLoses: true,
       erAktivt: true,
     },
@@ -526,10 +442,7 @@ describe('<VedtakForm>', () => {
   const vedtakVarsel = {
     avslagsarsak: null,
     avslagsarsakFritekst: null,
-    vedtaksbrev: {
-      kode: 'FRITEKST',
-      kodeverk: 'FRITKST',
-    },
+    vedtaksbrev: 'FRITEKST',
   };
 
   const dokumentdata = {

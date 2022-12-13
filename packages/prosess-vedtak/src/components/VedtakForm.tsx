@@ -61,22 +61,20 @@ const transformRedusertUtbetalingÅrsaker = formikValues =>
 
 interface Props {
   intl: IntlShape;
-  behandlingStatus: BehandlingStatusType;
+  behandlingStatus: string;
   aksjonspunkter: Aksjonspunkt[];
   behandlingresultat: Behandlingsresultat;
   behandlingPaaVent: boolean;
   previewCallback: () => void;
   hentFritekstbrevHtmlCallback: () => void;
   readOnly: boolean;
-  sprakkode: Kodeverk;
+  sprakkode: string;
   ytelseTypeKode: string;
   alleKodeverk: { [key: string]: KodeverkMedNavn[] };
   personopplysninger: Personopplysninger;
   arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysningerPerId;
   tilbakekrevingvalg: {
-    videreBehandling: {
-      kode: string;
-    };
+    videreBehandling: string;
   };
   vilkar: Vilkar[];
   tilgjengeligeVedtaksbrev: TilgjengeligeVedtaksbrev & TilgjengeligeVedtaksbrevMedMaler;
@@ -93,7 +91,7 @@ interface Props {
       dato: string;
     };
     redusertUtbetalingÅrsaker: string[];
-    vedtaksbrev: Kodeverk;
+    vedtaksbrev: string;
     vedtaksdato: string;
   };
   submitCallback: (object: any) => void;
@@ -395,7 +393,7 @@ export const VedtakForm: React.FC<Props> = ({
           )}
           <div className={styles.aksjonspunktContainer}>
             <VedtakAksjonspunktPanel
-              behandlingStatusKode={behandlingStatus?.kode}
+              behandlingStatusKode={behandlingStatus}
               aksjonspunktKoder={aksjonspunkter.map(ap => ap.definisjon)}
               readOnly={readOnly}
               overlappendeYtelser={overlappendeYtelser}
@@ -446,7 +444,7 @@ export const VedtakForm: React.FC<Props> = ({
                   alleKodeverk={alleKodeverk}
                   resultatstrukturOriginalBehandling={resultatstrukturOriginalBehandling}
                   bgPeriodeMedAvslagsårsak={bgPeriodeMedAvslagsårsak}
-                  behandlingStatusKode={behandlingStatus?.kode}
+                  behandlingStatusKode={behandlingStatus}
                   vilkar={vilkar}
                   aksjonspunkter={aksjonspunkter}
                   sprakkode={sprakkode}
@@ -486,7 +484,7 @@ export const VedtakForm: React.FC<Props> = ({
               />
               {!erRevurdering ? (
                 <VedtakSubmit
-                  behandlingStatusKode={behandlingStatus?.kode}
+                  behandlingStatusKode={behandlingStatus}
                   readOnly={readOnly}
                   behandlingPaaVent={behandlingPaaVent}
                   isSubmitting={formikProps.isSubmitting}
@@ -503,7 +501,7 @@ export const VedtakForm: React.FC<Props> = ({
                     erToTrinn ? formikProps.handleSubmit : event => handleErEntrinnSubmit(event, formikProps)
                   }
                   readOnly={readOnly}
-                  behandlingStatusKode={behandlingStatus?.kode}
+                  behandlingStatusKode={behandlingStatus}
                   harRedusertUtbetaling={harRedusertUtbetaling}
                   visFeilmeldingFordiArsakerMangler={() => setErSendtInnUtenArsaker(true)}
                   aksjonspunkter={aksjonspunkter}

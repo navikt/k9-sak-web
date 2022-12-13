@@ -7,7 +7,7 @@ import BehandlingArsakType from '@fpsak-frontend/kodeverk/src/behandlingArsakTyp
 import { isAvslag, isInnvilget, isOpphor } from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import { getKodeverknavnFn } from '@fpsak-frontend/utils';
-import { Aksjonspunkt, Kodeverk, KodeverkMedNavn, Vilkar } from '@k9-sak-web/types';
+import { Aksjonspunkt, KodeverkMedNavn, Vilkar } from '@k9-sak-web/types';
 import VedtakAvslagRevurderingPanel from './VedtakAvslagRevurderingPanel';
 import VedtakInnvilgetRevurderingPanel from './VedtakInnvilgetRevurderingPanel';
 import VedtakOpphorRevurderingPanel from './VedtakOpphorRevurderingPanel';
@@ -19,10 +19,10 @@ const createAarsakString = (revurderingAarsaker, getKodeverknavn) => {
   }
   const aarsakTekstList = [];
   const endringFraBrukerAarsak = revurderingAarsaker.find(
-    aarsak => aarsak.kode === BehandlingArsakType.RE_ENDRING_FRA_BRUKER,
+    aarsak => aarsak === BehandlingArsakType.RE_ENDRING_FRA_BRUKER,
   );
   const alleAndreAarsakerNavn = revurderingAarsaker
-    .filter(aarsak => aarsak.kode !== BehandlingArsakType.RE_ENDRING_FRA_BRUKER)
+    .filter(aarsak => aarsak !== BehandlingArsakType.RE_ENDRING_FRA_BRUKER)
     .map(aarsak => getKodeverknavn(aarsak));
   // Dersom en av årsakene er "RE_ENDRING_FRA_BRUKER" skal alltid denne vises først
   if (endringFraBrukerAarsak) {
@@ -40,9 +40,7 @@ interface OwnProps {
   };
   resultatstruktur: string;
   tilbakekrevingvalg: {
-    videreBehandling: {
-      kode: string;
-    };
+    videreBehandling: string;
   };
   simuleringResultat: any;
   alleKodeverk: { [key: string]: KodeverkMedNavn[] };
@@ -51,7 +49,7 @@ interface OwnProps {
   behandlingStatusKode: string;
   vilkar: Vilkar[];
   aksjonspunkter: Aksjonspunkt[];
-  sprakkode: Kodeverk;
+  sprakkode: string;
   readOnly: boolean;
   vedtakVarsel: any;
   medlemskapFom: string;

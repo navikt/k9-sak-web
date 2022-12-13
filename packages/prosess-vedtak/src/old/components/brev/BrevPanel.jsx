@@ -227,7 +227,7 @@ export const BrevPanel = props => {
 
 BrevPanel.propTypes = {
   intl: PropTypes.shape().isRequired,
-  sprakkode: PropTypes.shape().isRequired,
+  sprakkode: PropTypes.string.isRequired,
   readOnly: PropTypes.bool.isRequired,
   begrunnelse: PropTypes.string,
   tilgjengeligeVedtaksbrev: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.string), PropTypes.shape()]),

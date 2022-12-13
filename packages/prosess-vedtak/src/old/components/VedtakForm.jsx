@@ -105,7 +105,7 @@ export const VedtakForm = ({
     return aksjonspunkter
       .filter(ap => ap.kanLoses)
       .map(aksjonspunkt => ({
-        kode: aksjonspunkt.definisjon.kode,
+        kode: aksjonspunkt.definisjon,
         overstyrtMottaker: safeJSONParse(values?.[fieldnames.OVERSTYRT_MOTTAKER]),
         fritekstbrev: values?.[fieldnames.SKAL_BRUKE_OVERSTYRENDE_FRITEKST_BREV]
           ? {
@@ -119,7 +119,7 @@ export const VedtakForm = ({
         isVedtakSubmission,
         begrunnelserMedInformasjonsbehov: begrunnelser,
         redusertUtbetalingÅrsaker:
-          aksjonspunkt.definisjon.kode === aksjonspunktCodes.FORESLA_VEDTAK_MANUELT
+          aksjonspunkt.definisjon === aksjonspunktCodes.FORESLA_VEDTAK_MANUELT
             ? transformRedusertUtbetalingÅrsaker(values)
             : null,
         tilgjengeligeVedtaksbrev,
@@ -131,7 +131,7 @@ export const VedtakForm = ({
       .filter(ap => ap.kanLoses)
       .map(aksjonspunkt => {
         const tranformedValues = {
-          kode: aksjonspunkt.definisjon.kode,
+          kode: aksjonspunkt.definisjon,
           begrunnelse: values?.[fieldnames.BEGRUNNELSE],
           overstyrtMottaker: safeJSONParse(values?.[fieldnames.OVERSTYRT_MOTTAKER]),
           fritekstbrev: {
@@ -144,7 +144,7 @@ export const VedtakForm = ({
           isVedtakSubmission,
           tilgjengeligeVedtaksbrev,
         };
-        if (aksjonspunkt.definisjon.kode === aksjonspunktCodes.FORESLA_VEDTAK_MANUELT) {
+        if (aksjonspunkt.definisjon === aksjonspunktCodes.FORESLA_VEDTAK_MANUELT) {
           tranformedValues.redusertUtbetalingÅrsaker = transformRedusertUtbetalingÅrsaker(values);
         }
         return tranformedValues;
@@ -163,7 +163,7 @@ export const VedtakForm = ({
   const harFritekstILokalState =
     vedtakContext?.vedtakFormState?.brødtekst || vedtakContext?.vedtakFormState?.overskrift;
   const mellomlagredeInformasjonsbehov = aktiverteInformasjonsbehov.map(informasjonsbehov => ({
-    [informasjonsbehov.kode]: dokumentdata?.[informasjonsbehov.kode] || '',
+    [informasjonsbehov]: dokumentdata?.[informasjonsbehov.kode] || '',
   }));
 
   const initialValues = Object.assign(
@@ -216,8 +216,8 @@ export const VedtakForm = ({
         <form>
           <LagreFormikStateLokalt />
           <VedtakAksjonspunktPanel
-            behandlingStatusKode={behandlingStatus?.kode}
-            aksjonspunktKoder={aksjonspunkter.map(ap => ap.definisjon.kode)}
+            behandlingStatusKode={behandlingStatus}
+            aksjonspunktKoder={aksjonspunkter.map(ap => ap.definisjon)}
             readOnly={readOnly}
             overlappendeYtelser={overlappendeYtelser}
             alleKodeverk={alleKodeverk}
@@ -296,7 +296,7 @@ export const VedtakForm = ({
                 alleKodeverk={alleKodeverk}
                 resultatstrukturOriginalBehandling={resultatstrukturOriginalBehandling}
                 bgPeriodeMedAvslagsårsak={bgPeriodeMedAvslagsårsak}
-                behandlingStatusKode={behandlingStatus?.kode}
+                behandlingStatusKode={behandlingStatus}
                 vilkar={vilkar}
                 aksjonspunkter={aksjonspunkter}
                 sprakkode={sprakkode}
@@ -334,7 +334,7 @@ export const VedtakForm = ({
             />
             {!erRevurdering ? (
               <VedtakSubmit
-                behandlingStatusKode={behandlingStatus?.kode}
+                behandlingStatusKode={behandlingStatus}
                 readOnly={readOnly}
                 behandlingPaaVent={behandlingPaaVent}
                 isSubmitting={formikProps.isSubmitting}
@@ -354,7 +354,7 @@ export const VedtakForm = ({
                 handleSubmit={formikProps.handleSubmit}
                 ytelseTypeKode={ytelseTypeKode}
                 readOnly={readOnly}
-                behandlingStatusKode={behandlingStatus?.kode}
+                behandlingStatusKode={behandlingStatus}
                 harRedusertUtbetaling={harRedusertUtbetaling}
                 dokumentdata={dokumentdata}
                 lagreDokumentdata={lagreDokumentdata}
@@ -373,13 +373,13 @@ export const VedtakForm = ({
 
 VedtakForm.propTypes = {
   intl: PropTypes.shape().isRequired,
-  behandlingStatus: PropTypes.shape({ kode: PropTypes.string }),
+  behandlingStatus: PropTypes.string,
   aksjonspunkter: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   behandlingresultat: PropTypes.shape().isRequired,
   behandlingPaaVent: PropTypes.bool.isRequired,
   previewCallback: PropTypes.func.isRequired,
   readOnly: PropTypes.bool.isRequired,
-  sprakkode: kodeverkObjektPropType.isRequired,
+  sprakkode: PropTypes.string.isRequired,
   ytelseTypeKode: PropTypes.string.isRequired,
   alleKodeverk: PropTypes.shape().isRequired,
   personopplysninger: PropTypes.shape(),

@@ -31,7 +31,7 @@ const InformasjonsbehovAutomatiskVedtaksbrev = ({
 
 InformasjonsbehovAutomatiskVedtaksbrev.propTypes = {
   intl: PropTypes.shape().isRequired,
-  sprakkode: PropTypes.shape().isRequired,
+  sprakkode: PropTypes.string.isRequired,
   readOnly: PropTypes.bool.isRequired,
   begrunnelse: PropTypes.string,
   informasjonsbehovVedtaksbrev: PropTypes.shape({

@@ -99,9 +99,9 @@ const erArsakTypeBehandlingEtterKlage = createSelector(
       .map(({ behandlingArsakType }) => behandlingArsakType)
       .some(
         bt =>
-          bt.kode === klageBehandlingArsakType.ETTER_KLAGE ||
-          bt.kode === klageBehandlingArsakType.KLAGE_U_INNTK ||
-          bt.kode === klageBehandlingArsakType.KLAGE_M_INNTK,
+          bt === klageBehandlingArsakType.ETTER_KLAGE ||
+          bt === klageBehandlingArsakType.KLAGE_U_INNTK ||
+          bt === klageBehandlingArsakType.KLAGE_M_INNTK,
       ),
 );
 

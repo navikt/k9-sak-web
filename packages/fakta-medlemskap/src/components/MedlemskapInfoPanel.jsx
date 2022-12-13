@@ -70,7 +70,7 @@ MedlemskapInfoPanel.propTypes = {
   behandlingId: PropTypes.number.isRequired,
   behandlingVersjon: PropTypes.number.isRequired,
   fagsakPerson: PropTypes.shape().isRequired,
-  behandlingType: kodeverkObjektPropType.isRequired,
+  behandlingType: PropTypes.string.isRequired,
   soknad: medlemskapSoknadPropType,
   alleKodeverk: PropTypes.shape().isRequired,
   medlemskap: medlemskapMedlemskaPropType.isRequired,
