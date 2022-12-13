@@ -66,6 +66,7 @@ describe('<kodeverkUtils>', () => {
     const navn = getKodeverknavnFn(alleKodeverk, KodeverkType)(
       avslagsarsakCodes.INGEN_BEREGNINGSREGLER,
       KodeverkType.AVSLAGSARSAK,
+      vilkarType.MEDLEMSKAPSVILKARET,
     );
 
     expect(navn).toBe('Ingen beregningsregler');

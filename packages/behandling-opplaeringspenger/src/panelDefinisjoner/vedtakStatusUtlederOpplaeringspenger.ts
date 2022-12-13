@@ -4,7 +4,6 @@ import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 
 // TODO (TOR) Kan denne skrivast om? For høg kompleksitet.
-
 const hasOnlyClosedAps = (aksjonspunkter, vedtakAksjonspunkter) =>
   aksjonspunkter
     .filter(ap => !vedtakAksjonspunkter.some(vap => vap.definisjon.kode === ap.definisjon.kode))
@@ -14,13 +13,13 @@ const hasAksjonspunkt = ap => ap.definisjon.kode === aksjonspunktCodes.OVERSTYR_
 
 const isAksjonspunktOpenAndOfType = ap => hasAksjonspunkt(ap) && isAksjonspunktOpen(ap.status.kode);
 
-const findStatusForVedtak = (vilkar, aksjonspunkter, vedtakAksjonspunkter, behandlingsresultat, featureToggles) => {
+const findStatusForVedtak = (vilkar, aksjonspunkter, vedtakAksjonspunkter, behandlingsresultat) => {
   if (vilkar.length === 0) {
     return vilkarUtfallType.IKKE_VURDERT;
   }
 
   if (
-    vilkar.some(v => v.perioder.some(periode => periode.vilkarStatus.kode === vilkarUtfallType.IKKE_VURDERT)) ||
+    vilkar.some(v => v.perioder.some(periode => periode.vilkarStatus === vilkarUtfallType.IKKE_VURDERT)) ||
     aksjonspunkter.some(isAksjonspunktOpenAndOfType)
   ) {
     return vilkarUtfallType.IKKE_VURDERT;
@@ -30,9 +29,10 @@ const findStatusForVedtak = (vilkar, aksjonspunkter, vedtakAksjonspunkter, behan
     return vilkarUtfallType.IKKE_VURDERT;
   }
 
-  if (isAvslag(behandlingsresultat.type.kode)) {
+  if (isAvslag(behandlingsresultat?.type?.kode)) {
     return vilkarUtfallType.IKKE_OPPFYLT;
   }
+
   return vilkarUtfallType.OPPFYLT;
 };
 

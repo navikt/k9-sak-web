@@ -145,7 +145,7 @@ const getHentFritekstbrevHtmlCallback =
       ytelseType: fagsak.sakstype,
       saksnummer: fagsak.saksnummer,
       aktørId: fagsakPerson.aktørId,
-      avsenderApplikasjon: bestemAvsenderApp(behandling.type.kode),
+      avsenderApplikasjon: bestemAvsenderApp(behandling.type),
     });
 
 const OpplaeringspengerProsess = ({
@@ -258,7 +258,7 @@ const OpplaeringspengerProsess = ({
         behandlingsresultat={behandling.behandlingsresultat}
       />
       <FatterVedtakStatusModal
-        visModal={visFatterVedtakModal && behandling.status.kode === behandlingStatus.FATTER_VEDTAK}
+        visModal={visFatterVedtakModal && behandling.status === behandlingStatus.FATTER_VEDTAK}
         lukkModal={useCallback(() => {
           toggleFatterVedtakModal(false);
           opneSokeside();
