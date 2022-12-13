@@ -74,6 +74,16 @@ describe('<SøknadsperioderIndex>', () => {
               navn: 'Ny periode',
               kodeverk: 'ÅRSAK_TIL_VURDERING',
             },
+            {
+              kode: 'REVURDERER_BERØRT_PERIODE',
+              navn: 'Revurdert periode test',
+              kodeverk: 'ÅRSAK_TIL_VURDERING',
+            },
+            {
+              kode: 'REVURDERER_ETABLERT_TILSYN_ENDRING_FRA_ANNEN_OMSORGSPERSON',
+              navn: 'Revurder etablert tilsyn test',
+              kodeverk: 'ÅRSAK_TIL_VURDERING',
+            },
           ],
         }}
       />,
