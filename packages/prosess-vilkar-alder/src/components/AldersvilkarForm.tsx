@@ -43,11 +43,16 @@ const AldersvilkarForm = ({
     if (erVilkaretOk === false) return 'false';
     return null;
   };
-  const methods = useForm<Inputs>({ defaultValues: { begrunnelse: begrunnelseTekst, erVilkarOk: getErVilkaretOk() } });
-  const bekreftAksjonspunkt = data => submitCallback([{ kode: aksjonspunktCodes.ALDERSVILKÅR, ...data }]);
+  const methods = useForm<Inputs>({
+    defaultValues: {
+      begrunnelse: begrunnelseTekst,
+      erVilkarOk: getErVilkaretOk(),
+    },
+  });
+  const bekreftAksjonspunkt = (data: Inputs) => submitCallback([{ kode: aksjonspunktCodes.ALDERSVILKÅR, ...data }]);
 
   return (
-    <Form formMethods={methods} onSubmit={bekreftAksjonspunkt}>
+    <Form<Inputs> formMethods={methods} onSubmit={bekreftAksjonspunkt}>
       <Row>
         <AksjonspunktHelpTextTemp isAksjonspunktOpen>
           {[<FormattedMessage key={1} id="AlderVilkar.Hjelpetekst" />]}
