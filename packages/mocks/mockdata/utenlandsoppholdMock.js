@@ -42,15 +42,8 @@ const utenlandsopphold = {
       periode: `${dayjs().subtract(45, 'day').format('YYYY-MM-DD')}/${dayjs()
         .subtract(31, 'day')
         .format('YYYY-MM-DD')}`,
-      landkode: {
-        kode: 'CHE',
-        navn: 'CHE',
-        kodeverk: 'LANDKODER',
-      },
-      region: {
-        kode: 'ANNET',
-        kodeverk: 'REGION',
-      },
+      landkode: 'CHE',
+      region: 'ANNET',
       årsak: 'INGEN',
     },
   ],

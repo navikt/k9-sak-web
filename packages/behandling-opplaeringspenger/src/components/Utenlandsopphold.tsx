@@ -38,10 +38,10 @@ const Utenlandsopphold = ({
   };
 
   const mapItems = (periode: UtenlandsoppholdType) => {
-    const erEØS = periode.region.kode === 'NORDEN' || periode.region.kode === 'EOS';
+    const erEØS = periode.region === 'NORDEN' || periode.region === 'EOS';
 
-    const land = { label: 'Land', value: countries.getName(periode.landkode.kode, 'no') };
-    const eos = { label: 'EØS', value: erEØS ? 'Ja' : `Nei${vurderesMotEØSRegelverk(periode.landkode.kode)}` };
+    const land = { label: 'Land', value: countries.getName(periode.landkode, 'no') };
+    const eos = { label: 'EØS', value: erEØS ? 'Ja' : `Nei${vurderesMotEØSRegelverk(periode.landkode)}` };
     const årsak = { label: 'Merknad til utenlandsopphold', value: finnÅrsaker(periode, erEØS) };
 
     return [land, eos, årsak];
@@ -95,7 +95,7 @@ const Utenlandsopphold = ({
       {harUtenlandsopphold ? (
         <>
           <PeriodList perioder={[...perioderMedItems]} tittel="Perioder i utlandet" />
-          {perioder.some(periode => vurderesMotEØSRegelverk(periode.landkode.kode)) && (
+          {perioder.some(periode => vurderesMotEØSRegelverk(periode.landkode)) && (
             <div>{`*) Ikke en del av EØS, men vurderes mot EØS-regelverk`}</div>
           )}
         </>
