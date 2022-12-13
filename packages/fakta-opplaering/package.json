@@ -1,0 +1,18 @@
+{
+  "name": "@k9-sak-web/fakta-opplaering",
+  "version": "1.0.0",
+  "module": "index.ts",
+  "license": "MIT",
+  "private": true,
+  "dependencies": {
+    "@navikt/k9-period-utils": "^0.0.12",
+    "@navikt/k9-form-utils": "1.1.1",
+    "@navikt/ft-plattform-komponenter": "^1.4.0",
+    "formik": "^2.2.9",
+    "yup": "^0.32.11",
+    "@fpsak-frontend/form": "*",
+    "@k9-sak-web/types": "*",
+    "nav-frontend-tabs": "^2.0.3",
+    "classnames": "^2.3.2"
+  }
+}

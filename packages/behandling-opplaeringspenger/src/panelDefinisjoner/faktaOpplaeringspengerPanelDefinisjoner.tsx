@@ -14,6 +14,7 @@ import DirekteOvergangFaktaPanelDef from './faktaPaneler/DirekteOvergangFaktaPan
 import UtenlandsoppholdFaktaPanelDef from './faktaPaneler/UtenlandsoppholdFaktaPanelDef';
 import SoknadsperioderFaktaPanelDef from './faktaPaneler/SoknadsperioderFaktaPanelDef';
 import InstitusjonFaktaPanelDef from './faktaPaneler/InstitusjonFaktaPanelDef';
+import OpplaeringFaktaPanelDef from './faktaPaneler/OpplaeringFaktaPanelDef';
 
 const faktaPanelDefinisjoner = [
   new OmBarnetFaktaPanelDef(),
@@ -22,6 +23,7 @@ const faktaPanelDefinisjoner = [
   new DirekteOvergangFaktaPanelDef(),
   new OmsorgenForFaktaPanelDef(),
   new MedisinskVilkarFaktaPanelDef2(),
+  new OpplaeringFaktaPanelDef(),
   new EtablertTilsynFaktaPanelDef(),
   new MedlemskapsvilkaretFaktaPanelDef(),
   new OpptjeningsvilkaretFaktaPanelDef(),

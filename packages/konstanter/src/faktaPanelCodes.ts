@@ -32,6 +32,7 @@ const faktaPanelCodes = {
   UTENLANDSOPPHOLD: 'utenlandsopphold',
   SOKNADSPERIODER: 'soknadsperioder',
   INSTITUSJON: 'institusjon',
+  OPPLAERING: 'opplaering',
 };
 
 export default faktaPanelCodes;

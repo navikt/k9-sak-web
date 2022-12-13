@@ -63,6 +63,7 @@ export * from './src/overlappendePeriode';
 export * from './src/kodeverk';
 export * from './src/tidslinje';
 export * from './src/institusjon/InstitusjonTypes';
+export * from './src/opplaering/OpplaeringTypes';
 export { default as Kilde } from './src/Kilde';
 export { default as Vurderingsresultat } from './src/Vurderingsresultat';
 export type { default as BehandlingPerioder } from './src/behandlingPerioderType';

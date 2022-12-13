@@ -13,8 +13,6 @@ class PanelDef extends ProsessStegPanelDef {
   getTekstKode = () => 'Behandlingspunkt.Opplaering';
 
   getKomponent = props => this.overstyringDef.getKomponent(props);
-
-  getData = data => this.overstyringDef.getData(data);
 }
 
 class OpplaeringProsessStegPanelDef extends ProsessStegDef {
