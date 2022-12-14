@@ -8,7 +8,7 @@
     "@navikt/k9-period-utils": "^0.0.12",
     "@navikt/k9-form-utils": "1.1.1",
     "@navikt/ft-plattform-komponenter": "^1.4.0",
-    "@navikt/ds-react": "^1.5.6",
+    "@navikt/ds-react": "2.0.8",
     "formik": "^2.2.9",
     "yup": "^0.32.11",
     "@fpsak-frontend/form": "*",
