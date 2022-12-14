@@ -17,33 +17,18 @@ const createBehandling = (behandlingResultatType, behandlingHenlagt) => ({
   aksjonspunkter: [],
   behandlingPaaVent: false,
   behandlingHenlagt,
-  sprakkode: {
-    kode: 'NO',
-    kodeverk: '',
-  },
+  sprakkode: 'NO',
   behandlingsresultat: {
     id: 1,
     type: {
-      kode: behandlingResultatType,
+      kode: behandlingResultatType, // #kodeverk
       navn: 'test',
     },
-    avslagsarsak:
-      behandlingResultatType === BehandlingResultatType.AVSLATT
-        ? {
-            kode: '1019',
-            navn: 'Manglende dokumentasjon',
-          }
-        : null,
+    avslagsarsak: behandlingResultatType === BehandlingResultatType.AVSLATT ? '1019' : null,
     avslagsarsakFritekst: null,
   },
-  status: {
-    kode: behandlingStatus.BEHANDLING_UTREDES,
-    navn: 'test',
-  },
-  type: {
-    kode: 'test',
-    navn: 'test',
-  },
+  status: behandlingStatus.BEHANDLING_UTREDES,
+  type: 'test',
   opprettet: '16‎.‎07‎.‎2004‎ ‎17‎:‎35‎:‎21',
 });
 
@@ -62,21 +47,12 @@ describe('<VedtakRevurderingForm>', () => {
     const previewCallback = sinon.spy();
     const revurdering = createBehandlingAvslag();
 
-    revurdering.type = {
-      kode: 'BT-004',
-      navn: 'Revurdering',
-    };
+    revurdering.type = 'BT-004';
 
     revurdering.aksjonspunkter.push({
       id: 0,
-      definisjon: {
-        navn: 'Foreslå vedtak',
-        kode: aksjonspunktCodes.FORESLA_VEDTAK,
-      },
-      status: {
-        navn: 'Opprettet',
-        kode: '',
-      },
+      definisjon: aksjonspunktCodes.FORESLA_VEDTAK,
+      status: '',
       kanLoses: true,
       erAktivt: true,
     });
@@ -117,20 +93,14 @@ describe('<VedtakRevurderingForm>', () => {
     revurdering.behandlingsresultat = {
       id: 1,
       type: {
-        kode: BehandlingResultatType.INNVILGET,
+        kode: BehandlingResultatType.INNVILGET, // #kodeverk
         navn: 'Innvilget',
       },
     };
     revurdering.aksjonspunkter.push({
       id: 0,
-      definisjon: {
-        navn: 'Foreslå vedtak',
-        kode: aksjonspunktCodes.FORESLA_VEDTAK,
-      },
-      status: {
-        navn: 'Opprettet',
-        kode: '',
-      },
+      definisjon: aksjonspunktCodes.FORESLA_VEDTAK,
+      status: '',
       kanLoses: true,
       erAktivt: true,
       toTrinnsBehandling: true,
@@ -264,6 +234,7 @@ describe('<VedtakRevurderingForm>', () => {
         arbeidsgiverOpplysningerPerId={{}}
         tilgjengeligeVedtaksbrev={tilgjengeligeVedtaksbrev}
         erRevurdering
+        alleKodeverk={{}}
       />,
     );
 
