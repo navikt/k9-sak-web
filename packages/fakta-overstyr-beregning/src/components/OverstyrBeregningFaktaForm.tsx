@@ -88,7 +88,11 @@ const OverstyrBeregningFaktaForm = ({
   const validationSchema = Yup.object().shape({
     kode: Yup.string().required(),
     begrunnelse: Yup.string().required(intl.formatMessage({ id: 'OverstyrInputForm.BegrunnelseErPåkrevd' })),
-    perioder: Yup.array().of(periodeSchema),
+    /*
+     * Midlertidig deaktivere validering for dette for å teste valideringsfeil i prod
+     */
+    perioder: Yup.array().of(Yup.object()),
+    // perioder: Yup.array().of(periodeSchema),
   });
 
   /**
