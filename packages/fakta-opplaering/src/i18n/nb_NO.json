@@ -1,0 +1,11 @@
+{
+  "allePerioder": "Alle perioder",
+  "status": "Status",
+  "periode": "Periode",
+  "part": "Part",
+  "ingenVurderinger": "Ingen vurderinger å vise",
+  "opplaering.vurdering.label": "Gjør en vurdering av om det er opplæring i perioden etter § 9-14.",
+  "opplaering.gjennomfoertOpplaering.label": "Er det opplæring i perioden?",
+  "opplaering.perioder.label": "I hvilken periode er det opplæring?",
+  "opplaering.resterendePerioder.label": "Resterende perioder søkeren ikke har opplæring"
+}

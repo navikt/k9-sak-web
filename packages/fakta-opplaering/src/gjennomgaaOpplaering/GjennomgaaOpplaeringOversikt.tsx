@@ -37,7 +37,7 @@ const GjennomgaaOpplaeringOversikt = () => {
     <div style={{ fontSize: '16px' }}>
       <NavigationWithDetailView
         navigationSection={() => (
-          <GjennomgaaOpplaeringNavigation perioder={perioderMappet} setValgtPeriode={setValgtPeriode} />
+          <GjennomgaaOpplaeringNavigation perioder={vurderingerMappet} setValgtPeriode={setValgtPeriode} />
         )}
         showDetailSection
         detailSection={() => (valgtVurdering ? <GjennomgaaOpplaeringDetails vurdering={valgtVurdering} /> : null)}

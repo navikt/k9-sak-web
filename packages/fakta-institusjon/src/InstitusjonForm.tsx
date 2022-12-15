@@ -86,7 +86,7 @@ const InstitusjonForm = ({
             <Box marginTop={Margin.xLarge}>
               <TextAreaFormik
                 // eslint-disable-next-line max-len
-                label="Gjør en vurdering av om opplæringen gjennomgås ved en godkjent helseinstitusjon eller et offentlig spesialpedagogisk kompetansesenter som følge av § 9-14, første ledd."
+                label="Gjør en vurdering av om opplæringen gjennomgås ved en godkjent helseinstitusjon eller et offentlig spesialpedagogisk kompetansesenter etter § 9-14, første ledd."
                 name={fieldname.BEGRUNNELSE}
                 validate={[required]}
                 readOnly={readOnly}

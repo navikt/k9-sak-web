@@ -3,9 +3,11 @@ import classnames from 'classnames';
 import TabsPure from 'nav-frontend-tabs';
 import { WarningIcon } from '@navikt/ft-plattform-komponenter';
 import { FaktaOpplaeringContext } from '@k9-sak-web/behandling-opplaeringspenger/src/panelDefinisjoner/faktaPaneler/OpplaeringFaktaPanelDef';
+import { NestedIntlProvider } from '@fpsak-frontend/shared-components';
 import Tabs from './Tabs';
+import GjennomgaaOpplaeringOversikt from './gjennomgaaOpplaering/GjennomgaaOpplaeringOversikt';
+import messages from './i18n/nb_NO.json';
 import styles from './opplaeringContainer.modules.css';
-import GjennomgaaOpplaeringIndex from './gjennomgaaOpplaering/GjennomgaaOpplaeringIndex';
 
 interface TabItemProps {
   label: string;
@@ -33,7 +35,7 @@ const OpplaeringContainer = () => {
   const aktivtAksjonspunkt = aksjonspunkter.find(aksjonspunkt => aksjonspunkt.status.kode === 'OPPR');
   const [activeTab, setActiveTab] = useState(0);
   return (
-    <>
+    <NestedIntlProvider messages={messages}>
       <TabsPure
         kompakt
         tabs={Object.values(Tabs).map((tab, index) => ({
@@ -44,8 +46,8 @@ const OpplaeringContainer = () => {
         }))}
         onChange={(e, clickedIndex) => setActiveTab(clickedIndex)}
       />
-      {activeTab === 0 && <GjennomgaaOpplaeringIndex />}
-    </>
+      {activeTab === 0 && <GjennomgaaOpplaeringOversikt />}
+    </NestedIntlProvider>
   );
 };
 

@@ -22,13 +22,12 @@ class OpplaeringFaktaPanelDef extends FaktaPanelDef {
 
   // eslint-disable-next-line arrow-body-style
   getKomponent = props => {
-    console.log(props);
-    const løsAksjonspunktGjennomgåOpplæring = vurdering =>
+    const løsAksjonspunktGjennomgåOpplæring = perioder =>
       props.submitCallback([
         {
           kode: aksjonspunktCodes.VURDER_GJENNOMGÅTT_OPPLÆRING,
           begrunnelse: 'Gjennomgått opplæring er behandlet',
-          ...vurdering,
+          perioder,
         },
       ]);
     const løsAksjonspunktNødvendighet = vurdering =>

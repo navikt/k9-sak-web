@@ -10,10 +10,13 @@
     "@navikt/ft-plattform-komponenter": "^1.4.0",
     "@navikt/ds-react": "2.0.8",
     "formik": "^2.2.9",
+    "dayjs": "^1.11.6",
+    "uuid": "9.0.0",
     "yup": "^0.32.11",
     "@fpsak-frontend/form": "*",
     "@k9-sak-web/types": "*",
     "nav-frontend-tabs": "^2.0.3",
-    "classnames": "^2.3.2"
+    "classnames": "^2.3.2",
+    "react-intl": "6.2.5"
   }
 }

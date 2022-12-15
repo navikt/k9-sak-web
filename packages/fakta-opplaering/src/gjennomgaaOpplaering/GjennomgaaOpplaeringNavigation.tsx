@@ -14,12 +14,15 @@ interface OwnProps {
 const GjennomgaaOpplaeringNavigation = ({ perioder, setValgtPeriode }: OwnProps) => {
   const perioderTilVurdering = perioder.filter(periode => periode.resultat === GjennomgaaOpplaeringStatus.IKKE_VURDERT);
   const [activeIndex, setActiveIndex] = React.useState(perioderTilVurdering.length ? 0 : -1);
-  const perioderSomErVurdert = perioder.filter(periode => periode.resultat !== GjennomgaaOpplaeringStatus.IKKE_VURDERT);
+  const perioderSomErVurdert = perioder
+    .filter(periode => periode.resultat !== GjennomgaaOpplaeringStatus.IKKE_VURDERT)
+    // @ts-ignore
+    .sort((a, b) => new Date(b.opplæring.fom) - new Date(a.opplæring.fom));
   const allePerioder = [...perioderTilVurdering, ...perioderSomErVurdert];
   const elements = [
     ...perioderTilVurdering.map(periode => <PeriodeRad periode={periode.opplæring} resultat={periode.resultat} />),
     ...perioderSomErVurdert.map(periode => (
-      <PeriodeRad perioder={periode.opplæring} kilde="SØKER" resultat={periode.resultat} />
+      <PeriodeRad periode={periode.opplæring} kilde="SØKER" resultat={periode.resultat} />
     )),
   ];
   const antallPerioder = elements.length;

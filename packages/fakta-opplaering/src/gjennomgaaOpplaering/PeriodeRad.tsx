@@ -28,35 +28,14 @@ const renderStatusIcon = (resultat: string) => {
     );
   }
 
-  if (resultat === Vurderingsresultat.GODKJENT_AUTOMATISK) {
-    return (
-      <ContentWithTooltip tooltipText="Vilkåret er automatisk oppfylt">
-        <IndicatorWithOverlay
-          indicatorRenderer={() => <GreenCheckIconFilled />}
-          overlayRenderer={() => <InstitutionIcon />}
-        />
-      </ContentWithTooltip>
-    );
-  }
-
-  if (resultat === Vurderingsresultat.IKKE_GODKJENT_AUTOMATISK) {
-    return (
-      <ContentWithTooltip tooltipText="Vilkåret er automatisk ikke oppfylt">
-        <IndicatorWithOverlay
-          indicatorRenderer={() => <GreenCheckIconFilled />}
-          overlayRenderer={() => <InstitutionIcon />}
-        />
-      </ContentWithTooltip>
-    );
-  }
-  if (resultat === Vurderingsresultat.GODKJENT_MANUELT) {
+  if (resultat === Vurderingsresultat.GODKJENT) {
     return (
       <ContentWithTooltip tooltipText="Vilkåret er oppfylt">
         <GreenCheckIconFilled />
       </ContentWithTooltip>
     );
   }
-  if (resultat === Vurderingsresultat.IKKE_GODKJENT_MANUELT) {
+  if (resultat === Vurderingsresultat.IKKE_GODKJENT) {
     return (
       <ContentWithTooltip tooltipText="Vilkåret er ikke oppfylt">
         <RedCrossIconFilled />
