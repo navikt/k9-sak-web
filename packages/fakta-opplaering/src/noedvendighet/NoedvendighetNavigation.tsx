@@ -1,37 +1,34 @@
 import { Heading } from '@navikt/ds-react';
 import { InteractiveList } from '@navikt/ft-plattform-komponenter';
 import React from 'react';
-import { InstitusjonPerioderMedResultat } from '@k9-sak-web/types';
-import institusjonStatus from './konstanter';
-import PeriodeRad from './PeriodeRad';
-import styles from './InstitusjonNavigation.modules.css';
+import { NoedvendighetPerioderMedResultat } from '@k9-sak-web/types';
+import noedvendighetStatus from './konstanter';
+import PeriodeRad from '../components/PeriodeRad';
+import styles from './noedvendighetNavigation.modules.css';
 
 interface OwnProps {
-  perioder: InstitusjonPerioderMedResultat[];
-  setValgtPeriode: React.Dispatch<React.SetStateAction<InstitusjonPerioderMedResultat>>;
+  perioder: NoedvendighetPerioderMedResultat[];
+  setValgtPeriode: React.Dispatch<React.SetStateAction<NoedvendighetPerioderMedResultat>>;
 }
 
-const InstitusjonNavigation = ({ perioder, setValgtPeriode }: OwnProps) => {
-  const perioderTilVurdering = perioder.filter(periode => periode.resultat === institusjonStatus.IKKE_VURDERT);
+const NoedvendighetNavigation = ({ perioder, setValgtPeriode }: OwnProps) => {
+  const perioderTilVurdering = perioder.filter(periode => periode.resultat === noedvendighetStatus.IKKE_VURDERT);
   const [activeIndex, setActiveIndex] = React.useState(perioderTilVurdering.length ? 0 : -1);
-  const perioderSomErVurdert = perioder.filter(periode => periode.resultat !== institusjonStatus.IKKE_VURDERT);
+  const perioderSomErVurdert = perioder.filter(periode => periode.resultat !== noedvendighetStatus.IKKE_VURDERT);
   const allePerioder = [...perioderTilVurdering, ...perioderSomErVurdert];
   const elements = [
     ...perioderTilVurdering.map(periode => <PeriodeRad perioder={periode.perioder} resultat={periode.resultat} />),
-    ...perioderSomErVurdert.map(periode => (
-      <PeriodeRad perioder={periode.perioder} kilde="SØKER" resultat={periode.resultat} />
-    )),
+    ...perioderSomErVurdert.map(periode => <PeriodeRad perioder={periode.perioder} resultat={periode.resultat} />),
   ];
   const antallPerioder = elements.length;
   return (
-    <div className={styles['institusjon-oversikt']}>
+    <div className={styles['noedvendighet-oversikt']}>
       <Heading size="xsmall" className={styles.heading}>
         Alle perioder
       </Heading>
       <div className={styles.periodColumns}>
         <div className={styles.marginLeft}>Status</div>
         <div>Periode</div>
-        <div>Part</div>
       </div>
       {antallPerioder === 0 && <p className={styles.marginLeft}>Ingen vurderinger å vise</p>}
       {antallPerioder > 0 && (
@@ -54,4 +51,4 @@ const InstitusjonNavigation = ({ perioder, setValgtPeriode }: OwnProps) => {
   );
 };
 
-export default InstitusjonNavigation;
+export default NoedvendighetNavigation;

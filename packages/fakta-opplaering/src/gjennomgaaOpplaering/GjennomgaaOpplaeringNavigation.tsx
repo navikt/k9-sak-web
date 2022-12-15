@@ -3,7 +3,7 @@ import { InteractiveList } from '@navikt/ft-plattform-komponenter';
 import React from 'react';
 import { GjennomgaaOpplaeringPeriode } from '@k9-sak-web/types';
 import GjennomgaaOpplaeringStatus from './konstanter';
-import PeriodeRad from './PeriodeRad';
+import PeriodeRad from '../components/PeriodeRad';
 import styles from './gjennomgaaOpplaeringNavigation.modules.css';
 
 interface OwnProps {
@@ -21,9 +21,7 @@ const GjennomgaaOpplaeringNavigation = ({ perioder, setValgtPeriode }: OwnProps)
   const allePerioder = [...perioderTilVurdering, ...perioderSomErVurdert];
   const elements = [
     ...perioderTilVurdering.map(periode => <PeriodeRad periode={periode.opplæring} resultat={periode.resultat} />),
-    ...perioderSomErVurdert.map(periode => (
-      <PeriodeRad periode={periode.opplæring} kilde="SØKER" resultat={periode.resultat} />
-    )),
+    ...perioderSomErVurdert.map(periode => <PeriodeRad periode={periode.opplæring} resultat={periode.resultat} />),
   ];
   const antallPerioder = elements.length;
   return (
@@ -34,7 +32,6 @@ const GjennomgaaOpplaeringNavigation = ({ perioder, setValgtPeriode }: OwnProps)
       <div className={styles.periodColumns}>
         <div className={styles.marginLeft}>Status</div>
         <div>Periode</div>
-        <div>Part</div>
       </div>
       {antallPerioder === 0 && <p className={styles.marginLeft}>Ingen vurderinger å vise</p>}
       {antallPerioder > 0 && (

@@ -3,16 +3,18 @@ import { Box, Margin, DetailView, LabelledContent, Form } from '@navikt/ft-platt
 import { TextAreaFormik } from '@fpsak-frontend/form';
 import { Calender } from '@navikt/ds-icons';
 
-import React from 'react';
-import { InstitusjonVurderingMedPerioder, Vurderingsresultat } from '@k9-sak-web/types';
+import React, { useContext } from 'react';
+import { NoedvendighetVurderingMedPerioder, Vurderingsresultat } from '@k9-sak-web/types';
 import { required } from '@fpsak-frontend/utils';
 import { Formik } from 'formik';
 import RadioGroupFormik from '@fpsak-frontend/form/src/RadioGroupFormik';
 import { Button } from '@navikt/ds-react';
+import { FaktaOpplaeringContext } from '@k9-sak-web/behandling-opplaeringspenger/src/panelDefinisjoner/faktaPaneler/OpplaeringFaktaPanelDef';
+import { useIntl } from 'react-intl';
 
 enum fieldname {
   BEGRUNNELSE = 'BEGRUNNELSE',
-  GODKJENT_INSTITUSJON = 'GODKJENT_INSTITUSJON',
+  NOEDVENDIG_OPPLAERING = 'NOEDVENDIG_OPPLAERING',
 }
 
 enum RadioOptions {
@@ -21,34 +23,29 @@ enum RadioOptions {
 }
 
 interface VurderingAvBeredskapsperioderFormProps {
-  vurdering: InstitusjonVurderingMedPerioder;
+  vurdering: NoedvendighetVurderingMedPerioder;
   avbrytRedigering: () => void;
-  readOnly: boolean;
-  løsAksjonspunkt: (payload: any) => void;
   erRedigering: boolean;
 }
 
 interface FormState {
   [fieldname.BEGRUNNELSE]: string;
-  [fieldname.GODKJENT_INSTITUSJON]: string;
+  [fieldname.NOEDVENDIG_OPPLAERING]: string;
 }
 
-const InstitusjonForm = ({
+const NoedvendighetForm = ({
   vurdering,
   avbrytRedigering,
-  readOnly,
-  løsAksjonspunkt,
   erRedigering,
 }: VurderingAvBeredskapsperioderFormProps): JSX.Element => {
-  const godkjentInstitusjonInitialValue = () => {
-    if ([Vurderingsresultat.GODKJENT_AUTOMATISK, Vurderingsresultat.GODKJENT_MANUELT].includes(vurdering.resultat)) {
+  const { readOnly, løsAksjonspunktNødvendighet } = useContext(FaktaOpplaeringContext);
+  const intl = useIntl();
+
+  const godkjentNoedvendighetInitialValue = () => {
+    if ([Vurderingsresultat.GODKJENT].includes(vurdering.resultat)) {
       return RadioOptions.JA;
     }
-    if (
-      [Vurderingsresultat.IKKE_GODKJENT_AUTOMATISK, Vurderingsresultat.IKKE_GODKJENT_MANUELT].includes(
-        vurdering.resultat,
-      )
-    ) {
+    if ([Vurderingsresultat.IKKE_GODKJENT].includes(vurdering.resultat)) {
       return RadioOptions.NEI;
     }
     return null;
@@ -56,19 +53,19 @@ const InstitusjonForm = ({
 
   const initialValues = {
     [fieldname.BEGRUNNELSE]: vurdering.begrunnelse || '',
-    [fieldname.GODKJENT_INSTITUSJON]: godkjentInstitusjonInitialValue(),
+    [fieldname.NOEDVENDIG_OPPLAERING]: godkjentNoedvendighetInitialValue(),
   };
 
   const mapValuesTilAksjonspunktPayload = (values: FormState) => ({
-    godkjent: values[fieldname.GODKJENT_INSTITUSJON] === 'ja',
+    nødvendigOpplæring: values[fieldname.NOEDVENDIG_OPPLAERING] === 'ja',
     begrunnelse: values[fieldname.BEGRUNNELSE],
     journalpostId: vurdering.journalpostId,
   });
   return (
-    <DetailView title="Vurdering av institusjon">
+    <DetailView title="Vurdering av nødvendighet">
       <Formik
         initialValues={initialValues}
-        onSubmit={values => løsAksjonspunkt(mapValuesTilAksjonspunktPayload(values))}
+        onSubmit={values => løsAksjonspunktNødvendighet(mapValuesTilAksjonspunktPayload(values))}
       >
         {({ handleSubmit, isSubmitting }) => (
           <>
@@ -78,15 +75,9 @@ const InstitusjonForm = ({
               </div>
             ))}
             <Box marginTop={Margin.xLarge}>
-              <LabelledContent
-                label="På hvilken helseinstitusjon eller kompetansesenter foregår opplæringen?"
-                content={vurdering.institusjon}
-              />
-            </Box>
-            <Box marginTop={Margin.xLarge}>
               <TextAreaFormik
                 // eslint-disable-next-line max-len
-                label="Gjør en vurdering av om opplæringen gjennomgås ved en godkjent helseinstitusjon eller et offentlig spesialpedagogisk kompetansesenter som følge av § 9-14, første ledd."
+                label={intl.formatMessage({ id: 'noedvendighet.vurdering.label' })}
                 name={fieldname.BEGRUNNELSE}
                 validate={[required]}
                 readOnly={readOnly}
@@ -94,13 +85,13 @@ const InstitusjonForm = ({
             </Box>
             <Box marginTop={Margin.xLarge}>
               <RadioGroupFormik
-                legend="Er opplæringen ved godkjent helseinstitusjon eller kompetansesenter?"
+                legend={intl.formatMessage({ id: 'noedvendighet.noedvendigOpplaering.label' })}
                 options={[
                   { value: RadioOptions.JA, label: 'Ja' },
                   { value: RadioOptions.NEI, label: 'Nei' },
                 ]}
                 validate={[required]}
-                name={fieldname.GODKJENT_INSTITUSJON}
+                name={fieldname.NOEDVENDIG_OPPLAERING}
                 disabled={readOnly}
               />
             </Box>
@@ -135,4 +126,4 @@ const InstitusjonForm = ({
   );
 };
 
-export default InstitusjonForm;
+export default NoedvendighetForm;

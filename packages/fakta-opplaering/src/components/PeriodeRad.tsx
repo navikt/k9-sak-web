@@ -3,8 +3,6 @@ import React from 'react';
 import {
   ContentWithTooltip,
   GreenCheckIconFilled,
-  IndicatorWithOverlay,
-  InstitutionIcon,
   OnePersonIconGray,
   OnePersonOutlineGray,
   RedCrossIconFilled,
@@ -14,9 +12,9 @@ import { Vurderingsresultat, Kilde } from '@k9-sak-web/types';
 import styles from './periodeRad.modules.css';
 
 interface OwnProps {
-  periode: Period;
+  periode?: Period;
+  perioder?: Period[];
   resultat: string;
-  kilde: Kilde;
 }
 
 const renderStatusIcon = (resultat: string) => {
@@ -45,23 +43,7 @@ const renderStatusIcon = (resultat: string) => {
   return null;
 };
 
-const renderKildeIcon = (kilde: Kilde) => {
-  if (kilde === Kilde.ANDRE) {
-    return (
-      <ContentWithTooltip tooltipText="Annen part">
-        <OnePersonOutlineGray />
-      </ContentWithTooltip>
-    );
-  }
-
-  return (
-    <ContentWithTooltip tooltipText="Søker">
-      <OnePersonIconGray />
-    </ContentWithTooltip>
-  );
-};
-
-const PeriodeRad = ({ periode, resultat, kilde }: OwnProps): JSX.Element => (
+const PeriodeRad = ({ periode, perioder, resultat }: OwnProps): JSX.Element => (
   <div className={styles.vurderingsperiodeElement}>
     <div>
       <span className={styles.visuallyHidden}>Type</span>
@@ -71,13 +53,10 @@ const PeriodeRad = ({ periode, resultat, kilde }: OwnProps): JSX.Element => (
       <div className={styles.vurderingsperiodeElement__texts__period}>
         <div>
           <span className={styles.visuallyHidden}>Perioder</span>
-          {periode.prettifyPeriod()}
+          {periode && periode.prettifyPeriod()}
+          {!!perioder?.length && perioder.map(v => v.prettifyPeriod())}
         </div>
       </div>
-    </div>
-    <div className={styles.vurderingsperiodeElement__texts__kildeIcon}>
-      <span className={styles.visuallyHidden}>Kilde</span>
-      {renderKildeIcon(kilde)}
     </div>
   </div>
 );

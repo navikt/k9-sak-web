@@ -1,4 +1,4 @@
-const institusjonStatus = {
+const noedvendighetStatus = {
   IKKE_VURDERT: 'IKKE_VURDERT',
   AUTOMATISK_GODKJENT: 'AUTOMATISK_GODKJENT',
   AUTOMATISK_AVSLAG: 'AUTOMATISK_AVSLAG',
@@ -6,4 +6,4 @@ const institusjonStatus = {
   MANUELT_AVSLAG: 'MANUELT_AVSLAG',
 };
 
-export default institusjonStatus;
+export default noedvendighetStatus;

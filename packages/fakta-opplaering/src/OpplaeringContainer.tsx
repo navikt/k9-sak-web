@@ -6,6 +6,7 @@ import { FaktaOpplaeringContext } from '@k9-sak-web/behandling-opplaeringspenger
 import { NestedIntlProvider } from '@fpsak-frontend/shared-components';
 import Tabs from './Tabs';
 import GjennomgaaOpplaeringOversikt from './gjennomgaaOpplaering/GjennomgaaOpplaeringOversikt';
+import NoedvendighetOversikt from './noedvendighet/NoedvendighetOversikt';
 import messages from './i18n/nb_NO.json';
 import styles from './opplaeringContainer.modules.css';
 
@@ -47,6 +48,7 @@ const OpplaeringContainer = () => {
         onChange={(e, clickedIndex) => setActiveTab(clickedIndex)}
       />
       {activeTab === 0 && <GjennomgaaOpplaeringOversikt />}
+      {activeTab === 1 && <NoedvendighetOversikt />}
     </NestedIntlProvider>
   );
 };

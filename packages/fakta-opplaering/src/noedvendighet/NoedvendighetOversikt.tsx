@@ -1,14 +1,15 @@
-import * as React from 'react';
+import React, { useContext } from 'react';
 import { NavigationWithDetailView } from '@navikt/ft-plattform-komponenter';
 import { Heading } from '@navikt/ds-react';
-import { InstitusjonPeriode, InstitusjonPerioderMedResultat, InstitusjonVurdering } from '@k9-sak-web/types';
+import { NoedvendighetPeriode, NoedvendighetPerioderMedResultat, NoedvendighetVurdering } from '@k9-sak-web/types';
 import { Period } from '@navikt/k9-period-utils';
-import InstitusjonNavigation from './InstitusjonNavigation';
-import InstitusjonDetails from './InstitusjonDetails';
+import { FaktaOpplaeringContext } from '@k9-sak-web/behandling-opplaeringspenger/src/panelDefinisjoner/faktaPaneler/OpplaeringFaktaPanelDef';
+import NoedvendighetNavigation from './NoedvendighetNavigation';
+import NoedvendighetDetails from './NoedvendighetDetails';
 
 interface OwnProps {
-  perioder: InstitusjonPeriode[];
-  vurderinger: InstitusjonVurdering[];
+  perioder: NoedvendighetPeriode[];
+  vurderinger: NoedvendighetVurdering[];
   readOnly: boolean;
   løsAksjonspunkt: (payload: any) => void;
 }
@@ -24,7 +25,7 @@ const reducer = (accumulator, currentValue) => {
     return [
       ...arrayUtenPeriodeneSomSkalLeggesInn,
       {
-        institusjon: perioderMedMatchendeJournalpostId.institusjon,
+        noedvendighet: perioderMedMatchendeJournalpostId.noedvendighet,
         journalpostId: perioderMedMatchendeJournalpostId.journalpostId,
         resultat: perioderMedMatchendeJournalpostId.resultat,
         perioder: [...perioderMedMatchendeJournalpostId.perioder, currentValue.periode],
@@ -34,7 +35,7 @@ const reducer = (accumulator, currentValue) => {
   return [
     ...accumulator,
     {
-      institusjon: currentValue.institusjon,
+      noedvendighet: currentValue.noedvendighet,
       journalpostId: currentValue.journalpostId,
       resultat: currentValue.resultat,
       perioder: [currentValue.periode],
@@ -42,9 +43,10 @@ const reducer = (accumulator, currentValue) => {
   ];
 };
 
-const InstitusjonOversikt = ({ perioder, vurderinger, readOnly, løsAksjonspunkt }: OwnProps) => {
-  const [valgtPeriode, setValgtPeriode] = React.useState<InstitusjonPerioderMedResultat>(null);
-
+const NoedvendighetOversikt = () => {
+  const { nødvendigOpplæring } = useContext(FaktaOpplaeringContext);
+  const { vurderinger, perioder } = nødvendigOpplæring;
+  const [valgtPeriode, setValgtPeriode] = React.useState<NoedvendighetPerioderMedResultat>(null);
   const perioderMappet = perioder
     .map(periode => {
       const vurderingForPeriode = vurderinger.find(
@@ -65,7 +67,7 @@ const InstitusjonOversikt = ({ perioder, vurderinger, readOnly, løsAksjonspunkt
     return {
       ...vurdering,
       perioder: vurdering.perioder.map(v => new Period(v.fom, v.tom)),
-      institusjon: periodeForVurdering.institusjon,
+      noedvendighet: periodeForVurdering.noedvendighet,
     };
   });
 
@@ -75,20 +77,15 @@ const InstitusjonOversikt = ({ perioder, vurderinger, readOnly, løsAksjonspunkt
 
   return (
     <div style={{ fontSize: '16px' }}>
-      <Heading style={{ marginBottom: '1.625rem' }} size="small">
-        Institusjon
-      </Heading>
       <NavigationWithDetailView
-        navigationSection={() => <InstitusjonNavigation perioder={perioderMappet} setValgtPeriode={setValgtPeriode} />}
+        navigationSection={() => (
+          <NoedvendighetNavigation perioder={perioderMappet} setValgtPeriode={setValgtPeriode} />
+        )}
         showDetailSection
-        detailSection={() =>
-          valgtVurdering ? (
-            <InstitusjonDetails vurdering={valgtVurdering} readOnly={readOnly} løsAksjonspunkt={løsAksjonspunkt} />
-          ) : null
-        }
+        detailSection={() => (valgtVurdering ? <NoedvendighetDetails vurdering={valgtVurdering} /> : null)}
       />
     </div>
   );
 };
 
-export default InstitusjonOversikt;
+export default NoedvendighetOversikt;
