@@ -65,6 +65,7 @@ const FritekstRedigering = ({
     vb => vb.dokumentMalType === dokumentMalType.MANUELL,
   );
   const firstRender = useRef<boolean>(true);
+  const [henterMal, setHenterMal] = useState<boolean>(false);
   const [visRedigering, setVisRedigering] = useState<boolean>(false);
   const [redigerbartInnholdKlart, setRedigerbartInnholdKlart] = useState<boolean>(false);
   const [brevStiler, setBrevStiler] = useState<string>('');
@@ -74,6 +75,7 @@ const FritekstRedigering = ({
   const [originalHtml, setOriginalHtml] = useState<string>('');
 
   const hentFritekstbrevMal = async () => {
+    setHenterMal(true);
     const request: { dokumentMal: string; dokumentdata?: any[]; overstyrtMottaker?: Brevmottaker } = {
       dokumentMal: redigerbarDokumentmal.redigerbarMalType,
     };
@@ -108,7 +110,8 @@ const FritekstRedigering = ({
       setRedigerbartInnhold(originalHtmlStreng);
     }
 
-    setRedigerbartInnholdKlart(true);
+    await setRedigerbartInnholdKlart(true);
+    setHenterMal(false);
   };
 
   const lukkEditor = () => setVisRedigering(false);
@@ -128,7 +131,7 @@ const FritekstRedigering = ({
   };
 
   useEffect(() => {
-    if (!firstRender.current && overstyrtMottaker) {
+    if (!firstRender.current && overstyrtMottaker && !henterMal) {
       hentFritekstbrevMal();
     }
   }, [firstRender, overstyrtMottaker]);
