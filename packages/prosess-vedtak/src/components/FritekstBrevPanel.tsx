@@ -7,7 +7,11 @@ import { FormattedMessage, injectIntl, IntlShape } from 'react-intl';
 import { VerticalSpacer, useFeatureToggles } from '@fpsak-frontend/shared-components';
 import { hasValidText, maxLength, minLength, required } from '@fpsak-frontend/utils';
 import { TextAreaFormik, TextFieldFormik } from '@fpsak-frontend/form';
-import { kanHaManueltFritekstbrev, TilgjengeligeVedtaksbrev } from '@fpsak-frontend/utils/src/formidlingUtils';
+import {
+  Brevmottaker,
+  kanHaManueltFritekstbrev,
+  TilgjengeligeVedtaksbrev,
+} from '@fpsak-frontend/utils/src/formidlingUtils';
 import { DokumentDataType } from '@k9-sak-web/types/src/dokumentdata';
 
 import AlertStripe from 'nav-frontend-alertstriper';
@@ -34,6 +38,7 @@ interface OwnProps {
   formikProps: FormikProps<FormikValues>;
   dokumentdata: DokumentDataType;
   dokumentdataInformasjonsbehov: any;
+  overstyrtMottaker?: Brevmottaker;
 }
 
 const FritekstBrevPanel = ({
@@ -48,6 +53,7 @@ const FritekstBrevPanel = ({
   formikProps,
   dokumentdata,
   dokumentdataInformasjonsbehov,
+  overstyrtMottaker,
 }: OwnProps) => {
   const { formatMessage } = intl;
   const [featureToggles] = useFeatureToggles();
@@ -132,6 +138,7 @@ const FritekstBrevPanel = ({
             skalBrukeOverstyrendeFritekstBrev={formikProps.values.skalBrukeOverstyrendeFritekstBrev}
             kanInkludereKalender={kanInkludereKalender}
             dokumentdataInformasjonsbehov={dokumentdataInformasjonsbehov}
+            overstyrtMottaker={overstyrtMottaker}
           />
 
           {formikProps.errors?.[fieldnames.REDIGERT_HTML] && (

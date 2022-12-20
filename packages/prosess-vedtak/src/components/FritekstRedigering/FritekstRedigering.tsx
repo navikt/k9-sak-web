@@ -5,12 +5,14 @@ import { Modal, Button } from '@navikt/ds-react';
 import { Edit } from '@navikt/ds-icons';
 
 import {
+  Brevmottaker,
   TilgjengeligeVedtaksbrev,
   TilgjengeligeVedtaksbrevMedMaler,
   VedtaksbrevMal,
 } from '@fpsak-frontend/utils/src/formidlingUtils';
 import dokumentMalType from '@fpsak-frontend/kodeverk/src/dokumentMalType';
 import { DokumentDataType } from '@k9-sak-web/types/src/dokumentdata';
+import { safeJSONParse } from '@fpsak-frontend/utils';
 import {
   lagLagreHtmlDokumentdataRequest,
   utledPrefiksInnhold,
@@ -38,6 +40,7 @@ interface ownProps {
   inkluderKalender: boolean;
   kanInkludereKalender: boolean;
   dokumentdataInformasjonsbehov: any;
+  overstyrtMottaker?: Brevmottaker;
 }
 
 const FritekstRedigering = ({
@@ -53,6 +56,7 @@ const FritekstRedigering = ({
   inkluderKalender,
   kanInkludereKalender,
   dokumentdataInformasjonsbehov,
+  overstyrtMottaker,
 }: ownProps & WrappedComponentProps) => {
   useEffect(() => {
     Modal.setAppElement(document.body);
@@ -61,6 +65,7 @@ const FritekstRedigering = ({
     vb => vb.dokumentMalType === dokumentMalType.MANUELL,
   );
   const firstRender = useRef<boolean>(true);
+  const [henterMal, setHenterMal] = useState<boolean>(false);
   const [visRedigering, setVisRedigering] = useState<boolean>(false);
   const [redigerbartInnholdKlart, setRedigerbartInnholdKlart] = useState<boolean>(false);
   const [brevStiler, setBrevStiler] = useState<string>('');
@@ -70,12 +75,17 @@ const FritekstRedigering = ({
   const [originalHtml, setOriginalHtml] = useState<string>('');
 
   const hentFritekstbrevMal = async () => {
-    const request: { dokumentMal: string; dokumentdata?: any[] } = {
+    setHenterMal(true);
+    const request: { dokumentMal: string; dokumentdata?: any[]; overstyrtMottaker?: Brevmottaker } = {
       dokumentMal: redigerbarDokumentmal.redigerbarMalType,
     };
 
     if (dokumentdataInformasjonsbehov) {
       request.dokumentdata = dokumentdataInformasjonsbehov;
+    }
+
+    if (overstyrtMottaker) {
+      request.overstyrtMottaker = safeJSONParse(overstyrtMottaker);
     }
 
     const responseHtml = await hentFritekstbrevHtmlCallback(request);
@@ -100,7 +110,8 @@ const FritekstRedigering = ({
       setRedigerbartInnhold(originalHtmlStreng);
     }
 
-    setRedigerbartInnholdKlart(true);
+    await setRedigerbartInnholdKlart(true);
+    setHenterMal(false);
   };
 
   const lukkEditor = () => setVisRedigering(false);
@@ -114,9 +125,16 @@ const FritekstRedigering = ({
         redigertHtml: html,
         originalHtml,
         inkluderKalender,
+        overstyrtMottaker,
       }),
     );
   };
+
+  useEffect(() => {
+    if (!firstRender.current && overstyrtMottaker && !henterMal) {
+      hentFritekstbrevMal();
+    }
+  }, [firstRender, overstyrtMottaker]);
 
   useEffect(() => {
     if (!firstRender.current && redigerbartInnholdKlart) {
