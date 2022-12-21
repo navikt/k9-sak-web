@@ -50,7 +50,7 @@ const valgValues = {
 };
 
 const vilkårHarOverlappendePerioderIInfotrygd = (uttaksperiode: Uttaksperiode) =>
-  Object.entries(uttaksperiode.vurderteVilkår).some(
+  Object.entries(uttaksperiode.vurderteVilkår.vilkår).some(
     ([vilkår, utfall]) => vilkår === VilkårEnum.NOK_DAGER && utfall === UtfallEnum.UAVKLART,
   ) && !uttaksperiode.hjemler.some(hjemmel => hjemmel === 'FTRL_9_7__4');
 
@@ -59,7 +59,10 @@ export const FormContent = ({ handleSubmit, aktiviteter = [], isAksjonspunktOpen
     () =>
       aktiviteter
         .flatMap(({ uttaksperioder }) => uttaksperioder)
-        .filter(({ utfall, hjemler }) => utfall === UtfallEnum.UAVKLART && !hjemler.some(hjemmelen => hjemmelen === 'FTRL_9_7__4')),
+        .filter(
+          ({ utfall, hjemler }) =>
+            utfall === UtfallEnum.UAVKLART && !hjemler.some(hjemmelen => hjemmelen === 'FTRL_9_7__4'),
+        ),
     [aktiviteter],
   );
 
@@ -116,7 +119,7 @@ export const FormContent = ({ handleSubmit, aktiviteter = [], isAksjonspunktOpen
   );
 
   if (harUavklartePerioder) {
-    const harOverlappendePerioderIInfotrygd = uavklartePerioderPgaInfotrygd.some((uttaksperiode) =>
+    const harOverlappendePerioderIInfotrygd = uavklartePerioderPgaInfotrygd.some(uttaksperiode =>
       vilkårHarOverlappendePerioderIInfotrygd(uttaksperiode),
     );
 
