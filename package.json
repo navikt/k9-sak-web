@@ -47,7 +47,7 @@
     "@navikt/ds-css": "2.0.8",
     "@navikt/ds-react": "2.0.8",
     "@navikt/familie-endringslogg": "^2.0.0",
-    "@navikt/ft-plattform-komponenter": "1.4.2",
+    "@navikt/ft-plattform-komponenter": "1.4.3",
     "@sentry/browser": "7.26.0",
     "@storybook/testing-react": "^1.3.0",
     "axios": "0.27.2",
