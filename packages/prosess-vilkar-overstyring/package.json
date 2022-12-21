@@ -13,7 +13,7 @@
     "@fpsak-frontend/utils": "1.0.0",
     "@k9-sak-web/prosess-felles": "1.0.0",
     "@k9-sak-web/types": "1.0.0",
-    "@navikt/ft-plattform-komponenter": "1.4.1",
+    "@navikt/ft-plattform-komponenter": "1.4.2",
     "classnames": "^2.3.2",
     "moment": "^2.29.4",
     "nav-frontend-knapper": "3.1.3",

@@ -4,8 +4,9 @@ import vedtaksbrevtype from '@fpsak-frontend/kodeverk/src/vedtaksbrevtype';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import { useFeatureToggles, VerticalSpacer } from '@fpsak-frontend/shared-components';
 
-import { required, safeJSONParse, decodeHtmlEntity } from '@fpsak-frontend/utils';
+import { required, safeJSONParse } from '@fpsak-frontend/utils';
 import {
+  Brevmottaker,
   finnesTilgjengeligeVedtaksbrev,
   kanHaAutomatiskVedtaksbrev,
   kanHaFritekstbrevV1,
@@ -53,7 +54,7 @@ const getManuellBrevCallback =
   }: {
     brødtekst: string;
     overskrift: string;
-    overstyrtMottaker: boolean;
+    overstyrtMottaker?: Brevmottaker;
     formProps: FormikProps<any>;
     previewCallback: (dokument: any) => void;
     tilgjengeligeVedtaksbrev: TilgjengeligeVedtaksbrev;
@@ -160,7 +161,7 @@ interface BrevPanelProps {
   brødtekst: string;
   overskrift: string;
   behandlingResultat: Behandlingsresultat;
-  overstyrtMottaker: boolean;
+  overstyrtMottaker?: Brevmottaker;
   formikProps: FormikProps<any>;
   ytelseTypeKode: string;
   dokumentdata: DokumentDataType;
@@ -252,6 +253,7 @@ export const BrevPanel: React.FC<BrevPanelProps> = props => {
           dokumentdata={dokumentdata}
           lagreDokumentdata={lagreDokumentdata}
           dokumentdataInformasjonsbehov={dokumentdataInformasjonsbehov}
+          overstyrtMottaker={overstyrtMottaker}
         />
       </div>
       {!formikProps.values[fieldnames.SKAL_HINDRE_UTSENDING_AV_BREV] && (
