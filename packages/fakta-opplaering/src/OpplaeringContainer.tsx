@@ -8,6 +8,7 @@ import Tabs from './Tabs';
 import GjennomgaaOpplaeringOversikt from './gjennomgaaOpplaering/GjennomgaaOpplaeringOversikt';
 import NoedvendighetOversikt from './noedvendighet/NoedvendighetOversikt';
 import messages from './i18n/nb_NO.json';
+import ReisetidOversikt from './reisetid/ReisetidOversikt';
 import styles from './opplaeringContainer.modules.css';
 
 interface TabItemProps {
@@ -48,7 +49,8 @@ const OpplaeringContainer = () => {
         onChange={(e, clickedIndex) => setActiveTab(clickedIndex)}
       />
       {activeTab === 0 && <GjennomgaaOpplaeringOversikt />}
-      {activeTab === 1 && <NoedvendighetOversikt />}
+      {activeTab === 1 && <ReisetidOversikt />}
+      {activeTab === 2 && <NoedvendighetOversikt />}
     </NestedIntlProvider>
   );
 };

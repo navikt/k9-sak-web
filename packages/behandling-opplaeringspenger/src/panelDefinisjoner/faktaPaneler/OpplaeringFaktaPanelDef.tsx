@@ -13,11 +13,16 @@ class OpplaeringFaktaPanelDef extends FaktaPanelDef {
 
   getTekstKode = () => 'Opplaering.Title';
 
-  getAksjonspunktKoder = () => [aksjonspunktCodes.VURDER_GJENNOMGÅTT_OPPLÆRING, aksjonspunktCodes.VURDER_NØDVENDIGHET];
+  getAksjonspunktKoder = () => [
+    aksjonspunktCodes.VURDER_GJENNOMGÅTT_OPPLÆRING,
+    aksjonspunktCodes.VURDER_NØDVENDIGHET,
+    aksjonspunktCodes.VURDER_REISETID,
+  ];
 
   getEndepunkter = () => [
     OpplaeringspengerBehandlingApiKeys.GJENNOMGÅTT_OPPLÆRING,
     OpplaeringspengerBehandlingApiKeys.NØDVENDIG_OPPLÆRING,
+    OpplaeringspengerBehandlingApiKeys.REISETID,
   ];
 
   // eslint-disable-next-line arrow-body-style
@@ -34,13 +39,19 @@ class OpplaeringFaktaPanelDef extends FaktaPanelDef {
       props.submitCallback([
         { kode: aksjonspunktCodes.VURDER_NØDVENDIGHET, begrunnelse: 'Nødvendighet er behandlet', ...vurdering },
       ]);
+    const løsAksjonspunktReisetid = vurdering =>
+      props.submitCallback([
+        { kode: aksjonspunktCodes.VURDER_REISETID, begrunnelse: 'Reisetid er behandlet', ...vurdering },
+      ]);
 
     const contextProps = {
       aksjonspunkter: props.aksjonspunkter,
       gjennomgåttOpplæring: props.gjennomgåttOpplæring,
       nødvendigOpplæring: props.nødvendigOpplæring,
+      reisetid: props.reisetid,
       løsAksjonspunktGjennomgåOpplæring,
       løsAksjonspunktNødvendighet,
+      løsAksjonspunktReisetid,
       readOnly: props.readOnly,
     };
     return (

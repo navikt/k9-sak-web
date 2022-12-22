@@ -43,7 +43,7 @@ const renderStatusIcon = (resultat: string) => {
     return (
       <ContentWithTooltip tooltipText="Vilkåret er automatisk ikke oppfylt">
         <IndicatorWithOverlay
-          indicatorRenderer={() => <GreenCheckIconFilled />}
+          indicatorRenderer={() => <RedCrossIconFilled />}
           overlayRenderer={() => <InstitutionIcon />}
         />
       </ContentWithTooltip>

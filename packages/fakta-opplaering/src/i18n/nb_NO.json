@@ -11,5 +11,12 @@
   "opplaering.dokumenter.label": "Hvilke dokumenter er brukt i vurderingen av opplæringen?",
   "noedvendighet.dokumenter.label": "Hvilke dokumenter er brukt i vurderingen av nødvendighet?",
   "noedvendighet.vurdering.label": "Gjør en vurdering av om opplæringen er nødvendig for at søker skal kunne ta seg av og behandle barnet etter § 9-14.",
-  "noedvendighet.noedvendigOpplaering.label": "Er opplæringen nødvendig for å kunne ta seg av og behandle barnet?"
+  "noedvendighet.noedvendigOpplaering.label": "Er opplæringen nødvendig for å kunne ta seg av og behandle barnet?",
+  "reisetid.foersteDag": "Første dag med opplæring:",
+  "reisetid.sisteDag": "Siste dag med opplæring:",
+  "reisetid.hjemkomstdato": "Hjemkomstdato:",
+  "reisetid.avreisedato": "Avreisedato:",
+  "reisetid.periode": "I hvilken periode innvilges reisetid?",
+  "reisetid.begrunnelse": "Begrunnelse",
+  "reisetid.beskrivelseFraSoeker": "Beskrivelse fra søker for reisetid i perioden"
 }

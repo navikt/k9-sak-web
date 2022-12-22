@@ -8,21 +8,9 @@ import GjennomgaaOpplaeringDetails from './GjennomgaaOpplaeringDetails';
 
 const GjennomgaaOpplaeringOversikt = () => {
   const { gjennomgåttOpplæring } = useContext(FaktaOpplaeringContext);
-  const { vurderinger, perioder } = gjennomgåttOpplæring;
+  const { vurderinger } = gjennomgåttOpplæring;
 
   const [valgtPeriode, setValgtPeriode] = React.useState<GjennomgaaOpplaeringPeriode>(null);
-
-  const perioderMappet = perioder.map(periode => {
-    const vurderingForPeriode = vurderinger.find(
-      vurdering =>
-        vurdering.opplæring.fom === periode.opplæring.fom && vurdering.opplæring.tom === periode.opplæring.tom,
-    );
-    return {
-      ...periode,
-      opplæring: new Period(periode.opplæring.fom, periode.opplæring.tom),
-      resultat: vurderingForPeriode?.resultat,
-    };
-  }) as GjennomgaaOpplaeringPeriode[];
 
   const vurderingerMappet = vurderinger.map(vurdering => ({
     ...vurdering,

@@ -166,4 +166,4 @@ export const formatDate = (date: string): string => moment(date, ISO_DATE_FORMAT
 export const formatereLukketPeriode = (periode: string): string => {
   const [fom, tom] = periode.split('/');
   return `${formatDate(fom)} - ${formatDate(tom)}`;
-}
+};

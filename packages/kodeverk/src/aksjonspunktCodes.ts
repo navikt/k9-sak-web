@@ -93,6 +93,7 @@ const aksjonspunktCodes = {
   VURDER_INSTITUSJON: '9300',
   VURDER_NØDVENDIGHET: '9301',
   VURDER_GJENNOMGÅTT_OPPLÆRING: '9302',
+  VURDER_REISETID: '9303',
 };
 
 const klageAksjonspunkter = [

@@ -8,7 +8,11 @@ import { prosessStegCodes } from '@k9-sak-web/konstanter';
 class PanelDef extends ProsessStegPanelDef {
   overstyringDef = new ProsessStegOverstyringPanelDef(this);
 
-  getAksjonspunktKoder = () => [aksjonspunktCodes.VURDER_GJENNOMGÅTT_OPPLÆRING, aksjonspunktCodes.VURDER_NØDVENDIGHET];
+  getAksjonspunktKoder = () => [
+    aksjonspunktCodes.VURDER_GJENNOMGÅTT_OPPLÆRING,
+    aksjonspunktCodes.VURDER_NØDVENDIGHET,
+    aksjonspunktCodes.VURDER_REISETID,
+  ];
 
   getTekstKode = () => 'Behandlingspunkt.Opplaering';
 

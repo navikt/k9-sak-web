@@ -13,9 +13,9 @@ import { FieldArray, Formik } from 'formik';
 import RadioGroupFormik from '@fpsak-frontend/form/src/RadioGroupFormik';
 import { Button, Label, Alert } from '@navikt/ds-react';
 import { getPeriodDifference, Period } from '@navikt/k9-period-utils';
-import DeleteButton from './delete-button/DeleteButton';
-import AddButton from './add-button/AddButton';
-import RangeDatepicker from './rangeDatepicker/RangeDatepicker';
+import DeleteButton from '../components/delete-button/DeleteButton';
+import AddButton from '../components/add-button/AddButton';
+import RangeDatepicker from '../components/rangeDatepicker/RangeDatepicker';
 
 enum fieldname {
   BEGRUNNELSE = 'BEGRUNNELSE',

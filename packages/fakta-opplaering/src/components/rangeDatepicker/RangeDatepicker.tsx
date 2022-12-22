@@ -29,7 +29,7 @@ const validate = (date: DateValidationT) => {
   return '';
 };
 
-const RangeDatepicker = ({ name, fromDate, toDate, onRangeChange, placeholder }: OwnProps) => {
+const RangeDatepicker = ({ name, fromDate, toDate, onRangeChange, placeholder, defaultSelected }: OwnProps) => {
   const [fromError, setFromError] = useState('');
   const [toError, setToError] = useState('');
   const formik = useFormikContext();
@@ -37,6 +37,7 @@ const RangeDatepicker = ({ name, fromDate, toDate, onRangeChange, placeholder }:
     name,
   });
   const { datepickerProps, toInputProps, fromInputProps } = UNSAFE_useRangeDatepicker({
+    defaultSelected,
     fromDate,
     toDate,
     onRangeChange,
