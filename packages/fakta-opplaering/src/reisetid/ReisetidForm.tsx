@@ -1,32 +1,22 @@
 import React, { useContext } from 'react';
-import { Box, Margin, DetailView, LabelledContent } from '@navikt/ft-plattform-komponenter';
+import { Box, Margin, DetailView, LabelledContent, AssessedBy } from '@navikt/ft-plattform-komponenter';
 import { TextAreaFormik } from '@fpsak-frontend/form';
 import { useIntl } from 'react-intl';
-import { Calender } from '@navikt/ds-icons';
-import { v4 } from 'uuid';
 import dayjs from 'dayjs';
 
 import { FaktaOpplaeringContext } from '@k9-sak-web/behandling-opplaeringspenger/src/panelDefinisjoner/faktaPaneler/OpplaeringFaktaPanelDef';
-import { Vurderingsresultat } from '@k9-sak-web/types';
-import { required } from '@fpsak-frontend/utils';
-import { FieldArray, Formik } from 'formik';
-import RadioGroupFormik from '@fpsak-frontend/form/src/RadioGroupFormik';
-import { Button, Label, Alert } from '@navikt/ds-react';
+import { DDMMYYYY_DATE_FORMAT, required } from '@fpsak-frontend/utils';
+import { Formik } from 'formik';
+import { Button, Alert } from '@navikt/ds-react';
 import { getPeriodDifference, Period } from '@navikt/k9-period-utils';
-import DeleteButton from '../components/delete-button/DeleteButton';
 import { ReisetidVurdering } from './ReisetidTypes';
-import AddButton from '../components/add-button/AddButton';
 import RangeDatepicker from '../components/rangeDatepicker/RangeDatepicker';
+import FraSoeknad from './FraSoeknad';
+import BeskrivelseFraSoeker from './BeskrivelseFraSoeker';
 
 enum fieldname {
   BEGRUNNELSE = 'BEGRUNNELSE',
   PERIODE = 'PERIODE',
-}
-
-enum RadioOptions {
-  JA = 'ja',
-  DELVIS = 'delvis',
-  NEI = 'nei',
 }
 
 interface OwnProps {
@@ -53,7 +43,7 @@ const ReisetidForm = ({ vurdering, avbrytRedigering, erRedigering }: OwnProps): 
     const periodeSomSkalAvslås = {
       godkjent: false,
       begrunnelse: values[fieldname.BEGRUNNELSE],
-      periode: getPeriodDifference([vurdering.periode], [values[fieldname.PERIODE]]),
+      periode: getPeriodDifference([vurdering.periode], [values[fieldname.PERIODE]])[0],
     };
 
     const periodeSomSkalGodkjennes = {
@@ -63,35 +53,39 @@ const ReisetidForm = ({ vurdering, avbrytRedigering, erRedigering }: OwnProps): 
     };
 
     if (values[fieldname.PERIODE].covers(vurdering.periode)) {
-      return [periodeSomSkalGodkjennes];
+      return { reisetid: [periodeSomSkalGodkjennes] };
     }
 
-    return [periodeSomSkalAvslås, periodeSomSkalGodkjennes];
+    return { reisetid: [periodeSomSkalAvslås, periodeSomSkalGodkjennes] };
   };
 
   return (
-    <DetailView title="Vurdering av opplæring">
+    <DetailView title="Vurdering av reisetid">
       <Formik
         initialValues={initialValues}
         onSubmit={values => løsAksjonspunktReisetid(mapValuesTilAksjonspunktPayload(values))}
       >
         {({ handleSubmit, isSubmitting, values, setFieldValue }) => (
           <>
-            <div>
-              <Label>{`${intl.formatMessage({
-                id: 'reisetid.beskrivelseFraSoeker',
-              })} ${vurdering.periode.prettifyPeriod()}`}</Label>
-            </div>
+            <BeskrivelseFraSoeker vurdering={vurdering} />
             <Box marginTop={Margin.xLarge}>
               {vurdering.til ? (
                 <LabelledContent
                   label={intl.formatMessage({ id: 'reisetid.foersteDag' })}
-                  content={vurdering.opplæringPeriode.fom}
+                  content={
+                    <FraSoeknad>
+                      {dayjs(vurdering.perioderFraSoeknad.opplæringPeriode.fom).format(DDMMYYYY_DATE_FORMAT)}
+                    </FraSoeknad>
+                  }
                 />
               ) : (
                 <LabelledContent
                   label={intl.formatMessage({ id: 'reisetid.sisteDag' })}
-                  content={vurdering.opplæringPeriode.tom}
+                  content={
+                    <FraSoeknad>
+                      {dayjs(vurdering.perioderFraSoeknad.opplæringPeriode.tom).format(DDMMYYYY_DATE_FORMAT)}
+                    </FraSoeknad>
+                  }
                 />
               )}
             </Box>
@@ -99,12 +93,20 @@ const ReisetidForm = ({ vurdering, avbrytRedigering, erRedigering }: OwnProps): 
               {vurdering.til ? (
                 <LabelledContent
                   label={intl.formatMessage({ id: 'reisetid.avreisedato' })}
-                  content={vurdering.periode.fom}
+                  content={
+                    <FraSoeknad>
+                      {dayjs(vurdering.perioderFraSoeknad.reisetidTil.fom).format(DDMMYYYY_DATE_FORMAT)}
+                    </FraSoeknad>
+                  }
                 />
               ) : (
                 <LabelledContent
                   label={intl.formatMessage({ id: 'reisetid.hjemkomstdato' })}
-                  content={vurdering.periode.tom}
+                  content={
+                    <FraSoeknad>
+                      {dayjs(vurdering.perioderFraSoeknad.reisetidHjem.tom).format(DDMMYYYY_DATE_FORMAT)}
+                    </FraSoeknad>
+                  }
                 />
               )}
             </Box>

@@ -1,14 +1,14 @@
 import { Heading } from '@navikt/ds-react';
 import { InteractiveList } from '@navikt/ft-plattform-komponenter';
 import React from 'react';
-import { ReisetidPeriode } from './ReisetidTypes';
+import { ReisetidVurdering } from './ReisetidTypes';
 import ReisetidStatus from './konstanter';
 import PeriodeRad from './PeriodeRad';
 import styles from './reisetidNavigation.modules.css';
 
 interface OwnProps {
-  perioder: ReisetidPeriode[];
-  setValgtPeriode: React.Dispatch<React.SetStateAction<ReisetidPeriode>>;
+  perioder: ReisetidVurdering[];
+  setValgtPeriode: React.Dispatch<React.SetStateAction<ReisetidVurdering>>;
 }
 
 const ReisetidNavigation = ({ perioder, setValgtPeriode }: OwnProps) => {

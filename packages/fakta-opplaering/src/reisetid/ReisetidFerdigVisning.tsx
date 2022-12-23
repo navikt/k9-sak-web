@@ -1,11 +1,13 @@
 import React, { useContext } from 'react';
 import { useIntl } from 'react-intl';
-import { Vurderingsresultat } from '@k9-sak-web/types';
-
+import dayjs from 'dayjs';
+import { DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils';
 import { Box, Margin, DetailView, LabelledContent, LinkButton, AssessedBy } from '@navikt/ft-plattform-komponenter';
-import { Calender } from '@navikt/ds-icons';
+
 import { FaktaOpplaeringContext } from '@k9-sak-web/behandling-opplaeringspenger/src/panelDefinisjoner/faktaPaneler/OpplaeringFaktaPanelDef';
 import { ReisetidVurdering } from './ReisetidTypes';
+import FraSoeknad from './FraSoeknad';
+import BeskrivelseFraSoeker from './BeskrivelseFraSoeker';
 import styles from './reisetidFerdigVisning.modules.css';
 
 interface OwnProps {
@@ -19,7 +21,7 @@ const ReisetidFerdigVisning = ({ vurdering, rediger }: OwnProps) => {
 
   return (
     <DetailView
-      title="Vurdering av opplæring"
+      title="Vurdering av reisetid"
       // eslint-disable-next-line react/jsx-no-useless-fragment
       contentAfterTitleRenderer={() =>
         !readOnly ? (
@@ -29,25 +31,60 @@ const ReisetidFerdigVisning = ({ vurdering, rediger }: OwnProps) => {
         ) : null
       }
     >
-      <div>
-        <Calender /> <span>{vurdering.periode.prettifyPeriod()}</span>
-      </div>
+      <BeskrivelseFraSoeker vurdering={vurdering} />
       <Box marginTop={Margin.xLarge}>
-        <LabelledContent
-          label={intl.formatMessage({ id: 'opplaering.vurdering.label' })}
-          content={vurdering.begrunnelse}
-        />
+        {vurdering.til ? (
+          <LabelledContent
+            label={intl.formatMessage({ id: 'reisetid.foersteDag' })}
+            content={
+              <FraSoeknad>
+                {dayjs(vurdering.perioderFraSoeknad.opplæringPeriode.fom).format(DDMMYYYY_DATE_FORMAT)}
+              </FraSoeknad>
+            }
+          />
+        ) : (
+          <LabelledContent
+            label={intl.formatMessage({ id: 'reisetid.sisteDag' })}
+            content={
+              <FraSoeknad>
+                {dayjs(vurdering.perioderFraSoeknad.opplæringPeriode.tom).format(DDMMYYYY_DATE_FORMAT)}
+              </FraSoeknad>
+            }
+          />
+        )}
+      </Box>
+      <Box marginTop={Margin.xLarge}>
+        {vurdering.til ? (
+          <LabelledContent
+            label={intl.formatMessage({ id: 'reisetid.avreisedato' })}
+            content={
+              <FraSoeknad>
+                {dayjs(vurdering.perioderFraSoeknad.reisetidTil.fom).format(DDMMYYYY_DATE_FORMAT)}
+              </FraSoeknad>
+            }
+          />
+        ) : (
+          <LabelledContent
+            label={intl.formatMessage({ id: 'reisetid.hjemkomstdato' })}
+            content={
+              <FraSoeknad>
+                {dayjs(vurdering.perioderFraSoeknad.reisetidHjem.tom).format(DDMMYYYY_DATE_FORMAT)}
+              </FraSoeknad>
+            }
+          />
+        )}
       </Box>
       <Box marginTop={Margin.xLarge}>
         <LabelledContent
-          label={intl.formatMessage({ id: 'opplaering.gjennomfoertOpplaering.label' })}
-          content={[Vurderingsresultat.GODKJENT].includes(vurdering.resultat) ? 'Ja' : 'Nei'}
-        />
-      </Box>
-      <Box marginTop={Margin.xLarge}>
-        <LabelledContent
-          label={intl.formatMessage({ id: 'opplaering.perioder.label' })}
+          label={intl.formatMessage({ id: 'reisetid.periode' })}
           content={vurdering.periode.prettifyPeriod()}
+        />
+      </Box>
+      <Box marginTop={Margin.xLarge}>
+        <LabelledContent
+          label={intl.formatMessage({ id: 'reisetid.begrunnelse' })}
+          content={vurdering.begrunnelse}
+          indentContent
         />
       </Box>
     </DetailView>

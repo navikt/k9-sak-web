@@ -3,8 +3,6 @@ import React from 'react';
 import {
   ContentWithTooltip,
   GreenCheckIconFilled,
-  IndicatorWithOverlay,
-  InstitutionIcon,
   RedCrossIconFilled,
   WarningIcon,
 } from '@navikt/ft-plattform-komponenter';
@@ -18,7 +16,6 @@ interface OwnProps {
 }
 
 const renderStatusIcon = (resultat: string) => {
-  console.log(resultat);
   if (resultat === Vurderingsresultat.MÅ_VURDERES) {
     return (
       <ContentWithTooltip tooltipText="Perioden må vurderes">
@@ -30,10 +27,7 @@ const renderStatusIcon = (resultat: string) => {
   if (resultat === Vurderingsresultat.GODKJENT_AUTOMATISK) {
     return (
       <ContentWithTooltip tooltipText="Vilkåret er automatisk oppfylt">
-        <IndicatorWithOverlay
-          indicatorRenderer={() => <GreenCheckIconFilled />}
-          overlayRenderer={() => <InstitutionIcon />}
-        />
+        <GreenCheckIconFilled />
       </ContentWithTooltip>
     );
   }
@@ -41,21 +35,18 @@ const renderStatusIcon = (resultat: string) => {
   if (resultat === Vurderingsresultat.IKKE_GODKJENT_AUTOMATISK) {
     return (
       <ContentWithTooltip tooltipText="Vilkåret er automatisk ikke oppfylt">
-        <IndicatorWithOverlay
-          indicatorRenderer={() => <RedCrossIconFilled />}
-          overlayRenderer={() => <InstitutionIcon />}
-        />
+        <RedCrossIconFilled />
       </ContentWithTooltip>
     );
   }
-  if (resultat === Vurderingsresultat.GODKJENT_MANUELT) {
+  if (resultat === Vurderingsresultat.GODKJENT) {
     return (
       <ContentWithTooltip tooltipText="Vilkåret er oppfylt">
         <GreenCheckIconFilled />
       </ContentWithTooltip>
     );
   }
-  if (resultat === Vurderingsresultat.IKKE_GODKJENT_MANUELT) {
+  if (resultat === Vurderingsresultat.IKKE_GODKJENT) {
     return (
       <ContentWithTooltip tooltipText="Vilkåret er ikke oppfylt">
         <RedCrossIconFilled />
