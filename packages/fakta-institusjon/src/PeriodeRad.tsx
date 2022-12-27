@@ -16,7 +16,6 @@ import styles from './periodeRad.modules.css';
 interface OwnProps {
   perioder: Period[];
   resultat: string;
-  kilde: Kilde;
 }
 
 const renderStatusIcon = (resultat: string) => {
@@ -66,23 +65,7 @@ const renderStatusIcon = (resultat: string) => {
   return null;
 };
 
-const renderKildeIcon = (kilde: Kilde) => {
-  if (kilde === Kilde.ANDRE) {
-    return (
-      <ContentWithTooltip tooltipText="Annen part">
-        <OnePersonOutlineGray />
-      </ContentWithTooltip>
-    );
-  }
-
-  return (
-    <ContentWithTooltip tooltipText="Søker">
-      <OnePersonIconGray />
-    </ContentWithTooltip>
-  );
-};
-
-const PeriodeRad = ({ perioder, resultat, kilde }: OwnProps): JSX.Element => (
+const PeriodeRad = ({ perioder, resultat }: OwnProps): JSX.Element => (
   <div className={styles.vurderingsperiodeElement}>
     <div>
       <span className={styles.visuallyHidden}>Type</span>
@@ -97,10 +80,6 @@ const PeriodeRad = ({ perioder, resultat, kilde }: OwnProps): JSX.Element => (
           </div>
         ))}
       </div>
-    </div>
-    <div className={styles.vurderingsperiodeElement__texts__kildeIcon}>
-      <span className={styles.visuallyHidden}>Kilde</span>
-      {renderKildeIcon(kilde)}
     </div>
   </div>
 );
