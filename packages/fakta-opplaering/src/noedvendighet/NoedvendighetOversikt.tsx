@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { NavigationWithDetailView } from '@navikt/ft-plattform-komponenter';
 import { Heading } from '@navikt/ds-react';
-import { NoedvendighetPeriode, NoedvendighetPerioderMedResultat, NoedvendighetVurdering } from '@k9-sak-web/types';
+import { NoedvendighetPeriode, NoedvendighetPerioder, NoedvendighetVurdering } from '@k9-sak-web/types';
 import { Period } from '@navikt/k9-period-utils';
 import { FaktaOpplaeringContext } from '@k9-sak-web/behandling-opplaeringspenger/src/panelDefinisjoner/faktaPaneler/OpplaeringFaktaPanelDef';
 import NoedvendighetNavigation from './NoedvendighetNavigation';
@@ -46,7 +46,7 @@ const reducer = (accumulator, currentValue) => {
 const NoedvendighetOversikt = () => {
   const { nødvendigOpplæring } = useContext(FaktaOpplaeringContext);
   const { vurderinger, perioder } = nødvendigOpplæring;
-  const [valgtPeriode, setValgtPeriode] = React.useState<NoedvendighetPerioderMedResultat>(null);
+  const [valgtPeriode, setValgtPeriode] = React.useState<NoedvendighetPerioder>(null);
   const perioderMappet = perioder
     .map(periode => {
       const vurderingForPeriode = vurderinger.find(

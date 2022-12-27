@@ -12,3 +12,14 @@ export interface GjennomgaaOpplaeringVurdering {
   resultat: Vurderingsresultat;
   opplæring: Period;
 }
+
+export interface NoedvendighetPerioder {
+  journalpostId: { journalpostId: string };
+  perioder: Period[];
+  noedvendighet: boolean;
+  resultat: Vurderingsresultat;
+}
+
+export interface NoedvendighetVurdering extends NoedvendighetPerioder {
+  begrunnelse: string;
+}

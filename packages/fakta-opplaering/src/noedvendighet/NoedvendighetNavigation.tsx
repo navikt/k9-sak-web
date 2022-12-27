@@ -1,19 +1,23 @@
 import { Heading } from '@navikt/ds-react';
 import { InteractiveList } from '@navikt/ft-plattform-komponenter';
-import React from 'react';
-import { NoedvendighetPerioderMedResultat } from '@k9-sak-web/types';
+import React, { useEffect } from 'react';
+import { NoedvendighetPerioder } from '@k9-sak-web/types';
 import noedvendighetStatus from './konstanter';
 import PeriodeRad from '../components/PeriodeRad';
 import styles from './noedvendighetNavigation.modules.css';
 
 interface OwnProps {
-  perioder: NoedvendighetPerioderMedResultat[];
-  setValgtPeriode: React.Dispatch<React.SetStateAction<NoedvendighetPerioderMedResultat>>;
+  perioder: NoedvendighetPerioder[];
+  setValgtPeriode: React.Dispatch<React.SetStateAction<NoedvendighetPerioder>>;
 }
 
 const NoedvendighetNavigation = ({ perioder, setValgtPeriode }: OwnProps) => {
+  console.log(perioder);
   const perioderTilVurdering = perioder.filter(periode => periode.resultat === noedvendighetStatus.IKKE_VURDERT);
   const [activeIndex, setActiveIndex] = React.useState(perioderTilVurdering.length ? 0 : -1);
+  useEffect(() => {
+    if (activeIndex > -1) setValgtPeriode(perioderTilVurdering[activeIndex]);
+  }, []);
   const perioderSomErVurdert = perioder.filter(periode => periode.resultat !== noedvendighetStatus.IKKE_VURDERT);
   const allePerioder = [...perioderTilVurdering, ...perioderSomErVurdert];
   const elements = [

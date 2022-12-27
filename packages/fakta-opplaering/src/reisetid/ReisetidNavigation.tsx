@@ -1,6 +1,6 @@
 import { Heading } from '@navikt/ds-react';
 import { InteractiveList } from '@navikt/ft-plattform-komponenter';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { ReisetidVurdering } from './ReisetidTypes';
 import ReisetidStatus from './konstanter';
 import PeriodeRad from './PeriodeRad';
@@ -14,6 +14,9 @@ interface OwnProps {
 const ReisetidNavigation = ({ perioder, setValgtPeriode }: OwnProps) => {
   const perioderTilVurdering = perioder.filter(periode => periode.resultat === ReisetidStatus.IKKE_VURDERT);
   const [activeIndex, setActiveIndex] = React.useState(perioderTilVurdering.length ? 0 : -1);
+  useEffect(() => {
+    if (activeIndex > -1) setValgtPeriode(perioderTilVurdering[activeIndex]);
+  }, []);
   const perioderSomErVurdert = perioder
     .filter(periode => periode.resultat !== ReisetidStatus.IKKE_VURDERT)
     // @ts-ignore

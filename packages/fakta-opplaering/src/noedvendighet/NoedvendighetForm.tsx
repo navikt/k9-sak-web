@@ -1,10 +1,9 @@
-import { Period } from '@navikt/k9-period-utils';
-import { Box, Margin, DetailView, LabelledContent, Form } from '@navikt/ft-plattform-komponenter';
+import { Box, Margin, DetailView } from '@navikt/ft-plattform-komponenter';
 import { TextAreaFormik } from '@fpsak-frontend/form';
 import { Calender } from '@navikt/ds-icons';
 
 import React, { useContext } from 'react';
-import { NoedvendighetVurderingMedPerioder, Vurderingsresultat } from '@k9-sak-web/types';
+import { NoedvendighetVurdering, Vurderingsresultat } from '@k9-sak-web/types';
 import { required } from '@fpsak-frontend/utils';
 import { Formik } from 'formik';
 import RadioGroupFormik from '@fpsak-frontend/form/src/RadioGroupFormik';
@@ -23,7 +22,7 @@ enum RadioOptions {
 }
 
 interface VurderingAvBeredskapsperioderFormProps {
-  vurdering: NoedvendighetVurderingMedPerioder;
+  vurdering: NoedvendighetVurdering;
   avbrytRedigering: () => void;
   erRedigering: boolean;
 }
@@ -38,6 +37,7 @@ const NoedvendighetForm = ({
   avbrytRedigering,
   erRedigering,
 }: VurderingAvBeredskapsperioderFormProps): JSX.Element => {
+  console.log(vurdering);
   const { readOnly, løsAksjonspunktNødvendighet } = useContext(FaktaOpplaeringContext);
   const intl = useIntl();
 

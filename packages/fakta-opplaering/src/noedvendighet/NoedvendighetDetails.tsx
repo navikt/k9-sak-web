@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import { NoedvendighetVurderingMedPerioder, Vurderingsresultat } from '@k9-sak-web/types';
+import { NoedvendighetVurdering, Vurderingsresultat } from '@k9-sak-web/types';
 import NoedvendighetFerdigVisning from './NoedvendighetFerdigVisning';
 import NoedvendighetForm from './NoedvendighetForm';
 
 interface OwnProps {
-  vurdering: NoedvendighetVurderingMedPerioder;
+  vurdering: NoedvendighetVurdering;
 }
 
 const NoedvendighetDetails = ({ vurdering }: OwnProps) => {

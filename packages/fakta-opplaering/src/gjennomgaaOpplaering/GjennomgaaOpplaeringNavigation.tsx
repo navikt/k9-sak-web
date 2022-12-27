@@ -1,6 +1,6 @@
 import { Heading } from '@navikt/ds-react';
 import { InteractiveList } from '@navikt/ft-plattform-komponenter';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { GjennomgaaOpplaeringPeriode } from '@k9-sak-web/types';
 import GjennomgaaOpplaeringStatus from './konstanter';
 import PeriodeRad from '../components/PeriodeRad';
@@ -14,6 +14,9 @@ interface OwnProps {
 const GjennomgaaOpplaeringNavigation = ({ perioder, setValgtPeriode }: OwnProps) => {
   const perioderTilVurdering = perioder.filter(periode => periode.resultat === GjennomgaaOpplaeringStatus.IKKE_VURDERT);
   const [activeIndex, setActiveIndex] = React.useState(perioderTilVurdering.length ? 0 : -1);
+  useEffect(() => {
+    if (activeIndex > -1) setValgtPeriode(perioderTilVurdering[activeIndex]);
+  }, []);
   const perioderSomErVurdert = perioder
     .filter(periode => periode.resultat !== GjennomgaaOpplaeringStatus.IKKE_VURDERT)
     // @ts-ignore

@@ -16,6 +16,12 @@ interface TabItemProps {
   showWarningIcon: boolean;
 }
 
+const findInitialTabIndex = aktivtAksjonspunkt => {
+  const initialTab = Object.values(Tabs).find(tab => tab.aksjonspunkt === aktivtAksjonspunkt.definisjon.kode);
+  const index = Object.values(Tabs).findIndex(tab => initialTab === tab);
+  return index < 0 ? 0 : index;
+};
+
 const TabItem = ({ label, showWarningIcon }: TabItemProps) => {
   const cls = classnames(styles.medisinskVilkårTabItem, {
     [styles.medisinskVilkårTabItemExtended]: showWarningIcon,
@@ -35,7 +41,7 @@ const TabItem = ({ label, showWarningIcon }: TabItemProps) => {
 const OpplaeringContainer = () => {
   const { aksjonspunkter } = useContext(FaktaOpplaeringContext);
   const aktivtAksjonspunkt = aksjonspunkter.find(aksjonspunkt => aksjonspunkt.status.kode === 'OPPR');
-  const [activeTab, setActiveTab] = useState(0);
+  const [activeTab, setActiveTab] = useState(findInitialTabIndex(aktivtAksjonspunkt));
   return (
     <NestedIntlProvider messages={messages}>
       <TabsPure
