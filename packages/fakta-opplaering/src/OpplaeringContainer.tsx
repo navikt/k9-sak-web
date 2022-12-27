@@ -40,7 +40,10 @@ const TabItem = ({ label, showWarningIcon }: TabItemProps) => {
 
 const OpplaeringContainer = () => {
   const { aksjonspunkter } = useContext(FaktaOpplaeringContext);
-  const aktivtAksjonspunkt = aksjonspunkter.find(aksjonspunkt => aksjonspunkt.status.kode === 'OPPR');
+
+  const aktivtAksjonspunkt = aksjonspunkter
+    .sort((a, b) => a.definisjon.kode - b.definisjon.kode)
+    .find(aksjonspunkt => aksjonspunkt.status.kode === 'OPPR');
   const [activeTab, setActiveTab] = useState(findInitialTabIndex(aktivtAksjonspunkt));
   return (
     <NestedIntlProvider messages={messages}>

@@ -6,6 +6,7 @@ import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { prosessStegCodes } from '@k9-sak-web/konstanter';
 import NoedvendighetPanelDef from './opplaeringPaneler/NoedvendighetPanelDef';
 import GjennomgaaOpplaeringPanelDef from './opplaeringPaneler/GjennomgaaOpplaeringPanelDef';
+import ReisetidPanelDef from './opplaeringPaneler/ReisetidPanelDef';
 
 class OpplaeringProsessStegPanelDef extends ProsessStegDef {
   getUrlKode = () => prosessStegCodes.OPPLAERING;
@@ -18,7 +19,11 @@ class OpplaeringProsessStegPanelDef extends ProsessStegDef {
 
   getTekstKode = () => 'Behandlingspunkt.Opplaering';
 
-  getPanelDefinisjoner = () => [new GjennomgaaOpplaeringPanelDef(), new NoedvendighetPanelDef()];
+  getPanelDefinisjoner = () => [
+    new GjennomgaaOpplaeringPanelDef(),
+    new NoedvendighetPanelDef(),
+    new ReisetidPanelDef(),
+  ];
 }
 
 export default OpplaeringProsessStegPanelDef;
