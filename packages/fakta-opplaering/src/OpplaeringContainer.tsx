@@ -17,7 +17,7 @@ interface TabItemProps {
 }
 
 const findInitialTabIndex = aktivtAksjonspunkt => {
-  const initialTab = Object.values(Tabs).find(tab => tab.aksjonspunkt === aktivtAksjonspunkt.definisjon.kode);
+  const initialTab = Object.values(Tabs).find(tab => tab.aksjonspunkt === aktivtAksjonspunkt?.definisjon?.kode);
   const index = Object.values(Tabs).findIndex(tab => initialTab === tab);
   return index < 0 ? 0 : index;
 };

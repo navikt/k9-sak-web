@@ -5,6 +5,7 @@ import { DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils';
 import { Box, Margin, DetailView, LabelledContent, LinkButton, AssessedBy } from '@navikt/ft-plattform-komponenter';
 
 import { FaktaOpplaeringContext } from '@k9-sak-web/behandling-opplaeringspenger/src/panelDefinisjoner/faktaPaneler/OpplaeringFaktaPanelDef';
+import { Vurderingsresultat } from '@k9-sak-web/types';
 import { ReisetidVurdering } from './ReisetidTypes';
 import FraSoeknad from './FraSoeknad';
 import BeskrivelseFraSoeker from './BeskrivelseFraSoeker';
@@ -18,7 +19,6 @@ interface OwnProps {
 const ReisetidFerdigVisning = ({ vurdering, rediger }: OwnProps) => {
   const { readOnly } = useContext(FaktaOpplaeringContext);
   const intl = useIntl();
-
   return (
     <DetailView
       title="Vurdering av reisetid"
@@ -76,7 +76,11 @@ const ReisetidFerdigVisning = ({ vurdering, rediger }: OwnProps) => {
       </Box>
       <Box marginTop={Margin.xLarge}>
         <LabelledContent
-          label={intl.formatMessage({ id: 'reisetid.periode' })}
+          label={
+            vurdering.resultat === Vurderingsresultat.GODKJENT
+              ? intl.formatMessage({ id: 'reisetid.periode.innvilget' })
+              : intl.formatMessage({ id: 'reisetid.periode.avslått' })
+          }
           content={vurdering.periode.prettifyPeriod()}
         />
       </Box>

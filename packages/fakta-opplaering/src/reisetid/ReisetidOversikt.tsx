@@ -18,7 +18,7 @@ const mapVurdering = (vurdering, reisetidObj, perioder) => {
     resultat: reisetidObj.resultat,
     perioderFraSoeknad,
     periode: new Period(reisetidObj.periode.fom, reisetidObj.periode.tom),
-    til: dayjs(vurdering.opplæringPeriode.fom).isSameOrBefore(dayjs(reisetidObj.periode.tom)),
+    til: dayjs(reisetidObj.periode.fom).isSameOrBefore(dayjs(vurdering.opplæringPeriode.fom)),
   };
 };
 

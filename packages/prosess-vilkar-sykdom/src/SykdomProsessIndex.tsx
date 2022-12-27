@@ -50,24 +50,25 @@ interface UtvidetVilkarperiode extends Vilkarperiode {
 interface SykdomProsessIndexProps {
   perioder: UtvidetVilkarperiode[];
   panelTittelKode: string;
+  lovReferanse?: string;
 }
 
-const SykdomProsessIndex = ({ perioder, panelTittelKode }: SykdomProsessIndexProps) => {
+const SykdomProsessIndex = ({ perioder, panelTittelKode, lovReferanse }: SykdomProsessIndexProps) => {
   const [activePeriode, setActivePeriode] = React.useState(perioder[0]);
   const status = activePeriode?.vilkarStatus.kode || vilkarUtfallType.IKKE_VURDERT;
   const erOppfylt = vilkarUtfallType.OPPFYLT === status;
   const erVilkarOk = vilkarUtfallType.IKKE_VURDERT !== status ? erOppfylt : undefined;
   const skalBrukeSidemeny = perioder.length > 1;
   const mainContainerClassnames = cx('mainContainer', { 'mainContainer--withSideMenu': skalBrukeSidemeny });
-  let lovReferanse = '§ 9-10 første og andre ledd, og 9-16 første ledd';
-
+  let lovReferanseTekst = '§ 9-10 første og andre ledd, og 9-16 første ledd';
   // TODO lovref opplæring
   if (activePeriode?.pleietrengendeErOver18år) {
-    lovReferanse = '§ 9-10 tredje ledd (over 18 år)';
+    lovReferanseTekst = '§ 9-10 tredje ledd (over 18 år)';
   }
 
-  if (panelTittelKode === 'Behandlingspunkt.LivetsSluttfase') {
-    lovReferanse = '§ 9-13';
+  // Oppplæringspenger || livets sluttfase
+  if (lovReferanse === '§ 9-14' || lovReferanse === '§ 9-13') {
+    lovReferanseTekst = lovReferanse;
   }
 
   return (
@@ -104,7 +105,7 @@ const SykdomProsessIndex = ({ perioder, panelTittelKode }: SykdomProsessIndexPro
                 </Undertittel>
               </FlexColumn>
               <FlexColumn>
-                <Undertekst className={styles.vilkar}>{lovReferanse}</Undertekst>
+                <Undertekst className={styles.vilkar}>{lovReferanseTekst}</Undertekst>
               </FlexColumn>
             </FlexRow>
             <FlexRow>

@@ -3,18 +3,18 @@ import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 
-class InstitusjonPanelDef extends ProsessStegPanelDef {
+class NoedvendighetPanelDef extends ProsessStegPanelDef {
   overstyringDef = new ProsessStegOverstyringPanelDef(this);
 
-  getId = () => 'INSTITUSJON';
+  getId = () => 'NOEDVENDIGHET';
 
-  getTekstKode = () => 'Inngangsvilkar.Institusjon';
+  getTekstKode = () => 'Opplaering.Noedvendighet';
 
   getKomponent = props => this.overstyringDef.getKomponent(props);
 
-  getAksjonspunktKoder = () => [aksjonspunktCodes.VURDER_INSTITUSJON];
+  getAksjonspunktKoder = () => [aksjonspunktCodes.VURDER_NØDVENDIGHET];
 
-  getVilkarKoder = () => [vilkarType.GODKJENT_OPPLÆRINGSINSTITUSJON];
+  getVilkarKoder = () => [vilkarType.NØDVENDIG_OPPLÆRING];
 
   getData = ({
     vilkarForSteg,
@@ -35,4 +35,4 @@ class InstitusjonPanelDef extends ProsessStegPanelDef {
   });
 }
 
-export default InstitusjonPanelDef;
+export default NoedvendighetPanelDef;

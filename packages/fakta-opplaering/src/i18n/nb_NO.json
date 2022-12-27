@@ -16,7 +16,8 @@
   "reisetid.sisteDag": "Siste dag med opplæring:",
   "reisetid.hjemkomstdato": "Hjemkomstdato:",
   "reisetid.avreisedato": "Avreisedato:",
-  "reisetid.periode": "I hvilken periode innvilges reisetid?",
+  "reisetid.periode.innvilget": "I hvilken periode innvilges reisetid?",
+  "reisetid.periode.avslått": "I hvilken periode avslås reisetid?",
   "reisetid.begrunnelse": "Begrunnelse",
   "reisetid.beskrivelseFraSoeker": "Beskrivelse fra søker for reisetid i perioden"
 }

@@ -17,7 +17,7 @@ const NoedvendighetFerdigVisning = ({ vurdering, rediger }: OwnProps) => {
 
   return (
     <DetailView
-      title="Vurdering av noedvendighet"
+      title="Vurdering av nødvendighet"
       // eslint-disable-next-line react/jsx-no-useless-fragment
       contentAfterTitleRenderer={() =>
         !readOnly ? (
