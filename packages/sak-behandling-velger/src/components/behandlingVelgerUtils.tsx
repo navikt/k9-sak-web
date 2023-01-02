@@ -81,7 +81,7 @@ export const getStatusText = (
 };
 
 export const sortBehandlinger = (behandlinger: BehandlingAppKontekst[]): BehandlingAppKontekst[] =>
-  behandlinger.sort((b1, b2) => {
+  [...behandlinger].sort((b1, b2) => {
     if (b1.avsluttet && !b2.avsluttet) {
       return 1;
     }

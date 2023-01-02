@@ -92,7 +92,7 @@ spec:
     - name: UTENLANDSOPPHOLD
       value: "true"
     - name: SOKNADPERIODESTRIPE
-      value: "true"
+      value: "false"
     - name: TYPE_MEDISINSKE_OPPLYSNINGER_BREV
       value: "true"
     - name: LOS_MARKER_BEHANDLING
