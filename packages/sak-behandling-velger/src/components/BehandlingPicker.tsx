@@ -158,14 +158,15 @@ const BehandlingPicker = ({
 
   const behandlingerSomSkalVises = useMemo(() => {
     const sorterteBehandlinger = sortBehandlinger(behandlinger);
-    const indexOfValgtBehandling =
-      sorterteBehandlinger.findIndex(behandling => behandling.id === valgtBehandlingId) + 1;
+    const indexOfValgtBehandling = sorterteBehandlinger.findIndex(behandling => behandling.id === valgtBehandlingId);
+    if (indexOfValgtBehandling > -1) {
+      if (indexOfValgtBehandling + 1 > numberOfBehandlingperioderToFetch) {
+        setNumberOfBehandlingPerioderToFetch(indexOfValgtBehandling + 1);
+      }
+      return sorterteBehandlinger.slice(indexOfValgtBehandling, indexOfValgtBehandling + 1);
+    }
     if (activeFilters.length > 0 && !activeFilters.includes(automatiskBehandling)) {
       return sorterteBehandlinger;
-    }
-    if (indexOfValgtBehandling > numberOfBehandlingperioderToFetch) {
-      setNumberOfBehandlingPerioderToFetch(indexOfValgtBehandling);
-      return sorterteBehandlinger.slice(0, indexOfValgtBehandling);
     }
     return sorterteBehandlinger.slice(0, numberOfBehandlingperioderToFetch);
   }, [behandlinger, numberOfBehandlingperioderToFetch, valgtBehandlingId, activeFilters]);
@@ -212,7 +213,7 @@ const BehandlingPicker = ({
           label: getBehandlingNavn(behandling, getKodeverkFn, intl),
         });
       }
-      if (erAutomatiskBehandlet(behandling) && !filterListe.includes(automatiskBehandling)) {
+      if (erAutomatiskBehandlet(behandling) && !filterListe.some(filter => filter.value === automatiskBehandling)) {
         filterListe.push({
           value: automatiskBehandling,
           label: intl.formatMessage({ id: 'Behandlingspunkt.BehandlingFilter.AutomatiskBehandling' }),
