@@ -185,7 +185,7 @@ const getKodeverkFn = (kodeverk: Kodeverk) => {
 };
 
 export default {
-  title: 'sak/sak-behandling-velger',
+  title: 'sak/sak-behandling-velger-old',
   component: BehandlingVelgerSakIndex,
   decorators: [withKnobs, withReduxAndRouterProvider],
 };
