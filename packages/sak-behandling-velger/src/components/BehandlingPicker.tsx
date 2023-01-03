@@ -160,12 +160,15 @@ const BehandlingPicker = ({
     const sorterteBehandlinger = sortBehandlinger(behandlinger);
     const indexOfValgtBehandling =
       sorterteBehandlinger.findIndex(behandling => behandling.id === valgtBehandlingId) + 1;
+    if (activeFilters.length > 0 && !activeFilters.includes(automatiskBehandling)) {
+      return sorterteBehandlinger;
+    }
     if (indexOfValgtBehandling > numberOfBehandlingperioderToFetch) {
       setNumberOfBehandlingPerioderToFetch(indexOfValgtBehandling);
       return sorterteBehandlinger.slice(0, indexOfValgtBehandling);
     }
     return sorterteBehandlinger.slice(0, numberOfBehandlingperioderToFetch);
-  }, [behandlinger, numberOfBehandlingperioderToFetch, valgtBehandlingId]);
+  }, [behandlinger, numberOfBehandlingperioderToFetch, valgtBehandlingId, activeFilters]);
 
   const behandlingerMedPerioderMedÅrsak = useMemo(
     () =>
@@ -188,7 +191,9 @@ const BehandlingPicker = ({
     : null;
 
   const skalViseHentFlereBehandlingerKnapp =
-    behandlinger.length > numberOfBehandlingperioderToFetch && !valgtBehandling;
+    (activeFilters.length === 0 || activeFilters.includes(automatiskBehandling)) &&
+    behandlinger.length > numberOfBehandlingperioderToFetch &&
+    !valgtBehandling;
 
   const updateFilter = valgtFilter => {
     if (activeFilters.includes(valgtFilter)) {
@@ -200,7 +205,7 @@ const BehandlingPicker = ({
 
   const getFilterListe = () => {
     const filterListe = [];
-    behandlingerSomSkalVises.forEach(behandling => {
+    behandlinger.forEach(behandling => {
       if (!filterListe.some(filter => filter.value === behandling.type.kode)) {
         filterListe.push({
           value: behandling.type.kode,
