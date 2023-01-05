@@ -18,12 +18,14 @@ export interface TilgjengeligeVedtaksbrevMedMaler {
 
 export interface TilgjengeligeVedtaksbrev {
   begrunnelse: string;
-  alternativeMottakere: Array<{
-    id: string;
-    idType: string;
-  }>;
+  alternativeMottakere: Array<Brevmottaker>;
   vedtaksbrevmaler: Map<string, string>;
 }
+
+export type Brevmottaker = Readonly<{
+  id: string;
+  type: string;
+}>;
 
 export function bestemAvsenderApp(type: string): string {
   return type === BehandlingType.KLAGE ? avsenderApplikasjon.K9KLAGE : avsenderApplikasjon.K9SAK;

@@ -13,7 +13,6 @@ const selectedItemDataFL = {
   andeler: [
     {
       aktivitetStatus: 'FL',
-      inntektskategori: 'ARBEIDSTAKER',
       aktørId: null,
       arbeidsforholdId: null,
       arbeidsforholdType: '-',

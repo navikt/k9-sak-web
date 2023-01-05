@@ -1,15 +1,19 @@
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import KodeverkType from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
-import { BehandlingAppKontekst, BehandlingPerioder, Kodeverk, KodeverkMedNavn } from '@k9-sak-web/types';
-import PerioderMedBehandlingsId from '@k9-sak-web/types/src/PerioderMedBehandlingsId';
+import { BehandlingAppKontekst, KodeverkMedNavn, PerioderMedBehandlingsId } from '@k9-sak-web/types';
+import { AddCircle } from '@navikt/ds-icons';
+import { Button } from '@navikt/ds-react';
 import axios from 'axios';
 import { Location } from 'history';
 import { Tilbakeknapp } from 'nav-frontend-ikonknapper';
 import { Normaltekst, Undertittel } from 'nav-frontend-typografi';
-import React, { ReactElement, useEffect, useRef, useState } from 'react';
+import React, { ReactElement, useEffect, useMemo, useRef, useState } from 'react';
 import { FormattedMessage, IntlShape, useIntl } from 'react-intl';
+import { useQueries, UseQueryResult } from 'react-query';
 import { NavLink, useNavigate } from 'react-router-dom';
+
+import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import BehandlingFilter, { automatiskBehandling } from './BehandlingFilter';
 import styles from './behandlingPicker.less';
 import BehandlingPickerItemContent from './BehandlingPickerItemContent';
@@ -45,7 +49,7 @@ const renderListItems = ({
   getKodeverkFn: (kode: string, kodeverk: KodeverkType, behandlingType?: string) => KodeverkMedNavn;
   setValgtBehandlingId;
   intl: IntlShape;
-  alleSøknadsperioder: PerioderMedBehandlingsId[];
+  alleSøknadsperioder: UseQueryResult<PerioderMedBehandlingsId, unknown>[];
   activeFilters: string[];
 }): ReactElement[] =>
   sortBehandlinger(behandlinger)
@@ -69,14 +73,18 @@ const renderListItems = ({
             behandlingTypeNavn={getBehandlingNavn(behandling, getKodeverkFn, intl)}
             behandlingsresultatTypeNavn={
               behandling.behandlingsresultat
-                ? getKodeverkFn(behandling.behandlingsresultat.type.kode, KodeverkType.BEHANDLING_RESULTAT_TYPE, behandling.type).navn
+                ? getKodeverkFn(
+                    behandling.behandlingsresultat.type.kode,
+                    KodeverkType.BEHANDLING_RESULTAT_TYPE,
+                    behandling.type,
+                  ).navn
                 : undefined
             }
             behandlingsresultatTypeKode={
               behandling.behandlingsresultat ? behandling.behandlingsresultat.type.kode : undefined
             }
             erAutomatiskRevurdering={erAutomatiskBehandlet(behandling)}
-            søknadsperioder={alleSøknadsperioder.find(periode => periode.id === behandling.id)?.perioder}
+            søknadsperioder={alleSøknadsperioder.find(periode => periode.data?.id === behandling.id)?.data?.perioder}
             erFerdigstilt={!!behandling.avsluttet}
             erUnntaksløype={behandling.type === behandlingType.UNNTAK}
           />
@@ -92,6 +100,18 @@ const usePrevious = (value: number): number => {
   return ref.current;
 };
 
+const behandlingPerioderÅrsakRel = 'behandling-perioder-årsak-med-vilkår';
+
+const getBehandlingPerioderÅrsaker = (behandling: BehandlingAppKontekst): Promise<PerioderMedBehandlingsId> =>
+  axios
+    .get(behandling.links.find(link => link.rel === behandlingPerioderÅrsakRel).href)
+    .then(response => ({ data: response.data, id: behandling.id }))
+    .then(({ data, id }) => ({
+      id,
+      perioder: data.perioderMedÅrsak?.perioderTilVurdering,
+      perioderMedÅrsak: data.perioderMedÅrsak?.perioderMedÅrsak,
+    }));
+
 interface OwnProps {
   behandlinger: BehandlingAppKontekst[];
   getBehandlingLocation: (behandlingId: number) => Location;
@@ -102,7 +122,6 @@ interface OwnProps {
   sakstypeKode: string;
 }
 
-const behandlingPerioderÅrsakRel = 'behandling-perioder-årsak-med-vilkår';
 /**
  * BehandlingPicker
  *
@@ -129,8 +148,8 @@ const BehandlingPicker = ({
   const intl = useIntl();
   const [valgtBehandlingId, setValgtBehandlingId] = useState(behandlingId || finnÅpenBehandling());
   const previousBehandlingId = usePrevious(behandlingId || finnÅpenBehandling());
-  const [søknadsperioder, setSøknadsperioder] = useState<Array<PerioderMedBehandlingsId>>([]);
   const [activeFilters, setActiveFilters] = useState([]);
+  const [numberOfBehandlingperioderToFetch, setNumberOfBehandlingPerioderToFetch] = useState(10);
 
   useEffect(() => {
     if (previousBehandlingId !== behandlingId) {
@@ -138,34 +157,45 @@ const BehandlingPicker = ({
     }
   }, [behandlingId]);
 
-  useEffect(() => {
-    const perioder = [];
-    const behandlingerMedPerioderMedÅrsak = behandlinger.filter(behandling =>
-      behandling.links.some(link => link.rel === behandlingPerioderÅrsakRel),
-    );
-    if (behandlingerMedPerioderMedÅrsak.length > 0) {
-      Promise.all(
-        behandlingerMedPerioderMedÅrsak.map(behandling =>
-          axios
-            .get(behandling.links.find(link => link.rel === behandlingPerioderÅrsakRel).href)
-            .then(response => ({ data: response.data, id: behandling.id })),
-        ),
-      ).then((responses: { data: BehandlingPerioder; id: number }[]) => {
-        responses.forEach(({ data, id }) => {
-          perioder.push({
-            id,
-            perioder: data.perioderMedÅrsak?.perioderTilVurdering,
-            perioderMedÅrsak: data.perioderMedÅrsak?.perioderMedÅrsak,
-          });
-        });
-        setSøknadsperioder(perioder);
-      });
+  const behandlingerSomSkalVises = useMemo(() => {
+    const sorterteBehandlinger = sortBehandlinger(behandlinger);
+    const indexOfValgtBehandling = sorterteBehandlinger.findIndex(behandling => behandling.id === valgtBehandlingId);
+    if (indexOfValgtBehandling > -1) {
+      if (indexOfValgtBehandling + 1 > numberOfBehandlingperioderToFetch) {
+        setNumberOfBehandlingPerioderToFetch(indexOfValgtBehandling + 1);
+      }
+      return sorterteBehandlinger.slice(indexOfValgtBehandling, indexOfValgtBehandling + 1);
     }
-  }, []);
+    if (activeFilters.length > 0 && !activeFilters.includes(automatiskBehandling)) {
+      return sorterteBehandlinger;
+    }
+    return sorterteBehandlinger.slice(0, numberOfBehandlingperioderToFetch);
+  }, [behandlinger, numberOfBehandlingperioderToFetch, valgtBehandlingId, activeFilters]);
+
+  const behandlingerMedPerioderMedÅrsak = useMemo(
+    () =>
+      behandlingerSomSkalVises.filter(behandling =>
+        behandling.links.some(link => link.rel === behandlingPerioderÅrsakRel),
+      ),
+    [behandlingerSomSkalVises],
+  );
+
+  const søknadsperioder = useQueries(
+    behandlingerMedPerioderMedÅrsak.map(behandling => ({
+      queryKey: ['behandlingId', behandling.id],
+      queryFn: () => getBehandlingPerioderÅrsaker(behandling),
+      staleTime: 3 * 60 * 1000,
+    })),
+  );
 
   const valgtBehandling = valgtBehandlingId
-    ? behandlinger.find(behandling => behandling.id === valgtBehandlingId)
+    ? behandlingerSomSkalVises.find(behandling => behandling.id === valgtBehandlingId)
     : null;
+
+  const skalViseHentFlereBehandlingerKnapp =
+    (activeFilters.length === 0 || activeFilters.includes(automatiskBehandling)) &&
+    behandlinger.length > numberOfBehandlingperioderToFetch &&
+    !valgtBehandling;
 
   const updateFilter = valgtFilter => {
     if (activeFilters.includes(valgtFilter)) {
@@ -184,7 +214,7 @@ const BehandlingPicker = ({
           label: getBehandlingNavn(behandling, getKodeverkFn, intl),
         });
       }
-      if (erAutomatiskBehandlet(behandling) && !filterListe.includes(automatiskBehandling)) {
+      if (erAutomatiskBehandlet(behandling) && !filterListe.some(filter => filter.value === automatiskBehandling)) {
         filterListe.push({
           value: automatiskBehandling,
           label: intl.formatMessage({ id: 'Behandlingspunkt.BehandlingFilter.AutomatiskBehandling' }),
@@ -195,21 +225,23 @@ const BehandlingPicker = ({
   };
 
   const getÅrsaksliste = (): string[] => {
-    const søknadsperiode = søknadsperioder.find(periode => periode.id === valgtBehandling.id);
+    const søknadsperiode = søknadsperioder.find(periode => periode.data?.id === valgtBehandling.id);
     if (!søknadsperiode) {
       return [];
     }
     const årsaker = [];
-    [...søknadsperiode.perioderMedÅrsak].reverse().forEach(periode =>
-      periode.årsaker.forEach(årsak => {
-        // TODO: try/catch skal ikke være nødvendig etter at backend har lagt inn alle behandlingsårsaker
-        try {
-          årsaker.push(getKodeverkFn(årsak, KodeverkType.ÅRSAK_TIL_VURDERING).navn);
-        } catch {
-          årsaker.push(årsak);
-        }
-      }),
-    );
+    if (søknadsperiode.data) {
+      [...søknadsperiode.data.perioderMedÅrsak].reverse().forEach(periode =>
+        periode.årsaker.forEach(årsak => {
+          // TODO: try/catch skal ikke være nødvendig etter at backend har lagt inn alle behandlingsårsaker
+          try {
+            årsaker.push(getKodeverkFn(årsak, KodeverkType.ÅRSAK_TIL_VURDERING).navn);
+          } catch {
+            årsaker.push(årsak);
+          }
+        }),
+      );
+    }
     return årsaker;
   };
 
@@ -221,7 +253,6 @@ const BehandlingPicker = ({
           <FormattedMessage id="Behandlingspunkt.Behandling.SeAlle" />
         </Tilbakeknapp>
       )}
-
       {!valgtBehandlingId && (
         <>
           <div className={styles.headerContainer}>
@@ -246,7 +277,7 @@ const BehandlingPicker = ({
             )}
             {!noExistingBehandlinger &&
               renderListItems({
-                behandlinger,
+                behandlinger: behandlingerSomSkalVises,
                 getBehandlingLocation,
                 getKodeverkFn,
                 setValgtBehandlingId,
@@ -263,7 +294,11 @@ const BehandlingPicker = ({
           avsluttetDato={valgtBehandling.avsluttet}
           behandlingsresultatTypeNavn={
             valgtBehandling.behandlingsresultat
-              ? getKodeverkFn(valgtBehandling.behandlingsresultat.type.kode, KodeverkType.BEHANDLING_RESULTAT_TYPE, valgtBehandling.type).navn
+              ? getKodeverkFn(
+                  valgtBehandling.behandlingsresultat.type.kode,
+                  KodeverkType.BEHANDLING_RESULTAT_TYPE,
+                  valgtBehandling.type,
+                ).navn
               : undefined
           }
           behandlingsresultatTypeKode={
@@ -272,10 +307,23 @@ const BehandlingPicker = ({
           behandlingsårsaker={getÅrsaksliste()}
           behandlingTypeNavn={getBehandlingNavn(valgtBehandling, getKodeverkFn, intl)}
           behandlingTypeKode={valgtBehandling.type}
-          søknadsperioder={søknadsperioder.find(periode => periode.id === valgtBehandling.id)?.perioder}
+          søknadsperioder={søknadsperioder.find(periode => periode.data?.id === valgtBehandling.id)?.data?.perioder}
           createLocationForSkjermlenke={createLocationForSkjermlenke}
           sakstypeKode={sakstypeKode}
         />
+      )}
+      {skalViseHentFlereBehandlingerKnapp && (
+        <>
+          <VerticalSpacer twentyPx />
+          <Button
+            variant="tertiary"
+            onClick={() => setNumberOfBehandlingPerioderToFetch(numberOfBehandlingperioderToFetch + 10)}
+            icon={<AddCircle />}
+            size="small"
+          >
+            Hent flere behandlinger
+          </Button>
+        </>
       )}
     </div>
   );

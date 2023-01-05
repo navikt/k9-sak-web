@@ -5,6 +5,10 @@
   "license": "MIT",
   "private": true,
   "dependencies": {
+    "@editorjs/editorjs": "^2.26.4",
+    "@editorjs/header": "^2.7.0",
+    "@editorjs/list": "^1.8.0",
+    "@editorjs/paragraph": "^2.9.0",
     "@fpsak-frontend/assets": "1.0.0",
     "@fpsak-frontend/form": "1.0.0",
     "@fpsak-frontend/kodeverk": "1.0.0",
@@ -14,13 +18,10 @@
     "@k9-sak-web/behandling-utvidet-rett": "1.0.0",
     "@k9-sak-web/konstanter": "1.0.0",
     "@k9-sak-web/types": "1.0.0",
-    "@editorjs/editorjs": "^2.25.0",
-    "@editorjs/header": "^2.6.2",
-    "@editorjs/paragraph": "^2.8.0",
-    "@editorjs/list": "^1.7.0",
-    "editorjs-html": "^3.4.2",
     "classnames": "^2.3.2",
+    "css-tree": "^2.3.1",
     "date-fns": "^2.29.3",
+    "editorjs-html": "^3.4.2",
     "formik": "^2.2.9",
     "moment": "^2.29.4",
     "nav-frontend-alertstriper": "^4.0.2",
@@ -37,16 +38,15 @@
     "prop-types": "^15.8.1",
     "react": "^17.0.2",
     "react-intl": "6.2.5",
-    "react-redux": "^8.0.4",
+    "react-redux": "^8.0.5",
     "redux": "^4.1.2",
     "redux-form": "^8.3.8",
-    "reselect": "^4.1.6",
-    "css-tree": "^2.2.1"
+    "reselect": "^4.1.7"
   },
   "devDependencies": {
     "@fpsak-frontend/utils-test": "1.0.0",
-    "chai": "^4.2.0",
+    "chai": "^4.3.7",
     "enzyme": "^3.11.0",
-    "sinon": "^14.0.1"
+    "sinon": "^15.0.1"
   }
 }

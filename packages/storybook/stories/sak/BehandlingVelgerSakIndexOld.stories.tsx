@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { withKnobs, object, number, boolean } from '@storybook/addon-knobs';
 
-import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import BehandlingVelgerSakIndex from '@k9-sak-web/sak-behandling-velger';
@@ -14,8 +13,8 @@ import KodeverkType from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import alleKodeverk from '../mocks/alleKodeverk.json';
 import withReduxAndRouterProvider from '../../decorators/withReduxAndRouter';
 
-const BEHANDLING_TYPE_KODEVERK = 'BEHANDLING_TYPE';
-const BEHANDLING_STATUS_KODEVERK = 'BEHANDLING_STATUS';
+// const BEHANDLING_TYPE_KODEVERK = 'BEHANDLING_TYPE';
+// const BEHANDLING_STATUS_KODEVERK = 'BEHANDLING_STATUS';
 
 const behandlinger = [
   {
@@ -140,7 +139,7 @@ const getKodeverkFn = (kode: string, kodeverk: KodeverkType) => {
 };
 
 export default {
-  title: 'sak/sak-behandling-velger',
+  title: 'sak/sak-behandling-velger-old',
   component: BehandlingVelgerSakIndex,
   decorators: [withKnobs, withReduxAndRouterProvider],
 };

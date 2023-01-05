@@ -162,15 +162,6 @@ const FagsakIndex = () => {
     },
   );
 
-  const { data: behandlingPerioderMedVilkår } = restApiHooks.useRestApi<BehandlingPerioderårsakMedVilkår>(
-    K9sakApiKeys.BEHANDLING_PERIODER_ÅRSAK_MED_VILKÅR,
-    {},
-    {
-      updateTriggers: [behandlingId, behandlingVersjon],
-      suspendRequest: !behandling || (!erPleiepengerSyktBarn(fagsak) && !erPleiepengerLivetsSluttfase(fagsak)),
-    },
-  );
-
   const featureTogglesData = restApiHooks.useGlobalStateRestApiData<{ key: string; value: string }[]>(
     K9sakApiKeys.FEATURE_TOGGLE,
   );
@@ -181,6 +172,20 @@ const FagsakIndex = () => {
         return acc;
       }, {}),
     [featureTogglesData],
+  );
+
+  const showSøknadsperiodestripe = featureToggles?.SOKNADPERIODESTRIPE && erPleiepengerSyktBarn(fagsak);
+
+  const { data: behandlingPerioderMedVilkår } = restApiHooks.useRestApi<BehandlingPerioderårsakMedVilkår>(
+    K9sakApiKeys.BEHANDLING_PERIODER_ÅRSAK_MED_VILKÅR,
+    {},
+    {
+      updateTriggers: [behandlingId, behandlingVersjon],
+      suspendRequest:
+        !behandling ||
+        (!erPleiepengerSyktBarn(fagsak) && !erPleiepengerLivetsSluttfase(fagsak)) ||
+        !showSøknadsperiodestripe,
+    },
   );
 
   const { data: merknaderFraLos } = restApiHooks.useGlobalStateRestApi<MerknadFraLos>(
@@ -213,7 +218,6 @@ const FagsakIndex = () => {
   }
 
   const harVerge = behandling ? behandling.harVerge : false;
-  const showSøknadsperiodestripe = featureToggles?.SOKNADPERIODESTRIPE && erPleiepengerSyktBarn(fagsak);
   const showPunsjOgFagsakPåSøkerStripe = erPleiepengerSyktBarn(fagsak) || erPleiepengerLivetsSluttfase(fagsak);
   return (
     <>

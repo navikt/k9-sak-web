@@ -80,15 +80,19 @@ const OverstyrBeregningFaktaForm = ({
       }),
   });
 
-  const periodeSchema = Yup.object().shape({
-    skjaeringstudspunkt: Yup.string(),
-    aktivitetliste: Yup.array().of(aktivitetSchema),
-  });
+  // const periodeSchema = Yup.object().shape({
+  //   skjaeringstudspunkt: Yup.string(),
+  //   aktivitetliste: Yup.array().of(aktivitetSchema),
+  // });
 
   const validationSchema = Yup.object().shape({
     kode: Yup.string().required(),
     begrunnelse: Yup.string().required(intl.formatMessage({ id: 'OverstyrInputForm.BegrunnelseErPåkrevd' })),
-    perioder: Yup.array().of(periodeSchema),
+    /*
+     * Midlertidig deaktivere validering for dette for å teste valideringsfeil i prod
+     */
+    perioder: Yup.array().of(Yup.object()),
+    // perioder: Yup.array().of(periodeSchema),
   });
 
   /**
@@ -108,9 +112,7 @@ const OverstyrBeregningFaktaForm = ({
     aksjonspunkter.find(ap => ap.definisjon === aksjonspunktCodes.OVERSTYR_BEREGNING_INPUT).begrunnelse || '';
 
   const erAksjonspunktÅpent = () =>
-    isAksjonspunktOpen(
-      aksjonspunkter.find(ap => ap.definisjon === aksjonspunktCodes.OVERSTYR_BEREGNING_INPUT).status,
-    );
+    isAksjonspunktOpen(aksjonspunkter.find(ap => ap.definisjon === aksjonspunktCodes.OVERSTYR_BEREGNING_INPUT).status);
 
   /**
    * Formik liker ikke null i value feltene, null verdier kan forekomme fra backend.
