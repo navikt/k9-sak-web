@@ -1,5 +1,5 @@
-import React from 'react';
-import { FormattedMessage } from 'react-intl';
+import { startOfYear, format } from 'date-fns';
+import { screen } from '@testing-library/react';
 
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import klageVurderingOmgjoerCodes from '@fpsak-frontend/kodeverk/src/klageVurderingOmgjoer';
@@ -8,10 +8,13 @@ import klageVurderingCodes from '@fpsak-frontend/kodeverk/src/klageVurdering';
 import faktaOmBeregningTilfelle from '@fpsak-frontend/kodeverk/src/faktaOmBeregningTilfelle';
 import arbeidsforholdHandlingType from '@fpsak-frontend/kodeverk/src/arbeidsforholdHandlingType';
 import { KlageVurdering, TotrinnskontrollAksjonspunkt, TotrinnskontrollArbeidsforhold } from '@k9-sak-web/types';
+import { renderWithIntl } from '@fpsak-frontend/utils-test/src/test-utils';
 
-import { Element } from 'nav-frontend-typografi';
-import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import getAksjonspunkttekst, { getFaktaOmArbeidsforholdMessages } from './aksjonspunktTekstUtleder';
+
+import intlMessages from '../../../i18n/nb_NO.json';
+
+const dato = format(startOfYear(new Date()), 'yyyy-MM-dd');
 
 const medholdIKlage = {
   klageVurdering: klageVurderingCodes.MEDHOLD_I_KLAGE,
@@ -39,8 +42,9 @@ describe('aksjonspunktTekstUtleder', () => {
       totrinnskontrollGodkjent: false,
     } as TotrinnskontrollAksjonspunkt;
     const message = getAksjonspunkttekst(null, null, null, null, aksjonspunkt);
-    // @ts-ignore
-    expect(message[0].props.id).toEqual('ToTrinnsForm.Adopsjon.VilkarOverstyrt');
+
+    renderWithIntl(message[0], { messages: intlMessages });
+    expect(screen.getByText(intlMessages['ToTrinnsForm.Adopsjon.VilkarOverstyrt']));
   });
 
   it('skal vise korrekt tekst for aksjonspunkt 6003', () => {
@@ -50,8 +54,9 @@ describe('aksjonspunktTekstUtleder', () => {
       totrinnskontrollGodkjent: false,
     } as TotrinnskontrollAksjonspunkt;
     const message = getAksjonspunkttekst(null, null, null, null, aksjonspunkt);
-    // @ts-ignore
-    expect(message[0].props.id).toEqual('ToTrinnsForm.Fødsel.VilkarOverstyrt');
+
+    renderWithIntl(message[0], { messages: intlMessages });
+    expect(screen.getByText(intlMessages['ToTrinnsForm.Fødsel.VilkarOverstyrt']));
   });
 
   it('skal vise korrekt tekst for aksjonspunkt 5038', () => {
@@ -61,9 +66,11 @@ describe('aksjonspunktTekstUtleder', () => {
       totrinnskontrollGodkjent: false,
     } as TotrinnskontrollAksjonspunkt;
     const message = getAksjonspunkttekst(null, null, null, null, aksjonspunkt);
-    // @ts-ignore
-    expect(message[0].props.id).toEqual('ToTrinnsForm.Beregning.InntektFastsatt');
+
+    renderWithIntl(message[0], { messages: intlMessages });
+    expect(screen.getByText(intlMessages['ToTrinnsForm.Beregning.InntektFastsatt']));
   });
+
   it('skal vise korrekt tekst for aksjonspunkt 5042', () => {
     const aksjonspunkt = {
       aksjonspunktKode: aksjonspunktCodes.FASTSETT_BRUTTO_BEREGNINGSGRUNNLAG_SELVSTENDIG_NAERINGSDRIVENDE,
@@ -71,9 +78,11 @@ describe('aksjonspunktTekstUtleder', () => {
       totrinnskontrollGodkjent: false,
     } as TotrinnskontrollAksjonspunkt;
     const message = getAksjonspunkttekst(null, null, null, null, aksjonspunkt);
-    // @ts-ignore
-    expect(message[0].props.id).toEqual('ToTrinnsForm.Beregning.InntektFastsatt');
+
+    renderWithIntl(message, { messages: intlMessages });
+    expect(screen.getByText(intlMessages['ToTrinnsForm.Beregning.InntektFastsatt']));
   });
+
   it('skal vise korrekt tekst for aksjonspunkt 6007', () => {
     const aksjonspunkt = {
       aksjonspunktKode: aksjonspunktCodes.OVERSTYR_BEREGNING,
@@ -81,9 +90,11 @@ describe('aksjonspunktTekstUtleder', () => {
       totrinnskontrollGodkjent: false,
     } as TotrinnskontrollAksjonspunkt;
     const message = getAksjonspunkttekst(null, null, null, null, aksjonspunkt);
-    // @ts-ignore
-    expect(message[0].props.id).toEqual('ToTrinnsForm.Beregning.VilkarOverstyrt');
+
+    renderWithIntl(message, { messages: intlMessages });
+    expect(screen.getByText(intlMessages['ToTrinnsForm.Beregning.VilkarOverstyrt']));
   });
+
   it('skal vise korrekt tekst for aksjonspunkt 5047', () => {
     const aksjonspunkt = {
       aksjonspunktKode: aksjonspunktCodes.FASTSETT_BEREGNINGSGRUNNLAG_TIDSBEGRENSET_ARBEIDSFORHOLD,
@@ -91,8 +102,9 @@ describe('aksjonspunktTekstUtleder', () => {
       totrinnskontrollGodkjent: false,
     } as TotrinnskontrollAksjonspunkt;
     const message = getAksjonspunkttekst(null, null, null, null, aksjonspunkt);
-    // @ts-ignore
-    expect(message[0].props.id).toEqual('ToTrinnsForm.Beregning.InntektFastsatt');
+
+    renderWithIntl(message[0], { messages: intlMessages });
+    expect(screen.getByText(intlMessages['ToTrinnsForm.Beregning.InntektFastsatt']));
   });
 
   it('skal vise korrekt tekst for aksjonspunkt 6006', () => {
@@ -102,8 +114,9 @@ describe('aksjonspunktTekstUtleder', () => {
       totrinnskontrollGodkjent: false,
     } as TotrinnskontrollAksjonspunkt;
     const message = getAksjonspunkttekst(null, null, null, null, aksjonspunkt);
-    // @ts-ignore
-    expect(message[0].props.id).toEqual('ToTrinnsForm.Soknadsfrist.VilkarOverstyrt');
+
+    renderWithIntl(message, { messages: intlMessages });
+    expect(screen.getByText(intlMessages['ToTrinnsForm.Soknadsfrist.VilkarOverstyrt']));
   });
 
   it('skal vise korrekt tekst for aksjonspunkt 5021', () => {
@@ -113,9 +126,11 @@ describe('aksjonspunktTekstUtleder', () => {
       totrinnskontrollGodkjent: false,
     } as TotrinnskontrollAksjonspunkt;
     const message = getAksjonspunkttekst(null, null, null, null, aksjonspunkt);
-    // @ts-ignore
-    expect(message[0].props.id).toEqual('ToTrinnsForm.Medlemskap.VurderGyldigMedlemskap');
+
+    renderWithIntl(message, { messages: intlMessages });
+    expect(screen.getByText(intlMessages['ToTrinnsForm.Medlemskap.VurderGyldigMedlemskap']));
   });
+
   it('skal vise korrekt tekst for aksjonspunkt 5019', () => {
     const aksjonspunkt = {
       aksjonspunktKode: aksjonspunktCodes.AVKLAR_LOVLIG_OPPHOLD,
@@ -123,9 +138,11 @@ describe('aksjonspunktTekstUtleder', () => {
       totrinnskontrollGodkjent: false,
     } as TotrinnskontrollAksjonspunkt;
     const message = getAksjonspunkttekst(null, null, null, null, aksjonspunkt);
-    // @ts-ignore
-    expect(message[0].props.id).toEqual('ToTrinnsForm.Medlemskap.AvklarLovligOpphold');
+
+    renderWithIntl(message, { messages: intlMessages });
+    expect(screen.getByText(intlMessages['ToTrinnsForm.Medlemskap.AvklarLovligOpphold']));
   });
+
   it('skal vise korrekt tekst for aksjonspunkt 5020', () => {
     const aksjonspunkt = {
       aksjonspunktKode: aksjonspunktCodes.AVKLAR_OM_BRUKER_ER_BOSATT,
@@ -133,9 +150,11 @@ describe('aksjonspunktTekstUtleder', () => {
       totrinnskontrollGodkjent: false,
     } as TotrinnskontrollAksjonspunkt;
     const message = getAksjonspunkttekst(null, null, null, null, aksjonspunkt);
-    // @ts-ignore
-    expect(message[0].props.id).toEqual('ToTrinnsForm.Medlemskap.VurderSokerBosatt');
+
+    renderWithIntl(message, { messages: intlMessages });
+    expect(screen.getByText(intlMessages['ToTrinnsForm.Medlemskap.VurderSokerBosatt']));
   });
+
   it('skal vise korrekt tekst for aksjonspunkt 5023', () => {
     const aksjonspunkt = {
       aksjonspunktKode: aksjonspunktCodes.AVKLAR_OPPHOLDSRETT,
@@ -143,9 +162,11 @@ describe('aksjonspunktTekstUtleder', () => {
       totrinnskontrollGodkjent: false,
     } as TotrinnskontrollAksjonspunkt;
     const message = getAksjonspunkttekst(null, null, null, null, aksjonspunkt);
-    // @ts-ignore
-    expect(message[0].props.id).toEqual('ToTrinnsForm.Medlemskap.AvklarOppholdsrett');
+
+    renderWithIntl(message, { messages: intlMessages });
+    expect(screen.getByText(intlMessages['ToTrinnsForm.Medlemskap.AvklarOppholdsrett']));
   });
+
   it('skal vise korrekt tekst for aksjonspunkt 6005', () => {
     const aksjonspunkt = {
       aksjonspunktKode: aksjonspunktCodes.OVERSTYR_MEDLEMSKAPSVILKAR,
@@ -153,8 +174,9 @@ describe('aksjonspunktTekstUtleder', () => {
       totrinnskontrollGodkjent: false,
     } as TotrinnskontrollAksjonspunkt;
     const message = getAksjonspunkttekst(null, null, null, null, aksjonspunkt);
-    // @ts-ignore
-    expect(message[0].props.id).toEqual('ToTrinnsForm.Medlemskap.VilkarOverstyrt');
+
+    renderWithIntl(message[0], { messages: intlMessages });
+    expect(screen.getByText(intlMessages['ToTrinnsForm.Medlemskap.VilkarOverstyrt']));
   });
 
   it('skal vise korrekt tekst for aksjonspunkt 5039 varig endring', () => {
@@ -162,51 +184,61 @@ describe('aksjonspunktTekstUtleder', () => {
       aksjonspunktKode: aksjonspunktCodes.VURDER_VARIG_ENDRET_ELLER_NYOPPSTARTET_NAERING_SELVSTENDIG_NAERINGSDRIVENDE,
       besluttersBegrunnelse: 'begrunnelse',
       totrinnskontrollGodkjent: false,
-      beregningDtoer: [{ fastsattVarigEndring: true, skjæringstidspunkt: '2022-01-01' }],
+      beregningDtoer: [{ fastsattVarigEndring: true, skjæringstidspunkt: dato }],
     } as TotrinnskontrollAksjonspunkt;
     const message = getAksjonspunkttekst(null, null, null, null, aksjonspunkt);
-    // @ts-ignore
-    expect(message[0].props.id).toEqual('ToTrinnsForm.Beregning.VarigEndring');
+
+    renderWithIntl(message, { messages: intlMessages });
+    expect(screen.getByText(`Det er fastsatt varig endret/nyoppstartet næring fom ${dato}.`));
   });
+
   it('skal vise korrekt tekst for aksjonspunkt 5039 ikkje varig endring', () => {
     const aksjonspunkt = {
       aksjonspunktKode: aksjonspunktCodes.VURDER_VARIG_ENDRET_ELLER_NYOPPSTARTET_NAERING_SELVSTENDIG_NAERINGSDRIVENDE,
       besluttersBegrunnelse: 'begrunnelse',
       totrinnskontrollGodkjent: false,
-      beregningDtoer: [{ fastsattVarigEndring: false, skjæringstidspunkt: '2022-01-01' }],
+      beregningDtoer: [{ fastsattVarigEndring: false, skjæringstidspunkt: dato }],
     } as TotrinnskontrollAksjonspunkt;
     const message = getAksjonspunkttekst(null, null, null, null, aksjonspunkt);
-    // @ts-ignore
-    expect(message[0].props.id).toEqual('ToTrinnsForm.Beregning.IkkeVarigEndring');
+
+    renderWithIntl(message, { messages: intlMessages });
+    expect(screen.getByText(`Det er fastsatt at det ikke er varig endring i næring fom ${dato}.`));
   });
+
   it('skal vise korrekt tekst for aksjonspunkt 5080 når søker er i permisjon, skal kun vise tekst om permisjon', () => {
     const arbeidforholdDto = {
       arbeidsforholdHandlingType: arbeidsforholdHandlingType.BRUK,
       brukPermisjon: true,
     } as TotrinnskontrollArbeidsforhold;
     const messages = getFaktaOmArbeidsforholdMessages(arbeidforholdDto, arbeidsforholdHandlingTyper);
+
+    renderWithIntl(messages, { messages: intlMessages });
+    expect(screen.getByText('Søker er i permisjon.'));
     expect(messages).toHaveLength(1);
-    expect(messages[0].props.id).toEqual('ToTrinnsForm.FaktaOmArbeidsforhold.SoekerErIPermisjon');
   });
+
   it('skal vise korrekt tekst for aksjonspunkt 5080 når søker ikke er i permisjon, skal ikke vise tekst for bruk', () => {
     const arbeidforholdDto = {
       arbeidsforholdHandlingType: arbeidsforholdHandlingType.BRUK,
       brukPermisjon: false,
     } as TotrinnskontrollArbeidsforhold;
     const messages = getFaktaOmArbeidsforholdMessages(arbeidforholdDto, arbeidsforholdHandlingTyper);
-    expect(messages).toHaveLength(1);
-    expect(messages[0].props.id).toEqual('ToTrinnsForm.FaktaOmArbeidsforhold.SoekerErIkkeIPermisjon');
+
+    renderWithIntl(messages, { messages: intlMessages });
+    expect(screen.getByText('Søker er ikke i permisjon.'));
   });
+
   it('skal vise korrekt tekst for aksjonspunkt 5080 når søker ikke er i permisjon sammen med en annen handling som ikke er bruk', () => {
     const arbeidforholdDto = {
       arbeidsforholdHandlingType: arbeidsforholdHandlingType.BRUK_UTEN_INNTEKTSMELDING,
       brukPermisjon: false,
     } as TotrinnskontrollArbeidsforhold;
     const messages = getFaktaOmArbeidsforholdMessages(arbeidforholdDto, arbeidsforholdHandlingTyper);
+
+    renderWithIntl(messages, { messages: intlMessages });
     expect(messages).toHaveLength(2);
-    expect(messages[0].props.id).toEqual('ToTrinnsForm.FaktaOmArbeidsforhold.SoekerErIkkeIPermisjon');
-    expect(messages[1].props.id).toEqual('ToTrinnsForm.FaktaOmArbeidsforhold.Melding');
-    expect(messages[1].props.values.melding).toEqual('ccc');
+    expect(screen.getByText('Søker er ikke i permisjon.'));
+    expect(screen.getByText('ccc.'));
   });
 
   // Klage
@@ -221,9 +253,11 @@ describe('aksjonspunktTekstUtleder', () => {
       klageVurderingResultatNFP: medholdIKlage,
     } as KlageVurdering;
     const message = getAksjonspunkttekst(klagebehandlingVurdering, behandlingStatusFVED, [], false, aksjonspunkt);
-    // @ts-ignore
-    expect(message[0].props.id).toEqual('ToTrinnsForm.Klage.OmgjortTilGunst');
+
+    renderWithIntl(message[0], { messages: intlMessages });
+    expect(screen.getByText(intlMessages['ToTrinnsForm.Klage.OmgjortTilGunst']));
   });
+
   it('skal vise korrekt tekst for aksjonspunkt 5036 medhold', () => {
     const aksjonspunkt = {
       aksjonspunktKode: aksjonspunktCodes.BEHANDLE_KLAGE_NK,
@@ -234,9 +268,11 @@ describe('aksjonspunktTekstUtleder', () => {
       klageVurderingResultatNK: medholdIKlage,
     } as KlageVurdering;
     const message = getAksjonspunkttekst(klagebehandlingVurdering, behandlingStatusFVED, [], false, aksjonspunkt);
-    // @ts-ignore
-    expect(message[0].props.id).toEqual('ToTrinnsForm.Klage.OmgjortTilGunst');
+
+    renderWithIntl(message[0], { messages: intlMessages });
+    expect(screen.getByText(intlMessages['ToTrinnsForm.Klage.OmgjortTilGunst']));
   });
+
   // Klage avslag
   // Ytelsesvedtak opphevet
   it('skal vise korrekt tekst for aksjonspunkt 5035 avslag ytelsesvedtak opphevet', () => {
@@ -249,9 +285,11 @@ describe('aksjonspunktTekstUtleder', () => {
       totrinnskontrollGodkjent: false,
     } as TotrinnskontrollAksjonspunkt;
     const message = getAksjonspunkttekst(klagebehandlingVurdering, behandlingStatusFVED, [], false, aksjonspunkt);
-    // @ts-ignore
-    expect(message[0].props.id).toEqual('ToTrinnsForm.Klage.OppheveYtelsesVedtak');
+
+    renderWithIntl(message[0], { messages: intlMessages });
+    expect(screen.getByText(intlMessages['ToTrinnsForm.Klage.OppheveYtelsesVedtak']));
   });
+
   it('skal vise korrekt tekst for aksjonspunkt 5036 avslag ytelsesvedtak opphevet', () => {
     const klagebehandlingVurdering = {
       klageVurderingResultatNK: oppheveYtelsesVedtak,
@@ -262,9 +300,11 @@ describe('aksjonspunktTekstUtleder', () => {
       totrinnskontrollGodkjent: false,
     } as TotrinnskontrollAksjonspunkt;
     const message = getAksjonspunkttekst(klagebehandlingVurdering, behandlingStatusFVED, [], false, aksjonspunkt);
-    // @ts-ignore
-    expect(message[0].props.id).toEqual('ToTrinnsForm.Klage.OppheveYtelsesVedtak');
+
+    renderWithIntl(message[0], { messages: intlMessages });
+    expect(screen.getByText(intlMessages['ToTrinnsForm.Klage.OppheveYtelsesVedtak']));
   });
+
   // Klage avvist
   it('skal vise korrekt tekst for aksjonspunkt 5035 avslag klage avvist', () => {
     const klagebehandlingVurdering = {
@@ -276,9 +316,11 @@ describe('aksjonspunktTekstUtleder', () => {
       totrinnskontrollGodkjent: false,
     } as TotrinnskontrollAksjonspunkt;
     const message = getAksjonspunkttekst(klagebehandlingVurdering, behandlingStatusFVED, [], false, aksjonspunkt);
-    // @ts-ignore
-    expect(message[0].props.id).toEqual('ToTrinnsForm.Klage.Avvist');
+
+    renderWithIntl(message, { messages: intlMessages });
+    expect(screen.getByText(intlMessages['ToTrinnsForm.Klage.Avvist']));
   });
+
   it('skal vise korrekt tekst for aksjonspunkt 5036 avslag klage avvist', () => {
     const klagebehandlingVurdering = {
       klageVurderingResultatNK: avvistKlage,
@@ -289,9 +331,11 @@ describe('aksjonspunktTekstUtleder', () => {
       totrinnskontrollGodkjent: false,
     } as TotrinnskontrollAksjonspunkt;
     const message = getAksjonspunkttekst(klagebehandlingVurdering, behandlingStatusFVED, [], false, aksjonspunkt);
-    // @ts-ignore
-    expect(message[0].props.id).toEqual('ToTrinnsForm.Klage.Avvist');
+
+    renderWithIntl(message[0], { messages: intlMessages });
+    expect(screen.getByText(intlMessages['ToTrinnsForm.Klage.Avvist']));
   });
+
   // Ikke fastsatt Engangsstønad
   it('skal vise korrekt tekst for aksjonspunkt 5036 avslag ikke fastsatt', () => {
     const klagebehandlingVurdering = {
@@ -303,9 +347,11 @@ describe('aksjonspunktTekstUtleder', () => {
       totrinnskontrollGodkjent: false,
     } as TotrinnskontrollAksjonspunkt;
     const message = getAksjonspunkttekst(klagebehandlingVurdering, behandlingStatusFVED, [], false, aksjonspunkt);
-    // @ts-ignore
-    expect(message[0].props.id).toEqual('ToTrinnsForm.Klage.StadfesteYtelsesVedtak');
+
+    renderWithIntl(message[0], { messages: intlMessages });
+    expect(screen.getByText(intlMessages['ToTrinnsForm.Klage.StadfesteYtelsesVedtak']));
   });
+
   it('skal vise korrekt tekst for aksjonspunkt 5036 avslag ytelsesvedtak stadfestet', () => {
     const klagebehandlingVurdering = {
       klageVurderingResultatNK: stadfesteKlage,
@@ -316,14 +362,15 @@ describe('aksjonspunktTekstUtleder', () => {
       totrinnskontrollGodkjent: false,
     } as TotrinnskontrollAksjonspunkt;
     const message = getAksjonspunkttekst(klagebehandlingVurdering, behandlingStatusFVED, [], false, aksjonspunkt);
-    // @ts-ignore
-    expect(message[0].props.id).toEqual('ToTrinnsForm.Klage.StadfesteYtelsesVedtak');
+
+    renderWithIntl(message[0], { messages: intlMessages });
+    expect(screen.getByText(intlMessages['ToTrinnsForm.Klage.StadfesteYtelsesVedtak']));
   });
 
   it('skal vise korrekt tekst for aksjonspunkt 5058 vurder tidsbegrenset', () => {
     const beregningDto = {
       faktaOmBeregningTilfeller: [faktaOmBeregningTilfelle.VURDER_TIDSBEGRENSET_ARBEIDSFORHOLD],
-      skjæringstidspunkt: '2022-01-01',
+      skjæringstidspunkt: dato,
     };
     const aksjonspunkt = {
       aksjonspunktKode: aksjonspunktCodes.VURDER_FAKTA_FOR_ATFL_SN,
@@ -332,25 +379,15 @@ describe('aksjonspunktTekstUtleder', () => {
       beregningDtoer: [beregningDto],
     } as TotrinnskontrollAksjonspunkt;
     const message = getAksjonspunkttekst(null, null, null, null, aksjonspunkt);
-    expect(message[0]).toEqual(
-      <>
-        <Element>
-          <FormattedMessage
-            id="ToTrinnsForm.Beregning.Tittel"
-            values={{
-              dato: '2022-01-01',
-            }}
-          />
-        </Element>
-        <VerticalSpacer eightPx />
-        {[<FormattedMessage id="ToTrinnsForm.Beregning.VurderTidsbegrensetArbeidsforhold" />]}
-      </>,
-    );
+
+    renderWithIntl(message[0], { messages: intlMessages });
+    expect(screen.getByText(`Vurderinger av beregningsgrunnlag med skjæringstidspunkt ${dato}.`));
   });
+
   it('skal vise korrekt tekst for aksjonspunkt 5058 ATFL i samme org', () => {
     const beregningDto = {
       faktaOmBeregningTilfeller: [faktaOmBeregningTilfelle.VURDER_AT_OG_FL_I_SAMME_ORGANISASJON],
-      skjæringstidspunkt: '2022-01-01',
+      skjæringstidspunkt: dato,
     };
     const aksjonspunkt = {
       aksjonspunktKode: aksjonspunktCodes.VURDER_FAKTA_FOR_ATFL_SN,
@@ -358,26 +395,18 @@ describe('aksjonspunktTekstUtleder', () => {
       totrinnskontrollGodkjent: false,
       beregningDtoer: [beregningDto],
     } as TotrinnskontrollAksjonspunkt;
+
     const message = getAksjonspunkttekst(null, null, null, null, aksjonspunkt);
-    expect(message[0]).toEqual(
-      <>
-        <Element>
-          <FormattedMessage
-            id="ToTrinnsForm.Beregning.Tittel"
-            values={{
-              dato: '2022-01-01',
-            }}
-          />
-        </Element>
-        <VerticalSpacer eightPx />
-        {[<FormattedMessage id="ToTrinnsForm.Beregning.VurderATFLISammeOrg" />]}
-      </>,
-    );
+    renderWithIntl(message[0], { messages: intlMessages });
+
+    expect(screen.getByText(`Vurderinger av beregningsgrunnlag med skjæringstidspunkt ${dato}.`));
+    expect(screen.getByText(`Inntekt er fastsatt for arbeidstaker/frilanser i samme organisajon.`));
   });
+
   it('skal vise korrekte tekster for kombinasjon av aksjonspunkt 5058', () => {
     const beregningDto = {
       faktaOmBeregningTilfeller: [faktaOmBeregningTilfelle.VURDER_TIDSBEGRENSET_ARBEIDSFORHOLD],
-      skjæringstidspunkt: '2022-01-01',
+      skjæringstidspunkt: dato,
     };
     const aksjonspunkt = {
       aksjonspunktKode: aksjonspunktCodes.VURDER_FAKTA_FOR_ATFL_SN,
@@ -385,23 +414,11 @@ describe('aksjonspunktTekstUtleder', () => {
       totrinnskontrollGodkjent: false,
       beregningDtoer: [beregningDto],
     } as TotrinnskontrollAksjonspunkt;
-
     const message = getAksjonspunkttekst(null, null, null, null, aksjonspunkt);
 
-    expect(message[0]).toEqual(
-      <>
-        <Element>
-          <FormattedMessage
-            id="ToTrinnsForm.Beregning.Tittel"
-            values={{
-              dato: '2022-01-01',
-            }}
-          />
-        </Element>
-        <VerticalSpacer eightPx />
-        {[<FormattedMessage id="ToTrinnsForm.Beregning.VurderTidsbegrensetArbeidsforhold" />]}
-      </>,
-    );
+    renderWithIntl(message[0], { messages: intlMessages });
+
+    expect(screen.getByText(intlMessages['ToTrinnsForm.Beregning.VurderTidsbegrensetArbeidsforhold']));
   });
 
   it('skal vise korrekt tekst for aksjonspunkt 5080', () => {
@@ -427,9 +444,9 @@ describe('aksjonspunktTekstUtleder', () => {
     } as TotrinnskontrollAksjonspunkt;
 
     const messages = getAksjonspunkttekst(null, null, [], false, aksjonspunkt);
-    // @ts-ignore
-    expect(messages[0].props.children[0].props.id).toEqual('ToTrinnsForm.OpplysningerOmSøker.Arbeidsforhold');
-    // @ts-ignore
-    expect(messages[0].props.children[1][0].key).toEqual('ToTrinnsForm.FaktaOmArbeidsforhold.Melding');
+
+    renderWithIntl(messages, { messages: intlMessages });
+    expect(screen.getByText(`Arbeidsforhold hos COLOR LINE CREW AS(973135678)...664b`));
+    expect(screen.getByText(`Arbeidsforhold hos SESAM AS(976037286)`));
   });
 });

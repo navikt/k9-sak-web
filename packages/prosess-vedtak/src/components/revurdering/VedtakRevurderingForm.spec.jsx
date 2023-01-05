@@ -22,7 +22,7 @@ const createBehandling = (behandlingResultatType, behandlingHenlagt) => ({
   behandlingsresultat: {
     id: 1,
     type: {
-      kode: behandlingResultatType,
+      kode: behandlingResultatType, // #kodeverk
       navn: 'test',
     },
     avslagsarsak: behandlingResultatType === BehandlingResultatType.AVSLATT ? '1019' : null,

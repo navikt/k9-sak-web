@@ -42,6 +42,7 @@
   "ToTrinnsForm.Beregning.VurderRefusjonskrav": "Det er vurdert om refusjonskrav om er fremsatt etter fristen skal tas med i beregning.",
   "ToTrinnsForm.Beregning.Tittel": "Vurderinger av beregningsgrunnlag med skjæringstidspunkt {dato}.",
   "ToTrinnsForm.Beregning.Generell": "Det er gjort endring i beregning",
+  "ToTrinnsForm.Beregning.VilkarOverstyrt": "Vilkår er overstyrt", 
 
   "ToTrinnsForm.Godkjenn": "Godkjenn vedtaket",
   "ToTrinnsForm.SendTilbake": "Send til saksbehandler",

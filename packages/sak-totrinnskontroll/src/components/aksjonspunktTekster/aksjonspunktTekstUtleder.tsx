@@ -24,19 +24,23 @@ import vurderFaktaOmBeregningTotrinnText from '../../VurderFaktaBeregningTotrinn
 
 const buildVarigEndringBeregningText = (beregningDto: TotrinnskontrollAksjonspunkt['beregningDtoer'][number]) =>
   beregningDto?.fastsattVarigEndringNaering || beregningDto?.fastsattVarigEndring ? (
-    <FormattedMessage
-      id="ToTrinnsForm.Beregning.VarigEndring"
-      values={{
-        dato: beregningDto.skjæringstidspunkt,
-      }}
-    />
+    <React.Fragment key="ToTrinnsForm.Beregning.VarigEndring">
+      <FormattedMessage
+        id="ToTrinnsForm.Beregning.VarigEndring"
+        values={{
+          dato: beregningDto.skjæringstidspunkt,
+        }}
+      />
+    </React.Fragment>
   ) : (
-    <FormattedMessage
-      id="ToTrinnsForm.Beregning.IkkeVarigEndring"
-      values={{
-        dato: beregningDto.skjæringstidspunkt,
-      }}
-    />
+    <React.Fragment key="ToTrinnsForm.Beregning.IkkeVarigEndring">
+      <FormattedMessage
+        id="ToTrinnsForm.Beregning.IkkeVarigEndring"
+        values={{
+          dato: beregningDto.skjæringstidspunkt,
+        }}
+      />
+    </React.Fragment>
   );
 
 const buildVarigEndretArbeidssituasjonBeregningText = (
@@ -67,23 +71,31 @@ export const getFaktaOmArbeidsforholdMessages = (
   const kode = arbeidforholdDto.arbeidsforholdHandlingType;
   if (arbeidforholdDto.brukPermisjon === true) {
     formattedMessages.push(
-      <FormattedMessage
-        id="ToTrinnsForm.FaktaOmArbeidsforhold.SoekerErIPermisjon"
-        values={{
-          b: (chunks: any) => <b>{chunks}</b>,
-        }}
-      />,
+      <React.Fragment
+        key={`ToTrinnsForm.FaktaOmArbeidsforhold.SoekerErIPermisjon-${arbeidforholdDto.arbeidsforholdId}`}
+      >
+        <FormattedMessage
+          id="ToTrinnsForm.FaktaOmArbeidsforhold.SoekerErIPermisjon"
+          values={{
+            b: (chunks: any) => <b>{chunks}</b>,
+          }}
+        />
+      </React.Fragment>,
     );
     return formattedMessages;
   }
   if (arbeidforholdDto.brukPermisjon === false) {
     formattedMessages.push(
-      <FormattedMessage
-        id="ToTrinnsForm.FaktaOmArbeidsforhold.SoekerErIkkeIPermisjon"
-        values={{
-          b: (chunks: any) => <b>{chunks}</b>,
-        }}
-      />,
+      <React.Fragment
+        key={`ToTrinnsForm.FaktaOmArbeidsforhold.SoekerErIkkeIPermisjon-${arbeidforholdDto.arbeidsforholdId}`}
+      >
+        <FormattedMessage
+          id="ToTrinnsForm.FaktaOmArbeidsforhold.SoekerErIkkeIPermisjon"
+          values={{
+            b: (chunks: any) => <b>{chunks}</b>,
+          }}
+        />
+      </React.Fragment>,
     );
     if (kode === arbeidsforholdHandlingType.BRUK) {
       return formattedMessages;
@@ -92,10 +104,12 @@ export const getFaktaOmArbeidsforholdMessages = (
   const type = arbeidsforholdHandlingTyper.find(t => t.kode === kode);
   const melding = type !== undefined && type !== null ? type.navn : '';
   formattedMessages.push(
-    <FormattedMessage
-      id="ToTrinnsForm.FaktaOmArbeidsforhold.Melding"
-      values={{ melding, b: (chunks: any) => <b>{chunks}</b> }}
-    />,
+    <React.Fragment key={`ToTrinnsForm.FaktaOmArbeidsforhold.Melding-${arbeidforholdDto.arbeidsforholdId}`}>
+      <FormattedMessage
+        id="ToTrinnsForm.FaktaOmArbeidsforhold.Melding"
+        values={{ melding, b: (chunks: any) => <b>{chunks}</b> }}
+      />
+    </React.Fragment>,
   );
   return formattedMessages;
 };
@@ -107,7 +121,7 @@ const buildArbeidsforholdText = (
   aksjonspunkt.arbeidsforholdDtos.map(arbeidforholdDto => {
     const formattedMessages = getFaktaOmArbeidsforholdMessages(arbeidforholdDto, arbeidsforholdHandlingTyper);
     return (
-      <>
+      <React.Fragment key={`${arbeidforholdDto.arbeidsforholdId}-wrapper`}>
         <FormattedMessage
           id="ToTrinnsForm.OpplysningerOmSøker.Arbeidsforhold"
           values={{
@@ -120,9 +134,9 @@ const buildArbeidsforholdText = (
           }}
         />
         {formattedMessages.map(formattedMessage => (
-          <React.Fragment key={formattedMessage.props.id}>{formattedMessage}</React.Fragment>
+          <React.Fragment key={formattedMessage.key}>{formattedMessage}</React.Fragment>
         ))}
-      </>
+      </React.Fragment>
     );
   });
 
@@ -131,7 +145,11 @@ const buildOpptjeningText = (aksjonspunkt: TotrinnskontrollAksjonspunkt): ReactN
 
 const getTextFromAksjonspunktkode = (aksjonspunkt: TotrinnskontrollAksjonspunkt): ReactNode => {
   const aksjonspunktTextId = totrinnskontrollaksjonspunktTextCodes[aksjonspunkt.aksjonspunktKode];
-  return aksjonspunktTextId ? <FormattedMessage id={aksjonspunktTextId} /> : null;
+  return aksjonspunktTextId ? (
+    <React.Fragment key="standard-aksjonspunktkode-tekst">
+      <FormattedMessage id={aksjonspunktTextId} />
+    </React.Fragment>
+  ) : null;
 };
 
 const getTextFromTilbakekrevingAksjonspunktkode = (aksjonspunkt: TotrinnskontrollAksjonspunkt) => {
@@ -142,7 +160,7 @@ const getTextFromTilbakekrevingAksjonspunktkode = (aksjonspunkt: Totrinnskontrol
 const lagBgTilfelleTekst = (bg: TotrinnsBeregningDto): ReactNode => {
   const aksjonspunktTextIds = bg.faktaOmBeregningTilfeller.map(kode => vurderFaktaOmBeregningTotrinnText[kode]);
   return (
-    <>
+    <React.Fragment key={bg.faktaOmBeregningTilfeller.join()}>
       <Element>
         <FormattedMessage
           id="ToTrinnsForm.Beregning.Tittel"
@@ -153,9 +171,13 @@ const lagBgTilfelleTekst = (bg: TotrinnsBeregningDto): ReactNode => {
       </Element>
       <VerticalSpacer eightPx />
       {aksjonspunktTextIds.map(aksjonspunktTextId =>
-        aksjonspunktTextId ? <FormattedMessage id={aksjonspunktTextId} /> : null,
+        aksjonspunktTextId ? (
+          <React.Fragment key={aksjonspunktTextId}>
+            <FormattedMessage id={aksjonspunktTextId} />
+          </React.Fragment>
+        ) : null,
       )}
-    </>
+    </React.Fragment>
   );
 };
 
@@ -202,7 +224,7 @@ const getTextForKlageHelper = (
     default:
       break;
   }
-  return <FormattedMessage id={aksjonspunktTextId} />;
+  return <FormattedMessage key="klage-aksjonspunkt-text-id" id={aksjonspunktTextId} />;
 };
 
 const getTextForKlage = (klagebehandlingVurdering: KlageVurdering, behandlingStaus: string) => {
