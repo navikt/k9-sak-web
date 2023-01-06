@@ -32,7 +32,7 @@ describe('<BrevPanel>', () => {
       <BrevPanel
         intl={intlMock}
         readOnly={false}
-        sprakkode={{ kode: 'NB' }}
+        sprakkode="NB"
         beregningErManueltFastsatt={false}
         dokumentdata={{}}
         tilgjengeligeVedtaksbrev={automatiskInnvilgelsebrevTilgjengelig}
@@ -59,7 +59,7 @@ describe('<BrevPanel>', () => {
       <BrevPanel
         intl={intlMock}
         readOnly={false}
-        sprakkode={{ kode: 'NB' }}
+        sprakkode="NB"
         beregningErManueltFastsatt={false}
         dokumentdata={{}}
         tilgjengeligeVedtaksbrev={alleTilgjengeligeVedtaksbrev}
@@ -86,7 +86,7 @@ describe('<BrevPanel>', () => {
       <BrevPanel
         intl={intlMock}
         readOnly={false}
-        sprakkode={{ kode: 'NB' }}
+        sprakkode="NB"
         beregningErManueltFastsatt={false}
         dokumentdata={{}}
         tilgjengeligeVedtaksbrev={fritekstbrevTilgjenglig}
@@ -113,7 +113,7 @@ describe('<BrevPanel>', () => {
       <BrevPanel
         intl={intlMock}
         readOnly={false}
-        sprakkode={{ kode: 'NB' }}
+        sprakkode="NB"
         beregningErManueltFastsatt={false}
         dokumentdata={{}}
         tilgjengeligeVedtaksbrev={ingenTilgjengeligeVedtaksbrev}
@@ -140,7 +140,7 @@ describe('<BrevPanel>', () => {
       <BrevPanel
         intl={intlMock}
         readOnly={false}
-        sprakkode={{ kode: 'NB' }}
+        sprakkode="NB"
         beregningErManueltFastsatt={false}
         dokumentdata={{}}
         tilgjengeligeVedtaksbrev={{

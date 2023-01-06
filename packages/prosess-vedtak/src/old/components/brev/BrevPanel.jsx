@@ -163,7 +163,7 @@ export const BrevPanel = props => {
   const fritekstbrev = harFritekstbrev && (
     <>
       <FritekstBrevPanel
-        readOnly={readOnly || formikProps.values[fieldnames.SKAL_HINDRE_UTSENDING_AV_BREV]}
+        readOnly={readOnly || !!formikProps.values[fieldnames.SKAL_HINDRE_UTSENDING_AV_BREV]}
         sprakkode={sprakkode}
         intl={intl}
         previewBrev={automatiskBrevUtenValideringCallback}
@@ -179,7 +179,7 @@ export const BrevPanel = props => {
     <>
       <InformasjonsbehovAutomatiskVedtaksbrev
         intl={intl}
-        readOnly={readOnly || formikProps.values[fieldnames.SKAL_HINDRE_UTSENDING_AV_BREV]}
+        readOnly={readOnly || !!formikProps.values[fieldnames.SKAL_HINDRE_UTSENDING_AV_BREV]}
         sprakkode={sprakkode}
         begrunnelse={begrunnelse}
         informasjonsbehovVedtaksbrev={informasjonsbehovVedtaksbrev}
