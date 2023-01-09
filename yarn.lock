@@ -13666,9 +13666,9 @@ just-extend@^4.0.2:
   integrity sha512-g3UB796vUFIY90VIv/WX3L2c8CS2MdWUww3CNrYmqza1Fg0DURc2K/O4YrnklBdQarSJ/y8JnJYDGc+1iumQjg==
 
 just-is-empty@^3.2.1:
-  version "3.2.1"
-  resolved "https://registry.yarnpkg.com/just-is-empty/-/just-is-empty-3.2.1.tgz#54bb36264be58db5a08e5ac3644245d1e6cc978e"
-  integrity sha512-Es/0J1qVNmcT2O5TR4jQNc4R6kHl438BQJjyEsuXnQEQlix6gSmPU+JWbZDSSgN8hNBCoYpxCp2chls6iCtjhg==
+  version "3.3.0"
+  resolved "https://registry.yarnpkg.com/just-is-empty/-/just-is-empty-3.3.0.tgz#24837c047c06f4aea9c4886c016dae750d267d07"
+  integrity sha512-GWacjX1hMMiwolyAm3quCaWexQeF/ZBSvkWr7Rc45OVmBYB+pSnr/XqYYKgFtiehr/KiE9xrEXtoj+ywPWuAHw==
 
 keyv@^3.0.0:
   version "3.1.0"
