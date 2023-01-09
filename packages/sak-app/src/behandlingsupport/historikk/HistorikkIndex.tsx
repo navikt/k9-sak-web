@@ -127,14 +127,16 @@ const HistorikkIndex = ({ saksnummer, behandlingId, behandlingVersjon }: OwnProp
           alleKodeverk = alleKodeverkKlage;
         }
         return (
-          <HistorikkSakIndex
-            historikkinnslag={innslag}
-            saksnummer={saksnummer}
-            alleKodeverk={alleKodeverk}
-            erTilbakekreving={!!innslag.erTilbakekreving}
-            getBehandlingLocation={getBehandlingLocation}
-            createLocationForSkjermlenke={createLocationForSkjermlenke}
-          />
+          <React.Fragment key={JSON.stringify(innslag)}>
+            <HistorikkSakIndex
+              historikkinnslag={innslag}
+              saksnummer={saksnummer}
+              alleKodeverk={alleKodeverk}
+              erTilbakekreving={!!innslag.erTilbakekreving}
+              getBehandlingLocation={getBehandlingLocation}
+              createLocationForSkjermlenke={createLocationForSkjermlenke}
+            />
+          </React.Fragment>
         );
       })}
     </>
