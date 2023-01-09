@@ -108,6 +108,18 @@ describe('<BehandlingPaVent>', () => {
   });
 
   it('skal oppdatere på-vent-informasjon', async () => {
+    const mockResponse = jest.fn();
+    Object.defineProperty(window, 'location', {
+      value: {
+        hash: {
+          endsWith: mockResponse,
+          includes: mockResponse,
+        },
+        assign: mockResponse,
+      },
+      writable: true,
+    });
+
     const settPaVentCallback = sinon.stub();
     settPaVentCallback.returns(Promise.resolve());
 
