@@ -235,7 +235,7 @@ export class FeilutbetalingInfoPanelImpl extends Component {
                   {feilutbetaling.behandlingsresultat && (
                     <Normaltekst className={styles.smallPaddingRight}>
                       {getFpsakKodeverknavn(
-                        feilutbetaling.behandlingsresultat.type,
+                        feilutbetaling.behandlingsresultat.type.kode,
                         kodeverkTyper.BEHANDLING_RESULTAT_TYPE,
                       )}
                     </Normaltekst>

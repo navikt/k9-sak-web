@@ -37,17 +37,17 @@ export default ({ aksjonspunkter, behandling, readOnly, submitCallback, saksbeha
     httpErrorHandlerFn(status, addErrorMessage, locationHeader);
 
   const beredskapAksjonspunkt = findAksjonspunkt(aksjonspunkter, aksjonspunktCodes.BEREDSKAP);
-  const beredskapAksjonspunktkode = beredskapAksjonspunkt?.definisjon.kode;
+  const beredskapAksjonspunktkode = beredskapAksjonspunkt?.definisjon;
   const løsBeredskapAksjonspunkt = beredskapsperioder =>
     submitCallback([{ kode: beredskapAksjonspunktkode, begrunnelse: 'Beredskap er behandlet', ...beredskapsperioder }]);
 
   const nattevåkAksjonspunkt = findAksjonspunkt(aksjonspunkter, aksjonspunktCodes.NATTEVÅK);
-  const nattevåkAksjonspunktkode = nattevåkAksjonspunkt?.definisjon.kode;
+  const nattevåkAksjonspunktkode = nattevåkAksjonspunkt?.definisjon;
   const løsNattevåkAksjonspunkt = nattevåkperioder =>
     submitCallback([{ kode: nattevåkAksjonspunktkode, begrunnelse: 'Nattevåk er behandlet', ...nattevåkperioder }]);
 
-  const harUløstAksjonspunktForBeredskap = beredskapAksjonspunkt?.status.kode === aksjonspunktStatus.OPPRETTET;
-  const harUløstAksjonspunktForNattevåk = nattevåkAksjonspunkt?.status.kode === aksjonspunktStatus.OPPRETTET;
+  const harUløstAksjonspunktForBeredskap = beredskapAksjonspunkt?.status === aksjonspunktStatus.OPPRETTET;
+  const harUløstAksjonspunktForNattevåk = nattevåkAksjonspunkt?.status === aksjonspunktStatus.OPPRETTET;
   const harAksjonspunkt = !!beredskapAksjonspunktkode || !!nattevåkAksjonspunktkode;
 
   return (

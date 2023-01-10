@@ -92,7 +92,8 @@ VedtakInnvilgetRevurderingPanelImpl.defaultProps = {
 };
 
 const mapStateToProps = (state, ownProps) => ({
-  konsekvenserForYtelsen: ownProps.behandlingsresultat !== undefined ? [ownProps.behandlingsresultat.type] : undefined,
+  konsekvenserForYtelsen:
+    ownProps.behandlingsresultat !== undefined ? [ownProps.behandlingsresultat.type.kode] : undefined,
   tilbakekrevingText: findTilbakekrevingText(ownProps),
 });
 

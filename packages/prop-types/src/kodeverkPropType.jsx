@@ -11,6 +11,7 @@ export const kodeverkPropType = PropTypes.arrayOf(
 export const kodeverkObjektPropType = PropTypes.exact({
   kode: PropTypes.string.isRequired,
   kodeverk: PropTypes.string.isRequired,
+  navn: PropTypes.string,
 });
 
 export default kodeverkPropType;

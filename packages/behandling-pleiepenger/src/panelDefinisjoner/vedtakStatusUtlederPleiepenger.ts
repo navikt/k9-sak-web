@@ -30,7 +30,7 @@ const findStatusForVedtak = (vilkar, aksjonspunkter, vedtakAksjonspunkter, behan
     return vilkarUtfallType.IKKE_VURDERT;
   }
 
-  if (isAvslag(behandlingsresultat.type)) {
+  if (isAvslag(behandlingsresultat.type.kode)) {
     return vilkarUtfallType.IKKE_OPPFYLT;
   }
   return vilkarUtfallType.OPPFYLT;
