@@ -77,7 +77,6 @@ const ReisetidForm = ({ vurdering, avbrytRedigering, erRedigering }: OwnProps): 
         {({ handleSubmit, isSubmitting, values, setFieldValue }) => (
           <>
             <BeskrivelseFraSoeker vurdering={vurdering} />
-            {console.log(values)}
             <Box marginTop={Margin.xLarge}>
               {vurdering.til ? (
                 <LabelledContent

@@ -12,7 +12,6 @@ interface OwnProps {
 }
 
 const NoedvendighetNavigation = ({ perioder, setValgtPeriode }: OwnProps) => {
-  console.log(perioder);
   const perioderTilVurdering = perioder.filter(periode => periode.resultat === noedvendighetStatus.IKKE_VURDERT);
   const [activeIndex, setActiveIndex] = React.useState(perioderTilVurdering.length ? 0 : -1);
   useEffect(() => {

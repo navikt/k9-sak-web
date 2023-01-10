@@ -37,7 +37,6 @@ const NoedvendighetForm = ({
   avbrytRedigering,
   erRedigering,
 }: VurderingAvBeredskapsperioderFormProps): JSX.Element => {
-  console.log(vurdering);
   const { readOnly, løsAksjonspunktNødvendighet } = useContext(FaktaOpplaeringContext);
   const intl = useIntl();
 

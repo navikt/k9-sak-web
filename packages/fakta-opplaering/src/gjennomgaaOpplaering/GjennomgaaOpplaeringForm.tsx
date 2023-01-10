@@ -166,8 +166,6 @@ const GjennomgaaOpplaeringForm = ({ vurdering, avbrytRedigering, erRedigering }:
                             fromDate={new Date(vurdering.opplæring.fom)}
                             toDate={new Date(vurdering.opplæring.tom)}
                             onRangeChange={(dateRange: { from?: Date; to?: Date }) => {
-                              console.log(dateRange.from);
-                              console.log(dateRange.to);
                               arrayHelpers.replace(index, {
                                 id: periode.id,
                                 periode: new Period(
