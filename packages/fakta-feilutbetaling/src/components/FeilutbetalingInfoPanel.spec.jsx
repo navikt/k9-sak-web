@@ -43,7 +43,10 @@ const feilutbetalingFakta = {
   ],
   behandlingÅrsaker: [{ behandlingArsakType: behandlingArsakType.FEIL_I_LOVANDVENDELSE }],
   behandlingsresultat: {
-    type: behandlingResultatType.INNVILGET,
+    type: {
+      kode: behandlingResultatType.INNVILGET,
+      kodeverk: BEHANDLING_RESULTAT_TYPE_KODEVERK,
+    },
     konsekvenserForYtelsen: [konsekvensForYtelsen.FORELDREPENGER_OPPHØRER, konsekvensForYtelsen.ENDRING_I_BEREGNING],
   },
   tilbakekrevingValg: {
