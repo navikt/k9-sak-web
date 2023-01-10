@@ -77,20 +77,22 @@ const ReisetidFerdigVisning = ({ vurdering, rediger }: OwnProps) => {
       <Box marginTop={Margin.xLarge}>
         <LabelledContent
           label={
-            vurdering.resultat === Vurderingsresultat.GODKJENT
+            [Vurderingsresultat.GODKJENT_AUTOMATISK, Vurderingsresultat.GODKJENT].includes(vurdering.resultat)
               ? intl.formatMessage({ id: 'reisetid.periode.innvilget' })
               : intl.formatMessage({ id: 'reisetid.periode.avslått' })
           }
           content={vurdering.periode.prettifyPeriod()}
         />
       </Box>
-      <Box marginTop={Margin.xLarge}>
-        <LabelledContent
-          label={intl.formatMessage({ id: 'reisetid.begrunnelse' })}
-          content={vurdering.begrunnelse}
-          indentContent
-        />
-      </Box>
+      {vurdering.begrunnelse && (
+        <Box marginTop={Margin.xLarge}>
+          <LabelledContent
+            label={intl.formatMessage({ id: 'reisetid.begrunnelse' })}
+            content={vurdering.begrunnelse}
+            indentContent
+          />
+        </Box>
+      )}
     </DetailView>
   );
 };

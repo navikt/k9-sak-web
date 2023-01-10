@@ -1,62 +1,67 @@
 /* eslint-disable */
-import React, { useState } from 'react';
+import React from 'react';
 import { useField, useFormikContext } from 'formik';
 
 import {
   DatePickerProps,
+  DateValidationT,
+  RangeValidationT,
   UNSAFE_DatePicker,
   UNSAFE_useRangeDatepicker,
-  Label,
-  DateValidationT,
 } from '@navikt/ds-react';
-import { validateAll } from '@fpsak-frontend/form/src/formikUtils';
-import { required } from '@fpsak-frontend/utils';
 import styles from './rangeDatepicker.modules.css';
+import dayjs from 'dayjs';
 
 type OwnProps = {
   name: string;
   onRangeChange: any;
 } & DatePickerProps;
 
-const validate = (date: DateValidationT) => {
-  if (!date.isValidDate) {
-    return 'Datoen er ikke valid';
+const fieldValidaton = (
+  date: DateValidationT & {
+    isBeforeFrom?: boolean;
+  },
+  setError: (v: string) => void,
+  fromDate: Date,
+  toDate: Date,
+) => {
+  if (date.isBefore) {
+    return setError(`Datoen kan ikke være før ${dayjs(fromDate).format('DD.MM.YYYY')}`);
   }
-  if (required(date)) {
-    return required(date).id;
+  if (date.isAfter) {
+    return setError(`Datoen kan ikke være etter ${dayjs(toDate).format('DD.MM.YYYY')}`);
+  }
+  if (date.isEmpty) {
+    return setError('Datoen er påkrevd.');
   }
 
-  return '';
+  if (date.isInvalid) {
+    return setError('Datoen er ugyldig.');
+  }
+
+  if (date.isBeforeFrom) {
+    return setError('Til dato kan ikke være før fra dato.');
+  }
+
+  setError('');
 };
 
 const RangeDatepicker = ({ name, fromDate, toDate, onRangeChange, placeholder, defaultSelected }: OwnProps) => {
-  const [fromError, setFromError] = useState('');
-  const [toError, setToError] = useState('');
-  const formik = useFormikContext();
-  const [field, meta, lel] = useField({
-    name,
+  const [fieldFom, metaFom, fomHelpers] = useField({
+    name: `${name}.fom`,
   });
-  const { datepickerProps, toInputProps, fromInputProps } = UNSAFE_useRangeDatepicker({
+  const [fieldTom, metaTom, tomHelpers] = useField({
+    name: `${name}.tom`,
+  });
+
+  const { datepickerProps, toInputProps, fromInputProps, selectedRange } = UNSAFE_useRangeDatepicker({
     defaultSelected,
     fromDate,
     toDate,
     onRangeChange,
-    onValidate(val) {
-      const fromError = validate(val.from);
-      const toError = validate(val.to);
-      if (fromError) {
-        setFromError(fromError);
-        formik.setFieldError(`${name}.fom`, fromError);
-      }
-      if (toError) {
-        setToError(toError);
-        formik.setFieldError(`${name}.tom`, fromError);
-      }
-      if (!fromError && !toError) {
-        lel.setError(undefined);
-        setFromError(undefined);
-        setToError(undefined);
-      }
+    onValidate: ({ from, to }: RangeValidationT) => {
+      fieldValidaton(from, fomHelpers.setError, fromDate, toDate);
+      fieldValidaton(to, tomHelpers.setError, fromDate, toDate);
     },
   });
 
@@ -64,8 +69,22 @@ const RangeDatepicker = ({ name, fromDate, toDate, onRangeChange, placeholder, d
     <div>
       <UNSAFE_DatePicker {...datepickerProps}>
         <div className={styles['rangepicker-row']}>
-          <UNSAFE_DatePicker.Input {...fromInputProps} placeholder={placeholder} size="small" label="Fra" />
-          <UNSAFE_DatePicker.Input {...toInputProps} placeholder={placeholder} size="small" label="Til" />
+          <UNSAFE_DatePicker.Input
+            {...fromInputProps}
+            onBlur={_ => fomHelpers.setTouched(true, false)}
+            error={metaFom.touched && metaFom.error}
+            placeholder={placeholder}
+            size="small"
+            label="Fra"
+          />
+          <UNSAFE_DatePicker.Input
+            {...toInputProps}
+            onBlur={_ => tomHelpers.setTouched(true, false)}
+            error={metaTom.touched && metaTom.error}
+            placeholder={placeholder}
+            size="small"
+            label="Til"
+          />
         </div>
       </UNSAFE_DatePicker>
     </div>

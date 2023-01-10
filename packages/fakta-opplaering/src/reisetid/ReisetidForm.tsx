@@ -2,6 +2,7 @@ import React, { useContext } from 'react';
 import { Box, Margin, DetailView, LabelledContent, AssessedBy } from '@navikt/ft-plattform-komponenter';
 import { TextAreaFormik } from '@fpsak-frontend/form';
 import { useIntl } from 'react-intl';
+import * as yup from 'yup';
 import dayjs from 'dayjs';
 
 import { FaktaOpplaeringContext } from '@k9-sak-web/behandling-opplaeringspenger/src/panelDefinisjoner/faktaPaneler/OpplaeringFaktaPanelDef';
@@ -29,6 +30,13 @@ interface FormState {
   [fieldname.BEGRUNNELSE]: string;
   [fieldname.PERIODE]: Period;
 }
+
+const reisetidSchema = yup.object().shape({
+  [fieldname.PERIODE]: yup.object().shape({
+    fom: yup.string().required().label('Fra'),
+    tom: yup.string().required().label('Til'),
+  }),
+});
 
 const ReisetidForm = ({ vurdering, avbrytRedigering, erRedigering }: OwnProps): JSX.Element => {
   const { readOnly, løsAksjonspunktReisetid } = useContext(FaktaOpplaeringContext);
@@ -64,10 +72,12 @@ const ReisetidForm = ({ vurdering, avbrytRedigering, erRedigering }: OwnProps): 
       <Formik
         initialValues={initialValues}
         onSubmit={values => løsAksjonspunktReisetid(mapValuesTilAksjonspunktPayload(values))}
+        validationSchema={reisetidSchema}
       >
         {({ handleSubmit, isSubmitting, values, setFieldValue }) => (
           <>
             <BeskrivelseFraSoeker vurdering={vurdering} />
+            {console.log(values)}
             <Box marginTop={Margin.xLarge}>
               {vurdering.til ? (
                 <LabelledContent
@@ -123,8 +133,8 @@ const ReisetidForm = ({ vurdering, avbrytRedigering, erRedigering }: OwnProps): 
                 setFieldValue(
                   fieldname.PERIODE,
                   new Period(
-                    dayjs(dateRange?.from).format('YYYY-MM-DD') || '',
-                    dayjs(dateRange?.to).format('YYYY-MM-DD') || '',
+                    dateRange?.from ? dayjs(dateRange?.from).format('YYYY-MM-DD') : '',
+                    dateRange?.to ? dayjs(dateRange?.to).format('YYYY-MM-DD') : '',
                   ),
                 );
               }}

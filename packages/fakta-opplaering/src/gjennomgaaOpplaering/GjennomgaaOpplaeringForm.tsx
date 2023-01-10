@@ -5,6 +5,7 @@ import { useIntl } from 'react-intl';
 import { Calender } from '@navikt/ds-icons';
 import { v4 } from 'uuid';
 import dayjs from 'dayjs';
+import * as yup from 'yup';
 
 import { FaktaOpplaeringContext } from '@k9-sak-web/behandling-opplaeringspenger/src/panelDefinisjoner/faktaPaneler/OpplaeringFaktaPanelDef';
 import { GjennomgaaOpplaeringVurdering, Vurderingsresultat } from '@k9-sak-web/types';
@@ -28,6 +29,20 @@ enum RadioOptions {
   DELVIS = 'delvis',
   NEI = 'nei',
 }
+
+// valid date
+// tom er etter fom
+const schema = yup.object().shape({
+  [fieldname.PERIODER]: yup.array().of(
+    yup.object().shape({
+      id: yup.string(),
+      periode: yup.object().shape({
+        fom: yup.string().required().label('Fra'),
+        tom: yup.string().required().label('Til'),
+      }),
+    }),
+  ),
+});
 
 interface OwnProps {
   vurdering: GjennomgaaOpplaeringVurdering;
@@ -138,16 +153,26 @@ const GjennomgaaOpplaeringForm = ({ vurdering, avbrytRedigering, erRedigering }:
                       {values[fieldname.PERIODER].map((periode, index, array) => (
                         <div key={periode.id} style={{ display: 'flex' }}>
                           <RangeDatepicker
-                            name={`${fieldname.PERIODER}.${index}`}
+                            name={`${fieldname.PERIODER}.${index}.periode`}
+                            defaultSelected={{
+                              from: values[`${fieldname.PERIODER}`][index]?.periode?.fom
+                                ? new Date(values[`${fieldname.PERIODER}`][index]?.periode?.fom)
+                                : '',
+                              to: values[`${fieldname.PERIODER}`][index]?.periode?.tom
+                                ? new Date(values[`${fieldname.PERIODER}`][index]?.periode?.tom)
+                                : '',
+                            }}
                             placeholder="dd.mm.åååå"
                             fromDate={new Date(vurdering.opplæring.fom)}
                             toDate={new Date(vurdering.opplæring.tom)}
                             onRangeChange={(dateRange: { from?: Date; to?: Date }) => {
+                              console.log(dateRange.from);
+                              console.log(dateRange.to);
                               arrayHelpers.replace(index, {
                                 id: periode.id,
                                 periode: new Period(
-                                  dayjs(dateRange?.from).format('YYYY-MM-DD') || '',
-                                  dayjs(dateRange?.to).format('YYYY-MM-DD') || '',
+                                  dateRange?.from ? dayjs(dateRange?.from).format('YYYY-MM-DD') : '',
+                                  dateRange?.to ? dayjs(dateRange?.to).format('YYYY-MM-DD') : '',
                                 ),
                               });
                             }}
