@@ -2,17 +2,19 @@ import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktSta
 import { isAvslag } from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
+import Behandlingsresultat from '@k9-sak-web/types/src/behandlingsresultatTsType';
+import { Aksjonspunkt, Vilkar } from '@k9-sak-web/types';
 
 // TODO (TOR) Kan denne skrivast om? For høg kompleksitet.
 
-const hasOnlyClosedAps = (aksjonspunkter, vedtakAksjonspunkter) =>
+const hasOnlyClosedAps = (aksjonspunkter: Aksjonspunkt[], vedtakAksjonspunkter) =>
   aksjonspunkter
     .filter(ap => !vedtakAksjonspunkter.some(vap => vap.definisjon === ap.definisjon))
     .every(ap => !isAksjonspunktOpen(ap.status));
 
-const hasAksjonspunkt = ap => ap.definisjon === aksjonspunktCodes.OVERSTYR_BEREGNING;
+const hasAksjonspunkt = (ap: Aksjonspunkt) => ap.definisjon === aksjonspunktCodes.OVERSTYR_BEREGNING;
 
-const isAksjonspunktOpenAndOfType = ap => hasAksjonspunkt(ap) && isAksjonspunktOpen(ap.status);
+const isAksjonspunktOpenAndOfType = (ap: Aksjonspunkt) => hasAksjonspunkt(ap) && isAksjonspunktOpen(ap.status);
 
 const harVilkårSomIkkeErOppfylt = vilkar =>
   vilkar.some(v => v.perioder.some(periode => periode.vilkarStatus === vilkarUtfallType.IKKE_OPPFYLT));
@@ -20,7 +22,12 @@ const harVilkårSomIkkeErOppfylt = vilkar =>
 const harVilkårSomIkkeErVurdert = vilkar =>
   vilkar.some(v => v.perioder.some(periode => periode.vilkarStatus === vilkarUtfallType.IKKE_VURDERT));
 
-const findStatusForVedtak = (vilkar, aksjonspunkter, vedtakAksjonspunkter, behandlingsresultat) => {
+const findStatusForVedtak = (
+  vilkar: Vilkar[],
+  aksjonspunkter: Aksjonspunkt[],
+  vedtakAksjonspunkter,
+  behandlingsresultat: Behandlingsresultat,
+) => {
   if (vilkar.length === 0) {
     return vilkarUtfallType.IKKE_VURDERT;
   }

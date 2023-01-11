@@ -56,7 +56,7 @@ export type CustomPeriode = {
   fom: string;
   tom: string;
   erTotalBelopUnder4Rettsgebyr: boolean;
-  foreldelseVurderingType?: Kodeverk;
+  foreldelseVurderingType?: string;
   begrunnelse?: string;
   harMerEnnEnYtelse: boolean;
 } & DetaljertFeilutbetalingPeriode;
@@ -560,7 +560,7 @@ export const periodeFormBuildInitialValues = (
 ): InitialValuesDetailForm => {
   const { vilkarResultat, begrunnelse, vilkarResultatInfo } = periode;
 
-  const vilkarResultatKode = vilkarResultat && vilkarResultat.kode ? vilkarResultat.kode : vilkarResultat;
+  const vilkarResultatKode = vilkarResultat ? vilkarResultat.kode : vilkarResultat;
   let foreldetData = { erForeldet: false, periodenErForeldet: undefined, foreldetBegrunnelse: undefined };
   const erForeldet = periode.erForeldet ? periode.erForeldet : periode.foreldet;
   if (erForeldet) {

@@ -120,9 +120,9 @@ export const findAvslagResultatText = (behandlingResultatTypeKode, ytelseType) =
 export const hasIkkeOppfyltSoknadsfristvilkar = vilkar =>
   vilkar.some(
     v =>
-      v.vilkarType.kode === vilkarType.SOKNADFRISTVILKARET &&
+      v.vilkarType === vilkarType.SOKNADFRISTVILKARET &&
       Array.isArray(v.perioder) &&
-      v.perioder.some(periode => periode.vilkarStatus.kode === vilkarUtfallType.IKKE_OPPFYLT),
+      v.perioder.some(periode => periode.vilkarStatus === vilkarUtfallType.IKKE_OPPFYLT),
   );
 
 export const medholdIKlage = klageVurderingResultat =>
@@ -148,7 +148,7 @@ export const skalSkriveFritekstGrunnetFastsettingAvBeregning = (beregningsgrunnl
     return false;
   }
   const behandlingHarLøstBGAP = aksjonspunkter.find(
-    ap => isBGAksjonspunktSomGirFritekstfelt(ap.definisjon.kode) && ap.status.kode === aksjonspunktStatus.UTFORT,
+    ap => isBGAksjonspunktSomGirFritekstfelt(ap.definisjon) && ap.status === aksjonspunktStatus.UTFORT,
   );
 
   const alleAndelerFørstePerioder = beregningsgrunnlag

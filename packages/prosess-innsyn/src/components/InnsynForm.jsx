@@ -185,7 +185,7 @@ const buildInitialValues = createSelector(
     mottattDato: innsynMottattDato,
     innsynResultatType: innsynResultatType ? innsynResultatType.kode : undefined,
     fristDato: moment().add(3, 'days').format(ISO_DATE_FORMAT),
-    sattPaVent: isAksjonspunktOpen(aksjonspunkter[0].status.kode) ? undefined : !!fristBehandlingPaaVent,
+    sattPaVent: isAksjonspunktOpen(aksjonspunkter[0].status) ? undefined : !!fristBehandlingPaaVent,
     ...ProsessStegBegrunnelseTextField.buildInitialValues(aksjonspunkter),
     ...hentDokumenterMedNavnOgFikkInnsyn(dokumenter || []),
   }),
@@ -233,7 +233,7 @@ const mapStateToPropsFactory = (initialState, initialOwnProps) => {
     vedtaksdokumenter: ownProps.vedtaksdokumentasjon,
     innsynResultatTyper: ownProps.alleKodeverk[kodeverkTyper.INNSYN_RESULTAT_TYPE],
     behandlingTypes: ownProps.alleKodeverk[kodeverkTyper.BEHANDLING_TYPE],
-    isApOpen: isAksjonspunktOpen(ownProps.aksjonspunkter[0].status.kode),
+    isApOpen: isAksjonspunktOpen(ownProps.aksjonspunkter[0].status),
     innsynResultatType: behandlingFormValueSelector(
       formName,
       ownProps.behandlingId,

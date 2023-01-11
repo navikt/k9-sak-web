@@ -166,11 +166,11 @@ export class ProsessStegPanelUtledet {
     this.isReadOnlyCheck(this.getAksjonspunkterForPanel(), this.getVilkarForPanel());
 
   public getErDelvisBehandlet = (erVedtak?: boolean): boolean => {
-    const { uttaksperioder, vilkar } = this.getKomponentData();
+    const { uttaksperioder, vilkar }: { uttaksperioder: any; vilkar: Vilkar[] } = this.getKomponentData();
     if (erVedtak) {
       return (
-        vilkar.some(v => v.perioder.some(periode => periode.vilkarStatus.kode === vilkarUtfallType.IKKE_OPPFYLT)) &&
-        vilkar.some(v => v.perioder.some(periode => periode.vilkarStatus.kode === vilkarUtfallType.OPPFYLT))
+        vilkar.some(v => v.perioder.some(periode => periode.vilkarStatus === vilkarUtfallType.IKKE_OPPFYLT)) &&
+        vilkar.some(v => v.perioder.some(periode => periode.vilkarStatus === vilkarUtfallType.OPPFYLT))
       );
     }
     return finnErDelvisBehandlet(this.prosessStegPanelDef.finnVilkarForSteg(this.vilkar), uttaksperioder);

@@ -176,7 +176,7 @@ export const buildInitialValues = createSelector(
     (state, ownProps) => ownProps.uttakPeriodeGrense,
   ],
   (aksjonspunkter, mottattDato, uttaksperiodegrense = {}) => ({
-    gyldigSenFremsetting: isAksjonspunktOpen(aksjonspunkter[0].status.kode)
+    gyldigSenFremsetting: isAksjonspunktOpen(aksjonspunkter[0].status)
       ? undefined
       : uttaksperiodegrense.mottattDato !== mottattDato,
     ansesMottatt: uttaksperiodegrense.mottattDato,
@@ -187,7 +187,7 @@ export const buildInitialValues = createSelector(
 const transformValues = (values, aksjonspunkter) => ({
   harGyldigGrunn: values.gyldigSenFremsetting,
   ansesMottattDato: values.ansesMottatt,
-  kode: aksjonspunkter[0].definisjon.kode,
+  kode: aksjonspunkter[0].definisjon,
   ...ProsessStegBegrunnelseTextField.transformValues(values),
 });
 

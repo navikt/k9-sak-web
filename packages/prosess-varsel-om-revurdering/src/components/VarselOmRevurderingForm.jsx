@@ -225,7 +225,7 @@ VarselOmRevurderingFormImpl.defaultProps = {
 };
 
 export const buildInitialValues = createSelector([(state, ownProps) => ownProps.aksjonspunkter], aksjonspunkter => ({
-  kode: aksjonspunkter[0].definisjon.kode,
+  kode: aksjonspunkter[0].definisjon,
   frist: moment().add(28, 'days').format(ISO_DATE_FORMAT),
   ventearsak: null,
 }));
@@ -255,13 +255,13 @@ const mapStateToPropsFactory = (initialState, ownProps) => {
 
   return state => ({
     initialValues: buildInitialValues(state, ownProps),
-    aksjonspunktStatus: aksjonspunkt.status.kode,
+    aksjonspunktStatus: aksjonspunkt.status,
     begrunnelse: aksjonspunkt.begrunnelse,
     ...behandlingFormValueSelector(formName, behandlingId, behandlingVersjon)(state, 'sendVarsel', 'fritekst', 'frist'),
     avklartBarn: nullSafe(familiehendelse.register).avklartBarn,
     termindato: nullSafe(familiehendelse.gjeldende).termindato,
     vedtaksDatoSomSvangerskapsuke: nullSafe(familiehendelse.gjeldende).vedtaksDatoSomSvangerskapsuke,
-    behandlingTypeKode: behandlingType.kode,
+    behandlingTypeKode: behandlingType,
     languageCode,
     ventearsaker,
     erAutomatiskRevurdering,

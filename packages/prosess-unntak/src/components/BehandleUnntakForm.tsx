@@ -24,7 +24,9 @@ import {
   AksjonspunktHelpTextTemp,
   FlexColumn,
 } from '@fpsak-frontend/shared-components';
-import { Kodeverk } from '@k9-sak-web/types';
+import { Kodeverk, Aksjonspunkt, Vilkar } from '@k9-sak-web/types';
+import Behandlingsresultat from '@k9-sak-web/types/src/behandlingsresultatTsType';
+
 import FritekstTextField from './FritekstTextField';
 
 const FORM_NAME = 'BehandleUnntakForm';
@@ -94,7 +96,7 @@ export const BehandleUnntakForm = ({
 export const buildInitialValues = createSelector(
   // @ts-ignore Fiks dette!
   [ownProps => ownProps.vilkårsresultat, ownProps => ownProps.behandlingsresultat, ownProps => ownProps.vilkar],
-  (vilkårsresultat, behandlingsresultat, vilkar) => ({
+  (vilkårsresultat, behandlingsresultat: Behandlingsresultat, vilkar) => ({
     periode: vilkårsresultat ? vilkårsresultat[0].periode : null,
     avslagsårsak: vilkårsresultat ? vilkårsresultat[0].avslagsårsak : null,
     utfall: vilkårsresultat ? vilkårsresultat[0].utfall : null,

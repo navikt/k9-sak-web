@@ -95,7 +95,7 @@ const Utenlandsopphold = ({
       {harUtenlandsopphold ? (
         <>
           <PeriodList perioder={[...perioderMedItems]} tittel="Perioder i utlandet" />
-          {perioder.some(periode => vurderesMotEØSRegelverk(periode.landkode.kode)) && (
+          {perioder.some(periode => vurderesMotEØSRegelverk(periode.landkode)) && (
             <div>{`*) Ikke en del av EØS, men vurderes mot EØS-regelverk`}</div>
           )}
         </>

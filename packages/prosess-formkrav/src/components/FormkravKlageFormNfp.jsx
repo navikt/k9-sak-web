@@ -69,8 +69,7 @@ const getPåklagdBehandling = (avsluttedeBehandlinger, påklagdVedtak) =>
 export const erTilbakekreving = (avsluttedeBehandlinger, påklagdVedtak) => {
   const behandling = getPåklagdBehandling(avsluttedeBehandlinger, påklagdVedtak);
   return (
-    behandling?.type.kode === BehandlingType.TILBAKEKREVING ||
-    behandling?.type.kode === BehandlingType.TILBAKEKREVING_REVURDERING
+    behandling?.type === BehandlingType.TILBAKEKREVING || behandling?.type === BehandlingType.TILBAKEKREVING_REVURDERING
   );
 };
 export const påklagdBehandlingInfo = (avsluttedeBehandlinger, påklagdVedtak) => {
@@ -79,7 +78,7 @@ export const påklagdBehandlingInfo = (avsluttedeBehandlinger, påklagdVedtak) =
     ? {
         påklagBehandlingUuid: behandling.uuid,
         påklagBehandlingVedtakDato: behandling.avsluttet,
-        påklagBehandlingType: behandling.type.kode,
+        påklagBehandlingType: behandling.type,
       }
     : null;
 };
