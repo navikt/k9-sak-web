@@ -48,7 +48,7 @@ const renderTextarea = ({ field: { value, name }, form, label, maxLength, badges
   );
 };
 
-const TextAreaFormik = ({ name, label, validate, readOnly, formik, ...otherProps }: TextAreaFieldProps) => {
+const TextAreaFormik = ({ name, readOnly, formik, label, validate = [], ...otherProps }: TextAreaFieldProps) => {
   const intl = useIntl();
   return (
     <FormikField

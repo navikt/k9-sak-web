@@ -1,6 +1,6 @@
 /* eslint-disable */
 import React from 'react';
-import { useField, useFormikContext } from 'formik';
+import { useField } from 'formik';
 
 import {
   DatePickerProps,
@@ -40,10 +40,10 @@ const fieldValidaton = (
   }
 
   if (date.isBeforeFrom) {
-    return setError('Til dato kan ikke være før fra dato.');
+    return setError('Til-dato kan ikke være før fra-dato');
   }
 
-  setError('');
+  setError(undefined);
 };
 
 const RangeDatepicker = ({ name, fromDate, toDate, onRangeChange, placeholder, defaultSelected }: OwnProps) => {
@@ -53,8 +53,7 @@ const RangeDatepicker = ({ name, fromDate, toDate, onRangeChange, placeholder, d
   const [fieldTom, metaTom, tomHelpers] = useField({
     name: `${name}.tom`,
   });
-
-  const { datepickerProps, toInputProps, fromInputProps, selectedRange } = UNSAFE_useRangeDatepicker({
+  const { datepickerProps, toInputProps, fromInputProps } = UNSAFE_useRangeDatepicker({
     defaultSelected,
     fromDate,
     toDate,

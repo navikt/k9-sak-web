@@ -12,7 +12,7 @@ import { GjennomgaaOpplaeringVurdering, Vurderingsresultat } from '@k9-sak-web/t
 import { required } from '@fpsak-frontend/utils';
 import { FieldArray, Formik } from 'formik';
 import RadioGroupFormik from '@fpsak-frontend/form/src/RadioGroupFormik';
-import { Button, Label, Alert } from '@navikt/ds-react';
+import { Button, Label, Alert, ErrorMessage } from '@navikt/ds-react';
 import { getPeriodDifference, Period } from '@navikt/k9-period-utils';
 import DeleteButton from '../components/delete-button/DeleteButton';
 import AddButton from '../components/add-button/AddButton';
@@ -30,16 +30,31 @@ enum RadioOptions {
   NEI = 'nei',
 }
 
+yup.addMethod(yup.array, 'overlapp', () => this.test('overlapp', 'Kan ikke overlappe', list => list.length > 1));
 // valid date
 // tom er etter fom
 const schema = yup.object().shape({
   [fieldname.PERIODER]: yup.array().of(
     yup.object().shape({
       id: yup.string(),
-      periode: yup.object().shape({
-        fom: yup.string().required().label('Fra'),
-        tom: yup.string().required().label('Til'),
-      }),
+      periode: yup
+        .object()
+        .shape({
+          fom: yup.string().required().label('Fra'),
+          tom: yup.string().required().label('Til'),
+        })
+        .test(
+          'overlapp',
+          ({ value }: { value: Period }) => `${value.prettifyPeriod()} overlapper med en annen periode`,
+          // eslint-disable-next-line prefer-arrow-callback
+          function (periode: Period, testParams) {
+            const [, , values] = testParams.from;
+            const andrePerioder = values.value[fieldname.PERIODER]
+              .filter(v => v.periode !== periode)
+              .map(v => v.periode) as Period[];
+            return !periode.overlapsWithSomePeriodInList(andrePerioder);
+          },
+        ),
     }),
   ),
 });
@@ -110,8 +125,9 @@ const GjennomgaaOpplaeringForm = ({ vurdering, avbrytRedigering, erRedigering }:
       <Formik
         initialValues={initialValues}
         onSubmit={values => løsAksjonspunktGjennomgåOpplæring(mapValuesTilAksjonspunktPayload(values))}
+        validationSchema={schema}
       >
-        {({ handleSubmit, isSubmitting, values, setFieldValue }) => (
+        {({ handleSubmit, isSubmitting, values, setFieldValue, errors }) => (
           <>
             <div>
               <Calender /> <span>{vurdering.opplæring.prettifyPeriod()}</span>
@@ -151,36 +167,46 @@ const GjennomgaaOpplaeringForm = ({ vurdering, avbrytRedigering, erRedigering }:
                   render={arrayHelpers => (
                     <>
                       {values[fieldname.PERIODER].map((periode, index, array) => (
-                        <div key={periode.id} style={{ display: 'flex' }}>
-                          <RangeDatepicker
-                            name={`${fieldname.PERIODER}.${index}.periode`}
-                            defaultSelected={{
-                              from: values[`${fieldname.PERIODER}`][index]?.periode?.fom
-                                ? new Date(values[`${fieldname.PERIODER}`][index]?.periode?.fom)
-                                : '',
-                              to: values[`${fieldname.PERIODER}`][index]?.periode?.tom
-                                ? new Date(values[`${fieldname.PERIODER}`][index]?.periode?.tom)
-                                : '',
-                            }}
-                            placeholder="dd.mm.åååå"
-                            fromDate={new Date(vurdering.opplæring.fom)}
-                            toDate={new Date(vurdering.opplæring.tom)}
-                            onRangeChange={(dateRange: { from?: Date; to?: Date }) => {
-                              arrayHelpers.replace(index, {
-                                id: periode.id,
-                                periode: new Period(
-                                  dateRange?.from ? dayjs(dateRange?.from).format('YYYY-MM-DD') : '',
-                                  dateRange?.to ? dayjs(dateRange?.to).format('YYYY-MM-DD') : '',
-                                ),
-                              });
-                            }}
-                          />
-                          {array.length > 1 && <DeleteButton onClick={() => arrayHelpers.remove(index)} />}
-                        </div>
+                        <>
+                          <div key={periode.id} style={{ display: 'flex' }}>
+                            <RangeDatepicker
+                              name={`${fieldname.PERIODER}.${index}.periode`}
+                              defaultSelected={{
+                                from: values[`${fieldname.PERIODER}`][index]?.periode?.fom
+                                  ? new Date(values[`${fieldname.PERIODER}`][index]?.periode?.fom)
+                                  : undefined,
+                                to: values[`${fieldname.PERIODER}`][index]?.periode?.tom
+                                  ? new Date(values[`${fieldname.PERIODER}`][index]?.periode?.tom)
+                                  : undefined,
+                              }}
+                              placeholder="dd.mm.åååå"
+                              fromDate={new Date(vurdering.opplæring.fom)}
+                              toDate={new Date(vurdering.opplæring.tom)}
+                              onRangeChange={(dateRange: { from?: Date; to?: Date }) => {
+                                arrayHelpers.replace(index, {
+                                  id: periode.id,
+                                  periode: new Period(
+                                    dateRange?.from ? dayjs(dateRange?.from).format('YYYY-MM-DD') : '',
+                                    dateRange?.to ? dayjs(dateRange?.to).format('YYYY-MM-DD') : '',
+                                  ),
+                                });
+                              }}
+                            />
+                            {array.length > 1 && <DeleteButton onClick={() => arrayHelpers.remove(index)} />}
+                          </div>
+                          <div>
+                            {typeof errors[fieldname.PERIODER]?.[index]?.periode === 'string' && (
+                              <ErrorMessage size="small">{errors[fieldname.PERIODER]?.[index]?.periode}</ErrorMessage>
+                            )}
+                          </div>
+                        </>
                       ))}
                       <AddButton
                         onClick={() => {
-                          arrayHelpers.push({ id: v4(), periode: new Period('', '') });
+                          arrayHelpers.push({
+                            id: v4(),
+                            periode: new Period('', ''),
+                          });
                         }}
                         label="Legg til ny periode"
                       />

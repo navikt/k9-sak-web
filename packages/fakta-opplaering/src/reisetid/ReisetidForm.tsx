@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { Box, Margin, DetailView, LabelledContent, AssessedBy } from '@navikt/ft-plattform-komponenter';
+import { Box, Margin, DetailView, LabelledContent } from '@navikt/ft-plattform-komponenter';
 import { TextAreaFormik } from '@fpsak-frontend/form';
 import { useIntl } from 'react-intl';
 import * as yup from 'yup';
@@ -135,6 +135,7 @@ const ReisetidForm = ({ vurdering, avbrytRedigering, erRedigering }: OwnProps): 
                     dateRange?.from ? dayjs(dateRange?.from).format('YYYY-MM-DD') : '',
                     dateRange?.to ? dayjs(dateRange?.to).format('YYYY-MM-DD') : '',
                   ),
+                  false,
                 );
               }}
             />
