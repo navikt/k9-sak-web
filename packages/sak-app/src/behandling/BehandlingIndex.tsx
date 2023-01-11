@@ -317,7 +317,7 @@ const BehandlingIndex = ({
   }
 
   if (featureToggles.OPPLAERINGSPENGER) {
-    if (fagsak.sakstype.kode === FagsakYtelseType.OPPLAERINGSPENGER) {
+    if (fagsak.sakstype === FagsakYtelseType.OPPLAERINGSPENGER) {
       return (
         <Suspense fallback={<LoadingPanel />}>
           <ErrorBoundary errorMessageCallback={addErrorMessage}>

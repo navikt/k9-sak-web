@@ -20,7 +20,7 @@ const intl = createIntl(
 
 const tilbakekrevingÅrsakTyperKlage = [behandlingArsakType.RE_KLAGE_KA, behandlingArsakType.RE_KLAGE_NFP];
 
-const erTilbakekrevingÅrsakKlage = (årsak: any) => årsak && tilbakekrevingÅrsakTyperKlage.includes(årsak.kode);
+const erTilbakekrevingÅrsakKlage = (årsak: string) => årsak && tilbakekrevingÅrsakTyperKlage.includes(årsak);
 
 interface OwnProps {
   behandling: Behandling;

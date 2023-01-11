@@ -42,6 +42,7 @@ export type { Uttaksperiode, Utfalltype, Vilkår, VurderteVilkår } from './src/
 export { UtfallEnum, VilkårEnum } from './src/omsorgspenger/Uttaksperiode';
 export type { default as Aktor } from './src/aktorTsType';
 export type { default as BehandlingAppKontekst } from './src/behandlingAppKontekstTsType';
+export type { BehandlingÅrsak } from './src/behandlingAppKontekstTsType';
 export * from './src/historikkinnslagTsType';
 export * from './src/klageVurderingTsType';
 export * from './src/totrinnskontrollAksjonspunktTsType';

@@ -3,28 +3,28 @@ import { useIntl } from 'react-intl';
 
 import { Column, Row } from 'nav-frontend-grid';
 
-import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import { isAvslag, isInnvilget, isOpphor } from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
 import { redusertUtbetalingArsakType } from '@fpsak-frontend/prosess-vedtak/src/kodeverk/redusertUtbetalingArsak';
 import BehandlingArsakType from '@fpsak-frontend/kodeverk/src/behandlingArsakType';
 import { getKodeverknavnFn } from '@fpsak-frontend/utils';
-import { Aksjonspunkt, Kodeverk, KodeverkMedNavn, Vilkar } from '@k9-sak-web/types';
+import { Aksjonspunkt, KodeverkMedNavn, Vilkar, BehandlingÅrsak } from '@k9-sak-web/types';
+import Behandlingsresultat from '@k9-sak-web/types/src/behandlingsresultatTsType';
 import VedtakInnvilgetRevurderingPanel from './VedtakInnvilgetRevurderingPanel';
 import VedtakAvslagRevurderingPanel from './VedtakAvslagRevurderingPanel';
 import VedtakOpphorRevurderingPanel from './VedtakOpphorRevurderingPanel';
 import VedtakRedusertUtbetalingArsaker from './VedtakRedusertUtbetalingArsaker';
 
-const createAarsakString = (revurderingAarsaker, getKodeverknavn) => {
+const createAarsakString = (revurderingAarsaker: string[], getKodeverknavn) => {
   if (revurderingAarsaker === undefined || revurderingAarsaker.length < 1) {
     return '';
   }
   const aarsakTekstList = [];
   const endringFraBrukerAarsak = revurderingAarsaker.find(
-    aarsak => aarsak.kode === BehandlingArsakType.RE_ENDRING_FRA_BRUKER,
+    aarsak => aarsak === BehandlingArsakType.RE_ENDRING_FRA_BRUKER,
   );
   const alleAndreAarsakerNavn = revurderingAarsaker
-    .filter(aarsak => aarsak.kode !== BehandlingArsakType.RE_ENDRING_FRA_BRUKER)
+    .filter(aarsak => aarsak !== BehandlingArsakType.RE_ENDRING_FRA_BRUKER)
     .map(aarsak => getKodeverknavn(aarsak));
   // Dersom en av årsakene er "RE_ENDRING_FRA_BRUKER" skal alltid denne vises først
   if (endringFraBrukerAarsak) {
@@ -35,11 +35,7 @@ const createAarsakString = (revurderingAarsaker, getKodeverknavn) => {
 };
 interface OwnProps {
   ytelseTypeKode: string;
-  behandlingresultat: {
-    type: {
-      kode: string;
-    };
-  };
+  behandlingresultat: Behandlingsresultat;
   resultatstruktur: string;
   tilbakekrevingvalg: {
     videreBehandling: {
@@ -53,7 +49,7 @@ interface OwnProps {
   behandlingStatusKode: string;
   vilkar: Vilkar[];
   aksjonspunkter: Aksjonspunkt[];
-  sprakkode: Kodeverk;
+  sprakkode: string;
   readOnly: boolean;
   vedtakVarsel: any;
   medlemskapFom: string;
@@ -61,7 +57,7 @@ interface OwnProps {
   redusertUtbetalingArsak: redusertUtbetalingArsakType;
   formikValues: any;
   erSendtInnUtenArsaker: boolean;
-  behandlingArsaker: any;
+  behandlingArsaker: BehandlingÅrsak[];
 }
 
 const RevurderingPaneler = ({
