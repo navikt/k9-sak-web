@@ -37,6 +37,17 @@ describe('<MenySettPaVentIndex>', () => {
   it('skal vise modal og velge å åpne ta behandling av vent', async () => {
     const lukkModalCallback = jest.fn();
     const settBehandlingPaVent = jest.fn(() => Promise.resolve());
+    const mockResponse = jest.fn();
+    Object.defineProperty(window, 'location', {
+      value: {
+        hash: {
+          endsWith: mockResponse,
+          includes: mockResponse,
+        },
+        assign: mockResponse,
+      },
+      writable: true,
+    });
 
     render(
       <Provider store={createStore(combineReducers({ form: formReducer }))}>
