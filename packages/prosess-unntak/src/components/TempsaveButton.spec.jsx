@@ -13,7 +13,7 @@ describe('<TempsaveButton>', () => {
     begrunnelse: '',
   };
 
-  it.skip('Skal rendre komponent korrekt', () => {
+  it('Skal rendre komponent korrekt', () => {
     const wrapper = shallow(
       <TempsaveButton
         formValues={formValuesWithEmptyStrings}
