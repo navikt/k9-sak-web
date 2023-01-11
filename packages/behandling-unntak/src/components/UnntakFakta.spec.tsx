@@ -16,6 +16,7 @@ import sivilstandType from '@fpsak-frontend/kodeverk/src/sivilstandType';
 import opplysningAdresseType from '@fpsak-frontend/kodeverk/src/opplysningAdresseType';
 import UnntakFakta from './UnntakFakta';
 import FetchedData from '../types/fetchedDataTsType';
+import { requestUnntakApi, UnntakBehandlingApiKeys } from '../data/unntakBehandlingApi';
 
 describe('<UnntakFakta>', () => {
   const fagsak = {
@@ -96,7 +97,8 @@ describe('<UnntakFakta>', () => {
     },
   };
 
-  it.skip('skal rendre faktapaneler og sidemeny korrekt', () => {
+  it('skal rendre faktapaneler og sidemeny korrekt', () => {
+    requestUnntakApi.mock(UnntakBehandlingApiKeys.ARBEIDSFORHOLD, {});
     const fetchedData: Partial<FetchedData> = {
       aksjonspunkter,
       vilkar,
@@ -124,18 +126,19 @@ describe('<UnntakFakta>', () => {
     expect(panel.prop('paneler')).toEqual([
       {
         erAktiv: true,
-        harAksjonspunkt: false,
-        tekst: 'Inntekt og ytelser',
+        harAksjonspunkt: true,
+        tekstKode: 'ArbeidsforholdInfoPanel.Title',
       },
       {
         erAktiv: false,
         harAksjonspunkt: false,
-        tekst: 'Søknaden',
+        tekstKode: 'InntektOgYtelser.Title',
       },
     ]);
   });
 
-  it.skip('skal oppdatere url ved valg av faktapanel', () => {
+  it('skal oppdatere url ved valg av faktapanel', () => {
+    requestUnntakApi.mock(UnntakBehandlingApiKeys.ARBEIDSFORHOLD, {});
     const oppdaterProsessStegOgFaktaPanelIUrl = sinon.spy();
     const fetchedData: Partial<FetchedData> = {
       aksjonspunkter,
@@ -168,6 +171,6 @@ describe('<UnntakFakta>', () => {
     const { args } = calls[0];
     expect(args).toHaveLength(2);
     expect(args[0]).toEqual('default');
-    expect(args[1]).toEqual('opplysninger-fra-soknaden');
+    expect(args[1]).toEqual('arbeidsforhold');
   });
 });
