@@ -1,10 +1,10 @@
-import { render, screen } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
 import MenyMarkerBehandling from './MenyMarkerBehandling';
 
 describe('<MenyMarkerBehandling', () => {
-  it('skal vise inputfelt for tekst gitt at checkbox er valgt', () => {
+  it('skal vise inputfelt for tekst gitt at checkbox er valgt', async () => {
     render(
       <MenyMarkerBehandling
         behandlingUuid="123"
@@ -15,7 +15,9 @@ describe('<MenyMarkerBehandling', () => {
       />,
     );
     expect(screen.queryByLabelText('Kommentar')).toBe(null);
-    userEvent.click(screen.getByLabelText('Behandlingen er hastesak'));
+    await waitFor(() => {
+      userEvent.click(screen.getByLabelText('Behandlingen er hastesak'));
+    });
     expect(screen.getByLabelText('Kommentar')).toBeInTheDocument();
   });
 });
