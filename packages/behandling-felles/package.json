@@ -15,7 +15,7 @@
     "@k9-sak-web/modal-sett-pa-vent": "1.0.0",
     "@k9-sak-web/rest-api-hooks": "1.0.0",
     "@k9-sak-web/types": "1.0.0",
-    "@navikt/ft-plattform-komponenter": "1.4.3",
+    "@navikt/ft-plattform-komponenter": "1.4.5",
     "@navikt/k9-array-utils": "^0.0.1",
     "@navikt/k9-bem-utils": "^1.0.1",
     "@navikt/k9-date-utils": "^0.0.10",
@@ -37,7 +37,7 @@
     "react": "^17.0.2",
     "react-intl": "6.2.5",
     "react-redux": "^8.0.5",
-    "redux-form": "^8.3.8",
+    "redux-form": "^8.3.9",
     "reselect": "^4.1.7"
   },
   "devDependencies": {
