@@ -156,11 +156,7 @@ describe('<TilbakekrevingForm>', () => {
           begrunnelse: '3434',
           fom: '2016-05-02',
           tom: '2016-05-26',
-          vilkarResultat: {
-            kode: VilkarResultat.GOD_TRO,
-            kodeverk: 'VILKAAR_RESULTAT',
-            navn: 'Nei, mottaker har mottatt beløpet i god tro (1. ledd)',
-          },
+          vilkarResultat: VilkarResultat.GOD_TRO,
           vilkarResultatInfo: {
             begrunnelse: '34344',
             erBelopetIBehold: true,
@@ -242,11 +238,7 @@ describe('<TilbakekrevingForm>', () => {
           fom: '2016-03-16',
           tom: '2016-04-03',
           feilutbetalingBelop: 10000,
-          vilkarResultat: {
-            kode: VilkarResultat.GOD_TRO,
-            kodeverk: 'VILKAAR_RESULTAT',
-            navn: 'Nei, mottaker har mottatt beløpet i god tro (1. ledd)',
-          },
+          vilkarResultat: VilkarResultat.GOD_TRO,
           vilkarResultatInfo: {
             begrunnelse: '34344',
             erBelopetIBehold: true,
@@ -258,11 +250,7 @@ describe('<TilbakekrevingForm>', () => {
           fom: '2016-04-04',
           tom: '2016-05-26',
           feilutbetalingBelop: 22000,
-          vilkarResultat: {
-            kode: VilkarResultat.GOD_TRO,
-            kodeverk: 'VILKAAR_RESULTAT',
-            navn: 'Nei, mottaker har mottatt beløpet i god tro (1. ledd)',
-          },
+          vilkarResultat: VilkarResultat.GOD_TRO,
           vilkarResultatInfo: {
             begrunnelse: '34344',
             erBelopetIBehold: true,
