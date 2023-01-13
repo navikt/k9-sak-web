@@ -10,10 +10,7 @@ import { KlageVurderingRadioOptionsNfp } from './KlageVurderingRadioOptionsNfp';
 import shallowWithIntl, { intlMock } from '../../../i18n';
 
 describe('<KlageVurderingRadioOptionsNfp>', () => {
-  const sprakkode = {
-    kode: 'NO',
-    navn: 'Norsk',
-  };
+  const sprakkode = 'NO';
   const medholdReasons = [
     { kode: 'NYE_OPPLYSNINGER', navn: 'Nytt faktum', kodeverk: 'KLAGE_MEDHOLD_AARSAK' },
     { kode: 'ULIK_REGELVERKSTOLKNING', navn: 'Feil lovanvendelse', kodeverk: 'KLAGE_MEDHOLD_AARSAK' },
@@ -24,7 +21,7 @@ describe('<KlageVurderingRadioOptionsNfp>', () => {
   it('skal vise to options når klage opprettholdt', () => {
     const wrapper = shallowWithIntl(
       <KlageVurderingRadioOptionsNfp
-        fagsak={{ sakstype: { kode: fagsakYtelseType.OMSORGSPENGER } }}
+        fagsak={{ sakstype: fagsakYtelseType.OMSORGSPENGER }}
         readOnly={false}
         readOnlySubmitButton
         medholdReasons={medholdReasons}
@@ -45,7 +42,7 @@ describe('<KlageVurderingRadioOptionsNfp>', () => {
   it('skal vise fem options når klage medhold', () => {
     const wrapper = shallowWithIntl(
       <KlageVurderingRadioOptionsNfp
-        fagsak={{ sakstype: { kode: fagsakYtelseType.OMSORGSPENGER } }}
+        fagsak={{ sakstype: fagsakYtelseType.OMSORGSPENGER }}
         readOnly={false}
         readOnlySubmitButton
         aksjonspunktCode={aksjonspunktCodes.BEHANDLE_KLAGE_NFP}
@@ -69,7 +66,7 @@ describe('<KlageVurderingRadioOptionsNfp>', () => {
   it('skal vise hjemler når klagevurdering er opprettholdt', () => {
     const wrapper = shallowWithIntl(
       <KlageVurderingRadioOptionsNfp
-        fagsak={{ sakstype: { kode: fagsakYtelseType.OMSORGSPENGER } }}
+        fagsak={{ sakstype: fagsakYtelseType.OMSORGSPENGER }}
         readOnly={false}
         readOnlySubmitButton
         medholdReasons={medholdReasons}
@@ -88,7 +85,7 @@ describe('<KlageVurderingRadioOptionsNfp>', () => {
   it('skal ikke vise hjemler når klagevurdering er opprettholdt og behandling er frisinn', () => {
     const wrapper = shallowWithIntl(
       <KlageVurderingRadioOptionsNfp
-        fagsak={{ sakstype: { kode: fagsakYtelseType.FRISINN } }}
+        fagsak={{ sakstype: fagsakYtelseType.FRISINN }}
         readOnly={false}
         readOnlySubmitButton
         medholdReasons={medholdReasons}
