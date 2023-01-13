@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { Box, Margin, DetailView, LabelledContent } from '@navikt/ft-plattform-komponenter';
 import { TextAreaFormik } from '@fpsak-frontend/form';
 import { useIntl } from 'react-intl';
@@ -30,9 +30,6 @@ enum RadioOptions {
   NEI = 'nei',
 }
 
-yup.addMethod(yup.array, 'overlapp', () => this.test('overlapp', 'Kan ikke overlappe', list => list.length > 1));
-// valid date
-// tom er etter fom
 const schema = yup.object().shape({
   [fieldname.PERIODER]: yup.array().of(
     yup.object().shape({
@@ -73,6 +70,14 @@ interface FormState {
 const GjennomgaaOpplaeringForm = ({ vurdering, avbrytRedigering, erRedigering }: OwnProps): JSX.Element => {
   const { readOnly, løsAksjonspunktGjennomgåOpplæring } = useContext(FaktaOpplaeringContext);
   const intl = useIntl();
+
+  useEffect(
+    () => () => {
+      avbrytRedigering();
+    },
+    [vurdering],
+  );
+
   const godkjentGjennomgaaOpplaeringInitialValue = () => {
     if ([Vurderingsresultat.GODKJENT_AUTOMATISK, Vurderingsresultat.GODKJENT_MANUELT].includes(vurdering.resultat)) {
       return RadioOptions.JA;

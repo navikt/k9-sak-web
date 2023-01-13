@@ -5,8 +5,17 @@ import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { FaktaPanelDef } from '@k9-sak-web/behandling-felles';
 import { OpplaeringspengerBehandlingApiKeys } from '@k9-sak-web/behandling-opplaeringspenger/src/data/opplaeringspengerBehandlingApi';
 import FaktaOpplaering from '@k9-sak-web/fakta-opplaering';
+import { Aksjonspunkt, NoedvendighetPerioder, NoedvendighetVurdering } from '@k9-sak-web/types';
 
 export const FaktaOpplaeringContext = React.createContext(null);
+
+export interface FaktaOpplaeringContextTypes {
+  aksjonspunkter: Aksjonspunkt[];
+  nødvendigOpplæring: {
+    vurderinger: NoedvendighetVurdering[];
+    perioder: NoedvendighetPerioder[];
+  };
+}
 
 class OpplaeringFaktaPanelDef extends FaktaPanelDef {
   getUrlKode = () => faktaPanelCodes.OPPLAERING;

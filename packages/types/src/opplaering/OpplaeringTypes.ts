@@ -15,11 +15,12 @@ export interface GjennomgaaOpplaeringVurdering {
 
 export interface NoedvendighetPerioder {
   journalpostId: { journalpostId: string };
-  perioder: Period[];
+  periode: Period;
   noedvendighet: boolean;
   resultat: Vurderingsresultat;
 }
 
-export interface NoedvendighetVurdering extends NoedvendighetPerioder {
+export interface NoedvendighetVurdering extends Omit<NoedvendighetPerioder, 'periode'> {
   begrunnelse: string;
+  perioder: Period[];
 }

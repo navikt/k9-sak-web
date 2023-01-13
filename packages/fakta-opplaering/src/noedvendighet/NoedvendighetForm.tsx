@@ -2,7 +2,7 @@ import { Box, Margin, DetailView } from '@navikt/ft-plattform-komponenter';
 import { TextAreaFormik } from '@fpsak-frontend/form';
 import { Calender } from '@navikt/ds-icons';
 
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { NoedvendighetVurdering, Vurderingsresultat } from '@k9-sak-web/types';
 import { required } from '@fpsak-frontend/utils';
 import { Formik } from 'formik';
@@ -39,6 +39,13 @@ const NoedvendighetForm = ({
 }: VurderingAvBeredskapsperioderFormProps): JSX.Element => {
   const { readOnly, løsAksjonspunktNødvendighet } = useContext(FaktaOpplaeringContext);
   const intl = useIntl();
+
+  useEffect(
+    () => () => {
+      avbrytRedigering();
+    },
+    [],
+  );
 
   const godkjentNoedvendighetInitialValue = () => {
     if ([Vurderingsresultat.GODKJENT].includes(vurdering.resultat)) {

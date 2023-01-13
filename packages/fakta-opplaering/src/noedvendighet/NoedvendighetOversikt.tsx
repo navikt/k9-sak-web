@@ -1,18 +1,15 @@
 import React, { useContext } from 'react';
 import { NavigationWithDetailView } from '@navikt/ft-plattform-komponenter';
-import { Heading } from '@navikt/ds-react';
-import { NoedvendighetPeriode, NoedvendighetPerioder, NoedvendighetVurdering } from '@k9-sak-web/types';
+import { Alert } from '@navikt/ds-react';
+import { NoedvendighetPerioder } from '@k9-sak-web/types';
 import { Period } from '@navikt/k9-period-utils';
-import { FaktaOpplaeringContext } from '@k9-sak-web/behandling-opplaeringspenger/src/panelDefinisjoner/faktaPaneler/OpplaeringFaktaPanelDef';
+import {
+  FaktaOpplaeringContext,
+  FaktaOpplaeringContextTypes,
+} from '@k9-sak-web/behandling-opplaeringspenger/src/panelDefinisjoner/faktaPaneler/OpplaeringFaktaPanelDef';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import NoedvendighetNavigation from './NoedvendighetNavigation';
 import NoedvendighetDetails from './NoedvendighetDetails';
-
-interface OwnProps {
-  perioder: NoedvendighetPeriode[];
-  vurderinger: NoedvendighetVurdering[];
-  readOnly: boolean;
-  løsAksjonspunkt: (payload: any) => void;
-}
 
 const reducer = (accumulator, currentValue) => {
   const perioderMedMatchendeJournalpostId = accumulator.find(
@@ -44,7 +41,7 @@ const reducer = (accumulator, currentValue) => {
 };
 
 const NoedvendighetOversikt = () => {
-  const { nødvendigOpplæring } = useContext(FaktaOpplaeringContext);
+  const { nødvendigOpplæring, aksjonspunkter } = useContext<FaktaOpplaeringContextTypes>(FaktaOpplaeringContext);
   const { vurderinger, perioder } = nødvendigOpplæring;
   const [valgtPeriode, setValgtPeriode] = React.useState<NoedvendighetPerioder>(null);
   const perioderMappet = perioder
@@ -75,6 +72,27 @@ const NoedvendighetOversikt = () => {
     vurdering => vurdering.journalpostId.journalpostId === valgtPeriode?.journalpostId?.journalpostId,
   );
 
+  const andreAksjonspunkterIOpplæring = aksjonspunkter
+    .filter(aksjonspunkt => aksjonspunkt.definisjon.kode !== aksjonspunktCodes.VURDER_NØDVENDIGHET)
+    .map(aksjonspunkt => {
+      if (aksjonspunkt.definisjon.kode === aksjonspunktCodes.VURDER_GJENNOMGÅTT_OPPLÆRING) {
+        return 'Opplæring';
+      }
+
+      if (aksjonspunkt.definisjon.kode === aksjonspunktCodes.VURDER_REISETID) {
+        return 'Reisetid';
+      }
+      return aksjonspunkt;
+    })
+    .filter(v => typeof v === 'string');
+
+  if (!aksjonspunkter.find(aksjonspunkt => aksjonspunkt.definisjon.kode === aksjonspunktCodes.VURDER_NØDVENDIGHET)) {
+    return (
+      <Alert variant="info">
+        {`${andreAksjonspunkterIOpplæring.join(' og ')} må vurderes før Nødvendighet kan vurderes.`}
+      </Alert>
+    );
+  }
   return (
     <div style={{ fontSize: '16px' }}>
       <NavigationWithDetailView

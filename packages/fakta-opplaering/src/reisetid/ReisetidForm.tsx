@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { Box, Margin, DetailView, LabelledContent } from '@navikt/ft-plattform-komponenter';
 import { TextAreaFormik } from '@fpsak-frontend/form';
 import { useIntl } from 'react-intl';
@@ -41,6 +41,13 @@ const reisetidSchema = yup.object().shape({
 const ReisetidForm = ({ vurdering, avbrytRedigering, erRedigering }: OwnProps): JSX.Element => {
   const { readOnly, løsAksjonspunktReisetid } = useContext(FaktaOpplaeringContext);
   const intl = useIntl();
+
+  useEffect(
+    () => () => {
+      avbrytRedigering();
+    },
+    [vurdering],
+  );
 
   const initialValues = {
     [fieldname.BEGRUNNELSE]: vurdering.begrunnelse || '',
