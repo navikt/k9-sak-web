@@ -14,19 +14,9 @@ describe('<VedtakHelper>', () => {
   it('hasIkkeOppfyltSoknadsfristvilkar skal returnere true når søknadfristvilkår ikkje er oppfylt', () => {
     const vilkarListe = [
       {
-        vilkarType: {
-          kode: vilkarType.SOKNADFRISTVILKARET,
-          navn: 'Medlemskapsvilkåret',
-        },
+        vilkarType: vilkarType.SOKNADFRISTVILKARET,
         lovReferanse: '§ 22-13, 2. ledd',
-        perioder: [
-          {
-            vilkarStatus: {
-              kode: vilkarUtfallType.IKKE_OPPFYLT,
-              navn: 'test',
-            },
-          },
-        ],
+        perioder: [{ vilkarStatus: vilkarUtfallType.IKKE_OPPFYLT }],
       },
     ];
 
