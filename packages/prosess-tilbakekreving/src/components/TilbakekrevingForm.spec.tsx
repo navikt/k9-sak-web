@@ -193,11 +193,7 @@ describe('<TilbakekrevingForm>', () => {
       ytelser,
       årsak: arsak,
       begrunnelse: '3434',
-      vilkarResultat: {
-        kode: VilkarResultat.GOD_TRO,
-        kodeverk: 'VILKAAR_RESULTAT',
-        navn: 'Nei, mottaker har mottatt beløpet i god tro (1. ledd)',
-      },
+      vilkarResultat: VilkarResultat.GOD_TRO,
       vilkarResultatInfo: {
         begrunnelse: '34344',
         erBelopetIBehold: true,
@@ -275,11 +271,7 @@ describe('<TilbakekrevingForm>', () => {
       ytelser,
       årsak: arsak,
       begrunnelse: '3434',
-      vilkarResultat: {
-        kode: VilkarResultat.GOD_TRO,
-        kodeverk: 'VILKAAR_RESULTAT',
-        navn: 'Nei, mottaker har mottatt beløpet i god tro (1. ledd)',
-      },
+      vilkarResultat: VilkarResultat.GOD_TRO,
       vilkarResultatInfo: {
         begrunnelse: '34344',
         erBelopetIBehold: true,
@@ -298,11 +290,7 @@ describe('<TilbakekrevingForm>', () => {
       ytelser,
       årsak: arsak,
       begrunnelse: 'test',
-      vilkarResultat: {
-        kode: VilkarResultat.GOD_TRO,
-        kodeverk: 'VILKAAR_RESULTAT',
-        navn: 'Nei, mottaker har mottatt beløpet i god tro (1. ledd)',
-      },
+      vilkarResultat: VilkarResultat.GOD_TRO,
       vilkarResultatInfo: {
         begrunnelse: '34344',
         erBelopetIBehold: true,
