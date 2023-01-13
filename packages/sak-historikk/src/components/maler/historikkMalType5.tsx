@@ -87,10 +87,7 @@ const formatChangedField = (
   const fromValue = findEndretFeltVerdi(endretFelt, endretFelt.fraVerdi, intl, getKodeverknavn);
   const toValue = findEndretFeltVerdi(endretFelt, endretFelt.tilVerdi, intl, getKodeverknavn);
 
-  if (
-    endretFelt.fraVerdi !== null &&
-    endretFelt.endretFeltNavn !== historikkEndretFeltTypeCodes.FORDELING_FOR_NY_ANDEL.kode
-  ) {
+  if (endretFelt.fraVerdi !== null) {
     return (
       <FormattedMessage
         id="Historikk.Template.5.ChangedFromTo"
