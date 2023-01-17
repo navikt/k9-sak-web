@@ -15,7 +15,7 @@ interface OwnProps {
 }
 
 // Brukes av RequestRunner.ts for å lukke en popup som logger inn igjen ved 401
-const closeWindow = () => {
+const CloseWindow = () => {
   window.close();
   return <div />;
 };
@@ -31,7 +31,7 @@ const Home = ({ headerHeight }: OwnProps) => (
       <Route path="/" element={<DashboardResolver />} />
       <Route path={fagsakRoutePath} element={<FagsakIndex />} />
       <Route path={aktoerRoutePath} element={<AktoerIndex />} />
-      <Route path="/close" element={closeWindow()} />
+      <Route path="/close" element={<CloseWindow />} />
       <Route path="*" element={<NotFoundPage />} />
     </Routes>
   </div>
