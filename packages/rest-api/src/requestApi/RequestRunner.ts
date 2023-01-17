@@ -132,7 +132,7 @@ class RequestRunner {
   };
 
   retryStart = (response, params): Promise<{ payload: any }> =>
-    new Promise(resolve => {
+    new Promise((resolve, reject) => {
       if (popupWindow === null) {
         const location = `${response.headers.location}`;
         const queryParamAddition = location.includes('?') ? '&' : '?';
@@ -150,7 +150,7 @@ class RequestRunner {
           popupWindow = null;
         } catch (error2) {
           new RequestErrorEventHandler(this.notify, this.isPollingRequest).handleError(error2);
-          throw error2;
+          reject(error2);
         }
       }, 500);
     });
