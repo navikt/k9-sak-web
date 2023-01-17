@@ -20,6 +20,8 @@ const hasLocationAndStatusDelayedOrHalted = (responseData): boolean =>
 type Notify = (eventType: keyof typeof EventType, data?: any, isPolling?: boolean) => void;
 type NotificationEmitter = (eventType: keyof typeof EventType, data?: any) => void;
 
+let popupWindow = null;
+
 /**
  * RequestRunner
  *
@@ -118,25 +120,50 @@ class RequestRunner {
     this.isCancelled = true;
   };
 
+  executeRequest = async params => {
+    const response = await this.execute(this.path, this.restMethod, params);
+    if (this.isCancelled) {
+      return { payload: REQUEST_POLLING_CANCELLED };
+    }
+
+    const responseData = 'data' in response ? response.data : undefined;
+    this.notify(EventType.REQUEST_FINISHED, responseData, this.isPollingRequest);
+    return responseData ? { payload: responseData } : { payload: undefined };
+  };
+
+  retryStart = (response, params): Promise<{ payload: any }> =>
+    new Promise(resolve => {
+      if (popupWindow === null) {
+        const location = `${response.headers.location}`;
+        const queryParamAddition = location.includes('?') ? '&' : '?';
+        const redirectLocation = `${location}${queryParamAddition}redirectTo=/k9/web/close`;
+        popupWindow = window.open(redirectLocation, undefined, 'height=600,width=800');
+      }
+      const timer = setInterval(async () => {
+        if (popupWindow && !popupWindow.closed) {
+          return;
+        }
+        clearInterval(timer);
+        try {
+          const retryResponse = await this.executeRequest(params);
+          resolve(retryResponse);
+          popupWindow = null;
+        } catch (error2) {
+          new RequestErrorEventHandler(this.notify, this.isPollingRequest).handleError(error2);
+          throw error2;
+        }
+      }, 500);
+    });
+
   start = async (params: any): Promise<{ payload: any }> => {
     this.notify(EventType.REQUEST_STARTED);
-
     try {
-      const response = await this.execute(this.path, this.restMethod, params);
-      if (this.isCancelled) {
-        return { payload: REQUEST_POLLING_CANCELLED };
-      }
-
-      const responseData = 'data' in response ? response.data : undefined;
-      this.notify(EventType.REQUEST_FINISHED, responseData, this.isPollingRequest);
-      return responseData ? { payload: responseData } : { payload: undefined };
+      const response = await this.executeRequest(params);
+      return response;
     } catch (error) {
       const { response } = error;
       if (response && response.status === 401 && response.headers && response.headers.location) {
-        const currentPath = encodeURIComponent(window.location.pathname + window.location.search);
-        let location = `${response.headers.location}`;
-        let queryParamAddition = location.includes('?') ? '&' : '?';
-        window.location.href = `${location}${queryParamAddition}redirectTo=${currentPath}`;
+        return this.retryStart(response, params);
       }
       new RequestErrorEventHandler(this.notify, this.isPollingRequest).handleError(error);
       throw error;
