@@ -39,6 +39,7 @@ const InstitusjonFerdigVisning = ({ vurdering, readOnly, rediger, saksbehandlere
         // eslint-disable-next-line max-len
         label="Gjør en vurdering av om opplæringen gjennomgås ved en godkjent helseinstitusjon eller et offentlig spesialpedagogisk kompetansesenter etter § 9-14, første ledd."
         content={vurdering.begrunnelse}
+        indentContent
       />
       <AssessedBy name={saksbehandlere[vurdering.endretAv] || vurdering.endretAv} date={vurdering?.endretTidspunkt} />
     </Box>

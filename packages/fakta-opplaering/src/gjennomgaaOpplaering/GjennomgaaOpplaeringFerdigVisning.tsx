@@ -50,7 +50,7 @@ const GjennomgaaOpplaeringFerdigVisning = ({ vurdering, rediger }: OwnProps) => 
             <Box marginTop={Margin.medium}>
               <BasicList
                 elements={sykdomDokumenter
-                  .map(dokument => ({ ...dokument, benyttet: vurdering.tilknyttedeDokumenter.includes(dokument.id) }))
+                  .map(dokument => ({ ...dokument, benyttet: vurdering?.tilknyttedeDokumenter?.includes(dokument.id) }))
                   .filter(({ benyttet }) => benyttet)
                   .map(dokument => (
                     <DokumentLink dokument={dokument} visDokumentIkon />
@@ -64,6 +64,7 @@ const GjennomgaaOpplaeringFerdigVisning = ({ vurdering, rediger }: OwnProps) => 
         <LabelledContent
           label={intl.formatMessage({ id: 'opplaering.vurdering.label' })}
           content={vurdering.begrunnelse}
+          indentContent
         />
         <AssessedBy name={saksbehandlere[vurdering.endretAv] || vurdering.endretAv} date={vurdering?.endretTidspunkt} />
       </Box>

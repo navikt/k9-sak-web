@@ -114,7 +114,7 @@ const GjennomgaaOpplaeringForm = ({ vurdering, avbrytRedigering, erRedigering }:
     [fieldname.BEGRUNNELSE]: vurdering.begrunnelse || '',
     [fieldname.GODKJENT_OPPLAERING]: godkjentGjennomgaaOpplaeringInitialValue(),
     [fieldname.PERIODER]: [{ id: v4(), periode: vurdering.opplæring }],
-    [fieldname.DOKUMENTER]: vurdering.tilknyttedeDokumenter,
+    [fieldname.DOKUMENTER]: vurdering.tilknyttedeDokumenter || [],
   };
 
   const mapValuesTilAksjonspunktPayload = (values: FormState) => {

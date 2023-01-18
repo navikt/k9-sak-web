@@ -60,9 +60,9 @@ const NoedvendighetFerdigVisning = ({ vurdering, rediger }: OwnProps) => {
       </Box>
       <Box marginTop={Margin.xLarge}>
         <LabelledContent
-          // eslint-disable-next-line max-len
           label={intl.formatMessage({ id: 'noedvendighet.vurdering.label' })}
           content={vurdering.begrunnelse}
+          indentContent
         />
         <AssessedBy name={saksbehandlere[vurdering.endretAv] || vurdering.endretAv} date={vurdering?.endretTidspunkt} />
       </Box>

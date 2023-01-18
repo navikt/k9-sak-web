@@ -67,7 +67,7 @@ const NoedvendighetForm = ({
   const initialValues = {
     [fieldname.BEGRUNNELSE]: vurdering.begrunnelse || '',
     [fieldname.NOEDVENDIG_OPPLAERING]: godkjentNoedvendighetInitialValue(),
-    [fieldname.DOKUMENTER]: vurdering.tilknyttedeDokumenter,
+    [fieldname.DOKUMENTER]: vurdering.tilknyttedeDokumenter || [],
   };
 
   const mapValuesTilAksjonspunktPayload = (values: FormState) => ({
