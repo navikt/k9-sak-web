@@ -7,21 +7,26 @@ import { v4 } from 'uuid';
 import dayjs from 'dayjs';
 import * as yup from 'yup';
 
-import { FaktaOpplaeringContext } from '@k9-sak-web/behandling-opplaeringspenger/src/panelDefinisjoner/faktaPaneler/OpplaeringFaktaPanelDef';
+import {
+  FaktaOpplaeringContext,
+  FaktaOpplaeringContextTypes,
+} from '@k9-sak-web/behandling-opplaeringspenger/src/panelDefinisjoner/faktaPaneler/OpplaeringFaktaPanelDef';
 import { GjennomgaaOpplaeringVurdering, Vurderingsresultat } from '@k9-sak-web/types';
 import { required } from '@fpsak-frontend/utils';
-import { FieldArray, Formik } from 'formik';
+import { Field, FieldArray, Formik } from 'formik';
 import RadioGroupFormik from '@fpsak-frontend/form/src/RadioGroupFormik';
 import { Button, Label, Alert, ErrorMessage } from '@navikt/ds-react';
 import { getPeriodDifference, Period } from '@navikt/k9-period-utils';
 import DeleteButton from '../components/delete-button/DeleteButton';
 import AddButton from '../components/add-button/AddButton';
 import RangeDatepicker from '../components/rangeDatepicker/RangeDatepicker';
+import DokumenterIVurderingen from '../components/DokumenterIVurderingen';
 
 enum fieldname {
   BEGRUNNELSE = 'BEGRUNNELSE',
   GODKJENT_OPPLAERING = 'GODKJENT_OPPLAERING',
   PERIODER = 'PERIODER',
+  DOKUMENTER = 'DOKUMENTER',
 }
 
 enum RadioOptions {
@@ -31,6 +36,11 @@ enum RadioOptions {
 }
 
 const schema = yup.object().shape({
+  [fieldname.DOKUMENTER]: yup
+    .array()
+    .of(yup.string())
+    .min(1, 'Du må ha brukt ett eller flere dokumenter i vurderingen')
+    .required(),
   [fieldname.PERIODER]: yup.array().of(
     yup.object().shape({
       id: yup.string(),
@@ -68,7 +78,8 @@ interface FormState {
 }
 
 const GjennomgaaOpplaeringForm = ({ vurdering, avbrytRedigering, erRedigering }: OwnProps): JSX.Element => {
-  const { readOnly, løsAksjonspunktGjennomgåOpplæring } = useContext(FaktaOpplaeringContext);
+  const { readOnly, løsAksjonspunktGjennomgåOpplæring, sykdomDokumenter } =
+    useContext<FaktaOpplaeringContextTypes>(FaktaOpplaeringContext);
   const intl = useIntl();
 
   useEffect(
@@ -103,6 +114,7 @@ const GjennomgaaOpplaeringForm = ({ vurdering, avbrytRedigering, erRedigering }:
     [fieldname.BEGRUNNELSE]: vurdering.begrunnelse || '',
     [fieldname.GODKJENT_OPPLAERING]: godkjentGjennomgaaOpplaeringInitialValue(),
     [fieldname.PERIODER]: [{ id: v4(), periode: vurdering.opplæring }],
+    [fieldname.DOKUMENTER]: vurdering.tilknyttedeDokumenter,
   };
 
   const mapValuesTilAksjonspunktPayload = (values: FormState) => {
@@ -110,6 +122,7 @@ const GjennomgaaOpplaeringForm = ({ vurdering, avbrytRedigering, erRedigering }:
       values[fieldname.PERIODER].map(v => v.periode),
       vurdering.opplæring,
     ).map(periode => ({
+      tilknyttedeDokumenter: values[fieldname.DOKUMENTER],
       gjennomførtOpplæring: false,
       begrunnelse: values[fieldname.BEGRUNNELSE],
       periode,
@@ -117,6 +130,7 @@ const GjennomgaaOpplaeringForm = ({ vurdering, avbrytRedigering, erRedigering }:
     return values[fieldname.PERIODER]
       .map(obj => obj.periode)
       .map(periode => ({
+        tilknyttedeDokumenter: values[fieldname.DOKUMENTER],
         gjennomførtOpplæring:
           values[fieldname.GODKJENT_OPPLAERING] === RadioOptions.JA ||
           values[fieldname.GODKJENT_OPPLAERING] === RadioOptions.DELVIS,
@@ -132,11 +146,29 @@ const GjennomgaaOpplaeringForm = ({ vurdering, avbrytRedigering, erRedigering }:
         onSubmit={values => løsAksjonspunktGjennomgåOpplæring(mapValuesTilAksjonspunktPayload(values))}
         validationSchema={schema}
       >
-        {({ handleSubmit, isSubmitting, values, setFieldValue, errors }) => (
+        {({ handleSubmit, isSubmitting, values, setFieldValue, setFieldTouched, errors }) => (
           <>
             <div>
               <Calender /> <span>{vurdering.opplæring.prettifyPeriod()}</span>
             </div>
+            <Box marginTop={Margin.xLarge}>
+              <Field name={fieldname.DOKUMENTER}>
+                {({
+                  field, // { name, value, onChange, onBlur }
+                  meta,
+                }) => (
+                  <DokumenterIVurderingen
+                    dokumenter={sykdomDokumenter}
+                    valgteDokumenter={field.value}
+                    error={meta.touched && meta.error}
+                    onChange={value => {
+                      setFieldValue(field.name, value);
+                    }}
+                    onBlur={() => setFieldTouched(field.name, true)}
+                  />
+                )}
+              </Field>
+            </Box>
             <Box marginTop={Margin.xLarge}>
               <TextAreaFormik
                 label={intl.formatMessage({ id: 'opplaering.vurdering.label' })}

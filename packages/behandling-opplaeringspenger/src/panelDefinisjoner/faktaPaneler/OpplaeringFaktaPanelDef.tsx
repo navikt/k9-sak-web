@@ -11,10 +11,20 @@ export const FaktaOpplaeringContext = React.createContext(null);
 
 export interface FaktaOpplaeringContextTypes {
   aksjonspunkter: Aksjonspunkt[];
+  readOnly: boolean;
+  løsAksjonspunktGjennomgåOpplæring: (v: any) => void;
   nødvendigOpplæring: {
     vurderinger: NoedvendighetVurdering[];
     perioder: NoedvendighetPerioder[];
   };
+  sykdomDokumenter: {
+    datert: string;
+    id: string;
+    links: {
+      href: string;
+      rel: string;
+    };
+  }[];
 }
 
 class OpplaeringFaktaPanelDef extends FaktaPanelDef {
@@ -32,6 +42,7 @@ class OpplaeringFaktaPanelDef extends FaktaPanelDef {
     OpplaeringspengerBehandlingApiKeys.GJENNOMGÅTT_OPPLÆRING,
     OpplaeringspengerBehandlingApiKeys.NØDVENDIG_OPPLÆRING,
     OpplaeringspengerBehandlingApiKeys.REISETID,
+    OpplaeringspengerBehandlingApiKeys.SYKDOM_DOKUMENTER_OVERSIKT,
   ];
 
   // eslint-disable-next-line arrow-body-style
@@ -57,6 +68,7 @@ class OpplaeringFaktaPanelDef extends FaktaPanelDef {
       aksjonspunkter: props.aksjonspunkter,
       gjennomgåttOpplæring: props.gjennomgåttOpplæring,
       nødvendigOpplæring: props.nødvendigOpplæring,
+      sykdomDokumenter: props.sykdomDokumenterOversikt?.dokumenter,
       reisetid: props.reisetid,
       løsAksjonspunktGjennomgåOpplæring,
       løsAksjonspunktNødvendighet,

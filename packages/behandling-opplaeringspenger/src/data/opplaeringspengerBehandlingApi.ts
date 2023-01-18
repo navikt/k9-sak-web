@@ -40,6 +40,7 @@ export enum OpplaeringspengerBehandlingApiKeys {
   VERGE_OPPRETT = 'VERGE_OPPRETT',
   VERGE_FJERN = 'VERGE_FJERN',
   SYKDOM = 'SYKDOM',
+  SYKDOM_DOKUMENTER_OVERSIKT = 'SYKDOM_DOKUMENTER_OVERSIKT',
   TILGJENGELIGE_VEDTAKSBREV = 'TILGJENGELIGE_VEDTAKSBREV',
   INFORMASJONSBEHOV_VEDTAKSBREV = 'INFORMASJONSBEHOV_VEDTAKSBREV',
   DOKUMENTDATA_LAGRE = 'DOKUMENTDATA_LAGRE',
@@ -90,6 +91,7 @@ const endpoints = new RestApiConfigBuilder()
   .withRel('uttak-stonadskontoer', OpplaeringspengerBehandlingApiKeys.UTTAK_STONADSKONTOER)
   .withRel('uttak-kontroller-fakta-perioder', OpplaeringspengerBehandlingApiKeys.UTTAK_KONTROLLER_FAKTA_PERIODER)
   .withRel('sykdom', OpplaeringspengerBehandlingApiKeys.SYKDOM)
+  .withRel('sykdom-dokument-oversikt', OpplaeringspengerBehandlingApiKeys.SYKDOM_DOKUMENTER_OVERSIKT)
   .withRel('tilgjengelige-vedtaksbrev', OpplaeringspengerBehandlingApiKeys.TILGJENGELIGE_VEDTAKSBREV)
   .withRel('informasjonsbehov-vedtaksbrev', OpplaeringspengerBehandlingApiKeys.INFORMASJONSBEHOV_VEDTAKSBREV)
   .withRel('opplaeringspenger-uttaksplan-med-utsatt', OpplaeringspengerBehandlingApiKeys.UTTAK)

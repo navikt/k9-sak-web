@@ -11,6 +11,7 @@ export interface GjennomgaaOpplaeringVurdering {
   begrunnelse: string;
   resultat: Vurderingsresultat;
   opplæring: Period;
+  tilknyttedeDokumenter: string[];
 }
 
 export interface NoedvendighetPerioder {
@@ -23,4 +24,5 @@ export interface NoedvendighetPerioder {
 export interface NoedvendighetVurdering extends Omit<NoedvendighetPerioder, 'periode'> {
   begrunnelse: string;
   perioder: Period[];
+  tilknyttedeDokumenter: string[];
 }
