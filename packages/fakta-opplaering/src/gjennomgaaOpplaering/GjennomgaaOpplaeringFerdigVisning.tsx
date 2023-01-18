@@ -24,7 +24,8 @@ interface OwnProps {
 }
 
 const GjennomgaaOpplaeringFerdigVisning = ({ vurdering, rediger }: OwnProps) => {
-  const { readOnly, sykdomDokumenter } = useContext<FaktaOpplaeringContextTypes>(FaktaOpplaeringContext);
+  const { readOnly, sykdomDokumenter, saksbehandlere } =
+    useContext<FaktaOpplaeringContextTypes>(FaktaOpplaeringContext);
   const intl = useIntl();
 
   return (
@@ -64,6 +65,7 @@ const GjennomgaaOpplaeringFerdigVisning = ({ vurdering, rediger }: OwnProps) => 
           label={intl.formatMessage({ id: 'opplaering.vurdering.label' })}
           content={vurdering.begrunnelse}
         />
+        <AssessedBy name={saksbehandlere[vurdering.endretAv] || vurdering.endretAv} date={vurdering?.endretTidspunkt} />
       </Box>
       <Box marginTop={Margin.xLarge}>
         <LabelledContent

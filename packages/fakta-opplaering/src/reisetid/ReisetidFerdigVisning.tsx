@@ -17,7 +17,7 @@ interface OwnProps {
 }
 
 const ReisetidFerdigVisning = ({ vurdering, rediger }: OwnProps) => {
-  const { readOnly } = useContext(FaktaOpplaeringContext);
+  const { readOnly, saksbehandlere } = useContext(FaktaOpplaeringContext);
   const intl = useIntl();
   return (
     <DetailView
@@ -90,6 +90,10 @@ const ReisetidFerdigVisning = ({ vurdering, rediger }: OwnProps) => {
             label={intl.formatMessage({ id: 'reisetid.begrunnelse' })}
             content={vurdering.begrunnelse}
             indentContent
+          />
+          <AssessedBy
+            name={saksbehandlere[vurdering.endretAv] || vurdering.endretAv}
+            date={vurdering?.endretTidspunkt}
           />
         </Box>
       )}

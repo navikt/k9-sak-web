@@ -11,6 +11,7 @@ interface OwnProps {
   vurderinger: InstitusjonVurdering[];
   readOnly: boolean;
   løsAksjonspunkt: (payload: any) => void;
+  saksbehandlere: { [key: string]: string };
 }
 
 const reducer = (accumulator, currentValue) => {
@@ -42,7 +43,7 @@ const reducer = (accumulator, currentValue) => {
   ];
 };
 
-const InstitusjonOversikt = ({ perioder, vurderinger, readOnly, løsAksjonspunkt }: OwnProps) => {
+const InstitusjonOversikt = ({ perioder, vurderinger, readOnly, løsAksjonspunkt, saksbehandlere }: OwnProps) => {
   const [valgtPeriode, setValgtPeriode] = React.useState<InstitusjonPerioderMedResultat>(null);
 
   const perioderMappet = perioder
@@ -83,7 +84,12 @@ const InstitusjonOversikt = ({ perioder, vurderinger, readOnly, løsAksjonspunkt
         showDetailSection
         detailSection={() =>
           valgtVurdering ? (
-            <InstitusjonDetails vurdering={valgtVurdering} readOnly={readOnly} løsAksjonspunkt={løsAksjonspunkt} />
+            <InstitusjonDetails
+              vurdering={valgtVurdering}
+              readOnly={readOnly}
+              løsAksjonspunkt={løsAksjonspunkt}
+              saksbehandlere={saksbehandlere}
+            />
           ) : null
         }
       />

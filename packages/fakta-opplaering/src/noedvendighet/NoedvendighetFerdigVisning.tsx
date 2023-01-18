@@ -21,7 +21,7 @@ interface OwnProps {
 }
 
 const NoedvendighetFerdigVisning = ({ vurdering, rediger }: OwnProps) => {
-  const { readOnly, sykdomDokumenter } = useContext(FaktaOpplaeringContext);
+  const { readOnly, sykdomDokumenter, saksbehandlere } = useContext(FaktaOpplaeringContext);
   const intl = useIntl();
 
   return (
@@ -64,6 +64,7 @@ const NoedvendighetFerdigVisning = ({ vurdering, rediger }: OwnProps) => {
           label={intl.formatMessage({ id: 'noedvendighet.vurdering.label' })}
           content={vurdering.begrunnelse}
         />
+        <AssessedBy name={saksbehandlere[vurdering.endretAv] || vurdering.endretAv} date={vurdering?.endretTidspunkt} />
       </Box>
       <Box marginTop={Margin.xLarge}>
         <LabelledContent

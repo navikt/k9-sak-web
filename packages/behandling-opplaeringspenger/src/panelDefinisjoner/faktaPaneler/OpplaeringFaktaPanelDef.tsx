@@ -19,6 +19,7 @@ export interface FaktaOpplaeringContextTypes {
     vurderinger: NoedvendighetVurdering[];
     perioder: NoedvendighetPerioder[];
   };
+  saksbehandlere: { [key: string]: string };
   sykdomDokumenter: Dokument[];
 }
 
@@ -38,6 +39,7 @@ class OpplaeringFaktaPanelDef extends FaktaPanelDef {
     OpplaeringspengerBehandlingApiKeys.NØDVENDIG_OPPLÆRING,
     OpplaeringspengerBehandlingApiKeys.REISETID,
     OpplaeringspengerBehandlingApiKeys.SYKDOM_DOKUMENTER_OVERSIKT,
+    OpplaeringspengerBehandlingApiKeys.HENT_SAKSBEHANDLERE,
   ];
 
   // eslint-disable-next-line arrow-body-style
@@ -58,7 +60,6 @@ class OpplaeringFaktaPanelDef extends FaktaPanelDef {
       props.submitCallback([
         { kode: aksjonspunktCodes.VURDER_REISETID, begrunnelse: 'Reisetid er behandlet', ...vurdering },
       ]);
-
     const contextProps = {
       aksjonspunkter: props.aksjonspunkter,
       gjennomgåttOpplæring: props.gjennomgåttOpplæring,
@@ -69,6 +70,7 @@ class OpplaeringFaktaPanelDef extends FaktaPanelDef {
       løsAksjonspunktNødvendighet,
       løsAksjonspunktReisetid,
       readOnly: props.readOnly,
+      saksbehandlere: props.hentSaksbehandlere?.saksbehandlere || {},
     };
     return (
       <FaktaOpplaeringContext.Provider value={contextProps}>

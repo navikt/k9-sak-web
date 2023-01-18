@@ -8,9 +8,10 @@ interface OwnProps {
   vurdering: InstitusjonVurderingMedPerioder;
   readOnly: boolean;
   rediger: () => void;
+  saksbehandlere: { [key: string]: string };
 }
 
-const InstitusjonFerdigVisning = ({ vurdering, readOnly, rediger }: OwnProps) => (
+const InstitusjonFerdigVisning = ({ vurdering, readOnly, rediger, saksbehandlere }: OwnProps) => (
   <DetailView
     title="Vurdering av institusjon"
     // eslint-disable-next-line react/jsx-no-useless-fragment
@@ -39,6 +40,7 @@ const InstitusjonFerdigVisning = ({ vurdering, readOnly, rediger }: OwnProps) =>
         label="Gjør en vurdering av om opplæringen gjennomgås ved en godkjent helseinstitusjon eller et offentlig spesialpedagogisk kompetansesenter etter § 9-14, første ledd."
         content={vurdering.begrunnelse}
       />
+      <AssessedBy name={saksbehandlere[vurdering.endretAv] || vurdering.endretAv} date={vurdering?.endretTidspunkt} />
     </Box>
     <Box marginTop={Margin.xLarge}>
       <LabelledContent

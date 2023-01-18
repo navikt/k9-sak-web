@@ -13,7 +13,10 @@ class InstitusjonFaktaPanelDef extends FaktaPanelDef {
 
   getAksjonspunktKoder = () => [aksjonspunktCodes.VURDER_INSTITUSJON];
 
-  getEndepunkter = () => [OpplaeringspengerBehandlingApiKeys.INSTITUSJON];
+  getEndepunkter = () => [
+    OpplaeringspengerBehandlingApiKeys.INSTITUSJON,
+    OpplaeringspengerBehandlingApiKeys.HENT_SAKSBEHANDLERE,
+  ];
 
   // eslint-disable-next-line arrow-body-style
   getKomponent = props => {
@@ -27,6 +30,7 @@ class InstitusjonFaktaPanelDef extends FaktaPanelDef {
         vurderinger={props.institusjon?.vurderinger}
         readOnly={props.readOnly}
         løsAksjonspunkt={løsAksjonspunkt}
+        saksbehandlere={props.hentSaksbehandlere.saksbehandlere || {}}
       />
     );
   };
