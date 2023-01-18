@@ -1,10 +1,22 @@
 import React, { useContext } from 'react';
 import { useIntl } from 'react-intl';
 import { GjennomgaaOpplaeringVurdering, Vurderingsresultat } from '@k9-sak-web/types';
-import { Box, Margin, DetailView, LabelledContent, LinkButton, AssessedBy } from '@navikt/ft-plattform-komponenter';
+import {
+  Box,
+  Margin,
+  DetailView,
+  LabelledContent,
+  LinkButton,
+  AssessedBy,
+  BasicList,
+} from '@navikt/ft-plattform-komponenter';
 import { Calender } from '@navikt/ds-icons';
-import { FaktaOpplaeringContext } from '@k9-sak-web/behandling-opplaeringspenger/src/panelDefinisjoner/faktaPaneler/OpplaeringFaktaPanelDef';
+import {
+  FaktaOpplaeringContext,
+  FaktaOpplaeringContextTypes,
+} from '@k9-sak-web/behandling-opplaeringspenger/src/panelDefinisjoner/faktaPaneler/OpplaeringFaktaPanelDef';
 import styles from './GjennomgaaOpplaeringFerdigVisning.modules.css';
+import DokumentLink from '../components/DokumentLink';
 
 interface OwnProps {
   vurdering: GjennomgaaOpplaeringVurdering;
@@ -12,7 +24,7 @@ interface OwnProps {
 }
 
 const GjennomgaaOpplaeringFerdigVisning = ({ vurdering, rediger }: OwnProps) => {
-  const { readOnly } = useContext(FaktaOpplaeringContext);
+  const { readOnly, sykdomDokumenter } = useContext<FaktaOpplaeringContextTypes>(FaktaOpplaeringContext);
   const intl = useIntl();
 
   return (
@@ -30,6 +42,23 @@ const GjennomgaaOpplaeringFerdigVisning = ({ vurdering, rediger }: OwnProps) => 
       <div>
         <Calender /> <span>{vurdering.opplæring.prettifyPeriod()}</span>
       </div>
+      <Box marginTop={Margin.medium}>
+        <LabelledContent
+          label="Hvilke dokumenter er brukt i vurderingen om gjennomført opplæring??"
+          content={
+            <Box marginTop={Margin.medium}>
+              <BasicList
+                elements={sykdomDokumenter
+                  .map(dokument => ({ ...dokument, benyttet: vurdering.tilknyttedeDokumenter.includes(dokument.id) }))
+                  .filter(({ benyttet }) => benyttet)
+                  .map(dokument => (
+                    <DokumentLink dokument={dokument} visDokumentIkon />
+                  ))}
+              />
+            </Box>
+          }
+        />
+      </Box>
       <Box marginTop={Margin.xLarge}>
         <LabelledContent
           label={intl.formatMessage({ id: 'opplaering.vurdering.label' })}
