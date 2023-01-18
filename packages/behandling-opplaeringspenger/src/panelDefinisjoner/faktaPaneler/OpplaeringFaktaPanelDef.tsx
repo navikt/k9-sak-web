@@ -6,6 +6,7 @@ import { FaktaPanelDef } from '@k9-sak-web/behandling-felles';
 import { OpplaeringspengerBehandlingApiKeys } from '@k9-sak-web/behandling-opplaeringspenger/src/data/opplaeringspengerBehandlingApi';
 import FaktaOpplaering from '@k9-sak-web/fakta-opplaering';
 import { Aksjonspunkt, NoedvendighetPerioder, NoedvendighetVurdering } from '@k9-sak-web/types';
+import Dokument from '@k9-sak-web/types/src/sykdom/Dokument';
 
 export const FaktaOpplaeringContext = React.createContext(null);
 
@@ -13,18 +14,12 @@ export interface FaktaOpplaeringContextTypes {
   aksjonspunkter: Aksjonspunkt[];
   readOnly: boolean;
   løsAksjonspunktGjennomgåOpplæring: (v: any) => void;
+  løsAksjonspunktNødvendighet: (v: any) => void;
   nødvendigOpplæring: {
     vurderinger: NoedvendighetVurdering[];
     perioder: NoedvendighetPerioder[];
   };
-  sykdomDokumenter: {
-    datert: string;
-    id: string;
-    links: {
-      href: string;
-      rel: string;
-    };
-  }[];
+  sykdomDokumenter: Dokument[];
 }
 
 class OpplaeringFaktaPanelDef extends FaktaPanelDef {

@@ -5,15 +5,20 @@ import { Calender } from '@navikt/ds-icons';
 import React, { useContext, useEffect } from 'react';
 import { NoedvendighetVurdering, Vurderingsresultat } from '@k9-sak-web/types';
 import { required } from '@fpsak-frontend/utils';
-import { Formik } from 'formik';
+import { Field, Formik } from 'formik';
 import RadioGroupFormik from '@fpsak-frontend/form/src/RadioGroupFormik';
 import { Button } from '@navikt/ds-react';
-import { FaktaOpplaeringContext } from '@k9-sak-web/behandling-opplaeringspenger/src/panelDefinisjoner/faktaPaneler/OpplaeringFaktaPanelDef';
+import {
+  FaktaOpplaeringContext,
+  FaktaOpplaeringContextTypes,
+} from '@k9-sak-web/behandling-opplaeringspenger/src/panelDefinisjoner/faktaPaneler/OpplaeringFaktaPanelDef';
 import { useIntl } from 'react-intl';
+import DokumenterIVurderingen from '../components/DokumenterIVurderingen';
 
 enum fieldname {
   BEGRUNNELSE = 'BEGRUNNELSE',
   NOEDVENDIG_OPPLAERING = 'NOEDVENDIG_OPPLAERING',
+  DOKUMENTER = 'DOKUMENTER',
 }
 
 enum RadioOptions {
@@ -30,6 +35,7 @@ interface VurderingAvBeredskapsperioderFormProps {
 interface FormState {
   [fieldname.BEGRUNNELSE]: string;
   [fieldname.NOEDVENDIG_OPPLAERING]: string;
+  [fieldname.DOKUMENTER]: string[];
 }
 
 const NoedvendighetForm = ({
@@ -37,7 +43,8 @@ const NoedvendighetForm = ({
   avbrytRedigering,
   erRedigering,
 }: VurderingAvBeredskapsperioderFormProps): JSX.Element => {
-  const { readOnly, løsAksjonspunktNødvendighet } = useContext(FaktaOpplaeringContext);
+  const { readOnly, løsAksjonspunktNødvendighet, sykdomDokumenter } =
+    useContext<FaktaOpplaeringContextTypes>(FaktaOpplaeringContext);
   const intl = useIntl();
 
   useEffect(
@@ -60,12 +67,14 @@ const NoedvendighetForm = ({
   const initialValues = {
     [fieldname.BEGRUNNELSE]: vurdering.begrunnelse || '',
     [fieldname.NOEDVENDIG_OPPLAERING]: godkjentNoedvendighetInitialValue(),
+    [fieldname.DOKUMENTER]: vurdering.tilknyttedeDokumenter,
   };
 
   const mapValuesTilAksjonspunktPayload = (values: FormState) => ({
     nødvendigOpplæring: values[fieldname.NOEDVENDIG_OPPLAERING] === 'ja',
     begrunnelse: values[fieldname.BEGRUNNELSE],
     journalpostId: vurdering.journalpostId,
+    tilknyttedeDokumenter: values[fieldname.DOKUMENTER],
   });
   return (
     <DetailView title="Vurdering av nødvendighet">
@@ -73,13 +82,31 @@ const NoedvendighetForm = ({
         initialValues={initialValues}
         onSubmit={values => løsAksjonspunktNødvendighet(mapValuesTilAksjonspunktPayload(values))}
       >
-        {({ handleSubmit, isSubmitting }) => (
+        {({ handleSubmit, isSubmitting, setFieldValue, setFieldTouched }) => (
           <>
             {vurdering.perioder.map(periode => (
               <div key={periode.prettifyPeriod()}>
                 <Calender /> <span>{periode.prettifyPeriod()}</span>
               </div>
             ))}
+            <Box marginTop={Margin.xLarge}>
+              <Field name={fieldname.DOKUMENTER}>
+                {({
+                  field, // { name, value, onChange, onBlur }
+                  meta,
+                }) => (
+                  <DokumenterIVurderingen
+                    dokumenter={sykdomDokumenter}
+                    valgteDokumenter={field.value}
+                    error={meta.touched && meta.error}
+                    onChange={value => {
+                      setFieldValue(field.name, value);
+                    }}
+                    onBlur={() => setFieldTouched(field.name, true)}
+                  />
+                )}
+              </Field>
+            </Box>
             <Box marginTop={Margin.xLarge}>
               <TextAreaFormik
                 // eslint-disable-next-line max-len

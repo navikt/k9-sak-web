@@ -1,10 +1,19 @@
-import { Box, Margin, DetailView, LabelledContent, LinkButton, AssessedBy } from '@navikt/ft-plattform-komponenter';
+import {
+  Box,
+  Margin,
+  DetailView,
+  LabelledContent,
+  LinkButton,
+  AssessedBy,
+  BasicList,
+} from '@navikt/ft-plattform-komponenter';
 import React, { useContext } from 'react';
 import { NoedvendighetVurdering, Vurderingsresultat } from '@k9-sak-web/types';
 import { Calender } from '@navikt/ds-icons';
 import { FaktaOpplaeringContext } from '@k9-sak-web/behandling-opplaeringspenger/src/panelDefinisjoner/faktaPaneler/OpplaeringFaktaPanelDef';
 import { useIntl } from 'react-intl';
 import styles from './noedvendighetFerdigVisning.modules.css';
+import DokumentLink from '../components/DokumentLink';
 
 interface OwnProps {
   vurdering: NoedvendighetVurdering;
@@ -12,7 +21,7 @@ interface OwnProps {
 }
 
 const NoedvendighetFerdigVisning = ({ vurdering, rediger }: OwnProps) => {
-  const { readOnly } = useContext(FaktaOpplaeringContext);
+  const { readOnly, sykdomDokumenter } = useContext(FaktaOpplaeringContext);
   const intl = useIntl();
 
   return (
@@ -32,6 +41,23 @@ const NoedvendighetFerdigVisning = ({ vurdering, rediger }: OwnProps) => {
           <Calender /> <span>{periode.prettifyPeriod()}</span>
         </div>
       ))}
+      <Box marginTop={Margin.medium}>
+        <LabelledContent
+          label="Hvilke dokumenter er brukt i vurderingen om gjennomført opplæring?"
+          content={
+            <Box marginTop={Margin.medium}>
+              <BasicList
+                elements={sykdomDokumenter
+                  .map(dokument => ({ ...dokument, benyttet: vurdering.tilknyttedeDokumenter.includes(dokument.id) }))
+                  .filter(({ benyttet }) => benyttet)
+                  .map(dokument => (
+                    <DokumentLink dokument={dokument} visDokumentIkon />
+                  ))}
+              />
+            </Box>
+          }
+        />
+      </Box>
       <Box marginTop={Margin.xLarge}>
         <LabelledContent
           // eslint-disable-next-line max-len
