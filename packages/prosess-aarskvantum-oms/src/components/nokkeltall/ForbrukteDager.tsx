@@ -49,7 +49,8 @@ const forbrukteDagerDetaljer = (
     ),
   });
 
-  if (smittevernDagerTimer) {
+  // Skal kun vises for perioder der smitteverndager ble gitt (2020 til 2022)
+  if (smittevernDagerTimer && ['2020', '2021', '2022'].includes(ar)) {
     detaljer.push({
       antallDager: smittevernDagerTimer.dager,
       antallTimer: <AntallTimer timer={smittevernDagerTimer.timer} />,
