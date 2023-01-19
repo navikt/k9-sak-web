@@ -61,7 +61,7 @@ const SykdomProsessIndex = ({ perioder, panelTittelKode, lovReferanse }: SykdomP
   const skalBrukeSidemeny = perioder.length > 1;
   const mainContainerClassnames = cx('mainContainer', { 'mainContainer--withSideMenu': skalBrukeSidemeny });
   let lovReferanseTekst = '§ 9-10 første og andre ledd, og 9-16 første ledd';
-  // TODO lovref opplæring
+
   if (activePeriode?.pleietrengendeErOver18år) {
     lovReferanseTekst = '§ 9-10 tredje ledd (over 18 år)';
   }

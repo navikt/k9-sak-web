@@ -19,8 +19,7 @@ const GjennomgaaOpplaeringNavigation = ({ perioder, setValgtPeriode }: OwnProps)
   }, []);
   const perioderSomErVurdert = perioder
     .filter(periode => periode.resultat !== GjennomgaaOpplaeringStatus.IKKE_VURDERT)
-    // @ts-ignore
-    .sort((a, b) => new Date(b.opplæring.fom) - new Date(a.opplæring.fom));
+    .sort((a, b) => new Date(b.opplæring.fom).valueOf() - new Date(a.opplæring.fom).valueOf());
   const allePerioder = [...perioderTilVurdering, ...perioderSomErVurdert];
   const elements = [
     ...perioderTilVurdering.map(periode => <PeriodeRad periode={periode.opplæring} resultat={periode.resultat} />),

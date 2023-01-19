@@ -37,7 +37,7 @@ const NoedvendighetFerdigVisning = ({ vurdering, rediger }: OwnProps) => {
       }
     >
       {vurdering.perioder.map(periode => (
-        <div>
+        <div key={periode.prettifyPeriod()}>
           <Calender /> <span>{periode.prettifyPeriod()}</span>
         </div>
       ))}

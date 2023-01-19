@@ -78,7 +78,12 @@ const DokumenterIVurderingen = ({ dokumenter, onChange, onBlur, error, valgteDok
           {dokumentFilter.map(filter => {
             const { label } = vurderingDokumentfilterOptions.find(option => option.attributtNavn === filter);
             return (
-              <button onClick={() => updateDokumentFilter(filter)} type="button" className={styles.fjernFilterKnapp}>
+              <button
+                key={label}
+                onClick={() => updateDokumentFilter(filter)}
+                type="button"
+                className={styles.fjernFilterKnapp}
+              >
                 {label}
                 <Ikon kind="x" />
               </button>

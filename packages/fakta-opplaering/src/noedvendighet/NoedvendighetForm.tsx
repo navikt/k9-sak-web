@@ -91,10 +91,7 @@ const NoedvendighetForm = ({
             ))}
             <Box marginTop={Margin.xLarge}>
               <Field name={fieldname.DOKUMENTER}>
-                {({
-                  field, // { name, value, onChange, onBlur }
-                  meta,
-                }) => (
+                {({ field, meta }) => (
                   <DokumenterIVurderingen
                     dokumenter={sykdomDokumenter}
                     valgteDokumenter={field.value}

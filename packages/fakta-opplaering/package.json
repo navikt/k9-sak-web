@@ -7,7 +7,7 @@
   "dependencies": {
     "@navikt/k9-period-utils": "^0.0.12",
     "@navikt/k9-form-utils": "1.1.1",
-    "@navikt/ft-plattform-komponenter": "file:../../../ft-frontend-saksbehandling/packages/plattform-komponenter/dist",
+    "@navikt/ft-plattform-komponenter": "^1.4.0",
     "@navikt/ds-react": "2.0.8",
     "@navikt/ds-icons": "2.0.8",
     "react-outside-click-handler": "^1.3.0",
