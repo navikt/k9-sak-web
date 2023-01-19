@@ -3,6 +3,7 @@ import { BehandlingAppKontekst, Fagsak, Kodeverk, KodeverkMedNavn } from '@k9-sa
 import { Location } from 'history';
 import React from 'react';
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
+import { QueryClient, QueryClientProvider } from 'react-query';
 import messages from '../i18n/nb_NO.json';
 import BehandlingPicker from './components/BehandlingPicker';
 import BehandlingPickerOld from './components/BehandlingPickerOld';
@@ -16,6 +17,8 @@ const intl = createIntl(
   },
   cache,
 );
+
+const queryClient = new QueryClient();
 
 interface OwnProps {
   behandlinger: BehandlingAppKontekst[];
@@ -58,15 +61,17 @@ const BehandlingVelgerSakIndex = ({
           getKodeverkFn={getKodeverkFn}
         />
       ) : (
-        <BehandlingPicker
-          behandlinger={behandlinger}
-          getBehandlingLocation={getBehandlingLocation}
-          noExistingBehandlinger={noExistingBehandlinger}
-          getKodeverkFn={getKodeverkFn}
-          behandlingId={behandlingId}
-          createLocationForSkjermlenke={createLocationForSkjermlenke}
-          sakstypeKode={fagsak.sakstype.kode}
-        />
+        <QueryClientProvider client={queryClient}>
+          <BehandlingPicker
+            behandlinger={behandlinger}
+            getBehandlingLocation={getBehandlingLocation}
+            noExistingBehandlinger={noExistingBehandlinger}
+            getKodeverkFn={getKodeverkFn}
+            behandlingId={behandlingId}
+            createLocationForSkjermlenke={createLocationForSkjermlenke}
+            sakstypeKode={fagsak.sakstype.kode}
+          />
+        </QueryClientProvider>
       )}
     </RawIntlProvider>
   );

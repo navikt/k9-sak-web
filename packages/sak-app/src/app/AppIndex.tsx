@@ -81,7 +81,7 @@ const AppIndex = () => {
           />
           {shouldRenderHome && <Home headerHeight={headerHeight} />}
           {forbiddenErrors.length > 0 && <ForbiddenPage />}
-          {unauthorizedErrors.length > 0 && (redirectToLogin() || <UnauthorizedPage />)}
+          {unauthorizedErrors.length > 0 && <UnauthorizedPage />}
         </LanguageProvider>
       </AppConfigResolver>
     </ErrorBoundary>

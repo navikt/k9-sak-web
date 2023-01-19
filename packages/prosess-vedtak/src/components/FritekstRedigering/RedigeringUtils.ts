@@ -1,8 +1,9 @@
 import { parse as cssParse, generate as cssGenerate, walk as cssWalk } from 'css-tree';
 import * as Yup from 'yup';
 
-import { VedtaksbrevMal } from '@fpsak-frontend/utils/src/formidlingUtils';
+import { Brevmottaker, VedtaksbrevMal } from '@fpsak-frontend/utils/src/formidlingUtils';
 import { DokumentDataType } from '@k9-sak-web/types/src/dokumentdata';
+import { safeJSONParse } from '@fpsak-frontend/utils';
 
 export const utledStiler = (html: string) => {
   const heleBrevet = new DOMParser().parseFromString(html, 'text/html');
@@ -85,12 +86,14 @@ export const lagLagreHtmlDokumentdataRequest = ({
   redigertHtml,
   originalHtml,
   inkluderKalender,
+  overstyrtMottaker,
 }: {
   dokumentdata: DokumentDataType;
   redigerbarDokumentmal: VedtaksbrevMal;
   redigertHtml: string;
   originalHtml: string;
   inkluderKalender: boolean;
+  overstyrtMottaker?: Brevmottaker;
 }) => ({
   ...dokumentdata,
   REDIGERTBREV: {
@@ -101,6 +104,7 @@ export const lagLagreHtmlDokumentdataRequest = ({
   },
   VEDTAKSBREV_TYPE: redigerbarDokumentmal.vedtaksbrev,
   VEDTAKSBREV_MAL: redigerbarDokumentmal.dokumentMalType,
+  ...(overstyrtMottaker ? { OVERSTYRT_MOTTAKER: safeJSONParse(overstyrtMottaker) } : {}),
 });
 
 export const validerManueltRedigertBrev = (html: string): boolean => {

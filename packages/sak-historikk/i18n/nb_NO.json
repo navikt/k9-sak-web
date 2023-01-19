@@ -261,6 +261,8 @@
   "HistorikkEndretFelt.ErKlagefristOverholdt": "Er klagefristen overholdt",
   "HistorikkEndretFelt.ErKlageSignert": "Er klagen signert",
   "HistorikkEndretFelt.VurderEtterlønnSluttpakke": "Inntekt fra etterlønn eller sluttpakke",
+  "HistorikkEndretFelt.VurderNyttInntektsforhold": "Reduserer inntekt hos {value} inntektstap",
+  "HistorikkEndretFelt.BruttoInntektNyttInntektsforhold": "Brutto inntekt hos {value}",
   "HistorikkEndretFelt.FastsettEtterlønnSluttpakke": "Inntekten",
   "HistorikkEndretFelt.AvslagMorTarIkkeAlleUker": "Mor tar ikke alle 3 ukene før termin",
   "HistorikkEndretFelt.RettTilForeldrepenger": "Rett til pleiepenger",
