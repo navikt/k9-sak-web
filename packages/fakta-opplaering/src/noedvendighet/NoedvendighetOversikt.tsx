@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { NavigationWithDetailView } from '@navikt/ft-plattform-komponenter';
 import { Alert } from '@navikt/ds-react';
-import { NoedvendighetPerioder } from '@k9-sak-web/types';
+import { NoedvendighetPerioder, NoedvendighetVurdering } from '@k9-sak-web/types';
 import { Period } from '@navikt/k9-period-utils';
 import {
   FaktaOpplaeringContext,
@@ -43,7 +43,7 @@ const reducer = (accumulator, currentValue) => {
 const NoedvendighetOversikt = () => {
   const { nødvendigOpplæring, aksjonspunkter } = useContext<FaktaOpplaeringContextTypes>(FaktaOpplaeringContext);
   const { vurderinger, perioder } = nødvendigOpplæring;
-  const [valgtPeriode, setValgtPeriode] = React.useState<NoedvendighetPerioder>(null);
+  const [valgtPeriode, setValgtPeriode] = React.useState<NoedvendighetVurdering>(null);
   const perioderMappet = perioder
     .map(periode => {
       const vurderingForPeriode = vurderinger.find(

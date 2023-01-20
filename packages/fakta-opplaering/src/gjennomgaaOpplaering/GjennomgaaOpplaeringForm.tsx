@@ -237,6 +237,7 @@ const GjennomgaaOpplaeringForm = ({ vurdering, avbrytRedigering, erRedigering }:
                             {
                               // @ts-ignore
                               typeof errors[fieldname.PERIODER]?.[index]?.periode === 'string' && (
+                                // @ts-ignore
                                 <ErrorMessage size="small">{errors[fieldname.PERIODER]?.[index]?.periode}</ErrorMessage>
                               )
                             }
