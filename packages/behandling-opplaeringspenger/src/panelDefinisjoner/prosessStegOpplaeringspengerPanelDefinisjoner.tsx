@@ -9,12 +9,14 @@ import TilkjentYtelseProsessStegPanelDef from './prosessStegPaneler/TilkjentYtel
 import SimuleringProsessStegPanelDef from './prosessStegPaneler/SimuleringProsessStegPanelDef';
 import VedtakProsessStegPanelDef from './prosessStegPaneler/VedtakProsessStegPanelDef';
 import FortsattMedlemskapProsessStegPanelDef from './prosessStegPaneler/FortsattMedlemskapProsessStegPanelDef';
+import OpplaeringProsessStegPanelDef from './prosessStegPaneler/OpplaeringProsessStegPanelDef';
 
 const prosessStegPanelDefinisjoner = [
   new VarselProsessStegPanelDef(),
   new SaksopplysningerProsessStegPanelDef(),
   new InngangsvilkarProsessStegPanelDef(),
   new MedisinskVilkarProsessStegPanelDef(),
+  new OpplaeringProsessStegPanelDef(),
   new InngangsvilkarFortsProsessStegPanelDef(),
   new FortsattMedlemskapProsessStegPanelDef(),
   new BeregningsgrunnlagProsessStegPanelDef(),

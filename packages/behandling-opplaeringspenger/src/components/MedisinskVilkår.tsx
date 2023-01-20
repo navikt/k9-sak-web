@@ -72,6 +72,7 @@ export default ({
           findEndpointsForMicrofrontend(links, [
             { rel: 'sykdom-vurdering-oversikt-ktp', desiredName: 'vurderingsoversiktKontinuerligTilsynOgPleie' },
             { rel: 'sykdom-vurdering-oversikt-too', desiredName: 'vurderingsoversiktBehovForToOmsorgspersoner' },
+            { rel: 'sykdom-vurdering-oversikt-lvs', desiredName: 'vurderingsoversiktLangvarigSykdom' },
             { rel: 'sykdom-vurdering-direkte', desiredName: 'hentVurdering' },
             { rel: 'sykdom-vurdering-opprettelse', desiredName: 'opprettVurdering' },
             { rel: 'sykdom-vurdering-endring', desiredName: 'endreVurdering' },

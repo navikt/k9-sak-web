@@ -1,0 +1,23 @@
+{
+  "allePerioder": "Alle perioder",
+  "status": "Status",
+  "periode": "Periode",
+  "part": "Part",
+  "ingenVurderinger": "Ingen vurderinger å vise",
+  "opplaering.vurdering.label": "Gjør en vurdering av om det er opplæring i perioden etter § 9-14.",
+  "opplaering.gjennomfoertOpplaering.label": "Er det opplæring i perioden?",
+  "opplaering.perioder.label": "I hvilken periode er det opplæring?",
+  "opplaering.resterendePerioder.label": "Resterende perioder søkeren ikke har opplæring",
+  "opplaering.dokumenter.label": "Hvilke dokumenter er brukt i vurderingen av opplæringen?",
+  "noedvendighet.dokumenter.label": "Hvilke dokumenter er brukt i vurderingen av nødvendighet?",
+  "noedvendighet.vurdering.label": "Gjør en vurdering av om opplæringen er nødvendig for at søker skal kunne ta seg av og behandle barnet etter § 9-14.",
+  "noedvendighet.noedvendigOpplaering.label": "Er opplæringen nødvendig for å kunne ta seg av og behandle barnet?",
+  "reisetid.foersteDag": "Første dag med opplæring:",
+  "reisetid.sisteDag": "Siste dag med opplæring:",
+  "reisetid.hjemkomstdato": "Hjemkomstdato:",
+  "reisetid.avreisedato": "Avreisedato:",
+  "reisetid.periode.innvilget": "I hvilken periode innvilges reisetid?",
+  "reisetid.periode.avslått": "I hvilken periode avslås reisetid?",
+  "reisetid.begrunnelse": "Begrunnelse",
+  "reisetid.beskrivelseFraSoeker": "Beskrivelse fra søker for reisetid i perioden"
+}
