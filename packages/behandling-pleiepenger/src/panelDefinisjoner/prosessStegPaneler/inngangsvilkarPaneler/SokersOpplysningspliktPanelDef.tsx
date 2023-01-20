@@ -5,6 +5,7 @@ import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import SokersOpplysningspliktVilkarProsessIndex from '@fpsak-frontend/prosess-vilkar-sokers-opplysningsplikt';
 import { ProsessStegPanelDef } from '@k9-sak-web/behandling-felles';
+import { Aksjonspunkt, Behandling } from '@k9-sak-web/types';
 
 class SokersOpplysningspliktPanelDef extends ProsessStegPanelDef {
   getId = () => 'SOKERS_OPPLYSNINGSPLIKT';
@@ -25,10 +26,16 @@ class SokersOpplysningspliktPanelDef extends ProsessStegPanelDef {
 
   getVilkarKoder = () => [vilkarType.SOKERSOPPLYSNINGSPLIKT];
 
-  getOverstyrVisningAvKomponent = ({ behandling, aksjonspunkterForSteg }) => {
+  getOverstyrVisningAvKomponent = ({
+    behandling,
+    aksjonspunkterForSteg,
+  }: {
+    behandling: Behandling;
+    aksjonspunkterForSteg: Aksjonspunkt[];
+  }) => {
     const isRevurdering = behandlingType.REVURDERING === behandling.type;
     const hasAp = aksjonspunkterForSteg.some(
-      ap => ap.definisjon === aksjonspunktCodes.SOKERS_OPPLYSNINGSPLIKT_MANU,
+      ap => ap.definisjon.kode === aksjonspunktCodes.SOKERS_OPPLYSNINGSPLIKT_MANU,
     );
     return !(isRevurdering && !hasAp);
   };

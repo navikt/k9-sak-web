@@ -25,8 +25,6 @@ import {
   Aksjonspunkt,
   ArbeidsgiverOpplysningerPerId,
   Behandlingsresultat,
-  BehandlingStatusType,
-  Kodeverk,
   KodeverkMedNavn,
   Personopplysninger,
   Vilkar,
@@ -171,7 +169,7 @@ export const VedtakForm: React.FC<Props> = ({
     return aksjonspunkter
       .filter(ap => ap.kanLoses)
       .map(aksjonspunkt => ({
-        kode: aksjonspunkt.definisjon,
+        kode: aksjonspunkt.definisjon.kode,
         overstyrtMottaker: safeJSONParse(values?.[fieldnames.OVERSTYRT_MOTTAKER]),
         fritekstbrev: values?.[fieldnames.SKAL_BRUKE_OVERSTYRENDE_FRITEKST_BREV]
           ? {
@@ -193,7 +191,7 @@ export const VedtakForm: React.FC<Props> = ({
         isVedtakSubmission,
         begrunnelserMedInformasjonsbehov: begrunnelser,
         redusertUtbetalingÅrsaker:
-          aksjonspunkt.definisjon === aksjonspunktCodes.FORESLA_VEDTAK_MANUELT
+          aksjonspunkt.definisjon.kode === aksjonspunktCodes.FORESLA_VEDTAK_MANUELT
             ? transformRedusertUtbetalingÅrsaker(values)
             : null,
         tilgjengeligeVedtaksbrev,
@@ -205,7 +203,7 @@ export const VedtakForm: React.FC<Props> = ({
       .filter(ap => ap.kanLoses)
       .map(aksjonspunkt => {
         const tranformedValues = {
-          kode: aksjonspunkt.definisjon,
+          kode: aksjonspunkt.definisjon.kode,
           begrunnelse: values?.[fieldnames.BEGRUNNELSE],
           overstyrtMottaker: safeJSONParse(values?.[fieldnames.OVERSTYRT_MOTTAKER]),
           fritekstbrev: {
@@ -225,7 +223,7 @@ export const VedtakForm: React.FC<Props> = ({
           tilgjengeligeVedtaksbrev,
           redusertUtbetalingÅrsaker: undefined,
         };
-        if (aksjonspunkt.definisjon === aksjonspunktCodes.FORESLA_VEDTAK_MANUELT) {
+        if (aksjonspunkt.definisjon.kode === aksjonspunktCodes.FORESLA_VEDTAK_MANUELT) {
           tranformedValues.redusertUtbetalingÅrsaker = transformRedusertUtbetalingÅrsaker(values);
         }
         return tranformedValues;
@@ -394,7 +392,7 @@ export const VedtakForm: React.FC<Props> = ({
           <div className={styles.aksjonspunktContainer}>
             <VedtakAksjonspunktPanel
               behandlingStatusKode={behandlingStatus}
-              aksjonspunktKoder={aksjonspunkter.map(ap => ap.definisjon)}
+              aksjonspunktKoder={aksjonspunkter.map(ap => ap.definisjon.kode)}
               readOnly={readOnly}
               overlappendeYtelser={overlappendeYtelser}
               alleKodeverk={alleKodeverk}

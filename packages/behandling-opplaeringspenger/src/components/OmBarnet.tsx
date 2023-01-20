@@ -43,7 +43,7 @@ const OmBarnet = ({ behandling: { links }, readOnly, aksjonspunkter, submitCallb
     aksjonspunkter,
     aksjonspunktCodes.VURDER_RETT_ETTER_PLEIETRENGENDES_DØD,
   );
-  const omBarnetAksjonspunktkode = omBarnetAksjonspunkt?.definisjon;
+  const omBarnetAksjonspunktkode = omBarnetAksjonspunkt?.definisjon.kode;
   const harAksjonspunkt = !!omBarnetAksjonspunktkode;
 
   const løsAksjonspunkt = data =>

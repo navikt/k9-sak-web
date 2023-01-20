@@ -13,7 +13,7 @@ import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import { prosessStegCodes } from '@k9-sak-web/konstanter';
-import { Behandling, Fagsak } from '@k9-sak-web/types';
+import { Aksjonspunkt, Behandling, Fagsak } from '@k9-sak-web/types';
 
 import { K9sakApiKeys, requestApi } from '@k9-sak-web/sak-app/src/data/k9sakApi';
 import { ProsessStegDef, ProsessStegPanelDef } from './ProsessStegDef';
@@ -44,9 +44,13 @@ describe('<prosessStegHooks>', () => {
     links: [],
   };
 
-  const aksjonspunkter = [
+  const aksjonspunkter: Aksjonspunkt[] = [
     {
-      definisjon: aksjonspunktCodes.SOKERS_OPPLYSNINGSPLIKT_MANU,
+      definisjon: {
+        kode: aksjonspunktCodes.SOKERS_OPPLYSNINGSPLIKT_MANU,
+        kodeverk: 'AKSJONSPUNKT_DEF',
+        skalAvbrytesVedTilbakeføring: false,
+      },
       status: aksjonspunktStatus.OPPRETTET,
       kanLoses: true,
       erAktivt: true,
@@ -285,8 +289,8 @@ describe('<prosessStegHooks>', () => {
       behandlingVersjon: behandling.versjon,
       bekreftedeAksjonspunktDtoer: [
         {
-          '@type': aksjonspunkter[0].definisjon,
-          kode: aksjonspunkter[0].definisjon,
+          '@type': aksjonspunkter[0].definisjon.kode,
+          kode: aksjonspunkter[0].definisjon.kode,
         },
       ],
     });

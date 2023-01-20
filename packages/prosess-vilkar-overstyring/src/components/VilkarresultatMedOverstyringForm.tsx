@@ -18,7 +18,7 @@ import {
   VerticalSpacer,
 } from '@fpsak-frontend/shared-components';
 import { DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils';
-import { Aksjonspunkt, Kodeverk, KodeverkMedNavn, SubmitCallback } from '@k9-sak-web/types';
+import { Aksjonspunkt, KodeverkMedNavn, SubmitCallback } from '@k9-sak-web/types';
 import moment from 'moment';
 import { Knapp } from 'nav-frontend-knapper';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
@@ -182,7 +182,7 @@ const buildInitialValues = createSelector(
     (ownProps: VilkarresultatMedOverstyringFormProps) => ownProps.periode,
   ],
   (avslagKode, aksjonspunkter, status, overstyringApKode, periode) => {
-    const aksjonspunkt = aksjonspunkter.find(ap => ap.definisjon === overstyringApKode);
+    const aksjonspunkt = aksjonspunkter.find(ap => ap.definisjon.kode === overstyringApKode);
     return {
       isOverstyrt: aksjonspunkt !== undefined,
       ...VilkarresultatMedBegrunnelse.buildInitialValues(
@@ -198,8 +198,7 @@ const buildInitialValues = createSelector(
 
 const getCustomVilkarText = (medlemskapFom: string, behandlingType: string, erOppfylt: boolean) => {
   const customVilkarText = { id: '', values: null };
-  const isBehandlingRevurderingFortsattMedlemskap =
-    behandlingType === BehandlingType.REVURDERING && !!medlemskapFom;
+  const isBehandlingRevurderingFortsattMedlemskap = behandlingType === BehandlingType.REVURDERING && !!medlemskapFom;
   if (isBehandlingRevurderingFortsattMedlemskap) {
     customVilkarText.id = erOppfylt
       ? 'VilkarResultPicker.VilkarOppfyltRevurderingFom'
@@ -239,7 +238,7 @@ const mapStateToPropsFactory = (_initialState, initialOwnProps: VilkarresultatMe
   return (state, ownProps) => {
     const { behandlingId, behandlingVersjon, aksjonspunkter, erOverstyrt, overrideReadOnly } = ownProps;
 
-    const aksjonspunkt = aksjonspunkter.find(ap => ap.definisjon === overstyringApKode);
+    const aksjonspunkt = aksjonspunkter.find(ap => ap.definisjon.kode === overstyringApKode);
     const isSolvable =
       aksjonspunkt !== undefined
         ? !(aksjonspunkt.status === aksjonspunktStatus.OPPRETTET && !aksjonspunkt.kanLoses)

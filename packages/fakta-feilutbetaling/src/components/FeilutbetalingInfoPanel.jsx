@@ -368,7 +368,7 @@ const getSortedFeilutbetalingArsaker = createSelector(
 );
 
 const transformValues = (values, aksjonspunkter, årsaker) => {
-  const apCode = aksjonspunkter.find(ap => ap.definisjon === feilutbetalingAksjonspunkter[0]);
+  const apCode = aksjonspunkter.find(ap => ap.definisjon.kode === feilutbetalingAksjonspunkter[0]);
 
   const feilutbetalingFakta = values.perioder.map(periode => {
     const feilutbetalingÅrsak = årsaker.find(el => el.hendelseType === periode.årsak);
@@ -389,7 +389,7 @@ const transformValues = (values, aksjonspunkter, årsaker) => {
 
   return [
     {
-      kode: apCode.definisjon,
+      kode: apCode.definisjon.kode,
       begrunnelse: values.begrunnelse,
       feilutbetalingFakta,
     },

@@ -110,7 +110,7 @@ const VilkarresultatMedOverstyringHeader = ({
 };
 
 const mapStateToPropsFactory = (_initialState, initialOwnProps: VilkarresultatMedOverstyringHeaderProps) => {
-  const aksjonspunktCodes = initialOwnProps.aksjonspunkter.map(a => a.definisjon);
+  const aksjonspunktCodes = initialOwnProps.aksjonspunkter.map(a => a.definisjon.kode);
 
   return (state, ownProps) => {
     const erOppfylt = vilkarUtfallType.OPPFYLT === ownProps.status;

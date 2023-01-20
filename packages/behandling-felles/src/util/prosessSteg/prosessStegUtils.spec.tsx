@@ -12,7 +12,7 @@ import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import fagsakStatus from '@fpsak-frontend/kodeverk/src/fagsakStatus';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
-import { Behandling, Fagsak } from '@k9-sak-web/types';
+import { Aksjonspunkt, Behandling, Fagsak } from '@k9-sak-web/types';
 
 import { ProsessStegUtledet, ProsessStegPanelUtledet } from './ProsessStegUtledet';
 import {
@@ -43,9 +43,13 @@ describe('<prosessStegUtils>', () => {
     links: [],
   };
 
-  const aksjonspunkter = [
+  const aksjonspunkter: Aksjonspunkt[] = [
     {
-      definisjon: aksjonspunktCodes.SOKERS_OPPLYSNINGSPLIKT_MANU,
+      definisjon: {
+        kode: aksjonspunktCodes.SOKERS_OPPLYSNINGSPLIKT_MANU,
+        kodeverk: 'AKSJONSPUNKT_DEF',
+        skalAvbrytesVedTilbakeføring: false,
+      },
       status: aksjonspunktStatus.OPPRETTET,
       kanLoses: true,
       erAktivt: true,
@@ -305,7 +309,7 @@ describe('<prosessStegUtils>', () => {
 
     const aksjonspunktModeller = [
       {
-        kode: aksjonspunkter[0].definisjon,
+        kode: aksjonspunkter[0].definisjon.kode,
       },
     ];
 

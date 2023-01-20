@@ -41,7 +41,7 @@ const OmsorgenFor = ({ behandling: { links }, readOnly, aksjonspunkter, submitCa
     httpErrorHandler(status, addErrorMessage, locationHeader);
 
   const omsorgenForAksjonspunkt = findAksjonspunkt(aksjonspunkter, aksjonspunktCodes.OMSORGEN_FOR_PLEIEPENGER);
-  const omsorgenForAksjonspunktkode = omsorgenForAksjonspunkt?.definisjon;
+  const omsorgenForAksjonspunktkode = omsorgenForAksjonspunkt?.definisjon.kode;
   const harAksjonspunkt = !!omsorgenForAksjonspunktkode;
 
   const løsAksjonspunkt = omsorgsperioder =>

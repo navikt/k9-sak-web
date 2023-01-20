@@ -100,11 +100,7 @@ const MidlertidigAleneObjektTilMikrofrontend = ({
         aksjonspunkt.begrunnelse,
         'Utvidet Rett',
       ),
-      informasjonTilLesemodus: formatereLesemodusObjektForMidlertidigAlene(
-        vilkar,
-        aksjonspunkt,
-        status,
-      ),
+      informasjonTilLesemodus: formatereLesemodusObjektForMidlertidigAlene(vilkar, aksjonspunkt, status),
       losAksjonspunkt: ({
         begrunnelse,
         erSokerenMidlertidigAleneOmOmsorgen,
@@ -114,7 +110,7 @@ const MidlertidigAleneObjektTilMikrofrontend = ({
       }) => {
         submitCallback([
           formatereLosAksjonspunktObjektForMidlertidigAlene(
-            aksjonspunkt.definisjon,
+            aksjonspunkt.definisjon.kode,
             begrunnelse,
             erSokerenMidlertidigAleneOmOmsorgen,
             {

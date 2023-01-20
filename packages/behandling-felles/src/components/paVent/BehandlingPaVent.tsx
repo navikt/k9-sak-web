@@ -43,7 +43,7 @@ const BehandlingPaVent = ({
     () =>
       (aksjonspunkter || [])
         .filter(ap => isAksjonspunktOpen(ap.status))
-        .some(ap => ap.definisjon === aksjonspunktCodes.AUTO_MANUELT_SATT_PÅ_VENT),
+        .some(ap => ap.definisjon.kode === aksjonspunktCodes.AUTO_MANUELT_SATT_PÅ_VENT),
     [aksjonspunkter],
   );
 
@@ -51,7 +51,7 @@ const BehandlingPaVent = ({
     () =>
       (aksjonspunkter || [])
         .filter(ap => isAksjonspunktOpen(ap.status))
-        .find(ap => ap.definisjon === aksjonspunktCodes.AUTO_MANUELT_SATT_PÅ_VENT)?.venteårsakVariant,
+        .find(ap => ap.definisjon.kode === aksjonspunktCodes.AUTO_MANUELT_SATT_PÅ_VENT)?.venteårsakVariant,
     [aksjonspunkter],
   );
 

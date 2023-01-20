@@ -53,10 +53,10 @@ const vilkårHarOverlappendePerioderIInfotrygd = (uttaksperiode: Uttaksperiode) 
 
 const utledAksjonspunktKode = (aksjonspunkter: Aksjonspunkt[]) => {
   // 9014 skal ha presedens
-  if (aksjonspunkter.find(ap => ap.definisjon === aksjonspunktCodes.ÅRSKVANTUM_FOSTERBARN))
+  if (aksjonspunkter.find(ap => ap.definisjon.kode === aksjonspunktCodes.ÅRSKVANTUM_FOSTERBARN))
     return aksjonspunktCodes.ÅRSKVANTUM_FOSTERBARN;
 
-  if (aksjonspunkter.find(ap => ap.definisjon === aksjonspunktCodes.VURDER_ÅRSKVANTUM_KVOTE))
+  if (aksjonspunkter.find(ap => ap.definisjon.kode === aksjonspunktCodes.VURDER_ÅRSKVANTUM_KVOTE))
     return aksjonspunktCodes.VURDER_ÅRSKVANTUM_KVOTE;
 
   return null;

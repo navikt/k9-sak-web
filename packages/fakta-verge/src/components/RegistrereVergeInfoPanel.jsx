@@ -38,9 +38,7 @@ export const RegistrereVergeInfoPanelImpl = ({
         {[intl.formatMessage({ id: 'RegistrereVergeInfoPanel.CheckInformation' })]}
       </AksjonspunktHelpTextTemp>
       <VerticalSpacer twentyPx />
-      <Normaltekst>
-        {[intl.formatMessage({ id: 'RegistrereVergeInfoPanel.HjelpeTekst' })]}
-      </Normaltekst>
+      <Normaltekst>{[intl.formatMessage({ id: 'RegistrereVergeInfoPanel.HjelpeTekst' })]}</Normaltekst>
       <form onSubmit={formProps.handleSubmit}>
         <VerticalSpacer twentyPx />
         <FaktaBegrunnelseTextField
@@ -87,8 +85,8 @@ const buildInitialValues = createSelector(
       verge && verge.begrunnelse
         ? decodeHtmlEntity(verge.begrunnelse)
         : FaktaBegrunnelseTextField.buildInitialValues(
-          aksjonspunkter.filter(ap => ap.definisjon === aksjonspunktCodes.AVKLAR_VERGE)[0],
-        ).begrunnelse,
+            aksjonspunkter.filter(ap => ap.definisjon.kode === aksjonspunktCodes.AVKLAR_VERGE)[0],
+          ).begrunnelse,
   }),
 );
 

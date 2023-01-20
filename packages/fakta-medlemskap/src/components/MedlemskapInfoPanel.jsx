@@ -1,6 +1,5 @@
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
-import { kodeverkObjektPropType } from '@fpsak-frontend/prop-types';
 import PropTypes from 'prop-types';
 import React, { useMemo } from 'react';
 import medlemskapAksjonspunkterPropType from '../propTypes/medlemskapAksjonspunkterPropType';
@@ -33,9 +32,9 @@ const MedlemskapInfoPanel = ({
   medlemskap,
   fagsakPerson,
 }) => {
-  const avklarStartdatoOverstyring = aksjonspunkter.find(ap => ap.definisjon === OVERSTYR_AVKLAR_STARTDATO);
+  const avklarStartdatoOverstyring = aksjonspunkter.find(ap => ap.definisjon.kode === OVERSTYR_AVKLAR_STARTDATO);
   const aksjonspunkterMinusAvklarStartDato = useMemo(
-    () => aksjonspunkter.filter(ap => !avklarStartdatoAp.includes(ap.definisjon)),
+    () => aksjonspunkter.filter(ap => !avklarStartdatoAp.includes(ap.definisjon.kode)),
     [aksjonspunkter],
   );
 

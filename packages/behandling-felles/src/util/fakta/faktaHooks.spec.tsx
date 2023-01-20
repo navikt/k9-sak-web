@@ -11,7 +11,7 @@ import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import fagsakStatus from '@fpsak-frontend/kodeverk/src/fagsakStatus';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import { faktaPanelCodes } from '@k9-sak-web/konstanter';
-import { Behandling, Fagsak } from '@k9-sak-web/types';
+import { Aksjonspunkt, Behandling, Fagsak } from '@k9-sak-web/types';
 
 import faktaHooks from './faktaHooks';
 import FaktaPanelDef from './FaktaPanelDef';
@@ -71,9 +71,13 @@ describe('<faktaHooks>', () => {
         employeeHasAccess: true,
       },
     };
-    const aksjonspunkter = [
+    const aksjonspunkter: Aksjonspunkt[] = [
       {
-        definisjon: aksjonspunktCodes.AVKLAR_ARBEIDSFORHOLD,
+        definisjon: {
+          kode: aksjonspunktCodes.AVKLAR_ARBEIDSFORHOLD,
+          kodeverk: 'AKSJONSPUNKT_DEF',
+          skalAvbrytesVedTilbakeføring: false,
+        },
         status: aksjonspunktStatus.OPPRETTET,
         kanLoses: true,
         erAktivt: true,
@@ -121,9 +125,13 @@ describe('<faktaHooks>', () => {
   });
 
   it('skal bruke callbacks for å velge faktapanel og for å lagre', () => {
-    const aksjonspunkter = [
+    const aksjonspunkter: Aksjonspunkt[] = [
       {
-        definisjon: aksjonspunktCodes.AVKLAR_ARBEIDSFORHOLD,
+        definisjon: {
+          kode: aksjonspunktCodes.AVKLAR_ARBEIDSFORHOLD,
+          kodeverk: 'AKSJONSPUNKT_DEF',
+          skalAvbrytesVedTilbakeføring: false,
+        },
         status: aksjonspunktStatus.OPPRETTET,
         kanLoses: true,
         erAktivt: true,
@@ -180,8 +188,8 @@ describe('<faktaHooks>', () => {
       behandlingVersjon: behandling.versjon,
       bekreftedeAksjonspunktDtoer: [
         {
-          '@type': aksjonspunkter[0].definisjon,
-          kode: aksjonspunkter[0].definisjon,
+          '@type': aksjonspunkter[0].definisjon.kode,
+          kode: aksjonspunkter[0].definisjon.kode,
         },
       ],
     });

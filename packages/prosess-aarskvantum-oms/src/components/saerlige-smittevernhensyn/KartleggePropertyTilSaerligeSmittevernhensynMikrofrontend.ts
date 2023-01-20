@@ -7,8 +7,8 @@ import MikrofrontendKomponenter from './types/MikrofrontendKomponenter';
 import { SaerligSmittevernhensynProps } from './types/SaerligSmittevernhensynProps';
 import Aktivitet from '../../dto/Aktivitet';
 import { antallDager } from '../AktivitetTabell';
-import Soknadsårsak from "../../dto/Soknadsårsak";
-import PeriodeBekreftetStatus from "../../dto/PeriodeBekreftetStatus";
+import Soknadsårsak from '../../dto/Soknadsårsak';
+import PeriodeBekreftetStatus from '../../dto/PeriodeBekreftetStatus';
 
 interface LosAksjonspunktSaerligSmittevern {
   kode: string;
@@ -48,24 +48,32 @@ const KartleggePropertyTilSaerligeSmittevernhensynMikrofrontend = (
   let objektTilMikrofrontend = {};
 
   const harAktivitetPeriodeMedSoknadsarsakKonflikt: boolean[] = aktiviteter.map(aktivitet =>
-    aktivitet.uttaksperioder.some(periode => typeof periode.søknadÅrsak !== 'undefined' && periode.søknadÅrsak === Soknadsårsak.KONFLIKT_MED_ARBEIDSGIVER)
+    aktivitet.uttaksperioder.some(
+      periode =>
+        typeof periode.søknadÅrsak !== 'undefined' && periode.søknadÅrsak === Soknadsårsak.KONFLIKT_MED_ARBEIDSGIVER,
+    ),
   );
 
   const visKonfliktMedArbeidsgiverAksjonspunkt: boolean = harAktivitetPeriodeMedSoknadsarsakKonflikt.find(
-    harAktivitetEnPeriodeMedSoknadsårsakKonflikt => harAktivitetEnPeriodeMedSoknadsårsakKonflikt
+    harAktivitetEnPeriodeMedSoknadsårsakKonflikt => harAktivitetEnPeriodeMedSoknadsårsakKonflikt,
   );
 
   const perioderFilterFn = (period: Uttaksperiode, vilkarsUtfall: string): boolean =>
-    period.vurderteVilkår.vilkår[visKonfliktMedArbeidsgiverAksjonspunkt ? 'NOK_DAGER' : 'SMITTEVERN'] === vilkarsUtfall
-    && !!period.bekreftet
-    && period.bekreftet === PeriodeBekreftetStatus.MANUELTBEKREFTET;
+    period.vurderteVilkår.vilkår[visKonfliktMedArbeidsgiverAksjonspunkt ? 'NOK_DAGER' : 'SMITTEVERN'] ===
+      vilkarsUtfall &&
+    !!period.bekreftet &&
+    period.bekreftet === PeriodeBekreftetStatus.MANUELTBEKREFTET;
 
   let perioderInnvilget: Uttaksperiode[] = [];
   let perioderAvslått: Uttaksperiode[] = [];
 
   aktiviteter.forEach(aktivitet => {
-    perioderInnvilget = perioderInnvilget.concat(aktivitet.uttaksperioder.filter(p => perioderFilterFn(p, UtfallEnum.INNVILGET)));
-    perioderAvslått = perioderAvslått.concat(aktivitet.uttaksperioder.filter(p => perioderFilterFn(p, UtfallEnum.AVSLÅTT)));
+    perioderInnvilget = perioderInnvilget.concat(
+      aktivitet.uttaksperioder.filter(p => perioderFilterFn(p, UtfallEnum.INNVILGET)),
+    );
+    perioderAvslått = perioderAvslått.concat(
+      aktivitet.uttaksperioder.filter(p => perioderFilterFn(p, UtfallEnum.AVSLÅTT)),
+    );
   });
 
   const eksistererInnvilgetPeriode: boolean = perioderInnvilget.length > 0;
@@ -79,7 +87,7 @@ const KartleggePropertyTilSaerligeSmittevernhensynMikrofrontend = (
 
   const behandlingsID: string = behandling.id.toString();
 
-  if (typeof aksjonspunkt !== 'undefined' && aksjonspunkt.definisjon === aksjonspunktCodes.VURDER_ÅRSKVANTUM_DOK) {
+  if (typeof aksjonspunkt !== 'undefined' && aksjonspunkt.definisjon.kode === aksjonspunktCodes.VURDER_ÅRSKVANTUM_DOK) {
     const isAksjonspunktOpen = aksjonspunkt.status === aksjonspunktStatus.OPPRETTET && aksjonspunkt.kanLoses;
     const aksjonspunktLost = behandling.status === behandlingStatus.BEHANDLING_UTREDES && !isAksjonspunktOpen;
 
@@ -98,7 +106,7 @@ const KartleggePropertyTilSaerligeSmittevernhensynMikrofrontend = (
         losAksjonspunkt: (fravaerGrunnetSmittevernhensynEllerStengt, begrunnelse, antallDagerDelvisInnvilget) => {
           submitCallback([
             formatereLosAksjonspunktObjekt(
-              aksjonspunkt.definisjon,
+              aksjonspunkt.definisjon.kode,
               fravaerGrunnetSmittevernhensynEllerStengt,
               begrunnelse,
               antallDagerDelvisInnvilget,

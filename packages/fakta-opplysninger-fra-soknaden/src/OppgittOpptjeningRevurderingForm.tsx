@@ -245,7 +245,7 @@ const buildInitialValues = (values: OpplysningerFraSøknaden, aksjonspunkter: Ak
     : false;
 
   const aksjonspunkt = aksjonspunkter.find(
-    ap => ap.definisjon === aksjonspunktCodes.OVERSTYRING_FRISINN_OPPGITT_OPPTJENING,
+    ap => ap.definisjon.kode === aksjonspunktCodes.OVERSTYRING_FRISINN_OPPGITT_OPPTJENING,
   );
 
   return {

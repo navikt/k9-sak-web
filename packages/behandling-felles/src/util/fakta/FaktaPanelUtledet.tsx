@@ -26,7 +26,7 @@ class FaktaPanelUtledet {
   public getTekstKode = (): string => this.faktaPanelDef.getTekstKode();
 
   private getFiltrerteAksjonspunkter = (): Aksjonspunkt[] =>
-    this.aksjonspunkter.filter(ap => this.faktaPanelDef.getAksjonspunktKoder().includes(ap.definisjon));
+    this.aksjonspunkter.filter(ap => this.faktaPanelDef.getAksjonspunktKoder().includes(ap.definisjon.kode));
 
   public getHarApneAksjonspunkter = (): boolean =>
     this.getFiltrerteAksjonspunkter().some(ap => isAksjonspunktOpen(ap.status) && ap.kanLoses);

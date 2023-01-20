@@ -4,7 +4,6 @@ import { Formik } from 'formik';
 import { injectIntl } from 'react-intl';
 import { Checkbox } from '@navikt/ds-react';
 
-import { kodeverkObjektPropType } from '@fpsak-frontend/prop-types';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import { isAvslag, isDelvisInnvilget, isInnvilget } from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
 import { dokumentdatatype } from '@k9-sak-web/konstanter';
@@ -105,7 +104,7 @@ export const VedtakForm = ({
     return aksjonspunkter
       .filter(ap => ap.kanLoses)
       .map(aksjonspunkt => ({
-        kode: aksjonspunkt.definisjon,
+        kode: aksjonspunkt.definisjon.kode,
         overstyrtMottaker: safeJSONParse(values?.[fieldnames.OVERSTYRT_MOTTAKER]),
         fritekstbrev: values?.[fieldnames.SKAL_BRUKE_OVERSTYRENDE_FRITEKST_BREV]
           ? {
@@ -119,7 +118,7 @@ export const VedtakForm = ({
         isVedtakSubmission,
         begrunnelserMedInformasjonsbehov: begrunnelser,
         redusertUtbetalingÅrsaker:
-          aksjonspunkt.definisjon === aksjonspunktCodes.FORESLA_VEDTAK_MANUELT
+          aksjonspunkt.definisjon.kode === aksjonspunktCodes.FORESLA_VEDTAK_MANUELT
             ? transformRedusertUtbetalingÅrsaker(values)
             : null,
         tilgjengeligeVedtaksbrev,
@@ -131,7 +130,7 @@ export const VedtakForm = ({
       .filter(ap => ap.kanLoses)
       .map(aksjonspunkt => {
         const tranformedValues = {
-          kode: aksjonspunkt.definisjon,
+          kode: aksjonspunkt.definisjon.kode,
           begrunnelse: values?.[fieldnames.BEGRUNNELSE],
           overstyrtMottaker: safeJSONParse(values?.[fieldnames.OVERSTYRT_MOTTAKER]),
           fritekstbrev: {
@@ -144,7 +143,7 @@ export const VedtakForm = ({
           isVedtakSubmission,
           tilgjengeligeVedtaksbrev,
         };
-        if (aksjonspunkt.definisjon === aksjonspunktCodes.FORESLA_VEDTAK_MANUELT) {
+        if (aksjonspunkt.definisjon.kode === aksjonspunktCodes.FORESLA_VEDTAK_MANUELT) {
           tranformedValues.redusertUtbetalingÅrsaker = transformRedusertUtbetalingÅrsaker(values);
         }
         return tranformedValues;
@@ -217,7 +216,7 @@ export const VedtakForm = ({
           <LagreFormikStateLokalt />
           <VedtakAksjonspunktPanel
             behandlingStatusKode={behandlingStatus}
-            aksjonspunktKoder={aksjonspunkter.map(ap => ap.definisjon)}
+            aksjonspunktKoder={aksjonspunkter.map(ap => ap.definisjon.kode)}
             readOnly={readOnly}
             overlappendeYtelser={overlappendeYtelser}
             alleKodeverk={alleKodeverk}

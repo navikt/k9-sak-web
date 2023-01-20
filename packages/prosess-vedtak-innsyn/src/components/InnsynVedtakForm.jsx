@@ -192,7 +192,7 @@ InnsynVedtakFormImpl.defaultProps = {
 
 const buildInitialValues = (innsynMottattDato, aksjonspunkter) => ({
   mottattDato: innsynMottattDato,
-  begrunnelse: aksjonspunkter.find(ap => ap.definisjon === aksjonspunktCodes.FORESLA_VEDTAK).begrunnelse,
+  begrunnelse: aksjonspunkter.find(ap => ap.definisjon.kode === aksjonspunktCodes.FORESLA_VEDTAK).begrunnelse,
 });
 
 const transformValues = values => ({
@@ -227,7 +227,8 @@ const mapStateToPropsFactory = (initialState, initialOwnProps) => {
   return (state, ownProps) => ({
     documents: getDocumenterMedFikkInnsynVerdi(ownProps),
     initialValues: buildInitialValues(ownProps.innsynMottattDato, ownProps.aksjonspunkter),
-    apBegrunnelse: ownProps.aksjonspunkter.find(ap => ap.definisjon === aksjonspunktCodes.VURDER_INNSYN).begrunnelse,
+    apBegrunnelse: ownProps.aksjonspunkter.find(ap => ap.definisjon.kode === aksjonspunktCodes.VURDER_INNSYN)
+      .begrunnelse,
     begrunnelse: behandlingFormValueSelector(
       formName,
       ownProps.behandlingId,

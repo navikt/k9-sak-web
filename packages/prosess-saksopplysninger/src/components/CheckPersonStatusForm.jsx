@@ -168,7 +168,7 @@ const getFilteredKodeverk = createSelector(
 const transformValues = (values, aksjonspunkter) => ({
   fortsettBehandling: values.fortsettBehandling,
   personstatus: values.personstatus,
-  kode: aksjonspunkter[0].definisjon,
+  kode: aksjonspunkter[0].definisjon.kode,
   ...ProsessStegBegrunnelseTextField.transformValues(values),
 });
 

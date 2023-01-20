@@ -9,7 +9,7 @@ import {
   ProsessStegContainer,
   useSetBehandlingVedEndring,
 } from '@k9-sak-web/behandling-felles';
-import { Fagsak, Kodeverk, KodeverkMedNavn, Behandling, FagsakPerson } from '@k9-sak-web/types';
+import { Fagsak, KodeverkMedNavn, Behandling, FagsakPerson, Aksjonspunkt } from '@k9-sak-web/types';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 
 import lagForhåndsvisRequest, { bestemAvsenderApp } from '@fpsak-frontend/utils/src/formidlingUtils';
@@ -46,7 +46,7 @@ interface OwnProps {
 }
 
 const saveAnkeText =
-  (lagreAnkeVurdering, lagreReapneAnkeVurdering, behandling, aksjonspunkter) => aksjonspunktModel => {
+  (lagreAnkeVurdering, lagreReapneAnkeVurdering, behandling, aksjonspunkter: Aksjonspunkt[]) => aksjonspunktModel => {
     const data = {
       behandlingId: behandling.id,
       ...aksjonspunktModel,
@@ -54,7 +54,7 @@ const saveAnkeText =
 
     const getForeslaVedtakAp = aksjonspunkter
       .filter(ap => ap.status === aksjonspunktStatus.OPPRETTET)
-      .filter(ap => ap.definisjon === aksjonspunktCodes.FORESLA_VEDTAK);
+      .filter(ap => ap.definisjon.kode === aksjonspunktCodes.FORESLA_VEDTAK);
 
     if (getForeslaVedtakAp.length === 1) {
       lagreReapneAnkeVurdering(data);
@@ -199,7 +199,8 @@ const AnkeProsess = ({
     () =>
       data.aksjonspunkter.some(
         ap =>
-          ap.definisjon === aksjonspunktCodes.VEDTAK_UTEN_TOTRINNSKONTROLL && ap.status === aksjonspunktStatus.UTFORT,
+          ap.definisjon.kode === aksjonspunktCodes.VEDTAK_UTEN_TOTRINNSKONTROLL &&
+          ap.status === aksjonspunktStatus.UTFORT,
       ),
     [behandling.versjon],
   );

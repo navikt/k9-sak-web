@@ -247,7 +247,6 @@ const BehandlingPicker = ({
 
   return (
     <div className={styles.behandlingPicker} data-testid="BehandlingPicker">
-      her er vi
       {valgtBehandlingId && (
         <Tilbakeknapp className={styles.backButton} onClick={() => setValgtBehandlingId(undefined)}>
           <FormattedMessage id="Behandlingspunkt.Behandling.SeAlle" />

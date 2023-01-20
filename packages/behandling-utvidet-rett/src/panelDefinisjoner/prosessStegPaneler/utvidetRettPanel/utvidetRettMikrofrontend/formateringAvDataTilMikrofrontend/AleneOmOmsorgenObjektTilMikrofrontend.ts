@@ -1,8 +1,8 @@
 import { Aksjonspunkt, Behandling, Vilkar } from '@k9-sak-web/types';
 import { FormState } from '@fpsak-frontend/form/index';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
-import BehandlingType from "@fpsak-frontend/kodeverk/src/behandlingType";
-import aksjonspunktCodes from "@fpsak-frontend/kodeverk/src/aksjonspunktCodes";
+import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import UtvidetRettMikrofrontendVisning from '../../../../../types/MikrofrontendKomponenter';
 import { generereInfoForVurdertVilkar } from '../../../UtvidetRettOmsorgenForMikrofrontendFelles';
 import UtvidetRettSoknad from '../../../../../types/UtvidetRettSoknad';
@@ -11,7 +11,7 @@ import {
   AleneOmOmsorgenLosAksjonspunktK9Format,
   AleneOmOmsorgenProps,
 } from '../../../../../types/utvidetRettMikrofrontend/VilkarAleneOmOmsorgenProps';
-import AvslagskoderAleneOmOmsorgen from "../../../../../types/utvidetRettMikrofrontend/AvslagskoderAleneOmOmsorgen";
+import AvslagskoderAleneOmOmsorgen from '../../../../../types/utvidetRettMikrofrontend/AvslagskoderAleneOmOmsorgen';
 
 interface OwnProps {
   behandling: Behandling;
@@ -49,14 +49,13 @@ const formatereLosAksjonspunktObjekt = (
   fraDato: string,
   tilDato: string,
 ) => {
-
   const losAksjonspunktObjekt: AleneOmOmsorgenLosAksjonspunktK9Format = {
     kode: aksjonspunktKode,
     begrunnelse,
     erVilkarOk,
     periode: {
       fom: fraDato,
-    }
+    },
   };
 
   if (!erVilkarOk) {
@@ -66,7 +65,7 @@ const formatereLosAksjonspunktObjekt = (
   }
 
   return losAksjonspunktObjekt;
-}
+};
 
 const AleneOmOmsorgenObjektTilMikrofrontend = ({
   behandling,
@@ -84,9 +83,11 @@ const AleneOmOmsorgenObjektTilMikrofrontend = ({
   const barnetsFodselsdato = new Date(angittBarn[0].fødselsdato);
   const åretBarnetFyller18 = `${barnetsFodselsdato.getFullYear() + 18}-12-31`;
 
-  const vilkaretVurderesManuelltMedAksjonspunkt = aksjonspunkt && vilkar && aksjonspunkt.definisjon === aksjonspunktCodes.UTVIDET_RETT;
+  const vilkaretVurderesManuelltMedAksjonspunkt =
+    aksjonspunkt && vilkar && aksjonspunkt.definisjon.kode === aksjonspunktCodes.UTVIDET_RETT;
   // Vilkåret kan kun bli automatisk innvilget. Dersom det blir automatiskt avslått resulterer det i manuell vurdering via aksjonspunkt.
-  const vilkaretErAutomatiskInnvilget = !aksjonspunkt && vilkar && vilkar.perioder[0]?.vilkarStatus === vilkarUtfallType.OPPFYLT;
+  const vilkaretErAutomatiskInnvilget =
+    !aksjonspunkt && vilkar && vilkar.perioder[0]?.vilkarStatus === vilkarUtfallType.OPPFYLT;
 
   if (vilkaretVurderesManuelltMedAksjonspunkt) {
     return {
@@ -108,11 +109,11 @@ const AleneOmOmsorgenObjektTilMikrofrontend = ({
         losAksjonspunkt: ({ begrunnelse, vilkarOppfylt, fraDato, tilDato }) => {
           submitCallback([
             formatereLosAksjonspunktObjekt(
-              aksjonspunkt.definisjon,
+              aksjonspunkt.definisjon.kode,
               begrunnelse,
               vilkarOppfylt,
               fraDato,
-              erBehandlingRevurdering && !!tilDato ? tilDato : åretBarnetFyller18
+              erBehandlingRevurdering && !!tilDato ? tilDato : åretBarnetFyller18,
             ),
           ]);
         },
@@ -130,12 +131,7 @@ const AleneOmOmsorgenObjektTilMikrofrontend = ({
         fraDatoFraSoknad: soknad?.søknadsperiode.fom,
         vedtakFattetVilkarOppfylt: true,
         erBehandlingstypeRevurdering: erBehandlingRevurdering,
-        informasjonOmVilkar: generereInfoForVurdertVilkar(
-          true,
-          vilkar,
-          '',
-          'Utvidet Rett',
-        ),
+        informasjonOmVilkar: generereInfoForVurdertVilkar(true, vilkar, '', 'Utvidet Rett'),
         formState: FormState,
       } as AleneOmOmsorgenProps,
     };

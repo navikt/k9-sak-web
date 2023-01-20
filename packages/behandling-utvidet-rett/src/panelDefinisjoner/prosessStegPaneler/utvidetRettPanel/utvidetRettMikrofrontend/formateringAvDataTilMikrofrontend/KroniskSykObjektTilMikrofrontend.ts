@@ -96,7 +96,7 @@ const KroniskSykObjektTilMikrofrontend = ({
     losAksjonspunkt: (harDokumentasjonOgFravaerRisiko, begrunnelse, avslagsArsakErIkkeRiskioFraFravaer, fraDato) => {
       submitCallback([
         formatereLosAksjonspunktObjektForKroniskSyk(
-          aksjonspunkt.definisjon,
+          aksjonspunkt.definisjon.kode,
           begrunnelse,
           harDokumentasjonOgFravaerRisiko,
           avslagsArsakErIkkeRiskioFraFravaer,

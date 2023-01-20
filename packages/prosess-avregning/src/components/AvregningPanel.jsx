@@ -298,19 +298,19 @@ export const transformValues = (values, ap) => {
 
   return videreBehandling.endsWith(IKKE_SEND)
     ? {
-      ...info,
-      videreBehandling: tilbakekrevingVidereBehandling.TILBAKEKR_OPPRETT,
-    }
+        ...info,
+        videreBehandling: tilbakekrevingVidereBehandling.TILBAKEKR_OPPRETT,
+      }
     : {
-      ...info,
-      varseltekst,
-    };
+        ...info,
+        varseltekst,
+      };
 };
 
 const buildInitialValues = createSelector(
   [(state, ownProps) => ownProps.tilbakekrevingvalg, (state, ownProps) => ownProps.aksjonspunkter],
   (tilbakekrevingvalg, aksjonspunkter) => {
-    const aksjonspunkt = aksjonspunkter.find(ap => simuleringAksjonspunkter.includes(ap.definisjon));
+    const aksjonspunkt = aksjonspunkter.find(ap => simuleringAksjonspunkter.includes(ap.definisjon.kode));
     if (!aksjonspunkt || !tilbakekrevingvalg) {
       return undefined;
     }

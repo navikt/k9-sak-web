@@ -62,10 +62,10 @@ const ÅrskvantumIndex = ({
   const aktivitetsstatuser = alleKodeverk[kodeverkTyper.AKTIVITET_STATUS];
 
   const apForVurderÅrskvantumDok: Aksjonspunkt = aksjonspunkterForSteg.find(
-    ap => ap.definisjon === aksjonspunktCodes.VURDER_ÅRSKVANTUM_DOK,
+    ap => ap.definisjon.kode === aksjonspunktCodes.VURDER_ÅRSKVANTUM_DOK,
   );
   const aksjonspunkter: Aksjonspunkt[] = aksjonspunkterForSteg.filter(
-    ap => ap.definisjon !== aksjonspunktCodes.VURDER_ÅRSKVANTUM_DOK,
+    ap => ap.definisjon.kode !== aksjonspunktCodes.VURDER_ÅRSKVANTUM_DOK,
   );
   const åpenAksjonspunkt = aksjonspunkter.find(ap => ap.status !== aksjonspunktStatus.UTFORT) !== undefined;
 

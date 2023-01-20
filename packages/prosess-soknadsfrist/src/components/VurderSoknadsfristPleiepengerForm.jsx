@@ -187,7 +187,7 @@ export const buildInitialValues = createSelector(
 const transformValues = (values, aksjonspunkter) => ({
   harGyldigGrunn: values.gyldigSenFremsetting,
   ansesMottattDato: values.ansesMottatt,
-  kode: aksjonspunkter[0].definisjon,
+  kode: aksjonspunkter[0].definisjon.kode,
   ...ProsessStegBegrunnelseTextField.transformValues(values),
 });
 

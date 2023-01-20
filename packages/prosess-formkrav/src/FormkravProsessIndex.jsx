@@ -37,7 +37,7 @@ const FormkravProsessIndex = ({
 }) => (
   <RawIntlProvider value={intl}>
     {Array.isArray(aksjonspunkter) &&
-      aksjonspunkter.some(a => a.definisjon === aksjonspunktCodes.VURDERING_AV_FORMKRAV_KLAGE_NFP) && (
+      aksjonspunkter.some(a => a.definisjon.kode === aksjonspunktCodes.VURDERING_AV_FORMKRAV_KLAGE_NFP) && (
         <FormkravKlageFormNfp
           behandlingId={behandling.id}
           behandlingVersjon={behandling.versjon}
@@ -54,7 +54,7 @@ const FormkravProsessIndex = ({
         />
       )}
     {Array.isArray(aksjonspunkter) &&
-      aksjonspunkter.some(a => a.definisjon === aksjonspunktCodes.VURDERING_AV_FORMKRAV_KLAGE_KA) && (
+      aksjonspunkter.some(a => a.definisjon.kode === aksjonspunktCodes.VURDERING_AV_FORMKRAV_KLAGE_KA) && (
         <FormkravKlageFormKa
           behandlingId={behandling.id}
           behandlingVersjon={behandling.versjon}

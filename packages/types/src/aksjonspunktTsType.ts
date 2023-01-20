@@ -1,6 +1,11 @@
+export type AksjonspunktDefinisjon = Readonly<{
+  kode: string;
+  kodeverk: string;
+  skalAvbrytesVedTilbakeføring: boolean;
+}>;
 
 export type Aksjonspunkt = Readonly<{
-  definisjon: string;
+  definisjon: AksjonspunktDefinisjon;
   status: string;
   begrunnelse?: string;
   vilkarType?: string;

@@ -127,7 +127,7 @@ export const buildInitialValues = createSelector(
     return {
       opptjeningList: filteredOpptjeningList,
       aksjonspunkter:
-        aksjonspunkter.filter(ap => ap.definisjon === aksjonspunktCodes.VURDER_PERIODER_MED_OPPTJENING) || null,
+        aksjonspunkter.filter(ap => ap.definisjon.kode === aksjonspunktCodes.VURDER_PERIODER_MED_OPPTJENING) || null,
     };
   },
 );
@@ -181,7 +181,7 @@ const transformValues = (values: Values) => {
   }
   return {
     opptjeningListe: opptjeninger,
-    kode: values.aksjonspunkter[0].definisjon,
+    kode: values.aksjonspunkter[0].definisjon.kode,
   };
 };
 

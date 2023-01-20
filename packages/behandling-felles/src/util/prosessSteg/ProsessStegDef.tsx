@@ -66,15 +66,14 @@ export abstract class ProsessStegPanelDef {
 
   public finnAksjonspunkterForSteg = (aksjonspunkter: Aksjonspunkt[]) => {
     const panelDef = this.skalBrukeOverstyringspanel(aksjonspunkter) ? this.getOverstyringspanelDef() : this;
-    return aksjonspunkter.filter(ap => panelDef.getAksjonspunktKoder().includes(ap.definisjon));
+    return aksjonspunkter.filter(ap => panelDef.getAksjonspunktKoder().includes(ap.definisjon.kode));
   };
 
-  public finnVilkarForSteg = (vilkar: Vilkar[]) =>
-    vilkar.filter(v => this.getVilkarKoder().includes(v.vilkarType));
+  public finnVilkarForSteg = (vilkar: Vilkar[]) => vilkar.filter(v => this.getVilkarKoder().includes(v.vilkarType));
 
   public skalBrukeOverstyringspanel = (aksjonspunkter: Aksjonspunkt[]) =>
     this.getOverstyringspanelDef() &&
-    !this.getAksjonspunktKoder().some(ac => aksjonspunkter.some(a => a.definisjon === ac));
+    !this.getAksjonspunktKoder().some(ac => aksjonspunkter.some(a => a.definisjon.kode === ac));
 
   public skalVisePanel = (
     fagsak: Fagsak,
@@ -100,7 +99,7 @@ export abstract class ProsessStegPanelDef {
 
     const harAksjonspunkter = panelDef
       .getAksjonspunktKoder()
-      .some(ac => aksjonspunkter.some(a => a.definisjon === ac));
+      .some(ac => aksjonspunkter.some(a => a.definisjon.kode === ac));
     if (panelDef.getVilkarKoder().length === 0) {
       return harAksjonspunkter;
     }

@@ -1,12 +1,13 @@
 import React, { ReactNode } from 'react';
 
+import { Aksjonspunkt } from '@k9-sak-web/types';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import VilkarresultatMedOverstyringProsessIndex from '@fpsak-frontend/prosess-vilkar-overstyring';
 
 import { ProsessStegPanelDef } from './ProsessStegDef';
 
-const harVilkarresultatMedOverstyring = (aksjonspunkterForSteg, aksjonspunktDefKoderForSteg) => {
-  const apKoder = aksjonspunkterForSteg.map(ap => ap.definisjon);
+const harVilkarresultatMedOverstyring = (aksjonspunkterForSteg: Aksjonspunkt[], aksjonspunktDefKoderForSteg) => {
+  const apKoder = aksjonspunkterForSteg.map(ap => ap.definisjon.kode);
   const harIngenApOgMulighetTilOverstyring = apKoder.length === 0 && aksjonspunktDefKoderForSteg.length > 0;
   const harApSomErOverstyringAp = apKoder.some(apCode => aksjonspunktDefKoderForSteg.includes(apCode));
   return harIngenApOgMulighetTilOverstyring || harApSomErOverstyringAp;

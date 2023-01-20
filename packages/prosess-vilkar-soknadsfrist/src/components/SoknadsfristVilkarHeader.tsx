@@ -110,7 +110,7 @@ const SoknadsfristVilkarHeader = ({
 };
 
 const mapStateToPropsFactory = (_initialState, initialOwnProps: SoknadsfristVilkarHeaderProps) => {
-  const aksjonspunktCodes = initialOwnProps.aksjonspunkter.map(a => a.definisjon);
+  const aksjonspunktCodes = initialOwnProps.aksjonspunkter.map(a => a.definisjon.kode);
 
   return (state, ownProps) => {
     const erOppfylt = vilkarUtfallType.OPPFYLT === ownProps.status;

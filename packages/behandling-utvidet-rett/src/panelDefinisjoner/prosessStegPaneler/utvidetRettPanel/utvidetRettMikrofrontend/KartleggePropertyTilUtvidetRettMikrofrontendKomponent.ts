@@ -26,11 +26,12 @@ const KartleggePropertyTilUtvidetRettMikrofrontendKomponent = (
 
   // I utvidet rett finns det en aksjonspunkt (9013) med vilkår og tre ulike fagytelsetyper (alene om omsorg, kronisk syk og midlertidig alene).
 
-  const aksjonspunkt = aksjonspunkter.find(ap => ap.definisjon === aksjonspunktCodes.UTVIDET_RETT);
+  const aksjonspunkt = aksjonspunkter.find(ap => ap.definisjon.kode === aksjonspunktCodes.UTVIDET_RETT);
   const vilkaret = vilkar.find(v => v.vilkarType === vilkarType.UTVIDETRETTVILKARET);
 
   const eksistererAksjonspunktOgVilkar = aksjonspunkt && vilkar;
-  const eksistererVilkarForAutomatiskInnvilgetAleneOmOmsorgen = fagsaksType === FagsakYtelseType.OMSORGSPENGER_ALENE_OM_OMSORGEN && vilkar;
+  const eksistererVilkarForAutomatiskInnvilgetAleneOmOmsorgen =
+    fagsaksType === FagsakYtelseType.OMSORGSPENGER_ALENE_OM_OMSORGEN && vilkar;
 
   if (eksistererAksjonspunktOgVilkar || eksistererVilkarForAutomatiskInnvilgetAleneOmOmsorgen) {
     const skalVilkarsUtfallVises = behandling.status === behandlingStatus.AVSLUTTET;

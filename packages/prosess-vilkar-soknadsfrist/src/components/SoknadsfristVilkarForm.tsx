@@ -20,7 +20,6 @@ import {
   FlexRow,
   Image,
   VerticalSpacer,
-  useFeatureToggles,
 } from '@fpsak-frontend/shared-components';
 import { decodeHtmlEntity } from '@fpsak-frontend/utils';
 import { Aksjonspunkt, DokumentStatus, SubmitCallback } from '@k9-sak-web/types';
@@ -222,7 +221,7 @@ const buildInitialValues = createSelector(
   ],
   (aksjonspunkter, alleDokumenter, status) => {
     const overstyrtAksjonspunkt = aksjonspunkter.find(
-      ap => ap.definisjon === aksjonspunktCodes.OVERSTYR_SOKNADSFRISTVILKAR,
+      ap => ap.definisjon.kode === aksjonspunktCodes.OVERSTYR_SOKNADSFRISTVILKAR,
     );
 
     return {
@@ -294,8 +293,8 @@ const mapStateToPropsFactory = (_initialState, initialOwnProps: SoknadsfristVilk
       ownProps;
 
     const aksjonspunkt = harÅpentAksjonspunkt
-      ? aksjonspunkter.find(ap => ap.definisjon === aksjonspunktCodes.KONTROLLER_OPPLYSNINGER_OM_SØKNADSFRIST)
-      : aksjonspunkter.find(ap => ap.definisjon === aksjonspunktCodes.OVERSTYR_SOKNADSFRISTVILKAR);
+      ? aksjonspunkter.find(ap => ap.definisjon.kode === aksjonspunktCodes.KONTROLLER_OPPLYSNINGER_OM_SØKNADSFRIST)
+      : aksjonspunkter.find(ap => ap.definisjon.kode === aksjonspunktCodes.OVERSTYR_SOKNADSFRISTVILKAR);
 
     const isSolvable =
       harÅpentAksjonspunkt || aksjonspunkt !== undefined

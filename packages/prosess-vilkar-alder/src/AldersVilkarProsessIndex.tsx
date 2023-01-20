@@ -47,7 +47,7 @@ const AldersVilkarProsessIndex = ({
   const erVurdert = periode.vilkarStatus !== vilkarUtfallType.IKKE_VURDERT;
   const vilkarOppfylt = erVurdert ? status === vilkarUtfallType.OPPFYLT : false;
   const relevantAksjonspunkt: Aksjonspunkt = aksjonspunkter.find(
-    ap => ap.definisjon === aksjonspunktCodes.ALDERSVILKÅR,
+    ap => ap.definisjon.kode === aksjonspunktCodes.ALDERSVILKÅR,
   );
   const skalVilkarsUtfallVises = behandling.status === behandlingStatus.AVSLUTTET;
   const vilkaretErAutomatiskInnvilget =

@@ -43,11 +43,11 @@ export default ({
 }: UttakProps) => {
   const relevanteAksjonspunkter = [aksjonspunktCodes.VENT_ANNEN_PSB_SAK];
   const funnedeRelevanteAksjonspunkter = aksjonspunkter.filter(aksjonspunkt =>
-    relevanteAksjonspunkter.some(relevantAksjonspunkt => relevantAksjonspunkt === aksjonspunkt.definisjon),
+    relevanteAksjonspunkter.some(relevantAksjonspunkt => relevantAksjonspunkt === aksjonspunkt.definisjon.kode),
   );
   const funnedeRelevanteAksjonspunktkoder = funnedeRelevanteAksjonspunkter
     .filter(aksjonspunkt => aksjonspunkt.status === aksjonspunktStatus.OPPRETTET)
-    .map(aksjonspunkt => aksjonspunkt.definisjon);
+    .map(aksjonspunkt => aksjonspunkt.definisjon.kode);
   return (
     <MicroFrontend
       id={uttakAppID}

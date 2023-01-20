@@ -8,7 +8,6 @@ import { Column, Row } from 'nav-frontend-grid';
 import { Normaltekst } from 'nav-frontend-typografi';
 
 import { ProsessStegBegrunnelseTextField, ProsessPanelTemplate } from '@k9-sak-web/prosess-felles';
-import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { Table, TableColumn, TableRow, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { DDMMYYYY_DATE_FORMAT, isObject, required, getKodeverknavnFn } from '@fpsak-frontend/utils';
@@ -17,8 +16,7 @@ import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import { RadioGroupField, RadioOption, behandlingForm, behandlingFormValueSelector } from '@fpsak-frontend/form';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import dokumentTypeId from '@fpsak-frontend/kodeverk/src/dokumentTypeId';
-import { Aksjonspunkt, Behandling, Kodeverk, KodeverkMedNavn, ManglendeVedleggSoknad, Soknad } from '@k9-sak-web/types';
-import KodeverkType from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
+import { Aksjonspunkt, Behandling, KodeverkMedNavn, ManglendeVedleggSoknad, Soknad } from '@k9-sak-web/types';
 
 const formName = 'SokersOpplysningspliktForm';
 
@@ -88,7 +86,7 @@ interface PureOwnProps {
 }
 
 interface MappedOwnProps {
-  getKodeverknavn: (kode: string, kodeverk: KodeverkType, undertype?: string) => string;
+  getKodeverknavn: (kode: string, kodeverk: kodeverkTyper, undertype?: string) => string;
   hasSoknad: boolean;
   originalErVilkarOk: boolean;
   dokumentTypeIds: KodeverkMedNavn[];
@@ -145,9 +143,7 @@ export const SokersOpplysningspliktFormImpl = ({
             <Table noHover>
               {manglendeVedlegg.map(vedlegg => (
                 <TableRow
-                  key={
-                    vedlegg.dokumentType + (vedlegg.arbeidsgiver ? vedlegg.arbeidsgiver.organisasjonsnummer : '')
-                  }
+                  key={vedlegg.dokumentType + (vedlegg.arbeidsgiver ? vedlegg.arbeidsgiver.organisasjonsnummer : '')}
                 >
                   <TableColumn>{dokumentTypeIds.find(dti => dti.kode === vedlegg.dokumentType).navn}</TableColumn>
                   <TableColumn>
@@ -184,9 +180,7 @@ export const SokersOpplysningspliktFormImpl = ({
         {originalErVilkarOk === false && behandlingsresultat?.avslagsarsak && (
           <>
             <VerticalSpacer sixteenPx />
-            <Normaltekst>
-              {getKodeverknavn(behandlingsresultat.avslagsarsak, KodeverkType.AVSLAGSARSAK)}
-            </Normaltekst>
+            <Normaltekst>{getKodeverknavn(behandlingsresultat.avslagsarsak, kodeverkTyper.AVSLAGSARSAK)}</Normaltekst>
           </>
         )}
       </div>
@@ -197,8 +191,8 @@ export const SokersOpplysningspliktFormImpl = ({
 export const getSortedManglendeVedlegg = createSelector([(ownProps: PureOwnProps) => ownProps.soknad], soknad =>
   soknad && soknad.manglendeVedlegg
     ? soknad.manglendeVedlegg
-      .slice()
-      .sort(mv1 => (mv1.dokumentType === dokumentTypeId.DOKUMENTASJON_AV_TERMIN_ELLER_FØDSEL ? 1 : -1))
+        .slice()
+        .sort(mv1 => (mv1.dokumentType === dokumentTypeId.DOKUMENTASJON_AV_TERMIN_ELLER_FØDSEL ? 1 : -1))
     : [],
 );
 
@@ -239,7 +233,7 @@ export const buildInitialValues = createSelector(
     return {
       inntektsmeldingerSomIkkeKommer,
       erVilkarOk: isOpenAksjonspunkt && soknadExists ? undefined : isVilkarGodkjent,
-      aksjonspunktKode: aksjonspunkt ? aksjonspunkt.definisjon : aksjonspunktCodes.SOKERS_OPPLYSNINGSPLIKT_OVST,
+      aksjonspunktKode: aksjonspunkt ? aksjonspunkt.definisjon.kode : aksjonspunktCodes.SOKERS_OPPLYSNINGSPLIKT_OVST,
       hasAksjonspunkt: aksjonspunkt !== undefined,
       ...ProsessStegBegrunnelseTextField.buildInitialValues(aksjonspunkter),
     };

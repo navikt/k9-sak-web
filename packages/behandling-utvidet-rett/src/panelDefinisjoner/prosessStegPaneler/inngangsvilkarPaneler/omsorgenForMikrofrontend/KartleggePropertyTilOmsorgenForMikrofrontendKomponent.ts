@@ -1,7 +1,7 @@
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
-import { Behandling } from '@k9-sak-web/types';
+import { Aksjonspunkt, Behandling } from '@k9-sak-web/types';
 import fagsakTsType from '@k9-sak-web/types/src/fagsakTsType';
 import { FormStateType } from '@fpsak-frontend/form/src/types/FormStateType';
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
@@ -41,10 +41,10 @@ const KartleggePropertyTilOmsorgenForMikrofrontendKomponent = ({
   const { vilkar, status } = vilkarInformasjon;
   const omsorgenForVilkar = vilkar.find(v => v.vilkarType === vilkarType.OMSORGENFORVILKARET);
   const behandlingsID = behandling.id.toString();
-  let aksjonspunkt;
+  let aksjonspunkt: Aksjonspunkt;
 
   if (aksjonspunkter) {
-    aksjonspunkt = aksjonspunkter.find(ap => ap.definisjon === aksjonspunktCodes.OMSORGEN_FOR);
+    aksjonspunkt = aksjonspunkter.find(ap => ap.definisjon.kode === aksjonspunktCodes.OMSORGEN_FOR);
   }
 
   const vilkaretVurderesManuelltMedAksjonspunkt = aksjonspunkt && omsorgenForVilkar;
@@ -79,7 +79,7 @@ const KartleggePropertyTilOmsorgenForMikrofrontendKomponent = ({
         losAksjonspunkt: (harOmsorgen, begrunnelse) => {
           submitCallback([
             {
-              kode: aksjonspunkt.definisjon,
+              kode: aksjonspunkt.definisjon.kode,
               harOmsorgenFor: harOmsorgen,
               begrunnelse,
             },

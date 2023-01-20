@@ -3,7 +3,7 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import sinon from 'sinon';
 
-import { Behandling, Fagsak } from '@k9-sak-web/types';
+import { Aksjonspunkt, Behandling, Fagsak } from '@k9-sak-web/types';
 import { prosessStegCodes } from '@k9-sak-web/konstanter';
 import fagsakStatus from '@fpsak-frontend/kodeverk/src/fagsakStatus';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
@@ -39,10 +39,14 @@ describe('<ProsessStegPanel>', () => {
     links: [],
   };
 
-  const aksjonspunkter = [
+  const aksjonspunkter: Aksjonspunkt[] = [
     {
       status: aksjonspunktStatus.OPPRETTET,
-      definisjon: aksjonspunktCodes.AUTOMATISK_MARKERING_AV_UTENLANDSSAK,
+      definisjon: {
+        kode: aksjonspunktCodes.AUTOMATISK_MARKERING_AV_UTENLANDSSAK,
+        kodeverk: 'AKSJONSPUNKT_DEF',
+        skalAvbrytesVedTilbakeføring: false,
+      },
       kanLoses: true,
       erAktivt: true,
     },
@@ -160,10 +164,14 @@ describe('<ProsessStegPanel>', () => {
   });
 
   it('skal vise panel for inngangsvilkår når det er data for flere panel', () => {
-    const fodselAksjonspunkter = [
+    const fodselAksjonspunkter: Aksjonspunkt[] = [
       {
         ...aksjonspunkter[0],
-        definisjon: aksjonspunktCodes.AVKLAR_AKTIVITETER,
+        definisjon: {
+          kode: aksjonspunktCodes.AVKLAR_AKTIVITETER,
+          kodeverk: 'AKSJONSPUNKT_DEF',
+          skalAvbrytesVedTilbakeføring: false,
+        },
       },
     ];
     const fodselPanelDef = lagPanelDef('FODSEL', [aksjonspunktCodes.AVKLAR_AKTIVITETER], ['FODSEL.TEKST']);
@@ -218,10 +226,14 @@ describe('<ProsessStegPanel>', () => {
   });
 
   it('skal vise kun vise ett panel', () => {
-    const fodselAksjonspunkter = [
+    const fodselAksjonspunkter: Aksjonspunkt[] = [
       {
         ...aksjonspunkter[0],
-        definisjon: aksjonspunktCodes.AVKLAR_AKTIVITETER,
+        definisjon: {
+          kode: aksjonspunktCodes.AVKLAR_AKTIVITETER,
+          kodeverk: 'AKSJONSPUNKT_DEF',
+          skalAvbrytesVedTilbakeføring: false,
+        },
       },
     ];
     const fodselPanelDef = lagPanelDef('FODSEL', [aksjonspunktCodes.AVKLAR_AKTIVITETER], ['FODSEL.TEKST']);
@@ -266,10 +278,14 @@ describe('<ProsessStegPanel>', () => {
   });
 
   it('skal lagre aksjonspunkt', async () => {
-    const fodselAksjonspunkter = [
+    const fodselAksjonspunkter: Aksjonspunkt[] = [
       {
         ...aksjonspunkter[0],
-        definisjon: aksjonspunktCodes.AVKLAR_AKTIVITETER
+        definisjon: {
+          kode: aksjonspunktCodes.AVKLAR_AKTIVITETER,
+          kodeverk: 'AKSJONSPUNKT_DEF',
+          skalAvbrytesVedTilbakeføring: false,
+        },
       },
     ];
     const fodselPanelDef = lagPanelDef('FODSEL', [aksjonspunktCodes.AVKLAR_AKTIVITETER], ['FODSEL.TEKST']);
@@ -323,7 +339,7 @@ describe('<ProsessStegPanel>', () => {
 
     const aksjonspunktModels = [
       {
-        kode: fodselAksjonspunkter[0].definisjon,
+        kode: fodselAksjonspunkter[0].definisjon.kode,
       },
     ];
     panel.prop('submitCallback')(aksjonspunktModels);

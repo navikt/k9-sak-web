@@ -184,7 +184,7 @@ OppholdINorgeOgAdresserFaktaPanel.buildInitialValues = (soknad, periode, aksjons
       periode.aksjonspunkter.includes(aksjonspunktCodes.AVKLAR_OM_BRUKER_ER_BOSATT) ||
       (periode.aksjonspunkter.length > 0 &&
         periode.aksjonspunkter.includes(aksjonspunktCodes.AVKLAR_OM_BRUKER_ER_BOSATT) &&
-        ap.definisjon === aksjonspunktCodes.AVKLAR_FORTSATT_MEDLEMSKAP),
+        ap.definisjon.kode === aksjonspunktCodes.AVKLAR_FORTSATT_MEDLEMSKAP),
   );
 
   return {

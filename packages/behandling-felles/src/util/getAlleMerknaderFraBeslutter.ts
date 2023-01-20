@@ -8,7 +8,7 @@ const getAlleMerknaderFraBeslutter = (behandling: Behandling, aksjonspunkter: Ak
   return aksjonspunkter.reduce(
     (obj, ap) => ({
       ...obj,
-      [ap.definisjon]: {
+      [ap.definisjon.kode]: {
         notAccepted: ap.toTrinnsBehandling && ap.toTrinnsBehandlingGodkjent === false,
       },
     }),

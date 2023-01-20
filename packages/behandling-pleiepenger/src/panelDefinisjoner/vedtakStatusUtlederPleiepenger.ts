@@ -7,12 +7,12 @@ import Behandlingsresultat from '@k9-sak-web/types/src/behandlingsresultatTsType
 
 // TODO (TOR) Kan denne skrivast om? For høg kompleksitet.
 
-const hasOnlyClosedAps = (aksjonspunkter: Aksjonspunkt[], vedtakAksjonspunkter) =>
+const hasOnlyClosedAps = (aksjonspunkter: Aksjonspunkt[], vedtakAksjonspunkter: Aksjonspunkt[]) =>
   aksjonspunkter
-    .filter(ap => !vedtakAksjonspunkter.some(vap => vap.definisjon === ap.definisjon))
+    .filter(ap => !vedtakAksjonspunkter.some(vap => vap.definisjon.kode === ap.definisjon.kode))
     .every(ap => !isAksjonspunktOpen(ap.status));
 
-const hasAksjonspunkt = (ap: Aksjonspunkt) => ap.definisjon === aksjonspunktCodes.OVERSTYR_BEREGNING;
+const hasAksjonspunkt = (ap: Aksjonspunkt) => ap.definisjon.kode === aksjonspunktCodes.OVERSTYR_BEREGNING;
 
 const isAksjonspunktOpenAndOfType = (ap: Aksjonspunkt) => hasAksjonspunkt(ap) && isAksjonspunktOpen(ap.status);
 

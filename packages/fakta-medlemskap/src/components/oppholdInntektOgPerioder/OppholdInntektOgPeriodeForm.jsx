@@ -53,14 +53,14 @@ export const OppholdInntektOgPeriodeForm = ({
     />
     {(hasAksjonspunkt(AVKLAR_OPPHOLDSRETT, valgtPeriode.aksjonspunkter) ||
       hasAksjonspunkt(AVKLAR_LOVLIG_OPPHOLD, valgtPeriode.aksjonspunkter)) && (
-        <StatusForBorgerFaktaPanel
-          behandlingId={behandlingId}
-          behandlingVersjon={behandlingVersjon}
-          readOnly={readOnly}
-          id={valgtPeriode.id}
-          alleMerknaderFraBeslutter={alleMerknaderFraBeslutter}
-        />
-      )}
+      <StatusForBorgerFaktaPanel
+        behandlingId={behandlingId}
+        behandlingVersjon={behandlingVersjon}
+        readOnly={readOnly}
+        id={valgtPeriode.id}
+        alleMerknaderFraBeslutter={alleMerknaderFraBeslutter}
+      />
+    )}
     <VerticalSpacer twentyPx />
     {valgtPeriode.aksjonspunkter && valgtPeriode.aksjonspunkter.length > 0 && (
       <FaktaBegrunnelseTextField
@@ -147,10 +147,10 @@ const buildInitialValues = createSelector(
     const aksjonspunkter = alleAksjonspunkter
       .filter(
         ap =>
-          valgtPeriode.aksjonspunkter.includes(ap.definisjon) ||
-          ap.definisjon === aksjonspunktCodes.AVKLAR_FORTSATT_MEDLEMSKAP,
+          valgtPeriode.aksjonspunkter.includes(ap.definisjon.kode) ||
+          ap.definisjon.kode === aksjonspunktCodes.AVKLAR_FORTSATT_MEDLEMSKAP,
       )
-      .filter(ap => ap.definisjon !== aksjonspunktCodes.AVKLAR_STARTDATO_FOR_FORELDREPENGERPERIODEN);
+      .filter(ap => ap.definisjon.kode !== aksjonspunktCodes.AVKLAR_STARTDATO_FOR_FORELDREPENGERPERIODEN);
     let oppholdValues = {};
     let confirmValues = {};
     if (

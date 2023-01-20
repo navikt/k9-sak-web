@@ -11,12 +11,12 @@ import {
 } from '@k9-sak-web/behandling-felles';
 import {
   Fagsak,
-  Kodeverk,
   KodeverkMedNavn,
   Behandling,
   FagsakPerson,
   ArbeidsgiverOpplysningerPerId,
   FeatureToggles,
+  Aksjonspunkt,
 } from '@k9-sak-web/types';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import klageVurderingKodeverk from '@fpsak-frontend/kodeverk/src/klageVurdering';
@@ -58,7 +58,7 @@ const forhandsvis = data => {
 };
 
 const saveKlageText =
-  (lagreKlageVurdering, lagreReapneKlageVurdering, behandling, aksjonspunkter) => aksjonspunktModel => {
+  (lagreKlageVurdering, lagreReapneKlageVurdering, behandling, aksjonspunkter: Aksjonspunkt[]) => aksjonspunktModel => {
     const data = {
       behandlingId: behandling.id,
       ...aksjonspunktModel,
@@ -66,7 +66,7 @@ const saveKlageText =
 
     const getForeslaVedtakAp = aksjonspunkter
       .filter(ap => ap.status === aksjonspunktStatus.OPPRETTET)
-      .filter(ap => ap.definisjon === aksjonspunktCodes.FORESLA_VEDTAK);
+      .filter(ap => ap.definisjon.kode === aksjonspunktCodes.FORESLA_VEDTAK);
 
     if (getForeslaVedtakAp.length === 1) {
       return lagreReapneKlageVurdering(data);

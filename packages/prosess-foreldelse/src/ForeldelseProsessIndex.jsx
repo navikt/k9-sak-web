@@ -36,7 +36,7 @@ const ForeldelseProsessIndex = ({
       perioderForeldelse={perioderForeldelse}
       submitCallback={submitCallback}
       readOnly={isReadOnly}
-      apCodes={Array.isArray(aksjonspunkter) && aksjonspunkter.map(a => a.definisjon)}
+      apCodes={Array.isArray(aksjonspunkter) && aksjonspunkter.map(a => a.definisjon.kode)}
       readOnlySubmitButton={readOnlySubmitButton}
       navBrukerKjonn={navBrukerKjonn}
       alleMerknaderFraBeslutter={alleMerknaderFraBeslutter}

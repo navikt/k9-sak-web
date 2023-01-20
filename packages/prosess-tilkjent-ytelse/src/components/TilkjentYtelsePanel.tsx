@@ -129,7 +129,7 @@ export const TilkjentYtelsePanelImpl = ({
 
 const finnTilbaketrekkAksjonspunkt = (alleAksjonspunkter: Aksjonspunkt[]): Aksjonspunkt | undefined =>
   alleAksjonspunkter
-    ? alleAksjonspunkter.find(ap => ap.definisjon === aksjonspunktCodes.VURDER_TILBAKETREKK)
+    ? alleAksjonspunkter.find(ap => ap.definisjon.kode === aksjonspunktCodes.VURDER_TILBAKETREKK)
     : undefined;
 
 const mapStateToProps = (state, ownProps) => ({

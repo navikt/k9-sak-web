@@ -1,4 +1,4 @@
-import { Behandling } from '@k9-sak-web/types';
+import { Aksjonspunkt, Behandling } from '@k9-sak-web/types';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
@@ -17,10 +17,14 @@ describe('<getAlleMerknaderFraBeslutter>', () => {
     links: [],
   };
 
-  const aksjonspunkter = [
+  const aksjonspunkter: Aksjonspunkt[] = [
     {
       status: aksjonspunktStatus.OPPRETTET,
-      definisjon: aksjonspunktCodes.AUTOMATISK_MARKERING_AV_UTENLANDSSAK,
+      definisjon: {
+        kode: aksjonspunktCodes.AUTOMATISK_MARKERING_AV_UTENLANDSSAK,
+        kodeverk: 'AKSJONSPUNKT_DEF',
+        skalAvbrytesVedTilbakeføring: false,
+      },
       kanLoses: true,
       erAktivt: true,
       toTrinnsBehandling: true,
@@ -32,7 +36,7 @@ describe('<getAlleMerknaderFraBeslutter>', () => {
     const merknader = getAlleMerknaderFraBeslutter(behandling as Behandling, aksjonspunkter);
 
     expect(merknader).toEqual({
-      [aksjonspunkter[0].definisjon]: {
+      [aksjonspunkter[0].definisjon.kode]: {
         notAccepted: true,
       },
     });

@@ -177,10 +177,10 @@ PerioderMedMedlemskapFaktaPanel.buildInitialValues = (
     .sort((p1, p2) => new Date(p1.fom).getTime() - new Date(p2.fom).getTime());
   const filteredAp = aksjonspunkter.filter(
     ap =>
-      periode.aksjonspunkter.includes(ap.definisjon) ||
+      periode.aksjonspunkter.includes(ap.definisjon.kode) ||
       (periode.aksjonspunkter.length > 0 &&
         periode.aksjonspunkter.includes(aksjonspunktCodes.AVKLAR_OM_BRUKER_HAR_GYLDIG_PERIODE) &&
-        ap.definisjon === aksjonspunktCodes.AVKLAR_FORTSATT_MEDLEMSKAP),
+        ap.definisjon.kode === aksjonspunktCodes.AVKLAR_FORTSATT_MEDLEMSKAP),
   );
 
   return {

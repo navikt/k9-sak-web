@@ -226,14 +226,16 @@ export const getIsOpphevOgHjemsend = createSelector(
 
 const getÅpneAksjonspunktKoder = createSelector([ownProps => ownProps.aksjonspunkter], aksjonspunkter =>
   Array.isArray(aksjonspunkter)
-    ? aksjonspunkter.filter(ap => ap.status === aksjonspunktStatus.OPPRETTET && ap.kanLoses).map(ap => ap.definisjon)
+    ? aksjonspunkter
+        .filter(ap => ap.status === aksjonspunktStatus.OPPRETTET && ap.kanLoses)
+        .map(ap => ap.definisjon.kode)
     : [],
 );
 
 export const getFritekstTilBrev = createSelector([getKlageresultat], klageresultat => klageresultat.fritekstTilBrev);
 
 export const buildInitialValues = createSelector([ownProps => ownProps.aksjonspunkter], aksjonspunkter => {
-  const behandlingAksjonspunktCodes = aksjonspunkter.map(ap => ap.definisjon);
+  const behandlingAksjonspunktCodes = aksjonspunkter.map(ap => ap.definisjon.kode);
   return {
     aksjonspunktKoder: behandlingAksjonspunktCodes,
   };

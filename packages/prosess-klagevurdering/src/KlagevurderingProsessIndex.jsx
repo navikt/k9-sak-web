@@ -34,7 +34,7 @@ const KlagevurderingProsessIndex = ({
 }) => (
   <RawIntlProvider value={intl}>
     {Array.isArray(aksjonspunkter) &&
-      aksjonspunkter.some(a => a.definisjon === aksjonspunktCodes.BEHANDLE_KLAGE_NK) && (
+      aksjonspunkter.some(a => a.definisjon.kode === aksjonspunktCodes.BEHANDLE_KLAGE_NK) && (
         <BehandleKlageFormKa
           behandlingId={behandling.id}
           behandlingVersjon={behandling.versjon}
@@ -49,7 +49,7 @@ const KlagevurderingProsessIndex = ({
         />
       )}
     {Array.isArray(aksjonspunkter) &&
-      aksjonspunkter.some(a => a.definisjon === aksjonspunktCodes.BEHANDLE_KLAGE_NFP) && (
+      aksjonspunkter.some(a => a.definisjon.kode === aksjonspunktCodes.BEHANDLE_KLAGE_NFP) && (
         <BehandleKlageFormNfp
           fagsak={fagsak}
           behandlingId={behandling.id}

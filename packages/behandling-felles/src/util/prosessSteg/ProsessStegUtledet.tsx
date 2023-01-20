@@ -1,7 +1,7 @@
 import { SetStateAction } from 'react';
 
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
-import { Aksjonspunkt, Vilkar, Uttaksperiode, UtfallEnum, FeatureToggles } from '@k9-sak-web/types';
+import { Aksjonspunkt, Vilkar, Uttaksperiode, UtfallEnum } from '@k9-sak-web/types';
 import aksjonspunktStatus, { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 
 import { ProsessStegDef, ProsessStegPanelDef } from './ProsessStegDef';
@@ -147,7 +147,7 @@ export class ProsessStegPanelUtledet {
       ap => ap.status === aksjonspunktStatus.OPPRETTET && ap.kanLoses,
     );
     const indekser = opneAksjonspunkter.map(a =>
-      this.prosessStegPanelDef.getAksjonspunktKoder().findIndex(ac => a.definisjon === ac),
+      this.prosessStegPanelDef.getAksjonspunktKoder().findIndex(ac => a.definisjon.kode === ac),
     );
     return this.prosessStegPanelDef.getAksjonspunktTekstkoder().filter((a, index) => indekser.includes(index));
   };
@@ -225,7 +225,7 @@ export class ProsessStegUtledet {
 
   public getTekstKode = (): string => this.prosessStegDef.getTekstKode();
 
-  public getErStegDelvisBehandlet = (featureToggles?: FeatureToggles): boolean => {
+  public getErStegDelvisBehandlet = (): boolean => {
     const erVedtak = this.paneler.some(p => p.getId() === 'VEDTAK');
     return this.paneler.some(p => p.getErDelvisBehandlet(erVedtak));
   };

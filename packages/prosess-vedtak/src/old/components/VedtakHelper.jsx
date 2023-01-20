@@ -148,7 +148,7 @@ export const skalSkriveFritekstGrunnetFastsettingAvBeregning = (beregningsgrunnl
     return false;
   }
   const behandlingHarLøstBGAP = aksjonspunkter.find(
-    ap => isBGAksjonspunktSomGirFritekstfelt(ap.definisjon) && ap.status === aksjonspunktStatus.UTFORT,
+    ap => isBGAksjonspunktSomGirFritekstfelt(ap.definisjon.kode) && ap.status === aksjonspunktStatus.UTFORT,
   );
 
   const alleAndelerFørstePerioder = beregningsgrunnlag

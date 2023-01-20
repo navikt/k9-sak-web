@@ -229,7 +229,7 @@ const transformValues = (
         tom: opptjening.fastsattOpptjening.opptjeningTom,
       }))
     : [],
-  ...{ kode: Array.isArray(aksjonspunkter) && aksjonspunkter.length ? aksjonspunkter[0].definisjon : null },
+  ...{ kode: Array.isArray(aksjonspunkter) && aksjonspunkter.length ? aksjonspunkter[0].definisjon.kode : null },
 });
 
 const mapStateToPropsFactory = (initialState, initialOwnProps: OpptjeningVilkarAksjonspunktPanelImplProps) => {
