@@ -2669,6 +2669,11 @@
   dependencies:
     uuid "^8.3.2"
 
+"@navikt/ds-icons@^2.0.8":
+  version "2.0.18"
+  resolved "https://npm.pkg.github.com/download/@navikt/ds-icons/2.0.18/61e30253784f897147210bf7bbb58a7f110e9171#61e30253784f897147210bf7bbb58a7f110e9171"
+  integrity sha512-qQ66eMzSCw+6I7aQQXsfFnPDi/K2TbYCsm+AC8Qia0iK3Tu+DPvx1Ak/exWZ1TkAg5Ou31XuWdemDuZIoNnVdw==
+
 "@navikt/ds-react-internal@^0.14.20":
   version "0.14.28"
   resolved "https://npm.pkg.github.com/download/@navikt/ds-react-internal/0.14.28/e0d8c27dee0b0d2ee0c85310f21941d602d6ffb2#e0d8c27dee0b0d2ee0c85310f21941d602d6ffb2"
@@ -2884,7 +2889,7 @@
     react-hook-form "7.41.5"
     react-intl "6.2.5"
 
-"@navikt/ft-types@^1.0.38":
+"@navikt/ft-types@^1.0.35", "@navikt/ft-types@^1.0.38":
   version "1.0.38"
   resolved "https://npm.pkg.github.com/download/@navikt/ft-types/1.0.38/ef4e2f946b605a7d9467b9513cc5fc0e27f18c08#ef4e2f946b605a7d9467b9513cc5fc0e27f18c08"
   integrity sha512-+FRiLGYXYVkTkBEnyKCEQy7XFwmIZG3hwtBS4f0W7T+LaE8gqVLo+Lyeg495blY/nYamQewJ8N1LN4pKDDM8tA==
@@ -6540,18 +6545,10 @@ axios-mock-adapter@^1.21.2:
     fast-deep-equal "^3.1.3"
     is-buffer "^2.0.5"
 
-axios@0.27.2:
-  version "0.27.2"
-  resolved "https://registry.yarnpkg.com/axios/-/axios-0.27.2.tgz#207658cc8621606e586c85db4b41a750e756d972"
-  integrity sha512-t+yRIyySRTp/wua5xEr+z1q60QmLq8ABsS5O9Me1AsE5dfKqgnCFzwiCZZ/cGNd1lq4/7akDWMxdhVlucjmnOQ==
-  dependencies:
-    follow-redirects "^1.14.9"
-    form-data "^4.0.0"
-
-axios@^1.0.0:
-  version "1.2.2"
-  resolved "https://registry.yarnpkg.com/axios/-/axios-1.2.2.tgz#72681724c6e6a43a9fea860fc558127dbe32f9f1"
-  integrity sha512-bz/J4gS2S3I7mpN/YZfGFTqhXTYzRho8Ay38w2otuuDR322KzFIWm/4W2K6gIwvWaws5n+mnb7D1lN9uD+QH6Q==
+axios@1.2.3, axios@^1.0.0:
+  version "1.2.3"
+  resolved "https://registry.yarnpkg.com/axios/-/axios-1.2.3.tgz#31a3d824c0ebf754a004b585e5f04a5f87e6c4ff"
+  integrity sha512-pdDkMYJeuXLZ6Xj/Q5J3Phpe+jbGdsSzlQaFVkMQzRUL05+6+tetX8TV3p4HrU4kzuO9bt+io/yGQxuyxA/xcw==
   dependencies:
     follow-redirects "^1.15.0"
     form-data "^4.0.0"
@@ -10212,7 +10209,7 @@ focus-trap@^6.9.4:
   dependencies:
     tabbable "^5.3.3"
 
-follow-redirects@^1.0.0, follow-redirects@^1.14.9, follow-redirects@^1.15.0:
+follow-redirects@^1.0.0, follow-redirects@^1.15.0:
   version "1.15.2"
   resolved "https://registry.yarnpkg.com/follow-redirects/-/follow-redirects-1.15.2.tgz#b460864144ba63f2681096f274c4e57026da2c13"
   integrity sha512-VQLG33o04KaQ8uYi2tVNbdrWp1QWxNNea+nmIB4EVM28v0hmP17z7aG1+wAkNzVq4KeXTq3221ye5qTJP91JwA==
