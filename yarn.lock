@@ -2669,6 +2669,11 @@
   dependencies:
     uuid "^8.3.2"
 
+"@navikt/ds-icons@^2.0.8":
+  version "2.0.18"
+  resolved "https://npm.pkg.github.com/download/@navikt/ds-icons/2.0.18/61e30253784f897147210bf7bbb58a7f110e9171#61e30253784f897147210bf7bbb58a7f110e9171"
+  integrity sha512-qQ66eMzSCw+6I7aQQXsfFnPDi/K2TbYCsm+AC8Qia0iK3Tu+DPvx1Ak/exWZ1TkAg5Ou31XuWdemDuZIoNnVdw==
+
 "@navikt/ds-react-internal@^0.14.20":
   version "0.14.28"
   resolved "https://npm.pkg.github.com/download/@navikt/ds-react-internal/0.14.28/e0d8c27dee0b0d2ee0c85310f21941d602d6ffb2#e0d8c27dee0b0d2ee0c85310f21941d602d6ffb2"
@@ -2884,7 +2889,7 @@
     react-hook-form "7.41.5"
     react-intl "6.2.5"
 
-"@navikt/ft-types@^1.0.38":
+"@navikt/ft-types@^1.0.35", "@navikt/ft-types@^1.0.38":
   version "1.0.38"
   resolved "https://npm.pkg.github.com/download/@navikt/ft-types/1.0.38/ef4e2f946b605a7d9467b9513cc5fc0e27f18c08#ef4e2f946b605a7d9467b9513cc5fc0e27f18c08"
   integrity sha512-+FRiLGYXYVkTkBEnyKCEQy7XFwmIZG3hwtBS4f0W7T+LaE8gqVLo+Lyeg495blY/nYamQewJ8N1LN4pKDDM8tA==
@@ -2928,7 +2933,7 @@
     dayjs "1.11.7"
     react-intl "6.2.5"
 
-"@navikt/k9-array-utils@^0.0.1":
+"@navikt/k9-array-utils@0.0.1", "@navikt/k9-array-utils@^0.0.1":
   version "0.0.1"
   resolved "https://npm.pkg.github.com/download/@navikt/k9-array-utils/0.0.1/5f1fd9b78afcc5fe1d73b67d93fc1d5c4377d9d1#5f1fd9b78afcc5fe1d73b67d93fc1d5c4377d9d1"
   integrity sha512-43FAkBgT/LB4MgU5s18pe+4svmxXojKu5ypyNdxIPSCY+4y80ZZ58/yZTgmQw3XZxLACHMePRdP6PRkTrk9j2g==
@@ -2942,6 +2947,11 @@
   version "0.0.10"
   resolved "https://npm.pkg.github.com/download/@navikt/k9-date-utils/0.0.10/e9c0a38f7ec2b90193af950602e90ac5b222160d#e9c0a38f7ec2b90193af950602e90ac5b222160d"
   integrity sha512-8csB0fk5yhA7FolGL2S4EUAyIpc/Ubc88y3GVoa9KajLqRCLaBQ7ek53u207OUvxSqKjzcBH/nL+GPKRW2ol2A==
+
+"@navikt/k9-date-utils@0.1.0":
+  version "0.1.0"
+  resolved "https://npm.pkg.github.com/download/@navikt/k9-date-utils/0.1.0/4b3c0a162bd31145593a8b12a535d74211c0d437#4b3c0a162bd31145593a8b12a535d74211c0d437"
+  integrity sha512-JWix2fJibcPnxRIK2coWBVkmwxkWoocJxTLqzocTMXdE5KWcdIuWUKV/Vba9rj82MniPW66nmeYZvv+TBQltbQ==
 
 "@navikt/k9-date-utils@^0.0.8":
   version "0.0.8"
@@ -2957,7 +2967,15 @@
     "@navikt/k9-bem-utils" "^1.0.1"
     "@navikt/k9-period-utils" "^0.0.12"
 
-"@navikt/k9-period-utils@0.0.12", "@navikt/k9-period-utils@^0.0.12":
+"@navikt/k9-period-utils@1.0.0", "@navikt/k9-period-utils@^1.0.0":
+  version "1.0.0"
+  resolved "https://npm.pkg.github.com/download/@navikt/k9-period-utils/1.0.0/8a69c9e9e9036d63ed381284e6d2ec8404a32a47#8a69c9e9e9036d63ed381284e6d2ec8404a32a47"
+  integrity sha512-QTt+6GswRpPz5rDRP2R2AJGyscCCRHH+E3f65kFVEZUBzI3Ml6r4QPvpDnzlDjaZ1cT9+vZsEYzRxY42a0W3GQ==
+  dependencies:
+    "@navikt/k9-array-utils" "0.0.1"
+    "@navikt/k9-date-utils" "0.1.0"
+
+"@navikt/k9-period-utils@^0.0.12":
   version "0.0.12"
   resolved "https://npm.pkg.github.com/download/@navikt/k9-period-utils/0.0.12/202131c700503cfa3cab8e9be348cf10d60d5349#202131c700503cfa3cab8e9be348cf10d60d5349"
   integrity sha512-OVqWK2XVnuVFOM/wiz4diIV2tiSonXRyXCJlywe18oMhwDUyIFn+nayUdEGORJ8tf90MB+3oBWyGc1gdCq+reQ==
