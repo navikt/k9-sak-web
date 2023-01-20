@@ -2669,6 +2669,11 @@
   dependencies:
     uuid "^8.3.2"
 
+"@navikt/ds-icons@^2.0.8":
+  version "2.0.18"
+  resolved "https://npm.pkg.github.com/download/@navikt/ds-icons/2.0.18/61e30253784f897147210bf7bbb58a7f110e9171#61e30253784f897147210bf7bbb58a7f110e9171"
+  integrity sha512-qQ66eMzSCw+6I7aQQXsfFnPDi/K2TbYCsm+AC8Qia0iK3Tu+DPvx1Ak/exWZ1TkAg5Ou31XuWdemDuZIoNnVdw==
+
 "@navikt/ds-react-internal@^0.14.20":
   version "0.14.28"
   resolved "https://npm.pkg.github.com/download/@navikt/ds-react-internal/0.14.28/e0d8c27dee0b0d2ee0c85310f21941d602d6ffb2#e0d8c27dee0b0d2ee0c85310f21941d602d6ffb2"
@@ -2884,7 +2889,7 @@
     react-hook-form "7.41.5"
     react-intl "6.2.5"
 
-"@navikt/ft-types@^1.0.38":
+"@navikt/ft-types@^1.0.35", "@navikt/ft-types@^1.0.38":
   version "1.0.38"
   resolved "https://npm.pkg.github.com/download/@navikt/ft-types/1.0.38/ef4e2f946b605a7d9467b9513cc5fc0e27f18c08#ef4e2f946b605a7d9467b9513cc5fc0e27f18c08"
   integrity sha512-+FRiLGYXYVkTkBEnyKCEQy7XFwmIZG3hwtBS4f0W7T+LaE8gqVLo+Lyeg495blY/nYamQewJ8N1LN4pKDDM8tA==
@@ -4819,9 +4824,9 @@
     defer-to-connect "^1.0.1"
 
 "@testing-library/dom@^8.0.0", "@testing-library/dom@^8.11.1", "@testing-library/dom@^8.19.1":
-  version "8.19.1"
-  resolved "https://registry.yarnpkg.com/@testing-library/dom/-/dom-8.19.1.tgz#0e2dafd281dedb930bb235eac1045470b4129d0e"
-  integrity sha512-P6iIPyYQ+qH8CvGauAqanhVnjrnRe0IZFSYCeGkSRW9q3u8bdVn2NPI+lasFyVsEQn1J/IFmp5Aax41+dAP9wg==
+  version "8.20.0"
+  resolved "https://registry.yarnpkg.com/@testing-library/dom/-/dom-8.20.0.tgz#914aa862cef0f5e89b98cc48e3445c4c921010f6"
+  integrity sha512-d9ULIT+a4EXLX3UU8FBjauG9NnsZHkHztXoIcTsOKoOw030fyjheN9svkTULjJxtYag9DZz5Jz5qkWZDPxTFwA==
   dependencies:
     "@babel/code-frame" "^7.10.4"
     "@babel/runtime" "^7.12.5"
