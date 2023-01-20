@@ -86,7 +86,7 @@ const NoedvendighetForm = ({
           <>
             {vurdering.perioder.map(periode => (
               <div key={periode.prettifyPeriod()}>
-                <Calender /> <span>{periode.prettifyPeriod()}</span>
+                <Calender onResize={undefined} onResizeCapture={undefined} /> <span>{periode.prettifyPeriod()}</span>
               </div>
             ))}
             <Box marginTop={Margin.xLarge}>

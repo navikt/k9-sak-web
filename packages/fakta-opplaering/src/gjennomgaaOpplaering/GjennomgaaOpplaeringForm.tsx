@@ -53,8 +53,9 @@ const schema = yup.object().shape({
         .test(
           'overlapp',
           ({ value }: { value: Period }) => `${value.prettifyPeriod()} overlapper med en annen periode`,
-          // eslint-disable-next-line prefer-arrow-callback
-          function (periode: Period, testParams) {
+          // @ts-ignore
+          (periode: Period, testParams) => {
+            // @ts-ignore
             const [, , values] = testParams.from;
             const andrePerioder = values.value[fieldname.PERIODER]
               .filter(v => v.periode !== periode)
@@ -149,7 +150,8 @@ const GjennomgaaOpplaeringForm = ({ vurdering, avbrytRedigering, erRedigering }:
         {({ handleSubmit, isSubmitting, values, setFieldValue, setFieldTouched, errors }) => (
           <>
             <div>
-              <Calender /> <span>{vurdering.opplæring.prettifyPeriod()}</span>
+              <Calender onResize={undefined} onResizeCapture={undefined} />{' '}
+              <span>{vurdering.opplæring.prettifyPeriod()}</span>
             </div>
             <Box marginTop={Margin.xLarge}>
               <Field name={fieldname.DOKUMENTER}>
@@ -232,9 +234,12 @@ const GjennomgaaOpplaeringForm = ({ vurdering, avbrytRedigering, erRedigering }:
                             {array.length > 1 && <DeleteButton onClick={() => arrayHelpers.remove(index)} />}
                           </div>
                           <div>
-                            {typeof errors[fieldname.PERIODER]?.[index]?.periode === 'string' && (
-                              <ErrorMessage size="small">{errors[fieldname.PERIODER]?.[index]?.periode}</ErrorMessage>
-                            )}
+                            {
+                              // @ts-ignore
+                              typeof errors[fieldname.PERIODER]?.[index]?.periode === 'string' && (
+                                <ErrorMessage size="small">{errors[fieldname.PERIODER]?.[index]?.periode}</ErrorMessage>
+                              )
+                            }
                           </div>
                         </>
                       ))}

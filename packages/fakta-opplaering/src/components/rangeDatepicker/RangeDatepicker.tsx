@@ -54,6 +54,7 @@ const RangeDatepicker = ({ name, fromDate, toDate, onRangeChange, placeholder, d
     name: `${name}.tom`,
   });
   const { datepickerProps, toInputProps, fromInputProps } = UNSAFE_useRangeDatepicker({
+    // @ts-ignore
     defaultSelected,
     fromDate,
     toDate,

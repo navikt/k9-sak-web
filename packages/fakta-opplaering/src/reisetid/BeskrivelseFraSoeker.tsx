@@ -17,7 +17,7 @@ const BeskrivelseFraSoeker = ({ vurdering }: OwnProps) => {
     <Box marginTop={Margin.xLarge}>
       <div className={styles.container}>
         <div>
-          <PeopleFilled style={{ fontSize: '24px' }} />
+          <PeopleFilled style={{ fontSize: '24px' }} onResize={undefined} onResizeCapture={undefined} />
         </div>
         <LabelledContent
           label="Beskrivelse fra søker for reisetid i perioden 11.06.2021 - 13.06.2021"

@@ -1,14 +1,14 @@
 import { Heading } from '@navikt/ds-react';
 import { InteractiveList } from '@navikt/ft-plattform-komponenter';
 import React, { useEffect } from 'react';
-import { NoedvendighetPerioder } from '@k9-sak-web/types';
+import { NoedvendighetVurdering } from '@k9-sak-web/types';
 import noedvendighetStatus from './konstanter';
 import PeriodeRad from '../components/PeriodeRad';
 import styles from './noedvendighetNavigation.modules.css';
 
 interface OwnProps {
-  perioder: NoedvendighetPerioder[];
-  setValgtPeriode: React.Dispatch<React.SetStateAction<NoedvendighetPerioder>>;
+  perioder: NoedvendighetVurdering[];
+  setValgtPeriode: React.Dispatch<React.SetStateAction<NoedvendighetVurdering>>;
 }
 
 const NoedvendighetNavigation = ({ perioder, setValgtPeriode }: OwnProps) => {
