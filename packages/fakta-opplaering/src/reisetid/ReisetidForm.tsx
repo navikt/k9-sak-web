@@ -5,7 +5,8 @@ import { useIntl } from 'react-intl';
 import * as yup from 'yup';
 import dayjs from 'dayjs';
 
-import { FaktaOpplaeringContext } from '@k9-sak-web/behandling-opplaeringspenger/src/panelDefinisjoner/faktaPaneler/OpplaeringFaktaPanelDef';
+import { FaktaOpplaeringContext } from '@k9-sak-web/behandling-opplaeringspenger/src/FaktaOpplaeringContext';
+
 import { DDMMYYYY_DATE_FORMAT, required } from '@fpsak-frontend/utils';
 import { Formik } from 'formik';
 import { Button, Alert } from '@navikt/ds-react';

@@ -11,7 +11,7 @@ import { Button } from '@navikt/ds-react';
 import {
   FaktaOpplaeringContext,
   FaktaOpplaeringContextTypes,
-} from '@k9-sak-web/behandling-opplaeringspenger/src/panelDefinisjoner/faktaPaneler/OpplaeringFaktaPanelDef';
+} from '@k9-sak-web/behandling-opplaeringspenger/src/FaktaOpplaeringContext';
 import { useIntl } from 'react-intl';
 import DokumenterIVurderingen from '../components/DokumenterIVurderingen';
 

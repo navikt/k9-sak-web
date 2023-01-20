@@ -14,7 +14,7 @@ import { Calender } from '@navikt/ds-icons';
 import {
   FaktaOpplaeringContext,
   FaktaOpplaeringContextTypes,
-} from '@k9-sak-web/behandling-opplaeringspenger/src/panelDefinisjoner/faktaPaneler/OpplaeringFaktaPanelDef';
+} from '@k9-sak-web/behandling-opplaeringspenger/src/FaktaOpplaeringContext';
 import styles from './GjennomgaaOpplaeringFerdigVisning.modules.css';
 import DokumentLink from '../components/DokumentLink';
 

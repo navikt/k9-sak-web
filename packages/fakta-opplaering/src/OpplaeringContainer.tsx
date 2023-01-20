@@ -2,7 +2,8 @@ import React, { useContext, useState } from 'react';
 import classnames from 'classnames';
 import TabsPure from 'nav-frontend-tabs';
 import { WarningIcon } from '@navikt/ft-plattform-komponenter';
-import { FaktaOpplaeringContext } from '@k9-sak-web/behandling-opplaeringspenger/src/panelDefinisjoner/faktaPaneler/OpplaeringFaktaPanelDef';
+import { FaktaOpplaeringContext } from '@k9-sak-web/behandling-opplaeringspenger/src/FaktaOpplaeringContext';
+
 import { NestedIntlProvider } from '@fpsak-frontend/shared-components';
 import Tabs from './Tabs';
 import GjennomgaaOpplaeringOversikt from './gjennomgaaOpplaering/GjennomgaaOpplaeringOversikt';

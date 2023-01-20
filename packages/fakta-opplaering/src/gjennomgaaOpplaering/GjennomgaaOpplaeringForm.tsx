@@ -10,7 +10,7 @@ import * as yup from 'yup';
 import {
   FaktaOpplaeringContext,
   FaktaOpplaeringContextTypes,
-} from '@k9-sak-web/behandling-opplaeringspenger/src/panelDefinisjoner/faktaPaneler/OpplaeringFaktaPanelDef';
+} from '@k9-sak-web/behandling-opplaeringspenger/src/FaktaOpplaeringContext';
 import { GjennomgaaOpplaeringVurdering, Vurderingsresultat } from '@k9-sak-web/types';
 import { required } from '@fpsak-frontend/utils';
 import { Field, FieldArray, Formik } from 'formik';

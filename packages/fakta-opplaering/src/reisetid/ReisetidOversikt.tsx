@@ -1,7 +1,8 @@
 import React, { useContext } from 'react';
 import dayjs from 'dayjs';
 import { NavigationWithDetailView } from '@navikt/ft-plattform-komponenter';
-import { FaktaOpplaeringContext } from '@k9-sak-web/behandling-opplaeringspenger/src/panelDefinisjoner/faktaPaneler/OpplaeringFaktaPanelDef';
+import { FaktaOpplaeringContext } from '@k9-sak-web/behandling-opplaeringspenger/src/FaktaOpplaeringContext';
+
 import { Period } from '@navikt/k9-period-utils';
 import { ReisetidVurdering } from './ReisetidTypes';
 import ReisetidNavigation from './ReisetidNavigation';

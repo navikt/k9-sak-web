@@ -1,12 +1,12 @@
 import React, { useContext } from 'react';
 import { NavigationWithDetailView } from '@navikt/ft-plattform-komponenter';
 import { Alert } from '@navikt/ds-react';
-import { NoedvendighetPerioder, NoedvendighetVurdering } from '@k9-sak-web/types';
+import { NoedvendighetVurdering } from '@k9-sak-web/types';
 import { Period } from '@navikt/k9-period-utils';
 import {
   FaktaOpplaeringContext,
   FaktaOpplaeringContextTypes,
-} from '@k9-sak-web/behandling-opplaeringspenger/src/panelDefinisjoner/faktaPaneler/OpplaeringFaktaPanelDef';
+} from '@k9-sak-web/behandling-opplaeringspenger/src/FaktaOpplaeringContext';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import NoedvendighetNavigation from './NoedvendighetNavigation';
 import NoedvendighetDetails from './NoedvendighetDetails';
