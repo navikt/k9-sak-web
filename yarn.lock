@@ -2669,6 +2669,11 @@
   dependencies:
     uuid "^8.3.2"
 
+"@navikt/ds-icons@^2.0.8":
+  version "2.1.1"
+  resolved "https://npm.pkg.github.com/download/@navikt/ds-icons/2.1.1/262acd87a401875c728fb65b2d8efc37ca13c8d7#262acd87a401875c728fb65b2d8efc37ca13c8d7"
+  integrity sha512-jp+9mdotJdgKnXms4+LcaoeMWoYoj8jw540CcIWz8NK4jUpFDGdF/DXQgYMP3cH4XJhFjhE7jiOyRCjAt/Mpcw==
+
 "@navikt/ds-react-internal@^0.14.20":
   version "0.14.28"
   resolved "https://npm.pkg.github.com/download/@navikt/ds-react-internal/0.14.28/e0d8c27dee0b0d2ee0c85310f21941d602d6ffb2#e0d8c27dee0b0d2ee0c85310f21941d602d6ffb2"
@@ -2884,7 +2889,7 @@
     react-hook-form "7.41.5"
     react-intl "6.2.5"
 
-"@navikt/ft-types@^1.0.38":
+"@navikt/ft-types@^1.0.35", "@navikt/ft-types@^1.0.38":
   version "1.0.38"
   resolved "https://npm.pkg.github.com/download/@navikt/ft-types/1.0.38/ef4e2f946b605a7d9467b9513cc5fc0e27f18c08#ef4e2f946b605a7d9467b9513cc5fc0e27f18c08"
   integrity sha512-+FRiLGYXYVkTkBEnyKCEQy7XFwmIZG3hwtBS4f0W7T+LaE8gqVLo+Lyeg495blY/nYamQewJ8N1LN4pKDDM8tA==
@@ -16270,13 +16275,6 @@ react-colorful@^5.1.2:
   resolved "https://registry.yarnpkg.com/react-colorful/-/react-colorful-5.6.1.tgz#7dc2aed2d7c72fac89694e834d179e32f3da563b"
   integrity sha512-1exovf0uGTGyq5mXQT0zgQ80uvj2PCwvF8zY1RN9/vbJVSjSo3fsB/4L3ObbF7u70NduSiK4xu4Y6q1MHoUGEw==
 
-react-day-picker@7.4.10, react-day-picker@^7.4.10:
-  version "7.4.10"
-  resolved "https://registry.yarnpkg.com/react-day-picker/-/react-day-picker-7.4.10.tgz#d3928fa65c04379ad28c76de22aa85374a8361e1"
-  integrity sha512-/QkK75qLKdyLmv0kcVzhL7HoJPazoZXS8a6HixbVoK6vWey1Od1WRLcxfyEiUsRfccAlIlf6oKHShqY2SM82rA==
-  dependencies:
-    prop-types "^15.6.2"
-
 react-day-picker@8.3.4:
   version "8.3.4"
   resolved "https://registry.yarnpkg.com/react-day-picker/-/react-day-picker-8.3.4.tgz#0942d66266c58cd815d393ec0d142372b0d42f4f"
@@ -16286,6 +16284,11 @@ react-day-picker@8.4.1:
   version "8.4.1"
   resolved "https://registry.yarnpkg.com/react-day-picker/-/react-day-picker-8.4.1.tgz#341572d7110d7e286f311f8f173ed9cb304eae6a"
   integrity sha512-uqp/d3POv7127MmL7A16BNW746zYM/CxwfFdVanHMunKh2/8Y2a188KUpiHZH2Ck8IQlcS0I5HgC7xpRbBxK9w==
+
+react-day-picker@8.5.0, react-day-picker@^8.5.0:
+  version "8.5.0"
+  resolved "https://registry.yarnpkg.com/react-day-picker/-/react-day-picker-8.5.0.tgz#42d030d25895092532804cf0df27f813ca437585"
+  integrity sha512-9WEtx8tO6AD9vg257G2O0nkocmk8e7Mcszpdhq8+M34HP7kH0nBAzcZAiqN5pWia4mQPiY34AuAgwA7YKhrGZw==
 
 react-display-name@0.2.4:
   version "0.2.4"
