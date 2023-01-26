@@ -1,12 +1,13 @@
-import { MicroFrontend } from '@fpsak-frontend/utils';
 import React from 'react';
 import { useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { BehandlingAppKontekst, Aksjonspunkt } from '@k9-sak-web/types';
-import findEndpointsForMicrofrontend from '../microfrontend/utils/findEndpointsForMicrofrontend';
-import SimpleEndpoints from '../microfrontend/types/SimpleEndpoints';
-import httpErrorHandler from '../microfrontend/utils/httpErrorHandler';
-import findAksjonspunkt from '../microfrontend/utils/findAksjonspunkt';
+import { BehandlingAppKontekst, Aksjonspunkt, SimpleEndpoints } from '@k9-sak-web/types';
+import {
+  MicroFrontend,
+  httpErrorHandler,
+  findEndpointsForMicrofrontend,
+  findAksjonspunkt,
+} from '@fpsak-frontend/utils';
 
 const initializeOmsorgenFor = (
   elementId,
