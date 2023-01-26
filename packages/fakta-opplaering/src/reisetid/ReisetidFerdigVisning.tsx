@@ -93,8 +93,8 @@ const ReisetidFerdigVisning = ({ vurdering, rediger }: OwnProps) => {
             indentContent
           />
           <AssessedBy
-            name={saksbehandlere[vurdering.endretAv] || vurdering.endretAv}
-            date={vurdering?.endretTidspunkt}
+            name={saksbehandlere[vurdering.vurdertAv] || vurdering.vurdertAv}
+            date={vurdering?.vurdertTidspunkt}
           />
         </Box>
       )}
