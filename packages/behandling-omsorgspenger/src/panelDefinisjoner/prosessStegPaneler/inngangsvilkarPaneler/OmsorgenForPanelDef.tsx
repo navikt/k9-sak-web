@@ -10,7 +10,7 @@ class OmsorgenForPanelDef extends ProsessStegPanelDef {
 
   getTekstKode = () => 'Inngangsvilkar.OmsorgenFor';
 
-  getKomponent = props => this.overstyringDef.getKomponent(props);
+  getKomponent = props => this.overstyringDef.getKomponent({ ...props, lovReferanse: '$ 9-5' });
 
   getAksjonspunktKoder = () => [aksjonspunktCodes.OVERSTYR_OMSORGEN_FOR];
 
