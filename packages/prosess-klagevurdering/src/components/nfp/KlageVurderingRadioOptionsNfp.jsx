@@ -36,7 +36,6 @@ const utledHjemler = fagsak => {
         { kode: '9-6', navn: '§ 9-6' },
         { kode: '9-8', navn: '§ 9-8' },
         { kode: '9-9', navn: '§ 9-9' },
-        { kode: '9-10', navn: '§ 9-10' },
         { kode: '22-13', navn: '§ 22-13' },
       ];
 
