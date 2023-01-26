@@ -1,7 +1,7 @@
 import React from 'react';
 import { useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { BehandlingAppKontekst, Aksjonspunkt, SimpleEndpoints } from '@k9-sak-web/types';
+import { BehandlingAppKontekst, Aksjonspunkt, SimpleEndpoints, Fagsak } from '@k9-sak-web/types';
 import {
   MicroFrontend,
   httpErrorHandler,
@@ -15,17 +15,20 @@ const initializeOmsorgenFor = (
   endpoints: SimpleEndpoints,
   readOnly: boolean,
   løsAksjonspunkt: (omsorgsperioder) => void,
+  sakstype: string,
 ) => {
   (window as any).renderOmsorgenForApp(elementId, {
     httpErrorHandler: httpErrorHandlerFn,
     endpoints,
     readOnly,
     onFinished: løsAksjonspunkt,
+    sakstype,
   });
 };
 
 interface OmsorgenForProps {
   behandling: BehandlingAppKontekst;
+  fagsak: Fagsak;
   readOnly: boolean;
   aksjonspunkter: Aksjonspunkt[];
   submitCallback: ([{ kode, begrunnelse, omsorgsperioder }]: {
@@ -36,7 +39,10 @@ interface OmsorgenForProps {
 }
 
 const omsorgenForAppID = 'omsorgenForApp';
-const OmsorgenFor = ({ behandling: { links }, readOnly, aksjonspunkter, submitCallback }: OmsorgenForProps) => {
+const OmsorgenFor = ({ behandling, fagsak, readOnly, aksjonspunkter, submitCallback }: OmsorgenForProps) => {
+  const { links } = behandling;
+  const sakstype = fagsak.sakstype.kode;
+
   const { addErrorMessage } = useRestApiErrorDispatcher();
   const httpErrorHandlerCaller = (status: number, locationHeader?: string) =>
     httpErrorHandler(status, addErrorMessage, locationHeader);
@@ -66,6 +72,7 @@ const OmsorgenFor = ({ behandling: { links }, readOnly, aksjonspunkter, submitCa
           ]),
           readOnly || !harAksjonspunkt,
           løsAksjonspunkt,
+          sakstype,
         )
       }
     />
