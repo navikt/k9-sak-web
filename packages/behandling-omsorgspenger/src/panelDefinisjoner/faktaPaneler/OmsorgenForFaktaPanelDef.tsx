@@ -10,7 +10,7 @@ class OmsorgenForFaktaPanelDef extends FaktaPanelDef {
 
   getTekstKode = () => 'OmsorgenForInfoPanel.Title';
 
-  getAksjonspunktKoder = () => [aksjonspunktCodes.OMSORGEN_FOR_PLEIEPENGER];
+  getAksjonspunktKoder = () => [aksjonspunktCodes.AVKLAR_OMSORGEN_FOR];
 
   getEndepunkter = () => [];
 
