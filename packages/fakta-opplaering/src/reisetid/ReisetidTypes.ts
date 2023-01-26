@@ -15,6 +15,6 @@ export interface ReisetidVurdering {
   perioderFraSoeknad: ReisetidPeriode;
   periode: Period;
   til: boolean;
-  endretAv?: string;
-  endretTidspunkt?: string;
+  vurdertAv?: string;
+  vurdertTidspunkt?: string;
 }

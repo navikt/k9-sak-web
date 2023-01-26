@@ -26,6 +26,6 @@ export interface InstitusjonVurdering {
 export interface InstitusjonVurderingMedPerioder extends InstitusjonVurdering {
   perioder: Period[];
   institusjon: string;
-  endretAv?: string;
-  endretTidspunkt?: string;
+  vurdertAv?: string;
+  vurdertTidspunkt?: string;
 }
