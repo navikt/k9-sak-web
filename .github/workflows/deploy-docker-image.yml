@@ -12,9 +12,20 @@ env:
   IMAGE_BASE: ghcr.io/${{ github.repository }}
 
 jobs:
+  test:
+    uses: ./.github/workflows/test.yml
+    secrets: inherit
+
+  lint-tscheck-build:
+    uses: ./.github/workflows/lint-tscheck-build.yml
+    secrets: inherit
+    with:
+      run-build: false
+
   deploy-docker-image:
     name: Deploy Docker image
     runs-on: ubuntu-latest
+    needs: [test, lint-tscheck-build]
     steps:
       - name: Hente kode
         uses: actions/checkout@v3
@@ -35,9 +46,6 @@ jobs:
         run: HUSKY=0 yarn install --ignore-optional --no-progress --frozen-lockfile
         env:
           NODE_AUTH_TOKEN: ${{ secrets.READER_TOKEN }}
-
-      - name: Tester, typescript-sjekk og linting
-        run: yarn test:all --maxWorkers=2 && yarn ts-check && yarn less:lint
 
       - name: Bygge dist
         run: yarn build

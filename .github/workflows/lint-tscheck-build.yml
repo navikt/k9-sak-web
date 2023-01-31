@@ -2,10 +2,15 @@ name: Tester
 
 on:
   workflow_call:
+    inputs:
+      run-build:
+        required: false
+        type: boolean
+        default: false
 
 jobs:
-  enhetstester:
-    name: Kjør enhetstester
+  lint-tscheck-build:
+    name: Lint, typescript-sjekk og bygg
     runs-on: ubuntu-latest
     steps:
       - name: Hente kode
@@ -24,5 +29,12 @@ jobs:
         env:
           NODE_AUTH_TOKEN: ${{ secrets.READER_TOKEN }}
 
-      - name: Kjører tester
-        run: yarn test:all --maxWorkers=2 --silent
+      - name: Typescript-sjekk
+        run: yarn ts-check
+
+      - name: Linting
+        run: yarn less:lint
+
+      - name: Sjekker at koden bygger
+        if: ${{inputs.run-build}}
+        run: yarn build-ci
