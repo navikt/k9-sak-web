@@ -2823,7 +2823,7 @@
   resolved "https://npm.pkg.github.com/download/@navikt/ft-konstanter/1.0.17/c2957d7f22e41d320ccd5c15aa0d6798af426179#c2957d7f22e41d320ccd5c15aa0d6798af426179"
   integrity sha512-1Ll1F5ud8MPEYKh9EHNaKvmK7V9qksg1fvx5CUYXXzq26UjiXE/P1K4dlniyaSIlHXZcwd22dRD2Qr+KiokBsA==
 
-"@navikt/ft-plattform-komponenter@1.4.7", "@navikt/ft-plattform-komponenter@^1.2.2", "@navikt/ft-plattform-komponenter@^1.4.7":
+"@navikt/ft-plattform-komponenter@1.4.7", "@navikt/ft-plattform-komponenter@^1.4.7":
   version "1.4.7"
   resolved "https://npm.pkg.github.com/download/@navikt/ft-plattform-komponenter/1.4.7/4be19c3fcd609e686ee8137b9c73fad846fc2f7c#4be19c3fcd609e686ee8137b9c73fad846fc2f7c"
   integrity sha512-p/bqmarzY8TO1B8JKEy58nGuX5GPP444PXZEZ+1ABTYO21HLx3+FmVmnqEIFAno+nP/EvJDhG0je5XmeULsDMQ==
@@ -2889,12 +2889,12 @@
     dayjs "1.11.7"
     react-intl "6.2.5"
 
-"@navikt/k9-array-utils@^0.0.1":
+"@navikt/k9-array-utils@0.0.1", "@navikt/k9-array-utils@^0.0.1":
   version "0.0.1"
   resolved "https://npm.pkg.github.com/download/@navikt/k9-array-utils/0.0.1/05d7fa6a8e8194f121667cf9c945e7f2d325b088#05d7fa6a8e8194f121667cf9c945e7f2d325b088"
   integrity sha512-6plTd1GHq6bIBDMf5SnMoSOaKPqLBSm698vP4v+JnDwtnSggjlHnS57x5sJbf/QYc6tOmdDyf7q3qwz8kSJx3A==
 
-"@navikt/k9-bem-utils@^1.0.1":
+"@navikt/k9-bem-utils@1.0.1", "@navikt/k9-bem-utils@^1.0.1":
   version "1.0.1"
   resolved "https://npm.pkg.github.com/download/@navikt/k9-bem-utils/1.0.1/451f330cbf3636c6406468c157468ea07dfb3b10#451f330cbf3636c6406468c157468ea07dfb3b10"
   integrity sha512-DRV0rm6NDyAIosWGeMk0RlfUciUNIdD4AxpnGYOpqJCTIoCJHxLtzwRa1Zv15LEX5BHDWbiDYF5ZxDFhfE4yBg==
@@ -2904,19 +2904,23 @@
   resolved "https://npm.pkg.github.com/download/@navikt/k9-date-utils/0.0.10/e9c0a38f7ec2b90193af950602e90ac5b222160d#e9c0a38f7ec2b90193af950602e90ac5b222160d"
   integrity sha512-8csB0fk5yhA7FolGL2S4EUAyIpc/Ubc88y3GVoa9KajLqRCLaBQ7ek53u207OUvxSqKjzcBH/nL+GPKRW2ol2A==
 
+"@navikt/k9-date-utils@0.1.0":
+  version "0.1.0"
+  resolved "https://npm.pkg.github.com/download/@navikt/k9-date-utils/0.1.0/4b3c0a162bd31145593a8b12a535d74211c0d437#4b3c0a162bd31145593a8b12a535d74211c0d437"
+  integrity sha512-JWix2fJibcPnxRIK2coWBVkmwxkWoocJxTLqzocTMXdE5KWcdIuWUKV/Vba9rj82MniPW66nmeYZvv+TBQltbQ==
+
 "@navikt/k9-date-utils@^0.0.8":
   version "0.0.8"
   resolved "https://npm.pkg.github.com/download/@navikt/k9-date-utils/0.0.8/06cfdda433652b39c1c4f2457463fc91dabd0d58#06cfdda433652b39c1c4f2457463fc91dabd0d58"
   integrity sha512-k6kJtGyReu3ZAUwi5/8eNQyQHQgPyHYO1fuOuvsrcXv4KoU33d2tO/+QHvMyVW3qKyTJGURKT1tN8mqpAAajsQ==
 
-"@navikt/k9-form-utils@1.1.1":
-  version "1.1.1"
-  resolved "https://npm.pkg.github.com/download/@navikt/k9-form-utils/1.1.1/9289f9db0770803ee234d9b933af293f6ee1a283#9289f9db0770803ee234d9b933af293f6ee1a283"
-  integrity sha512-JQO7hMFh3CtAzILsbfKPnfaZAt1Nbd102/Y/512RYdl55Mdqb1IKWi+yd2PZdhsVMvCbv8V/QwTBibu2x9g0KQ==
+"@navikt/k9-form-utils@2.0.0":
+  version "2.0.0"
+  resolved "https://npm.pkg.github.com/download/@navikt/k9-form-utils/2.0.0/ed1782675b18d5231b5c31979547a7c878668c21#ed1782675b18d5231b5c31979547a7c878668c21"
+  integrity sha512-UqiSjwuVNSu4C6U4jMqoWCya1fzy+1zZtEvU4/aeT5oh+jGnJ9k7Miv4Q9ajs8O53lnxVuaM9L6xZUM/28xz5w==
   dependencies:
-    "@navikt/ft-plattform-komponenter" "^1.2.2"
-    "@navikt/k9-bem-utils" "^1.0.1"
-    "@navikt/k9-period-utils" "^0.0.12"
+    "@navikt/k9-bem-utils" "1.0.1"
+    "@navikt/k9-period-utils" "1.0.0"
 
 "@navikt/k9-period-utils@0.0.12", "@navikt/k9-period-utils@^0.0.12":
   version "0.0.12"
@@ -2925,6 +2929,14 @@
   dependencies:
     "@navikt/k9-array-utils" "^0.0.1"
     "@navikt/k9-date-utils" "^0.0.8"
+
+"@navikt/k9-period-utils@1.0.0":
+  version "1.0.0"
+  resolved "https://npm.pkg.github.com/download/@navikt/k9-period-utils/1.0.0/8a69c9e9e9036d63ed381284e6d2ec8404a32a47#8a69c9e9e9036d63ed381284e6d2ec8404a32a47"
+  integrity sha512-QTt+6GswRpPz5rDRP2R2AJGyscCCRHH+E3f65kFVEZUBzI3Ml6r4QPvpDnzlDjaZ1cT9+vZsEYzRxY42a0W3GQ==
+  dependencies:
+    "@navikt/k9-array-utils" "0.0.1"
+    "@navikt/k9-date-utils" "0.1.0"
 
 "@nicolo-ribaudo/eslint-scope-5-internals@5.1.1-v1":
   version "5.1.1-v1"
@@ -7006,14 +7018,14 @@ browserify-zlib@^0.2.0:
     pako "~1.0.5"
 
 browserslist@^4.0.0, browserslist@^4.12.0, browserslist@^4.14.5, browserslist@^4.16.5, browserslist@^4.16.6, browserslist@^4.21.3, browserslist@^4.21.4:
-  version "4.21.4"
-  resolved "https://registry.yarnpkg.com/browserslist/-/browserslist-4.21.4.tgz#e7496bbc67b9e39dd0f98565feccdcb0d4ff6987"
-  integrity sha512-CBHJJdDmgjl3daYjN5Cp5kbTf1mUhZoS+beLklHIvkOWscs83YAhLlF3Wsh/lciQYAcbBJgTOD44VtG31ZM4Hw==
+  version "4.21.5"
+  resolved "https://registry.yarnpkg.com/browserslist/-/browserslist-4.21.5.tgz#75c5dae60063ee641f977e00edd3cfb2fb7af6a7"
+  integrity sha512-tUkiguQGW7S3IhB7N+c2MV/HZPSCPAAiYBZXLsBhFB/PCy6ZKKsZrmBayHV9fdGV/ARIfJ14NkxKzRDjvp7L6w==
   dependencies:
-    caniuse-lite "^1.0.30001400"
-    electron-to-chromium "^1.4.251"
-    node-releases "^2.0.6"
-    update-browserslist-db "^1.0.9"
+    caniuse-lite "^1.0.30001449"
+    electron-to-chromium "^1.4.284"
+    node-releases "^2.0.8"
+    update-browserslist-db "^1.0.10"
 
 bser@2.1.1:
   version "2.1.1"
@@ -7296,7 +7308,7 @@ caniuse-api@^3.0.0:
     lodash.memoize "^4.1.2"
     lodash.uniq "^4.5.0"
 
-caniuse-lite@^1.0.0, caniuse-lite@^1.0.30001109, caniuse-lite@^1.0.30001400:
+caniuse-lite@^1.0.0, caniuse-lite@^1.0.30001109, caniuse-lite@^1.0.30001449:
   version "1.0.30001449"
   resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001449.tgz#a8d11f6a814c75c9ce9d851dc53eb1d1dfbcd657"
   integrity sha512-CPB+UL9XMT/Av+pJxCKGhdx+yg1hzplvFJQlJ2n68PyQGMz9L/E2zCyLdOL8uasbouTUgnPl+y0tccI/se+BEw==
@@ -9051,7 +9063,7 @@ ejs@^3.1.7:
   dependencies:
     jake "^10.8.5"
 
-electron-to-chromium@^1.4.251:
+electron-to-chromium@^1.4.284:
   version "1.4.284"
   resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.4.284.tgz#61046d1e4cab3a25238f6bf7413795270f125592"
   integrity sha512-M8WEXFuKXMYMVr45fo8mq0wUrrJHheiKZf6BArTKk9ZBYCKJEOU5H8cdWgDT+qCVZf7Na4lVUaZsA+h6uA9+PA==
@@ -14424,10 +14436,10 @@ node-libs-browser@^2.2.1:
     util "^0.11.0"
     vm-browserify "^1.0.1"
 
-node-releases@^2.0.6:
-  version "2.0.8"
-  resolved "https://registry.yarnpkg.com/node-releases/-/node-releases-2.0.8.tgz#0f349cdc8fcfa39a92ac0be9bc48b7706292b9ae"
-  integrity sha512-dFSmB8fFHEH/s81Xi+Y/15DQY6VHW81nXRj86EMSL3lmuTmK1e+aT4wrFCkTbm+gSwkw4KpX+rT/pMM2c1mF+A==
+node-releases@^2.0.8:
+  version "2.0.9"
+  resolved "https://registry.yarnpkg.com/node-releases/-/node-releases-2.0.9.tgz#fe66405285382b0c4ac6bcfbfbe7e8a510650b4d"
+  integrity sha512-2xfmOrRkGogbTK9R6Leda0DGiXeY3p2NJpy4+gNCffdUvV6mdEJnaDEic1i3Ec2djAo8jWYoJMR5PB0MSMpxUA==
 
 nopt@^5.0.0:
   version "5.0.0"
@@ -18964,7 +18976,7 @@ upath@^2.0.1:
   resolved "https://registry.yarnpkg.com/upath/-/upath-2.0.1.tgz#50c73dea68d6f6b990f51d279ce6081665d61a8b"
   integrity sha512-1uEe95xksV1O0CYKXo8vQvN1JEbtJp7lb7C5U9HMsIp6IVwntkH/oNUzyVNQSd4S1sYk2FpSSW44FqMc8qee5w==
 
-update-browserslist-db@^1.0.9:
+update-browserslist-db@^1.0.10:
   version "1.0.10"
   resolved "https://registry.yarnpkg.com/update-browserslist-db/-/update-browserslist-db-1.0.10.tgz#0f54b876545726f17d00cd9a2561e6dade943ff3"
   integrity sha512-OztqDenkfFkbSG+tRxBeAnCVPckDBcvibKd35yDONx6OU8N7sqgwc7rCbkJ/WcYtVRZ4ba68d6byhC21GFh7sQ==
