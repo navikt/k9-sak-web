@@ -28,6 +28,12 @@
   "Inngangsvilkar.OmsorgenFor": "Omsorg",
   "Inngangsvilkar.Alder": "Alder",
   "Inngangsvilkar.Soknadsfrist": "Søknadsfrist",
+  "Inngangsvilkar.Institusjon": "Institusjon",
+
+  "Opplaering.GjennomgaaOpplaering": "Gjennomgå opplæring",
+  "Opplaering.Noedvendighet": "Nødvendighet",
+  "Opplaering.Reisetid": "Reisetid",
+
   "Behandlingspunkt.MedisinskVilkar": "Medisinsk vilkår",
   "Behandlingspunkt.Opptjening": "Opptjening",
 

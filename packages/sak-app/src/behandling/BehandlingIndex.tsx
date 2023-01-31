@@ -316,20 +316,18 @@ const BehandlingIndex = ({
     );
   }
 
-  if (featureToggles.OPPLAERINGSPENGER) {
-    if (fagsak.sakstype.kode === FagsakYtelseType.OPPLAERINGSPENGER) {
-      return (
-        <Suspense fallback={<LoadingPanel />}>
-          <ErrorBoundary errorMessageCallback={addErrorMessage}>
-            <BehandlingOpplaeringspengerIndex
-              oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
-              valgtFaktaSteg={query.fakta}
-              {...defaultProps}
-            />
-          </ErrorBoundary>
-        </Suspense>
-      );
-    }
+  if (fagsak.sakstype.kode === FagsakYtelseType.OPPLAERINGSPENGER) {
+    return (
+      <Suspense fallback={<LoadingPanel />}>
+        <ErrorBoundary errorMessageCallback={addErrorMessage}>
+          <BehandlingOpplaeringspengerIndex
+            oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
+            valgtFaktaSteg={query.fakta}
+            {...defaultProps}
+          />
+        </ErrorBoundary>
+      </Suspense>
+    );
   }
 
   return (

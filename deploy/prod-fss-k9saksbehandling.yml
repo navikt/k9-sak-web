@@ -105,5 +105,5 @@ spec:
       value: "true"
     - name: FRITEKST_REDIGERING
       value: "true"
-    - name: OPPLAERINGSPENGER
+    - name: INKLUDER_KALENDER_PILS
       value: "false"

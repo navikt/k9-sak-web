@@ -1,0 +1,23 @@
+.GjennomgaaOpplaering-oversikt {
+  width: 25rem;
+}
+
+.GjennomgaaOpplaering-oversikt .heading {
+  margin: 1.3125rem 0 1.5rem 0.9375rem;
+}
+
+.GjennomgaaOpplaering-oversikt .marginLeft {
+  margin-left: 0.9375rem;
+}
+
+.GjennomgaaOpplaering-oversikt .periodColumns {
+  display: flex;
+}
+
+.GjennomgaaOpplaering-oversikt .periodColumns > div {
+  margin-right: 1rem;
+}
+
+.GjennomgaaOpplaering-oversikt .periodColumns > div:last-of-type {
+  margin-left: 1.7rem;
+}

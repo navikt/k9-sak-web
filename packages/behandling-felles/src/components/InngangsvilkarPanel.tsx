@@ -82,7 +82,7 @@ const InngangsvilkarPanel = ({
   );
 
   return (
-    <NestedIntlProvider messages={messages} locale="no">
+    <NestedIntlProvider messages={messages}>
       <FadingPanel>
         {((apentFaktaPanelInfo && erIkkeFerdigbehandlet) || aksjonspunktTekstKoder.length > 0) && (
           <>
