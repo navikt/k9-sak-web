@@ -47,8 +47,8 @@ const FagsakSokSakIndex = ({
       searchResultReceived={searchResultReceived}
       selectFagsakCallback={selectFagsakCallback}
       searchStarted={searchStarted}
-      searchResultAccessDenied={searchResultAccessDenied}
       alleKodeverk={alleKodeverk}
+      searchResultAccessDenied={searchResultAccessDenied}
     />
   </RawIntlProvider>
 );
