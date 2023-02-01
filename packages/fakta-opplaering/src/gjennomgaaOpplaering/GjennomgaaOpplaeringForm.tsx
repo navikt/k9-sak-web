@@ -79,7 +79,7 @@ interface FormState {
 }
 
 const GjennomgaaOpplaeringForm = ({ vurdering, avbrytRedigering, erRedigering }: OwnProps): JSX.Element => {
-  const { readOnly, løsAksjonspunktGjennomgåOpplæring, sykdomDokumenter } =
+  const { readOnly, løsAksjonspunktGjennomgåOpplæring, opplaeringDokumenter } =
     useContext<FaktaOpplaeringContextTypes>(FaktaOpplaeringContext);
   const intl = useIntl();
 
@@ -160,7 +160,7 @@ const GjennomgaaOpplaeringForm = ({ vurdering, avbrytRedigering, erRedigering }:
                   meta,
                 }) => (
                   <DokumenterIVurderingen
-                    dokumenter={sykdomDokumenter}
+                    dokumenter={opplaeringDokumenter}
                     valgteDokumenter={field.value}
                     error={meta.touched && meta.error}
                     onChange={value => {

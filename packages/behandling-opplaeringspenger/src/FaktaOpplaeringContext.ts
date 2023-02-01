@@ -15,5 +15,5 @@ export interface FaktaOpplaeringContextTypes {
     perioder: NoedvendighetPerioder[];
   };
   saksbehandlere: { [key: string]: string };
-  sykdomDokumenter: Dokument[];
+  opplaeringDokumenter: Dokument[];
 }

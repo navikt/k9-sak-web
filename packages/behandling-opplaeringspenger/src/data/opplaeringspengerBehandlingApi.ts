@@ -41,6 +41,7 @@ export enum OpplaeringspengerBehandlingApiKeys {
   VERGE_FJERN = 'VERGE_FJERN',
   SYKDOM = 'SYKDOM',
   SYKDOM_DOKUMENTER_OVERSIKT = 'SYKDOM_DOKUMENTER_OVERSIKT',
+  OPPLAERING_DOKUMENTER = 'OPPLAERING_DOKUMENTER',
   TILGJENGELIGE_VEDTAKSBREV = 'TILGJENGELIGE_VEDTAKSBREV',
   INFORMASJONSBEHOV_VEDTAKSBREV = 'INFORMASJONSBEHOV_VEDTAKSBREV',
   DOKUMENTDATA_LAGRE = 'DOKUMENTDATA_LAGRE',
@@ -101,6 +102,7 @@ const endpoints = new RestApiConfigBuilder()
   .withRel('overlappende-ytelser', OpplaeringspengerBehandlingApiKeys.OVERLAPPENDE_YTELSER)
   .withRel('saksbehandler-info', OpplaeringspengerBehandlingApiKeys.HENT_SAKSBEHANDLERE)
   .withRel('utenlandsopphold', OpplaeringspengerBehandlingApiKeys.UTENLANDSOPPHOLD)
+  .withRel('opplæring-dokument-liste', OpplaeringspengerBehandlingApiKeys.OPPLAERING_DOKUMENTER)
   .withRel(
     'behandling-perioder-årsak-med-vilkår',
     OpplaeringspengerBehandlingApiKeys.BEHANDLING_PERIODER_ÅRSAK_MED_VILKÅR,

@@ -43,7 +43,7 @@ const NoedvendighetForm = ({
   avbrytRedigering,
   erRedigering,
 }: VurderingAvBeredskapsperioderFormProps): JSX.Element => {
-  const { readOnly, løsAksjonspunktNødvendighet, sykdomDokumenter } =
+  const { readOnly, løsAksjonspunktNødvendighet, opplaeringDokumenter } =
     useContext<FaktaOpplaeringContextTypes>(FaktaOpplaeringContext);
   const intl = useIntl();
 
@@ -93,7 +93,7 @@ const NoedvendighetForm = ({
               <Field name={fieldname.DOKUMENTER}>
                 {({ field, meta }) => (
                   <DokumenterIVurderingen
-                    dokumenter={sykdomDokumenter}
+                    dokumenter={opplaeringDokumenter}
                     valgteDokumenter={field.value}
                     error={meta.touched && meta.error}
                     onChange={value => {
