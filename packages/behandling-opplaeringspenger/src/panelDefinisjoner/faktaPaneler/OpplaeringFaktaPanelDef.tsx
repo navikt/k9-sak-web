@@ -28,7 +28,6 @@ class OpplaeringFaktaPanelDef extends FaktaPanelDef {
 
   // eslint-disable-next-line arrow-body-style
   getKomponent = props => {
-    console.log(props);
     const løsAksjonspunktGjennomgåOpplæring = perioder =>
       props.submitCallback([
         {
