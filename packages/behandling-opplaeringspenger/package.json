@@ -36,7 +36,7 @@
     "@navikt/ft-fakta-beregning": "3.0.11",
     "@navikt/ft-fakta-fordel-beregningsgrunnlag": "5.2.0",
     "@navikt/ft-prosess-beregningsgrunnlag": "4.0.17",
-    "axios": "0.27.2",
+    "axios": "1.3.1",
     "nav-frontend-alertstriper": "^4.0.2",
     "react": "17.0.2",
     "react-intl": "6.2.5",
