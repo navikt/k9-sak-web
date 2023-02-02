@@ -24,7 +24,7 @@ interface OwnProps {
 }
 
 const GjennomgaaOpplaeringFerdigVisning = ({ vurdering, rediger }: OwnProps) => {
-  const { readOnly, sykdomDokumenter, saksbehandlere } =
+  const { readOnly, opplaeringDokumenter, saksbehandlere } =
     useContext<FaktaOpplaeringContextTypes>(FaktaOpplaeringContext);
   const intl = useIntl();
 
@@ -50,7 +50,7 @@ const GjennomgaaOpplaeringFerdigVisning = ({ vurdering, rediger }: OwnProps) => 
           content={
             <Box marginTop={Margin.medium}>
               <BasicList
-                elements={sykdomDokumenter
+                elements={opplaeringDokumenter
                   .map(dokument => ({ ...dokument, benyttet: vurdering?.tilknyttedeDokumenter?.includes(dokument.id) }))
                   .filter(({ benyttet }) => benyttet)
                   .map(dokument => (
