@@ -15,7 +15,7 @@
     "@k9-sak-web/modal-sett-pa-vent": "1.0.0",
     "@k9-sak-web/rest-api-hooks": "1.0.0",
     "@k9-sak-web/types": "1.0.0",
-    "@navikt/ft-plattform-komponenter": "1.4.6",
+    "@navikt/ft-plattform-komponenter": "1.4.7",
     "@navikt/k9-array-utils": "^0.0.1",
     "@navikt/k9-bem-utils": "^1.0.1",
     "@navikt/k9-date-utils": "^0.0.10",
