@@ -108,6 +108,12 @@ interface Props {
   behandlingArsaker: object[];
 }
 
+export type SjekkTilbakekrevingType = {
+  visAksjonspunkt: boolean;
+  skalBehandleTilbakekrevingFørst: boolean;
+  harVurdertÅSjekkeTilbakekreving: boolean;
+};
+
 export const VedtakForm: React.FC<Props> = ({
   intl,
   readOnly,
@@ -146,8 +152,14 @@ export const VedtakForm: React.FC<Props> = ({
   const [erSendtInnUtenArsaker, setErSendtInnUtenArsaker] = useState(false);
   const [harVurdertOverlappendeYtelse, setHarVurdertOverlappendeYtelse] = useState(false);
   const [visSakGårIkkeTilBeslutterModal, setVisSakGårIkkeTilBeslutterModal] = useState(false);
+  const [sjekkTilbakekreving, setSjekkTilbakekreving] = useState<SjekkTilbakekrevingType>({
+    visAksjonspunkt: !!aksjonspunkter.find(ap => ap.definisjon.kode === aksjonspunktCodes.SJEKK_TILBAKEKREVING),
+    skalBehandleTilbakekrevingFørst: false,
+    harVurdertÅSjekkeTilbakekreving: false,
+  });
 
   const harOverlappendeYtelser = overlappendeYtelser && overlappendeYtelser.length > 0;
+
   const vedtakContext = useContext(VedtakFormContext);
   const onToggleOverstyring = (e, setFieldValue) => {
     const isChecked = e.target.checked;
@@ -407,6 +419,8 @@ export const VedtakForm: React.FC<Props> = ({
               }
               harVurdertOverlappendeYtelse={harVurdertOverlappendeYtelse}
               setHarVurdertOverlappendeYtelse={setHarVurdertOverlappendeYtelse}
+              sjekkTilbakekreving={sjekkTilbakekreving}
+              setSjekkTilbakekreving={setSjekkTilbakekreving}
             >
               {!erRevurdering ? (
                 <>
@@ -492,6 +506,7 @@ export const VedtakForm: React.FC<Props> = ({
                   behandlingPaaVent={behandlingPaaVent}
                   isSubmitting={formikProps.isSubmitting}
                   aksjonspunkter={aksjonspunkter}
+                  sjekkTilbakekreving={sjekkTilbakekreving}
                   handleSubmit={
                     erToTrinn ? formikProps.handleSubmit : event => handleErEntrinnSubmit(event, formikProps)
                   }
@@ -508,6 +523,7 @@ export const VedtakForm: React.FC<Props> = ({
                   harRedusertUtbetaling={harRedusertUtbetaling}
                   visFeilmeldingFordiArsakerMangler={() => setErSendtInnUtenArsaker(true)}
                   aksjonspunkter={aksjonspunkter}
+                  sjekkTilbakekreving={sjekkTilbakekreving}
                 />
               )}
               {visSakGårIkkeTilBeslutterModal && (
