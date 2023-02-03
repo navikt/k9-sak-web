@@ -41,7 +41,10 @@ const InstitusjonFerdigVisning = ({ vurdering, readOnly, rediger, saksbehandlere
         content={vurdering.begrunnelse}
         indentContent
       />
-      <AssessedBy name={saksbehandlere[vurdering.endretAv] || vurdering.endretAv} date={vurdering?.endretTidspunkt} />
+      <AssessedBy
+        name={saksbehandlere[vurdering.vurdertAv] || vurdering.vurdertAv}
+        date={vurdering?.vurdertTidspunkt}
+      />
     </Box>
     <Box marginTop={Margin.xLarge}>
       <LabelledContent

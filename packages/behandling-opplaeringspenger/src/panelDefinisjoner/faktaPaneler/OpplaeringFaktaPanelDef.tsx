@@ -22,7 +22,7 @@ class OpplaeringFaktaPanelDef extends FaktaPanelDef {
     OpplaeringspengerBehandlingApiKeys.GJENNOMGÅTT_OPPLÆRING,
     OpplaeringspengerBehandlingApiKeys.NØDVENDIG_OPPLÆRING,
     OpplaeringspengerBehandlingApiKeys.REISETID,
-    OpplaeringspengerBehandlingApiKeys.SYKDOM_DOKUMENTER_OVERSIKT,
+    OpplaeringspengerBehandlingApiKeys.OPPLAERING_DOKUMENTER,
     OpplaeringspengerBehandlingApiKeys.HENT_SAKSBEHANDLERE,
   ];
 
@@ -48,7 +48,7 @@ class OpplaeringFaktaPanelDef extends FaktaPanelDef {
       aksjonspunkter: props.aksjonspunkter,
       gjennomgåttOpplæring: props.gjennomgåttOpplæring,
       nødvendigOpplæring: props.nødvendigOpplæring,
-      sykdomDokumenter: props.sykdomDokumenterOversikt?.dokumenter,
+      opplaeringDokumenter: props.opplaeringDokumenter,
       reisetid: props.reisetid,
       løsAksjonspunktGjennomgåOpplæring,
       løsAksjonspunktNødvendighet,

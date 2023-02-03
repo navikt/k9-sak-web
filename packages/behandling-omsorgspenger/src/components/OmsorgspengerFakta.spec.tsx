@@ -171,6 +171,11 @@ describe('<OmsorgspengerFakta>', () => {
       {
         erAktiv: false,
         harAksjonspunkt: false,
+        tekstKode: 'OmsorgenForInfoPanel.Title',
+      },
+      {
+        erAktiv: false,
+        harAksjonspunkt: false,
         tekstKode: 'InntektOgYtelser.Title',
       },
     ]);

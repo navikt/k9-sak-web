@@ -22,7 +22,7 @@ interface OwnProps {
 }
 
 const NoedvendighetFerdigVisning = ({ vurdering, rediger }: OwnProps) => {
-  const { readOnly, sykdomDokumenter, saksbehandlere } = useContext(FaktaOpplaeringContext);
+  const { readOnly, opplaeringDokumenter, saksbehandlere } = useContext(FaktaOpplaeringContext);
   const intl = useIntl();
 
   return (
@@ -48,7 +48,7 @@ const NoedvendighetFerdigVisning = ({ vurdering, rediger }: OwnProps) => {
           content={
             <Box marginTop={Margin.medium}>
               <BasicList
-                elements={sykdomDokumenter
+                elements={opplaeringDokumenter
                   .map(dokument => ({ ...dokument, benyttet: vurdering.tilknyttedeDokumenter.includes(dokument.id) }))
                   .filter(({ benyttet }) => benyttet)
                   .map(dokument => (
@@ -65,7 +65,10 @@ const NoedvendighetFerdigVisning = ({ vurdering, rediger }: OwnProps) => {
           content={vurdering.begrunnelse}
           indentContent
         />
-        <AssessedBy name={saksbehandlere[vurdering.endretAv] || vurdering.endretAv} date={vurdering?.endretTidspunkt} />
+        <AssessedBy
+          name={saksbehandlere[vurdering.vurdertAv] || vurdering.vurdertAv}
+          date={vurdering?.vurdertTidspunkt}
+        />
       </Box>
       <Box marginTop={Margin.xLarge}>
         <LabelledContent

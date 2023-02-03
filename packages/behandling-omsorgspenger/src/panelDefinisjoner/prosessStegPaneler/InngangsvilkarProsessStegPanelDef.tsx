@@ -5,6 +5,7 @@ import SoknadsfristPanelDef from './inngangsvilkarPaneler/SoknadsfristPanelDef';
 import AlderPanelDef from './inngangsvilkarPaneler/AlderPanelDef';
 import MedlemskapPanelDef from './inngangsvilkarPaneler/MedlemskapPanelDef';
 import OpptjeningPanelDef from './inngangsvilkarPaneler/OpptjeningPanelDef';
+import OmsorgenForPanelDef from './inngangsvilkarPaneler/OmsorgenForPanelDef';
 
 class InngangsvilkarProsessStegPanelDef extends ProsessStegDef {
   getUrlKode = () => prosessStegCodes.INNGANGSVILKAR;
@@ -13,6 +14,7 @@ class InngangsvilkarProsessStegPanelDef extends ProsessStegDef {
 
   getPanelDefinisjoner = () => [
     new SoknadsfristPanelDef(),
+    new OmsorgenForPanelDef(),
     new OpptjeningPanelDef(),
     new MedlemskapPanelDef(),
     new AlderPanelDef(),

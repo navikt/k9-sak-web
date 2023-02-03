@@ -126,6 +126,7 @@ const OmsorgspengerFakta = ({
           <ErrorBoundary errorMessageCallback={addErrorMessage}>
             {valgtPanel.getPanelDef().getKomponent({
               ...faktaData,
+              fagsak,
               behandling,
               alleKodeverk,
               formData,
