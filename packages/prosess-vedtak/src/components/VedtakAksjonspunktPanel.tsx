@@ -54,6 +54,7 @@ export const VedtakAksjonspunktPanelImpl: React.FC<Props> = ({
         <VerticalSpacer twentyPx />
         {sjekkTilbakekreving?.visAksjonspunkt && (
           <VedtakSjekkTilbakekreving
+            readOnly={readOnly}
             sjekkTilbakekreving={sjekkTilbakekreving}
             setSjekkTilbakekreving={setSjekkTilbakekreving}
           />

@@ -153,7 +153,9 @@ export const VedtakForm: React.FC<Props> = ({
   const [harVurdertOverlappendeYtelse, setHarVurdertOverlappendeYtelse] = useState(false);
   const [visSakGårIkkeTilBeslutterModal, setVisSakGårIkkeTilBeslutterModal] = useState(false);
   const [sjekkTilbakekreving, setSjekkTilbakekreving] = useState<SjekkTilbakekrevingType>({
-    visAksjonspunkt: !!aksjonspunkter.find(ap => ap.definisjon.kode === aksjonspunktCodes.SJEKK_TILBAKEKREVING),
+    visAksjonspunkt: !!aksjonspunkter.find(
+      ap => ap.definisjon.kode === aksjonspunktCodes.SJEKK_TILBAKEKREVING && ap.erAktivt && ap.kanLoses,
+    ),
     skalBehandleTilbakekrevingFørst: false,
     harVurdertÅSjekkeTilbakekreving: false,
   });
