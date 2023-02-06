@@ -1,17 +1,20 @@
 import React from 'react';
 import { Alert, BodyLong, Heading, Radio, RadioGroup } from '@navikt/ds-react';
-import { useFormikContext } from 'formik';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import styles from './VedtakSjekkTilbakekreving.less';
 import { SjekkTilbakekrevingType } from './VedtakForm';
 
 interface Props {
+  readOnly: boolean;
   sjekkTilbakekreving: SjekkTilbakekrevingType;
   setSjekkTilbakekreving: (sjekkTilbakekreving: SjekkTilbakekrevingType) => void;
 }
 
-export const VedtakSjekkTilbakekreving: React.FC<Props> = ({ sjekkTilbakekreving, setSjekkTilbakekreving }) => {
-  const { submitCount } = useFormikContext();
+export const VedtakSjekkTilbakekreving: React.FC<Props> = ({
+  readOnly,
+  sjekkTilbakekreving,
+  setSjekkTilbakekreving,
+}) => {
   const handleChange = value =>
     setSjekkTilbakekreving({
       ...sjekkTilbakekreving,
@@ -26,7 +29,7 @@ export const VedtakSjekkTilbakekreving: React.FC<Props> = ({ sjekkTilbakekreving
       </Heading>
       <BodyLong>Vurder om tilbakekrevingssaken skal behandles først.</BodyLong>
       <VerticalSpacer twentyPx />
-      <RadioGroup legend="Behandle tilbakekrevingssaken først?" onChange={handleChange}>
+      <RadioGroup legend="Behandle tilbakekrevingssaken først?" onChange={handleChange} disabled={readOnly}>
         <Radio value="ja">Ja</Radio>
         <Radio value="nei">Nei</Radio>
       </RadioGroup>

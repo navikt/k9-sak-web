@@ -72,7 +72,7 @@ const VedtakSubmit = ({
           <>
             <VerticalSpacer twentyPx />
             <Alert className={styles.aksjonspunktAlert} variant="error" size="small">
-              <BodyLong>Sett behandlingen på vent og behandle tilbakekrevingssaken først.</BodyLong>
+              <BodyLong>{intl.formatMessage({ id: 'VedtakForm.BehandleTilbakekrevingFørst' })}</BodyLong>
             </Alert>
           </>
         )}

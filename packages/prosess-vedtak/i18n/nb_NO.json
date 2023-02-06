@@ -1,6 +1,7 @@
 {
   "VedtakForm.ForslagTilVedtak": "Vedtak",
   "VedtakForm.BehandlingHenlagt": "Behandlingen er henlagt",
+  "VedtakForm.BehandleTilbakekrevingFørst": "Sett behandlingen på vent og behandle tilbakekrevingssaken først",
   "VedtakForm.ResultatKlageYtelsesvedtakOpphevet": "Vedtaket er opphevet",
   "VedtakForm.ResultatKlageAvvist": "Klagen er avvist",
   "VedtakForm.EngangsstonadIkkeInnvilget": "Engangsstønad er avslått",
