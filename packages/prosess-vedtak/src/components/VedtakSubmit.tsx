@@ -35,18 +35,19 @@ const VedtakSubmit = ({
 }: Props): JSX.Element => {
   const intl = useIntl();
 
+  const skalSubmitVæreDeaktivert =
+    behandlingPaaVent ||
+    isSubmitting ||
+    (sjekkTilbakekreving.visAksjonspunkt &&
+      sjekkTilbakekreving.harVurdertÅSjekkeTilbakekreving &&
+      sjekkTilbakekreving.skalBehandleTilbakekrevingFørst) ||
+    (sjekkTilbakekreving.visAksjonspunkt && !sjekkTilbakekreving.harVurdertÅSjekkeTilbakekreving);
+
   const submitKnapp = (
     <Button
       variant="primary"
       className={styles.mainButton}
-      disabled={
-        behandlingPaaVent ||
-        isSubmitting ||
-        (sjekkTilbakekreving.visAksjonspunkt &&
-          sjekkTilbakekreving.harVurdertÅSjekkeTilbakekreving &&
-          sjekkTilbakekreving.skalBehandleTilbakekrevingFørst) ||
-        (sjekkTilbakekreving.visAksjonspunkt && !sjekkTilbakekreving.harVurdertÅSjekkeTilbakekreving)
-      }
+      disabled={skalSubmitVæreDeaktivert}
       loading={isSubmitting}
       onClick={handleSubmit}
       size="small"
