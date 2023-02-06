@@ -69,18 +69,6 @@ export default {
   decorators: [withKnobs, withReduxProvider],
 };
 
-export const aksjonspunkt = [
-  {
-    definisjon: { kode: '5085', kodeverk: 'AKSJONSPUNKT_DEF' },
-    status: { kode: 'OPPR', kodeverk: 'AKSJONSPUNKT_STATUS' },
-    toTrinnsBehandling: true,
-    aksjonspunktType: { kode: 'MANU', kodeverk: 'AKSJONSPUNKT_TYPE' },
-    kanLoses: true,
-    erAktivt: true,
-    venteårsak: { kode: '-', kodeverk: 'VENT_AARSAK' },
-  },
-];
-
 export const visSjekkTilbakekreving = () => {
   const aksjonspunkt5040 = {
     aksjonspunktType: { kode: 'MANU', kodeverk: 'AKSJONSPUNKT_TYPE' },
