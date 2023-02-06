@@ -9,7 +9,11 @@ import { UtvidetRettBehandlingApiKeys } from '../../data/utvidetRettBehandlingAp
 class PanelDef extends ProsessStegPanelDef {
   getKomponent = props => <VedtakProsessIndex {...props} />;
 
-  getAksjonspunktKoder = () => [aksjonspunktCodes.FORESLA_VEDTAK, aksjonspunktCodes.FATTER_VEDTAK];
+  getAksjonspunktKoder = () => [
+    aksjonspunktCodes.FORESLA_VEDTAK,
+    aksjonspunktCodes.FATTER_VEDTAK,
+    aksjonspunktCodes.SJEKK_TILBAKEKREVING,
+  ];
 
   getEndepunkter = () => [
     UtvidetRettBehandlingApiKeys.TILBAKEKREVINGVALG,

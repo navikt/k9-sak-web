@@ -2,13 +2,14 @@ import React from 'react';
 import { createSelector } from 'reselect';
 import { injectIntl, IntlShape } from 'react-intl';
 import { connect } from 'react-redux';
-import { Button } from '@navikt/ds-react';
+import { Button, Alert, BodyLong } from '@navikt/ds-react';
 
 import klageBehandlingArsakType from '@fpsak-frontend/kodeverk/src/behandlingArsakType';
 import behandlingStatusCode from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import { Aksjonspunkt } from '@k9-sak-web/types';
-
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { SjekkTilbakekrevingType } from '../VedtakForm';
+
 import redusertUtbetalingArsak from '../../kodeverk/redusertUtbetalingArsak';
 
 import styles from '../vedtakForm.less';
@@ -23,6 +24,7 @@ interface OwnProps {
   isSubmitting: boolean;
   handleSubmit: (event: any) => void;
   aksjonspunkter: Aksjonspunkt[];
+  sjekkTilbakekreving: SjekkTilbakekrevingType;
 }
 
 export const submitKnappTekst = aksjonspunkter =>
@@ -40,6 +42,7 @@ export const VedtakRevurderingSubmitPanelImpl = ({
   isSubmitting,
   handleSubmit,
   aksjonspunkter,
+  sjekkTilbakekreving,
 }: OwnProps): JSX.Element => {
   const onClick = event =>
     !harRedusertUtbetaling || Object.values(redusertUtbetalingArsak).some(a => !!formikValues[a])
@@ -54,7 +57,13 @@ export const VedtakRevurderingSubmitPanelImpl = ({
       type="button"
       className={styles.mainButton}
       onClick={onClick}
-      disabled={isSubmitting}
+      disabled={
+        isSubmitting ||
+        (sjekkTilbakekreving.visAksjonspunkt &&
+          sjekkTilbakekreving.harVurdertÅSjekkeTilbakekreving &&
+          sjekkTilbakekreving.skalBehandleTilbakekrevingFørst) ||
+        (sjekkTilbakekreving.visAksjonspunkt && !sjekkTilbakekreving.harVurdertÅSjekkeTilbakekreving)
+      }
       loading={isSubmitting}
       size="small"
     >
@@ -71,6 +80,14 @@ export const VedtakRevurderingSubmitPanelImpl = ({
   return (
     <div>
       <div className={styles.margin} />
+      {sjekkTilbakekreving.skalBehandleTilbakekrevingFørst && (
+        <>
+          <VerticalSpacer twentyPx />
+          <Alert className={styles.aksjonspunktAlert} variant="error" size="small">
+            <BodyLong>Sett behandlingen på vent og behandle tilbakekrevingssaken først.</BodyLong>
+          </Alert>
+        </>
+      )}
       {!readOnly && (
         <>
           <VerticalSpacer sixteenPx />

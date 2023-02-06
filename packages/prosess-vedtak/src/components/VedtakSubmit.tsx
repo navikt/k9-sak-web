@@ -4,11 +4,12 @@ import behandlingStatusCode from '@fpsak-frontend/kodeverk/src/behandlingStatus'
 import { useIntl } from 'react-intl';
 
 import { Column, Row } from 'nav-frontend-grid';
-import { Button } from '@navikt/ds-react';
+import { Alert, BodyLong, Button } from '@navikt/ds-react';
 import { Aksjonspunkt } from '@k9-sak-web/types';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 
 import styles from './vedtakForm.less';
+import { SjekkTilbakekrevingType } from './VedtakForm';
 
 interface Props {
   behandlingStatusKode: string;
@@ -16,6 +17,7 @@ interface Props {
   behandlingPaaVent: boolean;
   isSubmitting: boolean;
   aksjonspunkter: Aksjonspunkt[];
+  sjekkTilbakekreving: SjekkTilbakekrevingType;
   handleSubmit: (e) => void;
 }
 
@@ -28,15 +30,24 @@ const VedtakSubmit = ({
   behandlingPaaVent,
   isSubmitting,
   aksjonspunkter,
+  sjekkTilbakekreving,
   handleSubmit,
 }: Props): JSX.Element => {
   const intl = useIntl();
+
+  const skalSubmitVæreDeaktivert =
+    behandlingPaaVent ||
+    isSubmitting ||
+    (sjekkTilbakekreving.visAksjonspunkt &&
+      sjekkTilbakekreving.harVurdertÅSjekkeTilbakekreving &&
+      sjekkTilbakekreving.skalBehandleTilbakekrevingFørst) ||
+    (sjekkTilbakekreving.visAksjonspunkt && !sjekkTilbakekreving.harVurdertÅSjekkeTilbakekreving);
 
   const submitKnapp = (
     <Button
       variant="primary"
       className={styles.mainButton}
-      disabled={behandlingPaaVent || isSubmitting}
+      disabled={skalSubmitVæreDeaktivert}
       loading={isSubmitting}
       onClick={handleSubmit}
       size="small"
@@ -57,6 +68,15 @@ const VedtakSubmit = ({
   return (
     <Row>
       <Column xs="12">
+        {sjekkTilbakekreving.skalBehandleTilbakekrevingFørst && (
+          <>
+            <VerticalSpacer twentyPx />
+            <Alert className={styles.aksjonspunktAlert} variant="error" size="small">
+              <BodyLong>{intl.formatMessage({ id: 'VedtakForm.BehandleTilbakekrevingFørst' })}</BodyLong>
+            </Alert>
+          </>
+        )}
+
         {!readOnly && (
           <>
             <VerticalSpacer sixteenPx />

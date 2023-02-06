@@ -5,8 +5,10 @@ import { Heading } from '@navikt/ds-react';
 import { Column, Row } from 'nav-frontend-grid';
 import React from 'react';
 import { injectIntl, IntlShape } from 'react-intl';
+import { SjekkTilbakekrevingType } from './VedtakForm';
 import VedtakHelpTextPanel from './VedtakHelpTextPanel';
 import VedtakOverlappendeYtelsePanel from './VedtakOverlappendeYtelsePanel';
+import VedtakSjekkTilbakekreving from './VedtakSjekkTilbakekreving';
 
 export const getTextCode = behandlingStatus =>
   behandlingStatus === behandlingStatusCode.AVSLUTTET || behandlingStatus === behandlingStatusCode.IVERKSETTER_VEDTAK
@@ -23,6 +25,8 @@ interface Props {
   viseFlereSjekkbokserForBrev: boolean;
   harVurdertOverlappendeYtelse: boolean;
   setHarVurdertOverlappendeYtelse: (harVurdertOverlappendeYtelse: boolean) => void;
+  sjekkTilbakekreving: SjekkTilbakekrevingType;
+  setSjekkTilbakekreving: (sjekkTilbakekreving: SjekkTilbakekrevingType) => void;
 }
 
 export const VedtakAksjonspunktPanelImpl: React.FC<Props> = ({
@@ -36,8 +40,11 @@ export const VedtakAksjonspunktPanelImpl: React.FC<Props> = ({
   viseFlereSjekkbokserForBrev,
   harVurdertOverlappendeYtelse,
   setHarVurdertOverlappendeYtelse,
+  sjekkTilbakekreving,
+  setSjekkTilbakekreving,
 }) => {
   const harOverlappendeYtelser = overlappendeYtelser && overlappendeYtelser.length > 0;
+
   return (
     <Row>
       <Column xs="8">
@@ -45,6 +52,13 @@ export const VedtakAksjonspunktPanelImpl: React.FC<Props> = ({
           {intl.formatMessage({ id: getTextCode(behandlingStatusKode) })}
         </Heading>
         <VerticalSpacer twentyPx />
+        {sjekkTilbakekreving?.visAksjonspunkt && (
+          <VedtakSjekkTilbakekreving
+            readOnly={readOnly}
+            sjekkTilbakekreving={sjekkTilbakekreving}
+            setSjekkTilbakekreving={setSjekkTilbakekreving}
+          />
+        )}
         {!harOverlappendeYtelser && (
           <VedtakHelpTextPanel
             aksjonspunktKoder={aksjonspunktKoder}
