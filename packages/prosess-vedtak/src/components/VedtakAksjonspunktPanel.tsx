@@ -52,7 +52,7 @@ export const VedtakAksjonspunktPanelImpl: React.FC<Props> = ({
           {intl.formatMessage({ id: getTextCode(behandlingStatusKode) })}
         </Heading>
         <VerticalSpacer twentyPx />
-        {sjekkTilbakekreving.visAksjonspunkt && (
+        {sjekkTilbakekreving?.visAksjonspunkt && (
           <VedtakSjekkTilbakekreving
             sjekkTilbakekreving={sjekkTilbakekreving}
             setSjekkTilbakekreving={setSjekkTilbakekreving}
