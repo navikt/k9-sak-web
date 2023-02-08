@@ -10,7 +10,7 @@ import styles from './loadingPanel.less';
  */
 const LoadingPanel = () => (
   <div className={styles.container}>
-    <Loader variant="neutral" size="2xlarge" title="venter..." onResize={undefined} onResizeCapture={undefined} />
+    <Loader variant="neutral" size="2xlarge" title="venter..." />
   </div>
 );
 

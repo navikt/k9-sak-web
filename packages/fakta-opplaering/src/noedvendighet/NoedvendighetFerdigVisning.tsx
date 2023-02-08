@@ -39,7 +39,7 @@ const NoedvendighetFerdigVisning = ({ vurdering, rediger }: OwnProps) => {
     >
       {vurdering.perioder.map(periode => (
         <div key={periode.prettifyPeriod()}>
-          <Calender onResize={undefined} onResizeCapture={undefined} /> <span>{periode.prettifyPeriod()}</span>
+          <Calender /> <span>{periode.prettifyPeriod()}</span>
         </div>
       ))}
       <Box marginTop={Margin.medium}>

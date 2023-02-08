@@ -41,7 +41,7 @@ const GjennomgaaOpplaeringFerdigVisning = ({ vurdering, rediger }: OwnProps) => 
       }
     >
       <div>
-        <Calender onResize={undefined} onResizeCapture={undefined} />
+        <Calender />
         <span>{vurdering.opplæring.prettifyPeriod()}</span>
       </div>
       <Box marginTop={Margin.medium}>

@@ -37,22 +37,14 @@ const FilterList = ({ text, activeFilters, onFilterChange, filterOptions }: Filt
     <div className={styles.vurderingDokumentfilter}>
       <span className={classNames(styles.chevronDropdown, open && styles.chevronDropdown__hidden)}>
         <ChevronWithText chevronDirection={chevronDirection} onClick={() => setOpen(!open)} text={text} />
-        <FilterFilled
-          className={listeErFiltrert ? '' : styles.chevronDropdown__hidden}
-          onResize={undefined}
-          onResizeCapture={undefined}
-        />
+        <FilterFilled className={listeErFiltrert ? '' : styles.chevronDropdown__hidden} />
       </span>
       {open && (
         <OutsideClickHandler onOutsideClick={() => setOpen(false)}>
           <div className={styles.chevronDropdown__dropdown}>
             <span className={classNames(styles.chevronDropdown)}>
               <ChevronWithText chevronDirection={chevronDirection} onClick={() => setOpen(!open)} text={text} />
-              <FilterFilled
-                className={listeErFiltrert ? '' : styles.chevronDropdown__hidden}
-                onResize={undefined}
-                onResizeCapture={undefined}
-              />
+              <FilterFilled className={listeErFiltrert ? '' : styles.chevronDropdown__hidden} />
               <div className={styles.chevronDropdown__dropdown__checkbox}>
                 {filterListe.map(({ label, attributtNavn }) => (
                   <Checkbox

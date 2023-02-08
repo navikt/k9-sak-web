@@ -150,8 +150,7 @@ const GjennomgaaOpplaeringForm = ({ vurdering, avbrytRedigering, erRedigering }:
         {({ handleSubmit, isSubmitting, values, setFieldValue, setFieldTouched, errors }) => (
           <>
             <div>
-              <Calender onResize={undefined} onResizeCapture={undefined} />{' '}
-              <span>{vurdering.opplæring.prettifyPeriod()}</span>
+              <Calender /> <span>{vurdering.opplæring.prettifyPeriod()}</span>
             </div>
             <Box marginTop={Margin.xLarge}>
               <Field name={fieldname.DOKUMENTER}>
