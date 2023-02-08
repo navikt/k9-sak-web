@@ -2909,7 +2909,7 @@
     "@navikt/ds-react" "2.1.5"
     "@navikt/ft-utils" "^1.1.16"
 
-"@navikt/ft-plattform-komponenter@^1.2.2", "@navikt/ft-plattform-komponenter@^1.4.7":
+"@navikt/ft-plattform-komponenter@^1.2.2":
   version "1.4.7"
   resolved "https://npm.pkg.github.com/download/@navikt/ft-plattform-komponenter/1.4.7/4be19c3fcd609e686ee8137b9c73fad846fc2f7c#4be19c3fcd609e686ee8137b9c73fad846fc2f7c"
   integrity sha512-p/bqmarzY8TO1B8JKEy58nGuX5GPP444PXZEZ+1ABTYO21HLx3+FmVmnqEIFAno+nP/EvJDhG0je5XmeULsDMQ==
