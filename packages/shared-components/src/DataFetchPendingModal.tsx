@@ -67,13 +67,7 @@ export class DataFetchPendingModal extends Component<OwnProps, OwnState> {
       >
         <Row>
           <Column xs="2">
-            <Loader
-              variant="neutral"
-              size="xlarge"
-              title="venter..."
-              onResize={undefined}
-              onResizeCapture={undefined}
-            />
+            <Loader variant="neutral" size="xlarge" title="venter..." />
             <div className={styles.divider} />
           </Column>
           <Column xs="10">
