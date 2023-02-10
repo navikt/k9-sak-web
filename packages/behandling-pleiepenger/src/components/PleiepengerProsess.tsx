@@ -61,9 +61,9 @@ const getForhandsvisCallback =
     fagsakPerson: FagsakPerson,
     behandling: Behandling,
   ) =>
-  (parametre: any) => {
+  (parametre: any, aapneINyttVindu = true) => {
     const request = lagForhåndsvisRequest(behandling, fagsak, fagsakPerson, parametre);
-    return forhandsvisMelding(request).then(response => forhandsvis(response));
+    return forhandsvisMelding(request).then(response => (aapneINyttVindu ? forhandsvis(response) : response));
   };
 
 const getForhandsvisFptilbakeCallback =
