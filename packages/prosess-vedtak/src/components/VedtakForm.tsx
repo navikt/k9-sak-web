@@ -401,10 +401,13 @@ export const VedtakForm: React.FC<Props> = ({
     }
 
     if (!hindreUtsending && !manueltBrev) {
+      // Tillater at automatisk brev eventuelt feiler i saker hvor man ikke kan undertrykke brev.
+      // Dette er fordi det er bedre at søker får utbetalt, men ikke noe brev, enn at det blir umulig å få gjennom saken.
       if (!kanHindreUtsending(tilgjengeligeVedtaksbrev)) {
         submitCallback(createPayload(values));
         return;
       }
+
       try {
         await getPreviewAutomatiskBrevCallback(values)({ aapneINyttVindu: false })(undefined);
         submitCallback(createPayload(values));
