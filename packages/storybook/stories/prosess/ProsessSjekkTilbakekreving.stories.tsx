@@ -115,7 +115,6 @@ export const visSjekkTilbakekreving = () => {
       previewCallback={action('button-click')}
       submitCallback={action('button-click')}
       alleKodeverk={alleKodeverk}
-      featureToggles={{ NY_PROSESS_VEDTAK_ENABLED: true }}
     />
   );
 };

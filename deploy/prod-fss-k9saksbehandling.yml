@@ -101,8 +101,6 @@ spec:
       value: "true"
     - name: AKSJONSPUNKT_9015
       value: "true"
-    - name: NY_PROSESS_VEDTAK_ENABLED
-      value: "true"
     - name: FRITEKST_REDIGERING
       value: "true"
     - name: INKLUDER_KALENDER_PILS
