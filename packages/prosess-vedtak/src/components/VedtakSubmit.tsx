@@ -4,7 +4,7 @@ import behandlingStatusCode from '@fpsak-frontend/kodeverk/src/behandlingStatus'
 import { useIntl } from 'react-intl';
 
 import { Column, Row } from 'nav-frontend-grid';
-import { Alert, BodyLong, Button } from '@navikt/ds-react';
+import { Alert, BodyLong, Button, ErrorMessage } from '@navikt/ds-react';
 import { Aksjonspunkt } from '@k9-sak-web/types';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 
@@ -19,6 +19,7 @@ interface Props {
   aksjonspunkter: Aksjonspunkt[];
   sjekkTilbakekreving: SjekkTilbakekrevingType;
   handleSubmit: (e) => void;
+  errorOnSubmit: string;
 }
 
 const kanSendesTilGodkjenning = behandlingStatusKode =>
@@ -32,6 +33,7 @@ const VedtakSubmit = ({
   aksjonspunkter,
   sjekkTilbakekreving,
   handleSubmit,
+  errorOnSubmit,
 }: Props): JSX.Element => {
   const intl = useIntl();
 
@@ -82,6 +84,7 @@ const VedtakSubmit = ({
             <VerticalSpacer sixteenPx />
             {submitKnapp}
             <VerticalSpacer sixteenPx />
+            {errorOnSubmit && <ErrorMessage size="small">{errorOnSubmit}</ErrorMessage>}
           </>
         )}
       </Column>
