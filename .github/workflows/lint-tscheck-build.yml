@@ -30,7 +30,7 @@ jobs:
           node-version: "18"
 
       - name: Installere dependencies
-        run: HUSKY=0 yarn install
+        run: HUSKY=0 yarn install --immutable
 
       - name: Typescript-sjekk
         run: yarn ts-check
