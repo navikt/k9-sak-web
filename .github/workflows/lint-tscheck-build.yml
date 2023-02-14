@@ -23,6 +23,8 @@ jobs:
           registry-url: 'https://npm.pkg.github.com/'
           scope: '@navikt'
           cache: 'yarn'
+          always-auth: true
+          token: ${{ secrets.READER_TOKEN }}
 
       - name: Installere dependencies
         run: HUSKY=0 yarn install --immutable

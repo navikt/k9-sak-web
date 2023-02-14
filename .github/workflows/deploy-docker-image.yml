@@ -2,9 +2,9 @@ name: Deploy Docker image
 on:
   push:
     paths-ignore:
-      - '**.md'
-      - '.gitignore'
-      - 'CODEOWNERS'
+      - "**.md"
+      - ".gitignore"
+      - "CODEOWNERS"
     branches:
       - master
 
@@ -33,11 +33,12 @@ jobs:
       - name: Sette opp Node
         uses: actions/setup-node@v3
         with:
-          node-version: '18'
+          node-version: "18"
           registry-url: https://npm.pkg.github.com/
-          scope: '@navikt'
-          cache: 'yarn'
+          scope: "@navikt"
+          cache: "yarn"
           always-auth: true
+          token: ${{ secrets.READER_TOKEN }}
 
       - name: Set timestamp
         run: echo "TIMESTAMP=$(expr $(date +%Y%m%d%H%M%S))" >> $GITHUB_ENV
