@@ -27,10 +27,13 @@ k9-sak-web har dependencies til pakker publisert fra [k9-frontend-modules](https
 
 For å få hentet pakker fra GitHub sitt pakkeregistry må man sette opp lokal NPM med autentisering mot GitHub med en Personal Access Token (PAT) med `read:packages`-tilgang i lokalt utviklingsmiljø, før man gjør `yarn install`. GitHub har en guide på hvordan man gjør dette [her](https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-npm-registry#authenticating-to-github-packages).
 
-TLDR er å opprette en GitHub PAT med kun `read:packages`-tilgang, enable SSO, og putte det i en egen ~/.npmrc-fil slik:
+TLDR er å opprette en GitHub PAT med kun `read:packages`-tilgang, enable SSO, og putte det i en egen ~/.yarnrc.yml-fil slik:
 
 ```
-//npm.pkg.github.com/:_authToken=<token>
+npmRegistries:
+  https://npm.pkg.github.com:
+    npmAlwaysAuth: true
+    npmAuthToken: <token>
 ```
 
 Merk at dette _ikke_ skal sjekkes inn i versjonskontroll.

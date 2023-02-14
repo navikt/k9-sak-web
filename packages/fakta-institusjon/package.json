@@ -5,12 +5,12 @@
   "license": "MIT",
   "private": true,
   "dependencies": {
-    "@navikt/k9-period-utils": "^0.0.12",
-    "@navikt/k9-form-utils": "2.0.0",
-    "@navikt/ft-plattform-komponenter": "^1.4.9",
-    "formik": "^2.2.9",
-    "yup": "^0.32.11",
     "@fpsak-frontend/form": "*",
-    "@k9-sak-web/types": "*"
+    "@k9-sak-web/types": "*",
+    "@navikt/ft-plattform-komponenter": "^1.4.9",
+    "@navikt/k9-form-utils": "2.0.0",
+    "@navikt/k9-period-utils": "^1.0.0",
+    "formik": "^2.2.9",
+    "yup": "^0.32.11"
   }
 }
