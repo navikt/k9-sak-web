@@ -20,7 +20,7 @@ jobs:
           cache: 'yarn'
 
       - name: Installere dependencies
-        run: HUSKY=0 yarn install --prefer-offline --ignore-optional --no-progress --immutable
+        run: HUSKY=0 yarn install --prefer-offline  --no-progress --immutable
         env:
           NODE_AUTH_TOKEN: ${{ secrets.READER_TOKEN }}
 

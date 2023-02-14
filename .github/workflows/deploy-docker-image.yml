@@ -43,7 +43,7 @@ jobs:
         run: echo "TIMESTAMP=$(expr $(date +%Y%m%d%H%M%S))" >> $GITHUB_ENV
 
       - name: Installere dependencies
-        run: HUSKY=0 yarn install --ignore-optional --no-progress --immutable
+        run: HUSKY=0 yarn install  --no-progress --immutable
         env:
           NODE_AUTH_TOKEN: ${{ secrets.READER_TOKEN }}
 
