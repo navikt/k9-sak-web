@@ -22,7 +22,7 @@ jobs:
           token: ${{ secrets.READER_TOKEN }}
 
       - name: Installere dependencies
-        run: HUSKY=0 yarn install --immutable
+        run: HUSKY=0 yarn install
         env:
           NODE_AUTH_TOKEN: ${{ secrets.READER_TOKEN }}
 
