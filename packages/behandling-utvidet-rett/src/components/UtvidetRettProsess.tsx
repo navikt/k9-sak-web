@@ -13,13 +13,19 @@ import {
 } from '@k9-sak-web/behandling-felles';
 import { Fagsak, FagsakPerson, Behandling } from '@k9-sak-web/types';
 
-import { bestemAvsenderApp, forhandsvis, getForhandsvisCallback } from '@fpsak-frontend/utils/src/formidlingUtils';
+import lagForhåndsvisRequest, { bestemAvsenderApp } from '@fpsak-frontend/utils/src/formidlingUtils';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import { restApiUtvidetRettHooks, UtvidetRettBehandlingApiKeys } from '../data/utvidetRettBehandlingApi';
 import prosessStegUtvidetRettPanelDefinisjoner from '../panelDefinisjoner/prosessStegUtvidetRettPanelDefinisjoner';
 import '@fpsak-frontend/assets/styles/arrowForProcessMenu.less';
 import { ProsessProps } from '../types/ProsessProps';
+
+const forhandsvis = (data: any) => {
+  if (URL.createObjectURL) {
+    window.open(URL.createObjectURL(data));
+  }
+};
 
 const getHentFritekstbrevHtmlCallback =
   (
@@ -50,6 +56,18 @@ const getForhandsvisTilbakeCallback =
       saksnummer,
     };
     return forhandsvisTilbakekrevingMelding(data).then(response => forhandsvis(response));
+  };
+
+const getForhandsvisCallback =
+  (
+    forhandsvisMelding: (data: any) => Promise<any>,
+    fagsak: Fagsak,
+    fagsakPerson: FagsakPerson,
+    behandling: Behandling,
+  ) =>
+  (data: any) => {
+    const request = lagForhåndsvisRequest(behandling, fagsak, fagsakPerson, data);
+    return forhandsvisMelding(request).then(response => forhandsvis(response));
   };
 
 const getLagringSideeffekter =

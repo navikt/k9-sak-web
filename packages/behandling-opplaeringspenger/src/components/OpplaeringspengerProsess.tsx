@@ -1,7 +1,8 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useMemo } from 'react';
 
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
+import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import {
   Rettigheter,
   prosessStegHooks,
@@ -20,7 +21,7 @@ import {
   FagsakPerson,
   ArbeidsgiverOpplysningerPerId,
 } from '@k9-sak-web/types';
-import { bestemAvsenderApp, forhandsvis, getForhandsvisCallback } from '@fpsak-frontend/utils/src/formidlingUtils';
+import lagForhåndsvisRequest, { bestemAvsenderApp } from '@fpsak-frontend/utils/src/formidlingUtils';
 
 import prosessStegPanelDefinisjoner from '../panelDefinisjoner/prosessStegOpplaeringspengerPanelDefinisjoner';
 import FetchedData from '../types/fetchedDataTsType';
@@ -31,6 +32,11 @@ import {
 
 import '@fpsak-frontend/assets/styles/arrowForProcessMenu.less';
 
+const forhandsvis = (data: any) => {
+  if (URL.createObjectURL) {
+    window.open(URL.createObjectURL(data));
+  }
+};
 interface OwnProps {
   data: FetchedData;
   fagsak: Fagsak;
@@ -50,6 +56,18 @@ interface OwnProps {
   featureToggles: FeatureToggles;
   setBeregningErBehandlet: (value: boolean) => void;
 }
+
+const getForhandsvisCallback =
+  (
+    forhandsvisMelding: (data: any) => Promise<any>,
+    fagsak: Fagsak,
+    fagsakPerson: FagsakPerson,
+    behandling: Behandling,
+  ) =>
+  (parametre: any) => {
+    const request = lagForhåndsvisRequest(behandling, fagsak, fagsakPerson, parametre);
+    return forhandsvisMelding(request).then(response => forhandsvis(response));
+  };
 
 const getForhandsvisFptilbakeCallback =
   (forhandsvisTilbakekrevingMelding: (data: any) => Promise<any>, fagsak: Fagsak, behandling: Behandling) =>
