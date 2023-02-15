@@ -21,12 +21,18 @@ import {
   ArbeidsgiverOpplysningerPerId,
 } from '@k9-sak-web/types';
 
-import { bestemAvsenderApp, forhandsvis, getForhandsvisCallback } from '@fpsak-frontend/utils/src/formidlingUtils';
+import lagForhåndsvisRequest, { bestemAvsenderApp } from '@fpsak-frontend/utils/src/formidlingUtils';
 import prosessStegPanelDefinisjoner from '../panelDefinisjoner/prosessStegOmsorgspengerPanelDefinisjoner';
 import FetchedData from '../types/fetchedDataTsType';
 import { restApiOmsorgHooks, OmsorgspengerBehandlingApiKeys } from '../data/omsorgspengerBehandlingApi';
 
 import '@fpsak-frontend/assets/styles/arrowForProcessMenu.less';
+
+const forhandsvis = (data: any) => {
+  if (URL.createObjectURL) {
+    window.open(URL.createObjectURL(data));
+  }
+};
 
 interface OwnProps {
   data: FetchedData;
@@ -46,6 +52,18 @@ interface OwnProps {
   arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysningerPerId;
   featureToggles: FeatureToggles;
 }
+
+const getForhandsvisCallback =
+  (
+    forhandsvisMelding: (data: any) => Promise<any>,
+    fagsak: Fagsak,
+    fagsakPerson: FagsakPerson,
+    behandling: Behandling,
+  ) =>
+  (data: any) => {
+    const request = lagForhåndsvisRequest(behandling, fagsak, fagsakPerson, data);
+    return forhandsvisMelding(request).then(response => forhandsvis(response));
+  };
 
 const getForhandsvisTilbakeCallback =
   (forhandsvisTilbakekrevingMelding: (data: any) => Promise<any>, fagsak: Fagsak, behandling: Behandling) =>

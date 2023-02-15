@@ -48,7 +48,6 @@ describe('<BrevPanel>', () => {
         behandlingResultat={null}
         overstyrtMottaker={null}
         formikProps={{ values: [] }}
-        getPreviewAutomatiskBrevCallback={() => () => {}}
       />,
     );
 
@@ -77,7 +76,6 @@ describe('<BrevPanel>', () => {
         behandlingResultat={null}
         overstyrtMottaker={null}
         formikProps={{ values: [] }}
-        getPreviewAutomatiskBrevCallback={() => () => {}}
       />,
     );
 
@@ -106,7 +104,6 @@ describe('<BrevPanel>', () => {
         behandlingResultat={null}
         overstyrtMottaker={null}
         formikProps={{ values: [] }}
-        getPreviewAutomatiskBrevCallback={() => () => {}}
       />,
     );
 
@@ -135,7 +132,6 @@ describe('<BrevPanel>', () => {
         behandlingResultat={null}
         overstyrtMottaker={null}
         formikProps={{ values: [] }}
-        getPreviewAutomatiskBrevCallback={() => () => {}}
       />,
     );
     expect(wrapper.find(InformasjonsbehovAutomatiskVedtaksbrev)).to.have.length(0);
@@ -177,7 +173,6 @@ describe('<BrevPanel>', () => {
         behandlingResultat={null}
         overstyrtMottaker={null}
         formikProps={{ values: [] }}
-        getPreviewAutomatiskBrevCallback={() => () => {}}
       />,
     );
 
