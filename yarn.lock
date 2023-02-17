@@ -1450,14 +1450,14 @@
   dependencies:
     tslib "^2.4.0"
 
-"@formatjs/intl-numberformat@^7.4.0":
-  version "7.4.3"
-  resolved "https://registry.yarnpkg.com/@formatjs/intl-numberformat/-/intl-numberformat-7.4.3.tgz#dbf15fb6c8341088f1d526cf24d54f5388b478d1"
-  integrity sha512-oxhLCw00YO7brwMPqGD+ui5gdeWoMiRhqsRSqwsDSRd03aJ/N3/VZQDoxGIn3IM9bhlPM5W0ckXiXuOMFLszjw==
+"@formatjs/intl-numberformat@^8.3.3":
+  version "8.3.3"
+  resolved "https://registry.yarnpkg.com/@formatjs/intl-numberformat/-/intl-numberformat-8.3.3.tgz#bfba1a90a22a28479dae4cf8cc16fb81ff659a36"
+  integrity sha512-11mSFZb5RsCVZMVaHbRcDYNxQ+tsstReL62AJcTCBZdvAZMqECOEsDkJODZ90nf/ClKqp0/KxwVlshxprn22Nw==
   dependencies:
-    "@formatjs/ecma402-abstract" "1.11.4"
-    "@formatjs/intl-localematcher" "0.2.25"
-    tslib "^2.1.0"
+    "@formatjs/ecma402-abstract" "1.14.3"
+    "@formatjs/intl-localematcher" "0.2.32"
+    tslib "^2.4.0"
 
 "@formatjs/intl@2.6.5":
   version "2.6.5"
