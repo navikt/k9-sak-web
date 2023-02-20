@@ -14,7 +14,7 @@ const initializeOmsorgenFor = (
   httpErrorHandlerFn,
   endpoints: SimpleEndpoints,
   readOnly: boolean,
-  løsAksjonspunkt: (omsorgsperioder) => void,
+  løsAksjonspunkt: (omsorgsperioder, fosterbarnForOmsorgspenger) => void,
   sakstype: string,
 ) => {
   (window as any).renderOmsorgenForApp(elementId, {
