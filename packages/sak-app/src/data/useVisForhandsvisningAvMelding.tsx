@@ -1,16 +1,10 @@
 import { Behandling, Fagsak } from '@k9-sak-web/types';
 
 import { erTilbakekrevingType } from '@fpsak-frontend/kodeverk/src/behandlingType';
-import lagForhåndsvisRequest from '@fpsak-frontend/utils/src/formidlingUtils';
+import lagForhåndsvisRequest, { forhandsvis } from '@fpsak-frontend/utils/src/formidlingUtils';
 import { K9sakApiKeys, restApiHooks } from './k9sakApi';
 
 type ForhandsvisFunksjon = (erHenleggelse: boolean, data: any) => void;
-
-const forhandsvis = (data: any) => {
-  if (URL.createObjectURL) {
-    window.open(URL.createObjectURL(data));
-  }
-};
 
 export const useVisForhandsvisningAvMelding = (behandling: Behandling, fagsak?: Fagsak): ForhandsvisFunksjon => {
   const erTilbakekreving = erTilbakekrevingType(behandling?.type);
