@@ -2612,10 +2612,10 @@
     react-hook-form "7.43.1"
     react-intl "6.2.8"
 
-"@navikt/ft-fakta-fordel-beregningsgrunnlag@6.0.5":
-  version "6.0.5"
-  resolved "https://npm.pkg.github.com/download/@navikt/ft-fakta-fordel-beregningsgrunnlag/6.0.5/0ba56fc3ec62f818174fd3c8046e87eed8a49aab#0ba56fc3ec62f818174fd3c8046e87eed8a49aab"
-  integrity sha512-xW+8yvjiTTqrolGiWZb0iAm/wwXXe6kChkPpt2pzeJ0/N3kO+RM69vlS0ijSRPq93s8solPJN8XLgKyv8yEOiQ==
+"@navikt/ft-fakta-fordel-beregningsgrunnlag@6.0.6":
+  version "6.0.6"
+  resolved "https://npm.pkg.github.com/download/@navikt/ft-fakta-fordel-beregningsgrunnlag/6.0.6/8a9d88fc51058d7f50ad638abcaed40de47bb3ef#8a9d88fc51058d7f50ad638abcaed40de47bb3ef"
+  integrity sha512-MREjPZ0HcQQ+C1sXZE5uTVM3W/2UoVNWyo95yt6LjLSXZxRPlox4kKNwRSX2XhMrsVxS/nelzz7gWqUhqd+hWQ==
   dependencies:
     "@navikt/ds-css" "2.1.7"
     "@navikt/ds-react" "2.1.7"
