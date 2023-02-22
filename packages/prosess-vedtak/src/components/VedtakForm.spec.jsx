@@ -11,6 +11,7 @@ import BehandlingResultatType from '@fpsak-frontend/kodeverk/src/behandlingResul
 import behandlingStatuser from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import { intlWithMessages } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
+import ProsessStegContainer from '@k9-sak-web/behandling-felles/src/components/ProsessStegContainer';
 
 import dokumentMalType from '@fpsak-frontend/kodeverk/src/dokumentMalType';
 import vedtaksbrevtype from '@fpsak-frontend/kodeverk/src/vedtaksbrevtype';
@@ -63,23 +64,25 @@ describe('<VedtakForm>', () => {
     };
 
     renderWithIntlAndReduxForm(
-      <VedtakForm
-        intl={intlWithMessages(messages)}
-        previewCallback={previewCallback}
-        behandlingStatus={behandlingStatusUtredes}
-        behandlingresultat={behandlingsresultat}
-        aksjonspunkter={aksjonspunkter}
-        readOnly={false}
-        behandlingPaaVent={false}
-        sprakkode={sprakkode}
-        ytelseTypeKode={fagsakYtelseType.PLEIEPENGER}
-        alleKodeverk={{}}
-        personopplysninger={{}}
-        arbeidsgiverOpplysningerPerId={{}}
-        vilkar={[]}
-        vedtakVarsel={vedtakVarsel}
-        tilgjengeligeVedtaksbrev={ingenTilgjengeligeVedtaksbrev}
-      />,
+      <ProsessStegContainer formaterteProsessStegPaneler={[]}>
+        <VedtakForm
+          intl={intlWithMessages(messages)}
+          previewCallback={previewCallback}
+          behandlingStatus={behandlingStatusUtredes}
+          behandlingresultat={behandlingsresultat}
+          aksjonspunkter={aksjonspunkter}
+          readOnly={false}
+          behandlingPaaVent={false}
+          sprakkode={sprakkode}
+          ytelseTypeKode={fagsakYtelseType.PLEIEPENGER}
+          alleKodeverk={{}}
+          personopplysninger={{}}
+          arbeidsgiverOpplysningerPerId={{}}
+          vilkar={[]}
+          vedtakVarsel={vedtakVarsel}
+          tilgjengeligeVedtaksbrev={ingenTilgjengeligeVedtaksbrev}
+        />
+      </ProsessStegContainer>,
     );
 
     expect(screen.getByTestId('innvilget')).toBeDefined();
@@ -124,23 +127,25 @@ describe('<VedtakForm>', () => {
       },
     };
     renderWithIntlAndReduxForm(
-      <VedtakForm
-        intl={intlWithMessages(messages)}
-        behandlingStatus={behandlingStatusUtredes}
-        behandlingresultat={behandlingsresultat}
-        aksjonspunkter={aksjonspunkter}
-        behandlingPaaVent={false}
-        previewCallback={previewCallback}
-        readOnly={false}
-        sprakkode={sprakkode}
-        ytelseTypeKode={fagsakYtelseType.PLEIEPENGER}
-        alleKodeverk={{}}
-        personopplysninger={{}}
-        arbeidsgiverOpplysningerPerId={{}}
-        vilkar={[]}
-        vedtakVarsel={vedtakVarsel}
-        tilgjengeligeVedtaksbrev={ingenTilgjengeligeVedtaksbrev}
-      />,
+      <ProsessStegContainer formaterteProsessStegPaneler={[]}>
+        <VedtakForm
+          intl={intlWithMessages(messages)}
+          behandlingStatus={behandlingStatusUtredes}
+          behandlingresultat={behandlingsresultat}
+          aksjonspunkter={aksjonspunkter}
+          behandlingPaaVent={false}
+          previewCallback={previewCallback}
+          readOnly={false}
+          sprakkode={sprakkode}
+          ytelseTypeKode={fagsakYtelseType.PLEIEPENGER}
+          alleKodeverk={{}}
+          personopplysninger={{}}
+          arbeidsgiverOpplysningerPerId={{}}
+          vilkar={[]}
+          vedtakVarsel={vedtakVarsel}
+          tilgjengeligeVedtaksbrev={ingenTilgjengeligeVedtaksbrev}
+        />
+      </ProsessStegContainer>,
     );
 
     expect(screen.getByTestId('avslaatt')).toBeDefined();
@@ -182,23 +187,25 @@ describe('<VedtakForm>', () => {
       },
     };
     renderWithIntlAndReduxForm(
-      <VedtakForm
-        intl={intlWithMessages(messages)}
-        behandlingStatus={behandlingStatusUtredes}
-        behandlingresultat={behandlingsresultat}
-        aksjonspunkter={aksjonspunkter}
-        behandlingPaaVent={false}
-        previewCallback={previewCallback}
-        readOnly={false}
-        sprakkode={sprakkode}
-        ytelseTypeKode={fagsakYtelseType.FORELDREPENGER}
-        alleKodeverk={{}}
-        personopplysninger={{}}
-        arbeidsgiverOpplysningerPerId={{}}
-        vilkar={[]}
-        vedtakVarsel={vedtakVarsel}
-        tilgjengeligeVedtaksbrev={ingenTilgjengeligeVedtaksbrev}
-      />,
+      <ProsessStegContainer formaterteProsessStegPaneler={[]}>
+        <VedtakForm
+          intl={intlWithMessages(messages)}
+          behandlingStatus={behandlingStatusUtredes}
+          behandlingresultat={behandlingsresultat}
+          aksjonspunkter={aksjonspunkter}
+          behandlingPaaVent={false}
+          previewCallback={previewCallback}
+          readOnly={false}
+          sprakkode={sprakkode}
+          ytelseTypeKode={fagsakYtelseType.FORELDREPENGER}
+          alleKodeverk={{}}
+          personopplysninger={{}}
+          arbeidsgiverOpplysningerPerId={{}}
+          vilkar={[]}
+          vedtakVarsel={vedtakVarsel}
+          tilgjengeligeVedtaksbrev={ingenTilgjengeligeVedtaksbrev}
+        />
+      </ProsessStegContainer>,
     );
     const fattVedtakButton = screen.getByRole('button');
     expect(fattVedtakButton).toHaveTextContent('VedtakForm.SendTilBeslutter');
@@ -239,23 +246,25 @@ describe('<VedtakForm>', () => {
       },
     };
     renderWithIntlAndReduxForm(
-      <VedtakForm
-        intl={intlWithMessages(messages)}
-        behandlingStatus={behandlingStatusUtredes}
-        behandlingresultat={behandlingsresultat}
-        aksjonspunkter={aksjonspunkter}
-        behandlingPaaVent={false}
-        previewCallback={previewCallback}
-        readOnly={false}
-        sprakkode={sprakkode}
-        ytelseTypeKode={fagsakYtelseType.PLEIEPENGER}
-        alleKodeverk={{}}
-        personopplysninger={{}}
-        arbeidsgiverOpplysningerPerId={{}}
-        vilkar={[]}
-        vedtakVarsel={vedtakVarsel}
-        tilgjengeligeVedtaksbrev={ingenTilgjengeligeVedtaksbrev}
-      />,
+      <ProsessStegContainer formaterteProsessStegPaneler={[]}>
+        <VedtakForm
+          intl={intlWithMessages(messages)}
+          behandlingStatus={behandlingStatusUtredes}
+          behandlingresultat={behandlingsresultat}
+          aksjonspunkter={aksjonspunkter}
+          behandlingPaaVent={false}
+          previewCallback={previewCallback}
+          readOnly={false}
+          sprakkode={sprakkode}
+          ytelseTypeKode={fagsakYtelseType.PLEIEPENGER}
+          alleKodeverk={{}}
+          personopplysninger={{}}
+          arbeidsgiverOpplysningerPerId={{}}
+          vilkar={[]}
+          vedtakVarsel={vedtakVarsel}
+          tilgjengeligeVedtaksbrev={ingenTilgjengeligeVedtaksbrev}
+        />
+      </ProsessStegContainer>,
     );
 
     const fattVedtakButton = screen.getByRole('button');
@@ -301,23 +310,25 @@ describe('<VedtakForm>', () => {
       },
     };
     renderWithIntlAndReduxForm(
-      <VedtakForm
-        intl={intlWithMessages(messages)}
-        behandlingStatus={behandlingStatusUtredes}
-        behandlingresultat={behandlingsresultat}
-        aksjonspunkter={aksjonspunkter}
-        behandlingPaaVent={false}
-        previewCallback={previewCallback}
-        readOnly={false}
-        sprakkode={sprakkode}
-        ytelseTypeKode={fagsakYtelseType.PLEIEPENGER}
-        alleKodeverk={{}}
-        personopplysninger={{}}
-        arbeidsgiverOpplysningerPerId={{}}
-        vilkar={[]}
-        vedtakVarsel={vedtakVarsel}
-        tilgjengeligeVedtaksbrev={ingenTilgjengeligeVedtaksbrev}
-      />,
+      <ProsessStegContainer formaterteProsessStegPaneler={[]}>
+        <VedtakForm
+          intl={intlWithMessages(messages)}
+          behandlingStatus={behandlingStatusUtredes}
+          behandlingresultat={behandlingsresultat}
+          aksjonspunkter={aksjonspunkter}
+          behandlingPaaVent={false}
+          previewCallback={previewCallback}
+          readOnly={false}
+          sprakkode={sprakkode}
+          ytelseTypeKode={fagsakYtelseType.PLEIEPENGER}
+          alleKodeverk={{}}
+          personopplysninger={{}}
+          arbeidsgiverOpplysningerPerId={{}}
+          vilkar={[]}
+          vedtakVarsel={vedtakVarsel}
+          tilgjengeligeVedtaksbrev={ingenTilgjengeligeVedtaksbrev}
+        />
+      </ProsessStegContainer>,
     );
 
     const fattVedtakButton = screen.getByRole('button');
@@ -360,23 +371,25 @@ describe('<VedtakForm>', () => {
       },
     };
     renderWithIntlAndReduxForm(
-      <VedtakForm
-        intl={intlWithMessages(messages)}
-        behandlingStatus={{ kode: behandlingStatuser.AVSLUTTET }}
-        behandlingresultat={behandlingsresultat}
-        aksjonspunkter={aksjonspunkter}
-        behandlingPaaVent={false}
-        previewCallback={previewCallback}
-        readOnly={false}
-        sprakkode={sprakkode}
-        ytelseTypeKode={fagsakYtelseType.PLEIEPENGER}
-        alleKodeverk={{}}
-        personopplysninger={{}}
-        arbeidsgiverOpplysningerPerId={{}}
-        vilkar={[]}
-        vedtakVarsel={vedtakVarsel}
-        tilgjengeligeVedtaksbrev={ingenTilgjengeligeVedtaksbrev}
-      />,
+      <ProsessStegContainer formaterteProsessStegPaneler={[]}>
+        <VedtakForm
+          intl={intlWithMessages(messages)}
+          behandlingStatus={{ kode: behandlingStatuser.AVSLUTTET }}
+          behandlingresultat={behandlingsresultat}
+          aksjonspunkter={aksjonspunkter}
+          behandlingPaaVent={false}
+          previewCallback={previewCallback}
+          readOnly={false}
+          sprakkode={sprakkode}
+          ytelseTypeKode={fagsakYtelseType.PLEIEPENGER}
+          alleKodeverk={{}}
+          personopplysninger={{}}
+          arbeidsgiverOpplysningerPerId={{}}
+          vilkar={[]}
+          vedtakVarsel={vedtakVarsel}
+          tilgjengeligeVedtaksbrev={ingenTilgjengeligeVedtaksbrev}
+        />
+      </ProsessStegContainer>,
     );
 
     const hovedknapp = screen.queryByRole('button');
@@ -418,23 +431,25 @@ describe('<VedtakForm>', () => {
     const previewCallback = sinon.spy();
 
     renderWithIntlAndReduxForm(
-      <VedtakForm
-        intl={intlWithMessages(messages)}
-        behandlingStatus={{ kode: behandlingStatuser.IVERKSETTER_VEDTAK }}
-        behandlingresultat={behandlingsresultat}
-        aksjonspunkter={aksjonspunkter}
-        behandlingPaaVent={false}
-        previewCallback={previewCallback}
-        readOnly={false}
-        sprakkode={sprakkode}
-        ytelseTypeKode={fagsakYtelseType.PLEIEPENGER}
-        alleKodeverk={{}}
-        personopplysninger={{}}
-        arbeidsgiverOpplysningerPerId={{}}
-        vilkar={[]}
-        vedtakVarsel={vedtakVarsel}
-        tilgjengeligeVedtaksbrev={ingenTilgjengeligeVedtaksbrev}
-      />,
+      <ProsessStegContainer formaterteProsessStegPaneler={[]}>
+        <VedtakForm
+          intl={intlWithMessages(messages)}
+          behandlingStatus={{ kode: behandlingStatuser.IVERKSETTER_VEDTAK }}
+          behandlingresultat={behandlingsresultat}
+          aksjonspunkter={aksjonspunkter}
+          behandlingPaaVent={false}
+          previewCallback={previewCallback}
+          readOnly={false}
+          sprakkode={sprakkode}
+          ytelseTypeKode={fagsakYtelseType.PLEIEPENGER}
+          alleKodeverk={{}}
+          personopplysninger={{}}
+          arbeidsgiverOpplysningerPerId={{}}
+          vilkar={[]}
+          vedtakVarsel={vedtakVarsel}
+          tilgjengeligeVedtaksbrev={ingenTilgjengeligeVedtaksbrev}
+        />
+      </ProsessStegContainer>,
     );
 
     const hovedknapp = screen.queryByRole('button');
@@ -476,23 +491,25 @@ describe('<VedtakForm>', () => {
       },
     };
     renderWithIntlAndReduxForm(
-      <VedtakForm
-        intl={intlWithMessages(messages)}
-        behandlingStatus={{ kode: behandlingStatuser.FATTER_VEDTAK }}
-        behandlingresultat={behandlingsresultat}
-        aksjonspunkter={aksjonspunkter}
-        behandlingPaaVent={false}
-        previewCallback={previewCallback}
-        readOnly={false}
-        sprakkode={sprakkode}
-        ytelseTypeKode={fagsakYtelseType.PLEIEPENGER}
-        alleKodeverk={{}}
-        personopplysninger={{}}
-        arbeidsgiverOpplysningerPerId={{}}
-        vilkar={[]}
-        vedtakVarsel={vedtakVarsel}
-        tilgjengeligeVedtaksbrev={ingenTilgjengeligeVedtaksbrev}
-      />,
+      <ProsessStegContainer formaterteProsessStegPaneler={[]}>
+        <VedtakForm
+          intl={intlWithMessages(messages)}
+          behandlingStatus={{ kode: behandlingStatuser.FATTER_VEDTAK }}
+          behandlingresultat={behandlingsresultat}
+          aksjonspunkter={aksjonspunkter}
+          behandlingPaaVent={false}
+          previewCallback={previewCallback}
+          readOnly={false}
+          sprakkode={sprakkode}
+          ytelseTypeKode={fagsakYtelseType.PLEIEPENGER}
+          alleKodeverk={{}}
+          personopplysninger={{}}
+          arbeidsgiverOpplysningerPerId={{}}
+          vilkar={[]}
+          vedtakVarsel={vedtakVarsel}
+          tilgjengeligeVedtaksbrev={ingenTilgjengeligeVedtaksbrev}
+        />
+      </ProsessStegContainer>,
       { messages },
     );
 
@@ -549,24 +566,26 @@ describe('<VedtakForm>', () => {
     requestApi.mock(K9sakApiKeys.FEATURE_TOGGLE, [{ FRITEKST_REDIGERING: true }]);
 
     renderWithIntlAndReduxForm(
-      <VedtakForm
-        intl={intlWithMessages(messages)}
-        behandlingStatus={behandlingStatusUtredes}
-        behandlingresultat={behandlingsresultat}
-        aksjonspunkter={aksjonspunkter}
-        behandlingPaaVent={false}
-        previewCallback={previewCallback}
-        readOnly={false}
-        sprakkode={sprakkode}
-        ytelseTypeKode={fagsakYtelseType.PLEIEPENGER}
-        alleKodeverk={{}}
-        personopplysninger={{}}
-        arbeidsgiverOpplysningerPerId={{}}
-        vilkar={[]}
-        vedtakVarsel={vedtakVarsel}
-        dokumentdata={dokumentdata}
-        tilgjengeligeVedtaksbrev={alleTilgjengeligeVedtaksbrev}
-      />,
+      <ProsessStegContainer formaterteProsessStegPaneler={[]}>
+        <VedtakForm
+          intl={intlWithMessages(messages)}
+          behandlingStatus={behandlingStatusUtredes}
+          behandlingresultat={behandlingsresultat}
+          aksjonspunkter={aksjonspunkter}
+          behandlingPaaVent={false}
+          previewCallback={previewCallback}
+          readOnly={false}
+          sprakkode={sprakkode}
+          ytelseTypeKode={fagsakYtelseType.PLEIEPENGER}
+          alleKodeverk={{}}
+          personopplysninger={{}}
+          arbeidsgiverOpplysningerPerId={{}}
+          vilkar={[]}
+          vedtakVarsel={vedtakVarsel}
+          dokumentdata={dokumentdata}
+          tilgjengeligeVedtaksbrev={alleTilgjengeligeVedtaksbrev}
+        />
+      </ProsessStegContainer>,
       { messages },
     );
     const overstyringsCheckbox = screen.getByLabelText(messages['VedtakForm.ManuellOverstyring']);
@@ -577,24 +596,26 @@ describe('<VedtakForm>', () => {
     requestApi.mock(K9sakApiKeys.FEATURE_TOGGLE, [{ FRITEKST_REDIGERING: true }]);
 
     renderWithIntlAndReduxForm(
-      <VedtakForm
-        intl={intlWithMessages(messages)}
-        behandlingStatus={behandlingStatusUtredes}
-        behandlingresultat={behandlingsresultat}
-        aksjonspunkter={aksjonspunkter}
-        behandlingPaaVent={false}
-        previewCallback={previewCallback}
-        readOnly={false}
-        sprakkode={sprakkode}
-        ytelseTypeKode={fagsakYtelseType.PLEIEPENGER}
-        alleKodeverk={{}}
-        personopplysninger={{}}
-        arbeidsgiverOpplysningerPerId={{}}
-        vilkar={[]}
-        vedtakVarsel={vedtakVarsel}
-        dokumentdata={dokumentdata}
-        tilgjengeligeVedtaksbrev={alleTilgjengeligeVedtaksbrev}
-      />,
+      <ProsessStegContainer formaterteProsessStegPaneler={[]}>
+        <VedtakForm
+          intl={intlWithMessages(messages)}
+          behandlingStatus={behandlingStatusUtredes}
+          behandlingresultat={behandlingsresultat}
+          aksjonspunkter={aksjonspunkter}
+          behandlingPaaVent={false}
+          previewCallback={previewCallback}
+          readOnly={false}
+          sprakkode={sprakkode}
+          ytelseTypeKode={fagsakYtelseType.PLEIEPENGER}
+          alleKodeverk={{}}
+          personopplysninger={{}}
+          arbeidsgiverOpplysningerPerId={{}}
+          vilkar={[]}
+          vedtakVarsel={vedtakVarsel}
+          dokumentdata={dokumentdata}
+          tilgjengeligeVedtaksbrev={alleTilgjengeligeVedtaksbrev}
+        />
+      </ProsessStegContainer>,
       { messages },
     );
 
@@ -606,24 +627,26 @@ describe('<VedtakForm>', () => {
     requestApi.mock(K9sakApiKeys.FEATURE_TOGGLE, [{ FRITEKST_REDIGERING: true }]);
 
     renderWithIntlAndReduxForm(
-      <VedtakForm
-        intl={intlWithMessages(messages)}
-        behandlingStatus={behandlingStatusUtredes}
-        behandlingresultat={behandlingsresultat}
-        aksjonspunkter={aksjonspunkter}
-        behandlingPaaVent={false}
-        previewCallback={previewCallback}
-        readOnly
-        sprakkode={sprakkode}
-        ytelseTypeKode={fagsakYtelseType.PLEIEPENGER}
-        alleKodeverk={{}}
-        personopplysninger={{}}
-        arbeidsgiverOpplysningerPerId={{}}
-        vilkar={[]}
-        vedtakVarsel={vedtakVarsel}
-        dokumentdata={dokumentdata}
-        tilgjengeligeVedtaksbrev={alleTilgjengeligeVedtaksbrev}
-      />,
+      <ProsessStegContainer formaterteProsessStegPaneler={[]}>
+        <VedtakForm
+          intl={intlWithMessages(messages)}
+          behandlingStatus={behandlingStatusUtredes}
+          behandlingresultat={behandlingsresultat}
+          aksjonspunkter={aksjonspunkter}
+          behandlingPaaVent={false}
+          previewCallback={previewCallback}
+          readOnly
+          sprakkode={sprakkode}
+          ytelseTypeKode={fagsakYtelseType.PLEIEPENGER}
+          alleKodeverk={{}}
+          personopplysninger={{}}
+          arbeidsgiverOpplysningerPerId={{}}
+          vilkar={[]}
+          vedtakVarsel={vedtakVarsel}
+          dokumentdata={dokumentdata}
+          tilgjengeligeVedtaksbrev={alleTilgjengeligeVedtaksbrev}
+        />
+      </ProsessStegContainer>,
       { messages },
     );
     const overstyringsCheckbox = screen.getByLabelText(messages['VedtakForm.ManuellOverstyring']);
@@ -641,25 +664,27 @@ describe('<VedtakForm>', () => {
     };
 
     renderWithIntlAndReduxForm(
-      <VedtakForm
-        intl={intlWithMessages(messages)}
-        behandlingStatus={behandlingStatusUtredes}
-        behandlingresultat={behandlingsresultat}
-        aksjonspunkter={aksjonspunkter}
-        behandlingPaaVent={false}
-        previewCallback={previewCallback}
-        aksjonspunktKoder={aksjonspunktKoder}
-        sprakkode={sprakkode}
-        readOnly={false}
-        ytelseTypeKode={fagsakYtelseType.PLEIEPENGER}
-        alleKodeverk={{}}
-        personopplysninger={{}}
-        arbeidsgiverOpplysningerPerId={{}}
-        vilkar={[]}
-        vedtakVarsel={vedtakVarsel}
-        dokumentdata={dokumentdata}
-        tilgjengeligeVedtaksbrev={vedtaksbrevmalerUtenAutomatisk}
-      />,
+      <ProsessStegContainer formaterteProsessStegPaneler={[]}>
+        <VedtakForm
+          intl={intlWithMessages(messages)}
+          behandlingStatus={behandlingStatusUtredes}
+          behandlingresultat={behandlingsresultat}
+          aksjonspunkter={aksjonspunkter}
+          behandlingPaaVent={false}
+          previewCallback={previewCallback}
+          aksjonspunktKoder={aksjonspunktKoder}
+          sprakkode={sprakkode}
+          readOnly={false}
+          ytelseTypeKode={fagsakYtelseType.PLEIEPENGER}
+          alleKodeverk={{}}
+          personopplysninger={{}}
+          arbeidsgiverOpplysningerPerId={{}}
+          vilkar={[]}
+          vedtakVarsel={vedtakVarsel}
+          dokumentdata={dokumentdata}
+          tilgjengeligeVedtaksbrev={vedtaksbrevmalerUtenAutomatisk}
+        />
+      </ProsessStegContainer>,
       { messages },
     );
     const overstyringsCheckbox = screen.getByLabelText(messages['VedtakForm.ManuellOverstyring']);

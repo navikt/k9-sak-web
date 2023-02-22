@@ -15,10 +15,11 @@ export const filtrerVerdierSomSkalNullstilles = vedtakForm =>
     .reduce((obj, key) => ({ ...obj, [key]: vedtakForm[key] }), {});
 
 export const settMalerVedtakContext = (vedtakContext, maler) => {
-  vedtakContext?.setVedtakFormState({
-    ...vedtakContext?.vedtakFormState,
-    maler,
-  });
+  const nyVedtakState = { ...vedtakContext, maler };
+
+  if (JSON.stringify(maler) !== JSON.stringify(vedtakContext.vedtakFormState?.maler)) {
+    vedtakContext?.setVedtakFormState(nyVedtakState);
+  }
 };
 
 const LagreVedtakFormIContext = () => {
