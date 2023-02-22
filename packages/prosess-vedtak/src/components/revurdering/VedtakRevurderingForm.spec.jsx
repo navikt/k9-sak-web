@@ -8,6 +8,7 @@ import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import { K9sakApiKeys, requestApi } from '@k9-sak-web/sak-app/src/data/k9sakApi';
+import ProsessStegContainer from '@k9-sak-web/behandling-felles/src/components/ProsessStegContainer';
 
 import VedtakForm from '../VedtakForm';
 
@@ -84,24 +85,26 @@ describe('<VedtakRevurderingForm>', () => {
     });
 
     renderWithIntlAndReduxForm(
-      <VedtakForm
-        intl={intlMock}
-        behandlingStatus={revurdering.status}
-        behandlingresultat={revurdering.behandlingsresultat}
-        aksjonspunkter={revurdering.aksjonspunkter}
-        sprakkode={revurdering.sprakkode}
-        behandlingPaaVent={revurdering.behandlingPaaVent}
-        previewCallback={previewCallback}
-        readOnly={false}
-        ytelseTypeKode={fagsakYtelseType.PLEIEPENGER}
-        resultatstruktur={resultatstruktur}
-        arbeidsgiverOpplysningerPerId={{}}
-        tilgjengeligeVedtaksbrev={tilgjengeligeVedtaksbrev}
-        personopplysninger={{}}
-        vilkar={[]}
-        alleKodeverk={{}}
-        erRevurdering
-      />,
+      <ProsessStegContainer formaterteProsessStegPaneler={[]}>
+        <VedtakForm
+          intl={intlMock}
+          behandlingStatus={revurdering.status}
+          behandlingresultat={revurdering.behandlingsresultat}
+          aksjonspunkter={revurdering.aksjonspunkter}
+          sprakkode={revurdering.sprakkode}
+          behandlingPaaVent={revurdering.behandlingPaaVent}
+          previewCallback={previewCallback}
+          readOnly={false}
+          ytelseTypeKode={fagsakYtelseType.PLEIEPENGER}
+          resultatstruktur={resultatstruktur}
+          arbeidsgiverOpplysningerPerId={{}}
+          tilgjengeligeVedtaksbrev={tilgjengeligeVedtaksbrev}
+          personopplysninger={{}}
+          vilkar={[]}
+          alleKodeverk={{}}
+          erRevurdering
+        />
+      </ProsessStegContainer>,
     );
 
     expect(screen.getByTestId('vedtakAksjonspunktPanel')).toBeInTheDocument();
@@ -140,24 +143,26 @@ describe('<VedtakRevurderingForm>', () => {
     });
 
     renderWithIntlAndReduxForm(
-      <VedtakForm
-        intl={intlMock}
-        behandlingStatus={revurdering.status}
-        behandlingresultat={revurdering.behandlingsresultat}
-        aksjonspunkter={revurdering.aksjonspunkter}
-        sprakkode={revurdering.sprakkode}
-        behandlingPaaVent={revurdering.behandlingPaaVent}
-        personopplysninger={{}}
-        previewCallback={previewCallback}
-        readOnly={false}
-        ytelseTypeKode={fagsakYtelseType.PLEIEPENGER}
-        resultatstruktur={resultatstruktur}
-        arbeidsgiverOpplysningerPerId={{}}
-        tilgjengeligeVedtaksbrev={tilgjengeligeVedtaksbrev}
-        alleKodeverk={{}}
-        vilkar={[]}
-        erRevurdering
-      />,
+      <ProsessStegContainer formaterteProsessStegPaneler={[]}>
+        <VedtakForm
+          intl={intlMock}
+          behandlingStatus={revurdering.status}
+          behandlingresultat={revurdering.behandlingsresultat}
+          aksjonspunkter={revurdering.aksjonspunkter}
+          sprakkode={revurdering.sprakkode}
+          behandlingPaaVent={revurdering.behandlingPaaVent}
+          personopplysninger={{}}
+          previewCallback={previewCallback}
+          readOnly={false}
+          ytelseTypeKode={fagsakYtelseType.PLEIEPENGER}
+          resultatstruktur={resultatstruktur}
+          arbeidsgiverOpplysningerPerId={{}}
+          tilgjengeligeVedtaksbrev={tilgjengeligeVedtaksbrev}
+          alleKodeverk={{}}
+          vilkar={[]}
+          erRevurdering
+        />
+      </ProsessStegContainer>,
     );
 
     expect(screen.getByTestId('vedtakAksjonspunktPanel')).toBeInTheDocument();
@@ -182,23 +187,25 @@ describe('<VedtakRevurderingForm>', () => {
     };
 
     renderWithIntlAndReduxForm(
-      <VedtakForm
-        intl={intlMock}
-        behandlingStatus={revurdering.status}
-        behandlingresultat={revurdering.behandlingsresultat}
-        aksjonspunkter={revurdering.aksjonspunkter}
-        sprakkode={revurdering.sprakkode}
-        behandlingPaaVent={revurdering.behandlingPaaVent}
-        personopplysninger={{}}
-        previewCallback={previewCallback}
-        readOnly={false}
-        ytelseTypeKode={fagsakYtelseType.PLEIEPENGER}
-        resultatstruktur={resultatstruktur}
-        arbeidsgiverOpplysningerPerId={{}}
-        alleKodeverk={{}}
-        tilgjengeligeVedtaksbrev={tilgjengeligeVedtaksbrev}
-        erRevurdering
-      />,
+      <ProsessStegContainer formaterteProsessStegPaneler={[]}>
+        <VedtakForm
+          intl={intlMock}
+          behandlingStatus={revurdering.status}
+          behandlingresultat={revurdering.behandlingsresultat}
+          aksjonspunkter={revurdering.aksjonspunkter}
+          sprakkode={revurdering.sprakkode}
+          behandlingPaaVent={revurdering.behandlingPaaVent}
+          personopplysninger={{}}
+          previewCallback={previewCallback}
+          readOnly={false}
+          ytelseTypeKode={fagsakYtelseType.PLEIEPENGER}
+          resultatstruktur={resultatstruktur}
+          arbeidsgiverOpplysningerPerId={{}}
+          alleKodeverk={{}}
+          tilgjengeligeVedtaksbrev={tilgjengeligeVedtaksbrev}
+          erRevurdering
+        />
+      </ProsessStegContainer>,
     );
 
     const submitknapp = screen.getByRole('button');
@@ -222,23 +229,25 @@ describe('<VedtakRevurderingForm>', () => {
     };
 
     renderWithIntlAndReduxForm(
-      <VedtakForm
-        intl={intlMock}
-        behandlingStatus={revurdering.status}
-        behandlingresultat={revurdering.behandlingsresultat}
-        aksjonspunkter={revurdering.aksjonspunkter}
-        sprakkode={revurdering.sprakkode}
-        behandlingPaaVent={revurdering.behandlingPaaVent}
-        personopplysninger={{}}
-        previewCallback={previewCallback}
-        readOnly={false}
-        ytelseTypeKode={fagsakYtelseType.PLEIEPENGER}
-        resultatstruktur={resultatstruktur}
-        alleKodeverk={{}}
-        arbeidsgiverOpplysningerPerId={{}}
-        tilgjengeligeVedtaksbrev={tilgjengeligeVedtaksbrev}
-        erRevurdering
-      />,
+      <ProsessStegContainer formaterteProsessStegPaneler={[]}>
+        <VedtakForm
+          intl={intlMock}
+          behandlingStatus={revurdering.status}
+          behandlingresultat={revurdering.behandlingsresultat}
+          aksjonspunkter={revurdering.aksjonspunkter}
+          sprakkode={revurdering.sprakkode}
+          behandlingPaaVent={revurdering.behandlingPaaVent}
+          personopplysninger={{}}
+          previewCallback={previewCallback}
+          readOnly={false}
+          ytelseTypeKode={fagsakYtelseType.PLEIEPENGER}
+          resultatstruktur={resultatstruktur}
+          alleKodeverk={{}}
+          arbeidsgiverOpplysningerPerId={{}}
+          tilgjengeligeVedtaksbrev={tilgjengeligeVedtaksbrev}
+          erRevurdering
+        />
+      </ProsessStegContainer>,
     );
 
     const submitknapp = screen.getByRole('button');
@@ -255,22 +264,24 @@ describe('<VedtakRevurderingForm>', () => {
     const revurdering = createBehandlingOpphor();
 
     renderWithIntlAndReduxForm(
-      <VedtakForm
-        intl={intlMock}
-        behandlingStatus={revurdering.status}
-        behandlingresultat={revurdering.behandlingsresultat}
-        aksjonspunkter={revurdering.aksjonspunkter}
-        sprakkode={revurdering.sprakkode}
-        behandlingPaaVent={revurdering.behandlingPaaVent}
-        personopplysninger={{}}
-        previewCallback={previewCallback}
-        readOnly={false}
-        ytelseTypeKode={fagsakYtelseType.PLEIEPENGER}
-        resultatstruktur={resultatstruktur}
-        arbeidsgiverOpplysningerPerId={{}}
-        tilgjengeligeVedtaksbrev={tilgjengeligeVedtaksbrev}
-        erRevurdering
-      />,
+      <ProsessStegContainer formaterteProsessStegPaneler={[]}>
+        <VedtakForm
+          intl={intlMock}
+          behandlingStatus={revurdering.status}
+          behandlingresultat={revurdering.behandlingsresultat}
+          aksjonspunkter={revurdering.aksjonspunkter}
+          sprakkode={revurdering.sprakkode}
+          behandlingPaaVent={revurdering.behandlingPaaVent}
+          personopplysninger={{}}
+          previewCallback={previewCallback}
+          readOnly={false}
+          ytelseTypeKode={fagsakYtelseType.PLEIEPENGER}
+          resultatstruktur={resultatstruktur}
+          arbeidsgiverOpplysningerPerId={{}}
+          tilgjengeligeVedtaksbrev={tilgjengeligeVedtaksbrev}
+          erRevurdering
+        />
+      </ProsessStegContainer>,
     );
 
     const submitknapp = screen.getByRole('button');

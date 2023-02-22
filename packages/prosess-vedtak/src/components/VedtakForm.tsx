@@ -40,7 +40,10 @@ import dokumentMalType from '@fpsak-frontend/kodeverk/src/dokumentMalType';
 import redusertUtbetalingArsak from '../kodeverk/redusertUtbetalingArsak';
 import { fieldnames } from '../konstanter';
 import BrevPanel from './brev/BrevPanel';
-import LagreFormikStateLokalt from './LagreFormikStateLokalt';
+import LagreVedtakFormIContext, {
+  filtrerVerdierSomSkalNullstilles,
+  settMalerVedtakContext,
+} from './LagreVedtakFormIContext';
 import RevurderingPaneler from './revurdering/RevurderingPaneler';
 import VedtakRevurderingSubmitPanel from './revurdering/VedtakRevurderingSubmitPanel';
 import SakGårIkkeTilBeslutterModal from './SakGårIkkeTilBeslutterModal';
@@ -150,6 +153,9 @@ export const VedtakForm: React.FC<Props> = ({
   useEffect(() => {
     Modal.setAppElement(document.body);
   }, []);
+
+  const vedtakContext = useContext(VedtakFormContext);
+
   const [erSendtInnUtenArsaker, setErSendtInnUtenArsaker] = useState(false);
   const [errorOnSubmit, setErrorOnSubmit] = useState('');
   const [harVurdertOverlappendeYtelse, setHarVurdertOverlappendeYtelse] = useState(false);
@@ -164,7 +170,6 @@ export const VedtakForm: React.FC<Props> = ({
 
   const harOverlappendeYtelser = overlappendeYtelser && overlappendeYtelser.length > 0;
 
-  const vedtakContext = useContext(VedtakFormContext);
   const onToggleOverstyring = (e, setFieldValue) => {
     setErrorOnSubmit('');
     const isChecked = e.target.checked;
@@ -256,6 +261,28 @@ export const VedtakForm: React.FC<Props> = ({
     harPotensieltFlereInformasjonsbehov(informasjonsbehovVedtaksbrev)
       ? payloadMedEkstraInformasjon(values)
       : payload(values);
+
+  const setInitialValues = initialValues => {
+    // Hvis vi har maler i contexten,
+    // sjekk om de er forskjellige fra maler som er tilgjengelige i API
+    if (vedtakContext.vedtakFormState?.maler) {
+      if (JSON.stringify(vedtakContext.vedtakFormState.maler) !== JSON.stringify(tilgjengeligeVedtaksbrev.maler)) {
+        // Hvis det er diff tilgjengelige vedtaksbrev og kontekst
+        // nullstill valg som har blitt gjort med tidligere tilgjengelige vedtaksbrev
+        const nyVedtakState = filtrerVerdierSomSkalNullstilles({
+          ...vedtakContext.vedtakFormState,
+          maler: tilgjengeligeVedtaksbrev?.maler,
+        });
+        vedtakContext.setVedtakFormState(nyVedtakState);
+        return { ...initialValues, ...nyVedtakState };
+      }
+    } else {
+      // Hvis vi ikke har en mal i konteksten fra før av, så setter vi det nå
+      settMalerVedtakContext(vedtakContext, tilgjengeligeVedtaksbrev?.maler);
+    }
+
+    return { ...initialValues, ...vedtakContext.vedtakFormState };
+  };
 
   const harRedusertUtbetaling = ytelseTypeKode === fagsakYtelseType.FRISINN;
 
@@ -420,10 +447,9 @@ export const VedtakForm: React.FC<Props> = ({
     }
     setErrorOnSubmit('');
   };
-
   return (
     <Formik
-      initialValues={{ ...initialValues, ...vedtakContext?.vedtakFormState }}
+      initialValues={setInitialValues(initialValues)}
       validationSchema={vedtakformPartialValidation}
       validateOnMount={false}
       validateOnChange={false}
@@ -437,7 +463,7 @@ export const VedtakForm: React.FC<Props> = ({
     >
       {formikProps => (
         <form className={styles.form}>
-          <LagreFormikStateLokalt />
+          <LagreVedtakFormIContext />
           {(kanHaFritekstbrevV1(tilgjengeligeVedtaksbrev) ||
             kanHaManueltFritekstbrev(tilgjengeligeVedtaksbrev) ||
             kanHindreUtsending(tilgjengeligeVedtaksbrev)) && (
