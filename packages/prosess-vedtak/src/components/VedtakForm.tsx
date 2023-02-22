@@ -271,14 +271,14 @@ export const VedtakForm: React.FC<Props> = ({
         // nullstill valg som har blitt gjort med tidligere tilgjengelige vedtaksbrev
         const nyVedtakState = filtrerVerdierSomSkalNullstilles({
           ...vedtakContext.vedtakFormState,
-          maler: tilgjengeligeVedtaksbrev.maler,
+          maler: tilgjengeligeVedtaksbrev?.maler,
         });
         vedtakContext.setVedtakFormState(nyVedtakState);
         return { ...initialValues, ...nyVedtakState };
       }
     } else {
       // Hvis vi ikke har en mal i konteksten fra før av, så setter vi det nå
-      settMalerVedtakContext(vedtakContext, tilgjengeligeVedtaksbrev.maler);
+      settMalerVedtakContext(vedtakContext, tilgjengeligeVedtaksbrev?.maler);
     }
 
     return { ...initialValues, ...vedtakContext.vedtakFormState };

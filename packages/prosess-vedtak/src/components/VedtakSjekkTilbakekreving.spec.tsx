@@ -1,19 +1,18 @@
 import React from 'react';
-import { render, screen } from '@testing-library/react';
+import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/src/test-utils';
+import { screen } from '@testing-library/react';
 import sinon from 'sinon';
 
 import klageBehandlingArsakType from '@fpsak-frontend/kodeverk/src/behandlingArsakType';
-import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import behandlingResultatType from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
-import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import { K9sakApiKeys, requestApi } from '@k9-sak-web/sak-app/src/data/k9sakApi';
 
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import VedtakProsessIndex from '@fpsak-frontend/prosess-vedtak';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
+import ProsessStegContainer from '@k9-sak-web/behandling-felles/src/components/ProsessStegContainer';
 
 const behandling = {
   id: 1,
@@ -77,37 +76,39 @@ describe('<AvslagårsakListe>', () => {
   it('Skal vise ap for sjekk tilbakekreving riktig', () => {
     requestApi.mock(K9sakApiKeys.FEATURE_TOGGLE, []);
 
-    render(
-      <VedtakProsessIndex
-        behandling={{
-          ...behandling,
-          type: {
-            kode: behandlingType.SOKNAD,
-            kodeverk: '',
-          },
-          behandlingsresultat: {
-            vedtaksbrev: {
-              kode: 'FRITEKST',
-            },
+    renderWithIntlAndReduxForm(
+      <ProsessStegContainer formaterteProsessStegPaneler={[]} velgProsessStegPanelCallback={() => {}}>
+        <VedtakProsessIndex
+          behandling={{
+            ...behandling,
             type: {
-              kode: behandlingResultatType.IKKE_FASTSATT,
+              kode: behandlingType.SOKNAD,
+              kodeverk: '',
             },
-          },
-        }}
-        vilkar={[]}
-        sendVarselOmRevurdering={false}
-        medlemskap={{ fom: '2019-01-01' }}
-        aksjonspunkter={[aksjonspunkt5040]}
-        employeeHasAccess={false}
-        isReadOnly={false}
-        previewCallback={sinon.spy()}
-        submitCallback={sinon.spy()}
-        alleKodeverk={alleKodeverk}
-        ytelseTypeKode={fagsakYtelseType.OMSORGSPENGER}
-        arbeidsgiverOpplysningerPerId={{}}
-        lagreDokumentdata={sinon.spy()}
-        hentFritekstbrevHtmlCallback={sinon.spy()}
-      />,
+            behandlingsresultat: {
+              vedtaksbrev: {
+                kode: 'FRITEKST',
+              },
+              type: {
+                kode: behandlingResultatType.IKKE_FASTSATT,
+              },
+            },
+          }}
+          vilkar={[]}
+          sendVarselOmRevurdering={false}
+          medlemskap={{ fom: '2019-01-01' }}
+          aksjonspunkter={[aksjonspunkt5040]}
+          employeeHasAccess={false}
+          isReadOnly={false}
+          previewCallback={sinon.spy()}
+          submitCallback={sinon.spy()}
+          alleKodeverk={alleKodeverk}
+          ytelseTypeKode={fagsakYtelseType.OMSORGSPENGER}
+          arbeidsgiverOpplysningerPerId={{}}
+          lagreDokumentdata={sinon.spy()}
+          hentFritekstbrevHtmlCallback={sinon.spy()}
+        />
+      </ProsessStegContainer>,
     );
 
     expect(screen.queryByText('Har åpen tilbakekrevingssak som kan bli påvirket.')).toBeInTheDocument();
@@ -117,47 +118,49 @@ describe('<AvslagårsakListe>', () => {
   it('Skal IKKS vise ap for sjekk tilbakekreving', () => {
     requestApi.mock(K9sakApiKeys.FEATURE_TOGGLE, []);
 
-    render(
-      <VedtakProsessIndex
-        behandling={{
-          ...behandling,
-          type: {
-            kode: behandlingType.SOKNAD,
-            kodeverk: '',
-          },
-          behandlingsresultat: {
-            vedtaksbrev: {
-              kode: 'FRITEKST',
-            },
+    renderWithIntlAndReduxForm(
+      <ProsessStegContainer formaterteProsessStegPaneler={[]} velgProsessStegPanelCallback={() => {}}>
+        <VedtakProsessIndex
+          behandling={{
+            ...behandling,
             type: {
-              kode: behandlingResultatType.IKKE_FASTSATT,
-            },
-          },
-        }}
-        vilkar={[]}
-        sendVarselOmRevurdering={false}
-        medlemskap={{ fom: '2019-01-01' }}
-        aksjonspunkter={[
-          {
-            definisjon: {
-              kode: aksjonspunktCodes.FORESLA_VEDTAK,
+              kode: behandlingType.SOKNAD,
               kodeverk: '',
             },
-            begrunnelse: undefined,
-            kanLoses: true,
-            erAktivt: true,
-          },
-        ]}
-        employeeHasAccess={false}
-        isReadOnly={false}
-        previewCallback={sinon.spy()}
-        submitCallback={sinon.spy()}
-        alleKodeverk={alleKodeverk}
-        ytelseTypeKode={fagsakYtelseType.OMSORGSPENGER}
-        arbeidsgiverOpplysningerPerId={{}}
-        lagreDokumentdata={sinon.spy()}
-        hentFritekstbrevHtmlCallback={sinon.spy()}
-      />,
+            behandlingsresultat: {
+              vedtaksbrev: {
+                kode: 'FRITEKST',
+              },
+              type: {
+                kode: behandlingResultatType.IKKE_FASTSATT,
+              },
+            },
+          }}
+          vilkar={[]}
+          sendVarselOmRevurdering={false}
+          medlemskap={{ fom: '2019-01-01' }}
+          aksjonspunkter={[
+            {
+              definisjon: {
+                kode: aksjonspunktCodes.FORESLA_VEDTAK,
+                kodeverk: '',
+              },
+              begrunnelse: undefined,
+              kanLoses: true,
+              erAktivt: true,
+            },
+          ]}
+          employeeHasAccess={false}
+          isReadOnly={false}
+          previewCallback={sinon.spy()}
+          submitCallback={sinon.spy()}
+          alleKodeverk={alleKodeverk}
+          ytelseTypeKode={fagsakYtelseType.OMSORGSPENGER}
+          arbeidsgiverOpplysningerPerId={{}}
+          lagreDokumentdata={sinon.spy()}
+          hentFritekstbrevHtmlCallback={sinon.spy()}
+        />
+      </ProsessStegContainer>,
     );
 
     expect(screen.queryByText('Har åpen tilbakekrevingssak som kan bli påvirket.')).not.toBeInTheDocument();
