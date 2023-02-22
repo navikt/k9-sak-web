@@ -13,6 +13,7 @@ interface OwnPropsWrapper {
 }
 
 const Wrapper = ({ withoutBorder, error, children, className }: OwnPropsWrapper) => (
+  // eslint-disable-next-line react/jsx-no-useless-fragment
   <>
     {withoutBorder ? (
       children

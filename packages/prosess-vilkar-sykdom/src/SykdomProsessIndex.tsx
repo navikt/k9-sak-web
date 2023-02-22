@@ -6,12 +6,13 @@ import FlexRow from '@fpsak-frontend/shared-components/src/flexGrid/FlexRow';
 import Image from '@fpsak-frontend/shared-components/src/Image';
 import VerticalSpacer from '@fpsak-frontend/shared-components/src/VerticalSpacer';
 import { dateFormat } from '@fpsak-frontend/utils';
-import { SideMenu } from '@navikt/k9-react-components';
+import { SideMenu } from '@navikt/ft-plattform-komponenter';
 import classNames from 'classnames/bind';
 import { Element, Undertekst, Undertittel } from 'nav-frontend-typografi';
 import React from 'react';
 import { createIntl, createIntlCache, FormattedMessage, RawIntlProvider } from 'react-intl';
-import Vilkarperiode from '../../types/src/vilkarperiode';
+import isEqual from 'lodash.isequal';
+import Vilkarperiode from '@k9-sak-web/types/src/vilkarperiode';
 import messages from '../i18n/nb_NO.json';
 import styles from './sykdomProsessIndex.less';
 
@@ -43,24 +44,31 @@ const getVilkarOkMessage = originalErVilkarOk => {
 };
 
 interface UtvidetVilkarperiode extends Vilkarperiode {
-  pleietrengendeErOver18år: boolean;
+  pleietrengendeErOver18år?: boolean;
 }
 
 interface SykdomProsessIndexProps {
   perioder: UtvidetVilkarperiode[];
   panelTittelKode: string;
+  lovReferanse?: string;
 }
 
-const SykdomProsessIndex = ({ perioder, panelTittelKode }: SykdomProsessIndexProps) => {
+const SykdomProsessIndex = ({ perioder, panelTittelKode, lovReferanse }: SykdomProsessIndexProps) => {
   const [activePeriode, setActivePeriode] = React.useState(perioder[0]);
-  const status = activePeriode.vilkarStatus.kode;
+  const status = activePeriode?.vilkarStatus.kode || vilkarUtfallType.IKKE_VURDERT;
   const erOppfylt = vilkarUtfallType.OPPFYLT === status;
   const erVilkarOk = vilkarUtfallType.IKKE_VURDERT !== status ? erOppfylt : undefined;
   const skalBrukeSidemeny = perioder.length > 1;
   const mainContainerClassnames = cx('mainContainer', { 'mainContainer--withSideMenu': skalBrukeSidemeny });
-  let lovReferanse = '§ 9-10 første og andre ledd, og 9-16 første ledd';
-  if (activePeriode.pleietrengendeErOver18år) {
-    lovReferanse = '§ 9-10 tredje ledd (over 18 år)';
+  let lovReferanseTekst = '§ 9-10 første og andre ledd, og 9-16 første ledd';
+
+  if (activePeriode?.pleietrengendeErOver18år) {
+    lovReferanseTekst = '§ 9-10 tredje ledd (over 18 år)';
+  }
+
+  // Oppplæringspenger || livets sluttfase
+  if (lovReferanse === '§ 9-14' || lovReferanse === '§ 9-13') {
+    lovReferanseTekst = lovReferanse;
   }
 
   return (
@@ -70,7 +78,7 @@ const SykdomProsessIndex = ({ perioder, panelTittelKode }: SykdomProsessIndexPro
           <div className={styles.sideMenuContainer}>
             <SideMenu
               links={perioder.map((currentPeriode, currentPeriodeIndex) => ({
-                active: perioder.indexOf(activePeriode) === currentPeriodeIndex,
+                active: perioder.findIndex(p => isEqual(p, activePeriode)) === currentPeriodeIndex,
                 label: `${dateFormat(perioder[currentPeriodeIndex].periode.fom)} - ${dateFormat(
                   perioder[currentPeriodeIndex].periode.tom,
                 )}`,
@@ -97,7 +105,7 @@ const SykdomProsessIndex = ({ perioder, panelTittelKode }: SykdomProsessIndexPro
                 </Undertittel>
               </FlexColumn>
               <FlexColumn>
-                <Undertekst className={styles.vilkar}>{lovReferanse}</Undertekst>
+                <Undertekst className={styles.vilkar}>{lovReferanseTekst}</Undertekst>
               </FlexColumn>
             </FlexRow>
             <FlexRow>

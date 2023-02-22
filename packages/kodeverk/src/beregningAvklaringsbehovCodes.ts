@@ -1,18 +1,20 @@
 import { BeregningAvklaringsbehov } from '@k9-sak-web/types';
 
 const avklaringsbehovCodes = {
-  FASTSETT_BEREGNINGSGRUNNLAG_ARBEIDSTAKER_FRILANS: '5038',
-  VURDER_VARIG_ENDRET_ELLER_NYOPPSTARTET_NAERING_SELVSTENDIG_NAERINGSDRIVENDE: '5039',
-  FASTSETT_BRUTTO_BEREGNINGSGRUNNLAG_SELVSTENDIG_NAERINGSDRIVENDE: '5042',
-  FORDEL_BEREGNINGSGRUNNLAG: '5046',
-  FASTSETT_BEREGNINGSGRUNNLAG_TIDSBEGRENSET_ARBEIDSFORHOLD: '5047',
-  FASTSETT_BEREGNINGSGRUNNLAG_SN_NY_I_ARBEIDSLIVET: '5049',
-  AVKLAR_AKTIVITETER: '5052',
-  VURDER_FAKTA_FOR_ATFL_SN: '5058',
-  VURDER_REFUSJON_BERGRUNN: '5059',
-  OVERSTYR_BEREGNING: '6007',
-  OVERSTYRING_AV_BEREGNINGSAKTIVITETER: '6014',
-  OVERSTYRING_AV_BEREGNINGSGRUNNLAG: '6015',
+  FASTSETT_BEREGNINGSGRUNNLAG_ARBEIDSTAKER_FRILANS: 'FASTSETT_BG_AT_FL',
+  VURDER_VARIG_ENDRET_ELLER_NYOPPSTARTET_NAERING_SELVSTENDIG_NAERINGSDRIVENDE: 'VURDER_VARIG_ENDRT_NYOPPSTR_NAERNG_SN',
+  VURDER_VARIG_ENDRET_ARBEIDSSITUASJON: 'VURDER_VARIG_ENDRT_ARB_SITSJN_MDL_INAKTV',
+  FASTSETT_BRUTTO_BEREGNINGSGRUNNLAG_SELVSTENDIG_NAERINGSDRIVENDE: 'FASTSETT_BG_SN',
+  FORDEL_BEREGNINGSGRUNNLAG: 'FORDEL_BG',
+  FASTSETT_BEREGNINGSGRUNNLAG_TIDSBEGRENSET_ARBEIDSFORHOLD: 'FASTSETT_BG_TB_ARB',
+  VURDER_NYTT_INNTKTSFRHLD: 'VURDER_NYTT_INNTKTSFRHLD',
+  VURDER_REPRSNTR_STORTNGT: 'VURDER_REPRSNTR_STORTNGT',
+  FASTSETT_BEREGNINGSGRUNNLAG_SN_NY_I_ARBEIDSLIVET: 'FASTSETT_BG_SN_NY_I_ARB_LIVT',
+  AVKLAR_AKTIVITETER: 'AVKLAR_AKTIVITETER',
+  VURDER_FAKTA_FOR_ATFL_SN: 'VURDER_FAKTA_ATFL_SN',
+  VURDER_REFUSJON_BERGRUNN: 'VURDER_REFUSJONSKRAV',
+  OVERSTYRING_AV_BEREGNINGSAKTIVITETER: 'OVST_BEREGNINGSAKTIVITETER',
+  OVERSTYRING_AV_BEREGNINGSGRUNNLAG: 'OVST_INNTEKT',
 };
 
 const beregningsgrunnlagFritekstfeltIVedtakAksjonspunkt = [
@@ -29,8 +31,6 @@ const løsesIBeregningspunkt = [
   avklaringsbehovCodes.FASTSETT_BEREGNINGSGRUNNLAG_SN_NY_I_ARBEIDSLIVET,
 ];
 
-
-
 const avklaringsbehovIsOfType =
   (validAksjonspunktCodes: string[]) =>
   (aksjonspunktCode: string): boolean =>
@@ -39,11 +39,15 @@ const avklaringsbehovIsOfType =
 export const harAvklaringsbehov = (avklaringsbehovCode: string, avklaringsbehov: BeregningAvklaringsbehov[]): boolean =>
   avklaringsbehov.some(ap => ap.definisjon.kode === avklaringsbehovCode);
 
+export const harAvklaringsbehovSomKanLøses = (
+  avklaringsbehovCode: string,
+  avklaringsbehov: BeregningAvklaringsbehov[],
+): boolean => avklaringsbehov.some(ap => ap.definisjon.kode === avklaringsbehovCode && ap.kanLoses);
+
 export const isBGAksjonspunktSomGirFritekstfelt = avklaringsbehovIsOfType(
   beregningsgrunnlagFritekstfeltIVedtakAksjonspunkt,
 );
 
 export const isBeregningAvklaringsbehov = avklaringsbehovIsOfType(løsesIBeregningspunkt);
-
 
 export default avklaringsbehovCodes;

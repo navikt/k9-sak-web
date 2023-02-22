@@ -20,7 +20,6 @@ import moment from 'moment';
 import React, { useState } from 'react';
 import { Arbeidstype } from '../types/Arbeidstype';
 import FetchedData from '../types/fetchedDataTsType';
-import AndreSakerPåSøkerStripe from './AndreSakerPåSøkerStripe';
 import ArbeidsgiverMedManglendePerioderListe from './ArbeidsgiverMedManglendePerioderListe';
 import DataFetcher from './DataFetcher';
 import PleiepengerSluttfaseFakta from './PleiepengerSluttfaseFakta';
@@ -38,7 +37,6 @@ interface OwnProps {
   oppdaterProsessStegOgFaktaPanelIUrl: (punktnavn?: string, faktanavn?: string) => void;
   oppdaterBehandlingVersjon: (versjon: number) => void;
   settPaVent: (params: SettPaVentParams) => Promise<any>;
-  hentBehandling: ({ behandlingId: number }, keepData: boolean) => Promise<any>;
   opneSokeside: () => void;
   hasFetchError: boolean;
   setBehandling: (behandling: Behandling) => void;
@@ -75,7 +73,6 @@ const PleiepengerSluttfasePaneler = ({
   valgtFaktaSteg,
   oppdaterBehandlingVersjon,
   settPaVent,
-  hentBehandling,
   opneSokeside,
   hasFetchError,
   setBehandling,
@@ -96,7 +93,6 @@ const PleiepengerSluttfasePaneler = ({
         aksjonspunkter={fetchedData?.aksjonspunkter}
         kodeverk={alleKodeverk}
         settPaVent={settPaVent}
-        hentBehandling={hentBehandling}
       />
       {harOpprettetAksjonspunkt9203 && (
         <DataFetcher
@@ -111,22 +107,24 @@ const PleiepengerSluttfasePaneler = ({
                   {hasError && <p>Noe gikk galt under henting av perioder</p>}
                   {!isLoading && !hasError && (
                     <ArbeidsgiverMedManglendePerioderListe
-                      arbeidsgivereMedPerioder={data.mangler?.map(mangel => ({
-                        arbeidsgiverNavn: arbeidsgiverOpplysningerUtil.finnArbeidsgiversNavn(
-                          mangel.arbeidsgiver.organisasjonsnummer || mangel.arbeidsgiver.aktørId,
-                        ),
-                        organisasjonsnummer: mangel.arbeidsgiver.organisasjonsnummer,
-                        perioder: mangel.manglendePerioder.map(periode => {
-                          const [fom, tom] = periode.split('/');
-                          const formattedFom = moment(fom, 'YYYY-MM-DD').format('DD.MM.YYYY');
-                          const formattedTom = moment(tom, 'YYYY-MM-DD').format('DD.MM.YYYY');
-                          return `${formattedFom} - ${formattedTom}`;
-                        }),
-                        arbeidstype: mangel.arbeidsgiver?.type,
-                        personIdentifikator:
-                          arbeidsgiverOpplysningerUtil.arbeidsgiverOpplysningerPerId[mangel.arbeidsgiver?.aktørId]
-                            ?.personIdentifikator,
-                      }))}
+                      arbeidsgivereMedPerioder={data.mangler
+                        ?.filter(mangel => mangel.manglendePerioder?.length > 0)
+                        .map(mangel => ({
+                          arbeidsgiverNavn: arbeidsgiverOpplysningerUtil.finnArbeidsgiversNavn(
+                            mangel.arbeidsgiver.organisasjonsnummer || mangel.arbeidsgiver.aktørId,
+                          ),
+                          organisasjonsnummer: mangel.arbeidsgiver.organisasjonsnummer,
+                          perioder: mangel.manglendePerioder.map(periode => {
+                            const [fom, tom] = periode.split('/');
+                            const formattedFom = moment(fom, 'YYYY-MM-DD').format('DD.MM.YYYY');
+                            const formattedTom = moment(tom, 'YYYY-MM-DD').format('DD.MM.YYYY');
+                            return `${formattedFom} - ${formattedTom}`;
+                          }),
+                          arbeidstype: mangel.arbeidsgiver?.type,
+                          personIdentifikator:
+                            arbeidsgiverOpplysningerUtil.arbeidsgiverOpplysningerPerId[mangel.arbeidsgiver?.aktørId]
+                              ?.personIdentifikator,
+                        }))}
                     />
                   )}
                 </div>
@@ -154,7 +152,6 @@ const PleiepengerSluttfasePaneler = ({
         featureToggles={featureToggles}
         setBeregningErBehandlet={setBeregningErBehandlet}
       />
-      <AndreSakerPåSøkerStripe søkerIdent={fagsakPerson.personnummer} saksnummer={fagsak.saksnummer} />
       <PleiepengerSluttfaseFakta
         behandling={behandling}
         data={fetchedData}
@@ -172,7 +169,6 @@ const PleiepengerSluttfasePaneler = ({
         dokumenter={dokumenter}
         featureToggles={featureToggles}
         beregningErBehandlet={beregningErBehandlet}
-
       />
     </>
   );

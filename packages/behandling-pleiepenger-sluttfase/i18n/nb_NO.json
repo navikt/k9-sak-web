@@ -3,12 +3,12 @@
   "ArbeidsforholdInfoPanel.Title": "Arbeidsforhold",
   "OmPleietrengende.Titel": "Om pleietrengende",
   "BeregningInfoPanel.Title": "Beregning",
-  "MedisinskVilkarPanel.MedisinskVilkar": "Sykdom",
+  "LivetsSluttfasePanel.LivetsSluttfase": "Livets sluttfase",
   "InntektOgYtelser.Title": "Inntekt og ytelser",
   "MainSideMenu.Heading": "Saksopplysninger",
   "OpptjeningInfoPanel.KontrollerFaktaForOpptjening": "Opptjening",
-
-  "Behandlingspunkt.MedisinskVilkar": "Sykdom",
+  "InntektsmeldingInfoPanel.Title": "Inntektsmelding",
+  "Behandlingspunkt.LivetsSluttfase": "Livets sluttfase",
   "Behandlingspunkt.Inngangsvilkar": "Inngangsvilkår",
   "Behandlingspunkt.InngangsvilkarForts": "Inngangsvilkår Fortsettelse",
   "Behandlingspunkt.Beregning": "Beregning",
@@ -17,8 +17,15 @@
   "Behandlingspunkt.TilkjentYtelse": "Tilkjent ytelse",
   "Behandlingspunkt.Soknadsfristvilkaret": "Søknadsfrist",
   "Behandlingspunkt.Avregning": "Simulering",
-
   "ProsessStegIkkeBehandletPanel.IkkeBehandlet": "Dette steget er ikke behandlet",
-  
-  "OmPleietrengendeInfoPanel.Title": "Om pleietrengende"
+  "OmPleietrengendeInfoPanel.Title": "Om pleietrengende",
+  "FatterVedtakStatusModal.SendtBeslutter": "Forslag til vedtak er sendt til beslutter",
+  "FatterVedtakStatusModal.ModalDescriptionPleiepenger": "Pleiepenger i livets sluttfase er avslått.",
+  "FatterVedtakStatusModal.GoToSearchPage": "Du kommer nå til forsiden.",
+  "FatterVedtakStatusModal.Ok": "OK",
+  "IverksetterVedtakStatusModal.Innvilget": "Innvilget",
+  "IverksetterVedtakStatusModal.Ok": "Ok",
+  "HelpText.Aksjonspunkt": "Aksjonspunkt",
+  "SoknadsperioderPanel.Soknadsperioder": "Søknadsperioder",
+  "FordelBeregningsgrunnlag.Title": "Fordeling"
 }

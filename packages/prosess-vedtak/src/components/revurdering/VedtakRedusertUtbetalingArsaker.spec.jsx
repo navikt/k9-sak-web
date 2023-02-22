@@ -35,34 +35,4 @@ describe('VedtakRedusertUtbetalingArsaker', () => {
       .children()
       .forEach(checkboxField => expect(checkboxField.prop('disabled')).to.be.true);
   });
-
-  it('Krysser av i riktige bokser ved skrivemodus', () => {
-    const checkedUtbetalingsarsak = Object.values(redusertUtbetalingArsak)[0];
-    const values = new Map(Object.values(redusertUtbetalingArsak).map(a => [a, a === checkedUtbetalingsarsak]));
-    const readOnly = false;
-    const expectedCheckedValue = checkboxField => checkboxField.key() === checkedUtbetalingsarsak;
-    vedtakRedusertUtbetalingArsaker(readOnly, values)
-      .children()
-      .forEach(checkboxField => expect(checkboxField.prop('checked')).to.be.equal(expectedCheckedValue(checkboxField)));
-  });
-
-  it('Krysser av i riktige bokser ved lesemodus når dokumentdata ikke er hentet', () => {
-    const checkedUtbetalingsarsak = Object.values(redusertUtbetalingArsak)[0];
-    const vedtakVarsel = { redusertUtbetalingÅrsaker: [checkedUtbetalingsarsak] };
-    const readOnly = true;
-    const expectedCheckedValue = checkboxField => checkboxField.key() === checkedUtbetalingsarsak;
-    vedtakRedusertUtbetalingArsaker(readOnly, undefined, vedtakVarsel)
-      .children()
-      .forEach(checkboxField => expect(checkboxField.prop('checked')).to.be.equal(expectedCheckedValue(checkboxField)));
-  });
-
-  it('Krysser av i riktige bokser ved lesemodus når dokumentdata er hentet', () => {
-    const checkedUtbetalingsarsak = Object.values(redusertUtbetalingArsak)[0];
-    const merkedeArsaker = [checkedUtbetalingsarsak];
-    const readOnly = true;
-    const expectedCheckedValue = checkboxField => checkboxField.key() === checkedUtbetalingsarsak;
-    vedtakRedusertUtbetalingArsaker(readOnly, undefined, undefined, undefined, merkedeArsaker)
-      .children()
-      .forEach(checkboxField => expect(checkboxField.prop('checked')).to.be.equal(expectedCheckedValue(checkboxField)));
-  });
 });

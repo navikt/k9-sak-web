@@ -63,6 +63,10 @@ export enum K9sakApiKeys {
   ARBEIDSGIVERE = 'ARBEIDSGIVERE',
   FAGSAK_RELATERTE_SAKER = 'FAGSAK_RELATERTE_SAKER',
   PARTER_MED_KLAGERETT = 'PARTER_MED_KLAGERETT',
+  DIREKTE_OVERGANG_FRA_INFOTRYGD = 'DIREKTE_OVERGANG_FRA_INFOTRYGD',
+  BEHANDLING_PERIODER_ÅRSAK_MED_VILKÅR = 'BEHANDLING_PERIODER_ÅRSAK_MED_VILKÅR',
+  LOS_LAGRE_MERKNAD = 'LOS_LAGRE_MERKNAD',
+  LOS_HENTE_MERKNAD = 'LOS_HENTE_MERKNAD',
 }
 
 const endpoints = new RestApiConfigBuilder()
@@ -113,6 +117,10 @@ const endpoints = new RestApiConfigBuilder()
   .withRel('behandling-rettigheter', K9sakApiKeys.BEHANDLING_RETTIGHETER)
   .withRel('tilgjengelige-vedtaksbrev', K9sakApiKeys.TILGJENGELIGE_VEDTAKSBREV)
   .withRel('fagsak-relaterte-saker', K9sakApiKeys.FAGSAK_RELATERTE_SAKER)
+  .withRel('direkte-overgang', K9sakApiKeys.DIREKTE_OVERGANG_FRA_INFOTRYGD)
+  .withRel('behandling-perioder-årsak-med-vilkår', K9sakApiKeys.BEHANDLING_PERIODER_ÅRSAK_MED_VILKÅR)
+  .withRel('los-lagre-merknad', K9sakApiKeys.LOS_LAGRE_MERKNAD)
+  .withRel('los-hente-merknad', K9sakApiKeys.LOS_HENTE_MERKNAD)
 
   .withPost('/k9/tilbake/api/brev/forhandsvis', K9sakApiKeys.PREVIEW_MESSAGE_TILBAKEKREVING, { isResponseBlob: true })
   .withPost(

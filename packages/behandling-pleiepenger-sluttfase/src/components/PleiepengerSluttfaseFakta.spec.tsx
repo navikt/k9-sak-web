@@ -1,8 +1,8 @@
 import React from 'react';
 import sinon from 'sinon';
+import { shallow } from 'enzyme';
 
 import ArbeidsforholdFaktaIndex from '@fpsak-frontend/fakta-arbeidsforhold';
-import { shallowWithIntl, intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import { SideMenuWrapper } from '@k9-sak-web/behandling-felles';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
@@ -17,12 +17,15 @@ import sivilstandType from '@fpsak-frontend/kodeverk/src/sivilstandType';
 import opplysningAdresseType from '@fpsak-frontend/kodeverk/src/opplysningAdresseType';
 import PleiepengerSluttfaseFakta from './PleiepengerSluttfaseFakta';
 import FetchedData from '../types/fetchedDataTsType';
-import { PleiepengerSluttfaseBehandlingApiKeys, requestPleiepengerSluttfaseApi } from '../data/pleiepengerSluttfaseBehandlingApi';
+import {
+  PleiepengerSluttfaseBehandlingApiKeys,
+  requestPleiepengerSluttfaseApi,
+} from '../data/pleiepengerSluttfaseBehandlingApi';
 
 describe('<PleiepengerSluttfaseFakta>', () => {
   const fagsak = {
     saksnummer: '123456',
-    sakstype: { kode: fagsakYtelseType.PLEIEPENGER, kodeverk: 'test' },
+    sakstype: { kode: fagsakYtelseType.PLEIEPENGER_SLUTTFASE, kodeverk: 'test' },
     status: { kode: fagsakStatus.UNDER_BEHANDLING, kodeverk: 'test' },
   } as Fagsak;
   const fagsakPerson = {
@@ -131,6 +134,7 @@ describe('<PleiepengerSluttfaseFakta>', () => {
       erPrivatPerson: false,
       identifikator: 'testId',
       navn: 'testNavn',
+      arbeidsforholdreferanser: [],
     },
   };
 
@@ -142,9 +146,8 @@ describe('<PleiepengerSluttfaseFakta>', () => {
       personopplysninger: soker,
     };
 
-    const wrapper = shallowWithIntl(
-      <PleiepengerSluttfaseFakta.WrappedComponent
-        intl={intlMock}
+    const wrapper = shallow(
+      <PleiepengerSluttfaseFakta
         data={fetchedData as FetchedData}
         behandling={behandling as Behandling}
         fagsak={fagsak}
@@ -168,42 +171,45 @@ describe('<PleiepengerSluttfaseFakta>', () => {
       {
         erAktiv: false,
         harAksjonspunkt: false,
-        tekst: "OmPleietrengendeInfoPanel.Title"
+        tekstKode: 'OmPleietrengendeInfoPanel.Title',
       },
       {
         erAktiv: true,
         harAksjonspunkt: true,
-        tekst: 'Arbeidsforhold',
+        tekstKode: 'ArbeidsforholdInfoPanel.Title',
       },
       {
         erAktiv: false,
         harAksjonspunkt: false,
-        tekst: 'Sykdom',
+        tekstKode: 'LivetsSluttfasePanel.LivetsSluttfase',
       },
       {
         erAktiv: false,
         harAksjonspunkt: false,
-        tekst: 'Inntektsmelding',
+        tekstKode: 'InntektsmeldingInfoPanel.Title',
       },
       {
         erAktiv: false,
         harAksjonspunkt: false,
-        tekst: 'Inntekt og ytelser',
+        tekstKode: 'InntektOgYtelser.Title',
+      },
+      {
+        erAktiv: false,
+        harAksjonspunkt: false,
+        tekstKode: 'SoknadsperioderPanel.Soknadsperioder',
       },
     ]);
   });
 
   it('skal oppdatere url ved valg av faktapanel', () => {
-
     const oppdaterProsessStegOgFaktaPanelIUrl = sinon.spy();
     const fetchedData: Partial<FetchedData> = {
       aksjonspunkter,
       vilkar,
     };
 
-    const wrapper = shallowWithIntl(
-      <PleiepengerSluttfaseFakta.WrappedComponent
-        intl={intlMock}
+    const wrapper = shallow(
+      <PleiepengerSluttfaseFakta
         data={fetchedData as FetchedData}
         behandling={behandling as Behandling}
         fagsak={fagsak}
@@ -239,9 +245,8 @@ describe('<PleiepengerSluttfaseFakta>', () => {
       aksjonspunkter,
       vilkar,
     };
-    const wrapper = shallowWithIntl(
-      <PleiepengerSluttfaseFakta.WrappedComponent
-        intl={intlMock}
+    const wrapper = shallow(
+      <PleiepengerSluttfaseFakta
         data={fetchedData as FetchedData}
         behandling={behandling as Behandling}
         fagsak={fagsak}

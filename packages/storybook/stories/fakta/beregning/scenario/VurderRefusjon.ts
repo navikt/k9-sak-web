@@ -4,6 +4,7 @@ export const bgUtenDelvisRefusjon = {
     {
       definisjon: { kode: '5059', kodeverk: 'AKSJONSPUNKT_DEF' },
       status: { kode: 'OPPR', kodeverk: 'AKSJONSPUNKT_STATUS' },
+      kanLoses: true
     }
   ],
   skjaeringstidspunktBeregning: '2020-05-15',

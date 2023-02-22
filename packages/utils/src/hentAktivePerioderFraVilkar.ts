@@ -1,10 +1,16 @@
-import {Vilkar} from "@k9-sak-web/types";
+import { Vilkar } from '@k9-sak-web/types';
 
 const hentAktivePerioderFraVilkar = (vilkar: Vilkar[], visAllePerioder: boolean) => {
   const [activeVilkår] = vilkar;
- return activeVilkår.perioder.filter(periode => (visAllePerioder && !periode.vurdersIBehandlingen)
-    || (periode.vurdersIBehandlingen && activeVilkår.perioder.length === 1)
-    || (periode.vurdersIBehandlingen && !visAllePerioder));
+
+  if (!activeVilkår?.perioder) {
+    return [];
+  }
+
+  return activeVilkår.perioder.filter(
+    periode =>
+      (visAllePerioder && !periode.vurderesIBehandlingen) || (periode.vurderesIBehandlingen && !visAllePerioder),
+  );
 };
 
 export default hentAktivePerioderFraVilkar;

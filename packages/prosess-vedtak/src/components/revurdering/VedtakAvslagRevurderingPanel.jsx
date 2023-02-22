@@ -1,16 +1,15 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import { injectIntl } from 'react-intl';
-import { Normaltekst, Undertekst } from 'nav-frontend-typografi';
-
-import { VerticalSpacer } from '@fpsak-frontend/shared-components';
-
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
+import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
+import { VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { getKodeverknavnFn } from '@fpsak-frontend/utils';
+import { BodyShort, Label } from '@navikt/ds-react';
+import PropTypes from 'prop-types';
+import React from 'react';
+import { injectIntl } from 'react-intl';
+import { connect } from 'react-redux';
 import vedtakResultType from '../../kodeverk/vedtakResultType';
-import VedtakAvslagArsakOgBegrunnelsePanel from '../VedtakAvslagArsakOgBegrunnelsePanel';
-import { findTilbakekrevingText, findAvslagResultatText } from '../VedtakHelper';
-import vedtakVarselPropType from '../../propTypes/vedtakVarselPropType';
+import AvslagsårsakListe from '../AvslagsårsakListe';
+import { findAvslagResultatText, findTilbakekrevingText } from '../VedtakHelper';
 
 export const isNewBehandlingResult = (beregningResultat, originaltBeregningResultat) => {
   const vedtakResult = beregningResultat ? vedtakResultType.INNVILGET : vedtakResultType.AVSLAG;
@@ -19,7 +18,7 @@ export const isNewBehandlingResult = (beregningResultat, originaltBeregningResul
 };
 
 export const isNewAmount = (beregningResultat, originaltBeregningResultat) => {
-  if (typeof beregningsResultat === 'undefined' || beregningResultat === null) {
+  if (typeof beregningResultat === 'undefined' || beregningResultat === null) {
     return false;
   }
   return beregningResultat.antallBarn !== originaltBeregningResultat.antallBarn;
@@ -36,58 +35,51 @@ const resultText = (beregningResultat, originaltBeregningResultat) => {
 
 export const VedtakAvslagRevurderingPanelImpl = ({
   intl,
-  beregningResultat,
-  behandlingStatusKode,
   vilkar,
-  aksjonspunkter,
-  sprakkode,
-  readOnly,
-  originaltBeregningResultat,
-  tilbakekrevingText,
-  alleKodeverk,
-  vedtakVarsel,
+  beregningResultat,
   ytelseTypeKode,
-}) => (
-  <div>
-    <Undertekst>{intl.formatMessage({ id: 'VedtakForm.Resultat' })}</Undertekst>
-    {(ytelseTypeKode === fagsakYtelseType.FRISINN || ytelseTypeKode === fagsakYtelseType.OMSORGSPENGER) && (
-      <Normaltekst>
-        {intl.formatMessage({ id: findAvslagResultatText(undefined, ytelseTypeKode) })}
-        {tilbakekrevingText && `. ${intl.formatMessage({ id: tilbakekrevingText })}`}
-      </Normaltekst>
-    )}
-    {ytelseTypeKode !== fagsakYtelseType.FRISINN && ytelseTypeKode !== fagsakYtelseType.OMSORGSPENGER && (
-      <Normaltekst>
-        {intl.formatMessage({ id: resultText(beregningResultat, originaltBeregningResultat) })}
-        {tilbakekrevingText && `. ${intl.formatMessage({ id: tilbakekrevingText })}`}
-      </Normaltekst>
-    )}
-    <VerticalSpacer sixteenPx />
-    <VedtakAvslagArsakOgBegrunnelsePanel
-      intl={intl}
-      behandlingStatusKode={behandlingStatusKode}
-      vilkar={vilkar}
-      aksjonspunkter={aksjonspunkter}
-      vedtakVarsel={vedtakVarsel}
-      sprakkode={sprakkode}
-      readOnly={readOnly}
-      alleKodeverk={alleKodeverk}
-    />
-  </div>
-);
+  tilbakekrevingText,
+  originaltBeregningResultat,
+  alleKodeverk,
+}) => {
+  const getKodeverknavn = getKodeverknavnFn(alleKodeverk, kodeverkTyper);
+  return (
+    <div>
+      <Label size="small" as="p">
+        {intl.formatMessage({ id: 'VedtakForm.Resultat' })}
+      </Label>
+      {(ytelseTypeKode === fagsakYtelseType.FRISINN || ytelseTypeKode === fagsakYtelseType.OMSORGSPENGER) && (
+        <BodyShort size="small">
+          {intl.formatMessage({ id: findAvslagResultatText(undefined, ytelseTypeKode) })}
+          {tilbakekrevingText && `. ${intl.formatMessage({ id: tilbakekrevingText })}`}
+        </BodyShort>
+      )}
+      {ytelseTypeKode !== fagsakYtelseType.FRISINN && ytelseTypeKode !== fagsakYtelseType.OMSORGSPENGER && (
+        <BodyShort size="small">
+          {intl.formatMessage({ id: resultText(beregningResultat, originaltBeregningResultat) })}
+          {tilbakekrevingText && `. ${intl.formatMessage({ id: tilbakekrevingText })}`}
+        </BodyShort>
+      )}
+      <div>
+        <VerticalSpacer sixteenPx />
+        <Label size="small" as="p">
+          {intl.formatMessage({ id: 'VedtakForm.ArsakTilAvslag' })}
+        </Label>
+        <AvslagsårsakListe vilkar={vilkar} getKodeverknavn={getKodeverknavn} />
+        <VerticalSpacer sixteenPx />
+      </div>
+      <VerticalSpacer sixteenPx />
+    </div>
+  );
+};
 
 VedtakAvslagRevurderingPanelImpl.propTypes = {
   intl: PropTypes.shape().isRequired,
   beregningResultat: PropTypes.shape(),
-  behandlingStatusKode: PropTypes.string.isRequired,
   vilkar: PropTypes.arrayOf(PropTypes.shape()).isRequired,
-  aksjonspunkter: PropTypes.arrayOf(PropTypes.shape()).isRequired,
-  sprakkode: PropTypes.shape().isRequired,
-  readOnly: PropTypes.bool.isRequired,
   originaltBeregningResultat: PropTypes.shape(),
   tilbakekrevingText: PropTypes.string,
   alleKodeverk: PropTypes.shape().isRequired,
-  vedtakVarsel: vedtakVarselPropType,
   ytelseTypeKode: PropTypes.string.isRequired,
 };
 

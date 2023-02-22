@@ -5,7 +5,7 @@ import { Location } from 'history';
 import { BehandlingAppKontekst, Kodeverk, KodeverkMedNavn } from '@k9-sak-web/types';
 import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 
-import BehandlingPickerItemContent from './BehandlingPickerItemContent';
+import BehandlingPickerItemContentOld from './BehandlingPickerItemContentOld';
 
 import styles from './behandlingPickerItem.less';
 
@@ -35,7 +35,7 @@ const renderItemContent = (
   withChevronDown = false,
   withChevronUp = false,
 ): ReactElement => (
-  <BehandlingPickerItemContent
+  <BehandlingPickerItemContentOld
     withChevronDown={withChevronDown}
     withChevronUp={withChevronUp}
     {...getContentProps(behandling, getKodeverkFn)}

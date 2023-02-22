@@ -1,28 +1,25 @@
-import React, { useMemo, useCallback, useState, Fragment } from 'react';
-import { createIntl, createIntlCache, RawIntlProvider, FormattedMessage } from 'react-intl';
+import React, { useMemo, useCallback, useState } from 'react';
+import { FormattedMessage } from 'react-intl';
 import { Column, Row } from 'nav-frontend-grid';
 import Tabs from 'nav-frontend-tabs';
 
-import { FadingPanel, VerticalSpacer, AksjonspunktHelpTextHTML, LoadingPanel } from '@fpsak-frontend/shared-components';
+import {
+  FadingPanel,
+  VerticalSpacer,
+  AksjonspunktHelpTextHTML,
+  LoadingPanel,
+  NestedIntlProvider,
+} from '@fpsak-frontend/shared-components';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import { Behandling, KodeverkMedNavn } from '@k9-sak-web/types';
 import { RestApiState } from '@k9-sak-web/rest-api-hooks';
 import { Options, EndpointData, RestApiData } from '@k9-sak-web/rest-api-hooks/src/local-data/useMultipleRestApi';
 
+import hentAktivePerioderFraVilkar from '@fpsak-frontend/utils/src/hentAktivePerioderFraVilkar';
 import { ProsessStegPanelUtledet } from '../util/prosessSteg/ProsessStegUtledet';
 import messages from '../i18n/nb_NO.json';
 
 import styles from './inngangsvilkarPanel.less';
-
-const cache = createIntlCache();
-
-const intl = createIntl(
-  {
-    locale: 'nb-NO',
-    messages,
-  },
-  cache,
-);
 
 interface OwnProps {
   behandling: Behandling;
@@ -52,6 +49,7 @@ const InngangsvilkarPanel = ({
       .getEndepunkter()
       .map(e => ({ key: e })),
   );
+
   const { data, state } = useMultipleRestApi(endepunkter, { updateTriggers: [behandling.versjon], isCachingOn: true });
 
   const aksjonspunktTekstKoder = useMemo(
@@ -79,37 +77,41 @@ const InngangsvilkarPanel = ({
     return <LoadingPanel />;
   }
 
-  const skalVisePeriodeTabs = filteredPanels.some(panel => panel.vilkar.some(vilkar => vilkar.perioder.length > 1));
+  const perioderFraTidligereBehandlinger = filteredPanels.filter(
+    panel => hentAktivePerioderFraVilkar(panel.vilkar, true).length > 0,
+  );
 
   return (
-    <RawIntlProvider value={intl}>
+    <NestedIntlProvider messages={messages}>
       <FadingPanel>
         {((apentFaktaPanelInfo && erIkkeFerdigbehandlet) || aksjonspunktTekstKoder.length > 0) && (
           <>
             <AksjonspunktHelpTextHTML>
               {apentFaktaPanelInfo && erIkkeFerdigbehandlet
                 ? [
-                    <Fragment key="1">
+                    <>
                       <FormattedMessage id="InngangsvilkarPanel.AvventerAvklaringAv" />
                       <a href="" onClick={oppdaterUrl}>
                         <FormattedMessage id={apentFaktaPanelInfo.textCode} />
                       </a>
-                    </Fragment>,
+                    </>,
                   ]
                 : aksjonspunktTekstKoder.map(kode => <FormattedMessage key={kode} id={kode} />)}
             </AksjonspunktHelpTextHTML>
             <VerticalSpacer thirtyTwoPx />
           </>
         )}
-        {skalVisePeriodeTabs && (
-          <Tabs
-            tabs={[
-              { label: <FormattedMessage id="Vilkarsperioder.DenneBehandling" /> },
-              { label: <FormattedMessage id="Vilkarsperioder.HittilIÅr" /> },
-            ]}
-            onChange={(e, index) => setVisAllePerioder(index === 1)}
-          />
-        )}
+        <Tabs
+          tabs={
+            perioderFraTidligereBehandlinger.length > 0
+              ? [
+                  { label: <FormattedMessage id="Vilkarsperioder.DenneBehandling" /> },
+                  { label: <FormattedMessage id="Vilkarsperioder.HittilIÅr" /> },
+                ]
+              : [{ label: <FormattedMessage id="Vilkarsperioder.DenneBehandling" /> }]
+          }
+          onChange={(e, index) => setVisAllePerioder(index === 1)}
+        />
         <VerticalSpacer thirtyTwoPx />
         <Row className="">
           <Column xs="6">
@@ -122,7 +124,7 @@ const InngangsvilkarPanel = ({
                     behandling,
                     alleKodeverk,
                     submitCallback,
-                    visAllePerioder: !skalVisePeriodeTabs || visAllePerioder,
+                    visAllePerioder,
                     ...stegData.getKomponentData(),
                   })}
                 </div>
@@ -138,7 +140,7 @@ const InngangsvilkarPanel = ({
                     behandling,
                     alleKodeverk,
                     submitCallback,
-                    visAllePerioder: !skalVisePeriodeTabs || visAllePerioder,
+                    visAllePerioder,
                     ...stegData.getKomponentData(),
                   })}
                 </div>
@@ -146,8 +148,7 @@ const InngangsvilkarPanel = ({
           </Column>
         </Row>
       </FadingPanel>
-    </RawIntlProvider>
+    </NestedIntlProvider>
   );
 };
-
 export default InngangsvilkarPanel;

@@ -29,7 +29,8 @@ const prosessStegCodes = {
   ANKE_RESULTAT: 'ankeresultat',
   MEDISINSK_VILKAR: 'medisinsk_vilkar',
   OPPTJENING: 'opptjening',
-  PLEIEPENGER_SLUTTFASE: 'pleiepenger_i_livets_sluttfase'
+  ALDER: 'alder',
+  OPPLAERING: 'opplaering',
 };
 
 export default prosessStegCodes;

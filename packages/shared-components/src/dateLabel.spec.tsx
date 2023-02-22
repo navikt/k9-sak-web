@@ -1,18 +1,17 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { render, screen } from '@testing-library/react';
+import { format } from 'date-fns';
 
 import DateLabel from './DateLabel';
 
 describe('<DateLabel>', () => {
   it('skal ha en FormattedDate-komponent', () => {
-    const wrapper = shallow(<DateLabel dateString="10.10.2017" />);
-    expect(wrapper.find('FormattedDate')).toHaveLength(1);
+    render(<DateLabel dateString="10.10.2017" />);
+    expect(screen.queryByText('10.10.2017')).toBeInTheDocument();
   });
 
   it('skal sjekke at dato blir formatert korrekt', () => {
-    const wrapper = shallow(<DateLabel dateString="10.10.2017" />);
-
-    const div = wrapper.find('FormattedDate');
-    expect(div.prop('value')).toEqual(new Date('10.10.2017'));
+    render(<DateLabel dateString="10.10.2017" />);
+    expect(screen.queryByText(format(new Date('10.10.2017'), 'dd.MM.yyyy'))).toBeInTheDocument();
   });
 });

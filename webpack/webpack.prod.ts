@@ -26,7 +26,7 @@ export default {
   },
   cache,
   module,
-  plugins,
+  plugins: plugins(),
   externals,
   resolve,
   optimization: {
@@ -43,4 +43,5 @@ export default {
   stats: {
     children: false,
   },
+  ignoreWarnings: [/Failed to parse source map/],
 };

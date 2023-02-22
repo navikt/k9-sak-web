@@ -6,22 +6,6 @@ import { MODULES_DIR, PACKAGES_DIR, CSS_DIR, IMAGE_DIR } from '../paths';
 
 import { IS_DEV } from '../constants';
 
-const eslintRules = {
-  test: /\.(t|j)sx?$/,
-  enforce: 'pre',
-  use: {
-    loader: 'eslint-loader',
-    options: {
-      failOnWarning: false,
-      failOnError: !IS_DEV,
-      configFile: path.resolve(__dirname, IS_DEV ? '../../eslint/eslintrc.dev.js' : '../../eslint/eslintrc.prod.js'),
-      fix: IS_DEV,
-      // cache: true,
-    },
-  },
-  include: [PACKAGES_DIR],
-};
-
 const babelRules = {
   test: /\.(t|j)sx?$/,
   use: [
@@ -35,9 +19,7 @@ const babelRules = {
     {
       loader: 'babel-loader',
       options: {
-        // envName: IS_DEV ? 'development' : 'production',
-        // cacheDirectory: true,
-        plugins: [IS_DEV && require.resolve('react-refresh/babel')].filter(Boolean),
+        cacheDirectory: true,
       },
     },
   ],
@@ -141,6 +123,13 @@ const svgExternalRules = {
   include: [MODULES_DIR],
 };
 
+const sourceMaps = {
+  test: /\.js$/,
+  enforce: 'pre',
+  use: ['source-map-loader'],
+  include: [`${MODULES_DIR}/@navikt`],
+};
+
 export default {
-  rules: [eslintRules, babelRules, lessLocalRules, lessExternalRules, assetRules, svgLocalRules, svgExternalRules],
+  rules: [sourceMaps, babelRules, lessLocalRules, lessExternalRules, assetRules, svgLocalRules, svgExternalRules],
 };

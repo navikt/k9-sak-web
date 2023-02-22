@@ -74,33 +74,31 @@ const VilkarResultPicker = ({
           <RadioOption label={customVilkarIkkeOppfyltText} value={false} />
         </RadioGroupField>
       )}
-      <>
-        {erVilkarOk !== undefined && !erVilkarOk && avslagsarsaker && (
-          <>
-            <VerticalSpacer eightPx />
-            <SelectField
-              name={`${fieldNamePrefix ? `${fieldNamePrefix}.` : ''}avslagCode`}
-              label={intl.formatMessage({ id: 'VilkarResultPicker.Arsak' })}
-              placeholder={intl.formatMessage({ id: 'VilkarResultPicker.SelectArsak' })}
-              selectValues={avslagsarsaker.map(aa => (
-                <option key={aa.kode} value={aa.kode}>
-                  {aa.navn}
-                </option>
-              ))}
-              bredde="xl"
+      {erVilkarOk !== undefined && !erVilkarOk && avslagsarsaker && (
+        <>
+          <VerticalSpacer eightPx />
+          <SelectField
+            name={`${fieldNamePrefix ? `${fieldNamePrefix}.` : ''}avslagCode`}
+            label={intl.formatMessage({ id: 'VilkarResultPicker.Arsak' })}
+            placeholder={intl.formatMessage({ id: 'VilkarResultPicker.SelectArsak' })}
+            selectValues={avslagsarsaker.map(aa => (
+              <option key={aa.kode} value={aa.kode}>
+                {aa.navn}
+              </option>
+            ))}
+            bredde="xl"
+            readOnly={readOnly}
+          />
+          {erMedlemskapsPanel && (
+            <DatepickerField
+              name={`${fieldNamePrefix ? `${fieldNamePrefix}.` : ''}avslagDato`}
+              label={intl.formatMessage({ id: 'VilkarResultPicker.VilkarDato' })}
               readOnly={readOnly}
+              validate={[required, hasValidDate]}
             />
-            {erMedlemskapsPanel && (
-              <DatepickerField
-                name={`${fieldNamePrefix ? `${fieldNamePrefix}.` : ''}avslagDato`}
-                label={intl.formatMessage({ id: 'VilkarResultPicker.VilkarDato' })}
-                readOnly={readOnly}
-                validate={[required, hasValidDate]}
-              />
-            )}
-          </>
-        )}
-      </>
+          )}
+        </>
+      )}
       <VerticalSpacer eightPx />
     </div>
   );
@@ -132,9 +130,9 @@ VilkarResultPicker.transformValues = (values: FormValues) =>
   values.erVilkarOk
     ? { erVilkarOk: values.erVilkarOk }
     : {
-        erVilkarOk: values.erVilkarOk,
-        avslagskode: values.avslagCode,
-        avslagDato: values.avslagDato,
-      };
+      erVilkarOk: values.erVilkarOk,
+      avslagskode: values.avslagCode,
+      avslagDato: values.avslagDato,
+    };
 
 export default VilkarResultPicker;

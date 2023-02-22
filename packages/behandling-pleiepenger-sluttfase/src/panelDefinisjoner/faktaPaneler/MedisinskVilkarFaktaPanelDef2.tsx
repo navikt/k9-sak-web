@@ -11,7 +11,7 @@ import MedisinskVilkår from '../../components/MedisinskVilkår';
 class MedisinskVilkarFaktaPanelDef2 extends FaktaPanelDef {
   getUrlKode = () => faktaPanelCodes.MEDISINSKVILKAAR_V2;
 
-  getTekstKode = () => 'MedisinskVilkarPanel.MedisinskVilkar';
+  getTekstKode = () => 'LivetsSluttfasePanel.LivetsSluttfase';
 
   getAksjonspunktKoder = () => [aksjonspunktCodes.MEDISINSK_VILKAAR];
 
@@ -19,13 +19,14 @@ class MedisinskVilkarFaktaPanelDef2 extends FaktaPanelDef {
 
   getKomponent = props => <MedisinskVilkår {...props} />;
 
-  getData = ({ hentSaksbehandlere, fagsak }) => ({
+  getData = ({ hentSaksbehandlere, fagsak, behandling }) => ({
     saksbehandlere: hentSaksbehandlere?.saksbehandlere,
-    erFagytelsetypePPN: fagsak.sakstype.kode === fagsakYtelseType.PLEIEPENGER_SLUTTFASE
+    fagsakYtelseType: fagsak.sakstype.kode,
+    behandlingType: behandling.type.kode,
   });
 
   getOverstyrVisningAvKomponent = ({ fagsak, behandling }: { fagsak: Fagsak; behandling: Behandling }) => {
-    const erPleiepengesak = fagsak.sakstype.kode === fagsakYtelseType.PLEIEPENGER;
+    const erPleiepengesak = fagsak.sakstype.kode === fagsakYtelseType.PLEIEPENGER_SLUTTFASE;
     const søknadsfristErIkkeUnderVurdering = behandling.stegTilstand?.stegType?.kode !== 'VURDER_SØKNADSFRIST';
     return erPleiepengesak && søknadsfristErIkkeUnderVurdering;
   };

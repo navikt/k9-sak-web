@@ -6,18 +6,28 @@
 }
 
 .pushRight {
-  margin-right: 2rem;
+  display: flex;
+  margin-left: auto;
+  margin-right: 2.3125rem;
 }
 
 .flexContainer {
   display: flex;
 }
 
-.dødsdatoLabel {
-  background-color: black;
+.label {
   border-radius: 0.25rem;
-  color: white;
-  line-height: 1.5rem;
-  margin-left: 1rem;
+  font-size: 0.875rem;
+  height: 1.5rem;
+  line-height: 1.375rem;
+  margin-bottom: 1rem;
+  margin-top: 1rem;
   padding: 0 0.5rem;
+}
+
+.dødsdatoLabel:extend(.label) {
+  background-color: black;
+  border: 1px solid black;
+  color: white;
+  margin-left: 1rem;
 }

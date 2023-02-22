@@ -1,9 +1,13 @@
 import React from 'react';
-import sinon from 'sinon';
+import { fireEvent, render, screen } from '@testing-library/react';
+import { reducer as formReducer, reduxForm } from 'redux-form';
+import { Provider } from 'react-redux';
+import { combineReducers, createStore } from 'redux';
+import { format, add } from 'date-fns';
+import { MemoryRouter } from 'react-router-dom';
+import userEvent from '@testing-library/user-event';
 
-import SettPaVentModalIndex from '@k9-sak-web/modal-sett-pa-vent';
-
-import shallowWithIntl from '../i18n/index';
+import venteArsakType from '@fpsak-frontend/kodeverk/src/venteArsakType';
 import MenySettPaVentIndex from './MenySettPaVentIndex';
 
 jest.mock('react-router-dom', () => ({
@@ -13,38 +17,72 @@ jest.mock('react-router-dom', () => ({
   }),
 }));
 
-describe('<MenySettPaVentIndex>', () => {
-  it('skal vise modal og velge å åpne ta behandling av vent', () => {
-    const setBehandlingOnHoldCallback = sinon.spy();
-    const lukkModalCallback = sinon.spy();
+const MockForm = reduxForm({ form: 'mock' })(({ children }) => {
+  const handleSubmit = jest.fn();
+  return <form onSubmit={handleSubmit}>{children}</form>;
+});
 
-    const wrapper = shallowWithIntl(
-      <MenySettPaVentIndex
-        behandlingId={3}
-        behandlingVersjon={1}
-        settBehandlingPaVent={setBehandlingOnHoldCallback}
-        ventearsaker={[]}
-        lukkModal={lukkModalCallback}
-        erTilbakekreving={false}
-      />,
+const ventearsaker = [
+  {
+    kode: venteArsakType.UTV_FRIST,
+    kodeverk: 'VENT_ARSAK_TYPE',
+    navn: 'Utvid frist',
+    kanVelges: 'true',
+  },
+];
+
+const testDato = add(new Date(), { months: 2, days: 1 });
+
+describe('<MenySettPaVentIndex>', () => {
+  it('skal vise modal og velge å åpne ta behandling av vent', async () => {
+    const lukkModalCallback = jest.fn();
+    const settBehandlingPaVent = jest.fn(() => Promise.resolve());
+
+    render(
+      <Provider store={createStore(combineReducers({ form: formReducer }))}>
+        <MemoryRouter>
+          <MockForm>
+            <MenySettPaVentIndex
+              behandlingId={3}
+              behandlingVersjon={1}
+              settBehandlingPaVent={settBehandlingPaVent}
+              ventearsaker={ventearsaker}
+              lukkModal={lukkModalCallback}
+              erTilbakekreving={false}
+            />
+          </MockForm>
+        </MemoryRouter>
+      </Provider>,
     );
 
-    const modal = wrapper.find(SettPaVentModalIndex);
-    expect(modal).toHaveLength(1);
+    expect(await screen.getByTestId('ventModalForm')).toBeInTheDocument();
+    expect(screen.queryByText('Behandlingen settes på vent med frist')).toBeInTheDocument();
 
-    modal.prop('submitCallback')({
-      frist: '20-12-2020',
-      ventearsak: 'test',
-    });
+    /**
+     * Velg en dato
+     */
+    const datoFelt = screen.getByPlaceholderText('dd.mm.åååå');
+    const datoStreng = format(testDato, 'dd.MM.yyyy');
+    userEvent.clear(datoFelt);
+    userEvent.type(datoFelt, datoStreng);
+    fireEvent.blur(datoFelt);
 
-    const kall = setBehandlingOnHoldCallback.getCalls();
-    expect(kall).toHaveLength(1);
-    expect(kall[0].args).toHaveLength(1);
-    expect(kall[0].args[0]).toEqual({
-      behandlingId: 3,
+    /**
+     * Velg en venteårsak
+     */
+    const venteArsakFelt = screen.getByLabelText('Hva venter vi på?');
+    userEvent.selectOptions(venteArsakFelt, venteArsakType.UTV_FRIST);
+
+    /**
+     * Ssubmit
+     */
+    userEvent.click(screen.getByText(/Sett på vent/i));
+
+    expect(settBehandlingPaVent).toHaveBeenCalledWith({
       behandlingVersjon: 1,
-      frist: '20-12-2020',
-      ventearsak: 'test',
+      behandlingId: 3,
+      frist: format(testDato, 'yyyy-MM-dd'),
+      ventearsak: venteArsakType.UTV_FRIST,
     });
   });
 });

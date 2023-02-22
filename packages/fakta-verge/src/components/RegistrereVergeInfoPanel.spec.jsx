@@ -4,8 +4,8 @@ import sinon from 'sinon';
 
 import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
 
+import { FaktaBegrunnelseTextField } from '@k9-sak-web/fakta-felles';
 import { RegistrereVergeInfoPanelImpl } from './RegistrereVergeInfoPanel';
-import RegistrereVergeFaktaForm from './RegistrereVergeFaktaForm';
 import shallowWithIntl, { intlMock } from '../../i18n';
 
 describe('<RegistrereVergeInfoPanel>', () => {
@@ -33,7 +33,7 @@ describe('<RegistrereVergeInfoPanel>', () => {
       />,
     );
 
-    const panel = wrapper.find(RegistrereVergeFaktaForm);
+    const panel = wrapper.find(FaktaBegrunnelseTextField);
     expect(panel).to.have.length(1);
   });
 });

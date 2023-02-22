@@ -16,6 +16,10 @@ const historikkEndretFeltTypeCodes = {
     kode: 'AKTIVITET_PERIODE',
     feltId: 'HistorikkEndretFelt.AktivitetPeriode',
   },
+  ALDERSVILKAR_BARN: {
+    kode: 'ALDERSVILKAR_BARN',
+    feltId: 'HistorikkEndretFelt.AldersvilkarBarn',
+  },
   ALENE_OM_OMSORG: {
     kode: 'ALENE_OM_OMSORG',
     feltId: 'HistorikkEndretFelt.AleneOmOmsorgen',
@@ -51,6 +55,10 @@ const historikkEndretFeltTypeCodes = {
   BRUTTO_NAERINGSINNTEKT: {
     kode: 'BRUTTO_NAERINGSINNTEKT',
     feltId: 'HistorikkEndretFelt.FastsettSelvstendigNaeringForm.BruttoBerGr',
+  },
+  BRUTTO_INNTEKT_NYTT_INNTEKTSFORHOLD: {
+    kode: 'BRUTTO_INNTEKT_NYTT_INNTEKTSFORHOLD',
+    feltId: 'HistorikkEndretFelt.BruttoInntektNyttInntektsforhold',
   },
   DAGPENGER_INNTEKT: {
     kode: 'DAGPENGER_INNTEKT',
@@ -188,6 +196,10 @@ const historikkEndretFeltTypeCodes = {
     kode: 'OVERSTYRT_BEREGNING',
     feltId: 'Historikk.Template.7.OverstyrtBeregning',
   },
+  FJERNET_OVERSTYRING: {
+    kode: 'FJERNET_OVERSTYRING',
+    feltId: 'Historikk.Template.7.AvbruttOverstyring',
+  },
   OVERSTYRT_VURDERING: {
     kode: 'OVERSTYRT_VURDERING',
     feltId: 'Historikk.Template.7.OverstyrtVilkar',
@@ -223,6 +235,10 @@ const historikkEndretFeltTypeCodes = {
   VILKAR_SOM_ANVENDES: {
     kode: 'VILKAR_SOM_ANVENDES',
     feltId: 'Historikk.Anvendes',
+  },
+  VURDER_NYTT_INNTEKTSFORHOLD: {
+    kode: 'VURDER_NYTT_INNTEKTSFORHOLD',
+    feltId: 'HistorikkEndretFelt.VurderNyttInntektsforhold',
   },
   OMSORG: {
     kode: 'OMSORG',

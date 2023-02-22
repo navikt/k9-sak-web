@@ -1,7 +1,7 @@
 import { shallow } from 'enzyme';
 import React from 'react';
 import sinon from 'sinon';
-import { SideMenu } from '@navikt/k9-react-components';
+import { SideMenu } from '@navikt/ft-plattform-komponenter';
 
 import { Behandling } from '@k9-sak-web/types';
 
@@ -46,7 +46,7 @@ describe('<VilkarresultatMedOverstyringForm>', () => {
                   kodeverk: 'test',
                 },
                 avslagKode: 'test',
-                vurdersIBehandlingen: true,
+                vurderesIBehandlingen: true,
                 merknadParametere: {
                   test: 'test',
                 },
@@ -59,7 +59,7 @@ describe('<VilkarresultatMedOverstyringForm>', () => {
             },
           },
         ]}
-        visAllePerioder
+        visAllePerioder={false}
       />,
     );
 
@@ -105,7 +105,7 @@ describe('<VilkarresultatMedOverstyringForm>', () => {
                   kodeverk: 'test',
                 },
                 avslagKode: 'test',
-                vurdersIBehandlingen: true,
+                vurderesIBehandlingen: true,
                 merknadParametere: {
                   test: 'test',
                 },
@@ -120,7 +120,7 @@ describe('<VilkarresultatMedOverstyringForm>', () => {
                   kodeverk: 'test',
                 },
                 avslagKode: 'test',
-                vurdersIBehandlingen: false,
+                vurderesIBehandlingen: false,
                 merknadParametere: {
                   test: 'test',
                 },
@@ -133,7 +133,7 @@ describe('<VilkarresultatMedOverstyringForm>', () => {
             },
           },
         ]}
-        visAllePerioder
+        visAllePerioder={false}
       />,
     );
 

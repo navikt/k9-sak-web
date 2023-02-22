@@ -1,12 +1,14 @@
 import React from 'react';
 import { useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
-import { MicroFrontend } from '@fpsak-frontend/utils';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
-import findEndpointsForMicrofrontend from '../microfrontend/utils/findEndpointsForMicrofrontend';
-import SimpleEndpoints from '../microfrontend/types/SimpleEndpoints';
-import findAksjonspunkt from '../microfrontend/utils/findAksjonspunkt';
-import httpErrorHandler from '../microfrontend/utils/httpErrorHandler';
+import {
+  MicroFrontend,
+  httpErrorHandler,
+  findEndpointsForMicrofrontend,
+  findAksjonspunkt,
+} from '@fpsak-frontend/utils';
+import { SimpleEndpoints } from '@k9-sak-web/types';
 
 const initializeMedisinskVilkår = (
   elementId,
@@ -17,7 +19,8 @@ const initializeMedisinskVilkår = (
   readOnly,
   visFortsettknapp,
   saksbehandlere,
-  erFagytelsetypePPN
+  fagsakYtelseType,
+  behandlingType,
 ) => {
   (window as any).renderMedisinskVilkarApp(elementId, {
     httpErrorHandler: httpErrorHandlerFn,
@@ -27,12 +30,21 @@ const initializeMedisinskVilkår = (
     readOnly,
     visFortsettknapp,
     saksbehandlere,
-    erFagytelsetypePPN,
+    fagsakYtelseType,
+    behandlingType,
   });
 };
 
 const medisinskVilkårAppID = 'medisinskVilkårApp';
-export default ({ behandling: { links, uuid }, submitCallback, aksjonspunkter, readOnly, saksbehandlere, erFagytelsetypePPN}) => {
+export default ({
+  behandling: { links, uuid },
+  submitCallback,
+  aksjonspunkter,
+  readOnly,
+  saksbehandlere,
+  fagsakYtelseType,
+  behandlingType,
+}) => {
   const { addErrorMessage } = useRestApiErrorDispatcher();
   const httpErrorHandlerCaller = (status: number, locationHeader?: string) =>
     httpErrorHandler(status, addErrorMessage, locationHeader);
@@ -48,7 +60,6 @@ export default ({ behandling: { links, uuid }, submitCallback, aksjonspunkter, r
     ]);
 
   const harAksjonspunkt = !!medisinskVilkårAksjonspunktkode;
-
   return (
     <MicroFrontend
       id={medisinskVilkårAppID}
@@ -62,6 +73,7 @@ export default ({ behandling: { links, uuid }, submitCallback, aksjonspunkter, r
           findEndpointsForMicrofrontend(links, [
             { rel: 'sykdom-vurdering-oversikt-ktp', desiredName: 'vurderingsoversiktKontinuerligTilsynOgPleie' },
             { rel: 'sykdom-vurdering-oversikt-too', desiredName: 'vurderingsoversiktBehovForToOmsorgspersoner' },
+            { rel: 'sykdom-vurdering-oversikt-slu', desiredName: 'vurderingsoversiktLivetsSluttfase' },
             { rel: 'sykdom-vurdering-direkte', desiredName: 'hentVurdering' },
             { rel: 'sykdom-vurdering-opprettelse', desiredName: 'opprettVurdering' },
             { rel: 'sykdom-vurdering-endring', desiredName: 'endreVurdering' },
@@ -77,7 +89,8 @@ export default ({ behandling: { links, uuid }, submitCallback, aksjonspunkter, r
           readOnly || !harAksjonspunkt,
           visFortsettknapp,
           saksbehandlere || {},
-          erFagytelsetypePPN
+          fagsakYtelseType,
+          behandlingType,
         )
       }
     />

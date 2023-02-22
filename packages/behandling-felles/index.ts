@@ -26,3 +26,4 @@ export type { default as SettPaVentParams } from './src/types/settPaVentParamsTs
 export { default as lagDokumentdata } from './src/util/lagDokumentdata';
 export { default as BehandlingUtil } from './src/util/BehandlingUtil';
 export { default as ArbeidsgiverOpplysningerUtil } from './src/util/ArbeidsgiverOpplysningerUtil';
+export { default as DynamicLoader } from './src/util/DynamicLoader';

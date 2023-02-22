@@ -1958,6 +1958,11 @@
   ],
   "SkjermlenkeType": [
     {
+      "kode": "BEREGNING",
+      "navn": "Beregning",
+      "kodeverk": "SKJERMLENKE_TYPE"
+    },
+    {
       "kode": "KLAGE_BEH_NFP",
       "navn": "Klageresultat Vedtaksinstans",
       "kodeverk": "SKJERMLENKE_TYPE"
@@ -3058,6 +3063,23 @@
       "kode": "TILBAKEKR_OPPDATER",
       "navn": "Endringer vil oppdatere eksisterende feilutbetalte perioder og beløp.",
       "kodeverk": "TILBAKEKR_VIDERE_BEH"
+    }
+  ],
+  "UtenlandsoppholdÅrsak": [
+    {
+      "kode": "BARNET_INNLAGT_I_HELSEINSTITUSJON_FOR_NORSK_OFFENTLIG_REGNING",
+      "navn": "Barnet er innlagt i helseinstitusjon for norsk offentlig regning (mottar pleiepenger som i Norge, telles ikke i 8 uker)",
+      "kodeverk": "UTENLANDSOPPHOLD_ÅRSAK"
+    },
+    {
+      "kode": "BARNET_INNLAGT_I_HELSEINSTITUSJON_DEKKET_ETTER_AVTALE_MED_ET_ANNET_LAND_OM_TRYGD",
+      "navn": "Barnet er innlagt i helseinstitusjon dekket etter avtale med annet land om trygd (mottar pleiepenger som i Norge, telles ikke i 8 uker)",
+      "kodeverk": "UTENLANDSOPPHOLD_ÅRSAK"
+    },
+    {
+      "kode": "INGEN",
+      "navn": "Ingen av årsakene over (kan motta pleiepenger i 8 uker)",
+      "kodeverk": "UTENLANDSOPPHOLD_ÅRSAK"
     }
   ],
   "OverføringÅrsak": [
@@ -6647,11 +6669,6 @@
     {
       "kode": "SLÅTT_SAMMEN_MED_ANNET",
       "navn": "Arbeidsforholdet er slått sammen med et annet",
-      "kodeverk": "ARBEIDSFORHOLD_HANDLING_TYPE"
-    },
-    {
-      "kode": "LAGT_TIL_AV_SAKSBEHANDLER",
-      "navn": "Arbeidsforhold lagt til av saksbehandler",
       "kodeverk": "ARBEIDSFORHOLD_HANDLING_TYPE"
     }
   ],

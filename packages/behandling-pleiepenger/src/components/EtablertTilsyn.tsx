@@ -1,12 +1,14 @@
-import { MicroFrontend } from '@fpsak-frontend/utils';
 import { useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
 import React from 'react';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
-import SimpleEndpoints from '../microfrontend/types/SimpleEndpoints';
-import findEndpointsForMicrofrontend from '../microfrontend/utils/findEndpointsForMicrofrontend';
-import httpErrorHandlerFn from '../microfrontend/utils/httpErrorHandler';
-import findAksjonspunkt from '../microfrontend/utils/findAksjonspunkt';
+import {
+  MicroFrontend,
+  httpErrorHandler as httpErrorHandlerFn,
+  findEndpointsForMicrofrontend,
+  findAksjonspunkt,
+} from '@fpsak-frontend/utils';
+import { SimpleEndpoints } from '@k9-sak-web/types';
 
 const etablertTilsynAppId = 'etablertTilsynApp';
 const initializeEtablertTilsynApp = (
@@ -61,6 +63,8 @@ export default ({ aksjonspunkter, behandling, readOnly, submitCallback, saksbeha
           httpErrorHandlerCaller,
           findEndpointsForMicrofrontend(behandling.links, [
             { rel: 'pleiepenger-sykt-barn-tilsyn', desiredName: 'tilsyn' },
+            { rel: 'sykdom-vurdering-oversikt-ktp', desiredName: 'sykdom' },
+            { rel: 'sykdom-innleggelse', desiredName: 'sykdomInnleggelse' },
           ]),
           readOnly || !harAksjonspunkt,
           løsBeredskapAksjonspunkt,

@@ -1,6 +1,6 @@
 import React, { Suspense, useEffect, useCallback, useMemo } from 'react';
-import { useHistory } from 'react-router-dom';
-import { History } from 'history';
+import { useNavigate, useLocation, NavigateFunction } from 'react-router-dom';
+import { Location } from 'history';
 
 import { useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
 import BehandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
@@ -19,6 +19,7 @@ import {
 } from '@k9-sak-web/types';
 
 import { erFagytelseTypeUtvidetRett } from '@k9-sak-web/behandling-utvidet-rett/src/utils/utvidetRettHjelpfunksjoner';
+import BehandlingPleiepengerSluttfaseIndex from '@k9-sak-web/behandling-pleiepenger-sluttfase/src/BehandlingPleiepengerSluttfaseIndex';
 import useTrackRouteParam from '../app/useTrackRouteParam';
 import getAccessRights from '../app/util/access';
 import {
@@ -30,7 +31,6 @@ import {
 import { K9sakApiKeys, requestApi, restApiHooks, LinkCategory } from '../data/k9sakApi';
 import behandlingEventHandler from './BehandlingEventHandler';
 import ErrorBoundary from '../app/ErrorBoundary';
-import BehandlingPleiepengerSluttfaseIndex from "../../../behandling-pleiepenger-sluttfase/src/BehandlingPleiepengerSluttfaseIndex";
 
 const BehandlingPleiepengerIndex = React.lazy(() => import('@k9-sak-web/behandling-pleiepenger'));
 const BehandlingOmsorgspengerIndex = React.lazy(() => import('@k9-sak-web/behandling-omsorgspenger'));
@@ -41,6 +41,7 @@ const BehandlingAnkeIndex = React.lazy(() => import('@k9-sak-web/behandling-anke
 const BehandlingFrisinnIndex = React.lazy(() => import('@k9-sak-web/behandling-frisinn'));
 const BehandlingUnntakIndex = React.lazy(() => import('@k9-sak-web/behandling-unntak'));
 const BehandlingUtvidetRettIndex = React.lazy(() => import('@k9-sak-web/behandling-utvidet-rett'));
+const BehandlingOpplaeringspengerIndex = React.lazy(() => import('@k9-sak-web/behandling-opplaeringspenger'));
 
 const erTilbakekreving = (behandlingTypeKode: string): boolean =>
   behandlingTypeKode === BehandlingType.TILBAKEKREVING ||
@@ -49,10 +50,9 @@ const erTilbakekreving = (behandlingTypeKode: string): boolean =>
 const formatName = (bpName = ''): string => replaceNorwegianCharacters(bpName.toLowerCase());
 
 const getOppdaterProsessStegOgFaktaPanelIUrl =
-  (history: History) =>
+  (location: Location, navigate: NavigateFunction) =>
   (prosessStegId: string, faktaPanelId: string): void => {
     let newLocation;
-    const { location } = history;
     if (prosessStegId === 'default') {
       newLocation = getLocationWithDefaultProsessStegAndFakta(location);
     } else if (prosessStegId) {
@@ -69,7 +69,7 @@ const getOppdaterProsessStegOgFaktaPanelIUrl =
       newLocation = getFaktaLocation(newLocation)(null);
     }
 
-    history.push(newLocation);
+    navigate(newLocation);
   };
 
 interface OwnProps {
@@ -139,13 +139,16 @@ const BehandlingIndex = ({
     [fagsak.status, behandlingId, behandling?.status, behandling?.type],
   );
 
-  const history = useHistory();
+  const location = useLocation();
+  const navigate = useNavigate();
   const opneSokeside = useCallback(() => {
     window.location.assign(getPathToFplos() || '/');
   }, []);
-  const oppdaterProsessStegOgFaktaPanelIUrl = useCallback(getOppdaterProsessStegOgFaktaPanelIUrl(history), [history]);
+  const oppdaterProsessStegOgFaktaPanelIUrl = useCallback(getOppdaterProsessStegOgFaktaPanelIUrl(location, navigate), [
+    location,
+    navigate,
+  ]);
 
-  const { location } = history;
   const query = parseQueryString(location.search);
 
   const behandlingTypeKode = behandling?.type ? behandling.type.kode : undefined;
@@ -304,6 +307,20 @@ const BehandlingIndex = ({
       <Suspense fallback={<LoadingPanel />}>
         <ErrorBoundary errorMessageCallback={addErrorMessage}>
           <BehandlingFrisinnIndex
+            oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
+            valgtFaktaSteg={query.fakta}
+            {...defaultProps}
+          />
+        </ErrorBoundary>
+      </Suspense>
+    );
+  }
+
+  if (fagsak.sakstype.kode === FagsakYtelseType.OPPLAERINGSPENGER) {
+    return (
+      <Suspense fallback={<LoadingPanel />}>
+        <ErrorBoundary errorMessageCallback={addErrorMessage}>
+          <BehandlingOpplaeringspengerIndex
             oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
             valgtFaktaSteg={query.fakta}
             {...defaultProps}

@@ -15,8 +15,14 @@ type QueryParams = {
 
 const DEV_LOGIN_URL = 'http://localhost:8080/k9/sak/jetty/login';
 
+export const aktoerRoutePath = '/aktoer/:aktoerId';
+
+export const fagsakRoutePath = '/fagsak/:saksnummer//*';
+export const behandlingerRoutePath = `behandling//*`;
+export const behandlingRoutePath = `/:behandlingId/`;
+
 export const fagsakPath = '/fagsak/:saksnummer/';
-export const aktoerPath = '/aktoer/:aktoerId(\\d+)';
+export const aktoerPath = '/aktoer/:aktoerId(.*)';
 export const behandlingerPath = `${fagsakPath}behandling/`;
 export const behandlingPath = `${behandlingerPath}:behandlingId(\\d+)/`;
 
@@ -41,14 +47,22 @@ export const getLocationWithQueryParams = (location: Location, queryParams: Quer
   search: updateQueryParams(location.search, queryParams),
 });
 
-export const getSupportPanelLocationCreator = (location: Location) => (supportPanel: string): Location =>
-  getLocationWithQueryParams(location, { stotte: supportPanel });
-export const getProsessStegLocation = (location: Location) => (prosessSteg: string): Location =>
-  getLocationWithQueryParams(location, { punkt: prosessSteg });
-export const getFaktaLocation = (location: Location) => (fakta: string): Location =>
-  getLocationWithQueryParams(location, { fakta });
-export const getRiskPanelLocationCreator = (location: Location) => (isRiskPanelOpen): Location =>
-  getLocationWithQueryParams(location, { risiko: isRiskPanelOpen });
+export const getSupportPanelLocationCreator =
+  (location: Location) =>
+  (supportPanel: string): Location =>
+    getLocationWithQueryParams(location, { stotte: supportPanel });
+export const getProsessStegLocation =
+  (location: Location) =>
+  (prosessSteg: string): Location =>
+    getLocationWithQueryParams(location, { punkt: prosessSteg });
+export const getFaktaLocation =
+  (location: Location) =>
+  (fakta: string): Location =>
+    getLocationWithQueryParams(location, { fakta });
+export const getRiskPanelLocationCreator =
+  (location: Location) =>
+  (isRiskPanelOpen): Location =>
+    getLocationWithQueryParams(location, { risiko: isRiskPanelOpen });
 
 // eslint-disable-next-line
 export const getLocationWithDefaultProsessStegAndFakta = (location: Location): Location =>
@@ -56,11 +70,22 @@ export const getLocationWithDefaultProsessStegAndFakta = (location: Location): L
 
 export const getPathToFplos = (): string | null => {
   const { host } = window.location;
-  if (host === 'app-q1.adeo.no') {
+  if (host === 'app-q1.adeo.no' || host === 'k9.dev.intern.nav.no') {
     return 'https://k9-los-web.dev.adeo.no/';
   }
-  if (host === 'app.adeo.no') {
+  if (host === 'app.adeo.no' || host === 'k9.intern.nav.no') {
     return 'https://k9-los-web.nais.adeo.no/';
+  }
+  return null;
+};
+
+export const getPathToK9Punsj = (): string | null => {
+  const { host } = window.location;
+  if (host === 'app-q1.adeo.no' || host === 'k9.dev.intern.nav.no') {
+    return 'https://k9-punsj-frontend.dev.adeo.no/';
+  }
+  if (host === 'app.adeo.no' || host === 'k9.intern.nav.no') {
+    return 'https://k9-punsj-frontend.nais.adeo.no/';
   }
   return null;
 };
@@ -82,4 +107,13 @@ export const redirectToLogin = () => {
     window.location.assign(DEV_LOGIN_URL);
   }
   return undefined;
+};
+
+export const goToLos = () => {
+  const path = getPathToFplos();
+  window.location.assign(path);
+};
+
+export const goToSearch = () => {
+  window.location.assign('/k9/web');
 };

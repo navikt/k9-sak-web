@@ -12,7 +12,11 @@ import { OmsorgspengerBehandlingApiKeys } from '../../data/omsorgspengerBehandli
 class PanelDef extends ProsessStegPanelDef {
   getKomponent = props => <ÅrskvantumIndex {...props} />;
 
-  getAksjonspunktKoder = () => [aksjonspunktCodes.VURDER_ÅRSKVANTUM_KVOTE, aksjonspunktCodes.VURDER_ÅRSKVANTUM_DOK];
+  getAksjonspunktKoder = () => [
+    aksjonspunktCodes.VURDER_ÅRSKVANTUM_KVOTE,
+    aksjonspunktCodes.ÅRSKVANTUM_FOSTERBARN,
+    aksjonspunktCodes.VURDER_ÅRSKVANTUM_DOK,
+  ];
 
   getOverstyrVisningAvKomponent = () => true;
 
@@ -31,11 +35,12 @@ class PanelDef extends ProsessStegPanelDef {
     return allePerioderAvslått ? vilkarUtfallType.IKKE_OPPFYLT : vilkarUtfallType.OPPFYLT;
   };
 
-  getData = ({ forbrukteDager, aksjonspunkterForSteg, arbeidsgiverOpplysningerPerId }) => ({
+  getData = ({ forbrukteDager, aksjonspunkterForSteg, arbeidsgiverOpplysningerPerId, fosterbarn }) => ({
     årskvantum: forbrukteDager,
     aksjonspunkterForSteg,
     uttaksperioder: forbrukteDager?.sisteUttaksplan?.aktiviteter?.flatMap(aktivitet => aktivitet.uttaksperioder),
     arbeidsgiverOpplysningerPerId,
+    fosterbarn: fosterbarn ? fosterbarn.fosterbarn : [],
   });
 }
 

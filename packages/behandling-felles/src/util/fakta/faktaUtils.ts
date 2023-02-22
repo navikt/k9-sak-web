@@ -1,6 +1,4 @@
-import { IntlShape } from 'react-intl';
-
-import { Behandling, Aksjonspunkt, Fagsak } from '@k9-sak-web/types';
+import { Aksjonspunkt, Behandling, Fagsak, FeatureToggles } from '@k9-sak-web/types';
 
 import Rettigheter from '../../types/rettigheterTsType';
 import FaktaPanelDef from './FaktaPanelDef';
@@ -16,11 +14,12 @@ export const utledFaktaPaneler = (
   behandling: Behandling,
   rettigheter: Rettigheter,
   aksjonspunkter: Aksjonspunkt[],
+  featureToggles?: FeatureToggles,
 ): FaktaPanelUtledet[] => {
   const utvidetEkstraPanelData = { ...ekstraPanelData, rettigheter };
   const apCodes = aksjonspunkter.map(ap => ap.definisjon.kode);
   return faktaPanelDefinisjoner
-    .filter(panelDef => panelDef.skalVisePanel(apCodes, utvidetEkstraPanelData))
+    .filter(panelDef => panelDef.skalVisePanel(apCodes, utvidetEkstraPanelData, featureToggles))
     .map(panelDef => new FaktaPanelUtledet(panelDef, behandling, aksjonspunkter));
 };
 
@@ -36,50 +35,52 @@ export const finnValgtPanel = (faktaPaneler: FaktaPanelUtledet[], valgtFaktaPane
 };
 
 export const formaterPanelerForSidemeny = (
-  intl: IntlShape,
   faktaPaneler: FaktaPanelUtledet[],
   valgtFaktaPanelKode: string,
 ): FaktaPanelMenyRad[] =>
   faktaPaneler.map(panel => ({
-    tekst: intl.formatMessage({ id: panel.getTekstKode() }),
+    tekstKode: panel.getTekstKode(),
     erAktiv: panel.getUrlKode() === valgtFaktaPanelKode,
     harAksjonspunkt: panel.getHarApneAksjonspunkter(),
   }));
 
-export const getBekreftAksjonspunktCallback = (
-  fagsak: Fagsak,
-  behandling: Behandling,
-  oppdaterProsessStegOgFaktaPanelIUrl: (prosessPanel?: string, faktanavn?: string) => void,
-  overstyringApCodes: string[],
-  lagreAksjonspunkter: (params: any, keepData?: boolean) => Promise<any>,
-  lagreOverstyrteAksjonspunkter?: (params: any, keepData?: boolean) => Promise<any>,
-) => aksjonspunkter => {
-  const model = aksjonspunkter.map(ap => ({
-    '@type': ap.kode,
-    ...ap,
-  }));
+export const getBekreftAksjonspunktCallback =
+  (
+    fagsak: Fagsak,
+    behandling: Behandling,
+    oppdaterProsessStegOgFaktaPanelIUrl: (prosessPanel?: string, faktanavn?: string) => void,
+    overstyringApCodes: string[],
+    lagreAksjonspunkter: (params: any, keepData?: boolean) => Promise<any>,
+    lagreOverstyrteAksjonspunkter?: (params: any, keepData?: boolean) => Promise<any>,
+  ) =>
+  aksjonspunkter => {
+    const model = aksjonspunkter.map(ap => ({
+      '@type': ap.kode,
+      ...ap,
+    }));
 
-  const params = {
-    saksnummer: fagsak.saksnummer,
-    behandlingId: behandling.id,
-    behandlingVersjon: behandling.versjon,
-  };
+    const params = {
+      saksnummer: fagsak.saksnummer,
+      behandlingId: behandling.id,
+      behandlingVersjon: behandling.versjon,
+    };
 
-  if (model && overstyringApCodes.includes(model[0].kode)) {
-    return lagreOverstyrteAksjonspunkter(
+    if (model && model.some(({ kode }) => overstyringApCodes.includes(kode))) {
+      return lagreOverstyrteAksjonspunkter(
+        {
+          ...params,
+          overstyrteAksjonspunktDtoer: model.filter(({ kode }) => overstyringApCodes.includes(kode)),
+          bekreftedeAksjonspunktDtoer: model.filter(({ kode }) => !overstyringApCodes.includes(kode)),
+        },
+        true,
+      ).then(() => oppdaterProsessStegOgFaktaPanelIUrl(DEFAULT_PROSESS_STEG_KODE, DEFAULT_FAKTA_KODE));
+    }
+
+    return lagreAksjonspunkter(
       {
         ...params,
-        overstyrteAksjonspunktDtoer: model,
+        bekreftedeAksjonspunktDtoer: model,
       },
       true,
     ).then(() => oppdaterProsessStegOgFaktaPanelIUrl(DEFAULT_PROSESS_STEG_KODE, DEFAULT_FAKTA_KODE));
-  }
-
-  return lagreAksjonspunkter(
-    {
-      ...params,
-      bekreftedeAksjonspunktDtoer: model,
-    },
-    true,
-  ).then(() => oppdaterProsessStegOgFaktaPanelIUrl(DEFAULT_PROSESS_STEG_KODE, DEFAULT_FAKTA_KODE));
-};
+  };

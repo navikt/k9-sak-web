@@ -9,6 +9,15 @@
   position: relative;
   transition: all 400ms;
   width: 100%;
+
+  &--border {
+    border: 1px solid #eae9ea;
+    border-radius: 0.25rem;
+
+    :global(.vis-timeline) {
+      border: none;
+    }
+  }
 }
 
 .timeLineWrapper {
@@ -20,8 +29,8 @@
   display: flex;
   flex-direction: column;
   max-width: 300px;
+  padding-top: 56px;
   position: relative;
-  top: 56px;
 
   & > * {
     align-items: center;

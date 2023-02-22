@@ -2,10 +2,14 @@
 
 .container {
   background-color: @white;
-  height: 100%;
+
+  @media screen and (min-width: 1350px) {
+    height: 1290px;
+  }
 }
 
 .content {
+  overflow: hidden;
   flex: 1 1 auto;
   padding-bottom: 40px;
   padding-left: 24px;

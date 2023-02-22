@@ -86,10 +86,7 @@ const formatChangedField = (
   const fromValue = findEndretFeltVerdi(endretFelt, endretFelt.fraVerdi, intl, getKodeverknavn);
   const toValue = findEndretFeltVerdi(endretFelt, endretFelt.tilVerdi, intl, getKodeverknavn);
 
-  if (
-    endretFelt.fraVerdi !== null &&
-    endretFelt.endretFeltNavn.kode !== historikkEndretFeltTypeCodes.FORDELING_FOR_NY_ANDEL.kode
-  ) {
+  if (endretFelt.fraVerdi !== null) {
     return (
       <FormattedMessage
         id="Historikk.Template.5.ChangedFromTo"
@@ -202,16 +199,14 @@ const HistorikkMalType5 = ({
         {historikkinnslagDel.aarsak && <Normaltekst>{getKodeverknavn(historikkinnslagDel.aarsak)}</Normaltekst>}
         {historikkinnslagDel.begrunnelse && <BubbleText bodyText={getKodeverknavn(historikkinnslagDel.begrunnelse)} />}
         {historikkinnslagDel.begrunnelseFritekst && <BubbleText bodyText={historikkinnslagDel.begrunnelseFritekst} />}
-        <>
-          {historikkinnslag.dokumentLinks &&
-            historikkinnslag.dokumentLinks.map(dokumentLenke => (
-              <HistorikkDokumentLenke
-                key={`${dokumentLenke.tag}@${dokumentLenke.url}`}
-                dokumentLenke={dokumentLenke}
-                saksnummer={saksnummer}
-              />
-            ))}
-        </>
+        {historikkinnslag.dokumentLinks &&
+          historikkinnslag.dokumentLinks.map(dokumentLenke => (
+            <HistorikkDokumentLenke
+              key={`${dokumentLenke.tag}@${dokumentLenke.url}`}
+              dokumentLenke={dokumentLenke}
+              saksnummer={saksnummer}
+            />
+          ))}
 
         {historikkinnslagDelIndex < historikkinnslag.historikkinnslagDeler.length - 1 && <VerticalSpacer sixteenPx />}
       </div>

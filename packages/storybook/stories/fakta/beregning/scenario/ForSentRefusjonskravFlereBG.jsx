@@ -1,7 +1,7 @@
 // eslint-disable-next-line max-len
 export const beregningsgrunnlag = [
   {
-    avklaringsbehov: [{definisjon: { kode : '5058' }, status: { kode: 'OPPR'}}],
+    avklaringsbehov: [{ definisjon: { kode: '5058' }, status: { kode: 'OPPR' }, kanLoses: true }],
     skjaeringstidspunktBeregning: '2019-03-13',
     skjæringstidspunkt: '2019-03-13',
     aktivitetStatus: [{ kodeverk: 'AKTIVITET_STATUS', kode: 'AT' }],
@@ -454,7 +454,7 @@ export const behandling = {
           merknadParametere: {},
           vilkarStatus: { kode: 'IKKE_VURDERT', kodeverk: 'VILKAR_UTFALL_TYPE' },
           periode: { fom: '2019-03-13', tom: '2020-03-19' },
-          vurdersIBehandlingen: true,
+          vurderesIBehandlingen: true,
           begrunnelse: null,
         },
         {
@@ -462,7 +462,7 @@ export const behandling = {
           merknadParametere: {},
           vilkarStatus: { kode: 'IKKE_VURDERT', kodeverk: 'VILKAR_UTFALL_TYPE' },
           periode: { fom: '2020-05-13', tom: '2020-05-14' },
-          vurdersIBehandlingen: true,
+          vurderesIBehandlingen: true,
           begrunnelse: null,
         },
         {
@@ -470,7 +470,7 @@ export const behandling = {
           merknadParametere: {},
           vilkarStatus: { kode: 'IKKE_VURDERT', kodeverk: 'VILKAR_UTFALL_TYPE' },
           periode: { fom: '2020-06-12', tom: '2020-06-12' },
-          vurdersIBehandlingen: true,
+          vurderesIBehandlingen: true,
           begrunnelse: null,
         },
         {
@@ -478,7 +478,7 @@ export const behandling = {
           merknadParametere: {},
           vilkarStatus: { kode: 'IKKE_VURDERT', kodeverk: 'VILKAR_UTFALL_TYPE' },
           periode: { fom: '2020-06-19', tom: '2020-06-23' },
-          vurdersIBehandlingen: true,
+          vurderesIBehandlingen: true,
           begrunnelse: null,
         },
         {
@@ -487,10 +487,9 @@ export const behandling = {
           vilkarStatus: { kode: 'IKKE_VURDERT', kodeverk: 'VILKAR_UTFALL_TYPE' },
           periode: { fom: '2020-06-25', tom: '2020-06-26' },
           begrunnelse: null,
-          vurdersIBehandlingen: true,
+          vurderesIBehandlingen: true,
         },
       ],
     },
   },
 };
-

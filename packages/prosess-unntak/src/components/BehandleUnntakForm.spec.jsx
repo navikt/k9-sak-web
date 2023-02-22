@@ -6,6 +6,7 @@ import sinon from 'sinon';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import behandlingResultatType from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
 import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
+import TempSaveAndPreviewKlageLink from '@fpsak-frontend/prosess-klagevurdering/src/components/felles/TempSaveAndPreviewKlageLink';
 import { BehandleUnntakForm } from './BehandleUnntakForm';
 import shallowWithIntl from '../../i18n';
 

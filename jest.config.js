@@ -9,6 +9,7 @@ module.exports = {
       moduleNameMapper: {
         '\\.(svg)$': '<rootDir>/_mocks/fileMock.js',
         '\\.(less|css)$': 'identity-obj-proxy',
+        uuid: require.resolve('uuid'),
       },
       roots: ['<rootDir>/packages/'],
       setupFiles: ['<rootDir>/setup/setup.js'],

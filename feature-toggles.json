@@ -14,5 +14,41 @@
   {
     "key": "UNNTAKSBEHANDLING",
     "value": "${UNNTAKSBEHANDLING}"
+  },
+  {
+    "key": "UTENLANDSOPPHOLD",
+    "value": "${UTENLANDSOPPHOLD}"
+  },
+  {
+    "key": "SOKNADPERIODESTRIPE",
+    "value": "${SOKNADPERIODESTRIPE}"
+  },
+  {
+    "key": "TYPE_MEDISINSKE_OPPLYSNINGER_BREV",
+    "value": "${TYPE_MEDISINSKE_OPPLYSNINGER_BREV}"
+  },
+  {
+    "key": "LOS_MARKER_BEHANDLING",
+    "value": "${LOS_MARKER_BEHANDLING}"
+  },
+  {
+    "key": "AKSJONSPUNKT_9014",
+    "value": "${AKSJONSPUNKT_9014}"
+  },
+  {
+    "key": "AKSJONSPUNKT_9015",
+    "value": "${AKSJONSPUNKT_9015}"
+  },
+  {
+    "key": "FRITEKST_REDIGERING",
+    "value": "${FRITEKST_REDIGERING}"
+  },
+  {
+    "key": "FIX_SOKNADSFRIST_KALENDER_OG_READONLY",
+    "value": "${FIX_SOKNADSFRIST_KALENDER_OG_READONLY}"
+  },
+  {
+    "key": "OPPLAERINGSPENGER",
+    "value": "${OPPLAERINGSPENGER}"
   }
 ]

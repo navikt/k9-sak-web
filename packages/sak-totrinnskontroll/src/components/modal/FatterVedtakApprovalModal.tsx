@@ -53,6 +53,9 @@ const getInfoTextCode = (
     if (erFagytelseTypeUtvidetRett(ytelseType.kode)) {
       return 'FatterVedtakApprovalModal.IkkeInnvilgetUtvidetRett';
     }
+    if (ytelseType.kode === FagsakYtelseType.PLEIEPENGER_SLUTTFASE) {
+      return 'FatterVedtakApprovalModal.IkkeInnvilgetLivetsSluttfase';
+    }
     return 'FatterVedtakApprovalModal.IkkeInnvilgetOmsorgspenger';
   }
   // HVIS OPPHØRT
@@ -66,6 +69,9 @@ const getInfoTextCode = (
     if (erFagytelseTypeUtvidetRett(ytelseType.kode)) {
       return 'FatterVedtakApprovalModal.OpphortUtvidetRett';
     }
+    if (ytelseType.kode === FagsakYtelseType.PLEIEPENGER_SLUTTFASE) {
+      return 'FatterVedtakApprovalModal.OpphortLivetsSluttfase';
+    }
     return 'FatterVedtakApprovalModal.OpphortOmsorgpenger';
   }
 
@@ -78,6 +84,9 @@ const getInfoTextCode = (
   }
   if (erFagytelseTypeUtvidetRett(ytelseType.kode)) {
     return 'FatterVedtakApprovalModal.InnvilgetUtvidetRett';
+  }
+  if (ytelseType.kode === FagsakYtelseType.PLEIEPENGER_SLUTTFASE) {
+    return 'FatterVedtakApprovalModal.InnvilgetLivetsSluttfase';
   }
   return 'FatterVedtakApprovalModal.InnvilgetOmsorgspenger';
 };
@@ -105,6 +114,9 @@ const getModalDescriptionTextCode = (
   }
   if (erFagytelseTypeUtvidetRett(ytelseType.kode)) {
     return 'FatterVedtakApprovalModal.ModalDescriptionUtvidetRettApproval';
+  }
+  if (ytelseType.kode === FagsakYtelseType.PLEIEPENGER_SLUTTFASE) {
+    return 'FatterVedtakApprovalModal.ModalDescriptionLivetsSluttfase';
   }
   return 'FatterVedtakApprovalModal.ModalDescriptionOMSApproval';
 };
@@ -142,6 +154,8 @@ const getAltImgTextCode = (ytelseType: Kodeverk) => {
       return 'FatterVedtakApprovalModal.InnvilgetFRISINN';
     case FagsakYtelseType.PLEIEPENGER:
       return 'FatterVedtakApprovalModal.InnvilgetPleiepenger';
+    case FagsakYtelseType.PLEIEPENGER_SLUTTFASE:
+      return 'FatterVedtakApprovalModal.InnvilgetLivetsSluttfase';
     default:
       return 'FatterVedtakApprovalModal.InnvilgetOmsorgspenger';
   }

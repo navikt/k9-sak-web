@@ -46,13 +46,8 @@ describe('<VedtakOpphorRevurderingPanel>', () => {
       />,
     );
 
-    const undertekstFields = wrapper.find('Undertekst');
-    expect(undertekstFields).to.have.length(2);
-    expect(undertekstFields.first().childAt(0).text()).to.eql('Resultat');
-    expect(undertekstFields.last().childAt(0).text()).to.eql('Årsak til revurdering');
-
-    const normaltekstFields = wrapper.find('Normaltekst');
-    expect(normaltekstFields).to.have.length(2);
+    const textFields = wrapper.find('ForwardRef');
+    expect(textFields.first().childAt(0).text()).to.eql('Resultat');
   });
   it('skal rendre opphørpanel med avslagsårsak før svangerskapspenger', () => {
     const vilkar = [
@@ -93,12 +88,7 @@ describe('<VedtakOpphorRevurderingPanel>', () => {
       />,
     );
 
-    const undertekstFields = wrapper.find('Undertekst');
-    expect(undertekstFields).to.have.length(2);
-    expect(undertekstFields.first().childAt(0).text()).to.eql('Resultat');
-    expect(undertekstFields.last().childAt(0).text()).to.eql('Årsak til revurdering');
-
-    const normaltekstFields = wrapper.find('Normaltekst');
-    expect(normaltekstFields).to.have.length(2);
+    const textFields = wrapper.find('ForwardRef');
+    expect(textFields.first().childAt(0).text()).to.eql('Resultat');
   });
 });

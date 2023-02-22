@@ -11,6 +11,7 @@ const location = {
   search: '',
   state: {},
   hash: '',
+  key: '',
 };
 
 describe('<TotrinnskontrollBeslutterForm>', () => {
@@ -45,7 +46,6 @@ describe('<TotrinnskontrollBeslutterForm>', () => {
         readOnly={false}
         erTilbakekreving
         lagLenke={() => location}
-        erForeldrepengerFagsak
         arbeidsforholdHandlingTyper={[]}
         skjemalenkeTyper={[]}
         aksjonspunktGodkjenning={[]}

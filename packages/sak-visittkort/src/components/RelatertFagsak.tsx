@@ -23,7 +23,8 @@ const RelatertFagsak = ({ relaterteFagsaker }: RelatertFagsakProps) => {
   const harMerEnnEnRelatertSøker = relaterteSøkere.length > 1;
   const { saksnummer, søkerNavn, søkerIdent, åpenBehandling } = valgtSøker;
 
-  const behandlingsstatus = åpenBehandling ? '(Åpen behandling)' : '(Lukket behandling)';
+  const behandlingsstatus = (søker: RelatertFagsakType["relaterteSøkere"][number]) => søker.åpenBehandling ? '(Åpen behandling)' : '(Lukket behandling)';
+
   const visRelaterteSøkere = () => {
     if (!harMerEnnEnRelatertSøker) {
       return (
@@ -39,19 +40,17 @@ const RelatertFagsak = ({ relaterteFagsaker }: RelatertFagsakProps) => {
       );
     }
     return (
-      <>
-        <NavSelect
-          label="Velg relatert søker"
-          onChange={e => setValgtSøkerIdent(e.target.value)}
-          className={styles.relatertFagsak__søkerSelect}
-        >
-          {relaterteSøkere.map(søker => (
-            <option key={søker.søkerIdent} value={søker.søkerIdent}>
-              {søker.søkerNavn} {behandlingsstatus}
-            </option>
-          ))}
-        </NavSelect>
-      </>
+      <NavSelect
+        label="Velg relatert søker"
+        onChange={e => setValgtSøkerIdent(e.target.value)}
+        className={styles.relatertFagsak__søkerSelect}
+      >
+        {relaterteSøkere.map(søker => (
+          <option key={søker.søkerIdent} value={søker.søkerIdent}>
+            {søker.søkerNavn} {behandlingsstatus(søker)}
+          </option>
+        ))}
+      </NavSelect>
     );
   };
 

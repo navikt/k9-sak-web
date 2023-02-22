@@ -13,10 +13,6 @@ const selectedItemDataFL = {
         kode: 'FL',
         kodeverk: 'AKTIVITET_STATUS',
       },
-      inntektskategori: {
-        kode: 'ARBEIDSTAKER',
-        kodeverk: 'INNTEKTSKATEGORI',
-      },
       aktørId: null,
       arbeidsforholdId: null,
       arbeidsforholdType: {

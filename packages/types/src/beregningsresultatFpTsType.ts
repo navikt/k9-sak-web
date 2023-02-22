@@ -1,5 +1,5 @@
 export type BeregningsresultatFp = Readonly<{
-  antallBarn: number;
+  antallBarn?: number;
 }>;
 
 export default BeregningsresultatFp;

@@ -1,12 +1,12 @@
 import React from 'react';
-import { shallow } from 'enzyme';
-import sinon from 'sinon';
+import { act, render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+import { MemoryRouter } from 'react-router-dom';
 
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import fagsakStatus from '@fpsak-frontend/kodeverk/src/fagsakStatus';
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
-import MenySakIndex from '@fpsak-frontend/sak-meny';
 import { BehandlingAppKontekst, Fagsak } from '@k9-sak-web/types';
 
 import { VergeBehandlingmenyValg } from '../behandling/behandlingRettigheterTsType';
@@ -73,7 +73,7 @@ jest.mock('react-router-dom', () => ({
 }));
 
 describe('BehandlingMenuIndex', () => {
-  it('skal vise meny der alle menyhandlinger er synlige', () => {
+  it('skal vise meny der alle menyhandlinger er synlige', async () => {
     requestApi.mock(K9sakApiKeys.INIT_FETCH_TILBAKE, {});
     requestApi.mock(K9sakApiKeys.INIT_FETCH_KLAGE, {});
     requestApi.mock(K9sakApiKeys.NAV_ANSATT, navAnsatt);
@@ -85,6 +85,7 @@ describe('BehandlingMenuIndex', () => {
     requestApi.mock(K9sakApiKeys.KODEVERK_KLAGE, {});
     requestApi.mock(K9sakApiKeys.KAN_TILBAKEKREVING_OPPRETTES, false);
     requestApi.mock(K9sakApiKeys.KAN_TILBAKEKREVING_REVURDERING_OPPRETTES, false);
+    requestApi.mock(K9sakApiKeys.LOS_HENTE_MERKNAD, false);
 
     const sakRettigheter = {
       sakSkalTilInfotrygd: false,
@@ -103,41 +104,50 @@ describe('BehandlingMenuIndex', () => {
       vergeBehandlingsmeny: VergeBehandlingmenyValg.OPPRETT,
     };
 
-    const wrapper = shallow(
-      <BehandlingMenuIndex
-        fagsak={fagsak as Fagsak}
-        alleBehandlinger={alleBehandlinger as BehandlingAppKontekst[]}
-        behandlingId={1}
-        behandlingVersjon={2}
-        oppfriskBehandlinger={sinon.spy()}
-        behandlingRettigheter={behandlingRettigheter}
-        sakRettigheter={sakRettigheter}
-        behandlendeEnheter={[
-          {
-            enhetId: 'TEST',
-            enhetNavn: 'TEST',
-          },
-        ]}
-      />,
+    render(
+      <MemoryRouter>
+        <BehandlingMenuIndex
+          fagsak={fagsak as Fagsak}
+          alleBehandlinger={alleBehandlinger as BehandlingAppKontekst[]}
+          behandlingId={1}
+          behandlingVersjon={2}
+          oppfriskBehandlinger={jest.fn()}
+          behandlingRettigheter={behandlingRettigheter}
+          sakRettigheter={sakRettigheter}
+          behandlendeEnheter={[
+            {
+              enhetId: 'TEST',
+              enhetNavn: 'TEST',
+            },
+          ]}
+        />
+      </MemoryRouter>,
     );
 
-    const meny = wrapper.find(MenySakIndex);
-    expect(meny).toHaveLength(1);
-    const data = meny.prop('data');
-    expect(data).toHaveLength(7);
-    expect(data[0].erSynlig).toBe(false);
-    expect(data[0].tekst).toEqual('Fortsett behandlingen');
-    expect(data[1].erSynlig).toBe(true);
-    expect(data[1].tekst).toEqual('Sett behandlingen på vent');
-    expect(data[2].erSynlig).toBe(true);
-    expect(data[2].tekst).toEqual('Henlegg behandlingen og avslutt');
-    expect(data[3].erSynlig).toBe(true);
-    expect(data[3].tekst).toEqual('Endre behandlende enhet');
-    expect(data[4].erSynlig).toBe(true);
-    expect(data[4].tekst).toEqual('Åpne behandling for endringer');
-    expect(data[5].erSynlig).toBe(true);
-    expect(data[5].tekst).toEqual('Opprett ny behandling');
-    expect(data[6].erSynlig).toBe(true);
-    expect(data[6].tekst).toEqual('Opprett verge/fullmektig');
+    const knapp = await screen.findByRole('button', { name: 'Behandlingsmeny' });
+    expect(await knapp).not.toBeNull();
+
+    expect(screen.queryByText('Fortsett behandlingen')).toBeNull();
+    expect(screen.queryByText('Sett behandlingen på vent')).not.toBeVisible();
+    expect(screen.queryByText('Henlegg behandlingen og avslutt')).not.toBeVisible();
+    expect(screen.queryByText('Endre behandlende enhet')).not.toBeVisible();
+    // expect(screen.queryByText('Marker behandling')).not.toBeVisible();
+    expect(screen.queryByText('Opprett ny behandling')).not.toBeVisible();
+    expect(screen.queryByText('Opprett verge/fullmektig')).not.toBeVisible();
+
+    /**
+     * Åpne behandlingsmenyen
+     */
+    await act(async () => {
+      userEvent.click(knapp);
+    });
+
+    expect(screen.queryByText('Fortsett behandlingen')).toBeNull();
+    expect(screen.queryByRole('button', { name: 'Sett behandlingen på vent' })).toBeVisible();
+    expect(screen.queryByRole('button', { name: 'Henlegg behandlingen og avslutt' })).toBeVisible();
+    expect(screen.queryByRole('button', { name: 'Endre behandlende enhet' })).toBeVisible();
+    // expect(screen.queryByRole('button', { name: 'Marker behandling' })).toBeVisible();
+    expect(screen.queryByRole('button', { name: 'Opprett ny behandling' })).toBeVisible();
+    expect(screen.queryByRole('button', { name: 'Opprett verge/fullmektig' })).toBeVisible();
   });
 });

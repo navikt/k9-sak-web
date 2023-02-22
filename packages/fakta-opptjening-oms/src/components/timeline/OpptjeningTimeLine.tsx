@@ -1,10 +1,11 @@
-import React, { Component } from 'react';
-import moment from 'moment';
+import { Timeline } from '@fpsak-frontend/tidslinje';
 import { DDMMYYYY_DATE_FORMAT, isEqual } from '@fpsak-frontend/utils';
 import OpptjeningAktivitet from '@k9-sak-web/types/src/opptjening/opptjeningAktivitet';
 import OpptjeningAktivitetType from '@k9-sak-web/types/src/opptjening/opptjeningAktivitetType';
+import moment from 'moment';
 import { Column, Row } from 'nav-frontend-grid';
-import { Timeline } from '@fpsak-frontend/tidslinje';
+import hash from 'object-hash';
+import React, { Component } from 'react';
 import DateContainer from './DateContainer';
 import styles from './opptjeningTimeLine.less';
 
@@ -181,7 +182,7 @@ class OpptjeningTimeLine extends Component<OpptjeningTimeLineProps, OpptjeningTi
   }
 
   render() {
-    const { opptjeningFomDato, opptjeningTomDato, selectedPeriod } = this.props;
+    const { opptjeningFomDato, opptjeningTomDato, selectedPeriod, opptjeningPeriods } = this.props;
     const { items, groups } = this.state;
     return (
       <div className="opptjening">
@@ -195,6 +196,7 @@ class OpptjeningTimeLine extends Component<OpptjeningTimeLineProps, OpptjeningTi
               <div className={styles.timeLineWrapper}>
                 <div className={styles.timeLine}>
                   <Timeline
+                    key={hash(opptjeningPeriods)}
                     ref={this.timelineRef}
                     options={options(opptjeningFomDato, opptjeningTomDato)}
                     initialItems={items}

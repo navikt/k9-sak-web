@@ -22,16 +22,16 @@ class PanelDef extends ProsessStegPanelDef {
     aksjonspunktCodes.VURDERE_DOKUMENT,
     aksjonspunktCodes.KONTROLLER_REVURDERINGSBEHANDLING_VARSEL_VED_UGUNST,
     aksjonspunktCodes.KONTROLL_AV_MAUNELT_OPPRETTET_REVURDERINGSBEHANDLING,
+    aksjonspunktCodes.SJEKK_TILBAKEKREVING,
   ];
 
   getEndepunkter = () => [
     OmsorgspengerBehandlingApiKeys.TILBAKEKREVINGVALG,
     OmsorgspengerBehandlingApiKeys.SEND_VARSEL_OM_REVURDERING,
     OmsorgspengerBehandlingApiKeys.MEDLEMSKAP,
-    OmsorgspengerBehandlingApiKeys.VEDTAK_VARSEL,
     OmsorgspengerBehandlingApiKeys.TILGJENGELIGE_VEDTAKSBREV,
     OmsorgspengerBehandlingApiKeys.DOKUMENTDATA_HENTE,
-    OmsorgspengerBehandlingApiKeys.OVERLAPPENDE_YTELSER
+    OmsorgspengerBehandlingApiKeys.OVERLAPPENDE_YTELSER,
   ];
 
   getOverstyrVisningAvKomponent = () => true;
@@ -41,6 +41,7 @@ class PanelDef extends ProsessStegPanelDef {
 
   getData = ({
     previewCallback,
+    hentFritekstbrevHtmlCallback,
     rettigheter,
     aksjonspunkter,
     vilkar,
@@ -49,9 +50,10 @@ class PanelDef extends ProsessStegPanelDef {
     forbrukteDager,
     personopplysninger,
     arbeidsgiverOpplysningerPerId,
-    lagreDokumentdata
+    lagreDokumentdata,
   }) => ({
     previewCallback,
+    hentFritekstbrevHtmlCallback,
     aksjonspunkter,
     vilkar,
     simuleringResultat,
@@ -61,8 +63,8 @@ class PanelDef extends ProsessStegPanelDef {
     uttaksperioder: forbrukteDager?.sisteUttaksplan?.aktiviteter?.flatMap(aktivitet => aktivitet.uttaksperioder),
     personopplysninger,
     arbeidsgiverOpplysningerPerId,
-    lagreDokumentdata
-  })
+    lagreDokumentdata,
+  });
 }
 
 class VedtakProsessStegPanelDef extends ProsessStegDef {

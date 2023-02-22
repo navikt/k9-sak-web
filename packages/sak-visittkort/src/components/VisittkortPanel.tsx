@@ -1,24 +1,24 @@
-import React from 'react';
-import { FormattedMessage } from 'react-intl';
-import moment from 'moment';
-import { PersonCard, Gender } from '@navikt/k9-react-components';
-
-import { DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils/src/formats';
-import { FlexColumn, FlexContainer, FlexRow } from '@fpsak-frontend/shared-components';
 import navBrukerKjonn from '@fpsak-frontend/kodeverk/src/navBrukerKjonn';
+import personstatusType from '@fpsak-frontend/kodeverk/src/personstatusType';
+import { FlexColumn, FlexContainer, FlexRow } from '@fpsak-frontend/shared-components';
+import { DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils/src/formats';
 import {
+  FagsakPerson,
   Kodeverk,
   KodeverkMedNavn,
   Personopplysninger,
-  FagsakPerson,
   RelatertFagsak as RelatertFagsakType,
 } from '@k9-sak-web/types';
-
+import OvergangFraInfotrygd from '@k9-sak-web/types/src/overgangFraInfotrygd';
+import { Gender, PersonCard } from '@navikt/ft-plattform-komponenter';
+import moment from 'moment';
+import React from 'react';
+import { FormattedMessage } from 'react-intl';
+import RelatertFagsak from './RelatertFagsak';
+import TagContainer from './TagContainer';
 import VisittkortDetaljerPopup from './VisittkortDetaljerPopup';
 import VisittkortLabels from './VisittkortLabels';
-
 import styles from './visittkortPanel.less';
-import RelatertFagsak from './RelatertFagsak';
 
 const utledKjonn = (kjonn: Kodeverk): Gender => {
   if (kjonn.kode === navBrukerKjonn.KVINNE) {
@@ -34,6 +34,9 @@ interface OwnProps {
   personopplysninger?: Personopplysninger;
   harTilbakekrevingVerge?: boolean;
   relaterteFagsaker: RelatertFagsakType;
+  direkteOvergangFraInfotrygd?: OvergangFraInfotrygd;
+  erPbSak?: boolean;
+  erHastesak?: boolean;
 }
 
 const VisittkortPanel = ({
@@ -43,6 +46,9 @@ const VisittkortPanel = ({
   sprakkode,
   harTilbakekrevingVerge,
   relaterteFagsaker,
+  direkteOvergangFraInfotrygd,
+  erPbSak,
+  erHastesak,
 }: OwnProps) => {
   if (!personopplysninger && !harTilbakekrevingVerge) {
     return (
@@ -73,6 +79,8 @@ const VisittkortPanel = ({
   const soker = personopplysninger;
   const annenPart = typeof personopplysninger.annenPart !== 'undefined' ? personopplysninger.annenPart : null;
   const barnSoktFor = personopplysninger.barnSoktFor?.length > 0 ? personopplysninger.barnSoktFor : null;
+  const erDirekteOvergangFraInfotrygd = direkteOvergangFraInfotrygd?.skjæringstidspunkter?.length > 0;
+  const erUtenlandssak = personopplysninger?.pleietrengendePart?.personstatus?.kode === personstatusType.AKTIVT;
 
   return (
     <div className={styles.container}>
@@ -109,9 +117,9 @@ const VisittkortPanel = ({
           <FlexColumn>
             <RelatertFagsak relaterteFagsaker={relaterteFagsaker} />
           </FlexColumn>
-          {barnSoktFor && (
-            <div className={styles.pushRight}>
-              {barnSoktFor.map(barn => (
+          <div className={styles.pushRight}>
+            {barnSoktFor &&
+              barnSoktFor.map(barn => (
                 <FlexColumn key={barn.aktoerId}>
                   <div className={styles.flexContainer}>
                     <PersonCard
@@ -134,8 +142,27 @@ const VisittkortPanel = ({
                   </div>
                 </FlexColumn>
               ))}
-            </div>
-          )}
+            {erDirekteOvergangFraInfotrygd && (
+              <TagContainer tagVariant="info">
+                <FormattedMessage id="VisittkortPanel.FraInfotrygd" />
+              </TagContainer>
+            )}
+            {erPbSak && (
+              <TagContainer tagVariant="warning">
+                <FormattedMessage id="VisittkortPanel.PB" />
+              </TagContainer>
+            )}
+            {erUtenlandssak && (
+              <TagContainer tagVariant="success">
+                <FormattedMessage id="VisittkortPanel.Utenlandssak" />
+              </TagContainer>
+            )}
+            {erHastesak && (
+              <TagContainer tagVariant="error">
+                <FormattedMessage id="VisittkortPanel.Hastesak" />
+              </TagContainer>
+            )}
+          </div>
         </FlexRow>
       </FlexContainer>
     </div>

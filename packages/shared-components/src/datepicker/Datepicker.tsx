@@ -86,8 +86,8 @@ class Datepicker extends Component<OwnProps, StateProps> {
     }
   }
 
-  handleDayChange(selectedDay: Date): void {
-    if (selectedDay) {
+  handleDayChange(selectedDay: Date, { disabled }): void {
+    if (selectedDay && !disabled) {
       const parsed = moment(selectedDay);
       if (parsed.isValid()) {
         const { onChange } = this.props;
@@ -112,18 +112,8 @@ class Datepicker extends Component<OwnProps, StateProps> {
   }
 
   render() {
-    const {
-      label,
-      placeholder,
-      onChange,
-      onBlur,
-      value,
-      feil,
-      disabled,
-      disabledDays,
-      initialMonth,
-      numberOfMonths,
-    } = this.props;
+    const { label, placeholder, onChange, onBlur, value, feil, disabled, disabledDays, initialMonth, numberOfMonths } =
+      this.props;
     const { inputOffsetTop, inputOffsetWidth, showCalendar } = this.state;
 
     return (

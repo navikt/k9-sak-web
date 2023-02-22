@@ -4,7 +4,8 @@ import { FormattedMessage, injectIntl } from 'react-intl';
 import { connect } from 'react-redux';
 import { Column, Row } from 'nav-frontend-grid';
 import { Normaltekst, Undertekst } from 'nav-frontend-typografi';
-
+import countries from 'i18n-iso-countries';
+import norwegianLocale from 'i18n-iso-countries/langs/no.json';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import { RadioGroupField, RadioOption, behandlingFormValueSelector } from '@fpsak-frontend/form';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
@@ -14,9 +15,18 @@ import { PeriodLabel, VerticalSpacer, FaktaGruppe } from '@fpsak-frontend/shared
 
 import styles from './oppholdINorgeOgAdresserFaktaPanel.less';
 
+countries.registerLocale(norwegianLocale);
+
 const capitalizeFirstLetter = landNavn => {
   const string = landNavn.toLowerCase();
   return string.charAt(0).toUpperCase() + string.slice(1);
+};
+
+const formatLandNavn = landNavn => {
+  if (landNavn.length === 2 || landNavn.length === 3) {
+    return countries.getName(landNavn, 'no');
+  }
+  return landNavn;
 };
 
 const lagOppholdIUtland = utlandsOpphold =>
@@ -25,7 +35,7 @@ const lagOppholdIUtland = utlandsOpphold =>
       <div key={`${u.landNavn}${u.fom}${u.tom}`}>
         <Row>
           <Column xs="4">
-            <Normaltekst>{capitalizeFirstLetter(u.landNavn)}</Normaltekst>
+            <Normaltekst>{capitalizeFirstLetter(formatLandNavn(u.landNavn))}</Normaltekst>
           </Column>
           <Column xs="8">
             <Normaltekst>

@@ -1,8 +1,8 @@
 import React from 'react';
 import sinon from 'sinon';
+import { shallow } from 'enzyme';
 
 import ArbeidsforholdFaktaIndex from '@fpsak-frontend/fakta-arbeidsforhold';
-import { shallowWithIntl, intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import { SideMenuWrapper } from '@k9-sak-web/behandling-felles';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
@@ -129,6 +129,7 @@ describe('<OmsorgspengerFakta>', () => {
       erPrivatPerson: false,
       identifikator: 'testId',
       navn: 'testNavn',
+      arbeidsforholdreferanser: [],
     },
   };
 
@@ -140,9 +141,8 @@ describe('<OmsorgspengerFakta>', () => {
       personopplysninger: soker,
     };
 
-    const wrapper = shallowWithIntl(
-      <OmsorgspengerFakta.WrappedComponent
-        intl={intlMock}
+    const wrapper = shallow(
+      <OmsorgspengerFakta
         data={fetchedData as FetchedData}
         behandling={behandling as Behandling}
         fagsak={fagsak}
@@ -157,6 +157,7 @@ describe('<OmsorgspengerFakta>', () => {
         setBehandling={sinon.spy()}
         arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
         featureToggles={{}}
+        dokumenter={[]}
       />,
     );
 
@@ -165,12 +166,17 @@ describe('<OmsorgspengerFakta>', () => {
       {
         erAktiv: true,
         harAksjonspunkt: true,
-        tekst: 'Arbeidsforhold',
+        tekstKode: 'ArbeidsforholdInfoPanel.Title',
       },
       {
         erAktiv: false,
         harAksjonspunkt: false,
-        tekst: 'Inntekt og ytelser',
+        tekstKode: 'OmsorgenForInfoPanel.Title',
+      },
+      {
+        erAktiv: false,
+        harAksjonspunkt: false,
+        tekstKode: 'InntektOgYtelser.Title',
       },
     ]);
   });
@@ -183,9 +189,8 @@ describe('<OmsorgspengerFakta>', () => {
       vilkar,
     };
 
-    const wrapper = shallowWithIntl(
-      <OmsorgspengerFakta.WrappedComponent
-        intl={intlMock}
+    const wrapper = shallow(
+      <OmsorgspengerFakta
         data={fetchedData as FetchedData}
         behandling={behandling as Behandling}
         fagsak={fagsak}
@@ -200,6 +205,7 @@ describe('<OmsorgspengerFakta>', () => {
         setBehandling={sinon.spy()}
         arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
         featureToggles={{}}
+        dokumenter={[]}
       />,
     );
 
@@ -222,9 +228,8 @@ describe('<OmsorgspengerFakta>', () => {
       vilkar,
     };
 
-    const wrapper = shallowWithIntl(
-      <OmsorgspengerFakta.WrappedComponent
-        intl={intlMock}
+    const wrapper = shallow(
+      <OmsorgspengerFakta
         data={fetchedData as FetchedData}
         behandling={behandling as Behandling}
         fagsak={fagsak}
@@ -239,6 +244,7 @@ describe('<OmsorgspengerFakta>', () => {
         setBehandling={sinon.spy()}
         arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
         featureToggles={{}}
+        dokumenter={[]}
       />,
     );
 

@@ -18,7 +18,7 @@ const periode = {
   },
   periode: { fom: '2020-04-24', tom: '2020-04-24' },
   vilkarStatus: { kode: 'IKKE_OPPFYLT', kodeverk: 'VILKAR_UTFALL_TYPE' },
-  vurdersIBehandlingen: true,
+  vurderesIBehandlingen: true,
 };
 
 describe('<OpptjeningVilkarForm>', () => {

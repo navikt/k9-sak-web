@@ -9,5 +9,7 @@
   "MenyNyBehandlingIndex.Ok": "OK",
   "MenyNyBehandlingIndex.Avbryt": "Avbryt",
   "MenyNyBehandlingIndex.SelectBehandlingTypePlaceholder": "Velg",
-  "MenyNyBehandlingIndex.SelectBehandlingArsakTypePlaceholder": "Velg årsak"
+  "MenyNyBehandlingIndex.SelectBehandlingArsakTypePlaceholder": "Velg årsak",
+
+  "ValidationMessage.NotEmpty": "Feltet må fylles ut"
 }

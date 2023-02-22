@@ -3,7 +3,7 @@ import React, { useState, useCallback, useMemo } from 'react';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
-import lagForhåndsvisRequest from '@fpsak-frontend/utils/src/formidlingUtils';
+import { bestemAvsenderApp, forhandsvis, getForhandsvisCallback } from '@fpsak-frontend/utils/src/formidlingUtils';
 import {
   Rettigheter,
   prosessStegHooks,
@@ -28,12 +28,6 @@ import FetchedData from '../types/fetchedDataTsType';
 
 import '@fpsak-frontend/assets/styles/arrowForProcessMenu.less';
 
-const forhandsvis = (data: any) => {
-  if (URL.createObjectURL) {
-    window.open(URL.createObjectURL(data));
-  }
-};
-
 interface OwnProps {
   data: FetchedData;
   fagsak: Fagsak;
@@ -53,18 +47,6 @@ interface OwnProps {
   featureToggles: FeatureToggles;
 }
 
-const getForhandsvisCallback =
-  (
-    forhandsvisMelding: (data: any) => Promise<any>,
-    fagsak: Fagsak,
-    fagsakPerson: FagsakPerson,
-    behandling: Behandling,
-  ) =>
-  (parametre: any) => {
-    const request = lagForhåndsvisRequest(behandling, fagsak, fagsakPerson, parametre);
-    return forhandsvisMelding(request).then(response => forhandsvis(response));
-  };
-
 const getForhandsvisFptilbakeCallback =
   (forhandsvisTilbakekrevingMelding: (data: any) => Promise<any>, fagsak: Fagsak, behandling: Behandling) =>
   (mottaker: string, brevmalkode: string, fritekst: string, saksnummer: string) => {
@@ -78,6 +60,23 @@ const getForhandsvisFptilbakeCallback =
     };
     return forhandsvisTilbakekrevingMelding(data).then(response => forhandsvis(response));
   };
+
+const getHentFritekstbrevHtmlCallback =
+  (
+    hentFriteksbrevHtml: (data: any) => Promise<any>,
+    behandling: Behandling,
+    fagsak: Fagsak,
+    fagsakPerson: FagsakPerson,
+  ) =>
+  (parameters: any) =>
+    hentFriteksbrevHtml({
+      ...parameters,
+      eksternReferanse: behandling.uuid,
+      ytelseType: fagsak.sakstype,
+      saksnummer: fagsak.saksnummer,
+      aktørId: fagsakPerson.aktørId,
+      avsenderApplikasjon: bestemAvsenderApp(behandling.type.kode),
+    });
 
 const getLagringSideeffekter =
   (
@@ -152,6 +151,9 @@ const FrisinnProsess = ({
   const { startRequest: forhandsvisMelding } = restApiFrisinnHooks.useRestApiRunner(
     FrisinnBehandlingApiKeys.PREVIEW_MESSAGE,
   );
+  const { startRequest: hentFriteksbrevHtml } = restApiFrisinnHooks.useRestApiRunner(
+    FrisinnBehandlingApiKeys.HENT_FRITEKSTBREV_HTML,
+  );
   const { startRequest: forhandsvisTilbakekrevingMelding } = restApiFrisinnHooks.useRestApiRunner<Behandling>(
     FrisinnBehandlingApiKeys.PREVIEW_TILBAKEKREVING_MESSAGE,
   );
@@ -165,6 +167,10 @@ const FrisinnProsess = ({
     ]),
     previewFptilbakeCallback: useCallback(
       getForhandsvisFptilbakeCallback(forhandsvisTilbakekrevingMelding, fagsak, behandling),
+      [behandling.versjon],
+    ),
+    hentFritekstbrevHtmlCallback: useCallback(
+      getHentFritekstbrevHtmlCallback(hentFriteksbrevHtml, behandling, fagsak, fagsakPerson),
       [behandling.versjon],
     ),
     fagsakPerson,

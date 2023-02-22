@@ -9,7 +9,6 @@ import vedtakAksjonspunkterPropType from '../propTypes/vedtakAksjonspunkterPropT
 import vedtakVilkarPropType from '../propTypes/vedtakVilkarPropType';
 import vedtakBeregningsresultatPropType from '../propTypes/vedtakBeregningsresultatPropType';
 import VedtakForm from './VedtakForm';
-import VedtakRevurderingForm from './revurdering/VedtakRevurderingForm';
 import { finnSistePeriodeMedAvslagsårsakBeregning } from './VedtakHelper';
 import vedtakBeregningsgrunnlagPropType from '../propTypes/vedtakBeregningsgrunnlagPropType';
 import vedtakVarselPropType from '../propTypes/vedtakVarselPropType';
@@ -22,6 +21,7 @@ import vedtakVarselPropType from '../propTypes/vedtakVarselPropType';
 const VedtakPanels = ({
   readOnly,
   previewCallback,
+  hentFritekstbrevHtmlCallback,
   submitCallback,
   behandlingTypeKode,
   behandlingId,
@@ -53,46 +53,12 @@ const VedtakPanels = ({
   overlappendeYtelser,
 }) => {
   const bg = Array.isArray(beregningsgrunnlag) ? beregningsgrunnlag.filter(Boolean) : [];
-  if (behandlingTypeKode === behandlingType.REVURDERING && Array.isArray(bg) && bg.length) {
-    const bgYtelsegrunnlag = bg[0].ytelsesspesifiktGrunnlag;
-    let bgPeriodeMedAvslagsårsak;
-    if (ytelseTypeKode === fagsakYtelseType.FRISINN && bgYtelsegrunnlag?.avslagsårsakPrPeriode) {
-      bgPeriodeMedAvslagsårsak = finnSistePeriodeMedAvslagsårsakBeregning(
-        bgYtelsegrunnlag.avslagsårsakPrPeriode,
-        bg[0].beregningsgrunnlagPeriode,
-      );
-    }
-    return (
-      <VedtakRevurderingForm
-        submitCallback={submitCallback}
-        previewCallback={previewCallback}
-        readOnly={readOnly}
-        behandlingId={behandlingId}
-        behandlingVersjon={behandlingVersjon}
-        behandlingresultat={behandlingresultat}
-        behandlingStatusKode={behandlingStatus.kode}
-        ytelseTypeKode={ytelseTypeKode}
-        sprakkode={sprakkode}
-        kanOverstyre={employeeHasAccess}
-        alleKodeverk={alleKodeverk}
-        aksjonspunkter={aksjonspunkter}
-        resultatstruktur={resultatstruktur}
-        behandlingArsaker={behandlingArsaker}
-        resultatstrukturOriginalBehandling={resultatstrukturOriginalBehandling}
-        medlemskapFom={medlemskapFom}
-        vilkar={vilkar}
-        tilbakekrevingvalg={tilbakekrevingvalg}
-        simuleringResultat={simuleringResultat}
-        vedtakVarsel={vedtakVarsel}
-        bgPeriodeMedAvslagsårsak={bgPeriodeMedAvslagsårsak}
-        tilgjengeligeVedtaksbrev={tilgjengeligeVedtaksbrev}
-        informasjonsbehovVedtaksbrev={informasjonsbehovVedtaksbrev}
-        dokumentdata={dokumentdata}
-        personopplysninger={personopplysninger}
-        arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
-        lagreDokumentdata={lagreDokumentdata}
-        overlappendeYtelser={overlappendeYtelser}
-      />
+  const bgYtelsegrunnlag = bg[0]?.ytelsesspesifiktGrunnlag;
+  let bgPeriodeMedAvslagsårsak;
+  if (ytelseTypeKode === fagsakYtelseType.FRISINN && bgYtelsegrunnlag?.avslagsårsakPrPeriode) {
+    bgPeriodeMedAvslagsårsak = finnSistePeriodeMedAvslagsårsakBeregning(
+      bgYtelsegrunnlag.avslagsårsakPrPeriode,
+      bg[0].beregningsgrunnlagPeriode,
     );
   }
   return (
@@ -100,6 +66,7 @@ const VedtakPanels = ({
       submitCallback={submitCallback}
       readOnly={readOnly}
       previewCallback={previewCallback}
+      hentFritekstbrevHtmlCallback={hentFritekstbrevHtmlCallback}
       behandlingId={behandlingId}
       behandlingVersjon={behandlingVersjon}
       behandlingresultat={behandlingresultat}
@@ -124,6 +91,10 @@ const VedtakPanels = ({
       fritekstdokumenter={fritekstdokumenter}
       lagreDokumentdata={lagreDokumentdata}
       overlappendeYtelser={overlappendeYtelser}
+      resultatstrukturOriginalBehandling={resultatstrukturOriginalBehandling}
+      bgPeriodeMedAvslagsårsak={bgPeriodeMedAvslagsårsak}
+      medlemskapFom={medlemskapFom}
+      erRevurdering={!!(behandlingTypeKode === behandlingType.REVURDERING && bg.length)}
     />
   );
 };
@@ -144,7 +115,7 @@ VedtakPanels.propTypes = {
   ytelseTypeKode: PropTypes.string.isRequired,
   employeeHasAccess: PropTypes.bool.isRequired,
   alleKodeverk: PropTypes.shape().isRequired,
-  personopplysninger: PropTypes.shape().isRequired,
+  personopplysninger: PropTypes.shape(),
   arbeidsgiverOpplysningerPerId: PropTypes.shape().isRequired,
   vilkar: PropTypes.arrayOf(vedtakVilkarPropType.isRequired),
   resultatstrukturOriginalBehandling: vedtakBeregningsresultatPropType,
@@ -162,6 +133,7 @@ VedtakPanels.propTypes = {
   fritekstdokumenter: PropTypes.arrayOf(PropTypes.shape()),
   lagreDokumentdata: PropTypes.func.isRequired,
   overlappendeYtelser: PropTypes.arrayOf(PropTypes.shape()),
+  hentFritekstbrevHtmlCallback: PropTypes.func.isRequired,
 };
 
 VedtakPanels.defaultProps = {

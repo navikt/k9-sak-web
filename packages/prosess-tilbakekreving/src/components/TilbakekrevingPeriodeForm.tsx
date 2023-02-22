@@ -138,23 +138,27 @@ export class TilbakekrevingPeriodeFormImpl extends Component<
     andelSomTilbakekreves: undefined,
   };
 
-  resetFields = () => {
-    const { behandlingFormPrefix, clearFields: clearFormFields, valgtVilkarResultatType } = this.props;
-    const fields = [valgtVilkarResultatType];
-    clearFormFields(`${behandlingFormPrefix}.${TILBAKEKREVING_PERIODE_FORM_NAME}`, false, false, ...fields);
-  };
-
-  resetAnnetTextField = () => {
+  resetFields = (valgtVerdi: string) => {
     const {
       behandlingFormPrefix,
       clearFields: clearFormFields,
+      change: changeValue,
       valgtVilkarResultatType,
-      handletUaktsomhetGrad,
-      erSerligGrunnAnnetValgt,
     } = this.props;
-    if (!erSerligGrunnAnnetValgt) {
-      const fields = [`${valgtVilkarResultatType}.${handletUaktsomhetGrad}.annetBegrunnelse`];
-      clearFormFields(`${behandlingFormPrefix}.${TILBAKEKREVING_PERIODE_FORM_NAME}`, false, false, ...fields);
+    const fields = [valgtVilkarResultatType];
+
+    clearFormFields(`${behandlingFormPrefix}.${TILBAKEKREVING_PERIODE_FORM_NAME}`, false, false, ...fields);
+
+    if (valgtVilkarResultatType === VilkarResultat.FORSTO_BURDE_FORSTAATT) {
+      if (valgtVerdi === Aktsomhet.FORSETT) {
+        changeValue(`${VilkarResultat.FORSTO_BURDE_FORSTAATT}.${Aktsomhet.FORSETT}.skalDetTilleggesRenter`, false);
+      }
+      if (valgtVerdi === Aktsomhet.GROVT_UAKTSOM) {
+        changeValue(
+          `${VilkarResultat.FORSTO_BURDE_FORSTAATT}.${Aktsomhet.GROVT_UAKTSOM}.skalDetTilleggesRenter`,
+          false,
+        );
+      }
     }
   };
 

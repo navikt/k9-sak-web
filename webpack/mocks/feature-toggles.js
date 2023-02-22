@@ -17,6 +17,34 @@ const featureToggles = [
     key: 'UNNTAKSBEHANDLING',
     value: process.env.UNNTAKSBEHANDLING,
   },
+  {
+    key: 'UTENLANDSOPPHOLD',
+    value: process.env.UTENLANDSOPPHOLD,
+  },
+  {
+    key: 'SOKNADPERIODESTRIPE',
+    value: process.env.SOKNADPERIODESTRIPE,
+  },
+  {
+    key: 'TYPE_MEDISINSKE_OPPLYSNINGER_BREV',
+    value: process.env.TYPE_MEDISINSKE_OPPLYSNINGER_BREV,
+  },
+  {
+    key: 'LOS_MARKER_BEHANDLING',
+    value: process.env.LOS_MARKER_BEHANDLING,
+  },
+  {
+    key: 'AKSJONSPUNKT_9014',
+    value: process.env.AKSJONSPUNKT_9014,
+  },
+  {
+    key: 'AKSJONSPUNKT_9015',
+    value: process.env.AKSJONSPUNKT_9015,
+  },
+  {
+    key: 'FRITEKST_REDIGERING',
+    value: process.env.FRITEKST_REDIGERING,
+  },
 ];
 
 module.exports = function (app) {

@@ -29,7 +29,6 @@ export enum UnntakBehandlingApiKeys {
   HENLEGG_BEHANDLING = 'HENLEGG_BEHANDLING',
   RESUME_BEHANDLING = 'RESUME_BEHANDLING',
   BEHANDLING_ON_HOLD = 'BEHANDLING_ON_HOLD',
-  OPEN_BEHANDLING_FOR_CHANGES = 'OPEN_BEHANDLING_FOR_CHANGES',
   VERGE_OPPRETT = 'VERGE_OPPRETT',
   VERGE_FJERN = 'VERGE_FJERN',
   VEDTAK_VARSEL = 'VEDTAK_VARSEL',
@@ -38,6 +37,7 @@ export enum UnntakBehandlingApiKeys {
   TILGJENGELIGE_VEDTAKSBREV = 'TILGJENGELIGE_VEDTAKSBREV',
   DOKUMENTDATA_LAGRE = 'DOKUMENTDATA_LAGRE',
   DOKUMENTDATA_HENTE = 'DOKUMENTDATA_HENTE',
+  HENT_FRITEKSTBREV_HTML = 'HENT_FRITEKSTBREV_HTML',
   ARBEIDSFORHOLD = 'ARBEIDSFORHOLD',
 }
 
@@ -59,7 +59,6 @@ const endpoints = new RestApiConfigBuilder()
   .withRel('soeker-verge', UnntakBehandlingApiKeys.VERGE)
   .withRel('opptjening-v2', UnntakBehandlingApiKeys.OPPTJENING)
   .withRel('sendt-varsel-om-revurdering', UnntakBehandlingApiKeys.SEND_VARSEL_OM_REVURDERING)
-  .withRel('vedtak-varsel', UnntakBehandlingApiKeys.VEDTAK_VARSEL)
   .withRel('forbrukte-dager', UnntakBehandlingApiKeys.FORBRUKTE_DAGER)
   .withRel('inntekt', UnntakBehandlingApiKeys.INNTEKT_OG_YTELSER)
   .withRel('tilgjengelige-vedtaksbrev', UnntakBehandlingApiKeys.TILGJENGELIGE_VEDTAKSBREV)
@@ -80,7 +79,6 @@ const endpoints = new RestApiConfigBuilder()
   .withPost('/k9/sak/api/behandlinger/henlegg', UnntakBehandlingApiKeys.HENLEGG_BEHANDLING)
   .withAsyncPost('/k9/sak/api/behandlinger/gjenoppta', UnntakBehandlingApiKeys.RESUME_BEHANDLING)
   .withPost('/k9/sak/api/behandlinger/sett-pa-vent', UnntakBehandlingApiKeys.BEHANDLING_ON_HOLD)
-  .withPost('/k9/sak/api/behandlinger/opne-for-endringer', UnntakBehandlingApiKeys.OPEN_BEHANDLING_FOR_CHANGES)
   .withPost('/k9/sak/api/verge/opprett', UnntakBehandlingApiKeys.VERGE_OPPRETT)
   .withPost('/k9/sak/api/verge/fjern', UnntakBehandlingApiKeys.VERGE_FJERN)
 
@@ -91,6 +89,7 @@ const endpoints = new RestApiConfigBuilder()
 
   /* K9FORMIDLING */
   .withPost('/k9/formidling/api/brev/forhaandsvis', UnntakBehandlingApiKeys.PREVIEW_MESSAGE, { isResponseBlob: true })
+  .withPost('/k9/formidling/api/brev/html', UnntakBehandlingApiKeys.HENT_FRITEKSTBREV_HTML)
 
   .build();
 

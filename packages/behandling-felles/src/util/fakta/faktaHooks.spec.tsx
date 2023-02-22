@@ -1,20 +1,21 @@
+/* eslint-disable class-methods-use-this */
+import { shallow } from 'enzyme';
 import React from 'react';
 import { IntlShape } from 'react-intl';
-import { shallow } from 'enzyme';
 import sinon from 'sinon';
 
-import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
-import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
-import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
-import { faktaPanelCodes } from '@k9-sak-web/konstanter';
-import { Behandling, Fagsak } from '@k9-sak-web/types';
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import ArbeidsforholdFaktaIndex from '@fpsak-frontend/fakta-arbeidsforhold';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
+import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
+import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import fagsakStatus from '@fpsak-frontend/kodeverk/src/fagsakStatus';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
+import { faktaPanelCodes } from '@k9-sak-web/konstanter';
+import { Behandling, Fagsak } from '@k9-sak-web/types';
 
-import FaktaPanelDef from './FaktaPanelDef';
 import faktaHooks from './faktaHooks';
+import FaktaPanelDef from './FaktaPanelDef';
 import FaktaPanelUtledet from './FaktaPanelUtledet';
 import { DEFAULT_FAKTA_KODE } from './faktaUtils';
 
@@ -90,7 +91,6 @@ describe('<faktaHooks>', () => {
         rettigheter,
         aksjonspunkter,
         valgtFaktaSteg,
-        intl,
       ),
     );
     const [faktaPaneler, valgtPanel, formaterteFaktaPaneler] = Object.values(wrapper.find('div').props()).reduce(
@@ -117,7 +117,7 @@ describe('<faktaHooks>', () => {
       {
         erAktiv: true,
         harAksjonspunkt: true,
-        tekst: 'ArbeidsforholdInfoPanel.Title',
+        tekstKode: 'ArbeidsforholdInfoPanel.Title',
       },
     ]);
   });

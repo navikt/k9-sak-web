@@ -1,6 +1,5 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
-import { injectIntl, WrappedComponentProps } from 'react-intl';
 import { Rettigheter, SideMenuWrapper, faktaHooks, useSetBehandlingVedEndring } from '@k9-sak-web/behandling-felles';
 import {
   KodeverkMedNavn,
@@ -42,7 +41,6 @@ interface OwnProps {
 }
 
 const PleiepengerFakta = ({
-  intl,
   data,
   behandling,
   fagsak,
@@ -58,8 +56,8 @@ const PleiepengerFakta = ({
   arbeidsgiverOpplysningerPerId,
   dokumenter,
   featureToggles,
-  beregningErBehandlet
-}: OwnProps & WrappedComponentProps) => {
+  beregningErBehandlet,
+}: OwnProps) => {
   const { aksjonspunkter, ...rest } = data;
   const { addErrorMessage } = useRestApiErrorDispatcher();
 
@@ -87,7 +85,7 @@ const PleiepengerFakta = ({
     rettigheter,
     aksjonspunkter,
     valgtFaktaSteg,
-    intl,
+    featureToggles,
   );
 
   faktaHooks.useFaktaAksjonspunktNotifikator(faktaPaneler, setApentFaktaPanel, behandling.versjon);
@@ -116,6 +114,13 @@ const PleiepengerFakta = ({
     isCachingOn: true,
   });
 
+  const [formData, setFormData] = useState({});
+  useEffect(() => {
+    if (formData) {
+      setFormData(undefined);
+    }
+  }, [behandling.versjon]);
+
   if (sidemenyPaneler.length > 0) {
     const isLoading = state === RestApiState.NOT_STARTED || state === RestApiState.LOADING;
     return (
@@ -131,7 +136,9 @@ const PleiepengerFakta = ({
               submitCallback: bekreftAksjonspunktCallback,
               ...valgtPanel.getKomponentData(rettigheter, dataTilUtledingAvPleiepengerPaneler, hasFetchError),
               dokumenter,
-              beregningErBehandlet
+              beregningErBehandlet,
+              formData,
+              setFormData,
             })}
           </ErrorBoundary>
         )}
@@ -141,4 +148,4 @@ const PleiepengerFakta = ({
   return null;
 };
 
-export default injectIntl(PleiepengerFakta);
+export default PleiepengerFakta;

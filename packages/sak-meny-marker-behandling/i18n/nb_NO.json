@@ -1,0 +1,11 @@
+{
+  "MenyMarkerBehandling.MarkerBehandling": "Marker behandling",
+  "MenyMarkerBehandling.VanskeligÅLøse": "Behandlingen er vanskelig å løse",
+  "MenyMarkerBehandling.MarkerSomHastesak": "Behandlingen er hastesak",
+  "MenyMarkerBehandling.Kommentar": "Kommentar",
+  "ValidationMessage.NotEmpty": "Feltet må fylles ut",
+  "ValidationMessage.MustBeChecked": "Må hukes av",
+  "ValidationMessage.Min3Char": "Feltet må være større eller lik 3",
+  "ValidationMessage.Max100000Char": "Feltet må være mindre eller lik 100000",
+  "ValidationMessage.ManglendeEndringerError": "Du må gjøre endringer før du kan lagre"
+}

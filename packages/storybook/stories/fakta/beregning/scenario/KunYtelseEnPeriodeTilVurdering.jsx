@@ -1,7 +1,7 @@
 // eslint-disable-next-line max-len
 export const beregningsgrunnlag = [
   {
-    avklaringsbehov: [{definisjon: { kode : '5058' }, status: { kode: 'UTFO'}}],
+    avklaringsbehov: [{ definisjon: { kode: '5058' }, status: { kode: 'UTFO' }, kanLoses: true }],
     skjaeringstidspunktBeregning: '2020-03-04',
     skjæringstidspunkt: '2020-03-04',
     aktivitetStatus: [{ kode: 'KUN_YTELSE', kodeverk: 'AKTIVITET_STATUS' }],
@@ -92,7 +92,7 @@ export const beregningsgrunnlag = [
     vilkårsperiodeFom: '2020-03-04',
   },
   {
-    avklaringsbehov: [{definisjon: { kode : '5058' }, status: { kode: 'OPPR'}}],
+    avklaringsbehov: [{ definisjon: { kode: '5058' }, status: { kode: 'OPPR' } }],
     skjaeringstidspunktBeregning: '2020-06-04',
     skjæringstidspunkt: '2020-06-04',
     aktivitetStatus: [{ kode: 'KUN_YTELSE', kodeverk: 'AKTIVITET_STATUS' }],
@@ -113,7 +113,7 @@ export const beregningsgrunnlag = [
             fastsattAvSaksbehandler: true,
             lagtTilAvSaksbehandler: false,
             erTilkommetAndel: false,
-            beregnetPrAar: null
+            beregnetPrAar: null,
           },
         ],
       },
@@ -183,29 +183,30 @@ export const beregningsgrunnlag = [
   },
 ];
 
-const vilkår = [{
-  vilkarType: { kode: "FP_VK_41" },
-  avslagKode: null,
-  merknadParametere: {},
-  vilkarStatus: { kode: 'IKKE_VURDERT', kodeverk: 'VILKAR_UTFALL_TYPE' },
-  periode: {
-    fom: beregningsgrunnlag[0].skjaeringstidspunktBeregning,
-    tom: beregningsgrunnlag[0].skjaeringstidspunktBeregning,
+const vilkår = [
+  {
+    vilkarType: { kode: 'FP_VK_41' },
+    avslagKode: null,
+    merknadParametere: {},
+    vilkarStatus: { kode: 'IKKE_VURDERT', kodeverk: 'VILKAR_UTFALL_TYPE' },
+    periode: {
+      fom: beregningsgrunnlag[0].skjaeringstidspunktBeregning,
+      tom: beregningsgrunnlag[0].skjaeringstidspunktBeregning,
+    },
+    begrunnelse: null,
+    vurderesIBehandlingen: false,
   },
-  begrunnelse: null,
-  vurdersIBehandlingen: false,
-},
-{
-  avslagKode: null,
-  merknadParametere: {},
-  vilkarStatus: { kode: 'IKKE_VURDERT', kodeverk: 'VILKAR_UTFALL_TYPE' },
-  periode: {
-    fom: beregningsgrunnlag[1].skjaeringstidspunktBeregning,
-    tom: beregningsgrunnlag[1].skjaeringstidspunktBeregning,
+  {
+    avslagKode: null,
+    merknadParametere: {},
+    vilkarStatus: { kode: 'IKKE_VURDERT', kodeverk: 'VILKAR_UTFALL_TYPE' },
+    periode: {
+      fom: beregningsgrunnlag[1].skjaeringstidspunktBeregning,
+      tom: beregningsgrunnlag[1].skjaeringstidspunktBeregning,
+    },
+    begrunnelse: null,
+    vurderesIBehandlingen: true,
   },
-  begrunnelse: null,
-  vurdersIBehandlingen: true,
-},
 ];
 
 export const behandling = {

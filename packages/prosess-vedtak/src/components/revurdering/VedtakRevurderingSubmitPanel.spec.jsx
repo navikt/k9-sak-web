@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import { getSubmitKnappTekst } from './VedtakRevurderingSubmitPanel';
+import { submitKnappTekst } from './VedtakRevurderingSubmitPanel';
 
 describe('<VedtakRevurderingSubmitPanel>', () => {
   it('knapp skal vise til godkjenning tekst når det finnes aktive aksjonspunkter som skal til totrinn', () => {
@@ -7,8 +7,8 @@ describe('<VedtakRevurderingSubmitPanel>', () => {
       { kode: '5058', erAktivt: true, toTrinnsBehandling: false },
       { kode: '5027', erAktivt: true, toTrinnsBehandling: true },
     ];
-    const tekstId = getSubmitKnappTekst.resultFunc(aksjonspunkter);
-    expect(tekstId).to.equal('VedtakForm.TilGodkjenning');
+    const tekstId = submitKnappTekst(aksjonspunkter);
+    expect(tekstId).to.equal('VedtakForm.SendTilBeslutter');
   });
 
   it('knapp skal vise fatt vedtak tekst når det finnes inaktive aksjonspunkter som skal til totrinn', () => {
@@ -16,7 +16,7 @@ describe('<VedtakRevurderingSubmitPanel>', () => {
       { kode: '5058', erAktivt: true, toTrinnsBehandling: false },
       { kode: '5027', erAktivt: false, toTrinnsBehandling: true },
     ];
-    const tekstId = getSubmitKnappTekst.resultFunc(aksjonspunkter);
+    const tekstId = submitKnappTekst(aksjonspunkter);
     expect(tekstId).to.equal('VedtakForm.FattVedtak');
   });
 
@@ -25,7 +25,7 @@ describe('<VedtakRevurderingSubmitPanel>', () => {
       { kode: '5058', erAktivt: true, toTrinnsBehandling: false },
       { kode: '5027', erAktivt: true, toTrinnsBehandling: false },
     ];
-    const tekstId = getSubmitKnappTekst.resultFunc(aksjonspunkter);
+    const tekstId = submitKnappTekst(aksjonspunkter);
     expect(tekstId).to.equal('VedtakForm.FattVedtak');
   });
 });

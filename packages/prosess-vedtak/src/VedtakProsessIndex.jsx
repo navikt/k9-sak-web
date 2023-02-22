@@ -37,6 +37,7 @@ const VedtakProsessIndex = ({
   aksjonspunkter,
   isReadOnly,
   previewCallback,
+  hentFritekstbrevHtmlCallback,
   submitCallback,
   ytelseTypeKode,
   employeeHasAccess,
@@ -49,7 +50,8 @@ const VedtakProsessIndex = ({
   dokumentdataHente,
   fritekstdokumenter,
   lagreDokumentdata,
-  overlappendeYtelser
+  overlappendeYtelser,
+  featureToggles,
 }) => (
   <RawIntlProvider value={intl}>
     <VedtakPanels
@@ -74,6 +76,7 @@ const VedtakProsessIndex = ({
       employeeHasAccess={employeeHasAccess}
       readOnly={isReadOnly}
       previewCallback={previewCallback}
+      hentFritekstbrevHtmlCallback={hentFritekstbrevHtmlCallback}
       submitCallback={submitCallback}
       alleKodeverk={alleKodeverk}
       personopplysninger={personopplysninger}
@@ -84,7 +87,8 @@ const VedtakProsessIndex = ({
       dokumentdata={dokumentdataHente}
       fritekstdokumenter={fritekstdokumenter}
       lagreDokumentdata={lagreDokumentdata}
-      overlappendeYtelser={overlappendeYtelser} />
+      overlappendeYtelser={overlappendeYtelser}
+    />
   </RawIntlProvider>
 );
 
@@ -104,7 +108,7 @@ VedtakProsessIndex.propTypes = {
   ytelseTypeKode: PropTypes.string.isRequired,
   employeeHasAccess: PropTypes.bool.isRequired,
   alleKodeverk: PropTypes.shape().isRequired,
-  personopplysninger: PropTypes.shape().isRequired,
+  personopplysninger: PropTypes.shape(),
   arbeidsgiverOpplysningerPerId: PropTypes.shape().isRequired,
   beregningsgrunnlag: PropTypes.arrayOf(vedtakBeregningsgrunnlagPropType),
   vedtakVarsel: vedtakVarselPropType,
@@ -116,6 +120,8 @@ VedtakProsessIndex.propTypes = {
   fritekstdokumenter: PropTypes.arrayOf(PropTypes.shape()),
   lagreDokumentdata: PropTypes.func.isRequired,
   overlappendeYtelser: PropTypes.arrayOf(PropTypes.shape()),
+  featureToggles: PropTypes.shape(),
+  hentFritekstbrevHtmlCallback: PropTypes.func.isRequired,
 };
 
 VedtakProsessIndex.defaultProps = {

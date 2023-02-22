@@ -17,6 +17,12 @@ import Home from './components/Home';
 import Dekorator from './components/Dekorator';
 
 import '@fpsak-frontend/assets/styles/global.less';
+import '@navikt/ds-css';
+import '@navikt/ft-plattform-komponenter/dist/style.css';
+import '@navikt/ft-ui-komponenter/dist/style.css';
+import '@navikt/ft-form-hooks/dist/style.css';
+import '@navikt/ft-prosess-beregningsgrunnlag/dist/style.css';
+import '@navikt/ft-fakta-beregning/dist/style.css';
 
 const EMPTY_ARRAY = [];
 
@@ -71,10 +77,11 @@ const AppIndex = () => {
             hideErrorMessages={hasForbiddenOrUnauthorizedErrors}
             queryStrings={queryStrings}
             setSiteHeight={setSiteHeight}
+            pathname={location.pathname}
           />
           {shouldRenderHome && <Home headerHeight={headerHeight} />}
           {forbiddenErrors.length > 0 && <ForbiddenPage />}
-          {unauthorizedErrors.length > 0 && (redirectToLogin() || <UnauthorizedPage />)}
+          {unauthorizedErrors.length > 0 && <UnauthorizedPage />}
         </LanguageProvider>
       </AppConfigResolver>
     </ErrorBoundary>

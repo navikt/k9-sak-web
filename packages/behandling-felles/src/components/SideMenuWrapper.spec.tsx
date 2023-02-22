@@ -1,6 +1,6 @@
 import React from 'react';
 import sinon from 'sinon';
-import { SideMenu } from '@navikt/k9-react-components';
+import { SideMenu } from '@navikt/ft-plattform-komponenter';
 
 import advarselIkonUrl from '@fpsak-frontend/assets/images/advarsel_ny.svg';
 import { intlMock, shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
@@ -15,7 +15,7 @@ describe('<SideMenuWrapper>', () => {
         intl={intlMock}
         paneler={[
           {
-            tekst: 'test',
+            tekstKode: 'OmsorgInfoPanel.Omsorg',
             erAktiv: true,
             harAksjonspunkt: true,
           },
@@ -31,7 +31,7 @@ describe('<SideMenuWrapper>', () => {
     expect(meny.prop('heading')).toEqual('Saksopplysninger');
     expect(meny.prop('links')).toEqual([
       {
-        label: 'test',
+        label: 'Omsorg',
         active: true,
         iconSrc: advarselIkonUrl,
         iconAltText: 'Aksjonspunkt',
@@ -46,7 +46,7 @@ describe('<SideMenuWrapper>', () => {
         intl={intlMock}
         paneler={[
           {
-            tekst: 'test',
+            tekstKode: 'OmsorgInfoPanel.Omsorg',
             erAktiv: true,
             harAksjonspunkt: false,
           },
@@ -60,7 +60,7 @@ describe('<SideMenuWrapper>', () => {
     const meny = wrapper.find(SideMenu);
     expect(meny.prop('links')).toEqual([
       {
-        label: 'test',
+        label: 'Omsorg',
         active: true,
         iconSrc: undefined,
         iconAltText: undefined,

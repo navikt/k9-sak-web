@@ -1,5 +1,4 @@
 import React from 'react';
-import { action } from '@storybook/addon-actions';
 import { withKnobs, object } from '@storybook/addon-knobs';
 
 import DokumenterSakIndex from '@fpsak-frontend/sak-dokumenter';
@@ -54,10 +53,6 @@ export const visMeldingerPanel = () => (
       backgroundColor: 'white',
     }}
   >
-    <DokumenterSakIndex
-      documents={object('documents', dokumenter)}
-      selectDocumentCallback={action('button-click')}
-      behandlingId={behandlingId}
-    />
+    <DokumenterSakIndex documents={object('documents', dokumenter)} saksnummer={1} behandlingId={behandlingId} />
   </div>
 );

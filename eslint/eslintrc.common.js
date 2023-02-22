@@ -18,14 +18,7 @@ const config = {
 
   plugins: ['jest', 'jest-dom', '@typescript-eslint'],
 
-  extends: [
-    'airbnb',
-    'plugin:@typescript-eslint/recommended',
-    'plugin:jest/recommended',
-    'prettier/@typescript-eslint',
-    'prettier',
-    'prettier/react',
-  ],
+  extends: ['airbnb', 'plugin:@typescript-eslint/recommended', 'plugin:jest/recommended', 'prettier'],
 
   parserOptions: {
     sourceType: 'module',
@@ -47,12 +40,27 @@ const config = {
     'linebreak-style': OFF,
     'import/no-named-as-default': OFF,
     'max-len': [ERROR, 160],
-    'no-undef': OFF,
+    'no-undef': ERROR,
     'react/require-default-props': OFF,
     'react/jsx-filename-extension': OFF,
     'react/static-property-placement': OFF,
     'react/state-in-constructor': OFF,
     'jest/valid-expect': OFF,
+
+    'function-paren-newline': OFF,
+    'function-call-argument-newline': OFF,
+    'no-restricted-exports': OFF,
+    'import/no-extraneous-dependencies': [
+      'error',
+      { devDependencies: ['**/*.spec.ts', '**/*.spec.tsx', '**/*.stories.tsx'] },
+    ],
+    'react/function-component-definition': [
+      'error',
+      {
+        namedComponents: 'arrow-function',
+        unnamedComponents: 'arrow-function',
+      },
+    ],
 
     // note you must disable the base rule as it can report incorrect errors
     'no-use-before-define': OFF,
@@ -63,6 +71,9 @@ const config = {
     '@typescript-eslint/no-unused-vars': [ERROR],
 
     // TODO (TOR) Ignorert inntil videre grunnet kost/nytte
+    'react/no-unstable-nested-components': OFF,
+    'prefer-regex-literals': OFF,
+    'react/no-unused-prop-types': OFF,
     'max-classes-per-file': OFF,
     'jsx-a11y/anchor-is-valid': OFF,
     'jsx-a11y/control-has-associated-label': OFF,
@@ -72,6 +83,7 @@ const config = {
     '@typescript-eslint/no-explicit-any': OFF,
     '@typescript-eslint/ban-ts-comment': OFF,
     '@typescript-eslint/explicit-module-boundary-types': OFF,
+    'class-methods-use-this': OFF,
 
     // TODO Desse kan vel fjernast?
     '@typescript-eslint/indent': OFF,
@@ -92,6 +104,10 @@ const config = {
       rules: {
         'react/prop-types': OFF,
       },
+    },
+    {
+      files: ['*.ts', '*.tsx'],
+      rules: { 'no-undef': OFF },
     },
   ],
 };

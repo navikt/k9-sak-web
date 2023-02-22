@@ -16,7 +16,7 @@ describe('<VedtakKlageForm>', () => {
     ];
     const forhandsvisVedtaksbrevFunc = sinon.spy();
     const klageVurderingResultatNFP = {
-      klageVurdertAv: 'NFP',
+      klageVurdertAv: 'NAY',
       klageVurdering: 'AVVIS_KLAGE',
     };
     const wrapper = mountWithIntl(
@@ -83,14 +83,14 @@ describe('<VedtakKlageForm>', () => {
 
     describe('getKlageresultat', () => {
       it('Skal returnere klageVurderingResultatNFP hvis klagen ikke har blitt vurdert av klageinstans', () => {
-        const klageVurderingResultatNFP = { klageVurdertAv: 'NFP' };
+        const klageVurderingResultatNFP = { klageVurdertAv: 'NAY' };
         const klageresultater = { klageVurderingResultatNFP };
         const resultat = getKlageresultat.resultFunc(klageresultater);
         expect(resultat).equal(klageVurderingResultatNFP);
       });
 
       it('Skal returnere klageVurderingResultatNK hvis klagen har blitt vurdert av klageinstans', () => {
-        const klageVurderingResultatNFP = { klageVurdertAv: 'NFP' };
+        const klageVurderingResultatNFP = { klageVurdertAv: 'NAY' };
         const klageVurderingResultatNK = { klageVurdertAv: 'NK' };
         const klageresultater = { klageVurderingResultatNFP, klageVurderingResultatNK };
         const resultat = getKlageresultat.resultFunc(klageresultater);

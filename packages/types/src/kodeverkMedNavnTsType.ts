@@ -1,7 +1,7 @@
-export type KodeverkMedNavn = Readonly<{
-  kode: string;
+import Kodeverk from "./kodeverkTsType";
+
+export type KodeverkMedNavn = Kodeverk & Readonly<{
   navn: string;
-  kodeverk: string;
 }>;
 
 export default KodeverkMedNavn;

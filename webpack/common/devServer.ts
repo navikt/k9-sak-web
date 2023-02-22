@@ -18,6 +18,12 @@ export default {
   //   },
   // },
   // publicPath: PUBLIC_PATH,
+  client: {
+    overlay: {
+      errors: false,
+      warnings: false,
+    },
+  },
   devMiddleware: {
     publicPath: PUBLIC_PATH,
     stats: {
@@ -78,10 +84,10 @@ export default {
       secure: false,
       changeOrigin: !!process.env.APP_URL_K9TILBAKE,
     },
-    '/k9/diagnosekoder': {
+    '/k9/diagnosekoder/': {
       target: process.env.APP_URL_DIAGNOSEKODER || 'http://localhost:8300',
       pathRewrite: {
-        '^/k9': '',
+        '^/k9/diagnosekoder/': '/diagnosekoder',
       },
       secure: false,
       changeOrigin: !!process.env.APP_URL_DIAGNOSEKODER,
@@ -127,6 +133,12 @@ export default {
       secure: false,
       changeOrigin: true,
       pathRewrite: { '^/k9/microfrontend/psb-inntektsmelding': '' },
+    },
+    '/k9/endringslogg/**': {
+      target: process.env.ENDRINGSLOGG_URL || 'https://familie-endringslogg.dev.intern.nav.no',
+      secure: false,
+      changeOrigin: true,
+      pathRewrite: { '^/k9/endringslogg': '' },
     },
   },
 };

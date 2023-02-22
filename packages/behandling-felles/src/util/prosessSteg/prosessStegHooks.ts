@@ -1,19 +1,20 @@
-import { useState, useMemo, useCallback, useEffect } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 
-import { Behandling, Aksjonspunkt, Vilkar, Fagsak } from '@k9-sak-web/types';
+import { Aksjonspunkt, Behandling, Fagsak, Vilkar } from '@k9-sak-web/types';
 
-import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
+import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
+import { useFeatureToggles } from '@fpsak-frontend/shared-components';
 import { prosessStegCodes } from '@k9-sak-web/konstanter';
-import Rettigheter from '../../types/rettigheterTsType';
 import ProsessStegMenyRad from '../../types/prosessStegMenyRadTsType';
+import Rettigheter from '../../types/rettigheterTsType';
+import { ProsessStegDef } from './ProsessStegDef';
 import {
-  utledProsessStegPaneler,
   finnValgtPanel,
   formaterPanelerForProsessmeny,
   getBekreftAksjonspunktCallback,
+  utledProsessStegPaneler,
 } from './prosessStegUtils';
-import { ProsessStegDef } from './ProsessStegDef';
 import { ProsessStegUtledet } from './ProsessStegUtledet';
 
 const useProsessStegPaneler = (
@@ -29,6 +30,7 @@ const useProsessStegPaneler = (
   apentFaktaPanelInfo?: { urlCode: string; textCode: string },
 ): [ProsessStegUtledet[], ProsessStegUtledet, ProsessStegMenyRad[]] => {
   const [overstyrteAksjonspunktKoder, toggleOverstyring] = useState<string[]>([]);
+  const [featureToggles] = useFeatureToggles();
   const ekstraPanelData = {
     ...panelData,
     fagsak,
@@ -79,7 +81,20 @@ const useProsessStegPaneler = (
 
       const forrigeStatus = forrigePanel.getStatus();
 
-      if (forrigeStatus === vilkarUtfallType.IKKE_OPPFYLT || forrigeStatus === vilkarUtfallType.IKKE_VURDERT) {
+      // alleAndrePanelerEnnSoknadsfristErOppfyllt:
+      // I saker hvor søknadsfrist er IKKE_OPPFYLT skal etterfølgende prosessteg fremdeles behandles
+      // og skal ikke føre til at senere steg blir stanset av tidligere avslag
+      let alleAndrePanelerEnnSoknadsfristErOppfyllt: boolean;
+      if (forrigePanel.paneler.find(v => v.getId() === 'SOKNADSFRIST')) {
+        alleAndrePanelerEnnSoknadsfristErOppfyllt = forrigePanel.paneler
+          .filter(v => v.getId() !== 'SOKNADSFRIST')
+          .every(v => v.getStatus() === vilkarUtfallType.OPPFYLT);
+      }
+
+      if (
+        (forrigeStatus === vilkarUtfallType.IKKE_OPPFYLT || forrigeStatus === vilkarUtfallType.IKKE_VURDERT) &&
+        !alleAndrePanelerEnnSoknadsfristErOppfyllt
+      ) {
         stansetAvTidligereAvslag = true;
       }
 
@@ -95,11 +110,10 @@ const useProsessStegPaneler = (
   );
 
   const urlCode = valgtPanel ? valgtPanel.getUrlKode() : undefined;
-  const formaterteProsessStegPaneler = useMemo(() => formaterPanelerForProsessmeny(prosessStegPaneler, urlCode), [
-    behandling.versjon,
-    urlCode,
-    overstyrteAksjonspunktKoder,
-  ]);
+  const formaterteProsessStegPaneler = useMemo(
+    () => formaterPanelerForProsessmeny(prosessStegPaneler, urlCode, featureToggles),
+    [behandling.versjon, urlCode, overstyrteAksjonspunktKoder],
+  );
 
   return [prosessStegPaneler, valgtPanel, formaterteProsessStegPaneler];
 };

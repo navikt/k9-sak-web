@@ -37,7 +37,7 @@ const FagsakSearch = ({
   searchResultAccessDenied,
   alleKodeverk,
 }: OwnProps) => (
-  <div className={styles.container}>
+  <div className={styles.container} data-testid="FagsakSearch">
     <SearchForm
       onSubmit={searchFagsakCallback}
       // @ts-ignore Fiks denne!
