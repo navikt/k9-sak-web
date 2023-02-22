@@ -14,7 +14,7 @@ const initializeOmsorgenFor = (
   httpErrorHandlerFn,
   endpoints: SimpleEndpoints,
   readOnly: boolean,
-  løsAksjonspunkt: (omsorgsperioder) => void,
+  løsAksjonspunkt: (omsorgsperioder, fosterbarnForOmsorgspenger) => void,
   sakstype: string,
 ) => {
   (window as any).renderOmsorgenForApp(elementId, {
@@ -35,6 +35,7 @@ interface OmsorgenForProps {
     kode: string;
     begrunnelse: string;
     omsorgsperioder: any;
+    fosterbarnForOmsorgspenger: any;
   }[]) => void;
 }
 
@@ -51,8 +52,15 @@ const OmsorgenFor = ({ behandling, fagsak, readOnly, aksjonspunkter, submitCallb
   const omsorgenForAksjonspunktkode = omsorgenForAksjonspunkt?.definisjon.kode;
   const harAksjonspunkt = !!omsorgenForAksjonspunktkode;
 
-  const løsAksjonspunkt = omsorgsperioder =>
-    submitCallback([{ kode: omsorgenForAksjonspunktkode, begrunnelse: 'Omsorgen for er behandlet', omsorgsperioder }]);
+  const løsAksjonspunkt = (omsorgsperioder, fosterbarnForOmsorgspenger) =>
+    submitCallback([
+      {
+        kode: omsorgenForAksjonspunktkode,
+        begrunnelse: 'Omsorgen for er behandlet',
+        omsorgsperioder,
+        fosterbarnForOmsorgspenger,
+      },
+    ]);
 
   return (
     <MicroFrontend

@@ -1,6 +1,6 @@
 import React from 'react';
 import sinon from 'sinon';
-import shallowWithIntl from '../../i18n';
+import { renderWithIntlAndReduxForm, screen } from '@fpsak-frontend/utils-test/src/test-utils';
 import AvslagsårsakListe from './AvslagsårsakListe';
 
 describe('<AvslagårsakListe>', () => {
@@ -49,8 +49,7 @@ describe('<AvslagårsakListe>', () => {
       },
     ];
 
-    const wrapper = shallowWithIntl(<AvslagsårsakListe vilkar={vilkar} getKodeverknavn={sinon.spy()} />);
-    const normaltekstFields = wrapper.find('Normaltekst');
-    expect(normaltekstFields).toHaveLength(2);
+    renderWithIntlAndReduxForm(<AvslagsårsakListe vilkar={vilkar} getKodeverknavn={sinon.spy()} />);
+    expect(screen.getAllByText(':')).toHaveLength(2);
   });
 });
