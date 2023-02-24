@@ -20,6 +20,10 @@ describe('<TilkjentYtelse>', () => {
               dagsats: 10000,
               andeler: [
                 {
+                  inntektskategori: {
+                    kode: 'ARBEIDSTAKER',
+                    kodeverk: 'INNTEKTSKATEGORI',
+                  },
                   aktørId: '',
                   arbeidsforholdType: {
                     kode: '',
