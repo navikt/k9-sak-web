@@ -2612,10 +2612,10 @@
     react-hook-form "7.43.1"
     react-intl "6.2.8"
 
-"@navikt/ft-fakta-fordel-beregningsgrunnlag@6.0.11":
-  version "6.0.11"
-  resolved "https://npm.pkg.github.com/download/@navikt/ft-fakta-fordel-beregningsgrunnlag/6.0.11/50da0fada459cdaf4a7c8b3d78c6a51696f16b2b#50da0fada459cdaf4a7c8b3d78c6a51696f16b2b"
-  integrity sha512-Zlkc86/8eID/RYAJYG5ZY7jwRxMHxyv2SnKTRyY+Iokovi+Rj/7ST2SNwuWtsVJ3EGGHCzddKgq4ot4mWqSOUw==
+"@navikt/ft-fakta-fordel-beregningsgrunnlag@6.0.12":
+  version "6.0.12"
+  resolved "https://npm.pkg.github.com/download/@navikt/ft-fakta-fordel-beregningsgrunnlag/6.0.12/784bd2ac5e90d73bdd45860ffedd980d703d45ed#784bd2ac5e90d73bdd45860ffedd980d703d45ed"
+  integrity sha512-sXeX7VuKDtkNMtRszNdLA3XlwsGBWUgzfJtH4wF/M74RUJ9iNxmgrbFTkwMCY4Gu4naKKXGXhKreA0Ejxtv08Q==
   dependencies:
     "@navikt/ds-css" "2.1.7"
     "@navikt/ds-react" "2.1.7"
@@ -5054,7 +5054,7 @@
     "@types/history" "^4.7.11"
     "@types/react" "*"
 
-"@types/react@*", "@types/react@16 || 17 || 18", "@types/react@^17", "@types/react@^17.0.38":
+"@types/react@*", "@types/react@16 || 17 || 18", "@types/react@^17", "@types/react@^18.0.28":
   version "17.0.53"
   resolved "https://registry.yarnpkg.com/@types/react/-/react-17.0.53.tgz#10d4d5999b8af3d6bc6a9369d7eb953da82442ab"
   integrity sha512-1yIpQR2zdYu1Z/dc1OxC+MA6GR240u3gcnP4l6mvj/PJiVaqHsQPmWttsvHsfnhfPbU2FuGmo0wSITPygjBmsw==
@@ -16180,7 +16180,7 @@ react-uuid@^2.0.0:
   resolved "https://registry.yarnpkg.com/react-uuid/-/react-uuid-2.0.0.tgz#e3c97e190db9eef53cb9dacfcc7314d913a411fa"
   integrity sha512-FNUH/8WR/FEtx0Bu6gmt1eONfc413hhvrEXFWUSFGvznUhI4dYoVZA09p7JHoTpnM4WC2D/bG2YSxGKXF4oVLg==
 
-react@17.0.2, react@18.2.0, react@^17.0.2:
+react@18.2.0, react@^17.0.2, react@^18.2.0:
   version "17.0.2"
   resolved "https://registry.yarnpkg.com/react/-/react-17.0.2.tgz#d0b5cc516d29eb3eee383f75b62864cfb6800037"
   integrity sha512-gnhPt75i/dq/z3/6q/0asP78D0u592D5L1pd7M8P+dck6Fu/jJeL6iVVK23fptSUZj8Vjf++7wXA8UNclGQcbA==

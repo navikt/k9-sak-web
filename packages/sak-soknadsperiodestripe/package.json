@@ -12,7 +12,7 @@
     "@navikt/k9-period-utils": "0.0.12",
     "nav-frontend-typografi": "4.0.2",
     "nav-frontend-typografi-style": "2.0.2",
-    "react": "^17.0.2",
+    "react": "^18.2.0",
     "react-intl": "6.2.8",
     "react-router-dom": "^6.6.2"
   }
