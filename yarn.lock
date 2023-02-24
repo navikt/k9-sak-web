@@ -2612,10 +2612,10 @@
     react-hook-form "7.43.1"
     react-intl "6.2.8"
 
-"@navikt/ft-fakta-fordel-beregningsgrunnlag@6.0.11":
-  version "6.0.11"
-  resolved "https://npm.pkg.github.com/download/@navikt/ft-fakta-fordel-beregningsgrunnlag/6.0.11/50da0fada459cdaf4a7c8b3d78c6a51696f16b2b#50da0fada459cdaf4a7c8b3d78c6a51696f16b2b"
-  integrity sha512-Zlkc86/8eID/RYAJYG5ZY7jwRxMHxyv2SnKTRyY+Iokovi+Rj/7ST2SNwuWtsVJ3EGGHCzddKgq4ot4mWqSOUw==
+"@navikt/ft-fakta-fordel-beregningsgrunnlag@6.0.12":
+  version "6.0.12"
+  resolved "https://npm.pkg.github.com/download/@navikt/ft-fakta-fordel-beregningsgrunnlag/6.0.12/784bd2ac5e90d73bdd45860ffedd980d703d45ed#784bd2ac5e90d73bdd45860ffedd980d703d45ed"
+  integrity sha512-sXeX7VuKDtkNMtRszNdLA3XlwsGBWUgzfJtH4wF/M74RUJ9iNxmgrbFTkwMCY4Gu4naKKXGXhKreA0Ejxtv08Q==
   dependencies:
     "@navikt/ds-css" "2.1.7"
     "@navikt/ds-react" "2.1.7"
@@ -2790,6 +2790,11 @@
   resolved "https://npm.pkg.github.com/download/@navikt/k9-array-utils/0.0.1/05d7fa6a8e8194f121667cf9c945e7f2d325b088#05d7fa6a8e8194f121667cf9c945e7f2d325b088"
   integrity sha512-6plTd1GHq6bIBDMf5SnMoSOaKPqLBSm698vP4v+JnDwtnSggjlHnS57x5sJbf/QYc6tOmdDyf7q3qwz8kSJx3A==
 
+"@navikt/k9-array-utils@1.0.1":
+  version "1.0.1"
+  resolved "https://npm.pkg.github.com/download/@navikt/k9-array-utils/1.0.1/ebcc44c1356bc2af138d6140a722219aa9952139#ebcc44c1356bc2af138d6140a722219aa9952139"
+  integrity sha512-3/l6D4sfcNUT5NHu8BVPe9zWaL3CsntIk6pul7sjT4w7xmrB1sct21I+XPv8HCWBKUck8yqYXbzgTdRGvbISjQ==
+
 "@navikt/k9-bem-utils@1.0.1", "@navikt/k9-bem-utils@^1.0.1":
   version "1.0.1"
   resolved "https://npm.pkg.github.com/download/@navikt/k9-bem-utils/1.0.1/451f330cbf3636c6406468c157468ea07dfb3b10#451f330cbf3636c6406468c157468ea07dfb3b10"
@@ -2805,11 +2810,6 @@
   resolved "https://npm.pkg.github.com/download/@navikt/k9-date-utils/0.1.0/4b3c0a162bd31145593a8b12a535d74211c0d437#4b3c0a162bd31145593a8b12a535d74211c0d437"
   integrity sha512-JWix2fJibcPnxRIK2coWBVkmwxkWoocJxTLqzocTMXdE5KWcdIuWUKV/Vba9rj82MniPW66nmeYZvv+TBQltbQ==
 
-"@navikt/k9-date-utils@^0.0.8":
-  version "0.0.8"
-  resolved "https://npm.pkg.github.com/download/@navikt/k9-date-utils/0.0.8/06cfdda433652b39c1c4f2457463fc91dabd0d58#06cfdda433652b39c1c4f2457463fc91dabd0d58"
-  integrity sha512-k6kJtGyReu3ZAUwi5/8eNQyQHQgPyHYO1fuOuvsrcXv4KoU33d2tO/+QHvMyVW3qKyTJGURKT1tN8mqpAAajsQ==
-
 "@navikt/k9-form-utils@2.0.0":
   version "2.0.0"
   resolved "https://npm.pkg.github.com/download/@navikt/k9-form-utils/2.0.0/ed1782675b18d5231b5c31979547a7c878668c21#ed1782675b18d5231b5c31979547a7c878668c21"
@@ -2818,20 +2818,20 @@
     "@navikt/k9-bem-utils" "1.0.1"
     "@navikt/k9-period-utils" "1.0.0"
 
-"@navikt/k9-period-utils@0.0.12", "@navikt/k9-period-utils@^0.0.12":
-  version "0.0.12"
-  resolved "https://npm.pkg.github.com/download/@navikt/k9-period-utils/0.0.12/202131c700503cfa3cab8e9be348cf10d60d5349#202131c700503cfa3cab8e9be348cf10d60d5349"
-  integrity sha512-OVqWK2XVnuVFOM/wiz4diIV2tiSonXRyXCJlywe18oMhwDUyIFn+nayUdEGORJ8tf90MB+3oBWyGc1gdCq+reQ==
-  dependencies:
-    "@navikt/k9-array-utils" "^0.0.1"
-    "@navikt/k9-date-utils" "^0.0.8"
-
 "@navikt/k9-period-utils@1.0.0":
   version "1.0.0"
   resolved "https://npm.pkg.github.com/download/@navikt/k9-period-utils/1.0.0/8a69c9e9e9036d63ed381284e6d2ec8404a32a47#8a69c9e9e9036d63ed381284e6d2ec8404a32a47"
   integrity sha512-QTt+6GswRpPz5rDRP2R2AJGyscCCRHH+E3f65kFVEZUBzI3Ml6r4QPvpDnzlDjaZ1cT9+vZsEYzRxY42a0W3GQ==
   dependencies:
     "@navikt/k9-array-utils" "0.0.1"
+    "@navikt/k9-date-utils" "0.1.0"
+
+"@navikt/k9-period-utils@1.0.1", "@navikt/k9-period-utils@^1.0.1":
+  version "1.0.1"
+  resolved "https://npm.pkg.github.com/download/@navikt/k9-period-utils/1.0.1/39ecb9a306628635d763cc3a084b783adb48d516#39ecb9a306628635d763cc3a084b783adb48d516"
+  integrity sha512-cqyiwEIZsZJKF6LKWdDNhBW7gbEoYRilmdDvcM5li4uOqBIUkzyAy57dj8Nw1rpmmcp4PSyM1o76A5ptWTMY6A==
+  dependencies:
+    "@navikt/k9-array-utils" "1.0.1"
     "@navikt/k9-date-utils" "0.1.0"
 
 "@nicolo-ribaudo/eslint-scope-5-internals@5.1.1-v1":

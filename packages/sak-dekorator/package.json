@@ -13,7 +13,7 @@
     "@navikt/k9-array-utils": "^0.0.1",
     "@navikt/k9-bem-utils": "^1.0.1",
     "@navikt/k9-date-utils": "^0.0.10",
-    "@navikt/k9-period-utils": "^0.0.12",
+    "@navikt/k9-period-utils": "^1.0.1",
     "nav-frontend-core": "6.0.1",
     "nav-frontend-grid": "2.0.2",
     "nav-frontend-grid-style": "1.0.3",
