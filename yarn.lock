@@ -2612,10 +2612,10 @@
     react-hook-form "7.43.1"
     react-intl "6.2.8"
 
-"@navikt/ft-fakta-fordel-beregningsgrunnlag@6.0.11":
-  version "6.0.11"
-  resolved "https://npm.pkg.github.com/download/@navikt/ft-fakta-fordel-beregningsgrunnlag/6.0.11/50da0fada459cdaf4a7c8b3d78c6a51696f16b2b#50da0fada459cdaf4a7c8b3d78c6a51696f16b2b"
-  integrity sha512-Zlkc86/8eID/RYAJYG5ZY7jwRxMHxyv2SnKTRyY+Iokovi+Rj/7ST2SNwuWtsVJ3EGGHCzddKgq4ot4mWqSOUw==
+"@navikt/ft-fakta-fordel-beregningsgrunnlag@6.0.12":
+  version "6.0.12"
+  resolved "https://npm.pkg.github.com/download/@navikt/ft-fakta-fordel-beregningsgrunnlag/6.0.12/784bd2ac5e90d73bdd45860ffedd980d703d45ed#784bd2ac5e90d73bdd45860ffedd980d703d45ed"
+  integrity sha512-sXeX7VuKDtkNMtRszNdLA3XlwsGBWUgzfJtH4wF/M74RUJ9iNxmgrbFTkwMCY4Gu4naKKXGXhKreA0Ejxtv08Q==
   dependencies:
     "@navikt/ds-css" "2.1.7"
     "@navikt/ds-react" "2.1.7"
@@ -9385,9 +9385,9 @@ eslint-webpack-plugin@^3.2.0:
     schema-utils "^4.0.0"
 
 eslint@^8.31.0:
-  version "8.32.0"
-  resolved "https://registry.yarnpkg.com/eslint/-/eslint-8.32.0.tgz#d9690056bb6f1a302bd991e7090f5b68fbaea861"
-  integrity sha512-nETVXpnthqKPFyuY2FNjz/bEd6nbosRgKbkgS/y1C7LJop96gYHWpiguLecMHQ2XCPxn77DS0P+68WzG6vkZSQ==
+  version "8.34.0"
+  resolved "https://registry.yarnpkg.com/eslint/-/eslint-8.34.0.tgz#fe0ab0ef478104c1f9ebc5537e303d25a8fb22d6"
+  integrity sha512-1Z8iFsucw+7kSqXNZVslXS8Ioa4u2KM7GPwuKtkTFAqZ/cHMcEaR+1+Br0wLlot49cNxIiZk5wp8EAbPcYZxTg==
   dependencies:
     "@eslint/eslintrc" "^1.4.1"
     "@humanwhocodes/config-array" "^0.11.8"
