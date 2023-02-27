@@ -3,17 +3,10 @@ import React from 'react';
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 import { prosessStegCodes } from '@k9-sak-web/konstanter';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { ProsessStegDef, ProsessStegPanelDef, DynamicLoader } from '@k9-sak-web/behandling-felles';
+import { ProsessStegDef, ProsessStegPanelDef } from '@k9-sak-web/behandling-felles';
 import { konverterKodeverkTilKode, mapVilkar, transformBeregningValues } from '@fpsak-frontend/utils';
 import '@navikt/ft-prosess-beregningsgrunnlag/dist/style.css';
-
-const ProsessBeregningsgrunnlag = React.lazy(() => import('@navikt/ft-prosess-beregningsgrunnlag'));
-
-const ProsessBeregningsgrunnlagMF =
-  process.env.NODE_ENV !== 'development'
-    ? undefined
-    : // eslint-disable-next-line import/no-unresolved
-      () => import('ft_prosess_beregningsgrunnlag/ProsessBeregningsgrunnlag');
+import ProsessBeregningsgrunnlag from '@navikt/ft-prosess-beregningsgrunnlag';
 
 class PanelDef extends ProsessStegPanelDef {
   // eslint-disable-next-line class-methods-use-this
@@ -22,9 +15,7 @@ class PanelDef extends ProsessStegPanelDef {
     konverterKodeverkTilKode(deepCopyProps);
     const bgVilkaret = deepCopyProps.vilkar.find(v => v.vilkarType === vilkarType.BEREGNINGSGRUNNLAGVILKARET);
     return (
-      <DynamicLoader<React.ComponentProps<typeof ProsessBeregningsgrunnlag>>
-        packageCompFn={() => import('@navikt/ft-prosess-beregningsgrunnlag')}
-        federatedCompFn={ProsessBeregningsgrunnlagMF}
+      <ProsessBeregningsgrunnlag
         {...props}
         beregningsgrunnlagsvilkar={mapVilkar(bgVilkaret, props.beregningreferanserTilVurdering)}
         beregningsgrunnlagListe={deepCopyProps.beregningsgrunnlag}

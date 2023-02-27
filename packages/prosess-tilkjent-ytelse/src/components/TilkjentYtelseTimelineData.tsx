@@ -4,14 +4,15 @@ import moment from 'moment';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { Column, Row } from 'nav-frontend-grid';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
-import { Table, TableColumn, TableRow, VerticalSpacer, FloatRight } from '@fpsak-frontend/shared-components';
+import { Table, TableColumn, TableRow, VerticalSpacer, FloatRight, Image } from '@fpsak-frontend/shared-components';
 import { calcDaysAndWeeksWithWeekends, DDMMYYYY_DATE_FORMAT, getKodeverknavnFn } from '@fpsak-frontend/utils';
 import { TimeLineButton, TimeLineDataContainer } from '@fpsak-frontend/tidslinje';
+import advarselIkonUrl from '@fpsak-frontend/assets/images/advarsel.svg';
 import { TabsPure } from 'nav-frontend-tabs';
 import { KodeverkMedNavn, ArbeidsgiverOpplysningerPerId } from '@k9-sak-web/types';
+
 import { createVisningsnavnForAndel, getAktivitet } from './TilkjentYteleseUtils';
 import { PeriodeMedId } from './TilkjentYtelse';
-
 import styles from './tilkjentYtelse.less';
 
 interface OwnProps {
@@ -102,6 +103,27 @@ const TilkjentYtelseTimeLineData = ({
           </div>
         </Row>
         <VerticalSpacer fourPx />
+        {(!!selectedItemData.inntektGraderingsprosent || selectedItemData.inntektGraderingsprosent === 0) && (
+          <Row>
+            <Column xs="12">
+              <Image
+                className={styles.image}
+                alt={intl.formatMessage({ id: 'HelpText.Aksjonspunkt' })}
+                src={advarselIkonUrl}
+              />
+              <FormattedMessage id="TilkjentYtelse.PeriodeData.GradertMotInntektInfo" />
+            </Column>
+            <Column xs="12">
+              <FormattedMessage
+                id="TilkjentYtelse.PeriodeData.InntekGraderingsProsent"
+                values={{
+                  inntektGraderingsprosentVerdi: selectedItemData.inntektGraderingsprosent,
+                  b: chunks => <b>{chunks}</b>,
+                }}
+              />
+            </Column>
+          </Row>
+        )}
         <Row>
           <Column xs="12">
             <FormattedMessage
