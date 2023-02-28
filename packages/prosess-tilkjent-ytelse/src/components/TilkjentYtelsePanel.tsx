@@ -53,7 +53,6 @@ interface PureOwnProps {
   submitCallback: (data: any) => Promise<any>;
   readOnlySubmitButton: boolean;
   arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysningerPerId;
-  antallBarn: number;
 }
 
 interface MappedOwnProps {
@@ -126,9 +125,10 @@ export const TilkjentYtelsePanelImpl = ({
   );
 };
 
-const finnTilbaketrekkAksjonspunkt = (alleAksjonspunkter: Aksjonspunkt[]): Aksjonspunkt | undefined => (alleAksjonspunkter
-  ? alleAksjonspunkter.find(ap => ap.definisjon?.kode === aksjonspunktCodes.VURDER_TILBAKETREKK)
-  : undefined);
+const finnTilbaketrekkAksjonspunkt = (alleAksjonspunkter: Aksjonspunkt[]): Aksjonspunkt | undefined =>
+  alleAksjonspunkter
+    ? alleAksjonspunkter.find(ap => ap.definisjon?.kode === aksjonspunktCodes.VURDER_TILBAKETREKK)
+    : undefined;
 
 const mapStateToProps = (state, ownProps) => ({
   beregningresultat: ownProps.beregningsresultat,

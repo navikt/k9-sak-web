@@ -2,18 +2,11 @@ import React from 'react';
 
 import { faktaPanelCodes } from '@k9-sak-web/konstanter';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { DynamicLoader, FaktaPanelDef } from '@k9-sak-web/behandling-felles';
+import { FaktaPanelDef } from '@k9-sak-web/behandling-felles';
 import { konverterKodeverkTilKode, transformBeregningValues } from '@fpsak-frontend/utils';
 import '@navikt/ft-fakta-fordel-beregningsgrunnlag/dist/style.css';
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
-
-const FaktaFordelBeregningsgrunnlag = React.lazy(() => import('@navikt/ft-fakta-fordel-beregningsgrunnlag'));
-
-const FaktaFordelBeregningsgrunnlagMF =
-  process.env.NODE_ENV !== 'development'
-    ? undefined
-    : // eslint-disable-next-line import/no-unresolved
-      () => import('ft_fakta_fordel_beregningsgrunnlag/FaktaFordelBeregningsgrunnlag');
+import FaktaFordelBeregningsgrunnlag from '@navikt/ft-fakta-fordel-beregningsgrunnlag';
 
 class FordelBeregningPanelDef extends FaktaPanelDef {
   getUrlKode = () => faktaPanelCodes.FORDELING;
@@ -26,15 +19,12 @@ class FordelBeregningPanelDef extends FaktaPanelDef {
     aksjonspunktCodes.VURDER_NYTT_INNTKTSFORHOLD,
   ];
 
-  // eslint-disable-next-line class-methods-use-this
   getKomponent = props => {
     const deepCopyProps = JSON.parse(JSON.stringify(props));
     konverterKodeverkTilKode(deepCopyProps);
     const bgVilkaret = deepCopyProps.vilkar.find(v => v.vilkarType === vilkarType.BEREGNINGSGRUNNLAGVILKARET);
     return (
-      <DynamicLoader<React.ComponentProps<typeof FaktaFordelBeregningsgrunnlag>>
-        packageCompFn={() => import('@navikt/ft-fakta-fordel-beregningsgrunnlag')}
-        federatedCompFn={FaktaFordelBeregningsgrunnlagMF}
+      <FaktaFordelBeregningsgrunnlag
         {...props}
         beregningsgrunnlagVilkår={bgVilkaret}
         beregningsgrunnlagListe={deepCopyProps.beregningsgrunnlag}
