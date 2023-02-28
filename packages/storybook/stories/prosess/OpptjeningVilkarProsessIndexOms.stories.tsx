@@ -1,6 +1,6 @@
 import React from 'react';
 import { action } from '@storybook/addon-actions';
-import { withKnobs, boolean } from '@storybook/addon-knobs';
+import { boolean, withKnobs } from '@storybook/addon-knobs';
 
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
@@ -33,6 +33,76 @@ const opptjening = {
 };
 
 const opptjening2 = {
+  fastsattOpptjening: {
+    opptjeningperiode: {
+      måneder: 4,
+      dager: 6,
+    },
+    fastsattOpptjeningAktivitetList: [
+      {
+        id: 1,
+        fom: '2018-05-01',
+        tom: '2018-09-04',
+        klasse: {
+          kode: opptjeningAktivitetKlassifisering.BEKREFTET_GODKJENT,
+        },
+      },
+    ],
+    opptjeningFom: '2018-02-01',
+    opptjeningTom: '2018-12-01',
+  },
+};
+
+const opptjeningUten847B = {
+  opptjeningAktivitetList: [
+    {
+      id: 1,
+      opptjeningFom: '2018-05-01',
+      opptjeningTom: '2018-11-15',
+      klasse: {
+        kode: opptjeningAktivitetKlassifisering.BEKREFTET_GODKJENT,
+      },
+    },
+  ],
+  fastsattOpptjening: {
+    opptjeningperiode: {
+      måneder: 4,
+      dager: 6,
+    },
+    fastsattOpptjeningAktivitetList: [
+      {
+        id: 1,
+        fom: '2018-05-01',
+        tom: '2018-09-04',
+        klasse: {
+          kode: opptjeningAktivitetKlassifisering.BEKREFTET_GODKJENT,
+        },
+      },
+    ],
+    opptjeningFom: '2018-02-01',
+    opptjeningTom: '2018-12-01',
+  },
+};
+
+const opptjeningMed847B = {
+  opptjeningAktivitetList: [
+    {
+      id: 1,
+      opptjeningFom: '2018-05-01',
+      opptjeningTom: '2018-11-15',
+      klasse: {
+        kode: opptjeningAktivitetKlassifisering.BEKREFTET_GODKJENT,
+      },
+    },
+    {
+      id: 2,
+      opptjeningFom: '2018-12-02',
+      opptjeningTom: '2018-12-15',
+      klasse: {
+        kode: opptjeningAktivitetKlassifisering.BEKREFTET_GODKJENT,
+      },
+    },
+  ],
   fastsattOpptjening: {
     opptjeningperiode: {
       måneder: 4,
@@ -88,6 +158,12 @@ export default {
 
 export const visPanelForÅpentAksjonspunkt = () => (
   <OpptjeningVilkarProsessIndex
+    fagsak={{
+      sakstype: {
+        kode: 'OMP',
+        kodeverk: 'FAGSAK_YTELSE',
+      },
+    }}
     behandling={
       {
         id: 1,
@@ -153,8 +229,152 @@ export const visPanelForÅpentAksjonspunkt = () => (
   />
 );
 
+export const visPanelForPSBÅpentAksjonspunktUten847B = () => (
+  <OpptjeningVilkarProsessIndex
+    fagsak={{
+      sakstype: {
+        kode: 'PSB',
+        kodeverk: 'FAGSAK_YTELSE',
+      },
+    }}
+    behandling={
+      {
+        id: 1,
+        versjon: 1,
+        behandlingsresultat,
+      } as OpptjeningBehandling
+    }
+    // @ts-ignore Fiks!
+    opptjening={{ opptjeninger: [opptjeningUten847B] }}
+    vilkar={[
+      {
+        vilkarType: {
+          kode: 'FP_VK_23',
+          kodeverk: 'VILKAR_TYPE',
+        },
+        lovReferanse: '§ 9-2 jamfør 8-2',
+        overstyrbar: true,
+        perioder: [
+          {
+            avslagKode: null,
+            merknadParametere: {
+              antattGodkjentArbeid: 'P10D',
+              antattOpptjeningAktivitetTidslinje:
+                'LocalDateTimeline<2020-04-17, 2020-04-26 [1]> = [[2020-04-17, 2020-04-26]]',
+            },
+            vilkarStatus: {
+              kode: 'OPPFYLT',
+              kodeverk: 'VILKAR_UTFALL_TYPE',
+            },
+            periode: {
+              fom: '2018-12-02',
+              tom: '2018-12-15',
+            },
+            begrunnelse: null,
+            vurderesIBehandlingen: true,
+          },
+        ],
+      },
+    ]}
+    aksjonspunkter={
+      [
+        {
+          definisjon: {
+            kode: aksjonspunktCodes.VURDER_OPPTJENINGSVILKARET,
+          },
+          status: {
+            kode: aksjonspunktStatus.OPPRETTET,
+          },
+          begrunnelse: undefined,
+        },
+      ] as Aksjonspunkt[]
+    }
+    status={vilkarUtfallType.IKKE_VURDERT}
+    lovReferanse="§§Dette er en lovreferanse"
+    submitCallback={action('button-click')}
+    isReadOnly={boolean('isReadOnly', false)}
+    isAksjonspunktOpen={boolean('isAksjonspunktOpen', true)}
+    readOnlySubmitButton={boolean('readOnlySubmitButton', false)}
+  />
+);
+
+export const visPanelForPSBÅpentAksjonspunktMed847B = () => (
+  <OpptjeningVilkarProsessIndex
+    fagsak={{
+      sakstype: {
+        kode: 'PSB',
+        kodeverk: 'FAGSAK_YTELSE',
+      },
+    }}
+    behandling={
+      {
+        id: 1,
+        versjon: 1,
+        behandlingsresultat,
+      } as OpptjeningBehandling
+    }
+    // @ts-ignore Fiks!
+    opptjening={{ opptjeninger: [opptjeningMed847B] }}
+    vilkar={[
+      {
+        vilkarType: {
+          kode: 'FP_VK_23',
+          kodeverk: 'VILKAR_TYPE',
+        },
+        lovReferanse: '§ 9-2 jamfør 8-2',
+        overstyrbar: true,
+        perioder: [
+          {
+            avslagKode: null,
+            merknadParametere: {
+              antattGodkjentArbeid: 'P10D',
+              antattOpptjeningAktivitetTidslinje:
+                'LocalDateTimeline<2020-04-17, 2020-04-26 [1]> = [[2020-04-17, 2020-04-26]]',
+            },
+            vilkarStatus: {
+              kode: 'OPPFYLT',
+              kodeverk: 'VILKAR_UTFALL_TYPE',
+            },
+            periode: {
+              fom: '2018-12-02',
+              tom: '2018-12-15',
+            },
+            begrunnelse: null,
+            vurderesIBehandlingen: true,
+          },
+        ],
+      },
+    ]}
+    aksjonspunkter={
+      [
+        {
+          definisjon: {
+            kode: aksjonspunktCodes.VURDER_OPPTJENINGSVILKARET,
+          },
+          status: {
+            kode: aksjonspunktStatus.OPPRETTET,
+          },
+          begrunnelse: undefined,
+        },
+      ] as Aksjonspunkt[]
+    }
+    status={vilkarUtfallType.IKKE_VURDERT}
+    lovReferanse="§§Dette er en lovreferanse"
+    submitCallback={action('button-click')}
+    isReadOnly={boolean('isReadOnly', false)}
+    isAksjonspunktOpen={boolean('isAksjonspunktOpen', true)}
+    readOnlySubmitButton={boolean('readOnlySubmitButton', false)}
+  />
+);
+
 export const visPanelForNårEnIkkeHarAksjonspunkt = () => (
   <OpptjeningVilkarProsessIndex
+    fagsak={{
+      sakstype: {
+        kode: 'OMP',
+        kodeverk: 'FAGSAK_YTELSE',
+      },
+    }}
     behandling={
       {
         id: 1,
