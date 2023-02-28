@@ -35,7 +35,7 @@
     "storybook": "start-storybook -p 9001",
     "deploy-storybook": "build-storybook -o .static_storybook && storybook-to-ghpages --existing-output-dir=.static_storybook",
     "prepare": "husky install",
-    "sentry-release": "(export SENTRY_RELEASE=$(git rev-parse --short HEAD); node ./scripts/sentry-release)"
+    "sentry-release": "(SENTRY_RELEASE=$(git rev-parse --short HEAD); node ./scripts/sentry-release)"
   },
   "workspaces": [
     "packages/*"
