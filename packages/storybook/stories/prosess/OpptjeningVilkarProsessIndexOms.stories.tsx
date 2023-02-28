@@ -7,7 +7,7 @@ import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus'
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import OpptjeningVilkarProsessIndex from '@fpsak-frontend/prosess-vilkar-opptjening-oms';
 import opptjeningAktivitetKlassifisering from '@fpsak-frontend/prosess-vilkar-opptjening-oms/src/kodeverk/opptjeningAktivitetKlassifisering';
-import { Aksjonspunkt, OpptjeningBehandling } from '@k9-sak-web/types';
+import { Aksjonspunkt, Fagsak, OpptjeningBehandling } from '@k9-sak-web/types';
 
 import withReduxProvider from '../../decorators/withRedux';
 
@@ -148,6 +148,29 @@ const behandlingsresultat = {
   },
 };
 
+const fagsak = {
+  saksnummer: '1DoJZD0',
+  sakstype: { kode: 'PSB', kodeverk: 'FAGSAK_YTELSE' },
+  gyldigPeriode: { fom: '2022-11-28', tom: '2023-01-20' },
+  status: { kode: 'UBEH', kodeverk: 'FAGSAK_STATUS' },
+  kanRevurderingOpprettes: false,
+  skalBehandlesAvInfotrygd: false,
+  opprettet: '2023-02-27T07:33:46.432',
+  endret: '2023-02-27T09:51:46.333',
+  person: {
+    erDod: false,
+    alder: 36,
+    diskresjonskode: null,
+    dodsdato: null,
+    erKvinne: false,
+    navn: 'DATO AKSEPTABEL',
+    personnummer: '06838698180',
+    personstatusType: { kode: 'BOSA', kodeverk: 'PERSONSTATUS_TYPE' },
+    aktørId: '2649841813944',
+  },
+  erPbSak: false,
+} as Fagsak;
+
 const opptjeninger = { opptjeninger: [opptjening, opptjening2] };
 
 export default {
@@ -159,6 +182,7 @@ export default {
 export const visPanelForÅpentAksjonspunkt = () => (
   <OpptjeningVilkarProsessIndex
     fagsak={{
+      ...fagsak,
       sakstype: {
         kode: 'OMP',
         kodeverk: 'FAGSAK_YTELSE',
@@ -231,12 +255,7 @@ export const visPanelForÅpentAksjonspunkt = () => (
 
 export const visPanelForPSBÅpentAksjonspunktUten847B = () => (
   <OpptjeningVilkarProsessIndex
-    fagsak={{
-      sakstype: {
-        kode: 'PSB',
-        kodeverk: 'FAGSAK_YTELSE',
-      },
-    }}
+    fagsak={fagsak}
     behandling={
       {
         id: 1,
@@ -300,12 +319,7 @@ export const visPanelForPSBÅpentAksjonspunktUten847B = () => (
 
 export const visPanelForPSBÅpentAksjonspunktMed847B = () => (
   <OpptjeningVilkarProsessIndex
-    fagsak={{
-      sakstype: {
-        kode: 'PSB',
-        kodeverk: 'FAGSAK_YTELSE',
-      },
-    }}
+    fagsak={fagsak}
     behandling={
       {
         id: 1,
@@ -370,6 +384,7 @@ export const visPanelForPSBÅpentAksjonspunktMed847B = () => (
 export const visPanelForNårEnIkkeHarAksjonspunkt = () => (
   <OpptjeningVilkarProsessIndex
     fagsak={{
+      ...fagsak,
       sakstype: {
         kode: 'OMP',
         kodeverk: 'FAGSAK_YTELSE',
