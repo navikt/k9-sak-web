@@ -188,5 +188,6 @@
     "*.{ts,tsx,js,jsx}": "eslint --cache --fix",
     "*.css": "stylelint --fix",
     "*.{js,css,md}": "prettier --write"
-  }
+  },
+  "packageManager": "yarn@3.4.1"
 }
