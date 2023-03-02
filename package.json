@@ -43,7 +43,7 @@
   "dependencies": {
     "@babel/runtime": "^7.21.0",
     "@formatjs/intl-datetimeformat": "^5.0.2",
-    "@formatjs/intl-numberformat": "^7.4.3",
+    "@formatjs/intl-numberformat": "^8.3.5",
     "@navikt/ds-css": "2.1.7",
     "@navikt/ds-react": "2.1.7",
     "@navikt/familie-endringslogg": "^6.0.0",

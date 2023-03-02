@@ -6,7 +6,7 @@
   "private": true,
   "dependencies": {
     "@formatjs/intl-datetimeformat": "^5.0.2",
-    "@formatjs/intl-numberformat": "^7.4.3",
+    "@formatjs/intl-numberformat": "^8.3.5",
     "@fpsak-frontend/assets": "1.0.0",
     "@fpsak-frontend/kodeverk": "1.0.0",
     "@fpsak-frontend/prop-types": "1.0.0",
