@@ -4633,7 +4633,7 @@ __metadata:
     "@fpsak-frontend/form": "*"
     "@fpsak-frontend/utils": "*"
     "@k9-sak-web/types": "*"
-    "@navikt/ds-icons": 2.1.7
+    "@navikt/ds-icons": 2.6.0
     "@navikt/ds-react": 2.1.7
     "@navikt/ft-plattform-komponenter": ^1.4.11
     "@navikt/k9-form-utils": 2.0.0
@@ -5292,6 +5292,16 @@ __metadata:
     "@types/react": ^17.0.30 || ^18.0.0
     react: ^17.0.0 || ^18.0.0
   checksum: 389085ca44ca498c5de8595a2750067e2f7f0aafb5950a681ac1a6cec708d43e6d464f3a3cfee2253d0c05e94d163e34906884dd8adaebff05c78c0937e35995
+  languageName: node
+  linkType: hard
+
+"@navikt/ds-icons@npm:2.6.0":
+  version: 2.6.0
+  resolution: "@navikt/ds-icons@npm:2.6.0::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fds-icons%2F2.6.0%2F0b6155d61669d9817708bfb703c4b57b23e1754b"
+  peerDependencies:
+    "@types/react": ^17.0.30 || ^18.0.0
+    react: ^17.0.0 || ^18.0.0
+  checksum: 0f9920078903e392aa524d342122ac923b486d96a122c2538bf4da5c7adc96dfc5cd1c6edf36754c6e41745f4f2d24f6dec820fe7dc92e5e02554a6f8f58e103
   languageName: node
   linkType: hard
 
