@@ -1980,14 +1980,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@formatjs/intl-datetimeformat@npm:^5.0.2":
-  version: 5.0.2
-  resolution: "@formatjs/intl-datetimeformat@npm:5.0.2"
+"@formatjs/intl-datetimeformat@npm:^6.5.1":
+  version: 6.5.1
+  resolution: "@formatjs/intl-datetimeformat@npm:6.5.1"
   dependencies:
-    "@formatjs/ecma402-abstract": 1.11.4
-    "@formatjs/intl-localematcher": 0.2.25
-    tslib: ^2.1.0
-  checksum: c2c1f2a18be83ab00e40dbd5601c5dace1da0080cb59ef4f53e9b4cfbe8d3da1d30a537b773975ad3d46a713b341899994ce62a1002f3d65959d696d6ab133eb
+    "@formatjs/ecma402-abstract": 1.14.3
+    "@formatjs/intl-localematcher": 0.2.32
+    tslib: ^2.4.0
+  checksum: 5e11ee237819e593f45753e43da94d002d78e0e7160cf14daf5e40e173cb9063996ea2e6e554cff7db9e4f6aa5366d2a463bccdcd92a4620ca1bfbea55fc4658
   languageName: node
   linkType: hard
 
@@ -4952,7 +4952,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@k9-sak-web/sak-app@workspace:packages/sak-app"
   dependencies:
-    "@formatjs/intl-datetimeformat": ^5.0.2
+    "@formatjs/intl-datetimeformat": ^6.5.1
     "@formatjs/intl-numberformat": ^7.4.3
     "@fpsak-frontend/assets": 1.0.0
     "@fpsak-frontend/kodeverk": 1.0.0
@@ -19018,7 +19018,7 @@ __metadata:
     "@babel/register": ^7.21.0
     "@babel/runtime": ^7.21.0
     "@commercetools/enzyme-extensions": ^5.0.0
-    "@formatjs/intl-datetimeformat": ^5.0.2
+    "@formatjs/intl-datetimeformat": ^6.5.1
     "@formatjs/intl-numberformat": ^7.4.3
     "@navikt/ds-css": 2.1.7
     "@navikt/ds-react": 2.1.7
