@@ -5295,7 +5295,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@navikt/ds-icons@npm:^2.0.x, @navikt/ds-icons@npm:^2.1.7, @navikt/ds-icons@npm:^2.4.0":
+"@navikt/ds-icons@npm:^2.1.7":
   version: 2.4.0
   resolution: "@navikt/ds-icons@npm:2.4.0::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fds-icons%2F2.4.0%2F3878e7930fe35a9a569204a07a0b5514fe9971b4"
   peerDependencies:
@@ -5324,40 +5324,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@navikt/ds-react@npm:^2.0.x":
-  version: 2.4.0
-  resolution: "@navikt/ds-react@npm:2.4.0::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fds-react%2F2.4.0%2Ff5703e68829b27994805860026c323054d46591f"
+"@navikt/familie-endringslogg@npm:^8.1.0":
+  version: 8.1.0
+  resolution: "@navikt/familie-endringslogg@npm:8.1.0::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Ffamilie-endringslogg%2F8.1.0%2F65a9ce7f00f2407365192368ff184055e3d2096d"
   dependencies:
-    "@floating-ui/react": 0.17.0
-    "@navikt/ds-icons": ^2.4.0
-    "@radix-ui/react-tabs": 1.0.0
-    "@radix-ui/react-toggle-group": 1.0.0
-    clsx: ^1.2.1
-    date-fns: 2.29.3
-    react-day-picker: 8.3.4
-    react-modal: 3.15.1
-  peerDependencies:
-    "@types/react": ^17.0.30 || ^18.0.0
-    react: ^17.0.0 || ^18.0.0
-  checksum: 7e0c73e31f03b16ea13e1b59d1eb2e01834c469d7b562fbfa8439bcd09e5a6a52f1d095e9411907dfd7dc1c455e58024f0302e74485f8e2f6114b5a93a2880e3
-  languageName: node
-  linkType: hard
-
-"@navikt/familie-endringslogg@npm:^6.0.0":
-  version: 6.0.0
-  resolution: "@navikt/familie-endringslogg@npm:6.0.0::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Ffamilie-endringslogg%2F6.0.0%2F5d94837092dcd143da0cc34e516d1e8a50e6ba8c"
-  dependencies:
-    "@navikt/ds-icons": ^2.0.x
-    "@navikt/ds-react": ^2.0.x
     "@portabletext/react": ^1.0.6
     "@types/react-modal": ^3.13.1
     classnames: ^2.3.1
     react-modal: ^3.15.1
     react-transition-group: ^4.4.2
   peerDependencies:
+    "@navikt/ds-icons": 2.x
+    "@navikt/ds-react": 2.x
     "@types/react": 17.x || 18.x
     react: 17.x || 18.x
-  checksum: 6d92ee7b331cdaaaa77dcdd9752b418617c72f181a5cd0e4e4b977a8d6c3349a01491fff5551ca823862fdfdce223f25135db4266473055b2507cba1831b5ef8
+  checksum: 1a6a06a272d7cc04498330b8910f658629f3f2eeb4588db1d03c2cf4ce635cde82263f3a956ff98c724118ba6484ae97b858d3feacd5b8e74236ad66b097d2f4
   languageName: node
   linkType: hard
 
@@ -19022,7 +19003,7 @@ __metadata:
     "@formatjs/intl-numberformat": ^7.4.3
     "@navikt/ds-css": 2.1.7
     "@navikt/ds-react": 2.1.7
-    "@navikt/familie-endringslogg": ^6.0.0
+    "@navikt/familie-endringslogg": ^8.1.0
     "@navikt/ft-plattform-komponenter": 1.4.11
     "@pmmmwh/react-refresh-webpack-plugin": ^0.5.10
     "@popperjs/core": ^2.11.6
