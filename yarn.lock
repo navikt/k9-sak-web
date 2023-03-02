@@ -4849,7 +4849,7 @@ __metadata:
     nav-frontend-knapper: 3.1.3
     react: ^17.0.2
     react-dom: ^17.0.2
-    react-hook-form: 7.43.3
+    react-hook-form: 7.43.1
     react-intl: 6.2.10
     sinon: ^15.0.1
   languageName: unknown
@@ -24004,15 +24004,6 @@ __metadata:
   peerDependencies:
     react: ^16.8.0 || ^17 || ^18
   checksum: a15b672885cf9bb43c6691bf544b3ead59860bb8c6298c7607b8b82952707ec8dd9fd9d1346310abb8696e99319b1f78f6023941d129154815811ee64d750461
-  languageName: node
-  linkType: hard
-
-"react-hook-form@npm:7.43.3":
-  version: 7.43.3
-  resolution: "react-hook-form@npm:7.43.3"
-  peerDependencies:
-    react: ^16.8.0 || ^17 || ^18
-  checksum: 16e03e42d07f696e36d67c0d60671df6d0bc73b9e48876ea99b85cf3aaa4cf40acb0c0e2870169d4a22504c7111c0f658b0b17a4f3fd191ef69c7eea70785a9d
   languageName: node
   linkType: hard
 
