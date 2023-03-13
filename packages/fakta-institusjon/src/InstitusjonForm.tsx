@@ -1,4 +1,4 @@
-import { Period } from '@navikt/k9-period-utils';
+import { Period } from '@navikt/k9-fe-period-utils';
 import { Box, Margin, DetailView, LabelledContent, Form } from '@navikt/ft-plattform-komponenter';
 import { TextAreaFormik } from '@fpsak-frontend/form';
 import { Calender } from '@navikt/ds-icons';

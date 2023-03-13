@@ -6,7 +6,7 @@ import { FaktaPanelDef } from '@k9-sak-web/behandling-felles';
 import { konverterKodeverkTilKode, transformBeregningValues } from '@fpsak-frontend/utils';
 import '@navikt/ft-fakta-fordel-beregningsgrunnlag/dist/style.css';
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
-import FaktaFordelBeregningsgrunnlag from '@navikt/ft-fakta-fordel-beregningsgrunnlag';
+import { FordelBeregningsgrunnlagFaktaIndex } from '@navikt/ft-fakta-fordel-beregningsgrunnlag';
 
 class FordelBeregningPanelDef extends FaktaPanelDef {
   getUrlKode = () => faktaPanelCodes.FORDELING;
@@ -24,7 +24,7 @@ class FordelBeregningPanelDef extends FaktaPanelDef {
     konverterKodeverkTilKode(deepCopyProps);
     const bgVilkaret = deepCopyProps.vilkar.find(v => v.vilkarType === vilkarType.BEREGNINGSGRUNNLAGVILKARET);
     return (
-      <FaktaFordelBeregningsgrunnlag
+      <FordelBeregningsgrunnlagFaktaIndex
         {...props}
         beregningsgrunnlagVilkår={bgVilkaret}
         beregningsgrunnlagListe={deepCopyProps.beregningsgrunnlag}

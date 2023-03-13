@@ -5,7 +5,7 @@ import { prosessStegCodes } from '@k9-sak-web/konstanter';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { ProsessStegDef, ProsessStegPanelDef } from '@k9-sak-web/behandling-felles';
 import { konverterKodeverkTilKode, mapVilkar, transformBeregningValues } from '@fpsak-frontend/utils';
-import ProsessBeregningsgrunnlag from '@navikt/ft-prosess-beregningsgrunnlag';
+import { BeregningsgrunnlagProsessIndex } from '@navikt/ft-prosess-beregningsgrunnlag';
 
 const mapYtelsesSpesifiktGrunnlagForFrisinn = (beregningsgrunnlag, behandling) =>
   beregningsgrunnlag.map(bg => ({
@@ -23,7 +23,7 @@ class PanelDef extends ProsessStegPanelDef {
     konverterKodeverkTilKode(deepCopyProps);
     const bgVilkaret = deepCopyProps.vilkar.find(v => v.vilkarType === vilkarType.BEREGNINGSGRUNNLAGVILKARET);
     return (
-      <ProsessBeregningsgrunnlag
+      <BeregningsgrunnlagProsessIndex
         {...props}
         beregningsgrunnlagsvilkar={mapVilkar(bgVilkaret, props.beregningreferanserTilVurdering)}
         beregningsgrunnlagListe={mapYtelsesSpesifiktGrunnlagForFrisinn(
