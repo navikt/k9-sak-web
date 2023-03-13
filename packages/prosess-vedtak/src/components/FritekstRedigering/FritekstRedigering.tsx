@@ -15,6 +15,7 @@ import { DokumentDataType } from '@k9-sak-web/types/src/dokumentdata';
 import { safeJSONParse } from '@fpsak-frontend/utils';
 import {
   lagLagreHtmlDokumentdataRequest,
+  seksjonSomKanRedigeres,
   utledPrefiksInnhold,
   utledRedigerbartInnhold,
   utledSkalInkludereKalender,
@@ -92,8 +93,9 @@ const FritekstRedigering = ({
     setFieldValue(fieldnames.REDIGERT_MAL, redigerbarDokumentmal.redigerbarMalType);
 
     setBrevStiler(utledStiler(responseHtml));
-    setPrefiksInnhold(utledPrefiksInnhold(responseHtml));
-    setSuffiksInnhold(utledSuffiksInnhold(responseHtml));
+    const seksjonerSomKanRedigeres = seksjonSomKanRedigeres(responseHtml);
+    setPrefiksInnhold(utledPrefiksInnhold(seksjonerSomKanRedigeres));
+    setSuffiksInnhold(utledSuffiksInnhold(seksjonerSomKanRedigeres));
 
     const originalHtmlStreng = utledRedigerbartInnhold(responseHtml);
     setOriginalHtml(originalHtmlStreng);
