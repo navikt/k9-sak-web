@@ -6,7 +6,7 @@ import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { ProsessStegDef, ProsessStegPanelDef } from '@k9-sak-web/behandling-felles';
 import { konverterKodeverkTilKode, mapVilkar, transformBeregningValues } from '@fpsak-frontend/utils';
 import '@navikt/ft-prosess-beregningsgrunnlag/dist/style.css';
-import ProsessBeregningsgrunnlag from '@navikt/ft-prosess-beregningsgrunnlag';
+import { BeregningsgrunnlagProsessIndex } from '@navikt/ft-prosess-beregningsgrunnlag';
 
 class PanelDef extends ProsessStegPanelDef {
   // eslint-disable-next-line class-methods-use-this
@@ -15,7 +15,7 @@ class PanelDef extends ProsessStegPanelDef {
     konverterKodeverkTilKode(deepCopyProps);
     const bgVilkaret = deepCopyProps.vilkar.find(v => v.vilkarType === vilkarType.BEREGNINGSGRUNNLAGVILKARET);
     return (
-      <ProsessBeregningsgrunnlag
+      <BeregningsgrunnlagProsessIndex
         {...props}
         beregningsgrunnlagsvilkar={mapVilkar(bgVilkaret, props.beregningreferanserTilVurdering)}
         beregningsgrunnlagListe={deepCopyProps.beregningsgrunnlag}
