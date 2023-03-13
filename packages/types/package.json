@@ -5,6 +5,6 @@
   "license": "MIT",
   "private": true,
   "dependencies": {
-    "@navikt/k9-period-utils": "^1.0.0"
+    "@navikt/k9-period-utils": "^1.0.1"
   }
 }
