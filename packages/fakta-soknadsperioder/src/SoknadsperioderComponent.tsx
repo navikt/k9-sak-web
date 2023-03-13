@@ -6,7 +6,7 @@ import BehandlingPerioderårsakMedVilkår, {
   DokumenterTilBehandling,
 } from '@k9-sak-web/types/src/behandlingPerioderarsakMedVilkar';
 import { PeriodStatus, Tidslinjeskala } from '@k9-sak-web/types/src/tidslinje';
-import { dateStringSorter } from '@navikt/k9-date-utils';
+import { dateStringSorter } from '@navikt/k9-fe-date-utils';
 import { Period } from '@navikt/k9-period-utils';
 import dayjs, { Dayjs } from 'dayjs';
 import { Normaltekst } from 'nav-frontend-typografi';
