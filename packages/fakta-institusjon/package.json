@@ -8,8 +8,8 @@
     "@fpsak-frontend/form": "*",
     "@k9-sak-web/types": "*",
     "@navikt/ft-plattform-komponenter": "2.0.6",
-    "@navikt/k9-fe-form-utils": "1.0.2",
-    "@navikt/k9-fe-period-utils": "1.0.2",
+    "@navikt/k9-fe-form-utils": "1.0.3",
+    "@navikt/k9-fe-period-utils": "1.0.4",
     "formik": "2.2.9",
     "yup": "0.32.11"
   }
