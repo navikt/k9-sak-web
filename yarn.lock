@@ -3086,8 +3086,8 @@ __metadata:
     "@fpsak-frontend/utils-test": 1.0.0
     "@k9-sak-web/konstanter": 1.0.0
     "@navikt/ft-plattform-komponenter": 2.0.6
-    "@navikt/k9-array-utils": ^0.0.1
     "@navikt/k9-date-utils": ^0.1.0
+    "@navikt/k9-fe-array-utils": ^1.0.1
     "@navikt/k9-fe-bem-utils": ^1.0.1
     "@navikt/k9-period-utils": ^1.0.1
     nav-frontend-core: 6.0.1
@@ -3349,8 +3349,8 @@ __metadata:
     "@fpsak-frontend/shared-components": 1.0.0
     "@fpsak-frontend/utils-test": 1.0.0
     "@navikt/ft-plattform-komponenter": 2.0.6
-    "@navikt/k9-array-utils": ^0.0.1
     "@navikt/k9-date-utils": ^0.1.0
+    "@navikt/k9-fe-array-utils": ^1.0.1
     "@navikt/k9-fe-bem-utils": ^1.0.1
     "@navikt/k9-period-utils": ^1.0.1
     enzyme: ^3.11.0
@@ -3484,8 +3484,8 @@ __metadata:
     "@k9-sak-web/sak-app": 1.0.0
     "@k9-sak-web/types": 1.0.0
     "@navikt/ft-plattform-komponenter": 2.0.6
-    "@navikt/k9-array-utils": ^0.0.1
     "@navikt/k9-date-utils": ^0.1.0
+    "@navikt/k9-fe-array-utils": ^1.0.1
     "@navikt/k9-fe-bem-utils": ^1.0.1
     "@navikt/k9-period-utils": ^1.0.1
     dayjs: ^1.11.7
@@ -4070,8 +4070,8 @@ __metadata:
     "@k9-sak-web/rest-api-hooks": 1.0.0
     "@k9-sak-web/types": 1.0.0
     "@navikt/ft-plattform-komponenter": 2.0.6
-    "@navikt/k9-array-utils": ^0.0.1
     "@navikt/k9-date-utils": ^0.1.0
+    "@navikt/k9-fe-array-utils": ^1.0.1
     "@navikt/k9-fe-bem-utils": ^1.0.1
     "@navikt/k9-period-utils": ^1.0.1
     classnames: ^2.3.2
@@ -5592,7 +5592,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@navikt/k9-array-utils@npm:0.0.1, @navikt/k9-array-utils@npm:^0.0.1":
+"@navikt/k9-array-utils@npm:0.0.1":
   version: 0.0.1
   resolution: "@navikt/k9-array-utils@npm:0.0.1::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fk9-array-utils%2F0.0.1%2F05d7fa6a8e8194f121667cf9c945e7f2d325b088"
   checksum: 8b8fd562beedfc263615eef275f3db08dc545963ce43c6397132a5e2e2b11b339f52ecc2094bb9a2442af936a26c8056fc232779de9c19690d87f12188181db7
@@ -5619,6 +5619,13 @@ __metadata:
   peerDependencies:
     dayjs: 1.11.6
   checksum: cce23a531bb6b98e232714520cd3e95bc8d6628a41ae6e50bcf55b4cb0fc8c39ea1c23142e4a15a22df9d4edf39f8f4cb5f12ef6c8842d2c052ccd2c08fa2116
+  languageName: node
+  linkType: hard
+
+"@navikt/k9-fe-array-utils@npm:^1.0.1":
+  version: 1.0.1
+  resolution: "@navikt/k9-fe-array-utils@npm:1.0.1::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fk9-fe-array-utils%2F1.0.1%2F58735d9c9d3b72f58a6073e9b2c4ed89830c7966"
+  checksum: e0a9ee765523070db0ce79e1e06133d25b982875601b670d933b0f42c44a8fe70d0143c9ad541b8a7004de0b15b99a0ce22066189846c24412f52ded4a99daad
   languageName: node
   linkType: hard
 
