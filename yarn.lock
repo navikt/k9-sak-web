@@ -62,7 +62,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/core@npm:^7.1.0, @babel/core@npm:^7.11.6, @babel/core@npm:^7.12.10, @babel/core@npm:^7.12.3, @babel/core@npm:^7.13.16, @babel/core@npm:^7.19.6, @babel/core@npm:^7.21.0, @babel/core@npm:^7.7.5":
+"@babel/core@npm:7.21.0, @babel/core@npm:^7.1.0, @babel/core@npm:^7.11.6, @babel/core@npm:^7.12.10, @babel/core@npm:^7.12.3, @babel/core@npm:^7.13.16, @babel/core@npm:^7.19.6, @babel/core@npm:^7.7.5":
   version: 7.21.0
   resolution: "@babel/core@npm:7.21.0"
   dependencies:
@@ -85,7 +85,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/eslint-parser@npm:^7.19.1":
+"@babel/eslint-parser@npm:7.19.1":
   version: 7.19.1
   resolution: "@babel/eslint-parser@npm:7.19.1"
   dependencies:
@@ -301,7 +301,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/helper-regex@npm:^7.10.5":
+"@babel/helper-regex@npm:7.10.5":
   version: 7.10.5
   resolution: "@babel/helper-regex@npm:7.10.5"
   dependencies:
@@ -1399,7 +1399,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/preset-env@npm:^7.12.11, @babel/preset-env@npm:^7.19.4, @babel/preset-env@npm:^7.20.2":
+"@babel/preset-env@npm:7.20.2, @babel/preset-env@npm:^7.12.11, @babel/preset-env@npm:^7.19.4":
   version: 7.20.2
   resolution: "@babel/preset-env@npm:7.20.2"
   dependencies:
@@ -1512,7 +1512,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/preset-react@npm:^7.12.10, @babel/preset-react@npm:^7.18.6":
+"@babel/preset-react@npm:7.18.6, @babel/preset-react@npm:^7.12.10, @babel/preset-react@npm:^7.18.6":
   version: 7.18.6
   resolution: "@babel/preset-react@npm:7.18.6"
   dependencies:
@@ -1528,7 +1528,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/preset-typescript@npm:^7.12.7, @babel/preset-typescript@npm:^7.13.0, @babel/preset-typescript@npm:^7.18.6, @babel/preset-typescript@npm:^7.21.0":
+"@babel/preset-typescript@npm:7.21.0, @babel/preset-typescript@npm:^7.12.7, @babel/preset-typescript@npm:^7.13.0, @babel/preset-typescript@npm:^7.18.6":
   version: 7.21.0
   resolution: "@babel/preset-typescript@npm:7.21.0"
   dependencies:
@@ -1541,7 +1541,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/register@npm:^7.12.1, @babel/register@npm:^7.13.16, @babel/register@npm:^7.21.0":
+"@babel/register@npm:7.21.0, @babel/register@npm:^7.12.1, @babel/register@npm:^7.13.16":
   version: 7.21.0
   resolution: "@babel/register@npm:7.21.0"
   dependencies:
@@ -1563,7 +1563,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/runtime@npm:^7.0.0, @babel/runtime@npm:^7.12.1, @babel/runtime@npm:^7.12.5, @babel/runtime@npm:^7.13.10, @babel/runtime@npm:^7.15.4, @babel/runtime@npm:^7.16.3, @babel/runtime@npm:^7.17.8, @babel/runtime@npm:^7.20.7, @babel/runtime@npm:^7.21.0, @babel/runtime@npm:^7.4.4, @babel/runtime@npm:^7.5.0, @babel/runtime@npm:^7.5.5, @babel/runtime@npm:^7.6.2, @babel/runtime@npm:^7.6.3, @babel/runtime@npm:^7.7.2, @babel/runtime@npm:^7.7.6, @babel/runtime@npm:^7.8.4, @babel/runtime@npm:^7.8.7, @babel/runtime@npm:^7.9.2":
+"@babel/runtime@npm:7.21.0, @babel/runtime@npm:^7.0.0, @babel/runtime@npm:^7.12.1, @babel/runtime@npm:^7.12.5, @babel/runtime@npm:^7.13.10, @babel/runtime@npm:^7.15.4, @babel/runtime@npm:^7.16.3, @babel/runtime@npm:^7.17.8, @babel/runtime@npm:^7.20.7, @babel/runtime@npm:^7.4.4, @babel/runtime@npm:^7.5.0, @babel/runtime@npm:^7.5.5, @babel/runtime@npm:^7.6.2, @babel/runtime@npm:^7.6.3, @babel/runtime@npm:^7.7.2, @babel/runtime@npm:^7.7.6, @babel/runtime@npm:^7.8.4, @babel/runtime@npm:^7.8.7, @babel/runtime@npm:^7.9.2":
   version: 7.21.0
   resolution: "@babel/runtime@npm:7.21.0"
   dependencies:
@@ -1666,7 +1666,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@commercetools/enzyme-extensions@npm:^5.0.0":
+"@commercetools/enzyme-extensions@npm:5.0.0":
   version: 5.0.0
   resolution: "@commercetools/enzyme-extensions@npm:5.0.0"
   dependencies:
@@ -1722,7 +1722,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@editorjs/editorjs@npm:^2.26.5":
+"@editorjs/editorjs@npm:2.26.5":
   version: 2.26.5
   resolution: "@editorjs/editorjs@npm:2.26.5"
   dependencies:
@@ -1735,7 +1735,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@editorjs/header@npm:^2.7.0":
+"@editorjs/header@npm:2.7.0":
   version: 2.7.0
   resolution: "@editorjs/header@npm:2.7.0"
   dependencies:
@@ -1744,7 +1744,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@editorjs/list@npm:^1.8.0":
+"@editorjs/list@npm:1.8.0":
   version: 1.8.0
   resolution: "@editorjs/list@npm:1.8.0"
   dependencies:
@@ -1753,7 +1753,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@editorjs/paragraph@npm:^2.9.0":
+"@editorjs/paragraph@npm:2.9.0":
   version: 2.9.0
   resolution: "@editorjs/paragraph@npm:2.9.0"
   dependencies:
@@ -2003,7 +2003,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@formatjs/intl-datetimeformat@npm:^6.5.1":
+"@formatjs/intl-datetimeformat@npm:6.5.1":
   version: 6.5.1
   resolution: "@formatjs/intl-datetimeformat@npm:6.5.1"
   dependencies:
@@ -2045,7 +2045,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@formatjs/intl-numberformat@npm:^8.3.5":
+"@formatjs/intl-numberformat@npm:8.3.5":
   version: 8.3.5
   resolution: "@formatjs/intl-numberformat@npm:8.3.5"
   dependencies:
@@ -2093,23 +2093,23 @@ __metadata:
     "@fpsak-frontend/utils": 1.0.0
     "@fpsak-frontend/utils-test": 1.0.0
     "@k9-sak-web/types": 1.0.0
-    enzyme: ^3.11.0
-    moment: ^2.29.4
+    enzyme: 3.11.0
+    moment: 2.29.4
     nav-frontend-grid: 2.0.2
     nav-frontend-grid-style: 1.0.3
     nav-frontend-knapper: 3.1.3
     nav-frontend-knapper-style: 2.1.2
-    nav-frontend-paneler: ^3.0.2
+    nav-frontend-paneler: 3.0.2
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
-    prop-types: ^15.8.1
-    react: ^17.0.2
+    prop-types: 15.8.1
+    react: 17.0.2
     react-intl: 6.2.10
-    react-redux: ^8.0.5
-    redux: ^4.2.1
-    redux-form: ^8.3.9
-    reselect: ^4.1.7
-    sinon: ^15.0.2
+    react-redux: 8.0.5
+    redux: 4.2.1
+    redux-form: 8.3.9
+    reselect: 4.1.7
+    sinon: 15.0.2
   languageName: unknown
   linkType: soft
 
@@ -2121,8 +2121,8 @@ __metadata:
     "@fpsak-frontend/utils": 1.0.0
     "@fpsak-frontend/utils-test": 1.0.0
     "@k9-sak-web/types": 1.0.0
-    chai: ^4.3.7
-    enzyme: ^3.11.0
+    chai: 4.3.7
+    enzyme: 3.11.0
     nav-frontend-core: 6.0.1
     nav-frontend-etiketter: 3.0.3
     nav-frontend-etiketter-style: 2.0.3
@@ -2130,8 +2130,8 @@ __metadata:
     nav-frontend-grid-style: 1.0.3
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
-    prop-types: ^15.8.1
-    react: ^17.0.2
+    prop-types: 15.8.1
+    react: 17.0.2
     react-intl: 6.2.10
   languageName: unknown
   linkType: soft
@@ -2143,10 +2143,10 @@ __metadata:
     "@fpsak-frontend/form": 1.0.0
     "@fpsak-frontend/kodeverk": 1.0.0
     "@fpsak-frontend/shared-components": 1.0.0
-    "@types/yup": ^0.32.0
-    date-fns: ^2.29.3
-    dayjs: ^1.11.7
-    formik: ^2.2.9
+    "@types/yup": 0.32.0
+    date-fns: 2.29.3
+    dayjs: 1.11.7
+    formik: 2.2.9
     nav-frontend-alertstriper: 4.0.2
     nav-frontend-core: 6.0.1
     nav-frontend-etiketter: 3.0.3
@@ -2156,11 +2156,11 @@ __metadata:
     nav-frontend-skjema: 4.0.6
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
-    react: ^17.0.2
+    react: 17.0.2
     react-intl: 6.2.10
-    yup: ^0.32.11
+    yup: 0.32.11
   peerDependencies:
-    dayjs: ^1.10.7
+    dayjs: 1.10.7
   languageName: unknown
   linkType: soft
 
@@ -2174,9 +2174,9 @@ __metadata:
     "@fpsak-frontend/shared-components": 1.0.0
     "@fpsak-frontend/utils": 1.0.0
     "@fpsak-frontend/utils-test": 1.0.0
-    chai: ^4.3.7
-    enzyme: ^3.11.0
-    moment: ^2.29.4
+    chai: 4.3.7
+    enzyme: 3.11.0
+    moment: 2.29.4
     nav-frontend-alertstriper: 4.0.2
     nav-frontend-alertstriper-style: 3.0.2
     nav-frontend-core: 6.0.1
@@ -2186,14 +2186,14 @@ __metadata:
     nav-frontend-knapper-style: 2.1.2
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
-    prop-types: ^15.8.1
-    react: ^17.0.2
+    prop-types: 15.8.1
+    react: 17.0.2
     react-intl: 6.2.10
-    react-redux: ^8.0.5
-    redux: ^4.2.1
-    redux-form: ^8.3.9
-    reselect: ^4.1.7
-    sinon: ^15.0.2
+    react-redux: 8.0.5
+    redux: 4.2.1
+    redux-form: 8.3.9
+    reselect: 4.1.7
+    sinon: 15.0.2
   languageName: unknown
   linkType: soft
 
@@ -2204,18 +2204,18 @@ __metadata:
     "@fpsak-frontend/shared-components": 1.0.0
     "@fpsak-frontend/utils": 1.0.0
     "@fpsak-frontend/utils-test": 1.0.0
-    chai: ^4.3.7
-    enzyme: ^3.11.0
-    moment: ^2.29.4
+    chai: 4.3.7
+    enzyme: 3.11.0
+    moment: 2.29.4
     nav-frontend-core: 6.0.1
-    nav-frontend-paneler: ^3.0.2
-    nav-frontend-paneler-style: ^2.0.2
+    nav-frontend-paneler: 3.0.2
+    nav-frontend-paneler-style: 2.0.2
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
-    prop-types: ^15.8.1
-    react: ^17.0.2
+    prop-types: 15.8.1
+    react: 17.0.2
     react-intl: 6.2.10
-    sinon: ^15.0.2
+    sinon: 15.0.2
   languageName: unknown
   linkType: soft
 
@@ -2231,10 +2231,10 @@ __metadata:
     "@fpsak-frontend/utils": 1.0.0
     "@fpsak-frontend/utils-test": 1.0.0
     "@k9-sak-web/fakta-felles": 1.0.0
-    chai: ^4.3.7
-    enzyme: ^3.11.0
-    i18n-iso-countries: ^7.5.0
-    moment: ^2.29.4
+    chai: 4.3.7
+    enzyme: 3.11.0
+    i18n-iso-countries: 7.5.0
+    moment: 2.29.4
     nav-frontend-core: 6.0.1
     nav-frontend-ekspanderbartpanel: 4.0.4
     nav-frontend-ekspanderbartpanel-style: 2.0.2
@@ -2244,14 +2244,14 @@ __metadata:
     nav-frontend-knapper-style: 2.1.2
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
-    prop-types: ^15.8.1
-    react: ^17.0.2
+    prop-types: 15.8.1
+    react: 17.0.2
     react-intl: 6.2.10
-    react-redux: ^8.0.5
-    redux: ^4.2.1
-    redux-form: ^8.3.9
-    reselect: ^4.1.7
-    sinon: ^15.0.2
+    react-redux: 8.0.5
+    redux: 4.2.1
+    redux-form: 8.3.9
+    reselect: 4.1.7
+    sinon: 15.0.2
   languageName: unknown
   linkType: soft
 
@@ -2264,21 +2264,21 @@ __metadata:
     "@fpsak-frontend/shared-components": 1.0.0
     "@fpsak-frontend/utils": 1.0.0
     "@k9-sak-web/types": 1.0.0
-    "@types/redux-form": ^8.3.5
-    classnames: ^2.3.2
-    moment: ^2.29.4
+    "@types/redux-form": 8.3.5
+    classnames: 2.3.2
+    moment: 2.29.4
     nav-frontend-core: 6.0.1
     nav-frontend-knapper: 3.1.3
     nav-frontend-knapper-style: 2.1.2
     nav-frontend-tabs: 2.0.3
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
-    react: ^17.0.2
+    react: 17.0.2
     react-intl: 6.2.10
-    react-redux: ^8.0.5
-    redux: ^4.2.1
-    redux-form: ^8.3.9
-    reselect: ^4.1.7
+    react-redux: 8.0.5
+    redux: 4.2.1
+    redux-form: 8.3.9
+    reselect: 4.1.7
   languageName: unknown
   linkType: soft
 
@@ -2293,28 +2293,28 @@ __metadata:
     "@fpsak-frontend/utils": 1.0.0
     "@fpsak-frontend/utils-test": 1.0.0
     "@k9-sak-web/types": 1.0.0
-    enzyme: ^3.11.0
-    moment: ^2.29.4
+    enzyme: 3.11.0
+    moment: 2.29.4
     nav-frontend-alertstriper: 4.0.2
     nav-frontend-core: 6.0.1
     nav-frontend-grid: 2.0.2
     nav-frontend-grid-style: 1.0.3
-    nav-frontend-js-utils: ^1.0.20
+    nav-frontend-js-utils: 1.0.20
     nav-frontend-knapper: 3.1.3
-    nav-frontend-tabs: ^2.0.3
-    nav-frontend-tabs-style: ^2.0.2
+    nav-frontend-tabs: 2.0.3
+    nav-frontend-tabs-style: 2.0.2
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
     object-hash: 3.0.0
-    prop-types: ^15.8.1
-    react: ^17.0.2
-    react-dom: ^17.0.2
+    prop-types: 15.8.1
+    react: 17.0.2
+    react-dom: 17.0.2
     react-intl: 6.2.10
-    react-redux: ^8.0.5
-    redux: ^4.2.1
-    redux-form: ^8.3.9
-    reselect: ^4.1.7
-    sinon: ^15.0.2
+    react-redux: 8.0.5
+    redux: 4.2.1
+    redux-form: 8.3.9
+    reselect: 4.1.7
+    sinon: 15.0.2
   languageName: unknown
   linkType: soft
 
@@ -2325,11 +2325,11 @@ __metadata:
     "@fpsak-frontend/form": 1.0.0
     "@fpsak-frontend/kodeverk": 1.0.0
     "@fpsak-frontend/shared-components": 1.0.0
-    "@types/yup": ^0.32.0
-    date-fns: ^2.29.3
-    dayjs: ^1.11.7
-    formik: ^2.2.9
-    nav-datovelger: ^12.6.0
+    "@types/yup": 0.32.0
+    date-fns: 2.29.3
+    dayjs: 1.11.7
+    formik: 2.2.9
+    nav-datovelger: 12.6.0
     nav-frontend-alertstriper: 4.0.2
     nav-frontend-core: 6.0.1
     nav-frontend-etiketter: 3.0.3
@@ -2339,12 +2339,12 @@ __metadata:
     nav-frontend-skjema: 4.0.6
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
-    react: ^17.0.2
+    react: 17.0.2
     react-day-picker: 7.4.10
     react-intl: 6.2.10
-    yup: ^0.32.11
+    yup: 0.32.11
   peerDependencies:
-    dayjs: ^1.10.7
+    dayjs: 1.10.7
   languageName: unknown
   linkType: soft
 
@@ -2359,20 +2359,20 @@ __metadata:
     "@fpsak-frontend/utils": 1.0.0
     "@fpsak-frontend/utils-test": 1.0.0
     "@k9-sak-web/fakta-felles": 1.0.0
-    chai: ^4.3.7
-    enzyme: ^3.11.0
+    chai: 4.3.7
+    enzyme: 3.11.0
     nav-frontend-grid: 2.0.2
     nav-frontend-grid-style: 1.0.3
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
-    prop-types: ^15.8.1
-    react: ^17.0.2
+    prop-types: 15.8.1
+    react: 17.0.2
     react-intl: 6.2.10
-    react-redux: ^8.0.5
-    redux: ^4.2.1
-    redux-form: ^8.3.9
-    reselect: ^4.1.7
-    sinon: ^15.0.2
+    react-redux: 8.0.5
+    redux: 4.2.1
+    redux-form: 8.3.9
+    reselect: 4.1.7
+    sinon: 15.0.2
   languageName: unknown
   linkType: soft
 
@@ -2385,10 +2385,10 @@ __metadata:
     "@fpsak-frontend/utils": 1.0.0
     "@fpsak-frontend/utils-test": 1.0.0
     "@navikt/ft-plattform-komponenter": 2.0.6
-    classnames: ^2.3.2
-    formik: ^2.2.9
-    lodash.throttle: ^4.1.1
-    moment: ^2.29.4
+    classnames: 2.3.2
+    formik: 2.2.9
+    lodash.throttle: 4.1.1
+    moment: 2.29.4
     nav-frontend-core: 6.0.1
     nav-frontend-etiketter: 3.0.3
     nav-frontend-etiketter-style: 2.0.3
@@ -2403,13 +2403,13 @@ __metadata:
     nav-frontend-spinner-style: 1.0.2
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
-    prop-types: ^15.8.1
-    react: ^17.0.2
+    prop-types: 15.8.1
+    react: 17.0.2
     react-intl: 6.2.10
-    react-redux: ^8.0.5
-    redux: ^4.2.1
-    redux-form: ^8.3.9
-    reselect: ^4.1.7
+    react-redux: 8.0.5
+    redux: 4.2.1
+    redux-form: 8.3.9
+    reselect: 4.1.7
   languageName: unknown
   linkType: soft
 
@@ -2426,7 +2426,7 @@ __metadata:
   resolution: "@fpsak-frontend/prop-types@workspace:packages/prop-types"
   dependencies:
     "@fpsak-frontend/kodeverk": 1.0.0
-    prop-types: ^15.8.1
+    prop-types: 15.8.1
   languageName: unknown
   linkType: soft
 
@@ -2440,21 +2440,21 @@ __metadata:
     "@fpsak-frontend/shared-components": 1.0.0
     "@fpsak-frontend/utils": 1.0.0
     "@k9-sak-web/prosess-felles": 1.0.0
-    chai: ^4.3.7
-    classnames: ^2.3.2
-    enzyme: ^3.11.0
+    chai: 4.3.7
+    classnames: 2.3.2
+    enzyme: 3.11.0
     nav-frontend-grid: 2.0.2
     nav-frontend-grid-style: 1.0.3
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
-    prop-types: ^15.8.1
-    react: ^17.0.2
+    prop-types: 15.8.1
+    react: 17.0.2
     react-intl: 6.2.10
-    react-redux: ^8.0.5
-    redux: ^4.2.1
-    redux-form: ^8.3.9
-    reselect: ^4.1.7
-    sinon: ^15.0.2
+    react-redux: 8.0.5
+    redux: 4.2.1
+    redux-form: 8.3.9
+    reselect: 4.1.7
+    sinon: 15.0.2
   languageName: unknown
   linkType: soft
 
@@ -2467,21 +2467,21 @@ __metadata:
     "@fpsak-frontend/prop-types": 1.0.0
     "@fpsak-frontend/shared-components": 1.0.0
     "@k9-sak-web/prosess-felles": 1.0.0
-    chai: ^4.3.7
-    classnames: ^2.3.2
-    enzyme: ^3.11.0
+    chai: 4.3.7
+    classnames: 2.3.2
+    enzyme: 3.11.0
     nav-frontend-grid: 2.0.2
     nav-frontend-grid-style: 1.0.3
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
-    prop-types: ^15.8.1
-    react: ^17.0.2
+    prop-types: 15.8.1
+    react: 17.0.2
     react-intl: 6.2.10
-    react-redux: ^8.0.5
-    redux: ^4.2.1
-    redux-form: ^8.3.9
-    reselect: ^4.1.7
-    sinon: ^15.0.2
+    react-redux: 8.0.5
+    redux: 4.2.1
+    redux-form: 8.3.9
+    reselect: 4.1.7
+    sinon: 15.0.2
   languageName: unknown
   linkType: soft
 
@@ -2495,24 +2495,24 @@ __metadata:
     "@fpsak-frontend/shared-components": 1.0.0
     "@fpsak-frontend/utils": 1.0.0
     "@k9-sak-web/prosess-felles": 1.0.0
-    chai: ^4.3.7
-    classnames: ^2.3.2
-    enzyme: ^3.11.0
-    moment: ^2.29.4
+    chai: 4.3.7
+    classnames: 2.3.2
+    enzyme: 3.11.0
+    moment: 2.29.4
     nav-frontend-grid: 2.0.2
     nav-frontend-grid-style: 1.0.3
     nav-frontend-knapper: 3.1.3
     nav-frontend-knapper-style: 2.1.2
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
-    prop-types: ^15.8.1
-    react: ^17.0.2
+    prop-types: 15.8.1
+    react: 17.0.2
     react-intl: 6.2.10
-    react-redux: ^8.0.5
-    redux: ^4.2.1
-    redux-form: ^8.3.9
-    reselect: ^4.1.7
-    sinon: ^15.0.2
+    react-redux: 8.0.5
+    redux: 4.2.1
+    redux-form: 8.3.9
+    reselect: 4.1.7
+    sinon: 15.0.2
   languageName: unknown
   linkType: soft
 
@@ -2527,10 +2527,10 @@ __metadata:
     "@fpsak-frontend/shared-components": 1.0.0
     "@fpsak-frontend/utils": 1.0.0
     "@fpsak-frontend/utils-test": 1.0.0
-    chai: ^4.3.7
-    classnames: ^2.3.2
-    enzyme: ^3.11.0
-    moment: ^2.29.4
+    chai: 4.3.7
+    classnames: 2.3.2
+    enzyme: 3.11.0
+    moment: 2.29.4
     nav-frontend-chevron: 1.0.30
     nav-frontend-chevron-style: 1.0.4
     nav-frontend-core: 6.0.1
@@ -2540,14 +2540,14 @@ __metadata:
     nav-frontend-knapper-style: 2.1.2
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
-    prop-types: ^15.8.1
-    react: ^17.0.2
+    prop-types: 15.8.1
+    react: 17.0.2
     react-intl: 6.2.10
-    react-redux: ^8.0.5
-    redux: ^4.2.1
-    redux-form: ^8.3.9
-    reselect: ^4.1.7
-    sinon: ^15.0.2
+    react-redux: 8.0.5
+    redux: 4.2.1
+    redux-form: 8.3.9
+    reselect: 4.1.7
+    sinon: 15.0.2
   languageName: unknown
   linkType: soft
 
@@ -2564,9 +2564,9 @@ __metadata:
     "@fpsak-frontend/utils": 1.0.0
     "@fpsak-frontend/utils-test": 1.0.0
     "@k9-sak-web/prosess-felles": 1.0.0
-    chai: ^4.3.7
-    enzyme: ^3.11.0
-    moment: ^2.29.4
+    chai: 4.3.7
+    enzyme: 3.11.0
+    moment: 2.29.4
     nav-frontend-alertstriper: 4.0.2
     nav-frontend-core: 6.0.1
     nav-frontend-grid: 2.0.2
@@ -2576,14 +2576,14 @@ __metadata:
     nav-frontend-modal: 2.0.2
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
-    prop-types: ^15.8.1
-    react: ^17.0.2
-    react-dom: ^17.0.2
+    prop-types: 15.8.1
+    react: 17.0.2
+    react-dom: 17.0.2
     react-intl: 6.2.10
-    react-redux: ^8.0.5
-    redux: ^4.2.1
-    redux-form: ^8.3.9
-    sinon: ^15.0.2
+    react-redux: 8.0.5
+    redux: 4.2.1
+    redux-form: 8.3.9
+    sinon: 15.0.2
   languageName: unknown
   linkType: soft
 
@@ -2599,21 +2599,21 @@ __metadata:
     "@fpsak-frontend/utils-test": 1.0.0
     "@k9-sak-web/prosess-felles": 1.0.0
     "@k9-sak-web/types": 1.0.0
-    chai: ^4.3.7
-    enzyme: ^3.11.0
-    moment: ^2.29.4
+    chai: 4.3.7
+    enzyme: 3.11.0
+    moment: 2.29.4
     nav-frontend-grid: 2.0.2
     nav-frontend-grid-style: 1.0.3
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
-    prop-types: ^15.8.1
-    react: ^17.0.2
+    prop-types: 15.8.1
+    react: 17.0.2
     react-intl: 6.2.10
-    react-redux: ^8.0.5
-    redux: ^4.2.1
-    redux-form: ^8.3.9
-    reselect: ^4.1.7
-    sinon: ^15.0.2
+    react-redux: 8.0.5
+    redux: 4.2.1
+    redux-form: 8.3.9
+    reselect: 4.1.7
+    sinon: 15.0.2
   languageName: unknown
   linkType: soft
 
@@ -2629,24 +2629,24 @@ __metadata:
     "@fpsak-frontend/utils": 1.0.0
     "@fpsak-frontend/utils-test": 1.0.0
     "@k9-sak-web/prosess-felles": 1.0.0
-    chai: ^4.3.7
-    classnames: ^2.3.2
-    enzyme: ^3.11.0
-    moment: ^2.29.4
+    chai: 4.3.7
+    classnames: 2.3.2
+    enzyme: 3.11.0
+    moment: 2.29.4
     nav-frontend-chevron: 1.0.30
     nav-frontend-chevron-style: 1.0.4
     nav-frontend-grid: 2.0.2
     nav-frontend-grid-style: 1.0.3
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
-    prop-types: ^15.8.1
-    react: ^17.0.2
+    prop-types: 15.8.1
+    react: 17.0.2
     react-intl: 6.2.10
-    react-redux: ^8.0.5
-    redux: ^4.2.1
-    redux-form: ^8.3.9
-    reselect: ^4.1.7
-    sinon: ^15.0.2
+    react-redux: 8.0.5
+    redux: 4.2.1
+    redux-form: 8.3.9
+    reselect: 4.1.7
+    sinon: 15.0.2
   languageName: unknown
   linkType: soft
 
@@ -2661,23 +2661,23 @@ __metadata:
     "@fpsak-frontend/utils": 1.0.0
     "@fpsak-frontend/utils-test": 1.0.0
     "@k9-sak-web/prosess-felles": 1.0.0
-    chai: ^4.3.7
-    classnames: ^2.3.2
-    enzyme: ^3.11.0
+    chai: 4.3.7
+    classnames: 2.3.2
+    enzyme: 3.11.0
     nav-frontend-grid: 2.0.2
     nav-frontend-grid-style: 1.0.3
     nav-frontend-knapper: 3.1.3
     nav-frontend-knapper-style: 2.1.2
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
-    prop-types: ^15.8.1
-    react: ^17.0.2
+    prop-types: 15.8.1
+    react: 17.0.2
     react-intl: 6.2.10
-    react-redux: ^8.0.5
-    redux: ^4.2.1
-    redux-form: ^8.3.9
-    reselect: ^4.1.7
-    sinon: ^15.0.2
+    react-redux: 8.0.5
+    redux: 4.2.1
+    redux-form: 8.3.9
+    reselect: 4.1.7
+    sinon: 15.0.2
   languageName: unknown
   linkType: soft
 
@@ -2692,22 +2692,22 @@ __metadata:
     "@fpsak-frontend/utils": 1.0.0
     "@fpsak-frontend/utils-test": 1.0.0
     "@k9-sak-web/prosess-felles": 1.0.0
-    chai: ^4.3.7
-    enzyme: ^3.11.0
-    moment: ^2.29.4
+    chai: 4.3.7
+    enzyme: 3.11.0
+    moment: 2.29.4
     nav-frontend-core: 6.0.1
     nav-frontend-grid: 2.0.2
     nav-frontend-grid-style: 1.0.3
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
-    prop-types: ^15.8.1
-    react: ^17.0.2
+    prop-types: 15.8.1
+    react: 17.0.2
     react-intl: 6.2.10
-    react-redux: ^8.0.5
-    redux: ^4.2.1
-    redux-form: ^8.3.9
-    reselect: ^4.1.7
-    sinon: ^15.0.2
+    react-redux: 8.0.5
+    redux: 4.2.1
+    redux-form: 8.3.9
+    reselect: 4.1.7
+    sinon: 15.0.2
   languageName: unknown
   linkType: soft
 
@@ -2720,9 +2720,9 @@ __metadata:
     "@fpsak-frontend/shared-components": 1.0.0
     "@fpsak-frontend/utils": 1.0.0
     "@fpsak-frontend/utils-test": 1.0.0
-    chai: ^4.3.7
-    enzyme: ^3.11.0
-    moment: ^2.29.4
+    chai: 4.3.7
+    enzyme: 3.11.0
+    moment: 2.29.4
     nav-frontend-core: 6.0.1
     nav-frontend-grid: 2.0.2
     nav-frontend-grid-style: 1.0.3
@@ -2730,14 +2730,14 @@ __metadata:
     nav-frontend-paneler-style: 2.0.2
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
-    prop-types: ^15.8.1
-    react: ^17.0.2
+    prop-types: 15.8.1
+    react: 17.0.2
     react-intl: 6.2.10
-    react-redux: ^8.0.5
-    redux: ^4.2.1
-    redux-form: ^8.3.9
-    reselect: ^4.1.7
-    sinon: ^15.0.2
+    react-redux: 8.0.5
+    redux: 4.2.1
+    redux-form: 8.3.9
+    reselect: 4.1.7
+    sinon: 15.0.2
   languageName: unknown
   linkType: soft
 
@@ -2755,8 +2755,8 @@ __metadata:
     "@fpsak-frontend/utils-test": 1.0.0
     "@k9-sak-web/prosess-felles": 1.0.0
     "@k9-sak-web/types": 1.0.0
-    enzyme: ^3.11.0
-    moment: ^2.29.4
+    enzyme: 3.11.0
+    moment: 2.29.4
     nav-frontend-alertstriper: 4.0.2
     nav-frontend-core: 6.0.1
     nav-frontend-grid: 2.0.2
@@ -2766,14 +2766,14 @@ __metadata:
     nav-frontend-modal: 2.0.2
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
-    react: ^17.0.2
-    react-dom: ^17.0.2
+    react: 17.0.2
+    react-dom: 17.0.2
     react-intl: 6.2.10
-    react-redux: ^8.0.5
-    redux: ^4.2.1
-    redux-form: ^8.3.9
-    reselect: ^4.1.7
-    sinon: ^15.0.2
+    react-redux: 8.0.5
+    redux: 4.2.1
+    redux-form: 8.3.9
+    reselect: 4.1.7
+    sinon: 15.0.2
   languageName: unknown
   linkType: soft
 
@@ -2790,9 +2790,9 @@ __metadata:
     "@fpsak-frontend/utils-test": 1.0.0
     "@k9-sak-web/prosess-felles": 1.0.0
     "@k9-sak-web/types": 1.0.0
-    classnames: ^2.3.2
-    enzyme: ^3.11.0
-    moment: ^2.29.4
+    classnames: 2.3.2
+    enzyme: 3.11.0
+    moment: 2.29.4
     nav-frontend-alertstriper: 4.0.2
     nav-frontend-core: 6.0.1
     nav-frontend-grid: 2.0.2
@@ -2800,20 +2800,20 @@ __metadata:
     nav-frontend-knapper: 3.1.3
     nav-frontend-knapper-style: 2.1.2
     nav-frontend-modal: 2.0.2
-    nav-frontend-tabs: ^2.0.3
-    nav-frontend-tabs-style: ^2.0.2
+    nav-frontend-tabs: 2.0.3
+    nav-frontend-tabs-style: 2.0.2
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
-    prop-types: ^15.8.1
-    react: ^17.0.2
-    react-dom: ^17.0.2
+    prop-types: 15.8.1
+    react: 17.0.2
+    react-dom: 17.0.2
     react-intl: 6.2.10
-    react-redux: ^8.0.5
-    redux: ^4.2.1
-    redux-form: ^8.3.9
-    reselect: ^4.1.7
-    sinon: ^15.0.2
-    xss: ^1.0.14
+    react-redux: 8.0.5
+    redux: 4.2.1
+    redux-form: 8.3.9
+    reselect: 4.1.7
+    sinon: 15.0.2
+    xss: 1.0.14
   languageName: unknown
   linkType: soft
 
@@ -2828,23 +2828,23 @@ __metadata:
     "@fpsak-frontend/utils": 1.0.0
     "@fpsak-frontend/utils-test": 1.0.0
     "@k9-sak-web/modal-sett-pa-vent": 1.0.0
-    chai: ^4.3.7
-    classnames: ^2.3.2
-    enzyme: ^3.11.0
-    moment: ^2.29.4
+    chai: 4.3.7
+    classnames: 2.3.2
+    enzyme: 3.11.0
+    moment: 2.29.4
     nav-frontend-core: 6.0.1
     nav-frontend-knapper: 3.1.3
     nav-frontend-knapper-style: 2.1.2
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
-    prop-types: ^15.8.1
-    react: ^17.0.2
+    prop-types: 15.8.1
+    react: 17.0.2
     react-intl: 6.2.10
-    react-redux: ^8.0.5
-    redux: ^4.2.1
-    redux-form: ^8.3.9
-    reselect: ^4.1.7
-    sinon: ^15.0.2
+    react-redux: 8.0.5
+    redux: 4.2.1
+    redux-form: 8.3.9
+    reselect: 4.1.7
+    sinon: 15.0.2
   languageName: unknown
   linkType: soft
 
@@ -2859,18 +2859,18 @@ __metadata:
     "@fpsak-frontend/utils": 1.0.0
     "@fpsak-frontend/utils-test": 1.0.0
     "@k9-sak-web/prosess-felles": 1.0.0
-    chai: ^4.3.7
-    enzyme: ^3.11.0
+    chai: 4.3.7
+    enzyme: 3.11.0
     nav-frontend-grid: 2.0.2
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
-    prop-types: ^15.8.1
-    react: ^17.0.2
+    prop-types: 15.8.1
+    react: 17.0.2
     react-intl: 6.2.10
-    react-redux: ^8.0.5
-    redux-form: ^8.3.9
-    reselect: ^4.1.7
-    sinon: ^15.0.2
+    react-redux: 8.0.5
+    redux-form: 8.3.9
+    reselect: 4.1.7
+    sinon: 15.0.2
   languageName: unknown
   linkType: soft
 
@@ -2884,20 +2884,20 @@ __metadata:
     "@fpsak-frontend/shared-components": 1.0.0
     "@fpsak-frontend/utils": 1.0.0
     "@fpsak-frontend/utils-test": 1.0.0
-    chai: ^4.3.7
-    classnames: ^2.3.2
-    enzyme: ^3.11.0
+    chai: 4.3.7
+    classnames: 2.3.2
+    enzyme: 3.11.0
     nav-frontend-grid: 2.0.2
     nav-frontend-knapper: 3.1.3
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
-    prop-types: ^15.8.1
-    react: ^17.0.2
+    prop-types: 15.8.1
+    react: 17.0.2
     react-intl: 6.2.10
-    react-redux: ^8.0.5
-    redux-form: ^8.3.9
-    reselect: ^4.1.7
-    sinon: ^15.0.2
+    react-redux: 8.0.5
+    redux-form: 8.3.9
+    reselect: 4.1.7
+    sinon: 15.0.2
   languageName: unknown
   linkType: soft
 
@@ -2913,19 +2913,19 @@ __metadata:
     "@fpsak-frontend/utils-test": 1.0.0
     "@k9-sak-web/prosess-felles": 1.0.0
     "@k9-sak-web/types": 1.0.0
-    classnames: ^2.3.2
-    enzyme: ^3.11.0
+    classnames: 2.3.2
+    enzyme: 3.11.0
     nav-frontend-core: 6.0.1
     nav-frontend-ekspanderbartpanel: 4.0.4
     nav-frontend-ekspanderbartpanel-style: 2.0.2
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
-    react: ^17.0.2
+    react: 17.0.2
     react-intl: 6.2.10
-    react-redux: ^8.0.5
-    redux-form: ^8.3.9
-    reselect: ^4.1.7
-    sinon: ^15.0.2
+    react-redux: 8.0.5
+    redux-form: 8.3.9
+    reselect: 4.1.7
+    sinon: 15.0.2
   languageName: unknown
   linkType: soft
 
@@ -2933,10 +2933,10 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fpsak-frontend/prosess-vedtak@workspace:packages/prosess-vedtak"
   dependencies:
-    "@editorjs/editorjs": ^2.26.5
-    "@editorjs/header": ^2.7.0
-    "@editorjs/list": ^1.8.0
-    "@editorjs/paragraph": ^2.9.0
+    "@editorjs/editorjs": 2.26.5
+    "@editorjs/header": 2.7.0
+    "@editorjs/list": 1.8.0
+    "@editorjs/paragraph": 2.9.0
     "@fpsak-frontend/assets": 1.0.0
     "@fpsak-frontend/form": 1.0.0
     "@fpsak-frontend/kodeverk": 1.0.0
@@ -2947,33 +2947,33 @@ __metadata:
     "@k9-sak-web/behandling-utvidet-rett": 1.0.0
     "@k9-sak-web/konstanter": 1.0.0
     "@k9-sak-web/types": 1.0.0
-    chai: ^4.3.7
-    classnames: ^2.3.2
-    css-tree: ^2.3.1
-    date-fns: ^2.29.3
-    editorjs-html: ^3.4.2
-    enzyme: ^3.11.0
-    formik: ^2.2.9
-    moment: ^2.29.4
-    nav-frontend-alertstriper: ^4.0.2
+    chai: 4.3.7
+    classnames: 2.3.2
+    css-tree: 2.3.1
+    date-fns: 2.29.3
+    editorjs-html: 3.4.2
+    enzyme: 3.11.0
+    formik: 2.2.9
+    moment: 2.29.4
+    nav-frontend-alertstriper: 4.0.2
     nav-frontend-core: 6.0.1
     nav-frontend-grid: 2.0.2
     nav-frontend-grid-style: 1.0.3
     nav-frontend-knapper: 3.1.3
     nav-frontend-knapper-style: 2.1.2
-    nav-frontend-lenker: ^2.0.2
+    nav-frontend-lenker: 2.0.2
     nav-frontend-modal: 2.0.2
     nav-frontend-skjema: 4.0.6
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
-    prop-types: ^15.8.1
-    react: ^17.0.2
+    prop-types: 15.8.1
+    react: 17.0.2
     react-intl: 6.2.10
-    react-redux: ^8.0.5
-    redux: ^4.2.1
-    redux-form: ^8.3.9
-    reselect: ^4.1.7
-    sinon: ^15.0.2
+    react-redux: 8.0.5
+    redux: 4.2.1
+    redux-form: 8.3.9
+    reselect: 4.1.7
+    sinon: 15.0.2
   languageName: unknown
   linkType: soft
 
@@ -2990,30 +2990,30 @@ __metadata:
     "@k9-sak-web/prosess-felles": 1.0.0
     "@k9-sak-web/types": 1.0.0
     "@navikt/ft-plattform-komponenter": 2.0.6
-    classnames: ^2.3.2
-    dayjs: ^1.11.7
-    enzyme: ^3.11.0
-    lodash.isequal: ^4.5.0
-    moment: ^2.29.4
+    classnames: 2.3.2
+    dayjs: 1.11.7
+    enzyme: 3.11.0
+    lodash.isequal: 4.5.0
+    moment: 2.29.4
     nav-frontend-core: 6.0.1
     nav-frontend-grid: 2.0.2
-    nav-frontend-js-utils: ^1.0.20
+    nav-frontend-js-utils: 1.0.20
     nav-frontend-lenker: 2.0.2
     nav-frontend-lenker-style: 2.0.2
     nav-frontend-spinner: 3.0.1
     nav-frontend-spinner-style: 1.0.2
-    nav-frontend-tabs: ^2.0.3
-    nav-frontend-tabs-style: ^2.0.2
+    nav-frontend-tabs: 2.0.3
+    nav-frontend-tabs-style: 2.0.2
     nav-frontend-typografi: 4.0.2
-    prop-types: ^15.8.1
-    react: ^17.0.2
-    react-dom: ^17.0.2
+    prop-types: 15.8.1
+    react: 17.0.2
+    react-dom: 17.0.2
     react-intl: 6.2.10
-    react-redux: ^8.0.5
-    redux: ^4.2.1
-    redux-form: ^8.3.9
-    reselect: ^4.1.7
-    sinon: ^15.0.2
+    react-redux: 8.0.5
+    redux: 4.2.1
+    redux-form: 8.3.9
+    reselect: 4.1.7
+    sinon: 15.0.2
   languageName: unknown
   linkType: soft
 
@@ -3031,22 +3031,22 @@ __metadata:
     "@k9-sak-web/prosess-felles": 1.0.0
     "@k9-sak-web/types": 1.0.0
     "@navikt/ft-plattform-komponenter": 2.0.6
-    classnames: ^2.3.2
-    enzyme: ^3.11.0
-    moment: ^2.29.4
+    classnames: 2.3.2
+    enzyme: 3.11.0
+    moment: 2.29.4
     nav-frontend-knapper: 3.1.3
     nav-frontend-knapper-style: 2.1.2
     nav-frontend-spinner: 3.0.1
     nav-frontend-spinner-style: 1.0.2
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
-    react: ^17.0.2
+    react: 17.0.2
     react-intl: 6.2.10
-    react-redux: ^8.0.5
-    redux: ^4.2.1
-    redux-form: ^8.3.9
-    reselect: ^4.1.7
-    sinon: ^15.0.2
+    react-redux: 8.0.5
+    redux: 4.2.1
+    redux-form: 8.3.9
+    reselect: 4.1.7
+    sinon: 15.0.2
   languageName: unknown
   linkType: soft
 
@@ -3059,20 +3059,20 @@ __metadata:
     "@fpsak-frontend/utils": 1.0.0
     "@fpsak-frontend/utils-test": 1.0.0
     "@k9-sak-web/types": 1.0.0
-    enzyme: ^3.11.0
-    moment: ^2.29.4
+    enzyme: 3.11.0
+    moment: 2.29.4
     nav-frontend-core: 6.0.1
     nav-frontend-grid: 2.0.2
     nav-frontend-grid-style: 1.0.3
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
-    react: ^17.0.2
+    react: 17.0.2
     react-intl: 6.2.10
-    react-redux: ^8.0.5
-    redux: ^4.2.1
-    redux-form: ^8.3.9
-    reselect: ^4.1.7
-    sinon: ^15.0.2
+    react-redux: 8.0.5
+    redux: 4.2.1
+    redux-form: 8.3.9
+    reselect: 4.1.7
+    sinon: 15.0.2
   languageName: unknown
   linkType: soft
 
@@ -3086,15 +3086,15 @@ __metadata:
     "@fpsak-frontend/utils-test": 1.0.0
     "@k9-sak-web/konstanter": 1.0.0
     "@navikt/ft-plattform-komponenter": 2.0.6
-    "@navikt/k9-fe-array-utils": ^1.0.1
-    "@navikt/k9-fe-bem-utils": ^1.0.1
-    "@navikt/k9-fe-date-utils": ^1.0.1
-    "@navikt/k9-period-utils": ^1.0.1
+    "@navikt/k9-fe-array-utils": 1.0.1
+    "@navikt/k9-fe-bem-utils": 1.0.1
+    "@navikt/k9-fe-date-utils": 1.0.1
+    "@navikt/k9-fe-period-utils": 1.0.2
     nav-frontend-core: 6.0.1
     nav-frontend-grid: 2.0.2
     nav-frontend-grid-style: 1.0.3
-    nav-frontend-ikonknapper: ^2.1.3
-    nav-frontend-js-utils: ^1.0.20
+    nav-frontend-ikonknapper: 2.1.3
+    nav-frontend-js-utils: 1.0.20
     nav-frontend-knapper: 3.1.3
     nav-frontend-knapper-style: 2.1.2
     nav-frontend-lukknapp: 2.0.2
@@ -3106,7 +3106,7 @@ __metadata:
     nav-frontend-spinner-style: 1.0.2
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
-    react: ^17.0.2
+    react: 17.0.2
     react-intl: 6.2.10
   languageName: unknown
   linkType: soft
@@ -3121,17 +3121,17 @@ __metadata:
     "@fpsak-frontend/utils": 1.0.0
     "@fpsak-frontend/utils-test": 1.0.0
     "@k9-sak-web/types": 1.0.0
-    enzyme: ^3.11.0
+    enzyme: 3.11.0
     nav-frontend-core: 6.0.1
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
-    react: ^17.0.2
+    react: 17.0.2
     react-intl: 6.2.10
-    react-redux: ^8.0.5
-    redux: ^4.2.1
-    redux-form: ^8.3.9
-    reselect: ^4.1.7
-    sinon: ^15.0.2
+    react-redux: 8.0.5
+    redux: 4.2.1
+    redux-form: 8.3.9
+    reselect: 4.1.7
+    sinon: 15.0.2
   languageName: unknown
   linkType: soft
 
@@ -3144,7 +3144,7 @@ __metadata:
     "@fpsak-frontend/utils": 1.0.0
     "@fpsak-frontend/utils-test": 1.0.0
     "@k9-sak-web/types": 1.0.0
-    enzyme: ^3.11.0
+    enzyme: 3.11.0
     nav-frontend-core: 6.0.1
     nav-frontend-etiketter: 3.0.3
     nav-frontend-etiketter-style: 2.0.3
@@ -3154,12 +3154,12 @@ __metadata:
     nav-frontend-knapper-style: 2.1.2
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
-    react: ^17.0.2
+    react: 17.0.2
     react-intl: 6.2.10
-    react-redux: ^8.0.5
-    react-router-dom: ^6.9.0
-    redux-form: ^8.3.9
-    sinon: ^15.0.2
+    react-redux: 8.0.5
+    react-router-dom: 6.9.0
+    redux-form: 8.3.9
+    sinon: 15.0.2
   languageName: unknown
   linkType: soft
 
@@ -3172,9 +3172,9 @@ __metadata:
     "@fpsak-frontend/utils": 1.0.0
     "@fpsak-frontend/utils-test": 1.0.0
     "@k9-sak-web/types": 1.0.0
-    classnames: ^2.3.2
-    enzyme: ^3.11.0
-    history: ^5.3.0
+    classnames: 2.3.2
+    enzyme: 3.11.0
+    history: 5.3.0
     nav-frontend-chevron: 1.0.30
     nav-frontend-chevron-style: 1.0.4
     nav-frontend-core: 6.0.1
@@ -3184,10 +3184,10 @@ __metadata:
     nav-frontend-snakkeboble-style: 2.0.2
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
-    react: ^17.0.2
+    react: 17.0.2
     react-intl: 6.2.10
-    react-router-dom: ^6.9.0
-    sinon: ^15.0.2
+    react-router-dom: 6.9.0
+    sinon: 15.0.2
   languageName: unknown
   linkType: soft
 
@@ -3200,7 +3200,7 @@ __metadata:
     "@fpsak-frontend/shared-components": 1.0.0
     "@fpsak-frontend/utils": 1.0.0
     "@fpsak-frontend/utils-test": 1.0.0
-    enzyme: ^3.11.0
+    enzyme: 3.11.0
     nav-frontend-core: 6.0.1
     nav-frontend-grid: 2.0.2
     nav-frontend-grid-style: 1.0.3
@@ -3210,12 +3210,12 @@ __metadata:
     nav-frontend-modal-style: 2.0.2
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
-    react: ^17.0.2
+    react: 17.0.2
     react-intl: 6.2.10
-    react-redux: ^8.0.5
-    redux: ^4.2.1
-    redux-form: ^8.3.9
-    sinon: ^15.0.2
+    react-redux: 8.0.5
+    redux: 4.2.1
+    redux-form: 8.3.9
+    sinon: 15.0.2
   languageName: unknown
   linkType: soft
 
@@ -3231,7 +3231,7 @@ __metadata:
     "@fpsak-frontend/utils-test": 1.0.0
     "@k9-sak-web/behandling-klage": 1.0.0
     "@k9-sak-web/types": 1.0.0
-    enzyme: ^3.11.0
+    enzyme: 3.11.0
     nav-frontend-core: 6.0.1
     nav-frontend-grid: 2.0.2
     nav-frontend-grid-style: 1.0.3
@@ -3243,13 +3243,13 @@ __metadata:
     nav-frontend-skjema-style: 3.0.3
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
-    react: ^17.0.2
+    react: 17.0.2
     react-intl: 6.2.10
-    react-redux: ^8.0.5
-    redux: ^4.2.1
-    redux-form: ^8.3.9
-    reselect: ^4.1.7
-    sinon: ^15.0.2
+    react-redux: 8.0.5
+    redux: 4.2.1
+    redux-form: 8.3.9
+    reselect: 4.1.7
+    sinon: 15.0.2
   languageName: unknown
   linkType: soft
 
@@ -3264,7 +3264,7 @@ __metadata:
     "@fpsak-frontend/utils": 1.0.0
     "@fpsak-frontend/utils-test": 1.0.0
     "@k9-sak-web/types": 1.0.0
-    enzyme: ^3.11.0
+    enzyme: 3.11.0
     nav-frontend-core: 6.0.1
     nav-frontend-grid: 2.0.2
     nav-frontend-grid-style: 1.0.3
@@ -3274,13 +3274,13 @@ __metadata:
     nav-frontend-modal-style: 2.0.2
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
-    react: ^17.0.2
+    react: 17.0.2
     react-intl: 6.2.10
-    react-redux: ^8.0.5
-    redux: ^4.2.1
-    redux-form: ^8.3.9
-    reselect: ^4.1.7
-    sinon: ^15.0.2
+    react-redux: 8.0.5
+    redux: 4.2.1
+    redux-form: 8.3.9
+    reselect: 4.1.7
+    sinon: 15.0.2
   languageName: unknown
   linkType: soft
 
@@ -3294,8 +3294,8 @@ __metadata:
     "@fpsak-frontend/utils-test": 1.0.0
     "@k9-sak-web/modal-sett-pa-vent": 1.0.0
     "@k9-sak-web/types": 1.0.0
-    enzyme: ^3.11.0
-    moment: ^2.29.4
+    enzyme: 3.11.0
+    moment: 2.29.4
     nav-frontend-core: 6.0.1
     nav-frontend-grid: 2.0.2
     nav-frontend-grid-style: 1.0.3
@@ -3305,13 +3305,13 @@ __metadata:
     nav-frontend-modal-style: 2.0.2
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
-    react: ^17.0.2
+    react: 17.0.2
     react-intl: 6.2.10
-    react-redux: ^8.0.5
-    react-router-dom: ^6.9.0
-    redux: ^4.2.1
-    redux-form: ^8.3.9
-    sinon: ^15.0.2
+    react-redux: 8.0.5
+    react-router-dom: 6.9.0
+    redux: 4.2.1
+    redux-form: 8.3.9
+    sinon: 15.0.2
   languageName: unknown
   linkType: soft
 
@@ -3321,10 +3321,10 @@ __metadata:
   dependencies:
     "@fpsak-frontend/shared-components": 1.0.0
     "@fpsak-frontend/utils-test": 1.0.0
-    enzyme: ^3.11.0
-    react: ^17.0.2
+    enzyme: 3.11.0
+    react: 17.0.2
     react-intl: 6.2.10
-    sinon: ^15.0.2
+    sinon: 15.0.2
   languageName: unknown
   linkType: soft
 
@@ -3334,10 +3334,10 @@ __metadata:
   dependencies:
     "@fpsak-frontend/shared-components": 1.0.0
     "@fpsak-frontend/utils-test": 1.0.0
-    enzyme: ^3.11.0
-    react: ^17.0.2
+    enzyme: 3.11.0
+    react: 17.0.2
     react-intl: 6.2.10
-    sinon: ^15.0.2
+    sinon: 15.0.2
   languageName: unknown
   linkType: soft
 
@@ -3349,19 +3349,19 @@ __metadata:
     "@fpsak-frontend/shared-components": 1.0.0
     "@fpsak-frontend/utils-test": 1.0.0
     "@navikt/ft-plattform-komponenter": 2.0.6
-    "@navikt/k9-fe-array-utils": ^1.0.1
-    "@navikt/k9-fe-bem-utils": ^1.0.1
-    "@navikt/k9-fe-date-utils": ^1.0.1
-    "@navikt/k9-period-utils": ^1.0.1
-    enzyme: ^3.11.0
-    nav-frontend-ikonknapper: ^2.1.3
+    "@navikt/k9-fe-array-utils": 1.0.1
+    "@navikt/k9-fe-bem-utils": 1.0.1
+    "@navikt/k9-fe-date-utils": 1.0.1
+    "@navikt/k9-fe-period-utils": 1.0.2
+    enzyme: 3.11.0
+    nav-frontend-ikonknapper: 2.1.3
     nav-frontend-knapper: 3.1.3
     nav-frontend-knapper-style: 2.1.2
     nav-frontend-spinner: 3.0.1
     nav-frontend-spinner-style: 1.0.2
-    react: ^17.0.2
+    react: 17.0.2
     react-intl: 6.2.10
-    sinon: ^15.0.2
+    sinon: 15.0.2
   languageName: unknown
   linkType: soft
 
@@ -3376,7 +3376,7 @@ __metadata:
     "@fpsak-frontend/utils": 1.0.0
     "@fpsak-frontend/utils-test": 1.0.0
     "@k9-sak-web/types": 1.0.0
-    enzyme: ^3.11.0
+    enzyme: 3.11.0
     nav-frontend-core: 6.0.1
     nav-frontend-ekspanderbartpanel: 4.0.4
     nav-frontend-ekspanderbartpanel-style: 2.0.2
@@ -3386,13 +3386,13 @@ __metadata:
     nav-frontend-paneler-style: 2.0.2
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
-    react: ^17.0.2
-    react-collapse: ^5.1.1
+    react: 17.0.2
+    react-collapse: 5.1.1
     react-intl: 6.2.10
-    react-redux: ^8.0.5
-    redux-form: ^8.3.9
-    reselect: ^4.1.7
-    sinon: ^15.0.2
+    react-redux: 8.0.5
+    redux-form: 8.3.9
+    reselect: 4.1.7
+    sinon: 15.0.2
   languageName: unknown
   linkType: soft
 
@@ -3407,7 +3407,7 @@ __metadata:
     "@fpsak-frontend/utils": 1.0.0
     "@fpsak-frontend/utils-test": 1.0.0
     "@k9-sak-web/types": 1.0.0
-    enzyme: ^3.11.0
+    enzyme: 3.11.0
     nav-frontend-core: 6.0.1
     nav-frontend-grid: 2.0.2
     nav-frontend-grid-style: 1.0.3
@@ -3415,11 +3415,11 @@ __metadata:
     nav-frontend-knapper-style: 2.1.2
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
-    react: ^17.0.2
+    react: 17.0.2
     react-intl: 6.2.10
-    react-redux: ^8.0.5
-    redux-form: ^8.3.9
-    sinon: ^15.0.2
+    react-redux: 8.0.5
+    redux-form: 8.3.9
+    sinon: 15.0.2
   languageName: unknown
   linkType: soft
 
@@ -3429,8 +3429,8 @@ __metadata:
   dependencies:
     "@fpsak-frontend/assets": 1.0.0
     "@fpsak-frontend/shared-components": 1.0.0
-    classnames: ^2.3.2
-    react: ^17.0.2
+    classnames: 2.3.2
+    react: 17.0.2
     react-intl: 6.2.10
   languageName: unknown
   linkType: soft
@@ -3448,9 +3448,9 @@ __metadata:
     "@k9-sak-web/behandling-utvidet-rett": 1.0.0
     "@k9-sak-web/konstanter": 1.0.0
     "@k9-sak-web/types": 1.0.0
-    enzyme: ^3.11.0
-    history: ^5.3.0
-    moment: ^2.29.4
+    enzyme: 3.11.0
+    history: 5.3.0
+    moment: 2.29.4
     nav-frontend-alertstriper: 4.0.2
     nav-frontend-alertstriper-style: 3.0.2
     nav-frontend-core: 6.0.1
@@ -3461,15 +3461,15 @@ __metadata:
     nav-frontend-modal: 2.0.2
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
-    prop-types: ^15.8.1
-    react: ^17.0.2
+    prop-types: 15.8.1
+    react: 17.0.2
     react-intl: 6.2.10
-    react-redux: ^8.0.5
-    react-router-dom: ^6.9.0
-    redux: ^4.2.1
-    redux-form: ^8.3.9
-    reselect: ^4.1.7
-    sinon: ^15.0.2
+    react-redux: 8.0.5
+    react-router-dom: 6.9.0
+    redux: 4.2.1
+    redux-form: 8.3.9
+    reselect: 4.1.7
+    sinon: 15.0.2
   languageName: unknown
   linkType: soft
 
@@ -3484,22 +3484,22 @@ __metadata:
     "@k9-sak-web/sak-app": 1.0.0
     "@k9-sak-web/types": 1.0.0
     "@navikt/ft-plattform-komponenter": 2.0.6
-    "@navikt/k9-fe-array-utils": ^1.0.1
-    "@navikt/k9-fe-bem-utils": ^1.0.1
-    "@navikt/k9-fe-date-utils": ^1.0.1
-    "@navikt/k9-period-utils": ^1.0.1
-    dayjs: ^1.11.7
-    moment: ^2.29.4
+    "@navikt/k9-fe-array-utils": 1.0.1
+    "@navikt/k9-fe-bem-utils": 1.0.1
+    "@navikt/k9-fe-date-utils": 1.0.1
+    "@navikt/k9-fe-period-utils": 1.0.2
+    dayjs: 1.11.7
+    moment: 2.29.4
     nav-frontend-etiketter: 3.0.3
     nav-frontend-etiketter-style: 2.0.3
-    nav-frontend-ikonknapper: ^2.1.3
+    nav-frontend-ikonknapper: 2.1.3
     nav-frontend-lenker: 2.0.2
     nav-frontend-skjema: 4.0.6
     nav-frontend-spinner: 3.0.1
     nav-frontend-spinner-style: 1.0.2
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
-    react: ^17.0.2
+    react: 17.0.2
     react-intl: 6.2.10
   languageName: unknown
   linkType: soft
@@ -3519,10 +3519,10 @@ __metadata:
     "@navikt/fnrvalidator": 1.3.3
     "@navikt/ft-plattform-komponenter": 2.0.6
     axios: 0.27.2
-    classnames: ^2.3.2
-    date-fns: ^2.29.3
-    date-fns-tz: ^2.0.0
-    moment: ^2.29.4
+    classnames: 2.3.2
+    date-fns: 2.29.3
+    date-fns-tz: 2.0.0
+    moment: 2.29.4
     nav-frontend-alertstriper: 4.0.2
     nav-frontend-core: 6.0.1
     nav-frontend-grid: 2.0.2
@@ -3541,12 +3541,12 @@ __metadata:
     nav-frontend-spinner-style: 1.0.2
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
-    react: ^17.0.2
-    react-day-picker: ^7.4.10
+    react: 17.0.2
+    react-day-picker: 7.4.10
     react-intl: 6.2.10
     react-modal: 3.16.1
-    react-redux: ^8.0.5
-    redux-form: ^8.3.9
+    react-redux: 8.0.5
+    redux-form: 8.3.9
   languageName: unknown
   linkType: soft
 
@@ -3560,17 +3560,17 @@ __metadata:
     "@fpsak-frontend/tidslinje": 1.0.0
     "@fpsak-frontend/utils": 1.0.0
     "@k9-sak-web/types": 1.0.0
-    moment: ^2.29.4
+    moment: 2.29.4
     nav-frontend-grid: 2.0.2
     nav-frontend-grid-style: 1.0.3
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
-    prop-types: ^15.8.1
-    react: ^17.0.2
-    react-dom: ^17.0.2
+    prop-types: 15.8.1
+    react: 17.0.2
+    react-dom: 17.0.2
     react-intl: 6.2.10
-    vis-data: ^7.1.4
-    vis-timeline: ^7.7.0
+    vis-data: 7.1.4
+    vis-timeline: 7.7.0
   languageName: unknown
   linkType: soft
 
@@ -3578,11 +3578,11 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fpsak-frontend/utils-test@workspace:packages/utils-test"
   dependencies:
-    "@commercetools/enzyme-extensions": ^5.0.0
+    "@commercetools/enzyme-extensions": 5.0.0
     "@fpsak-frontend/kodeverk": 1.0.0
-    "@wojtekmaj/enzyme-adapter-react-17": ^0.8.0
-    enzyme: ^3.11.0
-    react: ^17.0.2
+    "@wojtekmaj/enzyme-adapter-react-17": 0.8.0
+    enzyme: 3.11.0
+    react: 17.0.2
     react-intl: 6.2.10
   languageName: unknown
   linkType: soft
@@ -3594,9 +3594,9 @@ __metadata:
     "@fpsak-frontend/kodeverk": 1.0.0
     "@k9-sak-web/konstanter": 1.0.0
     "@k9-sak-web/types": 1.0.0
-    "@navikt/ft-types": ^2.0.6
-    moment: ^2.29.4
-    react: ^17.0.2
+    "@navikt/ft-types": 2.0.6
+    moment: 2.29.4
+    react: 17.0.2
     react-intl: 6.2.10
   languageName: unknown
   linkType: soft
@@ -4034,8 +4034,8 @@ __metadata:
     "@k9-sak-web/rest-api": 1.0.0
     "@k9-sak-web/rest-api-hooks": 1.0.0
     "@k9-sak-web/types": 1.0.0
-    axios-mock-adapter: ^1.21.2
-    enzyme: ^3.11.0
+    axios-mock-adapter: 1.21.2
+    enzyme: 3.11.0
     nav-frontend-grid: 2.0.2
     nav-frontend-grid-style: 1.0.3
     nav-frontend-knapper: 3.1.3
@@ -4044,14 +4044,14 @@ __metadata:
     nav-frontend-modal-style: 2.0.2
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
-    react: ^17.0.2
+    react: 17.0.2
     react-intl: 6.2.10
-    react-redux: ^8.0.5
-    redux: ^4.2.1
-    redux-form: ^8.3.9
-    redux-mock-store: ^1.5.4
-    reselect: ^4.1.7
-    sinon: ^15.0.2
+    react-redux: 8.0.5
+    redux: 4.2.1
+    redux-form: 8.3.9
+    redux-mock-store: 1.5.4
+    reselect: 4.1.7
+    sinon: 15.0.2
   languageName: unknown
   linkType: soft
 
@@ -4070,16 +4070,16 @@ __metadata:
     "@k9-sak-web/rest-api-hooks": 1.0.0
     "@k9-sak-web/types": 1.0.0
     "@navikt/ft-plattform-komponenter": 2.0.6
-    "@navikt/k9-fe-array-utils": ^1.0.1
-    "@navikt/k9-fe-bem-utils": ^1.0.1
-    "@navikt/k9-fe-date-utils": ^1.0.1
-    "@navikt/k9-period-utils": ^1.0.1
-    classnames: ^2.3.2
-    enzyme: ^3.11.0
+    "@navikt/k9-fe-array-utils": 1.0.1
+    "@navikt/k9-fe-bem-utils": 1.0.1
+    "@navikt/k9-fe-date-utils": 1.0.1
+    "@navikt/k9-fe-period-utils": 1.0.2
+    classnames: 2.3.2
+    enzyme: 3.11.0
     nav-frontend-core: 6.0.1
     nav-frontend-grid: 2.0.2
     nav-frontend-grid-style: 1.0.3
-    nav-frontend-ikonknapper: ^2.1.3
+    nav-frontend-ikonknapper: 2.1.3
     nav-frontend-knapper: 3.1.3
     nav-frontend-knapper-style: 2.1.2
     nav-frontend-modal: 2.0.2
@@ -4089,12 +4089,12 @@ __metadata:
     nav-frontend-tabs: 2.0.3
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
-    react: ^17.0.2
+    react: 17.0.2
     react-intl: 6.2.10
-    react-redux: ^8.0.5
-    redux-form: ^8.3.9
-    reselect: ^4.1.7
-    sinon: ^15.0.2
+    react-redux: 8.0.5
+    redux-form: 8.3.9
+    reselect: 4.1.7
+    sinon: 15.0.2
   languageName: unknown
   linkType: soft
 
@@ -4122,16 +4122,16 @@ __metadata:
     "@k9-sak-web/types": 1.0.0
     "@navikt/ft-fakta-beregning": 4.1.0
     "@navikt/ft-prosess-beregningsgrunnlag": 6.0.7
-    axios-mock-adapter: ^1.21.2
-    enzyme: ^3.11.0
-    react: ^17.0.2
+    axios-mock-adapter: 1.21.2
+    enzyme: 3.11.0
+    react: 17.0.2
     react-intl: 6.2.10
-    react-redux: ^8.0.5
-    redux: ^4.2.1
-    redux-form: ^8.3.9
-    redux-mock-store: ^1.5.4
-    reselect: ^4.1.7
-    sinon: ^15.0.2
+    react-redux: 8.0.5
+    redux: 4.2.1
+    redux-form: 8.3.9
+    redux-mock-store: 1.5.4
+    reselect: 4.1.7
+    sinon: 15.0.2
   languageName: unknown
   linkType: soft
 
@@ -4150,18 +4150,18 @@ __metadata:
     "@k9-sak-web/rest-api": 1.0.0
     "@k9-sak-web/rest-api-hooks": 1.0.0
     "@k9-sak-web/types": 1.0.0
-    axios-mock-adapter: ^1.21.2
-    enzyme: ^3.11.0
+    axios-mock-adapter: 1.21.2
+    enzyme: 3.11.0
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
-    react: ^17.0.2
+    react: 17.0.2
     react-intl: 6.2.10
-    react-redux: ^8.0.5
-    redux: ^4.2.1
-    redux-form: ^8.3.9
-    redux-mock-store: ^1.5.4
-    reselect: ^4.1.7
-    sinon: ^15.0.2
+    react-redux: 8.0.5
+    redux: 4.2.1
+    redux-form: 8.3.9
+    redux-mock-store: 1.5.4
+    reselect: 4.1.7
+    sinon: 15.0.2
   languageName: unknown
   linkType: soft
 
@@ -4181,8 +4181,8 @@ __metadata:
     "@k9-sak-web/rest-api": 1.0.0
     "@k9-sak-web/rest-api-hooks": 1.0.0
     "@k9-sak-web/types": 1.0.0
-    axios-mock-adapter: ^1.21.2
-    enzyme: ^3.11.0
+    axios-mock-adapter: 1.21.2
+    enzyme: 3.11.0
     nav-frontend-grid: 2.0.2
     nav-frontend-grid-style: 1.0.3
     nav-frontend-knapper: 3.1.3
@@ -4191,14 +4191,14 @@ __metadata:
     nav-frontend-modal-style: 2.0.2
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
-    react: ^17.0.2
+    react: 17.0.2
     react-intl: 6.2.10
-    react-redux: ^8.0.5
-    redux: ^4.2.1
-    redux-form: ^8.3.9
-    redux-mock-store: ^1.5.4
-    reselect: ^4.1.7
-    sinon: ^15.0.2
+    react-redux: 8.0.5
+    redux: 4.2.1
+    redux-form: 8.3.9
+    redux-mock-store: 1.5.4
+    reselect: 4.1.7
+    sinon: 15.0.2
   languageName: unknown
   linkType: soft
 
@@ -4234,17 +4234,17 @@ __metadata:
     "@navikt/ft-fakta-beregning": 4.1.0
     "@navikt/ft-fakta-fordel-beregningsgrunnlag": 7.0.6
     "@navikt/ft-prosess-beregningsgrunnlag": 6.0.7
-    axios-mock-adapter: ^1.21.2
-    enzyme: ^3.11.0
-    nav-frontend-popover: ^2.0.4
-    react: ^17.0.2
+    axios-mock-adapter: 1.21.2
+    enzyme: 3.11.0
+    nav-frontend-popover: 2.0.4
+    react: 17.0.2
     react-intl: 6.2.10
-    react-redux: ^8.0.5
-    redux: ^4.2.1
-    redux-form: ^8.3.9
-    redux-mock-store: ^1.5.4
-    reselect: ^4.1.7
-    sinon: ^15.0.2
+    react-redux: 8.0.5
+    redux: 4.2.1
+    redux-form: 8.3.9
+    redux-mock-store: 1.5.4
+    reselect: 4.1.7
+    sinon: 15.0.2
   languageName: unknown
   linkType: soft
 
@@ -4284,17 +4284,17 @@ __metadata:
     "@navikt/ft-fakta-fordel-beregningsgrunnlag": 7.0.6
     "@navikt/ft-prosess-beregningsgrunnlag": 6.0.7
     axios: 0.27.2
-    axios-mock-adapter: ^1.21.2
-    enzyme: ^3.11.0
-    nav-frontend-alertstriper: ^4.0.2
+    axios-mock-adapter: 1.21.2
+    enzyme: 3.11.0
+    nav-frontend-alertstriper: 4.0.2
     react: 17.0.2
     react-intl: 6.2.10
-    react-redux: ^8.0.5
-    redux: ^4.2.1
-    redux-form: ^8.3.9
-    redux-mock-store: ^1.5.4
-    reselect: ^4.1.7
-    sinon: ^15.0.2
+    react-redux: 8.0.5
+    redux: 4.2.1
+    redux-form: 8.3.9
+    redux-mock-store: 1.5.4
+    reselect: 4.1.7
+    sinon: 15.0.2
   languageName: unknown
   linkType: soft
 
@@ -4332,18 +4332,18 @@ __metadata:
     "@navikt/ft-fakta-fordel-beregningsgrunnlag": 7.0.6
     "@navikt/ft-prosess-beregningsgrunnlag": 6.0.7
     axios: 0.27.2
-    axios-mock-adapter: ^1.21.2
-    enzyme: ^3.11.0
-    nav-frontend-alertstriper: ^4.0.2
-    react: ^17.0.2
+    axios-mock-adapter: 1.21.2
+    enzyme: 3.11.0
+    nav-frontend-alertstriper: 4.0.2
+    react: 17.0.2
     react-intl: 6.2.10
-    react-redux: ^8.0.5
-    redux: ^4.2.1
-    redux-form: ^8.3.9
-    redux-mock-store: ^1.5.4
-    redux-saga: ^1.2.2
-    reselect: ^4.1.7
-    sinon: ^15.0.2
+    react-redux: 8.0.5
+    redux: 4.2.1
+    redux-form: 8.3.9
+    redux-mock-store: 1.5.4
+    redux-saga: 1.2.2
+    reselect: 4.1.7
+    sinon: 15.0.2
   languageName: unknown
   linkType: soft
 
@@ -4382,17 +4382,17 @@ __metadata:
     "@navikt/ft-fakta-fordel-beregningsgrunnlag": 7.0.6
     "@navikt/ft-prosess-beregningsgrunnlag": 6.0.7
     axios: 0.27.2
-    axios-mock-adapter: ^1.21.2
-    enzyme: ^3.11.0
-    nav-frontend-alertstriper: ^4.0.2
+    axios-mock-adapter: 1.21.2
+    enzyme: 3.11.0
+    nav-frontend-alertstriper: 4.0.2
     react: 17.0.2
     react-intl: 6.2.10
-    react-redux: ^8.0.5
-    redux: ^4.2.1
-    redux-form: ^8.3.9
-    redux-mock-store: ^1.5.4
-    reselect: ^4.1.7
-    sinon: ^15.0.2
+    react-redux: 8.0.5
+    redux: 4.2.1
+    redux-form: 8.3.9
+    redux-mock-store: 1.5.4
+    reselect: 4.1.7
+    sinon: 15.0.2
   languageName: unknown
   linkType: soft
 
@@ -4416,18 +4416,18 @@ __metadata:
     "@k9-sak-web/rest-api": 1.0.0
     "@k9-sak-web/rest-api-hooks": 1.0.0
     "@k9-sak-web/types": 1.0.0
-    axios-mock-adapter: ^1.21.2
-    enzyme: ^3.11.0
+    axios-mock-adapter: 1.21.2
+    enzyme: 3.11.0
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
-    react: ^17.0.2
+    react: 17.0.2
     react-intl: 6.2.10
-    react-redux: ^8.0.5
-    redux: ^4.2.1
-    redux-form: ^8.3.9
-    redux-mock-store: ^1.5.4
-    reselect: ^4.1.7
-    sinon: ^15.0.2
+    react-redux: 8.0.5
+    redux: 4.2.1
+    redux-form: 8.3.9
+    redux-mock-store: 1.5.4
+    reselect: 4.1.7
+    sinon: 15.0.2
   languageName: unknown
   linkType: soft
 
@@ -4459,8 +4459,8 @@ __metadata:
     "@k9-sak-web/rest-api": 1.0.0
     "@k9-sak-web/rest-api-hooks": 1.0.0
     "@k9-sak-web/types": 1.0.0
-    axios-mock-adapter: ^1.21.2
-    enzyme: ^3.11.0
+    axios-mock-adapter: 1.21.2
+    enzyme: 3.11.0
     nav-frontend-grid: 2.0.2
     nav-frontend-grid-style: 1.0.3
     nav-frontend-knapper: 3.1.3
@@ -4469,14 +4469,14 @@ __metadata:
     nav-frontend-modal-style: 2.0.2
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
-    react: ^17.0.2
+    react: 17.0.2
     react-intl: 6.2.10
-    react-redux: ^8.0.5
-    redux: ^4.2.1
-    redux-form: ^8.3.9
-    redux-mock-store: ^1.5.4
-    reselect: ^4.1.7
-    sinon: ^15.0.2
+    react-redux: 8.0.5
+    redux: 4.2.1
+    redux-form: 8.3.9
+    redux-mock-store: 1.5.4
+    reselect: 4.1.7
+    sinon: 15.0.2
   languageName: unknown
   linkType: soft
 
@@ -4497,17 +4497,17 @@ __metadata:
     "@k9-sak-web/rest-api": 1.0.0
     "@k9-sak-web/rest-api-hooks": 1.0.0
     "@k9-sak-web/types": 1.0.0
-    axios-mock-adapter: ^1.21.2
-    enzyme: ^3.11.0
-    react: ^17.0.2
+    axios-mock-adapter: 1.21.2
+    enzyme: 3.11.0
+    react: 17.0.2
     react-intl: 6.2.10
-    react-redux: ^8.0.5
-    react-uuid: ^2.0.0
-    redux: ^4.2.1
-    redux-form: ^8.3.9
-    redux-mock-store: ^1.5.4
-    reselect: ^4.1.7
-    sinon: ^15.0.2
+    react-redux: 8.0.5
+    react-uuid: 2.0.0
+    redux: 4.2.1
+    redux-form: 8.3.9
+    redux-mock-store: 1.5.4
+    reselect: 4.1.7
+    sinon: 15.0.2
   languageName: unknown
   linkType: soft
 
@@ -4521,32 +4521,32 @@ __metadata:
     "@fpsak-frontend/utils": 1.0.0
     "@fpsak-frontend/utils-test": 1.0.0
     "@k9-sak-web/types": 1.0.0
-    classnames: ^2.3.2
-    enzyme: ^3.11.0
-    just-is-empty: ^3.3.0
-    moment: ^2.29.4
+    classnames: 2.3.2
+    enzyme: 3.11.0
+    just-is-empty: 3.3.0
+    moment: 2.29.4
     nav-frontend-alertstriper: 4.0.2
     nav-frontend-alertstriper-style: 3.0.2
     nav-frontend-core: 6.0.1
     nav-frontend-ekspanderbartpanel: 4.0.4
-    nav-frontend-hjelpetekst: ^3.1.3
-    nav-frontend-hjelpetekst-style: ^3.0.2
-    nav-frontend-ikoner-assets: ^3.0.1
-    nav-frontend-js-utils: ^1.0.20
+    nav-frontend-hjelpetekst: 3.1.3
+    nav-frontend-hjelpetekst-style: 3.0.2
+    nav-frontend-ikoner-assets: 3.0.1
+    nav-frontend-js-utils: 1.0.20
     nav-frontend-knapper: 3.1.3
     nav-frontend-knapper-style: 2.1.2
-    nav-frontend-paneler: ^3.0.2
-    nav-frontend-popover: ^2.0.4
-    nav-frontend-popover-style: ^2.0.2
+    nav-frontend-paneler: 3.0.2
+    nav-frontend-popover: 2.0.4
+    nav-frontend-popover-style: 2.0.2
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
-    react: ^17.0.2
+    react: 17.0.2
     react-intl: 6.2.10
-    react-redux: ^8.0.5
-    redux-form: ^8.3.9
-    sinon: ^15.0.2
-    styled-components: ^5.3.8
-    uuid: ^9.0.0
+    react-redux: 8.0.5
+    redux-form: 8.3.9
+    sinon: 15.0.2
+    styled-components: 5.3.8
+    uuid: 9.0.0
   languageName: unknown
   linkType: soft
 
@@ -4562,21 +4562,21 @@ __metadata:
     "@k9-sak-web/fakta-barn-og-overfoeringsdager": 1.0.0
     "@k9-sak-web/prosess-aarskvantum-oms": 1.0.0
     "@k9-sak-web/types": 1.0.0
-    enzyme: ^3.11.0
-    moment: ^2.29.4
+    enzyme: 3.11.0
+    moment: 2.29.4
     nav-frontend-alertstriper: 4.0.2
     nav-frontend-alertstriper-style: 3.0.2
     nav-frontend-ekspanderbartpanel: 4.0.4
     nav-frontend-knapper: 3.1.3
     nav-frontend-knapper-style: 2.1.2
-    nav-frontend-paneler: ^3.0.2
+    nav-frontend-paneler: 3.0.2
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
-    react: ^17.0.2
+    react: 17.0.2
     react-intl: 6.2.10
-    sinon: ^15.0.2
-    styled-components: ^5.3.8
-    uuid: ^9.0.0
+    sinon: 15.0.2
+    styled-components: 5.3.8
+    uuid: 9.0.0
   languageName: unknown
   linkType: soft
 
@@ -4590,7 +4590,7 @@ __metadata:
     "@fpsak-frontend/utils": 1.0.0
     "@fpsak-frontend/utils-test": 1.0.0
     "@k9-sak-web/types": 1.0.0
-    enzyme: ^3.11.0
+    enzyme: 3.11.0
     nav-frontend-core: 6.0.1
     nav-frontend-etiketter: 3.0.3
     nav-frontend-etiketter-style: 2.0.3
@@ -4598,12 +4598,12 @@ __metadata:
     nav-frontend-knapper-style: 2.1.2
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
-    react: ^17.0.2
+    react: 17.0.2
     react-intl: 6.2.10
-    react-redux: ^8.0.5
-    redux: ^4.2.1
-    redux-form: ^8.3.9
-    sinon: ^15.0.2
+    react-redux: 8.0.5
+    redux: 4.2.1
+    redux-form: 8.3.9
+    sinon: 15.0.2
   languageName: unknown
   linkType: soft
 
@@ -4613,11 +4613,11 @@ __metadata:
   dependencies:
     "@fpsak-frontend/form": "*"
     "@k9-sak-web/types": "*"
-    "@navikt/ft-plattform-komponenter": ^2.0.6
-    "@navikt/k9-form-utils": 2.0.0
-    "@navikt/k9-period-utils": ^1.0.1
-    formik: ^2.2.9
-    yup: ^0.32.11
+    "@navikt/ft-plattform-komponenter": 2.0.6
+    "@navikt/k9-fe-form-utils": 1.0.2
+    "@navikt/k9-fe-period-utils": 1.0.2
+    formik: 2.2.9
+    yup: 0.32.11
   languageName: unknown
   linkType: soft
 
@@ -4630,17 +4630,17 @@ __metadata:
     "@k9-sak-web/types": "*"
     "@navikt/ds-icons": 2.7.6
     "@navikt/ds-react": 2.7.6
-    "@navikt/ft-plattform-komponenter": ^2.0.6
-    "@navikt/k9-form-utils": 2.0.0
-    "@navikt/k9-period-utils": ^1.0.1
-    classnames: ^2.3.2
-    dayjs: ^1.11.7
-    formik: ^2.2.9
-    nav-frontend-tabs: ^2.0.3
+    "@navikt/ft-plattform-komponenter": 2.0.6
+    "@navikt/k9-fe-form-utils": 1.0.2
+    "@navikt/k9-fe-period-utils": 1.0.2
+    classnames: 2.3.2
+    dayjs: 1.11.7
+    formik: 2.2.9
+    nav-frontend-tabs: 2.0.3
     react-intl: 6.2.10
-    react-outside-click-handler: ^1.3.0
+    react-outside-click-handler: 1.3.0
     uuid: 9.0.0
-    yup: ^0.32.11
+    yup: 0.32.11
   languageName: unknown
   linkType: soft
 
@@ -4657,9 +4657,9 @@ __metadata:
     nav-frontend-knapper-style: 2.1.2
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
-    react: ^17.0.2
+    react: 17.0.2
     react-intl: 6.2.10
-    uuid: ^9.0.0
+    uuid: 9.0.0
   languageName: unknown
   linkType: soft
 
@@ -4667,8 +4667,8 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@k9-sak-web/fremdriftslinje@workspace:packages/fremdriftslinje"
   dependencies:
-    react: ^17.0.2
-    react-dom: ^17.0.2
+    react: 17.0.2
+    react-dom: 17.0.2
   languageName: unknown
   linkType: soft
 
@@ -4689,8 +4689,8 @@ __metadata:
     "@fpsak-frontend/utils": 1.0.0
     "@fpsak-frontend/utils-test": 1.0.0
     "@k9-sak-web/types": 1.0.0
-    enzyme: ^3.11.0
-    moment: ^2.29.4
+    enzyme: 3.11.0
+    moment: 2.29.4
     nav-frontend-grid: 2.0.2
     nav-frontend-grid-style: 1.0.3
     nav-frontend-knapper: 3.1.3
@@ -4699,13 +4699,13 @@ __metadata:
     nav-frontend-modal-style: 2.0.2
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
-    react: ^17.0.2
+    react: 17.0.2
     react-intl: 6.2.10
-    react-redux: ^8.0.5
-    redux: ^4.2.1
-    redux-form: ^8.3.9
-    reselect: ^4.1.7
-    sinon: ^15.0.2
+    react-redux: 8.0.5
+    redux: 4.2.1
+    redux-form: 8.3.9
+    reselect: 4.1.7
+    sinon: 15.0.2
   languageName: unknown
   linkType: soft
 
@@ -4721,36 +4721,36 @@ __metadata:
     "@fpsak-frontend/utils-test": 1.0.0
     "@k9-sak-web/konstanter": 1.0.0
     "@k9-sak-web/types": 1.0.0
-    classnames: ^2.3.2
-    enzyme: ^3.11.0
-    lodash.throttle: ^4.1.1
-    moment: ^2.29.4
+    classnames: 2.3.2
+    enzyme: 3.11.0
+    lodash.throttle: 4.1.1
+    moment: 2.29.4
     nav-frontend-alertstriper: 4.0.2
     nav-frontend-alertstriper-style: 3.0.2
     nav-frontend-chevron: 1.0.30
     nav-frontend-core: 6.0.1
     nav-frontend-grid: 2.0.2
-    nav-frontend-hjelpetekst: ^3.1.3
-    nav-frontend-hjelpetekst-style: ^3.0.2
-    nav-frontend-ikoner-assets: ^3.0.1
-    nav-frontend-js-utils: ^1.0.20
-    nav-frontend-knapper: ^3.1.3
-    nav-frontend-lenker: ^2.0.2
-    nav-frontend-lenker-style: ^2.0.2
-    nav-frontend-paneler: ^3.0.2
-    nav-frontend-popover: ^2.0.4
-    nav-frontend-popover-style: ^2.0.2
-    nav-frontend-tabs: ^2.0.3
+    nav-frontend-hjelpetekst: 3.1.3
+    nav-frontend-hjelpetekst-style: 3.0.2
+    nav-frontend-ikoner-assets: 3.0.1
+    nav-frontend-js-utils: 1.0.20
+    nav-frontend-knapper: 3.1.3
+    nav-frontend-lenker: 2.0.2
+    nav-frontend-lenker-style: 2.0.2
+    nav-frontend-paneler: 3.0.2
+    nav-frontend-popover: 2.0.4
+    nav-frontend-popover-style: 2.0.2
+    nav-frontend-tabs: 2.0.3
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
-    prop-types: ^15.8.1
-    react: ^17.0.2
-    react-dom: ^17.0.2
+    prop-types: 15.8.1
+    react: 17.0.2
+    react-dom: 17.0.2
     react-intl: 6.2.10
-    react-redux: ^8.0.5
-    react-router-dom: ^6.9.0
-    redux-form: ^8.3.9
-    sinon: ^15.0.2
+    react-redux: 8.0.5
+    react-router-dom: 6.9.0
+    redux-form: 8.3.9
+    sinon: 15.0.2
   languageName: unknown
   linkType: soft
 
@@ -4765,18 +4765,18 @@ __metadata:
     "@fpsak-frontend/utils": 1.0.0
     "@fpsak-frontend/utils-test": 1.0.0
     "@k9-sak-web/types": 1.0.0
-    enzyme: ^3.11.0
+    enzyme: 3.11.0
     nav-frontend-core: 6.0.1
     nav-frontend-knapper: 3.1.3
     nav-frontend-knapper-style: 2.1.2
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
-    react: ^17.0.2
+    react: 17.0.2
     react-intl: 6.2.10
-    react-redux: ^8.0.5
-    redux: ^4.2.1
-    redux-form: ^8.3.9
-    sinon: ^15.0.2
+    react-redux: 8.0.5
+    redux: 4.2.1
+    redux-form: 8.3.9
+    sinon: 15.0.2
   languageName: unknown
   linkType: soft
 
@@ -4792,23 +4792,23 @@ __metadata:
     "@fpsak-frontend/utils-test": 1.0.0
     "@k9-sak-web/prosess-felles": 1.0.0
     "@k9-sak-web/types": 1.0.0
-    chai: ^4.3.7
-    classnames: ^2.3.2
-    enzyme: ^3.11.0
+    chai: 4.3.7
+    classnames: 2.3.2
+    enzyme: 3.11.0
     nav-frontend-grid: 2.0.2
     nav-frontend-grid-style: 1.0.3
     nav-frontend-knapper: 3.1.3
     nav-frontend-knapper-style: 2.1.2
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
-    prop-types: ^15.8.1
-    react: ^17.0.2
+    prop-types: 15.8.1
+    react: 17.0.2
     react-intl: 6.2.10
-    react-redux: ^8.0.5
-    redux: ^4.2.1
-    redux-form: ^8.3.9
-    reselect: ^4.1.7
-    sinon: ^15.0.2
+    react-redux: 8.0.5
+    redux: 4.2.1
+    redux-form: 8.3.9
+    reselect: 4.1.7
+    sinon: 15.0.2
   languageName: unknown
   linkType: soft
 
@@ -4820,11 +4820,11 @@ __metadata:
     "@fpsak-frontend/utils": 1.0.0
     "@fpsak-frontend/utils-test": 1.0.0
     "@k9-sak-web/fremdriftslinje": 1.0.0
-    enzyme: ^3.11.0
-    react: ^17.0.2
-    react-dom: ^17.0.2
+    enzyme: 3.11.0
+    react: 17.0.2
+    react-dom: 17.0.2
     react-intl: 6.2.10
-    sinon: ^15.0.2
+    sinon: 15.0.2
   languageName: unknown
   linkType: soft
 
@@ -4838,15 +4838,15 @@ __metadata:
     "@fpsak-frontend/utils-test": 1.0.0
     "@k9-sak-web/types": 1.0.0
     "@navikt/ft-form-hooks": 4.0.6
-    enzyme: ^3.11.0
+    enzyme: 3.11.0
     nav-frontend-core: 6.0.1
     nav-frontend-grid: 2.0.2
     nav-frontend-knapper: 3.1.3
-    react: ^17.0.2
-    react-dom: ^17.0.2
+    react: 17.0.2
+    react-dom: 17.0.2
     react-hook-form: 7.43.5
     react-intl: 6.2.10
-    sinon: ^15.0.2
+    sinon: 15.0.2
   languageName: unknown
   linkType: soft
 
@@ -4864,9 +4864,9 @@ __metadata:
     "@k9-sak-web/prosess-felles": 1.0.0
     "@k9-sak-web/types": 1.0.0
     "@navikt/ft-plattform-komponenter": 2.0.6
-    classnames: ^2.3.2
-    enzyme: ^3.11.0
-    moment: ^2.29.4
+    classnames: 2.3.2
+    enzyme: 3.11.0
+    moment: 2.29.4
     nav-frontend-knapper: 3.1.3
     nav-frontend-knapper-style: 2.1.2
     nav-frontend-spinner: 3.0.1
@@ -4874,13 +4874,13 @@ __metadata:
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
     object-hash: 3.0.0
-    react: ^17.0.2
+    react: 17.0.2
     react-intl: 6.2.10
-    react-redux: ^8.0.5
-    redux: ^4.2.1
-    redux-form: ^8.3.9
-    reselect: ^4.1.7
-    sinon: ^15.0.2
+    react-redux: 8.0.5
+    redux: 4.2.1
+    redux-form: 8.3.9
+    reselect: 4.1.7
+    sinon: 15.0.2
   languageName: unknown
   linkType: soft
 
@@ -4894,14 +4894,14 @@ __metadata:
     "@fpsak-frontend/utils": 1.0.0
     "@fpsak-frontend/utils-test": 1.0.0
     "@navikt/ft-plattform-komponenter": 2.0.6
-    classnames: ^2.3.2
-    enzyme: ^3.11.0
-    lodash.isequal: ^4.5.0
+    classnames: 2.3.2
+    enzyme: 3.11.0
+    lodash.isequal: 4.5.0
     nav-frontend-core: 6.0.1
     nav-frontend-spinner: 3.0.1
     nav-frontend-spinner-style: 1.0.2
     nav-frontend-typografi: 4.0.2
-    react: ^17.0.2
+    react: 17.0.2
     react-intl: 6.2.10
   languageName: unknown
   linkType: soft
@@ -4911,7 +4911,7 @@ __metadata:
   resolution: "@k9-sak-web/rest-api-hooks@workspace:packages/rest-api-hooks"
   dependencies:
     "@k9-sak-web/rest-api": 1.0.0
-    react: ^17.0.2
+    react: 17.0.2
   languageName: unknown
   linkType: soft
 
@@ -4921,7 +4921,7 @@ __metadata:
   dependencies:
     "@sentry/browser": 7.42.0
     axios: 0.27.2
-    node-cache: ^5.1.2
+    node-cache: 5.1.2
   languageName: unknown
   linkType: soft
 
@@ -4933,13 +4933,13 @@ __metadata:
     "@fpsak-frontend/sak-visittkort": 1.0.0
     "@fpsak-frontend/utils": 1.0.0
     "@k9-sak-web/types": 1.0.0
-    nav-frontend-lenkepanel: ^2.0.2
-    nav-frontend-lenkepanel-style: ^2.0.2
+    nav-frontend-lenkepanel: 2.0.2
+    nav-frontend-lenkepanel-style: 2.0.2
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
-    react: ^17.0.2
+    react: 17.0.2
     react-intl: 6.2.10
-    react-router-dom: ^6.9.0
+    react-router-dom: 6.9.0
   languageName: unknown
   linkType: soft
 
@@ -4947,8 +4947,8 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@k9-sak-web/sak-app@workspace:packages/sak-app"
   dependencies:
-    "@formatjs/intl-datetimeformat": ^6.5.1
-    "@formatjs/intl-numberformat": ^8.3.5
+    "@formatjs/intl-datetimeformat": 6.5.1
+    "@formatjs/intl-numberformat": 8.3.5
     "@fpsak-frontend/assets": 1.0.0
     "@fpsak-frontend/kodeverk": 1.0.0
     "@fpsak-frontend/prop-types": 1.0.0
@@ -4999,35 +4999,35 @@ __metadata:
     "@navikt/ft-ui-komponenter": 2.0.6
     "@sentry/browser": 7.42.0
     axios: 0.27.2
-    classnames: ^2.3.2
-    history: ^5.3.0
-    moment: ^2.29.4
-    nav-frontend-alertstriper: ^4.0.2
+    classnames: 2.3.2
+    history: 5.3.0
+    moment: 2.29.4
+    nav-frontend-alertstriper: 4.0.2
     nav-frontend-core: 6.0.1
     nav-frontend-grid: 2.0.2
     nav-frontend-grid-style: 1.0.3
     nav-frontend-knapper: 3.1.3
     nav-frontend-knapper-style: 2.1.2
-    nav-frontend-lenkepanel: ^2.0.2
-    nav-frontend-lenkepanel-style: ^2.0.2
+    nav-frontend-lenkepanel: 2.0.2
+    nav-frontend-lenkepanel-style: 2.0.2
     nav-frontend-modal: 2.0.2
     nav-frontend-modal-style: 2.0.2
     nav-frontend-paneler: 3.0.2
     nav-frontend-paneler-style: 2.0.2
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
-    prop-types: ^15.8.1
-    react: ^17.0.2
-    react-dom: ^17.0.2
+    prop-types: 15.8.1
+    react: 17.0.2
+    react-dom: 17.0.2
     react-intl: 6.2.10
-    react-redux: ^8.0.5
-    react-responsive: ^9.0.2
-    react-router-dom: ^6.9.0
-    redux: ^4.2.1
-    redux-form: ^8.3.9
-    redux-logger: ^3.0.6
-    redux-thunk: ^2.4.2
-    reselect: ^4.1.7
+    react-redux: 8.0.5
+    react-responsive: 9.0.2
+    react-router-dom: 6.9.0
+    redux: 4.2.1
+    redux-form: 8.3.9
+    redux-logger: 3.0.6
+    redux-thunk: 2.4.2
+    reselect: 4.1.7
   languageName: unknown
   linkType: soft
 
@@ -5042,10 +5042,10 @@ __metadata:
     "@fpsak-frontend/utils-test": 1.0.0
     "@k9-sak-web/konstanter": 1.0.0
     "@k9-sak-web/types": 1.0.0
-    classnames: ^2.3.2
-    enzyme: ^3.11.0
-    history: ^5.3.0
-    moment: ^2.29.4
+    classnames: 2.3.2
+    enzyme: 3.11.0
+    history: 5.3.0
+    moment: 2.29.4
     nav-frontend-chevron: 1.0.30
     nav-frontend-chevron-style: 1.0.4
     nav-frontend-core: 6.0.1
@@ -5055,11 +5055,11 @@ __metadata:
     nav-frontend-paneler-style: 2.0.2
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
-    react: ^17.0.2
+    react: 17.0.2
     react-intl: 6.2.10
     react-query: 3.39.3
-    react-router-dom: ^6.9.0
-    sinon: ^15.0.2
+    react-router-dom: 6.9.0
+    sinon: 15.0.2
   languageName: unknown
   linkType: soft
 
@@ -5070,9 +5070,9 @@ __metadata:
     nav-frontend-alertstriper: 4.0.2
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
-    react: ^17.0.2
+    react: 17.0.2
     react-intl: 6.2.10
-    react-router-dom: ^6.9.0
+    react-router-dom: 6.9.0
   languageName: unknown
   linkType: soft
 
@@ -5087,8 +5087,8 @@ __metadata:
     "@fpsak-frontend/utils": 1.0.0
     "@fpsak-frontend/utils-test": 1.0.0
     "@k9-sak-web/types": 1.0.0
-    classnames: ^2.3.2
-    enzyme: ^3.11.0
+    classnames: 2.3.2
+    enzyme: 3.11.0
     nav-frontend-core: 6.0.1
     nav-frontend-grid: 2.0.2
     nav-frontend-grid-style: 1.0.3
@@ -5098,12 +5098,12 @@ __metadata:
     nav-frontend-modal-style: 2.0.2
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
-    react: ^17.0.2
+    react: 17.0.2
     react-intl: 6.2.10
-    react-redux: ^8.0.5
-    redux-form: ^8.3.9
-    reselect: ^4.1.7
-    sinon: ^15.0.2
+    react-redux: 8.0.5
+    redux-form: 8.3.9
+    reselect: 4.1.7
+    sinon: 15.0.2
   languageName: unknown
   linkType: soft
 
@@ -5117,14 +5117,14 @@ __metadata:
     "@fpsak-frontend/utils": 1.0.0
     "@k9-sak-web/types": 1.0.0
     "@navikt/ds-react": 2.7.6
-    formik: ^2.2.9
+    formik: 2.2.9
     nav-frontend-core: 6.0.1
     nav-frontend-knapper: 3.1.3
     nav-frontend-knapper-style: 2.1.2
     nav-frontend-skjema: 4.0.6
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
-    react: ^17.0.2
+    react: 17.0.2
     react-intl: 6.2.10
     yup: 0.32.11
   languageName: unknown
@@ -5138,12 +5138,12 @@ __metadata:
     "@fpsak-frontend/shared-components": 1.0.0
     "@fpsak-frontend/utils": 1.0.0
     "@k9-sak-web/types": 1.0.0
-    "@navikt/k9-period-utils": 1.0.1
+    "@navikt/k9-fe-period-utils": 1.0.2
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
-    react: ^17.0.2
+    react: 17.0.2
     react-intl: 6.2.10
-    react-router-dom: ^6.9.0
+    react-router-dom: 6.9.0
   languageName: unknown
   linkType: soft
 
@@ -5151,7 +5151,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@k9-sak-web/types@workspace:packages/types"
   dependencies:
-    "@navikt/k9-period-utils": ^1.0.1
+    "@navikt/k9-fe-period-utils": 1.0.2
   languageName: unknown
   linkType: soft
 
@@ -5309,7 +5309,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@navikt/familie-endringslogg@npm:^8.1.0":
+"@navikt/familie-endringslogg@npm:8.1.0":
   version: 8.1.0
   resolution: "@navikt/familie-endringslogg@npm:8.1.0::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Ffamilie-endringslogg%2F8.1.0%2F65a9ce7f00f2407365192368ff184055e3d2096d"
   dependencies:
@@ -5533,7 +5533,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@navikt/ft-types@npm:^2.0.6":
+"@navikt/ft-types@npm:2.0.6, @navikt/ft-types@npm:^2.0.6":
   version: 2.0.6
   resolution: "@navikt/ft-types@npm:2.0.6::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fft-types%2F2.0.6%2F5d9ec6c1a287e678eff16b22febcbed801b536b2"
   dependencies:
@@ -5592,44 +5592,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@navikt/k9-array-utils@npm:0.0.1":
-  version: 0.0.1
-  resolution: "@navikt/k9-array-utils@npm:0.0.1::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fk9-array-utils%2F0.0.1%2F05d7fa6a8e8194f121667cf9c945e7f2d325b088"
-  checksum: 8b8fd562beedfc263615eef275f3db08dc545963ce43c6397132a5e2e2b11b339f52ecc2094bb9a2442af936a26c8056fc232779de9c19690d87f12188181db7
-  languageName: node
-  linkType: hard
-
-"@navikt/k9-array-utils@npm:1.0.1":
-  version: 1.0.1
-  resolution: "@navikt/k9-array-utils@npm:1.0.1::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fk9-array-utils%2F1.0.1%2Febcc44c1356bc2af138d6140a722219aa9952139"
-  checksum: 4fcd332be4f4108fcf8d6ffd802bfd27c27b20a1d9a38b01a500883bcb11d8d60080d046ca2b2060e73294e2c3aae10cc581a1aa2d68057fe4e9943a09ebb9b8
-  languageName: node
-  linkType: hard
-
-"@navikt/k9-bem-utils@npm:1.0.1":
-  version: 1.0.1
-  resolution: "@navikt/k9-bem-utils@npm:1.0.1::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fk9-bem-utils%2F1.0.1%2F451f330cbf3636c6406468c157468ea07dfb3b10"
-  checksum: 32be169f9f22604930a9047a2a6850217016ce99f6800cf36a68e9984cf0310b7cd29a3f4e979b2d455db10da43c0f2f9e2018d4210c52350174996dfed9c035
-  languageName: node
-  linkType: hard
-
-"@navikt/k9-date-utils@npm:0.1.0":
-  version: 0.1.0
-  resolution: "@navikt/k9-date-utils@npm:0.1.0::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fk9-date-utils%2F0.1.0%2F4b3c0a162bd31145593a8b12a535d74211c0d437"
-  peerDependencies:
-    dayjs: 1.11.6
-  checksum: cce23a531bb6b98e232714520cd3e95bc8d6628a41ae6e50bcf55b4cb0fc8c39ea1c23142e4a15a22df9d4edf39f8f4cb5f12ef6c8842d2c052ccd2c08fa2116
-  languageName: node
-  linkType: hard
-
-"@navikt/k9-fe-array-utils@npm:^1.0.1":
+"@navikt/k9-fe-array-utils@npm:1.0.1, @navikt/k9-fe-array-utils@npm:^1.0.1":
   version: 1.0.1
   resolution: "@navikt/k9-fe-array-utils@npm:1.0.1::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fk9-fe-array-utils%2F1.0.1%2F58735d9c9d3b72f58a6073e9b2c4ed89830c7966"
   checksum: e0a9ee765523070db0ce79e1e06133d25b982875601b670d933b0f42c44a8fe70d0143c9ad541b8a7004de0b15b99a0ce22066189846c24412f52ded4a99daad
   languageName: node
   linkType: hard
 
-"@navikt/k9-fe-bem-utils@npm:^1.0.1":
+"@navikt/k9-fe-bem-utils@npm:1.0.1":
   version: 1.0.1
   resolution: "@navikt/k9-fe-bem-utils@npm:1.0.1::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fk9-fe-bem-utils%2F1.0.1%2Fd50274dc796d848416fd5336a57c04ea7025a268"
   checksum: 55f21fa490399424dcd253b0d0d3763730cc8f10dc2812c9fceabe162e7bf9860a4f850198deee13246c33d21dec20fc4f7ccb00ea8eac506e9ef48f6328db83
@@ -5645,60 +5615,42 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@navikt/k9-form-utils@npm:2.0.0":
-  version: 2.0.0
-  resolution: "@navikt/k9-form-utils@npm:2.0.0::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fk9-form-utils%2F2.0.0%2Fed1782675b18d5231b5c31979547a7c878668c21"
+"@navikt/k9-fe-form-utils@npm:1.0.2":
+  version: 1.0.2
+  resolution: "@navikt/k9-fe-form-utils@npm:1.0.2::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fk9-fe-form-utils%2F1.0.2%2F60eadbe49b56f988c31dcd7f3f27e487f0861090"
   dependencies:
-    "@navikt/k9-bem-utils": 1.0.1
-    "@navikt/k9-period-utils": 1.0.0
+    "@navikt/k9-fe-bem-utils": 1.0.1
+    "@navikt/k9-fe-period-utils": 1.0.2
   peerDependencies:
     "@hookform/error-message": 2.0.1
-    "@navikt/ds-css": 2.0.14
-    "@navikt/ds-react": 2.0.14
+    "@navikt/ds-css": 2.1.7
+    "@navikt/ds-react": 2.1.7
     "@navikt/fnrvalidator": 1.3.3
-    "@navikt/ft-plattform-komponenter": 1.4.5
+    "@navikt/ft-plattform-komponenter": 1.4.13
     "@popperjs/core": 2.11.6
     "@storybook/react": 6.5.15
     classnames: 2.3.2
     dayjs: 1.11.7
     lodash.throttle: 4.1.1
-    nav-datovelger: 12.6.0
-    nav-frontend-js-utils: ^1.0.20
-    nav-frontend-knapper-style: ^2.1.2
-    nav-frontend-skjema-style: 3.0.3
-    nav-frontend-typografi-style: ^2.0.2
-    prop-types: 15.8.1
     react: 18.2.0
     react-collapse: 5.1.1
     react-day-picker: 7.4.10
     react-dom: 18.2.0
-    react-hook-form: 7.42.1
+    react-hook-form: 7.43.0
     react-popper: 2.3.0
-  checksum: fcc28dfa6aa6f8a0349a169fb03b67bf776ace909d99c6f4b3da299e951fd068e4635406cdda8472b897940a7f02ce825a0896ed1ef159ca1d84c50b0b3587dd
+  checksum: 13b29b41d44ceaf59a93c44112c28067402d966245c2aa4afecf7c43d05809ef694ec6b4737570ec965ede1db5554e2090e71d06b945563d304bba7e2c455450
   languageName: node
   linkType: hard
 
-"@navikt/k9-period-utils@npm:1.0.0":
-  version: 1.0.0
-  resolution: "@navikt/k9-period-utils@npm:1.0.0::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fk9-period-utils%2F1.0.0%2F8a69c9e9e9036d63ed381284e6d2ec8404a32a47"
+"@navikt/k9-fe-period-utils@npm:1.0.2":
+  version: 1.0.2
+  resolution: "@navikt/k9-fe-period-utils@npm:1.0.2::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fk9-fe-period-utils%2F1.0.2%2F9a0c5408bec29aa6d62e843476bce77c3e1cc9b0"
   dependencies:
-    "@navikt/k9-array-utils": 0.0.1
-    "@navikt/k9-date-utils": 0.1.0
+    "@navikt/k9-fe-array-utils": ^1.0.1
+    "@navikt/k9-fe-date-utils": ^1.0.1
   peerDependencies:
     dayjs: 1.11.7
-  checksum: 086e01f66a33dd3cbb45c1bb3ddaee25337fe98d30119bc3eefa218b861761f019ef27b318610aa4205899fb2e3c3464c278da5e69810bdd7ca8058b9c8be9ff
-  languageName: node
-  linkType: hard
-
-"@navikt/k9-period-utils@npm:1.0.1, @navikt/k9-period-utils@npm:^1.0.1":
-  version: 1.0.1
-  resolution: "@navikt/k9-period-utils@npm:1.0.1::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fk9-period-utils%2F1.0.1%2F39ecb9a306628635d763cc3a084b783adb48d516"
-  dependencies:
-    "@navikt/k9-array-utils": 1.0.1
-    "@navikt/k9-date-utils": 0.1.0
-  peerDependencies:
-    dayjs: 1.11.7
-  checksum: dde1cbfb5e8e21eba57f9f71b59522305bb6d301cecc63e2d870731e045b3ea0b95362d7dceca2244f5a5439f77071cb3a8f92c6c28e6509b8b1cfca4a4ff18f
+  checksum: 2051cb750728f922538ca13882c25346fff473132b18a492ebf66b8eb69c840704053e5dd34daaca49d48b522714c64870ba89279dbbb64c9f92ba12848962e7
   languageName: node
   linkType: hard
 
@@ -6237,7 +6189,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@pmmmwh/react-refresh-webpack-plugin@npm:^0.5.10, @pmmmwh/react-refresh-webpack-plugin@npm:^0.5.3":
+"@pmmmwh/react-refresh-webpack-plugin@npm:0.5.10, @pmmmwh/react-refresh-webpack-plugin@npm:^0.5.3":
   version: 0.5.10
   resolution: "@pmmmwh/react-refresh-webpack-plugin@npm:0.5.10"
   dependencies:
@@ -6276,7 +6228,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@popperjs/core@npm:^2.11.6":
+"@popperjs/core@npm:2.11.6":
   version: 2.11.6
   resolution: "@popperjs/core@npm:2.11.6"
   checksum: 47fb328cec1924559d759b48235c78574f2d71a8a6c4c03edb6de5d7074078371633b91e39bbf3f901b32aa8af9b9d8f82834856d2f5737a23475036b16817f0
@@ -6612,7 +6564,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@sentry/cli@npm:^2.14.4":
+"@sentry/cli@npm:2.14.4":
   version: 2.14.4
   resolution: "@sentry/cli@npm:2.14.4"
   dependencies:
@@ -6725,7 +6677,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@storybook/addon-actions@npm:6.5.16, @storybook/addon-actions@npm:^6.5.16":
+"@storybook/addon-actions@npm:6.5.16":
   version: 6.5.16
   resolution: "@storybook/addon-actions@npm:6.5.16"
   dependencies:
@@ -6817,7 +6769,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@storybook/addon-docs@npm:6.5.16, @storybook/addon-docs@npm:^6.5.16":
+"@storybook/addon-docs@npm:6.5.16":
   version: 6.5.16
   resolution: "@storybook/addon-docs@npm:6.5.16"
   dependencies:
@@ -6864,7 +6816,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@storybook/addon-essentials@npm:^6.5.16":
+"@storybook/addon-essentials@npm:6.5.16":
   version: 6.5.16
   resolution: "@storybook/addon-essentials@npm:6.5.16"
   dependencies:
@@ -6924,7 +6876,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@storybook/addon-knobs@npm:^6.4.0":
+"@storybook/addon-knobs@npm:6.4.0":
   version: 6.4.0
   resolution: "@storybook/addon-knobs@npm:6.4.0"
   dependencies:
@@ -7056,7 +7008,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@storybook/addons@npm:6.5.16, @storybook/addons@npm:^6.5.16":
+"@storybook/addons@npm:6.5.16":
   version: 6.5.16
   resolution: "@storybook/addons@npm:6.5.16"
   dependencies:
@@ -7167,7 +7119,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@storybook/builder-webpack5@npm:^6.5.16":
+"@storybook/builder-webpack5@npm:6.5.16":
   version: 6.5.16
   resolution: "@storybook/builder-webpack5@npm:6.5.16"
   dependencies:
@@ -7258,7 +7210,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@storybook/cli@npm:^6.5.16":
+"@storybook/cli@npm:6.5.16":
   version: 6.5.16
   resolution: "@storybook/cli@npm:6.5.16"
   dependencies:
@@ -7680,7 +7632,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@storybook/manager-webpack5@npm:^6.5.16":
+"@storybook/manager-webpack5@npm:6.5.16":
   version: 6.5.16
   resolution: "@storybook/manager-webpack5@npm:6.5.16"
   dependencies:
@@ -7812,7 +7764,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@storybook/react@npm:^6.5.16":
+"@storybook/react@npm:6.5.16":
   version: 6.5.16
   resolution: "@storybook/react@npm:6.5.16"
   dependencies:
@@ -7952,7 +7904,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@storybook/storybook-deployer@npm:^2.8.16":
+"@storybook/storybook-deployer@npm:2.8.16":
   version: 2.8.16
   resolution: "@storybook/storybook-deployer@npm:2.8.16"
   dependencies:
@@ -7988,7 +7940,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@storybook/testing-react@npm:^1.3.0":
+"@storybook/testing-react@npm:1.3.0":
   version: 1.3.0
   resolution: "@storybook/testing-react@npm:1.3.0"
   dependencies:
@@ -8003,7 +7955,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@storybook/theming@npm:6.5.16, @storybook/theming@npm:^6.5.16":
+"@storybook/theming@npm:6.5.16":
   version: 6.5.16
   resolution: "@storybook/theming@npm:6.5.16"
   dependencies:
@@ -8183,7 +8135,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@svgr/webpack@npm:^6.5.1":
+"@svgr/webpack@npm:6.5.1":
   version: 6.5.1
   resolution: "@svgr/webpack@npm:6.5.1"
   dependencies:
@@ -8208,7 +8160,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@testing-library/dom@npm:^8.0.0, @testing-library/dom@npm:^8.11.1, @testing-library/dom@npm:^8.20.0":
+"@testing-library/dom@npm:8.20.0, @testing-library/dom@npm:^8.0.0, @testing-library/dom@npm:^8.11.1":
   version: 8.20.0
   resolution: "@testing-library/dom@npm:8.20.0"
   dependencies:
@@ -8224,7 +8176,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@testing-library/jest-dom@npm:^5.16.5":
+"@testing-library/jest-dom@npm:5.16.5":
   version: 5.16.5
   resolution: "@testing-library/jest-dom@npm:5.16.5"
   dependencies:
@@ -8241,7 +8193,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@testing-library/react@npm:^12.1.5":
+"@testing-library/react@npm:12.1.5":
   version: 12.1.5
   resolution: "@testing-library/react@npm:12.1.5"
   dependencies:
@@ -8255,7 +8207,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@testing-library/user-event@npm:^13.5.0":
+"@testing-library/user-event@npm:13.5.0":
   version: 13.5.0
   resolution: "@testing-library/user-event@npm:13.5.0"
   dependencies:
@@ -8347,7 +8299,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/chai@npm:^4.3.4":
+"@types/chai@npm:4.3.4":
   version: 4.3.4
   resolution: "@types/chai@npm:4.3.4"
   checksum: 571184967beb03bf64c4392a13a7d44e72da9af5a1e83077ff81c39cf59c0fda2a5c78d2005084601cf8f3d11726608574d8b5b4a0e3e9736792807afd926cd0
@@ -8398,7 +8350,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/enzyme@npm:^3.10.12":
+"@types/enzyme@npm:3.10.12":
   version: 3.10.12
   resolution: "@types/enzyme@npm:3.10.12"
   dependencies:
@@ -8503,19 +8455,19 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/history@npm:^4.7.11":
-  version: 4.7.11
-  resolution: "@types/history@npm:4.7.11"
-  checksum: c92e2ba407dcab0581a9afdf98f533aa41b61a71133420a6d92b1ca9839f741ab1f9395b17454ba5b88cb86020b70b22d74a1950ccfbdfd9beeaa5459fdc3464
-  languageName: node
-  linkType: hard
-
-"@types/history@npm:^5.0.0":
+"@types/history@npm:5.0.0":
   version: 5.0.0
   resolution: "@types/history@npm:5.0.0"
   dependencies:
     history: "*"
   checksum: 53d35a7b3b7425dd1bac33ea024e3446eb9b8b1a390fef9bedb9428a6cfe84d9716d69c74364068dfca082abbbc5d5d126c5472ee5507150c4f55127422b5462
+  languageName: node
+  linkType: hard
+
+"@types/history@npm:^4.7.11":
+  version: 4.7.11
+  resolution: "@types/history@npm:4.7.11"
+  checksum: c92e2ba407dcab0581a9afdf98f533aa41b61a71133420a6d92b1ca9839f741ab1f9395b17454ba5b88cb86020b70b22d74a1950ccfbdfd9beeaa5459fdc3464
   languageName: node
   linkType: hard
 
@@ -8584,7 +8536,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/jest@npm:*, @types/jest@npm:^29.4.0":
+"@types/jest@npm:*, @types/jest@npm:29.4.0":
   version: 29.4.0
   resolution: "@types/jest@npm:29.4.0"
   dependencies:
@@ -8759,7 +8711,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/prop-types@npm:*, @types/prop-types@npm:^15.7.5":
+"@types/prop-types@npm:*, @types/prop-types@npm:15.7.5":
   version: 15.7.5
   resolution: "@types/prop-types@npm:15.7.5"
   checksum: 5b43b8b15415e1f298243165f1d44390403bb2bd42e662bca3b5b5633fdd39c938e91b7fce3a9483699db0f7a715d08cef220c121f723a634972fdf596aec980
@@ -8780,7 +8732,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react-collapse@npm:^5.0.1":
+"@types/react-collapse@npm:5.0.1":
   version: 5.0.1
   resolution: "@types/react-collapse@npm:5.0.1"
   dependencies:
@@ -8807,7 +8759,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react-router-dom@npm:^5.3.3":
+"@types/react-router-dom@npm:5.3.3":
   version: 5.3.3
   resolution: "@types/react-router-dom@npm:5.3.3"
   dependencies:
@@ -8828,7 +8780,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react@npm:^17":
+"@types/react@npm:17":
   version: 17.0.53
   resolution: "@types/react@npm:17.0.53"
   dependencies:
@@ -8839,7 +8791,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/redux-form@npm:^8.3.5":
+"@types/redux-form@npm:8.3.5":
   version: 8.3.5
   resolution: "@types/redux-form@npm:8.3.5"
   dependencies:
@@ -8907,7 +8859,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/sinon@npm:^10.0.13":
+"@types/sinon@npm:10.0.13":
   version: 10.0.13
   resolution: "@types/sinon@npm:10.0.13"
   dependencies:
@@ -8946,7 +8898,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/styled-components@npm:^5.1.26":
+"@types/styled-components@npm:5.1.26":
   version: 5.1.26
   resolution: "@types/styled-components@npm:5.1.26"
   dependencies:
@@ -9069,7 +9021,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/yup@npm:^0.32.0":
+"@types/yup@npm:0.32.0":
   version: 0.32.0
   resolution: "@types/yup@npm:0.32.0"
   dependencies:
@@ -9078,7 +9030,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@typescript-eslint/eslint-plugin@npm:^5.54.1":
+"@typescript-eslint/eslint-plugin@npm:5.54.1":
   version: 5.54.1
   resolution: "@typescript-eslint/eslint-plugin@npm:5.54.1"
   dependencies:
@@ -9102,7 +9054,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@typescript-eslint/parser@npm:^5.54.1":
+"@typescript-eslint/parser@npm:5.54.1":
   version: 5.54.1
   resolution: "@typescript-eslint/parser@npm:5.54.1"
   dependencies:
@@ -9627,7 +9579,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@wojtekmaj/enzyme-adapter-react-17@npm:^0.8.0":
+"@wojtekmaj/enzyme-adapter-react-17@npm:0.8.0":
   version: 0.8.0
   resolution: "@wojtekmaj/enzyme-adapter-react-17@npm:0.8.0"
   dependencies:
@@ -10544,7 +10496,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"axios-mock-adapter@npm:^1.21.2":
+"axios-mock-adapter@npm:1.21.2":
   version: 1.21.2
   resolution: "axios-mock-adapter@npm:1.21.2"
   dependencies:
@@ -10595,7 +10547,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"babel-jest@npm:^29.5.0":
+"babel-jest@npm:29.5.0, babel-jest@npm:^29.5.0":
   version: 29.5.0
   resolution: "babel-jest@npm:29.5.0"
   dependencies:
@@ -10612,6 +10564,19 @@ __metadata:
   languageName: node
   linkType: hard
 
+"babel-loader@npm:9.1.2":
+  version: 9.1.2
+  resolution: "babel-loader@npm:9.1.2"
+  dependencies:
+    find-cache-dir: ^3.3.2
+    schema-utils: ^4.0.0
+  peerDependencies:
+    "@babel/core": ^7.12.0
+    webpack: ">=5"
+  checksum: f0edb8e157f9806b810ba3f2c8ca8fa489d377ae5c2b7b00c2ace900a6925641ce4ec520b9c12f70e37b94aa5366e7003e0f6271b26821643e109966ce741cb7
+  languageName: node
+  linkType: hard
+
 "babel-loader@npm:^8.0.0":
   version: 8.3.0
   resolution: "babel-loader@npm:8.3.0"
@@ -10624,19 +10589,6 @@ __metadata:
     "@babel/core": ^7.0.0
     webpack: ">=2"
   checksum: d48bcf9e030e598656ad3ff5fb85967db2eaaf38af5b4a4b99d25618a2057f9f100e6b231af2a46c1913206db506115ca7a8cbdf52c9c73d767070dae4352ab5
-  languageName: node
-  linkType: hard
-
-"babel-loader@npm:^9.1.2":
-  version: 9.1.2
-  resolution: "babel-loader@npm:9.1.2"
-  dependencies:
-    find-cache-dir: ^3.3.2
-    schema-utils: ^4.0.0
-  peerDependencies:
-    "@babel/core": ^7.12.0
-    webpack: ">=5"
-  checksum: f0edb8e157f9806b810ba3f2c8ca8fa489d377ae5c2b7b00c2ace900a6925641ce4ec520b9c12f70e37b94aa5366e7003e0f6271b26821643e109966ce741cb7
   languageName: node
   linkType: hard
 
@@ -11024,7 +10976,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"body-parser@npm:^1.20.2":
+"body-parser@npm:1.20.2":
   version: 1.20.2
   resolution: "body-parser@npm:1.20.2"
   dependencies:
@@ -11237,17 +11189,18 @@ __metadata:
   languageName: node
   linkType: hard
 
-"browserslist@npm:^4.16.5":
-  version: 4.21.5
-  resolution: "browserslist@npm:4.21.5"
+"browserslist@npm:4.16.5":
+  version: 4.16.5
+  resolution: "browserslist@npm:4.16.5"
   dependencies:
-    caniuse-lite: ^1.0.30001449
-    electron-to-chromium: ^1.4.284
-    node-releases: ^2.0.8
-    update-browserslist-db: ^1.0.10
+    caniuse-lite: ^1.0.30001214
+    colorette: ^1.2.2
+    electron-to-chromium: ^1.3.719
+    escalade: ^3.1.1
+    node-releases: ^1.1.71
   bin:
     browserslist: cli.js
-  checksum: 9755986b22e73a6a1497fd8797aedd88e04270be33ce66ed5d85a1c8a798292a65e222b0f251bafa1c2522261e237d73b08b58689d4920a607e5a53d56dc4706
+  checksum: 8d060e01829a99e9525a5d2ab93193c5fe56790e6f46e44428fac634c3eb8dd7294d53763cdde9d7614bda5a81dc38d2cd946b761aa05fc70799aa685d472287
   languageName: node
   linkType: hard
 
@@ -11467,7 +11420,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"cache-loader@npm:^4.1.0":
+"cache-loader@npm:4.1.0":
   version: 4.1.0
   resolution: "cache-loader@npm:4.1.0"
   dependencies:
@@ -11600,10 +11553,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"caniuse-lite@npm:^1.0.0, caniuse-lite@npm:^1.0.30001109, caniuse-lite@npm:^1.0.30001449":
+"caniuse-lite@npm:^1.0.0, caniuse-lite@npm:^1.0.30001109":
   version: 1.0.30001458
   resolution: "caniuse-lite@npm:1.0.30001458"
   checksum: 258cc5a25babbbfe483bf788c6f321a19400ff80b2bf156b360bac09a6f9f4da44516350d187a30395667cb142c682d9ea96577ea0df236d35f76234b07ccb41
+  languageName: node
+  linkType: hard
+
+"caniuse-lite@npm:^1.0.30001214":
+  version: 1.0.30001465
+  resolution: "caniuse-lite@npm:1.0.30001465"
+  checksum: c991ecdfff378a22b268f9b1eb732d003c8ad89db3241a4cdec3b3ec3354aa966a44171cb806c90abe2e3f0573d67dc29a7dce2478b1f070b23747c392244c5d
   languageName: node
   linkType: hard
 
@@ -11630,7 +11590,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"chai@npm:^4.3.7":
+"chai@npm:4.3.7":
   version: 4.3.7
   resolution: "chai@npm:4.3.7"
   dependencies:
@@ -11861,7 +11821,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"circular-dependency-plugin@npm:^5.2.2":
+"circular-dependency-plugin@npm:5.2.2":
   version: 5.2.2
   resolution: "circular-dependency-plugin@npm:5.2.2"
   peerDependencies:
@@ -11889,7 +11849,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"classnames@npm:2.3.2, classnames@npm:^2.3.1, classnames@npm:^2.3.2":
+"classnames@npm:2.3.2, classnames@npm:^2.3.1":
   version: 2.3.2
   resolution: "classnames@npm:2.3.2"
   checksum: 2c62199789618d95545c872787137262e741f9db13328e216b093eea91c85ef2bfb152c1f9e63027204e2559a006a92eb74147d46c800a9f96297ae1d9f96f4e
@@ -12614,7 +12574,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"copy-webpack-plugin@npm:^11.0.0":
+"copy-webpack-plugin@npm:11.0.0":
   version: 11.0.0
   resolution: "copy-webpack-plugin@npm:11.0.0"
   dependencies:
@@ -12646,7 +12606,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"core-js@npm:3.29.1, core-js@npm:^3.29.1":
+"core-js@npm:3.29.1":
   version: 3.29.1
   resolution: "core-js@npm:3.29.1"
   checksum: b38446dbfcfd3887b3d4922990da487e2c95044cb4c5717aaf95e786a4c6b218f05c056c7ed6c699169b9794a49fec890e402659d54661fc56965a0eb717e7bd
@@ -12805,7 +12765,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"cross-env@npm:^7.0.3":
+"cross-env@npm:7.0.3":
   version: 7.0.3
   resolution: "cross-env@npm:7.0.3"
   dependencies:
@@ -12958,7 +12918,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"css-minimizer-webpack-plugin@npm:^4.2.2":
+"css-minimizer-webpack-plugin@npm:4.2.2":
   version: 4.2.2
   resolution: "css-minimizer-webpack-plugin@npm:4.2.2"
   dependencies:
@@ -13024,6 +12984,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"css-tree@npm:2.3.1, css-tree@npm:^2.3.1":
+  version: 2.3.1
+  resolution: "css-tree@npm:2.3.1"
+  dependencies:
+    mdn-data: 2.0.30
+    source-map-js: ^1.0.1
+  checksum: 493cc24b5c22b05ee5314b8a0d72d8a5869491c1458017ae5ed75aeb6c3596637dbe1b11dac2548974624adec9f7a1f3a6cf40593dc1f9185eb0e8279543fbc0
+  languageName: node
+  linkType: hard
+
 "css-tree@npm:^1.1.2, css-tree@npm:^1.1.3":
   version: 1.1.3
   resolution: "css-tree@npm:1.1.3"
@@ -13031,16 +13001,6 @@ __metadata:
     mdn-data: 2.0.14
     source-map: ^0.6.1
   checksum: 79f9b81803991b6977b7fcb1588799270438274d89066ce08f117f5cdb5e20019b446d766c61506dd772c839df84caa16042d6076f20c97187f5abe3b50e7d1f
-  languageName: node
-  linkType: hard
-
-"css-tree@npm:^2.3.1":
-  version: 2.3.1
-  resolution: "css-tree@npm:2.3.1"
-  dependencies:
-    mdn-data: 2.0.30
-    source-map-js: ^1.0.1
-  checksum: 493cc24b5c22b05ee5314b8a0d72d8a5869491c1458017ae5ed75aeb6c3596637dbe1b11dac2548974624adec9f7a1f3a6cf40593dc1f9185eb0e8279543fbc0
   languageName: node
   linkType: hard
 
@@ -13242,7 +13202,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"date-fns-tz@npm:^2.0.0":
+"date-fns-tz@npm:2.0.0":
   version: 2.0.0
   resolution: "date-fns-tz@npm:2.0.0"
   peerDependencies:
@@ -13251,7 +13211,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"date-fns@npm:2.29.3, date-fns@npm:^2.29.3":
+"date-fns@npm:2.29.3":
   version: 2.29.3
   resolution: "date-fns@npm:2.29.3"
   checksum: e01cf5b62af04e05dfff921bb9c9933310ed0e1ae9a81eb8653452e64dc841acf7f6e01e1a5ae5644d0337e9a7f936175fd2cb6819dc122fdd9c5e86c56be484
@@ -13272,7 +13232,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"dayjs@npm:1.11.7, dayjs@npm:^1.11.7":
+"dayjs@npm:1.11.7":
   version: 1.11.7
   resolution: "dayjs@npm:1.11.7"
   checksum: 5003a7c1dd9ed51385beb658231c3548700b82d3548c0cfbe549d85f2d08e90e972510282b7506941452c58d32136d6362f009c77ca55381a09c704e9f177ebb
@@ -13882,7 +13842,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"dotenv@npm:^16.0.3":
+"dotenv@npm:16.0.3":
   version: 16.0.3
   resolution: "dotenv@npm:16.0.3"
   checksum: afcf03f373d7a6d62c7e9afea6328e62851d627a4e73f2e12d0a8deae1cd375892004f3021883f8aec85932cd2834b091f568ced92b4774625b321db83b827f8
@@ -13946,7 +13906,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"editorjs-html@npm:^3.4.2":
+"editorjs-html@npm:3.4.2":
   version: 3.4.2
   resolution: "editorjs-html@npm:3.4.2"
   checksum: 61d21c1056f8d6362e8fe9ea5c3a7faf88b1a4970ae948c1a54232c058a6ffcd9c016a50c72ba4421b3fd9aa18776c40dfd0aae7071c96e4504467d3577ae03a
@@ -13971,10 +13931,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"electron-to-chromium@npm:^1.4.284":
-  version: 1.4.311
-  resolution: "electron-to-chromium@npm:1.4.311"
-  checksum: 663fde5d90293d19c05b0dc65996e1ba6f3ee89d6365de3503de6a96c21439e18ea579fdd7d718e260708aa871ef333de934a4024d54fd109959ac0bca9d1400
+"electron-to-chromium@npm:^1.3.719":
+  version: 1.4.328
+  resolution: "electron-to-chromium@npm:1.4.328"
+  checksum: 82c1617a77e40ac4ca5011749318a2fee8f8c75f8b517fcff7602219c85fd97a9fab2d5a1353ea10fb7f9c7d18acb90c9ed58c2292256f81e2ffa42ee66c4b0b
   languageName: node
   linkType: hard
 
@@ -14138,7 +14098,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"enzyme@npm:^3.11.0":
+"enzyme@npm:3.11.0":
   version: 3.11.0
   resolution: "enzyme@npm:3.11.0"
   dependencies:
@@ -14404,7 +14364,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-config-airbnb@npm:^19.0.4":
+"eslint-config-airbnb@npm:19.0.4":
   version: 19.0.4
   resolution: "eslint-config-airbnb@npm:19.0.4"
   dependencies:
@@ -14421,7 +14381,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-config-prettier@npm:^8.7.0":
+"eslint-config-prettier@npm:8.7.0":
   version: 8.7.0
   resolution: "eslint-config-prettier@npm:8.7.0"
   peerDependencies:
@@ -14432,7 +14392,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-import-resolver-lerna@npm:^2.0.0":
+"eslint-import-resolver-lerna@npm:2.0.0":
   version: 2.0.0
   resolution: "eslint-import-resolver-lerna@npm:2.0.0"
   checksum: 241ae04cdf93a926d33d60966b52832e7ac37fbd64cd229afb0a2e8af944370957250050b2879f34167b737f93da5d7f645b9ec75bb3393eea5aac8632139a15
@@ -14450,7 +14410,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-import-resolver-webpack@npm:^0.13.2":
+"eslint-import-resolver-webpack@npm:0.13.2":
   version: 0.13.2
   resolution: "eslint-import-resolver-webpack@npm:0.13.2"
   dependencies:
@@ -14472,7 +14432,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-loader@npm:^4.0.2":
+"eslint-loader@npm:4.0.2":
   version: 4.0.2
   resolution: "eslint-loader@npm:4.0.2"
   dependencies:
@@ -14500,7 +14460,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-plugin-import@npm:^2.27.5":
+"eslint-plugin-import@npm:2.27.5":
   version: 2.27.5
   resolution: "eslint-plugin-import@npm:2.27.5"
   dependencies:
@@ -14525,7 +14485,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-plugin-jest-dom@npm:^4.0.3":
+"eslint-plugin-jest-dom@npm:4.0.3":
   version: 4.0.3
   resolution: "eslint-plugin-jest-dom@npm:4.0.3"
   dependencies:
@@ -14538,7 +14498,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-plugin-jest@npm:^27.2.1":
+"eslint-plugin-jest@npm:27.2.1":
   version: 27.2.1
   resolution: "eslint-plugin-jest@npm:27.2.1"
   dependencies:
@@ -14555,7 +14515,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-plugin-jsx-a11y@npm:^6.7.1":
+"eslint-plugin-jsx-a11y@npm:6.7.1":
   version: 6.7.1
   resolution: "eslint-plugin-jsx-a11y@npm:6.7.1"
   dependencies:
@@ -14581,7 +14541,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-plugin-react@npm:^7.32.2":
+"eslint-plugin-react@npm:7.32.2":
   version: 7.32.2
   resolution: "eslint-plugin-react@npm:7.32.2"
   dependencies:
@@ -14661,7 +14621,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-webpack-plugin@npm:^4.0.0":
+"eslint-webpack-plugin@npm:4.0.0":
   version: 4.0.0
   resolution: "eslint-webpack-plugin@npm:4.0.0"
   dependencies:
@@ -14677,7 +14637,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint@npm:^8.36.0":
+"eslint@npm:8.36.0":
   version: 8.36.0
   resolution: "eslint@npm:8.36.0"
   dependencies:
@@ -15034,7 +14994,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"external-remotes-plugin@npm:^1.0.0":
+"external-remotes-plugin@npm:1.0.0":
   version: 1.0.0
   resolution: "external-remotes-plugin@npm:1.0.0"
   dependencies:
@@ -15218,7 +15178,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"file-loader@npm:^6.2.0":
+"file-loader@npm:6.2.0, file-loader@npm:^6.2.0":
   version: 6.2.0
   resolution: "file-loader@npm:6.2.0"
   dependencies:
@@ -15538,7 +15498,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"formik@npm:^2.2.9":
+"formik@npm:2.2.9":
   version: 2.2.9
   resolution: "formik@npm:2.2.9"
   dependencies:
@@ -15937,7 +15897,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"git-url-parse@npm:^13.1.0":
+"git-url-parse@npm:13.1.0":
   version: 13.1.0
   resolution: "git-url-parse@npm:13.1.0"
   dependencies:
@@ -15962,12 +15922,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"glob-parent@npm:^6.0.0":
-  version: 6.0.2
-  resolution: "glob-parent@npm:6.0.2"
+"glob-parent@npm:6.0.0":
+  version: 6.0.0
+  resolution: "glob-parent@npm:6.0.0"
   dependencies:
-    is-glob: ^4.0.3
-  checksum: c13ee97978bef4f55106b71e66428eb1512e71a7466ba49025fc2aec59a5bfb0954d5abd58fc5ee6c9b076eef4e1f6d3375c2e964b88466ca390da4419a786a8
+    is-glob: ^4.0.1
+  checksum: 48c492051a121c695e7a920c50512e5016458698f11e12133a217505d4b7d41bb20b244bcdd9df10ca29f0f1bd419ed97bcea35d15b1a645ba9e5a388013af7e
   languageName: node
   linkType: hard
 
@@ -16480,7 +16440,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"history@npm:*, history@npm:^5.3.0":
+"history@npm:*, history@npm:5.3.0":
   version: 5.3.0
   resolution: "history@npm:5.3.0"
   dependencies:
@@ -16643,6 +16603,21 @@ __metadata:
   languageName: node
   linkType: hard
 
+"html-webpack-plugin@npm:5.5.0, html-webpack-plugin@npm:^5.0.0":
+  version: 5.5.0
+  resolution: "html-webpack-plugin@npm:5.5.0"
+  dependencies:
+    "@types/html-minifier-terser": ^6.0.0
+    html-minifier-terser: ^6.0.2
+    lodash: ^4.17.21
+    pretty-error: ^4.0.0
+    tapable: ^2.0.0
+  peerDependencies:
+    webpack: ^5.20.0
+  checksum: f3d84d0df71fe2f5bac533cc74dce41ab058558cdcc6ff767d166a2abf1cf6fb8491d54d60ddbb34e95c00394e379ba52e0468e0284d1d0cc6a42987056e8219
+  languageName: node
+  linkType: hard
+
 "html-webpack-plugin@npm:^4.0.0":
   version: 4.5.2
   resolution: "html-webpack-plugin@npm:4.5.2"
@@ -16659,21 +16634,6 @@ __metadata:
   peerDependencies:
     webpack: ^4.0.0 || ^5.0.0
   checksum: 25ca0b341234501c64754ba8f9bb84f978e50f3f90affc199d18d04511cdc2c0c8ef8a975901a0fbcfe5bae32f80e8fd5ef52f1ce3672d3ff5307057ccb5a063
-  languageName: node
-  linkType: hard
-
-"html-webpack-plugin@npm:^5.0.0, html-webpack-plugin@npm:^5.5.0":
-  version: 5.5.0
-  resolution: "html-webpack-plugin@npm:5.5.0"
-  dependencies:
-    "@types/html-minifier-terser": ^6.0.0
-    html-minifier-terser: ^6.0.2
-    lodash: ^4.17.21
-    pretty-error: ^4.0.0
-    tapable: ^2.0.0
-  peerDependencies:
-    webpack: ^5.20.0
-  checksum: f3d84d0df71fe2f5bac533cc74dce41ab058558cdcc6ff767d166a2abf1cf6fb8491d54d60ddbb34e95c00394e379ba52e0468e0284d1d0cc6a42987056e8219
   languageName: node
   linkType: hard
 
@@ -16837,7 +16797,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"husky@npm:^8.0.3":
+"husky@npm:8.0.3":
   version: 8.0.3
   resolution: "husky@npm:8.0.3"
   bin:
@@ -16853,7 +16813,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"i18n-iso-countries@npm:^7.5.0":
+"i18n-iso-countries@npm:7.5.0":
   version: 7.5.0
   resolution: "i18n-iso-countries@npm:7.5.0"
   dependencies:
@@ -16898,7 +16858,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"identity-obj-proxy@npm:^3.0.0":
+"identity-obj-proxy@npm:3.0.0":
   version: 3.0.0
   resolution: "identity-obj-proxy@npm:3.0.0"
   dependencies:
@@ -16921,7 +16881,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ignore-styles@npm:^5.0.1":
+"ignore-styles@npm:5.0.1":
   version: 5.0.1
   resolution: "ignore-styles@npm:5.0.1"
   checksum: a2e4436595b931f43ad852c9ace2edd45a9968d47cf22949c3b307f73174f56b6bed970ffd1f5735ca47aebd8da9bf75d9006d0a4be2230f80bce0ecedf8b924
@@ -18162,7 +18122,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"jest-environment-jsdom@npm:^29.5.0":
+"jest-environment-jsdom@npm:29.5.0":
   version: 29.5.0
   resolution: "jest-environment-jsdom@npm:29.5.0"
   dependencies:
@@ -18384,7 +18344,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"jest-runner-eslint@npm:^2.0.0":
+"jest-runner-eslint@npm:2.0.0":
   version: 2.0.0
   resolution: "jest-runner-eslint@npm:2.0.0"
   dependencies:
@@ -18499,7 +18459,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"jest-transform-stub@npm:^2.0.0":
+"jest-transform-stub@npm:2.0.0":
   version: 2.0.0
   resolution: "jest-transform-stub@npm:2.0.0"
   checksum: c46134257e5fb047f5952e4a4a1339925dd009da15aa8d3310ba1d3e4d22266ed6c675cd18e58c9d5ca2246718d6cc8ff00ea6a4b6f3b2a6b285b6426f6ae8fe
@@ -18635,7 +18595,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"jest@npm:^29.5.0":
+"jest@npm:29.5.0":
   version: 29.5.0
   resolution: "jest@npm:29.5.0"
   dependencies:
@@ -18743,6 +18703,45 @@ __metadata:
   languageName: node
   linkType: hard
 
+"jsdom@npm:21.1.1":
+  version: 21.1.1
+  resolution: "jsdom@npm:21.1.1"
+  dependencies:
+    abab: ^2.0.6
+    acorn: ^8.8.2
+    acorn-globals: ^7.0.0
+    cssstyle: ^3.0.0
+    data-urls: ^4.0.0
+    decimal.js: ^10.4.3
+    domexception: ^4.0.0
+    escodegen: ^2.0.0
+    form-data: ^4.0.0
+    html-encoding-sniffer: ^3.0.0
+    http-proxy-agent: ^5.0.0
+    https-proxy-agent: ^5.0.1
+    is-potential-custom-element-name: ^1.0.1
+    nwsapi: ^2.2.2
+    parse5: ^7.1.2
+    rrweb-cssom: ^0.6.0
+    saxes: ^6.0.0
+    symbol-tree: ^3.2.4
+    tough-cookie: ^4.1.2
+    w3c-xmlserializer: ^4.0.0
+    webidl-conversions: ^7.0.0
+    whatwg-encoding: ^2.0.0
+    whatwg-mimetype: ^3.0.0
+    whatwg-url: ^12.0.1
+    ws: ^8.13.0
+    xml-name-validator: ^4.0.0
+  peerDependencies:
+    canvas: ^2.5.0
+  peerDependenciesMeta:
+    canvas:
+      optional: true
+  checksum: ea33c3f3f084b48685e3838baa1112f0cbffc2949b0249f90ee19152b66dbafc6ae7dd8573ee66933697f881e3bc04c0efc2b56cd26f64fd3e6321a64164e2d1
+  languageName: node
+  linkType: hard
+
 "jsdom@npm:^20.0.0":
   version: 20.0.3
   resolution: "jsdom@npm:20.0.3"
@@ -18779,45 +18778,6 @@ __metadata:
     canvas:
       optional: true
   checksum: 6e2ae21db397133a061b270c26d2dbc0b9051733ea3b896a7ece78d79f475ff0974f766a413c1198a79c793159119169f2335ddb23150348fbfdcfa6f3105536
-  languageName: node
-  linkType: hard
-
-"jsdom@npm:^21.1.1":
-  version: 21.1.1
-  resolution: "jsdom@npm:21.1.1"
-  dependencies:
-    abab: ^2.0.6
-    acorn: ^8.8.2
-    acorn-globals: ^7.0.0
-    cssstyle: ^3.0.0
-    data-urls: ^4.0.0
-    decimal.js: ^10.4.3
-    domexception: ^4.0.0
-    escodegen: ^2.0.0
-    form-data: ^4.0.0
-    html-encoding-sniffer: ^3.0.0
-    http-proxy-agent: ^5.0.0
-    https-proxy-agent: ^5.0.1
-    is-potential-custom-element-name: ^1.0.1
-    nwsapi: ^2.2.2
-    parse5: ^7.1.2
-    rrweb-cssom: ^0.6.0
-    saxes: ^6.0.0
-    symbol-tree: ^3.2.4
-    tough-cookie: ^4.1.2
-    w3c-xmlserializer: ^4.0.0
-    webidl-conversions: ^7.0.0
-    whatwg-encoding: ^2.0.0
-    whatwg-mimetype: ^3.0.0
-    whatwg-url: ^12.0.1
-    ws: ^8.13.0
-    xml-name-validator: ^4.0.0
-  peerDependencies:
-    canvas: ^2.5.0
-  peerDependenciesMeta:
-    canvas:
-      optional: true
-  checksum: ea33c3f3f084b48685e3838baa1112f0cbffc2949b0249f90ee19152b66dbafc6ae7dd8573ee66933697f881e3bc04c0efc2b56cd26f64fd3e6321a64164e2d1
   languageName: node
   linkType: hard
 
@@ -18992,7 +18952,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"just-is-empty@npm:^3.3.0":
+"just-is-empty@npm:3.3.0":
   version: 3.3.0
   resolution: "just-is-empty@npm:3.3.0"
   checksum: 07018a0236214c1203ea11d4c32ba8da79267249f894aa586e79990e67639b041026d7b2d8fceed512830b77b788154d5089015f7a17abcfaea6dc7909627a96
@@ -19003,124 +18963,124 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "k9-sak-web@workspace:."
   dependencies:
-    "@babel/core": ^7.21.0
-    "@babel/eslint-parser": ^7.19.1
-    "@babel/helper-regex": ^7.10.5
-    "@babel/preset-env": ^7.20.2
-    "@babel/preset-react": ^7.18.6
-    "@babel/preset-typescript": ^7.21.0
-    "@babel/register": ^7.21.0
-    "@babel/runtime": ^7.21.0
-    "@commercetools/enzyme-extensions": ^5.0.0
-    "@formatjs/intl-datetimeformat": ^6.5.1
-    "@formatjs/intl-numberformat": ^8.3.5
+    "@babel/core": 7.21.0
+    "@babel/eslint-parser": 7.19.1
+    "@babel/helper-regex": 7.10.5
+    "@babel/preset-env": 7.20.2
+    "@babel/preset-react": 7.18.6
+    "@babel/preset-typescript": 7.21.0
+    "@babel/register": 7.21.0
+    "@babel/runtime": 7.21.0
+    "@commercetools/enzyme-extensions": 5.0.0
+    "@formatjs/intl-datetimeformat": 6.5.1
+    "@formatjs/intl-numberformat": 8.3.5
     "@navikt/ds-css": 2.7.6
     "@navikt/ds-react": 2.7.6
-    "@navikt/familie-endringslogg": ^8.1.0
+    "@navikt/familie-endringslogg": 8.1.0
     "@navikt/ft-plattform-komponenter": 2.0.6
-    "@pmmmwh/react-refresh-webpack-plugin": ^0.5.10
-    "@popperjs/core": ^2.11.6
+    "@pmmmwh/react-refresh-webpack-plugin": 0.5.10
+    "@popperjs/core": 2.11.6
     "@sentry/browser": 7.42.0
-    "@sentry/cli": ^2.14.4
-    "@storybook/addon-actions": ^6.5.16
-    "@storybook/addon-docs": ^6.5.16
-    "@storybook/addon-essentials": ^6.5.16
-    "@storybook/addon-knobs": ^6.4.0
-    "@storybook/addons": ^6.5.16
-    "@storybook/builder-webpack5": ^6.5.16
-    "@storybook/cli": ^6.5.16
-    "@storybook/manager-webpack5": ^6.5.16
-    "@storybook/react": ^6.5.16
-    "@storybook/storybook-deployer": ^2.8.16
-    "@storybook/testing-react": ^1.3.0
-    "@storybook/theming": ^6.5.16
-    "@svgr/webpack": ^6.5.1
-    "@testing-library/dom": ^8.20.0
-    "@testing-library/jest-dom": ^5.16.5
-    "@testing-library/react": ^12.1.5
-    "@testing-library/user-event": ^13.5.0
-    "@types/chai": ^4.3.4
-    "@types/enzyme": ^3.10.12
-    "@types/history": ^5.0.0
-    "@types/jest": ^29.4.0
-    "@types/prop-types": ^15.7.5
-    "@types/react": ^17.0.53
-    "@types/react-collapse": ^5.0.1
-    "@types/react-router-dom": ^5.3.3
-    "@types/redux-form": ^8.3.5
-    "@types/sinon": ^10.0.13
-    "@types/styled-components": ^5.1.26
-    "@typescript-eslint/eslint-plugin": ^5.54.1
-    "@typescript-eslint/parser": ^5.54.1
-    "@wojtekmaj/enzyme-adapter-react-17": ^0.8.0
+    "@sentry/cli": 2.14.4
+    "@storybook/addon-actions": 6.5.16
+    "@storybook/addon-docs": 6.5.16
+    "@storybook/addon-essentials": 6.5.16
+    "@storybook/addon-knobs": 6.4.0
+    "@storybook/addons": 6.5.16
+    "@storybook/builder-webpack5": 6.5.16
+    "@storybook/cli": 6.5.16
+    "@storybook/manager-webpack5": 6.5.16
+    "@storybook/react": 6.5.16
+    "@storybook/storybook-deployer": 2.8.16
+    "@storybook/testing-react": 1.3.0
+    "@storybook/theming": 6.5.16
+    "@svgr/webpack": 6.5.1
+    "@testing-library/dom": 8.20.0
+    "@testing-library/jest-dom": 5.16.5
+    "@testing-library/react": 12.1.5
+    "@testing-library/user-event": 13.5.0
+    "@types/chai": 4.3.4
+    "@types/enzyme": 3.10.12
+    "@types/history": 5.0.0
+    "@types/jest": 29.4.0
+    "@types/prop-types": 15.7.5
+    "@types/react": 17.0.53
+    "@types/react-collapse": 5.0.1
+    "@types/react-router-dom": 5.3.3
+    "@types/redux-form": 8.3.5
+    "@types/sinon": 10.0.13
+    "@types/styled-components": 5.1.26
+    "@typescript-eslint/eslint-plugin": 5.54.1
+    "@typescript-eslint/parser": 5.54.1
+    "@wojtekmaj/enzyme-adapter-react-17": 0.8.0
     axios: 0.27.2
-    axios-mock-adapter: ^1.21.2
-    babel-jest: ^29.5.0
-    babel-loader: ^9.1.2
-    body-parser: ^1.20.2
-    cache-loader: ^4.1.0
-    chai: ^4.3.7
-    circular-dependency-plugin: ^5.2.2
-    copy-webpack-plugin: ^11.0.0
-    core-js: ^3.29.1
-    cross-env: ^7.0.3
+    axios-mock-adapter: 1.21.2
+    babel-jest: 29.5.0
+    babel-loader: 9.1.2
+    body-parser: 1.20.2
+    cache-loader: 4.1.0
+    chai: 4.3.7
+    circular-dependency-plugin: 5.2.2
+    copy-webpack-plugin: 11.0.0
+    core-js: 3.29.1
+    cross-env: 7.0.3
     css-loader: 6.7.3
-    css-minimizer-webpack-plugin: ^4.2.2
-    date-fns: ^2.29.3
-    date-fns-tz: ^2.0.0
-    dotenv: ^16.0.3
-    enzyme: ^3.11.0
-    eslint: ^8.36.0
-    eslint-config-airbnb: ^19.0.4
-    eslint-config-prettier: ^8.7.0
-    eslint-import-resolver-lerna: ^2.0.0
-    eslint-import-resolver-webpack: ^0.13.2
-    eslint-loader: ^4.0.2
-    eslint-plugin-import: ^2.27.5
-    eslint-plugin-jest: ^27.2.1
-    eslint-plugin-jest-dom: ^4.0.3
-    eslint-plugin-jsx-a11y: ^6.7.1
-    eslint-plugin-react: ^7.32.2
-    eslint-webpack-plugin: ^4.0.0
-    external-remotes-plugin: ^1.0.0
-    file-loader: ^6.2.0
-    history: ^5.3.0
-    html-webpack-plugin: ^5.5.0
-    husky: ^8.0.3
-    i18n-iso-countries: ^7.5.0
-    identity-obj-proxy: ^3.0.0
-    ignore-styles: ^5.0.1
-    jest: ^29.5.0
-    jest-environment-jsdom: ^29.5.0
-    jest-runner-eslint: ^2.0.0
-    jest-transform-stub: ^2.0.0
-    jsdom: ^21.1.1
-    lerna: ^6.5.1
-    less: ^4.1.3
-    less-loader: ^11.1.0
-    lint-staged: ^13.2.0
-    mini-css-extract-plugin: ^2.7.3
+    css-minimizer-webpack-plugin: 4.2.2
+    date-fns: 2.29.3
+    date-fns-tz: 2.0.0
+    dotenv: 16.0.3
+    enzyme: 3.11.0
+    eslint: 8.36.0
+    eslint-config-airbnb: 19.0.4
+    eslint-config-prettier: 8.7.0
+    eslint-import-resolver-lerna: 2.0.0
+    eslint-import-resolver-webpack: 0.13.2
+    eslint-loader: 4.0.2
+    eslint-plugin-import: 2.27.5
+    eslint-plugin-jest: 27.2.1
+    eslint-plugin-jest-dom: 4.0.3
+    eslint-plugin-jsx-a11y: 6.7.1
+    eslint-plugin-react: 7.32.2
+    eslint-webpack-plugin: 4.0.0
+    external-remotes-plugin: 1.0.0
+    file-loader: 6.2.0
+    history: 5.3.0
+    html-webpack-plugin: 5.5.0
+    husky: 8.0.3
+    i18n-iso-countries: 7.5.0
+    identity-obj-proxy: 3.0.0
+    ignore-styles: 5.0.1
+    jest: 29.5.0
+    jest-environment-jsdom: 29.5.0
+    jest-runner-eslint: 2.0.0
+    jest-transform-stub: 2.0.0
+    jsdom: 21.1.1
+    lerna: 6.5.1
+    less: 4.1.3
+    less-loader: 11.1.0
+    lint-staged: 13.2.0
+    mini-css-extract-plugin: 2.7.3
     msw: 1.1.0
-    node-cache: ^5.1.2
-    postcss-less: ^6.0.0
-    prettier: ^2.8.4
-    raf: ^3.4.1
+    node-cache: 5.1.2
+    postcss-less: 6.0.0
+    prettier: 2.8.4
+    raf: 3.4.1
     react: 17.0.2
     react-dom: 17.0.2
     react-modal: 3.16.1
-    react-popper: ^2.3.0
-    react-router: ^6.9.0
-    react-router-dom: ^6.9.0
-    react-test-renderer: ^18.2.0
-    redux-mock-store: ^1.5.4
-    sinon: ^15.0.2
-    source-map-loader: ^4.0.1
-    storybook-react-router: ^1.0.8
-    stylelint: ^15.2.0
-    stylelint-order: ^6.0.3
-    terser-webpack-plugin: ^5.3.7
-    thread-loader: ^3.0.4
-    type-fest: ^3.6.1
+    react-popper: 2.3.0
+    react-router: 6.9.0
+    react-router-dom: 6.9.0
+    react-test-renderer: 18.2.0
+    redux-mock-store: 1.5.4
+    sinon: 15.0.2
+    source-map-loader: 4.0.1
+    storybook-react-router: 1.0.8
+    stylelint: 15.2.0
+    stylelint-order: 6.0.3
+    terser-webpack-plugin: 5.3.7
+    thread-loader: 3.0.4
+    type-fest: 3.6.1
     typescript: 4.9.5
     webpack: 5.76.1
     webpack-cli: 5.0.1
@@ -19229,7 +19189,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"lerna@npm:^6.5.1":
+"lerna@npm:6.5.1":
   version: 6.5.1
   resolution: "lerna@npm:6.5.1"
   dependencies:
@@ -19315,7 +19275,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"less-loader@npm:^11.1.0":
+"less-loader@npm:11.1.0":
   version: 11.1.0
   resolution: "less-loader@npm:11.1.0"
   dependencies:
@@ -19327,7 +19287,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"less@npm:^4.1.3":
+"less@npm:4.1.3":
   version: 4.1.3
   resolution: "less@npm:4.1.3"
   dependencies:
@@ -19442,7 +19402,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"lint-staged@npm:^13.2.0":
+"lint-staged@npm:13.2.0":
   version: 13.2.0
   resolution: "lint-staged@npm:13.2.0"
   dependencies:
@@ -19632,7 +19592,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"lodash.isequal@npm:^4.5.0":
+"lodash.isequal@npm:4.5.0, lodash.isequal@npm:^4.5.0":
   version: 4.5.0
   resolution: "lodash.isequal@npm:4.5.0"
   checksum: da27515dc5230eb1140ba65ff8de3613649620e8656b19a6270afe4866b7bd461d9ba2ac8a48dcc57f7adac4ee80e1de9f965d89d4d81a0ad52bb3eec2609644
@@ -20304,7 +20264,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"mini-css-extract-plugin@npm:^2.7.3":
+"mini-css-extract-plugin@npm:2.7.3":
   version: 2.7.3
   resolution: "mini-css-extract-plugin@npm:2.7.3"
   dependencies:
@@ -20444,13 +20404,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"minipass@npm:^4.0.0":
-  version: 4.2.4
-  resolution: "minipass@npm:4.2.4"
-  checksum: c664f2ae4401408d1e7a6e4f50aca45f87b1b0634bc9261136df5c378e313e77355765f73f59c4a5abcadcdf43d83fcd3eb14e4a7cdcce8e36508e2290345753
-  languageName: node
-  linkType: hard
-
 "minizlib@npm:^2.1.1, minizlib@npm:^2.1.2":
   version: 2.1.2
   resolution: "minizlib@npm:2.1.2"
@@ -20527,7 +20480,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"moment@npm:2.29.4, moment@npm:^2.29.4":
+"moment@npm:2.29.4":
   version: 2.29.4
   resolution: "moment@npm:2.29.4"
   checksum: 0ec3f9c2bcba38dc2451b1daed5daded747f17610b92427bebe1d08d48d8b7bdd8d9197500b072d14e326dd0ccf3e326b9e3d07c5895d3d49e39b6803b76e80e
@@ -20716,7 +20669,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"nav-datovelger@npm:^12.6.0":
+"nav-datovelger@npm:12.6.0":
   version: 12.6.0
   resolution: "nav-datovelger@npm:12.6.0"
   dependencies:
@@ -20746,7 +20699,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"nav-frontend-alertstriper@npm:4.0.2, nav-frontend-alertstriper@npm:^4.0.2":
+"nav-frontend-alertstriper@npm:4.0.2":
   version: 4.0.2
   resolution: "nav-frontend-alertstriper@npm:4.0.2"
   peerDependencies:
@@ -20855,7 +20808,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"nav-frontend-hjelpetekst-style@npm:^3.0.2":
+"nav-frontend-hjelpetekst-style@npm:3.0.2":
   version: 3.0.2
   resolution: "nav-frontend-hjelpetekst-style@npm:3.0.2"
   peerDependencies:
@@ -20865,7 +20818,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"nav-frontend-hjelpetekst@npm:^3.1.3":
+"nav-frontend-hjelpetekst@npm:3.1.3":
   version: 3.1.3
   resolution: "nav-frontend-hjelpetekst@npm:3.1.3"
   peerDependencies:
@@ -20880,14 +20833,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"nav-frontend-ikoner-assets@npm:^3.0.1":
+"nav-frontend-ikoner-assets@npm:3.0.1":
   version: 3.0.1
   resolution: "nav-frontend-ikoner-assets@npm:3.0.1"
   checksum: 6d6bce01b95555d56333cd11cbadc715e5a4021a62a5981c30c4a8ba3d5807267cb04f6410bad2bc7804f377c0e020eb79e6d389c8bb19942a2b9d1f70b551d9
   languageName: node
   linkType: hard
 
-"nav-frontend-ikonknapper@npm:^2.1.3":
+"nav-frontend-ikonknapper@npm:2.1.3":
   version: 2.1.3
   resolution: "nav-frontend-ikonknapper@npm:2.1.3"
   peerDependencies:
@@ -20899,7 +20852,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"nav-frontend-js-utils@npm:1.0.20, nav-frontend-js-utils@npm:^1.0.20":
+"nav-frontend-js-utils@npm:1.0.20":
   version: 1.0.20
   resolution: "nav-frontend-js-utils@npm:1.0.20"
   dependencies:
@@ -20922,7 +20875,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"nav-frontend-knapper@npm:3.1.3, nav-frontend-knapper@npm:^3.1.3":
+"nav-frontend-knapper@npm:3.1.3":
   version: 3.1.3
   resolution: "nav-frontend-knapper@npm:3.1.3"
   peerDependencies:
@@ -20935,7 +20888,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"nav-frontend-lenkepanel-style@npm:^2.0.2":
+"nav-frontend-lenkepanel-style@npm:2.0.2":
   version: 2.0.2
   resolution: "nav-frontend-lenkepanel-style@npm:2.0.2"
   peerDependencies:
@@ -20946,7 +20899,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"nav-frontend-lenkepanel@npm:^2.0.2":
+"nav-frontend-lenkepanel@npm:2.0.2":
   version: 2.0.2
   resolution: "nav-frontend-lenkepanel@npm:2.0.2"
   peerDependencies:
@@ -20959,7 +20912,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"nav-frontend-lenker-style@npm:2.0.2, nav-frontend-lenker-style@npm:^2.0.2":
+"nav-frontend-lenker-style@npm:2.0.2":
   version: 2.0.2
   resolution: "nav-frontend-lenker-style@npm:2.0.2"
   peerDependencies:
@@ -20968,7 +20921,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"nav-frontend-lenker@npm:2.0.2, nav-frontend-lenker@npm:^2.0.2":
+"nav-frontend-lenker@npm:2.0.2":
   version: 2.0.2
   resolution: "nav-frontend-lenker@npm:2.0.2"
   peerDependencies:
@@ -21027,7 +20980,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"nav-frontend-paneler-style@npm:2.0.2, nav-frontend-paneler-style@npm:^2.0.2":
+"nav-frontend-paneler-style@npm:2.0.2":
   version: 2.0.2
   resolution: "nav-frontend-paneler-style@npm:2.0.2"
   peerDependencies:
@@ -21036,7 +20989,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"nav-frontend-paneler@npm:3.0.2, nav-frontend-paneler@npm:^3.0.2":
+"nav-frontend-paneler@npm:3.0.2":
   version: 3.0.2
   resolution: "nav-frontend-paneler@npm:3.0.2"
   peerDependencies:
@@ -21050,7 +21003,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"nav-frontend-popover-style@npm:^2.0.2":
+"nav-frontend-popover-style@npm:2.0.2":
   version: 2.0.2
   resolution: "nav-frontend-popover-style@npm:2.0.2"
   peerDependencies:
@@ -21059,7 +21012,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"nav-frontend-popover@npm:^2.0.4":
+"nav-frontend-popover@npm:2.0.4":
   version: 2.0.4
   resolution: "nav-frontend-popover@npm:2.0.4"
   peerDependencies:
@@ -21145,7 +21098,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"nav-frontend-tabs-style@npm:^2.0.2":
+"nav-frontend-tabs-style@npm:2.0.2":
   version: 2.0.2
   resolution: "nav-frontend-tabs-style@npm:2.0.2"
   peerDependencies:
@@ -21155,7 +21108,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"nav-frontend-tabs@npm:2.0.3, nav-frontend-tabs@npm:^2.0.3":
+"nav-frontend-tabs@npm:2.0.3":
   version: 2.0.3
   resolution: "nav-frontend-tabs@npm:2.0.3"
   peerDependencies:
@@ -21279,7 +21232,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"node-cache@npm:^5.1.2":
+"node-cache@npm:5.1.2":
   version: 5.1.2
   resolution: "node-cache@npm:5.1.2"
   dependencies:
@@ -21401,10 +21354,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"node-releases@npm:^2.0.8":
-  version: 2.0.10
-  resolution: "node-releases@npm:2.0.10"
-  checksum: d784ecde25696a15d449c4433077f5cce620ed30a1656c4abf31282bfc691a70d9618bae6868d247a67914d1be5cc4fde22f65a05f4398cdfb92e0fc83cadfbc
+"node-releases@npm:^1.1.71":
+  version: 1.1.77
+  resolution: "node-releases@npm:1.1.77"
+  checksum: eb2fcb45310e7d77f82bfdadeca546a698d258e011f15d88ad9a452a5e838a672ec532906581096ca19c66284a788330c3b09227ffc540e67228730f41b9c2e2
   languageName: node
   linkType: hard
 
@@ -21489,7 +21442,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"normalize-url@npm:^4.5.1":
+"normalize-url@npm:4.5.1":
   version: 4.5.1
   resolution: "normalize-url@npm:4.5.1"
   checksum: 9a9dee01df02ad23e171171893e56e22d752f7cff86fb96aafeae074819b572ea655b60f8302e2d85dbb834dc885c972cc1c573892fea24df46b2765065dd05a
@@ -22927,7 +22880,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"postcss-less@npm:^6.0.0":
+"postcss-less@npm:6.0.0":
   version: 6.0.0
   resolution: "postcss-less@npm:6.0.0"
   peerDependencies:
@@ -23359,21 +23312,21 @@ __metadata:
   languageName: node
   linkType: hard
 
+"prettier@npm:2.8.4":
+  version: 2.8.4
+  resolution: "prettier@npm:2.8.4"
+  bin:
+    prettier: bin-prettier.js
+  checksum: c173064bf3df57b6d93d19aa98753b9b9dd7657212e33b41ada8e2e9f9884066bb9ca0b4005b89b3ab137efffdf8fbe0b462785aba20364798ff4303aadda57e
+  languageName: node
+  linkType: hard
+
 "prettier@npm:>=2.2.1 <=2.3.0":
   version: 2.3.0
   resolution: "prettier@npm:2.3.0"
   bin:
     prettier: bin-prettier.js
   checksum: e8851a45f60f2994775f96e07964646c299b8a8f9c64da4fbd8efafc20db3458bdcedac79aed34e1d5477540b3aa04f6499adc4979cb7937f8ebd058a767d8ff
-  languageName: node
-  linkType: hard
-
-"prettier@npm:^2.8.4":
-  version: 2.8.4
-  resolution: "prettier@npm:2.8.4"
-  bin:
-    prettier: bin-prettier.js
-  checksum: c173064bf3df57b6d93d19aa98753b9b9dd7657212e33b41ada8e2e9f9884066bb9ca0b4005b89b3ab137efffdf8fbe0b462785aba20364798ff4303aadda57e
   languageName: node
   linkType: hard
 
@@ -23558,7 +23511,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"prop-types@npm:^15.0.0, prop-types@npm:^15.5.8, prop-types@npm:^15.6.0, prop-types@npm:^15.6.1, prop-types@npm:^15.6.2, prop-types@npm:^15.7.0, prop-types@npm:^15.7.2, prop-types@npm:^15.8.1":
+"prop-types@npm:15.8.1, prop-types@npm:^15.0.0, prop-types@npm:^15.5.8, prop-types@npm:^15.6.0, prop-types@npm:^15.6.1, prop-types@npm:^15.6.2, prop-types@npm:^15.7.0, prop-types@npm:^15.7.2, prop-types@npm:^15.8.1":
   version: 15.8.1
   resolution: "prop-types@npm:15.8.1"
   dependencies:
@@ -23781,7 +23734,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"raf@npm:^3.4.1":
+"raf@npm:3.4.1, raf@npm:^3.4.1":
   version: 3.4.1
   resolution: "raf@npm:3.4.1"
   dependencies:
@@ -23890,7 +23843,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-collapse@npm:5.1.1, react-collapse@npm:^5.1.1":
+"react-collapse@npm:5.1.1":
   version: 5.1.1
   resolution: "react-collapse@npm:5.1.1"
   peerDependencies:
@@ -23909,7 +23862,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-day-picker@npm:7.4.10, react-day-picker@npm:^7.4.10":
+"react-day-picker@npm:7.4.10":
   version: 7.4.10
   resolution: "react-day-picker@npm:7.4.10"
   dependencies:
@@ -23976,7 +23929,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-dom@npm:^17.0.2":
+"react-dom@npm:17.0.2":
   version: 17.0.2
   resolution: "react-dom@npm:17.0.2"
   dependencies:
@@ -24132,7 +24085,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-outside-click-handler@npm:^1.3.0":
+"react-outside-click-handler@npm:1.3.0":
   version: 1.3.0
   resolution: "react-outside-click-handler@npm:1.3.0"
   dependencies:
@@ -24148,7 +24101,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-popper@npm:^2.3.0":
+"react-popper@npm:2.3.0":
   version: 2.3.0
   resolution: "react-popper@npm:2.3.0"
   dependencies:
@@ -24180,7 +24133,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-redux@npm:^8.0.5":
+"react-redux@npm:8.0.5":
   version: 8.0.5
   resolution: "react-redux@npm:8.0.5"
   dependencies:
@@ -24219,7 +24172,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-responsive@npm:^9.0.2":
+"react-responsive@npm:9.0.2":
   version: 9.0.2
   resolution: "react-responsive@npm:9.0.2"
   dependencies:
@@ -24233,7 +24186,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-router-dom@npm:^6.9.0":
+"react-router-dom@npm:6.9.0":
   version: 6.9.0
   resolution: "react-router-dom@npm:6.9.0"
   dependencies:
@@ -24246,7 +24199,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-router@npm:6.9.0, react-router@npm:^6.9.0":
+"react-router@npm:6.9.0":
   version: 6.9.0
   resolution: "react-router@npm:6.9.0"
   dependencies:
@@ -24288,7 +24241,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-test-renderer@npm:^18.2.0":
+"react-test-renderer@npm:18.2.0":
   version: 18.2.0
   resolution: "react-test-renderer@npm:18.2.0"
   dependencies:
@@ -24316,14 +24269,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-uuid@npm:^2.0.0":
+"react-uuid@npm:2.0.0":
   version: 2.0.0
   resolution: "react-uuid@npm:2.0.0"
   checksum: edfdd86ce5cd19da9740fae1147ed106e3090f4d9c59b4e3f0001c2dc605f63dc89e225adc5623929a8775363ab355da32adda92dd70a3bb514fff911b93da73
   languageName: node
   linkType: hard
 
-"react@npm:^17.0.2":
+"react@npm:17.0.2":
   version: 17.0.2
   resolution: "react@npm:17.0.2"
   dependencies:
@@ -24575,7 +24528,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"redux-form@npm:^8.3.9":
+"redux-form@npm:8.3.9":
   version: 8.3.9
   resolution: "redux-form@npm:8.3.9"
   dependencies:
@@ -24599,7 +24552,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"redux-logger@npm:^3.0.6":
+"redux-logger@npm:3.0.6":
   version: 3.0.6
   resolution: "redux-logger@npm:3.0.6"
   dependencies:
@@ -24608,7 +24561,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"redux-mock-store@npm:^1.5.4":
+"redux-mock-store@npm:1.5.4":
   version: 1.5.4
   resolution: "redux-mock-store@npm:1.5.4"
   dependencies:
@@ -24617,7 +24570,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"redux-saga@npm:^1.2.2":
+"redux-saga@npm:1.2.2":
   version: 1.2.2
   resolution: "redux-saga@npm:1.2.2"
   dependencies:
@@ -24626,7 +24579,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"redux-thunk@npm:^2.4.2":
+"redux-thunk@npm:2.4.2":
   version: 2.4.2
   resolution: "redux-thunk@npm:2.4.2"
   peerDependencies:
@@ -24635,7 +24588,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"redux@npm:^3.6.0 || ^4.0.0, redux@npm:^4.0.4, redux@npm:^4.2.1":
+"redux@npm:4.2.1, redux@npm:^3.6.0 || ^4.0.0, redux@npm:^4.0.4":
   version: 4.2.1
   resolution: "redux@npm:4.2.1"
   dependencies:
@@ -24939,7 +24892,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"reselect@npm:^4.1.7":
+"reselect@npm:4.1.7":
   version: 4.1.7
   resolution: "reselect@npm:4.1.7"
   checksum: 738d8e2b8f0dca154ad29de6a209c9fbca2d70ae6788fd85df87f2c74b95a65bbf2d16d43a9e2faff39de34d17a29d706ba08a6b2ee5660c09589edbd19af7e1
@@ -25646,7 +25599,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"sinon@npm:^15.0.2":
+"sinon@npm:15.0.2":
   version: 15.0.2
   resolution: "sinon@npm:15.0.2"
   dependencies:
@@ -25818,7 +25771,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"source-map-loader@npm:^4.0.1":
+"source-map-loader@npm:4.0.1":
   version: 4.0.1
   resolution: "source-map-loader@npm:4.0.1"
   dependencies:
@@ -26091,7 +26044,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"storybook-react-router@npm:^1.0.8":
+"storybook-react-router@npm:1.0.8":
   version: 1.0.8
   resolution: "storybook-react-router@npm:1.0.8"
   dependencies:
@@ -26447,7 +26400,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"styled-components@npm:^5.3.8":
+"styled-components@npm:5.3.8":
   version: 5.3.8
   resolution: "styled-components@npm:5.3.8"
   dependencies:
@@ -26481,7 +26434,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"stylelint-order@npm:^6.0.3":
+"stylelint-order@npm:6.0.3":
   version: 6.0.3
   resolution: "stylelint-order@npm:6.0.3"
   dependencies:
@@ -26493,7 +26446,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"stylelint@npm:^15.2.0":
+"stylelint@npm:15.2.0":
   version: 15.2.0
   resolution: "stylelint@npm:15.2.0"
   dependencies:
@@ -26707,17 +26660,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"tar@npm:^6.1.2":
-  version: 6.1.13
-  resolution: "tar@npm:6.1.13"
+"tar@npm:6.1.2":
+  version: 6.1.2
+  resolution: "tar@npm:6.1.2"
   dependencies:
     chownr: ^2.0.0
     fs-minipass: ^2.0.0
-    minipass: ^4.0.0
+    minipass: ^3.0.0
     minizlib: ^2.1.1
     mkdirp: ^1.0.3
     yallist: ^4.0.0
-  checksum: 8a278bed123aa9f53549b256a36b719e317c8b96fe86a63406f3c62887f78267cea9b22dc6f7007009738509800d4a4dccc444abd71d762287c90f35b002eb1c
+  checksum: 13c9b26b22b26b321e842f024fd56831e26fd455cceface3827f2034d1027ad1e9c59b75a98e30a19171b1b5047526d517ec6bf38d2d7bb6bb8d496d7ff239af
   languageName: node
   linkType: hard
 
@@ -26750,6 +26703,28 @@ __metadata:
   dependencies:
     rimraf: ~2.6.2
   checksum: f35bed78565355dfdf95f730b7b489728bd6b7e35071bcc6497af7c827fb6c111fbe9063afc7b8cbc19522a072c278679f9a0ee81e684aa2c8617cc0f2e9c191
+  languageName: node
+  linkType: hard
+
+"terser-webpack-plugin@npm:5.3.7":
+  version: 5.3.7
+  resolution: "terser-webpack-plugin@npm:5.3.7"
+  dependencies:
+    "@jridgewell/trace-mapping": ^0.3.17
+    jest-worker: ^27.4.5
+    schema-utils: ^3.1.1
+    serialize-javascript: ^6.0.1
+    terser: ^5.16.5
+  peerDependencies:
+    webpack: ^5.1.0
+  peerDependenciesMeta:
+    "@swc/core":
+      optional: true
+    esbuild:
+      optional: true
+    uglify-js:
+      optional: true
+  checksum: 095e699fdeeb553cdf2c6f75f983949271b396d9c201d7ae9fc633c45c1c1ad14c7257ef9d51ccc62213dd3e97f875870ba31550f6d4f1b6674f2615562da7f7
   languageName: node
   linkType: hard
 
@@ -26810,28 +26785,6 @@ __metadata:
     uglify-js:
       optional: true
   checksum: 8f3448d7fdb0434ce6a0c09d95c462bfd2f4a5a430233d854163337f734a7f5c07c74513d16081e06d4ca33d366d5b1a36f5444219bc41a7403afd6162107bad
-  languageName: node
-  linkType: hard
-
-"terser-webpack-plugin@npm:^5.3.7":
-  version: 5.3.7
-  resolution: "terser-webpack-plugin@npm:5.3.7"
-  dependencies:
-    "@jridgewell/trace-mapping": ^0.3.17
-    jest-worker: ^27.4.5
-    schema-utils: ^3.1.1
-    serialize-javascript: ^6.0.1
-    terser: ^5.16.5
-  peerDependencies:
-    webpack: ^5.1.0
-  peerDependenciesMeta:
-    "@swc/core":
-      optional: true
-    esbuild:
-      optional: true
-    uglify-js:
-      optional: true
-  checksum: 095e699fdeeb553cdf2c6f75f983949271b396d9c201d7ae9fc633c45c1c1ad14c7257ef9d51ccc62213dd3e97f875870ba31550f6d4f1b6674f2615562da7f7
   languageName: node
   linkType: hard
 
@@ -26901,7 +26854,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"thread-loader@npm:^3.0.4":
+"thread-loader@npm:3.0.4":
   version: 3.0.4
   resolution: "thread-loader@npm:3.0.4"
   dependencies:
@@ -27130,7 +27083,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"trim-newlines@npm:^3.0.1":
+"trim-newlines@npm:3.0.1":
   version: 3.0.1
   resolution: "trim-newlines@npm:3.0.1"
   checksum: b530f3fadf78e570cf3c761fb74fef655beff6b0f84b29209bac6c9622db75ad1417f4a7b5d54c96605dcd72734ad44526fef9f396807b90839449eb543c6206
@@ -27144,7 +27097,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"trim@npm:^1.0.1":
+"trim@npm:1.0.1":
   version: 1.0.1
   resolution: "trim@npm:1.0.1"
   checksum: d7593f72edc1738218e94deeff54a9b81cb52b6448ef8a4d20015bd4581dadc3a636553fb06b1ab36d14e3803fd3138bd2b6da555de926abed33b0ae24f92879
@@ -27262,6 +27215,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"type-fest@npm:3.6.1":
+  version: 3.6.1
+  resolution: "type-fest@npm:3.6.1"
+  checksum: f7e39bf6b74a883661ec8642707f49c33cfcdc6221e1ba36b1d329c1cf301d87351b3ca0839b894cbfe47dc62140c0ce47e69c88f76800b678e0b67b7fe826e6
+  languageName: node
+  linkType: hard
+
 "type-fest@npm:^0.18.0":
   version: 0.18.1
   resolution: "type-fest@npm:0.18.1"
@@ -27308,13 +27268,6 @@ __metadata:
   version: 2.19.0
   resolution: "type-fest@npm:2.19.0"
   checksum: a4ef07ece297c9fba78fc1bd6d85dff4472fe043ede98bd4710d2615d15776902b595abf62bd78339ed6278f021235fb28a96361f8be86ed754f778973a0d278
-  languageName: node
-  linkType: hard
-
-"type-fest@npm:^3.6.1":
-  version: 3.6.1
-  resolution: "type-fest@npm:3.6.1"
-  checksum: f7e39bf6b74a883661ec8642707f49c33cfcdc6221e1ba36b1d329c1cf301d87351b3ca0839b894cbfe47dc62140c0ce47e69c88f76800b678e0b67b7fe826e6
   languageName: node
   linkType: hard
 
@@ -27694,20 +27647,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"update-browserslist-db@npm:^1.0.10":
-  version: 1.0.10
-  resolution: "update-browserslist-db@npm:1.0.10"
-  dependencies:
-    escalade: ^3.1.1
-    picocolors: ^1.0.0
-  peerDependencies:
-    browserslist: ">= 4.21.0"
-  bin:
-    browserslist-lint: cli.js
-  checksum: 12db73b4f63029ac407b153732e7cd69a1ea8206c9100b482b7d12859cd3cd0bc59c602d7ae31e652706189f1acb90d42c53ab24a5ba563ed13aebdddc5561a0
-  languageName: node
-  linkType: hard
-
 "update-notifier@npm:^5.0.1":
   version: 5.1.0
   resolution: "update-notifier@npm:5.1.0"
@@ -27886,7 +27825,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"uuid@npm:9.0.0, uuid@npm:^9.0.0":
+"uuid@npm:9.0.0":
   version: 9.0.0
   resolution: "uuid@npm:9.0.0"
   bin:
@@ -27986,7 +27925,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vis-data@npm:^7.1.4":
+"vis-data@npm:7.1.4":
   version: 7.1.4
   resolution: "vis-data@npm:7.1.4"
   peerDependencies:
@@ -27996,7 +27935,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vis-timeline@npm:^7.7.0":
+"vis-timeline@npm:7.7.0":
   version: 7.7.0
   resolution: "vis-timeline@npm:7.7.0"
   peerDependencies:
@@ -28829,7 +28768,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"xss@npm:^1.0.14":
+"xss@npm:1.0.14":
   version: 1.0.14
   resolution: "xss@npm:1.0.14"
   dependencies:
@@ -28999,7 +28938,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"yup@npm:0.32.11, yup@npm:^0.32.11":
+"yup@npm:0.32.11":
   version: 0.32.11
   resolution: "yup@npm:0.32.11"
   dependencies:

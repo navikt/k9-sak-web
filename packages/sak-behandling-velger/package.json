@@ -11,9 +11,9 @@
     "@fpsak-frontend/utils": "1.0.0",
     "@k9-sak-web/konstanter": "1.0.0",
     "@k9-sak-web/types": "1.0.0",
-    "classnames": "^2.3.2",
-    "history": "^5.3.0",
-    "moment": "^2.29.4",
+    "classnames": "2.3.2",
+    "history": "5.3.0",
+    "moment": "2.29.4",
     "nav-frontend-chevron": "1.0.30",
     "nav-frontend-chevron-style": "1.0.4",
     "nav-frontend-core": "6.0.1",
@@ -23,14 +23,14 @@
     "nav-frontend-paneler-style": "2.0.2",
     "nav-frontend-typografi": "4.0.2",
     "nav-frontend-typografi-style": "2.0.2",
-    "react": "^17.0.2",
+    "react": "17.0.2",
     "react-intl": "6.2.10",
     "react-query": "3.39.3",
-    "react-router-dom": "^6.9.0"
+    "react-router-dom": "6.9.0"
   },
   "devDependencies": {
     "@fpsak-frontend/utils-test": "1.0.0",
-    "enzyme": "^3.11.0",
-    "sinon": "^15.0.2"
+    "enzyme": "3.11.0",
+    "sinon": "15.0.2"
   }
 }

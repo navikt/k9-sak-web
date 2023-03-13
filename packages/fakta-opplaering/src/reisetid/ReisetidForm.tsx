@@ -10,7 +10,7 @@ import { FaktaOpplaeringContext } from '@k9-sak-web/behandling-opplaeringspenger
 import { DDMMYYYY_DATE_FORMAT, required } from '@fpsak-frontend/utils';
 import { Formik } from 'formik';
 import { Button, Alert } from '@navikt/ds-react';
-import { getPeriodDifference, Period } from '@navikt/k9-period-utils';
+import { getPeriodDifference, Period } from '@navikt/k9-fe-period-utils';
 import { ReisetidVurdering } from './ReisetidTypes';
 import RangeDatepicker from '../components/rangeDatepicker/RangeDatepicker';
 import FraSoeknad from './FraSoeknad';
