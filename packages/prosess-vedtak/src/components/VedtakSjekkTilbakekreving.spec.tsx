@@ -52,7 +52,7 @@ const behandling = {
   ],
 };
 
-const aksjonspunkt5040 = {
+const aksjonspunkt5085 = {
   aksjonspunktType: { kode: 'MANU', kodeverk: 'AKSJONSPUNKT_TYPE' },
   begrunnelse: null,
   besluttersBegrunnelse: null,
@@ -97,7 +97,7 @@ describe('<AvslagårsakListe>', () => {
         vilkar={[]}
         sendVarselOmRevurdering={false}
         medlemskap={{ fom: '2019-01-01' }}
-        aksjonspunkter={[aksjonspunkt5040]}
+        aksjonspunkter={[aksjonspunkt5085]}
         employeeHasAccess={false}
         isReadOnly={false}
         previewCallback={sinon.spy()}
@@ -110,11 +110,11 @@ describe('<AvslagårsakListe>', () => {
       />,
     );
 
-    expect(screen.queryByText('Har åpen tilbakekrevingssak som kan bli påvirket.')).toBeInTheDocument();
+    expect(screen.queryByText('Har åpen tilbakekrevingssak som kan bli påvirket')).toBeInTheDocument();
     expect(screen.queryByText('Vurder om tilbakekrevingssaken skal behandles først.')).toBeInTheDocument();
   });
 
-  it('Skal IKKS vise ap for sjekk tilbakekreving', () => {
+  it('Skal IKKE vise ap for sjekk tilbakekreving', () => {
     requestApi.mock(K9sakApiKeys.FEATURE_TOGGLE, []);
 
     render(
