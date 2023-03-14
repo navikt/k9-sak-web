@@ -37,7 +37,7 @@
     "nav-frontend-spinner-style": "1.0.2",
     "nav-frontend-typografi": "4.0.2",
     "nav-frontend-typografi-style": "2.0.2",
-    "react": "17.0.2",
+    "react": "18.2.0",
     "react-day-picker": "7.4.10",
     "react-intl": "6.2.10",
     "react-modal": "3.16.1",
