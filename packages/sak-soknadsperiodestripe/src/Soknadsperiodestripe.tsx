@@ -7,7 +7,7 @@ import BehandlingPerioderårsakMedVilkår, {
   PeriodeMedUtfall,
 } from '@k9-sak-web/types/src/behandlingPerioderarsakMedVilkar';
 import { PeriodStatus, Tidslinjeskala } from '@k9-sak-web/types/src/tidslinje';
-import { getPeriodDifference, Period } from '@navikt/k9-period-utils';
+import { getPeriodDifference, Period } from '@navikt/k9-fe-period-utils';
 import dayjs from 'dayjs';
 import 'dayjs/locale/nb';
 import React, { useEffect, useMemo, useState } from 'react';

@@ -38,35 +38,28 @@ export const utledStiler = (html: string) => {
   return cssGenerate(styleAst);
 };
 
-export const utledPrefiksInnhold = (html: string) => {
+export const seksjonSomKanRedigeres = (html: string) => {
   const heleBrevet = new DOMParser().parseFromString(html, 'application/xhtml+xml');
+  return Array.from(heleBrevet.querySelectorAll('body > *, section > *'));
+};
+
+const htmlForRedigerbartFelt = (elementer: Element[]) => {
   let funnetRedigerbartInnhold = false;
   const prefiks = [];
-  Array.from(heleBrevet.querySelectorAll('body > *')).map(el => {
+  elementer.forEach(el => {
     if (el.hasAttribute('data-editable')) {
       funnetRedigerbartInnhold = true;
     } else if (!funnetRedigerbartInnhold && !el.hasAttribute('data-hidden')) {
       prefiks.push(el.outerHTML);
     }
-    return el;
   });
-  return prefiks.join('');
+  return prefiks;
 };
 
-export const utledSuffiksInnhold = (html: string) => {
-  const heleBrevet = new DOMParser().parseFromString(html, 'application/xhtml+xml');
-  let funnetRedigerbartInnhold = false;
-  const suffiks = [];
-  Array.from(heleBrevet.querySelectorAll('body > *')).map(el => {
-    if (el.hasAttribute('data-editable')) {
-      funnetRedigerbartInnhold = true;
-    } else if (funnetRedigerbartInnhold && !el.hasAttribute('data-hidden')) {
-      suffiks.push(el.outerHTML);
-    }
-    return el;
-  });
-  return suffiks.join('');
-};
+export const utledPrefiksInnhold = (seksjoner: Element[]) => htmlForRedigerbartFelt(seksjoner).join('');
+
+export const utledSuffiksInnhold = (seksjoner: Element[]) =>
+  htmlForRedigerbartFelt(seksjoner.reverse()).reverse().join('');
 
 export const utledRedigerbartInnhold = (html: string) => {
   // Bruker application/xhtml+xml som datatype, da backend bruker en xhtml parser som

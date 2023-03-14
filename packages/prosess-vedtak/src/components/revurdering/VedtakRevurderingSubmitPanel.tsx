@@ -2,7 +2,7 @@ import React from 'react';
 import { createSelector } from 'reselect';
 import { injectIntl, IntlShape } from 'react-intl';
 import { connect } from 'react-redux';
-import { Button, Alert, BodyLong } from '@navikt/ds-react';
+import { Button, Alert, BodyLong, ErrorMessage } from '@navikt/ds-react';
 
 import klageBehandlingArsakType from '@fpsak-frontend/kodeverk/src/behandlingArsakType';
 import behandlingStatusCode from '@fpsak-frontend/kodeverk/src/behandlingStatus';
@@ -23,6 +23,7 @@ interface OwnProps {
   isSubmitting: boolean;
   handleSubmit: (event: any) => void;
   aksjonspunkter: Aksjonspunkt[];
+  errorOnSubmit: boolean;
 }
 
 export const submitKnappTekst = aksjonspunkter =>
@@ -40,6 +41,7 @@ export const VedtakRevurderingSubmitPanelImpl = ({
   isSubmitting,
   handleSubmit,
   aksjonspunkter,
+  errorOnSubmit,
 }: OwnProps): JSX.Element => {
   const onClick = event =>
     !harRedusertUtbetaling || Object.values(redusertUtbetalingArsak).some(a => !!formikValues[a])
@@ -76,6 +78,7 @@ export const VedtakRevurderingSubmitPanelImpl = ({
           <VerticalSpacer sixteenPx />
           {submitKnapp}
           <VerticalSpacer sixteenPx />
+          {errorOnSubmit && <ErrorMessage size="small">{errorOnSubmit}</ErrorMessage>}
         </>
       )}
     </div>

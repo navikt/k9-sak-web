@@ -50,12 +50,14 @@ const forbrukteDagerDetaljer = (
   });
 
   if (smittevernDagerTimer) {
-    detaljer.push({
-      antallDager: smittevernDagerTimer.dager,
-      antallTimer: <AntallTimer timer={smittevernDagerTimer.timer} />,
-      overskrifttekstId: 'Nøkkeltall.Smittevern',
-      infotekstContent: <FormattedMessage id={`Nøkkeltall.Smittevern.InfoText.${ar}`} />,
-    });
+    if ([2020, 2021, 2022].includes(parseInt(ar, 10))) {
+      detaljer.push({
+        antallDager: smittevernDagerTimer.dager,
+        antallTimer: <AntallTimer timer={smittevernDagerTimer.timer} />,
+        overskrifttekstId: 'Nøkkeltall.Smittevern',
+        infotekstContent: <FormattedMessage id={`Nøkkeltall.Smittevern.InfoText.${ar}`} />,
+      });
+    }
   } else if (utbetaltForMangeDagerTimer) {
     detaljer.push({
       antallDager: utbetaltForMangeDagerTimer.dager,

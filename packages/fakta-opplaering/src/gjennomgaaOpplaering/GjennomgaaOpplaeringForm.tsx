@@ -16,7 +16,7 @@ import { required } from '@fpsak-frontend/utils';
 import { Field, FieldArray, Formik } from 'formik';
 import RadioGroupFormik from '@fpsak-frontend/form/src/RadioGroupFormik';
 import { Button, Label, Alert, ErrorMessage } from '@navikt/ds-react';
-import { getPeriodDifference, Period } from '@navikt/k9-period-utils';
+import { getPeriodDifference, Period } from '@navikt/k9-fe-period-utils';
 import DeleteButton from '../components/delete-button/DeleteButton';
 import AddButton from '../components/add-button/AddButton';
 import RangeDatepicker from '../components/rangeDatepicker/RangeDatepicker';

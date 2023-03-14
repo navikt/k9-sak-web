@@ -2,18 +2,11 @@ import React from 'react';
 
 import { faktaPanelCodes } from '@k9-sak-web/konstanter';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { DynamicLoader, FaktaPanelDef } from '@k9-sak-web/behandling-felles';
+import { FaktaPanelDef } from '@k9-sak-web/behandling-felles';
 import { konverterKodeverkTilKode, transformBeregningValues } from '@fpsak-frontend/utils';
 import '@navikt/ft-fakta-fordel-beregningsgrunnlag/dist/style.css';
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
-
-const FaktaFordelBeregningsgrunnlag = React.lazy(() => import('@navikt/ft-fakta-fordel-beregningsgrunnlag'));
-
-const FaktaFordelBeregningsgrunnlagMF =
-  process.env.NODE_ENV !== 'development'
-    ? undefined
-    : // eslint-disable-next-line import/no-unresolved
-      () => import('ft_fakta_fordel_beregningsgrunnlag/FaktaFordelBeregningsgrunnlag');
+import { FordelBeregningsgrunnlagFaktaIndex } from '@navikt/ft-fakta-fordel-beregningsgrunnlag';
 
 class FordelBeregningPanelDef extends FaktaPanelDef {
   getUrlKode = () => faktaPanelCodes.FORDELING;
@@ -31,14 +24,12 @@ class FordelBeregningPanelDef extends FaktaPanelDef {
     konverterKodeverkTilKode(deepCopyProps);
     const bgVilkaret = deepCopyProps.vilkar.find(v => v.vilkarType === vilkarType.BEREGNINGSGRUNNLAGVILKARET);
     return (
-      <DynamicLoader<React.ComponentProps<typeof FaktaFordelBeregningsgrunnlag>>
-        packageCompFn={() => import('@navikt/ft-fakta-fordel-beregningsgrunnlag')}
-        federatedCompFn={FaktaFordelBeregningsgrunnlagMF}
+      <FordelBeregningsgrunnlagFaktaIndex
         {...props}
         beregningsgrunnlagVilkår={bgVilkaret}
         beregningsgrunnlagListe={deepCopyProps.beregningsgrunnlag}
         arbeidsgiverOpplysningerPerId={deepCopyProps.arbeidsgiverOpplysningerPerId}
-        submitCallback={apData => props.submitCallback(transformBeregningValues([apData]))} // Returnerer alltid kun eitt aksjonspunkt om gangen
+        submitCallback={data => props.submitCallback(transformBeregningValues([data]))} // Returnerer alltid kun eitt aksjonspunkt om gangen
         formData={props.formData}
         setFormData={props.setFormData}
       />
