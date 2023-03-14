@@ -70,7 +70,7 @@ export default {
 };
 
 export const visSjekkTilbakekreving = () => {
-  const aksjonspunkt5040 = {
+  const aksjonspunkt5085 = {
     aksjonspunktType: { kode: 'MANU', kodeverk: 'AKSJONSPUNKT_TYPE' },
     begrunnelse: null,
     besluttersBegrunnelse: null,
@@ -109,7 +109,7 @@ export const visSjekkTilbakekreving = () => {
       vilkar={[]}
       sendVarselOmRevurdering={boolean('sendVarselOmRevurdering', false)}
       medlemskap={{ fom: '2019-01-01' }}
-      aksjonspunkter={[aksjonspunkt5040]}
+      aksjonspunkter={[aksjonspunkt5085]}
       employeeHasAccess={boolean('employeeHasAccess', false)}
       isReadOnly={boolean('isReadOnly', false)}
       previewCallback={action('button-click')}

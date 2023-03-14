@@ -5,6 +5,7 @@ import { kodeverkObjektPropType } from '@fpsak-frontend/prop-types';
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import vedtakAksjonspunkterPropType from '../propTypes/vedtakAksjonspunkterPropType';
 import vedtakVilkarPropType from '../propTypes/vedtakVilkarPropType';
 import vedtakBeregningsresultatPropType from '../propTypes/vedtakBeregningsresultatPropType';
@@ -12,6 +13,7 @@ import VedtakForm from './VedtakForm';
 import { finnSistePeriodeMedAvslagsårsakBeregning } from './VedtakHelper';
 import vedtakBeregningsgrunnlagPropType from '../propTypes/vedtakBeregningsgrunnlagPropType';
 import vedtakVarselPropType from '../propTypes/vedtakVarselPropType';
+import VedtakSjekkTilbakekreving from './VedtakSjekkTilbakekreving';
 
 /*
  * VedtakPanels
@@ -61,6 +63,14 @@ const VedtakPanels = ({
       bg[0].beregningsgrunnlagPeriode,
     );
   }
+
+  const skalViseSjekkTilbakekreving = !!aksjonspunkter.find(
+    ap => ap.definisjon.kode === aksjonspunktCodes.SJEKK_TILBAKEKREVING && ap.erAktivt && ap.kanLoses,
+  );
+
+  if (skalViseSjekkTilbakekreving)
+    return <VedtakSjekkTilbakekreving readOnly={readOnly} submitCallback={submitCallback} />;
+
   return (
     <VedtakForm
       submitCallback={submitCallback}
