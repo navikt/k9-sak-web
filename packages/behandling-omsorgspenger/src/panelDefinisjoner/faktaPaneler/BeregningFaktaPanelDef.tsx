@@ -5,7 +5,7 @@ import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { FaktaPanelDef } from '@k9-sak-web/behandling-felles';
 import { konverterKodeverkTilKode, mapVilkar, transformBeregningValues } from '@fpsak-frontend/utils';
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
-import FaktaBeregningsgrunnlag from '@navikt/ft-fakta-beregning';
+import { BeregningFaktaIndex } from '@navikt/ft-fakta-beregning';
 
 class BeregningFaktaPanelDef extends FaktaPanelDef {
   getUrlKode = () => faktaPanelCodes.BEREGNING;
@@ -24,7 +24,7 @@ class BeregningFaktaPanelDef extends FaktaPanelDef {
     konverterKodeverkTilKode(deepCopyProps);
     const bgVilkaret = deepCopyProps.vilkar.find(v => v.vilkarType === vilkarType.BEREGNINGSGRUNNLAGVILKARET);
     return (
-      <FaktaBeregningsgrunnlag
+      <BeregningFaktaIndex
         {...deepCopyProps}
         beregningsgrunnlag={deepCopyProps.beregningsgrunnlag}
         arbeidsgiverOpplysningerPerId={deepCopyProps.arbeidsgiverOpplysningerPerId}
