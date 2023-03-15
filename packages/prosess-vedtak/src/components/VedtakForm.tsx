@@ -8,6 +8,10 @@ import {
   filterInformasjonsbehov,
   harMellomlagretFritekstbrev,
   harMellomLagretMedIngenBrev,
+  
+  
+  
+  
   harMellomlagretRedusertUtbetalingArsak,
   harPotensieltFlereInformasjonsbehov,
   harSattDokumentdataType,
@@ -112,12 +116,6 @@ interface Props {
   behandlingArsaker: object[];
 }
 
-export type SjekkTilbakekrevingType = {
-  visAksjonspunkt: boolean;
-  skalBehandleTilbakekrevingFørst: boolean;
-  harVurdertÅSjekkeTilbakekreving: boolean;
-};
-
 export const VedtakForm: React.FC<Props> = ({
   intl,
   readOnly,
@@ -160,13 +158,6 @@ export const VedtakForm: React.FC<Props> = ({
   const [errorOnSubmit, setErrorOnSubmit] = useState('');
   const [harVurdertOverlappendeYtelse, setHarVurdertOverlappendeYtelse] = useState(false);
   const [visSakGårIkkeTilBeslutterModal, setVisSakGårIkkeTilBeslutterModal] = useState(false);
-  const [sjekkTilbakekreving, setSjekkTilbakekreving] = useState<SjekkTilbakekrevingType>({
-    visAksjonspunkt: !!aksjonspunkter.find(
-      ap => ap.definisjon.kode === aksjonspunktCodes.SJEKK_TILBAKEKREVING && ap.erAktivt && ap.kanLoses,
-    ),
-    skalBehandleTilbakekrevingFørst: false,
-    harVurdertÅSjekkeTilbakekreving: false,
-  });
 
   const harOverlappendeYtelser = overlappendeYtelser && overlappendeYtelser.length > 0;
 
@@ -521,8 +512,7 @@ export const VedtakForm: React.FC<Props> = ({
               }
               harVurdertOverlappendeYtelse={harVurdertOverlappendeYtelse}
               setHarVurdertOverlappendeYtelse={setHarVurdertOverlappendeYtelse}
-              sjekkTilbakekreving={sjekkTilbakekreving}
-              setSjekkTilbakekreving={setSjekkTilbakekreving}
+              submitCallback={submitCallback}
             >
               {!erRevurdering ? (
                 <>
@@ -608,7 +598,6 @@ export const VedtakForm: React.FC<Props> = ({
                   behandlingPaaVent={behandlingPaaVent}
                   isSubmitting={formikProps.isSubmitting}
                   aksjonspunkter={aksjonspunkter}
-                  sjekkTilbakekreving={sjekkTilbakekreving}
                   errorOnSubmit={errorOnSubmit}
                   handleSubmit={
                     erToTrinn ? formikProps.handleSubmit : event => handleErEntrinnSubmit(event, formikProps)
@@ -626,7 +615,6 @@ export const VedtakForm: React.FC<Props> = ({
                   harRedusertUtbetaling={harRedusertUtbetaling}
                   visFeilmeldingFordiArsakerMangler={() => setErSendtInnUtenArsaker(true)}
                   aksjonspunkter={aksjonspunkter}
-                  sjekkTilbakekreving={sjekkTilbakekreving}
                   errorOnSubmit={errorOnSubmit}
                 />
               )}

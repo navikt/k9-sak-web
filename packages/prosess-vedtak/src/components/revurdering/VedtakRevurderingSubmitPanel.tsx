@@ -8,7 +8,6 @@ import klageBehandlingArsakType from '@fpsak-frontend/kodeverk/src/behandlingArs
 import behandlingStatusCode from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import { Aksjonspunkt } from '@k9-sak-web/types';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { SjekkTilbakekrevingType } from '../VedtakForm';
 
 import redusertUtbetalingArsak from '../../kodeverk/redusertUtbetalingArsak';
 
@@ -24,7 +23,6 @@ interface OwnProps {
   isSubmitting: boolean;
   handleSubmit: (event: any) => void;
   aksjonspunkter: Aksjonspunkt[];
-  sjekkTilbakekreving: SjekkTilbakekrevingType;
   errorOnSubmit: boolean;
 }
 
@@ -43,7 +41,6 @@ export const VedtakRevurderingSubmitPanelImpl = ({
   isSubmitting,
   handleSubmit,
   aksjonspunkter,
-  sjekkTilbakekreving,
   errorOnSubmit,
 }: OwnProps): JSX.Element => {
   const onClick = event =>
@@ -59,13 +56,7 @@ export const VedtakRevurderingSubmitPanelImpl = ({
       type="button"
       className={styles.mainButton}
       onClick={onClick}
-      disabled={
-        isSubmitting ||
-        (sjekkTilbakekreving.visAksjonspunkt &&
-          sjekkTilbakekreving.harVurdertÅSjekkeTilbakekreving &&
-          sjekkTilbakekreving.skalBehandleTilbakekrevingFørst) ||
-        (sjekkTilbakekreving.visAksjonspunkt && !sjekkTilbakekreving.harVurdertÅSjekkeTilbakekreving)
-      }
+      disabled={isSubmitting}
       loading={isSubmitting}
       size="small"
     >
@@ -82,14 +73,6 @@ export const VedtakRevurderingSubmitPanelImpl = ({
   return (
     <div>
       <div className={styles.margin} />
-      {sjekkTilbakekreving.skalBehandleTilbakekrevingFørst && (
-        <>
-          <VerticalSpacer twentyPx />
-          <Alert className={styles.aksjonspunktAlert} variant="error" size="small">
-            <BodyLong>Sett behandlingen på vent og behandle tilbakekrevingssaken først.</BodyLong>
-          </Alert>
-        </>
-      )}
       {!readOnly && (
         <>
           <VerticalSpacer sixteenPx />

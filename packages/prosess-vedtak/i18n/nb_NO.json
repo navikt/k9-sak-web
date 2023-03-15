@@ -1,7 +1,12 @@
 {
   "VedtakForm.ForslagTilVedtak": "Vedtak",
   "VedtakForm.BehandlingHenlagt": "Behandlingen er henlagt",
-  "VedtakForm.BehandleTilbakekrevingFørst": "Sett behandlingen på vent og behandle tilbakekrevingssaken først",
+  "VedtakForm.SjekkTilbakekreving.Overskrift": "Har åpen tilbakekrevingssak som kan bli påvirket", 
+  "VedtakForm.SjekkTilbakekreving.Ja": "Ja", 
+  "VedtakForm.SjekkTilbakekreving.Nei": "Nei", 
+  "VedtakForm.SjekkTilbakekreving.Bekreft": "Bekreft", 
+  "VedtakForm.SjekkTilbakekreving.Beskrivelse": "Vurder om tilbakekrevingssaken skal behandles først.", 
+  "VedtakForm.SjekkTilbakekreving.Advarsel": "Sett behandlingen på vent og behandle tilbakekrevingssaken først",
   "VedtakForm.ResultatKlageYtelsesvedtakOpphevet": "Vedtaket er opphevet",
   "VedtakForm.ResultatKlageAvvist": "Klagen er avvist",
   "VedtakForm.EngangsstonadIkkeInnvilget": "Engangsstønad er avslått",
