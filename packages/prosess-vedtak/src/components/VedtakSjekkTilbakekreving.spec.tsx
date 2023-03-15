@@ -1,5 +1,4 @@
 import React from 'react';
-import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/src/test-utils';
 import { screen } from '@testing-library/react';
 import sinon from 'sinon';
 
@@ -12,7 +11,8 @@ import { K9sakApiKeys, requestApi } from '@k9-sak-web/sak-app/src/data/k9sakApi'
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import VedtakProsessIndex from '@fpsak-frontend/prosess-vedtak';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
-import ProsessStegContainer from '@k9-sak-web/behandling-felles/src/components/ProsessStegContainer';
+import { ProsessStegContainer } from '@k9-sak-web/behandling-felles';
+import { renderWithIntl } from '@fpsak-frontend/utils-test/src/test-utils';
 
 const behandling = {
   id: 1,
@@ -76,7 +76,7 @@ describe('<AvslagårsakListe>', () => {
   it('Skal vise ap for sjekk tilbakekreving riktig', () => {
     requestApi.mock(K9sakApiKeys.FEATURE_TOGGLE, []);
 
-    renderWithIntlAndReduxForm(
+    renderWithIntl(
       <ProsessStegContainer formaterteProsessStegPaneler={[]} velgProsessStegPanelCallback={() => {}}>
         <VedtakProsessIndex
           behandling={{
@@ -85,22 +85,30 @@ describe('<AvslagårsakListe>', () => {
               kode: behandlingType.SOKNAD,
               kodeverk: '',
             },
-          },
-        }}
-        vilkar={[]}
-        sendVarselOmRevurdering={false}
-        medlemskap={{ fom: '2019-01-01' }}
-        aksjonspunkter={[aksjonspunkt5085]}
-        employeeHasAccess={false}
-        isReadOnly={false}
-        previewCallback={sinon.spy()}
-        submitCallback={sinon.spy()}
-        alleKodeverk={alleKodeverk}
-        ytelseTypeKode={fagsakYtelseType.OMSORGSPENGER}
-        arbeidsgiverOpplysningerPerId={{}}
-        lagreDokumentdata={sinon.spy()}
-        hentFritekstbrevHtmlCallback={sinon.spy()}
-      />,
+            behandlingsresultat: {
+              vedtaksbrev: {
+                kode: 'FRITEKST',
+              },
+              type: {
+                kode: behandlingResultatType.IKKE_FASTSATT,
+              },
+            },
+          }}
+          vilkar={[]}
+          sendVarselOmRevurdering={false}
+          medlemskap={{ fom: '2019-01-01' }}
+          aksjonspunkter={[aksjonspunkt5085]}
+          employeeHasAccess={false}
+          isReadOnly={false}
+          previewCallback={sinon.spy()}
+          submitCallback={sinon.spy()}
+          alleKodeverk={alleKodeverk}
+          ytelseTypeKode={fagsakYtelseType.OMSORGSPENGER}
+          arbeidsgiverOpplysningerPerId={{}}
+          lagreDokumentdata={sinon.spy()}
+          hentFritekstbrevHtmlCallback={sinon.spy()}
+        />
+      </ProsessStegContainer>,
     );
 
     expect(screen.queryByText('Har åpen tilbakekrevingssak som kan bli påvirket')).toBeInTheDocument();
@@ -110,7 +118,7 @@ describe('<AvslagårsakListe>', () => {
   it('Skal IKKE vise ap for sjekk tilbakekreving', () => {
     requestApi.mock(K9sakApiKeys.FEATURE_TOGGLE, []);
 
-    renderWithIntlAndReduxForm(
+    renderWithIntl(
       <ProsessStegContainer formaterteProsessStegPaneler={[]} velgProsessStegPanelCallback={() => {}}>
         <VedtakProsessIndex
           behandling={{
