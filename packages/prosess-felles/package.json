@@ -16,7 +16,7 @@
     "nav-frontend-knapper-style": "2.1.2",
     "nav-frontend-typografi": "4.0.2",
     "nav-frontend-typografi-style": "2.0.2",
-    "react": "17.0.2",
+    "react": "18.2.0",
     "react-intl": "6.2.10",
     "react-redux": "8.0.5",
     "redux": "4.2.1",
