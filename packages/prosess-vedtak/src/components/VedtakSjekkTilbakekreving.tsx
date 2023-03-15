@@ -11,12 +11,12 @@ interface Props {
 }
 
 export const VedtakSjekkTilbakekreving: React.FC<Props> = ({ readOnly, submitCallback }: Props) => {
-  const [deaktiverKnapp, setDeaktiverKnapp] = React.useState<boolean>(true);
-  const [aktivert, setAktivert] = React.useState<boolean>(false);
+  const [deaktiverBekreftKnapp, setDeaktiverBekreftKnapp] = React.useState<boolean>(true);
+  const [visAdvarselTekst, setVisAdvarselTekst] = React.useState<boolean>(false);
 
   const handleChange = value => {
-    setDeaktiverKnapp(value === 'ja');
-    setAktivert(true);
+    setDeaktiverBekreftKnapp(value === 'ja');
+    setVisAdvarselTekst(true);
   };
 
   const handleSubmit = () => submitCallback([{ kode: aksjonspunktCodes.SJEKK_TILBAKEKREVING }]);
@@ -40,11 +40,11 @@ export const VedtakSjekkTilbakekreving: React.FC<Props> = ({ readOnly, submitCal
           </Radio>
         </RadioGroup>
         <VerticalSpacer twentyPx />
-        <Button variant="primary" onClick={handleSubmit} type="button" disabled={deaktiverKnapp}>
+        <Button variant="primary" onClick={handleSubmit} type="button" disabled={deaktiverBekreftKnapp}>
           <FormattedMessage id="VedtakForm.SjekkTilbakekreving.Bekreft" />
         </Button>
       </Alert>
-      {deaktiverKnapp && aktivert && (
+      {deaktiverBekreftKnapp && visAdvarselTekst && (
         <>
           <VerticalSpacer twentyPx />
           <Alert className={styles.aksjonspunktAlert} variant="error" size="small">
