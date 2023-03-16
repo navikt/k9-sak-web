@@ -77,7 +77,7 @@
     "@babel/register": "7.21.0",
     "@commercetools/enzyme-extensions": "5.0.0",
     "@pmmmwh/react-refresh-webpack-plugin": "0.5.10",
-    "@sentry/cli": "2.14.4",
+    "@sentry/cli": "2.15.1",
     "@storybook/addon-actions": "6.5.16",
     "@storybook/addon-docs": "6.5.16",
     "@storybook/addon-essentials": "6.5.16",
