@@ -62,7 +62,7 @@ spec:
     - name: MEDISINSK_VILKAR_FRONTEND_URL
       value: "https://medisinsk-vilkar-frontend.dev.adeo.no/"
     - name: OMSORGSDAGER_FRONTEND_URL
-      value: "https://omsorgsdager-frontend.dev.intern.nav.no/"
+      value: "https://omsorgsdager-frontend.intern.dev.nav.no/"
     - name: PSB_UTTAK_FRONTEND_URL
       value: "https://psb-uttak-frontend.dev.adeo.no/"
     - name: OMSORGEN_FOR_FRONTEND_URL
@@ -74,7 +74,7 @@ spec:
     - name: PSB_OM_BARNET_FRONTEND_URL
       value: "https://psb-om-barnet-frontend.dev.adeo.no/"
     - name: ENDRINGSLOGG_URL
-      value: "https://familie-endringslogg.dev.intern.nav.no/"
+      value: "https://familie-endringslogg.intern.dev.nav.no/"
 
     # Feature-flag
     - name: KLAGE_KABAL
