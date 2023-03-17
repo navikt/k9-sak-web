@@ -50,31 +50,31 @@ spec:
     - name: APP_URL_K9FORMIDLING_DD
       value: "http://k9-formidling-dokumentdata.k9saksbehandling"
     - name: APP_URL_K9OPPDRAG
-      value: "http://k9-oppdrag.default"
+      value: "http://k9-oppdrag.k9saksbehandling"
     - name: APP_URL_KLAGE
       value: "http://k9-klage.k9saksbehandling"
     - name: APP_URL_K9TILBAKE
-      value: "http://k9-tilbake.default"
+      value: "http://k9-tilbake.k9saksbehandling"
     - name: APP_URL_K9FORDEL
       value: "http://k9-fordel.k9saksbehandling"
     - name: APP_DIAGNOSEKODER
       value: "http://diagnosekode-api.k9saksbehandling/diagnosekoder"
     - name: MEDISINSK_VILKAR_FRONTEND_URL
-      value: "https://medisinsk-vilkar-frontend.dev.adeo.no/"
+      value: "https://medisinsk-vilkar-frontend.intern.dev.nav.no/"
     - name: OMSORGSDAGER_FRONTEND_URL
-      value: "https://omsorgsdager-frontend.dev.intern.nav.no/"
+      value: "https://omsorgsdager-frontend.intern.dev.nav.no/"
     - name: PSB_UTTAK_FRONTEND_URL
-      value: "https://psb-uttak-frontend.dev.adeo.no/"
+      value: "https://psb-uttak-frontend.intern.dev.nav.no/"
     - name: OMSORGEN_FOR_FRONTEND_URL
-      value: "https://omsorgen-for-frontend.dev.adeo.no/"
+      value: "https://omsorgen-for-frontend.intern.dev.nav.no/"
     - name: PSB_INNTEKTSMELDING_FRONTEND_URL
-      value: "https://psb-inntektsmelding-frontend.dev.adeo.no/"
+      value: "https://psb-inntektsmelding-frontend.intern.dev.nav.no/"
     - name: PSB_ETABLERT_TILSYN_FRONTEND_URL
-      value: "https://psb-etablert-tilsyn-frontend.dev.adeo.no/"
+      value: "https://psb-etablert-tilsyn-frontend.intern.dev.nav.no/"
     - name: PSB_OM_BARNET_FRONTEND_URL
-      value: "https://psb-om-barnet-frontend.dev.adeo.no/"
+      value: "https://psb-om-barnet-frontend.intern.dev.nav.no/"
     - name: ENDRINGSLOGG_URL
-      value: "https://familie-endringslogg.dev.intern.nav.no/"
+      value: "https://familie-endringslogg.intern.dev.nav.no/"
 
     # Feature-flag
     - name: KLAGE_KABAL
