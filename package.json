@@ -45,7 +45,7 @@
     "@formatjs/intl-datetimeformat": "6.5.1",
     "@formatjs/intl-numberformat": "8.3.5",
     "@navikt/ds-css": "2.7.6",
-    "@navikt/ds-react": "2.7.6",
+    "@navikt/ds-react": "2.8.1",
     "@navikt/familie-endringslogg": "8.1.1",
     "@navikt/ft-plattform-komponenter": "2.0.6",
     "@popperjs/core": "2.11.6",
