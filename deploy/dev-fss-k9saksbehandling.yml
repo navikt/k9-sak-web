@@ -12,7 +12,7 @@ metadata:
     nginx.ingress.kubernetes.io/proxy-read-timeout: "600"
     nginx.ingress.kubernetes.io/proxy-send-timeout: "600"
 spec:
-  image: {{ image }}
+  image: { { image } }
   port: 9000
   team: k9saksbehandling
   liveness:
@@ -74,7 +74,7 @@ spec:
     - name: PSB_OM_BARNET_FRONTEND_URL
       value: "https://psb-om-barnet-frontend.dev.adeo.no/"
     - name: ENDRINGSLOGG_URL
-      value: "https://familie-endringslogg.dev.intern.nav.no/"
+      value: "https://familie-endringslogg.intern.dev.nav.no/"
 
     # Feature-flag
     - name: KLAGE_KABAL
