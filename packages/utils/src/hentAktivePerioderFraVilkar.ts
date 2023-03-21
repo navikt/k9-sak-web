@@ -7,15 +7,9 @@ const hentAktivePerioderFraVilkar = (vilkar: Vilkar[], visAllePerioder: boolean)
     return [];
   }
 
-  /*
-   * Denne logikken har ført til feil i visningen for søknadsfrist, med filter:
-   * (visAllePerioder && !periode.vurderesIBehandlingen) || (periode.vurderesIBehandlingen && !visAllePerioder)
-   *
-   * Endrer logikken til at om "visAllePerioder" er true, så skal alle perioder vises, om ikke så skal periodene
-   * filtreres på "vurderesIBehandlingen"
-   */
   return activeVilkår.perioder.filter(
-    periode => visAllePerioder || (periode.vurderesIBehandlingen && !visAllePerioder),
+    periode =>
+      (visAllePerioder && !periode.vurderesIBehandlingen) || (periode.vurderesIBehandlingen && !visAllePerioder),
   );
 };
 
