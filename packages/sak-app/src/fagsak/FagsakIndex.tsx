@@ -52,6 +52,7 @@ const erTilbakekreving = (behandlingType: Kodeverk): boolean =>
 const erPleiepengerSyktBarn = (fagsak: Fagsak) => fagsak?.sakstype?.kode === fagsakYtelseType.PLEIEPENGER;
 const erPleiepengerLivetsSluttfase = (fagsak: Fagsak) =>
   fagsak?.sakstype?.kode === fagsakYtelseType.PLEIEPENGER_SLUTTFASE;
+const erOmsorgspenger = (fagsak: Fagsak) => fagsak?.sakstype?.kode === fagsakYtelseType.OMSORGSPENGER;
 
 /**
  * FagsakIndex
@@ -221,7 +222,10 @@ const FagsakIndex = () => {
   }
 
   const harVerge = behandling ? behandling.harVerge : false;
-  const showPunsjOgFagsakPåSøkerStripe = erPleiepengerSyktBarn(fagsak) || erPleiepengerLivetsSluttfase(fagsak);
+  const showPunsjStripe =
+    erPleiepengerSyktBarn(fagsak) || erPleiepengerLivetsSluttfase(fagsak) || erOmsorgspenger(fagsak);
+  const showFagsakPåSøkerStripe = erPleiepengerSyktBarn(fagsak) || erPleiepengerLivetsSluttfase(fagsak);
+  
   return (
     <>
       <FagsakGrid
@@ -294,18 +298,20 @@ const FagsakIndex = () => {
                 erPbSak={fagsak.erPbSak}
                 erHastesak={erHastesak}
               />
-              {showPunsjOgFagsakPåSøkerStripe && (
+
+              {behandling && !erTilbakekreving(behandling.type) && (
                 <>
-                  {behandling && !erTilbakekreving(behandling.type) && (
-                    <Punsjstripe behandlingUuid={behandling.uuid} pathToLos={getPathToFplos()} />
+                  {showPunsjStripe && <Punsjstripe behandlingUuid={behandling.uuid} pathToLos={getPathToFplos()} />}
+                  {showFagsakPåSøkerStripe && (
+                    <AndreSakerPåSøkerStripe
+                      søkerIdent={fagsakPerson.personnummer}
+                      saksnummer={fagsak.saksnummer}
+                      fagsakYtelseType={fagsak.sakstype.kode}
+                    />
                   )}
-                  <AndreSakerPåSøkerStripe
-                    søkerIdent={fagsakPerson.personnummer}
-                    saksnummer={fagsak.saksnummer}
-                    fagsakYtelseType={fagsak.sakstype.kode}
-                  />
                 </>
               )}
+
               {showSøknadsperiodestripe && (
                 <Soknadsperiodestripe behandlingPerioderMedVilkår={behandlingPerioderMedVilkår} />
               )}
