@@ -223,9 +223,11 @@ const FagsakIndex = () => {
 
   const harVerge = behandling ? behandling.harVerge : false;
   const showPunsjStripe =
-    erPleiepengerSyktBarn(fagsak) || erPleiepengerLivetsSluttfase(fagsak) || erOmsorgspenger(fagsak);
+    erPleiepengerSyktBarn(fagsak) ||
+    erPleiepengerLivetsSluttfase(fagsak) ||
+    (erOmsorgspenger(fagsak) && featureToggles?.OMS_PUNSJSTRIPE);
   const showFagsakPåSøkerStripe = erPleiepengerSyktBarn(fagsak) || erPleiepengerLivetsSluttfase(fagsak);
-  
+
   return (
     <>
       <FagsakGrid

@@ -105,3 +105,5 @@ spec:
       value: "true"
     - name: INKLUDER_KALENDER_PILS
       value: "true"
+    - name: OMS_PUNSJSTRIPE
+      value: "true"
