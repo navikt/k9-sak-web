@@ -50,5 +50,9 @@
   {
     "key": "OPPLAERINGSPENGER",
     "value": "${OPPLAERINGSPENGER}"
+  },
+  {
+    "key": "OMS_PUNSJSTRIPE",
+    "value": "${OMS_PUNSJSTRIPE}"
   }
 ]

@@ -45,6 +45,10 @@ const featureToggles = [
     key: 'FRITEKST_REDIGERING',
     value: process.env.FRITEKST_REDIGERING,
   },
+  {
+    key: 'OMS_PUNSJSTRIPE',
+    value: process.env.OMS_PUNSJSTRIPE,
+  },
 ];
 
 module.exports = function (app) {
