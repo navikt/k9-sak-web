@@ -33,7 +33,7 @@
     "@k9-sak-web/rest-api-hooks": "1.0.0",
     "@k9-sak-web/sak-app": "1.0.0",
     "@k9-sak-web/types": "1.0.0",
-    "@navikt/ft-fakta-beregning": "4.1.5",
+    "@navikt/ft-fakta-beregning": "4.1.6",
     "@navikt/ft-fakta-fordel-beregningsgrunnlag": "7.0.10",
     "@navikt/ft-prosess-beregningsgrunnlag": "6.0.12",
     "axios": "0.27.2",
