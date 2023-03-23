@@ -18,7 +18,7 @@
     "nav-frontend-spinner": "3.0.1",
     "nav-frontend-spinner-style": "1.0.2",
     "react": "17.0.2",
-    "react-intl": "6.3.2"
+    "react-intl": "6.3.1"
   },
   "devDependencies": {
     "@fpsak-frontend/utils-test": "1.0.0",
