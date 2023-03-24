@@ -54,7 +54,7 @@
     "@navikt/ft-plattform-komponenter": "2.0.8",
     "@navikt/ft-prosess-beregningsgrunnlag": "6.0.12",
     "@navikt/ft-ui-komponenter": "2.0.8",
-    "@sentry/browser": "7.44.2",
+    "@sentry/browser": "7.45.0",
     "axios": "0.27.2",
     "classnames": "2.3.2",
     "history": "5.3.0",
