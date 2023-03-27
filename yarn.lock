@@ -4282,7 +4282,7 @@ __metadata:
     "@k9-sak-web/rest-api-hooks": 1.0.0
     "@k9-sak-web/types": 1.0.0
     "@navikt/ft-fakta-beregning": 4.1.8
-    "@navikt/ft-fakta-fordel-beregningsgrunnlag": 7.0.11
+    "@navikt/ft-fakta-fordel-beregningsgrunnlag": 7.1.0
     "@navikt/ft-prosess-beregningsgrunnlag": 6.0.13
     axios-mock-adapter: 1.21.3
     enzyme: 3.11.0
@@ -4331,7 +4331,7 @@ __metadata:
     "@k9-sak-web/sak-app": 1.0.0
     "@k9-sak-web/types": 1.0.0
     "@navikt/ft-fakta-beregning": 4.1.8
-    "@navikt/ft-fakta-fordel-beregningsgrunnlag": 7.0.11
+    "@navikt/ft-fakta-fordel-beregningsgrunnlag": 7.1.0
     "@navikt/ft-prosess-beregningsgrunnlag": 6.0.13
     axios: 0.27.2
     axios-mock-adapter: 1.21.3
@@ -4379,7 +4379,7 @@ __metadata:
     "@k9-sak-web/sak-app": 1.0.0
     "@k9-sak-web/types": 1.0.0
     "@navikt/ft-fakta-beregning": 4.1.8
-    "@navikt/ft-fakta-fordel-beregningsgrunnlag": 7.0.11
+    "@navikt/ft-fakta-fordel-beregningsgrunnlag": 7.1.0
     "@navikt/ft-prosess-beregningsgrunnlag": 6.0.13
     axios: 0.27.2
     axios-mock-adapter: 1.21.3
@@ -4429,7 +4429,7 @@ __metadata:
     "@k9-sak-web/sak-app": 1.0.0
     "@k9-sak-web/types": 1.0.0
     "@navikt/ft-fakta-beregning": 4.1.8
-    "@navikt/ft-fakta-fordel-beregningsgrunnlag": 7.0.11
+    "@navikt/ft-fakta-fordel-beregningsgrunnlag": 7.1.0
     "@navikt/ft-prosess-beregningsgrunnlag": 6.0.13
     axios: 0.27.2
     axios-mock-adapter: 1.21.3
@@ -5501,17 +5501,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@navikt/ft-fakta-fordel-beregningsgrunnlag@npm:7.0.11":
-  version: 7.0.11
-  resolution: "@navikt/ft-fakta-fordel-beregningsgrunnlag@npm:7.0.11::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fft-fakta-fordel-beregningsgrunnlag%2F7.0.11%2F54b55095e2c00583461eeecb396eb6eb92d34ce4"
+"@navikt/ft-fakta-fordel-beregningsgrunnlag@npm:7.1.0":
+  version: 7.1.0
+  resolution: "@navikt/ft-fakta-fordel-beregningsgrunnlag@npm:7.1.0::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fft-fakta-fordel-beregningsgrunnlag%2F7.1.0%2Fe13c1160f6fa1c809b4f6409d92535fa9e0c1a58"
   dependencies:
     "@navikt/ds-css": 2.8.4
     "@navikt/ds-react": 2.8.4
-    "@navikt/ft-form-hooks": ^4.0.11
+    "@navikt/ft-form-hooks": ^4.0.12
     "@navikt/ft-form-validators": ^2.0.10
     "@navikt/ft-kodeverk": ^2.0.8
     "@navikt/ft-types": ^2.0.8
-    "@navikt/ft-ui-komponenter": ^2.0.9
+    "@navikt/ft-ui-komponenter": ^2.0.10
     "@navikt/ft-utils": ^2.0.9
     classnames: 2.3.2
     core-js: 3.29.1
@@ -5521,6 +5521,7 @@ __metadata:
     react-intl: 6.3.2
   peerDependencies:
     "@navikt/ds-css": 2.6.0
+    "@navikt/ds-icons": 2.8.1
     "@navikt/ds-react": 2.6.0
     "@navikt/ft-form-hooks": 3.x
     "@navikt/ft-form-validators": 1.x
@@ -5534,7 +5535,7 @@ __metadata:
     react: 18.2.0
     react-hook-form: 7.43.5
     react-intl: 6.2.10
-  checksum: 21346a30a882e9acdcb1e1f279c1d3dd9c34b4da714760593577042a882ef3adb44d5f242e807b2d956ecff99a5312f3df5009fa7827d9bcc945960a45e7c162
+  checksum: d20a9064c5e2c962326a61e17c43cb106b39f1abec905a2484edf818f64d2a8758ebb32655e2ce27c01aedcf9b9750414028ce1ea1eccfdf1cf7ef7c017919d7
   languageName: node
   linkType: hard
 
@@ -5566,6 +5567,37 @@ __metadata:
     react: 18.2.0
     react-hook-form: 7.43.5
   checksum: 2f47295c658efb764e89550ace6c65fce31fe545befb91c690a7de85ad29b66e46f4941310d98a434dde07598a21d1f6d61ee1f9ec6ba8000d702f7df2be431e
+  languageName: node
+  linkType: hard
+
+"@navikt/ft-form-hooks@npm:^4.0.12":
+  version: 4.0.12
+  resolution: "@navikt/ft-form-hooks@npm:4.0.12::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fft-form-hooks%2F4.0.12%2Fadadf40a9450c9a3a8be9e86250fd339d3157490"
+  dependencies:
+    "@navikt/ds-css": 2.8.4
+    "@navikt/ds-react": 2.8.4
+    "@navikt/ft-form-validators": ^2.0.10
+    "@navikt/ft-types": ^2.0.8
+    "@navikt/ft-ui-komponenter": ^2.0.10
+    "@navikt/ft-utils": ^2.0.9
+    classnames: 2.3.2
+    dayjs: 1.11.7
+    lodash.throttle: 4.1.1
+    react: 18.2.0
+    react-hook-form: 7.43.8
+  peerDependencies:
+    "@navikt/ds-css": 2.6.0
+    "@navikt/ds-react": 2.6.0
+    "@navikt/ft-form-validators": 1.x
+    "@navikt/ft-types": 1.x
+    "@navikt/ft-ui-komponenter": 1.x
+    "@navikt/ft-utils": 1.x
+    classnames: 2.3.2
+    dayjs: 1.11.7
+    lodash.throttle: 4.1.1
+    react: 18.2.0
+    react-hook-form: 7.43.5
+  checksum: baeff2ab9c1ffba1ce977a01d62d310e3534e2b0a05e0ed2c4372b924f068b92ed11b9b56ac7f20452ed6f7f8d214df36ada02f3facea630cc09c3ee874ac5b1
   languageName: node
   linkType: hard
 
@@ -5698,6 +5730,37 @@ __metadata:
     react-intl: 6.2.10
     react-modal: 3.16.1
   checksum: 56d4d2cad59a8b091f1927f38c18291c4c41d1f88db2d5b21c6cfdaaa1c6cc6cec50acb7003143375be4e56b3b50229346eb13708d588972e18fc3e220f96bd5
+  languageName: node
+  linkType: hard
+
+"@navikt/ft-ui-komponenter@npm:^2.0.10":
+  version: 2.0.10
+  resolution: "@navikt/ft-ui-komponenter@npm:2.0.10::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fft-ui-komponenter%2F2.0.10%2F7114ad84ad556802eedac3361927a5ac752aa42d"
+  dependencies:
+    "@navikt/ds-css": 2.8.4
+    "@navikt/ds-react": 2.8.4
+    "@navikt/fnrvalidator": 1.3.3
+    "@navikt/ft-utils": ^2.0.9
+    classnames: 2.3.2
+    date-fns: 2.29.3
+    moment: 2.29.4
+    react: 18.2.0
+    react-day-picker: 8.6.0
+    react-intl: 6.3.2
+    react-modal: 3.16.1
+  peerDependencies:
+    "@navikt/ds-css": 2.6.0
+    "@navikt/ds-react": 2.6.0
+    "@navikt/fnrvalidator": 1.3.3
+    "@navikt/ft-utils": 1.x
+    classnames: 2.3.2
+    date-fns: 2.29.3
+    moment: 2.29.4
+    react: 18.2.0
+    react-day-picker: 8.6.0
+    react-intl: 6.2.10
+    react-modal: 3.16.1
+  checksum: 4a7fb537f0ab4441e2038a65353e7f087cd0022b3569eb9dcff653f7c7a639dfe83172038571f5d9ccf0c6e75aa5a685ba0544bcf069f8cf430a5d0dcae43efe
   languageName: node
   linkType: hard
 
