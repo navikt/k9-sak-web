@@ -15,11 +15,11 @@
     "@k9-sak-web/modal-sett-pa-vent": "1.0.0",
     "@k9-sak-web/rest-api-hooks": "1.0.0",
     "@k9-sak-web/types": "1.0.0",
-    "@navikt/ft-plattform-komponenter": "2.0.8",
-    "@navikt/k9-fe-array-utils": "1.0.3",
-    "@navikt/k9-fe-bem-utils": "1.0.1",
-    "@navikt/k9-fe-date-utils": "1.0.1",
-    "@navikt/k9-fe-period-utils": "1.0.4",
+    "@navikt/ft-plattform-komponenter": "2.0.9",
+    "@navikt/k9-fe-array-utils": "1.0.4",
+    "@navikt/k9-fe-bem-utils": "1.0.2",
+    "@navikt/k9-fe-date-utils": "1.0.2",
+    "@navikt/k9-fe-period-utils": "1.0.5",
     "classnames": "2.3.2",
     "nav-frontend-core": "6.0.1",
     "nav-frontend-grid": "2.0.2",
@@ -35,13 +35,13 @@
     "nav-frontend-typografi": "4.0.2",
     "nav-frontend-typografi-style": "2.0.2",
     "react": "17.0.2",
-    "react-intl": "6.3.1",
+    "react-intl": "6.3.2",
     "react-redux": "8.0.5",
     "redux-form": "8.3.9",
     "reselect": "4.1.7"
   },
   "devDependencies": {
     "enzyme": "3.11.0",
-    "sinon": "15.0.2"
+    "sinon": "15.0.3"
   }
 }
