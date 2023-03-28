@@ -4282,7 +4282,7 @@ __metadata:
     "@k9-sak-web/rest-api-hooks": 1.0.0
     "@k9-sak-web/types": 1.0.0
     "@navikt/ft-fakta-beregning": 4.1.8
-    "@navikt/ft-fakta-fordel-beregningsgrunnlag": 7.1.0
+    "@navikt/ft-fakta-fordel-beregningsgrunnlag": 7.1.1
     "@navikt/ft-prosess-beregningsgrunnlag": 6.0.13
     axios-mock-adapter: 1.21.3
     enzyme: 3.11.0
@@ -4331,7 +4331,7 @@ __metadata:
     "@k9-sak-web/sak-app": 1.0.0
     "@k9-sak-web/types": 1.0.0
     "@navikt/ft-fakta-beregning": 4.1.8
-    "@navikt/ft-fakta-fordel-beregningsgrunnlag": 7.1.0
+    "@navikt/ft-fakta-fordel-beregningsgrunnlag": 7.1.1
     "@navikt/ft-prosess-beregningsgrunnlag": 6.0.13
     axios: 0.27.2
     axios-mock-adapter: 1.21.3
@@ -4379,7 +4379,7 @@ __metadata:
     "@k9-sak-web/sak-app": 1.0.0
     "@k9-sak-web/types": 1.0.0
     "@navikt/ft-fakta-beregning": 4.1.8
-    "@navikt/ft-fakta-fordel-beregningsgrunnlag": 7.1.0
+    "@navikt/ft-fakta-fordel-beregningsgrunnlag": 7.1.1
     "@navikt/ft-prosess-beregningsgrunnlag": 6.0.13
     axios: 0.27.2
     axios-mock-adapter: 1.21.3
@@ -4429,7 +4429,7 @@ __metadata:
     "@k9-sak-web/sak-app": 1.0.0
     "@k9-sak-web/types": 1.0.0
     "@navikt/ft-fakta-beregning": 4.1.8
-    "@navikt/ft-fakta-fordel-beregningsgrunnlag": 7.1.0
+    "@navikt/ft-fakta-fordel-beregningsgrunnlag": 7.1.1
     "@navikt/ft-prosess-beregningsgrunnlag": 6.0.13
     axios: 0.27.2
     axios-mock-adapter: 1.21.3
@@ -5501,9 +5501,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@navikt/ft-fakta-fordel-beregningsgrunnlag@npm:7.1.0":
-  version: 7.1.0
-  resolution: "@navikt/ft-fakta-fordel-beregningsgrunnlag@npm:7.1.0::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fft-fakta-fordel-beregningsgrunnlag%2F7.1.0%2Fe13c1160f6fa1c809b4f6409d92535fa9e0c1a58"
+"@navikt/ft-fakta-fordel-beregningsgrunnlag@npm:7.1.1":
+  version: 7.1.1
+  resolution: "@navikt/ft-fakta-fordel-beregningsgrunnlag@npm:7.1.1::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fft-fakta-fordel-beregningsgrunnlag%2F7.1.1%2F7bed87228a64d4124a7f0a96cb838507b880c853"
   dependencies:
     "@navikt/ds-css": 2.8.4
     "@navikt/ds-react": 2.8.4
@@ -5535,7 +5535,7 @@ __metadata:
     react: 18.2.0
     react-hook-form: 7.43.5
     react-intl: 6.2.10
-  checksum: d20a9064c5e2c962326a61e17c43cb106b39f1abec905a2484edf818f64d2a8758ebb32655e2ce27c01aedcf9b9750414028ce1ea1eccfdf1cf7ef7c017919d7
+  checksum: 476542bd74aa3e5d7ca2cc096cbd66ff8c38359b04e7f8ebb3973e3b55372a9c0ce62b09509ec3d68c3c7cf77c0fbd3d29bdc565b4c55b3d974c6a18b3aadf32
   languageName: node
   linkType: hard
 
