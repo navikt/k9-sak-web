@@ -2413,7 +2413,7 @@ __metadata:
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
     react: 17.0.2
-    react-day-picker: 7.4.10
+    react-day-picker: 8.7.0
     react-intl: 6.3.2
     yup: 0.32.11
   peerDependencies:
@@ -3615,7 +3615,7 @@ __metadata:
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
     react: 17.0.2
-    react-day-picker: 7.4.10
+    react-day-picker: 8.7.0
     react-intl: 6.3.2
     react-modal: 3.16.1
     react-redux: 8.0.5
@@ -24453,17 +24453,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-day-picker@npm:7.4.10":
-  version: 7.4.10
-  resolution: "react-day-picker@npm:7.4.10"
-  dependencies:
-    prop-types: ^15.6.2
-  peerDependencies:
-    react: ~0.13.x || ~0.14.x || ^15.0.0 || ^16.0.0 || ^17.0.0
-  checksum: 33a4614bb4d457a3e72462d092fa131d3d7ec1ba858ac7e70d65b59e464606ffc039afdd226db37ead1326e248ca9a103007ee0bb829b277cd7297e5f5807ad1
-  languageName: node
-  linkType: hard
-
 "react-day-picker@npm:8.3.4":
   version: 8.3.4
   resolution: "react-day-picker@npm:8.3.4"
@@ -24481,6 +24470,16 @@ __metadata:
     date-fns: ^2.28.0
     react: ^16.8.0 || ^17.0.0 || ^18.0.0
   checksum: f5bc2f9b093ddffc5e504b48c52ca6fccd9180bd63d77641312b0df80cdf5285d440b191d6379262798ab40926936144ca216f1c2a1fb78b998105f9e49c6379
+  languageName: node
+  linkType: hard
+
+"react-day-picker@npm:8.7.0":
+  version: 8.7.0
+  resolution: "react-day-picker@npm:8.7.0"
+  peerDependencies:
+    date-fns: ^2.28.0
+    react: ^16.8.0 || ^17.0.0 || ^18.0.0
+  checksum: 98548e91bae5e3f5e171056f1b7a0a0a1733787101fd2f3663c18af34d7fbe0e18f3b3a85e2e0be7a356995e61cf468ea1fc7f115bed661cfd5714fee4e7583d
   languageName: node
   linkType: hard
 
