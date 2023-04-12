@@ -19,6 +19,37 @@ import OmsorgspengerFakta from './OmsorgspengerFakta';
 import FetchedData from '../types/fetchedDataTsType';
 import { OmsorgspengerBehandlingApiKeys, requestOmsorgApi } from '../data/omsorgspengerBehandlingApi';
 
+const getbehandlingPerioderårsakMedVilkår = (fom: string, tom: string) => ({
+  perioderMedÅrsak: {
+    perioderTilVurdering: [{ fom, tom }],
+    perioderMedÅrsak: [{ periode: { fom, tom }, årsaker: ['FØRSTEGANGSVURDERING'] }],
+    årsakMedPerioder: [{ årsak: 'FØRSTEGANGSVURDERING', perioder: [{ fom, tom }] }],
+    dokumenterTilBehandling: [
+      {
+        journalpostId: '4129401',
+        innsendingsTidspunkt: '2023-07-12T00:00:00',
+        type: 'INNTEKTSMELDING',
+        søktePerioder: [
+          {
+            periode: { fom, tom },
+            type: 'AT',
+            arbeidsgiver: { arbeidsgiverOrgnr: '910909088', arbeidsgiverAktørId: null },
+            arbeidsforholdRef: null,
+          },
+          {
+            periode: { fom, tom },
+            type: 'AT',
+            arbeidsgiver: { arbeidsgiverOrgnr: '910909088', arbeidsgiverAktørId: null },
+            arbeidsforholdRef: null,
+          },
+        ],
+      },
+    ],
+  },
+  periodeMedUtfall: [{ periode: { fom, tom }, utfall: { kode: 'IKKE_VURDERT', kodeverk: 'VILKAR_UTFALL_TYPE' } }],
+  forrigeVedtak: [],
+});
+
 describe('<OmsorgspengerFakta>', () => {
   const fagsak = {
     saksnummer: '123456',
@@ -133,12 +164,15 @@ describe('<OmsorgspengerFakta>', () => {
     },
   };
 
-  it('skal rendre faktapaneler og sidemeny korrekt', () => {
+  // const behandlingPerioderårsakMedVilkår =
+
+  it('skal rendre faktapaneler og sidemeny korrekt uten Omsorgen for', () => {
     requestOmsorgApi.mock(OmsorgspengerBehandlingApiKeys.ARBEIDSFORHOLD, undefined);
     const fetchedData: Partial<FetchedData> = {
       aksjonspunkter,
       vilkar,
       personopplysninger: soker,
+      behandlingPerioderårsakMedVilkår: getbehandlingPerioderårsakMedVilkår('2022-05-01', '2022-05-10'),
     };
 
     const wrapper = shallow(
@@ -171,12 +205,56 @@ describe('<OmsorgspengerFakta>', () => {
       {
         erAktiv: false,
         harAksjonspunkt: false,
-        tekstKode: 'OmsorgenForInfoPanel.Title',
+        tekstKode: 'InntektOgYtelser.Title',
+      },
+    ]);
+  });
+
+  it('skal rendre faktapaneler og sidemeny korrekt med Omsorgen for', () => {
+    requestOmsorgApi.mock(OmsorgspengerBehandlingApiKeys.ARBEIDSFORHOLD, undefined);
+    const fetchedData: Partial<FetchedData> = {
+      aksjonspunkter,
+      vilkar,
+      personopplysninger: soker,
+      behandlingPerioderårsakMedVilkår: getbehandlingPerioderårsakMedVilkår('2023-05-01', '2023-05-10'),
+    };
+
+    const wrapper = shallow(
+      <OmsorgspengerFakta
+        data={fetchedData as FetchedData}
+        behandling={behandling as Behandling}
+        fagsak={fagsak}
+        fagsakPerson={fagsakPerson}
+        rettigheter={rettigheter}
+        alleKodeverk={{}}
+        oppdaterProsessStegOgFaktaPanelIUrl={sinon.spy()}
+        valgtFaktaSteg="default"
+        valgtProsessSteg="default"
+        hasFetchError={false}
+        setApentFaktaPanel={sinon.spy()}
+        setBehandling={sinon.spy()}
+        arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
+        featureToggles={{}}
+        dokumenter={[]}
+      />,
+    );
+
+    const panel = wrapper.find(SideMenuWrapper);
+    expect(panel.prop('paneler')).toEqual([
+      {
+        erAktiv: true,
+        harAksjonspunkt: true,
+        tekstKode: 'ArbeidsforholdInfoPanel.Title',
       },
       {
         erAktiv: false,
         harAksjonspunkt: false,
         tekstKode: 'InntektOgYtelser.Title',
+      },
+      {
+        erAktiv: false,
+        harAksjonspunkt: false,
+        tekstKode: 'OmsorgenForInfoPanel.Title',
       },
     ]);
   });
