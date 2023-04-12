@@ -45,6 +45,7 @@ export enum OmsorgspengerBehandlingApiKeys {
   HENT_SAKSBEHANDLERE = 'HENT_SAKSBEHANDLERE',
   FOSTERBARN = 'FOSTERBARN',
   BEREGNINGREFERANSER_TIL_VURDERING = 'BEREGNINGREFERANSER_TIL_VURDERING',
+  BEHANDLING_PERIODER_ÅRSAK_MED_VILKÅR = 'BEHANDLING_PERIODER_ÅRSAK_MED_VILKÅR',
 }
 
 const endpoints = new RestApiConfigBuilder()
@@ -76,6 +77,7 @@ const endpoints = new RestApiConfigBuilder()
   .withRel('saksbehandler-info', OmsorgspengerBehandlingApiKeys.HENT_SAKSBEHANDLERE)
   .withRel('fosterbarn', OmsorgspengerBehandlingApiKeys.FOSTERBARN)
   .withRel('beregning-koblinger-til-vurdering', OmsorgspengerBehandlingApiKeys.BEREGNINGREFERANSER_TIL_VURDERING)
+  .withRel('behandling-perioder-årsak-med-vilkår', OmsorgspengerBehandlingApiKeys.BEHANDLING_PERIODER_ÅRSAK_MED_VILKÅR)
 
   // operasjoner
   .withRel('dokumentdata-lagre', OmsorgspengerBehandlingApiKeys.DOKUMENTDATA_LAGRE)

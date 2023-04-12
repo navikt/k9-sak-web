@@ -23,4 +23,18 @@ const faktaPanelDefinisjoner = [
   new FordelBeregningPanelDef(),
   new InntektOgYtelserFaktaPanelDef(),
 ];
+
+export const faktaPanelDefinisjonerUtenOmsorgenFor = [
+  new ArbeidsforholdFaktaPanelDef(),
+  new VergeFaktaPanelDef(),
+  new MedlemskapsvilkaretFaktaPanelDef(),
+  new OpptjeningsvilkaretFaktaPanelDef(),
+  new InntektsmeldingFaktaPanelDef(),
+  new UttakFaktaPanelDef(),
+  new BarnFaktaPanelDef(),
+  new BeregningFaktaPanelDef(),
+  new FordelBeregningPanelDef(),
+  new InntektOgYtelserFaktaPanelDef(),
+];
+
 export default faktaPanelDefinisjoner;

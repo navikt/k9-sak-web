@@ -15,10 +15,27 @@ import { RestApiState, useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-ho
 import ErrorBoundary from '@k9-sak-web/sak-app/src/app/ErrorBoundary';
 
 import { restApiOmsorgHooks, OmsorgspengerBehandlingApiKeys } from '../data/omsorgspengerBehandlingApi';
-import faktaPanelDefinisjoner from '../panelDefinisjoner/faktaOmsorgspengerPanelDefinisjoner';
+import faktaPanelDefinisjoner, {
+  faktaPanelDefinisjonerUtenOmsorgenFor,
+} from '../panelDefinisjoner/faktaOmsorgspengerPanelDefinisjoner';
 import FetchedData from '../types/fetchedDataTsType';
+import { isBefore, parse } from 'date-fns';
 
 const overstyringApCodes = [ac.OVERSTYRING_AV_BEREGNINGSAKTIVITETER, ac.OVERSTYRING_AV_BEREGNINGSGRUNNLAG];
+
+/**
+ * Skal vise Omsorgen for kun for saker som er i 2023 eller senere
+ */
+const skalSkjuleOmsorgenFor = (data: FetchedData): boolean => {
+  if (data?.behandlingPerioderårsakMedVilkår?.perioderMedÅrsak?.perioderTilVurdering) {
+    return data?.behandlingPerioderårsakMedVilkår?.perioderMedÅrsak?.perioderTilVurdering?.filter(periode =>
+      isBefore(parse(periode.tom, 'yyyy-MM-dd', new Date()), parse('2023-01-01', 'yyyy-MM-dd', new Date())),
+    ).length > 0
+      ? true
+      : false;
+  }
+  return false;
+};
 
 interface OwnProps {
   data: FetchedData;
@@ -77,7 +94,7 @@ const OmsorgspengerFakta = ({
   };
 
   const [faktaPaneler, valgtPanel, sidemenyPaneler] = faktaHooks.useFaktaPaneler(
-    faktaPanelDefinisjoner,
+    skalSkjuleOmsorgenFor(data) ? faktaPanelDefinisjonerUtenOmsorgenFor : faktaPanelDefinisjoner,
     dataTilUtledingAvOmsorgPaneler,
     behandling,
     rettigheter,
