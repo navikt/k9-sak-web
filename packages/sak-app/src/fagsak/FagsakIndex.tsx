@@ -52,7 +52,13 @@ const erTilbakekreving = (behandlingType: Kodeverk): boolean =>
 const erPleiepengerSyktBarn = (fagsak: Fagsak) => fagsak?.sakstype?.kode === fagsakYtelseType.PLEIEPENGER;
 const erPleiepengerLivetsSluttfase = (fagsak: Fagsak) =>
   fagsak?.sakstype?.kode === fagsakYtelseType.PLEIEPENGER_SLUTTFASE;
-const erOmsorgspenger = (fagsak: Fagsak) => fagsak?.sakstype?.kode === fagsakYtelseType.OMSORGSPENGER;
+const erOmsorgspenger = (fagsak: Fagsak) =>
+  [
+    fagsakYtelseType.OMSORGSPENGER,
+    fagsakYtelseType.OMSORGSPENGER_KRONISK_SYKT_BARN,
+    fagsakYtelseType.OMSORGSPENGER_ALENE_OM_OMSORGEN,
+    fagsakYtelseType.OMSORGSPENGER_MIDLERTIDIG_ALENE,
+  ].includes(fagsak?.sakstype?.kode);
 
 /**
  * FagsakIndex
