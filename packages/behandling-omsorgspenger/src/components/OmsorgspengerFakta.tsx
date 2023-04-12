@@ -28,7 +28,7 @@ const overstyringApCodes = [ac.OVERSTYRING_AV_BEREGNINGSAKTIVITETER, ac.OVERSTYR
  */
 const skalSkjuleOmsorgenFor = (data: FetchedData): boolean => {
   if (data?.behandlingPerioderårsakMedVilkår?.perioderMedÅrsak?.perioderTilVurdering) {
-    return data?.behandlingPerioderårsakMedVilkår?.perioderMedÅrsak?.perioderTilVurdering?.filter(periode =>
+    return data.behandlingPerioderårsakMedVilkår.perioderMedÅrsak.perioderTilVurdering.filter(periode =>
       isBefore(parse(periode.tom, 'yyyy-MM-dd', new Date()), parse('2023-01-01', 'yyyy-MM-dd', new Date())),
     ).length > 0
       ? true
