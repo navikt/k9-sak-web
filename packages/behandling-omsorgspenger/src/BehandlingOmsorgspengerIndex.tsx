@@ -36,6 +36,7 @@ const omsorgspengerData = [
   { key: OmsorgspengerBehandlingApiKeys.OVERLAPPENDE_YTELSER },
   { key: OmsorgspengerBehandlingApiKeys.HENT_SAKSBEHANDLERE },
   { key: OmsorgspengerBehandlingApiKeys.FOSTERBARN },
+  { key: OmsorgspengerBehandlingApiKeys.BEHANDLING_PERIODER_ÅRSAK_MED_VILKÅR },
 ];
 
 interface OwnProps {
