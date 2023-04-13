@@ -9,7 +9,7 @@
     "@fpsak-frontend/kodeverk": "1.0.0",
     "@fpsak-frontend/shared-components": "1.0.0",
     "@fpsak-frontend/utils": "1.0.0",
-    "@navikt/ft-plattform-komponenter": "2.0.13",
+    "@navikt/ft-plattform-komponenter": "2.0.14",
     "classnames": "2.3.2",
     "lodash.isequal": "4.5.0",
     "nav-frontend-core": "6.0.1",
