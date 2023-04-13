@@ -11,6 +11,6 @@
     "@navikt/k9-fe-form-utils": "1.0.4",
     "@navikt/k9-fe-period-utils": "1.0.5",
     "formik": "2.2.9",
-    "yup": "0.32.11"
+    "yup": "1.1.0"
   }
 }
