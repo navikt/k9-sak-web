@@ -38,11 +38,11 @@
     "react-intl": "6.3.2",
     "react-redux": "8.0.5",
     "redux": "4.2.1",
-    "redux-form": "8.3.9",
+    "redux-form": "8.3.10",
     "reselect": "4.1.7"
   },
   "devDependencies": {
-    "axios-mock-adapter": "1.21.3",
+    "axios-mock-adapter": "1.21.4",
     "enzyme": "3.11.0",
     "redux-mock-store": "1.5.4",
     "sinon": "15.0.3"
