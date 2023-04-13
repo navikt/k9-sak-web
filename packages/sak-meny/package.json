@@ -7,7 +7,7 @@
   "dependencies": {
     "@fpsak-frontend/assets": "1.0.0",
     "@fpsak-frontend/shared-components": "1.0.0",
-    "@navikt/ft-plattform-komponenter": "2.0.9",
+    "@navikt/ft-plattform-komponenter": "2.0.14",
     "@navikt/k9-fe-array-utils": "1.0.4",
     "@navikt/k9-fe-bem-utils": "1.0.2",
     "@navikt/k9-fe-date-utils": "1.0.2",
