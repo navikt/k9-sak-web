@@ -50,5 +50,9 @@
   {
     "key": "OPPLAERINGSPENGER",
     "value": "${OPPLAERINGSPENGER}"
+  },
+  {
+    "key": "SKJUL_AVSLUTTET_ARBEIDSGIVER",
+    "value": "${SKJUL_AVSLUTTET_ARBEIDSGIVER}"
   }
 ]

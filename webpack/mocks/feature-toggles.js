@@ -45,6 +45,10 @@ const featureToggles = [
     key: 'FRITEKST_REDIGERING',
     value: process.env.FRITEKST_REDIGERING,
   },
+  {
+    key: 'SKJUL_AVSLUTTET_ARBEIDSGIVER',
+    value: process.env.SKJUL_AVSLUTTET_ARBEIDSGIVER,
+  },
 ];
 
 module.exports = function (app) {

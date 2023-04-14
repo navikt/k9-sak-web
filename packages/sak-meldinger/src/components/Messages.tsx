@@ -11,6 +11,7 @@ import {
   ArbeidsgiverOpplysningerPerId,
   Brevmal,
   Brevmaler,
+  FeatureToggles,
   Kodeverk,
   KodeverkMedNavn,
   Mottaker,
@@ -71,6 +72,7 @@ interface PureOwnProps {
   isKontrollerRevurderingApOpen?: boolean;
   personopplysninger?: Personopplysninger;
   arbeidsgiverOpplysningerPerId?: ArbeidsgiverOpplysningerPerId;
+  featureToggles?: FeatureToggles;
 }
 
 interface MappedOwnProps {
@@ -116,6 +118,7 @@ export const MessagesImpl = ({
   personopplysninger,
   arbeidsgiverOpplysningerPerId,
   fritekstbrev,
+  featureToggles,
   ...formProps
 }: PureOwnProps & MappedOwnProps & WrappedComponentProps & InjectedFormProps) => {
   if (!sprakKode) {
@@ -139,7 +142,9 @@ export const MessagesImpl = ({
 
   const recipients: Mottaker[] =
     templates && brevmalkode && templates[brevmalkode] && Array.isArray(templates[brevmalkode].mottakere)
-      ? templates[brevmalkode].mottakere.filter(mottaker => !mottaker.harVarsel)
+      ? templates[brevmalkode].mottakere.filter(mottaker =>
+          featureToggles.SKJUL_AVSLUTTET_ARBEIDSGIVER ? !mottaker.harVarsel : true,
+        )
       : [];
 
   const tmpls: Brevmal[] = transformTemplates(templates);
