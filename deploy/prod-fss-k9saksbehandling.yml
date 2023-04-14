@@ -107,3 +107,5 @@ spec:
       value: "false"
     - name: SKJUL_AVSLUTTET_ARBEIDSGIVER
       value: "false"
+    - name: OMS_PUNSJSTRIPE
+      value: "true"

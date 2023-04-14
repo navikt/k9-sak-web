@@ -10,10 +10,9 @@ import InntektOgYtelserFaktaPanelDef from './faktaPaneler/InntektOgYtelserFaktaP
 import InntektsmeldingFaktaPanelDef from './faktaPaneler/InntektsmeldingFaktaPanelDef';
 import OmsorgenForFaktaPanelDef from './faktaPaneler/OmsorgenForFaktaPanelDef';
 
-const faktaPanelDefinisjoner = [
+export const faktaPanelDefinisjonerUtenOmsorgenFor = [
   new ArbeidsforholdFaktaPanelDef(),
   new VergeFaktaPanelDef(),
-  new OmsorgenForFaktaPanelDef(),
   new MedlemskapsvilkaretFaktaPanelDef(),
   new OpptjeningsvilkaretFaktaPanelDef(),
   new InntektsmeldingFaktaPanelDef(),
@@ -23,4 +22,11 @@ const faktaPanelDefinisjoner = [
   new FordelBeregningPanelDef(),
   new InntektOgYtelserFaktaPanelDef(),
 ];
+
+const faktaPanelDefinisjoner = [
+  ...faktaPanelDefinisjonerUtenOmsorgenFor,
+  new OmsorgenForFaktaPanelDef(),
+];
+
+
 export default faktaPanelDefinisjoner;
