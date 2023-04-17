@@ -54,5 +54,9 @@
   {
     "key": "SKJUL_AVSLUTTET_ARBEIDSGIVER",
     "value": "${SKJUL_AVSLUTTET_ARBEIDSGIVER}"
+  },
+  {
+    "key": "OMS_PUNSJSTRIPE",
+    "value": "${OMS_PUNSJSTRIPE}"
   }
 ]

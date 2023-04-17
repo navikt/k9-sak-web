@@ -135,7 +135,7 @@ export default {
       pathRewrite: { '^/k9/microfrontend/psb-inntektsmelding': '' },
     },
     '/k9/endringslogg/**': {
-      target: process.env.ENDRINGSLOGG_URL || 'https://familie-endringslogg.dev.intern.nav.no',
+      target: process.env.ENDRINGSLOGG_URL || 'https://familie-endringslogg.intern.dev.nav.no',
       secure: false,
       changeOrigin: true,
       pathRewrite: { '^/k9/endringslogg': '' },

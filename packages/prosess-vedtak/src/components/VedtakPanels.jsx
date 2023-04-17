@@ -3,9 +3,10 @@ import PropTypes from 'prop-types';
 
 import { kodeverkObjektPropType } from '@fpsak-frontend/prop-types';
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
-
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
+
 import vedtakAksjonspunkterPropType from '../propTypes/vedtakAksjonspunkterPropType';
 import vedtakVilkarPropType from '../propTypes/vedtakVilkarPropType';
 import vedtakBeregningsresultatPropType from '../propTypes/vedtakBeregningsresultatPropType';
@@ -65,7 +66,11 @@ const VedtakPanels = ({
   }
 
   const skalViseSjekkTilbakekreving = !!aksjonspunkter.find(
-    ap => ap.definisjon.kode === aksjonspunktCodes.SJEKK_TILBAKEKREVING && ap.erAktivt && ap.kanLoses,
+    ap =>
+      ap.definisjon.kode === aksjonspunktCodes.SJEKK_TILBAKEKREVING &&
+      ap.erAktivt &&
+      ap.kanLoses &&
+      ap.status.kode === aksjonspunktStatus.OPPRETTET,
   );
 
   if (skalViseSjekkTilbakekreving)

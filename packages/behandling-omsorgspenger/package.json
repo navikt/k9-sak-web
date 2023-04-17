@@ -30,21 +30,21 @@
     "@k9-sak-web/rest-api": "1.0.0",
     "@k9-sak-web/rest-api-hooks": "1.0.0",
     "@k9-sak-web/types": "1.0.0",
-    "@navikt/ft-fakta-beregning": "4.1.0",
-    "@navikt/ft-fakta-fordel-beregningsgrunnlag": "7.0.6",
-    "@navikt/ft-prosess-beregningsgrunnlag": "6.0.8",
+    "@navikt/ft-fakta-beregning": "4.1.14",
+    "@navikt/ft-fakta-fordel-beregningsgrunnlag": "7.1.8",
+    "@navikt/ft-prosess-beregningsgrunnlag": "6.0.20",
     "nav-frontend-popover": "2.0.4",
     "react": "17.0.2",
-    "react-intl": "6.2.10",
+    "react-intl": "6.3.2",
     "react-redux": "8.0.5",
     "redux": "4.2.1",
-    "redux-form": "8.3.9",
+    "redux-form": "8.3.10",
     "reselect": "4.1.7"
   },
   "devDependencies": {
-    "axios-mock-adapter": "1.21.2",
+    "axios-mock-adapter": "1.21.4",
     "enzyme": "3.11.0",
     "redux-mock-store": "1.5.4",
-    "sinon": "15.0.2"
+    "sinon": "15.0.3"
   }
 }
