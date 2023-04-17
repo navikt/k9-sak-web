@@ -46,6 +46,10 @@ const featureToggles = [
     value: process.env.FRITEKST_REDIGERING,
   },
   {
+    key: 'SKJUL_AVSLUTTET_ARBEIDSGIVER',
+    value: process.env.SKJUL_AVSLUTTET_ARBEIDSGIVER,
+  },
+  {
     key: 'OMS_PUNSJSTRIPE',
     value: process.env.OMS_PUNSJSTRIPE,
   },

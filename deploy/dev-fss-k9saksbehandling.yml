@@ -105,5 +105,7 @@ spec:
       value: "true"
     - name: INKLUDER_KALENDER_PILS
       value: "true"
+    - name: SKJUL_AVSLUTTET_ARBEIDSGIVER
+      value: "true"
     - name: OMS_PUNSJSTRIPE
       value: "true"
