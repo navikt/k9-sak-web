@@ -142,9 +142,12 @@ export const MessagesImpl = ({
 
   const recipients: Mottaker[] =
     templates && brevmalkode && templates[brevmalkode] && Array.isArray(templates[brevmalkode].mottakere)
-      ? templates[brevmalkode].mottakere.filter(mottaker =>
-          featureToggles.SKJUL_AVSLUTTET_ARBEIDSGIVER ? !mottaker.harVarsel : true,
-        )
+      ? templates[brevmalkode].mottakere.filter(mottaker => {
+          if (featureToggles && featureToggles.SKJUL_AVSLUTTET_ARBEIDSGIVER) {
+            return !mottaker.harVarsel;
+          }
+          return true;
+        })
       : [];
 
   const tmpls: Brevmal[] = transformTemplates(templates);
