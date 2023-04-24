@@ -22,6 +22,7 @@ class PanelDef extends ProsessStegPanelDef {
         arbeidsgiverOpplysningerPerId={deepCopyProps.arbeidsgiverOpplysningerPerId}
         submitCallback={data => props.submitCallback(transformBeregningValues(data))}
         formData={props.formData}
+        kodeverkSamling={deepCopyProps.alleKodeverk}
         setFormData={props.setFormData}
       />
     );
