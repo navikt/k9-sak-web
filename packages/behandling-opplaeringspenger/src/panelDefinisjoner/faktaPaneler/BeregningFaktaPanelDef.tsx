@@ -30,6 +30,7 @@ class BeregningFaktaPanelDef extends FaktaPanelDef {
     return (
       <BeregningFaktaIndex
         {...deepCopyProps}
+        kodeverkSamling={deepCopyProps.alleKodeverk}
         beregningsgrunnlag={deepCopyProps.beregningsgrunnlag}
         arbeidsgiverOpplysningerPerId={deepCopyProps.arbeidsgiverOpplysningerPerId}
         submitCallback={aksjonspunktData => props.submitCallback(transformBeregningValues(aksjonspunktData))}

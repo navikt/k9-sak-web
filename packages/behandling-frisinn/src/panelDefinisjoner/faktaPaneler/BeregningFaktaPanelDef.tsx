@@ -25,7 +25,7 @@ class BeregningFaktaPanelDef extends FaktaPanelDef {
         formData={props.formData}
         setFormData={props.setFormData}
         vilkar={mapVilkar(bgVilkaret, props.beregningreferanserTilVurdering)}
-        alleKodeverk={deepCopyProps.alleKodeverk}
+        kodeverkSamling={deepCopyProps.alleKodeverk}
         erOverstyrer={false}
         submittable={deepCopyProps.submittable}
         readOnly={deepCopyProps.isReadOnly}
