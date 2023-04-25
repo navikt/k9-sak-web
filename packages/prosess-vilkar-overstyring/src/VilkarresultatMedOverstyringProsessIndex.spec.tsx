@@ -32,7 +32,7 @@ describe('<VilkarresultatMedOverstyringForm>', () => {
         lovReferanse=""
         erOverstyrt={false}
         overrideReadOnly={false}
-        erMedlemskapsPanel={false}
+        visPeriodisering={false}
         vilkar={[
           {
             perioder: [
@@ -91,7 +91,7 @@ describe('<VilkarresultatMedOverstyringForm>', () => {
         lovReferanse=""
         erOverstyrt={false}
         overrideReadOnly={false}
-        erMedlemskapsPanel={false}
+        visPeriodisering={false}
         vilkar={[
           {
             perioder: [
