@@ -4,10 +4,13 @@ import sinon from 'sinon';
 import { SideMenu } from '@navikt/ft-plattform-komponenter';
 
 import { Behandling } from '@k9-sak-web/types';
+import { K9sakApiKeys, requestApi } from '@k9-sak-web/sak-app/src/data/k9sakApi';
 
 import VilkarresultatMedOverstyringProsessIndex from './VilkarresultatMedOverstyringProsessIndex';
 
 describe('<VilkarresultatMedOverstyringForm>', () => {
+  requestApi.mock(K9sakApiKeys.FEATURE_TOGGLE, []);
+  
   it('skal rendre tabs dersom bare en periode', () => {
     const wrapper = shallow(
       <VilkarresultatMedOverstyringProsessIndex
@@ -60,6 +63,7 @@ describe('<VilkarresultatMedOverstyringForm>', () => {
           },
         ]}
         visAllePerioder={false}
+        erMedlemskapsPanel={false}
       />,
     );
 
@@ -68,6 +72,8 @@ describe('<VilkarresultatMedOverstyringForm>', () => {
   });
 
   it('skal rendre tabs dersom mer enn en periode', () => {
+    requestApi.mock(K9sakApiKeys.FEATURE_TOGGLE, []);
+
     const wrapper = shallow(
       <VilkarresultatMedOverstyringProsessIndex
         behandling={
@@ -134,6 +140,7 @@ describe('<VilkarresultatMedOverstyringForm>', () => {
           },
         ]}
         visAllePerioder={false}
+        erMedlemskapsPanel={false}
       />,
     );
 
