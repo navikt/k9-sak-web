@@ -1,5 +1,4 @@
 import React, { ReactNode } from 'react';
-import { FormattedMessage } from 'react-intl';
 
 import { Normaltekst } from 'nav-frontend-typografi';
 import { VerticalSpacer, FlexContainer, FlexRow, FlexColumn, Image } from '@fpsak-frontend/shared-components';
@@ -109,11 +108,12 @@ const VilkarResultPicker = ({
           {visPeriodisering && (
             <RadioOption
               label={
-                periodeVilkarStatus ? (
-                  intl.formatMessage({ id: 'ProsessPanelTemplate.DelvisIkkeOppfylt' }, { b: chunks => <b>{chunks}</b> })
-                ) : (
-                  intl.formatMessage({ id: 'ProsessPanelTemplate.DelvisOppfylt' })
-                )
+                periodeVilkarStatus
+                  ? intl.formatMessage(
+                      { id: 'ProsessPanelTemplate.DelvisIkkeOppfylt' },
+                      { b: chunks => <b>{chunks}</b> },
+                    )
+                  : intl.formatMessage({ id: 'ProsessPanelTemplate.DelvisOppfylt' })
               }
               value={
                 periodeVilkarStatus

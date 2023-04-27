@@ -2,18 +2,20 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import { FormattedMessage } from 'react-intl';
 
+import { vilkarUtfallPeriodisert } from '@k9-sak-web/types';
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
 
 import VilkarresultatMedBegrunnelse from './VilkarresultatMedBegrunnelse';
 import { VilkarresultatMedOverstyringForm } from './VilkarresultatMedOverstyringForm';
 
+
 describe('<VilkarresultatMedOverstyringForm>', () => {
   it('skal rendre form med knapp når vilkåret er overstyrt', () => {
     const wrapper = shallow(
       <VilkarresultatMedOverstyringForm
         {...reduxFormPropsMock}
-        erVilkarOk
+        erVilkarOk={vilkarUtfallPeriodisert.OPPFYLT}
         isReadOnly
         overstyringApKode="5011"
         avslagsarsaker={[
@@ -42,6 +44,8 @@ describe('<VilkarresultatMedOverstyringForm>', () => {
         isSolvable
         periodeFom="2019-01-01"
         periodeTom="2020-01-01"
+        valgtPeriodeFom='2019-01-01'
+        valgtPeriodeTom='2020-01-01'
       />,
     );
 

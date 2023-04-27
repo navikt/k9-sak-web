@@ -24,7 +24,7 @@ describe('<VilkarresultatMedOverstyringForm>', () => {
         hasAksjonspunkt
         overrideReadOnly={false}
         toggleOverstyring={() => undefined}
-        visPeriodisering={false}
+        erMedlemskapsPanel={false}
         erOverstyrt
         aksjonspunkter={[]}
         behandlingsresultat={{
