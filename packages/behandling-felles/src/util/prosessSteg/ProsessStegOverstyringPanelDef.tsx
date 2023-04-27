@@ -44,17 +44,20 @@ class ProsessStegOverstyringPanelDef extends ProsessStegPanelDef {
     overrideReadOnly,
     kanOverstyreAccess,
     toggleOverstyring,
-  }): any => ({
-    avslagsarsaker: alleKodeverk[kodeverkTyper.AVSLAGSARSAK][vilkarForSteg[0].vilkarType.kode],
-    erOverstyrt: overstyrteAksjonspunktKoder.some(o => this.getAksjonspunktKoder().some(a => a === o)),
-    overstyringApKode: this.getAksjonspunktKoder()[0],
-    panelTittelKode: this.getTekstKode() ? this.getTekstKode() : prosessStegTekstKode,
-    erMedlemskapsPanel: this.getId() === 'MEDLEMSKAP',
-    lovReferanse: vilkarForSteg.length > 0 ? vilkarForSteg[0].lovReferanse : undefined,
-    overrideReadOnly,
-    kanOverstyreAccess,
-    toggleOverstyring,
-  });
+  }): any => {
+    return {
+      avslagsarsaker: alleKodeverk[kodeverkTyper.AVSLAGSARSAK][vilkarForSteg[0].vilkarType.kode],
+      erOverstyrt: overstyrteAksjonspunktKoder.some(o => this.getAksjonspunktKoder().some(a => a === o)),
+      overstyringApKode: this.getAksjonspunktKoder()[0],
+      panelTittelKode: this.getTekstKode() ? this.getTekstKode() : prosessStegTekstKode,
+      erMedlemskapsPanel: this.getId() === 'MEDLEMSKAP',
+      visPeriodisering: this.getId() === 'OMSORGENFOR',
+      lovReferanse: vilkarForSteg.length > 0 ? vilkarForSteg[0].lovReferanse : undefined,
+      overrideReadOnly,
+      kanOverstyreAccess,
+      toggleOverstyring,
+    };
+  };
 }
 
 export default ProsessStegOverstyringPanelDef;

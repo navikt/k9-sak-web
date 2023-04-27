@@ -109,3 +109,5 @@ spec:
       value: "true"
     - name: OMS_PUNSJSTRIPE
       value: "true"
+    - name: OMSORGEN_FOR_PERIODISERT
+      value: "true"

@@ -53,6 +53,10 @@ const featureToggles = [
     key: 'OMS_PUNSJSTRIPE',
     value: process.env.OMS_PUNSJSTRIPE,
   },
+  {
+    key: 'OMSORGEN_FOR_PERIODISERT',
+    value: process.env.OMSORGEN_FOR_PERIODISERT,
+  }
 ];
 
 module.exports = function (app) {
