@@ -9,19 +9,13 @@ import { CustomVilkarText } from './VilkarresultatMedOverstyringForm';
 import VilkarBegrunnelse from './VilkarBegrunnelse';
 
 interface VilkarresultatMedBegrunnelseProps {
-  erVilkarOk?: string;
-  periodeVilkarStatus?: boolean;
+  erVilkarOk?: boolean;
   readOnly: boolean;
   erMedlemskapsPanel: boolean;
-  visPeriodisering: boolean;
   avslagsarsaker: KodeverkMedNavn[];
   customVilkarIkkeOppfyltText?: CustomVilkarText;
   customVilkarOppfyltText?: CustomVilkarText;
   skalViseBegrunnelse?: boolean;
-  periodeFom?: string;
-  periodeTom?: string;
-  valgtPeriodeFom?: string;
-  valgtPeriodeTom?: string;
 }
 
 /**
@@ -32,18 +26,12 @@ interface VilkarresultatMedBegrunnelseProps {
  */
 export const VilkarresultatMedBegrunnelse = ({
   erVilkarOk,
-  periodeVilkarStatus,
   readOnly,
   avslagsarsaker,
   erMedlemskapsPanel,
-  visPeriodisering,
   skalViseBegrunnelse,
   customVilkarIkkeOppfyltText,
   customVilkarOppfyltText,
-  periodeFom,
-  periodeTom,
-  valgtPeriodeFom,
-  valgtPeriodeTom,
 }: VilkarresultatMedBegrunnelseProps) => (
   <>
     {skalViseBegrunnelse && (
@@ -87,12 +75,6 @@ export const VilkarresultatMedBegrunnelse = ({
       erVilkarOk={erVilkarOk}
       readOnly={readOnly}
       erMedlemskapsPanel={erMedlemskapsPanel}
-      visPeriodisering={visPeriodisering}
-      periodeFom={periodeFom}
-      periodeTom={periodeTom}
-      valgtPeriodeFom={valgtPeriodeFom}
-      valgtPeriodeTom={valgtPeriodeTom}
-      periodeVilkarStatus={periodeVilkarStatus}
     />
   </>
 );
@@ -105,7 +87,7 @@ VilkarresultatMedBegrunnelse.defaultProps = {
 };
 
 VilkarresultatMedBegrunnelse.buildInitialValues = (avslagKode, aksjonspunkter, status, overstyringApKode, periode) => ({
-  ...VilkarResultPicker.buildInitialValues(avslagKode, aksjonspunkter, status, periode),
+  ...VilkarResultPicker.buildInitialValues(avslagKode, aksjonspunkter, status),
   ...VilkarBegrunnelse.buildInitialValues(periode),
 });
 

@@ -96,6 +96,7 @@ export const visOverstyringspanelForOpptjening = () => {
       visPeriodisering={false}
       vilkar={vilkarOpptjening}
       visAllePerioder
+      erMedlemskapsPanel={false}
     />
   );
 };
@@ -132,6 +133,7 @@ export const visOverstyringspanelForMedlemskap = () => {
       visPeriodisering
       vilkar={vilkarMedlemskap}
       visAllePerioder
+      erMedlemskapsPanel={false}
     />
   );
 };
@@ -186,5 +188,6 @@ export const visOverstyrtAksjonspunktSomErBekreftet = () => (
     visPeriodisering={false}
     vilkar={vilkarOpptjening}
     visAllePerioder
+    erMedlemskapsPanel={false}
   />
 );

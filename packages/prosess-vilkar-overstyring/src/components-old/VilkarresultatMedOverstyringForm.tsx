@@ -8,7 +8,6 @@ import { behandlingForm, behandlingFormValueSelector } from '@fpsak-frontend/for
 import { VilkarResultPicker } from '@k9-sak-web/prosess-felles';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
-import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import {
   AksjonspunktBox,
   EditedIcon,
@@ -35,13 +34,6 @@ export interface CustomVilkarText {
   values?: any;
 }
 
-export const vilkarUtfallPeriodisert = {
-  OPPFYLT: 'OPPFYLT',
-  IKKE_OPPFYLT: 'IKKE_OPPFYLT',
-  DELVIS_OPPFYLT: 'DELVIS_OPPFYLT',
-  DELVIS_IKKE_OPPFYLT: 'DELVIS_IKKE_OPPFYLT',
-};
-
 interface VilkarresultatMedOverstyringFormProps {
   aksjonspunkter: Aksjonspunkt[];
   avslagsarsaker: KodeverkMedNavn[];
@@ -54,10 +46,8 @@ interface VilkarresultatMedOverstyringFormProps {
   customVilkarIkkeOppfyltText?: CustomVilkarText;
   customVilkarOppfyltText?: CustomVilkarText;
   erMedlemskapsPanel: boolean;
-  visPeriodisering: boolean;
   erOverstyrt?: boolean;
-  erVilkarOk?: string;
-  periodeVilkarStatus?: boolean;
+  erVilkarOk?: boolean;
   hasAksjonspunkt: boolean;
   isReadOnly: boolean;
   lovReferanse?: string;
@@ -75,8 +65,6 @@ interface StateProps {
   isSolvable: boolean;
   periodeFom: string;
   periodeTom: string;
-  valgtPeriodeFom: string;
-  valgtPeriodeTom: string;
 }
 
 /**
@@ -91,11 +79,9 @@ export const VilkarresultatMedOverstyringForm = ({
   overstyringApKode,
   isSolvable,
   erVilkarOk,
-  periodeVilkarStatus,
   customVilkarIkkeOppfyltText,
   customVilkarOppfyltText,
   erMedlemskapsPanel,
-  visPeriodisering,
   hasAksjonspunkt,
   avslagsarsaker,
   overrideReadOnly,
@@ -106,8 +92,6 @@ export const VilkarresultatMedOverstyringForm = ({
   pristine,
   periodeFom,
   periodeTom,
-  valgtPeriodeFom,
-  valgtPeriodeTom,
 }: Partial<VilkarresultatMedOverstyringFormProps> & StateProps & InjectedFormProps) => {
   const toggleAv = () => {
     reset();
@@ -136,13 +120,7 @@ export const VilkarresultatMedOverstyringForm = ({
             customVilkarIkkeOppfyltText={customVilkarIkkeOppfyltText}
             customVilkarOppfyltText={customVilkarOppfyltText}
             erMedlemskapsPanel={erMedlemskapsPanel}
-            visPeriodisering={visPeriodisering}
             avslagsarsaker={avslagsarsaker}
-            periodeFom={periodeFom}
-            periodeTom={periodeTom}
-            valgtPeriodeFom={valgtPeriodeFom}
-            valgtPeriodeTom={valgtPeriodeTom}
-            periodeVilkarStatus={periodeVilkarStatus}
           />
           <VerticalSpacer sixteenPx />
           {!erOverstyrt && erVilkarOk !== undefined && (
@@ -240,58 +218,13 @@ const getCustomVilkarTextForIkkeOppfylt = createSelector(
   (medlemskapFom, behandlingType) => getCustomVilkarText(medlemskapFom, behandlingType, false),
 );
 
-const transformValues = (values, overstyringApKode, periodeFom, periodeTom) => {
-  // console.log('submitting', values, overstyringApKode, periodeFom, periodeTom);
-
-  console.log('values', values);
-  console.log('mer values', VilkarresultatMedBegrunnelse.transformValues(values));
-  console.log('enda mer values', VilkarResultPicker.transformValues(values));
-
-  let periode = periodeFom && periodeTom ? { fom: periodeFom, tom: periodeTom } : undefined;
-
-  if (
-    values.erVilkarOk === vilkarUtfallPeriodisert.DELVIS_IKKE_OPPFYLT ||
-    values.erVilkarOk === vilkarUtfallPeriodisert.DELVIS_OPPFYLT
-  ) {
-    periode = { fom: values.valgtPeriodeFom, tom: values.valgtPeriodeTom };
-  }
-
-  // const submitValues = {
-  //   avslagCode: values.avslagCode,
-  //   begrunnelse: values.begrunnelse,
-  //   erVilkarOk:
-  //     values.erVilkarOk === vilkarUtfallPeriodisert.OPPFYLT ||
-  //     values.erVilkarOk === vilkarUtfallPeriodisert.DELVIS_OPPFYLT
-  //       ? true
-  //       : false,
-  //   isOverstyrt: values.isOverstyrt,
-  //   periode,
-  // };
-
-  const submitValues = {
-    avslagCode: values.avslagCode,
-    erVilkarOk:
-      values.erVilkarOk === vilkarUtfallPeriodisert.OPPFYLT ||
-      values.erVilkarOk === vilkarUtfallPeriodisert.DELVIS_OPPFYLT
-        ? true
-        : false,
-    periode,
-  };
-  console.log('submitting', {
-    kode: overstyringApKode,
-    ...VilkarResultPicker.transformValues(values),
-    ...VilkarresultatMedBegrunnelse.transformValues(values),
-  });
-  return 'asdf';
-  return {
-    kode: overstyringApKode,
-    // @ts-ignore Fiks
-    ...VilkarResultPicker.transformValues(values),
-    ...VilkarresultatMedBegrunnelse.transformValues(values),
-    periode,
-    //: periodeFom && periodeTom ? { fom: periodeFom, tom: periodeTom } : undefined,
-  };
-};
+const transformValues = (values, overstyringApKode, periodeFom, periodeTom) => ({
+  kode: overstyringApKode,
+  // @ts-ignore Fiks
+  ...VilkarResultPicker.transformValues(values),
+  ...VilkarresultatMedBegrunnelse.transformValues(values),
+  periode: periodeFom && periodeTom ? { fom: periodeFom, tom: periodeTom } : undefined,
+});
 
 const validate = values => VilkarresultatMedBegrunnelse.validate(values);
 
@@ -307,7 +240,6 @@ const mapStateToPropsFactory = (_initialState, initialOwnProps: VilkarresultatMe
     const { behandlingId, behandlingVersjon, aksjonspunkter, erOverstyrt, overrideReadOnly } = ownProps;
 
     const aksjonspunkt = aksjonspunkter.find(ap => ap.definisjon.kode === overstyringApKode);
-    const isOpenAksjonspunkt = aksjonspunkter.some(ap => isAksjonspunktOpen(ap.status.kode));
     const isSolvable =
       aksjonspunkt !== undefined
         ? !(aksjonspunkt.status.kode === aksjonspunktStatus.OPPRETTET && !aksjonspunkt.kanLoses)
@@ -327,14 +259,7 @@ const mapStateToPropsFactory = (_initialState, initialOwnProps: VilkarresultatMe
       form: formName,
       periodeFom,
       periodeTom,
-      ...behandlingFormValueSelector(formName, behandlingId, behandlingVersjon)(
-        state,
-        'isOverstyrt',
-        'erVilkarOk',
-        'valgtPeriodeFom',
-        'valgtPeriodeTom',
-        'periodeVilkarStatus',
-      ),
+      ...behandlingFormValueSelector(formName, behandlingId, behandlingVersjon)(state, 'isOverstyrt', 'erVilkarOk'),
     };
   };
 };
