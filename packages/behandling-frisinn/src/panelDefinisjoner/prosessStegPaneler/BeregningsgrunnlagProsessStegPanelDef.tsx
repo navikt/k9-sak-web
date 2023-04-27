@@ -35,7 +35,7 @@ class PanelDef extends ProsessStegPanelDef {
         formData={props.formData}
         setFormData={props.setFormData}
         readOnlySubmitButton={deepCopyProps.isReadOnly}
-        alleKodeverk={deepCopyProps.alleKodeverk}
+        kodeverkSamling={deepCopyProps.alleKodeverk}
         isReadOnly={deepCopyProps.isReadOnly}
       />
     );

@@ -23,6 +23,7 @@ class PanelDef extends ProsessStegPanelDef {
         submitCallback={data => props.submitCallback(transformBeregningValues(data))}
         formData={props.formData}
         setFormData={props.setFormData}
+        kodeverkSamling={deepCopyProps.alleKodeverk}
       />
     );
   };
