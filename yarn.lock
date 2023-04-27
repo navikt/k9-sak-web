@@ -3838,7 +3838,7 @@ __metadata:
     "@fpsak-frontend/utils": 1.0.0
     "@fpsak-frontend/utils-test": 1.0.0
     "@k9-sak-web/types": 1.0.0
-    "@navikt/ds-react": 2.8.15
+    "@navikt/ds-react": 2.9.1
     "@navikt/fnrvalidator": 1.3.3
     "@navikt/ft-plattform-komponenter": 2.0.21
     axios: 0.27.2
@@ -4929,7 +4929,7 @@ __metadata:
     "@fpsak-frontend/utils": "*"
     "@k9-sak-web/types": "*"
     "@navikt/ds-icons": 2.8.15
-    "@navikt/ds-react": 2.8.15
+    "@navikt/ds-react": 2.9.1
     "@navikt/ft-plattform-komponenter": 2.0.21
     "@navikt/k9-fe-form-utils": 1.0.5
     "@navikt/k9-fe-period-utils": 1.0.5
@@ -5291,7 +5291,7 @@ __metadata:
     "@k9-sak-web/sak-meny-marker-behandling": 1.0.0
     "@k9-sak-web/sak-soknadsperiodestripe": 1.0.0
     "@k9-sak-web/types": 1.0.0
-    "@navikt/ds-react": 2.8.15
+    "@navikt/ds-react": 2.9.1
     "@navikt/ft-fakta-beregning": 4.2.5
     "@navikt/ft-form-hooks": 4.0.22
     "@navikt/ft-plattform-komponenter": 2.0.21
@@ -5416,7 +5416,7 @@ __metadata:
     "@fpsak-frontend/shared-components": 1.0.0
     "@fpsak-frontend/utils": 1.0.0
     "@k9-sak-web/types": 1.0.0
-    "@navikt/ds-react": 2.8.15
+    "@navikt/ds-react": 2.9.1
     formik: 2.2.9
     nav-frontend-core: 6.0.1
     nav-frontend-knapper: 3.1.3
@@ -5650,6 +5650,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@navikt/aksel-icons@npm:^2.9.1":
+  version: 2.9.1
+  resolution: "@navikt/aksel-icons@npm:2.9.1::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Faksel-icons%2F2.9.1%2Fceb688d1bc1ec67946bb380d1643a5ad72303304"
+  checksum: 5ee2c56792aff4c81d80f0c05a9f895e197634e4219d9286f54050dff56e806328f38046d521541d9e06679e166512162846e4e422e2afb08a8624d012326882
+  languageName: node
+  linkType: hard
+
 "@navikt/ds-css@npm:2.8.15":
   version: 2.8.15
   resolution: "@navikt/ds-css@npm:2.8.15::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fds-css%2F2.8.15%2F6facd7fc2c7d7d1ff2005957506f86ebefa8f61a"
@@ -5664,6 +5671,16 @@ __metadata:
     "@types/react": ^17.0.30 || ^18.0.0
     react: ^17.0.0 || ^18.0.0
   checksum: 5bf6e19f8ea8e90505e911d6c4f27a37a48b7afe1f7e6c84f340f1e1f5ea1db9036ecb80cfb6a7d242930f70b06c379b825d0181809be5f79c8a3ea4c755edf7
+  languageName: node
+  linkType: hard
+
+"@navikt/ds-icons@npm:^2.9.1":
+  version: 2.9.1
+  resolution: "@navikt/ds-icons@npm:2.9.1::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fds-icons%2F2.9.1%2F20013b3bc07ebcdfbba55bda7197acb14f41bb52"
+  peerDependencies:
+    "@types/react": ^17.0.30 || ^18.0.0
+    react: ^17.0.0 || ^18.0.0
+  checksum: 141e7fa74f9c0381d016fea785a5c92d4d17de20bc9ca052ada8a6953017549e1c5179f4fcfea04c6455a950159f418b721520ed97c68bf6731d7c5638f8758e
   languageName: node
   linkType: hard
 
@@ -5684,6 +5701,26 @@ __metadata:
     "@types/react": ^17.0.30 || ^18.0.0
     react: ^17.0.0 || ^18.0.0
   checksum: d88909efa4971c16991b9bd2f34e8e415df59d69a62a986cdfb117ca38d2583d948970944a4a4086c958010b69968c415e345ff8b1d2cdb404fa4a62af628ab9
+  languageName: node
+  linkType: hard
+
+"@navikt/ds-react@npm:2.9.1":
+  version: 2.9.1
+  resolution: "@navikt/ds-react@npm:2.9.1::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fds-react%2F2.9.1%2F6c9514889f40d93b21ffcf749b63b05d73ead0f6"
+  dependencies:
+    "@floating-ui/react": 0.17.0
+    "@navikt/aksel-icons": ^2.9.1
+    "@navikt/ds-icons": ^2.9.1
+    "@radix-ui/react-tabs": 1.0.0
+    "@radix-ui/react-toggle-group": 1.0.0
+    clsx: ^1.2.1
+    date-fns: 2.29.3
+    react-day-picker: 8.3.4
+    react-modal: 3.15.1
+  peerDependencies:
+    "@types/react": ^17.0.30 || ^18.0.0
+    react: ^17.0.0 || ^18.0.0
+  checksum: dd72d2714dee5c3187facaebe910472b513b6cea5597277fe23114d2ac368833afc2cb6de73f6ff6e7ee4953a0ff2460733dd05ae0714337d6ff98c8ec11923b
   languageName: node
   linkType: hard
 
@@ -19787,7 +19824,7 @@ __metadata:
     "@formatjs/intl-datetimeformat": 6.7.0
     "@formatjs/intl-numberformat": 8.4.1
     "@navikt/ds-css": 2.8.15
-    "@navikt/ds-react": 2.8.15
+    "@navikt/ds-react": 2.9.1
     "@navikt/familie-endringslogg": 8.1.1
     "@navikt/ft-plattform-komponenter": 2.0.21
     "@pmmmwh/react-refresh-webpack-plugin": 0.5.10
