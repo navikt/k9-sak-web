@@ -5657,6 +5657,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@navikt/ds-css@npm:2.9.1":
+  version: 2.9.1
+  resolution: "@navikt/ds-css@npm:2.9.1::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fds-css%2F2.9.1%2F245fe35a71dcd43f25389ba61a0da7d6381a5ec8"
+  checksum: dc956e07ea2dfbe7f897f2add1b278ad20b6c543599d909f5856b0e1d60a4ce249bb1be9e2d65b55a149b8e030bcaaefb708f0b76080c4d7f1e8ce1a57233534
+  languageName: node
+  linkType: hard
+
 "@navikt/ds-icons@npm:2.8.15, @navikt/ds-icons@npm:^2.8.15":
   version: 2.8.15
   resolution: "@navikt/ds-icons@npm:2.8.15::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fds-icons%2F2.8.15%2F7f437cc036cfdc1d44143861555f0641f96e9cc4"
@@ -19786,7 +19793,7 @@ __metadata:
     "@commercetools/enzyme-extensions": 5.0.0
     "@formatjs/intl-datetimeformat": 6.7.0
     "@formatjs/intl-numberformat": 8.4.1
-    "@navikt/ds-css": 2.8.15
+    "@navikt/ds-css": 2.9.1
     "@navikt/ds-react": 2.8.15
     "@navikt/familie-endringslogg": 8.1.1
     "@navikt/ft-plattform-komponenter": 2.0.21
