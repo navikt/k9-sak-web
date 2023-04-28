@@ -257,7 +257,7 @@ export const VedtakForm: React.FC<Props> = ({
     // Hvis vi har maler i contexten,
     // sjekk om de er forskjellige fra maler som er tilgjengelige i API
     if (vedtakContext.vedtakFormState?.maler) {
-      if (JSON.stringify(vedtakContext.vedtakFormState.maler) !== JSON.stringify(tilgjengeligeVedtaksbrev.maler)) {
+      if (JSON.stringify(vedtakContext?.vedtakFormState?.maler) !== JSON.stringify(tilgjengeligeVedtaksbrev?.maler)) {
         // Hvis det er diff tilgjengelige vedtaksbrev og kontekst
         // nullstill valg som har blitt gjort med tidligere tilgjengelige vedtaksbrev
         const nyVedtakState = filtrerVerdierSomSkalNullstilles({
