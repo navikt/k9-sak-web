@@ -60,46 +60,49 @@ const getManuellBrevCallback =
     tilgjengeligeVedtaksbrev: TilgjengeligeVedtaksbrev;
   }) =>
   (e, redigertHtml = undefined) => {
-    if (formProps.isValid) {
-      if (kanHaManueltFritekstbrev(tilgjengeligeVedtaksbrev)) {
-        previewCallback(
-          {
-            dokumentdata: {
-              REDIGERTBREV: {
-                redigertMal: formProps.values[fieldnames.REDIGERT_MAL],
-                originalHtml: formProps.values[fieldnames.ORIGINAL_HTML],
-                redigertHtml: redigertHtml || formProps.values[fieldnames.REDIGERT_HTML],
-                inkluderKalender: formProps.values[fieldnames.INKLUDER_KALENDER_VED_OVERSTYRING] || false,
+    formProps.validateForm().then(errors => {
+      if (Object.keys(errors).length === 0) {
+        if (kanHaManueltFritekstbrev(tilgjengeligeVedtaksbrev)) {
+          previewCallback(
+            {
+              dokumentdata: {
+                REDIGERTBREV: {
+                  redigertMal: formProps.values[fieldnames.REDIGERT_MAL],
+                  originalHtml: formProps.values[fieldnames.ORIGINAL_HTML],
+                  redigertHtml: redigertHtml || formProps.values[fieldnames.REDIGERT_HTML],
+                  inkluderKalender: formProps.values[fieldnames.INKLUDER_KALENDER_VED_OVERSTYRING] || false,
+                },
               },
+              dokumentMal:
+                tilgjengeligeVedtaksbrev?.vedtaksbrevmaler?.[vedtaksbrevtype.MANUELL] ?? dokumentMalType.MANUELL,
+              ...(overstyrtMottaker ? { overstyrtMottaker: safeJSONParse(overstyrtMottaker) } : {}),
             },
-            dokumentMal:
-              tilgjengeligeVedtaksbrev?.vedtaksbrevmaler?.[vedtaksbrevtype.MANUELL] ?? dokumentMalType.MANUELL,
-            ...(overstyrtMottaker ? { overstyrtMottaker: safeJSONParse(overstyrtMottaker) } : {}),
-          },
-          true,
-        );
+            true,
+          );
+        } else {
+          previewCallback(
+            {
+              dokumentdata: {
+                fritekstbrev: {
+                  brødtekst: brødtekst || ' ',
+                  overskrift: overskrift || ' ',
+                  inkluderKalender: formProps.values[fieldnames.INKLUDER_KALENDER_VED_OVERSTYRING] || false,
+                },
+              },
+              // Bruker FRITKS som fallback til lenken ikke vises for avsluttede behandlinger
+              dokumentMal:
+                tilgjengeligeVedtaksbrev?.vedtaksbrevmaler?.[vedtaksbrevtype.FRITEKST] ?? dokumentMalType.FRITKS,
+              ...(overstyrtMottaker ? { overstyrtMottaker: safeJSONParse(overstyrtMottaker) } : {}),
+            },
+            true,
+          );
+        }
       } else {
-        previewCallback(
-          {
-            dokumentdata: {
-              fritekstbrev: {
-                brødtekst: brødtekst || ' ',
-                overskrift: overskrift || ' ',
-                inkluderKalender: formProps.values[fieldnames.INKLUDER_KALENDER_VED_OVERSTYRING] || false,
-              },
-            },
-            // Bruker FRITKS som fallback til lenken ikke vises for avsluttede behandlinger
-            dokumentMal:
-              tilgjengeligeVedtaksbrev?.vedtaksbrevmaler?.[vedtaksbrevtype.FRITEKST] ?? dokumentMalType.FRITKS,
-            ...(overstyrtMottaker ? { overstyrtMottaker: safeJSONParse(overstyrtMottaker) } : {}),
-          },
-          true,
-        );
+        // Fallback. Valideringsfeil bør være fanget før man havner her.
+        throw Error(`Feil i BrevPanel: ${Object.entries(errors).flat()}`);
       }
-    } else {
-      formProps.submitForm();
-    }
-    e.preventDefault();
+      e.preventDefault();
+    });
   };
 
 const getHentHtmlMalCallback =
