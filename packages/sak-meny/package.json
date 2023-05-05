@@ -7,7 +7,7 @@
   "dependencies": {
     "@fpsak-frontend/assets": "1.0.0",
     "@fpsak-frontend/shared-components": "1.0.0",
-    "@navikt/ft-plattform-komponenter": "2.0.21",
+    "@navikt/ft-plattform-komponenter": "2.0.24",
     "@navikt/k9-fe-array-utils": "1.0.4",
     "@navikt/k9-fe-bem-utils": "1.0.2",
     "@navikt/k9-fe-date-utils": "1.0.2",
@@ -18,7 +18,7 @@
     "nav-frontend-spinner": "3.0.1",
     "nav-frontend-spinner-style": "1.0.2",
     "react": "17.0.2",
-    "react-intl": "6.4.1"
+    "react-intl": "6.4.2"
   },
   "devDependencies": {
     "@fpsak-frontend/utils-test": "1.0.0",
