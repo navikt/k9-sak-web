@@ -8,12 +8,16 @@ import SelectFieldFormik from '@fpsak-frontend/form/src/SelectFieldFormik';
 import vedtaksbrevtype from '@fpsak-frontend/kodeverk/src/vedtaksbrevtype';
 import { K9sakApiKeys, requestApi } from '@k9-sak-web/sak-app/src/data/k9sakApi';
 
+import { useField } from 'formik';
 import { BrevPanel } from './BrevPanel';
 import { VedtakPreviewLink } from '../PreviewLink';
 import FritekstBrevPanel from '../FritekstBrevPanel';
 import InformasjonsbehovAutomatiskVedtaksbrev from './InformasjonsbehovAutomatiskVedtaksbrev';
 
 import { intlMock } from '../../../i18n/index';
+
+jest.mock('formik');
+useField.mockReturnValue([{}, { error: '' }, {}]);
 
 describe('<BrevPanel>', () => {
   const ingenTilgjengeligeVedtaksbrev = { vedtaksbrevmaler: [] };
