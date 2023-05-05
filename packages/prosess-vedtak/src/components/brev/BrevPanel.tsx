@@ -18,9 +18,9 @@ import {
 } from '@fpsak-frontend/utils/src/formidlingUtils';
 import { DokumentDataType } from '@k9-sak-web/types/src/dokumentdata';
 import { ArbeidsgiverOpplysningerPerId, Behandlingsresultat, Kodeverk, Personopplysninger } from '@k9-sak-web/types';
-import { Alert } from '@navikt/ds-react';
+import { Alert, ErrorMessage } from '@navikt/ds-react';
 
-import { FormikProps } from 'formik';
+import { FormikProps, setNestedObjectValues, useField } from 'formik';
 import { Column, Row } from 'nav-frontend-grid';
 import React from 'react';
 import { injectIntl, IntlShape } from 'react-intl';
@@ -98,8 +98,7 @@ const getManuellBrevCallback =
           );
         }
       } else {
-        // Fallback. Valideringsfeil bør være fanget før man havner her.
-        throw Error(`Feil i BrevPanel: ${Object.entries(errors).flat()}`);
+        formProps.setTouched(setNestedObjectValues(formProps.values, true));
       }
       e.preventDefault();
     });
@@ -161,6 +160,8 @@ export const BrevPanel: React.FC<BrevPanelProps> = props => {
     lagreDokumentdata,
     getPreviewAutomatiskBrevCallback,
   } = props;
+
+  const [field, meta, helpers] = useField({ name: 'overstyrtMottaker' });
 
   const automatiskBrevCallback = getPreviewAutomatiskBrevCallback(formikProps.values)({ aapneINyttVindu: true });
 
@@ -263,6 +264,10 @@ export const BrevPanel: React.FC<BrevPanelProps> = props => {
               validate={[required]}
               bredde="xl"
             />
+
+            {meta.error ? (
+              <ErrorMessage>{intl.formatMessage(meta.error as unknown as { id: string })}</ErrorMessage>
+            ) : null}
             <VerticalSpacer sixteenPx />
           </Column>
         </Row>
