@@ -8,10 +8,6 @@ import {
   filterInformasjonsbehov,
   harMellomlagretFritekstbrev,
   harMellomLagretMedIngenBrev,
-  
-  
-  
-  
   harMellomlagretRedusertUtbetalingArsak,
   harPotensieltFlereInformasjonsbehov,
   harSattDokumentdataType,
