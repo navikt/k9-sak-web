@@ -11,7 +11,7 @@
     "@fpsak-frontend/utils": "1.0.0",
     "@k9-sak-web/types": "1.0.0",
     "classnames": "2.3.2",
-    "just-is-empty": "3.3.0",
+    "just-is-empty": "3.4.1",
     "moment": "2.29.4",
     "nav-frontend-alertstriper": "4.0.2",
     "nav-frontend-alertstriper-style": "3.0.2",
