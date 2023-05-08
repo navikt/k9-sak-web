@@ -18,9 +18,9 @@ import {
 } from '@fpsak-frontend/utils/src/formidlingUtils';
 import { DokumentDataType } from '@k9-sak-web/types/src/dokumentdata';
 import { ArbeidsgiverOpplysningerPerId, Behandlingsresultat, Kodeverk, Personopplysninger } from '@k9-sak-web/types';
-import { Alert } from '@navikt/ds-react';
+import { Alert, ErrorMessage } from '@navikt/ds-react';
 
-import { FormikProps } from 'formik';
+import { FormikProps, setNestedObjectValues, useField } from 'formik';
 import { Column, Row } from 'nav-frontend-grid';
 import React from 'react';
 import { injectIntl, IntlShape } from 'react-intl';
@@ -60,46 +60,48 @@ const getManuellBrevCallback =
     tilgjengeligeVedtaksbrev: TilgjengeligeVedtaksbrev;
   }) =>
   (e, redigertHtml = undefined) => {
-    if (formProps.isValid) {
-      if (kanHaManueltFritekstbrev(tilgjengeligeVedtaksbrev)) {
-        previewCallback(
-          {
-            dokumentdata: {
-              REDIGERTBREV: {
-                redigertMal: formProps.values[fieldnames.REDIGERT_MAL],
-                originalHtml: formProps.values[fieldnames.ORIGINAL_HTML],
-                redigertHtml: redigertHtml || formProps.values[fieldnames.REDIGERT_HTML],
-                inkluderKalender: formProps.values[fieldnames.INKLUDER_KALENDER_VED_OVERSTYRING] || false,
+    formProps.validateForm().then(errors => {
+      if (Object.keys(errors).length === 0) {
+        if (kanHaManueltFritekstbrev(tilgjengeligeVedtaksbrev)) {
+          previewCallback(
+            {
+              dokumentdata: {
+                REDIGERTBREV: {
+                  redigertMal: formProps.values[fieldnames.REDIGERT_MAL],
+                  originalHtml: formProps.values[fieldnames.ORIGINAL_HTML],
+                  redigertHtml: redigertHtml || formProps.values[fieldnames.REDIGERT_HTML],
+                  inkluderKalender: formProps.values[fieldnames.INKLUDER_KALENDER_VED_OVERSTYRING] || false,
+                },
               },
+              dokumentMal:
+                tilgjengeligeVedtaksbrev?.vedtaksbrevmaler?.[vedtaksbrevtype.MANUELL] ?? dokumentMalType.MANUELL,
+              ...(overstyrtMottaker ? { overstyrtMottaker: safeJSONParse(overstyrtMottaker) } : {}),
             },
-            dokumentMal:
-              tilgjengeligeVedtaksbrev?.vedtaksbrevmaler?.[vedtaksbrevtype.MANUELL] ?? dokumentMalType.MANUELL,
-            ...(overstyrtMottaker ? { overstyrtMottaker: safeJSONParse(overstyrtMottaker) } : {}),
-          },
-          true,
-        );
+            true,
+          );
+        } else {
+          previewCallback(
+            {
+              dokumentdata: {
+                fritekstbrev: {
+                  brødtekst: brødtekst || ' ',
+                  overskrift: overskrift || ' ',
+                  inkluderKalender: formProps.values[fieldnames.INKLUDER_KALENDER_VED_OVERSTYRING] || false,
+                },
+              },
+              // Bruker FRITKS som fallback til lenken ikke vises for avsluttede behandlinger
+              dokumentMal:
+                tilgjengeligeVedtaksbrev?.vedtaksbrevmaler?.[vedtaksbrevtype.FRITEKST] ?? dokumentMalType.FRITKS,
+              ...(overstyrtMottaker ? { overstyrtMottaker: safeJSONParse(overstyrtMottaker) } : {}),
+            },
+            true,
+          );
+        }
       } else {
-        previewCallback(
-          {
-            dokumentdata: {
-              fritekstbrev: {
-                brødtekst: brødtekst || ' ',
-                overskrift: overskrift || ' ',
-                inkluderKalender: formProps.values[fieldnames.INKLUDER_KALENDER_VED_OVERSTYRING] || false,
-              },
-            },
-            // Bruker FRITKS som fallback til lenken ikke vises for avsluttede behandlinger
-            dokumentMal:
-              tilgjengeligeVedtaksbrev?.vedtaksbrevmaler?.[vedtaksbrevtype.FRITEKST] ?? dokumentMalType.FRITKS,
-            ...(overstyrtMottaker ? { overstyrtMottaker: safeJSONParse(overstyrtMottaker) } : {}),
-          },
-          true,
-        );
+        formProps.setTouched(setNestedObjectValues(formProps.values, true));
       }
-    } else {
-      formProps.submitForm();
-    }
-    e.preventDefault();
+      e.preventDefault();
+    });
   };
 
 const getHentHtmlMalCallback =
@@ -158,6 +160,8 @@ export const BrevPanel: React.FC<BrevPanelProps> = props => {
     lagreDokumentdata,
     getPreviewAutomatiskBrevCallback,
   } = props;
+
+  const [field, meta, helpers] = useField({ name: 'overstyrtMottaker' });
 
   const automatiskBrevCallback = getPreviewAutomatiskBrevCallback(formikProps.values)({ aapneINyttVindu: true });
 
@@ -260,6 +264,10 @@ export const BrevPanel: React.FC<BrevPanelProps> = props => {
               validate={[required]}
               bredde="xl"
             />
+
+            {meta.error ? (
+              <ErrorMessage>{intl.formatMessage(meta.error as unknown as { id: string })}</ErrorMessage>
+            ) : null}
             <VerticalSpacer sixteenPx />
           </Column>
         </Row>
