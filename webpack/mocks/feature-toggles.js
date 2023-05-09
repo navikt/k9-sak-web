@@ -34,6 +34,10 @@ const featureToggles = [
     value: process.env.LOS_MARKER_BEHANDLING,
   },
   {
+    key: 'LOS_MARKER_BEHANDLING_SUBMIT',
+    value: process.env.LOS_MARKER_BEHANDLING_SUBMIT,
+  },
+  {
     key: 'AKSJONSPUNKT_9014',
     value: process.env.AKSJONSPUNKT_9014,
   },
@@ -56,7 +60,7 @@ const featureToggles = [
   {
     key: 'OMSORGEN_FOR_PERIODISERT',
     value: process.env.OMSORGEN_FOR_PERIODISERT,
-  }
+  },
 ];
 
 module.exports = function (app) {

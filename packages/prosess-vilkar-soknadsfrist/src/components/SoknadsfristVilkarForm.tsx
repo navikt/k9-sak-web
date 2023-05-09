@@ -20,7 +20,6 @@ import {
   FlexRow,
   Image,
   VerticalSpacer,
-  useFeatureToggles,
 } from '@fpsak-frontend/shared-components';
 import { decodeHtmlEntity } from '@fpsak-frontend/utils';
 import { Aksjonspunkt, DokumentStatus, SubmitCallback } from '@k9-sak-web/types';

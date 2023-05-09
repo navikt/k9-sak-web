@@ -9,6 +9,7 @@ import { Element, Normaltekst } from 'nav-frontend-typografi';
 import React, { useRef, useState } from 'react';
 import { useIntl } from 'react-intl';
 import * as Yup from 'yup';
+import { useFeatureToggles } from '@fpsak-frontend/shared-components';
 import Merknadkode from '../Merknadkode';
 import styles from './markerBehandlingModal.less';
 
@@ -38,6 +39,7 @@ const MarkerBehandlingModal: React.FC<PureOwnProps> = ({
   erVeileder,
 }) => {
   const intl = useIntl();
+  const [featureToggles] = useFeatureToggles();
   const [showIngenEndringerError, setShowIngenEndringerError] = useState(false);
   if (!brukHastekøMarkering && !brukVanskeligKøMarkering) {
     return null;
@@ -159,6 +161,7 @@ const MarkerBehandlingModal: React.FC<PureOwnProps> = ({
                 <CheckboxFieldFormik
                   name="markerSomHastesak"
                   label={{ id: 'MenyMarkerBehandling.MarkerSomHastesak' }}
+                  disabled={!featureToggles?.LOS_MARKER_BEHANDLING_SUBMIT}
                 />
               </CheckboxGruppe>
             )}
@@ -176,6 +179,7 @@ const MarkerBehandlingModal: React.FC<PureOwnProps> = ({
                   label={intl.formatMessage({ id: 'MenyMarkerBehandling.Kommentar' })}
                   validate={[]}
                   maxLength={100000}
+                  readOnly={!featureToggles?.LOS_MARKER_BEHANDLING_SUBMIT}
                 />
               </div>
             )}
@@ -185,7 +189,12 @@ const MarkerBehandlingModal: React.FC<PureOwnProps> = ({
               </ErrorMessage>
             )}
             <div className={styles.buttonContainer}>
-              <Button variant="primary" size="small" className={styles.submitButton}>
+              <Button
+                variant="primary"
+                size="small"
+                disabled={!featureToggles?.LOS_MARKER_BEHANDLING_SUBMIT || formikProps.isSubmitting}
+                className={styles.submitButton}
+              >
                 {erVeileder ? 'Lagre, gå til forsiden' : 'Lagre, gå til LOS'}
               </Button>
               <Button variant="secondary" size="small" onClick={lukkModal}>
