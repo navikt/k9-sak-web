@@ -153,7 +153,7 @@ const MarkerBehandlingModal: React.FC<PureOwnProps> = ({
             {brukHastekøMarkering && (
               <>
                 <Alert variant="warning">
-                  Hastesaker skal følges opp fra Gosys inntil videre, og kan derfor ikke markeres her.
+                  Hastesaker skal følges opp fra Gosys inntil videre, og kan derfor ikke endres her.
                 </Alert>
                 <CheckboxGruppe
                   feil={
