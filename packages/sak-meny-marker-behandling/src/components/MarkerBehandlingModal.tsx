@@ -2,7 +2,7 @@ import CheckboxFieldFormik from '@fpsak-frontend/form/src/CheckboxFieldFormik';
 import TextAreaFormik from '@fpsak-frontend/form/src/TextAreaFormik';
 import { goToSearch, goToLos } from '@k9-sak-web/sak-app/src/app/paths';
 import { MerknadFraLos } from '@k9-sak-web/types';
-import { Button, ErrorMessage, Modal } from '@navikt/ds-react';
+import { Alert, Button, ErrorMessage, Modal } from '@navikt/ds-react';
 import { Form, Formik, FormikProps } from 'formik';
 import { CheckboxGruppe } from 'nav-frontend-skjema';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
@@ -151,19 +151,24 @@ const MarkerBehandlingModal: React.FC<PureOwnProps> = ({
               </CheckboxGruppe>
             )}
             {brukHastekøMarkering && (
-              <CheckboxGruppe
-                feil={
-                  formikProps.errors.markerSomHastesak
-                    ? intl.formatMessage({ id: formikProps.errors.markerSomHastesak })
-                    : false
-                }
-              >
-                <CheckboxFieldFormik
-                  name="markerSomHastesak"
-                  label={{ id: 'MenyMarkerBehandling.MarkerSomHastesak' }}
-                  disabled={!featureToggles?.LOS_MARKER_BEHANDLING_SUBMIT}
-                />
-              </CheckboxGruppe>
+              <>
+                <Alert variant="warning">
+                  Hastesaker skal følges opp fra Gosys inntil videre, og kan derfor ikke markeres her.
+                </Alert>
+                <CheckboxGruppe
+                  feil={
+                    formikProps.errors.markerSomHastesak
+                      ? intl.formatMessage({ id: formikProps.errors.markerSomHastesak })
+                      : false
+                  }
+                >
+                  <CheckboxFieldFormik
+                    name="markerSomHastesak"
+                    label={{ id: 'MenyMarkerBehandling.MarkerSomHastesak' }}
+                    disabled={!featureToggles?.LOS_MARKER_BEHANDLING_SUBMIT}
+                  />
+                </CheckboxGruppe>
+              </>
             )}
             {formikProps.values.markerSomVanskelig && (
               <>
