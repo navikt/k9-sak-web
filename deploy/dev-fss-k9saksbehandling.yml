@@ -97,6 +97,8 @@ spec:
       value: "true"
     - name: LOS_MARKER_BEHANDLING
       value: "true"
+    - name: LOS_MARKER_BEHANDLING_SUBMIT
+      value: "true"
     - name: AKSJONSPUNKT_9014
       value: "true"
     - name: AKSJONSPUNKT_9015
