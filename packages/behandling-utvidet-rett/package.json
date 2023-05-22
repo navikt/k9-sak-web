@@ -30,6 +30,6 @@
     "axios-mock-adapter": "1.21.4",
     "enzyme": "3.11.0",
     "redux-mock-store": "1.5.4",
-    "sinon": "15.0.4"
+    "sinon": "15.1.0"
   }
 }

@@ -23,6 +23,6 @@
   "devDependencies": {
     "@fpsak-frontend/utils-test": "1.0.0",
     "enzyme": "3.11.0",
-    "sinon": "15.0.4"
+    "sinon": "15.1.0"
   }
 }
