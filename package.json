@@ -160,7 +160,7 @@
     "stylelint": "15.6.2",
     "stylelint-order": "6.0.3",
     "terser-webpack-plugin": "5.3.9",
-    "thread-loader": "3.0.4",
+    "thread-loader": "4.0.1",
     "type-fest": "3.11.0",
     "typescript": "5.0.4",
     "webpack": "5.83.1",
