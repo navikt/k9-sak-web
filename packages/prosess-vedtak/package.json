@@ -5,7 +5,7 @@
   "license": "MIT",
   "private": true,
   "dependencies": {
-    "@editorjs/editorjs": "2.26.5",
+    "@editorjs/editorjs": "2.27.0",
     "@editorjs/header": "2.7.0",
     "@editorjs/list": "1.8.0",
     "@editorjs/paragraph": "2.9.0",
@@ -47,6 +47,6 @@
     "@fpsak-frontend/utils-test": "1.0.0",
     "chai": "4.3.7",
     "enzyme": "3.11.0",
-    "sinon": "15.0.4"
+    "sinon": "15.1.0"
   }
 }
