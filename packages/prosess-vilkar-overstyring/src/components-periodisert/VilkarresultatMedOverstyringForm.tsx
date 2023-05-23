@@ -8,7 +8,6 @@ import { behandlingForm, behandlingFormValueSelector } from '@fpsak-frontend/for
 import VilkarResultPicker from '@k9-sak-web/prosess-felles/src/vilkar/VilkarResultPickerPeriodisert';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
-import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import {
   AksjonspunktBox,
   EditedIcon,
@@ -249,7 +248,7 @@ const transformValues = (values, overstyringApKode, periodeFom, periodeTom) => {
   ) {
     periode = { fom: values.valgtPeriodeFom, tom: values.valgtPeriodeTom };
   }
-  
+
   return {
     kode: overstyringApKode,
     ...VilkarResultPicker.transformValues(values, periodeFom, periodeTom),
