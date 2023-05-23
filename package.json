@@ -83,7 +83,7 @@
     "@storybook/addon-docs": "6.5.16",
     "@storybook/addon-essentials": "6.5.16",
     "@storybook/addon-knobs": "6.4.0",
-    "@storybook/addons": "6.5.16",
+    "@storybook/addons": "7.0.14",
     "@storybook/builder-webpack5": "6.5.16",
     "@storybook/cli": "6.5.16",
     "@storybook/manager-webpack5": "6.5.16",
