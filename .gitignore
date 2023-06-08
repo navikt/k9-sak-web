@@ -31,7 +31,6 @@ node_modules_bak
 public/client/src
 .pnp.*
 .yarn/*
-!.yarn/cache
 !.yarn/patches
 !.yarn/plugins
 !.yarn/releases
