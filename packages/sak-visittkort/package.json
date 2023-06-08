@@ -16,7 +16,7 @@
     "@navikt/k9-fe-bem-utils": "1.0.2",
     "@navikt/k9-fe-date-utils": "1.0.2",
     "@navikt/k9-fe-period-utils": "1.0.5",
-    "dayjs": "1.11.7",
+    "dayjs": "1.11.8",
     "moment": "2.29.4",
     "nav-frontend-etiketter": "3.0.3",
     "nav-frontend-etiketter-style": "2.0.3",
