@@ -44,8 +44,7 @@ class ProsessStegOverstyringPanelDef extends ProsessStegPanelDef {
     overrideReadOnly,
     kanOverstyreAccess,
     toggleOverstyring,
-  }): any => {
-    return {
+  }): any => ({
       avslagsarsaker: alleKodeverk[kodeverkTyper.AVSLAGSARSAK][vilkarForSteg[0].vilkarType.kode],
       erOverstyrt: overstyrteAksjonspunktKoder.some(o => this.getAksjonspunktKoder().some(a => a === o)),
       overstyringApKode: this.getAksjonspunktKoder()[0],
@@ -56,8 +55,7 @@ class ProsessStegOverstyringPanelDef extends ProsessStegPanelDef {
       overrideReadOnly,
       kanOverstyreAccess,
       toggleOverstyring,
-    };
-  };
+    });
 }
 
 export default ProsessStegOverstyringPanelDef;

@@ -10,10 +10,10 @@ import avslattImage from '@fpsak-frontend/assets/images/avslaatt.svg';
 import innvilgetImage from '@fpsak-frontend/assets/images/check.svg';
 import { Aksjonspunkt, KodeverkMedNavn, vilkarUtfallPeriodisert, Vilkarperiode } from '@k9-sak-web/types';
 
+import { parse } from 'date-fns';
 import getPackageIntl from '../../i18n/getPackageIntl';
 
 import styles from './vilkarResultPicker.less';
-import { parse } from 'date-fns';
 
 type FormValues = {
   erVilkarOk: string;
@@ -215,7 +215,7 @@ VilkarResultPicker.buildInitialValues = (
   periode: Vilkarperiode,
 ): FormValues => {
   const isOpenAksjonspunkt = aksjonspunkter.some(ap => isAksjonspunktOpen(ap.status.kode));
-  let erVilkarOk = undefined;
+  let erVilkarOk;
 
   if (!isOpenAksjonspunkt) {
     if (status === vilkarUtfallType.OPPFYLT) {
