@@ -4918,8 +4918,8 @@ __metadata:
     "@fpsak-frontend/utils": 1.0.0
     "@fpsak-frontend/utils-test": 1.0.0
     "@k9-sak-web/types": 1.0.0
-    "@navikt/aksel-icons": 3.4.2
-    "@navikt/ds-react": 3.4.2
+    "@navikt/aksel-icons": 4.1.3
+    "@navikt/ds-react": 4.1.3
     "@navikt/fnrvalidator": 1.3.3
     "@navikt/ft-plattform-komponenter": 2.2.3
     axios: 0.27.2
@@ -6010,7 +6010,7 @@ __metadata:
     "@fpsak-frontend/utils": "*"
     "@k9-sak-web/types": "*"
     "@navikt/ds-icons": 3.4.3
-    "@navikt/ds-react": 3.4.2
+    "@navikt/ds-react": 4.1.3
     "@navikt/ft-plattform-komponenter": 2.2.3
     "@navikt/k9-fe-form-utils": 1.0.6
     "@navikt/k9-fe-period-utils": 1.0.5
@@ -6373,7 +6373,7 @@ __metadata:
     "@k9-sak-web/sak-meny-marker-behandling": 1.0.0
     "@k9-sak-web/sak-soknadsperiodestripe": 1.0.0
     "@k9-sak-web/types": 1.0.0
-    "@navikt/ds-react": 3.4.2
+    "@navikt/ds-react": 4.1.3
     "@navikt/ft-fakta-beregning": 4.2.20
     "@navikt/ft-form-hooks": 4.0.36
     "@navikt/ft-plattform-komponenter": 2.2.3
@@ -6498,7 +6498,7 @@ __metadata:
     "@fpsak-frontend/shared-components": 1.0.0
     "@fpsak-frontend/utils": 1.0.0
     "@k9-sak-web/types": 1.0.0
-    "@navikt/ds-react": 3.4.2
+    "@navikt/ds-react": 4.1.3
     formik: 2.2.9
     nav-frontend-core: 6.0.1
     nav-frontend-knapper: 3.1.3
@@ -6725,13 +6725,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@navikt/aksel-icons@npm:3.4.2, @navikt/aksel-icons@npm:^3.4.2":
-  version: 3.4.2
-  resolution: "@navikt/aksel-icons@npm:3.4.2::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Faksel-icons%2F3.4.2%2Ffa858e1a5fb0557d61b62ad7cdf0d75e26fc89d7"
-  checksum: d58da59cb6b31bfe54a1f83c17481c2d629ef62f11956ec9adc6615c2a5f1cf2efe0370ff2b8de70a5c9492e5bdb23594b89a38d269f090a512b7a1abe9b2960
-  languageName: node
-  linkType: hard
-
 "@navikt/aksel-icons@npm:4.0.0":
   version: 4.0.0
   resolution: "@navikt/aksel-icons@npm:4.0.0::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Faksel-icons%2F4.0.0%2Fdf5ca613a431e17acbf2a63dff7c73c4a6deec76"
@@ -6739,17 +6732,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@navikt/aksel-icons@npm:^4.0.0":
+"@navikt/aksel-icons@npm:4.1.3, @navikt/aksel-icons@npm:^4.0.0, @navikt/aksel-icons@npm:^4.1.3":
   version: 4.1.3
   resolution: "@navikt/aksel-icons@npm:4.1.3::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Faksel-icons%2F4.1.3%2F2f6fb656e7cdaa8ec0d5b937f8bddfe1285467d1"
   checksum: 5340fa10fa7fbab4a322c4df6a40d4761bcbdfc4e8645e95ed9b718eae64016054050262bc0798e81ed6175d38147533cc6d3a188f78c94f04c29f6cd4900175
-  languageName: node
-  linkType: hard
-
-"@navikt/ds-css@npm:3.4.2":
-  version: 3.4.2
-  resolution: "@navikt/ds-css@npm:3.4.2::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fds-css%2F3.4.2%2Fa95de8895af8f4bfec118e425f22c536cf232e2d"
-  checksum: a47614b4085c66eeecd43b73cb20aaae2f8800677aa34818f2c928a7ba7137d2ab49266cc8d59fdf29ce4e7703f473b214604caa2c5e3668d638a6c862265f39
   languageName: node
   linkType: hard
 
@@ -6760,6 +6746,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@navikt/ds-css@npm:4.1.3":
+  version: 4.1.3
+  resolution: "@navikt/ds-css@npm:4.1.3::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fds-css%2F4.1.3%2Fec9fec8ebd5ba96ab1b3f34c710266e65239af43"
+  checksum: 9bff194b988e1e54d888f8aea94c9753767384db758f5a4643c4341efdb47c51ce03e383b5fd27333ec155b57b87ef95ba7461ab9d9c14a4c45954c0f9eef8ff
+  languageName: node
+  linkType: hard
+
 "@navikt/ds-icons@npm:3.4.3":
   version: 3.4.3
   resolution: "@navikt/ds-icons@npm:3.4.3::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fds-icons%2F3.4.3%2Feaa8fc38f6d184806d3405a5efbc9d137c2b8d27"
@@ -6767,25 +6760,6 @@ __metadata:
     "@types/react": ^17.0.30 || ^18.0.0
     react: ^17.0.0 || ^18.0.0
   checksum: 3b5f917c65ea4ca6296075dcc5b91e4c2ebdd8146731fc58ab6ea2d7fcad7f6dfa8b63d550717c862a0dc889c6dc1a7dd04bf8ac84b6b88c6d75b94d4127f199
-  languageName: node
-  linkType: hard
-
-"@navikt/ds-react@npm:3.4.2":
-  version: 3.4.2
-  resolution: "@navikt/ds-react@npm:3.4.2::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fds-react%2F3.4.2%2F6b685ed5582ba4e7bd3e9e3a678046c76affe15e"
-  dependencies:
-    "@floating-ui/react": 0.24.1
-    "@navikt/aksel-icons": ^3.4.2
-    "@radix-ui/react-tabs": 1.0.0
-    "@radix-ui/react-toggle-group": 1.0.0
-    clsx: ^1.2.1
-    date-fns: 2.29.3
-    react-day-picker: 8.3.4
-    react-modal: 3.15.1
-  peerDependencies:
-    "@types/react": ^17.0.30 || ^18.0.0
-    react: ^17.0.0 || ^18.0.0
-  checksum: fdb1504a5b493be29a554cb118bad3aa037446505b83a96b8ab016d2dfe6c34ed5a3526d370da25dd8f393dc35818ae004913bfc70259c3a03be313713330c73
   languageName: node
   linkType: hard
 
@@ -6805,6 +6779,25 @@ __metadata:
     "@types/react": ^17.0.30 || ^18.0.0
     react: ^17.0.0 || ^18.0.0
   checksum: d2ee302a0101b1dd43fd11bed05d949904a47c75c31c6c81d197280e572a59540b4037f0c575cc70e2f1a0f894fd89f24dab287f6c7a8a781600ce7813624e3d
+  languageName: node
+  linkType: hard
+
+"@navikt/ds-react@npm:4.1.3":
+  version: 4.1.3
+  resolution: "@navikt/ds-react@npm:4.1.3::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fds-react%2F4.1.3%2F1b11641d0e0f9557c43a724f5fb87a9c3dc8519c"
+  dependencies:
+    "@floating-ui/react": 0.24.1
+    "@navikt/aksel-icons": ^4.1.3
+    "@radix-ui/react-tabs": 1.0.0
+    "@radix-ui/react-toggle-group": 1.0.0
+    clsx: ^1.2.1
+    date-fns: 2.29.3
+    react-day-picker: 8.3.4
+    react-modal: 3.15.1
+  peerDependencies:
+    "@types/react": ^17.0.30 || ^18.0.0
+    react: ^17.0.0 || ^18.0.0
+  checksum: dbd1934a046c2c8ca8e0e492a39f6649ba521eff497cc642104c6dd45f3496c5dad026c64d11d2cace9c9a1281a85fa36a3f0c6af875ab86bb4ec55f673102af
   languageName: node
   linkType: hard
 
@@ -20962,9 +20955,9 @@ __metadata:
     "@commercetools/enzyme-extensions": 5.0.0
     "@formatjs/intl-datetimeformat": 6.10.0
     "@formatjs/intl-numberformat": 8.7.0
-    "@navikt/aksel-icons": 3.4.2
-    "@navikt/ds-css": 3.4.2
-    "@navikt/ds-react": 3.4.2
+    "@navikt/aksel-icons": 4.1.3
+    "@navikt/ds-css": 4.1.3
+    "@navikt/ds-react": 4.1.3
     "@navikt/familie-endringslogg": 8.1.1
     "@navikt/ft-plattform-komponenter": 2.2.3
     "@pmmmwh/react-refresh-webpack-plugin": 0.5.10
