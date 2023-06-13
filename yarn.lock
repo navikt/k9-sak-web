@@ -5612,9 +5612,15 @@ __metadata:
     "@k9-sak-web/rest-api": 1.0.0
     "@k9-sak-web/rest-api-hooks": 1.0.0
     "@k9-sak-web/types": 1.0.0
+<<<<<<< HEAD
     "@navikt/ft-fakta-beregning": 4.2.20
     "@navikt/ft-fakta-fordel-beregningsgrunnlag": 7.2.24
     "@navikt/ft-prosess-beregningsgrunnlag": 6.2.20
+=======
+    "@navikt/ft-fakta-beregning": 4.2.19
+    "@navikt/ft-fakta-fordel-beregningsgrunnlag": 7.2.25
+    "@navikt/ft-prosess-beregningsgrunnlag": 6.2.19
+>>>>>>> cd76a8065 (Bumper fordel bg pakker med quickfiks til fordeling og forlengelsesperioder)
     axios-mock-adapter: 1.21.4
     enzyme: 3.11.0
     nav-frontend-popover: 2.0.4
@@ -5661,9 +5667,15 @@ __metadata:
     "@k9-sak-web/rest-api-hooks": 1.0.0
     "@k9-sak-web/sak-app": 1.0.0
     "@k9-sak-web/types": 1.0.0
+<<<<<<< HEAD
     "@navikt/ft-fakta-beregning": 4.2.20
     "@navikt/ft-fakta-fordel-beregningsgrunnlag": 7.2.24
     "@navikt/ft-prosess-beregningsgrunnlag": 6.2.20
+=======
+    "@navikt/ft-fakta-beregning": 4.2.19
+    "@navikt/ft-fakta-fordel-beregningsgrunnlag": 7.2.25
+    "@navikt/ft-prosess-beregningsgrunnlag": 6.2.19
+>>>>>>> cd76a8065 (Bumper fordel bg pakker med quickfiks til fordeling og forlengelsesperioder)
     axios: 0.27.2
     axios-mock-adapter: 1.21.4
     enzyme: 3.11.0
@@ -5709,9 +5721,15 @@ __metadata:
     "@k9-sak-web/rest-api-hooks": 1.0.0
     "@k9-sak-web/sak-app": 1.0.0
     "@k9-sak-web/types": 1.0.0
+<<<<<<< HEAD
     "@navikt/ft-fakta-beregning": 4.2.20
     "@navikt/ft-fakta-fordel-beregningsgrunnlag": 7.2.24
     "@navikt/ft-prosess-beregningsgrunnlag": 6.2.20
+=======
+    "@navikt/ft-fakta-beregning": 4.2.19
+    "@navikt/ft-fakta-fordel-beregningsgrunnlag": 7.2.25
+    "@navikt/ft-prosess-beregningsgrunnlag": 6.2.19
+>>>>>>> cd76a8065 (Bumper fordel bg pakker med quickfiks til fordeling og forlengelsesperioder)
     axios: 0.27.2
     axios-mock-adapter: 1.21.4
     enzyme: 3.11.0
@@ -5759,9 +5777,15 @@ __metadata:
     "@k9-sak-web/rest-api-hooks": 1.0.0
     "@k9-sak-web/sak-app": 1.0.0
     "@k9-sak-web/types": 1.0.0
+<<<<<<< HEAD
     "@navikt/ft-fakta-beregning": 4.2.20
     "@navikt/ft-fakta-fordel-beregningsgrunnlag": 7.2.24
     "@navikt/ft-prosess-beregningsgrunnlag": 6.2.20
+=======
+    "@navikt/ft-fakta-beregning": 4.2.19
+    "@navikt/ft-fakta-fordel-beregningsgrunnlag": 7.2.25
+    "@navikt/ft-prosess-beregningsgrunnlag": 6.2.19
+>>>>>>> cd76a8065 (Bumper fordel bg pakker med quickfiks til fordeling og forlengelsesperioder)
     axios: 0.27.2
     axios-mock-adapter: 1.21.4
     enzyme: 3.11.0
@@ -6739,10 +6763,31 @@ __metadata:
   languageName: node
   linkType: hard
 
+<<<<<<< HEAD
 "@navikt/ds-css@npm:4.0.0":
   version: 4.0.0
   resolution: "@navikt/ds-css@npm:4.0.0::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fds-css%2F4.0.0%2F7e197cbd0d29b547fd795f01f0477620c7fb1846"
   checksum: c7347a264a3dcb747e18fa13b78d3b72ae5af12181ebc3a2a1c586e4597dd9cc5a131a30aa1df0e664c354624f4063cbcad9a3b256a38cef27ec95efeedc7985
+=======
+"@navikt/aksel-icons@npm:4.0.0":
+  version: 4.0.0
+  resolution: "@navikt/aksel-icons@npm:4.0.0::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Faksel-icons%2F4.0.0%2Fdf5ca613a431e17acbf2a63dff7c73c4a6deec76"
+  checksum: 51bf03f4fd6f51ec5e4ffdc052304a1882e2817322f6cba1b98d77e056f14c62e49db07f16b625129a0b3fa0466461bf81fce1666bf8b046c5af3ba425c9eeaa
+  languageName: node
+  linkType: hard
+
+"@navikt/aksel-icons@npm:^4.0.0":
+  version: 4.1.3
+  resolution: "@navikt/aksel-icons@npm:4.1.3::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Faksel-icons%2F4.1.3%2F2f6fb656e7cdaa8ec0d5b937f8bddfe1285467d1"
+  checksum: 5340fa10fa7fbab4a322c4df6a40d4761bcbdfc4e8645e95ed9b718eae64016054050262bc0798e81ed6175d38147533cc6d3a188f78c94f04c29f6cd4900175
+  languageName: node
+  linkType: hard
+
+"@navikt/ds-css@npm:3.2.2":
+  version: 3.2.2
+  resolution: "@navikt/ds-css@npm:3.2.2::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fds-css%2F3.2.2%2F9cc2f6fe6f9b362f569f2e26aaef805e67a66065"
+  checksum: 5f8b2161e60589b4c152ba488bef7fc6eb0c3be9c0b8bd8fa20f0b23c1d7a00db8b1d93842ba4eb827b6b1affebf7e98ff793e8deb9930fa474552fcdb8bd5f0
+>>>>>>> cd76a8065 (Bumper fordel bg pakker med quickfiks til fordeling og forlengelsesperioder)
   languageName: node
   linkType: hard
 
@@ -6753,9 +6798,22 @@ __metadata:
   languageName: node
   linkType: hard
 
+<<<<<<< HEAD
 "@navikt/ds-icons@npm:3.4.3":
   version: 3.4.3
   resolution: "@navikt/ds-icons@npm:3.4.3::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fds-icons%2F3.4.3%2Feaa8fc38f6d184806d3405a5efbc9d137c2b8d27"
+=======
+"@navikt/ds-css@npm:4.0.0":
+  version: 4.0.0
+  resolution: "@navikt/ds-css@npm:4.0.0::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fds-css%2F4.0.0%2F7e197cbd0d29b547fd795f01f0477620c7fb1846"
+  checksum: c7347a264a3dcb747e18fa13b78d3b72ae5af12181ebc3a2a1c586e4597dd9cc5a131a30aa1df0e664c354624f4063cbcad9a3b256a38cef27ec95efeedc7985
+  languageName: node
+  linkType: hard
+
+"@navikt/ds-icons@npm:3.2.2":
+  version: 3.2.2
+  resolution: "@navikt/ds-icons@npm:3.2.2::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fds-icons%2F3.2.2%2Fcc802f47579481e24d4ae6bd3ee294ebdf3e63a7"
+>>>>>>> cd76a8065 (Bumper fordel bg pakker med quickfiks til fordeling og forlengelsesperioder)
   peerDependencies:
     "@types/react": ^17.0.30 || ^18.0.0
     react: ^17.0.0 || ^18.0.0
@@ -6798,6 +6856,25 @@ __metadata:
     "@types/react": ^17.0.30 || ^18.0.0
     react: ^17.0.0 || ^18.0.0
   checksum: dbd1934a046c2c8ca8e0e492a39f6649ba521eff497cc642104c6dd45f3496c5dad026c64d11d2cace9c9a1281a85fa36a3f0c6af875ab86bb4ec55f673102af
+  languageName: node
+  linkType: hard
+
+"@navikt/ds-react@npm:4.0.0":
+  version: 4.0.0
+  resolution: "@navikt/ds-react@npm:4.0.0::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fds-react%2F4.0.0%2Fca96d5030a37a857ef0d021a732e89b3dd381334"
+  dependencies:
+    "@floating-ui/react": 0.24.1
+    "@navikt/aksel-icons": ^4.0.0
+    "@radix-ui/react-tabs": 1.0.0
+    "@radix-ui/react-toggle-group": 1.0.0
+    clsx: ^1.2.1
+    date-fns: 2.29.3
+    react-day-picker: 8.3.4
+    react-modal: 3.15.1
+  peerDependencies:
+    "@types/react": ^17.0.30 || ^18.0.0
+    react: ^17.0.0 || ^18.0.0
+  checksum: d2ee302a0101b1dd43fd11bed05d949904a47c75c31c6c81d197280e572a59540b4037f0c575cc70e2f1a0f894fd89f24dab287f6c7a8a781600ce7813624e3d
   languageName: node
   linkType: hard
 
@@ -6867,14 +6944,24 @@ __metadata:
   languageName: node
   linkType: hard
 
+<<<<<<< HEAD
 "@navikt/ft-fakta-fordel-beregningsgrunnlag@npm:7.2.24":
   version: 7.2.24
   resolution: "@navikt/ft-fakta-fordel-beregningsgrunnlag@npm:7.2.24::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fft-fakta-fordel-beregningsgrunnlag%2F7.2.24%2F0826c6078343d73cacd981b00b62d9180d619e09"
+=======
+"@navikt/ft-fakta-fordel-beregningsgrunnlag@npm:7.2.25":
+  version: 7.2.25
+  resolution: "@navikt/ft-fakta-fordel-beregningsgrunnlag@npm:7.2.25::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fft-fakta-fordel-beregningsgrunnlag%2F7.2.25%2Ffff92ab96d006a237c6ac40b14d947132e668e74"
+>>>>>>> cd76a8065 (Bumper fordel bg pakker med quickfiks til fordeling og forlengelsesperioder)
   dependencies:
     "@navikt/aksel-icons": 4.0.0
     "@navikt/ds-css": 4.0.0
     "@navikt/ds-react": 4.0.0
+<<<<<<< HEAD
     "@navikt/ft-form-hooks": ^4.0.36
+=======
+    "@navikt/ft-form-hooks": ^4.0.37
+>>>>>>> cd76a8065 (Bumper fordel bg pakker med quickfiks til fordeling og forlengelsesperioder)
     "@navikt/ft-form-validators": ^2.0.31
     "@navikt/ft-kodeverk": ^2.1.12
     "@navikt/ft-types": ^2.1.14
@@ -6903,7 +6990,11 @@ __metadata:
     react: 18.2.0
     react-hook-form: 7.43.9
     react-intl: 6.3.2
+<<<<<<< HEAD
   checksum: 2e0b171fabe649894a143359b51442f247cae24f7c28cf9a8caf0eb1546ec009c13a6205f7562ca16614b827d851a33fb4b2fff51a03ccc89cc7f69befc7b5a7
+=======
+  checksum: a4dafffcde411e1ddbda8b8dbeb3e79cecb9e1588339c6bc825e68bf9083313349d724b02f00033ee9fb4ed35aacfafcfc8563f274a64b6545be3c4d715f0f18
+>>>>>>> cd76a8065 (Bumper fordel bg pakker med quickfiks til fordeling og forlengelsesperioder)
   languageName: node
   linkType: hard
 
@@ -6940,6 +7031,71 @@ __metadata:
   languageName: node
   linkType: hard
 
+<<<<<<< HEAD
+"@navikt/ft-form-validators@npm:^2.0.31":
+  version: 2.0.31
+  resolution: "@navikt/ft-form-validators@npm:2.0.31::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fft-form-validators%2F2.0.31%2F71a642f53e2b667400943c134b352475467c4b85"
+=======
+"@navikt/ft-form-hooks@npm:^4.0.37":
+  version: 4.0.37
+  resolution: "@navikt/ft-form-hooks@npm:4.0.37::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fft-form-hooks%2F4.0.37%2F6f3a0b4deb186adce69bf3ed665bbc5c2eb349b2"
+  dependencies:
+    "@navikt/aksel-icons": 4.0.0
+    "@navikt/ds-css": 4.0.0
+    "@navikt/ds-react": 4.0.0
+    "@navikt/ft-form-validators": ^2.0.31
+    "@navikt/ft-types": ^2.1.14
+    "@navikt/ft-ui-komponenter": ^2.0.34
+    "@navikt/ft-utils": ^2.0.30
+    classnames: 2.3.2
+    dayjs: 1.11.8
+    lodash.throttle: 4.1.1
+    react: 18.2.0
+    react-hook-form: 7.44.3
+  peerDependencies:
+    "@navikt/aksel-icons": 3.1.2
+    "@navikt/ds-css": 2.8.11
+    "@navikt/ds-react": 2.8.11
+    "@navikt/ft-form-validators": 2.x
+    "@navikt/ft-types": 2.x
+    "@navikt/ft-ui-komponenter": 2.x
+    "@navikt/ft-utils": 2.x
+    classnames: 2.3.2
+    dayjs: 1.11.7
+    lodash.throttle: 4.1.1
+    react: 18.2.0
+    react-hook-form: 7.43.9
+  checksum: ed2f9241cfb85699d321012471e858735da29ae80ef52b62d55f0825610a7c9fa14751fe3c7f190f46cef9dd7583606a2e2d106a80b931901ad9404c5c247724
+  languageName: node
+  linkType: hard
+
+"@navikt/ft-form-validators@npm:^2.0.30":
+  version: 2.0.30
+  resolution: "@navikt/ft-form-validators@npm:2.0.30::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fft-form-validators%2F2.0.30%2F688fed978bdb8fffd25f94bf226e11dbc24f2b1a"
+>>>>>>> cd76a8065 (Bumper fordel bg pakker med quickfiks til fordeling og forlengelsesperioder)
+  dependencies:
+    "@navikt/ft-utils": ^2.0.30
+    moment: 2.29.4
+  peerDependencies:
+    "@navikt/ft-utils": 2.x
+    moment: 2.29.4
+  checksum: d368c67b9f01761d44e647d2537741c3bd4fb96b0952a065c9aa8b23c899d1a7ecd0591a084dd888a299a06d90b553761e224a3481a4c05314d298dc1f369d26
+  languageName: node
+  linkType: hard
+
+<<<<<<< HEAD
+"@navikt/ft-kodeverk@npm:^2.1.12":
+  version: 2.1.12
+  resolution: "@navikt/ft-kodeverk@npm:2.1.12::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fft-kodeverk%2F2.1.12%2F966c2bfc0064c2c19ad6fb711aac013824bfc123"
+  checksum: 3f467ef61daebd74a1be5f9a2249cc7779dc8c4537dc2eb0487be7e4acf197439e4d01824c84adec4dabb25f713b0a3079cd95d579807735446e77eaf9537ea0
+  languageName: node
+  linkType: hard
+
+"@navikt/ft-konstanter@npm:^2.0.21":
+  version: 2.0.21
+  resolution: "@navikt/ft-konstanter@npm:2.0.21::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fft-konstanter%2F2.0.21%2Fc97383aef219a4ef546e3e829c92c47d6050aef0"
+  checksum: f15122cf2921b4ddd2d87e254a88c325a8316977304cc3f5cc077eb06a86b9cb03b349e305555d5a08ea5673c31e25143ba98c15abd417c07ec692d6a0015a76
+=======
 "@navikt/ft-form-validators@npm:^2.0.31":
   version: 2.0.31
   resolution: "@navikt/ft-form-validators@npm:2.0.31::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fft-form-validators%2F2.0.31%2F71a642f53e2b667400943c134b352475467c4b85"
@@ -6953,6 +7109,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@navikt/ft-kodeverk@npm:^2.1.11":
+  version: 2.1.11
+  resolution: "@navikt/ft-kodeverk@npm:2.1.11::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fft-kodeverk%2F2.1.11%2F42c7de73677173c9be1949a113ac9c405adce5eb"
+  checksum: 38b660ca78a1385fc315895bd9bc7ecbf5ae4e9eb71dc47e039d471809ec3ce3e590ab56ff3694d738b3006d54aac486ca7a0e26a17c45aaba56305f4ceabb0e
+  languageName: node
+  linkType: hard
+
 "@navikt/ft-kodeverk@npm:^2.1.12":
   version: 2.1.12
   resolution: "@navikt/ft-kodeverk@npm:2.1.12::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fft-kodeverk%2F2.1.12%2F966c2bfc0064c2c19ad6fb711aac013824bfc123"
@@ -6960,10 +7123,11 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@navikt/ft-konstanter@npm:^2.0.21":
-  version: 2.0.21
-  resolution: "@navikt/ft-konstanter@npm:2.0.21::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fft-konstanter%2F2.0.21%2Fc97383aef219a4ef546e3e829c92c47d6050aef0"
-  checksum: f15122cf2921b4ddd2d87e254a88c325a8316977304cc3f5cc077eb06a86b9cb03b349e305555d5a08ea5673c31e25143ba98c15abd417c07ec692d6a0015a76
+"@navikt/ft-konstanter@npm:^2.0.20":
+  version: 2.0.20
+  resolution: "@navikt/ft-konstanter@npm:2.0.20::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fft-konstanter%2F2.0.20%2F81a5b2323387a70b100e2d670caf924edb399efa"
+  checksum: dd5ad3634cf7c8a4b70ef3e1757a91e1a3b9c5c6bf406eaff745c4007513489049bceb9cf8ec92ce110b21d0fed41632c7db43eb2edfb6d40fa47158c8d341a8
+>>>>>>> cd76a8065 (Bumper fordel bg pakker med quickfiks til fordeling og forlengelsesperioder)
   languageName: node
   linkType: hard
 
@@ -7044,7 +7208,54 @@ __metadata:
   languageName: node
   linkType: hard
 
+<<<<<<< HEAD
 "@navikt/ft-ui-komponenter@npm:2.0.34, @navikt/ft-ui-komponenter@npm:^2.0.34":
+  version: 2.0.34
+  resolution: "@navikt/ft-ui-komponenter@npm:2.0.34::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fft-ui-komponenter%2F2.0.34%2F752e2c08ec0926b34f8246235f531feec1e70f3e"
+=======
+"@navikt/ft-types@npm:^2.1.14":
+  version: 2.1.14
+  resolution: "@navikt/ft-types@npm:2.1.14::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fft-types%2F2.1.14%2Fe7837f1328d823307a6b5d72731c715aa7ee562d"
+  dependencies:
+    "@navikt/ft-kodeverk": ^2.1.12
+  peerDependencies:
+    "@navikt/ft-kodeverk": 2.x
+  checksum: cb4c2727305f8fdfb1f01bac8482301157455b31738125f6bcac54600c084f4af414508194439ea4919a73140ae68a8a55c66a9901b9b0a7332f83d50d212ad0
+  languageName: node
+  linkType: hard
+
+"@navikt/ft-ui-komponenter@npm:2.0.33, @navikt/ft-ui-komponenter@npm:^2.0.33":
+  version: 2.0.33
+  resolution: "@navikt/ft-ui-komponenter@npm:2.0.33::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fft-ui-komponenter%2F2.0.33%2F098d871ac72834fb912adbe415de41c4f160637a"
+>>>>>>> cd76a8065 (Bumper fordel bg pakker med quickfiks til fordeling og forlengelsesperioder)
+  dependencies:
+    "@navikt/aksel-icons": 4.0.0
+    "@navikt/ds-css": 4.0.0
+    "@navikt/ds-react": 4.0.0
+    "@navikt/ft-utils": ^2.0.30
+    classnames: 2.3.2
+    react: 18.2.0
+    react-intl: 6.4.3
+    react-modal: 3.16.1
+  peerDependencies:
+    "@navikt/aksel-icons": 3.1.2
+    "@navikt/ds-css": 2.8.11
+    "@navikt/ds-react": 2.8.11
+    "@navikt/ft-utils": 2.x
+    classnames: 2.3.2
+    react: 18.2.0
+    react-intl: 6.3.2
+    react-modal: 3.16.1
+  checksum: 55001a62c80b998696bf21745f6b73c5a703513e19cb10069184d7ff1fbfa82542f0e6dfe8fbd03a6e1438c0d5e2375e80fe46d7291f8c4af3a33815bbf1906f
+  languageName: node
+  linkType: hard
+
+<<<<<<< HEAD
+"@navikt/ft-utils@npm:^2.0.30":
+  version: 2.0.30
+  resolution: "@navikt/ft-utils@npm:2.0.30::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fft-utils%2F2.0.30%2F15a1207ffc5153593c633d5cc0e292c6964d6b87"
+=======
+"@navikt/ft-ui-komponenter@npm:^2.0.34":
   version: 2.0.34
   resolution: "@navikt/ft-ui-komponenter@npm:2.0.34::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fft-ui-komponenter%2F2.0.34%2F752e2c08ec0926b34f8246235f531feec1e70f3e"
   dependencies:
@@ -7066,6 +7277,24 @@ __metadata:
     react-intl: 6.3.2
     react-modal: 3.16.1
   checksum: 55001a62c80b998696bf21745f6b73c5a703513e19cb10069184d7ff1fbfa82542f0e6dfe8fbd03a6e1438c0d5e2375e80fe46d7291f8c4af3a33815bbf1906f
+  languageName: node
+  linkType: hard
+
+"@navikt/ft-utils@npm:^2.0.29":
+  version: 2.0.29
+  resolution: "@navikt/ft-utils@npm:2.0.29::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fft-utils%2F2.0.29%2Fae0893677e5c393d7abdb99a68bd2cee746436b8"
+>>>>>>> cd76a8065 (Bumper fordel bg pakker med quickfiks til fordeling og forlengelsesperioder)
+  dependencies:
+    "@navikt/ft-kodeverk": ^2.1.12
+    "@navikt/ft-types": ^2.1.14
+    dayjs: 1.11.8
+    react-intl: 6.4.3
+  peerDependencies:
+    "@navikt/ft-kodeverk": 2.x
+    "@navikt/ft-types": 2.x
+    dayjs: 1.11.7
+    react-intl: 6.3.2
+  checksum: 06a561c9dd3c4865501d469a1077cbc3bfc5425df4b6989662d22517dd6ad47530ebecd4f6124635bec414298da920edb05b0b59f60f805ec80d2b6864becd3c
   languageName: node
   linkType: hard
 
