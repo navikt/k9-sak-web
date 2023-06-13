@@ -5613,7 +5613,7 @@ __metadata:
     "@k9-sak-web/rest-api-hooks": 1.0.0
     "@k9-sak-web/types": 1.0.0
     "@navikt/ft-fakta-beregning": 4.2.20
-    "@navikt/ft-fakta-fordel-beregningsgrunnlag": 7.2.24
+    "@navikt/ft-fakta-fordel-beregningsgrunnlag": 7.2.25
     "@navikt/ft-prosess-beregningsgrunnlag": 6.2.20
     axios-mock-adapter: 1.21.4
     enzyme: 3.11.0
@@ -5662,7 +5662,7 @@ __metadata:
     "@k9-sak-web/sak-app": 1.0.0
     "@k9-sak-web/types": 1.0.0
     "@navikt/ft-fakta-beregning": 4.2.20
-    "@navikt/ft-fakta-fordel-beregningsgrunnlag": 7.2.24
+    "@navikt/ft-fakta-fordel-beregningsgrunnlag": 7.2.25
     "@navikt/ft-prosess-beregningsgrunnlag": 6.2.20
     axios: 0.27.2
     axios-mock-adapter: 1.21.4
@@ -5710,7 +5710,7 @@ __metadata:
     "@k9-sak-web/sak-app": 1.0.0
     "@k9-sak-web/types": 1.0.0
     "@navikt/ft-fakta-beregning": 4.2.20
-    "@navikt/ft-fakta-fordel-beregningsgrunnlag": 7.2.24
+    "@navikt/ft-fakta-fordel-beregningsgrunnlag": 7.2.25
     "@navikt/ft-prosess-beregningsgrunnlag": 6.2.20
     axios: 0.27.2
     axios-mock-adapter: 1.21.4
@@ -5760,7 +5760,7 @@ __metadata:
     "@k9-sak-web/sak-app": 1.0.0
     "@k9-sak-web/types": 1.0.0
     "@navikt/ft-fakta-beregning": 4.2.20
-    "@navikt/ft-fakta-fordel-beregningsgrunnlag": 7.2.24
+    "@navikt/ft-fakta-fordel-beregningsgrunnlag": 7.2.25
     "@navikt/ft-prosess-beregningsgrunnlag": 6.2.20
     axios: 0.27.2
     axios-mock-adapter: 1.21.4
@@ -6867,14 +6867,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@navikt/ft-fakta-fordel-beregningsgrunnlag@npm:7.2.24":
-  version: 7.2.24
-  resolution: "@navikt/ft-fakta-fordel-beregningsgrunnlag@npm:7.2.24::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fft-fakta-fordel-beregningsgrunnlag%2F7.2.24%2F0826c6078343d73cacd981b00b62d9180d619e09"
+"@navikt/ft-fakta-fordel-beregningsgrunnlag@npm:7.2.25":
+  version: 7.2.25
+  resolution: "@navikt/ft-fakta-fordel-beregningsgrunnlag@npm:7.2.25::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fft-fakta-fordel-beregningsgrunnlag%2F7.2.25%2Ffff92ab96d006a237c6ac40b14d947132e668e74"
   dependencies:
     "@navikt/aksel-icons": 4.0.0
     "@navikt/ds-css": 4.0.0
     "@navikt/ds-react": 4.0.0
-    "@navikt/ft-form-hooks": ^4.0.36
+    "@navikt/ft-form-hooks": ^4.0.37
     "@navikt/ft-form-validators": ^2.0.31
     "@navikt/ft-kodeverk": ^2.1.12
     "@navikt/ft-types": ^2.1.14
@@ -6903,7 +6903,7 @@ __metadata:
     react: 18.2.0
     react-hook-form: 7.43.9
     react-intl: 6.3.2
-  checksum: 2e0b171fabe649894a143359b51442f247cae24f7c28cf9a8caf0eb1546ec009c13a6205f7562ca16614b827d851a33fb4b2fff51a03ccc89cc7f69befc7b5a7
+  checksum: a4dafffcde411e1ddbda8b8dbeb3e79cecb9e1588339c6bc825e68bf9083313349d724b02f00033ee9fb4ed35aacfafcfc8563f274a64b6545be3c4d715f0f18
   languageName: node
   linkType: hard
 
@@ -6937,6 +6937,39 @@ __metadata:
     react: 18.2.0
     react-hook-form: 7.43.9
   checksum: 231b8d7edd52c84030223b8e5ff379ee1a505c1d25ec4b0011b06d032ccf637480c5619d9490ee8ae585fe9708377bf6683b493cae7751022b2ed19ee2ecbcaa
+  languageName: node
+  linkType: hard
+
+"@navikt/ft-form-hooks@npm:^4.0.37":
+  version: 4.0.37
+  resolution: "@navikt/ft-form-hooks@npm:4.0.37::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fft-form-hooks%2F4.0.37%2F6f3a0b4deb186adce69bf3ed665bbc5c2eb349b2"
+  dependencies:
+    "@navikt/aksel-icons": 4.0.0
+    "@navikt/ds-css": 4.0.0
+    "@navikt/ds-react": 4.0.0
+    "@navikt/ft-form-validators": ^2.0.31
+    "@navikt/ft-types": ^2.1.14
+    "@navikt/ft-ui-komponenter": ^2.0.34
+    "@navikt/ft-utils": ^2.0.30
+    classnames: 2.3.2
+    dayjs: 1.11.8
+    lodash.throttle: 4.1.1
+    react: 18.2.0
+    react-hook-form: 7.44.3
+  peerDependencies:
+    "@navikt/aksel-icons": 3.1.2
+    "@navikt/ds-css": 2.8.11
+    "@navikt/ds-react": 2.8.11
+    "@navikt/ft-form-validators": 2.x
+    "@navikt/ft-types": 2.x
+    "@navikt/ft-ui-komponenter": 2.x
+    "@navikt/ft-utils": 2.x
+    classnames: 2.3.2
+    dayjs: 1.11.7
+    lodash.throttle: 4.1.1
+    react: 18.2.0
+    react-hook-form: 7.43.9
+  checksum: ed2f9241cfb85699d321012471e858735da29ae80ef52b62d55f0825610a7c9fa14751fe3c7f190f46cef9dd7583606a2e2d106a80b931901ad9404c5c247724
   languageName: node
   linkType: hard
 
