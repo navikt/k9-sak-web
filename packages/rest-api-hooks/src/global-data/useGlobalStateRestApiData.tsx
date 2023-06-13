@@ -8,9 +8,9 @@ import { RestApiStateContext } from './RestApiContext';
  * For mocking i unit-test
  */
 export const useGlobalStateRestApiDataMock = (requestApi: AbstractRequestApi) =>
-  function useGlobalStateRestApiDataa<T>(key: string): T {
+  (function useGlobalStateRestApiDataa<T>(key: string): T {
     return requestApi.startRequest(key, {});
-  };
+  });
 
 /**
  * Hook som bruker respons som allerede er hentet fra backend. For å kunne bruke denne

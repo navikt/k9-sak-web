@@ -6,8 +6,8 @@ import {
   DatePickerProps,
   DateValidationT,
   RangeValidationT,
-  UNSAFE_DatePicker,
-  UNSAFE_useRangeDatepicker,
+  DatePicker,
+  useRangeDatepicker,
 } from '@navikt/ds-react';
 import styles from './rangeDatepicker.modules.css';
 import dayjs from 'dayjs';
@@ -53,7 +53,7 @@ const RangeDatepicker = ({ name, fromDate, toDate, onRangeChange, placeholder, d
   const [fieldTom, metaTom, tomHelpers] = useField({
     name: `${name}.tom`,
   });
-  const { datepickerProps, toInputProps, fromInputProps } = UNSAFE_useRangeDatepicker({
+  const { datepickerProps, toInputProps, fromInputProps } = useRangeDatepicker({
     // @ts-ignore
     defaultSelected,
     fromDate,
@@ -67,9 +67,9 @@ const RangeDatepicker = ({ name, fromDate, toDate, onRangeChange, placeholder, d
 
   return (
     <div>
-      <UNSAFE_DatePicker {...datepickerProps}>
+      <DatePicker {...datepickerProps}>
         <div className={styles['rangepicker-row']}>
-          <UNSAFE_DatePicker.Input
+          <DatePicker.Input
             {...fromInputProps}
             onBlur={_ => fomHelpers.setTouched(true, false)}
             error={metaFom.touched && metaFom.error}
@@ -77,7 +77,7 @@ const RangeDatepicker = ({ name, fromDate, toDate, onRangeChange, placeholder, d
             size="small"
             label="Fra"
           />
-          <UNSAFE_DatePicker.Input
+          <DatePicker.Input
             {...toInputProps}
             onBlur={_ => tomHelpers.setTouched(true, false)}
             error={metaTom.touched && metaTom.error}
@@ -86,7 +86,7 @@ const RangeDatepicker = ({ name, fromDate, toDate, onRangeChange, placeholder, d
             label="Til"
           />
         </div>
-      </UNSAFE_DatePicker>
+      </DatePicker>
     </div>
   );
 };
