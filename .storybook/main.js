@@ -5,11 +5,7 @@ const PACKAGES_DIR = path.resolve(__dirname, '../packages');
 const CORE_DIR = path.resolve(__dirname, '../node_modules');
 const IMAGE_DIR = path.join(PACKAGES_DIR, 'assets/images');
 const CSS_DIR = path.join(PACKAGES_DIR, 'assets/styles');
-
 module.exports = {
-  core: {
-    builder: 'webpack5',
-  },
   stories: ['../packages/storybook/stories/**/*.stories.@(j|t)s?(x)'],
   addons: [
     '@storybook/addon-docs/preset',
@@ -19,6 +15,7 @@ module.exports = {
     // ref: https://medium.com/storybookjs/storybook-6-migration-guide-200346241bb5
     // '@storybook/addon-essentials',
   ],
+
   // reactOptions: {
   //   fastRefresh: true,
   // },
@@ -30,7 +27,6 @@ module.exports = {
       }
       return data;
     });
-
     config.devtool = configType === 'DEVELOPMENT' ? 'inline-source-map' : 'source-map';
 
     // Make whatever fine-grained changes you need
@@ -38,7 +34,9 @@ module.exports = {
       {
         test: /\.(t|j)sx?$/,
         use: [
-          { loader: 'cache-loader' },
+          {
+            loader: 'cache-loader',
+          },
           {
             loader: 'thread-loader',
             options: {
@@ -152,17 +150,22 @@ module.exports = {
         include: [CORE_DIR],
       },
     );
-
     config.plugins.push(
       new MiniCssExtractPlugin({
         filename: 'style[name].css',
         ignoreOrder: true,
       }),
     );
-
     config.resolve.extensions.push('.ts', '.tsx', '.less');
 
     // Return the altered config
     return config;
+  },
+  framework: {
+    name: '@storybook/react-webpack5',
+    options: {},
+  },
+  docs: {
+    autodocs: true,
   },
 };
