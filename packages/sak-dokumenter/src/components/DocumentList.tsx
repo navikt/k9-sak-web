@@ -22,7 +22,7 @@ const headerTextCodes = [
 
 const alleBehandlinger = 'ALLE';
 
-const vedtaksdokumenter = ['INNVILGELSE', 'AVSLAG', 'FRITKS', 'ENDRING'];
+const vedtaksdokumenter = ['INNVILGELSE', 'AVSLAG', 'FRITKS', 'ENDRING', 'MANUELL'];
 
 const isVedtaksdokument = (document: Dokument) =>
   vedtaksdokumenter.some(vedtaksdokument => vedtaksdokument === document.brevkode);
