@@ -3751,7 +3751,7 @@ __metadata:
     "@types/yup": 0.32.0
     date-fns: 2.30.0
     dayjs: 1.11.8
-    formik: 2.2.9
+    formik: 2.4.2
     nav-frontend-alertstriper: 4.0.2
     nav-frontend-core: 6.0.1
     nav-frontend-etiketter: 3.0.3
@@ -3933,7 +3933,7 @@ __metadata:
     "@types/yup": 0.32.0
     date-fns: 2.30.0
     dayjs: 1.11.8
-    formik: 2.2.9
+    formik: 2.4.2
     nav-datovelger: 12.6.0
     nav-frontend-alertstriper: 4.0.2
     nav-frontend-core: 6.0.1
@@ -3991,7 +3991,7 @@ __metadata:
     "@fpsak-frontend/utils-test": 1.0.0
     "@navikt/ft-plattform-komponenter": 2.2.6
     classnames: 2.3.2
-    formik: 2.2.9
+    formik: 2.4.2
     lodash.throttle: 4.1.1
     moment: 2.29.4
     nav-frontend-core: 6.0.1
@@ -4558,7 +4558,7 @@ __metadata:
     date-fns: 2.30.0
     editorjs-html: 3.4.3
     enzyme: 3.11.0
-    formik: 2.2.9
+    formik: 2.4.2
     moment: 2.29.4
     nav-frontend-alertstriper: 4.0.2
     nav-frontend-core: 6.0.1
@@ -6170,7 +6170,7 @@ __metadata:
     "@navikt/ft-plattform-komponenter": 2.2.6
     "@navikt/k9-fe-form-utils": 1.0.6
     "@navikt/k9-fe-period-utils": 1.0.5
-    formik: 2.2.9
+    formik: 2.4.2
     yup: 0.32.11
   languageName: unknown
   linkType: soft
@@ -6189,7 +6189,7 @@ __metadata:
     "@navikt/k9-fe-period-utils": 1.0.5
     classnames: 2.3.2
     dayjs: 1.11.8
-    formik: 2.2.9
+    formik: 2.4.2
     nav-frontend-tabs: 2.0.3
     react-intl: 6.4.4
     react-outside-click-handler: 1.3.0
@@ -6672,7 +6672,7 @@ __metadata:
     "@fpsak-frontend/utils": 1.0.0
     "@k9-sak-web/types": 1.0.0
     "@navikt/ds-react": 4.1.4
-    formik: 2.2.9
+    formik: 2.4.2
     nav-frontend-core: 6.0.1
     nav-frontend-knapper: 3.1.3
     nav-frontend-knapper-style: 2.1.2
@@ -15618,9 +15618,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"formik@npm:2.2.9":
-  version: 2.2.9
-  resolution: "formik@npm:2.2.9"
+"formik@npm:2.4.2":
+  version: 2.4.2
+  resolution: "formik@npm:2.4.2"
   dependencies:
     deepmerge: ^2.1.1
     hoist-non-react-statics: ^3.3.0
@@ -15628,10 +15628,10 @@ __metadata:
     lodash-es: ^4.17.21
     react-fast-compare: ^2.0.1
     tiny-warning: ^1.0.2
-    tslib: ^1.10.0
+    tslib: ^2.0.0
   peerDependencies:
     react: ">=16.8.0"
-  checksum: f07f80eee8423b4c5560546c48c4093c47530dae7d931a4e0d947d68ae1aab94291b1bf2e99ecaa5854ee50593b415fb5724c624c787338f0577f066009e8812
+  checksum: 2a942674ee0271707ccc575ecc025e4ac0658a66613d9a4f21e72ed81588c69e99bd627bd4844e512134268962435d3904401bcff726e49d7509125e5002f107
   languageName: node
   linkType: hard
 
@@ -25394,7 +25394,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"tslib@npm:^1.10.0, tslib@npm:^1.8.1, tslib@npm:^1.9.3":
+"tslib@npm:^1.8.1, tslib@npm:^1.9.3":
   version: 1.14.1
   resolution: "tslib@npm:1.14.1"
   checksum: dbe628ef87f66691d5d2959b3e41b9ca0045c3ee3c7c7b906cc1e328b39f199bb1ad9e671c39025bd56122ac57dfbf7385a94843b1cc07c60a4db74795829acd
