@@ -27,13 +27,13 @@
     "nav-frontend-typografi-style": "2.0.2",
     "react": "17.0.2",
     "react-intl": "6.4.4",
-    "react-redux": "8.0.7",
+    "react-redux": "8.1.1",
     "redux": "4.2.1",
     "redux-form": "8.3.10",
     "reselect": "4.1.8"
   },
   "devDependencies": {
-    "axios-mock-adapter": "1.21.4",
+    "axios-mock-adapter": "1.21.5",
     "enzyme": "3.11.0",
     "redux-mock-store": "1.5.4",
     "sinon": "15.1.0"
