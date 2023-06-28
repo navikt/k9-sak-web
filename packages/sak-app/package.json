@@ -48,7 +48,7 @@
     "@k9-sak-web/sak-meny-marker-behandling": "1.0.0",
     "@k9-sak-web/sak-soknadsperiodestripe": "1.0.0",
     "@k9-sak-web/types": "1.0.0",
-    "@navikt/ds-react": "4.3.0",
+    "@navikt/ds-react": "4.4.2",
     "@navikt/ft-fakta-beregning": "4.2.24",
     "@navikt/ft-form-hooks": "4.1.1",
     "@navikt/ft-plattform-komponenter": "2.2.7",
