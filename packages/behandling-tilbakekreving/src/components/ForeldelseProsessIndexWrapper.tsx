@@ -7,7 +7,7 @@ import { RelasjonsRolleType } from '@navikt/ft-kodeverk';
 import relasjonsRolleTypeKodeverk from '../kodeverk/relasjonsRolleTypeKodeverk';
 
 const ForeldelseProsessIndexWrapper: React.FC = (props: any) => {
-  const [formData, setFormData] = useState<ForeldelsesresultatActivity[]>([]);
+  const [formData, setFormData] = useState<ForeldelsesresultatActivity[] | undefined>(undefined);
   const {
     behandling,
     perioderForeldelse,
