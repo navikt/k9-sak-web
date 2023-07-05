@@ -37,7 +37,7 @@ class BeregningFaktaPanelDef extends FaktaPanelDef {
         formData={props.formData}
         setFormData={props.setFormData}
         vilkar={mapVilkar(bgVilkaret, props.beregningreferanserTilVurdering)}
-        skalKunneOverstyreAktiviteter
+        skalKunneOverstyreAktiviteter={false}
         skalKunneAvbryteOverstyring
       />
     );
