@@ -3708,7 +3708,7 @@ __metadata:
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
     prop-types: 15.8.1
-    react: 17.0.2
+    react: 18.2.0
     react-intl: 6.4.4
     react-redux: 8.1.1
     redux: 4.2.1
@@ -3736,7 +3736,7 @@ __metadata:
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
     prop-types: 15.8.1
-    react: 17.0.2
+    react: 18.2.0
     react-intl: 6.4.4
   languageName: unknown
   linkType: soft
@@ -3761,7 +3761,7 @@ __metadata:
     nav-frontend-skjema: 4.0.6
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
-    react: 17.0.2
+    react: 18.2.0
     react-intl: 6.4.4
     yup: 0.32.11
   peerDependencies:
@@ -3792,7 +3792,7 @@ __metadata:
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
     prop-types: 15.8.1
-    react: 17.0.2
+    react: 18.2.0
     react-intl: 6.4.4
     react-redux: 8.1.1
     redux: 4.2.1
@@ -3818,7 +3818,7 @@ __metadata:
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
     prop-types: 15.8.1
-    react: 17.0.2
+    react: 18.2.0
     react-intl: 6.4.4
     sinon: 15.1.0
   languageName: unknown
@@ -3850,7 +3850,7 @@ __metadata:
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
     prop-types: 15.8.1
-    react: 17.0.2
+    react: 18.2.0
     react-intl: 6.4.4
     react-redux: 8.1.1
     redux: 4.2.1
@@ -3878,7 +3878,7 @@ __metadata:
     nav-frontend-tabs: 2.0.3
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
-    react: 17.0.2
+    react: 18.2.0
     react-intl: 6.4.4
     react-redux: 8.1.1
     redux: 4.2.1
@@ -3912,7 +3912,7 @@ __metadata:
     nav-frontend-typografi-style: 2.0.2
     object-hash: 3.0.0
     prop-types: 15.8.1
-    react: 17.0.2
+    react: 18.2.0
     react-dom: 17.0.2
     react-intl: 6.4.4
     react-redux: 8.1.1
@@ -3944,7 +3944,7 @@ __metadata:
     nav-frontend-skjema: 4.0.6
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
-    react: 17.0.2
+    react: 18.2.0
     react-day-picker: 7.4.10
     react-intl: 6.4.4
     yup: 0.32.11
@@ -3971,7 +3971,7 @@ __metadata:
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
     prop-types: 15.8.1
-    react: 17.0.2
+    react: 18.2.0
     react-intl: 6.4.4
     react-redux: 8.1.1
     redux: 4.2.1
@@ -4009,7 +4009,7 @@ __metadata:
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
     prop-types: 15.8.1
-    react: 17.0.2
+    react: 18.2.0
     react-intl: 6.4.4
     react-redux: 8.1.1
     redux: 4.2.1
@@ -4053,7 +4053,7 @@ __metadata:
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
     prop-types: 15.8.1
-    react: 17.0.2
+    react: 18.2.0
     react-intl: 6.4.4
     react-redux: 8.1.1
     redux: 4.2.1
@@ -4080,7 +4080,7 @@ __metadata:
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
     prop-types: 15.8.1
-    react: 17.0.2
+    react: 18.2.0
     react-intl: 6.4.4
     react-redux: 8.1.1
     redux: 4.2.1
@@ -4111,7 +4111,7 @@ __metadata:
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
     prop-types: 15.8.1
-    react: 17.0.2
+    react: 18.2.0
     react-intl: 6.4.4
     react-redux: 8.1.1
     redux: 4.2.1
@@ -4146,7 +4146,7 @@ __metadata:
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
     prop-types: 15.8.1
-    react: 17.0.2
+    react: 18.2.0
     react-intl: 6.4.4
     react-redux: 8.1.1
     redux: 4.2.1
@@ -4182,7 +4182,7 @@ __metadata:
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
     prop-types: 15.8.1
-    react: 17.0.2
+    react: 18.2.0
     react-dom: 17.0.2
     react-intl: 6.4.4
     react-redux: 8.1.1
@@ -4212,7 +4212,7 @@ __metadata:
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
     prop-types: 15.8.1
-    react: 17.0.2
+    react: 18.2.0
     react-intl: 6.4.4
     react-redux: 8.1.1
     redux: 4.2.1
@@ -4245,7 +4245,7 @@ __metadata:
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
     prop-types: 15.8.1
-    react: 17.0.2
+    react: 18.2.0
     react-intl: 6.4.4
     react-redux: 8.1.1
     redux: 4.2.1
@@ -4276,7 +4276,7 @@ __metadata:
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
     prop-types: 15.8.1
-    react: 17.0.2
+    react: 18.2.0
     react-intl: 6.4.4
     react-redux: 8.1.1
     redux: 4.2.1
@@ -4306,7 +4306,7 @@ __metadata:
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
     prop-types: 15.8.1
-    react: 17.0.2
+    react: 18.2.0
     react-intl: 6.4.4
     react-redux: 8.1.1
     redux: 4.2.1
@@ -4336,7 +4336,7 @@ __metadata:
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
     prop-types: 15.8.1
-    react: 17.0.2
+    react: 18.2.0
     react-intl: 6.4.4
     react-redux: 8.1.1
     redux: 4.2.1
@@ -4371,7 +4371,7 @@ __metadata:
     nav-frontend-modal: 2.0.2
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
-    react: 17.0.2
+    react: 18.2.0
     react-dom: 17.0.2
     react-intl: 6.4.4
     react-redux: 8.1.1
@@ -4410,7 +4410,7 @@ __metadata:
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
     prop-types: 15.8.1
-    react: 17.0.2
+    react: 18.2.0
     react-dom: 17.0.2
     react-intl: 6.4.4
     react-redux: 8.1.1
@@ -4443,7 +4443,7 @@ __metadata:
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
     prop-types: 15.8.1
-    react: 17.0.2
+    react: 18.2.0
     react-intl: 6.4.4
     react-redux: 8.1.1
     redux: 4.2.1
@@ -4470,7 +4470,7 @@ __metadata:
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
     prop-types: 15.8.1
-    react: 17.0.2
+    react: 18.2.0
     react-intl: 6.4.4
     react-redux: 8.1.1
     redux-form: 8.3.10
@@ -4497,7 +4497,7 @@ __metadata:
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
     prop-types: 15.8.1
-    react: 17.0.2
+    react: 18.2.0
     react-intl: 6.4.4
     react-redux: 8.1.1
     redux-form: 8.3.10
@@ -4525,7 +4525,7 @@ __metadata:
     nav-frontend-ekspanderbartpanel-style: 2.0.2
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
-    react: 17.0.2
+    react: 18.2.0
     react-intl: 6.4.4
     react-redux: 8.1.1
     redux-form: 8.3.10
@@ -4572,7 +4572,7 @@ __metadata:
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
     prop-types: 15.8.1
-    react: 17.0.2
+    react: 18.2.0
     react-intl: 6.4.4
     react-redux: 8.1.1
     redux: 4.2.1
@@ -4611,7 +4611,7 @@ __metadata:
     nav-frontend-tabs-style: 2.0.2
     nav-frontend-typografi: 4.0.2
     prop-types: 15.8.1
-    react: 17.0.2
+    react: 18.2.0
     react-dom: 17.0.2
     react-intl: 6.4.4
     react-redux: 8.1.1
@@ -4645,7 +4645,7 @@ __metadata:
     nav-frontend-spinner-style: 1.0.2
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
-    react: 17.0.2
+    react: 18.2.0
     react-intl: 6.4.4
     react-redux: 8.1.1
     redux: 4.2.1
@@ -4671,7 +4671,7 @@ __metadata:
     nav-frontend-grid-style: 1.0.3
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
-    react: 17.0.2
+    react: 18.2.0
     react-intl: 6.4.4
     react-redux: 8.1.1
     redux: 4.2.1
@@ -4711,7 +4711,7 @@ __metadata:
     nav-frontend-spinner-style: 1.0.2
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
-    react: 17.0.2
+    react: 18.2.0
     react-intl: 6.4.4
   languageName: unknown
   linkType: soft
@@ -4730,7 +4730,7 @@ __metadata:
     nav-frontend-core: 6.0.1
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
-    react: 17.0.2
+    react: 18.2.0
     react-intl: 6.4.4
     react-redux: 8.1.1
     redux: 4.2.1
@@ -4759,7 +4759,7 @@ __metadata:
     nav-frontend-knapper-style: 2.1.2
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
-    react: 17.0.2
+    react: 18.2.0
     react-intl: 6.4.4
     react-redux: 8.1.1
     react-router-dom: 6.13.0
@@ -4789,7 +4789,7 @@ __metadata:
     nav-frontend-snakkeboble-style: 2.0.2
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
-    react: 17.0.2
+    react: 18.2.0
     react-intl: 6.4.4
     react-router-dom: 6.13.0
     sinon: 15.1.0
@@ -4815,7 +4815,7 @@ __metadata:
     nav-frontend-modal-style: 2.0.2
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
-    react: 17.0.2
+    react: 18.2.0
     react-intl: 6.4.4
     react-redux: 8.1.1
     redux: 4.2.1
@@ -4848,7 +4848,7 @@ __metadata:
     nav-frontend-skjema-style: 3.0.3
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
-    react: 17.0.2
+    react: 18.2.0
     react-intl: 6.4.4
     react-redux: 8.1.1
     redux: 4.2.1
@@ -4879,7 +4879,7 @@ __metadata:
     nav-frontend-modal-style: 2.0.2
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
-    react: 17.0.2
+    react: 18.2.0
     react-intl: 6.4.4
     react-redux: 8.1.1
     redux: 4.2.1
@@ -4910,7 +4910,7 @@ __metadata:
     nav-frontend-modal-style: 2.0.2
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
-    react: 17.0.2
+    react: 18.2.0
     react-intl: 6.4.4
     react-redux: 8.1.1
     react-router-dom: 6.13.0
@@ -4927,7 +4927,7 @@ __metadata:
     "@fpsak-frontend/shared-components": 1.0.0
     "@fpsak-frontend/utils-test": 1.0.0
     enzyme: 3.11.0
-    react: 17.0.2
+    react: 18.2.0
     react-intl: 6.4.4
     sinon: 15.1.0
   languageName: unknown
@@ -4940,7 +4940,7 @@ __metadata:
     "@fpsak-frontend/shared-components": 1.0.0
     "@fpsak-frontend/utils-test": 1.0.0
     enzyme: 3.11.0
-    react: 17.0.2
+    react: 18.2.0
     react-intl: 6.4.4
     sinon: 15.1.0
   languageName: unknown
@@ -4964,7 +4964,7 @@ __metadata:
     nav-frontend-knapper-style: 2.1.2
     nav-frontend-spinner: 3.0.1
     nav-frontend-spinner-style: 1.0.2
-    react: 17.0.2
+    react: 18.2.0
     react-intl: 6.4.4
     sinon: 15.1.0
   languageName: unknown
@@ -4991,7 +4991,7 @@ __metadata:
     nav-frontend-paneler-style: 2.0.2
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
-    react: 17.0.2
+    react: 18.2.0
     react-collapse: 5.1.1
     react-intl: 6.4.4
     react-redux: 8.1.1
@@ -5020,7 +5020,7 @@ __metadata:
     nav-frontend-knapper-style: 2.1.2
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
-    react: 17.0.2
+    react: 18.2.0
     react-intl: 6.4.4
     react-redux: 8.1.1
     redux-form: 8.3.10
@@ -5035,7 +5035,7 @@ __metadata:
     "@fpsak-frontend/assets": 1.0.0
     "@fpsak-frontend/shared-components": 1.0.0
     classnames: 2.3.2
-    react: 17.0.2
+    react: 18.2.0
     react-intl: 6.4.4
   languageName: unknown
   linkType: soft
@@ -5067,7 +5067,7 @@ __metadata:
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
     prop-types: 15.8.1
-    react: 17.0.2
+    react: 18.2.0
     react-intl: 6.4.4
     react-redux: 8.1.1
     react-router-dom: 6.13.0
@@ -5104,7 +5104,7 @@ __metadata:
     nav-frontend-spinner-style: 1.0.2
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
-    react: 17.0.2
+    react: 18.2.0
     react-intl: 6.4.4
   languageName: unknown
   linkType: soft
@@ -5147,7 +5147,7 @@ __metadata:
     nav-frontend-spinner-style: 1.0.2
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
-    react: 17.0.2
+    react: 18.2.0
     react-day-picker: 7.4.10
     react-intl: 6.4.4
     react-modal: 3.16.1
@@ -5172,7 +5172,7 @@ __metadata:
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
     prop-types: 15.8.1
-    react: 17.0.2
+    react: 18.2.0
     react-dom: 17.0.2
     react-intl: 6.4.4
     vis-data: 7.1.6
@@ -5188,7 +5188,7 @@ __metadata:
     "@fpsak-frontend/kodeverk": 1.0.0
     "@wojtekmaj/enzyme-adapter-react-17": 0.8.0
     enzyme: 3.11.0
-    react: 17.0.2
+    react: 18.2.0
     react-intl: 6.4.4
   languageName: unknown
   linkType: soft
@@ -5202,7 +5202,7 @@ __metadata:
     "@k9-sak-web/types": 1.0.0
     "@navikt/ft-types": 2.1.15
     moment: 2.29.4
-    react: 17.0.2
+    react: 18.2.0
     react-intl: 6.4.4
   languageName: unknown
   linkType: soft
@@ -5615,7 +5615,7 @@ __metadata:
     nav-frontend-modal-style: 2.0.2
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
-    react: 17.0.2
+    react: 18.2.0
     react-intl: 6.4.4
     react-redux: 8.1.1
     redux: 4.2.1
@@ -5660,7 +5660,7 @@ __metadata:
     nav-frontend-tabs: 2.0.3
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
-    react: 17.0.2
+    react: 18.2.0
     react-intl: 6.4.4
     react-redux: 8.1.1
     redux-form: 8.3.10
@@ -5695,7 +5695,7 @@ __metadata:
     "@navikt/ft-prosess-beregningsgrunnlag": 6.2.25
     axios-mock-adapter: 1.21.5
     enzyme: 3.11.0
-    react: 17.0.2
+    react: 18.2.0
     react-intl: 6.4.4
     react-redux: 8.1.1
     redux: 4.2.1
@@ -5725,7 +5725,7 @@ __metadata:
     enzyme: 3.11.0
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
-    react: 17.0.2
+    react: 18.2.0
     react-intl: 6.4.4
     react-redux: 8.1.1
     redux: 4.2.1
@@ -5762,7 +5762,7 @@ __metadata:
     nav-frontend-modal-style: 2.0.2
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
-    react: 17.0.2
+    react: 18.2.0
     react-intl: 6.4.4
     react-redux: 8.1.1
     redux: 4.2.1
@@ -5808,7 +5808,7 @@ __metadata:
     axios-mock-adapter: 1.21.5
     enzyme: 3.11.0
     nav-frontend-popover: 2.0.4
-    react: 17.0.2
+    react: 18.2.0
     react-intl: 6.4.4
     react-redux: 8.1.1
     redux: 4.2.1
@@ -5858,7 +5858,7 @@ __metadata:
     axios-mock-adapter: 1.21.5
     enzyme: 3.11.0
     nav-frontend-alertstriper: 4.0.2
-    react: 17.0.2
+    react: 18.2.0
     react-intl: 6.4.4
     react-redux: 8.1.1
     redux: 4.2.1
@@ -5906,7 +5906,7 @@ __metadata:
     axios-mock-adapter: 1.21.5
     enzyme: 3.11.0
     nav-frontend-alertstriper: 4.0.2
-    react: 17.0.2
+    react: 18.2.0
     react-intl: 6.4.4
     react-redux: 8.1.1
     redux: 4.2.1
@@ -5956,7 +5956,7 @@ __metadata:
     axios-mock-adapter: 1.21.5
     enzyme: 3.11.0
     nav-frontend-alertstriper: 4.0.2
-    react: 17.0.2
+    react: 18.2.0
     react-intl: 6.4.4
     react-redux: 8.1.1
     redux: 4.2.1
@@ -5993,7 +5993,7 @@ __metadata:
     enzyme: 3.11.0
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
-    react: 17.0.2
+    react: 18.2.0
     react-intl: 6.4.4
     react-redux: 8.1.1
     redux: 4.2.1
@@ -6042,7 +6042,7 @@ __metadata:
     nav-frontend-modal-style: 2.0.2
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
-    react: 17.0.2
+    react: 18.2.0
     react-intl: 6.4.4
     react-redux: 8.1.1
     redux: 4.2.1
@@ -6072,7 +6072,7 @@ __metadata:
     "@k9-sak-web/types": 1.0.0
     axios-mock-adapter: 1.21.5
     enzyme: 3.11.0
-    react: 17.0.2
+    react: 18.2.0
     react-intl: 6.4.4
     react-redux: 8.1.1
     react-uuid: 2.0.0
@@ -6113,7 +6113,7 @@ __metadata:
     nav-frontend-popover-style: 2.0.2
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
-    react: 17.0.2
+    react: 18.2.0
     react-intl: 6.4.4
     react-redux: 8.1.1
     redux-form: 8.3.10
@@ -6145,7 +6145,7 @@ __metadata:
     nav-frontend-paneler: 3.0.2
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
-    react: 17.0.2
+    react: 18.2.0
     react-intl: 6.4.4
     sinon: 15.1.0
     styled-components: 5.3.11
@@ -6171,7 +6171,7 @@ __metadata:
     nav-frontend-knapper-style: 2.1.2
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
-    react: 17.0.2
+    react: 18.2.0
     react-intl: 6.4.4
     react-redux: 8.1.1
     redux: 4.2.1
@@ -6230,7 +6230,7 @@ __metadata:
     nav-frontend-knapper-style: 2.1.2
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
-    react: 17.0.2
+    react: 18.2.0
     react-intl: 6.4.4
     uuid: 9.0.0
   languageName: unknown
@@ -6240,7 +6240,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@k9-sak-web/fremdriftslinje@workspace:packages/fremdriftslinje"
   dependencies:
-    react: 17.0.2
+    react: 18.2.0
     react-dom: 17.0.2
   languageName: unknown
   linkType: soft
@@ -6272,7 +6272,7 @@ __metadata:
     nav-frontend-modal-style: 2.0.2
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
-    react: 17.0.2
+    react: 18.2.0
     react-intl: 6.4.4
     react-redux: 8.1.1
     redux: 4.2.1
@@ -6317,7 +6317,7 @@ __metadata:
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
     prop-types: 15.8.1
-    react: 17.0.2
+    react: 18.2.0
     react-dom: 17.0.2
     react-intl: 6.4.4
     react-redux: 8.1.1
@@ -6344,7 +6344,7 @@ __metadata:
     nav-frontend-knapper-style: 2.1.2
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
-    react: 17.0.2
+    react: 18.2.0
     react-intl: 6.4.4
     react-redux: 8.1.1
     redux: 4.2.1
@@ -6375,7 +6375,7 @@ __metadata:
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
     prop-types: 15.8.1
-    react: 17.0.2
+    react: 18.2.0
     react-intl: 6.4.4
     react-redux: 8.1.1
     redux: 4.2.1
@@ -6394,7 +6394,7 @@ __metadata:
     "@fpsak-frontend/utils-test": 1.0.0
     "@k9-sak-web/fremdriftslinje": 1.0.0
     enzyme: 3.11.0
-    react: 17.0.2
+    react: 18.2.0
     react-dom: 17.0.2
     react-intl: 6.4.4
     sinon: 15.1.0
@@ -6416,7 +6416,7 @@ __metadata:
     nav-frontend-core: 6.0.1
     nav-frontend-grid: 2.0.2
     nav-frontend-knapper: 3.1.3
-    react: 17.0.2
+    react: 18.2.0
     react-dom: 17.0.2
     react-hook-form: 7.45.0
     react-intl: 6.4.4
@@ -6448,7 +6448,7 @@ __metadata:
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
     object-hash: 3.0.0
-    react: 17.0.2
+    react: 18.2.0
     react-intl: 6.4.4
     react-redux: 8.1.1
     redux: 4.2.1
@@ -6475,7 +6475,7 @@ __metadata:
     nav-frontend-spinner: 3.0.1
     nav-frontend-spinner-style: 1.0.2
     nav-frontend-typografi: 4.0.2
-    react: 17.0.2
+    react: 18.2.0
     react-intl: 6.4.4
   languageName: unknown
   linkType: soft
@@ -6485,7 +6485,7 @@ __metadata:
   resolution: "@k9-sak-web/rest-api-hooks@workspace:packages/rest-api-hooks"
   dependencies:
     "@k9-sak-web/rest-api": 1.0.0
-    react: 17.0.2
+    react: 18.2.0
   languageName: unknown
   linkType: soft
 
@@ -6511,7 +6511,7 @@ __metadata:
     nav-frontend-lenkepanel-style: 2.0.2
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
-    react: 17.0.2
+    react: 18.2.0
     react-intl: 6.4.4
     react-router-dom: 6.13.0
   languageName: unknown
@@ -6591,7 +6591,7 @@ __metadata:
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
     prop-types: 15.8.1
-    react: 17.0.2
+    react: 18.2.0
     react-dom: 17.0.2
     react-intl: 6.4.4
     react-redux: 8.1.1
@@ -6629,7 +6629,7 @@ __metadata:
     nav-frontend-paneler-style: 2.0.2
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
-    react: 17.0.2
+    react: 18.2.0
     react-intl: 6.4.4
     react-query: 3.39.3
     react-router-dom: 6.13.0
@@ -6644,7 +6644,7 @@ __metadata:
     nav-frontend-alertstriper: 4.0.2
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
-    react: 17.0.2
+    react: 18.2.0
     react-intl: 6.4.4
     react-router-dom: 6.13.0
   languageName: unknown
@@ -6672,7 +6672,7 @@ __metadata:
     nav-frontend-modal-style: 2.0.2
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
-    react: 17.0.2
+    react: 18.2.0
     react-intl: 6.4.4
     react-redux: 8.1.1
     redux-form: 8.3.10
@@ -6698,7 +6698,7 @@ __metadata:
     nav-frontend-skjema: 4.0.6
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
-    react: 17.0.2
+    react: 18.2.0
     react-intl: 6.4.4
     yup: 0.32.11
   languageName: unknown
@@ -6715,7 +6715,7 @@ __metadata:
     "@navikt/k9-fe-period-utils": 1.0.6
     nav-frontend-typografi: 4.0.2
     nav-frontend-typografi-style: 2.0.2
-    react: 17.0.2
+    react: 18.2.0
     react-intl: 6.4.4
     react-router-dom: 6.13.0
   languageName: unknown
@@ -18537,7 +18537,7 @@ __metadata:
     postcss-less: 6.0.0
     prettier: 2.8.8
     raf: 3.4.1
-    react: 17.0.2
+    react: 18.2.0
     react-dom: 17.0.2
     react-modal: 3.16.1
     react-popper: 2.3.0
@@ -22979,13 +22979,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react@npm:17.0.2":
-  version: 17.0.2
-  resolution: "react@npm:17.0.2"
+"react@npm:18.2.0":
+  version: 18.2.0
+  resolution: "react@npm:18.2.0"
   dependencies:
     loose-envify: ^1.1.0
-    object-assign: ^4.1.1
-  checksum: b254cc17ce3011788330f7bbf383ab653c6848902d7936a87b09d835d091e3f295f7e9dd1597c6daac5dc80f90e778c8230218ba8ad599f74adcc11e33b9d61b
+  checksum: 88e38092da8839b830cda6feef2e8505dec8ace60579e46aa5490fc3dc9bba0bd50336507dc166f43e3afc1c42939c09fe33b25fae889d6f402721dcd78fca1b
   languageName: node
   linkType: hard
 
