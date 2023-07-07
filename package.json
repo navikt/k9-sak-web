@@ -157,7 +157,7 @@
     "source-map-loader": "4.0.1",
     "storybook": "7.0.23",
     "storybook-react-router": "1.0.8",
-    "stylelint": "15.8.0",
+    "stylelint": "15.10.1",
     "stylelint-order": "6.0.3",
     "terser-webpack-plugin": "5.3.9",
     "thread-loader": "3.0.4",
