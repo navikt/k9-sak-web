@@ -143,7 +143,7 @@ const FritekstEditor = ({
         <h3>
           <FormattedMessage id="RedigeringAvFritekstBrev.Rediger" />
         </h3>
-        <Alert variant="info">
+        <Alert variant="info" size="small">
           <FormattedMessage id="RedigeringAvFritekstBrev.Infotekst" />
           <ÅpneSakINyttVinduKnapp />
         </Alert>
@@ -193,7 +193,7 @@ const FritekstEditor = ({
                   <VerticalSpacer sixteenPx />
                 </>
               )}
-              <PreviewLink previewCallback={onForhåndsvis} size="medium" intl={intl}>
+              <PreviewLink previewCallback={onForhåndsvis} size="small" intl={intl}>
                 <FormattedMessage id="VedtakForm.ForhandvisBrev" />
               </PreviewLink>
             </div>
@@ -208,6 +208,7 @@ const FritekstEditor = ({
               variant="primary"
               onClick={handleLagreOgLukk}
               disabled={!redigerbartInnholdKlart || readOnly}
+              size="small"
             >
               <FormattedMessage id="RedigeringAvFritekstBrev.Lagre" />
             </Button>
@@ -219,7 +220,7 @@ const FritekstEditor = ({
               type="button"
               onClick={() => setVisAdvarsel(true)}
               disabled={readOnly}
-              size="medium"
+              size="small"
             >
               <FormattedMessage id="RedigeringAvFritekstBrev.Tilbakestill" />
             </Button>
