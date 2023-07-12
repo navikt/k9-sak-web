@@ -5,7 +5,8 @@ import { FormattedMessage, injectIntl, WrappedComponentProps } from 'react-intl'
 import { Column, Row } from 'nav-frontend-grid';
 import { Modal, Button, Alert } from '@navikt/ds-react';
 import { Cancel } from '@navikt/ds-icons';
-import { VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { VerticalSpacer, ÅpneSakINyttVinduKnapp } from '@fpsak-frontend/shared-components';
+
 import EditorJSWrapper from './EditorJSWrapper';
 import PreviewLink from '../PreviewLink';
 import InkluderKalenderCheckbox from '../InkluderKalenderCheckbox';
@@ -144,6 +145,7 @@ const FritekstEditor = ({
         </h3>
         <Alert variant="info">
           <FormattedMessage id="RedigeringAvFritekstBrev.Infotekst" />
+          <ÅpneSakINyttVinduKnapp />
         </Alert>
         <FritekstFeilmeldinger />
       </header>
