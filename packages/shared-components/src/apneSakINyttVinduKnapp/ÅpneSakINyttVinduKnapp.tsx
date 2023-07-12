@@ -1,30 +1,27 @@
 import React from 'react';
 
 import { ExternalLink } from '@navikt/ds-icons';
-import { Button } from '@navikt/ds-react';
+import { Button, ButtonProps } from '@navikt/ds-react';
 
 import { useHref, useLocation } from 'react-router-dom';
 
 type ÅpneSakINyttVinduProps = {
-  variant?: 'tertiary' | 'secondary' | 'primary';
-  icon?: React.ReactNode;
-  size?: 'small' | 'medium' | 'xsmall';
   value?: string;
-  iconPosition?: 'left' | 'right';
   overridePath?: string;
   target?: string;
-  disabled?: boolean;
 };
 
-const ÅpneSakINyttVindu: React.FC<ÅpneSakINyttVinduProps> = ({
+const ÅpneSakINyttVindu: React.FC<ButtonProps & ÅpneSakINyttVinduProps> = ({
+  children,
   variant = 'tertiary',
-  icon = <ExternalLink aria-hidden />,
   size = 'small',
-  value = 'Åpne sak i ny fane',
-  iconPosition = 'left',
-  target = '_blank',
-  overridePath,
   disabled,
+  loading,
+  icon = <ExternalLink aria-hidden />,
+  iconPosition,
+  value = 'Åpne sak i ny fane',
+  overridePath,
+  target = '_blank',
 }) => {
   const { pathname } = useLocation();
   const href = useHref(pathname);
@@ -43,8 +40,10 @@ const ÅpneSakINyttVindu: React.FC<ÅpneSakINyttVinduProps> = ({
       size={size}
       iconPosition={iconPosition}
       disabled={disabled === undefined ? pathname.length < 1 : disabled}
+      loading={loading}
     >
-      {value}
+      {children && { children }}
+      {!children && { value }}
     </Button>
   );
 };
