@@ -11,8 +11,7 @@ type ÅpneSakINyttVinduProps = {
   target?: string;
 };
 
-const ÅpneSakINyttVindu: React.FC<ButtonProps & ÅpneSakINyttVinduProps> = ({
-  children,
+const ÅpneSakINyttVindu: React.FC<Omit<ButtonProps, 'children'> & ÅpneSakINyttVinduProps> = ({
   variant = 'tertiary',
   size = 'small',
   disabled,
@@ -42,8 +41,7 @@ const ÅpneSakINyttVindu: React.FC<ButtonProps & ÅpneSakINyttVinduProps> = ({
       disabled={disabled === undefined ? pathname.length < 1 : disabled}
       loading={loading}
     >
-      {children && { children }}
-      {!children && { value }}
+      {value}
     </Button>
   );
 };
