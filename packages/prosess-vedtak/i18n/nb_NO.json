@@ -150,7 +150,7 @@
   "RedigeringAvFritekstBrev.Lagre": "Lagre og lukk",
   "RedigeringAvFritekstBrev.Rediger": "Rediger brev",
   "RedigeringAvFritekstBrev.RedigerBrevTittel": "Rediger brev til søker",
-  "RedigeringAvFritekstBrev.Infotekst": "Gjør nødvendige endringer i brevet nedenfor. Redigering er begrenset til området markert i oransje.",
+  "RedigeringAvFritekstBrev.Infotekst": "Gjør nødvendige endringer i brevet nedenfor. Redigering er begrenset til området markert i oransje. Vil du se saken samtidig som du redigerer kan du åpne en kopi av saken i ny fane:",
   "RedigeringAvFritekstBrev.BekreftTilbakestillTittel": "Tilbakestill brev",
   "RedigeringAvFritekstBrev.BekreftTilbakestill": "Alle endringer gjort i brevet vil nå bli slettet. Er du sikker på at du vil tilbakestille brevet?",
   "RedigeringAvFritekstBrev.Tilbakestill": "Tilbakestill",
