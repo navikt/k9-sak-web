@@ -6855,13 +6855,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@navikt/ds-css@npm:4.3.0":
-  version: 4.3.0
-  resolution: "@navikt/ds-css@npm:4.3.0::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fds-css%2F4.3.0%2Fe3741ae74c53fcd95e3d33ce257867000383296e"
-  checksum: c568f557548d8982904200d339a6b200a65de264465b69ec4bdf34477188c7d7d24581a25ea4ff149b7e2c5b9756acc5c8aefba565c09c6250ae82a40c424ea1
-  languageName: node
-  linkType: hard
-
 "@navikt/ds-css@npm:4.4.0":
   version: 4.4.0
   resolution: "@navikt/ds-css@npm:4.4.0::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fds-css%2F4.4.0%2Ff8793291536f0e8ff8a6a28a58b7173efccb4254"
@@ -6873,6 +6866,13 @@ __metadata:
   version: 4.5.0
   resolution: "@navikt/ds-css@npm:4.5.0::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fds-css%2F4.5.0%2F77dc2d1ecc0d0516d28d1a76d98b42a50ce0ba92"
   checksum: 46ae8b70dedc6900fbfbcf8979061587d73d286adfa35f188ae7958cba746cd06020770cbe793570f0dd39ed5eed8bd258da9aa7a4b91b7e1519c43ce6392d38
+  languageName: node
+  linkType: hard
+
+"@navikt/ds-css@npm:4.6.1":
+  version: 4.6.1
+  resolution: "@navikt/ds-css@npm:4.6.1::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fds-css%2F4.6.1%2F31e1cb6d8c5be36aa20d1e181cd76597caef5156"
+  checksum: 1b63ecabec5769f7bda899bf9a0dbf7ae7b35eafe89967bfacd88f78b585a067fd694b567ea6be878883a2992c54b33d319af900dba689b162d3de9d3b251352
   languageName: node
   linkType: hard
 
@@ -18447,7 +18447,7 @@ __metadata:
     "@formatjs/intl-datetimeformat": 6.10.0
     "@formatjs/intl-numberformat": 8.7.0
     "@navikt/aksel-icons": 4.3.0
-    "@navikt/ds-css": 4.3.0
+    "@navikt/ds-css": 4.6.1
     "@navikt/ds-react": 4.3.0
     "@navikt/familie-endringslogg": 8.1.1
     "@navikt/ft-plattform-komponenter": 2.2.7
