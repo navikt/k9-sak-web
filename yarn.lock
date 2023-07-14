@@ -3250,12 +3250,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@csstools/css-parser-algorithms@npm:^2.2.0":
-  version: 2.2.0
-  resolution: "@csstools/css-parser-algorithms@npm:2.2.0"
+"@csstools/css-parser-algorithms@npm:^2.3.0":
+  version: 2.3.0
+  resolution: "@csstools/css-parser-algorithms@npm:2.3.0"
   peerDependencies:
     "@csstools/css-tokenizer": ^2.1.1
-  checksum: 9f1b6e902dadfc6ac37086c4b7073b16458186d9f42c534fdede8b0e7c2e3a832ea2d716baf32d4976c1fc2d8ad78f829916419faa73ecd10cc61c329121e683
+  checksum: 3be22a0cfcfe0dc4bb140e2f266590addf21c5052d9e69334da860b3839fbd4369c3d158cbc396032d5ed96d01d2b5d8ebdb5497f75c9830ed9ce99853e3f915
   languageName: node
   linkType: hard
 
@@ -3266,22 +3266,22 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@csstools/media-query-list-parser@npm:^2.1.0":
-  version: 2.1.0
-  resolution: "@csstools/media-query-list-parser@npm:2.1.0"
+"@csstools/media-query-list-parser@npm:^2.1.2":
+  version: 2.1.2
+  resolution: "@csstools/media-query-list-parser@npm:2.1.2"
   peerDependencies:
-    "@csstools/css-parser-algorithms": ^2.1.1
+    "@csstools/css-parser-algorithms": ^2.3.0
     "@csstools/css-tokenizer": ^2.1.1
-  checksum: 854379ad108673eb3a2031a9ca1d3b5976d3234f715b3fc2a0a67b057a80fb4b34ec4888cfa7675fbd31418e4b939128cdbbe7c75b635f639ddbbb0a22847b6d
+  checksum: 04936573ba837f14d7d637e172342c473665679c6497bbc0d548d93d08cb22e22151bb19e0e20422954c0b2aa50c3f38c9fc5f45c136e31bc863c656cb79df1b
   languageName: node
   linkType: hard
 
-"@csstools/selector-specificity@npm:^2.2.0":
-  version: 2.2.0
-  resolution: "@csstools/selector-specificity@npm:2.2.0"
+"@csstools/selector-specificity@npm:^3.0.0":
+  version: 3.0.0
+  resolution: "@csstools/selector-specificity@npm:3.0.0"
   peerDependencies:
-    postcss-selector-parser: ^6.0.10
-  checksum: 97c89f23b3b527d7bd51ed299969ed2b9fbb219a367948b44aefec228b8eda6ae0ad74fe8a82f9aac8ff32cfd00bb6d0c98d1daeab2e8fc6d5c4af25e5be5673
+    postcss-selector-parser: ^6.0.13
+  checksum: 4a2dfe69998a499155d9dab4c2a0e7ae7594d8db98bb8a487d2d5347c0c501655051eb5eacad3fe323c86b0ba8212fe092c27fc883621e6ac2a27662edfc3528
   languageName: node
   linkType: hard
 
@@ -3880,7 +3880,7 @@ __metadata:
     redux: 4.2.1
     redux-form: 8.3.10
     reselect: 4.1.8
-    sinon: 15.1.0
+    sinon: 15.2.0
   languageName: unknown
   linkType: soft
 
@@ -3964,7 +3964,7 @@ __metadata:
     redux: 4.2.1
     redux-form: 8.3.10
     reselect: 4.1.8
-    sinon: 15.1.0
+    sinon: 15.2.0
   languageName: unknown
   linkType: soft
 
@@ -3986,7 +3986,7 @@ __metadata:
     prop-types: 15.8.1
     react: 17.0.2
     react-intl: 6.4.4
-    sinon: 15.1.0
+    sinon: 15.2.0
   languageName: unknown
   linkType: soft
 
@@ -4022,7 +4022,7 @@ __metadata:
     redux: 4.2.1
     redux-form: 8.3.10
     reselect: 4.1.8
-    sinon: 15.1.0
+    sinon: 15.2.0
   languageName: unknown
   linkType: soft
 
@@ -4085,7 +4085,7 @@ __metadata:
     redux: 4.2.1
     redux-form: 8.3.10
     reselect: 4.1.8
-    sinon: 15.1.0
+    sinon: 15.2.0
   languageName: unknown
   linkType: soft
 
@@ -4143,7 +4143,7 @@ __metadata:
     redux: 4.2.1
     redux-form: 8.3.10
     reselect: 4.1.8
-    sinon: 15.1.0
+    sinon: 15.2.0
   languageName: unknown
   linkType: soft
 
@@ -4225,7 +4225,7 @@ __metadata:
     redux: 4.2.1
     redux-form: 8.3.10
     reselect: 4.1.8
-    sinon: 15.1.0
+    sinon: 15.2.0
   languageName: unknown
   linkType: soft
 
@@ -4252,7 +4252,7 @@ __metadata:
     redux: 4.2.1
     redux-form: 8.3.10
     reselect: 4.1.8
-    sinon: 15.1.0
+    sinon: 15.2.0
   languageName: unknown
   linkType: soft
 
@@ -4283,7 +4283,7 @@ __metadata:
     redux: 4.2.1
     redux-form: 8.3.10
     reselect: 4.1.8
-    sinon: 15.1.0
+    sinon: 15.2.0
   languageName: unknown
   linkType: soft
 
@@ -4318,7 +4318,7 @@ __metadata:
     redux: 4.2.1
     redux-form: 8.3.10
     reselect: 4.1.8
-    sinon: 15.1.0
+    sinon: 15.2.0
   languageName: unknown
   linkType: soft
 
@@ -4354,7 +4354,7 @@ __metadata:
     react-redux: 8.1.1
     redux: 4.2.1
     redux-form: 8.3.10
-    sinon: 15.1.0
+    sinon: 15.2.0
   languageName: unknown
   linkType: soft
 
@@ -4384,7 +4384,7 @@ __metadata:
     redux: 4.2.1
     redux-form: 8.3.10
     reselect: 4.1.8
-    sinon: 15.1.0
+    sinon: 15.2.0
   languageName: unknown
   linkType: soft
 
@@ -4417,7 +4417,7 @@ __metadata:
     redux: 4.2.1
     redux-form: 8.3.10
     reselect: 4.1.8
-    sinon: 15.1.0
+    sinon: 15.2.0
   languageName: unknown
   linkType: soft
 
@@ -4448,7 +4448,7 @@ __metadata:
     redux: 4.2.1
     redux-form: 8.3.10
     reselect: 4.1.8
-    sinon: 15.1.0
+    sinon: 15.2.0
   languageName: unknown
   linkType: soft
 
@@ -4478,7 +4478,7 @@ __metadata:
     redux: 4.2.1
     redux-form: 8.3.10
     reselect: 4.1.8
-    sinon: 15.1.0
+    sinon: 15.2.0
   languageName: unknown
   linkType: soft
 
@@ -4508,7 +4508,7 @@ __metadata:
     redux: 4.2.1
     redux-form: 8.3.10
     reselect: 4.1.8
-    sinon: 15.1.0
+    sinon: 15.2.0
   languageName: unknown
   linkType: soft
 
@@ -4544,7 +4544,7 @@ __metadata:
     redux: 4.2.1
     redux-form: 8.3.10
     reselect: 4.1.8
-    sinon: 15.1.0
+    sinon: 15.2.0
   languageName: unknown
   linkType: soft
 
@@ -4583,7 +4583,7 @@ __metadata:
     redux: 4.2.1
     redux-form: 8.3.10
     reselect: 4.1.8
-    sinon: 15.1.0
+    sinon: 15.2.0
     xss: 1.0.14
   languageName: unknown
   linkType: soft
@@ -4615,7 +4615,7 @@ __metadata:
     redux: 4.2.1
     redux-form: 8.3.10
     reselect: 4.1.8
-    sinon: 15.1.0
+    sinon: 15.2.0
   languageName: unknown
   linkType: soft
 
@@ -4641,7 +4641,7 @@ __metadata:
     react-redux: 8.1.1
     redux-form: 8.3.10
     reselect: 4.1.8
-    sinon: 15.1.0
+    sinon: 15.2.0
   languageName: unknown
   linkType: soft
 
@@ -4668,7 +4668,7 @@ __metadata:
     react-redux: 8.1.1
     redux-form: 8.3.10
     reselect: 4.1.8
-    sinon: 15.1.0
+    sinon: 15.2.0
   languageName: unknown
   linkType: soft
 
@@ -4696,7 +4696,7 @@ __metadata:
     react-redux: 8.1.1
     redux-form: 8.3.10
     reselect: 4.1.8
-    sinon: 15.1.0
+    sinon: 15.2.0
   languageName: unknown
   linkType: soft
 
@@ -4744,7 +4744,7 @@ __metadata:
     redux: 4.2.1
     redux-form: 8.3.10
     reselect: 4.1.8
-    sinon: 15.1.0
+    sinon: 15.2.0
   languageName: unknown
   linkType: soft
 
@@ -4784,7 +4784,7 @@ __metadata:
     redux: 4.2.1
     redux-form: 8.3.10
     reselect: 4.1.8
-    sinon: 15.1.0
+    sinon: 15.2.0
   languageName: unknown
   linkType: soft
 
@@ -4817,7 +4817,7 @@ __metadata:
     redux: 4.2.1
     redux-form: 8.3.10
     reselect: 4.1.8
-    sinon: 15.1.0
+    sinon: 15.2.0
   languageName: unknown
   linkType: soft
 
@@ -4843,7 +4843,7 @@ __metadata:
     redux: 4.2.1
     redux-form: 8.3.10
     reselect: 4.1.8
-    sinon: 15.1.0
+    sinon: 15.2.0
   languageName: unknown
   linkType: soft
 
@@ -4902,7 +4902,7 @@ __metadata:
     redux: 4.2.1
     redux-form: 8.3.10
     reselect: 4.1.8
-    sinon: 15.1.0
+    sinon: 15.2.0
   languageName: unknown
   linkType: soft
 
@@ -4928,9 +4928,9 @@ __metadata:
     react: 17.0.2
     react-intl: 6.4.4
     react-redux: 8.1.1
-    react-router-dom: 6.13.0
+    react-router-dom: 6.14.1
     redux-form: 8.3.10
-    sinon: 15.1.0
+    sinon: 15.2.0
   languageName: unknown
   linkType: soft
 
@@ -4957,8 +4957,8 @@ __metadata:
     nav-frontend-typografi-style: 2.0.2
     react: 17.0.2
     react-intl: 6.4.4
-    react-router-dom: 6.13.0
-    sinon: 15.1.0
+    react-router-dom: 6.14.1
+    sinon: 15.2.0
   languageName: unknown
   linkType: soft
 
@@ -4986,7 +4986,7 @@ __metadata:
     react-redux: 8.1.1
     redux: 4.2.1
     redux-form: 8.3.10
-    sinon: 15.1.0
+    sinon: 15.2.0
   languageName: unknown
   linkType: soft
 
@@ -5020,7 +5020,7 @@ __metadata:
     redux: 4.2.1
     redux-form: 8.3.10
     reselect: 4.1.8
-    sinon: 15.1.0
+    sinon: 15.2.0
   languageName: unknown
   linkType: soft
 
@@ -5051,7 +5051,7 @@ __metadata:
     redux: 4.2.1
     redux-form: 8.3.10
     reselect: 4.1.8
-    sinon: 15.1.0
+    sinon: 15.2.0
   languageName: unknown
   linkType: soft
 
@@ -5079,10 +5079,10 @@ __metadata:
     react: 17.0.2
     react-intl: 6.4.4
     react-redux: 8.1.1
-    react-router-dom: 6.13.0
+    react-router-dom: 6.14.1
     redux: 4.2.1
     redux-form: 8.3.10
-    sinon: 15.1.0
+    sinon: 15.2.0
   languageName: unknown
   linkType: soft
 
@@ -5095,7 +5095,7 @@ __metadata:
     enzyme: 3.11.0
     react: 17.0.2
     react-intl: 6.4.4
-    sinon: 15.1.0
+    sinon: 15.2.0
   languageName: unknown
   linkType: soft
 
@@ -5108,7 +5108,7 @@ __metadata:
     enzyme: 3.11.0
     react: 17.0.2
     react-intl: 6.4.4
-    sinon: 15.1.0
+    sinon: 15.2.0
   languageName: unknown
   linkType: soft
 
@@ -5132,7 +5132,7 @@ __metadata:
     nav-frontend-spinner-style: 1.0.2
     react: 17.0.2
     react-intl: 6.4.4
-    sinon: 15.1.0
+    sinon: 15.2.0
   languageName: unknown
   linkType: soft
 
@@ -5163,7 +5163,7 @@ __metadata:
     react-redux: 8.1.1
     redux-form: 8.3.10
     reselect: 4.1.8
-    sinon: 15.1.0
+    sinon: 15.2.0
   languageName: unknown
   linkType: soft
 
@@ -5190,7 +5190,7 @@ __metadata:
     react-intl: 6.4.4
     react-redux: 8.1.1
     redux-form: 8.3.10
-    sinon: 15.1.0
+    sinon: 15.2.0
   languageName: unknown
   linkType: soft
 
@@ -5236,11 +5236,11 @@ __metadata:
     react: 17.0.2
     react-intl: 6.4.4
     react-redux: 8.1.1
-    react-router-dom: 6.13.0
+    react-router-dom: 6.14.1
     redux: 4.2.1
     redux-form: 8.3.10
     reselect: 4.1.8
-    sinon: 15.1.0
+    sinon: 15.2.0
   languageName: unknown
   linkType: soft
 
@@ -5843,7 +5843,7 @@ __metadata:
     redux-form: 8.3.10
     redux-mock-store: 1.5.4
     reselect: 4.1.8
-    sinon: 15.1.0
+    sinon: 15.2.0
   languageName: unknown
   linkType: soft
 
@@ -5886,7 +5886,7 @@ __metadata:
     react-redux: 8.1.1
     redux-form: 8.3.10
     reselect: 4.1.8
-    sinon: 15.1.0
+    sinon: 15.2.0
   languageName: unknown
   linkType: soft
 
@@ -5923,7 +5923,7 @@ __metadata:
     redux-form: 8.3.10
     redux-mock-store: 1.5.4
     reselect: 4.1.8
-    sinon: 15.1.0
+    sinon: 15.2.0
   languageName: unknown
   linkType: soft
 
@@ -5953,7 +5953,7 @@ __metadata:
     redux-form: 8.3.10
     redux-mock-store: 1.5.4
     reselect: 4.1.8
-    sinon: 15.1.0
+    sinon: 15.2.0
   languageName: unknown
   linkType: soft
 
@@ -5990,7 +5990,7 @@ __metadata:
     redux-form: 8.3.10
     redux-mock-store: 1.5.4
     reselect: 4.1.8
-    sinon: 15.1.0
+    sinon: 15.2.0
   languageName: unknown
   linkType: soft
 
@@ -6036,7 +6036,7 @@ __metadata:
     redux-form: 8.3.10
     redux-mock-store: 1.5.4
     reselect: 4.1.8
-    sinon: 15.1.0
+    sinon: 15.2.0
   languageName: unknown
   linkType: soft
 
@@ -6086,7 +6086,7 @@ __metadata:
     redux-form: 8.3.10
     redux-mock-store: 1.5.4
     reselect: 4.1.8
-    sinon: 15.1.0
+    sinon: 15.2.0
   languageName: unknown
   linkType: soft
 
@@ -6135,7 +6135,7 @@ __metadata:
     redux-mock-store: 1.5.4
     redux-saga: 1.2.3
     reselect: 4.1.8
-    sinon: 15.1.0
+    sinon: 15.2.0
   languageName: unknown
   linkType: soft
 
@@ -6184,7 +6184,7 @@ __metadata:
     redux-form: 8.3.10
     redux-mock-store: 1.5.4
     reselect: 4.1.8
-    sinon: 15.1.0
+    sinon: 15.2.0
   languageName: unknown
   linkType: soft
 
@@ -6221,7 +6221,7 @@ __metadata:
     redux-form: 8.3.10
     redux-mock-store: 1.5.4
     reselect: 4.1.8
-    sinon: 15.1.0
+    sinon: 15.2.0
   languageName: unknown
   linkType: soft
 
@@ -6270,7 +6270,7 @@ __metadata:
     redux-form: 8.3.10
     redux-mock-store: 1.5.4
     reselect: 4.1.8
-    sinon: 15.1.0
+    sinon: 15.2.0
   languageName: unknown
   linkType: soft
 
@@ -6301,7 +6301,7 @@ __metadata:
     redux-form: 8.3.10
     redux-mock-store: 1.5.4
     reselect: 4.1.8
-    sinon: 15.1.0
+    sinon: 15.2.0
   languageName: unknown
   linkType: soft
 
@@ -6338,7 +6338,7 @@ __metadata:
     react-intl: 6.4.4
     react-redux: 8.1.1
     redux-form: 8.3.10
-    sinon: 15.1.0
+    sinon: 15.2.0
     styled-components: 5.3.11
     uuid: 9.0.0
   languageName: unknown
@@ -6368,7 +6368,7 @@ __metadata:
     nav-frontend-typografi-style: 2.0.2
     react: 17.0.2
     react-intl: 6.4.4
-    sinon: 15.1.0
+    sinon: 15.2.0
     styled-components: 5.3.11
     uuid: 9.0.0
   languageName: unknown
@@ -6397,7 +6397,7 @@ __metadata:
     react-redux: 8.1.1
     redux: 4.2.1
     redux-form: 8.3.10
-    sinon: 15.1.0
+    sinon: 15.2.0
   languageName: unknown
   linkType: soft
 
@@ -6499,7 +6499,7 @@ __metadata:
     redux: 4.2.1
     redux-form: 8.3.10
     reselect: 4.1.8
-    sinon: 15.1.0
+    sinon: 15.2.0
   languageName: unknown
   linkType: soft
 
@@ -6542,9 +6542,9 @@ __metadata:
     react-dom: 17.0.2
     react-intl: 6.4.4
     react-redux: 8.1.1
-    react-router-dom: 6.13.0
+    react-router-dom: 6.14.1
     redux-form: 8.3.10
-    sinon: 15.1.0
+    sinon: 15.2.0
   languageName: unknown
   linkType: soft
 
@@ -6570,7 +6570,7 @@ __metadata:
     react-redux: 8.1.1
     redux: 4.2.1
     redux-form: 8.3.10
-    sinon: 15.1.0
+    sinon: 15.2.0
   languageName: unknown
   linkType: soft
 
@@ -6602,7 +6602,7 @@ __metadata:
     redux: 4.2.1
     redux-form: 8.3.10
     reselect: 4.1.8
-    sinon: 15.1.0
+    sinon: 15.2.0
   languageName: unknown
   linkType: soft
 
@@ -6618,7 +6618,7 @@ __metadata:
     react: 17.0.2
     react-dom: 17.0.2
     react-intl: 6.4.4
-    sinon: 15.1.0
+    sinon: 15.2.0
   languageName: unknown
   linkType: soft
 
@@ -6641,7 +6641,7 @@ __metadata:
     react-dom: 17.0.2
     react-hook-form: 7.45.1
     react-intl: 6.4.4
-    sinon: 15.1.0
+    sinon: 15.2.0
   languageName: unknown
   linkType: soft
 
@@ -6675,7 +6675,7 @@ __metadata:
     redux: 4.2.1
     redux-form: 8.3.10
     reselect: 4.1.8
-    sinon: 15.1.0
+    sinon: 15.2.0
   languageName: unknown
   linkType: soft
 
@@ -6734,7 +6734,7 @@ __metadata:
     nav-frontend-typografi-style: 2.0.2
     react: 17.0.2
     react-intl: 6.4.4
-    react-router-dom: 6.13.0
+    react-router-dom: 6.14.1
   languageName: unknown
   linkType: soft
 
@@ -6817,7 +6817,7 @@ __metadata:
     react-intl: 6.4.4
     react-redux: 8.1.1
     react-responsive: 9.0.2
-    react-router-dom: 6.13.0
+    react-router-dom: 6.14.1
     redux: 4.2.1
     redux-form: 8.3.10
     redux-logger: 3.0.6
@@ -6853,8 +6853,8 @@ __metadata:
     react: 17.0.2
     react-intl: 6.4.4
     react-query: 3.39.3
-    react-router-dom: 6.13.0
-    sinon: 15.1.0
+    react-router-dom: 6.14.1
+    sinon: 15.2.0
   languageName: unknown
   linkType: soft
 
@@ -6867,7 +6867,7 @@ __metadata:
     nav-frontend-typografi-style: 2.0.2
     react: 17.0.2
     react-intl: 6.4.4
-    react-router-dom: 6.13.0
+    react-router-dom: 6.14.1
   languageName: unknown
   linkType: soft
 
@@ -6898,7 +6898,7 @@ __metadata:
     react-redux: 8.1.1
     redux-form: 8.3.10
     reselect: 4.1.8
-    sinon: 15.1.0
+    sinon: 15.2.0
   languageName: unknown
   linkType: soft
 
@@ -6938,7 +6938,7 @@ __metadata:
     nav-frontend-typografi-style: 2.0.2
     react: 17.0.2
     react-intl: 6.4.4
-    react-router-dom: 6.13.0
+    react-router-dom: 6.14.1
   languageName: unknown
   linkType: soft
 
@@ -6957,22 +6957,22 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@lerna/child-process@npm:7.0.2":
-  version: 7.0.2
-  resolution: "@lerna/child-process@npm:7.0.2"
+"@lerna/child-process@npm:7.1.3":
+  version: 7.1.3
+  resolution: "@lerna/child-process@npm:7.1.3"
   dependencies:
     chalk: ^4.1.0
     execa: ^5.0.0
     strong-log-transformer: ^2.1.0
-  checksum: 04df87688e51b25aea60c8e43357815254faad1e4c0b4465c731250180819fc8103969214db827cd1e68c747cc1597b7513e0c6bf1ae8d129614468355723739
+  checksum: 7bce9759f5b5082876f664a321b03ba0ab8710d41189f359c6500ed67013ee75acaac48abb3861aa18dca058cbcc30067bb291c02ead8cbbe3713ecb318bd80a
   languageName: node
   linkType: hard
 
-"@lerna/create@npm:7.0.2":
-  version: 7.0.2
-  resolution: "@lerna/create@npm:7.0.2"
+"@lerna/create@npm:7.1.3":
+  version: 7.1.3
+  resolution: "@lerna/create@npm:7.1.3"
   dependencies:
-    "@lerna/child-process": 7.0.2
+    "@lerna/child-process": 7.1.3
     dedent: 0.7.0
     fs-extra: ^11.1.1
     init-package-json: 5.0.0
@@ -6985,7 +6985,7 @@ __metadata:
     validate-npm-package-license: ^3.0.4
     validate-npm-package-name: 5.0.0
     yargs-parser: 20.2.4
-  checksum: 2d1664b0145fd77c98768469d479172f848dd40ac61b9eb91309d6604ce83d8d8d3bfaa6fd6700c1ca09b9c5f922cf7c593fafea13b32e825eec3ac030f8be17
+  checksum: e02fd9cded539a6ca4df71e55fc6a1bd868b4f95de00e80eb008266763ebce42cb8ed552defe7e3c4f4293197cced1754062055277f81135f0224f09b5187d56
   languageName: node
   linkType: hard
 
@@ -8298,10 +8298,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@remix-run/router@npm:1.6.3":
-  version: 1.6.3
-  resolution: "@remix-run/router@npm:1.6.3"
-  checksum: f6968b1626af930b42f8cb5a044f05e4fbce05af6c7947beb1704e45c9570944e3be16ee008b185e5e13baac97948299eb55341b2a359c3e2e54b9d6646ae167
+"@remix-run/router@npm:1.7.1":
+  version: 1.7.1
+  resolution: "@remix-run/router@npm:1.7.1"
+  checksum: d13ad7e0b3b35379f8fdec1eec4f515325b618e431915e12fb9f1cd812ee959add0e7045edcb229ba17888ecfc787869b64e6cb4153ae3be148887e234b6ffac
   languageName: node
   linkType: hard
 
@@ -8444,7 +8444,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@sinonjs/fake-timers@npm:^10.2.0":
+"@sinonjs/fake-timers@npm:^10.3.0":
   version: 10.3.0
   resolution: "@sinonjs/fake-timers@npm:10.3.0"
   dependencies:
@@ -10195,7 +10195,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/minimist@npm:^1.2.0":
+"@types/minimist@npm:^1.2.0, @types/minimist@npm:^1.2.2":
   version: 1.2.2
   resolution: "@types/minimist@npm:1.2.2"
   checksum: b8da83c66eb4aac0440e64674b19564d9d86c80ae273144db9681e5eeff66f238ade9515f5006ffbfa955ceff8b89ad2bd8ec577d7caee74ba101431fb07045d
@@ -10531,16 +10531,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@typescript-eslint/eslint-plugin@npm:5.60.0":
-  version: 5.60.0
-  resolution: "@typescript-eslint/eslint-plugin@npm:5.60.0"
+"@typescript-eslint/eslint-plugin@npm:5.62.0":
+  version: 5.62.0
+  resolution: "@typescript-eslint/eslint-plugin@npm:5.62.0"
   dependencies:
     "@eslint-community/regexpp": ^4.4.0
-    "@typescript-eslint/scope-manager": 5.60.0
-    "@typescript-eslint/type-utils": 5.60.0
-    "@typescript-eslint/utils": 5.60.0
+    "@typescript-eslint/scope-manager": 5.62.0
+    "@typescript-eslint/type-utils": 5.62.0
+    "@typescript-eslint/utils": 5.62.0
     debug: ^4.3.4
-    grapheme-splitter: ^1.0.4
+    graphemer: ^1.4.0
     ignore: ^5.2.0
     natural-compare-lite: ^1.4.0
     semver: ^7.3.7
@@ -10551,24 +10551,24 @@ __metadata:
   peerDependenciesMeta:
     typescript:
       optional: true
-  checksum: 61dd70a1ea9787e69d0d4cd14f6a4c94ba786b535a3f519ade7926d965ee1d4f8fefa8bf0224ee57c5c6517eec3674c0fd06f9226536aa428c2bdddeed1e70f4
+  checksum: fc104b389c768f9fa7d45a48c86d5c1ad522c1d0512943e782a56b1e3096b2cbcc1eea3fcc590647bf0658eef61aac35120a9c6daf979bf629ad2956deb516a1
   languageName: node
   linkType: hard
 
-"@typescript-eslint/parser@npm:5.60.0":
-  version: 5.60.0
-  resolution: "@typescript-eslint/parser@npm:5.60.0"
+"@typescript-eslint/parser@npm:5.62.0":
+  version: 5.62.0
+  resolution: "@typescript-eslint/parser@npm:5.62.0"
   dependencies:
-    "@typescript-eslint/scope-manager": 5.60.0
-    "@typescript-eslint/types": 5.60.0
-    "@typescript-eslint/typescript-estree": 5.60.0
+    "@typescript-eslint/scope-manager": 5.62.0
+    "@typescript-eslint/types": 5.62.0
+    "@typescript-eslint/typescript-estree": 5.62.0
     debug: ^4.3.4
   peerDependencies:
     eslint: ^6.0.0 || ^7.0.0 || ^8.0.0
   peerDependenciesMeta:
     typescript:
       optional: true
-  checksum: 94e7931a5b356b16638b281b8e1d661f8b1660f0c75a323537f68b311dae91b7a575a0a019d4ea05a79cc5d42b5cb41cc367205691cdfd292ef96a3b66b1e58b
+  checksum: d168f4c7f21a7a63f47002e2d319bcbb6173597af5c60c1cf2de046b46c76b4930a093619e69faf2d30214c29ab27b54dcf1efc7046a6a6bd6f37f59a990e752
   languageName: node
   linkType: hard
 
@@ -10582,22 +10582,22 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@typescript-eslint/scope-manager@npm:5.60.0":
-  version: 5.60.0
-  resolution: "@typescript-eslint/scope-manager@npm:5.60.0"
+"@typescript-eslint/scope-manager@npm:5.62.0":
+  version: 5.62.0
+  resolution: "@typescript-eslint/scope-manager@npm:5.62.0"
   dependencies:
-    "@typescript-eslint/types": 5.60.0
-    "@typescript-eslint/visitor-keys": 5.60.0
-  checksum: b21ee1ef57be948a806aa31fd65a9186766b3e1a727030dc47025edcadc54bd1aa6133a439acd5f44a93e2b983dd55bc5571bb01cb834461dab733682d66256a
+    "@typescript-eslint/types": 5.62.0
+    "@typescript-eslint/visitor-keys": 5.62.0
+  checksum: 6062d6b797fe1ce4d275bb0d17204c827494af59b5eaf09d8a78cdd39dadddb31074dded4297aaf5d0f839016d601032857698b0e4516c86a41207de606e9573
   languageName: node
   linkType: hard
 
-"@typescript-eslint/type-utils@npm:5.60.0":
-  version: 5.60.0
-  resolution: "@typescript-eslint/type-utils@npm:5.60.0"
+"@typescript-eslint/type-utils@npm:5.62.0":
+  version: 5.62.0
+  resolution: "@typescript-eslint/type-utils@npm:5.62.0"
   dependencies:
-    "@typescript-eslint/typescript-estree": 5.60.0
-    "@typescript-eslint/utils": 5.60.0
+    "@typescript-eslint/typescript-estree": 5.62.0
+    "@typescript-eslint/utils": 5.62.0
     debug: ^4.3.4
     tsutils: ^3.21.0
   peerDependencies:
@@ -10605,7 +10605,7 @@ __metadata:
   peerDependenciesMeta:
     typescript:
       optional: true
-  checksum: b90ce97592f2db899d88d7a325fec4d2ea11a7b8b4306787310890c27fb51862a6c003675252e9dc465908f791ad5320ea7307260ecd10e89ca1d209fbf8616d
+  checksum: fc41eece5f315dfda14320be0da78d3a971d650ea41300be7196934b9715f3fe1120a80207551eb71d39568275dbbcf359bde540d1ca1439d8be15e9885d2739
   languageName: node
   linkType: hard
 
@@ -10616,10 +10616,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@typescript-eslint/types@npm:5.60.0":
-  version: 5.60.0
-  resolution: "@typescript-eslint/types@npm:5.60.0"
-  checksum: 48f29e5c084c5663cfed1a6c4458799a6690a213e7861a24501f9b96698ae59e89a1df1c77e481777e4da78f1b0a5573a549f7b8880e3f4071a7a8b686254db8
+"@typescript-eslint/types@npm:5.62.0":
+  version: 5.62.0
+  resolution: "@typescript-eslint/types@npm:5.62.0"
+  checksum: 48c87117383d1864766486f24de34086155532b070f6264e09d0e6139449270f8a9559cfef3c56d16e3bcfb52d83d42105d61b36743626399c7c2b5e0ac3b670
   languageName: node
   linkType: hard
 
@@ -10641,12 +10641,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@typescript-eslint/typescript-estree@npm:5.60.0":
-  version: 5.60.0
-  resolution: "@typescript-eslint/typescript-estree@npm:5.60.0"
+"@typescript-eslint/typescript-estree@npm:5.62.0":
+  version: 5.62.0
+  resolution: "@typescript-eslint/typescript-estree@npm:5.62.0"
   dependencies:
-    "@typescript-eslint/types": 5.60.0
-    "@typescript-eslint/visitor-keys": 5.60.0
+    "@typescript-eslint/types": 5.62.0
+    "@typescript-eslint/visitor-keys": 5.62.0
     debug: ^4.3.4
     globby: ^11.1.0
     is-glob: ^4.0.3
@@ -10655,25 +10655,25 @@ __metadata:
   peerDependenciesMeta:
     typescript:
       optional: true
-  checksum: 0f4f342730ead42ba60b5fca4bf1950abebd83030010c38b5df98ff9fd95d0ce1cfc3974a44c90c65f381f4f172adcf1a540e018d7968cc845d937bf6c734dae
+  checksum: 3624520abb5807ed8f57b1197e61c7b1ed770c56dfcaca66372d584ff50175225798bccb701f7ef129d62c5989070e1ee3a0aa2d84e56d9524dcf011a2bb1a52
   languageName: node
   linkType: hard
 
-"@typescript-eslint/utils@npm:5.60.0":
-  version: 5.60.0
-  resolution: "@typescript-eslint/utils@npm:5.60.0"
+"@typescript-eslint/utils@npm:5.62.0":
+  version: 5.62.0
+  resolution: "@typescript-eslint/utils@npm:5.62.0"
   dependencies:
     "@eslint-community/eslint-utils": ^4.2.0
     "@types/json-schema": ^7.0.9
     "@types/semver": ^7.3.12
-    "@typescript-eslint/scope-manager": 5.60.0
-    "@typescript-eslint/types": 5.60.0
-    "@typescript-eslint/typescript-estree": 5.60.0
+    "@typescript-eslint/scope-manager": 5.62.0
+    "@typescript-eslint/types": 5.62.0
+    "@typescript-eslint/typescript-estree": 5.62.0
     eslint-scope: ^5.1.1
     semver: ^7.3.7
   peerDependencies:
     eslint: ^6.0.0 || ^7.0.0 || ^8.0.0
-  checksum: cbe56567f0b53e24ad7ef7d2fb4cdc8596e2559c21ee639aa0560879b6216208550e51e9d8ae4b388ff21286809c6dc985cec66738294871051396a8ae5bccbc
+  checksum: ee9398c8c5db6d1da09463ca7bf36ed134361e20131ea354b2da16a5fdb6df9ba70c62a388d19f6eebb421af1786dbbd79ba95ddd6ab287324fc171c3e28d931
   languageName: node
   linkType: hard
 
@@ -10705,13 +10705,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@typescript-eslint/visitor-keys@npm:5.60.0":
-  version: 5.60.0
-  resolution: "@typescript-eslint/visitor-keys@npm:5.60.0"
+"@typescript-eslint/visitor-keys@npm:5.62.0":
+  version: 5.62.0
+  resolution: "@typescript-eslint/visitor-keys@npm:5.62.0"
   dependencies:
-    "@typescript-eslint/types": 5.60.0
+    "@typescript-eslint/types": 5.62.0
     eslint-visitor-keys: ^3.3.0
-  checksum: d39b2485d030f9755820d0f6f3748a8ec44e1ca23cb36ddcba67a9eb1f258c8ec83c61fc015c50e8f4a00d05df62d719dbda445625e3e71a64a659f1d248157e
+  checksum: 976b05d103fe8335bef5c93ad3f76d781e3ce50329c0243ee0f00c0fcfb186c81df50e64bfdd34970148113f8ade90887f53e3c4938183afba830b4ba8e30a35
   languageName: node
   linkType: hard
 
@@ -12318,6 +12318,18 @@ __metadata:
   languageName: node
   linkType: hard
 
+"camelcase-keys@npm:^7.0.0":
+  version: 7.0.2
+  resolution: "camelcase-keys@npm:7.0.2"
+  dependencies:
+    camelcase: ^6.3.0
+    map-obj: ^4.1.0
+    quick-lru: ^5.1.1
+    type-fest: ^1.2.1
+  checksum: b5821cc48dd00e8398a30c5d6547f06837ab44de123f1b3a603d0a03399722b2fc67a485a7e47106eb02ef543c3b50c5ebaabc1242cde4b63a267c3258d2365b
+  languageName: node
+  linkType: hard
+
 "camelcase@npm:^5.0.0, camelcase@npm:^5.3.1":
   version: 5.3.1
   resolution: "camelcase@npm:5.3.1"
@@ -12325,7 +12337,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"camelcase@npm:^6.2.0":
+"camelcase@npm:^6.2.0, camelcase@npm:^6.3.0":
   version: 6.3.0
   resolution: "camelcase@npm:6.3.0"
   checksum: 8c96818a9076434998511251dcb2761a94817ea17dbdc37f47ac080bd088fc62c7369429a19e2178b993497132c8cbcf5cc1f44ba963e76782ba469c0474938d
@@ -13670,6 +13682,13 @@ __metadata:
   version: 1.2.0
   resolution: "decamelize@npm:1.2.0"
   checksum: ad8c51a7e7e0720c70ec2eeb1163b66da03e7616d7b98c9ef43cce2416395e84c1e9548dd94f5f6ffecfee9f8b94251fc57121a8b021f2ff2469b2bae247b8aa
+  languageName: node
+  linkType: hard
+
+"decamelize@npm:^5.0.0":
+  version: 5.0.1
+  resolution: "decamelize@npm:5.0.1"
+  checksum: 7c3b1ed4b3e60e7fbc00a35fb248298527c1cdfe603e41dfcf05e6c4a8cb9efbee60630deb677ed428908fb4e74e322966c687a094d1478ddc9c3a74e9dc7140
   languageName: node
   linkType: hard
 
@@ -15325,7 +15344,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"fast-glob@npm:^3.2.11, fast-glob@npm:^3.2.12, fast-glob@npm:^3.2.9":
+"fast-glob@npm:^3.2.11, fast-glob@npm:^3.2.9":
   version: 3.2.12
   resolution: "fast-glob@npm:3.2.12"
   dependencies:
@@ -15335,6 +15354,19 @@ __metadata:
     merge2: ^1.3.0
     micromatch: ^4.0.4
   checksum: 0b1990f6ce831c7e28c4d505edcdaad8e27e88ab9fa65eedadb730438cfc7cde4910d6c975d6b7b8dc8a73da4773702ebcfcd6e3518e73938bb1383badfe01c2
+  languageName: node
+  linkType: hard
+
+"fast-glob@npm:^3.3.0":
+  version: 3.3.0
+  resolution: "fast-glob@npm:3.3.0"
+  dependencies:
+    "@nodelib/fs.stat": ^2.0.2
+    "@nodelib/fs.walk": ^1.2.3
+    glob-parent: ^5.1.2
+    merge2: ^1.3.0
+    micromatch: ^4.0.4
+  checksum: 20df62be28eb5426fe8e40e0d05601a63b1daceb7c3d87534afcad91bdcf1e4b1743cf2d5247d6e225b120b46df0b9053a032b2691ba34ee121e033acd81f547
   languageName: node
   linkType: hard
 
@@ -16296,13 +16328,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"grapheme-splitter@npm:^1.0.4":
-  version: 1.0.4
-  resolution: "grapheme-splitter@npm:1.0.4"
-  checksum: 0c22ec54dee1b05cd480f78cf14f732cb5b108edc073572c4ec205df4cd63f30f8db8025afc5debc8835a8ddeacf648a1c7992fe3dcd6ad38f9a476d84906620
-  languageName: node
-  linkType: hard
-
 "graphemer@npm:^1.4.0":
   version: 1.4.0
   resolution: "graphemer@npm:1.4.0"
@@ -16902,6 +16927,13 @@ __metadata:
   version: 4.0.0
   resolution: "indent-string@npm:4.0.0"
   checksum: 824cfb9929d031dabf059bebfe08cf3137365e112019086ed3dcff6a0a7b698cb80cf67ccccde0e25b9e2d7527aa6cc1fed1ac490c752162496caba3e6699612
+  languageName: node
+  linkType: hard
+
+"indent-string@npm:^5.0.0":
+  version: 5.0.0
+  resolution: "indent-string@npm:5.0.0"
+  checksum: e466c27b6373440e6d84fbc19e750219ce25865cb82d578e41a6053d727e5520dc5725217d6eb1cc76005a1bb1696a0f106d84ce7ebda3033b963a38583fb3b3
   languageName: node
   linkType: hard
 
@@ -18571,8 +18603,8 @@ __metadata:
     "@types/redux-form": 8.3.5
     "@types/sinon": 10.0.15
     "@types/styled-components": 5.1.26
-    "@typescript-eslint/eslint-plugin": 5.60.0
-    "@typescript-eslint/parser": 5.60.0
+    "@typescript-eslint/eslint-plugin": 5.62.0
+    "@typescript-eslint/parser": 5.62.0
     "@wojtekmaj/enzyme-adapter-react-17": 0.8.0
     axios: 0.27.2
     axios-mock-adapter: 1.21.5
@@ -18616,7 +18648,7 @@ __metadata:
     jest-runner-eslint: 2.1.0
     jest-transform-stub: 2.0.0
     jsdom: 22.1.0
-    lerna: 7.0.2
+    lerna: 7.1.3
     less: 4.1.3
     less-loader: 11.1.3
     lint-staged: 13.2.3
@@ -18630,19 +18662,19 @@ __metadata:
     react-dom: 17.0.2
     react-modal: 3.16.1
     react-popper: 2.3.0
-    react-router: 6.13.0
-    react-router-dom: 6.13.0
+    react-router: 6.14.1
+    react-router-dom: 6.14.1
     react-test-renderer: 18.2.0
     redux-mock-store: 1.5.4
-    sinon: 15.1.0
+    sinon: 15.2.0
     source-map-loader: 4.0.1
     storybook: 7.0.27
     storybook-react-router: 1.0.8
-    stylelint: 15.8.0
+    stylelint: 15.10.1
     stylelint-order: 6.0.3
     terser-webpack-plugin: 5.3.9
     thread-loader: 3.0.4
-    type-fest: 3.12.0
+    type-fest: 3.13.0
     typescript: 5.1.6
     webpack: 5.88.1
     webpack-cli: 5.1.4
@@ -18709,12 +18741,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"lerna@npm:7.0.2":
-  version: 7.0.2
-  resolution: "lerna@npm:7.0.2"
+"lerna@npm:7.1.3":
+  version: 7.1.3
+  resolution: "lerna@npm:7.1.3"
   dependencies:
-    "@lerna/child-process": 7.0.2
-    "@lerna/create": 7.0.2
+    "@lerna/child-process": 7.1.3
+    "@lerna/create": 7.1.3
     "@npmcli/run-script": 6.0.2
     "@nx/devkit": ">=16.1.3 < 17"
     "@octokit/plugin-enterprise-rest": 6.0.1
@@ -18789,7 +18821,7 @@ __metadata:
     yargs-parser: 20.2.4
   bin:
     lerna: dist/cli.js
-  checksum: 2e287de93be9773ac6f8ce085b55d18f611b0d259aaeeadf904b68a0d4f1f190ce4ee9972979b2d5b296264c257e4f9685344c167d72ffdec3e88856eb4ef2ac
+  checksum: 11495703ea32b748d584b1c1d4c0053e7f97ff576df47a951433b310737d741d3d70e9f97c511056c3077281a8cda3c142697faec5c080a2ab20a7115c9141f5
   languageName: node
   linkType: hard
 
@@ -19358,7 +19390,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"map-obj@npm:^4.0.0":
+"map-obj@npm:^4.0.0, map-obj@npm:^4.1.0":
   version: 4.3.0
   resolution: "map-obj@npm:4.3.0"
   checksum: fbc554934d1a27a1910e842bc87b177b1a556609dd803747c85ece420692380827c6ae94a95cce4407c054fa0964be3bf8226f7f2cb2e9eeee432c7c1985684e
@@ -19485,6 +19517,26 @@ __metadata:
   languageName: node
   linkType: hard
 
+"meow@npm:^10.1.5":
+  version: 10.1.5
+  resolution: "meow@npm:10.1.5"
+  dependencies:
+    "@types/minimist": ^1.2.2
+    camelcase-keys: ^7.0.0
+    decamelize: ^5.0.0
+    decamelize-keys: ^1.1.0
+    hard-rejection: ^2.1.0
+    minimist-options: 4.1.0
+    normalize-package-data: ^3.0.2
+    read-pkg-up: ^8.0.0
+    redent: ^4.0.0
+    trim-newlines: ^4.0.2
+    type-fest: ^1.2.2
+    yargs-parser: ^20.2.9
+  checksum: dd5f0caa4af18517813547dc66741dcbf52c4c23def5062578d39b11189fd9457aee5c1f2263a5cd6592a465023df8357e8ac876b685b64dbcf545e3f66c23a7
+  languageName: node
+  linkType: hard
+
 "meow@npm:^8.1.2":
   version: 8.1.2
   resolution: "meow@npm:8.1.2"
@@ -19501,26 +19553,6 @@ __metadata:
     type-fest: ^0.18.0
     yargs-parser: ^20.2.3
   checksum: bc23bf1b4423ef6a821dff9734406bce4b91ea257e7f10a8b7f896f45b59649f07adc0926e2917eacd8cf1df9e4cd89c77623cf63dfd0f8bf54de07a32ee5a85
-  languageName: node
-  linkType: hard
-
-"meow@npm:^9.0.0":
-  version: 9.0.0
-  resolution: "meow@npm:9.0.0"
-  dependencies:
-    "@types/minimist": ^1.2.0
-    camelcase-keys: ^6.2.2
-    decamelize: ^1.2.0
-    decamelize-keys: ^1.1.0
-    hard-rejection: ^2.1.0
-    minimist-options: 4.1.0
-    normalize-package-data: ^3.0.0
-    read-pkg-up: ^7.0.1
-    redent: ^3.0.0
-    trim-newlines: ^3.0.0
-    type-fest: ^0.18.0
-    yargs-parser: ^20.2.3
-  checksum: 99799c47247f4daeee178e3124f6ef6f84bde2ba3f37652865d5d8f8b8adcf9eedfc551dd043e2455cd8206545fd848e269c0c5ab6b594680a0ad4d3617c9639
   languageName: node
   linkType: hard
 
@@ -19626,7 +19658,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"min-indent@npm:^1.0.0":
+"min-indent@npm:^1.0.0, min-indent@npm:^1.0.1":
   version: 1.0.1
   resolution: "min-indent@npm:1.0.1"
   checksum: bfc6dd03c5eaf623a4963ebd94d087f6f4bbbfd8c41329a7f09706b0cb66969c4ddd336abeb587bc44bc6f08e13bf90f0b374f9d71f9f01e04adc2cd6f083ef1
@@ -20741,7 +20773,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"normalize-package-data@npm:^3.0.0, normalize-package-data@npm:^3.0.3":
+"normalize-package-data@npm:^3.0.0, normalize-package-data@npm:^3.0.2, normalize-package-data@npm:^3.0.3":
   version: 3.0.3
   resolution: "normalize-package-data@npm:3.0.3"
   dependencies:
@@ -21954,13 +21986,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"postcss-media-query-parser@npm:^0.2.3":
-  version: 0.2.3
-  resolution: "postcss-media-query-parser@npm:0.2.3"
-  checksum: 8000d4d95b912994928ff86137f5ab0ed4c4ee1498af2336e93d708ae8827a690cd7acbaed55d14684cf44d82c8d44b031c1c69ae6bcd2f9620ea67573888090
-  languageName: node
-  linkType: hard
-
 "postcss-merge-longhand@npm:^6.0.0":
   version: 6.0.0
   resolution: "postcss-merge-longhand@npm:6.0.0"
@@ -22624,6 +22649,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"quick-lru@npm:^5.1.1":
+  version: 5.1.1
+  resolution: "quick-lru@npm:5.1.1"
+  checksum: a516faa25574be7947969883e6068dbe4aa19e8ef8e8e0fd96cddd6d36485e9106d85c0041a27153286b0770b381328f4072aa40d3b18a19f5f7d2b78b94b5ed
+  languageName: node
+  linkType: hard
+
 "raf@npm:3.4.1, raf@npm:^3.4.1":
   version: 3.4.1
   resolution: "raf@npm:3.4.1"
@@ -23022,27 +23054,27 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-router-dom@npm:6.13.0":
-  version: 6.13.0
-  resolution: "react-router-dom@npm:6.13.0"
+"react-router-dom@npm:6.14.1":
+  version: 6.14.1
+  resolution: "react-router-dom@npm:6.14.1"
   dependencies:
-    "@remix-run/router": 1.6.3
-    react-router: 6.13.0
+    "@remix-run/router": 1.7.1
+    react-router: 6.14.1
   peerDependencies:
     react: ">=16.8"
     react-dom: ">=16.8"
-  checksum: f51131063c2d5e127b6b3f3f813c6d4988d0f37694a06697dc9d4a4d9d3825e2a4487ec9b81a1d356eb269018814d884ffc2e3d9ff056a46ae59c99c9e7e1086
+  checksum: 6ddda481edb2c614671bcaf24b0ca07ca00215f1d0350ede43a03ba24c3401a537dfe4a9f5e108a512c2703e4a8ce99a3301c15caf16012b67b248b1a055d69a
   languageName: node
   linkType: hard
 
-"react-router@npm:6.13.0":
-  version: 6.13.0
-  resolution: "react-router@npm:6.13.0"
+"react-router@npm:6.14.1":
+  version: 6.14.1
+  resolution: "react-router@npm:6.14.1"
   dependencies:
-    "@remix-run/router": 1.6.3
+    "@remix-run/router": 1.7.1
   peerDependencies:
     react: ">=16.8"
-  checksum: 31a187005d05e063c59324564a283cd28052eaf848ad446c87658f4fc48fa9543329fe8a14d7be14d9bbf62410d383f8cf1cf13898a838bf9c1e3201fe93384c
+  checksum: 16f3d108e0f833bfee447192e3f40bd6731b8b11d42ca6925443ec8aeb157a889fe8ece67baf690f75f0d146d0a212656f9216fcc2df6fd3a2bd263108ed0abb
   languageName: node
   linkType: hard
 
@@ -23185,6 +23217,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"read-pkg-up@npm:^8.0.0":
+  version: 8.0.0
+  resolution: "read-pkg-up@npm:8.0.0"
+  dependencies:
+    find-up: ^5.0.0
+    read-pkg: ^6.0.0
+    type-fest: ^1.0.1
+  checksum: fe4c80401656b40b408884457fffb5a8015c03b1018cfd8e48f8d82a5e9023e24963603aeb2755608d964593e046c15b34d29b07d35af9c7aa478be81805209c
+  languageName: node
+  linkType: hard
+
 "read-pkg@npm:^3.0.0":
   version: 3.0.0
   resolution: "read-pkg@npm:3.0.0"
@@ -23205,6 +23248,18 @@ __metadata:
     parse-json: ^5.0.0
     type-fest: ^0.6.0
   checksum: eb696e60528b29aebe10e499ba93f44991908c57d70f2d26f369e46b8b9afc208ef11b4ba64f67630f31df8b6872129e0a8933c8c53b7b4daf0eace536901222
+  languageName: node
+  linkType: hard
+
+"read-pkg@npm:^6.0.0":
+  version: 6.0.0
+  resolution: "read-pkg@npm:6.0.0"
+  dependencies:
+    "@types/normalize-package-data": ^2.4.0
+    normalize-package-data: ^3.0.2
+    parse-json: ^5.2.0
+    type-fest: ^1.0.1
+  checksum: 0cebdff381128e923815c643074a87011070e5fc352bee575d327d6485da3317fab6d802a7b03deeb0be7be8d3ad1640397b3d5d2f044452caf4e8d1736bf94f
   languageName: node
   linkType: hard
 
@@ -23302,6 +23357,16 @@ __metadata:
     indent-string: ^4.0.0
     strip-indent: ^3.0.0
   checksum: fa1ef20404a2d399235e83cc80bd55a956642e37dd197b4b612ba7327bf87fa32745aeb4a1634b2bab25467164ab4ed9c15be2c307923dd08b0fe7c52431ae6b
+  languageName: node
+  linkType: hard
+
+"redent@npm:^4.0.0":
+  version: 4.0.0
+  resolution: "redent@npm:4.0.0"
+  dependencies:
+    indent-string: ^5.0.0
+    strip-indent: ^4.0.0
+  checksum: 6944e7b1d8f3fd28c2515f5c605b9f7f0ea0f4edddf41890bbbdd4d9ee35abb7540c3b278f03ff827bd278bb6ff4a5bd8692ca406b748c5c1c3ce7355e9fbf8f
   languageName: node
   linkType: hard
 
@@ -24200,17 +24265,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"sinon@npm:15.1.0":
-  version: 15.1.0
-  resolution: "sinon@npm:15.1.0"
+"sinon@npm:15.2.0":
+  version: 15.2.0
+  resolution: "sinon@npm:15.2.0"
   dependencies:
     "@sinonjs/commons": ^3.0.0
-    "@sinonjs/fake-timers": ^10.2.0
+    "@sinonjs/fake-timers": ^10.3.0
     "@sinonjs/samsam": ^8.0.0
     diff: ^5.1.0
     nise: ^5.1.4
     supports-color: ^7.2.0
-  checksum: 3f0eab3e293c6206cca4a31f3c2836be86889f16bf6f54e2429550c1d07d0e7e9327cdbe6b7b69662c152a63e9f2661334c266932ba8f3206190009d58cb4f06
+  checksum: 1641b9af8a73ba57c73c9b6fd955a2d062a5d78cce719887869eca45faf33b0fd20cabfeffdfd856bb35bfbd3d49debb2d954ff6ae5e9825a3da5ff4f604ab6c
   languageName: node
   linkType: hard
 
@@ -24750,6 +24815,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"strip-indent@npm:^4.0.0":
+  version: 4.0.0
+  resolution: "strip-indent@npm:4.0.0"
+  dependencies:
+    min-indent: ^1.0.1
+  checksum: 06cbcd93da721c46bc13caeb1c00af93a9b18146a1c95927672d2decab6a25ad83662772417cea9317a2507fb143253ecc23c4415b64f5828cef9b638a744598
+  languageName: node
+  linkType: hard
+
 "strip-json-comments@npm:^3.0.1, strip-json-comments@npm:^3.1.0, strip-json-comments@npm:^3.1.1":
   version: 3.1.1
   resolution: "strip-json-comments@npm:3.1.1"
@@ -24832,21 +24906,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"stylelint@npm:15.8.0":
-  version: 15.8.0
-  resolution: "stylelint@npm:15.8.0"
+"stylelint@npm:15.10.1":
+  version: 15.10.1
+  resolution: "stylelint@npm:15.10.1"
   dependencies:
-    "@csstools/css-parser-algorithms": ^2.2.0
+    "@csstools/css-parser-algorithms": ^2.3.0
     "@csstools/css-tokenizer": ^2.1.1
-    "@csstools/media-query-list-parser": ^2.1.0
-    "@csstools/selector-specificity": ^2.2.0
+    "@csstools/media-query-list-parser": ^2.1.2
+    "@csstools/selector-specificity": ^3.0.0
     balanced-match: ^2.0.0
     colord: ^2.9.3
     cosmiconfig: ^8.2.0
     css-functions-list: ^3.1.0
     css-tree: ^2.3.1
     debug: ^4.3.4
-    fast-glob: ^3.2.12
+    fast-glob: ^3.3.0
     fastest-levenshtein: ^1.0.16
     file-entry-cache: ^6.0.1
     global-modules: ^2.0.0
@@ -24859,12 +24933,11 @@ __metadata:
     is-plain-object: ^5.0.0
     known-css-properties: ^0.27.0
     mathml-tag-names: ^2.1.3
-    meow: ^9.0.0
+    meow: ^10.1.5
     micromatch: ^4.0.5
     normalize-path: ^3.0.0
     picocolors: ^1.0.0
     postcss: ^8.4.24
-    postcss-media-query-parser: ^0.2.3
     postcss-resolve-nested-selector: ^0.1.1
     postcss-safe-parser: ^6.0.0
     postcss-selector-parser: ^6.0.13
@@ -24878,8 +24951,8 @@ __metadata:
     table: ^6.8.1
     write-file-atomic: ^5.0.1
   bin:
-    stylelint: bin/stylelint.js
-  checksum: 3598f604393162c63f79f5696e24af871818f1422b4a0184deea054450a90434273d27bf8bf3f3e27d45c6850d29cbd0ed810f1092700b98c7fe4135fda6266c
+    stylelint: bin/stylelint.mjs
+  checksum: 8eeae81fe4ed2dfc580d7c401806dbb058c14631abfafd0821db32f1e649aee62e3d39dda3462c6122826df91bd9799409be926e91b55b007622f51e44eb94c1
   languageName: node
   linkType: hard
 
@@ -25498,10 +25571,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"type-fest@npm:3.12.0":
-  version: 3.12.0
-  resolution: "type-fest@npm:3.12.0"
-  checksum: 11cb6f40e42f92c462a13677eafedf5c48353eaefa8e489a146e55fe0ae5cecd59a2ba03cd6b294345b5ea304361891a6313c23ed959fa0117f63fb71ee6cbab
+"type-fest@npm:3.13.0":
+  version: 3.13.0
+  resolution: "type-fest@npm:3.13.0"
+  checksum: f7be142ae1ad0582eafd52d085350799c8cd918c15455896a06c82c147b61f8cea58892bedf1348943478e37740562219375b3b59fd855db99cd2b2766510f98
   languageName: node
   linkType: hard
 
@@ -25551,6 +25624,13 @@ __metadata:
   version: 0.8.1
   resolution: "type-fest@npm:0.8.1"
   checksum: d61c4b2eba24009033ae4500d7d818a94fd6d1b481a8111612ee141400d5f1db46f199c014766b9fa9b31a6a7374d96fc748c6d688a78a3ce5a33123839becb7
+  languageName: node
+  linkType: hard
+
+"type-fest@npm:^1.0.1, type-fest@npm:^1.2.1, type-fest@npm:^1.2.2":
+  version: 1.4.0
+  resolution: "type-fest@npm:1.4.0"
+  checksum: b011c3388665b097ae6a109a437a04d6f61d81b7357f74cbcb02246f2f5bd72b888ae33631b99871388122ba0a87f4ff1c94078e7119ff22c70e52c0ff828201
   languageName: node
   linkType: hard
 
