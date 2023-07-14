@@ -7034,13 +7034,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@navikt/aksel-icons@npm:4.3.0, @navikt/aksel-icons@npm:^4.1.7, @navikt/aksel-icons@npm:^4.3.0":
-  version: 4.3.0
-  resolution: "@navikt/aksel-icons@npm:4.3.0::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Faksel-icons%2F4.3.0%2Fb470175687cb9a6a0b94401f5627de6b7904425d"
-  checksum: 4bc63ffd1e9c863121415d945761f3e188283847232d6d4f86355becb9084e1581becc75d3f20a57f7ddbd8dec14640bcd403958801c5349a4d1f67d1a89bc72
-  languageName: node
-  linkType: hard
-
 "@navikt/aksel-icons@npm:4.4.0":
   version: 4.4.0
   resolution: "@navikt/aksel-icons@npm:4.4.0::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Faksel-icons%2F4.4.0%2Fc5a5086226e7a738da887f253b0d37675db0e2ac"
@@ -7055,6 +7048,20 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@navikt/aksel-icons@npm:4.6.1, @navikt/aksel-icons@npm:^4.5.0, @navikt/aksel-icons@npm:^4.6.1":
+  version: 4.6.1
+  resolution: "@navikt/aksel-icons@npm:4.6.1::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Faksel-icons%2F4.6.1%2Fb3c207959b55ef8e043758e4b42851f25d96868c"
+  checksum: 388a8f554b54e1b5753be9055b1e888f4912a13f3e83185e42bca7fa5b65605079c1d40fc834c03f80de6ae412e20c8333a59acf3bb046440d46c7528aba05ba
+  languageName: node
+  linkType: hard
+
+"@navikt/aksel-icons@npm:^4.1.7, @navikt/aksel-icons@npm:^4.3.0":
+  version: 4.3.0
+  resolution: "@navikt/aksel-icons@npm:4.3.0::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Faksel-icons%2F4.3.0%2Fb470175687cb9a6a0b94401f5627de6b7904425d"
+  checksum: 4bc63ffd1e9c863121415d945761f3e188283847232d6d4f86355becb9084e1581becc75d3f20a57f7ddbd8dec14640bcd403958801c5349a4d1f67d1a89bc72
+  languageName: node
+  linkType: hard
+
 "@navikt/aksel-icons@npm:^4.4.0":
   version: 4.4.1
   resolution: "@navikt/aksel-icons@npm:4.4.1::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Faksel-icons%2F4.4.1%2Fd7af119e945dce58316d71d06cff3f4193edd593"
@@ -7062,24 +7069,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@navikt/aksel-icons@npm:^4.5.0":
-  version: 4.6.1
-  resolution: "@navikt/aksel-icons@npm:4.6.1::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Faksel-icons%2F4.6.1%2Fb3c207959b55ef8e043758e4b42851f25d96868c"
-  checksum: 388a8f554b54e1b5753be9055b1e888f4912a13f3e83185e42bca7fa5b65605079c1d40fc834c03f80de6ae412e20c8333a59acf3bb046440d46c7528aba05ba
-  languageName: node
-  linkType: hard
-
 "@navikt/ds-css@npm:4.1.7":
   version: 4.1.7
   resolution: "@navikt/ds-css@npm:4.1.7::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fds-css%2F4.1.7%2F531ff46edd0e967f74695105135f1740bd1a5771"
   checksum: ead21bc3fda7f6364f9c7c4f4c97e9e3314cfe69fb7995bb0b32868cdc7a5849da298b94812cb6d920da7edf75e9524eb64310401168e9c24729e8d1faaa372a
-  languageName: node
-  linkType: hard
-
-"@navikt/ds-css@npm:4.3.0":
-  version: 4.3.0
-  resolution: "@navikt/ds-css@npm:4.3.0::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fds-css%2F4.3.0%2Fe3741ae74c53fcd95e3d33ce257867000383296e"
-  checksum: c568f557548d8982904200d339a6b200a65de264465b69ec4bdf34477188c7d7d24581a25ea4ff149b7e2c5b9756acc5c8aefba565c09c6250ae82a40c424ea1
   languageName: node
   linkType: hard
 
@@ -8623,6 +8616,18 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@sentry-internal/tracing@npm:7.56.0":
+  version: 7.56.0
+  resolution: "@sentry-internal/tracing@npm:7.56.0"
+  dependencies:
+    "@sentry/core": 7.56.0
+    "@sentry/types": 7.56.0
+    "@sentry/utils": 7.56.0
+    tslib: ^1.9.3
+  checksum: 34c90624c07eacf032bbef553f9c893d882db05bcfa9092f51df807f407c1927cf31c6cc215939f54be8b65f0c8effaf0038427b9fc0e2c4b80567415e4e060d
+  languageName: node
+  linkType: hard
+
 "@sentry-internal/tracing@npm:7.58.1":
   version: 7.58.1
   resolution: "@sentry-internal/tracing@npm:7.58.1"
@@ -8632,6 +8637,20 @@ __metadata:
     "@sentry/utils": 7.58.1
     tslib: ^2.4.1 || ^1.9.3
   checksum: dd9b67cda7eb42659fec948a7f229cc52cc00e46e7f0dc1e6b916284db0d879f697f4ddbc817259de31a59c744e0475556692a0bb2cbe0a1978fa68fbd2517c5
+  languageName: node
+  linkType: hard
+
+"@sentry/browser@npm:7.56.0":
+  version: 7.56.0
+  resolution: "@sentry/browser@npm:7.56.0"
+  dependencies:
+    "@sentry-internal/tracing": 7.56.0
+    "@sentry/core": 7.56.0
+    "@sentry/replay": 7.56.0
+    "@sentry/types": 7.56.0
+    "@sentry/utils": 7.56.0
+    tslib: ^1.9.3
+  checksum: 5a3dd579652c230afe626d8f6639d78633ce509169806efde5784073d30419095c35eacb49b11657b6795df0c0f356776bcf761dd58edecbe6580ddd6c95002a
   languageName: node
   linkType: hard
 
@@ -8664,6 +8683,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@sentry/core@npm:7.56.0":
+  version: 7.56.0
+  resolution: "@sentry/core@npm:7.56.0"
+  dependencies:
+    "@sentry/types": 7.56.0
+    "@sentry/utils": 7.56.0
+    tslib: ^1.9.3
+  checksum: 8ed39aa048a1e2b5259af0fe246c199e6276980d23703f0ab3564aeef7c077813f7196a0e8a115527b6bc8a5217495de42266489c0e1ce51f5f7defa8cb0773d
+  languageName: node
+  linkType: hard
+
 "@sentry/core@npm:7.58.1":
   version: 7.58.1
   resolution: "@sentry/core@npm:7.58.1"
@@ -8672,6 +8702,17 @@ __metadata:
     "@sentry/utils": 7.58.1
     tslib: ^2.4.1 || ^1.9.3
   checksum: 1008d4b8e3a8f2e508f7bc41c474736fc6be3a3fe803a2e5054ea192a69d2e1fa44d435428bd92b3274aac2a0bd2f5bd78e1e10ee78aa1586eaebc95d03960f6
+  languageName: node
+  linkType: hard
+
+"@sentry/replay@npm:7.56.0":
+  version: 7.56.0
+  resolution: "@sentry/replay@npm:7.56.0"
+  dependencies:
+    "@sentry/core": 7.56.0
+    "@sentry/types": 7.56.0
+    "@sentry/utils": 7.56.0
+  checksum: 35c513c1f822cc572cf653201b3c60849481d566eff703896f70d347f230c8274ab895e6397768e2ce2ab87c37cb55d70b09ea06fcefd8dda3122baa10204bff
   languageName: node
   linkType: hard
 
@@ -8686,10 +8727,27 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@sentry/types@npm:7.56.0":
+  version: 7.56.0
+  resolution: "@sentry/types@npm:7.56.0"
+  checksum: 404255165d09c03c122ef13c90cc732c7ccc42ce7950d12011469461d2bfcbbc7df6160ddefc4b676ea26f32fa01025d63678edf0ffbeb144e41102663b37fa6
+  languageName: node
+  linkType: hard
+
 "@sentry/types@npm:7.58.1":
   version: 7.58.1
   resolution: "@sentry/types@npm:7.58.1"
   checksum: 29874507bb0e348c35eedbb0169f7b6bfb84fbc131b8d1c4eeb368f1b67da39dc8cabd319a7068c0b7fdfa2447b6f243d9316ab08a361ae5c321daefff8fddeb
+  languageName: node
+  linkType: hard
+
+"@sentry/utils@npm:7.56.0":
+  version: 7.56.0
+  resolution: "@sentry/utils@npm:7.56.0"
+  dependencies:
+    "@sentry/types": 7.56.0
+    tslib: ^1.9.3
+  checksum: 00745e656828e8221056f5cac5a085a240cb4a9433ccb0d9492827ccd19ec80f84d511f944ca20b90182c806a15f8f655371aa9fef9acc00d49ef48945b4a3d8
   languageName: node
   linkType: hard
 
@@ -13946,6 +14004,13 @@ __metadata:
   version: 0.1.2
   resolution: "dayjs-plugin-utc@npm:0.1.2"
   checksum: 80a3732407d7bcb0e2ca34a2964852a60c88540144ecca3fb0f4db03c1611f8198fea49fd8373972af7f8427789e591f42e32d0a5fa54d0f413c1b0921685dec
+  languageName: node
+  linkType: hard
+
+"dayjs@npm:1.11.8":
+  version: 1.11.8
+  resolution: "dayjs@npm:1.11.8"
+  checksum: 4fe04b6df98ba6e5f89b49d80bba603cbf01e21a1b4a24ecb163c94c0ba5324a32ac234a139cee654f89d5277a2bcebca5347e6676c28a0a6d1a90f1d34a42b8
   languageName: node
   linkType: hard
 
@@ -23164,6 +23229,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"react-hook-form@npm:7.45.0":
+  version: 7.45.0
+  resolution: "react-hook-form@npm:7.45.0"
+  peerDependencies:
+    react: ^16.8.0 || ^17 || ^18
+  checksum: 3e35253f0efb0f77f5036c74f85cbdd425adb2fad20a14fc692d573fe552b3d9b7e7ac22193cd767f265fa292c33383d8721cfbdcc5ae41910a35a1ba3655f66
+  languageName: node
+  linkType: hard
+
 "react-hook-form@npm:7.45.1":
   version: 7.45.1
   resolution: "react-hook-form@npm:7.45.1"
@@ -25822,7 +25896,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"tslib@npm:^1.8.1":
+"tslib@npm:^1.8.1, tslib@npm:^1.9.3":
   version: 1.14.1
   resolution: "tslib@npm:1.14.1"
   checksum: dbe628ef87f66691d5d2959b3e41b9ca0045c3ee3c7c7b906cc1e328b39f199bb1ad9e671c39025bd56122ac57dfbf7385a94843b1cc07c60a4db74795829acd
