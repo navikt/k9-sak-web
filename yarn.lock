@@ -9722,9 +9722,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@testing-library/dom@npm:8.20.1":
-  version: 8.20.1
-  resolution: "@testing-library/dom@npm:8.20.1"
+"@testing-library/dom@npm:9.3.1":
+  version: 9.3.1
+  resolution: "@testing-library/dom@npm:9.3.1"
   dependencies:
     "@babel/code-frame": ^7.10.4
     "@babel/runtime": ^7.12.5
@@ -9734,7 +9734,7 @@ __metadata:
     dom-accessibility-api: ^0.5.9
     lz-string: ^1.5.0
     pretty-format: ^27.0.2
-  checksum: 06fc8dc67849aadb726cbbad0e7546afdf8923bd39acb64c576d706249bd7d0d05f08e08a31913fb621162e3b9c2bd0dce15964437f030f9fa4476326fdd3007
+  checksum: 8ee3136451644e39990edea93709c38cf1e8ce5306f3c66273ca00935963faa51ca74e8d92b02eb442ccb842cfa28ca62833e393e075eb269cf9bef6f5600663
   languageName: node
   linkType: hard
 
@@ -18467,7 +18467,7 @@ __metadata:
     "@storybook/testing-react": 2.0.1
     "@storybook/theming": 7.0.23
     "@svgr/webpack": 7.0.0
-    "@testing-library/dom": 8.20.1
+    "@testing-library/dom": 9.3.1
     "@testing-library/jest-dom": ^5.16.5
     "@testing-library/react": 12.1.5
     "@testing-library/user-event": 13.5.0
