@@ -9,11 +9,11 @@
     "@fpsak-frontend/shared-components": "1.0.0",
     "@fpsak-frontend/utils": "1.0.0",
     "@k9-sak-web/types": "1.0.0",
-    "@navikt/k9-fe-period-utils": "1.0.5",
+    "@navikt/k9-fe-period-utils": "1.0.6",
     "nav-frontend-typografi": "4.0.2",
     "nav-frontend-typografi-style": "2.0.2",
     "react": "17.0.2",
     "react-intl": "6.4.4",
-    "react-router-dom": "6.12.1"
+    "react-router-dom": "6.13.0"
   }
 }

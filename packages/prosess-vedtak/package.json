@@ -5,7 +5,7 @@
   "license": "MIT",
   "private": true,
   "dependencies": {
-    "@editorjs/editorjs": "2.27.0",
+    "@editorjs/editorjs": "2.27.1",
     "@editorjs/header": "2.7.0",
     "@editorjs/list": "1.8.0",
     "@editorjs/paragraph": "2.9.0",
@@ -22,7 +22,7 @@
     "css-tree": "2.3.1",
     "date-fns": "2.30.0",
     "editorjs-html": "3.4.3",
-    "formik": "2.2.9",
+    "formik": "2.4.2",
     "moment": "2.29.4",
     "nav-frontend-alertstriper": "4.0.2",
     "nav-frontend-core": "6.0.1",
@@ -38,7 +38,7 @@
     "prop-types": "15.8.1",
     "react": "17.0.2",
     "react-intl": "6.4.4",
-    "react-redux": "8.0.7",
+    "react-redux": "8.1.1",
     "redux": "4.2.1",
     "redux-form": "8.3.10",
     "reselect": "4.1.8"
