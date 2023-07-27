@@ -1,12 +1,24 @@
 import { isDelvisInnvilget } from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { BodyShort, Label } from '@navikt/ds-react';
-import PropTypes from 'prop-types';
 import React from 'react';
+import { IntlShape } from 'react-intl';
 import { connect } from 'react-redux';
 import { findDelvisInnvilgetResultatText, findInnvilgetResultatText, findTilbakekrevingText } from './VedtakHelper';
 
-export const VedtakInnvilgetPanelImpl = ({ intl, behandlingsresultat, ytelseTypeKode, tilbakekrevingText }) => (
+interface VedtakInnvilgetPanelImplProps {
+  intl: IntlShape;
+  behandlingsresultat: Record<string, any>;
+  ytelseTypeKode: string;
+  tilbakekrevingText?: string;
+}
+
+export const VedtakInnvilgetPanelImpl = ({
+  intl,
+  behandlingsresultat,
+  ytelseTypeKode,
+  tilbakekrevingText,
+}: VedtakInnvilgetPanelImplProps) => (
   <>
     <Label size="small" as="p" data-testid="innvilget">
       {intl.formatMessage({ id: 'VedtakForm.Resultat' })}
@@ -22,13 +34,6 @@ export const VedtakInnvilgetPanelImpl = ({ intl, behandlingsresultat, ytelseType
     <VerticalSpacer eightPx />
   </>
 );
-
-VedtakInnvilgetPanelImpl.propTypes = {
-  intl: PropTypes.shape().isRequired,
-  behandlingsresultat: PropTypes.shape().isRequired,
-  ytelseTypeKode: PropTypes.string.isRequired,
-  tilbakekrevingText: PropTypes.string,
-};
 
 VedtakInnvilgetPanelImpl.defaultProps = {
   tilbakekrevingText: null,

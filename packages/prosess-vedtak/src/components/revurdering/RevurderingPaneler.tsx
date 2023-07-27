@@ -13,6 +13,7 @@ import VedtakAvslagRevurderingPanel from './VedtakAvslagRevurderingPanel';
 import VedtakInnvilgetRevurderingPanel from './VedtakInnvilgetRevurderingPanel';
 import VedtakOpphorRevurderingPanel from './VedtakOpphorRevurderingPanel';
 import VedtakRedusertUtbetalingArsaker from './VedtakRedusertUtbetalingArsaker';
+import VedtakOriginalBehandlingType from '../../types/VedtakOriginalBehandlingType';
 
 const createAarsakString = (revurderingAarsaker, getKodeverknavn) => {
   if (revurderingAarsaker === undefined || revurderingAarsaker.length < 1) {
@@ -39,7 +40,7 @@ interface OwnProps {
       kode: string;
     };
   };
-  resultatstruktur: string;
+  resultatstruktur: VedtakOriginalBehandlingType;
   tilbakekrevingvalg: {
     videreBehandling: {
       kode: string;

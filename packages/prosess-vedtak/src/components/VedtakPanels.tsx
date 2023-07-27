@@ -1,19 +1,33 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 
-import { kodeverkObjektPropType } from '@fpsak-frontend/prop-types';
-import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
-import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
+import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
+import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
+import { TilgjengeligeVedtaksbrev } from '@fpsak-frontend/utils/src/formidlingUtils';
 
-import vedtakAksjonspunkterPropType from '../propTypes/vedtakAksjonspunkterPropType';
-import vedtakVilkarPropType from '../propTypes/vedtakVilkarPropType';
-import vedtakBeregningsresultatPropType from '../propTypes/vedtakBeregningsresultatPropType';
+import {
+  ArbeidsgiverOpplysningerPerId,
+  Behandlingsresultat,
+  Kodeverk,
+  KodeverkMedNavn,
+  Personopplysninger,
+  SimuleringResultat,
+  Vilkar,
+} from '@k9-sak-web/types';
+import { DokumentDataType, LagreDokumentdataType } from '@k9-sak-web/types/src/dokumentdata';
+import BehandlingArsaker from '../types/behandlingArsaker';
+import OverlappendeYtelseType from '../types/overlappendeYtelseType';
+import VedtakAksjonspunkterType from '../types/vedtakAksjonspunkterType';
+import vedtakBeregningsgrunnlagPropType from '../types/vedtakBeregningsgrunnlagType';
+
+import VedtakOriginalBehandlingType from '../types/VedtakOriginalBehandlingType';
+import VedtakTilbakekrevingvalgType from '../types/vedtakTilbakekrevingvalgType';
+import vedtakVarselPropType from '../types/vedtakVarselType';
+import { InformasjonsbehovVedtaksbrev } from './brev/InformasjonsbehovAutomatiskVedtaksbrev';
+import { UstrukturerteDokumenterType } from './UstrukturerteDokumenter';
 import VedtakForm from './VedtakForm';
 import { finnSistePeriodeMedAvslagsårsakBeregning } from './VedtakHelper';
-import vedtakBeregningsgrunnlagPropType from '../propTypes/vedtakBeregningsgrunnlagPropType';
-import vedtakVarselPropType from '../propTypes/vedtakVarselPropType';
 import VedtakSjekkTilbakekreving from './VedtakSjekkTilbakekreving';
 
 /*
@@ -21,14 +35,45 @@ import VedtakSjekkTilbakekreving from './VedtakSjekkTilbakekreving';
  *
  * Presentasjonskomponent.
  */
+
+interface VedtakPanelsProps {
+  behandlingresultat: Behandlingsresultat;
+  sprakkode: Kodeverk;
+  behandlingStatus: Kodeverk;
+  behandlingPaaVent: boolean;
+  behandlingArsaker: BehandlingArsaker[];
+  tilbakekrevingvalg?: VedtakTilbakekrevingvalgType;
+  simuleringResultat?: SimuleringResultat;
+  resultatstruktur: VedtakOriginalBehandlingType;
+  medlemskapFom?: string;
+  aksjonspunkter: VedtakAksjonspunkterType[];
+  ytelseTypeKode: string;
+  alleKodeverk: { [key: string]: KodeverkMedNavn[] };
+  personopplysninger?: Personopplysninger;
+  arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysningerPerId;
+  vilkar: Vilkar[];
+  resultatstrukturOriginalBehandling?: VedtakOriginalBehandlingType;
+  readOnly: boolean;
+  previewCallback: () => void;
+  submitCallback: () => void;
+  behandlingTypeKode: string;
+  beregningsgrunnlag?: vedtakBeregningsgrunnlagPropType[];
+  vedtakVarsel?: vedtakVarselPropType;
+  tilgjengeligeVedtaksbrev?: TilgjengeligeVedtaksbrev;
+  informasjonsbehovVedtaksbrev?: InformasjonsbehovVedtaksbrev;
+  dokumentdata?: DokumentDataType;
+  fritekstdokumenter?: UstrukturerteDokumenterType[];
+  lagreDokumentdata: LagreDokumentdataType;
+  overlappendeYtelser?: OverlappendeYtelseType[];
+  hentFritekstbrevHtmlCallback: () => void;
+}
+
 const VedtakPanels = ({
   readOnly,
   previewCallback,
   hentFritekstbrevHtmlCallback,
   submitCallback,
   behandlingTypeKode,
-  behandlingId,
-  behandlingVersjon,
   behandlingresultat,
   sprakkode,
   behandlingStatus,
@@ -40,7 +85,6 @@ const VedtakPanels = ({
   medlemskapFom,
   aksjonspunkter,
   ytelseTypeKode,
-  employeeHasAccess,
   alleKodeverk,
   personopplysninger,
   arbeidsgiverOpplysningerPerId,
@@ -54,7 +98,7 @@ const VedtakPanels = ({
   fritekstdokumenter,
   lagreDokumentdata,
   overlappendeYtelser,
-}) => {
+}: VedtakPanelsProps) => {
   const bg = Array.isArray(beregningsgrunnlag) ? beregningsgrunnlag.filter(Boolean) : [];
   const bgYtelsegrunnlag = bg[0]?.ytelsesspesifiktGrunnlag;
   let bgPeriodeMedAvslagsårsak;
@@ -82,8 +126,6 @@ const VedtakPanels = ({
       readOnly={readOnly}
       previewCallback={previewCallback}
       hentFritekstbrevHtmlCallback={hentFritekstbrevHtmlCallback}
-      behandlingId={behandlingId}
-      behandlingVersjon={behandlingVersjon}
       behandlingresultat={behandlingresultat}
       behandlingStatus={behandlingStatus}
       sprakkode={sprakkode}
@@ -94,7 +136,6 @@ const VedtakPanels = ({
       behandlingArsaker={behandlingArsaker}
       aksjonspunkter={aksjonspunkter}
       ytelseTypeKode={ytelseTypeKode}
-      kanOverstyre={employeeHasAccess}
       alleKodeverk={alleKodeverk}
       personopplysninger={personopplysninger}
       arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
@@ -114,47 +155,9 @@ const VedtakPanels = ({
   );
 };
 
-VedtakPanels.propTypes = {
-  behandlingId: PropTypes.number.isRequired,
-  behandlingVersjon: PropTypes.number.isRequired,
-  behandlingresultat: PropTypes.shape().isRequired,
-  sprakkode: kodeverkObjektPropType.isRequired,
-  behandlingStatus: kodeverkObjektPropType.isRequired,
-  behandlingPaaVent: PropTypes.bool.isRequired,
-  behandlingArsaker: PropTypes.arrayOf(PropTypes.shape()).isRequired,
-  tilbakekrevingvalg: PropTypes.shape(),
-  simuleringResultat: PropTypes.shape(),
-  resultatstruktur: vedtakBeregningsresultatPropType,
-  medlemskapFom: PropTypes.string,
-  aksjonspunkter: PropTypes.arrayOf(vedtakAksjonspunkterPropType).isRequired,
-  ytelseTypeKode: PropTypes.string.isRequired,
-  employeeHasAccess: PropTypes.bool.isRequired,
-  alleKodeverk: PropTypes.shape().isRequired,
-  personopplysninger: PropTypes.shape(),
-  arbeidsgiverOpplysningerPerId: PropTypes.shape().isRequired,
-  vilkar: PropTypes.arrayOf(vedtakVilkarPropType.isRequired),
-  resultatstrukturOriginalBehandling: vedtakBeregningsresultatPropType,
-  readOnly: PropTypes.bool.isRequired,
-  previewCallback: PropTypes.func.isRequired,
-  submitCallback: PropTypes.func.isRequired,
-  behandlingTypeKode: PropTypes.string.isRequired,
-  beregningsgrunnlag: PropTypes.arrayOf(vedtakBeregningsgrunnlagPropType),
-  vedtakVarsel: vedtakVarselPropType,
-  tilgjengeligeVedtaksbrev: PropTypes.oneOfType([PropTypes.shape(), PropTypes.arrayOf(PropTypes.string)]),
-  informasjonsbehovVedtaksbrev: PropTypes.shape({
-    informasjonsbehov: PropTypes.arrayOf(PropTypes.shape({ type: PropTypes.string })),
-  }),
-  dokumentdata: PropTypes.shape(),
-  fritekstdokumenter: PropTypes.arrayOf(PropTypes.shape()),
-  lagreDokumentdata: PropTypes.func.isRequired,
-  overlappendeYtelser: PropTypes.arrayOf(PropTypes.shape()),
-  hentFritekstbrevHtmlCallback: PropTypes.func.isRequired,
-};
-
 VedtakPanels.defaultProps = {
   tilbakekrevingvalg: undefined,
   simuleringResultat: undefined,
-  resultatstruktur: undefined,
 };
 
 export default VedtakPanels;

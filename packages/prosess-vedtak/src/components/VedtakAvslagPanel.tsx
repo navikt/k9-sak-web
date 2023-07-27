@@ -1,13 +1,22 @@
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { getKodeverknavnFn } from '@fpsak-frontend/utils';
+import { Behandlingsresultat, KodeverkMedNavn, Vilkar } from '@k9-sak-web/types';
 import { BodyShort, Label } from '@navikt/ds-react';
-import PropTypes from 'prop-types';
 import React from 'react';
-import { injectIntl } from 'react-intl';
+import { injectIntl, IntlShape } from 'react-intl';
 import { connect } from 'react-redux';
 import AvslagsårsakListe from './AvslagsårsakListe';
 import { findAvslagResultatText, findTilbakekrevingText } from './VedtakHelper';
+
+interface VedtakAvslagPanelImplProps {
+  intl: IntlShape;
+  vilkar: Vilkar[];
+  behandlingsresultat: Behandlingsresultat;
+  ytelseTypeKode: string;
+  tilbakekrevingText?: string;
+  alleKodeverk: { [key: string]: KodeverkMedNavn[] };
+}
 
 export const VedtakAvslagPanelImpl = ({
   intl,
@@ -16,7 +25,7 @@ export const VedtakAvslagPanelImpl = ({
   ytelseTypeKode,
   tilbakekrevingText,
   alleKodeverk,
-}) => {
+}: VedtakAvslagPanelImplProps) => {
   const getKodeverknavn = getKodeverknavnFn(alleKodeverk, kodeverkTyper);
   return (
     <div>
@@ -38,15 +47,6 @@ export const VedtakAvslagPanelImpl = ({
       </div>
     </div>
   );
-};
-
-VedtakAvslagPanelImpl.propTypes = {
-  intl: PropTypes.shape().isRequired,
-  vilkar: PropTypes.arrayOf(PropTypes.shape()).isRequired,
-  behandlingsresultat: PropTypes.shape().isRequired,
-  ytelseTypeKode: PropTypes.string.isRequired,
-  tilbakekrevingText: PropTypes.string,
-  alleKodeverk: PropTypes.shape().isRequired,
 };
 
 VedtakAvslagPanelImpl.defaultProps = {

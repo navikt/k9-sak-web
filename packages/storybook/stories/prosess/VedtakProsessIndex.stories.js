@@ -83,7 +83,6 @@ export const visÅpentAksjonspunktOgInnvilgetForForeldrepenger = () => (
     behandling={behandling}
     vilkar={vilkar}
     beregningresultatForeldrepenger={resultatstruktur}
-    sendVarselOmRevurdering={boolean('sendVarselOmRevurdering', false)}
     resultatstrukturOriginalBehandling={resultatstrukturOriginalBehandling}
     medlemskap={{ fom: '2019-01-01' }}
     aksjonspunkter={[]}
@@ -111,7 +110,6 @@ export const visDelvisInnvilgetForOmsorgspenger = () => (
     }}
     vilkar={vilkar}
     beregningresultatForeldrepenger={resultatstruktur}
-    sendVarselOmRevurdering={boolean('sendVarselOmRevurdering', false)}
     resultatstrukturOriginalBehandling={resultatstrukturOriginalBehandling}
     medlemskap={{ fom: '2019-01-01' }}
     aksjonspunkter={[]}
@@ -150,7 +148,6 @@ export const visAvslagForForeldrepenger = () => (
       },
     ]}
     beregningresultatForeldrepenger={resultatstruktur}
-    sendVarselOmRevurdering={boolean('sendVarselOmRevurdering', false)}
     resultatstrukturOriginalBehandling={resultatstrukturOriginalBehandling}
     medlemskap={{ fom: '2019-01-01' }}
     aksjonspunkter={[]}
@@ -168,7 +165,6 @@ export const visÅpentAksjonspunktForSvangerskapspenger = () => (
     behandling={behandling}
     vilkar={vilkar}
     beregningresultatForeldrepenger={resultatstruktur}
-    sendVarselOmRevurdering={boolean('sendVarselOmRevurdering', false)}
     resultatstrukturOriginalBehandling={resultatstrukturOriginalBehandling}
     medlemskap={{ fom: '2019-01-01' }}
     aksjonspunkter={[
@@ -219,7 +215,6 @@ export const visModalForObligatoriskFritekstbrevForSvangerskapspenger = () => (
       },
     ]}
     beregningresultatForeldrepenger={resultatstruktur}
-    sendVarselOmRevurdering={boolean('sendVarselOmRevurdering', false)}
     resultatstrukturOriginalBehandling={resultatstrukturOriginalBehandling}
     medlemskap={{ fom: '2019-01-01' }}
     aksjonspunkter={[
@@ -249,7 +244,6 @@ export const visÅpentAksjonspunktForEngangsstønad = () => (
     behandling={behandling}
     vilkar={vilkar}
     beregningresultatEngangsstonad={resultatstruktur}
-    sendVarselOmRevurdering={boolean('sendVarselOmRevurdering', false)}
     resultatstrukturOriginalBehandling={resultatstrukturOriginalBehandling}
     medlemskap={{ fom: '2019-01-01' }}
     aksjonspunkter={[
@@ -282,7 +276,6 @@ export const visAtBehandlingErHenlagt = () => (
     }}
     vilkar={vilkar}
     beregningresultatForeldrepenger={resultatstruktur}
-    sendVarselOmRevurdering={boolean('sendVarselOmRevurdering', false)}
     resultatstrukturOriginalBehandling={resultatstrukturOriginalBehandling}
     medlemskap={{ fom: '2019-01-01' }}
     aksjonspunkter={[
@@ -325,7 +318,6 @@ export const visInnvilgetForForeldrepengerRevurdering = () => (
     }}
     vilkar={vilkar}
     beregningresultatForeldrepenger={resultatstruktur}
-    sendVarselOmRevurdering={boolean('sendVarselOmRevurdering', false)}
     resultatstrukturOriginalBehandling={resultatstrukturOriginalBehandling}
     medlemskap={{ fom: '2019-01-01' }}
     aksjonspunkter={[
@@ -374,7 +366,6 @@ export const visOpphørtForForeldrepengerRevurdering = () => (
     }}
     vilkar={vilkar}
     beregningresultatForeldrepenger={resultatstruktur}
-    sendVarselOmRevurdering={boolean('sendVarselOmRevurdering', false)}
     resultatstrukturOriginalBehandling={resultatstrukturOriginalBehandling}
     medlemskap={{ fom: '2019-01-01' }}
     aksjonspunkter={[]}
@@ -397,7 +388,6 @@ export const visInnvilgetForEngangsstønadRevurdering = () => (
     }}
     vilkar={vilkar}
     beregningresultatEngangsstonad={resultatstruktur}
-    sendVarselOmRevurdering={boolean('sendVarselOmRevurdering', false)}
     resultatstrukturOriginalBehandling={resultatstrukturOriginalBehandling}
     medlemskap={{ fom: '2019-01-01' }}
     aksjonspunkter={[]}
@@ -439,7 +429,6 @@ export const visAvslåttForEngangsstønadRevurdering = () => (
       },
     ]}
     beregningresultatEngangsstonad={resultatstruktur}
-    sendVarselOmRevurdering={boolean('sendVarselOmRevurdering', false)}
     resultatstrukturOriginalBehandling={resultatstrukturOriginalBehandling}
     medlemskap={{ fom: '2019-01-01' }}
     aksjonspunkter={[]}
@@ -584,7 +573,6 @@ export const visOverlappendeYtelser = () => {
         },
       ]}
       beregningresultatEngangsstonad={resultatstruktur}
-      sendVarselOmRevurdering={boolean('sendVarselOmRevurdering', false)}
       resultatstrukturOriginalBehandling={resultatstrukturOriginalBehandling}
       medlemskap={{ fom: '2019-01-01' }}
       aksjonspunkter={[aksjonspunkt5040]}
@@ -604,7 +592,6 @@ export const brevMedFritekstfelt = () => (
     behandling={behandling}
     vilkar={[]}
     beregningresultatEngangsstonad={resultatstruktur}
-    sendVarselOmRevurdering={boolean('sendVarselOmRevurdering', false)}
     resultatstrukturOriginalBehandling={resultatstrukturOriginalBehandling}
     medlemskap={{ fom: '2019-01-01' }}
     aksjonspunkter={[]}

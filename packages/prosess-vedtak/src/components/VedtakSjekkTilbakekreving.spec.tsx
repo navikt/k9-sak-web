@@ -95,7 +95,6 @@ describe('<AvslagårsakListe>', () => {
             },
           }}
           vilkar={[]}
-          sendVarselOmRevurdering={false}
           medlemskap={{ fom: '2019-01-01' }}
           aksjonspunkter={[aksjonspunkt5085]}
           employeeHasAccess={false}
@@ -137,7 +136,6 @@ describe('<AvslagårsakListe>', () => {
             },
           }}
           vilkar={[]}
-          sendVarselOmRevurdering={false}
           medlemskap={{ fom: '2019-01-01' }}
           aksjonspunkter={[
             {

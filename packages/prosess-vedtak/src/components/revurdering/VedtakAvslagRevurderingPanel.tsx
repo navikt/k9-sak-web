@@ -2,29 +2,49 @@ import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { getKodeverknavnFn } from '@fpsak-frontend/utils';
+import { KodeverkMedNavn, Vilkar } from '@k9-sak-web/types';
 import { BodyShort, Label } from '@navikt/ds-react';
-import PropTypes from 'prop-types';
 import React from 'react';
-import { injectIntl } from 'react-intl';
+import { injectIntl, IntlShape } from 'react-intl';
 import { connect } from 'react-redux';
 import vedtakResultType from '../../kodeverk/vedtakResultType';
+import VedtakOriginalBehandlingType from '../../types/VedtakOriginalBehandlingType';
 import AvslagsårsakListe from '../AvslagsårsakListe';
 import { findAvslagResultatText, findTilbakekrevingText } from '../VedtakHelper';
 
-export const isNewBehandlingResult = (beregningResultat, originaltBeregningResultat) => {
+interface VedtakAvslagRevurderingPanelImplProps {
+  intl: IntlShape;
+  beregningResultat?: VedtakOriginalBehandlingType;
+  vilkar: Vilkar[];
+  originaltBeregningResultat?: VedtakOriginalBehandlingType;
+  tilbakekrevingText?: string;
+  alleKodeverk: { [key: string]: KodeverkMedNavn[] };
+  ytelseTypeKode: string;
+}
+
+export const isNewBehandlingResult = (
+  beregningResultat: VedtakOriginalBehandlingType,
+  originaltBeregningResultat: VedtakOriginalBehandlingType,
+) => {
   const vedtakResult = beregningResultat ? vedtakResultType.INNVILGET : vedtakResultType.AVSLAG;
   const vedtakResultOriginal = originaltBeregningResultat ? vedtakResultType.INNVILGET : vedtakResultType.AVSLAG;
   return vedtakResultOriginal !== vedtakResult;
 };
 
-export const isNewAmount = (beregningResultat, originaltBeregningResultat) => {
+export const isNewAmount = (
+  beregningResultat: VedtakOriginalBehandlingType,
+  originaltBeregningResultat: VedtakOriginalBehandlingType,
+) => {
   if (typeof beregningResultat === 'undefined' || beregningResultat === null) {
     return false;
   }
   return beregningResultat.antallBarn !== originaltBeregningResultat.antallBarn;
 };
 
-const resultText = (beregningResultat, originaltBeregningResultat) => {
+const resultText = (
+  beregningResultat: VedtakOriginalBehandlingType,
+  originaltBeregningResultat: VedtakOriginalBehandlingType,
+) => {
   if (isNewBehandlingResult(beregningResultat, originaltBeregningResultat)) {
     return beregningResultat ? 'VedtakForm.Resultat.EndretTilInnvilget' : 'VedtakForm.Resultat.EndretTilAvslag';
   }
@@ -41,7 +61,7 @@ export const VedtakAvslagRevurderingPanelImpl = ({
   tilbakekrevingText,
   originaltBeregningResultat,
   alleKodeverk,
-}) => {
+}: VedtakAvslagRevurderingPanelImplProps) => {
   const getKodeverknavn = getKodeverknavnFn(alleKodeverk, kodeverkTyper);
   return (
     <div>
@@ -71,16 +91,6 @@ export const VedtakAvslagRevurderingPanelImpl = ({
       <VerticalSpacer sixteenPx />
     </div>
   );
-};
-
-VedtakAvslagRevurderingPanelImpl.propTypes = {
-  intl: PropTypes.shape().isRequired,
-  beregningResultat: PropTypes.shape(),
-  vilkar: PropTypes.arrayOf(PropTypes.shape()).isRequired,
-  originaltBeregningResultat: PropTypes.shape(),
-  tilbakekrevingText: PropTypes.string,
-  alleKodeverk: PropTypes.shape().isRequired,
-  ytelseTypeKode: PropTypes.string.isRequired,
 };
 
 VedtakAvslagRevurderingPanelImpl.defaultProps = {

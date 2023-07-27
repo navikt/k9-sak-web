@@ -3,13 +3,12 @@ import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils';
 import { BodyShort, Label } from '@navikt/ds-react';
 import moment from 'moment';
-import PropTypes from 'prop-types';
 import React from 'react';
-import { injectIntl } from 'react-intl';
+import { injectIntl, IntlShape } from 'react-intl';
 import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
 
-const ytelseNavnMap = kode => {
+const ytelseNavnMap = (kode: string) => {
   switch (kode) {
     case fagsakYtelseType.FRISINN:
       return 'Frilans og selvstendig næringsdrivende inntektskompensasjon';
@@ -22,7 +21,17 @@ const ytelseNavnMap = kode => {
   }
 };
 
-export const VedtakOpphorRevurderingPanelImpl = ({ intl, opphoersdato, ytelseTypeKode }) => (
+interface VedtakOpphorRevurderingPanelImplProps {
+  intl: IntlShape;
+  opphoersdato?: string;
+  ytelseTypeKode: string;
+}
+
+export const VedtakOpphorRevurderingPanelImpl = ({
+  intl,
+  opphoersdato,
+  ytelseTypeKode,
+}: VedtakOpphorRevurderingPanelImplProps) => (
   <div data-testid="opphorRevurdering">
     <Label size="small" as="p">
       {intl.formatMessage({ id: 'VedtakForm.Resultat' })}
@@ -50,12 +59,6 @@ export const VedtakOpphorRevurderingPanelImpl = ({ intl, opphoersdato, ytelseTyp
     <VerticalSpacer sixteenPx />
   </div>
 );
-
-VedtakOpphorRevurderingPanelImpl.propTypes = {
-  intl: PropTypes.shape().isRequired,
-  opphoersdato: PropTypes.string,
-  ytelseTypeKode: PropTypes.string.isRequired,
-};
 
 VedtakOpphorRevurderingPanelImpl.defaultProps = {
   opphoersdato: '',

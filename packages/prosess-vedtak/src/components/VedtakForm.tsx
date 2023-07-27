@@ -55,6 +55,8 @@ import VedtakInnvilgetPanel from './VedtakInnvilgetPanel';
 import VedtakSubmit from './VedtakSubmit';
 import { InformasjonsbehovVedtaksbrev } from './brev/InformasjonsbehovAutomatiskVedtaksbrev';
 import { validerManueltRedigertBrev } from './FritekstRedigering/RedigeringUtils';
+import VedtakOriginalBehandlingType from '../types/VedtakOriginalBehandlingType';
+import VedtakVarselType from '../types/vedtakVarselType';
 
 const isVedtakSubmission = true;
 
@@ -87,23 +89,11 @@ interface Props {
   informasjonsbehovVedtaksbrev: InformasjonsbehovVedtaksbrev;
   dokumentdata: DokumentDataType;
   fritekstdokumenter: UstrukturerteDokumenterType[];
-  vedtakVarsel: {
-    avslagsarsak: object;
-    avslagsarsakFritekst: string;
-    id: number;
-    overskrift: string;
-    fritekstbrev: string;
-    skjæringstidspunkt: {
-      dato: string;
-    };
-    redusertUtbetalingÅrsaker: string[];
-    vedtaksbrev: Kodeverk;
-    vedtaksdato: string;
-  };
+  vedtakVarsel: VedtakVarselType;
   submitCallback: (object: any) => void;
   lagreDokumentdata: LagreDokumentdataType;
   overlappendeYtelser: object[];
-  resultatstruktur: string;
+  resultatstruktur: VedtakOriginalBehandlingType;
   simuleringResultat: object;
   resultatstrukturOriginalBehandling: object;
   bgPeriodeMedAvslagsårsak: object;

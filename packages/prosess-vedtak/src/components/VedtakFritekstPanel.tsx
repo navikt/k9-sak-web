@@ -1,17 +1,34 @@
-import React from 'react';
-import PropTypes from 'prop-types';
 import { Column, Row } from 'nav-frontend-grid';
+import React from 'react';
 
+import TextAreaFormik from '@fpsak-frontend/form/src/TextAreaFormik';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { decodeHtmlEntity, getLanguageFromSprakkode, hasValidText, maxLength, minLength } from '@fpsak-frontend/utils';
-import TextAreaFormik from '@fpsak-frontend/form/src/TextAreaFormik';
 
+import { Kodeverk } from '@k9-sak-web/types';
+import { IntlShape } from 'react-intl';
 import styles from './vedtakFritekstPanel.less';
 
 const maxLength100000 = maxLength(100000);
 const minLength3 = minLength(3);
 
-const VedtakFritekstPanelImpl = ({ begrunnelse, begrunnelseFieldName, sprakkode, readOnly, label, intl }) => (
+interface VedtakFritekstPanelImplProps {
+  begrunnelse?: string;
+  begrunnelseFieldName?: string;
+  sprakkode: Kodeverk;
+  readOnly: boolean;
+  label: string;
+  intl?: IntlShape;
+}
+
+const VedtakFritekstPanelImpl = ({
+  begrunnelse,
+  begrunnelseFieldName,
+  sprakkode,
+  readOnly,
+  label,
+  intl,
+}: VedtakFritekstPanelImplProps) => (
   <>
     {!readOnly && (
       <Row>
@@ -49,12 +66,4 @@ VedtakFritekstPanelImpl.defaultProps = {
   begrunnelseFieldName: 'begrunnelse',
 };
 
-VedtakFritekstPanelImpl.propTypes = {
-  begrunnelse: PropTypes.string,
-  begrunnelseFieldName: PropTypes.string,
-  sprakkode: PropTypes.shape().isRequired,
-  readOnly: PropTypes.bool.isRequired,
-  label: PropTypes.string.isRequired,
-  intl: PropTypes.shape(),
-};
 export default VedtakFritekstPanelImpl;

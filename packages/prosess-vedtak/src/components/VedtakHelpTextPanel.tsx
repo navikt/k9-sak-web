@@ -1,14 +1,13 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { FormattedMessage, injectIntl } from 'react-intl';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
+import React from 'react';
+import { FormattedMessage, injectIntl, IntlShape } from 'react-intl';
 
-import { AksjonspunktHelpTextTemp, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import { AksjonspunktHelpTextTemp, VerticalSpacer } from '@fpsak-frontend/shared-components';
 
 import styles from './vedtakForm.less';
 
-const findHelpTexts = (intl, aksjonspunktKoder) => {
+const findHelpTexts = (intl: IntlShape, aksjonspunktKoder: string[]) => {
   const helpTexts = [];
   if (aksjonspunktKoder && aksjonspunktKoder.includes(aksjonspunktCodes.VURDERE_ANNEN_YTELSE)) {
     helpTexts.push(intl.formatMessage({ id: 'VedtakForm.VurderAnnenYtelse' }));
@@ -30,7 +29,19 @@ const findHelpTexts = (intl, aksjonspunktKoder) => {
  * Det er i denne filen teksten vises ...
  */
 
-export const VedtakHelpTextPanelImpl = ({ intl, readOnly, aksjonspunktKoder, viseFlereSjekkbokserForBrev }) => {
+interface VedtakHelpTextPanelImplProps {
+  intl: IntlShape;
+  readOnly: boolean;
+  aksjonspunktKoder: string[];
+  viseFlereSjekkbokserForBrev?: boolean;
+}
+
+export const VedtakHelpTextPanelImpl = ({
+  intl,
+  readOnly,
+  aksjonspunktKoder,
+  viseFlereSjekkbokserForBrev,
+}: VedtakHelpTextPanelImplProps) => {
   const helpTexts = findHelpTexts(intl, aksjonspunktKoder);
   if (!readOnly && helpTexts.length > 0) {
     return (
@@ -59,13 +70,6 @@ export const VedtakHelpTextPanelImpl = ({ intl, readOnly, aksjonspunktKoder, vis
     );
   }
   return null;
-};
-
-VedtakHelpTextPanelImpl.propTypes = {
-  intl: PropTypes.shape().isRequired,
-  readOnly: PropTypes.bool.isRequired,
-  aksjonspunktKoder: PropTypes.arrayOf(PropTypes.string).isRequired,
-  viseFlereSjekkbokserForBrev: PropTypes.bool,
 };
 
 export default injectIntl(VedtakHelpTextPanelImpl);

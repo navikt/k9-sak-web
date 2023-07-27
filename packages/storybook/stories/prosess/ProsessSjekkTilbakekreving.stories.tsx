@@ -1,18 +1,15 @@
-import React from 'react';
 import { action } from '@storybook/addon-actions';
 import { boolean, withKnobs } from '@storybook/addon-knobs';
+import React from 'react';
 
 import klageBehandlingArsakType from '@fpsak-frontend/kodeverk/src/behandlingArsakType';
-import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import behandlingResultatType from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
-import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
-import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
+import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 
-import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import VedtakProsessIndex from '@fpsak-frontend/prosess-vedtak';
-import alleKodeverk from '../mocks/alleKodeverk.json';
 import withReduxProvider from '../../decorators/withRedux';
+import alleKodeverk from '../mocks/alleKodeverk.json';
 
 const behandling = {
   id: 1,
@@ -50,19 +47,6 @@ const behandling = {
     },
   ],
 };
-
-const vilkar = [
-  {
-    lovReferanse: '§§Dette er en lovreferanse',
-    vilkarType: {
-      kode: vilkarType.SOKNADSFRISTVILKARET,
-      kodeverk: kodeverkTyper.VILKAR_TYPE,
-    },
-    vilkarStatus: {
-      kode: vilkarUtfallType.OPPFYLT,
-    },
-  },
-];
 
 export default {
   title: 'prosess/prosess-vedtak',
@@ -107,7 +91,6 @@ export const visSjekkTilbakekreving = () => {
         },
       }}
       vilkar={[]}
-      sendVarselOmRevurdering={boolean('sendVarselOmRevurdering', false)}
       medlemskap={{ fom: '2019-01-01' }}
       aksjonspunkter={[aksjonspunkt5085]}
       employeeHasAccess={boolean('employeeHasAccess', false)}

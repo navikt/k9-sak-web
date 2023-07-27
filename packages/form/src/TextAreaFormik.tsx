@@ -18,6 +18,7 @@ interface TextAreaFieldProps {
   maxLength?: number;
   placeholder?: string;
   formik?: FormikState<any>;
+  badges?: { type: string; text: string; title: string }[];
 }
 
 const renderTextarea = ({ field: { value, name }, form, label, maxLength, badges, touched, error, intl, disabled }) => {

@@ -3,15 +3,21 @@ import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { DDMMYYYY_DATE_FORMAT, getKodeverknavnFn } from '@fpsak-frontend/utils';
+import { Kodeverk, KodeverkMedNavn } from '@k9-sak-web/types';
 import { BodyShort, Label } from '@navikt/ds-react';
 import moment from 'moment';
-import PropTypes from 'prop-types';
 import React from 'react';
-import { FormattedMessage, injectIntl } from 'react-intl';
+import { FormattedMessage, injectIntl, IntlShape } from 'react-intl';
 import { connect } from 'react-redux';
 import { findTilbakekrevingText } from '../VedtakHelper';
 
-const mapFraAvslagskodeTilTekst = kode => {
+interface PeriodeMedÅrsak {
+  avslagsårsak: string;
+  fom: string;
+  tom: string;
+}
+
+const mapFraAvslagskodeTilTekst = (kode: string) => {
   switch (kode) {
     case avslagsarsakCodes.AVKORTET_GRUNNET_ANNEN_INNTEKT:
       return 'Avkortet grunnet annen inntekt';
@@ -26,14 +32,14 @@ const mapFraAvslagskodeTilTekst = kode => {
   }
 };
 
-export const lagKonsekvensForYtelsenTekst = (konsekvenser, getKodeverknavn) => {
+export const lagKonsekvensForYtelsenTekst = (konsekvenser: Kodeverk[], getKodeverknavn) => {
   if (!konsekvenser || konsekvenser.length < 1) {
     return '';
   }
   return konsekvenser.map(k => getKodeverknavn(k)).join(' og ');
 };
 
-const lagPeriodevisning = periodeMedÅrsak => {
+const lagPeriodevisning = (periodeMedÅrsak: PeriodeMedÅrsak) => {
   if (!periodeMedÅrsak) {
     return undefined;
   }
@@ -43,6 +49,15 @@ const lagPeriodevisning = periodeMedÅrsak => {
   return <FormattedMessage id="VedtakForm.Avslagsgrunner.Beregning" values={{ fom, tom, årsak }} />;
 };
 
+interface VedtakInnvilgetRevurderingPanelImplProps {
+  intl: IntlShape;
+  ytelseTypeKode: string;
+  konsekvenserForYtelsen?: Kodeverk[];
+  tilbakekrevingText?: string;
+  alleKodeverk: { [key: string]: KodeverkMedNavn[] };
+  bgPeriodeMedAvslagsårsak?: PeriodeMedÅrsak;
+}
+
 export const VedtakInnvilgetRevurderingPanelImpl = ({
   intl,
   ytelseTypeKode,
@@ -50,7 +65,7 @@ export const VedtakInnvilgetRevurderingPanelImpl = ({
   tilbakekrevingText,
   alleKodeverk,
   bgPeriodeMedAvslagsårsak,
-}) => {
+}: VedtakInnvilgetRevurderingPanelImplProps) => {
   const getKodeverknavn = getKodeverknavnFn(alleKodeverk, kodeverkTyper);
   return (
     // eslint-disable-next-line react/jsx-no-useless-fragment
@@ -78,15 +93,6 @@ export const VedtakInnvilgetRevurderingPanelImpl = ({
       )}
     </>
   );
-};
-
-VedtakInnvilgetRevurderingPanelImpl.propTypes = {
-  intl: PropTypes.shape().isRequired,
-  ytelseTypeKode: PropTypes.string.isRequired,
-  konsekvenserForYtelsen: PropTypes.arrayOf(PropTypes.shape()),
-  tilbakekrevingText: PropTypes.string,
-  alleKodeverk: PropTypes.shape().isRequired,
-  bgPeriodeMedAvslagsårsak: PropTypes.shape(),
 };
 
 VedtakInnvilgetRevurderingPanelImpl.defaultProps = {

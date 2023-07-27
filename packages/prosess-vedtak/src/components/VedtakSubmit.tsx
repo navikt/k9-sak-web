@@ -3,10 +3,10 @@ import React from 'react';
 import behandlingStatusCode from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import { useIntl } from 'react-intl';
 
-import { Column, Row } from 'nav-frontend-grid';
-import { Alert, BodyLong, Button, ErrorMessage } from '@navikt/ds-react';
-import { Aksjonspunkt } from '@k9-sak-web/types';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { Aksjonspunkt } from '@k9-sak-web/types';
+import { Button, ErrorMessage } from '@navikt/ds-react';
+import { Column, Row } from 'nav-frontend-grid';
 
 import styles from './vedtakForm.less';
 
@@ -20,7 +20,7 @@ interface Props {
   errorOnSubmit: string;
 }
 
-const kanSendesTilGodkjenning = behandlingStatusKode =>
+const kanSendesTilGodkjenning = (behandlingStatusKode: string) =>
   behandlingStatusKode === behandlingStatusCode.BEHANDLING_UTREDES;
 
 const VedtakSubmit = ({

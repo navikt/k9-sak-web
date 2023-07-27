@@ -16,7 +16,7 @@ import {
   lagVisningsnavnForMottaker,
   TilgjengeligeVedtaksbrev,
 } from '@fpsak-frontend/utils/src/formidlingUtils';
-import { DokumentDataType } from '@k9-sak-web/types/src/dokumentdata';
+import { DokumentDataType, LagreDokumentdataType } from '@k9-sak-web/types/src/dokumentdata';
 import { ArbeidsgiverOpplysningerPerId, Behandlingsresultat, Kodeverk, Personopplysninger } from '@k9-sak-web/types';
 import { Alert, ErrorMessage } from '@navikt/ds-react';
 
@@ -132,7 +132,7 @@ interface BrevPanelProps {
   ytelseTypeKode: string;
   dokumentdata: DokumentDataType;
   aktiverteInformasjonsbehov: any;
-  lagreDokumentdata: (any) => void;
+  lagreDokumentdata: LagreDokumentdataType;
   getPreviewAutomatiskBrevCallback: (any) => (any) => (event: React.SyntheticEvent<Element, Event>) => void;
 }
 
@@ -161,7 +161,7 @@ export const BrevPanel: React.FC<BrevPanelProps> = props => {
     getPreviewAutomatiskBrevCallback,
   } = props;
 
-  const [field, meta, helpers] = useField({ name: 'overstyrtMottaker' });
+  const [meta] = useField({ name: 'overstyrtMottaker' });
 
   const automatiskBrevCallback = getPreviewAutomatiskBrevCallback(formikProps.values)({ aapneINyttVindu: true });
 
