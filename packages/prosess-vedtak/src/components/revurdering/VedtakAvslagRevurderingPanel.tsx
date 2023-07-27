@@ -8,7 +8,7 @@ import React from 'react';
 import { injectIntl, IntlShape } from 'react-intl';
 import { connect } from 'react-redux';
 import vedtakResultType from '../../kodeverk/vedtakResultType';
-import VedtakOriginalBehandlingType from '../../types/VedtakOriginalBehandlingType';
+import VedtakOriginalBehandlingType from '../../types/vedtakOriginalBehandlingType';
 import AvslagsårsakListe from '../AvslagsårsakListe';
 import { findAvslagResultatText, findTilbakekrevingText } from '../VedtakHelper';
 

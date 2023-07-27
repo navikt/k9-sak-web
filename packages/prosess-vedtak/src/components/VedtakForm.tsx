@@ -55,7 +55,7 @@ import VedtakInnvilgetPanel from './VedtakInnvilgetPanel';
 import VedtakSubmit from './VedtakSubmit';
 import { InformasjonsbehovVedtaksbrev } from './brev/InformasjonsbehovAutomatiskVedtaksbrev';
 import { validerManueltRedigertBrev } from './FritekstRedigering/RedigeringUtils';
-import VedtakOriginalBehandlingType from '../types/VedtakOriginalBehandlingType';
+import VedtakOriginalBehandlingType from '../types/vedtakOriginalBehandlingType';
 import VedtakVarselType from '../types/vedtakVarselType';
 
 const isVedtakSubmission = true;

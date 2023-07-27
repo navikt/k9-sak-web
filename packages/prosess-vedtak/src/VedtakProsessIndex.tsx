@@ -18,7 +18,7 @@ import VedtakAksjonspunkterPropType from './types/vedtakAksjonspunkterType';
 import VedtakBehandlingPropType from './types/vedtakBehandlingType';
 import VedtakBeregningsgrunnlagPropType from './types/vedtakBeregningsgrunnlagType';
 import VedtakMedlemskapType from './types/vedtakMedlemskapType';
-import VedtakOriginalBehandlingType from './types/VedtakOriginalBehandlingType';
+import VedtakOriginalBehandlingType from './types/vedtakOriginalBehandlingType';
 import VedtakTilbakekrevingvalgType from './types/vedtakTilbakekrevingvalgType';
 import VedtakVarselPropType from './types/vedtakVarselPropType';
 

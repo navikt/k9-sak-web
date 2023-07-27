@@ -21,7 +21,7 @@ import OverlappendeYtelseType from '../types/overlappendeYtelseType';
 import VedtakAksjonspunkterType from '../types/vedtakAksjonspunkterType';
 import vedtakBeregningsgrunnlagPropType from '../types/vedtakBeregningsgrunnlagType';
 
-import VedtakOriginalBehandlingType from '../types/VedtakOriginalBehandlingType';
+import VedtakOriginalBehandlingType from '../types/vedtakOriginalBehandlingType';
 import VedtakTilbakekrevingvalgType from '../types/vedtakTilbakekrevingvalgType';
 import vedtakVarselPropType from '../types/vedtakVarselType';
 import { InformasjonsbehovVedtaksbrev } from './brev/InformasjonsbehovAutomatiskVedtaksbrev';
