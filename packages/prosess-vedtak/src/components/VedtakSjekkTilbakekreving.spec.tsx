@@ -88,9 +88,11 @@ describe('<AvslagårsakListe>', () => {
             behandlingsresultat: {
               vedtaksbrev: {
                 kode: 'FRITEKST',
+                kodeverk: '',
               },
               type: {
                 kode: behandlingResultatType.IKKE_FASTSATT,
+                kodeverk: '',
               },
             },
           }}
@@ -129,9 +131,11 @@ describe('<AvslagårsakListe>', () => {
             behandlingsresultat: {
               vedtaksbrev: {
                 kode: 'FRITEKST',
+                kodeverk: '',
               },
               type: {
                 kode: behandlingResultatType.IKKE_FASTSATT,
+                kodeverk: '',
               },
             },
           }}
@@ -146,6 +150,10 @@ describe('<AvslagårsakListe>', () => {
               begrunnelse: undefined,
               kanLoses: true,
               erAktivt: true,
+              status: {
+                kode: '',
+                kodeverk: '',
+              },
             },
           ]}
           employeeHasAccess={false}
