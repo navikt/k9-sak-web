@@ -84,11 +84,14 @@ export const visSjekkTilbakekreving = () => {
         behandlingsresultat: {
           vedtaksbrev: {
             kode: 'FRITEKST',
+            kodeverk: '',
           },
           type: {
             kode: behandlingResultatType.IKKE_FASTSATT,
+            kodeverk: '',
           },
         },
+        behandlingÅrsaker: [],
       }}
       vilkar={[]}
       medlemskap={{ fom: '2019-01-01' }}
@@ -97,6 +100,7 @@ export const visSjekkTilbakekreving = () => {
       isReadOnly={boolean('isReadOnly', false)}
       previewCallback={action('button-click')}
       submitCallback={action('button-click')}
+      // @ts-ignore
       alleKodeverk={alleKodeverk}
     />
   );

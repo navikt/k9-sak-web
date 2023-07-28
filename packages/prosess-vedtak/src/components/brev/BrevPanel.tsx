@@ -161,7 +161,7 @@ export const BrevPanel: React.FC<BrevPanelProps> = props => {
     getPreviewAutomatiskBrevCallback,
   } = props;
 
-  const [meta] = useField({ name: 'overstyrtMottaker' });
+  const [, meta] = useField({ name: 'overstyrtMottaker' });
 
   const automatiskBrevCallback = getPreviewAutomatiskBrevCallback(formikProps.values)({ aapneINyttVindu: true });
 
