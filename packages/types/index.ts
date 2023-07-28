@@ -74,7 +74,7 @@ export type { default as Venteaarsak } from './src/venteaarsakTsType';
 export type { default as MerknadFraLos } from './src/merknadFraLos';
 export type { default as BeregningReferanse } from './src/beregning/beregningReferanseTsType';
 export type { default as BehandlingStatusType } from './src/totrinnskontroll/BehandlingStatusType';
-export type { default as Behandlingsresultat } from './src/totrinnskontroll/Behandlingsresultat';
+export type { default as Behandlingsresultat } from './src/behandlingsresultatTsType';
 export type { default as SimpleEndpoints } from './src/microfrontends/SimpleEndpoints';
 export type { default as SimpleLink } from './src/microfrontends/SimpleLink';
 export * from './src/vilkarUtfallPeriodisert';

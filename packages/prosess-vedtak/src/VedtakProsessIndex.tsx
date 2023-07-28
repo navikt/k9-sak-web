@@ -20,7 +20,7 @@ import VedtakBeregningsgrunnlagPropType from './types/vedtakBeregningsgrunnlagTy
 import VedtakMedlemskapType from './types/vedtakMedlemskapType';
 import VedtakOriginalBehandlingType from './types/vedtakOriginalBehandlingType';
 import VedtakTilbakekrevingvalgType from './types/vedtakTilbakekrevingvalgType';
-import VedtakVarselPropType from './types/vedtakVarselPropType';
+import VedtakVarselPropType from './types/vedtakVarselType';
 
 const cache = createIntlCache();
 
