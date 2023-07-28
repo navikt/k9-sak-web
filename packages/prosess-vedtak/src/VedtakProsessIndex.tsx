@@ -40,7 +40,7 @@ interface VedtakProsessIndexProps {
   medlemskap: VedtakMedlemskapType;
   aksjonspunkter: VedtakAksjonspunkterPropType[];
   simuleringResultat?: SimuleringResultat;
-  tilbakekrevingvalg: VedtakTilbakekrevingvalgType;
+  tilbakekrevingvalg?: VedtakTilbakekrevingvalgType;
   submitCallback: () => void;
   previewCallback: () => void;
   isReadOnly: boolean;
@@ -50,9 +50,9 @@ interface VedtakProsessIndexProps {
   personopplysninger?: Personopplysninger;
   arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysningerPerId;
   beregningsgrunnlag?: VedtakBeregningsgrunnlagPropType[];
-  vedtakVarsel: VedtakVarselPropType;
-  tilgjengeligeVedtaksbrev: TilgjengeligeVedtaksbrev;
-  informasjonsbehovVedtaksbrev: InformasjonsbehovVedtaksbrev;
+  vedtakVarsel?: VedtakVarselPropType;
+  tilgjengeligeVedtaksbrev?: TilgjengeligeVedtaksbrev;
+  informasjonsbehovVedtaksbrev?: InformasjonsbehovVedtaksbrev;
   dokumentdataHente?: DokumentDataType;
   fritekstdokumenter?: UstrukturerteDokumenterType[];
   lagreDokumentdata: LagreDokumentdataType;

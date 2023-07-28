@@ -58,12 +58,10 @@ export const VedtakFritekstbrevModal = ({
           isOpen={showModal}
           closeButton={false}
           contentLabel="VedtakForm.SvpFritektsBrevModal.ModalDescription"
-          onRequestClose={event => {
-            if (event) event.preventDefault();
+          onRequestClose={() => {
             settShowModal(false);
           }}
           shouldCloseOnOverlayClick={false}
-          ariaHideApp={false}
         >
           <Row>
             <Column xs="1">
