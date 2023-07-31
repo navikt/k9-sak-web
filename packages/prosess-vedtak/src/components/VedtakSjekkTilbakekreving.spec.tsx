@@ -39,8 +39,8 @@ const behandling = {
       kodeverk: '',
     },
   },
-  behandlingPaaVent: false,
   behandlingHenlagt: false,
+  behandlingPaaVent: false,
   behandlingÅrsaker: [
     {
       behandlingArsakType: {
