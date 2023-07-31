@@ -1,18 +1,18 @@
-import React from 'react';
 import { screen } from '@testing-library/react';
+import React from 'react';
 import sinon from 'sinon';
 
 import klageBehandlingArsakType from '@fpsak-frontend/kodeverk/src/behandlingArsakType';
 import behandlingResultatType from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
-import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
+import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import { K9sakApiKeys, requestApi } from '@k9-sak-web/sak-app/src/data/k9sakApi';
 
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import VedtakProsessIndex from '@fpsak-frontend/prosess-vedtak';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
-import { ProsessStegContainer } from '@k9-sak-web/behandling-felles';
 import { renderWithIntl } from '@fpsak-frontend/utils-test/src/test-utils';
+import { ProsessStegContainer } from '@k9-sak-web/behandling-felles';
+import VedtakProsessIndex from '@fpsak-frontend/prosess-vedtak';
 
 const behandling = {
   id: 1,
@@ -39,8 +39,8 @@ const behandling = {
       kodeverk: '',
     },
   },
-  behandlingPaaVent: false,
   behandlingHenlagt: false,
+  behandlingPaaVent: false,
   behandlingÅrsaker: [
     {
       behandlingArsakType: {
