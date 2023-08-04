@@ -12,7 +12,7 @@
     "@fpsak-frontend/utils": "1.0.0",
     "@k9-sak-web/types": "1.0.0",
     "@navikt/aksel-icons": "4.5.0",
-    "@navikt/ds-react": "4.5.0",
+    "@navikt/ds-react": "4.8.0",
     "@navikt/fnrvalidator": "1.3.3",
     "@navikt/ft-plattform-komponenter": "2.2.10",
     "axios": "0.27.2",
