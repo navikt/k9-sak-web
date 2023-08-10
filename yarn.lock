@@ -8144,9 +8144,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@sentry/cli@npm:2.20.1":
-  version: 2.20.1
-  resolution: "@sentry/cli@npm:2.20.1"
+"@sentry/cli@npm:2.20.3":
+  version: 2.20.3
+  resolution: "@sentry/cli@npm:2.20.3"
   dependencies:
     https-proxy-agent: ^5.0.0
     node-fetch: ^2.6.7
@@ -8155,7 +8155,7 @@ __metadata:
     which: ^2.0.2
   bin:
     sentry-cli: bin/sentry-cli
-  checksum: 358de2d3bc6dfa7639e55dda098b217a94e937de352f0034824bad5cffb74fee7ca6c6efa96faed6977099e7fde670a2e9a3438500e929db26fc146af9872fa6
+  checksum: a37c97fa2cc9d4661671c2d1806ecb5705965fd74cb3ab157a6e4ee44810c54d4df5c717c64e395fdaafa24d0280a184c6ddd5ad9178ac4579b66b6a4938d5c3
   languageName: node
   linkType: hard
 
@@ -18576,7 +18576,7 @@ __metadata:
     "@pmmmwh/react-refresh-webpack-plugin": 0.5.10
     "@popperjs/core": 2.11.8
     "@sentry/browser": 7.60.1
-    "@sentry/cli": 2.20.1
+    "@sentry/cli": 2.20.3
     "@storybook/addon-actions": 7.1.1
     "@storybook/addon-docs": 7.1.1
     "@storybook/addon-essentials": 7.1.1
