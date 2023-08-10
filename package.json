@@ -47,7 +47,7 @@
     "@navikt/aksel-icons": "4.10.2",
     "@navikt/ds-css": "4.10.2",
     "@navikt/ds-react": "4.10.2",
-    "@navikt/familie-endringslogg": "8.1.1",
+    "@navikt/familie-endringslogg": "9.0.0",
     "@navikt/ft-plattform-komponenter": "2.2.10",
     "@popperjs/core": "2.11.8",
     "@sentry/browser": "7.60.1",
