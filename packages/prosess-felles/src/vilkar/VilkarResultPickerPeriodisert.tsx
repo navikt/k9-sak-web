@@ -217,12 +217,10 @@ VilkarResultPicker.buildInitialValues = (
   const isOpenAksjonspunkt = aksjonspunkter.some(ap => isAksjonspunktOpen(ap.status.kode));
   let erVilkarOk;
 
-  if (!isOpenAksjonspunkt) {
-    if (status === vilkarUtfallType.OPPFYLT) {
-      erVilkarOk = vilkarUtfallPeriodisert.OPPFYLT;
-    } else if (status === vilkarUtfallType.IKKE_OPPFYLT) {
-      erVilkarOk = vilkarUtfallPeriodisert.IKKE_OPPFYLT;
-    }
+  if (status === vilkarUtfallType.OPPFYLT) {
+    erVilkarOk = vilkarUtfallPeriodisert.OPPFYLT;
+  } else if (status === vilkarUtfallType.IKKE_OPPFYLT) {
+    erVilkarOk = vilkarUtfallPeriodisert.IKKE_OPPFYLT;
   }
 
   return {
