@@ -18674,7 +18674,7 @@ __metadata:
     stylelint: 15.10.2
     stylelint-order: 6.0.3
     terser-webpack-plugin: 5.3.9
-    thread-loader: 3.0.4
+    thread-loader: 4.0.2
     type-fest: 3.13.1
     typescript: 5.1.6
     webpack: 5.88.2
@@ -25394,18 +25394,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"thread-loader@npm:3.0.4":
-  version: 3.0.4
-  resolution: "thread-loader@npm:3.0.4"
+"thread-loader@npm:4.0.2":
+  version: 4.0.2
+  resolution: "thread-loader@npm:4.0.2"
   dependencies:
     json-parse-better-errors: ^1.0.2
     loader-runner: ^4.1.0
-    loader-utils: ^2.0.0
     neo-async: ^2.6.2
-    schema-utils: ^3.0.0
+    schema-utils: ^4.0.1
   peerDependencies:
-    webpack: ^4.27.0 || ^5.0.0
-  checksum: 832edc6eac46df148465feb8d3e3e67a30ea82d1d29401ca1c6461d1a0386c6d1fed05739887fc9c69a7d189a68ca1686eaad214f283825e355de9b42663bcf0
+    webpack: ^5.0.0
+  checksum: 1b1bd4cf4320b63e2a8c52d6ff64c4cf7fbc5e6099f41aae5fa35c4714134becff5b91cd6b00d707f60d18003aba0ae112a719dfbd92fbcdeb875beba76b1146
   languageName: node
   linkType: hard
 
