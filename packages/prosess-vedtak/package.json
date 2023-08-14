@@ -8,7 +8,7 @@
     "@editorjs/editorjs": "2.27.2",
     "@editorjs/header": "2.7.0",
     "@editorjs/list": "1.8.0",
-    "@editorjs/paragraph": "2.9.0",
+    "@editorjs/paragraph": "2.10.0",
     "@fpsak-frontend/assets": "1.0.0",
     "@fpsak-frontend/form": "1.0.0",
     "@fpsak-frontend/kodeverk": "1.0.0",
@@ -22,7 +22,7 @@
     "css-tree": "2.3.1",
     "date-fns": "2.30.0",
     "editorjs-html": "3.4.3",
-    "formik": "2.4.2",
+    "formik": "2.4.3",
     "moment": "2.29.4",
     "nav-frontend-alertstriper": "4.0.2",
     "nav-frontend-core": "6.0.1",
@@ -47,6 +47,6 @@
     "@fpsak-frontend/utils-test": "1.0.0",
     "chai": "4.3.7",
     "enzyme": "3.11.0",
-    "sinon": "15.1.0"
+    "sinon": "15.2.0"
   }
 }
