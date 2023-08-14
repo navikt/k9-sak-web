@@ -30,7 +30,7 @@ class MedlemskapsvilkaretFaktaPanelDef extends FaktaPanelDef {
     fagsakPerson,
     soknad,
     personopplysninger,
-    saksbehandlere: hentSaksbehandlere.saksbehandlere || {},
+    saksbehandlere: hentSaksbehandlere?.saksbehandlere || {},
   });
 }
 
