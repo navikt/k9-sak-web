@@ -4747,7 +4747,7 @@ __metadata:
     react: 17.0.2
     react-intl: 6.4.4
     react-redux: 8.1.2
-    react-router-dom: 6.14.2
+    react-router-dom: 6.15.0
     redux-form: 8.3.10
     sinon: 15.1.0
   languageName: unknown
@@ -4776,7 +4776,7 @@ __metadata:
     nav-frontend-typografi-style: 2.0.2
     react: 17.0.2
     react-intl: 6.4.4
-    react-router-dom: 6.14.2
+    react-router-dom: 6.15.0
     sinon: 15.1.0
   languageName: unknown
   linkType: soft
@@ -4898,7 +4898,7 @@ __metadata:
     react: 17.0.2
     react-intl: 6.4.4
     react-redux: 8.1.2
-    react-router-dom: 6.14.2
+    react-router-dom: 6.15.0
     redux: 4.2.1
     redux-form: 8.3.10
     sinon: 15.1.0
@@ -5055,7 +5055,7 @@ __metadata:
     react: 17.0.2
     react-intl: 6.4.4
     react-redux: 8.1.2
-    react-router-dom: 6.14.2
+    react-router-dom: 6.15.0
     redux: 4.2.1
     redux-form: 8.3.10
     reselect: 4.1.8
@@ -6361,7 +6361,7 @@ __metadata:
     react-dom: 17.0.2
     react-intl: 6.4.4
     react-redux: 8.1.2
-    react-router-dom: 6.14.2
+    react-router-dom: 6.15.0
     redux-form: 8.3.10
     sinon: 15.1.0
   languageName: unknown
@@ -6553,7 +6553,7 @@ __metadata:
     nav-frontend-typografi-style: 2.0.2
     react: 17.0.2
     react-intl: 6.4.4
-    react-router-dom: 6.14.2
+    react-router-dom: 6.15.0
   languageName: unknown
   linkType: soft
 
@@ -6636,7 +6636,7 @@ __metadata:
     react-intl: 6.4.4
     react-redux: 8.1.2
     react-responsive: 9.0.2
-    react-router-dom: 6.14.2
+    react-router-dom: 6.15.0
     redux: 4.2.1
     redux-form: 8.3.10
     redux-logger: 3.0.6
@@ -6672,7 +6672,7 @@ __metadata:
     react: 17.0.2
     react-intl: 6.4.4
     react-query: 3.39.3
-    react-router-dom: 6.14.2
+    react-router-dom: 6.15.0
     sinon: 15.1.0
   languageName: unknown
   linkType: soft
@@ -6686,7 +6686,7 @@ __metadata:
     nav-frontend-typografi-style: 2.0.2
     react: 17.0.2
     react-intl: 6.4.4
-    react-router-dom: 6.14.2
+    react-router-dom: 6.15.0
   languageName: unknown
   linkType: soft
 
@@ -6757,7 +6757,7 @@ __metadata:
     nav-frontend-typografi-style: 2.0.2
     react: 17.0.2
     react-intl: 6.4.4
-    react-router-dom: 6.14.2
+    react-router-dom: 6.15.0
   languageName: unknown
   linkType: soft
 
@@ -8558,13 +8558,6 @@ __metadata:
   version: 1.2.1
   resolution: "@redux-saga/types@npm:1.2.1"
   checksum: 754f183bd1bdd589a29d2b976f666e9ee9e6d28e88268538c11f679d019334999676d5425af14d2a99d5c91c0c87a01e7ac1c4d81a656d93dd529df315bbd0c7
-  languageName: node
-  linkType: hard
-
-"@remix-run/router@npm:1.7.2":
-  version: 1.7.2
-  resolution: "@remix-run/router@npm:1.7.2"
-  checksum: ea43bb662f1f5c93965989b1667fb6e8a301cb69c44341ee92c81cb15ea685b494168e5905593b5777d59058f1455b4b58083d5b895f04382e49362e420d7af4
   languageName: node
   linkType: hard
 
@@ -19125,7 +19118,7 @@ __metadata:
     react-modal: 3.16.1
     react-popper: 2.3.0
     react-router: 6.15.0
-    react-router-dom: 6.14.2
+    react-router-dom: 6.15.0
     react-test-renderer: 18.2.0
     redux-mock-store: 1.5.4
     sinon: 15.1.0
@@ -23593,27 +23586,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-router-dom@npm:6.14.2":
-  version: 6.14.2
-  resolution: "react-router-dom@npm:6.14.2"
+"react-router-dom@npm:6.15.0":
+  version: 6.15.0
+  resolution: "react-router-dom@npm:6.15.0"
   dependencies:
-    "@remix-run/router": 1.7.2
-    react-router: 6.14.2
+    "@remix-run/router": 1.8.0
+    react-router: 6.15.0
   peerDependencies:
     react: ">=16.8"
     react-dom: ">=16.8"
-  checksum: a53dbc566ecab7890b829d42d38553684f704803c1f615db1bd6aa2d71542c369a1a79e4385be31ae71a14b72ddbcd0d8b51188248c2bccd44e015050d1927df
-  languageName: node
-  linkType: hard
-
-"react-router@npm:6.14.2":
-  version: 6.14.2
-  resolution: "react-router@npm:6.14.2"
-  dependencies:
-    "@remix-run/router": 1.7.2
-  peerDependencies:
-    react: ">=16.8"
-  checksum: 7507bf5732b3a8ddbd901c2061216eebca73e194449bff58acc1445171e22bdda36b455b8af066e467748ebfb5875b3c0a565941c46af65c6f653a6ed0dc4fe4
+  checksum: 95301837e293654f00934de6a4bdb27bfb06f613503e4cce7a93f19384793729832e7479d50faf3b9457d149014d4df40a3ee3a5193d7e3a3caadb7aaa6ec0f9
   languageName: node
   linkType: hard
 
