@@ -10,6 +10,8 @@ export type DokumentStatus = Readonly<{
     godkjent: boolean;
     begrunnelse: string;
     fraDato: string;
+    opprettetAv: string;
+    opprettetTidspunkt: string;
   };
   overstyrteOpplysninger?: {
     godkjent: boolean;

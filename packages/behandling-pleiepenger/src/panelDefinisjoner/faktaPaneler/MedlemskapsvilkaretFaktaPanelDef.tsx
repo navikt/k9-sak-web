@@ -20,16 +20,17 @@ class MedlemskapsvilkaretFaktaPanelDef extends FaktaPanelDef {
     aksjonspunktCodes.AVKLAR_FORTSATT_MEDLEMSKAP,
   ];
 
-  getEndepunkter = () => [PleiepengerBehandlingApiKeys.MEDLEMSKAP];
+  getEndepunkter = () => [PleiepengerBehandlingApiKeys.MEDLEMSKAP, PleiepengerBehandlingApiKeys.HENT_SAKSBEHANDLERE];
 
   getKomponent = props => <MedlemskapFaktaIndex {...props} />;
 
   getOverstyrVisningAvKomponent = ({ personopplysninger, soknad }) => personopplysninger && soknad;
 
-  getData = ({ fagsakPerson, soknad, personopplysninger }) => ({
+  getData = ({ fagsakPerson, soknad, personopplysninger, hentSaksbehandlere }) => ({
     fagsakPerson,
     soknad,
     personopplysninger,
+    saksbehandlere: hentSaksbehandlere.saksbehandlere || {},
   });
 }
 
