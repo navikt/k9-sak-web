@@ -106,6 +106,7 @@ export const visOverstyringspanelForSoknadsfrist = () => {
       panelTittelKode="Inngangsvilkar.Soknadsfrist"
       vilkar={vilkarSoknadsfrist}
       visAllePerioder
+      saksbehandlere={{}}
     />
   );
 };
@@ -136,6 +137,7 @@ export const visOverstyringspanelForSoknadsfristUtenDokumenter = () => {
       panelTittelKode="Inngangsvilkar.Soknadsfrist"
       vilkar={vilkarSoknadsfrist}
       visAllePerioder
+      saksbehandlere={{}}
     />
   );
 };
@@ -224,6 +226,7 @@ export const visSoknadsfristAksjonspunkt5077 = () => {
         },
       ]}
       visAllePerioder
+      saksbehandlere={{}}
     />
   );
 };
@@ -334,6 +337,7 @@ export const visSoknadsfristAksjonspunkt5077Delvis = () => {
         },
       ]}
       visAllePerioder
+      saksbehandlere={{}}
     />
   );
 };
