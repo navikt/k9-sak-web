@@ -106,6 +106,7 @@ export const visOverstyringspanelForSoknadsfrist = () => {
       panelTittelKode="Inngangsvilkar.Soknadsfrist"
       vilkar={vilkarSoknadsfrist}
       visAllePerioder
+      saksbehandlere={{}}
     />
   );
 };
@@ -136,6 +137,7 @@ export const visOverstyringspanelForSoknadsfristUtenDokumenter = () => {
       panelTittelKode="Inngangsvilkar.Soknadsfrist"
       vilkar={vilkarSoknadsfrist}
       visAllePerioder
+      saksbehandlere={{}}
     />
   );
 };
@@ -224,6 +226,7 @@ export const visSoknadsfristAksjonspunkt5077 = () => {
         },
       ]}
       visAllePerioder
+      saksbehandlere={{}}
     />
   );
 };
@@ -294,6 +297,8 @@ export const visSoknadsfristAksjonspunkt5077Delvis = () => {
                 'sdklfjsøl jølsdjfø lsjdfljsldøjf sdjf slødjf sld\n\n\n',
                 'sldfj sljfølsjd fløsdlfj øsldjf lsøjdfølsdjfløsjd lsdfs',
               ].join(''),
+              opprettetAv: 'saksbeh',
+              opprettetTidspunkt: '2021-08-26T16:17:16.538',
             },
             overstyrteOpplysninger: null,
           },
@@ -334,6 +339,7 @@ export const visSoknadsfristAksjonspunkt5077Delvis = () => {
         },
       ]}
       visAllePerioder
+      saksbehandlere={{}}
     />
   );
 };

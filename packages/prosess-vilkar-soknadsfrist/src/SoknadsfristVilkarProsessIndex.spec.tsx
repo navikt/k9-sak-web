@@ -58,6 +58,7 @@ describe('<SoknadsfristVilkarForm>', () => {
         ]}
         soknadsfristStatus={soknadsfristStatus}
         visAllePerioder={false}
+        saksbehandlere={{}}
       />,
     );
 
@@ -126,6 +127,7 @@ describe('<SoknadsfristVilkarForm>', () => {
         ]}
         soknadsfristStatus={soknadsfristStatus}
         visAllePerioder={false}
+        saksbehandlere={{}}
       />,
     );
 

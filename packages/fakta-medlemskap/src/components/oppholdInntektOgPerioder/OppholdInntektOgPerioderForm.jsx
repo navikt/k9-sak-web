@@ -164,6 +164,7 @@ export class OppholdInntektOgPerioderForm extends Component {
       behandlingVersjon,
       alleKodeverk,
       alleMerknaderFraBeslutter,
+      saksbehandlere,
       ...formProps
     } = this.props;
 

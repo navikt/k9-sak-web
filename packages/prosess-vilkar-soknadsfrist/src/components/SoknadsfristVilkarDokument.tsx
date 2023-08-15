@@ -14,20 +14,14 @@ import {
 } from '@fpsak-frontend/utils';
 
 import { DokumentStatus } from '@k9-sak-web/types';
-import {
-  VerticalSpacer,
-  FlexContainer,
-  FlexRow,
-  FlexColumn,
-  Image,
-  useFeatureToggles,
-} from '@fpsak-frontend/shared-components';
+import { VerticalSpacer, FlexContainer, FlexRow, FlexColumn, Image } from '@fpsak-frontend/shared-components';
 import avslattImage from '@fpsak-frontend/assets/images/avslaatt.svg';
 import innvilgetImage from '@fpsak-frontend/assets/images/check.svg';
+import { AssessedBy } from '@navikt/ft-plattform-komponenter';
 
 import { Normaltekst } from 'nav-frontend-typografi';
 
-import { utledInnsendtSoknadsfrist, formatDate } from '../utils';
+import { formatDate } from '../utils';
 
 import styles from './SoknadsfristVilkarDokument.less';
 
@@ -40,6 +34,7 @@ interface SoknadsfristVilkarDokumentProps {
   dokument: DokumentStatus;
   dokumentIndex: number;
   erAktivtDokument: boolean;
+  saksbehandlere: { [key: string]: string };
 }
 
 export const DELVIS_OPPFYLT = 'DELVIS_OPPFYLT';
@@ -57,8 +52,11 @@ export const SoknadsfristVilkarDokument = ({
   dokument,
   erAktivtDokument,
   dokumentIndex,
+  saksbehandlere,
 }: SoknadsfristVilkarDokumentProps) => {
   const intl = useIntl();
+  const opprettetAv = dokument?.avklarteOpplysninger?.opprettetAv;
+  const opprettetTidspunkt = dokument?.avklarteOpplysninger?.opprettetTidspunkt;
   const minDate = useMemo(
     () =>
       dokument.status.reduce(
@@ -78,7 +76,6 @@ export const SoknadsfristVilkarDokument = ({
 
   const isAtleastDate = useCallback(v => dateAfterOrEqual(minDate)(v), [minDate]);
   const isAtmostDate = useCallback(v => dateBeforeOrEqual(maxDate)(v), [maxDate]);
-
   return (
     <div style={{ display: erAktivtDokument ? 'block' : 'none' }}>
       <p>
@@ -96,6 +93,7 @@ export const SoknadsfristVilkarDokument = ({
             readOnly={readOnly}
             placeholder={intl.formatMessage({ id: 'VilkarBegrunnelse.BegrunnVurdering' })}
           />
+          <AssessedBy name={saksbehandlere[opprettetAv] || opprettetAv} date={opprettetTidspunkt} />
         </>
       )}
       <VerticalSpacer sixteenPx />
