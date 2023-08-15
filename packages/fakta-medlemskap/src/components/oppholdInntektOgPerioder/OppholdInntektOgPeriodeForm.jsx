@@ -5,6 +5,7 @@ import { FormattedMessage, injectIntl } from 'react-intl';
 import { connect } from 'react-redux';
 import moment from 'moment';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
+import { AssessedBy } from '@navikt/ft-plattform-komponenter';
 
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { FaktaBegrunnelseTextField } from '@k9-sak-web/fakta-felles';
@@ -31,6 +32,7 @@ export const OppholdInntektOgPeriodeForm = ({
   alleMerknaderFraBeslutter,
   behandlingId,
   behandlingVersjon,
+  saksbehandlere,
   ...formProps
 }) => (
   <BorderBox>
@@ -63,11 +65,19 @@ export const OppholdInntektOgPeriodeForm = ({
     )}
     <VerticalSpacer twentyPx />
     {valgtPeriode.aksjonspunkter && valgtPeriode.aksjonspunkter.length > 0 && (
-      <FaktaBegrunnelseTextField
-        isReadOnly={readOnly}
-        isSubmittable={submittable}
-        hasBegrunnelse={!!initialValues.begrunnelse}
-      />
+      <>
+        <FaktaBegrunnelseTextField
+          isReadOnly={readOnly}
+          isSubmittable={submittable}
+          hasBegrunnelse={!!initialValues.begrunnelse}
+        />
+        {!!initialValues.begrunnelse && (
+          <AssessedBy
+            name={saksbehandlere[valgtPeriode?.vurdertAv] || valgtPeriode?.vurdertAv}
+            date={valgtPeriode?.vurdertTidspunkt}
+          />
+        )}
+      </>
     )}
 
     <VerticalSpacer twentyPx />
@@ -102,6 +112,7 @@ OppholdInntektOgPeriodeForm.propTypes = {
   }).isRequired,
   behandlingId: PropTypes.number.isRequired,
   behandlingVersjon: PropTypes.number.isRequired,
+  saksbehandlere: PropTypes.shape(),
 };
 
 OppholdInntektOgPeriodeForm.defaultProps = {

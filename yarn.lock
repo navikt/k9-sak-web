@@ -4138,6 +4138,7 @@ __metadata:
     "@fpsak-frontend/utils": 1.0.0
     "@fpsak-frontend/utils-test": 1.0.0
     "@k9-sak-web/fakta-felles": 1.0.0
+    "@navikt/ft-plattform-komponenter": 2.2.18
     chai: 4.3.7
     enzyme: 3.11.0
     i18n-iso-countries: 7.6.0
@@ -7221,10 +7222,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@navikt/aksel-icons@npm:4.11.1, @navikt/aksel-icons@npm:^4.11.0, @navikt/aksel-icons@npm:^4.11.1":
+"@navikt/aksel-icons@npm:4.11.1, @navikt/aksel-icons@npm:^4.11.1":
   version: 4.11.1
   resolution: "@navikt/aksel-icons@npm:4.11.1::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Faksel-icons%2F4.11.1%2F2069b3eec02d3cb45b07500aa2d77d52347f323c"
   checksum: 31e0728142f909451f588dad9cef1989ac0f2f26578bc5b2943fdbfbb571396b066296299669b916c0d06dd20fb485eefb316fc93f60d541c4fff4565f8f4d2f
+  languageName: node
+  linkType: hard
+
+"@navikt/aksel-icons@npm:^4.11.0":
+  version: 4.11.2
+  resolution: "@navikt/aksel-icons@npm:4.11.2::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Faksel-icons%2F4.11.2%2F4f48bf3105c709353af2afd57aa3465f85eb261f"
+  checksum: 64612ff63a1a62468547fad4d06a3361ef37b02ae60692e74d005f93532307cd9c414dd00839d3427fcb4aa8d30c44d323250b52b8a7d7367ae0327c4200e1dd
   languageName: node
   linkType: hard
 
@@ -7522,6 +7530,29 @@ __metadata:
     react-dom: 18.2.0
     react-popper: 2.3.0
   checksum: 3fdea9a81b188a0cb195adeeefe7b8332e7b344410898a3773d3fb3592becdc70c1cbda89bc86dc6a75ee072ce8d9134532cc35ae02db57ac2fff0d95bb3f6ef
+  languageName: node
+  linkType: hard
+
+"@navikt/ft-plattform-komponenter@npm:2.2.18":
+  version: 2.2.18
+  resolution: "@navikt/ft-plattform-komponenter@npm:2.2.18::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fft-plattform-komponenter%2F2.2.18%2F4c20aa8bd20b6302dd96597419fabed304591522"
+  dependencies:
+    "@navikt/aksel-icons": 4.11.0
+    "@navikt/ds-css": 4.11.0
+    "@navikt/ds-react": 4.11.0
+    "@navikt/ft-utils": ^2.0.43
+    classnames: 2.3.2
+  peerDependencies:
+    "@popperjs/core": 2.11.7
+    classnames: 2.3.2
+    dayjs: 1.11.7
+    lodash.throttle: 4.1.1
+    prop-types: 15.8.1
+    react: 18.2.0
+    react-collapse: 5.1.1
+    react-dom: 18.2.0
+    react-popper: 2.3.0
+  checksum: 489686d650dfa1cf17a0745240a6ec14f9da8034138431565ce547d06a05a46f35bc7944bfe8182c7710a96d87b9dda2f62abb3500ee3fcf334ae644f0db2e9b
   languageName: node
   linkType: hard
 
