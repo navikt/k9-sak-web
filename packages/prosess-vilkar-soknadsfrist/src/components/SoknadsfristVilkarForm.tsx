@@ -54,6 +54,7 @@ interface SoknadsfristVilkarFormProps {
   toggleOverstyring: (overstyrtPanel: SetStateAction<string[]>) => void;
   alleDokumenter?: DokumentStatus[];
   dokumenterIAktivPeriode?: DokumentStatus[];
+  saksbehandlere: { [key: string]: string };
 }
 
 interface StateProps {
@@ -82,6 +83,7 @@ export const SoknadsfristVilkarForm = ({
   invalid,
   alleDokumenter,
   dokumenterIAktivPeriode,
+  saksbehandlere,
 }: SoknadsfristVilkarFormProps & StateProps & InjectedFormProps) => {
   const toggleAv = () => {
     reset();
@@ -104,6 +106,7 @@ export const SoknadsfristVilkarForm = ({
                 erVilkarOk={erVilkarOk}
                 dokumentIndex={index}
                 dokument={dokument}
+                saksbehandlere={saksbehandlere}
               />
             );
           })}
@@ -141,6 +144,7 @@ export const SoknadsfristVilkarForm = ({
                   erVilkarOk={erVilkarOk}
                   dokumentIndex={index}
                   dokument={dokument}
+                  saksbehandlere={saksbehandlere}
                 />
               );
             })

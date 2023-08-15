@@ -16,6 +16,7 @@ const initializeOmsorgenFor = (
   readOnly: boolean,
   løsAksjonspunkt: (omsorgsperioder, fosterbarnForOmsorgspenger) => void,
   sakstype: string,
+  saksbehandlere: { [key: string]: string },
 ) => {
   (window as any).renderOmsorgenForApp(elementId, {
     httpErrorHandler: httpErrorHandlerFn,
@@ -23,6 +24,7 @@ const initializeOmsorgenFor = (
     readOnly,
     onFinished: løsAksjonspunkt,
     sakstype,
+    saksbehandlere,
   });
 };
 
@@ -37,10 +39,18 @@ interface OmsorgenForProps {
     omsorgsperioder: any;
     fosterbarnForOmsorgspenger: any;
   }[]) => void;
+  saksbehandlere: { [key: string]: string };
 }
 
 const omsorgenForAppID = 'omsorgenForApp';
-const OmsorgenFor = ({ behandling, fagsak, readOnly, aksjonspunkter, submitCallback }: OmsorgenForProps) => {
+const OmsorgenFor = ({
+  behandling,
+  fagsak,
+  readOnly,
+  aksjonspunkter,
+  submitCallback,
+  saksbehandlere,
+}: OmsorgenForProps) => {
   const { links } = behandling;
   const sakstype = fagsak.sakstype.kode;
 
@@ -81,6 +91,7 @@ const OmsorgenFor = ({ behandling, fagsak, readOnly, aksjonspunkter, submitCallb
           readOnly || !harAksjonspunkt,
           løsAksjonspunkt,
           sakstype,
+          saksbehandlere || {},
         )
       }
     />

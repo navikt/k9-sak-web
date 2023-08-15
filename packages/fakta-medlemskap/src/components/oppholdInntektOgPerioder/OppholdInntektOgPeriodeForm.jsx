@@ -5,6 +5,7 @@ import { FormattedMessage, injectIntl } from 'react-intl';
 import { connect } from 'react-redux';
 import moment from 'moment';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
+import { AssessedBy } from '@navikt/ft-plattform-komponenter';
 
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { FaktaBegrunnelseTextField } from '@k9-sak-web/fakta-felles';
@@ -63,11 +64,14 @@ export const OppholdInntektOgPeriodeForm = ({
     )}
     <VerticalSpacer twentyPx />
     {valgtPeriode.aksjonspunkter && valgtPeriode.aksjonspunkter.length > 0 && (
-      <FaktaBegrunnelseTextField
-        isReadOnly={readOnly}
-        isSubmittable={submittable}
-        hasBegrunnelse={!!initialValues.begrunnelse}
-      />
+      <>
+        <FaktaBegrunnelseTextField
+          isReadOnly={readOnly}
+          isSubmittable={submittable}
+          hasBegrunnelse={!!initialValues.begrunnelse}
+        />
+        {!!initialValues.begrunnelse && <AssessedBy name />}
+      </>
     )}
 
     <VerticalSpacer twentyPx />

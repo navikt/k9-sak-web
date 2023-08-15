@@ -48,6 +48,7 @@ interface SoknadsfristVilkarProsessIndexProps {
   vilkar: Vilkar[];
   visAllePerioder: boolean;
   soknadsfristStatus: { dokumentStatus: DokumentStatus[] };
+  saksbehandlere: { [key: string]: string };
 }
 
 const SoknadsfristVilkarProsessIndex = ({
@@ -62,12 +63,11 @@ const SoknadsfristVilkarProsessIndex = ({
   vilkar,
   visAllePerioder,
   soknadsfristStatus,
+  saksbehandlere,
 }: SoknadsfristVilkarProsessIndexProps) => {
   const [activeTab, setActiveTab] = useState(0);
-
   const [activeVilkår] = vilkar;
   const perioder = hentAktivePerioderFraVilkar(vilkar, visAllePerioder);
-
   useEffect(() => {
     if (!visAllePerioder && activeTab >= perioder.length) {
       setActiveTab(0);
@@ -176,6 +176,7 @@ const SoknadsfristVilkarProsessIndex = ({
             alleDokumenter={dokumenterSomSkalVurderes}
             dokumenterIAktivPeriode={dokumenterIAktivPeriode}
             periode={activePeriode}
+            saksbehandlere={saksbehandlere}
           />
         </div>
       </div>
