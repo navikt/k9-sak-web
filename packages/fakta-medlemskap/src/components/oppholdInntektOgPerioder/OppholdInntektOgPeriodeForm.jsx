@@ -32,6 +32,7 @@ export const OppholdInntektOgPeriodeForm = ({
   alleMerknaderFraBeslutter,
   behandlingId,
   behandlingVersjon,
+  saksbehandlere,
   ...formProps
 }) => (
   <BorderBox>
@@ -70,7 +71,12 @@ export const OppholdInntektOgPeriodeForm = ({
           isSubmittable={submittable}
           hasBegrunnelse={!!initialValues.begrunnelse}
         />
-        {!!initialValues.begrunnelse && <AssessedBy name />}
+        {!!initialValues.begrunnelse && (
+          <AssessedBy
+            name={saksbehandlere[valgtPeriode?.vurdertAv] || valgtPeriode?.vurdertAv}
+            date={valgtPeriode?.vurdertTidspunkt}
+          />
+        )}
       </>
     )}
 
@@ -106,6 +112,7 @@ OppholdInntektOgPeriodeForm.propTypes = {
   }).isRequired,
   behandlingId: PropTypes.number.isRequired,
   behandlingVersjon: PropTypes.number.isRequired,
+  saksbehandlere: PropTypes.shape(),
 };
 
 OppholdInntektOgPeriodeForm.defaultProps = {

@@ -198,6 +198,7 @@ export class OppholdInntektOgPerioderForm extends Component {
             behandlingVersjon={behandlingVersjon}
             alleKodeverk={alleKodeverk}
             alleMerknaderFraBeslutter={alleMerknaderFraBeslutter}
+            saksbehandlere={saksbehandlere}
           />
         )}
 
