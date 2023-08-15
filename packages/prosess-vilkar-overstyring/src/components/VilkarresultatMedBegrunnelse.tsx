@@ -38,7 +38,7 @@ export const VilkarresultatMedBegrunnelse = ({
   customVilkarOppfyltText,
   opprettetAv,
 }: VilkarresultatMedBegrunnelseProps) => {
-  const { saksbehandlere } = useGlobalStateRestApiData<SaksbehandlereInfo>(K9sakApiKeys.HENT_SAKSBEHANDLERE) || {};
+  const { saksbehandlere = {} } = useGlobalStateRestApiData<SaksbehandlereInfo>(K9sakApiKeys.HENT_SAKSBEHANDLERE) || {};
   return (
     <>
       {skalViseBegrunnelse && (

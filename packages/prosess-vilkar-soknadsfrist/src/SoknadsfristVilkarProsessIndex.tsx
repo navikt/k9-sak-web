@@ -3,7 +3,16 @@ import moment from 'moment';
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 import classNames from 'classnames/bind';
 
-import { Aksjonspunkt, DokumentStatus, Behandling, SubmitCallback, Vilkar } from '@k9-sak-web/types';
+import useGlobalStateRestApiData from '@k9-sak-web/rest-api-hooks/src/global-data/useGlobalStateRestApiData';
+import { K9sakApiKeys } from '@k9-sak-web/sak-app/src/data/k9sakApi';
+import {
+  Aksjonspunkt,
+  DokumentStatus,
+  Behandling,
+  SubmitCallback,
+  Vilkar,
+  SaksbehandlereInfo,
+} from '@k9-sak-web/types';
 import { dateFormat } from '@fpsak-frontend/utils';
 import { SideMenu } from '@navikt/ft-plattform-komponenter';
 import advarselIcon from '@fpsak-frontend/assets/images/advarsel.svg';
@@ -48,7 +57,6 @@ interface SoknadsfristVilkarProsessIndexProps {
   vilkar: Vilkar[];
   visAllePerioder: boolean;
   soknadsfristStatus: { dokumentStatus: DokumentStatus[] };
-  saksbehandlere: { [key: string]: string };
 }
 
 const SoknadsfristVilkarProsessIndex = ({
@@ -63,8 +71,8 @@ const SoknadsfristVilkarProsessIndex = ({
   vilkar,
   visAllePerioder,
   soknadsfristStatus,
-  saksbehandlere,
 }: SoknadsfristVilkarProsessIndexProps) => {
+  const { saksbehandlere = {} } = useGlobalStateRestApiData<SaksbehandlereInfo>(K9sakApiKeys.HENT_SAKSBEHANDLERE) || {};
   const [activeTab, setActiveTab] = useState(0);
   const [activeVilkår] = vilkar;
   const perioder = hentAktivePerioderFraVilkar(vilkar, visAllePerioder);
