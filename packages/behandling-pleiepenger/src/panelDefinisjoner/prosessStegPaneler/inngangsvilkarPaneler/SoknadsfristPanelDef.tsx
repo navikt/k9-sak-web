@@ -21,10 +21,7 @@ class SoknadsfristPanelDef extends ProsessStegPanelDef {
 
   getVilkarKoder = () => [vilkarType.SOKNADSFRISTVILKARET];
 
-  getEndepunkter = () => [
-    PleiepengerBehandlingApiKeys.SOKNADSFRIST_STATUS,
-    PleiepengerBehandlingApiKeys.HENT_SAKSBEHANDLERE,
-  ];
+  getEndepunkter = () => [PleiepengerBehandlingApiKeys.SOKNADSFRIST_STATUS];
 
   getOverstyrVisningAvKomponent = ({ vilkarForSteg }) => vilkarForSteg.length > 0;
 
@@ -36,7 +33,6 @@ class SoknadsfristPanelDef extends ProsessStegPanelDef {
     overrideReadOnly,
     kanOverstyreAccess,
     toggleOverstyring,
-    hentSaksbehandlere,
   }): any => ({
     avslagsarsaker: alleKodeverk[kodeverkTyper.AVSLAGSARSAK][vilkarForSteg[0].vilkarType.kode],
     erOverstyrt: overstyrteAksjonspunktKoder.some(o => this.getAksjonspunktKoder().some(a => a === o)),
@@ -45,7 +41,6 @@ class SoknadsfristPanelDef extends ProsessStegPanelDef {
     overrideReadOnly,
     kanOverstyreAccess,
     toggleOverstyring,
-    saksbehandlere: hentSaksbehandlere?.saksbehandlere,
   });
 }
 

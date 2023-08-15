@@ -1,9 +1,12 @@
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
 
+import { AssessedBy } from '@navikt/ft-plattform-komponenter';
 import { VilkarResultPicker } from '@k9-sak-web/prosess-felles';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { KodeverkMedNavn } from '@k9-sak-web/types';
+import { KodeverkMedNavn, SaksbehandlereInfo } from '@k9-sak-web/types';
+import { K9sakApiKeys } from '@k9-sak-web/sak-app/src/data/k9sakApi';
+import useGlobalStateRestApiData from '@k9-sak-web/rest-api-hooks/src/global-data/useGlobalStateRestApiData';
 
 import { CustomVilkarText } from './VilkarresultatMedOverstyringForm';
 import VilkarBegrunnelse from './VilkarBegrunnelse';
@@ -16,10 +19,11 @@ interface VilkarresultatMedBegrunnelseProps {
   customVilkarIkkeOppfyltText?: CustomVilkarText;
   customVilkarOppfyltText?: CustomVilkarText;
   skalViseBegrunnelse?: boolean;
+  opprettetAv?: string;
 }
 
 /**
- * VIlkarresultatMedBegrunnelse
+ * VilkarresultatMedBegrunnelse
  *
  * Presentasjonskomponent. Viser resultat av vilkårskjøring når det ikke finnes tilknyttede aksjonspunkter.
  * Resultatet kan overstyres av Nav-ansatt med overstyr-rettighet.
@@ -32,52 +36,57 @@ export const VilkarresultatMedBegrunnelse = ({
   skalViseBegrunnelse,
   customVilkarIkkeOppfyltText,
   customVilkarOppfyltText,
-}: VilkarresultatMedBegrunnelseProps) => (
-  <>
-    {skalViseBegrunnelse && (
-      <>
-        <VilkarBegrunnelse isReadOnly={readOnly} />
-        <VerticalSpacer eightPx />
-      </>
-    )}
-    <VilkarResultPicker
-      avslagsarsaker={avslagsarsaker}
-      customVilkarOppfyltText={
-        <FormattedMessage
-          id={customVilkarOppfyltText ? customVilkarOppfyltText.id : 'VilkarresultatMedOverstyringForm.ErOppfylt'}
-          values={
-            customVilkarOppfyltText
-              ? {
-                  b: chunks => <b>{chunks}</b>,
-                  ...customVilkarIkkeOppfyltText.values,
-                }
-              : { b: chunks => <b>{chunks}</b> }
-          }
-        />
-      }
-      customVilkarIkkeOppfyltText={
-        <FormattedMessage
-          id={
-            customVilkarIkkeOppfyltText
-              ? customVilkarOppfyltText.id
-              : 'VilkarresultatMedOverstyringForm.VilkarIkkeOppfylt'
-          }
-          values={
-            customVilkarIkkeOppfyltText
-              ? {
-                  b: chunks => <b>{chunks}</b>,
-                  ...customVilkarIkkeOppfyltText.values,
-                }
-              : { b: chunks => <b>{chunks}</b> }
-          }
-        />
-      }
-      erVilkarOk={erVilkarOk}
-      readOnly={readOnly}
-      erMedlemskapsPanel={erMedlemskapsPanel}
-    />
-  </>
-);
+  opprettetAv,
+}: VilkarresultatMedBegrunnelseProps) => {
+  const { saksbehandlere } = useGlobalStateRestApiData<SaksbehandlereInfo>(K9sakApiKeys.HENT_SAKSBEHANDLERE) || {};
+  return (
+    <>
+      {skalViseBegrunnelse && (
+        <>
+          <VilkarBegrunnelse isReadOnly={readOnly} />
+          <AssessedBy name={saksbehandlere[opprettetAv] || opprettetAv} />
+          <VerticalSpacer eightPx />
+        </>
+      )}
+      <VilkarResultPicker
+        avslagsarsaker={avslagsarsaker}
+        customVilkarOppfyltText={
+          <FormattedMessage
+            id={customVilkarOppfyltText ? customVilkarOppfyltText.id : 'VilkarresultatMedOverstyringForm.ErOppfylt'}
+            values={
+              customVilkarOppfyltText
+                ? {
+                    b: chunks => <b>{chunks}</b>,
+                    ...customVilkarIkkeOppfyltText.values,
+                  }
+                : { b: chunks => <b>{chunks}</b> }
+            }
+          />
+        }
+        customVilkarIkkeOppfyltText={
+          <FormattedMessage
+            id={
+              customVilkarIkkeOppfyltText
+                ? customVilkarOppfyltText.id
+                : 'VilkarresultatMedOverstyringForm.VilkarIkkeOppfylt'
+            }
+            values={
+              customVilkarIkkeOppfyltText
+                ? {
+                    b: chunks => <b>{chunks}</b>,
+                    ...customVilkarIkkeOppfyltText.values,
+                  }
+                : { b: chunks => <b>{chunks}</b> }
+            }
+          />
+        }
+        erVilkarOk={erVilkarOk}
+        readOnly={readOnly}
+        erMedlemskapsPanel={erMedlemskapsPanel}
+      />
+    </>
+  );
+};
 
 VilkarresultatMedBegrunnelse.defaultProps = {
   customVilkarIkkeOppfyltText: undefined,

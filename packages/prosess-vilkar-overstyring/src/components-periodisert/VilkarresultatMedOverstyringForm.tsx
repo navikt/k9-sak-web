@@ -68,6 +68,7 @@ interface VilkarresultatMedOverstyringFormProps {
   toggleOverstyring: (overstyrtPanel: SetStateAction<string[]>) => void;
   avslagKode?: string;
   periode?: Vilkarperiode;
+  opprettetAv?: string;
 }
 
 interface StateProps {
@@ -107,6 +108,7 @@ export const VilkarresultatMedOverstyringForm = ({
   periodeTom,
   valgtPeriodeFom,
   valgtPeriodeTom,
+  opprettetAv,
 }: Partial<VilkarresultatMedOverstyringFormProps> & StateProps & InjectedFormProps) => {
   const toggleAv = () => {
     reset();
@@ -142,6 +144,7 @@ export const VilkarresultatMedOverstyringForm = ({
             valgtPeriodeFom={valgtPeriodeFom}
             valgtPeriodeTom={valgtPeriodeTom}
             periodeVilkarStatus={periodeVilkarStatus}
+            opprettetAv={opprettetAv}
           />
           <VerticalSpacer sixteenPx />
           {!erOverstyrt && erVilkarOk !== undefined && (
@@ -289,6 +292,7 @@ const mapStateToPropsFactory = (_initialState, initialOwnProps: VilkarresultatMe
       form: formName,
       periodeFom,
       periodeTom,
+      opprettetAv: aksjonspunkt ? aksjonspunkt.opprettetAv : '',
       ...behandlingFormValueSelector(formName, behandlingId, behandlingVersjon)(
         state,
         'isOverstyrt',
