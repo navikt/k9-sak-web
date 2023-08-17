@@ -9,7 +9,7 @@
     "@fpsak-frontend/utils": "*",
     "@k9-sak-web/types": "*",
     "@navikt/ds-icons": "3.4.3",
-    "@navikt/ds-react": "4.11.1",
+    "@navikt/ds-react": "4.12.0",
     "@navikt/ft-plattform-komponenter": "2.2.16",
     "@navikt/k9-fe-form-utils": "1.0.9",
     "@navikt/k9-fe-period-utils": "1.0.8",
