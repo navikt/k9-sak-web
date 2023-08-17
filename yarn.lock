@@ -7247,10 +7247,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@navikt/ds-css@npm:4.11.1":
-  version: 4.11.1
-  resolution: "@navikt/ds-css@npm:4.11.1::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fds-css%2F4.11.1%2Fde6d289112308cc5cee6b7658bd4d57b431fc179"
-  checksum: 9ffdf8cd3d9f94c699ba6e527c3f741969d208de460f69573d854bf506bf394c4701bdc1997afbd4b3bd758e6a6b4b482146beefae41c362dc6cf73b7cb53346
+"@navikt/ds-css@npm:4.12.0":
+  version: 4.12.0
+  resolution: "@navikt/ds-css@npm:4.12.0::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fds-css%2F4.12.0%2F2fc8793b19b380f3772d66de8bf00e1addbd26d7"
+  checksum: cf16d17bf4c9185e61610cbb5a51d7585391f2b8e3355ac56fec8631323d116e21661ff7632af046abe7309bd6782dae92fe54ea15a4c2255a2d4cb54ef34103
   languageName: node
   linkType: hard
 
@@ -19548,7 +19548,7 @@ __metadata:
     "@formatjs/intl-datetimeformat": 6.10.0
     "@formatjs/intl-numberformat": 8.7.0
     "@navikt/aksel-icons": 4.11.1
-    "@navikt/ds-css": 4.11.1
+    "@navikt/ds-css": 4.12.0
     "@navikt/ds-react": 4.11.1
     "@navikt/familie-endringslogg": 8.1.1
     "@navikt/ft-plattform-komponenter": 2.2.16
