@@ -91,7 +91,7 @@
     "@storybook/theming": "7.2.3",
     "@svgr/webpack": "7.0.0",
     "@testing-library/dom": "8.20.1",
-    "@testing-library/jest-dom": "^5.17.0",
+    "@testing-library/jest-dom": "^6.0.1",
     "@testing-library/react": "12.1.5",
     "@testing-library/user-event": "13.5.0",
     "@types/chai": "4.3.5",
