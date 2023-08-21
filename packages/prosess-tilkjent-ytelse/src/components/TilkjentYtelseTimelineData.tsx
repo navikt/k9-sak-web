@@ -1,14 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
 import moment from 'moment';
+import { BodyShort, ReadMore, Tabs, Tag } from '@navikt/ds-react';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { Column, Row } from 'nav-frontend-grid';
-import { Element, Normaltekst } from 'nav-frontend-typografi';
-import { Table, TableColumn, TableRow, VerticalSpacer, FloatRight, Image } from '@fpsak-frontend/shared-components';
+import { Element } from 'nav-frontend-typografi';
+import { VerticalSpacer, FloatRight } from '@fpsak-frontend/shared-components';
 import { calcDaysAndWeeksWithWeekends, DDMMYYYY_DATE_FORMAT, getKodeverknavnFn } from '@fpsak-frontend/utils';
 import { TimeLineButton, TimeLineDataContainer } from '@fpsak-frontend/tidslinje';
-import advarselIkonUrl from '@fpsak-frontend/assets/images/advarsel.svg';
-import { TabsPure } from 'nav-frontend-tabs';
 import { KodeverkMedNavn, ArbeidsgiverOpplysningerPerId } from '@k9-sak-web/types';
 
 import { createVisningsnavnForAndel, getAktivitet } from './TilkjentYteleseUtils';
@@ -39,17 +38,11 @@ const TilkjentYtelseTimeLineData = ({
   alleKodeverk,
   arbeidsgiverOpplysningerPerId,
 }: OwnProps) => {
-  const [activeTab, setActiveTab] = useState(0);
-  useEffect(() => {
-    setActiveTab(0);
-  }, [selectedItemData]);
-
   const { andeler } = selectedItemData;
-  const valgtAndel = andeler[activeTab];
   const numberOfDaysAndWeeks = calcDaysAndWeeksWithWeekends(selectedItemStartDate, selectedItemEndDate);
   const intl = useIntl();
   const getKodeverknavn = getKodeverknavnFn(alleKodeverk, kodeverkTyper);
-
+  const harTilkommetAktivitet = true;
   return (
     <TimeLineDataContainer>
       <Row>
@@ -76,163 +69,143 @@ const TilkjentYtelseTimeLineData = ({
       <VerticalSpacer eightPx />
 
       <div className={styles.detailsPeriode}>
-        <Row>
-          <Column xs="7">
-            <Element>
-              <FormattedMessage
-                id="TilkjentYtelse.PeriodeData.Periode"
-                values={{
-                  fomVerdi: moment(selectedItemStartDate).format(DDMMYYYY_DATE_FORMAT).toString(),
-                  tomVerdi: moment(selectedItemEndDate).format(DDMMYYYY_DATE_FORMAT).toString(),
-                }}
-              />
-            </Element>
-          </Column>
-          <div>
-            <Column xs="5">
-              <Normaltekst>
-                <FormattedMessage
-                  id={numberOfDaysAndWeeks.id}
-                  values={{
-                    weeks: numberOfDaysAndWeeks.weeks.toString(),
-                    days: numberOfDaysAndWeeks.days.toString(),
-                  }}
-                />
-              </Normaltekst>
-            </Column>
-          </div>
-        </Row>
-        <VerticalSpacer fourPx />
-        {(!!selectedItemData.inntektGraderingsprosent || selectedItemData.inntektGraderingsprosent === 0) && (
-          <Row>
-            <Column xs="12">
-              <Image
-                className={styles.image}
-                alt={intl.formatMessage({ id: 'HelpText.Aksjonspunkt' })}
-                src={advarselIkonUrl}
-              />
-              <FormattedMessage id="TilkjentYtelse.PeriodeData.GradertMotInntektInfo" />
-            </Column>
-            <Column xs="12">
-              <FormattedMessage
-                id="TilkjentYtelse.PeriodeData.InntekGraderingsProsent"
-                values={{
-                  inntektGraderingsprosentVerdi: selectedItemData.inntektGraderingsprosent,
-                  b: chunks => <b>{chunks}</b>,
-                }}
-              />
-            </Column>
-          </Row>
+        <div className="flex gap-2">
+          <BodyShort size="small" className="font-semibold">
+            <FormattedMessage
+              id="TilkjentYtelse.PeriodeData.Periode"
+              values={{
+                fomVerdi: moment(selectedItemStartDate).format(DDMMYYYY_DATE_FORMAT).toString(),
+                tomVerdi: moment(selectedItemEndDate).format(DDMMYYYY_DATE_FORMAT).toString(),
+              }}
+            />
+          </BodyShort>
+          <BodyShort size="small">
+            (
+            <FormattedMessage
+              id={numberOfDaysAndWeeks.id}
+              values={{
+                weeks: numberOfDaysAndWeeks.weeks.toString(),
+                days: numberOfDaysAndWeeks.days.toString(),
+              }}
+            />
+            )
+          </BodyShort>
+        </div>
+        <div className="mt-6">
+          <BodyShort size="small">
+            <FormattedMessage id="TilkjentYtelse.PeriodeData.UtbetalingsgradAvBeregningsGrunnlag" />
+            <span className="font-semibold inline-block">{selectedItemData.inntektGraderingsprosent} %</span>
+          </BodyShort>
+        </div>
+        {harTilkommetAktivitet && (
+          <ReadMore size="small" header="Detaljer om utbetalingsgrad" className="mt-1">
+            <ul>
+              <li>Resultat fra uttak: EN ELLER ANNEN PROSENT % </li>
+              <li>Resultat grunnet ny inntekt: EN ELLER ANNEN PROSENT % </li>
+            </ul>
+
+            <div className="mt-8">
+              <BodyShort size="small">
+                Resultat fra uttak: 60 % Resultat grunnet ny inntekt: 90% Den laveste graden styrer utbetalingsgraden.
+                Når resultat i uttak er lavere enn resultat grunnet ny inntekt, vil ny inntekt ikke gi reduksjon i
+                utbetaling.
+              </BodyShort>
+
+              <BodyShort size="small">
+                Resultat fra uttak: 100 % Resultat grunnet ny inntekt: 90% Den laveste graden styrer utbetalingsgraden.
+                Utbetalingen reduseres på grunn av inntekt i ny aktivitet.
+              </BodyShort>
+            </div>
+          </ReadMore>
         )}
-        <Row>
-          <Column xs="12">
-            <FormattedMessage
-              id="TilkjentYtelse.PeriodeData.Dagsats"
-              values={{
-                dagsatsVerdi: selectedItemData.dagsats,
-                b: chunks => <b>{chunks}</b>,
-              }}
-            />
-            <br />
-            {(andeler || []).length > 1 &&
-              andeler.map((andel, index) => (
-                <FormattedMessage
-                  id="Timeline.tooltip.dagsatsPerAndel"
-                  key={`index${index + 1}`}
-                  values={{
-                    arbeidsgiver: createVisningsnavnForAndel(andel, getKodeverknavn, arbeidsgiverOpplysningerPerId),
-                    dagsatsPerAndel: Number(andel.refusjon) + Number(andel.tilSoker),
-                    br: <br />,
-                  }}
-                />
-              ))}
-          </Column>
-        </Row>
+        <div className="mt-5 mb-4">
+          <BodyShort size="small">
+            <FormattedMessage id="TilkjentYtelse.PeriodeData.Dagsats" />
+            <span className="font-semibold inline-block">{selectedItemData.dagsats} kr</span>
+          </BodyShort>
+        </div>
+        {(andeler || []).length > 1 &&
+          andeler.map((andel, index) => (
+            <div key={andel.arbeidsforholdId} className="mt-2">
+              {!!andel.refusjon && (
+                <div className="flex gap-2">
+                  <BodyShort size="small" className="inline-block">
+                    <FormattedMessage
+                      id="Timeline.tooltip.dagsatsPerAndel"
+                      key={`index${index + 1}`}
+                      values={{
+                        arbeidsgiver: createVisningsnavnForAndel(andel, getKodeverknavn, arbeidsgiverOpplysningerPerId),
+                        dagsatsPerAndel: Number(andel.refusjon),
+                      }}
+                    />
+                  </BodyShort>
+                  <Tag size="xsmall" variant="neutral-moderate" className="tilkjentYtelseTag">
+                    Refusjon
+                  </Tag>
+                </div>
+              )}
+              {!!andel.tilSoker && (
+                <div className="flex gap-2">
+                  <BodyShort size="small" className="inline-block">
+                    <FormattedMessage
+                      id="Timeline.tooltip.dagsatsPerAndel"
+                      key={`index${index + 1}`}
+                      values={{
+                        arbeidsgiver: createVisningsnavnForAndel(andel, getKodeverknavn, arbeidsgiverOpplysningerPerId),
+                        dagsatsPerAndel: Number(andel.tilSoker),
+                      }}
+                    />
+                  </BodyShort>
+                  <Tag size="xsmall" variant="neutral-moderate" className="tilkjentYtelseTag">
+                    Til bruker
+                  </Tag>
+                </div>
+              )}
+            </div>
+          ))}
       </div>
-      <VerticalSpacer eightPx />
-      <TabsPure
-        tabs={andeler.map((andel, currentAndelIndex) => {
-          const label = createVisningsnavnForAndel(andel, getKodeverknavn, arbeidsgiverOpplysningerPerId);
-          return {
-            aktiv: activeTab === currentAndelIndex,
-            label,
-          };
-        })}
-        onChange={(e, clickedIndex) => setActiveTab(clickedIndex)}
-      />
-
-      <div style={{ padding: '1rem' }}>
-        <Row>
-          <Column xs="12">
-            <FormattedMessage
-              id="TilkjentYtelse.PeriodeData.UtbetaltRefusjon"
-              values={{ utbetaltRefusjonVerdi: valgtAndel?.refusjon, b: chunks => <b>{chunks}</b> }}
-            />
-          </Column>
-        </Row>
-        <Row>
-          <Column xs="12">
-            <FormattedMessage
-              id="TilkjentYtelse.PeriodeData.UtbetaltTilSoker"
-              values={{ utbetaltTilSokerVerdi: valgtAndel?.tilSoker, b: chunks => <b>{chunks}</b> }}
-            />
-          </Column>
-        </Row>
-        <Row>
-          <Column xs="12">
-            <FormattedMessage
-              id="TilkjentYtelse.PeriodeData.Utbetalingsgrad"
-              values={{ utbetalingsgradVerdi: valgtAndel?.utbetalingsgrad, b: chunks => <b>{chunks}</b> }}
-            />
-          </Column>
-        </Row>
-        <Row>
-          <Column xs="12">
-            <FormattedMessage
-              id="TilkjentYtelse.PeriodeData.Aktivitetsstatus"
-              values={{
-                aktivitetsstatus: getAktivitet(valgtAndel?.aktivitetStatus, getKodeverknavn),
-                b: chunks => <b>{chunks}</b>,
-              }}
-            />
-          </Column>
-        </Row>
-
-        {valgtAndel && valgtAndel.uttak && valgtAndel.uttak.length > 0 && (
-          <Table
-            headerTextCodes={[
-              'TilkjentYtelse.PeriodeData.Column.Uttaksperiode',
-              'TilkjentYtelse.PeriodeData.Column.Utbetalingsgrad',
-              'TilkjentYtelse.PeriodeData.Column.Utfall',
-            ]}
+      <Tabs
+        className="mt-12"
+        defaultValue={
+          andeler.length
+            ? createVisningsnavnForAndel(andeler[0], getKodeverknavn, arbeidsgiverOpplysningerPerId)
+            : undefined
+        }
+      >
+        <Tabs.List>
+          {andeler.map(andel => {
+            const label = createVisningsnavnForAndel(andel, getKodeverknavn, arbeidsgiverOpplysningerPerId);
+            return <Tabs.Tab value={label} key={label} label={label} />;
+          })}
+        </Tabs.List>
+        {andeler.map(andel => (
+          <Tabs.Panel
+            key={createVisningsnavnForAndel(andel, getKodeverknavn, arbeidsgiverOpplysningerPerId)}
+            value={createVisningsnavnForAndel(andel, getKodeverknavn, arbeidsgiverOpplysningerPerId)}
           >
-            {
-              // @ts-ignore
-              (valgtAndel.uttak || []).map(({ periode, utbetalingsgrad, utfall }, index) => (
-                <TableRow key={`index${index + 1}`}>
-                  <TableColumn>
-                    <Normaltekst>
-                      <FormattedMessage
-                        id="TilkjentYtelse.PeriodeData.Periode"
-                        values={{
-                          fomVerdi: moment(periode.fom).format(DDMMYYYY_DATE_FORMAT).toString(),
-                          tomVerdi: moment(periode.tom).format(DDMMYYYY_DATE_FORMAT).toString(),
-                        }}
-                      />
-                    </Normaltekst>
-                  </TableColumn>
-                  <TableColumn>
-                    <Normaltekst>{utbetalingsgrad}</Normaltekst>
-                  </TableColumn>
-                  <TableColumn>
-                    <Normaltekst>{utfall}</Normaltekst>
-                  </TableColumn>
-                </TableRow>
-              ))
-            }
-          </Table>
-        )}
-      </div>
+            <div className="p-4">
+              <BodyShort size="small">
+                <FormattedMessage id="TilkjentYtelse.PeriodeData.UtbetaltRefusjon" />
+                <span className="font-semibold inline-block">{andel?.refusjon} kr</span>
+              </BodyShort>
+              <BodyShort size="small">
+                <FormattedMessage id="TilkjentYtelse.PeriodeData.UtbetaltTilSoker" />
+                <span className="font-semibold inline-block">{andel?.tilSoker} kr</span>
+              </BodyShort>
+              <BodyShort size="small">
+                <FormattedMessage id="TilkjentYtelse.PeriodeData.Utbetalingsgrad" />
+                <span className="font-semibold inline-block">{andel?.utbetalingsgrad} %</span>
+              </BodyShort>
+              <BodyShort size="small">
+                <FormattedMessage id="TilkjentYtelse.PeriodeData.Aktivitetsstatus" />
+                <span className="font-semibold inline-block">
+                  {getAktivitet(andel?.aktivitetStatus, getKodeverknavn)}
+                </span>
+              </BodyShort>
+            </div>
+          </Tabs.Panel>
+        ))}
+      </Tabs>
     </TimeLineDataContainer>
   );
 };
