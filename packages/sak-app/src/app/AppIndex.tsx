@@ -10,14 +10,12 @@ import { NavAnsatt } from '@k9-sak-web/types';
 
 import { K9sakApiKeys, restApiHooks } from '../data/k9sakApi';
 import ErrorBoundary from './ErrorBoundary';
-import { redirectToLogin } from './paths';
 import AppConfigResolver from './AppConfigResolver';
 import LanguageProvider from './LanguageProvider';
 import Home from './components/Home';
 import Dekorator from './components/Dekorator';
 
 import '@fpsak-frontend/assets/styles/global.less';
-import '@navikt/ds-css';
 import '@navikt/ft-plattform-komponenter/dist/style.css';
 import '@navikt/ft-ui-komponenter/dist/style.css';
 import '@navikt/ft-form-hooks/dist/style.css';
