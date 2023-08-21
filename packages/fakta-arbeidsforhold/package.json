@@ -1,7 +1,7 @@
 {
   "name": "@fpsak-frontend/fakta-arbeidsforhold",
   "version": "1.0.0",
-  "module": "index.tsx",
+  "module": "index.ts",
   "license": "MIT",
   "private": true,
   "dependencies": {
