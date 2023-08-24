@@ -1,8 +1,6 @@
-import path from 'path';
-
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 
-import { MODULES_DIR, PACKAGES_DIR, CSS_DIR, IMAGE_DIR } from '../paths';
+import { CSS_DIR, IMAGE_DIR, MODULES_DIR, PACKAGES_DIR } from '../paths';
 
 import { IS_DEV } from '../constants';
 
@@ -72,6 +70,7 @@ const lessExternalRules = {
       },
     },
     { loader: 'css-loader' },
+    'postcss-loader',
     {
       loader: 'less-loader',
       options: {
