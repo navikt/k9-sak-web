@@ -155,7 +155,7 @@
     "redux-mock-store": "1.5.4",
     "sinon": "15.1.0",
     "source-map-loader": "4.0.1",
-    "storybook": "7.2.3",
+    "storybook": "7.3.2",
     "storybook-react-router": "1.0.8",
     "stylelint": "15.10.2",
     "stylelint-order": "6.0.3",
