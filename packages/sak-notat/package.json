@@ -1,0 +1,11 @@
+{
+  "name": "@k9-sak-web/sak-notat",
+  "version": "1.0.0",
+  "module": "index.jsx",
+  "license": "MIT",
+  "private": true,
+  "dependencies": {
+    "react": "17.0.2",
+    "react-intl": "6.4.4"
+  }
+}
