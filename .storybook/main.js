@@ -9,6 +9,7 @@ const CSS_DIR = path.join(PACKAGES_DIR, 'assets/styles');
 module.exports = {
   stories: ['../packages/storybook/stories/**/*.stories.@(j|t)s?(x)'],
   addons: [
+    '@storybook/addon-actions',
     {
       name: '@storybook/addon-docs',
       options: {
