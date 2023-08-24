@@ -1,3 +1,4 @@
+import { dirname, join } from 'path';
 const path = require('path');
 const ESLintPlugin = require('eslint-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
@@ -8,9 +9,13 @@ const CSS_DIR = path.join(PACKAGES_DIR, 'assets/styles');
 module.exports = {
   stories: ['../packages/storybook/stories/**/*.stories.@(j|t)s?(x)'],
   addons: [
-    '@storybook/addon-docs/preset',
-    '@storybook/addon-actions/register',
-    // '@storybook/addon-knobs',
+    {
+      name: '@storybook/addon-docs',
+      options: {
+        configureJSX: true,
+        csfPluginOptions: null,
+      },
+    },
     // Burde bytte ut alle knobs osv med controls
     // ref: https://medium.com/storybookjs/storybook-6-migration-guide-200346241bb5
     // '@storybook/addon-essentials',
@@ -162,10 +167,14 @@ module.exports = {
     return config;
   },
   framework: {
-    name: '@storybook/react-webpack5',
+    name: getAbsolutePath('@storybook/react-webpack5'),
     options: {},
   },
   docs: {
     autodocs: true,
   },
 };
+
+function getAbsolutePath(value) {
+  return dirname(require.resolve(join(value, 'package.json')));
+}
