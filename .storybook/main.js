@@ -21,6 +21,7 @@ module.exports = {
     // ref: https://medium.com/storybookjs/storybook-6-migration-guide-200346241bb5
     // '@storybook/addon-essentials',
   ],
+  staticDirs: ['../public'],
 
   // reactOptions: {
   //   fastRefresh: true,

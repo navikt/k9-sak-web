@@ -5225,7 +5225,12 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@k9-sak-web/sak-notat@workspace:packages/sak-notat"
   dependencies:
+    "@navikt/aksel-icons": 4.11.1
+    "@navikt/ds-react": 4.11.1
+    "@navikt/ft-form-hooks": 4.1.10
+    "@navikt/ft-form-validators": ^2.0.42
     react: 17.0.2
+    react-hook-form: 7.45.4
     react-intl: 6.4.4
   languageName: unknown
   linkType: soft
@@ -11489,16 +11494,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"chalk@npm:4.1.1":
-  version: 4.1.1
-  resolution: "chalk@npm:4.1.1"
-  dependencies:
-    ansi-styles: ^4.1.0
-    supports-color: ^7.1.0
-  checksum: 036e973e665ba1a32c975e291d5f3d549bceeb7b1b983320d4598fb75d70fe20c5db5d62971ec0fe76cdbce83985a00ee42372416abfc3a5584465005a7855ed
-  languageName: node
-  linkType: hard
-
 "chalk@npm:5.3.0":
   version: 5.3.0
   resolution: "chalk@npm:5.3.0"
@@ -16341,7 +16336,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"is-node-process@npm:^1.2.0":
+"is-node-process@npm:^1.0.1, is-node-process@npm:^1.2.0":
   version: 1.2.0
   resolution: "is-node-process@npm:1.2.0"
   checksum: 930765cdc6d81ab8f1bbecbea4a8d35c7c6d88a3ff61f3630e0fc7f22d624d7661c1df05c58547d0eb6a639dfa9304682c8e342c4113a6ed51472b704cee2928
@@ -17624,7 +17619,8 @@ __metadata:
     less-loader: 11.1.3
     lint-staged: 13.3.0
     mini-css-extract-plugin: 2.7.6
-    msw: 1.2.3
+    msw: 1.2.4
+    msw-storybook-addon: ^1.8.0
     node-cache: 5.1.2
     postcss: ^8.4.28
     postcss-import: ^15.1.0
@@ -18845,16 +18841,27 @@ __metadata:
   languageName: node
   linkType: hard
 
-"msw@npm:1.2.3":
-  version: 1.2.3
-  resolution: "msw@npm:1.2.3"
+"msw-storybook-addon@npm:^1.8.0":
+  version: 1.8.0
+  resolution: "msw-storybook-addon@npm:1.8.0"
+  dependencies:
+    is-node-process: ^1.0.1
+  peerDependencies:
+    msw: ">=0.35.0 <2.0.0"
+  checksum: 14d7ab064fcc548fe8169f029a2f02184387bd85267ea3c36d8076e671a13dc36349123f2f66fbd2930cedac929cf3ecbe7d45221d72918a9e83321305f3072c
+  languageName: node
+  linkType: hard
+
+"msw@npm:1.2.4":
+  version: 1.2.4
+  resolution: "msw@npm:1.2.4"
   dependencies:
     "@mswjs/cookies": ^0.2.2
     "@mswjs/interceptors": ^0.17.5
     "@open-draft/until": ^1.0.3
     "@types/cookie": ^0.4.1
     "@types/js-levenshtein": ^1.1.1
-    chalk: 4.1.1
+    chalk: ^4.1.1
     chokidar: ^3.4.2
     cookie: ^0.4.2
     graphql: ^15.0.0 || ^16.0.0
@@ -18875,7 +18882,7 @@ __metadata:
       optional: true
   bin:
     msw: cli/index.js
-  checksum: 832a6fc3973726a97e03ce2690c3b6e1774b5156d064a478657a1b33f9933e4834af833cc8a859e1b717fa9b71f1271b3e66a1ec6eed7f76bfe79406e9ec3986
+  checksum: ff32efd2e89b6e4e0b646362907658c2b37756a92d46a294171e0ef5c4488217f87381b7740a6c9e5d7ed9c490ce33474f56f5dba8524340233cd89f1de0b0e1
   languageName: node
   linkType: hard
 
