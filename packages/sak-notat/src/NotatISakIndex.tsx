@@ -1,4 +1,4 @@
-import { Alert, Button, Heading, Switch } from '@navikt/ds-react';
+import { Alert, Button, Heading, Loader, Switch } from '@navikt/ds-react';
 import { CheckboxField, Form, TextAreaField } from '@navikt/ft-form-hooks';
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
@@ -24,13 +24,29 @@ type Inputs = {
   visNotatIAlleSaker: boolean;
 };
 
-const NotatISakIndex = () => {
+interface NotatIndexProps {
+  fagsakId: number;
+}
+
+const NotatISakIndex: React.FunctionComponent<NotatIndexProps> = ({ fagsakId }) => {
   const [notater, setNotater] = useState<NotatResponse[]>([]);
-  const getNotater = () =>
-    axios
-      .get<NotatResponse[]>('/notat?fagsakId=X')
-      .then(response => setNotater(response.data))
-      .catch(error => console.log(error));
+  const [hasGetNotaterError, setHasGetNotaterError] = useState(false);
+  const [hasPostNotatError, setHasPostNotatError] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+  const getNotater = () => {
+    setIsLoading(true);
+    return axios
+      .get<NotatResponse[]>(`/notat?fagsakId=${fagsakId}`)
+      .then(response => {
+        setNotater(response.data);
+      })
+      .catch(() => {
+        setHasGetNotaterError(true);
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
+  };
 
   useEffect(() => {
     getNotater();
@@ -43,49 +59,78 @@ const NotatISakIndex = () => {
     },
   });
 
-  const postNotat = (data: Inputs, fagsakId?: string, notatGjelderType?: NotatGjelderType) => {
-    axios.post('/notat', { ...data, fagsakId, notatGjelderType });
+  const postNotat = (data: Inputs, id?: number, fagsakIdFraRedigertNotat?: string) => {
+    axios
+      .post('/notat', {
+        notatTekst: data.notatTekst,
+        id,
+        fagsakId: fagsakIdFraRedigertNotat || fagsakId,
+        notatGjelderType: data.visNotatIAlleSaker ? NotatGjelderType.pleietrengende : NotatGjelderType.fagsak,
+      })
+      .then(() => {
+        formMethods.reset();
+        getNotater();
+      })
+      .catch(() => setHasPostNotatError(true));
   };
 
   const submit = (data: Inputs) => postNotat(data);
 
   return (
     <RawIntlProvider value={intl}>
-      <div className="flex justify-between items-baseline">
-        <Heading level="3" size="xsmall">
-          <FormattedMessage id="NotatISakIndex.NotaterISak" />
-        </Heading>
-        <Switch size="small">
-          <FormattedMessage id="NotatISakIndex.VisSkjulteNotater" />
-        </Switch>
-      </div>
-      <Alert className="mt-7" size="small" variant="info">
-        <FormattedMessage id="NotatISakIndex.IngenNotaterAlert" />
-      </Alert>
-      {notater.length > 0 && (
-        <div className="grid mt-5 gap-10">
-          {notater.map(notat => (
-            <ChatComponent key={notat.id} notat={notat} postNotat={postNotat} />
-          ))}
-        </div>
+      {isLoading ? (
+        <Loader className="flex mx-auto" variant="neutral" size="xlarge" title="venter..." />
+      ) : (
+        <>
+          <div className="flex justify-between items-baseline">
+            <Heading level="3" size="xsmall">
+              <FormattedMessage id="NotatISakIndex.NotaterISak" />
+            </Heading>
+            <Switch size="small">
+              <FormattedMessage id="NotatISakIndex.VisSkjulteNotater" />
+            </Switch>
+          </div>
+          {notater.length === 0 && (
+            <Alert className="mt-7" size="small" variant="info">
+              <FormattedMessage id="NotatISakIndex.IngenNotaterAlert" />
+            </Alert>
+          )}
+          {hasGetNotaterError && (
+            <Alert className="mt-7" size="small" variant="error">
+              <FormattedMessage id="NotatISakIndex.NoeGikkGaltHentingNotater" />
+            </Alert>
+          )}
+          {hasPostNotatError && (
+            <Alert className="mt-7" size="small" variant="error">
+              <FormattedMessage id="NotatISakIndex.NoeGikkGaltLagringNotater" />
+            </Alert>
+          )}
+          {notater.length > 0 && (
+            <div className="grid mt-5 gap-10">
+              {notater.map(notat => (
+                <ChatComponent key={notat.id} notat={notat} postNotat={postNotat} />
+              ))}
+            </div>
+          )}
+          <Form<Inputs> formMethods={formMethods} onSubmit={submit}>
+            <div className="mt-9">
+              <TextAreaField
+                name="notatTekst"
+                size="small"
+                label={<FormattedMessage id="NotatISakIndex.SkrivNyttNotat" />}
+              />
+            </div>
+            <CheckboxField
+              className="mt-3"
+              name="visNotatIAlleSaker"
+              label={<FormattedMessage id="NotatISakIndex.VisNotatTilknyttetPleietrengende" />}
+            />
+            <Button type="submit" className="mt-4" size="small" variant="primary">
+              <FormattedMessage id="NotatISakIndex.LeggTilNotatButton" />
+            </Button>
+          </Form>
+        </>
       )}
-      <Form<Inputs> formMethods={formMethods} onSubmit={submit}>
-        <div className="mt-9">
-          <TextAreaField
-            name="notatTekst"
-            size="small"
-            label={<FormattedMessage id="NotatISakIndex.SkrivNyttNotat" />}
-          />
-        </div>
-        <CheckboxField
-          className="mt-3"
-          name="visNotatIAlleSaker"
-          label={<FormattedMessage id="NotatISakIndex.VisNotatTilknyttetPleietrengende" />}
-        />
-        <Button type="submit" className="mt-4" size="small" variant="primary">
-          <FormattedMessage id="NotatISakIndex.LeggTilNotatButton" />
-        </Button>
-      </Form>
     </RawIntlProvider>
   );
 };

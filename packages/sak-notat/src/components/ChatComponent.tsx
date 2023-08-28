@@ -20,23 +20,23 @@ type Inputs = {
 
 interface ChatComponentProps {
   notat: NotatResponse;
-  postNotat: (data: Inputs, fagsakId?: string, notatGjelderType?: NotatGjelderType) => void;
+  postNotat: (data: Inputs, id: number, fagsakId?: string) => void;
 }
 
 const ChatComponent: React.FunctionComponent<ChatComponentProps> = ({ notat, postNotat }) => {
-  const { notatTekst, endretAv, opprettetAv, endretTidspunkt, opprettetTidspunkt, gjelderType, fagsakId } = notat;
+  const { endretAv, endretTidspunkt, fagsakId, gjelderType, id, notatTekst, opprettetAv, opprettetTidspunkt } = notat;
   const position = gjelderType === NotatGjelderType.pleietrengende ? ChatPosition.Right : ChatPosition.Left;
   const minLength3 = minLength(3);
   const maxLength2000 = maxLength(1500);
   const formMethods = useForm<Inputs>({
     defaultValues: {
       notatTekst,
-      visNotatIAlleSaker: true,
+      visNotatIAlleSaker: gjelderType === NotatGjelderType.pleietrengende,
     },
   });
   const [readOnly, setReadOnly] = useState(true);
 
-  const submit = (data: Inputs) => postNotat(data, fagsakId, gjelderType);
+  const submit = (data: Inputs) => postNotat(data, id, fagsakId);
 
   const toggleReadOnly = () => {
     setReadOnly(current => !current);
@@ -88,7 +88,13 @@ const ChatComponent: React.FunctionComponent<ChatComponentProps> = ({ notat, pos
                 </Tag>
               </div>
               <div className="flex">
-                <Button onClick={toggleReadOnly} size="xsmall" variant="tertiary" icon={<PencilIcon aria-hidden />}>
+                <Button
+                  className="ml-2.5"
+                  onClick={toggleReadOnly}
+                  size="xsmall"
+                  variant="tertiary"
+                  icon={<PencilIcon aria-hidden />}
+                >
                   <FormattedMessage id="NotatISakIndex.Rediger" />
                 </Button>
                 <Button className="ml-2.5" size="xsmall" variant="tertiary" icon={<EyeWithPupilIcon aria-hidden />}>

@@ -9,5 +9,7 @@
   "NotatISakIndex.Rediger": "Rediger",
   "NotatISakIndex.SkjulNotat": "Skjul notat",
   "NotatISakIndex.LagreEndringer": "Lagre endringer",
-  "NotatISakIndex.Avbryt": "Avbryt"
+  "NotatISakIndex.Avbryt": "Avbryt",
+  "NotatISakIndex.NoeGikkGaltHentingNotater": "Noe gikk galt ved henting av notater, vennligst prøv igjen senere",
+  "NotatISakIndex.NoeGikkGaltLagringNotater": "Noe gikk galt ved lagring av notater, vennligst prøv igjen senere"
 }
