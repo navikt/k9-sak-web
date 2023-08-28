@@ -61,6 +61,10 @@ const featureToggles = [
     key: 'OMSORGEN_FOR_PERIODISERT',
     value: process.env.OMSORGEN_FOR_PERIODISERT,
   },
+  {
+    key: 'OVERSTYR_BEREGNING',
+    value: process.env.OVERSTYR_BEREGNING,
+  },
 ];
 
 module.exports = function (app) {
