@@ -1,7 +1,8 @@
+import { NavAnsatt } from '@k9-sak-web/types';
 import { Alert, Button, Heading, Loader, Switch } from '@navikt/ds-react';
 import { CheckboxField, Form, TextAreaField } from '@navikt/ft-form-hooks';
 import axios from 'axios';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { FormattedMessage, RawIntlProvider, createIntl, createIntlCache } from 'react-intl';
 import messages from '../i18n/nb_NO.json';
@@ -25,31 +26,41 @@ type Inputs = {
 };
 
 interface NotatIndexProps {
-  fagsakId: number;
+  fagsakId: string;
+  navAnsatt: NavAnsatt;
 }
 
-const NotatISakIndex: React.FunctionComponent<NotatIndexProps> = ({ fagsakId }) => {
+const Notater: React.FunctionComponent<NotatIndexProps> = ({ fagsakId, navAnsatt }) => {
   const [notater, setNotater] = useState<NotatResponse[]>([]);
   const [hasGetNotaterError, setHasGetNotaterError] = useState(false);
   const [hasPostNotatError, setHasPostNotatError] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const httpCanceler = useMemo(() => axios.CancelToken.source(), []);
   const getNotater = () => {
     setIsLoading(true);
-    return axios
-      .get<NotatResponse[]>(`/notat?fagsakId=${fagsakId}`)
-      .then(response => {
-        setNotater(response.data);
-      })
-      .catch(() => {
-        setHasGetNotaterError(true);
-      })
-      .finally(() => {
-        setIsLoading(false);
-      });
+    return axios.get<NotatResponse[]>(`/notat?fagsakId=${fagsakId}`, { cancelToken: httpCanceler.token });
   };
 
   useEffect(() => {
-    getNotater();
+    let isMounted = true;
+    getNotater()
+      .then(response => {
+        if (isMounted) {
+          setNotater(response.data);
+          setIsLoading(false);
+        }
+      })
+      .catch(() => {
+        if (isMounted) {
+          setHasGetNotaterError(true);
+          setIsLoading(false);
+        }
+      });
+
+    return () => {
+      isMounted = false;
+      httpCanceler.cancel();
+    };
   }, []);
 
   const formMethods = useForm<Inputs>({
@@ -66,10 +77,20 @@ const NotatISakIndex: React.FunctionComponent<NotatIndexProps> = ({ fagsakId }) 
         id,
         fagsakId: fagsakIdFraRedigertNotat || fagsakId,
         notatGjelderType: data.visNotatIAlleSaker ? NotatGjelderType.pleietrengende : NotatGjelderType.fagsak,
+        opprettetAv: id ? undefined : navAnsatt.brukernavn,
+        endretAv: id ? navAnsatt.brukernavn : undefined,
       })
       .then(() => {
         formMethods.reset();
-        getNotater();
+        getNotater()
+          .then(response => {
+            setNotater(response.data);
+            setIsLoading(false);
+          })
+          .catch(() => {
+            setHasGetNotaterError(true);
+            setIsLoading(false);
+          });
       })
       .catch(() => setHasPostNotatError(true));
   };
@@ -90,7 +111,7 @@ const NotatISakIndex: React.FunctionComponent<NotatIndexProps> = ({ fagsakId }) 
               <FormattedMessage id="NotatISakIndex.VisSkjulteNotater" />
             </Switch>
           </div>
-          {notater.length === 0 && (
+          {!hasGetNotaterError && notater.length === 0 && (
             <Alert className="mt-7" size="small" variant="info">
               <FormattedMessage id="NotatISakIndex.IngenNotaterAlert" />
             </Alert>
@@ -108,7 +129,7 @@ const NotatISakIndex: React.FunctionComponent<NotatIndexProps> = ({ fagsakId }) 
           {notater.length > 0 && (
             <div className="grid mt-5 gap-10">
               {notater.map(notat => (
-                <ChatComponent key={notat.id} notat={notat} postNotat={postNotat} />
+                <ChatComponent key={notat.id} notat={notat} postNotat={postNotat} navAnsatt={navAnsatt} />
               ))}
             </div>
           )}
@@ -134,4 +155,4 @@ const NotatISakIndex: React.FunctionComponent<NotatIndexProps> = ({ fagsakId }) 
     </RawIntlProvider>
   );
 };
-export default NotatISakIndex;
+export default Notater;

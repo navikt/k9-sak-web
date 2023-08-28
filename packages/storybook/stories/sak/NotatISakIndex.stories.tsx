@@ -17,11 +17,25 @@ export const VisNotatISakPanel = () => (
       backgroundColor: 'white',
     }}
   >
-    <NotatISakIndex fagsakId={1} />
+    <NotatISakIndex
+      fagsakId="1"
+      navAnsatt={{
+        brukernavn: 'saksbeh',
+        funksjonellTid: '2023-08-28T16:11:44.107219587',
+        kanBehandleKode6: false,
+        kanBehandleKode7: false,
+        kanBehandleKodeEgenAnsatt: false,
+        kanBeslutte: false,
+        kanOverstyre: false,
+        kanSaksbehandle: true,
+        kanVeilede: false,
+        navn: 'Sara Saksbehandler',
+      }}
+    />
   </div>
 );
 
-let notater = [
+const notater = [
   {
     id: 1,
     notatTekst: 'Saken er tidligere rettet opp i punsj på grunn av manglende funksjonalitet.',
@@ -29,7 +43,7 @@ let notater = [
     versjon: 1,
     opprettetAv: 'Saksbehandler Huldra',
     opprettetTidspunkt: '01.01.22 14:00',
-    endretAv: '',
+    endretAv: undefined,
     endretTidspunkt: undefined,
     fagsakId: '1',
   },
@@ -42,7 +56,7 @@ let notater = [
     versjon: 1,
     opprettetAv: 'Saksbehandler Huldra',
     opprettetTidspunkt: '01.01.22 14:00',
-    endretAv: '',
+    endretAv: undefined,
     endretTidspunkt: undefined,
     fagsakId: undefined,
     aktørId: '123',
@@ -56,24 +70,22 @@ VisNotatISakPanel.parameters = {
       rest.get('/notat', (req, res, ctx) => res(ctx.delay(250), ctx.json(notater))),
       rest.post('/notat', async (req, res, ctx) => {
         const nyttNotat = await req.json();
-        const redigertNotat = nyttNotat.id && notater.find(notat => notat.id === nyttNotat.id);
-        if (redigertNotat) {
-          notater = notater.filter(notat => notat.id !== nyttNotat.id);
-          notater.push({
-            ...redigertNotat,
+        const redigertNotatIndex = notater.findIndex(notat => notat.id === nyttNotat.id);
+        if (redigertNotatIndex >= 0) {
+          notater[redigertNotatIndex] = {
+            ...notater[redigertNotatIndex],
             notatTekst: nyttNotat.notatTekst,
-            versjon: redigertNotat.versjon + 1,
+            versjon: notater[redigertNotatIndex].versjon + 1,
             endretTidspunkt: dayjs().format('DD.MM.YYYY HH:mm'),
-            endretAv: 'Deg',
-          });
-          notater = notater.sort((a, b) => a.id - b.id);
+            endretAv: nyttNotat.endretAv,
+          };
         } else {
           notater.push({
             id: notater.length + 1,
             notatTekst: nyttNotat.notatTekst,
             gjelderType: nyttNotat.notatGjelderType,
             fagsakId: nyttNotat.fagsakId,
-            opprettetAv: 'Deg',
+            opprettetAv: nyttNotat.opprettetAv,
             opprettetTidspunkt: dayjs().format('DD.MM.YYYY HH:mm'),
             endretAv: '',
             endretTidspunkt: undefined,

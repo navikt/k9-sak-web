@@ -1,1 +1,1 @@
-export { default } from './src/NotatISakIndex';
+export { default } from './src/Notater';

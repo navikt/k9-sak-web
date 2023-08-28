@@ -19,6 +19,7 @@ import {
   Kodeverk,
   KodeverkMedNavn,
   MerknadFraLos,
+  NavAnsatt,
   Personopplysninger,
 } from '@k9-sak-web/types';
 import OvergangFraInfotrygd from '@k9-sak-web/types/src/overgangFraInfotrygd';
@@ -207,6 +208,8 @@ const FagsakIndex = () => {
     },
   );
 
+  const navAnsatt = restApiHooks.useGlobalStateRestApiData<NavAnsatt>(K9sakApiKeys.NAV_ANSATT);
+
   const erHastesak = merknaderFraLos && merknaderFraLos.merknadKoder?.includes(Merknadkode.HASTESAK);
 
   if (!fagsak) {
@@ -281,6 +284,7 @@ const FagsakIndex = () => {
               behandlingRettigheter={behandlingRettigheter}
               personopplysninger={behandlingPersonopplysninger}
               arbeidsgiverOpplysninger={arbeidsgiverOpplysninger}
+              navAnsatt={navAnsatt}
             />
           );
         }}

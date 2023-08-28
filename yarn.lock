@@ -5080,6 +5080,7 @@ __metadata:
     "@k9-sak-web/sak-infosider": 1.0.0
     "@k9-sak-web/sak-meldinger": 1.0.0
     "@k9-sak-web/sak-meny-marker-behandling": 1.0.0
+    "@k9-sak-web/sak-notat": 1.0.0
     "@k9-sak-web/sak-soknadsperiodestripe": 1.0.0
     "@k9-sak-web/types": 1.0.0
     "@navikt/ds-react": 4.11.1
@@ -5221,10 +5222,11 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@k9-sak-web/sak-notat@workspace:packages/sak-notat":
+"@k9-sak-web/sak-notat@1.0.0, @k9-sak-web/sak-notat@workspace:packages/sak-notat":
   version: 0.0.0-use.local
   resolution: "@k9-sak-web/sak-notat@workspace:packages/sak-notat"
   dependencies:
+    "@k9-sak-web/types": 1.0.0
     "@navikt/aksel-icons": 4.11.1
     "@navikt/ds-react": 4.11.1
     "@navikt/ft-form-hooks": 4.1.10

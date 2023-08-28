@@ -6,6 +6,7 @@ import { ReactComponent as SendMeldingSvg } from '@fpsak-frontend/assets/images/
 import { ReactComponent as DokumenterSvg } from '@fpsak-frontend/assets/images/folder-big.svg';
 import { ReactComponent as TilBeslutterSvg } from '@fpsak-frontend/assets/images/person-favorite-star-2.svg';
 import { ReactComponent as HistorikkSvg } from '@fpsak-frontend/assets/images/synchronize-time.svg';
+import { PencilWritingFillIcon, PencilWritingIcon } from '@navikt/aksel-icons';
 
 import TabMeny from './components/TabMeny';
 import SupportTabs from './supportTabs';
@@ -49,6 +50,15 @@ const TABS = {
   [SupportTabs.DOKUMENTER]: {
     getSvg: (isActive, isDisabled, props) => <DokumenterSvg {...props} style={getStyle(isActive, isDisabled)} />,
     tooltipTextCode: 'SupportMenySakIndex.Dokumenter',
+  },
+  [SupportTabs.NOTATER]: {
+    getSvg: (isActive, isDisabled, props) =>
+      isActive ? (
+        <PencilWritingFillIcon {...props} title="Notater" fontSize="1.5rem" fill={isDisabled ? '#c6c2bf' : '#0067c5'} />
+      ) : (
+        <PencilWritingIcon {...props} title="Notater" fontSize="1.5rem" />
+      ),
+    tooltipTextCode: 'SupportMenySakIndex.Notater',
   },
 };
 

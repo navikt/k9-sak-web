@@ -1,3 +1,4 @@
+import { NavAnsatt } from '@k9-sak-web/types';
 import { EyeWithPupilIcon, PencilIcon } from '@navikt/aksel-icons';
 import { BodyLong, Button, Chat, Label, Tag } from '@navikt/ds-react';
 import { CheckboxField, Form, TextAreaField } from '@navikt/ft-form-hooks';
@@ -21,11 +22,13 @@ type Inputs = {
 interface ChatComponentProps {
   notat: NotatResponse;
   postNotat: (data: Inputs, id: number, fagsakId?: string) => void;
+  navAnsatt: NavAnsatt;
 }
 
-const ChatComponent: React.FunctionComponent<ChatComponentProps> = ({ notat, postNotat }) => {
+const ChatComponent: React.FunctionComponent<ChatComponentProps> = ({ notat, postNotat, navAnsatt }) => {
   const { endretAv, endretTidspunkt, fagsakId, gjelderType, id, notatTekst, opprettetAv, opprettetTidspunkt } = notat;
-  const position = gjelderType === NotatGjelderType.pleietrengende ? ChatPosition.Right : ChatPosition.Left;
+  const position =
+    opprettetAv === navAnsatt.brukernavn || endretAv === navAnsatt.brukernavn ? ChatPosition.Right : ChatPosition.Left;
   const minLength3 = minLength(3);
   const maxLength2000 = maxLength(1500);
   const formMethods = useForm<Inputs>({
@@ -42,10 +45,13 @@ const ChatComponent: React.FunctionComponent<ChatComponentProps> = ({ notat, pos
     setReadOnly(current => !current);
   };
 
+  const name =
+    opprettetAv === navAnsatt.brukernavn || endretAv === navAnsatt.brukernavn ? 'Deg' : endretAv || opprettetAv;
+
   return (
     <Form<Inputs> formMethods={formMethods} onSubmit={submit}>
       <Chat
-        name={endretAv || opprettetAv}
+        name={name}
         timestamp={endretTidspunkt || opprettetTidspunkt}
         position={position}
         variant={position === ChatPosition.Right ? 'info' : 'neutral'}
