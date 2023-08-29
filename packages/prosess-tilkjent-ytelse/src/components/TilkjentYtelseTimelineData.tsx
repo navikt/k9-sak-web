@@ -29,6 +29,12 @@ interface OwnProps {
  *
  * Viser opp data fra valgt periode i tilkjent ytelse-tidslinjen
  */
+
+const desimalerTilProsent = (value: number) => {
+  const percentage = (value / 1) * 100;
+  const percentageString = percentage.toFixed(2);
+  return percentageString.replace(/\.00$/, '');
+};
 const TilkjentYtelseTimeLineData = ({
   selectedItemStartDate,
   selectedItemEndDate,
@@ -39,10 +45,25 @@ const TilkjentYtelseTimeLineData = ({
   arbeidsgiverOpplysningerPerId,
 }: OwnProps) => {
   const { andeler } = selectedItemData;
+  const utbetalingsgradFraUttak = desimalerTilProsent(selectedItemData.totalUtbetalingsgradFraUttak);
+  const utbetalingsgradEtterReduksjonVedTilkommetInntekt = desimalerTilProsent(
+    selectedItemData.totalUtbetalingsgradEtterReduksjonVedTilkommetInntekt,
+  );
+  const harTilkommetAktivitet = selectedItemData.totalUtbetalingsgradEtterReduksjonVedTilkommetInntekt;
+
+  const resultatGrunnetNyInntektErMinst = () => {
+    if (harTilkommetAktivitet) {
+      return (
+        selectedItemData.totalUtbetalingsgradFraUttak >
+        selectedItemData.totalUtbetalingsgradEtterReduksjonVedTilkommetInntekt
+      );
+    }
+    return false;
+  };
+
   const numberOfDaysAndWeeks = calcDaysAndWeeksWithWeekends(selectedItemStartDate, selectedItemEndDate);
   const intl = useIntl();
   const getKodeverknavn = getKodeverknavnFn(alleKodeverk, kodeverkTyper);
-  const harTilkommetAktivitet = true;
   return (
     <TimeLineDataContainer>
       <Row>
@@ -94,27 +115,39 @@ const TilkjentYtelseTimeLineData = ({
         <div className="mt-6">
           <BodyShort size="small">
             <FormattedMessage id="TilkjentYtelse.PeriodeData.UtbetalingsgradAvBeregningsGrunnlag" />
-            <span className="font-semibold inline-block">{selectedItemData.inntektGraderingsprosent} %</span>
+            <span className="font-semibold inline-block">
+              {resultatGrunnetNyInntektErMinst()
+                ? utbetalingsgradEtterReduksjonVedTilkommetInntekt
+                : utbetalingsgradFraUttak}
+              %
+            </span>
           </BodyShort>
         </div>
         {harTilkommetAktivitet && (
           <ReadMore size="small" header="Detaljer om utbetalingsgrad" className="mt-1">
             <ul>
-              <li>Resultat fra uttak: EN ELLER ANNEN PROSENT % </li>
-              <li>Resultat grunnet ny inntekt: EN ELLER ANNEN PROSENT % </li>
+              <li
+                className={!resultatGrunnetNyInntektErMinst() ? 'font-semibold' : ''}
+              >{`Resultat fra uttak: ${utbetalingsgradFraUttak}%`}</li>
+              <li
+                className={resultatGrunnetNyInntektErMinst() ? 'font-semibold' : ''}
+              >{`Resultat grunnet ny inntekt: ${utbetalingsgradEtterReduksjonVedTilkommetInntekt}%`}</li>
             </ul>
 
             <div className="mt-8">
-              <BodyShort size="small">
-                Resultat fra uttak: 60 % Resultat grunnet ny inntekt: 90% Den laveste graden styrer utbetalingsgraden.
-                Når resultat i uttak er lavere enn resultat grunnet ny inntekt, vil ny inntekt ikke gi reduksjon i
-                utbetaling.
-              </BodyShort>
+              {!resultatGrunnetNyInntektErMinst() && (
+                <BodyShort size="small">
+                  Den laveste graden styrer utbetalingsgraden. Når resultat i uttak er lavere enn resultat grunnet ny
+                  inntekt, vil ny inntekt ikke gi reduksjon i utbetaling.
+                </BodyShort>
+              )}
 
-              <BodyShort size="small">
-                Resultat fra uttak: 100 % Resultat grunnet ny inntekt: 90% Den laveste graden styrer utbetalingsgraden.
-                Utbetalingen reduseres på grunn av inntekt i ny aktivitet.
-              </BodyShort>
+              {resultatGrunnetNyInntektErMinst() && (
+                <BodyShort size="small">
+                  Den laveste graden styrer utbetalingsgraden. Utbetalingen reduseres på grunn av inntekt i ny
+                  aktivitet.
+                </BodyShort>
+              )}
             </div>
           </ReadMore>
         )}
@@ -126,7 +159,7 @@ const TilkjentYtelseTimeLineData = ({
         </div>
         {(andeler || []).length > 1 &&
           andeler.map((andel, index) => (
-            <div key={andel.arbeidsforholdId} className="mt-2">
+            <div key={`index${index + 1}`} className="mt-2">
               {!!andel.refusjon && (
                 <div className="flex gap-2">
                   <BodyShort size="small" className="inline-block">
