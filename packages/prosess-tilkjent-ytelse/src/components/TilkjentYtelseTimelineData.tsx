@@ -1,7 +1,7 @@
 import React from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
 import moment from 'moment';
-import { BodyShort, ReadMore, Tabs, Tag } from '@navikt/ds-react';
+import { BodyShort, Tabs, Tag } from '@navikt/ds-react';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { Column, Row } from 'nav-frontend-grid';
 import { Element } from 'nav-frontend-typografi';
@@ -13,6 +13,7 @@ import { KodeverkMedNavn, ArbeidsgiverOpplysningerPerId } from '@k9-sak-web/type
 import { createVisningsnavnForAndel, getAktivitet } from './TilkjentYteleseUtils';
 import { PeriodeMedId } from './TilkjentYtelse';
 import styles from './tilkjentYtelse.less';
+import UtbetalingsgradDetaljer from './UtbetalingsgradDetaljer';
 
 interface OwnProps {
   selectedItemStartDate: string;
@@ -51,7 +52,7 @@ const TilkjentYtelseTimeLineData = ({
   );
   const harTilkommetAktivitet = selectedItemData.totalUtbetalingsgradEtterReduksjonVedTilkommetInntekt;
 
-  const resultatGrunnetNyInntektErMinst = () => {
+  const utbetalingsgradVedTilkommetInntektErMinst = () => {
     if (harTilkommetAktivitet) {
       return (
         selectedItemData.totalUtbetalingsgradFraUttak >
@@ -116,40 +117,19 @@ const TilkjentYtelseTimeLineData = ({
           <BodyShort size="small">
             <FormattedMessage id="TilkjentYtelse.PeriodeData.UtbetalingsgradAvBeregningsGrunnlag" />
             <span className="font-semibold inline-block">
-              {resultatGrunnetNyInntektErMinst()
+              {utbetalingsgradVedTilkommetInntektErMinst()
                 ? utbetalingsgradEtterReduksjonVedTilkommetInntekt
                 : utbetalingsgradFraUttak}
               %
             </span>
           </BodyShort>
         </div>
-        {harTilkommetAktivitet && (
-          <ReadMore size="small" header="Detaljer om utbetalingsgrad" className="mt-1">
-            <ul>
-              <li
-                className={!resultatGrunnetNyInntektErMinst() ? 'font-semibold' : ''}
-              >{`Resultat fra uttak: ${utbetalingsgradFraUttak}%`}</li>
-              <li
-                className={resultatGrunnetNyInntektErMinst() ? 'font-semibold' : ''}
-              >{`Resultat grunnet ny inntekt: ${utbetalingsgradEtterReduksjonVedTilkommetInntekt}%`}</li>
-            </ul>
-
-            <div className="mt-8">
-              {!resultatGrunnetNyInntektErMinst() && (
-                <BodyShort size="small">
-                  Den laveste graden styrer utbetalingsgraden. Når resultat i uttak er lavere enn resultat grunnet ny
-                  inntekt, vil ny inntekt ikke gi reduksjon i utbetaling.
-                </BodyShort>
-              )}
-
-              {resultatGrunnetNyInntektErMinst() && (
-                <BodyShort size="small">
-                  Den laveste graden styrer utbetalingsgraden. Utbetalingen reduseres på grunn av inntekt i ny
-                  aktivitet.
-                </BodyShort>
-              )}
-            </div>
-          </ReadMore>
+        {!!harTilkommetAktivitet && (
+          <UtbetalingsgradDetaljer
+            utbetalingsgradVedTilkommetInntektErMinst={utbetalingsgradVedTilkommetInntektErMinst()}
+            utbetalingsgradFraUttak={utbetalingsgradFraUttak}
+            utbetalingsgradEtterReduksjonVedTilkommetInntekt={utbetalingsgradEtterReduksjonVedTilkommetInntekt}
+          />
         )}
         <div className="mt-5 mb-4">
           <BodyShort size="small">
