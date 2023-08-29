@@ -31,7 +31,7 @@ interface OwnProps {
  */
 
 const desimalerTilProsent = (value: number) => {
-  const percentage = (value / 1) * 100;
+  const percentage = value * 100;
   const percentageString = percentage.toFixed(2);
   return percentageString.replace(/\.00$/, '');
 };
