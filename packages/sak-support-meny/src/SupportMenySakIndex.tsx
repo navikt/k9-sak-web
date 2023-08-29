@@ -52,17 +52,37 @@ const TABS = {
     tooltipTextCode: 'SupportMenySakIndex.Dokumenter',
   },
   [SupportTabs.NOTATER]: {
-    getSvg: (isActive, isDisabled, props) =>
-      isActive ? (
-        <PencilWritingFillIcon {...props} title="Notater" fontSize="1.5rem" fill={isDisabled ? '#c6c2bf' : '#0067c5'} />
-      ) : (
-        <PencilWritingIcon {...props} title="Notater" fontSize="1.5rem" />
-      ),
+    getSvg: (isActive, isDisabled, props, antallUlesteNotater) => (
+      <div className="relative">
+        {antallUlesteNotater > 0 && (
+          <div className="absolute w-5 h-5 rounded-full bg-[#C30000] left-[1.125rem] top-[-0.4375rem] text-white text-sm font-semibold">
+            {antallUlesteNotater}
+          </div>
+        )}
+        {isActive ? (
+          <PencilWritingFillIcon
+            {...props}
+            title="Notater"
+            fontSize="1.625rem"
+            className="mb-2"
+            fill={isDisabled ? '#c6c2bf' : '#0067c5'}
+          />
+        ) : (
+          <PencilWritingIcon {...props} title="Notater" fontSize="1.625rem" className="mb-2" />
+        )}
+      </div>
+    ),
+
     tooltipTextCode: 'SupportMenySakIndex.Notater',
   },
 };
 
-const lagTabs = (tilgjengeligeTabs: string[], valgbareTabs: string[], valgtIndex?: number) =>
+const lagTabs = (
+  tilgjengeligeTabs: string[],
+  valgbareTabs: string[],
+  antallUlesteNotater: number,
+  valgtIndex?: number,
+) =>
   Object.keys(TABS)
     .filter(key => tilgjengeligeTabs.includes(key))
     .map((key, index) => ({
@@ -70,6 +90,7 @@ const lagTabs = (tilgjengeligeTabs: string[], valgbareTabs: string[], valgtIndex
       tooltip: intl.formatMessage({ id: TABS[key].tooltipTextCode }),
       isDisabled: !valgbareTabs.includes(key),
       isActive: index === valgtIndex,
+      antallUlesteNotater,
     }));
 
 interface OwnProps {
@@ -77,12 +98,19 @@ interface OwnProps {
   valgbareTabs: string[];
   valgtIndex?: number;
   onClick: (index: number) => void;
+  antallUlesteNotater: number;
 }
 
-const SupportMenySakIndex = ({ tilgjengeligeTabs, valgbareTabs, valgtIndex, onClick }: OwnProps) => {
+const SupportMenySakIndex = ({
+  tilgjengeligeTabs,
+  valgbareTabs,
+  valgtIndex,
+  onClick,
+  antallUlesteNotater,
+}: OwnProps) => {
   const tabs = useMemo(
-    () => lagTabs(tilgjengeligeTabs, valgbareTabs, valgtIndex),
-    [tilgjengeligeTabs, valgbareTabs, valgtIndex],
+    () => lagTabs(tilgjengeligeTabs, valgbareTabs, antallUlesteNotater, valgtIndex),
+    [tilgjengeligeTabs, valgbareTabs, valgtIndex, antallUlesteNotater],
   );
 
   return (

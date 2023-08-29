@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import SupportMenySakIndex, { SupportTabs } from '@fpsak-frontend/sak-support-meny';
@@ -10,6 +10,9 @@ import {
   Personopplysninger,
 } from '@k9-sak-web/types';
 
+import { httpErrorHandler, useLocalStorage } from '@fpsak-frontend/utils';
+import { useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
+import axios from 'axios';
 import { getSupportPanelLocationCreator } from '../app/paths';
 import useTrackRouteParam from '../app/useTrackRouteParam';
 import BehandlingRettigheter from '../behandling/behandlingRettigheterTsType';
@@ -71,6 +74,33 @@ const BehandlingSupportIndex = ({
   arbeidsgiverOpplysninger,
   navAnsatt,
 }: OwnProps) => {
+  const { addErrorMessage } = useRestApiErrorDispatcher();
+  const httpCanceler = useMemo(() => axios.CancelToken.source(), []);
+  const [antallUlesteNotater, setAntallUlesteNotater] = useState(0);
+  const [lesteNotater] = useLocalStorage('lesteNotater', []);
+
+  useEffect(() => {
+    let isMounted = true;
+    axios
+      .get(`/notat?fagsakId=${fagsak.saksnummer}`, { cancelToken: httpCanceler.token })
+      .then(response => {
+        if (isMounted) {
+          const ulesteNotater = response.data.filter(
+            notat => lesteNotater.findIndex(lestNotatId => lestNotatId === notat.id) === -1,
+          );
+          setAntallUlesteNotater(ulesteNotater.length);
+        }
+      })
+      .catch(error => {
+        httpErrorHandler(error?.response?.status, addErrorMessage, error?.response?.headers?.location);
+      });
+
+    return () => {
+      isMounted = false;
+      httpCanceler.cancel();
+    };
+  }, []);
+
   const { selected: valgtSupportPanel, location } = useTrackRouteParam<string>({
     paramName: 'stotte',
     isQueryParam: true,
@@ -111,6 +141,7 @@ const BehandlingSupportIndex = ({
           valgbareTabs={valgbareSupportPaneler}
           valgtIndex={synligeSupportPaneler.findIndex(p => p === aktivtSupportPanel)}
           onClick={changeRouteCallback}
+          antallUlesteNotater={antallUlesteNotater}
         />
       </div>
       <div className={aktivtSupportPanel === SupportTabs.HISTORIKK ? styles.containerHistorikk : styles.container}>

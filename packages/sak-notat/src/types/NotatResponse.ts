@@ -1,15 +1,16 @@
 import { NotatGjelderType } from './NotatGjelderType';
 
 export interface NotatResponse {
-  id: number;
-  notatTekst: string;
-  gjelderType: NotatGjelderType;
-  versjon: number;
-  opprettetAv: string;
-  opprettetTidspunkt: string;
+  aktørId?: string;
   endretAv: string;
   endretTidspunkt: null;
   fagsakId?: string;
-  aktørId?: string;
+  gjelderType: NotatGjelderType;
+  id: number;
+  notatTekst: string;
+  opprettetAv: string;
+  opprettetTidspunkt: string;
   sakstype?: string;
+  skjult: boolean;
+  versjon: number;
 }

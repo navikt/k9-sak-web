@@ -1,7 +1,8 @@
+import { useLocalStorage } from '@fpsak-frontend/utils';
 import { NavAnsatt } from '@k9-sak-web/types';
 import { Alert, Button, Heading, Loader, Switch } from '@navikt/ds-react';
 import { CheckboxField, Form, TextAreaField } from '@navikt/ft-form-hooks';
-import axios from 'axios';
+import axios, { AxiosResponse } from 'axios';
 import React, { useEffect, useMemo, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { FormattedMessage, RawIntlProvider, createIntl, createIntlCache } from 'react-intl';
@@ -36,9 +37,21 @@ const Notater: React.FunctionComponent<NotatIndexProps> = ({ fagsakId, navAnsatt
   const [hasPostNotatError, setHasPostNotatError] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const httpCanceler = useMemo(() => axios.CancelToken.source(), []);
+  const [, setLesteNotater] = useLocalStorage<number[]>('lesteNotater', []);
   const getNotater = () => {
     setIsLoading(true);
     return axios.get<NotatResponse[]>(`/notat?fagsakId=${fagsakId}`, { cancelToken: httpCanceler.token });
+  };
+
+  const handleGetNotaterResponse = (response: AxiosResponse<NotatResponse[], any>) => {
+    setNotater(response.data);
+    setIsLoading(false);
+    setLesteNotater(response.data.filter(notat => !notat.skjult).map(notat => notat.id));
+  };
+
+  const handleGetNotaterError = () => {
+    setHasGetNotaterError(true);
+    setIsLoading(false);
   };
 
   useEffect(() => {
@@ -46,14 +59,12 @@ const Notater: React.FunctionComponent<NotatIndexProps> = ({ fagsakId, navAnsatt
     getNotater()
       .then(response => {
         if (isMounted) {
-          setNotater(response.data);
-          setIsLoading(false);
+          handleGetNotaterResponse(response);
         }
       })
       .catch(() => {
         if (isMounted) {
-          setHasGetNotaterError(true);
-          setIsLoading(false);
+          handleGetNotaterError();
         }
       });
 
@@ -84,12 +95,10 @@ const Notater: React.FunctionComponent<NotatIndexProps> = ({ fagsakId, navAnsatt
         formMethods.reset();
         getNotater()
           .then(response => {
-            setNotater(response.data);
-            setIsLoading(false);
+            handleGetNotaterResponse(response);
           })
           .catch(() => {
-            setHasGetNotaterError(true);
-            setIsLoading(false);
+            handleGetNotaterError();
           });
       })
       .catch(() => setHasPostNotatError(true));

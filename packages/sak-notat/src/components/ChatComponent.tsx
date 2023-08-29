@@ -1,12 +1,11 @@
 import { NavAnsatt } from '@k9-sak-web/types';
 import { EyeWithPupilIcon, PencilIcon } from '@navikt/aksel-icons';
 import { BodyLong, Button, Chat, Label, Tag } from '@navikt/ds-react';
-import { CheckboxField, Form, TextAreaField } from '@navikt/ft-form-hooks';
+import { Form, TextAreaField } from '@navikt/ft-form-hooks';
 import { maxLength, minLength, required } from '@navikt/ft-form-validators';
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { FormattedMessage } from 'react-intl';
-import { NotatGjelderType } from '../types/NotatGjelderType';
 import { NotatResponse } from '../types/NotatResponse';
 
 export enum ChatPosition {
@@ -34,7 +33,6 @@ const ChatComponent: React.FunctionComponent<ChatComponentProps> = ({ notat, pos
   const formMethods = useForm<Inputs>({
     defaultValues: {
       notatTekst,
-      visNotatIAlleSaker: gjelderType === NotatGjelderType.pleietrengende,
     },
   });
   const [readOnly, setReadOnly] = useState(true);
@@ -66,12 +64,7 @@ const ChatComponent: React.FunctionComponent<ChatComponentProps> = ({ notat, pos
                 validate={[required, minLength3, maxLength2000]}
                 hideLabel
                 label="Har du noen tilbakemeldinger?"
-              />
-              <CheckboxField
-                className="mt-2"
-                name="visNotatIAlleSaker"
-                label="Vis notat i alle saker tilknyttet pleietrengende"
-                readOnly
+                className="min-w-[31.25rem]"
               />
               <div className="flex flex-wrap gap-2 mt-3">
                 <Button type="submit" size="small" variant="primary">
@@ -83,16 +76,16 @@ const ChatComponent: React.FunctionComponent<ChatComponentProps> = ({ notat, pos
               </div>
             </>
           )}
-          {readOnly && (
-            <div className="flex justify-between items-center mt-5">
-              <div className="flex items-baseline">
-                <Label as="p" size="small">
-                  <FormattedMessage id="NotatISakIndex.Gjelder" />
-                </Label>
-                <Tag className="ml-2" size="small" variant="neutral">
-                  {gjelderType}
-                </Tag>
-              </div>
+          <div className="flex justify-between items-center mt-5">
+            <div className="flex items-baseline">
+              <Label as="p" size="small">
+                <FormattedMessage id="NotatISakIndex.Gjelder" />
+              </Label>
+              <Tag className="ml-2" size="small" variant="neutral">
+                {gjelderType}
+              </Tag>
+            </div>
+            {readOnly && (
               <div className="flex">
                 <Button
                   className="ml-2.5"
@@ -107,8 +100,8 @@ const ChatComponent: React.FunctionComponent<ChatComponentProps> = ({ notat, pos
                   <FormattedMessage id="NotatISakIndex.SkjulNotat" />
                 </Button>
               </div>
-            </div>
-          )}
+            )}
+          </div>
         </Chat.Bubble>
       </Chat>
     </Form>
