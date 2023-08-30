@@ -50,7 +50,8 @@ const TilkjentYtelseTimeLineData = ({
   const utbetalingsgradEtterReduksjonVedTilkommetInntekt = desimalerTilProsent(
     selectedItemData.totalUtbetalingsgradEtterReduksjonVedTilkommetInntekt,
   );
-  const harTilkommetAktivitet = selectedItemData.totalUtbetalingsgradEtterReduksjonVedTilkommetInntekt;
+  const harUtbetalingsgradFraUttak = !!selectedItemData.totalUtbetalingsgradFraUttak;
+  const harTilkommetAktivitet = !!selectedItemData.totalUtbetalingsgradEtterReduksjonVedTilkommetInntekt;
 
   const utbetalingsgradVedTilkommetInntektErMinst = () => {
     if (harTilkommetAktivitet) {
@@ -113,23 +114,27 @@ const TilkjentYtelseTimeLineData = ({
             )
           </BodyShort>
         </div>
-        <div className="mt-6">
-          <BodyShort size="small">
-            <FormattedMessage id="TilkjentYtelse.PeriodeData.UtbetalingsgradAvBeregningsGrunnlag" />
-            <span className="font-semibold inline-block">
-              {utbetalingsgradVedTilkommetInntektErMinst()
-                ? utbetalingsgradEtterReduksjonVedTilkommetInntekt
-                : utbetalingsgradFraUttak}
-              %
-            </span>
-          </BodyShort>
-        </div>
-        {!!harTilkommetAktivitet && (
-          <UtbetalingsgradDetaljer
-            utbetalingsgradVedTilkommetInntektErMinst={utbetalingsgradVedTilkommetInntektErMinst()}
-            utbetalingsgradFraUttak={utbetalingsgradFraUttak}
-            utbetalingsgradEtterReduksjonVedTilkommetInntekt={utbetalingsgradEtterReduksjonVedTilkommetInntekt}
-          />
+        {harUtbetalingsgradFraUttak && (
+          <div>
+            <div className="mt-6">
+              <BodyShort size="small">
+                <FormattedMessage id="TilkjentYtelse.PeriodeData.UtbetalingsgradAvBeregningsGrunnlag" />
+                <span className="font-semibold inline-block">
+                  {utbetalingsgradVedTilkommetInntektErMinst()
+                    ? utbetalingsgradEtterReduksjonVedTilkommetInntekt
+                    : utbetalingsgradFraUttak}
+                  %
+                </span>
+              </BodyShort>
+            </div>
+            {harTilkommetAktivitet && (
+              <UtbetalingsgradDetaljer
+                utbetalingsgradVedTilkommetInntektErMinst={utbetalingsgradVedTilkommetInntektErMinst()}
+                utbetalingsgradFraUttak={utbetalingsgradFraUttak}
+                utbetalingsgradEtterReduksjonVedTilkommetInntekt={utbetalingsgradEtterReduksjonVedTilkommetInntekt}
+              />
+            )}
+          </div>
         )}
         <div className="mt-5 mb-4">
           <BodyShort size="small">
