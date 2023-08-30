@@ -71,7 +71,8 @@ const lessExternalRules = {
         publicPath: IS_DEV ? './' : '/k9/web/',
       },
     },
-    { loader: 'css-loader' },
+    { loader: 'css-loader',},
+    'postcss-loader',
     {
       loader: 'less-loader',
       options: {
