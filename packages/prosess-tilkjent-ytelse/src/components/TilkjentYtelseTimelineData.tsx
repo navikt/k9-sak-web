@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
 import moment from 'moment';
 import { BodyShort, Tabs, Tag } from '@navikt/ds-react';
@@ -46,13 +46,18 @@ const TilkjentYtelseTimeLineData = ({
   arbeidsgiverOpplysningerPerId,
 }: OwnProps) => {
   const { andeler } = selectedItemData;
+  const [selectedAndelIndex, setSelectedAndelIndex] = React.useState('0');
   const utbetalingsgradFraUttak = desimalerTilProsent(selectedItemData.totalUtbetalingsgradFraUttak);
   const utbetalingsgradEtterReduksjonVedTilkommetInntekt = desimalerTilProsent(
     selectedItemData.totalUtbetalingsgradEtterReduksjonVedTilkommetInntekt,
   );
+
+  useEffect(() => {
+    setSelectedAndelIndex('0');
+  }, [selectedItemData.fom]);
+
   const harUtbetalingsgradFraUttak = !!selectedItemData.totalUtbetalingsgradFraUttak;
   const harTilkommetAktivitet = !!selectedItemData.totalUtbetalingsgradEtterReduksjonVedTilkommetInntekt;
-
   const utbetalingsgradVedTilkommetInntektErMinst = () => {
     if (harTilkommetAktivitet) {
       return (
@@ -182,24 +187,17 @@ const TilkjentYtelseTimeLineData = ({
             </div>
           ))}
       </div>
-      <Tabs
-        className="mt-12"
-        defaultValue={
-          andeler.length
-            ? createVisningsnavnForAndel(andeler[0], getKodeverknavn, arbeidsgiverOpplysningerPerId)
-            : undefined
-        }
-      >
+      <Tabs className="mt-12" value={String(selectedAndelIndex)} onChange={setSelectedAndelIndex}>
         <Tabs.List>
-          {andeler.map(andel => {
+          {andeler.map((andel, index) => {
             const label = createVisningsnavnForAndel(andel, getKodeverknavn, arbeidsgiverOpplysningerPerId);
-            return <Tabs.Tab value={label} key={label} label={label} />;
+            return <Tabs.Tab value={String(index)} key={label} label={label} />;
           })}
         </Tabs.List>
-        {andeler.map(andel => (
+        {andeler.map((andel, index) => (
           <Tabs.Panel
             key={createVisningsnavnForAndel(andel, getKodeverknavn, arbeidsgiverOpplysningerPerId)}
-            value={createVisningsnavnForAndel(andel, getKodeverknavn, arbeidsgiverOpplysningerPerId)}
+            value={String(index)}
           >
             <div className="p-4">
               <BodyShort size="small">
