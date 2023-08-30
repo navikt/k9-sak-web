@@ -25,7 +25,7 @@ class PanelDef extends ProsessStegPanelDef {
     />
   );
 
-  getAksjonspunktKoder = () => [aksjonspunktCodes.VENT_ANNEN_PSB_SAK];
+  getAksjonspunktKoder = () => [aksjonspunktCodes.VENT_ANNEN_PSB_SAK, aksjonspunktCodes.VURDER_DATO_NY_REGEL_UTTAK];
 
   getOverstyrVisningAvKomponent = () => true;
 

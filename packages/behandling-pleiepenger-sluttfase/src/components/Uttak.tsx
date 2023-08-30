@@ -41,7 +41,7 @@ export default ({
   aksjonspunkter,
   erFagytelsetypeLivetsSluttfase,
 }: UttakProps) => {
-  const relevanteAksjonspunkter = [aksjonspunktCodes.VENT_ANNEN_PSB_SAK];
+  const relevanteAksjonspunkter = [aksjonspunktCodes.VENT_ANNEN_PSB_SAK, aksjonspunktCodes.VURDER_DATO_NY_REGEL_UTTAK];
   const funnedeRelevanteAksjonspunkter = aksjonspunkter.filter(aksjonspunkt =>
     relevanteAksjonspunkter.some(relevantAksjonspunkt => relevantAksjonspunkt === aksjonspunkt.definisjon.kode),
   );
