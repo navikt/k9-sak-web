@@ -2,16 +2,10 @@ import React from 'react';
 
 import { faktaPanelCodes } from '@k9-sak-web/konstanter';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { useFeatureToggles } from '@fpsak-frontend/shared-components';
 import { FaktaPanelDef } from '@k9-sak-web/behandling-felles';
 import { konverterKodeverkTilKode, mapVilkar, transformBeregningValues } from '@fpsak-frontend/utils';
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 import { BeregningFaktaIndex } from '@navikt/ft-fakta-beregning';
-
-const skalKunneOverstyre = () => {
-  const [featureToggles] = useFeatureToggles();
-  return featureToggles && featureToggles.OVERSTYR_BEREGNING;
-};
 
 class BeregningFaktaPanelDef extends FaktaPanelDef {
   // eslint-disable-next-line class-methods-use-this
