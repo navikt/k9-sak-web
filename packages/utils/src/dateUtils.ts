@@ -28,6 +28,10 @@ const checkDays = (weeks, days) => {
 
   if (days === 1) {
     id = weeks === 1 ? 'UttakInfoPanel.AntallEnDagOgEnUke' : 'UttakInfoPanel.AntallEnDagOgFlereUker';
+
+    if (weeks === 0) {
+      id = 'UttakInfoPanel.AntallEnDagOgNullUker';
+    }
   }
 
   if (weeks === 1) {
