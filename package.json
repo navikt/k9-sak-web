@@ -146,7 +146,7 @@
     "jest-environment-jsdom": "29.6.2",
     "jest-runner-eslint": "2.1.0",
     "jest-transform-stub": "2.0.0",
-    "jsdom": "22.1.0",
+    "jsdom": "21.1.2",
     "lerna": "7.1.5",
     "less": "4.2.0",
     "less-loader": "11.1.3",
