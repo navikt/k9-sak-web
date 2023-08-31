@@ -20,6 +20,7 @@ class PanelDef extends ProsessStegPanelDef {
     UtvidetRettBehandlingApiKeys.SEND_VARSEL_OM_REVURDERING,
     UtvidetRettBehandlingApiKeys.MEDLEMSKAP,
     UtvidetRettBehandlingApiKeys.TILGJENGELIGE_VEDTAKSBREV,
+    UtvidetRettBehandlingApiKeys.INFORMASJONSBEHOV_VEDTAKSBREV,
     UtvidetRettBehandlingApiKeys.DOKUMENTDATA_HENTE,
   ];
 
