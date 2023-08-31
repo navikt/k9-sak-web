@@ -16,7 +16,6 @@ class PanelDef extends ProsessStegPanelDef {
     aksjonspunktCodes.VURDER_ÅRSKVANTUM_KVOTE,
     aksjonspunktCodes.ÅRSKVANTUM_FOSTERBARN,
     aksjonspunktCodes.VURDER_ÅRSKVANTUM_DOK,
-    aksjonspunktCodes.VURDER_DATO_NY_REGEL_UTTAK,
   ];
 
   getOverstyrVisningAvKomponent = () => true;

@@ -17,6 +17,7 @@ class PanelDef extends ProsessStegPanelDef {
     arbeidsgiverOpplysningerPerId,
     aksjonspunkter,
     erFagytelsetypeLivetsSluttfase,
+    submitCallback,
   }) => (
     <>
       <AntallDagerLivetsSluttfaseIndex kvoteInfo={kvoteInfo} />
@@ -27,6 +28,7 @@ class PanelDef extends ProsessStegPanelDef {
         arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
         aksjonspunkter={aksjonspunkter}
         erFagytelsetypeLivetsSluttfase={erFagytelsetypeLivetsSluttfase}
+        submitCallback={submitCallback}
       />
     </>
   );

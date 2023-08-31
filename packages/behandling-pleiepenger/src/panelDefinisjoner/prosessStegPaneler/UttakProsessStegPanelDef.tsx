@@ -14,6 +14,7 @@ class PanelDef extends ProsessStegPanelDef {
     arbeidsgiverOpplysningerPerId,
     aksjonspunkter,
     alleKodeverk,
+    submitCallback,
   }) => (
     <Uttak
       uuid={behandling.uuid}
@@ -22,6 +23,7 @@ class PanelDef extends ProsessStegPanelDef {
       arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
       aksjonspunkter={aksjonspunkter}
       alleKodeverk={alleKodeverk}
+      submitCallback={submitCallback}
     />
   );
 
