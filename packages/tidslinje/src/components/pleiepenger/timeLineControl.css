@@ -1,0 +1,10 @@
+.scrollButtonContainer {
+  float: right;
+  margin-bottom: 8px;
+  margin-right: 4px;
+  margin-top: 8px;
+}
+.buttonSpacing {
+  margin-left: 8px;
+  margin-right: 8px;
+}

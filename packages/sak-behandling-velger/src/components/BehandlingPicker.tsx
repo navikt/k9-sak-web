@@ -9,14 +9,14 @@ import { Tilbakeknapp } from 'nav-frontend-ikonknapper';
 import { Normaltekst, Undertittel } from 'nav-frontend-typografi';
 import React, { ReactElement, useEffect, useMemo, useRef, useState } from 'react';
 import { FormattedMessage, IntlShape, useIntl } from 'react-intl';
-import { useQueries, UseQueryResult } from 'react-query';
+import { UseQueryResult, useQueries } from 'react-query';
 import { NavLink, useNavigate } from 'react-router-dom';
 
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import BehandlingFilter, { automatiskBehandling } from './BehandlingFilter';
-import styles from './behandlingPicker.less';
 import BehandlingPickerItemContent from './BehandlingPickerItemContent';
 import BehandlingSelected from './BehandlingSelected';
+import styles from './behandlingPicker.css';
 import { sortBehandlinger } from './behandlingVelgerUtils';
 
 const getBehandlingNavn = (

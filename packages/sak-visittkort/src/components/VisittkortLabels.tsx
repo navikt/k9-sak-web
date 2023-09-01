@@ -1,14 +1,14 @@
-import React, { useMemo } from 'react';
 import moment from 'moment';
-import { injectIntl, FormattedMessage, WrappedComponentProps } from 'react-intl';
-import { EtikettInfo, EtikettAdvarsel, EtikettFokus } from 'nav-frontend-etiketter';
+import { EtikettAdvarsel, EtikettFokus, EtikettInfo } from 'nav-frontend-etiketter';
+import React, { useMemo } from 'react';
+import { FormattedMessage, WrappedComponentProps, injectIntl } from 'react-intl';
 
 import diskresjonskodeType from '@fpsak-frontend/kodeverk/src/diskresjonskodeType';
-import { Personopplysninger } from '@k9-sak-web/types';
-import { dateFormat } from '@fpsak-frontend/utils';
 import { Tooltip } from '@fpsak-frontend/shared-components';
+import { dateFormat } from '@fpsak-frontend/utils';
+import { Personopplysninger } from '@k9-sak-web/types';
 
-import styles from './visittkortLabels.less';
+import styles from './visittkortLabels.css';
 
 interface OwnProps {
   personopplysninger: Personopplysninger;

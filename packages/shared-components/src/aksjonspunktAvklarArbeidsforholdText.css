@@ -1,0 +1,25 @@
+.image {
+  height: 30px;
+  margin-right: 10px;
+  margin-top: 8px;
+  width: 30px;
+}
+.message {
+  display: inline-flex;
+}
+.info {
+  color: black;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: normal;
+  line-height: 25px;
+  padding: 10px;
+}
+.spørsmål {
+  font-weight: bold;
+}
+.hl {
+  border: 1px solid #afafaf;
+  margin-top: 10px;
+  width: 100%;
+}

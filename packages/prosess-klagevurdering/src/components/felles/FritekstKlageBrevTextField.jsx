@@ -1,18 +1,13 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import { injectIntl } from 'react-intl';
-import PropTypes from 'prop-types';
 
-import { getLanguageCodeFromSprakkode, hasValidText, required } from '@fpsak-frontend/utils';
 import { TextAreaField } from '@fpsak-frontend/form';
+import { getLanguageCodeFromSprakkode, hasValidText, required } from '@fpsak-frontend/utils';
 
-import styles from './fritekstKlageBrevTextField.less';
+import styles from './fritekstKlageBrevTextField.css';
 
-
-const FritekstKlageBrevTextField = ({
-  sprakkode,
-  readOnly,
-  intl,
-}) => (
+const FritekstKlageBrevTextField = ({ sprakkode, readOnly, intl }) => (
   <div className={styles.fritekstTilBrevTextArea}>
     <TextAreaField
       name="fritekstTilBrev"
@@ -21,15 +16,16 @@ const FritekstKlageBrevTextField = ({
       readOnly={readOnly}
       textareaClass={styles.explanationTextarea}
       maxLength={100000}
-      badges={[{
-        type: 'fokus',
-        textId: getLanguageCodeFromSprakkode(sprakkode),
-        title: 'Malform.Beskrivelse',
-      }]}
+      badges={[
+        {
+          type: 'fokus',
+          textId: getLanguageCodeFromSprakkode(sprakkode),
+          title: 'Malform.Beskrivelse',
+        },
+      ]}
     />
   </div>
 );
-
 
 FritekstKlageBrevTextField.propTypes = {
   sprakkode: PropTypes.shape().isRequired,

@@ -1,13 +1,13 @@
-import React from 'react';
-import { connect } from 'react-redux';
 import moment from 'moment';
 import PropTypes from 'prop-types';
+import React from 'react';
+import { connect } from 'react-redux';
 
+import { SelectField, behandlingFormValueSelector } from '@fpsak-frontend/form';
 import { TableColumn, TableRow } from '@fpsak-frontend/shared-components';
 import { DDMMYYYY_DATE_FORMAT, required } from '@fpsak-frontend/utils';
-import { SelectField, behandlingFormValueSelector } from '@fpsak-frontend/form';
 
-import styles from './feilutbetalingPerioderTable.less';
+import styles from './feilutbetalingPerioderTable.css';
 
 const getHendelseUndertyper = (årsakNavn, årsaker) => {
   const årsak = årsaker.find(a => a.hendelseType.kode === årsakNavn);

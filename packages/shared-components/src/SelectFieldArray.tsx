@@ -6,8 +6,8 @@ import React from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { FieldArrayFieldsProps, FieldArrayMetaProps } from 'redux-form';
 import Image from './Image';
-import styles from './selectFieldArray.less';
 import VerticalSpacer from './VerticalSpacer';
+import styles from './selectFieldArray.css';
 
 interface EmptySelectTemplate {
   value: string;
@@ -29,20 +29,18 @@ interface SelectFieldArrayProps {
   createAddButtonInsteadOfImageLink?: boolean;
 }
 
-const onClick = (
-  fields: FieldArrayFieldsProps<EmptySelectTemplate>,
-  emptySelectTemplate: EmptySelectTemplate,
-) => () => {
-  fields.push(emptySelectTemplate);
-};
-
-const onKeyDown = (fields: FieldArrayFieldsProps<EmptySelectTemplate>, emptySelectTemplate: EmptySelectTemplate) => ({
-  keyCode,
-}) => {
-  if (keyCode === 13) {
+const onClick =
+  (fields: FieldArrayFieldsProps<EmptySelectTemplate>, emptySelectTemplate: EmptySelectTemplate) => () => {
     fields.push(emptySelectTemplate);
-  }
-};
+  };
+
+const onKeyDown =
+  (fields: FieldArrayFieldsProps<EmptySelectTemplate>, emptySelectTemplate: EmptySelectTemplate) =>
+  ({ keyCode }) => {
+    if (keyCode === 13) {
+      fields.push(emptySelectTemplate);
+    }
+  };
 
 const getRemoveButton = (index: number, fields: FieldArrayFieldsProps<EmptySelectTemplate>) => className => {
   if (index > 0) {

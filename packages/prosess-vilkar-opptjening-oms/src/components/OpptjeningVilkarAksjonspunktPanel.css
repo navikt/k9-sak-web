@@ -1,0 +1,7 @@
+.titelOgHjelpetekstFlexbox {
+  display: flex;
+}
+.titelOgHjelpetekstFlexbox :last-child {
+  margin-left: 0.5rem;
+  max-width: 40rem;
+}

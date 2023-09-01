@@ -1,0 +1,128 @@
+.inputWrapper {
+  display: block;
+  position: relative;
+}
+.dateInput {
+  display: inline-block;
+  width: 228px;
+}
+.visuallyHidden :global .skjemaelement__label {
+  clip: rect(1px, 1px, 1px, 1px);
+  height: 1px;
+  overflow: hidden;
+  position: absolute;
+  white-space: nowrap;
+  width: 1px;
+}
+.calendarToggleButton {
+  font-family: 'Source Sans Pro', Arial, sans-serif;
+  font-size: 1rem;
+  font-weight: 400;
+  appearance: none;
+  padding: 0.5rem;
+  background-color: #fff;
+  border-radius: 4px;
+  border: 1px solid #6a6a6a;
+  box-sizing: border-box;
+  line-height: 1.375rem;
+  background: transparent;
+  border: 1px solid transparent;
+  box-sizing: content-box;
+  cursor: pointer;
+  display: inline-block;
+  height: 22px;
+  left: 0;
+  margin: 0;
+  position: absolute;
+  top: 0;
+  width: 22px;
+}
+.calendarToggleButton:focus {
+  outline: 0;
+  box-shadow: 0 0 0 3px #00347d;
+}
+.calendarToggleButton:hover {
+  border-color: #0067c5;
+}
+.calendarToggleButton:disabled,
+.calendarToggleButton[readonly] {
+  background-color: #f1f1f1;
+  border-color: #6a6a6a;
+  box-shadow: none;
+  color: #262626;
+}
+.calendarToggleButton:disabled:hover,
+.calendarToggleButton[readonly]:hover {
+  cursor: not-allowed;
+}
+.calendarToggleButton--mini {
+  padding: 0.25rem;
+}
+.calendarToggleButton:focus {
+  outline: 0;
+  box-shadow: 0 0 0 3px #00347d;
+}
+.calendarToggleButton:hover {
+  border-color: #0067c5;
+}
+.calendarToggleButton:disabled,
+.calendarToggleButton[readonly] {
+  background-color: #f1f1f1;
+  border-color: #6a6a6a;
+  box-shadow: none;
+  color: #262626;
+}
+.calendarToggleButton:disabled:hover,
+.calendarToggleButton[readonly]:hover {
+  cursor: not-allowed;
+}
+.calendarToggleButton--mini {
+  padding: 0.25rem;
+}
+.calendarToggleButton:after {
+  content: url('~@fpsak-frontend/assets/images/kalender.svg');
+}
+.calendarToggleButton:hover,
+.calendarToggleButton:focus {
+  border-color: transparent;
+  box-shadow: none;
+  outline: none;
+}
+.calendarToggleButton:hover:after,
+.calendarToggleButton:focus:after {
+  content: url('~@fpsak-frontend/assets/images/kalender_hover.svg');
+}
+.calendarToggleButton:disabled {
+  background: transparent;
+  border-color: transparent;
+  cursor: initial;
+}
+.calendarToggleButton:disabled:after {
+  content: url('~@fpsak-frontend/assets/images/kalender_disabled.svg');
+}
+.calendarRoot {
+  height: 0;
+  position: relative;
+  top: 0;
+  width: 0;
+  z-index: 1000;
+}
+.calendarRoot:focus {
+  outline: none;
+}
+.calendarWrapper {
+  background: #fff;
+  border: 1px solid #a0a0a0;
+  border-radius: 4px;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 610px;
+}
+.calendarWrapper:focus {
+  outline: none;
+}
+.renderUpwards {
+  bottom: 370px;
+  top: initial;
+}

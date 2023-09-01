@@ -1,0 +1,26 @@
+.container {
+  width: 100%;
+}
+.fieldError {
+  border: 1px solid #ba3a26;
+}
+.error {
+  color: #ba3a26;
+}
+.firmaNavn {
+  display: block;
+  padding: 9px;
+}
+.buttonBar {
+  display: flex;
+}
+.button {
+  margin-right: 1rem;
+}
+.errorText {
+  color: #ba3a26;
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 1.375rem;
+  margin-top: 0.5rem;
+}

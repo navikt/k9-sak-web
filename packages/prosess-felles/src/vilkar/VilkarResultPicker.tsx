@@ -1,18 +1,18 @@
-import React, { ReactNode } from 'react';
 import { Normaltekst } from 'nav-frontend-typografi';
+import React, { ReactNode } from 'react';
 
-import { VerticalSpacer, FlexContainer, FlexRow, FlexColumn, Image } from '@fpsak-frontend/shared-components';
-import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
-import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
-import { DatepickerField, RadioGroupField, RadioOption, SelectField } from '@fpsak-frontend/form';
-import { hasValidDate, isRequiredMessage, required } from '@fpsak-frontend/utils';
 import avslattImage from '@fpsak-frontend/assets/images/avslaatt.svg';
 import innvilgetImage from '@fpsak-frontend/assets/images/check.svg';
+import { DatepickerField, RadioGroupField, RadioOption, SelectField } from '@fpsak-frontend/form';
+import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
+import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
+import { FlexColumn, FlexContainer, FlexRow, Image, VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { hasValidDate, isRequiredMessage, required } from '@fpsak-frontend/utils';
 import { Aksjonspunkt, KodeverkMedNavn } from '@k9-sak-web/types';
 
 import getPackageIntl from '../../i18n/getPackageIntl';
 
-import styles from './vilkarResultPicker.less';
+import styles from './vilkarResultPicker.css';
 
 type FormValues = {
   erVilkarOk: boolean;
@@ -130,9 +130,9 @@ VilkarResultPicker.transformValues = (values: FormValues) =>
   values.erVilkarOk
     ? { erVilkarOk: values.erVilkarOk }
     : {
-      erVilkarOk: values.erVilkarOk,
-      avslagskode: values.avslagCode,
-      avslagDato: values.avslagDato,
-    };
+        erVilkarOk: values.erVilkarOk,
+        avslagskode: values.avslagCode,
+        avslagDato: values.avslagDato,
+      };
 
 export default VilkarResultPicker;

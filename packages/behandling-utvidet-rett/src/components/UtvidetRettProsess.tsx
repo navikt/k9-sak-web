@@ -1,24 +1,24 @@
-import React, { useState, useCallback, useMemo } from 'react';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
+import React, { useCallback, useMemo, useState } from 'react';
 
 import {
-  prosessStegHooks,
-  IverksetterVedtakStatusModal,
   FatterVedtakStatusModal,
-  ProsessStegPanel,
+  IverksetterVedtakStatusModal,
   ProsessStegContainer,
+  ProsessStegPanel,
   lagDokumentdata,
+  prosessStegHooks,
   useSetBehandlingVedEndring,
 } from '@k9-sak-web/behandling-felles';
-import { Fagsak, FagsakPerson, Behandling } from '@k9-sak-web/types';
+import { Behandling, Fagsak, FagsakPerson } from '@k9-sak-web/types';
 
-import { bestemAvsenderApp, forhandsvis, getForhandsvisCallback } from '@fpsak-frontend/utils/src/formidlingUtils';
-import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
+import '@fpsak-frontend/assets/styles/arrowForProcessMenu.css';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
-import { restApiUtvidetRettHooks, UtvidetRettBehandlingApiKeys } from '../data/utvidetRettBehandlingApi';
+import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
+import { bestemAvsenderApp, forhandsvis, getForhandsvisCallback } from '@fpsak-frontend/utils/src/formidlingUtils';
+import { UtvidetRettBehandlingApiKeys, restApiUtvidetRettHooks } from '../data/utvidetRettBehandlingApi';
 import prosessStegUtvidetRettPanelDefinisjoner from '../panelDefinisjoner/prosessStegUtvidetRettPanelDefinisjoner';
-import '@fpsak-frontend/assets/styles/arrowForProcessMenu.less';
 import { ProsessProps } from '../types/ProsessProps';
 
 const getHentFritekstbrevHtmlCallback =

@@ -1,0 +1,6 @@
+.wrapper > div {
+  margin-bottom: 1rem;
+}
+.wrapper > div:last-child {
+  margin-bottom: 0;
+}

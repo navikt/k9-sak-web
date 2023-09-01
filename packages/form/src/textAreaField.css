@@ -1,0 +1,14 @@
+.textAreaFieldWithBadges {
+  position: relative;
+}
+.textAreaFieldWithBadges .etikettWrapper {
+  position: absolute;
+  right: 0;
+  top: -4px;
+  z-index: 1;
+}
+.textAreaFieldWithBadges label {
+  max-width: calc(100% - 100px);
+  overflow-wrap: break-word;
+  white-space: pre-wrap;
+}

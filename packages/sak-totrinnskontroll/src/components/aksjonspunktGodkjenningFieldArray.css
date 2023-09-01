@@ -1,0 +1,16 @@
+.halfColumn {
+  flex: 0 0 44%;
+}
+.fullWidth {
+  width: 100%;
+}
+.approvalItemContainer {
+  min-height: 70px;
+}
+.aksjonspunktTextContainer {
+  margin-bottom: 12px;
+  margin-top: 12px;
+}
+.lenke {
+  color: #0067c5;
+}

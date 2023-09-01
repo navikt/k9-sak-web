@@ -1,16 +1,16 @@
+import { Element, Undertekst } from 'nav-frontend-typografi';
 import React from 'react';
 import { FormattedMessage, injectIntl, IntlShape, WrappedComponentProps } from 'react-intl';
-import { Element, Undertekst } from 'nav-frontend-typografi';
 
-import { ArrowBox, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { RadioGroupField, RadioOption, TextAreaField } from '@fpsak-frontend/form';
+import { ArrowBox, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { hasValidText, maxLength, minLength, required } from '@fpsak-frontend/utils';
 
 import { KodeverkMedNavn } from '@k9-sak-web/types';
 import Aktsomhet from '../../../kodeverk/aktsomhet';
 
+import styles from './aktsomhetGradUaktsomhetFormPanel.css';
 import AktsomhetSarligeGrunnerFormPanel from './AktsomhetSarligeGrunnerFormPanel';
-import styles from './aktsomhetGradUaktsomhetFormPanel.less';
 
 const minLength3 = minLength(3);
 const maxLength1500 = maxLength(1500);

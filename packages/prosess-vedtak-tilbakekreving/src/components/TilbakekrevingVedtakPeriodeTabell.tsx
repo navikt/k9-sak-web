@@ -1,14 +1,14 @@
+import { Element, Normaltekst } from 'nav-frontend-typografi';
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
-import { Element, Normaltekst } from 'nav-frontend-typografi';
 
-import { formatCurrencyNoKr } from '@fpsak-frontend/utils';
 import { PeriodLabel, Table, TableColumn, TableRow } from '@fpsak-frontend/shared-components';
+import { formatCurrencyNoKr } from '@fpsak-frontend/utils';
 import { Kodeverk } from '@k9-sak-web/types';
 
 import { BeregningResultatPeriode } from '../types/beregningsresultatTilbakekrevingTsType';
 
-import styles from './tilbakekrevingVedtakPeriodeTabell.less';
+import styles from './tilbakekrevingVedtakPeriodeTabell.css';
 
 const headerTextCodes = [
   'TilbakekrevingVedtakPeriodeTabell.Periode',

@@ -1,12 +1,13 @@
 import SelectFieldFormik from '@fpsak-frontend/form/src/SelectFieldFormik';
 import dokumentMalType from '@fpsak-frontend/kodeverk/src/dokumentMalType';
-import vedtaksbrevtype from '@fpsak-frontend/kodeverk/src/vedtaksbrevtype';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
+import vedtaksbrevtype from '@fpsak-frontend/kodeverk/src/vedtaksbrevtype';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 
 import { required, safeJSONParse } from '@fpsak-frontend/utils';
 import {
   Brevmottaker,
+  TilgjengeligeVedtaksbrev,
   finnesTilgjengeligeVedtaksbrev,
   kanHaAutomatiskVedtaksbrev,
   kanHaFritekstbrevV1,
@@ -14,20 +15,19 @@ import {
   kanKunVelge,
   kanOverstyreMottakere,
   lagVisningsnavnForMottaker,
-  TilgjengeligeVedtaksbrev,
 } from '@fpsak-frontend/utils/src/formidlingUtils';
-import { DokumentDataType } from '@k9-sak-web/types/src/dokumentdata';
 import { ArbeidsgiverOpplysningerPerId, Behandlingsresultat, Kodeverk, Personopplysninger } from '@k9-sak-web/types';
+import { DokumentDataType } from '@k9-sak-web/types/src/dokumentdata';
 import { Alert, ErrorMessage } from '@navikt/ds-react';
 
 import { FormikProps, setNestedObjectValues, useField } from 'formik';
 import { Column, Row } from 'nav-frontend-grid';
 import React from 'react';
-import { injectIntl, IntlShape } from 'react-intl';
+import { IntlShape, injectIntl } from 'react-intl';
 import { fieldnames } from '../../konstanter';
 import FritekstBrevPanel from '../FritekstBrevPanel';
 import { VedtakPreviewLink } from '../PreviewLink';
-import styles from './BrevPanel.less';
+import styles from './BrevPanel.css';
 import InformasjonsbehovAutomatiskVedtaksbrev, {
   InformasjonsbehovVedtaksbrev,
 } from './InformasjonsbehovAutomatiskVedtaksbrev';
@@ -161,7 +161,7 @@ export const BrevPanel: React.FC<BrevPanelProps> = props => {
     getPreviewAutomatiskBrevCallback,
   } = props;
 
-  const [field, meta, helpers] = useField({ name: 'overstyrtMottaker' });
+  const [, meta] = useField({ name: 'overstyrtMottaker' });
 
   const automatiskBrevCallback = getPreviewAutomatiskBrevCallback(formikProps.values)({ aapneINyttVindu: true });
 

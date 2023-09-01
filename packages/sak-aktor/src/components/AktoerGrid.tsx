@@ -1,14 +1,14 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import { FormattedMessage } from 'react-intl';
 import Lenkepanel from 'nav-frontend-lenkepanel';
+import React from 'react';
+import { FormattedMessage } from 'react-intl';
+import { Link } from 'react-router-dom';
 
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
-import { getKodeverknavnFn } from '@fpsak-frontend/utils';
 import VisittkortSakIndex from '@fpsak-frontend/sak-visittkort';
+import { getKodeverknavnFn } from '@fpsak-frontend/utils';
 import { Fagsak, FagsakPerson, KodeverkMedNavn } from '@k9-sak-web/types';
 
-import styles from './aktoerGrid.less';
+import styles from './aktoerGrid.css';
 
 interface OwnProps {
   aktorInfo: {

@@ -3,20 +3,20 @@ import OAType from '@fpsak-frontend/kodeverk/src/opptjeningAktivitetType';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import {
   DDMMYYYY_DATE_FORMAT,
-  hasValidDecimal,
   ISO_DATE_FORMAT,
+  hasValidDecimal,
   maxValue,
   minValue,
   required,
 } from '@fpsak-frontend/utils';
-import { Kodeverk, ArbeidsgiverOpplysningerPerId } from '@k9-sak-web/types';
+import { ArbeidsgiverOpplysningerPerId, Kodeverk } from '@k9-sak-web/types';
 import OpptjeningAktivitet from '@k9-sak-web/types/src/opptjening/opptjeningAktivitet';
 import moment from 'moment';
 import { Column, Row } from 'nav-frontend-grid';
 import { Normaltekst, Undertekst } from 'nav-frontend-typografi';
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
-import styles from './activityDataSubPanel.less';
+import styles from './activityDataSubPanel.css';
 
 const ytelseTypes = [
   OAType.SYKEPENGER,

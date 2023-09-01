@@ -1,18 +1,18 @@
 import React from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
 
-import { Normaltekst } from 'nav-frontend-typografi';
-import { VerticalSpacer, FlexContainer, FlexRow, FlexColumn, Image } from '@fpsak-frontend/shared-components';
 import { RadioGroupField, RadioOption } from '@fpsak-frontend/form';
-import { ProsessStegBegrunnelseTextField } from '@k9-sak-web/prosess-felles';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
+import { FlexColumn, FlexContainer, FlexRow, Image, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { required } from '@fpsak-frontend/utils';
+import { ProsessStegBegrunnelseTextField } from '@k9-sak-web/prosess-felles';
 import { Aksjonspunkt, Vilkarperiode } from '@k9-sak-web/types';
+import { Normaltekst } from 'nav-frontend-typografi';
 
 import avslattImage from '@fpsak-frontend/assets/images/avslaatt.svg';
 import innvilgetImage from '@fpsak-frontend/assets/images/check.svg';
 
-import styles from './VilkarFields.less';
+import styles from './VilkarFields.css';
 
 export const midlertidigInaktiv = {
   TYPE_A: '7847A',

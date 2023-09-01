@@ -5,7 +5,7 @@ import React, { Component } from 'react';
 import { FormattedMessage } from 'react-intl';
 
 import { Loader } from '@navikt/ds-react';
-import styles from './dataFetchPendingModal.less';
+import styles from './dataFetchPendingModal.css';
 
 // Skal ikke være mulig å lukke modal
 const doNothing = () => undefined;

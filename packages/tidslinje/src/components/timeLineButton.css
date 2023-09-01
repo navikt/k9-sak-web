@@ -1,0 +1,40 @@
+.timeLineButton {
+  background-color: #fff;
+  border: 0 solid;
+  height: 26px;
+  margin-left: 4px;
+  margin-top: 0;
+  padding: 0;
+  width: 26px;
+}
+.timeLineButton:focus {
+  box-shadow: 0 0 0 3px #ffbd66;
+  outline: none;
+}
+.timeLineButton img:last-child {
+  display: none;
+}
+.timeLineButton:hover img:first-child {
+  display: none;
+}
+.timeLineButton:hover img:last-child {
+  display: inline-block;
+}
+.timeLineButton:active img:last-child {
+  display: inline-block;
+}
+.timeLineButtonInverted {
+  background-color: #fff;
+  border: 0 solid;
+  height: 26px;
+  margin-bottom: 0;
+  margin-left: 4px;
+  margin-top: 0;
+  padding: 0;
+  transform: rotate(180deg);
+  width: 26px;
+}
+.timeLineButtonInverted:focus {
+  box-shadow: 0 0 0 3px #ffbd66;
+  outline: none;
+}

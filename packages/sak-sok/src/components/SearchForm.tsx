@@ -1,17 +1,17 @@
+import { Column, Row } from 'nav-frontend-grid';
+import { Hovedknapp } from 'nav-frontend-knapper';
+import { Undertittel } from 'nav-frontend-typografi';
 import React from 'react';
 import { FormattedMessage, injectIntl, WrappedComponentProps } from 'react-intl';
-import { formValueSelector, reduxForm, InjectedFormProps } from 'redux-form';
 import { connect } from 'react-redux';
-import { Hovedknapp } from 'nav-frontend-knapper';
-import { Column, Row } from 'nav-frontend-grid';
-import { Undertittel } from 'nav-frontend-typografi';
+import { formValueSelector, InjectedFormProps, reduxForm } from 'redux-form';
 
-import { Image, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import advarselIcon from '@fpsak-frontend/assets/images/advarsel.svg';
-import { hasValidSaksnummerOrFodselsnummerFormat } from '@fpsak-frontend/utils';
 import { InputField } from '@fpsak-frontend/form';
+import { Image, VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { hasValidSaksnummerOrFodselsnummerFormat } from '@fpsak-frontend/utils';
 
-import styles from './searchForm.less';
+import styles from './searchForm.css';
 
 const isButtonDisabled = (searchStarted: boolean, searchString?: string): boolean =>
   !!(searchStarted || searchString.length < 1);

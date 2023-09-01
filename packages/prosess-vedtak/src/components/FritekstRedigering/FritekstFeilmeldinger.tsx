@@ -1,9 +1,9 @@
 import React from 'react';
 import { FormattedMessage, injectIntl } from 'react-intl';
 
-import { Alert } from '@navikt/ds-react';
-import { useRestApiError } from '@k9-sak-web/rest-api-hooks';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { useRestApiError } from '@k9-sak-web/rest-api-hooks';
+import { Alert } from '@navikt/ds-react';
 
 import {
   harDokumentdataApiFeilmelding,
@@ -11,7 +11,7 @@ import {
   utledForhandsvisFeilmeldinger,
 } from './RedigeringUtils';
 
-import styles from './RedigerFritekstbrev.less';
+import styles from './RedigerFritekstbrev.css';
 
 const FritekstFeilmeldinger = () => {
   const errorMessages = useRestApiError() || [];

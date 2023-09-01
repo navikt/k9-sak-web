@@ -1,10 +1,10 @@
-import React from 'react';
-import { FormattedMessage } from 'react-intl';
+import addCircleIcon from '@fpsak-frontend/assets/images/add-circle.svg';
+import Image from '@fpsak-frontend/shared-components/src/Image';
 import { Flatknapp } from 'nav-frontend-knapper';
 import { Normaltekst } from 'nav-frontend-typografi';
-import Image from '@fpsak-frontend/shared-components/src/Image';
-import addCircleIcon from '@fpsak-frontend/assets/images/add-circle.svg';
-import styles from './leggTilKnapp.less';
+import React from 'react';
+import { FormattedMessage } from 'react-intl';
+import styles from './leggTilKnapp.css';
 
 interface LeggTilKnappProps {
   onClick: VoidFunction;

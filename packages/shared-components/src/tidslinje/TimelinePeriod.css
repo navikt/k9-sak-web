@@ -1,0 +1,203 @@
+/* stylelint-disable max-line-length */
+button.periode {
+  cursor: pointer;
+  background: #e7e9e9;
+  border: 1px solid #59514b;
+}
+button.periode:hover,
+button.periode.active,
+button.periode:focus {
+  background: #c3c3c3;
+}
+button.periode:active,
+button.periode:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px #254b6d;
+  border-color: #254b6d;
+  z-index: 100;
+}
+.infoPin {
+  position: absolute;
+  background: #0067c5;
+  height: 6px;
+  width: 2px;
+  top: 0;
+  left: 50%;
+  transform: translate(-1px, -7px);
+}
+.infoPin:before {
+  content: '';
+  position: absolute;
+  top: 0;
+  width: 10px;
+  height: 10px;
+  background: #0067c5;
+  transform: translate(-5px, -100%);
+  border-radius: 50%;
+}
+.periode {
+  background: #e7e9e9;
+  border: 1px solid #59514b;
+  height: 1.5rem;
+  border-radius: 1.5rem;
+  position: absolute;
+  border: 1px dashed #59514b;
+  transition: box-shadow 0.1s ease;
+  padding: 0;
+}
+.periode:hover,
+.periode.active,
+.periode:focus {
+  background: #e7e9e9;
+}
+.periode.active {
+  outline: none;
+  box-shadow: 0 0 0 2px #254b6d;
+  border-color: #254b6d;
+  z-index: 100;
+}
+.avkuttetHøyre {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+  border-right-width: 0 !important;
+}
+.avkuttetVenstre {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+  border-left-width: 0 !important;
+}
+.mini {
+  min-width: 0;
+  padding: 0;
+}
+.mini:before {
+  display: none;
+}
+.advarsel {
+  background: #FFECCC;
+  border: 1px solid #D47B00;
+}
+.advarsel:hover,
+.advarsel.active,
+.advarsel:focus {
+  background: #ffa733;
+}
+button.advarsel {
+  background: #ffe9cc;
+  border: 1px solid #ff9100;
+}
+button.advarsel:hover,
+button.advarsel.active,
+button.advarsel:focus {
+  background: #fed7a3;
+}
+.feil {
+  background: #EFA89D;
+  border: 1px solid #BA3A26;
+}
+.feil:hover,
+.feil.active,
+.feil:focus {
+  background: #a13a28;
+}
+.feilRevurder {
+  background: repeating-linear-gradient(-45deg, #EFA89D, #EFA89D 10px, #ffe9cc 10px, #ffe9cc 20px);
+  border: 1px solid #ba3a26;
+}
+.feilRevurder:hover,
+.feilRevurder.active,
+.feilRevurder:focus {
+  background: repeating-linear-gradient(-45deg, #EFA89D, #EFA89D 10px, #ffe9cc 10px, #ffe9cc 20px);
+}
+button.feil {
+  background: #f1d8d4;
+  border: 1px solid #ba3a26;
+}
+button.feil:hover,
+button.feil.active,
+button.feil:focus {
+  background: #e3b0a8;
+}
+.inaktiv {
+  background: #e7e9e9;
+  border: 1px solid #78706a;
+}
+.inaktiv:hover,
+.inaktiv.active,
+.inaktiv:focus {
+  background: #e7e9e9;
+}
+button.inaktiv {
+  background: #e7e9e9;
+  border: 1px solid #78706a;
+}
+button.inaktiv:hover,
+button.inaktiv.active,
+button.inaktiv:focus {
+  background: #c3c3c3;
+}
+.suksess {
+  background: #99dead;
+  border: 1px solid #06893a;
+}
+.suksess:hover,
+.suksess.active,
+.suksess:focus {
+  background: #1c6937;
+}
+.suksessRevurder {
+  background: repeating-linear-gradient(-45deg, #99dead, #99dead 10px, #FFECCC 10px, #FFECCC 20px);
+  border: 1px solid #06893a;
+}
+.suksessRevurder:hover,
+.suksessRevurder.active,
+.suksessRevurder:focus {
+  background: repeating-linear-gradient(-45deg, #99dead, #99dead 10px, #FFECCC 10px, #FFECCC 20px);
+}
+.suksessDelvis {
+  background: repeating-linear-gradient(-45deg, #99dead, #99dead 10px, #CCF1D6 10px, #CCF1D6 20px);
+  border: 1px solid #06893a;
+}
+.suksessDelvis:hover,
+.suksessDelvis.active,
+.suksessDelvis:focus {
+  background: repeating-linear-gradient(-45deg, #99dead, #99dead 10px, #CCF1D6 10px, #CCF1D6 20px);
+}
+button.suksess {
+  background: #cde7d8;
+  border: 1px solid #117938;
+}
+button.suksess:hover,
+button.suksess.active,
+button.suksess:focus {
+  background: #9bd0b0;
+}
+.sammenhengendeFraHøyre {
+  border-bottom-right-radius: 0;
+  border-top-right-radius: 0;
+}
+.sammenhengendeFraVenstre {
+  border-bottom-left-radius: 0;
+  border-top-left-radius: 0;
+}
+.sammenhengendeFraBegge {
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+.usynlig {
+  display: none;
+}
+.nonClickablePeriod :global(.contentWithTooltip) {
+  height: 100%;
+  width: 100%;
+}
+.nonClickablePeriod :global(.contentWithTooltip__tooltipText) {
+  padding: 0.25rem 1rem;
+}
+.tooltipLeft :global(.contentWithTooltip__tooltipText) {
+  padding: 0.25rem 1rem;
+  left: -293px;
+  top: 30px;
+}

@@ -1,15 +1,15 @@
-import React, { ReactNode, useEffect, useMemo, useRef } from 'react';
 import moment from 'moment';
+import React, { ReactNode, useEffect, useMemo, useRef } from 'react';
 
+import { FlexRow, Image } from '@fpsak-frontend/shared-components';
 import { Timeline } from '@fpsak-frontend/tidslinje';
 import { ISO_DATE_FORMAT } from '@fpsak-frontend/utils';
 import { Column, Row } from 'nav-frontend-grid';
-import { Image, FlexRow } from '@fpsak-frontend/shared-components';
 
 import Periode from './types/Periode';
 import TidslinjeRad from './types/TidslinjeRad';
 
-import styles from './tidslinje.less';
+import styles from './tidslinje.css';
 
 interface EventProps {
   items: string[];

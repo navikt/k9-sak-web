@@ -1,9 +1,9 @@
-import React from 'react';
 import { Image } from '@fpsak-frontend/shared-components/index';
-import { Undertittel } from 'nav-frontend-typografi';
-import { FormattedMessage } from 'react-intl';
 import classnames from 'classnames/bind';
-import styles from './seksjon.less';
+import { Undertittel } from 'nav-frontend-typografi';
+import React from 'react';
+import { FormattedMessage } from 'react-intl';
+import styles from './seksjon.css';
 
 const classNames = classnames.bind(styles);
 

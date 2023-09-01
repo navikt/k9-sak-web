@@ -1,12 +1,12 @@
-import React from 'react';
-import PropTypes from 'prop-types';
 import moment from 'moment';
+import PropTypes from 'prop-types';
+import React from 'react';
 
 import { Table } from '@fpsak-frontend/shared-components';
 
 import FeilutbetalingPerioderForm from './FeilutbetalingPerioderForm';
 
-import styles from './feilutbetalingPerioderTable.less';
+import styles from './feilutbetalingPerioderTable.css';
 
 const headerTextCodes = [
   'FeilutbetalingInfoPanel.Period',

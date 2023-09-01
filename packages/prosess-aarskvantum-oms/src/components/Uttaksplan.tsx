@@ -1,15 +1,15 @@
-import React, { useState } from 'react';
-import { FormattedMessage } from 'react-intl';
+import kalender from '@fpsak-frontend/assets/images/calendar_filled.svg';
+import { Image } from '@fpsak-frontend/shared-components/index';
+import { joinNonNullStrings } from '@fpsak-frontend/utils';
+import { ArbeidsforholdV2, ArbeidsgiverOpplysningerPerId, KodeverkMedNavn } from '@k9-sak-web/types';
+import { AlertStripeInfo } from 'nav-frontend-alertstriper';
 import Tabs from 'nav-frontend-tabs';
 import { Undertittel } from 'nav-frontend-typografi';
-import { Image } from '@fpsak-frontend/shared-components/index';
-import kalender from '@fpsak-frontend/assets/images/calendar_filled.svg';
-import { KodeverkMedNavn, ArbeidsforholdV2, ArbeidsgiverOpplysningerPerId } from '@k9-sak-web/types';
-import { AlertStripeInfo } from 'nav-frontend-alertstriper';
-import { joinNonNullStrings } from '@fpsak-frontend/utils';
+import React, { useState } from 'react';
+import { FormattedMessage } from 'react-intl';
 import Aktivitet from '../dto/Aktivitet';
 import AktivitetTabell from './AktivitetTabell';
-import styles from './uttaksplan.less';
+import styles from './uttaksplan.css';
 
 interface UttaksplanProps {
   behandlingUuid: string;

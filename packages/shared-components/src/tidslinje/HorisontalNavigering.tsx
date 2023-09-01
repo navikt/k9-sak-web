@@ -1,10 +1,10 @@
 import dayjs, { Dayjs } from 'dayjs';
 import { Normaltekst } from 'nav-frontend-typografi';
 import React from 'react';
-import styles from './horisontalNavigering.less';
 import Rad from './Rad';
-import { useSenesteDato } from './useTidslinjerader';
+import styles from './horisontalNavigering.css';
 import NavigateArrowIcon from './icons/NavigateArrowIcon';
+import { useSenesteDato } from './useTidslinjerader';
 
 interface HorisontalNavigeringProps {
   tidslinjeSkala: number;

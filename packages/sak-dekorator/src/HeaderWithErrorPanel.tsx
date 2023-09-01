@@ -2,11 +2,11 @@ import { RETTSKILDE_URL, SYSTEMRUTINE_URL } from '@k9-sak-web/konstanter';
 import Endringslogg from '@navikt/familie-endringslogg';
 import { BoxedListWithLinks, Header, Popover, SystemButton, UserPanel } from '@navikt/ft-plattform-komponenter';
 import React, { RefObject, useCallback, useEffect, useRef, useState } from 'react';
-import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
+import { RawIntlProvider, createIntl, createIntlCache } from 'react-intl';
 import messages from '../i18n/nb_NO.json';
 import ErrorMessagePanel from './ErrorMessagePanel';
 import Feilmelding from './feilmeldingTsType';
-import styles from './headerWithErrorPanel.less';
+import styles from './headerWithErrorPanel.css';
 
 const cache = createIntlCache();
 

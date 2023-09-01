@@ -1,22 +1,22 @@
+import { Field, FieldArray, Form, Formik } from 'formik';
 import React from 'react';
 import { FormattedMessage, injectIntl, WrappedComponentProps } from 'react-intl';
-import { Field, FieldArray, Form, Formik } from 'formik';
 import * as Yup from 'yup';
 
-import { AksjonspunktHelpTextTemp, BorderBox, Table, VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { Knapp } from 'nav-frontend-knapper';
-import { Textarea } from 'nav-frontend-skjema';
-import { EtikettFokus, EtikettInfo } from 'nav-frontend-etiketter';
-import { Aksjonspunkt, ArbeidsgiverOpplysningerPerId } from '@k9-sak-web/types';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
-import AlertStripe from 'nav-frontend-alertstriper';
+import { AksjonspunktHelpTextTemp, BorderBox, Table, VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { Aksjonspunkt, ArbeidsgiverOpplysningerPerId } from '@k9-sak-web/types';
 import { isDate } from 'date-fns';
-import styles from './OverstyrBeregningFaktaForm.less';
+import AlertStripe from 'nav-frontend-alertstriper';
+import { EtikettFokus, EtikettInfo } from 'nav-frontend-etiketter';
+import { Knapp } from 'nav-frontend-knapper';
+import { Textarea } from 'nav-frontend-skjema';
 import { OverstyrInputBeregningDto } from '../types/OverstyrInputBeregningDto';
-import { formaterDatoString } from './utils';
 import { OverstyrInputForBeregningDto } from '../types/OverstyrInputForBeregningDto';
 import OverstyrBeregningAktivitetForm from './OverstyrBeregningAktivitetForm';
+import styles from './OverstyrBeregningFaktaForm.css';
+import { formaterDatoString } from './utils';
 
 interface Props {
   arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysningerPerId;

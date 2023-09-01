@@ -1,14 +1,14 @@
-import React from 'react';
 import classNames from 'classnames/bind';
 import Snakkeboble from 'nav-frontend-snakkeboble';
+import React from 'react';
 
-import useGlobalStateRestApiData from '@k9-sak-web/rest-api-hooks/src/global-data/useGlobalStateRestApiData';
 import HistorikkAktor from '@fpsak-frontend/kodeverk/src/historikkAktor';
 import navBrukerKjonn from '@fpsak-frontend/kodeverk/src/navBrukerKjonn';
-import { Kodeverk, SaksbehandlereInfo } from '@k9-sak-web/types';
+import useGlobalStateRestApiData from '@k9-sak-web/rest-api-hooks/src/global-data/useGlobalStateRestApiData';
 import { K9sakApiKeys } from '@k9-sak-web/sak-app/src/data/k9sakApi';
+import { Kodeverk, SaksbehandlereInfo } from '@k9-sak-web/types';
 
-import styles from './snakkebobleContainer.less';
+import styles from './snakkebobleContainer.css';
 
 const cx = classNames.bind(styles);
 

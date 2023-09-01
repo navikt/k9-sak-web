@@ -15,7 +15,7 @@ import { useIntl } from 'react-intl';
 import CheckIcon from './icons/CheckIcon';
 import RejectedIcon from './icons/RejectedIcon';
 import SaksbehandlerIcon from './icons/SaksbehandlerIcon';
-import styles from './soknadsperioderComponent.less';
+import styles from './soknadsperioderComponent.css';
 import Periode from './types/Periode';
 
 const getPerioderMedÅrsak = (årsak: string, behandlingPerioderårsakMedVilkår: BehandlingPerioderårsakMedVilkår) => {

@@ -1,0 +1,7 @@
+.aksjonspunkt {
+  padding: 20px;
+}
+.aksjonspunkt.erAksjonspunktApent {
+  border: 3px solid #ffaa33;
+  border-radius: 4px;
+}

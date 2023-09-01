@@ -1,14 +1,14 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { FormattedMessage, injectIntl } from 'react-intl';
 import classNames from 'classnames';
-import { Hovedknapp } from 'nav-frontend-knapper';
 import { Column, Row } from 'nav-frontend-grid';
+import { Hovedknapp } from 'nav-frontend-knapper';
+import PropTypes from 'prop-types';
+import React from 'react';
+import { FormattedMessage, injectIntl } from 'react-intl';
 
 import klageVurderingType from '@fpsak-frontend/kodeverk/src/klageVurdering';
 
 import dokumentMalType from '@fpsak-frontend/kodeverk/src/dokumentMalType';
-import styles from './vedtakKlageSubmitPanel.less';
+import styles from './vedtakKlageSubmitPanel.css';
 
 const medholdIKlage = klageVurderingResultat =>
   klageVurderingResultat && klageVurderingResultat.klageVurdering === klageVurderingType.MEDHOLD_I_KLAGE;

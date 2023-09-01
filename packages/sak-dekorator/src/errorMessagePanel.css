@@ -1,0 +1,36 @@
+.container {
+  background-color: #ba3a26;
+  color: #fff;
+  display: block;
+  max-height: 120px;
+  min-height: 53px;
+  overflow-x: hidden;
+  overflow-y: auto;
+  padding-bottom: 5px;
+  padding-left: 40px;
+  padding-top: 5px;
+  position: relative;
+}
+.link {
+  background: none;
+  border: 0;
+  border-bottom: solid 1px #fff;
+  color: #fff;
+  cursor: pointer;
+  padding: 0;
+  text-decoration: none;
+}
+.link:focus,
+.link:hover {
+  border-bottom-color: #a0a0a0;
+  color: #a0a0a0;
+}
+.lukkContainer {
+  font-size: 18px;
+  position: absolute;
+  right: 16px;
+  top: 8px;
+}
+.wordWrap {
+  white-space: pre-line;
+}

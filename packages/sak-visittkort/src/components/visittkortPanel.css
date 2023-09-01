@@ -1,0 +1,28 @@
+.container {
+  background-color: #f1f1f1;
+  border-bottom: 1px solid #6a6a6a;
+}
+.pushRight {
+  display: flex;
+  margin-left: auto;
+  margin-right: 2.3125rem;
+}
+.flexContainer {
+  display: flex;
+}
+.label,
+.dødsdatoLabel {
+  border-radius: 0.25rem;
+  font-size: 0.875rem;
+  height: 1.5rem;
+  line-height: 1.375rem;
+  margin-bottom: 1rem;
+  margin-top: 1rem;
+  padding: 0 0.5rem;
+}
+.dødsdatoLabel {
+  background-color: black;
+  border: 1px solid black;
+  color: white;
+  margin-left: 1rem;
+}

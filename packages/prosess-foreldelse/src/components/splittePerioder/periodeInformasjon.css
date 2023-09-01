@@ -1,0 +1,38 @@
+.infoSummary {
+  background-color: #fff2e0;
+  height: auto;
+  max-width: 500px;
+  padding: 10px 20px 10px;
+  top: 0;
+}
+.ingenPerioder {
+  font-weight: bold;
+}
+.resultSum {
+  margin-top: 15px;
+}
+.resultSum .number {
+  float: left;
+  font-weight: bold;
+}
+.resultSum .redNumbers .positivNumber {
+  font-weight: bold;
+  margin-left: 8px;
+}
+.resultSum .redNumbers .redNumber {
+  color: #c30000;
+  font-weight: bold;
+  margin-left: 8px;
+}
+.resultSum .redNumbers .lastNumberRed {
+  color: #c30000;
+  font-weight: bold;
+  padding-left: 15px;
+}
+.resultSum .redNumbers .lastNumberPositiv {
+  font-weight: bold;
+  padding-left: 15px;
+}
+.resultName {
+  width: 170px;
+}

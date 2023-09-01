@@ -1,9 +1,9 @@
-import React from 'react';
 import pilHøyre from '@fpsak-frontend/assets/images/pil_hoyre_filled.svg';
 import Image from '@fpsak-frontend/shared-components/src/Image';
 import classnames from 'classnames/bind';
+import React from 'react';
 import { Overføringsretning, OverføringsretningEnum } from '../types/Overføring';
-import styles from './pil.less';
+import styles from './pil.css';
 
 const classNames = classnames.bind(styles);
 

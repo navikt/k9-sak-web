@@ -1,18 +1,18 @@
-import React from 'react';
-import { FormattedMessage, injectIntl, WrappedComponentProps } from 'react-intl';
+import { KodeverkMedNavn } from '@k9-sak-web/types';
+import Etikettfokus from 'nav-frontend-etiketter';
 import { Column, Row } from 'nav-frontend-grid';
 import { Element, Normaltekst, Undertekst } from 'nav-frontend-typografi';
-import Etikettfokus from 'nav-frontend-etiketter';
-import { KodeverkMedNavn } from '@k9-sak-web/types';
+import React from 'react';
+import { FormattedMessage, injectIntl, WrappedComponentProps } from 'react-intl';
 
 import opplysningAdresseType from '@fpsak-frontend/kodeverk/src/opplysningAdresseType';
-import { getAddresses } from '@fpsak-frontend/utils';
 import personstatusType from '@fpsak-frontend/kodeverk/src/personstatusType';
 import Region from '@fpsak-frontend/kodeverk/src/region';
+import { getAddresses } from '@fpsak-frontend/utils';
 
 import { BostedSokerPersonopplysninger } from '../BostedSokerFaktaIndex';
 
-import styles from './bostedSokerView.less';
+import styles from './bostedSokerView.css';
 
 interface OwnProps {
   personopplysninger: BostedSokerPersonopplysninger;

@@ -1,7 +1,7 @@
-import React, { ReactNode } from 'react';
 import Panel from 'nav-frontend-paneler';
+import React, { ReactNode } from 'react';
 
-import styles from './fadingPanel.less';
+import styles from './fadingPanel.css';
 
 interface OwnProps {
   withoutTopMargin?: boolean;

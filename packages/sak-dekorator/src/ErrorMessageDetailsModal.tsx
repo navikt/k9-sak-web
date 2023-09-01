@@ -1,16 +1,16 @@
-import React from 'react';
-import { FormattedMessage, injectIntl, WrappedComponentProps } from 'react-intl';
 import { Column, Row } from 'nav-frontend-grid';
 import { Knapp } from 'nav-frontend-knapper';
-import { Normaltekst, Undertekst, Undertittel } from 'nav-frontend-typografi';
 import Modal from 'nav-frontend-modal';
+import { Normaltekst, Undertekst, Undertittel } from 'nav-frontend-typografi';
+import React from 'react';
+import { FormattedMessage, injectIntl, WrappedComponentProps } from 'react-intl';
 
-import { Image, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import infoImageUrl from '@fpsak-frontend/assets/images/behandle.svg';
+import { Image, VerticalSpacer } from '@fpsak-frontend/shared-components';
 
 import Feilmelding from './feilmeldingTsType';
 
-import styles from './errorMessageDetailsModal.less';
+import styles from './errorMessageDetailsModal.css';
 
 const capitalizeFirstLetters = (key: string): string => key.charAt(0).toUpperCase() + key.substr(1);
 

@@ -1,7 +1,7 @@
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import Nokkeltall from './Nokkeltall';
-import styles from './nokkeltall.less';
+import styles from './nokkeltall.css';
 
 interface DagerNavKanUtbetaleProps {
   dagerNavKanUtbetale: number;

@@ -1,9 +1,9 @@
 import { DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils';
+import moment from 'moment';
+import Lenke from 'nav-frontend-lenker';
 import { Normaltekst, Undertittel } from 'nav-frontend-typografi';
 import React from 'react';
-import Lenke from 'nav-frontend-lenker';
-import moment from 'moment';
-import styles from './ustrukturerteDokumenter.less';
+import styles from './ustrukturerteDokumenter.css';
 
 export interface Link {
   href: string;

@@ -1,9 +1,9 @@
-import React, { useRef, useEffect } from 'react';
 import classnames from 'classnames/bind';
+import React, { useEffect, useRef } from 'react';
 
-import { FlexContainer, FlexRow, FlexColumn } from '@fpsak-frontend/shared-components';
+import { FlexColumn, FlexContainer, FlexRow } from '@fpsak-frontend/shared-components';
 
-import styles from './tabMeny.less';
+import styles from './tabMeny.css';
 
 const classNames = classnames.bind(styles);
 

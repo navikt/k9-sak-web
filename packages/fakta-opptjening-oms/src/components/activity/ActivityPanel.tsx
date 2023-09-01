@@ -1,18 +1,17 @@
-import React, { KeyboardEvent, MouseEvent } from 'react';
 import {
-  behandlingForm,
-  behandlingFormValueSelector,
   PeriodpickerField,
   RadioGroupField,
   RadioOption,
   SelectField,
   TextAreaField,
+  behandlingForm,
+  behandlingFormValueSelector,
 } from '@fpsak-frontend/form';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import arbeidType from '@fpsak-frontend/kodeverk/src/arbeidType';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import opptjeningAktivitetType from '@fpsak-frontend/kodeverk/src/opptjeningAktivitetType';
-import { FlexColumn, FlexContainer, FlexRow, VerticalSpacer, FaktaGruppe } from '@fpsak-frontend/shared-components';
+import { FaktaGruppe, FlexColumn, FlexContainer, FlexRow, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { TimeLineButton } from '@fpsak-frontend/tidslinje';
 import {
   findDifferenceInMonthsAndDays,
@@ -26,7 +25,7 @@ import {
   required,
   requiredIfCustomFunctionIsTrue,
 } from '@fpsak-frontend/utils';
-import { Kodeverk, ArbeidsgiverOpplysningerPerId } from '@k9-sak-web/types';
+import { ArbeidsgiverOpplysningerPerId, Kodeverk } from '@k9-sak-web/types';
 import AlleKodeverk from '@k9-sak-web/types/src/kodeverk';
 import OpptjeningAktivitet from '@k9-sak-web/types/src/opptjening/opptjeningAktivitet';
 import OpptjeningAktivitetType from '@k9-sak-web/types/src/opptjening/opptjeningAktivitetType';
@@ -34,11 +33,12 @@ import moment from 'moment';
 import { Column, Row } from 'nav-frontend-grid';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
-import { FormattedMessage, injectIntl, WrappedComponentProps } from 'react-intl';
+import React, { KeyboardEvent, MouseEvent } from 'react';
+import { FormattedMessage, WrappedComponentProps, injectIntl } from 'react-intl';
 import { connect } from 'react-redux';
 import { InjectedFormProps } from 'redux-form';
 import ActivityDataSubPanel from './ActivityDataSubPanel';
-import styles from './activityPanel.less';
+import styles from './activityPanel.css';
 
 const minLength3 = minLength(3);
 const maxLength1500 = maxLength(1500);

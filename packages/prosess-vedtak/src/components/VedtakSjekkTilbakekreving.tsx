@@ -1,9 +1,9 @@
-import React from 'react';
-import { Alert, BodyLong, Button, Heading, Radio, RadioGroup } from '@navikt/ds-react';
-import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import { VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { Alert, BodyLong, Button, Heading, Radio, RadioGroup } from '@navikt/ds-react';
+import React from 'react';
 import { FormattedMessage } from 'react-intl';
-import styles from './VedtakSjekkTilbakekreving.less';
+import styles from './VedtakSjekkTilbakekreving.css';
 
 interface Props {
   readOnly: boolean;

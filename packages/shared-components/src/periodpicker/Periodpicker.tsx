@@ -1,12 +1,12 @@
-import React, { ReactNode, Component } from 'react';
+import { DDMMYYYY_DATE_FORMAT, haystack } from '@fpsak-frontend/utils';
 import moment from 'moment';
 import { Input } from 'nav-frontend-skjema';
+import React, { Component, ReactNode } from 'react';
 import { DateUtils, Modifier } from 'react-day-picker';
-import { DDMMYYYY_DATE_FORMAT, haystack } from '@fpsak-frontend/utils';
 import CalendarToggleButton from '../datepicker/CalendarToggleButton';
 import PeriodCalendarOverlay from './PeriodCalendarOverlay';
 
-import styles from './periodpicker.less';
+import styles from './periodpicker.css';
 
 interface OwnProps {
   names: string[];

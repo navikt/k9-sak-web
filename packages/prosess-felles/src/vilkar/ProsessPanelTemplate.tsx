@@ -1,22 +1,22 @@
+import { Element, Normaltekst, Undertekst, Undertittel } from 'nav-frontend-typografi';
 import React, { ReactNode } from 'react';
-import { Undertittel, Undertekst, Element, Normaltekst } from 'nav-frontend-typografi';
 
-import {
-  VerticalSpacer,
-  FlexContainer,
-  FlexRow,
-  FlexColumn,
-  AksjonspunktBox,
-  Image,
-} from '@fpsak-frontend/shared-components';
-import { hasBehandlingFormErrorsOfType, isBehandlingFormDirty, isBehandlingFormSubmitting } from '@fpsak-frontend/form';
 import avslattImage from '@fpsak-frontend/assets/images/avslaatt_hover.svg';
 import innvilgetImage from '@fpsak-frontend/assets/images/innvilget_hover.svg';
+import { hasBehandlingFormErrorsOfType, isBehandlingFormDirty, isBehandlingFormSubmitting } from '@fpsak-frontend/form';
+import {
+  AksjonspunktBox,
+  FlexColumn,
+  FlexContainer,
+  FlexRow,
+  Image,
+  VerticalSpacer,
+} from '@fpsak-frontend/shared-components';
 
 import getPackageIntl from '../../i18n/getPackageIntl';
 import ProsessStegSubmitButton from '../ProsessStegSubmitButton';
 
-import styles from './prosessPanelTemplate.less';
+import styles from './prosessPanelTemplate.css';
 
 interface OwnProps {
   title: string;

@@ -1,7 +1,7 @@
-import React, { ReactNode } from 'react';
 import classnames from 'classnames/bind';
+import React, { ReactNode } from 'react';
 
-import styles from './tableRow.less';
+import styles from './tableRow.css';
 
 const classNames = classnames.bind(styles);
 

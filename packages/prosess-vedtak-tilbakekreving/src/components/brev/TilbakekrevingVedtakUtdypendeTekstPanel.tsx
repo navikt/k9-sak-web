@@ -1,14 +1,14 @@
-import React, { useState } from 'react';
-import { connect } from 'react-redux';
-import { FormattedMessage, injectIntl, WrappedComponentProps } from 'react-intl';
 import { Undertekst } from 'nav-frontend-typografi';
+import React, { useState } from 'react';
+import { FormattedMessage, injectIntl, WrappedComponentProps } from 'react-intl';
+import { connect } from 'react-redux';
 
 import addCircleIcon from '@fpsak-frontend/assets/images/add-circle.svg';
-import { required, hasValidText, maxLength, minLength } from '@fpsak-frontend/utils';
-import { TextAreaField, behandlingFormValueSelector } from '@fpsak-frontend/form';
+import { behandlingFormValueSelector, TextAreaField } from '@fpsak-frontend/form';
 import { Image, VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { hasValidText, maxLength, minLength, required } from '@fpsak-frontend/utils';
 
-import styles from './tilbakekrevingVedtakUtdypendeTekstPanel.less';
+import styles from './tilbakekrevingVedtakUtdypendeTekstPanel.css';
 
 const minLength3 = minLength(3);
 const maxLength4000 = maxLength(4000);

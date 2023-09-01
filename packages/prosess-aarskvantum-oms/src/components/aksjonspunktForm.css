@@ -1,0 +1,23 @@
+.spaceBetween {
+  align-items: flex-start;
+  display: flex;
+  justify-content: space-between;
+  margin-top: 1em;
+}
+.graBoks {
+  background-color: #f1f1f1;
+  margin-bottom: 1em;
+  padding: 1em;
+}
+.sentrert {
+  text-align: center;
+}
+.vertikaltSentrert {
+  vertical-align: middle;
+}
+.vertikaltSentrert p {
+  padding-bottom: 0 !important;
+}
+.modalInnhold {
+  padding: 32px;
+}

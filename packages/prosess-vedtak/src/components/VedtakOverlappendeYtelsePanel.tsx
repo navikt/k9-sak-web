@@ -7,9 +7,9 @@ import { Accordion, Alert, BodyLong, Checkbox, CheckboxGroup, Heading } from '@n
 import { useFormikContext } from 'formik';
 import { EtikettFokus, EtikettInfo } from 'nav-frontend-etiketter';
 import React from 'react';
-import { injectIntl, WrappedComponentProps } from 'react-intl';
+import { WrappedComponentProps, injectIntl } from 'react-intl';
 import { sorterOverlappendeRader } from '../utils/periodeUtils';
-import styles from './VedtakOverlappendeYtelsePanel.less';
+import styles from './VedtakOverlappendeYtelsePanel.css';
 
 interface Props {
   overlappendeYtelser: any;

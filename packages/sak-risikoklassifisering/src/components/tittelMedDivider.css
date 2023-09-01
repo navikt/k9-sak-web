@@ -1,0 +1,11 @@
+.divider {
+  border-left: 1px solid #a0a0a0;
+  border-right: 0 solid #a0a0a0;
+  height: 100%;
+  margin-bottom: 3px;
+  margin-left: 5px;
+  margin-top: 3px;
+}
+.tekst {
+  padding-top: 3px;
+}

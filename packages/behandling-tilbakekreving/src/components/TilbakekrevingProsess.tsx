@@ -1,24 +1,24 @@
-import React, { useState, useCallback } from 'react';
+import React, { useCallback, useState } from 'react';
 import { injectIntl, WrappedComponentProps } from 'react-intl';
 
 import aksjonspunktCodesTilbakekreving from '@fpsak-frontend/kodeverk/src/aksjonspunktCodesTilbakekreving';
 import { AdvarselModal } from '@fpsak-frontend/shared-components';
+import { bestemAvsenderApp } from '@fpsak-frontend/utils/src/formidlingUtils';
 import {
-  prosessStegHooks,
   FatterVedtakStatusModal,
-  ProsessStegPanel,
   ProsessStegContainer,
+  prosessStegHooks,
+  ProsessStegPanel,
   Rettigheter,
   useSetBehandlingVedEndring,
 } from '@k9-sak-web/behandling-felles';
-import { bestemAvsenderApp } from '@fpsak-frontend/utils/src/formidlingUtils';
-import { KodeverkMedNavn, Behandling, Fagsak, FagsakPerson } from '@k9-sak-web/types';
+import { Behandling, Fagsak, FagsakPerson, KodeverkMedNavn } from '@k9-sak-web/types';
 
 import { restApiTilbakekrevingHooks, TilbakekrevingBehandlingApiKeys } from '../data/tilbakekrevingBehandlingApi';
 import prosessStegPanelDefinisjoner from '../panelDefinisjoner/prosessStegTilbakekrevingPanelDefinisjoner';
 import FetchedData from '../types/fetchedDataTsType';
 
-import '@fpsak-frontend/assets/styles/arrowForProcessMenu.less';
+import '@fpsak-frontend/assets/styles/arrowForProcessMenu.css';
 
 const forhandsvis = data => {
   if (URL.createObjectURL) {

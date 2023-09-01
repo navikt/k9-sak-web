@@ -1,0 +1,30 @@
+.flexRow {
+  box-sizing: border-box;
+  display: flex;
+  flex: 0 0 100%;
+  flex-flow: row nowrap;
+}
+.spaceBetween {
+  justify-content: space-between;
+}
+.alignItemsToBaseline {
+  align-items: baseline;
+}
+.alignItemsToFlexEnd {
+  align-items: flex-end;
+}
+.justifyItemsToFlexEnd {
+  justify-content: flex-end;
+}
+.wrap {
+  flex-flow: row wrap;
+}
+.justifyCenter {
+  justify-content: center;
+}
+.childrenMargin > *:not(:last-child) {
+  margin-right: 0.5em;
+}
+.autoFlex {
+  flex: 1 1 auto;
+}

@@ -1,0 +1,36 @@
+.container {
+  width: 730px;
+}
+.divider {
+  border-left: 1px solid #a0a0a0;
+  border-right: 0 solid #a0a0a0;
+  display: inline;
+  float: right;
+  height: 30px;
+  margin-left: 9px;
+  position: absolute;
+  top: 4px;
+}
+.image {
+  height: 25px;
+  margin-top: 5px;
+  width: 25px;
+}
+.modal {
+  width: 540px;
+}
+.label {
+  margin-top: 5px;
+}
+.right {
+  float: right;
+  margin-right: 50px;
+}
+.button {
+  margin-top: 10px;
+  padding-left: 35px;
+  padding-right: 35px;
+}
+.cancelButton {
+  margin: 10px 10px 0 10px;
+}

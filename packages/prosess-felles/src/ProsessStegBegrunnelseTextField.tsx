@@ -4,15 +4,15 @@ import { TextAreaField } from '@fpsak-frontend/form';
 import {
   decodeHtmlEntity,
   hasValidText,
+  requiredIfNotPristine,
   maxLength as validateMaxLength,
   minLength as validateMinLength,
-  requiredIfNotPristine,
 } from '@fpsak-frontend/utils';
 import { Aksjonspunkt } from '@k9-sak-web/types';
 
 import getPackageIntl from '../i18n/getPackageIntl';
 
-import styles from './prosessStegBegrunnelseTextField.less';
+import styles from './prosessStegBegrunnelseTextField.css';
 
 const validateMinLength3 = validateMinLength(3);
 const validateMaxLength1500 = validateMaxLength(1500);
@@ -63,7 +63,7 @@ const ProsessStegBegrunnelseTextField = ({
         textareaClass={styles.explanationTextarea}
         maxLength={maxLength || 1500}
         readOnly={readOnly}
-        placeholder={ placeholderText || intl.formatMessage({ id: 'ProsessStegBegrunnelseTextField.BegrunnVurdering' })}
+        placeholder={placeholderText || intl.formatMessage({ id: 'ProsessStegBegrunnelseTextField.BegrunnVurdering' })}
       />
     </div>
   );

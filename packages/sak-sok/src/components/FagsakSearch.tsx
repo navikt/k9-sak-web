@@ -1,14 +1,14 @@
+import { Normaltekst } from 'nav-frontend-typografi';
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
-import { Normaltekst } from 'nav-frontend-typografi';
 
-import { Fagsak, KodeverkMedNavn } from '@k9-sak-web/types';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { Fagsak, KodeverkMedNavn } from '@k9-sak-web/types';
 
-import SearchForm from './SearchForm';
 import FagsakList from './FagsakList';
+import SearchForm from './SearchForm';
 
-import styles from './fagsakSearch.less';
+import styles from './fagsakSearch.css';
 
 interface OwnProps {
   fagsaker: Fagsak[];

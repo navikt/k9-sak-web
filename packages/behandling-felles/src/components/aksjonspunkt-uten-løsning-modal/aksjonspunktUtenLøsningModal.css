@@ -1,0 +1,7 @@
+.aksjonspunktUtenLøsningModal {
+  padding: 0.5rem;
+}
+.aksjonspunktUtenLøsningModal__knapp {
+  display: block !important;
+  margin: 1rem auto auto auto;
+}

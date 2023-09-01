@@ -1,22 +1,15 @@
-import React, { useEffect } from 'react';
-import { createSelector } from 'reselect';
-import { connect } from 'react-redux';
-import { InjectedFormProps } from 'redux-form';
-import { injectIntl, WrappedComponentProps } from 'react-intl';
 import classNames from 'classnames';
 import { Hovedknapp } from 'nav-frontend-knapper';
+import React, { useEffect } from 'react';
+import { injectIntl, WrappedComponentProps } from 'react-intl';
+import { connect } from 'react-redux';
+import { InjectedFormProps } from 'redux-form';
+import { createSelector } from 'reselect';
 
+import { behandlingForm, behandlingFormValueSelector, SelectField, TextAreaField } from '@fpsak-frontend/form';
 import dokumentMalType from '@fpsak-frontend/kodeverk/src/dokumentMalType';
-import {
-  ArbeidsgiverOpplysningerPerId,
-  Brevmal,
-  Brevmaler,
-  FeatureToggles,
-  Kodeverk,
-  KodeverkMedNavn,
-  Mottaker,
-  Personopplysninger,
-} from '@k9-sak-web/types';
+import ugunstAarsakTyper from '@fpsak-frontend/kodeverk/src/ugunstAarsakTyper';
+import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import {
   ariaCheck,
   getLanguageCodeFromSprakkode,
@@ -27,13 +20,20 @@ import {
   safeJSONParse,
 } from '@fpsak-frontend/utils';
 import { lagVisningsnavnForMottaker } from '@fpsak-frontend/utils/src/formidlingUtils';
-import ugunstAarsakTyper from '@fpsak-frontend/kodeverk/src/ugunstAarsakTyper';
-import { behandlingForm, behandlingFormValueSelector, SelectField, TextAreaField } from '@fpsak-frontend/form';
-import { VerticalSpacer } from '@fpsak-frontend/shared-components';
+import {
+  ArbeidsgiverOpplysningerPerId,
+  Brevmal,
+  Brevmaler,
+  FeatureToggles,
+  Kodeverk,
+  KodeverkMedNavn,
+  Mottaker,
+  Personopplysninger,
+} from '@k9-sak-web/types';
 
 import InputField from '@fpsak-frontend/form/src/InputField';
 import { Fritekstbrev } from '@k9-sak-web/types/src/formidlingTsType';
-import styles from './messages.less';
+import styles from './messages.css';
 
 const maxLength4000 = maxLength(4000);
 const maxLength100000 = maxLength(100000);

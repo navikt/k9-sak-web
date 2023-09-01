@@ -1,10 +1,10 @@
-import React from 'react';
-import classnames from 'classnames/bind';
 import endretFelt from '@fpsak-frontend/assets/images/endret_felt.svg';
+import classnames from 'classnames/bind';
+import React from 'react';
 import { useIntl } from 'react-intl';
 import Image from './Image';
 
-import styles from './editedIcon.less';
+import styles from './editedIcon.css';
 
 const classNames = classnames.bind(styles);
 

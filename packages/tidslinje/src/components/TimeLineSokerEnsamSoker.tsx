@@ -1,14 +1,14 @@
-import React from 'react';
 import { Row } from 'nav-frontend-grid';
+import React from 'react';
 
+import urlMann from '@fpsak-frontend/assets/images/mann.svg';
 import navBrukerKjonn from '@fpsak-frontend/kodeverk/src/navBrukerKjonn';
 import { Image } from '@fpsak-frontend/shared-components';
-import urlMann from '@fpsak-frontend/assets/images/mann.svg';
 
 import urlKvinne from '@fpsak-frontend/assets/images/kvinne.svg';
 import Kjønnkode from '@k9-sak-web/types/src/Kjønnkode';
 import { useIntl } from 'react-intl';
-import styles from './timeLineSokerEnsamSoker.less';
+import styles from './timeLineSokerEnsamSoker.css';
 
 /**
  * TimeLineSoker

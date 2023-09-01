@@ -1,18 +1,18 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import moment from 'moment';
 import { Column, Row } from 'nav-frontend-grid';
+import PropTypes from 'prop-types';
+import React, { Component } from 'react';
 import { injectIntl } from 'react-intl';
 
-import { ISO_DATE_FORMAT } from '@fpsak-frontend/utils';
+import urlKvinne from '@fpsak-frontend/assets/images/kvinne.svg';
+import urlMann from '@fpsak-frontend/assets/images/mann.svg';
 import navBrukerKjonn from '@fpsak-frontend/kodeverk/src/navBrukerKjonn';
 import { Image } from '@fpsak-frontend/shared-components';
-import urlMann from '@fpsak-frontend/assets/images/mann.svg';
-import urlKvinne from '@fpsak-frontend/assets/images/kvinne.svg';
+import { ISO_DATE_FORMAT } from '@fpsak-frontend/utils';
 
 import { Timeline, TimeLineControl } from '@fpsak-frontend/tidslinje';
 
-import styles from './tilbakekrevingTimeline.less';
+import styles from './tilbakekrevingTimeline.css';
 
 export const GODKJENT_CLASSNAME = 'godkjentPeriode';
 export const AVVIST_CLASSNAME = 'avvistPeriode';

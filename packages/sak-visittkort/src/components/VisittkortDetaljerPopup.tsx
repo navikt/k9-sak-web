@@ -1,15 +1,15 @@
-import React, { useMemo } from 'react';
-import { injectIntl, FormattedMessage, WrappedComponentProps } from 'react-intl';
 import { EtikettInfo } from 'nav-frontend-etiketter';
-import { Normaltekst, Element } from 'nav-frontend-typografi';
+import { Element, Normaltekst } from 'nav-frontend-typografi';
+import React, { useMemo } from 'react';
+import { FormattedMessage, WrappedComponentProps, injectIntl } from 'react-intl';
 
-import { Kodeverk, KodeverkMedNavn, Personopplysninger } from '@k9-sak-web/types';
-import { FlexColumn, FlexContainer, FlexRow, VerticalSpacer, Tooltip } from '@fpsak-frontend/shared-components';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import opplysningAdresseType from '@fpsak-frontend/kodeverk/src/opplysningAdresseType';
-import { getKodeverknavnFn, getLanguageFromSprakkode, getAddresses, Adresser } from '@fpsak-frontend/utils';
+import { FlexColumn, FlexContainer, FlexRow, Tooltip, VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { Adresser, getAddresses, getKodeverknavnFn, getLanguageFromSprakkode } from '@fpsak-frontend/utils';
+import { Kodeverk, KodeverkMedNavn, Personopplysninger } from '@k9-sak-web/types';
 
-import styles from './visittkortDetaljerPopup.less';
+import styles from './visittkortDetaljerPopup.css';
 
 const borSokerMedBarnet = (adresser: Adresser, personopplysningerForBarn: Personopplysninger[] = []): boolean =>
   personopplysningerForBarn.some(

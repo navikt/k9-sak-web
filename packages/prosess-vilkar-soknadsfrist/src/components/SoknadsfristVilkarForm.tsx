@@ -32,7 +32,7 @@ import SoknadsfristVilkarDokument, { DELVIS_OPPFYLT } from './SoknadsfristVilkar
 
 import { utledInnsendtSoknadsfrist } from '../utils';
 
-import styles from './SoknadsfristVilkarForm.less';
+import styles from './SoknadsfristVilkarForm.css';
 
 const formName = 'SøknadsfristVilkårOverstyringForm';
 

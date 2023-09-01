@@ -1,24 +1,24 @@
-import React, { useState, useCallback, useMemo } from 'react';
+import React, { useCallback, useMemo, useState } from 'react';
 
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import {
+  IverksetterVedtakStatusModal,
+  ProsessStegContainer,
+  ProsessStegPanel,
   Rettigheter,
   prosessStegHooks,
-  IverksetterVedtakStatusModal,
-  ProsessStegPanel,
-  ProsessStegContainer,
   useSetBehandlingVedEndring,
 } from '@k9-sak-web/behandling-felles';
-import { Fagsak, Kodeverk, KodeverkMedNavn, Behandling, FagsakPerson } from '@k9-sak-web/types';
-import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
+import { Behandling, Fagsak, FagsakPerson, Kodeverk, KodeverkMedNavn } from '@k9-sak-web/types';
 
 import lagForhåndsvisRequest, { bestemAvsenderApp } from '@fpsak-frontend/utils/src/formidlingUtils';
-import AnkeBehandlingModal from './AnkeBehandlingModal';
+import { AnkeBehandlingApiKeys, restApiAnkeHooks } from '../data/ankeBehandlingApi';
 import prosessStegPanelDefinisjoner from '../panelDefinisjoner/prosessStegAnkePanelDefinisjoner';
 import FetchedData from '../types/fetchedDataTsType';
-import { restApiAnkeHooks, AnkeBehandlingApiKeys } from '../data/ankeBehandlingApi';
+import AnkeBehandlingModal from './AnkeBehandlingModal';
 
-import '@fpsak-frontend/assets/styles/arrowForProcessMenu.less';
+import '@fpsak-frontend/assets/styles/arrowForProcessMenu.css';
 
 const forhandsvis = data => {
   if (URL.createObjectURL) {

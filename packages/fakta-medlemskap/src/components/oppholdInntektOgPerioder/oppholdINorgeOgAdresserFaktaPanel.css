@@ -1,0 +1,9 @@
+.dodEtikett {
+  background-color: #262626;
+  color: #fff;
+}
+@media screen and (-ms-high-contrast: active), screen and (-ms-high-contrast: none) {
+  .ieFlex [class^='flexRow'] {
+    min-width: 300px;
+  }
+}

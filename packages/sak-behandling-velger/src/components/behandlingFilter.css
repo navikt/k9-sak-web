@@ -1,0 +1,60 @@
+.chevronDropdown__dropdown {
+  background-color: white;
+  border: 1px solid black;
+  border-radius: 0.1875rem;
+  margin-left: 0.25rem;
+  padding: 1rem 1.125rem 0.5rem;
+  position: absolute;
+  right: 0;
+  top: -0.875rem;
+  z-index: 1;
+}
+.chevronDropdown__dropdown__checkbox {
+  margin-top: 1.125rem;
+}
+.chevronDropdown__dropdown__checkbox :global legend {
+  clip: rect(1px, 1px, 1px, 1px);
+  height: 1px;
+  overflow: hidden;
+  position: absolute;
+  white-space: nowrap;
+  width: 1px;
+}
+.chevronDropdown__dropdown__checkbox :global .skjemaelement {
+  margin-top: 0;
+}
+.chevronDropdown__dropdown__checkbox div {
+  margin: 0.625rem 0;
+}
+.chevronDropdown__toggleButton {
+  background: none;
+  border: none;
+  color: #0067c5;
+  padding: unset;
+}
+.chevronDropdown__toggleButton__text {
+  display: inline;
+  line-height: 1.1875rem;
+  margin-right: 0.375rem;
+}
+.chevronDropdown__hidden {
+  visibility: hidden;
+}
+.closeButton {
+  align-items: center;
+  background: none;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  margin-left: auto;
+  padding: 0;
+}
+.closeButton img {
+  margin-bottom: 0.125rem;
+  margin-left: 0.25rem;
+}
+.automaticCheckbox {
+  border-top: 1px solid #c9c9c9;
+  margin-top: 1.125rem;
+  padding-top: 1.125rem;
+}

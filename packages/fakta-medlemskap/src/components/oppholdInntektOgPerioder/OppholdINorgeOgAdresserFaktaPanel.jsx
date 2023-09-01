@@ -1,19 +1,19 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { FormattedMessage, injectIntl } from 'react-intl';
-import { connect } from 'react-redux';
-import { Column, Row } from 'nav-frontend-grid';
-import { Normaltekst, Undertekst } from 'nav-frontend-typografi';
-import countries from 'i18n-iso-countries';
-import norwegianLocale from 'i18n-iso-countries/langs/no.json';
-import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
+import BostedSokerFaktaIndex from '@fpsak-frontend/fakta-bosted-soker';
 import { RadioGroupField, RadioOption, behandlingFormValueSelector } from '@fpsak-frontend/form';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
+import { FaktaGruppe, PeriodLabel, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { required } from '@fpsak-frontend/utils';
-import BostedSokerFaktaIndex from '@fpsak-frontend/fakta-bosted-soker';
-import { PeriodLabel, VerticalSpacer, FaktaGruppe } from '@fpsak-frontend/shared-components';
+import countries from 'i18n-iso-countries';
+import norwegianLocale from 'i18n-iso-countries/langs/no.json';
+import { Column, Row } from 'nav-frontend-grid';
+import { Normaltekst, Undertekst } from 'nav-frontend-typografi';
+import PropTypes from 'prop-types';
+import React from 'react';
+import { FormattedMessage, injectIntl } from 'react-intl';
+import { connect } from 'react-redux';
 
-import styles from './oppholdINorgeOgAdresserFaktaPanel.less';
+import styles from './oppholdINorgeOgAdresserFaktaPanel.css';
 
 countries.registerLocale(norwegianLocale);
 

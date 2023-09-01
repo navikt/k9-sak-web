@@ -1,18 +1,18 @@
-import React from 'react';
-import { connect } from 'react-redux';
-import { formValueSelector, reduxForm, InjectedFormProps } from 'redux-form';
-import { FormattedMessage, injectIntl, WrappedComponentProps } from 'react-intl';
 import { Column, Row } from 'nav-frontend-grid';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
-import { Normaltekst } from 'nav-frontend-typografi';
 import Modal from 'nav-frontend-modal';
+import { Normaltekst } from 'nav-frontend-typografi';
+import React from 'react';
+import { FormattedMessage, WrappedComponentProps, injectIntl } from 'react-intl';
+import { connect } from 'react-redux';
+import { InjectedFormProps, formValueSelector, reduxForm } from 'redux-form';
 
-import { SelectField, TextAreaField } from '@fpsak-frontend/form';
-import { hasValidText, maxLength, required } from '@fpsak-frontend/utils';
-import { Image, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import innvilgetImageUrl from '@fpsak-frontend/assets/images/innvilget_valgt.svg';
+import { SelectField, TextAreaField } from '@fpsak-frontend/form';
+import { Image, VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { hasValidText, maxLength, required } from '@fpsak-frontend/utils';
 
-import styles from './endreBehandlendeEnhetModal.less';
+import styles from './endreBehandlendeEnhetModal.css';
 
 const maxLength400 = maxLength(400);
 

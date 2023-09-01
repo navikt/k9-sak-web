@@ -3,7 +3,7 @@ import React from 'react';
 import { useIntl } from 'react-intl';
 import ZoomInIcon from './icons/ZoomInIcon';
 import ZoomOutIcon from './icons/ZoomOutIcon';
-import styles from './tidslinjeZoom.less';
+import styles from './tidslinjeZoom.css';
 
 const TidslinjeZoom = ({ handleZoomIn, handleZoomOut, disabledZoomIn, disabledZoomOut }) => {
   const intl = useIntl();

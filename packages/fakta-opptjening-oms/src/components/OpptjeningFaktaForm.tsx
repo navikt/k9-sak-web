@@ -10,7 +10,7 @@ import {
 } from '@fpsak-frontend/shared-components';
 import { TimeLineNavigation } from '@fpsak-frontend/tidslinje';
 import { ISO_DATE_FORMAT } from '@fpsak-frontend/utils';
-import { Opptjening, ArbeidsgiverOpplysningerPerId } from '@k9-sak-web/types';
+import { ArbeidsgiverOpplysningerPerId, Opptjening } from '@k9-sak-web/types';
 import AlleKodeverk from '@k9-sak-web/types/src/kodeverk';
 import OpptjeningAktivitet from '@k9-sak-web/types/src/opptjening/opptjeningAktivitet';
 import OpptjeningAktivitetType from '@k9-sak-web/types/src/opptjening/opptjeningAktivitetType';
@@ -18,14 +18,14 @@ import moment from 'moment';
 import { AlertStripeInfo } from 'nav-frontend-alertstriper';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 import { TabsPure } from 'nav-frontend-tabs';
-import { Undertittel, Normaltekst, Undertekst } from 'nav-frontend-typografi';
-import React, { Component, MouseEvent, KeyboardEvent } from 'react';
+import { Normaltekst, Undertekst, Undertittel } from 'nav-frontend-typografi';
+import React, { Component, KeyboardEvent, MouseEvent } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { change as reduxFormChange, initialize as reduxFormInitialize } from 'redux-form';
 import ActivityPanel, { activityPanelNameFormName } from './activity/ActivityPanel';
-import styles from './opptjeningFaktaForm.less';
+import styles from './opptjeningFaktaForm.css';
 import OpptjeningTimeLine from './timeline/OpptjeningTimeLine';
 
 const sortByFomDate = (opptjeningPeriods: Opptjening[]) =>

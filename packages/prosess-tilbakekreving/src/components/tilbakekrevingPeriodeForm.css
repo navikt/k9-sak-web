@@ -1,0 +1,13 @@
+.container {
+  animation-duration: 1s;
+  animation-name: fadein;
+  border: 1px solid #c9c9c9;
+  border-radius: 4px;
+  color: black;
+  margin-top: 8px;
+  padding: 20px;
+}
+.explanationTextarea {
+  min-height: 100px;
+  resize: none;
+}

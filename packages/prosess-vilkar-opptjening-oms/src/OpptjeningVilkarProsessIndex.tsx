@@ -1,19 +1,19 @@
-import React, { useState, useEffect } from 'react';
-import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
-import { Fagsak, Aksjonspunkt, Vilkar, OpptjeningBehandling, Opptjening, SubmitCallback } from '@k9-sak-web/types';
-import { SideMenu } from '@navikt/ft-plattform-komponenter';
-import { dateFormat } from '@fpsak-frontend/utils';
-import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import advarselIcon from '@fpsak-frontend/assets/images/advarsel.svg';
+import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
+import { dateFormat } from '@fpsak-frontend/utils';
+import { Aksjonspunkt, Fagsak, Opptjening, OpptjeningBehandling, SubmitCallback, Vilkar } from '@k9-sak-web/types';
+import { SideMenu } from '@navikt/ft-plattform-komponenter';
 import classNames from 'classnames/bind';
 import isEqual from 'lodash.isequal';
+import React, { useEffect, useState } from 'react';
+import { RawIntlProvider, createIntl, createIntlCache } from 'react-intl';
 
 import hentAktivePerioderFraVilkar from '@fpsak-frontend/utils/src/hentAktivePerioderFraVilkar';
 import OpptjeningVilkarForm from './components/OpptjeningVilkarForm';
 
 import messages from '../i18n/nb_NO.json';
 
-import styles from './opptjeningVilkarProsessIndex.less';
+import styles from './opptjeningVilkarProsessIndex.css';
 
 const cx = classNames.bind(styles);
 

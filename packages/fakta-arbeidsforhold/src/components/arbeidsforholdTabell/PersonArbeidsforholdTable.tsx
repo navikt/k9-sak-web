@@ -1,20 +1,20 @@
-import React, { Fragment, useState } from 'react';
-import { FormattedMessage, IntlShape } from 'react-intl';
-import { Normaltekst } from 'nav-frontend-typografi';
-import { DateLabel, Image, PeriodLabel, Table, TableColumn, TableRow } from '@fpsak-frontend/shared-components';
-import { decodeHtmlEntity } from '@fpsak-frontend/utils';
 import erIBrukImageUrl from '@fpsak-frontend/assets/images/innvilget_hover.svg';
 import chevronIkonUrl from '@fpsak-frontend/assets/images/pil_ned.svg';
-import FlexRow from '@fpsak-frontend/shared-components/src/flexGrid/FlexRow';
 import arbeidsforholdHandlingType from '@fpsak-frontend/kodeverk/src/arbeidsforholdHandlingType';
+import { DateLabel, Image, PeriodLabel, Table, TableColumn, TableRow } from '@fpsak-frontend/shared-components';
+import FlexRow from '@fpsak-frontend/shared-components/src/flexGrid/FlexRow';
+import { decodeHtmlEntity } from '@fpsak-frontend/utils';
 import { arbeidsforholdHarAksjonspunktÅrsak } from '@fpsak-frontend/utils/src/arbeidsforholdUtils';
-import ArbeidsforholdV2 from '@k9-sak-web/types/src/arbeidsforholdV2TsType';
 import { KodeverkMedNavn } from '@k9-sak-web/types';
+import ArbeidsforholdV2 from '@k9-sak-web/types/src/arbeidsforholdV2TsType';
+import { Normaltekst } from 'nav-frontend-typografi';
+import React, { Fragment, useState } from 'react';
+import { FormattedMessage, IntlShape } from 'react-intl';
 import IngenArbeidsforholdRegistrert from './IngenArbeidsforholdRegistrert';
 
-import styles from './personArbeidsforholdTable.less';
-import PersonArbeidsforholdDetailForm from '../arbeidsforholdDetaljer/PersonArbeidsforholdDetailForm';
 import PermisjonerInfo from '../arbeidsforholdDetaljer/PermisjonerInfo';
+import PersonArbeidsforholdDetailForm from '../arbeidsforholdDetaljer/PersonArbeidsforholdDetailForm';
+import styles from './personArbeidsforholdTable.css';
 
 const headerColumnContent = [
   <FormattedMessage key={1} id="PersonArbeidsforholdTable.ArbeidsforholdId" values={{ br: <br /> }} />,

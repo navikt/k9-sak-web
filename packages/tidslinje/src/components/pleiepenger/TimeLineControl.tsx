@@ -1,7 +1,7 @@
-import React, { ReactNode, MouseEvent } from 'react';
 import { Row } from 'nav-frontend-grid';
-import styles from './timeLineControl.less';
+import React, { MouseEvent, ReactNode } from 'react';
 import TimeLineButton from '../TimeLineButton';
+import styles from './timeLineControl.css';
 
 interface ButtonCallback {
   callback: (event: MouseEvent) => void;

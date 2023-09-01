@@ -3,12 +3,12 @@ import { Route, Routes } from 'react-router-dom';
 
 import { NotFoundPage } from '@k9-sak-web/sak-infosider';
 
-import { aktoerRoutePath, fagsakRoutePath } from '../paths';
-import FagsakIndex from '../../fagsak/FagsakIndex';
 import AktoerIndex from '../../aktoer/AktoerIndex';
+import FagsakIndex from '../../fagsak/FagsakIndex';
+import { aktoerRoutePath, fagsakRoutePath } from '../paths';
 import DashboardResolver from './DashboardResolver';
 
-import styles from './home.less';
+import styles from './home.css';
 
 interface OwnProps {
   headerHeight: number;

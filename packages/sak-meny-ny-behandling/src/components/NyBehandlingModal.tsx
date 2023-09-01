@@ -1,22 +1,22 @@
-import React, { useEffect, ReactElement } from 'react';
-import { formValueSelector, reduxForm, InjectedFormProps } from 'redux-form';
-import { createSelector } from 'reselect';
-import { connect } from 'react-redux';
-import { FormattedMessage, injectIntl, IntlShape, WrappedComponentProps } from 'react-intl';
 import { Column, Row } from 'nav-frontend-grid';
-import { Element } from 'nav-frontend-typografi';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 import Modal from 'nav-frontend-modal';
+import { Element } from 'nav-frontend-typografi';
+import React, { ReactElement, useEffect } from 'react';
+import { FormattedMessage, IntlShape, WrappedComponentProps, injectIntl } from 'react-intl';
+import { connect } from 'react-redux';
+import { InjectedFormProps, formValueSelector, reduxForm } from 'redux-form';
+import { createSelector } from 'reselect';
 
-import { Image, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import innvilgetImageUrl from '@fpsak-frontend/assets/images/innvilget_valgt.svg';
 import { CheckboxField, SelectField } from '@fpsak-frontend/form';
-import { required } from '@fpsak-frontend/utils';
-import bType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import behandlingArsakType from '@fpsak-frontend/kodeverk/src/behandlingArsakType';
-import { KodeverkMedNavn, Kodeverk } from '@k9-sak-web/types';
+import bType from '@fpsak-frontend/kodeverk/src/behandlingType';
+import { Image, VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { required } from '@fpsak-frontend/utils';
+import { Kodeverk, KodeverkMedNavn } from '@k9-sak-web/types';
 
-import styles from './nyBehandlingModal.less';
+import styles from './nyBehandlingModal.css';
 
 const createOptions = (
   bt: KodeverkMedNavn,

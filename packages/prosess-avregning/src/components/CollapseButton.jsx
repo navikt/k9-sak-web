@@ -1,17 +1,14 @@
+import { NedChevron, OppChevron } from 'nav-frontend-chevron';
+import PropTypes from 'prop-types';
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
-import PropTypes from 'prop-types';
-import { NedChevron, OppChevron } from 'nav-frontend-chevron';
 
-import styles from './collapseButton.less';
+import styles from './collapseButton.css';
 
-const buttonText = (showDetails) => (showDetails ? 'Avregning.headerText.VisFærreDetaljer' : 'Avregning.headerText.VisFlereDetaljer');
+const buttonText = showDetails =>
+  showDetails ? 'Avregning.headerText.VisFærreDetaljer' : 'Avregning.headerText.VisFlereDetaljer';
 
-const CollapseButton = ({
-  toggleDetails,
-  showDetails,
-  mottakerIndex,
-}) => (
+const CollapseButton = ({ toggleDetails, showDetails, mottakerIndex }) => (
   <button type="button" className={styles.invisibleButton} onClick={() => toggleDetails(mottakerIndex)}>
     <FormattedMessage id={buttonText(showDetails)} />
     {showDetails ? <OppChevron /> : <NedChevron />}

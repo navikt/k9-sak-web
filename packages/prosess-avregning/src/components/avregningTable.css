@@ -1,0 +1,60 @@
+.tableWrapper {
+  margin-top: 20px;
+  overflow-x: auto;
+  padding: 10px;
+}
+.tableWrapper .tableTitle {
+  font-weight: bold;
+}
+.simuleringTable {
+  border: 0;
+  margin-bottom: 40px;
+}
+.simuleringTable .rodTekst {
+  color: #c30000;
+}
+.simuleringTable .lastColumn {
+  border-left: dashed 1px #a0a0a0;
+  margin-left: 20px;
+}
+.simuleringTable tr {
+  display: flex;
+}
+.simuleringTable tr td {
+  border: 0;
+  display: flex;
+  justify-content: flex-end;
+  width: 80px;
+}
+.simuleringTable tr td:first-child {
+  justify-content: flex-start;
+  width: 300px;
+}
+.simuleringTable tr:after {
+  content: '';
+  flex-grow: 1;
+}
+.simuleringTable thead tr {
+  border-bottom: solid 1px #a0a0a0;
+}
+.simuleringTable thead td:last-child span {
+  align-items: center;
+  display: flex;
+  height: 100%;
+  justify-content: flex-end;
+  width: 100%;
+}
+.simuleringTable thead td {
+  padding: 0;
+}
+.simuleringTable thead td .nextPeriod {
+  border-left: dashed 1px #a0a0a0;
+  margin-right: -20px;
+  padding: 8px;
+}
+.simuleringTable thead td .normalPeriod {
+  padding: 8px;
+}
+.simuleringTable tbody tr:first-child td {
+  border-top: 0;
+}

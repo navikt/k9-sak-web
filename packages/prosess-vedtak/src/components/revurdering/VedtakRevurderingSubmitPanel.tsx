@@ -1,17 +1,17 @@
+import { Button, ErrorMessage } from '@navikt/ds-react';
 import React from 'react';
-import { createSelector } from 'reselect';
 import { injectIntl, IntlShape } from 'react-intl';
 import { connect } from 'react-redux';
-import { Button, Alert, BodyLong, ErrorMessage } from '@navikt/ds-react';
+import { createSelector } from 'reselect';
 
 import klageBehandlingArsakType from '@fpsak-frontend/kodeverk/src/behandlingArsakType';
 import behandlingStatusCode from '@fpsak-frontend/kodeverk/src/behandlingStatus';
-import { Aksjonspunkt } from '@k9-sak-web/types';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { Aksjonspunkt } from '@k9-sak-web/types';
 
 import redusertUtbetalingArsak from '../../kodeverk/redusertUtbetalingArsak';
 
-import styles from '../vedtakForm.less';
+import styles from '../vedtakForm.css';
 
 interface OwnProps {
   intl: IntlShape;

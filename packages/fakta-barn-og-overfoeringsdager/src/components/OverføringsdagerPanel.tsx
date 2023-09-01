@@ -1,17 +1,17 @@
+import classnames from 'classnames/bind';
+import EkspanderbartPanel from 'nav-frontend-ekspanderbartpanel';
 import React, { useMemo } from 'react';
 import { FormattedMessage } from 'react-intl';
-import EkspanderbartPanel from 'nav-frontend-ekspanderbartpanel';
-import classnames from 'classnames/bind';
 import Overføring, {
   Overføringsretning,
   OverføringsretningEnum,
   Overføringstype,
   OverføringstypeEnum,
 } from '../types/Overføring';
-import Pil from './Pil';
-import OverføringsraderForm from './OverføringsraderForm';
-import styles from './overføringsdagerPanel.less';
 import FastBreddeAligner from './FastBreddeAligner';
+import OverføringsraderForm from './OverføringsraderForm';
+import Pil from './Pil';
+import styles from './overføringsdagerPanel.css';
 
 const classNames = classnames.bind(styles);
 

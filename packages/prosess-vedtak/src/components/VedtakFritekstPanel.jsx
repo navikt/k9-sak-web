@@ -1,12 +1,12 @@
-import React from 'react';
-import PropTypes from 'prop-types';
 import { Column, Row } from 'nav-frontend-grid';
+import PropTypes from 'prop-types';
+import React from 'react';
 
+import TextAreaFormik from '@fpsak-frontend/form/src/TextAreaFormik';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { decodeHtmlEntity, getLanguageFromSprakkode, hasValidText, maxLength, minLength } from '@fpsak-frontend/utils';
-import TextAreaFormik from '@fpsak-frontend/form/src/TextAreaFormik';
 
-import styles from './vedtakFritekstPanel.less';
+import styles from './vedtakFritekstPanel.css';
 
 const maxLength100000 = maxLength(100000);
 const minLength3 = minLength(3);

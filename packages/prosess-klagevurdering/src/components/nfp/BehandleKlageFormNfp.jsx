@@ -1,19 +1,12 @@
+import { Column, Row } from 'nav-frontend-grid';
+import { Undertittel } from 'nav-frontend-typografi';
+import PropTypes from 'prop-types';
 import React from 'react';
 import { FormattedMessage, injectIntl } from 'react-intl';
 import { connect } from 'react-redux';
-import { createSelector } from 'reselect';
 import { formPropTypes } from 'redux-form';
-import PropTypes from 'prop-types';
-import { Column, Row } from 'nav-frontend-grid';
-import { Undertittel } from 'nav-frontend-typografi';
+import { createSelector } from 'reselect';
 
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
-import klageVurderingType from '@fpsak-frontend/kodeverk/src/klageVurdering';
-import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
-import { erTilbakekrevingType } from '@fpsak-frontend/kodeverk/src/behandlingType';
-import { AksjonspunktHelpTextTemp, FadingPanel, VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { ProsessStegSubmitButton, ProsessStegBegrunnelseTextField } from '@k9-sak-web/prosess-felles';
 import {
   behandlingForm,
   behandlingFormValueSelector,
@@ -21,13 +14,20 @@ import {
   isBehandlingFormDirty,
   isBehandlingFormSubmitting,
 } from '@fpsak-frontend/form';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import { erTilbakekrevingType } from '@fpsak-frontend/kodeverk/src/behandlingType';
+import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
+import klageVurderingType from '@fpsak-frontend/kodeverk/src/klageVurdering';
+import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
+import { AksjonspunktHelpTextTemp, FadingPanel, VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { ProsessStegBegrunnelseTextField, ProsessStegSubmitButton } from '@k9-sak-web/prosess-felles';
 
-import KlageVurderingRadioOptionsNfp, { TILBAKEKREVING_HJEMMEL } from './KlageVurderingRadioOptionsNfp';
 import FritekstBrevTextField from '../felles/FritekstKlageBrevTextField';
 import TempSaveAndPreviewKlageLink from '../felles/TempSaveAndPreviewKlageLink';
 import TempsaveKlageButton from '../felles/TempsaveKlageButton';
+import KlageVurderingRadioOptionsNfp, { TILBAKEKREVING_HJEMMEL } from './KlageVurderingRadioOptionsNfp';
 
-import styles from './behandleKlageFormNfp.less';
+import styles from './behandleKlageFormNfp.css';
 
 /**
  * BehandleklageformNfp

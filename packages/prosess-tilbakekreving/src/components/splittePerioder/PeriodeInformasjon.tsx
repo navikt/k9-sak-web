@@ -1,14 +1,14 @@
-import React from 'react';
 import moment from 'moment';
-import { FormattedMessage } from 'react-intl';
 import { Column, Row } from 'nav-frontend-grid';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
+import React from 'react';
+import { FormattedMessage } from 'react-intl';
 
 import { calcDaysAndWeeks, DDMMYYYY_DATE_FORMAT, formatCurrencyNoKr } from '@fpsak-frontend/utils';
 
 import DataForPeriode from '../../types/dataForPeriodeTsType';
 
-import styles from './periodeInformasjon.less';
+import styles from './periodeInformasjon.css';
 
 interface OwnProps {
   fom: string;

@@ -1,6 +1,7 @@
 import CheckboxFieldFormik from '@fpsak-frontend/form/src/CheckboxFieldFormik';
 import TextAreaFormik from '@fpsak-frontend/form/src/TextAreaFormik';
-import { goToSearch, goToLos } from '@k9-sak-web/sak-app/src/app/paths';
+import { useFeatureToggles } from '@fpsak-frontend/shared-components';
+import { goToLos, goToSearch } from '@k9-sak-web/sak-app/src/app/paths';
 import { MerknadFraLos } from '@k9-sak-web/types';
 import { Alert, Button, ErrorMessage, Modal } from '@navikt/ds-react';
 import { Form, Formik, FormikProps } from 'formik';
@@ -9,9 +10,8 @@ import { Element, Normaltekst } from 'nav-frontend-typografi';
 import React, { useRef, useState } from 'react';
 import { useIntl } from 'react-intl';
 import * as Yup from 'yup';
-import { useFeatureToggles } from '@fpsak-frontend/shared-components';
 import Merknadkode from '../Merknadkode';
-import styles from './markerBehandlingModal.less';
+import styles from './markerBehandlingModal.css';
 
 interface PureOwnProps {
   brukHastekøMarkering?: boolean;

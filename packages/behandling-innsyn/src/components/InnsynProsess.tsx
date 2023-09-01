@@ -1,21 +1,21 @@
-import React, { useState, useCallback } from 'react';
+import React, { useCallback, useState } from 'react';
 
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import lagForhåndsvisRequest, { bestemAvsenderApp } from '@fpsak-frontend/utils/src/formidlingUtils';
 import {
+  IverksetterVedtakStatusModal,
+  ProsessStegContainer,
+  ProsessStegPanel,
   Rettigheter,
   prosessStegHooks,
-  IverksetterVedtakStatusModal,
-  ProsessStegPanel,
-  ProsessStegContainer,
   useSetBehandlingVedEndring,
 } from '@k9-sak-web/behandling-felles';
-import { Fagsak, KodeverkMedNavn, Behandling, FeatureToggles, FagsakPerson } from '@k9-sak-web/types';
-import lagForhåndsvisRequest, { bestemAvsenderApp } from '@fpsak-frontend/utils/src/formidlingUtils';
+import { Behandling, Fagsak, FagsakPerson, FeatureToggles, KodeverkMedNavn } from '@k9-sak-web/types';
 
+import '@fpsak-frontend/assets/styles/arrowForProcessMenu.css';
+import { InnsynBehandlingApiKeys, restApiInnsynHooks } from '../data/innsynBehandlingApi';
 import prosessStegPanelDefinisjoner from '../panelDefinisjoner/prosessStegInnsynPanelDefinisjoner';
-import { restApiInnsynHooks, InnsynBehandlingApiKeys } from '../data/innsynBehandlingApi';
 import FetchedData from '../types/fetchedDataTsType';
-import '@fpsak-frontend/assets/styles/arrowForProcessMenu.less';
 
 const forhandsvis = data => {
   if (URL.createObjectURL) {

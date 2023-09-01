@@ -34,7 +34,7 @@ import InputField from '@fpsak-frontend/form/src/InputField';
 import { useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
 import { Fritekstbrev } from '@k9-sak-web/types/src/formidlingTsType';
 import { MessagesApiKeys, requestMessagesApi, restApiMessagesHooks } from '../data/messagesApi';
-import styles from './messages.less';
+import styles from './messages.css';
 
 const maxLength4000 = maxLength(4000);
 const maxLength100000 = maxLength(100000);

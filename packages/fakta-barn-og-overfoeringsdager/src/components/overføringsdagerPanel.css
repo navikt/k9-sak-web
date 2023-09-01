@@ -1,0 +1,22 @@
+.panelContainer {
+  align-items: flex-start;
+  display: flex;
+  flex-wrap: nowrap;
+}
+.panel {
+  flex-grow: 1;
+  max-width: 1000px;
+  min-width: 500px;
+}
+/* stylelint-disable */
+.koronapanel > * {
+  border: 1px solid #ffaa33 !important;
+  border-left: 8px solid #ffaa33 !important;
+}
+/* stylelint-enable */
+.checkIcon {
+  margin: 1em 0 0 1em;
+}
+.checkIcon.hidden {
+  visibility: hidden;
+}

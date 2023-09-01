@@ -1,32 +1,32 @@
-import React, { useState, useCallback, useMemo } from 'react';
+import React, { useCallback, useMemo, useState } from 'react';
 
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import { bestemAvsenderApp, forhandsvis, getForhandsvisCallback } from '@fpsak-frontend/utils/src/formidlingUtils';
 import {
+  FatterVedtakStatusModal,
+  IverksetterVedtakStatusModal,
+  ProsessStegContainer,
+  ProsessStegPanel,
   Rettigheter,
   prosessStegHooks,
-  IverksetterVedtakStatusModal,
-  FatterVedtakStatusModal,
-  ProsessStegPanel,
-  ProsessStegContainer,
   useSetBehandlingVedEndring,
 } from '@k9-sak-web/behandling-felles';
 
 import {
-  KodeverkMedNavn,
-  Behandling,
-  FeatureToggles,
-  Fagsak,
   ArbeidsgiverOpplysningerPerId,
+  Behandling,
+  Fagsak,
   FagsakPerson,
+  FeatureToggles,
+  KodeverkMedNavn,
 } from '@k9-sak-web/types';
-import { restApiFrisinnHooks, FrisinnBehandlingApiKeys } from '../data/frisinnBehandlingApi';
+import { FrisinnBehandlingApiKeys, restApiFrisinnHooks } from '../data/frisinnBehandlingApi';
 import prosessStegPanelDefinisjoner from '../panelDefinisjoner/prosessStegFrisinnPanelDefinisjoner';
 import FetchedData from '../types/fetchedDataTsType';
 
-import '@fpsak-frontend/assets/styles/arrowForProcessMenu.less';
+import '@fpsak-frontend/assets/styles/arrowForProcessMenu.css';
 
 interface OwnProps {
   data: FetchedData;

@@ -1,6 +1,3 @@
-import React, { SetStateAction } from 'react';
-import { connect } from 'react-redux';
-import { FormattedMessage } from 'react-intl';
 import avslattImage from '@fpsak-frontend/assets/images/avslaatt_hover.svg';
 import innvilgetImage from '@fpsak-frontend/assets/images/innvilget_hover.svg';
 import keyUtgraetImage from '@fpsak-frontend/assets/images/key-1-rotert-utgraet.svg';
@@ -9,7 +6,10 @@ import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import { FlexColumn, FlexContainer, FlexRow, Image, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { Aksjonspunkt } from '@k9-sak-web/types';
 import { Element, Undertekst, Undertittel } from 'nav-frontend-typografi';
-import styles from './SoknadsfristVilkarForm.less';
+import React, { SetStateAction } from 'react';
+import { FormattedMessage } from 'react-intl';
+import { connect } from 'react-redux';
+import styles from './SoknadsfristVilkarForm.css';
 
 const isOverridden = (aksjonspunktCodes: string[], aksjonspunktCode: string) =>
   aksjonspunktCodes.some(code => code === aksjonspunktCode);

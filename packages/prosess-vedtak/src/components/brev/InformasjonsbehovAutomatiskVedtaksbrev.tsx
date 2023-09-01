@@ -5,8 +5,8 @@ import { useFormikContext } from 'formik';
 import React from 'react';
 import { IntlShape } from 'react-intl';
 import VedtakFritekstPanel from '../VedtakFritekstPanel';
-import styles from './informasjonsbehovAutomatiskVedtaksbrev.less';
 import InformasjonsbehovKode from './InformasjonsbehovKode';
+import styles from './informasjonsbehovAutomatiskVedtaksbrev.css';
 
 export interface InformasjonsbehovVedtaksbrev {
   informasjonsbehov: { kode: string; beskrivelse: string; type: string }[];

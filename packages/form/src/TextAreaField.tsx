@@ -1,12 +1,12 @@
 import EtikettFokus from 'nav-frontend-etiketter';
 import { Textarea as NavTextarea, TextareaProps } from 'nav-frontend-skjema';
 import React from 'react';
-import { FormattedMessage, injectIntl, WrappedComponentProps } from 'react-intl';
+import { FormattedMessage, WrappedComponentProps, injectIntl } from 'react-intl';
 import { Field } from 'redux-form';
 import LabelType from './LabelType';
 import ReadOnlyField from './ReadOnlyField';
 import renderNavField from './renderNavField';
-import styles from './textAreaField.less';
+import styles from './textAreaField.css';
 
 type BadgesType = 'suksess' | 'info' | 'advarsel' | 'fokus';
 

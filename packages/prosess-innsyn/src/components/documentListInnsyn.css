@@ -1,0 +1,22 @@
+.checkboxCol {
+  width: 30px;
+}
+.linkCol {
+  width: 250px;
+}
+.image {
+  height: 25px;
+  margin-left: 10px;
+  width: 25px;
+}
+.noDocuments {
+  background-color: white;
+  margin-top: -15px;
+  padding: 12px;
+}
+.hidden {
+  visibility: hidden;
+}
+.table {
+  width: 610px;
+}

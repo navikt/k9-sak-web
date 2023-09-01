@@ -1,16 +1,16 @@
-import React from 'react';
-import { FormattedMessage } from 'react-intl';
 import Ekspanderbartpanel from 'nav-frontend-ekspanderbartpanel';
 import { Element, Normaltekst, Undertittel } from 'nav-frontend-typografi';
+import React from 'react';
+import { FormattedMessage } from 'react-intl';
 
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 
 import { decodeHtmlEntity } from '@fpsak-frontend/utils';
-import TilbakekrevingVedtakUtdypendeTekstPanel from './TilbakekrevingVedtakUtdypendeTekstPanel';
 import underavsnittType from '../../kodeverk/avsnittType';
 import VedtaksbrevAvsnitt from '../../types/vedtaksbrevAvsnittTsType';
+import TilbakekrevingVedtakUtdypendeTekstPanel from './TilbakekrevingVedtakUtdypendeTekstPanel';
 
-import styles from './tilbakekrevingEditerVedtaksbrevPanel.less';
+import styles from './tilbakekrevingEditerVedtaksbrevPanel.css';
 
 interface OwnProps {
   vedtaksbrevAvsnitt: VedtaksbrevAvsnitt[];

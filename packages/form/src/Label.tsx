@@ -1,9 +1,9 @@
 import classnames from 'classnames/bind';
-import { Undertekst, TypografiProps } from 'nav-frontend-typografi';
+import { TypografiProps, Undertekst } from 'nav-frontend-typografi';
 import React from 'react';
-import { injectIntl, WrappedComponentProps } from 'react-intl';
-import styles from './label.less';
+import { WrappedComponentProps, injectIntl } from 'react-intl';
 import LabelType from './LabelType';
+import styles from './label.css';
 
 const classNames = classnames.bind(styles);
 

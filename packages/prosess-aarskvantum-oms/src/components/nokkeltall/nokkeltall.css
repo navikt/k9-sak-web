@@ -1,0 +1,119 @@
+.nokkeltall article {
+  background-color: #fff;
+  box-shadow: 2px 2px 2px -1px #c9c9c9;
+  margin-bottom: 0.5em;
+  outline: 1px solid #f1f1f1;
+}
+.nokkeltall article.viserDetaljer {
+  padding-bottom: 0.5rem;
+}
+.overskrift {
+  align-items: stretch;
+  background-color: inherit;
+  border-bottom: none;
+  border-left: 5px solid;
+  border-right: none;
+  border-top: none;
+  display: flex;
+  flex-wrap: nowrap;
+  padding: 0;
+  width: 100%;
+}
+.overskrift:hover {
+  cursor: pointer;
+}
+.overskrift:focus {
+  outline: none;
+}
+.overskrift:focus .knapp {
+  border-radius: 5px;
+  outline: 2px solid #0067c5;
+}
+.overskrift:focus .knapp:hover {
+  cursor: pointer;
+}
+.overskrift > * {
+  padding: 0.1em 0;
+}
+.knapp {
+  background-color: inherit;
+  border: none;
+  color: #0067c5;
+  font-size: 0.9em;
+  padding: 0.2em;
+  text-decoration: underline;
+}
+.knapp:hover {
+  cursor: pointer;
+  text-decoration: none;
+}
+.dagerNavKanUtbetale .overskrift {
+  border-color: #634689;
+}
+.dagerSokerHarRettPa .overskrift {
+  border-color: #66cbec;
+}
+.dagerNavHarUtbetalt .overskrift {
+  border-color: #ba3a26;
+}
+.restdager .overskrift {
+  border-color: #06893a;
+}
+.overskrifttekst {
+  font-size: 0.8em;
+  font-weight: bold;
+}
+.banner {
+  align-items: center;
+  display: flex;
+  flex-grow: 1;
+  justify-content: space-between;
+}
+.banner > * {
+  margin: 0 0.5em;
+}
+.banner .overskrifttekst {
+  font-size: 1em;
+}
+tbody:nth-child(odd) .banner {
+  background-color: #f7f7f7;
+}
+.dagerOgTimer {
+  align-items: baseline;
+  display: flex;
+  flex: 0 0 80px;
+  font-size: 1.3em;
+}
+.dagerOgTimer > * {
+  display: inline;
+}
+.dager {
+  font-weight: bold;
+  margin-left: 0.5em;
+}
+.timer {
+  font-size: 0.7em;
+  margin: 0 0.5em;
+}
+.detaljer {
+  align-items: baseline;
+  border-left: 5px solid #fff;
+  display: flex;
+  flex-wrap: nowrap;
+}
+.detaljer .dager {
+  font-weight: normal;
+}
+.detaljoverskrift {
+  flex: 0 0 160px;
+  font-size: 0.9em;
+  font-weight: bold;
+  margin: 0 0.5em;
+}
+.detaljinfotekst {
+  font-size: 0.9em;
+  margin-right: 1em;
+}
+.varselOmMigrertData {
+  margin-bottom: 1rem;
+}

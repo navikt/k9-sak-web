@@ -1,14 +1,14 @@
-import React, { ReactNode, Component, ChangeEvent } from 'react';
-import moment from 'moment';
 import classnames from 'classnames/bind';
+import moment from 'moment';
 import { Input } from 'nav-frontend-skjema';
+import React, { ChangeEvent, Component, ReactNode } from 'react';
 
 import { DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils';
 
 import CalendarOverlay from './CalendarOverlay';
 import CalendarToggleButton from './CalendarToggleButton';
 
-import styles from './datepicker.less';
+import styles from './datepicker.css';
 
 const classNames = classnames.bind(styles);
 

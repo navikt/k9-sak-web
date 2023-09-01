@@ -1,32 +1,30 @@
-import React from 'react';
-import { useIntl } from 'react-intl';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import moment from 'moment';
 import { DatepickerField } from '@fpsak-frontend/form';
-import { behandlingForm, behandlingFormValueSelector } from '@fpsak-frontend/form/src/behandlingForm';
 import InputField from '@fpsak-frontend/form/src/InputField';
 import { Label } from '@fpsak-frontend/form/src/Label';
 import TextAreaField from '@fpsak-frontend/form/src/TextAreaField';
+import { behandlingForm, behandlingFormValueSelector } from '@fpsak-frontend/form/src/behandlingForm';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import {
+  ISO_DATE_FORMAT,
   dateFormat,
   hasValidDate,
   hasValidDecimalMaxNumberOfDecimals,
   hasValidText,
-  maxValue,
-  ISO_DATE_FORMAT,
   maxLength,
+  maxValue,
   minLength,
   required,
 } from '@fpsak-frontend/utils';
 import { Aksjonspunkt, Behandling, SubmitCallback } from '@k9-sak-web/types';
 import OpplysningerFraSøknaden, { Måned } from '@k9-sak-web/types/src/opplysningerFraSoknaden';
+import moment from 'moment';
 import { Knapp } from 'nav-frontend-knapper';
 import { TabsPure } from 'nav-frontend-tabs';
-import { change as reduxFormChange, FieldArray, InjectedFormProps, untouch as reduxFormUntouch } from 'redux-form';
-import { startdatoErISøknadsperiode } from './validators';
-import styles from './opplysningerFraSoknadenForm.less';
+import React from 'react';
+import { useIntl } from 'react-intl';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { FieldArray, InjectedFormProps, change as reduxFormChange, untouch as reduxFormUntouch } from 'redux-form';
 import SøknadsperiodeFieldArrayComponent, {
   buildInitialValuesForSøknadsperiode,
   inntektIsValid,
@@ -36,9 +34,11 @@ import SøknadsperiodeFieldArrayComponent, {
   lagPeriodeForOppgittEgenNæringFørSøkerperioden,
   nyoppstartetDatoIsValid,
 } from './SøknadsperiodeFieldArrayComponent';
+import oppgittOpptjeningRevurderingFormName from './formName';
+import styles from './opplysningerFraSoknadenForm.css';
 import OppgittOpptjeningRevurderingFormValues from './types/OppgittOpptjeningRevurderingFormValues';
 import SøknadFormValue from './types/SøknadFormValue';
-import oppgittOpptjeningRevurderingFormName from './formName';
+import { startdatoErISøknadsperiode } from './validators';
 
 const fieldArrayName = SøknadFormValue.SØKNADSPERIODER;
 

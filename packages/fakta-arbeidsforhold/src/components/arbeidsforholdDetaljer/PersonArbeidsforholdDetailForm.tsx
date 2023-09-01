@@ -1,20 +1,20 @@
-import React from 'react';
-import { connect } from 'react-redux';
-import { InjectedFormProps } from 'redux-form';
-import { FormattedMessage, injectIntl, WrappedComponentProps } from 'react-intl';
-import { Row } from 'nav-frontend-grid';
-import { Hovedknapp } from 'nav-frontend-knapper';
-import { FlexColumn, FlexContainer, FlexRow, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { behandlingForm, behandlingFormValueSelector } from '@fpsak-frontend/form';
+import { FlexColumn, FlexContainer, FlexRow, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import AksjonspunktAvklarArbeidsforholdText from '@fpsak-frontend/shared-components/src/AksjonspunktAvklarArbeidsforholdText';
 import ArbeidsforholdV2 from '@k9-sak-web/types/src/arbeidsforholdV2TsType';
-import LeggTilArbeidsforholdFelter from './LeggTilArbeidsforholdFelter';
-import ArbeidsforholdRadioknapper from './ArbeidsforholdRadioknapper';
+import { Row } from 'nav-frontend-grid';
+import { Hovedknapp } from 'nav-frontend-knapper';
+import React from 'react';
+import { FormattedMessage, injectIntl, WrappedComponentProps } from 'react-intl';
+import { connect } from 'react-redux';
+import { InjectedFormProps } from 'redux-form';
 import ArbeidsforholdBegrunnelse from './ArbeidsforholdBegrunnelse';
+import ArbeidsforholdRadioknapper from './ArbeidsforholdRadioknapper';
+import LeggTilArbeidsforholdFelter from './LeggTilArbeidsforholdFelter';
 
-import styles from './personArbeidsforholdDetailForm.less';
 import aksjonspunktÅrsaker from '../../kodeverk/aksjonspunktÅrsaker';
 import CustomArbeidsforhold from '../../typer/CustomArbeidsforholdTsType';
+import styles from './personArbeidsforholdDetailForm.css';
 
 export const PERSON_ARBEIDSFORHOLD_DETAIL_FORM = 'PersonArbeidsforholdDetailForm';
 

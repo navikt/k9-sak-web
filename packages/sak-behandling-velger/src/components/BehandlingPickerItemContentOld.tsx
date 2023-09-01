@@ -1,27 +1,27 @@
+import classNames from 'classnames';
+import Panel from 'nav-frontend-paneler';
+import { Element, Normaltekst, Undertekst } from 'nav-frontend-typografi';
 import React, { ReactElement } from 'react';
 import { FormattedMessage } from 'react-intl';
-import classNames from 'classnames';
-import { Element, Normaltekst, Undertekst } from 'nav-frontend-typografi';
-import Panel from 'nav-frontend-paneler';
 
+import chevronDown from '@fpsak-frontend/assets/images/pil_ned.svg';
+import chevronUp from '@fpsak-frontend/assets/images/pil_opp.svg';
+import stjerneImg from '@fpsak-frontend/assets/images/stjerne.svg';
+import behandlingArsakType from '@fpsak-frontend/kodeverk/src/behandlingArsakType';
+import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import {
+  DateLabel,
+  FlexColumn,
   FlexContainer,
   FlexRow,
-  FlexColumn,
-  DateLabel,
-  TimeLabel,
   Image,
-  VerticalSpacer,
+  TimeLabel,
   Tooltip,
+  VerticalSpacer,
 } from '@fpsak-frontend/shared-components';
-import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
-import behandlingArsakType from '@fpsak-frontend/kodeverk/src/behandlingArsakType';
-import chevronUp from '@fpsak-frontend/assets/images/pil_opp.svg';
-import chevronDown from '@fpsak-frontend/assets/images/pil_ned.svg';
-import stjerneImg from '@fpsak-frontend/assets/images/stjerne.svg';
 import { BehandlingAppKontekst, Kodeverk } from '@k9-sak-web/types';
 
-import styles from './behandlingPickerItemContent.less';
+import styles from './behandlingPickerItemContent.css';
 
 // TODO (TOR) Kva er dette for noko? Desse tekstane burde vel komma fra kodeverket? Ein skal uansett ikkje hardkoda kodane her!
 // TODO hente de forksjellige kodeverkene man trenger

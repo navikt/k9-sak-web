@@ -1,0 +1,20 @@
+.seksjon {
+  min-width: fit-content;
+}
+.seksjon + .seksjon {
+  margin: 1em 0;
+}
+.seksjon.grå {
+  background-color: #f3f4f4;
+}
+.seksjon.medMarg {
+  padding: 1em;
+}
+.tittel {
+  border-bottom: 1px solid #a0a0a0;
+  margin-bottom: 1em;
+  padding-bottom: 0.5em;
+}
+.tittel > img {
+  margin-right: 0.5em;
+}

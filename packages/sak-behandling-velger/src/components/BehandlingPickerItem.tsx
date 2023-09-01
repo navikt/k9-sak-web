@@ -1,13 +1,13 @@
+import { Location } from 'history';
 import React, { ReactElement } from 'react';
 import { NavLink } from 'react-router-dom';
-import { Location } from 'history';
 
-import { BehandlingAppKontekst, Kodeverk, KodeverkMedNavn } from '@k9-sak-web/types';
 import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
+import { BehandlingAppKontekst, Kodeverk, KodeverkMedNavn } from '@k9-sak-web/types';
 
 import BehandlingPickerItemContentOld from './BehandlingPickerItemContentOld';
 
-import styles from './behandlingPickerItem.less';
+import styles from './behandlingPickerItem.css';
 
 const getContentProps = (
   behandling: BehandlingAppKontekst,

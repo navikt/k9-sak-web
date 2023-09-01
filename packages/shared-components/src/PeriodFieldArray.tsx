@@ -3,21 +3,23 @@ import NavFieldGroup from '@fpsak-frontend/form/src/NavFieldGroup';
 import { Column, Row } from 'nav-frontend-grid';
 import { Undertekst } from 'nav-frontend-typografi';
 import React from 'react';
-import { FormattedMessage, injectIntl, IntlShape } from 'react-intl';
+import { FormattedMessage, IntlShape, injectIntl } from 'react-intl';
 import { FieldArrayFieldsProps, FieldArrayMetaProps } from 'redux-form';
 import Image from './Image';
-import styles from './periodFieldArray.less';
 import VerticalSpacer from './VerticalSpacer';
+import styles from './periodFieldArray.css';
 
 const onClick = (fields: FieldArrayFieldsProps<any>, emptyPeriodTemplate: EmptyPeriodTemplate) => () => {
   fields.push(emptyPeriodTemplate);
 };
 
-const onKeyDown = (fields: FieldArrayFieldsProps<any>, emptyPeriodTemplate: EmptyPeriodTemplate) => ({ keyCode }) => {
-  if (keyCode === 13) {
-    fields.push(emptyPeriodTemplate);
-  }
-};
+const onKeyDown =
+  (fields: FieldArrayFieldsProps<any>, emptyPeriodTemplate: EmptyPeriodTemplate) =>
+  ({ keyCode }) => {
+    if (keyCode === 13) {
+      fields.push(emptyPeriodTemplate);
+    }
+  };
 
 const getRemoveButton = (index: number, fields: FieldArrayFieldsProps<any>) => className => {
   if (index > 0) {

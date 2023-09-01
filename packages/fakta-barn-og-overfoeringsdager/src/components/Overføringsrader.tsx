@@ -1,19 +1,19 @@
-import React, { ReactNode } from 'react';
 import { InputField, PeriodpickerField } from '@fpsak-frontend/form/index';
-import { WrappedFieldArrayProps } from 'redux-form';
-import { FormattedMessage } from 'react-intl';
-import { Element } from 'nav-frontend-typografi';
-import classnames from 'classnames/bind';
 import { FlexRow } from '@fpsak-frontend/shared-components/index';
+import classnames from 'classnames/bind';
+import { Element } from 'nav-frontend-typografi';
+import React, { ReactNode } from 'react';
+import { FormattedMessage } from 'react-intl';
+import { WrappedFieldArrayProps } from 'redux-form';
 import Overføring, {
   Overføringsretning,
   OverføringsretningEnum,
   Overføringstype,
   OverføringstypeEnum,
 } from '../types/Overføring';
-import styles from './overføringsrader.less';
-import Pil from './Pil';
 import FastBreddeAligner from './FastBreddeAligner';
+import Pil from './Pil';
+import styles from './overføringsrader.css';
 
 const classNames = classnames.bind(styles);
 

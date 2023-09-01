@@ -1,34 +1,34 @@
-import React, { useState, useCallback } from 'react';
+import React, { useCallback, useState } from 'react';
 
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
+import klageVurderingKodeverk from '@fpsak-frontend/kodeverk/src/klageVurdering';
 import {
+  FatterVedtakStatusModal,
+  ProsessStegContainer,
+  ProsessStegPanel,
   Rettigheter,
   prosessStegHooks,
-  FatterVedtakStatusModal,
-  ProsessStegPanel,
-  ProsessStegContainer,
   useSetBehandlingVedEndring,
 } from '@k9-sak-web/behandling-felles';
 import {
+  ArbeidsgiverOpplysningerPerId,
+  Behandling,
   Fagsak,
+  FagsakPerson,
+  FeatureToggles,
   Kodeverk,
   KodeverkMedNavn,
-  Behandling,
-  FagsakPerson,
-  ArbeidsgiverOpplysningerPerId,
-  FeatureToggles,
 } from '@k9-sak-web/types';
-import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
-import klageVurderingKodeverk from '@fpsak-frontend/kodeverk/src/klageVurdering';
 
 import lagForhåndsvisRequest, { bestemAvsenderApp } from '@fpsak-frontend/utils/src/formidlingUtils';
-import KlageBehandlingModal from './KlageBehandlingModal';
+import { KlageBehandlingApiKeys, restApiKlageHooks } from '../data/klageBehandlingApi';
 import prosessStegPanelDefinisjoner from '../panelDefinisjoner/prosessStegKlagePanelDefinisjoner';
 import FetchedData from '../types/fetchedDataTsType';
-import { restApiKlageHooks, KlageBehandlingApiKeys } from '../data/klageBehandlingApi';
 import KlagePart from '../types/klagePartTsType';
+import KlageBehandlingModal from './KlageBehandlingModal';
 
-import '@fpsak-frontend/assets/styles/arrowForProcessMenu.less';
+import '@fpsak-frontend/assets/styles/arrowForProcessMenu.css';
 
 interface OwnProps {
   data: FetchedData;

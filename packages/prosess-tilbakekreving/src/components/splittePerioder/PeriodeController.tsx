@@ -1,17 +1,17 @@
-import React, { Component } from 'react';
 import { Column, Row } from 'nav-frontend-grid';
 import { Element } from 'nav-frontend-typografi';
-import { FormattedMessage, injectIntl, WrappedComponentProps } from 'react-intl';
+import React, { Component } from 'react';
+import { FormattedMessage, WrappedComponentProps, injectIntl } from 'react-intl';
 
-import { EditedIcon, Image, FloatRight } from '@fpsak-frontend/shared-components';
-import splitPeriodImageHoverUrl from '@fpsak-frontend/assets/images/splitt_hover.svg';
 import splitPeriodImageUrl from '@fpsak-frontend/assets/images/splitt.svg';
+import splitPeriodImageHoverUrl from '@fpsak-frontend/assets/images/splitt_hover.svg';
+import { EditedIcon, FloatRight, Image } from '@fpsak-frontend/shared-components';
 import { TimeLineButton } from '@fpsak-frontend/tidslinje';
 
-import DelOppPeriodeModal from './DelOppPeriodeModal';
 import DataForPeriode from '../../types/dataForPeriodeTsType';
+import DelOppPeriodeModal from './DelOppPeriodeModal';
 
-import styles from './periodeController.less';
+import styles from './periodeController.css';
 
 const isEdited = false;
 

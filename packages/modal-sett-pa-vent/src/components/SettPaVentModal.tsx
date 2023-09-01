@@ -21,10 +21,10 @@ import Modal from 'nav-frontend-modal';
 import { Select as NavSelect } from 'nav-frontend-skjema';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
 import React, { useState } from 'react';
-import { FormattedMessage, injectIntl, WrappedComponentProps } from 'react-intl';
+import { FormattedMessage, WrappedComponentProps, injectIntl } from 'react-intl';
 import { connect } from 'react-redux';
-import { formValueSelector, InjectedFormProps, reduxForm } from 'redux-form';
-import styles from './settPaVentModal.less';
+import { InjectedFormProps, formValueSelector, reduxForm } from 'redux-form';
+import styles from './settPaVentModal.css';
 
 const initFrist = (): string => {
   const date = moment().toDate();

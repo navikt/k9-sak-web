@@ -1,16 +1,12 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { formPropTypes } from 'redux-form';
-import { connect } from 'react-redux';
-import { createSelector } from 'reselect';
-import { FormattedMessage, injectIntl } from 'react-intl';
-import { Normaltekst, Undertekst, Undertittel } from 'nav-frontend-typografi';
 import { Column, Row } from 'nav-frontend-grid';
+import { Normaltekst, Undertekst, Undertittel } from 'nav-frontend-typografi';
+import PropTypes from 'prop-types';
+import React from 'react';
+import { FormattedMessage, injectIntl } from 'react-intl';
+import { connect } from 'react-redux';
+import { formPropTypes } from 'redux-form';
+import { createSelector } from 'reselect';
 
-import kommunikasjonsretning from '@fpsak-frontend/kodeverk/src/kommunikasjonsretning';
-import { ProsessStegSubmitButton } from '@k9-sak-web/prosess-felles';
-import { FadingPanel, VerticalSpacer } from '@fpsak-frontend/shared-components';
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import {
   TextAreaField,
   behandlingForm,
@@ -19,6 +15,10 @@ import {
   isBehandlingFormDirty,
   isBehandlingFormSubmitting,
 } from '@fpsak-frontend/form';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import innsynResultatType from '@fpsak-frontend/kodeverk/src/innsynResultatType';
+import kommunikasjonsretning from '@fpsak-frontend/kodeverk/src/kommunikasjonsretning';
+import { FadingPanel, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import {
   decodeHtmlEntity,
   getLanguageCodeFromSprakkode,
@@ -27,11 +27,11 @@ import {
   minLength,
   requiredIfNotPristine,
 } from '@fpsak-frontend/utils';
-import innsynResultatType from '@fpsak-frontend/kodeverk/src/innsynResultatType';
+import { ProsessStegSubmitButton } from '@k9-sak-web/prosess-felles';
 
 import DocumentListVedtakInnsyn from './DocumentListVedtakInnsyn';
 
-import styles from './innsynVedtakForm.less';
+import styles from './innsynVedtakForm.css';
 
 const maxLength1500 = maxLength(1500);
 const minLength3 = minLength(3);

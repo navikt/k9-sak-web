@@ -1,6 +1,6 @@
+import { Element, Normaltekst } from 'nav-frontend-typografi';
 import React, { ReactNode } from 'react';
 import { FormattedMessage, injectIntl, WrappedComponentProps } from 'react-intl';
-import { Element, Normaltekst } from 'nav-frontend-typografi';
 
 import advarselIkonUrl from '@fpsak-frontend/assets/images/advarsel.svg';
 import { isObject } from '@fpsak-frontend/utils';
@@ -8,7 +8,7 @@ import { isObject } from '@fpsak-frontend/utils';
 import { FlexColumn, FlexContainer, FlexRow } from './flexGrid';
 import Image from './Image';
 
-import styles from './aksjonspunktHelpText.less';
+import styles from './aksjonspunktHelpText.css';
 
 interface OwnProps {
   children: string[] | ReactNode[];

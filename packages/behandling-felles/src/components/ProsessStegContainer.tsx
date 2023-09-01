@@ -1,10 +1,10 @@
-import React, { useMemo, ReactNode, useState } from 'react';
-import { injectIntl, WrappedComponentProps } from 'react-intl';
 import { ProcessMenu } from '@navikt/ft-plattform-komponenter';
+import React, { ReactNode, useMemo, useState } from 'react';
+import { WrappedComponentProps, injectIntl } from 'react-intl';
 
 import ProsessStegMenyRad from '../types/prosessStegMenyRadTsType';
 
-import styles from './prosessStegContainer.less';
+import styles from './prosessStegContainer.css';
 
 interface OwnProps {
   formaterteProsessStegPaneler: ProsessStegMenyRad[];

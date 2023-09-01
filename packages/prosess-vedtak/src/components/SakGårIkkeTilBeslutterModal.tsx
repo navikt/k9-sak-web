@@ -1,7 +1,7 @@
 import { Alert, BodyShort, Button, Modal } from '@navikt/ds-react';
 import React from 'react';
 import { useIntl } from 'react-intl';
-import styles from './sakGårIkkeTilBeslutterModal.less';
+import styles from './sakGårIkkeTilBeslutterModal.css';
 
 const SakGårIkkeTilBeslutterModal = ({ onClose, onSubmit }) => {
   const intl = useIntl();

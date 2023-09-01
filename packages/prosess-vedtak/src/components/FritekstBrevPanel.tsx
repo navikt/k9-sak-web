@@ -2,23 +2,23 @@ import { Alert, Heading } from '@navikt/ds-react';
 import { FormikProps, FormikValues } from 'formik';
 import { Column, Row } from 'nav-frontend-grid';
 import React from 'react';
-import { FormattedMessage, injectIntl, IntlShape } from 'react-intl';
+import { FormattedMessage, IntlShape, injectIntl } from 'react-intl';
 
+import { TextAreaFormik, TextFieldFormik } from '@fpsak-frontend/form';
 import { VerticalSpacer, useFeatureToggles } from '@fpsak-frontend/shared-components';
 import { hasValidText, maxLength, minLength, required } from '@fpsak-frontend/utils';
-import { TextAreaFormik, TextFieldFormik } from '@fpsak-frontend/form';
 import {
   Brevmottaker,
-  kanHaManueltFritekstbrev,
   TilgjengeligeVedtaksbrev,
+  kanHaManueltFritekstbrev,
 } from '@fpsak-frontend/utils/src/formidlingUtils';
 import { DokumentDataType } from '@k9-sak-web/types/src/dokumentdata';
 
 import AlertStripe from 'nav-frontend-alertstriper';
 import InkluderKalenderCheckbox from './InkluderKalenderCheckbox';
 
-import styles from './vedtakForm.less';
 import FritekstRedigering from './FritekstRedigering/FritekstRedigering';
+import styles from './vedtakForm.css';
 
 import { fieldnames } from '../konstanter';
 

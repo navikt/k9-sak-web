@@ -2,8 +2,8 @@ import React, { ReactNode } from 'react';
 import { createIntl, createIntlCache, FormattedMessage, RawIntlProvider } from 'react-intl';
 
 import { Innholdstittel } from 'nav-frontend-typografi';
-import styles from './errorPageWrapper.less';
 import messages from '../../i18n/nb_NO.json';
+import styles from './errorPageWrapper.css';
 
 const cache = createIntlCache();
 

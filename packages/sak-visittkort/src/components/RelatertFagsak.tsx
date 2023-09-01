@@ -1,13 +1,13 @@
 import { pathToFagsak } from '@k9-sak-web/sak-app/src/app/paths';
 import { RelatertFagsak as RelatertFagsakType } from '@k9-sak-web/types';
+import { LockedFilled, UnlockedFilled } from '@navikt/ds-icons';
+import classNames from 'classnames';
 import Lenke from 'nav-frontend-lenker';
 import { Select as NavSelect } from 'nav-frontend-skjema';
 import { Normaltekst } from 'nav-frontend-typografi';
 import React from 'react';
-import { LockedFilled, UnlockedFilled } from '@navikt/ds-icons';
-import classNames from 'classnames';
-import styles from './relatertFagsak.less';
 import RelatertSøkerIcon from './RelatertSøkerIcon';
+import styles from './relatertFagsak.css';
 
 interface RelatertFagsakProps {
   relaterteFagsaker?: RelatertFagsakType;
@@ -23,7 +23,8 @@ const RelatertFagsak = ({ relaterteFagsaker }: RelatertFagsakProps) => {
   const harMerEnnEnRelatertSøker = relaterteSøkere.length > 1;
   const { saksnummer, søkerNavn, søkerIdent, åpenBehandling } = valgtSøker;
 
-  const behandlingsstatus = (søker: RelatertFagsakType["relaterteSøkere"][number]) => søker.åpenBehandling ? '(Åpen behandling)' : '(Lukket behandling)';
+  const behandlingsstatus = (søker: RelatertFagsakType['relaterteSøkere'][number]) =>
+    søker.åpenBehandling ? '(Åpen behandling)' : '(Lukket behandling)';
 
   const visRelaterteSøkere = () => {
     if (!harMerEnnEnRelatertSøker) {
