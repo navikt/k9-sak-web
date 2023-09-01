@@ -3,14 +3,14 @@ import { Knapp } from 'nav-frontend-knapper';
 import Modal from 'nav-frontend-modal';
 import { Normaltekst, Undertekst, Undertittel } from 'nav-frontend-typografi';
 import React from 'react';
-import { FormattedMessage, injectIntl, WrappedComponentProps } from 'react-intl';
+import { FormattedMessage, WrappedComponentProps, injectIntl } from 'react-intl';
 
 import infoImageUrl from '@fpsak-frontend/assets/images/behandle.svg';
 import { Image, VerticalSpacer } from '@fpsak-frontend/shared-components';
 
 import Feilmelding from './feilmeldingTsType';
 
-import styles from './errorMessageDetailsModal.css';
+import styles from './errorMessageDetailsModal.module.css';
 
 const capitalizeFirstLetters = (key: string): string => key.charAt(0).toUpperCase() + key.substr(1);
 

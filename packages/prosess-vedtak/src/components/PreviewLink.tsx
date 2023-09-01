@@ -7,7 +7,7 @@ import { Findout } from '@navikt/ds-icons';
 import { Alert, Button } from '@navikt/ds-react';
 import { validerRedigertHtml } from './FritekstRedigering/RedigeringUtils';
 
-import styles from './vedtakForm.css';
+import styles from './vedtakForm.module.css';
 
 interface PreviewLinkProps {
   previewCallback: (event: React.SyntheticEvent) => void;

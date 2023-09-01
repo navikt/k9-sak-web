@@ -4,7 +4,7 @@ import { FormattedMessage } from 'react-intl';
 
 import { FadingPanel } from '@fpsak-frontend/shared-components';
 
-import styles from './behandlingHenlagtPanel.css';
+import styles from './behandlingHenlagtPanel.module.css';
 
 const BehandlingHenlagtPanel = () => (
   <div className={styles.container}>

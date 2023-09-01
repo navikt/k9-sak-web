@@ -33,7 +33,7 @@ module.exports = {
       }
       return data;
     });
-    config.devtool = configType === 'DEVELOPMENT' ? 'inline-source-map' : 'source-map';
+    config.devtool = configType === 'DEVELOPMENT' ? 'eval-cheap-module-source-map' : 'source-map';
 
     // Make whatever fine-grained changes you need
     config.module.rules = config.module.rules.concat(
@@ -60,14 +60,8 @@ module.exports = {
         include: PACKAGES_DIR,
       },
       {
-        test: /\.css$/,
+        test: /\\.css$/,
         use: [
-          {
-            loader: MiniCssExtractPlugin.loader,
-            options: {
-              publicPath: './',
-            },
-          },
           {
             loader: 'css-loader',
             options: {
@@ -93,6 +87,7 @@ module.exports = {
           {
             loader: 'css-loader',
           },
+          'postcss-loader',
           {
             loader: 'less-loader',
             options: {

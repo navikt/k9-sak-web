@@ -9,7 +9,7 @@ import klageVurderingOmgjoerType from '@fpsak-frontend/kodeverk/src/klageVurderi
 import { ArrowBox, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { required } from '@fpsak-frontend/utils';
 
-import styles from './klageVurderingRadioOptionsNfp.css';
+import styles from './klageVurderingRadioOptionsNfp.module.css';
 
 export const TILBAKEKREVING_HJEMMEL = '22-15';
 

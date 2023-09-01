@@ -6,7 +6,7 @@ import Panel from 'nav-frontend-paneler';
 import { Normaltekst, Undertittel } from 'nav-frontend-typografi';
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
-import styles from './behandlingPickerItemContent.css';
+import styles from './behandlingPickerItemContent.module.css';
 import { getFormattedSøknadserioder, getStatusIcon, getStatusText } from './behandlingVelgerUtils';
 
 const getAutomatiskRevurderingText = () => (

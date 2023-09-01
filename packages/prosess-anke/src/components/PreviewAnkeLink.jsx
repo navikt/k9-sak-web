@@ -6,7 +6,7 @@ import { FormattedMessage } from 'react-intl';
 import ankeVurderingType from '@fpsak-frontend/kodeverk/src/ankeVurdering';
 import dokumentMalType from '@fpsak-frontend/kodeverk/src/dokumentMalType';
 
-import styles from './previewAnkeLink.css';
+import styles from './previewAnkeLink.module.css';
 
 const getBrevKode = ankeVurdering => {
   switch (ankeVurdering) {

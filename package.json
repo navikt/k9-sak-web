@@ -162,6 +162,7 @@
     "sinon": "15.1.0",
     "source-map-loader": "4.0.1",
     "storybook": "7.3.2",
+    "storybook-css-modules": "^1.0.8",
     "storybook-react-router": "1.0.8",
     "stylelint": "15.10.2",
     "stylelint-order": "6.0.3",

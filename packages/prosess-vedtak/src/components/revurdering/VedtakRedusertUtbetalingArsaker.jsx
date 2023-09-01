@@ -3,7 +3,7 @@ import { CheckboxGruppe } from 'nav-frontend-skjema';
 import PropTypes from 'prop-types';
 import React from 'react';
 import redusertUtbetalingArsak from '../../kodeverk/redusertUtbetalingArsak';
-import styles from './vedtakRedusertUtbetalingArsaker.css';
+import styles from './vedtakRedusertUtbetalingArsaker.module.css';
 
 const VedtakRedusertUtbetalingArsaker = ({ intl, readOnly, values, erSendtInnUtenArsaker }) => {
   const ingenArsakErValgt = !Array.from(values.values()).includes(true);

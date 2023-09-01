@@ -6,7 +6,7 @@ import { Table } from '@fpsak-frontend/shared-components';
 
 import FeilutbetalingPerioderForm from './FeilutbetalingPerioderForm';
 
-import styles from './feilutbetalingPerioderTable.css';
+import styles from './feilutbetalingPerioderTable.module.css';
 
 const headerTextCodes = [
   'FeilutbetalingInfoPanel.Period',

@@ -7,7 +7,7 @@ import { FormattedMessage, useIntl } from 'react-intl';
 import { FieldArrayFieldsProps, FieldArrayMetaProps } from 'redux-form';
 import Image from './Image';
 import VerticalSpacer from './VerticalSpacer';
-import styles from './selectFieldArray.css';
+import styles from './selectFieldArray.module.css';
 
 interface EmptySelectTemplate {
   value: string;

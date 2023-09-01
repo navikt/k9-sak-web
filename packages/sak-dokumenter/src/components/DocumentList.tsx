@@ -11,7 +11,7 @@ import { Select } from 'nav-frontend-skjema';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
 import React, { useState } from 'react';
 import { FormattedMessage, WrappedComponentProps, injectIntl } from 'react-intl';
-import styles from './documentList.css';
+import styles from './documentList.module.css';
 
 const headerTextCodes = [
   'DocumentList.Direction',

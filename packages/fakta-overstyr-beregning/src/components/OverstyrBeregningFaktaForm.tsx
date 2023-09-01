@@ -1,6 +1,6 @@
 import { Field, FieldArray, Form, Formik } from 'formik';
 import React from 'react';
-import { FormattedMessage, injectIntl, WrappedComponentProps } from 'react-intl';
+import { FormattedMessage, WrappedComponentProps, injectIntl } from 'react-intl';
 import * as Yup from 'yup';
 
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
@@ -15,7 +15,7 @@ import { Textarea } from 'nav-frontend-skjema';
 import { OverstyrInputBeregningDto } from '../types/OverstyrInputBeregningDto';
 import { OverstyrInputForBeregningDto } from '../types/OverstyrInputForBeregningDto';
 import OverstyrBeregningAktivitetForm from './OverstyrBeregningAktivitetForm';
-import styles from './OverstyrBeregningFaktaForm.css';
+import styles from './OverstyrBeregningFaktaForm.module.css';
 import { formaterDatoString } from './utils';
 
 interface Props {

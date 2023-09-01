@@ -10,7 +10,7 @@ import infoImageUrl from '@fpsak-frontend/assets/images/behandle.svg';
 import { isAvslag, isOpphor } from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
 import Image from '@fpsak-frontend/shared-components/src/Image';
 
-import styles from './vedtakFritekstbrevModal.css';
+import styles from './vedtakFritekstbrevModal.module.css';
 
 const isFritekstbrevRequired = (readOnly, behandlingsresultat, erSVP) => {
   if (readOnly || !erSVP) {

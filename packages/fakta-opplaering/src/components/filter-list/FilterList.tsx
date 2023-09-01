@@ -1,7 +1,7 @@
-import { FilterFilled, ChevronDownCircle, ChevronUpCircle } from '@navikt/ds-icons';
-import Chevron from 'nav-frontend-chevron';
-import { Checkbox, BodyShort } from '@navikt/ds-react';
+import { FilterFilled } from '@navikt/ds-icons';
+import { BodyShort, Checkbox } from '@navikt/ds-react';
 import classNames from 'classnames';
+import Chevron from 'nav-frontend-chevron';
 import React, { useState } from 'react';
 import OutsideClickHandler from 'react-outside-click-handler';
 import styles from './filterList.modules.css';

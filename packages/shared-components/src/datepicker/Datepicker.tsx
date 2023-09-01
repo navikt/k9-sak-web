@@ -8,7 +8,7 @@ import { DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils';
 import CalendarOverlay from './CalendarOverlay';
 import CalendarToggleButton from './CalendarToggleButton';
 
-import styles from './datepicker.css';
+import styles from './datepicker.module.css';
 
 const classNames = classnames.bind(styles);
 

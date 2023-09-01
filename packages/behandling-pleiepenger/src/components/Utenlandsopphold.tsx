@@ -10,7 +10,7 @@ import { PeriodList } from '@navikt/ft-plattform-komponenter';
 
 import countries from 'i18n-iso-countries';
 import norwegianLocale from 'i18n-iso-countries/langs/no.json';
-import styles from './utenlandsopphold.css';
+import styles from './utenlandsopphold.module.css';
 
 countries.registerLocale(norwegianLocale);
 

@@ -3,7 +3,7 @@ import { Hovedknapp } from 'nav-frontend-knapper';
 import React from 'react';
 import { WrappedComponentProps, injectIntl } from 'react-intl';
 
-import styles from './vedtakKlageSubmitPanel.css';
+import styles from './vedtakKlageSubmitPanel.module.css';
 
 interface Props {
   klageResultat: {

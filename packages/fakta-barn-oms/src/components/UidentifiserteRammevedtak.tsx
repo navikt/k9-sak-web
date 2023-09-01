@@ -4,7 +4,7 @@ import { Rammevedtak, RammevedtakEnum, RammevedtakType } from '@k9-sak-web/types
 import { AlertStripeAdvarsel } from 'nav-frontend-alertstriper';
 import React, { useMemo } from 'react';
 import { FormattedMessage } from 'react-intl';
-import styles from './uidentifisertRammevedtak.css';
+import styles from './uidentifisertRammevedtak.module.css';
 
 interface UidentifiserteRammevedtakProps {
   rammevedtak: Rammevedtak[];

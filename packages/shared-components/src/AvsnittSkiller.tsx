@@ -1,6 +1,6 @@
 import React from 'react';
 
-import styles from './avsnittSkiller.css';
+import styles from './avsnittSkiller.module.css';
 
 const AvsnittSkiller = () => <div className={styles.linje} />;
 

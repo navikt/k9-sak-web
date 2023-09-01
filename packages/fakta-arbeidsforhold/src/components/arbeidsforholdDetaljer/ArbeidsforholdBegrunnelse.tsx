@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 
 import aktivtArbeidsforholdHandling from '../../kodeverk/aktivtArbeidsforholdHandling';
 import BehandlingFormFieldCleaner from '../../util/BehandlingFormFieldCleaner';
-import styles from './arbeidsforholdBegrunnelse.css';
+import styles from './arbeidsforholdBegrunnelse.module.css';
 
 interface PureOwnProps {
   readOnly: boolean;

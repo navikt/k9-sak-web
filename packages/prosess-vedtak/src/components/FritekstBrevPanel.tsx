@@ -18,7 +18,7 @@ import AlertStripe from 'nav-frontend-alertstriper';
 import InkluderKalenderCheckbox from './InkluderKalenderCheckbox';
 
 import FritekstRedigering from './FritekstRedigering/FritekstRedigering';
-import styles from './vedtakForm.css';
+import styles from './vedtakForm.module.css';
 
 import { fieldnames } from '../konstanter';
 

@@ -16,7 +16,7 @@ import {
 import getPackageIntl from '../../i18n/getPackageIntl';
 import ProsessStegSubmitButton from '../ProsessStegSubmitButton';
 
-import styles from './prosessPanelTemplate.css';
+import styles from './prosessPanelTemplate.module.css';
 
 interface OwnProps {
   title: string;

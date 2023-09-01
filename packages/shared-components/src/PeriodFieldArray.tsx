@@ -7,7 +7,7 @@ import { FormattedMessage, IntlShape, injectIntl } from 'react-intl';
 import { FieldArrayFieldsProps, FieldArrayMetaProps } from 'redux-form';
 import Image from './Image';
 import VerticalSpacer from './VerticalSpacer';
-import styles from './periodFieldArray.css';
+import styles from './periodFieldArray.module.css';
 
 const onClick = (fields: FieldArrayFieldsProps<any>, emptyPeriodTemplate: EmptyPeriodTemplate) => () => {
   fields.push(emptyPeriodTemplate);

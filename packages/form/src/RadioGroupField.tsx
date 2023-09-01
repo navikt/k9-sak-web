@@ -4,7 +4,7 @@ import React from 'react';
 import { Field } from 'redux-form';
 import OptionGrid from './OptionGrid';
 import { RadioOptionProps } from './RadioOption';
-import styles from './radioGroupField.css';
+import styles from './radioGroupField.module.css';
 import renderNavField from './renderNavField';
 
 type Direction = 'horizontal' | 'vertical';

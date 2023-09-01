@@ -9,7 +9,7 @@ import { formatCurrencyNoKr, maxValue, minValue, required } from '@fpsak-fronten
 
 import Aktsomhet from '../../../kodeverk/aktsomhet';
 
-import styles from './aktsomhetReduksjonAvBelopFormPanel.css';
+import styles from './aktsomhetReduksjonAvBelopFormPanel.module.css';
 
 const minValue1 = minValue(0.0);
 const maxValue100 = maxValue(99.99);

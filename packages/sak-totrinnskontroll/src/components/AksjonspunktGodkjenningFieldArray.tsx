@@ -13,7 +13,7 @@ import { KlageVurdering, Kodeverk, KodeverkMedNavn, TotrinnskontrollSkjermlenkeC
 
 import getAksjonspunkttekst from './aksjonspunktTekster/aksjonspunktTekstUtleder';
 
-import styles from './aksjonspunktGodkjenningFieldArray.css';
+import styles from './aksjonspunktGodkjenningFieldArray.module.css';
 
 const minLength3 = minLength(3);
 const maxLength2000 = maxLength(2000);

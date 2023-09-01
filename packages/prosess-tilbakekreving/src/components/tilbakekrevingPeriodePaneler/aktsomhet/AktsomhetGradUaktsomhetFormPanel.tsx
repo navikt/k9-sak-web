@@ -9,7 +9,7 @@ import { hasValidText, maxLength, minLength, required } from '@fpsak-frontend/ut
 import { KodeverkMedNavn } from '@k9-sak-web/types';
 import Aktsomhet from '../../../kodeverk/aktsomhet';
 
-import styles from './aktsomhetGradUaktsomhetFormPanel.css';
+import styles from './aktsomhetGradUaktsomhetFormPanel.module.css';
 import AktsomhetSarligeGrunnerFormPanel from './AktsomhetSarligeGrunnerFormPanel';
 
 const minLength3 = minLength(3);

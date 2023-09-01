@@ -9,7 +9,7 @@ import advarselImageUrl from '@fpsak-frontend/assets/images/advarsel.svg';
 import getPackageIntl from '../i18n/getPackageIntl';
 import Image from './Image';
 
-import styles from './advarselModal.css';
+import styles from './advarselModal.module.css';
 
 interface OwnProps {
   headerText?: string;

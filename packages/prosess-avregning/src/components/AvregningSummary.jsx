@@ -8,7 +8,7 @@ import { FormattedMessage } from 'react-intl';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { DDMMYYYY_DATE_FORMAT, formatCurrencyNoKr } from '@fpsak-frontend/utils';
 
-import styles from './avregningSummary.css';
+import styles from './avregningSummary.module.css';
 
 /**
  * Avregning oppsummering

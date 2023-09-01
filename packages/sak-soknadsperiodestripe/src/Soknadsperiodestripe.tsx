@@ -12,7 +12,7 @@ import dayjs from 'dayjs';
 import 'dayjs/locale/nb';
 import React, { useEffect, useMemo, useState } from 'react';
 import { useIntl } from 'react-intl';
-import styles from './soknadsperiodestripe.css';
+import styles from './soknadsperiodestripe.module.css';
 
 dayjs.locale('nb');
 

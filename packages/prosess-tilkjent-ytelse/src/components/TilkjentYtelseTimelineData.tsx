@@ -12,7 +12,7 @@ import { FormattedMessage, useIntl } from 'react-intl';
 
 import { createVisningsnavnForAndel, getAktivitet } from './TilkjentYteleseUtils';
 import { PeriodeMedId } from './TilkjentYtelse';
-import styles from './tilkjentYtelse.css';
+import styles from './tilkjentYtelse.module.css';
 import UtbetalingsgradDetaljer from './UtbetalingsgradDetaljer';
 
 interface OwnProps {

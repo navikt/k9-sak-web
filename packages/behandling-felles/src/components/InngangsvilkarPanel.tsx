@@ -19,7 +19,7 @@ import hentAktivePerioderFraVilkar from '@fpsak-frontend/utils/src/hentAktivePer
 import messages from '../i18n/nb_NO.json';
 import { ProsessStegPanelUtledet } from '../util/prosessSteg/ProsessStegUtledet';
 
-import styles from './inngangsvilkarPanel.css';
+import styles from './inngangsvilkarPanel.module.css';
 
 interface OwnProps {
   behandling: Behandling;

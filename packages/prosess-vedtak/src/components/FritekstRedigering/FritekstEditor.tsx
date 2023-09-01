@@ -13,7 +13,7 @@ import EditorJSWrapper from './EditorJSWrapper';
 import FritekstFeilmeldinger from './FritekstFeilmeldinger';
 import { validerRedigertHtml } from './RedigeringUtils';
 
-import styles from './RedigerFritekstbrev.css';
+import styles from './RedigerFritekstbrev.module.css';
 
 interface ownProps {
   handleSubmit: (value: string) => void;

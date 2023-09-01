@@ -2,16 +2,16 @@ import { Column, Row } from 'nav-frontend-grid';
 import { Hovedknapp } from 'nav-frontend-knapper';
 import { Undertittel } from 'nav-frontend-typografi';
 import React from 'react';
-import { FormattedMessage, injectIntl, WrappedComponentProps } from 'react-intl';
+import { FormattedMessage, WrappedComponentProps, injectIntl } from 'react-intl';
 import { connect } from 'react-redux';
-import { formValueSelector, InjectedFormProps, reduxForm } from 'redux-form';
+import { InjectedFormProps, formValueSelector, reduxForm } from 'redux-form';
 
 import advarselIcon from '@fpsak-frontend/assets/images/advarsel.svg';
 import { InputField } from '@fpsak-frontend/form';
 import { Image, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { hasValidSaksnummerOrFodselsnummerFormat } from '@fpsak-frontend/utils';
 
-import styles from './searchForm.css';
+import styles from './searchForm.module.css';
 
 const isButtonDisabled = (searchStarted: boolean, searchString?: string): boolean =>
   !!(searchStarted || searchString.length < 1);

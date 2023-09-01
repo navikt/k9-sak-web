@@ -15,7 +15,7 @@ import { Aksjonspunkt, Risikoklassifisering } from '@k9-sak-web/types';
 
 import faresignalVurdering from '../kodeverk/faresignalVurdering';
 
-import styles from './avklarFaresignalerForm.css';
+import styles from './avklarFaresignalerForm.module.css';
 
 const maxLength1500 = maxLength(1500);
 const minLength3 = minLength(3);

@@ -25,7 +25,7 @@ import TempSaveAndPreviewKlageLink from '../felles/TempSaveAndPreviewKlageLink';
 import TempsaveKlageButton from '../felles/TempsaveKlageButton';
 import KlageVurderingRadioOptionsKa from './KlageVurderingRadioOptionsKa';
 
-import styles from './behandleKlageFormKa.css';
+import styles from './behandleKlageFormKa.module.css';
 
 /**
  * BehandleklageformNfp

@@ -18,7 +18,7 @@ import prosessStegPanelDefinisjoner from '../panelDefinisjoner/prosessStegAnkePa
 import FetchedData from '../types/fetchedDataTsType';
 import AnkeBehandlingModal from './AnkeBehandlingModal';
 
-import '@fpsak-frontend/assets/styles/arrowForProcessMenu.css';
+import '@fpsak-frontend/assets/styles/arrowForProcessMenu.module.css';
 
 const forhandsvis = data => {
   if (URL.createObjectURL) {

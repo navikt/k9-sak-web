@@ -11,7 +11,7 @@ import React, { useRef, useState } from 'react';
 import { useIntl } from 'react-intl';
 import * as Yup from 'yup';
 import Merknadkode from '../Merknadkode';
-import styles from './markerBehandlingModal.css';
+import styles from './markerBehandlingModal.module.css';
 
 interface PureOwnProps {
   brukHastekøMarkering?: boolean;

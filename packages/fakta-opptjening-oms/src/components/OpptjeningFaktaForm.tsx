@@ -25,7 +25,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { change as reduxFormChange, initialize as reduxFormInitialize } from 'redux-form';
 import ActivityPanel, { activityPanelNameFormName } from './activity/ActivityPanel';
-import styles from './opptjeningFaktaForm.css';
+import styles from './opptjeningFaktaForm.module.css';
 import OpptjeningTimeLine from './timeline/OpptjeningTimeLine';
 
 const sortByFomDate = (opptjeningPeriods: Opptjening[]) =>

@@ -25,7 +25,7 @@ import { InjectedFormProps } from 'redux-form';
 import { createSelector } from 'reselect';
 import OverstyrBekreftKnappPanel from './OverstyrBekreftKnappPanel';
 import { VilkarresultatMedBegrunnelse } from './VilkarresultatMedBegrunnelse';
-import styles from './vilkarresultatMedOverstyringForm.css';
+import styles from './vilkarresultatMedOverstyringForm.module.css';
 
 const getFormName = (overstyringApKode: string) => `VilkarresultatForm_${overstyringApKode}`;
 

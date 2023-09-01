@@ -26,7 +26,7 @@ import BehandlingMenuIndex, { BehandlendeEnheter } from '../behandlingmenu/Behan
 import { K9sakApiKeys, requestApi, restApiHooks } from '../data/k9sakApi';
 import { useFpSakKodeverkMedNavn, useGetKodeverkFn } from '../data/useKodeverk';
 import SakRettigheter from '../fagsak/sakRettigheterTsType';
-import styles from './fagsakProfileIndex.css';
+import styles from './fagsakProfileIndex.module.css';
 import RisikoklassifiseringIndex from './risikoklassifisering/RisikoklassifiseringIndex';
 
 const findPathToBehandling = (saksnummer: string, location: Location, alleBehandlinger: BehandlingAppKontekst[]) => {

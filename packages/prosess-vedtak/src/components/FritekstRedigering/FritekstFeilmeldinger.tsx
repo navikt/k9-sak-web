@@ -11,7 +11,7 @@ import {
   utledForhandsvisFeilmeldinger,
 } from './RedigeringUtils';
 
-import styles from './RedigerFritekstbrev.css';
+import styles from './RedigerFritekstbrev.module.css';
 
 const FritekstFeilmeldinger = () => {
   const errorMessages = useRestApiError() || [];

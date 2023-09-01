@@ -8,7 +8,7 @@ import navBrukerKjonn from '@fpsak-frontend/kodeverk/src/navBrukerKjonn';
 import { Image } from '@fpsak-frontend/shared-components';
 import Kjønnkode from '@k9-sak-web/types/src/Kjønnkode';
 import { useIntl } from 'react-intl';
-import styles from './timeLineSoker.css';
+import styles from './timeLineSoker.module.css';
 
 /**
  * TimeLineSoker

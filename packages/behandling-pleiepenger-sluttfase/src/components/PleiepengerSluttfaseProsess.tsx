@@ -30,7 +30,7 @@ import {
 import prosessStegPanelDefinisjoner from '../panelDefinisjoner/prosessStegPleiepengerSluttfasePanelDefinisjoner';
 import FetchedData from '../types/fetchedDataTsType';
 
-import '@fpsak-frontend/assets/styles/arrowForProcessMenu.css';
+import '@fpsak-frontend/assets/styles/arrowForProcessMenu.module.css';
 
 interface OwnProps {
   data: FetchedData;

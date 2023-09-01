@@ -4,7 +4,7 @@ import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import { v4 as uuidv4 } from 'uuid';
 import formaterDato from '../utils/formaterDato';
-import styles from './barnVisning.css';
+import styles from './barnVisning.module.css';
 
 interface BarnInputProps {
   barnet: KombinertBarnOgRammevedtak;

@@ -12,7 +12,7 @@ import { Aksjonspunkt } from '@k9-sak-web/types';
 
 import getPackageIntl from '../i18n/getPackageIntl';
 
-import styles from './prosessStegBegrunnelseTextField.css';
+import styles from './prosessStegBegrunnelseTextField.module.css';
 
 const validateMinLength3 = validateMinLength(3);
 const validateMaxLength1500 = validateMaxLength(1500);

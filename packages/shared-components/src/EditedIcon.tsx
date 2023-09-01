@@ -4,7 +4,7 @@ import React from 'react';
 import { useIntl } from 'react-intl';
 import Image from './Image';
 
-import styles from './editedIcon.css';
+import styles from './editedIcon.module.css';
 
 const classNames = classnames.bind(styles);
 

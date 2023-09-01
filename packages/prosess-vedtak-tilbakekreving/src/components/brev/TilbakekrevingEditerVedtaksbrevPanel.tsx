@@ -10,7 +10,7 @@ import underavsnittType from '../../kodeverk/avsnittType';
 import VedtaksbrevAvsnitt from '../../types/vedtaksbrevAvsnittTsType';
 import TilbakekrevingVedtakUtdypendeTekstPanel from './TilbakekrevingVedtakUtdypendeTekstPanel';
 
-import styles from './tilbakekrevingEditerVedtaksbrevPanel.css';
+import styles from './tilbakekrevingEditerVedtaksbrevPanel.module.css';
 
 interface OwnProps {
   vedtaksbrevAvsnitt: VedtaksbrevAvsnitt[];

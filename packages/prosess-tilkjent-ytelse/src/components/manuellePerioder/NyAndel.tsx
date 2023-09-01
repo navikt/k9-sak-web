@@ -10,7 +10,7 @@ import { WrappedComponentProps } from 'react-intl';
 import { FieldArrayFieldsProps, FieldArrayMetaProps } from 'redux-form';
 import NyArbeidsgiverModal from './NyArbeidsgiverModal';
 
-import styles from './periode.css';
+import styles from './periode.module.css';
 
 const minValue0 = minValue(0);
 const maxValue100 = maxValue(100);

@@ -1,11 +1,11 @@
 import { TextAreaField } from '@fpsak-frontend/form';
 import { decodeHtmlEntity, hasValidText, maxLength, minLength, required } from '@fpsak-frontend/utils';
 import React from 'react';
-import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
+import { RawIntlProvider, createIntl, createIntlCache } from 'react-intl';
 
 import { Aksjonspunkt } from '@k9-sak-web/types';
 import messages from '../../i18n/nb_NO.json';
-import styles from './faktaBegrunnelseTextField.css';
+import styles from './faktaBegrunnelseTextField.module.css';
 
 const cache = createIntlCache();
 

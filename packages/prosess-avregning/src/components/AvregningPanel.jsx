@@ -30,7 +30,7 @@ import avregningSimuleringResultatPropType from '../propTypes/avregningSimulerin
 import AvregningSummary from './AvregningSummary';
 import AvregningTable from './AvregningTable';
 
-import styles from './avregningPanel.css';
+import styles from './avregningPanel.module.css';
 
 // TODO Denne komponenten må refaktorerast! Er frykteleg stor
 

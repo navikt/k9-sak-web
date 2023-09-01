@@ -17697,6 +17697,7 @@ __metadata:
     sinon: 15.1.0
     source-map-loader: 4.0.1
     storybook: 7.3.2
+    storybook-css-modules: ^1.0.8
     storybook-react-router: 1.0.8
     stylelint: 15.10.2
     stylelint-order: 6.0.3
@@ -23510,6 +23511,13 @@ __metadata:
   version: 2.14.2
   resolution: "store2@npm:2.14.2"
   checksum: 6f270fc5bab99b63f45fcc7bd8b99c2714b4adf880f557ed7ffb5ed3987131251165bccde425a00928aaf044870aee79ddeef548576d093c68703ed2edec45d7
+  languageName: node
+  linkType: hard
+
+"storybook-css-modules@npm:^1.0.8":
+  version: 1.0.8
+  resolution: "storybook-css-modules@npm:1.0.8"
+  checksum: 38fb51bd7f7aae83227e4b8e582edc28fc45ed66dcf4c362d555766294856a7250dc5253523a1a48e9f63da1d69bd35445b92267c800412aeb4adb3407b31c63
   languageName: node
   linkType: hard
 

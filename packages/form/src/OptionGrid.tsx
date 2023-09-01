@@ -1,7 +1,7 @@
 import { EditedIcon, FlexColumn, FlexContainer, FlexRow } from '@fpsak-frontend/shared-components';
 import { range } from '@fpsak-frontend/utils';
 import React from 'react';
-import styles from './optionGrid.css';
+import styles from './optionGrid.module.css';
 
 interface OptionGridProps {
   columns?: number;

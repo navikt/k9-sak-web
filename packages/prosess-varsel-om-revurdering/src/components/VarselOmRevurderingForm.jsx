@@ -33,7 +33,7 @@ import SettPaVentModalIndex from '@k9-sak-web/modal-sett-pa-vent';
 import revurderingFamilieHendelsePropType from '../propTypes/revurderingFamilieHendelsePropType';
 import revurderingSoknadPropType from '../propTypes/revurderingSoknadPropType';
 
-import styles from './varselOmRevurderingForm.css';
+import styles from './varselOmRevurderingForm.module.css';
 
 const minLength3 = minLength(3);
 

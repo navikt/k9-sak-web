@@ -1,7 +1,7 @@
 import { Pin } from '@k9-sak-web/types/src/tidslinje';
 import dayjs, { Dayjs } from 'dayjs';
 import React, { useState } from 'react';
-import styles from './Pins.css';
+import styles from './Pins.module.css';
 import Tooltip from './Tooltip';
 import { position } from './calc';
 

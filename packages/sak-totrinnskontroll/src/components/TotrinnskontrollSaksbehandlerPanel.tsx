@@ -12,7 +12,7 @@ import { KlageVurdering, Kodeverk, KodeverkMedNavn, TotrinnskontrollSkjermlenkeC
 
 import getAksjonspunkttekst from './aksjonspunktTekster/aksjonspunktTekstUtleder';
 
-import styles from './totrinnskontrollSaksbehandlerPanel.css';
+import styles from './totrinnskontrollSaksbehandlerPanel.module.css';
 
 interface OwnProps {
   totrinnskontrollSkjermlenkeContext: TotrinnskontrollSkjermlenkeContext[];

@@ -26,7 +26,7 @@ import { OmsorgspengerBehandlingApiKeys, restApiOmsorgHooks } from '../data/omso
 import prosessStegPanelDefinisjoner from '../panelDefinisjoner/prosessStegOmsorgspengerPanelDefinisjoner';
 import FetchedData from '../types/fetchedDataTsType';
 
-import '@fpsak-frontend/assets/styles/arrowForProcessMenu.css';
+import '@fpsak-frontend/assets/styles/arrowForProcessMenu.module.css';
 
 interface OwnProps {
   data: FetchedData;

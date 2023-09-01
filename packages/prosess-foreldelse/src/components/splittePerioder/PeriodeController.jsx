@@ -11,7 +11,7 @@ import { TimeLineButton } from '@fpsak-frontend/tidslinje';
 
 import DelOppPeriodeModal from './DelOppPeriodeModal';
 
-import styles from './periodeController.css';
+import styles from './periodeController.module.css';
 
 const isEdited = false;
 

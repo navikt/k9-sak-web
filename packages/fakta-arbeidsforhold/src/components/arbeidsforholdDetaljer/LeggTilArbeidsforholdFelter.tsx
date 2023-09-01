@@ -14,7 +14,7 @@ import {
 import BehandlingFormFieldCleaner from '../../util/BehandlingFormFieldCleaner';
 
 import CustomArbeidsforhold from '../../typer/CustomArbeidsforholdTsType';
-import styles from './leggTilArbeidsforholdFelter.css';
+import styles from './leggTilArbeidsforholdFelter.module.css';
 
 // ----------------------------------------------------------------------------------
 // Methods

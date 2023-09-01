@@ -1,16 +1,14 @@
-import { Period } from '@navikt/k9-fe-period-utils';
-import React from 'react';
+import { Vurderingsresultat } from '@k9-sak-web/types';
 import {
   ContentWithTooltip,
   GreenCheckIconFilled,
   IndicatorWithOverlay,
   InstitutionIcon,
-  OnePersonIconGray,
-  OnePersonOutlineGray,
   RedCrossIconFilled,
   WarningIcon,
 } from '@navikt/ft-plattform-komponenter';
-import { Vurderingsresultat, Kilde } from '@k9-sak-web/types';
+import { Period } from '@navikt/k9-fe-period-utils';
+import React from 'react';
 import styles from './periodeRad.modules.css';
 
 interface OwnProps {

@@ -13,7 +13,7 @@ import OpptjeningVilkarForm from './components/OpptjeningVilkarForm';
 
 import messages from '../i18n/nb_NO.json';
 
-import styles from './opptjeningVilkarProsessIndex.css';
+import styles from './opptjeningVilkarProsessIndex.module.css';
 
 const cx = classNames.bind(styles);
 

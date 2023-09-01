@@ -5,7 +5,7 @@ import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktSta
 import BehandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import { Aksjonspunkt, Kodeverk } from '@k9-sak-web/types';
 
-import styles from './margMarkering.css';
+import styles from './margMarkering.module.css';
 
 const classNames = classnames.bind(styles);
 

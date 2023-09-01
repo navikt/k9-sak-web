@@ -9,7 +9,7 @@ import { EtikettFokus, EtikettInfo } from 'nav-frontend-etiketter';
 import React from 'react';
 import { WrappedComponentProps, injectIntl } from 'react-intl';
 import { sorterOverlappendeRader } from '../utils/periodeUtils';
-import styles from './VedtakOverlappendeYtelsePanel.css';
+import styles from './VedtakOverlappendeYtelsePanel.module.css';
 
 interface Props {
   overlappendeYtelser: any;

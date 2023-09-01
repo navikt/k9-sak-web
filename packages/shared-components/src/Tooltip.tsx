@@ -1,7 +1,7 @@
 import classnames from 'classnames/bind';
 import React, { ReactNode } from 'react';
 
-import styles from './tooltip.css';
+import styles from './tooltip.module.css';
 
 const classNames = classnames.bind(styles);
 

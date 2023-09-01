@@ -5,7 +5,7 @@ import { createIntl, createIntlCache, FormattedMessage, RawIntlProvider } from '
 
 import messages from '../i18n/nb_NO.json';
 
-import styles from './ingenBehandlingValgtPanel.css';
+import styles from './ingenBehandlingValgtPanel.module.css';
 
 const cache = createIntlCache();
 

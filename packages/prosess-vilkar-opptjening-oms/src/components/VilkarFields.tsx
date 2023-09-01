@@ -12,7 +12,7 @@ import { Normaltekst } from 'nav-frontend-typografi';
 import avslattImage from '@fpsak-frontend/assets/images/avslaatt.svg';
 import innvilgetImage from '@fpsak-frontend/assets/images/check.svg';
 
-import styles from './VilkarFields.css';
+import styles from './VilkarFields.module.css';
 
 export const midlertidigInaktiv = {
   TYPE_A: '7847A',

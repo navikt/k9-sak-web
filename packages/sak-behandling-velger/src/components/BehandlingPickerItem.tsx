@@ -7,7 +7,7 @@ import { BehandlingAppKontekst, Kodeverk, KodeverkMedNavn } from '@k9-sak-web/ty
 
 import BehandlingPickerItemContentOld from './BehandlingPickerItemContentOld';
 
-import styles from './behandlingPickerItem.css';
+import styles from './behandlingPickerItem.module.css';
 
 const getContentProps = (
   behandling: BehandlingAppKontekst,

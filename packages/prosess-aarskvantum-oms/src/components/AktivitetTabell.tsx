@@ -22,7 +22,7 @@ import { Element, Normaltekst } from 'nav-frontend-typografi';
 import React, { ReactNode, useMemo, useState } from 'react';
 import { FormattedMessage } from 'react-intl';
 import Utfall from './Utfall';
-import styles from './aktivitetTabell.css';
+import styles from './aktivitetTabell.module.css';
 import NøkkeltallContainer, { Nokkeltalltype } from './nokkeltall/NokkeltallContainer';
 import { durationTilTimerMed7ogEnHalvTimesDagsbasis } from './utils';
 

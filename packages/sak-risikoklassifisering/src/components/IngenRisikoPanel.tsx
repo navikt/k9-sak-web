@@ -5,7 +5,7 @@ import innvilgetIkonUrl from '@fpsak-frontend/assets/images/innvilget.svg';
 
 import TittelMedDivider from './TittelMedDivider';
 
-import styles from './ingenRisikoPanel.css';
+import styles from './ingenRisikoPanel.module.css';
 
 /**
  * IngenRisikoPanel

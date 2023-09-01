@@ -16,7 +16,7 @@ import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import BehandlingFilter, { automatiskBehandling } from './BehandlingFilter';
 import BehandlingPickerItemContent from './BehandlingPickerItemContent';
 import BehandlingSelected from './BehandlingSelected';
-import styles from './behandlingPicker.css';
+import styles from './behandlingPicker.module.css';
 import { sortBehandlinger } from './behandlingVelgerUtils';
 
 const getBehandlingNavn = (

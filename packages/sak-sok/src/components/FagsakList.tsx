@@ -6,7 +6,7 @@ import { Table, TableColumn, TableRow } from '@fpsak-frontend/shared-components'
 import { getKodeverknavnFn } from '@fpsak-frontend/utils';
 import { Fagsak, KodeverkMedNavn } from '@k9-sak-web/types';
 
-import styles from './fagsakList.css';
+import styles from './fagsakList.module.css';
 
 const headerTextCodes = ['FagsakList.Saksnummer', 'FagsakList.Sakstype', 'FagsakList.Status'];
 const lagFagsakSortObj = (fagsak: Fagsak) => ({

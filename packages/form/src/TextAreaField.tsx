@@ -6,7 +6,7 @@ import { Field } from 'redux-form';
 import LabelType from './LabelType';
 import ReadOnlyField from './ReadOnlyField';
 import renderNavField from './renderNavField';
-import styles from './textAreaField.css';
+import styles from './textAreaField.module.css';
 
 type BadgesType = 'suksess' | 'info' | 'advarsel' | 'fokus';
 

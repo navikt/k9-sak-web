@@ -6,7 +6,7 @@ import keyImage from '@fpsak-frontend/assets/images/key-1-rotert.svg';
 
 import Image from './Image';
 
-import styles from './overstyringKnapp.css';
+import styles from './overstyringKnapp.module.css';
 
 interface OwnProps {
   onClick?: (overstyrt: boolean) => void;

@@ -4,7 +4,7 @@ import { Normaltekst } from 'nav-frontend-typografi';
 import React, { ReactElement } from 'react';
 import { FormattedMessage } from 'react-intl';
 import BehandlingPickerItem from './BehandlingPickerItem';
-import styles from './behandlingPickerOld.css';
+import styles from './behandlingPickerOld.module.css';
 import { sortBehandlinger } from './behandlingVelgerUtils';
 
 const renderListItems = (

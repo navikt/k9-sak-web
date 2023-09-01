@@ -6,7 +6,7 @@ import React from 'react';
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 import messages from '../i18n/nb_NO.json';
 
-import styles from './antallDagerLivetsSluttfaseIndex.css';
+import styles from './antallDagerLivetsSluttfaseIndex.module.css';
 
 const cache = createIntlCache();
 

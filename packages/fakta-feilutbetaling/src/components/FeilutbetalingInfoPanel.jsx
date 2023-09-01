@@ -33,7 +33,7 @@ import {
 
 import FeilutbetalingPerioderTable from './FeilutbetalingPerioderTable';
 
-import styles from './feilutbetalingInfoPanel.css';
+import styles from './feilutbetalingInfoPanel.module.css';
 
 const formName = 'FaktaFeilutbetalingForm';
 const minLength3 = minLength(3);

@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { Loader } from '@navikt/ds-react';
-import styles from './loadingPanel.css';
+import styles from './loadingPanel.module.css';
 
 /**
  * LoadingPanel

@@ -26,7 +26,7 @@ import { PleiepengerBehandlingApiKeys, restApiPleiepengerHooks } from '../data/p
 import prosessStegPanelDefinisjoner from '../panelDefinisjoner/prosessStegPleiepengerPanelDefinisjoner';
 import FetchedData from '../types/fetchedDataTsType';
 
-import '@fpsak-frontend/assets/styles/arrowForProcessMenu.css';
+import '@fpsak-frontend/assets/styles/arrowForProcessMenu.module.css';
 
 interface OwnProps {
   data: FetchedData;

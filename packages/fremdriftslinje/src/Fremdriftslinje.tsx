@@ -1,6 +1,6 @@
 import React from 'react';
 
-import styles from './fremdriftslinje.css';
+import styles from './fremdriftslinje.module.css';
 
 interface OwnProps {
   max: number;

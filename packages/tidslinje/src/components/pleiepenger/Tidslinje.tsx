@@ -9,7 +9,7 @@ import { Column, Row } from 'nav-frontend-grid';
 import Periode from './types/Periode';
 import TidslinjeRad from './types/TidslinjeRad';
 
-import styles from './tidslinje.css';
+import styles from './tidslinje.module.css';
 
 interface EventProps {
   items: string[];

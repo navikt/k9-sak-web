@@ -1,7 +1,7 @@
 import classnames from 'classnames/bind';
 import React, { ReactNode } from 'react';
 
-import styles from './aksjonspunktBox.css';
+import styles from './aksjonspunktBox.module.css';
 
 const classNames = classnames.bind(styles);
 

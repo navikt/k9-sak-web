@@ -8,7 +8,7 @@ import useGlobalStateRestApiData from '@k9-sak-web/rest-api-hooks/src/global-dat
 import { K9sakApiKeys } from '@k9-sak-web/sak-app/src/data/k9sakApi';
 import { Kodeverk, SaksbehandlereInfo } from '@k9-sak-web/types';
 
-import styles from './snakkebobleContainer.css';
+import styles from './snakkebobleContainer.module.css';
 
 const cx = classNames.bind(styles);
 

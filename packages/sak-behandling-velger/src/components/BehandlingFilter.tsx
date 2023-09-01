@@ -6,7 +6,7 @@ import { Checkbox, CheckboxGruppe } from 'nav-frontend-skjema';
 import { Element } from 'nav-frontend-typografi';
 import React, { useEffect, useRef, useState } from 'react';
 import { FormattedMessage } from 'react-intl';
-import styles from './behandlingFilter.css';
+import styles from './behandlingFilter.module.css';
 
 interface FilterType {
   value: string;

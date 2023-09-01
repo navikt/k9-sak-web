@@ -8,7 +8,7 @@ import { Kodeverk } from '@k9-sak-web/types';
 
 import { BeregningResultatPeriode } from '../types/beregningsresultatTilbakekrevingTsType';
 
-import styles from './tilbakekrevingVedtakPeriodeTabell.css';
+import styles from './tilbakekrevingVedtakPeriodeTabell.module.css';
 
 const headerTextCodes = [
   'TilbakekrevingVedtakPeriodeTabell.Periode',

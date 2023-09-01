@@ -23,7 +23,7 @@ import {
   utledSuffiksInnhold,
 } from './RedigeringUtils';
 
-import styles from './RedigerFritekstbrev.css';
+import styles from './RedigerFritekstbrev.module.css';
 
 import { fieldnames } from '../../konstanter';
 import FritekstEditor from './FritekstEditor';

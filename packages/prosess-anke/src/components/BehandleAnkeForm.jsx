@@ -34,7 +34,7 @@ import FritekstBrevTextField from './FritekstAnkeBrevTextField';
 import PreviewAnkeLink from './PreviewAnkeLink';
 import TempsaveAnkeButton from './TempsaveAnkeButton';
 
-import styles from './behandleAnkeForm.css';
+import styles from './behandleAnkeForm.module.css';
 
 const omgjorArsakValues = [
   { kode: ankeOmgjorArsak.PROSESSUELL_FEIL, navn: 'Ankebehandling.OmgjoeringArsak.ProsessuellFeil' },

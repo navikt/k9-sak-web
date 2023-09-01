@@ -35,7 +35,7 @@ import SøknadsperiodeFieldArrayComponent, {
   nyoppstartetDatoIsValid,
 } from './SøknadsperiodeFieldArrayComponent';
 import oppgittOpptjeningRevurderingFormName from './formName';
-import styles from './opplysningerFraSoknadenForm.css';
+import styles from './opplysningerFraSoknadenForm.module.css';
 import OppgittOpptjeningRevurderingFormValues from './types/OppgittOpptjeningRevurderingFormValues';
 import SøknadFormValue from './types/SøknadFormValue';
 import { startdatoErISøknadsperiode } from './validators';

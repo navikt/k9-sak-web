@@ -21,7 +21,7 @@ import { ConfigProps, FieldArray, InjectedFormProps, SubmitHandler, formValueSel
 import Aktivitet from '../dto/Aktivitet';
 import { fosterbarnDto } from '../dto/FosterbarnDto';
 import FosterbarnForm from './FosterbarnForm';
-import styles from './aksjonspunktForm.css';
+import styles from './aksjonspunktForm.module.css';
 import { valgValues } from './utils';
 
 interface AksjonspunktFormImplProps {

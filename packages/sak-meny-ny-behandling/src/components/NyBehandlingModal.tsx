@@ -16,7 +16,7 @@ import { Image, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { required } from '@fpsak-frontend/utils';
 import { Kodeverk, KodeverkMedNavn } from '@k9-sak-web/types';
 
-import styles from './nyBehandlingModal.css';
+import styles from './nyBehandlingModal.module.css';
 
 const createOptions = (
   bt: KodeverkMedNavn,

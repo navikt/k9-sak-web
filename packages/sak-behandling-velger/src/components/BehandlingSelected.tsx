@@ -11,7 +11,7 @@ import { Element, Normaltekst, Undertittel } from 'nav-frontend-typografi';
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import { NavLink, useLocation } from 'react-router-dom';
-import styles from './behandlingSelected.css';
+import styles from './behandlingSelected.module.css';
 import { getFormattedSøknadserioder, getStatusIcon, getStatusText } from './behandlingVelgerUtils';
 
 const cx = classnames.bind(styles);

@@ -12,7 +12,7 @@ import {
 } from '@k9-sak-web/behandling-felles';
 import { Behandling, Fagsak, FagsakPerson, FeatureToggles, KodeverkMedNavn } from '@k9-sak-web/types';
 
-import '@fpsak-frontend/assets/styles/arrowForProcessMenu.css';
+import '@fpsak-frontend/assets/styles/arrowForProcessMenu.module.css';
 import { InnsynBehandlingApiKeys, restApiInnsynHooks } from '../data/innsynBehandlingApi';
 import prosessStegPanelDefinisjoner from '../panelDefinisjoner/prosessStegInnsynPanelDefinisjoner';
 import FetchedData from '../types/fetchedDataTsType';

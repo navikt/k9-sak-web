@@ -26,7 +26,7 @@ import { FrisinnBehandlingApiKeys, restApiFrisinnHooks } from '../data/frisinnBe
 import prosessStegPanelDefinisjoner from '../panelDefinisjoner/prosessStegFrisinnPanelDefinisjoner';
 import FetchedData from '../types/fetchedDataTsType';
 
-import '@fpsak-frontend/assets/styles/arrowForProcessMenu.css';
+import '@fpsak-frontend/assets/styles/arrowForProcessMenu.module.css';
 
 interface OwnProps {
   data: FetchedData;

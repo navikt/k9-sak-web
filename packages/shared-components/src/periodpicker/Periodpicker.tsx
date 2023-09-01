@@ -6,7 +6,7 @@ import { DateUtils, Modifier } from 'react-day-picker';
 import CalendarToggleButton from '../datepicker/CalendarToggleButton';
 import PeriodCalendarOverlay from './PeriodCalendarOverlay';
 
-import styles from './periodpicker.css';
+import styles from './periodpicker.module.css';
 
 interface OwnProps {
   names: string[];

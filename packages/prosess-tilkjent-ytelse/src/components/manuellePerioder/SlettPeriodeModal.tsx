@@ -8,7 +8,7 @@ import { Normaltekst } from 'nav-frontend-typografi';
 import React from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
 
-import styles from './periode.css';
+import styles from './periode.module.css';
 
 interface OwnProps {
   showModal?: boolean;

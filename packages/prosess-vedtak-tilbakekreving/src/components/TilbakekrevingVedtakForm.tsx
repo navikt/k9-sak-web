@@ -21,7 +21,7 @@ import underavsnittType from '../kodeverk/avsnittType';
 import VedtaksbrevAvsnitt from '../types/vedtaksbrevAvsnittTsType';
 import TilbakekrevingEditerVedtaksbrevPanel from './brev/TilbakekrevingEditerVedtaksbrevPanel';
 
-import styles from './tilbakekrevingVedtakForm.css';
+import styles from './tilbakekrevingVedtakForm.module.css';
 
 const formName = 'TilbakekrevingVedtakForm';
 

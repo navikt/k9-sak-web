@@ -24,7 +24,7 @@ import { AksjonspunktHelpTextTemp, ArrowBox, VerticalSpacer } from '@fpsak-front
 import { DDMMYYYY_DATE_FORMAT, getKodeverknavnFn, required } from '@fpsak-frontend/utils';
 import { ProsessStegBegrunnelseTextField, ProsessStegSubmitButton } from '@k9-sak-web/prosess-felles';
 
-import styles from './checkPersonStatusForm.css';
+import styles from './checkPersonStatusForm.module.css';
 
 /**
  * CheckPersonStatusForm

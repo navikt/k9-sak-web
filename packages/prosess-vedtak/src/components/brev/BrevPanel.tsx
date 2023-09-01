@@ -27,7 +27,7 @@ import { IntlShape, injectIntl } from 'react-intl';
 import { fieldnames } from '../../konstanter';
 import FritekstBrevPanel from '../FritekstBrevPanel';
 import { VedtakPreviewLink } from '../PreviewLink';
-import styles from './BrevPanel.css';
+import styles from './BrevPanel.module.css';
 import InformasjonsbehovAutomatiskVedtaksbrev, {
   InformasjonsbehovVedtaksbrev,
 } from './InformasjonsbehovAutomatiskVedtaksbrev';

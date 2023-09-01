@@ -3,7 +3,7 @@ import { TypografiProps, Undertekst } from 'nav-frontend-typografi';
 import React from 'react';
 import { WrappedComponentProps, injectIntl } from 'react-intl';
 import LabelType from './LabelType';
-import styles from './label.css';
+import styles from './label.module.css';
 
 const classNames = classnames.bind(styles);
 

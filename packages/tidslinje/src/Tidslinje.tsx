@@ -9,7 +9,7 @@ import Timeline from './Timeline';
 import TimeLineControl from './components/TimeLineControl';
 import TimeLineSoker from './components/TimeLineSoker';
 import TimeLineSokerEnsamSoker from './components/TimeLineSokerEnsamSoker';
-import styles from './tidslinje.css';
+import styles from './tidslinje.module.css';
 
 interface EventProps {
   items: string[];

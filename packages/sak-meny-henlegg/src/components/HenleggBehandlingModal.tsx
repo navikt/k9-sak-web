@@ -4,9 +4,9 @@ import Modal from 'nav-frontend-modal';
 import { SkjemaGruppe } from 'nav-frontend-skjema';
 import { Undertekst } from 'nav-frontend-typografi';
 import React, { useMemo } from 'react';
-import { injectIntl, WrappedComponentProps } from 'react-intl';
+import { WrappedComponentProps, injectIntl } from 'react-intl';
 import { connect } from 'react-redux';
-import { formValueSelector, InjectedFormProps, reduxForm } from 'redux-form';
+import { InjectedFormProps, formValueSelector, reduxForm } from 'redux-form';
 import { createSelector } from 'reselect';
 
 import { SelectField, TextAreaField } from '@fpsak-frontend/form';
@@ -19,7 +19,7 @@ import { ArbeidsgiverOpplysningerPerId, Kodeverk, KodeverkMedNavn, Personopplysn
 import dokumentMalType from '@fpsak-frontend/kodeverk/src/dokumentMalType';
 import KlagePart from '@k9-sak-web/behandling-klage/src/types/klagePartTsType';
 import Brevmottakere from './Brevmottakere';
-import styles from './henleggBehandlingModal.css';
+import styles from './henleggBehandlingModal.module.css';
 
 const maxLength1500 = maxLength(1500);
 

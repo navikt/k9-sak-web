@@ -8,7 +8,7 @@ import { Tooltip } from '@fpsak-frontend/shared-components';
 import { dateFormat } from '@fpsak-frontend/utils';
 import { Personopplysninger } from '@k9-sak-web/types';
 
-import styles from './visittkortLabels.css';
+import styles from './visittkortLabels.module.css';
 
 interface OwnProps {
   personopplysninger: Personopplysninger;

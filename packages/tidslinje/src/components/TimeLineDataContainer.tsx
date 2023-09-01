@@ -1,7 +1,7 @@
 import { Column, Row } from 'nav-frontend-grid';
 import PropTypes from 'prop-types';
 import React, { ReactNode } from 'react';
-import styles from './timelineDataContainer.css';
+import styles from './timelineDataContainer.module.css';
 
 const TimeLineDataContainer = ({ children }: { children: ReactNode }) => (
   <Row>

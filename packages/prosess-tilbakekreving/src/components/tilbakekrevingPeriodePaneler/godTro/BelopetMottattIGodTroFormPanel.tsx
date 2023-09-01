@@ -6,7 +6,7 @@ import { InputField, RadioGroupField, RadioOption } from '@fpsak-frontend/form';
 import { ArrowBox, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { formatCurrencyNoKr, minValue, removeSpacesFromNumber, required } from '@fpsak-frontend/utils';
 
-import styles from './belopetMottattIGodTroFormPanel.css';
+import styles from './belopetMottattIGodTroFormPanel.module.css';
 
 const minValue1 = minValue(1);
 

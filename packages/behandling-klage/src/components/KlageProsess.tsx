@@ -28,7 +28,7 @@ import FetchedData from '../types/fetchedDataTsType';
 import KlagePart from '../types/klagePartTsType';
 import KlageBehandlingModal from './KlageBehandlingModal';
 
-import '@fpsak-frontend/assets/styles/arrowForProcessMenu.css';
+import '@fpsak-frontend/assets/styles/arrowForProcessMenu.module.css';
 
 interface OwnProps {
   data: FetchedData;

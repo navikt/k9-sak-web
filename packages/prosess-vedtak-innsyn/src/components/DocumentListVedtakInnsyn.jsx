@@ -6,7 +6,7 @@ import { FormattedMessage } from 'react-intl';
 
 import { Table, TableColumn, TableRow } from '@fpsak-frontend/shared-components';
 
-import styles from './documentListVedtakInnsyn.css';
+import styles from './documentListVedtakInnsyn.module.css';
 
 // TODO (TOR) Flytt url ut av komponent
 const DOCUMENT_SERVER_URL = '/k9/sak/api/dokument/hent-dokument';

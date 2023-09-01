@@ -7,7 +7,7 @@ import { ArbeidsgiverOpplysningerWrapper, BehandlingAppKontekst, Fagsak, Persono
 import { getSupportPanelLocationCreator } from '../app/paths';
 import useTrackRouteParam from '../app/useTrackRouteParam';
 import BehandlingRettigheter from '../behandling/behandlingRettigheterTsType';
-import styles from './behandlingSupportIndex.css';
+import styles from './behandlingSupportIndex.module.css';
 import DokumentIndex from './dokument/DokumentIndex';
 import HistorikkIndex from './historikk/HistorikkIndex';
 import MeldingIndex from './melding/MeldingIndex';

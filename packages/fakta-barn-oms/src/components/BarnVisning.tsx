@@ -5,7 +5,7 @@ import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import BarnInformasjonVisning from './BarnInformasjonVisning';
 import BarnRammevedtakVisning from './BarnRammevedtakVisning';
-import styles from './barnVisning.css';
+import styles from './barnVisning.module.css';
 
 interface BarnInputProps {
   barnet: KombinertBarnOgRammevedtak;

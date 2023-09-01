@@ -7,7 +7,7 @@ import { Field, useFormikContext } from 'formik';
 import { Datepicker } from 'nav-datovelger';
 import { Input } from 'nav-frontend-skjema';
 import { OverstyrInputForBeregningDto } from '../types/OverstyrInputForBeregningDto';
-import styles from './OverstyrBeregningFaktaForm.css';
+import styles from './OverstyrBeregningFaktaForm.module.css';
 
 interface Props {
   key: string;

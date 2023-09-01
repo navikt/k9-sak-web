@@ -16,7 +16,7 @@ import { Column, Row } from 'nav-frontend-grid';
 import { Normaltekst, Undertekst } from 'nav-frontend-typografi';
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
-import styles from './activityDataSubPanel.css';
+import styles from './activityDataSubPanel.module.css';
 
 const ytelseTypes = [
   OAType.SYKEPENGER,

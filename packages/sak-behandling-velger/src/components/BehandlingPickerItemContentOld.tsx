@@ -21,7 +21,7 @@ import {
 } from '@fpsak-frontend/shared-components';
 import { BehandlingAppKontekst, Kodeverk } from '@k9-sak-web/types';
 
-import styles from './behandlingPickerItemContent.css';
+import styles from './behandlingPickerItemContent.module.css';
 
 // TODO (TOR) Kva er dette for noko? Desse tekstane burde vel komma fra kodeverket? Ein skal uansett ikkje hardkoda kodane her!
 // TODO hente de forksjellige kodeverkene man trenger

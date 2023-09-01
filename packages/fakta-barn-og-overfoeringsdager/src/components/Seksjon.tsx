@@ -3,7 +3,7 @@ import classnames from 'classnames/bind';
 import { Undertittel } from 'nav-frontend-typografi';
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
-import styles from './seksjon.css';
+import styles from './seksjon.module.css';
 
 const classNames = classnames.bind(styles);
 

@@ -8,7 +8,7 @@ import { Image } from '@fpsak-frontend/shared-components';
 import urlKvinne from '@fpsak-frontend/assets/images/kvinne.svg';
 import Kjønnkode from '@k9-sak-web/types/src/Kjønnkode';
 import { useIntl } from 'react-intl';
-import styles from './timeLineSokerEnsamSoker.css';
+import styles from './timeLineSokerEnsamSoker.module.css';
 
 /**
  * TimeLineSoker

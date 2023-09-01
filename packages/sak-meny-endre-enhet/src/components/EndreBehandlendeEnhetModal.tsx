@@ -12,7 +12,7 @@ import { SelectField, TextAreaField } from '@fpsak-frontend/form';
 import { Image, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { hasValidText, maxLength, required } from '@fpsak-frontend/utils';
 
-import styles from './endreBehandlendeEnhetModal.css';
+import styles from './endreBehandlendeEnhetModal.module.css';
 
 const maxLength400 = maxLength(400);
 

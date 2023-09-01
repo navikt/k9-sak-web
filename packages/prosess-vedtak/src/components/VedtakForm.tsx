@@ -54,7 +54,7 @@ import BrevPanel from './brev/BrevPanel';
 import { InformasjonsbehovVedtaksbrev } from './brev/InformasjonsbehovAutomatiskVedtaksbrev';
 import RevurderingPaneler from './revurdering/RevurderingPaneler';
 import VedtakRevurderingSubmitPanel from './revurdering/VedtakRevurderingSubmitPanel';
-import styles from './vedtakForm.css';
+import styles from './vedtakForm.module.css';
 
 const isVedtakSubmission = true;
 

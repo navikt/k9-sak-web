@@ -8,7 +8,7 @@ import { VuderFaresignalerAp } from './AvklarFaresignalerForm';
 import HoyRisikoPanel from './HoyRisikoPanel';
 import TittelMedDivider from './TittelMedDivider';
 
-import styles from './hoyRisikoTittel.css';
+import styles from './hoyRisikoTittel.module.css';
 
 interface OwnProps {
   risikoklassifisering: Risikoklassifisering;

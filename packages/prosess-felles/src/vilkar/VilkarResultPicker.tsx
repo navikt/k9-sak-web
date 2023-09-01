@@ -12,7 +12,7 @@ import { Aksjonspunkt, KodeverkMedNavn } from '@k9-sak-web/types';
 
 import getPackageIntl from '../../i18n/getPackageIntl';
 
-import styles from './vilkarResultPicker.css';
+import styles from './vilkarResultPicker.module.css';
 
 type FormValues = {
   erVilkarOk: boolean;

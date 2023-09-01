@@ -9,7 +9,7 @@ import { FlexColumn, FlexContainer, FlexRow, Tooltip, VerticalSpacer } from '@fp
 import { Adresser, getAddresses, getKodeverknavnFn, getLanguageFromSprakkode } from '@fpsak-frontend/utils';
 import { Kodeverk, KodeverkMedNavn, Personopplysninger } from '@k9-sak-web/types';
 
-import styles from './visittkortDetaljerPopup.css';
+import styles from './visittkortDetaljerPopup.module.css';
 
 const borSokerMedBarnet = (adresser: Adresser, personopplysningerForBarn: Personopplysninger[] = []): boolean =>
   personopplysningerForBarn.some(

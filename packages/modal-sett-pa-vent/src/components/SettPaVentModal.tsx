@@ -24,7 +24,7 @@ import React, { useState } from 'react';
 import { FormattedMessage, WrappedComponentProps, injectIntl } from 'react-intl';
 import { connect } from 'react-redux';
 import { InjectedFormProps, formValueSelector, reduxForm } from 'redux-form';
-import styles from './settPaVentModal.css';
+import styles from './settPaVentModal.module.css';
 
 const initFrist = (): string => {
   const date = moment().toDate();

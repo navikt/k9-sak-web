@@ -4,7 +4,7 @@ import { WrappedComponentProps, injectIntl } from 'react-intl';
 
 import ProsessStegMenyRad from '../types/prosessStegMenyRadTsType';
 
-import styles from './prosessStegContainer.css';
+import styles from './prosessStegContainer.module.css';
 
 interface OwnProps {
   formaterteProsessStegPaneler: ProsessStegMenyRad[];

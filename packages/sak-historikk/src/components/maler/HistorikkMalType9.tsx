@@ -10,7 +10,7 @@ import BubbleText from './felles/bubbleText';
 import { findEndretFeltVerdi } from './felles/historikkUtils';
 import Skjermlenke from './felles/Skjermlenke';
 
-import styles from './historikkMalType.css';
+import styles from './historikkMalType.module.css';
 
 const getSplitPeriods = (endredeFelter: HistorikkinnslagEndretFelt[]): string => {
   let text = '';

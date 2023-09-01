@@ -9,7 +9,7 @@ import { Delete } from '@navikt/ds-icons';
 import { FormattedMessage } from 'react-intl';
 import { fosterbarnDto } from '../dto/FosterbarnDto';
 
-import styles from './aksjonspunktForm.css';
+import styles from './aksjonspunktForm.module.css';
 import { valgValues } from './utils';
 
 interface Props {

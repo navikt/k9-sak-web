@@ -8,7 +8,7 @@ import { behandlingFormValueSelector, TextAreaField } from '@fpsak-frontend/form
 import { Image, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { hasValidText, maxLength, minLength, required } from '@fpsak-frontend/utils';
 
-import styles from './tilbakekrevingVedtakUtdypendeTekstPanel.css';
+import styles from './tilbakekrevingVedtakUtdypendeTekstPanel.module.css';
 
 const minLength3 = minLength(3);
 const maxLength4000 = maxLength(4000);

@@ -9,7 +9,7 @@ import FlexContainer from './flexGrid/FlexContainer';
 import FlexRow from './flexGrid/FlexRow';
 import VerticalSpacer from './VerticalSpacer';
 
-import styles from './okAvbrytModal.css';
+import styles from './okAvbrytModal.module.css';
 
 interface OwnProps {
   textCode?: string;

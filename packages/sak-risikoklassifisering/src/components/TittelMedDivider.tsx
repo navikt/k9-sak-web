@@ -4,7 +4,7 @@ import { FormattedMessage, useIntl } from 'react-intl';
 
 import { FlexColumn, FlexContainer, FlexRow, Image } from '@fpsak-frontend/shared-components';
 
-import styles from './tittelMedDivider.css';
+import styles from './tittelMedDivider.module.css';
 
 interface OwnProps {
   imageSrc: string;

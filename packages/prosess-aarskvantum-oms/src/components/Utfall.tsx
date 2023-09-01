@@ -5,7 +5,7 @@ import { Image } from '@fpsak-frontend/shared-components';
 import { UtfallEnum, Utfalltype } from '@k9-sak-web/types';
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
-import styles from './aktivitetTabell.css';
+import styles from './aktivitetTabell.module.css';
 
 type UtfallProps = {
   utfall: Utfalltype;

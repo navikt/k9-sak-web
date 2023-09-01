@@ -5,7 +5,7 @@ import manglendeKlassifiseringIkon from '@fpsak-frontend/assets/images/behandle_
 
 import TittelMedDivider from './TittelMedDivider';
 
-import styles from './manglendeKlassifiseringPanel.css';
+import styles from './manglendeKlassifiseringPanel.module.css';
 
 /**
  * ManglendeKlassifiseringPanel

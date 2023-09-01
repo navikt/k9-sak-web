@@ -18,7 +18,7 @@ import { restApiTilbakekrevingHooks, TilbakekrevingBehandlingApiKeys } from '../
 import prosessStegPanelDefinisjoner from '../panelDefinisjoner/prosessStegTilbakekrevingPanelDefinisjoner';
 import FetchedData from '../types/fetchedDataTsType';
 
-import '@fpsak-frontend/assets/styles/arrowForProcessMenu.css';
+import '@fpsak-frontend/assets/styles/arrowForProcessMenu.module.css';
 
 const forhandsvis = data => {
   if (URL.createObjectURL) {

@@ -5,7 +5,7 @@ import { Fagsak } from '@k9-sak-web/types';
 import { AlertStripeFeil, AlertStripeInfo } from 'nav-frontend-alertstriper';
 import Lenke from 'nav-frontend-lenker';
 import React, { useEffect } from 'react';
-import styles from './andreSakerPåSøkerStripe.css';
+import styles from './andreSakerPåSøkerStripe.module.css';
 
 interface Props {
   søkerIdent: string;

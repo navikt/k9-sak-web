@@ -10,7 +10,7 @@ import { ArrowBox, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { required } from '@fpsak-frontend/utils';
 import { ProsessStegBegrunnelseTextField } from '@k9-sak-web/prosess-felles';
 
-import styles from './klageVurderingRadioOptionsKa.css';
+import styles from './klageVurderingRadioOptionsKa.module.css';
 
 export const KlageVurderingRadioOptionsKa = ({ readOnly, medholdReasons, klageVurdering, intl }) => {
   const medholdOptions = medholdReasons.map(mo => (

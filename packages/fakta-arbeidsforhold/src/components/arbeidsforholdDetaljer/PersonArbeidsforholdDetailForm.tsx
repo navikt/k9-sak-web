@@ -5,7 +5,7 @@ import ArbeidsforholdV2 from '@k9-sak-web/types/src/arbeidsforholdV2TsType';
 import { Row } from 'nav-frontend-grid';
 import { Hovedknapp } from 'nav-frontend-knapper';
 import React from 'react';
-import { FormattedMessage, injectIntl, WrappedComponentProps } from 'react-intl';
+import { FormattedMessage, WrappedComponentProps, injectIntl } from 'react-intl';
 import { connect } from 'react-redux';
 import { InjectedFormProps } from 'redux-form';
 import ArbeidsforholdBegrunnelse from './ArbeidsforholdBegrunnelse';
@@ -14,7 +14,7 @@ import LeggTilArbeidsforholdFelter from './LeggTilArbeidsforholdFelter';
 
 import aksjonspunktÅrsaker from '../../kodeverk/aksjonspunktÅrsaker';
 import CustomArbeidsforhold from '../../typer/CustomArbeidsforholdTsType';
-import styles from './personArbeidsforholdDetailForm.css';
+import styles from './personArbeidsforholdDetailForm.module.css';
 
 export const PERSON_ARBEIDSFORHOLD_DETAIL_FORM = 'PersonArbeidsforholdDetailForm';
 

@@ -2,7 +2,7 @@ import dayjs, { Dayjs } from 'dayjs';
 import { Normaltekst } from 'nav-frontend-typografi';
 import React from 'react';
 import Rad from './Rad';
-import styles from './horisontalNavigering.css';
+import styles from './horisontalNavigering.module.css';
 import NavigateArrowIcon from './icons/NavigateArrowIcon';
 import { useSenesteDato } from './useTidslinjerader';
 

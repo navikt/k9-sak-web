@@ -5,7 +5,7 @@ import React from 'react';
 import { useIntl } from 'react-intl';
 import LabelType from './LabelType';
 import ReadOnlyField from './ReadOnlyField';
-import styles from './TextAreaFormik.css';
+import styles from './TextAreaFormik.module.css';
 import { validateAll } from './formikUtils';
 
 interface TextAreaFieldProps {

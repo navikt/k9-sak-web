@@ -9,7 +9,7 @@ import ArbeidsforholdV2 from '@k9-sak-web/types/src/arbeidsforholdV2TsType';
 import { FlexColumn, FlexContainer, FlexRow } from './flexGrid';
 import Image from './Image';
 
-import styles from './aksjonspunktAvklarArbeidsforholdText.css';
+import styles from './aksjonspunktAvklarArbeidsforholdText.module.css';
 import VerticalSpacer from './VerticalSpacer';
 
 interface OwnProps {

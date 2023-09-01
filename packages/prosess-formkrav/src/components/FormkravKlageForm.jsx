@@ -20,7 +20,7 @@ import { DDMMYYYY_DATE_FORMAT, getKodeverknavnFn, required } from '@fpsak-fronte
 import { ProsessStegBegrunnelseTextField, ProsessStegSubmitButton } from '@k9-sak-web/prosess-felles';
 import lagVisningsnavnForKlagepart from '../utils/lagVisningsnavnForKlagepart';
 
-import styles from './formkravKlageForm.css';
+import styles from './formkravKlageForm.module.css';
 
 export const IKKE_PAKLAGD_VEDTAK = 'ikkePaklagdVedtak';
 

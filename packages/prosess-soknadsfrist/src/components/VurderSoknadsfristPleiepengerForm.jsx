@@ -24,7 +24,7 @@ import { AksjonspunktHelpTextTemp, ArrowBox, VerticalSpacer } from '@fpsak-front
 import { DDMMYYYY_DATE_FORMAT, dateBeforeOrEqualToToday, hasValidDate, required } from '@fpsak-frontend/utils';
 import { ProsessStegBegrunnelseTextField, ProsessStegSubmitButton } from '@k9-sak-web/prosess-felles';
 
-import styles from './vurderSoknadsfristPleiepengerForm.css';
+import styles from './vurderSoknadsfristPleiepengerForm.module.css';
 
 const isEdited = (hasAksjonspunkt, gyldigSenFremsetting) => hasAksjonspunkt && gyldigSenFremsetting !== undefined;
 

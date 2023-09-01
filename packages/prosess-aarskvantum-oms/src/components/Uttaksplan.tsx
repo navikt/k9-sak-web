@@ -9,7 +9,7 @@ import React, { useState } from 'react';
 import { FormattedMessage } from 'react-intl';
 import Aktivitet from '../dto/Aktivitet';
 import AktivitetTabell from './AktivitetTabell';
-import styles from './uttaksplan.css';
+import styles from './uttaksplan.module.css';
 
 interface UttaksplanProps {
   behandlingUuid: string;

@@ -33,7 +33,7 @@ import {
 
 import InputField from '@fpsak-frontend/form/src/InputField';
 import { Fritekstbrev } from '@k9-sak-web/types/src/formidlingTsType';
-import styles from './messages.css';
+import styles from './messages.module.css';
 
 const maxLength4000 = maxLength(4000);
 const maxLength100000 = maxLength(100000);

@@ -10,7 +10,7 @@ import messages from '../i18n/nb_NO.json';
 import VilkarresultatMedOverstyringFormPeriodisert from './components-periodisert/VilkarresultatMedOverstyringForm';
 import VilkarresultatMedOverstyringForm from './components/VilkarresultatMedOverstyringForm';
 import VilkarresultatMedOverstyringHeader from './components/VilkarresultatMedOverstyringHeader';
-import styles from './vilkarresultatMedOverstyringProsessIndex.css';
+import styles from './vilkarresultatMedOverstyringProsessIndex.module.css';
 
 const cx = classNames.bind(styles);
 

@@ -21,7 +21,7 @@ import {
 
 import AksjonspunktGodkjenningFieldArray, { AksjonspunktGodkjenningData } from './AksjonspunktGodkjenningFieldArray';
 
-import styles from './totrinnskontrollBeslutterForm.css';
+import styles from './totrinnskontrollBeslutterForm.module.css';
 
 const erAlleGodkjent = (formState: TotrinnskontrollAksjonspunkt[] = []) =>
   formState.every(ap => ap.totrinnskontrollGodkjent && ap.totrinnskontrollGodkjent === true);

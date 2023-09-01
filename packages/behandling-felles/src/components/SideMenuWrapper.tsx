@@ -7,7 +7,7 @@ import { FlexColumn, FlexContainer, FlexRow, Image } from '@fpsak-frontend/share
 
 import FaktaPanelMenyRad from '../types/faktaPanelMenyRadTsType';
 
-import styles from './sideMenuWrapper.css';
+import styles from './sideMenuWrapper.module.css';
 
 interface OwnProps {
   paneler: FaktaPanelMenyRad[];

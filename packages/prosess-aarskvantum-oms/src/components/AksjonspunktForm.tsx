@@ -27,7 +27,7 @@ import { connect } from 'react-redux';
 import { ConfigProps, FieldArray, InjectedFormProps, SubmitHandler } from 'redux-form';
 import Aktivitet from '../dto/Aktivitet';
 import { fosterbarnDto } from '../dto/FosterbarnDto';
-import styles from './aksjonspunktForm.css';
+import styles from './aksjonspunktForm.module.css';
 
 interface AksjonspunktFormImplProps {
   aktiviteter: Aktivitet[];

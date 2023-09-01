@@ -1,6 +1,6 @@
-import React from 'react';
 import { ExclamationmarkTriangleFillIcon } from '@navikt/aksel-icons';
-import styles from './advarselIcon.css';
+import React from 'react';
+import styles from './advarselIcon.module.css';
 
 const AdvarselIcon = ({ title }: { title: string }) => (
   <ExclamationmarkTriangleFillIcon title={title} className={styles.advarselIkon} />

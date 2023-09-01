@@ -7,7 +7,7 @@ import { FormattedMessage } from 'react-intl';
 
 import { calcDaysAndWeeks, DDMMYYYY_DATE_FORMAT, formatCurrencyNoKr } from '@fpsak-frontend/utils';
 
-import styles from './periodeInformasjon.css';
+import styles from './periodeInformasjon.module.css';
 
 /**
  * PeriodeInformasjon

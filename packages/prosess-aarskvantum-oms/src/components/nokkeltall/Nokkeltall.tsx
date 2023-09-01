@@ -2,7 +2,7 @@ import classNames from 'classnames';
 import NavFrontendChevron from 'nav-frontend-chevron';
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
-import styles from './nokkeltall.css';
+import styles from './nokkeltall.module.css';
 
 export interface Nokkeltalldetalj {
   antallDager: number;

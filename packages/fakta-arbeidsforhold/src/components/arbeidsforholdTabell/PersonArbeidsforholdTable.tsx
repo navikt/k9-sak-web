@@ -14,7 +14,7 @@ import IngenArbeidsforholdRegistrert from './IngenArbeidsforholdRegistrert';
 
 import PermisjonerInfo from '../arbeidsforholdDetaljer/PermisjonerInfo';
 import PersonArbeidsforholdDetailForm from '../arbeidsforholdDetaljer/PersonArbeidsforholdDetailForm';
-import styles from './personArbeidsforholdTable.css';
+import styles from './personArbeidsforholdTable.module.css';
 
 const headerColumnContent = [
   <FormattedMessage key={1} id="PersonArbeidsforholdTable.ArbeidsforholdId" values={{ br: <br /> }} />,

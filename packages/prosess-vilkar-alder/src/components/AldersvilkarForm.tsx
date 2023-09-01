@@ -10,7 +10,7 @@ import { maxLength, minLength, required } from '@navikt/ft-form-validators';
 import { Column, Row } from 'nav-frontend-grid';
 import { Hovedknapp } from 'nav-frontend-knapper';
 
-import style from './AldersvilkarForm.css';
+import style from './AldersvilkarForm.module.css';
 
 type Inputs = {
   begrunnelse: string;

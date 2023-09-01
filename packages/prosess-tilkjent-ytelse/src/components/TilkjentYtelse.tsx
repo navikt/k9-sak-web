@@ -15,7 +15,7 @@ import { WrappedComponentProps, injectIntl } from 'react-intl';
 import { createVisningsnavnForAndel } from './TilkjentYteleseUtils';
 import TilkjentYtelseTimelineData from './TilkjentYtelseTimelineData';
 
-import styles from './tilkjentYtelse.css';
+import styles from './tilkjentYtelse.module.css';
 
 export type PeriodeMedId = BeregningsresultatPeriode & { id: number };
 

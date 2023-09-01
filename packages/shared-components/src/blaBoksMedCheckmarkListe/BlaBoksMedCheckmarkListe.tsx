@@ -3,7 +3,7 @@ import { Normaltekst } from 'nav-frontend-typografi';
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import { Image } from '../../index';
-import styles from './blaBoksMedCheckmarkListe.css';
+import styles from './blaBoksMedCheckmarkListe.module.css';
 
 interface OwnProps {
   textIds: string[];

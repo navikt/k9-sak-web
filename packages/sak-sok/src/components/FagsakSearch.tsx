@@ -8,7 +8,7 @@ import { Fagsak, KodeverkMedNavn } from '@k9-sak-web/types';
 import FagsakList from './FagsakList';
 import SearchForm from './SearchForm';
 
-import styles from './fagsakSearch.css';
+import styles from './fagsakSearch.module.css';
 
 interface OwnProps {
   fagsaker: Fagsak[];

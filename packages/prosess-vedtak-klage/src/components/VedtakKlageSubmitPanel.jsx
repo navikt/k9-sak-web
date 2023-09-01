@@ -8,7 +8,7 @@ import { FormattedMessage, injectIntl } from 'react-intl';
 import klageVurderingType from '@fpsak-frontend/kodeverk/src/klageVurdering';
 
 import dokumentMalType from '@fpsak-frontend/kodeverk/src/dokumentMalType';
-import styles from './vedtakKlageSubmitPanel.css';
+import styles from './vedtakKlageSubmitPanel.module.css';
 
 const medholdIKlage = klageVurderingResultat =>
   klageVurderingResultat && klageVurderingResultat.klageVurdering === klageVurderingType.MEDHOLD_I_KLAGE;

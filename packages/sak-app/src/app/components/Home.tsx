@@ -8,7 +8,7 @@ import FagsakIndex from '../../fagsak/FagsakIndex';
 import { aktoerRoutePath, fagsakRoutePath } from '../paths';
 import DashboardResolver from './DashboardResolver';
 
-import styles from './home.css';
+import styles from './home.module.css';
 
 interface OwnProps {
   headerHeight: number;

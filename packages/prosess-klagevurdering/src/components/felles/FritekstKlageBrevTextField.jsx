@@ -5,7 +5,7 @@ import { injectIntl } from 'react-intl';
 import { TextAreaField } from '@fpsak-frontend/form';
 import { getLanguageCodeFromSprakkode, hasValidText, required } from '@fpsak-frontend/utils';
 
-import styles from './fritekstKlageBrevTextField.css';
+import styles from './fritekstKlageBrevTextField.module.css';
 
 const FritekstKlageBrevTextField = ({ sprakkode, readOnly, intl }) => (
   <div className={styles.fritekstTilBrevTextArea}>

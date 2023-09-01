@@ -14,7 +14,7 @@ import { Element, Undertekst, Undertittel } from 'nav-frontend-typografi';
 import React from 'react';
 import { FormattedMessage, RawIntlProvider, createIntl, createIntlCache } from 'react-intl';
 import messages from '../i18n/nb_NO.json';
-import styles from './sykdomProsessIndex.css';
+import styles from './sykdomProsessIndex.module.css';
 
 const cx = classNames.bind(styles);
 

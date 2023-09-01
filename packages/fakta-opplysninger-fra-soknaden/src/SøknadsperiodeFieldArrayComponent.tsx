@@ -13,7 +13,7 @@ import { connect } from 'react-redux';
 import { WrappedFieldArrayProps } from 'redux-form';
 import oppgittOpptjeningRevurderingFormName from './formName';
 import FrilanserForm from './FrilanserForm';
-import styles from './opplysningerFraSoknadenForm.css';
+import styles from './opplysningerFraSoknadenForm.module.css';
 import SelvstendigNæringsdrivendeForm from './SelvstendigNæringsdrivendeForm';
 import OppgittOpptjeningRevurderingFormValues from './types/OppgittOpptjeningRevurderingFormValues';
 import SøknadFormValue from './types/SøknadFormValue';

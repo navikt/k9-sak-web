@@ -19,7 +19,7 @@ import {
   required,
 } from '@fpsak-frontend/utils';
 
-import styles from './delOppPeriodeModal.css';
+import styles from './delOppPeriodeModal.module.css';
 
 type PeriodeData = {
   fom: string;

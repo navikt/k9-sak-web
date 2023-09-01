@@ -27,7 +27,7 @@ import TempSaveAndPreviewKlageLink from '../felles/TempSaveAndPreviewKlageLink';
 import TempsaveKlageButton from '../felles/TempsaveKlageButton';
 import KlageVurderingRadioOptionsNfp, { TILBAKEKREVING_HJEMMEL } from './KlageVurderingRadioOptionsNfp';
 
-import styles from './behandleKlageFormNfp.css';
+import styles from './behandleKlageFormNfp.module.css';
 
 /**
  * BehandleklageformNfp

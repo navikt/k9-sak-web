@@ -8,7 +8,7 @@ import { isObject } from '@fpsak-frontend/utils';
 import { FlexColumn, FlexContainer, FlexRow } from './flexGrid';
 import Image from './Image';
 
-import styles from './aksjonspunktHelpTextHTML.css';
+import styles from './aksjonspunktHelpTextHTML.module.css';
 
 interface OwnProps {
   children: string[] | ReactNode | ReactNode[];

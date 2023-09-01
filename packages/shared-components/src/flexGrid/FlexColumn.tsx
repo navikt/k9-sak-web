@@ -1,7 +1,7 @@
 import classnames from 'classnames/bind';
 import React, { ReactNode } from 'react';
 
-import styles from './flexColumn.css';
+import styles from './flexColumn.module.css';
 
 const classNames = classnames.bind(styles);
 

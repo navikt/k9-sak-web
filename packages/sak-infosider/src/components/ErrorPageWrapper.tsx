@@ -3,7 +3,7 @@ import { createIntl, createIntlCache, FormattedMessage, RawIntlProvider } from '
 
 import { Innholdstittel } from 'nav-frontend-typografi';
 import messages from '../../i18n/nb_NO.json';
-import styles from './errorPageWrapper.css';
+import styles from './errorPageWrapper.module.css';
 
 const cache = createIntlCache();
 

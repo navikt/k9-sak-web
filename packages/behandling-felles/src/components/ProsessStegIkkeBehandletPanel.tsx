@@ -4,7 +4,7 @@ import { FormattedMessage } from 'react-intl';
 
 import { FadingPanel } from '@fpsak-frontend/shared-components';
 
-import styles from './prosessStegIkkeBehandletPanel.css';
+import styles from './prosessStegIkkeBehandletPanel.module.css';
 
 const ProsessStegIkkeBehandletPanel = () => (
   <div className={styles.container}>

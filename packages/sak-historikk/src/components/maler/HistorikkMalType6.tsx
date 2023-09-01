@@ -6,7 +6,7 @@ import { HistorikkInnslagOpplysning, Kodeverk } from '@k9-sak-web/types';
 import HistorikkMal from '../HistorikkMalTsType';
 import { findHendelseText } from './felles/historikkUtils';
 
-import styles from './historikkMalType.css';
+import styles from './historikkMalType.module.css';
 
 const formaterOpplysning = (
   opplysning: HistorikkInnslagOpplysning,

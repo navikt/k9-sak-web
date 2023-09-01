@@ -1,6 +1,6 @@
 import React, { ReactNode } from 'react';
 
-import styles from './floatRight.css';
+import styles from './floatRight.module.css';
 
 interface OwnProps {
   children?: ReactNode;

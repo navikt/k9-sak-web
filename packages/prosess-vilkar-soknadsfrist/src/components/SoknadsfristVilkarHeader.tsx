@@ -9,7 +9,7 @@ import { Element, Undertekst, Undertittel } from 'nav-frontend-typografi';
 import React, { SetStateAction } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
-import styles from './SoknadsfristVilkarForm.css';
+import styles from './SoknadsfristVilkarForm.module.css';
 
 const isOverridden = (aksjonspunktCodes: string[], aksjonspunktCode: string) =>
   aksjonspunktCodes.some(code => code === aksjonspunktCode);

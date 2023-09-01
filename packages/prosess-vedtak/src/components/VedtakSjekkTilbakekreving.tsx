@@ -3,7 +3,7 @@ import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { Alert, BodyLong, Button, Heading, Radio, RadioGroup } from '@navikt/ds-react';
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
-import styles from './VedtakSjekkTilbakekreving.css';
+import styles from './VedtakSjekkTilbakekreving.module.css';
 
 interface Props {
   readOnly: boolean;

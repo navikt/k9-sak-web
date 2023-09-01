@@ -6,7 +6,7 @@ import { FormattedMessage, injectIntl } from 'react-intl';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { AksjonspunktHelpTextTemp, VerticalSpacer } from '@fpsak-frontend/shared-components';
 
-import styles from './vedtakForm.css';
+import styles from './vedtakForm.module.css';
 
 const findHelpTexts = (intl, aksjonspunktKoder) => {
   const helpTexts = [];

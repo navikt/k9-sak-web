@@ -5,7 +5,7 @@ import { FormattedMessage } from 'react-intl';
 import TableColumn from './TableColumn';
 import TableRow from './TableRow';
 
-import styles from './table.css';
+import styles from './table.module.css';
 
 const classNames = classnames.bind(styles);
 

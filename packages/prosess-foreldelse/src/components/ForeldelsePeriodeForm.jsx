@@ -17,7 +17,7 @@ import { hasValidText, maxLength, minLength, required } from '@fpsak-frontend/ut
 
 import TilbakekrevingTimelineData from './splittePerioder/TilbakekrevingTimelineData';
 
-import styles from './foreldelsePeriodeForm.css';
+import styles from './foreldelsePeriodeForm.module.css';
 
 const minLength3 = minLength(3);
 const maxLength1500 = maxLength(1500);

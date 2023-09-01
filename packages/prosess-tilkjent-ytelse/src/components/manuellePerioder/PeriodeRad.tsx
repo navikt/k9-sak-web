@@ -5,11 +5,11 @@ import { FlexColumn, FlexRow, Image, Table, TableColumn, TableRow } from '@fpsak
 import { ArbeidsgiverOpplysningerPerId, Kodeverk, KodeverkMedNavn } from '@k9-sak-web/types';
 import AlertStripe from 'nav-frontend-alertstriper';
 import React from 'react';
-import { injectIntl, WrappedComponentProps } from 'react-intl';
+import { WrappedComponentProps, injectIntl } from 'react-intl';
 import { FieldArray, FieldArrayFieldsProps, FieldArrayMetaProps } from 'redux-form';
 import Andeler from './Andeler';
 
-import styles from './periode.css';
+import styles from './periode.module.css';
 
 interface OwnProps {
   fields: FieldArrayFieldsProps<any>;

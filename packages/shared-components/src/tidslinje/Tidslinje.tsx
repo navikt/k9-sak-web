@@ -14,7 +14,7 @@ import React, { ReactNode, useCallback } from 'react';
 import { AxisLabels } from './AxisLabels';
 import Pins from './Pins';
 import Rad from './Rad';
-import styles from './Tidslinje.css';
+import styles from './Tidslinje.module.css';
 import { EmptyTimelineRow, TimelineRow } from './TimelineRow';
 import { useTidligsteDato, useTidslinjerader } from './useTidslinjerader';
 

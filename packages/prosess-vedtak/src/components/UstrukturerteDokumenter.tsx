@@ -3,7 +3,7 @@ import moment from 'moment';
 import Lenke from 'nav-frontend-lenker';
 import { Normaltekst, Undertittel } from 'nav-frontend-typografi';
 import React from 'react';
-import styles from './ustrukturerteDokumenter.css';
+import styles from './ustrukturerteDokumenter.module.css';
 
 export interface Link {
   href: string;

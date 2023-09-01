@@ -6,7 +6,7 @@ import { RawIntlProvider, createIntl, createIntlCache } from 'react-intl';
 import messages from '../i18n/nb_NO.json';
 import ErrorMessagePanel from './ErrorMessagePanel';
 import Feilmelding from './feilmeldingTsType';
-import styles from './headerWithErrorPanel.css';
+import styles from './headerWithErrorPanel.module.css';
 
 const cache = createIntlCache();
 

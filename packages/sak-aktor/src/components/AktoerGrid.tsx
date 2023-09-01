@@ -8,7 +8,7 @@ import VisittkortSakIndex from '@fpsak-frontend/sak-visittkort';
 import { getKodeverknavnFn } from '@fpsak-frontend/utils';
 import { Fagsak, FagsakPerson, KodeverkMedNavn } from '@k9-sak-web/types';
 
-import styles from './aktoerGrid.css';
+import styles from './aktoerGrid.module.css';
 
 interface OwnProps {
   aktorInfo: {

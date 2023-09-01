@@ -32,7 +32,7 @@ import ForeldelsePeriodeForm, { FORELDELSE_PERIODE_FORM_NAME } from './Foreldels
 import ForeldelseTidslinjeHjelpetekster from './ForeldelseTidslinjeHjelpetekster';
 import TilbakekrevingTimelinePanel from './timeline/TilbakekrevingTimelinePanel';
 
-import styles from './foreldelseForm.css';
+import styles from './foreldelseForm.module.css';
 
 const FORELDELSE_FORM_NAME = 'ForeldelseForm';
 

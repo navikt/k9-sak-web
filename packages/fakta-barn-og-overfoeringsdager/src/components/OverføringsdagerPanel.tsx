@@ -11,7 +11,7 @@ import Overføring, {
 import FastBreddeAligner from './FastBreddeAligner';
 import OverføringsraderForm from './OverføringsraderForm';
 import Pil from './Pil';
-import styles from './overføringsdagerPanel.css';
+import styles from './overføringsdagerPanel.module.css';
 
 const classNames = classnames.bind(styles);
 

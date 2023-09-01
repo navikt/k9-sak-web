@@ -11,7 +11,7 @@ import { formatCurrencyNoKr, getRangeOfMonths } from '@fpsak-frontend/utils';
 
 import CollapseButton from './CollapseButton';
 
-import styles from './avregningTable.css';
+import styles from './avregningTable.module.css';
 
 const classNames = classnames.bind(styles);
 

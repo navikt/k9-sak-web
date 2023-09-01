@@ -1,7 +1,7 @@
 import classnames from 'classnames/bind';
 import React from 'react';
 
-import styles from './verticalSpacer.css';
+import styles from './verticalSpacer.module.css';
 
 const classNames = classnames.bind(styles);
 

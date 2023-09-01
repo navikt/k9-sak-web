@@ -3,7 +3,7 @@ import classNames from 'classnames';
 import dayjs, { Dayjs } from 'dayjs';
 import 'dayjs/locale/nb';
 import React, { ReactNode } from 'react';
-import styles from './AxisLabels.css';
+import styles from './AxisLabels.module.css';
 import { horizontalPositionAndWidth } from './calc';
 import { erSynlig } from './filter';
 

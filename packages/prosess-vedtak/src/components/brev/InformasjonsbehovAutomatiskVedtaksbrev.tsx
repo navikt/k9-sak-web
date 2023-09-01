@@ -6,7 +6,7 @@ import React from 'react';
 import { IntlShape } from 'react-intl';
 import VedtakFritekstPanel from '../VedtakFritekstPanel';
 import InformasjonsbehovKode from './InformasjonsbehovKode';
-import styles from './informasjonsbehovAutomatiskVedtaksbrev.css';
+import styles from './informasjonsbehovAutomatiskVedtaksbrev.module.css';
 
 export interface InformasjonsbehovVedtaksbrev {
   informasjonsbehov: { kode: string; beskrivelse: string; type: string }[];

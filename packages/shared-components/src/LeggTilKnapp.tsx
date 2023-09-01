@@ -4,7 +4,7 @@ import { Flatknapp } from 'nav-frontend-knapper';
 import { Normaltekst } from 'nav-frontend-typografi';
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
-import styles from './leggTilKnapp.css';
+import styles from './leggTilKnapp.module.css';
 
 interface LeggTilKnappProps {
   onClick: VoidFunction;

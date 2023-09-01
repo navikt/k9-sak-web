@@ -11,7 +11,7 @@ import { AlertStripeAdvarsel } from 'nav-frontend-alertstriper';
 import { Knapp } from 'nav-frontend-knapper';
 import { Textarea } from 'nav-frontend-skjema';
 import { Normaltekst } from 'nav-frontend-typografi';
-import styles from './ManglerSøknadForm.css';
+import styles from './ManglerSøknadForm.module.css';
 
 interface Props {
   submitCallback: (SubmitCallback) => void;

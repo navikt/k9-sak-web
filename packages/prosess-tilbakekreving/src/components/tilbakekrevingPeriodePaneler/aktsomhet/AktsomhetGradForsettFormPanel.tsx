@@ -6,7 +6,7 @@ import { FormattedMessage } from 'react-intl';
 import { RadioGroupField, RadioOption } from '@fpsak-frontend/form';
 import { ArrowBox, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { required } from '@fpsak-frontend/utils';
-import styles from './aktsomhetReduksjonAvBelopFormPanel.css';
+import styles from './aktsomhetReduksjonAvBelopFormPanel.module.css';
 
 interface OwnProps {
   readOnly: boolean;

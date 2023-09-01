@@ -7,7 +7,7 @@ import React from 'react';
 import { injectIntl, WrappedComponentProps } from 'react-intl';
 import { connect } from 'react-redux';
 import { InjectedFormProps } from 'redux-form';
-import styles from './periode.css';
+import styles from './periode.module.css';
 
 const defaultArbeidsgiver = {
   navn: '',

@@ -2,7 +2,7 @@ import classnames from 'classnames/bind';
 import Panel from 'nav-frontend-paneler';
 import React, { ReactNode } from 'react';
 
-import styles from './borderBox.css';
+import styles from './borderBox.module.css';
 
 const classNames = classnames.bind(styles);
 

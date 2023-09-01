@@ -1,7 +1,7 @@
 import React from 'react';
 import Overføring, { Overføringsretning, OverføringstypeEnum } from '../types/Overføring';
 import OverføringsdagerPanel from './OverføringsdagerPanel';
-import styles from './overføringsdagerPanelgruppe.css';
+import styles from './overføringsdagerPanelgruppe.module.css';
 
 interface OverføringsdagerPanelgruppeProps {
   overføringer: Overføring[];

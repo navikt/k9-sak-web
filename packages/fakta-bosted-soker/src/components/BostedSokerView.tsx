@@ -3,7 +3,7 @@ import Etikettfokus from 'nav-frontend-etiketter';
 import { Column, Row } from 'nav-frontend-grid';
 import { Element, Normaltekst, Undertekst } from 'nav-frontend-typografi';
 import React from 'react';
-import { FormattedMessage, injectIntl, WrappedComponentProps } from 'react-intl';
+import { FormattedMessage, WrappedComponentProps, injectIntl } from 'react-intl';
 
 import opplysningAdresseType from '@fpsak-frontend/kodeverk/src/opplysningAdresseType';
 import personstatusType from '@fpsak-frontend/kodeverk/src/personstatusType';
@@ -12,7 +12,7 @@ import { getAddresses } from '@fpsak-frontend/utils';
 
 import { BostedSokerPersonopplysninger } from '../BostedSokerFaktaIndex';
 
-import styles from './bostedSokerView.css';
+import styles from './bostedSokerView.module.css';
 
 interface OwnProps {
   personopplysninger: BostedSokerPersonopplysninger;

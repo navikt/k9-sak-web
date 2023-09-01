@@ -1,6 +1,6 @@
 import { Button, ErrorMessage } from '@navikt/ds-react';
 import React from 'react';
-import { injectIntl, IntlShape } from 'react-intl';
+import { IntlShape, injectIntl } from 'react-intl';
 import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
 
@@ -11,7 +11,7 @@ import { Aksjonspunkt } from '@k9-sak-web/types';
 
 import redusertUtbetalingArsak from '../../kodeverk/redusertUtbetalingArsak';
 
-import styles from '../vedtakForm.css';
+import styles from '../vedtakForm.module.css';
 
 interface OwnProps {
   intl: IntlShape;

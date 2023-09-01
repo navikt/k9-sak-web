@@ -3,7 +3,7 @@ import { Normaltekst } from 'nav-frontend-typografi';
 import React from 'react';
 import Label from './Label';
 import LabelType from './LabelType';
-import styles from './readOnlyField.css';
+import styles from './readOnlyField.module.css';
 
 export interface ReadOnlyFieldProps {
   label?: LabelType;

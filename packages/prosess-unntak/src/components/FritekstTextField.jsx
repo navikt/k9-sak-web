@@ -5,7 +5,7 @@ import { injectIntl } from 'react-intl';
 import { TextAreaField } from '@fpsak-frontend/form';
 import { getLanguageCodeFromSprakkode, hasValidText, required } from '@fpsak-frontend/utils';
 
-import styles from './fritekstTextField.css';
+import styles from './fritekstTextField.module.css';
 
 const FritekstTextField = ({ sprakkode, readOnly, intl }) => (
   <div className={styles.fritekstTextArea}>

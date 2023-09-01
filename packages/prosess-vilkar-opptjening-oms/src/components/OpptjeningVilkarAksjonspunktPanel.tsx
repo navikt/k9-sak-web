@@ -15,7 +15,7 @@ import { createSelector } from 'reselect';
 
 import dayjs from 'dayjs';
 import isBetween from 'dayjs/plugin/isBetween';
-import styles from './OpptjeningVilkarAksjonspunktPanel.css';
+import styles from './OpptjeningVilkarAksjonspunktPanel.module.css';
 import VilkarFields, { midlertidigInaktiv } from './VilkarFields';
 
 dayjs.extend(isBetween);

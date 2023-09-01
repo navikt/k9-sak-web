@@ -1,7 +1,7 @@
 import classnames from 'classnames/bind';
 import React, { ReactNode } from 'react';
 
-import styles from './tableColumn.css';
+import styles from './tableColumn.module.css';
 
 const classNames = classnames.bind(styles);
 

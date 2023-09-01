@@ -8,7 +8,7 @@ import { Aksjonspunkt } from '@k9-sak-web/types';
 import { Button, ErrorMessage } from '@navikt/ds-react';
 import { Column, Row } from 'nav-frontend-grid';
 
-import styles from './vedtakForm.css';
+import styles from './vedtakForm.module.css';
 
 interface Props {
   behandlingStatusKode: string;

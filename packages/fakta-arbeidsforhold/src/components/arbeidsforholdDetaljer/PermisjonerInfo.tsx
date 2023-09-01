@@ -8,7 +8,7 @@ import { getKodeverknavnFn } from '@fpsak-frontend/utils';
 import { KodeverkMedNavn } from '@k9-sak-web/types';
 import ArbeidsforholdV2 from '@k9-sak-web/types/src/arbeidsforholdV2TsType';
 
-import styles from './permisjonPeriode.css';
+import styles from './permisjonPeriode.module.css';
 
 const utledPeriodeLabelKey = (id, index) => id + index;
 

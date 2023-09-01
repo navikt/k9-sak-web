@@ -27,7 +27,7 @@ import arbeidsforholdKilder from '../kodeverk/arbeidsforholdKilder';
 import { PERSON_ARBEIDSFORHOLD_DETAIL_FORM } from './arbeidsforholdDetaljer/PersonArbeidsforholdDetailForm';
 import PersonArbeidsforholdTable from './arbeidsforholdTabell/PersonArbeidsforholdTable';
 
-import styles from './personArbeidsforholdPanel.css';
+import styles from './personArbeidsforholdPanel.module.css';
 
 // -------------------------------------------------------------------------------------------------------------
 // Methods

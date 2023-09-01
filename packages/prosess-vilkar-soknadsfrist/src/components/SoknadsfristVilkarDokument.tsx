@@ -23,7 +23,7 @@ import { Normaltekst } from 'nav-frontend-typografi';
 
 import { formatDate } from '../utils';
 
-import styles from './SoknadsfristVilkarDokument.css';
+import styles from './SoknadsfristVilkarDokument.module.css';
 
 const minLength3 = minLength(3);
 const maxLength1500 = maxLength(1500);

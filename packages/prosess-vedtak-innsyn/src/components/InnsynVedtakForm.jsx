@@ -31,7 +31,7 @@ import { ProsessStegSubmitButton } from '@k9-sak-web/prosess-felles';
 
 import DocumentListVedtakInnsyn from './DocumentListVedtakInnsyn';
 
-import styles from './innsynVedtakForm.css';
+import styles from './innsynVedtakForm.module.css';
 
 const maxLength1500 = maxLength(1500);
 const minLength3 = minLength(3);

@@ -10,7 +10,7 @@ import { connect } from 'react-redux';
 import { FieldArray, InjectedFormProps } from 'redux-form';
 import NyAndel from './NyAndel';
 
-import styles from './periode.css';
+import styles from './periode.module.css';
 
 interface OwnProps {
   newPeriodeResetCallback: (values: any) => any;

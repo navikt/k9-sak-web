@@ -12,7 +12,7 @@ import internDokumentImageUrl from '@fpsak-frontend/assets/images/intern_dokumen
 import mottaDokumentImageUrl from '@fpsak-frontend/assets/images/motta_dokument.svg';
 import sendDokumentImageUrl from '@fpsak-frontend/assets/images/send_dokument.svg';
 
-import styles from './documentListInnsyn.css';
+import styles from './documentListInnsyn.module.css';
 
 // TODO (TOR) Flytt url ut av komponent
 const DOCUMENT_SERVER_URL = '/k9/sak/api/dokument/hent-dokument';

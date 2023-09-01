@@ -13,7 +13,7 @@ import React from 'react';
 import { FormattedMessage, injectIntl } from 'react-intl';
 import { connect } from 'react-redux';
 
-import styles from './oppholdINorgeOgAdresserFaktaPanel.css';
+import styles from './oppholdINorgeOgAdresserFaktaPanel.module.css';
 
 countries.registerLocale(norwegianLocale);
 

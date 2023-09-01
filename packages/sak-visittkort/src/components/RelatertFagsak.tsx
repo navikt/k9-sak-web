@@ -7,7 +7,7 @@ import { Select as NavSelect } from 'nav-frontend-skjema';
 import { Normaltekst } from 'nav-frontend-typografi';
 import React from 'react';
 import RelatertSøkerIcon from './RelatertSøkerIcon';
-import styles from './relatertFagsak.css';
+import styles from './relatertFagsak.module.css';
 
 interface RelatertFagsakProps {
   relaterteFagsaker?: RelatertFagsakType;

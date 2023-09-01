@@ -13,7 +13,7 @@ import Overføring, {
 } from '../types/Overføring';
 import FastBreddeAligner from './FastBreddeAligner';
 import Pil from './Pil';
-import styles from './overføringsrader.css';
+import styles from './overføringsrader.module.css';
 
 const classNames = classnames.bind(styles);
 

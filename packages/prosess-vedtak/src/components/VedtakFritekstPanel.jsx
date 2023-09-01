@@ -6,7 +6,7 @@ import TextAreaFormik from '@fpsak-frontend/form/src/TextAreaFormik';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { decodeHtmlEntity, getLanguageFromSprakkode, hasValidText, maxLength, minLength } from '@fpsak-frontend/utils';
 
-import styles from './vedtakFritekstPanel.css';
+import styles from './vedtakFritekstPanel.module.css';
 
 const maxLength100000 = maxLength(100000);
 const minLength3 = minLength(3);

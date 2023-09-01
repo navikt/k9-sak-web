@@ -23,7 +23,7 @@ import { hasValidText, maxLength, minLength, required } from '@fpsak-frontend/ut
 import { ProsessStegSubmitButton } from '@k9-sak-web/prosess-felles';
 import { Aksjonspunkt, BeregningsresultatFp, BeregningsresultatUtbetalt } from '@k9-sak-web/types';
 
-import styles from './tilbaketrekkpanel.css';
+import styles from './tilbaketrekkpanel.module.css';
 
 const radioFieldName = 'radioVurderTilbaketrekk';
 const begrunnelseFieldName = 'begrunnelseVurderTilbaketrekk';

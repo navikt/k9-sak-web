@@ -8,7 +8,7 @@ import { calcDaysAndWeeks, DDMMYYYY_DATE_FORMAT, formatCurrencyNoKr } from '@fps
 
 import DataForPeriode from '../../types/dataForPeriodeTsType';
 
-import styles from './periodeInformasjon.css';
+import styles from './periodeInformasjon.module.css';
 
 interface OwnProps {
   fom: string;
