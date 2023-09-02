@@ -15,6 +15,7 @@ class PanelDef extends ProsessStegPanelDef {
     aksjonspunkter,
     alleKodeverk,
     submitCallback,
+    virkningsdatoUttakNyeRegler,
   }) => (
     <Uttak
       uuid={behandling.uuid}
@@ -24,6 +25,7 @@ class PanelDef extends ProsessStegPanelDef {
       aksjonspunkter={aksjonspunkter}
       alleKodeverk={alleKodeverk}
       submitCallback={submitCallback}
+      virkningsdatoUttakNyeRegler={virkningsdatoUttakNyeRegler}
     />
   );
 
@@ -55,6 +57,7 @@ class PanelDef extends ProsessStegPanelDef {
   getData = ({ uttak, arbeidsgiverOpplysningerPerId, alleKodeverk }) => ({
     uttaksperioder: uttak?.uttaksplan?.perioder,
     utsattePerioder: uttak?.utsattePerioder,
+    virkningsdatoUttakNyeRegler: uttak?.virkningsdatoUttakNyeRegler,
     arbeidsgiverOpplysningerPerId,
     alleKodeverk,
   });

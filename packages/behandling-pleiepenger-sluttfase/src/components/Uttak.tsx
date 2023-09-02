@@ -19,6 +19,7 @@ const initializeUttak = (
     begrunnelse: string;
     virkningsdato: string;
   }) => void,
+  virkningsdatoUttakNyeRegler?: string,
 ) => {
   (window as any).renderUttakApp(elementId, {
     uttaksperioder,
@@ -28,6 +29,7 @@ const initializeUttak = (
     aksjonspunktkoder,
     erFagytelsetypeLivetsSluttfase,
     løsAksjonspunktVurderDatoNyRegelUttak,
+    virkningsdatoUttakNyeRegler,
   });
 };
 
@@ -39,6 +41,7 @@ interface UttakProps {
   aksjonspunkter: Aksjonspunkt[];
   erFagytelsetypeLivetsSluttfase: boolean;
   submitCallback: (data: { kode: string; begrunnelse: string; virkningsdato: string }[]) => void;
+  virkningsdatoUttakNyeRegler?: string;
 }
 
 const uttakAppID = 'uttakApp';
@@ -50,6 +53,7 @@ export default ({
   aksjonspunkter,
   erFagytelsetypeLivetsSluttfase,
   submitCallback,
+  virkningsdatoUttakNyeRegler,
 }: UttakProps) => {
   const relevanteAksjonspunkter = [aksjonspunktCodes.VENT_ANNEN_PSB_SAK, aksjonspunktCodes.VURDER_DATO_NY_REGEL_UTTAK];
   const funnedeRelevanteAksjonspunkter = aksjonspunkter.filter(aksjonspunkt =>
@@ -78,6 +82,7 @@ export default ({
           funnedeRelevanteAksjonspunktkoder,
           erFagytelsetypeLivetsSluttfase,
           løsAksjonspunktVurderDatoNyRegelUttak,
+          virkningsdatoUttakNyeRegler,
         )
       }
     />
