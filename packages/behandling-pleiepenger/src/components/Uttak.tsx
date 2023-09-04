@@ -68,8 +68,8 @@ export default ({
   return (
     <MicroFrontend
       id={uttakAppID}
-      jsSrc="http://localhost:8081/main.js"
-      stylesheetSrc="http://localhost:8081/styles.css"
+      jsSrc="/k9/microfrontend/psb-uttak/1/app.js"
+      stylesheetSrc="/k9/microfrontend/psb-uttak/1/styles.css"
       noCache
       onReady={() =>
         initializeUttak(
