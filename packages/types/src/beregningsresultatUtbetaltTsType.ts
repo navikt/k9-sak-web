@@ -23,6 +23,8 @@ export type BeregningsresultatPeriode = Readonly<{
   dagsats: number;
   inntektGraderingsprosent?: number;
   andeler?: BeregningsresultatPeriodeAndel[];
+  totalUtbetalingsgradFraUttak: number;
+  totalUtbetalingsgradEtterReduksjonVedTilkommetInntekt?: number;
 }>;
 
 export type BeregningsresultatUtbetalt = Readonly<{
