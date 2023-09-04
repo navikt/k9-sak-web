@@ -496,6 +496,10 @@ const historikkEndretFeltTypeCodes = {
     kode: 'KOMPLETTHET',
     feltId: 'HistorikkEndretFelt.Kompletthet',
   },
+  VIRKNINGSDATO_UTTAK_NYE_REGLER: {
+    kode: 'VIRKNINGSDATO_UTTAK_NYE_REGLER',
+    feltId: 'HistorikkEndretFelt.VirkningsdatoNyeRegler',
+  },
 };
 
 export default historikkEndretFeltTypeCodes;
