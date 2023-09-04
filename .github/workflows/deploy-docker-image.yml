@@ -2,9 +2,9 @@ name: Deploy Docker image
 on:
   push:
     paths-ignore:
-      - "**.md"
-      - ".gitignore"
-      - "CODEOWNERS"
+      - '**.md'
+      - '.gitignore'
+      - 'CODEOWNERS'
     branches:
       - master
 
@@ -25,6 +25,9 @@ jobs:
   deploy-docker-image:
     name: Deploy Docker image
     runs-on: ubuntu-latest
+    permissions:
+      issues: write
+      packages: write
     needs: [test, lint-tscheck-build]
     steps:
       - name: Hente kode
@@ -41,8 +44,7 @@ jobs:
       - name: Sette opp Node
         uses: actions/setup-node@v3
         with:
-          node-version: "18"
-          
+          node-version: '18'
 
       - name: Set timestamp
         run: echo "TIMESTAMP=$(expr $(date +%Y%m%d%H%M%S))" >> $GITHUB_ENV
