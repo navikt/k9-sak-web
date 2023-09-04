@@ -1725,10 +1725,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@editorjs/editorjs@npm:2.27.2":
-  version: 2.27.2
-  resolution: "@editorjs/editorjs@npm:2.27.2"
-  checksum: fd484610d8ba8f04aff5ac5331c7a0ec75796af5dc0251e13cf5e64fdbe72d53f91e35b146cb3aca23db7091bd70da8b1abf9bcfc834c07dcc79e1299e010d7a
+"@editorjs/editorjs@npm:2.28.0":
+  version: 2.28.0
+  resolution: "@editorjs/editorjs@npm:2.28.0"
+  checksum: 48f19fe090de4fbd45e54b44b80f2269ca33395166ac3537e643ed26417bc894a32c6300494162d9f42bf209074f2d89d96fd1920238e09dcbdf2562f861622e
   languageName: node
   linkType: hard
 
@@ -3125,7 +3125,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fpsak-frontend/prosess-vedtak@workspace:packages/prosess-vedtak"
   dependencies:
-    "@editorjs/editorjs": 2.27.2
+    "@editorjs/editorjs": 2.28.0
     "@editorjs/header": 2.7.0
     "@editorjs/list": 1.8.0
     "@editorjs/paragraph": 2.10.0
