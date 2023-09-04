@@ -13,13 +13,17 @@ import OverstyrBeregningFaktaPanelDef from './faktaPaneler/OverstyrBeregningFakt
 import DirekteOvergangFaktaPanelDef from './faktaPaneler/DirekteOvergangFaktaPanelDef';
 import UtenlandsoppholdFaktaPanelDef from './faktaPaneler/UtenlandsoppholdFaktaPanelDef';
 import SoknadsperioderFaktaPanelDef from './faktaPaneler/SoknadsperioderFaktaPanelDef';
+import InstitusjonFaktaPanelDef from './faktaPaneler/InstitusjonFaktaPanelDef';
+import OpplaeringFaktaPanelDef from './faktaPaneler/OpplaeringFaktaPanelDef';
 
 const faktaPanelDefinisjoner = [
   new OmBarnetFaktaPanelDef(),
   new ArbeidsforholdFaktaPanelDef(),
+  new InstitusjonFaktaPanelDef(),
   new DirekteOvergangFaktaPanelDef(),
   new OmsorgenForFaktaPanelDef(),
   new MedisinskVilkarFaktaPanelDef2(),
+  new OpplaeringFaktaPanelDef(),
   new EtablertTilsynFaktaPanelDef(),
   new MedlemskapsvilkaretFaktaPanelDef(),
   new OpptjeningsvilkaretFaktaPanelDef(),

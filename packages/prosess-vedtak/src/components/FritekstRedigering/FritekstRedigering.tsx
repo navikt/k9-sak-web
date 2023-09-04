@@ -5,14 +5,17 @@ import { Modal, Button } from '@navikt/ds-react';
 import { Edit } from '@navikt/ds-icons';
 
 import {
+  Brevmottaker,
   TilgjengeligeVedtaksbrev,
   TilgjengeligeVedtaksbrevMedMaler,
   VedtaksbrevMal,
 } from '@fpsak-frontend/utils/src/formidlingUtils';
 import dokumentMalType from '@fpsak-frontend/kodeverk/src/dokumentMalType';
 import { DokumentDataType } from '@k9-sak-web/types/src/dokumentdata';
+import { safeJSONParse } from '@fpsak-frontend/utils';
 import {
   lagLagreHtmlDokumentdataRequest,
+  seksjonSomKanRedigeres,
   utledPrefiksInnhold,
   utledRedigerbartInnhold,
   utledSkalInkludereKalender,
@@ -38,6 +41,7 @@ interface ownProps {
   inkluderKalender: boolean;
   kanInkludereKalender: boolean;
   dokumentdataInformasjonsbehov: any;
+  overstyrtMottaker?: Brevmottaker;
 }
 
 const FritekstRedigering = ({
@@ -53,6 +57,7 @@ const FritekstRedigering = ({
   inkluderKalender,
   kanInkludereKalender,
   dokumentdataInformasjonsbehov,
+  overstyrtMottaker,
 }: ownProps & WrappedComponentProps) => {
   useEffect(() => {
     Modal.setAppElement(document.body);
@@ -61,6 +66,7 @@ const FritekstRedigering = ({
     vb => vb.dokumentMalType === dokumentMalType.MANUELL,
   );
   const firstRender = useRef<boolean>(true);
+  const [henterMal, setHenterMal] = useState<boolean>(false);
   const [visRedigering, setVisRedigering] = useState<boolean>(false);
   const [redigerbartInnholdKlart, setRedigerbartInnholdKlart] = useState<boolean>(false);
   const [brevStiler, setBrevStiler] = useState<string>('');
@@ -70,7 +76,8 @@ const FritekstRedigering = ({
   const [originalHtml, setOriginalHtml] = useState<string>('');
 
   const hentFritekstbrevMal = async () => {
-    const request: { dokumentMal: string; dokumentdata?: any[] } = {
+    setHenterMal(true);
+    const request: { dokumentMal: string; dokumentdata?: any[]; overstyrtMottaker?: Brevmottaker } = {
       dokumentMal: redigerbarDokumentmal.redigerbarMalType,
     };
 
@@ -78,19 +85,26 @@ const FritekstRedigering = ({
       request.dokumentdata = dokumentdataInformasjonsbehov;
     }
 
+    if (overstyrtMottaker) {
+      request.overstyrtMottaker = safeJSONParse(overstyrtMottaker);
+    }
+
     const responseHtml = await hentFritekstbrevHtmlCallback(request);
     setFieldValue(fieldnames.REDIGERT_MAL, redigerbarDokumentmal.redigerbarMalType);
 
     setBrevStiler(utledStiler(responseHtml));
-    setPrefiksInnhold(utledPrefiksInnhold(responseHtml));
-    setSuffiksInnhold(utledSuffiksInnhold(responseHtml));
+    const seksjonerSomKanRedigeres = seksjonSomKanRedigeres(responseHtml);
+    setPrefiksInnhold(utledPrefiksInnhold(seksjonerSomKanRedigeres));
+    setSuffiksInnhold(utledSuffiksInnhold(seksjonerSomKanRedigeres));
 
     const originalHtmlStreng = utledRedigerbartInnhold(responseHtml);
     setOriginalHtml(originalHtmlStreng);
     setFieldValue(fieldnames.ORIGINAL_HTML, originalHtmlStreng);
 
-    const skalInkludereKalender = utledSkalInkludereKalender(responseHtml);
-    setFieldValue(fieldnames.INKLUDER_KALENDER_VED_OVERSTYRING, skalInkludereKalender);
+    if (!dokumentdata?.REDIGERTBREV) {
+      const skalInkludereKalender = utledSkalInkludereKalender(responseHtml);
+      setFieldValue(fieldnames.INKLUDER_KALENDER_VED_OVERSTYRING, skalInkludereKalender);
+    }
 
     if (innholdTilRedigering) setRedigerbartInnhold(innholdTilRedigering);
     else {
@@ -98,7 +112,8 @@ const FritekstRedigering = ({
       setRedigerbartInnhold(originalHtmlStreng);
     }
 
-    setRedigerbartInnholdKlart(true);
+    await setRedigerbartInnholdKlart(true);
+    setHenterMal(false);
   };
 
   const lukkEditor = () => setVisRedigering(false);
@@ -112,13 +127,21 @@ const FritekstRedigering = ({
         redigertHtml: html,
         originalHtml,
         inkluderKalender,
+        overstyrtMottaker,
       }),
     );
   };
 
   useEffect(() => {
-    if (!firstRender.current) handleLagre(innholdTilRedigering);
-    else {
+    if (!firstRender.current && overstyrtMottaker && !henterMal) {
+      hentFritekstbrevMal();
+    }
+  }, [firstRender, overstyrtMottaker]);
+
+  useEffect(() => {
+    if (!firstRender.current && redigerbartInnholdKlart) {
+      handleLagre(innholdTilRedigering);
+    } else {
       hentFritekstbrevMal();
       firstRender.current = false;
     }

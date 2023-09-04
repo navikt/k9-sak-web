@@ -5,7 +5,8 @@ import { FormattedMessage, injectIntl, WrappedComponentProps } from 'react-intl'
 import { Column, Row } from 'nav-frontend-grid';
 import { Modal, Button, Alert } from '@navikt/ds-react';
 import { Cancel } from '@navikt/ds-icons';
-import { VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { VerticalSpacer, ÅpneSakINyttVinduKnapp } from '@fpsak-frontend/shared-components';
+
 import EditorJSWrapper from './EditorJSWrapper';
 import PreviewLink from '../PreviewLink';
 import InkluderKalenderCheckbox from '../InkluderKalenderCheckbox';
@@ -142,8 +143,9 @@ const FritekstEditor = ({
         <h3>
           <FormattedMessage id="RedigeringAvFritekstBrev.Rediger" />
         </h3>
-        <Alert variant="info">
+        <Alert variant="info" size="small">
           <FormattedMessage id="RedigeringAvFritekstBrev.Infotekst" />
+          <ÅpneSakINyttVinduKnapp />
         </Alert>
         <FritekstFeilmeldinger />
       </header>
@@ -191,7 +193,7 @@ const FritekstEditor = ({
                   <VerticalSpacer sixteenPx />
                 </>
               )}
-              <PreviewLink previewCallback={onForhåndsvis} size="medium" intl={intl}>
+              <PreviewLink previewCallback={onForhåndsvis} size="small" intl={intl}>
                 <FormattedMessage id="VedtakForm.ForhandvisBrev" />
               </PreviewLink>
             </div>
@@ -206,6 +208,7 @@ const FritekstEditor = ({
               variant="primary"
               onClick={handleLagreOgLukk}
               disabled={!redigerbartInnholdKlart || readOnly}
+              size="small"
             >
               <FormattedMessage id="RedigeringAvFritekstBrev.Lagre" />
             </Button>
@@ -217,7 +220,7 @@ const FritekstEditor = ({
               type="button"
               onClick={() => setVisAdvarsel(true)}
               disabled={readOnly}
-              size="medium"
+              size="small"
             >
               <FormattedMessage id="RedigeringAvFritekstBrev.Tilbakestill" />
             </Button>

@@ -17,6 +17,8 @@ class PanelDef extends ProsessStegPanelDef {
     arbeidsgiverOpplysningerPerId,
     aksjonspunkter,
     erFagytelsetypeLivetsSluttfase,
+    submitCallback,
+    virkningsdatoUttakNyeRegler,
   }) => (
     <>
       <AntallDagerLivetsSluttfaseIndex kvoteInfo={kvoteInfo} />
@@ -27,11 +29,13 @@ class PanelDef extends ProsessStegPanelDef {
         arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
         aksjonspunkter={aksjonspunkter}
         erFagytelsetypeLivetsSluttfase={erFagytelsetypeLivetsSluttfase}
+        submitCallback={submitCallback}
+        virkningsdatoUttakNyeRegler={virkningsdatoUttakNyeRegler}
       />
     </>
   );
 
-  getAksjonspunktKoder = () => [aksjonspunktCodes.VENT_ANNEN_PSB_SAK];
+  getAksjonspunktKoder = () => [aksjonspunktCodes.VENT_ANNEN_PSB_SAK, aksjonspunktCodes.VURDER_DATO_NY_REGEL_UTTAK];
 
   getOverstyrVisningAvKomponent = () => true;
 
@@ -60,6 +64,7 @@ class PanelDef extends ProsessStegPanelDef {
     uttaksperioder: uttak?.uttaksplan?.perioder,
     utsattePerioder: uttak?.utsattePerioder,
     kvoteInfo: uttak?.uttaksplan?.kvoteInfo,
+    virkningsdatoUttakNyeRegler: uttak?.virkningsdatoUttakNyeRegler,
     arbeidsgiverOpplysningerPerId,
     erFagytelsetypeLivetsSluttfase: fagsak.sakstype.kode === fagsakYtelseType.PLEIEPENGER_SLUTTFASE,
   });

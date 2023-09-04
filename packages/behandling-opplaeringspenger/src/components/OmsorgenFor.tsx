@@ -1,12 +1,13 @@
-import { MicroFrontend } from '@fpsak-frontend/utils';
 import React from 'react';
 import { useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { BehandlingAppKontekst, Aksjonspunkt } from '@k9-sak-web/types';
-import findEndpointsForMicrofrontend from '../microfrontend/utils/findEndpointsForMicrofrontend';
-import SimpleEndpoints from '../microfrontend/types/SimpleEndpoints';
-import httpErrorHandler from '../microfrontend/utils/httpErrorHandler';
-import findAksjonspunkt from '../microfrontend/utils/findAksjonspunkt';
+import { BehandlingAppKontekst, Aksjonspunkt, SimpleEndpoints } from '@k9-sak-web/types';
+import {
+  MicroFrontend,
+  httpErrorHandler,
+  findEndpointsForMicrofrontend,
+  findAksjonspunkt,
+} from '@fpsak-frontend/utils';
 
 const initializeOmsorgenFor = (
   elementId,
@@ -14,12 +15,14 @@ const initializeOmsorgenFor = (
   endpoints: SimpleEndpoints,
   readOnly: boolean,
   løsAksjonspunkt: (omsorgsperioder) => void,
+  saksbehandlere: { [key: string]: string },
 ) => {
   (window as any).renderOmsorgenForApp(elementId, {
     httpErrorHandler: httpErrorHandlerFn,
     endpoints,
     readOnly,
     onFinished: løsAksjonspunkt,
+    saksbehandlere,
   });
 };
 
@@ -32,15 +35,22 @@ interface OmsorgenForProps {
     begrunnelse: string;
     omsorgsperioder: any;
   }[]) => void;
+  saksbehandlere: { [key: string]: string };
 }
 
 const omsorgenForAppID = 'omsorgenForApp';
-const OmsorgenFor = ({ behandling: { links }, readOnly, aksjonspunkter, submitCallback }: OmsorgenForProps) => {
+const OmsorgenFor = ({
+  behandling: { links },
+  readOnly,
+  aksjonspunkter,
+  submitCallback,
+  saksbehandlere,
+}: OmsorgenForProps) => {
   const { addErrorMessage } = useRestApiErrorDispatcher();
   const httpErrorHandlerCaller = (status: number, locationHeader?: string) =>
     httpErrorHandler(status, addErrorMessage, locationHeader);
 
-  const omsorgenForAksjonspunkt = findAksjonspunkt(aksjonspunkter, aksjonspunktCodes.OMSORGEN_FOR_PLEIEPENGER);
+  const omsorgenForAksjonspunkt = findAksjonspunkt(aksjonspunkter, aksjonspunktCodes.AVKLAR_OMSORGEN_FOR);
   const omsorgenForAksjonspunktkode = omsorgenForAksjonspunkt?.definisjon.kode;
   const harAksjonspunkt = !!omsorgenForAksjonspunktkode;
 
@@ -65,6 +75,7 @@ const OmsorgenFor = ({ behandling: { links }, readOnly, aksjonspunkter, submitCa
           ]),
           readOnly || !harAksjonspunkt,
           løsAksjonspunkt,
+          saksbehandlere || {},
         )
       }
     />

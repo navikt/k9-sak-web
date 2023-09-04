@@ -93,9 +93,10 @@ export const visOverstyringspanelForOpptjening = () => {
       panelTittelKode="Inngangsvilkar.Opptjeningsvilkaret"
       lovReferanse="§§ Dette er en lovreferanse"
       overstyringApKode={aksjonspunktCode.OVERSTYRING_AV_OPPTJENINGSVILKARET}
-      erMedlemskapsPanel={false}
+      visPeriodisering={false}
       vilkar={vilkarOpptjening}
       visAllePerioder
+      erMedlemskapsPanel={false}
     />
   );
 };
@@ -129,9 +130,10 @@ export const visOverstyringspanelForMedlemskap = () => {
       panelTittelKode="Inngangsvilkar.Medlemskapsvilkaret"
       lovReferanse="§§ Dette er en lovreferanse"
       overstyringApKode={aksjonspunktCode.OVERSTYR_MEDLEMSKAPSVILKAR}
-      erMedlemskapsPanel
+      visPeriodisering
       vilkar={vilkarMedlemskap}
       visAllePerioder
+      erMedlemskapsPanel={false}
     />
   );
 };
@@ -183,8 +185,9 @@ export const visOverstyrtAksjonspunktSomErBekreftet = () => (
     panelTittelKode="Inngangsvilkar.Opptjeningsvilkaret"
     lovReferanse="§§ Dette er en lovreferanse"
     overstyringApKode={aksjonspunktCode.OVERSTYRING_AV_OPPTJENINGSVILKARET}
-    erMedlemskapsPanel={false}
+    visPeriodisering={false}
     vilkar={vilkarOpptjening}
     visAllePerioder
+    erMedlemskapsPanel={false}
   />
 );

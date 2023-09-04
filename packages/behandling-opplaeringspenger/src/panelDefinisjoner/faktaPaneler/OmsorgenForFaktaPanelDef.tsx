@@ -12,11 +12,15 @@ class OmsorgenForFaktaPanelDef extends FaktaPanelDef {
 
   getTekstKode = () => 'OmsorgenForInfoPanel.Title';
 
-  getAksjonspunktKoder = () => [aksjonspunktCodes.OMSORGEN_FOR_PLEIEPENGER];
+  getAksjonspunktKoder = () => [aksjonspunktCodes.AVKLAR_OMSORGEN_FOR];
 
   getEndepunkter = () => [];
 
   getKomponent = props => <OmsorgenFor {...props} />;
+
+  getData = ({ hentSaksbehandlere }) => ({
+    saksbehandlere: hentSaksbehandlere?.saksbehandlere,
+  });
 
   getOverstyrVisningAvKomponent = ({ fagsak, behandling }: { fagsak: Fagsak; behandling: Behandling }) => {
     const erPleiepengesak = fagsak.sakstype.kode === fagsakYtelseType.PLEIEPENGER;

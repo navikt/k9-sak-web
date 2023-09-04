@@ -2,13 +2,14 @@ import CheckboxFieldFormik from '@fpsak-frontend/form/src/CheckboxFieldFormik';
 import TextAreaFormik from '@fpsak-frontend/form/src/TextAreaFormik';
 import { goToSearch, goToLos } from '@k9-sak-web/sak-app/src/app/paths';
 import { MerknadFraLos } from '@k9-sak-web/types';
-import { Button, ErrorMessage, Modal } from '@navikt/ds-react';
+import { Alert, Button, ErrorMessage, Modal } from '@navikt/ds-react';
 import { Form, Formik, FormikProps } from 'formik';
 import { CheckboxGruppe } from 'nav-frontend-skjema';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
 import React, { useRef, useState } from 'react';
 import { useIntl } from 'react-intl';
 import * as Yup from 'yup';
+import { useFeatureToggles } from '@fpsak-frontend/shared-components';
 import Merknadkode from '../Merknadkode';
 import styles from './markerBehandlingModal.less';
 
@@ -38,6 +39,7 @@ const MarkerBehandlingModal: React.FC<PureOwnProps> = ({
   erVeileder,
 }) => {
   const intl = useIntl();
+  const [featureToggles] = useFeatureToggles();
   const [showIngenEndringerError, setShowIngenEndringerError] = useState(false);
   if (!brukHastekøMarkering && !brukVanskeligKøMarkering) {
     return null;
@@ -149,18 +151,24 @@ const MarkerBehandlingModal: React.FC<PureOwnProps> = ({
               </CheckboxGruppe>
             )}
             {brukHastekøMarkering && (
-              <CheckboxGruppe
-                feil={
-                  formikProps.errors.markerSomHastesak
-                    ? intl.formatMessage({ id: formikProps.errors.markerSomHastesak })
-                    : false
-                }
-              >
-                <CheckboxFieldFormik
-                  name="markerSomHastesak"
-                  label={{ id: 'MenyMarkerBehandling.MarkerSomHastesak' }}
-                />
-              </CheckboxGruppe>
+              <>
+                <Alert variant="warning">
+                  Hastesaker skal følges opp fra Gosys inntil videre, og kan derfor ikke endres her.
+                </Alert>
+                <CheckboxGruppe
+                  feil={
+                    formikProps.errors.markerSomHastesak
+                      ? intl.formatMessage({ id: formikProps.errors.markerSomHastesak })
+                      : false
+                  }
+                >
+                  <CheckboxFieldFormik
+                    name="markerSomHastesak"
+                    label={{ id: 'MenyMarkerBehandling.MarkerSomHastesak' }}
+                    disabled={!featureToggles?.LOS_MARKER_BEHANDLING_SUBMIT}
+                  />
+                </CheckboxGruppe>
+              </>
             )}
             {formikProps.values.markerSomVanskelig && (
               <>
@@ -176,6 +184,7 @@ const MarkerBehandlingModal: React.FC<PureOwnProps> = ({
                   label={intl.formatMessage({ id: 'MenyMarkerBehandling.Kommentar' })}
                   validate={[]}
                   maxLength={100000}
+                  readOnly={!featureToggles?.LOS_MARKER_BEHANDLING_SUBMIT}
                 />
               </div>
             )}
@@ -185,7 +194,12 @@ const MarkerBehandlingModal: React.FC<PureOwnProps> = ({
               </ErrorMessage>
             )}
             <div className={styles.buttonContainer}>
-              <Button variant="primary" size="small" className={styles.submitButton}>
+              <Button
+                variant="primary"
+                size="small"
+                disabled={!featureToggles?.LOS_MARKER_BEHANDLING_SUBMIT || formikProps.isSubmitting}
+                className={styles.submitButton}
+              >
                 {erVeileder ? 'Lagre, gå til forsiden' : 'Lagre, gå til LOS'}
               </Button>
               <Button variant="secondary" size="small" onClick={lukkModal}>

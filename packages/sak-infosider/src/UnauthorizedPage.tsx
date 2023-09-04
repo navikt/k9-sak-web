@@ -13,7 +13,7 @@ import ErrorPageWrapper from './components/ErrorPageWrapper';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const UnauthorizedPage = () => (
   <ErrorPageWrapper titleCode="UnauthorizedPage.Header">
-    <Link to="/">
+    <Link to="/" reloadDocument>
       <FormattedMessage id="UnauthorizedPage.LinkText" />
     </Link>
     <br />

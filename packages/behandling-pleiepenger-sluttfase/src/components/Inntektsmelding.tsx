@@ -1,7 +1,11 @@
 import React from 'react';
 import { useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
-import { ArbeidsgiverOpplysningerPerId, Dokument } from '@k9-sak-web/types';
-import { MicroFrontend, httpErrorHandler as httpErrorHandlerFn, findEndpointsForMicrofrontend, SimpleEndpoints } from '@fpsak-frontend/utils';
+import { ArbeidsgiverOpplysningerPerId, Dokument, SimpleEndpoints } from '@k9-sak-web/types';
+import {
+  MicroFrontend,
+  httpErrorHandler as httpErrorHandlerFn,
+  findEndpointsForMicrofrontend,
+} from '@fpsak-frontend/utils';
 
 const initializeInntektsmeldingApp = (
   elementId,

@@ -2,18 +2,11 @@ import React from 'react';
 
 import { faktaPanelCodes } from '@k9-sak-web/konstanter';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { DynamicLoader, FaktaPanelDef } from '@k9-sak-web/behandling-felles';
-import { konverterKodeverkTilKode } from '@fpsak-frontend/utils';
+import { FaktaPanelDef } from '@k9-sak-web/behandling-felles';
+import { konverterKodeverkTilKode, transformBeregningValues } from '@fpsak-frontend/utils';
 import '@navikt/ft-fakta-fordel-beregningsgrunnlag/dist/style.css';
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
-
-const FaktaFordelBeregningsgrunnlag = React.lazy(() => import('@navikt/ft-fakta-fordel-beregningsgrunnlag'));
-
-const FaktaFordelBeregningsgrunnlagMF =
-  process.env.NODE_ENV !== 'development'
-    ? undefined
-    : // eslint-disable-next-line import/no-unresolved
-      () => import('ft_fakta_fordel_beregningsgrunnlag/FaktaFordelBeregningsgrunnlag');
+import { FordelBeregningsgrunnlagFaktaIndex } from '@navikt/ft-fakta-fordel-beregningsgrunnlag';
 
 class FordelBeregningPanelDef extends FaktaPanelDef {
   getUrlKode = () => faktaPanelCodes.FORDELING;
@@ -23,6 +16,7 @@ class FordelBeregningPanelDef extends FaktaPanelDef {
   getAksjonspunktKoder = () => [
     aksjonspunktCodes.FORDEL_BEREGNINGSGRUNNLAG,
     aksjonspunktCodes.VURDER_REFUSJON_BERGRUNN,
+    aksjonspunktCodes.VURDER_NYTT_INNTKTSFORHOLD,
   ];
 
   getKomponent = props => {
@@ -30,15 +24,13 @@ class FordelBeregningPanelDef extends FaktaPanelDef {
     konverterKodeverkTilKode(deepCopyProps);
     const bgVilkaret = deepCopyProps.vilkar.find(v => v.vilkarType === vilkarType.BEREGNINGSGRUNNLAGVILKARET);
     return (
-      <DynamicLoader<React.ComponentProps<typeof FaktaFordelBeregningsgrunnlag>>
-        packageCompFn={() => import('@navikt/ft-fakta-fordel-beregningsgrunnlag')}
-        federatedCompFn={FaktaFordelBeregningsgrunnlagMF}
+      <FordelBeregningsgrunnlagFaktaIndex
         {...props}
-        behandlingType={deepCopyProps.behandling.type}
         beregningsgrunnlagVilkår={bgVilkaret}
         beregningsgrunnlagListe={deepCopyProps.beregningsgrunnlag}
         arbeidsgiverOpplysningerPerId={deepCopyProps.arbeidsgiverOpplysningerPerId}
-        submitCallback={apData => props.submitCallback([apData])} // Returnerer alltid kun eitt aksjonspunkt om gangen
+        kodeverkSamling={deepCopyProps.alleKodeverk}
+        submitCallback={data => props.submitCallback(transformBeregningValues([data]))} // Returnerer alltid kun eitt aksjonspunkt om gangen
         formData={props.formData}
         setFormData={props.setFormData}
       />

@@ -1,12 +1,14 @@
 import React from 'react';
 import { useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
-import { MicroFrontend } from '@fpsak-frontend/utils';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
-import findEndpointsForMicrofrontend from '../microfrontend/utils/findEndpointsForMicrofrontend';
-import SimpleEndpoints from '../microfrontend/types/SimpleEndpoints';
-import findAksjonspunkt from '../microfrontend/utils/findAksjonspunkt';
-import httpErrorHandler from '../microfrontend/utils/httpErrorHandler';
+import {
+  MicroFrontend,
+  httpErrorHandler,
+  findEndpointsForMicrofrontend,
+  findAksjonspunkt,
+} from '@fpsak-frontend/utils';
+import { SimpleEndpoints } from '@k9-sak-web/types';
 
 const initializeMedisinskVilkår = (
   elementId,
@@ -72,6 +74,7 @@ export default ({
           findEndpointsForMicrofrontend(links, [
             { rel: 'sykdom-vurdering-oversikt-ktp', desiredName: 'vurderingsoversiktKontinuerligTilsynOgPleie' },
             { rel: 'sykdom-vurdering-oversikt-too', desiredName: 'vurderingsoversiktBehovForToOmsorgspersoner' },
+            { rel: 'sykdom-vurdering-oversikt-lvs', desiredName: 'vurderingsoversiktLangvarigSykdom' },
             { rel: 'sykdom-vurdering-direkte', desiredName: 'hentVurdering' },
             { rel: 'sykdom-vurdering-opprettelse', desiredName: 'opprettVurdering' },
             { rel: 'sykdom-vurdering-endring', desiredName: 'endreVurdering' },

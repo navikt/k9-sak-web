@@ -70,10 +70,10 @@ export const getLocationWithDefaultProsessStegAndFakta = (location: Location): L
 
 export const getPathToFplos = (): string | null => {
   const { host } = window.location;
-  if (host === 'app-q1.adeo.no') {
+  if (host === 'app-q1.adeo.no' || host === 'k9.dev.intern.nav.no') {
     return 'https://k9-los-web.dev.adeo.no/';
   }
-  if (host === 'app.adeo.no') {
+  if (host === 'app.adeo.no' || host === 'k9.intern.nav.no') {
     return 'https://k9-los-web.nais.adeo.no/';
   }
   return null;
@@ -81,10 +81,10 @@ export const getPathToFplos = (): string | null => {
 
 export const getPathToK9Punsj = (): string | null => {
   const { host } = window.location;
-  if (host === 'app-q1.adeo.no') {
+  if (host === 'app-q1.adeo.no' || host === 'k9.dev.intern.nav.no') {
     return 'https://k9-punsj-frontend.dev.adeo.no/';
   }
-  if (host === 'app.adeo.no') {
+  if (host === 'app.adeo.no' || host === 'k9.intern.nav.no') {
     return 'https://k9-punsj-frontend.nais.adeo.no/';
   }
   return null;

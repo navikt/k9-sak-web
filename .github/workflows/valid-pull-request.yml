@@ -1,34 +1,12 @@
 name: Valider pull request
 on: [pull_request]
 jobs:
-  valid-pull-request:
-    name: Valider pull request
-    runs-on: ubuntu-latest
-    steps:
-      - name: Hente kode
-        uses: actions/checkout@v3
+  test:
+    uses: ./.github/workflows/test.yml
+    secrets: inherit
 
-      - name: Sette opp Node
-        uses: actions/setup-node@v3
-        with:
-          node-version: '18'
-          registry-url: 'https://npm.pkg.github.com/'
-          scope: '@navikt'
-          cache: 'yarn'
-
-      - name: Installere dependencies
-        run: yarn install --ignore-scripts --prefer-offline --ignore-optional --no-progress --frozen-lockfile
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.READER_TOKEN }}
-
-      - name: Kjører tester
-        run: yarn test:all --maxWorkers=2 --silent
-
-      - name: Typescript-sjekk
-        run: yarn ts-check
-
-      - name: Linting
-        run: yarn less:lint
-
-      - name: Sjekker at koden bygger
-        run: yarn build-ci
+  lint-tscheck-build:
+    uses: ./.github/workflows/lint-tscheck-build.yml
+    secrets: inherit
+    with:
+      run-build: true

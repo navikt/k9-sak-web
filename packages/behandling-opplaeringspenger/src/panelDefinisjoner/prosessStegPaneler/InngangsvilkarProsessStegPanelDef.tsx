@@ -3,13 +3,14 @@ import { ProsessStegDef } from '@k9-sak-web/behandling-felles';
 
 import SoknadsfristPanelDef from './inngangsvilkarPaneler/SoknadsfristPanelDef';
 import AlderPanelDef from './inngangsvilkarPaneler/AlderPanelDef';
+import InstitusjonPanelDef from './inngangsvilkarPaneler/InstitusjonPanelDef';
 
 class InngangsvilkarProsessStegPanelDef extends ProsessStegDef {
   getUrlKode = () => prosessStegCodes.INNGANGSVILKAR;
 
   getTekstKode = () => 'Behandlingspunkt.Inngangsvilkar';
 
-  getPanelDefinisjoner = () => [new SoknadsfristPanelDef(), new AlderPanelDef()];
+  getPanelDefinisjoner = () => [new SoknadsfristPanelDef(), new AlderPanelDef(), new InstitusjonPanelDef()];
 }
 
 export default InngangsvilkarProsessStegPanelDef;

@@ -15,7 +15,7 @@ import { Behandling, Fagsak } from '@k9-sak-web/types';
 
 import sivilstandType from '@fpsak-frontend/kodeverk/src/sivilstandType';
 import opplysningAdresseType from '@fpsak-frontend/kodeverk/src/opplysningAdresseType';
-import ForeldrepengerFakta from './OpplaeringspengerFakta';
+import OpplaeringspengerFakta from './OpplaeringspengerFakta';
 import FetchedData from '../types/fetchedDataTsType';
 import {
   OpplaeringspengerBehandlingApiKeys,
@@ -150,7 +150,7 @@ describe('<OpplaeringspengerFakta>', () => {
     };
 
     const wrapper = shallow(
-      <ForeldrepengerFakta
+      <OpplaeringspengerFakta
         data={fetchedData as FetchedData}
         behandling={behandling as Behandling}
         fagsak={fagsak}
@@ -184,12 +184,22 @@ describe('<OpplaeringspengerFakta>', () => {
       {
         erAktiv: false,
         harAksjonspunkt: false,
+        tekstKode: 'Institusjon.Title',
+      },
+      {
+        erAktiv: false,
+        harAksjonspunkt: false,
         tekstKode: 'OmsorgenForInfoPanel.Title',
       },
       {
         erAktiv: false,
         harAksjonspunkt: false,
         tekstKode: 'MedisinskVilkarPanel.MedisinskVilkar',
+      },
+      {
+        erAktiv: false,
+        harAksjonspunkt: false,
+        tekstKode: 'Opplaering.Title',
       },
       {
         erAktiv: false,
@@ -223,7 +233,7 @@ describe('<OpplaeringspengerFakta>', () => {
     };
 
     const wrapper = shallow(
-      <ForeldrepengerFakta
+      <OpplaeringspengerFakta
         data={fetchedData as FetchedData}
         behandling={behandling as Behandling}
         fagsak={fagsak}
@@ -260,7 +270,7 @@ describe('<OpplaeringspengerFakta>', () => {
       vilkar,
     };
     const wrapper = shallow(
-      <ForeldrepengerFakta
+      <OpplaeringspengerFakta
         data={fetchedData as FetchedData}
         behandling={behandling as Behandling}
         fagsak={fagsak}

@@ -4,11 +4,13 @@ on:
     types: [promote-command]
 env:
   IMAGE_BASE: ghcr.io/${{ github.repository }}
-  CLUSTER: ${{ github.event.client_payload.slash_command.args.unnamed.arg1 }}
 
 jobs:
   promote:
     runs-on: ubuntu-latest
+    permissions:
+      issues: write
+      packages: write
     steps:
       - name: Henter informasjon fra issuet
         id: issue_comment
@@ -26,9 +28,14 @@ jobs:
             });
 
       - name: Setter IMAGE som brukes i deploy-filen & SHA for kode checkout
+        env:
+          CLUSTER_INPUT: ${{ github.event.client_payload.slash_command.args.unnamed.arg1 }}
+          IMAGE_INPUT: ${{ steps.issue_comment.outputs.title }}
+          SHA_INPUT: ${{ steps.issue_comment.outputs.sha }}
         run: |
-          echo "IMAGE=$IMAGE_BASE:$(echo ${{ steps.issue_comment.outputs.title }} | awk '{print $NF}')" >> $GITHUB_ENV
-          echo "SHA=$(echo ${{ steps.issue_comment.outputs.sha }} | awk '{print $NF}')" >> $GITHUB_ENV
+          echo "IMAGE=$IMAGE_BASE:$(echo $IMAGE_INPUT | awk '{print $NF}')" >> $GITHUB_ENV
+          echo "SHA=$(echo $SHA_INPUT | awk '{print $NF}')" >> $GITHUB_ENV
+          echo "CLUSTER=$CLUSTER_INPUT" >> $GITHUB_ENV
 
       - name: Sjekk ut kode
         uses: actions/checkout@v3

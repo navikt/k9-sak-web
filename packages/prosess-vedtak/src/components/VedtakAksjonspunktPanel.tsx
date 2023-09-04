@@ -23,6 +23,7 @@ interface Props {
   viseFlereSjekkbokserForBrev: boolean;
   harVurdertOverlappendeYtelse: boolean;
   setHarVurdertOverlappendeYtelse: (harVurdertOverlappendeYtelse: boolean) => void;
+  submitCallback: (values: any[]) => void;
 }
 
 export const VedtakAksjonspunktPanelImpl: React.FC<Props> = ({
@@ -45,23 +46,25 @@ export const VedtakAksjonspunktPanelImpl: React.FC<Props> = ({
           {intl.formatMessage({ id: getTextCode(behandlingStatusKode) })}
         </Heading>
         <VerticalSpacer twentyPx />
-        {!harOverlappendeYtelser && (
-          <VedtakHelpTextPanel
-            aksjonspunktKoder={aksjonspunktKoder}
-            readOnly={readOnly}
-            viseFlereSjekkbokserForBrev={viseFlereSjekkbokserForBrev}
-          />
-        )}
-        {harOverlappendeYtelser && (
-          <VedtakOverlappendeYtelsePanel
-            alleKodeverk={alleKodeverk}
-            overlappendeYtelser={overlappendeYtelser}
-            harVurdertOverlappendeYtelse={harVurdertOverlappendeYtelse}
-            setHarVurdertOverlappendeYtelse={setHarVurdertOverlappendeYtelse}
-          />
-        )}
-        <VerticalSpacer twentyPx />
-        {children}
+        <>
+          {!harOverlappendeYtelser && (
+            <VedtakHelpTextPanel
+              aksjonspunktKoder={aksjonspunktKoder}
+              readOnly={readOnly}
+              viseFlereSjekkbokserForBrev={viseFlereSjekkbokserForBrev}
+            />
+          )}
+          {harOverlappendeYtelser && (
+            <VedtakOverlappendeYtelsePanel
+              alleKodeverk={alleKodeverk}
+              overlappendeYtelser={overlappendeYtelser}
+              harVurdertOverlappendeYtelse={harVurdertOverlappendeYtelse}
+              setHarVurdertOverlappendeYtelse={setHarVurdertOverlappendeYtelse}
+            />
+          )}
+          <VerticalSpacer twentyPx />
+          {children}
+        </>
       </Column>
     </Row>
   );

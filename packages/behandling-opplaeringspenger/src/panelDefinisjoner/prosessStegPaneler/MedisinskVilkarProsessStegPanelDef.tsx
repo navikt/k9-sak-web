@@ -17,25 +17,14 @@ class PanelDef extends ProsessStegPanelDef {
 
   getKomponent = (props: Props) => {
     const { vilkar } = props;
-    const vilkårPleietrengendeUnder18år = vilkar.find(
-      v => v.vilkarType.kode === vilkarType.MEDISINSKEVILKÅR_UNDER_18_ÅR,
-    );
-    const vilkårPleietrengendeOver18år = vilkar.find(v => v.vilkarType.kode === vilkarType.MEDISINSKEVILKÅR_18_ÅR);
-    const perioderUnder18 = vilkårPleietrengendeUnder18år?.perioder.map(periode => ({
-      ...periode,
-      pleietrengendeErOver18år: false,
-    }));
-    const perioderOver18 = vilkårPleietrengendeOver18år?.perioder.map(periode => ({
-      ...periode,
-      pleietrengendeErOver18år: true,
-    }));
-    const allePerioder = perioderUnder18.concat(perioderOver18);
-    return <SykdomProsessIndex {...props} perioder={allePerioder} />;
+
+    const perioder = vilkar.filter(v => v.vilkarType.kode === vilkarType.LANGVARIG_SYKDOM).flatMap(v => v.perioder);
+    return <SykdomProsessIndex {...props} perioder={perioder} />;
   };
 
   getAksjonspunktKoder = () => [aksjonspunktCodes.MEDISINSK_VILKAAR];
 
-  getVilkarKoder = () => [vilkarType.MEDISINSKEVILKÅR_UNDER_18_ÅR, vilkarType.MEDISINSKEVILKÅR_18_ÅR];
+  getVilkarKoder = () => [vilkarType.LANGVARIG_SYKDOM];
 
   getOverstyrVisningAvKomponent = data => this.overstyringDef.getOverstyrVisningAvKomponent(data);
 

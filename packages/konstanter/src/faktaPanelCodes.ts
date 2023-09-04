@@ -31,6 +31,8 @@ const faktaPanelCodes = {
   OM_PLEIETRENGENDE: 'om-pleietrengende',
   UTENLANDSOPPHOLD: 'utenlandsopphold',
   SOKNADSPERIODER: 'soknadsperioder',
+  INSTITUSJON: 'institusjon',
+  OPPLAERING: 'opplaering',
 };
 
 export default faktaPanelCodes;

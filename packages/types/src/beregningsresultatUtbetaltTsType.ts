@@ -9,6 +9,7 @@ export type BeregningsresultatPeriodeAndel = Readonly<{
   utbetalingsgrad: number;
   sisteUtbetalingsdato: string;
   aktivitetStatus: Kodeverk;
+  inntektskategori: Kodeverk;
   arbeidsforholdId: string;
   eksternArbeidsforholdId: string;
   aktørId: string;
@@ -16,23 +17,21 @@ export type BeregningsresultatPeriodeAndel = Readonly<{
   stillingsprosent: number;
 }>;
 
-export type BeregningsresultatUtbetalt = Readonly<{
-  opphoersdato?: string;
-  perioder: {
-    andeler: Kodeverk[];
-    dagsats: number;
-    fom: string;
-    tom: string;
-  }[];
-  skalHindreTilbaketrekk: boolean;
-  utbetaltePerioder: any[];
-}>;
-
 export type BeregningsresultatPeriode = Readonly<{
   fom: string;
   tom: string;
   dagsats: number;
+  inntektGraderingsprosent?: number;
   andeler?: BeregningsresultatPeriodeAndel[];
+  totalUtbetalingsgradFraUttak: number;
+  totalUtbetalingsgradEtterReduksjonVedTilkommetInntekt?: number;
+}>;
+
+export type BeregningsresultatUtbetalt = Readonly<{
+  opphoersdato?: string;
+  perioder: BeregningsresultatPeriode[];
+  skalHindreTilbaketrekk: boolean;
+  utbetaltePerioder: any[];
 }>;
 
 export default BeregningsresultatUtbetalt;

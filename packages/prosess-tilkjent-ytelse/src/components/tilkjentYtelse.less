@@ -42,6 +42,13 @@
   width: 100px;
 }
 
+.image {
+  height: 30px;
+  margin-bottom: 8px;
+  margin-right: 8px;
+  width: 30px;
+}
+
 .timeLineWrapper {
   border-bottom: 1px solid lightgrey;
   border-left: 1px solid lightgrey;
@@ -85,7 +92,13 @@
 .detailsPeriode {
   background-color: @navGronnLighten80;
   margin-right: 8px;
-  max-width: 370px;
+  max-width: 500px;
   padding: 16px;
-  width: 370px;
+  width: 500px;
+}
+
+:global(.navds-tag) {
+  border-radius: 0.25rem !important;
+  border: 1px solid var(--border-default, rgba(2, 20, 49, 0.49)) !important;
+  background: var(--surface-neutral-subtle, rgba(18, 43, 68, 0.08)) !important;
 }

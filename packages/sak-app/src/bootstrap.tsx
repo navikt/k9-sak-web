@@ -29,7 +29,7 @@ const environment = window.location.hostname;
 init({
   environment,
   dsn: isDevelopment ? 'http://dev@localhost:9000/1' : 'https://251afca29aa44d738b73f1ff5d78c67f@sentry.gc.nav.no/31',
-  release: '1', // TODO endre denne til å bli satt av github actions
+  release: process.env.SENTRY_RELEASE || 'unknown',
   integrations: [new Integrations.Breadcrumbs({ console: false })],
   beforeSend: (event, hint) => {
     const exception = hint.originalException;
@@ -59,7 +59,6 @@ init({
 const store = configureStore();
 
 const renderFunc = Component => {
-
   /**
    * Redirecte til riktig basename om man kommer hit uten
    * Vil kunne forekomme lokalt og i tester

@@ -3,9 +3,16 @@
   "ProsessPanelTemplate.ErIkkeOppfylt": "Vilkåret er avslått",
   "ProsessPanelTemplate.IkkeBehandlet": "Ikke behandlet",
 
+  "ProsessPanelTemplate.DelvisOppfylt": "Vilkåret er delvis oppfylt",
+  "ProsessPanelTemplate.DelvisIkkeOppfylt": "Vilkåret er <b>delvis ikke</b> oppfylt",
+
   "VilkarResultPicker.Arsak": "Avslagsårsak",
   "VilkarResultPicker.SelectArsak": "Velg årsak",
   
+
+  "VilkarResultPicker.VilkarPeriodisertFraDato": "Fra dato",
+  "VilkarResultPicker.VilkarPeriodisertTilDato": "Til dato",
+
   "ProsessStegBegrunnelseTextField.ExplanationRequired": "Vurdering",
   "ProsessStegBegrunnelseTextField.ExplanationRequiredReadOnly": "Begrunnelse",
   "ProsessStegBegrunnelseTextField.BegrunnVurdering": "Begrunn vurderingen din",

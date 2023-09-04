@@ -40,6 +40,8 @@ export enum OpplaeringspengerBehandlingApiKeys {
   VERGE_OPPRETT = 'VERGE_OPPRETT',
   VERGE_FJERN = 'VERGE_FJERN',
   SYKDOM = 'SYKDOM',
+  SYKDOM_DOKUMENTER_OVERSIKT = 'SYKDOM_DOKUMENTER_OVERSIKT',
+  OPPLAERING_DOKUMENTER = 'OPPLAERING_DOKUMENTER',
   TILGJENGELIGE_VEDTAKSBREV = 'TILGJENGELIGE_VEDTAKSBREV',
   INFORMASJONSBEHOV_VEDTAKSBREV = 'INFORMASJONSBEHOV_VEDTAKSBREV',
   DOKUMENTDATA_LAGRE = 'DOKUMENTDATA_LAGRE',
@@ -54,6 +56,10 @@ export enum OpplaeringspengerBehandlingApiKeys {
   UTENLANDSOPPHOLD = 'UTENLANDSOPPHOLD',
   BEHANDLING_PERIODER_ÅRSAK_MED_VILKÅR = 'BEHANDLING_PERIODER_ÅRSAK_MED_VILKÅR',
   BEREGNINGREFERANSER_TIL_VURDERING = 'BEREGNINGREFERANSER_TIL_VURDERING',
+  INSTITUSJON = 'INSTITUSJON',
+  GJENNOMGÅTT_OPPLÆRING = 'GJENNOMGÅTT_OPPLÆRING',
+  NØDVENDIG_OPPLÆRING = 'NØDVENDIG_OPPLÆRING',
+  REISETID = 'REISETID',
 }
 
 const endpoints = new RestApiConfigBuilder()
@@ -86,20 +92,26 @@ const endpoints = new RestApiConfigBuilder()
   .withRel('uttak-stonadskontoer', OpplaeringspengerBehandlingApiKeys.UTTAK_STONADSKONTOER)
   .withRel('uttak-kontroller-fakta-perioder', OpplaeringspengerBehandlingApiKeys.UTTAK_KONTROLLER_FAKTA_PERIODER)
   .withRel('sykdom', OpplaeringspengerBehandlingApiKeys.SYKDOM)
+  .withRel('sykdom-dokument-oversikt', OpplaeringspengerBehandlingApiKeys.SYKDOM_DOKUMENTER_OVERSIKT)
   .withRel('tilgjengelige-vedtaksbrev', OpplaeringspengerBehandlingApiKeys.TILGJENGELIGE_VEDTAKSBREV)
   .withRel('informasjonsbehov-vedtaksbrev', OpplaeringspengerBehandlingApiKeys.INFORMASJONSBEHOV_VEDTAKSBREV)
-  .withRel('opplaeringspenger-uttaksplan-med-utsatt', OpplaeringspengerBehandlingApiKeys.UTTAK)
+  .withRel('pleiepenger-uttaksplan-med-utsatt', OpplaeringspengerBehandlingApiKeys.UTTAK)
   .withRel('opplaeringspenger-fritekstdokumenter', OpplaeringspengerBehandlingApiKeys.FRITEKSTDOKUMENTER)
   .withRel('inntekt', OpplaeringspengerBehandlingApiKeys.INNTEKT_OG_YTELSER)
   .withRel('overstyr-input-beregning', OpplaeringspengerBehandlingApiKeys.OVERSTYR_INPUT_BEREGNING)
   .withRel('overlappende-ytelser', OpplaeringspengerBehandlingApiKeys.OVERLAPPENDE_YTELSER)
   .withRel('saksbehandler-info', OpplaeringspengerBehandlingApiKeys.HENT_SAKSBEHANDLERE)
   .withRel('utenlandsopphold', OpplaeringspengerBehandlingApiKeys.UTENLANDSOPPHOLD)
+  .withRel('opplæring-dokument-liste', OpplaeringspengerBehandlingApiKeys.OPPLAERING_DOKUMENTER)
   .withRel(
     'behandling-perioder-årsak-med-vilkår',
     OpplaeringspengerBehandlingApiKeys.BEHANDLING_PERIODER_ÅRSAK_MED_VILKÅR,
   )
   .withRel('beregning-koblinger-til-vurdering', OpplaeringspengerBehandlingApiKeys.BEREGNINGREFERANSER_TIL_VURDERING)
+  .withRel('institusjon', OpplaeringspengerBehandlingApiKeys.INSTITUSJON)
+  .withRel('gjennomgått-opplæring', OpplaeringspengerBehandlingApiKeys.GJENNOMGÅTT_OPPLÆRING)
+  .withRel('nødvendig-opplæring', OpplaeringspengerBehandlingApiKeys.NØDVENDIG_OPPLÆRING)
+  .withRel('reisetid', OpplaeringspengerBehandlingApiKeys.REISETID)
 
   // operasjoner
   .withRel('dokumentdata-lagre', OpplaeringspengerBehandlingApiKeys.DOKUMENTDATA_LAGRE)

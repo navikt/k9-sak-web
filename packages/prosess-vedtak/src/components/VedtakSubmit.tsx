@@ -4,7 +4,7 @@ import behandlingStatusCode from '@fpsak-frontend/kodeverk/src/behandlingStatus'
 import { useIntl } from 'react-intl';
 
 import { Column, Row } from 'nav-frontend-grid';
-import { Button } from '@navikt/ds-react';
+import { Alert, BodyLong, Button, ErrorMessage } from '@navikt/ds-react';
 import { Aksjonspunkt } from '@k9-sak-web/types';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 
@@ -17,6 +17,7 @@ interface Props {
   isSubmitting: boolean;
   aksjonspunkter: Aksjonspunkt[];
   handleSubmit: (e) => void;
+  errorOnSubmit: string;
 }
 
 const kanSendesTilGodkjenning = behandlingStatusKode =>
@@ -29,14 +30,17 @@ const VedtakSubmit = ({
   isSubmitting,
   aksjonspunkter,
   handleSubmit,
+  errorOnSubmit,
 }: Props): JSX.Element => {
   const intl = useIntl();
+
+  const skalSubmitVæreDeaktivert = behandlingPaaVent || isSubmitting;
 
   const submitKnapp = (
     <Button
       variant="primary"
       className={styles.mainButton}
-      disabled={behandlingPaaVent || isSubmitting}
+      disabled={skalSubmitVæreDeaktivert}
       loading={isSubmitting}
       onClick={handleSubmit}
       size="small"
@@ -62,6 +66,7 @@ const VedtakSubmit = ({
             <VerticalSpacer sixteenPx />
             {submitKnapp}
             <VerticalSpacer sixteenPx />
+            {errorOnSubmit && <ErrorMessage size="small">{errorOnSubmit}</ErrorMessage>}
           </>
         )}
       </Column>

@@ -3,16 +3,9 @@ import React from 'react';
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 import { prosessStegCodes } from '@k9-sak-web/konstanter';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { DynamicLoader, ProsessStegDef, ProsessStegPanelDef } from '@k9-sak-web/behandling-felles';
-import { konverterKodeverkTilKode, mapVilkar } from '@fpsak-frontend/utils';
-
-const ProsessBeregningsgrunnlag = React.lazy(() => import('@navikt/ft-prosess-beregningsgrunnlag'));
-
-const ProsessBeregningsgrunnlagMF =
-  process.env.NODE_ENV !== 'development'
-    ? undefined
-    : // eslint-disable-next-line import/no-unresolved
-      () => import('ft_prosess_beregningsgrunnlag/ProsessBeregningsgrunnlag');
+import { ProsessStegDef, ProsessStegPanelDef } from '@k9-sak-web/behandling-felles';
+import { konverterKodeverkTilKode, mapVilkar, transformBeregningValues } from '@fpsak-frontend/utils';
+import { BeregningsgrunnlagProsessIndex } from '@navikt/ft-prosess-beregningsgrunnlag';
 
 const mapYtelsesSpesifiktGrunnlagForFrisinn = (beregningsgrunnlag, behandling) =>
   beregningsgrunnlag.map(bg => ({
@@ -30,9 +23,7 @@ class PanelDef extends ProsessStegPanelDef {
     konverterKodeverkTilKode(deepCopyProps);
     const bgVilkaret = deepCopyProps.vilkar.find(v => v.vilkarType === vilkarType.BEREGNINGSGRUNNLAGVILKARET);
     return (
-      <DynamicLoader<React.ComponentProps<typeof ProsessBeregningsgrunnlag>>
-        packageCompFn={() => import('@navikt/ft-prosess-beregningsgrunnlag')}
-        federatedCompFn={ProsessBeregningsgrunnlagMF}
+      <BeregningsgrunnlagProsessIndex
         {...props}
         beregningsgrunnlagsvilkar={mapVilkar(bgVilkaret, props.beregningreferanserTilVurdering)}
         beregningsgrunnlagListe={mapYtelsesSpesifiktGrunnlagForFrisinn(
@@ -40,11 +31,11 @@ class PanelDef extends ProsessStegPanelDef {
           deepCopyProps.behandling,
         )}
         arbeidsgiverOpplysningerPerId={deepCopyProps.arbeidsgiverOpplysningerPerId}
-        submitCallback={props.submitCallback}
+        submitCallback={data => props.submitCallback(transformBeregningValues(data))}
         formData={props.formData}
         setFormData={props.setFormData}
         readOnlySubmitButton={deepCopyProps.isReadOnly}
-        alleKodeverk={deepCopyProps.alleKodeverk}
+        kodeverkSamling={deepCopyProps.alleKodeverk}
         isReadOnly={deepCopyProps.isReadOnly}
       />
     );

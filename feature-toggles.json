@@ -32,16 +32,16 @@
     "value": "${LOS_MARKER_BEHANDLING}"
   },
   {
+    "key": "LOS_MARKER_BEHANDLING_SUBMIT",
+    "value": "${LOS_MARKER_BEHANDLING_SUBMIT}"
+  },
+  {
     "key": "AKSJONSPUNKT_9014",
     "value": "${AKSJONSPUNKT_9014}"
   },
   {
     "key": "AKSJONSPUNKT_9015",
     "value": "${AKSJONSPUNKT_9015}"
-  },
-  {
-    "key": "NY_PROSESS_VEDTAK_ENABLED",
-    "value": "${NY_PROSESS_VEDTAK_ENABLED}"
   },
   {
     "key": "FRITEKST_REDIGERING",
@@ -54,5 +54,21 @@
   {
     "key": "OPPLAERINGSPENGER",
     "value": "${OPPLAERINGSPENGER}"
+  },
+  {
+    "key": "SKJUL_AVSLUTTET_ARBEIDSGIVER",
+    "value": "${SKJUL_AVSLUTTET_ARBEIDSGIVER}"
+  },
+  {
+    "key": "OMS_PUNSJSTRIPE",
+    "value": "${OMS_PUNSJSTRIPE}"
+  },
+  {
+    "key": "OMSORGEN_FOR_PERIODISERT",
+    "value": "${OMSORGEN_FOR_PERIODISERT}"
+  },
+  {
+    "key": "OVERSTYR_BEREGNING",
+    "value": "${OVERSTYR_BEREGNING}"
   }
 ]

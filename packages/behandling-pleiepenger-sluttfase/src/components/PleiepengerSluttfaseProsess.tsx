@@ -21,7 +21,7 @@ import {
   FagsakPerson,
   ArbeidsgiverOpplysningerPerId,
 } from '@k9-sak-web/types';
-import lagForhåndsvisRequest, { bestemAvsenderApp } from '@fpsak-frontend/utils/src/formidlingUtils';
+import { bestemAvsenderApp, forhandsvis, getForhandsvisCallback } from '@fpsak-frontend/utils/src/formidlingUtils';
 
 import prosessStegPanelDefinisjoner from '../panelDefinisjoner/prosessStegPleiepengerSluttfasePanelDefinisjoner';
 import FetchedData from '../types/fetchedDataTsType';
@@ -32,11 +32,6 @@ import {
 
 import '@fpsak-frontend/assets/styles/arrowForProcessMenu.less';
 
-const forhandsvis = (data: any) => {
-  if (URL.createObjectURL) {
-    window.open(URL.createObjectURL(data));
-  }
-};
 interface OwnProps {
   data: FetchedData;
   fagsak: Fagsak;
@@ -56,18 +51,6 @@ interface OwnProps {
   featureToggles: FeatureToggles;
   setBeregningErBehandlet: (value: boolean) => void;
 }
-
-const getForhandsvisCallback =
-  (
-    forhandsvisMelding: (data: any) => Promise<any>,
-    fagsak: Fagsak,
-    fagsakPerson: FagsakPerson,
-    behandling: Behandling,
-  ) =>
-  (parametre: any) => {
-    const request = lagForhåndsvisRequest(behandling, fagsak, fagsakPerson, parametre);
-    return forhandsvisMelding(request).then(response => forhandsvis(response));
-  };
 
 const getForhandsvisFptilbakeCallback =
   (forhandsvisTilbakekrevingMelding: (data: any) => Promise<any>, fagsak: Fagsak, behandling: Behandling) =>

@@ -18,12 +18,14 @@ export interface TilgjengeligeVedtaksbrevMedMaler {
 
 export interface TilgjengeligeVedtaksbrev {
   begrunnelse: string;
-  alternativeMottakere: Array<{
-    id: string;
-    idType: string;
-  }>;
+  alternativeMottakere: Array<Brevmottaker>;
   vedtaksbrevmaler: Map<string, string>;
 }
+
+export type Brevmottaker = Readonly<{
+  id: string;
+  type: string;
+}>;
 
 export function bestemAvsenderApp(type: string): string {
   return type === BehandlingType.KLAGE ? avsenderApplikasjon.K9KLAGE : avsenderApplikasjon.K9SAK;
@@ -142,6 +144,24 @@ export const lagForhåndsvisRequest = (
   avsenderApplikasjon: bestemAvsenderApp(behandling.type.kode),
   ...data,
 });
+
+export const forhandsvis = (data: any) => {
+  if (URL.createObjectURL) {
+    window.open(URL.createObjectURL(data));
+  }
+};
+
+export const getForhandsvisCallback =
+  (
+    forhandsvisMelding: (data: any) => Promise<any>,
+    fagsak: Fagsak,
+    fagsakPerson: FagsakPerson,
+    behandling: Behandling,
+  ) =>
+  (parametre: any, aapneINyttVindu = true) => {
+    const request = lagForhåndsvisRequest(behandling, fagsak, fagsakPerson, parametre);
+    return forhandsvisMelding(request).then(response => (aapneINyttVindu ? forhandsvis(response) : response));
+  };
 
 // export const lagHentFritekstbrevHtmlRequest = (): HentFritekstbrevHtmlRequest => ()
 

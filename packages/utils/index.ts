@@ -116,8 +116,6 @@ export { default as MicroFrontend } from './src/micro-frontends/MicroFrontend';
 export { findEndpointsForMicrofrontend } from './src/micro-frontends/findEndpointsForMicrofrontend';
 export { httpErrorHandler } from './src/micro-frontends/httpErrorHandler';
 export { findAksjonspunkt } from './src/micro-frontends/findAksjonspunkt';
-export type { SimpleEndpoints } from './src/micro-frontends/types/SimpleEndpoints';
-export type { SimpleLink } from './src/micro-frontends/types/SimpleLink';
 
 export { getKodeverknavnFn, konverterKodeverkTilKode } from './src/kodeverkUtils';
 export { joinNonNullStrings, safeJSONParse } from './src/stringUtils';
