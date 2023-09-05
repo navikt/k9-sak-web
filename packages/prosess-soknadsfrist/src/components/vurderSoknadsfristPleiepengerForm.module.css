@@ -5,17 +5,21 @@
   margin-top: 0;
   padding: 15px;
 }
+
 .hyphen {
   list-style-type: none;
   margin-top: 10px;
   padding: 0;
 }
+
 .hyphen > li:before {
   content: '- ';
 }
+
 .marginTop {
   margin-top: 20px;
 }
+
 .marginBottom {
   margin-bottom: 20px;
 }

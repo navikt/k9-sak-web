@@ -3,17 +3,21 @@
   padding-bottom: 0.5em;
   padding-top: 0.5em;
 }
+
 .alertstripe > *:not(:first-child) {
   max-width: 100%;
 }
+
 .uttaksboks {
   border: 1px solid #6a6a6a;
   min-width: 700px;
   padding: 1em;
 }
+
 .overskrift {
   margin-bottom: 1em;
 }
+
 .overskrift img {
   height: 28px;
   margin-right: 0.5em;

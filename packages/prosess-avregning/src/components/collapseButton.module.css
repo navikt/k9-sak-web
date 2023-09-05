@@ -5,6 +5,7 @@
   cursor: pointer;
   padding: 8px;
 }
+
 .invisibleButton:focus {
   background-color: #ffc166;
   border: 0;
@@ -12,9 +13,11 @@
   padding-bottom: 4px;
   text-decoration: none;
 }
+
 .invisibleButton:focus:hover {
   color: #0067c5;
 }
+
 .invisibleButton i {
   margin-left: 10px;
 }

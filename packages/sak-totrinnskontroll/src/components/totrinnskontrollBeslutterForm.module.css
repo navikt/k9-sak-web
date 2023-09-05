@@ -1,9 +1,11 @@
 .buttonRow {
   margin-top: 16px;
 }
+
 .buttonRow > :not(:first-child) {
   margin-left: 15px;
 }
+
 .buttonLink {
   background: none;
   border: 0;
@@ -12,6 +14,7 @@
   font: inherit;
   padding: 0;
 }
+
 .infoIkkeVedtaksbrev {
   margin-top: 1rem;
 }

@@ -3,9 +3,11 @@
   filter: drop-shadow(0 -3px 2px rgba(0, 0, 0, 0.1));
   z-index: 1;
 }
+
 .step__arrow-container .step__arrow {
   position: relative;
 }
+
 .step__arrow-container .step__arrow:after,
 .step__arrow-container .step__arrow:before {
   border: solid transparent;
@@ -17,12 +19,14 @@
   position: absolute;
   width: 0;
 }
+
 .step__arrow-container .step__arrow:after {
   border-color: rgba(255, 255, 255, 0);
   border-bottom-color: #fff;
   border-width: 12px;
   margin-left: -12px;
 }
+
 .step__arrow-container .step__arrow:before {
   border-color: rgba(0, 0, 0, 0);
   border-bottom-color: #6a6a6a;

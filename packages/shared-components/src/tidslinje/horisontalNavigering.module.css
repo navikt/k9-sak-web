@@ -4,6 +4,7 @@
   justify-content: flex-end;
   height: 2rem;
 }
+
 .navigasjonButton {
   align-items: center;
   width: 24px;
@@ -17,10 +18,12 @@
   margin-right: 0.875rem;
   padding: 0 0.0625rem 0 0;
 }
+
 .navigasjonButton:hover,
 .navigasjonButton:focus {
   box-shadow: 0 0 0 3px #00347d;
 }
+
 .navigasjonButtonLeft {
   align-items: center;
   width: 24px;
@@ -34,10 +37,12 @@
   margin-right: 0.875rem;
   padding: 0 0.0625rem 0 0;
 }
+
 .navigasjonButtonLeft:hover,
 .navigasjonButtonLeft:focus {
   box-shadow: 0 0 0 3px #00347d;
 }
+
 .navigasjonButtonRight {
   align-items: center;
   width: 24px;
@@ -52,17 +57,21 @@
   padding: 0 0.0625rem 0 0;
   transform: rotate(180deg);
 }
+
 .navigasjonButtonRight:hover,
 .navigasjonButtonRight:focus {
   box-shadow: 0 0 0 3px #00347d;
 }
+
 .navigasjonButtonRight:disabled {
   opacity: 0.2;
   cursor: default;
 }
+
 .navigasjonButtonRight:disabled:hover {
   box-shadow: none;
 }
+
 .navigasjonDatoContainer {
   min-width: 17rem;
 }

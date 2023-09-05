@@ -11,6 +11,7 @@
   padding-top: 5px;
   position: relative;
 }
+
 .link {
   background: none;
   border: 0;
@@ -20,17 +21,20 @@
   padding: 0;
   text-decoration: none;
 }
+
 .link:focus,
 .link:hover {
   border-bottom-color: #a0a0a0;
   color: #a0a0a0;
 }
+
 .lukkContainer {
   font-size: 18px;
   position: absolute;
   right: 16px;
   top: 8px;
 }
+
 .wordWrap {
   white-space: pre-line;
 }

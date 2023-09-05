@@ -1,9 +1,11 @@
 .container {
   width: 100%;
 }
+
 .buttonBar {
   display: flex;
 }
+
 .button {
   margin-right: 1rem;
 }

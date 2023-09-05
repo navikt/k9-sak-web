@@ -3,6 +3,7 @@
   margin-bottom: 4px;
   margin-top: 4px;
 }
+
 .clickableArea:after {
   content: '';
   left: -10px;
@@ -10,6 +11,7 @@
   position: absolute;
   top: -10px;
 }
+
 .breakWord {
   word-break: break-all;
 }

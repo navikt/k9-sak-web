@@ -5,26 +5,31 @@
   margin-top: 0.75rem;
   padding: 1.375rem;
 }
+
 .behandlingSelectedContainer.aapen {
   background: #fff9f0;
   border: 1px solid #d47b00;
 }
+
 .behandlingSelectedContainer .dateContainer {
   align-items: end;
   display: flex;
   margin-top: 0.0625rem;
 }
+
 .behandlingSelectedContainer .resultContainer {
   align-items: end;
   display: flex;
   margin-top: 0.0625rem;
 }
+
 .behandlingSelectedContainer .opprettet {
   border-left: 1.1948px dashed #a0a0a0;
   margin-left: 1.625rem;
   padding: 0 0 2.0625rem 2.0625rem;
   position: relative;
 }
+
 .behandlingSelectedContainer .opprettetIcon {
   align-items: center;
   background-color: #f1f1f1;
@@ -37,64 +42,80 @@
   top: 0;
   width: 1.8125rem;
 }
+
 .behandlingSelectedContainer .opprettetTittel {
   font-size: 1.125rem;
   padding-top: 0.1875rem;
 }
+
 .behandlingSelectedContainer .opprettetDetails {
   display: flex;
 }
+
 .behandlingSelectedContainer .timeline {
   margin-top: 1.25rem;
 }
+
 .behandlingSelectedContainer .opprettetÅrsak {
   font-style: italic;
 }
+
 .behandlingSelectedContainer .kalenderIcon {
   height: 1.25rem;
   margin-right: 0.75rem;
   margin-top: -0.125rem;
   width: 1.25rem;
 }
+
 .behandlingSelectedContainer .utfallImage {
   height: 1.25rem;
   margin-right: 0.625rem;
   margin-top: -0.125rem;
   width: 1.25rem;
 }
+
 .behandlingSelectedContainer .infoContainer {
   display: flex;
   justify-content: space-between;
   margin-top: 0.5rem;
 }
+
 .behandlingSelectedContainer .flexContainer {
   display: flex;
 }
+
 .behandlingSelectedContainer .marginRight4 {
   margin-right: 0.25rem;
 }
+
 .behandlingSelectedContainer .marginTop8 {
   margin-top: 0.5rem;
 }
+
 .behandlingSelectedContainer .marginTop2 {
   margin-top: 0.125rem;
 }
+
 .behandlingSelectedContainer .font18 {
   font-size: 1.125rem;
 }
+
 .behandlingSelectedContainer .årsakerContainer {
   margin-top: 1.375rem;
 }
+
 .behandlingSelectedContainer .årsakerList {
   list-style-type: none;
   margin-top: 0.625rem;
   padding: 0;
 }
+
 .behandlingSelectedContainer .årsakerList li {
   margin-left: 0.9375rem;
   padding: 0 0 0.75rem 0.75rem;
   position: relative;
 }
+
 .behandlingSelectedContainer .årsakerList li:before {
   align-items: center;
   background-color: #0067c5;
@@ -109,12 +130,15 @@
   width: 0.75rem;
   z-index: 1;
 }
+
 .behandlingSelectedContainer .årsakerList li:last-of-type {
   padding-bottom: 0;
 }
+
 .behandlingSelectedContainer .årsakerList p {
   padding-left: 0.25rem;
 }
+
 .behandlingSelectedContainer .faktapanelLenke {
   display: flex;
   margin-top: 1.25rem;

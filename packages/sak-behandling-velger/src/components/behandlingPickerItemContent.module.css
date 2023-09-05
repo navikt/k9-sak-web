@@ -4,78 +4,96 @@
   margin-left: 10px;
   width: 25px;
 }
+
 .resultatStatusImage {
   height: 16px;
   width: 16px;
 }
+
 .pushRight {
   margin-left: auto;
 }
+
 .pushRightCorner {
   margin-left: auto;
   margin-top: auto;
 }
+
 .line {
   border: 0;
   border-top: 1px solid #c9c9c9;
   height: 1px;
 }
+
 .arsakPadding {
   padding: 0 0 0 8px;
 }
+
 .timePadding {
   padding-left: 10px;
 }
+
 .resultatPadding {
   padding-left: 5px;
 }
+
 .inline {
   display: inline;
 }
+
 .firstColumnWidth {
   width: 150px;
 }
+
 .behandlingPicker {
   align-items: center;
   display: flex;
   justify-content: space-between;
 }
+
 .behandlingPicker .dateContainer {
   align-items: end;
   display: flex;
   margin-top: 0.25rem;
 }
+
 .behandlingPicker .resultContainer {
   align-items: center;
   display: flex;
   margin-top: 0.5rem;
 }
+
 .behandlingPicker .åpneText {
   align-items: center;
   color: #0067c5;
   display: flex;
   margin-right: 0.875rem;
 }
+
 .behandlingPicker .åpneChevron {
   margin-left: 0.5rem;
 }
+
 .behandlingPicker .kalenderIcon {
   height: 1.25rem;
   margin-right: 0.75rem;
   margin-top: -0.125rem;
   width: 1.25rem;
 }
+
 .behandlingPicker .smallerUndertittel {
   font-size: 1.125rem;
   font-weight: 400;
   margin-left: 0.25rem;
 }
+
 .behandlingPicker .utfallImage {
   height: 1.25rem;
   margin-right: 0.625rem;
   margin-top: -0.125rem;
   width: 1.25rem;
 }
+
 .indent {
   margin-left: 10%;
   width: 90%;

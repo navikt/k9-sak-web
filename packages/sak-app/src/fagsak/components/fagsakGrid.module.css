@@ -5,26 +5,32 @@
   max-height: 100%;
   max-width: 100%;
 }
+
 .leftColumn {
   float: left;
   width: 67%;
 }
+
 .rightColumn {
   float: right;
   width: 33%;
 }
+
 .rightColumn > div {
   margin-bottom: 16px;
 }
+
 @media all and (max-width: 1350px) {
   .leftColumn {
     width: 100%;
   }
+
   .rightColumn {
     margin-left: 0;
     width: 100%;
   }
 }
+
 @media all and (min-width: 1350px) {
   .rightColumn {
     border-left-color: #6a6a6a;
@@ -32,6 +38,7 @@
     border-left-width: 1px;
   }
 }
+
 @media all and (max-width: 1350px) {
   .rightColumn {
     border-top-color: #6a6a6a;

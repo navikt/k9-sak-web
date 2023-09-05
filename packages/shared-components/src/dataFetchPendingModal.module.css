@@ -7,12 +7,15 @@
   margin-left: 10px;
   position: absolute;
 }
+
 .modal {
   width: 500px;
 }
+
 .messageRow {
   padding-top: 7px;
 }
+
 .modalText {
   padding-top: 8px;
 }

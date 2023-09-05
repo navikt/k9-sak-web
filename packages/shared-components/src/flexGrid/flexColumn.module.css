@@ -4,9 +4,11 @@
   padding-left: 8px;
   padding-right: 8px;
 }
+
 .flexColumn--1-2 {
   flex-basis: 50%;
 }
+
 .justifyItemsToFlexEnd {
   align-items: flex-end;
   flex-grow: 1;

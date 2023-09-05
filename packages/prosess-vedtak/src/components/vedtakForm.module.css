@@ -1,13 +1,16 @@
 .inline {
   display: inline;
 }
+
 .margin {
   margin-bottom: 16px;
 }
+
 .mainButton {
   margin: 12px 1.5625rem 12px 0;
   display: inline;
 }
+
 .buttonLink {
   background: none;
   border: 0;
@@ -16,14 +19,17 @@
   font: inherit;
   padding: 0;
 }
+
 @keyframes fadein {
   from {
     opacity: 0;
   }
+
   to {
     opacity: 1;
   }
 }
+
 .smallTextArea {
   background-color: #fff;
   border: 1px solid #a0a0a0;
@@ -40,15 +46,19 @@
   transition: height 0.1s ease-out;
   width: 100%;
 }
+
 .brevAlertContainer {
   margin: 0.75rem 0;
 }
+
 .brevHeading {
   margin-bottom: 0.75rem;
 }
+
 .alignRight {
   text-align: right;
 }
+
 .knappContainer {
   align-self: flex-start;
   border: none;
@@ -59,49 +69,62 @@
   margin-top: 4.125rem;
   margin-right: 30px;
 }
+
 .knappContainer fieldset {
   border: none;
   padding: 0;
   margin: 0;
 }
+
 .knappContainer legend {
   margin-bottom: 0.25rem;
 }
+
 .begrensMaksBredde {
   max-width: 65%;
 }
+
 form {
   font-size: 16px;
 }
+
 .form {
   display: flex;
   justify-content: space-between;
 }
+
 .previewLink {
   margin-left: -0.75rem;
 }
+
 .previewLink--noIcon {
   text-decoration: underline;
 }
+
 .fritekstbrevPanel {
   margin-top: 1.5625rem;
 }
+
 .brevFormContainer {
   background: #f1f1f1;
   border-radius: 5px;
   padding: 1.5rem;
 }
+
 .manueltBrevFormContainer {
   background: #f1f1f1;
   border-radius: 5px;
   padding: 0.3rem 1.3rem 1.3rem;
 }
+
 .textAreaContainer {
   margin-top: 1.5625rem;
 }
+
 .textAreaContainer--readOnly {
   margin-top: 1rem;
 }
+
 .aksjonspunktContainer {
   flex: 1 1 auto;
 }

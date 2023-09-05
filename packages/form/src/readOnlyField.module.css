@@ -1,11 +1,13 @@
 .readOnlyContainer {
   display: inline-block;
 }
+
 .readOnlyContainer .readOnlyContent {
   margin-bottom: 4px;
   padding-bottom: 0.45rem;
   white-space: pre-wrap;
 }
+
 .textarea {
   border-left: 4px solid #c9c9c9;
   padding-left: 7px;

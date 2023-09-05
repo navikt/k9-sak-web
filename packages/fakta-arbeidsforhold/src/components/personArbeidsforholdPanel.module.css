@@ -9,26 +9,33 @@
   padding-left: 7px;
   width: 225px;
 }
+
 .arbeidsgiverColumn {
   width: 95%;
 }
+
 .container {
   overflow-x: auto;
 }
+
 .aksjonspunktColumn {
   display: inline-flex;
 }
+
 .aksjonspunktColumn img {
   height: 20px;
   margin-right: 10px;
   width: 20px;
 }
+
 .overskrift {
   display: inline-flex;
 }
+
 .overskrift img {
   padding-right: 10px;
 }
+
 .visLukkArbeidsforhold {
   border: 0;
   color: #0067c5;
@@ -36,6 +43,7 @@
   text-decoration: underline;
   width: max-content;
 }
+
 .knappContainer {
   background: #fff no-repeat;
   border: none;
@@ -43,12 +51,14 @@
   outline: none;
   text-align: center;
 }
+
 .chevronOpp {
   height: 14px;
   margin-left: 10px;
   transform: rotate(180deg);
   width: 8px;
 }
+
 .chevronNed {
   height: 14px;
   margin-left: 10px;

@@ -2,6 +2,7 @@
   position: absolute;
   height: 100%;
 }
+
 .pin {
   position: absolute;
   height: calc(100% + 10px);
@@ -9,6 +10,7 @@
   width: 1px;
   background: #000;
 }
+
 .pin:before {
   content: '';
   position: absolute;
@@ -21,11 +23,13 @@
   border-radius: 50%;
   transform: translate(-8.5px, -9.5px);
 }
+
 .pins {
   position: absolute;
   width: 100%;
   height: 100%;
 }
+
 .tooltip {
   font-family: 'Source Sans Pro', Arial, Helvetica, sans-serif;
   font-size: 14px;

@@ -10,6 +10,7 @@
   vertical-align: top;
   width: 17px;
 }
+
 .buttonAdd {
   background: #fff url('~@fpsak-frontend/assets/images/add-circle.svg') no-repeat;
   background-size: contain;
@@ -20,12 +21,14 @@
   padding-left: 7px;
   width: 100px;
 }
+
 .addCircleIcon,
 .imageText {
   display: inline-block;
   margin-right: 1ex;
   vertical-align: text-bottom;
 }
+
 .addPeriode {
   cursor: pointer;
 }

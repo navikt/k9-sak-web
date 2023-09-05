@@ -5,6 +5,7 @@
   box-sizing: content-box;
   margin-bottom: 16px;
 }
+
 .etiketter > * {
   font-family: 'Source Sans Pro', Arial, Helvetica, sans-serif;
   position: absolute;

@@ -5,13 +5,16 @@
   margin-top: 16px;
   width: 100%;
 }
+
 .hoyRisikoPanelTittel > button {
   background-color: #f3cccc;
 }
+
 .hoyRisikoPanelTittel > div {
   background-color: white;
   width: 100%;
 }
+
 .hoyRisikoPanelTittel > div > div > article {
   padding: 6px;
 }

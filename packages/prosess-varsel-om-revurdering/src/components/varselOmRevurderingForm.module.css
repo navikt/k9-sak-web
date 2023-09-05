@@ -8,22 +8,27 @@
   position: absolute;
   top: 5px;
 }
+
 .image {
   height: 25px;
   margin-top: 10px;
   width: 25px;
 }
+
 .labelColumn {
   margin-top: 10px;
 }
+
 .panelWrapper {
   display: flex;
   justify-content: flex-start;
   margin: 20px 20px 15px 0;
 }
+
 .varselRow {
   margin-top: 15px;
 }
+
 .panel {
   border: 1px solid #c9c9c9;
   border-radius: 4px;
@@ -31,12 +36,15 @@
   margin-right: 16px;
   width: 40%;
 }
+
 .panel > div {
   margin-top: 5px;
 }
+
 .panel:first-of-type {
   width: 60%;
 }
+
 .flexContainer {
   align-items: flex-end;
   display: flex;
@@ -44,15 +52,18 @@
   justify-content: flex-start;
   margin-top: 8px;
 }
+
 .flexContainer > div {
   flex: 0 0 60%;
   margin-right: 16px;
 }
+
 .flexContainer > button {
   flex: 0 0 50%;
   margin-bottom: 8px;
   max-width: 300px;
 }
+
 .warningRow {
   max-width: 650px;
 }

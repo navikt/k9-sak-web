@@ -1,9 +1,11 @@
 .borderbox {
   margin-top: 16px;
 }
+
 .error {
   border: 2px solid #ba3a26;
 }
+
 .warning {
   border: 2px solid #ffbd66;
 }

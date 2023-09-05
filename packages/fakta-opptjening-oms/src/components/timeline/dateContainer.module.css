@@ -1,12 +1,15 @@
 .topline {
   border-top: 1px solid grey;
 }
+
 .endDate {
   text-align: center;
 }
+
 .dateContainer {
   position: relative;
 }
+
 .dates {
   background: #fff;
   height: 28px;

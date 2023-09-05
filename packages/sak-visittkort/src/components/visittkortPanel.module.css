@@ -2,14 +2,17 @@
   background-color: #f1f1f1;
   border-bottom: 1px solid #6a6a6a;
 }
+
 .pushRight {
   display: flex;
   margin-left: auto;
   margin-right: 2.3125rem;
 }
+
 .flexContainer {
   display: flex;
 }
+
 .label,
 .dødsdatoLabel {
   border-radius: 0.25rem;
@@ -20,6 +23,7 @@
   margin-top: 1rem;
   padding: 0 0.5rem;
 }
+
 .dødsdatoLabel {
   background-color: black;
   border: 1px solid black;

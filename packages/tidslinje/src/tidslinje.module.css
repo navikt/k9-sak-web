@@ -2,6 +2,7 @@
 .vis-item.vis-dot {
   border-width: 1px;
 }
+
 /* our custom classes overrule the styles for selected events,
    so lets define a new style for the selected events */
 .vis-item.vis-selected {
@@ -10,9 +11,11 @@
   box-shadow: 0 0 10px gray;
   color: black;
 }
+
 .vis-timeline {
   border: 0;
 }
+
 .timelineContainer {
   animation-duration: 400ms;
   animation-name: fadein;
@@ -23,15 +26,18 @@
   transition: all 400ms;
   width: 100%;
 }
+
 .timelineContainerExpanded {
   animation: open;
   animation-duration: 200ms;
   max-height: 1600px;
   transition: all 300ms;
 }
+
 .iconContainer {
   width: 100px;
 }
+
 .timeLineWrapper {
   border-bottom: 1px solid lightgrey;
   border-left: 1px solid lightgrey;
@@ -39,6 +45,7 @@
   margin-left: -17px;
   padding-right: 0;
 }
+
 .timeLineWrapper:before {
   border-bottom: 1px solid lightgrey;
   bottom: 0;
@@ -47,6 +54,7 @@
   position: absolute;
   width: 70px;
 }
+
 .sokerContainer {
   max-width: 100px;
 }

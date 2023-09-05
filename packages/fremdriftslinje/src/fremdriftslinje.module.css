@@ -3,6 +3,7 @@
   border-radius: 1.5rem;
   height: 2rem;
 }
+
 .gronnBar {
   background-color: #99dead;
   border: 1px solid #06893a;
@@ -11,6 +12,7 @@
   height: 2rem;
   margin-top: -2rem;
 }
+
 .gulBar {
   background-color: #ffd799;
   border: 1px solid #ff9100;
@@ -19,6 +21,7 @@
   height: 2rem;
   margin-top: -2rem;
 }
+
 .antallTitler {
   display: flex;
   flex-direction: row;

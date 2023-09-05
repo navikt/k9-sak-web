@@ -6,6 +6,7 @@
   position: relative;
   margin-bottom: 1rem;
 }
+
 .emptyRow {
   flex: 1;
   height: 1.5rem;
@@ -15,9 +16,11 @@
   margin-top: 0;
   margin-bottom: 1rem;
 }
+
 .emptyRow:first-of-type {
   margin-bottom: 3rem;
 }
+
 .aktivRad > hr {
   background-color: #e5f3ff;
 }

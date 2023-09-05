@@ -1,20 +1,25 @@
 .modal {
   width: 750px;
 }
+
 .infotekst {
   height: 55px;
 }
+
 .infotekstBeskrivelse {
   padding-top: 12px;
 }
+
 .button {
   margin-right: 10px;
 }
+
 .image {
   height: 25px;
   margin-top: 10px;
   width: 25px;
 }
+
 .divider {
   border-left: 1px solid #a0a0a0;
   border-right: 0 solid #a0a0a0;
@@ -25,6 +30,7 @@
   position: absolute;
   top: 5px;
 }
+
 .floatButtons {
   float: right;
 }

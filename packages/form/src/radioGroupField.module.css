@@ -2,6 +2,7 @@
   display: inline-block;
   width: auto;
 }
+
 .radioGroup legend {
   clip: rect(1px, 1px, 1px, 1px);
   height: 1px;
@@ -10,6 +11,7 @@
   white-space: nowrap;
   width: 1px;
 }
+
 .radioGroupLabel {
   display: inline-block;
 }

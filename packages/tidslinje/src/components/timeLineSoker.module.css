@@ -4,20 +4,24 @@
   top: 102px;
   width: 25px;
 }
+
 .iconMedsoker {
   position: absolute;
   right: 25px;
   top: 64px;
   width: 25px;
 }
+
 .infoPlaceholder {
   display: flex;
   margin-left: 50px;
 }
+
 .timelineSokerContatiner {
   height: 144px;
   margin-bottom: 20px;
 }
+
 .timelineSokerContatiner:after {
   border-top: 1px solid lightgrey;
   content: '';
@@ -26,6 +30,7 @@
   top: 56px;
   width: 84px;
 }
+
 .scrollButton {
   background-color: #fff;
   border: 1px solid lightgray;
@@ -37,6 +42,7 @@
   padding-left: 0;
   width: 20px;
 }
+
 .scrollButton:focus {
   background-color: #ffc166;
   border-bottom: 2px solid #0067c5;
@@ -44,17 +50,21 @@
   padding-bottom: 4px;
   text-decoration: none;
 }
+
 .scrollButton:focus:hover {
   color: #0067c5;
 }
+
 .chevronLeft {
   margin-left: -2px;
 }
+
 @media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
   .timelineSokerContatiner:after {
     top: 58px;
   }
 }
+
 @supports (-ms-ime-align: auto) {
   .timelineSokerContatiner:after {
     top: 58px;

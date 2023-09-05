@@ -4,15 +4,18 @@
   padding-left: 20px;
   padding-right: 20px;
 }
+
 .column {
   flex: 1;
   padding-left: 0;
   padding-right: 0;
 }
+
 .tabImage {
   margin-bottom: 10px;
   outline: none;
 }
+
 .button {
   background: transparent;
   border: none;
@@ -23,20 +26,24 @@
   position: relative;
   width: 100%;
 }
+
 .button.active {
   border-bottom: 0.25rem solid #0067c5;
   cursor: default;
   padding-bottom: 0;
 }
+
 .button.active:hover {
   background-color: white;
   border-bottom: 0.25rem solid #0067c5;
 }
+
 .button:hover {
   background-color: #f1f1f1;
   border-bottom: 0.25rem solid #0067c5;
   padding-bottom: 0;
 }
+
 .button:focus {
   border-bottom: 0.25rem solid #0067c5;
   box-shadow: 0 0 0 3px #00347d;
@@ -44,12 +51,14 @@
   padding-bottom: 0;
   z-index: 2;
 }
+
 .button:disabled {
   background: white;
   border-bottom: 1px solid #c9c9c9;
   cursor: default;
   padding-bottom: 3px;
 }
+
 .button[data-tooltip]:before {
   background-color: #fff2e0;
   border-radius: 4px;
@@ -67,16 +76,19 @@
   position: absolute;
   z-index: 2;
 }
+
 .button[data-tooltip]:hover:before {
   animation-delay: 0.4s;
   animation-duration: 0.1s;
   animation-fill-mode: forwards;
   animation-name: showTooltip;
 }
+
 @keyframes showTooltip {
   from {
     opacity: 0;
   }
+
   to {
     opacity: 1;
   }

@@ -2,38 +2,49 @@
 .modalInnehold {
   padding: 0 3em 2em;
 }
+
 .alertModalInnehold {
   padding: 0 3em 2em;
   width: 27em;
 }
+
 .modalHeader {
   margin-bottom: 1.5em;
 }
+
 .knapper {
   margin: 1.5em 0 0;
 }
+
 .knapper button {
   margin-right: 1em;
 }
+
 .knapper button:first-child {
   margin-left: 0;
 }
+
 .knapper button:last-child {
   margin-right: 0;
 }
+
 .hoyere {
   text-align: right;
 }
+
 .knapperHoyere {
   margin: 1.5em 0 0;
   text-align: right;
 }
+
 .knapperHoyere button {
   margin-left: 1em;
 }
+
 .nullstillCss {
   all: unset;
 }
+
 .papir {
   background: white;
   width: 21cm;
@@ -43,10 +54,12 @@
   box-shadow: 0 0 0.5cm rgba(0, 0, 0, 0.5);
   padding-bottom: 10mm;
 }
+
 .ikkeRedigerbartInnhold {
   max-width: 650px;
   margin: 0 auto;
 }
+
 .redigerbartInnhold {
   border-left: 15px solid #ffc166;
   border-right: 15px solid #ffc166;
@@ -54,9 +67,11 @@
   min-width: 202.1mm;
   box-sizing: content-box;
 }
+
 .alertMeldinger p {
   margin-top: 0;
 }
+
 .alertMeldinger p:last-child {
   margin-bottom: 0;
 }

@@ -2,6 +2,7 @@
   margin-bottom: 2rem;
   margin-top: 3.125rem;
 }
+
 .behandlingPicker .backButton {
   /* stylelint-disable-next-line declaration-no-important */
   border: none !important;
@@ -13,6 +14,7 @@
   text-decoration: underline;
   text-transform: none;
 }
+
 .behandlingList {
   list-style-type: none;
   margin-bottom: 0;
@@ -20,12 +22,15 @@
   padding: 0;
   width: 100%;
 }
+
 .behandlingList li {
   width: 100%;
 }
+
 .behandlingList > li:not(:first-child) {
   margin-top: 16px;
 }
+
 .linkToBehandling,
 .toggleShowAllButton {
   background: none;
@@ -37,22 +42,27 @@
   text-decoration: none;
   width: 100%;
 }
+
 .linkToBehandling:hover,
 .toggleShowAllButton:hover {
   cursor: pointer;
   text-decoration: none;
 }
+
 .linkToBehandling:hover > :first-child,
 .toggleShowAllButton:hover > :first-child {
   background: #f1f1f1;
 }
+
 .linkToBehandling:visited {
   color: inherit;
 }
+
 .linkToBehandling:focus,
 .toggleShowAllButton:focus {
   outline: none;
 }
+
 .headerContainer {
   display: flex;
   justify-content: space-between;

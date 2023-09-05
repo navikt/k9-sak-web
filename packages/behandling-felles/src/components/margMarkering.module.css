@@ -5,16 +5,20 @@
   position: relative;
   width: 100%;
 }
+
 .prosesspunkt.visAksjonspunkt,
 .prosesspunkt.ikkeAkseptertAvBeslutter {
   border-left-width: 5px;
 }
+
 .prosesspunkt.visAksjonspunkt {
-  border-left-color: #ffaa33;
+  border-left-color: #fa3;
 }
+
 .prosesspunkt.ikkeAkseptertAvBeslutter {
   border-left-color: #ba3a26;
 }
+
 .prosesspunkt:empty {
   border: 0;
   margin-top: 0;

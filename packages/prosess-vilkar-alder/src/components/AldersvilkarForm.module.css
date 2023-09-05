@@ -3,12 +3,15 @@
   border-bottom: 1px solid #b7b1a9;
   margin-bottom: 1rem;
 }
+
 .opplysninger .label {
   font-weight: bold;
 }
+
 .barn {
   margin-top: 0.5rem;
 }
+
 .vurdering label span {
   font-size: 1rem;
   font-weight: bold;

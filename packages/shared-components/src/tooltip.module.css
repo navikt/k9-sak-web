@@ -2,6 +2,7 @@
   display: inline-block;
   position: relative;
 }
+
 /* Tooltip text */
 .tooltip .tooltiptext {
   background-color: #fff2e0;
@@ -20,21 +21,26 @@
   width: max-content;
   z-index: 1;
 }
+
 .left {
   bottom: auto;
   right: 110%;
   top: -5px;
 }
+
 .top {
   bottom: 125%;
 }
+
 .right {
   left: 110%;
   top: -5px;
 }
+
 .bottom {
   top: 135%;
 }
+
 /* Show the tooltip text when you mouse over the tooltip container */
 .tooltip:hover .tooltiptext {
   animation-delay: 0.4s;
@@ -42,10 +48,12 @@
   animation-fill-mode: forwards;
   animation-name: showTooltip;
 }
+
 @keyframes showTooltip {
   from {
     opacity: 0;
   }
+
   to {
     opacity: 1;
   }

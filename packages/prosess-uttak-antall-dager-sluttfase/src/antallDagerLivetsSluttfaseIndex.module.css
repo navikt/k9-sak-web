@@ -4,17 +4,20 @@
   padding: 1rem;
   font-family: 'Source Sans Pro', Arial, sans-serif;
 }
+
 .header {
   align-items: center;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
 }
+
 .sistePleiedagBoks {
   background-color: #99c3ff;
   border-radius: 8px;
   padding: 0 1rem 0 1rem;
 }
+
 .sistePleiedagBoks p {
   font-size: 1.2rem;
   margin-bottom: 0.5rem;

@@ -2,10 +2,12 @@
   display: flex;
   flex-wrap: wrap;
 }
+
 .legendBoxLegend {
   margin-bottom: 8px;
   width: 50%;
 }
+
 .legendBoxIcon {
   background-color: #fff;
   border: 0 solid;
@@ -15,10 +17,12 @@
   padding: 0;
   width: 26px;
 }
+
 .popUnder {
   margin-right: 20px;
   position: relative;
 }
+
 .popUnderContent {
   background-color: #fff;
   border: 1px solid lightgrey;
@@ -31,6 +35,7 @@
   visibility: hidden;
   width: auto;
 }
+
 .popUnderContent:before {
   border-color: transparent transparent lightgrey;
   border-style: solid;
@@ -43,6 +48,7 @@
   transition-property: transform;
   z-index: -1;
 }
+
 .popUnderContent:after {
   border-color: transparent transparent #fff;
   border-style: solid;
@@ -55,6 +61,7 @@
   transition-property: transform;
   z-index: -1;
 }
+
 .popUnder:hover .popUnderContent {
   opacity: 1;
   transform: translate(0, -20px);

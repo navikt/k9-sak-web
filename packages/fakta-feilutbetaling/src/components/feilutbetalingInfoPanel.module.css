@@ -1,15 +1,19 @@
 .smallMarginBottom {
   margin-bottom: 16px;
 }
+
 .smallMarginTop {
   margin-top: 16px;
 }
+
 .undertekstMarginBottom {
   margin-bottom: 8px;
 }
+
 .smallPaddingRight {
   padding-right: 8px;
 }
+
 .redText {
   color: #c30000;
   font-weight: bold;

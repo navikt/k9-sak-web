@@ -1,11 +1,13 @@
 .container {
   background-color: #fff;
 }
+
 @media screen and (min-width: 1350px) {
   .container {
     height: 1290px;
   }
 }
+
 .content {
   overflow: hidden;
   flex: 1 1 auto;
@@ -14,6 +16,7 @@
   padding-right: 40px;
   padding-top: 40px;
 }
+
 .sideMenu {
   flex: 0 0 auto;
 }

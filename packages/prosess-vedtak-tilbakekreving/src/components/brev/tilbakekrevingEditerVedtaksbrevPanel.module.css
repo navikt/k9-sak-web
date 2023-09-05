@@ -1,13 +1,15 @@
 .container {
   max-width: 1000px;
 }
+
 .panel {
   border: 1px solid black;
   padding: 1px 1px 1px 1px;
 }
+
 .panelMedGulmarkering {
   border: 1px solid black;
-  border-left-color: #ffaa33;
+  border-left-color: #fa3;
   border-left-width: 5px;
   padding: 1px 1px 1px 1px;
 }

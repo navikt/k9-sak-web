@@ -3,6 +3,7 @@
   border: 1px solid #d47b00;
   border-radius: 4px;
 }
+
 .divider {
   border-left: 1px solid #a0a0a0;
   border-right: 0 solid #a0a0a0;
@@ -11,23 +12,28 @@
   margin-left: 5px;
   margin-top: 3px;
 }
+
 .image {
   margin-left: 10px;
   margin-top: 8px;
 }
+
 .oneElement {
   margin-bottom: 9px;
   margin-left: 0;
   margin-top: 9px;
 }
+
 .severalElements {
   margin-left: 0;
   margin-top: 0;
 }
+
 .aksjonspunktText {
   max-width: 100%;
   padding-right: 20px;
 }
+
 .wordwrap {
   white-space: pre-line;
   word-wrap: break-word;

@@ -2,15 +2,19 @@
   height: 1.25rem;
   width: 1.25rem;
 }
+
 .vilkar {
   margin-top: 0.1875rem;
 }
+
 .contentContainer {
   flex: 1;
 }
+
 .sideMenuContainer {
   margin: 0 2rem 0 0;
 }
+
 .mainContainer--withSideMenu {
   display: flex;
   margin-left: -2rem;
