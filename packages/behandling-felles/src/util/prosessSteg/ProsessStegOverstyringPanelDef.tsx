@@ -13,23 +13,23 @@ const harVilkarresultatMedOverstyring = (aksjonspunkterForSteg, aksjonspunktDefK
 };
 
 class ProsessStegOverstyringPanelDef extends ProsessStegPanelDef {
-  overtyrtPanel: ProsessStegPanelDef;
+  overstyrtPanel: ProsessStegPanelDef;
 
   aksjonspunktKoder?: string[];
 
-  constructor(overtyrtPanel, ...aksjonspunktKoder) {
+  constructor(overstyrtPanel, ...aksjonspunktKoder) {
     super();
-    this.overtyrtPanel = overtyrtPanel;
+    this.overstyrtPanel = overstyrtPanel;
     this.aksjonspunktKoder = aksjonspunktKoder.length > 0 ? aksjonspunktKoder : undefined;
   }
 
-  getId = (): string => this.overtyrtPanel.getId();
+  getId = (): string => this.overstyrtPanel.getId();
 
-  getTekstKode = (): string => this.overtyrtPanel.getTekstKode();
+  getTekstKode = (): string => this.overstyrtPanel.getTekstKode();
 
-  getAksjonspunktKoder = (): string[] => this.aksjonspunktKoder || this.overtyrtPanel.getAksjonspunktKoder();
+  getAksjonspunktKoder = (): string[] => this.aksjonspunktKoder || this.overstyrtPanel.getAksjonspunktKoder();
 
-  getVilkarKoder = (): string[] => this.overtyrtPanel.getVilkarKoder();
+  getVilkarKoder = (): string[] => this.overstyrtPanel.getVilkarKoder();
 
   getOverstyrVisningAvKomponent = ({ vilkarForSteg, aksjonspunkterForSteg, aksjonspunktDefKoderForSteg }): boolean =>
     vilkarForSteg.length > 0 && harVilkarresultatMedOverstyring(aksjonspunkterForSteg, aksjonspunktDefKoderForSteg);

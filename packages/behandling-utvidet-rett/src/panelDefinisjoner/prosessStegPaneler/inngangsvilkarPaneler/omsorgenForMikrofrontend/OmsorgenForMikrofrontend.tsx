@@ -15,7 +15,7 @@ const initializeOmsorgenForVilkar = (
     vilkar,
     angitteBarn,
     fagsaksType,
-    harBarnSoktForRammevedtakOmKroniskSyk
+    harBarnSoktForRammevedtakOmKroniskSyk,
   },
 ) => {
   (window as any).renderMicrofrontendOmsorgsdagerApp(
@@ -29,7 +29,7 @@ const initializeOmsorgenForVilkar = (
       vilkarInformasjon: { vilkar, status },
       fagsaksType,
       FormState,
-      harBarnSoktForRammevedtakOmKroniskSyk
+      harBarnSoktForRammevedtakOmKroniskSyk,
     }),
   );
 };
@@ -37,12 +37,12 @@ const initializeOmsorgenForVilkar = (
 export default props => {
   const omsorgenForVilkårAppID = 'omsorgenForRettApp';
 
-    return (
-      <MicroFrontend
-        id={omsorgenForVilkårAppID}
-        jsSrc="/k9/microfrontend/omsorgsdager/1/app.js"
-        stylesheetSrc="/k9/microfrontend/omsorgsdager/1/styles.css"
-        onReady={() => initializeOmsorgenForVilkar(omsorgenForVilkårAppID, {...props, FormState})}
-      />
-    );
+  return (
+    <MicroFrontend
+      id={omsorgenForVilkårAppID}
+      jsSrc="/k9/microfrontend/omsorgsdager/1/app.js"
+      stylesheetSrc="/k9/microfrontend/omsorgsdager/1/styles.css"
+      onReady={() => initializeOmsorgenForVilkar(omsorgenForVilkårAppID, { ...props, FormState })}
+    />
+  );
 };

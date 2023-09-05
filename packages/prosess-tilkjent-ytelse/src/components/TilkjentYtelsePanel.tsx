@@ -72,7 +72,6 @@ export const TilkjentYtelsePanelImpl = ({
   arbeidsgiverOpplysningerPerId,
 }: Partial<PureOwnProps> & MappedOwnProps) => {
   const opphoersdato = beregningresultat?.opphoersdato;
-
   return (
     <>
       <Undertittel>

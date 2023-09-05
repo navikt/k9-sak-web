@@ -15,6 +15,25 @@ updates:
         update-types: ["version-update:semver-patch"]
     registries:
       - npm-github
+    groups:
+      react:
+        patterns:
+          - "react"
+          - "react-dom"
+          - "@types/react"
+      babel:
+        patterns:
+          - "@babel*"
+      typescript-eslint:
+        patterns:
+          - "@typescript-eslint*"
+      storybook:
+        patterns:
+          - "@storybook/*"
+        exclude-patterns:
+          - "@storybook/storybook-deployer"
+          - "@storybook/testing-react"
+          - "@storybook/testing-library"
   - package-ecosystem: github-actions
     directory: "/"
     schedule:

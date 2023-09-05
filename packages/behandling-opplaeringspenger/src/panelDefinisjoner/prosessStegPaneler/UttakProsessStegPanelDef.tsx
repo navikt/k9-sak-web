@@ -14,6 +14,8 @@ class PanelDef extends ProsessStegPanelDef {
     arbeidsgiverOpplysningerPerId,
     aksjonspunkter,
     alleKodeverk,
+    submitCallback,
+    virkningsdatoUttakNyeRegler,
   }) => (
     <Uttak
       uuid={behandling.uuid}
@@ -22,10 +24,12 @@ class PanelDef extends ProsessStegPanelDef {
       arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
       aksjonspunkter={aksjonspunkter}
       alleKodeverk={alleKodeverk}
+      submitCallback={submitCallback}
+      virkningsdatoUttakNyeRegler={virkningsdatoUttakNyeRegler}
     />
   );
 
-  getAksjonspunktKoder = () => [aksjonspunktCodes.VENT_ANNEN_PSB_SAK];
+  getAksjonspunktKoder = () => [aksjonspunktCodes.VENT_ANNEN_PSB_SAK, aksjonspunktCodes.VURDER_DATO_NY_REGEL_UTTAK];
 
   getOverstyrVisningAvKomponent = () => true;
 
@@ -53,6 +57,7 @@ class PanelDef extends ProsessStegPanelDef {
   getData = ({ uttak, arbeidsgiverOpplysningerPerId, alleKodeverk }) => ({
     uttaksperioder: uttak?.uttaksplan?.perioder,
     utsattePerioder: uttak?.utsattePerioder,
+    virkningsdatoUttakNyeRegler: uttak?.virkningsdatoUttakNyeRegler,
     arbeidsgiverOpplysningerPerId,
     alleKodeverk,
   });

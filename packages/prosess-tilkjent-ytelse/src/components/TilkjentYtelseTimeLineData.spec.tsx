@@ -79,7 +79,7 @@ describe('<TilkjentYtelseTimeLineData>', () => {
       messages,
     );
 
-    expect(wrapper.find('FormattedMessage')).toHaveLength(12);
+    expect(wrapper.find('FormattedMessage')).toHaveLength(8);
     expect(wrapper.find('FormattedMessage').at(7).props().id).toBe('TilkjentYtelse.PeriodeData.Aktivitetsstatus');
 
     expect(createVisningsnavnForAndel(selectedItemDataFL.andeler[0], getKodeverknavn, {})).toBe('Frilans');

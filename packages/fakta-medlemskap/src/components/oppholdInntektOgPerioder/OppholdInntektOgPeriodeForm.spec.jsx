@@ -36,6 +36,7 @@ describe('<OppholdInntektOgPeriodeForm>', () => {
         alleMerknaderFraBeslutter={{}}
         behandlingId={1}
         behandlingVersjon={1}
+        saksbehandlere={{ saksbeh: 'Sara Saksbehandler' }}
       />,
     );
 
@@ -84,6 +85,7 @@ describe('<OppholdInntektOgPeriodeForm>', () => {
         alleMerknaderFraBeslutter={{}}
         behandlingId={1}
         behandlingVersjon={1}
+        saksbehandlere={{ saksbeh: 'Sara Saksbehandler' }}
       />,
     );
 
@@ -133,6 +135,7 @@ describe('<OppholdInntektOgPeriodeForm>', () => {
         alleMerknaderFraBeslutter={{}}
         behandlingId={1}
         behandlingVersjon={1}
+        saksbehandlere={{ saksbeh: 'Sara Saksbehandler' }}
       />,
     );
 
@@ -180,6 +183,7 @@ describe('<OppholdInntektOgPeriodeForm>', () => {
         alleMerknaderFraBeslutter={{}}
         behandlingId={1}
         behandlingVersjon={1}
+        saksbehandlere={{ saksbeh: 'Sara Saksbehandler' }}
       />,
     );
 
@@ -227,6 +231,7 @@ describe('<OppholdInntektOgPeriodeForm>', () => {
         alleMerknaderFraBeslutter={{}}
         behandlingId={1}
         behandlingVersjon={1}
+        saksbehandlere={{ saksbeh: 'Sara Saksbehandler' }}
       />,
     );
 

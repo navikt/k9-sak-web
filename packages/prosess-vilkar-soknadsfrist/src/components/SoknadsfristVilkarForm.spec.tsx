@@ -72,6 +72,7 @@ describe('<SoknadsfristVilkarForm>', () => {
         alleDokumenter={dokumenter}
         periode={periode}
         isSolvable
+        saksbehandlere={{}}
       />,
     );
 

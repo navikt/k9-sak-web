@@ -26,14 +26,18 @@ const getOptions = (nyePerioder: PeriodeMedId[]) => {
   const lastPeriod = nyePerioder[nyePerioder.length - 1];
 
   return {
-    end: moment(lastPeriod?.tom).add(2, 'days').toDate(),
+    end: moment(lastPeriod?.tom)
+      .add(2, 'days')
+      .toDate(),
     locale: moment.locale('nb'),
     margin: { item: 10 },
     moment,
     orientation: { axis: 'top' },
     showCurrentTime: false,
     stack: false,
-    start: moment(firstPeriod?.fom).subtract(1, 'days').toDate(),
+    start: moment(firstPeriod?.fom)
+      .subtract(1, 'days')
+      .toDate(),
     tooltip: { followMouse: true },
     width: '100%',
     zoomMax: 1000 * 60 * 60 * 24 * 31 * 40,
@@ -71,11 +75,10 @@ const createTooltipContent = (intl, item, getKodeverknavn, arbeidsgiverOpplysnin
                 {
                   arbeidsgiver: createVisningsnavnForAndel(andel, getKodeverknavn, arbeidsgiverOpplysningerPerId),
                   dagsatsPerAndel: Number(andel.refusjon) + Number(andel.tilSoker),
-                  br: '<br />',
                 },
               ),
             )
-            .join('')
+            .join('<br />')
         : ''
     }
    </p>

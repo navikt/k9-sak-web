@@ -42,7 +42,7 @@ const getHeaderCodes = (showCollapseButton, collapseProps, rangeOfMonths, nextPe
         })}
         key={`${month.month}-${month.year}`}
       >
-        <FormattedMessage id={`Avregning.headerText.${month.month}`} />
+        <FormattedMessage id={`Avregning.headerText.${month.month}`} /> {month.year}
       </span>
     )),
   ];

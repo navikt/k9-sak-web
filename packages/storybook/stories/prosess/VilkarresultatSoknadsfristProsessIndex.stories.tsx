@@ -294,6 +294,8 @@ export const visSoknadsfristAksjonspunkt5077Delvis = () => {
                 'sdklfjsøl jølsdjfø lsjdfljsldøjf sdjf slødjf sld\n\n\n',
                 'sldfj sljfølsjd fløsdlfj øsldjf lsøjdfølsdjfløsjd lsdfs',
               ].join(''),
+              opprettetAv: 'saksbeh',
+              opprettetTidspunkt: '2021-08-26T16:17:16.538',
             },
             overstyrteOpplysninger: null,
           },
