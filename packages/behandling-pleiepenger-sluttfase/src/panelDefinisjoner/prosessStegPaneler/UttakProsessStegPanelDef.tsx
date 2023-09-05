@@ -18,6 +18,7 @@ class PanelDef extends ProsessStegPanelDef {
     aksjonspunkter,
     erFagytelsetypeLivetsSluttfase,
     submitCallback,
+    virkningsdatoUttakNyeRegler,
   }) => (
     <>
       <AntallDagerLivetsSluttfaseIndex kvoteInfo={kvoteInfo} />
@@ -29,6 +30,7 @@ class PanelDef extends ProsessStegPanelDef {
         aksjonspunkter={aksjonspunkter}
         erFagytelsetypeLivetsSluttfase={erFagytelsetypeLivetsSluttfase}
         submitCallback={submitCallback}
+        virkningsdatoUttakNyeRegler={virkningsdatoUttakNyeRegler}
       />
     </>
   );
@@ -62,6 +64,7 @@ class PanelDef extends ProsessStegPanelDef {
     uttaksperioder: uttak?.uttaksplan?.perioder,
     utsattePerioder: uttak?.utsattePerioder,
     kvoteInfo: uttak?.uttaksplan?.kvoteInfo,
+    virkningsdatoUttakNyeRegler: uttak?.virkningsdatoUttakNyeRegler,
     arbeidsgiverOpplysningerPerId,
     erFagytelsetypeLivetsSluttfase: fagsak.sakstype.kode === fagsakYtelseType.PLEIEPENGER_SLUTTFASE,
   });

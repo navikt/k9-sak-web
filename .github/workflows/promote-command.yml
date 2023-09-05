@@ -8,6 +8,9 @@ env:
 jobs:
   promote:
     runs-on: ubuntu-latest
+    permissions:
+      issues: write
+      packages: write
     steps:
       - name: Henter informasjon fra issuet
         id: issue_comment
