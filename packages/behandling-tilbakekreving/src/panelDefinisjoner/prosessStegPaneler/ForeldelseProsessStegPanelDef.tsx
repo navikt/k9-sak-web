@@ -11,9 +11,15 @@ import ForeldelseProsessIndexWrapper from '../../components/ForeldelseProsessInd
 class PanelDef extends ProsessStegPanelDef {
   getKomponent = props => {
     const deepCopyProps = JSON.parse(JSON.stringify(props));
-    konverterKodeverkTilKode(deepCopyProps);
+    konverterKodeverkTilKode(deepCopyProps, true);
     console.log('deepCopyProps', deepCopyProps); // Må teste denne i Q et lite sekund
-    return <ForeldelseProsessIndexWrapper {...deepCopyProps} kodeverkSamling={deepCopyProps.alleKodeverk} />;
+    return (
+      <ForeldelseProsessIndexWrapper
+        {...deepCopyProps}
+        kodeverkSamling={deepCopyProps.alleKodeverk}
+        submitCallback={props.submitCallback}
+      />
+    );
   };
 
   getOverstyrVisningAvKomponent = () => true;
