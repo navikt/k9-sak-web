@@ -7,7 +7,6 @@ import {
   InformasjonTilLesemodusKroniskSyk,
   VilkarKroniskSyktBarnProps,
 } from '../../../../../types/utvidetRettMikrofrontend/VilkarKroniskSyktBarnProps';
-import AvslagskoderKroniskSyk from '../../../../../types/utvidetRettMikrofrontend/AvslagskoderKroniskSyk';
 import UtvidetRettSoknad from '../../../../../types/UtvidetRettSoknad';
 
 interface OwnProps {
@@ -25,14 +24,15 @@ const formatereLosAksjonspunktObjektForKroniskSyk = (
   aksjonspunktKode: string,
   begrunnelse: string,
   erVilkarOk: boolean,
-  avslagsArsakErIkkeRiskioFraFravaer: boolean,
   fraDato: string,
   vilkar: Vilkar,
+  avslagsårsakKode: string,
 ) => {
   const losAksjonspunktObjekt = {
     kode: aksjonspunktKode,
     begrunnelse,
     erVilkarOk,
+    avslagsårsak: erVilkarOk ? null : avslagsårsakKode,
     periode: {
       fom: fraDato,
       tom:
@@ -42,12 +42,6 @@ const formatereLosAksjonspunktObjektForKroniskSyk = (
     },
   };
 
-  if (!erVilkarOk) {
-    losAksjonspunktObjekt['avslagsårsak'] = avslagsArsakErIkkeRiskioFraFravaer
-      ? AvslagskoderKroniskSyk.IKKE_OKT_RISIKO_FRA_FRAVAER
-      : AvslagskoderKroniskSyk.IKKE_KRONISK_SYK_ELLER_FUNKSJONSHEMMET;
-  }
-
   return losAksjonspunktObjekt;
 };
 
@@ -56,15 +50,14 @@ const formatereLesemodusObjektForKroniskSyk = (vilkar: Vilkar, aksjonspunkt: Aks
     return {
       begrunnelse: aksjonspunkt.begrunnelse,
       vilkarOppfylt: vilkar.perioder[0].vilkarStatus.kode === vilkarUtfallType.OPPFYLT,
-      avslagsArsakErIkkeRiskioFraFravaer:
-        vilkar.perioder[0]?.avslagKode === AvslagskoderKroniskSyk.IKKE_OKT_RISIKO_FRA_FRAVAER,
+      avslagsårsakKode: vilkar.perioder[0].avslagKode,
       fraDato: vilkar.perioder[0].periode.fom,
     } as InformasjonTilLesemodusKroniskSyk;
   }
   return {
     begrunnelse: '',
     vilkarOppfylt: false,
-    avslagsArsakErIkkeRiskioFraFravaer: false,
+    avslagsårsakKode: '',
     fraDato: '',
   } as InformasjonTilLesemodusKroniskSyk;
 };
@@ -93,15 +86,15 @@ const KroniskSykObjektTilMikrofrontend = ({
       aksjonspunkt.begrunnelse,
       'Utvidet Rett',
     ),
-    losAksjonspunkt: (harDokumentasjonOgFravaerRisiko, begrunnelse, avslagsArsakErIkkeRiskioFraFravaer, fraDato) => {
+    losAksjonspunkt: (harDokumentasjonOgFravaerRisiko, begrunnelse, avslagsårsakKode, fraDato) => {
       submitCallback([
         formatereLosAksjonspunktObjektForKroniskSyk(
           aksjonspunkt.definisjon.kode,
           begrunnelse,
           harDokumentasjonOgFravaerRisiko,
-          avslagsArsakErIkkeRiskioFraFravaer,
           fraDato || soknad.soknadsdato,
           vilkar,
+          avslagsårsakKode,
         ),
       ]);
     },
