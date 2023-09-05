@@ -27,8 +27,7 @@ jobs:
       - name: Sette opp Node
         uses: actions/setup-node@v3
         with:
-          node-version: "18"
-          
+          node-version: '18'
 
       - name: Installere dependencies
         run: HUSKY=0 yarn install --immutable
@@ -37,7 +36,7 @@ jobs:
         run: yarn ts-check
 
       - name: Linting
-        run: yarn less:lint
+        run: yarn css:lint
 
       - name: Sjekker at koden bygger
         if: ${{inputs.run-build}}
