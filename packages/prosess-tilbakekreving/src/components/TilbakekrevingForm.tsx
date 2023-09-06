@@ -378,7 +378,7 @@ export const slaSammenOriginaleOgLagredePeriode = createSelector(
     const erTotalBelopUnder4Rettsgebyr = totalbelop < rettsgebyr * 4;
     const lagredeVilkarsvurdertePerioder = vilkarsvurdering?.vilkarsVurdertePerioder;
 
-    const lagredePerioder = lagredeVilkarsvurdertePerioder.map((lagretPeriode: VilkarsVurdertPeriode) => {
+    const lagredePerioder = lagredeVilkarsvurdertePerioder?.map((lagretPeriode: VilkarsVurdertPeriode) => {
       const originalPeriode = finnOriginalPeriode(lagretPeriode, perioder);
       return {
         ...originalPeriode,
