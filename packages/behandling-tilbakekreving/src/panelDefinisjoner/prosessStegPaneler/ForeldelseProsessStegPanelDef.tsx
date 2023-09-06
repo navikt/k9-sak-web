@@ -19,6 +19,7 @@ class PanelDef extends ProsessStegPanelDef {
       console.log('submit', values);
       props.submitCallback(values);
     };
+    
     return (
       <ForeldelseProsessIndexWrapper
         {...deepCopyProps}
