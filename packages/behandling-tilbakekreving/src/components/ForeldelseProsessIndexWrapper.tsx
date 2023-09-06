@@ -22,11 +22,13 @@ const ForeldelseProsessIndexWrapper: React.FC = (props: any) => {
 
   const relasjonsRolleType = fagsakPerson.erKvinne ? RelasjonsRolleType.MOR : RelasjonsRolleType.FAR;
 
+  const submitForeldelse = (values: any) => submitCallback([values]);
+
   return (
     <ForeldelseProsessIndex
       behandling={behandling}
       perioderForeldelse={perioderForeldelse}
-      submitCallback={submitCallback}
+      submitCallback={submitForeldelse}
       isReadOnly={isReadOnly}
       aksjonspunkter={aksjonspunkter}
       beregnBelop={beregnBelop}
