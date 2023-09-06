@@ -16,7 +16,7 @@ class PanelDef extends ProsessStegPanelDef {
     return (
       <ForeldelseProsessIndexWrapper
         {...deepCopyProps}
-        kodeverkSamling={deepCopyProps.alleKodeverk}
+        kodeverkSamling={props.alleKodeverk}
         submitCallback={props.submitCallback}
       />
     );
