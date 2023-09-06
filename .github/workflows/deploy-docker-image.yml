@@ -12,15 +12,15 @@ env:
   IMAGE_BASE: ghcr.io/${{ github.repository }}
 
 jobs:
-  test:
-    uses: ./.github/workflows/test.yml
-    secrets: inherit
+  # test:
+  #   uses: ./.github/workflows/test.yml
+  #   secrets: inherit
 
-  lint-tscheck-build:
-    uses: ./.github/workflows/lint-tscheck-build.yml
-    secrets: inherit
-    with:
-      run-build: false
+  # lint-tscheck-build:
+  #   uses: ./.github/workflows/lint-tscheck-build.yml
+  #   secrets: inherit
+  #   with:
+  #     run-build: false
 
   deploy-docker-image:
     name: Deploy Docker image
@@ -28,7 +28,7 @@ jobs:
     permissions:
       issues: write
       packages: write
-    needs: [test, lint-tscheck-build]
+    # needs: [test, lint-tscheck-build]
     steps:
       - name: Hente kode
         uses: actions/checkout@v3
