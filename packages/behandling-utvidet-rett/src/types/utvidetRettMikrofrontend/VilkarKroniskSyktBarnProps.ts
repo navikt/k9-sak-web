@@ -9,13 +9,18 @@ export interface VilkarKroniskSyktBarnProps {
   informasjonOmVilkar?: InformasjonOmVurdertVilkar;
   lesemodus: boolean;
   informasjonTilLesemodus?: InformasjonTilLesemodusKroniskSyk;
-  losAksjonspunkt: (endreHarDokumentasjonOgFravaerRisiko, begrunnelse, avslagsKode, fraDato) => void;
+  losAksjonspunkt: (
+    endreHarDokumentasjonOgFravaerRisiko: boolean,
+    begrunnelse: string,
+    avslagsårsakKode: string,
+    fraDato: string,
+  ) => void;
   formState: FormStateType;
 }
 
 export interface InformasjonTilLesemodusKroniskSyk {
   begrunnelse: string;
   vilkarOppfylt: boolean;
-  avslagsArsakErIkkeRiskioFraFravaer: boolean;
+  avslagsårsakKode: string;
   fraDato: string;
 }
