@@ -18,7 +18,7 @@
   left: 0;
   width: 6px;
   height: 6px;
-  background: #fff;
+  background: var(--a-white);
   border: 6px solid #ba3a26;
   border-radius: 50%;
   transform: translate(-8.5px, -9.5px);

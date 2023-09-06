@@ -146,7 +146,7 @@
 }
 
 .skalaRadioInput:focus-visible + label {
-  box-shadow: 0 0 0 3px #00347d;
+  box-shadow: 0 0 0 3px var(--a-blue-800);
 }
 
 .skalaRadioInput:first-of-type + label {

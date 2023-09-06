@@ -1,5 +1,5 @@
 .infoSummary {
-  background-color: #fff2e0;
+  background-color: var(--a-white) 2;
   height: auto;
   max-width: 500px;
   padding: 10px 20px 10px;
@@ -25,13 +25,13 @@
 }
 
 .resultSum .redNumbers .redNumber {
-  color: #c30000;
+  color: var(--a-nav-red);
   font-weight: bold;
   margin-left: 8px;
 }
 
 .resultSum .redNumbers .lastNumberRed {
-  color: #c30000;
+  color: var(--a-nav-red);
   font-weight: bold;
   padding-left: 15px;
 }

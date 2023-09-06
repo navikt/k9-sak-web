@@ -5,8 +5,8 @@
 }
 
 .gronnBar {
-  background-color: #99dead;
-  border: 1px solid #06893a;
+  background-color: var(--a-green-200);
+  border: 1px solid var(--a-green-500);
   border-radius: 1.5rem;
   box-sizing: border-box;
   height: 2rem;
@@ -14,8 +14,8 @@
 }
 
 .gulBar {
-  background-color: #ffd799;
-  border: 1px solid #ff9100;
+  background-color: var(--a-orange-200);
+  border: 1px solid var(--a-orange-500);
   border-radius: 1.5rem;
   box-sizing: border-box;
   height: 2rem;

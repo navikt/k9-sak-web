@@ -1,7 +1,7 @@
 .addButton {
   display: flex;
   padding: 0;
-  color: #0067c5;
+  color: var(--a-blue-500);
   border: none;
   background: none;
   height: 23px;

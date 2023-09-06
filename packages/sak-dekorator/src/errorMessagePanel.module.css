@@ -1,6 +1,6 @@
 .container {
   background-color: #ba3a26;
-  color: #fff;
+  color: var(--a-white);
   display: block;
   max-height: 120px;
   min-height: 53px;
@@ -15,8 +15,8 @@
 .link {
   background: none;
   border: 0;
-  border-bottom: solid 1px #fff;
-  color: #fff;
+  border-bottom: solid 1px var(--a-white);
+  color: var(--a-white);
   cursor: pointer;
   padding: 0;
   text-decoration: none;

@@ -1,7 +1,7 @@
 .tooltip {
   position: absolute;
   padding: 0.5rem 1rem;
-  background: #fff;
+  background: var(--a-white);
   border-radius: 4px;
   border: 1px solid #78706a;
   color: #3e3832;
@@ -21,7 +21,7 @@
   position: absolute;
   width: 10px;
   height: 10px;
-  background: #fff;
+  background: var(--a-white);
   left: 50%;
   bottom: -1px;
   border-bottom: 1px solid #78706a;

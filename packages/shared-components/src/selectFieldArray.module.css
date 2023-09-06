@@ -1,5 +1,5 @@
 .buttonRemove {
-  background: #fff url('~@fpsak-frontend/assets/images/remove.svg') no-repeat;
+  background: var(--a-white) url('~@fpsak-frontend/assets/images/remove.svg') no-repeat;
   background-size: 100% 100%;
   border: 0;
   cursor: pointer;
@@ -12,7 +12,7 @@
 }
 
 .buttonAdd {
-  background: #fff url('~@fpsak-frontend/assets/images/add-circle.svg') no-repeat;
+  background: var(--a-white) url('~@fpsak-frontend/assets/images/add-circle.svg') no-repeat;
   background-size: contain;
   border: 0;
   cursor: pointer;

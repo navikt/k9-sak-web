@@ -21,7 +21,7 @@ button.periode:focus {
 
 .infoPin {
   position: absolute;
-  background: #0067c5;
+  background: var(--a-blue-500);
   height: 6px;
   width: 2px;
   top: 0;
@@ -35,7 +35,7 @@ button.periode:focus {
   top: 0;
   width: 10px;
   height: 10px;
-  background: #0067c5;
+  background: var(--a-blue-500);
   transform: translate(-5px, -100%);
   border-radius: 50%;
 }
@@ -85,7 +85,7 @@ button.periode:focus {
 }
 
 .advarsel {
-  background: #ffeccc;
+  background: var(--a-orange-100);
   border: 1px solid #d47b00;
 }
 
@@ -97,7 +97,7 @@ button.periode:focus {
 
 button.advarsel {
   background: #ffe9cc;
-  border: 1px solid #ff9100;
+  border: 1px solid var(--a-orange-500);
 }
 
 button.advarsel:hover,
@@ -162,8 +162,8 @@ button.inaktiv:focus {
 }
 
 .suksess {
-  background: #99dead;
-  border: 1px solid #06893a;
+  background: var(--a-green-200);
+  border: 1px solid var(--a-green-500);
 }
 
 .suksess:hover,
@@ -173,25 +173,49 @@ button.inaktiv:focus {
 }
 
 .suksessRevurder {
-  background: repeating-linear-gradient(-45deg, #99dead, #99dead 10px, #ffeccc 10px, #ffeccc 20px);
-  border: 1px solid #06893a;
+  background: repeating-linear-gradient(
+    -45deg,
+    var(--a-green-200),
+    var(--a-green-200) 10px,
+    var(--a-orange-100) 10px,
+    var(--a-orange-100) 20px
+  );
+  border: 1px solid var(--a-green-500);
 }
 
 .suksessRevurder:hover,
 .suksessRevurder.active,
 .suksessRevurder:focus {
-  background: repeating-linear-gradient(-45deg, #99dead, #99dead 10px, #ffeccc 10px, #ffeccc 20px);
+  background: repeating-linear-gradient(
+    -45deg,
+    var(--a-green-200),
+    var(--a-green-200) 10px,
+    var(--a-orange-100) 10px,
+    var(--a-orange-100) 20px
+  );
 }
 
 .suksessDelvis {
-  background: repeating-linear-gradient(-45deg, #99dead, #99dead 10px, #ccf1d6 10px, #ccf1d6 20px);
-  border: 1px solid #06893a;
+  background: repeating-linear-gradient(
+    -45deg,
+    var(--a-green-200),
+    var(--a-green-200) 10px,
+    var(--a-green-100) 10px,
+    var(--a-green-100) 20px
+  );
+  border: 1px solid var(--a-green-500);
 }
 
 .suksessDelvis:hover,
 .suksessDelvis.active,
 .suksessDelvis:focus {
-  background: repeating-linear-gradient(-45deg, #99dead, #99dead 10px, #ccf1d6 10px, #ccf1d6 20px);
+  background: repeating-linear-gradient(
+    -45deg,
+    var(--a-green-200),
+    var(--a-green-200) 10px,
+    var(--a-green-100) 10px,
+    var(--a-green-100) 20px
+  );
 }
 
 button.suksess {

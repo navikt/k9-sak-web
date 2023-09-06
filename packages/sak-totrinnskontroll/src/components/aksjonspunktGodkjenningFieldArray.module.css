@@ -16,5 +16,5 @@
 }
 
 .lenke {
-  color: #0067c5;
+  color: var(--a-blue-500);
 }

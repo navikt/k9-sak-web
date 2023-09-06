@@ -1,5 +1,5 @@
 .nokkeltall article {
-  background-color: #fff;
+  background-color: var(--a-white);
   box-shadow: 2px 2px 2px -1px #c9c9c9;
   margin-bottom: 0.5em;
   outline: 1px solid #f1f1f1;
@@ -32,7 +32,7 @@
 
 .overskrift:focus .knapp {
   border-radius: 5px;
-  outline: 2px solid #0067c5;
+  outline: 2px solid var(--a-blue-500);
 }
 
 .overskrift:focus .knapp:hover {
@@ -46,7 +46,7 @@
 .knapp {
   background-color: inherit;
   border: none;
-  color: #0067c5;
+  color: var(--a-blue-500);
   font-size: 0.9em;
   padding: 0.2em;
   text-decoration: underline;
@@ -58,11 +58,11 @@
 }
 
 .dagerNavKanUtbetale .overskrift {
-  border-color: #634689;
+  border-color: var(--a-purple-500);
 }
 
 .dagerSokerHarRettPa .overskrift {
-  border-color: #66cbec;
+  border-color: #var(--a-lightblue-500);
 }
 
 .dagerNavHarUtbetalt .overskrift {
@@ -70,7 +70,7 @@
 }
 
 .restdager .overskrift {
-  border-color: #06893a;
+  border-color: var(--a-green-500);
 }
 
 .overskrifttekst {
@@ -120,7 +120,7 @@ tbody:nth-child(odd) .banner {
 
 .detaljer {
   align-items: baseline;
-  border-left: 5px solid #fff;
+  border-left: 5px solid var(--a-white);
   display: flex;
   flex-wrap: nowrap;
 }
@@ -240,7 +240,7 @@ tbody:nth-child(odd) .banner {
 .knappForAlleUtregninger {
   background-color: inherit;
   border: none;
-  color: #0067c5;
+  color: var(--a-blue-500);
   font-size: 0.9em;
   margin-left: auto;
   padding: 0.2em;
@@ -253,7 +253,7 @@ tbody:nth-child(odd) .banner {
 }
 
 .knappForAlleUtregninger:focus {
-  outline: 2px solid #0067c5;
+  outline: 2px solid var(--a-blue-500);
 }
 
 .knappForAlleUtregninger img {

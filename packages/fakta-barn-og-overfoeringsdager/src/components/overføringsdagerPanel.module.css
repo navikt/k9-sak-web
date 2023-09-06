@@ -12,8 +12,8 @@
 
 /* stylelint-disable */
 .koronapanel > * {
-  border: 1px solid #ffaa33 !important;
-  border-left: 8px solid #ffaa33 !important;
+  border: 1px solid #var(--a-orange-400) !important;
+  border-left: 8px solid #var(--a-orange-400) !important;
 }
 
 /* stylelint-enable */

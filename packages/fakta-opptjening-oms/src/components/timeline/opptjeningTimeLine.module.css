@@ -6,7 +6,7 @@
 /* our custom classes overrule the styles for selected events,
    so lets define a new style for the selected events */
 .vis-item.vis-selected {
-  background-color: #fff;
+  background-color: var(--a-white);
   border-color: black;
   box-shadow: 0 0 10px gray;
   color: black;

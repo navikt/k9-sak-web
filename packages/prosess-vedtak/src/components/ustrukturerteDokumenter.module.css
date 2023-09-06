@@ -1,5 +1,5 @@
 .ustrukturerteDokumenter {
-  border: 2px solid #ff9100;
+  border: 2px solid var(--a-orange-500);
   border-radius: 0.25rem;
   margin: 2rem 0 2.875rem;
   max-width: 46rem;

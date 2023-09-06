@@ -20,6 +20,6 @@
 }
 
 .previewLink {
-  color: #0067c5;
+  color: var(--a-blue-500);
   font-weight: bold;
 }

@@ -16,7 +16,7 @@
 .vurderingsperiodeElement__texts__period {
   display: inline-block;
   margin: 0;
-  color: #0067c5;
+  color: var(--a-blue-500);
   text-decoration: underline;
   min-width: 10.125rem;
 }

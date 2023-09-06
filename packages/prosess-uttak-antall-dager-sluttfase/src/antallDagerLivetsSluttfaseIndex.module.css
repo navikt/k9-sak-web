@@ -13,7 +13,7 @@
 }
 
 .sistePleiedagBoks {
-  background-color: #99c3ff;
+  background-color: var(--a-blue-200);
   border-radius: 8px;
   padding: 0 1rem 0 1rem;
 }

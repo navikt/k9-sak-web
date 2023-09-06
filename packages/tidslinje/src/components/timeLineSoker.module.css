@@ -32,7 +32,7 @@
 }
 
 .scrollButton {
-  background-color: #fff;
+  background-color: var(--a-white);
   border: 1px solid lightgray;
   border-bottom: 1px solid lightgrey;
   border-image: none;
@@ -44,15 +44,15 @@
 }
 
 .scrollButton:focus {
-  background-color: #ffc166;
-  border-bottom: 2px solid #0067c5;
-  color: #0067c5;
+  background-color: var(--a-orange-300);
+  border-bottom: 2px solid var(--a-blue-500);
+  color: var(--a-blue-500);
   padding-bottom: 4px;
   text-decoration: none;
 }
 
 .scrollButton:focus:hover {
-  color: #0067c5;
+  color: var(--a-blue-500);
 }
 
 .chevronLeft {

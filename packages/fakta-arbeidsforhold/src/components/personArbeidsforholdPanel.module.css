@@ -1,5 +1,5 @@
 .leggTilArbeidsforholdButton {
-  background: #fff url('~@fpsak-frontend/assets/images/add-circle.svg') no-repeat;
+  background: var(--a-white) url('~@fpsak-frontend/assets/images/add-circle.svg') no-repeat;
   background-size: contain;
   border: 0;
   cursor: pointer;
@@ -38,14 +38,14 @@
 
 .visLukkArbeidsforhold {
   border: 0;
-  color: #0067c5;
+  color: var(--a-blue-500);
   font-size: 16px;
   text-decoration: underline;
   width: max-content;
 }
 
 .knappContainer {
-  background: #fff no-repeat;
+  background: var(--a-white) no-repeat;
   border: none;
   display: inline-flex;
   outline: none;

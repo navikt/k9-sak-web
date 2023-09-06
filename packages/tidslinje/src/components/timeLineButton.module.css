@@ -1,5 +1,5 @@
 .timeLineButton {
-  background-color: #fff;
+  background-color: var(--a-white);
   border: 0 solid;
   height: 26px;
   margin-left: 4px;
@@ -30,7 +30,7 @@
 }
 
 .timeLineButtonInverted {
-  background-color: #fff;
+  background-color: var(--a-white);
   border: 0 solid;
   height: 26px;
   margin-bottom: 0;

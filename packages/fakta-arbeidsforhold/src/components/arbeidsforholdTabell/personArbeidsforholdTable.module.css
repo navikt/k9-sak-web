@@ -1,6 +1,6 @@
 .visLukkPermisjon {
   border: 0;
-  color: #0067c5;
+  color: var(--a-blue-500);
   font-size: 16px;
   text-decoration: underline;
   width: max-content;

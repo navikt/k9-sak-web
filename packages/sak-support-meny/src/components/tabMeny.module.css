@@ -28,25 +28,25 @@
 }
 
 .button.active {
-  border-bottom: 0.25rem solid #0067c5;
+  border-bottom: 0.25rem solid var(--a-blue-500);
   cursor: default;
   padding-bottom: 0;
 }
 
 .button.active:hover {
   background-color: white;
-  border-bottom: 0.25rem solid #0067c5;
+  border-bottom: 0.25rem solid var(--a-blue-500);
 }
 
 .button:hover {
   background-color: #f1f1f1;
-  border-bottom: 0.25rem solid #0067c5;
+  border-bottom: 0.25rem solid var(--a-blue-500);
   padding-bottom: 0;
 }
 
 .button:focus {
-  border-bottom: 0.25rem solid #0067c5;
-  box-shadow: 0 0 0 3px #00347d;
+  border-bottom: 0.25rem solid var(--a-blue-500);
+  box-shadow: 0 0 0 3px var(--a-blue-800);
   outline: none;
   padding-bottom: 0;
   z-index: 2;
@@ -60,7 +60,7 @@
 }
 
 .button[data-tooltip]:before {
-  background-color: #fff2e0;
+  background-color: var(--a-white) 2;
   border-radius: 4px;
   bottom: -20px;
   box-shadow: 0 1px 2px 0 #a0a0a0;

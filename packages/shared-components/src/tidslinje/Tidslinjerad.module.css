@@ -12,7 +12,7 @@
   height: 1.5rem;
   width: 100%;
   border: none;
-  background-color: #e6f0ff;
+  background-color: var(--a-blue-50);
   margin-top: 0;
   margin-bottom: 1rem;
 }

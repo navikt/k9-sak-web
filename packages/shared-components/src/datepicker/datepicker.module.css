@@ -13,7 +13,7 @@
   font-weight: 400;
   appearance: none;
   padding: 0.5rem;
-  background-color: #fff;
+  background-color: var(--a-white);
   border-radius: 4px;
   line-height: 1.375rem;
   background: transparent;
@@ -31,11 +31,11 @@
 
 .calendarToggleButton:focus {
   outline: 0;
-  box-shadow: 0 0 0 3px #00347d;
+  box-shadow: 0 0 0 3px var(--a-blue-800);
 }
 
 .calendarToggleButton:hover {
-  border-color: #0067c5;
+  border-color: var(--a-blue-500);
 }
 
 .calendarToggleButton:disabled,
@@ -57,11 +57,11 @@
 
 .calendarToggleButton:focus {
   outline: 0;
-  box-shadow: 0 0 0 3px #00347d;
+  box-shadow: 0 0 0 3px var(--a-blue-800);
 }
 
 .calendarToggleButton:hover {
-  border-color: #0067c5;
+  border-color: var(--a-blue-500);
 }
 
 .calendarToggleButton:disabled,
@@ -120,7 +120,7 @@
 }
 
 .calendarWrapper {
-  background: #fff;
+  background: var(--a-white);
   border: 1px solid #a0a0a0;
   border-radius: 4px;
   left: 0;

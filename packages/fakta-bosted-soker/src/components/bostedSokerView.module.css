@@ -1,6 +1,6 @@
 .dodEtikett {
   background-color: #262626;
-  color: #fff;
+  color: var(--a-white);
 }
 
 .defaultBostedSoker {

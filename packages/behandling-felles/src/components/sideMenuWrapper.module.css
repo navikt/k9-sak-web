@@ -1,5 +1,5 @@
 .container {
-  background-color: #fff;
+  background-color: var(--a-white);
 }
 
 @media screen and (min-width: 1350px) {

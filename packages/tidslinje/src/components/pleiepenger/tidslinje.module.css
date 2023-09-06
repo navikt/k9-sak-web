@@ -2,7 +2,7 @@
   animation-duration: 400ms;
   animation-name: fadein;
   animation-timing-function: ease-out;
-  background-color: #fff;
+  background-color: var(--a-white);
   max-height: 1600px;
   position: relative;
   transition: all 400ms;

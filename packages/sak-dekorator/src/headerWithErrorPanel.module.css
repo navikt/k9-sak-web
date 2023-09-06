@@ -1,6 +1,6 @@
 .container {
   background-color: #262626;
-  color: #fff;
+  color: var(--a-white);
   font-size: 20px;
   position: fixed;
   top: 0;

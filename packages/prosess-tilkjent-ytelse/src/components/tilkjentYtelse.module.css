@@ -6,7 +6,7 @@
 /* our custom classes overrule the styles for selected events,
    so lets define a new style for the selected events */
 .vis-item.vis-selected {
-  background-color: #fff;
+  background-color: var(--a-white);
   border-color: black;
   box-shadow: 0 0 10px gray;
   color: black;
@@ -20,7 +20,7 @@
   animation-duration: 2s;
   animation-name: fadein;
   animation-timing-function: ease-out;
-  background-color: #fff;
+  background-color: var(--a-white);
   max-height: 1600px;
   position: relative;
   transition: all 2s;
@@ -86,7 +86,7 @@
 }
 
 .detailsPeriode {
-  background-color: #ccf1d6;
+  background-color: var(--a-green-100);
   margin-right: 8px;
   max-width: 500px;
   padding: 16px;

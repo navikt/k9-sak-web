@@ -14,7 +14,7 @@
 }
 
 .simuleringTable .rodTekst {
-  color: #c30000;
+  color: var(--a-nav-red);
 }
 
 .simuleringTable .lastColumn {

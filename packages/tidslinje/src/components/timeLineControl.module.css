@@ -41,7 +41,7 @@
 }
 
 .popUnderContent {
-  background-color: #fff;
+  background-color: var(--a-white);
   border: 1px solid lightgrey;
   left: -40px;
   min-width: 560px;
@@ -67,7 +67,7 @@
 }
 
 .popUnderContent:after {
-  border-color: transparent transparent #fff;
+  border-color: transparent transparent var(--a-white);
   border-style: solid;
   border-width: 0 19px 9px 19px;
   content: '';

@@ -15,6 +15,6 @@
 }
 
 .redText {
-  color: #c30000;
+  color: var(--a-nav-red);
   font-weight: bold;
 }

@@ -7,7 +7,7 @@
 }
 
 .behandlingSelectedContainer.aapen {
-  background: #fff9f0;
+  background: var(--a-white);
   border: 1px solid #d47b00;
 }
 
@@ -118,7 +118,7 @@
 
 .behandlingSelectedContainer .årsakerList li:before {
   align-items: center;
-  background-color: #0067c5;
+  background-color: var(--a-blue-500);
   border-radius: 50%;
   content: '';
   display: flex;

@@ -17,7 +17,7 @@
 }
 
 .medisinskVilkår :global .nav-frontend-tabs__tab-inner--aktiv .nav-frontend-tabs__tab-label {
-  border-bottom: 2px solid #0067c5;
+  border-bottom: 2px solid var(--a-blue-500);
 }
 
 .medisinskVilkår :global .alertstripe {

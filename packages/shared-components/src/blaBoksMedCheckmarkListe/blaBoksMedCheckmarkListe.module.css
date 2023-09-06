@@ -4,7 +4,7 @@
 
 .container {
   background-color: rgba(204, 225, 243, 0.26);
-  border: 1px solid #368da8;
+  border: 1px solid var(--a-lightblue-700);
   border-radius: 4px;
   padding: 1rem 1rem 0 1rem;
 }

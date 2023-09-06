@@ -22,7 +22,7 @@
 
 .step__arrow-container .step__arrow:after {
   border-color: rgba(255, 255, 255, 0);
-  border-bottom-color: #fff;
+  border-bottom-color: var(--a-white);
   border-width: 12px;
   margin-left: -12px;
 }

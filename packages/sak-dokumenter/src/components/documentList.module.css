@@ -31,12 +31,12 @@
 }
 
 .documentAnchor {
-  color: #0067c5;
+  color: var(--a-blue-500);
   text-decoration: underline;
 }
 
 .documentAnchor:visited {
-  color: #634689;
+  color: var(--a-purple-500);
 }
 
 .documentAnchorPlain {

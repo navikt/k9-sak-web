@@ -14,7 +14,7 @@
 
 :global(.snakkeboble__ikon).snakkeboble__ikon--saksbehandler {
   background: url('~@fpsak-frontend/assets/images/nav_ansatt_historikk.svg');
-  background-color: #634689;
+  background-color: var(--a-purple-500);
   background-position-x: 6px;
   background-position-y: 2px;
   background-size: contain;
@@ -48,11 +48,11 @@
 }
 
 .snakkeboble .snakkeboble__snakkebole-panel--saksbehandler {
-  background-color: #e0d8e9;
+  background-color: var(--a-purple-100);
 }
 
 .snakkeboble .snakkeboble__snakkebole-panel--beslutter {
-  background-color: #ccf1d6;
+  background-color: var(--a-green-100);
 }
 
 .snakkeboble .snakkeboble__snakkebole-panel--losningen {
@@ -60,11 +60,11 @@
 }
 
 .snakkeboble .snakkeboble__snakkebole-panel--bruker {
-  background-color: #fff2e0;
+  background-color: var(--a-white) 2;
 }
 
 .snakkeboble .snakkeboble__snakkebole-panel--ekstern {
-  background-color: #d8f9ff;
+  background-color: var(--a-lightblue-100);
 }
 
 @media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {

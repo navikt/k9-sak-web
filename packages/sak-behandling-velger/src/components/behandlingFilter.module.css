@@ -34,7 +34,7 @@
 .chevronDropdown__toggleButton {
   background: none;
   border: none;
-  color: #0067c5;
+  color: var(--a-blue-500);
   padding: unset;
 }
 
