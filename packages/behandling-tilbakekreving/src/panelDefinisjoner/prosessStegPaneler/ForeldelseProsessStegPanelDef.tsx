@@ -25,6 +25,7 @@ class PanelDef extends ProsessStegPanelDef {
         {...deepCopyProps}
         kodeverkSamling={props.alleKodeverk}
         submitCallback={tempSubmitCallback}
+        beregnBelop={props.beregnBelop}
       />
     );
   };
