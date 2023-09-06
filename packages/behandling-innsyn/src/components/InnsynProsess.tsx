@@ -12,7 +12,6 @@ import {
 } from '@k9-sak-web/behandling-felles';
 import { Behandling, Fagsak, FagsakPerson, FeatureToggles, KodeverkMedNavn } from '@k9-sak-web/types';
 
-import '@fpsak-frontend/assets/styles/arrowForProcessMenu.module.css';
 import { InnsynBehandlingApiKeys, restApiInnsynHooks } from '../data/innsynBehandlingApi';
 import prosessStegPanelDefinisjoner from '../panelDefinisjoner/prosessStegInnsynPanelDefinisjoner';
 import FetchedData from '../types/fetchedDataTsType';
@@ -38,47 +37,51 @@ interface OwnProps {
   featureToggles: FeatureToggles;
 }
 
-const previewCallback =
-  (forhandsvisMelding, fagsak: Fagsak, fagsakPerson: FagsakPerson, behandling: Behandling) => parametre => {
-    const request = lagForhåndsvisRequest(behandling, fagsak, fagsakPerson, parametre);
-    return forhandsvisMelding(request).then(response => forhandsvis(response));
-  };
+const previewCallback = (
+  forhandsvisMelding,
+  fagsak: Fagsak,
+  fagsakPerson: FagsakPerson,
+  behandling: Behandling,
+) => parametre => {
+  const request = lagForhåndsvisRequest(behandling, fagsak, fagsakPerson, parametre);
+  return forhandsvisMelding(request).then(response => forhandsvis(response));
+};
 
-const getHentFritekstbrevHtmlCallback =
-  (
-    hentFriteksbrevHtml: (data: any) => Promise<any>,
-    behandling: Behandling,
-    fagsak: Fagsak,
-    fagsakPerson: FagsakPerson,
-  ) =>
-  (parameters: any) =>
-    hentFriteksbrevHtml({
-      ...parameters,
-      eksternReferanse: behandling.uuid,
-      ytelseType: fagsak.sakstype,
-      saksnummer: fagsak.saksnummer,
-      aktørId: fagsakPerson.aktørId,
-      avsenderApplikasjon: bestemAvsenderApp(behandling.type.kode),
-    });
+const getHentFritekstbrevHtmlCallback = (
+  hentFriteksbrevHtml: (data: any) => Promise<any>,
+  behandling: Behandling,
+  fagsak: Fagsak,
+  fagsakPerson: FagsakPerson,
+) => (parameters: any) =>
+  hentFriteksbrevHtml({
+    ...parameters,
+    eksternReferanse: behandling.uuid,
+    ytelseType: fagsak.sakstype,
+    saksnummer: fagsak.saksnummer,
+    aktørId: fagsakPerson.aktørId,
+    avsenderApplikasjon: bestemAvsenderApp(behandling.type.kode),
+  });
 
-const getLagringSideeffekter =
-  (toggleIverksetterVedtakModal, toggleOppdatereFagsakContext, oppdaterProsessStegOgFaktaPanelIUrl) =>
-  async aksjonspunktModels => {
-    const isVedtak = aksjonspunktModels.some(a => a.kode === aksjonspunktCodes.FORESLA_VEDTAK);
+const getLagringSideeffekter = (
+  toggleIverksetterVedtakModal,
+  toggleOppdatereFagsakContext,
+  oppdaterProsessStegOgFaktaPanelIUrl,
+) => async aksjonspunktModels => {
+  const isVedtak = aksjonspunktModels.some(a => a.kode === aksjonspunktCodes.FORESLA_VEDTAK);
 
+  if (isVedtak) {
+    toggleOppdatereFagsakContext(false);
+  }
+
+  // Returner funksjon som blir kjørt etter lagring av aksjonspunkt(er)
+  return () => {
     if (isVedtak) {
-      toggleOppdatereFagsakContext(false);
+      toggleIverksetterVedtakModal(true);
+    } else {
+      oppdaterProsessStegOgFaktaPanelIUrl('default', 'default');
     }
-
-    // Returner funksjon som blir kjørt etter lagring av aksjonspunkt(er)
-    return () => {
-      if (isVedtak) {
-        toggleIverksetterVedtakModal(true);
-      } else {
-        oppdaterProsessStegOgFaktaPanelIUrl('default', 'default');
-      }
-    };
   };
+};
 
 const InnsynProsess = ({
   data,

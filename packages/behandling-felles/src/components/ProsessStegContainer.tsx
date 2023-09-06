@@ -38,7 +38,11 @@ const ProsessStegContainer = ({
   return (
     <div className={styles.container}>
       <div className={styles.meny}>
-        <ProcessMenu steps={steg} onClick={velgProsessStegPanelCallback} />
+        <ProcessMenu
+          steps={steg}
+          onClick={velgProsessStegPanelCallback}
+          stepArrowContainerStyle={styles.stepArrowContainer}
+        />
       </div>
       <VedtakFormContext.Provider value={value}>{children}</VedtakFormContext.Provider>
     </div>

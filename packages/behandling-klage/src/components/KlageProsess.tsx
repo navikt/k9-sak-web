@@ -28,8 +28,6 @@ import FetchedData from '../types/fetchedDataTsType';
 import KlagePart from '../types/klagePartTsType';
 import KlageBehandlingModal from './KlageBehandlingModal';
 
-import '@fpsak-frontend/assets/styles/arrowForProcessMenu.module.css';
-
 interface OwnProps {
   data: FetchedData;
   fagsak: Fagsak;
@@ -57,83 +55,86 @@ const forhandsvis = data => {
   }
 };
 
-const saveKlageText =
-  (lagreKlageVurdering, lagreReapneKlageVurdering, behandling, aksjonspunkter) => aksjonspunktModel => {
-    const data = {
-      behandlingId: behandling.id,
-      ...aksjonspunktModel,
-    };
+const saveKlageText = (
+  lagreKlageVurdering,
+  lagreReapneKlageVurdering,
+  behandling,
+  aksjonspunkter,
+) => aksjonspunktModel => {
+  const data = {
+    behandlingId: behandling.id,
+    ...aksjonspunktModel,
+  };
 
-    const getForeslaVedtakAp = aksjonspunkter
-      .filter(ap => ap.status.kode === aksjonspunktStatus.OPPRETTET)
-      .filter(ap => ap.definisjon.kode === aksjonspunktCodes.FORESLA_VEDTAK);
+  const getForeslaVedtakAp = aksjonspunkter
+    .filter(ap => ap.status.kode === aksjonspunktStatus.OPPRETTET)
+    .filter(ap => ap.definisjon.kode === aksjonspunktCodes.FORESLA_VEDTAK);
 
-    if (getForeslaVedtakAp.length === 1) {
-      return lagreReapneKlageVurdering(data);
+  if (getForeslaVedtakAp.length === 1) {
+    return lagreReapneKlageVurdering(data);
+  }
+  return lagreKlageVurdering(data);
+};
+
+const previewCallback = (
+  forhandsvisMelding,
+  fagsak: Fagsak,
+  fagsakPerson: FagsakPerson,
+  behandling: Behandling,
+  valgtPartMedKlagerett: KlagePart,
+) => parametre => {
+  const request = lagForhåndsvisRequest(behandling, fagsak, fagsakPerson, {
+    ...parametre,
+    overstyrtMottaker: valgtPartMedKlagerett && valgtPartMedKlagerett.identifikasjon,
+  });
+  return forhandsvisMelding(request).then(response => forhandsvis(response));
+};
+
+const getHentFritekstbrevHtmlCallback = (
+  hentFriteksbrevHtml: (data: any) => Promise<any>,
+  behandling: Behandling,
+  fagsak: Fagsak,
+  fagsakPerson: FagsakPerson,
+) => (parameters: any) =>
+  hentFriteksbrevHtml({
+    ...parameters,
+    eksternReferanse: behandling.uuid,
+    ytelseType: fagsak.sakstype,
+    saksnummer: fagsak.saksnummer,
+    aktørId: fagsakPerson.aktørId,
+    avsenderApplikasjon: bestemAvsenderApp(behandling.type.kode),
+  });
+
+const getLagringSideeffekter = (
+  toggleFatterVedtakModal,
+  toggleKlageModal,
+  toggleOppdatereFagsakContext,
+  oppdaterProsessStegOgFaktaPanelIUrl,
+) => async aksjonspunktModels => {
+  const skalByttTilKlageinstans = aksjonspunktModels.some(
+    apValue =>
+      apValue.kode === aksjonspunktCodes.BEHANDLE_KLAGE_NFP &&
+      apValue.klageVurdering === klageVurderingKodeverk.STADFESTE_YTELSESVEDTAK,
+  );
+  const erVedtakAp =
+    aksjonspunktModels[0].kode === aksjonspunktCodes.FORESLA_VEDTAK ||
+    aksjonspunktModels[0].kode === aksjonspunktCodes.VEDTAK_UTEN_TOTRINNSKONTROLL;
+
+  if (skalByttTilKlageinstans || erVedtakAp) {
+    toggleOppdatereFagsakContext(false);
+  }
+
+  // Returner funksjon som blir kjørt etter lagring av aksjonspunkt(er)
+  return () => {
+    if (skalByttTilKlageinstans) {
+      toggleKlageModal(true);
+    } else if (erVedtakAp) {
+      toggleFatterVedtakModal(true);
+    } else {
+      oppdaterProsessStegOgFaktaPanelIUrl('default', 'default');
     }
-    return lagreKlageVurdering(data);
   };
-
-const previewCallback =
-  (
-    forhandsvisMelding,
-    fagsak: Fagsak,
-    fagsakPerson: FagsakPerson,
-    behandling: Behandling,
-    valgtPartMedKlagerett: KlagePart,
-  ) =>
-  parametre => {
-    const request = lagForhåndsvisRequest(behandling, fagsak, fagsakPerson, {
-      ...parametre,
-      overstyrtMottaker: valgtPartMedKlagerett && valgtPartMedKlagerett.identifikasjon,
-    });
-    return forhandsvisMelding(request).then(response => forhandsvis(response));
-  };
-
-const getHentFritekstbrevHtmlCallback =
-  (
-    hentFriteksbrevHtml: (data: any) => Promise<any>,
-    behandling: Behandling,
-    fagsak: Fagsak,
-    fagsakPerson: FagsakPerson,
-  ) =>
-  (parameters: any) =>
-    hentFriteksbrevHtml({
-      ...parameters,
-      eksternReferanse: behandling.uuid,
-      ytelseType: fagsak.sakstype,
-      saksnummer: fagsak.saksnummer,
-      aktørId: fagsakPerson.aktørId,
-      avsenderApplikasjon: bestemAvsenderApp(behandling.type.kode),
-    });
-
-const getLagringSideeffekter =
-  (toggleFatterVedtakModal, toggleKlageModal, toggleOppdatereFagsakContext, oppdaterProsessStegOgFaktaPanelIUrl) =>
-  async aksjonspunktModels => {
-    const skalByttTilKlageinstans = aksjonspunktModels.some(
-      apValue =>
-        apValue.kode === aksjonspunktCodes.BEHANDLE_KLAGE_NFP &&
-        apValue.klageVurdering === klageVurderingKodeverk.STADFESTE_YTELSESVEDTAK,
-    );
-    const erVedtakAp =
-      aksjonspunktModels[0].kode === aksjonspunktCodes.FORESLA_VEDTAK ||
-      aksjonspunktModels[0].kode === aksjonspunktCodes.VEDTAK_UTEN_TOTRINNSKONTROLL;
-
-    if (skalByttTilKlageinstans || erVedtakAp) {
-      toggleOppdatereFagsakContext(false);
-    }
-
-    // Returner funksjon som blir kjørt etter lagring av aksjonspunkt(er)
-    return () => {
-      if (skalByttTilKlageinstans) {
-        toggleKlageModal(true);
-      } else if (erVedtakAp) {
-        toggleFatterVedtakModal(true);
-      } else {
-        oppdaterProsessStegOgFaktaPanelIUrl('default', 'default');
-      }
-    };
-  };
+};
 
 const KlageProsess = ({
   data,

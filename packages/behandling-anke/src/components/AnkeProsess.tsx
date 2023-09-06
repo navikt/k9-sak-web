@@ -18,8 +18,6 @@ import prosessStegPanelDefinisjoner from '../panelDefinisjoner/prosessStegAnkePa
 import FetchedData from '../types/fetchedDataTsType';
 import AnkeBehandlingModal from './AnkeBehandlingModal';
 
-import '@fpsak-frontend/assets/styles/arrowForProcessMenu.module.css';
-
 const forhandsvis = data => {
   if (URL.createObjectURL) {
     window.open(URL.createObjectURL(data));
@@ -45,75 +43,82 @@ interface OwnProps {
   setBehandling: (behandling: Behandling) => void;
 }
 
-const saveAnkeText =
-  (lagreAnkeVurdering, lagreReapneAnkeVurdering, behandling, aksjonspunkter) => aksjonspunktModel => {
-    const data = {
-      behandlingId: behandling.id,
-      ...aksjonspunktModel,
-    };
+const saveAnkeText = (
+  lagreAnkeVurdering,
+  lagreReapneAnkeVurdering,
+  behandling,
+  aksjonspunkter,
+) => aksjonspunktModel => {
+  const data = {
+    behandlingId: behandling.id,
+    ...aksjonspunktModel,
+  };
 
-    const getForeslaVedtakAp = aksjonspunkter
-      .filter(ap => ap.status.kode === aksjonspunktStatus.OPPRETTET)
-      .filter(ap => ap.definisjon.kode === aksjonspunktCodes.FORESLA_VEDTAK);
+  const getForeslaVedtakAp = aksjonspunkter
+    .filter(ap => ap.status.kode === aksjonspunktStatus.OPPRETTET)
+    .filter(ap => ap.definisjon.kode === aksjonspunktCodes.FORESLA_VEDTAK);
 
-    if (getForeslaVedtakAp.length === 1) {
-      lagreReapneAnkeVurdering(data);
+  if (getForeslaVedtakAp.length === 1) {
+    lagreReapneAnkeVurdering(data);
+  } else {
+    lagreAnkeVurdering(data);
+  }
+};
+
+const previewCallback = (
+  forhandsvisMelding,
+  fagsak: Fagsak,
+  fagsakPerson: FagsakPerson,
+  behandling: Behandling,
+) => parametre => {
+  const request = lagForhåndsvisRequest(behandling, fagsak, fagsakPerson, parametre);
+  return forhandsvisMelding(request).then(response => forhandsvis(response));
+};
+
+const getHentFritekstbrevHtmlCallback = (
+  hentFriteksbrevHtml: (data: any) => Promise<any>,
+  behandling: Behandling,
+  fagsak: Fagsak,
+  fagsakPerson: FagsakPerson,
+) => (parameters: any) =>
+  hentFriteksbrevHtml({
+    ...parameters,
+    eksternReferanse: behandling.uuid,
+    ytelseType: fagsak.sakstype,
+    saksnummer: fagsak.saksnummer,
+    aktørId: fagsakPerson.aktørId,
+    avsenderApplikasjon: bestemAvsenderApp(behandling.type.kode),
+  });
+
+const getLagringSideeffekter = (
+  toggleIverksetterVedtakModal,
+  toggleAnkeModal,
+  toggleOppdatereFagsakContext,
+  oppdaterProsessStegOgFaktaPanelIUrl,
+) => async aksjonspunktModels => {
+  const skalTilMedunderskriver = aksjonspunktModels.some(apValue => apValue.kode === aksjonspunktCodes.FORESLA_VEDTAK);
+  const skalFerdigstilles = aksjonspunktModels.some(
+    apValue => apValue.kode === aksjonspunktCodes.VEDTAK_UTEN_TOTRINNSKONTROLL,
+  );
+  const erManuellVurderingAvAnke = aksjonspunktModels.some(
+    apValue => apValue.kode === aksjonspunktCodes.MANUELL_VURDERING_AV_ANKE_MERKNADER,
+  );
+
+  if (skalTilMedunderskriver || skalFerdigstilles || erManuellVurderingAvAnke) {
+    toggleOppdatereFagsakContext(false);
+  }
+
+  // Returner funksjon som blir kjørt etter lagring av aksjonspunkt(er)
+  return () => {
+    if (skalTilMedunderskriver || skalFerdigstilles) {
+      toggleAnkeModal(true);
+    } else if (erManuellVurderingAvAnke) {
+      toggleIverksetterVedtakModal(true);
     } else {
-      lagreAnkeVurdering(data);
+      oppdaterProsessStegOgFaktaPanelIUrl('default', 'default');
     }
   };
-
-const previewCallback =
-  (forhandsvisMelding, fagsak: Fagsak, fagsakPerson: FagsakPerson, behandling: Behandling) => parametre => {
-    const request = lagForhåndsvisRequest(behandling, fagsak, fagsakPerson, parametre);
-    return forhandsvisMelding(request).then(response => forhandsvis(response));
-  };
-
-const getHentFritekstbrevHtmlCallback =
-  (
-    hentFriteksbrevHtml: (data: any) => Promise<any>,
-    behandling: Behandling,
-    fagsak: Fagsak,
-    fagsakPerson: FagsakPerson,
-  ) =>
-  (parameters: any) =>
-    hentFriteksbrevHtml({
-      ...parameters,
-      eksternReferanse: behandling.uuid,
-      ytelseType: fagsak.sakstype,
-      saksnummer: fagsak.saksnummer,
-      aktørId: fagsakPerson.aktørId,
-      avsenderApplikasjon: bestemAvsenderApp(behandling.type.kode),
-    });
-
-const getLagringSideeffekter =
-  (toggleIverksetterVedtakModal, toggleAnkeModal, toggleOppdatereFagsakContext, oppdaterProsessStegOgFaktaPanelIUrl) =>
-  async aksjonspunktModels => {
-    const skalTilMedunderskriver = aksjonspunktModels.some(
-      apValue => apValue.kode === aksjonspunktCodes.FORESLA_VEDTAK,
-    );
-    const skalFerdigstilles = aksjonspunktModels.some(
-      apValue => apValue.kode === aksjonspunktCodes.VEDTAK_UTEN_TOTRINNSKONTROLL,
-    );
-    const erManuellVurderingAvAnke = aksjonspunktModels.some(
-      apValue => apValue.kode === aksjonspunktCodes.MANUELL_VURDERING_AV_ANKE_MERKNADER,
-    );
-
-    if (skalTilMedunderskriver || skalFerdigstilles || erManuellVurderingAvAnke) {
-      toggleOppdatereFagsakContext(false);
-    }
-
-    // Returner funksjon som blir kjørt etter lagring av aksjonspunkt(er)
-    return () => {
-      if (skalTilMedunderskriver || skalFerdigstilles) {
-        toggleAnkeModal(true);
-      } else if (erManuellVurderingAvAnke) {
-        toggleIverksetterVedtakModal(true);
-      } else {
-        oppdaterProsessStegOgFaktaPanelIUrl('default', 'default');
-      }
-    };
-  };
+};
 
 const AnkeProsess = ({
   data,
