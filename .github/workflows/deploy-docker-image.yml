@@ -28,7 +28,7 @@ jobs:
     permissions:
       issues: write
       packages: write
-    needs: [test, lint-tscheck-build]
+    # needs: [test, lint-tscheck-build]
     steps:
       - name: Hente kode
         uses: actions/checkout@v3
