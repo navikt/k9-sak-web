@@ -15,7 +15,7 @@ const mockUseLocationValue = {
 
 jest.mock('react-router-dom', () => ({
   ...(jest.requireActual('react-router-dom') as Record<string, unknown>),
-  useLocation: jest.fn().mockImplementation(() => mockUseLocationValue),
+  useLocation: vi.fn().mockImplementation(() => mockUseLocationValue),
 }));
 
 afterEach(() => {

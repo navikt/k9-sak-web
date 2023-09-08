@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
+import { RestApiErrorProvider, RestApiProvider } from '@k9-sak-web/rest-api-hooks';
+import { Integrations, init } from '@sentry/browser';
 import React from 'react';
+import { render } from 'react-dom';
 import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
-import { render } from 'react-dom';
-import { init, Integrations } from '@sentry/browser';
-import { RestApiErrorProvider, RestApiProvider } from '@k9-sak-web/rest-api-hooks';
 
 /**
  * En bug i Chrome gjør at norsk locale ikke blir lastet inn riktig.
@@ -23,13 +23,13 @@ import configureStore from './configureStore';
 
 /* eslint no-undef: "error" */
 // @ts-ignore
-const isDevelopment = process.env.NODE_ENV === 'development';
+const isDevelopment = import.meta.env.DEV;
 const environment = window.location.hostname;
 
 init({
   environment,
   dsn: isDevelopment ? 'http://dev@localhost:9000/1' : 'https://251afca29aa44d738b73f1ff5d78c67f@sentry.gc.nav.no/31',
-  release: process.env.SENTRY_RELEASE || 'unknown',
+  release: import.meta.env.VITE_SENTRY_RELEASE || 'unknown',
   integrations: [new Integrations.Breadcrumbs({ console: false })],
   beforeSend: (event, hint) => {
     const exception = hint.originalException;
@@ -71,24 +71,29 @@ const renderFunc = Component => {
   if (app === null) {
     throw new Error('No app element');
   }
-  if (process.env.NODE_ENV === 'development') {
-    // eslint-disable-next-line global-require
-    const { worker } = require('../../mocks/browser');
-    worker.start({ onUnhandledRequest: 'bypass' });
-  }
 
-  render(
-    <Provider store={store}>
-      <BrowserRouter basename="/k9/web">
-        <RestApiProvider>
-          <RestApiErrorProvider>
-            <Component />
-          </RestApiErrorProvider>
-        </RestApiProvider>
-      </BrowserRouter>
-    </Provider>,
-    app,
-  );
+  const prepare = async (): Promise<void> => {
+    if (import.meta.env.DEV) {
+      // eslint-disable-next-line import/no-relative-packages
+      const { worker } = await import('../../mocks/browser');
+      worker.start({ onUnhandledRequest: 'bypass' });
+    }
+  };
+
+  prepare().then(() => {
+    render(
+      <Provider store={store}>
+        <BrowserRouter basename="/k9/web">
+          <RestApiProvider>
+            <RestApiErrorProvider>
+              <Component />
+            </RestApiErrorProvider>
+          </RestApiProvider>
+        </BrowserRouter>
+      </Provider>,
+      app,
+    );
+  });
 };
 
 renderFunc(AppIndex);

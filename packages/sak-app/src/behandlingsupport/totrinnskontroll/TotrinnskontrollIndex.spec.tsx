@@ -14,7 +14,7 @@ import BeslutterModalIndex from './BeslutterModalIndex';
 jest.mock('react-router-dom', () => ({
   ...(jest.requireActual('react-router-dom') as Record<string, unknown>),
   useHistory: () => ({
-    push: jest.fn(),
+    push: vi.fn(),
   }),
   useLocation: () => ({
     pathname: 'test',

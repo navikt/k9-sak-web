@@ -14,7 +14,7 @@ import dokumentMalType from '@fpsak-frontend/kodeverk/src/dokumentMalType';
 import { requestApi, K9sakApiKeys } from '../../data/k9sakApi';
 import MeldingIndex from './MeldingIndex';
 
-const mockHistoryPush = jest.fn();
+const mockHistoryPush = vi.fn();
 
 const MockForm = reduxForm({ form: 'mock' })(({ children }) => <div>{children}</div>);
 
@@ -27,7 +27,7 @@ jest.mock('react-router-dom', () => ({
 
 interface SendMeldingPayload {
   behandlingId: number;
-  overstyrtMottaker: { id: string, type: string } | undefined;
+  overstyrtMottaker: { id: string; type: string } | undefined;
   brevmalkode: string | undefined;
   fritekst: string | null;
   arsakskode: string | undefined;
@@ -35,7 +35,6 @@ interface SendMeldingPayload {
 }
 
 describe('<MeldingIndex>', () => {
-
   const meldingMal: SendMeldingPayload = {
     behandlingId: 1,
     overstyrtMottaker: undefined,
@@ -43,7 +42,7 @@ describe('<MeldingIndex>', () => {
     fritekst: null,
     arsakskode: undefined,
     fritekstbrev: null,
-  }
+  };
 
   const fagsak = { saksnummer: '123456', person: { aktørId: '123' } };
 
@@ -61,7 +60,10 @@ describe('<MeldingIndex>', () => {
     [kodeverkTyper.REVURDERING_VARSLING_ÅRSAK]: [{ kode: 'kode', navn: 'Årsak 1', kodeverk: 'kode' }],
   };
 
-  const aktorer = [{ id: '00000000', type: 'AKTØRID' }, { id: '123456789', type: 'ORGNR' }];
+  const aktorer = [
+    { id: '00000000', type: 'AKTØRID' },
+    { id: '123456789', type: 'ORGNR' },
+  ];
   const templates = {
     [dokumentMalType.INNHENT_DOK]: { navn: 'Innhent dokumentasjon', mottakere: aktorer },
     [dokumentMalType.REVURDERING_DOK]: { navn: 'Revurdering Dok', mottakere: aktorer },
@@ -69,7 +71,7 @@ describe('<MeldingIndex>', () => {
     [dokumentMalType.FORLENGET_DOK]: { navn: 'Forlenget', mottakere: aktorer },
   };
 
-  const assignMock = jest.fn();
+  const assignMock = vi.fn();
   delete window.location;
   // @ts-ignore Dette er kun for å unngå warnings med window.location.reload(). (Denne blir brukt som en temp-fiks, så dette skal derfor fjernes)
   window.location = { reload: assignMock };
@@ -78,12 +80,11 @@ describe('<MeldingIndex>', () => {
     assignMock.mockClear();
   });
 
-
   it('skal vise messages når mottakere og brevmaler har blitt hentet fra server', async () => {
     requestApi.mock(K9sakApiKeys.KODEVERK, kodeverk);
     requestApi.mock(K9sakApiKeys.HAR_APENT_KONTROLLER_REVURDERING_AP, true);
     requestApi.mock(K9sakApiKeys.BREVMALER, templates);
-    requestApi.mock(K9sakApiKeys.FEATURE_TOGGLE, [{TYPE_MEDISINSKE_OPPLYSNINGER_BREV: true}]);
+    requestApi.mock(K9sakApiKeys.FEATURE_TOGGLE, [{ TYPE_MEDISINSKE_OPPLYSNINGER_BREV: true }]);
 
     render(
       <Provider store={createStore(combineReducers({ form: formReducer }))}>
@@ -95,19 +96,18 @@ describe('<MeldingIndex>', () => {
             behandlingVersjon={123}
           />
         </MemoryRouter>
-      </Provider>
+      </Provider>,
     );
 
     expect(await screen.findByTestId('MessagesForm')).toBeInTheDocument();
   });
-
 
   it('skal sette default tom streng ved forhåndsvisning dersom fritekst ikke er fylt ut', async () => {
     requestApi.mock(K9sakApiKeys.KODEVERK, kodeverk);
     requestApi.mock(K9sakApiKeys.HAR_APENT_KONTROLLER_REVURDERING_AP, true);
     requestApi.mock(K9sakApiKeys.BREVMALER, templates);
     requestApi.mock(K9sakApiKeys.PREVIEW_MESSAGE_FORMIDLING, {});
-    requestApi.mock(K9sakApiKeys.FEATURE_TOGGLE, [{TYPE_MEDISINSKE_OPPLYSNINGER_BREV: true}]);
+    requestApi.mock(K9sakApiKeys.FEATURE_TOGGLE, [{ TYPE_MEDISINSKE_OPPLYSNINGER_BREV: true }]);
 
     render(
       <Provider store={createStore(combineReducers({ form: formReducer }))}>
@@ -121,7 +121,7 @@ describe('<MeldingIndex>', () => {
             />
           </MemoryRouter>
         </MockForm>
-      </Provider>
+      </Provider>,
     );
 
     expect(await screen.findByTestId('MessagesForm')).toBeInTheDocument();
@@ -133,13 +133,12 @@ describe('<MeldingIndex>', () => {
     expect(reqData[0].params.dokumentdata.fritekst).toEqual(' ');
   });
 
-
   it('skal lukke av modal', async () => {
     requestApi.mock(K9sakApiKeys.KODEVERK, kodeverk);
     requestApi.mock(K9sakApiKeys.HAR_APENT_KONTROLLER_REVURDERING_AP, true);
     requestApi.mock(K9sakApiKeys.BREVMALER, templates);
     requestApi.mock(K9sakApiKeys.SUBMIT_MESSAGE);
-    requestApi.mock(K9sakApiKeys.FEATURE_TOGGLE, [{TYPE_MEDISINSKE_OPPLYSNINGER_BREV: true}]);
+    requestApi.mock(K9sakApiKeys.FEATURE_TOGGLE, [{ TYPE_MEDISINSKE_OPPLYSNINGER_BREV: true }]);
 
     render(
       <Provider store={createStore(combineReducers({ form: formReducer }))}>
@@ -153,7 +152,7 @@ describe('<MeldingIndex>', () => {
             />
           </MemoryRouter>
         </MockForm>
-      </Provider>
+      </Provider>,
     );
 
     const melding = {
@@ -164,14 +163,16 @@ describe('<MeldingIndex>', () => {
 
     userEvent.selectOptions(screen.getByLabelText('Årsak'), melding.arsakskode);
 
-    await act(async () => { // Simuler klikk på Send brev knapp
+    await act(async () => {
+      // Simuler klikk på Send brev knapp
       userEvent.click(screen.getByRole('button', { name: 'Send brev' }));
-    })
+    });
 
     expect(await screen.queryByTestId('MessagesModal')).toBeInTheDocument();
     expect(screen.queryByText('Brevet er bestilt')).toBeInTheDocument();
 
-    await act(async () => { // Trykk på OK knapp for å lukke modalen
+    await act(async () => {
+      // Trykk på OK knapp for å lukke modalen
       userEvent.click(screen.getByText('OK'));
     });
 
@@ -179,13 +180,12 @@ describe('<MeldingIndex>', () => {
     expect(screen.queryByText('Brevet er bestilt')).not.toBeInTheDocument();
   });
 
-
   it('skal sende melding', async () => {
     requestApi.mock(K9sakApiKeys.KODEVERK, kodeverk);
     requestApi.mock(K9sakApiKeys.HAR_APENT_KONTROLLER_REVURDERING_AP, true);
     requestApi.mock(K9sakApiKeys.BREVMALER, templates);
     requestApi.mock(K9sakApiKeys.SUBMIT_MESSAGE);
-    requestApi.mock(K9sakApiKeys.FEATURE_TOGGLE, [{TYPE_MEDISINSKE_OPPLYSNINGER_BREV: true}]);
+    requestApi.mock(K9sakApiKeys.FEATURE_TOGGLE, [{ TYPE_MEDISINSKE_OPPLYSNINGER_BREV: true }]);
 
     render(
       <Provider store={createStore(combineReducers({ form: formReducer }))}>
@@ -199,12 +199,12 @@ describe('<MeldingIndex>', () => {
             />
           </MemoryRouter>
         </MockForm>
-      </Provider>
+      </Provider>,
     );
 
     const melding = {
       arsakskode: 'kode',
-      overstyrtMottaker: { "id": "00000000", "type": "AKTØRID" },
+      overstyrtMottaker: { id: '00000000', type: 'AKTØRID' },
       brevmalkode: dokumentMalType.INNHENT_DOK,
       fritekst: 'Dette er meldingen',
     };
@@ -214,22 +214,22 @@ describe('<MeldingIndex>', () => {
     userEvent.selectOptions(await screen.getByLabelText('Mottaker'), JSON.stringify(melding.overstyrtMottaker));
     userEvent.type(await screen.getByLabelText('Fritekst'), melding.fritekst);
 
-    await act(async () => { // Simuler klikk på Send brev knapp
+    await act(async () => {
+      // Simuler klikk på Send brev knapp
       userEvent.click(await screen.getByRole('button', { name: 'Send brev' }));
-    })
+    });
 
     const reqData = requestApi.getRequestMockData(K9sakApiKeys.SUBMIT_MESSAGE);
     expect(reqData).toHaveLength(1);
     expect(reqData[0].params).toEqual({ ...meldingMal, ...melding });
   });
 
-
   it('skal sende melding og ikke sette saken på vent hvis ikke Innhent eller forlenget', async () => {
     requestApi.mock(K9sakApiKeys.KODEVERK, kodeverk);
     requestApi.mock(K9sakApiKeys.HAR_APENT_KONTROLLER_REVURDERING_AP, true);
     requestApi.mock(K9sakApiKeys.BREVMALER, templates);
     requestApi.mock(K9sakApiKeys.SUBMIT_MESSAGE);
-    requestApi.mock(K9sakApiKeys.FEATURE_TOGGLE, [{TYPE_MEDISINSKE_OPPLYSNINGER_BREV: true}]);
+    requestApi.mock(K9sakApiKeys.FEATURE_TOGGLE, [{ TYPE_MEDISINSKE_OPPLYSNINGER_BREV: true }]);
 
     render(
       <Provider store={createStore(combineReducers({ form: formReducer }))}>
@@ -243,11 +243,11 @@ describe('<MeldingIndex>', () => {
             />
           </MemoryRouter>
         </MockForm>
-      </Provider>
+      </Provider>,
     );
 
     const melding = {
-      overstyrtMottaker: { "id": "123456789", "type": "ORGNR" },
+      overstyrtMottaker: { id: '123456789', type: 'ORGNR' },
       brevmalkode: dokumentMalType.AVSLAG,
     };
 
@@ -257,9 +257,10 @@ describe('<MeldingIndex>', () => {
     userEvent.selectOptions(screen.getByLabelText('Mal'), melding.brevmalkode);
     userEvent.selectOptions(screen.getByLabelText('Mottaker'), JSON.stringify(melding.overstyrtMottaker));
 
-    await act(async () => { // Simuler klikk på Send brev knapp
+    await act(async () => {
+      // Simuler klikk på Send brev knapp
       userEvent.click(screen.getByRole('button', { name: 'Send brev' }));
-    })
+    });
 
     expect(await screen.queryByTestId('MessagesModal')).toBeInTheDocument();
     expect(await screen.queryByTestId('SettPaVentModal')).not.toBeInTheDocument();
@@ -269,13 +270,12 @@ describe('<MeldingIndex>', () => {
     expect(reqData[0].params).toEqual({ ...meldingMal, ...melding });
   });
 
-
   it('skal sende melding og sette saken på vent hvis INNHENT_DOK', async () => {
     requestApi.mock(K9sakApiKeys.KODEVERK, kodeverk);
     requestApi.mock(K9sakApiKeys.HAR_APENT_KONTROLLER_REVURDERING_AP, true);
     requestApi.mock(K9sakApiKeys.BREVMALER, templates);
     requestApi.mock(K9sakApiKeys.SUBMIT_MESSAGE);
-    requestApi.mock(K9sakApiKeys.FEATURE_TOGGLE, [{TYPE_MEDISINSKE_OPPLYSNINGER_BREV: true}]);
+    requestApi.mock(K9sakApiKeys.FEATURE_TOGGLE, [{ TYPE_MEDISINSKE_OPPLYSNINGER_BREV: true }]);
 
     render(
       <Provider store={createStore(combineReducers({ form: formReducer }))}>
@@ -289,11 +289,11 @@ describe('<MeldingIndex>', () => {
             />
           </MemoryRouter>
         </MockForm>
-      </Provider>
+      </Provider>,
     );
 
     const melding = {
-      overstyrtMottaker: { "id": "123456789", "type": "ORGNR" },
+      overstyrtMottaker: { id: '123456789', type: 'ORGNR' },
       brevmalkode: dokumentMalType.INNHENT_DOK,
       fritekst: 'Dette er meldingen',
     };
@@ -305,9 +305,10 @@ describe('<MeldingIndex>', () => {
     expect(await screen.queryByTestId('MessagesModal')).not.toBeInTheDocument();
     expect(screen.queryByTestId('SettPaVentModal')).not.toBeInTheDocument();
 
-    await act(async () => { // Simuler klikk på Send brev knapp
+    await act(async () => {
+      // Simuler klikk på Send brev knapp
       userEvent.click(screen.getByRole('button', { name: 'Send brev' }));
-    })
+    });
 
     expect(await screen.queryByTestId('MessagesModal')).not.toBeInTheDocument();
     expect(await screen.queryByTestId('SettPaVentModal')).toBeInTheDocument();
@@ -317,13 +318,12 @@ describe('<MeldingIndex>', () => {
     expect(reqData[0].params).toEqual({ ...meldingMal, ...melding });
   });
 
-
   it('skal sende melding og sette saken på vent hvis FORLEN', async () => {
     requestApi.mock(K9sakApiKeys.KODEVERK, kodeverk);
     requestApi.mock(K9sakApiKeys.HAR_APENT_KONTROLLER_REVURDERING_AP, true);
     requestApi.mock(K9sakApiKeys.BREVMALER, templates);
     requestApi.mock(K9sakApiKeys.SUBMIT_MESSAGE);
-    requestApi.mock(K9sakApiKeys.FEATURE_TOGGLE, [{TYPE_MEDISINSKE_OPPLYSNINGER_BREV: true}]);
+    requestApi.mock(K9sakApiKeys.FEATURE_TOGGLE, [{ TYPE_MEDISINSKE_OPPLYSNINGER_BREV: true }]);
 
     render(
       <Provider store={createStore(combineReducers({ form: formReducer }))}>
@@ -337,7 +337,7 @@ describe('<MeldingIndex>', () => {
             />
           </MemoryRouter>
         </MockForm>
-      </Provider>
+      </Provider>,
     );
 
     const melding = {
@@ -351,9 +351,10 @@ describe('<MeldingIndex>', () => {
     expect(await screen.queryByTestId('MessagesModal')).not.toBeInTheDocument();
     expect(screen.queryByTestId('SettPaVentModal')).not.toBeInTheDocument();
 
-    await act(async () => { // Simuler klikk på Send brev knapp
+    await act(async () => {
+      // Simuler klikk på Send brev knapp
       userEvent.click(screen.getByRole('button', { name: 'Send brev' }));
-    })
+    });
 
     expect(await screen.queryByTestId('MessagesModal')).not.toBeInTheDocument();
     expect(await screen.queryByTestId('SettPaVentModal')).toBeInTheDocument();
@@ -362,5 +363,4 @@ describe('<MeldingIndex>', () => {
     expect(reqData).toHaveLength(1);
     expect(reqData[0].params).toEqual({ ...meldingMal, ...melding });
   });
-
 });

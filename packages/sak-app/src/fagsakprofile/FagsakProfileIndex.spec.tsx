@@ -38,7 +38,7 @@ jest.mock('react-router-dom', () => ({
     state: {},
     hash: 'test',
   }),
-  useNavigate: () => jest.fn(),
+  useNavigate: () => vi.fn(),
 }));
 
 describe('<FagsakProfileIndex>', () => {

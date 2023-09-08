@@ -9,16 +9,17 @@ import { messages } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper
 import RadioGroupField from './RadioGroupField';
 import RadioOption from './RadioOption';
 
-const MockForm = reduxForm({ form: 'mock' })(({ handleSubmit, children }) => <form onSubmit={handleSubmit}>{children}</form>);
-const mountFieldInForm = (field, initialValues) => mount(
-  <Provider store={createStore(combineReducers({ form: formReducer }))}>
-    <IntlProvider locale="nb-NO" messages={messages}>
-      <MockForm initialValues={initialValues}>
-        {field}
-      </MockForm>
-    </IntlProvider>
-  </Provider>,
-);
+const MockForm = reduxForm({ form: 'mock' })(({ handleSubmit, children }) => (
+  <form onSubmit={handleSubmit}>{children}</form>
+));
+const mountFieldInForm = (field, initialValues) =>
+  mount(
+    <Provider store={createStore(combineReducers({ form: formReducer }))}>
+      <IntlProvider locale="nb-NO" messages={messages}>
+        <MockForm initialValues={initialValues}>{field}</MockForm>
+      </IntlProvider>
+    </Provider>,
+  );
 
 describe('<RadioGroupField>', () => {
   it('Skal rendre radio inputs', () => {
@@ -39,6 +40,7 @@ describe('<RadioGroupField>', () => {
         <RadioOption label="label" value={false} />
       </RadioGroupField>,
     );
+    console.log(wrapper.debug());
     expect(wrapper.find('[className="skjemagruppe input--fullbredde radioGroup"]')).to.have.length(1);
   });
 });

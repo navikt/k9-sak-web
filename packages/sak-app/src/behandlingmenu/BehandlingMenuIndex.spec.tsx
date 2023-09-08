@@ -62,7 +62,7 @@ const alleBehandlinger = [
 jest.mock('react-router-dom', () => ({
   ...(jest.requireActual('react-router-dom') as Record<string, unknown>),
   useHistory: () => ({
-    push: jest.fn(),
+    push: vi.fn(),
   }),
   useLocation: () => ({
     pathname: 'test',
@@ -111,7 +111,7 @@ describe('BehandlingMenuIndex', () => {
           alleBehandlinger={alleBehandlinger as BehandlingAppKontekst[]}
           behandlingId={1}
           behandlingVersjon={2}
-          oppfriskBehandlinger={jest.fn()}
+          oppfriskBehandlinger={vi.fn()}
           behandlingRettigheter={behandlingRettigheter}
           sakRettigheter={sakRettigheter}
           behandlendeEnheter={[
