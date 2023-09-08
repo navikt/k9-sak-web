@@ -24,6 +24,7 @@ export default ({ mode }) => {
       setupFiles: ['./packages/utils-test/src/setup-test-env.ts', './packages/utils-test/src/setup-test-env-hooks.ts'],
       watch: false,
       testTimeout: 15000,
+      experimentalVmThreads: true,
     },
   });
 };
