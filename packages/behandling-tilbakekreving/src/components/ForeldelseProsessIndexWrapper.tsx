@@ -2,12 +2,12 @@ import React, { useState } from 'react';
 
 import { ForeldelseProsessIndex } from '@navikt/ft-prosess-tilbakekreving-foreldelse';
 // eslint-disable-next-line max-len, import/no-unresolved
-import ForeldelsesresultatActivity from '@navikt/ft-prosess-tilbakekreving-foreldelse/dist/packages/prosess-tilbakekreving-foreldelse/src/types/foreldelsesresultatActivitytsType';
+// import ForeldelsesresultatActivity from '@navikt/ft-prosess-tilbakekreving-foreldelse/dist/packages/prosess-tilbakekreving-foreldelse/src/types/foreldelsesresultatActivitytsType';
 import { RelasjonsRolleType } from '@navikt/ft-kodeverk';
 import relasjonsRolleTypeKodeverk from '../kodeverk/relasjonsRolleTypeKodeverk';
 
 const ForeldelseProsessIndexWrapper: React.FC = (props: any) => {
-  const [formData, setFormData] = useState<ForeldelsesresultatActivity[] | undefined>(undefined);
+  const [formData, setFormData] = useState<any[] | undefined>(undefined);
   const {
     behandling,
     perioderForeldelse,
