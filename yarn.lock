@@ -4374,7 +4374,7 @@ __metadata:
     "@k9-sak-web/rest-api": 1.0.0
     "@k9-sak-web/rest-api-hooks": 1.0.0
     "@k9-sak-web/types": 1.0.0
-    "@navikt/ft-fakta-beregning": 4.2.35
+    "@navikt/ft-fakta-beregning": 4.3.0
     "@navikt/ft-prosess-beregningsgrunnlag": 6.2.34
     axios-mock-adapter: 1.21.5
     enzyme: 3.11.0
@@ -4485,7 +4485,7 @@ __metadata:
     "@k9-sak-web/rest-api": 1.0.0
     "@k9-sak-web/rest-api-hooks": 1.0.0
     "@k9-sak-web/types": 1.0.0
-    "@navikt/ft-fakta-beregning": 4.2.35
+    "@navikt/ft-fakta-beregning": 4.3.0
     "@navikt/ft-fakta-fordel-beregningsgrunnlag": 7.2.40
     "@navikt/ft-prosess-beregningsgrunnlag": 6.2.34
     axios-mock-adapter: 1.21.5
@@ -4534,7 +4534,7 @@ __metadata:
     "@k9-sak-web/rest-api-hooks": 1.0.0
     "@k9-sak-web/sak-app": 1.0.0
     "@k9-sak-web/types": 1.0.0
-    "@navikt/ft-fakta-beregning": 4.2.35
+    "@navikt/ft-fakta-beregning": 4.3.0
     "@navikt/ft-fakta-fordel-beregningsgrunnlag": 7.2.40
     "@navikt/ft-prosess-beregningsgrunnlag": 6.2.34
     axios: 0.27.2
@@ -4582,7 +4582,7 @@ __metadata:
     "@k9-sak-web/rest-api-hooks": 1.0.0
     "@k9-sak-web/sak-app": 1.0.0
     "@k9-sak-web/types": 1.0.0
-    "@navikt/ft-fakta-beregning": 4.2.35
+    "@navikt/ft-fakta-beregning": 4.3.0
     "@navikt/ft-fakta-fordel-beregningsgrunnlag": 7.2.40
     "@navikt/ft-prosess-beregningsgrunnlag": 6.2.34
     axios: 0.27.2
@@ -4632,7 +4632,7 @@ __metadata:
     "@k9-sak-web/rest-api-hooks": 1.0.0
     "@k9-sak-web/sak-app": 1.0.0
     "@k9-sak-web/types": 1.0.0
-    "@navikt/ft-fakta-beregning": 4.2.35
+    "@navikt/ft-fakta-beregning": 4.3.0
     "@navikt/ft-fakta-fordel-beregningsgrunnlag": 7.2.40
     "@navikt/ft-prosess-beregningsgrunnlag": 6.2.34
     axios: 0.27.2
@@ -5251,7 +5251,7 @@ __metadata:
     "@k9-sak-web/sak-soknadsperiodestripe": 1.0.0
     "@k9-sak-web/types": 1.0.0
     "@navikt/ds-react": 4.11.1
-    "@navikt/ft-fakta-beregning": 4.2.35
+    "@navikt/ft-fakta-beregning": 4.3.0
     "@navikt/ft-form-hooks": 4.1.10
     "@navikt/ft-plattform-komponenter": 2.2.16
     "@navikt/ft-prosess-beregningsgrunnlag": 6.2.34
@@ -5695,21 +5695,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@navikt/ft-fakta-beregning@npm:4.2.35":
-  version: 4.2.35
-  resolution: "@navikt/ft-fakta-beregning@npm:4.2.35::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fft-fakta-beregning%2F4.2.35%2F80d57c284a159fb3b18809ba9213152b68c983cb"
+"@navikt/ft-fakta-beregning@npm:4.3.0":
+  version: 4.3.0
+  resolution: "@navikt/ft-fakta-beregning@npm:4.3.0::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fft-fakta-beregning%2F4.3.0%2F823769327d132fab4d7314e9ee3235c448fee3ff"
   dependencies:
-    "@navikt/aksel-icons": 4.11.0
-    "@navikt/ds-css": 4.11.0
-    "@navikt/ds-react": 4.11.0
-    "@navikt/ft-form-hooks": ^4.1.10
-    "@navikt/ft-form-validators": ^2.0.42
-    "@navikt/ft-kodeverk": ^2.1.22
-    "@navikt/ft-konstanter": ^2.0.32
-    "@navikt/ft-types": ^2.1.24
-    "@navikt/ft-ui-komponenter": ^2.0.45
-    "@navikt/ft-utils": ^2.0.41
-    core-js: 3.32.0
+    "@navikt/aksel-icons": 5.2.1
+    "@navikt/ds-css": 5.2.1
+    "@navikt/ds-react": 5.2.1
+    "@navikt/ft-form-hooks": ^4.2.0
+    "@navikt/ft-form-validators": ^2.1.0
+    "@navikt/ft-kodeverk": ^2.2.0
+    "@navikt/ft-konstanter": ^2.1.0
+    "@navikt/ft-types": ^2.2.0
+    "@navikt/ft-ui-komponenter": ^2.1.0
+    "@navikt/ft-utils": ^2.1.0
+    core-js: 3.32.1
     dayjs: 1.11.9
     dayjs-plugin-utc: 0.1.2
     react: 18.2.0
@@ -5734,7 +5734,7 @@ __metadata:
     react-dom: 18.2.0
     react-hook-form: 7.43.9
     react-intl: 6.4.2
-  checksum: ea3b0d2364c97ecf84b3006fe43a5d54d4accf5d69d01734f84f7bbbf45c2df229bd2ff909bfaf2ce020508511586de3438f6921a228cf0025e5c5f2653143ca
+  checksum: baf281dc9a73bf1181805c4fa34527f697c6fc00b099953f43744092c785e4207744eace2b3a2816a80ba44c5757c13eeba557a189e535a4b73e5f4eecdcce63
   languageName: node
   linkType: hard
 
@@ -5864,7 +5864,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@navikt/ft-konstanter@npm:^2.0.32":
+"@navikt/ft-konstanter@npm:^2.1.0":
   version: 2.1.0
   resolution: "@navikt/ft-konstanter@npm:2.1.0::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fft-konstanter%2F2.1.0%2F57177fd3f20e9d22d314b318001145a65a29b400"
   checksum: ab09b55ee2750ca58c13189c11db5b992ff3f416602502c3aeb0cc090ef2c4f7437f855e269d7c3c2f80d3c452500ae836eb9f03369ebeaa9ed0285ff6c860fc
