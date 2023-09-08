@@ -29,17 +29,20 @@ const lagRisikoklassifisering = kode => ({
   },
 });
 
-jest.mock('react-router-dom', () => ({
-  ...(jest.requireActual('react-router-dom') as Record<string, unknown>),
-  useRouteMatch: () => ({ isExact: false }),
-  useLocation: () => ({
-    pathname: 'test',
-    search: 'test',
-    state: {},
-    hash: 'test',
-  }),
-  useNavigate: () => vi.fn(),
-}));
+vi.mock('react-router-dom', async () => {
+  const actual = (await vi.importActual('react-router-dom')) as Record<string, unknown>;
+  return {
+    ...actual,
+    useRouteMatch: () => ({ isExact: false }),
+    useLocation: () => ({
+      pathname: 'test',
+      search: 'test',
+      state: {},
+      hash: 'test',
+    }),
+    useNavigate: () => vi.fn(),
+  };
+});
 
 describe('<FagsakProfileIndex>', () => {
   const fagsak = {

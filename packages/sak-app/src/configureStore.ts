@@ -3,7 +3,7 @@ import { reducer as formReducer } from 'redux-form';
 import { createLogger } from 'redux-logger';
 import thunkMiddleware from 'redux-thunk';
 
-const isDevelopment = import.meta.env.DEV;
+const isDevelopment = process.env.NODE_ENV === 'development';
 
 const configureStore = () => {
   const middleware = [thunkMiddleware];

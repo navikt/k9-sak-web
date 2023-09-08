@@ -23,13 +23,13 @@ import configureStore from './configureStore';
 
 /* eslint no-undef: "error" */
 // @ts-ignore
-const isDevelopment = import.meta.env.DEV;
+const isDevelopment = process.env.NODE_ENV === 'development';
 const environment = window.location.hostname;
 
 init({
   environment,
   dsn: isDevelopment ? 'http://dev@localhost:9000/1' : 'https://251afca29aa44d738b73f1ff5d78c67f@sentry.gc.nav.no/31',
-  release: import.meta.env.VITE_SENTRY_RELEASE || 'unknown',
+  release: process.env.SENTRY_RELEASE || 'unknown',
   integrations: [new Integrations.Breadcrumbs({ console: false })],
   beforeSend: (event, hint) => {
     const exception = hint.originalException;
@@ -73,7 +73,7 @@ const renderFunc = Component => {
   }
 
   const prepare = async (): Promise<void> => {
-    if (import.meta.env.DEV) {
+    if (process.env.NODE_ENV === 'development') {
       // eslint-disable-next-line import/no-relative-packages
       const { worker } = await import('../../mocks/browser');
       worker.start({ onUnhandledRequest: 'bypass' });

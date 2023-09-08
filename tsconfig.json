@@ -3,7 +3,7 @@
     "target": "esnext",
     "module": "es2020",
     "moduleResolution": "node",
-    "types": ["node", "vitest/globals", "@testing-library/jest-dom", "vite/client"],
+    "types": ["node", "vitest/globals", "@testing-library/jest-dom"],
     "allowJs": true,
     "noEmit": true,
     "strict": false,

@@ -8,7 +8,7 @@ import { useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
 import FagsakSearchIndex from '../../fagsakSearch/FagsakSearchIndex';
 import { getPathToFplos } from '../paths';
 
-const isDevelopment = () => import.meta.env.DEV || process.env.NODE_ENV === 'test';
+const isDevelopment = () => process.env.NODE_ENV === 'development' || process.env.NODE_ENV === 'test';
 
 /**
  * DashboardResolver

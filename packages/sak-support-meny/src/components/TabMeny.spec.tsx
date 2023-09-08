@@ -40,7 +40,6 @@ describe('<TabMeny>', () => {
     expect(knapp1.prop('disabled')).toBe(false);
 
     const svgPlaceholder1 = knapp1.find('SvgSynchronizeTime');
-    console.log(wrapper.debug());
     expect(svgPlaceholder1.prop('isActive')).toBe(true);
     expect(svgPlaceholder1.prop('isDisabled')).toBe(false);
     expect(svgPlaceholder1.prop('alt')).toEqual('Historikk');

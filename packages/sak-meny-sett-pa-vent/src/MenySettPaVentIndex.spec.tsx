@@ -10,12 +10,15 @@ import userEvent from '@testing-library/user-event';
 import venteArsakType from '@fpsak-frontend/kodeverk/src/venteArsakType';
 import MenySettPaVentIndex from './MenySettPaVentIndex';
 
-jest.mock('react-router-dom', () => ({
-  ...(jest.requireActual('react-router-dom') as Record<string, unknown>),
-  useHistory: () => ({
-    push: vi.fn(),
-  }),
-}));
+vi.mock('react-router-dom', async () => {
+  const actual = (await vi.importActual('react-router-dom')) as Record<string, unknown>;
+  return {
+    ...actual,
+    useHistory: () => ({
+      push: vi.fn(),
+    }),
+  };
+});
 
 const MockForm = reduxForm({ form: 'mock' })(({ children }) => {
   const handleSubmit = vi.fn();

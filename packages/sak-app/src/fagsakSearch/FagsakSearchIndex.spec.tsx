@@ -15,10 +15,13 @@ import FagsakSearchIndex from './FagsakSearchIndex';
 const mockNavigate = vi.fn();
 const MockForm = reduxForm({ form: 'mock' })(({ children }) => <div>{children}</div>);
 
-jest.mock('react-router-dom', () => ({
-  ...(jest.requireActual('react-router-dom') as Record<string, unknown>),
-  useNavigate: () => mockNavigate,
-}));
+vi.mock('react-router-dom', async () => {
+  const actual = await vi.importActual('react-router-dom');
+  return {
+    ...actual,
+    useNavigate: () => mockNavigate,
+  };
+});
 
 describe('<FagsakSearchIndex>', () => {
   const fagsak: Partial<Fagsak> = {

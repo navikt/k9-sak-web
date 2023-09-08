@@ -14,7 +14,7 @@ export default ({ mode }) => {
 
     test: {
       deps: { interopDefault: true },
-      environment: 'jsdom',
+      environment: 'happy-dom',
       css: {
         modules: {
           classNameStrategy: 'non-scoped',
@@ -24,7 +24,11 @@ export default ({ mode }) => {
       setupFiles: ['./packages/utils-test/src/setup-test-env.ts', './packages/utils-test/src/setup-test-env-hooks.ts'],
       watch: false,
       testTimeout: 15000,
-      experimentalVmThreads: true,
+      onConsoleLog(log) {
+        return !log.includes(
+          'Download the React DevTools for a better development experience: https://reactjs.org/link/react-devtools',
+        );
+      },
     },
   });
 };
