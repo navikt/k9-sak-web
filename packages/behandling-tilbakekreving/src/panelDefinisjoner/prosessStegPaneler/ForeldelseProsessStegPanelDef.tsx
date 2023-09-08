@@ -12,12 +12,12 @@ class PanelDef extends ProsessStegPanelDef {
   getKomponent = props => {
     const deepCopyProps = JSON.parse(JSON.stringify(props));
     konverterKodeverkTilKode(deepCopyProps, true);
-    console.log('deepCopyProps', deepCopyProps); // Må teste denne i Q et lite sekund
     return (
       <ForeldelseProsessIndexWrapper
         {...deepCopyProps}
-        kodeverkSamling={deepCopyProps.alleKodeverk}
+        kodeverkSamling={props.alleKodeverk}
         submitCallback={props.submitCallback}
+        beregnBelop={props.beregnBelop}
       />
     );
   };
