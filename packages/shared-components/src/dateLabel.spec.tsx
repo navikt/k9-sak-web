@@ -7,7 +7,6 @@ import DateLabel from './DateLabel';
 describe('<DateLabel>', () => {
   it('skal ha en FormattedDate-komponent', () => {
     render(<DateLabel dateString="10.10.2017" />);
-    console.log(screen.debug());
     expect(screen.queryByText('10.10.2017')).toBeInTheDocument();
   });
 

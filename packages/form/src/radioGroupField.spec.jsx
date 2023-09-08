@@ -40,7 +40,6 @@ describe('<RadioGroupField>', () => {
         <RadioOption label="label" value={false} />
       </RadioGroupField>,
     );
-    console.log(wrapper.debug());
     expect(wrapper.find('[className="skjemagruppe input--fullbredde radioGroup"]')).to.have.length(1);
   });
 });
