@@ -39,7 +39,8 @@ describe('<TabMeny>', () => {
     expect(knapp1.prop('data-tooltip')).toEqual('Historikk');
     expect(knapp1.prop('disabled')).toBe(false);
 
-    const svgPlaceholder1 = knapp1.find('div');
+    const svgPlaceholder1 = knapp1.find('SvgSynchronizeTime');
+    console.log(wrapper.debug());
     expect(svgPlaceholder1.prop('isActive')).toBe(true);
     expect(svgPlaceholder1.prop('isDisabled')).toBe(false);
     expect(svgPlaceholder1.prop('alt')).toEqual('Historikk');
@@ -49,7 +50,7 @@ describe('<TabMeny>', () => {
     expect(knapp2.prop('data-tooltip')).toEqual('Send melding');
     expect(knapp2.prop('disabled')).toBe(true);
 
-    const svgPlaceholder2 = knapp2.find('div');
+    const svgPlaceholder2 = knapp2.find('SvgEmailSend1');
     expect(svgPlaceholder2.prop('isActive')).toBe(false);
     expect(svgPlaceholder2.prop('isDisabled')).toBe(true);
     expect(svgPlaceholder2.prop('alt')).toEqual('Send melding');
