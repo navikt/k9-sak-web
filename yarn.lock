@@ -2444,8 +2444,6 @@ __metadata:
     redux-form: 8.3.10
     reselect: 4.1.8
     sinon: 15.1.0
-    vite: ^4.4.9
-    vitest: ^0.34.3
   languageName: unknown
   linkType: soft
 
@@ -2469,8 +2467,6 @@ __metadata:
     prop-types: 15.8.1
     react: 17.0.2
     react-intl: 6.4.4
-    vite: ^4.4.9
-    vitest: ^0.34.3
   languageName: unknown
   linkType: soft
 
@@ -2496,8 +2492,6 @@ __metadata:
     nav-frontend-typografi-style: 2.0.2
     react: 17.0.2
     react-intl: 6.4.4
-    vite: ^4.4.9
-    vitest: ^0.34.3
     yup: 0.32.11
   peerDependencies:
     dayjs: 1.10.7
@@ -2534,8 +2528,6 @@ __metadata:
     redux-form: 8.3.10
     reselect: 4.1.8
     sinon: 15.1.0
-    vite: ^4.4.9
-    vitest: ^0.34.3
   languageName: unknown
   linkType: soft
 
@@ -2558,8 +2550,6 @@ __metadata:
     react: 17.0.2
     react-intl: 6.4.4
     sinon: 15.1.0
-    vite: ^4.4.9
-    vitest: ^0.34.3
   languageName: unknown
   linkType: soft
 
@@ -2597,8 +2587,6 @@ __metadata:
     redux-form: 8.3.10
     reselect: 4.1.8
     sinon: 15.1.0
-    vite: ^4.4.9
-    vitest: ^0.34.3
   languageName: unknown
   linkType: soft
 
@@ -2662,8 +2650,6 @@ __metadata:
     redux-form: 8.3.10
     reselect: 4.1.8
     sinon: 15.1.0
-    vite: ^4.4.9
-    vitest: ^0.34.3
   languageName: unknown
   linkType: soft
 
@@ -2691,8 +2677,6 @@ __metadata:
     react: 17.0.2
     react-day-picker: 7.4.10
     react-intl: 6.4.4
-    vite: ^4.4.9
-    vitest: ^0.34.3
     yup: 0.32.11
   peerDependencies:
     dayjs: 1.10.7
@@ -2724,8 +2708,6 @@ __metadata:
     redux-form: 8.3.10
     reselect: 4.1.8
     sinon: 15.1.0
-    vite: ^4.4.9
-    vitest: ^0.34.3
   languageName: unknown
   linkType: soft
 
@@ -2763,8 +2745,6 @@ __metadata:
     redux: 4.2.1
     redux-form: 8.3.10
     reselect: 4.1.8
-    vite: ^4.4.9
-    vitest: ^0.34.3
   languageName: unknown
   linkType: soft
 
@@ -2810,8 +2790,6 @@ __metadata:
     redux-form: 8.3.10
     reselect: 4.1.8
     sinon: 15.1.0
-    vite: ^4.4.9
-    vitest: ^0.34.3
   languageName: unknown
   linkType: soft
 
@@ -2839,8 +2817,6 @@ __metadata:
     redux-form: 8.3.10
     reselect: 4.1.8
     sinon: 15.1.0
-    vite: ^4.4.9
-    vitest: ^0.34.3
   languageName: unknown
   linkType: soft
 
@@ -2872,8 +2848,6 @@ __metadata:
     redux-form: 8.3.10
     reselect: 4.1.8
     sinon: 15.1.0
-    vite: ^4.4.9
-    vitest: ^0.34.3
   languageName: unknown
   linkType: soft
 
@@ -2909,8 +2883,6 @@ __metadata:
     redux-form: 8.3.10
     reselect: 4.1.8
     sinon: 15.1.0
-    vite: ^4.4.9
-    vitest: ^0.34.3
   languageName: unknown
   linkType: soft
 
@@ -2947,8 +2919,6 @@ __metadata:
     redux: 4.2.1
     redux-form: 8.3.10
     sinon: 15.1.0
-    vite: ^4.4.9
-    vitest: ^0.34.3
   languageName: unknown
   linkType: soft
 
@@ -2979,8 +2949,6 @@ __metadata:
     redux-form: 8.3.10
     reselect: 4.1.8
     sinon: 15.1.0
-    vite: ^4.4.9
-    vitest: ^0.34.3
   languageName: unknown
   linkType: soft
 
@@ -3014,8 +2982,6 @@ __metadata:
     redux-form: 8.3.10
     reselect: 4.1.8
     sinon: 15.1.0
-    vite: ^4.4.9
-    vitest: ^0.34.3
   languageName: unknown
   linkType: soft
 
@@ -3047,8 +3013,6 @@ __metadata:
     redux-form: 8.3.10
     reselect: 4.1.8
     sinon: 15.1.0
-    vite: ^4.4.9
-    vitest: ^0.34.3
   languageName: unknown
   linkType: soft
 
@@ -3079,8 +3043,6 @@ __metadata:
     redux-form: 8.3.10
     reselect: 4.1.8
     sinon: 15.1.0
-    vite: ^4.4.9
-    vitest: ^0.34.3
   languageName: unknown
   linkType: soft
 
@@ -3111,8 +3073,6 @@ __metadata:
     redux-form: 8.3.10
     reselect: 4.1.8
     sinon: 15.1.0
-    vite: ^4.4.9
-    vitest: ^0.34.3
   languageName: unknown
   linkType: soft
 
@@ -3149,8 +3109,6 @@ __metadata:
     redux-form: 8.3.10
     reselect: 4.1.8
     sinon: 15.1.0
-    vite: ^4.4.9
-    vitest: ^0.34.3
   languageName: unknown
   linkType: soft
 
@@ -3190,8 +3148,6 @@ __metadata:
     redux-form: 8.3.10
     reselect: 4.1.8
     sinon: 15.1.0
-    vite: ^4.4.9
-    vitest: ^0.34.3
     xss: 1.0.14
   languageName: unknown
   linkType: soft
@@ -3224,8 +3180,6 @@ __metadata:
     redux-form: 8.3.10
     reselect: 4.1.8
     sinon: 15.1.0
-    vite: ^4.4.9
-    vitest: ^0.34.3
   languageName: unknown
   linkType: soft
 
@@ -3252,8 +3206,6 @@ __metadata:
     redux-form: 8.3.10
     reselect: 4.1.8
     sinon: 15.1.0
-    vite: ^4.4.9
-    vitest: ^0.34.3
   languageName: unknown
   linkType: soft
 
@@ -3281,8 +3233,6 @@ __metadata:
     redux-form: 8.3.10
     reselect: 4.1.8
     sinon: 15.1.0
-    vite: ^4.4.9
-    vitest: ^0.34.3
   languageName: unknown
   linkType: soft
 
@@ -3311,8 +3261,6 @@ __metadata:
     redux-form: 8.3.10
     reselect: 4.1.8
     sinon: 15.1.0
-    vite: ^4.4.9
-    vitest: ^0.34.3
   languageName: unknown
   linkType: soft
 
@@ -3361,8 +3309,6 @@ __metadata:
     redux-form: 8.3.10
     reselect: 4.1.8
     sinon: 15.1.0
-    vite: ^4.4.9
-    vitest: ^0.34.3
   languageName: unknown
   linkType: soft
 
@@ -3403,8 +3349,6 @@ __metadata:
     redux-form: 8.3.10
     reselect: 4.1.8
     sinon: 15.1.0
-    vite: ^4.4.9
-    vitest: ^0.34.3
   languageName: unknown
   linkType: soft
 
@@ -3440,8 +3384,6 @@ __metadata:
     redux-form: 8.3.10
     reselect: 4.1.8
     sinon: 15.1.0
-    vite: ^4.4.9
-    vitest: ^0.34.3
   languageName: unknown
   linkType: soft
 
@@ -3468,8 +3410,6 @@ __metadata:
     redux-form: 8.3.10
     reselect: 4.1.8
     sinon: 15.1.0
-    vite: ^4.4.9
-    vitest: ^0.34.3
   languageName: unknown
   linkType: soft
 
@@ -3505,8 +3445,6 @@ __metadata:
     nav-frontend-typografi-style: 2.0.2
     react: 17.0.2
     react-intl: 6.4.4
-    vite: ^4.4.9
-    vitest: ^0.34.3
   languageName: unknown
   linkType: soft
 
@@ -3531,8 +3469,6 @@ __metadata:
     redux-form: 8.3.10
     reselect: 4.1.8
     sinon: 15.1.0
-    vite: ^4.4.9
-    vitest: ^0.34.3
   languageName: unknown
   linkType: soft
 
@@ -3561,8 +3497,6 @@ __metadata:
     react-router-dom: 6.15.0
     redux-form: 8.3.10
     sinon: 15.1.0
-    vite: ^4.4.9
-    vitest: ^0.34.3
   languageName: unknown
   linkType: soft
 
@@ -3591,8 +3525,6 @@ __metadata:
     react-intl: 6.4.4
     react-router-dom: 6.15.0
     sinon: 15.1.0
-    vite: ^4.4.9
-    vitest: ^0.34.3
   languageName: unknown
   linkType: soft
 
@@ -3621,8 +3553,6 @@ __metadata:
     redux: 4.2.1
     redux-form: 8.3.10
     sinon: 15.1.0
-    vite: ^4.4.9
-    vitest: ^0.34.3
   languageName: unknown
   linkType: soft
 
@@ -3657,8 +3587,6 @@ __metadata:
     redux-form: 8.3.10
     reselect: 4.1.8
     sinon: 15.1.0
-    vite: ^4.4.9
-    vitest: ^0.34.3
   languageName: unknown
   linkType: soft
 
@@ -3690,8 +3618,6 @@ __metadata:
     redux-form: 8.3.10
     reselect: 4.1.8
     sinon: 15.1.0
-    vite: ^4.4.9
-    vitest: ^0.34.3
   languageName: unknown
   linkType: soft
 
@@ -3723,8 +3649,6 @@ __metadata:
     redux: 4.2.1
     redux-form: 8.3.10
     sinon: 15.1.0
-    vite: ^4.4.9
-    vitest: ^0.34.3
   languageName: unknown
   linkType: soft
 
@@ -3738,8 +3662,6 @@ __metadata:
     react: 17.0.2
     react-intl: 6.4.4
     sinon: 15.1.0
-    vite: ^4.4.9
-    vitest: ^0.34.3
   languageName: unknown
   linkType: soft
 
@@ -3753,8 +3675,6 @@ __metadata:
     react: 17.0.2
     react-intl: 6.4.4
     sinon: 15.1.0
-    vite: ^4.4.9
-    vitest: ^0.34.3
   languageName: unknown
   linkType: soft
 
@@ -3779,8 +3699,6 @@ __metadata:
     react: 17.0.2
     react-intl: 6.4.4
     sinon: 15.1.0
-    vite: ^4.4.9
-    vitest: ^0.34.3
   languageName: unknown
   linkType: soft
 
@@ -3812,8 +3730,6 @@ __metadata:
     redux-form: 8.3.10
     reselect: 4.1.8
     sinon: 15.1.0
-    vite: ^4.4.9
-    vitest: ^0.34.3
   languageName: unknown
   linkType: soft
 
@@ -3841,8 +3757,6 @@ __metadata:
     react-redux: 8.1.2
     redux-form: 8.3.10
     sinon: 15.1.0
-    vite: ^4.4.9
-    vitest: ^0.34.3
   languageName: unknown
   linkType: soft
 
@@ -3893,8 +3807,6 @@ __metadata:
     redux-form: 8.3.10
     reselect: 4.1.8
     sinon: 15.1.0
-    vite: ^4.4.9
-    vitest: ^0.34.3
   languageName: unknown
   linkType: soft
 
@@ -3973,8 +3885,6 @@ __metadata:
     react-modal: 3.16.1
     react-redux: 8.1.2
     redux-form: 8.3.10
-    vite: ^4.4.9
-    vitest: ^0.34.3
   languageName: unknown
   linkType: soft
 
@@ -4418,8 +4328,6 @@ __metadata:
     redux-mock-store: 1.5.4
     reselect: 4.1.8
     sinon: 15.1.0
-    vite: ^4.4.9
-    vitest: ^0.34.3
   languageName: unknown
   linkType: soft
 
@@ -4463,8 +4371,6 @@ __metadata:
     redux-form: 8.3.10
     reselect: 4.1.8
     sinon: 15.1.0
-    vite: ^4.4.9
-    vitest: ^0.34.3
   languageName: unknown
   linkType: soft
 
@@ -4502,8 +4408,6 @@ __metadata:
     redux-mock-store: 1.5.4
     reselect: 4.1.8
     sinon: 15.1.0
-    vite: ^4.4.9
-    vitest: ^0.34.3
   languageName: unknown
   linkType: soft
 
@@ -4534,8 +4438,6 @@ __metadata:
     redux-mock-store: 1.5.4
     reselect: 4.1.8
     sinon: 15.1.0
-    vite: ^4.4.9
-    vitest: ^0.34.3
   languageName: unknown
   linkType: soft
 
@@ -4573,8 +4475,6 @@ __metadata:
     redux-mock-store: 1.5.4
     reselect: 4.1.8
     sinon: 15.1.0
-    vite: ^4.4.9
-    vitest: ^0.34.3
   languageName: unknown
   linkType: soft
 
@@ -4621,8 +4521,6 @@ __metadata:
     redux-mock-store: 1.5.4
     reselect: 4.1.8
     sinon: 15.1.0
-    vite: ^4.4.9
-    vitest: ^0.34.3
   languageName: unknown
   linkType: soft
 
@@ -4673,8 +4571,6 @@ __metadata:
     redux-mock-store: 1.5.4
     reselect: 4.1.8
     sinon: 15.1.0
-    vite: ^4.4.9
-    vitest: ^0.34.3
   languageName: unknown
   linkType: soft
 
@@ -4724,8 +4620,6 @@ __metadata:
     redux-saga: 1.2.3
     reselect: 4.1.8
     sinon: 15.1.0
-    vite: ^4.4.9
-    vitest: ^0.34.3
   languageName: unknown
   linkType: soft
 
@@ -4775,8 +4669,6 @@ __metadata:
     redux-mock-store: 1.5.4
     reselect: 4.1.8
     sinon: 15.1.0
-    vite: ^4.4.9
-    vitest: ^0.34.3
   languageName: unknown
   linkType: soft
 
@@ -4814,8 +4706,6 @@ __metadata:
     redux-mock-store: 1.5.4
     reselect: 4.1.8
     sinon: 15.1.0
-    vite: ^4.4.9
-    vitest: ^0.34.3
   languageName: unknown
   linkType: soft
 
@@ -4865,8 +4755,6 @@ __metadata:
     redux-mock-store: 1.5.4
     reselect: 4.1.8
     sinon: 15.1.0
-    vite: ^4.4.9
-    vitest: ^0.34.3
   languageName: unknown
   linkType: soft
 
@@ -4898,8 +4786,6 @@ __metadata:
     redux-mock-store: 1.5.4
     reselect: 4.1.8
     sinon: 15.1.0
-    vite: ^4.4.9
-    vitest: ^0.34.3
   languageName: unknown
   linkType: soft
 
@@ -4939,8 +4825,6 @@ __metadata:
     sinon: 15.1.0
     styled-components: 5.3.11
     uuid: 9.0.0
-    vite: ^4.4.9
-    vitest: ^0.34.3
   languageName: unknown
   linkType: soft
 
@@ -4971,8 +4855,6 @@ __metadata:
     sinon: 15.1.0
     styled-components: 5.3.11
     uuid: 9.0.0
-    vite: ^4.4.9
-    vitest: ^0.34.3
   languageName: unknown
   linkType: soft
 
@@ -5000,8 +4882,6 @@ __metadata:
     redux: 4.2.1
     redux-form: 8.3.10
     sinon: 15.1.0
-    vite: ^4.4.9
-    vitest: ^0.34.3
   languageName: unknown
   linkType: soft
 
@@ -5104,8 +4984,6 @@ __metadata:
     redux-form: 8.3.10
     reselect: 4.1.8
     sinon: 15.1.0
-    vite: ^4.4.9
-    vitest: ^0.34.3
   languageName: unknown
   linkType: soft
 
@@ -5151,8 +5029,6 @@ __metadata:
     react-router-dom: 6.15.0
     redux-form: 8.3.10
     sinon: 15.1.0
-    vite: ^4.4.9
-    vitest: ^0.34.3
   languageName: unknown
   linkType: soft
 
@@ -5179,8 +5055,6 @@ __metadata:
     redux: 4.2.1
     redux-form: 8.3.10
     sinon: 15.1.0
-    vite: ^4.4.9
-    vitest: ^0.34.3
   languageName: unknown
   linkType: soft
 
@@ -5213,8 +5087,6 @@ __metadata:
     redux-form: 8.3.10
     reselect: 4.1.8
     sinon: 15.1.0
-    vite: ^4.4.9
-    vitest: ^0.34.3
   languageName: unknown
   linkType: soft
 
@@ -5231,8 +5103,6 @@ __metadata:
     react-dom: 17.0.2
     react-intl: 6.4.4
     sinon: 15.1.0
-    vite: ^4.4.9
-    vitest: ^0.34.3
   languageName: unknown
   linkType: soft
 
@@ -5256,8 +5126,6 @@ __metadata:
     react-hook-form: 7.45.4
     react-intl: 6.4.4
     sinon: 15.1.0
-    vite: ^4.4.9
-    vitest: ^0.34.3
   languageName: unknown
   linkType: soft
 
@@ -5294,8 +5162,6 @@ __metadata:
     redux-form: 8.3.10
     reselect: 4.1.8
     sinon: 15.1.0
-    vite: ^4.4.9
-    vitest: ^0.34.3
   languageName: unknown
   linkType: soft
 
@@ -5318,8 +5184,6 @@ __metadata:
     nav-frontend-typografi: 4.0.2
     react: 17.0.2
     react-intl: 6.4.4
-    vite: ^4.4.9
-    vitest: ^0.34.3
   languageName: unknown
   linkType: soft
 
@@ -5445,8 +5309,6 @@ __metadata:
     redux-logger: 3.0.6
     redux-thunk: 2.4.2
     reselect: 4.1.8
-    vite: ^4.4.9
-    vitest: ^0.34.3
   languageName: unknown
   linkType: soft
 
@@ -5479,8 +5341,6 @@ __metadata:
     react-query: 3.39.3
     react-router-dom: 6.15.0
     sinon: 15.1.0
-    vite: ^4.4.9
-    vitest: ^0.34.3
   languageName: unknown
   linkType: soft
 
@@ -5525,8 +5385,6 @@ __metadata:
     redux-form: 8.3.10
     reselect: 4.1.8
     sinon: 15.1.0
-    vite: ^4.4.9
-    vitest: ^0.34.3
   languageName: unknown
   linkType: soft
 
@@ -18043,7 +17901,6 @@ __metadata:
     "@navikt/ft-plattform-komponenter": 2.2.16
     "@pmmmwh/react-refresh-webpack-plugin": 0.5.11
     "@popperjs/core": 2.11.8
-    "@portabletext/react": ^1.0.6
     "@sentry/browser": 7.66.0
     "@sentry/cli": 2.20.6
     "@storybook/addon-actions": 7.4.0

@@ -5,9 +5,6 @@
   "module": "index.ts",
   "license": "MIT",
   "private": true,
-  "scripts": {
-    "test": "vitest --passWithNoTests"
-  },
   "dependencies": {
     "@fpsak-frontend/kodeverk": "1.0.0",
     "@fpsak-frontend/utils": "1.0.0",
@@ -26,8 +23,6 @@
   "devDependencies": {
     "@fpsak-frontend/utils-test": "1.0.0",
     "chai": "4.3.8",
-    "enzyme": "3.11.0",
-    "vite": "^4.4.9",
-    "vitest": "^0.34.3"
+    "enzyme": "3.11.0"
   }
 }

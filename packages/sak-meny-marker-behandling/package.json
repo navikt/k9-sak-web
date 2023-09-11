@@ -4,9 +4,6 @@
   "module": "index.jsx",
   "license": "MIT",
   "private": true,
-  "scripts": {
-    "test": "vitest --passWithNoTests"
-  },
   "dependencies": {
     "@fpsak-frontend/assets": "1.0.0",
     "@fpsak-frontend/form": "1.0.0",

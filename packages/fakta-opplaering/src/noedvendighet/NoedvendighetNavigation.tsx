@@ -4,7 +4,7 @@ import { InteractiveList } from '@navikt/ft-plattform-komponenter';
 import React, { useEffect } from 'react';
 import PeriodeRad from '../components/PeriodeRad';
 import noedvendighetStatus from './konstanter';
-import styles from './noedvendighetNavigation.modules.css';
+import styles from './noedvendighetNavigation.module.css';
 
 interface OwnProps {
   perioder: NoedvendighetVurdering[];

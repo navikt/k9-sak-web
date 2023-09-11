@@ -3,7 +3,7 @@ import { Heading } from '@navikt/ds-react';
 import { InteractiveList } from '@navikt/ft-plattform-komponenter';
 import React, { useEffect } from 'react';
 import PeriodeRad from '../components/PeriodeRad';
-import styles from './gjennomgaaOpplaeringNavigation.modules.css';
+import styles from './gjennomgaaOpplaeringNavigation.module.css';
 import GjennomgaaOpplaeringStatus from './konstanter';
 
 interface OwnProps {

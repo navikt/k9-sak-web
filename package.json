@@ -10,7 +10,7 @@
     "url": "git+https://github.com/navikt/k9-sak-web.git"
   },
   "scripts": {
-    "test": "lerna run test --stream",
+    "test": "vitest",
     "test:all:testonly": "vitest --selectProjects test",
     "test:watch": "vitest --watch --silent=false",
     "test:watch:all": "vitest --watchAll",
@@ -80,7 +80,6 @@
     "@babel/register": "7.22.5",
     "@commercetools/enzyme-extensions": "5.0.0",
     "@pmmmwh/react-refresh-webpack-plugin": "0.5.11",
-    "@portabletext/react": "^1.0.6",
     "@sentry/cli": "2.20.6",
     "@storybook/addon-actions": "7.4.0",
     "@storybook/addon-docs": "7.4.0",

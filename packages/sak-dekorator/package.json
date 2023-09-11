@@ -37,8 +37,6 @@
     "react-intl": "6.4.4"
   },
   "devDependencies": {
-    "@fpsak-frontend/utils-test": "1.0.0",
-    "vite": "^4.4.9",
-    "vitest": "^0.34.3"
+    "@fpsak-frontend/utils-test": "1.0.0"
   }
 }
