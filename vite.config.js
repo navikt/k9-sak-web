@@ -21,7 +21,7 @@ export default ({ mode }) => {
         },
       },
       globals: true,
-      setupFiles: ['./packages/utils-test/src/setup-test-env.ts', './packages/utils-test/src/setup-test-env-hooks.ts'],
+      setupFiles: ['../utils-test/src/setup-test-env.ts', '../utils-test/src/setup-test-env-hooks.ts'],
       watch: false,
       testTimeout: 15000,
       onConsoleLog(log) {

@@ -2,8 +2,12 @@
   "name": "@fpsak-frontend/utils",
   "version": "1.0.0",
   "module": "index.ts",
+  "main": "index.ts",
   "license": "MIT",
   "private": true,
+  "scripts": {
+    "test": "vitest --passWithNoTests"
+  },
   "dependencies": {
     "@fpsak-frontend/kodeverk": "1.0.0",
     "@k9-sak-web/konstanter": "1.0.0",

@@ -1,9 +1,13 @@
 {
   "name": "@fpsak-frontend/form",
   "version": "1.0.0",
-  "module ": "index.ts",
+  "main": "index.ts",
+  "module": "index.ts",
   "license": "MIT",
   "private": true,
+  "scripts": {
+    "test": "vitest --passWithNoTests"
+  },
   "dependencies": {
     "@fpsak-frontend/assets": "1.0.0",
     "@fpsak-frontend/shared-components": "1.0.0",
@@ -36,6 +40,8 @@
     "reselect": "4.1.8"
   },
   "devDependencies": {
-    "@fpsak-frontend/utils-test": "1.0.0"
+    "@fpsak-frontend/utils-test": "1.0.0",
+    "vite": "^4.4.9",
+    "vitest": "^0.34.3"
   }
 }

@@ -10,8 +10,7 @@
     "url": "git+https://github.com/navikt/k9-sak-web.git"
   },
   "scripts": {
-    "test": "vitest -o",
-    "test:all": "vitest",
+    "test": "lerna run test --stream",
     "test:all:testonly": "vitest --selectProjects test",
     "test:watch": "vitest --watch --silent=false",
     "test:watch:all": "vitest --watchAll",
@@ -48,7 +47,7 @@
     "@navikt/ds-css": "4.11.1",
     "@navikt/ds-react": "4.11.1",
     "@navikt/ds-tailwind": "^5.0.2",
-    "@navikt/familie-endringslogg": "8.1.1",
+    "@navikt/familie-endringslogg": "9.0.1",
     "@navikt/ft-plattform-komponenter": "2.2.16",
     "@popperjs/core": "2.11.8",
     "@sentry/browser": "7.66.0",
@@ -81,6 +80,7 @@
     "@babel/register": "7.22.5",
     "@commercetools/enzyme-extensions": "5.0.0",
     "@pmmmwh/react-refresh-webpack-plugin": "0.5.11",
+    "@portabletext/react": "^1.0.6",
     "@sentry/cli": "2.20.6",
     "@storybook/addon-actions": "7.4.0",
     "@storybook/addon-docs": "7.4.0",

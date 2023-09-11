@@ -4,6 +4,9 @@
   "module": "index.ts",
   "license": "MIT",
   "private": true,
+  "scripts": {
+    "test": "vitest --passWithNoTests"
+  },
   "dependencies": {
     "@fpsak-frontend/assets": "1.0.0",
     "@fpsak-frontend/fakta-arbeidsforhold": "1.0.0",
@@ -49,6 +52,8 @@
     "axios-mock-adapter": "1.21.5",
     "enzyme": "3.11.0",
     "redux-mock-store": "1.5.4",
-    "sinon": "15.1.0"
+    "sinon": "15.1.0",
+    "vite": "^4.4.9",
+    "vitest": "^0.34.3"
   }
 }
