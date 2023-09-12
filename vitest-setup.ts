@@ -3,7 +3,10 @@ import Adapter from '@wojtekmaj/enzyme-adapter-react-17';
 import '@testing-library/jest-dom/vitest';
 import { switchOnTestMode } from '@k9-sak-web/rest-api';
 
-vi.spyOn(window.URL, 'createObjectURL').mockImplementation(() => 'http://fake.url');
+// vi.spyOn(window.URL, 'createObjectURL').mockImplementation(() => 'http://fake.url');
+if (typeof window?.URL?.createObjectURL === 'undefined') {
+  window.URL.createObjectURL = jest.fn();
+}
 vi.stubGlobal('open', vi.fn());
 
 switchOnTestMode();

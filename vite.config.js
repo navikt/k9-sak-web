@@ -29,6 +29,7 @@ export default ({ mode }) => {
           'Download the React DevTools for a better development experience: https://reactjs.org/link/react-devtools',
         );
       },
+      isolate: false,
     },
   });
 };
