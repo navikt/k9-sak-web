@@ -3,7 +3,7 @@ import Ikon from 'nav-frontend-ikoner-assets';
 import React, { useState } from 'react';
 
 import DokumentLink from './DokumentLink';
-import styles from './dokumenterIVurderingen.modules.css';
+import styles from './dokumenterIVurderingen.module.css';
 import FilterList from './filter-list/FilterList';
 
 const DokumenterIVurderingen = ({ dokumenter, onChange, onBlur, error, valgteDokumenter }) => {

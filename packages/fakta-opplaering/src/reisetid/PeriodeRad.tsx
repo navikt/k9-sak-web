@@ -7,7 +7,7 @@ import {
 } from '@navikt/ft-plattform-komponenter';
 import { Period } from '@navikt/k9-fe-period-utils';
 import React from 'react';
-import styles from './periodeRad.modules.css';
+import styles from './periodeRad.module.css';
 
 interface OwnProps {
   periode?: Period;
