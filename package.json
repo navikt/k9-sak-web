@@ -11,7 +11,6 @@
   },
   "scripts": {
     "test": "lerna run test --stream",
-    "test:all": "jest --colors",
     "test:all:testonly": "jest --colors --selectProjects test",
     "test:watch": "jest --watch --colors --silent=false",
     "test:watch:all": "jest --watchAll --colors",
