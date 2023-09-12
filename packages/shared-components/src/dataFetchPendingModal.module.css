@@ -10,13 +10,13 @@
 
 .modal {
   width: 500px;
+}
 
-  svg:global(.navds-loader.loader),
-  svg:global(.navds-loader.loader circle) {
-    animation-duration: 1.8s !important;
-    animation-delay: 0s !important;
-    animation-iteration-count: infinite !important;
-  }
+.modal svg:global(.navds-loader.loader),
+.modal svg:global(.navds-loader.loader circle) {
+  animation-duration: 1.8s !important;
+  animation-delay: 0s !important;
+  animation-iteration-count: infinite !important;
 }
 
 .messageRow {
