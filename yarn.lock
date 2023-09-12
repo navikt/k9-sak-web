@@ -5672,19 +5672,19 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@navikt/familie-endringslogg@npm:8.1.1":
-  version: 8.1.1
-  resolution: "@navikt/familie-endringslogg@npm:8.1.1::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Ffamilie-endringslogg%2F8.1.1%2Fe2e3f73951dde3c1d26e28bc03aac05c4a92dd4a"
+"@navikt/familie-endringslogg@npm:9.0.1":
+  version: 9.0.1
+  resolution: "@navikt/familie-endringslogg@npm:9.0.1::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Ffamilie-endringslogg%2F9.0.1%2F2120e20e45b4090dfcf7baf6cdcd0da962b279d6"
   dependencies:
     "@portabletext/react": ^1.0.6
     classnames: ^2.3.2
     react-transition-group: ^4.4.2
   peerDependencies:
     "@navikt/ds-icons": 2.x
-    "@navikt/ds-react": 2.x
+    "@navikt/ds-react": 2.x || 3.x || 4.x
     "@types/react": 17.x || 18.x
     react: 17.x || 18.x
-  checksum: 608110d840d1aadc545c51be5d9a26adc5a3c079c70cd00f1fd13eda5c6cba43e18dcd855c36c1d72d5058cdba86231a76e5dce6d847e78a4c66e90434919850
+  checksum: 1975428b7ab73dc93e16e5fee8ddbf56719c2cc68087413cf4f86d11e3ff092d7783b3b9d099ecd6d3b3fecf66e2fdfb9ec6c042b105909aa2c2c36ee063e722
   languageName: node
   linkType: hard
 
@@ -17744,7 +17744,7 @@ __metadata:
     "@navikt/ds-css": 4.11.1
     "@navikt/ds-react": 4.11.1
     "@navikt/ds-tailwind": ^5.0.2
-    "@navikt/familie-endringslogg": 8.1.1
+    "@navikt/familie-endringslogg": 9.0.1
     "@navikt/ft-plattform-komponenter": 2.2.16
     "@pmmmwh/react-refresh-webpack-plugin": 0.5.11
     "@popperjs/core": 2.11.8

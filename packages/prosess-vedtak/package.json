@@ -4,6 +4,9 @@
   "module": "index.jsx",
   "license": "MIT",
   "private": true,
+  "scripts": {
+    "test": "jest --passWithNoTests"
+  },
   "dependencies": {
     "@editorjs/editorjs": "2.27.2",
     "@editorjs/header": "2.7.0",

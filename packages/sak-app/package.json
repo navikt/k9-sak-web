@@ -4,6 +4,9 @@
   "module": "src/index.jsx",
   "license": "MIT",
   "private": true,
+  "scripts": {
+    "test": "jest --passWithNoTests"
+  },
   "dependencies": {
     "@formatjs/intl-datetimeformat": "6.10.0",
     "@formatjs/intl-numberformat": "8.7.0",

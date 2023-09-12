@@ -4,6 +4,9 @@
   "module": "index.jsx",
   "license": "MIT",
   "private": true,
+  "scripts": {
+    "test": "jest --passWithNoTests"
+  },
   "dependencies": {
     "@fpsak-frontend/fakta-bosted-soker": "1.0.0",
     "@fpsak-frontend/form": "1.0.0",
