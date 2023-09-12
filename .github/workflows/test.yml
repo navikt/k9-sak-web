@@ -28,9 +28,5 @@ jobs:
       - name: Installere dependencies
         run: HUSKY=0 yarn install --immutable
 
-      - name: Get number of CPU cores
-        id: cpu-cores
-        uses: SimenB/github-actions-cpu-cores@v2
-
       - name: Kjører tester
-        run: yarn test:all --max-workers ${{ steps.cpu-cores.outputs.count }} --silent
+        run: yarn test:all --runInBand --silent
