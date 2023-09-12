@@ -5,7 +5,7 @@ import { switchOnTestMode } from '@k9-sak-web/rest-api';
 
 // vi.spyOn(window.URL, 'createObjectURL').mockImplementation(() => 'http://fake.url');
 if (typeof window?.URL?.createObjectURL === 'undefined') {
-  window.URL.createObjectURL = jest.fn();
+  window.URL.createObjectURL = vi.fn();
 }
 vi.stubGlobal('open', vi.fn());
 
