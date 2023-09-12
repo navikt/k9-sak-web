@@ -16,7 +16,7 @@ import {
 import React, { useContext } from 'react';
 import { useIntl } from 'react-intl';
 import DokumentLink from '../components/DokumentLink';
-import styles from './GjennomgaaOpplaeringFerdigVisning.module.css';
+import styles from './GjennomgaaOpplaeringFerdigVisning.modules.css';
 
 interface OwnProps {
   vurdering: GjennomgaaOpplaeringVurdering;
@@ -24,9 +24,8 @@ interface OwnProps {
 }
 
 const GjennomgaaOpplaeringFerdigVisning = ({ vurdering, rediger }: OwnProps) => {
-  const { readOnly, opplaeringDokumenter, saksbehandlere } = useContext<FaktaOpplaeringContextTypes>(
-    FaktaOpplaeringContext,
-  );
+  const { readOnly, opplaeringDokumenter, saksbehandlere } =
+    useContext<FaktaOpplaeringContextTypes>(FaktaOpplaeringContext);
   const intl = useIntl();
 
   return (

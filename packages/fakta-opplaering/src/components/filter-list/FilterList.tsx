@@ -4,7 +4,7 @@ import classNames from 'classnames';
 import Chevron from 'nav-frontend-chevron';
 import React, { useState } from 'react';
 import OutsideClickHandler from 'react-outside-click-handler';
-import styles from './filterList.module.css';
+import styles from './filterList.modules.css';
 
 interface ChevronWithTextProps {
   chevronDirection: 'opp' | 'ned';

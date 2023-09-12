@@ -2,7 +2,7 @@ import { InstitusjonVurderingMedPerioder, Vurderingsresultat } from '@k9-sak-web
 import { Calender } from '@navikt/ds-icons';
 import { AssessedBy, Box, DetailView, LabelledContent, LinkButton, Margin } from '@navikt/ft-plattform-komponenter';
 import React from 'react';
-import styles from './institusjonFerdigVisning.module.css';
+import styles from './institusjonFerdigVisning.modules.css';
 
 interface OwnProps {
   vurdering: InstitusjonVurderingMedPerioder;

@@ -4,7 +4,7 @@ import React from 'react';
 
 import { DatePicker, DatePickerProps, DateValidationT, RangeValidationT, useRangeDatepicker } from '@navikt/ds-react';
 import dayjs from 'dayjs';
-import styles from './rangeDatepicker.module.css';
+import styles from './rangeDatepicker.modules.css';
 
 type OwnProps = {
   name: string;

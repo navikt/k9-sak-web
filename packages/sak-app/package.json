@@ -4,6 +4,9 @@
   "module": "src/index.jsx",
   "license": "MIT",
   "private": true,
+  "scripts": {
+    "test": "vitest --passWithNoTests"
+  },
   "dependencies": {
     "@formatjs/intl-datetimeformat": "6.10.0",
     "@formatjs/intl-numberformat": "8.7.0",
@@ -87,6 +90,8 @@
     "reselect": "4.1.8"
   },
   "devDependencies": {
-    "@fpsak-frontend/utils-test": "1.0.0"
+    "@fpsak-frontend/utils-test": "1.0.0",
+    "vite": "^4.4.9",
+    "vitest": "^0.34.3"
   }
 }

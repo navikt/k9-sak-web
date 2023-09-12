@@ -21,7 +21,7 @@ export default ({ mode }) => {
         },
       },
       globals: true,
-      setupFiles: ['./vitest-setup.ts', './packages/utils-test/src/setup-test-env-hooks.ts'],
+      setupFiles: ['../../vitest-setup.ts', '../utils-test/src/setup-test-env-hooks.ts'],
       watch: false,
       testTimeout: 15000,
       onConsoleLog(log) {

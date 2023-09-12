@@ -14,7 +14,7 @@ import React, { useContext } from 'react';
 
 import { useIntl } from 'react-intl';
 import DokumentLink from '../components/DokumentLink';
-import styles from './noedvendighetFerdigVisning.module.css';
+import styles from './noedvendighetFerdigVisning.modules.css';
 
 interface OwnProps {
   vurdering: NoedvendighetVurdering;

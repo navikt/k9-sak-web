@@ -4,7 +4,7 @@ import React, { useEffect } from 'react';
 import PeriodeRad from './PeriodeRad';
 import { ReisetidVurdering } from './ReisetidTypes';
 import ReisetidStatus from './konstanter';
-import styles from './reisetidNavigation.module.css';
+import styles from './reisetidNavigation.modules.css';
 
 interface OwnProps {
   perioder: ReisetidVurdering[];

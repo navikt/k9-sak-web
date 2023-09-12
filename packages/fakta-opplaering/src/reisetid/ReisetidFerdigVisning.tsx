@@ -10,7 +10,7 @@ import { Vurderingsresultat } from '@k9-sak-web/types';
 import BeskrivelseFraSoeker from './BeskrivelseFraSoeker';
 import FraSoeknad from './FraSoeknad';
 import { ReisetidVurdering } from './ReisetidTypes';
-import styles from './reisetidFerdigVisning.module.css';
+import styles from './reisetidFerdigVisning.modules.css';
 
 interface OwnProps {
   vurdering: ReisetidVurdering;
