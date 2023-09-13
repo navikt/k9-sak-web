@@ -49,7 +49,7 @@
     "@k9-sak-web/sak-soknadsperiodestripe": "1.0.0",
     "@k9-sak-web/types": "1.0.0",
     "@navikt/ds-react": "4.11.1",
-    "@navikt/ft-fakta-beregning": "4.2.35",
+    "@navikt/ft-fakta-beregning": "4.3.1",
     "@navikt/ft-form-hooks": "4.1.10",
     "@navikt/ft-plattform-komponenter": "2.2.16",
     "@navikt/ft-prosess-beregningsgrunnlag": "6.2.34",
