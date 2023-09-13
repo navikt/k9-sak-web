@@ -43,15 +43,73 @@ const kanResultatForhåndsvises = behandlingResultat => {
   return type.kode !== 'ENDRING_I_FORDELING_AV_YTELSEN' && type.kode !== 'INGEN_ENDRING';
 };
 
-const getManuellBrevCallback =
-  ({
+export const manuellBrevPreview = (
+  {
+    tilgjengeligeVedtaksbrev,
+    previewCallback,
+    values,
+    redigertHtml,
+    overstyrtMottaker,
     brødtekst,
     overskrift,
-    overstyrtMottaker,
-    formProps,
-    previewCallback,
-    tilgjengeligeVedtaksbrev,
+    aapneINyttVindu
   }: {
+    tilgjengeligeVedtaksbrev: TilgjengeligeVedtaksbrev,
+    previewCallback: (values, aapneINyttVindu) => void,
+    values: any,
+    redigertHtml: any,
+    overstyrtMottaker: Brevmottaker,
+    brødtekst: string,
+    overskrift: string,
+    aapneINyttVindu: boolean
+  }) => {
+  if (kanHaManueltFritekstbrev(tilgjengeligeVedtaksbrev)) {
+    return previewCallback(
+      {
+        dokumentdata: {
+          REDIGERTBREV: {
+            redigertMal: values[fieldnames.REDIGERT_MAL],
+            originalHtml: values[fieldnames.ORIGINAL_HTML],
+            redigertHtml: redigertHtml || values[fieldnames.REDIGERT_HTML],
+            inkluderKalender: values[fieldnames.INKLUDER_KALENDER_VED_OVERSTYRING] || false,
+          },
+        },
+        dokumentMal:
+          tilgjengeligeVedtaksbrev?.vedtaksbrevmaler?.[vedtaksbrevtype.MANUELL] ?? dokumentMalType.MANUELL,
+        ...(overstyrtMottaker ? {overstyrtMottaker: safeJSONParse(overstyrtMottaker)} : {}),
+      },
+      aapneINyttVindu,
+    );
+  }
+  return previewCallback(
+    {
+      dokumentdata: {
+        fritekstbrev: {
+          brødtekst: brødtekst || ' ',
+          overskrift: overskrift || ' ',
+          inkluderKalender: values[fieldnames.INKLUDER_KALENDER_VED_OVERSTYRING] || false,
+        },
+      },
+      // Bruker FRITKS som fallback til lenken ikke vises for avsluttede behandlinger
+      dokumentMal:
+        tilgjengeligeVedtaksbrev?.vedtaksbrevmaler?.[vedtaksbrevtype.FRITEKST] ?? dokumentMalType.FRITKS,
+      ...(overstyrtMottaker ? {overstyrtMottaker: safeJSONParse(overstyrtMottaker)} : {}),
+    },
+    aapneINyttVindu,
+  );
+
+};
+
+
+const getManuellBrevCallback =
+  ({
+     brødtekst,
+     overskrift,
+     overstyrtMottaker,
+     formProps,
+     previewCallback,
+     tilgjengeligeVedtaksbrev,
+   }: {
     brødtekst: string;
     overskrift: string;
     overstyrtMottaker?: Brevmottaker;
@@ -62,47 +120,24 @@ const getManuellBrevCallback =
   (e, redigertHtml = undefined) => {
     formProps.validateForm().then(errors => {
       if (Object.keys(errors).length === 0) {
-        if (kanHaManueltFritekstbrev(tilgjengeligeVedtaksbrev)) {
-          previewCallback(
-            {
-              dokumentdata: {
-                REDIGERTBREV: {
-                  redigertMal: formProps.values[fieldnames.REDIGERT_MAL],
-                  originalHtml: formProps.values[fieldnames.ORIGINAL_HTML],
-                  redigertHtml: redigertHtml || formProps.values[fieldnames.REDIGERT_HTML],
-                  inkluderKalender: formProps.values[fieldnames.INKLUDER_KALENDER_VED_OVERSTYRING] || false,
-                },
-              },
-              dokumentMal:
-                tilgjengeligeVedtaksbrev?.vedtaksbrevmaler?.[vedtaksbrevtype.MANUELL] ?? dokumentMalType.MANUELL,
-              ...(overstyrtMottaker ? { overstyrtMottaker: safeJSONParse(overstyrtMottaker) } : {}),
-            },
-            true,
-          );
-        } else {
-          previewCallback(
-            {
-              dokumentdata: {
-                fritekstbrev: {
-                  brødtekst: brødtekst || ' ',
-                  overskrift: overskrift || ' ',
-                  inkluderKalender: formProps.values[fieldnames.INKLUDER_KALENDER_VED_OVERSTYRING] || false,
-                },
-              },
-              // Bruker FRITKS som fallback til lenken ikke vises for avsluttede behandlinger
-              dokumentMal:
-                tilgjengeligeVedtaksbrev?.vedtaksbrevmaler?.[vedtaksbrevtype.FRITEKST] ?? dokumentMalType.FRITKS,
-              ...(overstyrtMottaker ? { overstyrtMottaker: safeJSONParse(overstyrtMottaker) } : {}),
-            },
-            true,
-          );
-        }
+        manuellBrevPreview({
+          tilgjengeligeVedtaksbrev,
+          previewCallback,
+          values: formProps.values,
+          redigertHtml,
+          overstyrtMottaker,
+          brødtekst,
+          overskrift,
+          aapneINyttVindu: true
+        });
       } else {
         formProps.setTouched(setNestedObjectValues(formProps.values, true));
       }
       e.preventDefault();
     });
   };
+
+
 
 const getHentHtmlMalCallback =
   ({ hentFritekstbrevHtmlCallback }) =>
