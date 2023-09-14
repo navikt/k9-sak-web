@@ -173,49 +173,53 @@ button.inaktiv:focus {
 }
 
 .suksessRevurder {
-  background: repeating-linear-gradient(
-    -45deg,
-    var(--a-green-200),
-    var(--a-green-200) 10px,
-    var(--a-orange-100) 10px,
-    var(--a-orange-100) 20px
-  );
+  background:
+    repeating-linear-gradient(
+      -45deg,
+      var(--a-green-200),
+      var(--a-green-200) 10px,
+      var(--a-orange-100) 10px,
+      var(--a-orange-100) 20px
+    );
   border: 1px solid var(--a-green-500);
 }
 
 .suksessRevurder:hover,
 .suksessRevurder.active,
 .suksessRevurder:focus {
-  background: repeating-linear-gradient(
-    -45deg,
-    var(--a-green-200),
-    var(--a-green-200) 10px,
-    var(--a-orange-100) 10px,
-    var(--a-orange-100) 20px
-  );
+  background:
+    repeating-linear-gradient(
+      -45deg,
+      var(--a-green-200),
+      var(--a-green-200) 10px,
+      var(--a-orange-100) 10px,
+      var(--a-orange-100) 20px
+    );
 }
 
 .suksessDelvis {
-  background: repeating-linear-gradient(
-    -45deg,
-    var(--a-green-200),
-    var(--a-green-200) 10px,
-    var(--a-green-100) 10px,
-    var(--a-green-100) 20px
-  );
+  background:
+    repeating-linear-gradient(
+      -45deg,
+      var(--a-green-200),
+      var(--a-green-200) 10px,
+      var(--a-green-100) 10px,
+      var(--a-green-100) 20px
+    );
   border: 1px solid var(--a-green-500);
 }
 
 .suksessDelvis:hover,
 .suksessDelvis.active,
 .suksessDelvis:focus {
-  background: repeating-linear-gradient(
-    -45deg,
-    var(--a-green-200),
-    var(--a-green-200) 10px,
-    var(--a-green-100) 10px,
-    var(--a-green-100) 20px
-  );
+  background:
+    repeating-linear-gradient(
+      -45deg,
+      var(--a-green-200),
+      var(--a-green-200) 10px,
+      var(--a-green-100) 10px,
+      var(--a-green-100) 20px
+    );
 }
 
 button.suksess {

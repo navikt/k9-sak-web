@@ -10,7 +10,7 @@ import styles from './loadingPanel.module.css';
  */
 const LoadingPanel = () => (
   <div className={styles.container}>
-    <Loader variant="neutral" size="2xlarge" title="venter..." />
+    <Loader className="loader" variant="neutral" size="2xlarge" title="venter..." />
   </div>
 );
 

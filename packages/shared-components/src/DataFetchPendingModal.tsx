@@ -67,7 +67,7 @@ export class DataFetchPendingModal extends Component<OwnProps, OwnState> {
       >
         <Row>
           <Column xs="2">
-            <Loader variant="neutral" size="xlarge" title="venter..." />
+            <Loader className="loader" variant="neutral" size="xlarge" title="venter..." />
             <div className={styles.divider} />
           </Column>
           <Column xs="10">
