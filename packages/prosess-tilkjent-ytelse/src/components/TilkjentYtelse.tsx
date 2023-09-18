@@ -85,18 +85,31 @@ const createTooltipContent = (intl, item, getKodeverknavn, arbeidsgiverOpplysnin
 `;
 };
 
-const andelerUtgjør100ProsentTilsammen = periode => {
-  const { andeler } = periode;
-  const totalUtbetalingsgrad = (andeler || []).reduce((accumulator, andel) => accumulator + andel.utbetalingsgrad, 0);
-  if (totalUtbetalingsgrad >= 100) {
-    return true;
+const sumUtBetalingsgrad = (andeler: any) => andeler.reduce((sum, andel) => sum + andel.utbetalingsgrad, 0);
+
+const erTotalUtbetalingsgradOver100 = periode => {
+  const values = [
+    periode.totalUtbetalingsgradEtterReduksjonVedTilkommetInntekt,
+    periode.totalUtbetalingsgradFraUttak,
+  ].filter(value => value !== null);
+
+  if (values.length > 0) {
+    const totalUtbetalingsgrad = Math.min(...values) * 100;
+    return totalUtbetalingsgrad >= 100;
+  }
+
+  // Resten av koden i denne funksjonen kan fjernes når alle saker har totalUtbetalingsgradFraUttak.
+  // Denne koden er kun for å støtte saker som er laget før totalUtbetalingsgradFraUttak ble lagt til.
+  if (periode.andeler) {
+    const totalUtbetalingsgrad = sumUtBetalingsgrad(periode.andeler);
+    return totalUtbetalingsgrad >= 100;
   }
   return false;
 };
 
 const prepareTimelineData = (periode, index, intl, getKodeverknavn, arbeidsgiverOpplysningerPerId) => ({
   ...periode,
-  className: andelerUtgjør100ProsentTilsammen(periode) ? 'innvilget' : 'gradert',
+  className: erTotalUtbetalingsgradOver100(periode) ? 'innvilget' : 'gradert',
   group: 1,
   id: index,
   start: parseDateString(periode.fom),
