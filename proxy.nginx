@@ -146,6 +146,10 @@ server {
     error_page 403 = @403_json;
     error_page 404 = @404_json;
     error_page 504 = @504_json;
+
+    gzip on;
+    gzip_types text/css application/javascript;
+    gzip_proxied no-cache no-store private expired auth;
   }
 
   location  "/k9/microfrontend/omsorgsdager/" {
