@@ -88,10 +88,13 @@ const createTooltipContent = (intl, item, getKodeverknavn, arbeidsgiverOpplysnin
 const sumUtBetalingsgrad = (andeler: any) => andeler.reduce((sum, andel) => sum + andel.utbetalingsgrad, 0);
 
 const erTotalUtbetalingsgradOver100 = periode => {
-  if (periode.totalUtbetalingsgradEtterReduksjonVedTilkommetInntekt || periode.totalUtbetalingsgradFraUttak) {
-    const totalUtbetalingsgrad =
-      Math.min(periode.totalUtbetalingsgradEtterReduksjonVedTilkommetInntekt, periode.totalUtbetalingsgradFraUttak) *
-      100;
+  const values = [
+    periode.totalUtbetalingsgradEtterReduksjonVedTilkommetInntekt,
+    periode.totalUtbetalingsgradFraUttak,
+  ].filter(value => value !== null);
+
+  if (values.length > 0) {
+    const totalUtbetalingsgrad = Math.min(...values) * 100;
     return totalUtbetalingsgrad >= 100;
   }
 
