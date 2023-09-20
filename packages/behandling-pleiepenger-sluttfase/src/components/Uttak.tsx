@@ -12,6 +12,15 @@ const initializeUttak = (
   arbeidsforhold: ArbeidsgiverOpplysningerPerId,
   aksjonspunktkoder: string[],
   erFagytelsetypeLivetsSluttfase: boolean,
+  løsAksjonspunktVurderDatoNyRegelUttak: ({
+    begrunnelse,
+    virkningsdato,
+  }: {
+    begrunnelse: string;
+    virkningsdato: string;
+  }) => void,
+  virkningsdatoUttakNyeRegler?: string,
+  aksjonspunkter?: Aksjonspunkt[],
 ) => {
   (window as any).renderUttakApp(elementId, {
     uttaksperioder,
@@ -20,6 +29,9 @@ const initializeUttak = (
     arbeidsforhold,
     aksjonspunktkoder,
     erFagytelsetypeLivetsSluttfase,
+    løsAksjonspunktVurderDatoNyRegelUttak,
+    virkningsdatoUttakNyeRegler,
+    aksjonspunkter,
   });
 };
 
@@ -30,6 +42,8 @@ interface UttakProps {
   arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysningerPerId;
   aksjonspunkter: Aksjonspunkt[];
   erFagytelsetypeLivetsSluttfase: boolean;
+  submitCallback: (data: { kode: string; begrunnelse: string; virkningsdato: string }[]) => void;
+  virkningsdatoUttakNyeRegler?: string;
 }
 
 const uttakAppID = 'uttakApp';
@@ -40,14 +54,20 @@ export default ({
   arbeidsgiverOpplysningerPerId,
   aksjonspunkter,
   erFagytelsetypeLivetsSluttfase,
+  submitCallback,
+  virkningsdatoUttakNyeRegler,
 }: UttakProps) => {
-  const relevanteAksjonspunkter = [aksjonspunktCodes.VENT_ANNEN_PSB_SAK];
+  const relevanteAksjonspunkter = [aksjonspunktCodes.VENT_ANNEN_PSB_SAK, aksjonspunktCodes.VURDER_DATO_NY_REGEL_UTTAK];
   const funnedeRelevanteAksjonspunkter = aksjonspunkter.filter(aksjonspunkt =>
     relevanteAksjonspunkter.some(relevantAksjonspunkt => relevantAksjonspunkt === aksjonspunkt.definisjon.kode),
   );
   const funnedeRelevanteAksjonspunktkoder = funnedeRelevanteAksjonspunkter
     .filter(aksjonspunkt => aksjonspunkt.status.kode === aksjonspunktStatus.OPPRETTET)
     .map(aksjonspunkt => aksjonspunkt.definisjon.kode);
+
+  const løsAksjonspunktVurderDatoNyRegelUttak = ({ begrunnelse, virkningsdato }) =>
+    submitCallback([{ kode: aksjonspunktCodes.VURDER_DATO_NY_REGEL_UTTAK, begrunnelse, virkningsdato }]);
+
   return (
     <MicroFrontend
       id={uttakAppID}
@@ -63,6 +83,9 @@ export default ({
           arbeidsgiverOpplysningerPerId,
           funnedeRelevanteAksjonspunktkoder,
           erFagytelsetypeLivetsSluttfase,
+          løsAksjonspunktVurderDatoNyRegelUttak,
+          virkningsdatoUttakNyeRegler,
+          funnedeRelevanteAksjonspunkter,
         )
       }
     />

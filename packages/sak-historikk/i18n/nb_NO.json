@@ -316,6 +316,7 @@
   "HistorikkEndretFelt.BrukerErUnderTvungenForvaltning": "Søker er under tvungen forvaltning",
   "HistorikkEndretFelt.TilkjentYtelse": "Tilkjent ytelse",
   "HistorikkEndretFelt.Kompletthet": "Avklart behovet for inntektsmelding til inntektsgrunnlaget for {value}",
+  "HistorikkEndretFelt.VirkningsdatoNyeRegler": "Virkningsdato for nye regler i uttak",
   "HistorikkEndretFeltVerdiType.AdoptererAlene": "adopterer alene",
   "HistorikkEndretFeltVerdiType.AdoptererIkkeAlene": "adopterer ikke alene",
   "HistorikkEndretFeltVerdiType.Aleneomsorg": "Søker har aleneomsorg for barnet",

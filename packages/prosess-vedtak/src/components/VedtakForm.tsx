@@ -39,7 +39,7 @@ import { injectIntl, IntlShape } from 'react-intl';
 import dokumentMalType from '@fpsak-frontend/kodeverk/src/dokumentMalType';
 import redusertUtbetalingArsak from '../kodeverk/redusertUtbetalingArsak';
 import { fieldnames } from '../konstanter';
-import BrevPanel from './brev/BrevPanel';
+import BrevPanel, { manuellBrevPreview } from './brev/BrevPanel';
 import LagreVedtakFormIContext, {
   filtrerVerdierSomSkalNullstilles,
   settMalerVedtakContext,
@@ -398,16 +398,31 @@ export const VedtakForm: React.FC<Props> = ({
         aapneINyttVindu,
       );
     };
+
+  const getPreviewManuellBrevCallback = (values: any) =>
+    manuellBrevPreview({
+      tilgjengeligeVedtaksbrev,
+      previewCallback,
+      values,
+      redigertHtml: values[fieldnames.REDIGERT_HTML],
+      overstyrtMottaker: values.overstyrtMottaker,
+      brødtekst: values[fieldnames.BRØDTEKST],
+      overskrift: values[fieldnames.OVERSKRIFT],
+      aapneINyttVindu: false,
+    });
+
   const submit = async (values, actions) => {
     const manueltBrev = values[fieldnames.SKAL_BRUKE_OVERSTYRENDE_FRITEKST_BREV];
     const hindreUtsending = values[fieldnames.SKAL_HINDRE_UTSENDING_AV_BREV];
 
     if (manueltBrev) {
       try {
+        await getPreviewManuellBrevCallback(values);
         submitCallback(createPayload(values));
         return;
       } catch (e) {
         setErrorOnSubmit('Noe gikk galt ved innsending.');
+        actions.setSubmitting(false);
         return;
       }
     }
