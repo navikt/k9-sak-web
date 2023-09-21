@@ -4,11 +4,9 @@ import React, { useEffect } from 'react';
 import { injectIntl, WrappedComponentProps } from 'react-intl';
 import { connect } from 'react-redux';
 import { InjectedFormProps } from 'redux-form';
-import { createSelector } from 'reselect';
 
 import { behandlingForm, behandlingFormValueSelector, SelectField, TextAreaField } from '@fpsak-frontend/form';
 import dokumentMalType from '@fpsak-frontend/kodeverk/src/dokumentMalType';
-import ugunstAarsakTyper from '@fpsak-frontend/kodeverk/src/ugunstAarsakTyper';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import {
   ariaCheck,
@@ -46,18 +44,16 @@ export type FormValues = {
   brevmalkode: string;
   fritekst: string;
   fritekstbrev: Fritekstbrev;
-  arsakskode?: string;
 };
 
 // TODO (TOR) Bør erstattast av ein markør fra backend
-const showFritekst = (brevmalkode?: string, arsakskode?: string): boolean =>
+const showFritekst = (brevmalkode?: string): boolean =>
   brevmalkode === dokumentMalType.INNHENT_DOK ||
   brevmalkode === dokumentMalType.KORRIGVARS ||
   brevmalkode === dokumentMalType.FRITKS ||
   brevmalkode === dokumentMalType.VARSEL_OM_TILBAKEKREVING ||
   brevmalkode === dokumentMalType.INNHENT_MEDISINSKE_OPPLYSNINGER ||
-  brevmalkode === dokumentMalType.VARSEL_TILKOMMEN_INNTEKT ||
-  (brevmalkode === dokumentMalType.REVURDERING_DOK && arsakskode === ugunstAarsakTyper.ANNET);
+  brevmalkode === dokumentMalType.VARSEL_TILKOMMEN_INNTEKT;
 
 interface PureOwnProps {
   submitCallback: (values: FormValues) => void;
@@ -78,11 +74,9 @@ interface PureOwnProps {
 }
 
 interface MappedOwnProps {
-  causes: KodeverkMedNavn[];
   overstyrtMottaker?: string;
   brevmalkode?: string;
   fritekst?: string;
-  arsakskode?: string;
   fritekstbrev?: Fritekstbrev;
   valgtPreutfyltMal?: string;
 }
@@ -102,10 +96,9 @@ const createValidateRecipient = recipients => value =>
  * Presentasjonskomponent. Gir mulighet for å forhåndsvise og sende brev. Mottaker og brevtype velges fra predefinerte lister,
  * og fritekst som skal flettes inn i brevet skrives inn i et eget felt.
  */
-export const MessagesMedMedisinskeTypeBrevmalImpl = ({
+export const MessagesImpl = ({
   intl,
   templates,
-  causes = [],
   previewCallback,
   handleSubmit,
   sprakKode,
@@ -113,7 +106,6 @@ export const MessagesMedMedisinskeTypeBrevmalImpl = ({
   brevmalkode,
   fritekst,
   valgtPreutfyltMal,
-  arsakskode,
   personopplysninger,
   arbeidsgiverOpplysningerPerId,
   fritekstbrev,
@@ -150,7 +142,7 @@ export const MessagesMedMedisinskeTypeBrevmalImpl = ({
 
   const tmpls: Brevmal[] = Object.keys(templates).map(key => ({ ...templates[key], kode: key }));
 
-  const { startRequest: hentPreutfylteMaler, data: preutfylteFelter } = restApiMessagesHooks.useRestApiRunner<
+  const { startRequest: hentPreutfylteMaler, data: preutfylteTypeFelter } = restApiMessagesHooks.useRestApiRunner<
     { tittel: string; fritekst: string }[]
   >(MessagesApiKeys.HENT_PREUTFYLTE_FRITEKSTMALER);
 
@@ -172,8 +164,8 @@ export const MessagesMedMedisinskeTypeBrevmalImpl = ({
       if (valgtBrevmal.linker.length > 0) {
         requestMessagesApi.setLinks(valgtBrevmal.linker);
         hentPreutfylteMaler()
-          .then(preutfylteMaler => {
-            const felter = preutfylteMaler.find(alt => valgtPreutfyltMal === alt.tittel);
+          .then(preutfylteTyper => {
+            const felter = preutfylteTyper.find(alt => valgtPreutfyltMal === alt.tittel);
 
             if (felter) {
               formProps.change('fritekst', felter.fritekst);
@@ -202,15 +194,15 @@ export const MessagesMedMedisinskeTypeBrevmalImpl = ({
             ))}
             bredde="xxl"
           />
-          {valgtBrevmal?.linker.length > 0 && preutfylteFelter && (
+          {valgtBrevmal?.linker.length > 0 && preutfylteTypeFelter && (
             <>
               <VerticalSpacer eightPx />
               <SelectField
-                name="valgtMedisinType"
+                name="valgtPreutfyltType"
                 label={intl.formatMessage({ id: 'Messages.TypeAvDokumentasjon' })}
                 validate={[]}
                 placeholder={intl.formatMessage({ id: 'Messages.VelgTypeAvDokumentasjon' })}
-                selectValues={preutfylteFelter.map(alternativ => (
+                selectValues={preutfylteTypeFelter.map(alternativ => (
                   <option key={alternativ.tittel} value={alternativ.tittel}>
                     {alternativ.tittel}
                   </option>
@@ -240,7 +232,7 @@ export const MessagesMedMedisinskeTypeBrevmalImpl = ({
               />
             </>
           )}
-          {showFritekst(brevmalkode, arsakskode) && (
+          {showFritekst(brevmalkode) && (
             <>
               <VerticalSpacer eightPx />
               <div className="input--xxl">
@@ -330,9 +322,6 @@ const transformValues = (values: any) => {
       : undefined;
   return { ...newValues, overstyrtMottaker };
 };
-const getfilteredCauses = createSelector([(ownProps: PureOwnProps) => ownProps.revurderingVarslingArsak], causes =>
-  causes.filter(cause => cause.kode !== ugunstAarsakTyper.BARN_IKKE_REGISTRERT_FOLKEREGISTER),
-);
 
 const mapStateToPropsFactory = (_initialState, initialOwnProps: PureOwnProps) => {
   const onSubmit = (values: FormValues) => initialOwnProps.submitCallback(transformValues(values));
@@ -340,14 +329,12 @@ const mapStateToPropsFactory = (_initialState, initialOwnProps: PureOwnProps) =>
     ...behandlingFormValueSelector(formName, ownProps.behandlingId, ownProps.behandlingVersjon)(
       state,
       'overstyrtMottaker',
-      'valgtMedisinType',
+      'valgtPreutfyltType',
       'brevmalkode',
       'fritekst',
-      'arsakskode',
       'fritekstbrev.overskrift',
       'fritekstbrev.brødtekst',
     ),
-    causes: getfilteredCauses(ownProps),
     initialValues: buildInitalValues(ownProps.templates, ownProps.isKontrollerRevurderingApOpen),
     onSubmit,
   });
@@ -356,7 +343,7 @@ const mapStateToPropsFactory = (_initialState, initialOwnProps: PureOwnProps) =>
 const Messages = connect(mapStateToPropsFactory)(
   behandlingForm({
     form: formName,
-  })(injectIntl(MessagesMedMedisinskeTypeBrevmalImpl)),
+  })(injectIntl(MessagesImpl)),
 );
 
 export default Messages;

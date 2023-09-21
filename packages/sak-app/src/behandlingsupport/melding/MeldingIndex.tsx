@@ -56,7 +56,6 @@ const getSubmitCallback =
           overstyrtMottaker: values.overstyrtMottaker,
           brevmalkode: values.brevmalkode,
           fritekst: values.fritekst,
-          arsakskode: values.arsakskode,
           fritekstbrev: values.fritekstbrev,
         };
     return submitMessage(data)
