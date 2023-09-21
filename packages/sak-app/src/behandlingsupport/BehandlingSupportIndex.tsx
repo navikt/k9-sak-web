@@ -82,11 +82,16 @@ const BehandlingSupportIndex = ({
   useEffect(() => {
     let isMounted = true;
     axios
-      .get(`/notat?fagsakId=${fagsak.saksnummer}`, { cancelToken: httpCanceler.token })
+      .get(`/k9/sak/api/notat`, {
+        cancelToken: httpCanceler.token,
+        params: {
+          saksnummer: fagsak.saksnummer,
+        },
+      })
       .then(response => {
         if (isMounted) {
           const ulesteNotater = response.data.filter(
-            notat => lesteNotater.findIndex(lestNotatId => lestNotatId === notat.id) === -1,
+            notat => lesteNotater.findIndex(lestNotatId => lestNotatId === notat.notatId) === -1,
           );
           setAntallUlesteNotater(ulesteNotater.length);
         }

@@ -1,9 +1,9 @@
 import { NavAnsatt } from '@k9-sak-web/types';
-import { EyeWithPupilIcon, PencilIcon } from '@navikt/aksel-icons';
+import { EyeSlashIcon, EyeWithPupilIcon, PencilIcon } from '@navikt/aksel-icons';
 import { BodyLong, Button, Chat, Label, Tag } from '@navikt/ds-react';
 import { Form, TextAreaField } from '@navikt/ft-form-hooks';
 import { maxLength, minLength, required } from '@navikt/ft-form-validators';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { FormattedMessage } from 'react-intl';
 import { NotatResponse } from '../types/NotatResponse';
@@ -20,27 +20,80 @@ type Inputs = {
 
 interface ChatComponentProps {
   notat: NotatResponse;
-  postNotat: (data: Inputs, id: number, fagsakId?: string) => void;
+  postNotat: ({
+    data,
+    id,
+    saksnummer,
+    versjon,
+  }: {
+    data: Inputs;
+    id: number;
+    saksnummer: string;
+    versjon: number;
+  }) => void;
   navAnsatt: NavAnsatt;
+  skjulNotat: ({
+    skjul,
+    id,
+    saksnummer,
+    versjon,
+  }: {
+    skjul: boolean;
+    id: number;
+    saksnummer: string;
+    versjon: number;
+  }) => void;
+  fagsakId: string;
 }
 
-const ChatComponent: React.FunctionComponent<ChatComponentProps> = ({ notat, postNotat, navAnsatt }) => {
-  const { endretAv, endretTidspunkt, fagsakId, gjelderType, id, notatTekst, opprettetAv, opprettetTidspunkt } = notat;
+const ChatComponent: React.FunctionComponent<ChatComponentProps> = ({
+  notat,
+  postNotat,
+  navAnsatt,
+  skjulNotat,
+  fagsakId,
+}) => {
+  const {
+    endretAv,
+    endretTidspunkt,
+    gjelderType,
+    notatId,
+    notatTekst,
+    opprettetAv,
+    opprettetTidspunkt,
+    versjon,
+    skjult,
+  } = notat;
   const position =
     opprettetAv === navAnsatt.brukernavn || endretAv === navAnsatt.brukernavn ? ChatPosition.Right : ChatPosition.Left;
   const minLength3 = minLength(3);
   const maxLength2000 = maxLength(1500);
+
   const formMethods = useForm<Inputs>({
     defaultValues: {
       notatTekst,
     },
+    shouldUnregister: true,
   });
+  const { reset } = formMethods;
   const [readOnly, setReadOnly] = useState(true);
 
-  const submit = (data: Inputs) => postNotat(data, id, fagsakId);
+  useEffect(() => {
+    reset({
+      notatTekst,
+    });
+  }, [reset, notatTekst]);
+
+  const submit = (data: Inputs) => {
+    postNotat({ data, id: notatId, saksnummer: fagsakId, versjon });
+  };
 
   const toggleReadOnly = () => {
     setReadOnly(current => !current);
+  };
+
+  const toggleSkjulNotat = () => {
+    skjulNotat({ skjul: !skjult, id: notatId, saksnummer: fagsakId, versjon });
   };
 
   const name =
@@ -82,7 +135,7 @@ const ChatComponent: React.FunctionComponent<ChatComponentProps> = ({ notat, pos
                 <FormattedMessage id="NotatISakIndex.Gjelder" />
               </Label>
               <Tag className="ml-2" size="small" variant="neutral">
-                {gjelderType}
+                {gjelderType.navn}
               </Tag>
             </div>
             {readOnly && (
@@ -96,8 +149,19 @@ const ChatComponent: React.FunctionComponent<ChatComponentProps> = ({ notat, pos
                 >
                   <FormattedMessage id="NotatISakIndex.Rediger" />
                 </Button>
-                <Button className="ml-2.5" size="xsmall" variant="tertiary" icon={<EyeWithPupilIcon aria-hidden />}>
-                  <FormattedMessage id="NotatISakIndex.SkjulNotat" />
+                <Button
+                  onClick={toggleSkjulNotat}
+                  className="ml-2.5"
+                  size="xsmall"
+                  variant="tertiary"
+                  icon={skjult ? <EyeSlashIcon aria-hidden /> : <EyeWithPupilIcon aria-hidden />}
+                  type="button"
+                >
+                  {skjult ? (
+                    <FormattedMessage id="NotatISakIndex.VisNotat" />
+                  ) : (
+                    <FormattedMessage id="NotatISakIndex.SkjulNotat" />
+                  )}
                 </Button>
               </div>
             )}

@@ -55,7 +55,7 @@ const TABS = {
     getSvg: (isActive, isDisabled, props, antallUlesteNotater) => (
       <div className="relative">
         {antallUlesteNotater > 0 && (
-          <div className="absolute w-5 h-5 rounded-full bg-[#C30000] left-[1.125rem] top-[-0.4375rem] text-white text-sm font-semibold">
+          <div className="absolute w-5 h-5 rounded-full bg-[#C30000] left-[calc(50%+7px)] top-[-0.4375rem] text-white text-sm font-semibold">
             {antallUlesteNotater}
           </div>
         )}

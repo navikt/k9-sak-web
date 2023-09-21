@@ -1,12 +1,10 @@
 import { NotatGjelderType } from './NotatGjelderType';
 
 export interface NotatResponse {
-  aktørId?: string;
   endretAv: string;
   endretTidspunkt: null;
-  fagsakId?: string;
-  gjelderType: NotatGjelderType;
-  id: number;
+  gjelderType: { kode: NotatGjelderType; navn: string };
+  notatId: number;
   notatTekst: string;
   opprettetAv: string;
   opprettetTidspunkt: string;
