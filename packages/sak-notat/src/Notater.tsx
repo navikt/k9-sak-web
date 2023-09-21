@@ -34,7 +34,7 @@ interface NotaterProps {
 
 const Notater: React.FunctionComponent<NotaterProps> = ({ fagsakId, navAnsatt }) => {
   const [visSkjulteNotater, setVisSkjulteNotater] = useState(false);
-  const [, setLesteNotater] = useLocalStorage<number[]>('lesteNotater', []);
+  const [lesteNotater, setLesteNotater] = useLocalStorage<number[]>('lesteNotater', []);
   const queryClient = useQueryClient();
 
   const notaterQueryKey = 'notater';
@@ -51,7 +51,9 @@ const Notater: React.FunctionComponent<NotaterProps> = ({ fagsakId, navAnsatt })
         const sorterteNotater = [...data].sort(
           (notatA, notatB) => +new Date(notatA.opprettetTidspunkt) - +new Date(notatB.opprettetTidspunkt),
         );
-        setLesteNotater(data.map(notat => notat.notatId));
+        setLesteNotater([
+          ...new Set([...lesteNotater, ...data.filter(notat => !notat.skjult).map(notat => notat.notatId)]),
+        ]);
         return sorterteNotater;
       });
 
@@ -147,7 +149,7 @@ const Notater: React.FunctionComponent<NotaterProps> = ({ fagsakId, navAnsatt })
               <FormattedMessage id="NotatISakIndex.VisSkjulteNotater" />
             </Switch>
           </div>
-          {!hasGetNotaterError && notater.length === 0 && (
+          {!hasGetNotaterError && notater?.length === 0 && (
             <Alert className="mt-7" size="small" variant="info">
               <FormattedMessage id="NotatISakIndex.IngenNotaterAlert" />
             </Alert>
@@ -162,7 +164,7 @@ const Notater: React.FunctionComponent<NotaterProps> = ({ fagsakId, navAnsatt })
               <FormattedMessage id="NotatISakIndex.NoeGikkGaltLagringNotater" />
             </Alert>
           )}
-          {notater.length > 0 && (
+          {notater?.length > 0 && (
             <div className="grid mt-5 gap-10">
               {notater
                 .filter(notat => visSkjulteNotater || !notat.skjult)
