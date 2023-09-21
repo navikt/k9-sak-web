@@ -8,7 +8,7 @@ import {
   ArbeidsgiverOpplysningerPerId,
   Brevmaler,
   Brevmal,
-  Mottaker, FeatureToggles,
+  Mottaker,
 } from '@k9-sak-web/types';
 
 import { Fritekstbrev } from '@k9-sak-web/types/src/formidlingTsType';
