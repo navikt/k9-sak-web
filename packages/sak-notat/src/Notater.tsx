@@ -58,7 +58,6 @@ const Notater: React.FunctionComponent<NotaterProps> = ({ fagsakId, navAnsatt })
   const {
     isLoading: getNotaterLoading,
     isError: hasGetNotaterError,
-    refetch,
     data: notater,
   } = useQuery(notaterQueryKey, ({ signal }) => getNotater(signal));
 

@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import React, { useCallback, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import SupportMenySakIndex, { SupportTabs } from '@fpsak-frontend/sak-support-meny';
@@ -13,6 +13,7 @@ import {
 import { httpErrorHandler, useLocalStorage } from '@fpsak-frontend/utils';
 import { useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
 import axios from 'axios';
+import { useQuery } from 'react-query';
 import { getSupportPanelLocationCreator } from '../app/paths';
 import useTrackRouteParam from '../app/useTrackRouteParam';
 import BehandlingRettigheter from '../behandling/behandlingRettigheterTsType';
@@ -75,36 +76,29 @@ const BehandlingSupportIndex = ({
   navAnsatt,
 }: OwnProps) => {
   const { addErrorMessage } = useRestApiErrorDispatcher();
-  const httpCanceler = useMemo(() => axios.CancelToken.source(), []);
   const [antallUlesteNotater, setAntallUlesteNotater] = useState(0);
   const [lesteNotater] = useLocalStorage('lesteNotater', []);
 
-  useEffect(() => {
-    let isMounted = true;
+  const getNotater = (signal: AbortSignal) => {
     axios
       .get(`/k9/sak/api/notat`, {
-        cancelToken: httpCanceler.token,
+        signal,
         params: {
           saksnummer: fagsak.saksnummer,
         },
       })
       .then(response => {
-        if (isMounted) {
-          const ulesteNotater = response.data.filter(
-            notat => lesteNotater.findIndex(lestNotatId => lestNotatId === notat.notatId) === -1,
-          );
-          setAntallUlesteNotater(ulesteNotater.length);
-        }
+        const ulesteNotater = response.data.filter(
+          notat => lesteNotater.findIndex(lestNotatId => lestNotatId === notat.notatId) === -1,
+        );
+        setAntallUlesteNotater(ulesteNotater.length);
       })
       .catch(error => {
         httpErrorHandler(error?.response?.status, addErrorMessage, error?.response?.headers?.location);
       });
+  };
 
-    return () => {
-      isMounted = false;
-      httpCanceler.cancel();
-    };
-  }, []);
+  useQuery('notater', ({ signal }) => getNotater(signal));
 
   const { selected: valgtSupportPanel, location } = useTrackRouteParam<string>({
     paramName: 'stotte',

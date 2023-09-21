@@ -1,1 +1,1 @@
-export { default } from './src/NotaterIndex';
+export { default } from './src/Notater';
