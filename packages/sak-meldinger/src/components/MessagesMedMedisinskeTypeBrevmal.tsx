@@ -56,6 +56,7 @@ const showFritekst = (brevmalkode?: string, arsakskode?: string): boolean =>
   brevmalkode === dokumentMalType.FRITKS ||
   brevmalkode === dokumentMalType.VARSEL_OM_TILBAKEKREVING ||
   brevmalkode === dokumentMalType.INNHENT_MEDISINSKE_OPPLYSNINGER ||
+  brevmalkode === dokumentMalType.VARSEL_TILKOMMEN_INNTEKT ||
   (brevmalkode === dokumentMalType.REVURDERING_DOK && arsakskode === ugunstAarsakTyper.ANNET);
 
 interface PureOwnProps {
@@ -68,7 +69,7 @@ interface PureOwnProps {
     fritekst: string,
     fritekstbrev?: Fritekstbrev,
   ) => void;
-  templates: Brevmaler | Brevmal[];
+  templates: Brevmaler;
   sprakKode?: Kodeverk;
   revurderingVarslingArsak: KodeverkMedNavn[];
   isKontrollerRevurderingApOpen?: boolean;
@@ -126,6 +127,9 @@ export const MessagesMedMedisinskeTypeBrevmalImpl = ({
   if (!sprakKode) {
     return null;
   }
+  if (!templates) {
+    return null;
+  }
 
   const { addErrorMessage } = useRestApiErrorDispatcher();
   requestMessagesApi.setAddErrorMessageHandler(addErrorMessage);
@@ -145,21 +149,19 @@ export const MessagesMedMedisinskeTypeBrevmalImpl = ({
 
   const languageCode = getLanguageCodeFromSprakkode(sprakKode);
 
-  const recipients: Mottaker[] =
-    templates && brevmalkode && templates[brevmalkode] && Array.isArray(templates[brevmalkode].mottakere)
-      ? templates[brevmalkode].mottakere
-      : [];
+  const valgtBrevmal = templates[brevmalkode];
 
-  const tmpls: Brevmal[] = transformTemplates(templates);
+  const recipients: Mottaker[] = templates[brevmalkode]?.mottakere ?? [];
 
+  const tmpls: Brevmal[] = Object.keys(templates).map(key => ({ ...templates[key], kode: key }));
+
+  // todo rename
   const { startRequest: hentFritekstMaler, data: fritekstMaler } = restApiMessagesHooks.useRestApiRunner<
     { tittel: string; fritekst: string }[]
   >(MessagesApiKeys.HENT_FRITEKSTBREVMALER_TIL_TYPEN_AV_MEDISINSKE_OPPLYSNINGER);
 
-  const oppdaterAPILinkerForHentingAvMedisinskeTyper = () => {
-    const urlsTilHentingAvMedisinskeTyper = tmpls.find(
-      brevmal => brevmal.kode === dokumentMalType.INNHENT_MEDISINSKE_OPPLYSNINGER,
-    )?.linker;
+  const oppdaterAPILinkerForHentingAvMedisinskeTyper = (mal: string) => {
+    const urlsTilHentingAvMedisinskeTyper = tmpls.find(brevmal => brevmal.kode === mal)?.linker;
 
     if (urlsTilHentingAvMedisinskeTyper) {
       requestMessagesApi.setLinks(urlsTilHentingAvMedisinskeTyper);
@@ -184,28 +186,26 @@ export const MessagesMedMedisinskeTypeBrevmalImpl = ({
           : JSON.stringify(recipients[0]),
       );
 
-      if (brevmalkode === dokumentMalType.INNHENT_MEDISINSKE_OPPLYSNINGER) {
-        const erAPIOppdatertMedLinker = oppdaterAPILinkerForHentingAvMedisinskeTyper();
-
-        if (!erAPIOppdatertMedLinker) return;
-
+      if (valgtBrevmal.linker.length > 0) {
+        requestMessagesApi.setLinks(valgtBrevmal.linker);
         hentFritekstMaler()
-          .then(brevmalerForMedisinskeOpplysninger => {
-            const fritekstBrevmal = brevmalerForMedisinskeOpplysninger.find(alt => valgtMedisinType === alt.tittel);
+          .then(preutfylteMaler => {
+            const preutfylteFelter = preutfylteMaler.find(alt => valgtMedisinType === alt.tittel);
 
-            if (fritekstBrevmal) {
-              formProps.change('fritekst', fritekstBrevmal.fritekst);
+            if (preutfylteFelter) {
+              formProps.change('fritekst', preutfylteFelter.fritekst);
             }
             // Catch er tom fordi error message skal håndteres av requestMessagesApi.
           })
           .catch(() => {});
       }
     }
+    // todo rename
   }, [brevmalkode, valgtMedisinType]);
 
   return (
     <form onSubmit={handleSubmit} data-testid="MessagesForm">
-      {Array.isArray(tmpls) && tmpls.length ? (
+      {tmpls.length ? (
         <>
           <SelectField
             name="brevmalkode"
@@ -220,25 +220,23 @@ export const MessagesMedMedisinskeTypeBrevmalImpl = ({
             ))}
             bredde="xxl"
           />
-          {brevmalkode === dokumentMalType.INNHENT_MEDISINSKE_OPPLYSNINGER &&
-            fritekstMaler &&
-            fritekstMaler.length > 0 && (
-              <>
-                <VerticalSpacer eightPx />
-                <SelectField
-                  name="valgtMedisinType"
-                  label={intl.formatMessage({ id: 'Messages.TypeAvDokumentasjon' })}
-                  validate={[]}
-                  placeholder={intl.formatMessage({ id: 'Messages.VelgTypeAvDokumentasjon' })}
-                  selectValues={fritekstMaler.map(alternativ => (
-                    <option key={alternativ.tittel} value={alternativ.tittel}>
-                      {alternativ.tittel}
-                    </option>
-                  ))}
-                  bredde="xxl"
-                />
-              </>
-            )}
+          {valgtBrevmal?.linker.length > 0 && fritekstMaler?.length > 0 && (
+            <>
+              <VerticalSpacer eightPx />
+              <SelectField
+                name="valgtMedisinType"
+                label={intl.formatMessage({ id: 'Messages.TypeAvDokumentasjon' })}
+                validate={[]}
+                placeholder={intl.formatMessage({ id: 'Messages.VelgTypeAvDokumentasjon' })}
+                selectValues={fritekstMaler.map(alternativ => (
+                  <option key={alternativ.tittel} value={alternativ.tittel}>
+                    {alternativ.tittel}
+                  </option>
+                ))}
+                bredde="xxl"
+              />
+            </>
+          )}
           {recipients.length > 0 && (
             <>
               <VerticalSpacer eightPx />
@@ -254,23 +252,6 @@ export const MessagesMedMedisinskeTypeBrevmalImpl = ({
                 selectValues={recipients.map(recipient => (
                   <option key={recipient.id} value={JSON.stringify(recipient)}>
                     {lagVisningsnavnForMottaker(recipient.id, personopplysninger, arbeidsgiverOpplysningerPerId)}
-                  </option>
-                ))}
-                bredde="xxl"
-              />
-            </>
-          )}
-          {brevmalkode === dokumentMalType.REVURDERING_DOK && (
-            <>
-              <VerticalSpacer eightPx />
-              <SelectField
-                name="arsakskode"
-                label={intl.formatMessage({ id: 'Messages.Årsak' })}
-                validate={[required]}
-                placeholder={intl.formatMessage({ id: 'Messages.VelgÅrsak' })}
-                selectValues={(causes || []).map(cause => (
-                  <option key={cause.kode} value={cause.kode}>
-                    {cause.navn}
                   </option>
                 ))}
                 bredde="xxl"
@@ -335,17 +316,12 @@ export const MessagesMedMedisinskeTypeBrevmalImpl = ({
   );
 };
 
-const buildInitalValues = (templates: Brevmaler | Brevmal[], isKontrollerRevurderingApOpen?: boolean): FormValues => {
-  let brevmalkode = Array.isArray(templates) ? templates[0].kode : null;
-  let overstyrtMottaker = JSON.stringify(RECIPIENT);
-
-  if (templates && typeof templates === 'object' && !Array.isArray(templates)) {
-    [brevmalkode] = Object.keys(templates);
-    overstyrtMottaker =
-      templates[brevmalkode] && templates[brevmalkode].mottakere && Array.isArray(templates[brevmalkode].mottakere)
-        ? JSON.stringify(templates[brevmalkode].mottakere[0])
-        : null;
-  }
+const buildInitalValues = (templates: Brevmaler, isKontrollerRevurderingApOpen?: boolean): FormValues => {
+  const brevmalkode = Object.keys(templates)[0];
+  const overstyrtMottaker =
+    templates[brevmalkode] && templates[brevmalkode].mottakere
+      ? JSON.stringify(templates[brevmalkode].mottakere[0])
+      : null;
 
   const initialValues = {
     brevmalkode,
@@ -361,11 +337,8 @@ const buildInitalValues = (templates: Brevmaler | Brevmal[], isKontrollerRevurde
     : { ...initialValues };
 };
 
-const transformValues = values => {
+const transformValues = (values: any) => {
   const newValues = values;
-  if (values.brevmalkode === dokumentMalType.REVURDERING_DOK && newValues.arsakskode !== ugunstAarsakTyper.ANNET) {
-    newValues.fritekst = ' ';
-  }
 
   if (values.brevmalkode !== dokumentMalType.GENERELT_FRITEKSTBREV && values.fritekstbrev) {
     newValues.fritekstbrev = undefined;

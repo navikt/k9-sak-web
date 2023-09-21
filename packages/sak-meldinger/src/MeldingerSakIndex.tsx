@@ -7,14 +7,13 @@ import {
   Personopplysninger,
   ArbeidsgiverOpplysningerPerId,
   Brevmaler,
-  Brevmal,
   Mottaker,
 } from '@k9-sak-web/types';
 
 import { Fritekstbrev } from '@k9-sak-web/types/src/formidlingTsType';
 import messages from '../i18n/nb_NO.json';
-import MessagesMedMedisinskeTypeBrevmal, {FormValues} from './components/MessagesMedMedisinskeTypeBrevmal';
-import MessagesTilbakekreving from "./components/MessagesTilbakekreving";
+import MessagesMedMedisinskeTypeBrevmal, { FormValues } from './components/MessagesMedMedisinskeTypeBrevmal';
+import MessagesTilbakekreving from './components/MessagesTilbakekreving';
 
 const cache = createIntlCache();
 
@@ -28,16 +27,21 @@ const intl = createIntl(
 
 interface OwnProps {
   submitCallback: (values: FormValues) => void;
-  templates: Brevmaler | Brevmal[];
+  templates: Brevmaler;
   sprakKode: Kodeverk;
-  previewCallback: (mottaker: string | Mottaker, brevmalkode: string, fritekst: string, fritekstbrev?: Fritekstbrev) => void;
+  previewCallback: (
+    mottaker: string | Mottaker,
+    brevmalkode: string,
+    fritekst: string,
+    fritekstbrev?: Fritekstbrev,
+  ) => void;
   behandlingId: number;
   behandlingVersjon: number;
   isKontrollerRevurderingApOpen?: boolean;
   revurderingVarslingArsak: KodeverkMedNavn[];
   personopplysninger?: Personopplysninger;
   arbeidsgiverOpplysningerPerId?: ArbeidsgiverOpplysningerPerId;
-  erTilbakekreving: boolean
+  erTilbakekreving: boolean;
 }
 
 const MeldingerSakIndex = ({
@@ -51,11 +55,11 @@ const MeldingerSakIndex = ({
   revurderingVarslingArsak,
   personopplysninger,
   arbeidsgiverOpplysningerPerId,
-  erTilbakekreving
+  erTilbakekreving,
 }: OwnProps) => (
-    <RawIntlProvider value={intl}>
-    {erTilbakekreving
-      ? <MessagesTilbakekreving
+  <RawIntlProvider value={intl}>
+    {erTilbakekreving ? (
+      <MessagesTilbakekreving
         submitCallback={submitCallback}
         templates={templates}
         sprakKode={sprakKode}
@@ -67,7 +71,8 @@ const MeldingerSakIndex = ({
         personopplysninger={personopplysninger}
         arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
       />
-      : <MessagesMedMedisinskeTypeBrevmal
+    ) : (
+      <MessagesMedMedisinskeTypeBrevmal
         submitCallback={submitCallback}
         templates={templates}
         sprakKode={sprakKode}
@@ -79,8 +84,8 @@ const MeldingerSakIndex = ({
         personopplysninger={personopplysninger}
         arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
       />
-    }
-
-  </RawIntlProvider>);
+    )}
+  </RawIntlProvider>
+);
 
 export default MeldingerSakIndex;
