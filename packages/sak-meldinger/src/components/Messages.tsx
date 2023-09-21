@@ -84,7 +84,7 @@ interface MappedOwnProps {
   fritekst?: string;
   arsakskode?: string;
   fritekstbrev?: Fritekstbrev;
-  valgtMedisinType?: string;
+  valgtPreutfyltMal?: string;
 }
 
 const formName = 'Messages';
@@ -95,11 +95,6 @@ const createValidateRecipient = recipients => value =>
   (Array.isArray(recipients) && recipients.some(recipient => JSON.stringify(recipient) === value))
     ? undefined
     : [{ id: 'ValidationMessage.InvalidRecipient' }];
-
-const transformTemplates = templates =>
-  templates && typeof templates === 'object' && !Array.isArray(templates)
-    ? Object.keys(templates).map(key => ({ ...templates[key], kode: key }))
-    : templates;
 
 /**
  * Messages
@@ -117,7 +112,7 @@ export const MessagesMedMedisinskeTypeBrevmalImpl = ({
   overstyrtMottaker,
   brevmalkode,
   fritekst,
-  valgtMedisinType,
+  valgtPreutfyltMal,
   arsakskode,
   personopplysninger,
   arbeidsgiverOpplysningerPerId,
@@ -155,21 +150,9 @@ export const MessagesMedMedisinskeTypeBrevmalImpl = ({
 
   const tmpls: Brevmal[] = Object.keys(templates).map(key => ({ ...templates[key], kode: key }));
 
-  // todo rename
-  const { startRequest: hentFritekstMaler, data: fritekstMaler } = restApiMessagesHooks.useRestApiRunner<
+  const { startRequest: hentPreutfylteMaler, data: preutfylteFelter } = restApiMessagesHooks.useRestApiRunner<
     { tittel: string; fritekst: string }[]
-  >(MessagesApiKeys.HENT_FRITEKSTBREVMALER_TIL_TYPEN_AV_MEDISINSKE_OPPLYSNINGER);
-
-  const oppdaterAPILinkerForHentingAvMedisinskeTyper = (mal: string) => {
-    const urlsTilHentingAvMedisinskeTyper = tmpls.find(brevmal => brevmal.kode === mal)?.linker;
-
-    if (urlsTilHentingAvMedisinskeTyper) {
-      requestMessagesApi.setLinks(urlsTilHentingAvMedisinskeTyper);
-
-      return true;
-    }
-    return false;
-  };
+  >(MessagesApiKeys.HENT_PREUTFYLTE_FRITEKSTMALER);
 
   useEffect(() => {
     if (brevmalkode) {
@@ -188,20 +171,19 @@ export const MessagesMedMedisinskeTypeBrevmalImpl = ({
 
       if (valgtBrevmal.linker.length > 0) {
         requestMessagesApi.setLinks(valgtBrevmal.linker);
-        hentFritekstMaler()
+        hentPreutfylteMaler()
           .then(preutfylteMaler => {
-            const preutfylteFelter = preutfylteMaler.find(alt => valgtMedisinType === alt.tittel);
+            const felter = preutfylteMaler.find(alt => valgtPreutfyltMal === alt.tittel);
 
-            if (preutfylteFelter) {
-              formProps.change('fritekst', preutfylteFelter.fritekst);
+            if (felter) {
+              formProps.change('fritekst', felter.fritekst);
             }
             // Catch er tom fordi error message skal håndteres av requestMessagesApi.
           })
           .catch(() => {});
       }
     }
-    // todo rename
-  }, [brevmalkode, valgtMedisinType]);
+  }, [brevmalkode, valgtPreutfyltMal]);
 
   return (
     <form onSubmit={handleSubmit} data-testid="MessagesForm">
@@ -220,7 +202,7 @@ export const MessagesMedMedisinskeTypeBrevmalImpl = ({
             ))}
             bredde="xxl"
           />
-          {valgtBrevmal?.linker.length > 0 && fritekstMaler?.length > 0 && (
+          {valgtBrevmal?.linker.length > 0 && preutfylteFelter && (
             <>
               <VerticalSpacer eightPx />
               <SelectField
@@ -228,7 +210,7 @@ export const MessagesMedMedisinskeTypeBrevmalImpl = ({
                 label={intl.formatMessage({ id: 'Messages.TypeAvDokumentasjon' })}
                 validate={[]}
                 placeholder={intl.formatMessage({ id: 'Messages.VelgTypeAvDokumentasjon' })}
-                selectValues={fritekstMaler.map(alternativ => (
+                selectValues={preutfylteFelter.map(alternativ => (
                   <option key={alternativ.tittel} value={alternativ.tittel}>
                     {alternativ.tittel}
                   </option>
@@ -326,10 +308,8 @@ const buildInitalValues = (templates: Brevmaler, isKontrollerRevurderingApOpen?:
   const initialValues = {
     brevmalkode,
     overstyrtMottaker,
-    // overstyrtMottaker: null,
     fritekst: null,
     fritekstbrev: null,
-    // arsakskode: null,
   };
 
   return isKontrollerRevurderingApOpen

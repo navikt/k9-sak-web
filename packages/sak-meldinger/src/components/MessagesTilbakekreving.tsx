@@ -154,7 +154,7 @@ export const MessagesTilbakekrevingImpl = ({
 
   const { startRequest: hentFritekstMaler, data: fritekstMaler } = restApiMessagesHooks.useRestApiRunner<
     { tittel: string; fritekst: string }[]
-  >(MessagesApiKeys.HENT_FRITEKSTBREVMALER_TIL_TYPEN_AV_MEDISINSKE_OPPLYSNINGER);
+  >(MessagesApiKeys.HENT_PREUTFYLTE_FRITEKSTMALER);
 
   const oppdaterAPILinkerForHentingAvMedisinskeTyper = () => {
     const urlsTilHentingAvMedisinskeTyper = tmpls.find(
