@@ -42,7 +42,7 @@ describe('<MeldingIndex>', () => {
     brevmalkode: dokumentMalType.INNHENT_DOK,
     fritekst: null,
     arsakskode: undefined,
-    fritekstbrev: null,
+    fritekstbrev: undefined,
   }
 
   const fagsak = { saksnummer: '123456', person: { aktørId: '123' } };
