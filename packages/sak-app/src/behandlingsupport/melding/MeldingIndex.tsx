@@ -226,6 +226,7 @@ const MeldingIndex = ({
         isKontrollerRevurderingApOpen={harApentKontrollerRevAp}
         personopplysninger={personopplysninger}
         arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysninger ? arbeidsgiverOpplysninger.arbeidsgivere : {}}
+        erTilbakekreving={erTilbakekrevingType(behandling.type.kode)}
       />
 
       {submitFinished && showSettPaVentModal && (

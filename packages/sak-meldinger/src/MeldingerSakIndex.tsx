@@ -12,11 +12,9 @@ import {
 } from '@k9-sak-web/types';
 
 import { Fritekstbrev } from '@k9-sak-web/types/src/formidlingTsType';
-import { restApiHooks } from '@k9-sak-web/sak-app/src/data/k9sakApi';
-import Messages, { FormValues } from './components/Messages';
 import messages from '../i18n/nb_NO.json';
-import MessagesMedMedisinskeTypeBrevmal from './components/MessagesMedMedisinskeTypeBrevmal';
-import { MessagesApiKeys } from './data/messagesApi';
+import MessagesMedMedisinskeTypeBrevmal, {FormValues} from './components/MessagesMedMedisinskeTypeBrevmal';
+import MessagesTilbakekreving from "./components/MessagesTilbakekreving";
 
 const cache = createIntlCache();
 
@@ -39,6 +37,7 @@ interface OwnProps {
   revurderingVarslingArsak: KodeverkMedNavn[];
   personopplysninger?: Personopplysninger;
   arbeidsgiverOpplysningerPerId?: ArbeidsgiverOpplysningerPerId;
+  erTilbakekreving: boolean
 }
 
 const MeldingerSakIndex = ({
@@ -52,22 +51,11 @@ const MeldingerSakIndex = ({
   revurderingVarslingArsak,
   personopplysninger,
   arbeidsgiverOpplysningerPerId,
-}: OwnProps) => {
-
-  const featureTogglesData = restApiHooks.useGlobalStateRestApiData<{ key: string; value: string }[]>(
-    MessagesApiKeys.FEATURE_TOGGLE,
-  );
-  const featureToggles = useMemo<FeatureToggles>(
-    () =>
-      featureTogglesData?.reduce((acc, curr) => {
-        acc[curr.key] = `${curr.value}`.toLowerCase() === 'true';
-        return acc;
-      }, {}),
-    [featureTogglesData]);
-
-  return (<RawIntlProvider value={intl}>
-    {featureToggles?.TYPE_MEDISINSKE_OPPLYSNINGER_BREV
-      ? <MessagesMedMedisinskeTypeBrevmal
+  erTilbakekreving
+}: OwnProps) => (
+    <RawIntlProvider value={intl}>
+    {erTilbakekreving
+      ? <MessagesTilbakekreving
         submitCallback={submitCallback}
         templates={templates}
         sprakKode={sprakKode}
@@ -79,7 +67,7 @@ const MeldingerSakIndex = ({
         personopplysninger={personopplysninger}
         arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
       />
-      : <Messages
+      : <MessagesMedMedisinskeTypeBrevmal
         submitCallback={submitCallback}
         templates={templates}
         sprakKode={sprakKode}
@@ -94,6 +82,5 @@ const MeldingerSakIndex = ({
     }
 
   </RawIntlProvider>);
-};
 
 export default MeldingerSakIndex;
