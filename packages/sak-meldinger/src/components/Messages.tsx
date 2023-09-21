@@ -373,10 +373,10 @@ const mapStateToPropsFactory = (_initialState, initialOwnProps: PureOwnProps) =>
   });
 };
 
-const MessagesMedMedisinskeTypeBrevmal = connect(mapStateToPropsFactory)(
+const Messages = connect(mapStateToPropsFactory)(
   behandlingForm({
     form: formName,
   })(injectIntl(MessagesMedMedisinskeTypeBrevmalImpl)),
 );
 
-export default MessagesMedMedisinskeTypeBrevmal;
+export default Messages;

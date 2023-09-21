@@ -12,7 +12,7 @@ import {
 
 import { Fritekstbrev } from '@k9-sak-web/types/src/formidlingTsType';
 import messages from '../i18n/nb_NO.json';
-import MessagesMedMedisinskeTypeBrevmal, { FormValues } from './components/MessagesMedMedisinskeTypeBrevmal';
+import Messages, { FormValues } from './components/Messages';
 import MessagesTilbakekreving from './components/MessagesTilbakekreving';
 
 const cache = createIntlCache();
@@ -72,7 +72,7 @@ const MeldingerSakIndex = ({
         arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
       />
     ) : (
-      <MessagesMedMedisinskeTypeBrevmal
+      <Messages
         submitCallback={submitCallback}
         templates={templates}
         sprakKode={sprakKode}
