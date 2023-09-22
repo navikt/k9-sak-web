@@ -1,24 +1,25 @@
-import React, { SetStateAction, useState, useEffect } from 'react';
-import moment from 'moment';
-import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 import classNames from 'classnames/bind';
+import moment from 'moment';
+import React, { SetStateAction, useEffect, useState } from 'react';
+import { RawIntlProvider, createIntl, createIntlCache } from 'react-intl';
 
-import useGlobalStateRestApiData from '@k9-sak-web/rest-api-hooks/src/global-data/useGlobalStateRestApiData';
-import { K9sakApiKeys } from '@k9-sak-web/sak-app/src/data/k9sakApi';
-import {
-  Aksjonspunkt,
-  DokumentStatus,
-  Behandling,
-  SubmitCallback,
-  Vilkar,
-  SaksbehandlereInfo,
-} from '@k9-sak-web/types';
-import { dateFormat } from '@fpsak-frontend/utils';
-import { SideMenu } from '@navikt/ft-plattform-komponenter';
 import advarselIcon from '@fpsak-frontend/assets/images/advarsel.svg';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
+import { Image } from '@fpsak-frontend/shared-components';
+import { dateFormat } from '@fpsak-frontend/utils';
+import useGlobalStateRestApiData from '@k9-sak-web/rest-api-hooks/src/global-data/useGlobalStateRestApiData';
+import { K9sakApiKeys } from '@k9-sak-web/sak-app/src/data/k9sakApi';
+import {
+  Aksjonspunkt,
+  Behandling,
+  DokumentStatus,
+  SaksbehandlereInfo,
+  SubmitCallback,
+  Vilkar,
+} from '@k9-sak-web/types';
+import { SideMenu } from '@navikt/ft-plattform-komponenter';
 
 import hentAktivePerioderFraVilkar from '@fpsak-frontend/utils/src/hentAktivePerioderFraVilkar';
 import SoknadsfristVilkarForm from './components/SoknadsfristVilkarForm';
@@ -146,10 +147,14 @@ const SoknadsfristVilkarProsessIndex = ({
             links={perioder.map(({ periode, vilkarStatus }, index) => ({
               active: activeTab === index,
               label: `${dateFormat(periode.fom)} - ${dateFormat(periode.tom)}`,
-              iconSrc:
-                (erOverstyrt || harÅpentAksjonspunkt) && vilkarStatus.kode !== vilkarUtfallType.OPPFYLT
-                  ? advarselIcon
-                  : null,
+              icon:
+                (erOverstyrt || harÅpentAksjonspunkt) && vilkarStatus.kode !== vilkarUtfallType.OPPFYLT ? (
+                  <Image
+                    src={advarselIcon}
+                    className={styles.warningIcon}
+                    alt={intl.formatMessage({ id: 'HelpText.Aksjonspunkt' })}
+                  />
+                ) : null,
             }))}
             onClick={setActiveTab}
             theme="arrow"
