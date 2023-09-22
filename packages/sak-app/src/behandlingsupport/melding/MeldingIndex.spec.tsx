@@ -65,7 +65,12 @@ describe('<MeldingIndex>', () => {
     { id: '123456789', type: 'ORGNR' },
   ];
   const templates = {
-    [dokumentMalType.INNHENT_DOK]: { navn: 'Innhent dokumentasjon', mottakere: aktorer, linker: [] },
+    [dokumentMalType.INNHENT_DOK]: {
+      navn: 'Innhent dokumentasjon',
+      mottakere: aktorer,
+      linker: [],
+      støtterFritekst: true,
+    },
     [dokumentMalType.REVURDERING_DOK]: { navn: 'Revurdering Dok', mottakere: aktorer, linker: [] },
     [dokumentMalType.AVSLAG]: { navn: 'Avslag', mottakere: aktorer, linker: [] },
     [dokumentMalType.FORLENGET_DOK]: { navn: 'Forlenget', mottakere: aktorer, linker: [] },
