@@ -46,15 +46,6 @@ export type FormValues = {
   fritekstbrev: Fritekstbrev;
 };
 
-// TODO (TOR) Bør erstattast av ein markør fra backend
-const showFritekst = (brevmalkode?: string): boolean =>
-  brevmalkode === dokumentMalType.INNHENT_DOK ||
-  brevmalkode === dokumentMalType.KORRIGVARS ||
-  brevmalkode === dokumentMalType.FRITKS ||
-  brevmalkode === dokumentMalType.VARSEL_OM_TILBAKEKREVING ||
-  brevmalkode === dokumentMalType.INNHENT_MEDISINSKE_OPPLYSNINGER ||
-  brevmalkode === dokumentMalType.VARSEL_TILKOMMEN_INNTEKT;
-
 interface PureOwnProps {
   submitCallback: (values: FormValues) => void;
   behandlingId: number;
@@ -232,7 +223,7 @@ export const MessagesImpl = ({
               />
             </>
           )}
-          {showFritekst(brevmalkode) && (
+          {valgtBrevmal?.støtterFritekst && (
             <>
               <VerticalSpacer eightPx />
               <div className="input--xxl">
@@ -246,7 +237,7 @@ export const MessagesImpl = ({
               </div>
             </>
           )}
-          {brevmalkode === dokumentMalType.GENERELT_FRITEKSTBREV && (
+          {valgtBrevmal?.støtterTittelOgFritekst && (
             <div className="input--xxl">
               <VerticalSpacer eightPx />
               <InputField
