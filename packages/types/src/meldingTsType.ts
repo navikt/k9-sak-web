@@ -9,8 +9,8 @@ export type Mottaker = {
 export interface Brevmal {
   navn: string;
   kode?: string;
-  støtterFritekst: boolean;
-  støtterTittelOgFritekst: boolean;
+  støtterFritekst?: boolean;
+  støtterTittelOgFritekst?: boolean;
   tilgjengelig?: boolean;
   linker?: Link[];
   mottakere?: Mottaker[];

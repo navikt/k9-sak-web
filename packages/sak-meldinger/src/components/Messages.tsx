@@ -69,7 +69,7 @@ interface MappedOwnProps {
   brevmalkode?: string;
   fritekst?: string;
   fritekstbrev?: Fritekstbrev;
-  valgtPreutfyltMal?: string;
+  fritekstforslag?: string;
 }
 
 const formName = 'Messages';
@@ -96,7 +96,7 @@ export const MessagesImpl = ({
   overstyrtMottaker,
   brevmalkode,
   fritekst,
-  valgtPreutfyltMal,
+  fritekstforslag,
   personopplysninger,
   arbeidsgiverOpplysningerPerId,
   fritekstbrev,
@@ -133,7 +133,7 @@ export const MessagesImpl = ({
 
   const tmpls: Brevmal[] = Object.keys(templates).map(key => ({ ...templates[key], kode: key }));
 
-  const { startRequest: hentPreutfylteMaler, data: preutfylteTypeFelter } = restApiMessagesHooks.useRestApiRunner<
+  const { startRequest: hentPreutfylteMaler, data: fritekstforslagTyper } = restApiMessagesHooks.useRestApiRunner<
     { tittel: string; fritekst: string }[]
   >(MessagesApiKeys.HENT_PREUTFYLTE_FRITEKSTMALER);
 
@@ -155,8 +155,8 @@ export const MessagesImpl = ({
       if (valgtBrevmal.linker.length > 0) {
         requestMessagesApi.setLinks(valgtBrevmal.linker);
         hentPreutfylteMaler()
-          .then(preutfylteTyper => {
-            const felter = preutfylteTyper.find(alt => valgtPreutfyltMal === alt.tittel);
+          .then(_fritekstForslagTyper => {
+            const felter = _fritekstForslagTyper.find(alt => fritekstforslag === alt.tittel);
 
             if (felter) {
               formProps.change('fritekst', felter.fritekst);
@@ -166,7 +166,7 @@ export const MessagesImpl = ({
           .catch(() => {});
       }
     }
-  }, [brevmalkode, valgtPreutfyltMal]);
+  }, [brevmalkode, fritekstforslag]);
 
   return (
     <form onSubmit={handleSubmit} data-testid="MessagesForm">
@@ -185,15 +185,15 @@ export const MessagesImpl = ({
             ))}
             bredde="xxl"
           />
-          {valgtBrevmal?.linker.length > 0 && preutfylteTypeFelter && (
+          {valgtBrevmal?.linker.length > 0 && fritekstforslagTyper && (
             <>
               <VerticalSpacer eightPx />
               <SelectField
-                name="valgtPreutfyltType"
+                name="fritekstforslag"
                 label={intl.formatMessage({ id: 'Messages.TypeAvDokumentasjon' })}
                 validate={[]}
                 placeholder={intl.formatMessage({ id: 'Messages.VelgTypeAvDokumentasjon' })}
-                selectValues={preutfylteTypeFelter.map(alternativ => (
+                selectValues={fritekstforslagTyper.map(alternativ => (
                   <option key={alternativ.tittel} value={alternativ.tittel}>
                     {alternativ.tittel}
                   </option>
@@ -320,7 +320,7 @@ const mapStateToPropsFactory = (_initialState, initialOwnProps: PureOwnProps) =>
     ...behandlingFormValueSelector(formName, ownProps.behandlingId, ownProps.behandlingVersjon)(
       state,
       'overstyrtMottaker',
-      'valgtPreutfyltType',
+      'fritekstforslag',
       'brevmalkode',
       'fritekst',
       'fritekstbrev.overskrift',
