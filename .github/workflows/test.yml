@@ -27,6 +27,12 @@ jobs:
 
       - name: Installere dependencies
         run: HUSKY=0 yarn install --immutable
+      - uses: oven-sh/setup-bun@v1
+        with:
+          bun-version: latest
+
+      - name: Kjører tester med bun
+        run: yarn test:bun
 
       - name: Kjører tester
         run: yarn test:all --maxWorkers=2 --silent

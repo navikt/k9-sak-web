@@ -19,7 +19,7 @@ module.exports = {
         '<rootDir>/packages/utils-test/src/setup-test-env-hooks.ts',
       ],
       testEnvironment: 'jsdom',
-      testMatch: ['**/?(*.)+(spec).+(js|jsx|ts|tsx)'],
+      testMatch: ['**/?(*.)+(spec).+(jsx|tsx)'],
       testPathIgnorePatterns: ['/node_modules/', '/dist/'],
       transform: {
         '^.+\\.(ts|tsx|js|jsx)?$': 'babel-jest',
@@ -27,11 +27,5 @@ module.exports = {
       },
       transformIgnorePatterns: ['<rootDir>.*(node_modules)(?!.*nav.*).*$'],
     },
-    {
-      displayName: 'lint',
-      runner: 'jest-runner-eslint',
-      testMatch: ['**/?(*.)+(spec).+(js|jsx|ts|tsx)'],
-    },
   ],
-  watchPlugins: ['jest-runner-eslint/watch-fix'],
 };
