@@ -224,7 +224,10 @@ const MeldingIndex = ({
         isKontrollerRevurderingApOpen={harApentKontrollerRevAp}
         personopplysninger={personopplysninger}
         arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysninger ? arbeidsgiverOpplysninger.arbeidsgivere : {}}
-        erTilbakekreving={erTilbakekrevingType(behandling.type.kode)}
+        erTilbakekreving={
+          behandling.type.kode === BehandlingType.TILBAKEKREVING ||
+          behandling.type.kode === BehandlingType.TILBAKEKREVING_REVURDERING
+        }
       />
 
       {submitFinished && showSettPaVentModal && (
