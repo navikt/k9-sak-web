@@ -39,7 +39,7 @@ import { injectIntl, IntlShape } from 'react-intl';
 import dokumentMalType from '@fpsak-frontend/kodeverk/src/dokumentMalType';
 import redusertUtbetalingArsak from '../kodeverk/redusertUtbetalingArsak';
 import { fieldnames } from '../konstanter';
-import BrevPanel, {manuellBrevPreview} from './brev/BrevPanel';
+import BrevPanel, { manuellBrevPreview } from './brev/BrevPanel';
 import LagreVedtakFormIContext, {
   filtrerVerdierSomSkalNullstilles,
   settMalerVedtakContext,
@@ -144,9 +144,7 @@ export const VedtakForm: React.FC<Props> = ({
   erRevurdering,
   behandlingArsaker,
 }) => {
-  useEffect(() => {
-    Modal.setAppElement(document.body);
-  }, []);
+  useEffect(() => {}, []);
 
   const vedtakContext = useContext(VedtakFormContext);
 
@@ -399,7 +397,8 @@ export const VedtakForm: React.FC<Props> = ({
       );
     };
 
-  const getPreviewManuellBrevCallback = (values: any)  => manuellBrevPreview({
+  const getPreviewManuellBrevCallback = (values: any) =>
+    manuellBrevPreview({
       tilgjengeligeVedtaksbrev,
       previewCallback,
       values,
@@ -407,8 +406,8 @@ export const VedtakForm: React.FC<Props> = ({
       overstyrtMottaker: values.overstyrtMottaker,
       brødtekst: values[fieldnames.BRØDTEKST],
       overskrift: values[fieldnames.OVERSKRIFT],
-      aapneINyttVindu: false
-    })
+      aapneINyttVindu: false,
+    });
 
   const submit = async (values, actions) => {
     const manueltBrev = values[fieldnames.SKAL_BRUKE_OVERSTYRENDE_FRITEKST_BREV];
@@ -416,7 +415,7 @@ export const VedtakForm: React.FC<Props> = ({
 
     if (manueltBrev) {
       try {
-        await getPreviewManuellBrevCallback(values)
+        await getPreviewManuellBrevCallback(values);
         submitCallback(createPayload(values));
         return;
       } catch (e) {

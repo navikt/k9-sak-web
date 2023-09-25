@@ -71,7 +71,6 @@ export const FormContent = ({
   valgValue,
   initialValues,
 }: FormContentProps) => {
-  Modal.setAppElement(document.body);
   const uavklartePerioderPgaInfotrygd = useMemo(
     () =>
       aktiviteter

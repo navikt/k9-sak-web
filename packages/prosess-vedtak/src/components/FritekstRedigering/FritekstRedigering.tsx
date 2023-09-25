@@ -59,9 +59,7 @@ const FritekstRedigering = ({
   dokumentdataInformasjonsbehov,
   overstyrtMottaker,
 }: ownProps & WrappedComponentProps) => {
-  useEffect(() => {
-    Modal.setAppElement(document.body);
-  }, []);
+  useEffect(() => {}, []);
   const redigerbarDokumentmal: VedtaksbrevMal = tilgjengeligeVedtaksbrev.maler.find(
     vb => vb.dokumentMalType === dokumentMalType.MANUELL,
   );
@@ -171,25 +169,28 @@ const FritekstRedigering = ({
       >
         <FormattedMessage id="RedigeringAvFritekstBrev.Rediger" />
       </Button>
-      <Modal open={visRedigering} onClose={() => setVisRedigering(false)} shouldCloseOnOverlayClick={false}>
-        <div className={styles.modalInnehold}>
-          <FritekstEditor
-            handleSubmit={handleLagre}
-            lukkEditor={lukkEditor}
-            handleForhåndsvis={handleForhåndsvis}
-            oppdaterFormFelt={oppdaterFormFelt}
-            setFieldValue={setFieldValue}
-            kanInkludereKalender={kanInkludereKalender}
-            skalBrukeOverstyrendeFritekstBrev={skalBrukeOverstyrendeFritekstBrev}
-            readOnly={readOnly}
-            redigerbartInnholdKlart={redigerbartInnholdKlart}
-            redigerbartInnhold={redigerbartInnhold}
-            originalHtml={originalHtml}
-            brevStiler={brevStiler}
-            prefiksInnhold={prefiksInnhold}
-            suffiksInnhold={suffiksInnhold}
-          />
-        </div>
+      <Modal open={visRedigering} onClose={() => setVisRedigering(false)}>
+        <Modal.Header closeButton />
+        <Modal.Body>
+          <div className={styles.modalInnehold}>
+            <FritekstEditor
+              handleSubmit={handleLagre}
+              lukkEditor={lukkEditor}
+              handleForhåndsvis={handleForhåndsvis}
+              oppdaterFormFelt={oppdaterFormFelt}
+              setFieldValue={setFieldValue}
+              kanInkludereKalender={kanInkludereKalender}
+              skalBrukeOverstyrendeFritekstBrev={skalBrukeOverstyrendeFritekstBrev}
+              readOnly={readOnly}
+              redigerbartInnholdKlart={redigerbartInnholdKlart}
+              redigerbartInnhold={redigerbartInnhold}
+              originalHtml={originalHtml}
+              brevStiler={brevStiler}
+              prefiksInnhold={prefiksInnhold}
+              suffiksInnhold={suffiksInnhold}
+            />
+          </div>
+        </Modal.Body>
       </Modal>
     </>
   );

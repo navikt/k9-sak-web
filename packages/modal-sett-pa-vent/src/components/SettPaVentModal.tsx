@@ -169,8 +169,6 @@ export const SettPaVentModal = ({
 
   const toggleEndreFrist = () => setShowEndreFrist(!showEndreFrist);
 
-  Modal.setAppElement(document.body);
-
   const getHovedknappTekst = () => {
     if (erVenterEtterlysInntektsmelding && !showEndreFrist) {
       return <FormattedMessage id="SettPaVentModal.Ok" />;

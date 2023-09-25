@@ -44,7 +44,7 @@ const MarkerBehandlingModal: React.FC<PureOwnProps> = ({
   if (!brukHastekøMarkering && !brukVanskeligKøMarkering) {
     return null;
   }
-  Modal.setAppElement(document.body);
+
   const MarkerBehandlingSchema = Yup.object().shape({
     markerSomHastesak: brukHastekøMarkering ? Yup.boolean() : undefined,
     markerSomVanskelig: brukVanskeligKøMarkering ? Yup.boolean() : undefined,
@@ -97,118 +97,124 @@ const MarkerBehandlingModal: React.FC<PureOwnProps> = ({
     <Modal
       className={styles.modal}
       open
-      closeButton
       onClose={lukkModal}
-      shouldCloseOnOverlayClick={false}
       aria-label="Modal for markering av behandling"
+      portal
+      width="38.375rem"
     >
-      <h3 className={`${styles.tittel} typo-systemtittel`}>Marker behandling og send til egen kø</h3>
-      <Formik
-        innerRef={formRef}
-        initialValues={buildInitialValues()}
-        validationSchema={MarkerBehandlingSchema}
-        onSubmit={(values, actions) => {
-          actions.setSubmitting(false);
-          if (formHasChanges()) {
-            setShowIngenEndringerError(false);
-            const getMerknadKode = () => {
-              if (values.markerSomHastesak) {
-                return [Merknadkode.HASTESAK];
-              }
-              if (values.markerSomVanskelig) {
-                return [Merknadkode.VANSKELIG_SAK];
-              }
-              return [];
-            };
-            const transformedValues = {
-              behandlingUuid,
-              fritekst: values.markerSomHastesak || values.markerSomVanskelig ? values.begrunnelse : undefined,
-              merknadKoder: getMerknadKode(),
-            };
-            markerBehandling(transformedValues).then(() => {
-              if (erVeileder) {
-                goToSearch();
-              } else {
-                goToLos();
-              }
-            });
-          } else {
-            setShowIngenEndringerError(true);
-          }
-        }}
-      >
-        {formikProps => (
-          <Form>
-            {brukVanskeligKøMarkering && (
-              <CheckboxGruppe
-                feil={
-                  formikProps.errors.markerSomVanskelig
-                    ? intl.formatMessage({ id: formikProps.errors.markerSomVanskelig })
-                    : false
+      <Modal.Header closeButton />
+      <Modal.Body>
+        <h3 className={`${styles.tittel} typo-systemtittel`}>Marker behandling og send til egen kø</h3>
+        <Formik
+          innerRef={formRef}
+          initialValues={buildInitialValues()}
+          validationSchema={MarkerBehandlingSchema}
+          onSubmit={(values, actions) => {
+            actions.setSubmitting(false);
+            if (formHasChanges()) {
+              setShowIngenEndringerError(false);
+              const getMerknadKode = () => {
+                if (values.markerSomHastesak) {
+                  return [Merknadkode.HASTESAK];
                 }
-              >
-                <CheckboxFieldFormik name="markerSomVanskelig" label={{ id: 'MenyMarkerBehandling.VanskeligÅLøse' }} />
-              </CheckboxGruppe>
-            )}
-            {brukHastekøMarkering && (
-              <>
-                <Alert variant="warning">
-                  Hastesaker skal følges opp fra Gosys inntil videre, og kan derfor ikke endres her.
-                </Alert>
+                if (values.markerSomVanskelig) {
+                  return [Merknadkode.VANSKELIG_SAK];
+                }
+                return [];
+              };
+              const transformedValues = {
+                behandlingUuid,
+                fritekst: values.markerSomHastesak || values.markerSomVanskelig ? values.begrunnelse : undefined,
+                merknadKoder: getMerknadKode(),
+              };
+              markerBehandling(transformedValues).then(() => {
+                if (erVeileder) {
+                  goToSearch();
+                } else {
+                  goToLos();
+                }
+              });
+            } else {
+              setShowIngenEndringerError(true);
+            }
+          }}
+        >
+          {formikProps => (
+            <Form>
+              {brukVanskeligKøMarkering && (
                 <CheckboxGruppe
                   feil={
-                    formikProps.errors.markerSomHastesak
-                      ? intl.formatMessage({ id: formikProps.errors.markerSomHastesak })
+                    formikProps.errors.markerSomVanskelig
+                      ? intl.formatMessage({ id: formikProps.errors.markerSomVanskelig })
                       : false
                   }
                 >
                   <CheckboxFieldFormik
-                    name="markerSomHastesak"
-                    label={{ id: 'MenyMarkerBehandling.MarkerSomHastesak' }}
-                    disabled={!featureToggles?.LOS_MARKER_BEHANDLING_SUBMIT}
+                    name="markerSomVanskelig"
+                    label={{ id: 'MenyMarkerBehandling.VanskeligÅLøse' }}
                   />
                 </CheckboxGruppe>
-              </>
-            )}
-            {formikProps.values.markerSomVanskelig && (
-              <>
-                <Element className={styles.aksjonspunktHeading}>Aksjonspunkt:</Element>
-                <Normaltekst>Beregning</Normaltekst>
-              </>
-            )}
-            {(formikProps.values.markerSomVanskelig || formikProps.values.markerSomHastesak) && (
-              <div className={styles.textareaContainer}>
-                <TextAreaFormik
-                  textareaClass={styles.textArea}
-                  name="begrunnelse"
-                  label={intl.formatMessage({ id: 'MenyMarkerBehandling.Kommentar' })}
-                  validate={[]}
-                  maxLength={100000}
-                  readOnly={!featureToggles?.LOS_MARKER_BEHANDLING_SUBMIT}
-                />
+              )}
+              {brukHastekøMarkering && (
+                <>
+                  <Alert variant="warning">
+                    Hastesaker skal følges opp fra Gosys inntil videre, og kan derfor ikke endres her.
+                  </Alert>
+                  <CheckboxGruppe
+                    feil={
+                      formikProps.errors.markerSomHastesak
+                        ? intl.formatMessage({ id: formikProps.errors.markerSomHastesak })
+                        : false
+                    }
+                  >
+                    <CheckboxFieldFormik
+                      name="markerSomHastesak"
+                      label={{ id: 'MenyMarkerBehandling.MarkerSomHastesak' }}
+                      disabled={!featureToggles?.LOS_MARKER_BEHANDLING_SUBMIT}
+                    />
+                  </CheckboxGruppe>
+                </>
+              )}
+              {formikProps.values.markerSomVanskelig && (
+                <>
+                  <Element className={styles.aksjonspunktHeading}>Aksjonspunkt:</Element>
+                  <Normaltekst>Beregning</Normaltekst>
+                </>
+              )}
+              {(formikProps.values.markerSomVanskelig || formikProps.values.markerSomHastesak) && (
+                <div className={styles.textareaContainer}>
+                  <TextAreaFormik
+                    textareaClass={styles.textArea}
+                    name="begrunnelse"
+                    label={intl.formatMessage({ id: 'MenyMarkerBehandling.Kommentar' })}
+                    validate={[]}
+                    maxLength={100000}
+                    readOnly={!featureToggles?.LOS_MARKER_BEHANDLING_SUBMIT}
+                  />
+                </div>
+              )}
+              {showIngenEndringerError && (
+                <ErrorMessage className={styles.errorMessage}>
+                  {intl.formatMessage({ id: 'ValidationMessage.ManglendeEndringerError' })}
+                </ErrorMessage>
+              )}
+              <div className={styles.buttonContainer}>
+                <Button
+                  variant="primary"
+                  size="small"
+                  disabled={!featureToggles?.LOS_MARKER_BEHANDLING_SUBMIT || formikProps.isSubmitting}
+                  className={styles.submitButton}
+                >
+                  {erVeileder ? 'Lagre, gå til forsiden' : 'Lagre, gå til LOS'}
+                </Button>
+                <Button variant="secondary" size="small" onClick={lukkModal}>
+                  Lukk
+                </Button>
               </div>
-            )}
-            {showIngenEndringerError && (
-              <ErrorMessage className={styles.errorMessage}>
-                {intl.formatMessage({ id: 'ValidationMessage.ManglendeEndringerError' })}
-              </ErrorMessage>
-            )}
-            <div className={styles.buttonContainer}>
-              <Button
-                variant="primary"
-                size="small"
-                disabled={!featureToggles?.LOS_MARKER_BEHANDLING_SUBMIT || formikProps.isSubmitting}
-                className={styles.submitButton}
-              >
-                {erVeileder ? 'Lagre, gå til forsiden' : 'Lagre, gå til LOS'}
-              </Button>
-              <Button variant="secondary" size="small" onClick={lukkModal}>
-                Lukk
-              </Button>
-            </div>
-          </Form>
-        )}
-      </Formik>
+            </Form>
+          )}
+        </Formik>
+      </Modal.Body>
     </Modal>
   );
 };

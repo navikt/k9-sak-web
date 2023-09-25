@@ -83,7 +83,6 @@ const FritekstEditor = ({
   };
 
   useEffect(() => {
-    Modal.setAppElement(document.body);
     lastEditor();
   }, []);
 
@@ -118,26 +117,29 @@ const FritekstEditor = ({
 
   return (
     <>
-      <Modal open={visAdvarsel} onClose={() => setVisAdvarsel(false)} shouldCloseOnOverlayClick={false}>
-        <div className={styles.alertModalInnehold}>
-          <header>
-            <h3>
-              <FormattedMessage id="RedigeringAvFritekstBrev.BekreftTilbakestillTittel" />
-            </h3>
-          </header>
-          <Alert variant="warning" inline>
-            <FormattedMessage id="RedigeringAvFritekstBrev.BekreftTilbakestill" />
-          </Alert>
+      <Modal open={visAdvarsel} onClose={() => setVisAdvarsel(false)}>
+        <Modal.Header closeButton />
+        <Modal.Body>
+          <div className={styles.alertModalInnehold}>
+            <header>
+              <h3>
+                <FormattedMessage id="RedigeringAvFritekstBrev.BekreftTilbakestillTittel" />
+              </h3>
+            </header>
+            <Alert variant="warning" inline>
+              <FormattedMessage id="RedigeringAvFritekstBrev.BekreftTilbakestill" />
+            </Alert>
 
-          <div className={styles.knapperHoyere}>
-            <Button type="button" variant="tertiary" onClick={() => setVisAdvarsel(false)}>
-              <FormattedMessage id="RedigeringAvFritekstBrev.IkkeTilbakestill" />
-            </Button>
-            <Button type="button" variant="primary" onClick={handleTilbakestill}>
-              <FormattedMessage id="RedigeringAvFritekstBrev.Tilbakestill" />
-            </Button>
+            <div className={styles.knapperHoyere}>
+              <Button type="button" variant="tertiary" onClick={() => setVisAdvarsel(false)}>
+                <FormattedMessage id="RedigeringAvFritekstBrev.IkkeTilbakestill" />
+              </Button>
+              <Button type="button" variant="primary" onClick={handleTilbakestill}>
+                <FormattedMessage id="RedigeringAvFritekstBrev.Tilbakestill" />
+              </Button>
+            </div>
           </div>
-        </div>
+        </Modal.Body>
       </Modal>
       <header className={styles.modalHeader}>
         <h3>
