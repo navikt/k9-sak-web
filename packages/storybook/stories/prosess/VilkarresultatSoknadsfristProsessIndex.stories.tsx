@@ -223,7 +223,7 @@ export const visSoknadsfristAksjonspunkt5077 = () => {
           ],
         },
       ]}
-      visAllePerioder
+      visAllePerioder={false}
     />
   );
 };
