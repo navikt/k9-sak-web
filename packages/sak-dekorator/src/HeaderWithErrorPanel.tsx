@@ -174,7 +174,7 @@ const HeaderWithErrorPanel = ({
                   backendUrl="/k9/endringslogg"
                   stil="lys"
                   alignLeft
-                  maxEntries={10}
+                  maxEntries={20}
                 />
               </div>
             )}
