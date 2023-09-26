@@ -31,7 +31,7 @@ jobs:
     # needs: [test, lint-tscheck-build]
     steps:
       - name: Hente kode
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Setup .yarnrc.yml
         run: |
