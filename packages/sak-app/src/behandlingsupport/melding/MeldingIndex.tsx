@@ -36,37 +36,35 @@ const getSubmitCallback =
     setShowSettPaVentModal: (erInnhentetEllerForlenget: boolean) => void,
     setSubmitCounter: (fn: (prevValue: number) => number) => void,
   ) =>
-    (values: FormValues) => {
-      const isInnhentEllerForlenget =
-        values.brevmalkode === dokumentMalType.INNHENT_DOK ||
-        values.brevmalkode === dokumentMalType.INNOPP ||
-        values.brevmalkode === dokumentMalType.FORLENGET_DOK ||
-        values.brevmalkode === dokumentMalType.FORLENGET_MEDL_DOK;
-      const erTilbakekreving = erTilbakekrevingType({ kode: behandlingTypeKode });
+  (values: FormValues) => {
+    const isInnhentEllerForlenget =
+      values.brevmalkode === dokumentMalType.INNHENT_DOK ||
+      values.brevmalkode === dokumentMalType.INNOPP ||
+      values.brevmalkode === dokumentMalType.FORLENGET_DOK ||
+      values.brevmalkode === dokumentMalType.FORLENGET_MEDL_DOK;
+    setShowMessageModal(!isInnhentEllerForlenget);
 
-      setShowMessageModal(!isInnhentEllerForlenget);
-
-      const data = erTilbakekreving
-        ? {
+    const erTilbakekreving = erTilbakekrevingType({ kode: behandlingTypeKode });
+    const data = erTilbakekreving
+      ? {
           behandlingUuid,
           fritekst: values.fritekst,
           brevmalkode: values.brevmalkode,
         }
-        : {
+      : {
           behandlingId,
           overstyrtMottaker: values.overstyrtMottaker,
           brevmalkode: values.brevmalkode,
           fritekst: values.fritekst,
-          arsakskode: values.arsakskode,
           fritekstbrev: values.fritekstbrev,
         };
-      return submitMessage(data)
-        .then(() => resetMessage())
-        .then(() => {
-          setShowSettPaVentModal(isInnhentEllerForlenget);
-          setSubmitCounter(prevValue => prevValue + 1);
-        });
-    };
+    return submitMessage(data)
+      .then(() => resetMessage())
+      .then(() => {
+        setShowSettPaVentModal(isInnhentEllerForlenget);
+        setSubmitCounter(prevValue => prevValue + 1);
+      });
+  };
 
 const getPreviewCallback =
   (
@@ -75,13 +73,13 @@ const getPreviewCallback =
     fagsakYtelseType: Kodeverk,
     fetchPreview: (erHenleggelse: boolean, data: any) => void,
   ) =>
-    (overstyrtMottaker: Mottaker, dokumentMal: string, fritekst: string, fritekstbrev?: Fritekstbrev) => {
-      const data = erTilbakekrevingType({ kode: behandlingTypeKode })
-        ? {
+  (overstyrtMottaker: Mottaker, dokumentMal: string, fritekst: string, fritekstbrev?: Fritekstbrev) => {
+    const data = erTilbakekrevingType({ kode: behandlingTypeKode })
+      ? {
           fritekst: fritekst || ' ',
           brevmalkode: dokumentMal,
         }
-        : {
+      : {
           overstyrtMottaker,
           dokumentMal,
           dokumentdata: {
@@ -90,8 +88,8 @@ const getPreviewCallback =
               fritekstbrev && Object.values(fritekstbrev).some(x => x === null || x === '') ? null : fritekstbrev,
           },
         };
-      fetchPreview(false, data);
-    };
+    fetchPreview(false, data);
+  };
 
 interface OwnProps {
   fagsak: Fagsak;
@@ -226,6 +224,10 @@ const MeldingIndex = ({
         isKontrollerRevurderingApOpen={harApentKontrollerRevAp}
         personopplysninger={personopplysninger}
         arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysninger ? arbeidsgiverOpplysninger.arbeidsgivere : {}}
+        erTilbakekreving={
+          behandling.type.kode === BehandlingType.TILBAKEKREVING ||
+          behandling.type.kode === BehandlingType.TILBAKEKREVING_REVURDERING
+        }
       />
 
       {submitFinished && showSettPaVentModal && (

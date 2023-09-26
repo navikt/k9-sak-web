@@ -106,7 +106,7 @@ const transformTemplates = templates =>
  * Presentasjonskomponent. Gir mulighet for å forhåndsvise og sende brev. Mottaker og brevtype velges fra predefinerte lister,
  * og fritekst som skal flettes inn i brevet skrives inn i et eget felt.
  */
-export const MessagesMedMedisinskeTypeBrevmalImpl = ({
+export const MessagesTilbakekrevingImpl = ({
   intl,
   templates,
   causes = [],
@@ -154,7 +154,7 @@ export const MessagesMedMedisinskeTypeBrevmalImpl = ({
 
   const { startRequest: hentFritekstMaler, data: fritekstMaler } = restApiMessagesHooks.useRestApiRunner<
     { tittel: string; fritekst: string }[]
-  >(MessagesApiKeys.HENT_FRITEKSTBREVMALER_TIL_TYPEN_AV_MEDISINSKE_OPPLYSNINGER);
+  >(MessagesApiKeys.HENT_PREUTFYLTE_FRITEKSTMALER);
 
   const oppdaterAPILinkerForHentingAvMedisinskeTyper = () => {
     const urlsTilHentingAvMedisinskeTyper = tmpls.find(
@@ -400,10 +400,10 @@ const mapStateToPropsFactory = (_initialState, initialOwnProps: PureOwnProps) =>
   });
 };
 
-const MessagesMedMedisinskeTypeBrevmal = connect(mapStateToPropsFactory)(
+const MessagesTilbakekreving = connect(mapStateToPropsFactory)(
   behandlingForm({
     form: formName,
-  })(injectIntl(MessagesMedMedisinskeTypeBrevmalImpl)),
+  })(injectIntl(MessagesTilbakekrevingImpl)),
 );
 
-export default MessagesMedMedisinskeTypeBrevmal;
+export default MessagesTilbakekreving;

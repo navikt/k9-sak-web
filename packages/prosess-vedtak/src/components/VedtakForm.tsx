@@ -50,7 +50,7 @@ import VedtakAksjonspunktPanel from './VedtakAksjonspunktPanel';
 import VedtakAvslagPanel from './VedtakAvslagPanel';
 import VedtakInnvilgetPanel from './VedtakInnvilgetPanel';
 import VedtakSubmit from './VedtakSubmit';
-import BrevPanel from './brev/BrevPanel';
+import BrevPanel, { manuellBrevPreview } from './brev/BrevPanel';
 import { InformasjonsbehovVedtaksbrev } from './brev/InformasjonsbehovAutomatiskVedtaksbrev';
 import RevurderingPaneler from './revurdering/RevurderingPaneler';
 import VedtakRevurderingSubmitPanel from './revurdering/VedtakRevurderingSubmitPanel';
@@ -398,16 +398,31 @@ export const VedtakForm: React.FC<Props> = ({
         aapneINyttVindu,
       );
     };
+
+  const getPreviewManuellBrevCallback = (values: any) =>
+    manuellBrevPreview({
+      tilgjengeligeVedtaksbrev,
+      previewCallback,
+      values,
+      redigertHtml: values[fieldnames.REDIGERT_HTML],
+      overstyrtMottaker: values.overstyrtMottaker,
+      brødtekst: values[fieldnames.BRØDTEKST],
+      overskrift: values[fieldnames.OVERSKRIFT],
+      aapneINyttVindu: false,
+    });
+
   const submit = async (values, actions) => {
     const manueltBrev = values[fieldnames.SKAL_BRUKE_OVERSTYRENDE_FRITEKST_BREV];
     const hindreUtsending = values[fieldnames.SKAL_HINDRE_UTSENDING_AV_BREV];
 
     if (manueltBrev) {
       try {
+        await getPreviewManuellBrevCallback(values);
         submitCallback(createPayload(values));
         return;
       } catch (e) {
         setErrorOnSubmit('Noe gikk galt ved innsending.');
+        actions.setSubmitting(false);
         return;
       }
     }

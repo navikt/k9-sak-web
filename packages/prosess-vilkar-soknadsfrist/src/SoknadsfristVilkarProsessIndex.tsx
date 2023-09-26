@@ -7,6 +7,7 @@ import advarselIcon from '@fpsak-frontend/assets/images/advarsel.svg';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
+import { Image } from '@fpsak-frontend/shared-components';
 import { dateFormat } from '@fpsak-frontend/utils';
 import useGlobalStateRestApiData from '@k9-sak-web/rest-api-hooks/src/global-data/useGlobalStateRestApiData';
 import { K9sakApiKeys } from '@k9-sak-web/sak-app/src/data/k9sakApi';
@@ -146,10 +147,14 @@ const SoknadsfristVilkarProsessIndex = ({
             links={perioder.map(({ periode, vilkarStatus }, index) => ({
               active: activeTab === index,
               label: `${dateFormat(periode.fom)} - ${dateFormat(periode.tom)}`,
-              iconSrc:
-                (erOverstyrt || harÅpentAksjonspunkt) && vilkarStatus.kode !== vilkarUtfallType.OPPFYLT
-                  ? advarselIcon
-                  : null,
+              icon:
+                (erOverstyrt || harÅpentAksjonspunkt) && vilkarStatus.kode !== vilkarUtfallType.OPPFYLT ? (
+                  <Image
+                    src={advarselIcon}
+                    className={styles.warningIcon}
+                    alt={intl.formatMessage({ id: 'HelpText.Aksjonspunkt' })}
+                  />
+                ) : null,
             }))}
             onClick={setActiveTab}
             theme="arrow"

@@ -1,5 +1,6 @@
 import advarselIcon from '@fpsak-frontend/assets/images/advarsel.svg';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
+import { Image } from '@fpsak-frontend/shared-components';
 import { dateFormat } from '@fpsak-frontend/utils';
 import { Aksjonspunkt, Fagsak, Opptjening, OpptjeningBehandling, SubmitCallback, Vilkar } from '@k9-sak-web/types';
 import { SideMenu } from '@navikt/ft-plattform-komponenter';
@@ -80,7 +81,14 @@ const OpptjeningVilkarProsessIndex = ({
             links={perioder.map(({ periode, vilkarStatus }, index) => ({
               active: activeTab === index,
               label: `${dateFormat(periode.fom)} - ${dateFormat(periode.tom)}`,
-              iconSrc: isAksjonspunktOpen && vilkarStatus.kode === vilkarUtfallType.IKKE_VURDERT ? advarselIcon : null,
+              iconSrc:
+                isAksjonspunktOpen && vilkarStatus.kode === vilkarUtfallType.IKKE_VURDERT ? (
+                  <Image
+                    src={advarselIcon}
+                    className={styles.warningIcon}
+                    alt={intl.formatMessage({ id: 'HelpText.Aksjonspunkt' })}
+                  />
+                ) : null,
             }))}
             onClick={setActiveTab}
             theme="arrow"
