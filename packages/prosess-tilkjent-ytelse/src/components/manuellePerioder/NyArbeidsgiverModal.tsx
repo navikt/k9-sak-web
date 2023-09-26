@@ -1,13 +1,13 @@
-import React from 'react';
-import { connect } from 'react-redux';
-import { injectIntl, WrappedComponentProps } from 'react-intl';
-import { InjectedFormProps } from 'redux-form';
-import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
-import Modal from 'nav-frontend-modal';
 import { behandlingForm, InputField } from '@fpsak-frontend/form';
 import { FlexColumn, FlexContainer, FlexRow, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { hasValidOrgNumber, required } from '@fpsak-frontend/utils';
-import styles from './periode.less';
+import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
+import Modal from 'nav-frontend-modal';
+import React from 'react';
+import { injectIntl, WrappedComponentProps } from 'react-intl';
+import { connect } from 'react-redux';
+import { InjectedFormProps } from 'redux-form';
+import styles from './periode.module.css';
 
 const defaultArbeidsgiver = {
   navn: '',

@@ -1,15 +1,15 @@
-import React, { Component } from 'react';
-import { FormattedMessage, injectIntl, WrappedComponentProps } from 'react-intl';
 import { Column, Row } from 'nav-frontend-grid';
-import { Undertekst } from 'nav-frontend-typografi';
 import Lukknapp from 'nav-frontend-lukknapp';
+import { Undertekst } from 'nav-frontend-typografi';
+import React, { Component } from 'react';
+import { FormattedMessage, WrappedComponentProps, injectIntl } from 'react-intl';
 
 import { decodeHtmlEntity } from '@fpsak-frontend/utils';
 
 import ErrorMessageDetailsModal from './ErrorMessageDetailsModal';
 import Feilmelding from './feilmeldingTsType';
 
-import styles from './errorMessagePanel.less';
+import styles from './errorMessagePanel.module.css';
 
 interface OwnProps {
   errorMessages: Feilmelding[];

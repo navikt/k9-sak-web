@@ -1,15 +1,15 @@
+import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
+import Modal from 'nav-frontend-modal';
+import { Normaltekst } from 'nav-frontend-typografi';
 import React from 'react';
 import { FormattedMessage, injectIntl, WrappedComponentProps } from 'react-intl';
-import Modal from 'nav-frontend-modal';
-import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
-import { Normaltekst } from 'nav-frontend-typografi';
 
 import FlexColumn from './flexGrid/FlexColumn';
 import FlexContainer from './flexGrid/FlexContainer';
 import FlexRow from './flexGrid/FlexRow';
 import VerticalSpacer from './VerticalSpacer';
 
-import styles from './okAvbrytModal.less';
+import styles from './okAvbrytModal.module.css';
 
 interface OwnProps {
   textCode?: string;

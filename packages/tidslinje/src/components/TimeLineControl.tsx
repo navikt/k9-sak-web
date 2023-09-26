@@ -1,8 +1,8 @@
-import React, { ReactNode, MouseEvent } from 'react';
 import { Row } from 'nav-frontend-grid';
+import React, { MouseEvent, ReactNode } from 'react';
 import { useIntl } from 'react-intl';
 import TimeLineButton from './TimeLineButton';
-import styles from './timeLineControl.less';
+import styles from './timeLineControl.module.css';
 
 interface TimeLineControlProps {
   children?: ReactNode;

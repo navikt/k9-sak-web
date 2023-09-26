@@ -1,15 +1,15 @@
-import React, { Component, MouseEvent } from 'react';
-import moment from 'moment';
-import { Column, Row } from 'nav-frontend-grid';
 import { ISO_DATE_FORMAT } from '@fpsak-frontend/utils';
 import Kjønnkode from '@k9-sak-web/types/src/Kjønnkode';
 import UttakPeriode from '@k9-sak-web/types/src/uttak/UttakPeriode';
+import moment from 'moment';
+import { Column, Row } from 'nav-frontend-grid';
+import React, { Component, MouseEvent } from 'react';
 
 import Timeline from './Timeline';
 import TimeLineControl from './components/TimeLineControl';
 import TimeLineSoker from './components/TimeLineSoker';
 import TimeLineSokerEnsamSoker from './components/TimeLineSokerEnsamSoker';
-import styles from './tidslinje.less';
+import styles from './tidslinje.module.css';
 
 interface EventProps {
   items: string[];

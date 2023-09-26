@@ -1,11 +1,11 @@
-import React from 'react';
 import Panel from 'nav-frontend-paneler';
+import React from 'react';
 
 import innvilgetIkonUrl from '@fpsak-frontend/assets/images/innvilget.svg';
 
 import TittelMedDivider from './TittelMedDivider';
 
-import styles from './ingenRisikoPanel.less';
+import styles from './ingenRisikoPanel.module.css';
 
 /**
  * IngenRisikoPanel

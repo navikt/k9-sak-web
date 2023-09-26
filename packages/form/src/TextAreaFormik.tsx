@@ -1,11 +1,11 @@
-import React from 'react';
-import { Field as FormikField, connect, getIn, FormikState } from 'formik';
 import { Textarea } from '@navikt/ds-react';
+import { Field as FormikField, FormikState, connect, getIn } from 'formik';
 import { EtikettFokus } from 'nav-frontend-etiketter';
+import React from 'react';
 import { useIntl } from 'react-intl';
 import LabelType from './LabelType';
 import ReadOnlyField from './ReadOnlyField';
-import styles from './TextAreaFormik.less';
+import styles from './TextAreaFormik.module.css';
 import { validateAll } from './formikUtils';
 
 interface TextAreaFieldProps {

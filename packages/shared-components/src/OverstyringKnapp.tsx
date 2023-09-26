@@ -1,12 +1,12 @@
-import React, { useEffect, useCallback, useState } from 'react';
-import { injectIntl, WrappedComponentProps } from 'react-intl';
+import React, { useCallback, useEffect, useState } from 'react';
+import { WrappedComponentProps, injectIntl } from 'react-intl';
 
-import keyImage from '@fpsak-frontend/assets/images/key-1-rotert.svg';
 import keyUtgraetImage from '@fpsak-frontend/assets/images/key-1-rotert-utgraet.svg';
+import keyImage from '@fpsak-frontend/assets/images/key-1-rotert.svg';
 
 import Image from './Image';
 
-import styles from './overstyringKnapp.less';
+import styles from './overstyringKnapp.module.css';
 
 interface OwnProps {
   onClick?: (overstyrt: boolean) => void;

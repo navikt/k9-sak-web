@@ -1,21 +1,21 @@
-import React, { Component, RefObject } from 'react';
-import moment from 'moment';
-import { injectIntl, WrappedComponentProps } from 'react-intl';
-import { Column, Row } from 'nav-frontend-grid';
-import { BeregningsresultatPeriode, KodeverkMedNavn, ArbeidsgiverOpplysningerPerId } from '@k9-sak-web/types';
-import {
-  calcDaysAndWeeksWithWeekends,
-  DDMMYY_DATE_FORMAT,
-  ISO_DATE_FORMAT,
-  getKodeverknavnFn,
-} from '@fpsak-frontend/utils';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { Timeline, TimeLineControl } from '@fpsak-frontend/tidslinje';
-import TilkjentYtelseTimelineData from './TilkjentYtelseTimelineData';
+import { TimeLineControl, Timeline } from '@fpsak-frontend/tidslinje';
+import {
+  DDMMYY_DATE_FORMAT,
+  ISO_DATE_FORMAT,
+  calcDaysAndWeeksWithWeekends,
+  getKodeverknavnFn,
+} from '@fpsak-frontend/utils';
+import { ArbeidsgiverOpplysningerPerId, BeregningsresultatPeriode, KodeverkMedNavn } from '@k9-sak-web/types';
+import moment from 'moment';
+import { Column, Row } from 'nav-frontend-grid';
+import React, { Component, RefObject } from 'react';
+import { WrappedComponentProps, injectIntl } from 'react-intl';
 import { createVisningsnavnForAndel } from './TilkjentYteleseUtils';
+import TilkjentYtelseTimelineData from './TilkjentYtelseTimelineData';
 
-import styles from './tilkjentYtelse.less';
+import styles from './tilkjentYtelse.module.css';
 
 export type PeriodeMedId = BeregningsresultatPeriode & { id: number };
 

@@ -37,7 +37,7 @@ jobs:
         run: yarn ts-check
 
       - name: Linting
-        run: yarn less:lint
+        run: yarn css:lint
 
       - name: Sjekker at koden bygger
         if: ${{inputs.run-build}}

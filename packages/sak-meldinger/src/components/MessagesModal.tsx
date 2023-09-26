@@ -1,14 +1,14 @@
-import React from 'react';
-import { FormattedMessage, injectIntl, WrappedComponentProps } from 'react-intl';
-import { Hovedknapp } from 'nav-frontend-knapper';
 import { Column, Container, Row } from 'nav-frontend-grid';
-import { Element } from 'nav-frontend-typografi';
+import { Hovedknapp } from 'nav-frontend-knapper';
 import Modal from 'nav-frontend-modal';
+import { Element } from 'nav-frontend-typografi';
+import React from 'react';
+import { FormattedMessage, WrappedComponentProps, injectIntl } from 'react-intl';
 
-import { Image } from '@fpsak-frontend/shared-components';
 import innvilgetImageUrl from '@fpsak-frontend/assets/images/innvilget_valgt.svg';
+import { Image } from '@fpsak-frontend/shared-components';
 
-import styles from './MessagesModal.less';
+import styles from './MessagesModal.module.css';
 
 interface OwnProps {
   showModal: boolean;

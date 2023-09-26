@@ -1,0 +1,100 @@
+:global(.snakkeboble__ikon).snakkeboble__ikon--veileder {
+  background: #134852;
+}
+
+:global(.snakkeboble__ikon).snakkeboble__ikon--brukerMann {
+  background: url('~@fpsak-frontend/assets/images/mann.svg');
+  background-size: contain;
+}
+
+:global(.snakkeboble__ikon).snakkeboble__ikon--brukerKvinne {
+  background: url('~@fpsak-frontend/assets/images/kvinne.svg');
+  background-size: contain;
+}
+
+:global(.snakkeboble__ikon).snakkeboble__ikon--saksbehandler {
+  background: url('~@fpsak-frontend/assets/images/nav_ansatt_historikk.svg');
+  background-color: var(--a-purple-500);
+  background-position-x: 6px;
+  background-position-y: 2px;
+  background-size: contain;
+}
+
+:global(.snakkeboble__ikon).snakkeboble__ikon--beslutter {
+  background: url('~@fpsak-frontend/assets/images/beslutter.svg');
+  background-size: contain;
+}
+
+:global(.snakkeboble__ikon).snakkeboble__ikon--losningen {
+  background: url('~@fpsak-frontend/assets/images/maskin.svg');
+  background-size: contain;
+}
+
+:global(.snakkeboble__ikon).snakkeboble__ikon--ekstern {
+  background: url('~@fpsak-frontend/assets/images/arbeidsgiver.svg');
+  background-size: contain;
+}
+
+.snakkeboble .hide {
+  display: none;
+}
+
+.snakkeboble .show {
+  display: inline;
+}
+
+.snakkeboble .hoyrejustert-tekst {
+  text-align: right;
+}
+
+.snakkeboble .snakkeboble__snakkebole-panel--saksbehandler {
+  background-color: var(--a-purple-100);
+}
+
+.snakkeboble .snakkeboble__snakkebole-panel--beslutter {
+  background-color: var(--a-green-100);
+}
+
+.snakkeboble .snakkeboble__snakkebole-panel--losningen {
+  background-color: #f1f1f1;
+}
+
+.snakkeboble .snakkeboble__snakkebole-panel--bruker {
+  background-color: var(--a-white) 2;
+}
+
+.snakkeboble .snakkeboble__snakkebole-panel--ekstern {
+  background-color: var(--a-lightblue-100);
+}
+
+@media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
+  .snakkeboble :global(.snakkeboble__ikon).snakkeboble__ikon--saksbehandler {
+    background-position-x: 8px;
+    background-position-y: 4px;
+    background-repeat: no-repeat;
+    background-size: 40px;
+  }
+}
+
+@supports (-ms-ime-align: auto) {
+  .snakkeboble :global(.snakkeboble__ikon).snakkeboble__ikon--saksbehandler {
+    background-position-x: 8px;
+    background-position-y: 4px;
+    background-repeat: no-repeat;
+    background-size: 40px;
+  }
+
+  .snakkeboble :global(.snakkeboble__ikon).snakkeboble__ikon--brukerKvinne {
+    background-position-x: 8px;
+    background-position-y: 8px;
+    background-repeat: no-repeat;
+    background-size: 32px;
+  }
+
+  .snakkeboble :global(.snakkeboble__ikon).snakkeboble__ikon--brukerMann {
+    background-position-x: 8px;
+    background-position-y: 8px;
+    background-repeat: no-repeat;
+    background-size: 32px;
+  }
+}

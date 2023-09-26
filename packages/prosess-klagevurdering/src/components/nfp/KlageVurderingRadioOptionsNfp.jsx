@@ -1,15 +1,15 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import { injectIntl } from 'react-intl';
-import PropTypes from 'prop-types';
 
-import klageVurderingType from '@fpsak-frontend/kodeverk/src/klageVurdering';
-import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
-import { required } from '@fpsak-frontend/utils';
-import { ArrowBox, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { RadioGroupField, RadioOption, SelectField } from '@fpsak-frontend/form';
+import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
+import klageVurderingType from '@fpsak-frontend/kodeverk/src/klageVurdering';
 import klageVurderingOmgjoerType from '@fpsak-frontend/kodeverk/src/klageVurderingOmgjoer';
+import { ArrowBox, VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { required } from '@fpsak-frontend/utils';
 
-import styles from './klageVurderingRadioOptionsNfp.less';
+import styles from './klageVurderingRadioOptionsNfp.module.css';
 
 export const TILBAKEKREVING_HJEMMEL = '22-15';
 

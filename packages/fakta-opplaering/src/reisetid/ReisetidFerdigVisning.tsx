@@ -1,15 +1,15 @@
+import { DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils';
+import { AssessedBy, Box, DetailView, LabelledContent, LinkButton, Margin } from '@navikt/ft-plattform-komponenter';
+import dayjs from 'dayjs';
 import React, { useContext } from 'react';
 import { useIntl } from 'react-intl';
-import dayjs from 'dayjs';
-import { DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils';
-import { Box, Margin, DetailView, LabelledContent, LinkButton, AssessedBy } from '@navikt/ft-plattform-komponenter';
 
 import { FaktaOpplaeringContext } from '@k9-sak-web/behandling-opplaeringspenger/src/FaktaOpplaeringContext';
 
 import { Vurderingsresultat } from '@k9-sak-web/types';
-import { ReisetidVurdering } from './ReisetidTypes';
-import FraSoeknad from './FraSoeknad';
 import BeskrivelseFraSoeker from './BeskrivelseFraSoeker';
+import FraSoeknad from './FraSoeknad';
+import { ReisetidVurdering } from './ReisetidTypes';
 import styles from './reisetidFerdigVisning.modules.css';
 
 interface OwnProps {

@@ -18,7 +18,7 @@ import RelatertFagsak from './RelatertFagsak';
 import TagContainer from './TagContainer';
 import VisittkortDetaljerPopup from './VisittkortDetaljerPopup';
 import VisittkortLabels from './VisittkortLabels';
-import styles from './visittkortPanel.less';
+import styles from './visittkortPanel.module.css';
 
 const utledKjonn = (kjonn: Kodeverk): Gender => {
   if (kjonn.kode === navBrukerKjonn.KVINNE) {

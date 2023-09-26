@@ -1,10 +1,10 @@
+import { InstitusjonPerioderMedResultat } from '@k9-sak-web/types';
 import { Heading } from '@navikt/ds-react';
 import { InteractiveList } from '@navikt/ft-plattform-komponenter';
 import React, { useEffect } from 'react';
-import { InstitusjonPerioderMedResultat } from '@k9-sak-web/types';
-import institusjonStatus from './konstanter';
-import PeriodeRad from './PeriodeRad';
 import styles from './InstitusjonNavigation.modules.css';
+import PeriodeRad from './PeriodeRad';
+import institusjonStatus from './konstanter';
 
 interface OwnProps {
   perioder: InstitusjonPerioderMedResultat[];

@@ -1,22 +1,22 @@
-import React, { useContext } from 'react';
-import { useIntl } from 'react-intl';
-import { GjennomgaaOpplaeringVurdering, Vurderingsresultat } from '@k9-sak-web/types';
-import {
-  Box,
-  Margin,
-  DetailView,
-  LabelledContent,
-  LinkButton,
-  AssessedBy,
-  BasicList,
-} from '@navikt/ft-plattform-komponenter';
-import { Calender } from '@navikt/ds-icons';
 import {
   FaktaOpplaeringContext,
   FaktaOpplaeringContextTypes,
 } from '@k9-sak-web/behandling-opplaeringspenger/src/FaktaOpplaeringContext';
-import styles from './GjennomgaaOpplaeringFerdigVisning.modules.css';
+import { GjennomgaaOpplaeringVurdering, Vurderingsresultat } from '@k9-sak-web/types';
+import { Calender } from '@navikt/ds-icons';
+import {
+  AssessedBy,
+  BasicList,
+  Box,
+  DetailView,
+  LabelledContent,
+  LinkButton,
+  Margin,
+} from '@navikt/ft-plattform-komponenter';
+import React, { useContext } from 'react';
+import { useIntl } from 'react-intl';
 import DokumentLink from '../components/DokumentLink';
+import styles from './GjennomgaaOpplaeringFerdigVisning.modules.css';
 
 interface OwnProps {
   vurdering: GjennomgaaOpplaeringVurdering;

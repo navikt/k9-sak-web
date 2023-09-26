@@ -1,15 +1,15 @@
-import React from 'react';
 import { Column, Row } from 'nav-frontend-grid';
-import Modal from 'nav-frontend-modal';
 import { Hovedknapp } from 'nav-frontend-knapper';
+import Modal from 'nav-frontend-modal';
 import { Normaltekst, Undertittel } from 'nav-frontend-typografi';
+import React from 'react';
 
 import advarselImageUrl from '@fpsak-frontend/assets/images/advarsel.svg';
 
 import getPackageIntl from '../i18n/getPackageIntl';
 import Image from './Image';
 
-import styles from './advarselModal.less';
+import styles from './advarselModal.module.css';
 
 interface OwnProps {
   headerText?: string;

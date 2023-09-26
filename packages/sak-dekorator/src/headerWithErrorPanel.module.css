@@ -1,0 +1,34 @@
+.container {
+  background-color: #262626;
+  color: var(--a-white);
+  font-size: 20px;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 101;
+}
+
+.endringslogg-container {
+  margin-top: -4px;
+  color: black;
+}
+
+.endringslogg-container :global(.endringslogg-dropDown) {
+  transform: scale(0.65);
+}
+
+.endringslogg-container :global(.collapse-header) {
+  background-color: #3e3832;
+}
+
+.endringslogg-container :global(.ringring) {
+  border: 3px solid #ba3a26;
+}
+
+.endringslogg-container :global(.circle) {
+  background-color: #ba3a26;
+}
+
+.container_dev header {
+  background-color: #0a0;
+}

@@ -1,12 +1,12 @@
-import React from 'react';
-import { FormattedMessage } from 'react-intl';
 import { Column, Row } from 'nav-frontend-grid';
 import { Normaltekst, Undertekst } from 'nav-frontend-typografi';
+import React from 'react';
+import { FormattedMessage } from 'react-intl';
 
-import { ArrowBox, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { RadioGroupField, RadioOption } from '@fpsak-frontend/form';
+import { ArrowBox, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { required } from '@fpsak-frontend/utils';
-import styles from './aktsomhetReduksjonAvBelopFormPanel.less';
+import styles from './aktsomhetReduksjonAvBelopFormPanel.module.css';
 
 interface OwnProps {
   readOnly: boolean;

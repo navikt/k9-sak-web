@@ -5,12 +5,12 @@ import tilbakekrevingVidereBehandling from '@fpsak-frontend/kodeverk/src/tilbake
 import { HistorikkinnslagEndretFelt } from '@k9-sak-web/types';
 
 import historikkinnslagType from '../../kodeverk/historikkinnslagType';
-import { findEndretFeltVerdi } from './felles/historikkUtils';
-import BubbleText from './felles/bubbleText';
 import HistorikkMal from '../HistorikkMalTsType';
+import BubbleText from './felles/bubbleText';
+import { findEndretFeltVerdi } from './felles/historikkUtils';
 import Skjermlenke from './felles/Skjermlenke';
 
-import styles from './historikkMalType.less';
+import styles from './historikkMalType.module.css';
 
 const getSplitPeriods = (endredeFelter: HistorikkinnslagEndretFelt[]): string => {
   let text = '';
@@ -49,18 +49,19 @@ const HistorikkMalType9 = ({
               createLocationForSkjermlenke={createLocationForSkjermlenke}
             />
           )}
-          {historikkinnslagDel.endredeFelter && historikkinnslag.type.kode === historikkinnslagType.OVST_UTTAK_SPLITT && (
-            <FormattedMessage
-              id="Historikk.Template.9"
-              values={{
-                opprinneligPeriode: historikkinnslagDel.endredeFelter[0].fraVerdi,
-                numberOfPeriods: historikkinnslagDel.endredeFelter.length,
-                splitPeriods: getSplitPeriods(historikkinnslagDel.endredeFelter),
-                b: chunks => <b>{chunks}</b>,
-                br: <br />,
-              }}
-            />
-          )}
+          {historikkinnslagDel.endredeFelter &&
+            historikkinnslag.type.kode === historikkinnslagType.OVST_UTTAK_SPLITT && (
+              <FormattedMessage
+                id="Historikk.Template.9"
+                values={{
+                  opprinneligPeriode: historikkinnslagDel.endredeFelter[0].fraVerdi,
+                  numberOfPeriods: historikkinnslagDel.endredeFelter.length,
+                  splitPeriods: getSplitPeriods(historikkinnslagDel.endredeFelter),
+                  b: chunks => <b>{chunks}</b>,
+                  br: <br />,
+                }}
+              />
+            )}
 
           {historikkinnslagDel.endredeFelter &&
             historikkinnslag.type.kode === historikkinnslagType.FASTSATT_UTTAK_SPLITT && (

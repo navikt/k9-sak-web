@@ -1,20 +1,20 @@
-import React from 'react';
-import { FormattedMessage, injectIntl, WrappedComponentProps } from 'react-intl';
 import { Column, Row } from 'nav-frontend-grid';
 import { Hovedknapp } from 'nav-frontend-knapper';
-import { Normaltekst } from 'nav-frontend-typografi';
 import Modal from 'nav-frontend-modal';
+import { Normaltekst } from 'nav-frontend-typografi';
+import React from 'react';
+import { FormattedMessage, WrappedComponentProps, injectIntl } from 'react-intl';
 
-import { Image } from '@fpsak-frontend/shared-components';
-import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
-import FagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
-import behandlingResultatType from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
-import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import innvilgetImageUrl from '@fpsak-frontend/assets/images/innvilget_valgt.svg';
+import behandlingResultatType from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
+import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
+import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
+import FagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
+import { Image } from '@fpsak-frontend/shared-components';
 import { Behandling, Kodeverk } from '@k9-sak-web/types';
 
-import {erFagytelseTypeUtvidetRett} from '@k9-sak-web/behandling-utvidet-rett/src/utils/utvidetRettHjelpfunksjoner';
-import styles from './fatterVedtakApprovalModal.less';
+import { erFagytelseTypeUtvidetRett } from '@k9-sak-web/behandling-utvidet-rett/src/utils/utvidetRettHjelpfunksjoner';
+import styles from './fatterVedtakApprovalModal.module.css';
 
 const getInfoTextCode = (
   behandlingtypeKode: string,

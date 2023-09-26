@@ -1,13 +1,13 @@
+import classNames from 'classnames';
 import React, { ReactNode, useState } from 'react';
 import { FormattedMessage, IntlShape } from 'react-intl';
-import classNames from 'classnames';
 
-import { Findout } from '@navikt/ds-icons';
-import { Button, Alert } from '@navikt/ds-react';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { Findout } from '@navikt/ds-icons';
+import { Alert, Button } from '@navikt/ds-react';
 import { validerRedigertHtml } from './FritekstRedigering/RedigeringUtils';
 
-import styles from './vedtakForm.less';
+import styles from './vedtakForm.module.css';
 
 interface PreviewLinkProps {
   previewCallback: (event: React.SyntheticEvent) => void;

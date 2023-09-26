@@ -1,9 +1,9 @@
 import { Heading } from '@navikt/ds-react';
 import { InteractiveList } from '@navikt/ft-plattform-komponenter';
 import React, { useEffect } from 'react';
+import PeriodeRad from './PeriodeRad';
 import { ReisetidVurdering } from './ReisetidTypes';
 import ReisetidStatus from './konstanter';
-import PeriodeRad from './PeriodeRad';
 import styles from './reisetidNavigation.modules.css';
 
 interface OwnProps {

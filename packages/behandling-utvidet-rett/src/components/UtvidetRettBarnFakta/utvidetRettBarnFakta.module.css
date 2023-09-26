@@ -1,0 +1,17 @@
+.barnInput {
+  margin-top: 1em;
+  width: 550px;
+}
+
+.header {
+  display: flex;
+}
+
+.header h4 {
+  font-weight: 600;
+  margin: 0 1em 0 0;
+}
+
+.header .italic {
+  font-style: italic;
+}

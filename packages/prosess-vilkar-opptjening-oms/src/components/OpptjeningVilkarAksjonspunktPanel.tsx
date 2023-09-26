@@ -1,22 +1,22 @@
+import { behandlingForm, behandlingFormValueSelector } from '@fpsak-frontend/form';
+import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
+import FagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
+import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
+import { ProsessPanelTemplate, ProsessStegBegrunnelseTextField } from '@k9-sak-web/prosess-felles';
+import { Aksjonspunkt, Opptjening, SubmitCallback, Vilkarperiode } from '@k9-sak-web/types';
+import Hjelpetekst from 'nav-frontend-hjelpetekst';
+import { PopoverOrientering } from 'nav-frontend-popover';
+import { Element } from 'nav-frontend-typografi';
 import React, { useMemo } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { connect } from 'react-redux';
 import { InjectedFormProps } from 'redux-form';
 import { createSelector } from 'reselect';
-import { behandlingForm, behandlingFormValueSelector } from '@fpsak-frontend/form';
-import { ProsessStegBegrunnelseTextField, ProsessPanelTemplate } from '@k9-sak-web/prosess-felles';
-import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
-import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
-import FagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
-import { Aksjonspunkt, Opptjening, SubmitCallback, Vilkarperiode } from '@k9-sak-web/types';
-import { Element } from 'nav-frontend-typografi';
-import Hjelpetekst from 'nav-frontend-hjelpetekst';
-import { PopoverOrientering } from 'nav-frontend-popover';
 
 import dayjs from 'dayjs';
 import isBetween from 'dayjs/plugin/isBetween';
+import styles from './OpptjeningVilkarAksjonspunktPanel.module.css';
 import VilkarFields, { midlertidigInaktiv } from './VilkarFields';
-import styles from './OpptjeningVilkarAksjonspunktPanel.less';
 
 dayjs.extend(isBetween);
 

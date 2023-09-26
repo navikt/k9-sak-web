@@ -1,0 +1,15 @@
+.explanationTextarea {
+  resize: none;
+}
+
+.panel {
+  width: 720px;
+}
+
+.period {
+  padding-top: 25px;
+}
+
+.buttonContainer {
+  margin-top: 16px;
+}

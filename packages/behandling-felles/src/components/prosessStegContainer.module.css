@@ -1,0 +1,47 @@
+.container {
+  border-bottom: 1px solid #6a6a6a;
+}
+
+.meny {
+  margin-bottom: 23px;
+  margin-left: 25px;
+  margin-right: 25px;
+  margin-top: 15px;
+}
+
+.stepArrowContainer {
+  bottom: -24px !important;
+  filter: drop-shadow(0 -3px 2px rgba(0, 0, 0, 0.1));
+  position: relative;
+  z-index: 1;
+}
+
+.stepArrowContainer:after {
+  border: solid transparent;
+  border-color: rgba(255, 255, 255, 0);
+  border-bottom-color: #fff;
+  border-width: 12px;
+  bottom: 100%;
+  content: ' ';
+  height: 0;
+  left: 50%;
+  margin-left: -12px;
+  pointer-events: none;
+  position: absolute;
+  width: 0;
+}
+
+.stepArrowContainer:before {
+  border: solid transparent;
+  border-color: rgba(0, 0, 0, 0);
+  border-bottom-color: var(--a-gray-300);
+  border-width: 13px;
+  bottom: 100%;
+  content: ' ';
+  height: 0;
+  left: 50%;
+  margin-left: -13px;
+  pointer-events: none;
+  position: absolute;
+  width: 0;
+}

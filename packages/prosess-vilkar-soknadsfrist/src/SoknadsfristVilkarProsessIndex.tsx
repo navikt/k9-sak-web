@@ -28,7 +28,7 @@ import { utledInnsendtSoknadsfrist } from './utils';
 
 import messages from '../i18n/nb_NO.json';
 
-import styles from './SoknadsfristVilkarProsessIndex.less';
+import styles from './SoknadsfristVilkarProsessIndex.module.css';
 
 const cx = classNames.bind(styles);
 
