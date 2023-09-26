@@ -3,7 +3,7 @@ import TextAreaFormik from '@fpsak-frontend/form/src/TextAreaFormik';
 import { useFeatureToggles } from '@fpsak-frontend/shared-components';
 import { goToLos, goToSearch } from '@k9-sak-web/sak-app/src/app/paths';
 import { MerknadFraLos } from '@k9-sak-web/types';
-import { Alert, Button, ErrorMessage, Modal } from '@navikt/ds-react';
+import { Alert, Button, ErrorMessage, Heading, Modal, VStack } from '@navikt/ds-react';
 import { Form, Formik, FormikProps } from 'formik';
 import { CheckboxGruppe } from 'nav-frontend-skjema';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
@@ -94,17 +94,13 @@ const MarkerBehandlingModal: React.FC<PureOwnProps> = ({
   };
 
   return (
-    <Modal
-      className={styles.modal}
-      open
-      onClose={lukkModal}
-      aria-label="Modal for markering av behandling"
-      portal
-      width="38.375rem"
-    >
-      <Modal.Header closeButton />
+    <Modal open onClose={lukkModal} aria-label="Modal for markering av behandling" portal width="38.375rem">
+      <Modal.Header>
+        <Heading as="h3" size="medium">
+          Marker behandling og send til egen kø
+        </Heading>
+      </Modal.Header>
       <Modal.Body>
-        <h3 className={`${styles.tittel} typo-systemtittel`}>Marker behandling og send til egen kø</h3>
         <Formik
           innerRef={formRef}
           initialValues={buildInitialValues()}
@@ -156,7 +152,7 @@ const MarkerBehandlingModal: React.FC<PureOwnProps> = ({
                 </CheckboxGruppe>
               )}
               {brukHastekøMarkering && (
-                <>
+                <VStack gap="4">
                   <Alert variant="warning">
                     Hastesaker skal følges opp fra Gosys inntil videre, og kan derfor ikke endres her.
                   </Alert>
@@ -173,7 +169,7 @@ const MarkerBehandlingModal: React.FC<PureOwnProps> = ({
                       disabled={!featureToggles?.LOS_MARKER_BEHANDLING_SUBMIT}
                     />
                   </CheckboxGruppe>
-                </>
+                </VStack>
               )}
               {formikProps.values.markerSomVanskelig && (
                 <>

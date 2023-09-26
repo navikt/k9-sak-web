@@ -4,7 +4,7 @@ import { FormattedMessage, WrappedComponentProps, injectIntl } from 'react-intl'
 
 import { VerticalSpacer, ÅpneSakINyttVinduKnapp } from '@fpsak-frontend/shared-components';
 import { Cancel } from '@navikt/ds-icons';
-import { Alert, Button, Modal } from '@navikt/ds-react';
+import { Alert, Button, Heading, Modal } from '@navikt/ds-react';
 import { Column, Row } from 'nav-frontend-grid';
 
 import InkluderKalenderCheckbox from '../InkluderKalenderCheckbox';
@@ -118,14 +118,13 @@ const FritekstEditor = ({
   return (
     <>
       <Modal open={visAdvarsel} onClose={() => setVisAdvarsel(false)}>
-        <Modal.Header closeButton />
+        <Modal.Header>
+          <Heading as="h3" size="medium">
+            <FormattedMessage id="RedigeringAvFritekstBrev.BekreftTilbakestillTittel" />
+          </Heading>
+        </Modal.Header>
         <Modal.Body>
           <div className={styles.alertModalInnehold}>
-            <header>
-              <h3>
-                <FormattedMessage id="RedigeringAvFritekstBrev.BekreftTilbakestillTittel" />
-              </h3>
-            </header>
             <Alert variant="warning" inline>
               <FormattedMessage id="RedigeringAvFritekstBrev.BekreftTilbakestill" />
             </Alert>

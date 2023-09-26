@@ -34,7 +34,7 @@ import {
 import { DokumentDataType, LagreDokumentdataType } from '@k9-sak-web/types/src/dokumentdata';
 import { Checkbox, Label } from '@navikt/ds-react';
 import { Formik, FormikProps } from 'formik';
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { IntlShape, injectIntl } from 'react-intl';
 import * as Yup from 'yup';
 import redusertUtbetalingArsak from '../kodeverk/redusertUtbetalingArsak';
@@ -144,8 +144,6 @@ export const VedtakForm: React.FC<Props> = ({
   erRevurdering,
   behandlingArsaker,
 }) => {
-  useEffect(() => {}, []);
-
   const vedtakContext = useContext(VedtakFormContext);
 
   const [erSendtInnUtenArsaker, setErSendtInnUtenArsaker] = useState(false);
