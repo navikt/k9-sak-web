@@ -1,12 +1,12 @@
-import React from 'react';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
+import React from 'react';
 
 import { HistorikkInnslagOpplysning, Kodeverk } from '@k9-sak-web/types';
 
-import { findHendelseText } from './felles/historikkUtils';
 import HistorikkMal from '../HistorikkMalTsType';
+import { findHendelseText } from './felles/historikkUtils';
 
-import styles from './historikkMalType.less';
+import styles from './historikkMalType.module.css';
 
 const formaterOpplysning = (
   opplysning: HistorikkInnslagOpplysning,

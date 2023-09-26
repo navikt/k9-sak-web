@@ -1,11 +1,11 @@
-import React from 'react';
 import classNames from 'classnames';
+import React from 'react';
 import { FormattedMessage } from 'react-intl';
 
-import klageVurderingType from '@fpsak-frontend/kodeverk/src/klageVurdering';
 import dokumentMalType from '@fpsak-frontend/kodeverk/src/dokumentMalType';
+import klageVurderingType from '@fpsak-frontend/kodeverk/src/klageVurdering';
 
-import styles from './tempsaveAndPreviewKlageLink.less';
+import styles from './tempsaveAndPreviewKlageLink.module.css';
 
 const transformValues = (values: any, aksjonspunktCode: string) => ({
   klageMedholdArsak:

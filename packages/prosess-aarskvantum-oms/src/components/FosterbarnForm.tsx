@@ -1,15 +1,15 @@
-import React, { useEffect } from 'react';
-import { Table, TableColumn, TableRow, VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { minLength, maxLength, required, hasValidFodselsnummer } from '@fpsak-frontend/utils';
-import { Knapp } from 'nav-frontend-knapper';
 import { InputField } from '@fpsak-frontend/form/index';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import { Table, TableColumn, TableRow, VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { hasValidFodselsnummer, maxLength, minLength, required } from '@fpsak-frontend/utils';
+import { Knapp } from 'nav-frontend-knapper';
+import React, { useEffect } from 'react';
 
 import { Delete } from '@navikt/ds-icons';
 import { FormattedMessage } from 'react-intl';
 import { fosterbarnDto } from '../dto/FosterbarnDto';
 
-import styles from './aksjonspunktForm.less';
+import styles from './aksjonspunktForm.module.css';
 import { valgValues } from './utils';
 
 interface Props {

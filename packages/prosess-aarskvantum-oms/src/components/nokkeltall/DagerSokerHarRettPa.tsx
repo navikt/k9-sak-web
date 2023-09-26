@@ -5,7 +5,7 @@ import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import { useLocation } from 'react-router-dom';
 import Nokkeltall from './Nokkeltall';
-import styles from './nokkeltall.less';
+import styles from './nokkeltall.module.css';
 
 interface DagerSokerHarRettPaProps {
   dagerRettPå: number;

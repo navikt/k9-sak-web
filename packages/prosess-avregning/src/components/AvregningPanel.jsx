@@ -1,36 +1,36 @@
+import { Column, Row } from 'nav-frontend-grid';
+import { Hovedknapp } from 'nav-frontend-knapper';
+import { Element, Normaltekst, Undertekst, Undertittel } from 'nav-frontend-typografi';
+import PropTypes from 'prop-types';
 import React, { Component } from 'react';
+import { FormattedMessage, injectIntl } from 'react-intl';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import PropTypes from 'prop-types';
-import { FormattedMessage, injectIntl } from 'react-intl';
-import { createSelector } from 'reselect';
 import { clearFields, formPropTypes } from 'redux-form';
-import { Column, Row } from 'nav-frontend-grid';
-import { Element, Normaltekst, Undertekst, Undertittel } from 'nav-frontend-typografi';
-import { Hovedknapp } from 'nav-frontend-knapper';
+import { createSelector } from 'reselect';
 
-import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
+import questionHoverUrl from '@fpsak-frontend/assets/images/question_hover.svg';
+import questionNormalUrl from '@fpsak-frontend/assets/images/question_normal.svg';
 import {
   RadioGroupField,
   RadioOption,
   TextAreaField,
-  getBehandlingFormPrefix,
   behandlingForm,
   behandlingFormValueSelector,
+  getBehandlingFormPrefix,
 } from '@fpsak-frontend/form';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import dokumentMalType from '@fpsak-frontend/kodeverk/src/dokumentMalType';
+import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
+import tilbakekrevingVidereBehandling from '@fpsak-frontend/kodeverk/src/tilbakekrevingVidereBehandling';
 import { AksjonspunktHelpTextTemp, ArrowBox, Image, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { getLanguageCodeFromSprakkode, hasValidText, maxLength, minLength, required } from '@fpsak-frontend/utils';
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import tilbakekrevingVidereBehandling from '@fpsak-frontend/kodeverk/src/tilbakekrevingVidereBehandling';
-import dokumentMalType from '@fpsak-frontend/kodeverk/src/dokumentMalType';
-import questionNormalUrl from '@fpsak-frontend/assets/images/question_normal.svg';
-import questionHoverUrl from '@fpsak-frontend/assets/images/question_hover.svg';
 
 import avregningSimuleringResultatPropType from '../propTypes/avregningSimuleringResultatPropType';
 import AvregningSummary from './AvregningSummary';
 import AvregningTable from './AvregningTable';
 
-import styles from './avregningPanel.less';
+import styles from './avregningPanel.module.css';
 
 // TODO Denne komponenten må refaktorerast! Er frykteleg stor
 

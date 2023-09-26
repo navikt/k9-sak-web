@@ -1,0 +1,45 @@
+.timelineContainer {
+  animation-duration: 400ms;
+  animation-name: fadein;
+  animation-timing-function: ease-out;
+  background-color: var(--a-white);
+  max-height: 1600px;
+  position: relative;
+  transition: all 400ms;
+  width: 100%;
+}
+
+.timelineContainer--border {
+  border: 1px solid #eae9ea;
+  border-radius: 0.25rem;
+}
+
+.timelineContainer--border :global(.vis-timeline) {
+  border: none;
+}
+
+.timeLineWrapper {
+  width: 100%;
+}
+
+.timelineIkonContainer {
+  align-items: flex-end;
+  display: flex;
+  flex-direction: column;
+  max-width: 300px;
+  padding-top: 56px;
+  position: relative;
+}
+
+.timelineIkonContainer > * {
+  align-items: center;
+  display: flex;
+  height: 38px;
+  margin-right: 0.5em;
+  max-height: 38px;
+  text-align: end;
+}
+
+.timelineIkonContainer img {
+  width: 26px;
+}

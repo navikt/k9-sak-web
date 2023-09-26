@@ -6,7 +6,7 @@ import DagerNavKanUtbetale from './DagerNavKanUtbetale';
 import DagerSokerHarRettPa from './DagerSokerHarRettPa';
 import { beregnDagerTimer, DagerTimer, konverterDesimalTilDagerOgTimer, sumTid } from './durationUtils';
 import ForbrukteDager from './ForbrukteDager';
-import styles from './nokkeltall.less';
+import styles from './nokkeltall.module.css';
 import Restdager from './Restdager';
 
 export enum Nokkeltalltype {

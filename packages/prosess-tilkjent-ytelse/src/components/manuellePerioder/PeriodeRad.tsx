@@ -1,15 +1,15 @@
-import React from 'react';
-import { injectIntl, WrappedComponentProps } from 'react-intl';
-import { FieldArray, FieldArrayFieldsProps, FieldArrayMetaProps } from 'redux-form';
-import AlertStripe from 'nav-frontend-alertstriper';
-import { Kodeverk, KodeverkMedNavn, ArbeidsgiverOpplysningerPerId } from '@k9-sak-web/types';
-import { FlexRow, FlexColumn, Table, TableRow, TableColumn, Image } from '@fpsak-frontend/shared-components';
 import removePeriod from '@fpsak-frontend/assets/images/remove.svg';
 import removePeriodDisabled from '@fpsak-frontend/assets/images/remove_disabled.svg';
 import { DatepickerField } from '@fpsak-frontend/form';
+import { FlexColumn, FlexRow, Image, Table, TableColumn, TableRow } from '@fpsak-frontend/shared-components';
+import { ArbeidsgiverOpplysningerPerId, Kodeverk, KodeverkMedNavn } from '@k9-sak-web/types';
+import AlertStripe from 'nav-frontend-alertstriper';
+import React from 'react';
+import { WrappedComponentProps, injectIntl } from 'react-intl';
+import { FieldArray, FieldArrayFieldsProps, FieldArrayMetaProps } from 'redux-form';
 import Andeler from './Andeler';
 
-import styles from './periode.less';
+import styles from './periode.module.css';
 
 interface OwnProps {
   fields: FieldArrayFieldsProps<any>;

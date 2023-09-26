@@ -1,16 +1,16 @@
+import { Column, Row } from 'nav-frontend-grid';
+import PropTypes from 'prop-types';
 import React from 'react';
 import { injectIntl } from 'react-intl';
-import PropTypes from 'prop-types';
-import { Column, Row } from 'nav-frontend-grid';
 
-import { required } from '@fpsak-frontend/utils';
-import klageVurderingType from '@fpsak-frontend/kodeverk/src/klageVurdering';
-import { ArrowBox, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { RadioGroupField, RadioOption, SelectField } from '@fpsak-frontend/form';
-import { ProsessStegBegrunnelseTextField } from '@k9-sak-web/prosess-felles';
+import klageVurderingType from '@fpsak-frontend/kodeverk/src/klageVurdering';
 import klageVurderingOmgjoerType from '@fpsak-frontend/kodeverk/src/klageVurderingOmgjoer';
+import { ArrowBox, VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { required } from '@fpsak-frontend/utils';
+import { ProsessStegBegrunnelseTextField } from '@k9-sak-web/prosess-felles';
 
-import styles from './klageVurderingRadioOptionsKa.less';
+import styles from './klageVurderingRadioOptionsKa.module.css';
 
 export const KlageVurderingRadioOptionsKa = ({ readOnly, medholdReasons, klageVurdering, intl }) => {
   const medholdOptions = medholdReasons.map(mo => (

@@ -4,13 +4,13 @@ import React from 'react';
 import { Alert, Heading } from '@navikt/ds-react';
 import Ekspanderbartpanel from 'nav-frontend-ekspanderbartpanel';
 
+import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { KodeverkMedNavn, UtenlandsoppholdPerioder, UtenlandsoppholdType } from '@k9-sak-web/types';
 import { PeriodList } from '@navikt/ft-plattform-komponenter';
-import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 
 import countries from 'i18n-iso-countries';
 import norwegianLocale from 'i18n-iso-countries/langs/no.json';
-import styles from './utenlandsopphold.less';
+import styles from './utenlandsopphold.module.css';
 
 countries.registerLocale(norwegianLocale);
 

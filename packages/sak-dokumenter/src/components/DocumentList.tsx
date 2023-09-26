@@ -10,8 +10,8 @@ import Lenke from 'nav-frontend-lenker';
 import { Select } from 'nav-frontend-skjema';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
 import React, { useState } from 'react';
-import { FormattedMessage, injectIntl, WrappedComponentProps } from 'react-intl';
-import styles from './documentList.less';
+import { FormattedMessage, WrappedComponentProps, injectIntl } from 'react-intl';
+import styles from './documentList.module.css';
 
 const headerTextCodes = [
   'DocumentList.Direction',

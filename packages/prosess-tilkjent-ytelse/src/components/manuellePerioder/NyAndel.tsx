@@ -1,16 +1,16 @@
+import addCircleIcon from '@fpsak-frontend/assets/images/add-circle.svg';
+import { InputField, SelectField } from '@fpsak-frontend/form';
+import inntektskategorier from '@fpsak-frontend/kodeverk/src/inntektskategorier';
+import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
+import { FlexColumn, FlexRow, Image, PeriodFieldArray } from '@fpsak-frontend/shared-components';
+import { hasValidDecimal, maxValue, minValue, required } from '@fpsak-frontend/utils';
+import { ArbeidsgiverOpplysningerPerId, KodeverkMedNavn } from '@k9-sak-web/types';
 import React, { useState } from 'react';
 import { WrappedComponentProps } from 'react-intl';
 import { FieldArrayFieldsProps, FieldArrayMetaProps } from 'redux-form';
-import { FlexColumn, FlexRow, PeriodFieldArray, Image } from '@fpsak-frontend/shared-components';
-import { KodeverkMedNavn, ArbeidsgiverOpplysningerPerId } from '@k9-sak-web/types';
-import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
-import inntektskategorier from '@fpsak-frontend/kodeverk/src/inntektskategorier';
-import { InputField, SelectField } from '@fpsak-frontend/form';
-import { hasValidDecimal, maxValue, minValue, required } from '@fpsak-frontend/utils';
-import addCircleIcon from '@fpsak-frontend/assets/images/add-circle.svg';
 import NyArbeidsgiverModal from './NyArbeidsgiverModal';
 
-import styles from './periode.less';
+import styles from './periode.module.css';
 
 const minValue0 = minValue(0);
 const maxValue100 = maxValue(100);

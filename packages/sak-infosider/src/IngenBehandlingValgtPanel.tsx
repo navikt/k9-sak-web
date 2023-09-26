@@ -1,11 +1,11 @@
+import { AlertStripeInfo } from 'nav-frontend-alertstriper';
+import { Normaltekst } from 'nav-frontend-typografi';
 import React from 'react';
 import { createIntl, createIntlCache, FormattedMessage, RawIntlProvider } from 'react-intl';
-import { Normaltekst } from 'nav-frontend-typografi';
-import { AlertStripeInfo } from 'nav-frontend-alertstriper';
 
 import messages from '../i18n/nb_NO.json';
 
-import styles from './ingenBehandlingValgtPanel.less';
+import styles from './ingenBehandlingValgtPanel.module.css';
 
 const cache = createIntlCache();
 

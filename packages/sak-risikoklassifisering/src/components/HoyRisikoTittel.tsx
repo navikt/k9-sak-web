@@ -1,14 +1,14 @@
-import React from 'react';
 import { EkspanderbartpanelBase } from 'nav-frontend-ekspanderbartpanel';
+import React from 'react';
 
 import risikoIkon from '@fpsak-frontend/assets/images/avslaatt_hover.svg';
-import { Risikoklassifisering, Aksjonspunkt } from '@k9-sak-web/types';
+import { Aksjonspunkt, Risikoklassifisering } from '@k9-sak-web/types';
 
+import { VuderFaresignalerAp } from './AvklarFaresignalerForm';
 import HoyRisikoPanel from './HoyRisikoPanel';
 import TittelMedDivider from './TittelMedDivider';
-import { VuderFaresignalerAp } from './AvklarFaresignalerForm';
 
-import styles from './hoyRisikoTittel.less';
+import styles from './hoyRisikoTittel.module.css';
 
 interface OwnProps {
   risikoklassifisering: Risikoklassifisering;

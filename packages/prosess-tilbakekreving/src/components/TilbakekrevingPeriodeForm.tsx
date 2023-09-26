@@ -1,51 +1,51 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import { clearFields, FormSection, change, InjectedFormProps } from 'redux-form';
-import { FormattedMessage, injectIntl, WrappedComponentProps } from 'react-intl';
 import moment from 'moment';
-import { Element, Normaltekst, Undertekst } from 'nav-frontend-typografi';
 import { Column, Row } from 'nav-frontend-grid';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
+import { Element, Normaltekst, Undertekst } from 'nav-frontend-typografi';
+import React, { Component } from 'react';
+import { FormattedMessage, WrappedComponentProps, injectIntl } from 'react-intl';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { FormSection, InjectedFormProps, change, clearFields } from 'redux-form';
 
 import {
   RadioGroupField,
   RadioOption,
+  SelectField,
   TextAreaField,
   behandlingForm,
   behandlingFormValueSelector,
-  SelectField,
 } from '@fpsak-frontend/form';
+import tilbakekrevingKodeverkTyper from '@fpsak-frontend/kodeverk/src/tilbakekrevingKodeverkTyper';
+import { AdvarselModal, FlexColumn, FlexRow, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import {
+  DDMMYYYY_DATE_FORMAT,
+  decodeHtmlEntity,
   formatCurrencyNoKr,
   hasValidText,
   maxLength,
   minLength,
   required,
-  DDMMYYYY_DATE_FORMAT,
-  decodeHtmlEntity,
 } from '@fpsak-frontend/utils';
-import { AdvarselModal, FlexColumn, FlexRow, VerticalSpacer } from '@fpsak-frontend/shared-components';
-import tilbakekrevingKodeverkTyper from '@fpsak-frontend/kodeverk/src/tilbakekrevingKodeverkTyper';
 import { Kodeverk, KodeverkMedNavn } from '@k9-sak-web/types';
 import ForeldelsePerioderWrapper from '../types/foreldelsePerioderTsType';
 
-import SarligGrunn from '../kodeverk/sarligGrunn';
 import Aktsomhet, { AKTSOMHET_REKKEFØLGE } from '../kodeverk/aktsomhet';
+import SarligGrunn from '../kodeverk/sarligGrunn';
 import VilkarResultat from '../kodeverk/vilkarResultat';
-import TilbakekrevingAktivitetTabell from './tilbakekrevingPeriodePaneler/TilbakekrevingAktivitetTabell';
+import DataForPeriode from '../types/dataForPeriodeTsType';
+import { DetaljertFeilutbetalingPeriode } from '../types/detaljerteFeilutbetalingsperioderTsType';
+import TilbakekrevingTimelineData from './splittePerioder/TilbakekrevingTimelineData';
 import ForeldetFormPanel from './tilbakekrevingPeriodePaneler/ForeldetFormPanel';
-import BelopetMottattIGodTroFormPanel, {
-  InitialValuesGodTroForm,
-} from './tilbakekrevingPeriodePaneler/godTro/BelopetMottattIGodTroFormPanel';
+import TilbakekrevingAktivitetTabell from './tilbakekrevingPeriodePaneler/TilbakekrevingAktivitetTabell';
 import AktsomhetFormPanel, {
   InitialValuesAktsomhetForm,
 } from './tilbakekrevingPeriodePaneler/aktsomhet/AktsomhetFormPanel';
-import TilbakekrevingTimelineData from './splittePerioder/TilbakekrevingTimelineData';
-import { DetaljertFeilutbetalingPeriode } from '../types/detaljerteFeilutbetalingsperioderTsType';
-import DataForPeriode from '../types/dataForPeriodeTsType';
+import BelopetMottattIGodTroFormPanel, {
+  InitialValuesGodTroForm,
+} from './tilbakekrevingPeriodePaneler/godTro/BelopetMottattIGodTroFormPanel';
 
-import styles from './tilbakekrevingPeriodeForm.less';
+import styles from './tilbakekrevingPeriodeForm.module.css';
 
 const minLength3 = minLength(3);
 const maxLength1500 = maxLength(1500);

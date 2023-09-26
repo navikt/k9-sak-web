@@ -1,11 +1,11 @@
+import classnames from 'classnames/bind';
 import React, { ReactElement, ReactNode } from 'react';
 import { FormattedMessage } from 'react-intl';
-import classnames from 'classnames/bind';
 
-import TableRow from './TableRow';
 import TableColumn from './TableColumn';
+import TableRow from './TableRow';
 
-import styles from './table.less';
+import styles from './table.module.css';
 
 const classNames = classnames.bind(styles);
 

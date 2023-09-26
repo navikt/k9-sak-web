@@ -1,9 +1,9 @@
-import React from 'react';
 import CheckboxFieldFormik from '@fpsak-frontend/form/src/CheckboxFieldFormik';
-import PropTypes from 'prop-types';
 import { CheckboxGruppe } from 'nav-frontend-skjema';
-import styles from './vedtakRedusertUtbetalingArsaker.less';
+import PropTypes from 'prop-types';
+import React from 'react';
 import redusertUtbetalingArsak from '../../kodeverk/redusertUtbetalingArsak';
+import styles from './vedtakRedusertUtbetalingArsaker.module.css';
 
 const VedtakRedusertUtbetalingArsaker = ({ intl, readOnly, values, erSendtInnUtenArsaker }) => {
   const ingenArsakErValgt = !Array.from(values.values()).includes(true);

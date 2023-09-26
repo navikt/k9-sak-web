@@ -1,0 +1,46 @@
+.image {
+  height: 20px;
+  margin-left: 10px;
+  width: 25px;
+}
+
+.noDocuments {
+  margin-top: 30px;
+}
+
+.borderTop {
+  border-top: 2px solid #3e3832;
+}
+
+.modiaLink {
+  align-items: center;
+  display: flex;
+  margin-left: auto;
+}
+
+.externalIcon {
+  margin-bottom: 0.25rem;
+  margin-left: 0.5rem;
+}
+
+.controlsContainer {
+  align-items: baseline;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1.875rem;
+}
+
+.documentAnchor {
+  color: var(--a-blue-500);
+  text-decoration: underline;
+}
+
+.documentAnchor:visited {
+  color: var(--a-purple-500);
+}
+
+.documentAnchorPlain {
+  color: inherit;
+  display: flex;
+  text-decoration: none;
+}

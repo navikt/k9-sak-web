@@ -1,25 +1,25 @@
-import React, { useMemo } from 'react';
-import { connect } from 'react-redux';
-import { createSelector } from 'reselect';
-import { formValueSelector, InjectedFormProps, reduxForm } from 'redux-form';
 import { Column, Row } from 'nav-frontend-grid';
-import { SkjemaGruppe } from 'nav-frontend-skjema';
-import { injectIntl, WrappedComponentProps } from 'react-intl';
-import Modal from 'nav-frontend-modal';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
+import Modal from 'nav-frontend-modal';
+import { SkjemaGruppe } from 'nav-frontend-skjema';
 import { Undertekst } from 'nav-frontend-typografi';
+import React, { useMemo } from 'react';
+import { WrappedComponentProps, injectIntl } from 'react-intl';
+import { connect } from 'react-redux';
+import { InjectedFormProps, formValueSelector, reduxForm } from 'redux-form';
+import { createSelector } from 'reselect';
 
-import BehandlingType, { erTilbakekrevingType } from '@fpsak-frontend/kodeverk/src/behandlingType';
-import behandlingResultatType from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
 import { SelectField, TextAreaField } from '@fpsak-frontend/form';
+import behandlingResultatType from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
+import BehandlingType, { erTilbakekrevingType } from '@fpsak-frontend/kodeverk/src/behandlingType';
+import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import { hasValidText, maxLength, required, safeJSONParse } from '@fpsak-frontend/utils';
 import { ArbeidsgiverOpplysningerPerId, Kodeverk, KodeverkMedNavn, Personopplysninger } from '@k9-sak-web/types';
-import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 
 import dokumentMalType from '@fpsak-frontend/kodeverk/src/dokumentMalType';
 import KlagePart from '@k9-sak-web/behandling-klage/src/types/klagePartTsType';
-import styles from './henleggBehandlingModal.less';
 import Brevmottakere from './Brevmottakere';
+import styles from './henleggBehandlingModal.module.css';
 
 const maxLength1500 = maxLength(1500);
 
@@ -35,24 +35,24 @@ const previewHenleggBehandlingDoc =
     behandlingType?: Kodeverk,
     valgtMottaker?: KlagePart,
   ) =>
-    (e: React.MouseEvent | React.KeyboardEvent): void => {
-      // TODO Hardkoda verdiar. Er dette eit kodeverk?
-      const data = erTilbakekrevingType(behandlingType)
-        ? {
+  (e: React.MouseEvent | React.KeyboardEvent): void => {
+    // TODO Hardkoda verdiar. Er dette eit kodeverk?
+    const data = erTilbakekrevingType(behandlingType)
+      ? {
           ytelseType,
           dokumentMal: 'HENLEG',
           fritekst,
           mottaker: 'Søker',
           behandlingId,
         }
-        : {
+      : {
           dokumentMal: dokumentMalType.HENLEGG_BEHANDLING_DOK,
           dokumentdata: { fritekst: fritekst || ' ' },
           overstyrtMottaker: valgtMottaker?.identifikasjon,
         };
-      previewHenleggBehandling(true, data);
-      e.preventDefault();
-    };
+    previewHenleggBehandling(true, data);
+    e.preventDefault();
+  };
 
 const showHenleggelseFritekst = (behandlingTypeKode: string, årsakKode?: string): boolean =>
   BehandlingType.TILBAKEKREVING_REVURDERING === behandlingTypeKode &&
@@ -90,7 +90,10 @@ const henleggArsakerPerBehandlingType = {
     behandlingResultatType.HENLAGT_SOKNAD_TRUKKET,
     behandlingResultatType.HENLAGT_FEILOPPRETTET,
   ],
-  [BehandlingType.UNNTAK]: [behandlingResultatType.HENLAGT_FEILOPPRETTET, behandlingResultatType.HENLAGT_SOKNAD_TRUKKET]
+  [BehandlingType.UNNTAK]: [
+    behandlingResultatType.HENLAGT_FEILOPPRETTET,
+    behandlingResultatType.HENLAGT_SOKNAD_TRUKKET,
+  ],
 };
 
 export const getHenleggArsaker = (

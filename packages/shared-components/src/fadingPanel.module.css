@@ -1,0 +1,16 @@
+.container {
+  animation-duration: 300ms;
+  animation-name: fadein;
+  animation-timing-function: ease-out;
+  padding: 40px;
+}
+
+@keyframes fadein {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}

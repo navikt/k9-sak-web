@@ -1,8 +1,8 @@
-import React, { useCallback, useState } from 'react';
-import { injectIntl, WrappedComponentProps } from 'react-intl';
 import { NedChevron, OppChevron } from 'nav-frontend-chevron';
+import React, { useCallback, useState } from 'react';
+import { WrappedComponentProps, injectIntl } from 'react-intl';
 
-import styles from './bubbleText.less';
+import styles from './bubbleText.module.css';
 
 const truncateText = (tekst: string, cutOffLength: number): string =>
   tekst.length > cutOffLength ? `${tekst.substring(0, cutOffLength - 3)}...` : tekst;

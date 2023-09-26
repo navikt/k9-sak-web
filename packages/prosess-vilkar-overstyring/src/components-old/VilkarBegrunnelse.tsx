@@ -5,7 +5,7 @@ import { TextAreaField } from '@fpsak-frontend/form';
 import { decodeHtmlEntity, hasValidText, maxLength, minLength, requiredIfNotPristine } from '@fpsak-frontend/utils';
 import { Aksjonspunkt } from '@k9-sak-web/types';
 
-import styles from './vilkarBegrunnelse.less';
+import styles from './vilkarBegrunnelse.module.css';
 
 const minLength3 = minLength(3);
 const maxLength1500 = maxLength(1500);

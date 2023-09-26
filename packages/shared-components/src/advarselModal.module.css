@@ -1,0 +1,29 @@
+.divider {
+  border-left: 1px solid #a0a0a0;
+  border-right: 0 solid #a0a0a0;
+  display: inline;
+  float: right;
+  height: 67px;
+  margin-left: 17px;
+  position: absolute;
+  top: 5px;
+}
+
+.image {
+  height: 35px;
+  margin-top: 10px;
+  width: 35px;
+}
+
+.modal {
+  width: 630px;
+}
+
+.text {
+  margin-left: 20px;
+  margin-top: 8px;
+}
+
+.submitButton {
+  margin-top: 30px;
+}

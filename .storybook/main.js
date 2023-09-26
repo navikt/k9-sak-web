@@ -60,33 +60,14 @@ module.exports = {
         include: PACKAGES_DIR,
       },
       {
-        test: /\.(le|c)ss$/,
+        test: /\\.css$/,
         use: [
-          {
-            loader: MiniCssExtractPlugin.loader,
-            options: {
-              publicPath: './',
-            },
-          },
           {
             loader: 'css-loader',
             options: {
               importLoaders: 1,
               modules: {
                 localIdentName: '[name]_[local]_[contenthash:base64:5]',
-              },
-            },
-          },
-          {
-            loader: 'less-loader',
-            options: {
-              lessOptions: {
-                modules: true,
-                localIdentName: '[name]_[local]_[contenthash:base64:5]',
-                modifyVars: {
-                  nodeModulesPath: '~',
-                  coreModulePath: '~',
-                },
               },
             },
           },
@@ -163,7 +144,7 @@ module.exports = {
         ignoreOrder: true,
       }),
     );
-    config.resolve.extensions.push('.ts', '.tsx', '.less');
+    config.resolve.extensions.push('.ts', '.tsx', '.css');
 
     // Return the altered config
     return config;

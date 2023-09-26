@@ -1,18 +1,18 @@
-import React, { useEffect } from 'react';
-import { FormattedMessage, useIntl } from 'react-intl';
-import moment from 'moment';
-import { BodyShort, Tabs, Tag } from '@navikt/ds-react';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
+import { FloatRight, VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { TimeLineButton, TimeLineDataContainer } from '@fpsak-frontend/tidslinje';
+import { calcDaysAndWeeksWithWeekends, DDMMYYYY_DATE_FORMAT, getKodeverknavnFn } from '@fpsak-frontend/utils';
+import { ArbeidsgiverOpplysningerPerId, KodeverkMedNavn } from '@k9-sak-web/types';
+import { BodyShort, Tabs, Tag } from '@navikt/ds-react';
+import moment from 'moment';
 import { Column, Row } from 'nav-frontend-grid';
 import { Element } from 'nav-frontend-typografi';
-import { VerticalSpacer, FloatRight } from '@fpsak-frontend/shared-components';
-import { calcDaysAndWeeksWithWeekends, DDMMYYYY_DATE_FORMAT, getKodeverknavnFn } from '@fpsak-frontend/utils';
-import { TimeLineButton, TimeLineDataContainer } from '@fpsak-frontend/tidslinje';
-import { KodeverkMedNavn, ArbeidsgiverOpplysningerPerId } from '@k9-sak-web/types';
+import React, { useEffect } from 'react';
+import { FormattedMessage, useIntl } from 'react-intl';
 
 import { createVisningsnavnForAndel, getAktivitet } from './TilkjentYteleseUtils';
 import { PeriodeMedId } from './TilkjentYtelse';
-import styles from './tilkjentYtelse.less';
+import styles from './tilkjentYtelse.module.css';
 import UtbetalingsgradDetaljer from './UtbetalingsgradDetaljer';
 
 interface OwnProps {

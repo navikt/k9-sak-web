@@ -1,7 +1,7 @@
 import { FlexColumn } from '@fpsak-frontend/shared-components';
 import { Tag } from '@navikt/ds-react';
 import React from 'react';
-import styles from './tagContainer.less';
+import styles from './tagContainer.module.css';
 
 interface Props {
   tagVariant: 'warning' | 'error' | 'info' | 'success';

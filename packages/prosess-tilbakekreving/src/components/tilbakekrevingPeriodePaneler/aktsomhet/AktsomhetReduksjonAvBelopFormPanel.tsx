@@ -1,15 +1,15 @@
-import React from 'react';
-import { FormattedMessage } from 'react-intl';
 import { Column, Row } from 'nav-frontend-grid';
 import { Normaltekst, Undertekst } from 'nav-frontend-typografi';
+import React from 'react';
+import { FormattedMessage } from 'react-intl';
 
+import { DecimalField, InputField, RadioGroupField, RadioOption, SelectField } from '@fpsak-frontend/form';
 import { ArrowBox, FlexColumn, FlexRow, VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { InputField, RadioGroupField, RadioOption, SelectField, DecimalField } from '@fpsak-frontend/form';
-import { formatCurrencyNoKr, minValue, maxValue, required } from '@fpsak-frontend/utils';
+import { formatCurrencyNoKr, maxValue, minValue, required } from '@fpsak-frontend/utils';
 
 import Aktsomhet from '../../../kodeverk/aktsomhet';
 
-import styles from './aktsomhetReduksjonAvBelopFormPanel.less';
+import styles from './aktsomhetReduksjonAvBelopFormPanel.module.css';
 
 const minValue1 = minValue(0.0);
 const maxValue100 = maxValue(99.99);
