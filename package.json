@@ -180,7 +180,8 @@
     "react-dom": "17.0.2",
     "react-test-renderer": "18.2.0",
     "parse-url": "8.1.0",
-    "@types/react": "17"
+    "@types/react": "17",
+    "@editorjs/editorjs": "2.27.2"
   },
   "msw": {
     "workerDirectory": "public"
