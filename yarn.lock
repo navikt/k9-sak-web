@@ -4495,7 +4495,7 @@ __metadata:
     "@k9-sak-web/rest-api": 1.0.0
     "@k9-sak-web/rest-api-hooks": 1.0.0
     "@k9-sak-web/types": 1.0.0
-    "@navikt/ft-fakta-beregning": 4.3.3
+    "@navikt/ft-fakta-beregning": 5.0.2
     "@navikt/ft-prosess-beregningsgrunnlag": 6.3.6
     axios-mock-adapter: 1.22.0
     enzyme: 3.11.0
@@ -4606,7 +4606,7 @@ __metadata:
     "@k9-sak-web/rest-api": 1.0.0
     "@k9-sak-web/rest-api-hooks": 1.0.0
     "@k9-sak-web/types": 1.0.0
-    "@navikt/ft-fakta-beregning": 4.3.3
+    "@navikt/ft-fakta-beregning": 5.0.2
     "@navikt/ft-fakta-fordel-beregningsgrunnlag": 7.3.6
     "@navikt/ft-prosess-beregningsgrunnlag": 6.3.6
     axios-mock-adapter: 1.22.0
@@ -4655,7 +4655,7 @@ __metadata:
     "@k9-sak-web/rest-api-hooks": 1.0.0
     "@k9-sak-web/sak-app": 1.0.0
     "@k9-sak-web/types": 1.0.0
-    "@navikt/ft-fakta-beregning": 4.3.3
+    "@navikt/ft-fakta-beregning": 5.0.2
     "@navikt/ft-fakta-fordel-beregningsgrunnlag": 7.3.6
     "@navikt/ft-prosess-beregningsgrunnlag": 6.3.6
     axios: 0.27.2
@@ -4703,7 +4703,7 @@ __metadata:
     "@k9-sak-web/rest-api-hooks": 1.0.0
     "@k9-sak-web/sak-app": 1.0.0
     "@k9-sak-web/types": 1.0.0
-    "@navikt/ft-fakta-beregning": 4.3.3
+    "@navikt/ft-fakta-beregning": 5.0.2
     "@navikt/ft-fakta-fordel-beregningsgrunnlag": 7.3.6
     "@navikt/ft-prosess-beregningsgrunnlag": 6.3.6
     axios: 0.27.2
@@ -4753,7 +4753,7 @@ __metadata:
     "@k9-sak-web/rest-api-hooks": 1.0.0
     "@k9-sak-web/sak-app": 1.0.0
     "@k9-sak-web/types": 1.0.0
-    "@navikt/ft-fakta-beregning": 4.3.3
+    "@navikt/ft-fakta-beregning": 5.0.2
     "@navikt/ft-fakta-fordel-beregningsgrunnlag": 7.3.6
     "@navikt/ft-prosess-beregningsgrunnlag": 6.3.6
     axios: 0.27.2
@@ -5372,7 +5372,7 @@ __metadata:
     "@k9-sak-web/sak-soknadsperiodestripe": 1.0.0
     "@k9-sak-web/types": 1.0.0
     "@navikt/ds-react": 5.5.0
-    "@navikt/ft-fakta-beregning": 4.3.3
+    "@navikt/ft-fakta-beregning": 5.0.2
     "@navikt/ft-form-hooks": 4.2.6
     "@navikt/ft-plattform-komponenter": 2.3.2
     "@navikt/ft-prosess-beregningsgrunnlag": 6.3.6
@@ -5744,19 +5744,19 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@navikt/ft-fakta-beregning@npm:4.3.3":
-  version: 4.3.3
-  resolution: "@navikt/ft-fakta-beregning@npm:4.3.3::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fft-fakta-beregning%2F4.3.3%2F6ddf0a7de2d642862db46974230baa7f1cae1a62"
+"@navikt/ft-fakta-beregning@npm:5.0.2":
+  version: 5.0.2
+  resolution: "@navikt/ft-fakta-beregning@npm:5.0.2::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fft-fakta-beregning%2F5.0.2%2Fc6882a70f8d5b1f2d109d354335732aed1be3bec"
   dependencies:
     "@navikt/aksel-icons": 5.5.0
     "@navikt/ds-css": 5.5.0
     "@navikt/ds-react": 5.5.0
-    "@navikt/ft-form-hooks": ^4.2.3
+    "@navikt/ft-form-hooks": ^4.2.6
     "@navikt/ft-form-validators": ^2.1.2
     "@navikt/ft-kodeverk": ^2.2.2
     "@navikt/ft-konstanter": ^2.1.2
     "@navikt/ft-types": ^2.2.2
-    "@navikt/ft-ui-komponenter": ^2.1.3
+    "@navikt/ft-ui-komponenter": ^2.1.6
     "@navikt/ft-utils": ^2.1.2
     core-js: 3.32.2
     dayjs: 1.11.9
@@ -5783,7 +5783,7 @@ __metadata:
     react-dom: 18.2.0
     react-hook-form: 7.43.9
     react-intl: 6.4.2
-  checksum: 0ac3b5c7cffc80be364e66ae4e1a5092554f772bf7d5e3fa0b8237e935f60b660c3d23d107206a4c7dfa8edc3dcfec3d087249d35c662637bfd71930a7437e3b
+  checksum: 164aa8b5dadea0bdc16351324f78a308f54573a1696d7ec2464b126c6e394bbb487cfa2693d7f26a02963270d89c7429e9892636d9ad5843b7a8eea84fbaa167
   languageName: node
   linkType: hard
 
@@ -5827,7 +5827,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@navikt/ft-form-hooks@npm:4.2.6, @navikt/ft-form-hooks@npm:^4.2.3, @navikt/ft-form-hooks@npm:^4.2.6":
+"@navikt/ft-form-hooks@npm:4.2.6, @navikt/ft-form-hooks@npm:^4.2.6":
   version: 4.2.6
   resolution: "@navikt/ft-form-hooks@npm:4.2.6::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fft-form-hooks%2F4.2.6%2F7269c0e153485715a594a1f001b63957b853f78c"
   dependencies:
@@ -6001,7 +6001,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@navikt/ft-ui-komponenter@npm:2.1.6, @navikt/ft-ui-komponenter@npm:^2.1.3, @navikt/ft-ui-komponenter@npm:^2.1.6":
+"@navikt/ft-ui-komponenter@npm:2.1.6, @navikt/ft-ui-komponenter@npm:^2.1.6":
   version: 2.1.6
   resolution: "@navikt/ft-ui-komponenter@npm:2.1.6::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fft-ui-komponenter%2F2.1.6%2F403892386d126030f6ebc578d461f6f39b2d8225"
   dependencies:
