@@ -10,3 +10,7 @@
   display: flex;
   margin-left: -32px;
 }
+
+.warningIcon {
+  margin-left: 1rem;
+}

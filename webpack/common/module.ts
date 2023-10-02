@@ -116,6 +116,22 @@ const sourceMaps = {
   include: [`${NODE_MODULES}/@navikt`],
 };
 
+const esModulesRules = {
+  test: /\.m?js/,
+  resolve: {
+    fullySpecified: false,
+  },
+};
+
 export default {
-  rules: [sourceMaps, babelRules, lessLocalRules, lessExternalRules, assetRules, svgLocalRules, svgExternalRules],
+  rules: [
+    sourceMaps,
+    babelRules,
+    lessLocalRules,
+    lessExternalRules,
+    assetRules,
+    svgLocalRules,
+    svgExternalRules,
+    esModulesRules,
+  ],
 };

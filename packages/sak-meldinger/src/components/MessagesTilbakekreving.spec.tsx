@@ -4,7 +4,7 @@ import sinon from 'sinon';
 import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
 import { KodeverkMedNavn } from '@k9-sak-web/types';
 
-import { MessagesImpl as Messages } from './Messages';
+import { MessagesTilbakekrevingImpl as MessagesTilbakekreving } from './MessagesTilbakekreving';
 import shallowWithIntl, { intlMock } from '../../i18n/index';
 
 const mockProps = {
@@ -19,7 +19,7 @@ const mockProps = {
   ...reduxFormPropsMock,
 };
 
-describe('<Messages>', () => {
+describe('<MessagesTilbakekreving>', () => {
   const sprakkode = {
     kode: 'en',
     kodeverk: 'Engelsk',
@@ -67,7 +67,7 @@ describe('<Messages>', () => {
 
   it('skal støtte brevmaler som array', () => {
     const wrapper = shallowWithIntl(
-      <Messages
+      <MessagesTilbakekreving
         {...mockProps}
         templates={[
           { kode: 'INNHEN', navn: 'Innhent dokumentasjon', tilgjengelig: true },
@@ -93,7 +93,7 @@ describe('<Messages>', () => {
 
   it('skal vise to select-bokser', () => {
     const wrapper = shallowWithIntl(
-      <Messages
+      <MessagesTilbakekreving
         {...mockProps}
         templates={templates}
         sprakKode={sprakkode}
@@ -121,7 +121,7 @@ describe('<Messages>', () => {
   it('skal vise forhåndvisningslenke når fritekst er gyldig', () => {
     const previewEventCallback = sinon.spy();
     const wrapper = shallowWithIntl(
-      <Messages
+      <MessagesTilbakekreving
         {...mockProps}
         templates={templates}
         sprakKode={sprakkode}
@@ -148,7 +148,7 @@ describe('<Messages>', () => {
   it('skal vise tre select-bokser når varsel om revurdering', () => {
     const previewEventCallback = sinon.spy();
     const wrapper = shallowWithIntl(
-      <Messages
+      <MessagesTilbakekreving
         {...mockProps}
         templates={templates}
         sprakKode={sprakkode}

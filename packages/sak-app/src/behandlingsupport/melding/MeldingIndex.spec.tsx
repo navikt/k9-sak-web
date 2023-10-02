@@ -44,7 +44,7 @@ describe('<MeldingIndex>', () => {
     brevmalkode: dokumentMalType.INNHENT_DOK,
     fritekst: null,
     arsakskode: undefined,
-    fritekstbrev: null,
+    fritekstbrev: undefined,
   };
 
   const fagsak = { saksnummer: '123456', person: { aktørId: '123' } };
@@ -68,10 +68,15 @@ describe('<MeldingIndex>', () => {
     { id: '123456789', type: 'ORGNR' },
   ];
   const templates = {
-    [dokumentMalType.INNHENT_DOK]: { navn: 'Innhent dokumentasjon', mottakere: aktorer },
-    [dokumentMalType.REVURDERING_DOK]: { navn: 'Revurdering Dok', mottakere: aktorer },
-    [dokumentMalType.AVSLAG]: { navn: 'Avslag', mottakere: aktorer },
-    [dokumentMalType.FORLENGET_DOK]: { navn: 'Forlenget', mottakere: aktorer },
+    [dokumentMalType.INNHENT_DOK]: {
+      navn: 'Innhent dokumentasjon',
+      mottakere: aktorer,
+      linker: [],
+      støtterFritekst: true,
+    },
+    [dokumentMalType.REVURDERING_DOK]: { navn: 'Revurdering Dok', mottakere: aktorer, linker: [] },
+    [dokumentMalType.AVSLAG]: { navn: 'Avslag', mottakere: aktorer, linker: [] },
+    [dokumentMalType.FORLENGET_DOK]: { navn: 'Forlenget', mottakere: aktorer, linker: [] },
   };
 
   const assignMock = vi.fn();
@@ -136,53 +141,6 @@ describe('<MeldingIndex>', () => {
     expect(reqData[0].params.dokumentdata.fritekst).toEqual(' ');
   });
 
-  it('skal lukke av modal', async () => {
-    requestApi.mock(K9sakApiKeys.KODEVERK, kodeverk);
-    requestApi.mock(K9sakApiKeys.HAR_APENT_KONTROLLER_REVURDERING_AP, true);
-    requestApi.mock(K9sakApiKeys.BREVMALER, templates);
-    requestApi.mock(K9sakApiKeys.SUBMIT_MESSAGE);
-    requestApi.mock(K9sakApiKeys.FEATURE_TOGGLE, [{ TYPE_MEDISINSKE_OPPLYSNINGER_BREV: true }]);
-
-    render(
-      <Provider store={createStore(combineReducers({ form: formReducer }))}>
-        <MockForm>
-          <MemoryRouter>
-            <MeldingIndex
-              fagsak={fagsak as Fagsak}
-              alleBehandlinger={alleBehandlinger as BehandlingAppKontekst[]}
-              behandlingId={1}
-              behandlingVersjon={123}
-            />
-          </MemoryRouter>
-        </MockForm>
-      </Provider>,
-    );
-
-    const melding = {
-      arsakskode: 'kode',
-    };
-
-    expect(await screen.queryByTestId('MessagesModal')).not.toBeInTheDocument();
-
-    userEvent.selectOptions(screen.getByLabelText('Årsak'), melding.arsakskode);
-
-    await act(async () => {
-      // Simuler klikk på Send brev knapp
-      userEvent.click(screen.getByRole('button', { name: 'Send brev' }));
-    });
-
-    expect(await screen.queryByTestId('MessagesModal')).toBeInTheDocument();
-    expect(screen.queryByText('Brevet er bestilt')).toBeInTheDocument();
-
-    await act(async () => {
-      // Trykk på OK knapp for å lukke modalen
-      userEvent.click(screen.getByText('OK'));
-    });
-
-    expect(await screen.queryByTestId('MessagesModal')).not.toBeInTheDocument();
-    expect(screen.queryByText('Brevet er bestilt')).not.toBeInTheDocument();
-  });
-
   it('skal sende melding', async () => {
     requestApi.mock(K9sakApiKeys.KODEVERK, kodeverk);
     requestApi.mock(K9sakApiKeys.HAR_APENT_KONTROLLER_REVURDERING_AP, true);
@@ -206,13 +164,11 @@ describe('<MeldingIndex>', () => {
     );
 
     const melding = {
-      arsakskode: 'kode',
       overstyrtMottaker: { id: '00000000', type: 'AKTØRID' },
       brevmalkode: dokumentMalType.INNHENT_DOK,
       fritekst: 'Dette er meldingen',
     };
 
-    userEvent.selectOptions(await screen.getByLabelText('Årsak'), melding.arsakskode);
     userEvent.selectOptions(await screen.getByLabelText('Mal'), melding.brevmalkode);
     userEvent.selectOptions(await screen.getByLabelText('Mottaker'), JSON.stringify(melding.overstyrtMottaker));
     userEvent.type(await screen.getByLabelText('Fritekst'), melding.fritekst);
