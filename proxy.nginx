@@ -24,8 +24,8 @@ server {
   server_name  "${APP_HOSTNAME}";
 
   # Proxy headers. Will be overwritten if you set them in blocks.
-  proxy_buffers 16 16k;
-  proxy_buffer_size 16k;
+  proxy_buffers 16 32k;
+  proxy_buffer_size 32k;
   proxy_pass_header       Nav-Callid;
   proxy_set_header        Referer $http_referer;
   proxy_set_header        X-Forwarded-For $proxy_add_x_forwarded_for;
@@ -34,7 +34,7 @@ server {
   # complete disable cache and send some debug headers
   add_header              X-Cache-Status $upstream_cache_status;
   add_header              X-Application-Id "${APP_NAME}:${APP_VERSION}, pod=${APP_HOSTNAME}";
-  add_header              Content-Security-Policy "default-src 'self'; img-src 'self' data:; font-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline'; connect-src 'self' https://sentry.gc.nav.no";
+  add_header              Content-Security-Policy "default-src 'self'; img-src 'self' data:; font-src 'self' https://cdn.nav.no data:; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline'; connect-src 'self' https://sentry.gc.nav.no";
   add_header              X-Content-Type-Options "nosniff";
   add_header              X-XSS-Protection "1;mode=block";
   add_header              Strict-Transport-Security "max-age=31536000";
@@ -213,6 +213,7 @@ server {
     proxy_ssl_server_name on;
     proxy_pass "${ENDRINGSLOGG_URL}";
     proxy_intercept_errors on;
+    proxy_http_version 1.1;
     error_page 401 = @401_json;
     error_page 403 = @403_json;
     error_page 404 = @404_json;
@@ -226,7 +227,7 @@ server {
 
   location @401_json {
     default_type application/json;
-    add_header Location /k9/sak/resource/login always;
+    add_header Location /k9/sak/resource/login?original=$request_uri always;
     return 401 '{"feilmelding":"Bruker ikke innlogget","type":"MANGLER_TILGANG_FEIL"}';
   }
 
@@ -254,7 +255,7 @@ server {
 	sendfile                on;
 
 	add_header              X-Application-Id "${APP_NAME}:${APP_VERSION}, pod=${APP_HOSTNAME}";
-  add_header              Content-Security-Policy "default-src 'self'; img-src 'self' data:; font-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline'; connect-src 'self' https://sentry.gc.nav.no";
+  add_header              Content-Security-Policy "default-src 'self'; img-src 'self' data:; font-src 'self' https://cdn.nav.no data:; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline'; connect-src 'self' https://sentry.gc.nav.no";
 	add_header              X-Content-Type-Options "nosniff";
 	add_header              X-XSS-Protection "1;mode=block";
 	add_header              Strict-Transport-Security "max-age=31536000";

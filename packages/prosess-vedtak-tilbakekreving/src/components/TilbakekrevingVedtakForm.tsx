@@ -1,27 +1,27 @@
-import React from 'react';
-import { connect } from 'react-redux';
-import { FormattedMessage, injectIntl, WrappedComponentProps } from 'react-intl';
 import classNames from 'classnames';
-import { createSelector } from 'reselect';
+import React from 'react';
+import { FormattedMessage, injectIntl, WrappedComponentProps } from 'react-intl';
+import { connect } from 'react-redux';
 import { InjectedFormProps } from 'redux-form';
+import { createSelector } from 'reselect';
 
-import { omit } from '@fpsak-frontend/utils';
-import { FlexColumn, FlexContainer, FlexRow, Image, VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { ProsessStegSubmitButton } from '@k9-sak-web/prosess-felles';
 import {
   behandlingForm,
-  isBehandlingFormSubmitting,
-  isBehandlingFormDirty,
-  hasBehandlingFormErrorsOfType,
   getBehandlingFormValues,
+  hasBehandlingFormErrorsOfType,
+  isBehandlingFormDirty,
+  isBehandlingFormSubmitting,
 } from '@fpsak-frontend/form';
+import { FlexColumn, FlexContainer, FlexRow, Image, VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { omit } from '@fpsak-frontend/utils';
+import { ProsessStegSubmitButton } from '@k9-sak-web/prosess-felles';
 
 import advarselIcon from '@fpsak-frontend/assets/images/advarsel_ny.svg';
 import underavsnittType from '../kodeverk/avsnittType';
-import TilbakekrevingEditerVedtaksbrevPanel from './brev/TilbakekrevingEditerVedtaksbrevPanel';
 import VedtaksbrevAvsnitt from '../types/vedtaksbrevAvsnittTsType';
+import TilbakekrevingEditerVedtaksbrevPanel from './brev/TilbakekrevingEditerVedtaksbrevPanel';
 
-import styles from './tilbakekrevingVedtakForm.less';
+import styles from './tilbakekrevingVedtakForm.module.css';
 
 const formName = 'TilbakekrevingVedtakForm';
 

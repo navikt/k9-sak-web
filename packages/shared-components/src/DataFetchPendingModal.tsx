@@ -1,11 +1,11 @@
+import { Column, Row } from 'nav-frontend-grid';
+import Modal from 'nav-frontend-modal';
+import { Element } from 'nav-frontend-typografi';
 import React, { Component } from 'react';
 import { FormattedMessage } from 'react-intl';
-import { Column, Row } from 'nav-frontend-grid';
-import NavFrontendSpinner from 'nav-frontend-spinner';
-import { Element } from 'nav-frontend-typografi';
-import Modal from 'nav-frontend-modal';
 
-import styles from './dataFetchPendingModal.less';
+import { Loader } from '@navikt/ds-react';
+import styles from './dataFetchPendingModal.module.css';
 
 // Skal ikke være mulig å lukke modal
 const doNothing = () => undefined;
@@ -67,7 +67,7 @@ export class DataFetchPendingModal extends Component<OwnProps, OwnState> {
       >
         <Row>
           <Column xs="2">
-            <NavFrontendSpinner type="L" />
+            <Loader className="loader" variant="neutral" size="xlarge" title="venter..." />
             <div className={styles.divider} />
           </Column>
           <Column xs="10">

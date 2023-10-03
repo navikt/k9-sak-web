@@ -15,6 +15,7 @@ export enum AnkeBehandlingApiKeys {
   UPDATE_ON_HOLD = 'UPDATE_ON_HOLD',
   SAVE_AKSJONSPUNKT = 'SAVE_AKSJONSPUNKT',
   PREVIEW_MESSAGE = 'PREVIEW_MESSAGE',
+  HENT_FRITEKSTBREV_HTML = 'HENT_FRITEKSTBREV_HTML',
   SAVE_ANKE_VURDERING = 'SAVE_ANKE_VURDERING',
   SAVE_REOPEN_ANKE_VURDERING = 'SAVE_REOPEN_ANKE_VURDERING',
 }
@@ -43,6 +44,7 @@ const endpoints = new RestApiConfigBuilder()
 
   /* K9FORMIDLING */
   .withPost('/k9/formidling/api/brev/forhaandsvis', AnkeBehandlingApiKeys.PREVIEW_MESSAGE, { isResponseBlob: true })
+  .withPost('/k9/formidling/api/brev/html', AnkeBehandlingApiKeys.HENT_FRITEKSTBREV_HTML)
   .build();
 
 export const requestAnkeApi = createRequestApi(endpoints);

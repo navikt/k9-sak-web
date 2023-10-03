@@ -1,0 +1,23 @@
+.noedvendighet-oversikt {
+  width: 25rem;
+}
+
+.noedvendighet-oversikt .heading {
+  margin: 1.3125rem 0 1.5rem 0.9375rem;
+}
+
+.noedvendighet-oversikt .marginLeft {
+  margin-left: 0.9375rem;
+}
+
+.noedvendighet-oversikt .periodColumns {
+  display: flex;
+}
+
+.noedvendighet-oversikt .periodColumns > div {
+  margin-right: 1rem;
+}
+
+.noedvendighet-oversikt .periodColumns > div:last-of-type {
+  margin-left: 1.7rem;
+}

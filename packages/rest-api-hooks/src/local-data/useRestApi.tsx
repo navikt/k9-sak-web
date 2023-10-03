@@ -26,20 +26,20 @@ const defaultOptions = {
  * For mocking i unit-test
  */
 export const getUseRestApiMock = (requestApi: AbstractRequestApi) =>
-  function useRestApi<T>(key: string, params?: any, options: Options = defaultOptions): RestApiData<T> {
+  (function useRestApi<T>(key: string, params?: any, options: Options = defaultOptions): RestApiData<T> {
     return {
       state: options.suspendRequest ? RestApiState.NOT_STARTED : RestApiState.SUCCESS,
       error: undefined,
       data: options.suspendRequest ? undefined : requestApi.startRequest(key, params),
     };
-  };
+  });
 
 /**
  * Hook som utfører et restkall ved mount. En kan i tillegg legge ved en dependencies-liste som kan trigge ny henting når data
  * blir oppdatert. Hook returnerer rest-kallets status/resultat/feil
  */
 const getUseRestApi = (requestApi: AbstractRequestApi) =>
-  function useRestApi<T>(key: string, params?: any, options?: Options): RestApiData<T> {
+  (function useRestApi<T>(key: string, params?: any, options?: Options): RestApiData<T> {
     const allOptions = { ...defaultOptions, ...options };
 
     const [data, setData] = useState({
@@ -84,6 +84,6 @@ const getUseRestApi = (requestApi: AbstractRequestApi) =>
     }, [...allOptions.updateTriggers]);
 
     return data;
-  };
+  });
 
 export default getUseRestApi;

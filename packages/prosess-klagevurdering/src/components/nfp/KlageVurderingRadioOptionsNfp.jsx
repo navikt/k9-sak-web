@@ -1,15 +1,15 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import { injectIntl } from 'react-intl';
-import PropTypes from 'prop-types';
 
-import klageVurderingType from '@fpsak-frontend/kodeverk/src/klageVurdering';
-import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
-import { required } from '@fpsak-frontend/utils';
-import { ArrowBox, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { RadioGroupField, RadioOption, SelectField } from '@fpsak-frontend/form';
+import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
+import klageVurderingType from '@fpsak-frontend/kodeverk/src/klageVurdering';
 import klageVurderingOmgjoerType from '@fpsak-frontend/kodeverk/src/klageVurderingOmgjoer';
+import { ArrowBox, VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { required } from '@fpsak-frontend/utils';
 
-import styles from './klageVurderingRadioOptionsNfp.less';
+import styles from './klageVurderingRadioOptionsNfp.module.css';
 
 export const TILBAKEKREVING_HJEMMEL = '22-15';
 
@@ -19,15 +19,11 @@ const utledHjemler = fagsak => {
       return [
         { kode: '9-2', navn: '§ 9-2' },
         { kode: '9-3', navn: '§ 9-3' },
-        // { kode: '9-5/9-6', navn: '9-5/9-6' },
-        // { kode: '9-8/9-9', navn: '9-8/9-9' },
         { kode: '9-10', navn: '§ 9-10' },
         { kode: '9-11', navn: '§ 9-11' },
-        // { kode: '9-13', navn: '9-13' },
-        // { kode: '9-14', navn: '9-14' },
         { kode: '9-15', navn: '§ 9-15' },
+        { kode: '9-16', navn: '§ 9-16' },
         { kode: '22-13', navn: '§ 22-13' },
-        { kode: '9', navn: 'Kapittel 9' },
       ];
 
     case fagsakYtelseType.OMSORGSPENGER:
@@ -41,7 +37,6 @@ const utledHjemler = fagsak => {
         { kode: '9-8', navn: '§ 9-8' },
         { kode: '9-9', navn: '§ 9-9' },
         { kode: '22-13', navn: '§ 22-13' },
-        { kode: '9', navn: 'Kapittel 9' },
       ];
 
     case fagsakYtelseType.PLEIEPENGER_SLUTTFASE:
@@ -50,7 +45,6 @@ const utledHjemler = fagsak => {
         { kode: '9-3', navn: '§ 9-3' },
         { kode: '9-13', navn: '§ 9-13' },
         { kode: '22-13', navn: '§ 22-13' },
-        { kode: '9', navn: 'Kapittel 9' },
       ];
 
     default:

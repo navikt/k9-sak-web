@@ -6,8 +6,8 @@ import BehandlingPerioderårsakMedVilkår, {
   DokumenterTilBehandling,
 } from '@k9-sak-web/types/src/behandlingPerioderarsakMedVilkar';
 import { PeriodStatus, Tidslinjeskala } from '@k9-sak-web/types/src/tidslinje';
-import { dateStringSorter } from '@navikt/k9-date-utils';
-import { Period } from '@navikt/k9-period-utils';
+import { dateStringSorter } from '@navikt/k9-fe-date-utils';
+import { Period } from '@navikt/k9-fe-period-utils';
 import dayjs, { Dayjs } from 'dayjs';
 import { Normaltekst } from 'nav-frontend-typografi';
 import React, { useEffect, useState } from 'react';
@@ -15,7 +15,7 @@ import { useIntl } from 'react-intl';
 import CheckIcon from './icons/CheckIcon';
 import RejectedIcon from './icons/RejectedIcon';
 import SaksbehandlerIcon from './icons/SaksbehandlerIcon';
-import styles from './soknadsperioderComponent.less';
+import styles from './soknadsperioderComponent.module.css';
 import Periode from './types/Periode';
 
 const getPerioderMedÅrsak = (årsak: string, behandlingPerioderårsakMedVilkår: BehandlingPerioderårsakMedVilkår) => {

@@ -1,13 +1,14 @@
-import CheckboxFieldFormik from '@fpsak-frontend/form/src/CheckboxFieldFormik';
+import { CheckboxGroupFormik } from '@fpsak-frontend/form';
 import { Kodeverk } from '@k9-sak-web/types';
 import { Alert, Heading } from '@navikt/ds-react';
 import { useFormikContext } from 'formik';
 import React from 'react';
 import { IntlShape } from 'react-intl';
 import VedtakFritekstPanel from '../VedtakFritekstPanel';
-import styles from './informasjonsbehovAutomatiskVedtaksbrev.less';
+import InformasjonsbehovKode from './InformasjonsbehovKode';
+import styles from './informasjonsbehovAutomatiskVedtaksbrev.module.css';
 
-interface InformasjonsbehovVedtaksbrev {
+export interface InformasjonsbehovVedtaksbrev {
   informasjonsbehov: { kode: string; beskrivelse: string; type: string }[];
   mangler: string[];
 }
@@ -32,6 +33,29 @@ const InformasjonsbehovAutomatiskVedtaksbrev: React.FC<Props> = ({
   const aktiverteInformasjonsbehov =
     (informasjonsbehovVedtaksbrev?.informasjonsbehov || []).filter(({ type }) => type === 'FRITEKST') ?? [];
 
+  if (aktiverteInformasjonsbehov.length === 0) {
+    return null;
+  }
+
+  const harBegrunnelse = aktiverteInformasjonsbehov.some(behov => values[behov.kode]?.length > 0);
+
+  const getAksjonspunktInfoboks = () => {
+    let tekst = '';
+    if (informasjonsbehovVedtaksbrev.mangler.includes(InformasjonsbehovKode.BEREGNING_SKJONNSMESSIG)) {
+      tekst = intl.formatMessage({ id: 'InformasjonsbehovAutomatiskVedtaksbrev.SupplerMedFritekstSkjønnsmessig' });
+    } else if (informasjonsbehovVedtaksbrev.mangler.includes(InformasjonsbehovKode.REVURDERING_ENDRING)) {
+      tekst = intl.formatMessage({ id: 'InformasjonsbehovAutomatiskVedtaksbrev.SupplerMedFritekstEndring' });
+    } else {
+      return null;
+    }
+
+    return (
+      <Alert className={styles.alert} variant="warning" size="small">
+        {tekst}
+      </Alert>
+    );
+  };
+
   return (
     <>
       {!readOnly && (
@@ -39,9 +63,7 @@ const InformasjonsbehovAutomatiskVedtaksbrev: React.FC<Props> = ({
           <Heading className={styles.heading} level="3" size="small">
             {intl.formatMessage({ id: 'InformasjonsbehovAutomatiskVedtaksbrev.Fritekstbeskrivelse' })}
           </Heading>
-          <Alert className={styles.alert} variant="warning" size="small">
-            {intl.formatMessage({ id: 'InformasjonsbehovAutomatiskVedtaksbrev.SupplerMedFritekst' })}
-          </Alert>
+          {getAksjonspunktInfoboks()}
         </>
       )}
       <div className={readOnly ? '' : styles.textAreaContainer}>
@@ -58,16 +80,24 @@ const InformasjonsbehovAutomatiskVedtaksbrev: React.FC<Props> = ({
         ))}
         {!readOnly && (
           <div className={styles.checkbox}>
-            <CheckboxFieldFormik
-              label={{ id: 'InformasjonsbehovAutomatiskVedtaksbrev.IkkeRelevantMedFritekst' }}
+            <CheckboxGroupFormik
               name="ikkeRelevantMedFritekst"
-              validate={value => {
-                const harBegrunnelse = aktiverteInformasjonsbehov.some(behov => values[behov.kode]?.length > 0);
-                if (!harBegrunnelse && !value) {
-                  return 'Du må bekrefte at det ikke er relevant med fritekstbeskrivelse i brevet';
-                }
-                return null;
-              }}
+              legend={intl.formatMessage({ id: 'InformasjonsbehovAutomatiskVedtaksbrev.ErDetRelevantMedFritekst' })}
+              hideLegend
+              checkboxes={[
+                {
+                  value: 'ikkeRelevantMedFritekst',
+                  label: intl.formatMessage({ id: 'InformasjonsbehovAutomatiskVedtaksbrev.IkkeRelevantMedFritekst' }),
+                },
+              ]}
+              validate={[
+                value => {
+                  if (!harBegrunnelse && (!value || value.length === 0)) {
+                    return [intl.formatMessage({ id: 'ValidationMessage.BekreftIkkeRelevantFritekst' })];
+                  }
+                  return null;
+                },
+              ]}
             />
           </div>
         )}

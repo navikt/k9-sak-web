@@ -1,11 +1,11 @@
+import KombinertBarnOgRammevedtak from '@k9-sak-web/fakta-barn-oms/src/dto/KombinertBarnOgRammevedtak';
+import moment from 'moment';
+import Panel from 'nav-frontend-paneler';
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
-import Panel from 'nav-frontend-paneler';
-import moment from 'moment';
-import KombinertBarnOgRammevedtak from '@k9-sak-web/fakta-barn-oms/src/dto/KombinertBarnOgRammevedtak';
-import styles from './barnVisning.less';
-import BarnRammevedtakVisning from './BarnRammevedtakVisning';
 import BarnInformasjonVisning from './BarnInformasjonVisning';
+import BarnRammevedtakVisning from './BarnRammevedtakVisning';
+import styles from './barnVisning.module.css';
 
 interface BarnInputProps {
   barnet: KombinertBarnOgRammevedtak;

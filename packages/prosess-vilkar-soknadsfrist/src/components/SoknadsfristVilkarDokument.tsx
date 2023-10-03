@@ -1,28 +1,29 @@
-import React, { useMemo, useCallback } from 'react';
-import moment from 'moment';
-import { FormattedMessage, useIntl } from 'react-intl';
 import { DatepickerField, RadioGroupField, RadioOption, TextAreaField } from '@fpsak-frontend/form';
 import {
-  hasValidText,
-  hasValidDate,
   dateAfterOrEqual,
   dateBeforeOrEqual,
+  hasValidDate,
+  hasValidText,
   maxLength,
   minLength,
-  requiredIfNotPristine,
   required,
+  requiredIfNotPristine,
 } from '@fpsak-frontend/utils';
+import moment from 'moment';
+import React, { useCallback, useMemo } from 'react';
+import { FormattedMessage, useIntl } from 'react-intl';
 
-import { DokumentStatus } from '@k9-sak-web/types';
-import { VerticalSpacer, FlexContainer, FlexRow, FlexColumn, Image } from '@fpsak-frontend/shared-components';
 import avslattImage from '@fpsak-frontend/assets/images/avslaatt.svg';
 import innvilgetImage from '@fpsak-frontend/assets/images/check.svg';
+import { FlexColumn, FlexContainer, FlexRow, Image, VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { DokumentStatus } from '@k9-sak-web/types';
+import { AssessedBy } from '@navikt/ft-plattform-komponenter';
 
 import { Normaltekst } from 'nav-frontend-typografi';
 
-import { utledInnsendtSoknadsfrist, formatDate } from '../utils';
+import { formatDate } from '../utils';
 
-import styles from './SoknadsfristVilkarDokument.less';
+import styles from './SoknadsfristVilkarDokument.module.css';
 
 const minLength3 = minLength(3);
 const maxLength1500 = maxLength(1500);
@@ -30,9 +31,10 @@ interface SoknadsfristVilkarDokumentProps {
   erVilkarOk?: boolean | string;
   readOnly: boolean;
   skalViseBegrunnelse?: boolean;
-  erAktivtDokument: boolean;
   dokument: DokumentStatus;
   dokumentIndex: number;
+  erAktivtDokument: boolean;
+  saksbehandlere: { [key: string]: string };
 }
 
 export const DELVIS_OPPFYLT = 'DELVIS_OPPFYLT';
@@ -47,12 +49,14 @@ export const SoknadsfristVilkarDokument = ({
   erVilkarOk,
   readOnly,
   skalViseBegrunnelse,
-  erAktivtDokument,
   dokument,
+  erAktivtDokument,
   dokumentIndex,
+  saksbehandlere,
 }: SoknadsfristVilkarDokumentProps) => {
   const intl = useIntl();
-
+  const opprettetAv = dokument?.avklarteOpplysninger?.opprettetAv;
+  const opprettetTidspunkt = dokument?.avklarteOpplysninger?.opprettetTidspunkt;
   const minDate = useMemo(
     () =>
       dokument.status.reduce(
@@ -62,13 +66,16 @@ export const SoknadsfristVilkarDokument = ({
     [dokument.journalpostId],
   );
   const maxDate = useMemo(
-    () => utledInnsendtSoknadsfrist(dokument.innsendingstidspunkt),
-    [dokument.innsendingstidspunkt],
+    () =>
+      dokument.status.reduce(
+        (acc, curr) => (!acc || moment(curr.periode.tom) > moment(acc) ? curr.periode.tom : acc),
+        '',
+      ),
+    [dokument.innsendingstidspunkt, dokument.journalpostId],
   );
 
   const isAtleastDate = useCallback(v => dateAfterOrEqual(minDate)(v), [minDate]);
   const isAtmostDate = useCallback(v => dateBeforeOrEqual(maxDate)(v), [maxDate]);
-
   return (
     <div style={{ display: erAktivtDokument ? 'block' : 'none' }}>
       <p>
@@ -86,6 +93,7 @@ export const SoknadsfristVilkarDokument = ({
             readOnly={readOnly}
             placeholder={intl.formatMessage({ id: 'VilkarBegrunnelse.BegrunnVurdering' })}
           />
+          <AssessedBy name={saksbehandlere[opprettetAv] || opprettetAv} date={opprettetTidspunkt} />
         </>
       )}
       <VerticalSpacer sixteenPx />

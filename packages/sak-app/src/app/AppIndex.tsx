@@ -1,28 +1,45 @@
-import React, { useState, useEffect, useCallback } from 'react';
-import { useLocation } from 'react-router-dom';
 import moment from 'moment';
+import React, { useCallback, useEffect, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 
+import { parseQueryString } from '@fpsak-frontend/utils';
 import { useRestApiError, useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
 import EventType from '@k9-sak-web/rest-api/src/requestApi/eventType';
 import { ForbiddenPage, UnauthorizedPage } from '@k9-sak-web/sak-infosider';
-import { parseQueryString } from '@fpsak-frontend/utils';
 import { NavAnsatt } from '@k9-sak-web/types';
 
 import { K9sakApiKeys, restApiHooks } from '../data/k9sakApi';
-import ErrorBoundary from './ErrorBoundary';
-import { redirectToLogin } from './paths';
 import AppConfigResolver from './AppConfigResolver';
+import ErrorBoundary from './ErrorBoundary';
 import LanguageProvider from './LanguageProvider';
-import Home from './components/Home';
 import Dekorator from './components/Dekorator';
+import Home from './components/Home';
 
-import '@fpsak-frontend/assets/styles/global.less';
-import '@navikt/ds-css';
-import '@navikt/ft-plattform-komponenter/dist/style.css';
-import '@navikt/ft-ui-komponenter/dist/style.css';
-import '@navikt/ft-form-hooks/dist/style.css';
-import '@navikt/ft-prosess-beregningsgrunnlag/dist/style.css';
+import '@fpsak-frontend/assets/styles/global.css';
 import '@navikt/ft-fakta-beregning/dist/style.css';
+import '@navikt/ft-form-hooks/dist/style.css';
+import '@navikt/ft-plattform-komponenter/dist/style.css';
+import '@navikt/ft-prosess-beregningsgrunnlag/dist/style.css';
+import '@navikt/ft-ui-komponenter/dist/style.css';
+
+import 'nav-datovelger/lib/styles/main.css';
+import 'nav-frontend-alertstriper-style/dist/main.css';
+import 'nav-frontend-chevron-style/dist/main.css';
+import 'nav-frontend-core/dist/main.css';
+import 'nav-frontend-ekspanderbartpanel-style/dist/main.css';
+import 'nav-frontend-etiketter-style/dist/main.css';
+import 'nav-frontend-grid-style/dist/main.css';
+import 'nav-frontend-hjelpetekst-style/dist/main.css';
+import 'nav-frontend-knapper-style/dist/main.css';
+import 'nav-frontend-lukknapp-style/dist/main.css';
+import 'nav-frontend-modal-style/dist/main.css';
+import 'nav-frontend-paneler-style/dist/main.css';
+import 'nav-frontend-popover-style/dist/main.css';
+import 'nav-frontend-skjema-style/dist/main.css';
+import 'nav-frontend-snakkeboble-style/dist/main.css';
+import 'nav-frontend-spinner-style/dist/main.css';
+import 'nav-frontend-tabs-style/dist/main.css';
+import 'nav-frontend-typografi-style/dist/main.css';
 
 const EMPTY_ARRAY = [];
 
@@ -81,7 +98,7 @@ const AppIndex = () => {
           />
           {shouldRenderHome && <Home headerHeight={headerHeight} />}
           {forbiddenErrors.length > 0 && <ForbiddenPage />}
-          {unauthorizedErrors.length > 0 && (redirectToLogin() || <UnauthorizedPage />)}
+          {unauthorizedErrors.length > 0 && <UnauthorizedPage />}
         </LanguageProvider>
       </AppConfigResolver>
     </ErrorBoundary>

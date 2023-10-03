@@ -1,11 +1,11 @@
+import { TextAreaField, behandlingFormValueSelector, isBehandlingFormDirty } from '@fpsak-frontend/form';
+import { hasValidText, maxLength, minLength, required } from '@fpsak-frontend/utils';
 import React from 'react';
 import { connect } from 'react-redux';
-import { minLength, maxLength, required, hasValidText } from '@fpsak-frontend/utils';
-import { TextAreaField, behandlingFormValueSelector, isBehandlingFormDirty } from '@fpsak-frontend/form';
 
-import BehandlingFormFieldCleaner from '../../util/BehandlingFormFieldCleaner';
 import aktivtArbeidsforholdHandling from '../../kodeverk/aktivtArbeidsforholdHandling';
-import styles from './arbeidsforholdBegrunnelse.less';
+import BehandlingFormFieldCleaner from '../../util/BehandlingFormFieldCleaner';
+import styles from './arbeidsforholdBegrunnelse.module.css';
 
 interface PureOwnProps {
   readOnly: boolean;

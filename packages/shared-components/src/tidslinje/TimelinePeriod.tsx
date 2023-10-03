@@ -1,8 +1,8 @@
+import { PositionedPeriod } from '@k9-sak-web/types/src/tidslinje';
+import { ContentWithTooltip } from '@navikt/ft-plattform-komponenter';
 import classNames from 'classnames';
 import React, { CSSProperties, RefObject, useEffect, useLayoutEffect, useRef, useState } from 'react';
-import { PositionedPeriod } from '@k9-sak-web/types/src/tidslinje';
-import { ContentWithTooltip } from '@navikt/k9-react-components';
-import styles from './TimelinePeriod.less';
+import styles from './TimelinePeriod.module.css';
 import Tooltip from './Tooltip';
 
 interface NonClickablePeriodProps {

@@ -3,11 +3,13 @@ import PropTypes from 'prop-types';
 import { createSelector } from 'reselect';
 import { FormattedMessage, injectIntl } from 'react-intl';
 import { connect } from 'react-redux';
+import moment from 'moment';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
+import { AssessedBy } from '@navikt/ft-plattform-komponenter';
 
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { FaktaBegrunnelseTextField } from '@k9-sak-web/fakta-felles';
-import { getKodeverknavnFn } from '@fpsak-frontend/utils';
+import { getKodeverknavnFn, ISO_DATE_FORMAT } from '@fpsak-frontend/utils';
 import { behandlingForm, behandlingFormValueSelector } from '@fpsak-frontend/form';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { BorderBox, FlexColumn, FlexContainer, FlexRow, VerticalSpacer } from '@fpsak-frontend/shared-components';
@@ -15,7 +17,6 @@ import { BorderBox, FlexColumn, FlexContainer, FlexRow, VerticalSpacer } from '@
 import OppholdINorgeOgAdresserFaktaPanel from './OppholdINorgeOgAdresserFaktaPanel';
 import PerioderMedMedlemskapFaktaPanel from './PerioderMedMedlemskapFaktaPanel';
 import StatusForBorgerFaktaPanel from './StatusForBorgerFaktaPanel';
-import FortsattMedlemskapFaktaPanel from './FortsattMedlemskapFaktaPanel';
 
 const { AVKLAR_OPPHOLDSRETT, AVKLAR_LOVLIG_OPPHOLD } = aksjonspunktCodes;
 
@@ -31,6 +32,7 @@ export const OppholdInntektOgPeriodeForm = ({
   alleMerknaderFraBeslutter,
   behandlingId,
   behandlingVersjon,
+  saksbehandlere,
   ...formProps
 }) => (
   <BorderBox>
@@ -63,11 +65,19 @@ export const OppholdInntektOgPeriodeForm = ({
     )}
     <VerticalSpacer twentyPx />
     {valgtPeriode.aksjonspunkter && valgtPeriode.aksjonspunkter.length > 0 && (
-      <FaktaBegrunnelseTextField
-        isReadOnly={readOnly}
-        isSubmittable={submittable}
-        hasBegrunnelse={!!initialValues.begrunnelse}
-      />
+      <>
+        <FaktaBegrunnelseTextField
+          isReadOnly={readOnly}
+          isSubmittable={submittable}
+          hasBegrunnelse={!!initialValues.begrunnelse}
+        />
+        {!!initialValues.begrunnelse && (
+          <AssessedBy
+            name={saksbehandlere[valgtPeriode?.vurdertAv] || valgtPeriode?.vurdertAv}
+            date={valgtPeriode?.vurdertTidspunkt}
+          />
+        )}
+      </>
     )}
 
     <VerticalSpacer twentyPx />
@@ -102,6 +112,7 @@ OppholdInntektOgPeriodeForm.propTypes = {
   }).isRequired,
   behandlingId: PropTypes.number.isRequired,
   behandlingVersjon: PropTypes.number.isRequired,
+  saksbehandlere: PropTypes.shape(),
 };
 
 OppholdInntektOgPeriodeForm.defaultProps = {
@@ -173,7 +184,7 @@ const buildInitialValues = createSelector(
         aksjonspunkter,
         kodeverkFn,
       ),
-      ...FortsattMedlemskapFaktaPanel.buildInitialValues(gjeldendeFom),
+      fom: gjeldendeFom || moment().format(ISO_DATE_FORMAT),
       ...oppholdValues,
       ...confirmValues,
     };

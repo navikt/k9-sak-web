@@ -16,7 +16,7 @@ interface RestApiData<T> {
  * For mocking i unit-test
  */
 export const getUseRestApiRunnerMock = (requestApi: AbstractRequestApi) =>
-  function useRestApiRunner<T>(key: string): RestApiData<T> {
+  (function useRestApiRunner<T>(key: string): RestApiData<T> {
     const [data, setData] = useState({
       state: RestApiState.NOT_STARTED,
       data: undefined,
@@ -38,13 +38,13 @@ export const getUseRestApiRunnerMock = (requestApi: AbstractRequestApi) =>
       resetRequestData: () => undefined,
       ...data,
     };
-  };
+  });
 
 /**
  * Hook som gir deg ein funksjon til å starte restkall, i tillegg til kallets status/resultat/feil
  */
 const getUseRestApiRunner = (requestApi: AbstractRequestApi) =>
-  function useRestApiRunner<T>(key: string): RestApiData<T> {
+  (function useRestApiRunner<T>(key: string): RestApiData<T> {
     const [data, setData] = useState({
       state: RestApiState.NOT_STARTED,
       data: undefined,
@@ -101,6 +101,6 @@ const getUseRestApiRunner = (requestApi: AbstractRequestApi) =>
       resetRequestData,
       ...data,
     };
-  };
+  });
 
 export default getUseRestApiRunner;

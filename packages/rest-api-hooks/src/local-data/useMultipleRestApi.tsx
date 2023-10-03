@@ -41,7 +41,7 @@ const defaultOptions = {
  * For mocking i unit-test
  */
 export const getUseMultipleRestApiMock = (requestApi: AbstractRequestApi) =>
-  function useMultipleRestApi<T>(endpoints: EndpointData[], options: Options = defaultOptions): RestApiData<T> {
+  (function useMultipleRestApi<T>(endpoints: EndpointData[], options: Options = defaultOptions): RestApiData<T> {
     const endpointData = endpoints.reduce(
       (acc, endpoint) => ({
         ...acc,
@@ -55,7 +55,7 @@ export const getUseMultipleRestApiMock = (requestApi: AbstractRequestApi) =>
       // @ts-ignore
       data: options.suspendRequest ? undefined : endpointData,
     };
-  };
+  });
 
 const DEFAULT_STATE = {
   state: RestApiState.NOT_STARTED,
@@ -68,7 +68,7 @@ const DEFAULT_STATE = {
  * blir oppdatert. Hook returnerer rest-kallets status/resultat/feil
  */
 const getUseMultipleRestApi = (requestApi: AbstractRequestApi) =>
-  function useMultipleRestApi<T>(endpoints: EndpointData[], options: Options = defaultOptions): RestApiData<T> {
+  (function useMultipleRestApi<T>(endpoints: EndpointData[], options: Options = defaultOptions): RestApiData<T> {
     const [data, setData] = useState(DEFAULT_STATE);
 
     const ref = useRef<DependencyList>();
@@ -116,6 +116,6 @@ const getUseMultipleRestApi = (requestApi: AbstractRequestApi) =>
     return previousTriggers && notEqual(previousTriggers, options.updateTriggers)
       ? { ...DEFAULT_STATE, data: options.keepData ? data.data : undefined }
       : data;
-  };
+  });
 
 export default getUseMultipleRestApi;

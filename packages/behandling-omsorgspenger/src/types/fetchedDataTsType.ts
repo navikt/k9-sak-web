@@ -6,6 +6,7 @@ import {
   Soknad,
   Vilkar,
   BeregningsresultatUtbetalt,
+  BehandlingPerioderårsakMedVilkår
 } from '@k9-sak-web/types';
 import ÅrskvantumForbrukteDager from '@k9-sak-web/prosess-aarskvantum-oms/src/dto/ÅrskvantumForbrukteDager';
 
@@ -18,6 +19,7 @@ interface FetchedData {
   beregningsgrunnlag: Beregningsgrunnlag;
   simuleringResultat: SimuleringResultat;
   forbrukteDager: ÅrskvantumForbrukteDager;
+  behandlingPerioderårsakMedVilkår: BehandlingPerioderårsakMedVilkår;
 }
 
 export default FetchedData;

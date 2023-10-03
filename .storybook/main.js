@@ -1,24 +1,27 @@
+import { dirname, join } from 'path';
 const path = require('path');
 const ESLintPlugin = require('eslint-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const PACKAGES_DIR = path.resolve(__dirname, '../packages');
-const CORE_DIR = path.resolve(__dirname, '../node_modules');
+const NODE_MODULES = path.resolve(__dirname, '../node_modules');
 const IMAGE_DIR = path.join(PACKAGES_DIR, 'assets/images');
 const CSS_DIR = path.join(PACKAGES_DIR, 'assets/styles');
-
 module.exports = {
-  core: {
-    builder: 'webpack5',
-  },
   stories: ['../packages/storybook/stories/**/*.stories.@(j|t)s?(x)'],
   addons: [
-    '@storybook/addon-docs/preset',
-    '@storybook/addon-actions/register',
-    // '@storybook/addon-knobs',
+    '@storybook/addon-actions',
+    {
+      name: '@storybook/addon-docs',
+      options: {
+        configureJSX: true,
+        csfPluginOptions: null,
+      },
+    },
     // Burde bytte ut alle knobs osv med controls
     // ref: https://medium.com/storybookjs/storybook-6-migration-guide-200346241bb5
     // '@storybook/addon-essentials',
   ],
+
   // reactOptions: {
   //   fastRefresh: true,
   // },
@@ -30,15 +33,16 @@ module.exports = {
       }
       return data;
     });
-
-    config.devtool = configType === 'DEVELOPMENT' ? 'inline-source-map' : 'source-map';
+    config.devtool = configType === 'eval-cheap-module-source-map';
 
     // Make whatever fine-grained changes you need
     config.module.rules = config.module.rules.concat(
       {
         test: /\.(t|j)sx?$/,
         use: [
-          { loader: 'cache-loader' },
+          {
+            loader: 'cache-loader',
+          },
           {
             loader: 'thread-loader',
             options: {
@@ -56,33 +60,14 @@ module.exports = {
         include: PACKAGES_DIR,
       },
       {
-        test: /\.(le|c)ss$/,
+        test: /\\.css$/,
         use: [
-          {
-            loader: MiniCssExtractPlugin.loader,
-            options: {
-              publicPath: './',
-            },
-          },
           {
             loader: 'css-loader',
             options: {
               importLoaders: 1,
               modules: {
                 localIdentName: '[name]_[local]_[contenthash:base64:5]',
-              },
-            },
-          },
-          {
-            loader: 'less-loader',
-            options: {
-              lessOptions: {
-                modules: true,
-                localIdentName: '[name]_[local]_[contenthash:base64:5]',
-                modifyVars: {
-                  nodeModulesPath: '~',
-                  coreModulePath: '~',
-                },
               },
             },
           },
@@ -102,6 +87,7 @@ module.exports = {
           {
             loader: 'css-loader',
           },
+          'postcss-loader',
           {
             loader: 'less-loader',
             options: {
@@ -114,7 +100,7 @@ module.exports = {
             },
           },
         ],
-        include: [CSS_DIR, CORE_DIR],
+        include: [CSS_DIR, NODE_MODULES],
       },
       {
         test: /\.(jp|pn|sv)g$/,
@@ -149,30 +135,29 @@ module.exports = {
         generator: {
           filename: '[name]_[contenthash].[ext]',
         },
-        include: [CORE_DIR],
+        include: [NODE_MODULES],
       },
     );
-
     config.plugins.push(
       new MiniCssExtractPlugin({
         filename: 'style[name].css',
         ignoreOrder: true,
       }),
     );
-
-    config.plugins.push(new ESLintPlugin({
-      context: PACKAGES_DIR,
-      extensions: ['.js', '.jsx', '.ts', '.tsx'],
-      failOnWarning: false,
-      failOnError: !(configType === 'DEVELOPMENT'),
-      fix: (configType === 'DEVELOPMENT'),
-      overrideConfigFile: path.resolve(__dirname, (configType === 'DEVELOPMENT') ? '../eslint/eslintrc.dev.js' : '../eslint/eslintrc.prod.js'),
-      cache: true,
-    }));
-
-    config.resolve.extensions.push('.ts', '.tsx', '.less');
+    config.resolve.extensions.push('.ts', '.tsx', '.css');
 
     // Return the altered config
     return config;
   },
+  framework: {
+    name: getAbsolutePath('@storybook/react-webpack5'),
+    options: {},
+  },
+  docs: {
+    autodocs: true,
+  },
 };
+
+function getAbsolutePath(value) {
+  return dirname(require.resolve(join(value, 'package.json')));
+}

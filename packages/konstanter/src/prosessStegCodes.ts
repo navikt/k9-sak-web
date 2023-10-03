@@ -30,6 +30,7 @@ const prosessStegCodes = {
   MEDISINSK_VILKAR: 'medisinsk_vilkar',
   OPPTJENING: 'opptjening',
   ALDER: 'alder',
+  OPPLAERING: 'opplaering',
 };
 
 export default prosessStegCodes;

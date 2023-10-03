@@ -1,0 +1,28 @@
+.divider {
+  border-left: 1px solid #a0a0a0;
+  border-right: 0 solid #a0a0a0;
+  display: inline;
+  float: right;
+  height: 40px;
+  margin-left: 10px;
+  position: absolute;
+}
+
+.modal {
+  width: 500px;
+}
+
+.modal svg:global(.navds-loader.loader),
+.modal svg:global(.navds-loader.loader circle) {
+  animation-duration: 1.8s !important;
+  animation-delay: 0s !important;
+  animation-iteration-count: infinite !important;
+}
+
+.messageRow {
+  padding-top: 7px;
+}
+
+.modalText {
+  padding-top: 8px;
+}

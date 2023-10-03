@@ -32,6 +32,7 @@ const MedlemskapInfoPanel = ({
   alleKodeverk,
   medlemskap,
   fagsakPerson,
+  saksbehandlere,
 }) => {
   const avklarStartdatoOverstyring = aksjonspunkter.find(ap => ap.definisjon.kode === OVERSTYR_AVKLAR_STARTDATO);
   const aksjonspunkterMinusAvklarStartDato = useMemo(
@@ -40,24 +41,23 @@ const MedlemskapInfoPanel = ({
   );
 
   return (
-    <>
-      {!hasOpen(avklarStartdatoOverstyring) && (
-        <OppholdInntektOgPerioderForm
-          soknad={soknad}
-          readOnly={readOnly}
-          submitCallback={submitCallback}
-          submittable={submittable}
-          aksjonspunkter={aksjonspunkterMinusAvklarStartDato}
-          alleMerknaderFraBeslutter={alleMerknaderFraBeslutter}
-          behandlingId={behandlingId}
-          behandlingVersjon={behandlingVersjon}
-          behandlingType={behandlingType}
-          alleKodeverk={alleKodeverk}
-          medlemskap={medlemskap}
-          fagsakPerson={fagsakPerson}
-        />
-      )}
-    </>
+    !hasOpen(avklarStartdatoOverstyring) && (
+      <OppholdInntektOgPerioderForm
+        soknad={soknad}
+        readOnly={readOnly}
+        submitCallback={submitCallback}
+        submittable={submittable}
+        aksjonspunkter={aksjonspunkterMinusAvklarStartDato}
+        alleMerknaderFraBeslutter={alleMerknaderFraBeslutter}
+        behandlingId={behandlingId}
+        behandlingVersjon={behandlingVersjon}
+        behandlingType={behandlingType}
+        alleKodeverk={alleKodeverk}
+        medlemskap={medlemskap}
+        fagsakPerson={fagsakPerson}
+        saksbehandlere={saksbehandlere}
+      />
+    )
   );
 };
 
@@ -76,6 +76,7 @@ MedlemskapInfoPanel.propTypes = {
   soknad: medlemskapSoknadPropType,
   alleKodeverk: PropTypes.shape().isRequired,
   medlemskap: medlemskapMedlemskaPropType.isRequired,
+  saksbehandlere: PropTypes.shape(),
 };
 
 export default MedlemskapInfoPanel;

@@ -1,25 +1,23 @@
-import React, { Component } from 'react';
+import { Column, Row } from 'nav-frontend-grid';
+import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
+import { Undertekst } from 'nav-frontend-typografi';
 import PropTypes from 'prop-types';
+import React, { Component } from 'react';
+import { FormattedMessage, injectIntl } from 'react-intl';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { clearFields, formPropTypes } from 'redux-form';
-import { FormattedMessage, injectIntl } from 'react-intl';
-import { Undertekst } from 'nav-frontend-typografi';
-import { Column, Row } from 'nav-frontend-grid';
-import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 
-import { kodeverkObjektPropType } from '@fpsak-frontend/prop-types';
 import { RadioGroupField, RadioOption, TextAreaField, behandlingForm } from '@fpsak-frontend/form';
 import foreldelseVurderingType from '@fpsak-frontend/kodeverk/src/foreldelseVurderingType';
-import {
-  hasValidText, maxLength, minLength, required,
-} from '@fpsak-frontend/utils';
-import { FlexColumn, FlexRow, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import tilbakekrevingKodeverkTyper from '@fpsak-frontend/kodeverk/src/tilbakekrevingKodeverkTyper';
+import { kodeverkObjektPropType } from '@fpsak-frontend/prop-types';
+import { FlexColumn, FlexRow, VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { hasValidText, maxLength, minLength, required } from '@fpsak-frontend/utils';
 
 import TilbakekrevingTimelineData from './splittePerioder/TilbakekrevingTimelineData';
 
-import styles from './foreldelsePeriodeForm.less';
+import styles from './foreldelsePeriodeForm.module.css';
 
 const minLength3 = minLength(3);
 const maxLength1500 = maxLength(1500);
@@ -33,9 +31,7 @@ export class ForeldelsePeriodeFormImpl extends Component {
   }
 
   resetFields() {
-    const {
-      behandlingFormPrefix, clearFields: clearFormFields, oppfylt,
-    } = this.props;
+    const { behandlingFormPrefix, clearFields: clearFormFields, oppfylt } = this.props;
     const fields = [oppfylt];
     clearFormFields(`${behandlingFormPrefix}.${FORELDELSE_PERIODE_FORM_NAME}`, false, false, ...fields);
   }
@@ -80,7 +76,9 @@ export class ForeldelsePeriodeFormImpl extends Component {
             />
           </Column>
           <Column md="6">
-            <Undertekst><FormattedMessage id="ForeldelsePeriodeForm.RadioGroup.Foreldet" /></Undertekst>
+            <Undertekst>
+              <FormattedMessage id="ForeldelsePeriodeForm.RadioGroup.Foreldet" />
+            </Undertekst>
             <VerticalSpacer eightPx />
             <RadioGroupField
               validate={[required]}
@@ -89,7 +87,9 @@ export class ForeldelsePeriodeFormImpl extends Component {
               readOnly={readOnly}
               onChange={this.resetFields}
             >
-              {foreldelseVurderingTyper.map((type) => <RadioOption key={type.kode} label={type.navn} value={type.kode} />)}
+              {foreldelseVurderingTyper.map(type => (
+                <RadioOption key={type.kode} label={type.navn} value={type.kode} />
+              ))}
             </RadioGroupField>
           </Column>
         </Row>
@@ -133,26 +133,30 @@ ForeldelsePeriodeFormImpl.propTypes = {
   ...formPropTypes,
 };
 
-const oldForeldetValue = (fvType) => (fvType.kode !== foreldelseVurderingType.UDEFINERT ? fvType.kode : null);
-const checkForeldetValue = (selectedItemData) => (selectedItemData.foreldet ? selectedItemData.foreldet
-  : oldForeldetValue(selectedItemData.foreldelseVurderingType));
+const oldForeldetValue = fvType => (fvType.kode !== foreldelseVurderingType.UDEFINERT ? fvType.kode : null);
+const checkForeldetValue = selectedItemData =>
+  selectedItemData.foreldet ? selectedItemData.foreldet : oldForeldetValue(selectedItemData.foreldelseVurderingType);
 
-const buildInitalValues = (periode) => ({
+const buildInitalValues = periode => ({
   ...periode,
   foreldet: checkForeldetValue(periode),
 });
 
-const mapDispatchToProps = (dispatch) => ({
-  ...bindActionCreators({
-    clearFields,
-  }, dispatch),
+const mapDispatchToProps = dispatch => ({
+  ...bindActionCreators(
+    {
+      clearFields,
+    },
+    dispatch,
+  ),
 });
 
 const mapStateToPropsFactory = (initialState, ownProps) => {
   const initialValues = buildInitalValues(ownProps.periode);
-  const onSubmit = (values) => ownProps.oppdaterPeriode(values);
-  const foreldelseVurderingTyper = ownProps.alleKodeverk[tilbakekrevingKodeverkTyper.FORELDELSE_VURDERING]
-    .filter((fv) => fv.kode !== foreldelseVurderingType.IKKE_VURDERT);
+  const onSubmit = values => ownProps.oppdaterPeriode(values);
+  const foreldelseVurderingTyper = ownProps.alleKodeverk[tilbakekrevingKodeverkTyper.FORELDELSE_VURDERING].filter(
+    fv => fv.kode !== foreldelseVurderingType.IKKE_VURDERT,
+  );
   return () => ({
     initialValues,
     onSubmit,
@@ -160,9 +164,16 @@ const mapStateToPropsFactory = (initialState, ownProps) => {
   });
 };
 
-const ForeldelsePeriodeForm = connect(mapStateToPropsFactory, mapDispatchToProps)(injectIntl(behandlingForm({
-  form: FORELDELSE_PERIODE_FORM_NAME,
-  enableReinitialize: true,
-})(ForeldelsePeriodeFormImpl)));
+const ForeldelsePeriodeForm = connect(
+  mapStateToPropsFactory,
+  mapDispatchToProps,
+)(
+  injectIntl(
+    behandlingForm({
+      form: FORELDELSE_PERIODE_FORM_NAME,
+      enableReinitialize: true,
+    })(ForeldelsePeriodeFormImpl),
+  ),
+);
 
 export default ForeldelsePeriodeForm;

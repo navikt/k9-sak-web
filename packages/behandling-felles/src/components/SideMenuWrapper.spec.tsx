@@ -1,7 +1,8 @@
 import React from 'react';
 import sinon from 'sinon';
-import { SideMenu } from '@navikt/k9-react-components';
+import { SideMenu } from '@navikt/ft-plattform-komponenter';
 
+import { Image } from '@fpsak-frontend/shared-components';
 import advarselIkonUrl from '@fpsak-frontend/assets/images/advarsel_ny.svg';
 import { intlMock, shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 
@@ -33,8 +34,7 @@ describe('<SideMenuWrapper>', () => {
       {
         label: 'Omsorg',
         active: true,
-        iconSrc: advarselIkonUrl,
-        iconAltText: 'Aksjonspunkt',
+        icon: <Image src={advarselIkonUrl} alt="Aksjonspunkt" />,
       },
     ]);
   });

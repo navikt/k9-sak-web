@@ -3,8 +3,8 @@ import { SkjemaGruppe as NavSkjemaGruppe } from 'nav-frontend-skjema';
 import React from 'react';
 import { Field } from 'redux-form';
 import OptionGrid from './OptionGrid';
-import styles from './radioGroupField.less';
 import { RadioOptionProps } from './RadioOption';
+import styles from './radioGroupField.module.css';
 import renderNavField from './renderNavField';
 
 type Direction = 'horizontal' | 'vertical';

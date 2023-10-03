@@ -1,16 +1,16 @@
+import { AksjonspunktHelpTextTemp, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import React from 'react';
 import { useForm } from 'react-hook-form';
-import { AksjonspunktHelpTextTemp, VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { FormattedMessage, injectIntl, WrappedComponentProps } from 'react-intl';
+import { FormattedMessage, WrappedComponentProps, injectIntl } from 'react-intl';
 
-import { Aksjonspunkt } from '@k9-sak-web/types';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { Column, Row } from 'nav-frontend-grid';
-import { Hovedknapp } from 'nav-frontend-knapper';
+import { Aksjonspunkt } from '@k9-sak-web/types';
 import { Form, RadioGroupPanel, TextAreaField } from '@navikt/ft-form-hooks';
 import { maxLength, minLength, required } from '@navikt/ft-form-validators';
+import { Column, Row } from 'nav-frontend-grid';
+import { Hovedknapp } from 'nav-frontend-knapper';
 
-import style from './AldersvilkarForm.less';
+import style from './AldersvilkarForm.module.css';
 
 type Inputs = {
   begrunnelse: string;
@@ -43,11 +43,16 @@ const AldersvilkarForm = ({
     if (erVilkaretOk === false) return 'false';
     return null;
   };
-  const methods = useForm<Inputs>({ defaultValues: { begrunnelse: begrunnelseTekst, erVilkarOk: getErVilkaretOk() } });
-  const bekreftAksjonspunkt = data => submitCallback([{ kode: aksjonspunktCodes.ALDERSVILKÅR, ...data }]);
+  const methods = useForm<Inputs>({
+    defaultValues: {
+      begrunnelse: begrunnelseTekst,
+      erVilkarOk: getErVilkaretOk(),
+    },
+  });
+  const bekreftAksjonspunkt = (data: Inputs) => submitCallback([{ kode: aksjonspunktCodes.ALDERSVILKÅR, ...data }]);
 
   return (
-    <Form formMethods={methods} onSubmit={bekreftAksjonspunkt}>
+    <Form<Inputs> formMethods={methods} onSubmit={bekreftAksjonspunkt}>
       <Row>
         <AksjonspunktHelpTextTemp isAksjonspunktOpen>
           {[<FormattedMessage key={1} id="AlderVilkar.Hjelpetekst" />]}
@@ -56,19 +61,31 @@ const AldersvilkarForm = ({
       <VerticalSpacer sixteenPx />
       <Row>
         <div className={style.opplysninger}>
-          <p className="label">Opplysninger fra søknaden:</p>
+          <p className="label">
+            <FormattedMessage id="AlderVilkar.Lese.Etikett.Opplysninger" />
+          </p>
+          <b>
+            <FormattedMessage id="AlderVilkar.Lese.Etikett.Barn" />
+          </b>
           {angitteBarn.map(barn => (
-            <p key={barn.personIdent}>{barn.personIdent}</p>
+            <p className={style.barn} key={barn.personIdent}>
+              {barn.personIdent}
+            </p>
           ))}
         </div>
       </Row>
-      <Row>
-        <TextAreaField label="Begrunnelse" name="begrunnelse" validate={[required, minLength3, maxLength2000]} />
+      <Row className={style.vurdering}>
+        <TextAreaField
+          label={intl.formatMessage({ id: 'AlderVilkar.Lese.KroniskSyk' })}
+          name="begrunnelse"
+          validate={[required, minLength3, maxLength2000]}
+        />
       </Row>
       <VerticalSpacer sixteenPx />
       <Row>
         <Column>
           <RadioGroupPanel
+            isHorizontal
             label={<FormattedMessage id="AlderVilkar.KroniskSyk" />}
             name="erVilkarOk"
             validate={[required]}

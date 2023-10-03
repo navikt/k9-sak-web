@@ -1,39 +1,31 @@
-import React, { useState, useCallback, useMemo } from 'react';
+import React, { useCallback, useState } from 'react';
 
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
-import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
+import { bestemAvsenderApp, forhandsvis, getForhandsvisCallback } from '@fpsak-frontend/utils/src/formidlingUtils';
 import {
-  Rettigheter,
-  prosessStegHooks,
-  IverksetterVedtakStatusModal,
   FatterVedtakStatusModal,
-  ProsessStegPanel,
+  IverksetterVedtakStatusModal,
   ProsessStegContainer,
+  ProsessStegPanel,
+  Rettigheter,
   lagDokumentdata,
+  prosessStegHooks,
   useSetBehandlingVedEndring,
 } from '@k9-sak-web/behandling-felles';
 import {
-  KodeverkMedNavn,
+  ArbeidsgiverOpplysningerPerId,
   Behandling,
-  FeatureToggles,
   Fagsak,
   FagsakPerson,
-  ArbeidsgiverOpplysningerPerId,
+  FeatureToggles,
+  KodeverkMedNavn,
 } from '@k9-sak-web/types';
-import lagForhåndsvisRequest from '@fpsak-frontend/utils/src/formidlingUtils';
 
+import { PleiepengerBehandlingApiKeys, restApiPleiepengerHooks } from '../data/pleiepengerBehandlingApi';
 import prosessStegPanelDefinisjoner from '../panelDefinisjoner/prosessStegPleiepengerPanelDefinisjoner';
 import FetchedData from '../types/fetchedDataTsType';
-import { restApiPleiepengerHooks, PleiepengerBehandlingApiKeys } from '../data/pleiepengerBehandlingApi';
 
-import '@fpsak-frontend/assets/styles/arrowForProcessMenu.less';
-
-const forhandsvis = (data: any) => {
-  if (URL.createObjectURL) {
-    window.open(URL.createObjectURL(data));
-  }
-};
 interface OwnProps {
   data: FetchedData;
   fagsak: Fagsak;
@@ -54,79 +46,82 @@ interface OwnProps {
   setBeregningErBehandlet: (value: boolean) => void;
 }
 
-const getForhandsvisCallback =
-  (
-    forhandsvisMelding: (data: any) => Promise<any>,
-    fagsak: Fagsak,
-    fagsakPerson: FagsakPerson,
-    behandling: Behandling,
-  ) =>
-  (parametre: any) => {
-    const request = lagForhåndsvisRequest(behandling, fagsak, fagsakPerson, parametre);
-    return forhandsvisMelding(request).then(response => forhandsvis(response));
+const getForhandsvisFptilbakeCallback = (
+  forhandsvisTilbakekrevingMelding: (data: any) => Promise<any>,
+  fagsak: Fagsak,
+  behandling: Behandling,
+) => (mottaker: string, brevmalkode: string, fritekst: string, saksnummer: string) => {
+  const data = {
+    behandlingUuid: behandling.uuid,
+    fagsakYtelseType: fagsak.sakstype,
+    varseltekst: fritekst || '',
+    mottaker,
+    brevmalkode,
+    saksnummer,
   };
+  return forhandsvisTilbakekrevingMelding(data).then(response => forhandsvis(response));
+};
 
-const getForhandsvisFptilbakeCallback =
-  (forhandsvisTilbakekrevingMelding: (data: any) => Promise<any>, fagsak: Fagsak, behandling: Behandling) =>
-  (mottaker: string, brevmalkode: string, fritekst: string, saksnummer: string) => {
-    const data = {
-      behandlingUuid: behandling.uuid,
-      fagsakYtelseType: fagsak.sakstype,
-      varseltekst: fritekst || '',
-      mottaker,
-      brevmalkode,
-      saksnummer,
-    };
-    return forhandsvisTilbakekrevingMelding(data).then(response => forhandsvis(response));
-  };
+const getLagringSideeffekter = (
+  toggleIverksetterVedtakModal,
+  toggleFatterVedtakModal,
+  oppdaterProsessStegOgFaktaPanelIUrl,
+  opneSokeside,
+  lagreDokumentdata,
+) => async aksjonspunktModels => {
+  const erRevurderingsaksjonspunkt = aksjonspunktModels.some(
+    apModel =>
+      (apModel.kode === aksjonspunktCodes.VARSEL_REVURDERING_MANUELL ||
+        apModel.kode === aksjonspunktCodes.VARSEL_REVURDERING_ETTERKONTROLL) &&
+      apModel.sendVarsel,
+  );
 
-const getLagringSideeffekter =
-  (
-    toggleIverksetterVedtakModal,
-    toggleFatterVedtakModal,
-    oppdaterProsessStegOgFaktaPanelIUrl,
-    opneSokeside,
-    lagreDokumentdata,
-  ) =>
-  async aksjonspunktModels => {
-    const erRevurderingsaksjonspunkt = aksjonspunktModels.some(
-      apModel =>
-        (apModel.kode === aksjonspunktCodes.VARSEL_REVURDERING_MANUELL ||
-          apModel.kode === aksjonspunktCodes.VARSEL_REVURDERING_ETTERKONTROLL) &&
-        apModel.sendVarsel,
-    );
+  const visIverksetterVedtakModal = aksjonspunktModels.some(
+    aksjonspunkt =>
+      aksjonspunkt.isVedtakSubmission &&
+      [
+        aksjonspunktCodes.VEDTAK_UTEN_TOTRINNSKONTROLL,
+        aksjonspunktCodes.FATTER_VEDTAK,
+        aksjonspunktCodes.FORESLA_VEDTAK_MANUELT,
+      ].includes(aksjonspunkt.kode),
+  );
 
-    const visIverksetterVedtakModal = aksjonspunktModels.some(
-      aksjonspunkt =>
-        aksjonspunkt.isVedtakSubmission &&
-        [
-          aksjonspunktCodes.VEDTAK_UTEN_TOTRINNSKONTROLL,
-          aksjonspunktCodes.FATTER_VEDTAK,
-          aksjonspunktCodes.FORESLA_VEDTAK_MANUELT,
-        ].includes(aksjonspunkt.kode),
-    );
+  const visFatterVedtakModal =
+    aksjonspunktModels[0].isVedtakSubmission && aksjonspunktModels[0].kode === aksjonspunktCodes.FORESLA_VEDTAK;
 
-    const visFatterVedtakModal =
-      aksjonspunktModels[0].isVedtakSubmission && aksjonspunktModels[0].kode === aksjonspunktCodes.FORESLA_VEDTAK;
+  if (aksjonspunktModels[0].isVedtakSubmission) {
+    const dokumentdata = lagDokumentdata(aksjonspunktModels[0]);
+    if (dokumentdata) await lagreDokumentdata(dokumentdata);
+  }
 
-    if (aksjonspunktModels[0].isVedtakSubmission) {
-      const dokumentdata = lagDokumentdata(aksjonspunktModels[0]);
-      if (dokumentdata) await lagreDokumentdata(dokumentdata);
+  // Returner funksjon som blir kjørt etter lagring av aksjonspunkt(er)
+  return () => {
+    if (visFatterVedtakModal) {
+      toggleFatterVedtakModal(true);
+    } else if (visIverksetterVedtakModal) {
+      toggleIverksetterVedtakModal(true);
+    } else if (erRevurderingsaksjonspunkt) {
+      opneSokeside();
+    } else {
+      oppdaterProsessStegOgFaktaPanelIUrl('default', 'default');
     }
-
-    // Returner funksjon som blir kjørt etter lagring av aksjonspunkt(er)
-    return () => {
-      if (visFatterVedtakModal) {
-        toggleFatterVedtakModal(true);
-      } else if (visIverksetterVedtakModal) {
-        toggleIverksetterVedtakModal(true);
-      } else if (erRevurderingsaksjonspunkt) {
-        opneSokeside();
-      } else {
-        oppdaterProsessStegOgFaktaPanelIUrl('default', 'default');
-      }
-    };
   };
+};
+
+const getHentFritekstbrevHtmlCallback = (
+  hentFriteksbrevHtml: (data: any) => Promise<any>,
+  behandling: Behandling,
+  fagsak: Fagsak,
+  fagsakPerson: FagsakPerson,
+) => (parameters: any) =>
+  hentFriteksbrevHtml({
+    ...parameters,
+    eksternReferanse: behandling.uuid,
+    ytelseType: fagsak.sakstype,
+    saksnummer: fagsak.saksnummer,
+    aktørId: fagsakPerson.aktørId,
+    avsenderApplikasjon: bestemAvsenderApp(behandling.type.kode),
+  });
 
 const PleiepengerProsess = ({
   data,
@@ -149,10 +144,13 @@ const PleiepengerProsess = ({
 }: OwnProps) => {
   prosessStegHooks.useOppdateringAvBehandlingsversjon(behandling.versjon, oppdaterBehandlingVersjon);
 
-  const { startRequest: lagreAksjonspunkter, data: apBehandlingRes } =
-    restApiPleiepengerHooks.useRestApiRunner<Behandling>(PleiepengerBehandlingApiKeys.SAVE_AKSJONSPUNKT);
-  const { startRequest: lagreOverstyrteAksjonspunkter, data: apOverstyrtBehandlingRes } =
-    restApiPleiepengerHooks.useRestApiRunner<Behandling>(PleiepengerBehandlingApiKeys.SAVE_OVERSTYRT_AKSJONSPUNKT);
+  const { startRequest: lagreAksjonspunkter, data: apBehandlingRes } = restApiPleiepengerHooks.useRestApiRunner<
+    Behandling
+  >(PleiepengerBehandlingApiKeys.SAVE_AKSJONSPUNKT);
+  const {
+    startRequest: lagreOverstyrteAksjonspunkter,
+    data: apOverstyrtBehandlingRes,
+  } = restApiPleiepengerHooks.useRestApiRunner<Behandling>(PleiepengerBehandlingApiKeys.SAVE_OVERSTYRT_AKSJONSPUNKT);
   const { startRequest: forhandsvisMelding } = restApiPleiepengerHooks.useRestApiRunner(
     PleiepengerBehandlingApiKeys.PREVIEW_MESSAGE,
   );
@@ -161,6 +159,9 @@ const PleiepengerProsess = ({
   );
   const { startRequest: lagreDokumentdata } = restApiPleiepengerHooks.useRestApiRunner<Behandling>(
     PleiepengerBehandlingApiKeys.DOKUMENTDATA_LAGRE,
+  );
+  const { startRequest: hentFriteksbrevHtml } = restApiPleiepengerHooks.useRestApiRunner(
+    PleiepengerBehandlingApiKeys.HENT_FRITEKSTBREV_HTML,
   );
 
   useSetBehandlingVedEndring(apBehandlingRes, setBehandling);
@@ -173,6 +174,10 @@ const PleiepengerProsess = ({
     ]),
     previewFptilbakeCallback: useCallback(
       getForhandsvisFptilbakeCallback(forhandsvisTilbakekrevingMelding, fagsak, behandling),
+      [behandling.versjon],
+    ),
+    hentFritekstbrevHtmlCallback: useCallback(
+      getHentFritekstbrevHtmlCallback(hentFriteksbrevHtml, behandling, fagsak, fagsakPerson),
       [behandling.versjon],
     ),
     alleKodeverk,
@@ -218,14 +223,6 @@ const PleiepengerProsess = ({
     valgtPanel,
   );
 
-  const fatterVedtakTextCode = useMemo(
-    () =>
-      valgtPanel && valgtPanel.getStatus() === vilkarUtfallType.OPPFYLT
-        ? 'FatterVedtakStatusModal.SendtBeslutter'
-        : 'FatterVedtakStatusModal.ModalDescriptionPleiepenger',
-    [behandling.versjon],
-  );
-
   return (
     <>
       <IverksetterVedtakStatusModal
@@ -242,7 +239,7 @@ const PleiepengerProsess = ({
           toggleFatterVedtakModal(false);
           opneSokeside();
         }, [])}
-        tekstkode={fatterVedtakTextCode}
+        tekstkode="FatterVedtakStatusModal.ModalDescriptionPleiepenger"
       />
       <ProsessStegContainer
         formaterteProsessStegPaneler={formaterteProsessStegPaneler}

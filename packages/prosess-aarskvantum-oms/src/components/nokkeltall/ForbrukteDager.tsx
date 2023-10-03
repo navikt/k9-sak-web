@@ -1,9 +1,9 @@
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import AntallTimer from './AntallTimer';
-import { DagerTimer } from './durationUtils';
 import Nokkeltall, { Nokkeltalldetalj } from './Nokkeltall';
-import styles from './nokkeltall.less';
+import { DagerTimer } from './durationUtils';
+import styles from './nokkeltall.module.css';
 
 interface ForbrukteDagerProps {
   navHarUtbetaltDagerTimer: DagerTimer;
@@ -50,12 +50,14 @@ const forbrukteDagerDetaljer = (
   });
 
   if (smittevernDagerTimer) {
-    detaljer.push({
-      antallDager: smittevernDagerTimer.dager,
-      antallTimer: <AntallTimer timer={smittevernDagerTimer.timer} />,
-      overskrifttekstId: 'Nøkkeltall.Smittevern',
-      infotekstContent: <FormattedMessage id={`Nøkkeltall.Smittevern.InfoText.${ar}`} />,
-    });
+    if ([2020, 2021, 2022].includes(parseInt(ar, 10))) {
+      detaljer.push({
+        antallDager: smittevernDagerTimer.dager,
+        antallTimer: <AntallTimer timer={smittevernDagerTimer.timer} />,
+        overskrifttekstId: 'Nøkkeltall.Smittevern',
+        infotekstContent: <FormattedMessage id={`Nøkkeltall.Smittevern.InfoText.${ar}`} />,
+      });
+    }
   } else if (utbetaltForMangeDagerTimer) {
     detaljer.push({
       antallDager: utbetaltForMangeDagerTimer.dager,

@@ -1,25 +1,26 @@
+/* eslint-disable react/jsx-curly-brace-presence */
 import React from 'react';
 
 import { Alert, Heading } from '@navikt/ds-react';
 import Ekspanderbartpanel from 'nav-frontend-ekspanderbartpanel';
 
-import { KodeverkMedNavn, UtenlandsoppholdPerioder } from '@k9-sak-web/types';
-import { PeriodList } from '@navikt/k9-react-components';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { KodeverkMedNavn, UtenlandsoppholdPerioder, UtenlandsoppholdType } from '@k9-sak-web/types';
+import { PeriodList } from '@navikt/ft-plattform-komponenter';
 
 import countries from 'i18n-iso-countries';
 import norwegianLocale from 'i18n-iso-countries/langs/no.json';
-import styles from './utenlandsopphold.less';
+import styles from './utenlandsopphold.module.css';
 
 countries.registerLocale(norwegianLocale);
 
-export default function Utenlandsopphold({
+const Utenlandsopphold = ({
   utenlandsopphold,
   kodeverk,
 }: {
   utenlandsopphold: UtenlandsoppholdPerioder;
   kodeverk: { UtenlandsoppholdÅrsak: KodeverkMedNavn[] };
-}) {
+}) => {
   const finnÅrsaker = (periode, erEØS) => {
     if (erEØS) {
       return 'Periode telles ikke.';
@@ -28,11 +29,19 @@ export default function Utenlandsopphold({
     return kodeverk?.UtenlandsoppholdÅrsak?.find(v => v.kode === periode?.årsak)?.navn || 'Ukjent årsak';
   };
 
-  const mapItems = periode => {
+  const vurderesMotEØSRegelverk = (landkode: string) => {
+    const land = ['CHE'];
+    if (land.includes(landkode)) {
+      return '*';
+    }
+    return '';
+  };
+
+  const mapItems = (periode: UtenlandsoppholdType) => {
     const erEØS = periode.region.kode === 'NORDEN' || periode.region.kode === 'EOS';
 
     const land = { label: 'Land', value: countries.getName(periode.landkode.kode, 'no') };
-    const eos = { label: 'EØS', value: erEØS ? 'Ja' : 'Nei' };
+    const eos = { label: 'EØS', value: erEØS ? 'Ja' : `Nei${vurderesMotEØSRegelverk(periode.landkode.kode)}` };
     const årsak = { label: 'Merknad til utenlandsopphold', value: finnÅrsaker(periode, erEØS) };
 
     return [land, eos, årsak];
@@ -84,10 +93,17 @@ export default function Utenlandsopphold({
       </Alert>
       <VerticalSpacer fourtyPx />
       {harUtenlandsopphold ? (
-        <PeriodList perioder={[...perioderMedItems]} tittel="Perioder i utlandet" />
+        <>
+          <PeriodList perioder={[...perioderMedItems]} tittel="Perioder i utlandet" />
+          {perioder.some(periode => vurderesMotEØSRegelverk(periode.landkode.kode)) && (
+            <div>{`*) Ikke en del av EØS, men vurderes mot EØS-regelverk`}</div>
+          )}
+        </>
       ) : (
         <>Søker har ingen utenlandsopphold å vise.</>
       )}
     </div>
   );
-}
+};
+
+export default Utenlandsopphold;

@@ -37,3 +37,5 @@ export { default as TidslinjeZoom } from './src/tidslinje/TidslinjeZoom';
 export { default as Punsjstripe } from './src/punsjstripe/Punsjstripe';
 export { default as AndreSakerPåSøkerStripe } from './src/andreSakerPaSokerStripe/AndreSakerPåSøkerStripe';
 export { default as useFeatureToggles } from './src/hooks/useFeatureToggles';
+export { default as NestedIntlProvider } from './src/NestedIntlProvider';
+export { default as ÅpneSakINyttVinduKnapp } from './src/apneSakINyttVinduKnapp/ÅpneSakINyttVinduKnapp';

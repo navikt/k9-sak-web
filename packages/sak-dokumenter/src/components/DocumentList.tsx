@@ -6,12 +6,13 @@ import sendDokumentImageUrl from '@fpsak-frontend/assets/images/send_dokument.sv
 import kommunikasjonsretning from '@fpsak-frontend/kodeverk/src/kommunikasjonsretning';
 import { DateTimeLabel, Image, Table, TableColumn, TableRow, Tooltip } from '@fpsak-frontend/shared-components';
 import { Dokument, FagsakPerson } from '@k9-sak-web/types';
+import { StarFillIcon } from '@navikt/aksel-icons';
 import Lenke from 'nav-frontend-lenker';
 import { Select } from 'nav-frontend-skjema';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
 import React, { useState } from 'react';
-import { FormattedMessage, injectIntl, WrappedComponentProps } from 'react-intl';
-import styles from './documentList.less';
+import { FormattedMessage, WrappedComponentProps, injectIntl } from 'react-intl';
+import styles from './documentList.module.css';
 
 const headerTextCodes = [
   'DocumentList.Direction',
@@ -22,7 +23,9 @@ const headerTextCodes = [
 
 const alleBehandlinger = 'ALLE';
 
-const vedtaksdokumenter = ['INNVILGELSE', 'AVSLAG', 'FRITKS', 'ENDRING'];
+const vedtaksdokumenter = ['INNVILGELSE', 'AVSLAG', 'FRITKS', 'ENDRING', 'MANUELL'];
+
+const inntektsmeldingBrevkode = '4936';
 
 const isVedtaksdokument = (document: Dokument) =>
   vedtaksdokumenter.some(vedtaksdokument => vedtaksdokument === document.brevkode);
@@ -54,10 +57,10 @@ const getDirectionText = (document: Dokument): string => {
 
 const getModiaPath = (fødselsnummer: string) => {
   const { host } = window.location;
-  if (host === 'app-q1.adeo.no') {
+  if (host === 'app-q1.adeo.no' || host === 'k9.dev.intern.nav.no') {
     return `https://app-q1.adeo.no/modiapersonoversikt/person/${fødselsnummer}/meldinger/`;
   }
-  if (host === 'app.adeo.no') {
+  if (host === 'app.adeo.no' || host === 'k9.intern.nav.no') {
     return `https://app.adeo.no/modiapersonoversikt/person/${fødselsnummer}/meldinger/`;
   }
   return null;
@@ -122,9 +125,11 @@ const DocumentList = ({
   const makeDocumentURL = (document: Dokument) =>
     `/k9/sak/api/dokument/hent-dokument?saksnummer=${saksnummer}&journalpostId=${document.journalpostId}&dokumentId=${document.dokumentId}`;
 
-  const selectDocument = (_e, _id, document: Dokument): void => {
-    window.open(makeDocumentURL(document), '_blank');
-  };
+  const erInntektsmeldingOgBruktIDenneBehandlingen = (document: Dokument) =>
+    document.brevkode === inntektsmeldingBrevkode &&
+    document.behandlinger &&
+    behandlingId &&
+    document.behandlinger.includes(behandlingId);
 
   return (
     <>
@@ -152,17 +157,24 @@ const DocumentList = ({
                 key={document.dokumentId}
                 id={document.dokumentId}
                 model={document}
-                onMouseDown={selectDocument}
-                onKeyDown={selectDocument}
+                notFocusable
                 className={isVedtaksdokument(document) ? styles.borderTop : ''}
               >
                 <TableColumn>
-                  <Image
-                    className={styles.image}
-                    src={directionImage}
-                    alt={intl.formatMessage({ id: directionTextCode })}
-                    tooltip={intl.formatMessage({ id: directionTextCode })}
-                  />
+                  <a
+                    className={styles.documentAnchorPlain}
+                    href={makeDocumentURL(document)}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    tabIndex={-1}
+                  >
+                    <Image
+                      className={styles.image}
+                      src={directionImage}
+                      alt={intl.formatMessage({ id: directionTextCode })}
+                      tooltip={intl.formatMessage({ id: directionTextCode })}
+                    />
+                  </a>
                 </TableColumn>
                 <TableColumn>
                   <a
@@ -173,31 +185,52 @@ const DocumentList = ({
                     target="_blank"
                     rel="noopener noreferrer"
                     className={styles.documentAnchor}
-                    tabIndex={-1}
                   >
                     {isVedtaksdokument(document) ? (
-                      <Element>{document.tittel}</Element>
+                      <Element tag="span">{document.tittel}</Element>
                     ) : (
-                      <Normaltekst>{document.tittel}</Normaltekst>
+                      <Normaltekst tag="span">{document.tittel}</Normaltekst>
+                    )}
+                    {erInntektsmeldingOgBruktIDenneBehandlingen(document) && (
+                      <StarFillIcon
+                        className={styles.starIcon}
+                        title={intl.formatMessage({ id: 'DocumentList.IBruk' })}
+                      />
                     )}
                   </a>
                 </TableColumn>
                 <TableColumn>
-                  {isTextMoreThan25char(document.gjelderFor) && (
-                    <Tooltip content={<Normaltekst>{document.gjelderFor}</Normaltekst>} alignLeft>
-                      {trimText(document.gjelderFor)}
-                    </Tooltip>
-                  )}
-                  {!isTextMoreThan25char(document.gjelderFor) && document.gjelderFor}
+                  <a
+                    className={styles.documentAnchorPlain}
+                    href={makeDocumentURL(document)}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    tabIndex={-1}
+                  >
+                    {isTextMoreThan25char(document.gjelderFor) && (
+                      <Tooltip content={<Normaltekst>{document.gjelderFor}</Normaltekst>} alignLeft>
+                        {trimText(document.gjelderFor)}
+                      </Tooltip>
+                    )}
+                    {!isTextMoreThan25char(document.gjelderFor) && document.gjelderFor}
+                  </a>
                 </TableColumn>
                 <TableColumn>
-                  {document.tidspunkt ? (
-                    <DateTimeLabel dateTimeString={document.tidspunkt} />
-                  ) : (
-                    <Normaltekst>
-                      <FormattedMessage id="DocumentList.IProduksjon" />
-                    </Normaltekst>
-                  )}
+                  <a
+                    className={styles.documentAnchorPlain}
+                    href={makeDocumentURL(document)}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    tabIndex={-1}
+                  >
+                    {document.tidspunkt ? (
+                      <DateTimeLabel dateTimeString={document.tidspunkt} />
+                    ) : (
+                      <Normaltekst>
+                        <FormattedMessage id="DocumentList.IProduksjon" />
+                      </Normaltekst>
+                    )}
+                  </a>
                 </TableColumn>
               </TableRow>
             );

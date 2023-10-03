@@ -1,6 +1,6 @@
-import React, { ReactNode } from 'react';
 import classNames from 'classnames';
-import styles from './Tooltip.less';
+import React, { ReactNode } from 'react';
+import styles from './Tooltip.module.css';
 
 interface TooltipProps {
   children: ReactNode | ReactNode[];

@@ -21,6 +21,7 @@ class PanelDef extends ProsessStegPanelDef {
     aksjonspunktCodes.VURDERE_DOKUMENT,
     aksjonspunktCodes.KONTROLLER_REVURDERINGSBEHANDLING_VARSEL_VED_UGUNST,
     aksjonspunktCodes.KONTROLL_AV_MAUNELT_OPPRETTET_REVURDERINGSBEHANDLING,
+    aksjonspunktCodes.SJEKK_TILBAKEKREVING,
   ];
 
   getEndepunkter = () => [
@@ -41,6 +42,7 @@ class PanelDef extends ProsessStegPanelDef {
 
   getData = ({
     previewCallback,
+    hentFritekstbrevHtmlCallback,
     rettigheter,
     aksjonspunkter,
     vilkar,
@@ -48,9 +50,10 @@ class PanelDef extends ProsessStegPanelDef {
     beregningsgrunnlag,
     arbeidsgiverOpplysningerPerId,
     lagreDokumentdata,
-    fagsak
+    fagsak,
   }) => ({
     previewCallback,
+    hentFritekstbrevHtmlCallback,
     aksjonspunkter,
     vilkar,
     simuleringResultat,

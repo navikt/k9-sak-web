@@ -56,6 +56,10 @@ const historikkEndretFeltTypeCodes = {
     kode: 'BRUTTO_NAERINGSINNTEKT',
     feltId: 'HistorikkEndretFelt.FastsettSelvstendigNaeringForm.BruttoBerGr',
   },
+  BRUTTO_INNTEKT_NYTT_INNTEKTSFORHOLD: {
+    kode: 'BRUTTO_INNTEKT_NYTT_INNTEKTSFORHOLD',
+    feltId: 'HistorikkEndretFelt.BruttoInntektNyttInntektsforhold',
+  },
   DAGPENGER_INNTEKT: {
     kode: 'DAGPENGER_INNTEKT',
     feltId: 'HistorikkEndretFeltVerdiType.DagpengerInntekt',
@@ -231,6 +235,10 @@ const historikkEndretFeltTypeCodes = {
   VILKAR_SOM_ANVENDES: {
     kode: 'VILKAR_SOM_ANVENDES',
     feltId: 'Historikk.Anvendes',
+  },
+  VURDER_NYTT_INNTEKTSFORHOLD: {
+    kode: 'VURDER_NYTT_INNTEKTSFORHOLD',
+    feltId: 'HistorikkEndretFelt.VurderNyttInntektsforhold',
   },
   OMSORG: {
     kode: 'OMSORG',
@@ -487,6 +495,10 @@ const historikkEndretFeltTypeCodes = {
   KOMPLETTHET: {
     kode: 'KOMPLETTHET',
     feltId: 'HistorikkEndretFelt.Kompletthet',
+  },
+  VIRKNINGSDATO_UTTAK_NYE_REGLER: {
+    kode: 'VIRKNINGSDATO_UTTAK_NYE_REGLER',
+    feltId: 'HistorikkEndretFelt.VirkningsdatoNyeRegler',
   },
 };
 

@@ -12,39 +12,59 @@ env:
   IMAGE_BASE: ghcr.io/${{ github.repository }}
 
 jobs:
+  # test:
+  #   uses: ./.github/workflows/test.yml
+  #   secrets: inherit
+
+  # lint-tscheck-build:
+  #   uses: ./.github/workflows/lint-tscheck-build.yml
+  #   secrets: inherit
+  #   with:
+  #     run-build: false
+
   deploy-docker-image:
     name: Deploy Docker image
     runs-on: ubuntu-latest
+    permissions:
+      issues: write
+      packages: write
+    # needs: [test, lint-tscheck-build]
     steps:
       - name: Hente kode
         uses: actions/checkout@v3
 
+      - name: Setup .yarnrc.yml
+        run: |
+          yarn config set npmScopes.navikt.npmRegistryServer "https://npm.pkg.github.com"
+          yarn config set npmScopes.navikt.npmAlwaysAuth true
+          yarn config set npmScopes.navikt.npmAuthToken $NPM_AUTH_TOKEN
+        env:
+          NPM_AUTH_TOKEN: ${{ secrets.READER_TOKEN }}
+
       - name: Sette opp Node
         uses: actions/setup-node@v3
         with:
-          node-version: '16'
-          registry-url: https://npm.pkg.github.com/
-          scope: '@navikt'
+          node-version: '18'
           cache: 'yarn'
 
       - name: Set timestamp
         run: echo "TIMESTAMP=$(expr $(date +%Y%m%d%H%M%S))" >> $GITHUB_ENV
 
       - name: Installere dependencies
-        run: yarn install --ignore-optional --no-progress --frozen-lockfile
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.READER_TOKEN }}
-
-      - name: Tester, typescript-sjekk og linting
-        run: yarn test:all --maxWorkers=2 && yarn ts-check && yarn less:lint
+        run: HUSKY=0 yarn install --immutable
 
       - name: Bygge dist
         run: yarn build
 
+      - name: Opprett release med Sentry
+        run: yarn sentry-release
+        env:
+          SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
+
       - name: Sette TAG variable for docker image & deploy issue-info
         run: echo "TAG=$TIMESTAMP-$(echo $GITHUB_SHA | cut -c1-7)" >> $GITHUB_ENV
 
-      - uses: docker/login-action@v1
+      - uses: docker/login-action@v2
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
@@ -52,7 +72,6 @@ jobs:
 
       - name: Bygg og laste opp docker-image
         run: |
-          docker pull nginx:1.17.8-alpine
           docker build --tag ${IMAGE_BASE}:${TAG} --tag ${IMAGE_BASE}:latest --label "version=${TAG}" .
           docker push ${IMAGE_BASE} --all-tags
 

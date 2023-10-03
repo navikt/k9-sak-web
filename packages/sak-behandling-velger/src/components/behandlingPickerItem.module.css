@@ -1,0 +1,31 @@
+.linkToBehandling,
+.toggleShowAllButton {
+  background: none;
+  border: 0;
+  color: inherit;
+  margin: 0;
+  padding: 0;
+  text-align: inherit;
+  text-decoration: none;
+  width: 100%;
+}
+
+.linkToBehandling:hover,
+.toggleShowAllButton:hover {
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.linkToBehandling:hover > :first-child,
+.toggleShowAllButton:hover > :first-child {
+  background: #f1f1f1;
+}
+
+.linkToBehandling:visited {
+  color: inherit;
+}
+
+.linkToBehandling:focus,
+.toggleShowAllButton:focus {
+  outline: none;
+}

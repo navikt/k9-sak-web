@@ -1,14 +1,14 @@
-import React from 'react';
-import { FormattedMessage, useIntl } from 'react-intl';
-import moment from 'moment';
-import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
-import { Normaltekst } from 'nav-frontend-typografi';
-import Modal from 'nav-frontend-modal';
-import { DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils';
 import innvilgetImageUrl from '@fpsak-frontend/assets/images/innvilget_valgt.svg';
 import { FlexColumn, FlexContainer, FlexRow, Image, VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils';
+import moment from 'moment';
+import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
+import Modal from 'nav-frontend-modal';
+import { Normaltekst } from 'nav-frontend-typografi';
+import React from 'react';
+import { FormattedMessage, useIntl } from 'react-intl';
 
-import styles from './periode.less';
+import styles from './periode.module.css';
 
 interface OwnProps {
   showModal?: boolean;

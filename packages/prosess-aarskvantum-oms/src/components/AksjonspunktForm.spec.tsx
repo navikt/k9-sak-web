@@ -56,7 +56,6 @@ describe('<AksjonspunktForm>', () => {
           fosterbarn={[]}
           aksjonspunktKode={aksjonspunktCodes.VURDER_ÅRSKVANTUM_KVOTE}
           valgValue={null}
-          fosterbarnValue={[]}
         />,
       );
 
@@ -86,7 +85,6 @@ describe('<AksjonspunktForm>', () => {
           fosterbarn={[]}
           aksjonspunktKode={aksjonspunktCodes.VURDER_ÅRSKVANTUM_KVOTE}
           valgValue={null}
-          fosterbarnValue={[]}
         />,
       );
 
@@ -186,19 +184,40 @@ describe('<AksjonspunktForm>', () => {
     });
   });
 
-  describe('arskvantumFosterbarn', () => {
-    it('Håndterer 9014 riktig', () => {
+  describe('arskvantumFosterbarnFortsett', () => {
+    it('Håndterer fortsettelse av 9014 riktig', () => {
       const formValues: FormValues = {
         valg: 'fortsett',
         begrunnelse: 'Ja.',
         fosterbarn: ['12345678910', '10987654321'],
       };
 
-      const resultat = transformValues(formValues, aksjonspunktCodes.ÅRSKVANTUM_FOSTERBARN);
+      const resultat = transformValues(formValues, aksjonspunktCodes.ÅRSKVANTUM_FOSTERBARN, ['12345678910']);
 
       expect(resultat).toEqual([
         {
           fortsettBehandling: true,
+          begrunnelse: formValues.begrunnelse,
+          kode: aksjonspunktCodes.ÅRSKVANTUM_FOSTERBARN,
+          fosterbarn: ['12345678910'],
+        },
+      ]);
+    });
+  });
+
+  describe('arskvantumFosterbarnRebehandling', () => {
+    it('Håndterer rebehandling av 9014 riktig', () => {
+      const formValues: FormValues = {
+        valg: 'reBehandling',
+        begrunnelse: 'Ja.',
+        fosterbarn: ['12345678910', '10987654321'],
+      };
+
+      const resultat = transformValues(formValues, aksjonspunktCodes.ÅRSKVANTUM_FOSTERBARN, ['12345678910']);
+
+      expect(resultat).toEqual([
+        {
+          fortsettBehandling: false,
           begrunnelse: formValues.begrunnelse,
           kode: aksjonspunktCodes.ÅRSKVANTUM_FOSTERBARN,
           fosterbarn: ['12345678910', '10987654321'],

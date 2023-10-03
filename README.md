@@ -5,7 +5,6 @@ Monorepo for Frontend kode for k9-sak.
 [![](https://github.com/navikt/k9-sak-web/workflows/Deploy%20Docker%20image/badge.svg)](https://github.com/navikt/k9-sak-web/actions?query=workflow%3A%22Deploy+Docker+image%22)
 [![lerna](https://img.shields.io/badge/maintained%20with-lerna-cc00ff.svg)](https://lernajs.io/)
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=navikt_k9-sak-frontend&metric=alert_status)](https://sonarcloud.io/dashboard?id=navikt_k9-sak-frontend)
-[![Known Vulnerabilities](https://snyk.io/test/github/navikt/k9-sak-frontend/badge.svg)](https://snyk.io/test/github/navikt/k9-sak-frontend)
 [![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square)](https://github.com/prettier/prettier)
 
 ## Mikrofrontends i bruk per behandling
@@ -27,10 +26,13 @@ k9-sak-web har dependencies til pakker publisert fra [k9-frontend-modules](https
 
 For å få hentet pakker fra GitHub sitt pakkeregistry må man sette opp lokal NPM med autentisering mot GitHub med en Personal Access Token (PAT) med `read:packages`-tilgang i lokalt utviklingsmiljø, før man gjør `yarn install`. GitHub har en guide på hvordan man gjør dette [her](https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-npm-registry#authenticating-to-github-packages).
 
-TLDR er å opprette en GitHub PAT med kun `read:packages`-tilgang, enable SSO, og putte det i en egen ~/.npmrc-fil slik:
+TLDR er å opprette en GitHub PAT med kun `read:packages`-tilgang, enable SSO, og putte det i en egen ~/.yarnrc.yml-fil slik:
 
 ```
-//npm.pkg.github.com/:_authToken=<token>
+npmRegistries:
+  https://npm.pkg.github.com:
+    npmAlwaysAuth: true
+    npmAuthToken: <token>
 ```
 
 Merk at dette _ikke_ skal sjekkes inn i versjonskontroll.

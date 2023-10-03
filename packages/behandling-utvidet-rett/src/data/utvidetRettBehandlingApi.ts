@@ -25,8 +25,10 @@ export enum UtvidetRettBehandlingApiKeys {
   VERGE_FJERN = 'VERGE_FJERN',
   RAMMEVEDTAK = 'RAMMEVEDTAK',
   TILGJENGELIGE_VEDTAKSBREV = 'TILGJENGELIGE_VEDTAKSBREV',
+  INFORMASJONSBEHOV_VEDTAKSBREV = 'INFORMASJONSBEHOV_VEDTAKSBREV',
   DOKUMENTDATA_LAGRE = 'DOKUMENTDATA_LAGRE',
   DOKUMENTDATA_HENTE = 'DOKUMENTDATA_HENTE',
+  HENT_FRITEKSTBREV_HTML = 'HENT_FRITEKSTBREV_HTML',
   OMSORGEN_FOR = 'OMSORGEN_FOR',
 }
 
@@ -46,6 +48,7 @@ const endpoints = new RestApiConfigBuilder()
   .withRel('sendt-varsel-om-revurdering', UtvidetRettBehandlingApiKeys.SEND_VARSEL_OM_REVURDERING)
   .withRel('soeker-medlemskap-v2', UtvidetRettBehandlingApiKeys.MEDLEMSKAP)
   .withRel('tilgjengelige-vedtaksbrev', UtvidetRettBehandlingApiKeys.TILGJENGELIGE_VEDTAKSBREV)
+  .withRel('informasjonsbehov-vedtaksbrev', UtvidetRettBehandlingApiKeys.INFORMASJONSBEHOV_VEDTAKSBREV)
 
   // operasjoner
   .withRel('dokumentdata-lagre', UtvidetRettBehandlingApiKeys.DOKUMENTDATA_LAGRE)
@@ -72,6 +75,7 @@ const endpoints = new RestApiConfigBuilder()
   .withPost('/k9/formidling/api/brev/forhaandsvis', UtvidetRettBehandlingApiKeys.PREVIEW_MESSAGE, {
     isResponseBlob: true,
   })
+  .withPost('/k9/formidling/api/brev/html', UtvidetRettBehandlingApiKeys.HENT_FRITEKSTBREV_HTML)
 
   .build();
 

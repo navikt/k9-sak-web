@@ -1,29 +1,25 @@
-import React, { useMemo, useCallback, useState } from 'react';
-import { createIntl, createIntlCache, RawIntlProvider, FormattedMessage } from 'react-intl';
 import { Column, Row } from 'nav-frontend-grid';
 import Tabs from 'nav-frontend-tabs';
+import React, { useCallback, useMemo, useState } from 'react';
+import { FormattedMessage } from 'react-intl';
 
-import { FadingPanel, VerticalSpacer, AksjonspunktHelpTextHTML, LoadingPanel } from '@fpsak-frontend/shared-components';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
-import { Behandling, KodeverkMedNavn } from '@k9-sak-web/types';
+import {
+  AksjonspunktHelpTextHTML,
+  FadingPanel,
+  LoadingPanel,
+  NestedIntlProvider,
+  VerticalSpacer,
+} from '@fpsak-frontend/shared-components';
 import { RestApiState } from '@k9-sak-web/rest-api-hooks';
-import { Options, EndpointData, RestApiData } from '@k9-sak-web/rest-api-hooks/src/local-data/useMultipleRestApi';
+import { EndpointData, Options, RestApiData } from '@k9-sak-web/rest-api-hooks/src/local-data/useMultipleRestApi';
+import { Behandling, KodeverkMedNavn } from '@k9-sak-web/types';
 
-import hentAktivePerioderFraVilkar from "@fpsak-frontend/utils/src/hentAktivePerioderFraVilkar";
-import { ProsessStegPanelUtledet } from '../util/prosessSteg/ProsessStegUtledet';
+import hentAktivePerioderFraVilkar from '@fpsak-frontend/utils/src/hentAktivePerioderFraVilkar';
 import messages from '../i18n/nb_NO.json';
+import { ProsessStegPanelUtledet } from '../util/prosessSteg/ProsessStegUtledet';
 
-import styles from './inngangsvilkarPanel.less';
-
-const cache = createIntlCache();
-
-const intl = createIntl(
-  {
-    locale: 'nb-NO',
-    messages,
-  },
-  cache,
-);
+import styles from './inngangsvilkarPanel.module.css';
 
 interface OwnProps {
   behandling: Behandling;
@@ -81,23 +77,25 @@ const InngangsvilkarPanel = ({
     return <LoadingPanel />;
   }
 
-  const perioderFraTidligereBehandlinger = filteredPanels.filter(panel => hentAktivePerioderFraVilkar(panel.vilkar, true).length > 0);
+  const perioderFraTidligereBehandlinger = filteredPanels.filter(
+    panel => hentAktivePerioderFraVilkar(panel.vilkar, true).length > 0,
+  );
 
   return (
-    <RawIntlProvider value={intl}>
+    <NestedIntlProvider messages={messages}>
       <FadingPanel>
         {((apentFaktaPanelInfo && erIkkeFerdigbehandlet) || aksjonspunktTekstKoder.length > 0) && (
           <>
             <AksjonspunktHelpTextHTML>
               {apentFaktaPanelInfo && erIkkeFerdigbehandlet
                 ? [
-                  <>
-                    <FormattedMessage id="InngangsvilkarPanel.AvventerAvklaringAv" />
-                    <a href="" onClick={oppdaterUrl}>
-                      <FormattedMessage id={apentFaktaPanelInfo.textCode} />
-                    </a>
-                  </>,
-                ]
+                    <>
+                      <FormattedMessage id="InngangsvilkarPanel.AvventerAvklaringAv" />
+                      <a href="" onClick={oppdaterUrl}>
+                        <FormattedMessage id={apentFaktaPanelInfo.textCode} />
+                      </a>
+                    </>,
+                  ]
                 : aksjonspunktTekstKoder.map(kode => <FormattedMessage key={kode} id={kode} />)}
             </AksjonspunktHelpTextHTML>
             <VerticalSpacer thirtyTwoPx />
@@ -106,9 +104,11 @@ const InngangsvilkarPanel = ({
         <Tabs
           tabs={
             perioderFraTidligereBehandlinger.length > 0
-              ? [{label: <FormattedMessage id="Vilkarsperioder.DenneBehandling"/>},
-                {label: <FormattedMessage id="Vilkarsperioder.HittilIÅr"/>}]
-              : [{label: <FormattedMessage id="Vilkarsperioder.DenneBehandling"/>}]
+              ? [
+                  { label: <FormattedMessage id="Vilkarsperioder.DenneBehandling" /> },
+                  { label: <FormattedMessage id="Vilkarsperioder.HittilIÅr" /> },
+                ]
+              : [{ label: <FormattedMessage id="Vilkarsperioder.DenneBehandling" /> }]
           }
           onChange={(e, index) => setVisAllePerioder(index === 1)}
         />
@@ -148,7 +148,7 @@ const InngangsvilkarPanel = ({
           </Column>
         </Row>
       </FadingPanel>
-    </RawIntlProvider>
+    </NestedIntlProvider>
   );
 };
 export default InngangsvilkarPanel;

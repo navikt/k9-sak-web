@@ -1,7 +1,7 @@
 import { SetStateAction } from 'react';
 
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
-import { Aksjonspunkt, Vilkar, Uttaksperiode, UtfallEnum } from '@k9-sak-web/types';
+import { Aksjonspunkt, Vilkar, Uttaksperiode, UtfallEnum, FeatureToggles } from '@k9-sak-web/types';
 import aksjonspunktStatus, { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 
 import { ProsessStegDef, ProsessStegPanelDef } from './ProsessStegDef';
@@ -165,8 +165,14 @@ export class ProsessStegPanelUtledet {
   public getErReadOnly = (): boolean =>
     this.isReadOnlyCheck(this.getAksjonspunkterForPanel(), this.getVilkarForPanel());
 
-  public getErDelvisBehandlet = (): boolean => {
-    const { uttaksperioder } = this.getKomponentData();
+  public getErDelvisBehandlet = (erVedtak?: boolean): boolean => {
+    const { uttaksperioder, vilkar } = this.getKomponentData();
+    if (erVedtak) {
+      return (
+        vilkar.some(v => v.perioder.some(periode => periode.vilkarStatus.kode === vilkarUtfallType.IKKE_OPPFYLT)) &&
+        vilkar.some(v => v.perioder.some(periode => periode.vilkarStatus.kode === vilkarUtfallType.OPPFYLT))
+      );
+    }
     return finnErDelvisBehandlet(this.prosessStegPanelDef.finnVilkarForSteg(this.vilkar), uttaksperioder);
   };
 
@@ -219,7 +225,10 @@ export class ProsessStegUtledet {
 
   public getTekstKode = (): string => this.prosessStegDef.getTekstKode();
 
-  public getErStegDelvisBehandlet = (): boolean => this.paneler.every(p => p.getErDelvisBehandlet());
+  public getErStegDelvisBehandlet = (featureToggles?: FeatureToggles): boolean => {
+    const erVedtak = this.paneler.some(p => p.getId() === 'VEDTAK');
+    return this.paneler.some(p => p.getErDelvisBehandlet(erVedtak));
+  };
 
   private harMinstEttDelPanelStatus = (vuType: string): boolean => this.paneler.some(p => p.getStatus() === vuType);
 

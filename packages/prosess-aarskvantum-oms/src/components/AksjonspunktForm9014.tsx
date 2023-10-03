@@ -1,21 +1,28 @@
-import React, { useEffect, useMemo, useState } from 'react';
-import { AksjonspunktHelpTextTemp, BorderBox, VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { FormattedMessage } from 'react-intl';
-import { behandlingForm, getBehandlingFormName } from '@fpsak-frontend/form/src/behandlingForm';
-import { connect } from 'react-redux';
-import { InjectedFormProps, ConfigProps, SubmitHandler, FieldArray, formValueSelector } from 'redux-form';
-import { minLength, maxLength, required, hasValidText, hasValidValue } from '@fpsak-frontend/utils';
-import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 import { CheckboxField, RadioGroupField, RadioOption, TextAreaField } from '@fpsak-frontend/form/index';
-import { Element } from 'nav-frontend-typografi';
+import { behandlingForm, getBehandlingFormName } from '@fpsak-frontend/form/src/behandlingForm';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { Aksjonspunkt, UtfallEnum, VurderteVilkår, VilkårEnum } from '@k9-sak-web/types';
-import AlertStripe from 'nav-frontend-alertstriper';
+import {
+  AksjonspunktHelpTextTemp,
+  BorderBox,
+  Table,
+  TableColumn,
+  TableRow,
+  VerticalSpacer,
+} from '@fpsak-frontend/shared-components';
+import { hasValidText, hasValidValue, maxLength, minLength, required } from '@fpsak-frontend/utils';
+import { Aksjonspunkt, UtfallEnum, Uttaksperiode, VilkårEnum } from '@k9-sak-web/types';
 import { Modal } from '@navikt/ds-react';
-import styles from './aksjonspunktForm.less';
+import { Hovedknapp } from 'nav-frontend-knapper';
+import { Element } from 'nav-frontend-typografi';
+import React, { useMemo } from 'react';
+import { FormattedMessage } from 'react-intl';
+import { connect } from 'react-redux';
+import { ConfigProps, FieldArray, InjectedFormProps, SubmitHandler, formValueSelector } from 'redux-form';
 import Aktivitet from '../dto/Aktivitet';
 import { fosterbarnDto } from '../dto/FosterbarnDto';
 import FosterbarnForm from './FosterbarnForm';
+import styles from './aksjonspunktForm.module.css';
+import { valgValues } from './utils';
 
 interface AksjonspunktFormImplProps {
   aktiviteter: Aktivitet[];
@@ -23,7 +30,6 @@ interface AksjonspunktFormImplProps {
   fosterbarn: fosterbarnDto[];
   aksjonspunktKode: string;
   valgValue: string;
-  fosterbarnValue: fosterbarnDto[];
 }
 
 interface FormContentProps {
@@ -33,7 +39,6 @@ interface FormContentProps {
   fosterbarn: fosterbarnDto[];
   aksjonspunktKode: string;
   valgValue: string;
-  fosterbarnValue: fosterbarnDto[];
   initialValues: { begrunnelse: string; fosterbarn: fosterbarnDto[] } | any;
   dirty: boolean;
   reset: () => void;
@@ -41,15 +46,10 @@ interface FormContentProps {
 
 const årskvantumAksjonspunktFormName = 'årskvantumAksjonspunktFormName';
 
-const valgValues = {
-  reBehandling: 'reBehandling',
-  fortsett: 'fortsett',
-};
-
-const vilkårHarOverlappendePerioderIInfotrygd = (vurderteVilkår: VurderteVilkår) =>
-  Object.entries(vurderteVilkår).some(
+const vilkårHarOverlappendePerioderIInfotrygd = (uttaksperiode: Uttaksperiode) =>
+  Object.entries(uttaksperiode.vurderteVilkår.vilkår).some(
     ([vilkår, utfall]) => vilkår === VilkårEnum.NOK_DAGER && utfall === UtfallEnum.UAVKLART,
-  );
+  ) && !uttaksperiode.hjemler.some(hjemmel => hjemmel === 'FTRL_9_7__4');
 
 const utledAksjonspunktKode = (aksjonspunkter: Aksjonspunkt[]) => {
   // 9014 skal ha presedens
@@ -69,62 +69,25 @@ export const FormContent = ({
   fosterbarn,
   aksjonspunktKode,
   valgValue,
-  fosterbarnValue,
   initialValues,
-  dirty,
-  reset,
 }: FormContentProps) => {
-  Modal.setAppElement(document.body);
-  const uavklartePerioder = useMemo(
+  const uavklartePerioderPgaInfotrygd = useMemo(
     () =>
       aktiviteter
         .flatMap(({ uttaksperioder }) => uttaksperioder)
-        .filter(({ utfall }) => utfall === UtfallEnum.UAVKLART),
+        .filter(
+          ({ utfall, hjemler }) =>
+            utfall === UtfallEnum.UAVKLART && !hjemler.some(hjemmelen => hjemmelen === 'FTRL_9_7__4'),
+        ),
     [aktiviteter],
   );
 
-  const [kanFortsette, setKanFortsette] = useState<boolean>(true);
-  const [kanRebehandle, setKanRebehandle] = useState<boolean>(true);
-  const [kanFullføre, setKanFullføre] = useState<boolean>(false);
-  const [vistNullstillAdvarsel, setVisNullstillAdvarsel] = useState<boolean>(false);
-
-  const handleNullstill = () => {
-    reset();
-    setVisNullstillAdvarsel(false);
-  };
-
-  useEffect(() => {
-    let fosterbarnEndret = false;
-
-    if (fosterbarnValue && initialValues.fosterbarn) {
-      fosterbarnEndret =
-        JSON.stringify([...initialValues.fosterbarn].sort()) !== JSON.stringify([...fosterbarnValue].sort());
-    }
-
-    if (fosterbarnEndret) {
-      setKanRebehandle(true);
-      setKanFortsette(false);
-    } else {
-      setKanRebehandle(false);
-      setKanFortsette(true);
-    }
-
-    if (valgValue === valgValues.reBehandling) {
-      if (fosterbarnEndret) setKanFullføre(true);
-      else setKanFullføre(false);
-    }
-
-    if (valgValue === valgValues.fortsett) {
-      if (!fosterbarnEndret) setKanFullføre(true);
-      else setKanFullføre(false);
-    }
-  }, [valgValue, fosterbarnValue]);
-
-  const harUavklartePerioder = uavklartePerioder.length > 0;
+  const erÅF = aksjonspunktKode === aksjonspunktCodes.ÅRSKVANTUM_FOSTERBARN;
+  const harUavklartePerioder = uavklartePerioderPgaInfotrygd.length > 0;
 
   if (harUavklartePerioder) {
-    const harOverlappendePerioderIInfotrygd = uavklartePerioder.some(({ vurderteVilkår }) =>
-      vilkårHarOverlappendePerioderIInfotrygd(vurderteVilkår.vilkår),
+    const harOverlappendePerioderIInfotrygd = uavklartePerioderPgaInfotrygd.some(uttaksperiode =>
+      vilkårHarOverlappendePerioderIInfotrygd(uttaksperiode),
     );
 
     return (
@@ -171,11 +134,7 @@ export const FormContent = ({
         {[
           <FormattedMessage
             key={1}
-            id={
-              aksjonspunktKode === '9014'
-                ? 'Årskvantum.Aksjonspunkt.Avslått.Fosterbarn'
-                : 'Årskvantum.Aksjonspunkt.Avslått'
-            }
+            id={erÅF ? 'Årskvantum.Aksjonspunkt.Avslått.Fosterbarn' : 'Årskvantum.Aksjonspunkt.Avslått'}
           />,
         ]}
       </AksjonspunktHelpTextTemp>
@@ -193,19 +152,17 @@ export const FormContent = ({
           <RadioOption
             value={valgValues.reBehandling}
             label={{
-              id:
-                aksjonspunktKode === '9014'
-                  ? 'Årskvantum.Aksjonspunkt.Avslått.ReBehandling.Fosterbarn'
-                  : 'Årskvantum.Aksjonspunkt.Avslått.ReBehandling',
+              id: erÅF
+                ? 'Årskvantum.Aksjonspunkt.Avslått.ReBehandling.Fosterbarn'
+                : 'Årskvantum.Aksjonspunkt.Avslått.ReBehandling',
             }}
           />
           <RadioOption
             value={valgValues.fortsett}
             label={{
-              id:
-                aksjonspunktKode === '9014'
-                  ? 'Årskvantum.Aksjonspunkt.Avslått.Fortsett.Fosterbarn'
-                  : 'Årskvantum.Aksjonspunkt.Avslått.Fortsett',
+              id: erÅF
+                ? 'Årskvantum.Aksjonspunkt.Avslått.Fortsett.Fosterbarn'
+                : 'Årskvantum.Aksjonspunkt.Avslått.Fortsett',
             }}
           />
         </RadioGroupField>
@@ -217,67 +174,56 @@ export const FormContent = ({
         maxLength={1500}
         readOnly={!isAksjonspunktOpen}
       />
-
       <VerticalSpacer sixteenPx />
 
-      <BorderBox>
-        <FieldArray
-          name="fosterbarn"
-          component={FosterbarnForm}
-          barn={fosterbarn}
-          isAksjonspunktOpen={isAksjonspunktOpen}
-        />
-      </BorderBox>
-
-      <VerticalSpacer sixteenPx />
-
-      {isAksjonspunktOpen && (
+      {isAksjonspunktOpen && (!erÅF || valgValue === valgValues.reBehandling) && (
         <>
-          {!kanFortsette && !kanFullføre && dirty && (
-            <>
-              <AlertStripe type="feil">
-                <FormattedMessage id="Årskvantum.Aksjonspunkt.Avslått.Fosterbarn.KanIkkeFortsette" />
-              </AlertStripe>
-              <VerticalSpacer sixteenPx />
-            </>
-          )}
-
-          {!kanRebehandle && !kanFullføre && dirty && (
-            <>
-              <AlertStripe type="feil">
-                <FormattedMessage id="Årskvantum.Aksjonspunkt.Avslått.Fosterbarn.KanIkkeRebehandle" />
-              </AlertStripe>
-              <VerticalSpacer sixteenPx />
-            </>
-          )}
-
-          <div className={styles.spaceBetween}>
-            <Hovedknapp onClick={handleSubmit} htmlType="submit" disabled={!kanFullføre}>
-              <FormattedMessage id="Årskvantum.Aksjonspunkt.Avslått.Bekreft" />
-            </Hovedknapp>
-            <Knapp type="fare" htmlType="button" onClick={() => setVisNullstillAdvarsel(true)} disabled={!dirty}>
-              <FormattedMessage id="Årskvantum.Aksjonspunkt.Avslått.Fosterbarn.NullstillKnapp" />
-            </Knapp>
-          </div>
+          <BorderBox>
+            <FieldArray
+              name="fosterbarn"
+              component={FosterbarnForm}
+              barn={fosterbarn}
+              isAksjonspunktOpen={isAksjonspunktOpen}
+              valgValue={valgValue}
+              aksjonspunktkode={aksjonspunktKode}
+            />
+          </BorderBox>
+          <VerticalSpacer sixteenPx />
         </>
       )}
 
-      <Modal open={vistNullstillAdvarsel} onClose={() => setVisNullstillAdvarsel(false)} closeButton={false}>
-        <div className={styles.modalInnhold}>
-          <AlertStripe type="advarsel">
-            <FormattedMessage id="Årskvantum.Aksjonspunkt.Avslått.Fosterbarn.BekreftNullstillTekst" />
-          </AlertStripe>
-          <VerticalSpacer thirtyTwoPx />
-          <div className={styles.spaceBetween}>
-            <Knapp type="hoved" onClick={() => setVisNullstillAdvarsel(false)}>
-              Avbryt
-            </Knapp>
-            <Knapp type="fare" onClick={() => handleNullstill()}>
-              Nullstill skjemaet
-            </Knapp>
-          </div>
+      {erÅF && (valgValue === valgValues.fortsett || !valgValue) && initialValues.fosterbarn.length > 0 && (
+        <>
+          <VerticalSpacer eightPx />
+          <Table>
+            <TableRow isHeader>
+              <TableColumn>
+                <FormattedMessage id="Årskvantum.Aksjonspunkt.Avslått.FosterbarnTittel" />
+              </TableColumn>
+            </TableRow>
+            {initialValues.fosterbarn.map((fosterbarnFnr, index) => {
+              const fosterbarnObj = fosterbarn.find(barn => barn.fnr === fosterbarnFnr);
+              const navn = fosterbarnObj && fosterbarnObj.navn ? fosterbarnObj.navn : `Fosterbarn ${index + 1}`;
+              return (
+                <TableRow key={`${navn}`}>
+                  <TableColumn className={styles.vertikaltSentrert}>
+                    {navn} ({fosterbarnObj.fnr})
+                  </TableColumn>
+                </TableRow>
+              );
+            })}
+          </Table>
+          <VerticalSpacer eightPx />
+        </>
+      )}
+
+      {isAksjonspunktOpen && (
+        <div className={styles.spaceBetween}>
+          <Hovedknapp onClick={handleSubmit} htmlType="submit">
+            <FormattedMessage id="Årskvantum.Aksjonspunkt.Avslått.Bekreft" />
+          </Hovedknapp>
         </div>
-      </Modal>
+      )}
     </>
   );
 };
@@ -289,7 +235,6 @@ const AksjonspunktFormImpl = ({
   fosterbarn,
   aksjonspunktKode,
   valgValue,
-  fosterbarnValue,
   initialValues,
   dirty,
   reset,
@@ -303,7 +248,6 @@ const AksjonspunktFormImpl = ({
         fosterbarn={fosterbarn}
         aksjonspunktKode={aksjonspunktKode}
         valgValue={valgValue}
-        fosterbarnValue={fosterbarnValue}
         initialValues={initialValues}
         dirty={dirty}
         reset={reset}
@@ -337,17 +281,30 @@ export const begrunnelseUavklartePerioder = 'Rammemeldinger er oppdatert i Infot
 export const transformValues = (
   { begrunnelse = begrunnelseUavklartePerioder, valg, bekreftInfotrygd, fosterbarn }: FormValues,
   kode: string,
+  initialFosterbarn: string[] = [],
 ) => {
+  if (kode === aksjonspunktCodes.ÅRSKVANTUM_FOSTERBARN && valg === valgValues.fortsett) {
+    return [{ kode, begrunnelse, fortsettBehandling: true, fosterbarn: initialFosterbarn }];
+  }
+
   if (bekreftInfotrygd || valg === valgValues.reBehandling) {
     return [{ kode, begrunnelse, fortsettBehandling: false, fosterbarn }];
   }
+
   return [{ kode, begrunnelse, fortsettBehandling: true, fosterbarn }];
 };
 
 const mapStateToPropsFactory = (_initialState, initialProps: AksjonspunktFormProps) => {
   const { submitCallback, aksjonspunkterForSteg: aksjonspunkter } = initialProps;
   const aksjonspunktKode = utledAksjonspunktKode(aksjonspunkter);
-  const onSubmit = (formValues: FormValues) => submitCallback(transformValues(formValues, aksjonspunktKode));
+  const onSubmit = (formValues: FormValues) =>
+    submitCallback(
+      transformValues(
+        formValues,
+        aksjonspunktKode,
+        initialProps.fosterbarn.map(barn => barn.fnr),
+      ),
+    );
   const { behandlingId, behandlingVersjon } = initialProps;
   const formNavn = getBehandlingFormName(behandlingId, behandlingVersjon, årskvantumAksjonspunktFormName);
 
@@ -356,7 +313,7 @@ const mapStateToPropsFactory = (_initialState, initialProps: AksjonspunktFormPro
     { aktiviteter, isAksjonspunktOpen, aksjonspunkterForSteg = [], fosterbarn }: AksjonspunktFormProps,
   ): Partial<ConfigProps<FormValues>> & AksjonspunktFormImplProps => {
     const selector = formValueSelector(formNavn);
-    const { valg: valgValue, fosterbarn: fosterbarnValue } = selector(state, 'valg', 'fosterbarn');
+    const { valg: valgValue } = selector(state, 'valg', 'fosterbarn');
 
     return {
       onSubmit,
@@ -369,7 +326,6 @@ const mapStateToPropsFactory = (_initialState, initialProps: AksjonspunktFormPro
       fosterbarn,
       aksjonspunktKode,
       valgValue,
-      fosterbarnValue,
     };
   };
 };

@@ -1,15 +1,17 @@
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
+import { useFeatureToggles } from '@fpsak-frontend/shared-components';
 import { dateFormat } from '@fpsak-frontend/utils';
 import hentAktivePerioderFraVilkar from '@fpsak-frontend/utils/src/hentAktivePerioderFraVilkar';
 import { Aksjonspunkt, Behandling, KodeverkMedNavn, SubmitCallback, Vilkar } from '@k9-sak-web/types';
-import { SideMenu } from '@navikt/k9-react-components';
+import { SideMenu } from '@navikt/ft-plattform-komponenter';
 import classNames from 'classnames/bind';
 import React, { SetStateAction, useEffect, useState } from 'react';
-import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
+import { RawIntlProvider, createIntl, createIntlCache } from 'react-intl';
 import messages from '../i18n/nb_NO.json';
+import VilkarresultatMedOverstyringFormPeriodisert from './components-periodisert/VilkarresultatMedOverstyringForm';
 import VilkarresultatMedOverstyringForm from './components/VilkarresultatMedOverstyringForm';
 import VilkarresultatMedOverstyringHeader from './components/VilkarresultatMedOverstyringHeader';
-import styles from './vilkarresultatMedOverstyringProsessIndex.less';
+import styles from './vilkarresultatMedOverstyringProsessIndex.module.css';
 
 const cx = classNames.bind(styles);
 
@@ -41,6 +43,7 @@ interface VilkarresultatMedOverstyringProsessIndexProps {
   panelTittelKode: string;
   overstyringApKode: string;
   erMedlemskapsPanel: boolean;
+  visPeriodisering: boolean;
   vilkar: Vilkar[];
   visAllePerioder: boolean;
 }
@@ -59,6 +62,7 @@ const VilkarresultatMedOverstyringProsessIndex = ({
   overstyringApKode,
   lovReferanse,
   erMedlemskapsPanel,
+  visPeriodisering,
   vilkar,
   visAllePerioder,
 }: VilkarresultatMedOverstyringProsessIndexProps) => {
@@ -66,6 +70,8 @@ const VilkarresultatMedOverstyringProsessIndex = ({
 
   const [activeVilkår] = vilkar;
   const perioder = hentAktivePerioderFraVilkar(vilkar, visAllePerioder);
+
+  const [featureToggles] = useFeatureToggles();
 
   useEffect(() => {
     if (!visAllePerioder && activeTab >= perioder.length) {
@@ -116,28 +122,56 @@ const VilkarresultatMedOverstyringProsessIndex = ({
             status={activePeriode.vilkarStatus.kode}
             toggleOverstyring={toggleOverstyring}
           />
-          <VilkarresultatMedOverstyringForm
-            key={`${activePeriode.periode?.fom}-${activePeriode.periode?.tom}`}
-            behandlingId={behandling.id}
-            behandlingVersjon={behandling.versjon}
-            behandlingType={behandling.type}
-            behandlingsresultat={behandling.behandlingsresultat}
-            medlemskapFom={medlemskap?.fom}
-            aksjonspunkter={aksjonspunkter}
-            submitCallback={submitCallback}
-            overrideReadOnly={overrideReadOnly}
-            kanOverstyreAccess={kanOverstyreAccess}
-            toggleOverstyring={toggleOverstyring}
-            avslagsarsaker={avslagsarsaker}
-            status={activePeriode.vilkarStatus.kode}
-            erOverstyrt={erOverstyrt}
-            panelTittelKode={panelTittelKode}
-            overstyringApKode={overstyringApKode}
-            lovReferanse={activeVilkår.lovReferanse ?? lovReferanse}
-            erMedlemskapsPanel={erMedlemskapsPanel}
-            avslagKode={activePeriode.avslagKode}
-            periode={activePeriode}
-          />
+          {featureToggles?.OMSORGEN_FOR_PERIODISERT && (
+            <VilkarresultatMedOverstyringFormPeriodisert
+              key={`${activePeriode.periode?.fom}-${activePeriode.periode?.tom}`}
+              behandlingId={behandling.id}
+              behandlingVersjon={behandling.versjon}
+              behandlingType={behandling.type}
+              behandlingsresultat={behandling.behandlingsresultat}
+              medlemskapFom={medlemskap?.fom}
+              aksjonspunkter={aksjonspunkter}
+              submitCallback={submitCallback}
+              overrideReadOnly={overrideReadOnly}
+              kanOverstyreAccess={kanOverstyreAccess}
+              toggleOverstyring={toggleOverstyring}
+              avslagsarsaker={avslagsarsaker}
+              status={activePeriode.vilkarStatus.kode}
+              erOverstyrt={erOverstyrt}
+              panelTittelKode={panelTittelKode}
+              overstyringApKode={overstyringApKode}
+              lovReferanse={activeVilkår.lovReferanse ?? lovReferanse}
+              erMedlemskapsPanel={erMedlemskapsPanel}
+              visPeriodisering={visPeriodisering}
+              avslagKode={activePeriode.avslagKode}
+              periode={activePeriode}
+            />
+          )}
+
+          {!featureToggles?.OMSORGEN_FOR_PERIODISERT && (
+            <VilkarresultatMedOverstyringForm
+              key={`${activePeriode.periode?.fom}-${activePeriode.periode?.tom}`}
+              behandlingId={behandling.id}
+              behandlingVersjon={behandling.versjon}
+              behandlingType={behandling.type}
+              behandlingsresultat={behandling.behandlingsresultat}
+              medlemskapFom={medlemskap?.fom}
+              aksjonspunkter={aksjonspunkter}
+              submitCallback={submitCallback}
+              overrideReadOnly={overrideReadOnly}
+              kanOverstyreAccess={kanOverstyreAccess}
+              toggleOverstyring={toggleOverstyring}
+              avslagsarsaker={avslagsarsaker}
+              status={activePeriode.vilkarStatus.kode}
+              erOverstyrt={erOverstyrt}
+              panelTittelKode={panelTittelKode}
+              overstyringApKode={overstyringApKode}
+              lovReferanse={activeVilkår.lovReferanse ?? lovReferanse}
+              erMedlemskapsPanel={erMedlemskapsPanel}
+              avslagKode={activePeriode.avslagKode}
+              periode={activePeriode}
+            />
+          )}
         </div>
       </div>
     </RawIntlProvider>

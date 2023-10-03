@@ -81,23 +81,21 @@ const formaterPerioderForTidslinje = (
   vilkarsVurdertePerioder: CustomVilkarsVurdertePeriode[],
   perioder: DataForPeriode[] = [],
 ) =>
-  perioder.map(
-    (periode: DataForPeriode, index: number): TidslinjePeriode => {
-      const per = vilkarsVurdertePerioder.find(
-        (p: CustomVilkarsVurdertePeriode) => p.fom === periode.fom && p.tom === periode.tom,
-      );
-      const erBelopetIBehold =
-        per && per[per.valgtVilkarResultatType] ? per[per.valgtVilkarResultatType].erBelopetIBehold : undefined;
-      const erSplittet = per ? !!per.erSplittet : false;
-      return {
-        fom: periode.fom,
-        tom: periode.tom,
-        isAksjonspunktOpen: !periode.erForeldet && (per.begrunnelse === undefined || erSplittet),
-        isGodkjent: !(periode.erForeldet || erBelopetIBehold === false),
-        id: index,
-      };
-    },
-  );
+  perioder.map((periode: DataForPeriode, index: number): TidslinjePeriode => {
+    const per = vilkarsVurdertePerioder.find(
+      (p: CustomVilkarsVurdertePeriode) => p.fom === periode.fom && p.tom === periode.tom,
+    );
+    const erBelopetIBehold =
+      per && per[per.valgtVilkarResultatType] ? per[per.valgtVilkarResultatType].erBelopetIBehold : undefined;
+    const erSplittet = per ? !!per.erSplittet : false;
+    return {
+      fom: periode.fom,
+      tom: periode.tom,
+      isAksjonspunktOpen: !periode.erForeldet && (per.begrunnelse === undefined || erSplittet),
+      isGodkjent: !(periode.erForeldet || erBelopetIBehold === false),
+      id: index,
+    };
+  });
 
 interface OwnProps {
   vilkarsVurdertePerioder?: CustomVilkarsVurdertePeriode[];
@@ -247,8 +245,8 @@ export class TilbakekrevingFormImpl extends Component<OwnProps & DispatchProps &
     const isApOpen = perioderFormatertForTidslinje.some((p: TidslinjePeriode) => p.isAksjonspunktOpen);
     const valgtPeriodeFormatertForTidslinje = valgtPeriode
       ? perioderFormatertForTidslinje.find(
-        (p: TidslinjePeriode) => p.fom === valgtPeriode.fom && p.tom === valgtPeriode.tom,
-      )
+          (p: TidslinjePeriode) => p.fom === valgtPeriode.fom && p.tom === valgtPeriode.tom,
+        )
       : undefined;
 
     return (
@@ -327,13 +325,13 @@ export const transformValues = (
   values: { vilkarsVurdertePerioder: CustomVilkarsVurdertePeriode[] },
   sarligGrunnTyper: KodeverkMedNavn[],
 ) => [
-    {
-      kode: aksjonspunktCodesTilbakekreving.VURDER_TILBAKEKREVING,
-      vilkarsVurdertePerioder: values.vilkarsVurdertePerioder
-        .filter((p: CustomVilkarsVurdertePeriode) => !p.erForeldet)
-        .map((p: CustomVilkarsVurdertePeriode) => periodeFormTransformValues(p, sarligGrunnTyper)),
-    },
-  ];
+  {
+    kode: aksjonspunktCodesTilbakekreving.VURDER_TILBAKEKREVING,
+    vilkarsVurdertePerioder: values.vilkarsVurdertePerioder
+      .filter((p: CustomVilkarsVurdertePeriode) => !p.erForeldet)
+      .map((p: CustomVilkarsVurdertePeriode) => periodeFormTransformValues(p, sarligGrunnTyper)),
+  },
+];
 
 const finnOriginalPeriode = (
   lagretPeriode: CustomVilkarsVurdertePeriode | VilkarsVurdertPeriode,
@@ -378,9 +376,9 @@ export const slaSammenOriginaleOgLagredePeriode = createSelector(
       0,
     );
     const erTotalBelopUnder4Rettsgebyr = totalbelop < rettsgebyr * 4;
-    const lagredeVilkarsvurdertePerioder = vilkarsvurdering.vilkarsVurdertePerioder;
+    const lagredeVilkarsvurdertePerioder = vilkarsvurdering?.vilkarsVurdertePerioder;
 
-    const lagredePerioder = lagredeVilkarsvurdertePerioder.map((lagretPeriode: VilkarsVurdertPeriode) => {
+    const lagredePerioder = lagredeVilkarsvurdertePerioder?.map((lagretPeriode: VilkarsVurdertPeriode) => {
       const originalPeriode = finnOriginalPeriode(lagretPeriode, perioder);
       return {
         ...originalPeriode,

@@ -3,16 +3,22 @@ import { Route, Routes } from 'react-router-dom';
 
 import { NotFoundPage } from '@k9-sak-web/sak-infosider';
 
-import { aktoerRoutePath, fagsakRoutePath } from '../paths';
-import FagsakIndex from '../../fagsak/FagsakIndex';
 import AktoerIndex from '../../aktoer/AktoerIndex';
+import FagsakIndex from '../../fagsak/FagsakIndex';
+import { aktoerRoutePath, fagsakRoutePath } from '../paths';
 import DashboardResolver from './DashboardResolver';
 
-import styles from './home.less';
+import styles from './home.module.css';
 
 interface OwnProps {
   headerHeight: number;
 }
+
+// Brukes av RequestRunner.ts for å lukke en popup som logger inn igjen ved 401
+const CloseWindow = () => {
+  window.close();
+  return <div />;
+};
 
 /**
  * Home
@@ -25,7 +31,8 @@ const Home = ({ headerHeight }: OwnProps) => (
       <Route path="/" element={<DashboardResolver />} />
       <Route path={fagsakRoutePath} element={<FagsakIndex />} />
       <Route path={aktoerRoutePath} element={<AktoerIndex />} />
-      <Route path='*' element={<NotFoundPage />} />
+      <Route path="/close" element={<CloseWindow />} />
+      <Route path="*" element={<NotFoundPage />} />
     </Routes>
   </div>
 );

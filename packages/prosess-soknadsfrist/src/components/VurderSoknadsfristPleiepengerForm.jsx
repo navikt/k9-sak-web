@@ -1,15 +1,14 @@
-import React from 'react';
+import moment from 'moment';
+import { Column, Row } from 'nav-frontend-grid';
+import Panel from 'nav-frontend-paneler';
+import { Element, Normaltekst, Undertekst, Undertittel } from 'nav-frontend-typografi';
 import PropTypes from 'prop-types';
+import React from 'react';
 import { FormattedMessage } from 'react-intl';
+import { connect } from 'react-redux';
 import { formPropTypes } from 'redux-form';
 import { createSelector } from 'reselect';
-import moment from 'moment';
-import { connect } from 'react-redux';
-import { Column, Row } from 'nav-frontend-grid';
-import { Element, Normaltekst, Undertekst, Undertittel } from 'nav-frontend-typografi';
-import Panel from 'nav-frontend-paneler';
 
-import { AksjonspunktHelpTextTemp, ArrowBox, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import {
   DatepickerField,
   RadioGroupField,
@@ -20,11 +19,12 @@ import {
   isBehandlingFormDirty,
   isBehandlingFormSubmitting,
 } from '@fpsak-frontend/form';
-import { dateBeforeOrEqualToToday, DDMMYYYY_DATE_FORMAT, hasValidDate, required } from '@fpsak-frontend/utils';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
-import { ProsessStegSubmitButton, ProsessStegBegrunnelseTextField } from '@k9-sak-web/prosess-felles';
+import { AksjonspunktHelpTextTemp, ArrowBox, VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { DDMMYYYY_DATE_FORMAT, dateBeforeOrEqualToToday, hasValidDate, required } from '@fpsak-frontend/utils';
+import { ProsessStegBegrunnelseTextField, ProsessStegSubmitButton } from '@k9-sak-web/prosess-felles';
 
-import styles from './vurderSoknadsfristPleiepengerForm.less';
+import styles from './vurderSoknadsfristPleiepengerForm.module.css';
 
 const isEdited = (hasAksjonspunkt, gyldigSenFremsetting) => hasAksjonspunkt && gyldigSenFremsetting !== undefined;
 
@@ -172,10 +172,10 @@ VurderSoknadsfristPleiepengerFormImpl.defaultProps = {
 export const buildInitialValues = createSelector(
   [
     (state, ownProps) => ownProps.aksjonspunkter,
-    (state, ownProps) => ownProps.uttakPeriodeGrense,
     (state, ownProps) => ownProps.mottattDato,
+    (state, ownProps) => ownProps.uttakPeriodeGrense,
   ],
-  (aksjonspunkter, uttaksperiodegrense = {}, mottattDato) => ({
+  (aksjonspunkter, mottattDato, uttaksperiodegrense = {}) => ({
     gyldigSenFremsetting: isAksjonspunktOpen(aksjonspunkter[0].status.kode)
       ? undefined
       : uttaksperiodegrense.mottattDato !== mottattDato,

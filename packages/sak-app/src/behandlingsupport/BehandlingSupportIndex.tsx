@@ -2,16 +2,16 @@ import React, { useCallback, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import SupportMenySakIndex, { SupportTabs } from '@fpsak-frontend/sak-support-meny';
-import { Fagsak, BehandlingAppKontekst, Personopplysninger, ArbeidsgiverOpplysningerWrapper } from '@k9-sak-web/types';
+import { ArbeidsgiverOpplysningerWrapper, BehandlingAppKontekst, Fagsak, Personopplysninger } from '@k9-sak-web/types';
 
 import { getSupportPanelLocationCreator } from '../app/paths';
+import useTrackRouteParam from '../app/useTrackRouteParam';
+import BehandlingRettigheter from '../behandling/behandlingRettigheterTsType';
+import styles from './behandlingSupportIndex.module.css';
+import DokumentIndex from './dokument/DokumentIndex';
 import HistorikkIndex from './historikk/HistorikkIndex';
 import MeldingIndex from './melding/MeldingIndex';
-import DokumentIndex from './dokument/DokumentIndex';
 import TotrinnskontrollIndex from './totrinnskontroll/TotrinnskontrollIndex';
-import useTrackRouteParam from '../app/useTrackRouteParam';
-import styles from './behandlingSupportIndex.less';
-import BehandlingRettigheter from '../behandling/behandlingRettigheterTsType';
 
 export const hentSynligePaneler = (behandlingRettigheter?: BehandlingRettigheter): string[] =>
   Object.values(SupportTabs).filter(supportPanel => {

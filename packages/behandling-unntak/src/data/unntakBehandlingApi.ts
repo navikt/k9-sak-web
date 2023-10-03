@@ -4,6 +4,7 @@ import { RestApiHooks } from '@k9-sak-web/rest-api-hooks';
 // NB! ALDRI BRUK DETTE UTENFOR DENNE BEHANDLINGSPAKKEN
 
 export enum UnntakBehandlingApiKeys {
+  HENT_SAKSBEHANDLERE = 'HENT_SAKSBEHANDLERE',
   BEHANDLING_UNNTAK = 'BEHANDLING_UNNTAK',
   UPDATE_ON_HOLD = 'UPDATE_ON_HOLD',
   SAVE_AKSJONSPUNKT = 'SAVE_AKSJONSPUNKT',
@@ -37,12 +38,14 @@ export enum UnntakBehandlingApiKeys {
   TILGJENGELIGE_VEDTAKSBREV = 'TILGJENGELIGE_VEDTAKSBREV',
   DOKUMENTDATA_LAGRE = 'DOKUMENTDATA_LAGRE',
   DOKUMENTDATA_HENTE = 'DOKUMENTDATA_HENTE',
+  HENT_FRITEKSTBREV_HTML = 'HENT_FRITEKSTBREV_HTML',
   ARBEIDSFORHOLD = 'ARBEIDSFORHOLD',
 }
 
 const endpoints = new RestApiConfigBuilder()
   .withAsyncPost('/k9/sak/api/behandlinger', UnntakBehandlingApiKeys.BEHANDLING_UNNTAK)
 
+  .withRel('saksbehandler-info', UnntakBehandlingApiKeys.HENT_SAKSBEHANDLERE)
   .withRel('beregningsresultat-utbetalt', UnntakBehandlingApiKeys.BEREGNINGSRESULTAT_UTBETALING) // behandlingsdata
   .withRel('aksjonspunkter', UnntakBehandlingApiKeys.AKSJONSPUNKTER)
   .withRel('vilkar-v3', UnntakBehandlingApiKeys.VILKAR)
@@ -88,6 +91,7 @@ const endpoints = new RestApiConfigBuilder()
 
   /* K9FORMIDLING */
   .withPost('/k9/formidling/api/brev/forhaandsvis', UnntakBehandlingApiKeys.PREVIEW_MESSAGE, { isResponseBlob: true })
+  .withPost('/k9/formidling/api/brev/html', UnntakBehandlingApiKeys.HENT_FRITEKSTBREV_HTML)
 
   .build();
 

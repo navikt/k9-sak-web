@@ -1,29 +1,30 @@
+import { shallow } from 'enzyme';
 import React from 'react';
 import sinon from 'sinon';
-import { shallow } from 'enzyme';
 
-import { Behandling, Fagsak, Soknad } from '@k9-sak-web/types';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
+import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
+import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
+import fagsakStatus from '@fpsak-frontend/kodeverk/src/fagsakStatus';
+import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
+import personstatusType from '@fpsak-frontend/kodeverk/src/personstatusType';
+import soknadType from '@fpsak-frontend/kodeverk/src/soknadType';
+import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
+import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import {
-  ProsessStegPanel,
   FatterVedtakStatusModal,
   IverksetterVedtakStatusModal,
   ProsessStegContainer,
+  ProsessStegPanel,
 } from '@k9-sak-web/behandling-felles';
-import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
-import fagsakStatus from '@fpsak-frontend/kodeverk/src/fagsakStatus';
-import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
-import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
-import soknadType from '@fpsak-frontend/kodeverk/src/soknadType';
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
-import personstatusType from '@fpsak-frontend/kodeverk/src/personstatusType';
-import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
-import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
+import { Behandling, Fagsak, Soknad } from '@k9-sak-web/types';
 
+import { K9sakApiKeys, requestApi } from '@k9-sak-web/sak-app/src/data/k9sakApi';
+import { PleiepengerBehandlingApiKeys, requestPleiepengerApi } from '../data/pleiepengerBehandlingApi';
 import FetchedData from '../types/fetchedDataTsType';
 import PleiepengerProsess from './PleiepengerProsess';
-import { PleiepengerBehandlingApiKeys, requestPleiepengerApi } from '../data/pleiepengerBehandlingApi';
 
 describe('<PleiepengerProsess>', () => {
   const fagsak = {
@@ -166,7 +167,7 @@ describe('<PleiepengerProsess>', () => {
       erPrivatPerson: false,
       identifikator: 'testId',
       navn: 'testNavn',
-      arbeidsforholdreferanser: []
+      arbeidsforholdreferanser: [],
     },
   };
 
@@ -177,6 +178,7 @@ describe('<PleiepengerProsess>', () => {
   };
 
   it('skal vise alle aktuelle prosessSteg i meny', () => {
+    requestApi.mock(K9sakApiKeys.FEATURE_TOGGLE, []);
     const wrapper = shallow(
       <PleiepengerProsess
         data={fetchedData as FetchedData}
@@ -270,6 +272,7 @@ describe('<PleiepengerProsess>', () => {
   });
 
   it('skal sette nytt valgt prosessSteg ved trykk i meny', () => {
+    requestApi.mock(K9sakApiKeys.FEATURE_TOGGLE, []);
     const oppdaterProsessStegOgFaktaPanelIUrl = sinon.spy();
     const wrapper = shallow(
       <PleiepengerProsess
@@ -306,6 +309,7 @@ describe('<PleiepengerProsess>', () => {
   });
 
   it('skal vise fatter vedtak modal etter lagring når aksjonspunkt er FORESLA_VEDTAK og så lukke denne og gå til søkeside', async () => {
+    requestApi.mock(K9sakApiKeys.FEATURE_TOGGLE, []);
     const vedtakAksjonspunkter = [
       {
         definisjon: { kode: aksjonspunktCodes.FORESLA_VEDTAK, kodeverk: 'test' },
@@ -372,6 +376,7 @@ describe('<PleiepengerProsess>', () => {
   });
 
   it('skal vise iverksetter vedtak modal etter lagring når aksjonspunkt er FATTER_VEDTAK og så lukke denne og gå til søkeside', async () => {
+    requestApi.mock(K9sakApiKeys.FEATURE_TOGGLE, []);
     const vedtakAksjonspunkter = [
       {
         definisjon: { kode: aksjonspunktCodes.FATTER_VEDTAK, kodeverk: 'test' },
@@ -434,6 +439,7 @@ describe('<PleiepengerProsess>', () => {
   });
 
   it('skal gå til søkeside når en har revurderingsaksjonspunkt', async () => {
+    requestApi.mock(K9sakApiKeys.FEATURE_TOGGLE, []);
     const vedtakAksjonspunkter = [
       {
         definisjon: { kode: aksjonspunktCodes.VARSEL_REVURDERING_MANUELL, kodeverk: 'test' },
@@ -486,6 +492,7 @@ describe('<PleiepengerProsess>', () => {
   });
 
   it('skal gå til neste panel i prosess etter løst aksjonspunkt', async () => {
+    requestApi.mock(K9sakApiKeys.FEATURE_TOGGLE, []);
     const oppdaterProsessStegOgFaktaPanelIUrl = sinon.spy();
     const wrapper = shallow(
       <PleiepengerProsess
@@ -525,6 +532,7 @@ describe('<PleiepengerProsess>', () => {
   });
 
   it('skal legge til forhåndsvisningsfunksjon i prosess-steget til vedtak', () => {
+    requestApi.mock(K9sakApiKeys.FEATURE_TOGGLE, []);
     requestPleiepengerApi.mock(PleiepengerBehandlingApiKeys.PREVIEW_MESSAGE, undefined);
     const wrapper = shallow(
       <PleiepengerProsess
@@ -569,6 +577,7 @@ describe('<PleiepengerProsess>', () => {
   });
 
   it('skal legge til forhåndsvisningsfunksjon i prosess-steget til simulering', () => {
+    requestApi.mock(K9sakApiKeys.FEATURE_TOGGLE, []);
     requestPleiepengerApi.mock(PleiepengerBehandlingApiKeys.PREVIEW_TILBAKEKREVING_MESSAGE, undefined);
     const wrapper = shallow(
       <PleiepengerProsess

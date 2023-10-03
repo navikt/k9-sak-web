@@ -32,16 +32,8 @@
     "value": "${LOS_MARKER_BEHANDLING}"
   },
   {
-    "key": "NY_BEREGNING_PROSESS_ENABLED",
-    "value": "${NY_BEREGNING_PROSESS_ENABLED}"
-  },
-  {
-    "key": "NY_BEREGNING_FAKTA_ENABLED",
-    "value": "${NY_BEREGNING_FAKTA_ENABLED}"
-  },
-  {
-    "key": "NY_BEREGNING_FAKTA_FORDEL_ENABLED",
-    "value": "${NY_BEREGNING_FAKTA_FORDEL_ENABLED}"
+    "key": "LOS_MARKER_BEHANDLING_SUBMIT",
+    "value": "${LOS_MARKER_BEHANDLING_SUBMIT}"
   },
   {
     "key": "AKSJONSPUNKT_9014",
@@ -52,7 +44,31 @@
     "value": "${AKSJONSPUNKT_9015}"
   },
   {
-    "key": "NY_PROSESS_VEDTAK_ENABLED",
-    "value": "${NY_PROSESS_VEDTAK_ENABLED}"
+    "key": "FRITEKST_REDIGERING",
+    "value": "${FRITEKST_REDIGERING}"
+  },
+  {
+    "key": "FIX_SOKNADSFRIST_KALENDER_OG_READONLY",
+    "value": "${FIX_SOKNADSFRIST_KALENDER_OG_READONLY}"
+  },
+  {
+    "key": "OPPLAERINGSPENGER",
+    "value": "${OPPLAERINGSPENGER}"
+  },
+  {
+    "key": "SKJUL_AVSLUTTET_ARBEIDSGIVER",
+    "value": "${SKJUL_AVSLUTTET_ARBEIDSGIVER}"
+  },
+  {
+    "key": "OMS_PUNSJSTRIPE",
+    "value": "${OMS_PUNSJSTRIPE}"
+  },
+  {
+    "key": "OMSORGEN_FOR_PERIODISERT",
+    "value": "${OMSORGEN_FOR_PERIODISERT}"
+  },
+  {
+    "key": "OVERSTYR_BEREGNING",
+    "value": "${OVERSTYR_BEREGNING}"
   }
 ]

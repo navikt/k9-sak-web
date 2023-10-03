@@ -1,22 +1,39 @@
-import React, { useEffect } from 'react';
-import { createSelector } from 'reselect';
-import { connect } from 'react-redux';
-import { InjectedFormProps } from 'redux-form';
-import { injectIntl, WrappedComponentProps } from 'react-intl';
 import classNames from 'classnames';
 import { Hovedknapp } from 'nav-frontend-knapper';
+import React, { useEffect } from 'react';
+import { injectIntl, WrappedComponentProps } from 'react-intl';
+import { connect } from 'react-redux';
+import { InjectedFormProps } from 'redux-form';
 
-import dokumentMalType from '@fpsak-frontend/kodeverk/src/dokumentMalType';
-import { ArbeidsgiverOpplysningerPerId, Brevmal, Brevmaler, Kodeverk, KodeverkMedNavn, Mottaker, Personopplysninger } from '@k9-sak-web/types';
-import { ariaCheck, getLanguageCodeFromSprakkode, hasValidText, maxLength, minLength, required, safeJSONParse } from '@fpsak-frontend/utils';
-import { lagVisningsnavnForMottaker } from '@fpsak-frontend/utils/src/formidlingUtils';
-import ugunstAarsakTyper from '@fpsak-frontend/kodeverk/src/ugunstAarsakTyper';
 import { behandlingForm, behandlingFormValueSelector, SelectField, TextAreaField } from '@fpsak-frontend/form';
+import dokumentMalType from '@fpsak-frontend/kodeverk/src/dokumentMalType';
+
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
+import {
+  ariaCheck,
+  getLanguageCodeFromSprakkode,
+  hasValidText,
+  maxLength,
+  minLength,
+  required,
+  safeJSONParse,
+} from '@fpsak-frontend/utils';
+import { lagVisningsnavnForMottaker } from '@fpsak-frontend/utils/src/formidlingUtils';
+import {
+  ArbeidsgiverOpplysningerPerId,
+  Brevmal,
+  Brevmaler,
+  Kodeverk,
+  KodeverkMedNavn,
+  Mottaker,
+  Personopplysninger,
+} from '@k9-sak-web/types';
 
 import InputField from '@fpsak-frontend/form/src/InputField';
+import { useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
 import { Fritekstbrev } from '@k9-sak-web/types/src/formidlingTsType';
-import styles from './messages.less';
+import { MessagesApiKeys, requestMessagesApi, restApiMessagesHooks } from '../data/messagesApi';
+import styles from './messages.module.css';
 
 const maxLength4000 = maxLength(4000);
 const maxLength100000 = maxLength(100000);
@@ -28,23 +45,19 @@ export type FormValues = {
   brevmalkode: string;
   fritekst: string;
   fritekstbrev: Fritekstbrev;
-  arsakskode?: string;
 };
-
-// TODO (TOR) Bør erstattast av ein markør fra backend
-const showFritekst = (brevmalkode?: string, arsakskode?: string): boolean =>
-  brevmalkode === dokumentMalType.INNHENT_DOK ||
-  brevmalkode === dokumentMalType.KORRIGVARS ||
-  brevmalkode === dokumentMalType.FRITKS ||
-  brevmalkode === dokumentMalType.VARSEL_OM_TILBAKEKREVING ||
-  (brevmalkode === dokumentMalType.REVURDERING_DOK && arsakskode === ugunstAarsakTyper.ANNET);
 
 interface PureOwnProps {
   submitCallback: (values: FormValues) => void;
   behandlingId: number;
   behandlingVersjon: number;
-  previewCallback: (overstyrtMottaker: Mottaker, brevmalkode: string, fritekst: string, fritekstbrev?: Fritekstbrev) => void;
-  templates: Brevmaler | Brevmal[];
+  previewCallback: (
+    overstyrtMottaker: Mottaker,
+    brevmalkode: string,
+    fritekst: string,
+    fritekstbrev?: Fritekstbrev,
+  ) => void;
+  templates?: Brevmaler;
   sprakKode?: Kodeverk;
   revurderingVarslingArsak: KodeverkMedNavn[];
   isKontrollerRevurderingApOpen?: boolean;
@@ -53,13 +66,11 @@ interface PureOwnProps {
 }
 
 interface MappedOwnProps {
-  causes: KodeverkMedNavn[];
   overstyrtMottaker?: string;
   brevmalkode?: string;
   fritekst?: string;
-  arsakskode?: string;
   fritekstbrev?: Fritekstbrev;
-
+  fritekstforslag?: string;
 }
 
 const formName = 'Messages';
@@ -67,14 +78,9 @@ const RECIPIENT = { id: 'Bruker', type: '' };
 
 const createValidateRecipient = recipients => value =>
   value === JSON.stringify(RECIPIENT) ||
-    (Array.isArray(recipients) && recipients.some(recipient => JSON.stringify(recipient) === value))
+  (Array.isArray(recipients) && recipients.some(recipient => JSON.stringify(recipient) === value))
     ? undefined
     : [{ id: 'ValidationMessage.InvalidRecipient' }];
-
-const transformTemplates = templates =>
-  templates && typeof templates === 'object' && !Array.isArray(templates)
-    ? Object.keys(templates).map(key => ({ ...templates[key], kode: key }))
-    : templates;
 
 /**
  * Messages
@@ -85,14 +91,13 @@ const transformTemplates = templates =>
 export const MessagesImpl = ({
   intl,
   templates,
-  causes = [],
   previewCallback,
   handleSubmit,
   sprakKode,
   overstyrtMottaker,
   brevmalkode,
   fritekst,
-  arsakskode,
+  fritekstforslag,
   personopplysninger,
   arbeidsgiverOpplysningerPerId,
   fritekstbrev,
@@ -101,6 +106,12 @@ export const MessagesImpl = ({
   if (!sprakKode) {
     return null;
   }
+  if (!templates) {
+    return null;
+  }
+
+  const { addErrorMessage } = useRestApiErrorDispatcher();
+  requestMessagesApi.setAddErrorMessageHandler(addErrorMessage);
 
   const previewMessage = e => {
     e.preventDefault();
@@ -111,34 +122,56 @@ export const MessagesImpl = ({
         : undefined,
       brevmalkode,
       fritekst,
-      fritekstbrev
+      fritekstbrev,
     );
   };
 
   const languageCode = getLanguageCodeFromSprakkode(sprakKode);
 
-  const recipients: Mottaker[] =
-    templates && brevmalkode && templates[brevmalkode] && Array.isArray(templates[brevmalkode].mottakere)
-      ? templates[brevmalkode].mottakere
-      : [];
+  const valgtBrevmal = templates[brevmalkode];
 
-  const tmpls: Brevmal[] = transformTemplates(templates);
+  const recipients: Mottaker[] = templates[brevmalkode]?.mottakere ?? [];
+
+  const tmpls: Brevmal[] = Object.keys(templates).map(key => ({ ...templates[key], kode: key }));
+
+  const { startRequest: hentPreutfylteMaler, data: fritekstforslagTyper } = restApiMessagesHooks.useRestApiRunner<
+    { tittel: string; fritekst: string }[]
+  >(MessagesApiKeys.HENT_PREUTFYLTE_FRITEKSTMALER);
 
   useEffect(() => {
-    // Tilbakestill valgt mottaker hvis brukeren skifter mal og valgt mottakere ikke er tilgjengelig på ny mal.
     if (brevmalkode) {
+      // Resetter fritekst hver gang bruker endrer brevmalskode
+      formProps.change('fritekst', null);
+      formProps.change('fritekstbrev.overskrift', null);
+      formProps.change('fritekstbrev.brødtekst', null);
+
+      // Tilbakestill valgt mottaker hvis brukeren skifter mal og valgt mottakere ikke er tilgjengelig på ny mal.
       formProps.change(
         'overstyrtMottaker',
         recipients.some(recipient => JSON.stringify(recipient) === overstyrtMottaker)
           ? overstyrtMottaker
           : JSON.stringify(recipients[0]),
       );
+
+      if (valgtBrevmal.linker.length > 0) {
+        requestMessagesApi.setLinks(valgtBrevmal.linker);
+        hentPreutfylteMaler()
+          .then(_fritekstForslagTyper => {
+            const felter = _fritekstForslagTyper.find(alt => fritekstforslag === alt.tittel);
+
+            if (felter) {
+              formProps.change('fritekst', felter.fritekst);
+            }
+            // Catch er tom fordi error message skal håndteres av requestMessagesApi.
+          })
+          .catch(() => {});
+      }
     }
-  }, [brevmalkode]);
+  }, [brevmalkode, fritekstforslag]);
 
   return (
     <form onSubmit={handleSubmit} data-testid="MessagesForm">
-      {Array.isArray(tmpls) && tmpls.length ? (
+      {tmpls.length ? (
         <>
           <SelectField
             name="brevmalkode"
@@ -153,6 +186,23 @@ export const MessagesImpl = ({
             ))}
             bredde="xxl"
           />
+          {valgtBrevmal?.linker.length > 0 && fritekstforslagTyper && (
+            <>
+              <VerticalSpacer eightPx />
+              <SelectField
+                name="fritekstforslag"
+                label={intl.formatMessage({ id: 'Messages.TypeAvDokumentasjon' })}
+                validate={[]}
+                placeholder={intl.formatMessage({ id: 'Messages.VelgTypeAvDokumentasjon' })}
+                selectValues={fritekstforslagTyper.map(alternativ => (
+                  <option key={alternativ.tittel} value={alternativ.tittel}>
+                    {alternativ.tittel}
+                  </option>
+                ))}
+                bredde="xxl"
+              />
+            </>
+          )}
           {recipients.length > 0 && (
             <>
               <VerticalSpacer eightPx />
@@ -174,24 +224,7 @@ export const MessagesImpl = ({
               />
             </>
           )}
-          {brevmalkode === dokumentMalType.REVURDERING_DOK && (
-            <>
-              <VerticalSpacer eightPx />
-              <SelectField
-                name="arsakskode"
-                label={intl.formatMessage({ id: 'Messages.Årsak' })}
-                validate={[required]}
-                placeholder={intl.formatMessage({ id: 'Messages.VelgÅrsak' })}
-                selectValues={(causes || []).map(cause => (
-                  <option key={cause.kode} value={cause.kode}>
-                    {cause.navn}
-                  </option>
-                ))}
-                bredde="xxl"
-              />
-            </>
-          )}
-          {showFritekst(brevmalkode, arsakskode) && (
+          {valgtBrevmal?.støtterFritekst && (
             <>
               <VerticalSpacer eightPx />
               <div className="input--xxl">
@@ -205,11 +238,11 @@ export const MessagesImpl = ({
               </div>
             </>
           )}
-          {brevmalkode === dokumentMalType.GENERELT_FRITEKSTBREV && (
-            <div className='input--xxl'>
+          {valgtBrevmal?.støtterTittelOgFritekst && (
+            <div className="input--xxl">
               <VerticalSpacer eightPx />
               <InputField
-                name='fritekstbrev.overskrift'
+                name="fritekstbrev.overskrift"
                 label={intl.formatMessage({ id: 'Messages.FritekstTittel' })}
                 validate={[required, minLength3, maxLength200, hasValidText]}
                 maxLength={200}
@@ -217,7 +250,7 @@ export const MessagesImpl = ({
 
               <VerticalSpacer eightPx />
               <TextAreaField
-                name='fritekstbrev.brødtekst'
+                name="fritekstbrev.brødtekst"
                 label={intl.formatMessage({ id: 'Messages.Fritekst' })}
                 validate={[required, minLength3, maxLength100000, hasValidText]}
                 maxLength={100000}
@@ -249,25 +282,18 @@ export const MessagesImpl = ({
   );
 };
 
-const buildInitalValues = (templates: Brevmaler | Brevmal[], isKontrollerRevurderingApOpen?: boolean): FormValues => {
-  let brevmalkode = Array.isArray(templates) ? templates[0].kode : null;
-  let overstyrtMottaker = JSON.stringify(RECIPIENT);
-
-  if (templates && typeof templates === 'object' && !Array.isArray(templates)) {
-    [brevmalkode] = Object.keys(templates);
-    overstyrtMottaker =
-      templates[brevmalkode] && templates[brevmalkode].mottakere && Array.isArray(templates[brevmalkode].mottakere)
-        ? JSON.stringify(templates[brevmalkode].mottakere[0])
-        : null;
-  }
+const buildInitalValues = (templates?: Brevmaler, isKontrollerRevurderingApOpen?: boolean): FormValues => {
+  const brevmalkode = templates ? Object.keys(templates)[0] : null;
+  const overstyrtMottaker =
+    templates && templates[brevmalkode] && templates[brevmalkode].mottakere
+      ? JSON.stringify(templates[brevmalkode].mottakere[0])
+      : null;
 
   const initialValues = {
     brevmalkode,
     overstyrtMottaker,
-    // overstyrtMottaker: null,
     fritekst: null,
-    fritekstbrev: null
-    // arsakskode: null,
+    fritekstbrev: null,
   };
 
   return isKontrollerRevurderingApOpen
@@ -275,10 +301,11 @@ const buildInitalValues = (templates: Brevmaler | Brevmal[], isKontrollerRevurde
     : { ...initialValues };
 };
 
-const transformValues = values => {
+const transformValues = (values: any) => {
   const newValues = values;
-  if (values.brevmalkode === dokumentMalType.REVURDERING_DOK && newValues.arsakskode !== ugunstAarsakTyper.ANNET) {
-    newValues.fritekst = ' ';
+
+  if (values.brevmalkode !== dokumentMalType.GENERELT_FRITEKSTBREV && values.fritekstbrev) {
+    newValues.fritekstbrev = undefined;
   }
 
   const overstyrtMottaker =
@@ -287,9 +314,6 @@ const transformValues = values => {
       : undefined;
   return { ...newValues, overstyrtMottaker };
 };
-const getfilteredCauses = createSelector([(ownProps: PureOwnProps) => ownProps.revurderingVarslingArsak], causes =>
-  causes.filter(cause => cause.kode !== ugunstAarsakTyper.BARN_IKKE_REGISTRERT_FOLKEREGISTER),
-);
 
 const mapStateToPropsFactory = (_initialState, initialOwnProps: PureOwnProps) => {
   const onSubmit = (values: FormValues) => initialOwnProps.submitCallback(transformValues(values));
@@ -297,13 +321,12 @@ const mapStateToPropsFactory = (_initialState, initialOwnProps: PureOwnProps) =>
     ...behandlingFormValueSelector(formName, ownProps.behandlingId, ownProps.behandlingVersjon)(
       state,
       'overstyrtMottaker',
+      'fritekstforslag',
       'brevmalkode',
       'fritekst',
-      'arsakskode',
       'fritekstbrev.overskrift',
-      'fritekstbrev.brødtekst'
+      'fritekstbrev.brødtekst',
     ),
-    causes: getfilteredCauses(ownProps),
     initialValues: buildInitalValues(ownProps.templates, ownProps.isKontrollerRevurderingApOpen),
     onSubmit,
   });

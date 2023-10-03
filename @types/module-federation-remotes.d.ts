@@ -1,3 +1,0 @@
-declare module 'ft_prosess_beregningsgrunnlag/ProsessBeregningsgrunnlag';
-declare module 'ft_fakta_beregning/FaktaBeregning';
-declare module 'ft_fakta_fordel_beregningsgrunnlag/FaktaFordelBeregningsgrunnlag';

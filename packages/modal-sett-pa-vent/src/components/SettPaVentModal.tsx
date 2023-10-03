@@ -21,10 +21,10 @@ import Modal from 'nav-frontend-modal';
 import { Select as NavSelect } from 'nav-frontend-skjema';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
 import React, { useState } from 'react';
-import { FormattedMessage, injectIntl, WrappedComponentProps } from 'react-intl';
+import { FormattedMessage, WrappedComponentProps, injectIntl } from 'react-intl';
 import { connect } from 'react-redux';
-import { formValueSelector, InjectedFormProps, reduxForm } from 'redux-form';
-import styles from './settPaVentModal.less';
+import { InjectedFormProps, formValueSelector, reduxForm } from 'redux-form';
+import styles from './settPaVentModal.module.css';
 
 const initFrist = (): string => {
   const date = moment().toDate();
@@ -128,7 +128,7 @@ interface MappedOwnProps {
   ventearsakVariant?: string;
   originalVentearsakVariant?: string;
 }
-
+const maxLength200 = maxLength(200);
 export const SettPaVentModal = ({
   intl,
   handleSubmit,
@@ -168,8 +168,6 @@ export const SettPaVentModal = ({
   const showKommentarInput = venterårsakerMedKommentarmulighet.includes(ventearsak);
 
   const toggleEndreFrist = () => setShowEndreFrist(!showEndreFrist);
-
-  Modal.setAppElement(document.body);
 
   const getHovedknappTekst = () => {
     if (erVenterEtterlysInntektsmelding && !showEndreFrist) {
@@ -261,7 +259,7 @@ export const SettPaVentModal = ({
                 name="ventearsakVariant"
                 maxLength={200}
                 readOnly={!hasManualPaVent}
-                validate={[hasValidText, maxLength(200)]}
+                validate={[hasValidText, maxLength200]}
                 label={
                   <div className={styles.commentInputLabel}>
                     <Element>{intl.formatMessage({ id: 'SettPaVentModal.Kommentar' })}</Element>

@@ -1,21 +1,21 @@
-import React, { Component, RefObject } from 'react';
-import moment from 'moment';
-import { injectIntl, WrappedComponentProps } from 'react-intl';
-import { Column, Row } from 'nav-frontend-grid';
-import { BeregningsresultatPeriode, KodeverkMedNavn, ArbeidsgiverOpplysningerPerId } from '@k9-sak-web/types';
-import {
-  calcDaysAndWeeksWithWeekends,
-  DDMMYY_DATE_FORMAT,
-  ISO_DATE_FORMAT,
-  getKodeverknavnFn,
-} from '@fpsak-frontend/utils';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { Timeline, TimeLineControl } from '@fpsak-frontend/tidslinje';
-import TilkjentYtelseTimelineData from './TilkjentYtelseTimelineData';
+import { TimeLineControl, Timeline } from '@fpsak-frontend/tidslinje';
+import {
+  DDMMYY_DATE_FORMAT,
+  ISO_DATE_FORMAT,
+  calcDaysAndWeeksWithWeekends,
+  getKodeverknavnFn,
+} from '@fpsak-frontend/utils';
+import { ArbeidsgiverOpplysningerPerId, BeregningsresultatPeriode, KodeverkMedNavn } from '@k9-sak-web/types';
+import moment from 'moment';
+import { Column, Row } from 'nav-frontend-grid';
+import React, { Component, RefObject } from 'react';
+import { WrappedComponentProps, injectIntl } from 'react-intl';
 import { createVisningsnavnForAndel } from './TilkjentYteleseUtils';
+import TilkjentYtelseTimelineData from './TilkjentYtelseTimelineData';
 
-import styles from './tilkjentYtelse.less';
+import styles from './tilkjentYtelse.module.css';
 
 export type PeriodeMedId = BeregningsresultatPeriode & { id: number };
 
@@ -26,14 +26,18 @@ const getOptions = (nyePerioder: PeriodeMedId[]) => {
   const lastPeriod = nyePerioder[nyePerioder.length - 1];
 
   return {
-    end: moment(lastPeriod?.tom).add(2, 'days').toDate(),
+    end: moment(lastPeriod?.tom)
+      .add(2, 'days')
+      .toDate(),
     locale: moment.locale('nb'),
     margin: { item: 10 },
     moment,
     orientation: { axis: 'top' },
     showCurrentTime: false,
     stack: false,
-    start: moment(firstPeriod?.fom).subtract(1, 'days').toDate(),
+    start: moment(firstPeriod?.fom)
+      .subtract(1, 'days')
+      .toDate(),
     tooltip: { followMouse: true },
     width: '100%',
     zoomMax: 1000 * 60 * 60 * 24 * 31 * 40,
@@ -71,29 +75,41 @@ const createTooltipContent = (intl, item, getKodeverknavn, arbeidsgiverOpplysnin
                 {
                   arbeidsgiver: createVisningsnavnForAndel(andel, getKodeverknavn, arbeidsgiverOpplysningerPerId),
                   dagsatsPerAndel: Number(andel.refusjon) + Number(andel.tilSoker),
-                  br: '<br />',
                 },
               ),
             )
-            .join('')
+            .join('<br />')
         : ''
     }
    </p>
 `;
 };
 
-const andelerUtgjør100ProsentTilsammen = periode => {
-  const { andeler } = periode;
-  const totalUtbetalingsgrad = (andeler || []).reduce((accumulator, andel) => accumulator + andel.utbetalingsgrad, 0);
-  if (totalUtbetalingsgrad >= 100) {
-    return true;
+const sumUtBetalingsgrad = (andeler: any) => andeler.reduce((sum, andel) => sum + andel.utbetalingsgrad, 0);
+
+const erTotalUtbetalingsgradOver100 = periode => {
+  const values = [
+    periode.totalUtbetalingsgradEtterReduksjonVedTilkommetInntekt,
+    periode.totalUtbetalingsgradFraUttak,
+  ].filter(value => value !== null);
+
+  if (values.length > 0) {
+    const totalUtbetalingsgrad = Math.min(...values) * 100;
+    return totalUtbetalingsgrad >= 100;
+  }
+
+  // Resten av koden i denne funksjonen kan fjernes når alle saker har totalUtbetalingsgradFraUttak.
+  // Denne koden er kun for å støtte saker som er laget før totalUtbetalingsgradFraUttak ble lagt til.
+  if (periode.andeler) {
+    const totalUtbetalingsgrad = sumUtBetalingsgrad(periode.andeler);
+    return totalUtbetalingsgrad >= 100;
   }
   return false;
 };
 
 const prepareTimelineData = (periode, index, intl, getKodeverknavn, arbeidsgiverOpplysningerPerId) => ({
   ...periode,
-  className: andelerUtgjør100ProsentTilsammen(periode) ? 'innvilget' : 'gradert',
+  className: erTotalUtbetalingsgradOver100(periode) ? 'innvilget' : 'gradert',
   group: 1,
   id: index,
   start: parseDateString(periode.fom),

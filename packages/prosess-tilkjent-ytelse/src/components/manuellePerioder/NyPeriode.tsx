@@ -1,16 +1,16 @@
-import React from 'react';
-import { connect } from 'react-redux';
-import { FormattedMessage } from 'react-intl';
-import { FieldArray, InjectedFormProps } from 'redux-form';
-import { Element } from 'nav-frontend-typografi';
-import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
-import { calcDaysAndWeeks, guid, hasValidPeriod, required } from '@fpsak-frontend/utils';
 import { DatepickerField, behandlingForm, behandlingFormValueSelector } from '@fpsak-frontend/form';
 import { FlexColumn, FlexContainer, FlexRow, VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { KodeverkMedNavn, Periode, ArbeidsgiverOpplysningerPerId } from '@k9-sak-web/types';
+import { calcDaysAndWeeks, guid, hasValidPeriod, required } from '@fpsak-frontend/utils';
+import { ArbeidsgiverOpplysningerPerId, KodeverkMedNavn, Periode } from '@k9-sak-web/types';
+import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
+import { Element } from 'nav-frontend-typografi';
+import React from 'react';
+import { FormattedMessage } from 'react-intl';
+import { connect } from 'react-redux';
+import { FieldArray, InjectedFormProps } from 'redux-form';
 import NyAndel from './NyAndel';
 
-import styles from './periode.less';
+import styles from './periode.module.css';
 
 interface OwnProps {
   newPeriodeResetCallback: (values: any) => any;

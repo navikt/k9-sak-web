@@ -6,7 +6,6 @@ import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import CopyWebpackPlugin from 'copy-webpack-plugin';
 import ESLintPlugin from 'eslint-webpack-plugin';
-import ExternalTemplateRemotesPlugin from 'external-remotes-plugin';
 
 import { IS_DEV, IS_PROD } from '../constants';
 import { PUBLIC_ROOT, LANG_DIR } from '../paths';
@@ -62,6 +61,6 @@ export default function (env?) {
           failOnError: true,
         })
       : false,
-    new ExternalTemplateRemotesPlugin(),
+    new webpack.EnvironmentPlugin({ SENTRY_RELEASE: null }),
   ].filter(Boolean);
 }

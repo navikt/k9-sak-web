@@ -1,14 +1,15 @@
+import moment from 'moment/moment';
+import AlertStripe from 'nav-frontend-alertstriper';
+import { Column, Row } from 'nav-frontend-grid';
+import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
+import Modal from 'nav-frontend-modal';
+import { Element, Normaltekst, Undertekst } from 'nav-frontend-typografi';
 import React from 'react';
 import { FormattedMessage, injectIntl, WrappedComponentProps } from 'react-intl';
 import { connect } from 'react-redux';
-import moment from 'moment/moment';
 import { InjectedFormProps } from 'redux-form';
-import { Element, Normaltekst, Undertekst } from 'nav-frontend-typografi';
-import Modal from 'nav-frontend-modal';
-import { Column, Row } from 'nav-frontend-grid';
-import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
-import AlertStripe from 'nav-frontend-alertstriper';
 
+import { behandlingForm, DatepickerField } from '@fpsak-frontend/form';
 import {
   dateAfterOrEqual,
   dateBeforeOrEqual,
@@ -17,9 +18,8 @@ import {
   ISO_DATE_FORMAT,
   required,
 } from '@fpsak-frontend/utils';
-import { DatepickerField, behandlingForm } from '@fpsak-frontend/form';
 
-import styles from './delOppPeriodeModal.less';
+import styles from './delOppPeriodeModal.module.css';
 
 type PeriodeData = {
   fom: string;

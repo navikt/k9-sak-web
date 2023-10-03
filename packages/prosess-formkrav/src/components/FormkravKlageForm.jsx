@@ -1,12 +1,10 @@
-import React from 'react';
 import moment from 'moment';
-import { FormattedMessage, injectIntl } from 'react-intl';
-import PropTypes from 'prop-types';
-import { Undertekst, Undertittel } from 'nav-frontend-typografi';
 import { Column, Row } from 'nav-frontend-grid';
+import { Undertekst, Undertittel } from 'nav-frontend-typografi';
+import PropTypes from 'prop-types';
+import React from 'react';
+import { FormattedMessage, injectIntl } from 'react-intl';
 
-import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
-import { ProsessStegSubmitButton, ProsessStegBegrunnelseTextField } from '@k9-sak-web/prosess-felles';
 import {
   RadioGroupField,
   RadioOption,
@@ -15,12 +13,14 @@ import {
   isBehandlingFormDirty,
   isBehandlingFormSubmitting,
 } from '@fpsak-frontend/form';
-import { AksjonspunktHelpTextTemp, FadingPanel, VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { DDMMYYYY_DATE_FORMAT, required, getKodeverknavnFn } from '@fpsak-frontend/utils';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
+import { AksjonspunktHelpTextTemp, FadingPanel, VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { DDMMYYYY_DATE_FORMAT, getKodeverknavnFn, required } from '@fpsak-frontend/utils';
+import { ProsessStegBegrunnelseTextField, ProsessStegSubmitButton } from '@k9-sak-web/prosess-felles';
 import lagVisningsnavnForKlagepart from '../utils/lagVisningsnavnForKlagepart';
 
-import styles from './formkravKlageForm.less';
+import styles from './formkravKlageForm.module.css';
 
 export const IKKE_PAKLAGD_VEDTAK = 'ikkePaklagdVedtak';
 

@@ -1,16 +1,16 @@
+import { Column, Row } from 'nav-frontend-grid';
+import { Hovedknapp } from 'nav-frontend-knapper';
+import Modal from 'nav-frontend-modal';
+import { Normaltekst } from 'nav-frontend-typografi';
+import PropTypes from 'prop-types';
 import React, { useState } from 'react';
 import { FormattedMessage, injectIntl } from 'react-intl';
-import PropTypes from 'prop-types';
-import Modal from 'nav-frontend-modal';
-import { Hovedknapp } from 'nav-frontend-knapper';
-import { Column, Row } from 'nav-frontend-grid';
-import { Normaltekst } from 'nav-frontend-typografi';
 
-import Image from '@fpsak-frontend/shared-components/src/Image';
 import infoImageUrl from '@fpsak-frontend/assets/images/behandle.svg';
 import { isAvslag, isOpphor } from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
+import Image from '@fpsak-frontend/shared-components/src/Image';
 
-import styles from './vedtakFritekstbrevModal.less';
+import styles from './vedtakFritekstbrevModal.module.css';
 
 const isFritekstbrevRequired = (readOnly, behandlingsresultat, erSVP) => {
   if (readOnly || !erSVP) {
@@ -34,12 +34,7 @@ const isFritekstbrevRequired = (readOnly, behandlingsresultat, erSVP) => {
  * Se https://jira.adeo.no/browse/TFP-738 for mer informasjon.
  *
  */
-export const VedtakFritekstbrevModal = ({
-  intl,
-  readOnly,
-  behandlingsresultat,
-  erSVP,
-}) => {
+export const VedtakFritekstbrevModal = ({ intl, readOnly, behandlingsresultat, erSVP }) => {
   const fritektsbrevRequired = isFritekstbrevRequired(readOnly, behandlingsresultat, erSVP);
   const [showModal, settShowModal] = useState(fritektsbrevRequired);
   return (
@@ -51,7 +46,7 @@ export const VedtakFritekstbrevModal = ({
           isOpen={showModal}
           closeButton={false}
           contentLabel="VedtakForm.SvpFritektsBrevModal.ModalDescription"
-          onRequestClose={(event) => {
+          onRequestClose={event => {
             if (event) event.preventDefault();
             settShowModal(false);
           }}
@@ -76,7 +71,10 @@ export const VedtakFritekstbrevModal = ({
               <Hovedknapp
                 mini
                 className={styles.button}
-                onClick={(event) => { event.preventDefault(); settShowModal(false); }}
+                onClick={event => {
+                  event.preventDefault();
+                  settShowModal(false);
+                }}
                 autoFocus
               >
                 <FormattedMessage id="VedtakForm.SvpFritektsBrevModal.Ok" />

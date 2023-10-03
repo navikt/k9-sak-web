@@ -7,16 +7,13 @@ import {
   Personopplysninger,
   ArbeidsgiverOpplysningerPerId,
   Brevmaler,
-  Brevmal,
-  Mottaker, FeatureToggles,
+  Mottaker,
 } from '@k9-sak-web/types';
 
 import { Fritekstbrev } from '@k9-sak-web/types/src/formidlingTsType';
-import { restApiHooks } from '@k9-sak-web/sak-app/src/data/k9sakApi';
-import Messages, { FormValues } from './components/Messages';
 import messages from '../i18n/nb_NO.json';
-import MessagesMedMedisinskeTypeBrevmal from './components/MessagesMedMedisinskeTypeBrevmal';
-import { MessagesApiKeys } from './data/messagesApi';
+import Messages, { FormValues } from './components/Messages';
+import MessagesTilbakekreving from './components/MessagesTilbakekreving';
 
 const cache = createIntlCache();
 
@@ -30,15 +27,21 @@ const intl = createIntl(
 
 interface OwnProps {
   submitCallback: (values: FormValues) => void;
-  templates: Brevmaler | Brevmal[];
+  templates?: Brevmaler;
   sprakKode: Kodeverk;
-  previewCallback: (mottaker: string | Mottaker, brevmalkode: string, fritekst: string, fritekstbrev?: Fritekstbrev) => void;
+  previewCallback: (
+    mottaker: string | Mottaker,
+    brevmalkode: string,
+    fritekst: string,
+    fritekstbrev?: Fritekstbrev,
+  ) => void;
   behandlingId: number;
   behandlingVersjon: number;
   isKontrollerRevurderingApOpen?: boolean;
   revurderingVarslingArsak: KodeverkMedNavn[];
   personopplysninger?: Personopplysninger;
   arbeidsgiverOpplysningerPerId?: ArbeidsgiverOpplysningerPerId;
+  erTilbakekreving: boolean;
 }
 
 const MeldingerSakIndex = ({
@@ -52,22 +55,11 @@ const MeldingerSakIndex = ({
   revurderingVarslingArsak,
   personopplysninger,
   arbeidsgiverOpplysningerPerId,
-}: OwnProps) => {
-
-  const featureTogglesData = restApiHooks.useGlobalStateRestApiData<{ key: string; value: string }[]>(
-    MessagesApiKeys.FEATURE_TOGGLE,
-  );
-  const featureToggles = useMemo<FeatureToggles>(
-    () =>
-      featureTogglesData?.reduce((acc, curr) => {
-        acc[curr.key] = `${curr.value}`.toLowerCase() === 'true';
-        return acc;
-      }, {}),
-    [featureTogglesData]);
-
-  return (<RawIntlProvider value={intl}>
-    {featureToggles?.TYPE_MEDISINSKE_OPPLYSNINGER_BREV
-      ? <MessagesMedMedisinskeTypeBrevmal
+  erTilbakekreving,
+}: OwnProps) => (
+  <RawIntlProvider value={intl}>
+    {erTilbakekreving ? (
+      <MessagesTilbakekreving
         submitCallback={submitCallback}
         templates={templates}
         sprakKode={sprakKode}
@@ -79,7 +71,8 @@ const MeldingerSakIndex = ({
         personopplysninger={personopplysninger}
         arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
       />
-      : <Messages
+    ) : (
+      <Messages
         submitCallback={submitCallback}
         templates={templates}
         sprakKode={sprakKode}
@@ -91,9 +84,8 @@ const MeldingerSakIndex = ({
         personopplysninger={personopplysninger}
         arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
       />
-    }
-
-  </RawIntlProvider>);
-};
+    )}
+  </RawIntlProvider>
+);
 
 export default MeldingerSakIndex;

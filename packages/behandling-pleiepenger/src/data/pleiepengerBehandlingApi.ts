@@ -10,6 +10,7 @@ export enum PleiepengerBehandlingApiKeys {
   SAVE_OVERSTYRT_AKSJONSPUNKT = 'SAVE_OVERSTYRT_AKSJONSPUNKT',
   PREVIEW_MESSAGE = 'PREVIEW_MESSAGE',
   PREVIEW_TILBAKEKREVING_MESSAGE = 'PREVIEW_TILBAKEKREVING_MESSAGE',
+  HENT_FRITEKSTBREV_HTML = 'HENT_FRITEKSTBREV_HTML',
   STONADSKONTOER_GITT_UTTAKSPERIODER = 'STONADSKONTOER_GITT_UTTAKSPERIODER',
   AKSJONSPUNKTER = 'AKSJONSPUNKTER',
   VILKAR = 'VILKAR',
@@ -127,6 +128,7 @@ const endpoints = new RestApiConfigBuilder()
   .withPost('/k9/formidling/api/brev/forhaandsvis', PleiepengerBehandlingApiKeys.PREVIEW_MESSAGE, {
     isResponseBlob: true,
   })
+  .withPost('/k9/formidling/api/brev/html', PleiepengerBehandlingApiKeys.HENT_FRITEKSTBREV_HTML)
 
   .build();
 

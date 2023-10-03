@@ -1,11 +1,11 @@
+import classnames from 'classnames/bind';
 import React, { ReactElement, ReactNode } from 'react';
 import { FormattedMessage } from 'react-intl';
-import classnames from 'classnames/bind';
 
-import TableRow from './TableRow';
 import TableColumn from './TableColumn';
+import TableRow from './TableRow';
 
-import styles from './table.less';
+import styles from './table.module.css';
 
 const classNames = classnames.bind(styles);
 
@@ -70,7 +70,7 @@ const Table = ({
   const tableRowsWithNoHoverProp = childrenOfTbody =>
     performFunctionOnChildren(
       childrenOfTbody,
-      (row: ReactNode) => React.isValidElement(row) && React.cloneElement(row, { noHover }),
+      (row: ReactNode) => React.isValidElement(row) && React.cloneElement(row as React.ReactElement<any>, { noHover }),
     );
 
   const content = withoutTbody

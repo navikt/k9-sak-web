@@ -1,12 +1,12 @@
 import { RETTSKILDE_URL, SYSTEMRUTINE_URL } from '@k9-sak-web/konstanter';
 import Endringslogg from '@navikt/familie-endringslogg';
-import { BoxedListWithLinks, Header, Popover, SystemButton, UserPanel } from '@navikt/k9-react-components';
+import { BoxedListWithLinks, Header, Popover, SystemButton, UserPanel } from '@navikt/ft-plattform-komponenter';
 import React, { RefObject, useCallback, useEffect, useRef, useState } from 'react';
-import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
+import { RawIntlProvider, createIntl, createIntlCache } from 'react-intl';
 import messages from '../i18n/nb_NO.json';
 import ErrorMessagePanel from './ErrorMessagePanel';
 import Feilmelding from './feilmeldingTsType';
-import styles from './headerWithErrorPanel.less';
+import styles from './headerWithErrorPanel.module.css';
 
 const cache = createIntlCache();
 
@@ -48,7 +48,9 @@ const useOutsideClickEvent = (
 
 const isRunningOnLocalhost = () => window.location.hostname === 'localhost';
 const isInDevelopmentMode = () =>
-  window.location.hostname === 'localhost' || window.location.hostname === 'app-q1.adeo.no';
+  window.location.hostname === 'localhost' ||
+  window.location.hostname === 'app-q1.adeo.no' ||
+  window.location.hostname === 'k9.dev.intern.nav.no';
 const getHeaderTitleHref = getPathToFplos => {
   if (!isRunningOnLocalhost()) {
     return getPathToFplos() || '/k9/web';
@@ -172,6 +174,7 @@ const HeaderWithErrorPanel = ({
                   backendUrl="/k9/endringslogg"
                   stil="lys"
                   alignLeft
+                  maxEntries={20}
                 />
               </div>
             )}

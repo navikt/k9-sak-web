@@ -1,29 +1,30 @@
+import { shallow } from 'enzyme';
 import React from 'react';
 import sinon from 'sinon';
-import { shallow } from 'enzyme';
 
-import { Behandling, Fagsak, Soknad } from '@k9-sak-web/types';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
+import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
+import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
+import fagsakStatus from '@fpsak-frontend/kodeverk/src/fagsakStatus';
+import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
+import personstatusType from '@fpsak-frontend/kodeverk/src/personstatusType';
+import soknadType from '@fpsak-frontend/kodeverk/src/soknadType';
+import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
+import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import {
-  ProsessStegPanel,
   FatterVedtakStatusModal,
   IverksetterVedtakStatusModal,
   ProsessStegContainer,
+  ProsessStegPanel,
 } from '@k9-sak-web/behandling-felles';
-import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
-import fagsakStatus from '@fpsak-frontend/kodeverk/src/fagsakStatus';
-import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
-import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
-import soknadType from '@fpsak-frontend/kodeverk/src/soknadType';
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
-import personstatusType from '@fpsak-frontend/kodeverk/src/personstatusType';
-import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
-import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
+import { Behandling, Fagsak, Soknad } from '@k9-sak-web/types';
 
+import { K9sakApiKeys, requestApi } from '@k9-sak-web/sak-app/src/data/k9sakApi';
+import { OmsorgspengerBehandlingApiKeys, requestOmsorgApi } from '../data/omsorgspengerBehandlingApi';
 import FetchedData from '../types/fetchedDataTsType';
 import OmsorgspengerProsess from './OmsorgspengerProsess';
-import { OmsorgspengerBehandlingApiKeys, requestOmsorgApi } from '../data/omsorgspengerBehandlingApi';
 
 describe('<OmsorgspengerProsess>', () => {
   const fagsak = {
@@ -102,7 +103,7 @@ describe('<OmsorgspengerProsess>', () => {
       erPrivatPerson: false,
       identifikator: 'testId',
       navn: 'testNavn',
-      arbeidsforholdreferanser: []
+      arbeidsforholdreferanser: [],
     },
   };
 
@@ -113,6 +114,7 @@ describe('<OmsorgspengerProsess>', () => {
   };
 
   it('skal vise alle aktuelle prosessSteg i meny', () => {
+    requestApi.mock(K9sakApiKeys.FEATURE_TOGGLE, []);
     const wrapper = shallow(
       <OmsorgspengerProsess
         data={fetchedData as FetchedData}
@@ -179,6 +181,7 @@ describe('<OmsorgspengerProsess>', () => {
   });
 
   it('skal sette nytt valgt prosessSteg ved trykk i meny', () => {
+    requestApi.mock(K9sakApiKeys.FEATURE_TOGGLE, []);
     const oppdaterProsessStegOgFaktaPanelIUrl = sinon.spy();
     const wrapper = shallow(
       <OmsorgspengerProsess
@@ -212,6 +215,7 @@ describe('<OmsorgspengerProsess>', () => {
   });
 
   it('skal vise fatter vedtak modal etter lagring når aksjonspunkt er FORESLA_VEDTAK og så lukke denne og gå til søkeside', async () => {
+    requestApi.mock(K9sakApiKeys.FEATURE_TOGGLE, []);
     const vedtakAksjonspunkter = [
       {
         definisjon: { kode: aksjonspunktCodes.FORESLA_VEDTAK, kodeverk: 'test' },
@@ -277,6 +281,7 @@ describe('<OmsorgspengerProsess>', () => {
   });
 
   it('skal vise iverksetter vedtak modal etter lagring når aksjonspunkt er FATTER_VEDTAK og så lukke denne og gå til søkeside', async () => {
+    requestApi.mock(K9sakApiKeys.FEATURE_TOGGLE, []);
     const vedtakAksjonspunkter = [
       {
         definisjon: { kode: aksjonspunktCodes.FATTER_VEDTAK, kodeverk: 'test' },
@@ -338,6 +343,7 @@ describe('<OmsorgspengerProsess>', () => {
   });
 
   it('skal gå til søkeside når en har revurderingsaksjonspunkt', async () => {
+    requestApi.mock(K9sakApiKeys.FEATURE_TOGGLE, []);
     const vedtakAksjonspunkter = [
       {
         definisjon: { kode: aksjonspunktCodes.VARSEL_REVURDERING_MANUELL, kodeverk: 'test' },
@@ -389,6 +395,7 @@ describe('<OmsorgspengerProsess>', () => {
   });
 
   it('skal gå til neste panel i prosess etter løst aksjonspunkt', async () => {
+    requestApi.mock(K9sakApiKeys.FEATURE_TOGGLE, []);
     const oppdaterProsessStegOgFaktaPanelIUrl = sinon.spy();
     const wrapper = shallow(
       <OmsorgspengerProsess
@@ -425,6 +432,7 @@ describe('<OmsorgspengerProsess>', () => {
   });
 
   it('skal legge til forhåndsvisningsfunksjon i prosess-steget til vedtak', () => {
+    requestApi.mock(K9sakApiKeys.FEATURE_TOGGLE, []);
     requestOmsorgApi.mock(OmsorgspengerBehandlingApiKeys.PREVIEW_MESSAGE, undefined);
     const wrapper = shallow(
       <OmsorgspengerProsess
@@ -466,6 +474,7 @@ describe('<OmsorgspengerProsess>', () => {
   });
 
   it('skal legge til forhåndsvisningsfunksjon i prosess-steget til simulering', () => {
+    requestApi.mock(K9sakApiKeys.FEATURE_TOGGLE, []);
     requestOmsorgApi.mock(OmsorgspengerBehandlingApiKeys.PREVIEW_TILBAKEKREVING_MESSAGE, undefined);
     const wrapper = shallow(
       <OmsorgspengerProsess
@@ -489,8 +498,10 @@ describe('<OmsorgspengerProsess>', () => {
 
     const panel = wrapper.find(ProsessStegPanel);
     expect(panel.prop('valgtProsessSteg').getUrlKode()).toEqual('simulering');
-    const forhandsvisCallback = panel.prop('valgtProsessSteg').getDelPaneler()[0].getKomponentData()
-      .previewFptilbakeCallback;
+    const forhandsvisCallback = panel
+      .prop('valgtProsessSteg')
+      .getDelPaneler()[0]
+      .getKomponentData().previewFptilbakeCallback;
     expect(forhandsvisCallback).not.toBeNull();
 
     forhandsvisCallback({ param: 'test' });

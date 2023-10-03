@@ -10,7 +10,7 @@ import {
   RelatertFagsak as RelatertFagsakType,
 } from '@k9-sak-web/types';
 import OvergangFraInfotrygd from '@k9-sak-web/types/src/overgangFraInfotrygd';
-import { Gender, PersonCard } from '@navikt/k9-react-components';
+import { Gender, PersonCard } from '@navikt/ft-plattform-komponenter';
 import moment from 'moment';
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
@@ -18,7 +18,7 @@ import RelatertFagsak from './RelatertFagsak';
 import TagContainer from './TagContainer';
 import VisittkortDetaljerPopup from './VisittkortDetaljerPopup';
 import VisittkortLabels from './VisittkortLabels';
-import styles from './visittkortPanel.less';
+import styles from './visittkortPanel.module.css';
 
 const utledKjonn = (kjonn: Kodeverk): Gender => {
   if (kjonn.kode === navBrukerKjonn.KVINNE) {

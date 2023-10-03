@@ -4,6 +4,7 @@ import { BehandlingAppKontekst } from '@k9-sak-web/types';
 import { screen, waitFor } from '@testing-library/react';
 import axios from 'axios';
 import React from 'react';
+import { QueryClient, QueryClientProvider } from 'react-query';
 import { BrowserRouter } from 'react-router-dom';
 import sinon from 'sinon';
 import messages from '../../i18n/nb_NO.json';
@@ -12,6 +13,10 @@ import { sortBehandlinger } from './behandlingVelgerUtils';
 
 jest.mock('axios');
 const mockedAxios = axios as jest.Mocked<typeof axios>;
+
+const queryClient = new QueryClient();
+
+const ReactQueryWrapper = ({ children }) => <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>;
 
 describe('<BehandlingPicker>', () => {
   const behandlingTemplate = {
@@ -65,14 +70,16 @@ describe('<BehandlingPicker>', () => {
       });
       renderWithIntl(
         <BrowserRouter>
-          <BehandlingPicker
-            noExistingBehandlinger
-            behandlinger={[]}
-            getBehandlingLocation={() => locationMock}
-            getKodeverkFn={sinon.spy()}
-            createLocationForSkjermlenke={() => locationMock}
-            sakstypeKode="PSB"
-          />
+          <ReactQueryWrapper>
+            <BehandlingPicker
+              noExistingBehandlinger
+              behandlinger={[]}
+              getBehandlingLocation={() => locationMock}
+              getKodeverkFn={sinon.spy()}
+              createLocationForSkjermlenke={() => locationMock}
+              sakstypeKode="PSB"
+            />
+          </ReactQueryWrapper>
         </BrowserRouter>,
         {
           locale: 'nb-NO',
@@ -116,14 +123,16 @@ describe('<BehandlingPicker>', () => {
       });
       renderWithIntl(
         <BrowserRouter>
-          <BehandlingPicker
-            noExistingBehandlinger={false}
-            behandlinger={behandlinger as BehandlingAppKontekst[]}
-            getBehandlingLocation={() => locationMock}
-            getKodeverkFn={sinon.spy()}
-            createLocationForSkjermlenke={() => locationMock}
-            sakstypeKode="PSB"
-          />
+          <ReactQueryWrapper>
+            <BehandlingPicker
+              noExistingBehandlinger={false}
+              behandlinger={behandlinger as BehandlingAppKontekst[]}
+              getBehandlingLocation={() => locationMock}
+              getKodeverkFn={sinon.spy()}
+              createLocationForSkjermlenke={() => locationMock}
+              sakstypeKode="PSB"
+            />
+          </ReactQueryWrapper>
         </BrowserRouter>,
         {
           locale: 'nb-NO',
@@ -215,15 +224,17 @@ describe('<BehandlingPicker>', () => {
       });
       renderWithIntl(
         <BrowserRouter>
-          <BehandlingPicker
-            noExistingBehandlinger={false}
-            behandlinger={behandlinger as BehandlingAppKontekst[]}
-            getBehandlingLocation={() => locationMock}
-            getKodeverkFn={() => ({ navn: 'test', kode: 'test', kodeverk: 'test' })}
-            behandlingId={1}
-            createLocationForSkjermlenke={() => locationMock}
-            sakstypeKode="PSB"
-          />
+          <ReactQueryWrapper>
+            <BehandlingPicker
+              noExistingBehandlinger={false}
+              behandlinger={behandlinger as BehandlingAppKontekst[]}
+              getBehandlingLocation={() => locationMock}
+              getKodeverkFn={() => ({ navn: 'test', kode: 'test', kodeverk: 'test' })}
+              behandlingId={1}
+              createLocationForSkjermlenke={() => locationMock}
+              sakstypeKode="PSB"
+            />
+          </ReactQueryWrapper>
         </BrowserRouter>,
         {
           locale: 'nb-NO',

@@ -3,13 +3,13 @@ import { Normaltekst } from 'nav-frontend-typografi';
 import React from 'react';
 import Label from './Label';
 import LabelType from './LabelType';
-import styles from './readOnlyField.less';
+import styles from './readOnlyField.module.css';
 
 export interface ReadOnlyFieldProps {
   label?: LabelType;
   input?: { value: string | number };
   isEdited?: boolean;
-  type: string;
+  type?: string;
   renderReadOnlyValue?: (value: any) => any;
   field?: { value: string | number };
 }
@@ -45,7 +45,6 @@ export const ReadOnlyField = ({
 ReadOnlyField.defaultProps = {
   label: undefined,
   isEdited: false,
-  type: undefined,
 };
 
 export default ReadOnlyField;

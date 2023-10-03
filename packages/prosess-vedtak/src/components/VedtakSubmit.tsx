@@ -3,13 +3,12 @@ import React from 'react';
 import behandlingStatusCode from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import { useIntl } from 'react-intl';
 
-import { Column, Row } from 'nav-frontend-grid';
-import { Button } from '@navikt/ds-react';
+import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { Aksjonspunkt } from '@k9-sak-web/types';
-import { DokumentDataType, LagreDokumentdataType } from '@k9-sak-web/types/src/dokumentdata';
-import MellomLagreBrev from './brev/MellomLagreBrev';
+import { Button, ErrorMessage } from '@navikt/ds-react';
+import { Column, Row } from 'nav-frontend-grid';
 
-import styles from './vedtakForm.less';
+import styles from './vedtakForm.module.css';
 
 interface Props {
   behandlingStatusKode: string;
@@ -18,11 +17,7 @@ interface Props {
   isSubmitting: boolean;
   aksjonspunkter: Aksjonspunkt[];
   handleSubmit: (e) => void;
-  brødtekst: string;
-  overskrift: string;
-  inkluderKalender: boolean;
-  dokumentdata: DokumentDataType;
-  lagreDokumentdata: LagreDokumentdataType;
+  errorOnSubmit: string;
 }
 
 const kanSendesTilGodkjenning = behandlingStatusKode =>
@@ -35,22 +30,21 @@ const VedtakSubmit = ({
   isSubmitting,
   aksjonspunkter,
   handleSubmit,
-  lagreDokumentdata,
-  dokumentdata,
-  overskrift,
-  brødtekst,
-  inkluderKalender,
+  errorOnSubmit,
 }: Props): JSX.Element => {
   const intl = useIntl();
+
+  const skalSubmitVæreDeaktivert = behandlingPaaVent || isSubmitting;
 
   const submitKnapp = (
     <Button
       variant="primary"
       className={styles.mainButton}
-      disabled={behandlingPaaVent || isSubmitting}
+      disabled={skalSubmitVæreDeaktivert}
       loading={isSubmitting}
       onClick={handleSubmit}
       size="small"
+      type="button"
     >
       {intl.formatMessage({
         id:
@@ -68,14 +62,12 @@ const VedtakSubmit = ({
     <Row>
       <Column xs="12">
         {!readOnly && (
-          <MellomLagreBrev
-            lagreDokumentdata={lagreDokumentdata}
-            dokumentdata={dokumentdata}
-            overskrift={overskrift}
-            inkluderKalender={inkluderKalender}
-            brødtekst={brødtekst}
-            submitKnapp={submitKnapp}
-          />
+          <>
+            <VerticalSpacer sixteenPx />
+            {submitKnapp}
+            <VerticalSpacer sixteenPx />
+            {errorOnSubmit && <ErrorMessage size="small">{errorOnSubmit}</ErrorMessage>}
+          </>
         )}
       </Column>
     </Row>

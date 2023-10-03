@@ -21,19 +21,21 @@
     "@k9-sak-web/rest-api": "1.0.0",
     "@k9-sak-web/rest-api-hooks": "1.0.0",
     "@k9-sak-web/types": "1.0.0",
-    "nav-frontend-typografi": "4.0.1",
-    "nav-frontend-typografi-style": "2.0.1",
-    "react": "^17.0.2",
-    "react-intl": "6.0.5",
-    "react-redux": "^8.0.2",
-    "redux": "^4.1.2",
-    "redux-form": "^8.3.8",
-    "reselect": "^4.1.5"
+    "@navikt/ft-kodeverk": "^2.2.2",
+    "@navikt/ft-prosess-tilbakekreving-foreldelse": "^3.1.6",
+    "nav-frontend-typografi": "4.0.2",
+    "nav-frontend-typografi-style": "2.0.2",
+    "react": "17.0.2",
+    "react-intl": "6.4.7",
+    "react-redux": "8.1.2",
+    "redux": "4.2.1",
+    "redux-form": "8.3.10",
+    "reselect": "4.1.8"
   },
   "devDependencies": {
-    "axios-mock-adapter": "^1.20.0",
-    "enzyme": "^3.11.0",
-    "redux-mock-store": "^1.5.4",
-    "sinon": "^12.0.1"
+    "axios-mock-adapter": "1.22.0",
+    "enzyme": "3.11.0",
+    "redux-mock-store": "1.5.4",
+    "sinon": "15.2.0"
   }
 }

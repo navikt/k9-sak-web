@@ -1,13 +1,12 @@
-import React from 'react';
-import { Field as FormikField, connect, getIn, FormikState } from 'formik';
 import { Textarea } from '@navikt/ds-react';
+import { Field as FormikField, FormikState, connect, getIn } from 'formik';
 import { EtikettFokus } from 'nav-frontend-etiketter';
+import React from 'react';
 import { useIntl } from 'react-intl';
 import LabelType from './LabelType';
 import ReadOnlyField from './ReadOnlyField';
-import styles from './textAreaField.less';
+import styles from './TextAreaFormik.module.css';
 import { validateAll } from './formikUtils';
-import formikStyles from './TextAreaFormik.less';
 
 interface TextAreaFieldProps {
   name: string;
@@ -35,22 +34,21 @@ const renderTextarea = ({ field: { value, name }, form, label, maxLength, badges
           ))}
         </div>
       )}
-      <div className={formikStyles.label}>
-        <Textarea
-          value={value}
-          onChange={form.handleChange(name)}
-          onBlur={form.handleBlur(name)}
-          disabled={disabled}
-          label={label}
-          error={touched && error ? intl.formatMessage({ id }, { ...intlParams }) : null}
-          maxLength={maxLength}
-        />
-      </div>
+      <Textarea
+        value={value}
+        onChange={form.handleChange(name)}
+        onBlur={form.handleBlur(name)}
+        disabled={disabled}
+        label={label}
+        error={touched && error ? intl.formatMessage({ id }, { ...intlParams }) : null}
+        maxLength={maxLength}
+        size="small"
+      />
     </div>
   );
 };
 
-const TextAreaFormik = ({ name, label, validate, readOnly, formik, ...otherProps }: TextAreaFieldProps) => {
+const TextAreaFormik = ({ name, readOnly, formik, label, validate = [], ...otherProps }: TextAreaFieldProps) => {
   const intl = useIntl();
   return (
     <FormikField

@@ -1,12 +1,40 @@
 version: 2
+registries:
+  npm-github:
+    type: npm-registry
+    url: https://npm.pkg.github.com
+    token: ${{secrets.READER_TOKEN}}
 updates:
   - package-ecosystem: npm
     directory: "/"
     schedule:
       interval: daily
-    open-pull-requests-limit: 10
+    open-pull-requests-limit: 20
+    ignore:
+      - dependency-name: "*"
+        update-types: ["version-update:semver-patch"]
+    registries:
+      - npm-github
+    groups:
+      react:
+        patterns:
+          - "react"
+          - "react-dom"
+          - "@types/react"
+      babel:
+        patterns:
+          - "@babel*"
+      typescript-eslint:
+        patterns:
+          - "@typescript-eslint*"
+      storybook:
+        patterns:
+          - "@storybook/*"
+        exclude-patterns:
+          - "@storybook/storybook-deployer"
+          - "@storybook/testing-react"
+          - "@storybook/testing-library"
   - package-ecosystem: github-actions
     directory: "/"
     schedule:
       interval: daily
-    open-pull-requests-limit: 10

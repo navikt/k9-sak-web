@@ -5,7 +5,7 @@ import { Fagsak } from '@k9-sak-web/types';
 import { AlertStripeFeil, AlertStripeInfo } from 'nav-frontend-alertstriper';
 import Lenke from 'nav-frontend-lenker';
 import React, { useEffect } from 'react';
-import styles from './andreSakerPåSøkerStripe.less';
+import styles from './andreSakerPåSøkerStripe.module.css';
 
 interface Props {
   søkerIdent: string;
@@ -21,10 +21,20 @@ const AndreSakerPåSøkerStripe: React.FC<Props> = ({ søkerIdent, saksnummer, f
     error,
   } = restApiHooks.useRestApiRunner<Fagsak[]>(K9sakApiKeys.MATCH_FAGSAK);
   useEffect(() => {
-    searchFagsaker({
-      ytelseType: fagsakYtelseType,
-      bruker: søkerIdent,
-    });
+    let isMounted = true;
+
+    setTimeout(() => {
+      if (isMounted) {
+        searchFagsaker({
+          ytelseType: fagsakYtelseType,
+          bruker: søkerIdent,
+        });
+      }
+    }, 3 * 1000);
+
+    return () => {
+      isMounted = false;
+    };
   }, []);
 
   if (error) {

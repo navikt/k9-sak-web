@@ -1,0 +1,55 @@
+.fieldContainer {
+  margin-top: 16px;
+}
+
+.formContainer {
+  margin-bottom: 32px;
+  padding: 0 1rem;
+}
+
+.formContainer--showBorder {
+  border-bottom: 1px solid #c6c2bf;
+  padding: 0 1rem 2rem;
+}
+
+.formContainer--hidden {
+  display: none;
+}
+
+.nyoppstartetContainer {
+  margin-left: 32px;
+  margin-top: 16px;
+}
+
+.begrunnelseContainer {
+  margin: 16px 0 32px;
+  min-width: 500px;
+  width: 40%;
+}
+
+.inntektContainer {
+  display: flex;
+}
+
+.inntektContainer .fieldContainer {
+  margin-right: 16px;
+}
+
+.inntektContainer .fieldContainer:empty {
+  margin: 0;
+}
+
+.formUnlockButton {
+  margin-bottom: 16px;
+}
+
+.tabContent {
+  border: 1px solid #c6c2bf;
+  border-top: none;
+  padding-top: 32px;
+}
+
+.tabsContainer {
+  overflow-x: auto;
+  width: 50vw;
+}

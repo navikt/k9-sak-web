@@ -1,0 +1,44 @@
+name: Lint, typescript-sjekk og bygg
+
+on:
+  workflow_call:
+    inputs:
+      run-build:
+        required: false
+        type: boolean
+        default: false
+
+jobs:
+  lint-tscheck-build:
+    name: Lint, typescript-sjekk og bygg
+    runs-on: ubuntu-latest
+    steps:
+      - name: Hente kode
+        uses: actions/checkout@v3
+
+      - name: Setup .yarnrc.yml
+        run: |
+          yarn config set npmScopes.navikt.npmRegistryServer "https://npm.pkg.github.com"
+          yarn config set npmScopes.navikt.npmAlwaysAuth true
+          yarn config set npmScopes.navikt.npmAuthToken $NPM_AUTH_TOKEN
+        env:
+          NPM_AUTH_TOKEN: ${{ secrets.READER_TOKEN }}
+
+      - name: Sette opp Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+          cache: 'yarn'
+
+      - name: Installere dependencies
+        run: HUSKY=0 yarn install --immutable
+
+      - name: Typescript-sjekk
+        run: yarn ts-check
+
+      - name: Linting
+        run: yarn css:lint
+
+      - name: Sjekker at koden bygger
+        if: ${{inputs.run-build}}
+        run: yarn build-ci

@@ -1,16 +1,16 @@
-import React, { useMemo, useRef, useEffect, useImperativeHandle, forwardRef, ForwardedRef } from 'react';
+import React, { ForwardedRef, forwardRef, useEffect, useImperativeHandle, useMemo, useRef } from 'react';
 import { DataSet } from 'vis-data';
-import { Timeline as VisTimelineCtor } from 'vis-timeline';
 import type {
-  Timeline as VisTimeline,
+  DateType,
+  IdType,
   TimelineAnimationOptions,
+  TimelineEvents,
   TimelineGroup,
   TimelineItem,
   TimelineOptions,
-  TimelineEvents,
-  DateType,
-  IdType,
+  Timeline as VisTimeline,
 } from 'vis-timeline';
+import { Timeline as VisTimelineCtor } from 'vis-timeline';
 import 'vis-timeline/styles/vis-timeline-graph2d.min.css';
 
 export type TimelineEventsWithMissing = TimelineEvents | 'dragover' | 'markerchange' | 'markerchanged';
@@ -89,7 +89,8 @@ interface Props {
   currentTime?: DateType;
 }
 
-const Timeline = ({
+const Timeline = (
+  {
     initialItems,
     initialGroups,
     options,
@@ -99,7 +100,8 @@ const Timeline = ({
     currentTime,
     ...rest
   }: Props & TimelineEventsHandlers,
-  ref: ForwardedRef<Partial<VisTimeline>>) => {
+  ref: ForwardedRef<Partial<VisTimeline>>,
+) => {
   const el = useRef();
   const timeline = useRef<VisTimeline>();
   const items: DataSet<TimelineItem> = useMemo(() => new DataSet<TimelineItem>(), []);
@@ -170,6 +172,6 @@ const Timeline = ({
   );
 
   return <div ref={el} />;
-}
+};
 
 export default forwardRef(Timeline);

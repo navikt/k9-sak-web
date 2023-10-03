@@ -35,9 +35,14 @@ export interface DokumenterTilBehandling {
 
 export interface SøktePerioder {
   periode: Periode;
-  type: null;
-  arbeidsgiver: null;
+  type: null | string;
+  arbeidsgiver: null | Arbeidsgiver;
   arbeidsforholdRef: null;
+}
+
+export interface Arbeidsgiver {
+  arbeidsgiverOrgnr: string; 
+  arbeidsgiverAktørId: any; 
 }
 
 export interface PerioderMedÅrsakElement {

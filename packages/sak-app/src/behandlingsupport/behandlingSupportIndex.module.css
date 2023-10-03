@@ -1,0 +1,47 @@
+.container {
+  margin-top: 1.875rem;
+  min-width: 100%;
+  padding-bottom: 12px;
+  padding-left: 24px;
+  padding-right: 24px;
+  padding-top: 12px;
+  width: 100%;
+}
+
+.containerHistorikk {
+  margin-top: 10px;
+  min-width: 100%;
+  overflow-x: hidden;
+  overflow-y: auto;
+  padding-bottom: 12px;
+  padding-left: 24px;
+  padding-right: 24px;
+  padding-top: 12px;
+  width: 100%;
+}
+
+@media screen and (max-width: 1349px) {
+  .containerHistorikk {
+    max-height: 1130px;
+  }
+}
+
+@media screen and (min-width: 1350px) {
+  .containerHistorikk {
+    height: 1200px;
+  }
+}
+
+.columnMarginMedGodkjenning {
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+.columnMargin {
+  margin-left: 35px;
+  margin-right: 35px;
+}
+
+.meny {
+  width: 100%;
+}
