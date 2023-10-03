@@ -125,11 +125,11 @@ const DocumentList = ({
   const makeDocumentURL = (document: Dokument) =>
     `/k9/sak/api/dokument/hent-dokument?saksnummer=${saksnummer}&journalpostId=${document.journalpostId}&dokumentId=${document.dokumentId}`;
 
-  const erInntektsmeldingBruktIDenneBehandlingen = (document: Dokument) =>
+  const erInntektsmeldingOgBruktIDenneBehandlingen = (document: Dokument) =>
+    document.brevkode === inntektsmeldingBrevkode &&
     document.behandlinger &&
     behandlingId &&
-    document.behandlinger.includes(behandlingId) &&
-    document.brevkode === inntektsmeldingBrevkode;
+    document.behandlinger.includes(behandlingId);
 
   return (
     <>
@@ -191,7 +191,7 @@ const DocumentList = ({
                     ) : (
                       <Normaltekst tag="span">{document.tittel}</Normaltekst>
                     )}
-                    {erInntektsmeldingBruktIDenneBehandlingen(document) && (
+                    {erInntektsmeldingOgBruktIDenneBehandlingen(document) && (
                       <StarFillIcon
                         className={styles.starIcon}
                         title={intl.formatMessage({ id: 'DocumentList.IBruk' })}
