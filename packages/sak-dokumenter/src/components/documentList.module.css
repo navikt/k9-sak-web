@@ -4,6 +4,14 @@
   width: 25px;
 }
 
+.starIcon {
+  color: var(--a-orange-400);
+  height: 1.25rem;
+  margin-bottom: -0.25rem;
+  margin-left: 0.625rem;
+  width: 1.5625rem;
+}
+
 .noDocuments {
   margin-top: 30px;
 }

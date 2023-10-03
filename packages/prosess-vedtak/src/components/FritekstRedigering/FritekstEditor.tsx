@@ -83,10 +83,6 @@ const FritekstEditor = ({
   };
 
   useEffect(() => {
-    lastEditor();
-  }, []);
-
-  useEffect(() => {
     if (redigerbartInnholdKlart && !editor.harEditor()) {
       lastEditor();
     }
