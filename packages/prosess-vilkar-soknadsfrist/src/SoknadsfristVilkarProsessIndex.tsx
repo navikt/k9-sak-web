@@ -92,7 +92,7 @@ const SoknadsfristVilkarProsessIndex = ({
       const førsteIkkeVurdertPeriodeIndex = perioder.findIndex(
         periode => periode.vurderesIBehandlingen && periode.vilkarStatus.kode === vilkarUtfallType.IKKE_VURDERT,
       );
-      if (førsteIkkeVurdertPeriodeIndex >= 0) {
+      if (førsteIkkeVurdertPeriodeIndex > 0) {
         setActiveTab(førsteIkkeVurdertPeriodeIndex);
       }
     }
