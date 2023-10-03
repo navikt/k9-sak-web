@@ -6,6 +6,7 @@ import sendDokumentImageUrl from '@fpsak-frontend/assets/images/send_dokument.sv
 import kommunikasjonsretning from '@fpsak-frontend/kodeverk/src/kommunikasjonsretning';
 import { DateTimeLabel, Image, Table, TableColumn, TableRow, Tooltip } from '@fpsak-frontend/shared-components';
 import { Dokument, FagsakPerson } from '@k9-sak-web/types';
+import { StarFillIcon } from '@navikt/aksel-icons';
 import Lenke from 'nav-frontend-lenker';
 import { Select } from 'nav-frontend-skjema';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
@@ -23,6 +24,8 @@ const headerTextCodes = [
 const alleBehandlinger = 'ALLE';
 
 const vedtaksdokumenter = ['INNVILGELSE', 'AVSLAG', 'FRITKS', 'ENDRING', 'MANUELL'];
+
+const inntektsmeldingBrevkode = '4936';
 
 const isVedtaksdokument = (document: Dokument) =>
   vedtaksdokumenter.some(vedtaksdokument => vedtaksdokument === document.brevkode);
@@ -122,6 +125,12 @@ const DocumentList = ({
   const makeDocumentURL = (document: Dokument) =>
     `/k9/sak/api/dokument/hent-dokument?saksnummer=${saksnummer}&journalpostId=${document.journalpostId}&dokumentId=${document.dokumentId}`;
 
+  const erInntektsmeldingBruktIDenneBehandlingen = (document: Dokument) =>
+    document.behandlinger &&
+    behandlingId &&
+    document.behandlinger.includes(behandlingId) &&
+    document.brevkode === inntektsmeldingBrevkode;
+
   return (
     <>
       <div className={styles.controlsContainer}>
@@ -178,9 +187,15 @@ const DocumentList = ({
                     className={styles.documentAnchor}
                   >
                     {isVedtaksdokument(document) ? (
-                      <Element>{document.tittel}</Element>
+                      <Element tag="span">{document.tittel}</Element>
                     ) : (
-                      <Normaltekst>{document.tittel}</Normaltekst>
+                      <Normaltekst tag="span">{document.tittel}</Normaltekst>
+                    )}
+                    {erInntektsmeldingBruktIDenneBehandlingen(document) && (
+                      <StarFillIcon
+                        className={styles.starIcon}
+                        title={intl.formatMessage({ id: 'DocumentList.IBruk' })}
+                      />
                     )}
                   </a>
                 </TableColumn>
