@@ -7,11 +7,14 @@ import kommunikasjonsretning from '@fpsak-frontend/kodeverk/src/kommunikasjonsre
 import { DateTimeLabel, Image, Table, TableColumn, TableRow, Tooltip } from '@fpsak-frontend/shared-components';
 import { Dokument, FagsakPerson } from '@k9-sak-web/types';
 import { StarFillIcon } from '@navikt/aksel-icons';
+import axios from 'axios';
 import Lenke from 'nav-frontend-lenker';
 import { Select } from 'nav-frontend-skjema';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
 import React, { useState } from 'react';
 import { FormattedMessage, WrappedComponentProps, injectIntl } from 'react-intl';
+import { useQuery } from 'react-query';
+import { Kompletthet } from '../types/Kompletthetsperioder';
 import styles from './documentList.module.css';
 
 const headerTextCodes = [
@@ -71,6 +74,7 @@ interface OwnProps {
   behandlingId?: number;
   fagsakPerson?: FagsakPerson;
   saksnummer: number;
+  behandlingUuid: string;
 }
 
 /**
@@ -86,8 +90,27 @@ const DocumentList = ({
   behandlingId,
   fagsakPerson,
   saksnummer,
+  behandlingUuid,
 }: OwnProps & WrappedComponentProps) => {
   const [selectedFilter, setSelectedFilter] = useState(alleBehandlinger);
+
+  const getInntektsmeldingerIBruk = (signal?: AbortSignal) =>
+    axios
+      .get<Kompletthet>(`/k9/sak/api/behandling/kompletthet/beregning/vurderinger`, {
+        signal,
+        params: {
+          behandlingUuid,
+        },
+      })
+      .then(({ data }) => {
+        const inntektsmeldingerIBruk = data?.vurderinger?.flatMap(kompletthetvurdering =>
+          kompletthetvurdering.vurderinger.filter(vurdering => vurdering.vurdering === 'I_BRUK'),
+        );
+        return inntektsmeldingerIBruk;
+      });
+
+  const { data: inntektsmeldingerIBruk } = useQuery('kompletthet', ({ signal }) => getInntektsmeldingerIBruk(signal));
+
   const harMerEnnEnBehandlingKnyttetTilDokumenter = () => {
     const unikeBehandlinger = [];
     if (documents.some(document => document.behandlinger?.length > 0)) {
@@ -127,9 +150,9 @@ const DocumentList = ({
 
   const erInntektsmeldingOgBruktIDenneBehandlingen = (document: Dokument) =>
     document.brevkode === inntektsmeldingBrevkode &&
-    document.behandlinger &&
-    behandlingId &&
-    document.behandlinger.includes(behandlingId);
+    inntektsmeldingerIBruk &&
+    inntektsmeldingerIBruk.length > 0 &&
+    inntektsmeldingerIBruk.some(inntektsmelding => inntektsmelding.journalpostId === document.journalpostId);
 
   return (
     <>
