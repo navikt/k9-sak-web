@@ -56,8 +56,11 @@ const TilkjentYtelseTimeLineData = ({
     setSelectedAndelIndex('0');
   }, [selectedItemData.fom]);
 
-  const harUtbetalingsgradFraUttak = !!selectedItemData.totalUtbetalingsgradFraUttak;
-  const harTilkommetAktivitet = !!selectedItemData.totalUtbetalingsgradEtterReduksjonVedTilkommetInntekt;
+  const harUtbetalingsgradFraUttak =
+    !!selectedItemData.totalUtbetalingsgradFraUttak || selectedItemData.totalUtbetalingsgradFraUttak === 0;
+  const harTilkommetAktivitet =
+    !!selectedItemData.totalUtbetalingsgradEtterReduksjonVedTilkommetInntekt ||
+    selectedItemData.totalUtbetalingsgradEtterReduksjonVedTilkommetInntekt === 0;
   const utbetalingsgradVedTilkommetInntektErMinst = () => {
     if (harTilkommetAktivitet) {
       return (
