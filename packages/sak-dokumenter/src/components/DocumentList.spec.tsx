@@ -31,6 +31,7 @@ describe('<DocumentList>', () => {
         documents={[document, anotherDocument]}
         behandlingId={1}
         saksnummer={1}
+        behandlingUuid="1"
       />,
     );
 
@@ -65,7 +66,13 @@ describe('<DocumentList>', () => {
     };
 
     const wrapper = shallowWithIntl(
-      <DocumentList.WrappedComponent intl={intlMock} documents={[document]} behandlingId={1} saksnummer={1} />,
+      <DocumentList.WrappedComponent
+        intl={intlMock}
+        documents={[document]}
+        behandlingId={1}
+        saksnummer={1}
+        behandlingUuid="1"
+      />,
     );
 
     const formattedMessage = wrapper.find(FormattedMessage).findWhere(n => n.prop('id') === 'DocumentList.IProduksjon');
@@ -74,7 +81,13 @@ describe('<DocumentList>', () => {
 
   it('skal ikke vise tabell når det ikke finnes dokumenter', () => {
     const wrapper = shallowWithIntl(
-      <DocumentList.WrappedComponent intl={intlMock} documents={[]} behandlingId={1} saksnummer={1} />,
+      <DocumentList.WrappedComponent
+        intl={intlMock}
+        documents={[]}
+        behandlingId={1}
+        saksnummer={1}
+        behandlingUuid="1"
+      />,
     );
 
     const label = wrapper.find(Normaltekst);
