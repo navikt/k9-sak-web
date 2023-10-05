@@ -138,7 +138,7 @@ const DocumentList = ({
     return (
       <>
         <div className={styles.controlsContainer}>{getModiaLenke()}</div>
-        <Normaltekst className={styles.noDocuments}>
+        <Normaltekst className={styles.noDocuments} data-testid="no-documents">
           <FormattedMessage id="DocumentList.NoDocuments" />
         </Normaltekst>
       </>
@@ -249,7 +249,7 @@ const DocumentList = ({
                     {document.tidspunkt ? (
                       <DateTimeLabel dateTimeString={document.tidspunkt} />
                     ) : (
-                      <Normaltekst>
+                      <Normaltekst data-testid="missing-timestamp">
                         <FormattedMessage id="DocumentList.IProduksjon" />
                       </Normaltekst>
                     )}
