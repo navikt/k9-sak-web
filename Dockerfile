@@ -1,4 +1,4 @@
-FROM nginxinc/nginx-unprivileged:1.23.1-alpine
+FROM nginxinc/nginx-unprivileged:stable-alpine-slim
 
 LABEL org.opencontainers.image.source=https://github.com/navikt/k9-sak-web
 
