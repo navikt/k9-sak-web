@@ -2,9 +2,10 @@ import React, { useEffect, useRef, useState } from 'react';
 import { FormattedMessage, WrappedComponentProps, injectIntl } from 'react-intl';
 
 import { Edit } from '@navikt/ds-icons';
-import { Button, Modal } from '@navikt/ds-react';
+import { Alert, Button, Heading, Modal } from '@navikt/ds-react';
 
 import dokumentMalType from '@fpsak-frontend/kodeverk/src/dokumentMalType';
+import { ÅpneSakINyttVinduKnapp } from '@fpsak-frontend/shared-components';
 import { safeJSONParse } from '@fpsak-frontend/utils';
 import {
   Brevmottaker,
@@ -13,6 +14,10 @@ import {
   VedtaksbrevMal,
 } from '@fpsak-frontend/utils/src/formidlingUtils';
 import { DokumentDataType } from '@k9-sak-web/types/src/dokumentdata';
+import { fieldnames } from '../../konstanter';
+import FritekstEditor from './FritekstEditor';
+import FritekstFeilmeldinger from './FritekstFeilmeldinger';
+import styles from './RedigerFritekstbrev.module.css';
 import {
   lagLagreHtmlDokumentdataRequest,
   seksjonSomKanRedigeres,
@@ -22,11 +27,6 @@ import {
   utledStiler,
   utledSuffiksInnhold,
 } from './RedigeringUtils';
-
-import styles from './RedigerFritekstbrev.module.css';
-
-import { fieldnames } from '../../konstanter';
-import FritekstEditor from './FritekstEditor';
 
 interface ownProps {
   handleSubmit: (html: string, request: any) => void;
@@ -169,8 +169,17 @@ const FritekstRedigering = ({
       >
         <FormattedMessage id="RedigeringAvFritekstBrev.Rediger" />
       </Button>
-      <Modal open={visRedigering} onClose={() => setVisRedigering(false)}>
-        <Modal.Header closeButton />
+      <Modal open={visRedigering} onClose={() => setVisRedigering(false)} width="53.75rem">
+        <Modal.Header>
+          <Heading level="3" size="medium">
+            <FormattedMessage id="RedigeringAvFritekstBrev.Rediger" />
+          </Heading>
+          <Alert variant="info" size="small">
+            <FormattedMessage id="RedigeringAvFritekstBrev.Infotekst" />
+            <ÅpneSakINyttVinduKnapp />
+          </Alert>
+          <FritekstFeilmeldinger />
+        </Modal.Header>
         <Modal.Body>
           <div className={styles.modalInnehold}>
             <FritekstEditor
