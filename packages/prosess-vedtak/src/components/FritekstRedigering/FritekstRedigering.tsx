@@ -186,8 +186,8 @@ const FritekstRedigering = ({
             redigerbartInnhold={redigerbartInnhold}
             originalHtml={originalHtml}
             brevStiler={brevStiler}
-            prefiksInnhold={prefiksInnhold}
             suffiksInnhold={suffiksInnhold}
+            prefiksInnhold={prefiksInnhold}
           />
         </div>
       </Modal>
