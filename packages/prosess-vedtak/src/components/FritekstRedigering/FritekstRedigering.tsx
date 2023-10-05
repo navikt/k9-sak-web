@@ -5,7 +5,7 @@ import { Edit } from '@navikt/ds-icons';
 import { Alert, Button, Heading, Modal } from '@navikt/ds-react';
 
 import dokumentMalType from '@fpsak-frontend/kodeverk/src/dokumentMalType';
-import { ÅpneSakINyttVinduKnapp } from '@fpsak-frontend/shared-components';
+import { VerticalSpacer, ÅpneSakINyttVinduKnapp } from '@fpsak-frontend/shared-components';
 import { safeJSONParse } from '@fpsak-frontend/utils';
 import {
   Brevmottaker,
@@ -171,9 +171,10 @@ const FritekstRedigering = ({
       </Button>
       <Modal open={visRedigering} onClose={() => setVisRedigering(false)} width="53.75rem">
         <Modal.Header>
-          <Heading level="3" size="medium">
+          <Heading level="3" size="small">
             <FormattedMessage id="RedigeringAvFritekstBrev.Rediger" />
           </Heading>
+          <VerticalSpacer sixteenPx />
           <Alert variant="info" size="small">
             <FormattedMessage id="RedigeringAvFritekstBrev.Infotekst" />
             <ÅpneSakINyttVinduKnapp />
