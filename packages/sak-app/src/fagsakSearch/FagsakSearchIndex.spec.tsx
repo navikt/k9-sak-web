@@ -13,7 +13,7 @@ import { requestApi, K9sakApiKeys } from '../data/k9sakApi';
 import FagsakSearchIndex from './FagsakSearchIndex';
 
 const mockNavigate = jest.fn();
-const MockForm = reduxForm({ form: 'mock' })(({ children }) => <div>{children}</div>);
+const MockForm = reduxForm({ form: 'mock', onSubmit: jest.fn() })(({ children }) => <div>{children}</div>);
 
 jest.mock('react-router-dom', () => ({
   ...(jest.requireActual('react-router-dom') as Record<string, unknown>),

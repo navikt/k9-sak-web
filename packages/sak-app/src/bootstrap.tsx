@@ -89,7 +89,6 @@ const renderFunc = Component => {
         </RestApiProvider>
       </BrowserRouter>
     </Provider>,
-    app,
   );
 };
 
