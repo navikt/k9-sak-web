@@ -16,6 +16,7 @@ interface PreviewLinkProps {
   noIcon?: boolean;
   size?: 'small' | 'medium' | 'xsmall';
   intl: IntlShape;
+  loading: boolean;
 }
 
 const PreviewLink = ({
@@ -25,6 +26,7 @@ const PreviewLink = ({
   noIcon,
   size = 'small',
   intl,
+  loading,
 }: PreviewLinkProps) => {
   const [visValideringsFeil, setVisValideringsFeil] = useState<boolean>(false);
 
@@ -60,6 +62,7 @@ const PreviewLink = ({
           onKeyDown={e => (e.keyCode === 13 ? previewCallback(e) : null)}
           className={classNames(styles.previewLink, styles['previewLink--noIcon'])}
           type="button"
+          loading={loading}
         >
           {children}
         </Button>
@@ -74,6 +77,7 @@ const PreviewLink = ({
           onKeyDown={e => (e.keyCode === 13 ? previewCallback(e) : null)}
           className={classNames(styles.previewLink)}
           type="button"
+          loading={loading}
         >
           {children}
         </Button>
@@ -82,8 +86,8 @@ const PreviewLink = ({
   );
 };
 
-export const VedtakPreviewLink = ({ previewCallback, redigertHtml, intl }) => (
-  <PreviewLink previewCallback={previewCallback} redigertHtml={redigertHtml} intl={intl}>
+export const VedtakPreviewLink = ({ previewCallback, redigertHtml, intl, loading }) => (
+  <PreviewLink previewCallback={previewCallback} redigertHtml={redigertHtml} intl={intl} loading={loading}>
     <FormattedMessage id="VedtakForm.ForhandvisBrev" />
   </PreviewLink>
 );
