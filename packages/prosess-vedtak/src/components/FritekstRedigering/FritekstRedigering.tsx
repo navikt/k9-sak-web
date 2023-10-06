@@ -61,7 +61,9 @@ const FritekstRedigering = ({
   overstyrtMottaker,
   setForhaandsvisningKlart,
 }: ownProps & WrappedComponentProps) => {
-  useEffect(() => {}, []);
+  useEffect(() => {
+    setForhaandsvisningKlart(false);
+  }, []);
   const redigerbarDokumentmal: VedtaksbrevMal = tilgjengeligeVedtaksbrev.maler.find(
     vb => vb.dokumentMalType === dokumentMalType.MANUELL,
   );
