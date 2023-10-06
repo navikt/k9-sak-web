@@ -188,7 +188,7 @@ export const BrevPanel: React.FC<BrevPanelProps> = props => {
     lagreDokumentdata,
     getPreviewAutomatiskBrevCallback,
   } = props;
-  const [forhaandsvisningKlart, setForhaandsvisningKlart] = useState(false);
+  const [forhaandsvisningKlart, setForhaandsvisningKlart] = useState(true);
   const [, meta] = useField({ name: 'overstyrtMottaker' });
 
   const automatiskBrevCallback = getPreviewAutomatiskBrevCallback(formikProps.values)({ aapneINyttVindu: true });
