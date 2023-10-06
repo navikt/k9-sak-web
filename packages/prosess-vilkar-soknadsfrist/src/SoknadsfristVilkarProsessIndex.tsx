@@ -87,6 +87,17 @@ const SoknadsfristVilkarProsessIndex = ({
     return null;
   }
 
+  useEffect(() => {
+    if (perioder.length > 1) {
+      const førsteIkkeVurdertPeriodeIndex = perioder.findIndex(
+        periode => periode.vurderesIBehandlingen && periode.vilkarStatus.kode === vilkarUtfallType.IKKE_VURDERT,
+      );
+      if (førsteIkkeVurdertPeriodeIndex > 0) {
+        setActiveTab(førsteIkkeVurdertPeriodeIndex);
+      }
+    }
+  }, []);
+
   const activePeriode = perioder.length === 1 ? perioder[0] : perioder[activeTab];
 
   const harÅpentAksjonspunkt = aksjonspunkter.some(
