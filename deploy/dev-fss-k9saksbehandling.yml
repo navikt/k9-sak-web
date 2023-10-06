@@ -57,8 +57,6 @@ spec:
       value: "http://k9-tilbake.default"
     - name: APP_URL_K9FORDEL
       value: "http://k9-fordel.k9saksbehandling"
-    - name: APP_DIAGNOSEKODER
-      value: "http://diagnosekode-api.k9saksbehandling/diagnosekoder"
     - name: MEDISINSK_VILKAR_FRONTEND_URL
       value: "https://medisinsk-vilkar-frontend.dev.adeo.no/"
     - name: OMSORGSDAGER_FRONTEND_URL
