@@ -22,7 +22,7 @@ import { Alert, ErrorMessage } from '@navikt/ds-react';
 
 import { FormikProps, setNestedObjectValues, useField } from 'formik';
 import { Column, Row } from 'nav-frontend-grid';
-import React from 'react';
+import React, { useState } from 'react';
 import { IntlShape, injectIntl } from 'react-intl';
 import { fieldnames } from '../../konstanter';
 import FritekstBrevPanel from '../FritekstBrevPanel';
@@ -188,7 +188,7 @@ export const BrevPanel: React.FC<BrevPanelProps> = props => {
     lagreDokumentdata,
     getPreviewAutomatiskBrevCallback,
   } = props;
-
+  const [forhaandsvisningKlart, setForhaandsvisningKlart] = useState(true);
   const [, meta] = useField({ name: 'overstyrtMottaker' });
 
   const automatiskBrevCallback = getPreviewAutomatiskBrevCallback(formikProps.values)({ aapneINyttVindu: true });
@@ -240,6 +240,7 @@ export const BrevPanel: React.FC<BrevPanelProps> = props => {
           lagreDokumentdata={lagreDokumentdata}
           dokumentdataInformasjonsbehov={dokumentdataInformasjonsbehov}
           overstyrtMottaker={overstyrtMottaker}
+          setForhaandsvisningKlart={setForhaandsvisningKlart}
         />
       </div>
       {!formikProps.values[fieldnames.SKAL_HINDRE_UTSENDING_AV_BREV] && (
@@ -247,6 +248,7 @@ export const BrevPanel: React.FC<BrevPanelProps> = props => {
           previewCallback={manuellBrevCallback}
           redigertHtml={formikProps.values?.[fieldnames.REDIGERT_HTML]}
           intl={intl}
+          loading={!forhaandsvisningKlart}
         />
       )}
     </>
@@ -265,7 +267,12 @@ export const BrevPanel: React.FC<BrevPanelProps> = props => {
       </div>
       {!formikProps.values[fieldnames.SKAL_HINDRE_UTSENDING_AV_BREV] &&
         kanResultatForhåndsvises(behandlingResultat) && (
-          <VedtakPreviewLink previewCallback={automatiskBrevCallback} redigertHtml={false} intl={intl} />
+          <VedtakPreviewLink
+            previewCallback={automatiskBrevCallback}
+            redigertHtml={false}
+            intl={intl}
+            loading={!forhaandsvisningKlart}
+          />
         )}
     </>
   );

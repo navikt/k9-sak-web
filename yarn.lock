@@ -4015,6 +4015,7 @@ __metadata:
     "@k9-sak-web/konstanter": 1.0.0
     "@k9-sak-web/types": 1.0.0
     "@navikt/ft-types": 2.2.2
+    "@navikt/k9-fe-date-utils": 1.0.5
     moment: 2.29.4
     react: 18.2.0
     react-intl: 6.4.7
