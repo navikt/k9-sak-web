@@ -39,6 +39,7 @@ interface OwnProps {
   dokumentdata: DokumentDataType;
   dokumentdataInformasjonsbehov: any;
   overstyrtMottaker?: Brevmottaker;
+  setForhaandsvisningKlart: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const FritekstBrevPanel = ({
@@ -54,6 +55,7 @@ const FritekstBrevPanel = ({
   dokumentdata,
   dokumentdataInformasjonsbehov,
   overstyrtMottaker,
+  setForhaandsvisningKlart,
 }: OwnProps) => {
   const { formatMessage } = intl;
   const [featureToggles] = useFeatureToggles();
@@ -139,6 +141,7 @@ const FritekstBrevPanel = ({
             kanInkludereKalender={kanInkludereKalender}
             dokumentdataInformasjonsbehov={dokumentdataInformasjonsbehov}
             overstyrtMottaker={overstyrtMottaker}
+            setForhaandsvisningKlart={setForhaandsvisningKlart}
           />
 
           {formikProps.touched?.[fieldnames.REDIGERT_HTML] && formikProps.errors?.[fieldnames.REDIGERT_HTML] && (

@@ -73,7 +73,11 @@ const FritekstEditor = ({
 
   const debouncedLagre = useCallback(debounce(handleLagre), []);
 
-  const onChange = () => debouncedLagre();
+  const onChange = () => {
+    if (!readOnly) {
+      debouncedLagre();
+    }
+  };
 
   const lastEditor = async () => {
     await editor.init({ holder: 'rediger-brev', onChange });
@@ -179,7 +183,7 @@ const FritekstEditor = ({
                   <VerticalSpacer sixteenPx />
                 </>
               )}
-              <PreviewLink previewCallback={onForhåndsvis} size="small" intl={intl}>
+              <PreviewLink previewCallback={onForhåndsvis} size="small" intl={intl} loading={!redigerbartInnholdKlart}>
                 <FormattedMessage id="VedtakForm.ForhandvisBrev" />
               </PreviewLink>
             </div>
