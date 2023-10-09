@@ -7,7 +7,7 @@ import { IS_DEV } from '../constants';
 const babelRules = {
   test: /\.(t|j)sx?$/,
   use: [
-    IS_DEV && {
+    {
       loader: 'thread-loader',
       options: {
         workers: process.env.CIRCLE_NODE_TOTAL || require('os').cpus().length - 1,
@@ -20,7 +20,7 @@ const babelRules = {
         cacheDirectory: true,
       },
     },
-  ].filter(Boolean),
+  ],
   include: [PACKAGES_DIR],
 };
 
