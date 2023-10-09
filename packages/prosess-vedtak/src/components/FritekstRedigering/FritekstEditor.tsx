@@ -87,10 +87,10 @@ const FritekstEditor = ({
   };
 
   useEffect(() => {
-    if (redigerbartInnholdKlart && !editor.harEditor()) {
+    if (redigerbartInnholdKlart && !editor.harEditor() && !readOnly) {
       lastEditor();
     }
-  }, [redigerbartInnholdKlart]);
+  }, [redigerbartInnholdKlart, readOnly]);
 
   const handleLagreOgLukk = () => {
     handleLagre();
