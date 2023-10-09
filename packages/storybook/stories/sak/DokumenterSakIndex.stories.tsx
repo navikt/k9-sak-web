@@ -53,6 +53,11 @@ export const visMeldingerPanel = () => (
       backgroundColor: 'white',
     }}
   >
-    <DokumenterSakIndex documents={object('documents', dokumenter)} saksnummer={1} behandlingId={behandlingId} />
+    <DokumenterSakIndex
+      documents={object('documents', dokumenter)}
+      saksnummer={1}
+      behandlingId={behandlingId}
+      behandlingUuid="1"
+    />
   </div>
 );

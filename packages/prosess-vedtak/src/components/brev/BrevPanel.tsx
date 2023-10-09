@@ -22,7 +22,7 @@ import { Alert, ErrorMessage } from '@navikt/ds-react';
 
 import { FormikProps, setNestedObjectValues, useField } from 'formik';
 import { Column, Row } from 'nav-frontend-grid';
-import React from 'react';
+import React, { useState } from 'react';
 import { IntlShape, injectIntl } from 'react-intl';
 import { fieldnames } from '../../konstanter';
 import FritekstBrevPanel from '../FritekstBrevPanel';
@@ -41,6 +41,59 @@ const kanResultatForhåndsvises = behandlingResultat => {
     return true;
   }
   return type.kode !== 'ENDRING_I_FORDELING_AV_YTELSEN' && type.kode !== 'INGEN_ENDRING';
+};
+
+export const manuellBrevPreview = ({
+  tilgjengeligeVedtaksbrev,
+  previewCallback,
+  values,
+  redigertHtml,
+  overstyrtMottaker,
+  brødtekst,
+  overskrift,
+  aapneINyttVindu,
+}: {
+  tilgjengeligeVedtaksbrev: TilgjengeligeVedtaksbrev;
+  previewCallback: (values, aapneINyttVindu) => void;
+  values: any;
+  redigertHtml: any;
+  overstyrtMottaker: Brevmottaker;
+  brødtekst: string;
+  overskrift: string;
+  aapneINyttVindu: boolean;
+}) => {
+  if (kanHaManueltFritekstbrev(tilgjengeligeVedtaksbrev)) {
+    return previewCallback(
+      {
+        dokumentdata: {
+          REDIGERTBREV: {
+            redigertMal: values[fieldnames.REDIGERT_MAL],
+            originalHtml: values[fieldnames.ORIGINAL_HTML],
+            redigertHtml: redigertHtml || values[fieldnames.REDIGERT_HTML],
+            inkluderKalender: values[fieldnames.INKLUDER_KALENDER_VED_OVERSTYRING] || false,
+          },
+        },
+        dokumentMal: tilgjengeligeVedtaksbrev?.vedtaksbrevmaler?.[vedtaksbrevtype.MANUELL] ?? dokumentMalType.MANUELL,
+        ...(overstyrtMottaker ? { overstyrtMottaker: safeJSONParse(overstyrtMottaker) } : {}),
+      },
+      aapneINyttVindu,
+    );
+  }
+  return previewCallback(
+    {
+      dokumentdata: {
+        fritekstbrev: {
+          brødtekst: brødtekst || ' ',
+          overskrift: overskrift || ' ',
+          inkluderKalender: values[fieldnames.INKLUDER_KALENDER_VED_OVERSTYRING] || false,
+        },
+      },
+      // Bruker FRITKS som fallback til lenken ikke vises for avsluttede behandlinger
+      dokumentMal: tilgjengeligeVedtaksbrev?.vedtaksbrevmaler?.[vedtaksbrevtype.FRITEKST] ?? dokumentMalType.FRITKS,
+      ...(overstyrtMottaker ? { overstyrtMottaker: safeJSONParse(overstyrtMottaker) } : {}),
+    },
+    aapneINyttVindu,
+  );
 };
 
 const getManuellBrevCallback =
@@ -62,41 +115,16 @@ const getManuellBrevCallback =
   (e, redigertHtml = undefined) => {
     formProps.validateForm().then(errors => {
       if (Object.keys(errors).length === 0) {
-        if (kanHaManueltFritekstbrev(tilgjengeligeVedtaksbrev)) {
-          previewCallback(
-            {
-              dokumentdata: {
-                REDIGERTBREV: {
-                  redigertMal: formProps.values[fieldnames.REDIGERT_MAL],
-                  originalHtml: formProps.values[fieldnames.ORIGINAL_HTML],
-                  redigertHtml: redigertHtml || formProps.values[fieldnames.REDIGERT_HTML],
-                  inkluderKalender: formProps.values[fieldnames.INKLUDER_KALENDER_VED_OVERSTYRING] || false,
-                },
-              },
-              dokumentMal:
-                tilgjengeligeVedtaksbrev?.vedtaksbrevmaler?.[vedtaksbrevtype.MANUELL] ?? dokumentMalType.MANUELL,
-              ...(overstyrtMottaker ? { overstyrtMottaker: safeJSONParse(overstyrtMottaker) } : {}),
-            },
-            true,
-          );
-        } else {
-          previewCallback(
-            {
-              dokumentdata: {
-                fritekstbrev: {
-                  brødtekst: brødtekst || ' ',
-                  overskrift: overskrift || ' ',
-                  inkluderKalender: formProps.values[fieldnames.INKLUDER_KALENDER_VED_OVERSTYRING] || false,
-                },
-              },
-              // Bruker FRITKS som fallback til lenken ikke vises for avsluttede behandlinger
-              dokumentMal:
-                tilgjengeligeVedtaksbrev?.vedtaksbrevmaler?.[vedtaksbrevtype.FRITEKST] ?? dokumentMalType.FRITKS,
-              ...(overstyrtMottaker ? { overstyrtMottaker: safeJSONParse(overstyrtMottaker) } : {}),
-            },
-            true,
-          );
-        }
+        manuellBrevPreview({
+          tilgjengeligeVedtaksbrev,
+          previewCallback,
+          values: formProps.values,
+          redigertHtml,
+          overstyrtMottaker,
+          brødtekst,
+          overskrift,
+          aapneINyttVindu: true,
+        });
       } else {
         formProps.setTouched(setNestedObjectValues(formProps.values, true));
       }
@@ -160,7 +188,7 @@ export const BrevPanel: React.FC<BrevPanelProps> = props => {
     lagreDokumentdata,
     getPreviewAutomatiskBrevCallback,
   } = props;
-
+  const [forhaandsvisningKlart, setForhaandsvisningKlart] = useState(true);
   const [, meta] = useField({ name: 'overstyrtMottaker' });
 
   const automatiskBrevCallback = getPreviewAutomatiskBrevCallback(formikProps.values)({ aapneINyttVindu: true });
@@ -212,6 +240,7 @@ export const BrevPanel: React.FC<BrevPanelProps> = props => {
           lagreDokumentdata={lagreDokumentdata}
           dokumentdataInformasjonsbehov={dokumentdataInformasjonsbehov}
           overstyrtMottaker={overstyrtMottaker}
+          setForhaandsvisningKlart={setForhaandsvisningKlart}
         />
       </div>
       {!formikProps.values[fieldnames.SKAL_HINDRE_UTSENDING_AV_BREV] && (
@@ -219,6 +248,7 @@ export const BrevPanel: React.FC<BrevPanelProps> = props => {
           previewCallback={manuellBrevCallback}
           redigertHtml={formikProps.values?.[fieldnames.REDIGERT_HTML]}
           intl={intl}
+          loading={!forhaandsvisningKlart}
         />
       )}
     </>
@@ -237,7 +267,12 @@ export const BrevPanel: React.FC<BrevPanelProps> = props => {
       </div>
       {!formikProps.values[fieldnames.SKAL_HINDRE_UTSENDING_AV_BREV] &&
         kanResultatForhåndsvises(behandlingResultat) && (
-          <VedtakPreviewLink previewCallback={automatiskBrevCallback} redigertHtml={false} intl={intl} />
+          <VedtakPreviewLink
+            previewCallback={automatiskBrevCallback}
+            redigertHtml={false}
+            intl={intl}
+            loading={!forhaandsvisningKlart}
+          />
         )}
     </>
   );

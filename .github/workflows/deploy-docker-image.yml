@@ -29,6 +29,8 @@ jobs:
       issues: write
       packages: write
     # needs: [test, lint-tscheck-build]
+    outputs:
+      image: ${{ steps.docker-push.outputs.image }}
     steps:
       - name: Hente kode
         uses: actions/checkout@v3
@@ -136,3 +138,18 @@ jobs:
                             repo: context.issue.repo,
                             issue_number: ${{ steps.createdeployissue.outputs.number }} }
             github.rest.issues.createComment({...issue, body: '/promote dev-fss'})
+
+      - name: Set image output
+        id: docker-push
+        run: echo "IMAGE=$IMAGE_BASE:$TAG" >> $GITHUB_OUTPUT
+
+  trivy:
+    needs: [ deploy-docker-image ]
+    uses: navikt/sif-gha-workflows/.github/workflows/trivy-ghcr.yml@main
+    permissions:
+      contents: write
+      security-events: write
+      actions: read
+    secrets: inherit
+    with:
+      image: ${{ needs.deploy-docker-image.outputs.image }}

@@ -33,7 +33,7 @@ module.exports = {
       }
       return data;
     });
-    config.devtool = configType === 'DEVELOPMENT' ? 'eval-cheap-module-source-map' : 'source-map';
+    config.devtool = configType === 'eval-cheap-module-source-map';
 
     // Make whatever fine-grained changes you need
     config.module.rules = config.module.rules.concat(

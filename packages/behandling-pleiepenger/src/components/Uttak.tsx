@@ -20,6 +20,7 @@ const initializeUttak = (
     virkningsdato: string;
   }) => void,
   virkningsdatoUttakNyeRegler?: string,
+  aksjonspunkter?: Aksjonspunkt[],
 ) => {
   (window as any).renderUttakApp(elementId, {
     uttaksperioder,
@@ -31,6 +32,7 @@ const initializeUttak = (
     kodeverkUtenlandsoppholdÅrsak,
     løsAksjonspunktVurderDatoNyRegelUttak,
     virkningsdatoUttakNyeRegler,
+    aksjonspunkter,
   });
 };
 
@@ -82,6 +84,7 @@ export default ({
           alleKodeverk?.UtenlandsoppholdÅrsak,
           løsAksjonspunktVurderDatoNyRegelUttak,
           virkningsdatoUttakNyeRegler,
+          funnedeRelevanteAksjonspunkter,
         )
       }
     />

@@ -6,13 +6,8 @@ import styles from './sakGårIkkeTilBeslutterModal.module.css';
 const SakGårIkkeTilBeslutterModal = ({ onClose, onSubmit }) => {
   const intl = useIntl();
   return (
-    <Modal
-      open
-      aria-label={intl.formatMessage({ id: 'SakGårIkkeTilBeslutterModal.ModalAriaLabel' })}
-      onClose={onClose}
-      closeButton={false}
-    >
-      <Modal.Content className={styles.modalContent}>
+    <Modal open aria-label={intl.formatMessage({ id: 'SakGårIkkeTilBeslutterModal.ModalAriaLabel' })} onClose={onClose}>
+      <Modal.Body className={styles.modalContent}>
         <Alert variant="warning" size="medium" inline>
           <div className={styles.textContainer}>
             <BodyShort>{intl.formatMessage({ id: 'SakGårIkkeTilBeslutterModal.IngenToTrinnskontroll' })}</BodyShort>
@@ -27,7 +22,7 @@ const SakGårIkkeTilBeslutterModal = ({ onClose, onSubmit }) => {
             {intl.formatMessage({ id: 'SakGårIkkeTilBeslutterModal.Avbryt' })}
           </Button>
         </div>
-      </Modal.Content>
+      </Modal.Body>
     </Modal>
   );
 };

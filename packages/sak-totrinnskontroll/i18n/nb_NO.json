@@ -42,6 +42,7 @@
   "ToTrinnsForm.Beregning.VurderRefusjonskrav": "Det er vurdert om refusjonskrav om er fremsatt etter fristen skal tas med i beregning.",
   "ToTrinnsForm.Beregning.Tittel": "Vurderinger av beregningsgrunnlag med skjæringstidspunkt {dato}.",
   "ToTrinnsForm.Beregning.Generell": "Det er gjort endring i beregning",
+  "ToTrinnsForm.Beregning.VurdertNyttInntektsforhold": "Søker har tilkommet aktivitet i perioden. Det er vurdert om inntekt fra den nye aktiviteten skal redusere utbetaling.",
 
   "ToTrinnsForm.Godkjenn": "Godkjenn vedtaket",
   "ToTrinnsForm.SendTilbake": "Send til saksbehandler",
@@ -107,12 +108,12 @@
   "ToTrinnsForm.Uttak.TilstotendeYtelser.Innvilget": "Opplysninger om tilstøtende ytelser innvilget er kontrollert.",
   "ToTrinnsForm.Uttak.TilstotendeYtelser.Opphort": "Opplysninger om tilstøtende ytelser opphørt er kontrollert.",
   "ToTrinnsForm.Uttak.Stortinget": "Søker er stortingsrepresentant/administrativt ansatt i Stortinget. Uttak er kontrollert.",
+  "ToTrinnsForm.Uttak.DatoNyeReglerErSatt": "Søker har tilkommet aktivitet i perioden. Dato for når nye uttaksregler skal gjelde fra er satt.",
   "ToTrinnsForm.Uttak.Overstyrt": "Uttaksperioder er overstyrt.",
   "ToTrinnsForm.TilkjentYtelse.Tilbaketrekk": "Det er vurdert om det skal utføres tilbakekreving fra søker.",
   "ToTrinnsForm.Faresignaler.Vurder": "Det er vurdert om faresignalene påvirket behandlingen",
   "ToTrinnsForm.Opptjening.VurderPerioderMedOpptjening": "Perioder med opptjening har blitt vurdert.",
   "ToTrinnsForm.Opptjening.VurderOpptjeningsvilkåret": "Opptjeningsvilkåret har blitt manuelt vurdert.",
-
   "ToTrinnsForm.Klage.OmgjortTilGunst": "Omgjort til gunst",
   "ToTrinnsForm.Klage.StadfesteYtelsesVedtak": "Stadfest ytelsesvedtak",
   "ToTrinnsForm.Klage.OppheveYtelsesVedtak": "Opphev ytelsesvedtak",

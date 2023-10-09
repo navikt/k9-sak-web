@@ -1,14 +1,26 @@
 /* eslint-disable max-len */
-import { Label } from '@fpsak-frontend/form/src/Label';
-import { Table, TableColumn, TableRow } from '@fpsak-frontend/shared-components';
-import { Normaltekst } from 'nav-frontend-typografi';
+import { renderWithIntl } from '@fpsak-frontend/utils-test/src/test-utils';
+import { cleanup, screen, waitFor } from '@testing-library/react';
 import React from 'react';
-import { FormattedMessage } from 'react-intl';
-import shallowWithIntl, { intlMock } from '../../i18n/index';
+import { QueryClient, QueryClientProvider } from 'react-query';
+import { intlMock } from '../../i18n/index';
 import DocumentList from './DocumentList';
 
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      retry: false,
+    },
+  },
+});
+const wrapper = children => <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>;
+
 describe('<DocumentList>', () => {
-  it('skal vise to dokumenter i liste', () => {
+  afterEach(() => {
+    cleanup();
+  });
+
+  it('skal vise to dokumenter i liste', async () => {
     const document = {
       journalpostId: '1',
       dokumentId: '1',
@@ -25,37 +37,24 @@ describe('<DocumentList>', () => {
       kommunikasjonsretning: 'UT',
     };
 
-    const wrapper = shallowWithIntl(
-      <DocumentList.WrappedComponent
-        intl={intlMock}
-        documents={[document, anotherDocument]}
-        behandlingId={1}
-        saksnummer={1}
-      />,
+    renderWithIntl(
+      wrapper(
+        <DocumentList.WrappedComponent
+          intl={intlMock}
+          documents={[document, anotherDocument]}
+          behandlingId={1}
+          saksnummer={1}
+          behandlingUuid="1"
+        />,
+      ),
     );
-
-    const label = wrapper.find(Label);
-    expect(label).toHaveLength(0);
-
-    const table = wrapper.find(Table);
-    expect(table).toHaveLength(1);
-    const tableRows = table.find(TableRow);
-    expect(tableRows).toHaveLength(2);
-
-    const tableColumnsRow1 = tableRows.first().find(TableColumn);
-    expect(tableColumnsRow1.children()).toHaveLength(4);
-    expect(tableColumnsRow1.at(1).html()).toEqual(
-      '<td class="columnStyle"><a href="/k9/sak/api/dokument/hent-dokument?saksnummer=1&amp;journalpostId=1&amp;dokumentId=1" target="_blank" rel="noopener noreferrer" class="documentAnchor"><p class="typo-normal">Terminbekreftelse</p></a></td>',
-    );
-
-    const tableColumnsRow2 = tableRows.last().find(TableColumn);
-    expect(tableColumnsRow2.children()).toHaveLength(4);
-    expect(tableColumnsRow2.at(1).html()).toEqual(
-      '<td class="columnStyle"><a href="/k9/sak/api/dokument/hent-dokument?saksnummer=1&amp;journalpostId=2&amp;dokumentId=2" target="_blank" rel="noopener noreferrer" class="documentAnchor"><p class="typo-normal">Førstegangssøknad</p></a></td>',
-    );
+    await waitFor(() => {
+      expect(screen.getByText('Terminbekreftelse')).toBeInTheDocument();
+      expect(screen.getByText('Førstegangssøknad')).toBeInTheDocument();
+    });
   });
 
-  it('skal vise korrekt tekst om ikke tidspunkt finnes', () => {
+  it('skal vise korrekt tekst om ikke tidspunkt finnes', async () => {
     const document = {
       journalpostId: '1',
       dokumentId: '1',
@@ -64,22 +63,37 @@ describe('<DocumentList>', () => {
       kommunikasjonsretning: 'INN',
     };
 
-    const wrapper = shallowWithIntl(
-      <DocumentList.WrappedComponent intl={intlMock} documents={[document]} behandlingId={1} saksnummer={1} />,
+    renderWithIntl(
+      <QueryClientProvider client={queryClient}>
+        <DocumentList.WrappedComponent
+          intl={intlMock}
+          documents={[document]}
+          behandlingId={1}
+          saksnummer={1}
+          behandlingUuid="1"
+        />
+      </QueryClientProvider>,
     );
-
-    const formattedMessage = wrapper.find(FormattedMessage).findWhere(n => n.prop('id') === 'DocumentList.IProduksjon');
-    expect(formattedMessage).toHaveLength(1);
+    await waitFor(() => {
+      expect(screen.getByTestId('missing-timestamp')).toBeInTheDocument();
+    });
   });
 
-  it('skal ikke vise tabell når det ikke finnes dokumenter', () => {
-    const wrapper = shallowWithIntl(
-      <DocumentList.WrappedComponent intl={intlMock} documents={[]} behandlingId={1} saksnummer={1} />,
+  it('skal ikke vise tabell når det ikke finnes dokumenter', async () => {
+    renderWithIntl(
+      <QueryClientProvider client={queryClient}>
+        <DocumentList.WrappedComponent
+          intl={intlMock}
+          documents={[]}
+          behandlingId={1}
+          saksnummer={1}
+          behandlingUuid="1"
+        />
+      </QueryClientProvider>,
     );
 
-    const label = wrapper.find(Normaltekst);
-    expect(label).toHaveLength(1);
-    const table = wrapper.find(Table);
-    expect(table).toHaveLength(0);
+    await waitFor(() => {
+      expect(screen.getByTestId('no-documents')).toBeInTheDocument();
+    });
   });
 });

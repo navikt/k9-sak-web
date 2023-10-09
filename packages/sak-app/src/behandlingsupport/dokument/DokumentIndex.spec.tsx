@@ -34,7 +34,9 @@ describe('<DokumentIndex>', () => {
   it('skal vise liste med sorterte dokumenter', () => {
     requestApi.mock(K9sakApiKeys.ALL_DOCUMENTS, documents);
 
-    const wrapper = shallow(<DokumentIndex behandlingId={1} behandlingVersjon={2} saksnummer={123} />);
+    const wrapper = shallow(
+      <DokumentIndex behandlingId={1} behandlingVersjon={2} saksnummer={123} behandlingUuid="1" />,
+    );
 
     const index = wrapper.find(DokumenterSakIndex);
     expect(index).toHaveLength(1);
