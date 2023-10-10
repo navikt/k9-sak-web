@@ -1,0 +1,54 @@
+/* TODO (TOR) Fjern import av global.less etter refaktorering av timeline. Hack for å tving korrekt rekkefølge etter splitt av css */
+.vis-item.vis-dot {
+  border-width: 1px;
+}
+
+/* our custom classes overrule the styles for selected events,
+   so lets define a new style for the selected events */
+.vis-item.vis-selected {
+  background-color: var(--a-white);
+  border-color: black;
+  box-shadow: 0 0 10px gray;
+  color: black;
+}
+
+.vis-timeline {
+  border: 0;
+}
+
+.timelineContainer {
+  padding: 20px;
+  padding-bottom: 0;
+}
+
+.timelineContainerExpanded {
+  animation: open;
+  animation-duration: 0.8s;
+  max-height: 1600px;
+  transition: all 2s;
+}
+
+.iconContainer {
+  width: 100px;
+}
+
+.timeLineWrapper {
+  margin-left: -17px;
+}
+
+.sokerContainer {
+  max-width: 100px;
+}
+
+.showDataPanel {
+  height: 100%;
+}
+
+.hiddenpast {
+  content: '';
+  visibility: hidden;
+}
+
+.vis-text {
+  border-top: 1px solid darkgray;
+}

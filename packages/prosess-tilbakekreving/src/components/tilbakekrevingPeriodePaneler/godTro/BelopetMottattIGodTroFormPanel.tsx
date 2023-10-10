@@ -1,12 +1,12 @@
+import { Normaltekst, Undertekst } from 'nav-frontend-typografi';
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
-import { Undertekst, Normaltekst } from 'nav-frontend-typografi';
 
-import { minValue, required, removeSpacesFromNumber, formatCurrencyNoKr } from '@fpsak-frontend/utils';
-import { VerticalSpacer, ArrowBox } from '@fpsak-frontend/shared-components';
-import { RadioOption, RadioGroupField, InputField } from '@fpsak-frontend/form';
+import { InputField, RadioGroupField, RadioOption } from '@fpsak-frontend/form';
+import { ArrowBox, VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { formatCurrencyNoKr, minValue, removeSpacesFromNumber, required } from '@fpsak-frontend/utils';
 
-import styles from './belopetMottattIGodTroFormPanel.less';
+import styles from './belopetMottattIGodTroFormPanel.module.css';
 
 const minValue1 = minValue(1);
 

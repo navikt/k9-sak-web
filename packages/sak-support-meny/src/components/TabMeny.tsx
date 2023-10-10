@@ -3,7 +3,7 @@ import React, { useEffect, useRef } from 'react';
 
 import { FlexColumn, FlexContainer, FlexRow } from '@fpsak-frontend/shared-components';
 
-import styles from './tabMeny.less';
+import styles from './tabMeny.module.css';
 
 const classNames = classnames.bind(styles);
 

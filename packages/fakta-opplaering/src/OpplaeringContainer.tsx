@@ -1,16 +1,16 @@
-import React, { useContext, useState } from 'react';
+import { FaktaOpplaeringContext } from '@k9-sak-web/behandling-opplaeringspenger/src/FaktaOpplaeringContext';
+import { WarningIcon } from '@navikt/ft-plattform-komponenter';
 import classnames from 'classnames';
 import TabsPure from 'nav-frontend-tabs';
-import { WarningIcon } from '@navikt/ft-plattform-komponenter';
-import { FaktaOpplaeringContext } from '@k9-sak-web/behandling-opplaeringspenger/src/FaktaOpplaeringContext';
+import React, { useContext, useState } from 'react';
 
 import { NestedIntlProvider } from '@fpsak-frontend/shared-components';
 import Tabs from './Tabs';
 import GjennomgaaOpplaeringOversikt from './gjennomgaaOpplaering/GjennomgaaOpplaeringOversikt';
-import NoedvendighetOversikt from './noedvendighet/NoedvendighetOversikt';
 import messages from './i18n/nb_NO.json';
-import ReisetidOversikt from './reisetid/ReisetidOversikt';
+import NoedvendighetOversikt from './noedvendighet/NoedvendighetOversikt';
 import styles from './opplaeringContainer.modules.css';
+import ReisetidOversikt from './reisetid/ReisetidOversikt';
 
 interface TabItemProps {
   label: string;

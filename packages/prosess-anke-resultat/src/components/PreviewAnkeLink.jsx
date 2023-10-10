@@ -1,12 +1,12 @@
+import classNames from 'classnames';
+import PropTypes from 'prop-types';
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
-import PropTypes from 'prop-types';
-import classNames from 'classnames';
 
-import dokumentMalType from '@fpsak-frontend/kodeverk/src/dokumentMalType';
 import ankeVurderingType from '@fpsak-frontend/kodeverk/src/ankeVurdering';
+import dokumentMalType from '@fpsak-frontend/kodeverk/src/dokumentMalType';
 
-import styles from './previewAnkeLink.less';
+import styles from './previewAnkeLink.module.css';
 
 const getBrevKode = ankeVurdering => {
   switch (ankeVurdering) {

@@ -1,27 +1,27 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import { CheckboxField, RadioGroupField, RadioOption, TextAreaField } from '@fpsak-frontend/form/index';
+import { behandlingForm, getBehandlingFormName } from '@fpsak-frontend/form/src/behandlingForm';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import {
   AksjonspunktHelpTextTemp,
   BorderBox,
-  VerticalSpacer,
   Table,
   TableColumn,
   TableRow,
+  VerticalSpacer,
 } from '@fpsak-frontend/shared-components';
-import { FormattedMessage } from 'react-intl';
-import { behandlingForm, getBehandlingFormName } from '@fpsak-frontend/form/src/behandlingForm';
-import { connect } from 'react-redux';
-import { InjectedFormProps, ConfigProps, SubmitHandler, FieldArray, formValueSelector } from 'redux-form';
-import { minLength, maxLength, required, hasValidText, hasValidValue } from '@fpsak-frontend/utils';
-import { Hovedknapp } from 'nav-frontend-knapper';
-import { CheckboxField, RadioGroupField, RadioOption, TextAreaField } from '@fpsak-frontend/form/index';
-import { Element } from 'nav-frontend-typografi';
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { Aksjonspunkt, UtfallEnum, VilkårEnum, Uttaksperiode } from '@k9-sak-web/types';
+import { hasValidText, hasValidValue, maxLength, minLength, required } from '@fpsak-frontend/utils';
+import { Aksjonspunkt, UtfallEnum, Uttaksperiode, VilkårEnum } from '@k9-sak-web/types';
 import { Modal } from '@navikt/ds-react';
-import styles from './aksjonspunktForm.less';
+import { Hovedknapp } from 'nav-frontend-knapper';
+import { Element } from 'nav-frontend-typografi';
+import React, { useMemo } from 'react';
+import { FormattedMessage } from 'react-intl';
+import { connect } from 'react-redux';
+import { ConfigProps, FieldArray, InjectedFormProps, SubmitHandler, formValueSelector } from 'redux-form';
 import Aktivitet from '../dto/Aktivitet';
 import { fosterbarnDto } from '../dto/FosterbarnDto';
 import FosterbarnForm from './FosterbarnForm';
+import styles from './aksjonspunktForm.module.css';
 import { valgValues } from './utils';
 
 interface AksjonspunktFormImplProps {
@@ -71,7 +71,6 @@ export const FormContent = ({
   valgValue,
   initialValues,
 }: FormContentProps) => {
-  Modal.setAppElement(document.body);
   const uavklartePerioderPgaInfotrygd = useMemo(
     () =>
       aktiviteter

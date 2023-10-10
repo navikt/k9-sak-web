@@ -1,22 +1,12 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import { change as reduxFormChange, initialize as reduxFormInitialize } from 'redux-form';
-import { bindActionCreators } from 'redux';
 import moment from 'moment';
-import { FormattedMessage, injectIntl } from 'react-intl';
 import { Undertittel } from 'nav-frontend-typografi';
+import PropTypes from 'prop-types';
+import React, { Component } from 'react';
+import { FormattedMessage, injectIntl } from 'react-intl';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { change as reduxFormChange, initialize as reduxFormInitialize } from 'redux-form';
 
-import { DDMMYYYY_DATE_FORMAT, decodeHtmlEntity, omit } from '@fpsak-frontend/utils';
-import {
-  AksjonspunktHelpTextTemp,
-  FadingPanel,
-  FlexColumn,
-  FlexRow,
-  VerticalSpacer,
-  FaktaGruppe,
-} from '@fpsak-frontend/shared-components';
-import { ProsessStegSubmitButton } from '@k9-sak-web/prosess-felles';
 import {
   behandlingForm,
   behandlingFormValueSelector,
@@ -27,12 +17,22 @@ import {
 } from '@fpsak-frontend/form';
 import aksjonspunktCodesTilbakekreving from '@fpsak-frontend/kodeverk/src/aksjonspunktCodesTilbakekreving';
 import foreldelseVurderingType from '@fpsak-frontend/kodeverk/src/foreldelseVurderingType';
+import {
+  AksjonspunktHelpTextTemp,
+  FadingPanel,
+  FaktaGruppe,
+  FlexColumn,
+  FlexRow,
+  VerticalSpacer,
+} from '@fpsak-frontend/shared-components';
+import { DDMMYYYY_DATE_FORMAT, decodeHtmlEntity, omit } from '@fpsak-frontend/utils';
+import { ProsessStegSubmitButton } from '@k9-sak-web/prosess-felles';
 
 import ForeldelsePeriodeForm, { FORELDELSE_PERIODE_FORM_NAME } from './ForeldelsePeriodeForm';
-import TilbakekrevingTimelinePanel from './timeline/TilbakekrevingTimelinePanel';
 import ForeldelseTidslinjeHjelpetekster from './ForeldelseTidslinjeHjelpetekster';
+import TilbakekrevingTimelinePanel from './timeline/TilbakekrevingTimelinePanel';
 
-import styles from './foreldelseForm.less';
+import styles from './foreldelseForm.module.css';
 
 const FORELDELSE_FORM_NAME = 'ForeldelseForm';
 

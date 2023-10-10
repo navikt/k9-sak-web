@@ -7,7 +7,7 @@ import { Column, Row } from 'nav-frontend-grid';
 import hash from 'object-hash';
 import React, { Component } from 'react';
 import DateContainer from './DateContainer';
-import styles from './opptjeningTimeLine.less';
+import styles from './opptjeningTimeLine.module.css';
 
 // Desse må alltid vare med for rett skala av tidslinjen då den alltid skall vare 10 månader fra skjæringstidpunkten
 const standardItems = (opptjeningFomDato: string, opptjeningTomDato: string): any[] => {

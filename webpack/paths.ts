@@ -1,6 +1,6 @@
 import path from 'path';
 
-export const MODULES_DIR = path.resolve(__dirname, '../node_modules');
+export const NODE_MODULES = path.resolve(__dirname, '../node_modules');
 export const PUBLIC_ROOT = path.resolve(__dirname, '../public/client');
 export const LANG_DIR = path.resolve(__dirname, '../public/sprak/');
 export const PACKAGES_DIR = path.join(__dirname, '../packages');

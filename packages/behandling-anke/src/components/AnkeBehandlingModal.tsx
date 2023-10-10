@@ -1,14 +1,14 @@
-import React from 'react';
-import { FormattedMessage, injectIntl, WrappedComponentProps } from 'react-intl';
 import { Column, Row } from 'nav-frontend-grid';
-import Modal from 'nav-frontend-modal';
 import { Hovedknapp } from 'nav-frontend-knapper';
+import Modal from 'nav-frontend-modal';
 import { Normaltekst } from 'nav-frontend-typografi';
+import React from 'react';
+import { FormattedMessage, WrappedComponentProps, injectIntl } from 'react-intl';
 
-import { Image } from '@fpsak-frontend/shared-components';
 import innvilgetImageUrl from '@fpsak-frontend/assets/images/innvilget_valgt.svg';
+import { Image } from '@fpsak-frontend/shared-components';
 
-import styles from './ankeBehandlingModal.less';
+import styles from './ankeBehandlingModal.module.css';
 
 interface OwnProps {
   visModal?: boolean;

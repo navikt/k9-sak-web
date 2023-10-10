@@ -1,16 +1,10 @@
 /* eslint-disable */
-import React from 'react';
 import { useField } from 'formik';
+import React from 'react';
 
-import {
-  DatePickerProps,
-  DateValidationT,
-  RangeValidationT,
-  DatePicker,
-  useRangeDatepicker,
-} from '@navikt/ds-react';
-import styles from './rangeDatepicker.modules.css';
+import { DatePicker, DatePickerProps, DateValidationT, RangeValidationT, useRangeDatepicker } from '@navikt/ds-react';
 import dayjs from 'dayjs';
+import styles from './rangeDatepicker.modules.css';
 
 type OwnProps = {
   name: string;

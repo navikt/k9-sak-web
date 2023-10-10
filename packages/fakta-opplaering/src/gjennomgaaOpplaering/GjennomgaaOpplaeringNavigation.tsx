@@ -1,10 +1,10 @@
+import { GjennomgaaOpplaeringPeriode } from '@k9-sak-web/types';
 import { Heading } from '@navikt/ds-react';
 import { InteractiveList } from '@navikt/ft-plattform-komponenter';
 import React, { useEffect } from 'react';
-import { GjennomgaaOpplaeringPeriode } from '@k9-sak-web/types';
-import GjennomgaaOpplaeringStatus from './konstanter';
 import PeriodeRad from '../components/PeriodeRad';
 import styles from './gjennomgaaOpplaeringNavigation.modules.css';
+import GjennomgaaOpplaeringStatus from './konstanter';
 
 interface OwnProps {
   perioder: GjennomgaaOpplaeringPeriode[];

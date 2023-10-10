@@ -1,7 +1,6 @@
-import React, { useCallback, useMemo, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-
 import SupportMenySakIndex, { SupportTabs } from '@fpsak-frontend/sak-support-meny';
+import { httpErrorHandler, useLocalStorage } from '@fpsak-frontend/utils';
+import { useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
 import {
   ArbeidsgiverOpplysningerWrapper,
   BehandlingAppKontekst,
@@ -9,15 +8,14 @@ import {
   NavAnsatt,
   Personopplysninger,
 } from '@k9-sak-web/types';
-
-import { httpErrorHandler, useLocalStorage } from '@fpsak-frontend/utils';
-import { useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
 import axios from 'axios';
+import React, { useCallback, useMemo, useState } from 'react';
 import { useQuery } from 'react-query';
+import { useNavigate } from 'react-router-dom';
 import { getSupportPanelLocationCreator } from '../app/paths';
 import useTrackRouteParam from '../app/useTrackRouteParam';
 import BehandlingRettigheter from '../behandling/behandlingRettigheterTsType';
-import styles from './behandlingSupportIndex.less';
+import styles from './behandlingSupportIndex.module.css';
 import DokumentIndex from './dokument/DokumentIndex';
 import HistorikkIndex from './historikk/HistorikkIndex';
 import MeldingIndex from './melding/MeldingIndex';
@@ -175,6 +173,7 @@ const BehandlingSupportIndex = ({
             behandlingId={behandlingId}
             behandlingVersjon={behandlingVersjon}
             fagsakPerson={fagsak.person}
+            behandlingUuid={behandling?.uuid}
           />
         )}
         {aktivtSupportPanel === SupportTabs.NOTATER && (

@@ -3,7 +3,7 @@ const path = require('path');
 const ESLintPlugin = require('eslint-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const PACKAGES_DIR = path.resolve(__dirname, '../packages');
-const CORE_DIR = path.resolve(__dirname, '../node_modules');
+const NODE_MODULES = path.resolve(__dirname, '../node_modules');
 const IMAGE_DIR = path.join(PACKAGES_DIR, 'assets/images');
 const CSS_DIR = path.join(PACKAGES_DIR, 'assets/styles');
 module.exports = {
@@ -34,7 +34,7 @@ module.exports = {
       }
       return data;
     });
-    config.devtool = configType === 'DEVELOPMENT' ? 'inline-source-map' : 'source-map';
+    config.devtool = configType === 'eval-cheap-module-source-map';
 
     // Make whatever fine-grained changes you need
     config.module.rules = config.module.rules.concat(
@@ -61,33 +61,14 @@ module.exports = {
         include: PACKAGES_DIR,
       },
       {
-        test: /\.(le|c)ss$/,
+        test: /\\.css$/,
         use: [
-          {
-            loader: MiniCssExtractPlugin.loader,
-            options: {
-              publicPath: './',
-            },
-          },
           {
             loader: 'css-loader',
             options: {
               importLoaders: 1,
               modules: {
                 localIdentName: '[name]_[local]_[contenthash:base64:5]',
-              },
-            },
-          },
-          {
-            loader: 'less-loader',
-            options: {
-              lessOptions: {
-                modules: true,
-                localIdentName: '[name]_[local]_[contenthash:base64:5]',
-                modifyVars: {
-                  nodeModulesPath: '~',
-                  coreModulePath: '~',
-                },
               },
             },
           },
@@ -120,7 +101,7 @@ module.exports = {
             },
           },
         ],
-        include: [CSS_DIR, CORE_DIR],
+        include: [CSS_DIR, NODE_MODULES],
       },
       {
         test: /\.(jp|pn|sv)g$/,
@@ -155,7 +136,7 @@ module.exports = {
         generator: {
           filename: '[name]_[contenthash].[ext]',
         },
-        include: [CORE_DIR],
+        include: [NODE_MODULES],
       },
     );
     config.plugins.push(
@@ -164,7 +145,7 @@ module.exports = {
         ignoreOrder: true,
       }),
     );
-    config.resolve.extensions.push('.ts', '.tsx', '.less');
+    config.resolve.extensions.push('.ts', '.tsx', '.css');
 
     // Return the altered config
     return config;

@@ -1,12 +1,12 @@
-import React from 'react';
 import moment from 'moment';
-import { FormattedMessage, injectIntl } from 'react-intl';
-import { connect } from 'react-redux';
-import { createSelector } from 'reselect';
-import { formPropTypes } from 'redux-form';
-import PropTypes from 'prop-types';
 import { Column, Row } from 'nav-frontend-grid';
 import { Normaltekst, Undertittel } from 'nav-frontend-typografi';
+import PropTypes from 'prop-types';
+import React from 'react';
+import { FormattedMessage, injectIntl } from 'react-intl';
+import { connect } from 'react-redux';
+import { formPropTypes } from 'redux-form';
+import { createSelector } from 'reselect';
 
 import {
   CheckboxField,
@@ -22,19 +22,19 @@ import {
 } from '@fpsak-frontend/form';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import ankeVurdering from '@fpsak-frontend/kodeverk/src/ankeVurdering';
-import { ProsessStegSubmitButton } from '@k9-sak-web/prosess-felles';
-import { DDMMYYYY_DATE_FORMAT, ISO_DATE_FORMAT, required } from '@fpsak-frontend/utils';
-import { AksjonspunktHelpTextTemp, ArrowBox, FadingPanel, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import ankeVurderingOmgjoer from '@fpsak-frontend/kodeverk/src/ankeVurderingOmgjoer';
-import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
+import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
+import { AksjonspunktHelpTextTemp, ArrowBox, FadingPanel, VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { DDMMYYYY_DATE_FORMAT, ISO_DATE_FORMAT, required } from '@fpsak-frontend/utils';
+import { ProsessStegSubmitButton } from '@k9-sak-web/prosess-felles';
 
 import ankeOmgjorArsak from '../kodeverk/ankeOmgjorArsak';
-import PreviewAnkeLink from './PreviewAnkeLink';
 import FritekstBrevTextField from './FritekstAnkeBrevTextField';
+import PreviewAnkeLink from './PreviewAnkeLink';
 import TempsaveAnkeButton from './TempsaveAnkeButton';
 
-import styles from './behandleAnkeForm.less';
+import styles from './behandleAnkeForm.module.css';
 
 const omgjorArsakValues = [
   { kode: ankeOmgjorArsak.PROSESSUELL_FEIL, navn: 'Ankebehandling.OmgjoeringArsak.ProsessuellFeil' },

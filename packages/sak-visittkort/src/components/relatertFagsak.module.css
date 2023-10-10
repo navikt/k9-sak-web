@@ -1,0 +1,94 @@
+.relatertFagsak {
+  align-items: center;
+  display: flex;
+  height: 56px;
+  z-index: 2;
+}
+
+.relatertFagsak:first-of-type {
+  padding: 0 0 0 1rem;
+}
+
+.relatertFagsak__nameGenderContainer {
+  align-items: center;
+  display: flex;
+  padding: 0 0.75rem;
+}
+
+.relatertFagsak__icon {
+  height: 2.125rem;
+  margin-right: 0.5rem;
+  width: 2.125rem;
+}
+
+.relatertFagsak__description {
+  margin: 0 0.125rem 0 0;
+}
+
+.relatertFagsak__selector {
+  align-items: center;
+  background: transparent;
+  border: none;
+  color: var(--a-blue-500);
+  cursor: pointer;
+  display: flex;
+  overflow: hidden;
+  padding: 0;
+  text-decoration: underline;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+@supports (-webkit-line-clamp: 2) {
+  .relatertFagsak__selector {
+    -webkit-box-orient: vertical;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: initial;
+  }
+}
+
+.relatertFagsak__selector:hover {
+  text-decoration: none;
+}
+
+.relatertFagsak__selector--pushLeft {
+  margin-left: 0.75rem;
+}
+
+.relatertFagsak__name:global(.typo-normal) {
+  color: var(--a-blue-500);
+  font-weight: 400;
+  line-height: 1.25rem;
+  padding: 0 1.5px;
+}
+
+.relatertFagsak__centeredFlex {
+  align-items: center;
+  display: flex;
+  padding: 0 0.625rem 0 0.75rem;
+}
+
+.relatertFagsak__søkerSelect {
+  margin-left: 0.375rem;
+}
+
+.relatertFagsak__søkerSelect :global .skjemaelement__label {
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  height: 1px;
+  overflow: hidden;
+  position: absolute;
+  white-space: nowrap;
+  width: 1px;
+}
+
+.relatertFagsak__marginLeft {
+  margin-left: 0.75em;
+}
+
+.relatertFagsak__lock {
+  margin-left: 0.75em;
+}

@@ -79,6 +79,7 @@ export const visMeldingerPanel = () => (
           kodeverk: 'UGUNST',
         },
       ]}
+      erTilbakekreving={false}
     />
   </div>
 );

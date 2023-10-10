@@ -1,27 +1,27 @@
-import React from 'react';
-import { connect } from 'react-redux';
-import { FormattedMessage } from 'react-intl';
-import { createSelector } from 'reselect';
-import { InjectedFormProps, FieldArray } from 'redux-form';
 import { Location } from 'history';
 import { Hovedknapp } from 'nav-frontend-knapper';
+import React from 'react';
+import { FormattedMessage } from 'react-intl';
+import { connect } from 'react-redux';
+import { FieldArray, InjectedFormProps } from 'redux-form';
+import { createSelector } from 'reselect';
 
-import vurderPaNyttArsakType from '@fpsak-frontend/kodeverk/src/vurderPaNyttArsakType';
-import { ariaCheck, isRequiredMessage, decodeHtmlEntity } from '@fpsak-frontend/utils';
-import { VerticalSpacer, AksjonspunktHelpTextHTML } from '@fpsak-frontend/shared-components';
 import { behandlingForm, behandlingFormValueSelector } from '@fpsak-frontend/form';
+import vurderPaNyttArsakType from '@fpsak-frontend/kodeverk/src/vurderPaNyttArsakType';
+import { AksjonspunktHelpTextHTML, VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { ariaCheck, decodeHtmlEntity, isRequiredMessage } from '@fpsak-frontend/utils';
 import {
   Behandling,
+  KlageVurdering,
   Kodeverk,
   KodeverkMedNavn,
-  KlageVurdering,
   TotrinnskontrollAksjonspunkt,
   TotrinnskontrollSkjermlenkeContext,
 } from '@k9-sak-web/types';
 
 import AksjonspunktGodkjenningFieldArray, { AksjonspunktGodkjenningData } from './AksjonspunktGodkjenningFieldArray';
 
-import styles from './totrinnskontrollBeslutterForm.less';
+import styles from './totrinnskontrollBeslutterForm.module.css';
 
 const erAlleGodkjent = (formState: TotrinnskontrollAksjonspunkt[] = []) =>
   formState.every(ap => ap.totrinnskontrollGodkjent && ap.totrinnskontrollGodkjent === true);

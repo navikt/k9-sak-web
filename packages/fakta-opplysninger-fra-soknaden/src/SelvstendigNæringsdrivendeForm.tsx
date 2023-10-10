@@ -3,7 +3,7 @@ import InputField from '@fpsak-frontend/form/src/InputField';
 import { Label } from '@fpsak-frontend/form/src/Label';
 import React from 'react';
 import { useIntl } from 'react-intl';
-import styles from './opplysningerFraSoknadenForm.less';
+import styles from './opplysningerFraSoknadenForm.module.css';
 import SøknadFormValue from './types/SøknadFormValue';
 
 interface SelvstendigNæringsdrivendeFormProps {

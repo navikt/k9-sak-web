@@ -1,7 +1,7 @@
 import React from 'react';
 import { FormattedMessage, injectIntl, WrappedComponentProps } from 'react-intl';
 
-import styleLesemodus from './AldersvilkarLese.less';
+import styleLesemodus from './AldersvilkarLese.module.css';
 
 type Props = {
   aktiverRedigering: (boolean) => void;

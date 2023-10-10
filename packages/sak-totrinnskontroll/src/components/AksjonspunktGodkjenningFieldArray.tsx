@@ -1,19 +1,19 @@
+import { Location } from 'history';
+import { Normaltekst, Undertekst } from 'nav-frontend-typografi';
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
-import { FieldArrayFieldsProps } from 'redux-form';
 import { NavLink } from 'react-router-dom';
-import { Location } from 'history';
-import { Undertekst, Normaltekst } from 'nav-frontend-typografi';
+import { FieldArrayFieldsProps } from 'redux-form';
 
-import { Kodeverk, KodeverkMedNavn, KlageVurdering, TotrinnskontrollSkjermlenkeContext } from '@k9-sak-web/types';
-import { CheckboxField, NavFieldGroup, TextAreaField, RadioGroupField, RadioOption } from '@fpsak-frontend/form';
+import { CheckboxField, NavFieldGroup, RadioGroupField, RadioOption, TextAreaField } from '@fpsak-frontend/form';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { ArrowBox, FlexColumn, FlexContainer, FlexRow } from '@fpsak-frontend/shared-components';
 import { hasValidText, maxLength, minLength, required } from '@fpsak-frontend/utils';
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import { KlageVurdering, Kodeverk, KodeverkMedNavn, TotrinnskontrollSkjermlenkeContext } from '@k9-sak-web/types';
 
 import getAksjonspunkttekst from './aksjonspunktTekster/aksjonspunktTekstUtleder';
 
-import styles from './aksjonspunktGodkjenningFieldArray.less';
+import styles from './aksjonspunktGodkjenningFieldArray.module.css';
 
 const minLength3 = minLength(3);
 const maxLength2000 = maxLength(2000);

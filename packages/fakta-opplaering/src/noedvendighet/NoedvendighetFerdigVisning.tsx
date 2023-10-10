@@ -1,20 +1,20 @@
+import { FaktaOpplaeringContext } from '@k9-sak-web/behandling-opplaeringspenger/src/FaktaOpplaeringContext';
+import { NoedvendighetVurdering, Vurderingsresultat } from '@k9-sak-web/types';
+import { Calender } from '@navikt/ds-icons';
 import {
+  AssessedBy,
+  BasicList,
   Box,
-  Margin,
   DetailView,
   LabelledContent,
   LinkButton,
-  AssessedBy,
-  BasicList,
+  Margin,
 } from '@navikt/ft-plattform-komponenter';
 import React, { useContext } from 'react';
-import { NoedvendighetVurdering, Vurderingsresultat } from '@k9-sak-web/types';
-import { Calender } from '@navikt/ds-icons';
-import { FaktaOpplaeringContext } from '@k9-sak-web/behandling-opplaeringspenger/src/FaktaOpplaeringContext';
 
 import { useIntl } from 'react-intl';
-import styles from './noedvendighetFerdigVisning.modules.css';
 import DokumentLink from '../components/DokumentLink';
+import styles from './noedvendighetFerdigVisning.modules.css';
 
 interface OwnProps {
   vurdering: NoedvendighetVurdering;

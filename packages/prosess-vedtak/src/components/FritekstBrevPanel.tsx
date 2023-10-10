@@ -2,23 +2,23 @@ import { Alert, Heading } from '@navikt/ds-react';
 import { FormikProps, FormikValues } from 'formik';
 import { Column, Row } from 'nav-frontend-grid';
 import React from 'react';
-import { FormattedMessage, injectIntl, IntlShape } from 'react-intl';
+import { FormattedMessage, IntlShape, injectIntl } from 'react-intl';
 
+import { TextAreaFormik, TextFieldFormik } from '@fpsak-frontend/form';
 import { VerticalSpacer, useFeatureToggles } from '@fpsak-frontend/shared-components';
 import { hasValidText, maxLength, minLength, required } from '@fpsak-frontend/utils';
-import { TextAreaFormik, TextFieldFormik } from '@fpsak-frontend/form';
 import {
   Brevmottaker,
-  kanHaManueltFritekstbrev,
   TilgjengeligeVedtaksbrev,
+  kanHaManueltFritekstbrev,
 } from '@fpsak-frontend/utils/src/formidlingUtils';
 import { DokumentDataType } from '@k9-sak-web/types/src/dokumentdata';
 
 import AlertStripe from 'nav-frontend-alertstriper';
 import InkluderKalenderCheckbox from './InkluderKalenderCheckbox';
 
-import styles from './vedtakForm.less';
 import FritekstRedigering from './FritekstRedigering/FritekstRedigering';
+import styles from './vedtakForm.module.css';
 
 import { fieldnames } from '../konstanter';
 
@@ -39,6 +39,7 @@ interface OwnProps {
   dokumentdata: DokumentDataType;
   dokumentdataInformasjonsbehov: any;
   overstyrtMottaker?: Brevmottaker;
+  setForhaandsvisningKlart: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const FritekstBrevPanel = ({
@@ -54,6 +55,7 @@ const FritekstBrevPanel = ({
   dokumentdata,
   dokumentdataInformasjonsbehov,
   overstyrtMottaker,
+  setForhaandsvisningKlart,
 }: OwnProps) => {
   const { formatMessage } = intl;
   const [featureToggles] = useFeatureToggles();
@@ -139,6 +141,7 @@ const FritekstBrevPanel = ({
             kanInkludereKalender={kanInkludereKalender}
             dokumentdataInformasjonsbehov={dokumentdataInformasjonsbehov}
             overstyrtMottaker={overstyrtMottaker}
+            setForhaandsvisningKlart={setForhaandsvisningKlart}
           />
 
           {formikProps.touched?.[fieldnames.REDIGERT_HTML] && formikProps.errors?.[fieldnames.REDIGERT_HTML] && (

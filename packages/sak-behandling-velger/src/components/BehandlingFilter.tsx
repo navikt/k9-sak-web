@@ -6,7 +6,7 @@ import { Checkbox, CheckboxGruppe } from 'nav-frontend-skjema';
 import { Element } from 'nav-frontend-typografi';
 import React, { useEffect, useRef, useState } from 'react';
 import { FormattedMessage } from 'react-intl';
-import styles from './behandlingFilter.less';
+import styles from './behandlingFilter.module.css';
 
 interface FilterType {
   value: string;
@@ -38,11 +38,11 @@ interface BehandlingfilterProps {
 }
 
 const ChevronWithText = ({ chevronDirection, onClick, text }: ChevronWithTextProps): JSX.Element => (
-    <button type="button" className={styles.chevronDropdown__toggleButton} onClick={onClick}>
-      <Element className={styles.chevronDropdown__toggleButton__text}>{text}</Element>
-      <Chevron type={chevronDirection} />
-    </button>
-  )
+  <button type="button" className={styles.chevronDropdown__toggleButton} onClick={onClick}>
+    <Element className={styles.chevronDropdown__toggleButton__text}>{text}</Element>
+    <Chevron type={chevronDirection} />
+  </button>
+);
 
 const BehandlingFilter = ({ text, filters, activeFilters, onFilterChange }: BehandlingfilterProps): JSX.Element => {
   const wrapperRef = useRef(null);
@@ -108,6 +108,6 @@ const BehandlingFilter = ({ text, filters, activeFilters, onFilterChange }: Beha
       )}
     </div>
   );
-}
+};
 
 export default BehandlingFilter;

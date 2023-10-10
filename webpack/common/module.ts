@@ -1,6 +1,6 @@
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 
-import { CSS_DIR, IMAGE_DIR, MODULES_DIR, PACKAGES_DIR } from '../paths';
+import { CSS_DIR, IMAGE_DIR, NODE_MODULES, PACKAGES_DIR } from '../paths';
 
 import { IS_DEV } from '../constants';
 
@@ -25,7 +25,7 @@ const babelRules = {
 };
 
 const lessLocalRules = {
-  test: /\.(le|c)ss$/,
+  test: /\.css$/,
   use: [
     {
       loader: MiniCssExtractPlugin.loader,
@@ -39,19 +39,6 @@ const lessLocalRules = {
         importLoaders: 1,
         modules: {
           localIdentName: '[name]_[local]_[contenthash:base64:5]',
-        },
-      },
-    },
-    {
-      loader: 'less-loader',
-      options: {
-        lessOptions: {
-          modules: true,
-          localIdentName: '[name]_[local]_[contenthash:base64:5]',
-          modifyVars: {
-            nodeModulesPath: '~',
-            coreModulePath: '~',
-          },
         },
       },
     },
@@ -83,7 +70,7 @@ const lessExternalRules = {
       },
     },
   ],
-  include: [CSS_DIR, MODULES_DIR],
+  include: [CSS_DIR, NODE_MODULES],
 };
 
 const assetRules = {
@@ -119,16 +106,32 @@ const svgExternalRules = {
   generator: {
     filename: '[name]_[contenthash].[ext]',
   },
-  include: [MODULES_DIR],
+  include: [NODE_MODULES],
 };
 
 const sourceMaps = {
   test: /\.js$/,
   enforce: 'pre',
   use: ['source-map-loader'],
-  include: [`${MODULES_DIR}/@navikt`],
+  include: [`${NODE_MODULES}/@navikt`],
+};
+
+const esModulesRules = {
+  test: /\.m?js/,
+  resolve: {
+    fullySpecified: false,
+  },
 };
 
 export default {
-  rules: [sourceMaps, babelRules, lessLocalRules, lessExternalRules, assetRules, svgLocalRules, svgExternalRules],
+  rules: [
+    sourceMaps,
+    babelRules,
+    lessLocalRules,
+    lessExternalRules,
+    assetRules,
+    svgLocalRules,
+    svgExternalRules,
+    esModulesRules,
+  ],
 };

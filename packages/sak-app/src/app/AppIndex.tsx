@@ -15,12 +15,30 @@ import LanguageProvider from './LanguageProvider';
 import Dekorator from './components/Dekorator';
 import Home from './components/Home';
 
-import '@fpsak-frontend/assets/styles/global.less';
+import '@fpsak-frontend/assets/styles/global.css';
 import '@navikt/ft-fakta-beregning/dist/style.css';
 import '@navikt/ft-form-hooks/dist/style.css';
 import '@navikt/ft-plattform-komponenter/dist/style.css';
 import '@navikt/ft-prosess-beregningsgrunnlag/dist/style.css';
 import '@navikt/ft-ui-komponenter/dist/style.css';
+import 'nav-datovelger/lib/styles/main.css';
+import 'nav-frontend-alertstriper-style/dist/main.css';
+import 'nav-frontend-chevron-style/dist/main.css';
+import 'nav-frontend-core/dist/main.css';
+import 'nav-frontend-ekspanderbartpanel-style/dist/main.css';
+import 'nav-frontend-etiketter-style/dist/main.css';
+import 'nav-frontend-grid-style/dist/main.css';
+import 'nav-frontend-hjelpetekst-style/dist/main.css';
+import 'nav-frontend-knapper-style/dist/main.css';
+import 'nav-frontend-lukknapp-style/dist/main.css';
+import 'nav-frontend-modal-style/dist/main.css';
+import 'nav-frontend-paneler-style/dist/main.css';
+import 'nav-frontend-popover-style/dist/main.css';
+import 'nav-frontend-skjema-style/dist/main.css';
+import 'nav-frontend-snakkeboble-style/dist/main.css';
+import 'nav-frontend-spinner-style/dist/main.css';
+import 'nav-frontend-tabs-style/dist/main.css';
+import 'nav-frontend-typografi-style/dist/main.css';
 
 const EMPTY_ARRAY = [];
 

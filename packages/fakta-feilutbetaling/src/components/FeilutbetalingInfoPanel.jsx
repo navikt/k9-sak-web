@@ -1,39 +1,39 @@
-import React, { Component } from 'react';
+import moment from 'moment';
+import { Column, Row } from 'nav-frontend-grid';
+import { Hovedknapp } from 'nav-frontend-knapper';
+import { Element, Normaltekst, Undertekst } from 'nav-frontend-typografi';
 import PropTypes from 'prop-types';
-import { createSelector } from 'reselect';
+import React, { Component } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { clearFields, change, formPropTypes, getFormValues } from 'redux-form';
-import moment from 'moment';
-import { Column, Row } from 'nav-frontend-grid';
-import { Element, Normaltekst, Undertekst } from 'nav-frontend-typografi';
-import { Hovedknapp } from 'nav-frontend-knapper';
+import { change, clearFields, formPropTypes, getFormValues } from 'redux-form';
+import { createSelector } from 'reselect';
 
-import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
-import aksjonspunktCodesTilbakekreving from '@fpsak-frontend/kodeverk/src/aksjonspunktCodesTilbakekreving';
 import {
+  CheckboxField,
   TextAreaField,
   behandlingForm,
-  getBehandlingFormPrefix,
-  CheckboxField,
   behandlingFormValueSelector,
   getBehandlingFormName,
+  getBehandlingFormPrefix,
 } from '@fpsak-frontend/form';
-import { VerticalSpacer, AksjonspunktHelpTextTemp, FaktaGruppe } from '@fpsak-frontend/shared-components';
+import aksjonspunktCodesTilbakekreving from '@fpsak-frontend/kodeverk/src/aksjonspunktCodesTilbakekreving';
+import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
+import { AksjonspunktHelpTextTemp, FaktaGruppe, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import {
   DDMMYYYY_DATE_FORMAT,
+  decodeHtmlEntity,
+  getKodeverknavnFn,
   hasValidText,
   maxLength,
   minLength,
   required,
-  getKodeverknavnFn,
-  decodeHtmlEntity,
 } from '@fpsak-frontend/utils';
 
 import FeilutbetalingPerioderTable from './FeilutbetalingPerioderTable';
 
-import styles from './feilutbetalingInfoPanel.less';
+import styles from './feilutbetalingInfoPanel.module.css';
 
 const formName = 'FaktaFeilutbetalingForm';
 const minLength3 = minLength(3);

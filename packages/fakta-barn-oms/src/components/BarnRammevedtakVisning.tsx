@@ -1,10 +1,10 @@
+import KombinertBarnOgRammevedtak from '@k9-sak-web/fakta-barn-oms/src/dto/KombinertBarnOgRammevedtak';
+import { Element, Normaltekst } from 'nav-frontend-typografi';
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
-import { Element, Normaltekst } from 'nav-frontend-typografi';
 import { v4 as uuidv4 } from 'uuid';
-import KombinertBarnOgRammevedtak from '@k9-sak-web/fakta-barn-oms/src/dto/KombinertBarnOgRammevedtak';
 import formaterDato from '../utils/formaterDato';
-import styles from './barnVisning.less';
+import styles from './barnVisning.module.css';
 
 interface BarnInputProps {
   barnet: KombinertBarnOgRammevedtak;

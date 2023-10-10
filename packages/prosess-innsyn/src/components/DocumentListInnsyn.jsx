@@ -1,18 +1,18 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { FormattedMessage, injectIntl } from 'react-intl';
-import { Normaltekst, Undertekst } from 'nav-frontend-typografi';
 import { Column, Row } from 'nav-frontend-grid';
+import { Normaltekst, Undertekst } from 'nav-frontend-typografi';
+import PropTypes from 'prop-types';
+import React from 'react';
+import { FormattedMessage, injectIntl } from 'react-intl';
 
 import { CheckboxField } from '@fpsak-frontend/form';
-import { DateTimeLabel, Image, Table, TableColumn, TableRow } from '@fpsak-frontend/shared-components';
 import kommunikasjonsretning from '@fpsak-frontend/kodeverk/src/kommunikasjonsretning';
+import { DateTimeLabel, Image, Table, TableColumn, TableRow } from '@fpsak-frontend/shared-components';
 
-import sendDokumentImageUrl from '@fpsak-frontend/assets/images/send_dokument.svg';
-import mottaDokumentImageUrl from '@fpsak-frontend/assets/images/motta_dokument.svg';
 import internDokumentImageUrl from '@fpsak-frontend/assets/images/intern_dokument.svg';
+import mottaDokumentImageUrl from '@fpsak-frontend/assets/images/motta_dokument.svg';
+import sendDokumentImageUrl from '@fpsak-frontend/assets/images/send_dokument.svg';
 
-import styles from './documentListInnsyn.less';
+import styles from './documentListInnsyn.module.css';
 
 // TODO (TOR) Flytt url ut av komponent
 const DOCUMENT_SERVER_URL = '/k9/sak/api/dokument/hent-dokument';
@@ -121,7 +121,6 @@ const DocumentListInnsyn = ({ intl, documents, saksNr, readOnly }) => {
     </>
   );
 };
-
 
 DocumentListInnsyn.propTypes = {
   intl: PropTypes.shape().isRequired,

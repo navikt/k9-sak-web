@@ -1,12 +1,12 @@
 import React from 'react';
 
-import { faktaPanelCodes } from '@k9-sak-web/konstanter';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { FaktaPanelDef } from '@k9-sak-web/behandling-felles';
-import { konverterKodeverkTilKode, transformBeregningValues } from '@fpsak-frontend/utils';
-import '@navikt/ft-fakta-fordel-beregningsgrunnlag/dist/style.css';
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
+import { konverterKodeverkTilKode, transformBeregningValues } from '@fpsak-frontend/utils';
+import { FaktaPanelDef } from '@k9-sak-web/behandling-felles';
+import { faktaPanelCodes } from '@k9-sak-web/konstanter';
 import { FordelBeregningsgrunnlagFaktaIndex } from '@navikt/ft-fakta-fordel-beregningsgrunnlag';
+import '@navikt/ft-fakta-fordel-beregningsgrunnlag/dist/style.css';
 
 class FordelBeregningPanelDef extends FaktaPanelDef {
   getUrlKode = () => faktaPanelCodes.FORDELING;

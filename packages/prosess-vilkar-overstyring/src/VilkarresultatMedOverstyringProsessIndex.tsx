@@ -1,16 +1,17 @@
-import React, { SetStateAction, useState, useEffect } from 'react';
+import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
+import { useFeatureToggles } from '@fpsak-frontend/shared-components';
 import { dateFormat } from '@fpsak-frontend/utils';
+import hentAktivePerioderFraVilkar from '@fpsak-frontend/utils/src/hentAktivePerioderFraVilkar';
 import { Aksjonspunkt, Behandling, KodeverkMedNavn, SubmitCallback, Vilkar } from '@k9-sak-web/types';
 import { SideMenu } from '@navikt/ft-plattform-komponenter';
 import classNames from 'classnames/bind';
-import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
-import { useFeatureToggles } from '@fpsak-frontend/shared-components';
-import hentAktivePerioderFraVilkar from '@fpsak-frontend/utils/src/hentAktivePerioderFraVilkar';
+import React, { SetStateAction, useEffect, useState } from 'react';
+import { RawIntlProvider, createIntl, createIntlCache } from 'react-intl';
 import messages from '../i18n/nb_NO.json';
 import VilkarresultatMedOverstyringFormPeriodisert from './components-periodisert/VilkarresultatMedOverstyringForm';
 import VilkarresultatMedOverstyringForm from './components/VilkarresultatMedOverstyringForm';
 import VilkarresultatMedOverstyringHeader from './components/VilkarresultatMedOverstyringHeader';
-import styles from './vilkarresultatMedOverstyringProsessIndex.less';
+import styles from './vilkarresultatMedOverstyringProsessIndex.module.css';
 
 const cx = classNames.bind(styles);
 
@@ -81,6 +82,17 @@ const VilkarresultatMedOverstyringProsessIndex = ({
   if (perioder.length === 0) {
     return null;
   }
+
+  useEffect(() => {
+    if (perioder.length > 1) {
+      const førsteIkkeVurdertPeriodeIndex = perioder.findIndex(
+        periode => periode.vurderesIBehandlingen && periode.vilkarStatus.kode === vilkarUtfallType.IKKE_VURDERT,
+      );
+      if (førsteIkkeVurdertPeriodeIndex > 0) {
+        setActiveTab(førsteIkkeVurdertPeriodeIndex);
+      }
+    }
+  }, []);
 
   const activePeriode = perioder.length === 1 ? perioder[0] : perioder[activeTab];
 

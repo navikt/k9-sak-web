@@ -1,10 +1,10 @@
-import React from 'react';
 import { Normaltekst } from 'nav-frontend-typografi';
+import React from 'react';
 
-import { formatCurrencyNoKr } from '@fpsak-frontend/utils';
 import { Table, TableColumn, TableRow } from '@fpsak-frontend/shared-components';
+import { formatCurrencyNoKr } from '@fpsak-frontend/utils';
 
-import styles from './tilbakekrevingAktivitetTabell.less';
+import styles from './tilbakekrevingAktivitetTabell.module.css';
 
 const headerTextCodes = ['TilbakekrevingAktivitetTabell.Aktivitet', 'TilbakekrevingAktivitetTabell.FeilutbetaltBelop'];
 

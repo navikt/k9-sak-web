@@ -1,5 +1,5 @@
-import { Box, LabelledContent, Margin } from '@navikt/ft-plattform-komponenter';
 import { PeopleFilled } from '@navikt/ds-icons';
+import { Box, LabelledContent, Margin } from '@navikt/ft-plattform-komponenter';
 import React from 'react';
 
 import { ReisetidVurdering } from './ReisetidTypes';

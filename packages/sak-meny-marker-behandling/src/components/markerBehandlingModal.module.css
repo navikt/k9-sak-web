@@ -1,0 +1,23 @@
+.textArea {
+  margin-bottom: 2.25rem;
+}
+
+.submitButton:global(.navds-button) {
+  margin-right: 1.5rem;
+}
+
+.buttonContainer {
+  margin-top: 2.125rem;
+}
+
+.aksjonspunktHeading {
+  margin-top: 2rem;
+}
+
+.textareaContainer {
+  margin-top: 2rem;
+}
+
+.errorMessage:global(.navds-error-message) {
+  margin-top: 1rem;
+}

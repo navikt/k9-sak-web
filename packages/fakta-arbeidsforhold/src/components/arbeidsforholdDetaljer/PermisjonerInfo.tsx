@@ -1,14 +1,14 @@
+import { Normaltekst } from 'nav-frontend-typografi';
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
-import { Normaltekst } from 'nav-frontend-typografi';
 
-import ArbeidsforholdV2 from '@k9-sak-web/types/src/arbeidsforholdV2TsType';
-import { VerticalSpacer, PeriodLabel } from '@fpsak-frontend/shared-components';
-import { KodeverkMedNavn } from '@k9-sak-web/types';
-import { getKodeverknavnFn } from '@fpsak-frontend/utils';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
+import { PeriodLabel, VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { getKodeverknavnFn } from '@fpsak-frontend/utils';
+import { KodeverkMedNavn } from '@k9-sak-web/types';
+import ArbeidsforholdV2 from '@k9-sak-web/types/src/arbeidsforholdV2TsType';
 
-import styles from './permisjonPeriode.less';
+import styles from './permisjonPeriode.module.css';
 
 const utledPeriodeLabelKey = (id, index) => id + index;
 

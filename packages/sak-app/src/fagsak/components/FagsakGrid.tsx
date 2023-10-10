@@ -1,6 +1,6 @@
 import React, { ReactNode } from 'react';
 
-import styles from './fagsakGrid.less';
+import styles from './fagsakGrid.module.css';
 
 interface OwnProps {
   behandlingContent: ReactNode;
