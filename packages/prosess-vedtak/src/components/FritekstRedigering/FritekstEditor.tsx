@@ -87,7 +87,7 @@ const FritekstEditor = ({
   };
 
   useEffect(() => {
-    if (redigerbartInnholdKlart && !editor.harEditor() && !readOnly) {
+    if (redigerbartInnholdKlart && !readOnly) {
       lastEditor();
     }
   }, [redigerbartInnholdKlart, readOnly]);
