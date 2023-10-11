@@ -7,12 +7,12 @@
   "dependencies": {
     "@fpsak-frontend/utils": "1.0.0",
     "@k9-sak-web/types": "1.0.0",
-    "@navikt/aksel-icons": "4.11.1",
-    "@navikt/ds-react": "4.11.1",
-    "@navikt/ft-form-hooks": "4.1.10",
-    "@navikt/ft-form-validators": "^2.0.42",
+    "@navikt/aksel-icons": "5.5.0",
+    "@navikt/ds-react": "5.5.0",
+    "@navikt/ft-form-hooks": "4.2.6",
+    "@navikt/ft-form-validators": "^2.1.2",
     "react": "17.0.2",
-    "react-hook-form": "7.45.4",
-    "react-intl": "6.4.4"
+    "react-hook-form": "7.46.1",
+    "react-intl": "6.4.7"
   }
 }

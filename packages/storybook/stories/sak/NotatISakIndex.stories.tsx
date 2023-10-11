@@ -2,6 +2,9 @@ import dayjs from 'dayjs';
 import { rest } from 'msw';
 import React from 'react';
 import NotatISakIndex from '@k9-sak-web/sak-notat';
+import { QueryClientProvider, QueryClient } from 'react-query';
+
+const queryClient = new QueryClient();
 
 export default {
   title: 'sak/sak-notat',
@@ -17,21 +20,23 @@ export const VisNotatISakPanel = () => (
       backgroundColor: 'white',
     }}
   >
-    <NotatISakIndex
-      fagsakId="1"
-      navAnsatt={{
-        brukernavn: 'saksbeh',
-        funksjonellTid: '2023-08-28T16:11:44.107219587',
-        kanBehandleKode6: false,
-        kanBehandleKode7: false,
-        kanBehandleKodeEgenAnsatt: false,
-        kanBeslutte: false,
-        kanOverstyre: false,
-        kanSaksbehandle: true,
-        kanVeilede: false,
-        navn: 'Sara Saksbehandler',
-      }}
-    />
+    <QueryClientProvider client={queryClient}>
+      <NotatISakIndex
+        fagsakId="1"
+        navAnsatt={{
+          brukernavn: 'saksbeh',
+          funksjonellTid: '2023-08-28T16:11:44.107219587',
+          kanBehandleKode6: false,
+          kanBehandleKode7: false,
+          kanBehandleKodeEgenAnsatt: false,
+          kanBeslutte: false,
+          kanOverstyre: false,
+          kanSaksbehandle: true,
+          kanVeilede: false,
+          navn: 'Sara Saksbehandler',
+        }}
+      />
+    </QueryClientProvider>
   </div>
 );
 
@@ -69,8 +74,8 @@ const notater = [
 VisNotatISakPanel.parameters = {
   msw: {
     handlers: [
-      rest.get('/notat', (req, res, ctx) => res(ctx.delay(250), ctx.json(notater))),
-      rest.post('/notat', async (req, res, ctx) => {
+      rest.get('/k9/sak/api/notat', (req, res, ctx) => res(ctx.delay(250), ctx.json(notater))),
+      rest.post('/k9/sak/api/notat', async (req, res, ctx) => {
         const nyttNotat = await req.json();
         const redigertNotatIndex = notater.findIndex(notat => notat.id === nyttNotat.id);
         if (redigertNotatIndex >= 0) {
