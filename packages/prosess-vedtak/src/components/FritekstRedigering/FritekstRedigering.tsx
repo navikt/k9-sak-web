@@ -42,6 +42,7 @@ interface ownProps {
   kanInkludereKalender: boolean;
   dokumentdataInformasjonsbehov: any;
   overstyrtMottaker?: Brevmottaker;
+  setForhaandsvisningKlart: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const FritekstRedigering = ({
@@ -58,8 +59,11 @@ const FritekstRedigering = ({
   kanInkludereKalender,
   dokumentdataInformasjonsbehov,
   overstyrtMottaker,
+  setForhaandsvisningKlart,
 }: ownProps & WrappedComponentProps) => {
-  useEffect(() => {}, []);
+  useEffect(() => {
+    setForhaandsvisningKlart(false);
+  }, []);
   const redigerbarDokumentmal: VedtaksbrevMal = tilgjengeligeVedtaksbrev.maler.find(
     vb => vb.dokumentMalType === dokumentMalType.MANUELL,
   );
@@ -111,6 +115,7 @@ const FritekstRedigering = ({
     }
 
     await setRedigerbartInnholdKlart(true);
+    setForhaandsvisningKlart(true);
     setHenterMal(false);
   };
 
