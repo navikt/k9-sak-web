@@ -1,14 +1,14 @@
-import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { injectIntl, WrappedComponentProps } from 'react-intl';
+import React, { useEffect, useState } from 'react';
+import { WrappedComponentProps, injectIntl } from 'react-intl';
 
-import { useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
+import { useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
 
-import { getPathToFplos } from '../paths';
 import FagsakSearchIndex from '../../fagsakSearch/FagsakSearchIndex';
+import { getPathToFplos } from '../paths';
 
-const isDevelopment = () => process.env.NODE_ENV === 'development' || process.env.NODE_ENV === 'test';
+const isDevelopment = () => import.meta.env.DEV || process.env.NODE_ENV === 'test';
 
 /**
  * DashboardResolver

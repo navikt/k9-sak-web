@@ -1,6 +1,6 @@
-import React from 'react';
 import { format } from 'date-fns';
 import zonedTimeToUtc from 'date-fns-tz/zonedTimeToUtc';
+import React from 'react';
 
 interface OwnProps {
   dateString: string;
@@ -28,10 +28,11 @@ function isValidDate(d) {
 }
 
 const DateLabel = ({ dateString }: OwnProps) => {
-  const date = new Date(dateString);
+  const date = format(new Date(dateString), 'dd.MM.yyyy');
   if (!isValidDate(date)) {
     return null;
   }
+  console.log(zonedTimeToUtc(date, 'Europe/Oslo'));
   const formatedDate = format(zonedTimeToUtc(date, 'Europe/Oslo'), 'dd.MM.yyyy');
   // eslint-disable-next-line react/jsx-no-useless-fragment
   return <>{formatedDate}</>;

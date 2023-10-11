@@ -103,7 +103,7 @@ export const erBehandlingValgt = (location: Location): boolean =>
   location.pathname.includes('behandling') && !location.pathname.endsWith('behandling/');
 
 export const redirectToLogin = () => {
-  if (process.env.NODE_ENV === 'development') {
+  if (import.meta.env.DEV) {
     window.location.assign(DEV_LOGIN_URL);
   }
   return undefined;
