@@ -146,6 +146,7 @@ const ReisetidForm = ({ vurdering, avbrytRedigering, erRedigering }: OwnProps): 
                   false,
                 );
               }}
+              mode="range"
             />
             <Box marginTop={Margin.xLarge}>
               <TextAreaFormik
