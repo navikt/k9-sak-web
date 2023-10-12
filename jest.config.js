@@ -25,7 +25,12 @@ module.exports = {
       testMatch: ['**/?(*.)+(spec).+(js|jsx|ts|tsx)'],
       testPathIgnorePatterns: ['/node_modules/', '/dist/'],
       transform: {
-        '^.+\\.(ts|tsx|js|jsx)?$': 'babel-jest',
+        '^.+\\.(ts|tsx|js|jsx)?$': [
+          'esbuild-jest',
+          {
+            target: 'esnext',
+          },
+        ],
         '^.+.(css|less)$': 'jest-transform-stub',
       },
       transformIgnorePatterns: ['<rootDir>.*(node_modules)(?!.*nav.*).*$'],

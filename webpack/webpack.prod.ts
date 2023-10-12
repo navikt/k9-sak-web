@@ -1,6 +1,6 @@
 import path from 'path';
 
-import TerserPlugin from 'terser-webpack-plugin';
+import { EsbuildPlugin } from 'esbuild-loader';
 import CssMinimizerPlugin from 'css-minimizer-webpack-plugin';
 
 import { APP_DIR } from './paths';
@@ -31,10 +31,10 @@ export default {
   resolve,
   optimization: {
     minimizer: [
-      new TerserPlugin({
-        parallel: true,
+      new EsbuildPlugin({
+        target: 'esnext',
+        css: true,
       }),
-      new CssMinimizerPlugin(),
     ],
     splitChunks: {
       chunks: 'all',

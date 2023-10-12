@@ -15,9 +15,9 @@ const babelRules = {
       },
     },
     {
-      loader: 'babel-loader',
+      loader: 'esbuild-loader',
       options: {
-        cacheDirectory: true,
+        target: 'esnext',
       },
     },
   ],
