@@ -14,6 +14,7 @@ import { Element, Normaltekst } from 'nav-frontend-typografi';
 import React, { useState } from 'react';
 import { FormattedMessage, WrappedComponentProps, injectIntl } from 'react-intl';
 import { useQuery } from 'react-query';
+import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import { Kompletthet } from '../types/Kompletthetsperioder';
 import styles from './documentList.module.css';
 
@@ -75,6 +76,7 @@ interface OwnProps {
   fagsakPerson?: FagsakPerson;
   saksnummer: number;
   behandlingUuid: string;
+  sakstype: string;
 }
 
 /**
@@ -91,6 +93,7 @@ const DocumentList = ({
   fagsakPerson,
   saksnummer,
   behandlingUuid,
+  sakstype,
 }: OwnProps & WrappedComponentProps) => {
   const [selectedFilter, setSelectedFilter] = useState(alleBehandlinger);
 
@@ -149,6 +152,7 @@ const DocumentList = ({
     `/k9/sak/api/dokument/hent-dokument?saksnummer=${saksnummer}&journalpostId=${document.journalpostId}&dokumentId=${document.dokumentId}`;
 
   const erInntektsmeldingOgBruktIDenneBehandlingen = (document: Dokument) =>
+    sakstype === fagsakYtelseType.PLEIEPENGER &&
     document.brevkode === inntektsmeldingBrevkode &&
     inntektsmeldingerIBruk &&
     inntektsmeldingerIBruk.length > 0 &&
