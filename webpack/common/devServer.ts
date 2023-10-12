@@ -84,14 +84,6 @@ export default {
       secure: false,
       changeOrigin: !!process.env.APP_URL_K9TILBAKE,
     },
-    '/k9/diagnosekoder/': {
-      target: process.env.APP_URL_DIAGNOSEKODER || 'http://localhost:8300',
-      pathRewrite: {
-        '^/k9/diagnosekoder/': '/diagnosekoder',
-      },
-      secure: false,
-      changeOrigin: !!process.env.APP_URL_DIAGNOSEKODER,
-    },
     '/k9/microfrontend/omsorgsdager/**': {
       target: process.env.OMSORGSDAGER_FRONTEND_URL || 'http://localhost:8088',
       secure: false,

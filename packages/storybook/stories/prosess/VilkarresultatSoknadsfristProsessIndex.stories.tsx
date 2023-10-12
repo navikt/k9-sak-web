@@ -185,10 +185,10 @@ export const visSoknadsfristAksjonspunkt5077 = () => {
                 periode: { fom: '2021-04-28', tom: '2021-04-30' },
                 status: { kode: 'IKKE_VURDERT', kodeverk: 'VILKAR_UTFALL_TYPE' },
               },
-              // {
-              //   periode: { fom: '2021-05-01', tom: '2021-05-05' },
-              //   status: { kode: 'OPPFYLT', kodeverk: 'VILKAR_UTFALL_TYPE' },
-              // },
+              {
+                periode: { fom: '2021-05-01', tom: '2021-05-05' },
+                status: { kode: 'OPPFYLT', kodeverk: 'VILKAR_UTFALL_TYPE' },
+              },
             ],
             innsendingstidspunkt: '2021-08-19T11:50:21.894',
             journalpostId: '510536417',
@@ -212,14 +212,14 @@ export const visSoknadsfristAksjonspunkt5077 = () => {
               begrunnelse: null,
               vurderesIBehandlingen: true,
             },
-            // {
-            //   avslagKode: null,
-            //   merknadParametere: {},
-            //   vilkarStatus: { kode: 'OPPFYLT', kodeverk: 'VILKAR_UTFALL_TYPE' },
-            //   periode: { fom: '2021-05-01', tom: '2021-05-05' },
-            //   begrunnelse: null,
-            //   vurderesIBehandlingen: true,
-            // },
+            {
+              avslagKode: null,
+              merknadParametere: {},
+              vilkarStatus: { kode: 'OPPFYLT', kodeverk: 'VILKAR_UTFALL_TYPE' },
+              periode: { fom: '2021-05-01', tom: '2021-05-05' },
+              begrunnelse: null,
+              vurderesIBehandlingen: true,
+            },
           ],
         },
       ]}

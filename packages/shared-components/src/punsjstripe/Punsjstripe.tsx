@@ -1,10 +1,10 @@
-import React, { useMemo } from 'react';
 import axios, { AxiosResponse } from 'axios';
+import React, { useMemo } from 'react';
 
-import { AlertStripeAdvarsel, AlertStripeFeil } from 'nav-frontend-alertstriper';
 import { Link } from '@navikt/ds-react';
+import { AlertStripeAdvarsel, AlertStripeFeil } from 'nav-frontend-alertstriper';
 
-import styles from './punsjstripe.less';
+import styles from './punsjstripe.module.css';
 
 export interface PunsjResponse {
   journalpostIder: JournalpostIder[];

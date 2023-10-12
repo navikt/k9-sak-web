@@ -7,6 +7,7 @@ import { InjectedFormProps } from 'redux-form';
 
 import { behandlingForm, behandlingFormValueSelector, SelectField, TextAreaField } from '@fpsak-frontend/form';
 import dokumentMalType from '@fpsak-frontend/kodeverk/src/dokumentMalType';
+
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import {
   ariaCheck,
@@ -32,7 +33,7 @@ import InputField from '@fpsak-frontend/form/src/InputField';
 import { useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
 import { Fritekstbrev } from '@k9-sak-web/types/src/formidlingTsType';
 import { MessagesApiKeys, requestMessagesApi, restApiMessagesHooks } from '../data/messagesApi';
-import styles from './messages.less';
+import styles from './messages.module.css';
 
 const maxLength4000 = maxLength(4000);
 const maxLength100000 = maxLength(100000);
@@ -56,7 +57,7 @@ interface PureOwnProps {
     fritekst: string,
     fritekstbrev?: Fritekstbrev,
   ) => void;
-  templates: Brevmaler;
+  templates?: Brevmaler;
   sprakKode?: Kodeverk;
   revurderingVarslingArsak: KodeverkMedNavn[];
   isKontrollerRevurderingApOpen?: boolean;
@@ -281,10 +282,10 @@ export const MessagesImpl = ({
   );
 };
 
-const buildInitalValues = (templates: Brevmaler, isKontrollerRevurderingApOpen?: boolean): FormValues => {
-  const brevmalkode = Object.keys(templates)[0];
+const buildInitalValues = (templates?: Brevmaler, isKontrollerRevurderingApOpen?: boolean): FormValues => {
+  const brevmalkode = templates ? Object.keys(templates)[0] : null;
   const overstyrtMottaker =
-    templates[brevmalkode] && templates[brevmalkode].mottakere
+    templates && templates[brevmalkode] && templates[brevmalkode].mottakere
       ? JSON.stringify(templates[brevmalkode].mottakere[0])
       : null;
 

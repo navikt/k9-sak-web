@@ -1,7 +1,3 @@
-import classNames from 'classnames';
-import dayjs, { Dayjs } from 'dayjs';
-import React, { ReactNode, useCallback } from 'react';
-import { Normaltekst } from 'nav-frontend-typografi';
 import {
   AxisLabel,
   Etikett,
@@ -11,10 +7,14 @@ import {
   PositionedPeriod,
   Tidslinjeskala,
 } from '@k9-sak-web/types/src/tidslinje';
-import Rad from './Rad';
+import classNames from 'classnames';
+import dayjs, { Dayjs } from 'dayjs';
+import { Normaltekst } from 'nav-frontend-typografi';
+import React, { ReactNode, useCallback } from 'react';
 import { AxisLabels } from './AxisLabels';
 import Pins from './Pins';
-import styles from './Tidslinje.less';
+import Rad from './Rad';
+import styles from './Tidslinje.module.css';
 import { EmptyTimelineRow, TimelineRow } from './TimelineRow';
 import { useTidligsteDato, useTidslinjerader } from './useTidslinjerader';
 

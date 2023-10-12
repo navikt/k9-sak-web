@@ -1,0 +1,25 @@
+.helpTextImage {
+  margin-left: 4px;
+}
+
+.tooltipContent {
+  font-weight: normal;
+}
+
+.tooltipContent span:first-child {
+  margin-bottom: 8px;
+}
+
+.varsel {
+  min-width: 350px;
+  top: 70px;
+}
+
+.bold {
+  font-weight: bold;
+}
+
+.previewLink {
+  color: var(--a-blue-500);
+  font-weight: bold;
+}

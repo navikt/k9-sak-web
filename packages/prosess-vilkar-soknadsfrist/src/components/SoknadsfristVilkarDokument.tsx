@@ -1,29 +1,29 @@
-import React, { useMemo, useCallback } from 'react';
-import moment from 'moment';
-import { FormattedMessage, useIntl } from 'react-intl';
 import { DatepickerField, RadioGroupField, RadioOption, TextAreaField } from '@fpsak-frontend/form';
 import {
-  hasValidText,
-  hasValidDate,
   dateAfterOrEqual,
   dateBeforeOrEqual,
+  hasValidDate,
+  hasValidText,
   maxLength,
   minLength,
-  requiredIfNotPristine,
   required,
+  requiredIfNotPristine,
 } from '@fpsak-frontend/utils';
+import moment from 'moment';
+import React, { useCallback, useMemo } from 'react';
+import { FormattedMessage, useIntl } from 'react-intl';
 
-import { DokumentStatus } from '@k9-sak-web/types';
-import { VerticalSpacer, FlexContainer, FlexRow, FlexColumn, Image } from '@fpsak-frontend/shared-components';
 import avslattImage from '@fpsak-frontend/assets/images/avslaatt.svg';
 import innvilgetImage from '@fpsak-frontend/assets/images/check.svg';
+import { FlexColumn, FlexContainer, FlexRow, Image, VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { DokumentStatus } from '@k9-sak-web/types';
 import { AssessedBy } from '@navikt/ft-plattform-komponenter';
 
 import { Normaltekst } from 'nav-frontend-typografi';
 
 import { formatDate } from '../utils';
 
-import styles from './SoknadsfristVilkarDokument.less';
+import styles from './SoknadsfristVilkarDokument.module.css';
 
 const minLength3 = minLength(3);
 const maxLength1500 = maxLength(1500);

@@ -1,0 +1,33 @@
+.visLukkPermisjon {
+  border: 0;
+  color: var(--a-blue-500);
+  font-size: 16px;
+  text-decoration: underline;
+  width: max-content;
+}
+
+.knappContainer {
+  background: none;
+  border: none;
+  display: inline-flex;
+  float: right;
+  outline: none;
+}
+
+.aksjonspunktColumn img {
+  height: 20px;
+  margin-right: 10px;
+  width: 20px;
+}
+
+.chevronOpp {
+  margin-left: 10px;
+  margin-top: 5px;
+  transform: rotate(180deg);
+}
+
+.chevronNed {
+  margin-left: 10px;
+  margin-top: 5px;
+  transform: rotate(0deg);
+}

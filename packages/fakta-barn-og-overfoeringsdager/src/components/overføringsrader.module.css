@@ -1,0 +1,47 @@
+.headers {
+  border-bottom: 1px solid #6a6a6a;
+  margin-bottom: 0.5em;
+}
+
+.relativePosition {
+  position: relative;
+}
+
+.alignCenterRight {
+  margin-top: -16px;
+  position: absolute;
+  right: 0;
+  top: 50%;
+}
+
+.marginRight {
+  margin-right: 0.5em;
+}
+
+.dagerInputContainer {
+  align-items: baseline;
+  display: flex;
+}
+
+.dagerInputContainer > :not(:last-child) {
+  margin-right: 0.5em;
+}
+
+.dagerInput {
+  width: 45px;
+}
+
+.knappseksjon {
+  border-top: 1px solid #6a6a6a;
+  margin-top: 0.5em;
+  padding-top: 1em;
+}
+
+.bekreftKnapper {
+  display: flex;
+  flex-wrap: nowrap;
+}
+
+.bekreftKnapper > :not(:last-child) {
+  margin-right: 0.5em;
+}

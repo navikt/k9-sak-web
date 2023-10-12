@@ -28,7 +28,7 @@ import { utledInnsendtSoknadsfrist } from './utils';
 
 import messages from '../i18n/nb_NO.json';
 
-import styles from './SoknadsfristVilkarProsessIndex.less';
+import styles from './SoknadsfristVilkarProsessIndex.module.css';
 
 const cx = classNames.bind(styles);
 
@@ -86,6 +86,17 @@ const SoknadsfristVilkarProsessIndex = ({
   if (perioder.length === 0) {
     return null;
   }
+
+  useEffect(() => {
+    if (perioder.length > 1) {
+      const førsteIkkeVurdertPeriodeIndex = perioder.findIndex(
+        periode => periode.vurderesIBehandlingen && periode.vilkarStatus.kode === vilkarUtfallType.IKKE_VURDERT,
+      );
+      if (førsteIkkeVurdertPeriodeIndex > 0) {
+        setActiveTab(førsteIkkeVurdertPeriodeIndex);
+      }
+    }
+  }, []);
 
   const activePeriode = perioder.length === 1 ? perioder[0] : perioder[activeTab];
 

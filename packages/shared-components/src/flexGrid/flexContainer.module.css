@@ -1,0 +1,23 @@
+.flexContainer {
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: flex-start;
+}
+
+.flexContainer.fluid {
+  width: 100%;
+}
+
+.flexContainer.fullHeight {
+  height: 100%;
+}
+
+@media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
+  .flexContainer {
+    flex-direction: row;
+  }
+
+  .flexContainer.flexWrap {
+    flex-wrap: wrap;
+  }
+}

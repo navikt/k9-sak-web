@@ -1,9 +1,9 @@
-import { prettifyDateString } from '@navikt/k9-fe-date-utils';
+import Dokument, { dokumentLabel } from '@k9-sak-web/types/src/sykdom/Dokument';
 import { Link } from '@navikt/ds-react';
 import { DocumentIcon } from '@navikt/ft-plattform-komponenter';
+import { prettifyDateString } from '@navikt/k9-fe-date-utils';
 import React from 'react';
-import Dokument, { dokumentLabel } from '@k9-sak-web/types/src/sykdom/Dokument';
-import styles from './dokumentLink.css';
+import styles from './dokumentLink.module.css';
 
 interface DokumentLinkProps {
   dokument: Dokument & { benyttet: boolean };

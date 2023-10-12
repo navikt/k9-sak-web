@@ -1,10 +1,10 @@
+import { Normaltekst } from 'nav-frontend-typografi';
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
-import { Normaltekst } from 'nav-frontend-typografi';
 
 import { FadingPanel } from '@fpsak-frontend/shared-components';
 
-import styles from './behandlingHenlagtPanel.less';
+import styles from './behandlingHenlagtPanel.module.css';
 
 const BehandlingHenlagtPanel = () => (
   <div className={styles.container}>

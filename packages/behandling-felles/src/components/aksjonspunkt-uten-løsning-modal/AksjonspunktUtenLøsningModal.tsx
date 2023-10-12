@@ -1,8 +1,8 @@
-import React from 'react';
-import Modal from 'nav-frontend-modal';
 import Alertstripe from 'nav-frontend-alertstriper';
 import { Hovedknapp } from 'nav-frontend-knapper';
-import styles from './aksjonspunktUtenLøsningModal.less';
+import Modal from 'nav-frontend-modal';
+import React from 'react';
+import styles from './aksjonspunktUtenLøsningModal.module.css';
 
 interface AksjonspunktUtenLøsningModalProps {
   melding: string | React.ReactNode;

@@ -4,7 +4,7 @@ import { FormattedMessage, injectIntl, WrappedComponentProps } from 'react-intl'
 import Feilikon from '../icons/Feilikon';
 import Suksessikon from '../icons/Suksessikon';
 
-import styles from './AldersvilkarStatus.less';
+import styles from './AldersvilkarStatus.module.css';
 
 interface AldersVilkarAPProps {
   vilkarOppfylt: boolean;

@@ -1,25 +1,25 @@
-import React, { useMemo, useCallback, useState } from 'react';
-import { FormattedMessage } from 'react-intl';
 import { Column, Row } from 'nav-frontend-grid';
 import Tabs from 'nav-frontend-tabs';
+import React, { useCallback, useMemo, useState } from 'react';
+import { FormattedMessage } from 'react-intl';
 
+import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import {
-  FadingPanel,
-  VerticalSpacer,
   AksjonspunktHelpTextHTML,
+  FadingPanel,
   LoadingPanel,
   NestedIntlProvider,
+  VerticalSpacer,
 } from '@fpsak-frontend/shared-components';
-import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
-import { Behandling, KodeverkMedNavn } from '@k9-sak-web/types';
 import { RestApiState } from '@k9-sak-web/rest-api-hooks';
-import { Options, EndpointData, RestApiData } from '@k9-sak-web/rest-api-hooks/src/local-data/useMultipleRestApi';
+import { EndpointData, Options, RestApiData } from '@k9-sak-web/rest-api-hooks/src/local-data/useMultipleRestApi';
+import { Behandling, KodeverkMedNavn } from '@k9-sak-web/types';
 
 import hentAktivePerioderFraVilkar from '@fpsak-frontend/utils/src/hentAktivePerioderFraVilkar';
-import { ProsessStegPanelUtledet } from '../util/prosessSteg/ProsessStegUtledet';
 import messages from '../i18n/nb_NO.json';
+import { ProsessStegPanelUtledet } from '../util/prosessSteg/ProsessStegUtledet';
 
-import styles from './inngangsvilkarPanel.less';
+import styles from './inngangsvilkarPanel.module.css';
 
 interface OwnProps {
   behandling: Behandling;

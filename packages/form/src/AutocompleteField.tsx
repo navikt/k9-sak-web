@@ -1,10 +1,10 @@
-import React from 'react';
 import { Element } from 'nav-frontend-typografi';
+import React from 'react';
 import { Field, WrappedFieldInputProps } from 'redux-form';
 // eslint-disable-next-line import/no-named-default
 import { Autocomplete as NAPAutocomplete } from '@navikt/ft-plattform-komponenter';
 import ReadOnlyField from './ReadOnlyField';
-import styles from './autocompleteField.less';
+import styles from './autocompleteField.module.css';
 
 interface AutocompleteFieldProps {
   onChange: () => void;

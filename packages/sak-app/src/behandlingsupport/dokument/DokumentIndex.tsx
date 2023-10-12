@@ -22,6 +22,7 @@ interface OwnProps {
   behandlingId?: number;
   behandlingVersjon?: number;
   fagsakPerson?: FagsakPerson;
+  behandlingUuid: string;
 }
 
 const EMPTY_ARRAY = [];
@@ -31,7 +32,13 @@ const EMPTY_ARRAY = [];
  *
  * Container komponent. Har ansvar for å hente sakens dokumenter fra state og rendre det i en liste.
  */
-export const DokumentIndex = ({ behandlingId, behandlingVersjon, fagsakPerson, saksnummer }: OwnProps) => {
+export const DokumentIndex = ({
+  behandlingId,
+  behandlingVersjon,
+  fagsakPerson,
+  saksnummer,
+  behandlingUuid,
+}: OwnProps) => {
   const forrigeSaksnummer = usePrevious(saksnummer);
   const erBehandlingEndretFraUndefined = useBehandlingEndret(behandlingId, behandlingVersjon);
   const { data: alleDokumenter = EMPTY_ARRAY, state } = restApiHooks.useRestApi<Dokument[]>(
@@ -56,6 +63,7 @@ export const DokumentIndex = ({ behandlingId, behandlingVersjon, fagsakPerson, s
       behandlingId={behandlingId}
       fagsakPerson={fagsakPerson}
       saksnummer={saksnummer}
+      behandlingUuid={behandlingUuid}
     />
   );
 };

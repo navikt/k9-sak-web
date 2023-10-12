@@ -1,18 +1,15 @@
-import React from 'react';
-import { connect } from 'react-redux';
-import { formPropTypes, setSubmitFailed } from 'redux-form';
-import { createSelector } from 'reselect';
-import { bindActionCreators } from 'redux';
-import { FormattedMessage, injectIntl } from 'react-intl';
 import classNames from 'classnames';
 import moment from 'moment';
-import PropTypes from 'prop-types';
-import { Normaltekst, Undertekst, Undertittel } from 'nav-frontend-typografi';
 import { Hovedknapp } from 'nav-frontend-knapper';
+import { Normaltekst, Undertekst, Undertittel } from 'nav-frontend-typografi';
+import PropTypes from 'prop-types';
+import React from 'react';
+import { FormattedMessage, injectIntl } from 'react-intl';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { formPropTypes, setSubmitFailed } from 'redux-form';
+import { createSelector } from 'reselect';
 
-import SettPaVentModalIndex from '@k9-sak-web/modal-sett-pa-vent';
-import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
-import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import {
   RadioGroupField,
   RadioOption,
@@ -20,20 +17,23 @@ import {
   behandlingForm,
   behandlingFormValueSelector,
 } from '@fpsak-frontend/form';
-import { AksjonspunktHelpTextTemp, ArrowBox, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
+import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
+import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
+import { AksjonspunktHelpTextTemp, ArrowBox, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import {
-  hasValidText,
   ISO_DATE_FORMAT,
+  getLanguageCodeFromSprakkode,
+  hasValidText,
   minLength,
   required,
-  getLanguageCodeFromSprakkode,
 } from '@fpsak-frontend/utils';
+import SettPaVentModalIndex from '@k9-sak-web/modal-sett-pa-vent';
 
 import revurderingFamilieHendelsePropType from '../propTypes/revurderingFamilieHendelsePropType';
 import revurderingSoknadPropType from '../propTypes/revurderingSoknadPropType';
 
-import styles from './varselOmRevurderingForm.less';
+import styles from './varselOmRevurderingForm.module.css';
 
 const minLength3 = minLength(3);
 

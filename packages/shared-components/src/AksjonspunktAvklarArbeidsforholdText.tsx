@@ -1,15 +1,15 @@
+import { Normaltekst } from 'nav-frontend-typografi';
 import React from 'react';
 import { FormattedMessage, injectIntl, WrappedComponentProps } from 'react-intl';
-import { Normaltekst } from 'nav-frontend-typografi';
 
 import advarselIkonUrl from '@fpsak-frontend/assets/images/advarsel.svg';
 
-import ArbeidsforholdV2 from '@k9-sak-web/types/src/arbeidsforholdV2TsType';
 import aksjonspunktÅrsaker from '@fpsak-frontend/fakta-arbeidsforhold/src/kodeverk/aksjonspunktÅrsaker';
+import ArbeidsforholdV2 from '@k9-sak-web/types/src/arbeidsforholdV2TsType';
 import { FlexColumn, FlexContainer, FlexRow } from './flexGrid';
 import Image from './Image';
 
-import styles from './aksjonspunktAvklarArbeidsforholdText.less';
+import styles from './aksjonspunktAvklarArbeidsforholdText.module.css';
 import VerticalSpacer from './VerticalSpacer';
 
 interface OwnProps {

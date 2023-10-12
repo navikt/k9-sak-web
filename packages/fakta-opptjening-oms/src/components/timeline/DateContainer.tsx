@@ -1,6 +1,6 @@
 import { Column, Row } from 'nav-frontend-grid';
 import React from 'react';
-import styles from './dateContainer.less';
+import styles from './dateContainer.module.css';
 
 interface DateContainerProps {
   opptjeningFomDato: string;

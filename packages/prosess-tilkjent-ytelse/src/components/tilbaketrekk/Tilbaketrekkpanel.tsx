@@ -1,29 +1,29 @@
+import { Column, Row } from 'nav-frontend-grid';
+import { Element } from 'nav-frontend-typografi';
 import React from 'react';
+import { FormattedMessage, injectIntl, WrappedComponentProps } from 'react-intl';
 import { connect } from 'react-redux';
 import { InjectedFormProps } from 'redux-form';
 import { createSelector } from 'reselect';
-import { FormattedMessage, injectIntl, WrappedComponentProps } from 'react-intl';
-import { Element } from 'nav-frontend-typografi';
-import { Column, Row } from 'nav-frontend-grid';
 
 import behandleImageURL from '@fpsak-frontend/assets/images/advarsel.svg';
-import { FlexColumn, FlexContainer, FlexRow, Image, VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { hasValidText, maxLength, minLength, required } from '@fpsak-frontend/utils';
-import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import {
-  RadioGroupField,
-  RadioOption,
-  TextAreaField,
   behandlingForm,
   hasBehandlingFormErrorsOfType,
   isBehandlingFormDirty,
   isBehandlingFormSubmitting,
+  RadioGroupField,
+  RadioOption,
+  TextAreaField,
 } from '@fpsak-frontend/form';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
+import { FlexColumn, FlexContainer, FlexRow, Image, VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { hasValidText, maxLength, minLength, required } from '@fpsak-frontend/utils';
 import { ProsessStegSubmitButton } from '@k9-sak-web/prosess-felles';
 import { Aksjonspunkt, BeregningsresultatFp, BeregningsresultatUtbetalt } from '@k9-sak-web/types';
 
-import styles from './tilbaketrekkpanel.less';
+import styles from './tilbaketrekkpanel.module.css';
 
 const radioFieldName = 'radioVurderTilbaketrekk';
 const begrunnelseFieldName = 'begrunnelseVurderTilbaketrekk';
@@ -35,7 +35,7 @@ const minLength3 = minLength(3);
 type FormValues = {
   radioVurderTilbaketrekk: boolean;
   begrunnelseVurderTilbaketrekk: string;
-}
+};
 
 interface PureOwnProps {
   behandlingId: number;
@@ -142,10 +142,7 @@ export const transformValues = values => {
 };
 
 export const buildInitialValues = createSelector(
-  [
-    (state, ownProps) => ownProps.vurderTilbaketrekkAP,
-    (state, ownProps) => ownProps.beregningsresultat,
-  ],
+  [(state, ownProps) => ownProps.vurderTilbaketrekkAP, (state, ownProps) => ownProps.beregningsresultat],
   (ap, tilkjentYtelse) => {
     const tidligereValgt = tilkjentYtelse?.skalHindreTilbaketrekk;
     if (tidligereValgt === undefined || tidligereValgt === null || !ap || !ap.begrunnelse) {
@@ -158,8 +155,10 @@ export const buildInitialValues = createSelector(
   },
 );
 
-const lagSubmitFn = createSelector([(ownProps: PureOwnProps) => ownProps.submitCallback],
-  (submitCallback) => (values: FormValues) => submitCallback(transformValues(values)));
+const lagSubmitFn = createSelector(
+  [(ownProps: PureOwnProps) => ownProps.submitCallback],
+  submitCallback => (values: FormValues) => submitCallback(transformValues(values)),
+);
 
 const mapStateToProps = (state: any, ownProps: PureOwnProps): MappedOwnProps => ({
   onSubmit: lagSubmitFn(ownProps),

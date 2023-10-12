@@ -1,6 +1,8 @@
-import React from 'react';
 import moment from 'moment';
+import React from 'react';
 
+import { DatepickerField, InputField } from '@fpsak-frontend/form';
+import { FlexColumn, FlexContainer, FlexRow, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import {
   DDMMYYYY_DATE_FORMAT,
   hasValidDate,
@@ -9,12 +11,10 @@ import {
   minValue,
   required,
 } from '@fpsak-frontend/utils';
-import { DatepickerField, InputField } from '@fpsak-frontend/form';
-import { FlexContainer, FlexRow, FlexColumn, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import BehandlingFormFieldCleaner from '../../util/BehandlingFormFieldCleaner';
 
-import styles from './leggTilArbeidsforholdFelter.less';
 import CustomArbeidsforhold from '../../typer/CustomArbeidsforholdTsType';
+import styles from './leggTilArbeidsforholdFelter.module.css';
 
 // ----------------------------------------------------------------------------------
 // Methods

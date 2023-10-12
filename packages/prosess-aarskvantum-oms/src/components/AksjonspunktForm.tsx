@@ -1,4 +1,6 @@
-import React, { useMemo } from 'react';
+import { CheckboxField, InputField, RadioGroupField, RadioOption, TextAreaField } from '@fpsak-frontend/form/index';
+import { behandlingForm } from '@fpsak-frontend/form/src/behandlingForm';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import {
   AksjonspunktHelpTextTemp,
   BorderBox,
@@ -7,27 +9,25 @@ import {
   TableRow,
   VerticalSpacer,
 } from '@fpsak-frontend/shared-components';
-import { FormattedMessage } from 'react-intl';
-import { behandlingForm } from '@fpsak-frontend/form/src/behandlingForm';
-import { connect } from 'react-redux';
-import { InjectedFormProps, ConfigProps, SubmitHandler, FieldArray } from 'redux-form';
 import {
-  minLength,
-  maxLength,
-  required,
+  hasValidFodselsnummer,
   hasValidText,
   hasValidValue,
-  hasValidFodselsnummer,
+  maxLength,
+  minLength,
+  required,
 } from '@fpsak-frontend/utils';
-import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
-import { CheckboxField, InputField, RadioGroupField, RadioOption, TextAreaField } from '@fpsak-frontend/form/index';
-import { Element } from 'nav-frontend-typografi';
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { Aksjonspunkt, UtfallEnum, VilkårEnum, Uttaksperiode } from '@k9-sak-web/types';
+import { Aksjonspunkt, UtfallEnum, Uttaksperiode, VilkårEnum } from '@k9-sak-web/types';
 import { Delete } from '@navikt/ds-icons';
-import styles from './aksjonspunktForm.less';
+import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
+import { Element } from 'nav-frontend-typografi';
+import React, { useMemo } from 'react';
+import { FormattedMessage } from 'react-intl';
+import { connect } from 'react-redux';
+import { ConfigProps, FieldArray, InjectedFormProps, SubmitHandler } from 'redux-form';
 import Aktivitet from '../dto/Aktivitet';
 import { fosterbarnDto } from '../dto/FosterbarnDto';
+import styles from './aksjonspunktForm.module.css';
 
 interface AksjonspunktFormImplProps {
   aktiviteter: Aktivitet[];

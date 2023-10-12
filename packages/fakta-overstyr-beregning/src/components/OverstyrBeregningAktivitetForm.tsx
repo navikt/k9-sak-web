@@ -4,10 +4,10 @@ import { injectIntl, WrappedComponentProps } from 'react-intl';
 import { TableColumn, TableRow } from '@fpsak-frontend/shared-components';
 import { parseCurrencyInput } from '@fpsak-frontend/utils';
 import { Field, useFormikContext } from 'formik';
-import { Input } from 'nav-frontend-skjema';
 import { Datepicker } from 'nav-datovelger';
-import styles from './OverstyrBeregningFaktaForm.less';
+import { Input } from 'nav-frontend-skjema';
 import { OverstyrInputForBeregningDto } from '../types/OverstyrInputForBeregningDto';
+import styles from './OverstyrBeregningFaktaForm.module.css';
 
 interface Props {
   key: string;

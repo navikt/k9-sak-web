@@ -1,13 +1,15 @@
-import * as Yup from 'yup';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { isAvslag, isDelvisInnvilget, isInnvilget } from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
+import dokumentMalType from '@fpsak-frontend/kodeverk/src/dokumentMalType';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import vedtaksbrevtype from '@fpsak-frontend/kodeverk/src/vedtaksbrevtype';
 import { decodeHtmlEntity, safeJSONParse } from '@fpsak-frontend/utils';
 import {
+  TilgjengeligeVedtaksbrev,
+  TilgjengeligeVedtaksbrevMedMaler,
   filterInformasjonsbehov,
-  harMellomlagretFritekstbrev,
   harMellomLagretMedIngenBrev,
+  harMellomlagretFritekstbrev,
   harMellomlagretRedusertUtbetalingArsak,
   harPotensieltFlereInformasjonsbehov,
   harSattDokumentdataType,
@@ -16,45 +18,43 @@ import {
   kanHaManueltFritekstbrev,
   kanHindreUtsending,
   kanKunVelge,
-  TilgjengeligeVedtaksbrev,
-  TilgjengeligeVedtaksbrevMedMaler,
 } from '@fpsak-frontend/utils/src/formidlingUtils';
 import { VedtakFormContext } from '@k9-sak-web/behandling-felles/src/components/ProsessStegContainer';
 import { dokumentdatatype } from '@k9-sak-web/konstanter';
 import {
   Aksjonspunkt,
   ArbeidsgiverOpplysningerPerId,
-  Behandlingsresultat,
   BehandlingStatusType,
+  Behandlingsresultat,
   Kodeverk,
   KodeverkMedNavn,
   Personopplysninger,
   Vilkar,
 } from '@k9-sak-web/types';
 import { DokumentDataType, LagreDokumentdataType } from '@k9-sak-web/types/src/dokumentdata';
-import { Checkbox, Label, Modal } from '@navikt/ds-react';
+import { Checkbox, Label } from '@navikt/ds-react';
 import { Formik, FormikProps } from 'formik';
-import React, { useContext, useEffect, useState } from 'react';
-import { injectIntl, IntlShape } from 'react-intl';
-import dokumentMalType from '@fpsak-frontend/kodeverk/src/dokumentMalType';
+import React, { useContext, useState } from 'react';
+import { IntlShape, injectIntl } from 'react-intl';
+import * as Yup from 'yup';
 import redusertUtbetalingArsak from '../kodeverk/redusertUtbetalingArsak';
 import { fieldnames } from '../konstanter';
-import BrevPanel, {manuellBrevPreview} from './brev/BrevPanel';
+import { validerManueltRedigertBrev } from './FritekstRedigering/RedigeringUtils';
 import LagreVedtakFormIContext, {
   filtrerVerdierSomSkalNullstilles,
   settMalerVedtakContext,
 } from './LagreVedtakFormIContext';
-import RevurderingPaneler from './revurdering/RevurderingPaneler';
-import VedtakRevurderingSubmitPanel from './revurdering/VedtakRevurderingSubmitPanel';
 import SakGårIkkeTilBeslutterModal from './SakGårIkkeTilBeslutterModal';
 import UstrukturerteDokumenter, { UstrukturerteDokumenterType } from './UstrukturerteDokumenter';
 import VedtakAksjonspunktPanel from './VedtakAksjonspunktPanel';
 import VedtakAvslagPanel from './VedtakAvslagPanel';
-import styles from './vedtakForm.less';
 import VedtakInnvilgetPanel from './VedtakInnvilgetPanel';
 import VedtakSubmit from './VedtakSubmit';
+import BrevPanel, { manuellBrevPreview } from './brev/BrevPanel';
 import { InformasjonsbehovVedtaksbrev } from './brev/InformasjonsbehovAutomatiskVedtaksbrev';
-import { validerManueltRedigertBrev } from './FritekstRedigering/RedigeringUtils';
+import RevurderingPaneler from './revurdering/RevurderingPaneler';
+import VedtakRevurderingSubmitPanel from './revurdering/VedtakRevurderingSubmitPanel';
+import styles from './vedtakForm.module.css';
 
 const isVedtakSubmission = true;
 
@@ -144,10 +144,6 @@ export const VedtakForm: React.FC<Props> = ({
   erRevurdering,
   behandlingArsaker,
 }) => {
-  useEffect(() => {
-    Modal.setAppElement(document.body);
-  }, []);
-
   const vedtakContext = useContext(VedtakFormContext);
 
   const [erSendtInnUtenArsaker, setErSendtInnUtenArsaker] = useState(false);
@@ -399,7 +395,8 @@ export const VedtakForm: React.FC<Props> = ({
       );
     };
 
-  const getPreviewManuellBrevCallback = (values: any)  => manuellBrevPreview({
+  const getPreviewManuellBrevCallback = (values: any) =>
+    manuellBrevPreview({
       tilgjengeligeVedtaksbrev,
       previewCallback,
       values,
@@ -407,8 +404,8 @@ export const VedtakForm: React.FC<Props> = ({
       overstyrtMottaker: values.overstyrtMottaker,
       brødtekst: values[fieldnames.BRØDTEKST],
       overskrift: values[fieldnames.OVERSKRIFT],
-      aapneINyttVindu: false
-    })
+      aapneINyttVindu: false,
+    });
 
   const submit = async (values, actions) => {
     const manueltBrev = values[fieldnames.SKAL_BRUKE_OVERSTYRENDE_FRITEKST_BREV];
@@ -416,7 +413,7 @@ export const VedtakForm: React.FC<Props> = ({
 
     if (manueltBrev) {
       try {
-        await getPreviewManuellBrevCallback(values)
+        await getPreviewManuellBrevCallback(values);
         submitCallback(createPayload(values));
         return;
       } catch (e) {

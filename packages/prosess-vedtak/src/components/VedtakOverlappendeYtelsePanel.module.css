@@ -1,0 +1,37 @@
+.sideKolonne {
+  padding: 0 5px;
+  white-space: nowrap;
+}
+
+.periodeDetaljer {
+  display: flex;
+  margin-top: 10px;
+}
+
+.periodeDetalj {
+  margin-right: 10px;
+}
+
+.aksjonspunktAlert {
+  margin-bottom: 1.4375rem;
+}
+
+.aksjonspunktAlert :global(.navds-alert__wrapper) {
+  flex: 1;
+  max-width: none;
+}
+
+.accordion :global(.navds-accordion__header) {
+  border: none;
+  padding: 0;
+}
+
+.accordion :global(.navds-accordion__header[aria-expanded='true']) {
+  background-color: transparent;
+}
+
+.accordion :global(.navds-accordion__content) {
+  border: none;
+  margin-top: 1rem;
+  padding: 0;
+}

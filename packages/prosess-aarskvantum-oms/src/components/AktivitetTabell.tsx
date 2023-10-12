@@ -1,8 +1,19 @@
 import hide from '@fpsak-frontend/assets/images/hide.svg';
 import show from '@fpsak-frontend/assets/images/show.svg';
+import stjerneImg from '@fpsak-frontend/assets/images/stjerne.svg';
 import { Image, Table, TableRow } from '@fpsak-frontend/shared-components/index';
 import { calcDays, convertHoursToDays, formatereLukketPeriode, utledArbeidsforholdNavn } from '@fpsak-frontend/utils';
-import { ArbeidsforholdV2, ArbeidsgiverOpplysningerPerId, KodeverkMedNavn, Utfalltype, Uttaksperiode, Vilkår, VilkårEnum } from '@k9-sak-web/types';
+import {
+  ArbeidsforholdV2,
+  ArbeidsgiverOpplysningerPerId,
+  KodeverkMedNavn,
+  Utfalltype,
+  Uttaksperiode,
+  Vilkår,
+  VilkårEnum,
+} from '@k9-sak-web/types';
+import { FraværÅrsakEnum } from '@k9-sak-web/types/src/omsorgspenger/Uttaksperiode';
+import classNames from 'classnames';
 import NavFrontendChevron from 'nav-frontend-chevron';
 import Hjelpetekst from 'nav-frontend-hjelpetekst';
 import Panel from 'nav-frontend-paneler';
@@ -10,12 +21,9 @@ import Tabs from 'nav-frontend-tabs';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
 import React, { ReactNode, useMemo, useState } from 'react';
 import { FormattedMessage } from 'react-intl';
-import classNames from 'classnames';
-import { FraværÅrsakEnum } from '@k9-sak-web/types/src/omsorgspenger/Uttaksperiode';
-import stjerneImg from '@fpsak-frontend/assets/images/stjerne.svg';
-import styles from './aktivitetTabell.less';
-import NøkkeltallContainer, { Nokkeltalltype } from './nokkeltall/NokkeltallContainer';
 import Utfall from './Utfall';
+import styles from './aktivitetTabell.module.css';
+import NøkkeltallContainer, { Nokkeltalltype } from './nokkeltall/NokkeltallContainer';
 import { durationTilTimerMed7ogEnHalvTimesDagsbasis } from './utils';
 
 interface AktivitetTabellProps {

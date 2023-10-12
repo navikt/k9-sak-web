@@ -1,33 +1,33 @@
-import React, { Component } from 'react';
-import { WrappedComponentProps } from 'react-intl';
-import { change as reduxFormChange, initialize as reduxFormInitialize } from 'redux-form';
-import { bindActionCreators, Dispatch } from 'redux';
-import { connect } from 'react-redux';
-import chevronIkonUrl from '@fpsak-frontend/assets/images/pil_ned.svg';
+import advarselImageUrl from '@fpsak-frontend/assets/images/advarsel2.svg';
 import briefcaseImg from '@fpsak-frontend/assets/images/briefcase.svg';
-import { getBehandlingFormPrefix, behandlingFormValueSelector } from '@fpsak-frontend/form';
+import chevronIkonUrl from '@fpsak-frontend/assets/images/pil_ned.svg';
+import { behandlingFormValueSelector, getBehandlingFormPrefix } from '@fpsak-frontend/form';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import arbeidsforholdHandlingType from '@fpsak-frontend/kodeverk/src/arbeidsforholdHandlingType';
 import {
-  VerticalSpacer,
   FaktaGruppe,
-  Image,
-  FlexRow,
   FlexColumn,
   FlexContainer,
+  FlexRow,
+  Image,
+  VerticalSpacer,
 } from '@fpsak-frontend/shared-components';
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { Normaltekst } from 'nav-frontend-typografi';
-import advarselImageUrl from '@fpsak-frontend/assets/images/advarsel2.svg';
-import arbeidsforholdHandlingType from '@fpsak-frontend/kodeverk/src/arbeidsforholdHandlingType';
+import { arbeidsforholdHarAksjonspunktÅrsak } from '@fpsak-frontend/utils/src/arbeidsforholdUtils';
 import { ArbeidsgiverOpplysningerPerId, KodeverkMedNavn } from '@k9-sak-web/types';
 import ArbeidsforholdV2 from '@k9-sak-web/types/src/arbeidsforholdV2TsType';
-import { FormAction } from 'redux-form/lib/actions';
 import Arbeidsgiver from '@k9-sak-web/types/src/arbeidsgiverTsType';
-import { arbeidsforholdHarAksjonspunktÅrsak } from '@fpsak-frontend/utils/src/arbeidsforholdUtils';
+import { Normaltekst } from 'nav-frontend-typografi';
+import React, { Component } from 'react';
+import { WrappedComponentProps } from 'react-intl';
+import { connect } from 'react-redux';
+import { Dispatch, bindActionCreators } from 'redux';
+import { change as reduxFormChange, initialize as reduxFormInitialize } from 'redux-form';
+import { FormAction } from 'redux-form/lib/actions';
 import arbeidsforholdKilder from '../kodeverk/arbeidsforholdKilder';
-import PersonArbeidsforholdTable from './arbeidsforholdTabell/PersonArbeidsforholdTable';
 import { PERSON_ARBEIDSFORHOLD_DETAIL_FORM } from './arbeidsforholdDetaljer/PersonArbeidsforholdDetailForm';
+import PersonArbeidsforholdTable from './arbeidsforholdTabell/PersonArbeidsforholdTable';
 
-import styles from './personArbeidsforholdPanel.less';
+import styles from './personArbeidsforholdPanel.module.css';
 
 // -------------------------------------------------------------------------------------------------------------
 // Methods
