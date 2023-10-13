@@ -80,6 +80,7 @@
     "@babel/preset-typescript": "7.23.0",
     "@babel/register": "7.22.15",
     "@commercetools/enzyme-extensions": "5.0.0",
+    "@happy-dom/jest-environment": "^12.9.1",
     "@pmmmwh/react-refresh-webpack-plugin": "0.5.11",
     "@sentry/cli": "2.21.1",
     "@storybook/addon-actions": "7.4.5",

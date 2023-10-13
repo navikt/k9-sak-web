@@ -18,7 +18,7 @@ module.exports = {
         '<rootDir>/packages/utils-test/src/setup-test-env.ts',
         '<rootDir>/packages/utils-test/src/setup-test-env-hooks.ts',
       ],
-      testEnvironment: 'jsdom',
+      testEnvironment: '@happy-dom/jest-environment',
       testEnvironmentOptions: {
         customExportConditions: ['node'],
       },
