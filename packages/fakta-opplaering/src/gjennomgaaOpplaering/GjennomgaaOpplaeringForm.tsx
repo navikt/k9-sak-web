@@ -229,6 +229,7 @@ const GjennomgaaOpplaeringForm = ({ vurdering, avbrytRedigering, erRedigering }:
                                   ),
                                 });
                               }}
+                              mode="range"
                             />
                             {array.length > 1 && <DeleteButton onClick={() => arrayHelpers.remove(index)} />}
                           </div>
