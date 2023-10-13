@@ -32,7 +32,7 @@
     "react-intl": "6.4.7",
     "react-redux": "8.1.2",
     "redux-form": "8.3.10",
-    "styled-components": "5.3.11",
+    "styled-components": "6.0.9",
     "uuid": "9.0.1"
   },
   "devDependencies": {
