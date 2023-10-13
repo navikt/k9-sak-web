@@ -10,3 +10,6 @@ jest.spyOn(global.console, 'warn').mockImplementationOnce(message => {
     throw new Error(message);
   }
 });
+
+jest.spyOn(window.URL, 'createObjectURL').mockImplementation(() => 'http://fake.url');
+global.open = jest.fn();
