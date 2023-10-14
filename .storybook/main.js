@@ -77,6 +77,11 @@ module.exports = {
         exclude: [CSS_DIR],
       },
       {
+        test: /\.css$/,
+        use: ['postcss-loader'],
+        include: [CSS_DIR],
+      },
+      {
         test: /\.less$/,
         use: [
           {
@@ -101,7 +106,7 @@ module.exports = {
             },
           },
         ],
-        include: [CSS_DIR, NODE_MODULES],
+        include: [NODE_MODULES],
       },
       {
         test: /\.(jp|pn|sv)g$/,

@@ -5518,12 +5518,12 @@ __metadata:
   dependencies:
     "@fpsak-frontend/utils": 1.0.0
     "@k9-sak-web/types": 1.0.0
-    "@navikt/aksel-icons": 5.5.0
-    "@navikt/ds-react": 5.5.0
-    "@navikt/ft-form-hooks": 4.2.6
-    "@navikt/ft-form-validators": ^2.1.2
+    "@navikt/aksel-icons": 5.6.1
+    "@navikt/ds-react": 5.6.1
+    "@navikt/ft-form-hooks": 4.2.7
+    "@navikt/ft-form-validators": ^2.1.3
     react: 17.0.2
-    react-hook-form: 7.46.1
+    react-hook-form: 7.47.0
     react-intl: 6.4.7
   languageName: unknown
   linkType: soft
@@ -5732,10 +5732,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@navikt/ds-tailwind@npm:^5.5.0":
-  version: 5.5.0
-  resolution: "@navikt/ds-tailwind@npm:5.5.0::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fds-tailwind%2F5.5.0%2F0b61d1b5fcf8952350677cc10c4269833fde3afd"
-  checksum: b7013e6b00a0a5520e55682aa612a955841d9928d0dd01cf6333dd74e8f72c5fc876543e57b5922353b7aabbacb54248cb4995c414eddbf3cf7b1691d95e1b7f
+"@navikt/ds-tailwind@npm:^5.6.1":
+  version: 5.7.0
+  resolution: "@navikt/ds-tailwind@npm:5.7.0::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fds-tailwind%2F5.7.0%2F38f7ba6c50c9b60cc6ef21c8c15de7d795bea975"
+  checksum: af4eebb313b2cbf986c908195f8fc6c2a513687aa456486bda85c38876fd7d3ed20a42e00a6b7e81cbb4d9be61d810e5fa92415cf9178bc1d098623c95464774
   languageName: node
   linkType: hard
 
@@ -17882,7 +17882,7 @@ __metadata:
     "@navikt/aksel-icons": 5.6.1
     "@navikt/ds-css": 5.6.1
     "@navikt/ds-react": 5.6.1
-    "@navikt/ds-tailwind": ^5.5.0
+    "@navikt/ds-tailwind": ^5.6.1
     "@navikt/familie-endringslogg": 9.0.3
     "@navikt/ft-plattform-komponenter": 2.3.3
     "@pmmmwh/react-refresh-webpack-plugin": 0.5.11
