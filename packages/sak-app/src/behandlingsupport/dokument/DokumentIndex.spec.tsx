@@ -3,8 +3,12 @@ import { shallow } from 'enzyme';
 
 import DokumenterSakIndex from '@fpsak-frontend/sak-dokumenter';
 
-import { requestApi, K9sakApiKeys } from '../../data/k9sakApi';
+import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
+import relasjonsRolleType from '@fpsak-frontend/kodeverk/src/relasjonsRolleType';
+import fagsakStatus from '@fpsak-frontend/kodeverk/src/fagsakStatus';
+import { Fagsak } from '@k9-sak-web/types';
 import { DokumentIndex } from './DokumentIndex';
+import { requestApi, K9sakApiKeys } from '../../data/k9sakApi';
 
 describe('<DokumentIndex>', () => {
   const documents = [
@@ -31,11 +35,34 @@ describe('<DokumentIndex>', () => {
     },
   ];
 
+  const fagsak = {
+    saksnummer: '35425245',
+    sakstype: {
+      kode: fagsakYtelseType.PLEIEPENGER,
+      kodeverk: '',
+    },
+    relasjonsRolleType: {
+      kode: relasjonsRolleType.MOR,
+      kodeverk: '',
+    },
+    status: {
+      kode: fagsakStatus.UNDER_BEHANDLING,
+      kodeverk: '',
+    },
+    barnFodt: '2020-01-01',
+    opprettet: '2020-01-01',
+    endret: '2020-01-01',
+    antallBarn: 1,
+    kanRevurderingOpprettes: false,
+    skalBehandlesAvInfotrygd: false,
+    dekningsgrad: 100,
+  } as Fagsak;
+
   it('skal vise liste med sorterte dokumenter', () => {
     requestApi.mock(K9sakApiKeys.ALL_DOCUMENTS, documents);
 
     const wrapper = shallow(
-      <DokumentIndex behandlingId={1} behandlingVersjon={2} saksnummer={123} behandlingUuid="1" />,
+      <DokumentIndex behandlingId={1} behandlingVersjon={2} saksnummer={123} behandlingUuid="1" fagsak={fagsak} />,
     );
 
     const index = wrapper.find(DokumenterSakIndex);

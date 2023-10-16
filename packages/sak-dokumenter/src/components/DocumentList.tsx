@@ -14,6 +14,7 @@ import { Element, Normaltekst } from 'nav-frontend-typografi';
 import React, { useState } from 'react';
 import { FormattedMessage, WrappedComponentProps, injectIntl } from 'react-intl';
 import { useQuery } from 'react-query';
+import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import { Kompletthet } from '../types/Kompletthetsperioder';
 import styles from './documentList.module.css';
 
@@ -75,6 +76,7 @@ interface OwnProps {
   fagsakPerson?: FagsakPerson;
   saksnummer: number;
   behandlingUuid: string;
+  sakstype: string;
 }
 
 /**
@@ -91,8 +93,15 @@ const DocumentList = ({
   fagsakPerson,
   saksnummer,
   behandlingUuid,
+  sakstype,
 }: OwnProps & WrappedComponentProps) => {
   const [selectedFilter, setSelectedFilter] = useState(alleBehandlinger);
+
+  const erStøttetFagsakYtelseType = [
+    fagsakYtelseType.PLEIEPENGER,
+    fagsakYtelseType.OMSORGSPENGER,
+    fagsakYtelseType.PLEIEPENGER_SLUTTFASE,
+  ].includes(sakstype);
 
   const getInntektsmeldingerIBruk = (signal?: AbortSignal) =>
     axios
@@ -109,7 +118,9 @@ const DocumentList = ({
         return inntektsmeldingerIBruk;
       });
 
-  const { data: inntektsmeldingerIBruk } = useQuery('kompletthet', ({ signal }) => getInntektsmeldingerIBruk(signal));
+  const { data: inntektsmeldingerIBruk } = useQuery('kompletthet', ({ signal }) => getInntektsmeldingerIBruk(signal), {
+    enabled: erStøttetFagsakYtelseType && !!behandlingUuid,
+  });
 
   const harMerEnnEnBehandlingKnyttetTilDokumenter = () => {
     const unikeBehandlinger = [];
