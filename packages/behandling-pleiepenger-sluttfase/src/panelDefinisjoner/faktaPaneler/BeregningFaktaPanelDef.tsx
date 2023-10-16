@@ -25,18 +25,20 @@ class BeregningFaktaPanelDef extends FaktaPanelDef {
     konverterKodeverkTilKode(deepCopyProps);
     const bgVilkaret = deepCopyProps.vilkar.find(v => v.vilkarType === vilkarType.BEREGNINGSGRUNNLAGVILKARET);
     if (props.featureToggles?.FAKTA_BEREGNING_REDESIGN) {
-      <BeregningFaktaIndexRedesign
-        {...deepCopyProps}
-        kodeverkSamling={deepCopyProps.alleKodeverk}
-        beregningsgrunnlag={deepCopyProps.beregningsgrunnlag}
-        arbeidsgiverOpplysningerPerId={deepCopyProps.arbeidsgiverOpplysningerPerId}
-        submitCallback={aksjonspunktData => props.submitCallback(transformBeregningValues(aksjonspunktData))}
-        formData={props.formData}
-        setFormData={props.setFormData}
-        vilkar={mapVilkar(bgVilkaret, props.beregningreferanserTilVurdering)}
-        skalKunneOverstyreAktiviteter={false}
-        skalKunneAvbryteOverstyring
-      />;
+      return (
+        <BeregningFaktaIndexRedesign
+          {...deepCopyProps}
+          kodeverkSamling={deepCopyProps.alleKodeverk}
+          beregningsgrunnlag={deepCopyProps.beregningsgrunnlag}
+          arbeidsgiverOpplysningerPerId={deepCopyProps.arbeidsgiverOpplysningerPerId}
+          submitCallback={aksjonspunktData => props.submitCallback(transformBeregningValues(aksjonspunktData))}
+          formData={props.formData}
+          setFormData={props.setFormData}
+          vilkar={mapVilkar(bgVilkaret, props.beregningreferanserTilVurdering)}
+          skalKunneOverstyreAktiviteter={false}
+          skalKunneAvbryteOverstyring
+        />
+      );
     }
     return (
       <BeregningFaktaIndex
