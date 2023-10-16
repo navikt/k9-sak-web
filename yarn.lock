@@ -4755,6 +4755,7 @@ __metadata:
     "@k9-sak-web/sak-app": 1.0.0
     "@k9-sak-web/types": 1.0.0
     "@navikt/ft-fakta-beregning": 5.0.7
+    "@navikt/ft-fakta-beregning-redesign": 1.0.4
     "@navikt/ft-fakta-fordel-beregningsgrunnlag": 7.3.9
     "@navikt/ft-prosess-beregningsgrunnlag": 6.3.11
     axios: 0.27.2
@@ -5749,6 +5750,49 @@ __metadata:
   version: 1.3.3
   resolution: "@navikt/fnrvalidator@npm:1.3.3::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Ffnrvalidator%2F1.3.3%2F8414963a30e59e3056c9befea7bb022498a2a742"
   checksum: 49b2f481e1d5fdd107ba3cfd13a7a6fdb32371da2a634b97d5142d3940b73fe6cc90201c23381484def2859aecbd51b7e897ff3d69be483dafb13f1e2dd3060e
+  languageName: node
+  linkType: hard
+
+"@navikt/ft-fakta-beregning-redesign@npm:1.0.4":
+  version: 1.0.4
+  resolution: "@navikt/ft-fakta-beregning-redesign@npm:1.0.4::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fft-fakta-beregning-redesign%2F1.0.4%2Fdd92a62b3efbc9adcde8a4f27374b14d6946d2ae"
+  dependencies:
+    "@navikt/aksel-icons": 5.6.1
+    "@navikt/ds-css": 5.6.1
+    "@navikt/ds-react": 5.6.1
+    "@navikt/ft-form-hooks": ^4.2.9
+    "@navikt/ft-form-validators": ^2.1.3
+    "@navikt/ft-kodeverk": ^2.2.3
+    "@navikt/ft-konstanter": ^2.1.3
+    "@navikt/ft-types": ^2.2.3
+    "@navikt/ft-ui-komponenter": ^2.1.9
+    "@navikt/ft-utils": ^2.1.3
+    core-js: 3.33.0
+    dayjs: 1.11.9
+    dayjs-plugin-utc: 0.1.2
+    react: 18.2.0
+    react-dom: 18.2.0
+    react-hook-form: 7.47.0
+    react-intl: 6.4.7
+  peerDependencies:
+    "@navikt/aksel-icons": 2.9.5
+    "@navikt/ds-css": 2.9.5
+    "@navikt/ds-react": 2.9.5
+    "@navikt/ft-form-hooks": 4.x
+    "@navikt/ft-form-validators": 2.x
+    "@navikt/ft-kodeverk": 2.x
+    "@navikt/ft-konstanter": 2.x
+    "@navikt/ft-types": 2.x
+    "@navikt/ft-ui-komponenter": 2.x
+    "@navikt/ft-utils": 2.x
+    core-js: 3.30.1
+    dayjs: 1.11.7
+    dayjs-plugin-utc: 0.1.2
+    react: 18.2.0
+    react-dom: 18.2.0
+    react-hook-form: 7.43.9
+    react-intl: 6.4.2
+  checksum: 22c5387ab9592820aba7a2f6354f5327195b1a18d0e269faaff655567f74c229c1d7ef9b9df6f59205aca2052d30cf7359e6a12f72d35286c70fce6f162ada34
   languageName: node
   linkType: hard
 

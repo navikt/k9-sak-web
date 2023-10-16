@@ -21,7 +21,7 @@
     "lint:fix": "eslint --fix --cache packages --ext .ts,.tsx,.js,.jsx",
     "css:lint": "stylelint \"packages/**/*.css\"",
     "dev": "yarn dev-env-variables cross-env NODE_ENV=development APP_URL_K9FORMIDLING=http://localhost:8060/rest/dummy webpack serve --config webpack/webpack.dev.ts",
-    "dev-env-variables": "cross-env KLAGE_KABAL=true VARSELTEKST=true DOKUMENTDATA=true UNNTAKSBEHANDLING=true UTENLANDSOPPHOLD=true SOKNADPERIODESTRIPE=false TYPE_MEDISINSKE_OPPLYSNINGER_BREV=true LOS_MARKER_BEHANDLING=true LOS_MARKER_BEHANDLING_SUBMIT=true AKSJONSPUNKT_9014=true AKSJONSPUNKT_9015=true FRITEKST_REDIGERING=true FIX_SOKNADSFRIST_KALENDER_OG_READONLY=true INKLUDER_KALENDER_PILS=true",
+    "dev-env-variables": "cross-env KLAGE_KABAL=true VARSELTEKST=true DOKUMENTDATA=true UNNTAKSBEHANDLING=true UTENLANDSOPPHOLD=true SOKNADPERIODESTRIPE=false TYPE_MEDISINSKE_OPPLYSNINGER_BREV=true LOS_MARKER_BEHANDLING=true LOS_MARKER_BEHANDLING_SUBMIT=true AKSJONSPUNKT_9014=true AKSJONSPUNKT_9015=true FRITEKST_REDIGERING=true FIX_SOKNADSFRIST_KALENDER_OG_READONLY=true INKLUDER_KALENDER_PILS=true FAKTA_BEREGNING_REDESIGN=true",
     "dev-lokal": "cross-env NODE_ENV=development APP_URL_SAK=http://k9-sak:8080 APP_URL_K9OPPDRAG=http://k9-oppdrag:8070 APP_URL_K9FORMIDLING_DD=http://k9-formidling-dokumentdata:8294 APP_URL_K9FORMIDLING=http://k9-formidling:8290 SPLITTET_SAMMENLINGNING_BEREGNING=true webpack serve --config webpack/webpack.dev.ts",
     "dev-med-formidling": "cross-env NODE_ENV=development webpack serve --config webpack/webpack.dev.ts",
     "build": "cross-env NODE_ENV=production SENTRY_RELEASE=$(git rev-parse --short HEAD) webpack --config webpack/webpack.prod.ts",
