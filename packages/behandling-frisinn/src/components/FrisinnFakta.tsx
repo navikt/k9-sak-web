@@ -1,7 +1,14 @@
 import React, { useEffect, useState } from 'react';
 
 import { Rettigheter, SideMenuWrapper, faktaHooks, useSetBehandlingVedEndring } from '@k9-sak-web/behandling-felles';
-import { KodeverkMedNavn, Behandling, Fagsak, FagsakPerson, ArbeidsgiverOpplysningerPerId } from '@k9-sak-web/types';
+import {
+  KodeverkMedNavn,
+  Behandling,
+  Fagsak,
+  FagsakPerson,
+  ArbeidsgiverOpplysningerPerId,
+  FeatureToggles,
+} from '@k9-sak-web/types';
 import { RestApiState, useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
 import ErrorBoundary from '@k9-sak-web/sak-app/src/app/ErrorBoundary';
 import ac from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
@@ -27,6 +34,7 @@ interface OwnProps {
   setApentFaktaPanel: (faktaPanelInfo: { urlCode: string; textCode: string }) => void;
   setBehandling: (behandling: Behandling) => void;
   arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysningerPerId;
+  featureToggles: FeatureToggles;
 }
 
 const FrisinnFakta = ({
@@ -43,6 +51,7 @@ const FrisinnFakta = ({
   setApentFaktaPanel,
   setBehandling,
   arbeidsgiverOpplysningerPerId,
+  featureToggles,
 }: OwnProps) => {
   const { aksjonspunkter, ...rest } = data;
   const { addErrorMessage } = useRestApiErrorDispatcher();
@@ -72,6 +81,7 @@ const FrisinnFakta = ({
     rettigheter,
     aksjonspunkter,
     valgtFaktaSteg,
+    featureToggles,
   );
 
   faktaHooks.useFaktaAksjonspunktNotifikator(faktaPaneler, setApentFaktaPanel, behandling.versjon);

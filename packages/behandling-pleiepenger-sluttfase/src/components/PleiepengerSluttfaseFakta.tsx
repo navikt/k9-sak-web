@@ -92,6 +92,7 @@ const PleiepengerSluttfaseFakta = ({
     rettigheter,
     aksjonspunkter,
     valgtFaktaSteg,
+    featureToggles,
   );
 
   faktaHooks.useFaktaAksjonspunktNotifikator(faktaPaneler, setApentFaktaPanel, behandling.versjon);

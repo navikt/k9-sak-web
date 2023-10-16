@@ -31,6 +31,7 @@
     "@k9-sak-web/rest-api-hooks": "1.0.0",
     "@k9-sak-web/types": "1.0.0",
     "@navikt/ft-fakta-beregning": "5.0.7",
+    "@navikt/ft-fakta-beregning-redesign": "1.0.4",
     "@navikt/ft-fakta-fordel-beregningsgrunnlag": "7.3.9",
     "@navikt/ft-prosess-beregningsgrunnlag": "6.3.11",
     "nav-frontend-popover": "2.0.4",
