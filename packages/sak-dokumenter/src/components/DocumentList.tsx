@@ -97,6 +97,12 @@ const DocumentList = ({
 }: OwnProps & WrappedComponentProps) => {
   const [selectedFilter, setSelectedFilter] = useState(alleBehandlinger);
 
+  const erStøttetFagsakYtelseType = [
+    fagsakYtelseType.PLEIEPENGER,
+    fagsakYtelseType.OMSORGSPENGER,
+    fagsakYtelseType.PLEIEPENGER_SLUTTFASE,
+  ].includes(sakstype);
+
   const getInntektsmeldingerIBruk = (signal?: AbortSignal) =>
     axios
       .get<Kompletthet>(`/k9/sak/api/behandling/kompletthet/beregning/vurderinger`, {
@@ -112,7 +118,9 @@ const DocumentList = ({
         return inntektsmeldingerIBruk;
       });
 
-  const { data: inntektsmeldingerIBruk } = useQuery('kompletthet', ({ signal }) => getInntektsmeldingerIBruk(signal));
+  const { data: inntektsmeldingerIBruk } = useQuery('kompletthet', ({ signal }) => getInntektsmeldingerIBruk(signal), {
+    enabled: erStøttetFagsakYtelseType && !!behandlingUuid,
+  });
 
   const harMerEnnEnBehandlingKnyttetTilDokumenter = () => {
     const unikeBehandlinger = [];
@@ -152,7 +160,6 @@ const DocumentList = ({
     `/k9/sak/api/dokument/hent-dokument?saksnummer=${saksnummer}&journalpostId=${document.journalpostId}&dokumentId=${document.dokumentId}`;
 
   const erInntektsmeldingOgBruktIDenneBehandlingen = (document: Dokument) =>
-    sakstype === fagsakYtelseType.PLEIEPENGER &&
     document.brevkode === inntektsmeldingBrevkode &&
     inntektsmeldingerIBruk &&
     inntektsmeldingerIBruk.length > 0 &&
