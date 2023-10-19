@@ -70,5 +70,9 @@
   {
     "key": "OVERSTYR_BEREGNING",
     "value": "${OVERSTYR_BEREGNING}"
+  },
+  {
+    "key": "FAKTA_BEREGNING_REDESIGN",
+    "value": "${FAKTA_BEREGNING_REDESIGN}"
   }
 ]

@@ -565,11 +565,11 @@ div[class^='SjekkFodselDokForm'] [class^='periodFieldArray_buttonRemove'] {
 }
 
 .snakkeboble.snakkeboble__bruker .panel {
-  background: var(--a-white) 2;
+  background: #fff2e0;
 }
 
 .snakkeboble.snakkeboble__bruker .snakkeboble__snakkebole-pil {
-  background: var(--a-white) 2;
+  background: #fff2e0;
 }
 
 .snakkeboble.snakkeboble__ekstern .panel {
