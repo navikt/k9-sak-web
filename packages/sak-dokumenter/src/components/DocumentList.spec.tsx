@@ -45,6 +45,7 @@ describe('<DocumentList>', () => {
           behandlingId={1}
           saksnummer={1}
           behandlingUuid="1"
+          sakstype="PSB"
         />,
       ),
     );
@@ -71,6 +72,7 @@ describe('<DocumentList>', () => {
           behandlingId={1}
           saksnummer={1}
           behandlingUuid="1"
+          sakstype="PSB"
         />
       </QueryClientProvider>,
     );
@@ -88,6 +90,7 @@ describe('<DocumentList>', () => {
           behandlingId={1}
           saksnummer={1}
           behandlingUuid="1"
+          sakstype="PSB"
         />
       </QueryClientProvider>,
     );

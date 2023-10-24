@@ -65,6 +65,10 @@ const featureToggles = [
     key: 'OVERSTYR_BEREGNING',
     value: process.env.OVERSTYR_BEREGNING,
   },
+  {
+    key: 'FAKTA_BEREGNING_REDESIGN',
+    value: process.env.FAKTA_BEREGNING_REDESIGN,
+  },
 ];
 
 module.exports = function (app) {

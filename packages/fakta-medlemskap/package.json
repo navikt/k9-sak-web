@@ -12,7 +12,7 @@
     "@fpsak-frontend/shared-components": "1.0.0",
     "@fpsak-frontend/utils": "1.0.0",
     "@k9-sak-web/fakta-felles": "1.0.0",
-    "@navikt/ft-plattform-komponenter": "2.3.3",
+    "@navikt/ft-plattform-komponenter": "2.3.5",
     "i18n-iso-countries": "7.7.0",
     "moment": "2.29.4",
     "nav-frontend-core": "6.0.1",
