@@ -5,7 +5,6 @@ import { useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
 import { MedisinskVilkår } from '@navikt/k9-fe-medisinsk-vilkar';
 import React from 'react';
 
-const medisinskVilkårAppID = 'medisinskVilkårApp';
 export default ({
   behandling: { links, uuid },
   submitCallback,
@@ -33,7 +32,6 @@ export default ({
 
   return (
     <MedisinskVilkår
-      appId={medisinskVilkårAppID}
       data={{
         httpErrorHandler: httpErrorHandlerCaller,
         endpoints: findEndpointsForMicrofrontend(links, [
