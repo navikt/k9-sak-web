@@ -64,8 +64,10 @@ const ChatComponent: React.FunctionComponent<ChatComponentProps> = ({
     versjon,
     skjult,
   } = notat;
-  const position =
-    opprettetAv === navAnsatt.brukernavn || endretAv === navAnsatt.brukernavn ? ChatPosition.Right : ChatPosition.Left;
+  const erSistEndretAvGjeldendeBruker =
+    endretAv === navAnsatt.brukernavn || (!endretAv && opprettetAv === navAnsatt.brukernavn);
+  const position = erSistEndretAvGjeldendeBruker ? ChatPosition.Right : ChatPosition.Left;
+
   const minLength3 = minLength(3);
   const maxLength2000 = maxLength(1500);
 
@@ -96,8 +98,7 @@ const ChatComponent: React.FunctionComponent<ChatComponentProps> = ({
     skjulNotat({ skjul: !skjult, id: notatId, saksnummer: fagsakId, versjon });
   };
 
-  const name =
-    opprettetAv === navAnsatt.brukernavn || endretAv === navAnsatt.brukernavn ? 'Deg' : endretAv || opprettetAv;
+  const name = erSistEndretAvGjeldendeBruker ? 'Deg' : endretAv || opprettetAv;
 
   return (
     <Form<Inputs> formMethods={formMethods} onSubmit={submit}>
