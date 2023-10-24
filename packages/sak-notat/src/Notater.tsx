@@ -1,15 +1,11 @@
-import { useLocalStorage } from '@fpsak-frontend/utils';
 import { NavAnsatt } from '@k9-sak-web/types';
 import { Alert, Button, Heading, Loader, Switch } from '@navikt/ds-react';
 import { CheckboxField, Form, TextAreaField } from '@navikt/ft-form-hooks';
-import axios from 'axios';
 import React, { useState } from 'react';
-import { useForm } from 'react-hook-form';
+import { UseFormReturn } from 'react-hook-form';
 import { FormattedMessage, RawIntlProvider, createIntl, createIntlCache } from 'react-intl';
-import { useMutation, useQuery, useQueryClient } from 'react-query';
 import messages from '../i18n/nb_NO.json';
 import ChatComponent from './components/ChatComponent';
-import { NotatGjelderType } from './types/NotatGjelderType';
 import { NotatResponse } from './types/NotatResponse';
 
 const cache = createIntlCache();
@@ -22,118 +18,48 @@ const intl = createIntl(
   cache,
 );
 
-type Inputs = {
+export type Inputs = {
   notatTekst: string;
   visNotatIAlleSaker: boolean;
 };
 
+export interface skjulNotatMutationVariables {
+  skjul: boolean;
+  id: number;
+  saksnummer: string;
+  versjon: number;
+}
+
 interface NotaterProps {
   fagsakId: string;
   navAnsatt: NavAnsatt;
+  submitNotat: (data: Inputs, id?: number, fagsakIdFraRedigertNotat?: string, versjon?: number) => void;
+  submitSkjulNotat: ({ skjul, id, saksnummer, versjon }: skjulNotatMutationVariables) => void;
+  isLoading: boolean;
+  hasGetNotaterError: boolean;
+  notater: NotatResponse[];
+  postNotatMutationError: boolean;
+  formMethods: UseFormReturn<Inputs, any, undefined>;
 }
 
-const Notater: React.FunctionComponent<NotaterProps> = ({ fagsakId, navAnsatt }) => {
+const Notater: React.FunctionComponent<NotaterProps> = ({
+  fagsakId,
+  navAnsatt,
+  submitNotat,
+  isLoading,
+  hasGetNotaterError,
+  notater,
+  postNotatMutationError,
+  submitSkjulNotat,
+  formMethods,
+}) => {
   const [visSkjulteNotater, setVisSkjulteNotater] = useState(false);
-  const [lesteNotater, setLesteNotater] = useLocalStorage<number[]>('lesteNotater', []);
-  const queryClient = useQueryClient();
-
-  const notaterQueryKey = 'notater';
-
-  const getNotater = (signal: AbortSignal) =>
-    axios
-      .get<NotatResponse[]>(`/k9/sak/api/notat`, {
-        signal,
-        params: {
-          saksnummer: fagsakId,
-        },
-      })
-      .then(({ data }) => {
-        const sorterteNotater = [...data].sort(
-          (notatA, notatB) => +new Date(notatA.opprettetTidspunkt) - +new Date(notatB.opprettetTidspunkt),
-        );
-        setLesteNotater([
-          ...new Set([...lesteNotater, ...data.filter(notat => !notat.skjult).map(notat => notat.notatId)]),
-        ]);
-        return sorterteNotater;
-      });
-
-  const {
-    isLoading: getNotaterLoading,
-    isError: hasGetNotaterError,
-    data: notater,
-  } = useQuery(notaterQueryKey, ({ signal }) => getNotater(signal));
 
   const toggleVisSkjulteNotater = () => {
     setVisSkjulteNotater(current => !current);
   };
 
-  const formMethods = useForm<Inputs>({
-    defaultValues: {
-      notatTekst: '',
-      visNotatIAlleSaker: false,
-    },
-  });
-
-  const postNotat = (data: Inputs, id?: number, fagsakIdFraRedigertNotat?: string, versjon?: number) => {
-    let notatGjelderType;
-    if (!id) {
-      notatGjelderType = data.visNotatIAlleSaker ? NotatGjelderType.pleietrengende : NotatGjelderType.fagsak;
-    }
-    const postUrl = id ? '/k9/sak/api/notat/endre' : '/k9/sak/api/notat';
-    return axios.post(postUrl, {
-      notatTekst: data.notatTekst,
-      saksnummer: fagsakIdFraRedigertNotat || fagsakId,
-      notatGjelderType,
-      versjon: versjon || 0,
-      notatId: id,
-    });
-  };
-
-  interface postNotatMutationVariables {
-    data: Inputs;
-    id?: number;
-    fagsakIdFraRedigertNotat?: string;
-    versjon?: number;
-  }
-
-  const postNotatMutation = useMutation(
-    ({ data, id, fagsakIdFraRedigertNotat, versjon }: postNotatMutationVariables) =>
-      postNotat(data, id, fagsakIdFraRedigertNotat, versjon),
-    {
-      onSuccess: () => {
-        formMethods.reset();
-        queryClient.invalidateQueries(notaterQueryKey);
-      },
-    },
-  );
-
-  const skjulNotat = (skjul: boolean, id: number, saksnummer: string, versjon: number) =>
-    axios.post('/k9/sak/api/notat/skjul', {
-      notatId: id,
-      skjul,
-      saksnummer,
-      versjon,
-    });
-
-  interface skjulNotatMutationVariables {
-    skjul: boolean;
-    id: number;
-    saksnummer: string;
-    versjon: number;
-  }
-
-  const skjulNotatMutation = useMutation(
-    ({ skjul, id, saksnummer, versjon }: skjulNotatMutationVariables) => skjulNotat(skjul, id, saksnummer, versjon),
-    {
-      onSuccess: () => {
-        queryClient.invalidateQueries(notaterQueryKey);
-      },
-    },
-  );
-
-  const submit = (data: Inputs) => postNotatMutation.mutate({ data });
-
-  const isLoading = getNotaterLoading || postNotatMutation.isLoading;
+  const submit = (data: Inputs) => submitNotat(data);
 
   return (
     <RawIntlProvider value={intl}>
@@ -159,7 +85,7 @@ const Notater: React.FunctionComponent<NotaterProps> = ({ fagsakId, navAnsatt })
               <FormattedMessage id="NotatISakIndex.NoeGikkGaltHentingNotater" />
             </Alert>
           )}
-          {postNotatMutation.isError && (
+          {postNotatMutationError && (
             <Alert className="mt-7" size="small" variant="error">
               <FormattedMessage id="NotatISakIndex.NoeGikkGaltLagringNotater" />
             </Alert>
@@ -172,9 +98,9 @@ const Notater: React.FunctionComponent<NotaterProps> = ({ fagsakId, navAnsatt })
                   <ChatComponent
                     key={notat.notatId}
                     notat={notat}
-                    postNotat={data => postNotatMutation.mutate(data)}
+                    postNotat={data => submitNotat(data.data, data.id, data.saksnummer, data.versjon)}
                     navAnsatt={navAnsatt}
-                    skjulNotat={data => skjulNotatMutation.mutate(data)}
+                    skjulNotat={data => submitSkjulNotat(data)}
                     fagsakId={fagsakId}
                   />
                 ))}
