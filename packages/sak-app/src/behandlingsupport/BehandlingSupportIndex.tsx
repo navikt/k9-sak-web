@@ -5,6 +5,7 @@ import {
   ArbeidsgiverOpplysningerWrapper,
   BehandlingAppKontekst,
   Fagsak,
+  FeatureToggles,
   NavAnsatt,
   Personopplysninger,
 } from '@k9-sak-web/types';
@@ -22,13 +23,18 @@ import MeldingIndex from './melding/MeldingIndex';
 import NotaterIndex from './notater/NotaterIndex';
 import TotrinnskontrollIndex from './totrinnskontroll/TotrinnskontrollIndex';
 
-export const hentSynligePaneler = (behandlingRettigheter?: BehandlingRettigheter): string[] =>
+export const hentSynligePaneler = (
+  behandlingRettigheter?: BehandlingRettigheter,
+  featureToggles?: FeatureToggles,
+): string[] =>
   Object.values(SupportTabs).filter(supportPanel => {
     switch (supportPanel) {
       case SupportTabs.TIL_BESLUTTER:
         return behandlingRettigheter && behandlingRettigheter.behandlingTilGodkjenning;
       case SupportTabs.FRA_BESLUTTER:
         return behandlingRettigheter && behandlingRettigheter.behandlingFraBeslutter;
+      case SupportTabs.NOTATER:
+        return featureToggles?.NOTAT_I_SAK;
       default:
         return true;
     }
@@ -55,6 +61,7 @@ interface OwnProps {
   personopplysninger?: Personopplysninger;
   arbeidsgiverOpplysninger?: ArbeidsgiverOpplysningerWrapper;
   navAnsatt: NavAnsatt;
+  featureToggles?: FeatureToggles;
 }
 
 /**
@@ -72,6 +79,7 @@ const BehandlingSupportIndex = ({
   personopplysninger,
   arbeidsgiverOpplysninger,
   navAnsatt,
+  featureToggles,
 }: OwnProps) => {
   const { addErrorMessage } = useRestApiErrorDispatcher();
   const [antallUlesteNotater, setAntallUlesteNotater] = useState(0);
@@ -96,7 +104,7 @@ const BehandlingSupportIndex = ({
       });
   };
 
-  useQuery('notater', ({ signal }) => getNotater(signal));
+  useQuery('notater', ({ signal }) => getNotater(signal), { enabled: featureToggles?.NOTAT_I_SAK });
 
   const { selected: valgtSupportPanel, location } = useTrackRouteParam<string>({
     paramName: 'stotte',
@@ -110,7 +118,10 @@ const BehandlingSupportIndex = ({
   const erPaVent = behandling ? behandling.behandlingPaaVent : false;
   const erSendMeldingRelevant = fagsak && !erPaVent;
 
-  const synligeSupportPaneler = useMemo(() => hentSynligePaneler(behandlingRettigheter), [behandlingRettigheter]);
+  const synligeSupportPaneler = useMemo(
+    () => hentSynligePaneler(behandlingRettigheter, featureToggles),
+    [behandlingRettigheter, featureToggles],
+  );
   const valgbareSupportPaneler = useMemo(
     () => hentValgbarePaneler(synligeSupportPaneler, erSendMeldingRelevant, behandlingRettigheter),
     [synligeSupportPaneler, erSendMeldingRelevant, behandlingRettigheter],
@@ -176,7 +187,7 @@ const BehandlingSupportIndex = ({
             behandlingUuid={behandling?.uuid}
           />
         )}
-        {aktivtSupportPanel === SupportTabs.NOTATER && (
+        {aktivtSupportPanel === SupportTabs.NOTATER && featureToggles?.NOTAT_I_SAK && (
           <NotaterIndex
             saksnummer={fagsak.saksnummer}
             behandlingId={behandlingId}

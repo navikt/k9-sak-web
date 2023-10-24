@@ -115,3 +115,5 @@ spec:
       value: "false"
     - name: FAKTA_BEREGNING_REDESIGN
       value: "false"
+    - name: NOTAT_I_SAK
+      value: "false"

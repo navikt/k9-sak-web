@@ -289,6 +289,7 @@ const FagsakIndex = () => {
                 personopplysninger={behandlingPersonopplysninger}
                 arbeidsgiverOpplysninger={arbeidsgiverOpplysninger}
                 navAnsatt={navAnsatt}
+                featureToggles={featureToggles}
               />
             </QueryClientProvider>
           );

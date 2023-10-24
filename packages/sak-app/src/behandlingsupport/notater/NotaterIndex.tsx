@@ -18,23 +18,7 @@ const EMPTY_ARRAY = [];
  *
  * Container komponent. Har ansvar for å vise notater i saken.
  */
-export const NotaterIndex = ({ behandlingId, behandlingVersjon, fagsakPerson, saksnummer, navAnsatt }: OwnProps) => (
-  // const forrigeSaksnummer = usePrevious(saksnummer);
-  // const erBehandlingEndretFraUndefined = useBehandlingEndret(behandlingId, behandlingVersjon);
-  // const { data: alleDokumenter = EMPTY_ARRAY, state } = restApiHooks.useRestApi<Dokument[]>(
-  //   K9sakApiKeys.ALL_DOCUMENTS,
-  //   { saksnummer },
-  //   {
-  //     updateTriggers: [behandlingId, behandlingVersjon],
-  //     suspendRequest: forrigeSaksnummer && erBehandlingEndretFraUndefined,
-  //     keepData: true,
-  //   },
-  // );
-
-  // if (state === RestApiState.LOADING) {
-  //   return <LoadingPanel />;
-  // }
-
+export const NotaterIndex = ({ saksnummer, navAnsatt }: OwnProps) => (
   <Notater fagsakId={saksnummer} navAnsatt={navAnsatt} />
 );
 
