@@ -113,3 +113,5 @@ spec:
       value: "true"
     - name: OMSORGEN_FOR_PERIODISERT
       value: "true"
+    - name: OVERSTYRING_UTTAK
+      value: "true"

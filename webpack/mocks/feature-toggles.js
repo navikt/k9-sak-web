@@ -61,6 +61,10 @@ const featureToggles = [
     key: 'OMSORGEN_FOR_PERIODISERT',
     value: process.env.OMSORGEN_FOR_PERIODISERT,
   },
+  {
+    key: 'OVERSTYRING_UTTAK',
+    value: process.env.OVERSTYRING_UTTAK,
+  },
 ];
 
 module.exports = function (app) {

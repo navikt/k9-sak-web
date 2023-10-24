@@ -66,5 +66,9 @@
   {
     "key": "OMSORGEN_FOR_PERIODISERT",
     "value": "${OMSORGEN_FOR_PERIODISERT}"
+  },
+  {
+    "key": "OVERSTYRING_UTTAK",
+    "value": "${OVERSTYRING_UTTAK}"
   }
 ]
