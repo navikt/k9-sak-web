@@ -10,6 +10,7 @@ import { PencilWritingFillIcon, PencilWritingIcon } from '@navikt/aksel-icons';
 
 import TabMeny from './components/TabMeny';
 import SupportTabs from './supportTabs';
+import styles from './supportMenySakIndex.module.css';
 
 import messages from '../i18n/nb_NO.json';
 
@@ -53,22 +54,18 @@ const TABS = {
   },
   [SupportTabs.NOTATER]: {
     getSvg: (isActive, isDisabled, props, antallUlesteNotater) => (
-      <div className="relative">
-        {antallUlesteNotater > 0 && (
-          <div className="absolute w-5 h-5 rounded-full bg-[#C30000] left-[calc(50%+7px)] top-[-0.4375rem] text-white text-sm font-semibold">
-            {antallUlesteNotater}
-          </div>
-        )}
+      <div className={styles.pencilSvgContainer}>
+        {antallUlesteNotater > 0 && <div className={styles.ulesteNotater}>{antallUlesteNotater}</div>}
         {isActive ? (
           <PencilWritingFillIcon
             {...props}
             title="Notater"
             fontSize="1.625rem"
-            className="mb-2"
+            className={styles.pencilSvgFill}
             fill={isDisabled ? '#c6c2bf' : '#0067c5'}
           />
         ) : (
-          <PencilWritingIcon {...props} title="Notater" fontSize="1.625rem" className="mb-2" />
+          <PencilWritingIcon {...props} title="Notater" fontSize="1.625rem" className={styles.pencilSvg} />
         )}
       </div>
     ),

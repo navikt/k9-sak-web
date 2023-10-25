@@ -4,6 +4,7 @@ import '@formatjs/intl-datetimeformat/locale-data/nb';
 import '@formatjs/intl-numberformat/locale-data/nb';
 import { initialize, mswLoader } from 'msw-storybook-addon';
 import React from 'react';
+import '@navikt/ds-css';
 import '@fpsak-frontend/assets/styles/global.css';
 import '@navikt/ft-plattform-komponenter/dist/style.css';
 

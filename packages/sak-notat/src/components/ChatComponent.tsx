@@ -8,6 +8,7 @@ import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { FormattedMessage } from 'react-intl';
 import { NotatResponse } from '../types/NotatResponse';
+import styles from './chatComponent.module.css';
 
 export enum ChatPosition {
   Left = 'left',
@@ -120,9 +121,9 @@ const ChatComponent: React.FunctionComponent<ChatComponentProps> = ({
                 validate={[required, minLength3, maxLength2000]}
                 hideLabel
                 label="Har du noen tilbakemeldinger?"
-                className="min-w-[31.25rem]"
+                className={styles.nyttNotatTekst}
               />
-              <div className="flex flex-wrap gap-2 mt-3">
+              <div className={styles.nyttNotatKnappContainer}>
                 <Button type="submit" size="small" variant="primary">
                   <FormattedMessage id="NotatISakIndex.LagreEndringer" />
                 </Button>
@@ -132,19 +133,19 @@ const ChatComponent: React.FunctionComponent<ChatComponentProps> = ({
               </div>
             </>
           )}
-          <div className="flex justify-between items-center mt-5">
-            <div className="flex items-baseline">
+          <div className={styles.notatContainer}>
+            <div className={styles.labelTagContainer}>
               <Label as="p" size="small">
                 <FormattedMessage id="NotatISakIndex.Gjelder" />
               </Label>
-              <Tag className="ml-2" size="small" variant="neutral">
+              <Tag className={styles.navnTag} size="small" variant="neutral">
                 {gjelderType.navn}
               </Tag>
             </div>
             {readOnly && (
-              <div className="flex">
+              <div className={styles.redigerSkjulNotatKnappContainer}>
                 <Button
-                  className="ml-2.5"
+                  className={styles.redigerSkjulKnapp}
                   onClick={toggleReadOnly}
                   size="xsmall"
                   variant="tertiary"
@@ -154,7 +155,7 @@ const ChatComponent: React.FunctionComponent<ChatComponentProps> = ({
                 </Button>
                 <Button
                   onClick={toggleSkjulNotat}
-                  className="ml-2.5"
+                  className={styles.redigerSkjulKnapp}
                   size="xsmall"
                   variant="tertiary"
                   icon={skjult ? <EyeSlashIcon aria-hidden /> : <EyeWithPupilIcon aria-hidden />}

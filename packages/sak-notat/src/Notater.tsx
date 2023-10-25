@@ -7,6 +7,7 @@ import { FormattedMessage, RawIntlProvider, createIntl, createIntlCache } from '
 import messages from '../i18n/nb_NO.json';
 import ChatComponent from './components/ChatComponent';
 import { NotatResponse } from './types/NotatResponse';
+import styles from './notater.module.css';
 
 const cache = createIntlCache();
 
@@ -64,10 +65,10 @@ const Notater: React.FunctionComponent<NotaterProps> = ({
   return (
     <RawIntlProvider value={intl}>
       {isLoading ? (
-        <Loader className="flex mx-auto" variant="neutral" size="xlarge" title="venter..." />
+        <Loader className={styles.loader} variant="neutral" size="xlarge" title="venter..." />
       ) : (
         <>
-          <div className="flex justify-between items-baseline">
+          <div className={styles.heading}>
             <Heading level="3" size="xsmall">
               <FormattedMessage id="NotatISakIndex.NotaterISak" />
             </Heading>
@@ -76,22 +77,22 @@ const Notater: React.FunctionComponent<NotaterProps> = ({
             </Switch>
           </div>
           {!hasGetNotaterError && notater?.length === 0 && (
-            <Alert className="mt-7" size="small" variant="info">
+            <Alert className={styles.alert} size="small" variant="info">
               <FormattedMessage id="NotatISakIndex.IngenNotaterAlert" />
             </Alert>
           )}
           {hasGetNotaterError && (
-            <Alert className="mt-7" size="small" variant="error">
+            <Alert className={styles.alert} size="small" variant="error">
               <FormattedMessage id="NotatISakIndex.NoeGikkGaltHentingNotater" />
             </Alert>
           )}
           {postNotatMutationError && (
-            <Alert className="mt-7" size="small" variant="error">
+            <Alert className={styles.alert} size="small" variant="error">
               <FormattedMessage id="NotatISakIndex.NoeGikkGaltLagringNotater" />
             </Alert>
           )}
           {notater?.length > 0 && (
-            <div className="grid mt-5 gap-10">
+            <div className={styles.notater}>
               {notater
                 .filter(notat => visSkjulteNotater || !notat.skjult)
                 .map(notat => (
@@ -107,7 +108,7 @@ const Notater: React.FunctionComponent<NotaterProps> = ({
             </div>
           )}
           <Form<Inputs> formMethods={formMethods} onSubmit={submit}>
-            <div className="mt-9">
+            <div className={styles.nyttNotat}>
               <TextAreaField
                 name="notatTekst"
                 size="small"
@@ -115,11 +116,11 @@ const Notater: React.FunctionComponent<NotaterProps> = ({
               />
             </div>
             <CheckboxField
-              className="mt-3"
+              className={styles.visAlleNotater}
               name="visNotatIAlleSaker"
               label={<FormattedMessage id="NotatISakIndex.VisNotatTilknyttetPleietrengende" />}
             />
-            <Button type="submit" className="mt-4" size="small" variant="primary">
+            <Button type="submit" className={styles.leggTilNotatKnapp} size="small" variant="primary">
               <FormattedMessage id="NotatISakIndex.LeggTilNotatButton" />
             </Button>
           </Form>
