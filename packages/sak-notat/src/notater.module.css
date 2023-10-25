@@ -1,0 +1,33 @@
+.loader {
+  display: flex;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.heading {
+  align-items: baseline;
+  display: flex;
+  justify-content: space-between;
+}
+
+.alert {
+  margin-top: 1.75rem;
+}
+
+.notater {
+  display: grid;
+  gap: 2.5rem;
+  margin-top: 1.25rem;
+}
+
+.nyttNotat {
+  margin-top: 2.25rem;
+}
+
+.visAlleNotater {
+  margin-top: 0.75rem;
+}
+
+:global(.navds-button).leggTilNotatKnapp {
+  margin-top: 1rem;
+}

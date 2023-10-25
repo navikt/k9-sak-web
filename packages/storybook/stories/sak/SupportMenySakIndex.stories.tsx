@@ -17,6 +17,7 @@ export const visMenyUtenBeslutterGodkjenningOgTilbakesending = () => {
       valgbareTabs={[SupportTabs.HISTORIKK, SupportTabs.MELDINGER, SupportTabs.DOKUMENTER]}
       valgtIndex={valgtPanelIndex}
       onClick={setPanelIndex}
+      antallUlesteNotater={0}
     />
   );
 };
@@ -34,6 +35,7 @@ export const visMenyMedBeslutterGodkjenning = () => {
       valgbareTabs={[SupportTabs.TIL_BESLUTTER, SupportTabs.HISTORIKK, SupportTabs.MELDINGER, SupportTabs.DOKUMENTER]}
       valgtIndex={valgtPanelIndex}
       onClick={setPanelIndex}
+      antallUlesteNotater={0}
     />
   );
 };
@@ -51,6 +53,7 @@ export const visMenyEtterTilbakesendingFraBeslutter = () => {
       valgbareTabs={[SupportTabs.FRA_BESLUTTER, SupportTabs.HISTORIKK, SupportTabs.MELDINGER, SupportTabs.DOKUMENTER]}
       valgtIndex={valgtPanelIndex}
       onClick={setPanelIndex}
+      antallUlesteNotater={0}
     />
   );
 };
@@ -63,6 +66,7 @@ export const visSendMeldingSomIkkeValgbar = () => {
       valgbareTabs={[SupportTabs.HISTORIKK, SupportTabs.DOKUMENTER]}
       valgtIndex={valgtPanelIndex}
       onClick={setPanelIndex}
+      antallUlesteNotater={0}
     />
   );
 };
