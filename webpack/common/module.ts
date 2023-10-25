@@ -57,6 +57,7 @@ const lessExternalRules = {
       },
     },
     { loader: 'css-loader' },
+    'postcss-loader',
     {
       loader: 'less-loader',
       options: {

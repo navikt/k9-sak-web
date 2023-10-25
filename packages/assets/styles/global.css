@@ -1,4 +1,7 @@
+@import 'tailwindcss/base';
 @import '@navikt/ds-css';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
 @import 'dayPicker.css';
 
 /* TODO Mesteparten i denne fila bør ikkje ligga her */
