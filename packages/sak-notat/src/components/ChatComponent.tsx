@@ -3,6 +3,7 @@ import { EyeSlashIcon, EyeWithPupilIcon, PencilIcon } from '@navikt/aksel-icons'
 import { BodyLong, Button, Chat, Label, Tag } from '@navikt/ds-react';
 import { Form, TextAreaField } from '@navikt/ft-form-hooks';
 import { maxLength, minLength, required } from '@navikt/ft-form-validators';
+import { format } from 'date-fns';
 import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { FormattedMessage } from 'react-intl';
@@ -99,12 +100,13 @@ const ChatComponent: React.FunctionComponent<ChatComponentProps> = ({
   };
 
   const name = erSistEndretAvGjeldendeBruker ? 'Deg' : endretAv || opprettetAv;
+  const timestamp = format(new Date(endretTidspunkt || opprettetTidspunkt), 'dd.MM.yyyy H:mm');
 
   return (
     <Form<Inputs> formMethods={formMethods} onSubmit={submit}>
       <Chat
         name={name}
-        timestamp={endretTidspunkt || opprettetTidspunkt}
+        timestamp={timestamp}
         position={position}
         variant={position === ChatPosition.Right ? 'info' : 'neutral'}
       >

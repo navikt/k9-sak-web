@@ -24,7 +24,7 @@ const NotaterIndex: React.FC<NotaterIndexProps> = ({ fagsakId, navAnsatt }) => {
   const [lesteNotater, setLesteNotater] = useLocalStorage<number[]>('lesteNotater', []);
   const queryClient = useQueryClient();
 
-  const notaterQueryKey = 'notater';
+  const notaterQueryKey = ['notater', fagsakId];
 
   const formMethods = useForm<Inputs>({
     defaultValues: {
@@ -55,7 +55,7 @@ const NotaterIndex: React.FC<NotaterIndexProps> = ({ fagsakId, navAnsatt }) => {
     isLoading: getNotaterLoading,
     isError: hasGetNotaterError,
     data: notater,
-  } = useQuery(notaterQueryKey, ({ signal }) => getNotater(signal));
+  } = useQuery({ queryKey: notaterQueryKey, queryFn: ({ signal }) => getNotater(signal), enabled: !!fagsakId });
 
   const postNotat = (data: Inputs, id?: number, fagsakIdFraRedigertNotat?: string, versjon?: number) => {
     let notatGjelderType;
@@ -78,7 +78,7 @@ const NotaterIndex: React.FC<NotaterIndexProps> = ({ fagsakId, navAnsatt }) => {
     {
       onSuccess: () => {
         formMethods.reset();
-        queryClient.invalidateQueries(notaterQueryKey);
+        queryClient.invalidateQueries({ queryKey: notaterQueryKey });
       },
     },
   );
@@ -95,7 +95,7 @@ const NotaterIndex: React.FC<NotaterIndexProps> = ({ fagsakId, navAnsatt }) => {
     ({ skjul, id, saksnummer, versjon }: skjulNotatMutationVariables) => skjulNotat(skjul, id, saksnummer, versjon),
     {
       onSuccess: () => {
-        queryClient.invalidateQueries(notaterQueryKey);
+        queryClient.invalidateQueries({ queryKey: notaterQueryKey });
       },
     },
   );

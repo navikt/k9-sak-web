@@ -103,8 +103,13 @@ const BehandlingSupportIndex = ({
         httpErrorHandler(error?.response?.status, addErrorMessage, error?.response?.headers?.location);
       });
   };
-
-  useQuery('notater', ({ signal }) => getNotater(signal), { enabled: featureToggles?.NOTAT_I_SAK });
+  const notaterQueryKey = ['notater', fagsak?.saksnummer];
+  useQuery({
+    queryKey: notaterQueryKey,
+    queryFn: ({ signal }) => getNotater(signal),
+    enabled: featureToggles?.NOTAT_I_SAK && !!fagsak,
+    refetchOnWindowFocus: false,
+  });
 
   const { selected: valgtSupportPanel, location } = useTrackRouteParam<string>({
     paramName: 'stotte',
