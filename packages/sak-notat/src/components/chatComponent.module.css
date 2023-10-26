@@ -33,11 +33,13 @@
   margin-left: 0.5rem;
 }
 
-.chatLeft {
-  max-width: calc(100% - 40px);
-}
-
 .chatRight {
   margin-left: auto;
-  max-width: calc(100% - 40px);
+}
+
+@media (min-width: 1350px) and (max-width: 1440px) {
+  .chatLeft,
+  .chatRight {
+    max-width: calc(100% - 40px);
+  }
 }
