@@ -44,10 +44,10 @@ const notater = [
   {
     id: 1,
     notatTekst: 'Saken er tidligere rettet opp i punsj på grunn av manglende funksjonalitet.',
-    gjelderType: 'FAGSAK',
+    gjelderType: { navn: 'FAGSAK' },
     versjon: 1,
     opprettetAv: 'Saksbehandler Huldra',
-    opprettetTidspunkt: '01.01.22 14:00',
+    opprettetTidspunkt: new Date(),
     endretAv: undefined,
     endretTidspunkt: undefined,
     fagsakId: '1',
@@ -58,10 +58,10 @@ const notater = [
     notatTekst:
       // eslint-disable-next-line max-len
       'Bruker venter på legeerklæring fra sykehus, men har fått beskjed om at sykehuslege er på ferie og det kan derfor ta litt tid før den kommer inn. Setter derfor fristen lenger frem i tid enn normalt.',
-    gjelderType: 'PLEIETRENGENDE',
+    gjelderType: { navn: 'PLEIETRENGENDE' },
     versjon: 1,
-    opprettetAv: 'Saksbehandler Huldra',
-    opprettetTidspunkt: '01.01.22 14:00',
+    opprettetAv: 'saksbeh',
+    opprettetTidspunkt: new Date(),
     endretAv: undefined,
     endretTidspunkt: undefined,
     fagsakId: undefined,
@@ -83,7 +83,7 @@ VisNotatISakPanel.parameters = {
             ...notater[redigertNotatIndex],
             notatTekst: nyttNotat.notatTekst,
             versjon: notater[redigertNotatIndex].versjon + 1,
-            endretTidspunkt: dayjs().format('DD.MM.YYYY HH:mm'),
+            endretTidspunkt: new Date(),
             endretAv: nyttNotat.endretAv,
           };
         } else {
@@ -93,7 +93,7 @@ VisNotatISakPanel.parameters = {
             gjelderType: nyttNotat.notatGjelderType,
             fagsakId: nyttNotat.fagsakId,
             opprettetAv: nyttNotat.opprettetAv,
-            opprettetTidspunkt: dayjs().format('DD.MM.YYYY HH:mm'),
+            opprettetTidspunkt: new Date(),
             endretAv: '',
             endretTidspunkt: undefined,
             aktørId: '123',

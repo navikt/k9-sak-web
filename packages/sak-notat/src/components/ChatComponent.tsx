@@ -104,7 +104,11 @@ const ChatComponent: React.FunctionComponent<ChatComponentProps> = ({
   const timestamp = format(new Date(endretTidspunkt || opprettetTidspunkt), 'dd.MM.yyyy H:mm');
 
   return (
-    <Form<Inputs> formMethods={formMethods} onSubmit={submit}>
+    <Form<Inputs>
+      formMethods={formMethods}
+      onSubmit={submit}
+      className={position === ChatPosition.Right ? styles.chatRight : styles.chatLeft}
+    >
       <Chat
         name={name}
         timestamp={timestamp}
