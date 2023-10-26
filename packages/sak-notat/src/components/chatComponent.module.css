@@ -32,3 +32,14 @@
 :global(.navds-tag).navnTag {
   margin-left: 0.5rem;
 }
+
+.chatRight {
+  margin-left: auto;
+}
+
+@media (min-width: 1350px) and (max-width: 1440px) {
+  .chatLeft,
+  .chatRight {
+    max-width: calc(100% - 40px);
+  }
+}
