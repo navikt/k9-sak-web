@@ -1,0 +1,108 @@
+.lenkepanel {
+  background-color: #fff;
+  display: block;
+  padding: 1rem 1rem 1rem 1rem;
+  border-radius: 4px;
+  position: relative;
+  margin-bottom: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  text-decoration: none;
+  color: #262626;
+}
+.lenkepanel:hover,
+.lenkepanel--hover {
+  box-shadow: #a0a0a0 0 2px 1px 0;
+}
+.lenkepanel:focus,
+.lenkepanel--focus {
+  box-shadow: 0 0 0 3px #00347d;
+  outline: none;
+}
+.lenkepanel__indikator {
+  display: inline-block;
+  flex-shrink: 0;
+  height: 2px;
+  line-height: 2px;
+  width: 20px;
+  position: relative;
+  text-align: center;
+  transition: 200ms transform;
+  vertical-align: middle;
+  transform: rotate(-90deg);
+  left: 0;
+  transition: left 250ms;
+}
+.lenkepanel__indikator::before,
+.lenkepanel__indikator::after {
+  transition: 200ms transform;
+  border-radius: 10px;
+}
+.lenkepanel__indikator::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 50%;
+  background: currentColor;
+}
+.lenkepanel__indikator::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 100%;
+  width: 50%;
+  background: currentColor;
+}
+.lenkepanel__indikator::before {
+  transform: translateX(2px) rotate(45deg);
+}
+.lenkepanel__indikator::after {
+  transform: translateX(-2px) rotate(-45deg);
+}
+.lenkepanel:hover .lenkepanel__heading,
+.lenkepanel--hover .lenkepanel__heading {
+  text-decoration: underline;
+  color: #0067c5;
+}
+.lenkepanel:hover .lenkepanel__indikator,
+.lenkepanel--hover .lenkepanel__indikator {
+  left: 6px;
+}
+.lenkepanel--border {
+  border: 1px solid #c9c9c9;
+  border: 1px solid #6a6a6a;
+}
+.lenkepanel--border:hover,
+.lenkepanel--border.panel-interaktiv-mixin--hover {
+  border: 1px solid #0067c5;
+}
+
+.etikett {
+  display: inline-block;
+  padding: 4px 9px;
+  border-radius: 4px;
+}
+.etikett--advarsel {
+  background-color: #f9d2cc;
+  border: 1px solid #ba3a26;
+}
+.etikett--suksess {
+  background-color: #ccf1d6;
+  border: 1px solid #06893a;
+}
+.etikett--fokus {
+  background-color: #ffeccc;
+  border: 1px solid #d47b00;
+}
+.etikett--info {
+  background-color: #d8f9ff;
+  border: 1px solid #368da8;
+}
+.etikett--mini {
+  padding: 1px 8px;
+}
+

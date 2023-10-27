@@ -1,0 +1,67 @@
+/*!****************************************************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[1]!./packages/prosess-innsyn/src/components/documentListInnsyn.module.css ***!
+  \****************************************************************************************************************************************************/
+.documentListInnsyn-module_checkboxCol_NsR0q {
+  width: 30px;
+}
+
+.documentListInnsyn-module_linkCol_xjP4S {
+  width: 250px;
+}
+
+.documentListInnsyn-module_image_C4p1W {
+  height: 25px;
+  margin-left: 10px;
+  width: 25px;
+}
+
+.documentListInnsyn-module_noDocuments_hOcdU {
+  background-color: white;
+  margin-top: -15px;
+  padding: 12px;
+}
+
+.documentListInnsyn-module_hidden_o6Xo7 {
+  visibility: hidden;
+}
+
+.documentListInnsyn-module_table_kW7YQ {
+  width: 610px;
+}
+
+/*!*****************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[1]!./packages/prosess-vedtak-innsyn/src/components/documentListVedtakInnsyn.module.css ***!
+  \*****************************************************************************************************************************************************************/
+.documentListVedtakInnsyn-module_checkboxCol__xjx6 {
+  width: 30px;
+}
+
+.documentListVedtakInnsyn-module_linkCol_aRqhM {
+  width: 250px;
+}
+
+.documentListVedtakInnsyn-module_image_bLZkK {
+  height: 25px;
+  margin-left: 10px;
+  width: 25px;
+}
+
+.documentListVedtakInnsyn-module_noDocuments_EkLDu {
+  margin-top: 30px;
+}
+
+.documentListVedtakInnsyn-module_hidden_z9DTF {
+  visibility: hidden;
+}
+
+.documentListVedtakInnsyn-module_table_bJJDv {
+  width: 610px;
+}
+
+/*!*********************************************************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[1]!./packages/prosess-vedtak-innsyn/src/components/innsynVedtakForm.module.css ***!
+  \*********************************************************************************************************************************************************/
+.innsynVedtakForm-module_wordwrap_dZQZe {
+  word-wrap: break-word;
+}
+

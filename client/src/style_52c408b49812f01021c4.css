@@ -1,0 +1,183 @@
+/*!***************************************************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[1]!./packages/prosess-unntak/src/components/fritekstTextField.module.css ***!
+  \***************************************************************************************************************************************************/
+.fritekstTextField-module_fritekstTextArea_UdTzv {
+  width: 80%;
+}
+
+.fritekstTextField-module_explanationTextarea_DkN_O {
+  min-height: 300px;
+}
+
+/*!******************************************************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[1]!./packages/fakta-barn-og-overfoeringsdager/src/components/pil.module.css ***!
+  \******************************************************************************************************************************************************/
+.pil-module_pil_A1ywh {
+  height: 24px;
+  width: 24px;
+}
+
+.pil-module_pilVenstre_ZuY_9 {
+  transform: rotate(180deg);
+}
+
+/*!*******************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[1]!./packages/fakta-barn-og-overfoeringsdager/src/components/overføringsrader.module.css ***!
+  \*******************************************************************************************************************************************************************/
+.overføringsrader-module_headers_mCzwX {
+  border-bottom: 1px solid #6a6a6a;
+  margin-bottom: 0.5em;
+}
+
+.overføringsrader-module_relativePosition_thVSm {
+  position: relative;
+}
+
+.overføringsrader-module_alignCenterRight_zwcZ9 {
+  margin-top: -16px;
+  position: absolute;
+  right: 0;
+  top: 50%;
+}
+
+.overføringsrader-module_marginRight_KSn8S {
+  margin-right: 0.5em;
+}
+
+.overføringsrader-module_dagerInputContainer_TLewK {
+  align-items: baseline;
+  display: flex;
+}
+
+.overføringsrader-module_dagerInputContainer_TLewK > :not(:last-child) {
+  margin-right: 0.5em;
+}
+
+.overføringsrader-module_dagerInput_M_WpL {
+  width: 45px;
+}
+
+.overføringsrader-module_knappseksjon_o04fW {
+  border-top: 1px solid #6a6a6a;
+  margin-top: 0.5em;
+  padding-top: 1em;
+}
+
+.overføringsrader-module_bekreftKnapper_CWvQo {
+  display: flex;
+  flex-wrap: nowrap;
+}
+
+.overføringsrader-module_bekreftKnapper_CWvQo > :not(:last-child) {
+  margin-right: 0.5em;
+}
+
+/*!************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[1]!./packages/fakta-barn-og-overfoeringsdager/src/components/overføringsdagerPanel.module.css ***!
+  \************************************************************************************************************************************************************************/
+.overføringsdagerPanel-module_panelContainer_WzSeO {
+  align-items: flex-start;
+  display: flex;
+  flex-wrap: nowrap;
+}
+
+.overføringsdagerPanel-module_panel_lNip7 {
+  flex-grow: 1;
+  max-width: 1000px;
+  min-width: 500px;
+}
+
+/* stylelint-disable */
+.overføringsdagerPanel-module_koronapanel_PKAdk > * {
+  border: 1px solid #var(--a-orange-400) !important;
+  border-left: 8px solid #var(--a-orange-400) !important;
+}
+
+/* stylelint-enable */
+.overføringsdagerPanel-module_checkIcon_Sf5uE {
+  margin: 1em 0 0 1em;
+}
+
+.overføringsdagerPanel-module_checkIcon_Sf5uE.overføringsdagerPanel-module_hidden_rBAET {
+  visibility: hidden;
+}
+
+/*!******************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[1]!./packages/fakta-barn-og-overfoeringsdager/src/components/overføringsdagerPanelgruppe.module.css ***!
+  \******************************************************************************************************************************************************************************/
+.overføringsdagerPanelgruppe-module_panelgruppeContainer_FZ6Zz > * {
+  margin: 0.5em 0;
+}
+
+/*!**********************************************************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[1]!./packages/fakta-barn-og-overfoeringsdager/src/components/seksjon.module.css ***!
+  \**********************************************************************************************************************************************************/
+.seksjon-module_seksjon_T6DjC {
+  min-width: fit-content;
+}
+
+.seksjon-module_seksjon_T6DjC + .seksjon-module_seksjon_T6DjC {
+  margin: 1em 0;
+}
+
+.seksjon-module_seksjon_T6DjC.seksjon-module_grå_Zk75a {
+  background-color: #f3f4f4;
+}
+
+.seksjon-module_seksjon_T6DjC.seksjon-module_medMarg_PeQt0 {
+  padding: 1em;
+}
+
+.seksjon-module_tittel_LCH14 {
+  border-bottom: 1px solid #a0a0a0;
+  margin-bottom: 1em;
+  padding-bottom: 0.5em;
+}
+
+.seksjon-module_tittel_LCH14 > img {
+  margin-right: 0.5em;
+}
+
+/*!*********************************************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[1]!./packages/fakta-barn-oms/src/components/barnVisning.module.css ***!
+  \*********************************************************************************************************************************************/
+.barnVisning-module_barnInput_CzJO_ {
+  margin-top: 1em;
+  width: 550px;
+}
+
+.barnVisning-module_header_a0r5H {
+  display: flex;
+}
+
+.barnVisning-module_header_a0r5H h4 {
+  font-weight: 600;
+  margin: 0 1em 0 0;
+}
+
+.barnVisning-module_header_a0r5H .barnVisning-module_italic_WQapz {
+  font-style: italic;
+}
+
+.barnVisning-module_rammevedtak_hrsty {
+  display: flex;
+  margin-top: 1em;
+}
+
+.barnVisning-module_rammevedtak_hrsty > * {
+  display: flex;
+  flex-direction: column;
+  margin-right: 1em;
+}
+
+/*!**********************************************************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[1]!./packages/fakta-barn-oms/src/components/uidentifisertRammevedtak.module.css ***!
+  \**********************************************************************************************************************************************************/
+.uidentifisertRammevedtak-module_ol_JQaKE {
+  margin-bottom: 0;
+}
+
+.uidentifisertRammevedtak-module_advarsel_MAPdW > *:not(:first-child) {
+  max-width: 100%;
+}
+

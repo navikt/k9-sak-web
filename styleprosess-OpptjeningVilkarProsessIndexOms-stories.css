@@ -1,0 +1,182 @@
+.etikett {
+  display: inline-block;
+  padding: 4px 9px;
+  border-radius: 4px;
+}
+.etikett--advarsel {
+  background-color: #f9d2cc;
+  border: 1px solid #ba3a26;
+}
+.etikett--suksess {
+  background-color: #ccf1d6;
+  border: 1px solid #06893a;
+}
+.etikett--fokus {
+  background-color: #ffeccc;
+  border: 1px solid #d47b00;
+}
+.etikett--info {
+  background-color: #d8f9ff;
+  border: 1px solid #368da8;
+}
+.etikett--mini {
+  padding: 1px 8px;
+}
+
+.popover {
+  position: relative;
+  z-index: 100;
+  min-width: 1rem;
+  min-height: 1rem;
+  background: white;
+  box-shadow: 0 0.05rem 0.25rem 0.125rem rgba(0, 0, 0, 0.08);
+  border: 1px solid #c9c9c9;
+  border-radius: 2px;
+  display: block;
+  will-change: transform;
+}
+.popover:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px #00347d;
+}
+.popover--controlled {
+  position: fixed;
+  top: 0;
+  left: 0;
+}
+.popover__pil {
+  content: "";
+  display: block;
+  width: 0.8rem;
+  height: 0.8rem;
+  position: absolute;
+  background: white;
+  transform: rotate(45deg);
+  will-change: left, top;
+}
+.popover__content-inner {
+  position: relative;
+  z-index: 101;
+}
+.popover--hidden {
+  display: none;
+}
+.popover--over .popover__pil {
+  top: auto;
+  left: 50%;
+  bottom: -0.4rem;
+  margin-left: -0.4rem;
+  border: 0;
+  border-right: 1px solid #c9c9c9;
+  border-bottom: 1px solid #c9c9c9;
+}
+.popover--under .popover__pil {
+  top: -0.45rem;
+  left: 50%;
+  margin-left: -0.4rem;
+  border: 0;
+  border-top: 1px solid #c9c9c9;
+  border-left: 1px solid #c9c9c9;
+}
+.popover--hoyre .popover__pil {
+  top: 50%;
+  left: 0;
+  margin-top: -0.5rem;
+  margin-left: -0.45rem;
+  border: 0;
+  border-left: 1px solid #c9c9c9;
+  border-bottom: 1px solid #c9c9c9;
+}
+.popover--venstre .popover__pil {
+  top: 50%;
+  left: auto;
+  right: 0;
+  margin-top: -0.5rem;
+  margin-right: -0.4rem;
+  border: 0;
+  border-right: 1px solid #c9c9c9;
+  border-top: 1px solid #c9c9c9;
+}
+
+.hjelpetekst {
+  position: relative;
+  display: inline-block;
+  width: 1.5rem;
+  height: 1.5rem;
+}
+.hjelpetekst .popover {
+  border: 1px solid #66cbec;
+  background-color: #d8f9ff;
+}
+.hjelpetekst .popover--over .popover__pil {
+  border-right: 1px solid #66cbec;
+  border-bottom: 1px solid #66cbec;
+}
+.hjelpetekst .popover--under .popover__pil {
+  border-top: 1px solid #66cbec;
+  border-left: 1px solid #66cbec;
+}
+.hjelpetekst .popover--hoyre .popover__pil {
+  border-left: 1px solid #66cbec;
+  border-bottom: 1px solid #66cbec;
+}
+.hjelpetekst .popover--venstre .popover__pil {
+  border-right: 1px solid #66cbec;
+  border-top: 1px solid #66cbec;
+}
+.hjelpetekst .popover__pil {
+  background-color: #d8f9ff;
+}
+.hjelpetekst__innhold {
+  font-family: "Source Sans Pro", Arial, sans-serif;
+  font-size: 1rem;
+  line-height: 1.375rem;
+  font-weight: 400;
+  padding: 1rem;
+}
+.hjelpetekst__apneknapp {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  cursor: pointer;
+  background-color: transparent;
+  border-radius: 50%;
+  width: 100%;
+  height: 100%;
+}
+.hjelpetekst__apneknapp .hjelpetekst__ikon {
+  width: 100%;
+  height: 100%;
+  fill: #0067c5;
+}
+.hjelpetekst__apneknapp:focus,
+.hjelpetekst__apneknapp:active,
+.hjelpetekst__apneknapp:hover {
+  outline: 0;
+  color: #fff;
+  background: #0067c5;
+}
+.hjelpetekst__apneknapp:focus .hjelpetekst__ikon,
+.hjelpetekst__apneknapp:active .hjelpetekst__ikon,
+.hjelpetekst__apneknapp:hover .hjelpetekst__ikon {
+  fill: white;
+}
+.hjelpetekst__apneknapp:focus {
+  outline: 0;
+  box-shadow: 0 0 0 3px #00347d;
+}
+.hjelpetekst__apneknapp:hover {
+  box-shadow: 0 0 0 2px #0067c5;
+}
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
+  white-space: nowrap;
+}
+

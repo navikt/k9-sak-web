@@ -1,0 +1,59 @@
+/*!*******************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[1]!./packages/fakta-opplysninger-fra-soknaden/src/opplysningerFraSoknadenForm.module.css ***!
+  \*******************************************************************************************************************************************************************/
+.opplysningerFraSoknadenForm-module_fieldContainer_wfnU9 {
+  margin-top: 16px;
+}
+
+.opplysningerFraSoknadenForm-module_formContainer_UbExX {
+  margin-bottom: 32px;
+  padding: 0 1rem;
+}
+
+.opplysningerFraSoknadenForm-module_formContainer--showBorder_SO2hU {
+  border-bottom: 1px solid #c6c2bf;
+  padding: 0 1rem 2rem;
+}
+
+.opplysningerFraSoknadenForm-module_formContainer--hidden_CybTK {
+  display: none;
+}
+
+.opplysningerFraSoknadenForm-module_nyoppstartetContainer_J5hGv {
+  margin-left: 32px;
+  margin-top: 16px;
+}
+
+.opplysningerFraSoknadenForm-module_begrunnelseContainer_sSVPg {
+  margin: 16px 0 32px;
+  min-width: 500px;
+  width: 40%;
+}
+
+.opplysningerFraSoknadenForm-module_inntektContainer_aQmZL {
+  display: flex;
+}
+
+.opplysningerFraSoknadenForm-module_inntektContainer_aQmZL .opplysningerFraSoknadenForm-module_fieldContainer_wfnU9 {
+  margin-right: 16px;
+}
+
+.opplysningerFraSoknadenForm-module_inntektContainer_aQmZL .opplysningerFraSoknadenForm-module_fieldContainer_wfnU9:empty {
+  margin: 0;
+}
+
+.opplysningerFraSoknadenForm-module_formUnlockButton_Ipqcg {
+  margin-bottom: 16px;
+}
+
+.opplysningerFraSoknadenForm-module_tabContent_LICWp {
+  border: 1px solid #c6c2bf;
+  border-top: none;
+  padding-top: 32px;
+}
+
+.opplysningerFraSoknadenForm-module_tabsContainer_Uqvjm {
+  overflow-x: auto;
+  width: 50vw;
+}
+

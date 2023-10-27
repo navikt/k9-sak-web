@@ -1,0 +1,252 @@
+/*!********************************************************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[1]!./packages/prosess-vilkar-alder/src/components/AldersvilkarForm.module.css ***!
+  \********************************************************************************************************************************************************/
+.AldersvilkarForm-module_opplysninger_lawaC {
+  font-size: 18px;
+  border-bottom: 1px solid #b7b1a9;
+  margin-bottom: 1rem;
+}
+
+.AldersvilkarForm-module_opplysninger_lawaC .AldersvilkarForm-module_label_pqxL9 {
+  font-weight: bold;
+}
+
+.AldersvilkarForm-module_barn_wjJp4 {
+  margin-top: 0.5rem;
+}
+
+.AldersvilkarForm-module_vurdering_C4rvM label span {
+  font-size: 1rem;
+  font-weight: bold;
+}
+
+/*!********************************************************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[1]!./packages/prosess-vilkar-alder/src/components/AldersvilkarLese.module.css ***!
+  \********************************************************************************************************************************************************/
+.AldersvilkarLese-module_lesemodusboks_mN2CJ {
+  background-color: #f1f1f1;
+  border-radius: 4px;
+  margin-bottom: 1rem;
+  padding: 1rem;
+  width: 100% !important;
+}
+
+.AldersvilkarLese-module_text_e75Zi {
+  margin-top: 0.5rem;
+}
+
+.AldersvilkarLese-module_label_Uh_eb {
+  font-weight: bold;
+  margin-bottom: 0.5rem !important;
+}
+
+.AldersvilkarLese-module_fritekst_xMuPj {
+  border-left: 5px solid #c9c9c9;
+  margin-top: 0.5rem;
+  max-width: 40rem;
+  padding: 5px;
+  word-wrap: break-word;
+}
+
+.AldersvilkarLese-module_aksjonspunktOgRedigerVurderingContainer_VUTew {
+  align-items: flex-start;
+  display: flex;
+  margin-top: 1rem;
+}
+
+.AldersvilkarLese-module_aksjonspunktOgRedigerVurderingContainer_VUTew p {
+  margin-bottom: 0 !important;
+  margin-top: 0 !important;
+}
+
+.AldersvilkarLese-module_redigerVurderingTekst_t295W {
+  margin-left: auto;
+  padding-left: 2rem;
+  text-align: center;
+  width: 13rem;
+}
+
+.AldersvilkarLese-module_redigerVurderingTekst_t295W button {
+  border: none;
+  color: var(--a-blue-500);
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.AldersvilkarLese-module_redigerVurderingTekst_t295W button:hover {
+  text-decoration: none;
+}
+
+.AldersvilkarLese-module_opplysningerFraSoknad_mypNN {
+  border-bottom: 1px solid #b7b1a9;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  margin: 1rem 0 1rem 0;
+  padding-bottom: 1rem;
+}
+
+.AldersvilkarLese-module_opplysningerFraSoknad_mypNN h4 {
+  margin: 1rem 0 0.5rem 0;
+}
+
+.AldersvilkarLese-module_opplysningerFraSoknad_mypNN p {
+  margin: 0;
+}
+
+.AldersvilkarLese-module_begrunnelseContainer_EVMNw {
+  max-width: 40rem;
+}
+
+.AldersvilkarLese-module_alder_yqMdU {
+  width: max-content;
+}
+
+.AldersvilkarLese-module_alder_yqMdU hr {
+  border-color: #c9c9c9;
+  border-style: solid;
+  border-width: 1px 0 0 0;
+  margin-top: 1rem;
+}
+
+.AldersvilkarLese-module_alder_yqMdU .AldersvilkarLese-module_barnTekst_nFYlB {
+  margin-bottom: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+.AldersvilkarLese-module_alder_yqMdU legend {
+  margin-bottom: 0.5rem !important;
+}
+
+/*!**********************************************************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[1]!./packages/prosess-vilkar-alder/src/components/AldersvilkarStatus.module.css ***!
+  \**********************************************************************************************************************************************************/
+.AldersvilkarStatus-module_vilkarStatusOverskrift_wzxA8 {
+  align-items: center;
+  display: flex;
+  flex-direction: row nowrap;
+  justify-content: flex-start;
+}
+
+.AldersvilkarStatus-module_vilkarStatusOverskrift_wzxA8 :first-child {
+  height: 1.2rem;
+  margin-left: 0;
+  width: 1.25rem;
+}
+
+.AldersvilkarStatus-module_vilkarStatusOverskrift_wzxA8 * {
+  margin: 0 0.5rem;
+}
+
+.AldersvilkarStatus-module_aksjonspunktNavn_YDfn3 {
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+.AldersvilkarStatus-module_vilkar_Z1v3X {
+  font-size: 0.875rem;
+  font-weight: 400;
+  padding-top: 0.188rem;
+  text-transform: uppercase;
+  margin-left: 1.25rem;
+}
+
+.AldersvilkarStatus-module_vilkarStatus_UwCAc {
+  font-size: 1rem;
+  font-weight: bold;
+  margin: 0.75rem 0 1rem 0;
+}
+
+.AldersvilkarStatus-module_begrunnelseOverskrift_u5F6K {
+  font-size: 1rem;
+  font-weight: bold;
+  margin-bottom: 0.5rem !important;
+  margin-top: 1rem;
+}
+
+.AldersvilkarStatus-module_fritekst_LYzPQ {
+  border-left: 5px solid #c9c9c9;
+  margin-top: 0.5rem;
+  max-width: 40rem;
+  padding: 5px;
+  word-wrap: break-word;
+}
+
+.AldersvilkarStatus-module_begrunnelse_QFWH2 {
+  margin-top: 0.5rem;
+  max-width: 40rem !important;
+  word-wrap: break-word;
+}
+
+/*!**********************************************************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[1]!./packages/fakta-barn-og-overfoeringsdager/src/components/seksjon.module.css ***!
+  \**********************************************************************************************************************************************************/
+.seksjon-module_seksjon_T6DjC {
+  min-width: fit-content;
+}
+
+.seksjon-module_seksjon_T6DjC + .seksjon-module_seksjon_T6DjC {
+  margin: 1em 0;
+}
+
+.seksjon-module_seksjon_T6DjC.seksjon-module_grå_Zk75a {
+  background-color: #f3f4f4;
+}
+
+.seksjon-module_seksjon_T6DjC.seksjon-module_medMarg_PeQt0 {
+  padding: 1em;
+}
+
+.seksjon-module_tittel_LCH14 {
+  border-bottom: 1px solid #a0a0a0;
+  margin-bottom: 1em;
+  padding-bottom: 0.5em;
+}
+
+.seksjon-module_tittel_LCH14 > img {
+  margin-right: 0.5em;
+}
+
+/*!*********************************************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[1]!./packages/fakta-barn-oms/src/components/barnVisning.module.css ***!
+  \*********************************************************************************************************************************************/
+.barnVisning-module_barnInput_CzJO_ {
+  margin-top: 1em;
+  width: 550px;
+}
+
+.barnVisning-module_header_a0r5H {
+  display: flex;
+}
+
+.barnVisning-module_header_a0r5H h4 {
+  font-weight: 600;
+  margin: 0 1em 0 0;
+}
+
+.barnVisning-module_header_a0r5H .barnVisning-module_italic_WQapz {
+  font-style: italic;
+}
+
+.barnVisning-module_rammevedtak_hrsty {
+  display: flex;
+  margin-top: 1em;
+}
+
+.barnVisning-module_rammevedtak_hrsty > * {
+  display: flex;
+  flex-direction: column;
+  margin-right: 1em;
+}
+
+/*!**********************************************************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[1]!./packages/fakta-barn-oms/src/components/uidentifisertRammevedtak.module.css ***!
+  \**********************************************************************************************************************************************************/
+.uidentifisertRammevedtak-module_ol_JQaKE {
+  margin-bottom: 0;
+}
+
+.uidentifisertRammevedtak-module_advarsel_MAPdW > *:not(:first-child) {
+  max-width: 100%;
+}
+

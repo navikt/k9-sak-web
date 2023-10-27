@@ -1,0 +1,25 @@
+.etikett {
+  display: inline-block;
+  padding: 4px 9px;
+  border-radius: 4px;
+}
+.etikett--advarsel {
+  background-color: #f9d2cc;
+  border: 1px solid #ba3a26;
+}
+.etikett--suksess {
+  background-color: #ccf1d6;
+  border: 1px solid #06893a;
+}
+.etikett--fokus {
+  background-color: #ffeccc;
+  border: 1px solid #d47b00;
+}
+.etikett--info {
+  background-color: #d8f9ff;
+  border: 1px solid #368da8;
+}
+.etikett--mini {
+  padding: 1px 8px;
+}
+

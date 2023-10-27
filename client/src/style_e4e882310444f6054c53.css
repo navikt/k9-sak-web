@@ -1,0 +1,86 @@
+/*!*********************************************************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[1]!./packages/prosess-anke/src/components/fritekstAnkeBrevTextField.module.css ***!
+  \*********************************************************************************************************************************************************/
+.fritekstAnkeBrevTextField-module_fritekstTilBrevTextArea_AuLgj {
+  width: 80%;
+}
+
+.fritekstAnkeBrevTextField-module_explanationTextarea_XcA2o {
+  min-height: 300px;
+}
+
+/*!***********************************************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[1]!./packages/prosess-anke/src/components/previewAnkeLink.module.css ***!
+  \***********************************************************************************************************************************************/
+.previewAnkeLink-module_previewLink_QIPUJ {
+  margin-left: 16px;
+}
+
+.previewAnkeLink-module_previewLinkDisabled_Nzmum {
+  color: grey;
+  margin-left: 16px;
+}
+
+/*!************************************************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[1]!./packages/prosess-anke/src/components/behandleAnkeForm.module.css ***!
+  \************************************************************************************************************************************************/
+.behandleAnkeForm-module_selectReadOnly_E3NNV {
+  color: #f00;
+}
+
+.behandleAnkeForm-module_confirmVilkarForm_cfF7M textarea {
+  min-width: 380px;
+}
+
+/*!********************************************************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[1]!./packages/prosess-anke-resultat/src/components/previewAnkeLink.module.css ***!
+  \********************************************************************************************************************************************************/
+.previewAnkeLink-module_previewLink_IrWfQ {
+  margin-left: 16px;
+}
+
+.previewAnkeLink-module_previewLinkDisabled_EFMUQ {
+  color: grey;
+  margin-left: 16px;
+}
+
+/*!*********************************************************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[1]!./packages/prosess-anke-merknader/src/components/previewAnkeLink.module.css ***!
+  \*********************************************************************************************************************************************************/
+.previewAnkeLink-module_previewLink_QnGek {
+  margin-left: 16px;
+}
+
+.previewAnkeLink-module_previewLinkDisabled_Q1kiR {
+  color: grey;
+  margin-left: 16px;
+}
+
+/*!******************************************************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[1]!./packages/behandling-anke/src/components/ankeBehandlingModal.module.css ***!
+  \******************************************************************************************************************************************************/
+.ankeBehandlingModal-module_button_pehkG {
+  margin-top: 10px;
+}
+
+.ankeBehandlingModal-module_divider_u1sUd {
+  border-left: 1px solid #a0a0a0;
+  border-right: 0 solid #a0a0a0;
+  display: inline;
+  float: right;
+  height: 37px;
+  margin-left: 15px;
+  position: absolute;
+  top: 5px;
+}
+
+.ankeBehandlingModal-module_image_xOUNZ {
+  height: 25px;
+  margin-top: 10px;
+  width: 25px;
+}
+
+.ankeBehandlingModal-module_modal_Z__Ok {
+  width: 750px;
+}
+

@@ -1,0 +1,119 @@
+.etikett {
+  display: inline-block;
+  padding: 4px 9px;
+  border-radius: 4px;
+}
+.etikett--advarsel {
+  background-color: #f9d2cc;
+  border: 1px solid #ba3a26;
+}
+.etikett--suksess {
+  background-color: #ccf1d6;
+  border: 1px solid #06893a;
+}
+.etikett--fokus {
+  background-color: #ffeccc;
+  border: 1px solid #d47b00;
+}
+.etikett--info {
+  background-color: #d8f9ff;
+  border: 1px solid #368da8;
+}
+.etikett--mini {
+  padding: 1px 8px;
+}
+
+.nav-frontend-tabs {
+  border-bottom: 1px solid #c9c9c9;
+}
+.nav-frontend-tabs__tab-list {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  align-items: flex-end;
+}
+.nav-frontend-tabs__tab-outer {
+  margin-right: 0.5rem;
+  display: flex;
+}
+.nav-frontend-tabs__tab-outer:last-child {
+  margin-right: 0;
+}
+.nav-frontend-tabs__tab-label {
+  font-family: "Source Sans Pro", Arial, sans-serif;
+  font-size: 1rem;
+  line-height: 1.375rem;
+  font-weight: 400;
+  padding-bottom: 0.2rem;
+  border: 1px solid transparent;
+  text-align: center;
+  text-decoration: underline;
+}
+.nav-frontend-tabs__tab-inner {
+  padding: 0.75rem 1rem 0.3rem 1rem;
+  color: #0067c5;
+  -webkit-appearance: none;
+  border: 1px solid transparent;
+  border-top-left-radius: 0.25rem;
+  border-top-right-radius: 0.25rem;
+  background: none;
+  display: flex;
+  align-items: flex-end;
+  text-decoration: none;
+}
+.nav-frontend-tabs__tab-inner--aktiv {
+  color: #262626;
+  background: white;
+  border: 1px solid #c9c9c9;
+  border-bottom: 1px solid white;
+  position: relative;
+  top: 1px;
+}
+.nav-frontend-tabs__tab-inner--aktiv .nav-frontend-tabs__tab-label {
+  font-family: "Source Sans Pro", Arial, sans-serif;
+  font-size: 1rem;
+  line-height: 1.375rem;
+  font-weight: 600;
+  position: relative;
+  top: -1px;
+  text-decoration: none;
+}
+.nav-frontend-tabs__tab-inner--interaktiv {
+  text-align: left;
+}
+.nav-frontend-tabs__tab-inner--interaktiv:hover:not(.nav-frontend-tabs__tab-inner--disabled) {
+  cursor: pointer;
+}
+.nav-frontend-tabs__tab-inner--interaktiv:hover:not(.nav-frontend-tabs__tab-inner--disabled) .nav-frontend-tabs__tab-label {
+  text-decoration: none;
+}
+.nav-frontend-tabs__tab-inner--disabled {
+  color: #6a6a6a;
+  cursor: not-allowed;
+}
+.nav-frontend-tabs__tab-inner--disabled .nav-frontend-tabs__tab-label {
+  text-decoration: none;
+}
+.nav-frontend-tabs__tab-inner:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px #00347d;
+}
+.nav-frontend-tabs--kompakt {
+  border: 0;
+}
+.nav-frontend-tabs--kompakt .nav-frontend-tabs__tab-outer {
+  margin-right: 1rem;
+}
+.nav-frontend-tabs--kompakt .nav-frontend-tabs__tab-label {
+  padding-bottom: 0.3rem;
+}
+.nav-frontend-tabs--kompakt .nav-frontend-tabs__tab-inner {
+  padding: 0;
+  background: none;
+}
+.nav-frontend-tabs--kompakt .nav-frontend-tabs__tab-inner--aktiv {
+  border: 0;
+  top: 0;
+}
+

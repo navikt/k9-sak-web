@@ -1,0 +1,682 @@
+/*!***********************************************************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[1]!./packages/prosess-aarskvantum-oms/src/components/aksjonspunktForm.module.css ***!
+  \***********************************************************************************************************************************************************/
+.aksjonspunktForm-module_spaceBetween_xidLt {
+  align-items: flex-start;
+  display: flex;
+  justify-content: space-between;
+  margin-top: 1em;
+}
+
+.aksjonspunktForm-module_graBoks_HLOV6 {
+  background-color: #f1f1f1;
+  margin-bottom: 1em;
+  padding: 1em;
+}
+
+.aksjonspunktForm-module_sentrert_ehKdZ {
+  text-align: center;
+}
+
+.aksjonspunktForm-module_vertikaltSentrert_AEWeH {
+  vertical-align: middle;
+}
+
+.aksjonspunktForm-module_vertikaltSentrert_AEWeH p {
+  padding-bottom: 0 !important;
+}
+
+.aksjonspunktForm-module_modalInnhold_PE3OY {
+  padding: 32px;
+}
+
+/*!**********************************************************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[1]!./packages/prosess-aarskvantum-oms/src/components/aktivitetTabell.module.css ***!
+  \**********************************************************************************************************************************************************/
+.aktivitetTabell-module_nokkeltall_WI4Gt article {
+  background-color: var(--a-white);
+  box-shadow: 2px 2px 2px -1px #c9c9c9;
+  margin-bottom: 0.5em;
+  outline: 1px solid #f1f1f1;
+}
+
+.aktivitetTabell-module_nokkeltall_WI4Gt article.aktivitetTabell-module_viserDetaljer_E8gTZ {
+  padding-bottom: 0.5rem;
+}
+
+.aktivitetTabell-module_overskrift_YEblN {
+  align-items: stretch;
+  background-color: inherit;
+  border-bottom: none;
+  border-left: 5px solid;
+  border-right: none;
+  border-top: none;
+  display: flex;
+  flex-wrap: nowrap;
+  padding: 0;
+  width: 100%;
+}
+
+.aktivitetTabell-module_overskrift_YEblN:hover {
+  cursor: pointer;
+}
+
+.aktivitetTabell-module_overskrift_YEblN:focus {
+  outline: none;
+}
+
+.aktivitetTabell-module_overskrift_YEblN:focus .aktivitetTabell-module_knapp_OiRyA {
+  border-radius: 5px;
+  outline: 2px solid var(--a-blue-500);
+}
+
+.aktivitetTabell-module_overskrift_YEblN:focus .aktivitetTabell-module_knapp_OiRyA:hover {
+  cursor: pointer;
+}
+
+.aktivitetTabell-module_overskrift_YEblN > * {
+  padding: 0.1em 0;
+}
+
+.aktivitetTabell-module_knapp_OiRyA {
+  background-color: inherit;
+  border: none;
+  color: var(--a-blue-500);
+  font-size: 0.9em;
+  padding: 0.2em;
+  text-decoration: underline;
+}
+
+.aktivitetTabell-module_knapp_OiRyA:hover {
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.aktivitetTabell-module_dagerNavKanUtbetale_GC97C .aktivitetTabell-module_overskrift_YEblN {
+  border-color: var(--a-purple-500);
+}
+
+.aktivitetTabell-module_dagerSokerHarRettPa_eO9oa .aktivitetTabell-module_overskrift_YEblN {
+  border-color: #var(--a-lightblue-500);
+}
+
+.aktivitetTabell-module_dagerNavHarUtbetalt_Bzx9a .aktivitetTabell-module_overskrift_YEblN {
+  border-color: #ba3a26;
+}
+
+.aktivitetTabell-module_restdager_hH38V .aktivitetTabell-module_overskrift_YEblN {
+  border-color: var(--a-green-500);
+}
+
+.aktivitetTabell-module_overskrifttekst_c62Vd {
+  font-size: 0.8em;
+  font-weight: bold;
+}
+
+.aktivitetTabell-module_banner_bqhyp {
+  align-items: center;
+  display: flex;
+  flex-grow: 1;
+  justify-content: space-between;
+}
+
+.aktivitetTabell-module_banner_bqhyp > * {
+  margin: 0 0.5em;
+}
+
+.aktivitetTabell-module_banner_bqhyp .aktivitetTabell-module_overskrifttekst_c62Vd {
+  font-size: 1em;
+}
+
+tbody:nth-child(odd) .aktivitetTabell-module_banner_bqhyp {
+  background-color: #f7f7f7;
+}
+
+.aktivitetTabell-module_dagerOgTimer_BGHfT {
+  align-items: baseline;
+  display: flex;
+  flex: 0 0 80px;
+  font-size: 1.3em;
+}
+
+.aktivitetTabell-module_dagerOgTimer_BGHfT > * {
+  display: inline;
+}
+
+.aktivitetTabell-module_dager_EVDfP {
+  font-weight: bold;
+  margin-left: 0.5em;
+}
+
+.aktivitetTabell-module_timer_UwCIa {
+  font-size: 0.7em;
+  margin: 0 0.5em;
+}
+
+.aktivitetTabell-module_detaljer_k88qm {
+  align-items: baseline;
+  border-left: 5px solid var(--a-white);
+  display: flex;
+  flex-wrap: nowrap;
+}
+
+.aktivitetTabell-module_detaljer_k88qm .aktivitetTabell-module_dager_EVDfP {
+  font-weight: normal;
+}
+
+.aktivitetTabell-module_detaljoverskrift_DB3G_ {
+  flex: 0 0 160px;
+  font-size: 0.9em;
+  font-weight: bold;
+  margin: 0 0.5em;
+}
+
+.aktivitetTabell-module_detaljinfotekst_HOvLk {
+  font-size: 0.9em;
+  margin-right: 1em;
+}
+
+.aktivitetTabell-module_varselOmMigrertData_UIi4C {
+  margin-bottom: 1rem;
+}
+
+.aktivitetTabell-module_aktivitetTabell_U4lYT {
+  margin-top: 1em;
+}
+
+.aktivitetTabell-module_aktivitetTabell_U4lYT td,
+.aktivitetTabell-module_aktivitetTabell_U4lYT th {
+  padding: 0.5rem;
+  position: relative;
+  text-align: left;
+}
+
+.aktivitetTabell-module_aktivitetTabell_U4lYT th:first-child {
+  width: 25%;
+}
+
+.aktivitetTabell-module_aktivitetTabell_U4lYT th:nth-child(2) {
+  width: 20%;
+}
+
+.aktivitetTabell-module_aktivitetTabell_U4lYT th:nth-child(3) {
+  width: 20%;
+}
+
+.aktivitetTabell-module_aktivitetTabell_U4lYT th:nth-child(4) {
+  width: 20%;
+}
+
+.aktivitetTabell-module_aktivitetTabell_U4lYT th:nth-child(5) {
+  width: 10%;
+}
+
+.aktivitetTabell-module_aktivitetTabell_U4lYT th:nth-last-child(1) {
+  width: 5%;
+}
+
+.aktivitetTabell-module_aktivitetTabell_U4lYT tbody tr:first-child td {
+  border-top-width: 0;
+}
+
+.aktivitetTabell-module_aktivitetTabell_U4lYT tr {
+  cursor: default;
+}
+
+.aktivitetTabell-module_aktivitetTabell_U4lYT tbody,
+.aktivitetTabell-module_aktivitetTabell_U4lYT thead {
+  border-bottom: 1px solid;
+  border-bottom-color: #a0a0a0;
+}
+
+.aktivitetTabell-module_aktivitetTabell_U4lYT tbody:nth-child(even),
+.aktivitetTabell-module_aktivitetTabell_U4lYT thead:nth-child(even) {
+  background-color: #f7f7f7;
+}
+
+.aktivitetTabell-module_fanerad_s6dJh td {
+  padding: 0;
+}
+
+.aktivitetTabell-module_fanewrapper_WUVvf {
+  border-top: 1px solid #a0a0a0;
+  display: flex;
+  margin: 0 0.5rem;
+  padding: 1rem 0.5rem 0.5rem 0.5rem;
+}
+
+.aktivitetTabell-module_innholdsrad_xhTgP td {
+  padding-bottom: 1rem;
+  padding-top: 0;
+}
+
+.aktivitetTabell-module_innholdsrad_xhTgP td:first-child {
+  padding-left: 1rem;
+}
+
+.aktivitetTabell-module_innholdsrad_xhTgP td:last-child {
+  padding-right: 1rem;
+}
+
+.aktivitetTabell-module_utvidelsesknapp_lR3Ua {
+  background: inherit;
+  border: none;
+  cursor: pointer;
+  line-height: 17px;
+}
+
+.aktivitetTabell-module_deaktivertFane_EOU9g {
+  color: #6a6a6a;
+  margin: 2px 0.5rem 2px 2px;
+  text-decoration: underline;
+  text-decoration-color: #c9c9c9;
+}
+
+.aktivitetTabell-module_knappForAlleUtregninger_ByY7Z {
+  background-color: inherit;
+  border: none;
+  color: var(--a-blue-500);
+  font-size: 0.9em;
+  margin-left: auto;
+  padding: 0.2em;
+  text-decoration: underline;
+}
+
+.aktivitetTabell-module_knappForAlleUtregninger_ByY7Z:hover {
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.aktivitetTabell-module_knappForAlleUtregninger_ByY7Z:focus {
+  outline: 2px solid var(--a-blue-500);
+}
+
+.aktivitetTabell-module_knappForAlleUtregninger_ByY7Z img {
+  height: 24px;
+  margin-left: 0.5em;
+  pointer-events: none;
+  width: 24px;
+}
+
+.aktivitetTabell-module_vilkar_DxUCK {
+  white-space: nowrap;
+}
+
+.aktivitetTabell-module_utfallsikon_jj8KA img {
+  height: 20px;
+  margin-right: 0.5em;
+  width: 20px;
+}
+
+.aktivitetTabell-module_header_DDXb7 {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+}
+
+.aktivitetTabell-module_starImage_UNior {
+  height: 1.25rem;
+  margin-right: 0.25rem;
+  margin-top: -0.25rem;
+  width: 1.5rem;
+}
+
+.aktivitetTabell-module_starImage_UNior.aktivitetTabell-module_hidden_yyQ9X {
+  opacity: 0;
+}
+
+.aktivitetTabell-module_ikkeGjeldendeBehandling_zJgh5 {
+  padding-left: 1.75rem;
+}
+
+/*!****************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[1]!./packages/prosess-aarskvantum-oms/src/components/nokkeltall/nokkeltall.module.css ***!
+  \****************************************************************************************************************************************************************/
+.nokkeltall-module_nokkeltall_N72sd article {
+  background-color: var(--a-white);
+  box-shadow: 2px 2px 2px -1px #c9c9c9;
+  margin-bottom: 0.5em;
+  outline: 1px solid #f1f1f1;
+}
+
+.nokkeltall-module_nokkeltall_N72sd article.nokkeltall-module_viserDetaljer_OTh00 {
+  padding-bottom: 0.5rem;
+}
+
+.nokkeltall-module_overskrift_PISvr {
+  align-items: stretch;
+  background-color: inherit;
+  border-bottom: none;
+  border-left: 5px solid;
+  border-right: none;
+  border-top: none;
+  display: flex;
+  flex-wrap: nowrap;
+  padding: 0;
+  width: 100%;
+}
+
+.nokkeltall-module_overskrift_PISvr:hover {
+  cursor: pointer;
+}
+
+.nokkeltall-module_overskrift_PISvr:focus {
+  outline: none;
+}
+
+.nokkeltall-module_overskrift_PISvr:focus .nokkeltall-module_knapp_BtNDy {
+  border-radius: 5px;
+  outline: 2px solid var(--a-blue-500);
+}
+
+.nokkeltall-module_overskrift_PISvr:focus .nokkeltall-module_knapp_BtNDy:hover {
+  cursor: pointer;
+}
+
+.nokkeltall-module_overskrift_PISvr > * {
+  padding: 0.1em 0;
+}
+
+.nokkeltall-module_knapp_BtNDy {
+  background-color: inherit;
+  border: none;
+  color: var(--a-blue-500);
+  font-size: 0.9em;
+  padding: 0.2em;
+  text-decoration: underline;
+}
+
+.nokkeltall-module_knapp_BtNDy:hover {
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.nokkeltall-module_dagerNavKanUtbetale_QyeOy .nokkeltall-module_overskrift_PISvr {
+  border-color: var(--a-purple-500);
+}
+
+.nokkeltall-module_dagerSokerHarRettPa_ivToc .nokkeltall-module_overskrift_PISvr {
+  border-color: #var(--a-lightblue-500);
+}
+
+.nokkeltall-module_dagerNavHarUtbetalt_uRvhY .nokkeltall-module_overskrift_PISvr {
+  border-color: #ba3a26;
+}
+
+.nokkeltall-module_restdager_JtPD8 .nokkeltall-module_overskrift_PISvr {
+  border-color: var(--a-green-500);
+}
+
+.nokkeltall-module_overskrifttekst_ZzTcO {
+  font-size: 0.8em;
+  font-weight: bold;
+}
+
+.nokkeltall-module_banner_OR55C {
+  align-items: center;
+  display: flex;
+  flex-grow: 1;
+  justify-content: space-between;
+}
+
+.nokkeltall-module_banner_OR55C > * {
+  margin: 0 0.5em;
+}
+
+.nokkeltall-module_banner_OR55C .nokkeltall-module_overskrifttekst_ZzTcO {
+  font-size: 1em;
+}
+
+tbody:nth-child(odd) .nokkeltall-module_banner_OR55C {
+  background-color: #f7f7f7;
+}
+
+.nokkeltall-module_dagerOgTimer_wW8g3 {
+  align-items: baseline;
+  display: flex;
+  flex: 0 0 80px;
+  font-size: 1.3em;
+}
+
+.nokkeltall-module_dagerOgTimer_wW8g3 > * {
+  display: inline;
+}
+
+.nokkeltall-module_dager_VuxK2 {
+  font-weight: bold;
+  margin-left: 0.5em;
+}
+
+.nokkeltall-module_timer_A4vND {
+  font-size: 0.7em;
+  margin: 0 0.5em;
+}
+
+.nokkeltall-module_detaljer_DOuFq {
+  align-items: baseline;
+  border-left: 5px solid var(--a-white);
+  display: flex;
+  flex-wrap: nowrap;
+}
+
+.nokkeltall-module_detaljer_DOuFq .nokkeltall-module_dager_VuxK2 {
+  font-weight: normal;
+}
+
+.nokkeltall-module_detaljoverskrift_lQMFq {
+  flex: 0 0 160px;
+  font-size: 0.9em;
+  font-weight: bold;
+  margin: 0 0.5em;
+}
+
+.nokkeltall-module_detaljinfotekst_SsCTy {
+  font-size: 0.9em;
+  margin-right: 1em;
+}
+
+.nokkeltall-module_varselOmMigrertData_qNIAs {
+  margin-bottom: 1rem;
+}
+
+/*!*****************************************************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[1]!./packages/prosess-aarskvantum-oms/src/components/uttaksplan.module.css ***!
+  \*****************************************************************************************************************************************************/
+.uttaksplan-module_alertstripe_A0DbS {
+  margin-bottom: 1em;
+  padding-bottom: 0.5em;
+  padding-top: 0.5em;
+}
+
+.uttaksplan-module_alertstripe_A0DbS > *:not(:first-child) {
+  max-width: 100%;
+}
+
+.uttaksplan-module_uttaksboks_pcvBX {
+  border: 1px solid #6a6a6a;
+  min-width: 700px;
+  padding: 1em;
+}
+
+.uttaksplan-module_overskrift_b5zwD {
+  margin-bottom: 1em;
+}
+
+.uttaksplan-module_overskrift_b5zwD img {
+  height: 28px;
+  margin-right: 0.5em;
+  width: 28px;
+}
+
+/*!******************************************************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[1]!./packages/fakta-barn-og-overfoeringsdager/src/components/pil.module.css ***!
+  \******************************************************************************************************************************************************/
+.pil-module_pil_A1ywh {
+  height: 24px;
+  width: 24px;
+}
+
+.pil-module_pilVenstre_ZuY_9 {
+  transform: rotate(180deg);
+}
+
+/*!*******************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[1]!./packages/fakta-barn-og-overfoeringsdager/src/components/overføringsrader.module.css ***!
+  \*******************************************************************************************************************************************************************/
+.overføringsrader-module_headers_mCzwX {
+  border-bottom: 1px solid #6a6a6a;
+  margin-bottom: 0.5em;
+}
+
+.overføringsrader-module_relativePosition_thVSm {
+  position: relative;
+}
+
+.overføringsrader-module_alignCenterRight_zwcZ9 {
+  margin-top: -16px;
+  position: absolute;
+  right: 0;
+  top: 50%;
+}
+
+.overføringsrader-module_marginRight_KSn8S {
+  margin-right: 0.5em;
+}
+
+.overføringsrader-module_dagerInputContainer_TLewK {
+  align-items: baseline;
+  display: flex;
+}
+
+.overføringsrader-module_dagerInputContainer_TLewK > :not(:last-child) {
+  margin-right: 0.5em;
+}
+
+.overføringsrader-module_dagerInput_M_WpL {
+  width: 45px;
+}
+
+.overføringsrader-module_knappseksjon_o04fW {
+  border-top: 1px solid #6a6a6a;
+  margin-top: 0.5em;
+  padding-top: 1em;
+}
+
+.overføringsrader-module_bekreftKnapper_CWvQo {
+  display: flex;
+  flex-wrap: nowrap;
+}
+
+.overføringsrader-module_bekreftKnapper_CWvQo > :not(:last-child) {
+  margin-right: 0.5em;
+}
+
+/*!************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[1]!./packages/fakta-barn-og-overfoeringsdager/src/components/overføringsdagerPanel.module.css ***!
+  \************************************************************************************************************************************************************************/
+.overføringsdagerPanel-module_panelContainer_WzSeO {
+  align-items: flex-start;
+  display: flex;
+  flex-wrap: nowrap;
+}
+
+.overføringsdagerPanel-module_panel_lNip7 {
+  flex-grow: 1;
+  max-width: 1000px;
+  min-width: 500px;
+}
+
+/* stylelint-disable */
+.overføringsdagerPanel-module_koronapanel_PKAdk > * {
+  border: 1px solid #var(--a-orange-400) !important;
+  border-left: 8px solid #var(--a-orange-400) !important;
+}
+
+/* stylelint-enable */
+.overføringsdagerPanel-module_checkIcon_Sf5uE {
+  margin: 1em 0 0 1em;
+}
+
+.overføringsdagerPanel-module_checkIcon_Sf5uE.overføringsdagerPanel-module_hidden_rBAET {
+  visibility: hidden;
+}
+
+/*!******************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[1]!./packages/fakta-barn-og-overfoeringsdager/src/components/overføringsdagerPanelgruppe.module.css ***!
+  \******************************************************************************************************************************************************************************/
+.overføringsdagerPanelgruppe-module_panelgruppeContainer_FZ6Zz > * {
+  margin: 0.5em 0;
+}
+
+/*!**********************************************************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[1]!./packages/fakta-barn-og-overfoeringsdager/src/components/seksjon.module.css ***!
+  \**********************************************************************************************************************************************************/
+.seksjon-module_seksjon_T6DjC {
+  min-width: fit-content;
+}
+
+.seksjon-module_seksjon_T6DjC + .seksjon-module_seksjon_T6DjC {
+  margin: 1em 0;
+}
+
+.seksjon-module_seksjon_T6DjC.seksjon-module_grå_Zk75a {
+  background-color: #f3f4f4;
+}
+
+.seksjon-module_seksjon_T6DjC.seksjon-module_medMarg_PeQt0 {
+  padding: 1em;
+}
+
+.seksjon-module_tittel_LCH14 {
+  border-bottom: 1px solid #a0a0a0;
+  margin-bottom: 1em;
+  padding-bottom: 0.5em;
+}
+
+.seksjon-module_tittel_LCH14 > img {
+  margin-right: 0.5em;
+}
+
+/*!*********************************************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[1]!./packages/fakta-barn-oms/src/components/barnVisning.module.css ***!
+  \*********************************************************************************************************************************************/
+.barnVisning-module_barnInput_CzJO_ {
+  margin-top: 1em;
+  width: 550px;
+}
+
+.barnVisning-module_header_a0r5H {
+  display: flex;
+}
+
+.barnVisning-module_header_a0r5H h4 {
+  font-weight: 600;
+  margin: 0 1em 0 0;
+}
+
+.barnVisning-module_header_a0r5H .barnVisning-module_italic_WQapz {
+  font-style: italic;
+}
+
+.barnVisning-module_rammevedtak_hrsty {
+  display: flex;
+  margin-top: 1em;
+}
+
+.barnVisning-module_rammevedtak_hrsty > * {
+  display: flex;
+  flex-direction: column;
+  margin-right: 1em;
+}
+
+/*!**********************************************************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[1]!./packages/fakta-barn-oms/src/components/uidentifisertRammevedtak.module.css ***!
+  \**********************************************************************************************************************************************************/
+.uidentifisertRammevedtak-module_ol_JQaKE {
+  margin-bottom: 0;
+}
+
+.uidentifisertRammevedtak-module_advarsel_MAPdW > *:not(:first-child) {
+  max-width: 100%;
+}
+

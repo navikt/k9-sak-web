@@ -1,0 +1,114 @@
+/*!*****************************************************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[1]!./packages/prosess-formkrav/src/components/formkravKlageForm.module.css ***!
+  \*****************************************************************************************************************************************************/
+.formkravKlageForm-module_confirmVilkarForm_sRjog textarea {
+  min-width: 380px;
+}
+
+/*!***************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[1]!./packages/prosess-klagevurdering/src/components/felles/fritekstKlageBrevTextField.module.css ***!
+  \***************************************************************************************************************************************************************************/
+.fritekstKlageBrevTextField-module_fritekstTilBrevTextArea_gpb4R {
+  width: 80%;
+}
+
+.fritekstKlageBrevTextField-module_explanationTextarea_Pu6xK {
+  min-height: 300px;
+}
+
+/*!****************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[1]!./packages/prosess-klagevurdering/src/components/felles/tempsaveAndPreviewKlageLink.module.css ***!
+  \****************************************************************************************************************************************************************************/
+.tempsaveAndPreviewKlageLink-module_previewLink_Z4Nyf {
+  bottom: 16px;
+  display: block;
+  left: 208px;
+  position: absolute;
+}
+
+/*!*************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[1]!./packages/prosess-klagevurdering/src/components/ka/klageVurderingRadioOptionsKa.module.css ***!
+  \*************************************************************************************************************************************************************************/
+.klageVurderingRadioOptionsKa-module_selectReadOnly_GlStH {
+  color: #f00;
+}
+
+/*!****************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[1]!./packages/prosess-klagevurdering/src/components/ka/behandleKlageFormKa.module.css ***!
+  \****************************************************************************************************************************************************************/
+.behandleKlageFormKa-module_confirmVilkarForm_d9xMW textarea {
+  min-width: 380px;
+}
+
+/*!***************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[1]!./packages/prosess-klagevurdering/src/components/nfp/klageVurderingRadioOptionsNfp.module.css ***!
+  \***************************************************************************************************************************************************************************/
+.klageVurderingRadioOptionsNfp-module_previewLink_t5y8t {
+  bottom: 16px;
+  display: block;
+  left: 208px;
+  position: absolute;
+}
+
+.klageVurderingRadioOptionsNfp-module_selectReadOnly_oqp2R {
+  color: #f00;
+}
+
+.klageVurderingRadioOptionsNfp-module_confirmVilkarForm_Gfo3I textarea {
+  min-width: 380px;
+}
+
+.klageVurderingRadioOptionsNfp-module_panel_cJuo4 {
+  margin-top: 16px;
+}
+
+.klageVurderingRadioOptionsNfp-module_fritekstTilBrevTextArea_xpFZw {
+  width: 80%;
+}
+
+.klageVurderingRadioOptionsNfp-module_explanationTextarea_v2zIl {
+  min-height: 300px;
+}
+
+/*!******************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[1]!./packages/prosess-klagevurdering/src/components/nfp/behandleKlageFormNfp.module.css ***!
+  \******************************************************************************************************************************************************************/
+.behandleKlageFormNfp-module_confirmVilkarForm_wq1_B textarea {
+  min-width: 380px;
+}
+
+/*!**************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[1]!./packages/prosess-vedtak-klage/src/components/vedtakKlageSubmitPanel.module.css ***!
+  \**************************************************************************************************************************************************************/
+.vedtakKlageSubmitPanel-module_mainButton_RbhF_ {
+  margin: 12px 16px 12px 0;
+}
+
+/*!********************************************************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[1]!./packages/behandling-klage/src/components/klageBehandlingModal.module.css ***!
+  \********************************************************************************************************************************************************/
+.klageBehandlingModal-module_button_CKhzj {
+  margin-top: 10px;
+}
+
+.klageBehandlingModal-module_divider_NRZap {
+  border-left: 1px solid #a0a0a0;
+  border-right: 0 solid #a0a0a0;
+  display: inline;
+  float: right;
+  height: 37px;
+  margin-left: 15px;
+  position: absolute;
+  top: 5px;
+}
+
+.klageBehandlingModal-module_image_YAS9N {
+  height: 25px;
+  margin-top: 10px;
+  width: 25px;
+}
+
+.klageBehandlingModal-module_modal_PGmmD {
+  width: 750px;
+}
+
