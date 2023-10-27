@@ -165,7 +165,7 @@ const TilkjentYtelseTimeLineData = ({
                       }}
                     />
                   </BodyShort>
-                  <Tag size="xsmall" variant="neutral-moderate" className="tilkjentYtelseTag">
+                  <Tag size="xsmall" variant="neutral-moderate" className={styles.tilkjentYtelseTag}>
                     Refusjon
                   </Tag>
                 </div>
@@ -182,7 +182,7 @@ const TilkjentYtelseTimeLineData = ({
                       }}
                     />
                   </BodyShort>
-                  <Tag size="xsmall" variant="neutral-moderate" className="tilkjentYtelseTag">
+                  <Tag size="xsmall" variant="neutral-moderate" className={styles.tilkjentYtelseTag}>
                     Til bruker
                   </Tag>
                 </div>
