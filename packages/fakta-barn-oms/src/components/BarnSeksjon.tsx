@@ -1,7 +1,6 @@
 import { FormattedMessage } from 'react-intl';
 import { Element } from 'nav-frontend-typografi';
 import React from 'react';
-import styled from 'styled-components';
 import { v4 as uuidv4 } from 'uuid';
 import BarnVisning from './BarnVisning';
 import KombinertBarnOgRammevedtak from '../dto/KombinertBarnOgRammevedtak';
@@ -12,24 +11,20 @@ interface BarnSeksjonProps {
   tekstId: string;
 }
 
-const AvstandTopp = styled.div`
-  margin-top: 1.5rem;
-`;
-
 const BarnSeksjon = ({ barn, startIndex, tekstId }: BarnSeksjonProps) => {
   if (barn.length === 0) {
     return null;
   }
 
   return (
-    <AvstandTopp>
+    <div style={{ marginTop: '1.5rem' }}>
       <Element>
         <FormattedMessage id={tekstId} />
       </Element>
       {barn.map((barnet, index) => (
         <BarnVisning barnet={barnet} index={index + startIndex} key={uuidv4()} />
       ))}
-    </AvstandTopp>
+    </div>
   );
 };
 
