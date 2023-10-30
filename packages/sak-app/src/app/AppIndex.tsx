@@ -22,7 +22,6 @@ import '@navikt/ft-form-hooks/dist/style.css';
 import '@navikt/ft-plattform-komponenter/dist/style.css';
 import '@navikt/ft-prosess-beregningsgrunnlag/dist/style.css';
 import '@navikt/ft-ui-komponenter/dist/style.css';
-
 import 'nav-datovelger/lib/styles/main.css';
 import 'nav-frontend-alertstriper-style/dist/main.css';
 import 'nav-frontend-chevron-style/dist/main.css';

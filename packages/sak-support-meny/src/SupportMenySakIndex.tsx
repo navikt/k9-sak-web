@@ -6,9 +6,11 @@ import { ReactComponent as SendMeldingSvg } from '@fpsak-frontend/assets/images/
 import { ReactComponent as DokumenterSvg } from '@fpsak-frontend/assets/images/folder-big.svg';
 import { ReactComponent as TilBeslutterSvg } from '@fpsak-frontend/assets/images/person-favorite-star-2.svg';
 import { ReactComponent as HistorikkSvg } from '@fpsak-frontend/assets/images/synchronize-time.svg';
+import { PencilWritingFillIcon, PencilWritingIcon } from '@navikt/aksel-icons';
 
 import TabMeny from './components/TabMeny';
 import SupportTabs from './supportTabs';
+import styles from './supportMenySakIndex.module.css';
 
 import messages from '../i18n/nb_NO.json';
 
@@ -50,9 +52,34 @@ const TABS = {
     getSvg: (isActive, isDisabled, props) => <DokumenterSvg {...props} style={getStyle(isActive, isDisabled)} />,
     tooltipTextCode: 'SupportMenySakIndex.Dokumenter',
   },
+  [SupportTabs.NOTATER]: {
+    getSvg: (isActive, isDisabled, props, antallUlesteNotater) => (
+      <div className={styles.pencilSvgContainer}>
+        {antallUlesteNotater > 0 && <div className={styles.ulesteNotater}>{antallUlesteNotater}</div>}
+        {isActive ? (
+          <PencilWritingFillIcon
+            {...props}
+            title="Notater"
+            fontSize="1.625rem"
+            className={styles.pencilSvgFill}
+            fill={isDisabled ? '#c6c2bf' : '#0067c5'}
+          />
+        ) : (
+          <PencilWritingIcon {...props} title="Notater" fontSize="1.625rem" className={styles.pencilSvg} />
+        )}
+      </div>
+    ),
+
+    tooltipTextCode: 'SupportMenySakIndex.Notater',
+  },
 };
 
-const lagTabs = (tilgjengeligeTabs: string[], valgbareTabs: string[], valgtIndex?: number) =>
+const lagTabs = (
+  tilgjengeligeTabs: string[],
+  valgbareTabs: string[],
+  antallUlesteNotater: number,
+  valgtIndex?: number,
+) =>
   Object.keys(TABS)
     .filter(key => tilgjengeligeTabs.includes(key))
     .map((key, index) => ({
@@ -60,6 +87,7 @@ const lagTabs = (tilgjengeligeTabs: string[], valgbareTabs: string[], valgtIndex
       tooltip: intl.formatMessage({ id: TABS[key].tooltipTextCode }),
       isDisabled: !valgbareTabs.includes(key),
       isActive: index === valgtIndex,
+      antallUlesteNotater,
     }));
 
 interface OwnProps {
@@ -67,12 +95,19 @@ interface OwnProps {
   valgbareTabs: string[];
   valgtIndex?: number;
   onClick: (index: number) => void;
+  antallUlesteNotater: number;
 }
 
-const SupportMenySakIndex = ({ tilgjengeligeTabs, valgbareTabs, valgtIndex, onClick }: OwnProps) => {
+const SupportMenySakIndex = ({
+  tilgjengeligeTabs,
+  valgbareTabs,
+  valgtIndex,
+  onClick,
+  antallUlesteNotater,
+}: OwnProps) => {
   const tabs = useMemo(
-    () => lagTabs(tilgjengeligeTabs, valgbareTabs, valgtIndex),
-    [tilgjengeligeTabs, valgbareTabs, valgtIndex],
+    () => lagTabs(tilgjengeligeTabs, valgbareTabs, antallUlesteNotater, valgtIndex),
+    [tilgjengeligeTabs, valgbareTabs, valgtIndex, antallUlesteNotater],
   );
 
   return (
