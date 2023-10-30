@@ -25,7 +25,8 @@ const ÅpneSakINyttVindu: React.FC<Omit<ButtonProps, 'children'> & ÅpneSakINytt
   const { pathname } = useLocation();
   const href = useHref(pathname);
 
-  const handleClick = () => {
+  const handleClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    e.preventDefault();
     if (pathname.length > 0) {
       window.open(overridePath || href, target);
     }
@@ -34,7 +35,7 @@ const ÅpneSakINyttVindu: React.FC<Omit<ButtonProps, 'children'> & ÅpneSakINytt
   return (
     <Button
       variant={variant}
-      onClick={handleClick}
+      onClick={e => handleClick(e)}
       icon={icon}
       size={size}
       iconPosition={iconPosition}

@@ -2,7 +2,7 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { FormattedMessage, WrappedComponentProps, injectIntl } from 'react-intl';
 
-import { VerticalSpacer, ÅpneSakINyttVinduKnapp } from '@fpsak-frontend/shared-components';
+import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { Cancel } from '@navikt/ds-icons';
 import { Alert, Button, Heading, Modal } from '@navikt/ds-react';
 import { Column, Row } from 'nav-frontend-grid';
@@ -73,7 +73,11 @@ const FritekstEditor = ({
 
   const debouncedLagre = useCallback(debounce(handleLagre), []);
 
-  const onChange = () => debouncedLagre();
+  const onChange = () => {
+    if (!readOnly) {
+      debouncedLagre();
+    }
+  };
 
   const lastEditor = async () => {
     await editor.init({ holder: 'rediger-brev', onChange });
@@ -83,10 +87,10 @@ const FritekstEditor = ({
   };
 
   useEffect(() => {
-    if (redigerbartInnholdKlart && !editor.harEditor()) {
+    if (redigerbartInnholdKlart && !readOnly) {
       lastEditor();
     }
-  }, [redigerbartInnholdKlart]);
+  }, [redigerbartInnholdKlart, readOnly]);
 
   const handleLagreOgLukk = () => {
     handleLagre();
@@ -120,32 +124,21 @@ const FritekstEditor = ({
           </Heading>
         </Modal.Header>
         <Modal.Body>
-          <div className={styles.alertModalInnehold}>
-            <Alert variant="warning" inline>
-              <FormattedMessage id="RedigeringAvFritekstBrev.BekreftTilbakestill" />
-            </Alert>
+          <Alert variant="warning" inline>
+            <FormattedMessage id="RedigeringAvFritekstBrev.BekreftTilbakestill" />
+          </Alert>
 
-            <div className={styles.knapperHoyere}>
-              <Button type="button" variant="tertiary" onClick={() => setVisAdvarsel(false)}>
-                <FormattedMessage id="RedigeringAvFritekstBrev.IkkeTilbakestill" />
-              </Button>
-              <Button type="button" variant="primary" onClick={handleTilbakestill}>
-                <FormattedMessage id="RedigeringAvFritekstBrev.Tilbakestill" />
-              </Button>
-            </div>
+          <div className={styles.knapperHoyere}>
+            <Button type="button" variant="tertiary" onClick={() => setVisAdvarsel(false)}>
+              <FormattedMessage id="RedigeringAvFritekstBrev.IkkeTilbakestill" />
+            </Button>
+            <Button type="button" variant="primary" onClick={handleTilbakestill}>
+              <FormattedMessage id="RedigeringAvFritekstBrev.Tilbakestill" />
+            </Button>
           </div>
         </Modal.Body>
       </Modal>
-      <header className={styles.modalHeader}>
-        <h3>
-          <FormattedMessage id="RedigeringAvFritekstBrev.Rediger" />
-        </h3>
-        <Alert variant="info" size="small">
-          <FormattedMessage id="RedigeringAvFritekstBrev.Infotekst" />
-          <ÅpneSakINyttVinduKnapp />
-        </Alert>
-        <FritekstFeilmeldinger />
-      </header>
+
       <div className={styles.papirWrapper}>
         <div className={styles.papir}>
           {redigerbartInnholdKlart && (
@@ -190,7 +183,7 @@ const FritekstEditor = ({
                   <VerticalSpacer sixteenPx />
                 </>
               )}
-              <PreviewLink previewCallback={onForhåndsvis} size="small" intl={intl}>
+              <PreviewLink previewCallback={onForhåndsvis} size="small" intl={intl} loading={!redigerbartInnholdKlart}>
                 <FormattedMessage id="VedtakForm.ForhandvisBrev" />
               </PreviewLink>
             </div>

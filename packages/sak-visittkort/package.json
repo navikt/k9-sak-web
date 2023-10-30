@@ -11,7 +11,7 @@
     "@fpsak-frontend/utils": "1.0.0",
     "@k9-sak-web/sak-app": "1.0.0",
     "@k9-sak-web/types": "1.0.0",
-    "@navikt/ft-plattform-komponenter": "2.3.2",
+    "@navikt/ft-plattform-komponenter": "2.3.7",
     "@navikt/k9-fe-array-utils": "1.0.4",
     "@navikt/k9-fe-bem-utils": "1.0.2",
     "@navikt/k9-fe-date-utils": "1.0.5",
@@ -28,6 +28,6 @@
     "nav-frontend-typografi": "4.0.2",
     "nav-frontend-typografi-style": "2.0.2",
     "react": "17.0.2",
-    "react-intl": "6.4.7"
+    "react-intl": "6.5.1"
   }
 }

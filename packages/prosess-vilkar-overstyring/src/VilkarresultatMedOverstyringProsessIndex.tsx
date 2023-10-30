@@ -1,3 +1,4 @@
+import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import { useFeatureToggles } from '@fpsak-frontend/shared-components';
 import { dateFormat } from '@fpsak-frontend/utils';
 import hentAktivePerioderFraVilkar from '@fpsak-frontend/utils/src/hentAktivePerioderFraVilkar';
@@ -81,6 +82,17 @@ const VilkarresultatMedOverstyringProsessIndex = ({
   if (perioder.length === 0) {
     return null;
   }
+
+  useEffect(() => {
+    if (perioder.length > 1) {
+      const førsteIkkeVurdertPeriodeIndex = perioder.findIndex(
+        periode => periode.vurderesIBehandlingen && periode.vilkarStatus.kode === vilkarUtfallType.IKKE_VURDERT,
+      );
+      if (førsteIkkeVurdertPeriodeIndex > 0) {
+        setActiveTab(førsteIkkeVurdertPeriodeIndex);
+      }
+    }
+  }, []);
 
   const activePeriode = perioder.length === 1 ? perioder[0] : perioder[activeTab];
 

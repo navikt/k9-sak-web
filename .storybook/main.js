@@ -21,6 +21,7 @@ module.exports = {
     // ref: https://medium.com/storybookjs/storybook-6-migration-guide-200346241bb5
     // '@storybook/addon-essentials',
   ],
+  staticDirs: ['../public'],
 
   // reactOptions: {
   //   fastRefresh: true,
@@ -76,6 +77,11 @@ module.exports = {
         exclude: [CSS_DIR],
       },
       {
+        test: /\.css$/,
+        use: ['postcss-loader'],
+        include: [CSS_DIR],
+      },
+      {
         test: /\.less$/,
         use: [
           {
@@ -100,7 +106,7 @@ module.exports = {
             },
           },
         ],
-        include: [CSS_DIR, NODE_MODULES],
+        include: [NODE_MODULES],
       },
       {
         test: /\.(jp|pn|sv)g$/,
