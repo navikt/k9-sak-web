@@ -22,7 +22,7 @@
     "css-tree": "2.3.1",
     "date-fns": "2.30.0",
     "editorjs-html": "3.4.3",
-    "formik": "2.4.3",
+    "formik": "2.4.5",
     "moment": "2.29.4",
     "nav-frontend-alertstriper": "4.0.2",
     "nav-frontend-core": "6.0.1",
@@ -37,7 +37,7 @@
     "nav-frontend-typografi-style": "2.0.2",
     "prop-types": "15.8.1",
     "react": "17.0.2",
-    "react-intl": "6.4.4",
+    "react-intl": "6.5.1",
     "react-redux": "8.1.2",
     "redux": "4.2.1",
     "redux-form": "8.3.10",
@@ -47,6 +47,6 @@
     "@fpsak-frontend/utils-test": "1.0.0",
     "chai": "4.3.8",
     "enzyme": "3.11.0",
-    "sinon": "15.1.0"
+    "sinon": "15.2.0"
   }
 }

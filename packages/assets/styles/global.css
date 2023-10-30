@@ -17,7 +17,7 @@ body {
   margin: 0;
 }
 
-:global(#app) {
+#app {
   height: 100%;
 }
 
@@ -25,40 +25,40 @@ body {
 CSS-endringer för felleskomponenter og globaler så
 som fra core/og muligen import fra alla andra komponenter
  */
-:global(.cal-wrap) {
+.cal-wrap {
   width: 300px;
 }
 
-:global(.textarea--medMeta__teller) {
+.textarea--medMeta__teller {
   color: #262626;
   font-size: 0.8rem;
   font-style: italic;
 }
 
-:global(.skjemaelement > .skjemaelement)__feilmelding {
+.skjemaelement > .skjemaelement__feilmelding {
   margin-top: 1rem;
 }
 
-:global(.skjemaelement > .skjemaelement__input) {
+.skjemaelement > .skjemaelement__input {
   padding: 9px;
 }
 
-:global(.vis-timeline) {
+.vis-timeline {
   border: 0;
   overflow: inherit !important;
 }
 
-:global(.currentDate) {
+.currentDate {
   display: none;
 }
 
-:global(.soknad) {
+.soknad {
   background-color: var(--a-blue-600);
   pointer-events: none;
   top: 6px !important;
 }
 
-:global(.soknad):after {
+.soknad:after {
   background: transparent url('../../assets/images/soknad.svg') no-repeat;
   content: '';
   height: 20px;
@@ -68,13 +68,13 @@ som fra core/og muligen import fra alla andra komponenter
   width: 20px;
 }
 
-:global(.fodsel) {
+.fodsel {
   background-color: #a32a17;
   pointer-events: none;
   top: 0 !important;
 }
 
-:global(.fodsel):after {
+.fodsel:after {
   background: transparent url('../../assets/images/fodsel.svg') no-repeat;
   content: '';
   height: 20px;
@@ -84,13 +84,13 @@ som fra core/og muligen import fra alla andra komponenter
   width: 20px;
 }
 
-:global(.revurdering) {
+.revurdering {
   background-color: var(--a-green-600);
   pointer-events: none;
   top: 12px !important;
 }
 
-:global(.revurdering):after {
+.revurdering:after {
   background: transparent url('../../assets/images/endringstidspunkt.svg') no-repeat;
   content: '';
   height: 20px;
@@ -100,81 +100,81 @@ som fra core/og muligen import fra alla andra komponenter
   width: 20px;
 }
 
-:global(.lastDateInSoknad) {
+.lastDateInSoknad {
   display: none;
 }
 
-:global(.vis-foreground .vis-group) {
+.vis-foreground .vis-group {
   border-bottom: 0;
 }
 
-:global(.vis-text.vis-major > div) {
+.vis-text.vis-major > div {
   margin-top: 12px;
 }
 
-:global(.opptjening .vis-text.vis-major > div) {
+.opptjening .vis-text.vis-major > div {
   margin-top: 0;
 }
 
-:global(.uttakTimeline .vis-text.vis-major > div) {
+.uttakTimeline .vis-text.vis-major > div {
   margin-top: 0;
 }
 
-:global(.vis-item.vis-selected) {
+.vis-item.vis-selected {
   border: 1px solid #4a4a4a;
 }
 
-:global(.vis-item.vis-range) {
+.vis-item.vis-range {
   border-radius: 6px;
 }
 
-:global(.vis-label .vis-inner) {
+.vis-label .vis-inner {
   max-height: 50px;
 }
 
-:global(.vis-custom-time) {
+.vis-custom-time {
   width: 1px;
 }
 
-:global(.vis-item) {
+.vis-item {
   top: 5px;
   transition: transform 0.2s;
 }
 
-:global(.vis-item):hover {
+.vis-item:hover {
   box-shadow: 2px 2px 1px rgba(0, 0, 0, 0.3);
   filter: brightness(80%);
   opacity: 1;
   transform: translateY(-3px);
 }
 
-:global(.vis-item):active {
+.vis-item:active {
   box-shadow: 0 4px 5px rgba(0, 0, 0, 0.2);
   filter: brightness(95%);
   transform: translateY(-2px);
 }
 
-:global(.grey) {
+.grey {
   background-color: #c9c9c9;
   border-color: #a0a0a0;
   border-radius: 8px;
   opacity: 0.7;
 }
 
-:global(.laastPeriode.vis-item.vis-selected) {
+.laastPeriode.vis-item.vis-selected {
   background-color: #c9c9c9;
   border-color: #a0a0a0;
   border-radius: 8px;
 }
 
-:global(.grey.vis-item.vis-selected) {
+.grey.vis-item.vis-selected {
   background-color: #c9c9c9;
   border-color: #a0a0a0;
   border-radius: 8px;
   opacity: 0.7;
 }
 
-:global(.gradert) {
+.gradert {
   /* stylelint-disable */
   background: var(--a-green-500)
     repeating-linear-gradient(
@@ -190,87 +190,87 @@ som fra core/og muligen import fra alla andra komponenter
   opacity: 0.9;
 }
 
-:global(.gradert.vis-item.vis-selected) {
+.gradert.vis-item.vis-selected {
   background-color: var(--a-green-500);
   opacity: 1;
 }
 
-:global(.gradert.vis-item.vis-selected):hover {
+.gradert.vis-item.vis-selected:hover {
   transform: translateY(-1px);
 }
 
-:global(.avslatt) {
+.avslatt {
   background-color: transparent;
   border-color: rgba(186, 58, 38, 0.5);
   border-radius: 6px;
 }
 
-:global(.avslatt):active {
+.avslatt:active {
   background-color: transparent;
 }
 
-:global(.avvistPeriode) {
+.avvistPeriode {
   background-color: rgba(186, 58, 38, 0.5);
   border-color: rgba(201, 201, 201, 0.5);
   border-radius: 6px;
 }
 
-:global(.avvistPeriode):active {
+.avvistPeriode:active {
   background-color: #ba3a26;
   border-color: #c9c9c9;
 }
 
-:global(.undefined) {
+.undefined {
   background-color: rgba(255, 145, 0, 0.8);
   border-color: rgba(255, 145, 0, 0.8);
   border-radius: 8px;
 }
 
-:global(.undefined):active {
+.undefined:active {
   background-color: var(--a-orange-200);
   border-color: var(--a-orange-500);
 }
 
-:global(.undefined.vis-item.vis-selected) {
+.undefined.vis-item.vis-selected {
   background-color: var(--a-orange-500);
   border: 1px solid #4a4a4a;
 }
 
-:global(.avslatt.vis-item.vis-selected) {
+.avslatt.vis-item.vis-selected {
   background-color: #ba3a26;
 }
 
-:global(.avvistPeriode.vis-item.vis-selected) {
+.avvistPeriode.vis-item.vis-selected {
   background-color: #ba3a26;
 }
 
-:global(.innvilget) {
+.innvilget {
   background-color: rgba(6, 137, 58, 0.5);
   border-color: rgba(6, 137, 58, 0.5);
   border-radius: 8px;
 }
 
-:global(.godkjentPeriode) {
+.godkjentPeriode {
   background-color: rgba(6, 137, 58, 0.5);
   border-color: rgba(6, 137, 58, 0.5);
   border-radius: 8px;
 }
 
-:global(.godkjentPeriode):active {
+.godkjentPeriode:active {
   background-color: var(--a-green-500);
   border-color: var(--a-green-500);
 }
 
-:global(.vis-current-time) {
+.vis-current-time {
   width: 0;
 }
 
-:global(.godkjentPeriode.vis-item.vis-selected) {
+.godkjentPeriode.vis-item.vis-selected {
   background-color: var(--a-green-500);
   border-radius: 6px;
 }
 
-:global(.mellomliggendePeriode) {
+.mellomliggendePeriode {
   background-color: rgba(6, 137, 58, 0.5);
   border-color: rgba(6, 137, 58, 0.5);
   border-radius: 8px;
@@ -278,43 +278,43 @@ som fra core/og muligen import fra alla andra komponenter
   top: 12px !important;
 }
 
-:global(.mellomliggendePeriode):active {
+.mellomliggendePeriode:active {
   background-color: var(--a-green-500);
   border-color: var(--a-green-500);
 }
 
-:global(.mellomliggendePeriode.vis-item.vis-selected) {
+.mellomliggendePeriode.vis-item.vis-selected {
   background-color: var(--a-green-500);
   border-radius: 6px;
 }
 
-:global(.innvilget.vis-item.vis-selected) {
+.innvilget.vis-item.vis-selected {
   background-color: var(--a-green-500);
   border-radius: 6px;
 }
 
-:global(.innvilgetnullprosent) {
+.innvilgetnullprosent {
   background-color: transparent;
   border-color: var(--a-green-500);
   border-radius: 8px;
 }
 
-:global(.innvilgetnullprosent.vis-item.vis-selected) {
+.innvilgetnullprosent.vis-item.vis-selected {
   background-color: transparent;
   border-radius: 8px;
 }
 
-:global(.opphold-manuell) {
+.opphold-manuell {
   background-color: transparent;
   border-color: var(--a-orange-500);
   border-radius: 6px;
 }
 
-:global(.opphold-manuell.vis-item.vis-range) {
+.opphold-manuell.vis-item.vis-range {
   border-style: dashed;
 }
 
-:global(.opphold-manuell.vis-item.vis-selected) {
+.opphold-manuell.vis-item.vis-selected {
   background-color: transparent;
   border-color: var(--a-orange-500);
   border-radius: 6px;
@@ -322,17 +322,17 @@ som fra core/og muligen import fra alla andra komponenter
   border-width: 1.5px;
 }
 
-:global(.opphold) {
+.opphold {
   background-color: transparent;
   border-color: var(--a-green-500);
   border-radius: 6px;
 }
 
-:global(.opphold.vis-item.vis-range) {
+.opphold.vis-item.vis-range {
   border-style: dashed;
 }
 
-:global(.opphold.vis-item.vis-selected) {
+.opphold.vis-item.vis-selected {
   background-color: transparent;
   border-color: var(--a-green-500);
   border-radius: 6px;
@@ -340,79 +340,79 @@ som fra core/og muligen import fra alla andra komponenter
   border-width: 1.5px;
 }
 
-:global(.vis-item.endretPeriode) {
+.vis-item.endretPeriode {
   border-top-color: var(--a-orange-500);
   border-top-width: 5px;
 }
 
-:global(.opptjening .vis-center) {
+.opptjening .vis-center {
   border-bottom: 1px solid grey;
   border-left-style: none;
   border-right-style: none;
 }
 
-:global(.opptjening .vis-text) {
+.opptjening .vis-text {
   border-top: 1px solid darkgrey;
   text-align: center;
 }
 
-:global(.uttakTimeline .vis-time-axis .vis-text.vis-minor) {
+.uttakTimeline .vis-time-axis .vis-text.vis-minor {
   border-top: 1px solid darkgrey;
   text-align: center;
 }
 
-:global(.opptjening .vis-label) {
+.opptjening .vis-label {
   border-bottom: 0 solid;
   text-align: right;
 }
 
-:global(.opptjening .vis-panel.vis-left) {
+.opptjening .vis-panel.vis-left {
   border-top-style: hidden;
   max-width: 150px;
 }
 
-:global(.opptjening .vis-panel.vis-left .vis-label) {
+.opptjening .vis-panel.vis-left .vis-label {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
 
-:global(.opptjening > .timeLineLight .vis-panel.vis-left) {
+.opptjening > .timeLineLight .vis-panel.vis-left {
   width: 0;
 }
 
-:global(.opptjening .vis-panel.vis-top) {
+.opptjening .vis-panel.vis-top {
   margin-left: -1px;
 }
 
-:global(.opptjening .timeLineLight .vis-panel.vis-top) {
+.opptjening .timeLineLight .vis-panel.vis-top {
   margin-left: 0;
 }
 
-:global(.opptjening .vis-panel > .vis-content) {
+.opptjening .vis-panel > .vis-content {
   border-left: 0 solid;
 }
 
-:global(.opptjening .vis-panel.vis-center) {
+.opptjening .vis-panel.vis-center {
   border-top-style: hidden;
 }
 
-:global(.opptjening .vis-itemset > .vis-background) {
+.opptjening .vis-itemset > .vis-background {
   border-top: 1px solid darkgray;
 }
 
-:global(.vis-timeline.vis-bottom) {
+.vis-timeline.vis-bottom {
   animation-duration: 2s;
   animation-name: fadeIn;
 }
 
 @media all and (-ms-high-contrast: none) {
-  :global(.vis-timeline.vis-bottom) {
+  .vis-timeline.vis-bottom {
     animation-duration: 0s;
     animation-name: none;
   }
 
-  :global(.opptjening .vis-labelset .vis-label .vis-inner) {
+  .opptjening .vis-labelset .vis-label .vis-inner {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -421,7 +421,7 @@ som fra core/og muligen import fra alla andra komponenter
 }
 
 @supports (-ms-ime-align: auto) {
-  :global(.opptjening .vis-labelset .vis-label .vis-inner) {
+  .opptjening .vis-labelset .vis-label .vis-inner {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -429,51 +429,51 @@ som fra core/og muligen import fra alla andra komponenter
   }
 }
 
-:global(.opptjening .vis-foreground .vis-group:last-child) {
+.opptjening .vis-foreground .vis-group:last-child {
   border-bottom: 1px solid darkgray;
 }
 
-:global(.timeLineLight .vis-foreground .vis-group:last-child) {
+.timeLineLight .vis-foreground .vis-group:last-child {
   border-left: 1px solid darkgray;
 }
 
-:global(.opptjening .vis-january > div) {
+.opptjening .vis-january > div {
   display: none;
 }
 
-:global(.opptjening .vis-content) {
+.opptjening .vis-content {
   border-left: 1px solid darkgray;
   border-right: 1px solid darkgray;
 }
 
-:global(.opptjening .currentDate) {
+.opptjening .currentDate {
   display: none;
 }
 
-:global(.opptjening .currentDate):after {
+.opptjening .currentDate:after {
   display: none;
 }
 
-:global(.godkjent) {
+.godkjent {
   background-color: var(--a-green-200);
 }
 
-:global(.avvist) {
+.avvist {
   background-color: #efa89d;
 }
 
-:global(div .vis-tooltip) {
+div .vis-tooltip {
   font-size: 10px;
   max-width: 300px;
   padding: 0 4px 0 4px;
   white-space: normal;
 }
 
-:global(.tableRowHighlight) {
+.tableRowHighlight {
   background-color: var(--a-orange-100);
 }
 
-:global(.tableRowHighlight):hover {
+.tableRowHighlight:hover {
   background-color: var(--a-orange-100) !important;
 }
 
@@ -490,14 +490,14 @@ div[class^='SjekkFodselDokForm'] [class^='periodFieldArray_buttonRemove'] {
   margin-top: 42px;
 }
 
-:global(.dodSoker) {
+.dodSoker {
   background-color: black;
   color: white;
   pointer-events: none;
   z-index: 0;
 }
 
-:global(.dodSoker):after {
+.dodSoker:after {
   background-color: black;
   color: white;
   content: 'Søker død';
@@ -509,14 +509,14 @@ div[class^='SjekkFodselDokForm'] [class^='periodFieldArray_buttonRemove'] {
   width: 80px;
 }
 
-:global([class^='vis-custom-time barndod']) {
+[class^='vis-custom-time barndod'] {
   background-color: black;
   color: white;
   pointer-events: none;
   z-index: 0;
 }
 
-:global([class^='vis-custom-time barndod']):after {
+[class^='vis-custom-time barndod']:after {
   background-color: black;
   color: white;
   content: 'Barn død';
@@ -565,11 +565,11 @@ div[class^='SjekkFodselDokForm'] [class^='periodFieldArray_buttonRemove'] {
 }
 
 .snakkeboble.snakkeboble__bruker .panel {
-  background: var(--a-white) 2;
+  background: #fff2e0;
 }
 
 .snakkeboble.snakkeboble__bruker .snakkeboble__snakkebole-pil {
-  background: var(--a-white) 2;
+  background: #fff2e0;
 }
 
 .snakkeboble.snakkeboble__ekstern .panel {

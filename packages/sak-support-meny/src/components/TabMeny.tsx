@@ -9,10 +9,11 @@ const classNames = classnames.bind(styles);
 
 interface OwnProps {
   tabs: {
-    getSvg: (isActive: boolean, isDisabled: boolean, props) => React.ReactNode;
+    getSvg: (isActive: boolean, isDisabled: boolean, prop, antallUlesteNotater: number) => React.ReactNode;
     tooltip: string;
     isActive: boolean;
     isDisabled: boolean;
+    antallUlesteNotater: number;
   }[];
   onClick: (index: number) => void;
 }
@@ -47,11 +48,16 @@ const TabMeny = ({ tabs, onClick }: OwnProps) => {
                 tabRef.current[index] = el;
               }}
             >
-              {tab.getSvg(tab.isActive, tab.isDisabled, {
-                className: styles.tabImage,
-                tabIndex: '-1',
-                alt: tab.tooltip,
-              })}
+              {tab.getSvg(
+                tab.isActive,
+                tab.isDisabled,
+                {
+                  className: styles.tabImage,
+                  tabIndex: '-1',
+                  alt: tab.tooltip,
+                },
+                tab.antallUlesteNotater,
+              )}
             </button>
           </FlexColumn>
         ))}

@@ -16,6 +16,7 @@ const totrinnskontrollaksjonspunktTextCodes = {
     'ToTrinnsForm.Beregning.InntektFastsatt',
   [aksjonspunktCodes.FASTSETT_BEREGNINGSGRUNNLAG_SN_NY_I_ARBEIDSLIVET]: 'ToTrinnsForm.Beregning.InntektFastsatt',
   [aksjonspunktCodes.FORDEL_BEREGNINGSGRUNNLAG]: 'ToTrinnsForm.Beregning.FastsettFordeltBeregningsgrunnlag',
+  [aksjonspunktCodes.VURDER_NYTT_INNTKTSFORHOLD]: 'ToTrinnsForm.Beregning.VurdertNyttInntektsforhold',
 
   [aksjonspunktCodes.OVERSTYR_SOKNADSFRISTVILKAR]: 'ToTrinnsForm.Soknadsfrist.VilkarOverstyrt',
 
@@ -31,12 +32,15 @@ const totrinnskontrollaksjonspunktTextCodes = {
   [aksjonspunktCodes.KONTROLLER_TILSTØTENDE_YTELSER_INNVILGET]: 'ToTrinnsForm.Uttak.TilstotendeYtelser.Innvilget',
   [aksjonspunktCodes.KONTROLLER_TILSTØTENDE_YTELSER_OPPHØRT]: 'ToTrinnsForm.Uttak.TilstotendeYtelser.Opphort',
   [aksjonspunktCodes.TILKNYTTET_STORTINGET]: 'ToTrinnsForm.Uttak.Stortinget',
+  [aksjonspunktCodes.VURDER_DATO_NY_REGEL_UTTAK]: 'ToTrinnsForm.Uttak.DatoNyeReglerErSatt',
 
   [aksjonspunktCodes.VURDER_TILBAKETREKK]: 'ToTrinnsForm.TilkjentYtelse.Tilbaketrekk',
 
   [aksjonspunktCodes.VURDER_FARESIGNALER]: 'ToTrinnsForm.Faresignaler.Vurder',
 
   [aksjonspunktCodes.VURDER_OPPTJENINGSVILKARET]: 'ToTrinnsForm.Opptjening.VurderOpptjeningsvilkåret',
+
+  [aksjonspunktCodes.FORESLA_VEDTAK]: 'ToTrinnsForm.Vedtak.Fritekstbrev',
 };
 
 export const totrinnsTilbakekrevingkontrollaksjonspunktTextCodes = {};

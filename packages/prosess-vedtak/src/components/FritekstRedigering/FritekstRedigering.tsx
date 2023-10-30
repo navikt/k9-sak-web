@@ -2,9 +2,10 @@ import React, { useEffect, useRef, useState } from 'react';
 import { FormattedMessage, WrappedComponentProps, injectIntl } from 'react-intl';
 
 import { Edit } from '@navikt/ds-icons';
-import { Button, Modal } from '@navikt/ds-react';
+import { Alert, Button, Heading, Modal } from '@navikt/ds-react';
 
 import dokumentMalType from '@fpsak-frontend/kodeverk/src/dokumentMalType';
+import { VerticalSpacer, ÅpneSakINyttVinduKnapp } from '@fpsak-frontend/shared-components';
 import { safeJSONParse } from '@fpsak-frontend/utils';
 import {
   Brevmottaker,
@@ -13,6 +14,10 @@ import {
   VedtaksbrevMal,
 } from '@fpsak-frontend/utils/src/formidlingUtils';
 import { DokumentDataType } from '@k9-sak-web/types/src/dokumentdata';
+import { fieldnames } from '../../konstanter';
+import FritekstEditor from './FritekstEditor';
+import FritekstFeilmeldinger from './FritekstFeilmeldinger';
+import styles from './RedigerFritekstbrev.module.css';
 import {
   lagLagreHtmlDokumentdataRequest,
   seksjonSomKanRedigeres,
@@ -22,11 +27,6 @@ import {
   utledStiler,
   utledSuffiksInnhold,
 } from './RedigeringUtils';
-
-import styles from './RedigerFritekstbrev.module.css';
-
-import { fieldnames } from '../../konstanter';
-import FritekstEditor from './FritekstEditor';
 
 interface ownProps {
   handleSubmit: (html: string, request: any) => void;
@@ -42,6 +42,7 @@ interface ownProps {
   kanInkludereKalender: boolean;
   dokumentdataInformasjonsbehov: any;
   overstyrtMottaker?: Brevmottaker;
+  setForhaandsvisningKlart: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const FritekstRedigering = ({
@@ -58,9 +59,10 @@ const FritekstRedigering = ({
   kanInkludereKalender,
   dokumentdataInformasjonsbehov,
   overstyrtMottaker,
+  setForhaandsvisningKlart,
 }: ownProps & WrappedComponentProps) => {
   useEffect(() => {
-    Modal.setAppElement(document.body);
+    setForhaandsvisningKlart(false);
   }, []);
   const redigerbarDokumentmal: VedtaksbrevMal = tilgjengeligeVedtaksbrev.maler.find(
     vb => vb.dokumentMalType === dokumentMalType.MANUELL,
@@ -113,6 +115,7 @@ const FritekstRedigering = ({
     }
 
     await setRedigerbartInnholdKlart(true);
+    setForhaandsvisningKlart(true);
     setHenterMal(false);
   };
 
@@ -171,25 +174,40 @@ const FritekstRedigering = ({
       >
         <FormattedMessage id="RedigeringAvFritekstBrev.Rediger" />
       </Button>
-      <Modal open={visRedigering} onClose={() => setVisRedigering(false)} shouldCloseOnOverlayClick={false}>
-        <div className={styles.modalInnehold}>
-          <FritekstEditor
-            handleSubmit={handleLagre}
-            lukkEditor={lukkEditor}
-            handleForhåndsvis={handleForhåndsvis}
-            oppdaterFormFelt={oppdaterFormFelt}
-            setFieldValue={setFieldValue}
-            kanInkludereKalender={kanInkludereKalender}
-            skalBrukeOverstyrendeFritekstBrev={skalBrukeOverstyrendeFritekstBrev}
-            readOnly={readOnly}
-            redigerbartInnholdKlart={redigerbartInnholdKlart}
-            redigerbartInnhold={redigerbartInnhold}
-            originalHtml={originalHtml}
-            brevStiler={brevStiler}
-            prefiksInnhold={prefiksInnhold}
-            suffiksInnhold={suffiksInnhold}
-          />
-        </div>
+      <Modal open={visRedigering} onClose={() => setVisRedigering(false)} width="53.75rem">
+        <Modal.Header>
+          <Heading level="3" size="small">
+            <FormattedMessage id="RedigeringAvFritekstBrev.Rediger" />
+          </Heading>
+          <VerticalSpacer sixteenPx />
+          <Alert variant="info" size="small">
+            <FormattedMessage id="RedigeringAvFritekstBrev.Infotekst" />
+            <ÅpneSakINyttVinduKnapp />
+          </Alert>
+          <FritekstFeilmeldinger />
+        </Modal.Header>
+        <Modal.Body>
+          <div className={styles.modalInnehold}>
+            {visRedigering && (
+              <FritekstEditor
+                handleSubmit={handleLagre}
+                lukkEditor={lukkEditor}
+                handleForhåndsvis={handleForhåndsvis}
+                oppdaterFormFelt={oppdaterFormFelt}
+                setFieldValue={setFieldValue}
+                kanInkludereKalender={kanInkludereKalender}
+                skalBrukeOverstyrendeFritekstBrev={skalBrukeOverstyrendeFritekstBrev}
+                readOnly={readOnly}
+                redigerbartInnholdKlart={redigerbartInnholdKlart}
+                redigerbartInnhold={redigerbartInnhold}
+                originalHtml={originalHtml}
+                brevStiler={brevStiler}
+                prefiksInnhold={prefiksInnhold}
+                suffiksInnhold={suffiksInnhold}
+              />
+            )}
+          </div>
+        </Modal.Body>
       </Modal>
     </>
   );

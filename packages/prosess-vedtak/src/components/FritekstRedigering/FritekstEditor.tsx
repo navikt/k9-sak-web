@@ -2,9 +2,9 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { FormattedMessage, WrappedComponentProps, injectIntl } from 'react-intl';
 
-import { VerticalSpacer, ÅpneSakINyttVinduKnapp } from '@fpsak-frontend/shared-components';
+import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { Cancel } from '@navikt/ds-icons';
-import { Alert, Button, Modal } from '@navikt/ds-react';
+import { Alert, Button, Heading, Modal } from '@navikt/ds-react';
 import { Column, Row } from 'nav-frontend-grid';
 
 import InkluderKalenderCheckbox from '../InkluderKalenderCheckbox';
@@ -73,7 +73,11 @@ const FritekstEditor = ({
 
   const debouncedLagre = useCallback(debounce(handleLagre), []);
 
-  const onChange = () => debouncedLagre();
+  const onChange = () => {
+    if (!readOnly) {
+      debouncedLagre();
+    }
+  };
 
   const lastEditor = async () => {
     await editor.init({ holder: 'rediger-brev', onChange });
@@ -83,15 +87,10 @@ const FritekstEditor = ({
   };
 
   useEffect(() => {
-    Modal.setAppElement(document.body);
-    lastEditor();
-  }, []);
-
-  useEffect(() => {
-    if (redigerbartInnholdKlart && !editor.harEditor()) {
+    if (redigerbartInnholdKlart && !readOnly) {
       lastEditor();
     }
-  }, [redigerbartInnholdKlart]);
+  }, [redigerbartInnholdKlart, readOnly]);
 
   const handleLagreOgLukk = () => {
     handleLagre();
@@ -118,13 +117,13 @@ const FritekstEditor = ({
 
   return (
     <>
-      <Modal open={visAdvarsel} onClose={() => setVisAdvarsel(false)} shouldCloseOnOverlayClick={false}>
-        <div className={styles.alertModalInnehold}>
-          <header>
-            <h3>
-              <FormattedMessage id="RedigeringAvFritekstBrev.BekreftTilbakestillTittel" />
-            </h3>
-          </header>
+      <Modal open={visAdvarsel} onClose={() => setVisAdvarsel(false)}>
+        <Modal.Header>
+          <Heading as="h3" size="medium">
+            <FormattedMessage id="RedigeringAvFritekstBrev.BekreftTilbakestillTittel" />
+          </Heading>
+        </Modal.Header>
+        <Modal.Body>
           <Alert variant="warning" inline>
             <FormattedMessage id="RedigeringAvFritekstBrev.BekreftTilbakestill" />
           </Alert>
@@ -137,18 +136,9 @@ const FritekstEditor = ({
               <FormattedMessage id="RedigeringAvFritekstBrev.Tilbakestill" />
             </Button>
           </div>
-        </div>
+        </Modal.Body>
       </Modal>
-      <header className={styles.modalHeader}>
-        <h3>
-          <FormattedMessage id="RedigeringAvFritekstBrev.Rediger" />
-        </h3>
-        <Alert variant="info" size="small">
-          <FormattedMessage id="RedigeringAvFritekstBrev.Infotekst" />
-          <ÅpneSakINyttVinduKnapp />
-        </Alert>
-        <FritekstFeilmeldinger />
-      </header>
+
       <div className={styles.papirWrapper}>
         <div className={styles.papir}>
           {redigerbartInnholdKlart && (
@@ -193,7 +183,7 @@ const FritekstEditor = ({
                   <VerticalSpacer sixteenPx />
                 </>
               )}
-              <PreviewLink previewCallback={onForhåndsvis} size="small" intl={intl}>
+              <PreviewLink previewCallback={onForhåndsvis} size="small" intl={intl} loading={!redigerbartInnholdKlart}>
                 <FormattedMessage id="VedtakForm.ForhandvisBrev" />
               </PreviewLink>
             </div>

@@ -1,0 +1,45 @@
+.nyttNotatTekst {
+  min-width: 31.25rem;
+}
+
+.nyttNotatKnappContainer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 0.75rem;
+}
+
+.notatContainer {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+  margin-top: 1.25rem;
+}
+
+.labelTagContainer {
+  align-items: baseline;
+  display: flex;
+}
+
+.redigerSkjulNotatKnappContainer {
+  display: flex;
+}
+
+:global(.navds-button).redigerSkjulKnapp {
+  margin-left: 0.625rem;
+}
+
+:global(.navds-tag).navnTag {
+  margin-left: 0.5rem;
+}
+
+.chatRight {
+  margin-left: auto;
+}
+
+@media screen and (min-width: 1350px) {
+  .chatLeft,
+  .chatRight {
+    max-width: calc(100% - 40px);
+  }
+}

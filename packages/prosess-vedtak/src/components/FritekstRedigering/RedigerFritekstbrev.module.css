@@ -1,15 +1,7 @@
 /* stylelint-disable unit-allowed-list, length-zero-no-unit */
-.modalInnehold {
-  padding: 0 3em 2em;
-}
 
 .alertModalInnehold {
-  padding: 0 3em 2em;
   width: 27em;
-}
-
-.modalHeader {
-  margin-bottom: 1.5em;
 }
 
 .knapper {

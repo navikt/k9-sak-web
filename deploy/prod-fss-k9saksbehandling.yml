@@ -57,8 +57,6 @@ spec:
       value: "http://k9-tilbake.k9saksbehandling"
     - name: APP_URL_K9FORDEL
       value: "http://k9-fordel.k9saksbehandling"
-    - name: APP_DIAGNOSEKODER
-      value: "http://diagnosekode-api.k9saksbehandling/diagnosekoder"
     - name: MEDISINSK_VILKAR_FRONTEND_URL
       value: "https://medisinsk-vilkar-frontend.intern.nav.no/"
     - name: OMSORGSDAGER_FRONTEND_URL
@@ -114,4 +112,8 @@ spec:
     - name: OMSORGEN_FOR_PERIODISERT
       value: "true"
     - name: OVERSTYR_BEREGNING
+      value: "false"
+    - name: FAKTA_BEREGNING_REDESIGN
+      value: "false"
+    - name: NOTAT_I_SAK
       value: "false"

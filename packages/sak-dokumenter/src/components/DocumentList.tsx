@@ -6,11 +6,16 @@ import sendDokumentImageUrl from '@fpsak-frontend/assets/images/send_dokument.sv
 import kommunikasjonsretning from '@fpsak-frontend/kodeverk/src/kommunikasjonsretning';
 import { DateTimeLabel, Image, Table, TableColumn, TableRow, Tooltip } from '@fpsak-frontend/shared-components';
 import { Dokument, FagsakPerson } from '@k9-sak-web/types';
+import { StarFillIcon } from '@navikt/aksel-icons';
+import axios from 'axios';
 import Lenke from 'nav-frontend-lenker';
 import { Select } from 'nav-frontend-skjema';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
 import React, { useState } from 'react';
 import { FormattedMessage, WrappedComponentProps, injectIntl } from 'react-intl';
+import { useQuery } from 'react-query';
+import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
+import { Kompletthet } from '../types/Kompletthetsperioder';
 import styles from './documentList.module.css';
 
 const headerTextCodes = [
@@ -23,6 +28,8 @@ const headerTextCodes = [
 const alleBehandlinger = 'ALLE';
 
 const vedtaksdokumenter = ['INNVILGELSE', 'AVSLAG', 'FRITKS', 'ENDRING', 'MANUELL'];
+
+const inntektsmeldingBrevkode = '4936';
 
 const isVedtaksdokument = (document: Dokument) =>
   vedtaksdokumenter.some(vedtaksdokument => vedtaksdokument === document.brevkode);
@@ -68,6 +75,8 @@ interface OwnProps {
   behandlingId?: number;
   fagsakPerson?: FagsakPerson;
   saksnummer: number;
+  behandlingUuid: string;
+  sakstype: string;
 }
 
 /**
@@ -83,8 +92,36 @@ const DocumentList = ({
   behandlingId,
   fagsakPerson,
   saksnummer,
+  behandlingUuid,
+  sakstype,
 }: OwnProps & WrappedComponentProps) => {
   const [selectedFilter, setSelectedFilter] = useState(alleBehandlinger);
+
+  const erStøttetFagsakYtelseType = [
+    fagsakYtelseType.PLEIEPENGER,
+    fagsakYtelseType.OMSORGSPENGER,
+    fagsakYtelseType.PLEIEPENGER_SLUTTFASE,
+  ].includes(sakstype);
+
+  const getInntektsmeldingerIBruk = (signal?: AbortSignal) =>
+    axios
+      .get<Kompletthet>(`/k9/sak/api/behandling/kompletthet/beregning/vurderinger`, {
+        signal,
+        params: {
+          behandlingUuid,
+        },
+      })
+      .then(({ data }) => {
+        const inntektsmeldingerIBruk = data?.vurderinger?.flatMap(kompletthetvurdering =>
+          kompletthetvurdering.vurderinger.filter(vurdering => vurdering.vurdering === 'I_BRUK'),
+        );
+        return inntektsmeldingerIBruk;
+      });
+
+  const { data: inntektsmeldingerIBruk } = useQuery('kompletthet', ({ signal }) => getInntektsmeldingerIBruk(signal), {
+    enabled: erStøttetFagsakYtelseType && !!behandlingUuid,
+  });
+
   const harMerEnnEnBehandlingKnyttetTilDokumenter = () => {
     const unikeBehandlinger = [];
     if (documents.some(document => document.behandlinger?.length > 0)) {
@@ -112,7 +149,7 @@ const DocumentList = ({
     return (
       <>
         <div className={styles.controlsContainer}>{getModiaLenke()}</div>
-        <Normaltekst className={styles.noDocuments}>
+        <Normaltekst className={styles.noDocuments} data-testid="no-documents">
           <FormattedMessage id="DocumentList.NoDocuments" />
         </Normaltekst>
       </>
@@ -121,6 +158,12 @@ const DocumentList = ({
 
   const makeDocumentURL = (document: Dokument) =>
     `/k9/sak/api/dokument/hent-dokument?saksnummer=${saksnummer}&journalpostId=${document.journalpostId}&dokumentId=${document.dokumentId}`;
+
+  const erInntektsmeldingOgBruktIDenneBehandlingen = (document: Dokument) =>
+    document.brevkode === inntektsmeldingBrevkode &&
+    inntektsmeldingerIBruk &&
+    inntektsmeldingerIBruk.length > 0 &&
+    inntektsmeldingerIBruk.some(inntektsmelding => inntektsmelding.journalpostId === document.journalpostId);
 
   return (
     <>
@@ -178,9 +221,15 @@ const DocumentList = ({
                     className={styles.documentAnchor}
                   >
                     {isVedtaksdokument(document) ? (
-                      <Element>{document.tittel}</Element>
+                      <Element tag="span">{document.tittel}</Element>
                     ) : (
-                      <Normaltekst>{document.tittel}</Normaltekst>
+                      <Normaltekst tag="span">{document.tittel}</Normaltekst>
+                    )}
+                    {erInntektsmeldingOgBruktIDenneBehandlingen(document) && (
+                      <StarFillIcon
+                        className={styles.starIcon}
+                        title={intl.formatMessage({ id: 'DocumentList.IBruk' })}
+                      />
                     )}
                   </a>
                 </TableColumn>
@@ -211,7 +260,7 @@ const DocumentList = ({
                     {document.tidspunkt ? (
                       <DateTimeLabel dateTimeString={document.tidspunkt} />
                     ) : (
-                      <Normaltekst>
+                      <Normaltekst data-testid="missing-timestamp">
                         <FormattedMessage id="DocumentList.IProduksjon" />
                       </Normaltekst>
                     )}

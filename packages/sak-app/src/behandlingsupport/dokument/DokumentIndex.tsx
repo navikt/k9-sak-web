@@ -1,7 +1,7 @@
 import DokumenterSakIndex from '@fpsak-frontend/sak-dokumenter';
 import { LoadingPanel, requireProps, usePrevious } from '@fpsak-frontend/shared-components';
 import { RestApiState } from '@k9-sak-web/rest-api-hooks';
-import { Dokument, FagsakPerson } from '@k9-sak-web/types';
+import { Dokument, Fagsak } from '@k9-sak-web/types';
 import React, { useMemo } from 'react';
 import useBehandlingEndret from '../../behandling/useBehandlingEndret';
 import { K9sakApiKeys, restApiHooks } from '../../data/k9sakApi';
@@ -21,7 +21,8 @@ interface OwnProps {
   saksnummer: number;
   behandlingId?: number;
   behandlingVersjon?: number;
-  fagsakPerson?: FagsakPerson;
+  fagsak: Fagsak;
+  behandlingUuid: string;
 }
 
 const EMPTY_ARRAY = [];
@@ -31,7 +32,7 @@ const EMPTY_ARRAY = [];
  *
  * Container komponent. Har ansvar for å hente sakens dokumenter fra state og rendre det i en liste.
  */
-export const DokumentIndex = ({ behandlingId, behandlingVersjon, fagsakPerson, saksnummer }: OwnProps) => {
+export const DokumentIndex = ({ behandlingId, behandlingVersjon, fagsak, saksnummer, behandlingUuid }: OwnProps) => {
   const forrigeSaksnummer = usePrevious(saksnummer);
   const erBehandlingEndretFraUndefined = useBehandlingEndret(behandlingId, behandlingVersjon);
   const { data: alleDokumenter = EMPTY_ARRAY, state } = restApiHooks.useRestApi<Dokument[]>(
@@ -54,8 +55,9 @@ export const DokumentIndex = ({ behandlingId, behandlingVersjon, fagsakPerson, s
     <DokumenterSakIndex
       documents={sorterteDokumenter}
       behandlingId={behandlingId}
-      fagsakPerson={fagsakPerson}
+      fagsak={fagsak}
       saksnummer={saksnummer}
+      behandlingUuid={behandlingUuid}
     />
   );
 };

@@ -57,7 +57,7 @@ interface PureOwnProps {
     fritekst: string,
     fritekstbrev?: Fritekstbrev,
   ) => void;
-  templates: Brevmaler;
+  templates?: Brevmaler;
   sprakKode?: Kodeverk;
   revurderingVarslingArsak: KodeverkMedNavn[];
   isKontrollerRevurderingApOpen?: boolean;
@@ -153,7 +153,7 @@ export const MessagesImpl = ({
           : JSON.stringify(recipients[0]),
       );
 
-      if (valgtBrevmal.linker.length > 0) {
+      if (valgtBrevmal?.linker?.length > 0) {
         requestMessagesApi.setLinks(valgtBrevmal.linker);
         hentPreutfylteMaler()
           .then(_fritekstForslagTyper => {
@@ -186,7 +186,7 @@ export const MessagesImpl = ({
             ))}
             bredde="xxl"
           />
-          {valgtBrevmal?.linker.length > 0 && fritekstforslagTyper && (
+          {valgtBrevmal?.linker?.length > 0 && fritekstforslagTyper && (
             <>
               <VerticalSpacer eightPx />
               <SelectField
@@ -282,10 +282,10 @@ export const MessagesImpl = ({
   );
 };
 
-const buildInitalValues = (templates: Brevmaler, isKontrollerRevurderingApOpen?: boolean): FormValues => {
-  const brevmalkode = Object.keys(templates)[0];
+const buildInitalValues = (templates?: Brevmaler, isKontrollerRevurderingApOpen?: boolean): FormValues => {
+  const brevmalkode = templates ? Object.keys(templates)[0] : null;
   const overstyrtMottaker =
-    templates[brevmalkode] && templates[brevmalkode].mottakere
+    templates && templates[brevmalkode] && templates[brevmalkode].mottakere
       ? JSON.stringify(templates[brevmalkode].mottakere[0])
       : null;
 

@@ -1,12 +1,16 @@
-import React from 'react';
 import '@formatjs/intl-datetimeformat/polyfill-force';
-import '@formatjs/intl-datetimeformat/locale-data/nb';
 import '@formatjs/intl-numberformat/polyfill-force';
+import '@formatjs/intl-datetimeformat/locale-data/nb';
 import '@formatjs/intl-numberformat/locale-data/nb';
+import { initialize, mswLoader } from 'msw-storybook-addon';
+import React from 'react';
+import '@navikt/ds-css';
 import '@fpsak-frontend/assets/styles/global.css';
 import '@navikt/ft-plattform-komponenter/dist/style.css';
-import '@navikt/ds-css';
 
+initialize({ onUnhandledRequest: 'bypass' });
+
+export const loaders = [mswLoader];
 export const decorators = [
   Story => (
     <div style={{ margin: '40px' }}>
