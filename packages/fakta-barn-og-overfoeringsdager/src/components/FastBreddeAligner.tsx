@@ -1,18 +1,4 @@
-import React, { ReactNode } from 'react';
-import styled from 'styled-components';
-
-const Rad = styled.div<{ padding?: string; margin?: string }>`
-  display: flex;
-  justify-content: flex-start;
-  align-items: flex-start;
-  padding: ${({ padding }) => padding};
-  margin: ${({ margin }) => margin};
-`;
-
-export const Kolonne = styled.span<{ width: string; padding?: string }>`
-  width: ${({ width }) => width};
-  padding: ${({ padding }) => padding};
-`;
+import React, { ReactNode, CSSProperties } from 'react';
 
 interface FastBreddeAlignerProps {
   kolonner: {
@@ -27,14 +13,31 @@ interface FastBreddeAlignerProps {
   };
 }
 
-const FastBreddeAligner = ({ kolonner, rad }: FastBreddeAlignerProps) => (
-  <Rad padding={rad?.padding} margin={rad?.margin}>
-    {kolonner.map(({ width, id, content, padding }) => (
-      <Kolonne width={width} key={id} padding={padding}>
-        {content}
-      </Kolonne>
-    ))}
-  </Rad>
-);
+const FastBreddeAligner = ({ kolonner, rad }: FastBreddeAlignerProps) => {
+  const radStyle: CSSProperties = {
+    display: 'flex',
+    justifyContent: 'flex-start',
+    alignItems: 'flex-start',
+    padding: rad?.padding,
+    margin: rad?.margin,
+  };
+
+  return (
+    <div style={radStyle}>
+      {kolonner.map(({ width, id, content, padding }) => {
+        const kolonneStyle: CSSProperties = {
+          width,
+          padding,
+        };
+
+        return (
+          <span style={kolonneStyle} key={id}>
+            {content}
+          </span>
+        );
+      })}
+    </div>
+  );
+};
 
 export default FastBreddeAligner;
