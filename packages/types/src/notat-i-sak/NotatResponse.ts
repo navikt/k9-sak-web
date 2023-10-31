@@ -1,6 +1,6 @@
-import { NotatGjelderType } from './NotatGjelderType';
+import NotatGjelderType from './NotatGjelderType';
 
-export interface NotatResponse {
+interface NotatResponse {
   endretAv: string;
   endretTidspunkt: null;
   gjelderType: { kode: NotatGjelderType; navn: string };
@@ -12,3 +12,5 @@ export interface NotatResponse {
   skjult: boolean;
   versjon: number;
 }
+
+export default NotatResponse;
