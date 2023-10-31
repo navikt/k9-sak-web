@@ -16,6 +16,7 @@ class PanelDef extends ProsessStegPanelDef {
     kvoteInfo,
     arbeidsgiverOpplysningerPerId,
     aksjonspunkter,
+    alleKodeverk,
     erFagytelsetypeLivetsSluttfase,
     submitCallback,
     virkningsdatoUttakNyeRegler,
@@ -26,6 +27,7 @@ class PanelDef extends ProsessStegPanelDef {
         uuid={behandling.uuid}
         uttaksperioder={uttaksperioder}
         utsattePerioder={utsattePerioder}
+        alleKodeverk={alleKodeverk}
         arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
         aksjonspunkter={aksjonspunkter}
         erFagytelsetypeLivetsSluttfase={erFagytelsetypeLivetsSluttfase}
@@ -60,13 +62,14 @@ class PanelDef extends ProsessStegPanelDef {
 
   getEndepunkter = () => [PleiepengerSluttfaseBehandlingApiKeys.ARBEIDSFORHOLD];
 
-  getData = ({ uttak, arbeidsgiverOpplysningerPerId, fagsak }) => ({
+  getData = ({ uttak, arbeidsgiverOpplysningerPerId, fagsak, alleKodeverk }) => ({
     uttaksperioder: uttak?.uttaksplan?.perioder,
     utsattePerioder: uttak?.utsattePerioder,
     kvoteInfo: uttak?.uttaksplan?.kvoteInfo,
     virkningsdatoUttakNyeRegler: uttak?.virkningsdatoUttakNyeRegler,
     arbeidsgiverOpplysningerPerId,
     erFagytelsetypeLivetsSluttfase: fagsak.sakstype.kode === fagsakYtelseType.PLEIEPENGER_SLUTTFASE,
+    alleKodeverk,
   });
 }
 
