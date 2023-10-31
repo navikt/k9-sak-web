@@ -1,16 +1,14 @@
-import { useLocalStorage } from '@fpsak-frontend/utils';
-import { NavAnsatt } from '@k9-sak-web/types';
+import { NavAnsatt, NotatGjelderType, NotatResponse } from '@k9-sak-web/types';
 import axios from 'axios';
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 import Notater, { Inputs, skjulNotatMutationVariables } from './Notater';
-import { NotatGjelderType } from './types/NotatGjelderType';
-import { NotatResponse } from './types/NotatResponse';
 
 interface NotaterIndexProps {
   fagsakId: string;
   navAnsatt: NavAnsatt;
+  fagsakHarPleietrengende: boolean;
 }
 
 interface postNotatMutationVariables {
@@ -20,8 +18,7 @@ interface postNotatMutationVariables {
   versjon?: number;
 }
 
-const NotaterIndex: React.FC<NotaterIndexProps> = ({ fagsakId, navAnsatt }) => {
-  const [lesteNotater, setLesteNotater] = useLocalStorage<number[]>('lesteNotater', []);
+const NotaterIndex: React.FC<NotaterIndexProps> = ({ fagsakId, navAnsatt, fagsakHarPleietrengende }) => {
   const queryClient = useQueryClient();
 
   const notaterQueryKey = ['notater', fagsakId];
@@ -41,15 +38,7 @@ const NotaterIndex: React.FC<NotaterIndexProps> = ({ fagsakId, navAnsatt }) => {
           saksnummer: fagsakId,
         },
       })
-      .then(({ data }) => {
-        const sorterteNotater = [...data].sort(
-          (notatA, notatB) => +new Date(notatA.opprettetTidspunkt) - +new Date(notatB.opprettetTidspunkt),
-        );
-        setLesteNotater([
-          ...new Set([...lesteNotater, ...data.filter(notat => !notat.skjult).map(notat => notat.notatId)]),
-        ]);
-        return sorterteNotater;
-      });
+      .then(({ data }) => data);
 
   const {
     isLoading: getNotaterLoading,
@@ -118,6 +107,7 @@ const NotaterIndex: React.FC<NotaterIndexProps> = ({ fagsakId, navAnsatt }) => {
       postNotatMutationError={postNotatMutation.isError}
       submitSkjulNotat={submitSkjulNotat}
       formMethods={formMethods}
+      fagsakHarPleietrengende={fagsakHarPleietrengende}
     />
   );
 };
