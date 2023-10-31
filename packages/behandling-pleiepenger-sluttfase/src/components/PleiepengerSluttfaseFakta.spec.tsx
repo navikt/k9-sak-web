@@ -102,6 +102,7 @@ describe('<PleiepengerSluttfaseFakta>', () => {
     statsborgerskap: {
       kode: '',
       kodeverk: '',
+      navn: '',
     },
     diskresjonskode: {
       kode: '',
