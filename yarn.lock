@@ -4570,7 +4570,7 @@ __metadata:
     "@k9-sak-web/rest-api-hooks": 1.0.0
     "@k9-sak-web/types": 1.0.0
     "@navikt/ft-fakta-beregning": 5.0.9
-    "@navikt/ft-fakta-beregning-redesign": 1.0.7
+    "@navikt/ft-fakta-beregning-redesign": 1.0.8
     "@navikt/ft-prosess-beregningsgrunnlag": 6.3.13
     axios-mock-adapter: 1.22.0
     enzyme: 3.11.0
@@ -4682,7 +4682,7 @@ __metadata:
     "@k9-sak-web/rest-api-hooks": 1.0.0
     "@k9-sak-web/types": 1.0.0
     "@navikt/ft-fakta-beregning": 5.0.9
-    "@navikt/ft-fakta-beregning-redesign": 1.0.7
+    "@navikt/ft-fakta-beregning-redesign": 1.0.8
     "@navikt/ft-fakta-fordel-beregningsgrunnlag": 7.3.11
     "@navikt/ft-prosess-beregningsgrunnlag": 6.3.13
     axios-mock-adapter: 1.22.0
@@ -4732,7 +4732,7 @@ __metadata:
     "@k9-sak-web/sak-app": 1.0.0
     "@k9-sak-web/types": 1.0.0
     "@navikt/ft-fakta-beregning": 5.0.9
-    "@navikt/ft-fakta-beregning-redesign": 1.0.7
+    "@navikt/ft-fakta-beregning-redesign": 1.0.8
     "@navikt/ft-fakta-fordel-beregningsgrunnlag": 7.3.11
     "@navikt/ft-prosess-beregningsgrunnlag": 6.3.13
     axios: 0.27.2
@@ -4781,7 +4781,7 @@ __metadata:
     "@k9-sak-web/sak-app": 1.0.0
     "@k9-sak-web/types": 1.0.0
     "@navikt/ft-fakta-beregning": 5.0.9
-    "@navikt/ft-fakta-beregning-redesign": 1.0.7
+    "@navikt/ft-fakta-beregning-redesign": 1.0.8
     "@navikt/ft-fakta-fordel-beregningsgrunnlag": 7.3.11
     "@navikt/ft-prosess-beregningsgrunnlag": 6.3.13
     axios: 0.27.2
@@ -4832,7 +4832,7 @@ __metadata:
     "@k9-sak-web/sak-app": 1.0.0
     "@k9-sak-web/types": 1.0.0
     "@navikt/ft-fakta-beregning": 5.0.9
-    "@navikt/ft-fakta-beregning-redesign": 1.0.7
+    "@navikt/ft-fakta-beregning-redesign": 1.0.8
     "@navikt/ft-fakta-fordel-beregningsgrunnlag": 7.3.11
     "@navikt/ft-prosess-beregningsgrunnlag": 6.3.13
     axios: 0.27.2
@@ -5451,7 +5451,7 @@ __metadata:
     "@k9-sak-web/types": 1.0.0
     "@navikt/ds-react": 5.8.0
     "@navikt/ft-fakta-beregning": 5.0.9
-    "@navikt/ft-fakta-beregning-redesign": 1.0.7
+    "@navikt/ft-fakta-beregning-redesign": 1.0.8
     "@navikt/ft-form-hooks": 4.2.11
     "@navikt/ft-plattform-komponenter": 2.3.7
     "@navikt/ft-prosess-beregningsgrunnlag": 6.3.13
@@ -5880,9 +5880,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@navikt/ft-fakta-beregning-redesign@npm:1.0.7":
-  version: 1.0.7
-  resolution: "@navikt/ft-fakta-beregning-redesign@npm:1.0.7::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fft-fakta-beregning-redesign%2F1.0.7%2Ff91c838e829168dbdf7854877cdf2832a8059c5d"
+"@navikt/ft-fakta-beregning-redesign@npm:1.0.8":
+  version: 1.0.8
+  resolution: "@navikt/ft-fakta-beregning-redesign@npm:1.0.8::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fft-fakta-beregning-redesign%2F1.0.8%2Fb82bcfbf9f3158bce7daaf6e158fdc0394ce2730"
   dependencies:
     "@navikt/aksel-icons": 5.7.6
     "@navikt/ds-css": 5.7.6
@@ -5919,7 +5919,7 @@ __metadata:
     react-dom: 18.2.0
     react-hook-form: 7.43.9
     react-intl: 6.4.2
-  checksum: fa7090b68f15bf0c1e5c0a48f11f0bd367cfafd190841f1a0fe75b6af90f5038c51a9deacb073cc9f320850d2af7affd27a6430fb5677203c2f9a1e04a9ad04b
+  checksum: cc97b1c06cb55812d62625be73c5de04f23bd767c83a32e68cb4a56d1057f73dc53210053530c9919ce621297ec59c89932a776f108a0146401ef0c5062955df
   languageName: node
   linkType: hard
 
