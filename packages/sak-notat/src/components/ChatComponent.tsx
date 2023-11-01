@@ -100,8 +100,8 @@ const ChatComponent: React.FunctionComponent<ChatComponentProps> = ({
   const navnPåOppretter = opprettetAv === navAnsatt.brukernavn ? 'Deg' : opprettetAv;
 
   const tidspunktStreng = () => {
-    const formatertOpprettetTidspunkt = format(new Date(opprettetTidspunkt), 'dd.MM.yyyy H:mm');
-    const formatertEndretTidspunkt = format(new Date(endretTidspunkt), 'dd.MM.yyyy H:mm');
+    const formatertOpprettetTidspunkt = format(new Date(opprettetTidspunkt), 'dd.MM.yy H:mm');
+    const formatertEndretTidspunkt = endretTidspunkt ? format(new Date(endretTidspunkt), 'dd.MM.yy H:mm') : undefined;
     if (endretTidspunkt) {
       return `(Endret: ${formatertEndretTidspunkt})  ${formatertOpprettetTidspunkt}`;
     }
