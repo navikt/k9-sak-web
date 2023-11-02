@@ -103,12 +103,24 @@ const FrisinnFakta = ({
         .getEndepunkter()
         .map(e => ({ key: e }))
     : [];
+  const endepunkterUtenCaching = valgtPanel
+    ? valgtPanel
+        .getPanelDef()
+        .getEndepunkterUtenCaching()
+        .map(e => ({ key: e }))
+    : [];
   // TODO FetchedData er feil type
   const { data: faktaData, state } = restApiFrisinnHooks.useMultipleRestApi<FetchedData>(endepunkter, {
     updateTriggers: [behandling.versjon, valgtPanel],
     suspendRequest: !valgtPanel,
     isCachingOn: true,
   });
+
+  const { data: faktaDataUtenCaching, state: stateForEndepunkterUtenCaching } =
+    restApiFrisinnHooks.useMultipleRestApi<FetchedData>(endepunkterUtenCaching, {
+      updateTriggers: [behandling.versjon, valgtPanel],
+      suspendRequest: !valgtPanel,
+    });
 
   const [formData, setFormData] = useState({});
   useEffect(() => {
@@ -118,7 +130,11 @@ const FrisinnFakta = ({
   }, [behandling.versjon]);
 
   if (sidemenyPaneler.length > 0) {
-    const isLoading = state === RestApiState.NOT_STARTED || state === RestApiState.LOADING;
+    const isLoading =
+      state === RestApiState.NOT_STARTED ||
+      state === RestApiState.LOADING ||
+      stateForEndepunkterUtenCaching === RestApiState.NOT_STARTED ||
+      stateForEndepunkterUtenCaching === RestApiState.LOADING;
     return (
       <SideMenuWrapper paneler={sidemenyPaneler} onClick={velgFaktaPanelCallback}>
         {valgtPanel && isLoading && <LoadingPanel />}
@@ -126,6 +142,7 @@ const FrisinnFakta = ({
           <ErrorBoundary errorMessageCallback={addErrorMessage}>
             {valgtPanel.getPanelDef().getKomponent({
               ...faktaData,
+              ...faktaDataUtenCaching,
               behandling,
               alleKodeverk,
               formData,
