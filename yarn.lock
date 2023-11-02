@@ -3992,7 +3992,7 @@ __metadata:
     "@fpsak-frontend/utils": 1.0.0
     "@fpsak-frontend/utils-test": 1.0.0
     "@k9-sak-web/types": 1.0.0
-    "@navikt/aksel-icons": 5.8.0
+    "@navikt/aksel-icons": 5.9.1
     "@navikt/ds-react": 5.8.0
     "@navikt/fnrvalidator": 1.3.3
     "@navikt/ft-plattform-komponenter": 2.3.8
@@ -5595,7 +5595,7 @@ __metadata:
   dependencies:
     "@fpsak-frontend/utils": 1.0.0
     "@k9-sak-web/types": 1.0.0
-    "@navikt/aksel-icons": 5.8.0
+    "@navikt/aksel-icons": 5.9.1
     "@navikt/ds-react": 5.8.0
     "@navikt/ft-form-hooks": 4.2.12
     "@navikt/ft-form-validators": ^2.1.5
@@ -5764,6 +5764,13 @@ __metadata:
   version: 5.8.0
   resolution: "@navikt/aksel-icons@npm:5.8.0::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Faksel-icons%2F5.8.0%2Fa7b48ff5ab48f8d57f19edc2cc50e3a74514890a"
   checksum: cf78ef4d3fc902deb5d8314dcca3227b9cc66118741c263cb7644daa4816043cd6df31b4982620662063beaa596f9e42fa783ccdbb0474521c6832a1ae334ddf
+  languageName: node
+  linkType: hard
+
+"@navikt/aksel-icons@npm:5.9.1":
+  version: 5.9.1
+  resolution: "@navikt/aksel-icons@npm:5.9.1::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Faksel-icons%2F5.9.1%2F161559aed12119b6f8e797864106fc1bec087575"
+  checksum: 25b1160a9dfa86f9011c241572ec0b1237d96705cd73b49e98f450f28d274279ef5ccbcec45b65a482b6d12efa0346e794c9113baf3199a9f71320f1df3b8326
   languageName: node
   linkType: hard
 
@@ -18101,7 +18108,7 @@ __metadata:
     "@commercetools/enzyme-extensions": 5.0.0
     "@formatjs/intl-datetimeformat": 6.11.1
     "@formatjs/intl-numberformat": 8.8.0
-    "@navikt/aksel-icons": 5.8.0
+    "@navikt/aksel-icons": 5.9.1
     "@navikt/ds-css": 5.8.0
     "@navikt/ds-react": 5.8.0
     "@navikt/ds-tailwind": ^5.8.0
