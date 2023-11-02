@@ -3993,7 +3993,7 @@ __metadata:
     "@fpsak-frontend/utils-test": 1.0.0
     "@k9-sak-web/types": 1.0.0
     "@navikt/aksel-icons": 5.8.0
-    "@navikt/ds-react": 5.8.0
+    "@navikt/ds-react": 5.9.1
     "@navikt/fnrvalidator": 1.3.3
     "@navikt/ft-plattform-komponenter": 2.3.8
     axios: 0.27.2
@@ -5083,7 +5083,7 @@ __metadata:
     "@fpsak-frontend/utils": "*"
     "@k9-sak-web/types": "*"
     "@navikt/ds-icons": 3.4.3
-    "@navikt/ds-react": 5.8.0
+    "@navikt/ds-react": 5.9.1
     "@navikt/ft-plattform-komponenter": 2.3.8
     "@navikt/k9-fe-form-utils": 1.0.10
     "@navikt/k9-fe-period-utils": 1.0.9
@@ -5449,7 +5449,7 @@ __metadata:
     "@k9-sak-web/sak-notat": 1.0.0
     "@k9-sak-web/sak-soknadsperiodestripe": 1.0.0
     "@k9-sak-web/types": 1.0.0
-    "@navikt/ds-react": 5.8.0
+    "@navikt/ds-react": 5.9.1
     "@navikt/ft-fakta-beregning": 5.0.10
     "@navikt/ft-fakta-beregning-redesign": 1.0.11
     "@navikt/ft-form-hooks": 4.2.12
@@ -5575,7 +5575,7 @@ __metadata:
     "@fpsak-frontend/shared-components": 1.0.0
     "@fpsak-frontend/utils": 1.0.0
     "@k9-sak-web/types": 1.0.0
-    "@navikt/ds-react": 5.8.0
+    "@navikt/ds-react": 5.9.1
     formik: 2.4.5
     nav-frontend-core: 6.0.1
     nav-frontend-knapper: 3.1.3
@@ -5596,7 +5596,7 @@ __metadata:
     "@fpsak-frontend/utils": 1.0.0
     "@k9-sak-web/types": 1.0.0
     "@navikt/aksel-icons": 5.8.0
-    "@navikt/ds-react": 5.8.0
+    "@navikt/ds-react": 5.9.1
     "@navikt/ft-form-hooks": 4.2.12
     "@navikt/ft-form-validators": ^2.1.5
     date-fns: 2.30.0
@@ -5767,6 +5767,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@navikt/aksel-icons@npm:^5.9.1":
+  version: 5.9.1
+  resolution: "@navikt/aksel-icons@npm:5.9.1::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Faksel-icons%2F5.9.1%2F161559aed12119b6f8e797864106fc1bec087575"
+  checksum: 25b1160a9dfa86f9011c241572ec0b1237d96705cd73b49e98f450f28d274279ef5ccbcec45b65a482b6d12efa0346e794c9113baf3199a9f71320f1df3b8326
+  languageName: node
+  linkType: hard
+
 "@navikt/ds-css@npm:5.8.0":
   version: 5.8.0
   resolution: "@navikt/ds-css@npm:5.8.0::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fds-css%2F5.8.0%2F899d01811f3761f0c6135dd1d621d38d52138d12"
@@ -5803,6 +5810,25 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@navikt/ds-react@npm:5.9.1":
+  version: 5.9.1
+  resolution: "@navikt/ds-react@npm:5.9.1::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fds-react%2F5.9.1%2F12248f3c01ea15c6abe51225d9822bcace2e46bb"
+  dependencies:
+    "@floating-ui/react": 0.25.4
+    "@navikt/aksel-icons": ^5.9.1
+    "@navikt/ds-tokens": ^5.9.1
+    "@radix-ui/react-tabs": 1.0.0
+    "@radix-ui/react-toggle-group": 1.0.0
+    clsx: ^1.2.1
+    date-fns: 2.29.3
+    react-day-picker: 8.3.4
+  peerDependencies:
+    "@types/react": ^17.0.30 || ^18.0.0
+    react: ^17.0.0 || ^18.0.0
+  checksum: 8aca422928629bf677034956294308459bd37561c100c11126dd3d2944331cefa3eeff5c1e0f51b42aa581844a042e989d3fddae52f9ac2622215f4bde83ba0c
+  languageName: node
+  linkType: hard
+
 "@navikt/ds-tailwind@npm:^5.8.0":
   version: 5.8.0
   resolution: "@navikt/ds-tailwind@npm:5.8.0::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fds-tailwind%2F5.8.0%2F101dbf479d1f50510bfe0332065ded054e1baf00"
@@ -5814,6 +5840,13 @@ __metadata:
   version: 5.8.0
   resolution: "@navikt/ds-tokens@npm:5.8.0::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fds-tokens%2F5.8.0%2Fbae5aa84a0137fa75502c50a1c7c4b8c7996ed0e"
   checksum: c41601dc2007a74c01f94fdf1b2e73b319ce54ab27774bcfd4ecdc1a6ea46580564b35193cd677cc1ac0a7b29a60862e7964c9a43eb57622993d0aca0aae771d
+  languageName: node
+  linkType: hard
+
+"@navikt/ds-tokens@npm:^5.9.1":
+  version: 5.9.1
+  resolution: "@navikt/ds-tokens@npm:5.9.1::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fds-tokens%2F5.9.1%2Fc68176389a5ce670f36382403693953be674b3d7"
+  checksum: 578a7859a33d91d791a429f24b42dc4510aedf781d7d40341b39fadb4ee8a9c729603627d88d187f73e256eb148290e28c54815d7393fb3c0d1ae29f4de75b80
   languageName: node
   linkType: hard
 
@@ -18103,7 +18136,7 @@ __metadata:
     "@formatjs/intl-numberformat": 8.8.0
     "@navikt/aksel-icons": 5.8.0
     "@navikt/ds-css": 5.8.0
-    "@navikt/ds-react": 5.8.0
+    "@navikt/ds-react": 5.9.1
     "@navikt/ds-tailwind": ^5.8.0
     "@navikt/familie-endringslogg": 10.0.0
     "@navikt/ft-plattform-komponenter": 2.3.8
