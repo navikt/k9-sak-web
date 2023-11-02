@@ -5774,6 +5774,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@navikt/ds-css@npm:5.9.1":
+  version: 5.9.1
+  resolution: "@navikt/ds-css@npm:5.9.1::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fds-css%2F5.9.1%2F83ccbc4ad1b41d1ca783d28a5547054a6f9230c7"
+  checksum: a32a1f7ffaee7bc1a39c9e13ae22ba26661f19c568749d651b6b7154127f6b982e06f7949b8975b41a1d7629430b97f8fda62b915fbe22b02f4b2e2fd14a655b
+  languageName: node
+  linkType: hard
+
 "@navikt/ds-icons@npm:3.4.3":
   version: 3.4.3
   resolution: "@navikt/ds-icons@npm:3.4.3::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fds-icons%2F3.4.3%2Feaa8fc38f6d184806d3405a5efbc9d137c2b8d27"
@@ -18102,7 +18109,7 @@ __metadata:
     "@formatjs/intl-datetimeformat": 6.11.1
     "@formatjs/intl-numberformat": 8.8.0
     "@navikt/aksel-icons": 5.8.0
-    "@navikt/ds-css": 5.8.0
+    "@navikt/ds-css": 5.9.1
     "@navikt/ds-react": 5.8.0
     "@navikt/ds-tailwind": ^5.8.0
     "@navikt/familie-endringslogg": 10.0.0
