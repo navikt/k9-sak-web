@@ -21,9 +21,10 @@ updates:
         exclude-patterns:
           - "@storybook/*"
           - "@typescript-eslint*"
-          - "react"
-          - "react-dom"
+          - "@babel*"
+          - "react*"
           - "@types/react"
+          - "@navikt*"
       react:
         patterns:
           - "react"
