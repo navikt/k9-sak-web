@@ -4868,6 +4868,7 @@ __metadata:
     "@navikt/k9-fe-medisinsk-vilkar": 0.0.4
     "@navikt/k9-fe-om-barnet": 0.0.3
     "@navikt/k9-fe-omsorgen-for": 0.0.1
+    "@navikt/k9-fe-uttak": 0.0.1
     axios: 1.5.1
     axios-mock-adapter: 1.22.0
     enzyme: 3.11.0
@@ -5497,6 +5498,7 @@ __metadata:
     "@navikt/k9-fe-om-barnet": 0.0.3
     "@navikt/k9-fe-omsorgen-for": 0.0.1
     "@navikt/k9-fe-omsorgsdager": 0.0.1
+    "@navikt/k9-fe-uttak": 0.0.1
     "@sentry/browser": 7.77.0
     axios: 0.27.2
     classnames: 2.3.2
@@ -5801,6 +5803,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@navikt/aksel-icons@npm:5.6.1":
+  version: 5.6.1
+  resolution: "@navikt/aksel-icons@npm:5.6.1::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Faksel-icons%2F5.6.1%2F2929441e9c379ca7185235e4b51fd7dce6b333b4"
+  checksum: 06a8ef3b2d63a60a4a3cdd0aad8e6e97199567ef989e66b40df71654027a6bb5b3a8ac817f74cfdd57548e05bb4c1b05a8209125c03204e5bc2ca624071eaa55
+  languageName: node
+  linkType: hard
+
 "@navikt/aksel-icons@npm:5.8.0, @navikt/aksel-icons@npm:^5.8.0":
   version: 5.8.0
   resolution: "@navikt/aksel-icons@npm:5.8.0::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Faksel-icons%2F5.8.0%2Fa7b48ff5ab48f8d57f19edc2cc50e3a74514890a"
@@ -5808,10 +5817,24 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@navikt/aksel-icons@npm:^5.6.1":
+  version: 5.9.2
+  resolution: "@navikt/aksel-icons@npm:5.9.2::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Faksel-icons%2F5.9.2%2F482bb83a2bc6b4e954700e278c28614c108117e3"
+  checksum: 713c46d976ff337f68f0b6ddb5f3f6f45ca39ba0a1e0f2ad2a390a5ab4974e448fba47e405893d5b21d598a8990c82c16c2cee962cb603e40d61afc09a96bb39
+  languageName: node
+  linkType: hard
+
 "@navikt/diagnosekoder@npm:^1.2023.0":
   version: 1.2023.0
   resolution: "@navikt/diagnosekoder@npm:1.2023.0::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fdiagnosekoder%2F1.2023.0%2F5a183052f0676e45a88cb9ebb8696d85452f54e6"
   checksum: 8f98bc41c36801383532e258873e5b1f35eb6e1e45cf332db3178577c97aa77c7bffc18de8ea2c27f4a6b7bc2345a21a9a81b11d207ce543e3d26dce925e9649
+  languageName: node
+  linkType: hard
+
+"@navikt/ds-css@npm:5.6.1":
+  version: 5.6.1
+  resolution: "@navikt/ds-css@npm:5.6.1::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fds-css%2F5.6.1%2F03f4282efc02cfec2546a60a6ba97fdb2c83d9a6"
+  checksum: 79a3d010e0f472e3e66b24197c2723ac506260d02c4df45ce87c88877b621c35177a45713bca65fd0aab0dfe346050959b0df8247bbd2ff1d96fa502ffaff7fb
   languageName: node
   linkType: hard
 
@@ -5829,6 +5852,25 @@ __metadata:
     "@types/react": ^17.0.30 || ^18.0.0
     react: ^17.0.0 || ^18.0.0
   checksum: 3b5f917c65ea4ca6296075dcc5b91e4c2ebdd8146731fc58ab6ea2d7fcad7f6dfa8b63d550717c862a0dc889c6dc1a7dd04bf8ac84b6b88c6d75b94d4127f199
+  languageName: node
+  linkType: hard
+
+"@navikt/ds-react@npm:5.6.1":
+  version: 5.6.1
+  resolution: "@navikt/ds-react@npm:5.6.1::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fds-react%2F5.6.1%2F3708463c64696e4be067b699743bfd78f0204b67"
+  dependencies:
+    "@floating-ui/react": 0.25.4
+    "@navikt/aksel-icons": ^5.6.1
+    "@navikt/ds-tokens": ^5.6.1
+    "@radix-ui/react-tabs": 1.0.0
+    "@radix-ui/react-toggle-group": 1.0.0
+    clsx: ^1.2.1
+    date-fns: 2.29.3
+    react-day-picker: 8.3.4
+  peerDependencies:
+    "@types/react": ^17.0.30 || ^18.0.0
+    react: ^17.0.0 || ^18.0.0
+  checksum: c56ee007992228ea1f85f41ccc68d158152489fd5799b72cc0d10ab79a53e7da2baef857b27cfbecbc9e03c1ed056f7f2e754c3d7afcd2c4947bb384259f8989
   languageName: node
   linkType: hard
 
@@ -5855,6 +5897,13 @@ __metadata:
   version: 5.8.0
   resolution: "@navikt/ds-tailwind@npm:5.8.0::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fds-tailwind%2F5.8.0%2F101dbf479d1f50510bfe0332065ded054e1baf00"
   checksum: 52fe5e273a944d8cd60c084f32cfe83f6c9bb79dc45ea66a9aef5593f393581fc0c9bd641b1295c23402f83e5f525bfedd000cbe2dfd50af234f27388b98bc01
+  languageName: node
+  linkType: hard
+
+"@navikt/ds-tokens@npm:^5.6.1":
+  version: 5.9.2
+  resolution: "@navikt/ds-tokens@npm:5.9.2::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fds-tokens%2F5.9.2%2Ff410260891058d4d3ec19f1c2c175274c3b637ca"
+  checksum: 611b8e1b68c99bf6e8d3f2e570b36485b59ade256513c95cd9541413cf469c33842b8ebb2cbc14e781c78e39ce72a011a558bc141933af87b4e3feb0d442c798
   languageName: node
   linkType: hard
 
@@ -6047,7 +6096,53 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@navikt/ft-form-validators@npm:^2.1.5":
+"@navikt/ft-form-hooks@npm:4.2.9":
+  version: 4.2.9
+  resolution: "@navikt/ft-form-hooks@npm:4.2.9::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fft-form-hooks%2F4.2.9%2F813a0066ebc606a8e2e8ec7096ee30a95a174c34"
+  dependencies:
+    "@navikt/aksel-icons": 5.6.1
+    "@navikt/ds-css": 5.6.1
+    "@navikt/ds-react": 5.6.1
+    "@navikt/ft-form-validators": ^2.1.3
+    "@navikt/ft-types": ^2.2.3
+    "@navikt/ft-ui-komponenter": ^2.1.9
+    "@navikt/ft-utils": ^2.1.3
+    classnames: 2.3.2
+    dayjs: 1.11.9
+    lodash.throttle: 4.1.1
+    react: 18.2.0
+    react-hook-form: 7.47.0
+  peerDependencies:
+    "@navikt/aksel-icons": 3.1.2
+    "@navikt/ds-css": 2.8.11
+    "@navikt/ds-react": 2.8.11
+    "@navikt/ft-form-validators": 2.x
+    "@navikt/ft-types": 2.x
+    "@navikt/ft-ui-komponenter": 2.x
+    "@navikt/ft-utils": 2.x
+    classnames: 2.3.2
+    dayjs: 1.11.7
+    lodash.throttle: 4.1.1
+    react: 18.2.0
+    react-hook-form: 7.43.9
+  checksum: c240a81eff608b004f6e54a407abd2af017080cf0bed4ccb2a36380ede150dd668f57a815d8c27d1d7a8f533eb596bfa42366f9d7cf5735227fbbbe063c37d5c
+  languageName: node
+  linkType: hard
+
+"@navikt/ft-form-validators@npm:2.1.3":
+  version: 2.1.3
+  resolution: "@navikt/ft-form-validators@npm:2.1.3::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fft-form-validators%2F2.1.3%2Fa10569286e3d9d7afd6c6f33c1a61f3d6ed708e7"
+  dependencies:
+    "@navikt/ft-utils": ^2.1.3
+    moment: 2.29.4
+  peerDependencies:
+    "@navikt/ft-utils": 2.x
+    moment: 2.29.4
+  checksum: 56f91f2eaa0d8f590752d402230bfdd71d0e4166f8b27e1899139a096931311d654d534b59a041f8beba3796a766a826f772341e8e1166c6401aa77f76abba42
+  languageName: node
+  linkType: hard
+
+"@navikt/ft-form-validators@npm:^2.1.3, @navikt/ft-form-validators@npm:^2.1.5":
   version: 2.1.5
   resolution: "@navikt/ft-form-validators@npm:2.1.5::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fft-form-validators%2F2.1.5%2Fffcedfda66a7a1d1665826746348c302c454779c"
   dependencies:
@@ -6071,6 +6166,29 @@ __metadata:
   version: 2.1.5
   resolution: "@navikt/ft-konstanter@npm:2.1.5::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fft-konstanter%2F2.1.5%2F30a53b176a9de5b877df0e9cc61b85145f736165"
   checksum: ff31694c796d6d5dae79792e277681720c750a9f5b1099d0e50651c3dbd437c73aa9f80da2e942158a565833c834dd2ac4d0a1f4c3154a97ade6e78b18e66659
+  languageName: node
+  linkType: hard
+
+"@navikt/ft-plattform-komponenter@npm:2.3.6":
+  version: 2.3.6
+  resolution: "@navikt/ft-plattform-komponenter@npm:2.3.6::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fft-plattform-komponenter%2F2.3.6%2F925cc74a1f9cc6e803886574f0a61718b75d67fa"
+  dependencies:
+    "@navikt/aksel-icons": 5.6.1
+    "@navikt/ds-css": 5.6.1
+    "@navikt/ds-react": 5.6.1
+    "@navikt/ft-utils": ^2.1.3
+    classnames: 2.3.2
+  peerDependencies:
+    "@popperjs/core": 2.11.7
+    classnames: 2.3.2
+    dayjs: 1.11.7
+    lodash.throttle: 4.1.1
+    prop-types: 15.8.1
+    react: 18.2.0
+    react-collapse: 5.1.1
+    react-dom: 18.2.0
+    react-popper: 2.3.0
+  checksum: e57845233a1786bae17ac6cf949596199ce2a09e1bf8a45a3fad339d09953cbafee1ea3964be53c6e544e32e1e13004b5bd961cf9cae3480ed1ab70236d5f4b5
   languageName: node
   linkType: hard
 
@@ -6177,7 +6295,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@navikt/ft-types@npm:2.2.5, @navikt/ft-types@npm:^2.2.5":
+"@navikt/ft-types@npm:2.2.5, @navikt/ft-types@npm:^2.2.3, @navikt/ft-types@npm:^2.2.5":
   version: 2.2.5
   resolution: "@navikt/ft-types@npm:2.2.5::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fft-types%2F2.2.5%2Fce3029f97f3ff3aee7a205e9482b0f33a60e0f90"
   dependencies:
@@ -6188,7 +6306,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@navikt/ft-ui-komponenter@npm:2.1.12, @navikt/ft-ui-komponenter@npm:^2.1.12":
+"@navikt/ft-ui-komponenter@npm:2.1.12, @navikt/ft-ui-komponenter@npm:^2.1.12, @navikt/ft-ui-komponenter@npm:^2.1.9":
   version: 2.1.12
   resolution: "@navikt/ft-ui-komponenter@npm:2.1.12::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fft-ui-komponenter%2F2.1.12%2F13925931aa1fa0eab795345b2a5890cd0e890e83"
   dependencies:
@@ -6213,7 +6331,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@navikt/ft-utils@npm:^2.1.5":
+"@navikt/ft-utils@npm:^2.1.3, @navikt/ft-utils@npm:^2.1.5":
   version: 2.1.5
   resolution: "@navikt/ft-utils@npm:2.1.5::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fft-utils%2F2.1.5%2F95afb7cf833ac5428742012675aa2d424dd3d468"
   dependencies:
@@ -6571,6 +6689,52 @@ __metadata:
   peerDependencies:
     dayjs: 1.11.7
   checksum: 47707969e7bb3edf3a9edf4356e5232131dfda6d51e137ecc2088368eca287ecb002aadd864804c9f004f95eaa5329d12d30b39669b612e5884dc9814f67aa24
+  languageName: node
+  linkType: hard
+
+"@navikt/k9-fe-uttak@npm:0.0.1":
+  version: 0.0.1
+  resolution: "@navikt/k9-fe-uttak@npm:0.0.1::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fk9-fe-uttak%2F0.0.1%2F7580343ecae5a663d8f6cb2b84cdb8c5512bf260"
+  dependencies:
+    "@navikt/ds-css": 5.6.1
+    "@navikt/ds-react": 5.6.1
+    "@navikt/ft-form-hooks": 4.2.9
+    "@navikt/ft-form-validators": 2.1.3
+    "@navikt/ft-plattform-komponenter": 2.3.6
+    "@popperjs/core": 2.x
+    classnames: 2.x
+    dayjs: 1.x
+    lodash.throttle: 4.x
+    nav-frontend-alertstriper: 4.x
+    nav-frontend-alertstriper-style: 3.x
+    nav-frontend-chevron: 1.x
+    nav-frontend-chevron-style: 1.x
+    nav-frontend-core: 6.x
+    nav-frontend-etiketter: 3.x
+    nav-frontend-etiketter-style: 2.x
+    nav-frontend-hjelpetekst: 3.x
+    nav-frontend-hjelpetekst-style: 3.x
+    nav-frontend-ikoner-assets: 3.x
+    nav-frontend-ikonknapper: 2.x
+    nav-frontend-js-utils: 1.x
+    nav-frontend-knapper: 3.x
+    nav-frontend-knapper-style: 2.x
+    nav-frontend-paneler: 3.x
+    nav-frontend-paneler-style: 2.x
+    nav-frontend-popover: 2.x
+    nav-frontend-popover-style: 2.x
+    nav-frontend-spinner: 3.x
+    nav-frontend-spinner-style: 1.x
+    nav-frontend-tabs: 2.x
+    nav-frontend-tabs-style: 2.x
+    nav-frontend-typografi: 4.x
+    nav-frontend-typografi-style: 2.x
+    react: 18.x
+    react-collapse: 5.x
+    react-dom: 18.x
+    react-hook-form: 7.47.0
+    react-popper: 2.x
+  checksum: 0b967d1b4318a080a288a2db0d8a8720192e044172759e19963d920321316e8ffd908b2b7b9d80d68a1760e3ca80eb04a10b67a18bb8a4229e35ddf0c125c5b0
   languageName: node
   linkType: hard
 
@@ -7011,7 +7175,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@popperjs/core@npm:2.11.8":
+"@popperjs/core@npm:2.11.8, @popperjs/core@npm:2.x":
   version: 2.11.8
   resolution: "@popperjs/core@npm:2.11.8"
   checksum: e5c69fdebf52a4012f6a1f14817ca8e9599cb1be73dd1387e1785e2ed5e5f0862ff817f420a87c7fc532add1f88a12e25aeb010ffcbdc98eace3d55ce2139cf0
@@ -12351,7 +12515,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"classnames@npm:2.3.2, classnames@npm:^2.3.2":
+"classnames@npm:2.3.2, classnames@npm:2.x, classnames@npm:^2.3.2":
   version: 2.3.2
   resolution: "classnames@npm:2.3.2"
   checksum: 2c62199789618d95545c872787137262e741f9db13328e216b093eea91c85ef2bfb152c1f9e63027204e2559a006a92eb74147d46c800a9f96297ae1d9f96f4e
@@ -13417,10 +13581,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"dayjs@npm:1.11.10":
+"dayjs@npm:1.11.10, dayjs@npm:1.x":
   version: 1.11.10
   resolution: "dayjs@npm:1.11.10"
   checksum: a6b5a3813b8884f5cd557e2e6b7fa569f4c5d0c97aca9558e38534af4f2d60daafd3ff8c2000fed3435cfcec9e805bcebd99f90130c6d1c5ef524084ced588c4
+  languageName: node
+  linkType: hard
+
+"dayjs@npm:1.11.9":
+  version: 1.11.9
+  resolution: "dayjs@npm:1.11.9"
+  checksum: a4844d83dc87f921348bb9b1b93af851c51e6f71fa259604809cfe1b49d1230e6b0212dab44d1cb01994c096ad3a77ea1cf18fa55154da6efcc9d3610526ac38
   languageName: node
   linkType: hard
 
@@ -19115,7 +19286,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"lodash.throttle@npm:4.1.1, lodash.throttle@npm:^4.1.1":
+"lodash.throttle@npm:4.1.1, lodash.throttle@npm:4.x, lodash.throttle@npm:^4.1.1":
   version: 4.1.1
   resolution: "lodash.throttle@npm:4.1.1"
   checksum: 129c0a28cee48b348aef146f638ef8a8b197944d4e9ec26c1890c19d9bf5a5690fe11b655c77a4551268819b32d27f4206343e30c78961f60b561b8608c8c805
@@ -19972,7 +20143,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"nav-frontend-alertstriper-style@npm:3.0.2":
+"nav-frontend-alertstriper-style@npm:3.0.2, nav-frontend-alertstriper-style@npm:3.x":
   version: 3.0.2
   resolution: "nav-frontend-alertstriper-style@npm:3.0.2"
   peerDependencies:
@@ -19984,7 +20155,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"nav-frontend-alertstriper@npm:4.0.2":
+"nav-frontend-alertstriper@npm:4.0.2, nav-frontend-alertstriper@npm:4.x":
   version: 4.0.2
   resolution: "nav-frontend-alertstriper@npm:4.0.2"
   peerDependencies:
@@ -19998,14 +20169,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"nav-frontend-chevron-style@npm:1.0.4":
+"nav-frontend-chevron-style@npm:1.0.4, nav-frontend-chevron-style@npm:1.x":
   version: 1.0.4
   resolution: "nav-frontend-chevron-style@npm:1.0.4"
   checksum: c4c4e8c63a9d9802060fbc451f8d82fa48ced9763b2820c0ff6e0801b5e9c8624a92d83ccb8c914f65cb29ed78dedf7ed92ce8c42c91fc6ffe29421f1a788630
   languageName: node
   linkType: hard
 
-"nav-frontend-chevron@npm:1.0.30":
+"nav-frontend-chevron@npm:1.0.30, nav-frontend-chevron@npm:1.x":
   version: 1.0.30
   resolution: "nav-frontend-chevron@npm:1.0.30"
   peerDependencies:
@@ -20017,7 +20188,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"nav-frontend-core@npm:6.0.1, nav-frontend-core@npm:^6.0.1":
+"nav-frontend-core@npm:6.0.1, nav-frontend-core@npm:6.x, nav-frontend-core@npm:^6.0.1":
   version: 6.0.1
   resolution: "nav-frontend-core@npm:6.0.1"
   checksum: 7673f42a2a93a08fa6952d2c32d8e5d424de437910b76d84363d7cb86a7c0691e5f475a3623c8964366b3bbd33a6defb8e3907bc61b41c3434b4619aab7567d2
@@ -20050,7 +20221,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"nav-frontend-etiketter-style@npm:2.0.3":
+"nav-frontend-etiketter-style@npm:2.0.3, nav-frontend-etiketter-style@npm:2.x":
   version: 2.0.3
   resolution: "nav-frontend-etiketter-style@npm:2.0.3"
   peerDependencies:
@@ -20059,7 +20230,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"nav-frontend-etiketter@npm:3.0.3":
+"nav-frontend-etiketter@npm:3.0.3, nav-frontend-etiketter@npm:3.x":
   version: 3.0.3
   resolution: "nav-frontend-etiketter@npm:3.0.3"
   peerDependencies:
@@ -20093,7 +20264,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"nav-frontend-hjelpetekst-style@npm:3.0.2":
+"nav-frontend-hjelpetekst-style@npm:3.0.2, nav-frontend-hjelpetekst-style@npm:3.x":
   version: 3.0.2
   resolution: "nav-frontend-hjelpetekst-style@npm:3.0.2"
   peerDependencies:
@@ -20103,7 +20274,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"nav-frontend-hjelpetekst@npm:3.1.3":
+"nav-frontend-hjelpetekst@npm:3.1.3, nav-frontend-hjelpetekst@npm:3.x":
   version: 3.1.3
   resolution: "nav-frontend-hjelpetekst@npm:3.1.3"
   peerDependencies:
@@ -20118,14 +20289,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"nav-frontend-ikoner-assets@npm:3.0.1":
+"nav-frontend-ikoner-assets@npm:3.0.1, nav-frontend-ikoner-assets@npm:3.x":
   version: 3.0.1
   resolution: "nav-frontend-ikoner-assets@npm:3.0.1"
   checksum: 6d6bce01b95555d56333cd11cbadc715e5a4021a62a5981c30c4a8ba3d5807267cb04f6410bad2bc7804f377c0e020eb79e6d389c8bb19942a2b9d1f70b551d9
   languageName: node
   linkType: hard
 
-"nav-frontend-ikonknapper@npm:2.1.3":
+"nav-frontend-ikonknapper@npm:2.1.3, nav-frontend-ikonknapper@npm:2.x":
   version: 2.1.3
   resolution: "nav-frontend-ikonknapper@npm:2.1.3"
   peerDependencies:
@@ -20137,7 +20308,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"nav-frontend-js-utils@npm:1.0.20":
+"nav-frontend-js-utils@npm:1.0.20, nav-frontend-js-utils@npm:1.x":
   version: 1.0.20
   resolution: "nav-frontend-js-utils@npm:1.0.20"
   dependencies:
@@ -20150,7 +20321,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"nav-frontend-knapper-style@npm:2.1.2":
+"nav-frontend-knapper-style@npm:2.1.2, nav-frontend-knapper-style@npm:2.x":
   version: 2.1.2
   resolution: "nav-frontend-knapper-style@npm:2.1.2"
   peerDependencies:
@@ -20160,7 +20331,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"nav-frontend-knapper@npm:3.1.3":
+"nav-frontend-knapper@npm:3.1.3, nav-frontend-knapper@npm:3.x":
   version: 3.1.3
   resolution: "nav-frontend-knapper@npm:3.1.3"
   peerDependencies:
@@ -20265,7 +20436,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"nav-frontend-paneler-style@npm:2.0.2":
+"nav-frontend-paneler-style@npm:2.0.2, nav-frontend-paneler-style@npm:2.x":
   version: 2.0.2
   resolution: "nav-frontend-paneler-style@npm:2.0.2"
   peerDependencies:
@@ -20274,7 +20445,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"nav-frontend-paneler@npm:3.0.2":
+"nav-frontend-paneler@npm:3.0.2, nav-frontend-paneler@npm:3.x":
   version: 3.0.2
   resolution: "nav-frontend-paneler@npm:3.0.2"
   peerDependencies:
@@ -20288,7 +20459,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"nav-frontend-popover-style@npm:2.0.2":
+"nav-frontend-popover-style@npm:2.0.2, nav-frontend-popover-style@npm:2.x":
   version: 2.0.2
   resolution: "nav-frontend-popover-style@npm:2.0.2"
   peerDependencies:
@@ -20297,7 +20468,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"nav-frontend-popover@npm:2.0.4":
+"nav-frontend-popover@npm:2.0.4, nav-frontend-popover@npm:2.x":
   version: 2.0.4
   resolution: "nav-frontend-popover@npm:2.0.4"
   peerDependencies:
@@ -20363,14 +20534,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"nav-frontend-spinner-style@npm:1.0.2":
+"nav-frontend-spinner-style@npm:1.0.2, nav-frontend-spinner-style@npm:1.x":
   version: 1.0.2
   resolution: "nav-frontend-spinner-style@npm:1.0.2"
   checksum: 28e376811be644987470012a513d4c4a22231263631e8911355cc15080301a54334ac8163a45503146706bf76483b3243a3495b1272b1321b4535a0e5103977f
   languageName: node
   linkType: hard
 
-"nav-frontend-spinner@npm:3.0.1":
+"nav-frontend-spinner@npm:3.0.1, nav-frontend-spinner@npm:3.x":
   version: 3.0.1
   resolution: "nav-frontend-spinner@npm:3.0.1"
   peerDependencies:
@@ -20383,7 +20554,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"nav-frontend-tabs-style@npm:2.0.2":
+"nav-frontend-tabs-style@npm:2.0.2, nav-frontend-tabs-style@npm:2.x":
   version: 2.0.2
   resolution: "nav-frontend-tabs-style@npm:2.0.2"
   peerDependencies:
@@ -20393,7 +20564,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"nav-frontend-tabs@npm:2.0.3":
+"nav-frontend-tabs@npm:2.0.3, nav-frontend-tabs@npm:2.x":
   version: 2.0.3
   resolution: "nav-frontend-tabs@npm:2.0.3"
   peerDependencies:
@@ -20405,7 +20576,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"nav-frontend-typografi-style@npm:2.0.2":
+"nav-frontend-typografi-style@npm:2.0.2, nav-frontend-typografi-style@npm:2.x":
   version: 2.0.2
   resolution: "nav-frontend-typografi-style@npm:2.0.2"
   dependencies:
@@ -20414,7 +20585,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"nav-frontend-typografi@npm:4.0.2":
+"nav-frontend-typografi@npm:4.0.2, nav-frontend-typografi@npm:4.x":
   version: 4.0.2
   resolution: "nav-frontend-typografi@npm:4.0.2"
   peerDependencies:
@@ -22593,7 +22764,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-collapse@npm:5.1.1":
+"react-collapse@npm:5.1.1, react-collapse@npm:5.x":
   version: 5.1.1
   resolution: "react-collapse@npm:5.1.1"
   peerDependencies:
@@ -22669,7 +22840,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-dom@npm:18.2.0":
+"react-dom@npm:18.2.0, react-dom@npm:18.x":
   version: 18.2.0
   resolution: "react-dom@npm:18.2.0"
   dependencies:
@@ -22817,7 +22988,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-popper@npm:2.3.0":
+"react-popper@npm:2.3.0, react-popper@npm:2.x":
   version: 2.3.0
   resolution: "react-popper@npm:2.3.0"
   dependencies:
@@ -23045,7 +23216,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react@npm:18.2.0":
+"react@npm:18.2.0, react@npm:18.x":
   version: 18.2.0
   resolution: "react@npm:18.2.0"
   dependencies:

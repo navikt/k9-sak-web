@@ -1,40 +1,8 @@
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
-import { MicroFrontend } from '@fpsak-frontend/utils';
 import { Aksjonspunkt, AlleKodeverk, ArbeidsgiverOpplysningerPerId } from '@k9-sak-web/types';
+import { Uttak } from '@navikt/k9-fe-uttak';
 import React from 'react';
-
-const initializeUttak = (
-  elementId,
-  uttaksperioder,
-  utsattePerioder,
-  behandlingUuid: string,
-  arbeidsforhold: ArbeidsgiverOpplysningerPerId,
-  aksjonspunktkoder: string[],
-  kodeverkUtenlandsoppholdÅrsak,
-  løsAksjonspunktVurderDatoNyRegelUttak: ({
-    begrunnelse,
-    virkningsdato,
-  }: {
-    begrunnelse: string;
-    virkningsdato: string;
-  }) => void,
-  virkningsdatoUttakNyeRegler?: string,
-  aksjonspunkter?: Aksjonspunkt[],
-) => {
-  (window as any).renderUttakApp(elementId, {
-    uttaksperioder,
-    utsattePerioder,
-    aktivBehandlingUuid: behandlingUuid,
-    arbeidsforhold,
-    aksjonspunktkoder,
-    erFagytelsetypeLivetsSluttfase: false,
-    kodeverkUtenlandsoppholdÅrsak,
-    løsAksjonspunktVurderDatoNyRegelUttak,
-    virkningsdatoUttakNyeRegler,
-    aksjonspunkter,
-  });
-};
 
 interface UttakProps {
   uuid: string;
@@ -46,7 +14,6 @@ interface UttakProps {
   alleKodeverk: AlleKodeverk;
   submitCallback: (data: { kode: string; begrunnelse: string; virkningsdato: string }[]) => void;
 }
-const uttakAppID = 'uttakApp';
 export default ({
   uuid,
   uttaksperioder,
@@ -67,26 +34,21 @@ export default ({
 
   const løsAksjonspunktVurderDatoNyRegelUttak = ({ begrunnelse, virkningsdato }) =>
     submitCallback([{ kode: aksjonspunktCodes.VURDER_DATO_NY_REGEL_UTTAK, begrunnelse, virkningsdato }]);
+
   return (
-    <MicroFrontend
-      id={uttakAppID}
-      jsSrc="/k9/microfrontend/psb-uttak/1/app.js"
-      stylesheetSrc="/k9/microfrontend/psb-uttak/1/styles.css"
-      noCache
-      onReady={() =>
-        initializeUttak(
-          uttakAppID,
-          uttaksperioder,
-          utsattePerioder,
-          uuid,
-          arbeidsgiverOpplysningerPerId,
-          funnedeRelevanteAksjonspunktkoder,
-          alleKodeverk?.UtenlandsoppholdÅrsak,
-          løsAksjonspunktVurderDatoNyRegelUttak,
-          virkningsdatoUttakNyeRegler,
-          funnedeRelevanteAksjonspunkter,
-        )
-      }
+    <Uttak
+      data={{
+        uttaksperioder,
+        utsattePerioder,
+        aktivBehandlingUuid: uuid,
+        arbeidsforhold: arbeidsgiverOpplysningerPerId,
+        aksjonspunktkoder: funnedeRelevanteAksjonspunktkoder,
+        erFagytelsetypeLivetsSluttfase: false,
+        kodeverkUtenlandsoppholdÅrsak: alleKodeverk?.UtenlandsoppholdÅrsak,
+        løsAksjonspunktVurderDatoNyRegelUttak,
+        virkningsdatoUttakNyeRegler,
+        aksjonspunkter,
+      }}
     />
   );
 };
