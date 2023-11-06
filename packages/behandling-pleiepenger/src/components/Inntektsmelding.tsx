@@ -26,9 +26,7 @@ export default ({
         readOnly,
         onFinished: løsAksjonspunkt,
         endpoints: findEndpointsForMicrofrontend(behandling.links, [
-          { rel: 'pleiepenger-sykt-barn-tilsyn', desiredName: 'tilsyn' },
-          { rel: 'sykdom-vurdering-oversikt-ktp', desiredName: 'sykdom' },
-          { rel: 'sykdom-innleggelse', desiredName: 'sykdomInnleggelse' },
+          { rel: 'kompletthet-beregning', desiredName: 'kompletthetBeregning' },
         ]),
         saksbehandlere: saksbehandlere || {},
         aksjonspunkter,

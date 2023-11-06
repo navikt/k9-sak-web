@@ -37,7 +37,7 @@ export default ({
 
   return (
     <Uttak
-      data={{
+      containerData={{
         uttaksperioder,
         utsattePerioder,
         aktivBehandlingUuid: uuid,
