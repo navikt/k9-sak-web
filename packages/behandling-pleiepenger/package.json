@@ -39,6 +39,7 @@
     "@navikt/ft-prosess-beregningsgrunnlag": "6.3.14",
     "@navikt/k9-fe-etablert-tilsyn": "0.0.1",
     "@navikt/k9-fe-http-utils": "1.0.4",
+    "@navikt/k9-fe-inntektsmelding": "0.0.1",
     "@navikt/k9-fe-medisinsk-vilkar": "0.0.4",
     "@navikt/k9-fe-om-barnet": "0.0.3",
     "axios": "1.5.1",

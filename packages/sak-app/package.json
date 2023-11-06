@@ -57,6 +57,7 @@
     "@navikt/ft-prosess-beregningsgrunnlag": "6.3.14",
     "@navikt/ft-ui-komponenter": "2.1.12",
     "@navikt/k9-fe-etablert-tilsyn": "0.0.1",
+    "@navikt/k9-fe-inntektsmelding": "0.0.1",
     "@navikt/k9-fe-medisinsk-vilkar": "0.0.4",
     "@navikt/k9-fe-om-barnet": "0.0.3",
     "@sentry/browser": "7.77.0",

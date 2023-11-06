@@ -1,36 +1,8 @@
-import React from 'react';
+import { findEndpointsForMicrofrontend, httpErrorHandler as httpErrorHandlerFn } from '@fpsak-frontend/utils';
 import { useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
-import { ArbeidsgiverOpplysningerPerId, Dokument, SimpleEndpoints } from '@k9-sak-web/types';
-import {
-  MicroFrontend,
-  httpErrorHandler as httpErrorHandlerFn,
-  findEndpointsForMicrofrontend,
-} from '@fpsak-frontend/utils';
+import { Inntektsmelding } from '@navikt/k9-fe-inntektsmelding';
+import React from 'react';
 
-const initializeInntektsmeldingApp = (
-  elementId,
-  httpErrorHandler,
-  endpoints: SimpleEndpoints,
-  arbeidsforhold: ArbeidsgiverOpplysningerPerId,
-  dokumenter: Dokument[],
-  løsAksjonspunkt,
-  readOnly,
-  saksbehandlere,
-  aksjonspunkter,
-) => {
-  (window as any).renderKompletthetApp(elementId, {
-    httpErrorHandler,
-    arbeidsforhold,
-    dokumenter,
-    readOnly,
-    onFinished: løsAksjonspunkt,
-    endpoints,
-    saksbehandlere,
-    aksjonspunkter,
-  });
-};
-
-const inntektsmeldingAppId = 'inntektsmeldingApp';
 export default ({
   behandling,
   readOnly,
@@ -46,26 +18,21 @@ export default ({
 
   const løsAksjonspunkt = aksjonspunktArgs => submitCallback([{ ...aksjonspunktArgs }]);
   return (
-    <MicroFrontend
-      id={inntektsmeldingAppId}
-      jsSrc="/k9/microfrontend/psb-inntektsmelding/1/app.js"
-      stylesheetSrc="/k9/microfrontend/psb-inntektsmelding/1/styles.css"
-      noCache
-      onReady={() =>
-        initializeInntektsmeldingApp(
-          inntektsmeldingAppId,
-          httpErrorHandlerCaller,
-          findEndpointsForMicrofrontend(behandling.links, [
-            { rel: 'kompletthet-beregning', desiredName: 'kompletthetBeregning' },
-          ]),
-          arbeidsgiverOpplysningerPerId,
-          dokumenter,
-          løsAksjonspunkt,
-          readOnly,
-          saksbehandlere || {},
-          aksjonspunkter,
-        )
-      }
+    <Inntektsmelding
+      data={{
+        httpErrorHandler: httpErrorHandlerCaller,
+        arbeidsforhold: arbeidsgiverOpplysningerPerId,
+        dokumenter,
+        readOnly,
+        onFinished: løsAksjonspunkt,
+        endpoints: findEndpointsForMicrofrontend(behandling.links, [
+          { rel: 'pleiepenger-sykt-barn-tilsyn', desiredName: 'tilsyn' },
+          { rel: 'sykdom-vurdering-oversikt-ktp', desiredName: 'sykdom' },
+          { rel: 'sykdom-innleggelse', desiredName: 'sykdomInnleggelse' },
+        ]),
+        saksbehandlere: saksbehandlere || {},
+        aksjonspunkter,
+      }}
     />
   );
 };
