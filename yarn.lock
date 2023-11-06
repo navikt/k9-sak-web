@@ -4063,7 +4063,7 @@ __metadata:
     react-dom: 18.2.0
     react-intl: 6.5.1
     vis-data: 7.1.7
-    vis-timeline: 7.7.2
+    vis-timeline: 7.7.3
   languageName: unknown
   linkType: soft
 
@@ -25690,9 +25690,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vis-timeline@npm:7.7.2":
-  version: 7.7.2
-  resolution: "vis-timeline@npm:7.7.2"
+"vis-timeline@npm:7.7.3":
+  version: 7.7.3
+  resolution: "vis-timeline@npm:7.7.3"
   peerDependencies:
     "@egjs/hammerjs": ^2.0.0
     component-emitter: ^1.3.0
@@ -25703,7 +25703,7 @@ __metadata:
     vis-data: ^6.3.0 || ^7.0.0
     vis-util: ^5.0.1
     xss: ^1.0.0
-  checksum: 3a44e6870e4230ddbdb1123ce655ad4491d9b163a656d9a8211504aa040e7bfa857d7e9689cc88515c6b41a76da540b26b14ca0f8d229fa87987b89866fa7cf1
+  checksum: d11eeb5cdb64fc02c47d02a423c5a347996a265405f0c5b2157cc981e828dd951a78222d994e97795b82e98e48c1dcb1b1f23c615aa1df3e5b4c6091fc18de64
   languageName: node
   linkType: hard
 
