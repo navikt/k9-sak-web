@@ -1955,6 +1955,21 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@cfaester/enzyme-adapter-react-18@npm:^0.7.1":
+  version: 0.7.1
+  resolution: "@cfaester/enzyme-adapter-react-18@npm:0.7.1"
+  dependencies:
+    enzyme-shallow-equal: ^1.0.0
+    react-is: ^18.2.0
+    react-test-renderer: ^18.2.0
+  peerDependencies:
+    enzyme: ^3.11.0
+    react: ^18.2.0
+    react-dom: ^18.2.0
+  checksum: cd8065c956f200c66cbde4909b489933b14c9a7ebbc3f87612d6d44163c2aa935de625ad904945ce20f0d19f348589a8f0559a9543f31422c0bf838f16b3eb20
+  languageName: node
+  linkType: hard
+
 "@codexteam/icons@npm:^0.0.4":
   version: 0.0.4
   resolution: "@codexteam/icons@npm:0.0.4"
@@ -18120,6 +18135,7 @@ __metadata:
     "@babel/preset-typescript": 7.23.2
     "@babel/register": 7.22.15
     "@babel/runtime": 7.23.2
+    "@cfaester/enzyme-adapter-react-18": ^0.7.1
     "@commercetools/enzyme-extensions": 5.0.0
     "@formatjs/intl-datetimeformat": 6.11.1
     "@formatjs/intl-numberformat": 8.8.0
