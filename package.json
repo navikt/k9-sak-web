@@ -46,7 +46,7 @@
     "@formatjs/intl-numberformat": "8.8.0",
     "@navikt/aksel-icons": "5.8.0",
     "@navikt/ds-css": "5.8.0",
-    "@navikt/ds-react": "5.8.0",
+    "@navikt/ds-react": "5.9.2",
     "@navikt/ds-tailwind": "^5.8.0",
     "@navikt/familie-endringslogg": "10.0.0",
     "@navikt/ft-plattform-komponenter": "2.3.8",
