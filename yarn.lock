@@ -4867,6 +4867,7 @@ __metadata:
     "@navikt/k9-fe-inntektsmelding": 0.0.1
     "@navikt/k9-fe-medisinsk-vilkar": 0.0.4
     "@navikt/k9-fe-om-barnet": 0.0.3
+    "@navikt/k9-fe-omsorgen-for": 0.0.1
     axios: 1.5.1
     axios-mock-adapter: 1.22.0
     enzyme: 3.11.0
@@ -5492,6 +5493,7 @@ __metadata:
     "@navikt/k9-fe-inntektsmelding": 0.0.1
     "@navikt/k9-fe-medisinsk-vilkar": 0.0.4
     "@navikt/k9-fe-om-barnet": 0.0.3
+    "@navikt/k9-fe-omsorgen-for": 0.0.1
     "@sentry/browser": 7.77.0
     axios: 0.27.2
     classnames: 2.3.2
@@ -6455,6 +6457,57 @@ __metadata:
     react-popper: 2.x
     tailwindcss: 3.x
   checksum: ed8da063afd73364694fc84a303ed95417b986ab59ed09d3f4f809f730e3bc4faccf756cab5b314fd8df121213316b9398efb51ac14ebdba1573dc97e8f8628f
+  languageName: node
+  linkType: hard
+
+"@navikt/k9-fe-omsorgen-for@npm:0.0.1":
+  version: 0.0.1
+  resolution: "@navikt/k9-fe-omsorgen-for@npm:0.0.1::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fk9-fe-omsorgen-for%2F0.0.1%2Ff9800628dbcf31f32c2d4fd6109ec87916742164"
+  peerDependencies:
+    "@hookform/error-message": 2.x
+    "@navikt/ds-css": 5.6.1
+    "@navikt/ds-icons": 3.4.3
+    "@navikt/ds-react": 5.6.1
+    "@navikt/fnrvalidator": 1.x
+    "@navikt/ft-plattform-komponenter": 2.3.6
+    "@navikt/k9-fe-array-utils": 1.0.4
+    "@navikt/k9-fe-date-utils": 1.0.5
+    "@navikt/k9-fe-form-utils": 1.0.9
+    "@navikt/k9-fe-http-utils": 1.0.4
+    "@navikt/k9-fe-period-utils": 1.0.8
+    "@popperjs/core": 2.x
+    axios: 1.x
+    classnames: 2.x
+    dayjs: 1.x
+    lodash.throttle: 4.x
+    nav-frontend-alertstriper: 4.x
+    nav-frontend-alertstriper-style: 3.x
+    nav-frontend-chevron: 1.x
+    nav-frontend-chevron-style: 1.x
+    nav-frontend-core: 6.x
+    nav-frontend-ikoner-assets: 3.x
+    nav-frontend-ikonknapper: 2.x
+    nav-frontend-js-utils: 1.x
+    nav-frontend-knapper: 3.x
+    nav-frontend-knapper-style: 2.x
+    nav-frontend-lenker: 2.x
+    nav-frontend-lenker-style: 2.x
+    nav-frontend-paneler: 3.x
+    nav-frontend-paneler-style: 2.x
+    nav-frontend-skjema: 4.x
+    nav-frontend-skjema-style: 3.x
+    nav-frontend-spinner: 3.x
+    nav-frontend-spinner-style: 1.x
+    nav-frontend-typografi: 4.x
+    nav-frontend-typografi-style: 2.x
+    object-hash: 3.x
+    react: 18.x
+    react-collapse: 5.x
+    react-dom: 18.x
+    react-hook-form: 7.47.0
+    react-intl: 6.4.7
+    react-popper: 2.x
+  checksum: 37e4340c958724539f702bce2a560843703aba1822e80ccc32378119082d01de947cdc775fb8e83c61e03fc7ef69ca27eead0c8654a7e4760627703180dc06b0
   languageName: node
   linkType: hard
 

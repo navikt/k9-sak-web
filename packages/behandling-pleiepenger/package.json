@@ -42,6 +42,7 @@
     "@navikt/k9-fe-inntektsmelding": "0.0.1",
     "@navikt/k9-fe-medisinsk-vilkar": "0.0.4",
     "@navikt/k9-fe-om-barnet": "0.0.3",
+    "@navikt/k9-fe-omsorgen-for": "0.0.1",
     "axios": "1.5.1",
     "nav-frontend-alertstriper": "4.0.2",
     "react": "18.2.0",
