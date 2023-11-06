@@ -5,7 +5,7 @@
 
 /* Tooltip text */
 .tooltip .tooltiptext {
-  background-color: var(--a-white) 2;
+  background-color: #fff2e0;
   border-radius: 4px;
   box-shadow: 0 1px 2px 0 #a0a0a0;
   color: #262626;

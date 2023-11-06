@@ -113,3 +113,7 @@ spec:
       value: "true"
     - name: OVERSTYR_BEREGNING
       value: "true"
+    - name: FAKTA_BEREGNING_REDESIGN
+      value: "true"
+    - name: NOTAT_I_SAK
+      value: "true"

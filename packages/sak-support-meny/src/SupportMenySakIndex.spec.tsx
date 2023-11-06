@@ -13,6 +13,7 @@ describe('<SupportMenySakIndex>', () => {
         valgbareTabs={[SupportTabs.HISTORIKK, SupportTabs.MELDINGER, SupportTabs.DOKUMENTER]}
         valgtIndex={1}
         onClick={() => undefined}
+        antallUlesteNotater={0}
       />,
     );
 
@@ -37,6 +38,7 @@ describe('<SupportMenySakIndex>', () => {
         tilgjengeligeTabs={[SupportTabs.HISTORIKK, SupportTabs.MELDINGER]}
         valgbareTabs={[SupportTabs.HISTORIKK]}
         onClick={() => undefined}
+        antallUlesteNotater={0}
       />,
     );
 
