@@ -4862,6 +4862,7 @@ __metadata:
     "@navikt/ft-fakta-beregning-redesign": 1.0.11
     "@navikt/ft-fakta-fordel-beregningsgrunnlag": 7.3.12
     "@navikt/ft-prosess-beregningsgrunnlag": 6.3.14
+    "@navikt/k9-fe-etablert-tilsyn": 0.0.1
     "@navikt/k9-fe-http-utils": 1.0.4
     "@navikt/k9-fe-medisinsk-vilkar": 0.0.4
     "@navikt/k9-fe-om-barnet": 0.0.3
@@ -5486,6 +5487,9 @@ __metadata:
     "@navikt/ft-plattform-komponenter": 2.3.8
     "@navikt/ft-prosess-beregningsgrunnlag": 6.3.14
     "@navikt/ft-ui-komponenter": 2.1.12
+    "@navikt/k9-fe-etablert-tilsyn": 0.0.1
+    "@navikt/k9-fe-medisinsk-vilkar": 0.0.4
+    "@navikt/k9-fe-om-barnet": 0.0.3
     "@sentry/browser": 7.77.0
     axios: 0.27.2
     classnames: 2.3.2
@@ -6248,6 +6252,58 @@ __metadata:
   peerDependencies:
     dayjs: 1.11.6
   checksum: d6d8f28ab727266f5ba95404f50cd1cb5dd116c2d0298a1b6d128757ac5960064513f034db5d5fc299fd7cbe98000963ea7d7b55ec992059f615560de1f56088
+  languageName: node
+  linkType: hard
+
+"@navikt/k9-fe-etablert-tilsyn@npm:0.0.1":
+  version: 0.0.1
+  resolution: "@navikt/k9-fe-etablert-tilsyn@npm:0.0.1::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fk9-fe-etablert-tilsyn%2F0.0.1%2Fb902d6ae35412942ab9cceabe1d54779c88da9ad"
+  peerDependencies:
+    "@navikt/ds-css": 5.6.1
+    "@navikt/ds-icons": 3.4.3
+    "@navikt/ds-react": 5.6.1
+    "@navikt/fnrvalidator": 1.x
+    "@navikt/ft-plattform-komponenter": 2.3.6
+    "@navikt/k9-fe-date-utils": 1.0.5
+    "@navikt/k9-fe-form-utils": 1.0.9
+    "@navikt/k9-fe-http-utils": 1.0.4
+    "@navikt/k9-fe-period-utils": ^1.0.8
+    "@popperjs/core": 2.x
+    axios: 1.x
+    classnames: 2.x
+    dayjs: 1.x
+    lodash: 4.x
+    lodash.throttle: 4.x
+    nav-frontend-alertstriper: 4.x
+    nav-frontend-alertstriper-style: 3.x
+    nav-frontend-chevron: 1.x
+    nav-frontend-chevron-style: 1.x
+    nav-frontend-core: 6.x
+    nav-frontend-etiketter: 3.x
+    nav-frontend-etiketter-style: 2.x
+    nav-frontend-ikoner-assets: 3.x
+    nav-frontend-ikonknapper: 2.x
+    nav-frontend-js-utils: 1.x
+    nav-frontend-knapper: 3.x
+    nav-frontend-knapper-style: 2.x
+    nav-frontend-lenker: 2.x
+    nav-frontend-lenker-style: 2.x
+    nav-frontend-paneler: 3.x
+    nav-frontend-paneler-style: 2.x
+    nav-frontend-skjema: 4.x
+    nav-frontend-skjema-style: 3.x
+    nav-frontend-spinner: 3.x
+    nav-frontend-spinner-style: 1.x
+    nav-frontend-tabs: 2.x
+    nav-frontend-tabs-style: 2.x
+    nav-frontend-typografi: 4.x
+    nav-frontend-typografi-style: 2.x
+    react: 18.x
+    react-collapse: 5.x
+    react-dom: 18.x
+    react-hook-form: 7.47.0
+    react-popper: 2.x
+  checksum: c9c3aebda4a21a544055567e9ffa7dc14869d83b6cd4f86829ad97e078e410a2b555804d5498c19ea22aa899a4df7e8a6a370c39cf9115520198f543889639cd
   languageName: node
   linkType: hard
 
