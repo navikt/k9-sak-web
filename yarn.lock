@@ -4986,6 +4986,7 @@ __metadata:
     "@k9-sak-web/rest-api": 1.0.0
     "@k9-sak-web/rest-api-hooks": 1.0.0
     "@k9-sak-web/types": 1.0.0
+    "@navikt/k9-fe-omsorgsdager": 0.0.1
     axios-mock-adapter: 1.22.0
     enzyme: 3.11.0
     react: 18.2.0
@@ -5208,6 +5209,7 @@ __metadata:
     "@fpsak-frontend/utils-test": 1.0.0
     "@k9-sak-web/konstanter": 1.0.0
     "@k9-sak-web/types": 1.0.0
+    "@navikt/k9-fe-omsorgsdager": 0.0.1
     classnames: 2.3.2
     enzyme: 3.11.0
     lodash.throttle: 4.1.1
@@ -5494,6 +5496,7 @@ __metadata:
     "@navikt/k9-fe-medisinsk-vilkar": 0.0.4
     "@navikt/k9-fe-om-barnet": 0.0.3
     "@navikt/k9-fe-omsorgen-for": 0.0.1
+    "@navikt/k9-fe-omsorgsdager": 0.0.1
     "@sentry/browser": 7.77.0
     axios: 0.27.2
     classnames: 2.3.2
@@ -6508,6 +6511,42 @@ __metadata:
     react-intl: 6.4.7
     react-popper: 2.x
   checksum: 37e4340c958724539f702bce2a560843703aba1822e80ccc32378119082d01de947cdc775fb8e83c61e03fc7ef69ca27eead0c8654a7e4760627703180dc06b0
+  languageName: node
+  linkType: hard
+
+"@navikt/k9-fe-omsorgsdager@npm:0.0.1":
+  version: 0.0.1
+  resolution: "@navikt/k9-fe-omsorgsdager@npm:0.0.1::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fk9-fe-omsorgsdager%2F0.0.1%2F4df71f46c15bfb1bdc6c7a981b6d96dfeda4744f"
+  peerDependencies:
+    "@navikt/ds-css": 5.6.1
+    "@navikt/ds-react": 5.6.1
+    "@navikt/fnrvalidator": 1.x
+    classnames: 2.x
+    dayjs: 1.x
+    lodash: 4.x
+    lodash.throttle: 4.x
+    nav-datovelger: 12.x
+    nav-frontend-alertstriper: 4.x
+    nav-frontend-alertstriper-style: 3.x
+    nav-frontend-core: 6.x
+    nav-frontend-ikoner-assets: 3.x
+    nav-frontend-js-utils: 1.x
+    nav-frontend-knapper: 3.x
+    nav-frontend-knapper-style: 2.x
+    nav-frontend-lenker: 2.x
+    nav-frontend-lenker-style: 2.x
+    nav-frontend-paneler-style: 2.x
+    nav-frontend-skjema: 4.x
+    nav-frontend-skjema-style: 3.x
+    nav-frontend-spinner: 3.x
+    nav-frontend-spinner-style: 1.x
+    nav-frontend-typografi: 4.x
+    nav-frontend-typografi-style: 2.x
+    react: 18.x
+    react-day-picker: 7.x
+    react-dom: 18.x
+    react-hook-form: 7.47.0
+  checksum: 24c13a107c1b8ecb8187d560c85d063e679d54088a8508fbef960e1bb9ae290bc622566eb906753af1cd363a870dbd5534b6f74a5aa7bddec61a707d44fc3bb9
   languageName: node
   linkType: hard
 

@@ -1,36 +1,16 @@
-import React from 'react';
-import { MicroFrontend } from '@fpsak-frontend/utils';
 import { FormState } from '@fpsak-frontend/form/index';
+import { Omsorgsdager } from '@navikt/k9-fe-omsorgsdager';
+import React from 'react';
 import KartleggePropertyTilSaerligeSmittevernhensynMikrofrontend from './KartleggePropertyTilSaerligeSmittevernhensynMikrofrontend';
 
-const initializeOmsorgsdagerFrontend = (elementId, { submitCallback, behandling, saerligSmittevernAp, aktiviteter }) => {
-  (window as any).renderMicrofrontendOmsorgsdagerApp(
-    elementId,
-    KartleggePropertyTilSaerligeSmittevernhensynMikrofrontend(
+export default ({ submitCallback, behandling, saerligSmittevernAp, aktiviteter }) => (
+  <Omsorgsdager
+    containerData={KartleggePropertyTilSaerligeSmittevernhensynMikrofrontend(
       submitCallback,
       behandling,
       saerligSmittevernAp,
       aktiviteter,
       FormState,
-    ),
-  );
-};
-
-export default ({submitCallback, behandling, saerligSmittevernAp, aktiviteter})  => {
-  const saerligSmittvernhensynVilkårAppID = 'saerligSmittvernhensyn';
-
-  // Kode til mikrofrontenden -> https://github.com/navikt/omsorgsdager-frontend/blob/main/src/ui/components/korrigere-perioder/KorrigerePerioder.tsx
-  return (
-    <MicroFrontend
-      id={saerligSmittvernhensynVilkårAppID}
-      jsSrc="/k9/microfrontend/omsorgsdager/1/app.js"
-      stylesheetSrc="/k9/microfrontend/omsorgsdager/1/styles.css"
-      onReady={() => initializeOmsorgsdagerFrontend(saerligSmittvernhensynVilkårAppID, {
-        submitCallback,
-        behandling,
-        saerligSmittevernAp,
-        aktiviteter
-      })}
-    />
-  );
-};
+    )}
+  />
+);
