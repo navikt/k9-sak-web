@@ -7,9 +7,12 @@ import { konverterKodeverkTilKode, mapVilkar, transformBeregningValues } from '@
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 import { BeregningFaktaIndex } from '@navikt/ft-fakta-beregning';
 import { BeregningFaktaIndex as BeregningFaktaIndexRedesign } from '@navikt/ft-fakta-beregning-redesign';
+import { FrisinnBehandlingApiKeys } from '../../data/frisinnBehandlingApi';
 
 class BeregningFaktaPanelDef extends FaktaPanelDef {
   getUrlKode = () => faktaPanelCodes.BEREGNING;
+
+  getEndepunkterUtenCaching = () => [FrisinnBehandlingApiKeys.BEREGNINGSGRUNNLAG];
 
   getTekstKode = () => 'BeregningInfoPanel.Title';
 

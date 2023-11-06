@@ -2,7 +2,7 @@
 import React from 'react';
 import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
-import { render } from 'react-dom';
+import { createRoot } from 'react-dom/client';
 import { init, Integrations } from '@sentry/browser';
 import { RestApiErrorProvider, RestApiProvider } from '@k9-sak-web/rest-api-hooks';
 
@@ -77,7 +77,9 @@ const renderFunc = Component => {
     worker.start({ onUnhandledRequest: 'bypass' });
   }
 
-  render(
+  const root = createRoot(app);
+
+  root.render(
     <Provider store={store}>
       <BrowserRouter basename="/k9/web">
         <RestApiProvider>
@@ -87,7 +89,6 @@ const renderFunc = Component => {
         </RestApiProvider>
       </BrowserRouter>
     </Provider>,
-    app,
   );
 };
 

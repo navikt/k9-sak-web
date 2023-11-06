@@ -1,11 +1,12 @@
 import classnames from 'classnames/bind';
 import { SkjemaGruppe as NavSkjemaGruppe } from 'nav-frontend-skjema';
 import React from 'react';
-import { Field } from 'redux-form';
+import { Field, WrappedFieldArrayProps } from 'redux-form';
 import OptionGrid from './OptionGrid';
 import { RadioOptionProps } from './RadioOption';
 import styles from './radioGroupField.module.css';
 import renderNavField from './renderNavField';
+import LabelType from './LabelType';
 
 type Direction = 'horizontal' | 'vertical';
 
@@ -15,7 +16,7 @@ interface RenderProp<TChildrenProps, TElement = any> {
 
 interface RadioGroupFieldProps {
   name: string;
-  label?: React.ReactNode;
+  label?: LabelType;
   /**
    * columns: Antall kolonner som valgene skal fordeles på. Default er samme som antall valg.
    */
@@ -117,8 +118,8 @@ export const RadioGroupField = (props: RadioGroupFieldProps) => <Field component
 RadioGroupField.defaultProps = {
   columns: 0,
   rows: 0,
-  bredde: 'fullbredde',
   label: '',
+  bredde: 'fullbredde',
   spaceBetween: false,
   direction: 'horizontal',
   DOMName: undefined,

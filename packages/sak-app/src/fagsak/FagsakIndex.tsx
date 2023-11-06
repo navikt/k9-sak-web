@@ -19,6 +19,7 @@ import {
   Kodeverk,
   KodeverkMedNavn,
   MerknadFraLos,
+  NavAnsatt,
   Personopplysninger,
 } from '@k9-sak-web/types';
 import OvergangFraInfotrygd from '@k9-sak-web/types/src/overgangFraInfotrygd';
@@ -26,6 +27,7 @@ import RelatertFagsak from '@k9-sak-web/types/src/relatertFagsak';
 import React, { useCallback, useMemo, useState } from 'react';
 import { Navigate, Route, Routes, useLocation } from 'react-router-dom';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
+import { QueryClient, QueryClientProvider } from 'react-query';
 import {
   behandlingerRoutePath,
   erBehandlingValgt,
@@ -59,6 +61,8 @@ const erOmsorgspenger = (fagsak: Fagsak) =>
     fagsakYtelseType.OMSORGSPENGER_ALENE_OM_OMSORGEN,
     fagsakYtelseType.OMSORGSPENGER_MIDLERTIDIG_ALENE,
   ].includes(fagsak?.sakstype?.kode);
+
+const queryClient = new QueryClient();
 
 /**
  * FagsakIndex
@@ -207,6 +211,8 @@ const FagsakIndex = () => {
     },
   );
 
+  const navAnsatt = restApiHooks.useGlobalStateRestApiData<NavAnsatt>(K9sakApiKeys.NAV_ANSATT);
+
   const erHastesak = merknaderFraLos && merknaderFraLos.merknadKoder?.includes(Merknadkode.HASTESAK);
 
   if (!fagsak) {
@@ -273,15 +279,19 @@ const FagsakIndex = () => {
           }
 
           return (
-            <BehandlingSupportIndex
-              fagsak={fagsak}
-              alleBehandlinger={alleBehandlinger}
-              behandlingId={behandlingId}
-              behandlingVersjon={behandlingVersjon}
-              behandlingRettigheter={behandlingRettigheter}
-              personopplysninger={behandlingPersonopplysninger}
-              arbeidsgiverOpplysninger={arbeidsgiverOpplysninger}
-            />
+            <QueryClientProvider client={queryClient}>
+              <BehandlingSupportIndex
+                fagsak={fagsak}
+                alleBehandlinger={alleBehandlinger}
+                behandlingId={behandlingId}
+                behandlingVersjon={behandlingVersjon}
+                behandlingRettigheter={behandlingRettigheter}
+                personopplysninger={behandlingPersonopplysninger}
+                arbeidsgiverOpplysninger={arbeidsgiverOpplysninger}
+                navAnsatt={navAnsatt}
+                featureToggles={featureToggles}
+              />
+            </QueryClientProvider>
           );
         }}
         visittkortContent={() => {

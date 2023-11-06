@@ -8,27 +8,24 @@ import { expect } from 'chai';
 import { messages } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import DecimalField from './DecimalField';
 
-const MockForm = reduxForm({ form: 'mock' })(({ handleSubmit, children }) => <form onSubmit={handleSubmit}>{children}</form>);
-const mountFieldInForm = (field, initialValues) => mount(
-  <Provider store={createStore(combineReducers({ form: formReducer }))}>
-    <IntlProvider locale="nb-NO" messages={messages}>
-      <MockForm initialValues={initialValues}>
-        {field}
-      </MockForm>
-    </IntlProvider>
-  </Provider>,
-);
+const MockForm = reduxForm({ form: 'mock', onSubmit: jest.fn() })(({ handleSubmit, children }) => (
+  <form onSubmit={handleSubmit}>{children}</form>
+));
+const mountFieldInForm = (field, initialValues) =>
+  mount(
+    <Provider store={createStore(combineReducers({ form: formReducer }))}>
+      <IntlProvider locale="nb-NO" messages={messages}>
+        <MockForm initialValues={initialValues}>{field}</MockForm>
+      </IntlProvider>
+    </Provider>,
+  );
 
 describe('<DecimalField>', () => {
   it('skal legge til desimaler på onBlur hvis bruker kun skriver inn heltall', () => {
     const wrapper = mountFieldInForm(
       <DecimalField
         name="prosent"
-        normalizeOnBlur={
-          (value) => (Number.isNaN(value)
-            ? value
-            : parseFloat(value).toFixed(2))
-        }
+        normalizeOnBlur={value => (Number.isNaN(value) ? value : parseFloat(value).toFixed(2))}
       />,
       { prosent: 10 },
     );
@@ -42,11 +39,7 @@ describe('<DecimalField>', () => {
     const wrapper = mountFieldInForm(
       <DecimalField
         name="prosent"
-        normalizeOnBlur={
-          (value) => (Number.isNaN(value)
-            ? value
-            : parseFloat(value).toFixed(2))
-        }
+        normalizeOnBlur={value => (Number.isNaN(value) ? value : parseFloat(value).toFixed(2))}
       />,
       { prosent: 10 },
     );
@@ -61,11 +54,7 @@ describe('<DecimalField>', () => {
     const wrapper = mountFieldInForm(
       <DecimalField
         name="prosent"
-        normalizeOnBlur={
-          (value) => (Number.isNaN(value)
-            ? value
-            : parseFloat(value).toFixed(2))
-        }
+        normalizeOnBlur={value => (Number.isNaN(value) ? value : parseFloat(value).toFixed(2))}
       />,
       { prosent: 10 },
     );

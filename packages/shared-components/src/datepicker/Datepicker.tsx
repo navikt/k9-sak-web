@@ -15,7 +15,7 @@ const classNames = classnames.bind(styles);
 interface OwnProps {
   label?: ReactNode;
   placeholder?: string;
-  feil?: { feilmelding?: string };
+  feil?: string;
   disabled?: boolean;
   onChange: (dato: string | ChangeEvent) => void;
   onBlur: () => void;

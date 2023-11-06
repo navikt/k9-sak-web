@@ -6,6 +6,7 @@ import styles from './tagContainer.module.css';
 interface Props {
   tagVariant: 'warning' | 'error' | 'info' | 'success';
   size?: 'small' | 'medium';
+  children?: React.ReactNode;
 }
 
 const TagContainer: React.FC<Props> = ({ children, tagVariant, size = 'small' }) => (

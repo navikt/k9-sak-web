@@ -33,7 +33,7 @@ jobs:
       image: ${{ steps.docker-push.outputs.image }}
     steps:
       - name: Hente kode
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Setup .yarnrc.yml
         run: |
@@ -44,7 +44,7 @@ jobs:
           NPM_AUTH_TOKEN: ${{ secrets.READER_TOKEN }}
 
       - name: Sette opp Node
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: '18'
           cache: 'yarn'
@@ -66,7 +66,7 @@ jobs:
       - name: Sette TAG variable for docker image & deploy issue-info
         run: echo "TAG=$TIMESTAMP-$(echo $GITHUB_SHA | cut -c1-7)" >> $GITHUB_ENV
 
-      - uses: docker/login-action@v2
+      - uses: docker/login-action@v3
         with:
           registry: ghcr.io
           username: ${{ github.actor }}

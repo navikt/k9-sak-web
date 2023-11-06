@@ -24,6 +24,7 @@ interface Props {
   harVurdertOverlappendeYtelse: boolean;
   setHarVurdertOverlappendeYtelse: (harVurdertOverlappendeYtelse: boolean) => void;
   submitCallback: (values: any[]) => void;
+  children: React.ReactNode;
 }
 
 export const VedtakAksjonspunktPanelImpl: React.FC<Props> = ({
