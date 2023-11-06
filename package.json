@@ -65,8 +65,8 @@
     "postcss-import": "^15.1.0",
     "postcss-less": "6.0.0",
     "postcss-loader": "^7.3.3",
-    "react": "17.0.2",
-    "react-dom": "17.0.2",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
     "react-modal": "3.16.1",
     "react-router": "6.18.0",
     "react-router-dom": "6.18.0"
@@ -79,6 +79,7 @@
     "@babel/preset-react": "7.22.15",
     "@babel/preset-typescript": "7.23.2",
     "@babel/register": "7.22.15",
+    "@cfaester/enzyme-adapter-react-18": "^0.7.1",
     "@commercetools/enzyme-extensions": "5.0.0",
     "@pmmmwh/react-refresh-webpack-plugin": "0.5.11",
     "@sentry/cli": "2.21.2",
@@ -102,7 +103,7 @@
     "@types/history": "5.0.0",
     "@types/jest": "29.5.7",
     "@types/prop-types": "15.7.9",
-    "@types/react": "17.0.69",
+    "@types/react": "18.2.35",
     "@types/react-collapse": "5.0.3",
     "@types/react-router-dom": "5.3.3",
     "@types/redux-form": "8.3.8",
@@ -176,11 +177,8 @@
   },
   "resolutions": {
     "postcss": "8.4.31",
-    "react": "17.0.2",
-    "react-dom": "17.0.2",
     "react-test-renderer": "18.2.0",
     "parse-url": "8.1.0",
-    "@types/react": "17",
     "@editorjs/editorjs": "2.27.2"
   },
   "msw": {

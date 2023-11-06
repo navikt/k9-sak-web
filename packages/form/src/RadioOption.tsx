@@ -42,14 +42,14 @@ export const RadioOption = ({
   return (
     <div style={style} className={wrapperClassName}>
       <NavRadio
-        name={name}
+        name={name || ''}
         className={className}
         label={<Label input={label} typographyElement={Normaltekst} />}
         // @ts-ignore TODO Fjern denne. Må fjerna bruken av bolske verdiar som value
         value={value}
         checked={checked}
         disabled={disabled || groupDisabled}
-        onChange={() => onChange(value)}
+        onChange={() => onChange?.(value)}
         data-id={dataId}
       />
       {(checked || manualHideChildren) && children}

@@ -42,3 +42,4 @@ jobs:
       - name: Sjekker at koden bygger
         if: ${{inputs.run-build}}
         run: yarn build-ci
+        timeout-minutes: 30

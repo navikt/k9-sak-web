@@ -147,7 +147,7 @@ const FritekstBrevPanel = ({
           {formikProps.touched?.[fieldnames.REDIGERT_HTML] && formikProps.errors?.[fieldnames.REDIGERT_HTML] && (
             <>
               <VerticalSpacer sixteenPx />
-              <AlertStripe type="feil">{formikProps.errors[fieldnames.REDIGERT_HTML]}</AlertStripe>
+              <AlertStripe type="feil">{formikProps.errors[fieldnames.REDIGERT_HTML] as string}</AlertStripe>
             </>
           )}
 
