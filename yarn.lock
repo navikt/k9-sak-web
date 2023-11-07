@@ -2462,6 +2462,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@formatjs/ecma402-abstract@npm:1.17.3":
+  version: 1.17.3
+  resolution: "@formatjs/ecma402-abstract@npm:1.17.3"
+  dependencies:
+    "@formatjs/intl-localematcher": 0.5.0
+    tslib: ^2.4.0
+  checksum: f8f1e05ce30bf695c234fe96131b5c3b6175b608718c1f888baa60fc9b7e6794d84a4a44fff9adeb7f8825c050d0ae05cb5f83d9484a07eaf4d340ab7a03238c
+  languageName: node
+  linkType: hard
+
 "@formatjs/fast-memoize@npm:2.2.0":
   version: 2.2.0
   resolution: "@formatjs/fast-memoize@npm:2.2.0"
@@ -2534,14 +2544,23 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@formatjs/intl-numberformat@npm:8.8.0":
-  version: 8.8.0
-  resolution: "@formatjs/intl-numberformat@npm:8.8.0"
+"@formatjs/intl-localematcher@npm:0.5.0":
+  version: 0.5.0
+  resolution: "@formatjs/intl-localematcher@npm:0.5.0"
   dependencies:
-    "@formatjs/ecma402-abstract": 1.17.2
-    "@formatjs/intl-localematcher": 0.4.2
     tslib: ^2.4.0
-  checksum: 2df9781f79d756c4c9cad9c659b6ab9d11c2672d04f7325308ee479069af8c645b3fed8f2397ff452c8639c1867872d027a9d7fa96e9a67e44c9d0d06b5e21f8
+  checksum: 5c6dc271640df498292585060bb2defc6183045d5a14052b2f6005872e66a8d2ae0c3c2900710dd73128c580b07989d7d3b149b845f38231ea57ac055aef73e0
+  languageName: node
+  linkType: hard
+
+"@formatjs/intl-numberformat@npm:8.8.1":
+  version: 8.8.1
+  resolution: "@formatjs/intl-numberformat@npm:8.8.1"
+  dependencies:
+    "@formatjs/ecma402-abstract": 1.17.3
+    "@formatjs/intl-localematcher": 0.5.0
+    tslib: ^2.4.0
+  checksum: 0d6cd9872cf17e7a0e64bfb69f98b761cb5110524b7073a8379fa1f356d2f612a8e59d112667381c33e0265af3f10d9eac5ffb9d7b8f1361fe488ef600cc50a0
   languageName: node
   linkType: hard
 
@@ -5420,7 +5439,7 @@ __metadata:
   resolution: "@k9-sak-web/sak-app@workspace:packages/sak-app"
   dependencies:
     "@formatjs/intl-datetimeformat": 6.11.1
-    "@formatjs/intl-numberformat": 8.8.0
+    "@formatjs/intl-numberformat": 8.8.1
     "@fpsak-frontend/assets": 1.0.0
     "@fpsak-frontend/kodeverk": 1.0.0
     "@fpsak-frontend/prop-types": 1.0.0
@@ -18138,7 +18157,7 @@ __metadata:
     "@cfaester/enzyme-adapter-react-18": ^0.7.1
     "@commercetools/enzyme-extensions": 5.0.0
     "@formatjs/intl-datetimeformat": 6.11.1
-    "@formatjs/intl-numberformat": 8.8.0
+    "@formatjs/intl-numberformat": 8.8.1
     "@navikt/aksel-icons": 5.8.0
     "@navikt/ds-css": 5.8.0
     "@navikt/ds-react": 5.8.0
