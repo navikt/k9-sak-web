@@ -12,7 +12,7 @@
     "@fpsak-frontend/utils": "1.0.0",
     "@k9-sak-web/konstanter": "1.0.0",
     "@k9-sak-web/types": "1.0.0",
-    "@navikt/k9-fe-omsorgsdager": "0.0.1",
+    "@navikt/k9-fe-omsorgsdager": "0.0.2",
     "classnames": "2.3.2",
     "lodash.throttle": "4.1.1",
     "moment": "2.29.4",
