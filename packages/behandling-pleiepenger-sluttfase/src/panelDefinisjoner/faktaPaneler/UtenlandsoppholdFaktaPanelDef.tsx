@@ -21,6 +21,8 @@ class UtenlandsoppholdFaktaPanelDef extends FaktaPanelDef {
       fagsakYtelseType={fagsakYtelseType.PLEIEPENGER_SLUTTFASE}
     />
   );
+
+  skalVisePanel = () => true;
 }
 
 export default UtenlandsoppholdFaktaPanelDef;
