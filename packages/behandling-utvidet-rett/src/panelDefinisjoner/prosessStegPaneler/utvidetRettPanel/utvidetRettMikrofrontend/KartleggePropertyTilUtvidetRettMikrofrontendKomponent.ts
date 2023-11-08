@@ -1,16 +1,16 @@
-import FagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
-import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
-import { Behandling } from '@k9-sak-web/types';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
+import FagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
+import { Behandling } from '@k9-sak-web/types';
 import {
   AksjonspunktInformasjon,
   SaksinformasjonUtvidetRett,
   VilkarInformasjon,
 } from '../../../../types/utvidetRettMikrofrontend/KartleggePropertyTilMikrofrontendTypes';
+import AleneOmOmsorgenObjektTilMikrofrontend from './formateringAvDataTilMikrofrontend/AleneOmOmsorgenObjektTilMikrofrontend';
 import KroniskSykObjektTilMikrofrontend from './formateringAvDataTilMikrofrontend/KroniskSykObjektTilMikrofrontend';
 import MidlertidigAleneObjektTilMikrofrontend from './formateringAvDataTilMikrofrontend/MidlertidigAleneObjektTilMikrofrontend';
-import AleneOmOmsorgenObjektTilMikrofrontend from './formateringAvDataTilMikrofrontend/AleneOmOmsorgenObjektTilMikrofrontend';
 
 const KartleggePropertyTilUtvidetRettMikrofrontendKomponent = (
   saksInformasjon: SaksinformasjonUtvidetRett,
@@ -30,7 +30,8 @@ const KartleggePropertyTilUtvidetRettMikrofrontendKomponent = (
   const vilkaret = vilkar.find(v => v.vilkarType.kode === vilkarType.UTVIDETRETTVILKARET);
 
   const eksistererAksjonspunktOgVilkar = aksjonspunkt && vilkar;
-  const eksistererVilkarForAutomatiskInnvilgetAleneOmOmsorgen = fagsaksType === FagsakYtelseType.OMSORGSPENGER_ALENE_OM_OMSORGEN && vilkar;
+  const eksistererVilkarForAutomatiskInnvilgetAleneOmOmsorgen =
+    fagsaksType === FagsakYtelseType.OMSORGSPENGER_ALENE_OM_OMSORGEN && vilkar;
 
   if (eksistererAksjonspunktOgVilkar || eksistererVilkarForAutomatiskInnvilgetAleneOmOmsorgen) {
     const skalVilkarsUtfallVises = behandling.status.kode === behandlingStatus.AVSLUTTET;
@@ -80,7 +81,7 @@ const KartleggePropertyTilUtvidetRettMikrofrontendKomponent = (
         break;
     }
   }
-  return {};
+  return null;
 };
 
 export default KartleggePropertyTilUtvidetRettMikrofrontendKomponent;

@@ -29,6 +29,12 @@ export default ({ aksjonspunkter, behandling, readOnly, submitCallback, saksbeha
   const harUløstAksjonspunktForNattevåk = nattevåkAksjonspunkt?.status.kode === aksjonspunktStatus.OPPRETTET;
   const harAksjonspunkt = !!beredskapAksjonspunktkode || !!nattevåkAksjonspunktkode;
 
+  interface Endpoints {
+    tilsyn: string;
+    sykdom: string;
+    sykdomInnleggelse: string;
+  }
+
   return (
     <EtablertTilsyn
       data={{

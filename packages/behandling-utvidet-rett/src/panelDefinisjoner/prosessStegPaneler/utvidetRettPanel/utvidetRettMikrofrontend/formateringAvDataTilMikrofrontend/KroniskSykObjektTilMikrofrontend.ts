@@ -1,7 +1,7 @@
 import { Aksjonspunkt, Vilkar } from '@k9-sak-web/types';
 import { FormState } from '@fpsak-frontend/form/index';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
-import UtvidetRettMikrofrontendVisning from '../../../../../types/MikrofrontendKomponenter';
+import { KomponenterEnum } from '@navikt/k9-fe-omsorgsdager';
 import { generereInfoForVurdertVilkar } from '../../../UtvidetRettOmsorgenForMikrofrontendFelles';
 import {
   InformasjonTilLesemodusKroniskSyk,
@@ -71,8 +71,11 @@ const KroniskSykObjektTilMikrofrontend = ({
   skalVilkarsUtfallVises,
   submitCallback,
   soknad,
-}: OwnProps) => ({
-  visKomponent: UtvidetRettMikrofrontendVisning.VILKAR_KRONISK_SYKT_BARN,
+}: OwnProps): {
+  visKomponent: KomponenterEnum.VILKAR_KRONISK_SYKT_BARN;
+  props: VilkarKroniskSyktBarnProps;
+} => ({
+  visKomponent: KomponenterEnum.VILKAR_KRONISK_SYKT_BARN,
   props: {
     behandlingsID,
     aksjonspunktLost,

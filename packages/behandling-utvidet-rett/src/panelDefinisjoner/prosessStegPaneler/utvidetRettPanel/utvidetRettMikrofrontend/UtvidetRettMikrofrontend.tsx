@@ -13,16 +13,16 @@ export default props => {
     status,
     vilkar,
   } = props;
-  return (
-    <Omsorgsdager
-      containerData={KartleggePropertyTilUtvidetRettMikrofrontendKomponent(
-        saksInformasjon,
-        isReadOnly,
-        submitCallback,
-        behandling,
-        { aksjonspunkter, isAksjonspunktOpen },
-        { vilkar, status },
-      )}
-    />
+  const containerData = KartleggePropertyTilUtvidetRettMikrofrontendKomponent(
+    saksInformasjon,
+    isReadOnly,
+    submitCallback,
+    behandling,
+    { aksjonspunkter, isAksjonspunktOpen },
+    { vilkar, status },
   );
+  if (!containerData) {
+    return null;
+  }
+  return <Omsorgsdager containerData={containerData} />;
 };

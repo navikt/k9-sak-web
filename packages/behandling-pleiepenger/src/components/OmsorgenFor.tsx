@@ -38,7 +38,7 @@ export default ({
   return (
     <OmsorgenFor
       data={{
-        httpErrorHandlerCaller,
+        httpErrorHandler: httpErrorHandlerCaller,
         endpoints: findEndpointsForMicrofrontend(links, [
           {
             rel: 'omsorgen-for',

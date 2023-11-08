@@ -47,7 +47,7 @@ export default ({
         kodeverkUtenlandsoppholdÅrsak: alleKodeverk?.UtenlandsoppholdÅrsak,
         løsAksjonspunktVurderDatoNyRegelUttak,
         virkningsdatoUttakNyeRegler,
-        aksjonspunkter,
+        aksjonspunkter: funnedeRelevanteAksjonspunkter,
       }}
     />
   );

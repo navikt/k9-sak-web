@@ -10,7 +10,6 @@ export default ({
   dokumenter,
   aksjonspunkter,
   submitCallback,
-  saksbehandlere,
 }) => {
   const { addErrorMessage } = useRestApiErrorDispatcher();
   const httpErrorHandlerCaller = (status: number, locationHeader?: string) =>
@@ -28,7 +27,6 @@ export default ({
         endpoints: findEndpointsForMicrofrontend(behandling.links, [
           { rel: 'kompletthet-beregning', desiredName: 'kompletthetBeregning' },
         ]),
-        saksbehandlere: saksbehandlere || {},
         aksjonspunkter,
       }}
     />
