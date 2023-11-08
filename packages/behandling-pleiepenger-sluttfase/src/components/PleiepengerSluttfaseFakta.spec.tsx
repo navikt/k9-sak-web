@@ -196,6 +196,11 @@ describe('<PleiepengerSluttfaseFakta>', () => {
       {
         erAktiv: false,
         harAksjonspunkt: false,
+        tekstKode: 'UtenlandsoppholdInfoPanel.Title',
+      },
+      {
+        erAktiv: false,
+        harAksjonspunkt: false,
         tekstKode: 'SoknadsperioderPanel.Soknadsperioder',
       },
     ]);

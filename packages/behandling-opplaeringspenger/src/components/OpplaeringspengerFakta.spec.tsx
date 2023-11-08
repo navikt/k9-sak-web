@@ -216,11 +216,6 @@ describe('<OpplaeringspengerFakta>', () => {
         harAksjonspunkt: false,
         tekstKode: 'InntektOgYtelser.Title',
       },
-      {
-        erAktiv: false,
-        harAksjonspunkt: false,
-        tekstKode: 'UtenlandsoppholdInfoPanel.Title',
-      },
       { erAktiv: false, harAksjonspunkt: false, tekstKode: 'SoknadsperioderPanel.Soknadsperioder' },
     ]);
   });

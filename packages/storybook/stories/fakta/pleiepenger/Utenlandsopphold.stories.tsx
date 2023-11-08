@@ -1,5 +1,5 @@
 import React from 'react';
-import Utenlandsopphold from '@k9-sak-web/behandling-pleiepenger/src/components/Utenlandsopphold';
+import Utenlandsopphold from '@k9-sak-web/fakta-utenlandsopphold';
 import utenlandsoppholdMock, { utenlandsoppholdÅrsakMock } from '../../../../mocks/mockdata/utenlandsoppholdMock';
 
 export default {

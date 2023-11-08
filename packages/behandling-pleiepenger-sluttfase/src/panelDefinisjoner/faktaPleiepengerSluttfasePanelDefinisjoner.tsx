@@ -22,8 +22,8 @@ const faktaPanelDefinisjoner = [
   new BeregningFaktaPanelDef(),
   new FordelBeregningPanelDef(),
   new InntektOgYtelserFaktaPanelDef(),
-  new SoknadsperioderFaktaPanelDef(),
   new UtenlandsoppholdFaktaPanelDef(),
+  new SoknadsperioderFaktaPanelDef(),
 ];
 
 export default faktaPanelDefinisjoner;
