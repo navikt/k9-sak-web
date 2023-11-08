@@ -35,6 +35,7 @@
     "@navikt/ft-fakta-beregning-redesign": "1.0.11",
     "@navikt/ft-fakta-fordel-beregningsgrunnlag": "7.3.12",
     "@navikt/ft-prosess-beregningsgrunnlag": "6.3.14",
+    "@navikt/k9-fe-http-utils": "1.0.6",
     "@navikt/k9-fe-inntektsmelding": "0.0.3",
     "@navikt/k9-fe-medisinsk-vilkar": "0.0.7",
     "@navikt/k9-fe-uttak": "0.0.4",
