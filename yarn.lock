@@ -4788,6 +4788,7 @@ __metadata:
     "@fpsak-frontend/shared-components": 1.0.0
     "@fpsak-frontend/utils": 1.0.0
     "@k9-sak-web/behandling-felles": 1.0.0
+    "@k9-sak-web/fakta-utenlandsopphold": 1.0.0
     "@k9-sak-web/konstanter": 1.0.0
     "@k9-sak-web/prosess-vilkar-soknadsfrist": 1.0.0
     "@k9-sak-web/prosess-vilkar-sykdom": 1.0.0
@@ -4839,6 +4840,7 @@ __metadata:
     "@fpsak-frontend/shared-components": 1.0.0
     "@fpsak-frontend/utils": 1.0.0
     "@k9-sak-web/behandling-felles": 1.0.0
+    "@k9-sak-web/fakta-utenlandsopphold": 1.0.0
     "@k9-sak-web/konstanter": 1.0.0
     "@k9-sak-web/prosess-vilkar-soknadsfrist": 1.0.0
     "@k9-sak-web/prosess-vilkar-sykdom": 1.0.0
@@ -5129,6 +5131,17 @@ __metadata:
     react: 18.2.0
     react-intl: 6.5.1
     uuid: 9.0.1
+  languageName: unknown
+  linkType: soft
+
+"@k9-sak-web/fakta-utenlandsopphold@1.0.0, @k9-sak-web/fakta-utenlandsopphold@workspace:packages/fakta-utenlandsopphold":
+  version: 0.0.0-use.local
+  resolution: "@k9-sak-web/fakta-utenlandsopphold@workspace:packages/fakta-utenlandsopphold"
+  dependencies:
+    "@fpsak-frontend/kodeverk": 1.0.0
+    "@fpsak-frontend/shared-components": 1.0.0
+    "@fpsak-frontend/utils": 1.0.0
+    "@k9-sak-web/types": 1.0.0
   languageName: unknown
   linkType: soft
 
