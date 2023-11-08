@@ -26,6 +26,7 @@
     "@fpsak-frontend/utils": "1.0.0",
     "@k9-sak-web/behandling-felles": "1.0.0",
     "@k9-sak-web/fakta-institusjon": "1.0.0",
+    "k9-sak-web/fakta-utenlandsopphold": "1.0.0",
     "@k9-sak-web/konstanter": "1.0.0",
     "@k9-sak-web/prosess-vilkar-soknadsfrist": "1.0.0",
     "@k9-sak-web/prosess-vilkar-sykdom": "1.0.0",
