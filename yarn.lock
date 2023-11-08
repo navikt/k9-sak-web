@@ -4062,7 +4062,7 @@ __metadata:
     react: 18.2.0
     react-dom: 18.2.0
     react-intl: 6.5.1
-    vis-data: 7.1.7
+    vis-data: 7.1.8
     vis-timeline: 7.7.2
   languageName: unknown
   linkType: soft
@@ -25680,13 +25680,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vis-data@npm:7.1.7":
-  version: 7.1.7
-  resolution: "vis-data@npm:7.1.7"
+"vis-data@npm:7.1.8":
+  version: 7.1.8
+  resolution: "vis-data@npm:7.1.8"
   peerDependencies:
     uuid: ^3.4.0 || ^7.0.0 || ^8.0.0 || ^9.0.0
     vis-util: ^5.0.1
-  checksum: ecb92cc440bf8440097e8b64668c77eb93a7b7e36c6faf82fe2e807849099619a69770c894ca3cb8708d8cd023990e5dd6c26451360149d7c8ce0d82d807110d
+  checksum: f36bb8fd6c1894ed395cc1ba116cb4f346e1a0662706130f2b5003c3797bc1ac9437a17eb2875a1aff0ea45137fd95e6c0d79bcf793dab90bc958c79c08a9db2
   languageName: node
   linkType: hard
 
