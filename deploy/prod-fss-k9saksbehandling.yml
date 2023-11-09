@@ -57,20 +57,6 @@ spec:
       value: "http://k9-tilbake.k9saksbehandling"
     - name: APP_URL_K9FORDEL
       value: "http://k9-fordel.k9saksbehandling"
-    - name: MEDISINSK_VILKAR_FRONTEND_URL
-      value: "https://medisinsk-vilkar-frontend.intern.nav.no/"
-    - name: OMSORGSDAGER_FRONTEND_URL
-      value: "https://omsorgsdager-frontend.intern.nav.no/"
-    - name: PSB_UTTAK_FRONTEND_URL
-      value: "https://psb-uttak-frontend.intern.nav.no/"
-    - name: OMSORGEN_FOR_FRONTEND_URL
-      value: "https://omsorgen-for-frontend.intern.nav.no/"
-    - name: PSB_INNTEKTSMELDING_FRONTEND_URL
-      value: "https://psb-inntektsmelding-frontend.intern.nav.no/"
-    - name: PSB_ETABLERT_TILSYN_FRONTEND_URL
-      value: "https://psb-etablert-tilsyn-frontend.intern.nav.no/"
-    - name: PSB_OM_BARNET_FRONTEND_URL
-      value: "https://psb-om-barnet-frontend.intern.nav.no/"
     - name: ENDRINGSLOGG_URL
       value: "https://familie-endringslogg.intern.nav.no/"
 
