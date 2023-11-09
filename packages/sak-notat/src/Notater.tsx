@@ -103,7 +103,7 @@ const Notater: React.FunctionComponent<NotaterProps> = ({
               <FormattedMessage id="NotatISakIndex.IngenNotaterAlert" />
             </Alert>
           )}
-          {alleNotaterErSkjulte && !visSkjulteNotater && (
+          {alleNotaterErSkjulte && !visSkjulteNotater && notater?.length > 0 && (
             <Alert className={styles.alert} size="small" variant="info">
               <FormattedMessage id="NotatISakIndex.IngenAktiveNotaterAlert" />
             </Alert>

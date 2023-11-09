@@ -1,5 +1,6 @@
 import SupportMenySakIndex, { SupportTabs } from '@fpsak-frontend/sak-support-meny';
 import { httpErrorHandler } from '@fpsak-frontend/utils';
+import { apiPaths } from '@k9-sak-web/rest-api';
 import { useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
 import {
   ArbeidsgiverOpplysningerWrapper,
@@ -87,7 +88,7 @@ const BehandlingSupportIndex = ({
 
   const getNotater = (signal: AbortSignal) =>
     axios
-      .get<NotatResponse[]>(`/k9/sak/api/notat`, {
+      .get<NotatResponse[]>(apiPaths.notatISak, {
         signal,
         params: {
           saksnummer: fagsak.saksnummer,

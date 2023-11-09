@@ -63,7 +63,7 @@ const ChatComponent: React.FunctionComponent<ChatComponentProps> = ({
     opprettetTidspunkt,
     versjon,
     skjult,
-    kanRedigeres,
+    kanRedigere,
   } = notat;
   const position = opprettetAv === navAnsatt.brukernavn ? ChatPosition.Right : ChatPosition.Left;
 
@@ -153,7 +153,7 @@ const ChatComponent: React.FunctionComponent<ChatComponentProps> = ({
             </div>
             {readOnly && (
               <div className={styles.redigerSkjulNotatKnappContainer}>
-                {kanRedigeres && (
+                {kanRedigere && (
                   <Button
                     className={styles.redigerSkjulKnapp}
                     onClick={toggleReadOnly}

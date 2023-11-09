@@ -11,7 +11,7 @@ interface NotatResponse {
   sakstype?: string;
   skjult: boolean;
   versjon: number;
-  kanRedigeres: boolean;
+  kanRedigere: boolean;
 }
 
 export default NotatResponse;

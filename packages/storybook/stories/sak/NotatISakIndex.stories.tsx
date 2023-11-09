@@ -53,7 +53,7 @@ const notater = [
     endretTidspunkt: undefined,
     fagsakId: '1',
     skjult: false,
-    kanRedigeres: true,
+    kanRedigere: true,
   },
   {
     id: 2,
@@ -70,7 +70,7 @@ const notater = [
     aktørId: '123',
     sakstype: 'PSB',
     skjult: false,
-    kanRedigeres: true,
+    kanRedigere: true,
   },
 ];
 
@@ -103,7 +103,7 @@ VisNotatISakPanel.parameters = {
             sakstype: 'PSB',
             versjon: 1,
             skjult: false,
-            kanRedigeres: true,
+            kanRedigere: true,
           });
         }
         return res(ctx.status(201));
