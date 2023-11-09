@@ -6042,9 +6042,9 @@ __metadata:
   linkType: hard
 
 "@navikt/ft-kodeverk@npm:^2.2.5":
-  version: 2.2.5
-  resolution: "@navikt/ft-kodeverk@npm:2.2.5::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fft-kodeverk%2F2.2.5%2F00ecd8c4f292f2a391100cd24ae7ef5a97734c30"
-  checksum: 1a506323cb4908cc587195fe45cefa2e48ac1d05c32f481df524dcbc62ada51f42d245b01c5b9a4090f040d3485947b48d97945013c1ca67f643c9ebdf314583
+  version: 2.2.6
+  resolution: "@navikt/ft-kodeverk@npm:2.2.6::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fft-kodeverk%2F2.2.6%2Fa859250bc99822f3b223b14cef78f4214ee3a9e8"
+  checksum: 121e30a47d2f1c59c04074f71e8d7ca08a9868ef4c857d3c919df3592d47d68aede46e669699b9575996d7e31e8a314b24a6078c3a4cc5ec437097cf2e155193
   languageName: node
   linkType: hard
 
