@@ -4,6 +4,7 @@ enum SupportTabs {
   HISTORIKK = 'HISTORIKK',
   MELDINGER = 'MELDINGER',
   DOKUMENTER = 'DOKUMENTER',
+  NOTATER = 'NOTATER',
 }
 
 export default SupportTabs;

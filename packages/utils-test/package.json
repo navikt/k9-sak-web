@@ -9,7 +9,7 @@
     "@fpsak-frontend/kodeverk": "1.0.0",
     "@wojtekmaj/enzyme-adapter-react-17": "0.8.0",
     "enzyme": "3.11.0",
-    "react": "17.0.2",
-    "react-intl": "6.4.7"
+    "react": "18.2.0",
+    "react-intl": "6.5.1"
   }
 }

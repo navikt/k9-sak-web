@@ -150,7 +150,7 @@ export const MessagesImpl = ({
           : JSON.stringify(recipients[0]),
       );
 
-      if (valgtBrevmal.linker.length > 0) {
+      if (valgtBrevmal?.linker?.length > 0) {
         requestMessagesApi.setLinks(valgtBrevmal.linker);
         hentPreutfylteMaler()
           .then(_fritekstForslagTyper => {
@@ -183,7 +183,7 @@ export const MessagesImpl = ({
             ))}
             bredde="xxl"
           />
-          {valgtBrevmal?.linker.length > 0 && fritekstforslagTyper && (
+          {valgtBrevmal?.linker?.length > 0 && fritekstforslagTyper && (
             <>
               <VerticalSpacer eightPx />
               <SelectField

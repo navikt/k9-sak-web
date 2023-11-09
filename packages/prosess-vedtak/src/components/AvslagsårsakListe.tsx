@@ -17,7 +17,7 @@ const finnUnikeAvslagskoder = (avslåttePerioder: Vilkarperiode[]) => {
 
 const visAvslåtteVilkårsperioder = (
   avslåttVilkår: Vilkar,
-  getKodeverknavn: (kodeverkOjekt: Kodeverk, undertype?: string) => void,
+  getKodeverknavn: (kodeverkOjekt: Kodeverk, undertype?: string) => string,
 ) => {
   const avslåttePerioder = avslåttVilkår.perioder.filter(
     periode => periode.vilkarStatus.kode === vilkarUtfallType.IKKE_OPPFYLT,
@@ -34,7 +34,7 @@ const visAvslåtteVilkårsperioder = (
 
 interface AvslagsårsakListeProps {
   vilkar: Vilkar[];
-  getKodeverknavn: (kodeverkOjekt: Kodeverk, undertype?: string) => void;
+  getKodeverknavn: (kodeverkOjekt: Kodeverk, undertype?: string) => string;
 }
 
 const AvslagsårsakListe = ({ vilkar, getKodeverknavn }: AvslagsårsakListeProps) => {

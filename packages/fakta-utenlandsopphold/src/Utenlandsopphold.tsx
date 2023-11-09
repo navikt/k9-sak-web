@@ -7,6 +7,7 @@ import Ekspanderbartpanel from 'nav-frontend-ekspanderbartpanel';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { KodeverkMedNavn, UtenlandsoppholdPerioder, UtenlandsoppholdType } from '@k9-sak-web/types';
 import { PeriodList } from '@navikt/ft-plattform-komponenter';
+import ytelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 
 import countries from 'i18n-iso-countries';
 import norwegianLocale from 'i18n-iso-countries/langs/no.json';
@@ -17,9 +18,11 @@ countries.registerLocale(norwegianLocale);
 const Utenlandsopphold = ({
   utenlandsopphold,
   kodeverk,
+  fagsakYtelseType,
 }: {
   utenlandsopphold: UtenlandsoppholdPerioder;
   kodeverk: { UtenlandsoppholdÅrsak: KodeverkMedNavn[] };
+  fagsakYtelseType?: string;
 }) => {
   const finnÅrsaker = (periode, erEØS) => {
     if (erEØS) {
@@ -56,6 +59,8 @@ const Utenlandsopphold = ({
     return { fom, tom, items: mapItems(periode) };
   });
 
+  const erPleiepenger = fagsakYtelseType === ytelseType.PLEIEPENGER;
+
   return (
     <div className={styles.utenlandsopphold}>
       <Heading spacing size="small" level="4">
@@ -75,19 +80,23 @@ const Utenlandsopphold = ({
               For opphold utenfor EØS skal perioden med pleiepenger i utgangspunktet begrenses til 8 uker i løpet av en
               periode på 12 måneder.
             </li>
-            <li>
-              <div>Opphold utenfor EØS har likevel ingen tidsbegrensning dersom</div>
-              <ul>
-                <li>barnet er innlagt i helseinstitusjon for norsk offentlig regning</li>
-                <li>barnet er innlagt i helseinstitusjon og oppholdet dekkes av trygdeordning med annet land</li>
-                <li>søker er medlem etter §§ 2-5, 2-6 eller 2-8</li>
-              </ul>
-            </li>
+            {erPleiepenger && (
+              <li>
+                <div>Opphold utenfor EØS har likevel ingen tidsbegrensning dersom</div>
+                <ul>
+                  <li>barnet er innlagt i helseinstitusjon for norsk offentlig regning</li>
+                  <li>barnet er innlagt i helseinstitusjon og oppholdet dekkes av trygdeordning med annet land</li>
+                  <li>søker er medlem etter §§ 2-5, 2-6 eller 2-8</li>
+                </ul>
+              </li>
+            )}
             <li>Vilkårene for rett til pleiepenger må være oppfylt hele perioden.</li>
-            <li>
-              Det utbetales ikke pleiepenger når søker avvikler ferie. Utenlandsopphold i en periode med ferie telles
-              derfor ikke med, uavhengig av årsaken til utenlandsoppholdet.
-            </li>
+            {erPleiepenger && (
+              <li>
+                Det utbetales ikke pleiepenger når søker avvikler ferie. Utenlandsopphold i en periode med ferie telles
+                derfor ikke med, uavhengig av årsaken til utenlandsoppholdet.
+              </li>
+            )}
           </ul>
         </Ekspanderbartpanel>
       </Alert>

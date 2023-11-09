@@ -2,7 +2,7 @@
 import { RestApiErrorProvider, RestApiProvider } from '@k9-sak-web/rest-api-hooks';
 import { Integrations, init } from '@sentry/browser';
 import React from 'react';
-import { render } from 'react-dom';
+import { createRoot } from 'react-dom/client';
 import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
 
@@ -72,28 +72,19 @@ const renderFunc = Component => {
     throw new Error('No app element');
   }
 
-  const prepare = async (): Promise<void> => {
-    if (import.meta.env.DEV) {
-      // eslint-disable-next-line import/no-relative-packages
-      const { worker } = await import('../../mocks/browser');
-      worker.start({ onUnhandledRequest: 'bypass' });
-    }
-  };
+  const root = createRoot(app);
 
-  prepare().then(() => {
-    render(
-      <Provider store={store}>
-        <BrowserRouter basename="/k9/web">
-          <RestApiProvider>
-            <RestApiErrorProvider>
-              <Component />
-            </RestApiErrorProvider>
-          </RestApiProvider>
-        </BrowserRouter>
-      </Provider>,
-      app,
-    );
-  });
+  root.render(
+    <Provider store={store}>
+      <BrowserRouter basename="/k9/web">
+        <RestApiProvider>
+          <RestApiErrorProvider>
+            <Component />
+          </RestApiErrorProvider>
+        </RestApiProvider>
+      </BrowserRouter>
+    </Provider>,
+  );
 };
 
 renderFunc(AppIndex);

@@ -32,7 +32,7 @@ describe('<PeriodFieldArray>', () => {
 
     const wrapper = shallowWithIntl(
       <PeriodFieldArray.WrappedComponent intl={intlMock} fields={fields} meta={metaMock} readOnly={readOnly}>
-        {(_periodeElementFieldId, index, getRemoveButton: () => void) => (
+        {(_periodeElementFieldId, index, getRemoveButton: () => React.ReactNode) => (
           <div key={index} id={`id_${index}`}>
             test
             {getRemoveButton()}
@@ -73,7 +73,7 @@ describe('<PeriodFieldArray>', () => {
 
     const wrapper = shallowWithIntl(
       <PeriodFieldArray.WrappedComponent intl={intlMock} fields={fields} meta={metaMock} readOnly={readOnly}>
-        {(_periodeElementFieldId, index, getRemoveButton: () => void) => (
+        {(_periodeElementFieldId, index, getRemoveButton: () => React.ReactNode) => (
           <div key={index} id={`id_${index}`}>
             test
             {getRemoveButton()}

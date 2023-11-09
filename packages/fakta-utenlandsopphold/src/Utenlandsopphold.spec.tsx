@@ -5,7 +5,7 @@ import userEvent from '@testing-library/user-event';
 
 import { renderWithIntl } from '@fpsak-frontend/utils-test/src/test-utils';
 // eslint-disable-next-line import/no-relative-packages
-import utenlandsoppholdMock, { utenlandsoppholdÅrsakMock } from '../../../mocks/mockdata/utenlandsoppholdMock';
+import utenlandsoppholdMock, { utenlandsoppholdÅrsakMock } from '../../mocks/mockdata/utenlandsoppholdMock';
 
 import Utenlandsopphold from './Utenlandsopphold';
 

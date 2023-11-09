@@ -77,4 +77,6 @@ export type { default as BehandlingStatusType } from './src/totrinnskontroll/Beh
 export type { default as Behandlingsresultat } from './src/totrinnskontroll/Behandlingsresultat';
 export type { default as SimpleEndpoints } from './src/microfrontends/SimpleEndpoints';
 export type { default as SimpleLink } from './src/microfrontends/SimpleLink';
+export { default as NotatGjelderType } from './src/notat-i-sak/NotatGjelderType';
+export type { default as NotatResponse } from './src/notat-i-sak/NotatResponse';
 export * from './src/vilkarUtfallPeriodisert';

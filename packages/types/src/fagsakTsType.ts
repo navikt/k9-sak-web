@@ -26,6 +26,7 @@ export type Fagsak = Readonly<{
   skalBehandlesAvInfotrygd: boolean;
   dekningsgrad: number;
   erPbSak?: boolean;
+  pleietrengendeAktørId?: string;
 }>;
 
 export default Fagsak;

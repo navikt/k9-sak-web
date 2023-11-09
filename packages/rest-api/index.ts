@@ -11,6 +11,7 @@ export { default as AbstractRequestApi } from './src/requestApi/AbstractRequestA
 export { ErrorTypes, errorOfType, getErrorResponseData } from './src/requestApi/error/ErrorTypes';
 export type { default as ErrorType } from './src/requestApi/error/errorTsType';
 export type { default as Link } from './src/requestApi/LinkTsType';
+export { default as apiPaths } from './src/requestApi/apiPaths';
 
 let isUnitTestModeOn = false;
 export const switchOnTestMode = () => {

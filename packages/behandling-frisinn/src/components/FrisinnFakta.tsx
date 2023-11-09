@@ -1,7 +1,14 @@
 import React, { useEffect, useState } from 'react';
 
 import { Rettigheter, SideMenuWrapper, faktaHooks, useSetBehandlingVedEndring } from '@k9-sak-web/behandling-felles';
-import { KodeverkMedNavn, Behandling, Fagsak, FagsakPerson, ArbeidsgiverOpplysningerPerId } from '@k9-sak-web/types';
+import {
+  KodeverkMedNavn,
+  Behandling,
+  Fagsak,
+  FagsakPerson,
+  ArbeidsgiverOpplysningerPerId,
+  FeatureToggles,
+} from '@k9-sak-web/types';
 import { RestApiState, useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
 import ErrorBoundary from '@k9-sak-web/sak-app/src/app/ErrorBoundary';
 import ac from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
@@ -27,6 +34,7 @@ interface OwnProps {
   setApentFaktaPanel: (faktaPanelInfo: { urlCode: string; textCode: string }) => void;
   setBehandling: (behandling: Behandling) => void;
   arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysningerPerId;
+  featureToggles: FeatureToggles;
 }
 
 const FrisinnFakta = ({
@@ -43,6 +51,7 @@ const FrisinnFakta = ({
   setApentFaktaPanel,
   setBehandling,
   arbeidsgiverOpplysningerPerId,
+  featureToggles,
 }: OwnProps) => {
   const { aksjonspunkter, ...rest } = data;
   const { addErrorMessage } = useRestApiErrorDispatcher();
@@ -72,6 +81,7 @@ const FrisinnFakta = ({
     rettigheter,
     aksjonspunkter,
     valgtFaktaSteg,
+    featureToggles,
   );
 
   faktaHooks.useFaktaAksjonspunktNotifikator(faktaPaneler, setApentFaktaPanel, behandling.versjon);
@@ -93,12 +103,24 @@ const FrisinnFakta = ({
         .getEndepunkter()
         .map(e => ({ key: e }))
     : [];
+  const endepunkterUtenCaching = valgtPanel
+    ? valgtPanel
+        .getPanelDef()
+        .getEndepunkterUtenCaching()
+        .map(e => ({ key: e }))
+    : [];
   // TODO FetchedData er feil type
   const { data: faktaData, state } = restApiFrisinnHooks.useMultipleRestApi<FetchedData>(endepunkter, {
     updateTriggers: [behandling.versjon, valgtPanel],
     suspendRequest: !valgtPanel,
     isCachingOn: true,
   });
+
+  const { data: faktaDataUtenCaching, state: stateForEndepunkterUtenCaching } =
+    restApiFrisinnHooks.useMultipleRestApi<FetchedData>(endepunkterUtenCaching, {
+      updateTriggers: [behandling.versjon, valgtPanel],
+      suspendRequest: !valgtPanel,
+    });
 
   const [formData, setFormData] = useState({});
   useEffect(() => {
@@ -108,7 +130,11 @@ const FrisinnFakta = ({
   }, [behandling.versjon]);
 
   if (sidemenyPaneler.length > 0) {
-    const isLoading = state === RestApiState.NOT_STARTED || state === RestApiState.LOADING;
+    const isLoading =
+      state === RestApiState.NOT_STARTED ||
+      state === RestApiState.LOADING ||
+      stateForEndepunkterUtenCaching === RestApiState.NOT_STARTED ||
+      stateForEndepunkterUtenCaching === RestApiState.LOADING;
     return (
       <SideMenuWrapper paneler={sidemenyPaneler} onClick={velgFaktaPanelCallback}>
         {valgtPanel && isLoading && <LoadingPanel />}
@@ -116,6 +142,7 @@ const FrisinnFakta = ({
           <ErrorBoundary errorMessageCallback={addErrorMessage}>
             {valgtPanel.getPanelDef().getKomponent({
               ...faktaData,
+              ...faktaDataUtenCaching,
               behandling,
               alleKodeverk,
               formData,

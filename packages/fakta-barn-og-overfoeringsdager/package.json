@@ -28,11 +28,10 @@
     "nav-frontend-popover-style": "2.0.2",
     "nav-frontend-typografi": "4.0.2",
     "nav-frontend-typografi-style": "2.0.2",
-    "react": "17.0.2",
-    "react-intl": "6.4.7",
-    "react-redux": "8.1.2",
+    "react": "18.2.0",
+    "react-intl": "6.5.1",
+    "react-redux": "8.1.3",
     "redux-form": "8.3.10",
-    "styled-components": "5.3.11",
     "uuid": "9.0.1"
   },
   "devDependencies": {

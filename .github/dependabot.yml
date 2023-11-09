@@ -9,13 +9,22 @@ updates:
     directory: "/"
     schedule:
       interval: daily
-    open-pull-requests-limit: 20
-    ignore:
-      - dependency-name: "*"
-        update-types: ["version-update:semver-patch"]
+    open-pull-requests-limit: 30
     registries:
       - npm-github
     groups:
+      patch:
+        patterns:
+          - "*"
+        update-types:
+          - "patch"
+        exclude-patterns:
+          - "@storybook/*"
+          - "@typescript-eslint*"
+          - "@babel*"
+          - "react*"
+          - "@types/react"
+          - "@navikt*"
       react:
         patterns:
           - "react"
@@ -34,7 +43,12 @@ updates:
           - "@storybook/storybook-deployer"
           - "@storybook/testing-react"
           - "@storybook/testing-library"
+
   - package-ecosystem: github-actions
     directory: "/"
     schedule:
       interval: daily
+    groups:
+      github:
+        patterns:
+          - "*"

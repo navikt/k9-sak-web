@@ -1,0 +1,17 @@
+{
+  "NotatISakIndex.VisNotatTilknyttetPleietrengende": "Vis notat i alle saker tilknyttet pleietrengende",
+  "NotatISakIndex.LeggTilNotatButton": "Legg til notat",
+  "NotatISakIndex.IngenNotaterAlert": "Ingen notater er publisert i saken",
+  "NotatISakIndex.IngenAktiveNotaterAlert": "Ingen aktive notater i saken",
+  "NotatISakIndex.NotaterISak": "Notater i sak",
+  "NotatISakIndex.VisSkjulteNotater": "Vis skjulte notater",
+  "NotatISakIndex.SkrivNyttNotat": "Skriv et nytt notat",
+  "NotatISakIndex.Gjelder": "Gjelder:",
+  "NotatISakIndex.Rediger": "Rediger",
+  "NotatISakIndex.SkjulNotat": "Skjul notat",
+  "NotatISakIndex.VisNotat": "Vis notat",
+  "NotatISakIndex.LagreEndringer": "Lagre endringer",
+  "NotatISakIndex.Avbryt": "Avbryt",
+  "NotatISakIndex.NoeGikkGaltHentingNotater": "Noe gikk galt ved henting av notater, vennligst prøv igjen senere",
+  "NotatISakIndex.NoeGikkGaltLagringNotater": "Noe gikk galt ved lagring av notater, vennligst prøv igjen senere"
+}

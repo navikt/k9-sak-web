@@ -1,0 +1,20 @@
+{
+  "name": "@k9-sak-web/sak-notat",
+  "version": "1.0.0",
+  "module": "index.ts",
+  "license": "MIT",
+  "private": true,
+  "dependencies": {
+    "@fpsak-frontend/utils": "1.0.0",
+    "@k9-sak-web/rest-api": "1.0.0",
+    "@k9-sak-web/types": "1.0.0",
+    "@navikt/aksel-icons": "5.8.0",
+    "@navikt/ds-react": "5.8.0",
+    "@navikt/ft-form-hooks": "4.2.12",
+    "@navikt/ft-form-validators": "^2.1.5",
+    "date-fns": "2.30.0",
+    "react": "18.2.0",
+    "react-hook-form": "7.47.0",
+    "react-intl": "6.5.1"
+  }
+}

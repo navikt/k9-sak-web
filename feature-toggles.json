@@ -16,10 +16,6 @@
     "value": "${UNNTAKSBEHANDLING}"
   },
   {
-    "key": "UTENLANDSOPPHOLD",
-    "value": "${UTENLANDSOPPHOLD}"
-  },
-  {
     "key": "SOKNADPERIODESTRIPE",
     "value": "${SOKNADPERIODESTRIPE}"
   },
@@ -70,5 +66,13 @@
   {
     "key": "OVERSTYR_BEREGNING",
     "value": "${OVERSTYR_BEREGNING}"
+  },
+  {
+    "key": "FAKTA_BEREGNING_REDESIGN",
+    "value": "${FAKTA_BEREGNING_REDESIGN}"
+  },
+  {
+    "key": "NOTAT_I_SAK",
+    "value": "${NOTAT_I_SAK}"
   }
 ]

@@ -186,22 +186,24 @@ const FritekstRedigering = ({
         </Modal.Header>
         <Modal.Body>
           <div className={styles.modalInnehold}>
-            <FritekstEditor
-              handleSubmit={handleLagre}
-              lukkEditor={lukkEditor}
-              handleForhåndsvis={handleForhåndsvis}
-              oppdaterFormFelt={oppdaterFormFelt}
-              setFieldValue={setFieldValue}
-              kanInkludereKalender={kanInkludereKalender}
-              skalBrukeOverstyrendeFritekstBrev={skalBrukeOverstyrendeFritekstBrev}
-              readOnly={readOnly}
-              redigerbartInnholdKlart={redigerbartInnholdKlart}
-              redigerbartInnhold={redigerbartInnhold}
-              originalHtml={originalHtml}
-              brevStiler={brevStiler}
-              prefiksInnhold={prefiksInnhold}
-              suffiksInnhold={suffiksInnhold}
-            />
+            {visRedigering && (
+              <FritekstEditor
+                handleSubmit={handleLagre}
+                lukkEditor={lukkEditor}
+                handleForhåndsvis={handleForhåndsvis}
+                oppdaterFormFelt={oppdaterFormFelt}
+                setFieldValue={setFieldValue}
+                kanInkludereKalender={kanInkludereKalender}
+                skalBrukeOverstyrendeFritekstBrev={skalBrukeOverstyrendeFritekstBrev}
+                readOnly={readOnly}
+                redigerbartInnholdKlart={redigerbartInnholdKlart}
+                redigerbartInnhold={redigerbartInnhold}
+                originalHtml={originalHtml}
+                brevStiler={brevStiler}
+                prefiksInnhold={prefiksInnhold}
+                suffiksInnhold={suffiksInnhold}
+              />
+            )}
           </div>
         </Modal.Body>
       </Modal>

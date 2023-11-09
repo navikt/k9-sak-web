@@ -17,7 +17,7 @@ jest.mock('react-router-dom', () => ({
   }),
 }));
 
-const MockForm = reduxForm({ form: 'mock' })(({ children }) => {
+const MockForm = reduxForm({ form: 'mock', onSubmit: jest.fn() })(({ children }) => {
   const handleSubmit = jest.fn();
   return <form onSubmit={handleSubmit}>{children}</form>;
 });

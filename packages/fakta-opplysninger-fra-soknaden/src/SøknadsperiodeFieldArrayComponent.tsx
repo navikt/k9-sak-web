@@ -10,7 +10,7 @@ import { Element } from 'nav-frontend-typografi';
 import React from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { connect } from 'react-redux';
-import { WrappedFieldArrayProps } from 'redux-form';
+import { FormAction, WrappedFieldArrayProps } from 'redux-form';
 import oppgittOpptjeningRevurderingFormName from './formName';
 import FrilanserForm from './FrilanserForm';
 import styles from './opplysningerFraSoknadenForm.module.css';
@@ -75,12 +75,12 @@ export const buildInitialValuesForSøknadsperiode = (values: Måned) => {
 interface SøknadsperiodeFieldArrayComponentProps {
   behandlingId: number;
   behandlingVersjon: number;
-  harApneAksjonspunkter: boolean;
-  submitCallback: (props: SubmitCallback[]) => void;
-  submittable: boolean;
-  opplysningerFraSøknaden: OpplysningerFraSøknaden;
+  harApneAksjonspunkter?: boolean;
+  submitCallback?: (props: SubmitCallback[]) => void;
+  submittable?: boolean;
+  opplysningerFraSøknaden?: OpplysningerFraSøknaden;
   formIsEditable: boolean;
-  kanEndrePåSøknadsopplysninger: boolean;
+  kanEndrePåSøknadsopplysninger?: boolean;
   aktivMånedIndeks: number;
   måneder: Måned[];
 }
@@ -90,13 +90,13 @@ interface InitialValues {
 }
 
 interface StateProps {
-  initialValues: InitialValues;
-  selvstendigNæringsdrivendeInntekt2019: boolean;
-  selvstendigNæringsdrivendeInntekt2020: boolean;
-  harSøktSomFrilanser: boolean;
-  harSøktSomSSN: boolean;
-  formChange: (formName: string, fieldName: string, value: any) => void;
-  formUntouch: (formName: string, fieldName: string) => void;
+  initialValues?: InitialValues;
+  selvstendigNæringsdrivendeInntekt2019?: boolean;
+  selvstendigNæringsdrivendeInntekt2020?: boolean;
+  harSøktSomFrilanser?: boolean;
+  harSøktSomSSN?: boolean;
+  formChange: (formName: string, fieldName: string, value: any) => FormAction;
+  formUntouch: (formName: string, fieldName: string) => FormAction;
   behandlingFormPrefix: string;
   søknadsperiodeFormValues: SøknadsperiodeFormValues;
 }
