@@ -11,7 +11,7 @@
 }
 
 .dokumentLenke .dokumentIkon {
-  background-image: url('~@fpsak-frontend/assets/images/dokument_filled.svg');
+  background-image: url('@fpsak-frontend/assets/images/dokument_filled.svg');
   display: inline-block;
   height: 24px;
   margin-right: 6px;
@@ -20,5 +20,5 @@
 }
 
 .dokumentLenke:hover .dokumentIkon {
-  background-image: url('~@fpsak-frontend/assets/images/dokument_outline.svg');
+  background-image: url('@fpsak-frontend/assets/images/dokument_outline.svg');
 }
