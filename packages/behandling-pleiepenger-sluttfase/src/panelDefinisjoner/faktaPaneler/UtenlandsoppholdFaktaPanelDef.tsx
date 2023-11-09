@@ -5,20 +5,20 @@ import { FaktaPanelDef } from '@k9-sak-web/behandling-felles';
 
 import Utenlandsopphold from '@k9-sak-web/fakta-utenlandsopphold';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
-import { PleiepengerBehandlingApiKeys } from '../../data/pleiepengerBehandlingApi';
+import { PleiepengerSluttfaseBehandlingApiKeys } from '../../data/pleiepengerSluttfaseBehandlingApi';
 
 class UtenlandsoppholdFaktaPanelDef extends FaktaPanelDef {
   getUrlKode = () => faktaPanelCodes.UTENLANDSOPPHOLD;
 
   getTekstKode = () => 'UtenlandsoppholdInfoPanel.Title';
 
-  getEndepunkter = () => [PleiepengerBehandlingApiKeys.UTENLANDSOPPHOLD];
+  getEndepunkter = () => [PleiepengerSluttfaseBehandlingApiKeys.UTENLANDSOPPHOLD];
 
   getKomponent = props => (
     <Utenlandsopphold
       utenlandsopphold={props.utenlandsopphold}
       kodeverk={props.alleKodeverk}
-      fagsakYtelseType={fagsakYtelseType.PLEIEPENGER}
+      fagsakYtelseType={fagsakYtelseType.PLEIEPENGER_SLUTTFASE}
     />
   );
 

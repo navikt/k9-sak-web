@@ -14,7 +14,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Hente kode
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Setup .yarnrc.yml
         run: |
@@ -42,3 +42,4 @@ jobs:
       - name: Sjekker at koden bygger
         if: ${{inputs.run-build}}
         run: yarn build-ci
+        timeout-minutes: 30

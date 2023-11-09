@@ -87,8 +87,6 @@ spec:
       value: "true"
     - name: TILBAKE
       value: "true"
-    - name: UTENLANDSOPPHOLD
-      value: "true"
     - name: SOKNADPERIODESTRIPE
       value: "false"
     - name: TYPE_MEDISINSKE_OPPLYSNINGER_BREV

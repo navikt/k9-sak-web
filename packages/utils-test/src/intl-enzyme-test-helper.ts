@@ -16,6 +16,7 @@ import defaultMessages from '../../../public/sprak/nb_NO.json';
 export { default as messages } from '../../../public/sprak/nb_NO.json';
 
 export function shallowWithIntl(node: ReactElement, messages: any = defaultMessages) {
+  // @ts-ignore
   return shallow(node, {
     wrappingComponent: IntlProvider,
     wrappingComponentProps: {
@@ -27,6 +28,7 @@ export function shallowWithIntl(node: ReactElement, messages: any = defaultMessa
 }
 
 export function mountWithIntl(node: ReactElement, messages: any = defaultMessages) {
+  // @ts-ignore
   return mount(node, {
     wrappingComponent: IntlProvider,
     wrappingComponentProps: {

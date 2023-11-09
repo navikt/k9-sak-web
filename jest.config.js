@@ -14,7 +14,6 @@ module.exports = {
       roots: ['<rootDir>/packages/'],
       setupFiles: ['<rootDir>/setup/setup.js'],
       setupFilesAfterEnv: [
-        '@testing-library/jest-dom/extend-expect',
         '<rootDir>/packages/utils-test/src/setup-test-env.ts',
         '<rootDir>/packages/utils-test/src/setup-test-env-hooks.ts',
       ],
@@ -29,11 +28,6 @@ module.exports = {
         '^.+.(css|less)$': 'jest-transform-stub',
       },
       transformIgnorePatterns: ['<rootDir>.*(node_modules)(?!.*nav.*).*$'],
-    },
-    {
-      displayName: 'lint',
-      runner: 'jest-runner-eslint',
-      testMatch: ['**/?(*.)+(spec).+(js|jsx|ts|tsx)'],
     },
   ],
   watchPlugins: ['jest-runner-eslint/watch-fix'],

@@ -1,5 +1,5 @@
 import React from 'react';
-import { injectIntl, WrappedComponentProps } from 'react-intl';
+import { injectIntl, WrappedComponentProps, useIntl } from 'react-intl';
 import { FieldArrayMetaProps, WrappedFieldInputProps } from 'redux-form';
 import Label from './Label';
 import LabelType from './LabelType';
@@ -7,16 +7,16 @@ import LabelType from './LabelType';
 interface FieldComponentProps {
   input: WrappedFieldInputProps;
   meta: FieldArrayMetaProps;
-  label: LabelType;
+  label?: LabelType;
   readOnly?: boolean;
   readOnlyHideEmpty?: boolean;
   isEdited?: boolean;
 }
 
 const renderNavField = WrappedNavFieldComponent => {
-  const FieldComponent = (props: FieldComponentProps & WrappedComponentProps) => {
+  const FieldComponent = (props: FieldComponentProps) => {
+    const intl = useIntl();
     const formatError = (submitFailed: boolean, error: any) => {
-      const { intl } = props;
       if (submitFailed && error) {
         // @ts-ignore
         return intl.formatMessage(...error);
@@ -50,17 +50,13 @@ const renderNavField = WrappedNavFieldComponent => {
     );
   };
 
-  FieldComponent.defaultProps = {
-    readOnly: false,
-    readOnlyHideEmpty: false,
-    isEdited: false,
-  };
+  // FieldComponent.defaultProps = {
+  //   readOnly: false,
+  //   readOnlyHideEmpty: false,
+  //   isEdited: false,
+  // };
 
-  const FieldComponentWithIntl = injectIntl(FieldComponent);
-
-  FieldComponentWithIntl.WrappedComponent = FieldComponent;
-
-  return FieldComponentWithIntl;
+  return FieldComponent;
 };
 
 export default renderNavField;
