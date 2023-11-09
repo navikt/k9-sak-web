@@ -1,5 +1,6 @@
 import SupportMenySakIndex, { SupportTabs } from '@fpsak-frontend/sak-support-meny';
-import { httpErrorHandler, useLocalStorage } from '@fpsak-frontend/utils';
+import { httpErrorHandler } from '@fpsak-frontend/utils';
+import { apiPaths } from '@k9-sak-web/rest-api';
 import { useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
 import {
   ArbeidsgiverOpplysningerWrapper,
@@ -7,10 +8,11 @@ import {
   Fagsak,
   FeatureToggles,
   NavAnsatt,
+  NotatResponse,
   Personopplysninger,
 } from '@k9-sak-web/types';
 import axios from 'axios';
-import React, { useCallback, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { useQuery } from 'react-query';
 import { useNavigate } from 'react-router-dom';
 import { getSupportPanelLocationCreator } from '../app/paths';
@@ -83,33 +85,32 @@ const BehandlingSupportIndex = ({
 }: OwnProps) => {
   const { addErrorMessage } = useRestApiErrorDispatcher();
   const [antallUlesteNotater, setAntallUlesteNotater] = useState(0);
-  const [lesteNotater] = useLocalStorage('lesteNotater', []);
 
-  const getNotater = (signal: AbortSignal) => {
+  const getNotater = (signal: AbortSignal) =>
     axios
-      .get(`/k9/sak/api/notat`, {
+      .get<NotatResponse[]>(apiPaths.notatISak, {
         signal,
         params: {
           saksnummer: fagsak.saksnummer,
         },
       })
-      .then(response => {
-        const ulesteNotater = response.data.filter(
-          notat => lesteNotater.findIndex(lestNotatId => lestNotatId === notat.notatId) === -1,
-        );
-        setAntallUlesteNotater(ulesteNotater.length);
-      })
+      .then(({ data }) => data)
       .catch(error => {
         httpErrorHandler(error?.response?.status, addErrorMessage, error?.response?.headers?.location);
       });
-  };
+
   const notaterQueryKey = ['notater', fagsak?.saksnummer];
-  useQuery({
+  const { data: notater } = useQuery({
     queryKey: notaterQueryKey,
     queryFn: ({ signal }) => getNotater(signal),
     enabled: featureToggles?.NOTAT_I_SAK && !!fagsak,
     refetchOnWindowFocus: false,
   });
+
+  useEffect(() => {
+    const ulesteNotater = (notater || []).filter(notat => !notat.skjult);
+    setAntallUlesteNotater(ulesteNotater?.length);
+  }, [notater]);
 
   const { selected: valgtSupportPanel, location } = useTrackRouteParam<string>({
     paramName: 'stotte',
@@ -193,13 +194,7 @@ const BehandlingSupportIndex = ({
           />
         )}
         {aktivtSupportPanel === SupportTabs.NOTATER && featureToggles?.NOTAT_I_SAK && (
-          <NotaterIndex
-            saksnummer={fagsak.saksnummer}
-            behandlingId={behandlingId}
-            behandlingVersjon={behandlingVersjon}
-            fagsakPerson={fagsak.person}
-            navAnsatt={navAnsatt}
-          />
+          <NotaterIndex navAnsatt={navAnsatt} fagsak={fagsak} />
         )}
       </div>
     </>

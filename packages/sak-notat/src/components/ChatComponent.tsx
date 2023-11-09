@@ -1,4 +1,4 @@
-import { NavAnsatt } from '@k9-sak-web/types';
+import { NavAnsatt, NotatResponse } from '@k9-sak-web/types';
 import { EyeSlashIcon, EyeWithPupilIcon, PencilIcon } from '@navikt/aksel-icons';
 import { BodyLong, Button, Chat, Label, Tag } from '@navikt/ds-react';
 import { Form, TextAreaField } from '@navikt/ft-form-hooks';
@@ -7,7 +7,6 @@ import { format } from 'date-fns';
 import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { FormattedMessage } from 'react-intl';
-import { NotatResponse } from '../types/NotatResponse';
 import styles from './chatComponent.module.css';
 
 export enum ChatPosition {
@@ -56,7 +55,6 @@ const ChatComponent: React.FunctionComponent<ChatComponentProps> = ({
   fagsakId,
 }) => {
   const {
-    endretAv,
     endretTidspunkt,
     gjelderType,
     notatId,
@@ -65,10 +63,9 @@ const ChatComponent: React.FunctionComponent<ChatComponentProps> = ({
     opprettetTidspunkt,
     versjon,
     skjult,
+    kanRedigere,
   } = notat;
-  const erSistEndretAvGjeldendeBruker =
-    endretAv === navAnsatt.brukernavn || (!endretAv && opprettetAv === navAnsatt.brukernavn);
-  const position = erSistEndretAvGjeldendeBruker ? ChatPosition.Right : ChatPosition.Left;
+  const position = opprettetAv === navAnsatt.brukernavn ? ChatPosition.Right : ChatPosition.Left;
 
   const minLength3 = minLength(3);
   const maxLength2000 = maxLength(1500);
@@ -100,8 +97,16 @@ const ChatComponent: React.FunctionComponent<ChatComponentProps> = ({
     skjulNotat({ skjul: !skjult, id: notatId, saksnummer: fagsakId, versjon });
   };
 
-  const name = erSistEndretAvGjeldendeBruker ? 'Deg' : endretAv || opprettetAv;
-  const timestamp = format(new Date(endretTidspunkt || opprettetTidspunkt), 'dd.MM.yyyy H:mm');
+  const navnPåOppretter = opprettetAv === navAnsatt.brukernavn ? 'Deg' : opprettetAv;
+
+  const tidspunktStreng = () => {
+    const formatertOpprettetTidspunkt = format(new Date(opprettetTidspunkt), 'dd.MM.yy H:mm');
+    const formatertEndretTidspunkt = endretTidspunkt ? format(new Date(endretTidspunkt), 'dd.MM.yy H:mm') : undefined;
+    if (endretTidspunkt) {
+      return `(Endret: ${formatertEndretTidspunkt})  ${formatertOpprettetTidspunkt}`;
+    }
+    return formatertOpprettetTidspunkt;
+  };
 
   return (
     <Form<Inputs>
@@ -110,8 +115,8 @@ const ChatComponent: React.FunctionComponent<ChatComponentProps> = ({
       className={position === ChatPosition.Right ? styles.chatRight : styles.chatLeft}
     >
       <Chat
-        name={name}
-        timestamp={timestamp}
+        name={navnPåOppretter}
+        timestamp={tidspunktStreng()}
         position={position}
         variant={position === ChatPosition.Right ? 'info' : 'neutral'}
       >
@@ -148,15 +153,17 @@ const ChatComponent: React.FunctionComponent<ChatComponentProps> = ({
             </div>
             {readOnly && (
               <div className={styles.redigerSkjulNotatKnappContainer}>
-                <Button
-                  className={styles.redigerSkjulKnapp}
-                  onClick={toggleReadOnly}
-                  size="xsmall"
-                  variant="tertiary"
-                  icon={<PencilIcon aria-hidden />}
-                >
-                  <FormattedMessage id="NotatISakIndex.Rediger" />
-                </Button>
+                {kanRedigere && (
+                  <Button
+                    className={styles.redigerSkjulKnapp}
+                    onClick={toggleReadOnly}
+                    size="xsmall"
+                    variant="tertiary"
+                    icon={<PencilIcon aria-hidden />}
+                  >
+                    <FormattedMessage id="NotatISakIndex.Rediger" />
+                  </Button>
+                )}
                 <Button
                   onClick={toggleSkjulNotat}
                   className={styles.redigerSkjulKnapp}

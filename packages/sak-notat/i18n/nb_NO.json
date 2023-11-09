@@ -2,6 +2,7 @@
   "NotatISakIndex.VisNotatTilknyttetPleietrengende": "Vis notat i alle saker tilknyttet pleietrengende",
   "NotatISakIndex.LeggTilNotatButton": "Legg til notat",
   "NotatISakIndex.IngenNotaterAlert": "Ingen notater er publisert i saken",
+  "NotatISakIndex.IngenAktiveNotaterAlert": "Ingen aktive notater i saken",
   "NotatISakIndex.NotaterISak": "Notater i sak",
   "NotatISakIndex.VisSkjulteNotater": "Vis skjulte notater",
   "NotatISakIndex.SkrivNyttNotat": "Skriv et nytt notat",

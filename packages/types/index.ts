@@ -76,4 +76,6 @@ export type { default as BeregningReferanse } from './src/beregning/beregningRef
 export type { default as BehandlingStatusType } from './src/totrinnskontroll/BehandlingStatusType';
 export type { default as Behandlingsresultat } from './src/totrinnskontroll/Behandlingsresultat';
 export type { default as SimpleLink } from './src/microfrontends/SimpleLink';
+export { default as NotatGjelderType } from './src/notat-i-sak/NotatGjelderType';
+export type { default as NotatResponse } from './src/notat-i-sak/NotatResponse';
 export * from './src/vilkarUtfallPeriodisert';

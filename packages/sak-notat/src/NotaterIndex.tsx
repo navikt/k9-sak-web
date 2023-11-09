@@ -1,16 +1,14 @@
-import { useLocalStorage } from '@fpsak-frontend/utils';
 import { NavAnsatt } from '@k9-sak-web/types';
-import axios from 'axios';
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 import Notater, { Inputs, skjulNotatMutationVariables } from './Notater';
-import { NotatGjelderType } from './types/NotatGjelderType';
-import { NotatResponse } from './types/NotatResponse';
+import { getNotater, postNotat, skjulNotat } from './notatApi';
 
 interface NotaterIndexProps {
   fagsakId: string;
   navAnsatt: NavAnsatt;
+  fagsakHarPleietrengende: boolean;
 }
 
 interface postNotatMutationVariables {
@@ -20,8 +18,7 @@ interface postNotatMutationVariables {
   versjon?: number;
 }
 
-const NotaterIndex: React.FC<NotaterIndexProps> = ({ fagsakId, navAnsatt }) => {
-  const [lesteNotater, setLesteNotater] = useLocalStorage<number[]>('lesteNotater', []);
+const NotaterIndex: React.FC<NotaterIndexProps> = ({ fagsakId, navAnsatt, fagsakHarPleietrengende }) => {
   const queryClient = useQueryClient();
 
   const notaterQueryKey = ['notater', fagsakId];
@@ -33,48 +30,19 @@ const NotaterIndex: React.FC<NotaterIndexProps> = ({ fagsakId, navAnsatt }) => {
     },
   });
 
-  const getNotater = (signal: AbortSignal) =>
-    axios
-      .get<NotatResponse[]>(`/k9/sak/api/notat`, {
-        signal,
-        params: {
-          saksnummer: fagsakId,
-        },
-      })
-      .then(({ data }) => {
-        const sorterteNotater = [...data].sort(
-          (notatA, notatB) => +new Date(notatA.opprettetTidspunkt) - +new Date(notatB.opprettetTidspunkt),
-        );
-        setLesteNotater([
-          ...new Set([...lesteNotater, ...data.filter(notat => !notat.skjult).map(notat => notat.notatId)]),
-        ]);
-        return sorterteNotater;
-      });
-
   const {
     isLoading: getNotaterLoading,
     isError: hasGetNotaterError,
     data: notater,
-  } = useQuery({ queryKey: notaterQueryKey, queryFn: ({ signal }) => getNotater(signal), enabled: !!fagsakId });
-
-  const postNotat = (data: Inputs, id?: number, fagsakIdFraRedigertNotat?: string, versjon?: number) => {
-    let notatGjelderType;
-    if (!id) {
-      notatGjelderType = data.visNotatIAlleSaker ? NotatGjelderType.pleietrengende : NotatGjelderType.fagsak;
-    }
-    const postUrl = id ? '/k9/sak/api/notat/endre' : '/k9/sak/api/notat';
-    return axios.post(postUrl, {
-      notatTekst: data.notatTekst,
-      saksnummer: fagsakIdFraRedigertNotat || fagsakId,
-      notatGjelderType,
-      versjon: versjon || 0,
-      notatId: id,
-    });
-  };
+  } = useQuery({
+    queryKey: notaterQueryKey,
+    queryFn: ({ signal }) => getNotater(signal, fagsakId),
+    enabled: !!fagsakId,
+  });
 
   const postNotatMutation = useMutation(
     ({ data, id, fagsakIdFraRedigertNotat, versjon }: postNotatMutationVariables) =>
-      postNotat(data, id, fagsakIdFraRedigertNotat, versjon),
+      postNotat(data, fagsakId, id, fagsakIdFraRedigertNotat, versjon),
     {
       onSuccess: () => {
         formMethods.reset();
@@ -82,14 +50,6 @@ const NotaterIndex: React.FC<NotaterIndexProps> = ({ fagsakId, navAnsatt }) => {
       },
     },
   );
-
-  const skjulNotat = (skjul: boolean, id: number, saksnummer: string, versjon: number) =>
-    axios.post('/k9/sak/api/notat/skjul', {
-      notatId: id,
-      skjul,
-      saksnummer,
-      versjon,
-    });
 
   const skjulNotatMutation = useMutation(
     ({ skjul, id, saksnummer, versjon }: skjulNotatMutationVariables) => skjulNotat(skjul, id, saksnummer, versjon),
@@ -118,6 +78,7 @@ const NotaterIndex: React.FC<NotaterIndexProps> = ({ fagsakId, navAnsatt }) => {
       postNotatMutationError={postNotatMutation.isError}
       submitSkjulNotat={submitSkjulNotat}
       formMethods={formMethods}
+      fagsakHarPleietrengende={fagsakHarPleietrengende}
     />
   );
 };
