@@ -1,25 +1,31 @@
 import { LoadingPanel, requireProps } from '@fpsak-frontend/shared-components';
 import Notater from '@k9-sak-web/sak-notat';
-import { FagsakPerson, NavAnsatt } from '@k9-sak-web/types';
+import { Fagsak, NavAnsatt } from '@k9-sak-web/types';
 import React from 'react';
+import ErrorBoundary from '@k9-sak-web/sak-app/src/app/ErrorBoundary';
+import { useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
 
 interface OwnProps {
-  saksnummer: string;
-  behandlingId?: number;
-  behandlingVersjon?: number;
-  fagsakPerson?: FagsakPerson;
   navAnsatt: NavAnsatt;
+  fagsak: Fagsak;
 }
-
-const EMPTY_ARRAY = [];
 
 /**
  * NotaterIndex
  *
  * Container komponent. Har ansvar for å vise notater i saken.
  */
-export const NotaterIndex = ({ saksnummer, navAnsatt }: OwnProps) => (
-  <Notater fagsakId={saksnummer} navAnsatt={navAnsatt} />
-);
+export const NotaterIndex = ({ fagsak, navAnsatt }: OwnProps) => {
+  const { addErrorMessage } = useRestApiErrorDispatcher();
 
-export default requireProps(['saksnummer'], <LoadingPanel />)(NotaterIndex);
+  return (
+    <ErrorBoundary errorMessageCallback={addErrorMessage}>
+      <Notater
+        fagsakId={fagsak.saksnummer}
+        navAnsatt={navAnsatt}
+        fagsakHarPleietrengende={!!fagsak.pleietrengendeAktørId}
+      />
+    </ErrorBoundary>
+  );
+};
+export default requireProps(['fagsak'], <LoadingPanel />)(NotaterIndex);
