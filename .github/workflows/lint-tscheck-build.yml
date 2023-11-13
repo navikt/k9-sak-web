@@ -36,7 +36,10 @@ jobs:
       - name: Typescript-sjekk
         run: yarn ts-check
 
-      - name: Linting
+      - name: Eslint
+        run: yarn lint
+
+      - name: CSS-lint
         run: yarn css:lint
 
       - name: Sjekker at koden bygger
