@@ -72,12 +72,12 @@
     "react-router-dom": "6.18.0"
   },
   "devDependencies": {
-    "@babel/core": "7.23.2",
-    "@babel/eslint-parser": "7.22.15",
+    "@babel/core": "7.23.3",
+    "@babel/eslint-parser": "7.23.3",
     "@babel/helper-regex": "7.10.5",
-    "@babel/preset-env": "7.23.2",
-    "@babel/preset-react": "7.22.15",
-    "@babel/preset-typescript": "7.23.2",
+    "@babel/preset-env": "7.23.3",
+    "@babel/preset-react": "7.23.3",
+    "@babel/preset-typescript": "7.23.3",
     "@babel/register": "7.22.15",
     "@cfaester/enzyme-adapter-react-18": "^0.7.1",
     "@commercetools/enzyme-extensions": "5.0.0",
