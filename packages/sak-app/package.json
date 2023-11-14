@@ -62,7 +62,7 @@
     "@navikt/k9-fe-medisinsk-vilkar": "0.0.9",
     "@navikt/k9-fe-om-barnet": "0.0.7",
     "@navikt/k9-fe-omsorgen-for": "0.0.6",
-    "@navikt/k9-fe-omsorgsdager": "0.0.6",
+    "@navikt/k9-fe-omsorgsdager": "0.0.7",
     "@navikt/k9-fe-uttak": "0.0.6",
     "@sentry/browser": "7.80.0",
     "axios": "1.6.1",
