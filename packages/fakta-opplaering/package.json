@@ -11,7 +11,7 @@
     "@navikt/ds-icons": "3.4.3",
     "@navikt/ds-react": "5.10.0",
     "@navikt/ft-plattform-komponenter": "2.3.9",
-    "@navikt/k9-fe-form-utils": "1.0.11",
+    "@navikt/k9-fe-form-utils": "1.0.12",
     "@navikt/k9-fe-period-utils": "1.0.10",
     "classnames": "2.3.2",
     "dayjs": "1.11.10",
