@@ -18,6 +18,7 @@ describe('<TabMeny>', () => {
         tooltip: 'Historikk',
         isActive: true,
         isDisabled: false,
+        antallUlesteNotater: 0,
       },
       {
         getSvg: (isActive, isDisabled, props) => (
@@ -26,6 +27,7 @@ describe('<TabMeny>', () => {
         tooltip: 'Send melding',
         isActive: false,
         isDisabled: true,
+        antallUlesteNotater: 0,
       },
     ];
 
@@ -64,6 +66,7 @@ describe('<TabMeny>', () => {
         tooltip: 'Historikk',
         isActive: false,
         isDisabled: false,
+        antallUlesteNotater: 0,
       },
       {
         getSvg: (isActive, isDisabled, props) => (
@@ -72,6 +75,7 @@ describe('<TabMeny>', () => {
         tooltip: 'Send melding',
         isActive: false,
         isDisabled: false,
+        antallUlesteNotater: 0,
       },
     ];
 

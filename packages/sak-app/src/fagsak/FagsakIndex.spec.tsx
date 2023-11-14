@@ -77,6 +77,7 @@ describe('<FagsakIndex>', () => {
     requestApi.mock(K9sakApiKeys.HENT_SAKSBEHANDLERE, {});
     requestApi.mock(K9sakApiKeys.FEATURE_TOGGLE, []);
     requestApi.mock(K9sakApiKeys.LOS_HENTE_MERKNAD, []);
+    requestApi.mock(K9sakApiKeys.NAV_ANSATT, {});
 
     const wrapper = shallow(<FagsakIndex />);
 

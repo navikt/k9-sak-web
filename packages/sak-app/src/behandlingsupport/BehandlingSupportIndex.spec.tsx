@@ -1,16 +1,17 @@
+import { screen } from '@testing-library/react';
 import React from 'react';
-import sinon, { SinonStub } from 'sinon';
-import { render, screen } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
+import sinon, { SinonStub } from 'sinon';
 
-import { BehandlingAppKontekst, Fagsak } from '@k9-sak-web/types';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
+import { BehandlingAppKontekst, Fagsak } from '@k9-sak-web/types';
 
-import { VergeBehandlingmenyValg } from '../behandling/behandlingRettigheterTsType';
+import { renderWithReactQueryClient } from '@fpsak-frontend/utils-test/src/test-utils';
 import * as useTrackRouteParam from '../app/useTrackRouteParam';
+import { VergeBehandlingmenyValg } from '../behandling/behandlingRettigheterTsType';
+import { K9sakApiKeys, requestApi } from '../data/k9sakApi';
 import BehandlingSupportIndex, { hentSynligePaneler, hentValgbarePaneler } from './BehandlingSupportIndex';
-import { requestApi, K9sakApiKeys } from '../data/k9sakApi';
 
 describe('<BehandlingSupportIndex>', () => {
   const fagsak = {
@@ -66,15 +67,16 @@ describe('<BehandlingSupportIndex>', () => {
     requestApi.mock(K9sakApiKeys.HISTORY_TILBAKE, []);
     requestApi.mock(K9sakApiKeys.HISTORY_KLAGE, []);
 
-    render(
+    renderWithReactQueryClient(
       <MemoryRouter>
         <BehandlingSupportIndex
           fagsak={fagsak as Fagsak}
           alleBehandlinger={[behandling] as BehandlingAppKontekst[]}
           behandlingId={1}
           behandlingVersjon={2}
+          navAnsatt={navAnsatt}
         />
-      </MemoryRouter>
+      </MemoryRouter>,
     );
 
     expect(screen.queryAllByTestId('TabMenyKnapp').length).toBe(3);

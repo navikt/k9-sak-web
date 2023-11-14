@@ -16,7 +16,7 @@ import MeldingIndex from './MeldingIndex';
 
 const mockHistoryPush = vi.fn();
 
-const MockForm = reduxForm({ form: 'mock' })(({ children }) => <div>{children}</div>);
+const MockForm = reduxForm({ form: 'mock', onSubmit: jest.fn() })(({ children }) => <div>{children}</div>);
 
 vi.mock('react-router-dom', async () => {
   const actual = (await vi.importActual('react-router-dom')) as Record<string, unknown>;
@@ -34,7 +34,11 @@ interface SendMeldingPayload {
   brevmalkode: string | undefined;
   fritekst: string | null;
   arsakskode: string | undefined;
-  fritekstbrev: string | null;
+  fritekstbrev?: string;
+}
+
+interface ExtendedWindow {
+  location?: Location;
 }
 
 describe('<MeldingIndex>', () => {
@@ -80,7 +84,7 @@ describe('<MeldingIndex>', () => {
   };
 
   const assignMock = vi.fn();
-  delete window.location;
+  delete (window as Partial<ExtendedWindow>).location;
   // @ts-ignore Dette er kun for å unngå warnings med window.location.reload(). (Denne blir brukt som en temp-fiks, så dette skal derfor fjernes)
   window.location = { reload: assignMock };
 

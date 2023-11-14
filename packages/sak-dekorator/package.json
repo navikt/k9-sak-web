@@ -12,11 +12,11 @@
     "@fpsak-frontend/shared-components": "1.0.0",
     "@fpsak-frontend/utils": "1.0.0",
     "@k9-sak-web/konstanter": "1.0.0",
-    "@navikt/ft-plattform-komponenter": "2.3.2",
+    "@navikt/ft-plattform-komponenter": "2.3.9",
     "@navikt/k9-fe-array-utils": "1.0.4",
     "@navikt/k9-fe-bem-utils": "1.0.2",
-    "@navikt/k9-fe-date-utils": "1.0.5",
-    "@navikt/k9-fe-period-utils": "1.0.8",
+    "@navikt/k9-fe-date-utils": "1.0.6",
+    "@navikt/k9-fe-period-utils": "1.0.9",
     "nav-frontend-core": "6.0.1",
     "nav-frontend-grid": "2.0.2",
     "nav-frontend-grid-style": "1.0.3",
@@ -33,8 +33,8 @@
     "nav-frontend-spinner-style": "1.0.2",
     "nav-frontend-typografi": "4.0.2",
     "nav-frontend-typografi-style": "2.0.2",
-    "react": "17.0.2",
-    "react-intl": "6.4.7"
+    "react": "18.2.0",
+    "react-intl": "6.5.2"
   },
   "devDependencies": {
     "@fpsak-frontend/utils-test": "1.0.0"

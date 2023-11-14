@@ -51,7 +51,7 @@ interface PeriodFieldArrayProps {
     periodeElementFieldId: string,
     index: number,
     getRemoveButton: (index?: number, fields?: FieldArrayFieldsProps<any>) => JSX.Element,
-  ) => void;
+  ) => React.ReactNode;
   readOnly?: boolean;
   titleTextCode?: string;
   textCode?: string;

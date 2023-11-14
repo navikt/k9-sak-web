@@ -26,7 +26,7 @@ SOFTWARE.
 
 */
 
-import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios';
+import axios, { AxiosError, AxiosHeaders, AxiosRequestConfig, AxiosResponse, InternalAxiosRequestConfig } from 'axios';
 
 import NodeCache from 'node-cache';
 
@@ -80,13 +80,13 @@ function getCacheByAxiosConfig(config: AxiosRequestConfig) {
   return EtagCache.get(getUUIDByAxiosConfig(config));
 }
 
-function requestInterceptor(config: AxiosRequestConfig) {
+function requestInterceptor(config: InternalAxiosRequestConfig) {
   if (isCacheableMethod(config)) {
     const uuid = getUUIDByAxiosConfig(config);
     const lastCachedResult = EtagCache.get(uuid);
     if (lastCachedResult) {
       // eslint-disable-next-line no-param-reassign
-      config.headers = { ...config.headers, 'If-None-Match': lastCachedResult.etag };
+      config.headers = new AxiosHeaders({ ...config.headers, 'If-None-Match': lastCachedResult.etag });
     }
   }
   return config;

@@ -87,8 +87,6 @@ spec:
       value: "true"
     - name: TILBAKE
       value: "true"
-    - name: UTENLANDSOPPHOLD
-      value: "true"
     - name: SOKNADPERIODESTRIPE
       value: "false"
     - name: TYPE_MEDISINSKE_OPPLYSNINGER_BREV
@@ -112,4 +110,8 @@ spec:
     - name: OMSORGEN_FOR_PERIODISERT
       value: "true"
     - name: OVERSTYR_BEREGNING
+      value: "true"
+    - name: FAKTA_BEREGNING_REDESIGN
+      value: "true"
+    - name: NOTAT_I_SAK
       value: "true"

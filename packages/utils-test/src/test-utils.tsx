@@ -4,6 +4,7 @@ import { IntlProvider } from 'react-intl';
 import { combineReducers, createStore } from 'redux';
 import { Provider } from 'react-redux';
 import { reducer } from 'redux-form';
+import { QueryClient, QueryClientProvider } from 'react-query';
 // eslint-disable-next-line import/no-relative-packages
 import defaultMessages from '../../../public/sprak/nb_NO.json';
 // eslint-disable-next-line import/no-relative-packages
@@ -37,6 +38,25 @@ export function renderWithIntlAndReduxForm(ui: ReactElement, { locale, messages,
   );
 
   return rtlRender(ui, { wrapper: Wrapper, ...renderOptions });
+}
+
+const createTestReactQueryClient = () =>
+  new QueryClient({
+    defaultOptions: {
+      queries: {
+        retry: false,
+      },
+    },
+  });
+
+export function renderWithReactQueryClient(ui: React.ReactElement) {
+  const testQueryClient = createTestReactQueryClient();
+  const { rerender, ...result } = rtlRender(<QueryClientProvider client={testQueryClient}>{ui}</QueryClientProvider>);
+  return {
+    ...result,
+    rerender: (rerenderUi: React.ReactElement) =>
+      rerender(<QueryClientProvider client={testQueryClient}>{rerenderUi}</QueryClientProvider>),
+  };
 }
 
 export * from '@testing-library/react';

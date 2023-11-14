@@ -1,7 +1,7 @@
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import { MicroFrontend } from '@fpsak-frontend/utils';
-import { Aksjonspunkt, ArbeidsgiverOpplysningerPerId } from '@k9-sak-web/types';
+import { Aksjonspunkt, AlleKodeverk, ArbeidsgiverOpplysningerPerId } from '@k9-sak-web/types';
 import React from 'react';
 
 const initializeUttak = (
@@ -12,6 +12,7 @@ const initializeUttak = (
   arbeidsforhold: ArbeidsgiverOpplysningerPerId,
   aksjonspunktkoder: string[],
   erFagytelsetypeLivetsSluttfase: boolean,
+  kodeverkUtenlandsoppholdÅrsak,
   løsAksjonspunktVurderDatoNyRegelUttak: ({
     begrunnelse,
     virkningsdato,
@@ -29,6 +30,7 @@ const initializeUttak = (
     arbeidsforhold,
     aksjonspunktkoder,
     erFagytelsetypeLivetsSluttfase,
+    kodeverkUtenlandsoppholdÅrsak,
     løsAksjonspunktVurderDatoNyRegelUttak,
     virkningsdatoUttakNyeRegler,
     aksjonspunkter,
@@ -41,6 +43,7 @@ interface UttakProps {
   utsattePerioder: string[];
   arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysningerPerId;
   aksjonspunkter: Aksjonspunkt[];
+  alleKodeverk: AlleKodeverk;
   erFagytelsetypeLivetsSluttfase: boolean;
   submitCallback: (data: { kode: string; begrunnelse: string; virkningsdato: string }[]) => void;
   virkningsdatoUttakNyeRegler?: string;
@@ -53,6 +56,7 @@ export default ({
   utsattePerioder,
   arbeidsgiverOpplysningerPerId,
   aksjonspunkter,
+  alleKodeverk,
   erFagytelsetypeLivetsSluttfase,
   submitCallback,
   virkningsdatoUttakNyeRegler,
@@ -83,6 +87,7 @@ export default ({
           arbeidsgiverOpplysningerPerId,
           funnedeRelevanteAksjonspunktkoder,
           erFagytelsetypeLivetsSluttfase,
+          alleKodeverk?.UtenlandsoppholdÅrsak,
           løsAksjonspunktVurderDatoNyRegelUttak,
           virkningsdatoUttakNyeRegler,
           funnedeRelevanteAksjonspunkter,

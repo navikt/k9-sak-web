@@ -146,6 +146,7 @@ describe('<FrisinnFakta>', () => {
         setApentFaktaPanel={sinon.spy()}
         setBehandling={sinon.spy()}
         arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
+        featureToggles={{ FAKTA_BEREGNING_REDESIGN: true }}
       />,
     );
 
@@ -187,6 +188,7 @@ describe('<FrisinnFakta>', () => {
         setApentFaktaPanel={sinon.spy()}
         setBehandling={sinon.spy()}
         arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
+        featureToggles={{ FAKTA_BEREGNING_REDESIGN: true }}
       />,
     );
 

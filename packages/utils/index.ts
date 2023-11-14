@@ -122,3 +122,4 @@ export { joinNonNullStrings, safeJSONParse } from './src/stringUtils';
 export type { Adresser } from './src/getAddresses';
 export { default as mapVilkar } from './src/beregning/VilkarMapper';
 export { default as transformBeregningValues } from './src/beregning/transformValuesBeregning';
+export { default as useLocalStorage } from './src/useLocalStorageHook';

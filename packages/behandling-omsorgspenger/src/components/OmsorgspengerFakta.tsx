@@ -28,9 +28,11 @@ const overstyringApCodes = [ac.OVERSTYRING_AV_BEREGNINGSAKTIVITETER, ac.OVERSTYR
  */
 const skalSkjuleOmsorgenFor = (data: FetchedData): boolean => {
   if (data?.behandlingPerioderårsakMedVilkår?.perioderMedÅrsak?.perioderTilVurdering) {
-    return data.behandlingPerioderårsakMedVilkår.perioderMedÅrsak.perioderTilVurdering.filter(periode =>
-      isBefore(parse(periode.tom, 'yyyy-MM-dd', new Date()), parse('2023-01-01', 'yyyy-MM-dd', new Date())),
-    ).length > 0;
+    return (
+      data.behandlingPerioderårsakMedVilkår.perioderMedÅrsak.perioderTilVurdering.filter(periode =>
+        isBefore(parse(periode.tom, 'yyyy-MM-dd', new Date()), parse('2023-01-01', 'yyyy-MM-dd', new Date())),
+      ).length > 0
+    );
   }
   return false;
 };
@@ -98,6 +100,7 @@ const OmsorgspengerFakta = ({
     rettigheter,
     aksjonspunkter,
     valgtFaktaSteg,
+    featureToggles,
   );
 
   faktaHooks.useFaktaAksjonspunktNotifikator(faktaPaneler, setApentFaktaPanel, behandling.versjon);
@@ -119,11 +122,23 @@ const OmsorgspengerFakta = ({
         .getEndepunkter(featureToggles)
         .map(e => ({ key: e }))
     : [];
+  const endepunkterUtenCaching = valgtPanel
+    ? valgtPanel
+        .getPanelDef()
+        .getEndepunkterUtenCaching()
+        .map(e => ({ key: e }))
+    : [];
   const { data: faktaData, state } = restApiOmsorgHooks.useMultipleRestApi<FetchedData>(endepunkter, {
     updateTriggers: [behandling.versjon, valgtPanel],
     suspendRequest: !valgtPanel,
     isCachingOn: true,
   });
+
+  const { data: faktaDataUtenCaching, state: stateForEndepunkterUtenCaching } =
+    restApiOmsorgHooks.useMultipleRestApi<FetchedData>(endepunkterUtenCaching, {
+      updateTriggers: [behandling.versjon, valgtPanel],
+      suspendRequest: !valgtPanel,
+    });
 
   const [formData, setFormData] = useState({});
   useEffect(() => {
@@ -133,7 +148,11 @@ const OmsorgspengerFakta = ({
   }, [behandling.versjon]);
 
   if (sidemenyPaneler.length > 0) {
-    const isLoading = state === RestApiState.NOT_STARTED || state === RestApiState.LOADING;
+    const isLoading =
+      state === RestApiState.NOT_STARTED ||
+      state === RestApiState.LOADING ||
+      stateForEndepunkterUtenCaching === RestApiState.NOT_STARTED ||
+      stateForEndepunkterUtenCaching === RestApiState.LOADING;
     return (
       <SideMenuWrapper paneler={sidemenyPaneler} onClick={velgFaktaPanelCallback}>
         {valgtPanel && isLoading && <LoadingPanel />}
@@ -141,6 +160,7 @@ const OmsorgspengerFakta = ({
           <ErrorBoundary errorMessageCallback={addErrorMessage}>
             {valgtPanel.getPanelDef().getKomponent({
               ...faktaData,
+              ...faktaDataUtenCaching,
               fagsak,
               behandling,
               alleKodeverk,

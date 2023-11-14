@@ -1,8 +1,8 @@
-import { shallow } from 'enzyme';
 import React from 'react';
-import FastBreddeAligner, { Kolonne } from './FastBreddeAligner';
+import { render, screen } from '@testing-library/react';
+import FastBreddeAligner from './FastBreddeAligner';
 
-it('rendrer alle kolonner med gitt content', () => {
+it('renders all columns with given content', () => {
   const content1 = 'kolonne_1';
   const content2 = 'kolonne_2';
   const kolonner = [
@@ -18,10 +18,11 @@ it('rendrer alle kolonner med gitt content', () => {
     },
   ];
 
-  const wrapper = shallow(<FastBreddeAligner kolonner={kolonner} />);
-  const renderedKolonner = wrapper.find(Kolonne);
+  render(<FastBreddeAligner kolonner={kolonner} />);
 
-  expect(renderedKolonner).toHaveLength(2);
-  expect(renderedKolonner.filterWhere(kol => kol.text() === content1)).toHaveLength(1);
-  expect(renderedKolonner.filterWhere(kol => kol.text() === content2)).toHaveLength(1);
+  const renderedContent1 = screen.getByText(content1);
+  const renderedContent2 = screen.getByText(content2);
+
+  expect(renderedContent1).toBeInTheDocument();
+  expect(renderedContent2).toBeInTheDocument();
 });

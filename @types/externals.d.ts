@@ -6,4 +6,5 @@ declare module '*.svg' {
   export default src;
 }
 declare module '*.less';
+declare module '*.css';
 declare module '*.module.css';

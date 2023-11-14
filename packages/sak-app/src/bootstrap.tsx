@@ -2,7 +2,7 @@
 import { RestApiErrorProvider, RestApiProvider } from '@k9-sak-web/rest-api-hooks';
 import { Integrations, init } from '@sentry/browser';
 import React from 'react';
-import { render } from 'react-dom';
+import { createRoot } from 'react-dom/client';
 import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
 
@@ -13,10 +13,10 @@ import { BrowserRouter } from 'react-router-dom';
  * - https://bugs.chromium.org/p/chromium/issues/detail?id=1215606&q=norwegian&can=2
  * - https://github.com/formatjs/formatjs/issues/3066
  */
-import '@formatjs/intl-datetimeformat/polyfill-force';
 import '@formatjs/intl-datetimeformat/locale-data/nb';
-import '@formatjs/intl-numberformat/polyfill-force';
+import '@formatjs/intl-datetimeformat/polyfill-force';
 import '@formatjs/intl-numberformat/locale-data/nb';
+import '@formatjs/intl-numberformat/polyfill-force';
 
 import AppIndex from './app/AppIndex';
 import configureStore from './configureStore';
@@ -81,7 +81,8 @@ const renderFunc = Component => {
   };
 
   prepare().then(() => {
-    render(
+    const root = createRoot(app);
+    root.render(
       <Provider store={store}>
         <BrowserRouter basename="/k9/web">
           <RestApiProvider>
