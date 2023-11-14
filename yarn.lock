@@ -5818,7 +5818,7 @@ __metadata:
     "@fpsak-frontend/form": "*"
     "@k9-sak-web/types": "*"
     "@navikt/ft-plattform-komponenter": 2.3.9
-    "@navikt/k9-fe-form-utils": 1.0.10
+    "@navikt/k9-fe-form-utils": 1.0.11
     "@navikt/k9-fe-period-utils": 1.0.9
     formik: 2.4.5
     yup: 0.32.11
@@ -5835,7 +5835,7 @@ __metadata:
     "@navikt/ds-icons": 3.4.3
     "@navikt/ds-react": 5.10.0
     "@navikt/ft-plattform-komponenter": 2.3.9
-    "@navikt/k9-fe-form-utils": 1.0.10
+    "@navikt/k9-fe-form-utils": 1.0.11
     "@navikt/k9-fe-period-utils": 1.0.9
     classnames: 2.3.2
     dayjs: 1.11.10
@@ -6967,21 +6967,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@navikt/k9-fe-date-utils@npm:^1.0.5":
-  version: 1.0.5
-  resolution: "@navikt/k9-fe-date-utils@npm:1.0.5::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fk9-fe-date-utils%2F1.0.5%2F683b33177ab060ef2bf5767d44e61916402643b6"
+"@navikt/k9-fe-date-utils@npm:^1.0.7":
+  version: 1.0.7
+  resolution: "@navikt/k9-fe-date-utils@npm:1.0.7::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fk9-fe-date-utils%2F1.0.7%2F8f3101a6734ba686422e41ccda75b1563ca23326"
   peerDependencies:
     dayjs: 1.11.6
-  checksum: d6d8f28ab727266f5ba95404f50cd1cb5dd116c2d0298a1b6d128757ac5960064513f034db5d5fc299fd7cbe98000963ea7d7b55ec992059f615560de1f56088
+  checksum: 91a4f9db2f0c025300caa25f4c892157c3120a17faacab5a13ba721f5335734a1e215d4867343cadac16593f5625af2ea0c05835526d0ceb2a0ae122779cad08
   languageName: node
   linkType: hard
 
-"@navikt/k9-fe-form-utils@npm:1.0.10":
-  version: 1.0.10
-  resolution: "@navikt/k9-fe-form-utils@npm:1.0.10::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fk9-fe-form-utils%2F1.0.10%2Fd526ade2838557b806b8831278a05983d5af038d"
+"@navikt/k9-fe-form-utils@npm:1.0.11":
+  version: 1.0.11
+  resolution: "@navikt/k9-fe-form-utils@npm:1.0.11::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fk9-fe-form-utils%2F1.0.11%2Fad7b150ac9a8551c6ead47632d590b2e945fa022"
   dependencies:
     "@navikt/k9-fe-bem-utils": 1.0.2
-    "@navikt/k9-fe-period-utils": ^1.0.8
+    "@navikt/k9-fe-period-utils": ^1.0.10
   peerDependencies:
     "@hookform/error-message": 2.0.1
     "@navikt/ds-css": 2.1.7
@@ -6998,7 +6998,7 @@ __metadata:
     react-dom: 18.2.0
     react-hook-form: 7.43.0
     react-popper: 2.3.0
-  checksum: 30ad763092f1ef29116a33281ad8e3e6c2d8fefe224008c02b1f8e4da3b003d285a7f4734eb504a03b50c7f9e71a51ce383b7d23d984f46f3f7629302c13f09c
+  checksum: a822492c8886dfe5d2e86e232914a2d5192132f1992603acbf3d7818e4c386718ca80e906c84fef2f512655ceb17ec59c96934e28e349aca6aa9b5e0d49079e1
   languageName: node
   linkType: hard
 
@@ -7014,15 +7014,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@navikt/k9-fe-period-utils@npm:^1.0.8":
-  version: 1.0.8
-  resolution: "@navikt/k9-fe-period-utils@npm:1.0.8::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fk9-fe-period-utils%2F1.0.8%2F7c08c6a60a1ae8875745f0c958f55e2fd1ca4487"
+"@navikt/k9-fe-period-utils@npm:^1.0.10":
+  version: 1.0.10
+  resolution: "@navikt/k9-fe-period-utils@npm:1.0.10::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fk9-fe-period-utils%2F1.0.10%2F13378f36f433844e9e99ce2529fc3c0689b6126b"
   dependencies:
     "@navikt/k9-fe-array-utils": 1.0.4
-    "@navikt/k9-fe-date-utils": ^1.0.5
+    "@navikt/k9-fe-date-utils": ^1.0.7
   peerDependencies:
     dayjs: 1.11.7
-  checksum: 47707969e7bb3edf3a9edf4356e5232131dfda6d51e137ecc2088368eca287ecb002aadd864804c9f004f95eaa5329d12d30b39669b612e5884dc9814f67aa24
+  checksum: d3bcd0218b769b7754ce920e6d88fa22edcbcbccc0c9abd1f96cc0dd1c684dd8a8b2685be6a7c3f07bc72b805cda2808a88b9978a05ec3b57bd2fbefb8a1e5cb
   languageName: node
   linkType: hard
 
