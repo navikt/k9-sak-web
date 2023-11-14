@@ -51,7 +51,7 @@
     "@navikt/familie-endringslogg": "10.0.0",
     "@navikt/ft-plattform-komponenter": "2.3.9",
     "@popperjs/core": "2.11.8",
-    "@sentry/browser": "7.77.0",
+    "@sentry/browser": "7.80.0",
     "@storybook/testing-react": "2.0.1",
     "axios": "1.6.1",
     "core-js": "3.33.2",
