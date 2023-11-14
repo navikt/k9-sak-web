@@ -1,7 +1,7 @@
 import { Aksjonspunkt, Vilkar } from '@k9-sak-web/types';
 import { FormState } from '@fpsak-frontend/form/index';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
-import UtvidetRettMikrofrontendVisning from '../../../../../types/MikrofrontendKomponenter';
+import { KomponenterEnum } from '@navikt/k9-fe-omsorgsdager';
 import { generereInfoForVurdertVilkar } from '../../../UtvidetRettOmsorgenForMikrofrontendFelles';
 import { VilkarMidlertidigAleneProps } from '../../../../../types/utvidetRettMikrofrontend/VilkarMidlertidigAleneProps';
 import UtvidetRettSoknad from '../../../../../types/UtvidetRettSoknad';
@@ -79,10 +79,13 @@ const MidlertidigAleneObjektTilMikrofrontend = ({
   skalVilkarsUtfallVises,
   submitCallback,
   soknad,
-}: OwnProps) => {
+}: OwnProps): {
+  visKomponent: KomponenterEnum.VILKAR_MIDLERTIDIG_ALENE;
+  props: VilkarMidlertidigAleneProps;
+} => {
   const angittForelder = soknad.angittePersoner.filter(person => person.rolle === 'ANPA');
   return {
-    visKomponent: UtvidetRettMikrofrontendVisning.VILKAR_MIDLERTIDIG_ALENE,
+    visKomponent: KomponenterEnum.VILKAR_MIDLERTIDIG_ALENE,
     props: {
       behandlingsID,
       aksjonspunktLost,
@@ -100,11 +103,7 @@ const MidlertidigAleneObjektTilMikrofrontend = ({
         aksjonspunkt.begrunnelse,
         'Utvidet Rett',
       ),
-      informasjonTilLesemodus: formatereLesemodusObjektForMidlertidigAlene(
-        vilkar,
-        aksjonspunkt,
-        status,
-      ),
+      informasjonTilLesemodus: formatereLesemodusObjektForMidlertidigAlene(vilkar, aksjonspunkt, status),
       losAksjonspunkt: ({
         begrunnelse,
         erSokerenMidlertidigAleneOmOmsorgen,

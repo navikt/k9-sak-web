@@ -24,7 +24,7 @@ const babelRules = {
   include: [PACKAGES_DIR],
 };
 
-const lessLocalRules = {
+const cssLocalRules = {
   test: /\.css$/,
   use: [
     {
@@ -48,7 +48,7 @@ const lessLocalRules = {
 };
 
 const lessExternalRules = {
-  test: /\.(le|c)ss$/,
+  test: /\.less$/,
   use: [
     {
       loader: MiniCssExtractPlugin.loader,
@@ -69,6 +69,21 @@ const lessExternalRules = {
         },
       },
     },
+  ],
+  include: [CSS_DIR, NODE_MODULES],
+};
+
+const cssExternalRules = {
+  test: /\.css$/,
+  use: [
+    {
+      loader: MiniCssExtractPlugin.loader,
+      options: {
+        publicPath: IS_DEV ? './' : '/k9/web/',
+      },
+    },
+    { loader: 'css-loader' },
+    'postcss-loader',
   ],
   include: [CSS_DIR, NODE_MODULES],
 };
@@ -127,8 +142,9 @@ export default {
   rules: [
     sourceMaps,
     babelRules,
-    lessLocalRules,
+    cssLocalRules,
     lessExternalRules,
+    cssExternalRules,
     assetRules,
     svgLocalRules,
     svgExternalRules,
