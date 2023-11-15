@@ -8,13 +8,13 @@
     "@fpsak-frontend/utils": "1.0.0",
     "@k9-sak-web/rest-api": "1.0.0",
     "@k9-sak-web/types": "1.0.0",
-    "@navikt/aksel-icons": "5.8.0",
-    "@navikt/ds-react": "5.8.0",
-    "@navikt/ft-form-hooks": "4.2.12",
-    "@navikt/ft-form-validators": "^2.1.5",
+    "@navikt/aksel-icons": "5.10.0",
+    "@navikt/ds-react": "5.10.0",
+    "@navikt/ft-form-hooks": "4.2.13",
+    "@navikt/ft-form-validators": "^2.1.6",
     "date-fns": "2.30.0",
     "react": "18.2.0",
-    "react-hook-form": "7.47.0",
-    "react-intl": "6.5.1"
+    "react-hook-form": "7.48.2",
+    "react-intl": "6.5.2"
   }
 }

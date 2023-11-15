@@ -23,12 +23,12 @@ interface DecimalFieldProps {
 }
 
 const createNormalizeOnBlurField = WrappedNavFieldComponent => {
-  interface FieldComponent {
+  interface FieldComponentProps {
     normalizeOnBlur: (value: any) => void;
     component?: () => reduxFormField;
   }
-  class FieldComponent extends Component<FieldComponent & WrappedComponentProps> {
-    constructor(props: FieldComponent & WrappedComponentProps) {
+  class FieldComponent extends Component<FieldComponentProps & WrappedComponentProps> {
+    constructor(props: FieldComponentProps & WrappedComponentProps) {
       super(props);
       this.blurHandler = this.blurHandler.bind(this);
     }

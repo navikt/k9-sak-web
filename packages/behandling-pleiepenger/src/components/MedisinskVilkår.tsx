@@ -1,41 +1,10 @@
-import React from 'react';
-import { useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
-import {
-  MicroFrontend,
-  httpErrorHandler,
-  findEndpointsForMicrofrontend,
-  findAksjonspunkt,
-} from '@fpsak-frontend/utils';
-import { SimpleEndpoints } from '@k9-sak-web/types';
+import { findAksjonspunkt, findEndpointsForMicrofrontend, httpErrorHandler } from '@fpsak-frontend/utils';
+import { useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
+import { MedisinskVilkår } from '@navikt/k9-fe-medisinsk-vilkar';
+import React from 'react';
 
-const initializeMedisinskVilkår = (
-  elementId,
-  httpErrorHandlerFn,
-  endpoints: SimpleEndpoints,
-  behandlingUuid: string,
-  løsAksjonspunkt,
-  readOnly,
-  visFortsettknapp,
-  saksbehandlere,
-  fagsakYtelseType,
-  behandlingType,
-) => {
-  (window as any).renderMedisinskVilkarApp(elementId, {
-    httpErrorHandler: httpErrorHandlerFn,
-    endpoints,
-    behandlingUuid,
-    onFinished: løsAksjonspunkt,
-    readOnly,
-    visFortsettknapp,
-    saksbehandlere,
-    fagsakYtelseType,
-    behandlingType,
-  });
-};
-
-const medisinskVilkårAppID = 'medisinskVilkårApp';
 export default ({
   behandling: { links, uuid },
   submitCallback,
@@ -62,37 +31,28 @@ export default ({
   const harAksjonspunkt = !!medisinskVilkårAksjonspunktkode;
 
   return (
-    <MicroFrontend
-      id={medisinskVilkårAppID}
-      jsSrc="/k9/microfrontend/medisinsk-vilkar/1/app.js"
-      stylesheetSrc="/k9/microfrontend/medisinsk-vilkar/1/styles.css"
-      noCache
-      onReady={() =>
-        initializeMedisinskVilkår(
-          medisinskVilkårAppID,
-          httpErrorHandlerCaller,
-          findEndpointsForMicrofrontend(links, [
-            { rel: 'sykdom-vurdering-oversikt-ktp', desiredName: 'vurderingsoversiktKontinuerligTilsynOgPleie' },
-            { rel: 'sykdom-vurdering-oversikt-too', desiredName: 'vurderingsoversiktBehovForToOmsorgspersoner' },
-            { rel: 'sykdom-vurdering-direkte', desiredName: 'hentVurdering' },
-            { rel: 'sykdom-vurdering-opprettelse', desiredName: 'opprettVurdering' },
-            { rel: 'sykdom-vurdering-endring', desiredName: 'endreVurdering' },
-            { rel: 'sykdom-dokument-oversikt', desiredName: 'dokumentoversikt' },
-            { rel: 'sykdom-innleggelse', desiredName: 'innleggelsesperioder' },
-            { rel: 'sykdom-diagnosekoder', desiredName: 'diagnosekoder' },
-            { rel: 'sykdom-dokument-liste', desiredName: 'dataTilVurdering' },
-            { rel: 'sykdom-aksjonspunkt', desiredName: 'status' },
-            { rel: 'sykdom-dokument-eksisterendevurderinger', desiredName: 'nyeDokumenter' },
-          ]),
-          uuid,
-          løsAksjonspunkt,
-          readOnly || !harAksjonspunkt,
-          visFortsettknapp,
-          saksbehandlere || {},
-          fagsakYtelseType,
-          behandlingType,
-        )
-      }
+    <MedisinskVilkår
+      data={{
+        httpErrorHandler: httpErrorHandlerCaller,
+        endpoints: findEndpointsForMicrofrontend(links, [
+          { rel: 'sykdom-vurdering-oversikt-ktp', desiredName: 'vurderingsoversiktKontinuerligTilsynOgPleie' },
+          { rel: 'sykdom-vurdering-oversikt-too', desiredName: 'vurderingsoversiktBehovForToOmsorgspersoner' },
+          { rel: 'sykdom-vurdering-endring', desiredName: 'endreVurdering' },
+          { rel: 'sykdom-dokument-oversikt', desiredName: 'dokumentoversikt' },
+          { rel: 'sykdom-innleggelse', desiredName: 'innleggelsesperioder' },
+          { rel: 'sykdom-diagnosekoder', desiredName: 'diagnosekoder' },
+          { rel: 'sykdom-dokument-liste', desiredName: 'dataTilVurdering' },
+          { rel: 'sykdom-aksjonspunkt', desiredName: 'status' },
+          { rel: 'sykdom-dokument-eksisterendevurderinger', desiredName: 'nyeDokumenter' },
+        ]),
+        behandlingUuid: uuid,
+        onFinished: løsAksjonspunkt,
+        readOnly: readOnly || !harAksjonspunkt,
+        visFortsettknapp,
+        saksbehandlere: saksbehandlere || {},
+        fagsakYtelseType,
+        behandlingType,
+      }}
     />
   );
 };

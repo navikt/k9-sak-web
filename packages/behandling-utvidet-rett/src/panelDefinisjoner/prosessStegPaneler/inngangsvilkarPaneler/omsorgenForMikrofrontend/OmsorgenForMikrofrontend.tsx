@@ -1,26 +1,22 @@
-import React from 'react';
-import { MicroFrontend } from '@fpsak-frontend/utils';
 import { FormState } from '@fpsak-frontend/form';
+import { Omsorgsdager } from '@navikt/k9-fe-omsorgsdager';
+import React from 'react';
 import KartleggePropertyTilOmsorgenForMikrofrontendKomponent from './KartleggePropertyTilOmsorgenForMikrofrontendKomponent';
 
-const initializeOmsorgenForVilkar = (
-  elementId,
-  {
-    isReadOnly,
-    aksjonspunkter,
-    isAksjonspunktOpen,
-    submitCallback,
-    behandling,
-    status,
-    vilkar,
-    angitteBarn,
-    fagsaksType,
-    harBarnSoktForRammevedtakOmKroniskSyk,
-  },
-) => {
-  (window as any).renderMicrofrontendOmsorgsdagerApp(
-    elementId,
-    KartleggePropertyTilOmsorgenForMikrofrontendKomponent({
+export default ({
+  isReadOnly,
+  aksjonspunkter,
+  isAksjonspunktOpen,
+  submitCallback,
+  behandling,
+  status,
+  vilkar,
+  angitteBarn,
+  fagsaksType,
+  harBarnSoktForRammevedtakOmKroniskSyk,
+}) => (
+  <Omsorgsdager
+    containerData={KartleggePropertyTilOmsorgenForMikrofrontendKomponent({
       isReadOnly,
       submitCallback,
       behandling,
@@ -30,19 +26,6 @@ const initializeOmsorgenForVilkar = (
       fagsaksType,
       FormState,
       harBarnSoktForRammevedtakOmKroniskSyk,
-    }),
-  );
-};
-
-export default props => {
-  const omsorgenForVilkårAppID = 'omsorgenForRettApp';
-
-  return (
-    <MicroFrontend
-      id={omsorgenForVilkårAppID}
-      jsSrc="/k9/microfrontend/omsorgsdager/1/app.js"
-      stylesheetSrc="/k9/microfrontend/omsorgsdager/1/styles.css"
-      onReady={() => initializeOmsorgenForVilkar(omsorgenForVilkårAppID, { ...props, FormState })}
-    />
-  );
-};
+    })}
+  />
+);
