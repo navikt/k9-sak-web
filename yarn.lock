@@ -4365,8 +4365,8 @@ __metadata:
     "@navikt/ft-fakta-fordel-beregningsgrunnlag": 7.3.13
     "@navikt/ft-prosess-beregningsgrunnlag": 6.3.15
     "@navikt/k9-fe-http-utils": 1.0.6
-    "@navikt/k9-fe-inntektsmelding": 0.0.5
-    "@navikt/k9-fe-omsorgen-for": 0.0.6
+    "@navikt/k9-fe-inntektsmelding": 0.0.6
+    "@navikt/k9-fe-omsorgen-for": 0.0.7
     axios-mock-adapter: 1.22.0
     enzyme: 3.11.0
     nav-frontend-popover: 2.0.4
@@ -4419,10 +4419,10 @@ __metadata:
     "@navikt/ft-prosess-beregningsgrunnlag": 6.3.15
     "@navikt/k9-fe-etablert-tilsyn": 0.0.7
     "@navikt/k9-fe-http-utils": 1.0.6
-    "@navikt/k9-fe-inntektsmelding": 0.0.5
-    "@navikt/k9-fe-medisinsk-vilkar": 0.0.9
+    "@navikt/k9-fe-inntektsmelding": 0.0.6
+    "@navikt/k9-fe-medisinsk-vilkar": 0.0.11
     "@navikt/k9-fe-om-barnet": 0.0.7
-    "@navikt/k9-fe-omsorgen-for": 0.0.6
+    "@navikt/k9-fe-omsorgen-for": 0.0.7
     "@navikt/k9-fe-uttak": 0.0.6
     axios: 1.6.1
     axios-mock-adapter: 1.22.0
@@ -4475,8 +4475,8 @@ __metadata:
     "@navikt/ft-fakta-fordel-beregningsgrunnlag": 7.3.13
     "@navikt/ft-prosess-beregningsgrunnlag": 6.3.15
     "@navikt/k9-fe-http-utils": 1.0.6
-    "@navikt/k9-fe-inntektsmelding": 0.0.5
-    "@navikt/k9-fe-medisinsk-vilkar": 0.0.9
+    "@navikt/k9-fe-inntektsmelding": 0.0.6
+    "@navikt/k9-fe-medisinsk-vilkar": 0.0.11
     "@navikt/k9-fe-uttak": 0.0.6
     axios: 1.6.1
     axios-mock-adapter: 1.22.0
@@ -4533,10 +4533,10 @@ __metadata:
     "@navikt/ft-prosess-beregningsgrunnlag": 6.3.15
     "@navikt/k9-fe-etablert-tilsyn": 0.0.7
     "@navikt/k9-fe-http-utils": 1.0.6
-    "@navikt/k9-fe-inntektsmelding": 0.0.5
-    "@navikt/k9-fe-medisinsk-vilkar": 0.0.9
+    "@navikt/k9-fe-inntektsmelding": 0.0.6
+    "@navikt/k9-fe-medisinsk-vilkar": 0.0.11
     "@navikt/k9-fe-om-barnet": 0.0.7
-    "@navikt/k9-fe-omsorgen-for": 0.0.6
+    "@navikt/k9-fe-omsorgen-for": 0.0.7
     "@navikt/k9-fe-uttak": 0.0.6
     axios: 1.6.1
     axios-mock-adapter: 1.22.0
@@ -5174,10 +5174,10 @@ __metadata:
     "@navikt/ft-ui-komponenter": 2.1.13
     "@navikt/k9-fe-etablert-tilsyn": 0.0.7
     "@navikt/k9-fe-http-utils": 1.0.6
-    "@navikt/k9-fe-inntektsmelding": 0.0.5
-    "@navikt/k9-fe-medisinsk-vilkar": 0.0.9
+    "@navikt/k9-fe-inntektsmelding": 0.0.6
+    "@navikt/k9-fe-medisinsk-vilkar": 0.0.11
     "@navikt/k9-fe-om-barnet": 0.0.7
-    "@navikt/k9-fe-omsorgen-for": 0.0.6
+    "@navikt/k9-fe-omsorgen-for": 0.0.7
     "@navikt/k9-fe-omsorgsdager": 0.0.7
     "@navikt/k9-fe-uttak": 0.0.6
     "@sentry/browser": 7.80.0
@@ -6031,9 +6031,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@navikt/k9-fe-inntektsmelding@npm:0.0.5":
-  version: 0.0.5
-  resolution: "@navikt/k9-fe-inntektsmelding@npm:0.0.5::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fk9-fe-inntektsmelding%2F0.0.5%2F011e6ac8b6246fff0541cc7e006fd35348540dff"
+"@navikt/k9-fe-inntektsmelding@npm:0.0.6":
+  version: 0.0.6
+  resolution: "@navikt/k9-fe-inntektsmelding@npm:0.0.6::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fk9-fe-inntektsmelding%2F0.0.6%2F5556f5b5ffab9ef35f97f59f6dbe4680c31e341f"
   peerDependencies:
     "@navikt/ds-css": 5.10.0
     "@navikt/ds-icons": 3.4.3
@@ -6080,13 +6080,13 @@ __metadata:
     react-popper: 2.x
     tsconfig-paths-webpack-plugin: 4.x
     uuid: 9.x
-  checksum: 8803855dc8ae84918c5f5ff2c209e7f1c6f35c4fbdfd36f5705856518f1d0c977e42dcbd83ceb479df8a7510d59334ab2965d822f2af27c8c3fd51cc433b41be
+  checksum: a49ab8a941cb9ec06b927fe4be7da2d3f9a2a8d8388f5eee85b7993794f5841d5851cffe738fc33a154167c131922208ffa1916bd1133aa3fe042eefde53315b
   languageName: node
   linkType: hard
 
-"@navikt/k9-fe-medisinsk-vilkar@npm:0.0.9":
-  version: 0.0.9
-  resolution: "@navikt/k9-fe-medisinsk-vilkar@npm:0.0.9::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fk9-fe-medisinsk-vilkar%2F0.0.9%2Fe55ec52abd7a3f5d893ae0725d76e22cb07602fe"
+"@navikt/k9-fe-medisinsk-vilkar@npm:0.0.11":
+  version: 0.0.11
+  resolution: "@navikt/k9-fe-medisinsk-vilkar@npm:0.0.11::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fk9-fe-medisinsk-vilkar%2F0.0.11%2F5fd66eb22b6cc5a22fe1153c6b25ced87ae27197"
   peerDependencies:
     "@navikt/diagnosekoder": ^1.2023.0
     "@navikt/ds-css": 5.10.0
@@ -6112,7 +6112,7 @@ __metadata:
     react-outside-click-handler: 1.x
     react-popper: 2.x
     react-query: 3.x
-  checksum: 6854bfca0c0d97ca40da1010038de9de7dfb05ed013ce1418dc9c2077007232f161716872fd3229feef3a2efdd5f12553b0ecb30605c09630809b11a1a3a2787
+  checksum: d17ee9ea26b450bb6712b1c4f1da7e6eb5b0c719f482843d9e1ab0227c80556ebd6b4ed43d8b8d2bdce0669b702cdd1262ffbbd12985bb4378b2bda21eeb53da
   languageName: node
   linkType: hard
 
@@ -6145,9 +6145,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@navikt/k9-fe-omsorgen-for@npm:0.0.6":
-  version: 0.0.6
-  resolution: "@navikt/k9-fe-omsorgen-for@npm:0.0.6::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fk9-fe-omsorgen-for%2F0.0.6%2F1b38762511803c16f5ade3192e19381e03d82bfe"
+"@navikt/k9-fe-omsorgen-for@npm:0.0.7":
+  version: 0.0.7
+  resolution: "@navikt/k9-fe-omsorgen-for@npm:0.0.7::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fk9-fe-omsorgen-for%2F0.0.7%2Ffe2a0380da2c601ff473deb361f3379d1b4ffa97"
   peerDependencies:
     "@hookform/error-message": 2.x
     "@navikt/ds-css": 5.10.0
@@ -6192,7 +6192,7 @@ __metadata:
     react-hook-form: 7.47.0
     react-intl: 6.5.2
     react-popper: 2.x
-  checksum: ea95e540d892b3358c3ce12e9bc0c33bcb59c6296d27f38ee05768d8ada131d26ed1f0ebd37dd8389e60650c0ca5597c830dbf699332db4eb62857a2fb2f320a
+  checksum: 5ecac608b8c07a4380153889e7661ba8e0fa8281745850eeb30c82f44d5561c0bb86f1b5353cd1f2fe688ee7bfec9db5204529b1b6d983e2db16bd2714752adf
   languageName: node
   linkType: hard
 
