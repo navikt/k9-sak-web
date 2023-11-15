@@ -4366,7 +4366,7 @@ __metadata:
     "@navikt/ft-prosess-beregningsgrunnlag": 6.3.15
     "@navikt/k9-fe-http-utils": 1.0.6
     "@navikt/k9-fe-inntektsmelding": 0.0.5
-    "@navikt/k9-fe-omsorgen-for": 0.0.6
+    "@navikt/k9-fe-omsorgen-for": 0.0.7
     axios-mock-adapter: 1.22.0
     enzyme: 3.11.0
     nav-frontend-popover: 2.0.4
@@ -4422,7 +4422,7 @@ __metadata:
     "@navikt/k9-fe-inntektsmelding": 0.0.5
     "@navikt/k9-fe-medisinsk-vilkar": 0.0.9
     "@navikt/k9-fe-om-barnet": 0.0.7
-    "@navikt/k9-fe-omsorgen-for": 0.0.6
+    "@navikt/k9-fe-omsorgen-for": 0.0.7
     "@navikt/k9-fe-uttak": 0.0.6
     axios: 1.6.1
     axios-mock-adapter: 1.22.0
@@ -4536,7 +4536,7 @@ __metadata:
     "@navikt/k9-fe-inntektsmelding": 0.0.5
     "@navikt/k9-fe-medisinsk-vilkar": 0.0.9
     "@navikt/k9-fe-om-barnet": 0.0.7
-    "@navikt/k9-fe-omsorgen-for": 0.0.6
+    "@navikt/k9-fe-omsorgen-for": 0.0.7
     "@navikt/k9-fe-uttak": 0.0.6
     axios: 1.6.1
     axios-mock-adapter: 1.22.0
@@ -5177,7 +5177,7 @@ __metadata:
     "@navikt/k9-fe-inntektsmelding": 0.0.5
     "@navikt/k9-fe-medisinsk-vilkar": 0.0.9
     "@navikt/k9-fe-om-barnet": 0.0.7
-    "@navikt/k9-fe-omsorgen-for": 0.0.6
+    "@navikt/k9-fe-omsorgen-for": 0.0.7
     "@navikt/k9-fe-omsorgsdager": 0.0.7
     "@navikt/k9-fe-uttak": 0.0.6
     "@sentry/browser": 7.80.0
@@ -6145,9 +6145,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@navikt/k9-fe-omsorgen-for@npm:0.0.6":
-  version: 0.0.6
-  resolution: "@navikt/k9-fe-omsorgen-for@npm:0.0.6::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fk9-fe-omsorgen-for%2F0.0.6%2F1b38762511803c16f5ade3192e19381e03d82bfe"
+"@navikt/k9-fe-omsorgen-for@npm:0.0.7":
+  version: 0.0.7
+  resolution: "@navikt/k9-fe-omsorgen-for@npm:0.0.7::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fk9-fe-omsorgen-for%2F0.0.7%2Ffe2a0380da2c601ff473deb361f3379d1b4ffa97"
   peerDependencies:
     "@hookform/error-message": 2.x
     "@navikt/ds-css": 5.10.0
@@ -6192,7 +6192,7 @@ __metadata:
     react-hook-form: 7.47.0
     react-intl: 6.5.2
     react-popper: 2.x
-  checksum: ea95e540d892b3358c3ce12e9bc0c33bcb59c6296d27f38ee05768d8ada131d26ed1f0ebd37dd8389e60650c0ca5597c830dbf699332db4eb62857a2fb2f320a
+  checksum: 5ecac608b8c07a4380153889e7661ba8e0fa8281745850eeb30c82f44d5561c0bb86f1b5353cd1f2fe688ee7bfec9db5204529b1b6d983e2db16bd2714752adf
   languageName: node
   linkType: hard
 
