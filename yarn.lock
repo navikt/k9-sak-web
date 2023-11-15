@@ -3689,7 +3689,7 @@ __metadata:
     "@navikt/ds-react": 5.10.0
     "@navikt/fnrvalidator": 1.3.3
     "@navikt/ft-plattform-komponenter": 2.3.9
-    axios: 1.6.1
+    axios: 1.6.2
     classnames: 2.3.2
     date-fns: 2.30.0
     date-fns-tz: 2.0.0
@@ -4424,7 +4424,7 @@ __metadata:
     "@navikt/k9-fe-om-barnet": 0.0.7
     "@navikt/k9-fe-omsorgen-for": 0.0.7
     "@navikt/k9-fe-uttak": 0.0.7
-    axios: 1.6.1
+    axios: 1.6.2
     axios-mock-adapter: 1.22.0
     enzyme: 3.11.0
     nav-frontend-alertstriper: 4.0.2
@@ -4478,7 +4478,7 @@ __metadata:
     "@navikt/k9-fe-inntektsmelding": 0.0.6
     "@navikt/k9-fe-medisinsk-vilkar": 0.0.11
     "@navikt/k9-fe-uttak": 0.0.7
-    axios: 1.6.1
+    axios: 1.6.2
     axios-mock-adapter: 1.22.0
     enzyme: 3.11.0
     nav-frontend-alertstriper: 4.0.2
@@ -4538,7 +4538,7 @@ __metadata:
     "@navikt/k9-fe-om-barnet": 0.0.7
     "@navikt/k9-fe-omsorgen-for": 0.0.7
     "@navikt/k9-fe-uttak": 0.0.7
-    axios: 1.6.1
+    axios: 1.6.2
     axios-mock-adapter: 1.22.0
     enzyme: 3.11.0
     nav-frontend-alertstriper: 4.0.2
@@ -5093,7 +5093,7 @@ __metadata:
   resolution: "@k9-sak-web/rest-api@workspace:packages/rest-api"
   dependencies:
     "@sentry/browser": 7.80.0
-    axios: 1.6.1
+    axios: 1.6.2
     node-cache: 5.1.2
   languageName: unknown
   linkType: soft
@@ -5181,7 +5181,7 @@ __metadata:
     "@navikt/k9-fe-omsorgsdager": 0.0.7
     "@navikt/k9-fe-uttak": 0.0.7
     "@sentry/browser": 7.80.0
-    axios: 1.6.1
+    axios: 1.6.2
     classnames: 2.3.2
     history: 5.3.0
     moment: 2.29.4
@@ -11439,7 +11439,18 @@ __metadata:
   languageName: node
   linkType: hard
 
-"axios@npm:1.6.1, axios@npm:^1.0.0":
+"axios@npm:1.6.2":
+  version: 1.6.2
+  resolution: "axios@npm:1.6.2"
+  dependencies:
+    follow-redirects: ^1.15.0
+    form-data: ^4.0.0
+    proxy-from-env: ^1.1.0
+  checksum: 4a7429e2b784be0f2902ca2680964391eae7236faa3967715f30ea45464b98ae3f1c6f631303b13dfe721b17126b01f486c7644b9ef276bfc63112db9fd379f8
+  languageName: node
+  linkType: hard
+
+"axios@npm:^1.0.0":
   version: 1.6.1
   resolution: "axios@npm:1.6.1"
   dependencies:
@@ -18349,7 +18360,7 @@ __metadata:
     "@typescript-eslint/parser": 6.11.0
     "@wojtekmaj/enzyme-adapter-react-17": 0.8.0
     autoprefixer: ^10.4.16
-    axios: 1.6.1
+    axios: 1.6.2
     axios-mock-adapter: 1.22.0
     babel-jest: 29.7.0
     babel-loader: 9.1.3
