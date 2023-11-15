@@ -38,7 +38,7 @@
     "@navikt/ft-prosess-beregningsgrunnlag": "6.3.15",
     "@navikt/k9-fe-http-utils": "1.0.6",
     "@navikt/k9-fe-inntektsmelding": "0.0.5",
-    "@navikt/k9-fe-medisinsk-vilkar": "0.0.9",
+    "@navikt/k9-fe-medisinsk-vilkar": "0.0.10",
     "@navikt/k9-fe-uttak": "0.0.6",
     "axios": "1.6.1",
     "nav-frontend-alertstriper": "4.0.2",
