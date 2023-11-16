@@ -4656,7 +4656,7 @@ __metadata:
     "@k9-sak-web/rest-api": 1.0.0
     "@k9-sak-web/rest-api-hooks": 1.0.0
     "@k9-sak-web/types": 1.0.0
-    "@navikt/k9-fe-omsorgsdager": 0.0.7
+    "@navikt/k9-fe-omsorgsdager": 0.0.12
     axios-mock-adapter: 1.22.0
     enzyme: 3.11.0
     react: 18.2.0
@@ -4890,7 +4890,7 @@ __metadata:
     "@fpsak-frontend/utils-test": 1.0.0
     "@k9-sak-web/konstanter": 1.0.0
     "@k9-sak-web/types": 1.0.0
-    "@navikt/k9-fe-omsorgsdager": 0.0.7
+    "@navikt/k9-fe-omsorgsdager": 0.0.12
     classnames: 2.3.2
     enzyme: 3.11.0
     lodash.throttle: 4.1.1
@@ -5178,7 +5178,7 @@ __metadata:
     "@navikt/k9-fe-medisinsk-vilkar": 0.0.11
     "@navikt/k9-fe-om-barnet": 0.0.7
     "@navikt/k9-fe-omsorgen-for": 0.0.7
-    "@navikt/k9-fe-omsorgsdager": 0.0.7
+    "@navikt/k9-fe-omsorgsdager": 0.0.12
     "@navikt/k9-fe-uttak": 0.0.7
     "@sentry/browser": 7.80.1
     axios: 1.6.2
@@ -6196,9 +6196,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@navikt/k9-fe-omsorgsdager@npm:0.0.7":
-  version: 0.0.7
-  resolution: "@navikt/k9-fe-omsorgsdager@npm:0.0.7::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fk9-fe-omsorgsdager%2F0.0.7%2F85982e4be85d9608b2924c1c0a193090cff91d54"
+"@navikt/k9-fe-omsorgsdager@npm:0.0.12":
+  version: 0.0.12
+  resolution: "@navikt/k9-fe-omsorgsdager@npm:0.0.12::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fk9-fe-omsorgsdager%2F0.0.12%2Ffd9b9d6cc412d3951b8d5e978d3c8f9d6d53042c"
   peerDependencies:
     "@navikt/ds-css": 5.10.0
     "@navikt/ds-react": 5.10.0
@@ -6228,7 +6228,7 @@ __metadata:
     react-day-picker: 7.x
     react-dom: 18.x
     react-hook-form: 7.47.0
-  checksum: 7b3d5215a3a39cfb46bd48514a3c46b51dd126bfeb12a3cc6512a2bead0edfbe653bc821459dd36c05fd1ec161e83a022e1d9989f35491f02c665dba7bee2e50
+  checksum: c6d1e41fb94fc23bc5275ad778a2725e203b35c6939f588626333ff6124e3f763ac7c9cbb80344dca0a93a666030e88b6c4619608833f8f633f1476052f58ca1
   languageName: node
   linkType: hard
 
