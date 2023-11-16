@@ -3865,7 +3865,7 @@ __metadata:
     "@navikt/ds-react": 5.10.0
     "@navikt/fnrvalidator": 1.3.3
     "@navikt/ft-plattform-komponenter": 2.3.9
-    axios: 1.6.1
+    axios: 1.6.2
     classnames: 2.3.2
     date-fns: 2.30.0
     date-fns-tz: 2.0.0
@@ -4541,8 +4541,8 @@ __metadata:
     "@navikt/ft-fakta-fordel-beregningsgrunnlag": 7.3.13
     "@navikt/ft-prosess-beregningsgrunnlag": 6.3.15
     "@navikt/k9-fe-http-utils": 1.0.6
-    "@navikt/k9-fe-inntektsmelding": 0.0.5
-    "@navikt/k9-fe-omsorgen-for": 0.0.6
+    "@navikt/k9-fe-inntektsmelding": 0.0.6
+    "@navikt/k9-fe-omsorgen-for": 0.0.7
     axios-mock-adapter: 1.22.0
     enzyme: 3.11.0
     nav-frontend-popover: 2.0.4
@@ -4595,12 +4595,12 @@ __metadata:
     "@navikt/ft-prosess-beregningsgrunnlag": 6.3.15
     "@navikt/k9-fe-etablert-tilsyn": 0.0.7
     "@navikt/k9-fe-http-utils": 1.0.6
-    "@navikt/k9-fe-inntektsmelding": 0.0.5
-    "@navikt/k9-fe-medisinsk-vilkar": 0.0.9
+    "@navikt/k9-fe-inntektsmelding": 0.0.6
+    "@navikt/k9-fe-medisinsk-vilkar": 0.0.11
     "@navikt/k9-fe-om-barnet": 0.0.7
-    "@navikt/k9-fe-omsorgen-for": 0.0.6
-    "@navikt/k9-fe-uttak": 0.0.6
-    axios: 1.6.1
+    "@navikt/k9-fe-omsorgen-for": 0.0.7
+    "@navikt/k9-fe-uttak": 0.0.7
+    axios: 1.6.2
     axios-mock-adapter: 1.22.0
     enzyme: 3.11.0
     nav-frontend-alertstriper: 4.0.2
@@ -4651,10 +4651,10 @@ __metadata:
     "@navikt/ft-fakta-fordel-beregningsgrunnlag": 7.3.13
     "@navikt/ft-prosess-beregningsgrunnlag": 6.3.15
     "@navikt/k9-fe-http-utils": 1.0.6
-    "@navikt/k9-fe-inntektsmelding": 0.0.5
-    "@navikt/k9-fe-medisinsk-vilkar": 0.0.9
-    "@navikt/k9-fe-uttak": 0.0.6
-    axios: 1.6.1
+    "@navikt/k9-fe-inntektsmelding": 0.0.6
+    "@navikt/k9-fe-medisinsk-vilkar": 0.0.11
+    "@navikt/k9-fe-uttak": 0.0.7
+    axios: 1.6.2
     axios-mock-adapter: 1.22.0
     enzyme: 3.11.0
     nav-frontend-alertstriper: 4.0.2
@@ -4709,12 +4709,12 @@ __metadata:
     "@navikt/ft-prosess-beregningsgrunnlag": 6.3.15
     "@navikt/k9-fe-etablert-tilsyn": 0.0.7
     "@navikt/k9-fe-http-utils": 1.0.6
-    "@navikt/k9-fe-inntektsmelding": 0.0.5
-    "@navikt/k9-fe-medisinsk-vilkar": 0.0.9
+    "@navikt/k9-fe-inntektsmelding": 0.0.6
+    "@navikt/k9-fe-medisinsk-vilkar": 0.0.11
     "@navikt/k9-fe-om-barnet": 0.0.7
-    "@navikt/k9-fe-omsorgen-for": 0.0.6
-    "@navikt/k9-fe-uttak": 0.0.6
-    axios: 1.6.1
+    "@navikt/k9-fe-omsorgen-for": 0.0.7
+    "@navikt/k9-fe-uttak": 0.0.7
+    axios: 1.6.2
     axios-mock-adapter: 1.22.0
     enzyme: 3.11.0
     nav-frontend-alertstriper: 4.0.2
@@ -5268,8 +5268,8 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@k9-sak-web/rest-api@workspace:packages/rest-api"
   dependencies:
-    "@sentry/browser": 7.80.0
-    axios: 1.6.1
+    "@sentry/browser": 7.80.1
+    axios: 1.6.2
     node-cache: 5.1.2
   languageName: unknown
   linkType: soft
@@ -5350,14 +5350,14 @@ __metadata:
     "@navikt/ft-ui-komponenter": 2.1.13
     "@navikt/k9-fe-etablert-tilsyn": 0.0.7
     "@navikt/k9-fe-http-utils": 1.0.6
-    "@navikt/k9-fe-inntektsmelding": 0.0.5
-    "@navikt/k9-fe-medisinsk-vilkar": 0.0.9
+    "@navikt/k9-fe-inntektsmelding": 0.0.6
+    "@navikt/k9-fe-medisinsk-vilkar": 0.0.11
     "@navikt/k9-fe-om-barnet": 0.0.7
-    "@navikt/k9-fe-omsorgen-for": 0.0.6
+    "@navikt/k9-fe-omsorgen-for": 0.0.7
     "@navikt/k9-fe-omsorgsdager": 0.0.7
-    "@navikt/k9-fe-uttak": 0.0.6
-    "@sentry/browser": 7.80.0
-    axios: 1.6.1
+    "@navikt/k9-fe-uttak": 0.0.7
+    "@sentry/browser": 7.80.1
+    axios: 1.6.2
     classnames: 2.3.2
     history: 5.3.0
     moment: 2.29.4
@@ -5914,7 +5914,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@navikt/ft-form-validators@npm:2.1.6, @navikt/ft-form-validators@npm:^2.1.6":
+"@navikt/ft-form-validators@npm:^2.1.6":
   version: 2.1.6
   resolution: "@navikt/ft-form-validators@npm:2.1.6::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fft-form-validators%2F2.1.6%2F43c6a39b667b28973f344495f7ada86294439c47"
   dependencies:
@@ -6207,9 +6207,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@navikt/k9-fe-inntektsmelding@npm:0.0.5":
-  version: 0.0.5
-  resolution: "@navikt/k9-fe-inntektsmelding@npm:0.0.5::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fk9-fe-inntektsmelding%2F0.0.5%2F011e6ac8b6246fff0541cc7e006fd35348540dff"
+"@navikt/k9-fe-inntektsmelding@npm:0.0.6":
+  version: 0.0.6
+  resolution: "@navikt/k9-fe-inntektsmelding@npm:0.0.6::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fk9-fe-inntektsmelding%2F0.0.6%2F5556f5b5ffab9ef35f97f59f6dbe4680c31e341f"
   peerDependencies:
     "@navikt/ds-css": 5.10.0
     "@navikt/ds-icons": 3.4.3
@@ -6256,13 +6256,13 @@ __metadata:
     react-popper: 2.x
     tsconfig-paths-webpack-plugin: 4.x
     uuid: 9.x
-  checksum: 8803855dc8ae84918c5f5ff2c209e7f1c6f35c4fbdfd36f5705856518f1d0c977e42dcbd83ceb479df8a7510d59334ab2965d822f2af27c8c3fd51cc433b41be
+  checksum: a49ab8a941cb9ec06b927fe4be7da2d3f9a2a8d8388f5eee85b7993794f5841d5851cffe738fc33a154167c131922208ffa1916bd1133aa3fe042eefde53315b
   languageName: node
   linkType: hard
 
-"@navikt/k9-fe-medisinsk-vilkar@npm:0.0.9":
-  version: 0.0.9
-  resolution: "@navikt/k9-fe-medisinsk-vilkar@npm:0.0.9::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fk9-fe-medisinsk-vilkar%2F0.0.9%2Fe55ec52abd7a3f5d893ae0725d76e22cb07602fe"
+"@navikt/k9-fe-medisinsk-vilkar@npm:0.0.11":
+  version: 0.0.11
+  resolution: "@navikt/k9-fe-medisinsk-vilkar@npm:0.0.11::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fk9-fe-medisinsk-vilkar%2F0.0.11%2F5fd66eb22b6cc5a22fe1153c6b25ced87ae27197"
   peerDependencies:
     "@navikt/diagnosekoder": ^1.2023.0
     "@navikt/ds-css": 5.10.0
@@ -6288,7 +6288,7 @@ __metadata:
     react-outside-click-handler: 1.x
     react-popper: 2.x
     react-query: 3.x
-  checksum: 6854bfca0c0d97ca40da1010038de9de7dfb05ed013ce1418dc9c2077007232f161716872fd3229feef3a2efdd5f12553b0ecb30605c09630809b11a1a3a2787
+  checksum: d17ee9ea26b450bb6712b1c4f1da7e6eb5b0c719f482843d9e1ab0227c80556ebd6b4ed43d8b8d2bdce0669b702cdd1262ffbbd12985bb4378b2bda21eeb53da
   languageName: node
   linkType: hard
 
@@ -6321,9 +6321,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@navikt/k9-fe-omsorgen-for@npm:0.0.6":
-  version: 0.0.6
-  resolution: "@navikt/k9-fe-omsorgen-for@npm:0.0.6::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fk9-fe-omsorgen-for%2F0.0.6%2F1b38762511803c16f5ade3192e19381e03d82bfe"
+"@navikt/k9-fe-omsorgen-for@npm:0.0.7":
+  version: 0.0.7
+  resolution: "@navikt/k9-fe-omsorgen-for@npm:0.0.7::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fk9-fe-omsorgen-for%2F0.0.7%2Ffe2a0380da2c601ff473deb361f3379d1b4ffa97"
   peerDependencies:
     "@hookform/error-message": 2.x
     "@navikt/ds-css": 5.10.0
@@ -6368,7 +6368,7 @@ __metadata:
     react-hook-form: 7.47.0
     react-intl: 6.5.2
     react-popper: 2.x
-  checksum: ea95e540d892b3358c3ce12e9bc0c33bcb59c6296d27f38ee05768d8ada131d26ed1f0ebd37dd8389e60650c0ca5597c830dbf699332db4eb62857a2fb2f320a
+  checksum: 5ecac608b8c07a4380153889e7661ba8e0fa8281745850eeb30c82f44d5561c0bb86f1b5353cd1f2fe688ee7bfec9db5204529b1b6d983e2db16bd2714752adf
   languageName: node
   linkType: hard
 
@@ -6420,10 +6420,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@navikt/k9-fe-uttak@npm:0.0.6":
-  version: 0.0.6
-  resolution: "@navikt/k9-fe-uttak@npm:0.0.6::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fk9-fe-uttak%2F0.0.6%2F53a7ea39fb943f0833da242824391ef682f0e0dd"
-  dependencies:
+"@navikt/k9-fe-uttak@npm:0.0.7":
+  version: 0.0.7
+  resolution: "@navikt/k9-fe-uttak@npm:0.0.7::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fk9-fe-uttak%2F0.0.7%2F4b16e66914133b9e63fc8ae0b80d7264c11b4a37"
+  peerDependencies:
     "@navikt/ds-css": 5.10.0
     "@navikt/ds-react": 5.10.0
     "@navikt/ft-form-hooks": 4.2.13
@@ -6462,7 +6462,7 @@ __metadata:
     react-dom: 18.x
     react-hook-form: 7.48.2
     react-popper: 2.x
-  checksum: 2dfed9fc67dc9db090dc58ad8de1c31752a3c5f8f64f8aede5e00323cd6ad9a12fa98bcddf4159e817a5bdf07e179b75724c4ce7818bfe36a36760b2a639baed
+  checksum: e33a754810d429b32ffc97f752b41f311b818cd2881382957783b2fcfba3572a2a4525075c76986c2f3dc665aa209a3ba01f497862da920648b24307a1e17724
   languageName: node
   linkType: hard
 
@@ -6936,7 +6936,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@popperjs/core@npm:2.11.8, @popperjs/core@npm:2.x":
+"@popperjs/core@npm:2.11.8":
   version: 2.11.8
   resolution: "@popperjs/core@npm:2.11.8"
   checksum: e5c69fdebf52a4012f6a1f14817ca8e9599cb1be73dd1387e1785e2ed5e5f0862ff817f420a87c7fc532add1f88a12e25aeb010ffcbdc98eace3d55ce2139cf0
@@ -7930,27 +7930,27 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@sentry-internal/tracing@npm:7.80.0":
-  version: 7.80.0
-  resolution: "@sentry-internal/tracing@npm:7.80.0"
+"@sentry-internal/tracing@npm:7.80.1":
+  version: 7.80.1
+  resolution: "@sentry-internal/tracing@npm:7.80.1"
   dependencies:
-    "@sentry/core": 7.80.0
-    "@sentry/types": 7.80.0
-    "@sentry/utils": 7.80.0
-  checksum: a2f341e1072fc08c7017e1120abea84b58b27926d4d621a0f74c5ac62a013199d80154ca381904556b279854226a0e13ef0e39b7117c6696eefe6ea0aca83c80
+    "@sentry/core": 7.80.1
+    "@sentry/types": 7.80.1
+    "@sentry/utils": 7.80.1
+  checksum: 32745bc81e780bdd0001b113b8eabc72f28d3a70257acc4184edef03c2d57cbf9dd44126c6cb307d9ff23e1030c484dafb12b6a325e4b9abf4684bfdf64ed31a
   languageName: node
   linkType: hard
 
-"@sentry/browser@npm:7.80.0":
-  version: 7.80.0
-  resolution: "@sentry/browser@npm:7.80.0"
+"@sentry/browser@npm:7.80.1":
+  version: 7.80.1
+  resolution: "@sentry/browser@npm:7.80.1"
   dependencies:
-    "@sentry-internal/tracing": 7.80.0
-    "@sentry/core": 7.80.0
-    "@sentry/replay": 7.80.0
-    "@sentry/types": 7.80.0
-    "@sentry/utils": 7.80.0
-  checksum: a64061e50be53ac25043ae3214d6fc3d31b37f5fc4809fe3d8f8bca05085d77fe34d297930a3a85de5d779df59dcc090be4193a3de2550e0e9b0eda3140f9a6b
+    "@sentry-internal/tracing": 7.80.1
+    "@sentry/core": 7.80.1
+    "@sentry/replay": 7.80.1
+    "@sentry/types": 7.80.1
+    "@sentry/utils": 7.80.1
+  checksum: 75fdcad4fbdd5b6bf82db27ef8d44dbfa6923e99184c45f9eb8ec95eaaad1f7b6901b0cb0155613d50c81bfeee229955b873c478560e7810d21e1c9e102728ed
   languageName: node
   linkType: hard
 
@@ -7969,41 +7969,41 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@sentry/core@npm:7.80.0":
-  version: 7.80.0
-  resolution: "@sentry/core@npm:7.80.0"
+"@sentry/core@npm:7.80.1":
+  version: 7.80.1
+  resolution: "@sentry/core@npm:7.80.1"
   dependencies:
-    "@sentry/types": 7.80.0
-    "@sentry/utils": 7.80.0
-  checksum: 5b47929febbc517c4f9727abc73dd0d9fa0b21de3185eb21486a07409f27b84af9a58919d1341acda804e117f57aa9946187b35215edb8ac50745f9274edd5ae
+    "@sentry/types": 7.80.1
+    "@sentry/utils": 7.80.1
+  checksum: 5b37656613f2a396d2ae71ef3d2e5e50d4f0c43ee747a1c2640036ceb3ff5dedbefec64d1477197cb88ed1205c9fc106b0042ef63b5baf2e739572bea7e114f8
   languageName: node
   linkType: hard
 
-"@sentry/replay@npm:7.80.0":
-  version: 7.80.0
-  resolution: "@sentry/replay@npm:7.80.0"
+"@sentry/replay@npm:7.80.1":
+  version: 7.80.1
+  resolution: "@sentry/replay@npm:7.80.1"
   dependencies:
-    "@sentry-internal/tracing": 7.80.0
-    "@sentry/core": 7.80.0
-    "@sentry/types": 7.80.0
-    "@sentry/utils": 7.80.0
-  checksum: 9d367486bfc3b95a25be9264ff4b166642d468b2dcf272adb5f2f405e54573baca903d292a18fbd3f7c7be8cfc049e36a8c91ff39264eb413a74ebe7301cdef3
+    "@sentry-internal/tracing": 7.80.1
+    "@sentry/core": 7.80.1
+    "@sentry/types": 7.80.1
+    "@sentry/utils": 7.80.1
+  checksum: 606532190d29631a550b8e1e1a9892b6d981bd1951fd9810a762bb868726362cb9f8929f8b4863ad4e0bfedc437626fbeda5b07042a790a819c4b37601634c4b
   languageName: node
   linkType: hard
 
-"@sentry/types@npm:7.80.0":
-  version: 7.80.0
-  resolution: "@sentry/types@npm:7.80.0"
-  checksum: 95892d04ddda2136589f418b1673a7192ec03b9338c94de10fc0645b8b6e48de2c3363aec869137ba4dfa895273a749dc78fb7317c3dd410695a3c592abc4b03
+"@sentry/types@npm:7.80.1":
+  version: 7.80.1
+  resolution: "@sentry/types@npm:7.80.1"
+  checksum: f24c34fb1216361f1dbf0937101151db07a372346ca8258b6bd7d5c9cae528010378b84928fab8a7487ff29fb2fea124ef1d92e7ab8b93825ade7dd7f546190f
   languageName: node
   linkType: hard
 
-"@sentry/utils@npm:7.80.0":
-  version: 7.80.0
-  resolution: "@sentry/utils@npm:7.80.0"
+"@sentry/utils@npm:7.80.1":
+  version: 7.80.1
+  resolution: "@sentry/utils@npm:7.80.1"
   dependencies:
-    "@sentry/types": 7.80.0
-  checksum: 14442040f97e5dffbb3dd2f3903e954a68b24d9f60dbfd7a2b3a475859ecee8ac1d0adcab1037a423f854d4b3708cd115a8c0514ed2fe10cb9f86b663c765e0a
+    "@sentry/types": 7.80.1
+  checksum: ed28be55e1348811725e611d39928d3802fc1637118adec5e6d359af0c1bb0d20dce49b3e7c013a06687d0b35db5ca63b2280b028776b2fced672fb1d429a969
   languageName: node
   linkType: hard
 
@@ -11777,7 +11777,18 @@ __metadata:
   languageName: node
   linkType: hard
 
-"axios@npm:1.6.1, axios@npm:^1.0.0":
+"axios@npm:1.6.2":
+  version: 1.6.2
+  resolution: "axios@npm:1.6.2"
+  dependencies:
+    follow-redirects: ^1.15.0
+    form-data: ^4.0.0
+    proxy-from-env: ^1.1.0
+  checksum: 4a7429e2b784be0f2902ca2680964391eae7236faa3967715f30ea45464b98ae3f1c6f631303b13dfe721b17126b01f486c7644b9ef276bfc63112db9fd379f8
+  languageName: node
+  linkType: hard
+
+"axios@npm:^1.0.0":
   version: 1.6.1
   resolution: "axios@npm:1.6.1"
   dependencies:
@@ -12660,7 +12671,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"classnames@npm:2.3.2, classnames@npm:2.x, classnames@npm:^2.3.2":
+"classnames@npm:2.3.2, classnames@npm:^2.3.2":
   version: 2.3.2
   resolution: "classnames@npm:2.3.2"
   checksum: 2c62199789618d95545c872787137262e741f9db13328e216b093eea91c85ef2bfb152c1f9e63027204e2559a006a92eb74147d46c800a9f96297ae1d9f96f4e
@@ -13736,7 +13747,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"dayjs@npm:1.11.10, dayjs@npm:1.x":
+"dayjs@npm:1.11.10":
   version: 1.11.10
   resolution: "dayjs@npm:1.11.10"
   checksum: a6b5a3813b8884f5cd557e2e6b7fa569f4c5d0c97aca9558e38534af4f2d60daafd3ff8c2000fed3435cfcec9e805bcebd99f90130c6d1c5ef524084ced588c4
@@ -18805,7 +18816,7 @@ __metadata:
     "@navikt/ft-plattform-komponenter": 2.3.9
     "@pmmmwh/react-refresh-webpack-plugin": 0.5.11
     "@popperjs/core": 2.11.8
-    "@sentry/browser": 7.80.0
+    "@sentry/browser": 7.80.1
     "@sentry/cli": 2.21.2
     "@storybook/addon-actions": 7.5.3
     "@storybook/addon-docs": 7.5.3
@@ -18838,7 +18849,7 @@ __metadata:
     "@vitejs/plugin-react": ^4.0.4
     "@wojtekmaj/enzyme-adapter-react-17": 0.8.0
     autoprefixer: ^10.4.16
-    axios: 1.6.1
+    axios: 1.6.2
     axios-mock-adapter: 1.22.0
     babel-jest: 29.7.0
     babel-loader: 9.1.3
@@ -19413,7 +19424,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"lodash.throttle@npm:4.1.1, lodash.throttle@npm:4.x, lodash.throttle@npm:^4.1.1":
+"lodash.throttle@npm:4.1.1, lodash.throttle@npm:^4.1.1":
   version: 4.1.1
   resolution: "lodash.throttle@npm:4.1.1"
   checksum: 129c0a28cee48b348aef146f638ef8a8b197944d4e9ec26c1890c19d9bf5a5690fe11b655c77a4551268819b32d27f4206343e30c78961f60b561b8608c8c805
@@ -20380,7 +20391,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"nav-frontend-alertstriper-style@npm:3.0.2, nav-frontend-alertstriper-style@npm:3.x":
+"nav-frontend-alertstriper-style@npm:3.0.2":
   version: 3.0.2
   resolution: "nav-frontend-alertstriper-style@npm:3.0.2"
   peerDependencies:
@@ -20392,7 +20403,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"nav-frontend-alertstriper@npm:4.0.2, nav-frontend-alertstriper@npm:4.x":
+"nav-frontend-alertstriper@npm:4.0.2":
   version: 4.0.2
   resolution: "nav-frontend-alertstriper@npm:4.0.2"
   peerDependencies:
@@ -20420,14 +20431,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"nav-frontend-chevron-style@npm:1.0.4, nav-frontend-chevron-style@npm:1.x":
+"nav-frontend-chevron-style@npm:1.0.4":
   version: 1.0.4
   resolution: "nav-frontend-chevron-style@npm:1.0.4"
   checksum: c4c4e8c63a9d9802060fbc451f8d82fa48ced9763b2820c0ff6e0801b5e9c8624a92d83ccb8c914f65cb29ed78dedf7ed92ce8c42c91fc6ffe29421f1a788630
   languageName: node
   linkType: hard
 
-"nav-frontend-chevron@npm:1.0.30, nav-frontend-chevron@npm:1.x":
+"nav-frontend-chevron@npm:1.0.30":
   version: 1.0.30
   resolution: "nav-frontend-chevron@npm:1.0.30"
   peerDependencies:
@@ -20451,7 +20462,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"nav-frontend-core@npm:6.0.1, nav-frontend-core@npm:6.x, nav-frontend-core@npm:^6.0.1":
+"nav-frontend-core@npm:6.0.1, nav-frontend-core@npm:^6.0.1":
   version: 6.0.1
   resolution: "nav-frontend-core@npm:6.0.1"
   checksum: 7673f42a2a93a08fa6952d2c32d8e5d424de437910b76d84363d7cb86a7c0691e5f475a3623c8964366b3bbd33a6defb8e3907bc61b41c3434b4619aab7567d2
@@ -20498,7 +20509,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"nav-frontend-etiketter-style@npm:2.0.3, nav-frontend-etiketter-style@npm:2.x":
+"nav-frontend-etiketter-style@npm:2.0.3":
   version: 2.0.3
   resolution: "nav-frontend-etiketter-style@npm:2.0.3"
   peerDependencies:
@@ -20507,7 +20518,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"nav-frontend-etiketter@npm:3.0.3, nav-frontend-etiketter@npm:3.x":
+"nav-frontend-etiketter@npm:3.0.3":
   version: 3.0.3
   resolution: "nav-frontend-etiketter@npm:3.0.3"
   peerDependencies:
@@ -20568,7 +20579,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"nav-frontend-hjelpetekst-style@npm:3.0.2, nav-frontend-hjelpetekst-style@npm:3.x":
+"nav-frontend-hjelpetekst-style@npm:3.0.2":
   version: 3.0.2
   resolution: "nav-frontend-hjelpetekst-style@npm:3.0.2"
   peerDependencies:
@@ -20578,7 +20589,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"nav-frontend-hjelpetekst@npm:3.1.3, nav-frontend-hjelpetekst@npm:3.x":
+"nav-frontend-hjelpetekst@npm:3.1.3":
   version: 3.1.3
   resolution: "nav-frontend-hjelpetekst@npm:3.1.3"
   peerDependencies:
@@ -20608,14 +20619,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"nav-frontend-ikoner-assets@npm:3.0.1, nav-frontend-ikoner-assets@npm:3.x":
+"nav-frontend-ikoner-assets@npm:3.0.1":
   version: 3.0.1
   resolution: "nav-frontend-ikoner-assets@npm:3.0.1"
   checksum: 6d6bce01b95555d56333cd11cbadc715e5a4021a62a5981c30c4a8ba3d5807267cb04f6410bad2bc7804f377c0e020eb79e6d389c8bb19942a2b9d1f70b551d9
   languageName: node
   linkType: hard
 
-"nav-frontend-ikonknapper@npm:2.1.3, nav-frontend-ikonknapper@npm:2.x":
+"nav-frontend-ikonknapper@npm:2.1.3":
   version: 2.1.3
   resolution: "nav-frontend-ikonknapper@npm:2.1.3"
   peerDependencies:
@@ -20627,7 +20638,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"nav-frontend-js-utils@npm:1.0.20, nav-frontend-js-utils@npm:1.x":
+"nav-frontend-js-utils@npm:1.0.20":
   version: 1.0.20
   resolution: "nav-frontend-js-utils@npm:1.0.20"
   dependencies:
@@ -20640,7 +20651,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"nav-frontend-knapper-style@npm:2.1.2, nav-frontend-knapper-style@npm:2.x":
+"nav-frontend-knapper-style@npm:2.1.2":
   version: 2.1.2
   resolution: "nav-frontend-knapper-style@npm:2.1.2"
   peerDependencies:
@@ -20650,7 +20661,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"nav-frontend-knapper@npm:3.1.3, nav-frontend-knapper@npm:3.x":
+"nav-frontend-knapper@npm:3.1.3":
   version: 3.1.3
   resolution: "nav-frontend-knapper@npm:3.1.3"
   peerDependencies:
@@ -20820,7 +20831,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"nav-frontend-paneler-style@npm:2.0.2, nav-frontend-paneler-style@npm:2.x":
+"nav-frontend-paneler-style@npm:2.0.2":
   version: 2.0.2
   resolution: "nav-frontend-paneler-style@npm:2.0.2"
   peerDependencies:
@@ -20829,7 +20840,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"nav-frontend-paneler@npm:3.0.2, nav-frontend-paneler@npm:3.x":
+"nav-frontend-paneler@npm:3.0.2":
   version: 3.0.2
   resolution: "nav-frontend-paneler@npm:3.0.2"
   peerDependencies:
@@ -20857,7 +20868,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"nav-frontend-popover-style@npm:2.0.2, nav-frontend-popover-style@npm:2.x":
+"nav-frontend-popover-style@npm:2.0.2":
   version: 2.0.2
   resolution: "nav-frontend-popover-style@npm:2.0.2"
   peerDependencies:
@@ -20866,7 +20877,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"nav-frontend-popover@npm:2.0.4, nav-frontend-popover@npm:2.x":
+"nav-frontend-popover@npm:2.0.4":
   version: 2.0.4
   resolution: "nav-frontend-popover@npm:2.0.4"
   peerDependencies:
@@ -20977,14 +20988,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"nav-frontend-spinner-style@npm:1.0.2, nav-frontend-spinner-style@npm:1.x":
+"nav-frontend-spinner-style@npm:1.0.2":
   version: 1.0.2
   resolution: "nav-frontend-spinner-style@npm:1.0.2"
   checksum: 28e376811be644987470012a513d4c4a22231263631e8911355cc15080301a54334ac8163a45503146706bf76483b3243a3495b1272b1321b4535a0e5103977f
   languageName: node
   linkType: hard
 
-"nav-frontend-spinner@npm:3.0.1, nav-frontend-spinner@npm:3.x":
+"nav-frontend-spinner@npm:3.0.1":
   version: 3.0.1
   resolution: "nav-frontend-spinner@npm:3.0.1"
   peerDependencies:
@@ -21010,7 +21021,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"nav-frontend-tabs-style@npm:2.0.2, nav-frontend-tabs-style@npm:2.x":
+"nav-frontend-tabs-style@npm:2.0.2":
   version: 2.0.2
   resolution: "nav-frontend-tabs-style@npm:2.0.2"
   peerDependencies:
@@ -21020,7 +21031,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"nav-frontend-tabs@npm:2.0.3, nav-frontend-tabs@npm:2.x":
+"nav-frontend-tabs@npm:2.0.3":
   version: 2.0.3
   resolution: "nav-frontend-tabs@npm:2.0.3"
   peerDependencies:
@@ -21044,7 +21055,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"nav-frontend-typografi-style@npm:2.0.2, nav-frontend-typografi-style@npm:2.x":
+"nav-frontend-typografi-style@npm:2.0.2":
   version: 2.0.2
   resolution: "nav-frontend-typografi-style@npm:2.0.2"
   dependencies:
@@ -21053,7 +21064,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"nav-frontend-typografi@npm:4.0.2, nav-frontend-typografi@npm:4.x":
+"nav-frontend-typografi@npm:4.0.2":
   version: 4.0.2
   resolution: "nav-frontend-typografi@npm:4.0.2"
   peerDependencies:
@@ -23303,7 +23314,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-collapse@npm:5.1.1, react-collapse@npm:5.x":
+"react-collapse@npm:5.1.1":
   version: 5.1.1
   resolution: "react-collapse@npm:5.1.1"
   peerDependencies:
@@ -23379,7 +23390,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-dom@npm:18.2.0, react-dom@npm:18.x":
+"react-dom@npm:18.2.0":
   version: 18.2.0
   resolution: "react-dom@npm:18.2.0"
   dependencies:
@@ -23527,7 +23538,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-popper@npm:2.3.0, react-popper@npm:2.x":
+"react-popper@npm:2.3.0":
   version: 2.3.0
   resolution: "react-popper@npm:2.3.0"
   dependencies:
@@ -23762,7 +23773,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react@npm:18.2.0, react@npm:18.x":
+"react@npm:18.2.0":
   version: 18.2.0
   resolution: "react@npm:18.2.0"
   dependencies:
