@@ -9,8 +9,8 @@ import { ProsessStegBegrunnelseTextField } from '@k9-sak-web/prosess-felles';
 import { Aksjonspunkt, Vilkarperiode } from '@k9-sak-web/types';
 import { Normaltekst } from 'nav-frontend-typografi';
 
-import avslattImage from '@fpsak-frontend/assets/images/avslaatt.svg';
-import innvilgetImage from '@fpsak-frontend/assets/images/check.svg';
+import avslattImage from '@fpsak-frontend/assets/images/avslaatt.svg?react';
+import innvilgetImage from '@fpsak-frontend/assets/images/check.svg?react';
 
 import styles from './VilkarFields.module.css';
 

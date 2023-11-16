@@ -1,4 +1,4 @@
-import advarselIkonUrl from '@fpsak-frontend/assets/images/advarsel_ny.svg';
+import advarselIkonUrl from '@fpsak-frontend/assets/images/advarsel_ny.svg?react';
 import { behandlingForm, behandlingFormValueSelector } from '@fpsak-frontend/form';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';

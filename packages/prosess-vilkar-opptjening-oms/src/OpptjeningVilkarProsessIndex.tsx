@@ -1,4 +1,4 @@
-import advarselIcon from '@fpsak-frontend/assets/images/advarsel.svg';
+import advarselIcon from '@fpsak-frontend/assets/images/advarsel.svg?react';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import { Image } from '@fpsak-frontend/shared-components';
 import { dateFormat } from '@fpsak-frontend/utils';

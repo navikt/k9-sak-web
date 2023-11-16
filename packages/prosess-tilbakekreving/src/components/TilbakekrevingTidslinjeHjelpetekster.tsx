@@ -1,9 +1,9 @@
 import React from 'react';
-import {injectIntl, WrappedComponentProps} from 'react-intl';
+import { injectIntl, WrappedComponentProps } from 'react-intl';
 
-import ikkeOppfyltUrl from '@fpsak-frontend/assets/images/ikke_oppfylt.svg';
-import oppfyltUrl from '@fpsak-frontend/assets/images/oppfylt.svg';
-import uavklartUrl from '@fpsak-frontend/assets/images/uavklart.svg';
+import ikkeOppfyltUrl from '@fpsak-frontend/assets/images/ikke_oppfylt.svg?react';
+import oppfyltUrl from '@fpsak-frontend/assets/images/oppfylt.svg?react';
+import uavklartUrl from '@fpsak-frontend/assets/images/uavklart.svg?react';
 import { LegendBox } from '@fpsak-frontend/tidslinje';
 
 const TilbakekrevingTidslinjeHjelpetekster = ({ intl }: WrappedComponentProps) => {

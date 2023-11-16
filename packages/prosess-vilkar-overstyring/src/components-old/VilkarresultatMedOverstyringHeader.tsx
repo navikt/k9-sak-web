@@ -1,7 +1,7 @@
-import avslattImage from '@fpsak-frontend/assets/images/avslaatt_hover.svg';
-import innvilgetImage from '@fpsak-frontend/assets/images/innvilget_hover.svg';
-import keyUtgraetImage from '@fpsak-frontend/assets/images/key-1-rotert-utgraet.svg';
-import keyImage from '@fpsak-frontend/assets/images/key-1-rotert.svg';
+import avslattImage from '@fpsak-frontend/assets/images/avslaatt_hover.svg?react';
+import innvilgetImage from '@fpsak-frontend/assets/images/innvilget_hover.svg?react';
+import keyUtgraetImage from '@fpsak-frontend/assets/images/key-1-rotert-utgraet.svg?react';
+import keyImage from '@fpsak-frontend/assets/images/key-1-rotert.svg?react';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import { FlexColumn, FlexContainer, FlexRow, Image, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { Aksjonspunkt } from '@k9-sak-web/types';

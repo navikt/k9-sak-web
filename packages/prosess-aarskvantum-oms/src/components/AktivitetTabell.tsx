@@ -1,6 +1,6 @@
-import hide from '@fpsak-frontend/assets/images/hide.svg';
-import show from '@fpsak-frontend/assets/images/show.svg';
-import stjerneImg from '@fpsak-frontend/assets/images/stjerne.svg';
+import hide from '@fpsak-frontend/assets/images/hide.svg?react';
+import show from '@fpsak-frontend/assets/images/show.svg?react';
+import stjerneImg from '@fpsak-frontend/assets/images/stjerne.svg?react';
 import { Image, Table, TableRow } from '@fpsak-frontend/shared-components/index';
 import { calcDays, convertHoursToDays, formatereLukketPeriode, utledArbeidsforholdNavn } from '@fpsak-frontend/utils';
 import {

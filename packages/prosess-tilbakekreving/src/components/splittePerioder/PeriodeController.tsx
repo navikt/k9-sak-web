@@ -3,8 +3,8 @@ import { Element } from 'nav-frontend-typografi';
 import React, { Component } from 'react';
 import { FormattedMessage, WrappedComponentProps, injectIntl } from 'react-intl';
 
-import splitPeriodImageUrl from '@fpsak-frontend/assets/images/splitt.svg';
-import splitPeriodImageHoverUrl from '@fpsak-frontend/assets/images/splitt_hover.svg';
+import splitPeriodImageUrl from '@fpsak-frontend/assets/images/splitt.svg?react';
+import splitPeriodImageHoverUrl from '@fpsak-frontend/assets/images/splitt_hover.svg?react';
 import { EditedIcon, FloatRight, Image } from '@fpsak-frontend/shared-components';
 import { TimeLineButton } from '@fpsak-frontend/tidslinje';
 

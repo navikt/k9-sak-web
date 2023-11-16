@@ -1,5 +1,5 @@
-import erIBrukImageUrl from '@fpsak-frontend/assets/images/innvilget_hover.svg';
-import chevronIkonUrl from '@fpsak-frontend/assets/images/pil_ned.svg';
+import erIBrukImageUrl from '@fpsak-frontend/assets/images/innvilget_hover.svg?react';
+import chevronIkonUrl from '@fpsak-frontend/assets/images/pil_ned.svg?react';
 import arbeidsforholdHandlingType from '@fpsak-frontend/kodeverk/src/arbeidsforholdHandlingType';
 import { DateLabel, Image, PeriodLabel, Table, TableColumn, TableRow } from '@fpsak-frontend/shared-components';
 import FlexRow from '@fpsak-frontend/shared-components/src/flexGrid/FlexRow';

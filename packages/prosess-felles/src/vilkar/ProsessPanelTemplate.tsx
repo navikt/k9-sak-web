@@ -1,8 +1,8 @@
 import { Element, Normaltekst, Undertekst, Undertittel } from 'nav-frontend-typografi';
 import React, { ReactNode } from 'react';
 
-import avslattImage from '@fpsak-frontend/assets/images/avslaatt_hover.svg';
-import innvilgetImage from '@fpsak-frontend/assets/images/innvilget_hover.svg';
+import avslattImage from '@fpsak-frontend/assets/images/avslaatt_hover.svg?react';
+import innvilgetImage from '@fpsak-frontend/assets/images/innvilget_hover.svg?react';
 import { hasBehandlingFormErrorsOfType, isBehandlingFormDirty, isBehandlingFormSubmitting } from '@fpsak-frontend/form';
 import {
   AksjonspunktBox,

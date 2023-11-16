@@ -16,7 +16,7 @@ import { FlexColumn, FlexContainer, FlexRow, Image, VerticalSpacer } from '@fpsa
 import { omit } from '@fpsak-frontend/utils';
 import { ProsessStegSubmitButton } from '@k9-sak-web/prosess-felles';
 
-import advarselIcon from '@fpsak-frontend/assets/images/advarsel_ny.svg';
+import advarselIcon from '@fpsak-frontend/assets/images/advarsel_ny.svg?react';
 import underavsnittType from '../kodeverk/avsnittType';
 import VedtaksbrevAvsnitt from '../types/vedtaksbrevAvsnittTsType';
 import TilbakekrevingEditerVedtaksbrevPanel from './brev/TilbakekrevingEditerVedtaksbrevPanel';

@@ -4,9 +4,9 @@ import { Element, Normaltekst, Undertekst } from 'nav-frontend-typografi';
 import React, { ReactElement } from 'react';
 import { FormattedMessage } from 'react-intl';
 
-import chevronDown from '@fpsak-frontend/assets/images/pil_ned.svg';
-import chevronUp from '@fpsak-frontend/assets/images/pil_opp.svg';
-import stjerneImg from '@fpsak-frontend/assets/images/stjerne.svg';
+import chevronDown from '@fpsak-frontend/assets/images/pil_ned.svg?react';
+import chevronUp from '@fpsak-frontend/assets/images/pil_opp.svg?react';
+import stjerneImg from '@fpsak-frontend/assets/images/stjerne.svg?react';
 import behandlingArsakType from '@fpsak-frontend/kodeverk/src/behandlingArsakType';
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import {

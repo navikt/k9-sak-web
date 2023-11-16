@@ -4,7 +4,7 @@ import Modal from 'nav-frontend-modal';
 import { Normaltekst, Undertittel } from 'nav-frontend-typografi';
 import React from 'react';
 
-import advarselImageUrl from '@fpsak-frontend/assets/images/advarsel.svg';
+import advarselImageUrl from '@fpsak-frontend/assets/images/advarsel.svg?react';
 
 import getPackageIntl from '../i18n/getPackageIntl';
 import Image from './Image';

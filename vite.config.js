@@ -13,6 +13,14 @@ const createProxy = (target, pathRewrite) => ({
   ws: false,
   rewrite: p =>
     pathRewrite ? p.replace(new RegExp(Object.keys(pathRewrite)[0]), pathRewrite[Object.keys(pathRewrite)[0]]) : p,
+  configure: proxy => {
+    proxy.on('proxyRes', (proxyRes, req, res) => {
+      if (proxyRes.statusCode === 401) {
+        // eslint-disable-next-line no-param-reassign
+        proxyRes.headers.location = `/k9/sak/resource/login?original=${req.originalUrl}`;
+      }
+    });
+  },
 });
 
 export default ({ mode }) => {

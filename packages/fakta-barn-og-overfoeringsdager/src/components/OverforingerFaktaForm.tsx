@@ -10,7 +10,7 @@ import {
   getBehandlingFormValues,
 } from '@fpsak-frontend/form/src/behandlingForm';
 import { FlexRow, VerticalSpacer } from '@fpsak-frontend/shared-components/index';
-import transferIcon from '@fpsak-frontend/assets/images/data-transfer-horizontal.svg';
+import transferIcon from '@fpsak-frontend/assets/images/data-transfer-horizontal.svg?react';
 import { Element } from 'nav-frontend-typografi';
 import { Rammevedtak } from '@k9-sak-web/types/src/omsorgspenger/Rammevedtak';
 import mapDtoTilFormValues from '../dto/mapping';

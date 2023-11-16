@@ -1,6 +1,6 @@
-import advarselImageUrl from '@fpsak-frontend/assets/images/advarsel2.svg';
-import briefcaseImg from '@fpsak-frontend/assets/images/briefcase.svg';
-import chevronIkonUrl from '@fpsak-frontend/assets/images/pil_ned.svg';
+import advarselImageUrl from '@fpsak-frontend/assets/images/advarsel2.svg?react';
+import briefcaseImg from '@fpsak-frontend/assets/images/briefcase.svg?react';
+import chevronIkonUrl from '@fpsak-frontend/assets/images/pil_ned.svg?react';
 import { behandlingFormValueSelector, getBehandlingFormPrefix } from '@fpsak-frontend/form';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import arbeidsforholdHandlingType from '@fpsak-frontend/kodeverk/src/arbeidsforholdHandlingType';

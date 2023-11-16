@@ -1,4 +1,4 @@
-import checkBlaIkonUrl from '@fpsak-frontend/assets/images/check_blue.svg';
+import checkBlaIkonUrl from '@fpsak-frontend/assets/images/check_blue.svg?react';
 import { Normaltekst } from 'nav-frontend-typografi';
 import React from 'react';
 import { FormattedMessage } from 'react-intl';

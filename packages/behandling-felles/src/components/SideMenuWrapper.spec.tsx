@@ -3,7 +3,7 @@ import sinon from 'sinon';
 import { SideMenu } from '@navikt/ft-plattform-komponenter';
 
 import { Image } from '@fpsak-frontend/shared-components';
-import advarselIkonUrl from '@fpsak-frontend/assets/images/advarsel_ny.svg';
+import advarselIkonUrl from '@fpsak-frontend/assets/images/advarsel_ny.svg?react';
 import { intlMock, shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 
 import SideMenuWrapper from './SideMenuWrapper';

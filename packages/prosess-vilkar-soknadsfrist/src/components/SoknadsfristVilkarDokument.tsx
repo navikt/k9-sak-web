@@ -13,8 +13,8 @@ import moment from 'moment';
 import React, { useCallback, useMemo } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
 
-import avslattImage from '@fpsak-frontend/assets/images/avslaatt.svg';
-import innvilgetImage from '@fpsak-frontend/assets/images/check.svg';
+import avslattImage from '@fpsak-frontend/assets/images/avslaatt.svg?react';
+import innvilgetImage from '@fpsak-frontend/assets/images/check.svg?react';
 import { FlexColumn, FlexContainer, FlexRow, Image, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { DokumentStatus } from '@k9-sak-web/types';
 import { AssessedBy } from '@navikt/ft-plattform-komponenter';

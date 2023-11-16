@@ -1,8 +1,8 @@
 import { Normaltekst } from 'nav-frontend-typografi';
 import React, { ReactNode } from 'react';
 
-import avslattImage from '@fpsak-frontend/assets/images/avslaatt.svg';
-import innvilgetImage from '@fpsak-frontend/assets/images/check.svg';
+import avslattImage from '@fpsak-frontend/assets/images/avslaatt.svg?react';
+import innvilgetImage from '@fpsak-frontend/assets/images/check.svg?react';
 import { DatepickerField, RadioGroupField, RadioOption, SelectField } from '@fpsak-frontend/form';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';

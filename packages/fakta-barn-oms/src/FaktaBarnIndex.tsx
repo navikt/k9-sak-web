@@ -3,8 +3,8 @@ import React from 'react';
 import { createIntl, createIntlCache, RawIntlProvider, FormattedMessage } from 'react-intl';
 import BarnDto from '@k9-sak-web/prosess-aarskvantum-oms/src/dto/BarnDto';
 import Seksjon from '@k9-sak-web/fakta-barn-og-overfoeringsdager/src/components/Seksjon';
-import users from '@fpsak-frontend/assets/images/users.svg';
-import user from '@fpsak-frontend/assets/images/user.svg';
+import users from '@fpsak-frontend/assets/images/users.svg?react';
+import user from '@fpsak-frontend/assets/images/user.svg?react';
 import { Rammevedtak } from '@k9-sak-web/types';
 import { RammevedtakEnum } from '@k9-sak-web/types/src/omsorgspenger/Rammevedtak';
 import FagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
@@ -123,9 +123,10 @@ const FaktaBarnIndex = ({ barn = [], rammevedtak = [], fagsaksType }: FaktaBarnI
     rammevedtakGruppertPerBarn.forEach(barnMedRV => {
       const BarnRVFodselsnummer = barnMedRV.personIdent.substr(0, 6);
       const BarnFodselsnummer = b.personIdent.substr(0, 6);
-      if (barnMedRV.personIdent === b.personIdent
-        || BarnRVFodselsnummer === b.personIdent
-        || barnMedRV.personIdent === BarnFodselsnummer
+      if (
+        barnMedRV.personIdent === b.personIdent ||
+        BarnRVFodselsnummer === b.personIdent ||
+        barnMedRV.personIdent === BarnFodselsnummer
       ) {
         kombinertBarnOgRammevedtak.rammevedtak = barnMedRV;
       }

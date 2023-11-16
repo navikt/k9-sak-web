@@ -1,5 +1,5 @@
-import removePeriod from '@fpsak-frontend/assets/images/remove.svg';
-import removePeriodDisabled from '@fpsak-frontend/assets/images/remove_disabled.svg';
+import removePeriod from '@fpsak-frontend/assets/images/remove.svg?react';
+import removePeriodDisabled from '@fpsak-frontend/assets/images/remove_disabled.svg?react';
 import { DatepickerField } from '@fpsak-frontend/form';
 import { FlexColumn, FlexRow, Image, Table, TableColumn, TableRow } from '@fpsak-frontend/shared-components';
 import { ArbeidsgiverOpplysningerPerId, Kodeverk, KodeverkMedNavn } from '@k9-sak-web/types';

@@ -1,5 +1,5 @@
-import avslattImage from '@fpsak-frontend/assets/images/avslaatt_hover.svg';
-import innvilgetImage from '@fpsak-frontend/assets/images/innvilget_hover.svg';
+import avslattImage from '@fpsak-frontend/assets/images/avslaatt_hover.svg?react';
+import innvilgetImage from '@fpsak-frontend/assets/images/innvilget_hover.svg?react';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import { FlexColumn, FlexContainer } from '@fpsak-frontend/shared-components/index';
 import Image from '@fpsak-frontend/shared-components/src/Image';

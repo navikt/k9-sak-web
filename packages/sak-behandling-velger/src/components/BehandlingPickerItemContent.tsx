@@ -1,5 +1,5 @@
-import calendarImg from '@fpsak-frontend/assets/images/calendar-2.svg';
-import chevronBlueRightImg from '@fpsak-frontend/assets/images/chevron_blue_right.svg';
+import calendarImg from '@fpsak-frontend/assets/images/calendar-2.svg?react';
+import chevronBlueRightImg from '@fpsak-frontend/assets/images/chevron_blue_right.svg?react';
 import { Image } from '@fpsak-frontend/shared-components';
 import { Periode } from '@k9-sak-web/types';
 import Panel from 'nav-frontend-paneler';

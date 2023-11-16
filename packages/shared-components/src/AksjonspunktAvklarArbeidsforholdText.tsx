@@ -2,7 +2,7 @@ import { Normaltekst } from 'nav-frontend-typografi';
 import React from 'react';
 import { FormattedMessage, injectIntl, WrappedComponentProps } from 'react-intl';
 
-import advarselIkonUrl from '@fpsak-frontend/assets/images/advarsel.svg';
+import advarselIkonUrl from '@fpsak-frontend/assets/images/advarsel.svg?react';
 
 import aksjonspunktÅrsaker from '@fpsak-frontend/fakta-arbeidsforhold/src/kodeverk/aksjonspunktÅrsaker';
 import ArbeidsforholdV2 from '@k9-sak-web/types/src/arbeidsforholdV2TsType';
