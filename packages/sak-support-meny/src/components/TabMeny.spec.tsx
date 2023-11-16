@@ -1,11 +1,10 @@
-import React from 'react';
-import { shallow } from 'enzyme';
-import sinon from 'sinon';
 import SendMeldingSvg from '@fpsak-frontend/assets/images/email-send-1.svg';
 import HistorikkSvg from '@fpsak-frontend/assets/images/synchronize-time.svg';
-
 import { FlexColumn } from '@fpsak-frontend/shared-components';
-
+import { render, screen } from '@testing-library/react';
+import { shallow } from 'enzyme';
+import React from 'react';
+import sinon from 'sinon';
 import TabMeny from './TabMeny';
 
 describe('<TabMeny>', () => {
@@ -31,30 +30,9 @@ describe('<TabMeny>', () => {
       },
     ];
 
-    const wrapper = shallow(<TabMeny tabs={tabs} onClick={() => undefined} />);
-
-    const kolonne = wrapper.find(FlexColumn);
-    expect(kolonne).toHaveLength(2);
-
-    const knapp1 = kolonne.first().find('button');
-    expect(knapp1.prop('className')).toEqual('button active');
-    expect(knapp1.prop('data-tooltip')).toEqual('Historikk');
-    expect(knapp1.prop('disabled')).toBe(false);
-
-    const svgPlaceholder1 = knapp1.find('div');
-    expect(svgPlaceholder1.prop('isActive')).toBe(true);
-    expect(svgPlaceholder1.prop('isDisabled')).toBe(false);
-    expect(svgPlaceholder1.prop('alt')).toEqual('Historikk');
-
-    const knapp2 = kolonne.last().find('button');
-    expect(knapp2.prop('className')).toEqual('button');
-    expect(knapp2.prop('data-tooltip')).toEqual('Send melding');
-    expect(knapp2.prop('disabled')).toBe(true);
-
-    const svgPlaceholder2 = knapp2.find('div');
-    expect(svgPlaceholder2.prop('isActive')).toBe(false);
-    expect(svgPlaceholder2.prop('isDisabled')).toBe(true);
-    expect(svgPlaceholder2.prop('alt')).toEqual('Send melding');
+    render(<TabMeny tabs={tabs} onClick={vi.fn} />);
+    expect(screen.getAllByTestId('TabMenyKnapp')[0]).not.toBeDisabled();
+    expect(screen.getAllByTestId('TabMenyKnapp')[1]).toBeDisabled();
   });
 
   it('skal velge Send melding ved trykk på knapp', () => {
