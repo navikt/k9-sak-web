@@ -1,15 +1,17 @@
 import React from 'react';
 import { action } from '@storybook/addon-actions';
-import { withKnobs, object } from '@storybook/addon-knobs';
+import { object, withKnobs } from '@storybook/addon-knobs';
 
 import MeldingerSakIndex, { MessagesModalSakIndex } from '@k9-sak-web/sak-meldinger';
 import ugunstAarsakTyper from '@fpsak-frontend/kodeverk/src/ugunstAarsakTyper';
 
+import { Brevmaler, EregOrganizationLookupResponse, Kodeverk } from "@k9-sak-web/types";
+import dokumentMalType from "@fpsak-frontend/kodeverk/src/dokumentMalType";
+import { BackendApi } from "@k9-sak-web/sak-meldinger/src/MeldingerSakIndex";
 import arbeidsgivere from '../mocks/arbeidsgivere.json';
 import personopplysninger from '../mocks/personopplysninger';
-import brevmaler from '../mocks/brevmaler';
+import mockedBrevmaler from '../mocks/brevmaler';
 import withReduxProvider from '../../decorators/withRedux';
-
 
 export default {
   title: 'sak/sak-meldinger',
@@ -17,12 +19,33 @@ export default {
   decorators: [withKnobs, withReduxProvider],
 };
 
-const sprakKode = {
+const emptySprakKode = {
   kode: '',
   kodeverk: '',
 };
 
-export const SendMeldingPanel = () => (
+interface SendMeldingPanelStoryArgs {
+  readonly brevmaler: Brevmaler;
+  readonly sprakKode?: Kodeverk;
+  readonly backendApi?: BackendApi;
+}
+
+const defaultFakeBackend = {
+  async getTredjepartsmottakerInfo(orgnr: string): Promise<EregOrganizationLookupResponse> {
+    if (orgnr.length === 9) {
+      if(Number.isFinite(Number(orgnr))) {
+        if(orgnr === "000000000") { // To test what happens when orgnr is not found
+          return {notFound: true}
+        }
+        return {name: `Fake storybook org (${orgnr})`}
+      }
+    }
+    return {invalidOrgnum: true}
+  }
+} satisfies BackendApi
+
+const sendMeldingTemplate = ({brevmaler, sprakKode = emptySprakKode}: SendMeldingPanelStoryArgs) => {
+  return (
     <div
       style={{
         width: '600px',
@@ -54,9 +77,43 @@ export const SendMeldingPanel = () => (
           },
         ]}
         erTilbakekreving={false}
+        backendApi={defaultFakeBackend}
       />
     </div>
   )
+}
+
+/**
+ * Eit vanleg tilfelle (pleiepenger sykt barn), med mockdata kopiert frå Q
+ */
+export const SendMeldingPanel= () => sendMeldingTemplate({brevmaler: mockedBrevmaler})
+
+/**
+ * Viser kva som skjer viss ein berre sende inn ein brevmal til panelet
+ */
+export const SendMeldingPanelEnMal = () => {
+  const enBrevmal: Brevmaler = {
+    [dokumentMalType.INNHENT_DOK]: mockedBrevmaler.INNHEN
+  }
+  const sprakKode: Kodeverk = {
+    kode: 'EN',
+    kodeverk: 'Engelsk'
+  }
+
+  return sendMeldingTemplate({brevmaler: enBrevmal})
+}
+
+/**
+ * Viser meldingspanel med engelsk språk kode input
+ */
+export const SendMeldingPanelEngelsk= () => {
+  const sprakKode: Kodeverk = {
+    kode: 'EN',
+    kodeverk: 'Engelsk'
+  }
+
+  return sendMeldingTemplate({brevmaler: mockedBrevmaler, sprakKode})
+}
 
 
 export const visMeldingModal = () => <MessagesModalSakIndex showModal closeEvent={action('button-click')} />;

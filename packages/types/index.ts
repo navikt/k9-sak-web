@@ -78,3 +78,4 @@ export type { default as Behandlingsresultat } from './src/totrinnskontroll/Beha
 export type { default as SimpleEndpoints } from './src/microfrontends/SimpleEndpoints';
 export type { default as SimpleLink } from './src/microfrontends/SimpleLink';
 export * from './src/vilkarUtfallPeriodisert';
+export type * from './src/EregOrganizationLookupResponse';

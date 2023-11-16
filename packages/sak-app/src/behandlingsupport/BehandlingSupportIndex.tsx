@@ -22,6 +22,7 @@ import HistorikkIndex from './historikk/HistorikkIndex';
 import MeldingIndex from './melding/MeldingIndex';
 import NotaterIndex from './notater/NotaterIndex';
 import TotrinnskontrollIndex from './totrinnskontroll/TotrinnskontrollIndex';
+import MeldingBackendClient from "./melding/MeldingBackendClient";
 
 export const hentSynligePaneler = (
   behandlingRettigheter?: BehandlingRettigheter,
@@ -181,6 +182,7 @@ const BehandlingSupportIndex = ({
             behandlingVersjon={behandlingVersjon}
             personopplysninger={personopplysninger}
             arbeidsgiverOpplysninger={arbeidsgiverOpplysninger}
+            backendApi={new MeldingBackendClient()}
           />
         )}
         {aktivtSupportPanel === SupportTabs.DOKUMENTER && (

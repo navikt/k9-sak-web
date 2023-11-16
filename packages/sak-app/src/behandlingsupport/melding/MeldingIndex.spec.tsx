@@ -8,11 +8,11 @@ import { combineReducers, createStore } from 'redux';
 
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
-import { BehandlingAppKontekst, Fagsak } from '@k9-sak-web/types';
+import type { BehandlingAppKontekst, Brevmaler, Fagsak, Mottaker } from '@k9-sak-web/types';
 import dokumentMalType from '@fpsak-frontend/kodeverk/src/dokumentMalType';
 
 import { requestApi, K9sakApiKeys } from '../../data/k9sakApi';
-import MeldingIndex from './MeldingIndex';
+import MeldingIndex, { type BackendApi } from './MeldingIndex';
 
 const mockHistoryPush = jest.fn();
 
@@ -35,6 +35,12 @@ interface SendMeldingPayload {
 }
 
 describe('<MeldingIndex>', () => {
+  const meldingBackend = {
+    async getTredjepartsmottakerInfo(orgnr: string) {
+      return {name: `Test Org navn (${orgnr})`}
+    }
+  } satisfies BackendApi
+
   const meldingMal: SendMeldingPayload = {
     behandlingId: 1,
     overstyrtMottaker: undefined,
@@ -70,11 +76,12 @@ describe('<MeldingIndex>', () => {
       mottakere: aktorer,
       linker: [],
       støtterFritekst: true,
+      støtterTredjepartsmottaker: true,
     },
     [dokumentMalType.REVURDERING_DOK]: { navn: 'Revurdering Dok', mottakere: aktorer, linker: [] },
     [dokumentMalType.AVSLAG]: { navn: 'Avslag', mottakere: aktorer, linker: [] },
     [dokumentMalType.FORLENGET_DOK]: { navn: 'Forlenget', mottakere: aktorer, linker: [] },
-  };
+  } satisfies Brevmaler;
 
   const assignMock = jest.fn();
   delete window.location;
@@ -99,6 +106,7 @@ describe('<MeldingIndex>', () => {
             alleBehandlinger={alleBehandlinger as BehandlingAppKontekst[]}
             behandlingId={1}
             behandlingVersjon={123}
+            backendApi={meldingBackend}
           />
         </MemoryRouter>
       </Provider>,
@@ -123,6 +131,7 @@ describe('<MeldingIndex>', () => {
               alleBehandlinger={alleBehandlinger as BehandlingAppKontekst[]}
               behandlingId={1}
               behandlingVersjon={123}
+              backendApi={meldingBackend}
             />
           </MemoryRouter>
         </MockForm>
@@ -154,6 +163,7 @@ describe('<MeldingIndex>', () => {
               alleBehandlinger={alleBehandlinger as BehandlingAppKontekst[]}
               behandlingId={1}
               behandlingVersjon={123}
+              backendApi={meldingBackend}
             />
           </MemoryRouter>
         </MockForm>
@@ -180,6 +190,61 @@ describe('<MeldingIndex>', () => {
     expect(reqData[0].params).toEqual({ ...meldingMal, ...melding });
   });
 
+  it('skal sende melding til tredjepartsmottaker hvis det er valgt og utfyllt', async () => {
+    requestApi.mock(K9sakApiKeys.KODEVERK, kodeverk);
+    requestApi.mock(K9sakApiKeys.HAR_APENT_KONTROLLER_REVURDERING_AP, true);
+    requestApi.mock(K9sakApiKeys.BREVMALER, templates);
+    requestApi.mock(K9sakApiKeys.SUBMIT_MESSAGE);
+    requestApi.mock(K9sakApiKeys.FEATURE_TOGGLE, [{ TYPE_MEDISINSKE_OPPLYSNINGER_BREV: true }]);
+
+    render(
+      <Provider store={createStore(combineReducers({ form: formReducer }))}>
+        <MockForm>
+          <MemoryRouter>
+            <MeldingIndex
+              fagsak={fagsak as Fagsak}
+              alleBehandlinger={alleBehandlinger as BehandlingAppKontekst[]}
+              behandlingId={1}
+              behandlingVersjon={123}
+              backendApi={meldingBackend}
+            />
+          </MemoryRouter>
+        </MockForm>
+      </Provider>,
+    );
+
+    const melding = {
+      overstyrtMottaker: { id: '00000000', type: 'AKTØRID' },
+      brevmalkode: dokumentMalType.INNHENT_DOK,
+      fritekst: 'Dette er meldingen',
+    };
+
+    userEvent.selectOptions(await screen.getByLabelText('Mal'), melding.brevmalkode);
+    userEvent.selectOptions(await screen.getByLabelText('Mottaker'), JSON.stringify(melding.overstyrtMottaker));
+    userEvent.type(await screen.getByLabelText('Fritekst'), melding.fritekst);
+
+    userEvent.click(await screen.getByLabelText('Velg annen mottaker'))
+    const tredjepartsMottaker = {
+      type: "ORGNR",
+      id: "974652269",
+    } satisfies Mottaker;
+
+    await act(async () => {
+      const orgnrInput = await screen.getByLabelText("Org.nr")
+      expect(orgnrInput).toBeInTheDocument()
+      userEvent.type(orgnrInput, tredjepartsMottaker.id)
+    })
+
+    await act(async () => {
+      // Simuler klikk på Send brev knapp
+      userEvent.click(await screen.getByRole('button', { name: 'Send brev' }));
+    });
+
+    const reqData = requestApi.getRequestMockData(K9sakApiKeys.SUBMIT_MESSAGE);
+    expect(reqData).toHaveLength(1);
+    expect(reqData[0].params).toEqual({ ...meldingMal, ...melding, ...{overstyrtMottaker: tredjepartsMottaker} });
+  });
+
   it('skal sende melding og ikke sette saken på vent hvis ikke Innhent eller forlenget', async () => {
     requestApi.mock(K9sakApiKeys.KODEVERK, kodeverk);
     requestApi.mock(K9sakApiKeys.HAR_APENT_KONTROLLER_REVURDERING_AP, true);
@@ -196,6 +261,7 @@ describe('<MeldingIndex>', () => {
               alleBehandlinger={alleBehandlinger as BehandlingAppKontekst[]}
               behandlingId={1}
               behandlingVersjon={123}
+              backendApi={meldingBackend}
             />
           </MemoryRouter>
         </MockForm>
@@ -242,6 +308,7 @@ describe('<MeldingIndex>', () => {
               alleBehandlinger={alleBehandlinger as BehandlingAppKontekst[]}
               behandlingId={1}
               behandlingVersjon={123}
+              backendApi={meldingBackend}
             />
           </MemoryRouter>
         </MockForm>
@@ -290,6 +357,7 @@ describe('<MeldingIndex>', () => {
               alleBehandlinger={alleBehandlinger as BehandlingAppKontekst[]}
               behandlingId={1}
               behandlingVersjon={123}
+              backendApi={meldingBackend}
             />
           </MemoryRouter>
         </MockForm>

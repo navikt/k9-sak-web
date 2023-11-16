@@ -23,23 +23,31 @@ interface SelectFieldProps {
 }
 
 /* eslint-disable-next-line react/prop-types */
-const renderReadOnly = () => ({ input, selectValues, ...otherProps }) => {
+const renderReadOnly = () => ({ input, selectValues, disabled, hideValueOnDisable, ...otherProps }) => {
   /* eslint-disable-next-line react/prop-types */
   const option = selectValues.map(sv => sv.props).find(o => o.value === input.value);
-  const value = option ? option.children : undefined;
-  return <ReadOnlyField input={{ value }} {...otherProps} />;
+  let value = option ? option.children : undefined;
+  // For å få nokolunde samme oppførsel som "opprinneleg komponent" på readonly komponenten når disabled og hideValueOnDisable
+  // er satt, legger vi inn value som eit tomt mellomrom i dette tilfellet. Dette sidan viss vi setter value til null, undefined
+  // eller "", så returnerer ReadOnlyField null, så heile input feltet med label forsvinner.
+  const hideValue = hideValueOnDisable === true && disabled === true
+  if(hideValue) {
+    value = <>&nbsp;</>
+  }
+  return <ReadOnlyField input={{ value }} { ...otherProps} />;
 };
 
 const renderNavSelect = renderNavField(CustomNavSelect);
 
-const SelectField = ({ name, label, selectValues, validate, readOnly, ...otherProps }: SelectFieldProps) => (
+const SelectField = ({ name, label, selectValues, validate, readOnly, hideValueOnDisable, disabled, ...otherProps }: SelectFieldProps) => (
   <Field
     name={name}
     validate={validate}
     component={readOnly ? renderReadOnly() : renderNavSelect}
     label={label}
     selectValues={selectValues}
-    disabled={!!readOnly}
+    disabled={disabled === true}
+    hideValueOnDisable={hideValueOnDisable}
     {...otherProps}
     readOnly={readOnly}
     // @ts-ignore TODO Fiks

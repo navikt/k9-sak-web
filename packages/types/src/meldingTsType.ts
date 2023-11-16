@@ -14,6 +14,7 @@ export interface Brevmal {
   tilgjengelig?: boolean;
   linker?: Link[];
   mottakere?: Mottaker[];
+  støtterTredjepartsmottaker?: boolean;
 }
 
 export interface Brevmaler {

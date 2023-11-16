@@ -1,6 +1,6 @@
 import { Brevmaler } from "@k9-sak-web/types";
 
-const brevmaler: Brevmaler = {
+const brevmaler = {
   "INNHEN": {
     "navn": "Innhent dokumentasjon",
     "mottakere": [
@@ -20,6 +20,7 @@ const brevmaler: Brevmaler = {
         "harVarsel": false
       }
     ],
+    "støtterTredjepartsmottaker": true,
     "linker": [],
     "støtterFritekst": true,
     "støtterTittelOgFritekst": false,
@@ -44,6 +45,7 @@ const brevmaler: Brevmaler = {
         "harVarsel": false
       }
     ],
+    "støtterTredjepartsmottaker": true,
     "linker": [],
     "støtterFritekst": false,
     "støtterTittelOgFritekst": true,
@@ -58,6 +60,7 @@ const brevmaler: Brevmaler = {
         "harVarsel": false
       }
     ],
+    "støtterTredjepartsmottaker": true,
     "linker": [],
     "støtterFritekst": true,
     "støtterTittelOgFritekst": false,
@@ -77,6 +80,6 @@ const brevmaler: Brevmaler = {
     "støtterTittelOgFritekst": false,
     "kode": "VARSEL_FRITEKST"
   }
-}
+} satisfies Brevmaler
 
 export default brevmaler;
