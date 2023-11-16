@@ -1,18 +1,17 @@
+import { FormStateType } from '@fpsak-frontend/form/src/types/FormStateType';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
+import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import { Behandling } from '@k9-sak-web/types';
-import fagsakTsType from '@k9-sak-web/types/src/fagsakTsType';
-import { FormStateType } from '@fpsak-frontend/form/src/types/FormStateType';
-import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
-import UtvidetRettMikrofrontendVisning from '../../../../types/MikrofrontendKomponenter';
-import { generereInfoForVurdertVilkar } from '../../UtvidetRettOmsorgenForMikrofrontendFelles';
-import { OmsorgenForProps } from '../../../../types/utvidetRettMikrofrontend/OmsorgProps';
-import { InformasjonTilLesemodus } from '../../../../types/utvidetRettMikrofrontend/informasjonTilLesemodus';
+import { KomponenterEnum } from '@navikt/k9-fe-omsorgsdager';
 import {
   AksjonspunktInformasjon,
   VilkarInformasjon,
 } from '../../../../types/utvidetRettMikrofrontend/KartleggePropertyTilMikrofrontendTypes';
+import { OmsorgenForProps } from '../../../../types/utvidetRettMikrofrontend/OmsorgProps';
+import { InformasjonTilLesemodus } from '../../../../types/utvidetRettMikrofrontend/informasjonTilLesemodus';
+import { generereInfoForVurdertVilkar } from '../../UtvidetRettOmsorgenForMikrofrontendFelles';
 
 interface PropTypes {
   isReadOnly: boolean;
@@ -21,7 +20,7 @@ interface PropTypes {
   behandling: Behandling;
   aksjonspunktInformasjon?: AksjonspunktInformasjon;
   vilkarInformasjon: VilkarInformasjon;
-  fagsaksType: fagsakTsType;
+  fagsaksType: string;
   FormState: FormStateType;
   harBarnSoktForRammevedtakOmKroniskSyk: boolean;
 }
@@ -36,7 +35,10 @@ const KartleggePropertyTilOmsorgenForMikrofrontendKomponent = ({
   fagsaksType,
   FormState,
   harBarnSoktForRammevedtakOmKroniskSyk,
-}: PropTypes) => {
+}: PropTypes): {
+  visKomponent: KomponenterEnum.OMSORG;
+  props: OmsorgenForProps;
+} => {
   const { aksjonspunkter, isAksjonspunktOpen } = aksjonspunktInformasjon;
   const { vilkar, status } = vilkarInformasjon;
   const omsorgenForVilkar = vilkar.find(v => v.vilkarType.kode === vilkarType.OMSORGENFORVILKARET);
@@ -57,7 +59,7 @@ const KartleggePropertyTilOmsorgenForMikrofrontendKomponent = ({
     const aksjonspunktLost = behandling.status.kode === behandlingStatus.BEHANDLING_UTREDES && !isAksjonspunktOpen;
 
     return {
-      visKomponent: UtvidetRettMikrofrontendVisning.OMSORG,
+      visKomponent: KomponenterEnum.OMSORG,
       props: {
         behandlingsID,
         fagytelseType: fagsaksType,
@@ -86,13 +88,13 @@ const KartleggePropertyTilOmsorgenForMikrofrontendKomponent = ({
           ]);
         },
         formState: FormState,
-      } as OmsorgenForProps,
+      },
     };
   }
 
   if (vilkaretErAutomatiskInnvilget) {
     return {
-      visKomponent: UtvidetRettMikrofrontendVisning.OMSORG,
+      visKomponent: KomponenterEnum.OMSORG,
       props: {
         behandlingsID,
         fagytelseType: fagsaksType,
@@ -102,11 +104,11 @@ const KartleggePropertyTilOmsorgenForMikrofrontendKomponent = ({
         vedtakFattetVilkarOppfylt: true,
         informasjonOmVilkar: generereInfoForVurdertVilkar(true, omsorgenForVilkar, '', 'Omsorgen for'),
         formState: FormState,
-      } as OmsorgenForProps,
+      },
     };
   }
 
-  return {};
+  return null;
 };
 
 export default KartleggePropertyTilOmsorgenForMikrofrontendKomponent;

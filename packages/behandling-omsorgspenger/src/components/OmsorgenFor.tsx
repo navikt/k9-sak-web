@@ -1,32 +1,9 @@
-import React from 'react';
-import { useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { BehandlingAppKontekst, Aksjonspunkt, SimpleEndpoints, Fagsak } from '@k9-sak-web/types';
-import {
-  MicroFrontend,
-  httpErrorHandler,
-  findEndpointsForMicrofrontend,
-  findAksjonspunkt,
-} from '@fpsak-frontend/utils';
-
-const initializeOmsorgenFor = (
-  elementId,
-  httpErrorHandlerFn,
-  endpoints: SimpleEndpoints,
-  readOnly: boolean,
-  løsAksjonspunkt: (omsorgsperioder, fosterbarnForOmsorgspenger) => void,
-  sakstype: string,
-  saksbehandlere: { [key: string]: string },
-) => {
-  (window as any).renderOmsorgenForApp(elementId, {
-    httpErrorHandler: httpErrorHandlerFn,
-    endpoints,
-    readOnly,
-    onFinished: løsAksjonspunkt,
-    sakstype,
-    saksbehandlere,
-  });
-};
+import { findAksjonspunkt, findEndpointsForMicrofrontend, httpErrorHandler } from '@fpsak-frontend/utils';
+import { useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
+import { Aksjonspunkt, BehandlingAppKontekst, Fagsak } from '@k9-sak-web/types';
+import React from 'react';
+import { OmsorgenFor } from '@navikt/k9-fe-omsorgen-for';
 
 interface OmsorgenForProps {
   behandling: BehandlingAppKontekst;
@@ -42,15 +19,7 @@ interface OmsorgenForProps {
   saksbehandlere: { [key: string]: string };
 }
 
-const omsorgenForAppID = 'omsorgenForApp';
-const OmsorgenFor = ({
-  behandling,
-  fagsak,
-  readOnly,
-  aksjonspunkter,
-  submitCallback,
-  saksbehandlere,
-}: OmsorgenForProps) => {
+export default ({ behandling, fagsak, readOnly, aksjonspunkter, submitCallback, saksbehandlere }: OmsorgenForProps) => {
   const { links } = behandling;
   const sakstype = fagsak.sakstype.kode;
 
@@ -73,28 +42,20 @@ const OmsorgenFor = ({
     ]);
 
   return (
-    <MicroFrontend
-      id={omsorgenForAppID}
-      jsSrc="/k9/microfrontend/omsorgen-for/1/app.js"
-      stylesheetSrc="/k9/microfrontend/omsorgen-for/1/styles.css"
-      noCache
-      onReady={() =>
-        initializeOmsorgenFor(
-          omsorgenForAppID,
-          httpErrorHandlerCaller,
-          findEndpointsForMicrofrontend(links, [
-            {
-              rel: 'omsorgen-for',
-              desiredName: 'omsorgsperioder',
-            },
-          ]),
-          readOnly || !harAksjonspunkt,
-          løsAksjonspunkt,
-          sakstype,
-          saksbehandlere || {},
-        )
-      }
+    <OmsorgenFor
+      data={{
+        httpErrorHandler: httpErrorHandlerCaller,
+        endpoints: findEndpointsForMicrofrontend(links, [
+          {
+            rel: 'omsorgen-for',
+            desiredName: 'omsorgsperioder',
+          },
+        ]),
+        readOnly: readOnly || !harAksjonspunkt,
+        onFinished: løsAksjonspunkt,
+        saksbehandlere: saksbehandlere || {},
+        sakstype,
+      }}
     />
   );
 };
-export default OmsorgenFor;

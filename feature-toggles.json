@@ -16,10 +16,6 @@
     "value": "${UNNTAKSBEHANDLING}"
   },
   {
-    "key": "UTENLANDSOPPHOLD",
-    "value": "${UTENLANDSOPPHOLD}"
-  },
-  {
     "key": "SOKNADPERIODESTRIPE",
     "value": "${SOKNADPERIODESTRIPE}"
   },

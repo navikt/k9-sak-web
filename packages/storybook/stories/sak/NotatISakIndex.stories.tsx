@@ -23,6 +23,7 @@ export const VisNotatISakPanel = () => (
     <QueryClientProvider client={queryClient}>
       <NotatISakIndex
         fagsakId="1"
+        fagsakHarPleietrengende
         navAnsatt={{
           brukernavn: 'saksbeh',
           funksjonellTid: '2023-08-28T16:11:44.107219587',
@@ -52,6 +53,7 @@ const notater = [
     endretTidspunkt: undefined,
     fagsakId: '1',
     skjult: false,
+    kanRedigere: true,
   },
   {
     id: 2,
@@ -68,6 +70,7 @@ const notater = [
     aktørId: '123',
     sakstype: 'PSB',
     skjult: false,
+    kanRedigere: true,
   },
 ];
 
@@ -100,6 +103,7 @@ VisNotatISakPanel.parameters = {
             sakstype: 'PSB',
             versjon: 1,
             skjult: false,
+            kanRedigere: true,
           });
         }
         return res(ctx.status(201));

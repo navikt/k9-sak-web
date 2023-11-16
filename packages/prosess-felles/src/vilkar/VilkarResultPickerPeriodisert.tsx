@@ -266,6 +266,12 @@ VilkarResultPicker.transformValues = (values: FormValues, periodeFom?: string, p
           tom: values.valgtPeriodeTom,
         },
       };
+    default:
+      return {
+        erVilkarOk: null,
+        avslagskode: null,
+        periode: null,
+      };
   }
 };
 

@@ -19,7 +19,7 @@ export interface AleneOmOmsorgenAksjonspunktObjekt {
   begrunnelse: string;
   vilkarOppfylt: boolean;
   fraDato: string;
-  tilDato?: string;
+  tilDato: string;
 }
 
 export interface AleneOmOmsorgenLosAksjonspunktK9Format {
@@ -27,8 +27,8 @@ export interface AleneOmOmsorgenLosAksjonspunktK9Format {
   begrunnelse: string;
   erVilkarOk: boolean;
   periode: {
-    fom: string,
-    tom?: string
-  }
+    fom: string;
+    tom?: string;
+  };
   avslagsårsak?: string;
 }

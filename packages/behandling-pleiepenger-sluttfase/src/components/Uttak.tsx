@@ -1,39 +1,8 @@
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
-import { MicroFrontend } from '@fpsak-frontend/utils';
-import { Aksjonspunkt, ArbeidsgiverOpplysningerPerId } from '@k9-sak-web/types';
+import { Aksjonspunkt, AlleKodeverk, ArbeidsgiverOpplysningerPerId } from '@k9-sak-web/types';
+import { Uttak } from '@navikt/k9-fe-uttak';
 import React from 'react';
-
-const initializeUttak = (
-  elementId,
-  uttaksperioder,
-  utsattePerioder,
-  behandlingUuid: string,
-  arbeidsforhold: ArbeidsgiverOpplysningerPerId,
-  aksjonspunktkoder: string[],
-  erFagytelsetypeLivetsSluttfase: boolean,
-  løsAksjonspunktVurderDatoNyRegelUttak: ({
-    begrunnelse,
-    virkningsdato,
-  }: {
-    begrunnelse: string;
-    virkningsdato: string;
-  }) => void,
-  virkningsdatoUttakNyeRegler?: string,
-  aksjonspunkter?: Aksjonspunkt[],
-) => {
-  (window as any).renderUttakApp(elementId, {
-    uttaksperioder,
-    utsattePerioder,
-    aktivBehandlingUuid: behandlingUuid,
-    arbeidsforhold,
-    aksjonspunktkoder,
-    erFagytelsetypeLivetsSluttfase,
-    løsAksjonspunktVurderDatoNyRegelUttak,
-    virkningsdatoUttakNyeRegler,
-    aksjonspunkter,
-  });
-};
 
 interface UttakProps {
   uuid: string;
@@ -41,18 +10,19 @@ interface UttakProps {
   utsattePerioder: string[];
   arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysningerPerId;
   aksjonspunkter: Aksjonspunkt[];
+  alleKodeverk: AlleKodeverk;
   erFagytelsetypeLivetsSluttfase: boolean;
   submitCallback: (data: { kode: string; begrunnelse: string; virkningsdato: string }[]) => void;
   virkningsdatoUttakNyeRegler?: string;
 }
 
-const uttakAppID = 'uttakApp';
 export default ({
   uuid,
   uttaksperioder,
   utsattePerioder,
   arbeidsgiverOpplysningerPerId,
   aksjonspunkter,
+  alleKodeverk,
   erFagytelsetypeLivetsSluttfase,
   submitCallback,
   virkningsdatoUttakNyeRegler,
@@ -69,25 +39,19 @@ export default ({
     submitCallback([{ kode: aksjonspunktCodes.VURDER_DATO_NY_REGEL_UTTAK, begrunnelse, virkningsdato }]);
 
   return (
-    <MicroFrontend
-      id={uttakAppID}
-      jsSrc="/k9/microfrontend/psb-uttak/1/app.js"
-      stylesheetSrc="/k9/microfrontend/psb-uttak/1/styles.css"
-      noCache
-      onReady={() =>
-        initializeUttak(
-          uttakAppID,
-          uttaksperioder,
-          utsattePerioder,
-          uuid,
-          arbeidsgiverOpplysningerPerId,
-          funnedeRelevanteAksjonspunktkoder,
-          erFagytelsetypeLivetsSluttfase,
-          løsAksjonspunktVurderDatoNyRegelUttak,
-          virkningsdatoUttakNyeRegler,
-          funnedeRelevanteAksjonspunkter,
-        )
-      }
+    <Uttak
+      containerData={{
+        uttaksperioder,
+        utsattePerioder,
+        aktivBehandlingUuid: uuid,
+        arbeidsforhold: arbeidsgiverOpplysningerPerId,
+        aksjonspunktkoder: funnedeRelevanteAksjonspunktkoder,
+        erFagytelsetypeLivetsSluttfase,
+        kodeverkUtenlandsoppholdÅrsak: alleKodeverk?.UtenlandsoppholdÅrsak,
+        løsAksjonspunktVurderDatoNyRegelUttak,
+        virkningsdatoUttakNyeRegler,
+        aksjonspunkter: funnedeRelevanteAksjonspunkter,
+      }}
     />
   );
 };

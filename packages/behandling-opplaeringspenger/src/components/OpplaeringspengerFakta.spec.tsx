@@ -166,7 +166,7 @@ describe('<OpplaeringspengerFakta>', () => {
         setBehandling={sinon.spy()}
         arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
         dokumenter={[]}
-        featureToggles={{ UTENLANDSOPPHOLD: true }}
+        featureToggles={{}}
       />,
     );
 
@@ -216,11 +216,6 @@ describe('<OpplaeringspengerFakta>', () => {
         erAktiv: false,
         harAksjonspunkt: false,
         tekstKode: 'InntektOgYtelser.Title',
-      },
-      {
-        erAktiv: false,
-        harAksjonspunkt: false,
-        tekstKode: 'UtenlandsoppholdInfoPanel.Title',
       },
       { erAktiv: false, harAksjonspunkt: false, tekstKode: 'SoknadsperioderPanel.Soknadsperioder' },
     ]);

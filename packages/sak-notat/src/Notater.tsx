@@ -1,4 +1,4 @@
-import { NavAnsatt } from '@k9-sak-web/types';
+import { NavAnsatt, NotatResponse } from '@k9-sak-web/types';
 import { Alert, Button, Heading, Loader, Switch } from '@navikt/ds-react';
 import { CheckboxField, Form, TextAreaField } from '@navikt/ft-form-hooks';
 import React, { useState } from 'react';
@@ -6,7 +6,6 @@ import { UseFormReturn } from 'react-hook-form';
 import { FormattedMessage, RawIntlProvider, createIntl, createIntlCache } from 'react-intl';
 import messages from '../i18n/nb_NO.json';
 import ChatComponent from './components/ChatComponent';
-import { NotatResponse } from './types/NotatResponse';
 import styles from './notater.module.css';
 
 const cache = createIntlCache();
@@ -41,6 +40,7 @@ interface NotaterProps {
   notater: NotatResponse[];
   postNotatMutationError: boolean;
   formMethods: UseFormReturn<Inputs, any, undefined>;
+  fagsakHarPleietrengende: boolean;
 }
 
 const Notater: React.FunctionComponent<NotaterProps> = ({
@@ -53,6 +53,7 @@ const Notater: React.FunctionComponent<NotaterProps> = ({
   postNotatMutationError,
   submitSkjulNotat,
   formMethods,
+  fagsakHarPleietrengende,
 }) => {
   const [visSkjulteNotater, setVisSkjulteNotater] = useState(false);
 
@@ -61,6 +62,8 @@ const Notater: React.FunctionComponent<NotaterProps> = ({
   };
 
   const submit = (data: Inputs) => submitNotat(data);
+
+  const alleNotaterErSkjulte = notater?.every(notat => notat.skjult);
 
   return (
     <RawIntlProvider value={intl}>
@@ -76,9 +79,33 @@ const Notater: React.FunctionComponent<NotaterProps> = ({
               <FormattedMessage id="NotatISakIndex.VisSkjulteNotater" />
             </Switch>
           </div>
+          <Form<Inputs> formMethods={formMethods} onSubmit={submit}>
+            <div className={styles.nyttNotat}>
+              <TextAreaField
+                name="notatTekst"
+                size="small"
+                label={<FormattedMessage id="NotatISakIndex.SkrivNyttNotat" />}
+              />
+            </div>
+            {fagsakHarPleietrengende && (
+              <CheckboxField
+                className={styles.visAlleNotater}
+                name="visNotatIAlleSaker"
+                label={<FormattedMessage id="NotatISakIndex.VisNotatTilknyttetPleietrengende" />}
+              />
+            )}
+            <Button type="submit" className={styles.leggTilNotatKnapp} size="small" variant="primary">
+              <FormattedMessage id="NotatISakIndex.LeggTilNotatButton" />
+            </Button>
+          </Form>
           {!hasGetNotaterError && notater?.length === 0 && (
             <Alert className={styles.alert} size="small" variant="info">
               <FormattedMessage id="NotatISakIndex.IngenNotaterAlert" />
+            </Alert>
+          )}
+          {alleNotaterErSkjulte && !visSkjulteNotater && notater?.length > 0 && (
+            <Alert className={styles.alert} size="small" variant="info">
+              <FormattedMessage id="NotatISakIndex.IngenAktiveNotaterAlert" />
             </Alert>
           )}
           {hasGetNotaterError && (
@@ -107,23 +134,6 @@ const Notater: React.FunctionComponent<NotaterProps> = ({
                 ))}
             </div>
           )}
-          <Form<Inputs> formMethods={formMethods} onSubmit={submit}>
-            <div className={styles.nyttNotat}>
-              <TextAreaField
-                name="notatTekst"
-                size="small"
-                label={<FormattedMessage id="NotatISakIndex.SkrivNyttNotat" />}
-              />
-            </div>
-            <CheckboxField
-              className={styles.visAlleNotater}
-              name="visNotatIAlleSaker"
-              label={<FormattedMessage id="NotatISakIndex.VisNotatTilknyttetPleietrengende" />}
-            />
-            <Button type="submit" className={styles.leggTilNotatKnapp} size="small" variant="primary">
-              <FormattedMessage id="NotatISakIndex.LeggTilNotatButton" />
-            </Button>
-          </Form>
         </>
       )}
     </RawIntlProvider>

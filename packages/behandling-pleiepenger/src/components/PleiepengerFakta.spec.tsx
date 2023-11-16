@@ -160,7 +160,7 @@ describe('<PleiepengerFakta>', () => {
         setBehandling={sinon.spy()}
         arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
         dokumenter={[]}
-        featureToggles={{ UTENLANDSOPPHOLD: true }}
+        featureToggles={{}}
       />,
     );
 

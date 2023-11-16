@@ -16,7 +16,7 @@ import MeldingIndex, { type BackendApi } from './MeldingIndex';
 
 const mockHistoryPush = jest.fn();
 
-const MockForm = reduxForm({ form: 'mock' })(({ children }) => <div>{children}</div>);
+const MockForm = reduxForm({ form: 'mock', onSubmit: jest.fn() })(({ children }) => <div>{children}</div>);
 
 jest.mock('react-router-dom', () => ({
   ...(jest.requireActual('react-router-dom') as Record<string, unknown>),
@@ -31,7 +31,11 @@ interface SendMeldingPayload {
   brevmalkode: string | undefined;
   fritekst: string | null;
   arsakskode: string | undefined;
-  fritekstbrev: string | null;
+  fritekstbrev?: string;
+}
+
+interface ExtendedWindow {
+  location?: Location;
 }
 
 describe('<MeldingIndex>', () => {
@@ -84,7 +88,7 @@ describe('<MeldingIndex>', () => {
   } satisfies Brevmaler;
 
   const assignMock = jest.fn();
-  delete window.location;
+  delete (window as Partial<ExtendedWindow>).location;
   // @ts-ignore Dette er kun for å unngå warnings med window.location.reload(). (Denne blir brukt som en temp-fiks, så dette skal derfor fjernes)
   window.location = { reload: assignMock };
 

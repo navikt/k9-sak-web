@@ -14,7 +14,7 @@ jobs:
     steps:
       - name: Henter informasjon fra issuet
         id: issue_comment
-        uses: actions/github-script@v6
+        uses: actions/github-script@v7
         with:
           github-token: ${{secrets.GITHUB_TOKEN}}
           script: |
@@ -38,7 +38,7 @@ jobs:
           echo "CLUSTER=$CLUSTER_INPUT" >> $GITHUB_ENV
 
       - name: Sjekk ut kode
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           ref: ${{ env.SHA }}
 
@@ -52,7 +52,7 @@ jobs:
 
       - name: Oppdater kommentar med deployment status ved feil
         if: failure()
-        uses: actions/github-script@v6
+        uses: actions/github-script@v7
         with:
           github-token: ${{secrets.GITHUB_TOKEN}}
           script: |
@@ -64,7 +64,7 @@ jobs:
 
       - name: Oppdater kommentar med deployment status
         if: success()
-        uses: actions/github-script@v6
+        uses: actions/github-script@v7
         with:
           github-token: ${{secrets.GITHUB_TOKEN}}
           script: |

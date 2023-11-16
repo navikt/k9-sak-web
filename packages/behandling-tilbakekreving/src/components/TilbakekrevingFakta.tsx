@@ -77,14 +77,30 @@ const TilbakekrevingFakta = ({
         .getEndepunkter()
         .map(e => ({ key: e }))
     : [];
+  const endepunkterUtenCaching = valgtPanel
+    ? valgtPanel
+        .getPanelDef()
+        .getEndepunkterUtenCaching()
+        .map(e => ({ key: e }))
+    : [];
   const { data: faktaData, state } = restApiTilbakekrevingHooks.useMultipleRestApi<FetchedData>(endepunkter, {
     updateTriggers: [behandling.versjon, valgtPanel],
     suspendRequest: !valgtPanel,
     isCachingOn: true,
   });
 
+  const { data: faktaDataUtenCaching, state: stateForEndepunkterUtenCaching } =
+    restApiTilbakekrevingHooks.useMultipleRestApi<FetchedData>(endepunkterUtenCaching, {
+      updateTriggers: [behandling.versjon, valgtPanel],
+      suspendRequest: !valgtPanel,
+    });
+
   if (sidemenyPaneler.length > 0) {
-    const isLoading = state === RestApiState.NOT_STARTED || state === RestApiState.LOADING;
+    const isLoading =
+      state === RestApiState.NOT_STARTED ||
+      state === RestApiState.LOADING ||
+      stateForEndepunkterUtenCaching === RestApiState.NOT_STARTED ||
+      stateForEndepunkterUtenCaching === RestApiState.LOADING;
     return (
       <SideMenuWrapper paneler={sidemenyPaneler} onClick={velgFaktaPanelCallback}>
         {valgtPanel && isLoading && <LoadingPanel />}
@@ -92,6 +108,7 @@ const TilbakekrevingFakta = ({
           <ErrorBoundary errorMessageCallback={addErrorMessage}>
             {valgtPanel.getPanelDef().getKomponent({
               ...faktaData,
+              ...faktaDataUtenCaching,
               behandling,
               alleKodeverk,
               fpsakKodeverk,

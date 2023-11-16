@@ -1,30 +1,9 @@
-import React from 'react';
-import { useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { BehandlingAppKontekst, Aksjonspunkt, SimpleEndpoints } from '@k9-sak-web/types';
-import {
-  MicroFrontend,
-  httpErrorHandler,
-  findEndpointsForMicrofrontend,
-  findAksjonspunkt,
-} from '@fpsak-frontend/utils';
-
-const initializeOmsorgenFor = (
-  elementId,
-  httpErrorHandlerFn,
-  endpoints: SimpleEndpoints,
-  readOnly: boolean,
-  løsAksjonspunkt: (omsorgsperioder) => void,
-  saksbehandlere: { [key: string]: string },
-) => {
-  (window as any).renderOmsorgenForApp(elementId, {
-    httpErrorHandler: httpErrorHandlerFn,
-    endpoints,
-    readOnly,
-    onFinished: løsAksjonspunkt,
-    saksbehandlere,
-  });
-};
+import { findAksjonspunkt, findEndpointsForMicrofrontend, httpErrorHandler } from '@fpsak-frontend/utils';
+import { useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
+import { Aksjonspunkt, BehandlingAppKontekst } from '@k9-sak-web/types';
+import { OmsorgenFor } from '@navikt/k9-fe-omsorgen-for';
+import React from 'react';
 
 interface OmsorgenForProps {
   behandling: BehandlingAppKontekst;
@@ -38,8 +17,7 @@ interface OmsorgenForProps {
   saksbehandlere: { [key: string]: string };
 }
 
-const omsorgenForAppID = 'omsorgenForApp';
-const OmsorgenFor = ({
+export default ({
   behandling: { links },
   readOnly,
   aksjonspunkter,
@@ -58,27 +36,19 @@ const OmsorgenFor = ({
     submitCallback([{ kode: omsorgenForAksjonspunktkode, begrunnelse: 'Omsorgen for er behandlet', omsorgsperioder }]);
 
   return (
-    <MicroFrontend
-      id={omsorgenForAppID}
-      jsSrc="/k9/microfrontend/omsorgen-for/1/app.js"
-      stylesheetSrc="/k9/microfrontend/omsorgen-for/1/styles.css"
-      noCache
-      onReady={() =>
-        initializeOmsorgenFor(
-          omsorgenForAppID,
-          httpErrorHandlerCaller,
-          findEndpointsForMicrofrontend(links, [
-            {
-              rel: 'omsorgen-for',
-              desiredName: 'omsorgsperioder',
-            },
-          ]),
-          readOnly || !harAksjonspunkt,
-          løsAksjonspunkt,
-          saksbehandlere || {},
-        )
-      }
+    <OmsorgenFor
+      data={{
+        httpErrorHandler: httpErrorHandlerCaller,
+        endpoints: findEndpointsForMicrofrontend(links, [
+          {
+            rel: 'omsorgen-for',
+            desiredName: 'omsorgsperioder',
+          },
+        ]),
+        readOnly: readOnly || !harAksjonspunkt,
+        onFinished: løsAksjonspunkt,
+        saksbehandlere: saksbehandlere || {},
+      }}
     />
   );
 };
-export default OmsorgenFor;

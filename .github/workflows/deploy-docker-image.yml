@@ -33,7 +33,7 @@ jobs:
       image: ${{ steps.docker-push.outputs.image }}
     steps:
       - name: Hente kode
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Setup .yarnrc.yml
         run: |
@@ -44,7 +44,7 @@ jobs:
           NPM_AUTH_TOKEN: ${{ secrets.READER_TOKEN }}
 
       - name: Sette opp Node
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: '18'
           cache: 'yarn'
@@ -66,7 +66,7 @@ jobs:
       - name: Sette TAG variable for docker image & deploy issue-info
         run: echo "TAG=$TIMESTAMP-$(echo $GITHUB_SHA | cut -c1-7)" >> $GITHUB_ENV
 
-      - uses: docker/login-action@v2
+      - uses: docker/login-action@v3
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
@@ -78,7 +78,7 @@ jobs:
           docker push ${IMAGE_BASE} --all-tags
 
       - name: Lukk gamle issues
-        uses: actions/github-script@v6
+        uses: actions/github-script@v7
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
@@ -101,7 +101,7 @@ jobs:
       - name: Opprett deployment issue
         id: createdeployissue
         if: success()
-        uses: actions/github-script@v6
+        uses: actions/github-script@v7
         with:
           github-token: ${{secrets.GITHUB_TOKEN}}
           script: |
@@ -130,7 +130,7 @@ jobs:
 
       - name: Trigg deploy til dev-fss
         if: success()
-        uses: actions/github-script@v6
+        uses: actions/github-script@v7
         with:
           github-token: ${{secrets.GA_P_TOKEN}}
           script: |

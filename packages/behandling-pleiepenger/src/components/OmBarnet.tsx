@@ -1,28 +1,9 @@
-import React from 'react';
-import { useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { BehandlingAppKontekst, Aksjonspunkt, SimpleEndpoints } from '@k9-sak-web/types';
-import {
-  MicroFrontend,
-  httpErrorHandler,
-  findEndpointsForMicrofrontend,
-  findAksjonspunkt,
-} from '@fpsak-frontend/utils';
-
-const initializeOmBarnet = (
-  elementId,
-  httpErrorHandlerFn,
-  endpoints: SimpleEndpoints,
-  readOnly: boolean,
-  løsAksjonspunkt: (data) => void,
-) => {
-  (window as any).renderOmBarnetApp(elementId, {
-    httpErrorHandler: httpErrorHandlerFn,
-    endpoints,
-    readOnly,
-    onFinished: løsAksjonspunkt,
-  });
-};
+import { findAksjonspunkt, findEndpointsForMicrofrontend, httpErrorHandler } from '@fpsak-frontend/utils';
+import { useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
+import { Aksjonspunkt, BehandlingAppKontekst } from '@k9-sak-web/types';
+import { OmBarnet } from '@navikt/k9-fe-om-barnet';
+import React from 'react';
 
 interface OmBarnetProps {
   behandling: BehandlingAppKontekst;
@@ -34,8 +15,7 @@ interface OmBarnetProps {
   }[]) => void;
 }
 
-const omBarnetAppID = 'omBarnet';
-const OmBarnet = ({ behandling: { links }, readOnly, aksjonspunkter, submitCallback }: OmBarnetProps) => {
+export default ({ behandling: { links }, readOnly, aksjonspunkter, submitCallback }: OmBarnetProps) => {
   const { addErrorMessage } = useRestApiErrorDispatcher();
   const httpErrorHandlerCaller = (status: number, locationHeader?: string) =>
     httpErrorHandler(status, addErrorMessage, locationHeader);
@@ -53,27 +33,19 @@ const OmBarnet = ({ behandling: { links }, readOnly, aksjonspunkter, submitCallb
     ]);
 
   return (
-    <MicroFrontend
-      id={omBarnetAppID}
-      jsSrc="/k9/microfrontend/psb-om-barnet/1/app.js"
-      stylesheetSrc="/k9/microfrontend/psb-om-barnet/1/styles.css"
-      noCache
-      onReady={() =>
-        initializeOmBarnet(
-          omBarnetAppID,
-          httpErrorHandlerCaller,
-          findEndpointsForMicrofrontend(links, [
-            {
-              rel: 'rett-ved-dod',
-              desiredName: 'rettVedDod',
-            },
-            { rel: 'om-pleietrengende', desiredName: 'omPleietrengende' },
-          ]),
-          readOnly || !harAksjonspunkt,
-          løsAksjonspunkt,
-        )
-      }
+    <OmBarnet
+      data={{
+        httpErrorHandler: httpErrorHandlerCaller,
+        endpoints: findEndpointsForMicrofrontend(links, [
+          {
+            rel: 'rett-ved-dod',
+            desiredName: 'rettVedDod',
+          },
+          { rel: 'om-pleietrengende', desiredName: 'omPleietrengende' },
+        ]),
+        readOnly: readOnly || !harAksjonspunkt,
+        onFinished: løsAksjonspunkt,
+      }}
     />
   );
 };
-export default OmBarnet;

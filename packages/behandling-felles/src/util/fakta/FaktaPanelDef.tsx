@@ -32,6 +32,13 @@ abstract class FaktaPanelDef {
   public getEndepunkter = (featureToggles?: any): string[] => [];
 
   /**
+   * Data som komponent er avhengig av må defineres her slik at det kan hentes fra server.
+   * Forskjell fra getEndepunkter er at disse endepunktene alltid kalles på nytt ved åpning av panelet
+   */
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  public getEndepunkterUtenCaching = (featureToggles?: any): string[] => [];
+
+  /**
    * For å avgjøre om komponent skal vises brukes denne i @see skalVisePanel
    */
   // eslint-disable-next-line @typescript-eslint/no-unused-vars

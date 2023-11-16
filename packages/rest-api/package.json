@@ -5,8 +5,8 @@
   "license": "MIT",
   "private": true,
   "dependencies": {
-    "@sentry/browser": "7.70.0",
-    "axios": "0.27.2",
+    "@sentry/browser": "7.80.1",
+    "axios": "1.6.2",
     "node-cache": "5.1.2"
   }
 }

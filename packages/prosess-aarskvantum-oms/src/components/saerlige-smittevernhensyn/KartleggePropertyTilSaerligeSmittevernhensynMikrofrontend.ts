@@ -1,15 +1,15 @@
+import { FormStateType } from '@fpsak-frontend/form/src/types/FormStateType';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import { Aksjonspunkt, Behandling, UtfallEnum, Uttaksperiode } from '@k9-sak-web/types';
-import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
-import { FormStateType } from '@fpsak-frontend/form/src/types/FormStateType';
+import { KomponenterEnum } from '@navikt/k9-fe-omsorgsdager';
 import { isAfter, parse } from 'date-fns';
-import MikrofrontendKomponenter from './types/MikrofrontendKomponenter';
-import { SaerligSmittevernhensynProps } from './types/SaerligSmittevernhensynProps';
 import Aktivitet from '../../dto/Aktivitet';
-import { antallDager } from '../AktivitetTabell';
-import Soknadsårsak from '../../dto/Soknadsårsak';
 import PeriodeBekreftetStatus from '../../dto/PeriodeBekreftetStatus';
+import Soknadsårsak from '../../dto/Soknadsårsak';
+import { antallDager } from '../AktivitetTabell';
+import { SaerligSmittevernhensynProps } from './types/SaerligSmittevernhensynProps';
 
 interface LosAksjonspunktSaerligSmittevern {
   kode: string;
@@ -45,8 +45,11 @@ const KartleggePropertyTilSaerligeSmittevernhensynMikrofrontend = (
   aksjonspunkt: Aksjonspunkt,
   aktiviteter: Aktivitet[],
   FormState: FormStateType,
-) => {
-  let objektTilMikrofrontend = {};
+): {
+  visKomponent: KomponenterEnum.KORRIGERE_PERIODER;
+  props: SaerligSmittevernhensynProps;
+} => {
+  let objektTilMikrofrontend;
 
   const harAktivitetPeriodeMedSoknadsarsakKonflikt: boolean[] = aktiviteter.map(aktivitet =>
     aktivitet.uttaksperioder.some(
@@ -109,7 +112,7 @@ const KartleggePropertyTilSaerligeSmittevernhensynMikrofrontend = (
     const aksjonspunktLost = behandling.status.kode === behandlingStatus.BEHANDLING_UTREDES && !isAksjonspunktOpen;
 
     objektTilMikrofrontend = {
-      visKomponent: MikrofrontendKomponenter.KORRIGERE_PERIODER,
+      visKomponent: KomponenterEnum.KORRIGERE_PERIODER,
       props: {
         behandlingsID,
         aksjonspunktLost,
