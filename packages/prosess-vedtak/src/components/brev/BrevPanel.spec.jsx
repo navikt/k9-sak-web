@@ -16,7 +16,7 @@ import InformasjonsbehovAutomatiskVedtaksbrev from './InformasjonsbehovAutomatis
 
 import { intlMock } from '../../../i18n/index';
 
-jest.mock('formik');
+vi.mock('formik');
 useField.mockReturnValue([{}, { error: '' }, {}]);
 
 describe('<BrevPanel>', () => {

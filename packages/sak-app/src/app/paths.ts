@@ -47,22 +47,14 @@ export const getLocationWithQueryParams = (location: Location, queryParams: Quer
   search: updateQueryParams(location.search, queryParams),
 });
 
-export const getSupportPanelLocationCreator =
-  (location: Location) =>
-  (supportPanel: string): Location =>
-    getLocationWithQueryParams(location, { stotte: supportPanel });
-export const getProsessStegLocation =
-  (location: Location) =>
-  (prosessSteg: string): Location =>
-    getLocationWithQueryParams(location, { punkt: prosessSteg });
-export const getFaktaLocation =
-  (location: Location) =>
-  (fakta: string): Location =>
-    getLocationWithQueryParams(location, { fakta });
-export const getRiskPanelLocationCreator =
-  (location: Location) =>
-  (isRiskPanelOpen): Location =>
-    getLocationWithQueryParams(location, { risiko: isRiskPanelOpen });
+export const getSupportPanelLocationCreator = (location: Location) => (supportPanel: string): Location =>
+  getLocationWithQueryParams(location, { stotte: supportPanel });
+export const getProsessStegLocation = (location: Location) => (prosessSteg: string): Location =>
+  getLocationWithQueryParams(location, { punkt: prosessSteg });
+export const getFaktaLocation = (location: Location) => (fakta: string): Location =>
+  getLocationWithQueryParams(location, { fakta });
+export const getRiskPanelLocationCreator = (location: Location) => (isRiskPanelOpen): Location =>
+  getLocationWithQueryParams(location, { risiko: isRiskPanelOpen });
 
 // eslint-disable-next-line
 export const getLocationWithDefaultProsessStegAndFakta = (location: Location): Location =>

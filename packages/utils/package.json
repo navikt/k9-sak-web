@@ -2,6 +2,7 @@
   "name": "@fpsak-frontend/utils",
   "version": "1.0.0",
   "module": "index.ts",
+  "main": "index.ts",
   "license": "MIT",
   "private": true,
   "dependencies": {

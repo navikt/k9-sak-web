@@ -20,7 +20,7 @@ self.addEventListener('activate', function (event) {
 })
 
 self.addEventListener('message', async function (event) {
-  const clientId = event.source.id
+  const clientId = event.source.id;
 
   if (!clientId || !self.clients) {
     return
@@ -85,8 +85,8 @@ self.addEventListener('message', async function (event) {
 })
 
 self.addEventListener('fetch', function (event) {
-  const { request } = event
-  const accept = request.headers.get('accept') || ''
+  const { request } = event;
+  const accept = request.headers.get('accept') || '';
 
   // Bypass server-sent events.
   if (accept.includes('text/event-stream')) {
@@ -112,7 +112,7 @@ self.addEventListener('fetch', function (event) {
   }
 
   // Generate unique request ID.
-  const requestId = Math.random().toString(16).slice(2)
+  const requestId = Math.random().toString(16).slice(2);
 
   event.respondWith(
     handleRequest(event, requestId).catch((error) => {
@@ -145,8 +145,8 @@ async function handleRequest(event, requestId) {
   // Ensure MSW is active and ready to handle the message, otherwise
   // this message will pend indefinitely.
   if (client && activeClientIds.has(client.id)) {
-    ;(async function () {
-      const clonedResponse = response.clone()
+    (async function () {
+      const clonedResponse = response.clone();
       sendToClient(client, {
         type: 'RESPONSE',
         payload: {

@@ -1,6 +1,7 @@
 {
   "name": "@k9-sak-web/fakta-felles",
   "version": "1.0.0",
+  "main": "index.ts",
   "module": "index.ts",
   "license": "MIT",
   "private": true,

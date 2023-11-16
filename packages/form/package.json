@@ -1,7 +1,8 @@
 {
   "name": "@fpsak-frontend/form",
   "version": "1.0.0",
-  "module ": "index.js",
+  "main": "index.ts",
+  "module": "index.ts",
   "license": "MIT",
   "private": true,
   "dependencies": {

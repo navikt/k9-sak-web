@@ -1,7 +1,8 @@
 {
   "name": "@fpsak-frontend/prosess-anke-resultat",
   "version": "1.0.0",
-  "module": "index.jsx",
+  "main": "index.ts",
+  "module": "index.ts",
   "license": "MIT",
   "private": true,
   "dependencies": {

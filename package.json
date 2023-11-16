@@ -175,6 +175,7 @@
     "vite-plugin-html": "^3.2.0",
     "vite-plugin-mock": "^3.0.0",
     "vite-plugin-static-copy": "^0.17.0",
+    "vite-plugin-svgr": "^3.2.0",
     "vitest": "^0.34.6",
     "webpack": "5.89.0",
     "webpack-cli": "5.1.4",

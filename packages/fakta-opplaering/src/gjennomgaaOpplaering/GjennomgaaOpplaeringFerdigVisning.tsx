@@ -24,8 +24,9 @@ interface OwnProps {
 }
 
 const GjennomgaaOpplaeringFerdigVisning = ({ vurdering, rediger }: OwnProps) => {
-  const { readOnly, opplaeringDokumenter, saksbehandlere } =
-    useContext<FaktaOpplaeringContextTypes>(FaktaOpplaeringContext);
+  const { readOnly, opplaeringDokumenter, saksbehandlere } = useContext<FaktaOpplaeringContextTypes>(
+    FaktaOpplaeringContext,
+  );
   const intl = useIntl();
 
   return (
