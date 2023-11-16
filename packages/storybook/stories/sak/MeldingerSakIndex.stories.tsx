@@ -44,44 +44,42 @@ const defaultFakeBackend = {
   }
 } satisfies BackendApi
 
-const sendMeldingTemplate = ({brevmaler, sprakKode = emptySprakKode}: SendMeldingPanelStoryArgs) => {
-  return (
-    <div
-      style={{
-        width: '600px',
-        margin: '50px',
-        padding: '20px',
-        backgroundColor: 'white',
-      }}
-    >
-      <MeldingerSakIndex
-        submitCallback={action('button-click')}
-        templates={object('templates', brevmaler)}
-        sprakKode={object('sprakKode', sprakKode)}
-        previewCallback={action('button-click')}
-        behandlingId={1}
-        behandlingVersjon={1}
-        isKontrollerRevurderingApOpen={false}
-        personopplysninger={personopplysninger}
-        arbeidsgiverOpplysningerPerId={arbeidsgivere}
-        revurderingVarslingArsak={[
-          {
-            kode: ugunstAarsakTyper.BARN_IKKE_REGISTRERT_FOLKEREGISTER,
-            navn: 'Barn ikke registrert i folkeregisteret',
-            kodeverk: 'UGUNST',
-          },
-          {
-            kode: ugunstAarsakTyper.ANNET,
-            navn: 'Annet',
-            kodeverk: 'UGUNST',
-          },
-        ]}
-        erTilbakekreving={false}
-        backendApi={defaultFakeBackend}
-      />
-    </div>
-  )
-}
+const sendMeldingTemplate = ({brevmaler, sprakKode = emptySprakKode}: SendMeldingPanelStoryArgs) => (
+  <div
+    style={{
+      width: '600px',
+      margin: '50px',
+      padding: '20px',
+      backgroundColor: 'white',
+    }}
+  >
+    <MeldingerSakIndex
+      submitCallback={action('button-click')}
+      templates={object('templates', brevmaler)}
+      sprakKode={object('sprakKode', sprakKode)}
+      previewCallback={action('button-click')}
+      behandlingId={1}
+      behandlingVersjon={1}
+      isKontrollerRevurderingApOpen={false}
+      personopplysninger={personopplysninger}
+      arbeidsgiverOpplysningerPerId={arbeidsgivere}
+      revurderingVarslingArsak={[
+        {
+          kode: ugunstAarsakTyper.BARN_IKKE_REGISTRERT_FOLKEREGISTER,
+          navn: 'Barn ikke registrert i folkeregisteret',
+          kodeverk: 'UGUNST',
+        },
+        {
+          kode: ugunstAarsakTyper.ANNET,
+          navn: 'Annet',
+          kodeverk: 'UGUNST',
+        },
+      ]}
+      erTilbakekreving={false}
+      backendApi={defaultFakeBackend}
+    />
+  </div>
+)
 
 /**
  * Eit vanleg tilfelle (pleiepenger sykt barn), med mockdata kopiert frå Q
@@ -95,11 +93,6 @@ export const SendMeldingPanelEnMal = () => {
   const enBrevmal: Brevmaler = {
     [dokumentMalType.INNHENT_DOK]: mockedBrevmaler.INNHEN
   }
-  const sprakKode: Kodeverk = {
-    kode: 'EN',
-    kodeverk: 'Engelsk'
-  }
-
   return sendMeldingTemplate({brevmaler: enBrevmal})
 }
 
