@@ -63,6 +63,7 @@ const config = {
     ],
 
     // note you must disable the base rule as it can report incorrect errors
+    'no-nested-ternary': OFF,
     'no-use-before-define': OFF,
     '@typescript-eslint/no-use-before-define': [ERROR],
     'no-shadow': OFF,
