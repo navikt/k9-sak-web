@@ -46,7 +46,7 @@
     "@formatjs/intl-numberformat": "8.8.0",
     "@hookform/error-message": "^2.0.1",
     "@navikt/aksel-icons": "5.10.0",
-    "@navikt/ds-css": "5.10.0",
+    "@navikt/ds-css": "5.10.2",
     "@navikt/ds-react": "5.10.0",
     "@navikt/ds-tailwind": "^5.10.0",
     "@navikt/familie-endringslogg": "10.0.0",
