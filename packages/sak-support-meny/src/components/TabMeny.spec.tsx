@@ -1,8 +1,8 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 import sinon from 'sinon';
-import { ReactComponent as SendMeldingSvg } from '@fpsak-frontend/assets/images/email-send-1.svg';
-import { ReactComponent as HistorikkSvg } from '@fpsak-frontend/assets/images/synchronize-time.svg';
+import SendMeldingSvg from '@fpsak-frontend/assets/images/email-send-1.svg';
+import HistorikkSvg from '@fpsak-frontend/assets/images/synchronize-time.svg';
 
 import { FlexColumn } from '@fpsak-frontend/shared-components';
 

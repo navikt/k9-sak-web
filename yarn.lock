@@ -10700,7 +10700,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@vitejs/plugin-react@npm:^4.0.4":
+"@vitejs/plugin-react@npm:^4.1.1":
   version: 4.1.1
   resolution: "@vitejs/plugin-react@npm:4.1.1"
   dependencies:
@@ -14770,7 +14770,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"esbuild@npm:^0.18.0, esbuild@npm:^0.18.10":
+"esbuild@npm:^0.18.0":
   version: 0.18.20
   resolution: "esbuild@npm:0.18.20"
   dependencies:
@@ -18846,7 +18846,7 @@ __metadata:
     "@types/sinon": 10.0.20
     "@typescript-eslint/eslint-plugin": 6.11.0
     "@typescript-eslint/parser": 6.11.0
-    "@vitejs/plugin-react": ^4.0.4
+    "@vitejs/plugin-react": ^4.1.1
     "@wojtekmaj/enzyme-adapter-react-17": 0.8.0
     autoprefixer: ^10.4.16
     axios: 1.6.2
@@ -18925,12 +18925,12 @@ __metadata:
     terser-webpack-plugin: 5.3.9
     thread-loader: 4.0.2
     typescript: 5.2.2
-    vite: ^4.4.9
+    vite: ^5.0.0
     vite-plugin-html: ^3.2.0
     vite-plugin-mock: ^3.0.0
     vite-plugin-static-copy: ^0.17.0
-    vite-plugin-svgr: ^3.2.0
-    vitest: ^0.34.3
+    vite-plugin-svgr: 4.1.0
+    vitest: ^0.34.6
     webpack: 5.89.0
     webpack-cli: 5.1.4
     webpack-dev-server: 4.15.1
@@ -24426,20 +24426,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"rollup@npm:^3.27.1":
-  version: 3.29.4
-  resolution: "rollup@npm:3.29.4"
-  dependencies:
-    fsevents: ~2.3.2
-  dependenciesMeta:
-    fsevents:
-      optional: true
-  bin:
-    rollup: dist/bin/rollup
-  checksum: 8bb20a39c8d91130825159c3823eccf4dc2295c9a0a5c4ed851a5bf2167dbf24d9a29f23461a54c955e5506395e6cc188eafc8ab0e20399d7489fb33793b184e
-  languageName: node
-  linkType: hard
-
 "rollup@npm:^4.2.0":
   version: 4.3.0
   resolution: "rollup@npm:4.3.0"
@@ -26989,16 +26975,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vite-plugin-svgr@npm:^3.2.0":
-  version: 3.3.0
-  resolution: "vite-plugin-svgr@npm:3.3.0"
+"vite-plugin-svgr@npm:4.1.0":
+  version: 4.1.0
+  resolution: "vite-plugin-svgr@npm:4.1.0"
   dependencies:
     "@rollup/pluginutils": ^5.0.4
     "@svgr/core": ^8.1.0
     "@svgr/plugin-jsx": ^8.1.0
   peerDependencies:
     vite: ^2.6.0 || 3 || 4
-  checksum: 014840a0d98a54422fb94520086bb20c99c7ee21285d7049e4496f529b7be69e23d34f543a29867372e5cbdf135c5a96eae01474c88ec1223c78b7e4b18008b0
+  checksum: b2896d851a75d86d9b21b8a64c8bc8090601d6b26fcfb4739b84314dbb8b426daa7ad451e02e54ce8ae4f8473e19990caa362e2a3e9a22ee1cea0eb27c15f018
   languageName: node
   linkType: hard
 
@@ -27042,16 +27028,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vite@npm:^4.4.9":
-  version: 4.5.0
-  resolution: "vite@npm:4.5.0"
+"vite@npm:^5.0.0":
+  version: 5.0.0
+  resolution: "vite@npm:5.0.0"
   dependencies:
-    esbuild: ^0.18.10
-    fsevents: ~2.3.2
-    postcss: ^8.4.27
-    rollup: ^3.27.1
+    esbuild: ^0.19.3
+    fsevents: ~2.3.3
+    postcss: ^8.4.31
+    rollup: ^4.2.0
   peerDependencies:
-    "@types/node": ">= 14"
+    "@types/node": ^18.0.0 || >=20.0.0
     less: "*"
     lightningcss: ^1.21.0
     sass: "*"
@@ -27078,11 +27064,11 @@ __metadata:
       optional: true
   bin:
     vite: bin/vite.js
-  checksum: 06f1a4c858e4dc4c04a10466f4ccacea30c5a9f8574e5ba3deb9d03fa20e80ca6797f02dad97a988da7cdef96238dbc69c3b6a538156585c74722d996223619e
+  checksum: 1f953b062593b072f0e718384e1ff3307b548235ff8c4016fcaa85c09568eb0ba8cd8cfd80e99d940d3bea296b4661b1d0384fe5cb9a996d3e935feb69259755
   languageName: node
   linkType: hard
 
-"vitest@npm:^0.34.3":
+"vitest@npm:^0.34.6":
   version: 0.34.6
   resolution: "vitest@npm:0.34.6"
   dependencies:
