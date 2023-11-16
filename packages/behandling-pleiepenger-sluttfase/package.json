@@ -40,7 +40,7 @@
     "@navikt/k9-fe-inntektsmelding": "0.0.6",
     "@navikt/k9-fe-medisinsk-vilkar": "0.0.11",
     "@navikt/k9-fe-uttak": "0.0.7",
-    "axios": "1.6.1",
+    "axios": "1.6.2",
     "nav-frontend-alertstriper": "4.0.2",
     "react": "18.2.0",
     "react-intl": "6.5.2",
