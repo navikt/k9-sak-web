@@ -16,9 +16,11 @@
 .orgnumField {
   width: 12ex;
 }
+
 .orgnameField {
   flex-grow: 3;
 }
+
 .orgnameField p { /* Matches the Normaltekst component inside orgnameField */
   /* Adds the same padding/margin/border y-axis spacing as the orgnumField has, to align the text content */
   padding-top: 10px;
