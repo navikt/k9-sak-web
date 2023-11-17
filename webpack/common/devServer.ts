@@ -49,11 +49,21 @@ export default {
       target: process.env.APP_URL_K9FORMIDLING_DD || 'http://localhost:8294',
       secure: false,
       changeOrigin: !!process.env.APP_URL_K9FORMIDLING_DD,
+      onProxyRes: function onProxyRes(proxyRes, req, res) {
+        if (proxyRes.statusCode === 401) {
+          proxyRes.headers.location = `/k9/sak/resource/login?original=${req.originalUrl}`;
+        }
+      },
     },
     '/k9/formidling/**': {
       target: process.env.APP_URL_K9FORMIDLING || 'http://localhost:8290',
       secure: false,
       changeOrigin: !!process.env.APP_URL_K9FORMIDLING,
+      onProxyRes: function onProxyRes(proxyRes, req, res) {
+        if (proxyRes.statusCode === 401) {
+          proxyRes.headers.location = `/k9/sak/resource/login?original=${req.originalUrl}`;
+        }
+      },
     },
     '/k9/sak/**': {
       target: process.env.APP_URL_SAK || 'http://localhost:8080',
@@ -73,16 +83,31 @@ export default {
       target: process.env.APP_URL_K9OPPDRAG || 'http://localhost:8070',
       secure: false,
       changeOrigin: !!process.env.APP_URL_K9OPPDRAG,
+      onProxyRes: function onProxyRes(proxyRes, req, res) {
+        if (proxyRes.statusCode === 401) {
+          proxyRes.headers.location = `/k9/sak/resource/login?original=${req.originalUrl}`;
+        }
+      },
     },
     '/k9/klage/**': {
       target: process.env.APP_URL_KLAGE || 'http://localhost:8701',
       secure: false,
       changeOrigin: !!process.env.APP_URL_KLAGE,
+      onProxyRes: function onProxyRes(proxyRes, req, res) {
+        if (proxyRes.statusCode === 401) {
+          proxyRes.headers.location = `/k9/sak/resource/login?original=${req.originalUrl}`;
+        }
+      },
     },
     '/k9/tilbake/**': {
       target: process.env.APP_URL_K9TILBAKE || 'http://localhost:8030',
       secure: false,
       changeOrigin: !!process.env.APP_URL_K9TILBAKE,
+      onProxyRes: function onProxyRes(proxyRes, req, res) {
+        if (proxyRes.statusCode === 401) {
+          proxyRes.headers.location = `/k9/sak/resource/login?original=${req.originalUrl}`;
+        }
+      },
     },
     '/k9/endringslogg/**': {
       target: process.env.ENDRINGSLOGG_URL || 'https://familie-endringslogg.intern.dev.nav.no',
