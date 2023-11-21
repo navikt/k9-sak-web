@@ -1,0 +1,15 @@
+.nyLabel__container {
+  align-self: center;
+  margin-left: 0.5rem;
+}
+.nyLabel__icon {
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  background: #0067c5;
+  color: white;
+  font-size: 0.875rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

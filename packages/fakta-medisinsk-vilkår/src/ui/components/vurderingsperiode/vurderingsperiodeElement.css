@@ -1,0 +1,41 @@
+.vurderingsperiodeElement {
+  display: flex;
+  cursor: pointer;
+}
+.vurderingsperiodeElement__indicator {
+  width: 3.5rem;
+}
+.vurderingsperiodeElement__texts {
+  display: flex;
+  align-items: center;
+}
+.vurderingsperiodeElement__texts__period {
+  display: inline-block;
+  margin: 0;
+  color: #0067c5;
+  text-decoration: underline;
+  min-width: 10.0625rem;
+}
+.vurderingsperiodeElement__texts__resultat {
+  display: inline-block;
+  margin: 0 0 0 1.375rem;
+}
+.vurderingsperiodeElement__texts__parterIcon {
+  display: inline-block;
+  vertical-align: top;
+  margin-top: -0.125rem;
+  margin-left: 1.625rem;
+}
+.vurderingsperiodeElement__texts__parterIcon--wide svg {
+  width: 2.25rem;
+}
+.vurderingsperiodeElement .visuallyHidden {
+  position: absolute;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  height: 1px;
+  width: 1px;
+  margin: -1px;
+  padding: 0;
+  border: 0;
+}

@@ -1,0 +1,19 @@
+.nyeDokumenterSomKanPåvirkeEksisterendeVurderinger {
+  max-width: 75.25rem;
+}
+.nyeDokumenterSomKanPåvirkeEksisterendeVurderinger__dokumentLink {
+  margin-left: 0.5rem;
+}
+.nyeDokumenterSomKanPåvirkeEksisterendeVurderinger__ikonContainer {
+  position: relative;
+  top: 6px;
+  margin-right: 0.5rem;
+}
+.nyeDokumenterSomKanPåvirkeEksisterendeVurderinger__ikonContainer svg {
+  height: 1.375rem;
+  width: 1.125rem;
+}
+.nyeDokumenterSomKanPåvirkeEksisterendeVurderinger__content {
+  border: 2px solid #ff9100;
+  padding: 1.25rem;
+}

@@ -1,0 +1,9 @@
+.innleggelsesperiodeoversikt {
+  width: 100%;
+}
+.innleggelsesperiodeoversikt__titleContainer {
+  display: flex;
+}
+.innleggelsesperiodeoversikt__redigerListeKnapp {
+  margin-left: 1.5rem;
+}

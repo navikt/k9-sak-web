@@ -1,0 +1,11 @@
+.periodList {
+  display: flex;
+}
+.periodList__calendarIcon {
+  flex-shrink: 0;
+}
+.periodList__periods {
+  position: relative;
+  left: 2px;
+  line-height: 1.5;
+}

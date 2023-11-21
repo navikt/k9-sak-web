@@ -1,0 +1,19 @@
+.innleggelsesperiodeliste {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+.innleggelsesperiodeliste__element {
+  border-bottom: 1px solid #c8c8c8;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+}
+.innleggelsesperiodeliste__element:not(:first-child) {
+  margin-top: 0.5rem;
+}
+.lenkeContainer {
+  float: right;
+}
+.lenkeContainer__slettLenke {
+  margin-left: 1rem;
+}

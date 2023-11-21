@@ -4454,6 +4454,7 @@ __metadata:
     "@k9-sak-web/fakta-institusjon": 1.0.0
     "@k9-sak-web/inntektsmelding": 1.0.0
     "@k9-sak-web/konstanter": 1.0.0
+    "@k9-sak-web/medisinsk-vilkar": 1.0.0
     "@k9-sak-web/prosess-vilkar-soknadsfrist": 1.0.0
     "@k9-sak-web/prosess-vilkar-sykdom": 1.0.0
     "@k9-sak-web/rest-api": 1.0.0
@@ -4465,7 +4466,6 @@ __metadata:
     "@navikt/ft-fakta-fordel-beregningsgrunnlag": 7.3.16
     "@navikt/ft-prosess-beregningsgrunnlag": 6.3.16
     "@navikt/k9-fe-http-utils": 1.0.6
-    "@navikt/k9-fe-medisinsk-vilkar": 0.0.13
     "@navikt/k9-fe-om-barnet": 0.0.8
     "@navikt/k9-fe-omsorgen-for": 0.0.8
     "@navikt/k9-fe-uttak": 0.0.8
@@ -4510,6 +4510,7 @@ __metadata:
     "@k9-sak-web/fakta-utenlandsopphold": 1.0.0
     "@k9-sak-web/inntektsmelding": 1.0.0
     "@k9-sak-web/konstanter": 1.0.0
+    "@k9-sak-web/medisinsk-vilkar": 1.0.0
     "@k9-sak-web/prosess-vilkar-soknadsfrist": 1.0.0
     "@k9-sak-web/prosess-vilkar-sykdom": 1.0.0
     "@k9-sak-web/rest-api": 1.0.0
@@ -4521,7 +4522,6 @@ __metadata:
     "@navikt/ft-fakta-fordel-beregningsgrunnlag": 7.3.16
     "@navikt/ft-prosess-beregningsgrunnlag": 6.3.16
     "@navikt/k9-fe-http-utils": 1.0.6
-    "@navikt/k9-fe-medisinsk-vilkar": 0.0.13
     "@navikt/k9-fe-uttak": 0.0.8
     axios: 1.6.2
     axios-mock-adapter: 1.22.0
@@ -4567,6 +4567,7 @@ __metadata:
     "@k9-sak-web/fakta-utenlandsopphold": 1.0.0
     "@k9-sak-web/inntektsmelding": 1.0.0
     "@k9-sak-web/konstanter": 1.0.0
+    "@k9-sak-web/medisinsk-vilkar": 1.0.0
     "@k9-sak-web/prosess-vilkar-soknadsfrist": 1.0.0
     "@k9-sak-web/prosess-vilkar-sykdom": 1.0.0
     "@k9-sak-web/rest-api": 1.0.0
@@ -4579,7 +4580,6 @@ __metadata:
     "@navikt/ft-fakta-fordel-beregningsgrunnlag": 7.3.16
     "@navikt/ft-prosess-beregningsgrunnlag": 6.3.16
     "@navikt/k9-fe-http-utils": 1.0.6
-    "@navikt/k9-fe-medisinsk-vilkar": 0.0.13
     "@navikt/k9-fe-om-barnet": 0.0.8
     "@navikt/k9-fe-omsorgen-for": 0.0.8
     "@navikt/k9-fe-uttak": 0.0.8
@@ -5054,6 +5054,37 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@k9-sak-web/medisinsk-vilkar@1.0.0, @k9-sak-web/medisinsk-vilkar@workspace:packages/fakta-medisinsk-vilkår":
+  version: 0.0.0-use.local
+  resolution: "@k9-sak-web/medisinsk-vilkar@workspace:packages/fakta-medisinsk-vilkår"
+  dependencies:
+    "@navikt/diagnosekoder": ^1.2023.0
+    "@navikt/ds-css": 5.10.0
+    "@navikt/ds-icons": 3.4.3
+    "@navikt/ds-react": 5.10.0
+    "@navikt/fnrvalidator": 1.x
+    "@navikt/ft-plattform-komponenter": 2.3.6
+    "@navikt/k9-fe-array-utils": 1.0.4
+    "@navikt/k9-fe-date-utils": 1.0.6
+    "@navikt/k9-fe-form-utils": 1.0.10
+    "@navikt/k9-fe-http-utils": 1.0.5
+    "@navikt/k9-fe-period-utils": 1.0.9
+    "@popperjs/core": 2.11.8
+    axios: 1.6.2
+    classnames: 2.3.2
+    dayjs: 1.11.10
+    lodash.throttle: 4.1.1
+    react: 18.2.0
+    react-collapse: 5.1.1
+    react-dom: 18.2.0
+    react-hook-form: 7.47.0
+    react-modal: 3.16.1
+    react-outside-click-handler: 1.3.0
+    react-popper: 2.3.0
+    react-query: 3.39.3
+  languageName: unknown
+  linkType: soft
+
 "@k9-sak-web/modal-sett-pa-vent@1.0.0, @k9-sak-web/modal-sett-pa-vent@workspace:packages/modal-sett-pa-vent":
   version: 0.0.0-use.local
   resolution: "@k9-sak-web/modal-sett-pa-vent@workspace:packages/modal-sett-pa-vent"
@@ -5363,6 +5394,7 @@ __metadata:
     "@k9-sak-web/etablert-tilsyn": 1.0.0
     "@k9-sak-web/inntektsmelding": 1.0.0
     "@k9-sak-web/konstanter": 1.0.0
+    "@k9-sak-web/medisinsk-vilkar": 1.0.0
     "@k9-sak-web/modal-sett-pa-vent": 1.0.0
     "@k9-sak-web/rest-api": 1.0.0
     "@k9-sak-web/rest-api-hooks": 1.0.0
@@ -5382,7 +5414,6 @@ __metadata:
     "@navikt/ft-prosess-beregningsgrunnlag": 6.3.16
     "@navikt/ft-ui-komponenter": 2.1.13
     "@navikt/k9-fe-http-utils": 1.0.6
-    "@navikt/k9-fe-medisinsk-vilkar": 0.0.13
     "@navikt/k9-fe-om-barnet": 0.0.8
     "@navikt/k9-fe-omsorgen-for": 0.0.8
     "@navikt/k9-fe-omsorgsdager": 0.0.12
@@ -5826,7 +5857,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@navikt/fnrvalidator@npm:1.3.3":
+"@navikt/fnrvalidator@npm:1.3.3, @navikt/fnrvalidator@npm:1.x":
   version: 1.3.3
   resolution: "@navikt/fnrvalidator@npm:1.3.3::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Ffnrvalidator%2F1.3.3%2F8414963a30e59e3056c9befea7bb022498a2a742"
   checksum: 49b2f481e1d5fdd107ba3cfd13a7a6fdb32371da2a634b97d5142d3940b73fe6cc90201c23381484def2859aecbd51b7e897ff3d69be483dafb13f1e2dd3060e
@@ -6221,12 +6252,47 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@navikt/k9-fe-date-utils@npm:1.0.7, @navikt/k9-fe-date-utils@npm:^1.0.7":
+"@navikt/k9-fe-date-utils@npm:1.0.6":
+  version: 1.0.6
+  resolution: "@navikt/k9-fe-date-utils@npm:1.0.6::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fk9-fe-date-utils%2F1.0.6%2F8147578fc8dc76f2b697e68f24ab86a592f2cb63"
+  peerDependencies:
+    dayjs: 1.11.6
+  checksum: 24a5c0ac73e7b6a670eac6d4bdb15a1b563de1e42737edadc194e007e867d16f22f0f0d9053a5a84e2a0301ac5af6266ad67650ea95d054785d0de2a311e8ac0
+  languageName: node
+  linkType: hard
+
+"@navikt/k9-fe-date-utils@npm:1.0.7, @navikt/k9-fe-date-utils@npm:^1.0.6, @navikt/k9-fe-date-utils@npm:^1.0.7":
   version: 1.0.7
   resolution: "@navikt/k9-fe-date-utils@npm:1.0.7::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fk9-fe-date-utils%2F1.0.7%2F8f3101a6734ba686422e41ccda75b1563ca23326"
   peerDependencies:
     dayjs: 1.11.6
   checksum: 91a4f9db2f0c025300caa25f4c892157c3120a17faacab5a13ba721f5335734a1e215d4867343cadac16593f5625af2ea0c05835526d0ceb2a0ae122779cad08
+  languageName: node
+  linkType: hard
+
+"@navikt/k9-fe-form-utils@npm:1.0.10":
+  version: 1.0.10
+  resolution: "@navikt/k9-fe-form-utils@npm:1.0.10::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fk9-fe-form-utils%2F1.0.10%2Fd526ade2838557b806b8831278a05983d5af038d"
+  dependencies:
+    "@navikt/k9-fe-bem-utils": 1.0.2
+    "@navikt/k9-fe-period-utils": ^1.0.8
+  peerDependencies:
+    "@hookform/error-message": 2.0.1
+    "@navikt/ds-css": 2.1.7
+    "@navikt/ds-react": 2.1.7
+    "@navikt/fnrvalidator": 1.3.3
+    "@navikt/ft-plattform-komponenter": 1.4.13
+    "@popperjs/core": 2.11.6
+    "@storybook/react": 6.5.15
+    classnames: 2.3.2
+    dayjs: 1.11.7
+    lodash.throttle: 4.1.1
+    react: 18.2.0
+    react-collapse: 5.1.1
+    react-dom: 18.2.0
+    react-hook-form: 7.43.0
+    react-popper: 2.3.0
+  checksum: 30ad763092f1ef29116a33281ad8e3e6c2d8fefe224008c02b1f8e4da3b003d285a7f4734eb504a03b50c7f9e71a51ce383b7d23d984f46f3f7629302c13f09c
   languageName: node
   linkType: hard
 
@@ -6292,44 +6358,21 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@navikt/k9-fe-http-utils@npm:1.0.5":
+  version: 1.0.5
+  resolution: "@navikt/k9-fe-http-utils@npm:1.0.5::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fk9-fe-http-utils%2F1.0.5%2F52d1a2d51d0a476a224ac5baae5650d92779bbb3"
+  peerDependencies:
+    axios: 1.2.6
+  checksum: f03eaa5e570586e6f0b08d637c83ac1442ef92f4b78803729abc8e1c95ddfafd4efc3c1ede26909f12a9aa3c3e1294fda8e9a158173ab5c9ade61a5a0d169e93
+  languageName: node
+  linkType: hard
+
 "@navikt/k9-fe-http-utils@npm:1.0.6, @navikt/k9-fe-http-utils@npm:^1.0.6":
   version: 1.0.6
   resolution: "@navikt/k9-fe-http-utils@npm:1.0.6::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fk9-fe-http-utils%2F1.0.6%2F393059cb6f40d777d377e3ed288fe187ee43d29b"
   peerDependencies:
     axios: 1.2.6
   checksum: 521067f51535422c1010251c2beb8d7d27041027cc997dcfc9a39ce59e0b1c8a0eb60cbf0d096627e60a5f1fefaf5a0f0692f703c8c26ffc7b04c0ec86755290
-  languageName: node
-  linkType: hard
-
-"@navikt/k9-fe-medisinsk-vilkar@npm:0.0.13":
-  version: 0.0.13
-  resolution: "@navikt/k9-fe-medisinsk-vilkar@npm:0.0.13::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fk9-fe-medisinsk-vilkar%2F0.0.13%2F4141616930884ebbf0b48309aa86bb24c65b1cfc"
-  peerDependencies:
-    "@navikt/diagnosekoder": ^1.2023.0
-    "@navikt/ds-css": 5.10.0
-    "@navikt/ds-icons": 3.4.3
-    "@navikt/ds-react": 5.10.0
-    "@navikt/fnrvalidator": 1.x
-    "@navikt/ft-plattform-komponenter": 2.3.6
-    "@navikt/k9-fe-array-utils": 1.0.4
-    "@navikt/k9-fe-date-utils": 1.0.6
-    "@navikt/k9-fe-form-utils": 1.0.10
-    "@navikt/k9-fe-http-utils": 1.0.5
-    "@navikt/k9-fe-period-utils": 1.0.9
-    "@popperjs/core": 2.x
-    axios: 1.x
-    classnames: 2.x
-    dayjs: 1.x
-    lodash.throttle: 4.x
-    react: 18.x
-    react-collapse: 5.x
-    react-dom: 18.x
-    react-hook-form: 7.47.0
-    react-modal: 3.x
-    react-outside-click-handler: 1.x
-    react-popper: 2.x
-    react-query: 3.x
-  checksum: 40421030ce13f9e4d6e93119e3c433df0c32da4f2f345dbc49f1910b7fcdb399b50628caa8a8b99e10bd434138892b90358cfa00fb06787f3113674deba90108
   languageName: node
   linkType: hard
 
@@ -6458,6 +6501,18 @@ __metadata:
   peerDependencies:
     dayjs: 1.11.7
   checksum: d3bcd0218b769b7754ce920e6d88fa22edcbcbccc0c9abd1f96cc0dd1c684dd8a8b2685be6a7c3f07bc72b805cda2808a88b9978a05ec3b57bd2fbefb8a1e5cb
+  languageName: node
+  linkType: hard
+
+"@navikt/k9-fe-period-utils@npm:1.0.9":
+  version: 1.0.9
+  resolution: "@navikt/k9-fe-period-utils@npm:1.0.9::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fk9-fe-period-utils%2F1.0.9%2Ff4ae7f8c794c1786b026c2c29f68584b5dc740f0"
+  dependencies:
+    "@navikt/k9-fe-array-utils": 1.0.4
+    "@navikt/k9-fe-date-utils": ^1.0.6
+  peerDependencies:
+    dayjs: 1.11.7
+  checksum: f3f082b106f332303bb09376f9b267eb1a17cc154e2871c0937924b842c8f664a93b05df8bc19cb437134a8964c5777766dc310e86c43c859978d87002e962bc
   languageName: node
   linkType: hard
 

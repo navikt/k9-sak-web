@@ -1,0 +1,15 @@
+.dokumentLink {
+  display: flex;
+}
+.dokumentLink:hover {
+  text-decoration: none;
+}
+.dokumentLink__etikett {
+  margin-left: 1rem;
+}
+svg.dokumentLink__dokumentikon {
+  margin-right: 0.5rem;
+  width: 1.125rem;
+  height: 1.375rem;
+  stroke: none;
+}

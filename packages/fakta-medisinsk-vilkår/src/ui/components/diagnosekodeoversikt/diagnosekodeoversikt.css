@@ -1,0 +1,32 @@
+.diagnosekodeoversikt__modal {
+  overflow: visible;
+  color: #262626;
+}
+
+.diagnosekodeoversikt__modal form{
+  margin: 0;
+}
+
+.diagnosekodeoversikt__modal :global .autocomplete ul {
+  /*
+  This overrides the position: relative set in the Autocomplete component css.
+  Without this, the autocomplete suggestions appear inline in the DOM, pushing
+  other content down, causing jank.
+
+  Using fixed works with dialog element, let's the popup content overflow the
+  dialog box.
+  */
+  position: fixed;
+  /*
+  The css in Autocomplete component used in the modal has width: 100% (minus
+  a little) for the suggestions list. With the original position: relative
+  that makes the width of the suggestion list match the parent Autocomplete
+  input element.
+
+  When changing to position fixed, the width: 100% becomes calculated from the
+  viewport instead, so the ul becomes much to wide.
+
+  Setting width: inherit makes it as wide as its content instead.
+  */
+  width: inherit;
+}

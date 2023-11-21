@@ -1,0 +1,6 @@
+.iconWithText {
+  display: flex;
+}
+.iconWithText__text {
+  margin-left: 0.5rem;
+}

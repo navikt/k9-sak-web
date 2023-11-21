@@ -39,7 +39,7 @@ const config = {
     'import/extensions': ['error', 'ignorePackages', { js: 'never', jsx: 'never', ts: 'never', tsx: 'never' }],
     'linebreak-style': OFF,
     'import/no-named-as-default': OFF,
-    'max-len': [ERROR, 160],
+    'max-len': [1, 160],
     'no-undef': ERROR,
     'react/require-default-props': OFF,
     'react/jsx-filename-extension': OFF,

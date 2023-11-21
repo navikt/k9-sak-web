@@ -1,0 +1,11 @@
+.fristForDokumentasjonUtløptPanel {
+  border: 2px solid #ff9100;
+}
+.fristForDokumentasjonUtløptPanel__formContainer {
+  display: flex;
+}
+.fristForDokumentasjonUtløptPanel__formContainer__gåVidereKnapp {
+  position: relative;
+  top: 6px;
+  left: 16px;
+}
