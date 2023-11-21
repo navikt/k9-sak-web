@@ -1,4 +1,3 @@
-import { HttpErrorHandler } from '@navikt/k9-fe-http-utils';
 import Saksbehandlere from './Saksbehandlere';
 
 interface ContainerContract {
@@ -8,7 +7,7 @@ interface ContainerContract {
     sykdom: string;
     sykdomInnleggelse: string;
   };
-  httpErrorHandler: HttpErrorHandler;
+  httpErrorHandler: (statusCode: number, locationHeader?: string) => void;
   lagreBeredskapvurdering: (data: any) => void;
   lagreNattevåkvurdering: (data: any) => void;
   harAksjonspunktForBeredskap: boolean;
