@@ -1,0 +1,31 @@
+.periodList {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+}
+.periodList__element {
+  border-bottom: 1px solid #b0b0b0;
+  padding: 1.5rem 0rem 2.1875rem 0rem;
+}
+.periodList__element:first-of-type {
+  border-top: 1px solid #b0b0b0;
+}
+.periodList__element__title {
+  display: flex;
+  margin-bottom: 1rem;
+}
+.periodList__element__title__period {
+  position: relative;
+  top: 2px;
+}
+.periodList__alertstripe {
+  margin: 2.4375rem 0 1.6875rem 0;
+}
+.periodList__alertstripe div {
+  max-width: unset !important;
+  width: 100%;
+}
+.periodList__alertstripe div button {
+  float: right;
+  margin-right: 1.8rem;
+}

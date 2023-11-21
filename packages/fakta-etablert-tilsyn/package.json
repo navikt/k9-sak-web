@@ -7,8 +7,7 @@
   "license": "MIT",
   "private": true,
   "scripts": {
-    "dev": "node webpack/webpack-config.development.js",
-    "api-mock": "ts-node mock/api-mock.ts"
+    "dev": "node webpack/webpack-config.development.js"
   },
   "dependencies": {
     "@navikt/ds-css": "5.10.0",

@@ -1,0 +1,13 @@
+.mottattLabel {
+  display: flex;
+}
+.mottattLabel__text {
+  margin-left: 0.5rem;
+}
+.mottattLabel__link {
+  margin-left: 1rem;
+}
+.mottattLabel svg {
+  width: 20px;
+  height: 20px;
+}
