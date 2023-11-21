@@ -1,0 +1,13 @@
+.beskrivelserForPerioden__label {
+  display: flex;
+  align-items: flex-end;
+  margin-bottom: 0.75rem;
+}
+.beskrivelserForPerioden__labelText {
+  margin: 0 0 0 0.75rem;
+}
+.beskrivelserForPerioden__separator {
+  border: none;
+  border-bottom: 1px solid #c6c2bf;
+  margin: 1.75rem 0 0;
+}

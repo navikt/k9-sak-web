@@ -1,0 +1,42 @@
+.etablertTilsynRowContent {
+    display: grid;
+    margin-top: 0.8125rem;
+    grid-template-columns: repeat(5, 1fr) 2fr;
+}
+
+.etablertTilsyn__tag {
+    margin-top: 0.25rem;
+    padding: 0.5rem;
+    min-width: 4.5625rem;
+    min-height: 2.5rem;
+    background-color: #e6f0ff;
+    border: none;
+}
+
+.etablertTilsyn__tag__disabled {
+    background-image: repeating-linear-gradient(-45deg, #f1f1f1, #f1f1f1 3.33%, #cfcfcf 6.66%);
+}
+
+.etablertTilsyn__timer__container {
+    display: flex;
+    align-items: flex-end;
+}
+
+.etablertTilsyn__ikon__container {
+    margin-top: 1rem;
+    display: flex;
+    column-gap: 1rem;
+}
+.etablertTilsyn__ikon__forklaring__container {
+    display: inline-flex;
+    align-items: center;
+}
+
+.etablertTilsyn__innrapportert_timer__container {
+    display: flex;
+    column-gap: 0.625rem;
+}
+
+.marginTop_1rem {
+    margin-top: 1rem;
+}

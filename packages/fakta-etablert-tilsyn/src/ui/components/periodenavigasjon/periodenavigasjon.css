@@ -1,0 +1,42 @@
+.nyVurderingKnapp {
+  flex-basis: 40%;
+  margin-left: auto;
+}
+.vurderingsvelgerContainer {
+  flex-grow: 1;
+}
+.vurderingsvelgerContainer__columnHeadings {
+  display: flex;
+  margin-bottom: 0.75rem;
+}
+.vurderingsvelgerContainer__columnHeading--first {
+  margin-left: 0.875rem;
+}
+.vurderingsvelgerContainer__columnHeading--second {
+  margin-left: 1.125rem;
+}
+.vurderingsvelgerContainer__columnHeading--third {
+  margin-left: 8.875rem;
+}
+.vurderingsperiode__postElementContainer {
+  margin-left: 1.375rem;
+  display: flex;
+}
+.vurderingsperiode__postElementContainer :nth-child(2) {
+  margin-left: 1rem;
+}
+.vurderingsnavigasjon {
+  position: relative;
+}
+.vurderingsnavigasjon__opprettVurderingKnapp {
+  position: absolute;
+  right: 0;
+  top: 4px;
+}
+.vurderingsnavigasjon__heading {
+  padding: 1.25rem 0.9375rem 0;
+}
+.vurderingsnavigasjon__emptyText {
+  margin-left: 0.9375rem;
+  margin-right: 0.9375rem;
+}

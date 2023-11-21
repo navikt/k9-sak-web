@@ -8,7 +8,7 @@ import {
 import { useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
 import React from 'react';
 
-import { EtablertTilsyn } from '@navikt/k9-fe-etablert-tilsyn';
+import { EtablertTilsyn } from '@k9-sak-web/etablert-tilsyn';
 
 export default ({ aksjonspunkter, behandling, readOnly, submitCallback, saksbehandlere }) => {
   const { addErrorMessage } = useRestApiErrorDispatcher();

@@ -1,0 +1,33 @@
+.mainComponent {
+  max-width: 75rem;
+  color: #262626;
+  margin-top: 1.25rem;
+}
+.mainComponent__alertstripe :global .alertstripe__tekst {
+  max-width: 50rem;
+}
+.mainComponent__contentContainer {
+  margin-top: 2rem;
+  margin-bottom: 8rem;
+}
+.mainComponent :global .nav-frontend-tabs__tab-label {
+  padding-bottom: 0.1rem;
+}
+.mainComponent :global .nav-frontend-tabs__tab-inner--aktiv .nav-frontend-tabs__tab-label {
+  border-bottom: 2px solid #0067c5;
+}
+.mainComponent :global .alertstripe {
+  padding-top: 0.4375rem;
+  padding-bottom: 0.4375rem;
+}
+.tabItem {
+  position: relative;
+}
+.tabItem__warningIcon {
+  position: absolute;
+  right: 0;
+  bottom: -4px;
+}
+.tabItemExtended {
+  padding-right: 2rem;
+}
