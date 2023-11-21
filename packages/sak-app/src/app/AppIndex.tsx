@@ -22,7 +22,6 @@ import '@navikt/ft-form-hooks/dist/style.css';
 import '@navikt/ft-plattform-komponenter/dist/style.css';
 import '@navikt/ft-prosess-beregningsgrunnlag/dist/style.css';
 import '@navikt/ft-ui-komponenter/dist/style.css';
-import '@navikt/k9-fe-omsorgen-for/build/styles.css';
 import '@navikt/k9-fe-omsorgsdager/build/styles.css';
 import '@navikt/k9-fe-uttak/build/styles.css';
 

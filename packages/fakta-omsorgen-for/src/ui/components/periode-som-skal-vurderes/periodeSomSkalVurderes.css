@@ -1,0 +1,28 @@
+.periodeSomSkalVurderes {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+.periodeSomSkalVurderes__texts {
+  margin-left: 1.625rem;
+  display: flex;
+  align-items: center;
+}
+.periodeSomSkalVurderes__texts__period {
+  margin: 0;
+  color: #0067c5;
+  text-decoration: underline;
+}
+.periodeSomSkalVurderes__etikett {
+  margin-left: 1.375rem;
+}
+.periodeSomSkalVurderes .visuallyHidden {
+  position: absolute;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  height: 1px;
+  width: 1px;
+  margin: -1px;
+  padding: 0;
+  border: 0;
+}
