@@ -1,5 +1,5 @@
 {
-  "name": "@k9-sak-web/etablert-tilsyn",
+  "name": "@k9-sak-web/fakta-etablert-tilsyn",
   "version": "1.0.0",
   "module": "index.ts",
   "keywords": [],

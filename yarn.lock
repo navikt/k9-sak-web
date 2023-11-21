@@ -4399,7 +4399,7 @@ __metadata:
     "@k9-sak-web/behandling-felles": 1.0.0
     "@k9-sak-web/fakta-barn-og-overfoeringsdager": 1.0.0
     "@k9-sak-web/fakta-barn-oms": 1.0.0
-    "@k9-sak-web/inntektsmelding": 1.0.0
+    "@k9-sak-web/fakta-inntektsmelding": 1.0.0
     "@k9-sak-web/konstanter": 1.0.0
     "@k9-sak-web/prosess-aarskvantum-oms": 1.0.0
     "@k9-sak-web/prosess-vilkar-soknadsfrist": 1.0.0
@@ -4450,11 +4450,12 @@ __metadata:
     "@fpsak-frontend/shared-components": 1.0.0
     "@fpsak-frontend/utils": 1.0.0
     "@k9-sak-web/behandling-felles": 1.0.0
-    "@k9-sak-web/etablert-tilsyn": 1.0.0
+    "@k9-sak-web/fakta-etablert-tilsyn": 1.0.0
+    "@k9-sak-web/fakta-inntektsmelding": 1.0.0
     "@k9-sak-web/fakta-institusjon": 1.0.0
-    "@k9-sak-web/inntektsmelding": 1.0.0
+    "@k9-sak-web/fakta-medisinsk-vilkar": 1.0.0
+    "@k9-sak-web/fakta-om-barnet": 1.0.0
     "@k9-sak-web/konstanter": 1.0.0
-    "@k9-sak-web/medisinsk-vilkar": 1.0.0
     "@k9-sak-web/prosess-vilkar-soknadsfrist": 1.0.0
     "@k9-sak-web/prosess-vilkar-sykdom": 1.0.0
     "@k9-sak-web/rest-api": 1.0.0
@@ -4466,7 +4467,6 @@ __metadata:
     "@navikt/ft-fakta-fordel-beregningsgrunnlag": 7.3.16
     "@navikt/ft-prosess-beregningsgrunnlag": 6.3.16
     "@navikt/k9-fe-http-utils": 1.0.6
-    "@navikt/k9-fe-om-barnet": 0.0.8
     "@navikt/k9-fe-omsorgen-for": 0.0.8
     "@navikt/k9-fe-uttak": 0.0.8
     axios: 1.6.2
@@ -4507,10 +4507,10 @@ __metadata:
     "@fpsak-frontend/shared-components": 1.0.0
     "@fpsak-frontend/utils": 1.0.0
     "@k9-sak-web/behandling-felles": 1.0.0
+    "@k9-sak-web/fakta-inntektsmelding": 1.0.0
+    "@k9-sak-web/fakta-medisinsk-vilkar": 1.0.0
     "@k9-sak-web/fakta-utenlandsopphold": 1.0.0
-    "@k9-sak-web/inntektsmelding": 1.0.0
     "@k9-sak-web/konstanter": 1.0.0
-    "@k9-sak-web/medisinsk-vilkar": 1.0.0
     "@k9-sak-web/prosess-vilkar-soknadsfrist": 1.0.0
     "@k9-sak-web/prosess-vilkar-sykdom": 1.0.0
     "@k9-sak-web/rest-api": 1.0.0
@@ -4563,11 +4563,12 @@ __metadata:
     "@fpsak-frontend/shared-components": 1.0.0
     "@fpsak-frontend/utils": 1.0.0
     "@k9-sak-web/behandling-felles": 1.0.0
-    "@k9-sak-web/etablert-tilsyn": 1.0.0
+    "@k9-sak-web/fakta-etablert-tilsyn": 1.0.0
+    "@k9-sak-web/fakta-inntektsmelding": 1.0.0
+    "@k9-sak-web/fakta-medisinsk-vilkar": 1.0.0
+    "@k9-sak-web/fakta-om-barnet": 1.0.0
     "@k9-sak-web/fakta-utenlandsopphold": 1.0.0
-    "@k9-sak-web/inntektsmelding": 1.0.0
     "@k9-sak-web/konstanter": 1.0.0
-    "@k9-sak-web/medisinsk-vilkar": 1.0.0
     "@k9-sak-web/prosess-vilkar-soknadsfrist": 1.0.0
     "@k9-sak-web/prosess-vilkar-sykdom": 1.0.0
     "@k9-sak-web/rest-api": 1.0.0
@@ -4580,7 +4581,6 @@ __metadata:
     "@navikt/ft-fakta-fordel-beregningsgrunnlag": 7.3.16
     "@navikt/ft-prosess-beregningsgrunnlag": 6.3.16
     "@navikt/k9-fe-http-utils": 1.0.6
-    "@navikt/k9-fe-om-barnet": 0.0.8
     "@navikt/k9-fe-omsorgen-for": 0.0.8
     "@navikt/k9-fe-uttak": 0.0.8
     axios: 1.6.2
@@ -4716,57 +4716,6 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@k9-sak-web/etablert-tilsyn@1.0.0, @k9-sak-web/etablert-tilsyn@workspace:packages/fakta-etablert-tilsyn":
-  version: 0.0.0-use.local
-  resolution: "@k9-sak-web/etablert-tilsyn@workspace:packages/fakta-etablert-tilsyn"
-  dependencies:
-    "@navikt/ds-css": 5.10.0
-    "@navikt/ds-icons": 3.4.3
-    "@navikt/ds-react": 5.10.0
-    "@navikt/fnrvalidator": 1.3.3
-    "@navikt/ft-plattform-komponenter": 2.3.6
-    "@navikt/k9-fe-date-utils": 1.0.5
-    "@navikt/k9-fe-form-utils": 1.0.9
-    "@navikt/k9-fe-http-utils": 1.0.4
-    "@navikt/k9-fe-period-utils": ^1.0.8
-    "@popperjs/core": 2.11.8
-    axios: 1.6.2
-    classnames: 2.3.2
-    dayjs: 1.11.10
-    lodash: 4.17.21
-    lodash.throttle: 4.1.1
-    nav-frontend-alertstriper: 4.0.2
-    nav-frontend-alertstriper-style: 3.0.2
-    nav-frontend-chevron: 1.0.30
-    nav-frontend-chevron-style: 1.0.4
-    nav-frontend-core: 6.0.1
-    nav-frontend-etiketter: 3.0.3
-    nav-frontend-etiketter-style: 2.0.3
-    nav-frontend-ikoner-assets: 3.0.1
-    nav-frontend-ikonknapper: 2.1.3
-    nav-frontend-js-utils: 1.0.20
-    nav-frontend-knapper: 3.1.3
-    nav-frontend-knapper-style: 2.1.2
-    nav-frontend-lenkepanel: 2.0.2
-    nav-frontend-lenkepanel-style: 2.0.2
-    nav-frontend-paneler: 3.0.2
-    nav-frontend-paneler-style: 2.0.2
-    nav-frontend-skjema: 4.0.6
-    nav-frontend-skjema-style: 3.0.3
-    nav-frontend-spinner: 3.0.1
-    nav-frontend-spinner-style: 1.0.2
-    nav-frontend-tabs: 2.0.3
-    nav-frontend-tabs-style: 2.0.2
-    nav-frontend-typografi: 4.0.2
-    nav-frontend-typografi-style: 2.0.2
-    react: 18.2.0
-    react-collapse: 5.1.1
-    react-dom: 18.2.0
-    react-hook-form: 7.47.0
-    react-popper: 2.3.0
-  languageName: unknown
-  linkType: soft
-
 "@k9-sak-web/fakta-barn-og-overfoeringsdager@1.0.0, @k9-sak-web/fakta-barn-og-overfoeringsdager@workspace:packages/fakta-barn-og-overfoeringsdager":
   version: 0.0.0-use.local
   resolution: "@k9-sak-web/fakta-barn-og-overfoeringsdager@workspace:packages/fakta-barn-og-overfoeringsdager"
@@ -4834,6 +4783,57 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@k9-sak-web/fakta-etablert-tilsyn@1.0.0, @k9-sak-web/fakta-etablert-tilsyn@workspace:packages/fakta-etablert-tilsyn":
+  version: 0.0.0-use.local
+  resolution: "@k9-sak-web/fakta-etablert-tilsyn@workspace:packages/fakta-etablert-tilsyn"
+  dependencies:
+    "@navikt/ds-css": 5.10.0
+    "@navikt/ds-icons": 3.4.3
+    "@navikt/ds-react": 5.10.0
+    "@navikt/fnrvalidator": 1.3.3
+    "@navikt/ft-plattform-komponenter": 2.3.6
+    "@navikt/k9-fe-date-utils": 1.0.5
+    "@navikt/k9-fe-form-utils": 1.0.9
+    "@navikt/k9-fe-http-utils": 1.0.4
+    "@navikt/k9-fe-period-utils": ^1.0.8
+    "@popperjs/core": 2.11.8
+    axios: 1.6.2
+    classnames: 2.3.2
+    dayjs: 1.11.10
+    lodash: 4.17.21
+    lodash.throttle: 4.1.1
+    nav-frontend-alertstriper: 4.0.2
+    nav-frontend-alertstriper-style: 3.0.2
+    nav-frontend-chevron: 1.0.30
+    nav-frontend-chevron-style: 1.0.4
+    nav-frontend-core: 6.0.1
+    nav-frontend-etiketter: 3.0.3
+    nav-frontend-etiketter-style: 2.0.3
+    nav-frontend-ikoner-assets: 3.0.1
+    nav-frontend-ikonknapper: 2.1.3
+    nav-frontend-js-utils: 1.0.20
+    nav-frontend-knapper: 3.1.3
+    nav-frontend-knapper-style: 2.1.2
+    nav-frontend-lenkepanel: 2.0.2
+    nav-frontend-lenkepanel-style: 2.0.2
+    nav-frontend-paneler: 3.0.2
+    nav-frontend-paneler-style: 2.0.2
+    nav-frontend-skjema: 4.0.6
+    nav-frontend-skjema-style: 3.0.3
+    nav-frontend-spinner: 3.0.1
+    nav-frontend-spinner-style: 1.0.2
+    nav-frontend-tabs: 2.0.3
+    nav-frontend-tabs-style: 2.0.2
+    nav-frontend-typografi: 4.0.2
+    nav-frontend-typografi-style: 2.0.2
+    react: 18.2.0
+    react-collapse: 5.1.1
+    react-dom: 18.2.0
+    react-hook-form: 7.47.0
+    react-popper: 2.3.0
+  languageName: unknown
+  linkType: soft
+
 "@k9-sak-web/fakta-felles@1.0.0, @k9-sak-web/fakta-felles@workspace:packages/fakta-felles":
   version: 0.0.0-use.local
   resolution: "@k9-sak-web/fakta-felles@workspace:packages/fakta-felles"
@@ -4861,85 +4861,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@k9-sak-web/fakta-institusjon@1.0.0, @k9-sak-web/fakta-institusjon@workspace:packages/fakta-institusjon":
+"@k9-sak-web/fakta-inntektsmelding@1.0.0, @k9-sak-web/fakta-inntektsmelding@workspace:packages/fakta-inntektsmelding":
   version: 0.0.0-use.local
-  resolution: "@k9-sak-web/fakta-institusjon@workspace:packages/fakta-institusjon"
-  dependencies:
-    "@fpsak-frontend/form": "*"
-    "@k9-sak-web/types": "*"
-    "@navikt/ft-plattform-komponenter": 2.3.10
-    "@navikt/k9-fe-form-utils": 1.0.13
-    "@navikt/k9-fe-period-utils": 1.0.10
-    formik: 2.4.5
-    yup: 0.32.11
-  languageName: unknown
-  linkType: soft
-
-"@k9-sak-web/fakta-opplaering@workspace:packages/fakta-opplaering":
-  version: 0.0.0-use.local
-  resolution: "@k9-sak-web/fakta-opplaering@workspace:packages/fakta-opplaering"
-  dependencies:
-    "@fpsak-frontend/form": "*"
-    "@fpsak-frontend/utils": "*"
-    "@k9-sak-web/types": "*"
-    "@navikt/ds-icons": 3.4.3
-    "@navikt/ds-react": 5.10.0
-    "@navikt/ft-plattform-komponenter": 2.3.10
-    "@navikt/k9-fe-form-utils": 1.0.13
-    "@navikt/k9-fe-period-utils": 1.0.10
-    classnames: 2.3.2
-    dayjs: 1.11.10
-    formik: 2.4.5
-    nav-frontend-tabs: 2.0.3
-    react-intl: 6.5.2
-    react-outside-click-handler: 1.3.0
-    uuid: 9.0.1
-    yup: 0.32.11
-  languageName: unknown
-  linkType: soft
-
-"@k9-sak-web/fakta-soknadsperioder@workspace:packages/fakta-soknadsperioder":
-  version: 0.0.0-use.local
-  resolution: "@k9-sak-web/fakta-soknadsperioder@workspace:packages/fakta-soknadsperioder"
-  dependencies:
-    "@fpsak-frontend/kodeverk": 1.0.0
-    "@fpsak-frontend/shared-components": 1.0.0
-    "@fpsak-frontend/utils": 1.0.0
-    "@navikt/k9-fe-date-utils": 1.0.7
-    nav-frontend-core: 6.0.1
-    nav-frontend-knapper: 3.1.3
-    nav-frontend-knapper-style: 2.1.2
-    nav-frontend-typografi: 4.0.2
-    nav-frontend-typografi-style: 2.0.2
-    react: 18.2.0
-    react-intl: 6.5.2
-    uuid: 9.0.1
-  languageName: unknown
-  linkType: soft
-
-"@k9-sak-web/fakta-utenlandsopphold@1.0.0, @k9-sak-web/fakta-utenlandsopphold@workspace:packages/fakta-utenlandsopphold":
-  version: 0.0.0-use.local
-  resolution: "@k9-sak-web/fakta-utenlandsopphold@workspace:packages/fakta-utenlandsopphold"
-  dependencies:
-    "@fpsak-frontend/kodeverk": 1.0.0
-    "@fpsak-frontend/shared-components": 1.0.0
-    "@fpsak-frontend/utils": 1.0.0
-    "@k9-sak-web/types": 1.0.0
-  languageName: unknown
-  linkType: soft
-
-"@k9-sak-web/fremdriftslinje@1.0.0, @k9-sak-web/fremdriftslinje@workspace:packages/fremdriftslinje":
-  version: 0.0.0-use.local
-  resolution: "@k9-sak-web/fremdriftslinje@workspace:packages/fremdriftslinje"
-  dependencies:
-    react: 18.2.0
-    react-dom: 18.2.0
-  languageName: unknown
-  linkType: soft
-
-"@k9-sak-web/inntektsmelding@1.0.0, @k9-sak-web/inntektsmelding@workspace:packages/fakta-inntektsmelding":
-  version: 0.0.0-use.local
-  resolution: "@k9-sak-web/inntektsmelding@workspace:packages/fakta-inntektsmelding"
+  resolution: "@k9-sak-web/fakta-inntektsmelding@workspace:packages/fakta-inntektsmelding"
   dependencies:
     "@navikt/ds-css": 5.10.0
     "@navikt/ds-icons": 3.4.3
@@ -5048,15 +4972,23 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@k9-sak-web/konstanter@1.0.0, @k9-sak-web/konstanter@workspace:packages/konstanter":
+"@k9-sak-web/fakta-institusjon@1.0.0, @k9-sak-web/fakta-institusjon@workspace:packages/fakta-institusjon":
   version: 0.0.0-use.local
-  resolution: "@k9-sak-web/konstanter@workspace:packages/konstanter"
+  resolution: "@k9-sak-web/fakta-institusjon@workspace:packages/fakta-institusjon"
+  dependencies:
+    "@fpsak-frontend/form": "*"
+    "@k9-sak-web/types": "*"
+    "@navikt/ft-plattform-komponenter": 2.3.10
+    "@navikt/k9-fe-form-utils": 1.0.13
+    "@navikt/k9-fe-period-utils": 1.0.10
+    formik: 2.4.5
+    yup: 0.32.11
   languageName: unknown
   linkType: soft
 
-"@k9-sak-web/medisinsk-vilkar@1.0.0, @k9-sak-web/medisinsk-vilkar@workspace:packages/fakta-medisinsk-vilkår":
+"@k9-sak-web/fakta-medisinsk-vilkar@1.0.0, @k9-sak-web/fakta-medisinsk-vilkar@workspace:packages/fakta-medisinsk-vilkår":
   version: 0.0.0-use.local
-  resolution: "@k9-sak-web/medisinsk-vilkar@workspace:packages/fakta-medisinsk-vilkår"
+  resolution: "@k9-sak-web/fakta-medisinsk-vilkar@workspace:packages/fakta-medisinsk-vilkår"
   dependencies:
     "@navikt/diagnosekoder": ^1.2023.0
     "@navikt/ds-css": 5.10.0
@@ -5082,6 +5014,96 @@ __metadata:
     react-outside-click-handler: 1.3.0
     react-popper: 2.3.0
     react-query: 3.39.3
+  languageName: unknown
+  linkType: soft
+
+"@k9-sak-web/fakta-om-barnet@1.0.0, @k9-sak-web/fakta-om-barnet@workspace:packages/fakta-om-barnet":
+  version: 0.0.0-use.local
+  resolution: "@k9-sak-web/fakta-om-barnet@workspace:packages/fakta-om-barnet"
+  dependencies:
+    "@navikt/ds-css": 5.10.0
+    "@navikt/ds-react": 5.10.0
+    "@navikt/fnrvalidator": 1.3.3
+    "@navikt/ft-plattform-komponenter": 2.3.6
+    "@popperjs/core": 2.11.8
+    axios: 1.6.2
+    classnames: 2.3.2
+    dayjs: 1.11.10
+    lodash.throttle: 4.1.1
+    react: 18.2.0
+    react-collapse: 5.1.1
+    react-dom: 18.2.0
+    react-hook-form: 7.47.0
+    react-popper: 2.3.0
+    tailwindcss: ^3.3.5
+  languageName: unknown
+  linkType: soft
+
+"@k9-sak-web/fakta-opplaering@workspace:packages/fakta-opplaering":
+  version: 0.0.0-use.local
+  resolution: "@k9-sak-web/fakta-opplaering@workspace:packages/fakta-opplaering"
+  dependencies:
+    "@fpsak-frontend/form": "*"
+    "@fpsak-frontend/utils": "*"
+    "@k9-sak-web/types": "*"
+    "@navikt/ds-icons": 3.4.3
+    "@navikt/ds-react": 5.10.0
+    "@navikt/ft-plattform-komponenter": 2.3.10
+    "@navikt/k9-fe-form-utils": 1.0.13
+    "@navikt/k9-fe-period-utils": 1.0.10
+    classnames: 2.3.2
+    dayjs: 1.11.10
+    formik: 2.4.5
+    nav-frontend-tabs: 2.0.3
+    react-intl: 6.5.2
+    react-outside-click-handler: 1.3.0
+    uuid: 9.0.1
+    yup: 0.32.11
+  languageName: unknown
+  linkType: soft
+
+"@k9-sak-web/fakta-soknadsperioder@workspace:packages/fakta-soknadsperioder":
+  version: 0.0.0-use.local
+  resolution: "@k9-sak-web/fakta-soknadsperioder@workspace:packages/fakta-soknadsperioder"
+  dependencies:
+    "@fpsak-frontend/kodeverk": 1.0.0
+    "@fpsak-frontend/shared-components": 1.0.0
+    "@fpsak-frontend/utils": 1.0.0
+    "@navikt/k9-fe-date-utils": 1.0.7
+    nav-frontend-core: 6.0.1
+    nav-frontend-knapper: 3.1.3
+    nav-frontend-knapper-style: 2.1.2
+    nav-frontend-typografi: 4.0.2
+    nav-frontend-typografi-style: 2.0.2
+    react: 18.2.0
+    react-intl: 6.5.2
+    uuid: 9.0.1
+  languageName: unknown
+  linkType: soft
+
+"@k9-sak-web/fakta-utenlandsopphold@1.0.0, @k9-sak-web/fakta-utenlandsopphold@workspace:packages/fakta-utenlandsopphold":
+  version: 0.0.0-use.local
+  resolution: "@k9-sak-web/fakta-utenlandsopphold@workspace:packages/fakta-utenlandsopphold"
+  dependencies:
+    "@fpsak-frontend/kodeverk": 1.0.0
+    "@fpsak-frontend/shared-components": 1.0.0
+    "@fpsak-frontend/utils": 1.0.0
+    "@k9-sak-web/types": 1.0.0
+  languageName: unknown
+  linkType: soft
+
+"@k9-sak-web/fremdriftslinje@1.0.0, @k9-sak-web/fremdriftslinje@workspace:packages/fremdriftslinje":
+  version: 0.0.0-use.local
+  resolution: "@k9-sak-web/fremdriftslinje@workspace:packages/fremdriftslinje"
+  dependencies:
+    react: 18.2.0
+    react-dom: 18.2.0
+  languageName: unknown
+  linkType: soft
+
+"@k9-sak-web/konstanter@1.0.0, @k9-sak-web/konstanter@workspace:packages/konstanter":
+  version: 0.0.0-use.local
+  resolution: "@k9-sak-web/konstanter@workspace:packages/konstanter"
   languageName: unknown
   linkType: soft
 
@@ -5391,10 +5413,11 @@ __metadata:
     "@k9-sak-web/behandling-tilbakekreving": 1.0.0
     "@k9-sak-web/behandling-unntak": 1.0.0
     "@k9-sak-web/behandling-utvidet-rett": 1.0.0
-    "@k9-sak-web/etablert-tilsyn": 1.0.0
-    "@k9-sak-web/inntektsmelding": 1.0.0
+    "@k9-sak-web/fakta-etablert-tilsyn": 1.0.0
+    "@k9-sak-web/fakta-inntektsmelding": 1.0.0
+    "@k9-sak-web/fakta-medisinsk-vilkar": 1.0.0
+    "@k9-sak-web/fakta-om-barnet": 1.0.0
     "@k9-sak-web/konstanter": 1.0.0
-    "@k9-sak-web/medisinsk-vilkar": 1.0.0
     "@k9-sak-web/modal-sett-pa-vent": 1.0.0
     "@k9-sak-web/rest-api": 1.0.0
     "@k9-sak-web/rest-api-hooks": 1.0.0
@@ -5414,7 +5437,6 @@ __metadata:
     "@navikt/ft-prosess-beregningsgrunnlag": 6.3.16
     "@navikt/ft-ui-komponenter": 2.1.13
     "@navikt/k9-fe-http-utils": 1.0.6
-    "@navikt/k9-fe-om-barnet": 0.0.8
     "@navikt/k9-fe-omsorgen-for": 0.0.8
     "@navikt/k9-fe-omsorgsdager": 0.0.12
     "@navikt/k9-fe-uttak": 0.0.8
@@ -6373,35 +6395,6 @@ __metadata:
   peerDependencies:
     axios: 1.2.6
   checksum: 521067f51535422c1010251c2beb8d7d27041027cc997dcfc9a39ce59e0b1c8a0eb60cbf0d096627e60a5f1fefaf5a0f0692f703c8c26ffc7b04c0ec86755290
-  languageName: node
-  linkType: hard
-
-"@navikt/k9-fe-om-barnet@npm:0.0.8":
-  version: 0.0.8
-  resolution: "@navikt/k9-fe-om-barnet@npm:0.0.8::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fk9-fe-om-barnet%2F0.0.8%2Fbb4572f7804b497f17e307f6604e039fb9016d7f"
-  peerDependencies:
-    "@hookform/error-message": 2.x
-    "@navikt/ds-css": 5.10.0
-    "@navikt/ds-react": 5.10.0
-    "@navikt/fnrvalidator": 1.x
-    "@navikt/ft-plattform-komponenter": 2.3.6
-    "@navikt/k9-fe-array-utils": 1.0.4
-    "@navikt/k9-fe-date-utils": 1.0.6
-    "@navikt/k9-fe-form-utils": 1.0.10
-    "@navikt/k9-fe-http-utils": 1.0.5
-    "@navikt/k9-fe-period-utils": 1.0.9
-    "@popperjs/core": 2.x
-    axios: 1.x
-    classnames: 2.x
-    dayjs: 1.x
-    lodash.throttle: 4.x
-    react: 18.x
-    react-collapse: 5.x
-    react-dom: 18.x
-    react-hook-form: 7.47.0
-    react-popper: 2.x
-    tailwindcss: 3.x
-  checksum: e1c09f5f1d840e0591c8c0bf9f97588c8b613ca3bb02a5e589b254f2542d804b497e649069f788614547c42094f821c4179f88983ae38d5dbb8579c1169b4b94
   languageName: node
   linkType: hard
 

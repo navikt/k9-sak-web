@@ -24,7 +24,7 @@
     "@k9-sak-web/behandling-felles": "1.0.0",
     "@k9-sak-web/fakta-barn-og-overfoeringsdager": "1.0.0",
     "@k9-sak-web/fakta-barn-oms": "1.0.0",
-    "@k9-sak-web/inntektsmelding": "1.0.0",
+    "@k9-sak-web/fakta-inntektsmelding": "1.0.0",
     "@k9-sak-web/konstanter": "1.0.0",
     "@k9-sak-web/prosess-aarskvantum-oms": "1.0.0",
     "@k9-sak-web/prosess-vilkar-soknadsfrist": "1.0.0",

@@ -1,5 +1,5 @@
 {
-  "name": "@k9-sak-web/inntektsmelding",
+  "name": "@k9-sak-web/fakta-inntektsmelding",
   "version": "1.0.0",
   "module": "index.ts",
   "private": true,

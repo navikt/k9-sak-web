@@ -6,7 +6,7 @@ import {
   httpErrorHandler as httpErrorHandlerFn,
 } from '@fpsak-frontend/utils';
 import { useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
-import { EtablertTilsyn } from '@k9-sak-web/etablert-tilsyn';
+import { EtablertTilsyn } from '@k9-sak-web/fakta-etablert-tilsyn';
 import React from 'react';
 
 export default ({ aksjonspunkter, behandling, readOnly, submitCallback, saksbehandlere }) => {
