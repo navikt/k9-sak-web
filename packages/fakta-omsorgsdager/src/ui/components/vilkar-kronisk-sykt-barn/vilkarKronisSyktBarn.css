@@ -1,0 +1,23 @@
+.vilkarKroniskSyktBarn input[type='radio'] + label::before {
+    box-sizing: border-box;
+}
+.vilkarKroniskSyktBarn legend {
+    margin-bottom: 0.5rem !important;
+}
+.vilkarKroniskSyktBarn label,
+.vilkarKroniskSyktBarn legend {
+    font-size: 1rem !important;
+    font-weight: bold;
+}
+.fraDato {
+    margin-bottom: 2rem !important;
+}
+.form > * {
+    margin-bottom: 1rem !important;
+}
+.form {
+    margin-top: 1rem;
+}
+.feilmelding {
+    margin: 0px;
+}

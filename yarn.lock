@@ -4696,12 +4696,12 @@ __metadata:
     "@fpsak-frontend/utils": 1.0.0
     "@k9-sak-web/behandling-felles": 1.0.0
     "@k9-sak-web/fakta-barn-oms": 1.0.0
+    "@k9-sak-web/fakta-omsorgsdager": 1.0.0
     "@k9-sak-web/konstanter": 1.0.0
     "@k9-sak-web/prosess-aarskvantum-oms": 1.0.0
     "@k9-sak-web/rest-api": 1.0.0
     "@k9-sak-web/rest-api-hooks": 1.0.0
     "@k9-sak-web/types": 1.0.0
-    "@navikt/k9-fe-omsorgsdager": 0.0.12
     axios-mock-adapter: 1.22.0
     enzyme: 3.11.0
     react: 18.2.0
@@ -5088,6 +5088,42 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@k9-sak-web/fakta-omsorgsdager@1.0.0, @k9-sak-web/fakta-omsorgsdager@workspace:packages/fakta-omsorgsdager":
+  version: 0.0.0-use.local
+  resolution: "@k9-sak-web/fakta-omsorgsdager@workspace:packages/fakta-omsorgsdager"
+  dependencies:
+    "@navikt/ds-css": 5.10.0
+    "@navikt/ds-react": 5.10.0
+    "@navikt/fnrvalidator": 1.3.3
+    classnames: 2.3.2
+    dayjs: 1.11.10
+    jest-axe: ^8.0.0
+    lodash: 4.17.21
+    lodash.throttle: 4.1.1
+    nav-datovelger: 12.6.0
+    nav-frontend-alertstriper: 4.0.2
+    nav-frontend-alertstriper-style: 3.0.2
+    nav-frontend-core: 6.0.1
+    nav-frontend-ikoner-assets: 3.0.1
+    nav-frontend-js-utils: 1.0.20
+    nav-frontend-knapper: 3.1.3
+    nav-frontend-knapper-style: 2.1.2
+    nav-frontend-lenker: 2.0.2
+    nav-frontend-lenker-style: 2.0.2
+    nav-frontend-paneler-style: 2.0.2
+    nav-frontend-skjema: 4.0.6
+    nav-frontend-skjema-style: 3.0.3
+    nav-frontend-spinner: 3.0.1
+    nav-frontend-spinner-style: 1.0.2
+    nav-frontend-typografi: 4.0.2
+    nav-frontend-typografi-style: 2.0.2
+    react: 18.2.0
+    react-day-picker: 7.4.10
+    react-dom: 18.2.0
+    react-hook-form: 7.47.0
+  languageName: unknown
+  linkType: soft
+
 "@k9-sak-web/fakta-opplaering@workspace:packages/fakta-opplaering":
   version: 0.0.0-use.local
   resolution: "@k9-sak-web/fakta-opplaering@workspace:packages/fakta-opplaering"
@@ -5197,9 +5233,9 @@ __metadata:
     "@fpsak-frontend/shared-components": 1.0.0
     "@fpsak-frontend/utils": 1.0.0
     "@fpsak-frontend/utils-test": 1.0.0
+    "@k9-sak-web/fakta-omsorgsdager": 1.0.0
     "@k9-sak-web/konstanter": 1.0.0
     "@k9-sak-web/types": 1.0.0
-    "@navikt/k9-fe-omsorgsdager": 0.0.12
     classnames: 2.3.2
     enzyme: 3.11.0
     lodash.throttle: 4.1.1
@@ -5467,6 +5503,7 @@ __metadata:
     "@k9-sak-web/fakta-medisinsk-vilkar": 1.0.0
     "@k9-sak-web/fakta-om-barnet": 1.0.0
     "@k9-sak-web/fakta-omsorgen-for": 1.0.0
+    "@k9-sak-web/fakta-omsorgsdager": 1.0.0
     "@k9-sak-web/konstanter": 1.0.0
     "@k9-sak-web/modal-sett-pa-vent": 1.0.0
     "@k9-sak-web/rest-api": 1.0.0
@@ -5487,7 +5524,6 @@ __metadata:
     "@navikt/ft-prosess-beregningsgrunnlag": 6.3.16
     "@navikt/ft-ui-komponenter": 2.1.13
     "@navikt/k9-fe-http-utils": 1.0.6
-    "@navikt/k9-fe-omsorgsdager": 0.0.12
     "@navikt/k9-fe-uttak": 0.0.8
     "@sentry/browser": 7.80.1
     axios: 1.6.2
@@ -6444,42 +6480,6 @@ __metadata:
   peerDependencies:
     axios: 1.2.6
   checksum: 521067f51535422c1010251c2beb8d7d27041027cc997dcfc9a39ce59e0b1c8a0eb60cbf0d096627e60a5f1fefaf5a0f0692f703c8c26ffc7b04c0ec86755290
-  languageName: node
-  linkType: hard
-
-"@navikt/k9-fe-omsorgsdager@npm:0.0.12":
-  version: 0.0.12
-  resolution: "@navikt/k9-fe-omsorgsdager@npm:0.0.12::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fk9-fe-omsorgsdager%2F0.0.12%2Ffd9b9d6cc412d3951b8d5e978d3c8f9d6d53042c"
-  peerDependencies:
-    "@navikt/ds-css": 5.10.0
-    "@navikt/ds-react": 5.10.0
-    "@navikt/fnrvalidator": 1.x
-    classnames: 2.x
-    dayjs: 1.x
-    lodash: 4.x
-    lodash.throttle: 4.x
-    nav-datovelger: 12.x
-    nav-frontend-alertstriper: 4.x
-    nav-frontend-alertstriper-style: 3.x
-    nav-frontend-core: 6.x
-    nav-frontend-ikoner-assets: 3.x
-    nav-frontend-js-utils: 1.x
-    nav-frontend-knapper: 3.x
-    nav-frontend-knapper-style: 2.x
-    nav-frontend-lenker: 2.x
-    nav-frontend-lenker-style: 2.x
-    nav-frontend-paneler-style: 2.x
-    nav-frontend-skjema: 4.x
-    nav-frontend-skjema-style: 3.x
-    nav-frontend-spinner: 3.x
-    nav-frontend-spinner-style: 1.x
-    nav-frontend-typografi: 4.x
-    nav-frontend-typografi-style: 2.x
-    react: 18.x
-    react-day-picker: 7.x
-    react-dom: 18.x
-    react-hook-form: 7.47.0
-  checksum: c6d1e41fb94fc23bc5275ad778a2725e203b35c6939f588626333ff6124e3f763ac7c9cbb80344dca0a93a666030e88b6c4619608833f8f633f1476052f58ca1
   languageName: node
   linkType: hard
 
@@ -11920,6 +11920,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"axe-core@npm:4.7.2":
+  version: 4.7.2
+  resolution: "axe-core@npm:4.7.2"
+  checksum: 5d86fa0f45213b0e54cbb5d713ce885c4a8fe3a72b92dd915a47aa396d6fd149c4a87fec53aa978511f6d941402256cfeb26f2db35129e370f25a453c688655a
+  languageName: node
+  linkType: hard
+
 "axe-core@npm:^4.6.2":
   version: 4.8.2
   resolution: "axe-core@npm:4.8.2"
@@ -12699,6 +12706,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"chalk@npm:4.1.2, chalk@npm:^4.0.0, chalk@npm:^4.0.2, chalk@npm:^4.1.0, chalk@npm:^4.1.1, chalk@npm:^4.1.2":
+  version: 4.1.2
+  resolution: "chalk@npm:4.1.2"
+  dependencies:
+    ansi-styles: ^4.1.0
+    supports-color: ^7.1.0
+  checksum: fe75c9d5c76a7a98d45495b91b2172fa3b7a09e0cc9370e5c8feb1c567b85c4288e2b3fded7cfdd7359ac28d6b3844feb8b82b8686842e93d23c827c417e83fc
+  languageName: node
+  linkType: hard
+
 "chalk@npm:5.3.0":
   version: 5.3.0
   resolution: "chalk@npm:5.3.0"
@@ -12724,16 +12741,6 @@ __metadata:
     ansi-styles: ^4.1.0
     supports-color: ^7.1.0
   checksum: 8e3ddf3981c4da405ddbd7d9c8d91944ddf6e33d6837756979f7840a29272a69a5189ecae0ff84006750d6d1e92368d413335eab4db5476db6e6703a1d1e0505
-  languageName: node
-  linkType: hard
-
-"chalk@npm:^4.0.0, chalk@npm:^4.0.2, chalk@npm:^4.1.0, chalk@npm:^4.1.1, chalk@npm:^4.1.2":
-  version: 4.1.2
-  resolution: "chalk@npm:4.1.2"
-  dependencies:
-    ansi-styles: ^4.1.0
-    supports-color: ^7.1.0
-  checksum: fe75c9d5c76a7a98d45495b91b2172fa3b7a09e0cc9370e5c8feb1c567b85c4288e2b3fded7cfdd7359ac28d6b3844feb8b82b8686842e93d23c827c417e83fc
   languageName: node
   linkType: hard
 
@@ -18338,6 +18345,18 @@ __metadata:
   languageName: node
   linkType: hard
 
+"jest-axe@npm:^8.0.0":
+  version: 8.0.0
+  resolution: "jest-axe@npm:8.0.0"
+  dependencies:
+    axe-core: 4.7.2
+    chalk: 4.1.2
+    jest-matcher-utils: 29.2.2
+    lodash.merge: 4.6.2
+  checksum: 895501afa6ac6c49e5e45ee1cd4a8e923589f220f6f950a8f5366cc3f3636aaee9c9d501a469f9658185e7a5928b59a337d4b4f1c7bb3f4b3b5ba8b3811c9f15
+  languageName: node
+  linkType: hard
+
 "jest-changed-files@npm:^29.7.0":
   version: 29.7.0
   resolution: "jest-changed-files@npm:29.7.0"
@@ -18441,7 +18460,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"jest-diff@npm:>=29.4.3 < 30, jest-diff@npm:^29.4.1, jest-diff@npm:^29.7.0":
+"jest-diff@npm:>=29.4.3 < 30, jest-diff@npm:^29.2.1, jest-diff@npm:^29.4.1, jest-diff@npm:^29.7.0":
   version: 29.7.0
   resolution: "jest-diff@npm:29.7.0"
   dependencies:
@@ -18510,7 +18529,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"jest-get-type@npm:^29.6.3":
+"jest-get-type@npm:^29.2.0, jest-get-type@npm:^29.6.3":
   version: 29.6.3
   resolution: "jest-get-type@npm:29.6.3"
   checksum: 88ac9102d4679d768accae29f1e75f592b760b44277df288ad76ce5bf038c3f5ce3719dea8aa0f035dac30e9eb034b848ce716b9183ad7cc222d029f03e92205
@@ -18547,6 +18566,18 @@ __metadata:
     jest-get-type: ^29.6.3
     pretty-format: ^29.7.0
   checksum: e3950e3ddd71e1d0c22924c51a300a1c2db6cf69ec1e51f95ccf424bcc070f78664813bef7aed4b16b96dfbdeea53fe358f8aeaaea84346ae15c3735758f1605
+  languageName: node
+  linkType: hard
+
+"jest-matcher-utils@npm:29.2.2":
+  version: 29.2.2
+  resolution: "jest-matcher-utils@npm:29.2.2"
+  dependencies:
+    chalk: ^4.0.0
+    jest-diff: ^29.2.1
+    jest-get-type: ^29.2.0
+    pretty-format: ^29.2.1
+  checksum: 97ef2638ab826c25f84bfedea231cef091820ae0876ba316922da81145e950d2b9d2057d3645813b5ee880bb975ed4f22e228dda5d0d26a20715e575b675357d
   languageName: node
   linkType: hard
 
@@ -19285,6 +19316,7 @@ __metadata:
     identity-obj-proxy: 3.0.0
     ignore-styles: 5.0.1
     jest: 29.7.0
+    jest-axe: ^8.0.0
     jest-environment-jsdom: 29.7.0
     jest-runner-eslint: 2.1.2
     jest-transform-stub: 2.0.0
@@ -19814,7 +19846,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"lodash.merge@npm:^4.6.2":
+"lodash.merge@npm:4.6.2, lodash.merge@npm:^4.6.2":
   version: 4.6.2
   resolution: "lodash.merge@npm:4.6.2"
   checksum: ad580b4bdbb7ca1f7abf7e1bce63a9a0b98e370cf40194b03380a46b4ed799c9573029599caebc1b14e3f24b111aef72b96674a56cfa105e0f5ac70546cdc005
@@ -23113,7 +23145,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"pretty-format@npm:^29.0.0, pretty-format@npm:^29.7.0":
+"pretty-format@npm:^29.0.0, pretty-format@npm:^29.2.1, pretty-format@npm:^29.7.0":
   version: 29.7.0
   resolution: "pretty-format@npm:29.7.0"
   dependencies:

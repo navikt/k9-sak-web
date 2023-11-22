@@ -1,0 +1,46 @@
+.vilkarStatusOverskrift {
+    align-items: center;
+    display: flex;
+    flex-direction: row nowrap;
+    justify-content: flex-start;
+}
+.vilkarStatusOverskrift :first-child {
+    height: 1.2rem;
+    margin-left: 0;
+    width: 1.25rem;
+}
+.vilkarStatusOverskrift * {
+    margin: 0 0.5rem 0 0.5rem;
+}
+.aksjonspunktNavn {
+    font-size: 1.25rem;
+    font-weight: 600;
+}
+.begrunnelseOverskrift {
+    font-size: 1rem;
+    font-weight: bold;
+    margin-bottom: 0.5rem !important;
+    margin-top: 1rem;
+}
+.begrunnelse {
+    margin-top: 0.5rem;
+    max-width: 40rem !important;
+    word-wrap: break-word;
+}
+.vilkar {
+    font-size: 0.875rem;
+    font-weight: 400;
+    padding-top: 0.188rem;
+    text-transform: uppercase;
+}
+.vilkarStatus {
+    font-size: 1rem;
+    font-weight: bold;
+    margin: 0.75rem 0 1rem 0;
+}
+.beskrivelseForOmsorgenForOppfyltVilkar {
+    display: flex;
+}
+.beskrivelseForOmsorgenForOppfyltVilkar h4 {
+    margin: 0rem 0rem 0rem 0.25rem;
+}

@@ -1,0 +1,18 @@
+.alertstripe {
+    align-content: center;
+    background-color: #ffeccc;
+    border: 1px solid #d47b00;
+    border-radius: 0.25rem;
+    display: flex;
+    padding: 0.44rem 1.25rem 0.44rem 1rem;
+    width: fit-content;
+}
+.alertstripe_ikon {
+    align-items: center;
+    display: flex;
+    margin-right: 0.75rem;
+}
+.alertstripe_tekst {
+    display: block;
+    margin: auto 0;
+}

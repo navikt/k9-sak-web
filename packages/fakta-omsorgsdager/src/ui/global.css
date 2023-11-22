@@ -1,0 +1,10 @@
+:global(.alertstripe) {
+    padding-bottom: 0.4375rem;
+    padding-top: 0.4375rem;
+}
+:global(.textarea--medMeta__wrapper) {
+    width: 30rem;
+}
+:global(.knapp--hoved) {
+    text-transform: none;
+}
