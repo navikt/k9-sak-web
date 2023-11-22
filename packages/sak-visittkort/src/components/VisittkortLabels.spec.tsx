@@ -22,6 +22,7 @@ describe('<VisittkortLabels>', () => {
     statsborgerskap: {
       kode: 'NORSK',
       kodeverk: 'STATSBORGERSKAP',
+      navn: 'NORSK',
     },
     avklartPersonstatus: {
       orginalPersonstatus: {
