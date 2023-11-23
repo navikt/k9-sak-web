@@ -5543,9 +5543,9 @@ __metadata:
   linkType: hard
 
 "@navikt/ds-tailwind@npm:^5.10.0":
-  version: 5.10.1
-  resolution: "@navikt/ds-tailwind@npm:5.10.1::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fds-tailwind%2F5.10.1%2Fe42cab3c9f1e220159a353597600fcbfd292e276"
-  checksum: 91f1e450eb14af4afb7bb94202eae7a14b1e237d8f93711a5aacfd6f8567263af4c122271997056cb77ed7f3438716238218f4c1aae7f914ee658a597cb2d767
+  version: 5.11.1
+  resolution: "@navikt/ds-tailwind@npm:5.11.1::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fds-tailwind%2F5.11.1%2Fa7067161353b95e28320db0faa5e824927bfdb0e"
+  checksum: 62d3c0bd715249aa7a236a7f227a3b4b28bcc3e87efc3b816622cdd929b48805a1e7e6cdb71f0a9a399c06aefc0290bb4f573fc1086df70a35f49617da3e66cd
   languageName: node
   linkType: hard
 
