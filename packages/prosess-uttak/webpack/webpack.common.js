@@ -8,7 +8,6 @@ const cssExtractLoaderConfig = {
 
 const nodeModules = path.resolve(__dirname, '../node_modules');
 const rootNodeModules = path.resolve(__dirname, '../../../node_modules');
-const isDevelopment = process.env.NODE_ENV !== 'production';
 
 module.exports = {
   resolve: {
