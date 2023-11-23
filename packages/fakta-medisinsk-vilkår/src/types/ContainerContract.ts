@@ -1,4 +1,3 @@
-import { HttpErrorHandler } from '@fpsak-frontend/utils';
 import BehandlingType from '../constants/BehandlingType';
 import FagsakYtelseType from '../constants/FagsakYtelseType';
 

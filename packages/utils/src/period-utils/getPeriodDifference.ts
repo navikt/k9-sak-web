@@ -1,6 +1,7 @@
 import { getArrayDifference, makeArrayWithoutDuplicates } from '../arrayUtils';
-import { dateStringSorter, isDayAfter } from '../date-utils/dateComparison';
+import { isDayAfter } from '../date-utils/dateComparison';
 import initializeDate from '../date-utils/initialize';
+import { dateStringSorter } from '../date-utils/sort';
 import Period from './Period';
 
 export function getPeriodsAsListOfDays(period: Period[]): string[] {
