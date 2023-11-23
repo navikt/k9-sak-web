@@ -1,6 +1,6 @@
-import { Period } from '@navikt/k9-fe-period-utils';
+import { Period } from '@fpsak-frontend/utils';
 import { Box, Margin, DetailView, LabelledContent, Form } from '@navikt/ft-plattform-komponenter';
-import { PeriodpickerList, RadioGroupPanel, TextArea } from '@navikt/k9-fe-form-utils';
+import { PeriodpickerListRHF, RadioGroupPanelRHF, TextAreaRHF } from '@fpsak-frontend/form';
 import { AlertStripeInfo } from 'nav-frontend-alertstriper';
 import React from 'react';
 import { FormProvider, useForm, useWatch } from 'react-hook-form';
@@ -130,7 +130,7 @@ const VurderingAvBeredskapsperioderForm = ({
             <BeskrivelserForPerioden periodebeskrivelser={beskrivelser} />
           </Box>
           <Box marginTop={Margin.xLarge}>
-            <TextArea
+            <TextAreaRHF
               label="Gjør en vurdering av om det er behov for beredskap etter § 9-11, tredje ledd."
               name={FieldName.BEGRUNNELSE}
               validators={{ required }}
@@ -138,7 +138,7 @@ const VurderingAvBeredskapsperioderForm = ({
             />
           </Box>
           <Box marginTop={Margin.xLarge}>
-            <RadioGroupPanel
+            <RadioGroupPanelRHF
               question="Er det behov for beredskap?"
               radios={[
                 { value: RadioOptions.JA, label: 'Ja' },
@@ -152,7 +152,7 @@ const VurderingAvBeredskapsperioderForm = ({
           </Box>
           {erDetBehovForBeredskap === RadioOptions.JA_DELER && (
             <Box marginTop={Margin.xLarge}>
-              <PeriodpickerList
+              <PeriodpickerListRHF
                 name={FieldName.PERIODER}
                 legend="I hvilke perioder er det behov for beredskap?"
                 fromDatepickerProps={{ label: 'Fra', ariaLabel: 'Fra' }}

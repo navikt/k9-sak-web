@@ -2,7 +2,7 @@ import * as React from 'react';
 import { NavigationWithDetailView } from '@navikt/ft-plattform-komponenter';
 import { Heading } from '@navikt/ds-react';
 import { InstitusjonPeriode, InstitusjonPerioderMedResultat, InstitusjonVurdering } from '@k9-sak-web/types';
-import { Period } from '@navikt/k9-fe-period-utils';
+import { Period } from '@fpsak-frontend/utils';
 import InstitusjonNavigation from './InstitusjonNavigation';
 import InstitusjonDetails from './InstitusjonDetails';
 

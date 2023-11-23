@@ -1,6 +1,5 @@
 import React from 'react';
-import { Period } from '@navikt/k9-fe-period-utils';
-import { addYearsToDate } from '@navikt/k9-fe-date-utils';
+import { addYearsToDate, Period } from '@fpsak-frontend/utils';
 import Vurderingsoversikt from '../../../types/Vurderingsoversikt';
 import { findLinkByRel } from '../../../util/linkUtils';
 import LinkRel from '../../../constants/LinkRel';

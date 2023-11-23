@@ -1,5 +1,4 @@
-import { get } from '@navikt/k9-fe-http-utils';
-import { Period } from '@navikt/k9-fe-period-utils';
+import { get, Period } from '@fpsak-frontend/utils';
 import { NavigationWithDetailView, PageContainer, Box, Margin } from '@navikt/ft-plattform-komponenter';
 import React, { useMemo } from 'react';
 import Step, { StepId, tilsynOgPleieSteg, toOmsorgspersonerSteg } from '../../../types/Step';

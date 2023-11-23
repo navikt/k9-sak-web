@@ -1,4 +1,4 @@
-import { HttpErrorHandler } from '@navikt/k9-fe-http-utils';
+import { HttpErrorHandler } from '@fpsak-frontend/utils';
 import BehandlingType from '../constants/BehandlingType';
 import FagsakYtelseType from '../constants/FagsakYtelseType';
 
@@ -18,7 +18,7 @@ interface ContainerContract {
   behandlingUuid: string;
   readOnly: boolean;
   onFinished: (...args: unknown[]) => void;
-  httpErrorHandler: HttpErrorHandler;
+  httpErrorHandler: (statusCode: number, locationHeader?: string) => void;
   visFortsettknapp: boolean;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   saksbehandlere: any;

@@ -1,4 +1,4 @@
-import { initializeDate } from '@navikt/k9-fe-date-utils';
+import { initializeDate } from '@fpsak-frontend/utils';
 import { Dokument } from '../types/Dokument';
 import {
   StrukturerDokumentFormFieldName as FieldName,

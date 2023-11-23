@@ -1,4 +1,4 @@
-import { post } from '@navikt/k9-fe-http-utils';
+import { post } from '@fpsak-frontend/utils';
 import { Box, Margin } from '@navikt/ft-plattform-komponenter';
 import { Alert } from '@navikt/ds-react';
 import React, { useMemo } from 'react';

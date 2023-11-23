@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
 import { Box, Margin, PageContainer } from '@navikt/ft-plattform-komponenter';
-import { post } from '@navikt/k9-fe-http-utils';
+import { post } from '@fpsak-frontend/utils';
 import Dokument from '../../../types/Dokument';
 import ContainerContext from '../../context/ContainerContext';
 import NyeDokumenterSomKanPåvirkeEksisterendeVurderinger from './NyeDokumenterSomKanPåvirkeEksisterendeVurderinger';

@@ -1,5 +1,5 @@
 import { Dayjs } from 'dayjs';
-import { Period } from '@navikt/k9-fe-period-utils';
+import { Period } from '@fpsak-frontend/utils';
 import { dateFromString } from '../../../util/dateUtils';
 import { tomorrow } from '../../../constants/dateConstants';
 

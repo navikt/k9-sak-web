@@ -1,4 +1,4 @@
-import * as httpUtils from '@navikt/k9-fe-http-utils';
+import * as httpUtils from '@fpsak-frontend/utils';
 import { render, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';

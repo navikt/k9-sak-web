@@ -1,6 +1,6 @@
 import { Loader } from '@navikt/ds-react';
 import { PageError } from '@navikt/ft-plattform-komponenter';
-import { get } from '@navikt/k9-fe-http-utils';
+import { get } from '@fpsak-frontend/utils';
 import React, { useMemo } from 'react';
 import Vurdering from '../../../types/Vurdering';
 import ContainerContext from '../../context/ContainerContext';

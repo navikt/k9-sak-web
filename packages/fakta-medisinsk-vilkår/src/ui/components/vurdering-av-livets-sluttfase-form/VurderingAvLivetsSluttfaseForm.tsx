@@ -1,8 +1,8 @@
 import { Close } from '@navikt/ds-icons';
 import { Alert, Label, Link } from '@navikt/ds-react';
 import { Box, ContentWithTooltip, Form, Margin, OnePersonOutlineGray } from '@navikt/ft-plattform-komponenter';
-import { CheckboxGroup, PeriodpickerList, RadioGroupPanel, TextArea } from '@navikt/k9-fe-form-utils';
-import { Period } from '@navikt/k9-fe-period-utils';
+import { CheckboxGroupRHF, PeriodpickerListRHF, RadioGroupPanelRHF, TextAreaRHF } from '@fpsak-frontend/form';
+import { Period } from '@fpsak-frontend/utils';
 import React, { useState } from 'react';
 import { FormProvider, useForm, useWatch } from 'react-hook-form';
 import Dokument from '../../../types/Dokument';
@@ -184,7 +184,7 @@ const VurderingAvLivetsSluttfaseForm = ({
                 </div>
               )}
               <div className={styles.checkboxGroupWrapper}>
-                <CheckboxGroup
+                <CheckboxGroupRHF
                   question="Hvilke dokumenter er brukt i vurderingen av livets sluttfase?"
                   name={FieldName.DOKUMENTER}
                   checkboxes={getDokumenterSomSkalVises().map(dokument => ({
@@ -230,7 +230,7 @@ const VurderingAvLivetsSluttfaseForm = ({
             </Box>
           )}
           <Box marginTop={Margin.xLarge}>
-            <TextArea
+            <TextAreaRHF
               id="begrunnelsesfelt"
               disabled={readOnly}
               textareaClass={styles.begrunnelsesfelt}
@@ -263,7 +263,7 @@ const VurderingAvLivetsSluttfaseForm = ({
             />
           </Box>
           <Box marginTop={Margin.xLarge}>
-            <RadioGroupPanel
+            <RadioGroupPanelRHF
               question="Er den pleietrengende i livets sluttfase?"
               name={FieldName.ER_I_LIVETS_SLUTTFASE}
               radios={[
@@ -276,7 +276,7 @@ const VurderingAvLivetsSluttfaseForm = ({
           </Box>
 
           <Box marginTop={Margin.xLarge}>
-            <PeriodpickerList
+            <PeriodpickerListRHF
               legend="Oppgi perioder"
               name={FieldName.PERIODER}
               disabled={readOnly}

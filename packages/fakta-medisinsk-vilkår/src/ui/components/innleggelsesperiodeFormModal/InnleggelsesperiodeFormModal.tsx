@@ -1,7 +1,7 @@
 import { Alert, Button, Label, Modal } from '@navikt/ds-react';
 import { Box, Form, Margin } from '@navikt/ft-plattform-komponenter';
-import { PeriodpickerList } from '@navikt/k9-fe-form-utils';
-import { Period } from '@navikt/k9-fe-period-utils';
+import { PeriodpickerListRHF } from '@fpsak-frontend/form';
+import { Period } from '@fpsak-frontend/utils';
 import React from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { InnleggelsesperiodeDryRunResponse } from '../../../api/api';
@@ -71,7 +71,7 @@ const InnleggelsesperiodeFormModal = ({
         <FormProvider {...formMethods}>
           <Form onSubmit={formMethods.handleSubmit(handleSubmit)} shouldShowSubmitButton={false}>
             <Box marginTop={Margin.large}>
-              <PeriodpickerList
+              <PeriodpickerListRHF
                 name="innleggelsesperioder"
                 legend="Innleggelsesperioder"
                 fromDatepickerProps={{

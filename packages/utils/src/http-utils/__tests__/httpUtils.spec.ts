@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { get, post } from '../httpUtils';
+import { get, post } from '../axiosHttpUtils';
 import * as responseHelpers from '../responseHelpers';
 
 jest.mock('axios');

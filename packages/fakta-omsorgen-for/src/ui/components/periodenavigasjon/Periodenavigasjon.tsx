@@ -1,4 +1,4 @@
-import { Period } from '@navikt/k9-fe-period-utils';
+import { Period } from '@fpsak-frontend/utils';
 import { Box, Margin, InteractiveList } from '@navikt/ft-plattform-komponenter';
 import { Undertittel } from 'nav-frontend-typografi';
 import React, { useEffect } from 'react';

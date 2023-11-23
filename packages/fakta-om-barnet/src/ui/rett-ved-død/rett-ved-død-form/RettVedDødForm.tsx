@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { useForm, FormProvider } from 'react-hook-form';
 import { Form } from '@navikt/ft-plattform-komponenter';
-import { RadioGroupPanel, TextArea } from '@navikt/k9-fe-form-utils';
+import { RadioGroupPanelRHF, TextAreaRHF } from '@fpsak-frontend/form';
 import required from '../../../validators/required';
 import ContainerContext from '../../context/ContainerContext';
 import RettVedDødUtfallType from '../../../types/RettVedDødType';
@@ -54,7 +54,7 @@ const RettVedDødForm = ({ rettVedDød, onCancelClick }: RettVedDødFormProps): 
           onAvbryt={onCancelClick}
         >
           <div className="hide-legend">
-            <RadioGroupPanel
+            <RadioGroupPanelRHF
               question="Vurder hvor lang periode søker har rett på pleiepenger ved barnets død."
               radios={[
                 {
@@ -74,7 +74,7 @@ const RettVedDødForm = ({ rettVedDød, onCancelClick }: RettVedDødFormProps): 
             />
           </div>
           <div className="mt-3 max-w-xl">
-            <TextArea label="Vurdering" name={FieldName.VURDERING} validators={{ required }} disabled={readOnly} />
+            <TextAreaRHF label="Vurdering" name={FieldName.VURDERING} validators={{ required }} disabled={readOnly} />
           </div>
         </Form>
       </FormProvider>

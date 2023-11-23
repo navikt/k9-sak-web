@@ -1,5 +1,4 @@
-import { dateConstants } from '@navikt/k9-fe-date-utils';
-import { Period } from '@navikt/k9-fe-period-utils';
+import { dateConstants, Period } from '@fpsak-frontend/utils';
 import {
   dateIsNotInTheFuture,
   datoenInngårISøknadsperioden,

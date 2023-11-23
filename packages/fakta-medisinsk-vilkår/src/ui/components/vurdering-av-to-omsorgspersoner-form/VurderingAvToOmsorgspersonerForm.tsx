@@ -1,7 +1,7 @@
 import { Alert, Link } from '@navikt/ds-react';
 import { Box, ContentWithTooltip, Form, Margin, OnePersonOutlineGray } from '@navikt/ft-plattform-komponenter';
-import { CheckboxGroup, PeriodpickerList, TextArea, YesOrNoQuestion } from '@navikt/k9-fe-form-utils';
-import { Period } from '@navikt/k9-fe-period-utils';
+import { CheckboxGroupRHF, PeriodpickerListRHF, TextAreaRHF, YesOrNoQuestionRHF } from '@fpsak-frontend/form';
+import { Period } from '@fpsak-frontend/utils';
 import React from 'react';
 import { FormProvider, useForm, useWatch } from 'react-hook-form';
 import Dokument from '../../../types/Dokument';
@@ -110,7 +110,7 @@ const VurderingAvToOmsorgspersonerForm = ({
         >
           {dokumenter?.length > 0 && (
             <Box marginTop={Margin.large}>
-              <CheckboxGroup
+              <CheckboxGroupRHF
                 question="Hvilke dokumenter er brukt i vurderingen av to omsorgspersoner?"
                 name={FieldName.DOKUMENTER}
                 checkboxes={dokumenter.map(dokument => ({
@@ -136,7 +136,7 @@ const VurderingAvToOmsorgspersonerForm = ({
             </Box>
           )}
           <Box marginTop={Margin.xLarge}>
-            <TextArea
+            <TextAreaRHF
               textareaClass={styles.begrunnelsesfelt}
               name={FieldName.VURDERING_AV_TO_OMSORGSPERSONER}
               label={
@@ -168,7 +168,7 @@ const VurderingAvToOmsorgspersonerForm = ({
             />
           </Box>
           <Box marginTop={Margin.xLarge}>
-            <YesOrNoQuestion
+            <YesOrNoQuestionRHF
               question="Er det behov for to omsorgspersoner samtidig?"
               name={FieldName.HAR_BEHOV_FOR_TO_OMSORGSPERSONER}
               validators={{ required }}
@@ -176,7 +176,7 @@ const VurderingAvToOmsorgspersonerForm = ({
             />
           </Box>
           <Box marginTop={Margin.xLarge}>
-            <PeriodpickerList
+            <PeriodpickerListRHF
               legend="Oppgi perioder"
               name={FieldName.PERIODER}
               disabled={readOnly}

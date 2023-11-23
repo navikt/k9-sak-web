@@ -1,4 +1,4 @@
-import { initializeDate } from '@navikt/k9-fe-date-utils';
+import { initializeDate } from '@fpsak-frontend/utils';
 import Aksjonspunkt from '../types/Aksjonspunkt';
 import { Kode, TilstandBeriket } from '../types/KompletthetData';
 import Status from '../types/TilstandStatus';

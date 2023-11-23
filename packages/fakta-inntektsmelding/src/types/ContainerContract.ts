@@ -1,4 +1,3 @@
-import { HttpErrorHandler } from '@navikt/k9-fe-http-utils';
 import Aksjonspunkt from './Aksjonspunkt';
 import AksjonspunktRequestPayload from './AksjonspunktRequestPayload';
 
@@ -16,7 +15,7 @@ interface ContainerContract {
   readOnly: boolean;
   arbeidsforhold: Record<string, ArbeidsgiverOpplysninger>;
   dokumenter?: DokumentOpplysninger[];
-  httpErrorHandler?: HttpErrorHandler;
+  httpErrorHandler?: (statusCode: number, locationHeader?: string) => void;
   endpoints: {
     kompletthetBeregning: string;
   };

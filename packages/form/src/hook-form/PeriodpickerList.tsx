@@ -2,7 +2,7 @@
 import { ErrorMessage } from '@navikt/ds-react';
 import { Box, Margin } from '@navikt/ft-plattform-komponenter';
 import '@navikt/ft-plattform-komponenter/dist/style.css';
-import { Period } from '@navikt/k9-fe-period-utils';
+import { Period } from '@fpsak-frontend/utils';
 import React from 'react';
 import { Controller, useFieldArray, useFormContext } from 'react-hook-form';
 import { DatepickerLimitations } from './pure/DatepickerLimitations';

@@ -1,4 +1,4 @@
-import { prettifyDateString } from '@navikt/k9-fe-date-utils';
+import { prettifyDateString } from '@fpsak-frontend/utils';
 import { BucketIcon } from '@navikt/ft-plattform-komponenter';
 import { Link } from '@navikt/ds-react';
 import React, { useState } from 'react';

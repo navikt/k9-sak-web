@@ -1,5 +1,4 @@
-import { get } from '@navikt/k9-fe-http-utils';
-import { Period } from '@navikt/k9-fe-period-utils';
+import { get, Period } from '@fpsak-frontend/utils';
 import { PageContainer, Box, Margin } from '@navikt/ft-plattform-komponenter';
 import React, { useMemo } from 'react';
 import Dokument from '../../../types/Dokument';

@@ -2,9 +2,9 @@ import React from 'react';
 import { useIntl } from 'react-intl';
 import { FormProvider, useForm, useWatch } from 'react-hook-form';
 
-import { getPeriodDifference, Period } from '@navikt/k9-fe-period-utils';
+import { getPeriodDifference, Period } from '@fpsak-frontend/utils';
 import { Box, Margin, DetailView, Form, LabelledContent } from '@navikt/ft-plattform-komponenter';
-import { PeriodpickerList, RadioGroupPanel, TextArea } from '@navikt/k9-fe-form-utils';
+import { PeriodpickerListRHF, RadioGroupPanelRHF, TextAreaRHF } from '@fpsak-frontend/form';
 import { Label } from '@navikt/ds-react';
 import { AlertStripeInfo } from 'nav-frontend-alertstriper';
 
@@ -137,10 +137,10 @@ const VurderingAvOmsorgsperioderForm = ({
             <Box marginTop={Margin.xLarge}>
               <Label htmlFor={FieldName.BEGRUNNELSE}>{intl.formatMessage({ id: 'vurdering.hjemmel' })}</Label>
               {erOMP && <p>{intl.formatMessage({ id: 'vurdering.hjemmel.hjelpetekst' })}</p>}
-              <TextArea name={FieldName.BEGRUNNELSE} validators={{ required }} disabled={readOnly} />
+              <TextAreaRHF name={FieldName.BEGRUNNELSE} validators={{ required }} disabled={readOnly} />
             </Box>
             <Box marginTop={Margin.xLarge}>
-              <RadioGroupPanel
+              <RadioGroupPanelRHF
                 question={intl.formatMessage({ id: 'vurdering.harOmsorgenFor' })}
                 radios={[
                   { value: RadioOptions.HELE, label: 'Ja' },
@@ -154,7 +154,7 @@ const VurderingAvOmsorgsperioderForm = ({
             </Box>
             {harSøkerOmsorgenFor === RadioOptions.DELER && (
               <Box marginTop={Margin.xLarge}>
-                <PeriodpickerList
+                <PeriodpickerListRHF
                   name={FieldName.PERIODER}
                   legend="I hvilke perioder har søker omsorgen for barnet?"
                   disabled={readOnly}

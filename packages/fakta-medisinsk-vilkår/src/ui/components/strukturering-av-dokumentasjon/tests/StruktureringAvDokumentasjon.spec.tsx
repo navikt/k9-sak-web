@@ -1,6 +1,6 @@
 import { render, waitFor } from '@testing-library/react';
 import React from 'react';
-import * as httpUtils from '@navikt/k9-fe-http-utils';
+import * as httpUtils from '@fpsak-frontend/utils';
 import ContainerContext from '../../../context/ContainerContext';
 import StruktureringAvDokumentasjon from '../StruktureringAvDokumentasjon';
 

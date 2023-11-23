@@ -1,5 +1,5 @@
-import { dateConstants } from '@navikt/k9-fe-date-utils';
-import { Datepicker, RadioGroupPanel } from '@navikt/k9-fe-form-utils';
+import { dateConstants } from '@fpsak-frontend/utils';
+import { DatepickerRHF, RadioGroupPanelRHF } from '@fpsak-frontend/form';
 import { Box, DetailView, Form, Margin } from '@navikt/ft-plattform-komponenter';
 import React from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
@@ -55,7 +55,7 @@ const StrukturerDokumentSluttfaseForm = ({
             <DokumentKnapp href={dokumentLink.href} />
           </Box>
           <Box marginTop={Margin.xLarge}>
-            <RadioGroupPanel
+            <RadioGroupPanelRHF
               name={FieldName.INNEHOLDER_MEDISINSKE_OPPLYSNINGER}
               disabled={readOnly}
               question="Inneholder dokumentet medisinske opplysninger?"
@@ -73,7 +73,7 @@ const StrukturerDokumentSluttfaseForm = ({
             />
           </Box>
           <Box marginTop={Margin.xLarge}>
-            <Datepicker
+            <DatepickerRHF
               name={FieldName.DATERT}
               disabled={readOnly}
               label="Hvilken dato er dokumentet datert?"

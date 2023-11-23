@@ -1,7 +1,6 @@
-import { Period } from '@navikt/k9-fe-period-utils';
+import { Period, get } from '@fpsak-frontend/utils';
 import { PageContainer } from '@navikt/ft-plattform-komponenter';
 import React from 'react';
-import { get } from '@navikt/k9-fe-http-utils';
 import ContainerContext from '../context/ContainerContext';
 import ContainerContract from '../types/ContainerContract';
 import { Kompletthet as KompletthetData } from '../types/KompletthetData';

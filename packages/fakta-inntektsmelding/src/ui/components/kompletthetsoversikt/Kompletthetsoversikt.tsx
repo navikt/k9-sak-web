@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Period } from '@navikt/k9-fe-period-utils';
+import { Period } from '@fpsak-frontend/utils';
 import { Box, Margin } from '@navikt/ft-plattform-komponenter';
 import { Hovedknapp } from 'nav-frontend-knapper';
 import { useForm } from 'react-hook-form';

@@ -6,7 +6,7 @@ import {
   InteractiveList,
   WarningIcon,
 } from '@navikt/ft-plattform-komponenter';
-import { Period, sortPeriodsByFomDate } from '@navikt/k9-fe-period-utils';
+import { Period, sortPeriodsByFomDate } from '@fpsak-frontend/utils';
 import React, { useEffect } from 'react';
 import ManuellVurdering from '../../../types/ManuellVurdering';
 import Vurderingselement from '../../../types/Vurderingselement';

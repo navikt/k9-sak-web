@@ -1,5 +1,5 @@
 import React from 'react';
-import { addYearsToDate } from '@navikt/k9-fe-date-utils';
+import { addYearsToDate } from '@fpsak-frontend/utils';
 import Vurderingselement from '../../../types/Vurderingselement';
 // eslint-disable-next-line max-len
 import VurderingsoppsummeringForKontinuerligTilsynOgPleie from '../vurderingsoppsummering-for-kontinuerlig-tilsyn-og-pleie/VurderingsoppsummeringForKontinuerligTilsynOgPleie';

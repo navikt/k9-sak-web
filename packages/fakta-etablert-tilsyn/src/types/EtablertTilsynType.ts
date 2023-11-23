@@ -1,4 +1,4 @@
-import { Period } from '@navikt/k9-fe-period-utils';
+import { Period } from '@fpsak-frontend/utils';
 import { EtablertTilsynPeriode } from './TilsynResponse';
 import { beregnDagerTimer } from '../util/dateUtils';
 import Kilde from './Kilde';

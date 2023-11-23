@@ -1,5 +1,5 @@
 import { BodyShort, Detail, HelpText, Label } from '@navikt/ds-react';
-import { Period } from '@navikt/k9-fe-period-utils';
+import { Period } from '@fpsak-frontend/utils';
 import dayjs from 'dayjs';
 import React from 'react';
 import EtablertTilsynType from '../../../types/EtablertTilsynType';

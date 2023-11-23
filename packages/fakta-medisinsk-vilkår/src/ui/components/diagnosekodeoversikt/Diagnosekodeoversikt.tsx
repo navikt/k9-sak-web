@@ -1,5 +1,5 @@
 import { Box, Margin, TitleWithUnderline, WarningIcon } from '@navikt/ft-plattform-komponenter';
-import { get, post } from '@navikt/k9-fe-http-utils';
+import { get, post } from '@fpsak-frontend/utils';
 
 import { Loader } from '@navikt/ds-react';
 import React, { useMemo } from 'react';

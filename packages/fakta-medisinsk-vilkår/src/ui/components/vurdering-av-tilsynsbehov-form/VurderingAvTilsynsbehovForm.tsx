@@ -1,9 +1,8 @@
 import { Close } from '@navikt/ds-icons';
 import { Alert, Label, Link } from '@navikt/ds-react';
 import { Box, ContentWithTooltip, Form, Margin, OnePersonOutlineGray } from '@navikt/ft-plattform-komponenter';
-import { isSameOrBefore } from '@navikt/k9-fe-date-utils';
-import { CheckboxGroup, PeriodpickerList, TextArea, YesOrNoQuestion } from '@navikt/k9-fe-form-utils';
-import { Period } from '@navikt/k9-fe-period-utils';
+import { isSameOrBefore, Period } from '@fpsak-frontend/utils';
+import { CheckboxGroupRHF, PeriodpickerListRHF, TextAreaRHF, YesOrNoQuestionRHF } from '@fpsak-frontend/form';
 import React, { useState } from 'react';
 import { FormProvider, useForm, useWatch } from 'react-hook-form';
 import Dokument from '../../../types/Dokument';
@@ -197,7 +196,7 @@ const VurderingAvTilsynsbehovForm = ({
                 </div>
               )}
               <div className={styles.checkboxGroupWrapper}>
-                <CheckboxGroup
+                <CheckboxGroupRHF
                   question="Hvilke dokumenter er brukt i vurderingen av tilsyn og pleie?"
                   name={FieldName.DOKUMENTER}
                   checkboxes={getDokumenterSomSkalVises().map(dokument => ({
@@ -243,7 +242,7 @@ const VurderingAvTilsynsbehovForm = ({
             </Box>
           )}
           <Box marginTop={Margin.xLarge}>
-            <TextArea
+            <TextAreaRHF
               id="begrunnelsesfelt"
               disabled={readOnly}
               textareaClass={styles.begrunnelsesfelt}
@@ -284,7 +283,7 @@ const VurderingAvTilsynsbehovForm = ({
             />
           </Box>
           <Box marginTop={Margin.xLarge}>
-            <YesOrNoQuestion
+            <YesOrNoQuestionRHF
               question="Er det behov for tilsyn og pleie?"
               name={FieldName.HAR_BEHOV_FOR_KONTINUERLIG_TILSYN_OG_PLEIE}
               validators={{ required }}
@@ -292,7 +291,7 @@ const VurderingAvTilsynsbehovForm = ({
             />
           </Box>
           <Box marginTop={Margin.xLarge}>
-            <PeriodpickerList
+            <PeriodpickerListRHF
               legend="Oppgi perioder"
               name={FieldName.PERIODER}
               disabled={readOnly}

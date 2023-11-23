@@ -1,6 +1,6 @@
 /* eslint-disable max-len */
 import React from 'react';
-import * as httpUtils from '@navikt/k9-fe-http-utils';
+import * as httpUtils from '@fpsak-frontend/utils';
 import { render, fireEvent, waitFor, screen } from '@testing-library/react';
 import VilkårsvurderingAvTilsynOgPleie from '../VilkårsvurderingAvTilsynOgPleie';
 import ContainerContext from '../../../context/ContainerContext';

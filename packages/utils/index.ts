@@ -133,13 +133,7 @@ export { default as transformBeregningValues } from './src/beregning/transformVa
 export { default as useLocalStorage } from './src/useLocalStorageHook';
 export { default as bemUtils } from './src/bemUtils';
 export { isDayAfter, isSameOrBefore } from './src/date-utils/dateComparison';
-export { default as CheckboxGroup } from './src/form-utils/CheckboxGroup';
-export { default as Datepicker } from './src/form-utils/Datepicker';
-export { default as PeriodpickerList } from './src/form-utils/PeriodpickerList';
-export { default as RadioGroupPanel } from './src/form-utils/RadioGroupPanel';
-export { default as YesOrNoQuestion } from './src/form-utils/YesOrNoQuestion';
-export { default as TextArea } from './src/form-utils/TextArea';
-export { get, post } from './src/http-utils/httpUtils';
+export { get, post } from './src/http-utils/axiosHttpUtils';
 export {
   isForbidden,
   isUnauthorized,
@@ -152,3 +146,8 @@ export { default as getHumanReadablePeriodString } from './src/period-utils/getH
 export { default as sortPeriodsByFomDate } from './src/period-utils/sortPeriodsByFomDate';
 export { default as prettifyPeriodList } from './src/period-utils/prettifyPeriodList';
 export { default as findHolesInPeriods } from './src/period-utils/findHolesInPeriods';
+export { default as initializeDate } from './src/date-utils/initialize';
+export { prettifyDateString, prettifyDate } from './src/date-utils/format';
+export { default as dateConstants } from './src/date-utils/dateConstants';
+export { default as addYearsToDate } from './src/date-utils/addYearsToDate';
+export { dateStringSorter } from './src/date-utils/sort';

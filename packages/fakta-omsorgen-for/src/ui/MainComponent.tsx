@@ -1,5 +1,5 @@
 import { Box, Margin, PageContainer } from '@navikt/ft-plattform-komponenter';
-import { get } from '@navikt/k9-fe-http-utils';
+import { get } from '@fpsak-frontend/utils';
 import React from 'react';
 import { IntlProvider } from 'react-intl';
 import { ContainerContract } from '../types/ContainerContract';

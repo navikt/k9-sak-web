@@ -1,9 +1,10 @@
-import { post, HttpErrorHandler } from '@navikt/k9-fe-http-utils';
-import { Period } from '@navikt/k9-fe-period-utils';
+import { post, Period } from '@fpsak-frontend/utils';
 import { Vurderingsversjon } from '../types/Vurdering';
 import Vurderingstype from '../types/Vurderingstype';
 import { PerioderMedEndringResponse } from '../types/PeriodeMedEndring';
 import { RequestPayload } from '../types/RequestPayload';
+
+type HttpErrorHandler = (statusCode: number, locationHeader?: string) => void;
 
 type VurderingsversjonMedType = Partial<Vurderingsversjon> & {
   type: Vurderingstype;

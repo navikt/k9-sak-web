@@ -1,4 +1,4 @@
-import { Period } from '@navikt/k9-fe-period-utils';
+import { Period } from '@fpsak-frontend/utils';
 import React from 'react';
 import { ContentWithTooltip, OnePersonIconGray, WarningIcon } from '@navikt/ft-plattform-komponenter';
 import styles from './periodeSomSkalVurderes.css';

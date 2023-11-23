@@ -1,6 +1,6 @@
 import { BodyShort, Button } from '@navikt/ds-react';
 import { InfoPanel } from '@navikt/ft-plattform-komponenter';
-import { Period, prettifyPeriodList } from '@navikt/k9-fe-period-utils';
+import { Period, prettifyPeriodList } from '@fpsak-frontend/utils';
 import React from 'react';
 
 interface OverlappendeSøknadsperiodePanelProps {

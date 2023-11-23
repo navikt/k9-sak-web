@@ -1,4 +1,4 @@
-import { prettifyDateString } from '@navikt/k9-fe-date-utils';
+import { prettifyDateString } from '@fpsak-frontend/utils';
 import {
   ContentWithTooltip,
   DuplicateDocumentsIcon,

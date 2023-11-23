@@ -1,5 +1,5 @@
 import { ContentWithTooltip, OnePersonIconGray } from '@navikt/ft-plattform-komponenter';
-import { Period } from '@navikt/k9-fe-period-utils';
+import { Period } from '@fpsak-frontend/utils';
 import React from 'react';
 import styles from './vurderingsperioder.css';
 
