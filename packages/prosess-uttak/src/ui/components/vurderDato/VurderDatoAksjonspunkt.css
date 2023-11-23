@@ -1,0 +1,16 @@
+.vurderDatoAksjonspunktContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 1.9rem;
+    padding: 1.3rem 1.95rem 1.7rem 1.5rem;
+    border: 1px solid #ff9100;
+    margin-bottom: 3.4rem;
+}
+
+.knapper {
+    display: flex;
+    gap: 1rem;
+}
+.bekreft {
+    max-width: 10rem;
+}

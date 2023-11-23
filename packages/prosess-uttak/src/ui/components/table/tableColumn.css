@@ -1,0 +1,16 @@
+.columnStyle {
+  line-height: 1.42857143;
+  padding: 0.6875rem 0.3125rem 0.625rem;
+  text-align: left;
+  border-bottom: 1px solid #bbbbbb;
+}
+.columnStyle:first-of-type {
+  border-left: 1px solid #bbbbbb;
+}
+.columnStyle:last-of-type {
+  border-right: 1px solid #bbbbbb;
+  width: 6.5rem;
+}
+.columnStyle > svg {
+  vertical-align: bottom;
+}

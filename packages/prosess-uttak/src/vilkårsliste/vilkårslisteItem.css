@@ -1,0 +1,12 @@
+.item {
+  display: flex;
+  align-items: center;
+  margin: 1rem 0;
+}
+.item__text {
+  width: 165px;
+}
+.item svg {
+  vertical-align: middle;
+  margin-right: 0.5rem;
+}

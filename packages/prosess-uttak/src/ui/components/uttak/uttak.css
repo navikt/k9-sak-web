@@ -1,0 +1,72 @@
+.expanded {
+    padding: 1.125rem 0 0;
+    border: 1px solid #b7b1a9;
+    border-top: none;
+}
+.uttak__expandButton {
+    border: none;
+    background: none;
+    cursor: pointer;
+    display: flex;
+    float: right;
+}
+.uttak__expandButton svg {
+    width: 1.125rem;
+    height: 0.625rem;
+}
+.uttak__expandButton--expanded {
+    transform: rotate(180deg);
+}
+.uttak__indikator {
+    height: 0.75rem;
+    border-radius: 0.3125rem 0.3125rem 0 0;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+}
+.uttak__indikator__avslått {
+    background: #f1d8d4;
+    border: 1px solid #a13a28;
+}
+.uttak__indikator__innvilget {
+    background: #cde7d8;
+    border: 1px solid #06893a;
+}
+.uttak__indikator__innvilget--delvis {
+    background: repeating-linear-gradient(-45deg, #9bd0b0, #9bd0b0 10px, #fff 10px, #fff 20px);
+}
+.uttak__uttaksgrad {
+    position: relative;
+    padding-top: 0.125rem;
+    width: 9rem;
+}
+.uttak__uttaksgrad__tekst {
+    margin: 0;
+}
+.uttak__iconContainer {
+    display: inline-flex;
+    vertical-align: bottom;
+    margin-right: 0.625rem;
+}
+.uttak__icon--wide svg {
+    width: 2.25rem;
+}
+.uttak__expandedRow {
+    background: #f1f1f1;
+}
+.uttak__behandlerIcon {
+    margin: 0 0.5rem 0 1.375rem;
+}
+.uttak__lastColumn {
+    display: grid;
+    grid-template-columns: 6rem 30px;
+    grid-column-gap: 1.75rem;
+    align-items: center;
+}
+:global .ReactCollapse--collapse {
+    transition: height 500ms;
+}
+
+.borderTop {
+    border-top: 1px solid rgb(187, 187, 187);
+}

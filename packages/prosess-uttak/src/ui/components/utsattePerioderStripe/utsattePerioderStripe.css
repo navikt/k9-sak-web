@@ -1,0 +1,14 @@
+.utsattePerioderStripe {
+  margin-bottom: 1.875rem;
+  max-width: 64.375rem;
+}
+.utsattePerioderStripe :global .alertstripe__tekst {
+  max-width: 64.375rem;
+}
+.utsattePerioderStripe .punktliste {
+  padding-left: 1rem;
+  margin: 0.75rem 0 0 0.625rem;
+}
+.utsattePerioderStripe .bodyText {
+  margin-top: 0.75rem;
+}

@@ -1,0 +1,11 @@
+.infostripe {
+  margin-bottom: 1rem;
+  max-width: 64.375rem;
+}
+.infostripe :global .alertstripe__tekst {
+  max-width: 64.375rem;
+}
+.infostripe__punktliste {
+  padding-left: 1rem;
+  margin: 0;
+}

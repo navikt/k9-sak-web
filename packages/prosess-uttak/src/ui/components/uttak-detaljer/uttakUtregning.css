@@ -1,0 +1,20 @@
+.uttakUtregning {
+  border-radius: 5px;
+  margin-top: 0.625rem;
+  padding: 1.125rem 0;
+}
+.uttakUtregning--highlighted {
+  padding: 1.125rem;
+  background: #e7f4ff;
+  margin: 0.625rem 0 2.5rem;
+}
+.uttakUtregning__headingContainer {
+  display: flex;
+}
+.uttakUtregning__headingIcon svg {
+  vertical-align: middle;
+  margin-right: 0.5rem;
+}
+.uttakUtregning hr {
+  margin-top: 0.375rem;
+}
