@@ -227,7 +227,7 @@ describe('<MeldingIndex>', () => {
     userEvent.selectOptions(await screen.getByLabelText('Mottaker'), JSON.stringify(melding.overstyrtMottaker));
     userEvent.type(await screen.getByLabelText('Fritekst'), melding.fritekst);
 
-    userEvent.click(await screen.getByLabelText('Send til tredjepartsmottaker'))
+    userEvent.click(await screen.getByLabelText('Send til tredjepart'))
     const tredjepartsMottaker = {
       type: "ORGNR",
       id: "974652269",
