@@ -1,6 +1,6 @@
 import { Loader } from '@navikt/ds-react';
 import { PageError } from '@navikt/ft-plattform-komponenter';
-import { get } from '@fpsak-frontend/utils';
+import { httpUtils } from '@fpsak-frontend/utils';
 import React, { useMemo } from 'react';
 import Vurdering from '../../../types/Vurdering';
 import ContainerContext from '../../context/ContainerContext';
@@ -20,7 +20,7 @@ const VurderingsdetaljerFetcher = ({ url, contentRenderer }: VurderingsdetaljerF
   const controller = useMemo(() => new AbortController(), [url]);
 
   function hentVurderingsdetaljer(): Promise<Vurdering> {
-    return get(url, httpErrorHandler, { signal: controller.signal });
+    return httpUtils.get(url, httpErrorHandler, { signal: controller.signal });
   }
 
   const handleError = () => {

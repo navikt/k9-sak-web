@@ -1,4 +1,4 @@
-import { post } from '@fpsak-frontend/utils';
+import { httpUtils } from '@fpsak-frontend/utils';
 import { Box, Margin } from '@navikt/ft-plattform-komponenter';
 import { Alert } from '@navikt/ds-react';
 import React, { useMemo } from 'react';
@@ -42,20 +42,22 @@ const StrukturerDokumentController = ({
   const strukturerDokument = (strukturertDokument: Dokument) => {
     setIsSubmitting(true);
     setSubmitDocumentError(null);
-    post(href, { ...requestPayload, ...strukturertDokument }, httpErrorHandler, {
-      signal: controller.signal,
-    }).then(
-      () => {
-        setIsSubmitting(false);
-        onDokumentStrukturert();
-        scrollUp();
-      },
-      error => {
-        setSubmitDocumentError(error);
-        setIsSubmitting(false);
-        scrollUp();
-      },
-    );
+    httpUtils
+      .post(href, { ...requestPayload, ...strukturertDokument }, httpErrorHandler, {
+        signal: controller.signal,
+      })
+      .then(
+        () => {
+          setIsSubmitting(false);
+          onDokumentStrukturert();
+          scrollUp();
+        },
+        error => {
+          setSubmitDocumentError(error);
+          setIsSubmitting(false);
+          scrollUp();
+        },
+      );
   };
 
   const hasError = !!submitDocumentError;

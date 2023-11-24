@@ -151,3 +151,4 @@ export { prettifyDateString, prettifyDate } from './src/date-utils/format';
 export { default as dateConstants } from './src/date-utils/dateConstants';
 export { default as addYearsToDate } from './src/date-utils/addYearsToDate';
 export { dateStringSorter } from './src/date-utils/sort';
+export * as httpUtils from './src/http-utils/axiosHttpUtils';

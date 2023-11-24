@@ -1,6 +1,6 @@
 import { Tabs } from '@navikt/ds-react';
 import { Box, ChildIcon, Infostripe, Margin, PageContainer, WarningIcon } from '@navikt/ft-plattform-komponenter';
-import { get } from '@fpsak-frontend/utils';
+import { httpUtils } from '@fpsak-frontend/utils';
 import classnames from 'classnames';
 import React, { useMemo } from 'react';
 import { useQuery } from 'react-query';
@@ -102,9 +102,9 @@ const MedisinskVilkår = (): JSX.Element => {
   const controller = useMemo(() => new AbortController(), []);
 
   const hentDiagnosekoder = () =>
-    get<DiagnosekodeResponse>(endpoints.diagnosekoder, httpErrorHandler).then(
-      (response: DiagnosekodeResponse) => response,
-    );
+    httpUtils
+      .get<DiagnosekodeResponse>(endpoints.diagnosekoder, httpErrorHandler)
+      .then((response: DiagnosekodeResponse) => response);
 
   const { isLoading: diagnosekoderLoading, data: diagnosekoderData } = useQuery(
     'diagnosekodeResponse',
@@ -117,7 +117,7 @@ const MedisinskVilkår = (): JSX.Element => {
 
   const hentSykdomsstegStatus = async () => {
     try {
-      const status = await get<SykdomsstegStatusResponse>(endpoints.status, httpErrorHandler, {
+      const status = await httpUtils.get<SykdomsstegStatusResponse>(endpoints.status, httpErrorHandler, {
         signal: controller.signal,
       });
       const nesteSteg = finnNesteStegFn(status);
@@ -138,12 +138,14 @@ const MedisinskVilkår = (): JSX.Element => {
   const hentNyeDokumenterSomIkkeErVurdertHvisNødvendig = (status): Promise<[SykdomsstegStatusResponse, Dokument[]]> =>
     new Promise((resolve, reject) => {
       if (status.nyttDokumentHarIkkekontrollertEksisterendeVurderinger) {
-        get<NyeDokumenterResponse>(endpoints.nyeDokumenter, httpErrorHandler, {
-          signal: controller.signal,
-        }).then(
-          dokumenter => resolve([status, dokumenter]),
-          error => reject(error),
-        );
+        httpUtils
+          .get<NyeDokumenterResponse>(endpoints.nyeDokumenter, httpErrorHandler, {
+            signal: controller.signal,
+          })
+          .then(
+            dokumenter => resolve([status, dokumenter]),
+            error => reject(error),
+          );
       } else {
         resolve([status, []]);
       }

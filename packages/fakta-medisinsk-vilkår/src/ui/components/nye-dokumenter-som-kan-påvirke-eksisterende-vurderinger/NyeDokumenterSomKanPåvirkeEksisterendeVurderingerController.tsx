@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
 import { Box, Margin, PageContainer } from '@navikt/ft-plattform-komponenter';
-import { post } from '@fpsak-frontend/utils';
+import { httpUtils } from '@fpsak-frontend/utils';
 import Dokument from '../../../types/Dokument';
 import ContainerContext from '../../context/ContainerContext';
 import NyeDokumenterSomKanPåvirkeEksisterendeVurderinger from './NyeDokumenterSomKanPåvirkeEksisterendeVurderinger';
@@ -25,7 +25,7 @@ const NyeDokumenterSomKanPåvirkeEksisterendeVurderingerController = ({
   });
 
   const bekreftAtEndringerErRegistrert = () =>
-    post(endpoints.nyeDokumenter, createRegistrerNyeDokumenterRequestPayload(), httpErrorHandler, {
+    httpUtils.post(endpoints.nyeDokumenter, createRegistrerNyeDokumenterRequestPayload(), httpErrorHandler, {
       signal: controller.signal,
     });
 

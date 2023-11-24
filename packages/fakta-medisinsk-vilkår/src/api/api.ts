@@ -1,4 +1,4 @@
-import { post, Period } from '@fpsak-frontend/utils';
+import { httpUtils, Period } from '@fpsak-frontend/utils';
 import { Vurderingsversjon } from '../types/Vurdering';
 import Vurderingstype from '../types/Vurderingstype';
 import { PerioderMedEndringResponse } from '../types/PeriodeMedEndring';
@@ -23,7 +23,7 @@ export async function postNyVurdering(
 ): Promise<AnyType> {
   try {
     const { perioder, resultat, tekst, dokumenter, type } = vurderingsversjonMedType;
-    return post(
+    return httpUtils.post(
       href,
       {
         behandlingUuid,
@@ -63,7 +63,7 @@ export async function postEndreVurdering(
 ): Promise<AnyType> {
   try {
     const { perioder, resultat, tekst, dokumenter, versjon } = vurderingsversjon;
-    return post(
+    return httpUtils.post(
       href,
       {
         behandlingUuid,
@@ -109,7 +109,7 @@ export async function postInnleggelsesperioder(
   signal?: AbortSignal,
   dryRun?: boolean,
 ): Promise<AnyType> {
-  return post(href, { ...body, dryRun: dryRun || false }, httpErrorHandler, { signal });
+  return httpUtils.post(href, { ...body, dryRun: dryRun || false }, httpErrorHandler, { signal });
 }
 
 export async function postInnleggelsesperioderDryRun(

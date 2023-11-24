@@ -1,4 +1,4 @@
-import { get, Period } from '@fpsak-frontend/utils';
+import { httpUtils, Period } from '@fpsak-frontend/utils';
 import { PageContainer, Box, Margin } from '@navikt/ft-plattform-komponenter';
 import React, { useMemo } from 'react';
 import Dokument from '../../../types/Dokument';
@@ -132,7 +132,7 @@ const NyVurderingController = ({
         resolve([]);
       });
     }
-    return get(dataTilVurderingUrl, httpErrorHandler, { signal: controller.signal });
+    return httpUtils.get(dataTilVurderingUrl, httpErrorHandler, { signal: controller.signal });
   }
 
   const handleHentDataTilVurderingError = () => {

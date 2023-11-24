@@ -1,5 +1,5 @@
 import { Box, Margin, TitleWithUnderline, WarningIcon } from '@navikt/ft-plattform-komponenter';
-import { get, post } from '@fpsak-frontend/utils';
+import { httpUtils } from '@fpsak-frontend/utils';
 
 import { Loader } from '@navikt/ds-react';
 import React, { useMemo } from 'react';
@@ -40,9 +40,9 @@ const Diagnosekodeoversikt = ({ onDiagnosekoderUpdated }: DiagnosekodeoversiktPr
   const addButtonRef = React.useRef<HTMLButtonElement>();
 
   const hentDiagnosekoder = () =>
-    get<DiagnosekodeResponse>(endpoints.diagnosekoder, httpErrorHandler).then(
-      (response: DiagnosekodeResponse) => response,
-    );
+    httpUtils
+      .get<DiagnosekodeResponse>(endpoints.diagnosekoder, httpErrorHandler)
+      .then((response: DiagnosekodeResponse) => response);
 
   const { isLoading, data, refetch } = useQuery('diagnosekodeResponse', hentDiagnosekoder);
 
@@ -69,7 +69,7 @@ const Diagnosekodeoversikt = ({ onDiagnosekoderUpdated }: DiagnosekodeoversiktPr
   };
 
   const slettDiagnosekode = (diagnosekode: string) =>
-    post(
+    httpUtils.post(
       endreDiagnosekoderLink.href,
       {
         behandlingUuid,
@@ -80,7 +80,7 @@ const Diagnosekodeoversikt = ({ onDiagnosekoderUpdated }: DiagnosekodeoversiktPr
     );
 
   const lagreDiagnosekode = (nyeDiagnosekoder: string[]) =>
-    post(
+    httpUtils.post(
       endreDiagnosekoderLink.href,
       {
         behandlingUuid,
