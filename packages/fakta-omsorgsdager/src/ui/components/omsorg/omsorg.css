@@ -1,22 +1,27 @@
 .omsorg {
-    width: max-content;
+  width: max-content;
 }
+
 .omsorg hr {
-    border-color: #c9c9c9;
-    border-style: solid;
-    border-width: 1px 0 0 0;
-    margin-top: 1rem;
+  border-color: #c9c9c9;
+  border-style: solid;
+  border-width: 1px 0 0 0;
+  margin-top: 1rem;
 }
+
 .omsorg .barnTekst {
-    margin-bottom: 0.5rem;
-    margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+  margin-top: 0.5rem;
 }
+
 .omsorg legend {
-    margin-bottom: 0.5rem !important;
+  margin-bottom: 0.5rem !important;
 }
+
 .form > * {
-    margin-bottom: 1rem;
+  margin-bottom: 1rem;
 }
+
 .form {
-    margin-top: 1rem;
+  margin-top: 1rem;
 }

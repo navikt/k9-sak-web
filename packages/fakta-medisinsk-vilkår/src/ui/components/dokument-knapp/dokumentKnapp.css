@@ -5,15 +5,18 @@
   background: white;
   text-decoration: none;
 }
+
 .dokumentKnapp:hover {
   color: white;
   text-decoration: none;
   background-color: #254b6d;
 }
+
 .dokumentKnapp:hover svg {
   fill: white;
   stroke: white;
 }
+
 .dokumentKnapp svg {
   margin-right: 0.5rem;
   width: 1.125rem;

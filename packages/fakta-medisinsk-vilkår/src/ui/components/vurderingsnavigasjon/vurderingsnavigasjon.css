@@ -1,46 +1,57 @@
 .nyVurderingKnapp {
-    flex-basis: 40%;
-    margin-left: auto;
+  flex-basis: 40%;
+  margin-left: auto;
 }
+
 .vurderingsvelgerContainer {
-    flex-grow: 1;
-    margin-top: 0.125rem;
-    padding: 1.25rem 0 0;
+  flex-grow: 1;
+  margin-top: 0.125rem;
+  padding: 1.25rem 0 0;
 }
+
 .vurderingsvelgerContainer__columnHeadings {
-    display: flex;
-    margin-bottom: 0.25rem;
+  display: flex;
+  margin-bottom: 0.25rem;
 }
+
 .vurderingsvelgerContainer__columnHeading--first {
-    width: 4.1875rem;
-    margin-left: 0.875rem;
+  width: 4.1875rem;
+  margin-left: 0.875rem;
 }
+
 .vurderingsvelgerContainer__columnHeading--third {
-    margin-left: 8.1875rem;
+  margin-left: 8.1875rem;
 }
+
 .vurderingsperiode__postElementContainer {
-    margin-left: 1.375rem;
-    display: flex;
+  margin-left: 1.375rem;
+  display: flex;
 }
+
 .vurderingsperiode__postElementContainer :nth-child(2) {
-    margin-left: 1rem;
+  margin-left: 1rem;
 }
+
 .vurderingsperiode__postElementContainer :global .editedBySaksbehandlerIcon {
-    position: absolute;
-    height: 1.875rem;
+  position: absolute;
+  height: 1.875rem;
 }
+
 button.vurderingsnavigasjon__opprettVurderingKnapp {
-    margin-top: 1.375rem;
-    padding-right: 1.75rem;
-    font-size: 0.875rem;
+  margin-top: 1.375rem;
+  padding-right: 1.75rem;
+  font-size: 0.875rem;
 }
+
 .vurderingsnavigasjon__headingContainer {
-    display: flex;
-    justify-content: space-between;
+  display: flex;
+  justify-content: space-between;
 }
+
 .vurderingsnavigasjon__heading {
-    padding: 1.25rem 0.9375rem 0;
+  padding: 1.25rem 0.9375rem 0;
 }
+
 .vurderingsnavigasjon__ingenVurderinger {
-    margin-left: 0.9375rem;
+  margin-left: 0.9375rem;
 }

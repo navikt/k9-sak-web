@@ -1,45 +1,52 @@
 .strukturertDokumentElement {
-    display: flex;
-    align-items: center;
-    cursor: pointer;
-    color: #262626;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  color: #262626;
 }
+
 .strukturertDokumentElement__texts {
-    margin-left: 2rem;
-    display: flex;
-    align-items: center;
+  margin-left: 2rem;
+  display: flex;
+  align-items: center;
 }
+
 .strukturertDokumentElement__texts__type {
-    display: inline-block;
-    min-width: 170px;
-    color: #0067c5;
-    text-decoration: underline;
-    margin: 0;
+  display: inline-block;
+  min-width: 170px;
+  color: #0067c5;
+  text-decoration: underline;
+  margin: 0;
 }
+
 .strukturertDokumentElement__texts__date {
-    margin-left: 1rem;
+  margin-left: 1rem;
 }
+
 .strukturertDokumentElement__texts__part {
-    margin-left: 1.375rem;
-    margin-bottom: -0.25rem;
-    display: inline-block;
+  margin-left: 1.375rem;
+  margin-bottom: -0.25rem;
+  display: inline-block;
 }
+
 .strukturertDokumentElement__texts__document {
-    margin-left: 1.5rem;
-    margin-bottom: -0.125rem;
+  margin-left: 1.5rem;
+  margin-bottom: -0.125rem;
 }
+
 .strukturertDokumentElement__texts__document svg {
-    width: 1.125rem;
-    height: 1.375rem;
-    stroke: none;
+  width: 1.125rem;
+  height: 1.375rem;
+  stroke: none;
 }
+
 .strukturertDokumentElement .visuallyHidden {
-    position: absolute;
-    overflow: hidden;
-    clip: rect(0 0 0 0);
-    height: 1px;
-    width: 1px;
-    margin: -1px;
-    padding: 0;
-    border: 0;
+  position: absolute;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  height: 1px;
+  width: 1px;
+  margin: -1px;
+  padding: 0;
+  border: 0;
 }

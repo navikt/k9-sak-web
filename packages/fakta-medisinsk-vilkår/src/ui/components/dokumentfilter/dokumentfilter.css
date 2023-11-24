@@ -1,31 +1,36 @@
 .dokumentfilter {
-    margin-right: -2.8125rem;
-    margin-top: -0.25rem;
+  margin-right: -2.8125rem;
+  margin-top: -0.25rem;
 }
+
 .chevronDropdown__dropdown {
-    position: absolute;
-    top: -14px;
-    left: 40px;
-    border: 1px solid black;
-    border-radius: 3px;
-    padding: 13px 13px 24px 16px;
-    margin-left: 4px;
-    z-index: 1;
-    background-color: white;
+  position: absolute;
+  top: -14px;
+  left: 40px;
+  border: 1px solid black;
+  border-radius: 3px;
+  padding: 13px 13px 24px 16px;
+  margin-left: 4px;
+  z-index: 1;
+  background-color: white;
 }
+
 .chevronDropdown__dropdown__checkbox div {
-    margin: 10px 0;
+  margin: 10px 0;
 }
+
 button.chevronDropdown__toggleButton {
-    border: none;
-    background: none;
-    padding: unset;
-    color: black;
+  border: none;
+  background: none;
+  padding: unset;
+  color: black;
 }
+
 .chevronDropdown__toggleButton__text {
-    display: inline;
-    line-height: 19px;
+  display: inline;
+  line-height: 19px;
 }
+
 .chevronDropdown__hidden {
-    visibility: hidden;
+  visibility: hidden;
 }

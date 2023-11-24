@@ -1,6 +1,7 @@
 .listItem {
   display: flex;
 }
+
 .listItem__firstColumn {
   flex-basis: 35%;
 }

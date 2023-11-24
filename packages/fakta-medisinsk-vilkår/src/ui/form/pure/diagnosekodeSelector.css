@@ -1,56 +1,60 @@
 .diagnosekodeContainer {
-    width: 100%;
+  width: 100%;
 }
+
 .diagnosekodeContainer input {
-    min-width: 500px;
-    width: 40%;
+  min-width: 500px;
+  width: 40%;
 }
+
 .diagnosekodeContainer__hideLabel {
-    clip: rect(0 0 0 0);
-    clip-path: inset(50%);
-    height: 1px;
-    overflow: hidden;
-    position: absolute;
-    white-space: nowrap;
-    width: 1px;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  height: 1px;
+  overflow: hidden;
+  position: absolute;
+  white-space: nowrap;
+  width: 1px;
 }
+
 .diagnosekodeContainer__autocompleteContainer {
-    display: flex;
-    align-items: center;
+  display: flex;
+  align-items: center;
 }
+
 .diagnosekodeContainer__spinnerContainer {
-    margin-left: 1rem;
-    width: 2rem;
+  margin-left: 1rem;
+  width: 2rem;
 }
 
 .diagnosekodeContainer__diagnosekodeList {
-    margin: 1rem 0 0;
-    padding: 0;
+  margin: 1rem 0 0;
+  padding: 0;
 }
 
 .diagnosekodeContainer__diagnosekodeList li {
-    align-items: center;
-    display: flex;
-    justify-content: space-between;
-    list-style-type: none;
-    padding: 0.75rem 0;
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+  list-style-type: none;
+  padding: 0.75rem 0;
 }
 
 .diagnosekodeContainer__diagnosekodeList li:not(:first-of-type) {
-    border-top: 1px solid #c6c2bf;
+  border-top: 1px solid #c6c2bf;
 }
 
 .diagnosekodeContainer__diagnosekodeList li:last-of-type {
-    padding-bottom: 0;
+  padding-bottom: 0;
 }
 
 .diagnosekodeContainer__diagnosekodeList li > div {
-    margin: 0;
+  margin: 0;
 }
 
 .diagnosekodeContainer__diagnosekodeList :global(.navds-body-short) {
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    max-width: 500px;
-    overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 500px;
+  overflow: hidden;
 }

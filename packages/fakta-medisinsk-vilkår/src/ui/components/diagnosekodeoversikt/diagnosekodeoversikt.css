@@ -3,7 +3,7 @@
   color: #262626;
 }
 
-.diagnosekodeoversikt__modal form{
+.diagnosekodeoversikt__modal form {
   margin: 0;
 }
 
@@ -17,6 +17,7 @@
   dialog box.
   */
   position: fixed;
+
   /*
   The css in Autocomplete component used in the modal has width: 100% (minus
   a little) for the suggestions list. With the original position: relative
