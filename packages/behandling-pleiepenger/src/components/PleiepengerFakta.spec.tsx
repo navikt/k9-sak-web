@@ -99,6 +99,7 @@ describe('<PleiepengerFakta>', () => {
     statsborgerskap: {
       kode: '',
       kodeverk: '',
+      navn: ''
     },
     diskresjonskode: {
       kode: '',

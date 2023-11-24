@@ -102,6 +102,7 @@ describe('<OpplaeringspengerFakta>', () => {
     statsborgerskap: {
       kode: '',
       kodeverk: '',
+      navn: '',
     },
     diskresjonskode: {
       kode: '',

@@ -88,6 +88,7 @@ describe('<FrisinnFakta>', () => {
     statsborgerskap: {
       kode: '',
       kodeverk: '',
+      navn: '',
     },
     diskresjonskode: {
       kode: '',
