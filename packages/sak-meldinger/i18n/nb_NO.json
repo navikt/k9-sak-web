@@ -4,7 +4,7 @@
   "Messages.TypeAvDokumentasjon": "Type dokumentasjon du vil etterspørre",
   "Messages.VelgTypeAvDokumentasjon": "Velg type",
   "Messages.ChooseRecipient": "Velg mottaker",
-  "Messages.SendToThirdparty": "Send til tredjepartsmottaker",
+  "Messages.SendToThirdparty": "Send til tredjepart",
   "Messages.OrgNum": "Org.nr",
   "Messages.InvalidOrgNum": "Ugyldig org.nr",
   "Messages.OrgNumNotFound": "Org.nr ikke funnet i registeret",
