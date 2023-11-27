@@ -8,14 +8,10 @@ import { InnleggelsesperiodeResponse } from '../../../types/InnleggelsesperiodeR
 import { findLinkByRel } from '../../../util/linkUtils';
 import ContainerContext from '../../context/ContainerContext';
 import AddButton from '../add-button/AddButton';
-import InnleggelsesperiodeFormModal from '../innleggelsesperiodeFormModal/InnleggelsesperiodeFormModal';
+import InnleggelsesperiodeFormModal, { FieldName } from '../innleggelsesperiodeFormModal/InnleggelsesperiodeFormModal';
 import Innleggelsesperiodeliste from '../innleggelsesperiodeliste/Innleggelsesperiodeliste';
 import WriteAccessBoundContent from '../write-access-bound-content/WriteAccessBoundContent';
 import styles from './innleggelsesperiodeoversikt.css';
-
-export enum FieldName {
-  INNLEGGELSESPERIODER = 'innleggelsesperioder',
-}
 
 interface InnleggelsesperiodeoversiktProps {
   onInnleggelsesperioderUpdated: () => void;

@@ -13,7 +13,6 @@ import {
   finnMaksavgrensningerForPerioder,
   slåSammenSammenhengendePerioder,
 } from '../../../util/periodUtils';
-import { lagSluttfaseVurdering } from '../../../util/vurderingUtils';
 import ContainerContext from '../../context/ContainerContext';
 import { fomDatoErFørTomDato, harBruktDokumentasjon, required } from '../../form/validators';
 import AddButton from '../add-button/AddButton';
@@ -24,6 +23,7 @@ import StjerneIkon from '../vurdering-av-form/StjerneIkon';
 import styles from '../vurdering-av-form/vurderingForm.css';
 import VurderingDokumentfilter from '../vurdering-dokumentfilter/VurderingDokumentfilter';
 import vurderingDokumentfilterOptions from '../vurdering-dokumentfilter/vurderingDokumentfilterOptions';
+import { finnBenyttedeDokumenter } from '../../../util/dokumentUtils';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type AnyType = any;
@@ -35,6 +35,25 @@ export enum FieldName {
   DOKUMENTER = 'dokumenter',
   PERIODER = 'perioder',
 }
+
+const lagSluttfaseVurdering = (
+  formState: VurderingAvLivetsSluttfaseFormState,
+  alleDokumenter: Dokument[],
+): Partial<Vurderingsversjon> => {
+  const resultat = formState[FieldName.ER_I_LIVETS_SLUTTFASE];
+  const tekst = formState[FieldName.VURDERING_AV_LIVETS_SLUTTFASE];
+  const dokumenter = finnBenyttedeDokumenter(formState[FieldName.DOKUMENTER], alleDokumenter);
+  const perioder = formState[FieldName.PERIODER].map(
+    periodeWrapper => new Period((periodeWrapper as AnyType).period.fom, (periodeWrapper as AnyType).period.tom),
+  );
+
+  return {
+    resultat,
+    tekst,
+    perioder,
+    dokumenter,
+  };
+};
 
 export interface VurderingAvLivetsSluttfaseFormState {
   [FieldName.VURDERING_AV_LIVETS_SLUTTFASE]?: string;

@@ -12,7 +12,6 @@ import {
   finnMaksavgrensningerForPerioder,
   slåSammenSammenhengendePerioder,
 } from '../../../util/periodUtils';
-import { lagTilsynsbehovVurdering } from '../../../util/vurderingUtils';
 import ContainerContext from '../../context/ContainerContext';
 import { fomDatoErFørTomDato, harBruktDokumentasjon, required } from '../../form/validators';
 import AddButton from '../add-button/AddButton';
@@ -23,6 +22,8 @@ import VurderingDokumentfilter from '../vurdering-dokumentfilter/VurderingDokume
 import vurderingDokumentfilterOptions from '../vurdering-dokumentfilter/vurderingDokumentfilterOptions';
 import StjerneIkon from '../vurdering-av-form/StjerneIkon';
 import styles from '../vurdering-av-form/vurderingForm.css';
+import Vurderingsresultat from '../../../types/Vurderingsresultat';
+import { finnBenyttedeDokumenter } from '../../../util/dokumentUtils';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type AnyType = any;
@@ -33,6 +34,27 @@ export enum FieldName {
   PERIODER = 'perioder',
   DOKUMENTER = 'dokumenter',
 }
+
+const lagTilsynsbehovVurdering = (
+  formState: VurderingAvTilsynsbehovFormState,
+  alleDokumenter: Dokument[],
+): Partial<Vurderingsversjon> => {
+  const resultat = formState[FieldName.HAR_BEHOV_FOR_KONTINUERLIG_TILSYN_OG_PLEIE]
+    ? Vurderingsresultat.OPPFYLT
+    : Vurderingsresultat.IKKE_OPPFYLT;
+
+  const perioder = formState[FieldName.PERIODER].map(
+    periodeWrapper => new Period((periodeWrapper as AnyType).period.fom, (periodeWrapper as AnyType).period.tom),
+  );
+  const begrunnelse = formState[FieldName.VURDERING_AV_KONTINUERLIG_TILSYN_OG_PLEIE];
+
+  return {
+    resultat,
+    perioder,
+    tekst: begrunnelse,
+    dokumenter: finnBenyttedeDokumenter(formState[FieldName.DOKUMENTER], alleDokumenter),
+  };
+};
 
 export interface VurderingAvTilsynsbehovFormState {
   [FieldName.VURDERING_AV_KONTINUERLIG_TILSYN_OG_PLEIE]?: string;

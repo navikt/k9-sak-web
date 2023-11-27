@@ -11,7 +11,6 @@ import {
   finnMaksavgrensningerForPerioder,
   slåSammenSammenhengendePerioder,
 } from '../../../util/periodUtils';
-import { lagToOmsorgspersonerVurdering } from '../../../util/vurderingUtils';
 import ContainerContext from '../../context/ContainerContext';
 import { fomDatoErFørTomDato, harBruktDokumentasjon, required } from '../../form/validators';
 import AddButton from '../add-button/AddButton';
@@ -19,6 +18,8 @@ import DeleteButton from '../delete-button/DeleteButton';
 import DetailViewVurdering from '../detail-view-vurdering/DetailViewVurdering';
 import DokumentLink from '../dokument-link/DokumentLink';
 import styles from '../vurdering-av-form/vurderingForm.css';
+import { finnBenyttedeDokumenter } from '../../../util/dokumentUtils';
+import Vurderingsresultat from '../../../types/Vurderingsresultat';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type AnyType = any;
@@ -29,6 +30,26 @@ export enum FieldName {
   PERIODER = 'perioder',
   DOKUMENTER = 'dokumenter',
 }
+
+const lagToOmsorgspersonerVurdering = (
+  formState: VurderingAvToOmsorgspersonerFormState,
+  alleDokumenter: Dokument[],
+): Partial<Vurderingsversjon> => {
+  const resultat = formState[FieldName.HAR_BEHOV_FOR_TO_OMSORGSPERSONER]
+    ? Vurderingsresultat.OPPFYLT
+    : Vurderingsresultat.IKKE_OPPFYLT;
+  const perioder = formState[FieldName.PERIODER].map(
+    periodeWrapper => new Period((periodeWrapper as AnyType).period.fom, (periodeWrapper as AnyType).period.tom),
+  );
+  const begrunnelse = formState[FieldName.VURDERING_AV_TO_OMSORGSPERSONER];
+
+  return {
+    resultat,
+    perioder,
+    tekst: begrunnelse,
+    dokumenter: finnBenyttedeDokumenter(formState[FieldName.DOKUMENTER], alleDokumenter),
+  };
+};
 
 export interface VurderingAvToOmsorgspersonerFormState {
   [FieldName.VURDERING_AV_TO_OMSORGSPERSONER]?: string;

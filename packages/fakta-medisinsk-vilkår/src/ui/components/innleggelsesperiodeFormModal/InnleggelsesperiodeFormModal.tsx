@@ -7,8 +7,11 @@ import { FormProvider, useForm } from 'react-hook-form';
 import { InnleggelsesperiodeDryRunResponse } from '../../../api/api';
 import AddButton from '../add-button/AddButton';
 import DeleteButton from '../delete-button/DeleteButton';
-import { FieldName } from '../innleggelsesperiodeoversikt/Innleggelsesperiodeoversikt';
 import styles from './innleggelsesperiodeFormModal.css';
+
+export enum FieldName {
+  INNLEGGELSESPERIODER = 'innleggelsesperioder',
+}
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type AnyType = any;
