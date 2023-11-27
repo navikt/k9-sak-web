@@ -1,21 +1,23 @@
-import React from 'react';
-
-import { Story } from '@storybook/react';
-import { composeStories } from '@storybook/testing-react';
-
-import { cleanup, render, screen, waitFor } from '@testing-library/react';
+import { Story, composeStories } from '@storybook/react';
+import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { getWorker } from 'msw-storybook-addon';
-import { SetupServerApi } from 'msw/lib/node';
+import { rest } from 'msw';
+import { setupServer } from 'msw/node';
+import React from 'react';
+import { manglerInntektsmelding } from '../mock/mockedKompletthetsdata';
 import * as stories from '../src/stories/MainComponent.stories';
 import MainComponent from '../src/ui/MainComponent';
 
-describe('9069 - Mangler inntektsmelding', () => {
-  afterEach(() => {
-    cleanup();
-  });
+const server = setupServer(
+  rest.get('http://localhost/tilstand', (req, res, ctx) => res(ctx.json(manglerInntektsmelding))),
+);
 
-  afterAll(() => (getWorker() as SetupServerApi).close());
+describe('9069 - Mangler inntektsmelding', () => {
+  beforeAll(() => {
+    server.listen();
+  });
+  afterEach(() => server.resetHandlers());
+  afterAll(() => server.close());
 
   const { Mangler9069 } = composeStories(stories) as {
     [key: string]: Story<Partial<typeof MainComponent>>;
