@@ -10,7 +10,8 @@ import { StrukturerDokumentFormFieldName as FieldName } from '../../../types/Str
 import { findLinkByRel } from '../../../util/linkUtils';
 import ContainerContext from '../../context/ContainerContext';
 import { required } from '../../form/validators';
-import { ikkeDuplikatValue } from '../strukturer-dokument-form/StrukturerDokumentForm';
+
+export const ikkeDuplikatValue = 'ikkeDuplikat';
 
 interface DuplikatRadiobuttonsProps {
   dokument: Dokument;

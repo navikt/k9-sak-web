@@ -17,8 +17,6 @@ import DokumentKnapp from '../dokument-knapp/DokumentKnapp';
 import DuplikatRadiobuttons from '../duplikat-radiobuttons/DuplikatRadiobuttons';
 import StrukturerDokumentFormProps from '../../../types/StrukturerDokumentFormProps';
 
-export const ikkeDuplikatValue = 'ikkeDuplikat';
-
 const StrukturerDokumentForm = ({
   dokument,
   onSubmit,
