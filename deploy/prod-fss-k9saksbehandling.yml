@@ -1,18 +1,18 @@
-apiVersion: "nais.io/v1alpha1"
-kind: "Application"
+apiVersion: 'nais.io/v1alpha1'
+kind: 'Application'
 metadata:
   name: k9-sak-web
   namespace: k9saksbehandling
   labels:
     team: k9saksbehandling
   annotations:
-    nais.io/run-as-user: "101" # Fix permissions for nginx
-    nais.io/read-only-file-system: "false" # Fix permissions for nginx
-    nginx.ingress.kubernetes.io/proxy-buffer-size: "32k"
-    nginx.ingress.kubernetes.io/proxy-read-timeout: "600"
-    nginx.ingress.kubernetes.io/proxy-send-timeout: "600"
+    nais.io/run-as-user: '101' # Fix permissions for nginx
+    nais.io/read-only-file-system: 'false' # Fix permissions for nginx
+    nginx.ingress.kubernetes.io/proxy-buffer-size: '32k'
+    nginx.ingress.kubernetes.io/proxy-read-timeout: '600'
+    nginx.ingress.kubernetes.io/proxy-send-timeout: '600'
 spec:
-  image: {{ image }}
+  image: { { image } }
   port: 9000
   team: k9saksbehandling
   liveness:
@@ -37,67 +37,65 @@ spec:
       cpu: 200m
       memory: 32Mi
   ingresses:
-    - "https://k9.intern.nav.no/"
+    - 'https://k9.intern.nav.no/'
   env:
     - name: APP_NAME
       value: k9-sak-web
     - name: APP_URL
-      value: "http://k9-sak"
+      value: 'http://k9-sak'
     - name: APP_PORT
-      value: "9000"
+      value: '9000'
     - name: APP_URL_K9FORMIDLING
-      value: "http://k9-formidling"
+      value: 'http://k9-formidling'
     - name: APP_URL_K9FORMIDLING_DD
-      value: "http://k9-formidling-dokumentdata.k9saksbehandling"
+      value: 'http://k9-formidling-dokumentdata.k9saksbehandling'
     - name: APP_URL_K9OPPDRAG
-      value: "http://k9-oppdrag.k9saksbehandling"
+      value: 'http://k9-oppdrag.k9saksbehandling'
     - name: APP_URL_KLAGE
-      value: "http://k9-klage.k9saksbehandling"
+      value: 'http://k9-klage.k9saksbehandling'
     - name: APP_URL_K9TILBAKE
-      value: "http://k9-tilbake.k9saksbehandling"
+      value: 'http://k9-tilbake.k9saksbehandling'
     - name: APP_URL_K9FORDEL
-      value: "http://k9-fordel.k9saksbehandling"
+      value: 'http://k9-fordel.k9saksbehandling'
     - name: ENDRINGSLOGG_URL
-      value: "https://familie-endringslogg.intern.nav.no/"
+      value: 'https://familie-endringslogg.intern.nav.no/'
 
     # Feature-flag
     - name: KLAGE_KABAL
-      value: "true"
+      value: 'true'
     - name: VARSELTEKST
-      value: "true"
+      value: 'true'
     - name: DOKUMENTDATA
-      value: "false"
+      value: 'false'
     - name: UNNTAKSBEHANDLING
-      value: "false"
+      value: 'false'
     - name: KLAGEBEHANDLING
-      value: "true"
+      value: 'true'
     - name: TILBAKE
-      value: "true"
+      value: 'true'
     - name: SOKNADPERIODESTRIPE
-      value: "false"
+      value: 'false'
     - name: TYPE_MEDISINSKE_OPPLYSNINGER_BREV
-      value: "true"
+      value: 'true'
     - name: LOS_MARKER_BEHANDLING
-      value: "true"
+      value: 'true'
     - name: LOS_MARKER_BEHANDLING_SUBMIT
-      value: "false"
+      value: 'false'
     - name: AKSJONSPUNKT_9014
-      value: "true"
+      value: 'true'
     - name: AKSJONSPUNKT_9015
-      value: "true"
+      value: 'true'
     - name: FRITEKST_REDIGERING
-      value: "true"
+      value: 'true'
     - name: INKLUDER_KALENDER_PILS
-      value: "false"
+      value: 'false'
     - name: SKJUL_AVSLUTTET_ARBEIDSGIVER
-      value: "false"
+      value: 'false'
     - name: OMS_PUNSJSTRIPE
-      value: "true"
+      value: 'true'
     - name: OMSORGEN_FOR_PERIODISERT
-      value: "true"
+      value: 'true'
     - name: OVERSTYR_BEREGNING
-      value: "false"
+      value: 'false'
     - name: FAKTA_BEREGNING_REDESIGN
-      value: "false"
-    - name: NOTAT_I_SAK
-      value: "false"
+      value: 'false'
