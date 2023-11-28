@@ -50,7 +50,7 @@
     "@navikt/ds-react": "5.10.0",
     "@navikt/ds-tailwind": "^5.10.0",
     "@navikt/familie-endringslogg": "10.0.0",
-    "@navikt/ft-plattform-komponenter": "2.3.10",
+    "@navikt/ft-plattform-komponenter": "2.3.11",
     "@popperjs/core": "2.11.8",
     "@sentry/browser": "7.80.1",
     "@storybook/testing-react": "2.0.1",

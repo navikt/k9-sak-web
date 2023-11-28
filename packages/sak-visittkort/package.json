@@ -11,7 +11,7 @@
     "@fpsak-frontend/utils": "1.0.0",
     "@k9-sak-web/sak-app": "1.0.0",
     "@k9-sak-web/types": "1.0.0",
-    "@navikt/ft-plattform-komponenter": "2.3.10",
+    "@navikt/ft-plattform-komponenter": "2.3.11",
     "@navikt/k9-fe-array-utils": "1.0.6",
     "@navikt/k9-fe-bem-utils": "1.0.4",
     "@navikt/k9-fe-date-utils": "1.0.9",
