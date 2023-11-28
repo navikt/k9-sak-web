@@ -4450,7 +4450,7 @@ __metadata:
     "@navikt/ft-fakta-beregning-redesign": 1.0.12
     "@navikt/ft-fakta-fordel-beregningsgrunnlag": 7.3.16
     "@navikt/ft-prosess-beregningsgrunnlag": 6.3.16
-    "@navikt/k9-fe-uttak": 0.0.8
+    "@navikt/k9-fe-uttak": 1.0.1
     axios: 1.6.2
     axios-mock-adapter: 1.22.0
     enzyme: 3.11.0
@@ -4503,7 +4503,7 @@ __metadata:
     "@navikt/ft-fakta-beregning-redesign": 1.0.12
     "@navikt/ft-fakta-fordel-beregningsgrunnlag": 7.3.16
     "@navikt/ft-prosess-beregningsgrunnlag": 6.3.16
-    "@navikt/k9-fe-uttak": 0.0.8
+    "@navikt/k9-fe-uttak": 1.0.1
     axios: 1.6.2
     axios-mock-adapter: 1.22.0
     enzyme: 3.11.0
@@ -4562,7 +4562,7 @@ __metadata:
     "@navikt/ft-fakta-beregning-redesign": 1.0.12
     "@navikt/ft-fakta-fordel-beregningsgrunnlag": 7.3.16
     "@navikt/ft-prosess-beregningsgrunnlag": 6.3.16
-    "@navikt/k9-fe-uttak": 0.0.8
+    "@navikt/k9-fe-uttak": 1.0.1
     axios: 1.6.2
     axios-mock-adapter: 1.22.0
     enzyme: 3.11.0
@@ -5477,7 +5477,7 @@ __metadata:
     "@navikt/ft-plattform-komponenter": 2.3.10
     "@navikt/ft-prosess-beregningsgrunnlag": 6.3.16
     "@navikt/ft-ui-komponenter": 2.1.13
-    "@navikt/k9-fe-uttak": 0.0.8
+    "@navikt/k9-fe-uttak": 1.0.1
     "@sentry/browser": 7.80.1
     axios: 1.6.2
     classnames: 2.3.2
@@ -6286,9 +6286,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@navikt/k9-fe-uttak@npm:0.0.8":
-  version: 0.0.8
-  resolution: "@navikt/k9-fe-uttak@npm:0.0.8::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fk9-fe-uttak%2F0.0.8%2F4239ae25bb49577e8715cffcf0bed0125fb99de0"
+"@navikt/k9-fe-uttak@npm:1.0.1":
+  version: 1.0.1
+  resolution: "@navikt/k9-fe-uttak@npm:1.0.1::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fk9-fe-uttak%2F1.0.1%2F4a7cfa9f8bcc1e0f31129106a9b17f63e284aedd"
   peerDependencies:
     "@navikt/ds-css": 5.10.0
     "@navikt/ds-react": 5.10.0
@@ -6328,7 +6328,7 @@ __metadata:
     react-dom: 18.x
     react-hook-form: 7.48.2
     react-popper: 2.x
-  checksum: df2c46c3f20e894d37b94574800ac56cf1687a0ac109047d4a8eb5b54977f02e3a0d59d60eeb3b5b212830af344d92db8bb75af9b76e49392a384ca573269924
+  checksum: a78f163981915339dd8b1c517811648d2b63cdd7e3d6bac25047916f733eb1f326ff0be1bd1eb7ef5659a4a07da201c18fd9d6aafc8f8c4679e66198a6f8d019
   languageName: node
   linkType: hard
 

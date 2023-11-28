@@ -42,7 +42,7 @@
     "@navikt/ft-fakta-beregning-redesign": "1.0.12",
     "@navikt/ft-fakta-fordel-beregningsgrunnlag": "7.3.16",
     "@navikt/ft-prosess-beregningsgrunnlag": "6.3.16",
-    "@navikt/k9-fe-uttak": "0.0.8",
+    "@navikt/k9-fe-uttak": "1.0.1",
     "axios": "1.6.2",
     "nav-frontend-alertstriper": "4.0.2",
     "react": "18.2.0",
