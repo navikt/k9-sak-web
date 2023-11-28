@@ -23,7 +23,7 @@
     "@k9-sak-web/rest-api": "1.0.0",
     "@k9-sak-web/rest-api-hooks": "1.0.0",
     "@k9-sak-web/types": "1.0.0",
-    "@navikt/ft-fakta-beregning": "5.0.13",
+    "@navikt/ft-fakta-beregning": "5.0.15",
     "@navikt/ft-fakta-beregning-redesign": "1.0.12",
     "@navikt/ft-prosess-beregningsgrunnlag": "6.3.16",
     "react": "18.2.0",
