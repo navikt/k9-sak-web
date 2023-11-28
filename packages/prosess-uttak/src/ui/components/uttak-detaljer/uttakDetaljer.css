@@ -1,0 +1,80 @@
+.uttakDetaljer__oppsummering {
+  display: flex;
+  padding-left: 1.125rem;
+}
+.uttakDetaljer__oppsummering__container {
+  display: flex;
+  align-items: flex-end;
+  padding: 0.625rem 0;
+}
+.uttakDetaljer__oppsummering__container--highlighted {
+  padding: 0.625rem 1.375rem 0.625rem 0.625rem;
+  background: #e7f4ff;
+  border-radius: 5px;
+}
+.uttakDetaljer__oppsummering__container:first-of-type {
+  margin-right: 1.625rem;
+}
+.uttakDetaljer__oppsummering__tekst {
+  margin: 0 0 0 0.75rem;
+}
+.uttakDetaljer__oppsummering__checkIcon {
+  margin-right: 0.5rem;
+}
+.uttakDetaljer__grid {
+  display: grid;
+  grid-template-columns: 30rem 30rem;
+  row-gap: 1rem;
+  column-gap: 2rem;
+  margin: 0 1.125rem;
+}
+.uttakDetaljer__etikett {
+  display: flex;
+  align-items: center;
+  margin: 0 1.125rem 1rem;
+  padding: 0.8125rem 1.125rem;
+}
+.uttakDetaljer__data {
+  margin: 0.5rem 0;
+  line-height: 1.375rem;
+  display: flex;
+}
+.uttakDetaljer__data--utnullet {
+  text-decoration: line-through;
+}
+.uttakDetaljer__data__questionMark {
+  margin-left: 0.75rem;
+  margin-top: -0.125rem;
+}
+.uttakDetaljer__data--margin-left {
+  margin-left: 0.25rem;
+}
+.uttakDetaljer__data--margin-left-right {
+  margin: 0 4px;
+}
+.uttakDetaljer__separator {
+  max-width: 200px;
+  margin-left: 0;
+  margin-bottom: 0;
+}
+.uttakDetaljer__sum {
+  margin-top: 1rem;
+  text-decoration: underline;
+}
+.uttakDetaljer__avkortingMotArbeid {
+  display: grid;
+  column-gap: 2rem;
+}
+.uttakDetaljer__avkortingMotArbeid__heading {
+  margin: 0.5rem 0;
+}
+.uttakDetaljer__avkortingMotArbeid__heading span {
+  display: block;
+}
+.uttakDetaljer__etikettBarnetsDødsfall {
+  background: #cde7d8;
+  border: 1px solid #06893a;
+  border-radius: 0.3125rem;
+  margin: 0 1.125rem 1rem;
+  padding: 0.8125rem 1.125rem;
+}

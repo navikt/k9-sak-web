@@ -1,7 +1,7 @@
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import { Aksjonspunkt, AlleKodeverk, ArbeidsgiverOpplysningerPerId } from '@k9-sak-web/types';
-import { Uttak } from '@navikt/k9-fe-uttak';
+import { Uttak } from '@k9-sak-web/prosess-uttak';
 import React from 'react';
 
 interface UttakProps {

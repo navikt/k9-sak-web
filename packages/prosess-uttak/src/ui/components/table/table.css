@@ -1,0 +1,23 @@
+.table {
+  background-color: transparent;
+  border-collapse: separate;
+  border-spacing: 0;
+  margin-bottom: 1rem;
+  max-width: 100%;
+  width: 100%;
+}
+.table thead {
+  display: table-header-group;
+}
+.table caption {
+  color: grey;
+  left: -3000px;
+  padding-bottom: 8px;
+  padding-top: 8px;
+  position: absolute;
+  text-align: left;
+}
+.table tbody tr:first-child th,
+.table tbody tr:first-child td {
+  border-top-width: 2px;
+}
