@@ -1,6 +1,6 @@
 .dokumentasjonFooter {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   column-gap: 4rem;
   max-width: 1190px;
 }
