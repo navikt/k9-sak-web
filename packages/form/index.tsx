@@ -29,3 +29,10 @@ export {
   getBehandlingFormSyncErrors,
   getBehandlingFormPrefix,
 } from './src/behandlingForm';
+
+export { default as CheckboxGroupRHF } from './src/hook-form/CheckboxGroup';
+export { default as DatepickerRHF } from './src/hook-form/Datepicker';
+export { default as PeriodpickerListRHF } from './src/hook-form/PeriodpickerList';
+export { default as RadioGroupPanelRHF } from './src/hook-form/RadioGroupPanel';
+export { default as YesOrNoQuestionRHF } from './src/hook-form/YesOrNoQuestion';
+export { default as TextAreaRHF } from './src/hook-form/TextArea';
