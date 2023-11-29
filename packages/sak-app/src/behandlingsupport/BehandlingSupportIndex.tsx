@@ -24,7 +24,7 @@ import HistorikkIndex from './historikk/HistorikkIndex';
 import MeldingIndex from './melding/MeldingIndex';
 import NotaterIndex from './notater/NotaterIndex';
 import TotrinnskontrollIndex from './totrinnskontroll/TotrinnskontrollIndex';
-import MeldingBackendClient from "./melding/MeldingBackendClient";
+import MeldingBackendClient from './melding/MeldingBackendClient';
 
 export const hentSynligePaneler = (
   behandlingRettigheter?: BehandlingRettigheter,
@@ -36,8 +36,6 @@ export const hentSynligePaneler = (
         return behandlingRettigheter && behandlingRettigheter.behandlingTilGodkjenning;
       case SupportTabs.FRA_BESLUTTER:
         return behandlingRettigheter && behandlingRettigheter.behandlingFraBeslutter;
-      case SupportTabs.NOTATER:
-        return featureToggles?.NOTAT_I_SAK;
       default:
         return true;
     }
@@ -104,7 +102,7 @@ const BehandlingSupportIndex = ({
   const { data: notater } = useQuery({
     queryKey: notaterQueryKey,
     queryFn: ({ signal }) => getNotater(signal),
-    enabled: featureToggles?.NOTAT_I_SAK && !!fagsak,
+    enabled: !!fagsak,
     refetchOnWindowFocus: false,
   });
 
@@ -195,9 +193,7 @@ const BehandlingSupportIndex = ({
             behandlingUuid={behandling?.uuid}
           />
         )}
-        {aktivtSupportPanel === SupportTabs.NOTATER && featureToggles?.NOTAT_I_SAK && (
-          <NotaterIndex navAnsatt={navAnsatt} fagsak={fagsak} />
-        )}
+        {aktivtSupportPanel === SupportTabs.NOTATER && <NotaterIndex navAnsatt={navAnsatt} fagsak={fagsak} />}
       </div>
     </>
   );
