@@ -28,11 +28,11 @@
     "@types/react-dom": "18.2.14"
   },
   "dependencies": {
-    "@navikt/ds-css": "5.8.0",
-    "@navikt/ds-react": "5.8.0",
-    "@navikt/ft-form-hooks": "4.2.11",
-    "@navikt/ft-form-validators": "2.1.4",
-    "@navikt/ft-plattform-komponenter": "2.3.7",
+    "@navikt/ds-css": "5.11.2",
+    "@navikt/ds-react": "5.11.2",
+    "@navikt/ft-form-hooks": "4.2.17",
+    "@navikt/ft-form-validators": "2.1.10",
+    "@navikt/ft-plattform-komponenter": "2.3.14",
     "@popperjs/core": "2.11.8",
     "classnames": "2.3.2",
     "cors": "2.8.5",
@@ -66,7 +66,7 @@
     "react": "18.2.0",
     "react-collapse": "5.1.1",
     "react-dom": "18.2.0",
-    "react-hook-form": "7.47.0",
+    "react-hook-form": "7.48.2",
     "react-popper": "2.3.0"
   }
 }
