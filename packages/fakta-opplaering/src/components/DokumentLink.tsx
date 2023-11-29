@@ -1,7 +1,7 @@
 import Dokument, { dokumentLabel } from '@k9-sak-web/types/src/sykdom/Dokument';
 import { Link } from '@navikt/ds-react';
 import { DocumentIcon } from '@navikt/ft-plattform-komponenter';
-import { prettifyDateString } from '@fpsak-frontend/utils';
+import { prettifyDateString } from '@navikt/k9-fe-date-utils';
 import React from 'react';
 import styles from './dokumentLink.module.css';
 

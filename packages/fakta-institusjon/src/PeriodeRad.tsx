@@ -7,7 +7,7 @@ import {
   RedCrossIconFilled,
   WarningIcon,
 } from '@navikt/ft-plattform-komponenter';
-import { Period } from '@fpsak-frontend/utils';
+import { Period } from '@navikt/k9-fe-period-utils';
 import React from 'react';
 import styles from './periodeRad.modules.css';
 

@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import { NavigationWithDetailView } from '@navikt/ft-plattform-komponenter';
 import { Alert } from '@navikt/ds-react';
 import { NoedvendighetVurdering } from '@k9-sak-web/types';
-import { Period } from '@fpsak-frontend/utils';
+import { Period } from '@navikt/k9-fe-period-utils';
 import {
   FaktaOpplaeringContext,
   FaktaOpplaeringContextTypes,

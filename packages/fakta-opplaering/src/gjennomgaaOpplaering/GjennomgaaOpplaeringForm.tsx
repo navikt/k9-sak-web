@@ -8,7 +8,8 @@ import { v4 } from 'uuid';
 import * as yup from 'yup';
 
 import RadioGroupFormik from '@fpsak-frontend/form/src/RadioGroupFormik';
-import { Period, getPeriodDifference, required } from '@fpsak-frontend/utils';
+import { required } from '@fpsak-frontend/utils';
+import { getPeriodDifference, Period } from '@navikt/k9-fe-period-utils';
 import {
   FaktaOpplaeringContext,
   FaktaOpplaeringContextTypes,

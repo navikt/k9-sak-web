@@ -7,7 +7,8 @@ import dayjs from 'dayjs';
 
 import { FaktaOpplaeringContext } from '@k9-sak-web/behandling-opplaeringspenger/src/FaktaOpplaeringContext';
 
-import { getPeriodDifference, Period, DDMMYYYY_DATE_FORMAT, required } from '@fpsak-frontend/utils';
+import { DDMMYYYY_DATE_FORMAT, required } from '@fpsak-frontend/utils';
+import { getPeriodDifference, Period } from '@navikt/k9-fe-period-utils';
 import { Formik } from 'formik';
 import { Button, Alert } from '@navikt/ds-react';
 import { ReisetidVurdering } from './ReisetidTypes';
