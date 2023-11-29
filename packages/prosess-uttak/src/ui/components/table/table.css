@@ -6,9 +6,11 @@
   max-width: 100%;
   width: 100%;
 }
+
 .table thead {
   display: table-header-group;
 }
+
 .table caption {
   color: grey;
   left: -3000px;
@@ -17,6 +19,7 @@
   position: absolute;
   text-align: left;
 }
+
 .table tbody tr:first-child th,
 .table tbody tr:first-child td {
   border-top-width: 2px;

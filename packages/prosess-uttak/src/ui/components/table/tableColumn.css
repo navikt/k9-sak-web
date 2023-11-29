@@ -2,15 +2,18 @@
   line-height: 1.42857143;
   padding: 0.6875rem 0.3125rem 0.625rem;
   text-align: left;
-  border-bottom: 1px solid #bbbbbb;
+  border-bottom: 1px solid #bbb;
 }
+
 .columnStyle:first-of-type {
-  border-left: 1px solid #bbbbbb;
+  border-left: 1px solid #bbb;
 }
+
 .columnStyle:last-of-type {
-  border-right: 1px solid #bbbbbb;
+  border-right: 1px solid #bbb;
   width: 6.5rem;
 }
+
 .columnStyle > svg {
   vertical-align: bottom;
 }

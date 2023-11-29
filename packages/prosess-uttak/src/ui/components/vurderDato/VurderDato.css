@@ -1,17 +1,19 @@
 .vurderDatoContainer {
-    margin-top: 1rem;
-    max-width: 44rem;
+  margin-top: 1rem;
+  max-width: 44rem;
 }
 
 .info {
-    margin-top: 1rem;
-    margin-bottom: 1rem;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
 }
 
 .alertAccordion :global(.navds-accordion__header) {
-    box-shadow: none !important;
-    --a-spacing-3: 0;
+  --a-spacing-3: 0;
+
+  box-shadow: none !important;
 }
+
 .alertAccordion :global(.navds-accordion__content) {
-    --a-spacing-5: 0;
+  --a-spacing-5: 0;
 }
