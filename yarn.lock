@@ -5002,7 +5002,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@k9-sak-web/prosess-uttak@workspace:packages/prosess-uttak"
   dependencies:
-    "@navikt/ds-css": 5.8.0
+    "@navikt/ds-css": 5.11.2
     "@navikt/ds-react": 5.8.0
     "@navikt/ft-form-hooks": 4.2.11
     "@navikt/ft-form-validators": 2.1.4
@@ -5578,17 +5578,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@navikt/ds-css@npm:5.11.2":
+  version: 5.11.2
+  resolution: "@navikt/ds-css@npm:5.11.2::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fds-css%2F5.11.2%2F42b0d0aa14fa32035e3fedc3569e47ca7faf30e8"
+  checksum: c48138d86c3caed2c97f002a9ebabd6357b98614f638c517ca016ffe216f66c37261ba74b9bc7d070ed6e0e18378d0299c228c788c1b008ec92f5fcefa3c41b3
+  languageName: node
+  linkType: hard
+
 "@navikt/ds-css@npm:5.7.6":
   version: 5.7.6
   resolution: "@navikt/ds-css@npm:5.7.6::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fds-css%2F5.7.6%2Ffef98381e0ed44b133390f7e2ed272b6fb5ec89e"
   checksum: 52f83487fb8d3d7070ccf9540c2fd41199a6e03af0c59099abadb0ed243002e770a92e6cdfe6e43641c413db843411a462f5903944abe76c08aa9c1d37a1242b
-  languageName: node
-  linkType: hard
-
-"@navikt/ds-css@npm:5.8.0":
-  version: 5.8.0
-  resolution: "@navikt/ds-css@npm:5.8.0::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fds-css%2F5.8.0%2F899d01811f3761f0c6135dd1d621d38d52138d12"
-  checksum: b52dc1d22e605a4e21173f28ad95af03f5bd1e277fe1ded68d100db68ad6e44a343ff283ccf7af00be467474e8844afff00cab8252a5a8b7236b444e7d426c48
   languageName: node
   linkType: hard
 
@@ -18524,7 +18524,7 @@ __metadata:
     "@formatjs/intl-numberformat": 8.8.0
     "@hookform/error-message": ^2.0.1
     "@navikt/aksel-icons": 5.10.0
-    "@navikt/ds-css": 5.10.0
+    "@navikt/ds-css": 5.11.2
     "@navikt/ds-react": 5.10.0
     "@navikt/ds-tailwind": ^5.10.0
     "@navikt/familie-endringslogg": 10.0.0
