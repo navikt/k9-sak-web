@@ -1,8 +1,8 @@
-import PropTypes from 'prop-types';
 import React from 'react';
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 import messages from '../i18n/nb_NO.json';
 import InntektOgYtelserPanel from './components/InntektOgYtelserFaktaPanel';
+import { Inntekt } from './InntektType';
 
 const cache = createIntlCache();
 
@@ -14,14 +14,14 @@ const intl = createIntl(
   cache,
 );
 
-const InntektOgYtelserFaktaIndex = ({ inntektOgYtelser }) => (
+interface InntektOgYtelserFaktaIndexProps {
+  inntektOgYtelser?: { inntekt: Inntekt[] };
+}
+
+const InntektOgYtelserFaktaIndex: React.FC<InntektOgYtelserFaktaIndexProps> = ({ inntektOgYtelser }) => (
   <RawIntlProvider value={intl}>
-    <InntektOgYtelserPanel inntekter={inntektOgYtelser.inntekt} />
+    <InntektOgYtelserPanel inntekter={inntektOgYtelser?.inntekt} />
   </RawIntlProvider>
 );
-
-InntektOgYtelserFaktaIndex.propTypes = {
-  inntektOgYtelser: PropTypes.shape().isRequired,
-};
 
 export default InntektOgYtelserFaktaIndex;

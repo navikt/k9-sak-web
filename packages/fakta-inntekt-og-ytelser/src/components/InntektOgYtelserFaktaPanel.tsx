@@ -1,12 +1,12 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { FormattedMessage } from 'react-intl';
 import moment from 'moment';
-import { Normaltekst } from 'nav-frontend-typografi';
 import Panel from 'nav-frontend-paneler';
+import { Normaltekst } from 'nav-frontend-typografi';
+import React from 'react';
+import { FormattedMessage } from 'react-intl';
 
-import { formatCurrencyWithKr, ISO_DATE_FORMAT } from '@fpsak-frontend/utils';
 import { PeriodLabel, Table, TableColumn, TableRow } from '@fpsak-frontend/shared-components';
+import { formatCurrencyWithKr, ISO_DATE_FORMAT } from '@fpsak-frontend/utils';
+import { Inntekt } from '../InntektType';
 
 const headerTextCodes = [
   'InntektOgYtelserFaktaPanel.Employer',
@@ -14,10 +14,14 @@ const headerTextCodes = [
   'InntektOgYtelserFaktaPanel.Amount',
 ];
 
-const sortInntekter = (inntekt1, inntekt2) =>
+const sortInntekter = (inntekt1: Inntekt, inntekt2: Inntekt) =>
   moment(inntekt2.fom, ISO_DATE_FORMAT).diff(moment(inntekt1.fom, ISO_DATE_FORMAT));
 
-const InntektOgYtelserFaktaPanel = ({ inntekter }) => {
+interface InntektOgYtelserFaktaPanelProps {
+  inntekter?: Inntekt[];
+}
+
+const InntektOgYtelserFaktaPanel: React.FC<InntektOgYtelserFaktaPanelProps> = ({ inntekter }) => {
   if (!inntekter || inntekter.length === 0) {
     return (
       <Panel border>
@@ -46,14 +50,6 @@ const InntektOgYtelserFaktaPanel = ({ inntekter }) => {
       </Table>
     </Panel>
   );
-};
-
-InntektOgYtelserFaktaPanel.propTypes = {
-  inntekter: PropTypes.arrayOf(PropTypes.shape()),
-};
-
-InntektOgYtelserFaktaPanel.defaultProps = {
-  inntekter: [],
 };
 
 export default InntektOgYtelserFaktaPanel;
