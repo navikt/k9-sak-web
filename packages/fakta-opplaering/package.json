@@ -12,7 +12,7 @@
     "@navikt/ds-react": "5.11.2",
     "@navikt/ft-plattform-komponenter": "2.3.14",
     "@navikt/k9-fe-date-utils": "1.0.9",
-    "@navikt/k9-fe-form-utils": "1.0.16",
+    "@navikt/k9-fe-form-utils": "1.0.17",
     "@navikt/k9-fe-period-utils": "1.0.12",
     "classnames": "2.3.2",
     "dayjs": "1.11.10",
