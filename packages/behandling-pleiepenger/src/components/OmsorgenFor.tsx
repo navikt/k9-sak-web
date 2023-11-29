@@ -2,7 +2,7 @@ import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { findAksjonspunkt, findEndpointsForMicrofrontend, httpErrorHandler } from '@fpsak-frontend/utils';
 import { useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
 import { Aksjonspunkt, BehandlingAppKontekst } from '@k9-sak-web/types';
-import { OmsorgenFor } from '@k9-sak-web/fakta-omsorgen-for';
+import { OmsorgenFor } from '@navikt/k9-fe-omsorgen-for';
 import React from 'react';
 
 interface OmsorgenForProps {

@@ -1,5 +1,5 @@
 import { FormState } from '@fpsak-frontend/form';
-import { Omsorgsdager } from '@k9-sak-web/fakta-omsorgsdager';
+import { Omsorgsdager } from '@navikt/k9-fe-omsorgsdager';
 import React from 'react';
 import KartleggePropertyTilOmsorgenForMikrofrontendKomponent from './KartleggePropertyTilOmsorgenForMikrofrontendKomponent';
 
