@@ -1,7 +1,7 @@
 import { Aksjonspunkt, Behandling, Vilkar } from '@k9-sak-web/types';
 import { FormState } from '@fpsak-frontend/form/index';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
-import { KomponenterEnum } from '@k9-sak-web/fakta-omsorgsdager';
+import { KomponenterEnum } from '@navikt/k9-fe-omsorgsdager';
 import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { generereInfoForVurdertVilkar } from '../../../UtvidetRettOmsorgenForMikrofrontendFelles';

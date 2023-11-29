@@ -1,7 +1,7 @@
 import { Aksjonspunkt, Vilkar } from '@k9-sak-web/types';
 import { FormState } from '@fpsak-frontend/form/index';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
-import { KomponenterEnum } from '@k9-sak-web/fakta-omsorgsdager';
+import { KomponenterEnum } from '@navikt/k9-fe-omsorgsdager';
 import { generereInfoForVurdertVilkar } from '../../../UtvidetRettOmsorgenForMikrofrontendFelles';
 import { VilkarMidlertidigAleneProps } from '../../../../../types/utvidetRettMikrofrontend/VilkarMidlertidigAleneProps';
 import UtvidetRettSoknad from '../../../../../types/UtvidetRettSoknad';

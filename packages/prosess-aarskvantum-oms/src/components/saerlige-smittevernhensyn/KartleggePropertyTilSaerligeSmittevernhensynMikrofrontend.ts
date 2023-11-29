@@ -3,7 +3,7 @@ import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import { Aksjonspunkt, Behandling, UtfallEnum, Uttaksperiode } from '@k9-sak-web/types';
-import { KomponenterEnum } from '@k9-sak-web/fakta-omsorgsdager';
+import { KomponenterEnum } from '@navikt/k9-fe-omsorgsdager';
 import { isAfter, parse } from 'date-fns';
 import Aktivitet from '../../dto/Aktivitet';
 import PeriodeBekreftetStatus from '../../dto/PeriodeBekreftetStatus';
