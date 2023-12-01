@@ -98,4 +98,4 @@ spec:
     - name: OVERSTYR_BEREGNING
       value: "false"
     - name: FAKTA_BEREGNING_REDESIGN
-      value: "false"
+      value: "true"
