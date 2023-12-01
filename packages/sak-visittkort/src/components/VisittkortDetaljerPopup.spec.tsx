@@ -22,6 +22,7 @@ describe('<VisittkortDetaljerPopup>', () => {
     statsborgerskap: {
       kode: 'NORSK',
       kodeverk: 'STATSBORGERSKAP',
+      navn: 'NORSK',
     },
     avklartPersonstatus: {
       orginalPersonstatus: {

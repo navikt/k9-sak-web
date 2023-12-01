@@ -1,18 +1,18 @@
-import React, { useMemo } from 'react';
+import React from 'react';
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 
 import {
-  Kodeverk,
-  KodeverkMedNavn,
-  Personopplysninger,
   ArbeidsgiverOpplysningerPerId,
   Brevmaler,
+  Kodeverk,
+  KodeverkMedNavn,
   Mottaker,
+  Personopplysninger,
 } from '@k9-sak-web/types';
 
 import { Fritekstbrev } from '@k9-sak-web/types/src/formidlingTsType';
 import messages from '../i18n/nb_NO.json';
-import Messages, { FormValues } from './components/Messages';
+import Messages, { type BackendApi as MessagesBackendApi, type FormValues } from './components/Messages';
 import MessagesTilbakekreving from './components/MessagesTilbakekreving';
 
 const cache = createIntlCache();
@@ -24,6 +24,8 @@ const intl = createIntl(
   },
   cache,
 );
+
+export interface BackendApi extends MessagesBackendApi {}
 
 interface OwnProps {
   submitCallback: (values: FormValues) => void;
@@ -42,6 +44,7 @@ interface OwnProps {
   personopplysninger?: Personopplysninger;
   arbeidsgiverOpplysningerPerId?: ArbeidsgiverOpplysningerPerId;
   erTilbakekreving: boolean;
+  readonly backendApi: BackendApi;
 }
 
 const MeldingerSakIndex = ({
@@ -56,6 +59,7 @@ const MeldingerSakIndex = ({
   personopplysninger,
   arbeidsgiverOpplysningerPerId,
   erTilbakekreving,
+  backendApi,
 }: OwnProps) => (
   <RawIntlProvider value={intl}>
     {erTilbakekreving ? (
@@ -83,6 +87,7 @@ const MeldingerSakIndex = ({
         revurderingVarslingArsak={revurderingVarslingArsak}
         personopplysninger={personopplysninger}
         arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
+        backendApi={backendApi}
       />
     )}
   </RawIntlProvider>

@@ -5,7 +5,11 @@ import BehandlingType, { erTilbakekrevingType } from '@fpsak-frontend/kodeverk/s
 import dokumentMalType from '@fpsak-frontend/kodeverk/src/dokumentMalType';
 import venteArsakType from '@fpsak-frontend/kodeverk/src/venteArsakType';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
-import MeldingerSakIndex, { FormValues, MessagesModalSakIndex } from '@k9-sak-web/sak-meldinger';
+import MeldingerSakIndex, {
+  FormValues,
+  MessagesModalSakIndex,
+  type MeldingerSakIndexBackendApi,
+} from '@k9-sak-web/sak-meldinger';
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
 import { RestApiState } from '@k9-sak-web/rest-api-hooks';
 import {
@@ -91,6 +95,8 @@ const getPreviewCallback =
     fetchPreview(false, data);
   };
 
+export interface BackendApi extends MeldingerSakIndexBackendApi {}
+
 interface OwnProps {
   fagsak: Fagsak;
   alleBehandlinger: BehandlingAppKontekst[];
@@ -98,6 +104,7 @@ interface OwnProps {
   behandlingVersjon?: number;
   personopplysninger?: Personopplysninger;
   arbeidsgiverOpplysninger?: ArbeidsgiverOpplysningerWrapper;
+  readonly backendApi: BackendApi;
 }
 
 const EMPTY_ARRAY = [];
@@ -114,6 +121,7 @@ const MeldingIndex = ({
   behandlingVersjon,
   personopplysninger,
   arbeidsgiverOpplysninger,
+  backendApi,
 }: OwnProps) => {
   const [showSettPaVentModal, setShowSettPaVentModal] = useState(false);
   const [showMessagesModal, setShowMessageModal] = useState(false);
@@ -228,6 +236,7 @@ const MeldingIndex = ({
           behandling.type.kode === BehandlingType.TILBAKEKREVING ||
           behandling.type.kode === BehandlingType.TILBAKEKREVING_REVURDERING
         }
+        backendApi={backendApi}
       />
 
       {submitFinished && showSettPaVentModal && (

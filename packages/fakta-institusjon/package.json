@@ -7,9 +7,9 @@
   "dependencies": {
     "@fpsak-frontend/form": "*",
     "@k9-sak-web/types": "*",
-    "@navikt/ft-plattform-komponenter": "2.3.9",
-    "@navikt/k9-fe-form-utils": "1.0.12",
-    "@navikt/k9-fe-period-utils": "1.0.10",
+    "@navikt/ft-plattform-komponenter": "2.3.14",
+    "@navikt/k9-fe-form-utils": "1.0.17",
+    "@navikt/k9-fe-period-utils": "1.0.12",
     "formik": "2.4.5",
     "yup": "0.32.11"
   }

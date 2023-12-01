@@ -71,6 +71,11 @@ const renderFunc = Component => {
   if (app === null) {
     throw new Error('No app element');
   }
+  if (process.env.NODE_ENV === 'test') {
+    // eslint-disable-next-line global-require
+    const { worker } = require('../../mocks/browser');
+    worker.start({ onUnhandledRequest: 'bypass' });
+  }
 
   const root = createRoot(app);
 

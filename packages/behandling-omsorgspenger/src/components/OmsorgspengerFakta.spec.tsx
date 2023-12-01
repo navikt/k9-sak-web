@@ -128,6 +128,7 @@ describe('<OmsorgspengerFakta>', () => {
     statsborgerskap: {
       kode: '',
       kodeverk: '',
+      navn: '',
     },
     diskresjonskode: {
       kode: '',

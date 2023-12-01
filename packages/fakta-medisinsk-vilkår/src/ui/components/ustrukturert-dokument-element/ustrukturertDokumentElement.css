@@ -1,0 +1,51 @@
+.ustrukturertDokumentElement {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.ustrukturertDokumentElement__texts {
+  margin-left: 2rem;
+  display: flex;
+  align-items: center;
+}
+
+.ustrukturertDokumentElement__texts__type {
+  display: inline-block;
+  min-width: 170px;
+  color: #0067c5;
+  text-decoration: underline;
+  margin: 0;
+}
+
+.ustrukturertDokumentElement__texts__date {
+  margin-left: 1rem;
+}
+
+.ustrukturertDokumentElement__texts__part {
+  margin-left: 1rem;
+  margin-bottom: -0.25rem;
+  display: inline-block;
+}
+
+.ustrukturertDokumentElement__texts__document {
+  margin-left: 1.5rem;
+  margin-bottom: -0.125rem;
+}
+
+.ustrukturertDokumentElement__texts__document svg {
+  width: 1.125rem;
+  height: 1.375rem;
+  stroke: none;
+}
+
+.ustrukturertDokumentElement .visuallyHidden {
+  position: absolute;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  height: 1px;
+  width: 1px;
+  margin: -1px;
+  padding: 0;
+  border: 0;
+}

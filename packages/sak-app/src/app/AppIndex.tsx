@@ -28,7 +28,6 @@ import '@navikt/k9-fe-etablert-tilsyn/build/styles.css';
 import '@navikt/k9-fe-inntektsmelding/build/styles.css';
 import '@navikt/k9-fe-omsorgen-for/build/styles.css';
 import '@navikt/k9-fe-omsorgsdager/build/styles.css';
-import '@navikt/k9-fe-uttak/build/styles.css';
 
 import 'nav-datovelger/lib/styles/main.css';
 import 'nav-frontend-alertstriper-style/dist/main.css';
