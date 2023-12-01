@@ -34,6 +34,7 @@ describe('<VisittkortPanel>', () => {
     statsborgerskap: {
       kode: 'NORSK',
       kodeverk: 'STATSBORGERSKAP',
+      navn: 'NORSK',
     },
     avklartPersonstatus: {
       orginalPersonstatus: {

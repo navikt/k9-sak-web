@@ -1,0 +1,30 @@
+<html>
+    <head>
+        <title>Etablert tilsyn</title>
+        <style>
+            body {
+                font-family: 'Source Sans Pro', Arial, sans-serif;
+                font-size: 1rem;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="app" style="padding: 2.5rem"></div>
+        <script type="text/javascript">
+            document.addEventListener('DOMContentLoaded', () => {
+                window.renderTilsynApp('app', {
+                    readOnly: false,
+                    endpoints: {
+                        tilsyn: 'http://localhost:8082/mock/tilsyn',
+                        sykdom: 'http://localhost:8082/mock/sykdom',
+                        sykdomInnleggelse: 'http://localhost:8082/mock/sykdomInnleggelse',
+                    },
+                    onFinished: () => console.log('Aksjonspunkt løst'),
+                    beredskapMåVurderes: true,
+                    nattevåkMåVurderes: true,
+                    saksbehandlere: [],
+                });
+            });
+        </script>
+    </body>
+</html>

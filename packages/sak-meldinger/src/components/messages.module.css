@@ -5,3 +5,25 @@
 .previewLink {
   float: right;
 }
+
+.tredjepartsmottakerInp {
+  display: flex;
+  flex-flow: row wrap;
+  gap: 0.5rem;
+  max-width: 420px;
+}
+
+.orgnumField {
+  width: 12ex;
+}
+
+.orgnameField {
+  flex-grow: 3;
+}
+
+.orgnameField p { /* Matches the Normaltekst component inside orgnameField */
+  /* Adds the same padding/margin/border y-axis spacing as the orgnumField has, to align the text content */
+  padding-top: 10px;
+  padding-bottom: 10px;
+  margin: 0;
+}

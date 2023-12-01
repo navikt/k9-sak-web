@@ -79,7 +79,7 @@ describe('<BehandlingSupportIndex>', () => {
       </MemoryRouter>,
     );
 
-    expect(screen.queryAllByTestId('TabMenyKnapp').length).toBe(3);
+    expect(screen.queryAllByTestId('TabMenyKnapp').length).toBe(4);
   });
 
   describe('hentSynligePaneler', () => {
@@ -98,7 +98,14 @@ describe('<BehandlingSupportIndex>', () => {
 
       const accessiblePanels = hentSynligePaneler(behandlingRettigheter);
 
-      expect(accessiblePanels).toEqual(['TIL_BESLUTTER', 'FRA_BESLUTTER', 'HISTORIKK', 'MELDINGER', 'DOKUMENTER']);
+      expect(accessiblePanels).toEqual([
+        'TIL_BESLUTTER',
+        'FRA_BESLUTTER',
+        'HISTORIKK',
+        'MELDINGER',
+        'DOKUMENTER',
+        'NOTATER',
+      ]);
     });
 
     it('skal kunne aksessere kun supportpanelene som alltid vises; historikk og dokumenter', () => {
@@ -116,7 +123,7 @@ describe('<BehandlingSupportIndex>', () => {
 
       const accessiblePanels = hentSynligePaneler(behandlingRettigheter);
 
-      expect(accessiblePanels).toEqual(['HISTORIKK', 'MELDINGER', 'DOKUMENTER']);
+      expect(accessiblePanels).toEqual(['HISTORIKK', 'MELDINGER', 'DOKUMENTER', 'NOTATER']);
     });
   });
 

@@ -103,7 +103,7 @@ const ChatComponent: React.FunctionComponent<ChatComponentProps> = ({
     const formatertOpprettetTidspunkt = format(new Date(opprettetTidspunkt), 'dd.MM.yy H:mm');
     const formatertEndretTidspunkt = endretTidspunkt ? format(new Date(endretTidspunkt), 'dd.MM.yy H:mm') : undefined;
     if (endretTidspunkt) {
-      return `(Endret: ${formatertEndretTidspunkt})  ${formatertOpprettetTidspunkt}`;
+      return `${formatertOpprettetTidspunkt} (Endret: ${formatertEndretTidspunkt})`;
     }
     return formatertOpprettetTidspunkt;
   };

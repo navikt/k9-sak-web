@@ -1,4 +1,5 @@
 import Kodeverk from './kodeverkTsType';
+import KodeverkMedNavnTsType from './kodeverkMedNavnTsType';
 
 export type PersonopplysningAdresse = Readonly<{
   adresseType?: Kodeverk;
@@ -14,7 +15,7 @@ export type PersonopplysningAdresse = Readonly<{
 export type PersonopplysningerBasic = Readonly<{
   nummer?: number;
   navBrukerKjonn: Kodeverk;
-  statsborgerskap: Kodeverk;
+  statsborgerskap: KodeverkMedNavnTsType;
   avklartPersonstatus: {
     orginalPersonstatus: Kodeverk;
     overstyrtPersonstatus: Kodeverk;
@@ -30,6 +31,7 @@ export type PersonopplysningerBasic = Readonly<{
   fnr?: string;
   region: Kodeverk;
   harVerge?: boolean;
+  ektefelle?: PersonopplysningerBasic;
 }>;
 
 type Personopplysninger = Readonly<

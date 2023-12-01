@@ -9,7 +9,7 @@
     "@fpsak-frontend/kodeverk": "1.0.0",
     "@fpsak-frontend/shared-components": "1.0.0",
     "@fpsak-frontend/utils": "1.0.0",
-    "@navikt/ft-plattform-komponenter": "2.3.9",
+    "@navikt/ft-plattform-komponenter": "2.3.14",
     "classnames": "2.3.2",
     "lodash.isequal": "4.5.0",
     "nav-frontend-core": "6.0.1",
@@ -17,7 +17,7 @@
     "nav-frontend-spinner-style": "1.0.2",
     "nav-frontend-typografi": "4.0.2",
     "react": "18.2.0",
-    "react-intl": "6.5.2"
+    "react-intl": "6.5.5"
   },
   "devDependencies": {
     "@fpsak-frontend/utils-test": "1.0.0",

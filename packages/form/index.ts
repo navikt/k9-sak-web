@@ -15,6 +15,7 @@ export { default as PeriodpickerField } from './src/PeriodpickerField';
 export { default as AutocompleteField } from './src/AutocompleteField';
 export { default as CheckboxGroupFormik } from './src/CheckboxGroupFormik';
 export { default as FormState } from './src/FormState';
+export { default as Label } from './src/Label';
 
 export {
   behandlingForm,
@@ -28,3 +29,10 @@ export {
   getBehandlingFormSyncErrors,
   getBehandlingFormPrefix,
 } from './src/behandlingForm';
+
+export { default as CheckboxGroupRHF } from './src/hook-form/CheckboxGroup';
+export { default as DatepickerRHF } from './src/hook-form/Datepicker';
+export { default as PeriodpickerListRHF } from './src/hook-form/PeriodpickerList';
+export { default as RadioGroupPanelRHF } from './src/hook-form/RadioGroupPanel';
+export { default as YesOrNoQuestionRHF } from './src/hook-form/YesOrNoQuestion';
+export { default as TextAreaRHF } from './src/hook-form/TextArea';

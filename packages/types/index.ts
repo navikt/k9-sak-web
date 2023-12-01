@@ -79,3 +79,4 @@ export type { default as SimpleLink } from './src/microfrontends/SimpleLink';
 export { default as NotatGjelderType } from './src/notat-i-sak/NotatGjelderType';
 export type { default as NotatResponse } from './src/notat-i-sak/NotatResponse';
 export * from './src/vilkarUtfallPeriodisert';
+export type * from './src/EregOrganizationLookupResponse';

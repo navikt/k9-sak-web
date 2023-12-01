@@ -15,5 +15,5 @@
     "baseUrl": "packages/",
     "skipLibCheck": true //TODO Fjern denne
   },
-  "include": ["packages/**/*", "@types", "vitest-setup.ts"]
+  "include": ["packages/**/*", "@types", "vitest-setup.ts", "cypress.config.ts"]
 }

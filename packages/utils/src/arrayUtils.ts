@@ -11,7 +11,10 @@ export const isArrayEmpty = array => !array || array.length === 0;
 
 export const flatten = array => array.reduce((a, b) => [...a, ...b], []);
 
-export const without = (...excluded) => array => array.filter(v => !excluded.includes(v));
+export const without =
+  (...excluded) =>
+  array =>
+    array.filter(v => !excluded.includes(v));
 
 export const haystack = (object, keys, defaultValue = null) => {
   const keysArray = Array.isArray(keys) ? keys : keys.replace(/(\[(\d+)\])/g, '.$2').split('.');
@@ -21,3 +24,16 @@ export const haystack = (object, keys, defaultValue = null) => {
   }
   return currentObject === undefined ? defaultValue : currentObject;
 };
+
+export const makeArrayWithoutDuplicates = (array: any[]) => {
+  const arrayWithoutDuplicates = [];
+  array.forEach(value => {
+    if (!arrayWithoutDuplicates.includes(value)) {
+      arrayWithoutDuplicates.push(value);
+    }
+  });
+  return arrayWithoutDuplicates;
+};
+
+export const getArrayDifference = (baseArray: any[], otherArray: any[]) =>
+  baseArray.filter(value => otherArray.includes(value) === false);
