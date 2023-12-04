@@ -72,15 +72,15 @@ const ÅrskvantumIndex = ({
   const visAPVurderÅrskvantumDokIOmsorgsdagerFrontend =
     apForVurderÅrskvantumDok !== undefined &&
     (!åpenAksjonspunkt || apForVurderÅrskvantumDok.status.kode === aksjonspunktStatus.UTFORT);
+  const [featureToggles] = useFeatureToggles();
 
   const propsTilMikrofrontend = {
     submitCallback,
     behandling,
     saerligSmittevernAp: apForVurderÅrskvantumDok,
     aktiviteter: sisteUttaksplan?.aktiviteter,
+    featureToggles,
   };
-
-  const [featureToggles] = useFeatureToggles();
 
   return (
     <RawIntlProvider value={årskvantumIntl}>
