@@ -12,7 +12,7 @@
   "dependencies": {
     "@fpsak-frontend/form": "1.0.0",
     "@navikt/diagnosekoder": "^1.2023.0",
-    "@navikt/ds-css": "5.11.2",
+    "@navikt/ds-css": "5.11.3",
     "@navikt/ds-icons": "3.4.3",
     "@navikt/ds-react": "5.11.2",
     "@navikt/fnrvalidator": "1.x",
