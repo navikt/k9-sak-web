@@ -99,3 +99,5 @@ spec:
       value: "false"
     - name: FAKTA_BEREGNING_REDESIGN
       value: "true"
+    - name: LOKALE_PAKKER
+      value: "false"
