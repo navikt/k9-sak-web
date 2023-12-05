@@ -16,6 +16,7 @@ class PanelDef extends ProsessStegPanelDef {
     alleKodeverk,
     submitCallback,
     virkningsDatoUttakNyeRegler,
+    relevanteAksjonspunkter,
   }) => (
     <Uttak
       uuid={behandling.uuid}
@@ -26,6 +27,7 @@ class PanelDef extends ProsessStegPanelDef {
       alleKodeverk={alleKodeverk}
       submitCallback={submitCallback}
       virkningsdatoUttakNyeRegler={virkningsDatoUttakNyeRegler}
+      relevanteAksjonspunkter={relevanteAksjonspunkter}
     />
   );
 
