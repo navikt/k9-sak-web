@@ -15,7 +15,7 @@ class PanelDef extends ProsessStegPanelDef {
     aksjonspunkter,
     alleKodeverk,
     submitCallback,
-    virkningsdatoUttakNyeRegler,
+    virkningsDatoUttakNyeRegler,
   }) => (
     <Uttak
       uuid={behandling.uuid}
@@ -25,7 +25,7 @@ class PanelDef extends ProsessStegPanelDef {
       aksjonspunkter={aksjonspunkter}
       alleKodeverk={alleKodeverk}
       submitCallback={submitCallback}
-      virkningsdatoUttakNyeRegler={virkningsdatoUttakNyeRegler}
+      virkningsdatoUttakNyeRegler={virkningsDatoUttakNyeRegler}
     />
   );
 
@@ -55,12 +55,12 @@ class PanelDef extends ProsessStegPanelDef {
   getEndepunkter = () => [PleiepengerBehandlingApiKeys.ARBEIDSFORHOLD];
 
   getData = ({ uttak, arbeidsgiverOpplysningerPerId, alleKodeverk }) => ({
-    uttaksperioder:
-      uttak?.uttaksplan != null ? uttak?.uttaksplan?.perioder : uttak?.simulertUttaksplan?.perioder,
+    uttaksperioder: uttak?.uttaksplan != null ? uttak?.uttaksplan?.perioder : uttak?.simulertUttaksplan?.perioder,
     utsattePerioder: uttak?.utsattePerioder,
     virkningsdatoUttakNyeRegler: uttak?.virkningsdatoUttakNyeRegler,
     arbeidsgiverOpplysningerPerId,
     alleKodeverk,
+    relevanteAksjonspunkter: this.getAksjonspunktKoder(),
   });
 }
 
