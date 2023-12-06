@@ -7,6 +7,7 @@ import {
   LoadingPanel,
   Punsjstripe,
 } from '@fpsak-frontend/shared-components';
+import { RestApiState } from '@k9-sak-web/rest-api-hooks';
 import { Merknadkode } from '@k9-sak-web/sak-meny-marker-behandling';
 import Soknadsperiodestripe from '@k9-sak-web/sak-soknadsperiodestripe';
 import {
@@ -27,7 +28,6 @@ import React, { useCallback, useMemo, useState } from 'react';
 import { Navigate, Route, Routes, useLocation } from 'react-router-dom';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { QueryClient, QueryClientProvider } from 'react-query';
-import { isRequestNotDone } from "@k9-sak-web/rest-api-hooks/src/RestApiState";
 import {
   behandlingerRoutePath,
   erBehandlingValgt,
@@ -216,13 +216,14 @@ const FagsakIndex = () => {
   const erHastesak = merknaderFraLos && merknaderFraLos.merknadKoder?.includes(Merknadkode.HASTESAK);
 
   if (!fagsak) {
-    if (isRequestNotDone(fagsakState)) {
+    if (fagsakState === RestApiState.NOT_STARTED || fagsakState === RestApiState.LOADING) {
       return <LoadingPanel />;
     }
     return <Navigate to={pathToMissingPage()} />;
   }
 
-  const harIkkeHentetfagsakPersonData = isRequestNotDone(fagsakPersonState);
+  const harIkkeHentetfagsakPersonData =
+    fagsakPersonState === RestApiState.LOADING || fagsakPersonState === RestApiState.NOT_STARTED;
 
   if (harIkkeHentetfagsakPersonData || !harFerdighentetfagsakRettigheter) {
     return <LoadingPanel />;
@@ -273,7 +274,7 @@ const FagsakIndex = () => {
           />
         }
         supportContent={() => {
-          if (isRequestNotDone(personopplysningerState)) {
+          if (personopplysningerState === RestApiState.LOADING) {
             return <LoadingPanel />;
           }
 
@@ -298,7 +299,7 @@ const FagsakIndex = () => {
             return null;
           }
 
-          if (isRequestNotDone(personopplysningerState)) {
+          if (personopplysningerState === RestApiState.LOADING) {
             return <LoadingPanel />;
           }
 
