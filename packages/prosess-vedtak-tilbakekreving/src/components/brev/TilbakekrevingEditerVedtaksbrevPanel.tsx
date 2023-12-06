@@ -49,7 +49,13 @@ const TilbakekrevingEditerVedtaksbrevPanel = ({
         <React.Fragment key={avsnitt.avsnittstype + avsnitt.fom}>
           <Ekspanderbartpanel
             className={harPeriodeSomManglerObligatoriskVerdi || visApen ? styles.panelMedGulmarkering : styles.panel}
-            tittel={avsnitt.overskrift ? avsnitt.overskrift : ''}
+            tittel={
+              avsnitt.overskrift ? (
+                avsnitt.overskrift
+              ) : (
+                <FormattedMessage id="TilbakekrevingEditerVedtaksbrevPanel.LovhjemlerOgKlagerettOverskrift" />
+              )
+            }
             apen={harPeriodeSomManglerObligatoriskVerdi || visApen}
           >
             {underavsnitter.map((underavsnitt: any) => (
