@@ -1,7 +1,10 @@
-import { ArbeidsgiverOpplysninger, KodeverkMedNavn, Uttaksperioder } from '.';
+import { Aksjonspunkt } from '@k9-sak-web/types';
+import Uttaksperioder from './Uttaksperioder';
+import ArbeidsgiverOpplysninger from './ArbeidsgiverOpplysninger';
+import KodeverkMedNavn from './kodeverkMedNavnTsType';
 
 interface ContainerContract {
-  httpErrorHandler: (error: any) => void;
+  httpErrorHandler: (status: number, locationHeader?: string) => void;
   endpoints: {
     behandlingUttakOverstyrbareAktiviteter: string;
     behandlingUttakOverstyrt: string;
@@ -9,10 +12,22 @@ interface ContainerContract {
   uttaksperioder: Uttaksperioder;
   utsattePerioder: string[];
   aktivBehandlingUuid: string;
+  arbeidsforhold: Record<string, ArbeidsgiverOpplysninger>;
+  aksjonspunktkoder: string[];
   erFagytelsetypeLivetsSluttfase: boolean;
   kodeverkUtenlandsoppholdÅrsak: KodeverkMedNavn[];
   handleOverstyringAksjonspunkt: (data: any) => Promise<any>;
-  versjon: string;
+  løsAksjonspunktVurderDatoNyRegelUttak: ({
+    begrunnelse,
+    virkningsdato,
+  }: {
+    begrunnelse: string;
+    virkningsdato: string;
+  }) => void;
+  virkningsdatoUttakNyeRegler: string;
+  aksjonspunkter?: Aksjonspunkt[];
+  versjon: number;
   featureToggles: { [key: string]: boolean };
 }
+
 export default ContainerContract;
