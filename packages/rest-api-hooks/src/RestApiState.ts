@@ -6,6 +6,3 @@ enum RestApiState {
 }
 
 export default RestApiState;
-
-export const isRequestNotDone = (state: RestApiState): boolean =>
-  state === RestApiState.NOT_STARTED || state === RestApiState.LOADING;
