@@ -6,7 +6,7 @@ import Relasjon from '../../../types/Relasjon';
 import Ytelsestype from '../../../types/Ytelsestype';
 import ContainerContext from '../../context/ContainerContext';
 import WriteAccessBoundContent from '../write-access-bound-content/WriteAccessBoundContent';
-import styles from './omsorgsperiodeVurderingsdetaljer.css';
+import styles from './omsorgsperiodeVurderingsdetaljer.module.css';
 
 interface OmsorgsperiodeVurderingsdetaljerProps {
   omsorgsperiode: Omsorgsperiode;

@@ -1,7 +1,7 @@
 import { AlertStripeFeil, AlertStripeSuksess } from 'nav-frontend-alertstriper';
 import React from 'react';
 import ApiErrorMessage from '../api-error-message/ApiErrorMessage';
-import styles from './apiResponseMessage.css';
+import styles from './apiResponseMessage.module.css';
 
 interface ApiResponseMessageProps {
   response: Response;

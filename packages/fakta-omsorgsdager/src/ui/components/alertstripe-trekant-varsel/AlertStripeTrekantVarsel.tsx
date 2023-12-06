@@ -1,7 +1,7 @@
 import React from 'react';
 import { Normaltekst } from 'nav-frontend-typografi';
 import WarningIcon from '../../icons/WarningIcon';
-import styles from './alertStripeTrekantVarsel.css';
+import styles from './alertStripeTrekantVarsel.module.css';
 
 interface IconWithTextProps {
   text: string;

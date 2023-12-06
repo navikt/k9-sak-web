@@ -21,7 +21,7 @@ import DokumentLink from '../dokument-link/DokumentLink';
 import VurderingDokumentfilter from '../vurdering-dokumentfilter/VurderingDokumentfilter';
 import vurderingDokumentfilterOptions from '../vurdering-dokumentfilter/vurderingDokumentfilterOptions';
 import StjerneIkon from '../vurdering-av-form/StjerneIkon';
-import styles from '../vurdering-av-form/vurderingForm.css';
+import styles from '../vurdering-av-form/vurderingForm.module.css';
 import Vurderingsresultat from '../../../types/Vurderingsresultat';
 import { finnBenyttedeDokumenter } from '../../../util/dokumentUtils';
 

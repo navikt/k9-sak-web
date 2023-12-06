@@ -5,7 +5,7 @@ import { Dokument, Dokumenttype } from '../../../types/Dokument';
 import Dokumentfilter from '../dokumentfilter/Dokumentfilter';
 import StrukturertDokumentElement from '../strukturet-dokument-element/StrukturertDokumentElement';
 import UstrukturertDokumentElement from '../ustrukturert-dokument-element/UstrukturertDokumentElement';
-import styles from './dokumentnavigasjon.css';
+import styles from './dokumentnavigasjon.module.css';
 
 interface DokumentnavigasjonProps {
   tittel: string;

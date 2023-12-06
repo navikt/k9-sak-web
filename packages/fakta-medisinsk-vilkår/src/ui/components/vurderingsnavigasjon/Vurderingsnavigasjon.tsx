@@ -15,7 +15,7 @@ import AddButton from '../add-button/AddButton';
 import VurderingsperiodeElement from '../vurderingsperiode/VurderingsperiodeElement';
 import Vurderingsperioder from '../vurderingsperioder/Vurderingsperioder';
 import WriteAccessBoundContent from '../write-access-bound-content/WriteAccessBoundContent';
-import styles from './vurderingsnavigasjon.css';
+import styles from './vurderingsnavigasjon.module.css';
 
 interface VurderingsnavigasjonProps {
   vurderingselementer: Vurderingselement[];

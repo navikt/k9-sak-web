@@ -5,7 +5,7 @@ import React from 'react';
 import LinkRel from '../../../constants/LinkRel';
 import Dokument, { Dokumenttype } from '../../../types/Dokument';
 import { findLinkByRel } from '../../../util/linkUtils';
-import styles from './nyeDokumenterSomKanPåvirkeEksisterendeVurderinger.css';
+import styles from './nyeDokumenterSomKanPåvirkeEksisterendeVurderinger.module.css';
 
 interface NyeDokumenterListeProps {
   dokumenter: Dokument[];

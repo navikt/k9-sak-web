@@ -1,6 +1,6 @@
 import React, { forwardRef, Ref } from 'react';
 import { PlusIcon } from '@navikt/ft-plattform-komponenter';
-import styles from './addButton.css';
+import styles from './addButton.module.css';
 
 interface AddButtonProps {
   onClick: () => void;

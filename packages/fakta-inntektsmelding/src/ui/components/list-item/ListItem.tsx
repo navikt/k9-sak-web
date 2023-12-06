@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from './listItem.css';
+import styles from './listItem.module.css';
 
 interface ListItemProps {
   firstColumnRenderer: () => React.ReactNode;

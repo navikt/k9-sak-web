@@ -6,7 +6,7 @@ import React from 'react';
 import EtablertTilsynType from '../../../types/EtablertTilsynType';
 import EtablertTilsynRowContent from './EtablertTilsynRowContent';
 import PartIkon from './PartIkon';
-import styles from './etablertTilsynMedSmoring.css';
+import styles from './etablertTilsynMedSmoring.module.css';
 
 interface EtablertTilsynProps {
   etablertTilsynData: EtablertTilsynType[];

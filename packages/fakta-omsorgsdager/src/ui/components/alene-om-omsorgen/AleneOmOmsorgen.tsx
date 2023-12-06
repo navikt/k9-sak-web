@@ -11,7 +11,7 @@ import useFormSessionStorage from '../../../util/useFormSessionStorageUtils';
 import { valideringsFunksjoner } from '../../../util/validationReactHookFormUtils';
 import AleneOmOmsorgenLesemodus from '../alene-om-omsorgen-lesemodus/AleneOmOmsorgenLesemodus';
 import AlertStripeTrekantVarsel from '../alertstripe-trekant-varsel/AlertStripeTrekantVarsel';
-import styleLesemodus from '../lesemodus/lesemodusboks.css';
+import styleLesemodus from '../lesemodus/lesemodusboks.module.css';
 import OpplysningerFraSoknad from '../opplysninger-fra-soknad/OpplysningerFraSoknad';
 import DatePicker from '../react-hook-form-wrappers/DatePicker';
 import RadioButtonWithBooleanValue from '../react-hook-form-wrappers/RadioButton';
@@ -27,8 +27,8 @@ import {
 } from '../../../util/stringUtils';
 import { AleneOmOmsorgenProps } from '../../../types/AleneOmOmsorgenProps';
 
-import styles from '../vilkar-midlertidig-alene/vilkarMidlertidigAlene.css';
-import styleRadioknapper from '../styles/radioknapper/radioknapper.css';
+import styles from '../vilkar-midlertidig-alene/vilkarMidlertidigAlene.module.css';
+import styleRadioknapper from '../styles/radioknapper/radioknapper.module.css';
 
 type FormData = {
   begrunnelse: string;

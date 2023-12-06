@@ -1,6 +1,6 @@
 import React from 'react';
 import { Period, sortPeriodsByFomDate } from '@fpsak-frontend/utils';
-import styles from './innleggelsesperiodeliste.css';
+import styles from './innleggelsesperiodeliste.module.css';
 
 interface InnleggelsesperiodelisteProps {
   innleggelsesperioder: Period[];

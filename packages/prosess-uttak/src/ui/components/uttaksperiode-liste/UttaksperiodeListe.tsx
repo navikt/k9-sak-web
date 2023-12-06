@@ -4,7 +4,7 @@ import dayjs from 'dayjs';
 import { Uttaksperiode } from '../../../types/Uttaksperiode';
 import Table from '../table/Table';
 import TableColumn from '../table/TableColumn';
-import styles from './uttaksperiodeListe.css';
+import styles from './uttaksperiodeListe.module.css';
 import Uttak from '../uttak/Uttak';
 import ContainerContext from '../../context/ContainerContext';
 import FullWidthRow from '../table/FullWidthRow';

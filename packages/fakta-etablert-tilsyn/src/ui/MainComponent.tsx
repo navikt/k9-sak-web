@@ -11,7 +11,7 @@ import EtablertTilsyn from './components/etablertTilsyn/EtablertTilsynMedSmoring
 import Nattevåksperiodeoversikt from './components/nattevåk/nattevåksperiodeoversikt/Nattevåksperiodeoversikt';
 import ContainerContext from './context/ContainerContext';
 import ActionType from './mainActionTypes';
-import styles from './mainComponent.css';
+import styles from './mainComponent.module.css';
 import mainComponentReducer from './mainReducer';
 
 interface MainComponentProps {

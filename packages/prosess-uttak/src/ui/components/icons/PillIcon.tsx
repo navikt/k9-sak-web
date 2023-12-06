@@ -1,5 +1,5 @@
 import * as React from 'react';
-import styles from './PillIcon.css';
+import styles from './PillIcon.module.css';
 
 interface PillIconProps {
   text: string;

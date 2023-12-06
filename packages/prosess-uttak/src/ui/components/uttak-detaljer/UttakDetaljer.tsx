@@ -17,7 +17,7 @@ import { Uttaksperiode } from '../../../types/Uttaksperiode';
 import { beregnDagerTimer } from '../../../util/dateUtils';
 import { harÅrsak } from '../../../util/årsakUtils';
 import ContainerContext from '../../context/ContainerContext';
-import styles from './uttakDetaljer.css';
+import styles from './uttakDetaljer.module.css';
 import UttakUtregning from './UttakUtregning';
 import Utfall from '../../../constants/Utfall';
 

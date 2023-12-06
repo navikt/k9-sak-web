@@ -23,7 +23,7 @@ import Innleggelsesperiodeoversikt from '../innleggelsesperiodeoversikt/Innlegge
 import SignertSeksjon from '../signert-seksjon/SignertSeksjon';
 import ActionType from './actionTypes';
 import dokumentReducer from './reducer';
-import styles from './struktureringAvDokumentasjon.css';
+import styles from './struktureringAvDokumentasjon.module.css';
 
 interface StruktureringAvDokumentasjonProps {
   navigerTilNesteSteg: () => void;

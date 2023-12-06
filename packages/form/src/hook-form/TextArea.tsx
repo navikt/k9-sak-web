@@ -1,7 +1,6 @@
 import { ErrorMessage } from '@hookform/error-message';
 import { Textarea } from '@navikt/ds-react';
 import { Box, ExpandableLabel, Margin } from '@navikt/ft-plattform-komponenter';
-import '@navikt/ft-plattform-komponenter/dist/style.css';
 import React from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
 

@@ -8,7 +8,7 @@ import VilkarKroniskSyktBarn from './components/vilkar-kronisk-sykt-barn/VilkarK
 import AleneOmOmsorgen from './components/alene-om-omsorgen/AleneOmOmsorgen';
 import VilkarMidlertidigAlene from './components/vilkar-midlertidig-alene/VilkarMidlertidigAlene';
 import ContainerContext from './context/ContainerContext';
-import styles from './global.css';
+import styles from './global.module.css';
 
 interface MainComponentProps {
   containerData: ContainerContract;

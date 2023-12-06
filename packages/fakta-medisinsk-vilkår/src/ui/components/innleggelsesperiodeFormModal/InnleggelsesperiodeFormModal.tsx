@@ -7,7 +7,7 @@ import { FormProvider, useForm } from 'react-hook-form';
 import { InnleggelsesperiodeDryRunResponse } from '../../../api/api';
 import AddButton from '../add-button/AddButton';
 import DeleteButton from '../delete-button/DeleteButton';
-import styles from './innleggelsesperiodeFormModal.css';
+import styles from './innleggelsesperiodeFormModal.module.css';
 
 export enum FieldName {
   INNLEGGELSESPERIODER = 'innleggelsesperioder',

@@ -3,7 +3,7 @@ import { Autocomplete, FieldError } from '@navikt/ft-plattform-komponenter';
 import * as React from 'react';
 import Diagnosekode from '../../../types/Diagnosekode';
 import DeleteButton from '../../components/delete-button/DeleteButton';
-import styles from './diagnosekodeSelector.css';
+import styles from './diagnosekodeSelector.module.css';
 import { type DiagnosekodeSearcherPromise, toLegacyDiagnosekode } from '../../../util/diagnosekodeSearcher';
 
 interface Suggestion {

@@ -20,7 +20,7 @@ import FullWidthRow from '../table/FullWidthRow';
 import TableColumn from '../table/TableColumn';
 import TableRow from '../table/TableRow';
 import UttakDetaljer from '../uttak-detaljer/UttakDetaljer';
-import styles from './uttak.css';
+import styles from './uttak.module.css';
 import ContainerContext from '../../context/ContainerContext';
 
 const cx = classNames.bind(styles);

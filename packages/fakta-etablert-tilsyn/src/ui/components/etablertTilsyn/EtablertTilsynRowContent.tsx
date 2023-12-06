@@ -4,7 +4,7 @@ import dayjs from 'dayjs';
 import React from 'react';
 import EtablertTilsynType from '../../../types/EtablertTilsynType';
 import PartIkon from './PartIkon';
-import styles from './etablertTilsynRowContent.css';
+import styles from './etablertTilsynRowContent.module.css';
 import EtablertTilsynDag from './EtablertTilsynDag';
 import Kilde from '../../../types/Kilde';
 

@@ -6,7 +6,7 @@ import Vurderingsresultat from '../../../../types/Vurderingsresultat';
 import ContainerContext from '../../../context/ContainerContext';
 import BeskrivelserForPerioden from '../../beskrivelser-for-perioden/BeskrivelserForPerioden';
 import WriteAccessBoundContent from '../../write-access-bound-content/WriteAccessBoundContent';
-import styles from './nattevåksperiodeVurderingsdetaljer.css';
+import styles from './nattevåksperiodeVurderingsdetaljer.module.css';
 
 interface NattevåksperiodeVurderingsdetaljerProps {
   nattevåksperiode: Vurderingsperiode;

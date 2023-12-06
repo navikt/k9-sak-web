@@ -2,7 +2,7 @@ import { Period } from '@fpsak-frontend/utils';
 import { CalendarIcon } from '@navikt/ft-plattform-komponenter';
 import * as React from 'react';
 import classnames from 'classnames';
-import styles from './periodList.css';
+import styles from './periodList.module.css';
 
 interface PeriodListProps {
   periods: Period[];
