@@ -2590,7 +2590,7 @@ __metadata:
     "@fpsak-frontend/shared-components": 1.0.0
     "@fpsak-frontend/utils": 1.0.0
     "@k9-sak-web/types": 1.0.0
-    "@types/redux-form": 8.3.8
+    "@types/redux-form": 8.3.10
     classnames: 2.3.2
     moment: 2.29.4
     nav-frontend-core: 6.0.1
@@ -4981,9 +4981,9 @@ __metadata:
     "@storybook/testing-react": 2.0.1
     "@testing-library/react": 14.0.0
     "@testing-library/user-event": 14.5.1
-    "@types/jest": 29.5.7
-    "@types/node": 20.8.10
-    "@types/react": 18.2.34
+    "@types/jest": 29.5.11
+    "@types/node": 20.10.3
+    "@types/react": 18.2.42
     axios: 1.6.2
     classnames: 2.3.2
     cors: 2.8.5
@@ -5442,10 +5442,10 @@ __metadata:
     "@navikt/ft-form-validators": 2.1.10
     "@navikt/ft-plattform-komponenter": 2.3.14
     "@popperjs/core": 2.11.8
-    "@types/jest": 29.5.6
-    "@types/node": 20.8.9
-    "@types/react": 18.2.33
-    "@types/react-dom": 18.2.14
+    "@types/jest": 29.5.11
+    "@types/node": 20.10.3
+    "@types/react": 18.2.42
+    "@types/react-dom": 18.2.17
     classnames: 2.3.2
     cors: 2.8.5
     dayjs: 1.11.10
@@ -10105,10 +10105,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/chai@npm:4.3.9":
-  version: 4.3.9
-  resolution: "@types/chai@npm:4.3.9"
-  checksum: 2300a2c7abd4cb590349927a759b3d0172211a69f363db06e585faf7874a47f125ef3b364cce4f6190e3668147587fc11164c791c9560cf9bce8478fb7019610
+"@types/chai@npm:4.3.11":
+  version: 4.3.11
+  resolution: "@types/chai@npm:4.3.11"
+  checksum: d0c05fe5d02b2e6bbca2bd4866a2ab20a59cf729bc04af0060e7a3277eaf2fb65651b90d4c74b0ebf1d152b4b1d49fa8e44143acef276a2bbaa7785fbe5642d3
   languageName: node
   linkType: hard
 
@@ -10193,13 +10193,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/enzyme@npm:3.10.15":
-  version: 3.10.15
-  resolution: "@types/enzyme@npm:3.10.15"
+"@types/enzyme@npm:3.10.18":
+  version: 3.10.18
+  resolution: "@types/enzyme@npm:3.10.18"
   dependencies:
     "@types/cheerio": "*"
     "@types/react": ^16
-  checksum: 64cf2537808d132a5e5b795596036c147b263948a8522ca9f0fa70d33aa5c096747a9fa4c663bc6b1b667d2f21477c5f7a211a073434d373a93703277ee80428
+  checksum: faccec3634e7ae5e5c19e6d9b09d0171a63c9dffb7c9464ba7ddc8f6beceb2b083d94d043fd719ab728e9b15f49b9faba62639e2c3956ac55cb526291485c139
   languageName: node
   linkType: hard
 
@@ -10368,23 +10368,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/jest@npm:29.5.6":
-  version: 29.5.6
-  resolution: "@types/jest@npm:29.5.6"
+"@types/jest@npm:29.5.11":
+  version: 29.5.11
+  resolution: "@types/jest@npm:29.5.11"
   dependencies:
     expect: ^29.0.0
     pretty-format: ^29.0.0
-  checksum: fa13a27bd1c8efd0381a419478769d0d6d3a8e93e1952d7ac3a16274e8440af6f73ed6f96ac1ff00761198badf2ee226b5ab5583a5d87a78d609ea78da5c5a24
-  languageName: node
-  linkType: hard
-
-"@types/jest@npm:29.5.7":
-  version: 29.5.7
-  resolution: "@types/jest@npm:29.5.7"
-  dependencies:
-    expect: ^29.0.0
-    pretty-format: ^29.0.0
-  checksum: e28624ccb0ef1255a03fbbb4b5bc3e5cbcdc450d39e0739985ff679b124198f808c38c8c3e67859c6efc0e848196deeb8cfed028e12a821c511dfc1112a2d6e9
+  checksum: f892a06ec9f0afa9a61cd7fa316ec614e21d4df1ad301b5a837787e046fcb40dfdf7f264a55e813ac6b9b633cb9d366bd5b8d1cea725e84102477b366df23fdd
   languageName: node
   linkType: hard
 
@@ -10504,21 +10494,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:20.8.10":
-  version: 20.8.10
-  resolution: "@types/node@npm:20.8.10"
+"@types/node@npm:20.10.3":
+  version: 20.10.3
+  resolution: "@types/node@npm:20.10.3"
   dependencies:
     undici-types: ~5.26.4
-  checksum: 7c61190e43e8074a1b571e52ff14c880bc67a0447f2fe5ed0e1a023eb8a23d5f815658edb98890f7578afe0f090433c4a635c7c87311762544e20dd78723e515
-  languageName: node
-  linkType: hard
-
-"@types/node@npm:20.8.9":
-  version: 20.8.9
-  resolution: "@types/node@npm:20.8.9"
-  dependencies:
-    undici-types: ~5.26.4
-  checksum: 0c05f3502a9507ff27e91dd6fd574fa6f391b3fafedcfe8e0c8d33351fb22d02c0121f854e5b6b3ecb9a8a468407ddf6e7ac0029fb236d4c7e1361ffc758a01f
+  checksum: 34a329494f0ea239af05eeb6f00f396963725b3eb9a2f79c5e6a6d37e823f2ab85e1079c2ee56723a37d8b89e7bbe2bd050c97144e5bb06dab93fd1cace65c97
   languageName: node
   linkType: hard
 
@@ -10552,17 +10533,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/prop-types@npm:*":
+"@types/prop-types@npm:*, @types/prop-types@npm:15.7.11":
   version: 15.7.11
   resolution: "@types/prop-types@npm:15.7.11"
   checksum: 7519ff11d06fbf6b275029fe03fff9ec377b4cb6e864cac34d87d7146c7f5a7560fd164bdc1d2dbe00b60c43713631251af1fd3d34d46c69cd354602bc0c7c54
-  languageName: node
-  linkType: hard
-
-"@types/prop-types@npm:15.7.9":
-  version: 15.7.9
-  resolution: "@types/prop-types@npm:15.7.9"
-  checksum: c7591d3ff7593e243908a07e1d3e2bb6e8879008af5800d8378115a90d0fdf669a1cae72a6d7f69e59c4fa7bb4c8ed61f6ebc1c520fe110c6f2b03ac02414072
   languageName: node
   linkType: hard
 
@@ -10580,21 +10554,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react-collapse@npm:5.0.3":
-  version: 5.0.3
-  resolution: "@types/react-collapse@npm:5.0.3"
+"@types/react-collapse@npm:5.0.4":
+  version: 5.0.4
+  resolution: "@types/react-collapse@npm:5.0.4"
   dependencies:
     "@types/react": "*"
-  checksum: 6b8eac009022419c85764f6d7144bd1fcf6f86579a6b7edb37737a4a506d7cf9c4df23519a6d9e6eaba55021e5aa84b83a74ba376d79eeec519d3064f802b73d
+  checksum: b4fecc3245fea612caa940d34deae6d4673068d622e44959d1b716b11431c65e7a5b9ad8f4247cce6adc70d26dca76b629da9701f30f6796402e5f0272c5f788
   languageName: node
   linkType: hard
 
-"@types/react-dom@npm:18.2.14":
-  version: 18.2.14
-  resolution: "@types/react-dom@npm:18.2.14"
+"@types/react-dom@npm:18.2.17, @types/react-dom@npm:^18.0.0":
+  version: 18.2.17
+  resolution: "@types/react-dom@npm:18.2.17"
   dependencies:
     "@types/react": "*"
-  checksum: 890289c70d1966c168037637c09cacefe6205bdd27a33252144a6b432595a2943775ac1a1accac0beddaeb67f8fdf721e076acb1adc990b08e51c3d9fd4e780c
+  checksum: 7a4e704ed4be6e0c3ccd8a22ff69386fe548304bf4db090513f42e059ff4c65f7a427790320051524d6578a2e4c9667bb7a80a4c989b72361c019fbe851d9385
   languageName: node
   linkType: hard
 
@@ -10604,15 +10578,6 @@ __metadata:
   dependencies:
     "@types/react": ^17
   checksum: d1e582682478e0848c8d54ea3e89d02047bac6d916266b85ce63731b06987575919653ea7159d98fda47ade3362b8c4d5796831549564b83088e7aa9ce8b60ed
-  languageName: node
-  linkType: hard
-
-"@types/react-dom@npm:^18.0.0":
-  version: 18.2.17
-  resolution: "@types/react-dom@npm:18.2.17"
-  dependencies:
-    "@types/react": "*"
-  checksum: 7a4e704ed4be6e0c3ccd8a22ff69386fe548304bf4db090513f42e059ff4c65f7a427790320051524d6578a2e4c9667bb7a80a4c989b72361c019fbe851d9385
   languageName: node
   linkType: hard
 
@@ -10657,36 +10622,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react@npm:18.2.33":
-  version: 18.2.33
-  resolution: "@types/react@npm:18.2.33"
+"@types/react@npm:18.2.42":
+  version: 18.2.42
+  resolution: "@types/react@npm:18.2.42"
   dependencies:
     "@types/prop-types": "*"
     "@types/scheduler": "*"
     csstype: ^3.0.2
-  checksum: 75903c4d53898c69dd23d0b2730eac4676dc5ade15c25c793dec855f0d7c650cb823832bb1dd881efe8895724f15b06d4bf7081ea0b82391aa3059512ad49ccf
-  languageName: node
-  linkType: hard
-
-"@types/react@npm:18.2.34":
-  version: 18.2.34
-  resolution: "@types/react@npm:18.2.34"
-  dependencies:
-    "@types/prop-types": "*"
-    "@types/scheduler": "*"
-    csstype: ^3.0.2
-  checksum: 16446542228cba827143caf0ecb4718cbf02ae5befd4a6bc6d67ed144fe1c0cb4b06b20facf3d2b972d86c67a17cc82f5ec8a03fce42d50e12b2dcd0592fc66e
-  languageName: node
-  linkType: hard
-
-"@types/react@npm:18.2.35":
-  version: 18.2.35
-  resolution: "@types/react@npm:18.2.35"
-  dependencies:
-    "@types/prop-types": "*"
-    "@types/scheduler": "*"
-    csstype: ^3.0.2
-  checksum: d3f1c39116c82e3a504f3332b9198f94f34a33d8535604434b1e387ecabd41ec995961775e2e1c08feefdde878a5b86220879350900137980d681ae3983db462
+  checksum: d2019afdf48303a3a598a97cc9dd2284e3c04b369e791f6ba3c33232b7f8645daff97b093a19f8b3ce75ac8a261b47552cb4513226ab16d843eb9443b0f91844
   languageName: node
   linkType: hard
 
@@ -10712,13 +10655,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/redux-form@npm:8.3.8":
-  version: 8.3.8
-  resolution: "@types/redux-form@npm:8.3.8"
+"@types/redux-form@npm:8.3.10":
+  version: 8.3.10
+  resolution: "@types/redux-form@npm:8.3.10"
   dependencies:
     "@types/react": "*"
     redux: ^3.6.0 || ^4.0.0
-  checksum: b303731211643bf5c20fff64ddace69624483f620e0fd7589d1493a048a807a19487e7ca5ce49241f10bb35f07d62863793ea23f4e5f7c6d4d1ec67f96e1ffe9
+  checksum: a47940ce976228dc85b8c52c113411f9d55ec107fa83fa43f676e55c781e375c03821d8b0574718ea8cf398443f73e117585c4a18507f0a95c78e87c225a30df
   languageName: node
   linkType: hard
 
@@ -19468,15 +19411,15 @@ __metadata:
     "@testing-library/jest-dom": ^5.17.0
     "@testing-library/react": 12.1.5
     "@testing-library/user-event": 13.5.0
-    "@types/chai": 4.3.9
-    "@types/enzyme": 3.10.15
+    "@types/chai": 4.3.11
+    "@types/enzyme": 3.10.18
     "@types/history": 5.0.0
-    "@types/jest": 29.5.7
-    "@types/prop-types": 15.7.9
-    "@types/react": 18.2.35
-    "@types/react-collapse": 5.0.3
+    "@types/jest": 29.5.11
+    "@types/prop-types": 15.7.11
+    "@types/react": 18.2.42
+    "@types/react-collapse": 5.0.4
     "@types/react-router-dom": 5.3.3
-    "@types/redux-form": 8.3.8
+    "@types/redux-form": 8.3.10
     "@types/sinon": 10.0.20
     "@typescript-eslint/eslint-plugin": 6.11.0
     "@typescript-eslint/parser": 6.11.0
