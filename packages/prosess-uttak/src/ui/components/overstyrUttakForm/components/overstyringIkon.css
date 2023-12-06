@@ -1,0 +1,6 @@
+@import '@navikt/ds-tokens';
+
+.overstyringNokkel {
+    margin-left: 10px;
+    color: var(--a-text-action);
+}

@@ -1,0 +1,26 @@
+.begrunnelseBoks {
+  background: #f1f1f1;
+  border-radius: 5px;
+  padding: 1.5rem;
+}
+
+.begrunnelseTekst {
+  border-left: 4px solid #c6c2bf;
+  padding-left: 1rem;
+  margin-top: 0.75rem;
+  margin-left: 0.75rem;
+}
+
+.begrunnelseFooter {
+  margin-top: 0.75rem;
+}
+
+.begrunnelseFooter svg {
+margin-bottom: -5px;
+}
+
+.begrunnelseFooter span {
+  font-size: 14px;
+  font-weight: 600;
+  margin-left: 0.75rem;
+}

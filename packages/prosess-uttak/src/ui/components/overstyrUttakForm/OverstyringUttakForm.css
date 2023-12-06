@@ -1,0 +1,48 @@
+@import '@navikt/ds-tokens';
+
+.overstyringSkjemaWrapper {
+    border: 1px solid var(--a-border-divider);
+    background-color: var(--a-deepblue-50);
+    padding: var(--a-spacing-6);
+    border-radius: 3px;
+    max-width: 800px;
+    margin-top: var(--a-spacing-8);
+    margin-bottom: var(--a-spacing-8);
+}
+
+.overstyringDatoOgUttaksgrad {
+    display: flex;
+    justify-content: left;
+    flex-wrap: wrap;
+    gap: var(--a-spacing-4);
+    margin-bottom: var(--a-spacing-4);
+    margin-top: var(--a-spacing-4);
+}
+
+.overstyringDatoVelger {
+    display: flex;
+    justify-content: left;
+    flex-wrap: wrap;
+    gap: var(--a-spacing-4);
+}
+
+.overstyringDatoVelger > div {
+    justify-items: start;
+    display: grid;
+}
+
+.overstyringKnapperad {
+    margin-top: var(--a-spacing-4);
+    display: flex;
+    justify-content: left;
+    flex-wrap: wrap;
+    gap: var(--a-spacing-4);
+}
+
+.overstyringBegrunnelse > div {
+    margin-top: var(--a-spacing-4);
+}
+
+.overstyringAktivitetListe {
+  margin-top: var(--a-spacing-4);
+}
