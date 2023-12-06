@@ -15,23 +15,30 @@ class PanelDef extends ProsessStegPanelDef {
     aksjonspunkter,
     alleKodeverk,
     submitCallback,
+    lagreOverstyringUttak,
     virkningsDatoUttakNyeRegler,
     relevanteAksjonspunkter,
   }) => (
     <Uttak
       uuid={behandling.uuid}
+      behandling={behandling}
       uttaksperioder={uttaksperioder}
       utsattePerioder={utsattePerioder}
       arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
       aksjonspunkter={aksjonspunkter}
       alleKodeverk={alleKodeverk}
       submitCallback={submitCallback}
+      lagreOverstyringUttak={lagreOverstyringUttak}
       virkningsdatoUttakNyeRegler={virkningsDatoUttakNyeRegler}
       relevanteAksjonspunkter={relevanteAksjonspunkter}
     />
   );
 
-  getAksjonspunktKoder = () => [aksjonspunktCodes.VENT_ANNEN_PSB_SAK, aksjonspunktCodes.VURDER_DATO_NY_REGEL_UTTAK];
+  getAksjonspunktKoder = () => [
+    aksjonspunktCodes.VENT_ANNEN_PSB_SAK,
+    aksjonspunktCodes.VURDER_DATO_NY_REGEL_UTTAK,
+    aksjonspunktCodes.OVERSTYRING_AV_UTTAK_KODE,
+  ];
 
   getOverstyrVisningAvKomponent = () => true;
 

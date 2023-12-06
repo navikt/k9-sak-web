@@ -19,6 +19,11 @@ export type Aksjonspunkt = Readonly<{
 }>;
 
 interface ContainerContract {
+  httpErrorHandlerCaller: (status: number, locationHeader?: string) => void;
+  endpoints: {
+    behandlingUttakOverstyrbareAktiviteter: string;
+    behandlingUttakOverstyrt: string;
+  };
   uttaksperioder: Uttaksperioder;
   utsattePerioder: string[];
   aktivBehandlingUuid: string;
@@ -26,6 +31,7 @@ interface ContainerContract {
   aksjonspunktkoder: string[];
   erFagytelsetypeLivetsSluttfase: boolean;
   kodeverkUtenlandsoppholdÅrsak: KodeverkMedNavn[];
+  handleOverstyringAksjonspunkt: (data: any) => Promise<any>;
   løsAksjonspunktVurderDatoNyRegelUttak: ({
     begrunnelse,
     virkningsdato,
@@ -35,6 +41,8 @@ interface ContainerContract {
   }) => void;
   virkningsdatoUttakNyeRegler: string;
   aksjonspunkter?: Aksjonspunkt[];
+  versjon: number;
+  featureToggles: { [key: string]: boolean };
 }
 
 export default ContainerContract;

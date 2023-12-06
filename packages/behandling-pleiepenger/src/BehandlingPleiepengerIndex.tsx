@@ -133,6 +133,21 @@ const BehandlingPleiepengerIndex = ({
     PleiepengerBehandlingApiKeys.SAVE_AKSJONSPUNKT,
   );
 
+  const { startRequest: lagreOverstyringUttakRequest } = restApiPleiepengerHooks.useRestApiRunner(
+    PleiepengerBehandlingApiKeys.SAVE_OVERSTYRT_AKSJONSPUNKT,
+  );
+
+  // TODO: Types på values
+  const lagreOverstyringUttak = async (values: any): Promise<void> =>
+    lagreOverstyringUttakRequest({
+      saksnummer: fagsak.saksnummer,
+      behandlingId: behandling.id,
+      behandlingVersjon: behandling.versjon,
+      overstyrteAksjonspunktDtoer: [values],
+    })
+      .then(() => hentBehandling({ behandlingId }, true))
+      .then(() => window.scroll(0, 0));
+
   useEffect(() => {
     behandlingEventHandler.setHandler({
       endreBehandlendeEnhet: params => nyBehandlendeEnhet(params).then(() => hentBehandling({ behandlingId }, true)),
@@ -191,6 +206,7 @@ const BehandlingPleiepengerIndex = ({
         arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysninger ? arbeidsgiverOpplysninger.arbeidsgivere : {}}
         featureToggles={featureToggles}
         dokumenter={alleDokumenter}
+        lagreOverstyringUttak={lagreOverstyringUttak}
       />
     </>
   );

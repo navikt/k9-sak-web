@@ -43,6 +43,7 @@ interface OwnProps {
   arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysningerPerId;
   featureToggles: FeatureToggles;
   dokumenter: Dokument[];
+  lagreOverstyringUttak: (values: any) => void;
 }
 
 interface FaktaPanelInfo {
@@ -79,6 +80,7 @@ const PleiepengerPaneler = ({
   arbeidsgiverOpplysningerPerId,
   featureToggles,
   dokumenter,
+  lagreOverstyringUttak,
 }: OwnProps) => {
   const [apentFaktaPanelInfo, setApentFaktaPanel] = useState<FaktaPanelInfo>();
   const [beregningErBehandlet, setBeregningErBehandlet] = useState<boolean>(false);
@@ -152,6 +154,7 @@ const PleiepengerPaneler = ({
         arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
         featureToggles={featureToggles}
         setBeregningErBehandlet={setBeregningErBehandlet}
+        lagreOverstyringUttak={lagreOverstyringUttak}
       />
       <PleiepengerFakta
         behandling={behandling}
