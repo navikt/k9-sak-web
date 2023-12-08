@@ -1,5 +1,7 @@
 import React from 'react';
+
 import { Heading } from '@navikt/ds-react';
+
 import ContainerContract from '../types/ContainerContract';
 import lagUttaksperiodeliste from '../util/uttaksperioder';
 import UttaksperiodeListe from './components/uttaksperiode-liste/UttaksperiodeListe';
@@ -8,15 +10,22 @@ import Infostripe from './components/infostripe/Infostripe';
 import UtsattePerioderStripe from './components/utsattePerioderStripe/UtsattePerioderStripe';
 import VurderDato from './components/vurderDato/VurderDato';
 import { aksjonspunktVurderDatoKode, aksjonspunktkodeVentAnnenPSBSakKode } from '../constants/Aksjonspunkter';
+import OverstyringIkon from './components/overstyrUttakForm/components/OverstyringIkon';
+import { OverstyrUttakContextProvider } from './context/OverstyrUttakContext';
+import Overstyr from './components/overstyrUttakForm/Overstyr';
 
 interface MainComponentProps {
   containerData: ContainerContract;
 }
 
 const MainComponent = ({ containerData }: MainComponentProps): JSX.Element => {
-  const { uttaksperioder, aksjonspunktkoder, aksjonspunkter, virkningsdatoUttakNyeRegler } = containerData;
+  const { featureToggles, uttaksperioder, aksjonspunktkoder, aksjonspunkter, virkningsdatoUttakNyeRegler } =
+    containerData;
   const [redigerVirkningsdato, setRedigervirkningsdato] = React.useState<boolean>(false);
   const aksjonspunktVurderDato = aksjonspunkter?.find(ap => ap.definisjon.kode === aksjonspunktVurderDatoKode);
+
+  const [overstyringAktiv, setOverstyringAktiv] = React.useState<boolean>(aksjonspunktkoder.includes('6017'));
+  const toggleOverstyring = () => setOverstyringAktiv(!overstyringAktiv);
 
   const harVentAnnenPSBSakAksjonspunkt = aksjonspunktkoder?.some(
     aksjonspunktkode => aksjonspunktkode === aksjonspunktkodeVentAnnenPSBSakKode,
@@ -24,12 +33,23 @@ const MainComponent = ({ containerData }: MainComponentProps): JSX.Element => {
   const harAksjonspunktVurderDatoMedStatusOpprettet = aksjonspunktkoder?.some(
     aksjonspunktkode => aksjonspunktkode === aksjonspunktVurderDatoKode,
   );
+
+  // Data som må utledes
+  const erOverstyrer = true;
+
   return (
     <ContainerContext.Provider value={containerData}>
       <Heading size="small" level="1">
         Uttak
+        {featureToggles?.OVERSTYRING_UTTAK && (
+          <OverstyringIkon erOverstyrer={erOverstyrer} aktiv={overstyringAktiv} toggleOverstyring={toggleOverstyring} />
+        )}
       </Heading>
+
       <Infostripe harVentAnnenPSBSakAksjonspunkt={harVentAnnenPSBSakAksjonspunkt} />
+
+      <OverstyrUttakContextProvider>{erOverstyrer && overstyringAktiv && <Overstyr />}</OverstyrUttakContextProvider>
+
       <UtsattePerioderStripe />
       {harAksjonspunktVurderDatoMedStatusOpprettet && <VurderDato />}
       {virkningsdatoUttakNyeRegler && redigerVirkningsdato && (

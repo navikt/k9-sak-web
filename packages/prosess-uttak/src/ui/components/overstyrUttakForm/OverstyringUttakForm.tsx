@@ -2,10 +2,9 @@ import React, { useContext, useState } from 'react';
 import { FormProvider, useForm, useFieldArray } from 'react-hook-form';
 import dayjs from 'dayjs';
 
-import { TextArea } from '@navikt/k9-fe-form-utils';
 import DatePicker from '@navikt/ds-react/esm/date/datepicker/DatePicker';
 import { useRangeDatepicker } from '@navikt/ds-react/esm/date/hooks/useRangeDatepicker';
-import { Alert, Button, Heading, Loader, TextField } from '@navikt/ds-react';
+import { Alert, Button, Heading, Loader, TextField, Textarea } from '@navikt/ds-react';
 import { Form } from '@navikt/ft-form-hooks';
 
 import OverstyrAktivitetListe from './OverstyrAktivitetListe';
@@ -142,8 +141,7 @@ const OverstyringUttakForm: React.FC<OwnProps> = ({
           </div>
 
           <div className={styles.overstyringBegrunnelse}>
-            <TextArea label="Begrunnelse" name={OverstyrUttakFormFieldName.BEGRUNNELSE} disabled={loading} />
-
+            <Textarea label="Begrunnelse" {...register(OverstyrUttakFormFieldName.BEGRUNNELSE)} disabled={loading} />
             <Alert inline variant="info">
               Overstyringen vil ikke være synlig i uttak før du har bekreftet overstyringen.
             </Alert>

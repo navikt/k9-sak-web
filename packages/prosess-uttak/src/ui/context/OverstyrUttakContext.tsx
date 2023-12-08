@@ -89,7 +89,7 @@ export const OverstyrUttakContextProvider = ({ children }) => {
     const apiResult: OverstyrtUttakResponse = await get(endpoints.behandlingUttakOverstyrt, httpErrorHandler).then(
       (response: OverstyrtUttakResponse) => response,
     );
-
+    console.log('apiResult', apiResult);
     setOverstyrte(apiResult?.overstyringer || []);
     setArbeidsgivere(apiResult?.arbeidsgiverOversikt?.arbeidsgivere || {});
     setLasterOverstyringer(false);

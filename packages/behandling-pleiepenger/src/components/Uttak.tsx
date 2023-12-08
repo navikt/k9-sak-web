@@ -63,7 +63,7 @@ export default ({
   return (
     <Uttak
       containerData={{
-        httpErrorHandlerCaller,
+        httpErrorHandler: httpErrorHandlerCaller,
         endpoints: findEndpointsForMicrofrontend(links, [
           { rel: 'pleiepenger-overstyrtbare-aktiviteter', desiredName: 'behandlingUttakOverstyrbareAktiviteter' },
           { rel: 'pleiepenger-overstyrt-uttak', desiredName: 'behandlingUttakOverstyrt' },
