@@ -1,4 +1,4 @@
-import Ekspanderbartpanel from 'nav-frontend-ekspanderbartpanel';
+import { ExpansionCard } from '@navikt/ds-react';
 import { Element, Normaltekst, Undertittel } from 'nav-frontend-typografi';
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
@@ -47,43 +47,49 @@ const TilbakekrevingEditerVedtaksbrevPanel = ({
         avsnitt.avsnittstype === underavsnittType.OPPSUMMERING && fritekstOppsummeringPakrevdMenIkkeUtfylt;
       return (
         <React.Fragment key={avsnitt.avsnittstype + avsnitt.fom}>
-          <Ekspanderbartpanel
-            className={harPeriodeSomManglerObligatoriskVerdi || visApen ? styles.panelMedGulmarkering : styles.panel}
-            tittel={
-              avsnitt.overskrift ? (
-                avsnitt.overskrift
-              ) : (
-                <FormattedMessage id="TilbakekrevingEditerVedtaksbrevPanel.LovhjemlerOgKlagerettOverskrift" />
-              )
-            }
-            apen={harPeriodeSomManglerObligatoriskVerdi || visApen}
+          <ExpansionCard
+            size="small"
+            aria-label={avsnitt.overskrift}
+            className={harPeriodeSomManglerObligatoriskVerdi || visApen ? styles.panelMedGulmarkering : ''}
+            defaultOpen={harPeriodeSomManglerObligatoriskVerdi || visApen}
           >
-            {underavsnitter.map((underavsnitt: any) => (
-              <React.Fragment key={underavsnitt.underavsnittstype + underavsnitt.overskrift + underavsnitt.brødtekst}>
-                {underavsnitt.overskrift && <Element>{underavsnitt.overskrift}</Element>}
-                {underavsnitt.brødtekst && <Normaltekst>{underavsnitt.brødtekst}</Normaltekst>}
-                {underavsnitt.fritekstTillatt && (
-                  <>
-                    <VerticalSpacer eightPx />
-                    <TilbakekrevingVedtakUtdypendeTekstPanel
-                      type={
-                        underavsnitt.underavsnittstype
-                          ? `${periode}.${underavsnitt.underavsnittstype}`
-                          : avsnitt.avsnittstype
-                      }
-                      formName={formName}
-                      readOnly={readOnly}
-                      behandlingId={behandlingId}
-                      behandlingVersjon={behandlingVersjon}
-                      fritekstPakrevet={underavsnitt.fritekstPåkrevet}
-                      maximumLength={erRevurderingTilbakekrevingFeilBeløpBortfalt ? 10000 : null}
-                    />
-                  </>
+            <ExpansionCard.Header>
+              <ExpansionCard.Title size="small">
+                {avsnitt.overskrift ? (
+                  avsnitt.overskrift
+                ) : (
+                  <FormattedMessage id="TilbakekrevingEditerVedtaksbrevPanel.LovhjemlerOgKlagerettOverskrift" />
                 )}
-                <VerticalSpacer eightPx />
-              </React.Fragment>
-            ))}
-          </Ekspanderbartpanel>
+              </ExpansionCard.Title>
+            </ExpansionCard.Header>
+            <ExpansionCard.Content>
+              {underavsnitter.map((underavsnitt: any) => (
+                <React.Fragment key={underavsnitt.underavsnittstype + underavsnitt.overskrift + underavsnitt.brødtekst}>
+                  {underavsnitt.overskrift && <Element>{underavsnitt.overskrift}</Element>}
+                  {underavsnitt.brødtekst && <Normaltekst>{underavsnitt.brødtekst}</Normaltekst>}
+                  {underavsnitt.fritekstTillatt && (
+                    <>
+                      <VerticalSpacer eightPx />
+                      <TilbakekrevingVedtakUtdypendeTekstPanel
+                        type={
+                          underavsnitt.underavsnittstype
+                            ? `${periode}.${underavsnitt.underavsnittstype}`
+                            : avsnitt.avsnittstype
+                        }
+                        formName={formName}
+                        readOnly={readOnly}
+                        behandlingId={behandlingId}
+                        behandlingVersjon={behandlingVersjon}
+                        fritekstPakrevet={underavsnitt.fritekstPåkrevet}
+                        maximumLength={erRevurderingTilbakekrevingFeilBeløpBortfalt ? 10000 : null}
+                      />
+                    </>
+                  )}
+                  <VerticalSpacer eightPx />
+                </React.Fragment>
+              ))}
+            </ExpansionCard.Content>
+          </ExpansionCard>
           <VerticalSpacer eightPx />
         </React.Fragment>
       );
