@@ -26,7 +26,6 @@ const AktivitetRad: React.FC<ownProps> = ({
   visOverstyringSkjema,
   handleSlett,
   loading,
-  setLoading,
 }) => {
   const [ekspandert, setEkspandert] = React.useState<boolean>(false);
   const { id, periode, søkersUttaksgrad, begrunnelse } = overstyring;
@@ -50,7 +49,7 @@ const AktivitetRad: React.FC<ownProps> = ({
           size="xsmall"
           variant="tertiary"
           icon={<Edit aria-hidden />}
-          onClick={e => {
+          onClick={() => {
             handleRediger(index);
           }}
           disabled={visOverstyringSkjema}

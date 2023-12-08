@@ -6,64 +6,6 @@ import dayjs from 'dayjs';
 import ContainerContext from './ContainerContext';
 import { Arbeidsforhold, OverstyrbareAktiviteterResponse, OverstyringUttak, OverstyrtUttakResponse } from '../../types';
 
-const mockApiCall = (fom: Date, tom: Date): Promise<{ arbeidsforholdsperioder: any[] }> =>
-  new Promise(resolve => {
-    setTimeout(() => {
-      const apiResult = {
-        arbeidsforholdsperioder: [
-          {
-            arbeidsforhold: {
-              type: 'BLAH type',
-              organisasjonsnummer: '123123123',
-              aktørId: 'aktørid',
-              arbeidsforholdId: 'arbedsfholdid',
-            },
-          },
-          {
-            arbeidsforhold: {
-              type: 'MEH',
-              organisasjonsnummer: '123123123',
-              aktørId: 'aktørid',
-              arbeidsforholdId: 'arbedsfholdid',
-            },
-          },
-        ],
-      };
-      resolve(apiResult);
-    }, 1000);
-  });
-
-const mockApiCall2 = (): Promise<{ overstyringer: any[] }> =>
-  new Promise(resolve => {
-    setTimeout(() => {
-      const apiResult = {
-        overstyringer: [
-          {
-            id: 96912836,
-            begrunnelse: 'Grundig begrunnet',
-            periode: {
-              fom: new Date().toISOString(),
-              tom: new Date().toISOString(),
-            },
-            søkersUttaksgrad: 100.0,
-            utbetalingsgrader: [
-              {
-                arbeidsforhold: {
-                  type: 'AT',
-                  organisasjonsnummer: '910909088',
-                  aktørId: null,
-                  arbeidsforholdId: null,
-                },
-                utbetalingsgrad: 50.0,
-              },
-            ],
-          },
-        ],
-      };
-      resolve(apiResult);
-    }, 2000);
-  });
-
 type OverstyrUttakContextType = {
   lasterOverstyringer: boolean;
   lasterAktiviteter: boolean;
@@ -89,7 +31,6 @@ export const OverstyrUttakContextProvider = ({ children }) => {
     const apiResult: OverstyrtUttakResponse = await get(endpoints.behandlingUttakOverstyrt, httpErrorHandler).then(
       (response: OverstyrtUttakResponse) => response,
     );
-    console.log('apiResult', apiResult);
     setOverstyrte(apiResult?.overstyringer || []);
     setArbeidsgivere(apiResult?.arbeidsgiverOversikt?.arbeidsgivere || {});
     setLasterOverstyringer(false);

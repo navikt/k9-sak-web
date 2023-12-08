@@ -48,13 +48,7 @@ const OverstyringUttakForm: React.FC<OwnProps> = ({
   });
 
   const tidligesteStartDato = finnTidligsteStartDatoFraUttaksperioder(uttaksperioder);
-  const {
-    control,
-    formState: { errors },
-    setValue,
-    watch,
-    register,
-  } = formMethods;
+  const { control, setValue, watch, register } = formMethods;
 
   const { fields, replace: replaceAktiviteter } = useFieldArray({
     control,
@@ -77,12 +71,8 @@ const OverstyringUttakForm: React.FC<OwnProps> = ({
 
   React.useEffect(() => {
     const handleHentAktuelleAktiviteter = async (fom: Date, tom: Date) => {
-      try {
-        const aktiviteter = await hentAktuelleAktiviteter(fom, tom);
-        replaceAktiviteter(formaterOverstyringAktiviteter(aktiviteter));
-      } catch (error) {
-        console.log('error: ', error);
-      }
+      const aktiviteter = await hentAktuelleAktiviteter(fom, tom);
+      replaceAktiviteter(formaterOverstyringAktiviteter(aktiviteter));
     };
 
     if (watchFraDato && watchTilDato) {
