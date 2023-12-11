@@ -5,7 +5,7 @@ import { dateFormat } from '@fpsak-frontend/utils';
 import { Aksjonspunkt, Fagsak, Opptjening, OpptjeningBehandling, SubmitCallback, Vilkar } from '@k9-sak-web/types';
 import { SideMenu } from '@navikt/ft-plattform-komponenter';
 import classNames from 'classnames/bind';
-import isEqual from 'lodash.isequal';
+import isEqual from 'lodash/isEqual';
 import React, { useEffect, useState } from 'react';
 import { RawIntlProvider, createIntl, createIntlCache } from 'react-intl';
 
