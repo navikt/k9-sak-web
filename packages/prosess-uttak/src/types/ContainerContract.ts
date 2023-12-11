@@ -4,8 +4,8 @@ import ArbeidsgiverOpplysninger from './ArbeidsgiverOpplysninger';
 import KodeverkMedNavn from './kodeverkMedNavnTsType';
 
 interface ContainerContract {
-  httpErrorHandler: (status: number, locationHeader?: string) => void;
-  endpoints: {
+  httpErrorHandler?: (status: number, locationHeader?: string) => void;
+  endpoints?: {
     behandlingUttakOverstyrbareAktiviteter: string;
     behandlingUttakOverstyrt: string;
   };
@@ -16,7 +16,7 @@ interface ContainerContract {
   aksjonspunktkoder: string[];
   erFagytelsetypeLivetsSluttfase: boolean;
   kodeverkUtenlandsoppholdÅrsak: KodeverkMedNavn[];
-  handleOverstyringAksjonspunkt: (data: any) => Promise<any>;
+  handleOverstyringAksjonspunkt?: (data: any) => Promise<any>;
   løsAksjonspunktVurderDatoNyRegelUttak: ({
     begrunnelse,
     virkningsdato,
@@ -26,7 +26,7 @@ interface ContainerContract {
   }) => void;
   virkningsdatoUttakNyeRegler: string;
   aksjonspunkter?: Aksjonspunkt[];
-  versjon: number;
+  versjon?: number;
   featureToggles: { [key: string]: boolean };
 }
 
