@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { KeyHorizontalIcon, KeyVerticalIcon } from '@navikt/aksel-icons';
+import { KeyHorizontalIcon } from '@navikt/aksel-icons';
 
 import styles from './overstyringIkon.css';
 
@@ -13,9 +13,9 @@ interface OverstyringIkonProps {
 const OverstyringIkon: React.FC<OverstyringIkonProps> = ({ erOverstyrer, toggleOverstyring }) => {
   if (erOverstyrer) {
     return (
-      <a title="Overstyr" href="#" onClick={() => toggleOverstyring()} className={styles.overstyringNokkel}>
+      <button type="button" title="Overstyr" onClick={() => toggleOverstyring()} className={styles.overstyringNokkel}>
         <KeyHorizontalIcon title="Overstyr uttak" />
-      </a>
+      </button>
     );
   }
   return <KeyHorizontalIcon title="Overstyr uttak" className={styles.overstyringNokkelInaktiv} />;

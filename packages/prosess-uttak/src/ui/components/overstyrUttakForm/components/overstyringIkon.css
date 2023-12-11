@@ -3,6 +3,8 @@
 .overstyringNokkel {
     margin-left: 10px;
     color: var(--a-icon-action);
+    border: none;
+    background: none;
 }
 
 .overstyringNokkelInaktiv {
