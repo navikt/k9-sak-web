@@ -12,7 +12,7 @@ import VurderDato from './components/vurderDato/VurderDato';
 import { aksjonspunktVurderDatoKode, aksjonspunktkodeVentAnnenPSBSakKode } from '../constants/Aksjonspunkter';
 import OverstyringIkon from './components/overstyrUttakForm/components/OverstyringIkon';
 import { OverstyrUttakContextProvider } from './context/OverstyrUttakContext';
-import Overstyr from './components/overstyrUttakForm/Overstyr';
+import OverstyrUttakForm from './components/overstyrUttakForm/OverstyrUttakForm';
 
 interface MainComponentProps {
   containerData: ContainerContract;
@@ -48,7 +48,9 @@ const MainComponent = ({ containerData }: MainComponentProps): JSX.Element => {
 
       <Infostripe harVentAnnenPSBSakAksjonspunkt={harVentAnnenPSBSakAksjonspunkt} />
 
-      <OverstyrUttakContextProvider>{erOverstyrer && overstyringAktiv && <Overstyr />}</OverstyrUttakContextProvider>
+      <OverstyrUttakContextProvider>
+        {erOverstyrer && overstyringAktiv && <OverstyrUttakForm />}
+      </OverstyrUttakContextProvider>
 
       <UtsattePerioderStripe />
       {harAksjonspunktVurderDatoMedStatusOpprettet && <VurderDato />}
