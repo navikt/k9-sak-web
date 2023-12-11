@@ -17,6 +17,8 @@ describe('<BehandlingPickerItemContent>', () => {
         søknadsperioder={[{ fom: '2022-01-01', tom: '2022-01-18' }]}
         erFerdigstilt
         erUnntaksløype={false}
+        index={0}
+        opprettet="2021-12-20T09:21:41"
       />,
     );
     expect(wrapper.find(Panel)).toHaveLength(1);
@@ -33,6 +35,8 @@ describe('<BehandlingPickerItemContent>', () => {
         søknadsperioder={[{ fom: '2022-01-01', tom: '2022-01-18' }]}
         erFerdigstilt
         erUnntaksløype={false}
+        index={0}
+        opprettet="2021-12-20T09:21:41"
       />,
     );
 
