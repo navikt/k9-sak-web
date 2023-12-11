@@ -2591,7 +2591,7 @@ __metadata:
     "@navikt/ft-plattform-komponenter": 2.3.14
     classnames: 2.3.2
     formik: 2.4.5
-    lodash.throttle: 4.1.1
+    lodash: 4.17.21
     moment: 2.29.4
     nav-frontend-core: 6.0.1
     nav-frontend-etiketter: 3.0.3
@@ -3198,7 +3198,7 @@ __metadata:
     classnames: 2.3.2
     dayjs: 1.11.10
     enzyme: 3.11.0
-    lodash.isequal: 4.5.0
+    lodash: 4.17.21
     moment: 2.29.4
     nav-frontend-core: 6.0.1
     nav-frontend-grid: 2.0.2
@@ -4442,12 +4442,12 @@ __metadata:
     "@navikt/ft-fakta-beregning-redesign": 1.0.17
     "@navikt/ft-fakta-fordel-beregningsgrunnlag": 7.3.20
     "@navikt/ft-prosess-beregningsgrunnlag": 6.3.20
-    "@navikt/k9-fe-etablert-tilsyn": 1.0.3
+    "@navikt/k9-fe-etablert-tilsyn": 1.0.4
     "@navikt/k9-fe-http-utils": 1.0.8
-    "@navikt/k9-fe-inntektsmelding": 1.0.4
-    "@navikt/k9-fe-medisinsk-vilkar": 1.0.3
-    "@navikt/k9-fe-om-barnet": 1.0.3
-    "@navikt/k9-fe-omsorgen-for": 1.0.3
+    "@navikt/k9-fe-inntektsmelding": 1.0.5
+    "@navikt/k9-fe-medisinsk-vilkar": 1.0.4
+    "@navikt/k9-fe-om-barnet": 1.0.4
+    "@navikt/k9-fe-omsorgen-for": 1.0.4
     axios: 1.6.2
     axios-mock-adapter: 1.22.0
     enzyme: 3.11.0
@@ -4502,8 +4502,8 @@ __metadata:
     "@navikt/ft-fakta-fordel-beregningsgrunnlag": 7.3.20
     "@navikt/ft-prosess-beregningsgrunnlag": 6.3.20
     "@navikt/k9-fe-http-utils": 1.0.8
-    "@navikt/k9-fe-inntektsmelding": 1.0.4
-    "@navikt/k9-fe-medisinsk-vilkar": 1.0.3
+    "@navikt/k9-fe-inntektsmelding": 1.0.5
+    "@navikt/k9-fe-medisinsk-vilkar": 1.0.4
     axios: 1.6.2
     axios-mock-adapter: 1.22.0
     enzyme: 3.11.0
@@ -4563,12 +4563,12 @@ __metadata:
     "@navikt/ft-fakta-beregning-redesign": 1.0.17
     "@navikt/ft-fakta-fordel-beregningsgrunnlag": 7.3.20
     "@navikt/ft-prosess-beregningsgrunnlag": 6.3.20
-    "@navikt/k9-fe-etablert-tilsyn": 1.0.3
+    "@navikt/k9-fe-etablert-tilsyn": 1.0.4
     "@navikt/k9-fe-http-utils": 1.0.8
-    "@navikt/k9-fe-inntektsmelding": 1.0.4
-    "@navikt/k9-fe-medisinsk-vilkar": 1.0.3
-    "@navikt/k9-fe-om-barnet": 1.0.3
-    "@navikt/k9-fe-omsorgen-for": 1.0.3
+    "@navikt/k9-fe-inntektsmelding": 1.0.5
+    "@navikt/k9-fe-medisinsk-vilkar": 1.0.4
+    "@navikt/k9-fe-om-barnet": 1.0.4
+    "@navikt/k9-fe-omsorgen-for": 1.0.4
     axios: 1.6.2
     axios-mock-adapter: 1.22.0
     enzyme: 3.11.0
@@ -4783,7 +4783,6 @@ __metadata:
     classnames: 2.3.2
     dayjs: 1.11.10
     lodash: 4.17.21
-    lodash.throttle: 4.1.1
     nav-frontend-alertstriper: 4.0.2
     nav-frontend-alertstriper-style: 3.0.2
     nav-frontend-chevron: 1.0.30
@@ -4868,7 +4867,7 @@ __metadata:
     date-fns: 2.30.0
     dayjs: 1.11.10
     express: 4.18.2
-    lodash.throttle: 4.1.1
+    lodash: 4.17.21
     msw: 1.3.2
     msw-storybook-addon: 1.10.0
     nav-frontend-alertstriper: 4.0.2
@@ -4913,7 +4912,7 @@ __metadata:
     classnames: 2.3.2
     date-fns: 2.30.0
     dayjs: 1.11.10
-    lodash.throttle: 4.1.1
+    lodash: 4.17.21
     msw-storybook-addon: 1.10.0
     nav-frontend-alertstriper: 4.0.2
     nav-frontend-alertstriper-style: 3.0.2
@@ -4953,7 +4952,7 @@ __metadata:
     "@fpsak-frontend/form": "*"
     "@k9-sak-web/types": "*"
     "@navikt/ft-plattform-komponenter": 2.3.14
-    "@navikt/k9-fe-form-utils": 1.0.17
+    "@navikt/k9-fe-form-utils": 1.0.18
     "@navikt/k9-fe-period-utils": 1.0.12
     formik: 2.4.5
     yup: 0.32.11
@@ -4975,7 +4974,7 @@ __metadata:
     axios: 1.6.2
     classnames: 2.3.2
     dayjs: 1.11.10
-    lodash.throttle: 4.1.1
+    lodash: 4.17.21
     react: 18.2.0
     react-collapse: 5.1.1
     react-dom: 18.2.0
@@ -4999,7 +4998,7 @@ __metadata:
     axios: 1.6.2
     classnames: 2.3.2
     dayjs: 1.11.10
-    lodash.throttle: 4.1.1
+    lodash: 4.17.21
     react: 18.2.0
     react-collapse: 5.1.1
     react-dom: 18.2.0
@@ -5022,7 +5021,7 @@ __metadata:
     axios: 1.6.2
     classnames: 2.3.2
     dayjs: 1.11.10
-    lodash.throttle: 4.1.1
+    lodash: 4.17.21
     nav-frontend-alertstriper: 4.0.2
     nav-frontend-alertstriper-style: 3.0.2
     nav-frontend-chevron: 1.0.30
@@ -5064,7 +5063,6 @@ __metadata:
     dayjs: 1.11.10
     jest-axe: ^8.0.0
     lodash: 4.17.21
-    lodash.throttle: 4.1.1
     nav-datovelger: 12.6.0
     nav-frontend-alertstriper: 4.0.2
     nav-frontend-alertstriper-style: 3.0.2
@@ -5100,7 +5098,7 @@ __metadata:
     "@navikt/ds-react": 5.11.2
     "@navikt/ft-plattform-komponenter": 2.3.14
     "@navikt/k9-fe-date-utils": 1.0.9
-    "@navikt/k9-fe-form-utils": 1.0.17
+    "@navikt/k9-fe-form-utils": 1.0.18
     "@navikt/k9-fe-period-utils": 1.0.12
     classnames: 2.3.2
     dayjs: 1.11.10
@@ -5205,7 +5203,7 @@ __metadata:
     "@k9-sak-web/types": 1.0.0
     classnames: 2.3.2
     enzyme: 3.11.0
-    lodash.throttle: 4.1.1
+    lodash: 4.17.21
     moment: 2.29.4
     nav-frontend-alertstriper: 4.0.2
     nav-frontend-alertstriper-style: 3.0.2
@@ -5328,7 +5326,7 @@ __metadata:
     cors: 2.8.5
     dayjs: 1.11.10
     express: 4.18.2
-    lodash.throttle: 4.1.1
+    lodash: 4.17.21
     nav-frontend-alertstriper: 4.0.2
     nav-frontend-alertstriper-style: 3.0.2
     nav-frontend-chevron: 1.0.30
@@ -5432,7 +5430,7 @@ __metadata:
     "@navikt/ft-plattform-komponenter": 2.3.14
     classnames: 2.3.2
     enzyme: 3.11.0
-    lodash.isequal: 4.5.0
+    lodash: 4.17.21
     nav-frontend-core: 6.0.1
     nav-frontend-spinner: 3.0.1
     nav-frontend-spinner-style: 1.0.2
@@ -5542,13 +5540,13 @@ __metadata:
     "@navikt/ft-plattform-komponenter": 2.3.14
     "@navikt/ft-prosess-beregningsgrunnlag": 6.3.20
     "@navikt/ft-ui-komponenter": 2.1.17
-    "@navikt/k9-fe-etablert-tilsyn": 1.0.3
+    "@navikt/k9-fe-etablert-tilsyn": 1.0.4
     "@navikt/k9-fe-http-utils": 1.0.8
-    "@navikt/k9-fe-inntektsmelding": 1.0.4
-    "@navikt/k9-fe-medisinsk-vilkar": 1.0.3
-    "@navikt/k9-fe-om-barnet": 1.0.3
-    "@navikt/k9-fe-omsorgen-for": 1.0.3
-    "@navikt/k9-fe-omsorgsdager": 1.0.2
+    "@navikt/k9-fe-inntektsmelding": 1.0.5
+    "@navikt/k9-fe-medisinsk-vilkar": 1.0.4
+    "@navikt/k9-fe-om-barnet": 1.0.4
+    "@navikt/k9-fe-omsorgen-for": 1.0.4
+    "@navikt/k9-fe-omsorgsdager": 1.0.3
     "@sentry/browser": 7.84.0
     axios: 1.6.2
     classnames: 2.3.2
@@ -6318,9 +6316,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@navikt/k9-fe-etablert-tilsyn@npm:1.0.3":
-  version: 1.0.3
-  resolution: "@navikt/k9-fe-etablert-tilsyn@npm:1.0.3::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fk9-fe-etablert-tilsyn%2F1.0.3%2Fabbdb795b1c59dfb435bcf53962165f5b1c28258"
+"@navikt/k9-fe-etablert-tilsyn@npm:1.0.4":
+  version: 1.0.4
+  resolution: "@navikt/k9-fe-etablert-tilsyn@npm:1.0.4::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fk9-fe-etablert-tilsyn%2F1.0.4%2Fbbe13706187128f565f1815a36c4de238e22ee99"
   peerDependencies:
     "@navikt/ds-css": 5.11.2
     "@navikt/ds-icons": 3.4.3
@@ -6336,7 +6334,6 @@ __metadata:
     classnames: 2.x
     dayjs: 1.x
     lodash: 4.x
-    lodash.throttle: 4.x
     nav-frontend-alertstriper: 4.x
     nav-frontend-alertstriper-style: 3.x
     nav-frontend-chevron: 1.x
@@ -6366,13 +6363,13 @@ __metadata:
     react-dom: 18.x
     react-hook-form: 7.48.2
     react-popper: 2.x
-  checksum: 48c73f94433450b73766b39c55dcceb7599330f79d857a4534a431db24e5f76f65a987aafc4b89a529d8d9eb08f675c56cf6b97ee8ae4aceb92866c0e8ce432a
+  checksum: 5a3d6a9d4675227b3ef699144bc80b4799b1dc1b482b93f6d30bb300bcb3c9671e6d8ef8a65e38f94266c7cf7d85050ad26e9180bc3a4aa90db83061c7cab14e
   languageName: node
   linkType: hard
 
-"@navikt/k9-fe-form-utils@npm:1.0.17":
-  version: 1.0.17
-  resolution: "@navikt/k9-fe-form-utils@npm:1.0.17::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fk9-fe-form-utils%2F1.0.17%2Ff1b4c0a3390242f8ef7ccdc5795e46518e822f5a"
+"@navikt/k9-fe-form-utils@npm:1.0.18":
+  version: 1.0.18
+  resolution: "@navikt/k9-fe-form-utils@npm:1.0.18::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fk9-fe-form-utils%2F1.0.18%2Fb792b0de3d6ca82b165fc958e574e6918b552818"
   dependencies:
     "@navikt/k9-fe-bem-utils": ^1.0.4
     "@navikt/k9-fe-period-utils": ^1.0.12
@@ -6386,13 +6383,12 @@ __metadata:
     "@storybook/react": 6.5.15
     classnames: 2.3.2
     dayjs: 1.11.7
-    lodash.throttle: 4.1.1
     react: 18.2.0
     react-collapse: 5.1.1
     react-dom: 18.2.0
     react-hook-form: 7.43.0
     react-popper: 2.3.0
-  checksum: 5ad423a7dd42745824d23bd5728d8c56770b5b79e53b388832c0690f74f31d54824d4577951e71cf407e421d66937d211abab3fbd3ab1935606b1f8cbe973235
+  checksum: c45bdbcf0a181ce858ea580fbc1d42f40abc8bddca13209e0f7c7c4c16ee3f6c46fdcbbd3e6c3338e23789ccab3c504f5b2667e3aa1ece12173e477c4c2703eb
   languageName: node
   linkType: hard
 
@@ -6405,9 +6401,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@navikt/k9-fe-inntektsmelding@npm:1.0.4":
-  version: 1.0.4
-  resolution: "@navikt/k9-fe-inntektsmelding@npm:1.0.4::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fk9-fe-inntektsmelding%2F1.0.4%2F429ee5d9b3fc2490254c2e89464a2571e8bd306b"
+"@navikt/k9-fe-inntektsmelding@npm:1.0.5":
+  version: 1.0.5
+  resolution: "@navikt/k9-fe-inntektsmelding@npm:1.0.5::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fk9-fe-inntektsmelding%2F1.0.5%2F6f3417210edad43cac3f025a40a9ab253ba1d929"
   peerDependencies:
     "@navikt/ds-css": 5.11.2
     "@navikt/ds-icons": 3.4.3
@@ -6424,7 +6420,7 @@ __metadata:
     classnames: 2.x
     date-fns: 2.x
     dayjs: 1.x
-    lodash.throttle: 4.x
+    lodash: 4.x
     nav-frontend-alertstriper: 4.x
     nav-frontend-alertstriper-style: 3.x
     nav-frontend-chevron: 1.x
@@ -6454,13 +6450,13 @@ __metadata:
     react-popper: 2.x
     tsconfig-paths-webpack-plugin: 4.x
     uuid: 9.x
-  checksum: fbfe16bc7b7795013229808760e30bca2374f26cfca1e449e325958edaef990b079ba0e669702d49aef79cb8b9a34c3bbacc43788a6b24e04d8ad094accfe32c
+  checksum: 9f27f017e39e0a35e985981ad48116021576f7e1e3dc2d01ac924c695d30dc852ee67b1532b7df39d98ded9cad016f954e7d815546b82c70a398007ce725c00b
   languageName: node
   linkType: hard
 
-"@navikt/k9-fe-medisinsk-vilkar@npm:1.0.3":
-  version: 1.0.3
-  resolution: "@navikt/k9-fe-medisinsk-vilkar@npm:1.0.3::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fk9-fe-medisinsk-vilkar%2F1.0.3%2Ff1f90595f9786210868c578773de5558daf36f04"
+"@navikt/k9-fe-medisinsk-vilkar@npm:1.0.4":
+  version: 1.0.4
+  resolution: "@navikt/k9-fe-medisinsk-vilkar@npm:1.0.4::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fk9-fe-medisinsk-vilkar%2F1.0.4%2Ff062b6590bf2ba6130c369e8ce85d04e4eebfc09"
   peerDependencies:
     "@navikt/diagnosekoder": ^1.2023.0
     "@navikt/ds-css": 5.11.2
@@ -6477,7 +6473,7 @@ __metadata:
     axios: 1.x
     classnames: 2.x
     dayjs: 1.x
-    lodash.throttle: 4.x
+    lodash: 4.x
     react: 18.x
     react-collapse: 5.x
     react-dom: 18.x
@@ -6486,13 +6482,13 @@ __metadata:
     react-outside-click-handler: 1.x
     react-popper: 2.x
     react-query: 3.x
-  checksum: cc0df8a1f1dee58eb8395515f7579e89657791eaec110707bdf2a3f67f94b11e83a125961381fd88ecbfb6995eb377bea7c975258c178f93adb575028eb4c7d8
+  checksum: 2f6e6120f9266de663b96d83e9d92581ee1e5a825c031bad192df5d8cb7abb0a21f3dfb6ac73073ea7d4a2f8e4cca3f70402e0172d1dad078ae7d3136cea8506
   languageName: node
   linkType: hard
 
-"@navikt/k9-fe-om-barnet@npm:1.0.3":
-  version: 1.0.3
-  resolution: "@navikt/k9-fe-om-barnet@npm:1.0.3::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fk9-fe-om-barnet%2F1.0.3%2F86226a2426286355ccbd0395b71ea84ade1c4dbd"
+"@navikt/k9-fe-om-barnet@npm:1.0.4":
+  version: 1.0.4
+  resolution: "@navikt/k9-fe-om-barnet@npm:1.0.4::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fk9-fe-om-barnet%2F1.0.4%2F46f770892332b9d849a35a13e054b244df46b545"
   peerDependencies:
     "@hookform/error-message": 2.x
     "@navikt/ds-css": 5.11.2
@@ -6508,20 +6504,20 @@ __metadata:
     axios: 1.x
     classnames: 2.x
     dayjs: 1.x
-    lodash.throttle: 4.x
+    lodash: 4.x
     react: 18.x
     react-collapse: 5.x
     react-dom: 18.x
     react-hook-form: 7.48.2
     react-popper: 2.x
     tailwindcss: 3.x
-  checksum: d8e41ffb6bee94c10f647a1c1f7fe1a7553d55be3bbca72ab6a0a35ffe1d7cf82a628a7880a206d8f1078405882cf23f70bd178dbee30af8f61a93bfca276887
+  checksum: c5e68982891a4aeb160d9e2f643d8486eb909692e0461875e3c3dd2988f8599bf0c19f09bf0e06d883943b21b2cc0b14591f7da5619101b16663b6e072ceb0c5
   languageName: node
   linkType: hard
 
-"@navikt/k9-fe-omsorgen-for@npm:1.0.3":
-  version: 1.0.3
-  resolution: "@navikt/k9-fe-omsorgen-for@npm:1.0.3::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fk9-fe-omsorgen-for%2F1.0.3%2F2adf9c9e015587c32ba8b63e5a77b5ee571425ca"
+"@navikt/k9-fe-omsorgen-for@npm:1.0.4":
+  version: 1.0.4
+  resolution: "@navikt/k9-fe-omsorgen-for@npm:1.0.4::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fk9-fe-omsorgen-for%2F1.0.4%2Fecb77870e3f9a448b87c7844258170c1dfd860c6"
   peerDependencies:
     "@hookform/error-message": 2.x
     "@navikt/ds-css": 5.11.2
@@ -6538,7 +6534,7 @@ __metadata:
     axios: 1.x
     classnames: 2.x
     dayjs: 1.x
-    lodash.throttle: 4.x
+    lodash: 4.x
     nav-frontend-alertstriper: 4.x
     nav-frontend-alertstriper-style: 3.x
     nav-frontend-chevron: 1.x
@@ -6566,13 +6562,13 @@ __metadata:
     react-hook-form: 7.48.2
     react-intl: 6.5.5
     react-popper: 2.x
-  checksum: 7848f3d1ddaae7b008de6f8e824b6a1aeed1cf2b1d3090fe7be05a89b454bb350908a0b609c511d3517df030f60120b6e4131f937eeab50bf7426dd6424f9443
+  checksum: 835eef42e253bad2deb3772b0ed6c78bf654a889715af2dcede66c1acbf20b819737a38d22e8b533d4c7bdb7dea327e8e2f03c9151fbdc10438141953bc6a545
   languageName: node
   linkType: hard
 
-"@navikt/k9-fe-omsorgsdager@npm:1.0.2":
-  version: 1.0.2
-  resolution: "@navikt/k9-fe-omsorgsdager@npm:1.0.2::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fk9-fe-omsorgsdager%2F1.0.2%2Fe9f000689d2226dd93dccb99b90704a86f29e729"
+"@navikt/k9-fe-omsorgsdager@npm:1.0.3":
+  version: 1.0.3
+  resolution: "@navikt/k9-fe-omsorgsdager@npm:1.0.3::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fk9-fe-omsorgsdager%2F1.0.3%2F5167a934b035b71b85f49ee874ac981fa9526940"
   peerDependencies:
     "@navikt/ds-css": 5.11.2
     "@navikt/ds-react": 5.11.2
@@ -6580,7 +6576,6 @@ __metadata:
     classnames: 2.x
     dayjs: 1.x
     lodash: 4.x
-    lodash.throttle: 4.x
     nav-datovelger: 12.x
     nav-frontend-alertstriper: 4.x
     nav-frontend-alertstriper-style: 3.x
@@ -6602,7 +6597,7 @@ __metadata:
     react-day-picker: 7.x
     react-dom: 18.x
     react-hook-form: 7.47.0
-  checksum: 694c23e2088be22d018273249c0e46a1310ac98853b9c01c960422f3dc404a4a5eb1fd2528746c8203dd61f4dfbcba60282a4ad690bf9eaaa73a9253fb39ff78
+  checksum: 7dd989fa9ef936bb03569aff2801e236af4e6ccb12024829469cc86de264334d50916ca6170d911811bd4c92daafb496740078262c4c8c4700c72a3b35ad1e67
   languageName: node
   linkType: hard
 
@@ -19853,7 +19848,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"lodash.isequal@npm:4.5.0, lodash.isequal@npm:^4.5.0":
+"lodash.isequal@npm:^4.5.0":
   version: 4.5.0
   resolution: "lodash.isequal@npm:4.5.0"
   checksum: da27515dc5230eb1140ba65ff8de3613649620e8656b19a6270afe4866b7bd461d9ba2ac8a48dcc57f7adac4ee80e1de9f965d89d4d81a0ad52bb3eec2609644
