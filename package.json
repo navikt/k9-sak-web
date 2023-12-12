@@ -10,7 +10,7 @@
     "url": "git+https://github.com/navikt/k9-sak-web.git"
   },
   "scripts": {
-    "test": "vitest",
+    "test": "lerna run test --stream",
     "test:all:testonly": "vitest --selectProjects test",
     "test:watch": "vitest --watch --silent=false",
     "test:watch:all": "vitest --watchAll",

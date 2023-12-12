@@ -4,6 +4,9 @@
   "module": "index.ts",
   "license": "MIT",
   "private": true,
+  "scripts": {
+    "test": "vitest --passWithNoTests"
+  },
   "dependencies": {
     "@editorjs/editorjs": "2.28.2",
     "@editorjs/header": "2.8.1",

@@ -4,6 +4,9 @@
   "module": "index.ts",
   "license": "MIT",
   "private": true,
+  "scripts": {
+    "test": "vitest --passWithNoTests"
+  },
   "dependencies": {
     "@k9-sak-web/rest-api": "1.0.0",
     "react": "18.2.0"

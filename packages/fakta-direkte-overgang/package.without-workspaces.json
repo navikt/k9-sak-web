@@ -4,5 +4,6 @@
   "module": "index.ts",
   "license": "MIT",
   "private": true,
+  "scripts": { "test": "vitest --passWithNoTests" },
   "dependencies": {}
 }

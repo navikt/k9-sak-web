@@ -5,6 +5,9 @@
   "module": "index.ts",
   "license": "MIT",
   "private": true,
+  "scripts": {
+    "test": "vitest --passWithNoTests"
+  },
   "dependencies": {
     "@fpsak-frontend/form": "1.0.0",
     "@fpsak-frontend/kodeverk": "1.0.0",

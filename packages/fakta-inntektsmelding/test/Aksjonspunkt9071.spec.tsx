@@ -65,7 +65,7 @@ describe('9071 - Mangler inntektsmelding', () => {
   test('Kan sende purring med varsel om avslag', async () => {
     server.use(rest.get('/tilstand', (req, res, ctx) => res(ctx.json(manglerInntektsmelding))));
     // ARRANGE
-    const onClickSpy = jest.fn();
+    const onClickSpy = vi.fn();
     const data = { onFinished: onClickSpy };
     render(<Mangler9071 {...data} />);
 
@@ -95,7 +95,7 @@ describe('9071 - Mangler inntektsmelding', () => {
   test('Kan submitte begrunnelse når man har valgt A-inntekt', async () => {
     server.use(rest.get('/tilstand', (req, res, ctx) => res(ctx.json(manglerInntektsmelding))));
     // ARRANGE
-    const onClickSpy = jest.fn();
+    const onClickSpy = vi.fn();
     const data = { onFinished: onClickSpy };
     render(<Mangler9071 {...data} />);
 
@@ -124,7 +124,7 @@ describe('9071 - Mangler inntektsmelding', () => {
   test('Hvis det tidligere er blitt gjort en vurdering og behandlingen har hoppet tilbake må man kunne løse aksjonspunktet', async () => {
     server.use(rest.get('/tilstand', (req, res, ctx) => res(ctx.json(alleErMottatt))));
     // ARRANGE
-    const onClickSpy = jest.fn();
+    const onClickSpy = vi.fn();
     const data = { onFinished: onClickSpy };
     render(<AlleInntektsmeldingerMottatt {...data} />);
 

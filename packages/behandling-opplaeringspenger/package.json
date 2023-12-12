@@ -4,6 +4,9 @@
   "module": "index.ts",
   "license": "MIT",
   "private": true,
+  "scripts": {
+    "test": "vitest --passWithNoTests"
+  },
   "dependencies": {
     "@fpsak-frontend/assets": "1.0.0",
     "@fpsak-frontend/fakta-arbeidsforhold": "1.0.0",
