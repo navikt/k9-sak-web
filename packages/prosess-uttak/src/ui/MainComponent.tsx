@@ -51,17 +51,6 @@ const MainComponent = ({ containerData }: MainComponentProps): JSX.Element => {
       </Heading>
 
       <Infostripe harVentAnnenPSBSakAksjonspunkt={harVentAnnenPSBSakAksjonspunkt} />
-      {overstyringAktiv && (
-        <Alert variant="warning">
-          <Heading spacing size="xsmall" level="3">
-            Vurder overstrying av uttaksgrad
-          </Heading>
-          <BodyShort>
-            Det er lagt til overstyring av uttaksgrad i en tidligere periode. Vurder om det skal legges til overstyring
-            for nye perioder i uttak.
-          </BodyShort>
-        </Alert>
-      )}
 
       {harAksjonspunktForOVerstyringAvUttak && (
         <Alert variant="warning">
