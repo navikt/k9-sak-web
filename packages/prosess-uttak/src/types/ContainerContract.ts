@@ -28,7 +28,7 @@ interface ContainerContract {
   aksjonspunkter?: Aksjonspunkt[];
   versjon?: number;
   featureToggles: { [key: string]: boolean };
-  erOverstyrer: boolean;
+  erOverstyrer?: boolean;
 }
 
 export default ContainerContract;

@@ -55,6 +55,7 @@ export default ({
         virkningsdatoUttakNyeRegler,
         aksjonspunkter: funnedeRelevanteAksjonspunkter,
         featureToggles,
+        erOverstyrer: false, // Overstyring er ikke implementert for PILS
       }}
     />
   );

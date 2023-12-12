@@ -52,6 +52,7 @@ export default ({
         løsAksjonspunktVurderDatoNyRegelUttak,
         virkningsdatoUttakNyeRegler,
         featureToggles,
+        erOverstyrer: false, // Overstyring er ikke implementert for Pleiepenger
       }}
     />
   );

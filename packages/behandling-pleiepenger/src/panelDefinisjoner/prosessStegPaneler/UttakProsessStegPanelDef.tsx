@@ -18,6 +18,7 @@ class PanelDef extends ProsessStegPanelDef {
     lagreOverstyringUttak,
     virkningsDatoUttakNyeRegler,
     relevanteAksjonspunkter,
+    erOverstyrer,
   }) => (
     <Uttak
       uuid={behandling.uuid}
@@ -31,10 +32,9 @@ class PanelDef extends ProsessStegPanelDef {
       lagreOverstyringUttak={lagreOverstyringUttak}
       virkningsdatoUttakNyeRegler={virkningsDatoUttakNyeRegler}
       relevanteAksjonspunkter={relevanteAksjonspunkter}
+      erOverstyrer={erOverstyrer}
     />
   );
-
-  erOverstyrer = { erOverstyrer };
 
   getAksjonspunktKoder = () => [
     aksjonspunktCodes.VENT_ANNEN_PSB_SAK,
