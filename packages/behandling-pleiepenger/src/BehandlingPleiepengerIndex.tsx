@@ -22,6 +22,7 @@ import {
   restApiPleiepengerHooks,
 } from './data/pleiepengerBehandlingApi';
 import FetchedData from './types/fetchedDataTsType';
+import { OverstyringUttakRequest } from './types/OverstyringUttakRequest';
 
 const pleiepengerData = [
   { key: PleiepengerBehandlingApiKeys.AKSJONSPUNKTER },
@@ -137,8 +138,7 @@ const BehandlingPleiepengerIndex = ({
     PleiepengerBehandlingApiKeys.SAVE_OVERSTYRT_AKSJONSPUNKT,
   );
 
-  // TODO: Types på values
-  const lagreOverstyringUttak = async (values: any): Promise<void> =>
+  const lagreOverstyringUttak = async (values: OverstyringUttakRequest): Promise<void> => {
     lagreOverstyringUttakRequest({
       saksnummer: fagsak.saksnummer,
       behandlingId: behandling.id,
@@ -147,6 +147,7 @@ const BehandlingPleiepengerIndex = ({
     })
       .then(() => hentBehandling({ behandlingId }, true))
       .then(() => window.scroll(0, 0));
+  };
 
   useEffect(() => {
     behandlingEventHandler.setHandler({

@@ -20,7 +20,7 @@ const OverstyrUttakContext = createContext<OverstyrUttakContextType | null>(null
 export const OverstyrUttakContextProvider = ({ children }) => {
   const { httpErrorHandler, endpoints, aktivBehandlingUuid, versjon } = React.useContext(ContainerContext);
   const [lasterOverstyringer, setLasterOverstyringer] = React.useState<boolean>(false);
-  const [lasterAktiviteter, setLasterAktiviteter] = React.useState<boolean>(false);
+  const [lasterAktiviteter, setLasterAktiviteter] = React.useState<boolean | null>(null);
   const [overstyrte, setOverstyrte] = React.useState<OverstyringUttak[] | null>(null);
   const [arbeidsgivere, setArbeidsgivere] = React.useState<
     OverstyrtUttakResponse['arbeidsgiverOversikt']['arbeidsgivere'] | null

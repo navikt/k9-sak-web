@@ -120,15 +120,17 @@ const OverstyringUttakForm: React.FC<OwnProps> = ({
             />
           </div>
 
-          <div className={styles.overstyringAktivitetListe}>
-            {lasterAktiviteter && <Loader />}
-            {!lasterAktiviteter && (
-              <>
-                {fields.length > 0 && <OverstyrAktivitetListe fields={fields} loading={loading} />}
-                {fields.length === 0 && <>Kunne ikke finne noen aktiviteter i den angitte perioden</>}
-              </>
-            )}
-          </div>
+          {lasterAktiviteter !== null && (
+            <div className={styles.overstyringAktivitetListe}>
+              {lasterAktiviteter && <Loader />}
+              {!lasterAktiviteter && (
+                <>
+                  {fields.length > 0 && <OverstyrAktivitetListe fields={fields} loading={loading} />}
+                  {fields.length === 0 && <>Kunne ikke finne noen aktiviteter i den angitte perioden</>}
+                </>
+              )}
+            </div>
+          )}
 
           <div className={styles.overstyringBegrunnelse}>
             <Textarea label="Begrunnelse" {...register(OverstyrUttakFormFieldName.BEGRUNNELSE)} disabled={loading} />
