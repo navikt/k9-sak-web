@@ -10,7 +10,7 @@
     "url": "git+https://github.com/navikt/k9-sak-web.git"
   },
   "scripts": {
-    "test": "jest -o --colors",
+    "test": "lerna run test --stream",
     "test:all": "jest --colors",
     "test:all:testonly": "jest --colors --selectProjects test",
     "test:watch": "jest --watch --colors --silent=false",

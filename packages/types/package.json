@@ -3,5 +3,11 @@
   "version": "1.0.0",
   "module": "index.tsx",
   "license": "MIT",
-  "private": true
+  "private": true,
+  "scripts": {
+    "test": "jest --passWithNoTests"
+  },
+  "dependencies": {
+    "@navikt/k9-fe-period-utils": "1.0.12"
+  }
 }
