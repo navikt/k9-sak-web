@@ -3,6 +3,8 @@ import utc from 'dayjs/plugin/utc';
 import duration from 'dayjs/plugin/duration';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
 
+import { Uttaksperioder } from '../types';
+
 const dateFormats = ['YYYY-MM-DD', 'DD.MM.YYYY'];
 
 dayjs.extend(utc);
@@ -16,3 +18,13 @@ export const beregnDagerTimer = (dur: string): number => Math.round(dayjs.durati
 export function dateFromString(dateString: string): dayjs.Dayjs {
   return dayjs(dateString, dateFormats).utc(true);
 }
+
+export const finnTidligsteStartDatoFraUttaksperioder = (uttaksperioder: Uttaksperioder): Date => {
+  const startDatoer = Object.keys(uttaksperioder).map(key => dayjs(key.split('/')[0]));
+  return new Date(Math.min(...startDatoer.map(date => date.valueOf())));
+};
+
+export const finnSisteSluttDatoFraUttaksperioder = (uttaksperioder: Uttaksperioder): Date => {
+  const startDatoer = Object.keys(uttaksperioder).map(key => dayjs(key.split('/')[0]));
+  return new Date(Math.max(...startDatoer.map(date => date.valueOf())));
+};

@@ -1,8 +1,10 @@
+import React from 'react';
+
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import { Aksjonspunkt, AlleKodeverk, ArbeidsgiverOpplysningerPerId } from '@k9-sak-web/types';
 import { Uttak } from '@k9-sak-web/prosess-uttak';
-import React from 'react';
+import { useFeatureToggles } from '@fpsak-frontend/shared-components';
 
 interface UttakProps {
   uuid: string;
@@ -25,6 +27,7 @@ export default ({
   submitCallback,
   virkningsdatoUttakNyeRegler,
 }: UttakProps) => {
+  const [featureToggles] = useFeatureToggles();
   const relevanteAksjonspunkter = [aksjonspunktCodes.VENT_ANNEN_PSB_SAK, aksjonspunktCodes.VURDER_DATO_NY_REGEL_UTTAK];
   const funnedeRelevanteAksjonspunkter = aksjonspunkter.filter(aksjonspunkt =>
     relevanteAksjonspunkter.some(relevantAksjonspunkt => relevantAksjonspunkt === aksjonspunkt.definisjon.kode),
@@ -48,6 +51,8 @@ export default ({
         kodeverkUtenlandsoppholdÅrsak: alleKodeverk?.UtenlandsoppholdÅrsak,
         løsAksjonspunktVurderDatoNyRegelUttak,
         virkningsdatoUttakNyeRegler,
+        featureToggles,
+        erOverstyrer: false, // Overstyring er ikke implementert for Pleiepenger
       }}
     />
   );
