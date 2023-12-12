@@ -78,8 +78,14 @@ events.forEach(event => {
   eventDefaultProps[`${event}Handler`] = null;
 });
 
+/*
+ * Forsøk for å omgå typescript-feil
+ */
+interface K9TimelineItem extends Omit<TimelineItem, 'content'> {
+  content: string;
+}
 interface Props {
-  initialItems?: TimelineItem[];
+  initialItems?: K9TimelineItem[];
   initialGroups?: TimelineGroup[];
   options?: TimelineOptions;
   selection?: IdType[];
@@ -104,7 +110,7 @@ const Timeline = (
 ) => {
   const el = useRef();
   const timeline = useRef<VisTimeline>();
-  const items: DataSet<TimelineItem> = useMemo(() => new DataSet<TimelineItem>(), []);
+  const items: DataSet<K9TimelineItem> = useMemo(() => new DataSet<K9TimelineItem>(), []);
   const groups: DataSet<TimelineGroup> = useMemo(() => new DataSet<TimelineGroup>(), []);
 
   useEffect(() => {

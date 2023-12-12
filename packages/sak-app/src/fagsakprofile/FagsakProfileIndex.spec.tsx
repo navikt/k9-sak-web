@@ -194,8 +194,8 @@ describe('<FagsakProfileIndex>', () => {
     expect(screen.queryAllByTestId('BehandlingPickerItem').length).toBe(2);
     expect(screen.getByTestId('BehandlingPicker')).toBeInTheDocument();
     expect(screen.getByText('123 - Opprettet')).toBeInTheDocument();
-    expect(screen.getByText('Førstegangsbehandling')).toBeInTheDocument();
-    expect(screen.getByText('Viderebehandling')).toBeInTheDocument();
+    expect(screen.getByText('1. Førstegangsbehandling')).toBeInTheDocument();
+    expect(screen.getByText('2. Viderebehandling')).toBeInTheDocument();
   });
 
   it('skal ikke vise alle behandlinger når behandling er valgt', async () => {

@@ -70,5 +70,13 @@
   {
     "key": "FAKTA_BEREGNING_REDESIGN",
     "value": "${FAKTA_BEREGNING_REDESIGN}"
+  },
+  {
+    "key": "LOKALE_PAKKER",
+    "value": "${LOKALE_PAKKER}"
+  },
+  {
+    "key": "OVERSTYRING_UTTAK",
+    "value": "${OVERSTYRING_UTTAK}"
   }
 ]

@@ -2,6 +2,7 @@ import { findEndpointsForMicrofrontend, httpErrorHandler as httpErrorHandlerFn }
 import { useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
 import React from 'react';
 import { Inntektsmelding } from '@navikt/k9-fe-inntektsmelding';
+import { Inntektsmelding as LokalInntektsmelding } from '@k9-sak-web/fakta-inntektsmelding';
 
 export default ({
   behandling,
@@ -10,12 +11,32 @@ export default ({
   dokumenter,
   aksjonspunkter,
   submitCallback,
+  featureToggles,
 }) => {
   const { addErrorMessage } = useRestApiErrorDispatcher();
   const httpErrorHandlerCaller = (status: number, locationHeader?: string) =>
     httpErrorHandlerFn(status, addErrorMessage, locationHeader);
 
   const løsAksjonspunkt = aksjonspunktArgs => submitCallback([{ ...aksjonspunktArgs }]);
+
+  if (featureToggles?.LOKALE_PAKKER) {
+    return (
+      <LokalInntektsmelding
+        data={{
+          httpErrorHandler: httpErrorHandlerCaller,
+          arbeidsforhold: arbeidsgiverOpplysningerPerId,
+          dokumenter,
+          readOnly,
+          onFinished: løsAksjonspunkt,
+          endpoints: findEndpointsForMicrofrontend(behandling.links, [
+            { rel: 'kompletthet-beregning', desiredName: 'kompletthetBeregning' },
+          ]),
+          aksjonspunkter,
+        }}
+      />
+    );
+  }
+
   return (
     <Inntektsmelding
       data={{

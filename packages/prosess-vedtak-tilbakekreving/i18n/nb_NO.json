@@ -19,6 +19,8 @@
   "TilbakekrevingVedtakForm.ForhandvisBrev": "Forhåndsvis brev",
   "TilbakekrevingVedtakForm.Infotekst.Klage": "Vedtaksbrev sendes ikke ut fra denne behandlingen, men må sendes av saksbehandler fra klagebehandlingen",
 
+  "TilbakekrevingEditerVedtaksbrevPanel.LovhjemlerOgKlagerettOverskrift": "Lovhjemler og klagerett",
+
   "ValidationMessage.NotEmpty": "Feltet må fylles ut",
   "ValidationMessage.MinLength": "Du må skrive minst {length} tegn",
   "ValidationMessage.MaxLength": "Du kan skrive maksimalt {length} tegn",
