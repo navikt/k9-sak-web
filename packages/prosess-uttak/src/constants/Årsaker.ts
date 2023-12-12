@@ -1,4 +1,4 @@
-enum Årsaker {
+export enum Årsaker {
   // Oppfylt årsaker
   GRADERT_MOT_TILSYN = 'GRADERT_MOT_TILSYN',
   AVKORTET_MOT_INNTEKT = 'AVKORTET_MOT_INNTEKT',

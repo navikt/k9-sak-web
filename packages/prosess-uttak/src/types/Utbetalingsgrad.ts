@@ -1,6 +1,6 @@
 import { Arbeidsforhold } from './Arbeidsforhold';
 
-interface Utbetalingsgrad {
+export interface Utbetalingsgrad {
   arbeidsforhold: Arbeidsforhold;
   normalArbeidstid: string;
   faktiskArbeidstid: string;

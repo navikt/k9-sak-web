@@ -41,7 +41,7 @@ test('<TilbakekrevingVedtakForm> skal vise tekstfelt for begrunnelse og godkjenn
     { messages },
   );
 
-  expect(screen.getByRole('heading')).toHaveTextContent('Vedtaksbrev');
+  expect(screen.getByRole('heading', { level: 2 })).toHaveTextContent('Vedtaksbrev');
   expect(screen.getByText('Til godkjenning')).not.toBeDisabled();
   expect(screen.getByRole('link')).toHaveTextContent('Forhåndsvis brev');
 });

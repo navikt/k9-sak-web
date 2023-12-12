@@ -1,4 +1,4 @@
-enum Parter {
+export enum Parter {
   SØKER = 'Søker',
 }
 
