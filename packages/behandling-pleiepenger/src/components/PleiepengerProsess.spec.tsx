@@ -199,6 +199,7 @@ describe('<PleiepengerProsess>', () => {
         arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
         featureToggles={{}}
         setBeregningErBehandlet={() => {}}
+        lagreOverstyringUttak={sinon.spy()}
       />,
     );
 
@@ -294,6 +295,7 @@ describe('<PleiepengerProsess>', () => {
         arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
         featureToggles={{}}
         setBeregningErBehandlet={() => {}}
+        lagreOverstyringUttak={sinon.spy()}
       />,
     );
 
@@ -353,6 +355,7 @@ describe('<PleiepengerProsess>', () => {
         arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
         featureToggles={{}}
         setBeregningErBehandlet={() => {}}
+        lagreOverstyringUttak={sinon.spy()}
       />,
     );
 
@@ -416,6 +419,7 @@ describe('<PleiepengerProsess>', () => {
         arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
         featureToggles={{}}
         setBeregningErBehandlet={() => {}}
+        lagreOverstyringUttak={sinon.spy()}
       />,
     );
 
@@ -477,6 +481,7 @@ describe('<PleiepengerProsess>', () => {
         arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
         featureToggles={{}}
         setBeregningErBehandlet={() => {}}
+        lagreOverstyringUttak={sinon.spy()}
       />,
     );
 
@@ -514,6 +519,7 @@ describe('<PleiepengerProsess>', () => {
         arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
         featureToggles={{}}
         setBeregningErBehandlet={() => {}}
+        lagreOverstyringUttak={sinon.spy()}
       />,
     );
 
@@ -554,6 +560,7 @@ describe('<PleiepengerProsess>', () => {
         arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
         featureToggles={{}}
         setBeregningErBehandlet={() => {}}
+        lagreOverstyringUttak={sinon.spy()}
       />,
     );
 
@@ -599,6 +606,7 @@ describe('<PleiepengerProsess>', () => {
         arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
         featureToggles={{}}
         setBeregningErBehandlet={() => {}}
+        lagreOverstyringUttak={sinon.spy()}
       />,
     );
 
