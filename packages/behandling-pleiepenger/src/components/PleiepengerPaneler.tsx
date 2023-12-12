@@ -18,12 +18,13 @@ import {
 } from '@k9-sak-web/types';
 import moment from 'moment';
 import React, { useState } from 'react';
-import { Arbeidstype } from '../types/Arbeidstype';
-import FetchedData from '../types/fetchedDataTsType';
+import { Arbeidstype } from '../types';
+import FetchedData from '../types/FetchedData';
 import ArbeidsgiverMedManglendePerioderListe from './ArbeidsgiverMedManglendePerioderListe';
 import DataFetcher from './DataFetcher';
 import PleiepengerFakta from './PleiepengerFakta';
 import PleiepengerProsess from './PleiepengerProsess';
+import { OverstyringUttakRequest } from '../types/OverstyringUttakRequest';
 
 interface OwnProps {
   fetchedData: FetchedData;
@@ -43,7 +44,7 @@ interface OwnProps {
   arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysningerPerId;
   featureToggles: FeatureToggles;
   dokumenter: Dokument[];
-  lagreOverstyringUttak: (values: any) => void;
+  lagreOverstyringUttak: (values: OverstyringUttakRequest) => void;
 }
 
 interface FaktaPanelInfo {

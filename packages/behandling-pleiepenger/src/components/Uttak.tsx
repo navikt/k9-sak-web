@@ -53,8 +53,7 @@ export default ({
 
   const handleOverstyringAksjonspunkt = async values => {
     lagreOverstyringUttak({
-      // erVilkarOk: false, // TODO: WIP
-      '@type': aksjonspunktCodes.OVERSTYRING_AV_UTTAK_KODE, // overstyringApKode,
+      '@type': aksjonspunktCodes.OVERSTYRING_AV_UTTAK_KODE,
       ...VilkarResultPicker.transformValues(values),
       ...values,
     });

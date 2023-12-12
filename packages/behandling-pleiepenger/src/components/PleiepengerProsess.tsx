@@ -24,7 +24,7 @@ import {
 
 import { PleiepengerBehandlingApiKeys, restApiPleiepengerHooks } from '../data/pleiepengerBehandlingApi';
 import prosessStegPanelDefinisjoner from '../panelDefinisjoner/prosessStegPleiepengerPanelDefinisjoner';
-import FetchedData from '../types/fetchedDataTsType';
+import FetchedData from '../types/FetchedData';
 
 interface OwnProps {
   data: FetchedData;
@@ -151,20 +151,8 @@ const PleiepengerProsess = ({
   const { startRequest: lagreAksjonspunkter, data: apBehandlingRes } =
     restApiPleiepengerHooks.useRestApiRunner<Behandling>(PleiepengerBehandlingApiKeys.SAVE_AKSJONSPUNKT);
 
-  // TODO UTTAK OVERSTYR: tilbakestill denne når overstyring av uttak er ferdig
-  /*
-  const { startRequest: lagreOverstyrteAksjonspunkterFinal, data: apOverstyrtBehandlingRes } =
+  const { startRequest: lagreOverstyrteAksjonspunkter, data: apOverstyrtBehandlingRes } =
     restApiPleiepengerHooks.useRestApiRunner<Behandling>(PleiepengerBehandlingApiKeys.SAVE_OVERSTYRT_AKSJONSPUNKT);
-    */
-  /* Fra her */
-  const { startRequest: lagreOverstyrteAksjonspunkterFinal, data: apOverstyrtBehandlingRes } =
-    restApiPleiepengerHooks.useRestApiRunner<Behandling>(PleiepengerBehandlingApiKeys.SAVE_OVERSTYRT_AKSJONSPUNKT);
-
-  const lagreOverstyrteAksjonspunkter = (...params: any) => {
-    console.log('stopper overstyringskallet her', params);
-    return lagreOverstyrteAksjonspunkterFinal(...params, true);
-  };
-  /* Til hit */
 
   const { startRequest: forhandsvisMelding } = restApiPleiepengerHooks.useRestApiRunner(
     PleiepengerBehandlingApiKeys.PREVIEW_MESSAGE,
