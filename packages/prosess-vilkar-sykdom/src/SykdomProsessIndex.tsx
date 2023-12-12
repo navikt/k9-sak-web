@@ -9,7 +9,7 @@ import { dateFormat } from '@fpsak-frontend/utils';
 import Vilkarperiode from '@k9-sak-web/types/src/vilkarperiode';
 import { SideMenu } from '@navikt/ft-plattform-komponenter';
 import classNames from 'classnames/bind';
-import isEqual from 'lodash.isequal';
+import isEqual from 'lodash/isEqual';
 import { Element, Undertekst, Undertittel } from 'nav-frontend-typografi';
 import React from 'react';
 import { FormattedMessage, RawIntlProvider, createIntl, createIntlCache } from 'react-intl';

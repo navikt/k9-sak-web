@@ -38,7 +38,7 @@
     "cors": "2.8.5",
     "dayjs": "1.11.10",
     "express": "4.18.2",
-    "lodash.throttle": "4.1.1",
+    "lodash": "4.17.21",
     "nav-frontend-alertstriper": "4.0.2",
     "nav-frontend-alertstriper-style": "3.0.2",
     "nav-frontend-chevron": "1.0.30",
