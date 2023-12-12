@@ -6102,6 +6102,8 @@ __metadata:
 "@k9-sak-web/types@*, @k9-sak-web/types@1.0.0, @k9-sak-web/types@workspace:packages/types":
   version: 0.0.0-use.local
   resolution: "@k9-sak-web/types@workspace:packages/types"
+  dependencies:
+    "@navikt/k9-fe-period-utils": 1.0.12
   languageName: unknown
   linkType: soft
 
