@@ -29,6 +29,7 @@ interface OwnProps {
   useMultipleRestApi: (endpoints: EndpointData[], options: Options) => RestApiData<any>;
   featureToggles?: FeatureToggles;
   lagreOverstyringUttak?: (params: any) => void;
+  erOverstyrer?: boolean;
 }
 
 const ProsessStegPanel = ({
@@ -44,6 +45,7 @@ const ProsessStegPanel = ({
   useMultipleRestApi,
   featureToggles,
   lagreOverstyringUttak,
+  erOverstyrer = false,
 }: OwnProps) => {
   const erHenlagtOgVedtakStegValgt =
     behandling.behandlingHenlagt && valgtProsessSteg && valgtProsessSteg.getUrlKode() === prosessStegCodes.VEDTAK;
@@ -122,6 +124,7 @@ const ProsessStegPanel = ({
                     setFormData,
                     submitCallback: bekreftAksjonspunktCallback,
                     lagreOverstyringUttak,
+                    erOverstyrer,
                     ...delPaneler[0].getKomponentData(),
                     ...data,
                   })}

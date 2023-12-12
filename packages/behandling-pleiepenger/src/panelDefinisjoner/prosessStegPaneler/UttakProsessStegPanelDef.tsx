@@ -34,6 +34,8 @@ class PanelDef extends ProsessStegPanelDef {
     />
   );
 
+  erOverstyrer = { erOverstyrer };
+
   getAksjonspunktKoder = () => [
     aksjonspunktCodes.VENT_ANNEN_PSB_SAK,
     aksjonspunktCodes.VURDER_DATO_NY_REGEL_UTTAK,

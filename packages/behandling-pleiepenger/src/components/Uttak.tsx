@@ -21,7 +21,9 @@ interface UttakProps {
   submitCallback: (data: { kode: string; begrunnelse: string; virkningsdato: string }[]) => void;
   lagreOverstyringUttak: (values: any) => void;
   relevanteAksjonspunkter: string[];
+  erOverstyrer: boolean;
 }
+
 export default ({
   uuid,
   behandling,
@@ -34,6 +36,7 @@ export default ({
   virkningsdatoUttakNyeRegler,
   lagreOverstyringUttak,
   relevanteAksjonspunkter,
+  erOverstyrer,
 }: UttakProps) => {
   const [featureToggles] = useFeatureToggles();
   const { versjon, links } = behandling;
@@ -80,6 +83,7 @@ export default ({
         handleOverstyringAksjonspunkt,
         versjon,
         featureToggles,
+        erOverstyrer,
       }}
     />
   );

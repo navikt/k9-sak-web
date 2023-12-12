@@ -19,8 +19,14 @@ interface MainComponentProps {
 }
 
 const MainComponent = ({ containerData }: MainComponentProps): JSX.Element => {
-  const { featureToggles, uttaksperioder, aksjonspunktkoder, aksjonspunkter, virkningsdatoUttakNyeRegler } =
-    containerData;
+  const {
+    featureToggles,
+    uttaksperioder,
+    aksjonspunktkoder,
+    aksjonspunkter,
+    virkningsdatoUttakNyeRegler,
+    erOverstyrer,
+  } = containerData;
   const [redigerVirkningsdato, setRedigervirkningsdato] = React.useState<boolean>(false);
   const aksjonspunktVurderDato = aksjonspunkter?.find(ap => ap.definisjon.kode === aksjonspunktVurderDatoKode);
 
@@ -33,9 +39,6 @@ const MainComponent = ({ containerData }: MainComponentProps): JSX.Element => {
   const harAksjonspunktVurderDatoMedStatusOpprettet = aksjonspunktkoder?.some(
     aksjonspunktkode => aksjonspunktkode === aksjonspunktVurderDatoKode,
   );
-
-  // Data som må utledes
-  const erOverstyrer = true;
 
   return (
     <ContainerContext.Provider value={containerData}>

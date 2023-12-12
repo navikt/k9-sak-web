@@ -261,6 +261,7 @@ const PleiepengerProsess = ({
           useMultipleRestApi={restApiPleiepengerHooks.useMultipleRestApi}
           featureToggles={featureToggles}
           lagreOverstyringUttak={lagreOverstyringUttak}
+          erOverstyrer={rettigheter.kanOverstyreAccess.isEnabled}
         />
       </ProsessStegContainer>
     </>
