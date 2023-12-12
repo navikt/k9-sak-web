@@ -1,6 +1,6 @@
 import { Uttaksperiodeelement } from './Uttaksperiode';
 
-interface Uttaksperioder {
+export interface Uttaksperioder {
   [key: string]: Uttaksperiodeelement;
 }
 

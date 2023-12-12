@@ -69,6 +69,10 @@ const featureToggles = [
     key: 'LOKALE_PAKKER',
     value: process.env.LOKALE_PAKKER,
   },
+  {
+    key: 'OVERSTYRING_UTTAK',
+    value: process.env.OVERSTYRING_UTTAK,
+  },
 ];
 
 module.exports = function (app) {

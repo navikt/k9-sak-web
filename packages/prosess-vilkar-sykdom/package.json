@@ -11,7 +11,7 @@
     "@fpsak-frontend/utils": "1.0.0",
     "@navikt/ft-plattform-komponenter": "2.3.14",
     "classnames": "2.3.2",
-    "lodash.isequal": "4.5.0",
+    "lodash": "4.17.21",
     "nav-frontend-core": "6.0.1",
     "nav-frontend-spinner": "3.0.1",
     "nav-frontend-spinner-style": "1.0.2",
