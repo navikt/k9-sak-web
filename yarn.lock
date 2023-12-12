@@ -1956,12 +1956,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@editorjs/header@npm:2.7.0":
-  version: 2.7.0
-  resolution: "@editorjs/header@npm:2.7.0"
+"@editorjs/header@npm:2.8.1":
+  version: 2.8.1
+  resolution: "@editorjs/header@npm:2.8.1"
   dependencies:
     "@codexteam/icons": ^0.0.5
-  checksum: 9b26ed44356bb0a2099d6b7d0d1c44b47c38737107e7c99cc43e337811926393f0494e8ce5b300115562c6e6f9b9cd9962da7e3ec9c81c14fded93bbe5b3a999
+  checksum: d27cb82e63cdaa5be314c102b55b835b326a75e5a40b32c6e41728c26afcbb301dbac78c185e41e8b9a502698f2ab240fce5ff2ccae0114d2368eac1ffdea067
   languageName: node
   linkType: hard
 
@@ -3347,7 +3347,7 @@ __metadata:
   resolution: "@fpsak-frontend/prosess-vedtak@workspace:packages/prosess-vedtak"
   dependencies:
     "@editorjs/editorjs": 2.28.2
-    "@editorjs/header": 2.7.0
+    "@editorjs/header": 2.8.1
     "@editorjs/list": 1.8.0
     "@editorjs/paragraph": 2.11.3
     "@fpsak-frontend/assets": 1.0.0
