@@ -9,7 +9,7 @@ module.exports = {
       coverageReporters: ['text', 'lcov', 'html'],
       moduleFileExtensions: ['js', 'jsx', 'json', 'ts', 'tsx', 'less', 'css'],
       moduleNameMapper: {
-        '\\.(svg)$': '../../_mocks/fileMock.js',
+        '\\.(svg)$': '<rootDir>/_mocks/fileMock.js',
         '\\.(less|css)$': 'identity-obj-proxy',
         '^uuid': require.resolve('uuid'),
       },
