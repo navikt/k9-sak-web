@@ -3568,7 +3568,7 @@ __metadata:
     react: 18.2.0
     react-intl: 6.5.5
     react-redux: 8.1.3
-    react-router-dom: 6.18.0
+    react-router-dom: 6.20.1
     redux-form: 8.3.10
     sinon: 15.2.0
   languageName: unknown
@@ -3597,7 +3597,7 @@ __metadata:
     nav-frontend-typografi-style: 2.0.2
     react: 18.2.0
     react-intl: 6.5.5
-    react-router-dom: 6.18.0
+    react-router-dom: 6.20.1
     sinon: 15.2.0
   languageName: unknown
   linkType: soft
@@ -3719,7 +3719,7 @@ __metadata:
     react: 18.2.0
     react-intl: 6.5.5
     react-redux: 8.1.3
-    react-router-dom: 6.18.0
+    react-router-dom: 6.20.1
     redux: 4.2.1
     redux-form: 8.3.10
     sinon: 15.2.0
@@ -3872,7 +3872,7 @@ __metadata:
     react: 18.2.0
     react-intl: 6.5.5
     react-redux: 8.1.3
-    react-router-dom: 6.18.0
+    react-router-dom: 6.20.1
     redux: 4.2.1
     redux-form: 8.3.10
     reselect: 4.1.8
@@ -5436,7 +5436,7 @@ __metadata:
     react-dom: 18.2.0
     react-intl: 6.5.5
     react-redux: 8.1.3
-    react-router-dom: 6.18.0
+    react-router-dom: 6.20.1
     redux-form: 8.3.10
     sinon: 15.2.0
   languageName: unknown
@@ -5681,7 +5681,7 @@ __metadata:
     nav-frontend-typografi-style: 2.0.2
     react: 18.2.0
     react-intl: 6.5.5
-    react-router-dom: 6.18.0
+    react-router-dom: 6.20.1
   languageName: unknown
   linkType: soft
 
@@ -5780,7 +5780,7 @@ __metadata:
     react-intl: 6.5.5
     react-redux: 8.1.3
     react-responsive: 9.0.2
-    react-router-dom: 6.18.0
+    react-router-dom: 6.20.1
     redux: 4.2.1
     redux-form: 8.3.10
     redux-logger: 3.0.6
@@ -5816,7 +5816,7 @@ __metadata:
     react: 18.2.0
     react-intl: 6.5.5
     react-query: 3.39.3
-    react-router-dom: 6.18.0
+    react-router-dom: 6.20.1
     sinon: 15.2.0
   languageName: unknown
   linkType: soft
@@ -5830,7 +5830,7 @@ __metadata:
     nav-frontend-typografi-style: 2.0.2
     react: 18.2.0
     react-intl: 6.5.5
-    react-router-dom: 6.18.0
+    react-router-dom: 6.20.1
   languageName: unknown
   linkType: soft
 
@@ -5919,7 +5919,7 @@ __metadata:
     nav-frontend-typografi-style: 2.0.2
     react: 18.2.0
     react-intl: 6.5.5
-    react-router-dom: 6.18.0
+    react-router-dom: 6.20.1
   languageName: unknown
   linkType: soft
 
@@ -19438,7 +19438,7 @@ __metadata:
     react-modal: 3.16.1
     react-popper: 2.3.0
     react-router: 6.20.1
-    react-router-dom: 6.18.0
+    react-router-dom: 6.20.1
     react-test-renderer: 18.2.0
     redux-mock-store: 1.5.4
     sinon: 15.2.0
@@ -23969,16 +23969,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-router-dom@npm:6.18.0":
-  version: 6.18.0
-  resolution: "react-router-dom@npm:6.18.0"
+"react-router-dom@npm:6.20.1":
+  version: 6.20.1
+  resolution: "react-router-dom@npm:6.20.1"
   dependencies:
-    "@remix-run/router": 1.11.0
-    react-router: 6.18.0
+    "@remix-run/router": 1.13.1
+    react-router: 6.20.1
   peerDependencies:
     react: ">=16.8"
     react-dom: ">=16.8"
-  checksum: ca5c9a9f748f4ff9677d25762970fc59cb216568aad0ebc668b22398222a940f767680bc9a3e65a92e940d3fe05731eda8a4b352ccbf1054904b3b785a9f5e6f
+  checksum: 137b12fd3c3fd2a9469367946353c8ccd4e31473c6ec650eeb2d9e9f256f64b031fafaecb2ae4dc47bbab817c8d089b1f07a0db74699df7d874850e511cd5380
   languageName: node
   linkType: hard
 
