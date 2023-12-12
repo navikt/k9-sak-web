@@ -25,6 +25,6 @@ export const finnTidligsteStartDatoFraUttaksperioder = (uttaksperioder: Uttakspe
 };
 
 export const finnSisteSluttDatoFraUttaksperioder = (uttaksperioder: Uttaksperioder): Date => {
-  const startDatoer = Object.keys(uttaksperioder).map(key => dayjs(key.split('/')[0]));
-  return new Date(Math.max(...startDatoer.map(date => date.valueOf())));
+  const sluttDatoer = Object.keys(uttaksperioder).map(key => dayjs(key.split('/')[1]));
+  return new Date(Math.max(...sluttDatoer.map(date => date.valueOf())));
 };
