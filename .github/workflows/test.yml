@@ -29,4 +29,4 @@ jobs:
         run: HUSKY=0 yarn install --immutable
 
       - name: Kjører tester
-        run: yarn test:all --maxWorkers=2 --silent
+        run: yarn test
