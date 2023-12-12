@@ -5,13 +5,13 @@
 }
 
 .leggTilOverstyringKnapp {
-    margin-top: var(--a-spacing-5);
-    margin-bottom: var(--a-spacing-5);
+  margin-top: var(--a-spacing-5);
+  margin-bottom: var(--a-spacing-5);
 }
 
 .overstyrUttakFormFooter {
-    margin-top: var(--a-spacing-5);
-    margin-bottom: var(--a-spacing-5);
+  margin-top: var(--a-spacing-5);
+  margin-bottom: var(--a-spacing-5);
 }
 
 .overstyringUttakTabell {

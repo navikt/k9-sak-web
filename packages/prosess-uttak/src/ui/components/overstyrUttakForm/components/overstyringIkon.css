@@ -1,15 +1,13 @@
 @import '@navikt/ds-tokens';
 
 .overstyringNokkel {
-    margin-left: 10px;
-    color: var(--a-icon-action);
-    border: none;
-    background: none;
+  margin-left: 10px;
+  color: var(--a-icon-action);
+  border: none;
+  background: none;
 }
 
 .overstyringNokkelInaktiv {
-    margin-left: 10px;
-    color: var(--a-icon-subtle);
+  margin-left: 10px;
+  color: var(--a-icon-subtle);
 }
-
-
