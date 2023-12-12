@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Heading } from '@navikt/ds-react';
+import { Alert, BodyShort, Heading } from '@navikt/ds-react';
 
 import ContainerContract from '../types/ContainerContract';
 import lagUttaksperiodeliste from '../util/uttaksperioder';
@@ -50,6 +50,17 @@ const MainComponent = ({ containerData }: MainComponentProps): JSX.Element => {
       </Heading>
 
       <Infostripe harVentAnnenPSBSakAksjonspunkt={harVentAnnenPSBSakAksjonspunkt} />
+      {overstyringAktiv && (
+        <Alert variant="warning">
+          <Heading spacing size="xsmall" level="3">
+            Vurder overstrying av uttaksgrad
+          </Heading>
+          <BodyShort>
+            Det er lagt til overstyring av uttaksgrad i en tidligere periode. Vurder om det skal legges til overstyring
+            for nye perioder i uttak.
+          </BodyShort>
+        </Alert>
+      )}
 
       <OverstyrUttakContextProvider>
         {erOverstyrer && overstyringAktiv && <OverstyrUttakForm />}
