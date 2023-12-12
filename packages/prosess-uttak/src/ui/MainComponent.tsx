@@ -30,7 +30,8 @@ const MainComponent = ({ containerData }: MainComponentProps): JSX.Element => {
   const [redigerVirkningsdato, setRedigervirkningsdato] = React.useState<boolean>(false);
   const aksjonspunktVurderDato = aksjonspunkter?.find(ap => ap.definisjon.kode === aksjonspunktVurderDatoKode);
 
-  const [overstyringAktiv, setOverstyringAktiv] = React.useState<boolean>(aksjonspunktkoder.includes('6017'));
+  const harAksjonspunktForOVerstyringAvUttak = aksjonspunktkoder.includes('6017');
+  const [overstyringAktiv, setOverstyringAktiv] = React.useState<boolean>(harAksjonspunktForOVerstyringAvUttak);
   const toggleOverstyring = () => setOverstyringAktiv(!overstyringAktiv);
 
   const harVentAnnenPSBSakAksjonspunkt = aksjonspunktkoder?.some(
@@ -50,7 +51,8 @@ const MainComponent = ({ containerData }: MainComponentProps): JSX.Element => {
       </Heading>
 
       <Infostripe harVentAnnenPSBSakAksjonspunkt={harVentAnnenPSBSakAksjonspunkt} />
-      {overstyringAktiv && (
+
+      {harAksjonspunktForOVerstyringAvUttak && (
         <Alert variant="warning">
           <Heading spacing size="xsmall" level="3">
             Vurder overstrying av uttaksgrad
