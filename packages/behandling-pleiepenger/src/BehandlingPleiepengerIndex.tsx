@@ -21,6 +21,7 @@ import {
   requestPleiepengerApi,
   restApiPleiepengerHooks,
 } from './data/pleiepengerBehandlingApi';
+import { OverstyringUttakRequest, FetchedData } from './types';
 
 const pleiepengerData = [
   { key: PleiepengerBehandlingApiKeys.AKSJONSPUNKTER },
