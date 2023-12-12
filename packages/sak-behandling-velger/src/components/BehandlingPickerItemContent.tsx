@@ -1,11 +1,12 @@
 import calendarImg from '@fpsak-frontend/assets/images/calendar-2.svg';
 import chevronBlueRightImg from '@fpsak-frontend/assets/images/chevron_blue_right.svg';
-import { Image } from '@fpsak-frontend/shared-components';
+import { DateLabel, Image } from '@fpsak-frontend/shared-components';
 import { Periode } from '@k9-sak-web/types';
 import Panel from 'nav-frontend-paneler';
 import { Normaltekst, Undertittel } from 'nav-frontend-typografi';
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
+import { BodyShort } from '@navikt/ds-react';
 import styles from './behandlingPickerItemContent.module.css';
 import { getFormattedSøknadserioder, getStatusIcon, getStatusText } from './behandlingVelgerUtils';
 
@@ -28,6 +29,8 @@ interface OwnProps {
   søknadsperioder: Periode[];
   erFerdigstilt: boolean;
   erUnntaksløype: boolean;
+  index: number;
+  opprettet: string;
 }
 
 /**
@@ -43,11 +46,14 @@ const BehandlingPickerItemContent: React.FC<OwnProps> = ({
   søknadsperioder,
   erFerdigstilt,
   erUnntaksløype,
+  index,
+  opprettet,
 }) => (
   <Panel className={erAutomatiskRevurdering ? styles.indent : ''} border>
     <div className={styles.behandlingPicker}>
       <div>
         <Undertittel>
+          {`${index}. `}
           {behandlingTypeNavn}
           {erAutomatiskRevurdering ? getAutomatiskRevurderingText() : ''}
           {erUnntaksløype ? getUnntaksløypeText() : ''}
@@ -69,6 +75,16 @@ const BehandlingPickerItemContent: React.FC<OwnProps> = ({
             {getStatusText(behandlingsresultatTypeKode, behandlingsresultatTypeNavn, erFerdigstilt)}
           </Normaltekst>
         </div>
+        {opprettet && (
+          <div className={styles.opprettetDatoContainer}>
+            <BodyShort weight="semibold" size="small">
+              Opprettet:
+            </BodyShort>
+            <BodyShort size="small">
+              <DateLabel dateString={opprettet} />
+            </BodyShort>
+          </div>
+        )}
       </div>
       <div className={styles.åpneText}>
         <Normaltekst>

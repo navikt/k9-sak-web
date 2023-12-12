@@ -98,6 +98,8 @@ spec:
     - name: OVERSTYR_BEREGNING
       value: "false"
     - name: FAKTA_BEREGNING_REDESIGN
+      value: "true"
+    - name: LOKALE_PAKKER
       value: "false"
-    - name: NOTAT_I_SAK
+    - name: "OVERSTYRING_UTTAK"
       value: "false"

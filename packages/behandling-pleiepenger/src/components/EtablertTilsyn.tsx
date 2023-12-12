@@ -9,8 +9,9 @@ import { useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
 import React from 'react';
 
 import { EtablertTilsyn } from '@navikt/k9-fe-etablert-tilsyn';
+import { EtablertTilsyn as LokalEtablertTilsyn } from '@k9-sak-web/fakta-etablert-tilsyn';
 
-export default ({ aksjonspunkter, behandling, readOnly, submitCallback, saksbehandlere }) => {
+export default ({ aksjonspunkter, behandling, readOnly, submitCallback, saksbehandlere, featureToggles }) => {
   const { addErrorMessage } = useRestApiErrorDispatcher();
   const httpErrorHandlerCaller = (status: number, locationHeader?: string) =>
     httpErrorHandlerFn(status, addErrorMessage, locationHeader);
@@ -29,10 +30,25 @@ export default ({ aksjonspunkter, behandling, readOnly, submitCallback, saksbeha
   const harUløstAksjonspunktForNattevåk = nattevåkAksjonspunkt?.status.kode === aksjonspunktStatus.OPPRETTET;
   const harAksjonspunkt = !!beredskapAksjonspunktkode || !!nattevåkAksjonspunktkode;
 
-  interface Endpoints {
-    tilsyn: string;
-    sykdom: string;
-    sykdomInnleggelse: string;
+  if (featureToggles?.LOKALE_PAKKER) {
+    return (
+      <LokalEtablertTilsyn
+        data={{
+          httpErrorHandler: httpErrorHandlerCaller,
+          readOnly: readOnly || !harAksjonspunkt,
+          endpoints: findEndpointsForMicrofrontend(behandling.links, [
+            { rel: 'pleiepenger-sykt-barn-tilsyn', desiredName: 'tilsyn' },
+            { rel: 'sykdom-vurdering-oversikt-ktp', desiredName: 'sykdom' },
+            { rel: 'sykdom-innleggelse', desiredName: 'sykdomInnleggelse' },
+          ]),
+          lagreBeredskapvurdering: løsBeredskapAksjonspunkt,
+          lagreNattevåkvurdering: løsNattevåkAksjonspunkt,
+          harAksjonspunktForBeredskap: harUløstAksjonspunktForBeredskap,
+          harAksjonspunktForNattevåk: harUløstAksjonspunktForNattevåk,
+          saksbehandlere,
+        }}
+      />
+    );
   }
 
   return (

@@ -1,7 +1,6 @@
 import React from 'react';
-import { shallow } from 'enzyme';
-import Ekspanderbartpanel from 'nav-frontend-ekspanderbartpanel';
-
+import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/src/test-utils';
+import { screen } from '@testing-library/react';
 import TilbakekrevingEditerVedtaksbrevPanel from './TilbakekrevingEditerVedtaksbrevPanel';
 
 describe('<TilbakekrevingEditerVedtaksbrevPanel>', () => {
@@ -74,7 +73,7 @@ describe('<TilbakekrevingEditerVedtaksbrevPanel>', () => {
   ];
 
   it('skal vise tekstfelt for begrunnelse og godkjenningsknapp', () => {
-    const wrapper = shallow(
+    renderWithIntlAndReduxForm(
       <TilbakekrevingEditerVedtaksbrevPanel
         vedtaksbrevAvsnitt={vedtaksbrevAvsnitt}
         formName="testForm"
@@ -86,18 +85,16 @@ describe('<TilbakekrevingEditerVedtaksbrevPanel>', () => {
       />,
     );
 
-    const paneler = wrapper.find(Ekspanderbartpanel);
-    expect(paneler).toHaveLength(3);
-    expect(paneler.first().prop('tittel')).toEqual('Du må betale tilbake foreldrepenger');
-    expect(paneler.first().prop('apen')).toBe(false);
-    expect(paneler.at(1).prop('tittel')).toEqual('Perioden fra og med 10. april 2019 til og med 14. april 2019');
-    expect(paneler.at(1).prop('apen')).toBe(false);
-    expect(paneler.last().prop('tittel')).toEqual('Hvordan betale tilbake pengene du skylder');
-    expect(paneler.last().prop('apen')).toBe(false);
+    expect(screen.getByText('Du må betale tilbake foreldrepenger', { selector: 'h3' })).toBeInTheDocument();
+    expect(
+      screen.getByText('Perioden fra og med 10. april 2019 til og med 14. april 2019', { selector: 'h3' }),
+    ).toBeInTheDocument();
+    expect(screen.getByText('Hvordan betale tilbake pengene du skylder', { selector: 'h3' })).toBeInTheDocument();
+    expect(screen.getAllByRole('button', { expanded: false })).toHaveLength(3);
   });
 
   it('skal automatisk åpne panel som ikke har obligatorisk verdi utfylt', () => {
-    const wrapper = shallow(
+    renderWithIntlAndReduxForm(
       <TilbakekrevingEditerVedtaksbrevPanel
         vedtaksbrevAvsnitt={vedtaksbrevAvsnitt}
         formName="testForm"
@@ -109,11 +106,8 @@ describe('<TilbakekrevingEditerVedtaksbrevPanel>', () => {
       />,
     );
 
-    const paneler = wrapper.find(Ekspanderbartpanel);
-    expect(paneler).toHaveLength(3);
-    expect(paneler.at(0).prop('apen')).toBe(true);
-    expect(paneler.at(1).prop('apen')).toBe(true);
-    expect(paneler.at(2).prop('apen')).toBe(false);
+    expect(screen.getAllByRole('button', { expanded: false })).toHaveLength(1);
+    expect(screen.getAllByRole('button', { expanded: true })).toHaveLength(2);
   });
 
   it('skal sette opp initial values for form', () => {

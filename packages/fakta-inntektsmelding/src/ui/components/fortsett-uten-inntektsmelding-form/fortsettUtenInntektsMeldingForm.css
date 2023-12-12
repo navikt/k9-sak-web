@@ -1,0 +1,48 @@
+.fortsettUtenInntektsmelding__panel {
+  border: 2px solid #ff9100;
+  padding: 1.5625rem;
+  margin: 1.5625rem 0 0.6875rem 0;
+}
+
+.fortsettUtenInntektsmelding__knapper {
+  display: flex;
+  gap: 1rem;
+}
+
+.fortsettUtenInntektsmelding__begrunnelse-subtext {
+  font-weight: 400;
+}
+
+.fortsettUtenInntektsmelding__radiogroup {
+  margin: 1rem 0;
+}
+
+.fortsettUtenInntektsmelding__radiogroup :global(legend) {
+  position: absolute;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  height: 1px;
+  width: 1px;
+  margin: -1px;
+  padding: 0;
+  border: 0;
+}
+
+.fortsettUtenInntektsmelding__radiogroupAlert {
+  margin-top: 1rem;
+}
+
+.fortsettUtenInntektsmelding__radiogroupAlert ul {
+  list-style-type: disc;
+  margin: 0;
+  padding-left: 1.5rem;
+}
+
+.fortsettUtenInntektsmelding__radiogroupAlert :global(.navds-alert__wrapper) {
+  max-width: none;
+}
+
+.radiogroupAlert__emphasize {
+  font-weight: bold;
+  text-decoration: underline;
+}

@@ -1,26 +1,26 @@
-import React, { useContext, useEffect } from 'react';
-import { Box, Margin, DetailView, LabelledContent } from '@navikt/ft-plattform-komponenter';
 import { TextAreaFormik } from '@fpsak-frontend/form';
-import { useIntl } from 'react-intl';
 import { Calender } from '@navikt/ds-icons';
-import { v4 } from 'uuid';
+import { Box, DetailView, LabelledContent, Margin } from '@navikt/ft-plattform-komponenter';
 import dayjs from 'dayjs';
+import React, { useContext, useEffect } from 'react';
+import { useIntl } from 'react-intl';
+import { v4 } from 'uuid';
 import * as yup from 'yup';
 
+import RadioGroupFormik from '@fpsak-frontend/form/src/RadioGroupFormik';
+import { required } from '@fpsak-frontend/utils';
+import { getPeriodDifference, Period } from '@navikt/k9-fe-period-utils';
 import {
   FaktaOpplaeringContext,
   FaktaOpplaeringContextTypes,
 } from '@k9-sak-web/behandling-opplaeringspenger/src/FaktaOpplaeringContext';
 import { GjennomgaaOpplaeringVurdering, Vurderingsresultat } from '@k9-sak-web/types';
-import { required } from '@fpsak-frontend/utils';
+import { Alert, Button, ErrorMessage, Label } from '@navikt/ds-react';
 import { Field, FieldArray, Formik } from 'formik';
-import RadioGroupFormik from '@fpsak-frontend/form/src/RadioGroupFormik';
-import { Button, Label, Alert, ErrorMessage } from '@navikt/ds-react';
-import { getPeriodDifference, Period } from '@navikt/k9-fe-period-utils';
-import DeleteButton from '../components/delete-button/DeleteButton';
-import AddButton from '../components/add-button/AddButton';
-import RangeDatepicker from '../components/rangeDatepicker/RangeDatepicker';
 import DokumenterIVurderingen from '../components/DokumenterIVurderingen';
+import AddButton from '../components/add-button/AddButton';
+import DeleteButton from '../components/delete-button/DeleteButton';
+import RangeDatepicker from '../components/rangeDatepicker/RangeDatepicker';
 
 enum fieldname {
   BEGRUNNELSE = 'BEGRUNNELSE',

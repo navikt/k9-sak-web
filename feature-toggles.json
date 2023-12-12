@@ -72,7 +72,11 @@
     "value": "${FAKTA_BEREGNING_REDESIGN}"
   },
   {
-    "key": "NOTAT_I_SAK",
-    "value": "${NOTAT_I_SAK}"
+    "key": "LOKALE_PAKKER",
+    "value": "${LOKALE_PAKKER}"
+  },
+  {
+    "key": "OVERSTYRING_UTTAK",
+    "value": "${OVERSTYRING_UTTAK}"
   }
 ]

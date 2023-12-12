@@ -66,8 +66,12 @@ const featureToggles = [
     value: process.env.FAKTA_BEREGNING_REDESIGN,
   },
   {
-    key: 'NOTAT_I_SAK',
-    value: process.env.NOTAT_I_SAK,
+    key: 'LOKALE_PAKKER',
+    value: process.env.LOKALE_PAKKER,
+  },
+  {
+    key: 'OVERSTYRING_UTTAK',
+    value: process.env.OVERSTYRING_UTTAK,
   },
 ];
 
