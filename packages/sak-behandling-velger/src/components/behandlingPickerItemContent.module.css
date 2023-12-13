@@ -98,3 +98,13 @@
   margin-left: 10%;
   width: 90%;
 }
+
+.opprettetDatoContainer {
+  align-items: center;
+  display: flex;
+  margin-top: 0.5rem;
+}
+
+.opprettetDatoContainer p:first-of-type {
+  margin-right: 0.25rem;
+}

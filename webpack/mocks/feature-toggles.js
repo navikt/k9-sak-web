@@ -65,6 +65,14 @@ const featureToggles = [
     key: 'FAKTA_BEREGNING_REDESIGN',
     value: process.env.FAKTA_BEREGNING_REDESIGN,
   },
+  {
+    key: 'LOKALE_PAKKER',
+    value: process.env.LOKALE_PAKKER,
+  },
+  {
+    key: 'OVERSTYRING_UTTAK',
+    value: process.env.OVERSTYRING_UTTAK,
+  },
 ];
 
 module.exports = function (app) {

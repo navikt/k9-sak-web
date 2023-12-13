@@ -31,7 +31,7 @@ describe('<BubbleText>', () => {
     const wrapper = shallowWithIntl(
       <BubbleText.WrappedComponent intl={intlMock} bodyText={bodyText} cutOffLength={cutOffLength} />,
     );
-    const x = wrapper.find('a');
+    const x = wrapper.find('button');
     x.simulate('click');
     const oppChevron = wrapper.find(OppChevron);
     expect(oppChevron).toHaveLength(1);

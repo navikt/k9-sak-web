@@ -15,21 +15,32 @@ class PanelDef extends ProsessStegPanelDef {
     aksjonspunkter,
     alleKodeverk,
     submitCallback,
-    virkningsdatoUttakNyeRegler,
+    lagreOverstyringUttak,
+    virkningsDatoUttakNyeRegler,
+    relevanteAksjonspunkter,
+    erOverstyrer,
   }) => (
     <Uttak
       uuid={behandling.uuid}
+      behandling={behandling}
       uttaksperioder={uttaksperioder}
       utsattePerioder={utsattePerioder}
       arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
       aksjonspunkter={aksjonspunkter}
       alleKodeverk={alleKodeverk}
       submitCallback={submitCallback}
-      virkningsdatoUttakNyeRegler={virkningsdatoUttakNyeRegler}
+      lagreOverstyringUttak={lagreOverstyringUttak}
+      virkningsdatoUttakNyeRegler={virkningsDatoUttakNyeRegler}
+      relevanteAksjonspunkter={relevanteAksjonspunkter}
+      erOverstyrer={erOverstyrer}
     />
   );
 
-  getAksjonspunktKoder = () => [aksjonspunktCodes.VENT_ANNEN_PSB_SAK, aksjonspunktCodes.VURDER_DATO_NY_REGEL_UTTAK];
+  getAksjonspunktKoder = () => [
+    aksjonspunktCodes.VENT_ANNEN_PSB_SAK,
+    aksjonspunktCodes.VURDER_DATO_NY_REGEL_UTTAK,
+    aksjonspunktCodes.OVERSTYRING_AV_UTTAK_KODE,
+  ];
 
   getOverstyrVisningAvKomponent = () => true;
 
@@ -55,11 +66,12 @@ class PanelDef extends ProsessStegPanelDef {
   getEndepunkter = () => [PleiepengerBehandlingApiKeys.ARBEIDSFORHOLD];
 
   getData = ({ uttak, arbeidsgiverOpplysningerPerId, alleKodeverk }) => ({
-    uttaksperioder: uttak?.uttaksplan?.perioder,
+    uttaksperioder: uttak?.uttaksplan != null ? uttak?.uttaksplan?.perioder : uttak?.simulertUttaksplan?.perioder,
     utsattePerioder: uttak?.utsattePerioder,
     virkningsdatoUttakNyeRegler: uttak?.virkningsdatoUttakNyeRegler,
     arbeidsgiverOpplysningerPerId,
     alleKodeverk,
+    relevanteAksjonspunkter: this.getAksjonspunktKoder(),
   });
 }
 

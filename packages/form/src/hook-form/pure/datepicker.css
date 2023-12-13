@@ -1,0 +1,8 @@
+.datepicker {
+  display: flex;
+  flex-direction: column;
+}
+
+.datepicker :global(.navds-label) {
+  margin-bottom: 0.5rem;
+}

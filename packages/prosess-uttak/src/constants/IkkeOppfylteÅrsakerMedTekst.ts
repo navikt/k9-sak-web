@@ -1,6 +1,6 @@
 import Årsaker from './Årsaker';
 
-const IkkeOppfylteÅrsakerMedTekst = [
+export const IkkeOppfylteÅrsakerMedTekst = [
   {
     årsak: Årsaker.LOVBESTEMT_FERIE,
     tekst: 'Årsak for 0 % uttak: Søker avvikler lovbestemt ferie',

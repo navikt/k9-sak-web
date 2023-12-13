@@ -27,7 +27,12 @@ const formatereLosAksjonspunktObjektForKroniskSyk = (
   fraDato: string,
   vilkar: Vilkar,
   avslagsårsakKode: string,
+  soknad: UtvidetRettSoknad,
 ) => {
+  const angittBarn = soknad.angittePersoner.find(person => person.rolle === 'BARN');
+  const barnetsFodselsdato = new Date(angittBarn.fødselsdato);
+  const åretBarnetFyller18 = `${barnetsFodselsdato.getFullYear() + 18}-12-31`;
+
   const losAksjonspunktObjekt = {
     kode: aksjonspunktKode,
     begrunnelse,
@@ -36,9 +41,9 @@ const formatereLosAksjonspunktObjektForKroniskSyk = (
     periode: {
       fom: fraDato,
       tom:
-        typeof vilkar.perioder[0]?.periode.tom !== 'undefined' && vilkar.perioder[0]?.periode.tom !== null
+        typeof vilkar.perioder[0]?.periode.tom && vilkar.perioder[0]?.periode.tom !== '9999-12-31'
           ? vilkar.perioder[0]?.periode.tom
-          : '',
+          : åretBarnetFyller18,
     },
   };
 
@@ -98,6 +103,7 @@ const KroniskSykObjektTilMikrofrontend = ({
           fraDato || soknad.soknadsdato,
           vilkar,
           avslagsårsakKode,
+          soknad,
         ),
       ]);
     },
