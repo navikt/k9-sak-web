@@ -27,7 +27,6 @@ const AktivitetRad: React.FC<ownProps> = ({
   handleSlett,
   loading,
 }) => {
-  const [ekspandert, setEkspandert] = React.useState<boolean>(false);
   const { id, periode, søkersUttaksgrad, begrunnelse } = overstyring;
   const { fom, tom } = periode;
 
@@ -39,11 +38,10 @@ const AktivitetRad: React.FC<ownProps> = ({
           <BegrunnelseBoks begrunnelse={begrunnelse} saksbehandler={undefined} dato={undefined} />
         </div>
       }
-      open={ekspandert}
     >
-      <Table.DataCell onClick={() => setEkspandert(!ekspandert)}>{dayjs(fom).format('DD.MM.YYYY')}</Table.DataCell>
-      <Table.DataCell onClick={() => setEkspandert(!ekspandert)}>{dayjs(tom).format('DD.MM.YYYY')}</Table.DataCell>
-      <Table.DataCell onClick={() => setEkspandert(!ekspandert)}>{søkersUttaksgrad}</Table.DataCell>
+      <Table.DataCell>{dayjs(fom).format('DD.MM.YYYY')}</Table.DataCell>
+      <Table.DataCell>{dayjs(tom).format('DD.MM.YYYY')}</Table.DataCell>
+      <Table.DataCell>{søkersUttaksgrad}</Table.DataCell>
       <Table.DataCell>
         <Button
           size="xsmall"
