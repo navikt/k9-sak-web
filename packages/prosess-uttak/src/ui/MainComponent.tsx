@@ -70,6 +70,12 @@ const MainComponent = ({ containerData }: MainComponentProps): JSX.Element => {
         {erOverstyrer && overstyringAktiv && <OverstyrUttakForm />}
       </OverstyrUttakContextProvider>
 
+      {erOverstyrer && overstyringAktiv && (
+        <Button size="small" onClick={toggleOverstyring} variant="secondary">
+          Avbryt overstyring
+        </Button>
+      )}
+
       <UtsattePerioderStripe />
       {harAksjonspunktVurderDatoMedStatusOpprettet && <VurderDato />}
       {virkningsdatoUttakNyeRegler && redigerVirkningsdato && (
