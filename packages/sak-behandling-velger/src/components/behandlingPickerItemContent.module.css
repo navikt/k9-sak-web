@@ -103,8 +103,8 @@
   align-items: center;
   display: flex;
   margin-top: 0.5rem;
+}
 
-  p:first-of-type {
-    margin-right: 0.25rem;
-  }
+.opprettetDatoContainer p:first-of-type {
+  margin-right: 0.25rem;
 }
