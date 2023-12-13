@@ -1,8 +1,9 @@
 import react from '@vitejs/plugin-react';
 import path from 'path';
-import { defineConfig, loadEnv } from 'vite';
+import { loadEnv } from 'vite';
 import { viteMockServe } from 'vite-plugin-mock';
-import { viteStaticCopy } from 'vite-plugin-static-copy';
+// import { viteStaticCopy } from 'vite-plugin-static-copy';
+import { defineConfig } from 'vitest/config';
 import svgr from 'vite-plugin-svgr';
 
 // Convert your Webpack proxy to Vite's style
@@ -103,23 +104,23 @@ export default ({ mode }) => {
         include: [/\.jsx$/, /\.tsx?$/],
       }),
       svgr(),
-      viteStaticCopy({
-        targets: [
-          {
-            src: path.resolve(__dirname, './public/sprak/nb_NO.json'),
-            dest: 'sprak/nb_NO.json',
-            overwrite: true,
-            transform: {
-              transformer: content => content,
-              cache: {
-                keys: {
-                  key: '[contenthash]',
-                },
-              },
-            },
-          },
-        ],
-      }),
+      // viteStaticCopy({
+      //   targets: [
+      //     {
+      //       src: path.resolve(__dirname, './public/sprak/nb_NO.json'),
+      //       dest: 'sprak/nb_NO.json',
+      //       overwrite: true,
+      //       transform: {
+      //         transformer: content => content,
+      //         cache: {
+      //           keys: {
+      //             key: '[contenthash]',
+      //           },
+      //         },
+      //       },
+      //     },
+      //   ],
+      // }),
       viteMockServe({
         mockPath: '_mocks',
       }),
