@@ -1,7 +1,8 @@
 import React from 'react';
 
-import { Alert, BodyShort, Heading } from '@navikt/ds-react';
+import { Alert, BodyShort, Button, HStack, Heading } from '@navikt/ds-react';
 
+import { OverstyringKnapp } from '@navikt/ft-ui-komponenter';
 import ContainerContract from '../types/ContainerContract';
 import lagUttaksperiodeliste from '../util/uttaksperioder';
 import UttaksperiodeListe from './components/uttaksperiode-liste/UttaksperiodeListe';
@@ -10,7 +11,6 @@ import Infostripe from './components/infostripe/Infostripe';
 import UtsattePerioderStripe from './components/utsattePerioderStripe/UtsattePerioderStripe';
 import VurderDato from './components/vurderDato/VurderDato';
 import { aksjonspunktVurderDatoKode, aksjonspunktkodeVentAnnenPSBSakKode } from '../constants/Aksjonspunkter';
-import OverstyringIkon from './components/overstyrUttakForm/components/OverstyringIkon';
 import { OverstyrUttakContextProvider } from './context/OverstyrUttakContext';
 import OverstyrUttakForm from './components/overstyrUttakForm/OverstyrUttakForm';
 
@@ -43,12 +43,14 @@ const MainComponent = ({ containerData }: MainComponentProps): JSX.Element => {
 
   return (
     <ContainerContext.Provider value={containerData}>
-      <Heading size="small" level="1">
-        Uttak
-        {featureToggles?.OVERSTYRING_UTTAK && (
-          <OverstyringIkon erOverstyrer={erOverstyrer} aktiv={overstyringAktiv} toggleOverstyring={toggleOverstyring} />
+      <HStack justify="start">
+        <Heading size="small" level="1">
+          Uttak
+        </Heading>
+        {featureToggles?.OVERSTYRING_UTTAK && erOverstyrer && (
+          <OverstyringKnapp erOverstyrt={overstyringAktiv} onClick={toggleOverstyring} />
         )}
-      </Heading>
+      </HStack>
 
       <Infostripe harVentAnnenPSBSakAksjonspunkt={harVentAnnenPSBSakAksjonspunkt} />
 
