@@ -17,10 +17,10 @@ const tableHeaders = (
   <Table.Header>
     <Table.Row>
       <Table.HeaderCell />
-      <Table.HeaderCell>Fra og med</Table.HeaderCell>
-      <Table.HeaderCell>Til og med</Table.HeaderCell>
-      <Table.HeaderCell>Ny uttaksgrad</Table.HeaderCell>
-      <Table.HeaderCell>Valg for overstyring</Table.HeaderCell>
+      <Table.HeaderCell scope="col">Fra og med</Table.HeaderCell>
+      <Table.HeaderCell scope="col">Til og med</Table.HeaderCell>
+      <Table.HeaderCell scope="col">Ny uttaksgrad</Table.HeaderCell>
+      <Table.HeaderCell scope="col">Valg for overstyring</Table.HeaderCell>
     </Table.Row>
   </Table.Header>
 );
