@@ -37,7 +37,7 @@
     "@k9-sak-web/types": "1.0.0",
     "@navikt/ft-fakta-beregning": "5.0.17",
     "@navikt/ft-fakta-beregning-redesign": "1.0.17",
-    "@navikt/ft-fakta-fordel-beregningsgrunnlag": "7.3.20",
+    "@navikt/ft-fakta-fordel-beregningsgrunnlag": "7.3.21",
     "@navikt/ft-prosess-beregningsgrunnlag": "6.3.20",
     "@navikt/k9-fe-http-utils": "1.0.8",
     "@navikt/k9-fe-inntektsmelding": "1.0.5",
