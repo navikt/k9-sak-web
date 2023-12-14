@@ -2817,7 +2817,7 @@ __metadata:
     nav-frontend-typografi-style: 2.0.2
     prop-types: 15.8.1
     react: 18.2.0
-    react-hook-form: 7.48.2
+    react-hook-form: 7.49.2
     react-intl: 6.5.5
     react-redux: 8.1.3
     redux: 4.2.1
@@ -5018,7 +5018,7 @@ __metadata:
     react: 18.2.0
     react-collapse: 5.1.1
     react-dom: 18.2.0
-    react-hook-form: 7.48.2
+    react-hook-form: 7.49.2
     react-popper: 2.3.0
   languageName: unknown
   linkType: soft
@@ -5104,7 +5104,7 @@ __metadata:
     react: 18.2.0
     react-collapse: 5.1.1
     react-dom: 18.2.0
-    react-hook-form: 7.48.2
+    react-hook-form: 7.49.2
     react-popper: 2.3.0
     uuid: 9.0.1
     webpack-node-externals: ^3.0.0
@@ -5147,7 +5147,7 @@ __metadata:
     react: 18.2.0
     react-collapse: 5.1.1
     react-dom: 18.2.0
-    react-hook-form: 7.48.2
+    react-hook-form: 7.49.2
     react-popper: 2.3.0
     uuid: 9.0.1
   languageName: unknown
@@ -5186,7 +5186,7 @@ __metadata:
     react: 18.2.0
     react-collapse: 5.1.1
     react-dom: 18.2.0
-    react-hook-form: 7.48.2
+    react-hook-form: 7.49.2
     react-modal: 3.16.1
     react-outside-click-handler: 1.3.0
     react-popper: 2.3.0
@@ -5210,7 +5210,7 @@ __metadata:
     react: 18.2.0
     react-collapse: 5.1.1
     react-dom: 18.2.0
-    react-hook-form: 7.48.2
+    react-hook-form: 7.49.2
     react-popper: 2.3.0
     tailwindcss: ^3.3.6
   languageName: unknown
@@ -5254,7 +5254,7 @@ __metadata:
     react: 18.2.0
     react-collapse: 5.1.1
     react-dom: 18.2.0
-    react-hook-form: 7.48.2
+    react-hook-form: 7.49.2
     react-intl: 6.5.5
     react-popper: 2.3.0
   languageName: unknown
@@ -5291,7 +5291,7 @@ __metadata:
     react: 18.2.0
     react-day-picker: 7.4.10
     react-dom: 18.2.0
-    react-hook-form: 7.48.2
+    react-hook-form: 7.49.2
   languageName: unknown
   linkType: soft
 
@@ -5562,7 +5562,7 @@ __metadata:
     react: 18.2.0
     react-collapse: 5.1.1
     react-dom: 18.2.0
-    react-hook-form: 7.48.2
+    react-hook-form: 7.49.2
     react-popper: 2.3.0
   languageName: unknown
   linkType: soft
@@ -5584,7 +5584,7 @@ __metadata:
     nav-frontend-knapper: 3.1.3
     react: 18.2.0
     react-dom: 18.2.0
-    react-hook-form: 7.48.2
+    react-hook-form: 7.49.2
     react-intl: 6.5.5
     sinon: 15.2.0
   languageName: unknown
@@ -5901,7 +5901,7 @@ __metadata:
     "@navikt/ft-form-validators": 2.1.10
     date-fns: 2.30.0
     react: 18.2.0
-    react-hook-form: 7.48.2
+    react-hook-form: 7.49.2
     react-intl: 6.5.5
   languageName: unknown
   linkType: soft
@@ -23853,6 +23853,15 @@ __metadata:
   peerDependencies:
     react: ^16.8.0 || ^17 || ^18
   checksum: 39652d08f78f16e5234049ceeb794d8bcd4d146772aca99c6db8c5aea8926cd4a230d02098886a441074deefbc24ffcb5ed57bc7cb0009d950115f5b3e627f12
+  languageName: node
+  linkType: hard
+
+"react-hook-form@npm:7.49.2":
+  version: 7.49.2
+  resolution: "react-hook-form@npm:7.49.2"
+  peerDependencies:
+    react: ^16.8.0 || ^17 || ^18
+  checksum: e982a4638d474bfd156a7d4ebb098065944895f62d8e0098195a2e0030106debea7262ddd58f920797f3b651fdc2a47831f89be0c7e0338c9cb8430fd3b202f1
   languageName: node
   linkType: hard
 
