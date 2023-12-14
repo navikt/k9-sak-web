@@ -40,7 +40,7 @@ interface ExtendedWindow {
 
 describe('<MeldingIndex>', () => {
   const meldingBackend = {
-    async getTredjepartsmottakerInfo(orgnr: string) {
+    async getBrevMottakerinfoEreg(orgnr: string) {
       return {name: `Test Org navn (${orgnr})`}
     }
   } satisfies BackendApi

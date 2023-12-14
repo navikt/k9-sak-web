@@ -57,7 +57,7 @@ export type FormValues = {
 };
 
 export interface BackendApi {
-  getTredjepartsmottakerInfo(orgnr: string): Promise<EregOrganizationLookupResponse>;
+  getBrevMottakerinfoEreg(orgnr: string): Promise<EregOrganizationLookupResponse>;
 }
 
 interface PureOwnProps {
@@ -191,7 +191,7 @@ export const MessagesImpl = ({
   useEffect(() => {
     if (tredjepartsmottakerOrgnr?.length >= 9) {
       const loadTredjepartsmottakerNavn = async () => {
-        const tredjepartsmottakerInfoRes = await backendApi.getTredjepartsmottakerInfo(tredjepartsmottakerOrgnr)
+        const tredjepartsmottakerInfoRes = await backendApi.getBrevMottakerinfoEreg(tredjepartsmottakerOrgnr)
         if(tredjepartsmottakerInfoRes) {
           setTredjepartsmottakerInfo(tredjepartsmottakerInfoRes)
         }
