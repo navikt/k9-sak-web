@@ -88,6 +88,7 @@ const renderListItems = ({
           erUnntaksløype={behandling.type.kode === behandlingType.UNNTAK}
           index={sorterteOgFiltrerteBehandlinger.length - index}
           opprettet={behandling.opprettet}
+          avsluttet={behandling.avsluttet}
         />
       </NavLink>
     </li>
