@@ -17,7 +17,7 @@ describe('<BehandlingPickerItemContent>', () => {
         erUnntaksløype={false}
         index={1}
         opprettet="2021-12-20T09:21:41"
-        avsluttet="2021-12-20T09:21:41"
+        avsluttet="2021-12-21T09:21:41"
       />,
       {
         locale: 'nb-NO',
