@@ -19,7 +19,7 @@ describe('<RelatertFagsak>', () => {
   };
 
   it('skal vise relatert søker dersom bare én relatert søker', () => {
-    const wrapper = shallow(<RelatertFagsak relaterteFagsaker={relaterteFagsakerEnSøker} />);
+    const wrapper = shallow(<RelatertFagsak relaterteFagsakerResponse={relaterteFagsakerEnSøker} />);
 
     expect(wrapper.find(NavSelect)).toHaveLength(0);
     const lenke = wrapper.find(Lenke);
@@ -28,7 +28,7 @@ describe('<RelatertFagsak>', () => {
   });
 
   it('skal vise select dersom flere relaterte søkere', () => {
-    const wrapper = shallow(<RelatertFagsak relaterteFagsaker={relaterteFagsakerFlereSøkere} />);
+    const wrapper = shallow(<RelatertFagsak relaterteFagsakerResponse={relaterteFagsakerFlereSøkere} />);
 
     expect(wrapper.find(NavSelect)).toHaveLength(1);
     expect(wrapper.find('option')).toHaveLength(2);

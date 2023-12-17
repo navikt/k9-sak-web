@@ -162,7 +162,7 @@ const FagsakIndex = () => {
     K9sakApiKeys.FAGSAK_RELATERTE_SAKER,
     {},
     {
-      updateTriggers: [!behandling],
+      updateTriggers: [behandlingId],
       suspendRequest: !behandling,
     },
   );
