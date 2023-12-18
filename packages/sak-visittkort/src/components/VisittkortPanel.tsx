@@ -115,7 +115,7 @@ const VisittkortPanel = ({
             </FlexColumn>
           )}
           <FlexColumn>
-            <RelatertFagsak relaterteFagsakerResponse={relaterteFagsaker} />
+            <RelatertFagsak relaterteFagsaker={relaterteFagsaker} />
           </FlexColumn>
           <div className={styles.pushRight}>
             {barnSoktFor &&

@@ -5,21 +5,15 @@ import classNames from 'classnames';
 import Lenke from 'nav-frontend-lenker';
 import { Select as NavSelect } from 'nav-frontend-skjema';
 import { Normaltekst } from 'nav-frontend-typografi';
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import RelatertSøkerIcon from './RelatertSøkerIcon';
 import styles from './relatertFagsak.module.css';
 
 interface RelatertFagsakProps {
-  relaterteFagsakerResponse?: RelatertFagsakType;
+  relaterteFagsaker?: RelatertFagsakType;
 }
 
-const RelatertFagsak = ({ relaterteFagsakerResponse }: RelatertFagsakProps) => {
-  const [relaterteFagsaker, setRelaterteFagsaker] = useState(relaterteFagsakerResponse);
-  useEffect(() => {
-    if (relaterteFagsakerResponse && relaterteFagsakerResponse.relaterteSøkere?.length > 0) {
-      setRelaterteFagsaker(relaterteFagsakerResponse);
-    }
-  }, [relaterteFagsakerResponse]);
+const RelatertFagsak = ({ relaterteFagsaker }: RelatertFagsakProps) => {
   if (!relaterteFagsaker || relaterteFagsaker.relaterteSøkere?.length === 0) {
     return null;
   }
