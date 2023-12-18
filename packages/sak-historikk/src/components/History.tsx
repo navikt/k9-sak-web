@@ -72,6 +72,9 @@ const velgHistorikkMal = (histType: Kodeverk) => {
     case historikkinnslagType.TERMINBEKREFTELSE_UGYLDIG:
     case historikkinnslagType.ANKE_BEH:
     case historikkinnslagType.VIRKNINGSDATO_UTTAK_NYE_REGLER:
+    case historikkinnslagType.OVST_UTTAK_NY:
+    case historikkinnslagType.OVST_UTTAK_OPPDATERT:
+    case historikkinnslagType.OVST_UTTAK_FJERNET:
       return HistorikkMalType5;
     case historikkinnslagType.NY_INFO_FRA_TPS:
     case historikkinnslagType.NY_GRUNNLAG_MOTTATT:
