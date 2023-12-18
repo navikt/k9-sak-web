@@ -40,7 +40,7 @@
     "@k9-sak-web/sak-app": "1.0.0",
     "@k9-sak-web/types": "1.0.0",
     "@navikt/ft-fakta-beregning": "5.0.19",
-    "@navikt/ft-fakta-beregning-redesign": "1.0.20",
+    "@navikt/ft-fakta-beregning-redesign": "1.0.21",
     "@navikt/ft-fakta-fordel-beregningsgrunnlag": "7.3.22",
     "@navikt/ft-prosess-beregningsgrunnlag": "6.3.22",
     "@navikt/k9-fe-etablert-tilsyn": "1.0.4",
