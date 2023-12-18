@@ -97,20 +97,29 @@ const createValidateRecipient = recipients => value =>
     ? undefined
     : [{ id: 'ValidationMessage.InvalidRecipient' }];
 
-const createTredjepartsmottaker = (orgnr: string): Mottaker => ({
-  id: orgnr,
-  type: "ORGNR",
-})
+const createTredjepartsmottaker = (orgnr: string): Mottaker => {
+  if (orgnr.length < 9) {
+    throw new Error(`Invalid orgnr: ${orgnr}`)
+  }
+  return {
+    id: orgnr,
+      type: "ORGNR",
+  }
+}
 
 const resolveOverstyrtMottaker = (
   overstyrtMottaker: string,
   recipients: Mottaker[],
   visTredjepartsmottaker: boolean,
-  tredjepartsmottakerOrgnr: string | undefined
+  tredjepartsmottakerOrgnr: string | undefined,
+  eregLookupResponse: EregOrganizationLookupResponse,
 ): Mottaker | undefined => {
   // Viss sending til tredjepartsmottaker er valgt skal tredjepartsmottakerOrgnr brukast (viss gyldig)
-  if (visTredjepartsmottaker && typeof tredjepartsmottakerOrgnr === "string" && tredjepartsmottakerOrgnr.length === 9) {
-    return createTredjepartsmottaker(tredjepartsmottakerOrgnr);
+  if (visTredjepartsmottaker) {
+    if(typeof tredjepartsmottakerOrgnr === "string" && tredjepartsmottakerOrgnr.length >= 9 && eregLookupResponse.name !== undefined) {
+      return createTredjepartsmottaker(tredjepartsmottakerOrgnr);
+    }
+    return undefined; // Tredjepartsmottaker aktivert, men ikkje funne gyldig
   }
   if (recipients.some(recipient => JSON.stringify(recipient) === overstyrtMottaker)) {
       return JSON.parse(overstyrtMottaker)
@@ -161,15 +170,19 @@ export const MessagesImpl = ({
 
   const tmpls: Brevmal[] = Object.keys(templates).map(key => ({ ...templates[key], kode: key }));
 
+  const resolvedOverstyrtMottaker: Mottaker | undefined =
+    resolveOverstyrtMottaker(overstyrtMottaker, recipients, visTredjepartsmottakerInput, tredjepartsmottakerOrgnr, tredjepartsmottakerInfo)
+
   const previewMessage = e => {
     e?.preventDefault();
-
-    previewCallback(
-      resolveOverstyrtMottaker(overstyrtMottaker, recipients, visTredjepartsmottakerInput, tredjepartsmottakerOrgnr),
-      brevmalkode,
-      fritekst,
-      fritekstbrev,
-    );
+    if (resolvedOverstyrtMottaker !== undefined) { // Don't want to start preview before valid receiver is resolved.
+      previewCallback(
+        resolvedOverstyrtMottaker,
+        brevmalkode,
+        fritekst,
+        fritekstbrev,
+      );
+    }
   };
 
 
@@ -184,9 +197,9 @@ export const MessagesImpl = ({
   useEffect(() => {
     formProps.change(
       'overstyrtMottaker',
-      JSON.stringify(resolveOverstyrtMottaker(overstyrtMottaker, recipients, visTredjepartsmottakerInput, tredjepartsmottakerOrgnr))
+      resolvedOverstyrtMottaker ? JSON.stringify(resolvedOverstyrtMottaker) : undefined
     );
-  }, [overstyrtMottaker, recipients, visTredjepartsmottakerInput, tredjepartsmottakerOrgnr])
+  }, [resolvedOverstyrtMottaker])
 
   useEffect(() => {
     if (tredjepartsmottakerOrgnr?.length >= 9) {
@@ -360,7 +373,7 @@ export const MessagesImpl = ({
           )}
           <VerticalSpacer eightPx />
           <div className={styles.buttonRow}>
-            <Hovedknapp mini spinner={formProps.submitting} disabled={formProps.submitting} onClick={ariaCheck}>
+            <Hovedknapp mini spinner={formProps.submitting} disabled={resolvedOverstyrtMottaker === undefined || formProps.submitting} onClick={ariaCheck}>
               {intl.formatMessage({ id: 'Messages.Submit' })}
             </Hovedknapp>
             {brevmalkode && (
