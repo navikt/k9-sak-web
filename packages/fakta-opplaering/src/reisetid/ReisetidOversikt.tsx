@@ -3,7 +3,7 @@ import dayjs from 'dayjs';
 import { NavigationWithDetailView } from '@navikt/ft-plattform-komponenter';
 import { FaktaOpplaeringContext } from '@k9-sak-web/behandling-opplaeringspenger/src/FaktaOpplaeringContext';
 
-import { Period } from '@navikt/k9-fe-period-utils';
+import { Period } from '@fpsak-frontend/utils';
 import { ReisetidVurdering } from './ReisetidTypes';
 import ReisetidNavigation from './ReisetidNavigation';
 import ReisetidDetails from './ReisetidDetails';

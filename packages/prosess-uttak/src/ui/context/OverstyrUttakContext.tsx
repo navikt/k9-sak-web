@@ -1,6 +1,6 @@
 import React, { createContext } from 'react';
 
-import { get, post } from '@navikt/k9-fe-http-utils';
+import { httpUtils } from '@fpsak-frontend/utils';
 
 import dayjs from 'dayjs';
 import ContainerContext from './ContainerContext';
@@ -28,9 +28,9 @@ export const OverstyrUttakContextProvider = ({ children }) => {
 
   const hentOverstyrte = async () => {
     setLasterOverstyringer(true);
-    const apiResult: OverstyrtUttakResponse = await get(endpoints.behandlingUttakOverstyrt, httpErrorHandler).then(
-      (response: OverstyrtUttakResponse) => response,
-    );
+    const apiResult: OverstyrtUttakResponse = await httpUtils
+      .get(endpoints.behandlingUttakOverstyrt, httpErrorHandler)
+      .then((response: OverstyrtUttakResponse) => response);
     setOverstyrte(apiResult?.overstyringer || []);
     setArbeidsgivere(apiResult?.arbeidsgiverOversikt?.arbeidsgivere || {});
     setLasterOverstyringer(false);
@@ -38,15 +38,17 @@ export const OverstyrUttakContextProvider = ({ children }) => {
 
   const hentAktuelleAktiviteter = async (fom: Date, tom: Date): Promise<Arbeidsforhold[]> => {
     setLasterAktiviteter(true);
-    const apiResult = await post(
-      endpoints.behandlingUttakOverstyrbareAktiviteter,
-      {
-        behandlingIdDto: aktivBehandlingUuid,
-        fom: dayjs(fom).format('YYYY-MM-DD'),
-        tom: dayjs(tom).format('YYYY-MM-DD'),
-      },
-      httpErrorHandler,
-    ).then((response: OverstyrbareAktiviteterResponse) => response);
+    const apiResult = await httpUtils
+      .post(
+        endpoints.behandlingUttakOverstyrbareAktiviteter,
+        {
+          behandlingIdDto: aktivBehandlingUuid,
+          fom: dayjs(fom).format('YYYY-MM-DD'),
+          tom: dayjs(tom).format('YYYY-MM-DD'),
+        },
+        httpErrorHandler,
+      )
+      .then((response: OverstyrbareAktiviteterResponse) => response);
 
     setLasterAktiviteter(false);
     return apiResult.arbeidsforholdsperioder;
