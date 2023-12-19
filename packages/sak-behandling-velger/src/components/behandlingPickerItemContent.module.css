@@ -63,6 +63,10 @@
   margin-top: 0.5rem;
 }
 
+.behandlingPicker .resultContainer span {
+  margin-left: 0.25rem;
+}
+
 .behandlingPicker .åpneText {
   align-items: center;
   color: var(--a-blue-500);
