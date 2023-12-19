@@ -1,25 +1,15 @@
 import type { EregOrganizationLookupResponse } from '@k9-sak-web/types';
 import { BackendApi } from './MeldingIndex';
+import { K9sakApiKeys, requestApi } from '../../data/k9sakApi';
 
 export default class MeldingBackendClient implements BackendApi {
-  // TODO Bytt ut denne implementasjonen med ein som går mot eigen backend, og bruker requestApi, eller ein lågare nivå
-  //  http klient dependency injecta i konstruktør (axios)
-  async getTredjepartsmottakerInfo(orgnr: string): Promise<EregOrganizationLookupResponse> {
-    const resp = await fetch(`https://data.brreg.no/enhetsregisteret/api/enheter/${orgnr}`, {
-      headers: {
-        Accept: 'application/vnd.brreg.enhetsregisteret.enhet.v2+json;charset=UTF-8',
-      },
-    });
-    if (resp.ok) {
-      const json = await resp.json();
-      return { name: json.navn };
+  async getBrevMottakerinfoEreg(organisasjonsnr: string): Promise<EregOrganizationLookupResponse> {
+    const resp = await requestApi.startRequest(K9sakApiKeys.BREV_MOTTAKER_ORGANISASJON, { organisasjonsnr });
+    if (resp.payload.navn) {
+      // Fant namn på gitt organisasjonsnr
+      return { name: resp.payload.navn };
     }
-    if (resp.status === 400) {
-      return { invalidOrgnum: true };
-    }
-    if (resp.status === 404) {
-      return { notFound: true };
-    }
-    throw new Error(`Unexpected response from data.brreg.no: ${resp.status} - ${resp.statusText}`);
+    // Fant ikkje gitt organisasjonsnr
+    return { notFound: true };
   }
 }

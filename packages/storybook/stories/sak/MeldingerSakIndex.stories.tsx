@@ -31,7 +31,7 @@ interface SendMeldingPanelStoryArgs {
 }
 
 const defaultFakeBackend = {
-  async getTredjepartsmottakerInfo(orgnr: string): Promise<EregOrganizationLookupResponse> {
+  async getBrevMottakerinfoEreg(orgnr: string): Promise<EregOrganizationLookupResponse> {
     if (orgnr.length === 9) {
       if (Number.isFinite(Number(orgnr))) {
         if (orgnr === '000000000') {

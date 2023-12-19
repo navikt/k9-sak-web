@@ -31,6 +31,7 @@ interface OwnProps {
   erUnntaksløype: boolean;
   index: number;
   opprettet: string;
+  avsluttet: string;
 }
 
 /**
@@ -48,6 +49,7 @@ const BehandlingPickerItemContent: React.FC<OwnProps> = ({
   erUnntaksløype,
   index,
   opprettet,
+  avsluttet,
 }) => (
   <Panel className={erAutomatiskRevurdering ? styles.indent : ''} border>
     <div className={styles.behandlingPicker}>
@@ -73,6 +75,11 @@ const BehandlingPickerItemContent: React.FC<OwnProps> = ({
             <FormattedMessage id="BehandlingPickerItemContent.Resultat" />
             {`: `}
             {getStatusText(behandlingsresultatTypeKode, behandlingsresultatTypeNavn, erFerdigstilt)}
+            {avsluttet && (
+              <BodyShort as="span" size="small">
+                <DateLabel dateString={avsluttet} />
+              </BodyShort>
+            )}
           </Normaltekst>
         </div>
         {opprettet && (
