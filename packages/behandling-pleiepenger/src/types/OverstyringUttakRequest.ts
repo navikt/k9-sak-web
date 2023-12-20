@@ -20,7 +20,6 @@ export type EnkeltOverstyringUttak = {
 export type OverstyringUttakRequest = {
   periode: { fom: string; tom: string };
   erVilkarOk: boolean;
-  begrunnelse: string;
   gåVidere: boolean;
   lagreEllerOppdater: EnkeltOverstyringUttak[];
   slett: { id: number | string }[];

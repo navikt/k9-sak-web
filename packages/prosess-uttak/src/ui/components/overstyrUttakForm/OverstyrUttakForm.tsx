@@ -36,7 +36,6 @@ const OverstyrUttakForm: React.FC = () => {
     handleOverstyringAksjonspunkt({
       gåVidere: true,
       erVilkarOk: true,
-      begrunnelse: '',
       periode: { fom: '', tom: '' },
       lagreEllerOppdater: [],
       slett: [],
@@ -48,7 +47,6 @@ const OverstyrUttakForm: React.FC = () => {
     handleOverstyringAksjonspunkt({
       erVilkarOk: false,
       gåVidere: false,
-      begrunnelse: '',
       periode: { fom: '', tom: '' },
       lagreEllerOppdater: [],
       slett: [{ id }],
