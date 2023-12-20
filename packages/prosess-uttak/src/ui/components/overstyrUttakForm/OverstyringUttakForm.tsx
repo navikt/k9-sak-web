@@ -91,7 +91,6 @@ const OverstyringUttakForm: React.FC<OwnProps> = ({
     handleOverstyringAksjonspunkt({
       gåVidere: false,
       erVilkarOk: false,
-      begrunnelse: '',
       periode: { fom: '', tom: '' }, // MÅ legge til denne inntill videre, hack, for å komme rundt validering i backend
       lagreEllerOppdater: [{ ...formaterOverstyring(values) }],
       slett: [],
