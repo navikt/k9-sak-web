@@ -43,7 +43,7 @@ jobs:
           ref: ${{ env.SHA }}
 
       - name: Promoter til cluster og namespace
-        uses: nais/deploy/actions/deploy@v1
+        uses: nais/deploy/actions/deploy@v2
         env:
           PRINT_PAYLOAD: true
           APIKEY: ${{ secrets.DEPLOY_KEY }}
