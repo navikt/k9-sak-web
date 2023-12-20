@@ -1,10 +1,12 @@
-import { ContentWithTooltip, GreenCheckIcon, OnePersonIconBlue } from '@navikt/ft-plattform-komponenter';
+import * as React from 'react';
 import classNames from 'classnames/bind';
+
+import { ContentWithTooltip, GreenCheckIcon, OnePersonIconBlue } from '@navikt/ft-plattform-komponenter';
 import { EtikettAdvarsel, EtikettSuksess } from 'nav-frontend-etiketter';
 import Hjelpetekst from 'nav-frontend-hjelpetekst';
 import { PopoverOrientering } from 'nav-frontend-popover';
 import { Element } from 'nav-frontend-typografi';
-import * as React from 'react';
+
 import { arbeidstypeTilVisning } from '../../../constants/Arbeidstype';
 import BarnetsDødsfallÅrsakerMedTekst from '../../../constants/BarnetsDødsfallÅrsakerMedTekst';
 import IkkeOppfylteÅrsakerMedTekst from '../../../constants/IkkeOppfylteÅrsakerMedTekst';
@@ -17,9 +19,10 @@ import { Uttaksperiode } from '../../../types/Uttaksperiode';
 import { beregnDagerTimer } from '../../../util/dateUtils';
 import { harÅrsak } from '../../../util/årsakUtils';
 import ContainerContext from '../../context/ContainerContext';
-import styles from './uttakDetaljer.css';
 import UttakUtregning from './UttakUtregning';
 import Utfall from '../../../constants/Utfall';
+
+import styles from './uttakDetaljer.css';
 
 const cx = classNames.bind(styles);
 
@@ -131,7 +134,7 @@ const formatAvkortingMotArbeid = (
     <div className={styles.uttakDetaljer__avkortingMotArbeid}>
       {utbetalingsgrader.map((utbetalingsgradItem, index) => {
         const { normalArbeidstid, faktiskArbeidstid, utbetalingsgrad, arbeidsforhold } = utbetalingsgradItem;
-        const orgnr = arbeidsforhold?.organisasjonsnummer;
+        const orgnr = arbeidsforhold?.orgnr;
         const aktoerId = arbeidsforhold?.aktørId;
         const arbeidsforholdData = alleArbeidsforhold[orgnr || aktoerId];
         const arbeidsgivernavn = arbeidsforholdData?.navn;
