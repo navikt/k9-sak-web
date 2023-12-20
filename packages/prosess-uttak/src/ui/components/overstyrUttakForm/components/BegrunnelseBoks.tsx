@@ -3,7 +3,7 @@ import React from 'react';
 import { Heading, BodyShort } from '@navikt/ds-react';
 import { PersonPencilFillIcon } from '@navikt/aksel-icons';
 
-import styles from './begrunnelseBoks.css';
+import styles from './begrunnelseBoks.module.css';
 
 interface BegrunnelseBoksProps {
   begrunnelse: string;

@@ -8,7 +8,7 @@ import ContainerContext from '../../context/ContainerContext';
 import OverstyringUttakForm from './OverstyringUttakForm';
 import AktivitetRad from './AktivitetRad';
 
-import styles from './overstyrUttakForm.css';
+import styles from './overstyrUttakForm.module.css';
 import { useOverstyrUttak } from '../../context/OverstyrUttakContext';
 import { UttakOverstyring } from '../../../types/UttakOverstyring';
 import { formaterOverstyringTilFormData } from '../../../util/overstyringUtils';

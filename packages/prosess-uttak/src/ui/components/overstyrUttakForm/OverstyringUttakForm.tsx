@@ -15,7 +15,7 @@ import { OverstyrUttakFormFieldName } from '../../../constants/OverstyrUttakForm
 import { OverstyrUttakFormData } from '../../../types';
 import { finnSisteSluttDatoFraUttaksperioder, finnTidligsteStartDatoFraUttaksperioder } from '../../../util/dateUtils';
 
-import styles from './OverstyringUttakForm.css';
+import styles from './overstyringUttakForm.module.css';
 
 type OwnProps = {
   handleAvbrytOverstyringForm: () => void;
