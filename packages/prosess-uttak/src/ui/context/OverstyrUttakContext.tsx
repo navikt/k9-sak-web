@@ -2,7 +2,7 @@ import React, { createContext } from 'react';
 import dayjs from 'dayjs';
 
 import { httpUtils } from '@fpsak-frontend/utils';
-import { arbeidstypeTilVisning } from '@k9-sak-web/prosess-uttak';
+import { arbeidstypeTilVisning } from '@k9-sak-web/prosess-uttak/src/constants/Arbeidstype';
 
 import ContainerContext from './ContainerContext';
 import { Arbeidsforhold, OverstyrbareAktiviteterResponse, OverstyringUttak, OverstyrtUttakResponse } from '../../types';
