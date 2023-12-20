@@ -5,6 +5,7 @@
 }
 
 .begrunnelseTekst {
+  word-wrap: break-word;
   border-left: 4px solid #c6c2bf;
   padding-left: 1rem;
   margin-top: 0.75rem;
