@@ -1,11 +1,12 @@
 import dayjs from 'dayjs';
-import { OverstyrUttakFormFieldName } from '../constants/OverstyrUttakFormFieldName';
+
 import {
   Arbeidsforhold,
   OverstyrUttakFormData,
   OverstyrUttakFormDataUtbetalingsgrad,
   OverstyringUttak,
 } from '../types';
+import { OverstyrUttakFormFieldName } from '../constants/OverstyrUttakFormFieldName';
 import { FormatertOverstyring } from '../types/FormatertOverstyring';
 
 export const formaterOverstyringTilFormData = (overstyring: OverstyringUttak): OverstyrUttakFormData => ({

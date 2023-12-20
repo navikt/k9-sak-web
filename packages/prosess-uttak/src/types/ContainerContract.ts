@@ -1,4 +1,6 @@
 import { Aksjonspunkt } from '@k9-sak-web/types';
+import { OverstyringUttakRequest } from '@k9-sak-web/behandling-pleiepenger';
+
 import Uttaksperioder from './Uttaksperioder';
 import ArbeidsgiverOpplysninger from './ArbeidsgiverOpplysninger';
 import KodeverkMedNavn from './kodeverkMedNavnTsType';
@@ -16,7 +18,7 @@ interface ContainerContract {
   aksjonspunktkoder: string[];
   erFagytelsetypeLivetsSluttfase: boolean;
   kodeverkUtenlandsoppholdÅrsak: KodeverkMedNavn[];
-  handleOverstyringAksjonspunkt?: (data: any) => Promise<any>;
+  handleOverstyringAksjonspunkt?: (data: OverstyringUttakRequest) => Promise<void>;
   løsAksjonspunktVurderDatoNyRegelUttak: ({
     begrunnelse,
     virkningsdato,

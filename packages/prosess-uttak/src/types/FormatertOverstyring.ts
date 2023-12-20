@@ -1,11 +1,11 @@
 export type FormatertOverstyring = {
   id?: string;
-  begrunnelse?: string;
+  begrunnelse: string;
   periode: {
     fom: string;
     tom: string;
   };
-  søkersUttaksgrad: number;
+  søkersUttaksgrad: number | string;
   utbetalingsgrader: {
     arbeidsforhold: {
       type: string;
