@@ -63,7 +63,7 @@ export const OverstyrUttakContextProvider = ({ children }) => {
 
     if (arbeidsforhold.arbeidsforholdId !== null) identifikator = arbeidsforhold.arbeidsforholdId;
     if (arbeidsforhold.orgnr !== null) identifikator = arbeidsforhold.orgnr;
-    if (arbeidsforhold.orgnr !== null) identifikator = arbeidsforhold.organisasjonsnummer;
+    if (arbeidsforhold.organisasjonsnummer !== null) identifikator = arbeidsforhold.organisasjonsnummer;
     if (arbeidsforhold.aktørId !== null) identifikator = arbeidsforhold.aktørId;
 
     if (arbeidsgiverOversikt && arbeidsgiverOversikt[identifikator]) return arbeidsgiverOversikt[identifikator].navn;
