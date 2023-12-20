@@ -24,3 +24,23 @@
   font-weight: 600;
   margin-left: 0.75rem;
 }
+
+.utbetalingsgrader {
+  display: table;
+  margin-top: 0.25em;
+  margin-bottom: 1.5em;
+}
+
+.utbetalingsgrad {
+  display: table-row;
+}
+
+.utbetalingsgradProsent {
+  display: table-cell;
+  padding: 0.75em 4em 0 0;
+}
+
+.utbetalingsgradNavn {
+  display: table-cell;
+  padding: 0.75em 4em 0 0;
+}
