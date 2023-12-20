@@ -2,6 +2,7 @@ import React from 'react';
 
 import { Heading, BodyShort } from '@navikt/ds-react';
 import { PersonPencilFillIcon } from '@navikt/aksel-icons';
+import { useSaksbehandlerOppslag } from '@fpsak-frontend/shared-components';
 
 import { OverstyringUttak } from '../../../../types';
 import { useOverstyrUttak } from '../../../context/OverstyrUttakContext';
@@ -16,6 +17,7 @@ interface BegrunnelseBoksProps {
 const BegrunnelseBoks: React.FC<BegrunnelseBoksProps> = ({ begrunnelse, overstyring }) => {
   const { utbetalingsgrader, saksbehandler } = overstyring;
   const { utledAktivitetNavn } = useOverstyrUttak();
+  const { hentSaksbehandlerNavn } = useSaksbehandlerOppslag();
 
   return (
     <div className={styles.begrunnelseBoks}>
@@ -45,6 +47,13 @@ const BegrunnelseBoks: React.FC<BegrunnelseBoksProps> = ({ begrunnelse, overstyr
       <BodyShort size="small" className={styles.begrunnelseTekst}>
         {begrunnelse}
       </BodyShort>
+
+      {saksbehandler && (
+        <div className={styles.begrunnelseFooter}>
+          <PersonPencilFillIcon title="Saksbehandlerikon" fontSize="1.5rem" />
+          <span>Vurdering av {hentSaksbehandlerNavn(saksbehandler)}</span>
+        </div>
+      )}
     </div>
   );
 };
