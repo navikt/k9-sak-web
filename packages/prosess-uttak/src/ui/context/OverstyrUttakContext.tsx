@@ -1,8 +1,9 @@
 import React, { createContext } from 'react';
+import dayjs from 'dayjs';
 
 import { httpUtils } from '@fpsak-frontend/utils';
+import { arbeidstypeTilVisning } from '@k9-sak-web/prosess-uttak';
 
-import dayjs from 'dayjs';
 import ContainerContext from './ContainerContext';
 import { Arbeidsforhold, OverstyrbareAktiviteterResponse, OverstyringUttak, OverstyrtUttakResponse } from '../../types';
 
@@ -10,9 +11,10 @@ type OverstyrUttakContextType = {
   lasterOverstyringer: boolean;
   lasterAktiviteter: boolean;
   overstyrte: null | OverstyringUttak[];
-  arbeidsgivere: null | OverstyrtUttakResponse['arbeidsgiverOversikt']['arbeidsgivere'];
+  arbeidsgiverOversikt: null | OverstyrtUttakResponse['arbeidsgiverOversikt']['arbeidsgivere'];
   hentAktuelleAktiviteter: (fom: Date, tom: Date) => Promise<Arbeidsforhold[]>;
   hentOverstyrte: () => void;
+  utledAktivitetNavn: (arbeidsforhold: Arbeidsforhold) => string;
 };
 
 const OverstyrUttakContext = createContext<OverstyrUttakContextType | null>(null);
@@ -22,7 +24,7 @@ export const OverstyrUttakContextProvider = ({ children }) => {
   const [lasterOverstyringer, setLasterOverstyringer] = React.useState<boolean>(false);
   const [lasterAktiviteter, setLasterAktiviteter] = React.useState<boolean | null>(null);
   const [overstyrte, setOverstyrte] = React.useState<OverstyringUttak[] | null>(null);
-  const [arbeidsgivere, setArbeidsgivere] = React.useState<
+  const [arbeidsgiverOversikt, setArbeidsgiverOversikt] = React.useState<
     OverstyrtUttakResponse['arbeidsgiverOversikt']['arbeidsgivere'] | null
   >(null);
 
@@ -32,7 +34,9 @@ export const OverstyrUttakContextProvider = ({ children }) => {
       .get(endpoints.behandlingUttakOverstyrt, httpErrorHandler)
       .then((response: OverstyrtUttakResponse) => response);
     setOverstyrte(apiResult?.overstyringer || []);
-    setArbeidsgivere(apiResult?.arbeidsgiverOversikt?.arbeidsgivere || {});
+    setArbeidsgiverOversikt(
+      apiResult?.arbeidsgiverOversikt?.arbeidsgivere ? apiResult?.arbeidsgiverOversikt?.arbeidsgivere : null,
+    );
     setLasterOverstyringer(false);
   };
 
@@ -54,6 +58,21 @@ export const OverstyrUttakContextProvider = ({ children }) => {
     return apiResult.arbeidsforholdsperioder;
   };
 
+  const utledAktivitetNavn = (arbeidsforhold: Arbeidsforhold): string => {
+    let identifikator = null;
+
+    if (arbeidsforhold.arbeidsforholdId !== null) identifikator = arbeidsforhold.arbeidsforholdId;
+    if (arbeidsforhold.orgnr !== null) identifikator = arbeidsforhold.orgnr;
+    if (arbeidsforhold.orgnr !== null) identifikator = arbeidsforhold.organisasjonsnummer;
+    if (arbeidsforhold.aktørId !== null) identifikator = arbeidsforhold.aktørId;
+
+    if (arbeidsgiverOversikt && arbeidsgiverOversikt[identifikator]) return arbeidsgiverOversikt[identifikator].navn;
+    if (arbeidsforhold.type === 'SN') return arbeidstypeTilVisning.SN;
+    if (arbeidsforhold.type === 'BA') return arbeidstypeTilVisning.BA;
+    if (identifikator === null || identifikator === undefined) return `${arbeidsforhold.type}`;
+    return `${arbeidsforhold.type} ${identifikator}`;
+  };
+
   React.useEffect(() => {
     hentOverstyrte();
   }, [versjon]);
@@ -64,10 +83,19 @@ export const OverstyrUttakContextProvider = ({ children }) => {
       lasterAktiviteter,
       hentAktuelleAktiviteter,
       overstyrte,
-      arbeidsgivere,
+      arbeidsgiverOversikt,
       hentOverstyrte,
+      utledAktivitetNavn,
     }),
-    [lasterOverstyringer, lasterAktiviteter, hentAktuelleAktiviteter, overstyrte, arbeidsgivere, hentOverstyrte],
+    [
+      lasterOverstyringer,
+      lasterAktiviteter,
+      hentAktuelleAktiviteter,
+      overstyrte,
+      arbeidsgiverOversikt,
+      hentOverstyrte,
+      utledAktivitetNavn,
+    ],
   );
 
   return <OverstyrUttakContext.Provider value={value}>{children}</OverstyrUttakContext.Provider>;
