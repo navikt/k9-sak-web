@@ -9,7 +9,7 @@ export type FormatertOverstyring = {
   utbetalingsgrader: {
     arbeidsforhold: {
       type: string;
-      organisasjonsnummer: string;
+      orgnr: string;
       aktørId: string;
       arbeidsforholdId: string;
     };

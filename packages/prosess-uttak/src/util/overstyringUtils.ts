@@ -29,8 +29,7 @@ export const formaterOverstyring = (values: OverstyrUttakFormData): FormatertOve
   utbetalingsgrader: values[OverstyrUttakFormFieldName.UTBETALINGSGRADER].map(aktivitet => ({
     arbeidsforhold: {
       type: aktivitet[OverstyrUttakFormFieldName.ARBEIDSFORHOLD][OverstyrUttakFormFieldName.TYPE],
-      organisasjonsnummer:
-        aktivitet[OverstyrUttakFormFieldName.ARBEIDSFORHOLD][OverstyrUttakFormFieldName.ORGANISASJONSNUMMER],
+      orgnr: aktivitet[OverstyrUttakFormFieldName.ARBEIDSFORHOLD][OverstyrUttakFormFieldName.ORGNR],
       aktørId: aktivitet[OverstyrUttakFormFieldName.ARBEIDSFORHOLD][OverstyrUttakFormFieldName.AKTØR_ID],
       arbeidsforholdId:
         aktivitet[OverstyrUttakFormFieldName.ARBEIDSFORHOLD][OverstyrUttakFormFieldName.ARBEIDSFORHOLD_ID],
@@ -43,7 +42,7 @@ export const formaterOverstyringAktiviteter = (aktiviteter: Arbeidsforhold[]): O
   aktiviteter.map(aktivitet => ({
     arbeidsforhold: {
       type: aktivitet.type,
-      organisasjonsnummer: aktivitet.orgnr,
+      orgnr: aktivitet.orgnr,
       aktørId: aktivitet.aktørId,
       arbeidsforholdId: aktivitet.arbeidsforholdId,
     },

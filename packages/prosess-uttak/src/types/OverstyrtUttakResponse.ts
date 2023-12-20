@@ -1,19 +1,6 @@
-import { OverstyringUttak } from './OverstyringUttak';
+import { ArbeidsforholdReferanse, OverstyringUttak } from '.';
 
 export interface OverstyrtUttakResponse {
   overstyringer: OverstyringUttak[];
-  arbeidsgiverOversikt: {
-    arbeidsgivere: {
-      [key: string]: {
-        identifikator: string;
-        personIdentifikator: string;
-        navn: string;
-        fødselsdato: string;
-        arbeidsforholdreferanser: {
-          internArbeidsforholdId: string;
-          eksternArbeidsforholdId: string;
-        }[];
-      };
-    };
-  };
+  arbeidsgiverOversikt: { [key: string]: ArbeidsforholdReferanse };
 }
