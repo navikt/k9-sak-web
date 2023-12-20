@@ -5064,7 +5064,7 @@ __metadata:
     "@storybook/react": 7.5.2
     "@storybook/testing-library": 0.2.2
     "@storybook/testing-react": 2.0.1
-    "@testing-library/react": 14.0.0
+    "@testing-library/react": 14.1.2
     "@testing-library/user-event": 14.5.1
     "@types/jest": 29.5.11
     "@types/node": 20.10.3
@@ -9790,7 +9790,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@testing-library/dom@npm:8.20.1, @testing-library/dom@npm:^8.0.0, @testing-library/dom@npm:^8.11.1":
+"@testing-library/dom@npm:8.20.1, @testing-library/dom@npm:^8.11.1":
   version: 8.20.1
   resolution: "@testing-library/dom@npm:8.20.1"
   dependencies:
@@ -9839,23 +9839,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@testing-library/react@npm:12.1.5":
-  version: 12.1.5
-  resolution: "@testing-library/react@npm:12.1.5"
-  dependencies:
-    "@babel/runtime": ^7.12.5
-    "@testing-library/dom": ^8.0.0
-    "@types/react-dom": <18.0.0
-  peerDependencies:
-    react: <18.0.0
-    react-dom: <18.0.0
-  checksum: 4abd0490405e709a7df584a0db604e508a4612398bb1326e8fa32dd9393b15badc826dcf6d2f7525437886d507871f719f127b9860ed69ddd204d1fa834f576a
-  languageName: node
-  linkType: hard
-
-"@testing-library/react@npm:14.0.0":
-  version: 14.0.0
-  resolution: "@testing-library/react@npm:14.0.0"
+"@testing-library/react@npm:14.1.2":
+  version: 14.1.2
+  resolution: "@testing-library/react@npm:14.1.2"
   dependencies:
     "@babel/runtime": ^7.12.5
     "@testing-library/dom": ^9.0.0
@@ -9863,7 +9849,7 @@ __metadata:
   peerDependencies:
     react: ^18.0.0
     react-dom: ^18.0.0
-  checksum: 4a54c8f56cc4a39b50803205f84f06280bb76521d6d5d4b3b36651d760c7c7752ef142d857d52aaf4fad4848ed7a8be49afc793a5dda105955d2f8bef24901ac
+  checksum: 0269903e53412cf96fddb55c8a97a9987a89c3308d71fa1418fe61c47d275445e7044c5387f57cf39b8cda319a41623dbad2cce7a17016aed3a9e85185aac75a
   languageName: node
   linkType: hard
 
@@ -10452,15 +10438,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react-dom@npm:<18.0.0":
-  version: 17.0.25
-  resolution: "@types/react-dom@npm:17.0.25"
-  dependencies:
-    "@types/react": ^17
-  checksum: d1e582682478e0848c8d54ea3e89d02047bac6d916266b85ce63731b06987575919653ea7159d98fda47ade3362b8c4d5796831549564b83088e7aa9ce8b60ed
-  languageName: node
-  linkType: hard
-
 "@types/react-router-dom@npm:5.3.3":
   version: 5.3.3
   resolution: "@types/react-router-dom@npm:5.3.3"
@@ -10521,17 +10498,6 @@ __metadata:
     "@types/scheduler": "*"
     csstype: ^3.0.2
   checksum: f96700c8b5ef18aac3522eac5d367e0603d9d65e2516746c098b9675a36c216973ae804ff3fb9cb3c6f305f58ec8062b589f54f0cfed64354073760998ccc488
-  languageName: node
-  linkType: hard
-
-"@types/react@npm:^17":
-  version: 17.0.71
-  resolution: "@types/react@npm:17.0.71"
-  dependencies:
-    "@types/prop-types": "*"
-    "@types/scheduler": "*"
-    csstype: ^3.0.2
-  checksum: c72dbebdced882fa39de867b0179ed91259331172458d69250ff30fdb3c61e3d1f3373dacca3771c3de4b19162fd65758179252b17961729213496a016b918d7
   languageName: node
   linkType: hard
 
@@ -19317,7 +19283,7 @@ __metadata:
     "@testing-library/cypress": ^10.0.1
     "@testing-library/dom": 8.20.1
     "@testing-library/jest-dom": ^5.17.0
-    "@testing-library/react": 12.1.5
+    "@testing-library/react": 14.1.2
     "@testing-library/user-event": 13.5.0
     "@types/chai": 4.3.11
     "@types/enzyme": 3.10.18
