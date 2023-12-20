@@ -14,6 +14,8 @@ import { aksjonspunktVurderDatoKode, aksjonspunktkodeVentAnnenPSBSakKode } from 
 import { OverstyrUttakContextProvider } from './context/OverstyrUttakContext';
 import OverstyrUttakForm from './components/overstyrUttakForm/OverstyrUttakForm';
 
+import styles from './MainComponent.css';
+
 interface MainComponentProps {
   containerData: ContainerContract;
 }
@@ -43,7 +45,7 @@ const MainComponent = ({ containerData }: MainComponentProps): JSX.Element => {
 
   return (
     <ContainerContext.Provider value={containerData}>
-      <HStack justify="start">
+      <HStack justify="start" className={styles.overstyringsHeader}>
         <Heading size="small" level="1">
           Uttak
         </Heading>

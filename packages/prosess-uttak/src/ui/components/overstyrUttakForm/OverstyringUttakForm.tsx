@@ -89,8 +89,10 @@ const OverstyringUttakForm: React.FC<OwnProps> = ({
   const handleSubmit = (values: OverstyrUttakFormData) => {
     setLoading(true);
     handleOverstyringAksjonspunkt({
-      periode: {}, // MÅ legge til denne inntill videre, hack, for å komme rundt validering i backen
-      lagreEllerOppdater: [{ erVilkarOk: false, ...formaterOverstyring(values) }],
+      gåVidere: false,
+      erVilkarOk: false,
+      periode: { fom: '', tom: '' }, // MÅ legge til denne inntill videre, hack, for å komme rundt validering i backend
+      lagreEllerOppdater: [{ ...formaterOverstyring(values) }],
       slett: [],
     });
   };
