@@ -1,4 +1,4 @@
-enum Arbeidstype {
+export enum Arbeidstype {
   AT = 'ARBEIDSTAKER',
   FL = 'FRILANSER',
   DP = 'DAGPENGER',

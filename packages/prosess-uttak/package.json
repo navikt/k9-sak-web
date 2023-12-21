@@ -22,23 +22,23 @@
   "author": "NAV IT",
   "license": "MIT",
   "devDependencies": {
-    "@types/jest": "29.5.6",
-    "@types/node": "20.8.9",
-    "@types/react": "18.2.33",
-    "@types/react-dom": "18.2.14"
+    "@types/jest": "29.5.11",
+    "@types/node": "20.10.3",
+    "@types/react": "18.2.42",
+    "@types/react-dom": "18.2.17"
   },
   "dependencies": {
-    "@navikt/ds-css": "5.11.2",
-    "@navikt/ds-react": "5.11.2",
-    "@navikt/ft-form-hooks": "4.2.17",
-    "@navikt/ft-form-validators": "2.1.10",
-    "@navikt/ft-plattform-komponenter": "2.3.14",
+    "@navikt/ds-css": "5.12.0",
+    "@navikt/ds-react": "5.12.0",
+    "@navikt/ft-form-hooks": "4.2.19",
+    "@navikt/ft-form-validators": "2.1.12",
+    "@navikt/ft-plattform-komponenter": "2.3.16",
     "@popperjs/core": "2.11.8",
     "classnames": "2.3.2",
     "cors": "2.8.5",
     "dayjs": "1.11.10",
     "express": "4.18.2",
-    "lodash.throttle": "4.1.1",
+    "lodash": "4.17.21",
     "nav-frontend-alertstriper": "4.0.2",
     "nav-frontend-alertstriper-style": "3.0.2",
     "nav-frontend-chevron": "1.0.30",
@@ -66,7 +66,7 @@
     "react": "18.2.0",
     "react-collapse": "5.1.1",
     "react-dom": "18.2.0",
-    "react-hook-form": "7.48.2",
+    "react-hook-form": "7.49.2",
     "react-popper": "2.3.0"
   }
 }

@@ -198,5 +198,6 @@ const mapStateToPropsFactory = (initialState, { submitCallback }: OpptjeningInfo
 export default connect(mapStateToPropsFactory)(
   behandlingForm({
     form: formName,
+    enableReinitialize: true,
   })(OpptjeningInfoPanel),
 );

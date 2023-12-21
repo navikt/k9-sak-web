@@ -5,13 +5,7 @@ import { injectIntl, WrappedComponentProps } from 'react-intl';
 import { connect } from 'react-redux';
 import { InjectedFormProps } from 'redux-form';
 
-import {
-  behandlingForm,
-  behandlingFormValueSelector,
-  SelectField,
-  TextAreaField,
-  Label,
-} from '@fpsak-frontend/form';
+import { behandlingForm, behandlingFormValueSelector, SelectField, TextAreaField, Label } from '@fpsak-frontend/form';
 import dokumentMalType from '@fpsak-frontend/kodeverk/src/dokumentMalType';
 
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
@@ -27,7 +21,8 @@ import { lagVisningsnavnForMottaker } from '@fpsak-frontend/utils/src/formidling
 import {
   ArbeidsgiverOpplysningerPerId,
   Brevmal,
-  Brevmaler, EregOrganizationLookupResponse,
+  Brevmaler,
+  EregOrganizationLookupResponse,
   Kodeverk,
   KodeverkMedNavn,
   Mottaker,
@@ -37,11 +32,10 @@ import {
 import InputField from '@fpsak-frontend/form/src/InputField';
 import { useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
 import { Fritekstbrev } from '@k9-sak-web/types/src/formidlingTsType';
-import { Checkbox } from "nav-frontend-skjema";
-import { Normaltekst } from "nav-frontend-typografi";
+import { Checkbox } from 'nav-frontend-skjema';
+import { Normaltekst } from 'nav-frontend-typografi';
 import { MessagesApiKeys, requestMessagesApi, restApiMessagesHooks } from '../data/messagesApi';
 import styles from './messages.module.css';
-import OrgnrInputField from "./OrgnrInputField";
 
 const maxLength4000 = maxLength(4000);
 const maxLength100000 = maxLength(100000);
@@ -50,14 +44,18 @@ const minLength3 = minLength(3);
 
 export type FormValues = {
   overstyrtMottaker: string;
+  // Disse to tredjepartsmottaker props er her berre for å få skjemaet med validering til å fungere. Blir ikkje behandla
+  // på serveren. Infoen frå disse blir sett inn i overstyrtMottaker når sending til tredjepart er aktivert. Så blir
+  // den behandla på serveren.
   tredjepartsmottakerOrgnr?: string;
+  tredjepartsmottakerInfo: EregOrganizationLookupResponse;
   brevmalkode: string;
   fritekst: string;
   fritekstbrev: Fritekstbrev;
 };
 
 export interface BackendApi {
-  getTredjepartsmottakerInfo(orgnr: string): Promise<EregOrganizationLookupResponse>;
+  getBrevMottakerinfoEreg(orgnr: string): Promise<EregOrganizationLookupResponse>;
 }
 
 interface PureOwnProps {
@@ -82,6 +80,7 @@ interface PureOwnProps {
 interface MappedOwnProps {
   overstyrtMottaker?: string;
   tredjepartsmottakerOrgnr?: string;
+  tredjepartsmottakerInfo: EregOrganizationLookupResponse;
   brevmalkode?: string;
   fritekst?: string;
   fritekstbrev?: Fritekstbrev;
@@ -97,26 +96,39 @@ const createValidateRecipient = recipients => value =>
     ? undefined
     : [{ id: 'ValidationMessage.InvalidRecipient' }];
 
-const createTredjepartsmottaker = (orgnr: string): Mottaker => ({
-  id: orgnr,
-  type: "ORGNR",
-})
+const createTredjepartsmottaker = (orgnr: string): Mottaker => {
+  if (orgnr.length < 9) {
+    throw new Error(`Invalid orgnr: ${orgnr}`);
+  }
+  return {
+    id: orgnr,
+    type: 'ORGNR',
+  };
+};
 
 const resolveOverstyrtMottaker = (
   overstyrtMottaker: string,
   recipients: Mottaker[],
   visTredjepartsmottaker: boolean,
-  tredjepartsmottakerOrgnr: string | undefined
+  tredjepartsmottakerOrgnr: string | undefined,
+  eregLookupResponse: EregOrganizationLookupResponse,
 ): Mottaker | undefined => {
   // Viss sending til tredjepartsmottaker er valgt skal tredjepartsmottakerOrgnr brukast (viss gyldig)
-  if (visTredjepartsmottaker && typeof tredjepartsmottakerOrgnr === "string" && tredjepartsmottakerOrgnr.length === 9) {
-    return createTredjepartsmottaker(tredjepartsmottakerOrgnr);
+  if (visTredjepartsmottaker) {
+    if (
+      typeof tredjepartsmottakerOrgnr === 'string' &&
+      tredjepartsmottakerOrgnr.length === 9 &&
+      eregLookupResponse.name !== undefined
+    ) {
+      return createTredjepartsmottaker(tredjepartsmottakerOrgnr);
+    }
+    return undefined; // Tredjepartsmottaker aktivert, men ikkje funne gyldig
   }
   if (recipients.some(recipient => JSON.stringify(recipient) === overstyrtMottaker)) {
-      return JSON.parse(overstyrtMottaker)
+    return JSON.parse(overstyrtMottaker);
   }
-  return recipients?.[0]
-}
+  return recipients?.[0];
+};
 
 /**
  * Messages
@@ -132,6 +144,7 @@ export const MessagesImpl = ({
   sprakKode,
   overstyrtMottaker,
   tredjepartsmottakerOrgnr,
+  tredjepartsmottakerInfo,
   brevmalkode,
   fritekst,
   fritekstforslag,
@@ -141,8 +154,7 @@ export const MessagesImpl = ({
   backendApi,
   ...formProps
 }: PureOwnProps & MappedOwnProps & WrappedComponentProps & InjectedFormProps) => {
-  const [visTredjepartsmottakerInput, setVisTredjepartsmottakerInput] = useState(false)
-  const [tredjepartsmottakerInfo, setTredjepartsmottakerInfo] = useState<EregOrganizationLookupResponse>({})
+  const [visTredjepartsmottakerInput, setVisTredjepartsmottakerInput] = useState(false);
   if (!sprakKode) {
     return null;
   }
@@ -161,46 +173,47 @@ export const MessagesImpl = ({
 
   const tmpls: Brevmal[] = Object.keys(templates).map(key => ({ ...templates[key], kode: key }));
 
+  const resolvedOverstyrtMottaker: Mottaker | undefined = resolveOverstyrtMottaker(
+    overstyrtMottaker,
+    recipients,
+    visTredjepartsmottakerInput,
+    tredjepartsmottakerOrgnr,
+    tredjepartsmottakerInfo,
+  );
+
   const previewMessage = e => {
     e?.preventDefault();
-
-    previewCallback(
-      resolveOverstyrtMottaker(overstyrtMottaker, recipients, visTredjepartsmottakerInput, tredjepartsmottakerOrgnr),
-      brevmalkode,
-      fritekst,
-      fritekstbrev,
-    );
+    previewCallback(resolvedOverstyrtMottaker, brevmalkode, fritekst, fritekstbrev);
   };
 
-
   useEffect(() => {
-    if(!valgtBrevmal?.støtterTredjepartsmottaker) {
-      setVisTredjepartsmottakerInput(false)
+    if (!valgtBrevmal?.støtterTredjepartsmottaker) {
+      setVisTredjepartsmottakerInput(false);
     }
-  }, [valgtBrevmal])
+  }, [valgtBrevmal]);
 
   // Tilbakestill valgt mottaker hvis brukeren skifter mal og valgt mottakere ikke er tilgjengelig på ny mal, eller
   // viss tredjepartsmottaker input er aktivert og orgnr blir endra.
   useEffect(() => {
     formProps.change(
       'overstyrtMottaker',
-      JSON.stringify(resolveOverstyrtMottaker(overstyrtMottaker, recipients, visTredjepartsmottakerInput, tredjepartsmottakerOrgnr))
+      resolvedOverstyrtMottaker ? JSON.stringify(resolvedOverstyrtMottaker) : undefined,
     );
-  }, [overstyrtMottaker, recipients, visTredjepartsmottakerInput, tredjepartsmottakerOrgnr])
+  }, [resolvedOverstyrtMottaker]);
 
   useEffect(() => {
-    if (tredjepartsmottakerOrgnr?.length >= 9) {
+    if (tredjepartsmottakerOrgnr?.length === 9) {
       const loadTredjepartsmottakerNavn = async () => {
-        const tredjepartsmottakerInfoRes = await backendApi.getTredjepartsmottakerInfo(tredjepartsmottakerOrgnr)
-        if(tredjepartsmottakerInfoRes) {
-          setTredjepartsmottakerInfo(tredjepartsmottakerInfoRes)
+        const tredjepartsmottakerInfoRes = await backendApi.getBrevMottakerinfoEreg(tredjepartsmottakerOrgnr);
+        if (tredjepartsmottakerInfoRes) {
+          formProps.change('tredjepartsmottakerInfo', tredjepartsmottakerInfoRes);
         }
-      }
-      loadTredjepartsmottakerNavn()
+      };
+      loadTredjepartsmottakerNavn();
     } else {
-      setTredjepartsmottakerInfo({})
+      formProps.change('tredjepartsmottakerInfo', {});
     }
-  }, [tredjepartsmottakerOrgnr])
+  }, [tredjepartsmottakerOrgnr]);
 
   const { startRequest: hentPreutfylteMaler, data: fritekstforslagTyper } = restApiMessagesHooks.useRestApiRunner<
     { tittel: string; fritekst: string }[]
@@ -212,7 +225,6 @@ export const MessagesImpl = ({
       formProps.change('fritekst', null);
       formProps.change('fritekstbrev.overskrift', null);
       formProps.change('fritekstbrev.brødtekst', null);
-
 
       if (valgtBrevmal?.linker?.length > 0) {
         requestMessagesApi.setLinks(valgtBrevmal.linker);
@@ -230,6 +242,15 @@ export const MessagesImpl = ({
       }
     }
   }, [brevmalkode, fritekstforslag]);
+
+  const orgnrValidator = (value: string | undefined, allVals: FormValues) =>
+    value?.length !== 9
+      ? [{ id: 'ValidationMessage.InvalidOrganisasjonsnummer' }]
+      : allVals.tredjepartsmottakerInfo?.invalidOrgnum
+        ? [{ id: 'Messages.InvalidOrgNum' }]
+        : allVals.tredjepartsmottakerInfo?.notFound
+          ? [{ id: 'Messages.OrgNumNotFound' }]
+          : undefined;
 
   return (
     <form onSubmit={handleSubmit} data-testid="MessagesForm">
@@ -288,41 +309,36 @@ export const MessagesImpl = ({
               />
             </>
           )}
-          {
-            valgtBrevmal?.støtterTredjepartsmottaker ? <>
+          {valgtBrevmal?.støtterTredjepartsmottaker ? (
+            <>
               <VerticalSpacer eightPx />
               <Checkbox
                 checked={visTredjepartsmottakerInput}
-                onChange={() => setVisTredjepartsmottakerInput(!visTredjepartsmottakerInput)} label={intl.formatMessage({id: 'Messages.SendToThirdparty'})}
+                onChange={() => setVisTredjepartsmottakerInput(!visTredjepartsmottakerInput)}
+                label={intl.formatMessage({ id: 'Messages.SendToThirdparty' })}
               />
-            </> : null
-          }
-          {
-            visTredjepartsmottakerInput ? <>
+            </>
+          ) : null}
+          {visTredjepartsmottakerInput ? (
+            <>
               <VerticalSpacer eightPx />
               <div className={styles.tredjepartsmottakerInp}>
                 <div className={styles.orgnumField}>
-                  <OrgnrInputField
+                  <InputField
                     name="tredjepartsmottakerOrgnr"
-                    label={intl.formatMessage({id: 'Messages.OrgNum'})}
-                    error={
-                      tredjepartsmottakerInfo?.invalidOrgnum ?
-                        intl.formatMessage({id: 'Messages.InvalidOrgNum'}) :
-                        tredjepartsmottakerInfo?.notFound ?
-                          intl.formatMessage({id: 'Messages.OrgNumNotFound'}) :
-                          undefined
-                  }
+                    label={intl.formatMessage({ id: 'Messages.OrgNum' })}
+                    parse={(value?: string): string | undefined => value?.replaceAll(/[^0-9]/g, '')}
+                    maxLength={19}
+                    validate={[orgnrValidator]}
                   />
                 </div>
                 <div className={styles.orgnameField}>
-                  <Label input={intl.formatMessage({id: 'Messages.Name'})} readOnly />
-                  <Normaltekst>
-                    {tredjepartsmottakerInfo.name || ""}
-                  </Normaltekst>
+                  <Label input={intl.formatMessage({ id: 'Messages.Name' })} readOnly />
+                  <Normaltekst>{tredjepartsmottakerInfo.name || ''}</Normaltekst>
                 </div>
               </div>
-            </> : null
-          }
+            </>
+          ) : null}
 
           {valgtBrevmal?.støtterFritekst && (
             <>
@@ -394,6 +410,7 @@ const buildInitalValues = (templates?: Brevmaler, isKontrollerRevurderingApOpen?
     overstyrtMottaker,
     fritekst: null,
     fritekstbrev: null,
+    tredjepartsmottakerInfo: {},
   };
 
   return isKontrollerRevurderingApOpen
@@ -422,6 +439,7 @@ const mapStateToPropsFactory = (_initialState, initialOwnProps: PureOwnProps) =>
       state,
       'overstyrtMottaker',
       'tredjepartsmottakerOrgnr',
+      'tredjepartsmottakerInfo',
       'fritekstforslag',
       'brevmalkode',
       'fritekst',

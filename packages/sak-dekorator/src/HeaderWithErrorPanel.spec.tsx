@@ -1,23 +1,23 @@
+import { render, screen } from '@testing-library/react';
 import React from 'react';
-import { shallow } from 'enzyme';
-import { Header } from '@navikt/ft-plattform-komponenter';
-
+import { MemoryRouter } from 'react-router';
 import HeaderWithErrorPanel from './HeaderWithErrorPanel';
 
 describe('<HeaderWithErrorPanel>', () => {
   it('skal sjekke at navn blir vist', () => {
-    const wrapper = shallow(
-      <HeaderWithErrorPanel
-        navAnsattName="Per"
-        removeErrorMessage={() => undefined}
-        setSiteHeight={() => undefined}
-        getPathToFplos={() => undefined}
-        getPathToK9Punsj={() => undefined}
-        ainntektPath="test"
-        aaregPath="test"
-      />,
+    render(
+      <MemoryRouter>
+        <HeaderWithErrorPanel
+          navAnsattName="Per"
+          removeErrorMessage={() => undefined}
+          setSiteHeight={() => undefined}
+          getPathToFplos={() => undefined}
+          getPathToK9Punsj={() => undefined}
+          ainntektPath="test"
+          aaregPath="test"
+        />
+      </MemoryRouter>,
     );
-    const header = wrapper.find(Header);
-    expect(header.prop('title')).toBe('Pleiepenger, omsorgspenger og frisinn');
+    expect(screen.getByText('Pleiepenger, omsorgspenger og frisinn')).toBeInTheDocument();
   });
 });

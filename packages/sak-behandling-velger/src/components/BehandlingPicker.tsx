@@ -54,42 +54,46 @@ const renderListItems = ({
   intl: IntlShape;
   alleSøknadsperioder: UseQueryResult<PerioderMedBehandlingsId, unknown>[];
   activeFilters: string[];
-}): ReactElement[] =>
-  sortBehandlinger(behandlinger)
-    .filter(behandling => {
-      if (activeFilters.length === 0) {
-        return true;
-      }
-      if (activeFilters.includes(automatiskBehandling)) {
-        return erAutomatiskBehandlet(behandling);
-      }
-      return activeFilters.includes(behandling.type.kode);
-    })
-    .map(behandling => (
-      <li data-testid="BehandlingPickerItem" key={behandling.id}>
-        <NavLink
-          onClick={() => setValgtBehandlingId(behandling.id)}
-          className={styles.linkToBehandling}
-          to={getBehandlingLocation(behandling.id)}
-        >
-          <BehandlingPickerItemContent
-            behandlingTypeNavn={getBehandlingNavn(behandling, getKodeverkFn, intl)}
-            behandlingsresultatTypeNavn={
-              behandling.behandlingsresultat
-                ? getKodeverkFn(behandling.behandlingsresultat.type, behandling.type).navn
-                : undefined
-            }
-            behandlingsresultatTypeKode={
-              behandling.behandlingsresultat ? behandling.behandlingsresultat.type.kode : undefined
-            }
-            erAutomatiskRevurdering={erAutomatiskBehandlet(behandling)}
-            søknadsperioder={alleSøknadsperioder.find(periode => periode.data?.id === behandling.id)?.data?.perioder}
-            erFerdigstilt={!!behandling.avsluttet}
-            erUnntaksløype={behandling.type.kode === behandlingType.UNNTAK}
-          />
-        </NavLink>
-      </li>
-    ));
+}): ReactElement[] => {
+  const sorterteOgFiltrerteBehandlinger = sortBehandlinger(behandlinger).filter(behandling => {
+    if (activeFilters.length === 0) {
+      return true;
+    }
+    if (activeFilters.includes(automatiskBehandling)) {
+      return erAutomatiskBehandlet(behandling);
+    }
+    return activeFilters.includes(behandling.type.kode);
+  });
+
+  return sorterteOgFiltrerteBehandlinger.map((behandling, index) => (
+    <li data-testid="BehandlingPickerItem" key={behandling.id}>
+      <NavLink
+        onClick={() => setValgtBehandlingId(behandling.id)}
+        className={styles.linkToBehandling}
+        to={getBehandlingLocation(behandling.id)}
+      >
+        <BehandlingPickerItemContent
+          behandlingTypeNavn={getBehandlingNavn(behandling, getKodeverkFn, intl)}
+          behandlingsresultatTypeNavn={
+            behandling.behandlingsresultat
+              ? getKodeverkFn(behandling.behandlingsresultat.type, behandling.type).navn
+              : undefined
+          }
+          behandlingsresultatTypeKode={
+            behandling.behandlingsresultat ? behandling.behandlingsresultat.type.kode : undefined
+          }
+          erAutomatiskRevurdering={erAutomatiskBehandlet(behandling)}
+          søknadsperioder={alleSøknadsperioder.find(periode => periode.data?.id === behandling.id)?.data?.perioder}
+          erFerdigstilt={!!behandling.avsluttet}
+          erUnntaksløype={behandling.type.kode === behandlingType.UNNTAK}
+          index={sorterteOgFiltrerteBehandlinger.length - index}
+          opprettet={behandling.opprettet}
+          avsluttet={behandling.avsluttet}
+        />
+      </NavLink>
+    </li>
+  ));
+};
 
 const usePrevious = (value: number): number => {
   const ref = useRef<number>();

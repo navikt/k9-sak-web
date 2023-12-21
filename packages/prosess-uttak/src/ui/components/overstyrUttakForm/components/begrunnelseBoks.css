@@ -1,0 +1,47 @@
+.begrunnelseBoks {
+  background: #f1f1f1;
+  border-radius: 5px;
+  padding: 1.5rem;
+}
+
+.begrunnelseTekst {
+  word-wrap: break-word;
+  border-left: 4px solid #c6c2bf;
+  padding-left: 1rem;
+  margin-top: 0.75rem;
+  margin-left: 0.75rem;
+}
+
+.begrunnelseFooter {
+  margin-top: 0.75rem;
+}
+
+.begrunnelseFooter svg {
+  margin-bottom: -5px;
+}
+
+.begrunnelseFooter span {
+  font-size: 14px;
+  font-weight: 600;
+  margin-left: 0.75rem;
+}
+
+.utbetalingsgrader {
+  display: table;
+  margin-top: 0.25em;
+  margin-bottom: 1.5em;
+}
+
+.utbetalingsgrad {
+  display: table-row;
+}
+
+.utbetalingsgradProsent {
+  display: table-cell;
+  padding: 0.75em 4em 0 0;
+}
+
+.utbetalingsgradNavn {
+  display: table-cell;
+  padding: 0.75em 4em 0 0;
+}
