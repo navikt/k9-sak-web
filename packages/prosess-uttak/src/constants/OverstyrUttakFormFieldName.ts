@@ -11,7 +11,7 @@ export enum OverstyrUttakFormFieldName {
   AKTIVITET_UTBETALINGSGRAD = 'aktivitetUtbetalingsgrad',
   ARBEIDSFORHOLD = 'arbeidsforhold',
   TYPE = 'type',
-  ORGANISASJONSNUMMER = 'organisasjonsnummer',
+  ORGNR = 'orgnr',
   AKTØR_ID = 'aktørId',
   ARBEIDSFORHOLD_ID = 'arbeidsforholdId',
 }

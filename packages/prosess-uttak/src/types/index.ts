@@ -1,4 +1,5 @@
 export * from './Arbeidsforhold';
+export * from './ArbeidsforholdReferanse';
 export * from './ArbeidsgiverOpplysninger';
 export * from './ContainerContract';
 export * from './Endringsstatus';

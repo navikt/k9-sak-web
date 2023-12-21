@@ -24,3 +24,11 @@
   display: inline-block;
   margin-right: var(--a-spacing-2);
 }
+
+.aktiviteterTable {
+  width: auto;
+}
+
+.aktiviteterTable > td {
+  border: none;
+}
