@@ -40,10 +40,10 @@ interface ExtendedWindow {
 
 describe('<MeldingIndex>', () => {
   const meldingBackend = {
-    async getTredjepartsmottakerInfo(orgnr: string) {
-      return {name: `Test Org navn (${orgnr})`}
-    }
-  } satisfies BackendApi
+    async getBrevMottakerinfoEreg(orgnr: string) {
+      return { name: `Test Org navn (${orgnr})` };
+    },
+  } satisfies BackendApi;
 
   const meldingMal: SendMeldingPayload = {
     behandlingId: 1,
@@ -227,17 +227,17 @@ describe('<MeldingIndex>', () => {
     userEvent.selectOptions(await screen.getByLabelText('Mottaker'), JSON.stringify(melding.overstyrtMottaker));
     userEvent.type(await screen.getByLabelText('Fritekst'), melding.fritekst);
 
-    userEvent.click(await screen.getByLabelText('Send til tredjepart'))
+    userEvent.click(await screen.getByLabelText('Send til tredjepart'));
     const tredjepartsMottaker = {
-      type: "ORGNR",
-      id: "974652269",
+      type: 'ORGNR',
+      id: '974652269',
     } satisfies Mottaker;
 
     await act(async () => {
-      const orgnrInput = await screen.getByLabelText("Org.nr")
-      expect(orgnrInput).toBeInTheDocument()
-      userEvent.type(orgnrInput, tredjepartsMottaker.id)
-    })
+      const orgnrInput = await screen.getByLabelText('Org.nr');
+      expect(orgnrInput).toBeInTheDocument();
+      userEvent.type(orgnrInput, tredjepartsMottaker.id);
+    });
 
     await act(async () => {
       // Simuler klikk på Send brev knapp
@@ -246,7 +246,7 @@ describe('<MeldingIndex>', () => {
 
     const reqData = requestApi.getRequestMockData(K9sakApiKeys.SUBMIT_MESSAGE);
     expect(reqData).toHaveLength(1);
-    expect(reqData[0].params).toEqual({ ...meldingMal, ...melding, ...{overstyrtMottaker: tredjepartsMottaker} });
+    expect(reqData[0].params).toEqual({ ...meldingMal, ...melding, ...{ overstyrtMottaker: tredjepartsMottaker } });
   });
 
   it('skal sende melding og ikke sette saken på vent hvis ikke Innhent eller forlenget', async () => {

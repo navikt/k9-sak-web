@@ -5,9 +5,9 @@ import { object, withKnobs } from '@storybook/addon-knobs';
 import MeldingerSakIndex, { MessagesModalSakIndex } from '@k9-sak-web/sak-meldinger';
 import ugunstAarsakTyper from '@fpsak-frontend/kodeverk/src/ugunstAarsakTyper';
 
-import { Brevmaler, EregOrganizationLookupResponse, Kodeverk } from "@k9-sak-web/types";
-import dokumentMalType from "@fpsak-frontend/kodeverk/src/dokumentMalType";
-import { BackendApi } from "@k9-sak-web/sak-meldinger/src/MeldingerSakIndex";
+import { Brevmaler, EregOrganizationLookupResponse, Kodeverk } from '@k9-sak-web/types';
+import dokumentMalType from '@fpsak-frontend/kodeverk/src/dokumentMalType';
+import { BackendApi } from '@k9-sak-web/sak-meldinger/src/MeldingerSakIndex';
 import arbeidsgivere from '../mocks/arbeidsgivere.json';
 import personopplysninger from '../mocks/personopplysninger';
 import mockedBrevmaler from '../mocks/brevmaler';
@@ -31,20 +31,21 @@ interface SendMeldingPanelStoryArgs {
 }
 
 const defaultFakeBackend = {
-  async getTredjepartsmottakerInfo(orgnr: string): Promise<EregOrganizationLookupResponse> {
+  async getBrevMottakerinfoEreg(orgnr: string): Promise<EregOrganizationLookupResponse> {
     if (orgnr.length === 9) {
-      if(Number.isFinite(Number(orgnr))) {
-        if(orgnr === "000000000") { // To test what happens when orgnr is not found
-          return {notFound: true}
+      if (Number.isFinite(Number(orgnr))) {
+        if (orgnr === '000000000') {
+          // To test what happens when orgnr is not found
+          return { notFound: true };
         }
-        return {name: `Fake storybook org (${orgnr})`}
+        return { name: `Fake storybook org (${orgnr})` };
       }
     }
-    return {invalidOrgnum: true}
-  }
-} satisfies BackendApi
+    return { invalidOrgnum: true };
+  },
+} satisfies BackendApi;
 
-const sendMeldingTemplate = ({brevmaler, sprakKode = emptySprakKode}: SendMeldingPanelStoryArgs) => (
+const sendMeldingTemplate = ({ brevmaler, sprakKode = emptySprakKode }: SendMeldingPanelStoryArgs) => (
   <div
     style={{
       width: '600px',
@@ -79,34 +80,33 @@ const sendMeldingTemplate = ({brevmaler, sprakKode = emptySprakKode}: SendMeldin
       backendApi={defaultFakeBackend}
     />
   </div>
-)
+);
 
 /**
  * Eit vanleg tilfelle (pleiepenger sykt barn), med mockdata kopiert frå Q
  */
-export const SendMeldingPanel= () => sendMeldingTemplate({brevmaler: mockedBrevmaler})
+export const SendMeldingPanel = () => sendMeldingTemplate({ brevmaler: mockedBrevmaler });
 
 /**
  * Viser kva som skjer viss ein berre sende inn ein brevmal til panelet
  */
 export const SendMeldingPanelEnMal = () => {
   const enBrevmal: Brevmaler = {
-    [dokumentMalType.INNHENT_DOK]: mockedBrevmaler.INNHEN
-  }
-  return sendMeldingTemplate({brevmaler: enBrevmal})
-}
+    [dokumentMalType.INNHENT_DOK]: mockedBrevmaler.INNHEN,
+  };
+  return sendMeldingTemplate({ brevmaler: enBrevmal });
+};
 
 /**
  * Viser meldingspanel med engelsk språk kode input
  */
-export const SendMeldingPanelEngelsk= () => {
+export const SendMeldingPanelEngelsk = () => {
   const sprakKode: Kodeverk = {
     kode: 'EN',
-    kodeverk: 'Engelsk'
-  }
+    kodeverk: 'Engelsk',
+  };
 
-  return sendMeldingTemplate({brevmaler: mockedBrevmaler, sprakKode})
-}
-
+  return sendMeldingTemplate({ brevmaler: mockedBrevmaler, sprakKode });
+};
 
 export const visMeldingModal = () => <MessagesModalSakIndex showModal closeEvent={action('button-click')} />;

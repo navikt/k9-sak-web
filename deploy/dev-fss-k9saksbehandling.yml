@@ -101,3 +101,5 @@ spec:
       value: "true"
     - name: LOKALE_PAKKER
       value: "true"
+    - name: "OVERSTYRING_UTTAK"
+      value: "true"
