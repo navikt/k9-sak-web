@@ -5,8 +5,8 @@
   "license": "MIT",
   "private": true,
   "dependencies": {
-    "@formatjs/intl-numberformat": "8.9.0",
     "@formatjs/intl-datetimeformat": "6.12.0",
+    "@formatjs/intl-numberformat": "8.9.0",
     "@fpsak-frontend/assets": "1.0.0",
     "@fpsak-frontend/kodeverk": "1.0.0",
     "@fpsak-frontend/prop-types": "1.0.0",
