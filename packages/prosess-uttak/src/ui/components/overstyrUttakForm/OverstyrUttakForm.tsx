@@ -10,7 +10,6 @@ import AktivitetRad from './AktivitetRad';
 
 import styles from './overstyrUttakForm.module.css';
 import { useOverstyrUttak } from '../../context/OverstyrUttakContext';
-import { UttakOverstyring } from '../../../types/UttakOverstyring';
 import { formaterOverstyringTilFormData } from '../../../util/overstyringUtils';
 
 const tableHeaders = (
@@ -25,15 +24,6 @@ const tableHeaders = (
   </Table.Header>
 );
 
-const nyOverstyring: UttakOverstyring = {
-  id: '',
-  navn: '',
-  fraDato: '',
-  tilDato: '',
-  uttaksgrad: 0,
-  begrunnelse: '',
-};
-
 const OverstyrUttakForm: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const { handleOverstyringAksjonspunkt } = React.useContext(ContainerContext);
@@ -44,19 +34,21 @@ const OverstyrUttakForm: React.FC = () => {
     setLoading(true);
     handleOverstyringAksjonspunkt({
       gåVidere: true,
+      erVilkarOk: true,
+      periode: { fom: '', tom: '' },
       lagreEllerOppdater: [],
       slett: [],
-      periode: {},
     });
   };
 
   const handleSlett = (id: string): void => {
     setLoading(true);
     handleOverstyringAksjonspunkt({
+      erVilkarOk: false,
       gåVidere: false,
+      periode: { fom: '', tom: '' },
       lagreEllerOppdater: [],
       slett: [{ id }],
-      periode: {},
     });
   };
 

@@ -8,6 +8,7 @@ import { Uttak } from '@k9-sak-web/prosess-uttak';
 import { useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
 import { findEndpointsForMicrofrontend, httpErrorHandler } from '@fpsak-frontend/utils';
 import { VilkarResultPicker } from '@k9-sak-web/prosess-felles';
+import { OverstyringUttakRequest } from '../types';
 
 interface UttakProps {
   uuid: string;
@@ -54,7 +55,7 @@ export default ({
   const løsAksjonspunktVurderDatoNyRegelUttak = ({ begrunnelse, virkningsdato }) =>
     submitCallback([{ kode: aksjonspunktCodes.VURDER_DATO_NY_REGEL_UTTAK, begrunnelse, virkningsdato }]);
 
-  const handleOverstyringAksjonspunkt = async values => {
+  const handleOverstyringAksjonspunkt = async (values: OverstyringUttakRequest) => {
     lagreOverstyringUttak({
       '@type': aksjonspunktCodes.OVERSTYRING_AV_UTTAK_KODE,
       ...VilkarResultPicker.transformValues(values),

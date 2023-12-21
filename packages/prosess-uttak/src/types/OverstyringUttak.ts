@@ -4,11 +4,12 @@ export type OverstyringUttak = {
     fom: Date;
     tom: Date;
   };
+  saksbehandler: string;
   søkersUttaksgrad: number;
   utbetalingsgrader: {
     arbeidsforhold: {
       type: string;
-      organisasjonsnummer: string | null;
+      orgnr: string | null;
       aktørId: string | null;
       arbeidsforholdId: string | null;
     };

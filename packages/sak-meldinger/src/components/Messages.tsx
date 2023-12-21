@@ -33,7 +33,6 @@ import { connect } from 'react-redux';
 import { InjectedFormProps } from 'redux-form';
 import { MessagesApiKeys, requestMessagesApi, restApiMessagesHooks } from '../data/messagesApi';
 import styles from './messages.module.css';
-import OrgnrInputField from './OrgnrInputField';
 
 const maxLength4000 = maxLength(4000);
 const maxLength100000 = maxLength(100000);
@@ -42,7 +41,11 @@ const minLength3 = minLength(3);
 
 export type FormValues = {
   overstyrtMottaker: string;
+  // Disse to tredjepartsmottaker props er her berre for å få skjemaet med validering til å fungere. Blir ikkje behandla
+  // på serveren. Infoen frå disse blir sett inn i overstyrtMottaker når sending til tredjepart er aktivert. Så blir
+  // den behandla på serveren.
   tredjepartsmottakerOrgnr?: string;
+  tredjepartsmottakerInfo: EregOrganizationLookupResponse;
   brevmalkode: string;
   fritekst: string;
   fritekstbrev: Fritekstbrev;
@@ -74,6 +77,7 @@ interface PureOwnProps {
 interface MappedOwnProps {
   overstyrtMottaker?: string;
   tredjepartsmottakerOrgnr?: string;
+  tredjepartsmottakerInfo: EregOrganizationLookupResponse;
   brevmalkode?: string;
   fritekst?: string;
   fritekstbrev?: Fritekstbrev;
@@ -110,7 +114,7 @@ const resolveOverstyrtMottaker = (
   if (visTredjepartsmottaker) {
     if (
       typeof tredjepartsmottakerOrgnr === 'string' &&
-      tredjepartsmottakerOrgnr.length >= 9 &&
+      tredjepartsmottakerOrgnr.length === 9 &&
       eregLookupResponse.name !== undefined
     ) {
       return createTredjepartsmottaker(tredjepartsmottakerOrgnr);
@@ -137,6 +141,7 @@ export const MessagesImpl = ({
   sprakKode,
   overstyrtMottaker,
   tredjepartsmottakerOrgnr,
+  tredjepartsmottakerInfo,
   brevmalkode,
   fritekst,
   fritekstforslag,
@@ -147,7 +152,6 @@ export const MessagesImpl = ({
   ...formProps
 }: PureOwnProps & MappedOwnProps & WrappedComponentProps & InjectedFormProps) => {
   const [visTredjepartsmottakerInput, setVisTredjepartsmottakerInput] = useState(false);
-  const [tredjepartsmottakerInfo, setTredjepartsmottakerInfo] = useState<EregOrganizationLookupResponse>({});
   if (!sprakKode) {
     return null;
   }
@@ -176,10 +180,7 @@ export const MessagesImpl = ({
 
   const previewMessage = e => {
     e?.preventDefault();
-    if (resolvedOverstyrtMottaker !== undefined) {
-      // Don't want to start preview before valid receiver is resolved.
-      previewCallback(resolvedOverstyrtMottaker, brevmalkode, fritekst, fritekstbrev);
-    }
+    previewCallback(resolvedOverstyrtMottaker, brevmalkode, fritekst, fritekstbrev);
   };
 
   useEffect(() => {
@@ -198,16 +199,16 @@ export const MessagesImpl = ({
   }, [resolvedOverstyrtMottaker]);
 
   useEffect(() => {
-    if (tredjepartsmottakerOrgnr?.length >= 9) {
+    if (tredjepartsmottakerOrgnr?.length === 9) {
       const loadTredjepartsmottakerNavn = async () => {
         const tredjepartsmottakerInfoRes = await backendApi.getBrevMottakerinfoEreg(tredjepartsmottakerOrgnr);
         if (tredjepartsmottakerInfoRes) {
-          setTredjepartsmottakerInfo(tredjepartsmottakerInfoRes);
+          formProps.change('tredjepartsmottakerInfo', tredjepartsmottakerInfoRes);
         }
       };
       loadTredjepartsmottakerNavn();
     } else {
-      setTredjepartsmottakerInfo({});
+      formProps.change('tredjepartsmottakerInfo', {});
     }
   }, [tredjepartsmottakerOrgnr]);
 
@@ -238,6 +239,15 @@ export const MessagesImpl = ({
       }
     }
   }, [brevmalkode, fritekstforslag]);
+
+  const orgnrValidator = (value: string | undefined, allVals: FormValues) =>
+    value?.length !== 9
+      ? [{ id: 'ValidationMessage.InvalidOrganisasjonsnummer' }]
+      : allVals.tredjepartsmottakerInfo?.invalidOrgnum
+        ? [{ id: 'Messages.InvalidOrgNum' }]
+        : allVals.tredjepartsmottakerInfo?.notFound
+          ? [{ id: 'Messages.OrgNumNotFound' }]
+          : undefined;
 
   return (
     <form onSubmit={handleSubmit} data-testid="MessagesForm">
@@ -311,16 +321,12 @@ export const MessagesImpl = ({
               <VerticalSpacer eightPx />
               <div className={styles.tredjepartsmottakerInp}>
                 <div className={styles.orgnumField}>
-                  <OrgnrInputField
+                  <InputField
                     name="tredjepartsmottakerOrgnr"
                     label={intl.formatMessage({ id: 'Messages.OrgNum' })}
-                    error={
-                      tredjepartsmottakerInfo?.invalidOrgnum
-                        ? intl.formatMessage({ id: 'Messages.InvalidOrgNum' })
-                        : tredjepartsmottakerInfo?.notFound
-                          ? intl.formatMessage({ id: 'Messages.OrgNumNotFound' })
-                          : undefined
-                    }
+                    parse={(value?: string): string | undefined => value?.replaceAll(/[^0-9]/g, '')}
+                    maxLength={19}
+                    validate={[orgnrValidator]}
                   />
                 </div>
                 <div className={styles.orgnameField}>
@@ -367,12 +373,7 @@ export const MessagesImpl = ({
           )}
           <VerticalSpacer eightPx />
           <div className={styles.buttonRow}>
-            <Hovedknapp
-              mini
-              spinner={formProps.submitting}
-              disabled={resolvedOverstyrtMottaker === undefined || formProps.submitting}
-              onClick={ariaCheck}
-            >
+            <Hovedknapp mini spinner={formProps.submitting} disabled={formProps.submitting} onClick={ariaCheck}>
               {intl.formatMessage({ id: 'Messages.Submit' })}
             </Hovedknapp>
             {brevmalkode && (
@@ -406,6 +407,7 @@ const buildInitalValues = (templates?: Brevmaler, isKontrollerRevurderingApOpen?
     overstyrtMottaker,
     fritekst: null,
     fritekstbrev: null,
+    tredjepartsmottakerInfo: {},
   };
 
   return isKontrollerRevurderingApOpen
@@ -434,6 +436,7 @@ const mapStateToPropsFactory = (_initialState, initialOwnProps: PureOwnProps) =>
       state,
       'overstyrtMottaker',
       'tredjepartsmottakerOrgnr',
+      'tredjepartsmottakerInfo',
       'fritekstforslag',
       'brevmalkode',
       'fritekst',

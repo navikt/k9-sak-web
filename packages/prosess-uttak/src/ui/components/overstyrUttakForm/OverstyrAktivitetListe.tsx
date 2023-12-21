@@ -6,6 +6,7 @@ import { OverstyrUttakFormFieldName } from '../../../constants';
 
 import styles from './overstyrAktivitetListe.module.css';
 import { OverstyrUttakFormData } from '../../../types';
+import { useOverstyrUttak } from '../../context/OverstyrUttakContext';
 
 type ownProps = {
   fields: FieldArrayWithId<OverstyrUttakFormData, OverstyrUttakFormFieldName.UTBETALINGSGRADER, 'id'>[];
@@ -14,26 +15,7 @@ type ownProps = {
 
 const OverstyrAktivitetListe: React.FC<ownProps> = ({ fields, loading }) => {
   const { register } = useFormContext();
-
-  const utledAtkivitetNavn = (
-    field: FieldArrayWithId<OverstyrUttakFormData, OverstyrUttakFormFieldName.UTBETALINGSGRADER, 'id'>,
-  ): string => {
-    const arbeidsforhold = field[OverstyrUttakFormFieldName.ARBEIDSFORHOLD];
-    if (arbeidsforhold[OverstyrUttakFormFieldName.AKTØR_ID])
-      return `${arbeidsforhold[OverstyrUttakFormFieldName.TYPE]} ${
-        arbeidsforhold[OverstyrUttakFormFieldName.AKTØR_ID]
-      }`;
-    if (arbeidsforhold[OverstyrUttakFormFieldName.ORGANISASJONSNUMMER])
-      return `${arbeidsforhold[OverstyrUttakFormFieldName.TYPE]} ${
-        arbeidsforhold[OverstyrUttakFormFieldName.ORGANISASJONSNUMMER]
-      }`;
-    if (arbeidsforhold[OverstyrUttakFormFieldName.ARBEIDSFORHOLD_ID])
-      return `${arbeidsforhold[OverstyrUttakFormFieldName.TYPE]} ${
-        arbeidsforhold[OverstyrUttakFormFieldName.ARBEIDSFORHOLD_ID]
-      }`;
-
-    return `${arbeidsforhold[OverstyrUttakFormFieldName.TYPE]}`;
-  };
+  const { utledAktivitetNavn } = useOverstyrUttak();
 
   return (
     <>
@@ -41,7 +23,7 @@ const OverstyrAktivitetListe: React.FC<ownProps> = ({ fields, loading }) => {
       <div className={styles.overstyringSkjemaAktiviteter}>
         {fields.map((field, index) => (
           <div key={field.id} className={styles.overstyringSkjemaAktivitet}>
-            <div>{utledAtkivitetNavn(field)}</div>
+            <div>{utledAktivitetNavn(field.arbeidsforhold)}</div>
             <div>
               <TextField
                 {...register(

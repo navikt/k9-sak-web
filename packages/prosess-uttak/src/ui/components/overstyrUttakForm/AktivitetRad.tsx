@@ -33,15 +33,16 @@ const AktivitetRad: React.FC<ownProps> = ({
   return (
     <Table.ExpandableRow
       key={`aktivitet-rad-${index}`}
+      expandOnRowClick
       content={
         <div className={styles.begrunnelseWrapper}>
-          <BegrunnelseBoks begrunnelse={begrunnelse} saksbehandler={undefined} dato={undefined} />
+          <BegrunnelseBoks begrunnelse={begrunnelse} overstyring={overstyring} />
         </div>
       }
     >
       <Table.DataCell>{dayjs(fom).format('DD.MM.YYYY')}</Table.DataCell>
       <Table.DataCell>{dayjs(tom).format('DD.MM.YYYY')}</Table.DataCell>
-      <Table.DataCell>{søkersUttaksgrad}</Table.DataCell>
+      <Table.DataCell>{søkersUttaksgrad} %</Table.DataCell>
       <Table.DataCell>
         <Button
           size="xsmall"
