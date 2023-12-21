@@ -3,7 +3,7 @@ import { OverstyrUttakFormFieldName } from '../constants/OverstyrUttakFormFieldN
 export type OverstyrUttakFormDataUtbetalingsgrad = {
   [OverstyrUttakFormFieldName.ARBEIDSFORHOLD]: {
     [OverstyrUttakFormFieldName.TYPE]: string;
-    [OverstyrUttakFormFieldName.ORGANISASJONSNUMMER]: string;
+    [OverstyrUttakFormFieldName.ORGNR]: string;
     [OverstyrUttakFormFieldName.AKTØR_ID]: string;
     [OverstyrUttakFormFieldName.ARBEIDSFORHOLD_ID]: string;
   };
