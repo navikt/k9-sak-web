@@ -1,4 +1,4 @@
-import calendarImg from '@fpsak-frontend/assets/images/calendar-2.svg?react';
+import calendarImg from '@fpsak-frontend/assets/images/calendar-2.svg';
 import behandlingResultatType from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';

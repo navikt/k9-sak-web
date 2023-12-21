@@ -6,7 +6,7 @@ import { FormattedMessage, WrappedComponentProps, injectIntl } from 'react-intl'
 import { connect } from 'react-redux';
 import { InjectedFormProps, formValueSelector, reduxForm } from 'redux-form';
 
-import advarselIcon from '@fpsak-frontend/assets/images/advarsel.svg?react';
+import advarselIcon from '@fpsak-frontend/assets/images/advarsel.svg';
 import { InputField } from '@fpsak-frontend/form';
 import { Image, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { hasValidSaksnummerOrFodselsnummerFormat } from '@fpsak-frontend/utils';

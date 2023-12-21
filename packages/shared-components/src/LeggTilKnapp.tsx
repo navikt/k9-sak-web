@@ -1,4 +1,4 @@
-import addCircleIcon from '@fpsak-frontend/assets/images/add-circle.svg?react';
+import addCircleIcon from '@fpsak-frontend/assets/images/add-circle.svg';
 import Image from '@fpsak-frontend/shared-components/src/Image';
 import { Flatknapp } from 'nav-frontend-knapper';
 import { Normaltekst } from 'nav-frontend-typografi';

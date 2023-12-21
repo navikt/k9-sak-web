@@ -1,4 +1,4 @@
-import innvilgetImageUrl from '@fpsak-frontend/assets/images/innvilget_valgt.svg?react';
+import innvilgetImageUrl from '@fpsak-frontend/assets/images/innvilget_valgt.svg';
 import { DatepickerField, SelectField, TextAreaField } from '@fpsak-frontend/form';
 import venteArsakType from '@fpsak-frontend/kodeverk/src/venteArsakType';
 import { Image, VerticalSpacer } from '@fpsak-frontend/shared-components';

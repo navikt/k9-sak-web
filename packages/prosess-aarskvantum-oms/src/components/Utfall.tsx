@@ -1,6 +1,6 @@
-import advarsel from '@fpsak-frontend/assets/images/advarsel_ny.svg?react';
-import avslått from '@fpsak-frontend/assets/images/avslaatt_valgt.svg?react';
-import innvilget from '@fpsak-frontend/assets/images/innvilget_valgt.svg?react';
+import advarsel from '@fpsak-frontend/assets/images/advarsel_ny.svg';
+import avslått from '@fpsak-frontend/assets/images/avslaatt_valgt.svg';
+import innvilget from '@fpsak-frontend/assets/images/innvilget_valgt.svg';
 import { Image } from '@fpsak-frontend/shared-components';
 import { UtfallEnum, Utfalltype } from '@k9-sak-web/types';
 import React from 'react';

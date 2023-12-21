@@ -3,8 +3,8 @@ import { Column, Row } from 'nav-frontend-grid';
 import React, { Component, MouseEvent, RefObject } from 'react';
 import { injectIntl, WrappedComponentProps } from 'react-intl';
 
-import urlKvinne from '@fpsak-frontend/assets/images/kvinne.svg?react';
-import urlMann from '@fpsak-frontend/assets/images/mann.svg?react';
+import urlKvinne from '@fpsak-frontend/assets/images/kvinne.svg';
+import urlMann from '@fpsak-frontend/assets/images/mann.svg';
 import navBrukerKjonn from '@fpsak-frontend/kodeverk/src/navBrukerKjonn';
 import { Image } from '@fpsak-frontend/shared-components';
 import { ISO_DATE_FORMAT } from '@fpsak-frontend/utils';

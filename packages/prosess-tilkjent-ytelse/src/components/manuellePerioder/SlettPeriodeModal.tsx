@@ -1,4 +1,4 @@
-import innvilgetImageUrl from '@fpsak-frontend/assets/images/innvilget_valgt.svg?react';
+import innvilgetImageUrl from '@fpsak-frontend/assets/images/innvilget_valgt.svg';
 import { FlexColumn, FlexContainer, FlexRow, Image, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils';
 import moment from 'moment';

@@ -1,4 +1,4 @@
-import xImg from '@fpsak-frontend/assets/images/x.svg?react';
+import xImg from '@fpsak-frontend/assets/images/x.svg';
 import { Image } from '@fpsak-frontend/shared-components';
 import classNames from 'classnames';
 import Chevron from 'nav-frontend-chevron';

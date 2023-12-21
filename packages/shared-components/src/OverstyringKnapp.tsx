@@ -1,8 +1,8 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { WrappedComponentProps, injectIntl } from 'react-intl';
 
-import keyUtgraetImage from '@fpsak-frontend/assets/images/key-1-rotert-utgraet.svg?react';
-import keyImage from '@fpsak-frontend/assets/images/key-1-rotert.svg?react';
+import keyUtgraetImage from '@fpsak-frontend/assets/images/key-1-rotert-utgraet.svg';
+import keyImage from '@fpsak-frontend/assets/images/key-1-rotert.svg';
 
 import Image from './Image';
 

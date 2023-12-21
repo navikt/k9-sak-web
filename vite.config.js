@@ -111,23 +111,23 @@ export default ({ mode }) => {
         include: [/\.jsx$/, /\.tsx?$/],
       }),
       svgr(),
-      viteStaticCopy({
-        targets: [
-          {
-            src: path.resolve(__dirname, './public/sprak/nb_NO.json'),
-            dest: 'sprak/nb_NO.json',
-            overwrite: true,
-            transform: {
-              transformer: content => content,
-              cache: {
-                keys: {
-                  key: '[contenthash]',
-                },
-              },
-            },
-          },
-        ],
-      }),
+      // viteStaticCopy({
+      //   targets: [
+      //     {
+      //       src: path.resolve(__dirname, './public/sprak/nb_NO.json'),
+      //       dest: 'sprak/nb_NO.json',
+      //       overwrite: true,
+      //       transform: {
+      //         transformer: content => content,
+      //         cache: {
+      //           keys: {
+      //             key: '[contenthash]',
+      //           },
+      //         },
+      //       },
+      //     },
+      //   ],
+      // }),
       viteMockServe({
         mockPath: '_mocks',
       }),

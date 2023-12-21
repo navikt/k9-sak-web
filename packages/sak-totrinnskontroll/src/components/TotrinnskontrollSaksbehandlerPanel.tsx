@@ -4,8 +4,8 @@ import React, { ReactNode } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { NavLink } from 'react-router-dom';
 
-import avslattImg from '@fpsak-frontend/assets/images/avslaatt.svg?react';
-import checkImg from '@fpsak-frontend/assets/images/check.svg?react';
+import avslattImg from '@fpsak-frontend/assets/images/avslaatt.svg';
+import checkImg from '@fpsak-frontend/assets/images/check.svg';
 import { Image } from '@fpsak-frontend/shared-components';
 import { decodeHtmlEntity } from '@fpsak-frontend/utils';
 import { KlageVurdering, Kodeverk, KodeverkMedNavn, TotrinnskontrollSkjermlenkeContext } from '@k9-sak-web/types';

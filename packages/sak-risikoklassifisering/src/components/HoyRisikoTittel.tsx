@@ -1,7 +1,7 @@
 import { EkspanderbartpanelBase } from 'nav-frontend-ekspanderbartpanel';
 import React from 'react';
 
-import risikoIkon from '@fpsak-frontend/assets/images/avslaatt_hover.svg?react';
+import risikoIkon from '@fpsak-frontend/assets/images/avslaatt_hover.svg';
 import { Aksjonspunkt, Risikoklassifisering } from '@k9-sak-web/types';
 
 import { VuderFaresignalerAp } from './AvklarFaresignalerForm';

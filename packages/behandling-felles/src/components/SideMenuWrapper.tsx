@@ -2,7 +2,7 @@ import { SideMenu } from '@navikt/ft-plattform-komponenter';
 import React, { ReactNode } from 'react';
 import { injectIntl, WrappedComponentProps } from 'react-intl';
 
-import advarselIkonUrl from '@fpsak-frontend/assets/images/advarsel_ny.svg?react';
+import advarselIkonUrl from '@fpsak-frontend/assets/images/advarsel_ny.svg';
 import { FlexColumn, FlexContainer, FlexRow, Image } from '@fpsak-frontend/shared-components';
 
 import FaktaPanelMenyRad from '../types/faktaPanelMenyRadTsType';

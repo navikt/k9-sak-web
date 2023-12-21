@@ -2,7 +2,7 @@ import { Element, Normaltekst } from 'nav-frontend-typografi';
 import React, { ReactNode } from 'react';
 import { FormattedMessage, injectIntl, WrappedComponentProps } from 'react-intl';
 
-import advarselIkonUrl from '@fpsak-frontend/assets/images/advarsel.svg?react';
+import advarselIkonUrl from '@fpsak-frontend/assets/images/advarsel.svg';
 import { isObject } from '@fpsak-frontend/utils';
 
 import { FlexColumn, FlexContainer, FlexRow } from './flexGrid';

@@ -1,4 +1,4 @@
-import addCircleIcon from '@fpsak-frontend/assets/images/add-circle.svg?react';
+import addCircleIcon from '@fpsak-frontend/assets/images/add-circle.svg';
 import NavFieldGroup from '@fpsak-frontend/form/src/NavFieldGroup';
 import { Column, Row } from 'nav-frontend-grid';
 import { Undertekst } from 'nav-frontend-typografi';

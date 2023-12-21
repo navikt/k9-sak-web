@@ -1,7 +1,7 @@
 import Panel from 'nav-frontend-paneler';
 import React from 'react';
 
-import innvilgetIkonUrl from '@fpsak-frontend/assets/images/innvilget.svg?react';
+import innvilgetIkonUrl from '@fpsak-frontend/assets/images/innvilget.svg';
 
 import TittelMedDivider from './TittelMedDivider';
 

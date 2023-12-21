@@ -1,8 +1,8 @@
-import arrowLeftPurpleImageUrl from '@fpsak-frontend/assets/images/arrow_left_purple.svg?react';
-import eksternLinkImageUrl from '@fpsak-frontend/assets/images/ekstern_link_pil_boks.svg?react';
-import internDokumentImageUrl from '@fpsak-frontend/assets/images/intern_dokument.svg?react';
-import mottaDokumentImageUrl from '@fpsak-frontend/assets/images/motta_dokument.svg?react';
-import sendDokumentImageUrl from '@fpsak-frontend/assets/images/send_dokument.svg?react';
+import arrowLeftPurpleImageUrl from '@fpsak-frontend/assets/images/arrow_left_purple.svg';
+import eksternLinkImageUrl from '@fpsak-frontend/assets/images/ekstern_link_pil_boks.svg';
+import internDokumentImageUrl from '@fpsak-frontend/assets/images/intern_dokument.svg';
+import mottaDokumentImageUrl from '@fpsak-frontend/assets/images/motta_dokument.svg';
+import sendDokumentImageUrl from '@fpsak-frontend/assets/images/send_dokument.svg';
 import kommunikasjonsretning from '@fpsak-frontend/kodeverk/src/kommunikasjonsretning';
 import { DateTimeLabel, Image, Table, TableColumn, TableRow, Tooltip } from '@fpsak-frontend/shared-components';
 import { Dokument, FagsakPerson } from '@k9-sak-web/types';

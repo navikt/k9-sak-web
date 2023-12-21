@@ -1,7 +1,7 @@
 import Panel from 'nav-frontend-paneler';
 import React from 'react';
 
-import manglendeKlassifiseringIkon from '@fpsak-frontend/assets/images/behandle_disable.svg?react';
+import manglendeKlassifiseringIkon from '@fpsak-frontend/assets/images/behandle_disable.svg';
 
 import TittelMedDivider from './TittelMedDivider';
 

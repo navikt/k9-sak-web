@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import { InjectedFormProps } from 'redux-form';
 import { createSelector } from 'reselect';
 
-import behandleImageURL from '@fpsak-frontend/assets/images/advarsel.svg?react';
+import behandleImageURL from '@fpsak-frontend/assets/images/advarsel.svg';
 import {
   behandlingForm,
   hasBehandlingFormErrorsOfType,

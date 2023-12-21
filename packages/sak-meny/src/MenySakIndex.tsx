@@ -4,8 +4,8 @@ import { Popover, BoxedListWithSelection } from '@navikt/ft-plattform-komponente
 import { Knapp } from 'nav-frontend-knapper';
 
 import { Image } from '@fpsak-frontend/shared-components';
-import openImage from '@fpsak-frontend/assets/images/pil_opp.svg?react';
-import closedImage from '@fpsak-frontend/assets/images/pil_ned.svg?react';
+import openImage from '@fpsak-frontend/assets/images/pil_opp.svg';
+import closedImage from '@fpsak-frontend/assets/images/pil_ned.svg';
 
 import MenyData from './MenyData';
 

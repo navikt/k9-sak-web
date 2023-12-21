@@ -1,4 +1,4 @@
-import addCircleIcon from '@fpsak-frontend/assets/images/add-circle.svg?react';
+import addCircleIcon from '@fpsak-frontend/assets/images/add-circle.svg';
 import { InputField, SelectField } from '@fpsak-frontend/form';
 import inntektskategorier from '@fpsak-frontend/kodeverk/src/inntektskategorier';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';

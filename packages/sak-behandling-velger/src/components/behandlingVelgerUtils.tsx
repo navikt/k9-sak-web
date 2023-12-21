@@ -1,6 +1,6 @@
-import advarselImg from '@fpsak-frontend/assets/images/advarsel-circle.svg?react';
-import avslaattImg from '@fpsak-frontend/assets/images/avslaatt_valgt.svg?react';
-import innvilgetImg from '@fpsak-frontend/assets/images/innvilget_valgt.svg?react';
+import advarselImg from '@fpsak-frontend/assets/images/advarsel-circle.svg';
+import avslaattImg from '@fpsak-frontend/assets/images/avslaatt_valgt.svg';
+import innvilgetImg from '@fpsak-frontend/assets/images/innvilget_valgt.svg';
 import behandlingResultatType from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
 import { DateLabel, Image } from '@fpsak-frontend/shared-components';
 import { BehandlingAppKontekst, Periode } from '@k9-sak-web/types';

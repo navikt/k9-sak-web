@@ -1,3 +1,4 @@
+/// <reference types="vite-plugin-svgr/client" />
 /* eslint-disable @typescript-eslint/no-var-requires */
 import { RestApiErrorProvider, RestApiProvider } from '@k9-sak-web/rest-api-hooks';
 import { Integrations, init } from '@sentry/browser';
