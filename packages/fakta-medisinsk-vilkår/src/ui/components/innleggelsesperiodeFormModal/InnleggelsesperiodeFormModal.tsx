@@ -2,7 +2,7 @@ import { Alert, Button, Label, Modal } from '@navikt/ds-react';
 import { Box, Form, Margin } from '@navikt/ft-plattform-komponenter';
 import { PeriodpickerListRHF } from '@fpsak-frontend/form';
 import { Period } from '@fpsak-frontend/utils';
-import React from 'react';
+import React, { useRef } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { InnleggelsesperiodeDryRunResponse } from '../../../api/api';
 import AddButton from '../add-button/AddButton';
@@ -40,6 +40,7 @@ const InnleggelsesperiodeFormModal = ({
       })),
     },
   });
+  const modalRef = useRef<HTMLDialogElement>()
 
   const {
     formState: { isDirty },
@@ -55,17 +56,19 @@ const InnleggelsesperiodeFormModal = ({
   };
 
   const handleCloseModal = () => {
-    // eslint-disable-next-line no-alert
-    if ((isDirty && window.confirm('Du vil miste alle endringer du har gjort')) || !isDirty) {
-      setModalIsOpen(false);
-      setShowWarningMessage(false);
-    }
+    setModalIsOpen(false);
+    setShowWarningMessage(false);
   };
+
+  // eslint-disable-next-line no-alert
+  const handleBeforeCloseModal = () => isDirty && window.confirm('Du vil miste alle endringer du har gjort')
 
   return (
     <Modal
+      ref={modalRef}
       open
-      onBeforeClose={handleCloseModal}
+      onClose={handleCloseModal}
+      onBeforeClose={handleBeforeCloseModal}
       header={{ heading: 'Innleggelsesperioder', closeButton: true }}
       className={styles.innleggelsesperiodeFormModal}
     >
@@ -169,10 +172,11 @@ const InnleggelsesperiodeFormModal = ({
                   Bekreft
                 </Button>
                 <Button
+                  type="button"
                   size="small"
                   style={{ marginLeft: '1rem' }}
                   variant="secondary"
-                  onClick={handleCloseModal}
+                  onClick={() => modalRef.current?.close()}
                   disabled={isLoading}
                 >
                   Avbryt

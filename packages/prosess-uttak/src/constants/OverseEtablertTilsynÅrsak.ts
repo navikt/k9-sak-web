@@ -1,4 +1,4 @@
-enum OverseEtablertTilsynÅrsak {
+export enum OverseEtablertTilsynÅrsak {
   FOR_LAVT = 'FOR_LAVT',
   NATTEVÅK = 'NATTEVÅK',
   BEREDSKAP = 'BEREDSKAP',

@@ -1,4 +1,4 @@
-enum Utfall {
+export enum Utfall {
   OPPFYLT = 'OPPFYLT',
   IKKE_OPPFYLT = 'IKKE_OPPFYLT',
 }

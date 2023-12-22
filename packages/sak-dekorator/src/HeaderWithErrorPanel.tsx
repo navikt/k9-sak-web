@@ -3,6 +3,7 @@ import Endringslogg from '@navikt/familie-endringslogg';
 import { BoxedListWithLinks, Header, Popover, SystemButton, UserPanel } from '@navikt/ft-plattform-komponenter';
 import React, { RefObject, useCallback, useEffect, useRef, useState } from 'react';
 import { RawIntlProvider, createIntl, createIntlCache } from 'react-intl';
+import { useLocation } from 'react-router';
 import messages from '../i18n/nb_NO.json';
 import ErrorMessagePanel from './ErrorMessagePanel';
 import Feilmelding from './feilmeldingTsType';
@@ -90,6 +91,7 @@ const HeaderWithErrorPanel = ({
 }: OwnProps) => {
   const [erLenkepanelApent, setLenkePanelApent] = useState(false);
   const wrapperRef = useOutsideClickEvent(erLenkepanelApent, setLenkePanelApent);
+  const location = useLocation();
 
   const fixedHeaderRef = useRef<any>();
   useEffect(() => {
@@ -149,6 +151,8 @@ const HeaderWithErrorPanel = ({
     [erLenkepanelApent],
   );
 
+  const skalViseEndringslogg = !location.pathname.includes('/close') && !!navBrukernavn;
+
   return (
     <div
       ref={fixedHeaderRef}
@@ -165,7 +169,7 @@ const HeaderWithErrorPanel = ({
             https://github.com/navikt/familie-endringslogg
             For å nå backend lokalt må man være tilkoblet naisdevice og kjøre opp k9-sak-web på port 8000 pga CORS
             */}
-            {navBrukernavn && (
+            {skalViseEndringslogg && (
               <div className={styles['endringslogg-container']}>
                 <Endringslogg
                   userId={navBrukernavn}

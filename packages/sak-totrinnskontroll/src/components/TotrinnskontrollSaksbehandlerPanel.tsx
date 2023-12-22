@@ -58,7 +58,7 @@ const TotrinnskontrollSaksbehandlerPanel = ({
               onClick={() => window.scroll(0, 0)}
               className={styles.lenke}
             >
-              {skjermlenkeTypeKodeverk.navn}
+              {skjermlenkeTypeKodeverk?.navn}
             </NavLink>
             {aksjonspunkter.map(aksjonspunkt => {
               const aksjonspunktTexts = getAksjonspunkttekst(

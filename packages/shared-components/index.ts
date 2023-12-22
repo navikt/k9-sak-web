@@ -38,3 +38,4 @@ export { default as AndreSakerPåSøkerStripe } from './src/andreSakerPaSokerStr
 export { default as useFeatureToggles } from './src/hooks/useFeatureToggles';
 export { default as NestedIntlProvider } from './src/NestedIntlProvider';
 export { default as ÅpneSakINyttVinduKnapp } from './src/apneSakINyttVinduKnapp/ÅpneSakINyttVinduKnapp';
+export * from './src/hooks/useSaksbehandlerOppslag';
