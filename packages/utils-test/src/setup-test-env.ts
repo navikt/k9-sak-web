@@ -6,7 +6,7 @@ import ShallowWrapper from 'enzyme/ShallowWrapper';
 import { switchOnTestMode } from '@k9-sak-web/rest-api';
 import { TextEncoder, TextDecoder } from 'util';
 import '@testing-library/jest-dom';
-import { toHaveNoViolations } from 'jest-axe';
+import 'vitest-axe/extend-expect';
 
 configureEnzyme({ adapter: new Adapter() });
 
@@ -14,4 +14,3 @@ configure(ShallowWrapper);
 
 switchOnTestMode();
 Object.assign(global, { TextDecoder, TextEncoder });
-expect.extend(toHaveNoViolations);

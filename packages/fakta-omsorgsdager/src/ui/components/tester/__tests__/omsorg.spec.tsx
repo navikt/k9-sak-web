@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
-import { axe } from 'jest-axe';
+import { axe } from 'vitest-axe';
 import Omsorg from '../../omsorg/Omsorg';
 import FormStateTilTest from '../dataTilTest/FormStateTilTest';
 

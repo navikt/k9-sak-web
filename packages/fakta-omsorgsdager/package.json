@@ -10,7 +10,7 @@
     "dev": "node webpack/webpack-config.development.js"
   },
   "devDependencies": {
-    "jest-axe": "^8.0.0"
+    "vitest-axe": "^0.1.0"
   },
   "dependencies": {
     "@navikt/ds-css": "5.12.0",
