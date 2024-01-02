@@ -12,7 +12,9 @@ const PinView = ({ render, classname }: Partial<Pin>) => {
     <div
       className={`${styles.pin} ${classname} pin`}
       onMouseOver={() => setShowRender(true)}
+      onFocus={() => setShowRender(true)}
       onMouseLeave={() => setShowRender(false)}
+      onBlur={() => setShowRender(false)}
     >
       {showRender && render && <Tooltip className={styles.tooltip}>{render}</Tooltip>}
     </div>
