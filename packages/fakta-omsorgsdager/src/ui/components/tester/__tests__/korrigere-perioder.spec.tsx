@@ -1,5 +1,5 @@
 import { fireEvent, render, screen } from '@testing-library/react';
-import { axe } from 'vitest-axe';
+import { axe } from 'jest-axe';
 import React from 'react';
 import { KorrigerePerioderProps } from '../../../../types/KorrigerePerioderProps';
 import KorrigerePerioder from '../../korrigere-perioder/KorrigerePerioder';
