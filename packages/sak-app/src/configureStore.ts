@@ -2,9 +2,9 @@ import { applyMiddleware, combineReducers, compose, createStore } from 'redux';
 import { reducer as formReducer } from 'redux-form';
 import { createLogger } from 'redux-logger';
 import thunkMiddleware from 'redux-thunk';
-import { ENVIRONMENT } from './constants';
+import { IS_DEV } from './constants';
 
-const isDevelopment = ENVIRONMENT.DEV;
+const isDevelopment = IS_DEV;
 
 const configureStore = () => {
   const middleware = [thunkMiddleware];

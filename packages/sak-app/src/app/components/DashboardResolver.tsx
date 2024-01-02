@@ -5,11 +5,11 @@ import { WrappedComponentProps, injectIntl } from 'react-intl';
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
 import { useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
 
+import { IS_DEV } from '../../constants';
 import FagsakSearchIndex from '../../fagsakSearch/FagsakSearchIndex';
 import { getPathToFplos } from '../paths';
-import { ENVIRONMENT } from '../../constants';
 
-const isDevelopment = () => ENVIRONMENT.DEV || process.env.NODE_ENV === 'test';
+const isDevelopment = () => IS_DEV || process.env.NODE_ENV === 'test';
 
 /**
  * DashboardResolver

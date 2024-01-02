@@ -21,17 +21,17 @@ import '@formatjs/intl-numberformat/locale-data/nb';
 
 import AppIndex from './app/AppIndex';
 import configureStore from './configureStore';
-import { ENVIRONMENT } from './constants';
+import { IS_DEV, VITE_SENTRY_RELEASE } from './constants';
 
 /* eslint no-undef: "error" */
 // @ts-ignore
-const isDevelopment = ENVIRONMENT.DEV;
+const isDevelopment = IS_DEV;
 const environment = window.location.hostname;
 
 init({
   environment,
   dsn: isDevelopment ? 'http://dev@localhost:9000/1' : 'https://251afca29aa44d738b73f1ff5d78c67f@sentry.gc.nav.no/31',
-  release: ENVIRONMENT.VITE_SENTRY_RELEASE || 'unknown',
+  release: VITE_SENTRY_RELEASE || 'unknown',
   integrations: [new Integrations.Breadcrumbs({ console: false })],
   beforeSend: (event, hint) => {
     const exception = hint.originalException;

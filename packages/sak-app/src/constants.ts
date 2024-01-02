@@ -1,3 +1,3 @@
-const { MODE: ENVIRONMENT } = import.meta.env;
+const { DEV: IS_DEV, VITE_SENTRY_RELEASE } = import.meta.env;
 
-export { ENVIRONMENT };
+export { IS_DEV, VITE_SENTRY_RELEASE };

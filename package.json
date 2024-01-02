@@ -102,6 +102,7 @@
     "@types/enzyme": "3.10.18",
     "@types/history": "5.0.0",
     "@types/jest": "29.5.11",
+    "@types/jest-axe": "^3.5.9",
     "@types/prop-types": "15.7.11",
     "@types/react": "18.2.42",
     "@types/react-collapse": "5.0.4",
