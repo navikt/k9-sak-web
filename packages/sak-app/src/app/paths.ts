@@ -2,6 +2,7 @@ import { Location, Search } from 'history';
 
 import { buildPath, formatQueryString, parseQueryString } from '@fpsak-frontend/utils';
 import { skjermlenkeCodes } from '@k9-sak-web/konstanter';
+import { ENVIRONMENT } from '../constants';
 
 export const DEFAULT_FAKTA = 'default';
 export const DEFAULT_PROSESS_STEG = 'default';
@@ -103,7 +104,7 @@ export const erBehandlingValgt = (location: Location): boolean =>
   location.pathname.includes('behandling') && !location.pathname.endsWith('behandling/');
 
 export const redirectToLogin = () => {
-  if (import.meta.env.DEV) {
+  if (ENVIRONMENT.DEV) {
     window.location.assign(DEV_LOGIN_URL);
   }
   return undefined;

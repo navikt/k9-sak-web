@@ -1,11 +1,11 @@
 import React, { useMemo } from 'react';
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 
-import FraBeslutterSvg from '@fpsak-frontend/assets/images/arrow-return.svg?react';
-import SendMeldingSvg from '@fpsak-frontend/assets/images/email-send-1.svg?react';
-import DokumenterSvg from '@fpsak-frontend/assets/images/folder-big.svg?react';
-import TilBeslutterSvg from '@fpsak-frontend/assets/images/person-favorite-star-2.svg?react';
-import HistorikkSvg from '@fpsak-frontend/assets/images/synchronize-time.svg?react';
+import FraBeslutterSvg from '@fpsak-frontend/assets/images/arrow-return.svg';
+import SendMeldingSvg from '@fpsak-frontend/assets/images/email-send-1.svg';
+import DokumenterSvg from '@fpsak-frontend/assets/images/folder-big.svg';
+import TilBeslutterSvg from '@fpsak-frontend/assets/images/person-favorite-star-2.svg';
+import HistorikkSvg from '@fpsak-frontend/assets/images/synchronize-time.svg';
 import { PencilWritingFillIcon, PencilWritingIcon } from '@navikt/aksel-icons';
 
 import TabMeny from './components/TabMeny';

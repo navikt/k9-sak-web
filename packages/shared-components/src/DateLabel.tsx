@@ -28,11 +28,10 @@ function isValidDate(d) {
 }
 
 const DateLabel = ({ dateString }: OwnProps) => {
-  const date = format(new Date(dateString), 'dd.MM.yyyy');
+  const date = new Date(dateString);
   if (!isValidDate(date)) {
     return null;
   }
-  console.log(zonedTimeToUtc(date, 'Europe/Oslo'));
   const formatedDate = format(zonedTimeToUtc(date, 'Europe/Oslo'), 'dd.MM.yyyy');
   // eslint-disable-next-line react/jsx-no-useless-fragment
   return <>{formatedDate}</>;
