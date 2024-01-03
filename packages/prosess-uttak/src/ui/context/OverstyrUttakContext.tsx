@@ -61,10 +61,18 @@ export const OverstyrUttakContextProvider = ({ children }) => {
   const utledAktivitetNavn = (arbeidsforhold: Arbeidsforhold): string => {
     let identifikator = null;
 
-    if (arbeidsforhold.arbeidsforholdId !== null) identifikator = arbeidsforhold.arbeidsforholdId;
-    if (arbeidsforhold.orgnr !== null) identifikator = arbeidsforhold.orgnr;
-    if (arbeidsforhold.organisasjonsnummer !== null) identifikator = arbeidsforhold.organisasjonsnummer;
-    if (arbeidsforhold.aktørId !== null) identifikator = arbeidsforhold.aktørId;
+    if (arbeidsforhold.arbeidsforholdId !== null && arbeidsforhold.arbeidsforholdId !== undefined) {
+      identifikator = arbeidsforhold.arbeidsforholdId;
+    }
+    if (arbeidsforhold.orgnr !== null && arbeidsforhold.orgnr !== undefined) {
+      identifikator = arbeidsforhold.orgnr;
+    }
+    if (arbeidsforhold.organisasjonsnummer !== null && arbeidsforhold.organisasjonsnummer !== undefined) {
+      identifikator = arbeidsforhold.organisasjonsnummer;
+    }
+    if (arbeidsforhold.aktørId !== null && arbeidsforhold.aktørId !== undefined) {
+      identifikator = arbeidsforhold.aktørId;
+    }
 
     if (arbeidsgiverOversikt && arbeidsgiverOversikt[identifikator]) return arbeidsgiverOversikt[identifikator].navn;
     if (arbeidsforhold.type === 'SN') return arbeidstypeTilVisning.SN;
