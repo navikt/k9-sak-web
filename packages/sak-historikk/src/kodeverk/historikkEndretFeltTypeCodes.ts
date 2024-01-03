@@ -232,12 +232,12 @@ const historikkEndretFeltTypeCodes = {
     kode: 'UTTAK_OVERSTYRT_PERIODE',
     feltId: 'HistorikkEndretFelt.uttakOverstyrtPeriode',
   },
-  UTTAK_OVERSTYRT_SOKERS_UTTAKSGRAD: {
+  UTTAK_OVERSTYRT_SØKERS_UTTAKSGRAD: {
     kode: 'UTTAK_OVERSTYRT_SØKERS_UTTAKSGRAD',
     feltId: 'HistorikkEndretFelt.uttakOverstyrtSokersUttaksgrad',
   },
   UTTAK_OVERSTYRT_UTBETALINGSGRAD: {
-    kode: 'UTTAK_OVERSTYRT_SØKERS_UTTAKSGRAD',
+    kode: 'UTTAK_OVERSTYRT_UTBETALINGSGRAD',
     feltId: 'HistorikkEndretFelt.uttakOverstyrtUtbetalingsgrad',
   },
   UTVIDETRETT: {
