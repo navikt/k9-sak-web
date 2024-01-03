@@ -3,7 +3,7 @@
     "target": "esnext",
     "module": "es2020",
     "moduleResolution": "node",
-    "types": ["node", "jest"],
+    "types": ["node", "vitest/globals"],
     "allowJs": true,
     "noEmit": true,
     "strict": false,
@@ -11,9 +11,8 @@
     "esModuleInterop": true,
     "sourceMap": true,
     "jsx": "react",
-    "typeRoots": ["./node_modules/@types", "./@types"],
     "baseUrl": "packages/",
     "skipLibCheck": true //TODO Fjern denne
   },
-  "include": ["packages/**/*", "@types", "cypress.config.ts"]
+  "include": ["packages/**/*", "@types", "cypress.config.ts", "vite.config.ts", "vitest.config.ts"]
 }

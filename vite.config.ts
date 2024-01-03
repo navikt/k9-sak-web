@@ -1,12 +1,18 @@
 import react from '@vitejs/plugin-react';
-import path from 'path';
-import { defineConfig, loadEnv } from 'vite';
+import { defineConfig, loadEnv, ProxyOptions } from 'vite';
 import { viteMockServe } from 'vite-plugin-mock';
-import { viteStaticCopy } from 'vite-plugin-static-copy';
 import svgr from 'vite-plugin-svgr';
 
+
+type RewritePath = `^/k9/${string}`
+
+interface PathRewriteDefinition {
+  [path: RewritePath]: string;
+}
+
+
 // Convert your Webpack proxy to Vite's style
-const createProxy = (target, pathRewrite) => ({
+const createProxy = (target: string, pathRewrite?: PathRewriteDefinition): string | ProxyOptions => ({
   target,
   changeOrigin: !!target,
   secure: false,
@@ -16,16 +22,18 @@ const createProxy = (target, pathRewrite) => ({
   configure: proxy => {
     proxy.on('proxyRes', (proxyRes, req, res) => {
       if (proxyRes.statusCode === 401) {
+        // @ts-ignore TODO Remove this
+        throw new Error(`TODO check if we can use req.url here, or if originalUrl exists. req.url: ${req.url}, req.originalUrl: ${req.originalUrl}`)
         // eslint-disable-next-line no-param-reassign
-        proxyRes.headers.location = `/k9/sak/resource/login?original=${req.originalUrl}`;
+        proxyRes.headers.location = `/k9/sak/resource/login?original=${req.url}`;
       }
     });
   },
 });
 
-export default ({ mode }) => {
+export default defineConfig(({ mode }) => {
   process.env = { ...process.env, ...loadEnv(mode, process.cwd()) };
-  return defineConfig({
+  return {
     server: {
       port: 9000,
       proxy: {
@@ -50,12 +58,8 @@ export default ({ mode }) => {
           },
         },
         '/k9/oppdrag': createProxy(process.env.APP_URL_K9OPPDRAG || 'http://localhost:8070'),
-        'k9/klage': createProxy(process.env.APP_URL_KLAGE || 'http://localhost:8701'),
-        'k9/tilbake': createProxy(process.env.APP_URL_K9TILBAKE || 'http://localhost:8030'),
-
-        'k9/diagnosekoder/': createProxy(process.env.APP_URL_DIAGNOSEKODER || 'http://localhost:8300', {
-          '^/k9/diagnosekoder/': '/diagnosekoder',
-        }),
+        '/k9/klage': createProxy(process.env.APP_URL_KLAGE || 'http://localhost:8701'),
+        '/k9/tilbake': createProxy(process.env.APP_URL_K9TILBAKE || 'http://localhost:8030'),
 
         '/k9/microfrontend/omsorgsdager': createProxy(
           process.env.OMSORGSDAGER_FRONTEND_URL || 'http://localhost:8088',
@@ -96,7 +100,7 @@ export default ({ mode }) => {
             '^/k9/microfrontend/psb-inntektsmelding': '',
           },
         ),
-        'k9/endringslogg': createProxy(
+        '/k9/endringslogg': createProxy(
           process.env.ENDRINGSLOGG_URL || 'https://familie-endringslogg.intern.dev.nav.no',
           {
             '^/k9/endringslogg': '',
@@ -136,5 +140,5 @@ export default ({ mode }) => {
       // Relative to the root
       outDir: './dist/k9/web',
     },
-  });
-};
+  };
+});

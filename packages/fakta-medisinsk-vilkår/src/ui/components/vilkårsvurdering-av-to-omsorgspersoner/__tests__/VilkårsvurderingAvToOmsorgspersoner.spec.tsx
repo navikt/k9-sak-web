@@ -116,15 +116,15 @@ describe('VilkårsvurderingAvToOmsorgspersoner', () => {
   let onFinishedSpy = null;
 
   beforeAll(() => {
-    httpGetSpy = jest.spyOn(httpUtils, 'get');
-    httpPostSpy = jest.spyOn(httpUtils, 'post');
+    httpGetSpy = vi.spyOn(httpUtils, 'get');
+    httpPostSpy = vi.spyOn(httpUtils, 'post');
 
-    sykdomsstegFerdigStatusSpy = jest.spyOn(sykdomsstegFerdigStatusMock, 'fn');
-    sykdomsstegDokumentUferdigStatusSpy = jest.spyOn(sykdomsstegDokumentUferdigStatusMock, 'fn');
-    sykdomsstegToOmsorgspersonerUferdigStatusSpy = jest.spyOn(sykdomsstegToOmsorgspersonerUferdigStatusMock, 'fn');
+    sykdomsstegFerdigStatusSpy = vi.spyOn(sykdomsstegFerdigStatusMock, 'fn');
+    sykdomsstegDokumentUferdigStatusSpy = vi.spyOn(sykdomsstegDokumentUferdigStatusMock, 'fn');
+    sykdomsstegToOmsorgspersonerUferdigStatusSpy = vi.spyOn(sykdomsstegToOmsorgspersonerUferdigStatusMock, 'fn');
 
-    navigerTilNesteStegSpy = jest.spyOn(navigerTilNesteStegMock, 'fn');
-    onFinishedSpy = jest.spyOn(onFinishedMock, 'fn');
+    navigerTilNesteStegSpy = vi.spyOn(navigerTilNesteStegMock, 'fn');
+    onFinishedSpy = vi.spyOn(onFinishedMock, 'fn');
   });
 
   const mockResolvedGetApiCallOnce = data => {

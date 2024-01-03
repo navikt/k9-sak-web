@@ -1,9 +1,9 @@
 import { render, screen } from '@testing-library/react';
-import { axe } from 'jest-axe';
 import React from 'react';
 import { VilkarKroniskSyktBarnProps } from '../../../../types/VilkarKroniskSyktBarnProps';
 import VilkarKroniskSyktBarn, { AvslagskoderKroniskSyk } from '../../vilkar-kronisk-sykt-barn/VilkarKroniskSyktBarn';
 import FormStateTilTest from '../dataTilTest/FormStateTilTest';
+import { axe } from "vitest-axe";
 
 describe('<VilkarKroniskSyktBarn>', () => {
   test('VilkarKroniskSyktBarn viser åpen aksjonspunkt som forventet', () => {

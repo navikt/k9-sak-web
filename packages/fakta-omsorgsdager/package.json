@@ -9,9 +9,6 @@
   "scripts": {
     "dev": "node webpack/webpack-config.development.js"
   },
-  "devDependencies": {
-    "jest-axe": "^8.0.0"
-  },
   "dependencies": {
     "@navikt/ds-css": "5.12.0",
     "@navikt/ds-react": "5.12.0",

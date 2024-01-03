@@ -80,7 +80,7 @@ describe('StruktureringAvDokumentasjon', () => {
   let httpGetSpy = null;
 
   beforeAll(() => {
-    httpGetSpy = jest.spyOn(httpUtils, 'get');
+    httpGetSpy = vi.spyOn(httpUtils, 'get');
   });
 
   const mockResolvedGetApiCallOnce = data => {
