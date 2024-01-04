@@ -204,7 +204,7 @@
     "workerDirectory": "public"
   },
   "lint-staged": {
-    "packages/**/*.{ts,tsx,js,jsx}": "eslint --fix",
+    "packages/**/*.{ts,tsx,js,jsx}": "eslint --cache --fix",
     "packages/**/*.css": "stylelint --fix",
     "packages/**/*.{ts,tsx,js,jsx,css}": "prettier --write"
   },
