@@ -96,12 +96,10 @@ const createValidateRecipient = recipients => value =>
     ? undefined
     : [{ id: 'ValidationMessage.InvalidRecipient' }];
 
-const createTredjepartsmottaker = (orgnr: string): Mottaker => {
-  return {
+const createTredjepartsmottaker = (orgnr: string): Mottaker => ({
     id: orgnr,
     type: 'ORGNR',
-  };
-};
+  });
 
 const resolveOverstyrtMottaker = (
   overstyrtMottaker: string,
@@ -119,7 +117,8 @@ const resolveOverstyrtMottaker = (
       eregLookupResponse.name !== undefined
     ) {
       return createTredjepartsmottaker(tredjepartsmottakerOrgnr);
-    } else if(
+    }
+    if(
       typeof tredjepartsmottakerOrgnr === 'string' &&
       tredjepartsmottakerOrgnr.length > 0 &&
       forPreview
