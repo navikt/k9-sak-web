@@ -4,28 +4,13 @@
   "private": true,
   "module": "index.ts",
   "scripts": {
-    "test": "jest --passWithNoTests --maxWorkers=2",
-    "test-watch": "jest --watch",
-    "start": "node ./server.js",
-    "build": "webpack --config webpack/webpack-config.production.js",
-    "dev": "node webpack/webpack-config.development.js",
-    "api-mock": "ts-node mock/api-mock.ts",
-    "majorVersion": "node ./majorVersion.js",
-    "lint": "eslint 'src/**/*.{ts,tsx,js,jsx}'",
-    "ts-check": "tsc --pretty --noEmit"
+    "dev": "vite serve"
   },
-  "pre-commit": [
-    "lint",
-    "test"
-  ],
   "keywords": [],
   "author": "NAV IT",
   "license": "MIT",
   "devDependencies": {
-    "@types/jest": "29.5.11",
-    "@types/node": "20.10.3",
-    "@types/react": "18.2.42",
-    "@types/react-dom": "18.2.17"
+    "vite": "^5.0.10"
   },
   "dependencies": {
     "@navikt/ds-css": "5.12.0",

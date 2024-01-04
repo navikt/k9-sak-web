@@ -7,10 +7,11 @@
   "license": "MIT",
   "private": true,
   "scripts": {
-    "dev": "node webpack/webpack-config.development.js"
+    "dev": "vite serve"
   },
   "devDependencies": {
-    "jest-axe": "^8.0.0"
+    "jest-axe": "^8.0.0",
+    "vite": "^5.0.10"
   },
   "dependencies": {
     "@navikt/ds-css": "5.12.0",

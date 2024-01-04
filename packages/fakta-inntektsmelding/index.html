@@ -1,113 +1,21 @@
 <html>
-    <head>
-        <title>Kompletthet</title>
+  <head>
+    <title>Kompletthet</title>
 
-        <style>
-            body {
-                font-family: 'Source Sans Pro', Arial, sans-serif;
-                font-size: 1rem;
-            }
-        </style>
-    </head>
-    <body>
-        <div id="app" style="padding: 2.5rem"></div>
-        <script type="text/javascript">
-            document.addEventListener('DOMContentLoaded', () => {
-                window.renderKompletthetApp('app', {
-                    readOnly: false,
-                    dokumenter: [
-                        { journalpostId: '1111', href: '/foo' },
-                        { journalpostId: '4444', href: '/bar' },
-                    ],
-                    arbeidsforhold: {
-                        896929119: {
-                            identifikator: '896929119',
-                            personIdentifikator: null,
-                            navn: 'SAUEFABRIKK',
-                            fødselsdato: null,
-                            arbeidsforholdreferanser: [
-                                {
-                                    internArbeidsforholdId: 'b28c0e54-0e9d-4af4-bdde-37c4d5cc5b7e',
-                                    eksternArbeidsforholdId: '2',
-                                },
-                                {
-                                    internArbeidsforholdId: 'e0018e43-25a6-4722-844c-7483d7528424',
-                                    eksternArbeidsforholdId: '1',
-                                },
-                            ],
-                        },
-                    },
-                    endpoints: {
-                        kompletthetBeregning: 'http://localhost:8082/mock/kompletthet',
-                    },
-                    httpErrorHandler: () => console.error('An error occured'),
-                    onFinished: (data) => console.log('Aksjonspunkt løst', data),
-                    aksjonspunkter: [
-                        {
-                            aksjonspunktType: {
-                                kode: 'MANU',
-                                kodeverk: 'AKSJONSPUNKT_TYPE',
-                            },
-                            begrunnelse: null,
-                            besluttersBegrunnelse: null,
-                            definisjon: {
-                                skalAvbrytesVedTilbakeføring: false,
-                                kode: '9069',
-                                kodeverk: 'AKSJONSPUNKT_DEF',
-                            },
-                            erAktivt: true,
-                            fristTid: null,
-                            kanLoses: false,
-                            status: {
-                                kode: 'UTFO',
-                                kodeverk: 'AKSJONSPUNKT_STATUS',
-                            },
-                            toTrinnsBehandling: false,
-                            toTrinnsBehandlingGodkjent: null,
-                            vilkarType: null,
-                            vurderPaNyttArsaker: null,
-                            venteårsak: {
-                                kanVelgesIGui: false,
-                                kode: '-',
-                                kodeverk: 'VENT_AARSAK',
-                            },
-                            venteårsakVariant: null,
-                            opprettetAv: 'srvk9sak',
-                        },
-                        {
-                            aksjonspunktType: {
-                                kode: 'MANU',
-                                kodeverk: 'AKSJONSPUNKT_TYPE',
-                            },
-                            begrunnelse: 'wwdwdwwqwdwqwqw',
-                            besluttersBegrunnelse: null,
-                            definisjon: {
-                                skalAvbrytesVedTilbakeføring: false,
-                                kode: '9071',
-                                kodeverk: 'AKSJONSPUNKT_DEF',
-                            },
-                            erAktivt: true,
-                            fristTid: null,
-                            kanLoses: false,
-                            status: {
-                                kode: 'UTFO',
-                                kodeverk: 'AKSJONSPUNKT_STATUS',
-                            },
-                            toTrinnsBehandling: true,
-                            toTrinnsBehandlingGodkjent: null,
-                            vilkarType: null,
-                            vurderPaNyttArsaker: null,
-                            venteårsak: {
-                                kanVelgesIGui: false,
-                                kode: '-',
-                                kodeverk: 'VENT_AARSAK',
-                            },
-                            venteårsakVariant: null,
-                            opprettetAv: 'srvk9sak',
-                        },
-                    ],
-                });
-            });
-        </script>
-    </body>
+    <style>
+      body {
+        font-family: 'Source Sans Pro', Arial, sans-serif;
+        font-size: 1rem;
+      }
+    </style>
+    <script type="module" src="/src/dev/app.ts"></script>
+  </head>
+  <body>
+    <div id="app" style="padding: 2.5rem"></div>
+    <script type="text/javascript">
+      document.addEventListener('DOMContentLoaded', () => {
+        window.renderKompletthetApp('app');
+      });
+    </script>
+  </body>
 </html>

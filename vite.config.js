@@ -5,7 +5,6 @@ import { viteMockServe } from 'vite-plugin-mock';
 import { viteStaticCopy } from 'vite-plugin-static-copy';
 import svgr from 'vite-plugin-svgr';
 
-// Convert your Webpack proxy to Vite's style
 const createProxy = (target, pathRewrite) => ({
   target,
   changeOrigin: !!target,

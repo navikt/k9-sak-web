@@ -28,13 +28,6 @@ const config = {
       impliedStrict: true,
     },
   },
-  settings: {
-    'import/resolver': {
-      webpack: {
-        config: resolve(__dirname, '../webpack/webpack.common.ts'),
-      },
-    },
-  },
   rules: {
     'import/extensions': ['error', 'ignorePackages', { js: 'never', jsx: 'never', ts: 'never', tsx: 'never' }],
     'linebreak-style': OFF,
