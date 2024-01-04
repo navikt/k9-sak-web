@@ -11,7 +11,7 @@
     "@fpsak-frontend/utils": "1.0.0",
     "@k9-sak-web/sak-app": "1.0.0",
     "@k9-sak-web/types": "1.0.0",
-    "@navikt/ft-plattform-komponenter": "2.3.16",
+    "@navikt/ft-plattform-komponenter": "2.3.17",
     "dayjs": "1.11.10",
     "moment": "2.29.4",
     "nav-frontend-etiketter": "3.0.3",

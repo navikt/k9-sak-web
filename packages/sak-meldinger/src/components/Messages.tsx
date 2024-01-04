@@ -94,9 +94,9 @@ const createValidateRecipient = recipients => value =>
     : [{ id: 'ValidationMessage.InvalidRecipient' }];
 
 const createTredjepartsmottaker = (orgnr: string): Mottaker => ({
-    id: orgnr,
-    type: 'ORGNR',
-  });
+  id: orgnr,
+  type: 'ORGNR',
+});
 
 const resolveOverstyrtMottaker = (
   overstyrtMottaker: string,
@@ -115,11 +115,7 @@ const resolveOverstyrtMottaker = (
     ) {
       return createTredjepartsmottaker(tredjepartsmottakerOrgnr);
     }
-    if(
-      typeof tredjepartsmottakerOrgnr === 'string' &&
-      tredjepartsmottakerOrgnr.length > 0 &&
-      forPreview
-    ) {
+    if (typeof tredjepartsmottakerOrgnr === 'string' && tredjepartsmottakerOrgnr.length > 0 && forPreview) {
       // Spesialtilfelle. For forhåndsvisning ønsker vi å sende ufullstendig tredjepartsmottaker orgnr til backend
       // slik at den kan levere tilbake valideringsfeil, sidan vi med redux-form ikkje klarer å trigge frontend
       // validering utanom ved faktisk sending av brevet.
