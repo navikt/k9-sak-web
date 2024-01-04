@@ -50,8 +50,8 @@ const data = {
       },
       knekkpunktTyper: [],
       kildeBehandlingUUID: '123456',
-      annenPart: AnnenPart.MED_ANDRE,
       endringsstatus: 'NY' as Endringsstatus,
+      annenPart: AnnenPart.MED_ANDRE,
     },
     '2021-03-09/2021-03-22': {
       utfall: Utfall.OPPFYLT,
