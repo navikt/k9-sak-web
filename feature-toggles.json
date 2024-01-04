@@ -68,10 +68,6 @@
     "value": "${OVERSTYR_BEREGNING}"
   },
   {
-    "key": "FAKTA_BEREGNING_REDESIGN",
-    "value": "${FAKTA_BEREGNING_REDESIGN}"
-  },
-  {
     "key": "LOKALE_PAKKER",
     "value": "${LOKALE_PAKKER}"
   },
