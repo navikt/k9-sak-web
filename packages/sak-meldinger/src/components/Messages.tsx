@@ -93,15 +93,10 @@ const createValidateRecipient = recipients => value =>
     ? undefined
     : [{ id: 'ValidationMessage.InvalidRecipient' }];
 
-const createTredjepartsmottaker = (orgnr: string): Mottaker => {
-  if (orgnr.length < 9) {
-    throw new Error(`Invalid orgnr: ${orgnr}`);
-  }
-  return {
+const createTredjepartsmottaker = (orgnr: string): Mottaker => ({
     id: orgnr,
     type: 'ORGNR',
-  };
-};
+  });
 
 const resolveOverstyrtMottaker = (
   overstyrtMottaker: string,
@@ -109,6 +104,7 @@ const resolveOverstyrtMottaker = (
   visTredjepartsmottaker: boolean,
   tredjepartsmottakerOrgnr: string | undefined,
   eregLookupResponse: EregOrganizationLookupResponse,
+  forPreview: boolean,
 ): Mottaker | undefined => {
   // Viss sending til tredjepartsmottaker er valgt skal tredjepartsmottakerOrgnr brukast (viss gyldig)
   if (visTredjepartsmottaker) {
@@ -117,6 +113,16 @@ const resolveOverstyrtMottaker = (
       tredjepartsmottakerOrgnr.length === 9 &&
       eregLookupResponse.name !== undefined
     ) {
+      return createTredjepartsmottaker(tredjepartsmottakerOrgnr);
+    }
+    if(
+      typeof tredjepartsmottakerOrgnr === 'string' &&
+      tredjepartsmottakerOrgnr.length > 0 &&
+      forPreview
+    ) {
+      // Spesialtilfelle. For forhåndsvisning ønsker vi å sende ufullstendig tredjepartsmottaker orgnr til backend
+      // slik at den kan levere tilbake valideringsfeil, sidan vi med redux-form ikkje klarer å trigge frontend
+      // validering utanom ved faktisk sending av brevet.
       return createTredjepartsmottaker(tredjepartsmottakerOrgnr);
     }
     return undefined; // Tredjepartsmottaker aktivert, men ikkje funne gyldig
@@ -170,16 +176,16 @@ export const MessagesImpl = ({
 
   const tmpls: Brevmal[] = Object.keys(templates).map(key => ({ ...templates[key], kode: key }));
 
-  const resolvedOverstyrtMottaker: Mottaker | undefined = resolveOverstyrtMottaker(
-    overstyrtMottaker,
-    recipients,
-    visTredjepartsmottakerInput,
-    tredjepartsmottakerOrgnr,
-    tredjepartsmottakerInfo,
-  );
-
   const previewMessage = e => {
     e?.preventDefault();
+    const resolvedOverstyrtMottaker: Mottaker | undefined = resolveOverstyrtMottaker(
+      overstyrtMottaker,
+      recipients,
+      visTredjepartsmottakerInput,
+      tredjepartsmottakerOrgnr,
+      tredjepartsmottakerInfo,
+      true,
+    );
     previewCallback(resolvedOverstyrtMottaker, brevmalkode, fritekst, fritekstbrev);
   };
 
@@ -192,11 +198,19 @@ export const MessagesImpl = ({
   // Tilbakestill valgt mottaker hvis brukeren skifter mal og valgt mottakere ikke er tilgjengelig på ny mal, eller
   // viss tredjepartsmottaker input er aktivert og orgnr blir endra.
   useEffect(() => {
+    const resolvedOverstyrtMottaker: Mottaker | undefined = resolveOverstyrtMottaker(
+      overstyrtMottaker,
+      recipients,
+      visTredjepartsmottakerInput,
+      tredjepartsmottakerOrgnr,
+      tredjepartsmottakerInfo,
+      false,
+    );
     formProps.change(
       'overstyrtMottaker',
       resolvedOverstyrtMottaker ? JSON.stringify(resolvedOverstyrtMottaker) : undefined,
     );
-  }, [resolvedOverstyrtMottaker]);
+  }, [overstyrtMottaker, recipients, visTredjepartsmottakerInput, tredjepartsmottakerOrgnr, tredjepartsmottakerInfo]);
 
   useEffect(() => {
     if (tredjepartsmottakerOrgnr?.length === 9) {
