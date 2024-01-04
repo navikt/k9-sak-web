@@ -13,6 +13,8 @@ const data = {
     rettVedDod: 'http://localhost:8082/mock/rettVedDod',
     omPleietrengende: 'http://localhost:8082/mock/omPleietrengende',
   },
+  httpErrorHandler: undefined,
+  onFinished: undefined,
 };
 
 (window as Partial<ExtendedWindow>).renderOmBarnetApp = async appId => {

@@ -1,3 +1,4 @@
+import Komponenter from '../types/Komponenter';
 import renderers from '../util/renderers';
 import '@navikt/ds-css';
 
@@ -28,8 +29,9 @@ const formState = {
 
 const inputMocks = {
   korrigerePerioder: {
-    visKomponent: 'KorrigerePerioder',
+    visKomponent: 'KorrigerePerioder' as Komponenter.KORRIGERE_PERIODER,
     props: {
+      behandlingsID: '123',
       aksjonspunktLost: false,
       lesemodus: false,
       informasjonTilLesemodus: {
@@ -44,7 +46,7 @@ const inputMocks = {
     },
   },
   vilkarKroniskSyktBarn: {
-    visKomponent: 'VilkarKroniskSyktBarn',
+    visKomponent: 'VilkarKroniskSyktBarn' as Komponenter.VILKAR_KRONISK_SYKT_BARN,
     props: {
       behandlingsID: '123',
       aksjonspunktLost: true,
@@ -69,7 +71,7 @@ const inputMocks = {
     },
   },
   vilkarMidlertidigAlene: {
-    visKomponent: 'VilkarMidlertidigAlene',
+    visKomponent: 'VilkarMidlertidigAlene' as Komponenter.VILKAR_MIDLERTIDIG_ALENE,
     props: {
       behandlingsID: '123',
       aksjonspunktLost: true,
@@ -108,7 +110,7 @@ const inputMocks = {
     },
   },
   omsorg: {
-    visKomponent: 'Omsorg',
+    visKomponent: 'Omsorg' as Komponenter.OMSORG,
     props: {
       behandlingsID: '123',
       fagytelseType: 'OMP_KS',
@@ -132,7 +134,7 @@ const inputMocks = {
     },
   },
   aleneOmOmsorgen: {
-    visKomponent: 'AleneOmOmsorgen',
+    visKomponent: 'AleneOmOmsorgen' as Komponenter.ALENE_OM_OMSORGEN,
     props: {
       behandlingsID: '123',
       aksjonspunktLost: false,

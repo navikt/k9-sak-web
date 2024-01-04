@@ -15500,13 +15500,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-import-resolver-lerna@npm:2.0.0":
-  version: 2.0.0
-  resolution: "eslint-import-resolver-lerna@npm:2.0.0"
-  checksum: 241ae04cdf93a926d33d60966b52832e7ac37fbd64cd229afb0a2e8af944370957250050b2879f34167b737f93da5d7f645b9ec75bb3393eea5aac8632139a15
-  languageName: node
-  linkType: hard
-
 "eslint-import-resolver-node@npm:^0.3.9":
   version: 0.3.9
   resolution: "eslint-import-resolver-node@npm:0.3.9"
@@ -19451,7 +19444,6 @@ __metadata:
     eslint: 8.56.0
     eslint-config-airbnb: 19.0.4
     eslint-config-prettier: 9.1.0
-    eslint-import-resolver-lerna: 2.0.0
     eslint-loader: 4.0.2
     eslint-plugin-cypress: ^2.15.1
     eslint-plugin-import: 2.29.1

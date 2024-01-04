@@ -12,7 +12,12 @@ const data = {
   onFinished: () => console.log('Aksjonspunkt løst'),
   beredskapMåVurderes: true,
   nattevåkMåVurderes: true,
-  saksbehandlere: [],
+  saksbehandlere: { test: 'test' },
+  httpErrorHandler: undefined,
+  lagreBeredskapvurdering: undefined,
+  lagreNattevåkvurdering: undefined,
+  harAksjonspunktForBeredskap: true,
+  harAksjonspunktForNattevåk: true,
 };
 
 (window as any).renderTilsynApp = async appId => {

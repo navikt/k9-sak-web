@@ -2,6 +2,9 @@ import renderers from '../util/renderers';
 import ContainerContract from '../types/ContainerContract';
 import '@navikt/ds-css';
 import '@navikt/ft-plattform-komponenter/dist/style.css';
+import { AnnenPart, Utfall } from '../constants';
+import Årsaker from '../constants/Årsaker';
+import { Endringsstatus } from '../types';
 
 interface ExtendedWindow extends Window {
   renderUttakApp: (id: string, contract: ContainerContract) => void;
@@ -11,7 +14,7 @@ const data = {
   aktivBehandlingUuid: '123456',
   uttaksperioder: {
     '2021-03-01/2021-03-08': {
-      utfall: 'OPPFYLT',
+      utfall: Utfall.OPPFYLT,
       uttaksgrad: 50.0,
       utbetalingsgrader: [
         {
@@ -27,16 +30,16 @@ const data = {
         },
       ],
       søkersTapteArbeidstid: 65.11,
-      årsaker: ['GRADERT_MOT_TILSYN'],
+      årsaker: [Årsaker.GRADERT_MOT_TILSYN],
       inngangsvilkår: {
-        FP_VK_2: 'OPPFYLT',
-        FP_VK_3: 'OPPFYLT',
-        K9_VK_1: 'OPPFYLT',
-        K9_VK_3: 'OPPFYLT',
-        FP_VK_21: 'OPPFYLT',
-        FP_VK_23: 'OPPFYLT',
-        FP_VK_34: 'OPPFYLT',
-        K9_VK_2_a: 'OPPFYLT',
+        FP_VK_2: Utfall.OPPFYLT,
+        FP_VK_3: Utfall.OPPFYLT,
+        K9_VK_1: Utfall.OPPFYLT,
+        K9_VK_3: Utfall.OPPFYLT,
+        FP_VK_21: Utfall.OPPFYLT,
+        FP_VK_23: Utfall.OPPFYLT,
+        FP_VK_34: Utfall.OPPFYLT,
+        K9_VK_2_a: Utfall.OPPFYLT,
       },
       pleiebehov: 100.0,
       graderingMotTilsyn: {
@@ -47,11 +50,11 @@ const data = {
       },
       knekkpunktTyper: [],
       kildeBehandlingUUID: '123456',
-      annenPart: 'MED_ANDRE',
-      endringsstatus: 'NY',
+      annenPart: AnnenPart.MED_ANDRE,
+      endringsstatus: 'NY' as Endringsstatus,
     },
     '2021-03-09/2021-03-22': {
-      utfall: 'OPPFYLT',
+      utfall: Utfall.OPPFYLT,
       uttaksgrad: 65.0,
       utbetalingsgrader: [
         {
@@ -67,16 +70,16 @@ const data = {
         },
       ],
       søkersTapteArbeidstid: 65.11,
-      årsaker: ['AVKORTET_MOT_INNTEKT'],
+      årsaker: [Årsaker.AVKORTET_MOT_INNTEKT],
       inngangsvilkår: {
-        FP_VK_2: 'OPPFYLT',
-        FP_VK_3: 'OPPFYLT',
-        K9_VK_1: 'OPPFYLT',
-        K9_VK_3: 'OPPFYLT',
-        FP_VK_21: 'OPPFYLT',
-        FP_VK_23: 'OPPFYLT',
-        FP_VK_34: 'OPPFYLT',
-        K9_VK_2_a: 'OPPFYLT',
+        FP_VK_2: Utfall.OPPFYLT,
+        FP_VK_3: Utfall.OPPFYLT,
+        K9_VK_1: Utfall.OPPFYLT,
+        K9_VK_3: Utfall.OPPFYLT,
+        FP_VK_21: Utfall.OPPFYLT,
+        FP_VK_23: Utfall.OPPFYLT,
+        FP_VK_34: Utfall.OPPFYLT,
+        K9_VK_2_a: Utfall.OPPFYLT,
       },
       pleiebehov: 100.0,
       graderingMotTilsyn: {
@@ -87,12 +90,12 @@ const data = {
       },
       knekkpunktTyper: ['ANNEN_PARTS_UTTAK'],
       kildeBehandlingUUID: '123456',
-      annenPart: 'ALENE',
-      endringsstatus: 'ENDRET',
+      annenPart: AnnenPart.ALENE,
+      endringsstatus: 'ENDRET' as Endringsstatus,
       utenlandsoppholdÅrsak: 'INGEN',
     },
     '2021-03-23/2021-03-31': {
-      utfall: 'IKKE_OPPFYLT',
+      utfall: Utfall.IKKE_OPPFYLT,
       uttaksgrad: 0.0,
       utbetalingsgrader: [
         {
@@ -108,24 +111,26 @@ const data = {
         },
       ],
       søkersTapteArbeidstid: 65.11,
-      årsaker: ['FOR_LAV_ØNSKET_UTTAKSGRAD', 'INNGANGSVILKÅR_IKKE_OPPFYLT'],
+      årsaker: [Årsaker.FOR_LAV_ØNSKET_UTTAKSGRAD, Årsaker.INNGANGSVILKÅR_IKKE_OPPFYLT],
       inngangsvilkår: {
-        FP_VK_2: 'OPPFYLT',
-        FP_VK_3: 'OPPFYLT',
-        K9_VK_1: 'OPPFYLT',
-        K9_VK_3: 'OPPFYLT',
-        FP_VK_34: 'OPPFYLT',
-        K9_VK_2_a: 'IKKE_OPPFYLT',
+        FP_VK_2: Utfall.OPPFYLT,
+        FP_VK_3: Utfall.OPPFYLT,
+        K9_VK_1: Utfall.OPPFYLT,
+        K9_VK_3: Utfall.OPPFYLT,
+        FP_VK_34: Utfall.OPPFYLT,
+        K9_VK_2_a: Utfall.IKKE_OPPFYLT,
+        FP_VK_21: Utfall.OPPFYLT,
+        FP_VK_23: Utfall.OPPFYLT,
       },
       pleiebehov: 0.0,
       graderingMotTilsyn: null,
       knekkpunktTyper: [],
       kildeBehandlingUUID: '123456',
-      annenPart: 'ALENE',
-      endringsstatus: 'UENDRET',
+      annenPart: AnnenPart.ALENE,
+      endringsstatus: 'UENDRET' as Endringsstatus,
     },
     '2021-04-01/2021-04-14': {
-      utfall: 'IKKE_OPPFYLLT',
+      utfall: Utfall.IKKE_OPPFYLT,
       uttaksgrad: 0.0,
       utbetalingsgrader: [
         {
@@ -141,21 +146,23 @@ const data = {
         },
       ],
       søkersTapteArbeidstid: 65.11,
-      årsaker: ['FOR_MANGE_DAGER_UTENLANDSOPPHOLD'],
+      årsaker: [Årsaker.FOR_MANGE_DAGER_UTENLANDSOPPHOLD],
       inngangsvilkår: {
-        FP_VK_2: 'OPPFYLT',
-        FP_VK_3: 'OPPFYLT',
-        K9_VK_1: 'OPPFYLT',
-        K9_VK_3: 'OPPFYLT',
-        FP_VK_34: 'OPPFYLT',
-        K9_VK_2_a: 'OPPFYLT',
+        FP_VK_2: Utfall.OPPFYLT,
+        FP_VK_3: Utfall.OPPFYLT,
+        K9_VK_1: Utfall.OPPFYLT,
+        K9_VK_3: Utfall.OPPFYLT,
+        FP_VK_34: Utfall.OPPFYLT,
+        K9_VK_2_a: Utfall.OPPFYLT,
+        FP_VK_21: Utfall.OPPFYLT,
+        FP_VK_23: Utfall.OPPFYLT,
       },
       pleiebehov: 0.0,
       graderingMotTilsyn: null,
       knekkpunktTyper: [],
       kildeBehandlingUUID: '123456',
-      annenPart: 'ALENE',
-      endringsstatus: 'UENDRET',
+      annenPart: AnnenPart.ALENE,
+      endringsstatus: 'UENDRET' as Endringsstatus,
       utenlandsoppholdÅrsak: { landkode: 'BGD', årsak: 'INGEN' },
       utenlandsoppholdUtenÅrsak: true,
     },
@@ -185,6 +192,11 @@ const data = {
       kodeverk: 'UTENLANDSOPPHOLD_ÅRSAK',
     },
   ],
+  utsattePerioder: [],
+  erFagytelsetypeLivetsSluttfase: false,
+  løsAksjonspunktVurderDatoNyRegelUttak: undefined,
+  virkningsdatoUttakNyeRegler: '',
+  featureToggles: {},
 };
 
 (window as Partial<ExtendedWindow>).renderUttakApp = async appId => {
