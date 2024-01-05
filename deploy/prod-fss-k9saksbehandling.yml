@@ -98,6 +98,6 @@ spec:
     - name: OVERSTYR_BEREGNING
       value: "false"
     - name: LOKALE_PAKKER
-      value: "false"
+      value: "true"
     - name: "OVERSTYRING_UTTAK"
       value: "false"
