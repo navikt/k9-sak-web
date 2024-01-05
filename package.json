@@ -41,7 +41,7 @@
     "packages/*"
   ],
   "dependencies": {
-    "@babel/runtime": "7.23.6",
+    "@babel/runtime": "7.23.7",
     "@formatjs/intl-datetimeformat": "6.12.0",
     "@formatjs/intl-numberformat": "8.9.0",
     "@hookform/error-message": "^2.0.1",
@@ -73,13 +73,13 @@
     "react-router-dom": "6.20.1"
   },
   "devDependencies": {
-    "@babel/core": "7.23.6",
+    "@babel/core": "7.23.7",
     "@babel/eslint-parser": "7.23.3",
     "@babel/helper-regex": "7.10.5",
-    "@babel/preset-env": "7.23.6",
+    "@babel/preset-env": "7.23.7",
     "@babel/preset-react": "7.23.3",
     "@babel/preset-typescript": "7.23.3",
-    "@babel/register": "7.22.15",
+    "@babel/register": "7.23.7",
     "@cfaester/enzyme-adapter-react-18": "^0.7.1",
     "@commercetools/enzyme-extensions": "5.0.0",
     "@pmmmwh/react-refresh-webpack-plugin": "0.5.11",
