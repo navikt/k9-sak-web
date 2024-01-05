@@ -1,0 +1,13 @@
+{
+  "tasksRunnerOptions": {
+    "default": {
+      "runner": "nx/tasks-runners/default",
+      "options": {
+        "cacheableOperations": [
+          "test:e2e"
+        ]
+      }
+    }
+  },
+  "targetDefaults": {}
+}

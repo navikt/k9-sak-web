@@ -16,6 +16,7 @@
     "test:watch": "jest --watch --colors --silent=false",
     "test:watch:all": "jest --watchAll --colors",
     "test:coverage": "jest --coverage --colors --selectProjects test",
+    "test:e2e": "lerna run test:e2e --stream",
     "ts-check": "tsc  --pretty",
     "lint": "eslint --cache packages --ext .ts,.tsx,.js,.jsx",
     "lint:fix": "eslint --fix --cache packages --ext .ts,.tsx,.js,.jsx",

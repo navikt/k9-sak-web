@@ -7,9 +7,12 @@
   "license": "MIT",
   "private": true,
   "scripts": {
-    "dev": "vite serve"
+    "dev": "vite serve",
+    "cypress:headless": "cypress run",
+    "test:e2e": "start-server-and-test dev http://localhost:5174 cypress:headless"
   },
   "devDependencies": {
+    "start-server-and-test": "^2.0.3",
     "vite": "^5.0.10"
   },
   "dependencies": {
