@@ -10,6 +10,7 @@ module.exports = {
         '\\.(svg)$': '<rootDir>/_mocks/fileMock.js',
         '\\.(less|css)$': 'identity-obj-proxy',
         '^uuid': require.resolve('uuid'),
+        '^(.+\\.svg)\\?react$': '<rootDir>/_mocks/svg.tsx',
       },
       roots: ['<rootDir>/packages/'],
       setupFiles: ['<rootDir>/setup/setup.js'],
