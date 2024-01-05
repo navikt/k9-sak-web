@@ -19,23 +19,26 @@ const behandling = {
   },
 };
 
-const aksjonspunkter = [{
-  definisjon: {
-    kode: aksjonspunktCodes.VURDER_INNSYN,
+const aksjonspunkter = [
+  {
+    definisjon: {
+      kode: aksjonspunktCodes.VURDER_INNSYN,
+    },
+    status: {
+      kode: aksjonspunktStatus.UTFORT,
+    },
+    begrunnelse: 'Dette er utført',
   },
-  status: {
-    kode: aksjonspunktStatus.UTFORT,
+  {
+    definisjon: {
+      kode: aksjonspunktCodes.FORESLA_VEDTAK,
+    },
+    status: {
+      kode: aksjonspunktStatus.OPPRETTET,
+    },
+    begrunnelse: undefined,
   },
-  begrunnelse: 'Dette er utført',
-}, {
-  definisjon: {
-    kode: aksjonspunktCodes.FORESLA_VEDTAK,
-  },
-  status: {
-    kode: aksjonspunktStatus.OPPRETTET,
-  },
-  begrunnelse: undefined,
-}];
+];
 
 export default {
   title: 'prosess/innsyn/prosess-vedtak-innsyn',
@@ -47,19 +50,23 @@ export const visPanelForInnvilgetVedtak = () => (
   <VedtakInnsynProsessIndex
     behandling={behandling}
     innsyn={object('innsyn', {
-      dokumenter: [{
-        journalpostId: '2',
-        dokumentId: '3',
-        tittel: 'Dette er et dokument',
-        tidspunkt: '2017-08-02T00:54:25.455',
-        kommunikasjonsretning: kommunikasjonsretning.INN,
-        fikkInnsyn: true,
-      }],
-      vedtaksdokumentasjon: [{
-        dokumentId: '1',
-        tittel: behandlingType.FORSTEGANGSSOKNAD,
-        opprettetDato: '2019-01-01',
-      }],
+      dokumenter: [
+        {
+          journalpostId: '2',
+          dokumentId: '3',
+          tittel: 'Dette er et dokument',
+          tidspunkt: '2017-08-02T00:54:25.455',
+          kommunikasjonsretning: kommunikasjonsretning.INN,
+          fikkInnsyn: true,
+        },
+      ],
+      vedtaksdokumentasjon: [
+        {
+          dokumentId: '1',
+          tittel: behandlingType.FORSTEGANGSSOKNAD,
+          opprettetDato: '2019-01-01',
+        },
+      ],
       innsynResultatType: {
         kode: innsynResultatType.INNVILGET,
       },
@@ -67,13 +74,15 @@ export const visPanelForInnvilgetVedtak = () => (
     })}
     saksnummer={123434}
     aksjonspunkter={aksjonspunkter}
-    alleDokumenter={[{
-      journalpostId: '2',
-      dokumentId: '3',
-      tittel: 'Dette er et dokument',
-      tidspunkt: '2017-08-02T00:54:25.455',
-      kommunikasjonsretning: kommunikasjonsretning.INN,
-    }]}
+    alleDokumenter={[
+      {
+        journalpostId: '2',
+        dokumentId: '3',
+        tittel: 'Dette er et dokument',
+        tidspunkt: '2017-08-02T00:54:25.455',
+        kommunikasjonsretning: kommunikasjonsretning.INN,
+      },
+    ]}
     submitCallback={action('button-click')}
     previewCallback={action('button-click')}
     readOnly={boolean('readOnly', false)}
@@ -84,19 +93,23 @@ export const visPanelForAvvistVedtak = () => (
   <VedtakInnsynProsessIndex
     behandling={behandling}
     innsyn={object('innsyn', {
-      dokumenter: [{
-        journalpostId: '2',
-        dokumentId: '3',
-        tittel: 'Dette er et dokument',
-        tidspunkt: '2017-08-02T00:54:25.455',
-        kommunikasjonsretning: kommunikasjonsretning.INN,
-        fikkInnsyn: true,
-      }],
-      vedtaksdokumentasjon: [{
-        dokumentId: '1',
-        tittel: behandlingType.FORSTEGANGSSOKNAD,
-        opprettetDato: '2019-01-01',
-      }],
+      dokumenter: [
+        {
+          journalpostId: '2',
+          dokumentId: '3',
+          tittel: 'Dette er et dokument',
+          tidspunkt: '2017-08-02T00:54:25.455',
+          kommunikasjonsretning: kommunikasjonsretning.INN,
+          fikkInnsyn: true,
+        },
+      ],
+      vedtaksdokumentasjon: [
+        {
+          dokumentId: '1',
+          tittel: behandlingType.FORSTEGANGSSOKNAD,
+          opprettetDato: '2019-01-01',
+        },
+      ],
       innsynResultatType: {
         kode: innsynResultatType.AVVIST,
       },
@@ -104,13 +117,15 @@ export const visPanelForAvvistVedtak = () => (
     })}
     saksnummer={123434}
     aksjonspunkter={aksjonspunkter}
-    alleDokumenter={[{
-      journalpostId: '2',
-      dokumentId: '3',
-      tittel: 'Dette er et dokument',
-      tidspunkt: '2017-08-02T00:54:25.455',
-      kommunikasjonsretning: kommunikasjonsretning.INN,
-    }]}
+    alleDokumenter={[
+      {
+        journalpostId: '2',
+        dokumentId: '3',
+        tittel: 'Dette er et dokument',
+        tidspunkt: '2017-08-02T00:54:25.455',
+        kommunikasjonsretning: kommunikasjonsretning.INN,
+      },
+    ]}
     submitCallback={action('button-click')}
     previewCallback={action('button-click')}
     readOnly={boolean('readOnly', false)}

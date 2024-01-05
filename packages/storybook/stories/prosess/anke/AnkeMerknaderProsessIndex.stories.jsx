@@ -5,7 +5,7 @@ import { withKnobs, boolean, object } from '@storybook/addon-knobs';
 import ankeVurdering from '@fpsak-frontend/kodeverk/src/ankeVurdering';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import AnkeProsessIndex from '@fpsak-frontend/prosess-anke';
+import AnkeMerknaderProsessIndex from '@fpsak-frontend/prosess-anke-merknader';
 
 import withReduxProvider from '../../../decorators/withRedux';
 
@@ -14,24 +14,26 @@ const behandling = {
   versjon: 1,
 };
 
-const aksjonspunkter = [{
-  definisjon: {
-    kode: aksjonspunktCodes.MANUELL_VURDERING_AV_ANKE,
+const aksjonspunkter = [
+  {
+    definisjon: {
+      kode: aksjonspunktCodes.MANUELL_VURDERING_AV_ANKE_MERKNADER,
+    },
+    status: {
+      kode: aksjonspunktStatus.OPPRETTET,
+    },
+    begrunnelse: undefined,
   },
-  status: {
-    kode: aksjonspunktStatus.OPPRETTET,
-  },
-  begrunnelse: undefined,
-}];
+];
 
 export default {
-  title: 'prosess/anke/prosess-anke',
-  component: AnkeProsessIndex,
+  title: 'prosess/anke/prosess-anke-merknader',
+  component: AnkeMerknaderProsessIndex,
   decorators: [withKnobs, withReduxProvider],
 };
 
 export const visPanelForResultatVedStadfestYtelsesvedtak = () => (
-  <AnkeProsessIndex
+  <AnkeMerknaderProsessIndex
     behandling={behandling}
     ankeVurdering={object('ankeVurdering', {
       ankeVurderingResultat: {

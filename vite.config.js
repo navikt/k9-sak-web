@@ -115,6 +115,7 @@ export default ({ mode }) => {
     build: {
       // Relative to the root
       outDir: './dist/k9/web',
+      sourcemap: true,
     },
   });
 };

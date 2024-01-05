@@ -51,15 +51,17 @@ export const visÅpentAksjonspunkt = () => (
     behandling={object('behandling', behandling)}
     medlemskap={object('medlemskap', medlemskap)}
     personopplysninger={object('personopplysninger', personopplysninger)}
-    aksjonspunkter={[{
-      definisjon: {
-        kode: aksjonspunktCodes.AVKLAR_PERSONSTATUS,
+    aksjonspunkter={[
+      {
+        definisjon: {
+          kode: aksjonspunktCodes.AVKLAR_PERSONSTATUS,
+        },
+        status: {
+          kode: aksjonspunktStatus.OPPRETTET,
+        },
+        begrunnelse: undefined,
       },
-      status: {
-        kode: aksjonspunktStatus.OPPRETTET,
-      },
-      begrunnelse: undefined,
-    }]}
+    ]}
     alleKodeverk={alleKodeverk}
     submitCallback={action('button-click')}
     isReadOnly={boolean('isReadOnly', false)}
@@ -72,15 +74,17 @@ export const visUtførtAksjonspunkt = () => (
     behandling={object('behandling', behandling)}
     medlemskap={object('medlemskap', medlemskap)}
     personopplysninger={object('personopplysninger', personopplysninger)}
-    aksjonspunkter={[{
-      definisjon: {
-        kode: aksjonspunktCodes.AVKLAR_PERSONSTATUS,
+    aksjonspunkter={[
+      {
+        definisjon: {
+          kode: aksjonspunktCodes.AVKLAR_PERSONSTATUS,
+        },
+        status: {
+          kode: aksjonspunktStatus.UTFORT,
+        },
+        begrunnelse: 'Dette er en begrunnelse',
       },
-      status: {
-        kode: aksjonspunktStatus.UTFORT,
-      },
-      begrunnelse: 'Dette er en begrunnelse',
-    }]}
+    ]}
     alleKodeverk={alleKodeverk}
     submitCallback={action('button-click')}
     isReadOnly

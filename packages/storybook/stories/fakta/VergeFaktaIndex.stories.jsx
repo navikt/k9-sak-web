@@ -15,17 +15,19 @@ const behandling = {
   versjon: 1,
 };
 
-const aksjonspunkter = [{
-  definisjon: {
-    kode: aksjonspunktCodes.AVKLAR_VERGE,
+const aksjonspunkter = [
+  {
+    definisjon: {
+      kode: aksjonspunktCodes.AVKLAR_VERGE,
+    },
+    status: {
+      kode: aksjonspunktStatus.OPPRETTET,
+    },
+    begrunnelse: undefined,
+    kanLoses: true,
+    erAktivt: true,
   },
-  status: {
-    kode: aksjonspunktStatus.OPPRETTET,
-  },
-  begrunnelse: undefined,
-  kanLoses: true,
-  erAktivt: true,
-}];
+];
 
 const verge = {};
 
