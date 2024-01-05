@@ -170,7 +170,6 @@
     "vite": "^5.0.10",
     "vite-plugin-html": "^3.2.1",
     "vite-plugin-mock": "^3.0.1",
-    "vite-plugin-static-copy": "^0.17.1",
     "vitest": "^0.34.6",
     "webpack-merge": "5.10.0"
   },

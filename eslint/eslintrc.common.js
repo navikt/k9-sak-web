@@ -64,6 +64,7 @@ const config = {
       },
     ],
     'import/prefer-default-export': OFF,
+    'import/no-unresolved': ['error', { ignore: ['\\.svg\\?react$'] }],
 
     // note you must disable the base rule as it can report incorrect errors
     'no-nested-ternary': OFF,
