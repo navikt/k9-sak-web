@@ -28,9 +28,6 @@ jobs:
       - name: Installere dependencies
         run: HUSKY=0 yarn install --immutable
 
-      - name: Kjører tester
-        run: yarn test:all --maxWorkers=2 --silent
-
       - name: Cypress run
         uses: cypress-io/github-action@v6
         env:
@@ -46,3 +43,6 @@ jobs:
         with:
           name: cypress-screenshots
           path: packages/**/cypress/screenshots
+
+      - name: Kjører tester
+        run: yarn test:all --maxWorkers=2 --silent
