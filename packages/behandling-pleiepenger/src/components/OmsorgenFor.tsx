@@ -1,9 +1,8 @@
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { findAksjonspunkt, findEndpointsForMicrofrontend, httpErrorHandler } from '@fpsak-frontend/utils';
 import { useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
-import { Aksjonspunkt, BehandlingAppKontekst, FeatureToggles } from '@k9-sak-web/types';
-import { OmsorgenFor } from '@navikt/k9-fe-omsorgen-for';
-import { OmsorgenFor as LokalOmsorgenFor } from '@k9-sak-web/fakta-omsorgen-for';
+import { Aksjonspunkt, BehandlingAppKontekst } from '@k9-sak-web/types';
+import { OmsorgenFor } from '@k9-sak-web/fakta-omsorgen-for';
 import React from 'react';
 
 interface OmsorgenForProps {
@@ -16,7 +15,6 @@ interface OmsorgenForProps {
     omsorgsperioder: any;
   }[]) => void;
   saksbehandlere: { [key: string]: string };
-  featureToggles: FeatureToggles;
 }
 
 export default ({
@@ -25,7 +23,6 @@ export default ({
   aksjonspunkter,
   submitCallback,
   saksbehandlere,
-  featureToggles,
 }: OmsorgenForProps) => {
   const { addErrorMessage } = useRestApiErrorDispatcher();
   const httpErrorHandlerCaller = (status: number, locationHeader?: string) =>
@@ -37,25 +34,6 @@ export default ({
 
   const løsAksjonspunkt = omsorgsperioder =>
     submitCallback([{ kode: omsorgenForAksjonspunktkode, begrunnelse: 'Omsorgen for er behandlet', omsorgsperioder }]);
-
-  if (featureToggles?.LOKALE_PAKKER) {
-    return (
-      <LokalOmsorgenFor
-        data={{
-          httpErrorHandler: httpErrorHandlerCaller,
-          endpoints: findEndpointsForMicrofrontend(links, [
-            {
-              rel: 'omsorgen-for',
-              desiredName: 'omsorgsperioder',
-            },
-          ]),
-          readOnly: readOnly || !harAksjonspunkt,
-          onFinished: løsAksjonspunkt,
-          saksbehandlere: saksbehandlere || {},
-        }}
-      />
-    );
-  }
 
   return (
     <OmsorgenFor
