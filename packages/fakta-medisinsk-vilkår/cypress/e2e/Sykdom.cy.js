@@ -3,8 +3,6 @@ describe('Sykdom', () => {
     cy.visit('/');
   });
   it('skal kunne håndtere dokumentasjon av sykdom', () => {
-    cy.contains('Ja, legeerklæring fra sykehus/spesialisthelsetjenesten').click();
-    cy.findByLabelText(/Hvilken dato er dokumentet datert?/).type('101021');
     cy.contains('Bekreft').click();
   });
   it('skal kunne legge inn innleggelsesperioder', () => {
