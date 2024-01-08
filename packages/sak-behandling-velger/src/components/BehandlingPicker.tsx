@@ -182,7 +182,6 @@ const BehandlingPicker = ({
       ),
     [behandlingerSomSkalVises],
   );
-
   const søknadsperioder = useQueries(
     behandlingerMedPerioderMedÅrsak.map(behandling => ({
       queryKey: ['behandlingId', behandling.id],

@@ -64,7 +64,7 @@ describe('9069 - Mangler inntektsmelding', () => {
 
   test('Kan sende purring med varsel om avslag', async () => {
     // ARRANGE
-    const onClickSpy = jest.fn();
+    const onClickSpy = vi.fn();
     const data = { onFinished: onClickSpy };
     // eslint-disable-next-line react/jsx-props-no-spreading
     render(<Mangler9069 {...data} />);
@@ -96,7 +96,7 @@ describe('9069 - Mangler inntektsmelding', () => {
 
   test('Kan submitte begrunnelse når man har valgt A-inntekt', async () => {
     // ARRANGE
-    const onClickSpy = jest.fn();
+    const onClickSpy = vi.fn();
     const data = { onFinished: onClickSpy };
     // eslint-disable-next-line react/jsx-props-no-spreading
     render(<Mangler9069 {...data} />);

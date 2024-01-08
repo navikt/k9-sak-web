@@ -1,5 +1,5 @@
 import { render, screen } from '@testing-library/react';
-import { axe } from 'jest-axe';
+import { axe } from 'vitest-axe';
 import React from 'react';
 import { VilkarMidlertidigAleneProps } from '../../../../types/VilkarMidlertidigAleneProps';
 import VilkarMidlertidigAlene from '../../vilkar-midlertidig-alene/VilkarMidlertidigAlene';

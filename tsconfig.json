@@ -3,7 +3,7 @@
     "target": "esnext",
     "module": "es2020",
     "moduleResolution": "node",
-    "types": ["node", "jest", "vite/client"],
+    "types": ["node","vite/client", "vitest/globals", "@testing-library/jest-dom"],
     "allowJs": true,
     "noEmit": true,
     "strict": false,
@@ -11,10 +11,10 @@
     "esModuleInterop": true,
     "sourceMap": true,
     "jsx": "react",
-    "typeRoots": ["./node_modules/@types", "./@types"],
+    "typeRoots": ["./node_modules/@types", "./@types", "./node_modules"],
     "baseUrl": "packages/",
     "skipLibCheck": true //TODO Fjern denne
   },
-  "include": ["packages/**/*", "@types", "_mocks"],
+  "include": ["packages/**/*", "@types", "_mocks", "vitest-setup.ts"],
   "exclude": ["packages/**/cypress.config.ts", "packages/**/cypress"]
 }

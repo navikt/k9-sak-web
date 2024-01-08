@@ -12,13 +12,16 @@ import { RestApiErrorProvider } from '@k9-sak-web/rest-api-hooks';
 import { requestApi, K9sakApiKeys } from '../data/k9sakApi';
 import FagsakSearchIndex from './FagsakSearchIndex';
 
-const mockNavigate = jest.fn();
-const MockForm = reduxForm({ form: 'mock', onSubmit: jest.fn() })(({ children }) => <div>{children}</div>);
+const mockNavigate = vi.fn();
+const MockForm = reduxForm({ form: 'mock' })(({ children }) => <div>{children}</div>);
 
-jest.mock('react-router-dom', () => ({
-  ...(jest.requireActual('react-router-dom') as Record<string, unknown>),
-  useNavigate: () => mockNavigate,
-}));
+vi.mock('react-router-dom', async () => {
+  const actual = await vi.importActual<typeof import('react-router-dom')>('react-router-dom');
+  return {
+    ...actual,
+    useNavigate: () => mockNavigate,
+  };
+});
 
 describe('<FagsakSearchIndex>', () => {
   const fagsak: Partial<Fagsak> = {

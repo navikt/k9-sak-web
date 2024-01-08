@@ -2,18 +2,18 @@ import axios from 'axios';
 import { get, post } from '../axiosHttpUtils';
 import * as responseHelpers from '../responseHelpers';
 
-jest.mock('axios');
-const axiosMock = axios as jest.Mocked<typeof axios>;
+vi.mock('axios');
+const axiosMock = axios as vi.Mocked<typeof axios>;
 
 describe('httpUtils', () => {
   const mockedErrorHandler = () => null;
 
   beforeEach(() => {
-    jest.spyOn(console, 'error').mockImplementation(() => null);
+    vi.spyOn(console, 'error').mockImplementation(() => null);
   });
 
   afterEach(() => {
-    jest.resetAllMocks();
+    vi.resetAllMocks();
   });
 
   describe('get', () => {
@@ -37,8 +37,8 @@ describe('httpUtils', () => {
     });
 
     it('should call function triggering the provided httpErrorHandler when required', async () => {
-      const httpErrorHandlerCaller = jest.spyOn(responseHelpers, 'handleErrorExternally');
-      const checkerFn = jest.spyOn(responseHelpers, 'httpErrorShouldBeHandledExternally');
+      const httpErrorHandlerCaller = vi.spyOn(responseHelpers, 'handleErrorExternally');
+      const checkerFn = vi.spyOn(responseHelpers, 'httpErrorShouldBeHandledExternally');
       checkerFn.mockReturnValueOnce(true);
 
       axiosMock.get.mockImplementation(() => Promise.reject(badRequestResponseMock));
@@ -49,8 +49,8 @@ describe('httpUtils', () => {
     });
 
     it('should avoid calling function triggering httpErrorHandler when unneccessary', async () => {
-      const httpErrorHandlerCaller = jest.spyOn(responseHelpers, 'handleErrorExternally');
-      const checkerFn = jest.spyOn(responseHelpers, 'httpErrorShouldBeHandledExternally');
+      const httpErrorHandlerCaller = vi.spyOn(responseHelpers, 'handleErrorExternally');
+      const checkerFn = vi.spyOn(responseHelpers, 'httpErrorShouldBeHandledExternally');
       checkerFn.mockReturnValueOnce(false);
 
       axiosMock.get.mockImplementation(() => Promise.reject(badRequestResponseMock));
@@ -81,8 +81,8 @@ describe('httpUtils', () => {
     });
 
     it('should call function triggering the provided httpErrorHandler when required', async () => {
-      const httpErrorHandlerCaller = jest.spyOn(responseHelpers, 'handleErrorExternally');
-      const checkerFn = jest.spyOn(responseHelpers, 'httpErrorShouldBeHandledExternally');
+      const httpErrorHandlerCaller = vi.spyOn(responseHelpers, 'handleErrorExternally');
+      const checkerFn = vi.spyOn(responseHelpers, 'httpErrorShouldBeHandledExternally');
       checkerFn.mockReturnValueOnce(true);
 
       axiosMock.post.mockImplementation(() => Promise.reject(badRequestResponseMock));
@@ -93,8 +93,8 @@ describe('httpUtils', () => {
     });
 
     it('should avoid calling function triggering httpErrorHandler when unneccessary', async () => {
-      const httpErrorHandlerCaller = jest.spyOn(responseHelpers, 'handleErrorExternally');
-      const checkerFn = jest.spyOn(responseHelpers, 'httpErrorShouldBeHandledExternally');
+      const httpErrorHandlerCaller = vi.spyOn(responseHelpers, 'handleErrorExternally');
+      const checkerFn = vi.spyOn(responseHelpers, 'httpErrorShouldBeHandledExternally');
       checkerFn.mockReturnValueOnce(false);
 
       axiosMock.post.mockImplementation(() => Promise.reject(badRequestResponseMock));

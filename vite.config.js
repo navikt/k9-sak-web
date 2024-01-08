@@ -117,5 +117,23 @@ export default ({ mode }) => {
       outDir: './dist/k9/web',
       sourcemap: true,
     },
+    test: {
+      deps: { interopDefault: true },
+      environment: 'happy-dom',
+      css: {
+        modules: {
+          classNameStrategy: 'non-scoped',
+        },
+      },
+      globals: true,
+      setupFiles: ['./vitest-setup.ts', './packages/utils-test/src/setup-test-env-hooks.ts'],
+      watch: false,
+      testTimeout: 15000,
+      onConsoleLog(log) {
+        return !log.includes(
+          'Download the React DevTools for a better development experience: https://reactjs.org/link/react-devtools',
+        );
+      },
+    }
   });
 };

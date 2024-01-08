@@ -11,7 +11,7 @@ import { requestPleiepengerApi } from '@k9-sak-web/behandling-pleiepenger/src/da
 
 /* beforeAll(() => {
   // Denne trengs for snapshot-testing
-  ReactDOM.createPortal = jest.fn((element) => element);
+  ReactDOM.createPortal = vi.fn((element) => element);
 }); */
 
 afterEach(() => {

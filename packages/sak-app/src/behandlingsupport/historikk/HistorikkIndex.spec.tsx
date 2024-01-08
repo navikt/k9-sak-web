@@ -6,15 +6,18 @@ import HistorikkSakIndex from '@fpsak-frontend/sak-historikk';
 import { requestApi, K9sakApiKeys } from '../../data/k9sakApi';
 import HistorikkIndex from './HistorikkIndex';
 
-jest.mock('react-router-dom', () => ({
-  ...(jest.requireActual('react-router-dom') as Record<string, unknown>),
-  useLocation: () => ({
-    pathname: 'test',
-    search: 'test',
-    state: {},
-    hash: 'test',
-  }),
-}));
+vi.mock('react-router-dom', async () => {
+  const actual = (await vi.importActual('react-router-dom')) as Record<string, unknown>;
+  return {
+    ...actual,
+    useLocation: () => ({
+      pathname: 'test',
+      search: 'test',
+      state: {},
+      hash: 'test',
+    }),
+  };
+});
 
 describe('<HistorikkIndex>', () => {
   it('skal slå sammen og sortere historikk for k9sak, tilbake og klage', () => {

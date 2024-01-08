@@ -12,6 +12,7 @@ const config = {
 
   globals: {
     VERSION: 'off',
+    vi: true,
   },
 
   parser: '@typescript-eslint/parser',
