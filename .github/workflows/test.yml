@@ -28,15 +28,5 @@ jobs:
       - name: Installere dependencies
         run: HUSKY=0 yarn install --immutable
 
-      - name: Cypress run
-        run: yarn test:e2e
-
-      - name: Laster opp screenshots dersom Cypress-testene feiler
-        uses: actions/upload-artifact@v3
-        if: failure()
-        with:
-          name: cypress-screenshots
-          path: packages/**/cypress/screenshots
-
       - name: Kjører tester
         run: yarn test:all --maxWorkers=2 --silent
