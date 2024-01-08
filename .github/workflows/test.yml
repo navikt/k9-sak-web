@@ -30,3 +30,19 @@ jobs:
 
       - name: Kjører tester
         run: yarn test:all --maxWorkers=2 --silent
+
+      - name: Cypress run
+        uses: cypress-io/github-action@v6
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.READER_TOKEN }}
+        with:
+          start: yarn test:e2e
+          wait-on-timeout: 60
+          headless: true
+
+      - name: Laster opp screenshots dersom Cypress-testene feiler
+        uses: actions/upload-artifact@v3
+        if: failure()
+        with:
+          name: cypress-screenshots
+          path: packages/**/cypress/screenshots
