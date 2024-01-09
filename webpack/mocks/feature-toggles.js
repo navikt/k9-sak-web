@@ -62,10 +62,6 @@ const featureToggles = [
     value: process.env.OVERSTYR_BEREGNING,
   },
   {
-    key: 'FAKTA_BEREGNING_REDESIGN',
-    value: process.env.FAKTA_BEREGNING_REDESIGN,
-  },
-  {
     key: 'LOKALE_PAKKER',
     value: process.env.LOKALE_PAKKER,
   },

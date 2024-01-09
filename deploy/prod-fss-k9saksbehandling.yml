@@ -97,9 +97,7 @@ spec:
       value: "true"
     - name: OVERSTYR_BEREGNING
       value: "false"
-    - name: FAKTA_BEREGNING_REDESIGN
-      value: "true"
     - name: LOKALE_PAKKER
-      value: "false"
+      value: "true"
     - name: "OVERSTYRING_UTTAK"
       value: "false"
