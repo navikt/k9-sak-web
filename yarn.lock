@@ -4732,7 +4732,7 @@ __metadata:
     "@k9-sak-web/rest-api-hooks": 1.0.0
     "@k9-sak-web/types": 1.0.0
     "@navikt/ft-fakta-beregning-redesign": 1.0.23
-    "@navikt/ft-fakta-fordel-beregningsgrunnlag": 7.3.23
+    "@navikt/ft-fakta-fordel-beregningsgrunnlag": 7.3.24
     "@navikt/ft-prosess-beregningsgrunnlag": 6.3.23
     axios-mock-adapter: 1.22.0
     enzyme: 3.11.0
@@ -4787,7 +4787,7 @@ __metadata:
     "@k9-sak-web/sak-app": 1.0.0
     "@k9-sak-web/types": 1.0.0
     "@navikt/ft-fakta-beregning-redesign": 1.0.23
-    "@navikt/ft-fakta-fordel-beregningsgrunnlag": 7.3.23
+    "@navikt/ft-fakta-fordel-beregningsgrunnlag": 7.3.24
     "@navikt/ft-prosess-beregningsgrunnlag": 6.3.23
     "@navikt/k9-fe-etablert-tilsyn": 1.0.4
     "@navikt/k9-fe-http-utils": 1.0.8
@@ -4845,7 +4845,7 @@ __metadata:
     "@k9-sak-web/sak-app": 1.0.0
     "@k9-sak-web/types": 1.0.0
     "@navikt/ft-fakta-beregning-redesign": 1.0.23
-    "@navikt/ft-fakta-fordel-beregningsgrunnlag": 7.3.23
+    "@navikt/ft-fakta-fordel-beregningsgrunnlag": 7.3.24
     "@navikt/ft-prosess-beregningsgrunnlag": 6.3.23
     "@navikt/k9-fe-http-utils": 1.0.8
     "@navikt/k9-fe-inntektsmelding": 1.0.5
@@ -4906,7 +4906,7 @@ __metadata:
     "@k9-sak-web/types": 1.0.0
     "@navikt/diagnosekoder": ^1.2024.0
     "@navikt/ft-fakta-beregning-redesign": 1.0.23
-    "@navikt/ft-fakta-fordel-beregningsgrunnlag": 7.3.23
+    "@navikt/ft-fakta-fordel-beregningsgrunnlag": 7.3.24
     "@navikt/ft-prosess-beregningsgrunnlag": 6.3.23
     "@navikt/k9-fe-etablert-tilsyn": 1.0.4
     "@navikt/k9-fe-http-utils": 1.0.8
@@ -6324,9 +6324,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@navikt/ft-fakta-fordel-beregningsgrunnlag@npm:7.3.23":
-  version: 7.3.23
-  resolution: "@navikt/ft-fakta-fordel-beregningsgrunnlag@npm:7.3.23::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fft-fakta-fordel-beregningsgrunnlag%2F7.3.23%2F07897ba42bec7ae272e63687fa77a741708cbfb6"
+"@navikt/ft-fakta-fordel-beregningsgrunnlag@npm:7.3.24":
+  version: 7.3.24
+  resolution: "@navikt/ft-fakta-fordel-beregningsgrunnlag@npm:7.3.24::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Fft-fakta-fordel-beregningsgrunnlag%2F7.3.24%2Fc4613ccac7851a720205718d95687325c6532642"
   dependencies:
     "@navikt/aksel-icons": 5.12.2
     "@navikt/ds-css": 5.12.2
@@ -6360,7 +6360,7 @@ __metadata:
     react: 18.2.0
     react-hook-form: 7.43.9
     react-intl: 6.3.2
-  checksum: 322c8258ef3f586631a8e3fc31c3bcb47ac7617101816f63296544a6b7db60eeb5b30d9e7c5cb71fe9de98485d9a83e0e5e13cc994beb80a8350b884e06c85dd
+  checksum: 48bee83ecd8dbd82943c0022d4973f23e0aad76e7a1adfbd249d37ce38cca6d958de3b2b3380d7df599cfe95067c8663ea77de4d0053435781bde424ca200769
   languageName: node
   linkType: hard
 
