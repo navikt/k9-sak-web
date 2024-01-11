@@ -12,8 +12,6 @@ import messages from '../../i18n/nb_NO.json';
 import BehandlingVelgerSakIndex from '../BehandlingVelgerSakIndex';
 import { sortBehandlinger } from './behandlingVelgerUtils';
 
-vi.mock('axios');
-
 describe('<BehandlingPicker>', () => {
   const behandlingTemplate = {
     versjon: 123,

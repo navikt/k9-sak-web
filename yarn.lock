@@ -14067,7 +14067,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"entities@npm:^4.2.0, entities@npm:^4.4.0, entities@npm:^4.5.0":
+"entities@npm:^4.2.0, entities@npm:^4.4.0":
   version: 4.5.0
   resolution: "entities@npm:4.5.0"
   checksum: 853f8ebd5b425d350bffa97dd6958143179a5938352ccae092c62d1267c4e392a039be1bae7d51b6e4ffad25f51f9617531fedf5237f15df302ccfb452cbf2d7
@@ -16197,20 +16197,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"happy-dom@npm:^11.0.2":
-  version: 11.2.0
-  resolution: "happy-dom@npm:11.2.0"
-  dependencies:
-    css.escape: ^1.5.1
-    entities: ^4.5.0
-    iconv-lite: ^0.6.3
-    webidl-conversions: ^7.0.0
-    whatwg-encoding: ^2.0.0
-    whatwg-mimetype: ^3.0.0
-  checksum: 05d9cfcce6eddd0814043b61eb9709a47b68079f526858b6611d03e5f47ea47be29f896a40c363f5888347d012692caf0ea724225b22228b8c01ca6e3f8d78e7
-  languageName: node
-  linkType: hard
-
 "hard-rejection@npm:^2.1.0":
   version: 2.1.0
   resolution: "hard-rejection@npm:2.1.0"
@@ -17911,7 +17897,6 @@ __metadata:
     eslint-plugin-storybook: 0.6.15
     external-remotes-plugin: 1.0.0
     file-loader: 6.2.0
-    happy-dom: ^11.0.2
     history: 5.3.0
     husky: 8.0.3
     i18n-iso-countries: 7.7.0
