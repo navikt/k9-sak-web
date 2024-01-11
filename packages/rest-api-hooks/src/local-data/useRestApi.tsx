@@ -1,6 +1,6 @@
-import { useState, useEffect, DependencyList } from 'react';
+import { DependencyList, useEffect, useState } from 'react';
 
-import { REQUEST_POLLING_CANCELLED, AbstractRequestApi } from '@k9-sak-web/rest-api';
+import { AbstractRequestApi, REQUEST_POLLING_CANCELLED } from '@k9-sak-web/rest-api';
 
 import RestApiState from '../RestApiState';
 
@@ -43,7 +43,7 @@ const getUseRestApi = (requestApi: AbstractRequestApi) =>
     const allOptions = { ...defaultOptions, ...options };
 
     const [data, setData] = useState({
-      state: RestApiState.NOT_STARTED,
+      state: requestApi.hasPath(key) ? RestApiState.NOT_STARTED : RestApiState.NO_PATH,
       error: undefined,
       data: undefined,
     });
@@ -76,7 +76,7 @@ const getUseRestApi = (requestApi: AbstractRequestApi) =>
           });
       } else if (!requestApi.hasPath(key)) {
         setData({
-          state: RestApiState.NOT_STARTED,
+          state: RestApiState.NO_PATH,
           error: undefined,
           data: undefined,
         });
