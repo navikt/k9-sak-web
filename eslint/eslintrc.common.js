@@ -17,9 +17,9 @@ const config = {
 
   parser: '@typescript-eslint/parser',
 
-  plugins: ['jest', 'jest-dom', '@typescript-eslint'],
+  plugins: ['jest-dom', '@typescript-eslint'],
 
-  extends: ['airbnb', 'plugin:@typescript-eslint/recommended', 'plugin:jest/recommended', 'prettier'],
+  extends: ['airbnb', 'plugin:@typescript-eslint/recommended', 'prettier'],
 
   parserOptions: {
     sourceType: 'module',

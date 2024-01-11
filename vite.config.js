@@ -1,7 +1,8 @@
 import react from '@vitejs/plugin-react';
-import { defineConfig, loadEnv } from 'vite';
+import { loadEnv } from 'vite';
 import { viteMockServe } from 'vite-plugin-mock';
 import svgr from 'vite-plugin-svgr';
+import { defineConfig } from 'vitest/config'
 
 const createProxy = (target, pathRewrite) => ({
   target,
@@ -119,7 +120,7 @@ export default ({ mode }) => {
     },
     test: {
       deps: { interopDefault: true },
-      environment: 'happy-dom',
+      environment: 'jsdom',
       css: {
         modules: {
           classNameStrategy: 'non-scoped',
@@ -130,6 +131,7 @@ export default ({ mode }) => {
       watch: false,
       testTimeout: 15000,
       onConsoleLog(log) {
+        // if (log.includes('Warning: ReactDOM.render is no longer supported in React 18.')) return false
         return !log.includes(
           'Download the React DevTools for a better development experience: https://reactjs.org/link/react-devtools',
         );

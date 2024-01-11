@@ -9,7 +9,7 @@ import * as stories from '../src/stories/MainComponent.stories';
 import MainComponent from '../src/ui/MainComponent';
 
 const server = setupServer(
-  rest.get('http://localhost/tilstand', (req, res, ctx) => res(ctx.json(manglerInntektsmelding))),
+  rest.get('http://localhost:3000/tilstand', (req, res, ctx) => res(ctx.json(manglerInntektsmelding))),
 );
 
 describe('9069 - Mangler inntektsmelding', () => {

@@ -3,7 +3,7 @@
     "target": "esnext",
     "module": "es2020",
     "moduleResolution": "node",
-    "types": ["node","vite/client", "vitest/globals", "@testing-library/jest-dom"],
+    "types": ["node", "vite/client", "vitest/globals", "@testing-library/jest-dom"],
     "allowJs": true,
     "noEmit": true,
     "strict": false,
@@ -16,5 +16,5 @@
     "skipLibCheck": true //TODO Fjern denne
   },
   "include": ["packages/**/*", "@types", "_mocks", "vitest-setup.ts"],
-  "exclude": ["packages/**/cypress.config.ts", "packages/**/cypress"]
+  "exclude": ["packages/**/cypress.config.ts", "packages/**/cypress", "cypress", "node_modules"]
 }
