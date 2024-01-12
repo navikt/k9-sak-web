@@ -13,7 +13,7 @@
     "@k9-sak-web/types": "1.0.0",
     "@navikt/ft-plattform-komponenter": "2.3.17",
     "dayjs": "1.11.10",
-    "moment": "2.29.4",
+    "moment": "2.30.1",
     "nav-frontend-etiketter": "3.0.3",
     "nav-frontend-etiketter-style": "2.0.3",
     "nav-frontend-ikonknapper": "2.1.3",

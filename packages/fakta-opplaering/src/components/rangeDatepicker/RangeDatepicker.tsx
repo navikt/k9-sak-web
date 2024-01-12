@@ -9,6 +9,7 @@ import styles from './rangeDatepicker.modules.css';
 type OwnProps = {
   name: string;
   onRangeChange: any;
+  placeholder?: string;
 } & DatePickerProps;
 
 const fieldValidaton = (
