@@ -124,6 +124,7 @@ jobs:
           -d '{"ref":"master",
                   "inputs":{
                       "trigger": "${{ github.repository }}",
+                      "run_id": "${{ github.run_id }}",
                       "version": "${{ env.TAG }}",
                       "issue_number": "${{ steps.createdeployissue.outputs.number }}"
                   }}'
@@ -144,7 +145,7 @@ jobs:
         run: echo "IMAGE=$IMAGE_BASE:$TAG" >> $GITHUB_OUTPUT
 
   trivy:
-    needs: [ deploy-docker-image ]
+    needs: [deploy-docker-image]
     uses: navikt/sif-gha-workflows/.github/workflows/trivy-ghcr.yml@main
     permissions:
       contents: write
