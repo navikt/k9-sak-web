@@ -105,9 +105,9 @@ describe('MedisinskVilkår', () => {
     expect(queryByText(/Sykdom er ferdig vurdert og du kan gå videre i behandlingen/i)).toBeNull();
     expect(queryByText(/OBS! Det er gjort endringer i sykdomssteget/i)).toBeNull();
     await waitFor(async () => {
-      userEvent.click(getAllByText(/Tilsyn og pleie/i)[0]);
+      await userEvent.click(getAllByText(/Tilsyn og pleie/i)[0]);
       expect(getByText(/Sykdom er ferdig vurdert og du kan gå videre i behandlingen/i)).toBeInTheDocument();
-      userEvent.click(getAllByText(/To omsorgspersoner/i)[0]);
+      await userEvent.click(getAllByText(/To omsorgspersoner/i)[0]);
       expect(getByText(/Sykdom er ferdig vurdert og du kan gå videre i behandlingen/i)).toBeInTheDocument();
     });
   });
@@ -125,9 +125,9 @@ describe('MedisinskVilkår', () => {
     expect(getByText('venter...')).toBeInTheDocument();
     await waitFor(async () => {
       expect(getByText(/OBS! Det er gjort endringer i sykdomssteget/i)).toBeInTheDocument();
-      userEvent.click(getAllByText(/Tilsyn og pleie/i)[0]);
+      await userEvent.click(getAllByText(/Tilsyn og pleie/i)[0]);
       expect(getByText(/OBS! Det er gjort endringer i sykdomssteget/i)).toBeInTheDocument();
-      userEvent.click(getAllByText(/To omsorgspersoner/i)[0]);
+      await userEvent.click(getAllByText(/To omsorgspersoner/i)[0]);
       expect(getByText(/OBS! Det er gjort endringer i sykdomssteget/i)).toBeInTheDocument();
     });
   });
@@ -147,11 +147,11 @@ describe('MedisinskVilkår', () => {
     });
     expect(getByText('venter...')).toBeInTheDocument();
     await waitFor(async () => {
-      userEvent.click(getAllByText(/Tilsyn og pleie/i)[0]);
+      await userEvent.click(getAllByText(/Tilsyn og pleie/i)[0]);
     });
     expect(onFinishedSpy).toHaveBeenCalledTimes(0);
     await waitFor(async () => {
-      userEvent.click(getAllByText(/Fortsett/i)[0]);
+      await userEvent.click(getAllByText(/Fortsett/i)[0]);
       expect(onFinishedSpy).toHaveBeenCalledTimes(1);
     });
   });
@@ -172,7 +172,7 @@ describe('MedisinskVilkår', () => {
     expect(getByText('venter...')).toBeInTheDocument();
     await waitFor(async () => {
       expect(onFinishedSpy).not.toHaveBeenCalled();
-      userEvent.click(getAllByText(/Fortsett/i)[0]);
+      await userEvent.click(getAllByText(/Fortsett/i)[0]);
     });
   });
 });

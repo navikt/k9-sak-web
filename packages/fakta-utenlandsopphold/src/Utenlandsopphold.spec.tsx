@@ -15,12 +15,12 @@ describe('Utenlandsopphold', () => {
     screen.getByText('Utenlandsopphold');
   });
 
-  test('kan kan toggle på hjelpetekst', () => {
+  test('kan kan toggle på hjelpetekst', async () => {
     renderWithIntl(<Utenlandsopphold utenlandsopphold={utenlandsoppholdMock} kodeverk={utenlandsoppholdÅrsakMock} />);
     const infoboksTekst =
       'Opphold innenfor EØS likestilles med opphold i Norge, og det er ingen tidsbegrensning på hvor lenge søker kan motta pleiepenger.';
     expect(screen.queryByText(infoboksTekst)).toBeFalsy();
-    userEvent.click(screen.getByRole('button'));
+    await userEvent.click(screen.getByRole('button'));
     expect(screen.getByText(infoboksTekst)).toBeVisible();
   });
 
