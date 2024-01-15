@@ -62,10 +62,6 @@ const featureToggles = [
     value: process.env.OVERSTYR_BEREGNING,
   },
   {
-    key: 'LOKALE_PAKKER',
-    value: process.env.LOKALE_PAKKER,
-  },
-  {
     key: 'OVERSTYRING_UTTAK',
     value: process.env.OVERSTYRING_UTTAK,
   },
