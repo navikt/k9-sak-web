@@ -21,12 +21,6 @@ import '@navikt/ft-form-hooks/dist/style.css';
 import '@navikt/ft-plattform-komponenter/dist/style.css';
 import '@navikt/ft-prosess-beregningsgrunnlag/dist/style.css';
 import '@navikt/ft-ui-komponenter/dist/style.css';
-import '@navikt/k9-fe-medisinsk-vilkar/build/styles.css';
-import '@navikt/k9-fe-om-barnet/build/styles.css';
-import '@navikt/k9-fe-etablert-tilsyn/build/styles.css';
-import '@navikt/k9-fe-inntektsmelding/build/styles.css';
-import '@navikt/k9-fe-omsorgen-for/build/styles.css';
-import '@navikt/k9-fe-omsorgsdager/build/styles.css';
 
 import 'nav-datovelger/lib/styles/main.css';
 import 'nav-frontend-alertstriper-style/dist/main.css';
