@@ -125,9 +125,13 @@ describe('MedisinskVilkår', () => {
     expect(getByText('venter...')).toBeInTheDocument();
     await waitFor(async () => {
       expect(getByText(/OBS! Det er gjort endringer i sykdomssteget/i)).toBeInTheDocument();
-      await userEvent.click(getAllByText(/Tilsyn og pleie/i)[0]);
+    });
+    await userEvent.click(getAllByText(/Tilsyn og pleie/i)[0]);
+    await waitFor(async () => {
       expect(getByText(/OBS! Det er gjort endringer i sykdomssteget/i)).toBeInTheDocument();
-      await userEvent.click(getAllByText(/To omsorgspersoner/i)[0]);
+    });
+    await userEvent.click(getAllByText(/To omsorgspersoner/i)[0]);
+    await waitFor(async () => {
       expect(getByText(/OBS! Det er gjort endringer i sykdomssteget/i)).toBeInTheDocument();
     });
   });

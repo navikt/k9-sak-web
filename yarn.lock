@@ -4146,6 +4146,7 @@ __metadata:
     "@fpsak-frontend/kodeverk": 1.0.0
     "@wojtekmaj/enzyme-adapter-react-17": 0.8.0
     enzyme: 3.11.0
+    jest-axe: 8.0.0
     react: 18.2.0
     react-intl: 6.5.5
   languageName: unknown
@@ -17997,7 +17998,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"jest-axe@npm:^8.0.0":
+"jest-axe@npm:8.0.0, jest-axe@npm:^8.0.0":
   version: 8.0.0
   resolution: "jest-axe@npm:8.0.0"
   dependencies:
