@@ -14,7 +14,6 @@ metadata:
 spec:
   image: {{ image }}
   port: 9000
-  team: k9saksbehandling
   liveness:
     path: /isAlive
     initialDelay: 20
