@@ -6,7 +6,7 @@ import HistorikkSakIndex from '@fpsak-frontend/sak-historikk';
 import { KodeverkMedNavn, Historikkinnslag } from '@k9-sak-web/types';
 import { LoadingPanel, usePrevious } from '@fpsak-frontend/shared-components';
 
-import { isRequestNotDone } from "@k9-sak-web/rest-api-hooks/src/RestApiState";
+import { isRequestNotDone } from '@k9-sak-web/rest-api-hooks/src/RestApiState';
 import useBehandlingEndret from '../../behandling/useBehandlingEndret';
 import { K9sakApiKeys, restApiHooks } from '../../data/k9sakApi';
 import { pathToBehandling, createLocationForSkjermlenke } from '../../app/paths';

@@ -27,7 +27,7 @@ import React, { useCallback, useMemo, useState } from 'react';
 import { Navigate, Route, Routes, useLocation } from 'react-router-dom';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { QueryClient, QueryClientProvider } from 'react-query';
-import { isRequestNotDone } from "@k9-sak-web/rest-api-hooks/src/RestApiState";
+import { isRequestNotDone } from '@k9-sak-web/rest-api-hooks/src/RestApiState';
 import {
   behandlingerRoutePath,
   erBehandlingValgt,

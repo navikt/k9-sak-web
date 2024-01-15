@@ -1,10 +1,9 @@
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { findAksjonspunkt, findEndpointsForMicrofrontend, httpErrorHandler } from '@fpsak-frontend/utils';
 import { useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
-import { Aksjonspunkt, BehandlingAppKontekst, Fagsak, FeatureToggles } from '@k9-sak-web/types';
+import { Aksjonspunkt, BehandlingAppKontekst, Fagsak } from '@k9-sak-web/types';
 import React from 'react';
-import { OmsorgenFor } from '@navikt/k9-fe-omsorgen-for';
-import { OmsorgenFor as LokalOmsorgenFor } from '@k9-sak-web/fakta-omsorgen-for';
+import { OmsorgenFor } from '@k9-sak-web/fakta-omsorgen-for';
 
 interface OmsorgenForProps {
   behandling: BehandlingAppKontekst;
@@ -18,18 +17,9 @@ interface OmsorgenForProps {
     fosterbarnForOmsorgspenger: any;
   }[]) => void;
   saksbehandlere: { [key: string]: string };
-  featureToggles: FeatureToggles;
 }
 
-export default ({
-  behandling,
-  fagsak,
-  readOnly,
-  aksjonspunkter,
-  submitCallback,
-  saksbehandlere,
-  featureToggles,
-}: OmsorgenForProps) => {
+export default ({ behandling, fagsak, readOnly, aksjonspunkter, submitCallback, saksbehandlere }: OmsorgenForProps) => {
   const { links } = behandling;
   const sakstype = fagsak.sakstype.kode;
 
@@ -50,26 +40,6 @@ export default ({
         fosterbarnForOmsorgspenger,
       },
     ]);
-
-  if (featureToggles?.LOKALE_PAKKER) {
-    return (
-      <LokalOmsorgenFor
-        data={{
-          httpErrorHandler: httpErrorHandlerCaller,
-          endpoints: findEndpointsForMicrofrontend(links, [
-            {
-              rel: 'omsorgen-for',
-              desiredName: 'omsorgsperioder',
-            },
-          ]),
-          readOnly: readOnly || !harAksjonspunkt,
-          onFinished: løsAksjonspunkt,
-          saksbehandlere: saksbehandlere || {},
-          sakstype,
-        }}
-      />
-    );
-  }
 
   return (
     <OmsorgenFor

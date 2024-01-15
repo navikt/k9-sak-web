@@ -1,5 +1,4 @@
-import { Omsorgsdager } from '@navikt/k9-fe-omsorgsdager';
-import { Omsorgsdager as LokalOmsorgsdager } from '@k9-sak-web/prosess-omsorgsdager';
+import { Omsorgsdager } from '@k9-sak-web/prosess-omsorgsdager';
 import React from 'react';
 import KartleggePropertyTilUtvidetRettMikrofrontendKomponent from './KartleggePropertyTilUtvidetRettMikrofrontendKomponent';
 
@@ -13,7 +12,6 @@ export default props => {
     behandling,
     status,
     vilkar,
-    featureToggles,
   } = props;
   const containerData = KartleggePropertyTilUtvidetRettMikrofrontendKomponent(
     saksInformasjon,
@@ -25,9 +23,6 @@ export default props => {
   );
   if (!containerData) {
     return null;
-  }
-  if (featureToggles?.LOKALE_PAKKER) {
-    return <LokalOmsorgsdager containerData={containerData} />;
   }
   return <Omsorgsdager containerData={containerData} />;
 };
