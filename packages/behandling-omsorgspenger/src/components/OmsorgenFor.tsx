@@ -1,7 +1,7 @@
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { findAksjonspunkt, findEndpointsForMicrofrontend, httpErrorHandler } from '@fpsak-frontend/utils';
 import { useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
-import { Aksjonspunkt, BehandlingAppKontekst, Fagsak, FeatureToggles } from '@k9-sak-web/types';
+import { Aksjonspunkt, BehandlingAppKontekst, Fagsak } from '@k9-sak-web/types';
 import React from 'react';
 import { OmsorgenFor } from '@k9-sak-web/fakta-omsorgen-for';
 
