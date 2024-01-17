@@ -17,7 +17,7 @@
     "@navikt/ft-form-hooks": "4.2.21",
     "@navikt/ft-plattform-komponenter": "2.3.18",
     "@popperjs/core": "2.11.8",
-    "@storybook/react": "7.6.8",
+    "@storybook/react": "7.6.9",
     "@storybook/testing-library": "0.2.2",
     "@storybook/testing-react": "2.0.1",
     "@testing-library/react": "14.1.2",
