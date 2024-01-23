@@ -54,13 +54,13 @@ export const OverstyrUttakContextProvider = ({ children }) => {
       )
       .then((response: OverstyrbareAktiviteterResponse) => response);
 
+    setArbeidsgiverOversikt(apiResult?.arbeidsgiverOversikt?.arbeidsgivere || null);
     setLasterAktiviteter(false);
     return apiResult.arbeidsforholdsperioder;
   };
 
   const utledAktivitetNavn = (arbeidsforhold: Arbeidsforhold): string => {
     let identifikator = null;
-
     if (arbeidsforhold.arbeidsforholdId) identifikator = arbeidsforhold.arbeidsforholdId;
     if (arbeidsforhold.orgnr) identifikator = arbeidsforhold.orgnr;
     if (arbeidsforhold.organisasjonsnummer) identifikator = arbeidsforhold.organisasjonsnummer;
