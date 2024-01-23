@@ -22,6 +22,7 @@ import TableRow from '../table/TableRow';
 import UttakDetaljer from '../uttak-detaljer/UttakDetaljer';
 import styles from './uttak.css';
 import ContainerContext from '../../context/ContainerContext';
+import { PersonPencilFillIcon } from '@navikt/aksel-icons';
 
 const cx = classNames.bind(styles);
 
@@ -33,7 +34,7 @@ interface UttakProps {
 }
 
 const Uttak = ({ uttak, erValgt, velgPeriode, withBorderTop = false }: UttakProps): JSX.Element => {
-  const { periode, uttaksgrad, inngangsvilkår, pleiebehov, årsaker, endringsstatus } = uttak;
+  const { periode, uttaksgrad, inngangsvilkår, pleiebehov, årsaker, endringsstatus, manueltOverstyrt } = uttak;
   const { erFagytelsetypeLivetsSluttfase } = React.useContext(ContainerContext);
 
   const harUtenomPleiebehovÅrsak = harÅrsak(årsaker, Årsaker.UTENOM_PLEIEBEHOV);
@@ -79,7 +80,10 @@ const Uttak = ({ uttak, erValgt, velgPeriode, withBorderTop = false }: UttakProp
         </TableColumn>
 
         <TableColumn className={`${styles.uttak__uttaksgrad} ${withBorderTop ? styles.borderTop : ''}`}>
-          <p className={styles.uttak__uttaksgrad__tekst}>{`${uttaksgrad} %`}</p>
+          <p className={styles.uttak__uttaksgrad__tekst}>
+            {`${uttaksgrad} %`} 
+            {manueltOverstyrt && <PersonPencilFillIcon  className="ml-1 align-middle text-2xl text-border-warning" title="Manuelt overstyrt" />}
+          </p>
           <div className={uttakGradIndikatorCls} />
         </TableColumn>
         <TableColumn className={`${withBorderTop ? styles.borderTop : ''}`}>

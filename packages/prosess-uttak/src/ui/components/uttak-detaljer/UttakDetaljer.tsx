@@ -144,7 +144,7 @@ const formatAvkortingMotArbeid = (
         const beregnetNormalArbeidstid = beregnDagerTimer(normalArbeidstid);
         const beregnetFaktiskArbeidstid = beregnDagerTimer(faktiskArbeidstid);
         const faktiskOverstigerNormal = beregnetNormalArbeidstid < beregnetFaktiskArbeidstid;
-        const prosentFravær = Math.round(beregnetFaktiskArbeidstid / beregnetNormalArbeidstid * 100);
+        const prosentFravær = Math.round(Math.max(beregnetNormalArbeidstid - beregnetFaktiskArbeidstid, 0) / beregnetNormalArbeidstid * 100);
 
         return (
           // eslint-disable-next-line react/no-array-index-key
@@ -182,7 +182,6 @@ const formatAvkortingMotArbeid = (
     </div>
     <div className="border-4">
       {`= ${søkersTapteArbeidstid} % totalt inntektstap`}
-
     </div>
   </>
 );
