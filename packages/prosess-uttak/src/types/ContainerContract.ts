@@ -12,6 +12,7 @@ interface ContainerContract {
     behandlingUttakOverstyrt: string;
   };
   uttaksperioder: Uttaksperioder;
+  perioderTilVurdering: string[];
   utsattePerioder: string[];
   aktivBehandlingUuid: string;
   arbeidsforhold: Record<string, ArbeidsgiverOpplysninger>;
