@@ -144,6 +144,8 @@ const formatAvkortingMotArbeid = (
         const beregnetNormalArbeidstid = beregnDagerTimer(normalArbeidstid);
         const beregnetFaktiskArbeidstid = beregnDagerTimer(faktiskArbeidstid);
         const faktiskOverstigerNormal = beregnetNormalArbeidstid < beregnetFaktiskArbeidstid;
+        const prosentFravær = Math.round(beregnetFaktiskArbeidstid / beregnetNormalArbeidstid * 100);
+
         return (
           // eslint-disable-next-line react/no-array-index-key
           <div key={index}>
@@ -169,13 +171,19 @@ const formatAvkortingMotArbeid = (
                 </Hjelpetekst>
               )}
             </span>
-            <p className={styles.uttakDetaljer__data}>{`Utbetalingsgrad: ${utbetalingsgrad} %`}</p>
+            <hr />
+            <div className="inline-flex justify-between w-full mb-6">
+              <div>= {prosentFravær}% fravær</div>
+              <div>Utbetalingsgrad: {utbetalingsgrad}%</div>
+            </div>
           </div>
         );
       })}
     </div>
-    <hr />
-    <p className={styles.uttakDetaljer__sum}>{`= ${søkersTapteArbeidstid} % totalt inntektstap`}</p>
+    <div className="border-4">
+      {`= ${søkersTapteArbeidstid} % totalt inntektstap`}
+
+    </div>
   </>
 );
 
