@@ -7,7 +7,7 @@ import { safeJSONParse } from '@fpsak-frontend/utils';
 
 export const utledStiler = (html: string) => {
   const heleBrevet = new DOMParser().parseFromString(html, 'text/html');
-  const stiler = heleBrevet.querySelector('style').innerHTML;
+  const stiler = heleBrevet?.querySelector('style')?.innerHTML;
   const styleAst = cssParse(stiler);
 
   cssWalk(styleAst, (nodeRef, item, list) => {
@@ -65,7 +65,7 @@ export const utledRedigerbartInnhold = (html: string) => {
   // Bruker application/xhtml+xml som datatype, da backend bruker en xhtml parser som
   // ikke støtter feks. <br> som ikke er self-closing (<br/>)
   const heleBrevet = new DOMParser().parseFromString(html, 'application/xhtml+xml');
-  return heleBrevet.querySelector('[data-editable]').innerHTML;
+  return heleBrevet?.querySelector('[data-editable]')?.innerHTML;
 };
 
 export const utledSkalInkludereKalender = (html: string) => {
