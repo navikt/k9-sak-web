@@ -23,6 +23,8 @@ import UttakUtregning from './UttakUtregning';
 import Utfall from '../../../constants/Utfall';
 
 import styles from './uttakDetaljer.css';
+import { PersonPencilFillIcon } from '@navikt/aksel-icons';
+import { HelpText } from '@navikt/ds-react';
 
 const cx = classNames.bind(styles);
 
@@ -129,6 +131,7 @@ const formatAvkortingMotArbeid = (
   utbetalingsgrader: Utbetalingsgrad[],
   søkersTapteArbeidstid: number,
   alleArbeidsforhold: Record<string, ArbeidsgiverOpplysninger>,
+  manueltOverstyrt?: boolean
 ) => (
   <>
     <div className={styles.uttakDetaljer__avkortingMotArbeid}>
@@ -174,7 +177,15 @@ const formatAvkortingMotArbeid = (
             <hr />
             <div className="inline-flex justify-between w-full mb-6">
               <div>= {prosentFravær}% fravær</div>
-              <div>Utbetalingsgrad: {utbetalingsgrad}%</div>
+              <div className='inline-flex justify-end'>
+                Utbetalingsgrad: {utbetalingsgrad}%
+                {manueltOverstyrt && <>
+                  <PersonPencilFillIcon className="ml-1 align-middle text-2xl text-border-warning" title="Manuelt overstyrt" />
+                  <HelpText title="Hvor kommer utbetalingsgraden fra?">
+                    Utbetalingsgraden <i>kan</i> være manuelt overstyrt av saksbehandler.
+                  </HelpText>
+                </>}
+              </div>
             </div>
           </div>
         );
@@ -228,6 +239,7 @@ const UttakDetaljer = ({ uttak }: UttakDetaljerProps): JSX.Element => {
     pleiebehov,
     utenlandsopphold,
     utfall,
+    manueltOverstyrt
   } = uttak;
   return (
     <div className={styles.uttakDetaljer}>
@@ -257,7 +269,7 @@ const UttakDetaljer = ({ uttak }: UttakDetaljerProps): JSX.Element => {
           heading="Avkorting mot arbeid"
           highlight={shouldHighlight(Årsaker.AVKORTET_MOT_INNTEKT, årsaker)}
         >
-          {formatAvkortingMotArbeid(utbetalingsgrader, søkersTapteArbeidstid, arbeidsforhold)}
+          {formatAvkortingMotArbeid(utbetalingsgrader, søkersTapteArbeidstid, arbeidsforhold, manueltOverstyrt)}
         </UttakUtregning>
       </div>
     </div>
