@@ -9,6 +9,7 @@ import { useFeatureToggles } from '@fpsak-frontend/shared-components';
 interface UttakProps {
   uuid: string;
   uttaksperioder: any;
+  perioderTilVurdering?: string[];
   utsattePerioder: string[];
   arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysningerPerId;
   aksjonspunkter: Aksjonspunkt[];
@@ -22,6 +23,7 @@ export default ({
   uuid,
   uttaksperioder,
   utsattePerioder,
+  perioderTilVurdering = [],
   arbeidsgiverOpplysningerPerId,
   aksjonspunkter,
   alleKodeverk,
@@ -46,6 +48,7 @@ export default ({
       containerData={{
         uttaksperioder,
         utsattePerioder,
+        perioderTilVurdering,
         aktivBehandlingUuid: uuid,
         arbeidsforhold: arbeidsgiverOpplysningerPerId,
         aksjonspunktkoder: funnedeRelevanteAksjonspunktkoder,

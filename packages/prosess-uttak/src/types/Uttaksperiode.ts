@@ -15,6 +15,7 @@ export interface Uttaksperiodeelement {
   inngangsvilkår: Inngangsvilkår;
   kildeBehandlingUUID: string;
   knekkpunktTyper: string[];
+  manueltOverstyrt: boolean;
   utbetalingsgrader: Utbetalingsgrad[];
   graderingMotTilsyn: GraderingMotTilsyn;
   annenPart: AnnenPart;

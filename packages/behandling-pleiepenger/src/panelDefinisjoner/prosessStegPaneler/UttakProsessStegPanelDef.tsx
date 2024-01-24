@@ -10,6 +10,7 @@ class PanelDef extends ProsessStegPanelDef {
   getKomponent = ({
     behandling,
     uttaksperioder,
+    perioderTilVurdering,
     utsattePerioder,
     arbeidsgiverOpplysningerPerId,
     aksjonspunkter,
@@ -24,6 +25,7 @@ class PanelDef extends ProsessStegPanelDef {
       uuid={behandling.uuid}
       behandling={behandling}
       uttaksperioder={uttaksperioder}
+      perioderTilVurdering={perioderTilVurdering}
       utsattePerioder={utsattePerioder}
       arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
       aksjonspunkter={aksjonspunkter}
@@ -67,6 +69,7 @@ class PanelDef extends ProsessStegPanelDef {
 
   getData = ({ uttak, arbeidsgiverOpplysningerPerId, alleKodeverk }) => ({
     uttaksperioder: uttak?.uttaksplan != null ? uttak?.uttaksplan?.perioder : uttak?.simulertUttaksplan?.perioder,
+    perioderTilVurdering: uttak?.perioderTilVurdering,
     utsattePerioder: uttak?.utsattePerioder,
     virkningsdatoUttakNyeRegler: uttak?.virkningsdatoUttakNyeRegler,
     arbeidsgiverOpplysningerPerId,
