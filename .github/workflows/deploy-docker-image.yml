@@ -105,7 +105,7 @@ jobs:
               repo: context.issue.repo,
               labels: ['deployment'],
               body: 'Kommenter enten "/promote dev-fss" eller "/promote prod-fss" for å deploye ${{ github.sha }}',
-              title: 'Deploy av ${{ steps.docker-push.outputs.NEW_VERSION }}'})
+              title: 'Deploy av ${{ env.DOCKER_METADATA_OUTPUT_VERSION }}'})
             .then(response => {
                     core.setOutput('number', response.data.number);
              });
@@ -120,7 +120,7 @@ jobs:
                   "inputs":{
                       "trigger": "${{ github.repository }}",
                       "run_id": "${{ github.run_id }}",
-                      "version": "${{ steps.docker-push.outputs.NEW_VERSION}}",
+                      "version": "${{ env.DOCKER_METADATA_OUTPUT_VERSION}}",
                       "issue_number": "${{ steps.createdeployissue.outputs.number }}"
                   }}'
 
