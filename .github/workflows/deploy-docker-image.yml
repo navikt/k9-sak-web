@@ -27,7 +27,8 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       issues: write
-      packages: write
+      contents: read
+      id-token: write
     # needs: [test, lint-tscheck-build]
     outputs:
       image: ${{ steps.docker-push.outputs.image }}
@@ -63,19 +64,17 @@ jobs:
         env:
           SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
 
-      - name: Sette TAG variable for docker image & deploy issue-info
-        run: echo "TAG=$TIMESTAMP-$(echo $GITHUB_SHA | cut -c1-7)" >> $GITHUB_ENV
-
-      - uses: docker/login-action@v3
+      - uses: nais/docker-build-push@v0
+        id: docker-push
         with:
-          registry: ghcr.io
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Bygg og laste opp docker-image
+          tag: 'latest'
+          team: k9saksbehandling
+          project_id: ${{ vars.NAIS_MANAGEMENT_PROJECT_ID }}
+          identity_provider: ${{ secrets.NAIS_WORKLOAD_IDENTITY_PROVIDER }}
+      - name: Sett image for nais deploy
         run: |
-          docker build --tag ${IMAGE_BASE}:${TAG} --tag ${IMAGE_BASE}:latest --label "version=${TAG}" .
-          docker push ${IMAGE_BASE} --all-tags
+          echo "IMAGE=${{steps.docker-push.outputs.IMAGE}}" >> $GITHUB_OUTPUT
+          echo "TAG=${{steps.docker-push.outputs.NEW_VERSION}}" >> $GITHUB_ENV
 
       - name: Lukk gamle issues
         uses: actions/github-script@v7
@@ -109,7 +108,7 @@ jobs:
               owner: context.issue.owner,
               repo: context.issue.repo,
               labels: ['deployment'],
-              body: 'Kommenter enten "/promote dev-fss" eller "/promote prod-fss" for att deploye ${{ github.sha }}',
+              body: 'Kommenter enten "/promote dev-fss" eller "/promote prod-fss" for å deploye ${{ github.sha }}',
               title: 'Deploy av ${{ env.TAG }}'})
             .then(response => {
                     core.setOutput('number', response.data.number);
@@ -140,13 +139,9 @@ jobs:
                             issue_number: ${{ steps.createdeployissue.outputs.number }} }
             github.rest.issues.createComment({...issue, body: '/promote dev-fss'})
 
-      - name: Set image output
-        id: docker-push
-        run: echo "IMAGE=$IMAGE_BASE:$TAG" >> $GITHUB_OUTPUT
-
   trivy:
     needs: [deploy-docker-image]
-    uses: navikt/sif-gha-workflows/.github/workflows/trivy-ghcr.yml@main
+    uses: navikt/sif-gha-workflows/.github/workflows/trivy.yml@main
     permissions:
       contents: write
       security-events: write
@@ -154,3 +149,4 @@ jobs:
     secrets: inherit
     with:
       image: ${{ needs.deploy-docker-image.outputs.image }}
+      team: k9saksbehandling
