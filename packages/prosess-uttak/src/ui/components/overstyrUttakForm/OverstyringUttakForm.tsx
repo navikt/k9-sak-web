@@ -31,7 +31,7 @@ const OverstyringUttakForm: React.FC<OwnProps> = ({
   setLoading,
 }) => {
   const erNyOverstyring = overstyring === undefined;
-  const { handleOverstyringAksjonspunkt, perioderTilVurdering } = useContext(ContainerContext);
+  const { handleOverstyringAksjonspunkt, perioderTilVurdering = [] } = useContext(ContainerContext);
   const { lasterAktiviteter, hentAktuelleAktiviteter } = useOverstyrUttak();
   const [deaktiverLeggTil, setDeaktiverLeggTil] = useState<boolean>(true);
 

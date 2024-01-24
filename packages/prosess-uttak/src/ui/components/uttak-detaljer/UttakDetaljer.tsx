@@ -6,6 +6,8 @@ import { EtikettAdvarsel, EtikettSuksess } from 'nav-frontend-etiketter';
 import Hjelpetekst from 'nav-frontend-hjelpetekst';
 import { PopoverOrientering } from 'nav-frontend-popover';
 import { Element } from 'nav-frontend-typografi';
+import { PersonPencilFillIcon } from '@navikt/aksel-icons';
+import { HelpText } from '@navikt/ds-react';
 
 import { arbeidstypeTilVisning } from '../../../constants/Arbeidstype';
 import BarnetsDødsfallÅrsakerMedTekst from '../../../constants/BarnetsDødsfallÅrsakerMedTekst';
@@ -23,8 +25,6 @@ import UttakUtregning from './UttakUtregning';
 import Utfall from '../../../constants/Utfall';
 
 import styles from './uttakDetaljer.css';
-import { PersonPencilFillIcon } from '@navikt/aksel-icons';
-import { HelpText } from '@navikt/ds-react';
 
 const cx = classNames.bind(styles);
 

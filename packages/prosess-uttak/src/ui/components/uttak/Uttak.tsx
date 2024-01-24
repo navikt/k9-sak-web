@@ -6,6 +6,7 @@ import {
   RedCrossIconFilled,
   TwoPersonsWithOneHighlightedIconGray,
 } from '@navikt/ft-plattform-komponenter';
+import { PersonPencilFillIcon } from '@navikt/aksel-icons';
 import classNames from 'classnames/bind';
 import { Normaltekst } from 'nav-frontend-typografi';
 import * as React from 'react';
@@ -22,7 +23,6 @@ import TableRow from '../table/TableRow';
 import UttakDetaljer from '../uttak-detaljer/UttakDetaljer';
 import styles from './uttak.css';
 import ContainerContext from '../../context/ContainerContext';
-import { PersonPencilFillIcon } from '@navikt/aksel-icons';
 
 const cx = classNames.bind(styles);
 
