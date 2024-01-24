@@ -106,9 +106,7 @@ const OverstyrUttakForm: React.FC = () => {
 
       {bekreftSlettId && (
         <Modal ref={ref} width="small" header={{ heading: "Er du sikker på at du vil slette en overstyring?", size: "small", closeButton: false }}>
-          <Modal.Body>
-            {bekreftSlettId}
-          </Modal.Body>
+          
           <Modal.Footer>
             <Button variant='danger' onClick={() => handleSlett(bekreftSlettId)}>Slett</Button>
             <Button variant='primary' onClick={() => ref.current?.close()}>Avbryt</Button>
@@ -131,7 +129,7 @@ const OverstyrUttakForm: React.FC = () => {
         </div>
       )}
 
-      {!visOverstyringSkjema && overstyrte?.length > 0 && (
+      {!visOverstyringSkjema && (
         <div className={styles.overstyrUttakFormFooter}>
           <Button variant="primary" size="small" type="submit" onClick={handleSubmit} loading={loading}>
             Bekreft og fortsett
