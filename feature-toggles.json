@@ -68,10 +68,6 @@
     "value": "${OVERSTYR_BEREGNING}"
   },
   {
-    "key": "LOKALE_PAKKER",
-    "value": "${LOKALE_PAKKER}"
-  },
-  {
     "key": "OVERSTYRING_UTTAK",
     "value": "${OVERSTYRING_UTTAK}"
   }

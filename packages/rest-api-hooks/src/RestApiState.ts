@@ -11,5 +11,4 @@ export default RestApiState;
 export const isRequestNotDone = (state: RestApiState): boolean =>
   state === RestApiState.NOT_STARTED || state === RestApiState.LOADING;
 
-export const isRequestNotToBeDone = (state: RestApiState): boolean =>
-  state === RestApiState.NO_PATH;
+export const isRequestNotToBeDone = (state: RestApiState): boolean => state === RestApiState.NO_PATH;
