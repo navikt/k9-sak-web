@@ -106,9 +106,7 @@ const OverstyrUttakForm: React.FC = () => {
 
       {bekreftSlettId && (
         <Modal ref={ref} width="small" header={{ heading: "Er du sikker på at du vil slette en overstyring?", size: "small", closeButton: false }}>
-          <Modal.Body>
-            {bekreftSlettId}
-          </Modal.Body>
+          
           <Modal.Footer>
             <Button variant='danger' onClick={() => handleSlett(bekreftSlettId)}>Slett</Button>
             <Button variant='primary' onClick={() => ref.current?.close()}>Avbryt</Button>
