@@ -14,7 +14,6 @@ metadata:
 spec:
   image: {{ image }}
   port: 9000
-  team: k9saksbehandling
   liveness:
     path: /isAlive
     initialDelay: 20
@@ -97,7 +96,5 @@ spec:
       value: "true"
     - name: OVERSTYR_BEREGNING
       value: "false"
-    - name: LOKALE_PAKKER
-      value: "true"
     - name: "OVERSTYRING_UTTAK"
       value: "false"

@@ -11,6 +11,8 @@ jobs:
     permissions:
       issues: write
       packages: write
+      contents: read
+      id-token: write
     steps:
       - name: Henter informasjon fra issuet
         id: issue_comment
@@ -43,10 +45,9 @@ jobs:
           ref: ${{ env.SHA }}
 
       - name: Promoter til cluster og namespace
-        uses: nais/deploy/actions/deploy@v1
+        uses: nais/deploy/actions/deploy@v2
         env:
           PRINT_PAYLOAD: true
-          APIKEY: ${{ secrets.DEPLOY_KEY }}
           CLUSTER: ${{ env.CLUSTER }}
           RESOURCE: deploy/${{ env.CLUSTER }}-k9saksbehandling.yml
 

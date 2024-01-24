@@ -1,6 +1,6 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import { Story, composeStories } from '@storybook/react';
-import { render, screen, waitFor } from '@testing-library/react';
+import { act, render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { rest } from 'msw';
 import { setupServer } from 'msw/node';
@@ -41,7 +41,9 @@ describe('9071 - Mangler inntektsmelding', () => {
     await waitFor(() => screen.getByText(/Når kan du gå videre uten inntektsmelding?/i));
 
     // ACT
-    await userEvent.click(screen.getByLabelText(/Nei, avslå periode på grunn av manglende inntektsopplysninger/i));
+    await act(async () => {
+      await userEvent.click(screen.getByLabelText(/Nei, avslå periode på grunn av manglende inntektsopplysninger/i));
+    });
 
     // ASSERT
     expect(screen.queryByRole('button', { name: /Fortsett uten inntektsmelding/i })).toBeNull();
@@ -55,9 +57,10 @@ describe('9071 - Mangler inntektsmelding', () => {
     await waitFor(() => screen.getByText(/Når kan du gå videre uten inntektsmelding?/i));
 
     // ACT
-    await userEvent.click(screen.getByText(/ja, bruk a-inntekt for sauefabrikk \(2\) og sauefabrikk \(1\)/i));
-    await userEvent.click(screen.getByRole('button', { name: /Fortsett uten inntektsmelding/i }));
-
+    await act(async () => {
+      await userEvent.click(screen.getByText(/ja, bruk a-inntekt for sauefabrikk \(2\) og sauefabrikk \(1\)/i));
+      await userEvent.click(screen.getByRole('button', { name: /Fortsett uten inntektsmelding/i }));
+    });
     // ASSERT
     expect(screen.getByText('Du må fylle inn en verdi')).toBeDefined();
   });
@@ -72,9 +75,11 @@ describe('9071 - Mangler inntektsmelding', () => {
     await waitFor(() => screen.getByText(/Når kan du gå videre uten inntektsmelding?/i));
 
     // ACT
-    await userEvent.click(screen.getByText(/ja, bruk a-inntekt for sauefabrikk \(2\) og sauefabrikk \(1\)/i));
-    await userEvent.type(screen.getByLabelText(/Begrunnelse/i), 'Inntektsmelding? LOL! Nei takk');
-    await userEvent.click(screen.getByRole('button', { name: /Fortsett uten inntektsmelding/i }));
+    await act(async () => {
+      await userEvent.click(screen.getByText(/ja, bruk a-inntekt for sauefabrikk \(2\) og sauefabrikk \(1\)/i));
+      await userEvent.type(screen.getByLabelText(/Begrunnelse/i), 'Inntektsmelding? LOL! Nei takk');
+      await userEvent.click(screen.getByRole('button', { name: /Fortsett uten inntektsmelding/i }));
+    });
 
     // ASSERT
     expect(onClickSpy).toHaveBeenCalledWith({

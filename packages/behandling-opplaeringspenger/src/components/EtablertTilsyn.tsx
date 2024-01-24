@@ -6,11 +6,10 @@ import {
   httpErrorHandler as httpErrorHandlerFn,
 } from '@fpsak-frontend/utils';
 import { useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
-import { EtablertTilsyn } from '@navikt/k9-fe-etablert-tilsyn';
-import { EtablertTilsyn as LokalEtablertTilsyn } from '@k9-sak-web/fakta-etablert-tilsyn';
+import { EtablertTilsyn } from '@k9-sak-web/fakta-etablert-tilsyn';
 import React from 'react';
 
-export default ({ aksjonspunkter, behandling, readOnly, submitCallback, saksbehandlere, featureToggles }) => {
+export default ({ aksjonspunkter, behandling, readOnly, submitCallback, saksbehandlere }) => {
   const { addErrorMessage } = useRestApiErrorDispatcher();
   const httpErrorHandlerCaller = (status: number, locationHeader?: string) =>
     httpErrorHandlerFn(status, addErrorMessage, locationHeader);
@@ -28,27 +27,6 @@ export default ({ aksjonspunkter, behandling, readOnly, submitCallback, saksbeha
   const harUløstAksjonspunktForBeredskap = beredskapAksjonspunkt?.status.kode === aksjonspunktStatus.OPPRETTET;
   const harUløstAksjonspunktForNattevåk = nattevåkAksjonspunkt?.status.kode === aksjonspunktStatus.OPPRETTET;
   const harAksjonspunkt = !!beredskapAksjonspunktkode || !!nattevåkAksjonspunktkode;
-
-  if (featureToggles?.LOKALE_PAKKER) {
-    return (
-      <LokalEtablertTilsyn
-        data={{
-          httpErrorHandler: httpErrorHandlerCaller,
-          readOnly: readOnly || !harAksjonspunkt,
-          endpoints: findEndpointsForMicrofrontend(behandling.links, [
-            { rel: 'opplaeringspenger-sykt-barn-tilsyn', desiredName: 'tilsyn' },
-            { rel: 'sykdom-vurdering-oversikt-ktp', desiredName: 'sykdom' },
-            { rel: 'sykdom-innleggelse', desiredName: 'sykdomInnleggelse' },
-          ]),
-          lagreBeredskapvurdering: løsBeredskapAksjonspunkt,
-          lagreNattevåkvurdering: løsNattevåkAksjonspunkt,
-          harAksjonspunktForBeredskap: harUløstAksjonspunktForBeredskap,
-          harAksjonspunktForNattevåk: harUløstAksjonspunktForNattevåk,
-          saksbehandlere,
-        }}
-      />
-    );
-  }
 
   return (
     <EtablertTilsyn
