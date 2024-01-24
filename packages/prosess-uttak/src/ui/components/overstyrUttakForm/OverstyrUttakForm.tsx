@@ -129,7 +129,7 @@ const OverstyrUttakForm: React.FC = () => {
         </div>
       )}
 
-      {!visOverstyringSkjema && overstyrte?.length > 0 && (
+      {!visOverstyringSkjema && (
         <div className={styles.overstyrUttakFormFooter}>
           <Button variant="primary" size="small" type="submit" onClick={handleSubmit} loading={loading}>
             Bekreft og fortsett
