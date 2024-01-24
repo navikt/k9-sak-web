@@ -19,12 +19,12 @@ export function dateFromString(dateString: string): dayjs.Dayjs {
   return dayjs(dateString, dateFormats).utc(true);
 }
 
-export const finnTidligsteStartDatoFraUttaksperioder = (uttaksperioder: Uttaksperioder): Date => {
-  const startDatoer = Object.keys(uttaksperioder).map(key => dayjs(key.split('/')[0]));
+export const finnTidligsteStartDatoFraPerioderTilVurdering = (perioderTilVurdering: string[]): Date => {
+  const startDatoer = perioderTilVurdering.map(periodeString => dayjs(periodeString.split('/')[0]));
   return new Date(Math.min(...startDatoer.map(date => date.valueOf())));
 };
 
-export const finnSisteSluttDatoFraUttaksperioder = (uttaksperioder: Uttaksperioder): Date => {
-  const sluttDatoer = Object.keys(uttaksperioder).map(key => dayjs(key.split('/')[1]));
+export const finnSisteSluttDatoFraPerioderTilVurdering = (perioderTilVurdering: string[]): Date => {
+  const sluttDatoer = perioderTilVurdering.map(periodeString => dayjs(periodeString.split('/')[1]));
   return new Date(Math.max(...sluttDatoer.map(date => date.valueOf())));
-};
+}

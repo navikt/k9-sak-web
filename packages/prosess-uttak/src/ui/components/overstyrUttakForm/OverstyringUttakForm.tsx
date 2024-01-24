@@ -13,7 +13,7 @@ import { useOverstyrUttak } from '../../context/OverstyrUttakContext';
 import { formaterOverstyring, formaterOverstyringAktiviteter } from '../../../util/overstyringUtils';
 import { OverstyrUttakFormFieldName } from '../../../constants/OverstyrUttakFormFieldName';
 import { OverstyrUttakFormData } from '../../../types';
-import { finnSisteSluttDatoFraUttaksperioder, finnTidligsteStartDatoFraUttaksperioder } from '../../../util/dateUtils';
+import { finnSisteSluttDatoFraPerioderTilVurdering, finnTidligsteStartDatoFraPerioderTilVurdering } from '../../../util/dateUtils';
 
 import styles from './OverstyringUttakForm.css';
 
@@ -31,7 +31,7 @@ const OverstyringUttakForm: React.FC<OwnProps> = ({
   setLoading,
 }) => {
   const erNyOverstyring = overstyring === undefined;
-  const { handleOverstyringAksjonspunkt, uttaksperioder } = useContext(ContainerContext);
+  const { handleOverstyringAksjonspunkt, perioderTilVurdering = [] } = useContext(ContainerContext);
   const { lasterAktiviteter, hentAktuelleAktiviteter } = useOverstyrUttak();
   const [deaktiverLeggTil, setDeaktiverLeggTil] = useState<boolean>(true);
 
@@ -47,7 +47,7 @@ const OverstyringUttakForm: React.FC<OwnProps> = ({
     mode: 'onChange',
   });
 
-  const tidligesteStartDato = finnTidligsteStartDatoFraUttaksperioder(uttaksperioder);
+  const tidligesteStartDato = finnTidligsteStartDatoFraPerioderTilVurdering(perioderTilVurdering);
   const { control, setValue, watch, register } = formMethods;
 
   const { fields, replace: replaceAktiviteter } = useFieldArray({
@@ -83,7 +83,7 @@ const OverstyringUttakForm: React.FC<OwnProps> = ({
 
   const disabledDays = [
     date => dayjs(date).isBefore(tidligesteStartDato),
-    date => dayjs(date).isAfter(finnSisteSluttDatoFraUttaksperioder(uttaksperioder)),
+    date => dayjs(date).isAfter(finnSisteSluttDatoFraPerioderTilVurdering(perioderTilVurdering)),
   ];
 
   const handleSubmit = (values: OverstyrUttakFormData) => {

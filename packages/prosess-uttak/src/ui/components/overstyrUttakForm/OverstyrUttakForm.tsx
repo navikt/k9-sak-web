@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 
-import { Button, Heading, Table } from '@navikt/ds-react';
+import { Button, Heading, Modal, Table } from '@navikt/ds-react';
 import { PlusIcon } from '@navikt/ft-plattform-komponenter';
 
 import NavFrontendSpinner from 'nav-frontend-spinner';
@@ -26,6 +26,7 @@ const tableHeaders = (
 );
 
 const OverstyrUttakForm: React.FC = () => {
+  const [bekreftSlettId, setBekreftSlettId] = useState<string | false>(false);
   const [loading, setLoading] = useState<boolean>(false);
   const { handleOverstyringAksjonspunkt } = React.useContext(ContainerContext);
   const [visOverstyringSkjema, setVisOverstyringSkjema] = React.useState<boolean>(false);
@@ -42,7 +43,11 @@ const OverstyrUttakForm: React.FC = () => {
     });
   };
 
+  const ref = useRef<HTMLDialogElement>(null);
+
   const handleSlett = (id: string): void => {
+    ref.current?.close();
+    setBekreftSlettId(false);
     setLoading(true);
     handleOverstyringAksjonspunkt({
       erVilkarOk: false,
@@ -61,6 +66,11 @@ const OverstyrUttakForm: React.FC = () => {
   const handleRediger = (index: number) => {
     setRedigerOverstyring(index);
     setVisOverstyringSkjema(true);
+  };
+
+  const bekreftSletting = (id: string) => {
+    setBekreftSlettId(id);
+    ref.current?.showModal();
   };
 
   return (
@@ -82,7 +92,7 @@ const OverstyrUttakForm: React.FC = () => {
                       index={index}
                       handleRediger={handleRediger}
                       visOverstyringSkjema={visOverstyringSkjema}
-                      handleSlett={handleSlett}
+                      handleSlett={bekreftSletting}
                       loading={loading}
                       setLoading={setLoading}
                     />
@@ -92,6 +102,18 @@ const OverstyrUttakForm: React.FC = () => {
             </>
           )}
         </>
+      )}
+
+      {bekreftSlettId && (
+        <Modal ref={ref} width="small" header={{ heading: "Er du sikker på at du vil slette en overstyring?", size: "small", closeButton: false }}>
+          <Modal.Body>
+            {bekreftSlettId}
+          </Modal.Body>
+          <Modal.Footer>
+            <Button variant='danger' onClick={() => handleSlett(bekreftSlettId)}>Slett</Button>
+            <Button variant='primary' onClick={() => ref.current?.close()}>Avbryt</Button>
+          </Modal.Footer>
+        </Modal>
       )}
 
       {!visOverstyringSkjema && (

@@ -14,6 +14,7 @@ interface UttakProps {
   uuid: string;
   behandling: Behandling;
   uttaksperioder: any;
+  perioderTilVurdering?: string[];
   utsattePerioder: string[];
   virkningsdatoUttakNyeRegler?: string;
   arbeidsgiverOpplysningerPerId: ArbeidsgiverOpplysningerPerId;
@@ -29,6 +30,7 @@ export default ({
   uuid,
   behandling,
   uttaksperioder,
+  perioderTilVurdering = [],
   utsattePerioder,
   arbeidsgiverOpplysningerPerId,
   aksjonspunkter,
@@ -72,6 +74,7 @@ export default ({
           { rel: 'pleiepenger-overstyrt-uttak', desiredName: 'behandlingUttakOverstyrt' },
         ]),
         uttaksperioder,
+        perioderTilVurdering,
         utsattePerioder,
         aktivBehandlingUuid: uuid,
         arbeidsforhold: arbeidsgiverOpplysningerPerId,
