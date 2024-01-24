@@ -144,6 +144,7 @@ jobs:
     uses: navikt/sif-gha-workflows/.github/workflows/trivy.yml@main
     permissions:
       contents: write
+      id-token: write
       security-events: write
       actions: read
     secrets: inherit
