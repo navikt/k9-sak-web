@@ -2,6 +2,8 @@ name: Promote
 on:
   repository_dispatch:
     types: [promote-command]
+env:
+  IMAGE_BASE: europe-north1-docker.pkg.dev/nais-management-233d/k9saksbehandling/k9-sak-web
 
 jobs:
   promote:
@@ -33,7 +35,7 @@ jobs:
           IMAGE_INPUT: ${{ steps.issue_comment.outputs.title }}
           SHA_INPUT: ${{ steps.issue_comment.outputs.sha }}
         run: |
-          echo "IMAGE=$(echo $IMAGE_INPUT | awk '{print $NF}')" >> $GITHUB_ENV
+          echo "IMAGE=$IMAGE_BASE:$(echo $IMAGE_INPUT | awk '{print $NF}')" >> $GITHUB_ENV
           echo "SHA=$(echo $SHA_INPUT | awk '{print $NF}')" >> $GITHUB_ENV
           echo "CLUSTER=$CLUSTER_INPUT" >> $GITHUB_ENV
 
