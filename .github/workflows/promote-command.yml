@@ -2,8 +2,6 @@ name: Promote
 on:
   repository_dispatch:
     types: [promote-command]
-env:
-  IMAGE_BASE: ghcr.io/${{ github.repository }}
 
 jobs:
   promote:
@@ -35,7 +33,7 @@ jobs:
           IMAGE_INPUT: ${{ steps.issue_comment.outputs.title }}
           SHA_INPUT: ${{ steps.issue_comment.outputs.sha }}
         run: |
-          echo "IMAGE=$IMAGE_BASE:$(echo $IMAGE_INPUT | awk '{print $NF}')" >> $GITHUB_ENV
+          echo "IMAGE=(echo $IMAGE_INPUT | awk '{print $NF}')" >> $GITHUB_ENV
           echo "SHA=$(echo $SHA_INPUT | awk '{print $NF}')" >> $GITHUB_ENV
           echo "CLUSTER=$CLUSTER_INPUT" >> $GITHUB_ENV
 
