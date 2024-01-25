@@ -24,13 +24,13 @@ describe.skip('httpUtils', () => {
 
     it('should return the data-property from the response when the promise resolved', async () => {
       vi.mocked(httpUtils.get).mockImplementation(() => Promise.resolve(goodResponseMock));
-      const data = await get('', () => null);
+      const data = await httpUtils.get('', () => null);
       expect(data).toEqual(goodResponseMock.data);
     });
 
     it('should throw an error and console.error when the promise is rejected', async () => {
       vi.mocked(httpUtils.get).mockImplementation(() => Promise.reject(badRequestResponseMock));
-      const error = get('', () => null);
+      const error = httpUtils.get('', () => null);
       await expect(error).rejects.toThrow();
       expect(console.error).toHaveBeenCalledWith(badRequestResponseMock);
     });
@@ -42,7 +42,7 @@ describe.skip('httpUtils', () => {
 
       vi.mocked(httpUtils.get).mockImplementation(() => Promise.reject(badRequestResponseMock));
 
-      const error = get('', mockedErrorHandler);
+      const error = httpUtils.get('', mockedErrorHandler);
       await expect(error).rejects.toThrow('');
       expect(httpErrorHandlerCaller).toHaveBeenCalledWith(badRequestResponseMock, mockedErrorHandler);
     });
@@ -54,7 +54,7 @@ describe.skip('httpUtils', () => {
 
       vi.mocked(httpUtils.get).mockImplementation(() => Promise.reject(badRequestResponseMock));
 
-      await expect(get('', mockedErrorHandler)).rejects.toThrow('');
+      await expect(httpUtils.get('', mockedErrorHandler)).rejects.toThrow('');
       expect(httpErrorHandlerCaller).not.toHaveBeenCalled();
     });
   });
@@ -68,13 +68,13 @@ describe.skip('httpUtils', () => {
 
     it('should return the data-property from the response when the promise resolved', async () => {
       vi.mocked(httpUtils.post).mockImplementation(() => Promise.resolve(goodResponseMock));
-      const data = await post('', null, null);
+      const data = await httpUtils.post('', null, null);
       expect(data).toEqual(goodResponseMock.data);
     });
 
     it('should throw an error and console.error when the promise is rejected', async () => {
       vi.mocked(httpUtils.post).mockImplementation(() => Promise.reject(badRequestResponseMock));
-      const error = post('', null, null);
+      const error = httpUtils.post('', null, null);
       await expect(error).rejects.toEqual(badRequestResponseMock);
       expect(console.error).toHaveBeenCalledWith(badRequestResponseMock);
     });
@@ -86,7 +86,7 @@ describe.skip('httpUtils', () => {
 
       vi.mocked(httpUtils.post).mockImplementation(() => Promise.reject(badRequestResponseMock));
 
-      const error = post('', null, mockedErrorHandler);
+      const error = httpUtils.post('', null, mockedErrorHandler);
       await expect(error).rejects.toEqual(badRequestResponseMock);
       expect(httpErrorHandlerCaller).toHaveBeenCalledWith(badRequestResponseMock, mockedErrorHandler);
     });
@@ -98,7 +98,7 @@ describe.skip('httpUtils', () => {
 
       vi.mocked(httpUtils.post).mockImplementation(() => Promise.reject(badRequestResponseMock));
 
-      await expect(post('', null, mockedErrorHandler)).rejects.toEqual(badRequestResponseMock);
+      await expect(httpUtils.post('', null, mockedErrorHandler)).rejects.toEqual(badRequestResponseMock);
       expect(httpErrorHandlerCaller).not.toHaveBeenCalled();
     });
   });

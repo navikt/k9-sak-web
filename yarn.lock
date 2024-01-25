@@ -11252,7 +11252,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"axe-core@npm:^4.4.2":
+"axe-core@npm:^4.4.2, axe-core@npm:^4.7.2":
   version: 4.8.3
   resolution: "axe-core@npm:4.8.3"
   checksum: f546c74d1f3a7bff81752457fe9e5573693a8ecce11d3c265db501a82105efe0cd29964a491dd98e5979f6f3d85db6776e5e46626c2b09ab579a3729108964fd
@@ -11922,7 +11922,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"chalk@npm:5.3.0, chalk@npm:^5.0.1":
+"chalk@npm:5.3.0, chalk@npm:^5.0.1, chalk@npm:^5.3.0":
   version: 5.3.0
   resolution: "chalk@npm:5.3.0"
   checksum: 623922e077b7d1e9dedaea6f8b9e9352921f8ae3afe739132e0e00c275971bdd331268183b2628cf4ab1727c45ea1f28d7e24ac23ce1db1eb653c414ca8a5a80
@@ -17572,7 +17572,7 @@ __metadata:
     vite-plugin-mock: ^3.0.1
     vite-plugin-svgr: 4.2.0
     vitest: 1.1.3
-    vitest-axe: ^0.1.0
+    vitest-axe: 1.0.0-pre.3
     webpack-merge: 5.10.0
   languageName: unknown
   linkType: soft
@@ -25148,6 +25148,19 @@ __metadata:
   bin:
     vite: bin/vite.js
   checksum: b97b6f1c204d9091d0973626827a6e9d8e8b1959ebd0877b6f76e7068e1e7adf9ecd3b1cc382cbab9d421e3eeca5e1a95f27f9c1734439b229f5a58ef2052fa4
+  languageName: node
+  linkType: hard
+
+"vitest-axe@npm:1.0.0-pre.3":
+  version: 1.0.0-pre.3
+  resolution: "vitest-axe@npm:1.0.0-pre.3"
+  dependencies:
+    axe-core: ^4.7.2
+    chalk: ^5.3.0
+    lodash-es: ^4.17.21
+  peerDependencies:
+    vitest: ">=0.31.0"
+  checksum: d2025eef660080b3d267adbc2f8e40d3febd77d26f7080761d0dfdccd9e4e262c13b7f71a0574af20f692712124c7a1b5929b9c2f21fd9e579e54f0693c40c2a
   languageName: node
   linkType: hard
 
