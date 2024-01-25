@@ -46,7 +46,7 @@
     "@navikt/ds-css": "5.12.2",
     "@navikt/ds-react": "5.12.2",
     "@navikt/ds-tailwind": "^5.12.2",
-    "@navikt/familie-endringslogg": "10.0.0",
+    "@navikt/familie-endringslogg": "11.0.0",
     "@navikt/ft-plattform-komponenter": "2.3.17",
     "@popperjs/core": "2.11.8",
     "@sentry/browser": "7.92.0",

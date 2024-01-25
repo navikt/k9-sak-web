@@ -5977,19 +5977,19 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@navikt/familie-endringslogg@npm:10.0.0":
-  version: 10.0.0
-  resolution: "@navikt/familie-endringslogg@npm:10.0.0::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Ffamilie-endringslogg%2F10.0.0%2Fa85a44073c816ec36daaaa8d20c44ab8dff0ccaa"
+"@navikt/familie-endringslogg@npm:11.0.0":
+  version: 11.0.0
+  resolution: "@navikt/familie-endringslogg@npm:11.0.0::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40navikt%2Ffamilie-endringslogg%2F11.0.0%2Fd50201e34031ee99803728763ba5769cc31af07a"
   dependencies:
-    "@portabletext/react": ^3.0.7
-    classnames: ^2.3.2
+    "@portabletext/react": ^3.0.11
+    classnames: ^2.5.1
     react-transition-group: ^4.4.5
   peerDependencies:
     "@navikt/aksel-icons": 5.x
-    "@navikt/ds-react": 4.x || 5.x
-    "@types/react": 17.x || 18.x
-    react: 17.x || 18.x
-  checksum: aba26b3bf89516fde625322f0c4db7f6ab10f88a9a5a8810a61fe7af26ae3ac7b49ec283f6532086ea784ea42d5f80a52d37b3b89e6fc550d2a17f2caa5485a9
+    "@navikt/ds-react": 5.x
+    "@types/react": 18.x
+    react: 18.x
+  checksum: 2e69e386f07023ca66b8ba9f926b327cd8c5ea95d61c6cb5dfb74088990bfddb3d7d011ae187a91465f0d7ce7caee969adee01ec838f3ddbd3454c66b3129df8
   languageName: node
   linkType: hard
 
@@ -6898,7 +6898,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@portabletext/react@npm:^3.0.7":
+"@portabletext/react@npm:^3.0.11":
   version: 3.0.11
   resolution: "@portabletext/react@npm:3.0.11"
   dependencies:
@@ -11951,7 +11951,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"classnames@npm:2.5.1, classnames@npm:^2.3.2":
+"classnames@npm:2.5.1, classnames@npm:^2.5.1":
   version: 2.5.1
   resolution: "classnames@npm:2.5.1"
   checksum: da424a8a6f3a96a2e87d01a432ba19315503294ac7e025f9fece656db6b6a0f7b5003bb1fbb51cbb0d9624d964f1b9bb35a51c73af9b2434c7b292c42231c1e5
@@ -17303,7 +17303,7 @@ __metadata:
     "@navikt/ds-css": 5.12.2
     "@navikt/ds-react": 5.12.2
     "@navikt/ds-tailwind": ^5.12.2
-    "@navikt/familie-endringslogg": 10.0.0
+    "@navikt/familie-endringslogg": 11.0.0
     "@navikt/ft-plattform-komponenter": 2.3.17
     "@popperjs/core": 2.11.8
     "@sentry/browser": 7.92.0
