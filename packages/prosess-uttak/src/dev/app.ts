@@ -52,6 +52,7 @@ const data = {
       kildeBehandlingUUID: '123456',
       endringsstatus: 'NY' as Endringsstatus,
       annenPart: AnnenPart.MED_ANDRE,
+      manueltOverstyrt: false,
     },
     '2021-03-09/2021-03-22': {
       utfall: Utfall.OPPFYLT,
@@ -93,6 +94,7 @@ const data = {
       annenPart: AnnenPart.ALENE,
       endringsstatus: 'ENDRET' as Endringsstatus,
       utenlandsoppholdÅrsak: 'INGEN',
+      manueltOverstyrt: false,
     },
     '2021-03-23/2021-03-31': {
       utfall: Utfall.IKKE_OPPFYLT,
@@ -128,6 +130,7 @@ const data = {
       kildeBehandlingUUID: '123456',
       annenPart: AnnenPart.ALENE,
       endringsstatus: 'UENDRET' as Endringsstatus,
+      manueltOverstyrt: false,
     },
     '2021-04-01/2021-04-14': {
       utfall: Utfall.IKKE_OPPFYLT,
@@ -165,6 +168,7 @@ const data = {
       endringsstatus: 'UENDRET' as Endringsstatus,
       utenlandsoppholdÅrsak: { landkode: 'BGD', årsak: 'INGEN' },
       utenlandsoppholdUtenÅrsak: true,
+      manueltOverstyrt: false,
     },
   },
   arbeidsforhold: {
