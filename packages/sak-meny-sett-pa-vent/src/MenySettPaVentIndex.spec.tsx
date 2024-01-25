@@ -66,20 +66,20 @@ describe('<MenySettPaVentIndex>', () => {
      */
     const datoFelt = screen.getByPlaceholderText('dd.mm.åååå');
     const datoStreng = format(testDato, 'dd.MM.yyyy');
-    userEvent.clear(datoFelt);
-    userEvent.type(datoFelt, datoStreng);
+    await userEvent.clear(datoFelt);
+    await userEvent.type(datoFelt, datoStreng);
     fireEvent.blur(datoFelt);
 
     /**
      * Velg en venteårsak
      */
     const venteArsakFelt = screen.getByLabelText('Hva venter vi på?');
-    userEvent.selectOptions(venteArsakFelt, venteArsakType.UTV_FRIST);
+    await userEvent.selectOptions(venteArsakFelt, venteArsakType.UTV_FRIST);
 
     /**
      * Ssubmit
      */
-    userEvent.click(screen.getByText(/Sett på vent/i));
+    await userEvent.click(screen.getByText(/Sett på vent/i));
 
     expect(settBehandlingPaVent).toHaveBeenCalledWith({
       behandlingVersjon: 1,

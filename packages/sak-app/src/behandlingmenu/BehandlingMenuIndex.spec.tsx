@@ -142,7 +142,7 @@ describe('BehandlingMenuIndex', () => {
      * Åpne behandlingsmenyen
      */
     await act(async () => {
-      userEvent.click(knapp);
+      await userEvent.click(knapp);
     });
 
     expect(screen.queryByText('Fortsett behandlingen')).toBeNull();

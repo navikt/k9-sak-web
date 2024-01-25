@@ -6,6 +6,8 @@ import { EtikettAdvarsel, EtikettSuksess } from 'nav-frontend-etiketter';
 import Hjelpetekst from 'nav-frontend-hjelpetekst';
 import { PopoverOrientering } from 'nav-frontend-popover';
 import { Element } from 'nav-frontend-typografi';
+import { PersonPencilFillIcon } from '@navikt/aksel-icons';
+import { HelpText } from '@navikt/ds-react';
 
 import { arbeidstypeTilVisning } from '../../../constants/Arbeidstype';
 import BarnetsDødsfallÅrsakerMedTekst from '../../../constants/BarnetsDødsfallÅrsakerMedTekst';
@@ -128,6 +130,7 @@ const formatAvkortingMotArbeid = (
   utbetalingsgrader: Utbetalingsgrad[],
   søkersTapteArbeidstid: number,
   alleArbeidsforhold: Record<string, ArbeidsgiverOpplysninger>,
+  manueltOverstyrt?: boolean
 ) => (
   <>
     <div className={styles.uttakDetaljer__avkortingMotArbeid}>
@@ -143,6 +146,8 @@ const formatAvkortingMotArbeid = (
         const beregnetNormalArbeidstid = beregnDagerTimer(normalArbeidstid);
         const beregnetFaktiskArbeidstid = beregnDagerTimer(faktiskArbeidstid);
         const faktiskOverstigerNormal = beregnetNormalArbeidstid < beregnetFaktiskArbeidstid;
+        const prosentFravær = Math.round(Math.max(beregnetNormalArbeidstid - beregnetFaktiskArbeidstid, 0) / beregnetNormalArbeidstid * 100);
+
         return (
           // eslint-disable-next-line react/no-array-index-key
           <div key={index}>
@@ -168,13 +173,26 @@ const formatAvkortingMotArbeid = (
                 </Hjelpetekst>
               )}
             </span>
-            <p className={styles.uttakDetaljer__data}>{`Utbetalingsgrad: ${utbetalingsgrad} %`}</p>
+            <hr />
+            <div className="inline-flex justify-between w-full mb-6">
+              <div>= {prosentFravær}% fravær</div>
+              <div className='inline-flex justify-end'>
+                Utbetalingsgrad: {utbetalingsgrad}%
+                {manueltOverstyrt && <>
+                  <PersonPencilFillIcon className="ml-1 align-middle text-2xl text-border-warning" title="Manuelt overstyrt" />
+                  <HelpText title="Hvor kommer utbetalingsgraden fra?">
+                    Utbetalingsgraden <i>kan</i> være manuelt overstyrt av saksbehandler.
+                  </HelpText>
+                </>}
+              </div>
+            </div>
           </div>
         );
       })}
     </div>
-    <hr />
-    <p className={styles.uttakDetaljer__sum}>{`= ${søkersTapteArbeidstid} % totalt inntektstap`}</p>
+    <div className="border-4">
+      {`= ${søkersTapteArbeidstid} % totalt inntektstap`}
+    </div>
   </>
 );
 
@@ -220,6 +238,7 @@ const UttakDetaljer = ({ uttak }: UttakDetaljerProps): JSX.Element => {
     pleiebehov,
     utenlandsopphold,
     utfall,
+    manueltOverstyrt
   } = uttak;
   return (
     <div className={styles.uttakDetaljer}>
@@ -249,7 +268,7 @@ const UttakDetaljer = ({ uttak }: UttakDetaljerProps): JSX.Element => {
           heading="Avkorting mot arbeid"
           highlight={shouldHighlight(Årsaker.AVKORTET_MOT_INNTEKT, årsaker)}
         >
-          {formatAvkortingMotArbeid(utbetalingsgrader, søkersTapteArbeidstid, arbeidsforhold)}
+          {formatAvkortingMotArbeid(utbetalingsgrader, søkersTapteArbeidstid, arbeidsforhold, manueltOverstyrt)}
         </UttakUtregning>
       </div>
     </div>

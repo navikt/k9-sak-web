@@ -25,7 +25,7 @@ describe('<MenyMarkerBehandling', () => {
     );
     expect(screen.queryByLabelText('Kommentar')).toBe(null);
     await act(async () => {
-      userEvent.click(screen.getByLabelText('Behandlingen er hastesak'));
+      await userEvent.click(screen.getByLabelText('Behandlingen er hastesak'));
     });
 
     expect(screen.getByLabelText('Kommentar')).toBeInTheDocument();

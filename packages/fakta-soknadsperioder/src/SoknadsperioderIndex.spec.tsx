@@ -92,7 +92,7 @@ describe('<SøknadsperioderIndex>', () => {
     expect(navigerFremoverKnapp).toBeDisabled();
     expect(datoFørNavigering).toBeInTheDocument();
 
-    userEvent.click(navigerBakoverKnapp);
+    await userEvent.click(navigerBakoverKnapp);
     expect(navigerFremoverKnapp).not.toBeDisabled();
     const datoEtterNavigering6mnd = screen.getByText('11. april 2021 - 11. oktober 2021');
     expect(datoEtterNavigering6mnd).toBeInTheDocument();
@@ -104,12 +104,12 @@ describe('<SøknadsperioderIndex>', () => {
     const datoFørNavigering = screen.getByText('11. oktober 2021 - 11. april 2022');
     expect(datoFørNavigering).toBeInTheDocument();
 
-    userEvent.click(zoomInnKnapp);
+    await userEvent.click(zoomInnKnapp);
     const datoEtterZoomInn = screen.getByText('11. november 2021 - 11. april 2022');
     expect(datoEtterZoomInn).toBeInTheDocument();
 
-    userEvent.click(zoomUtKnapp);
-    userEvent.click(zoomUtKnapp);
+    await userEvent.click(zoomUtKnapp);
+    await userEvent.click(zoomUtKnapp);
     const datoEtterZoomUt = screen.getByText('11. september 2021 - 11. april 2022');
     expect(datoEtterZoomUt).toBeInTheDocument();
   });

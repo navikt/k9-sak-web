@@ -59,11 +59,11 @@ describe('<FagsakSearchIndex>', () => {
       </Provider>,
     );
 
-    expect(await screen.getByTestId('FagsakSearch')).toBeInTheDocument();
+    expect(screen.getByTestId('FagsakSearch')).toBeInTheDocument();
     expect(screen.queryByRole('table')).not.toBeInTheDocument();
 
-    userEvent.type(screen.getByRole('textbox', { name: 'Saksnummer eller fødselsnummer/D-nummer' }), '12345');
-    userEvent.click(await screen.getByRole('button', { name: 'Søk' }));
+    await userEvent.type(screen.getByRole('textbox', { name: 'Saksnummer eller fødselsnummer/D-nummer' }), '12345');
+    await userEvent.click(screen.getByRole('button', { name: 'Søk' }));
 
     const reqData = requestApi.getRequestMockData(K9sakApiKeys.SEARCH_FAGSAK);
     expect(reqData[0].params).toEqual({ searchString: '12345' });
@@ -91,15 +91,15 @@ describe('<FagsakSearchIndex>', () => {
     expect(await screen.getByTestId('FagsakSearch')).toBeInTheDocument();
     expect(screen.queryByRole('table')).not.toBeInTheDocument();
 
-    userEvent.type(screen.getByRole('textbox', { name: 'Saksnummer eller fødselsnummer/D-nummer' }), '12345');
-    userEvent.click(await screen.getByRole('button', { name: 'Søk' }));
+    await userEvent.type(screen.getByRole('textbox', { name: 'Saksnummer eller fødselsnummer/D-nummer' }), '12345');
+    await userEvent.click(screen.getByRole('button', { name: 'Søk' }));
 
     const reqData = requestApi.getRequestMockData(K9sakApiKeys.SEARCH_FAGSAK);
     expect(reqData[0].params).toEqual({ searchString: '12345' });
     expect(screen.queryAllByRole('table').length).toBe(1);
     expect(screen.queryAllByRole('cell', { name: '12345' }).length).toBe(1);
 
-    userEvent.click(screen.getByRole('row', { name: '12345' }));
+    await userEvent.click(screen.getByRole('row', { name: '12345' }));
 
     expect(mockNavigate.mock.calls[0][0]).toBe('/fagsak/12345/');
   });

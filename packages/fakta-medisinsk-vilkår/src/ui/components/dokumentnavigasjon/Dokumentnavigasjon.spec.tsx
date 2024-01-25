@@ -7,7 +7,7 @@ import mockedDokumentoversikt from '../../../../mock/mocked-data/mockedDokumento
 describe('Dokumentnavigasjon', () => {
   const { dokumenter } = mockedDokumentoversikt;
 
-  it('should render "Ingen dokumenter å vise" text when there are no documents to show', () => {
+  it('should render "Ingen dokumenter å vise" text when there are no documents to show', async () => {
     render(
       <Dokumentnavigasjon
         tittel="something"
@@ -65,11 +65,11 @@ describe('Dokumentnavigasjon', () => {
     );
     expect(screen.getByText(/ikke klassifisert/i)).toBeInTheDocument();
 
-    userEvent.click(screen.getByRole('button', { name: 'Type' }));
+    await userEvent.click(screen.getByRole('button', { name: 'Type' }));
 
     const ikkeKlassifisertCheckbox = await screen.findByLabelText(/ikke klassifisert/i);
-    userEvent.click(ikkeKlassifisertCheckbox);
-    userEvent.click(screen.getAllByText(/type/i)[1]);
+    await userEvent.click(ikkeKlassifisertCheckbox);
+    await userEvent.click(screen.getAllByText(/type/i)[1]);
 
     await waitFor(() => expect(screen.queryByText(/ikke klassifisert/i)).not.toBeInTheDocument());
   });
@@ -85,11 +85,11 @@ describe('Dokumentnavigasjon', () => {
         onDokumentValgt={() => null}
       />,
     );
-    userEvent.click(screen.getByRole('button', { name: 'Type' }));
+    await userEvent.click(screen.getByRole('button', { name: 'Type' }));
     const ikkeKlassifisertCheckbox = await screen.findByLabelText(/ikke klassifisert/i);
     expect(ikkeKlassifisertCheckbox).toBeTruthy();
 
-    userEvent.click(document.body);
+    await userEvent.click(document.body);
     await waitFor(() => expect(screen.queryByLabelText(/ikke klassifisert/i)).not.toBeInTheDocument());
   });
 });
