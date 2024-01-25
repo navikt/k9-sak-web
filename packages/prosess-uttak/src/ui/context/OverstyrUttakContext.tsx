@@ -54,17 +54,17 @@ export const OverstyrUttakContextProvider = ({ children }) => {
       )
       .then((response: OverstyrbareAktiviteterResponse) => response);
 
+    setArbeidsgiverOversikt(apiResult?.arbeidsgiverOversikt?.arbeidsgivere || null);
     setLasterAktiviteter(false);
     return apiResult.arbeidsforholdsperioder;
   };
 
   const utledAktivitetNavn = (arbeidsforhold: Arbeidsforhold): string => {
     let identifikator = null;
-
-    if (arbeidsforhold.arbeidsforholdId !== null) identifikator = arbeidsforhold.arbeidsforholdId;
-    if (arbeidsforhold.orgnr !== null) identifikator = arbeidsforhold.orgnr;
-    if (arbeidsforhold.organisasjonsnummer !== null) identifikator = arbeidsforhold.organisasjonsnummer;
-    if (arbeidsforhold.aktørId !== null) identifikator = arbeidsforhold.aktørId;
+    if (arbeidsforhold.arbeidsforholdId) identifikator = arbeidsforhold.arbeidsforholdId;
+    if (arbeidsforhold.orgnr) identifikator = arbeidsforhold.orgnr;
+    if (arbeidsforhold.organisasjonsnummer) identifikator = arbeidsforhold.organisasjonsnummer;
+    if (arbeidsforhold.aktørId) identifikator = arbeidsforhold.aktørId;
 
     if (arbeidsgiverOversikt && arbeidsgiverOversikt[identifikator]) return arbeidsgiverOversikt[identifikator].navn;
     if (arbeidsforhold.type === 'SN') return arbeidstypeTilVisning.SN;

@@ -694,7 +694,7 @@ describe('<VedtakForm>', () => {
     expect(overstyringsCheckbox).toBeDisabled();
     expect(hindreUtsendingCheckbox).toBeEnabled();
 
-    userEvent.click(hindreUtsendingCheckbox);
+    await userEvent.click(hindreUtsendingCheckbox);
 
     await waitFor(() => expect(hindreUtsendingCheckbox).toBeChecked());
     await waitFor(() => expect(hindreUtsendingCheckbox).toBeDisabled());
