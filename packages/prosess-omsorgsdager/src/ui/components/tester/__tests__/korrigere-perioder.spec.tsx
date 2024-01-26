@@ -176,7 +176,7 @@ describe('<KorrigerePerioder>', () => {
     const { container } = render(<KorrigerePerioder {...props} />);
 
     const a11yResults = await axe(container);
-
+    // @ts-expect-error vitest-axe doesn't work with vitest v1
     expect(a11yResults).toHaveNoViolations();
   });
 });

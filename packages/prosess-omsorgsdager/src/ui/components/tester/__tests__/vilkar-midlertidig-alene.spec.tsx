@@ -336,7 +336,7 @@ describe('<VilkarMidlertidigAlene>', () => {
     const { container } = render(<VilkarMidlertidigAlene {...props} />);
 
     const a11yResults = await axe(container);
-
+    // @ts-expect-error vitest-axe doesn't work with vitest v1
     expect(a11yResults).toHaveNoViolations();
   });
 });
