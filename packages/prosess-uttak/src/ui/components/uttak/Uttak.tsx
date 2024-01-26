@@ -52,7 +52,10 @@ const Uttak = ({ uttak, erValgt, velgPeriode, withBorderTop = false }: UttakProp
     <>
       <TableRow className={`${erValgt ? styles.uttak__expandedRow : ''}`} onClick={velgPeriode}>
         <TableColumn className={`${withBorderTop ? styles.borderTop : ''}`}>
-          <Normaltekst>{periode.prettifyPeriod()}</Normaltekst>
+          <Normaltekst>
+            {periode.prettifyPeriod()}
+            {manueltOverstyrt && <PersonPencilFillIcon className="ml-1 align-middle text-2xl text-border-warning" title="Manuelt overstyrt" />}
+          </Normaltekst>
         </TableColumn>
         <TableColumn className={`${withBorderTop ? styles.borderTop : ''}`}>
           {harOppfyltAlleInngangsvilkår ? <GreenCheckIconFilled /> : <RedCrossIconFilled />}
@@ -81,8 +84,7 @@ const Uttak = ({ uttak, erValgt, velgPeriode, withBorderTop = false }: UttakProp
 
         <TableColumn className={`${styles.uttak__uttaksgrad} ${withBorderTop ? styles.borderTop : ''}`}>
           <p className={styles.uttak__uttaksgrad__tekst}>
-            {`${uttaksgrad} %`} 
-            {manueltOverstyrt && <PersonPencilFillIcon  className="ml-1 align-middle text-2xl text-border-warning" title="Manuelt overstyrt" />}
+            {`${uttaksgrad} %`}
           </p>
           <div className={uttakGradIndikatorCls} />
         </TableColumn>
