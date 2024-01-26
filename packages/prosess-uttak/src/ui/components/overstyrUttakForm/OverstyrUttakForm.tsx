@@ -2,8 +2,9 @@ import React, { useRef, useState } from 'react';
 
 import { Alert, BodyShort, Button, Heading, Modal, Table } from '@navikt/ds-react';
 import { PlusIcon } from '@navikt/ft-plattform-komponenter';
-
 import NavFrontendSpinner from 'nav-frontend-spinner';
+
+import { erOverstyringInnenforPerioderTilVurdering } from '../../../util/dateUtils';
 import ContainerContext from '../../context/ContainerContext';
 import OverstyringUttakForm from './OverstyringUttakForm';
 import AktivitetRad from './AktivitetRad';
@@ -16,7 +17,7 @@ import styles from './overstyrUttakForm.css';
 const OverstyrUttakForm: React.FC = () => {
   const [bekreftSlettId, setBekreftSlettId] = useState<string | false>(false);
   const [loading, setLoading] = useState<boolean>(false);
-  const { handleOverstyringAksjonspunkt, erOverstyrer } = React.useContext(ContainerContext);
+  const { handleOverstyringAksjonspunkt, erOverstyrer, perioderTilVurdering } = React.useContext(ContainerContext);
   const [visOverstyringSkjema, setVisOverstyringSkjema] = React.useState<boolean>(false);
   const { lasterOverstyringer, overstyrte, harAksjonspunktForOverstyringAvUttak } = useOverstyrUttak();
   const [redigerOverstyring, setRedigerOverstyring] = React.useState<number | boolean>(false);
@@ -31,7 +32,7 @@ const OverstyrUttakForm: React.FC = () => {
       slett: [],
     });
   };
-  
+
   const tableHeaders = (
     <Table.Header>
       <Table.Row>
@@ -106,7 +107,7 @@ const OverstyrUttakForm: React.FC = () => {
                       visOverstyringSkjema={visOverstyringSkjema}
                       handleSlett={bekreftSletting}
                       loading={loading}
-                      setLoading={setLoading}
+                      erTilVurdering={erOverstyringInnenforPerioderTilVurdering(overstyring, perioderTilVurdering)}
                       leseModus={leseModus}
                     />
                   ))}
