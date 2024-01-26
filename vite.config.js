@@ -2,7 +2,7 @@ import react from '@vitejs/plugin-react';
 import { loadEnv } from 'vite';
 import { viteMockServe } from 'vite-plugin-mock';
 import svgr from 'vite-plugin-svgr';
-import { defineConfig } from 'vitest/config'
+import { defineConfig } from 'vitest/config';
 
 const createProxy = (target, pathRewrite) => ({
   target,

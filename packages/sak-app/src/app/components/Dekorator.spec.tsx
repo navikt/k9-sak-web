@@ -1,3 +1,4 @@
+/* eslint-disable vitest/no-commented-out-tests */
 import HeaderWithErrorPanel from '@fpsak-frontend/sak-dekorator';
 import { intlMock, shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import * as useRestApiError from '@k9-sak-web/rest-api-hooks/src/error/useRestApiError';

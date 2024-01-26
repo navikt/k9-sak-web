@@ -1,3 +1,4 @@
+/* eslint-disable vitest/no-commented-out-tests */
 import { render, screen } from '@testing-library/react';
 import React from 'react';
 import { MemoryRouter } from 'react-router';
