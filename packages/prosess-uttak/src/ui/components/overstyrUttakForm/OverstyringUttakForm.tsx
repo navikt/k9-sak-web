@@ -40,7 +40,7 @@ const OverstyringUttakForm: React.FC<OwnProps> = ({
     defaultValues: overstyring || {
       [OverstyrUttakFormFieldName.FOM]: undefined,
       [OverstyrUttakFormFieldName.TOM]: undefined,
-      [OverstyrUttakFormFieldName.UTTAKSGRAD]: 0,
+      [OverstyrUttakFormFieldName.UTTAKSGRAD]: undefined,
       [OverstyrUttakFormFieldName.BEGRUNNELSE]: '',
       [OverstyrUttakFormFieldName.UTBETALINGSGRADER]: [],
     },
