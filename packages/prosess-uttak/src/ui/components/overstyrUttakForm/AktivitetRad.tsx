@@ -16,6 +16,7 @@ interface ownProps {
   visOverstyringSkjema: boolean;
   handleSlett: (id: string) => void;
   loading: boolean;
+  leseModus: boolean;
   setLoading: (loading: boolean) => void;
 }
 
@@ -25,6 +26,7 @@ const AktivitetRad: React.FC<ownProps> = ({
   handleRediger,
   visOverstyringSkjema,
   handleSlett,
+  leseModus,
   loading,
 }) => {
   const { id, periode, søkersUttaksgrad, begrunnelse } = overstyring;
@@ -43,7 +45,7 @@ const AktivitetRad: React.FC<ownProps> = ({
       <Table.DataCell>{dayjs(fom).format('DD.MM.YYYY')}</Table.DataCell>
       <Table.DataCell>{dayjs(tom).format('DD.MM.YYYY')}</Table.DataCell>
       <Table.DataCell>{søkersUttaksgrad} %</Table.DataCell>
-      <Table.DataCell>
+      {!leseModus && <Table.DataCell>
         <Button
           size="xsmall"
           variant="tertiary"
@@ -67,7 +69,7 @@ const AktivitetRad: React.FC<ownProps> = ({
         >
           Slett
         </Button>
-      </Table.DataCell>
+      </Table.DataCell>}
     </Table.ExpandableRow>
   );
 };

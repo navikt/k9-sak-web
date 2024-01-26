@@ -15,18 +15,20 @@ type OverstyrUttakContextType = {
   hentAktuelleAktiviteter: (fom: Date, tom: Date) => Promise<Arbeidsforhold[]>;
   hentOverstyrte: () => void;
   utledAktivitetNavn: (arbeidsforhold: Arbeidsforhold) => string;
+  harAksjonspunktForOverstyringAvUttak: boolean;
 };
 
 const OverstyrUttakContext = createContext<OverstyrUttakContextType | null>(null);
 
 export const OverstyrUttakContextProvider = ({ children }) => {
-  const { httpErrorHandler, endpoints, aktivBehandlingUuid, versjon } = React.useContext(ContainerContext);
+  const { httpErrorHandler, endpoints, aktivBehandlingUuid, versjon, aksjonspunktkoder } = React.useContext(ContainerContext);
   const [lasterOverstyringer, setLasterOverstyringer] = React.useState<boolean>(false);
   const [lasterAktiviteter, setLasterAktiviteter] = React.useState<boolean | null>(null);
   const [overstyrte, setOverstyrte] = React.useState<OverstyringUttak[] | null>(null);
   const [arbeidsgiverOversikt, setArbeidsgiverOversikt] = React.useState<
     OverstyrtUttakResponse['arbeidsgiverOversikt']['arbeidsgivere'] | null
   >(null);
+  const harAksjonspunktForOverstyringAvUttak = aksjonspunktkoder.includes('6017');
 
   const hentOverstyrte = async () => {
     setLasterOverstyringer(true);
@@ -86,6 +88,7 @@ export const OverstyrUttakContextProvider = ({ children }) => {
       arbeidsgiverOversikt,
       hentOverstyrte,
       utledAktivitetNavn,
+      harAksjonspunktForOverstyringAvUttak,
     }),
     [
       lasterOverstyringer,
@@ -95,6 +98,7 @@ export const OverstyrUttakContextProvider = ({ children }) => {
       arbeidsgiverOversikt,
       hentOverstyrte,
       utledAktivitetNavn,
+      harAksjonspunktForOverstyringAvUttak
     ],
   );
 
