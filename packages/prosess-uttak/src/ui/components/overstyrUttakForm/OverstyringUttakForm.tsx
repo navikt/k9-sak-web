@@ -136,9 +136,6 @@ const OverstyringUttakForm: React.FC<OwnProps> = ({
 
           <div className={styles.overstyringBegrunnelse}>
             <Textarea label="Begrunnelse" {...register(OverstyrUttakFormFieldName.BEGRUNNELSE)} disabled={loading} />
-            <Alert inline variant="info">
-              Overstyringen vil ikke være synlig i uttak før du har bekreftet overstyringen.
-            </Alert>
           </div>
           <div className={styles.overstyringKnapperad}>
             <Button variant="primary" size="small" disabled={deaktiverLeggTil} loading={loading}>
