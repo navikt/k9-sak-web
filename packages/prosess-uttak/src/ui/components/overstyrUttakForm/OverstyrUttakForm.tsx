@@ -11,8 +11,7 @@ import AktivitetRad from './AktivitetRad';
 import { useOverstyrUttak } from '../../context/OverstyrUttakContext';
 import { formaterOverstyringTilFormData } from '../../../util/overstyringUtils';
 
-import styles from './overstyrUttakForm.css';
-
+import styles from './overstyrUttakForm.module.css';
 
 const OverstyrUttakForm: React.FC = () => {
   const [bekreftSlettId, setBekreftSlettId] = useState<string | false>(false);
@@ -166,8 +165,7 @@ const OverstyrUttakForm: React.FC = () => {
           />
         )}
       </>)}
-
-    </div>
+    </div >
   );
 };
 

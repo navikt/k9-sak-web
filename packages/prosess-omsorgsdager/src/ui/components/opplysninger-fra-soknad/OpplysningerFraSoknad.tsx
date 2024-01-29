@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from './opplysningerFraSoknad.css';
+import styles from './opplysningerFraSoknad.module.css';
 
 interface Props {
   årsak?: string;

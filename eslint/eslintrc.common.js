@@ -28,13 +28,15 @@ const config = {
       impliedStrict: true,
     },
   },
-  settings: {
-    'import/resolver': {
-      webpack: {
-        config: resolve(__dirname, '../webpack/webpack.common.ts'),
-      },
-    },
+
+  "settings": {
+    "import/resolver": {
+      "node": {
+        "extensions": [".js", ".jsx", ".ts", ".tsx"]
+      }
+    }
   },
+
   rules: {
     'import/extensions': ['error', 'ignorePackages', { js: 'never', jsx: 'never', ts: 'never', tsx: 'never' }],
     'linebreak-style': OFF,
@@ -62,6 +64,7 @@ const config = {
       },
     ],
     'import/prefer-default-export': OFF,
+    'import/no-unresolved': ['error', { ignore: ['\\.svg\\?react$'] }],
 
     // note you must disable the base rule as it can report incorrect errors
     'no-nested-ternary': OFF,

@@ -2,7 +2,7 @@ import { Button, Modal } from '@navikt/ds-react';
 import { Box, Margin } from '@navikt/ft-plattform-komponenter';
 import React from 'react';
 import DiagnosekodeSelector from '../../form/pure/PureDiagnosekodeSelector';
-import styles from '../diagnosekodeoversikt/diagnosekodeoversikt.css';
+import styles from '../diagnosekodeoversikt/diagnosekodeoversikt.module.css';
 import type { DiagnosekodeSearcherPromise } from '../../../util/diagnosekodeSearcher';
 
 interface DiagnosekodeModalProps {

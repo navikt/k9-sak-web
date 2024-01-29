@@ -3,8 +3,8 @@ import React from 'react';
 import Feilikon from '../../icons/Feilikon';
 import SjekkIkon from '../../icons/SjekkIkon';
 import Suksessikon from '../../icons/Suksessikon';
-import styleLesemodus from '../lesemodus/lesemodusboks.css';
-import styles from './vilkarStatus.css';
+import styleLesemodus from '../lesemodus/lesemodusboks.module.css';
+import styles from './vilkarStatus.module.css';
 
 interface OwnProps {
   aksjonspunktNavn: string;

@@ -17,7 +17,7 @@ import AddButton from '../add-button/AddButton';
 import DeleteButton from '../delete-button/DeleteButton';
 import DetailViewVurdering from '../detail-view-vurdering/DetailViewVurdering';
 import DokumentLink from '../dokument-link/DokumentLink';
-import styles from '../vurdering-av-form/vurderingForm.css';
+import styles from '../vurdering-av-form/vurderingForm.module.css';
 import { finnBenyttedeDokumenter } from '../../../util/dokumentUtils';
 import Vurderingsresultat from '../../../types/Vurderingsresultat';
 

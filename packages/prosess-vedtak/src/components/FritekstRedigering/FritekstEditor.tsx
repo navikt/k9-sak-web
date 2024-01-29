@@ -1,12 +1,10 @@
 /* eslint-disable react/no-danger, @typescript-eslint/no-this-alias */
-import React, { useCallback, useEffect, useState } from 'react';
-import { FormattedMessage, WrappedComponentProps, injectIntl } from 'react-intl';
-
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { Cancel } from '@navikt/ds-icons';
 import { Alert, Button, Heading, Modal } from '@navikt/ds-react';
 import { Column, Row } from 'nav-frontend-grid';
-
+import React, { useCallback, useEffect, useState } from 'react';
+import { FormattedMessage, WrappedComponentProps, injectIntl } from 'react-intl';
 import InkluderKalenderCheckbox from '../InkluderKalenderCheckbox';
 import PreviewLink from '../PreviewLink';
 import EditorJSWrapper from './EditorJSWrapper';

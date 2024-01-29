@@ -3,7 +3,7 @@ import classNames from 'classnames';
 import React from 'react';
 import Kilde from '../../../types/Kilde';
 
-import styles from './etablertTilsynRowContent.css';
+import styles from './etablertTilsynRowContent.module.css';
 import PartIkon from './PartIkon';
 
 interface OwnProps {

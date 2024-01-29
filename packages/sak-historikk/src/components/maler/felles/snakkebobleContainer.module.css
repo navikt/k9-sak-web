@@ -3,17 +3,17 @@
 }
 
 :global(.snakkeboble__ikon).snakkeboble__ikon--brukerMann {
-  background: url('~@fpsak-frontend/assets/images/mann.svg');
+  background: url('@fpsak-frontend/assets/images/mann.svg');
   background-size: contain;
 }
 
 :global(.snakkeboble__ikon).snakkeboble__ikon--brukerKvinne {
-  background: url('~@fpsak-frontend/assets/images/kvinne.svg');
+  background: url('@fpsak-frontend/assets/images/kvinne.svg');
   background-size: contain;
 }
 
 :global(.snakkeboble__ikon).snakkeboble__ikon--saksbehandler {
-  background: url('~@fpsak-frontend/assets/images/nav_ansatt_historikk.svg');
+  background: url('@fpsak-frontend/assets/images/nav_ansatt_historikk.svg');
   background-color: var(--a-purple-500);
   background-position-x: 6px;
   background-position-y: 2px;
@@ -21,17 +21,17 @@
 }
 
 :global(.snakkeboble__ikon).snakkeboble__ikon--beslutter {
-  background: url('~@fpsak-frontend/assets/images/beslutter.svg');
+  background: url('@fpsak-frontend/assets/images/beslutter.svg');
   background-size: contain;
 }
 
 :global(.snakkeboble__ikon).snakkeboble__ikon--losningen {
-  background: url('~@fpsak-frontend/assets/images/maskin.svg');
+  background: url('@fpsak-frontend/assets/images/maskin.svg');
   background-size: contain;
 }
 
 :global(.snakkeboble__ikon).snakkeboble__ikon--ekstern {
-  background: url('~@fpsak-frontend/assets/images/arbeidsgiver.svg');
+  background: url('@fpsak-frontend/assets/images/arbeidsgiver.svg');
   background-size: contain;
 }
 

@@ -2,7 +2,7 @@ import { WarningIcon } from '@navikt/ft-plattform-komponenter';
 import React from 'react';
 import { Status } from '../../../types/KompletthetData';
 import ListItem from '../list-item/ListItem';
-import styles from '../inntektsmelding-mottatt-item/inntektsmeldingMottattItem.css';
+import styles from '../inntektsmelding-mottatt-item/inntektsmeldingMottattItem.module.css';
 import ArbeidsgiverTekst from '../arbeidsgiver-tekst/ArbeidsgiverTekst';
 
 interface InntektsmeldingMottattItemProps {

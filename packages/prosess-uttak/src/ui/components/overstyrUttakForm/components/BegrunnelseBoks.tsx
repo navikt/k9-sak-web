@@ -7,7 +7,7 @@ import { useSaksbehandlerOppslag } from '@fpsak-frontend/shared-components';
 import { OverstyringUttak } from '../../../../types';
 import { useOverstyrUttak } from '../../../context/OverstyrUttakContext';
 
-import styles from './begrunnelseBoks.css';
+import styles from './begrunnelseBoks.module.css';
 
 interface BegrunnelseBoksProps {
   begrunnelse: string;

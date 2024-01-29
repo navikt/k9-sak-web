@@ -2,7 +2,7 @@ import React from 'react';
 import { Period } from '@fpsak-frontend/utils';
 import { ContentWithTooltip, GreenCheckIconFilled, RedCrossIconFilled } from '@navikt/ft-plattform-komponenter';
 import Vurderingsresultat from '../../../types/Vurderingsresultat';
-import styles from './vurderingsperiodeElement.css';
+import styles from './vurderingsperiodeElement.module.css';
 
 interface VurderingsperiodeElementProps {
   periode: Period;

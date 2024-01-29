@@ -7,7 +7,13 @@
   "license": "MIT",
   "private": true,
   "scripts": {
-    "dev": "node webpack/webpack-config.development.js"
+    "dev": "vite serve",
+    "cypress:headless": "cypress run",
+    "test:e2e": "start-server-and-test dev http://localhost:5174 cypress:headless"
+  },
+  "devDependencies": {
+    "start-server-and-test": "^2.0.3",
+    "vite": "^5.0.10"
   },
   "dependencies": {
     "@navikt/ds-css": "5.13.0",

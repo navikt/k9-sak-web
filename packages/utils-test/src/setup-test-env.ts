@@ -15,3 +15,7 @@ configure(ShallowWrapper);
 switchOnTestMode();
 Object.assign(global, { TextDecoder, TextEncoder });
 expect.extend(toHaveNoViolations);
+
+jest.mock('../../sak-app/src/constants', () => ({
+  ENVIRONMENT: 'development',
+}));

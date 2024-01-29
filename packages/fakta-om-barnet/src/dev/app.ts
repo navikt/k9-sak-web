@@ -7,7 +7,17 @@ interface ExtendedWindow extends Window {
   renderOmBarnetApp: (id: string, contract: ContainerContract) => void;
 }
 
-(window as Partial<ExtendedWindow>).renderOmBarnetApp = async (appId, data) => {
+const data = {
+  readOnly: false,
+  endpoints: {
+    rettVedDod: 'http://localhost:8082/mock/rettVedDod',
+    omPleietrengende: 'http://localhost:8082/mock/omPleietrengende',
+  },
+  httpErrorHandler: undefined,
+  onFinished: undefined,
+};
+
+(window as Partial<ExtendedWindow>).renderOmBarnetApp = async appId => {
   const { renderAppInSuccessfulState } = renderers;
   renderAppInSuccessfulState(appId, data);
 };

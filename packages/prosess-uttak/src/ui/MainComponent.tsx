@@ -14,7 +14,7 @@ import { aksjonspunktVurderDatoKode, aksjonspunktkodeVentAnnenPSBSakKode } from 
 import { OverstyrUttakContextProvider } from './context/OverstyrUttakContext';
 import OverstyrUttakForm from './components/overstyrUttakForm/OverstyrUttakForm';
 
-import styles from './MainComponent.css';
+import styles from './mainComponent.module.css';
 
 interface MainComponentProps {
   containerData: ContainerContract;

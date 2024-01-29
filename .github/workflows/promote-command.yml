@@ -3,7 +3,7 @@ on:
   repository_dispatch:
     types: [promote-command]
 env:
-  IMAGE_BASE: ghcr.io/${{ github.repository }}
+  IMAGE_BASE: europe-north1-docker.pkg.dev/nais-management-233d/k9saksbehandling/k9-sak-web
 
 jobs:
   promote:

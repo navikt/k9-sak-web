@@ -1,9 +1,168 @@
+import Komponenter from '../types/Komponenter';
 import renderers from '../util/renderers';
-import ContainerContract from '../types/ContainerContract';
 import '@navikt/ds-css';
 
+const state = {};
+
+const getState = key => {
+  console.log(`getState med ${key} gir ${state[key]}`);
+  try {
+    return JSON.parse(state[key]);
+  } catch {
+    return null;
+  }
+};
+const deleteState = key => {
+  console.log(`deleteState med ${key}`);
+  delete state[key];
+};
+const setState = (key, data) => {
+  console.log(`setState til ${key} med data:`, data);
+  state[key] = JSON.stringify(data);
+};
+
+const formState = {
+  getState,
+  deleteState,
+  setState,
+};
+
+const inputMocks = {
+  korrigerePerioder: {
+    visKomponent: 'KorrigerePerioder' as Komponenter.KORRIGERE_PERIODER,
+    props: {
+      behandlingsID: '123',
+      aksjonspunktLost: false,
+      lesemodus: false,
+      informasjonTilLesemodus: {
+        begrunnelse: 'Begrunnelse til lesemodus',
+        vilkarOppfylt: true,
+        antallDagerDelvisInnvilget: 10,
+      },
+      losAksjonspunkt: (fravaerGrunnetSmittevernhensynEllerStengt, begrunnelse, antallDagerDelvisInnvilget) =>
+        console.log(fravaerGrunnetSmittevernhensynEllerStengt, begrunnelse, antallDagerDelvisInnvilget),
+      konfliktMedArbeidsgiver: true,
+      formState,
+    },
+  },
+  vilkarKroniskSyktBarn: {
+    visKomponent: 'VilkarKroniskSyktBarn' as Komponenter.VILKAR_KRONISK_SYKT_BARN,
+    props: {
+      behandlingsID: '123',
+      aksjonspunktLost: true,
+      lesemodus: true,
+      soknadsdato: '2021-04-06',
+      informasjonTilLesemodus: {
+        begrunnelse: 'Begrunnelse til lesemodus',
+        vilkarOppfylt: true,
+        avslagsArsakErIkkeRiskioFraFravaer: true,
+        fraDato: '2019-06-25',
+      },
+      losAksjonspunkt: (endreHarDokumentasjonOgFravaerRisiko, begrunnelse, avslagsKode, fraDato) =>
+        console.log(endreHarDokumentasjonOgFravaerRisiko, begrunnelse, avslagsKode, fraDato),
+      vedtakFattetVilkarOppfylt: true,
+      informasjonOmVilkar: {
+        begrunnelse: 'begrunnelse',
+        navnPåAksjonspunkt: 'Utvidet rett',
+        vilkarOppfylt: true,
+        vilkar: '§ 9-3 vilkar',
+      },
+      formState,
+    },
+  },
+  vilkarMidlertidigAlene: {
+    visKomponent: 'VilkarMidlertidigAlene' as Komponenter.VILKAR_MIDLERTIDIG_ALENE,
+    props: {
+      behandlingsID: '123',
+      aksjonspunktLost: true,
+      lesemodus: true,
+      soknadsopplysninger: {
+        årsak: 'Årsak',
+        beskrivelse: 'Beskrivelse',
+        periode: 'DD.MM.ÅÅÅÅ - DD.MM.ÅÅÅÅ',
+        soknadsdato: '2021-04-06',
+      },
+      vedtakFattetVilkarOppfylt: true,
+      informasjonOmVilkar: {
+        begrunnelse: 'begrunnelse',
+        navnPåAksjonspunkt: 'Utvidet rett',
+        vilkarOppfylt: false,
+        vilkar: '§ 9-3 vilkar',
+      },
+      informasjonTilLesemodus: {
+        begrunnelse: 'Begrunnelse',
+        vilkarOppfylt: true,
+        dato: {
+          fra: '2021-06-06',
+          til: '2021-10-03',
+        },
+        avslagsArsakErPeriodeErIkkeOverSeksMån: true,
+      },
+      losAksjonspunkt: ({
+        begrunnelse,
+        erSokerenMidlertidigAleneOmOmsorgen,
+        fra,
+        til,
+        avslagsArsakErPeriodeErIkkeOverSeksMån,
+      }) =>
+        console.log(begrunnelse, erSokerenMidlertidigAleneOmOmsorgen, fra, til, avslagsArsakErPeriodeErIkkeOverSeksMån),
+      formState,
+    },
+  },
+  omsorg: {
+    visKomponent: 'Omsorg' as Komponenter.OMSORG,
+    props: {
+      behandlingsID: '123',
+      fagytelseType: 'OMP_KS',
+      aksjonspunktLost: false,
+      lesemodus: false,
+      informasjonTilLesemodus: {
+        begrunnelse: 'Begrunnelse til lesemodus',
+        vilkarOppfylt: false,
+      },
+      barn: ['01010050053', '34324'],
+      harBarnSoktForRammevedtakOmKroniskSyk: true,
+      vedtakFattetVilkarOppfylt: true,
+      informasjonOmVilkar: {
+        begrunnelse: 'begrunnelse',
+        navnPåAksjonspunkt: 'Utvidet rett',
+        vilkarOppfylt: true,
+        vilkar: '§ 9-3 vilkar',
+      },
+      losAksjonspunkt: (harOmsorgen, begrunnelse) => console.log(harOmsorgen, begrunnelse),
+      formState,
+    },
+  },
+  aleneOmOmsorgen: {
+    visKomponent: 'AleneOmOmsorgen' as Komponenter.ALENE_OM_OMSORGEN,
+    props: {
+      behandlingsID: '123',
+      aksjonspunktLost: false,
+      lesemodus: true,
+      fraDatoFraSoknad: '2021-04-06',
+      vedtakFattetVilkarOppfylt: true,
+      informasjonOmVilkar: {
+        begrunnelse: 'begrunnelse',
+        navnPåAksjonspunkt: 'Utvidet rett',
+        vilkarOppfylt: true,
+        vilkar: '§ 9-3 vilkar',
+      },
+      erBehandlingstypeRevurdering: true,
+      informasjonTilLesemodus: {
+        begrunnelse: 'Begrunnelse',
+        vilkarOppfylt: true,
+        fraDato: '2021-06-06',
+        tilDato: '2021-09-10',
+      },
+      losAksjonspunkt: ({ begrunnelse, vilkarOppfylt, fraDato, tilDato }) =>
+        console.log(begrunnelse, vilkarOppfylt, fraDato, tilDato),
+      formState,
+    },
+  },
+};
+
 // test
-(window as any).renderMicrofrontendOmsorgsdagerApp = async (appId, data: ContainerContract) => {
+(window as any).renderMicrofrontendOmsorgsdagerApp = async appId => {
   const { renderAppInSuccessfulState } = renderers;
-  renderAppInSuccessfulState(appId, data);
+  renderAppInSuccessfulState(appId, inputMocks.korrigerePerioder);
 };

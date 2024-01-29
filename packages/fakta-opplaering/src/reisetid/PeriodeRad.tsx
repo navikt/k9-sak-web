@@ -7,7 +7,7 @@ import {
 } from '@navikt/ft-plattform-komponenter';
 import { Period } from '@fpsak-frontend/utils';
 import React from 'react';
-import styles from './periodeRad.modules.css';
+import styles from './periodeRad.module.css';
 
 interface OwnProps {
   periode?: Period;

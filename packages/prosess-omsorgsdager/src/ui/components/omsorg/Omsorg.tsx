@@ -7,12 +7,12 @@ import { booleanTilTekst, tekstTilBoolean } from '../../../util/stringUtils';
 import useFormSessionStorage from '../../../util/useFormSessionStorageUtils';
 import AksjonspunktLesemodus from '../aksjonspunkt-lesemodus/AksjonspunktLesemodus';
 import AlertStripeTrekantVarsel from '../alertstripe-trekant-varsel/AlertStripeTrekantVarsel';
-import styleLesemodus from '../lesemodus/lesemodusboks.css';
+import styleLesemodus from '../lesemodus/lesemodusboks.module.css';
 import RadioButtonWithBooleanValue from '../react-hook-form-wrappers/RadioButton';
 import TextArea from '../react-hook-form-wrappers/TextArea';
-import styles from './omsorg.css';
+import styles from './omsorg.module.css';
 import VilkarStatus from '../vilkar-status/VilkarStatus';
-import styleRadioknapper from '../styles/radioknapper/radioknapper.css';
+import styleRadioknapper from '../styles/radioknapper/radioknapper.module.css';
 
 type FormData = {
   harOmsorgen: string;

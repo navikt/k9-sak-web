@@ -1,6 +1,6 @@
 import React, { FunctionComponent, ReactElement } from 'react';
 import TableRow from './TableRow';
-import styles from './table.css';
+import styles from './table.module.css';
 
 interface OwnProps {
   children: ReactElement | ReactElement[];

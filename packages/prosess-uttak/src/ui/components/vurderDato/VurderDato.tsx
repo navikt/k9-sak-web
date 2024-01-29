@@ -1,7 +1,7 @@
 import { Accordion, Alert, BodyLong, Label } from '@navikt/ds-react';
 import React, { useEffect } from 'react';
 import VurderDatoAksjonspunkt from './VurderDatoAksjonspunkt';
-import styles from './VurderDato.css';
+import styles from './VurderDato.module.css';
 
 interface Props {
   avbryt?: () => void;

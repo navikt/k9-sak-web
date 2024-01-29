@@ -10,7 +10,7 @@ import ContainerContext from '../../context/ContainerContext';
 import DokumentKnapp from '../dokument-knapp/DokumentKnapp';
 import Duplikatliste from '../duplikatliste/Duplikatliste';
 import WriteAccessBoundContent from '../write-access-bound-content/WriteAccessBoundContent';
-import styles from './strukturertDokumentDetaljer.css';
+import styles from './strukturertDokumentDetaljer.module.css';
 
 interface StrukturertDokumentDetaljerProps {
   dokument: Dokument;

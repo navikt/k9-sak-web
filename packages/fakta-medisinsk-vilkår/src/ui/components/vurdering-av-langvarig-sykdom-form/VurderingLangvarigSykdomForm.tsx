@@ -20,7 +20,7 @@ import DeleteButton from '../delete-button/DeleteButton';
 import DetailViewVurdering from '../detail-view-vurdering/DetailViewVurdering';
 import DokumentLink from '../dokument-link/DokumentLink';
 import StjerneIkon from '../vurdering-av-form/StjerneIkon';
-import styles from '../vurdering-av-form/vurderingForm.css';
+import styles from '../vurdering-av-form/vurderingForm.module.css';
 import VurderingDokumentfilter from '../vurdering-dokumentfilter/VurderingDokumentfilter';
 import vurderingDokumentfilterOptions from '../vurdering-dokumentfilter/vurderingDokumentfilterOptions';
 import { finnBenyttedeDokumenter } from '../../../util/dokumentUtils';

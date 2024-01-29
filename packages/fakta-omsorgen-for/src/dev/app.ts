@@ -7,7 +7,18 @@ interface ExtendedWindow extends Window {
   renderOmsorgenForApp: (id: string, contract: ContainerContract) => void;
 }
 
-(window as Partial<ExtendedWindow>).renderOmsorgenForApp = async (appId, data) => {
+const data = {
+  readOnly: false,
+  endpoints: {
+    omsorgsperioder: 'http://localhost:8082/mock/omsorgsperioder',
+  },
+  onFinished: () => console.log('Klar til å løse aksjonspunkt'),
+  sakstype: 'OMP',
+  httpErrorHandler: undefined,
+  saksbehandlere: { test: 'test' },
+};
+
+(window as Partial<ExtendedWindow>).renderOmsorgenForApp = async appId => {
   const { renderAppInSuccessfulState } = renderers;
   renderAppInSuccessfulState(appId, data);
 };

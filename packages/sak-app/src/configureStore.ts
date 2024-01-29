@@ -1,15 +1,17 @@
 import { applyMiddleware, combineReducers, compose, createStore } from 'redux';
-import thunkMiddleware from 'redux-thunk';
 import { reducer as formReducer } from 'redux-form';
+import { createLogger } from 'redux-logger';
+import thunkMiddleware from 'redux-thunk';
+import { IS_DEV } from './constants';
 
-const isDevelopment = process.env.NODE_ENV === 'development';
-const logger = isDevelopment ? require('redux-logger') : null;
+const isDevelopment = IS_DEV;
 
 const configureStore = () => {
   const middleware = [thunkMiddleware];
   let enhancer;
   if (isDevelopment) {
-    middleware.push(logger.createLogger());
+    const logger = createLogger();
+    middleware.push(logger);
 
     /* eslint-disable-next-line no-underscore-dangle */
     const composeEnhancers = (window && (window as any).__REDUX_DEVTOOLS_EXTENSION_COMPOSE__) || compose;

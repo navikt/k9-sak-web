@@ -8,7 +8,7 @@ import { Kode, Kompletthet, Tilstand } from '../../../types/KompletthetData';
 import InntektsmeldingListeHeading from '../inntektsmelding-liste-heading/InntektsmeldingListeHeading';
 import InntektsmeldingListe from '../inntektsmelding-liste/InntektsmeldingListe';
 import PeriodList from '../period-list/PeriodList';
-import styles from './kompletthetsoversikt.css';
+import styles from './kompletthetsoversikt.module.css';
 import {
   finnAktivtAksjonspunkt,
   finnTilstanderSomRedigeres,
