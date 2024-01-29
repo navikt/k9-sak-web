@@ -2,11 +2,11 @@ import React, { useCallback, useMemo } from 'react';
 import { useLocation } from 'react-router-dom';
 import moment from 'moment';
 
-import { RestApiState } from '@k9-sak-web/rest-api-hooks';
 import HistorikkSakIndex from '@fpsak-frontend/sak-historikk';
 import { KodeverkMedNavn, Historikkinnslag } from '@k9-sak-web/types';
 import { LoadingPanel, usePrevious } from '@fpsak-frontend/shared-components';
 
+import { isRequestNotDone } from '@k9-sak-web/rest-api-hooks/src/RestApiState';
 import useBehandlingEndret from '../../behandling/useBehandlingEndret';
 import { K9sakApiKeys, restApiHooks } from '../../data/k9sakApi';
 import { pathToBehandling, createLocationForSkjermlenke } from '../../app/paths';
@@ -109,9 +109,9 @@ const HistorikkIndex = ({ saksnummer, behandlingId, behandlingVersjon }: OwnProp
   );
 
   if (
-    historikkK9SakState === RestApiState.LOADING ||
-    (skalBrukeFpTilbakeHistorikk && historikkTilbakeState === RestApiState.LOADING) ||
-    (skalBrukeKlageHistorikk && historikkKlageState === RestApiState.LOADING)
+    isRequestNotDone(historikkK9SakState) ||
+    (skalBrukeFpTilbakeHistorikk && isRequestNotDone(historikkTilbakeState)) ||
+    (skalBrukeKlageHistorikk && isRequestNotDone(historikkKlageState))
   ) {
     return <LoadingPanel />;
   }

@@ -1,0 +1,36 @@
+.diagnosekodeliste {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+.diagnosekodeliste__element {
+  display: flex;
+  position: relative;
+  border-bottom: 1px solid #c8c8c8;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+}
+
+.diagnosekodeliste__element:not(:first-child) {
+  margin-top: 0.5rem;
+}
+
+.lenkeContainer {
+  position: absolute;
+  right: 0;
+}
+
+.lenkeContainer__slettLenke {
+  border: none;
+  background: transparent;
+  cursor: pointer;
+}
+
+.beskrivelse {
+  margin: 0;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  max-width: 80%;
+}

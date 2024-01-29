@@ -8,11 +8,11 @@ import { combineReducers, createStore } from 'redux';
 
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
-import { BehandlingAppKontekst, Fagsak } from '@k9-sak-web/types';
+import type { BehandlingAppKontekst, Brevmaler, Fagsak, Mottaker } from '@k9-sak-web/types';
 import dokumentMalType from '@fpsak-frontend/kodeverk/src/dokumentMalType';
 
 import { requestApi, K9sakApiKeys } from '../../data/k9sakApi';
-import MeldingIndex from './MeldingIndex';
+import MeldingIndex, { type BackendApi } from './MeldingIndex';
 
 const mockHistoryPush = jest.fn();
 
@@ -39,6 +39,12 @@ interface ExtendedWindow {
 }
 
 describe('<MeldingIndex>', () => {
+  const meldingBackend = {
+    async getBrevMottakerinfoEreg(orgnr: string) {
+      return { name: `Test Org navn (${orgnr})` };
+    },
+  } satisfies BackendApi;
+
   const meldingMal: SendMeldingPayload = {
     behandlingId: 1,
     overstyrtMottaker: undefined,
@@ -74,11 +80,12 @@ describe('<MeldingIndex>', () => {
       mottakere: aktorer,
       linker: [],
       støtterFritekst: true,
+      støtterTredjepartsmottaker: true,
     },
     [dokumentMalType.REVURDERING_DOK]: { navn: 'Revurdering Dok', mottakere: aktorer, linker: [] },
     [dokumentMalType.AVSLAG]: { navn: 'Avslag', mottakere: aktorer, linker: [] },
     [dokumentMalType.FORLENGET_DOK]: { navn: 'Forlenget', mottakere: aktorer, linker: [] },
-  };
+  } satisfies Brevmaler;
 
   const assignMock = jest.fn();
   delete (window as Partial<ExtendedWindow>).location;
@@ -103,6 +110,7 @@ describe('<MeldingIndex>', () => {
             alleBehandlinger={alleBehandlinger as BehandlingAppKontekst[]}
             behandlingId={1}
             behandlingVersjon={123}
+            backendApi={meldingBackend}
           />
         </MemoryRouter>
       </Provider>,
@@ -127,6 +135,7 @@ describe('<MeldingIndex>', () => {
               alleBehandlinger={alleBehandlinger as BehandlingAppKontekst[]}
               behandlingId={1}
               behandlingVersjon={123}
+              backendApi={meldingBackend}
             />
           </MemoryRouter>
         </MockForm>
@@ -135,7 +144,7 @@ describe('<MeldingIndex>', () => {
 
     expect(await screen.findByTestId('MessagesForm')).toBeInTheDocument();
 
-    userEvent.click(screen.getByRole('link', { name: 'Forhåndsvis' }));
+    await userEvent.click(screen.getByRole('link', { name: 'Forhåndsvis' }));
 
     const reqData = requestApi.getRequestMockData(K9sakApiKeys.PREVIEW_MESSAGE_FORMIDLING);
     expect(reqData).toHaveLength(1);
@@ -158,6 +167,7 @@ describe('<MeldingIndex>', () => {
               alleBehandlinger={alleBehandlinger as BehandlingAppKontekst[]}
               behandlingId={1}
               behandlingVersjon={123}
+              backendApi={meldingBackend}
             />
           </MemoryRouter>
         </MockForm>
@@ -170,18 +180,73 @@ describe('<MeldingIndex>', () => {
       fritekst: 'Dette er meldingen',
     };
 
-    userEvent.selectOptions(await screen.getByLabelText('Mal'), melding.brevmalkode);
-    userEvent.selectOptions(await screen.getByLabelText('Mottaker'), JSON.stringify(melding.overstyrtMottaker));
-    userEvent.type(await screen.getByLabelText('Fritekst'), melding.fritekst);
+    await userEvent.selectOptions(await screen.getByLabelText('Mal'), melding.brevmalkode);
+    await userEvent.selectOptions(await screen.getByLabelText('Mottaker'), JSON.stringify(melding.overstyrtMottaker));
+    await userEvent.type(await screen.getByLabelText('Fritekst'), melding.fritekst);
 
     await act(async () => {
       // Simuler klikk på Send brev knapp
-      userEvent.click(await screen.getByRole('button', { name: 'Send brev' }));
+      await userEvent.click(await screen.getByRole('button', { name: 'Send brev' }));
     });
 
     const reqData = requestApi.getRequestMockData(K9sakApiKeys.SUBMIT_MESSAGE);
     expect(reqData).toHaveLength(1);
     expect(reqData[0].params).toEqual({ ...meldingMal, ...melding });
+  });
+
+  it('skal sende melding til tredjepartsmottaker hvis det er valgt og utfyllt', async () => {
+    requestApi.mock(K9sakApiKeys.KODEVERK, kodeverk);
+    requestApi.mock(K9sakApiKeys.HAR_APENT_KONTROLLER_REVURDERING_AP, true);
+    requestApi.mock(K9sakApiKeys.BREVMALER, templates);
+    requestApi.mock(K9sakApiKeys.SUBMIT_MESSAGE);
+    requestApi.mock(K9sakApiKeys.FEATURE_TOGGLE, [{ TYPE_MEDISINSKE_OPPLYSNINGER_BREV: true }]);
+
+    render(
+      <Provider store={createStore(combineReducers({ form: formReducer }))}>
+        <MockForm>
+          <MemoryRouter>
+            <MeldingIndex
+              fagsak={fagsak as Fagsak}
+              alleBehandlinger={alleBehandlinger as BehandlingAppKontekst[]}
+              behandlingId={1}
+              behandlingVersjon={123}
+              backendApi={meldingBackend}
+            />
+          </MemoryRouter>
+        </MockForm>
+      </Provider>,
+    );
+
+    const melding = {
+      overstyrtMottaker: { id: '00000000', type: 'AKTØRID' },
+      brevmalkode: dokumentMalType.INNHENT_DOK,
+      fritekst: 'Dette er meldingen',
+    };
+
+    await userEvent.selectOptions(screen.getByLabelText('Mal'), melding.brevmalkode);
+    await userEvent.selectOptions(screen.getByLabelText('Mottaker'), JSON.stringify(melding.overstyrtMottaker));
+    await userEvent.type(screen.getByLabelText('Fritekst'), melding.fritekst);
+
+    await userEvent.click(screen.getByLabelText('Send til tredjepart'));
+    const tredjepartsMottaker = {
+      type: 'ORGNR',
+      id: '974652269',
+    } satisfies Mottaker;
+
+    await act(async () => {
+      const orgnrInput = screen.getByLabelText('Org.nr');
+      expect(orgnrInput).toBeInTheDocument();
+      await userEvent.type(orgnrInput, tredjepartsMottaker.id);
+    });
+
+    await act(async () => {
+      // Simuler klikk på Send brev knapp
+      await userEvent.click(screen.getByRole('button', { name: 'Send brev' }));
+    });
+
+    const reqData = requestApi.getRequestMockData(K9sakApiKeys.SUBMIT_MESSAGE);
+    expect(reqData).toHaveLength(1);
+    expect(reqData[0].params).toEqual({ ...meldingMal, ...melding, ...{ overstyrtMottaker: tredjepartsMottaker } });
   });
 
   it('skal sende melding og ikke sette saken på vent hvis ikke Innhent eller forlenget', async () => {
@@ -200,6 +265,7 @@ describe('<MeldingIndex>', () => {
               alleBehandlinger={alleBehandlinger as BehandlingAppKontekst[]}
               behandlingId={1}
               behandlingVersjon={123}
+              backendApi={meldingBackend}
             />
           </MemoryRouter>
         </MockForm>
@@ -214,12 +280,12 @@ describe('<MeldingIndex>', () => {
     expect(await screen.queryByTestId('MessagesModal')).not.toBeInTheDocument();
     expect(screen.queryByTestId('SettPaVentModal')).not.toBeInTheDocument();
 
-    userEvent.selectOptions(screen.getByLabelText('Mal'), melding.brevmalkode);
-    userEvent.selectOptions(screen.getByLabelText('Mottaker'), JSON.stringify(melding.overstyrtMottaker));
+    await userEvent.selectOptions(screen.getByLabelText('Mal'), melding.brevmalkode);
+    await userEvent.selectOptions(screen.getByLabelText('Mottaker'), JSON.stringify(melding.overstyrtMottaker));
 
     await act(async () => {
       // Simuler klikk på Send brev knapp
-      userEvent.click(screen.getByRole('button', { name: 'Send brev' }));
+      await userEvent.click(screen.getByRole('button', { name: 'Send brev' }));
     });
 
     expect(await screen.queryByTestId('MessagesModal')).toBeInTheDocument();
@@ -246,6 +312,7 @@ describe('<MeldingIndex>', () => {
               alleBehandlinger={alleBehandlinger as BehandlingAppKontekst[]}
               behandlingId={1}
               behandlingVersjon={123}
+              backendApi={meldingBackend}
             />
           </MemoryRouter>
         </MockForm>
@@ -258,16 +325,16 @@ describe('<MeldingIndex>', () => {
       fritekst: 'Dette er meldingen',
     };
 
-    userEvent.selectOptions(screen.getByLabelText('Mal'), melding.brevmalkode);
-    userEvent.selectOptions(screen.getByLabelText('Mottaker'), JSON.stringify(melding.overstyrtMottaker));
-    userEvent.type(screen.getByLabelText('Fritekst'), melding.fritekst);
+    await userEvent.selectOptions(screen.getByLabelText('Mal'), melding.brevmalkode);
+    await userEvent.selectOptions(screen.getByLabelText('Mottaker'), JSON.stringify(melding.overstyrtMottaker));
+    await userEvent.type(screen.getByLabelText('Fritekst'), melding.fritekst);
 
     expect(await screen.queryByTestId('MessagesModal')).not.toBeInTheDocument();
     expect(screen.queryByTestId('SettPaVentModal')).not.toBeInTheDocument();
 
     await act(async () => {
       // Simuler klikk på Send brev knapp
-      userEvent.click(screen.getByRole('button', { name: 'Send brev' }));
+      await userEvent.click(screen.getByRole('button', { name: 'Send brev' }));
     });
 
     expect(await screen.queryByTestId('MessagesModal')).not.toBeInTheDocument();
@@ -294,6 +361,7 @@ describe('<MeldingIndex>', () => {
               alleBehandlinger={alleBehandlinger as BehandlingAppKontekst[]}
               behandlingId={1}
               behandlingVersjon={123}
+              backendApi={meldingBackend}
             />
           </MemoryRouter>
         </MockForm>
@@ -305,15 +373,15 @@ describe('<MeldingIndex>', () => {
       brevmalkode: dokumentMalType.FORLENGET_DOK,
     };
 
-    userEvent.selectOptions(screen.getByLabelText('Mal'), melding.brevmalkode);
-    userEvent.selectOptions(screen.getByLabelText('Mottaker'), JSON.stringify(melding.overstyrtMottaker));
+    await userEvent.selectOptions(screen.getByLabelText('Mal'), melding.brevmalkode);
+    await userEvent.selectOptions(screen.getByLabelText('Mottaker'), JSON.stringify(melding.overstyrtMottaker));
 
     expect(await screen.queryByTestId('MessagesModal')).not.toBeInTheDocument();
     expect(screen.queryByTestId('SettPaVentModal')).not.toBeInTheDocument();
 
     await act(async () => {
       // Simuler klikk på Send brev knapp
-      userEvent.click(screen.getByRole('button', { name: 'Send brev' }));
+      await userEvent.click(screen.getByRole('button', { name: 'Send brev' }));
     });
 
     expect(await screen.queryByTestId('MessagesModal')).not.toBeInTheDocument();

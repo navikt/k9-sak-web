@@ -8,7 +8,7 @@ import {
 import { useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
 import React from 'react';
 
-import { EtablertTilsyn } from '@navikt/k9-fe-etablert-tilsyn';
+import { EtablertTilsyn } from '@k9-sak-web/fakta-etablert-tilsyn';
 
 export default ({ aksjonspunkter, behandling, readOnly, submitCallback, saksbehandlere }) => {
   const { addErrorMessage } = useRestApiErrorDispatcher();
@@ -28,12 +28,6 @@ export default ({ aksjonspunkter, behandling, readOnly, submitCallback, saksbeha
   const harUløstAksjonspunktForBeredskap = beredskapAksjonspunkt?.status.kode === aksjonspunktStatus.OPPRETTET;
   const harUløstAksjonspunktForNattevåk = nattevåkAksjonspunkt?.status.kode === aksjonspunktStatus.OPPRETTET;
   const harAksjonspunkt = !!beredskapAksjonspunktkode || !!nattevåkAksjonspunktkode;
-
-  interface Endpoints {
-    tilsyn: string;
-    sykdom: string;
-    sykdomInnleggelse: string;
-  }
 
   return (
     <EtablertTilsyn

@@ -15,5 +15,5 @@
     "baseUrl": "packages/",
     "skipLibCheck": true //TODO Fjern denne
   },
-  "include": ["packages/**/*", "@types"]
+  "include": ["packages/**/*", "@types", "cypress.config.ts"]
 }

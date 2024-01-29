@@ -1,0 +1,26 @@
+<html>
+    <head>
+        <title>Omsorgen for</title>
+        <style>
+            body {
+                font-family: 'Source Sans Pro', Arial, sans-serif;
+                font-size: 1rem;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="app" style="padding: 2.5rem"></div>
+        <script type="text/javascript">
+            document.addEventListener('DOMContentLoaded', () => {
+                window.renderOmsorgenForApp('app', {
+                    readOnly: false,
+                    endpoints: {
+                        omsorgsperioder: 'http://localhost:8082/mock/omsorgsperioder',
+                    },
+                    onFinished: () => console.log('Klar til å løse aksjonspunkt'),
+                    sakstype: 'OMP',
+                });
+            });
+        </script>
+    </body>
+</html>

@@ -16,7 +16,7 @@ import { Behandling, Fagsak } from '@k9-sak-web/types';
 import sivilstandType from '@fpsak-frontend/kodeverk/src/sivilstandType';
 import opplysningAdresseType from '@fpsak-frontend/kodeverk/src/opplysningAdresseType';
 import ForeldrepengerFakta from './PleiepengerFakta';
-import FetchedData from '../types/fetchedDataTsType';
+import FetchedData from '../types/FetchedData';
 import { PleiepengerBehandlingApiKeys, requestPleiepengerApi } from '../data/pleiepengerBehandlingApi';
 
 describe('<PleiepengerFakta>', () => {
@@ -99,6 +99,7 @@ describe('<PleiepengerFakta>', () => {
     statsborgerskap: {
       kode: '',
       kodeverk: '',
+      navn: '',
     },
     diskresjonskode: {
       kode: '',

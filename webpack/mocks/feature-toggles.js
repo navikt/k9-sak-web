@@ -62,12 +62,8 @@ const featureToggles = [
     value: process.env.OVERSTYR_BEREGNING,
   },
   {
-    key: 'FAKTA_BEREGNING_REDESIGN',
-    value: process.env.FAKTA_BEREGNING_REDESIGN,
-  },
-  {
-    key: 'NOTAT_I_SAK',
-    value: process.env.NOTAT_I_SAK,
+    key: 'OVERSTYRING_UTTAK',
+    value: process.env.OVERSTYRING_UTTAK,
   },
 ];
 

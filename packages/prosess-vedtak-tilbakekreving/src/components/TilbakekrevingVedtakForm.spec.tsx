@@ -41,12 +41,12 @@ test('<TilbakekrevingVedtakForm> skal vise tekstfelt for begrunnelse og godkjenn
     { messages },
   );
 
-  expect(screen.getByRole('heading')).toHaveTextContent('Vedtaksbrev');
+  expect(screen.getByRole('heading', { level: 2 })).toHaveTextContent('Vedtaksbrev');
   expect(screen.getByText('Til godkjenning')).not.toBeDisabled();
   expect(screen.getByRole('link')).toHaveTextContent('Forhåndsvis brev');
 });
 
-test('<TilbakekrevingVedtakForm> skal formatere data for forhåndsvisning av vedtaksbrevet', () => {
+test('<TilbakekrevingVedtakForm> skal formatere data for forhåndsvisning av vedtaksbrevet', async () => {
   const fetchPreview = sinon.spy();
   renderWithIntlAndReduxForm(
     <TilbakekrevingVedtakForm
@@ -82,7 +82,7 @@ test('<TilbakekrevingVedtakForm> skal formatere data for forhåndsvisning av ved
     { messages },
   );
 
-  userEvent.click(screen.getByRole('link'));
+  await userEvent.click(screen.getByRole('link'));
   expect(fetchPreview.calledOnce).toBe(true);
   expect(fetchPreview.getCalls()[0].args[0]).toEqual({
     uuid: 'uuid',

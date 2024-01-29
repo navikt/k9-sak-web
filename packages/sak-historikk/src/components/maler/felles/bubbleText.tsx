@@ -39,15 +39,16 @@ const BubbleText = ({ intl, cutOffLength = 83, bodyText = '' }: OwnProps & Wrapp
     <>
       {expanded && <div>{bodyText}</div>}
       {!expanded && <div className={styles.breakWord}>{truncateText(bodyText, cutOffLength)}</div>}
-      <a
-        href="#"
+      <button
+        type="button"
         onClick={handleOnClick}
         onKeyDown={handleKeyDown}
         className={styles.clickableArea}
-        title={intl.formatMessage({ id: expanded ? 'BubbleText.LukkeTekstfelt' : 'BubbleText.ApneTekstfelt' })}
+        aria-label={intl.formatMessage({ id: expanded ? 'BubbleText.LukkeTekstfelt' : 'BubbleText.ApneTekstfelt' })}
+        aria-expanded={expanded}
       >
         {expanded ? <OppChevron /> : <NedChevron />}
-      </a>
+      </button>
     </>
   );
 };

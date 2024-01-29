@@ -67,6 +67,7 @@ export enum K9sakApiKeys {
   BEHANDLING_PERIODER_ÅRSAK_MED_VILKÅR = 'BEHANDLING_PERIODER_ÅRSAK_MED_VILKÅR',
   LOS_LAGRE_MERKNAD = 'LOS_LAGRE_MERKNAD',
   LOS_HENTE_MERKNAD = 'LOS_HENTE_MERKNAD',
+  BREV_MOTTAKER_ORGANISASJON = 'BREV_MOTTAKER_ORGANISASJON',
 }
 
 const endpoints = new RestApiConfigBuilder()
@@ -82,6 +83,7 @@ const endpoints = new RestApiConfigBuilder()
   .withRel('klage-kodeverk', K9sakApiKeys.KODEVERK_KLAGE)
   .withRel('behandlende-enheter', K9sakApiKeys.BEHANDLENDE_ENHETER)
   .withRel('arbeidsgivere', K9sakApiKeys.ARBEIDSGIVERE)
+  .withPost('/k9/sak/api/brev/mottaker-info/ereg', K9sakApiKeys.BREV_MOTTAKER_ORGANISASJON)
 
   // Feature toggles
   .withGet('/k9/feature-toggle/toggles.json', K9sakApiKeys.FEATURE_TOGGLE)

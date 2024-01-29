@@ -1,0 +1,24 @@
+.periodpickerList fieldset {
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.periodpickerList legend {
+  font-size: 1rem !important;
+  font-weight: 600 !important;
+  margin-bottom: 0.5rem !important;
+}
+
+.periodpickerList__flexContainer {
+  display: flex;
+}
+
+.periodpickerList__flexContainer label {
+  margin-right: 0.5rem;
+}
+
+.periodpickerList__datepickerTom {
+  display: flex;
+  margin-left: 1rem;
+}

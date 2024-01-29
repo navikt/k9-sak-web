@@ -5,8 +5,7 @@ import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { FaktaPanelDef } from '@k9-sak-web/behandling-felles';
 import { konverterKodeverkTilKode, mapVilkar, transformBeregningValues } from '@fpsak-frontend/utils';
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
-import { BeregningFaktaIndex } from '@navikt/ft-fakta-beregning';
-import { BeregningFaktaIndex as BeregningFaktaIndexRedesign } from '@navikt/ft-fakta-beregning-redesign';
+import { BeregningFaktaIndex } from '@navikt/ft-fakta-beregning-redesign';
 import { FrisinnBehandlingApiKeys } from '../../data/frisinnBehandlingApi';
 
 class BeregningFaktaPanelDef extends FaktaPanelDef {
@@ -22,23 +21,7 @@ class BeregningFaktaPanelDef extends FaktaPanelDef {
     const deepCopyProps = JSON.parse(JSON.stringify(props));
     konverterKodeverkTilKode(deepCopyProps);
     const bgVilkaret = deepCopyProps.vilkar.find(v => v.vilkarType === vilkarType.BEREGNINGSGRUNNLAGVILKARET);
-    if (props.featureToggles?.FAKTA_BEREGNING_REDESIGN) {
-      return (
-        <BeregningFaktaIndexRedesign
-          arbeidsgiverOpplysningerPerId={deepCopyProps.arbeidsgiverOpplysningerPerId}
-          submitCallback={aksjonspunktData => props.submitCallback(transformBeregningValues(aksjonspunktData))}
-          formData={props.formData}
-          setFormData={props.setFormData}
-          vilkar={mapVilkar(bgVilkaret, props.beregningreferanserTilVurdering)}
-          kodeverkSamling={deepCopyProps.alleKodeverk}
-          erOverstyrer={false}
-          submittable={deepCopyProps.submittable}
-          readOnly={deepCopyProps.isReadOnly}
-          skalKunneOverstyreAktiviteter={false}
-          skalKunneAvbryteOverstyring
-        />
-      );
-    }
+
     return (
       <BeregningFaktaIndex
         arbeidsgiverOpplysningerPerId={deepCopyProps.arbeidsgiverOpplysningerPerId}

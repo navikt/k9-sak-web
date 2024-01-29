@@ -4,7 +4,7 @@ import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import { Behandling } from '@k9-sak-web/types';
-import { KomponenterEnum } from '@navikt/k9-fe-omsorgsdager';
+import { KomponenterEnum } from '@k9-sak-web/prosess-omsorgsdager';
 import {
   AksjonspunktInformasjon,
   VilkarInformasjon,

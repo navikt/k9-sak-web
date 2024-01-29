@@ -87,6 +87,7 @@ describe('<UnntakFakta>', () => {
     statsborgerskap: {
       kode: '',
       kodeverk: '',
+      navn: '',
     },
     diskresjonskode: {
       kode: '',

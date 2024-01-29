@@ -1,0 +1,23 @@
+.headerColumn {
+  font-size: 1rem;
+  border-bottom: 1px solid #bbb;
+  border-left: none !important;
+  border-right: none !important;
+}
+
+.alertRow {
+  margin: 1rem 0;
+}
+
+.alertRow :global(.navds-alert__wrapper) {
+  max-width: 100% !important;
+}
+
+.alertRow:global(.navds-alert) {
+  padding: 0.5rem 1rem !important;
+}
+
+.redigerDato {
+  margin-left: auto !important;
+  margin-bottom: 1rem !important;
+}

@@ -37,6 +37,7 @@ const personopplysningerSoker = {
   statsborgerskap: {
     kode: 'NORSK',
     kodeverk: 'STATSBORGERSKAP',
+    navn: 'NORSK',
   },
   avklartPersonstatus: {
     orginalPersonstatus: {
@@ -87,6 +88,7 @@ const personopplysningerAnnenPart = {
   statsborgerskap: {
     kode: 'NORSK',
     kodeverk: 'STATSBORGERSKAP',
+    navn: 'NORSK',
   },
   avklartPersonstatus: {
     orginalPersonstatus: {
