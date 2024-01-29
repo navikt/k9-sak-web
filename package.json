@@ -40,7 +40,7 @@
     "packages/*"
   ],
   "dependencies": {
-    "@babel/runtime": "7.23.8",
+    "@babel/runtime": "7.23.9",
     "@formatjs/intl-datetimeformat": "6.12.0",
     "@formatjs/intl-numberformat": "8.9.0",
     "@hookform/error-message": "^2.0.1",
@@ -72,10 +72,10 @@
     "vite-plugin-svgr": "4.2.0"
   },
   "devDependencies": {
-    "@babel/core": "7.23.7",
-    "@babel/eslint-parser": "7.23.3",
+    "@babel/core": "7.23.9",
+    "@babel/eslint-parser": "7.23.9",
     "@babel/helper-regex": "7.10.5",
-    "@babel/preset-env": "7.23.8",
+    "@babel/preset-env": "7.23.9",
     "@babel/preset-react": "7.23.3",
     "@babel/preset-typescript": "7.23.3",
     "@babel/register": "7.23.7",
