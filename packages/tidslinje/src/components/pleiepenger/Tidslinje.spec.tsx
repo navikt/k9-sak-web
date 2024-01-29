@@ -1,13 +1,12 @@
-import React from 'react';
-import { shallow } from 'enzyme';
-
-import Timeline from '../../Timeline';
-import Tidslinje from './Tidslinje';
+import { ISO_DATE_FORMAT } from '@fpsak-frontend/utils';
+import moment from 'moment';
+import { createGroups, createItems } from './Tidslinje';
+import Periode from './types/Periode';
 import TidslinjeRad from './types/TidslinjeRad';
 
 describe('<Tidslinje>', () => {
   it('konverterer props til Timeline config', () => {
-    const rader: TidslinjeRad<unknown>[] = [
+    const rader: TidslinjeRad<Periode<any>>[] = [
       {
         ikon: {
           src: null,
@@ -21,14 +20,12 @@ describe('<Tidslinje>', () => {
             fom: '2019-10-10',
             tom: '2019-11-10',
             hoverText: '',
-            periodeinfo: {},
           },
           {
             id: '1-2',
             fom: '2017-10-10',
             tom: '2017-11-10',
             hoverText: '',
-            periodeinfo: {},
           },
         ],
       },
@@ -45,24 +42,20 @@ describe('<Tidslinje>', () => {
             fom: '2018-10-10',
             tom: '2018-11-10',
             hoverText: '',
-            periodeinfo: {},
           },
         ],
       },
     ];
-    const wrapper = shallow(<Tidslinje rader={rader} velgPeriode={() => undefined} />);
+    const momentDate = dateString => moment(dateString, ISO_DATE_FORMAT);
 
-    const timeline = wrapper.find(Timeline);
-    expect(timeline).toHaveLength(1);
-
-    const items = timeline.prop('initialItems');
+    const items = createItems(
+      rader.flatMap(rad => rad.perioder).sort((p1, p2) => momentDate(p1.fom).diff(momentDate(p2.fom))),
+    );
     expect(items).toHaveLength(3);
     expect(items[0].id).toBe('1-2');
     expect(items[1].id).toBe('2-1');
     expect(items[2].id).toBe('1-1');
-
-    const groups = timeline.prop('initialGroups');
-    expect(groups).toEqual([
+    expect(createGroups(rader)).toEqual([
       { id: '1', content: '' },
       { id: '2', content: '' },
     ]);
