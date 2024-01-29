@@ -15,7 +15,7 @@ import { OverstyrUttakFormFieldName } from '../../../constants/OverstyrUttakForm
 import { OverstyrUttakFormData } from '../../../types';
 import { finnSisteSluttDatoFraPerioderTilVurdering, finnTidligsteStartDatoFraPerioderTilVurdering } from '../../../util/dateUtils';
 
-import styles from './OverstyringUttakForm.css';
+import styles from './overstyringUttakForm.module.css';
 
 type OwnProps = {
   handleAvbrytOverstyringForm: () => void;
@@ -40,7 +40,7 @@ const OverstyringUttakForm: React.FC<OwnProps> = ({
     defaultValues: overstyring || {
       [OverstyrUttakFormFieldName.FOM]: undefined,
       [OverstyrUttakFormFieldName.TOM]: undefined,
-      [OverstyrUttakFormFieldName.UTTAKSGRAD]: 0,
+      [OverstyrUttakFormFieldName.UTTAKSGRAD]: undefined,
       [OverstyrUttakFormFieldName.BEGRUNNELSE]: '',
       [OverstyrUttakFormFieldName.UTBETALINGSGRADER]: [],
     },

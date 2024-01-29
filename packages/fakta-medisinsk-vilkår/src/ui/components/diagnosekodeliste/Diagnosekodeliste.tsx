@@ -1,7 +1,7 @@
 import React from 'react';
 import Diagnosekode from '../../../types/Diagnosekode';
 import WriteAccessBoundContent from '../write-access-bound-content/WriteAccessBoundContent';
-import styles from './diagnosekodeliste.css';
+import styles from './diagnosekodeliste.module.css';
 
 interface DiagnosekodelisteProps {
   diagnosekoder: Diagnosekode[];

@@ -4,7 +4,7 @@ import React from 'react';
 import Period from '../../../types/Period';
 import { sortPeriodsChronological } from '../../../util/periodUtils';
 import ContainerContext from '../../context/ContainerContext';
-import styles from './utsattePerioderStripe.css';
+import styles from './utsattePerioderStripe.module.css';
 
 const UtsattePerioderStripe = () => {
   const { utsattePerioder } = React.useContext(ContainerContext);

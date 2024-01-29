@@ -16,7 +16,7 @@ import {
 import React, { useContext } from 'react';
 import { useIntl } from 'react-intl';
 import DokumentLink from '../components/DokumentLink';
-import styles from './GjennomgaaOpplaeringFerdigVisning.modules.css';
+import styles from './GjennomgaaOpplaeringFerdigVisning.module.css';
 
 interface OwnProps {
   vurdering: GjennomgaaOpplaeringVurdering;

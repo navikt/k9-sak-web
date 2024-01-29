@@ -1,5 +1,5 @@
 import React from 'react';
-import {injectIntl, WrappedComponentProps} from 'react-intl';
+import { injectIntl, WrappedComponentProps } from 'react-intl';
 
 import ikkeOppfyltUrl from '@fpsak-frontend/assets/images/ikke_oppfylt.svg';
 import oppfyltUrl from '@fpsak-frontend/assets/images/oppfylt.svg';

@@ -5,7 +5,7 @@ import Vurderingsperiode from '../../../types/Vurderingsperiode';
 import { usePrevious } from '../../../util/hooks';
 import PeriodeSomSkalVurderes from '../periode-som-skal-vurderes/PeriodeSomSkalVurderes';
 import VurderingsperiodeElement from '../vurderingsperiode/VurderingsperiodeElement';
-import styles from './periodenavigasjon.css';
+import styles from './periodenavigasjon.module.css';
 
 interface PeriodenavigasjonProps {
   perioderTilVurdering: Vurderingsperiode[];

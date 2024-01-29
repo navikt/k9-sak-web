@@ -9,7 +9,7 @@ import {
 } from '@navikt/ft-plattform-komponenter';
 import Kilde from '../../../types/Kilde';
 import Vurderingsresultat from '../../../types/Vurderingsresultat';
-import styles from './vurderingsperiodeElement.css';
+import styles from './vurderingsperiodeElement.module.css';
 
 interface VurderingsperiodeElementProps {
   periode: Period;

@@ -10,13 +10,13 @@ import { booleanTilTekst } from '../../../util/stringUtils';
 import useFormSessionStorage from '../../../util/useFormSessionStorageUtils';
 import AksjonspunktLesemodus from '../aksjonspunkt-lesemodus/AksjonspunktLesemodus';
 import AlertStripeTrekantVarsel from '../alertstripe-trekant-varsel/AlertStripeTrekantVarsel';
-import styleLesemodus from '../lesemodus/lesemodusboks.css';
+import styleLesemodus from '../lesemodus/lesemodusboks.module.css';
 import InputField from '../react-hook-form-wrappers/InputField';
 import RadioButtonWithBooleanValue from '../react-hook-form-wrappers/RadioButton';
 import TextArea from '../react-hook-form-wrappers/TextArea';
-import styleRadioknapper from '../styles/radioknapper/radioknapper.css';
+import styleRadioknapper from '../styles/radioknapper/radioknapper.module.css';
 
-import styles from './korrigerePerioder.css';
+import styles from './korrigerePerioder.module.css';
 
 type FormData = {
   fravaerGrunnetSmittevernhensynEllerStengt: string;

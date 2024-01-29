@@ -7,7 +7,7 @@ import Dokument, { dokumentLabel } from '../../../types/Dokument';
 import { findLinkByRel } from '../../../util/linkUtils';
 import SlettDuplikatModal from '../slett-duplikat-modal/SlettDuplikatModal';
 import WriteAccessBoundContent from '../write-access-bound-content/WriteAccessBoundContent';
-import styles from './duplikatliste.css';
+import styles from './duplikatliste.module.css';
 
 interface DuplikatlisteProps {
   dokumenter: Dokument[];

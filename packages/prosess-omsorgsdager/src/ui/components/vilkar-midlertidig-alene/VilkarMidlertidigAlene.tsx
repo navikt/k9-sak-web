@@ -12,13 +12,13 @@ import OpplysningerFraSoknad from '../opplysninger-fra-soknad/OpplysningerFraSok
 import DatePicker from '../react-hook-form-wrappers/DatePicker';
 import RadioButtonWithBooleanValue from '../react-hook-form-wrappers/RadioButton';
 import TextArea from '../react-hook-form-wrappers/TextArea';
-import styles from './vilkarMidlertidigAlene.css';
-import styleLesemodus from '../lesemodus/lesemodusboks.css';
+import styles from './vilkarMidlertidigAlene.module.css';
+import styleLesemodus from '../lesemodus/lesemodusboks.module.css';
 import tekst from './vilkar-midlertidig-alene-tekst';
 import { VilkarMidlertidigAleneProps } from '../../../types/VilkarMidlertidigAleneProps';
 import VilkarMidlertidigAleneLesemodus from '../vilkar-midlertidig-alene-lesemodus/VilkarMidlertidigAleneLesemodus';
 import VilkarStatus from '../vilkar-status/VilkarStatus';
-import styleRadioknapper from '../styles/radioknapper/radioknapper.css';
+import styleRadioknapper from '../styles/radioknapper/radioknapper.module.css';
 
 type FormData = {
   begrunnelse: string;

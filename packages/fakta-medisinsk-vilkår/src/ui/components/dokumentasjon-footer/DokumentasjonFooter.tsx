@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from './dokumentasjonFooter.css';
+import styles from './dokumentasjonFooter.module.css';
 
 interface DokumentasjonFooterProps {
   firstSectionRenderer: () => React.ReactNode;

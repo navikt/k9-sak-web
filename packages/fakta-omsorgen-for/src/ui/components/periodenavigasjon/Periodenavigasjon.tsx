@@ -7,7 +7,7 @@ import { usePrevious } from '../../../util/hooks';
 import { sortPeriodsByFomDate } from '../../../util/periodUtils';
 import PeriodeSomSkalVurderes from '../periode-som-skal-vurderes/PeriodeSomSkalVurderes';
 import VurderingsperiodeElement from '../vurderingsperiode/VurderingsperiodeElement';
-import styles from './periodenavigasjon.css';
+import styles from './periodenavigasjon.module.css';
 
 interface PeriodenavigasjonProps {
   perioderTilVurdering: Omsorgsperiode[];

@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Element } from 'nav-frontend-typografi';
 import VilkårslisteItem from './VilkårslisteItem';
-import styles from './vilkårsliste.css';
+import styles from './vilkårsliste.module.css';
 import Inngangsvilkår from '../types/Inngangsvilkår';
 import vilkår from './Vilkår';
 import Utfall from '../constants/Utfall';

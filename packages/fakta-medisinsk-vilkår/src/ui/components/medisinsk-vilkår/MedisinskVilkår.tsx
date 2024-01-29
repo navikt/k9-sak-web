@@ -37,7 +37,7 @@ import VilkårsvurderingAvToOmsorgspersoner from '../vilkårsvurdering-av-to-oms
 import VilkårsvurderingLangvarigSykdom from '../vilkårsvurdering-langvarig-sykdom/VilkarsvurderingLangvarigSykdom';
 import WriteAccessBoundContent from '../write-access-bound-content/WriteAccessBoundContent';
 import ActionType from './actionTypes';
-import styles from './medisinskVilkår.css';
+import styles from './medisinskVilkår.module.css';
 import medisinskVilkårReducer from './reducer';
 
 interface TabItemProps {

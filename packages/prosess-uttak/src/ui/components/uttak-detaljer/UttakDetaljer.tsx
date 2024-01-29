@@ -21,10 +21,9 @@ import { Uttaksperiode } from '../../../types/Uttaksperiode';
 import { beregnDagerTimer } from '../../../util/dateUtils';
 import { harÅrsak } from '../../../util/årsakUtils';
 import ContainerContext from '../../context/ContainerContext';
+import styles from './uttakDetaljer.module.css';
 import UttakUtregning from './UttakUtregning';
 import Utfall from '../../../constants/Utfall';
-
-import styles from './uttakDetaljer.css';
 
 const cx = classNames.bind(styles);
 
@@ -179,12 +178,9 @@ const formatAvkortingMotArbeid = (
               <div>= {prosentFravær}% fravær</div>
               <div className='inline-flex justify-end'>
                 Utbetalingsgrad: {utbetalingsgrad}%
-                {manueltOverstyrt && <>
-                  <PersonPencilFillIcon className="ml-1 align-middle text-2xl text-border-warning" title="Manuelt overstyrt" />
-                  <HelpText title="Hvor kommer utbetalingsgraden fra?">
-                    Utbetalingsgraden <i>kan</i> være manuelt overstyrt av saksbehandler.
-                  </HelpText>
-                </>}
+                {manueltOverstyrt && <HelpText title="Hvor kommer utbetalingsgraden fra?">
+                  Utbetalingsgraden <i>kan</i> være manuelt overstyrt av saksbehandler.
+                </HelpText>}
               </div>
             </div>
           </div>

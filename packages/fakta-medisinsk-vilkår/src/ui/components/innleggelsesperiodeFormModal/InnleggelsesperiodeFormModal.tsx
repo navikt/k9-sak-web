@@ -7,7 +7,7 @@ import { FormProvider, useForm } from 'react-hook-form';
 import { InnleggelsesperiodeDryRunResponse } from '../../../api/api';
 import AddButton from '../add-button/AddButton';
 import DeleteButton from '../delete-button/DeleteButton';
-import styles from './innleggelsesperiodeFormModal.css';
+import styles from './innleggelsesperiodeFormModal.module.css';
 
 export enum FieldName {
   INNLEGGELSESPERIODER = 'innleggelsesperioder',
@@ -40,7 +40,7 @@ const InnleggelsesperiodeFormModal = ({
       })),
     },
   });
-  const modalRef = useRef<HTMLDialogElement>()
+  const modalRef = useRef<HTMLDialogElement>();
 
   const {
     formState: { isDirty },
@@ -61,7 +61,7 @@ const InnleggelsesperiodeFormModal = ({
   };
 
   // eslint-disable-next-line no-alert
-  const handleBeforeCloseModal = () => isDirty && window.confirm('Du vil miste alle endringer du har gjort')
+  const handleBeforeCloseModal = () => isDirty && window.confirm('Du vil miste alle endringer du har gjort');
 
   return (
     <Modal

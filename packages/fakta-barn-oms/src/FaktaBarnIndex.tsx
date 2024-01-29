@@ -123,9 +123,10 @@ const FaktaBarnIndex = ({ barn = [], rammevedtak = [], fagsaksType }: FaktaBarnI
     rammevedtakGruppertPerBarn.forEach(barnMedRV => {
       const BarnRVFodselsnummer = barnMedRV.personIdent.substr(0, 6);
       const BarnFodselsnummer = b.personIdent.substr(0, 6);
-      if (barnMedRV.personIdent === b.personIdent
-        || BarnRVFodselsnummer === b.personIdent
-        || barnMedRV.personIdent === BarnFodselsnummer
+      if (
+        barnMedRV.personIdent === b.personIdent ||
+        BarnRVFodselsnummer === b.personIdent ||
+        barnMedRV.personIdent === BarnFodselsnummer
       ) {
         kombinertBarnOgRammevedtak.rammevedtak = barnMedRV;
       }

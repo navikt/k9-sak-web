@@ -4,7 +4,7 @@ import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import Omsorgsperiodeoversikt from '../../../types/Omsorgsperiodeoversikt';
 import { getStringMedPerioder } from '../../../util/periodUtils';
-import styles from './omsorgsperiodeoversiktMessages.css';
+import styles from './omsorgsperiodeoversiktMessages.module.css';
 
 interface OmsorgsperiodeoversiktMessagesProps {
   omsorgsperiodeoversikt: Omsorgsperiodeoversikt;

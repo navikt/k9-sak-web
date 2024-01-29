@@ -13,7 +13,7 @@ import ManuellVurdering from '../../../types/ManuellVurdering';
 import InnleggelsesperiodeIkonOverOppfylt from '../innleggelsesperiode-ikon-over-oppfylt/InnleggelsesperiodeIkonOverOppfylt';
 import InnleggelsesperiodeIkonOverIkkeOppfylt from '../innleggelsesperiode-ikon-over-ikkeoppfylt/InnleggelsesperiodeIkonOverIkkeOppfylt';
 import Vurderingselement from '../../../types/Vurderingselement';
-import styles from './vurderingsperiodeElement.css';
+import styles from './vurderingsperiodeElement.module.css';
 
 interface VurderingsperiodeElementProps {
   vurderingselement: Vurderingselement;

@@ -4,7 +4,7 @@ import classNames from 'classnames';
 import React, { useState } from 'react';
 import OutsideClickHandler from 'react-outside-click-handler';
 import { dokumentLabel, Dokumenttype } from '../../../types/Dokument';
-import styles from './dokumentfilter.css';
+import styles from './dokumentfilter.module.css';
 
 interface ChevronWithTextProps {
   chevronDirection: 'opp' | 'ned';

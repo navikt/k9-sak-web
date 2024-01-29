@@ -3,7 +3,7 @@ import { Checkbox, Label } from '@navikt/ds-react';
 import classNames from 'classnames';
 import React, { useState } from 'react';
 import OutsideClickHandler from 'react-outside-click-handler';
-import styles from './vurderingDokumentfilter.css';
+import styles from './vurderingDokumentfilter.module.css';
 import vurderingDokumentfilterOptions from './vurderingDokumentfilterOptions';
 
 interface ChevronWithTextProps {

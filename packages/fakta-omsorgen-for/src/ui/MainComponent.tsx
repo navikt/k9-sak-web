@@ -10,7 +10,7 @@ import { teksterForSakstype } from '../util/utils';
 import ActionType from './actionTypes';
 import Omsorgsperiodeoversikt from './components/omsorgsperiodeoversikt/Omsorgsperiodeoversikt';
 import ContainerContext from './context/ContainerContext';
-import styles from './mainComponent.css';
+import styles from './mainComponent.module.css';
 import mainComponentReducer from './reducer';
 
 interface MainComponentProps {

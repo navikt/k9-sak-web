@@ -2,11 +2,10 @@
 /* eslint-disable camelcase */
 /* eslint-disable react/jsx-pascal-case */
 import { DatePicker, useDatepicker } from '@navikt/ds-react';
-import '@navikt/ft-plattform-komponenter/dist/style.css';
 import dayjs from 'dayjs';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
 import React from 'react';
-import styles from './datepicker.css';
+import styles from './datepicker.module.css';
 import { DatepickerLimitations } from './DatepickerLimitations';
 
 dayjs.extend(customParseFormat);

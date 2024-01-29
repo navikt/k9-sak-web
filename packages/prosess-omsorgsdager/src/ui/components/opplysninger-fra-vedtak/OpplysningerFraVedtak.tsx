@@ -1,6 +1,6 @@
 import React from 'react';
-import styles from './opplysningerFraVedtak.css';
-import styleLesemodus from '../lesemodus/lesemodusboks.css';
+import styles from './opplysningerFraVedtak.module.css';
+import styleLesemodus from '../lesemodus/lesemodusboks.module.css';
 
 interface Props {
   tekstBegrunnelseLesemodus: string;

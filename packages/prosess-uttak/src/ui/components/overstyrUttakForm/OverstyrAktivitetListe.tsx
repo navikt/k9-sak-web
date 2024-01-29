@@ -4,8 +4,8 @@ import { useFormContext, FieldArrayWithId } from 'react-hook-form';
 import { Label, TextField } from '@navikt/ds-react';
 import { OverstyrUttakFormFieldName } from '../../../constants';
 
-import styles from './OverstyrAktivitetListe.css';
-import { Arbeidsforhold, OverstyrUttakFormData } from '../../../types';
+import styles from './overstyrAktivitetListe.module.css';
+import { OverstyrUttakFormData } from '../../../types';
 import { useOverstyrUttak } from '../../context/OverstyrUttakContext';
 
 type ownProps = {

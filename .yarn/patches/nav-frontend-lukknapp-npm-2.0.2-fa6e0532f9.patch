@@ -1,0 +1,47 @@
+diff --git a/lib/lukknapp.js b/lib/lukknapp.js
+index e989cf789260d9f4c6f16af70b670a277062c9c7..2e02a9bbba6852074ab7b50788931130ffd89a84 100644
+--- a/lib/lukknapp.js
++++ b/lib/lukknapp.js
+@@ -1,14 +1,14 @@
+ "use strict";
+-var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
++var __createBinding = (this && this.__createBinding) || (Object.create ? (function (o, m, k, k2) {
+     if (k2 === undefined) k2 = k;
+-    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
+-}) : (function(o, m, k, k2) {
++    Object.defineProperty(o, k2, { enumerable: true, get: function () { return m[k]; } });
++}) : (function (o, m, k, k2) {
+     if (k2 === undefined) k2 = k;
+     o[k2] = m[k];
+ }));
+-var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
++var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function (o, v) {
+     Object.defineProperty(o, "default", { enumerable: true, value: v });
+-}) : function(o, v) {
++}) : function (o, v) {
+     o["default"] = v;
+ });
+ var __importStar = (this && this.__importStar) || function (mod) {
+@@ -36,7 +36,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
+ const PT = __importStar(require("prop-types"));
+ const React = __importStar(require("react"));
+ const classnames_1 = __importDefault(require("classnames"));
+-require("nav-frontend-lukknapp-style");
++require("nav-frontend-lukknapp-style/dist/main.css");
+ const cls = (bla, hvit, hjorne, className) => (0, classnames_1.default)("lukknapp", {
+     "lukknapp--hvit": hvit,
+     "lukknapp--bla": bla,
+@@ -57,9 +57,11 @@ class Lukknapp extends React.Component {
+     }
+     render() {
+         const _a = this.props, { children, bla, hvit, overstHjorne, className, ariaLabel } = _a, props = __rest(_a, ["children", "bla", "hvit", "overstHjorne", "className", "ariaLabel"]);
+-        return (React.createElement("button", Object.assign({ ref: (buttonRef) => {
++        return (React.createElement("button", Object.assign({
++            ref: (buttonRef) => {
+                 this.buttonRef = buttonRef;
+-            }, className: cls(bla, hvit, overstHjorne, className), "aria-label": ariaLabel }, props),
++            }, className: cls(bla, hvit, overstHjorne, className), "aria-label": ariaLabel
++        }, props),
+             React.createElement("span", { className: "text-hide" }, children)));
+     }
+ }

@@ -1,0 +1,33 @@
+diff --git a/lib/tabs.js b/lib/tabs.js
+index 7979afe1453e9dc53569920d94a2c24c40218577..bb5f85fc97207e8b99c02c8b281c62b9bbb74df5 100644
+--- a/lib/tabs.js
++++ b/lib/tabs.js
+@@ -1,14 +1,14 @@
+ "use strict";
+-var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
++var __createBinding = (this && this.__createBinding) || (Object.create ? (function (o, m, k, k2) {
+     if (k2 === undefined) k2 = k;
+-    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
+-}) : (function(o, m, k, k2) {
++    Object.defineProperty(o, k2, { enumerable: true, get: function () { return m[k]; } });
++}) : (function (o, m, k, k2) {
+     if (k2 === undefined) k2 = k;
+     o[k2] = m[k];
+ }));
+-var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
++var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function (o, v) {
+     Object.defineProperty(o, "default", { enumerable: true, value: v });
+-}) : function(o, v) {
++}) : function (o, v) {
+     o["default"] = v;
+ });
+ var __importStar = (this && this.__importStar) || function (mod) {
+@@ -27,7 +27,7 @@ const React = __importStar(require("react"));
+ const nav_frontend_js_utils_1 = require("nav-frontend-js-utils");
+ const tab_1 = __importDefault(require("./tab"));
+ const tabs_pure_1 = __importDefault(require("./tabs-pure"));
+-require("nav-frontend-tabs-style");
++require("nav-frontend-tabs-style/dist/main.css");
+ class Tabs extends React.Component {
+     constructor(props) {
+         super(props);

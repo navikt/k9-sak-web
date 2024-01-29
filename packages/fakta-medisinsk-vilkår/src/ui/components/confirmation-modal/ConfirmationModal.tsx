@@ -1,6 +1,6 @@
 import React from 'react';
 import { Button, Modal } from '@navikt/ds-react';
-import styles from './confirmationModal.css';
+import styles from './confirmationModal.module.css';
 
 interface ConfirmationModalProps {
   children: React.ReactNode;

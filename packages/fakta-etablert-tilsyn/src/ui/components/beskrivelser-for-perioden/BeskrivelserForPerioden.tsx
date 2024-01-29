@@ -10,7 +10,7 @@ import * as React from 'react';
 import Beskrivelse from '../../../types/Beskrivelse';
 import Kilde from '../../../types/Kilde';
 import { prettifyDate } from '../../../util/formats';
-import styles from './beskrivelserForPerioden.css';
+import styles from './beskrivelserForPerioden.module.css';
 
 interface BeskrivelserForPeriodenProps {
   periodebeskrivelser: Beskrivelse[];
