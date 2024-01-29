@@ -15,18 +15,20 @@ type OverstyrUttakContextType = {
   hentAktuelleAktiviteter: (fom: Date, tom: Date) => Promise<Arbeidsforhold[]>;
   hentOverstyrte: () => void;
   utledAktivitetNavn: (arbeidsforhold: Arbeidsforhold) => string;
+  harAksjonspunktForOverstyringAvUttak: boolean;
 };
 
 const OverstyrUttakContext = createContext<OverstyrUttakContextType | null>(null);
 
 export const OverstyrUttakContextProvider = ({ children }) => {
-  const { httpErrorHandler, endpoints, aktivBehandlingUuid, versjon } = React.useContext(ContainerContext);
+  const { httpErrorHandler, endpoints, aktivBehandlingUuid, versjon, aksjonspunktkoder } = React.useContext(ContainerContext);
   const [lasterOverstyringer, setLasterOverstyringer] = React.useState<boolean>(false);
   const [lasterAktiviteter, setLasterAktiviteter] = React.useState<boolean | null>(null);
   const [overstyrte, setOverstyrte] = React.useState<OverstyringUttak[] | null>(null);
   const [arbeidsgiverOversikt, setArbeidsgiverOversikt] = React.useState<
     OverstyrtUttakResponse['arbeidsgiverOversikt']['arbeidsgivere'] | null
   >(null);
+  const harAksjonspunktForOverstyringAvUttak = aksjonspunktkoder.includes('6017');
 
   const hentOverstyrte = async () => {
     setLasterOverstyringer(true);
@@ -65,12 +67,32 @@ export const OverstyrUttakContextProvider = ({ children }) => {
     if (arbeidsforhold.orgnr) identifikator = arbeidsforhold.orgnr;
     if (arbeidsforhold.organisasjonsnummer) identifikator = arbeidsforhold.organisasjonsnummer;
     if (arbeidsforhold.aktørId) identifikator = arbeidsforhold.aktørId;
+    
+    let navn = '';
+    if (arbeidsgiverOversikt && arbeidsgiverOversikt[identifikator]) navn = arbeidsgiverOversikt[identifikator].navn;
+    else if (arbeidsforhold.type === 'SN') navn = arbeidstypeTilVisning.SN;
+    else if (arbeidsforhold.type === 'BA') navn = arbeidstypeTilVisning.BA;
+    else if (identifikator === null || identifikator === undefined) navn = `${arbeidsforhold.type}`;
+    else navn = `${arbeidsforhold.type}`;
+    
+    let navnId = '';
+    if ( arbeidsforhold.orgnr ) navnId = ` (${arbeidsforhold.orgnr})`;
+    else if ( arbeidsforhold.organisasjonsnummer ) navnId = ` (${arbeidsforhold.organisasjonsnummer})`;
+    else if ( arbeidsforhold.aktørId ) navnId = ` (${arbeidsforhold.aktørId})`;
+    else if ( arbeidsforhold.arbeidsforholdId ) navnId = ` (${arbeidsforhold.arbeidsforholdId})`;
+    else navnId = ` (${identifikator})`;
+    
+    return `${navn}${navnId}`;
 
-    if (arbeidsgiverOversikt && arbeidsgiverOversikt[identifikator]) return arbeidsgiverOversikt[identifikator].navn;
-    if (arbeidsforhold.type === 'SN') return arbeidstypeTilVisning.SN;
-    if (arbeidsforhold.type === 'BA') return arbeidstypeTilVisning.BA;
-    if (identifikator === null || identifikator === undefined) return `${arbeidsforhold.type}`;
-    return `${arbeidsforhold.type} ${identifikator}`;
+    if (arbeidsgiverOversikt && arbeidsgiverOversikt[identifikator]) {
+      if (arbeidsforhold.orgnr) {
+        return `${arbeidsgiverOversikt[identifikator].navn} (${arbeidsforhold.orgnr})`;
+      }
+      if (arbeidsforhold.organisasjonsnummer) {
+        return `${arbeidsgiverOversikt[identifikator].navn} (${arbeidsforhold.organisasjonsnummer})`;
+      }
+    }
+
   };
 
   React.useEffect(() => {
@@ -86,6 +108,7 @@ export const OverstyrUttakContextProvider = ({ children }) => {
       arbeidsgiverOversikt,
       hentOverstyrte,
       utledAktivitetNavn,
+      harAksjonspunktForOverstyringAvUttak,
     }),
     [
       lasterOverstyringer,
@@ -95,6 +118,7 @@ export const OverstyrUttakContextProvider = ({ children }) => {
       arbeidsgiverOversikt,
       hentOverstyrte,
       utledAktivitetNavn,
+      harAksjonspunktForOverstyringAvUttak
     ],
   );
 

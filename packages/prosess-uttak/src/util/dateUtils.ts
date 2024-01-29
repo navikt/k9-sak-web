@@ -3,7 +3,7 @@ import utc from 'dayjs/plugin/utc';
 import duration from 'dayjs/plugin/duration';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
 
-import { Uttaksperioder } from '../types';
+import { OverstyringUttak } from '../types';
 
 const dateFormats = ['YYYY-MM-DD', 'DD.MM.YYYY'];
 
@@ -28,3 +28,20 @@ export const finnSisteSluttDatoFraPerioderTilVurdering = (perioderTilVurdering: 
   const sluttDatoer = perioderTilVurdering.map(periodeString => dayjs(periodeString.split('/')[1]));
   return new Date(Math.max(...sluttDatoer.map(date => date.valueOf())));
 }
+
+export const erOverstyringInnenforPerioderTilVurdering = (overstyring: OverstyringUttak, perioderTilVurdering: string[]): boolean => {
+  const overstyringStartDato = dayjs(overstyring.periode.fom);
+  const overstyringSluttDato = dayjs(overstyring.periode.tom);
+
+  return perioderTilVurdering.some((periodeString) => {
+    const [periodeStartStr, periodeSluttStr] = periodeString.split('/');
+    const periodeStartDato = dayjs(periodeStartStr);
+    const periodeSluttDato = dayjs(periodeSluttStr);
+
+    return (
+      (overstyringStartDato.isBefore(periodeSluttDato) || overstyringStartDato.isSame(periodeSluttDato, 'day')) &&
+      (overstyringSluttDato.isAfter(periodeStartDato) || overstyringSluttDato.isSame(periodeStartDato, 'day'))
+    );
+  });
+}
+
