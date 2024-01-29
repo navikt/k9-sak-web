@@ -1,6 +1,6 @@
-import React from 'react';
 import { format } from 'date-fns';
 import zonedTimeToUtc from 'date-fns-tz/zonedTimeToUtc';
+import React from 'react';
 
 interface OwnProps {
   dateString: string;

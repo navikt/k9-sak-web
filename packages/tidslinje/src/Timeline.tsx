@@ -78,7 +78,7 @@ events.forEach(event => {
   eventDefaultProps[`${event}Handler`] = null;
 });
 
-/* 
+/*
  * Forsøk for å omgå typescript-feil
  */
 interface K9TimelineItem extends Omit<TimelineItem, 'content'> {

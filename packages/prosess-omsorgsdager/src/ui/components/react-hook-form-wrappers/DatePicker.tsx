@@ -2,7 +2,7 @@ import { Datepicker } from 'nav-datovelger';
 import { DatepickerLimitations } from 'nav-datovelger/lib/types';
 import React from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
-import styles from './datePicker.css';
+import styles from './datePicker.module.css';
 
 interface OwnProps {
   titel: string;

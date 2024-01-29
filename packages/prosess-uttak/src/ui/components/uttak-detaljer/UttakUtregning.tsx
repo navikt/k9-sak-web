@@ -2,7 +2,7 @@ import classNames from 'classnames/bind';
 import { Element } from 'nav-frontend-typografi';
 import * as React from 'react';
 import { GreenCheckIcon } from '@navikt/ft-plattform-komponenter';
-import styles from './uttakUtregning.css';
+import styles from './uttakUtregning.module.css';
 
 const cx = classNames.bind(styles);
 

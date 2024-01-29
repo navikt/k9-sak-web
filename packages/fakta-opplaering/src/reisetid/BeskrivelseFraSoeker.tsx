@@ -3,7 +3,7 @@ import { Box, LabelledContent, Margin } from '@navikt/ft-plattform-komponenter';
 import React from 'react';
 
 import { ReisetidVurdering } from './ReisetidTypes';
-import styles from './beskrivelseFraSoeker.modules.css';
+import styles from './beskrivelseFraSoeker.module.css';
 
 interface OwnProps {
   vurdering: ReisetidVurdering;

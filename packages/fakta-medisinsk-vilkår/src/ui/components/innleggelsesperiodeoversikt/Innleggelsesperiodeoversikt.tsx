@@ -11,7 +11,7 @@ import AddButton from '../add-button/AddButton';
 import InnleggelsesperiodeFormModal, { FieldName } from '../innleggelsesperiodeFormModal/InnleggelsesperiodeFormModal';
 import Innleggelsesperiodeliste from '../innleggelsesperiodeliste/Innleggelsesperiodeliste';
 import WriteAccessBoundContent from '../write-access-bound-content/WriteAccessBoundContent';
-import styles from './innleggelsesperiodeoversikt.css';
+import styles from './innleggelsesperiodeoversikt.module.css';
 
 interface InnleggelsesperiodeoversiktProps {
   onInnleggelsesperioderUpdated: () => void;

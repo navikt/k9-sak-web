@@ -1,7 +1,7 @@
 import { ContentWithTooltip, OnePersonIconGray } from '@navikt/ft-plattform-komponenter';
 import { Period } from '@fpsak-frontend/utils';
 import React from 'react';
-import styles from './vurderingsperioder.css';
+import styles from './vurderingsperioder.module.css';
 
 interface VurderingsperioderProps {
   perioder: Period[];

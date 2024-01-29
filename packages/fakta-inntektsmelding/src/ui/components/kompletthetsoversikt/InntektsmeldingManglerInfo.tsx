@@ -2,7 +2,7 @@ import React from 'react';
 
 import { Accordion, Alert, BodyLong, Heading } from '@navikt/ds-react';
 import { Box, Margin } from '@navikt/ft-plattform-komponenter';
-import styles from './kompletthetsoversikt.css';
+import styles from './kompletthetsoversikt.module.css';
 
 const InntektsmeldingManglerInfo = (): JSX.Element => (
   <>

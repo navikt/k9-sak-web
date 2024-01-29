@@ -1,7 +1,7 @@
 {
   "name": "@fpsak-frontend/assets",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "images/index.js",
   "license": "MIT",
   "private": true
 }

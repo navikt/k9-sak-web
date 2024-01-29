@@ -9,7 +9,7 @@ import Tabs from './Tabs';
 import GjennomgaaOpplaeringOversikt from './gjennomgaaOpplaering/GjennomgaaOpplaeringOversikt';
 import messages from './i18n/nb_NO.json';
 import NoedvendighetOversikt from './noedvendighet/NoedvendighetOversikt';
-import styles from './opplaeringContainer.modules.css';
+import styles from './opplaeringContainer.module.css';
 import ReisetidOversikt from './reisetid/ReisetidOversikt';
 
 interface TabItemProps {

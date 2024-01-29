@@ -1,5 +1,5 @@
 import * as React from 'react';
-import styles from './fullWidthRow.css';
+import styles from './fullWidthRow.module.css';
 
 interface FullWidthRowProps {
   children: React.ReactNode;

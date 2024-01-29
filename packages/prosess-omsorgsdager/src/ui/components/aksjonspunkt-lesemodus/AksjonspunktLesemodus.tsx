@@ -1,6 +1,6 @@
 import Lenke from 'nav-frontend-lenker';
 import React from 'react';
-import styleLesemodus from '../lesemodus/lesemodusboks.css';
+import styleLesemodus from '../lesemodus/lesemodusboks.module.css';
 
 interface OwnProps {
   harAksjonspunktBlivitLostTidligare: boolean;

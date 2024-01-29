@@ -51,7 +51,6 @@ const Image = ({
   }, []);
 
   const imgSource = srcHover && isHovering ? srcHover : src;
-
   const image = (
     <img // eslint-disable-line jsx-a11y/no-noninteractive-element-interactions
       className={className}

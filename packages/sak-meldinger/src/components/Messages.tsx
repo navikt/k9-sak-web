@@ -1,13 +1,6 @@
-import classNames from 'classnames';
-import { Hovedknapp } from 'nav-frontend-knapper';
-import React, { useEffect, useState } from 'react';
-import { injectIntl, WrappedComponentProps } from 'react-intl';
-import { connect } from 'react-redux';
-import { InjectedFormProps } from 'redux-form';
-
-import { behandlingForm, behandlingFormValueSelector, SelectField, TextAreaField, Label } from '@fpsak-frontend/form';
+import { behandlingForm, behandlingFormValueSelector, Label, SelectField, TextAreaField } from '@fpsak-frontend/form';
+import InputField from '@fpsak-frontend/form/src/InputField';
 import dokumentMalType from '@fpsak-frontend/kodeverk/src/dokumentMalType';
-
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import {
   ariaCheck,
@@ -18,6 +11,7 @@ import {
   required,
 } from '@fpsak-frontend/utils';
 import { lagVisningsnavnForMottaker } from '@fpsak-frontend/utils/src/formidlingUtils';
+import { useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
 import {
   ArbeidsgiverOpplysningerPerId,
   Brevmal,
@@ -28,12 +22,15 @@ import {
   Mottaker,
   Personopplysninger,
 } from '@k9-sak-web/types';
-
-import InputField from '@fpsak-frontend/form/src/InputField';
-import { useRestApiErrorDispatcher } from '@k9-sak-web/rest-api-hooks';
 import { Fritekstbrev } from '@k9-sak-web/types/src/formidlingTsType';
+import classNames from 'classnames';
+import { Hovedknapp } from 'nav-frontend-knapper';
 import { Checkbox } from 'nav-frontend-skjema';
 import { Normaltekst } from 'nav-frontend-typografi';
+import React, { useEffect, useState } from 'react';
+import { injectIntl, WrappedComponentProps } from 'react-intl';
+import { connect } from 'react-redux';
+import { InjectedFormProps } from 'redux-form';
 import { MessagesApiKeys, requestMessagesApi, restApiMessagesHooks } from '../data/messagesApi';
 import styles from './messages.module.css';
 

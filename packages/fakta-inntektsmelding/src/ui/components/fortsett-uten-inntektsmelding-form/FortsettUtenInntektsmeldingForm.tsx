@@ -12,7 +12,7 @@ import AksjonspunktRequestPayload from '../../../types/AksjonspunktRequestPayloa
 import { Kode, TilstandBeriket } from '../../../types/KompletthetData';
 import TilstandStatus from '../../../types/TilstandStatus';
 import { skalVurderes } from '../../../util/utils';
-import styles from './fortsettUtenInntektsMeldingForm.css';
+import styles from './fortsettUtenInntektsMeldingForm.module.css';
 
 export interface FortsettUtenInntektsmeldingFormState {
   begrunnelse: string;

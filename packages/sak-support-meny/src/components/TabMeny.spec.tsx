@@ -1,8 +1,8 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 import sinon from 'sinon';
-import { ReactComponent as SendMeldingSvg } from '@fpsak-frontend/assets/images/email-send-1.svg';
-import { ReactComponent as HistorikkSvg } from '@fpsak-frontend/assets/images/synchronize-time.svg';
+import SendMeldingSvg from '@fpsak-frontend/assets/images/email-send-1.svg';
+import HistorikkSvg from '@fpsak-frontend/assets/images/synchronize-time.svg';
 
 import { FlexColumn } from '@fpsak-frontend/shared-components';
 
@@ -41,7 +41,7 @@ describe('<TabMeny>', () => {
     expect(knapp1.prop('data-tooltip')).toEqual('Historikk');
     expect(knapp1.prop('disabled')).toBe(false);
 
-    const svgPlaceholder1 = knapp1.find('div');
+    const svgPlaceholder1 = knapp1.find('SvgrURL');
     expect(svgPlaceholder1.prop('isActive')).toBe(true);
     expect(svgPlaceholder1.prop('isDisabled')).toBe(false);
     expect(svgPlaceholder1.prop('alt')).toEqual('Historikk');
@@ -51,7 +51,7 @@ describe('<TabMeny>', () => {
     expect(knapp2.prop('data-tooltip')).toEqual('Send melding');
     expect(knapp2.prop('disabled')).toBe(true);
 
-    const svgPlaceholder2 = knapp2.find('div');
+    const svgPlaceholder2 = knapp2.find('SvgrURL');
     expect(svgPlaceholder2.prop('isActive')).toBe(false);
     expect(svgPlaceholder2.prop('isDisabled')).toBe(true);
     expect(svgPlaceholder2.prop('alt')).toEqual('Send melding');

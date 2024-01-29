@@ -5,7 +5,7 @@ import React from 'react';
 import LinkRel from '../../../constants/LinkRel';
 import Dokument, { dokumentLabel } from '../../../types/Dokument';
 import { findLinkByRel } from '../../../util/linkUtils';
-import styles from './dokumentLink.css';
+import styles from './dokumentLink.module.css';
 
 interface DokumentLinkProps {
   dokument: Dokument;

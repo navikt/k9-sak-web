@@ -15,7 +15,7 @@ import ContainerContext from '../../context/ContainerContext';
 import { required } from '../../form/validators/index';
 import AddButton from '../add-button/AddButton';
 import DeleteButton from '../delete-button/DeleteButton';
-import styles from './vurderingAvOmsorgsperioderForm.css';
+import styles from './vurderingAvOmsorgsperioderForm.module.css';
 import Ytelsestype from '../../../types/Ytelsestype';
 
 export enum FieldName {

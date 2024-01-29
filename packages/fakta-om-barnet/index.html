@@ -1,25 +1,20 @@
 <html>
-    <head>
-        <title>Om barnet</title>
-        <style>
-            body {
-                font-family: 'Source Sans Pro', Arial, sans-serif;
-                font-size: 1rem;
-            }
-        </style>
-    </head>
-    <body>
-        <div id="app" style="padding: 2.5rem"></div>
-        <script type="text/javascript">
-            document.addEventListener('DOMContentLoaded', () => {
-                window.renderOmBarnetApp('app', {
-                    readOnly: false,
-                    endpoints: {
-                        rettVedDod: 'http://localhost:8082/mock/rettVedDod',
-                        omPleietrengende: 'http://localhost:8082/mock/omPleietrengende',
-                    },
-                });
-            });
-        </script>
-    </body>
+  <head>
+    <title>Om barnet</title>
+    <style>
+      body {
+        font-family: 'Source Sans Pro', Arial, sans-serif;
+        font-size: 1rem;
+      }
+    </style>
+    <script type="module" src="/src/dev/app.ts"></script>
+  </head>
+  <body>
+    <div id="app" style="padding: 2.5rem"></div>
+    <script type="text/javascript">
+      document.addEventListener('DOMContentLoaded', () => {
+        window.renderOmBarnetApp('app');
+      });
+    </script>
+  </body>
 </html>

@@ -5,7 +5,7 @@ import { Edit, Delete } from '@navikt/ds-icons';
 
 import dayjs from 'dayjs';
 
-import styles from './aktivitetRad.css';
+import styles from './aktivitetRad.module.css';
 import BegrunnelseBoks from './components/BegrunnelseBoks';
 import { OverstyringUttak } from '../../../types';
 

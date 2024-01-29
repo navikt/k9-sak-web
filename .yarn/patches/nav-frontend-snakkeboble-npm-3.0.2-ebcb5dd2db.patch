@@ -1,0 +1,33 @@
+diff --git a/lib/snakkeboble.js b/lib/snakkeboble.js
+index 6fc572c191fb0dd67abc933208c32f3a13ba6e0f..8c4b51445fb24428d664a5a92c44348931b8dc7a 100644
+--- a/lib/snakkeboble.js
++++ b/lib/snakkeboble.js
+@@ -1,14 +1,14 @@
+ "use strict";
+-var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
++var __createBinding = (this && this.__createBinding) || (Object.create ? (function (o, m, k, k2) {
+     if (k2 === undefined) k2 = k;
+-    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
+-}) : (function(o, m, k, k2) {
++    Object.defineProperty(o, k2, { enumerable: true, get: function () { return m[k]; } });
++}) : (function (o, m, k, k2) {
+     if (k2 === undefined) k2 = k;
+     o[k2] = m[k];
+ }));
+-var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
++var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function (o, v) {
+     Object.defineProperty(o, "default", { enumerable: true, value: v });
+-}) : function(o, v) {
++}) : function (o, v) {
+     o["default"] = v;
+ });
+ var __importStar = (this && this.__importStar) || function (mod) {
+@@ -36,7 +36,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
+ const React = __importStar(require("react"));
+ const classnames_1 = __importDefault(require("classnames"));
+ const PT = __importStar(require("prop-types"));
+-require("nav-frontend-snakkeboble-style");
++require("nav-frontend-snakkeboble-style/dist/main.css");
+ const nav_frontend_paneler_1 = __importDefault(require("nav-frontend-paneler"));
+ const nav_frontend_typografi_1 = require("nav-frontend-typografi");
+ const snakkebobleCls = (hoyre, className) => (0, classnames_1.default)("snakkeboble", ...className.split(" "), {

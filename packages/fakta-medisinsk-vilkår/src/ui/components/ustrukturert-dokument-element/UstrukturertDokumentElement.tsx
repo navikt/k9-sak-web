@@ -7,7 +7,7 @@ import {
 } from '@navikt/ft-plattform-komponenter';
 import React from 'react';
 import { Dokument, dokumentLabel } from '../../../types/Dokument';
-import styles from './ustrukturertDokumentElement.css';
+import styles from './ustrukturertDokumentElement.module.css';
 
 interface UstrukturertDokumentElementProps {
   dokument: Dokument;

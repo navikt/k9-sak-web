@@ -1,13 +1,12 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import { ErrorMessage } from '@navikt/ds-react';
 import { Box, Margin } from '@navikt/ft-plattform-komponenter';
-import '@navikt/ft-plattform-komponenter/dist/style.css';
 import { Period } from '@fpsak-frontend/utils';
 import React from 'react';
 import { Controller, useFieldArray, useFormContext } from 'react-hook-form';
 import { DatepickerLimitations } from './pure/DatepickerLimitations';
 import PureDatepicker from './pure/PureDatepicker';
-import styles from './periodpickerList.css';
+import styles from './periodpickerList.module.css';
 
 interface DatepickerProps {
   label?: string;

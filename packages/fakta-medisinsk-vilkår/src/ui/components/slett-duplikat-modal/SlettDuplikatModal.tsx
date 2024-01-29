@@ -7,7 +7,7 @@ import Dokument from '../../../types/Dokument';
 import { findLinkByRel } from '../../../util/linkUtils';
 import scrollUp from '../../../util/viewUtils';
 import ContainerContext from '../../context/ContainerContext';
-import styles from './slettDuplikatModal.css';
+import styles from './slettDuplikatModal.module.css';
 
 interface SlettDuplikatModalProps {
   handleCloseModal: () => void;
