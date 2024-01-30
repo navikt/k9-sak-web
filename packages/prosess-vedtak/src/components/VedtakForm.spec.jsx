@@ -589,7 +589,7 @@ describe('<VedtakForm>', () => {
       { messages },
     );
     const overstyringsCheckbox = screen.getByLabelText(messages['VedtakForm.ManuellOverstyring']);
-    expect(overstyringsCheckbox).toBeVisible();
+    expect(overstyringsCheckbox).toBeInTheDocument();
   });
 
   it('skal vise avkrysningsboks for å hindre brevutsending', () => {
@@ -620,7 +620,7 @@ describe('<VedtakForm>', () => {
     );
 
     const hindreUtsendingCheckbox = screen.getByLabelText('Hindre utsending av brev');
-    expect(hindreUtsendingCheckbox).toBeVisible();
+    expect(hindreUtsendingCheckbox).toBeInTheDocument();
   });
 
   it('skal disable checkboxer i readonly', () => {

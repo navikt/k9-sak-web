@@ -8,10 +8,10 @@ import { erOverstyringInnenforPerioderTilVurdering } from '../../../util/dateUti
 import ContainerContext from '../../context/ContainerContext';
 import OverstyringUttakForm from './OverstyringUttakForm';
 import AktivitetRad from './AktivitetRad';
-import { useOverstyrUttak } from '../../context/OverstyrUttakContext';
-import { formaterOverstyringTilFormData } from '../../../util/overstyringUtils';
 
 import styles from './overstyrUttakForm.module.css';
+import { useOverstyrUttak } from '../../context/OverstyrUttakContext';
+import { formaterOverstyringTilFormData } from '../../../util/overstyringUtils';
 
 const OverstyrUttakForm: React.FC = () => {
   const [bekreftSlettId, setBekreftSlettId] = useState<string | false>(false);
@@ -20,7 +20,7 @@ const OverstyrUttakForm: React.FC = () => {
   const [visOverstyringSkjema, setVisOverstyringSkjema] = React.useState<boolean>(false);
   const { lasterOverstyringer, overstyrte, harAksjonspunktForOverstyringAvUttak } = useOverstyrUttak();
   const [redigerOverstyring, setRedigerOverstyring] = React.useState<number | boolean>(false);
-  const leseModus = !erOverstyrer
+  const leseModus = !erOverstyrer;
   const handleSubmit = () => {
     setLoading(true);
     handleOverstyringAksjonspunkt({
@@ -93,7 +93,9 @@ const OverstyrUttakForm: React.FC = () => {
           {overstyrte?.length === 0 && !visOverstyringSkjema && <>Det er ingen overstyrte aktiviteter i denne saken</>}
           {overstyrte?.length > 0 && (
             <>
-              <Heading size="xsmall" className="mt-4" >Overstyrte perioder</Heading>
+              <Heading size="xsmall" className="mt-4">
+                Overstyrte perioder
+              </Heading>
               <Table size="small" className={styles.overstyringUttakTabell}>
                 {tableHeaders}
                 <Table.Body>
@@ -117,55 +119,68 @@ const OverstyrUttakForm: React.FC = () => {
         </>
       )}
 
-      {erOverstyrer && (<>
-        {bekreftSlettId && (
-          <Modal ref={ref} width="small" header={{ heading: "Er du sikker på at du vil slette en overstyring?", size: "small", closeButton: false }}>
-
-            <Modal.Footer>
-              <Button variant='danger' onClick={() => handleSlett(bekreftSlettId)}>Slett</Button>
-              <Button variant='primary' onClick={() => ref.current?.close()}>Avbryt</Button>
-            </Modal.Footer>
-          </Modal>
-        )}
-        {!visOverstyringSkjema && (
-          <div className={styles.leggTilOverstyringKnapp}>
-            <Button
-              variant="secondary"
-              size="small"
-              disabled={loading}
-              onClick={() => setVisOverstyringSkjema(true)}
-              icon={<PlusIcon />}
-              loading={loading}
+      {erOverstyrer && (
+        <>
+          {bekreftSlettId && (
+            <Modal
+              ref={ref}
+              width="small"
+              header={{
+                heading: 'Er du sikker på at du vil slette en overstyring?',
+                size: 'small',
+                closeButton: false,
+              }}
             >
-              Legg til ny overstyring
-            </Button>
-          </div>
-        )}
+              <Modal.Footer>
+                <Button variant="danger" onClick={() => handleSlett(bekreftSlettId)}>
+                  Slett
+                </Button>
+                <Button variant="primary" onClick={() => ref.current?.close()}>
+                  Avbryt
+                </Button>
+              </Modal.Footer>
+            </Modal>
+          )}
+          {!visOverstyringSkjema && (
+            <div className={styles.leggTilOverstyringKnapp}>
+              <Button
+                variant="secondary"
+                size="small"
+                disabled={loading}
+                onClick={() => setVisOverstyringSkjema(true)}
+                icon={<PlusIcon />}
+                loading={loading}
+              >
+                Legg til ny overstyring
+              </Button>
+            </div>
+          )}
 
-        {!visOverstyringSkjema && harAksjonspunktForOverstyringAvUttak && (
-          <div className={styles.overstyrUttakFormFooter}>
-            <Button variant="primary" size="small" type="submit" onClick={handleSubmit} loading={loading}>
-              Bekreft og fortsett
-            </Button>
-          </div>
-        )}
-        {visOverstyringSkjema && redigerOverstyring === false && (
-          <OverstyringUttakForm
-            handleAvbrytOverstyringForm={handleAvbrytOverstyringForm}
-            loading={loading}
-            setLoading={setLoading}
-          />
-        )}
-        {visOverstyringSkjema && typeof redigerOverstyring === 'number' && (
-          <OverstyringUttakForm
-            handleAvbrytOverstyringForm={handleAvbrytOverstyringForm}
-            overstyring={formaterOverstyringTilFormData(overstyrte[redigerOverstyring])}
-            loading={loading}
-            setLoading={setLoading}
-          />
-        )}
-      </>)}
-    </div >
+          {!visOverstyringSkjema && harAksjonspunktForOverstyringAvUttak && (
+            <div className={styles.overstyrUttakFormFooter}>
+              <Button variant="primary" size="small" type="submit" onClick={handleSubmit} loading={loading}>
+                Bekreft og fortsett
+              </Button>
+            </div>
+          )}
+          {visOverstyringSkjema && redigerOverstyring === false && (
+            <OverstyringUttakForm
+              handleAvbrytOverstyringForm={handleAvbrytOverstyringForm}
+              loading={loading}
+              setLoading={setLoading}
+            />
+          )}
+          {visOverstyringSkjema && typeof redigerOverstyring === 'number' && (
+            <OverstyringUttakForm
+              handleAvbrytOverstyringForm={handleAvbrytOverstyringForm}
+              overstyring={formaterOverstyringTilFormData(overstyrte[redigerOverstyring])}
+              loading={loading}
+              setLoading={setLoading}
+            />
+          )}
+        </>
+      )}
+    </div>
   );
 };
 

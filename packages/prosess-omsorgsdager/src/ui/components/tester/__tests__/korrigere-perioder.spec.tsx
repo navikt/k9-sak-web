@@ -1,5 +1,5 @@
 import { fireEvent, render, screen } from '@testing-library/react';
-import { axe } from 'jest-axe';
+import { axe } from 'vitest-axe';
 import React from 'react';
 import { KorrigerePerioderProps } from '../../../../types/KorrigerePerioderProps';
 import KorrigerePerioder from '../../korrigere-perioder/KorrigerePerioder';
@@ -176,7 +176,7 @@ describe('<KorrigerePerioder>', () => {
     const { container } = render(<KorrigerePerioder {...props} />);
 
     const a11yResults = await axe(container);
-
+    // @ts-expect-error vitest-axe doesn't work with vitest v1
     expect(a11yResults).toHaveNoViolations();
   });
 });

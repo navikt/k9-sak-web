@@ -59,18 +59,21 @@ const alleBehandlinger = [
   },
 ];
 
-jest.mock('react-router-dom', () => ({
-  ...(jest.requireActual('react-router-dom') as Record<string, unknown>),
-  useHistory: () => ({
-    push: jest.fn(),
-  }),
-  useLocation: () => ({
-    pathname: 'test',
-    search: 'test',
-    state: {},
-    hash: 'test',
-  }),
-}));
+vi.mock('react-router-dom', async () => {
+  const actual = (await vi.importActual('react-router-dom')) as Record<string, unknown>;
+  return {
+    ...actual,
+    useHistory: () => ({
+      push: vi.fn(),
+    }),
+    useLocation: () => ({
+      pathname: 'test',
+      search: 'test',
+      state: {},
+      hash: 'test',
+    }),
+  };
+});
 
 describe('BehandlingMenuIndex', () => {
   it('skal vise meny der alle menyhandlinger er synlige', async () => {
@@ -111,7 +114,7 @@ describe('BehandlingMenuIndex', () => {
           alleBehandlinger={alleBehandlinger as BehandlingAppKontekst[]}
           behandlingId={1}
           behandlingVersjon={2}
-          oppfriskBehandlinger={jest.fn()}
+          oppfriskBehandlinger={vi.fn()}
           behandlingRettigheter={behandlingRettigheter}
           sakRettigheter={sakRettigheter}
           behandlendeEnheter={[

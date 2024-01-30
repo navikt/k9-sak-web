@@ -1,3 +1,4 @@
+/* eslint-disable vitest/expect-expect */
 describe('Sykdom', () => {
   before(() => {
     cy.visit('/');

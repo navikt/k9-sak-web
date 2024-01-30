@@ -1,4 +1,4 @@
-import { get, Period } from '@fpsak-frontend/utils';
+import { httpUtils, Period } from '@fpsak-frontend/utils';
 import { NavigationWithDetailView, PageContainer, Box, Margin } from '@navikt/ft-plattform-komponenter';
 import React, { useMemo } from 'react';
 import Step, { StepId, toOmsorgspersonerSteg } from '../../../types/Step';
@@ -49,7 +49,7 @@ const VilkårsvurderingAvToOmsorgspersoner = ({
   const harGyldigSignatur = !manglerGodkjentLegeerklæring;
 
   const getVurderingsoversikt = () =>
-    get<Vurderingsoversikt>(endpoints.vurderingsoversiktBehovForToOmsorgspersoner, httpErrorHandler, {
+    httpUtils.get<Vurderingsoversikt>(endpoints.vurderingsoversiktBehovForToOmsorgspersoner, httpErrorHandler, {
       signal: controller.signal,
     });
 

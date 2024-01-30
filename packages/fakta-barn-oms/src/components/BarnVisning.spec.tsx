@@ -41,9 +41,8 @@ it('<BarnVisning>', () => {
   const barnetsAlderIdag = moment().diff(barn.barnRelevantIBehandling.fødselsdato, 'years').toString();
 
   const wrapper = shallow(<BarnVisning barnet={barn} index={0} />);
-
-  expect(wrapper.find('span').text().includes(barn.barnRelevantIBehandling.fødselsdato));
-  expect(wrapper.find('span').text().includes(barnetsAlderIdag));
+  expect(wrapper.find('span').text().includes(barn.barnRelevantIBehandling.personIdent)).toBe(true);
+  expect(wrapper.find('span').text().includes(barnetsAlderIdag)).toBe(true);
 
   expect(wrapper.find(Panel)).toHaveLength(1);
   expect(wrapper.find(BarnInformasjonVisning)).toHaveLength(1);

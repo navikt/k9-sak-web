@@ -12,13 +12,14 @@ const config = {
 
   globals: {
     VERSION: 'off',
+    vi: true,
   },
 
   parser: '@typescript-eslint/parser',
 
-  plugins: ['jest', 'jest-dom', '@typescript-eslint'],
+  plugins: ['vitest', '@typescript-eslint'],
 
-  extends: ['airbnb', 'plugin:@typescript-eslint/recommended', 'plugin:jest/recommended', 'prettier'],
+  extends: ['airbnb', 'plugin:@typescript-eslint/recommended', "plugin:vitest/recommended", 'prettier'],
 
   parserOptions: {
     sourceType: 'module',
@@ -111,7 +112,7 @@ const config = {
       },
     },
     {
-      files: ['*.ts', '*.tsx'],
+      files: ['*.ts', '*.tsx', '*.jsx'],
       rules: { 'no-undef': OFF },
     },
   ],
