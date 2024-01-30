@@ -1,8 +1,9 @@
-import React from 'react';
-import { shallow } from 'enzyme';
-
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
-
+import { renderWithIntl } from '@fpsak-frontend/utils-test';
+import { screen } from '@testing-library/react';
+import React from 'react';
+import { MemoryRouter } from 'react-router';
+import messages from '../../i18n/nb_NO.json';
 import TotrinnskontrollSaksbehandlerPanel from './TotrinnskontrollSaksbehandlerPanel';
 
 const getTotrinnsaksjonspunkterFødsel = () => [
@@ -95,39 +96,48 @@ const location = {
 
 describe('<TotrinnskontrollSaksbehandlerPanel>', () => {
   it('skal vise korrekt antall element og navn', () => {
-    const wrapper = shallow(
-      <TotrinnskontrollSaksbehandlerPanel
-        totrinnskontrollSkjermlenkeContext={totrinnskontrollSkjermlenkeContext}
-        behandlingStatus={{
-          kode: behandlingStatus.BEHANDLING_UTREDES,
-          kodeverk: '',
-        }}
-        arbeidsforholdHandlingTyper={[]}
-        erTilbakekreving={false}
-        vurderArsaker={[]}
-        skjemalenkeTyper={[
-          {
-            kode: 'FOEDSEL',
-            navn: 'Fødsel',
+    renderWithIntl(
+      <MemoryRouter>
+        <TotrinnskontrollSaksbehandlerPanel
+          totrinnskontrollSkjermlenkeContext={totrinnskontrollSkjermlenkeContext}
+          behandlingStatus={{
+            kode: behandlingStatus.BEHANDLING_UTREDES,
             kodeverk: '',
-          },
-          {
-            kode: 'OMSORG',
-            navn: 'Omsorg',
-            kodeverk: '',
-          },
-          {
-            kode: 'FORELDREANSVAR',
-            navn: 'Foreldreansvar',
-            kodeverk: '',
-          },
-        ]}
-        lagLenke={() => location}
-      />,
+          }}
+          arbeidsforholdHandlingTyper={[]}
+          erTilbakekreving={false}
+          vurderArsaker={[]}
+          skjemalenkeTyper={[
+            {
+              kode: 'FOEDSEL',
+              navn: 'Fødsel',
+              kodeverk: '',
+            },
+            {
+              kode: 'OMSORG',
+              navn: 'Omsorg',
+              kodeverk: '',
+            },
+            {
+              kode: 'FORELDREANSVAR',
+              navn: 'Foreldreansvar',
+              kodeverk: '',
+            },
+          ]}
+          lagLenke={() => location}
+        />
+      </MemoryRouter>,
+      { messages },
     );
-    const navFieldGroup = wrapper.find('NavLink');
-    expect(navFieldGroup).toHaveLength(3);
-    const normaltekst = wrapper.find('pre');
-    expect(normaltekst).toHaveLength(7);
+
+    expect(screen.getByRole('link', { name: 'Fødsel' })).toBeInTheDocument();
+    expect(screen.getByRole('link', { name: 'Omsorg' })).toBeInTheDocument();
+    expect(screen.getByRole('link', { name: 'Foreldreansvar' })).toBeInTheDocument();
+    expect(
+      screen.getAllByText(
+        (_, element) =>
+          element.textContent === 'Løst aksjonspunkt: Kontroller endrede opplysninger og faglige vurderinger',
+      )[0],
+    ).toBeInTheDocument();
   });
 });

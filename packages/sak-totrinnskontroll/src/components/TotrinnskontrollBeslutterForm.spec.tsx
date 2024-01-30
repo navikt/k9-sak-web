@@ -1,10 +1,13 @@
-import React from 'react';
-
+import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test';
 import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
 import { Behandling, TotrinnskontrollSkjermlenkeContext } from '@k9-sak-web/types';
-
+import { screen } from '@testing-library/react';
+import React from 'react';
+import { reduxForm } from 'redux-form';
+import messages from '../../i18n/nb_NO.json';
 import { TotrinnskontrollBeslutterForm } from './TotrinnskontrollBeslutterForm';
-import shallowWithIntl from '../../i18n/index';
+
+const MockForm = reduxForm({ form: 'mock', onSubmit: vi.fn() })(({ children }) => <div>{children}</div>);
 
 const location = {
   pathname: '',
@@ -38,24 +41,22 @@ describe('<TotrinnskontrollBeslutterForm>', () => {
       },
     ] as TotrinnskontrollSkjermlenkeContext[];
 
-    const wrapper = shallowWithIntl(
-      <TotrinnskontrollBeslutterForm
-        {...reduxFormPropsMock}
-        behandling={behandling}
-        totrinnskontrollSkjermlenkeContext={totrinnskontrollSkjermlenkeContext}
-        readOnly={false}
-        erTilbakekreving
-        lagLenke={() => location}
-        arbeidsforholdHandlingTyper={[]}
-        skjemalenkeTyper={[]}
-        aksjonspunktGodkjenning={[]}
-      />,
+    renderWithIntlAndReduxForm(
+      <MockForm>
+        <TotrinnskontrollBeslutterForm
+          {...reduxFormPropsMock}
+          behandling={behandling}
+          totrinnskontrollSkjermlenkeContext={totrinnskontrollSkjermlenkeContext}
+          readOnly={false}
+          erTilbakekreving
+          lagLenke={() => location}
+          arbeidsforholdHandlingTyper={[]}
+          skjemalenkeTyper={[]}
+          aksjonspunktGodkjenning={[]}
+        />
+      </MockForm>,
+      { messages },
     );
-
-    const form = wrapper.find('form');
-    expect(form).toHaveLength(1);
-
-    const button = wrapper.find('button');
-    expect(button).toHaveLength(0);
+    expect(screen.queryByRole('button', { name: 'Forhåndsvis' })).not.toBeInTheDocument();
   });
 });
