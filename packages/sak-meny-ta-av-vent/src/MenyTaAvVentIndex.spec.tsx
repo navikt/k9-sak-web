@@ -1,29 +1,29 @@
+import { act, renderWithIntl } from '@fpsak-frontend/utils-test';
+import { screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import React from 'react';
 import sinon from 'sinon';
-
-import { OkAvbrytModal } from '@fpsak-frontend/shared-components';
-
-import shallowWithIntl from '../i18n/index';
+import messages from '../i18n/nb_NO.json';
 import MenyTaAvVentIndex from './MenyTaAvVentIndex';
 
 describe('<MenyTaAvVentIndex>', () => {
-  it('skal vise modal og velge å åpne ta behandling av vent', () => {
+  it('skal vise modal og velge å åpne ta behandling av vent', async () => {
     const resumeBehandlingCallback = sinon.spy();
     const lukkModalCallback = sinon.spy();
 
-    const wrapper = shallowWithIntl(
+    renderWithIntl(
       <MenyTaAvVentIndex
         behandlingId={3}
         behandlingVersjon={1}
         taBehandlingAvVent={resumeBehandlingCallback}
         lukkModal={lukkModalCallback}
       />,
+      { messages },
     );
 
-    const modal = wrapper.find(OkAvbrytModal);
-    expect(modal).toHaveLength(1);
-
-    modal.prop('submit')();
+    await act(async () => {
+      await userEvent.click(screen.getByRole('button', { name: 'OK' }));
+    });
 
     const kall = resumeBehandlingCallback.getCalls();
     expect(kall).toHaveLength(1);

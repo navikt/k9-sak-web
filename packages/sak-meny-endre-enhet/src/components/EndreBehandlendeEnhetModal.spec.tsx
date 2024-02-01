@@ -1,13 +1,16 @@
-import React from 'react';
-import sinon from 'sinon';
-import Modal from 'nav-frontend-modal';
-
+import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test';
 import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
-
+import { act, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+import React from 'react';
+import { reduxForm } from 'redux-form';
+import sinon from 'sinon';
+import { intlMock } from '../../i18n/index';
+import messages from '../../i18n/nb_NO.json';
 import { EndreBehandlendeEnhetModal } from './EndreBehandlendeEnhetModal';
-import shallowWithIntl, { intlMock } from '../../i18n/index';
 
 describe('<ChangeBehandlendeEnhetModal>', () => {
+  const MockForm = reduxForm({ form: 'mock', onSubmit: vi.fn() })(({ children }) => <div>{children}</div>);
   const behandlendeEnheter = [
     {
       enhetId: '001',
@@ -17,116 +20,118 @@ describe('<ChangeBehandlendeEnhetModal>', () => {
   ];
 
   it('skal rendre åpen modal', () => {
-    const wrapper = shallowWithIntl(
-      <EndreBehandlendeEnhetModal
-        {...reduxFormPropsMock}
-        handleSubmit={sinon.spy()}
-        lukkModal={sinon.spy()}
-        behandlendeEnheter={behandlendeEnheter}
-        gjeldendeBehandlendeEnhetId="002"
-        gjeldendeBehandlendeEnhetNavn="Oslo"
-        nyEnhet="Test3"
-        begrunnelse="Dette er en begrunnelse"
-        intl={intlMock}
-      />,
+    renderWithIntlAndReduxForm(
+      <MockForm>
+        <EndreBehandlendeEnhetModal
+          {...reduxFormPropsMock}
+          handleSubmit={sinon.spy()}
+          lukkModal={sinon.spy()}
+          behandlendeEnheter={behandlendeEnheter}
+          gjeldendeBehandlendeEnhetId="002"
+          gjeldendeBehandlendeEnhetNavn="Oslo"
+          nyEnhet="Test3"
+          begrunnelse="Dette er en begrunnelse"
+          intl={intlMock}
+        />
+      </MockForm>,
+      { messages },
     );
 
-    const modal = wrapper.find(Modal);
-    expect(modal).toHaveLength(1);
-    expect(modal.prop('isOpen')).toBe(true);
-    expect(modal.prop('closeButton')).toBe(false);
-    expect(modal.prop('contentLabel')).toEqual('Endre behandlende enhet');
-
-    const button = wrapper.find('Hovedknapp');
-    expect(button).toHaveLength(1);
-    expect(button.prop('disabled')).toBe(false);
+    expect(screen.getByRole('dialog', { name: 'Endre behandlende enhet' })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'OK' })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'OK' })).not.toBeDisabled();
   });
 
   it('skal vise nedtrekksliste med behandlende enheter', () => {
-    const wrapper = shallowWithIntl(
-      <EndreBehandlendeEnhetModal
-        {...reduxFormPropsMock}
-        handleSubmit={sinon.spy()}
-        lukkModal={sinon.spy()}
-        behandlendeEnheter={behandlendeEnheter}
-        gjeldendeBehandlendeEnhetId="002"
-        gjeldendeBehandlendeEnhetNavn="Oslo"
-        nyEnhet="Test"
-        begrunnelse="Dette er en begrunnelse"
-        intl={intlMock}
-      />,
+    renderWithIntlAndReduxForm(
+      <MockForm>
+        <EndreBehandlendeEnhetModal
+          {...reduxFormPropsMock}
+          handleSubmit={sinon.spy()}
+          lukkModal={sinon.spy()}
+          behandlendeEnheter={behandlendeEnheter}
+          gjeldendeBehandlendeEnhetId="002"
+          gjeldendeBehandlendeEnhetNavn="Oslo"
+          nyEnhet="Test"
+          begrunnelse="Dette er en begrunnelse"
+          intl={intlMock}
+        />
+      </MockForm>,
+      { messages },
     );
 
-    const selectField = wrapper.find('SelectField');
-    expect(selectField).toHaveLength(1);
-    expect(selectField.prop('placeholder')).toEqual('002 Oslo');
-    const values = selectField.prop('selectValues');
-    expect(values[0].props.value).toEqual('0');
+    expect(screen.getByRole('combobox', { name: 'Ny enhet' })).toBeInTheDocument();
+    expect(screen.getByRole('option', { name: '002 Oslo' })).toBeInTheDocument();
+    expect(screen.getByRole('option', { name: '001 NAV' })).toBeInTheDocument();
   });
 
   it('skal disable knapp for lagring når ny behandlende enhet og begrunnnelse ikke er valgt', () => {
-    const wrapper = shallowWithIntl(
-      <EndreBehandlendeEnhetModal
-        {...reduxFormPropsMock}
-        handleSubmit={sinon.spy()}
-        lukkModal={sinon.spy()}
-        behandlendeEnheter={behandlendeEnheter}
-        gjeldendeBehandlendeEnhetId="002"
-        gjeldendeBehandlendeEnhetNavn="Oslo"
-        intl={intlMock}
-      />,
+    renderWithIntlAndReduxForm(
+      <MockForm>
+        <EndreBehandlendeEnhetModal
+          {...reduxFormPropsMock}
+          handleSubmit={sinon.spy()}
+          lukkModal={sinon.spy()}
+          behandlendeEnheter={behandlendeEnheter}
+          gjeldendeBehandlendeEnhetId="002"
+          gjeldendeBehandlendeEnhetNavn="Oslo"
+          intl={intlMock}
+        />{' '}
+      </MockForm>,
+      { messages },
     );
 
-    const button = wrapper.find('Hovedknapp');
-    expect(button.prop('disabled')).toBe(true);
+    expect(screen.getByRole('button', { name: 'OK' })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'OK' })).toBeDisabled();
   });
 
-  it('skal bruke submit-callback når en trykker ok', () => {
+  it('skal bruke submit-callback når en trykker ok', async () => {
     const submitEventCallback = sinon.spy();
-    const wrapper = shallowWithIntl(
-      <EndreBehandlendeEnhetModal
-        {...reduxFormPropsMock}
-        handleSubmit={submitEventCallback}
-        lukkModal={sinon.spy()}
-        behandlendeEnheter={behandlendeEnheter}
-        gjeldendeBehandlendeEnhetId="002"
-        gjeldendeBehandlendeEnhetNavn="Oslo"
-        nyEnhet="Test"
-        begrunnelse="Dette er en begrunnelse"
-        intl={intlMock}
-      />,
+    renderWithIntlAndReduxForm(
+      <MockForm>
+        <EndreBehandlendeEnhetModal
+          {...reduxFormPropsMock}
+          handleSubmit={submitEventCallback}
+          lukkModal={sinon.spy()}
+          behandlendeEnheter={behandlendeEnheter}
+          gjeldendeBehandlendeEnhetId="002"
+          gjeldendeBehandlendeEnhetNavn="Oslo"
+          nyEnhet="Test"
+          begrunnelse="Dette er en begrunnelse"
+          intl={intlMock}
+        />
+      </MockForm>,
+      { messages },
     );
 
-    const form = wrapper.find('form');
-    form.simulate('submit', {
-      preventDefault() {
-        return undefined;
-      },
+    await act(async () => {
+      await userEvent.click(screen.getByRole('button', { name: 'OK' }));
     });
     expect(submitEventCallback.called).toBe(true);
   });
 
-  it('skal avbryte redigering ved trykk på avbryt-knapp', () => {
+  it('skal avbryte redigering ved trykk på avbryt-knapp', async () => {
     const cancelEventCallback = sinon.spy();
-    const wrapper = shallowWithIntl(
-      <EndreBehandlendeEnhetModal
-        {...reduxFormPropsMock}
-        handleSubmit={sinon.spy()}
-        lukkModal={cancelEventCallback}
-        behandlendeEnheter={behandlendeEnheter}
-        gjeldendeBehandlendeEnhetId="002"
-        gjeldendeBehandlendeEnhetNavn="Oslo"
-        nyEnhet="Test"
-        begrunnelse="Dette er en begrunnelse"
-        intl={intlMock}
-      />,
+    renderWithIntlAndReduxForm(
+      <MockForm>
+        <EndreBehandlendeEnhetModal
+          {...reduxFormPropsMock}
+          handleSubmit={sinon.spy()}
+          lukkModal={cancelEventCallback}
+          behandlendeEnheter={behandlendeEnheter}
+          gjeldendeBehandlendeEnhetId="002"
+          gjeldendeBehandlendeEnhetNavn="Oslo"
+          nyEnhet="Test"
+          begrunnelse="Dette er en begrunnelse"
+          intl={intlMock}
+        />
+      </MockForm>,
+      { messages },
     );
 
-    const avbrytKnapp = wrapper.find('Knapp');
-    expect(avbrytKnapp).toHaveLength(1);
-    expect(avbrytKnapp.prop('mini')).toBe(true);
-
-    avbrytKnapp.simulate('click');
+    await act(async () => {
+      await userEvent.click(screen.getByRole('button', { name: 'Avbryt' }));
+    });
     expect(cancelEventCallback.called).toBe(true);
   });
 });

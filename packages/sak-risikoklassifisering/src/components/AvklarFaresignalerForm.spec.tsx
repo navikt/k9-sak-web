@@ -1,12 +1,11 @@
-import React from 'react';
-import { shallow } from 'enzyme';
-
+import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test';
 import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
-import { RadioGroupField, RadioOption, TextAreaField } from '@fpsak-frontend/form';
 import { Risikoklassifisering } from '@k9-sak-web/types';
-
+import { screen } from '@testing-library/react';
+import React from 'react';
+import { reduxForm } from 'redux-form';
+import messages from '../../i18n/nb_NO.json';
 import faresignalVurdering from '../kodeverk/faresignalVurdering';
-
 import {
   AvklarFaresignalerForm,
   begrunnelseFieldName,
@@ -42,37 +41,43 @@ const mockRisikoklassifisering = kode => ({
 });
 
 describe('<AvklarFaresignalerForm>', () => {
+  const MockForm = reduxForm({ form: 'mock', onSubmit: vi.fn() })(({ children }) => <div>{children}</div>);
   it('skal teste at komponent mountes korrekt med inputfelter', () => {
-    const wrapper = shallow(
-      <AvklarFaresignalerForm
-        readOnly
-        aksjonspunkt={mockAksjonspunkt('UTFO', undefined)}
-        submitCallback={() => undefined}
-        risikoklassifisering={{} as Risikoklassifisering}
-        {...reduxFormPropsMock}
-      />,
+    renderWithIntlAndReduxForm(
+      <MockForm>
+        <AvklarFaresignalerForm
+          readOnly={false}
+          aksjonspunkt={mockAksjonspunkt('UTFO', undefined)}
+          submitCallback={() => undefined}
+          risikoklassifisering={{} as Risikoklassifisering}
+          {...reduxFormPropsMock}
+        />
+      </MockForm>,
+      { messages },
     );
-    expect(wrapper.find(TextAreaField)).toHaveLength(1);
-    expect(wrapper.find(RadioOption)).toHaveLength(2);
-    expect(wrapper.find(RadioGroupField)).toHaveLength(1);
+    expect(screen.getByRole('radio', { name: 'Faresignalene hadde innvirkning på behandlingen' })).toBeInTheDocument();
+    expect(
+      screen.getByRole('radio', { name: 'Faresignalene hadde ingen innvirkning på behandlingen' }),
+    ).toBeInTheDocument();
+    expect(screen.getByRole('textbox', { name: 'Vurdering' })).toBeInTheDocument();
   });
 
   it('skal teste at komponent gir inputfelter korrekte verdier', () => {
-    const wrapper = shallow(
-      <AvklarFaresignalerForm
-        readOnly
-        aksjonspunkt={mockAksjonspunkt('UTFO', undefined)}
-        submitCallback={() => undefined}
-        risikoklassifisering={{} as Risikoklassifisering}
-        {...reduxFormPropsMock}
-      />,
+    renderWithIntlAndReduxForm(
+      <MockForm>
+        <AvklarFaresignalerForm
+          readOnly
+          aksjonspunkt={mockAksjonspunkt('UTFO', undefined)}
+          submitCallback={() => undefined}
+          risikoklassifisering={{} as Risikoklassifisering}
+          {...reduxFormPropsMock}
+        />
+      </MockForm>,
+      { messages },
     );
-    const textArea = wrapper.find('TextAreaField');
-    expect(textArea.props().readOnly).toBe(true);
-
-    const radioGroup = wrapper.find('RadioGroupField');
-    expect(radioGroup.props().readOnly).toBe(true);
-    expect(radioGroup.prop('isEdited')).toBe(true);
+    expect(screen.queryByRole('textbox', { name: 'Vurdering' })).not.toBeInTheDocument();
+    expect(screen.getByRole('radio', { name: 'Faresignalene hadde innvirkning på behandlingen' })).toBeDisabled();
+    expect(screen.getByRole('radio', { name: 'Faresignalene hadde ingen innvirkning på behandlingen' })).toBeDisabled();
   });
 
   it('skal teste at buildInitialValues gir korrekte verdier', () => {

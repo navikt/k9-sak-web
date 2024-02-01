@@ -1,6 +1,7 @@
+import { renderWithIntl } from '@fpsak-frontend/utils-test';
+import { screen } from '@testing-library/react';
 import React from 'react';
-import { shallow } from 'enzyme';
-import { Normaltekst } from 'nav-frontend-typografi';
+import messages from '../../i18n/nb_NO.json';
 import Faresignaler from './Faresignaler';
 
 const mockRisikoklassifisering = (medlSignaler, iaySignaler) => ({
@@ -18,49 +19,41 @@ const mockRisikoklassifisering = (medlSignaler, iaySignaler) => ({
 
 describe('<Faresignaler>', () => {
   it('skal teste at komponent mountes korrekt når vi har faresignaler i medl kategorien', () => {
-    const wrapper = shallow(
+    renderWithIntl(
       <Faresignaler
         risikoklassifisering={mockRisikoklassifisering(['Dette er en grunn', 'Dette er en annen grunn'], undefined)}
       />,
+      { messages },
     );
-    const formattedMessage = wrapper.find('MemoizedFormattedMessage');
-    expect(formattedMessage).toHaveLength(1);
-    expect(formattedMessage.prop('id')).toEqual('Risikopanel.Panel.Medlemskap');
 
-    const normaltekst = wrapper.find(Normaltekst);
-    expect(normaltekst).toHaveLength(2);
-    expect(normaltekst.children().at(0).text()).toEqual('Dette er en grunn');
-    expect(normaltekst.children().at(1).text()).toEqual('Dette er en annen grunn');
+    expect(screen.getByText('Medlemskap')).toBeInTheDocument();
+    expect(screen.getByText('Dette er en grunn')).toBeInTheDocument();
+    expect(screen.getByText('Dette er en annen grunn')).toBeInTheDocument();
   });
 
   it('skal teste at komponent mountes korrekt når vi har faresignaler i iay kategorien', () => {
-    const wrapper = shallow(
+    renderWithIntl(
       <Faresignaler
         risikoklassifisering={mockRisikoklassifisering(undefined, ['Dette er en grunn', 'Dette er en annen grunn'])}
       />,
+      { messages },
     );
-    const formattedMessage = wrapper.find('MemoizedFormattedMessage');
-    expect(formattedMessage).toHaveLength(1);
-    expect(formattedMessage.prop('id')).toEqual('Risikopanel.Panel.ArbeidsforholdInntekt');
 
-    const normaltekst = wrapper.find(Normaltekst);
-    expect(normaltekst).toHaveLength(2);
-    expect(normaltekst.children().at(0).text()).toEqual('Dette er en grunn');
-    expect(normaltekst.children().at(1).text()).toEqual('Dette er en annen grunn');
+    expect(screen.getByText('Arbeidsforhold og inntekt')).toBeInTheDocument();
+    expect(screen.getByText('Dette er en grunn')).toBeInTheDocument();
+    expect(screen.getByText('Dette er en annen grunn')).toBeInTheDocument();
   });
 
   it('skal teste at komponent mountes korrekt når vi har faresignaler i begge kategorier', () => {
-    const wrapper = shallow(
+    renderWithIntl(
       <Faresignaler risikoklassifisering={mockRisikoklassifisering(['Grunn 1', 'Grunn 2'], ['Grunn 3', 'Grunn 4'])} />,
+      { messages },
     );
-    const formattedMessage = wrapper.find('MemoizedFormattedMessage');
-    expect(formattedMessage).toHaveLength(2);
-
-    const normaltekst = wrapper.find(Normaltekst);
-    expect(normaltekst).toHaveLength(4);
-    expect(normaltekst.children().at(0).text()).toEqual('Grunn 1');
-    expect(normaltekst.children().at(1).text()).toEqual('Grunn 2');
-    expect(normaltekst.children().at(2).text()).toEqual('Grunn 3');
-    expect(normaltekst.children().at(3).text()).toEqual('Grunn 4');
+    expect(screen.getByText('Medlemskap')).toBeInTheDocument();
+    expect(screen.getByText('Arbeidsforhold og inntekt')).toBeInTheDocument();
+    expect(screen.getByText('Grunn 1')).toBeInTheDocument();
+    expect(screen.getByText('Grunn 2')).toBeInTheDocument();
+    expect(screen.getByText('Grunn 3')).toBeInTheDocument();
+    expect(screen.getByText('Grunn 4')).toBeInTheDocument();
   });
 });

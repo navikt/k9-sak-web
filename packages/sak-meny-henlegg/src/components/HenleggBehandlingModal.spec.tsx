@@ -1,16 +1,20 @@
-import React from 'react';
-import sinon from 'sinon';
-import Modal from 'nav-frontend-modal';
-
-import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
-import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import behandlingResultatType from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
-
+import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
+import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test';
+import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
+import { act, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+import React from 'react';
+import { reduxForm } from 'redux-form';
+import sinon from 'sinon';
+import { intlMock } from '../../i18n/index';
+import messages from '../../i18n/nb_NO.json';
 import { getHenleggArsaker, HenleggBehandlingModalImpl } from './HenleggBehandlingModal';
-import shallowWithIntl, { intlMock } from '../../i18n/index';
 
 describe('<HenleggBehandlingModal>', () => {
+  const MockForm = reduxForm({ form: 'mock', onSubmit: vi.fn() })(({ children }) => <div>{children}</div>);
+
   const ytelseType = {
     kode: fagsakYtelseType.FORELDREPENGER,
     kodeverk: 'FAGSAK_YTELSE_TYPE',
@@ -50,72 +54,68 @@ describe('<HenleggBehandlingModal>', () => {
   ];
 
   it('skal rendre åpen modal', () => {
-    const wrapper = shallowWithIntl(
-      <HenleggBehandlingModalImpl
-        {...reduxFormPropsMock}
-        handleSubmit={sinon.spy()}
-        cancelEvent={sinon.spy()}
-        previewHenleggBehandling={sinon.spy()}
-        årsakKode={behandlingResultatType.HENLAGT_FEILOPPRETTET}
-        begrunnelse="Dette er en begrunnelse"
-        intl={intlMock}
-        showLink={false}
-        ytelseType={ytelseType}
-        behandlingUuid="123"
-        behandlingId={123}
-        behandlingResultatTyper={behandlingResultatTyper}
-        behandlingType={{
-          kode: behandlingType.FORSTEGANGSSOKNAD,
-          kodeverk: '',
-        }}
-        hentMottakere={sinon.spy()}
-      />,
+    renderWithIntlAndReduxForm(
+      <MockForm>
+        <HenleggBehandlingModalImpl
+          {...reduxFormPropsMock}
+          handleSubmit={sinon.spy()}
+          cancelEvent={sinon.spy()}
+          previewHenleggBehandling={sinon.spy()}
+          årsakKode={behandlingResultatType.HENLAGT_FEILOPPRETTET}
+          begrunnelse="Dette er en begrunnelse"
+          intl={intlMock}
+          showLink={false}
+          ytelseType={ytelseType}
+          behandlingUuid="123"
+          behandlingId={123}
+          behandlingResultatTyper={behandlingResultatTyper}
+          behandlingType={{
+            kode: behandlingType.FORSTEGANGSSOKNAD,
+            kodeverk: '',
+          }}
+          hentMottakere={sinon.spy()}
+        />
+      </MockForm>,
+      { messages },
     );
 
-    const modal = wrapper.find(Modal);
-    expect(modal).toHaveLength(1);
-    expect(modal.prop('isOpen')).toBe(true);
-    expect(modal.prop('closeButton')).toBe(false);
-    expect(modal.prop('contentLabel')).toEqual('Behandlingen henlegges');
-
-    const button = wrapper.find('Hovedknapp');
-    expect(button).toHaveLength(1);
-    expect(button.prop('disabled')).toBe(false);
-
-    const previewLink = wrapper.find('a');
-    expect(previewLink).toHaveLength(0);
+    expect(screen.getByRole('dialog', { name: 'Behandlingen henlegges' })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'Henlegg behandling' })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'Henlegg behandling' })).not.toBeDisabled();
+    expect(screen.queryByRole('link', { name: 'Forhåndsvis brev' })).not.toBeInTheDocument();
   });
 
   it('skal vise nedtrekksliste med behandlingsresultat-typer', () => {
-    const wrapper = shallowWithIntl(
-      <HenleggBehandlingModalImpl
-        {...reduxFormPropsMock}
-        handleSubmit={sinon.spy()}
-        cancelEvent={sinon.spy()}
-        previewHenleggBehandling={sinon.spy()}
-        årsakKode={behandlingResultatType.HENLAGT_FEILOPPRETTET}
-        begrunnelse="Dette er en begrunnelse"
-        intl={intlMock}
-        showLink
-        ytelseType={ytelseType}
-        behandlingUuid="123"
-        behandlingId={123}
-        behandlingResultatTyper={behandlingResultatTyper}
-        behandlingType={{
-          kode: behandlingType.FORSTEGANGSSOKNAD,
-          kodeverk: '',
-        }}
-        hentMottakere={sinon.spy()}
-      />,
+    renderWithIntlAndReduxForm(
+      <MockForm>
+        <HenleggBehandlingModalImpl
+          {...reduxFormPropsMock}
+          handleSubmit={sinon.spy()}
+          cancelEvent={sinon.spy()}
+          previewHenleggBehandling={sinon.spy()}
+          årsakKode={behandlingResultatType.HENLAGT_FEILOPPRETTET}
+          begrunnelse="Dette er en begrunnelse"
+          intl={intlMock}
+          showLink
+          ytelseType={ytelseType}
+          behandlingUuid="123"
+          behandlingId={123}
+          behandlingResultatTyper={behandlingResultatTyper}
+          behandlingType={{
+            kode: behandlingType.FORSTEGANGSSOKNAD,
+            kodeverk: '',
+          }}
+          hentMottakere={sinon.spy()}
+        />
+      </MockForm>,
+      { messages },
     );
 
-    const selectField = wrapper.find('SelectField');
-    expect(selectField).toHaveLength(1);
-    expect(selectField.prop('placeholder')).toEqual('Velg årsak til henleggelse');
-    const values = selectField.prop('selectValues');
-    expect(values).toHaveLength(2);
-    expect(values[0].props.value).toEqual(behandlingResultatType.HENLAGT_SOKNAD_TRUKKET);
-    expect(values[1].props.value).toEqual(behandlingResultatType.HENLAGT_FEILOPPRETTET);
+    expect(screen.getByRole('combobox', { name: 'Velg årsak' })).toBeInTheDocument();
+    expect(screen.getByRole('option', { name: 'Velg årsak til henleggelse' })).toBeInTheDocument();
+    expect(screen.getByRole('option', { name: 'Velg årsak til henleggelse' })).toBeDisabled();
+    expect(screen.getByRole('option', { name: 'Søknaden er trukket' })).toBeInTheDocument();
+    expect(screen.getByRole('option', { name: 'Behandlingen er feilaktig opprettet' })).toBeInTheDocument();
   });
 
   it('skal bruke behandlingsresultat-typer for klage', () => {
@@ -182,184 +182,190 @@ describe('<HenleggBehandlingModal>', () => {
   });
 
   it('skal disable knapp for lagring når behandlingsresultat-type og begrunnnelse ikke er valgt', () => {
-    const wrapper = shallowWithIntl(
-      <HenleggBehandlingModalImpl
-        {...reduxFormPropsMock}
-        handleSubmit={sinon.spy()}
-        cancelEvent={sinon.spy()}
-        previewHenleggBehandling={sinon.spy()}
-        intl={intlMock}
-        showLink
-        ytelseType={ytelseType}
-        behandlingUuid="123"
-        behandlingId={123}
-        behandlingResultatTyper={behandlingResultatTyper}
-        behandlingType={{
-          kode: behandlingType.FORSTEGANGSSOKNAD,
-          kodeverk: '',
-        }}
-        hentMottakere={sinon.spy()}
-      />,
+    renderWithIntlAndReduxForm(
+      <MockForm>
+        <HenleggBehandlingModalImpl
+          {...reduxFormPropsMock}
+          handleSubmit={sinon.spy()}
+          cancelEvent={sinon.spy()}
+          previewHenleggBehandling={sinon.spy()}
+          intl={intlMock}
+          showLink
+          ytelseType={ytelseType}
+          behandlingUuid="123"
+          behandlingId={123}
+          behandlingResultatTyper={behandlingResultatTyper}
+          behandlingType={{
+            kode: behandlingType.FORSTEGANGSSOKNAD,
+            kodeverk: '',
+          }}
+          hentMottakere={sinon.spy()}
+        />
+      </MockForm>,
+      { messages },
     );
-
-    const button = wrapper.find('Hovedknapp');
-    expect(button.prop('disabled')).toBe(true);
+    expect(screen.getByRole('button', { name: 'Henlegg behandling' })).toBeDisabled();
   });
 
   it('skal disable knapp for lagring når behandlingsresultat-type, begrunnnelse og fritekst ikke er valgt for tilbakekreving revurdering', () => {
-    const wrapper = shallowWithIntl(
-      <HenleggBehandlingModalImpl
-        {...reduxFormPropsMock}
-        handleSubmit={sinon.spy()}
-        cancelEvent={sinon.spy()}
-        previewHenleggBehandling={sinon.spy()}
-        intl={intlMock}
-        showLink
-        ytelseType={ytelseType}
-        behandlingUuid="123"
-        behandlingId={123}
-        behandlingResultatTyper={behandlingResultatTyper}
-        behandlingType={{
-          kode: behandlingType.FORSTEGANGSSOKNAD,
-          kodeverk: '',
-        }}
-        hentMottakere={sinon.spy()}
-      />,
+    renderWithIntlAndReduxForm(
+      <MockForm>
+        <HenleggBehandlingModalImpl
+          {...reduxFormPropsMock}
+          handleSubmit={sinon.spy()}
+          cancelEvent={sinon.spy()}
+          previewHenleggBehandling={sinon.spy()}
+          intl={intlMock}
+          showLink
+          ytelseType={ytelseType}
+          behandlingUuid="123"
+          behandlingId={123}
+          behandlingResultatTyper={behandlingResultatTyper}
+          behandlingType={{
+            kode: behandlingType.FORSTEGANGSSOKNAD,
+            kodeverk: '',
+          }}
+          hentMottakere={sinon.spy()}
+        />
+      </MockForm>,
+      { messages },
     );
 
-    const button = wrapper.find('Hovedknapp');
-    expect(button.prop('disabled')).toBe(true);
+    expect(screen.getByRole('button', { name: 'Henlegg behandling' })).toBeDisabled();
   });
 
-  it('skal bruke submit-callback når en trykker lagre', () => {
+  it('skal bruke submit-callback når en trykker lagre', async () => {
     const submitEventCallback = sinon.spy();
-    const wrapper = shallowWithIntl(
-      <HenleggBehandlingModalImpl
-        {...reduxFormPropsMock}
-        handleSubmit={submitEventCallback}
-        cancelEvent={sinon.spy()}
-        previewHenleggBehandling={sinon.spy()}
-        årsakKode={behandlingResultatType.HENLAGT_FEILOPPRETTET}
-        begrunnelse="Dette er en begrunnelse"
-        intl={intlMock}
-        showLink
-        ytelseType={ytelseType}
-        behandlingUuid="123"
-        behandlingId={123}
-        behandlingResultatTyper={behandlingResultatTyper}
-        behandlingType={{
-          kode: behandlingType.FORSTEGANGSSOKNAD,
-          kodeverk: '',
-        }}
-        hentMottakere={sinon.spy()}
-      />,
+    renderWithIntlAndReduxForm(
+      <MockForm>
+        <HenleggBehandlingModalImpl
+          {...reduxFormPropsMock}
+          handleSubmit={submitEventCallback}
+          cancelEvent={sinon.spy()}
+          previewHenleggBehandling={sinon.spy()}
+          årsakKode={behandlingResultatType.HENLAGT_FEILOPPRETTET}
+          begrunnelse="Dette er en begrunnelse"
+          intl={intlMock}
+          showLink
+          ytelseType={ytelseType}
+          behandlingUuid="123"
+          behandlingId={123}
+          behandlingResultatTyper={behandlingResultatTyper}
+          behandlingType={{
+            kode: behandlingType.FORSTEGANGSSOKNAD,
+            kodeverk: '',
+          }}
+          hentMottakere={sinon.spy()}
+        />
+      </MockForm>,
+      { messages },
     );
 
-    const form = wrapper.find('form');
-    form.simulate('submit', {
-      preventDefault() {
-        return undefined;
-      },
+    await act(async () => {
+      await userEvent.click(screen.getByRole('button', { name: 'Henlegg behandling' }));
     });
     expect(submitEventCallback.called).toBe(true);
   });
 
-  it('skal avbryte redigering ved trykk på avbryt-knapp', () => {
+  it('skal avbryte redigering ved trykk på avbryt-knapp', async () => {
     const cancelEventCallback = sinon.spy();
-    const wrapper = shallowWithIntl(
-      <HenleggBehandlingModalImpl
-        {...reduxFormPropsMock}
-        handleSubmit={sinon.spy()}
-        cancelEvent={cancelEventCallback}
-        previewHenleggBehandling={sinon.spy()}
-        årsakKode={behandlingResultatType.HENLAGT_FEILOPPRETTET}
-        begrunnelse="Dette er en begrunnelse"
-        intl={intlMock}
-        showLink
-        ytelseType={ytelseType}
-        behandlingUuid="123"
-        behandlingId={123}
-        behandlingResultatTyper={behandlingResultatTyper}
-        behandlingType={{
-          kode: behandlingType.FORSTEGANGSSOKNAD,
-          kodeverk: '',
-        }}
-        hentMottakere={sinon.spy()}
-      />,
+    renderWithIntlAndReduxForm(
+      <MockForm>
+        <HenleggBehandlingModalImpl
+          {...reduxFormPropsMock}
+          handleSubmit={sinon.spy()}
+          cancelEvent={cancelEventCallback}
+          previewHenleggBehandling={sinon.spy()}
+          årsakKode={behandlingResultatType.HENLAGT_FEILOPPRETTET}
+          begrunnelse="Dette er en begrunnelse"
+          intl={intlMock}
+          showLink
+          ytelseType={ytelseType}
+          behandlingUuid="123"
+          behandlingId={123}
+          behandlingResultatTyper={behandlingResultatTyper}
+          behandlingType={{
+            kode: behandlingType.FORSTEGANGSSOKNAD,
+            kodeverk: '',
+          }}
+          hentMottakere={sinon.spy()}
+        />
+      </MockForm>,
+      { messages },
     );
 
-    const avbrytKnapp = wrapper.find('Knapp');
-    expect(avbrytKnapp).toHaveLength(1);
-    expect(avbrytKnapp.prop('mini')).toBe(true);
-
-    avbrytKnapp.simulate('click');
+    await act(async () => {
+      await userEvent.click(screen.getByRole('button', { name: 'Avbryt' }));
+    });
     expect(cancelEventCallback.called).toBe(true);
   });
 
-  it('skal vise forhåndvisningslenke når søknad om henleggelse er trukket', () => {
+  it('skal vise forhåndvisningslenke når søknad om henleggelse er trukket', async () => {
     const previewEventCallback = sinon.spy();
-    const wrapper = shallowWithIntl(
-      <HenleggBehandlingModalImpl
-        {...reduxFormPropsMock}
-        handleSubmit={sinon.spy()}
-        cancelEvent={sinon.spy()}
-        previewHenleggBehandling={previewEventCallback}
-        årsakKode={behandlingResultatType.HENLAGT_SOKNAD_TRUKKET}
-        begrunnelse="Dette er en begrunnelse"
-        intl={intlMock}
-        showLink
-        ytelseType={ytelseType}
-        behandlingUuid="123"
-        behandlingId={123}
-        behandlingResultatTyper={behandlingResultatTyper}
-        behandlingType={{
-          kode: behandlingType.FORSTEGANGSSOKNAD,
-          kodeverk: '',
-        }}
-        hentMottakere={sinon.spy()}
-      />,
+    renderWithIntlAndReduxForm(
+      <MockForm>
+        <HenleggBehandlingModalImpl
+          {...reduxFormPropsMock}
+          handleSubmit={sinon.spy()}
+          cancelEvent={sinon.spy()}
+          previewHenleggBehandling={previewEventCallback}
+          årsakKode={behandlingResultatType.HENLAGT_SOKNAD_TRUKKET}
+          begrunnelse="Dette er en begrunnelse"
+          intl={intlMock}
+          showLink
+          ytelseType={ytelseType}
+          behandlingUuid="123"
+          behandlingId={123}
+          behandlingResultatTyper={behandlingResultatTyper}
+          behandlingType={{
+            kode: behandlingType.FORSTEGANGSSOKNAD,
+            kodeverk: '',
+          }}
+          hentMottakere={sinon.spy()}
+        />
+      </MockForm>,
+      { messages },
     );
 
-    const previewLink = wrapper.find('a');
-    expect(previewLink).toHaveLength(1);
-    expect(previewLink.text()).toEqual('Forhåndsvis brev');
-
-    expect(previewEventCallback.called).toBe(false);
-    previewLink.simulate('click', { preventDefault: sinon.spy() });
+    expect(screen.getByRole('link', { name: 'Forhåndsvis brev' })).toBeInTheDocument();
+    await act(async () => {
+      await userEvent.click(screen.getByRole('link', { name: 'Forhåndsvis brev' }));
+    });
     expect(previewEventCallback.called).toBe(true);
   });
 
-  it('skal vise forhåndvisningslenke når tilbakekreving revurdering henlagt ved feilaktig opprettet med henleggelsesbrev', () => {
+  it('skal vise forhåndvisningslenke når tilbakekreving revurdering henlagt ved feilaktig opprettet med henleggelsesbrev', async () => {
     const previewEventCallback = sinon.spy();
-    const wrapper = shallowWithIntl(
-      <HenleggBehandlingModalImpl
-        {...reduxFormPropsMock}
-        handleSubmit={sinon.spy()}
-        cancelEvent={sinon.spy()}
-        previewHenleggBehandling={previewEventCallback}
-        årsakKode={behandlingResultatType.HENLAGT_FEILOPPRETTET_MED_BREV}
-        begrunnelse="Dette er en begrunnelse"
-        fritekst="Dette er en friteskt"
-        intl={intlMock}
-        showLink
-        ytelseType={ytelseType}
-        behandlingUuid="123"
-        behandlingId={123}
-        behandlingResultatTyper={behandlingResultatTyper}
-        behandlingType={{
-          kode: behandlingType.FORSTEGANGSSOKNAD,
-          kodeverk: '',
-        }}
-        hentMottakere={sinon.spy()}
-      />,
+    renderWithIntlAndReduxForm(
+      <MockForm>
+        <HenleggBehandlingModalImpl
+          {...reduxFormPropsMock}
+          handleSubmit={sinon.spy()}
+          cancelEvent={sinon.spy()}
+          previewHenleggBehandling={previewEventCallback}
+          årsakKode={behandlingResultatType.HENLAGT_FEILOPPRETTET_MED_BREV}
+          begrunnelse="Dette er en begrunnelse"
+          fritekst="Dette er en friteskt"
+          intl={intlMock}
+          showLink
+          ytelseType={ytelseType}
+          behandlingUuid="123"
+          behandlingId={123}
+          behandlingResultatTyper={behandlingResultatTyper}
+          behandlingType={{
+            kode: behandlingType.FORSTEGANGSSOKNAD,
+            kodeverk: '',
+          }}
+          hentMottakere={sinon.spy()}
+        />
+      </MockForm>,
+      { messages },
     );
 
-    const previewLink = wrapper.find('a');
-    expect(previewLink).toHaveLength(1);
-    expect(previewLink.text()).toEqual('Forhåndsvis brev');
-
-    expect(previewEventCallback.called).toBe(false);
-    previewLink.simulate('click', { preventDefault: sinon.spy() });
+    expect(screen.getByRole('link', { name: 'Forhåndsvis brev' })).toBeInTheDocument();
+    await act(async () => {
+      await userEvent.click(screen.getByRole('link', { name: 'Forhåndsvis brev' }));
+    });
     expect(previewEventCallback.called).toBe(true);
   });
 });
