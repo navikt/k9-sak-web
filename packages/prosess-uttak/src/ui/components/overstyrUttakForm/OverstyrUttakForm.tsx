@@ -79,11 +79,11 @@ const OverstyrUttakForm: React.FC = () => {
       {harAksjonspunktForOverstyringAvUttak && (
         <Alert variant="warning">
           <Heading spacing size="xsmall" level="3">
-            Vurder overstyring av uttaksgrad
+            Vurder overstyring av uttaksgrad og utbetalingsgrad
           </Heading>
           <BodyShort>
-            Det er lagt til overstyring av uttaksgrad i en tidligere periode. Vurder om det skal legges til overstyring
-            for nye perioder i uttak.
+            Aksjonspunkt for overstyring av uttaks-/utbetalingsgrad har blitt opprettet i denne, eller en tidligere, 
+            behandling og må løses av en saksbehandler med overstyrerrolle. 
           </BodyShort>
         </Alert>
       )}
