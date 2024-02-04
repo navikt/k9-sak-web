@@ -1,14 +1,12 @@
+import { renderWithIntl } from '@fpsak-frontend/utils-test';
+import { screen } from '@testing-library/react';
 import React from 'react';
-import { shallow } from 'enzyme';
-import Panel from 'nav-frontend-paneler';
-
-import { DateLabel } from '@fpsak-frontend/shared-components';
-
+import messages from '../../i18n/nb_NO.json';
 import BehandlingPickerItemContent from './BehandlingPickerItemContentOld';
 
 describe('<BehandlingPickerItemContent>', () => {
   it('skal rendre komponent', () => {
-    const wrapper = shallow(
+    renderWithIntl(
       <BehandlingPickerItemContent
         withChevronDown
         withChevronUp
@@ -18,14 +16,14 @@ describe('<BehandlingPickerItemContent>', () => {
         behandlingsstatus="Opprettet"
         erGjeldendeVedtak={false}
       />,
+      { messages },
     );
 
-    expect(wrapper.find(Panel)).toHaveLength(1);
-    expect(wrapper.find(DateLabel)).toHaveLength(1);
+    expect(screen.getByText('01.01.2018')).toBeInTheDocument();
   });
 
   it('skal vise avsluttet dato når denne finnes', () => {
-    const wrapper = shallow(
+    renderWithIntl(
       <BehandlingPickerItemContent
         withChevronDown
         withChevronUp
@@ -36,24 +34,23 @@ describe('<BehandlingPickerItemContent>', () => {
         behandlingsstatus="Opprettet"
         erGjeldendeVedtak={false}
       />,
+      { messages },
     );
 
-    const labels = wrapper.find(DateLabel);
-    expect(labels).toHaveLength(2);
-    expect(labels.first().prop('dateString')).toEqual('2018-01-01');
-    expect(labels.last().prop('dateString')).toEqual('2018-05-01');
+    expect(screen.getByText('01.01.2018')).toBeInTheDocument();
+    expect(screen.getByText('01.05.2018')).toBeInTheDocument();
   });
 
   it('skal vise årsak for revurdering', () => {
     const førsteÅrsak = {
       behandlingArsakType: {
-        kode: '-',
+        kode: 'RE-MF',
         kodeverk: '',
       },
       erAutomatiskRevurdering: false,
       manueltOpprettet: false,
     };
-    const wrapper = shallow(
+    renderWithIntl(
       <BehandlingPickerItemContent
         withChevronDown
         withChevronUp
@@ -65,9 +62,9 @@ describe('<BehandlingPickerItemContent>', () => {
         førsteÅrsak={førsteÅrsak}
         erGjeldendeVedtak={false}
       />,
+      { messages },
     );
 
-    const formattedMessages = wrapper.find('MemoizedFormattedMessage');
-    expect(formattedMessages.first().prop('id')).toEqual('Behandlingspunkt.Årsak.Annet');
+    expect(screen.getByText('Mangler fødselsdato')).toBeInTheDocument();
   });
 });

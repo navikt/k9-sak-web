@@ -1,11 +1,10 @@
+import { render } from '@testing-library/react';
 import React from 'react';
-import { shallow } from 'enzyme';
-
 import FagsakGrid from './FagsakGrid';
 
 describe('<FagsakGrid>', () => {
   it('skal vise fagsakgrid med underkomponenter', () => {
-    const wrapper = shallow(
+    const { container } = render(
       <FagsakGrid
         behandlingContent={<div id="behandlingContent" />}
         profileAndNavigationContent={<div id="profileContent" />}
@@ -14,9 +13,9 @@ describe('<FagsakGrid>', () => {
       />,
     );
 
-    expect(wrapper.find('#behandlingContent')).toHaveLength(1);
-    expect(wrapper.find('#profileContent')).toHaveLength(1);
-    expect(wrapper.find('#supportContent')).toHaveLength(1);
-    expect(wrapper.find('#visittkort')).toHaveLength(1);
+    expect(container.querySelector('#behandlingContent')).toBeInTheDocument();
+    expect(container.querySelector('#profileContent')).toBeInTheDocument();
+    expect(container.querySelector('#supportContent')).toBeInTheDocument();
+    expect(container.querySelector('#visittkort')).toBeInTheDocument();
   });
 });

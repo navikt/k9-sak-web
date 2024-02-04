@@ -1,16 +1,24 @@
+import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test';
+import { intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
+import { screen } from '@testing-library/react';
 import React from 'react';
-
-import { intlMock, shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
-import { LoadingPanel } from '@fpsak-frontend/shared-components';
-
-import FagsakSearchIndex from '../../fagsakSearch/FagsakSearchIndex';
+import { MemoryRouter } from 'react-router';
+import { K9sakApiKeys, requestApi } from '../../data/k9sakApi';
 import { DashboardResolver } from './DashboardResolver';
 
 describe('<DashboardResolver>', () => {
+  const messages = { 'DashboardResolver.FpLosErNede': 'Forsiden har nedetid' };
+  const kodeverk = {};
   it('skal vise fremsiden til fpsak når miljø er lik development', () => {
-    const wrapper = shallowWithIntl(<DashboardResolver intl={intlMock} />);
+    requestApi.mock(K9sakApiKeys.KODEVERK, kodeverk);
+    renderWithIntlAndReduxForm(
+      <MemoryRouter>
+        <DashboardResolver intl={intlMock} />
+      </MemoryRouter>,
+      { messages },
+    );
 
-    expect(wrapper.find(FagsakSearchIndex)).toHaveLength(1);
-    expect(wrapper.find(LoadingPanel)).toHaveLength(0);
+    expect(screen.getByRole('heading', { name: 'Søk på sak eller person' })).toBeInTheDocument();
+    expect(screen.getByRole('textbox', { name: 'Saksnummer eller fødselsnummer/D-nummer' })).toBeInTheDocument();
   });
 });
