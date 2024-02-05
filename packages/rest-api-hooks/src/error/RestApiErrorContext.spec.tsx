@@ -1,9 +1,8 @@
+import { render, screen } from '@testing-library/react';
 import React, { useEffect } from 'react';
-import { mount } from 'enzyme';
-
 import { RestApiErrorProvider } from './RestApiErrorContext';
-import useRestApiErrorDispatcher from './useRestApiErrorDispatcher';
 import useRestApiError from './useRestApiError';
+import useRestApiErrorDispatcher from './useRestApiErrorDispatcher';
 
 const TestErrorMessage = ({ skalFjerne = false }) => {
   const { addErrorMessage, removeErrorMessages } = useRestApiErrorDispatcher();
@@ -28,26 +27,23 @@ const TestErrorMessage = ({ skalFjerne = false }) => {
 
 describe('<RestApiErrorContext>', () => {
   it('skal legge til feilmelding og så hente alle i kontekst', () => {
-    const wrapper = mount(
+    render(
       <RestApiErrorProvider>
         <TestErrorMessage />
       </RestApiErrorProvider>,
     );
-
-    const spans = wrapper.find('span');
-    expect(spans).toHaveLength(2);
-    expect(spans.first().text()).toEqual('Feilmeldingstest 1');
-    expect(spans.last().text()).toEqual('Feilmeldingstest 2');
+    screen.debug();
+    expect(screen.getByText('Feilmeldingstest 1')).toBeInTheDocument();
+    expect(screen.getByText('Feilmeldingstest 2')).toBeInTheDocument();
   });
 
   it('skal legge til feilmelding og så fjerne alle i kontekst', () => {
-    const wrapper = mount(
+    render(
       <RestApiErrorProvider>
         <TestErrorMessage skalFjerne />
       </RestApiErrorProvider>,
     );
-
-    const spans = wrapper.find('span');
-    expect(spans).toHaveLength(0);
+    expect(screen.queryByText('Feilmeldingstest 1')).not.toBeInTheDocument();
+    expect(screen.queryByText('Feilmeldingstest 2')).not.toBeInTheDocument();
   });
 });
