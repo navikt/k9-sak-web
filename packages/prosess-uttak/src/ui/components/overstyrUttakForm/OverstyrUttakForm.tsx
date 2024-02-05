@@ -13,7 +13,11 @@ import { formaterOverstyringTilFormData } from '../../../util/overstyringUtils';
 
 import styles from './overstyrUttakForm.module.css';
 
-const OverstyrUttakForm: React.FC = () => {
+interface ownProps {
+  overstyringAktiv: boolean;
+}
+
+const OverstyrUttakForm: React.FC<ownProps> = ({ overstyringAktiv }) => {
   const [bekreftSlettId, setBekreftSlettId] = useState<string | false>(false);
   const [loading, setLoading] = useState<boolean>(false);
   const { handleOverstyringAksjonspunkt, erOverstyrer, perioderTilVurdering } = React.useContext(ContainerContext);
@@ -74,8 +78,10 @@ const OverstyrUttakForm: React.FC = () => {
     ref.current?.showModal();
   };
 
-  return (
-    <div className="mt-4 mb-8">
+  const harNoeÅVise = (overstyrte?.length > 0 && leseModus) || (overstyringAktiv && erOverstyrer);
+
+  if (harNoeÅVise) {
+    return <div className="mt-4 mb-8">
       {harAksjonspunktForOverstyringAvUttak && (
         <Alert variant="warning">
           <Heading spacing size="xsmall" level="3">
@@ -117,7 +123,7 @@ const OverstyrUttakForm: React.FC = () => {
         </>
       )}
 
-      {erOverstyrer && (<>
+      {erOverstyrer && overstyringAktiv && (<>
         {bekreftSlettId && (
           <Modal ref={ref} width="small" header={{ heading: "Er du sikker på at du vil slette en overstyring?", size: "small", closeButton: false }}>
 
@@ -165,8 +171,10 @@ const OverstyrUttakForm: React.FC = () => {
           />
         )}
       </>)}
-    </div >
-  );
+    </div >;
+  }
+
+  return null;
 };
 
 export default OverstyrUttakForm;
