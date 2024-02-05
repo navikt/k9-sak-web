@@ -5,7 +5,6 @@ export type { default as Beregningsgrunnlag } from './src/beregningsgrunnlagTsTy
 export type { default as BeregningsresultatFp } from './src/beregningsresultatFpTsType';
 export type { default as Dokument } from './src/dokumentTsType';
 export type { default as Kodeverk } from './src/kodeverkTsType';
-export type { default as KodeverkMedNavn } from './src/kodeverkMedNavnTsType';
 export type { default as NavAnsatt } from './src/navAnsattTsType';
 export type { default as Personopplysninger, PersonopplysningAdresse } from './src/personopplysningerTsType';
 export type { default as SimuleringResultat } from './src/simuleringResultatTsType';

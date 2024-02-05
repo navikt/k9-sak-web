@@ -1,5 +1,4 @@
-import PropTypes from 'prop-types';
-import { kodeverkObjektPropType } from '@fpsak-frontend/prop-types';
+import PropTypes, { kodeverkObjektPropType } from 'prop-types';
 
 const beregningsgrunnlagPropType = PropTypes.shape({
   aktivitetStatus: PropTypes.arrayOf(PropTypes.shape({

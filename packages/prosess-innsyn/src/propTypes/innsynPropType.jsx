@@ -1,6 +1,5 @@
-import PropTypes from 'prop-types';
+import PropTypes, { kodeverkObjektPropType } from 'prop-types';
 
-import { kodeverkObjektPropType } from '@fpsak-frontend/prop-types';
 
 const innsynPropType = PropTypes.shape({
   dokumenter: PropTypes.arrayOf(PropTypes.shape({

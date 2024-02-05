@@ -1,12 +1,8 @@
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const { resolve } = require('path');
-
 const OFF = 0;
 const ERROR = 2;
 
 const config = {
   env: {
-    es6: true,
     browser: true,
   },
 
@@ -17,28 +13,38 @@ const config = {
 
   parser: '@typescript-eslint/parser',
 
-  plugins: ['vitest', '@typescript-eslint'],
+  plugins: ['import', 'vitest', '@typescript-eslint'],
 
   extends: ['airbnb', 'plugin:@typescript-eslint/recommended', "plugin:vitest/recommended", 'prettier'],
 
   parserOptions: {
     sourceType: 'module',
     ecmaFeatures: {
-      ecmaVersion: 8,
+      ecmaVersion: 2020,
       jsx: true,
       impliedStrict: true,
     },
   },
 
   "settings": {
+    "import/parsers": {
+      "@typescript-eslint/parser": [".ts", ".tsx", ".js", ".jsx"]
+    },
     "import/resolver": {
-      "node": {
-        "extensions": [".js", ".jsx", ".ts", ".tsx"]
+      "typescript": {
+        "alwaysTryTypes": true,
       }
     }
   },
 
   rules: {
+    // Disabled since unresolved imports will be detected by typescript and vite build. Also, couldn't get it to work when
+    // importing typescript modules (ESM) exported from a package with the modern "exports" clause. (*.js extension problem)
+    'import/no-unresolved': OFF,
+
+    // import/no-cycle rule apparently started working when import/resolver was changed to typescript. It found lots of
+    // existing problems, so disabled it for now.
+    'import/no-cycle': OFF,
     'import/extensions': ['error', 'ignorePackages', { js: 'never', jsx: 'never', ts: 'never', tsx: 'never' }],
     'linebreak-style': OFF,
     'import/no-named-as-default': OFF,
@@ -48,7 +54,6 @@ const config = {
     'react/jsx-filename-extension': OFF,
     'react/static-property-placement': OFF,
     'react/state-in-constructor': OFF,
-    'jest/valid-expect': OFF,
 
     'function-paren-newline': OFF,
     'function-call-argument-newline': OFF,
@@ -65,7 +70,6 @@ const config = {
       },
     ],
     'import/prefer-default-export': OFF,
-    'import/no-unresolved': ['error', { ignore: ['\\.svg\\?react$'] }],
 
     // note you must disable the base rule as it can report incorrect errors
     'no-nested-ternary': OFF,

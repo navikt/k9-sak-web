@@ -1,6 +1,5 @@
-import PropTypes from 'prop-types';
+import PropTypes, { kodeverkObjektPropType } from 'prop-types';
 
-import { kodeverkObjektPropType } from '@fpsak-frontend/prop-types';
 
 const soknadsfristAksjonspunkterPropType = PropTypes.shape({
   definisjon: kodeverkObjektPropType.isRequired,
