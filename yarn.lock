@@ -3361,7 +3361,6 @@ __metadata:
     "@k9-sak-web/prosess-felles": 1.0.0
     "@k9-sak-web/types": 1.0.0
     classnames: 2.5.1
-    enzyme: 3.11.0
     nav-frontend-core: 6.0.1
     nav-frontend-ekspanderbartpanel: 4.0.4
     nav-frontend-ekspanderbartpanel-style: 2.0.2
@@ -3439,7 +3438,6 @@ __metadata:
     "@navikt/ft-plattform-komponenter": 2.3.18
     classnames: 2.5.1
     dayjs: 1.11.10
-    enzyme: 3.11.0
     lodash: 4.17.21
     moment: 2.30.1
     nav-frontend-core: 6.0.1
@@ -3481,7 +3479,6 @@ __metadata:
     "@k9-sak-web/types": 1.0.0
     "@navikt/ft-plattform-komponenter": 2.3.18
     classnames: 2.5.1
-    enzyme: 3.11.0
     moment: 2.30.1
     nav-frontend-knapper: 3.1.3
     nav-frontend-knapper-style: 2.1.2
@@ -3508,7 +3505,6 @@ __metadata:
     "@fpsak-frontend/utils": 1.0.0
     "@fpsak-frontend/utils-test": 1.0.0
     "@k9-sak-web/types": 1.0.0
-    enzyme: 3.11.0
     moment: 2.30.1
     nav-frontend-core: 6.0.1
     nav-frontend-grid: 2.0.2
@@ -5182,7 +5178,6 @@ __metadata:
     "@k9-sak-web/prosess-omsorgsdager": 1.0.0
     "@k9-sak-web/types": 1.0.0
     classnames: 2.5.1
-    enzyme: 3.11.0
     lodash: 4.17.21
     moment: 2.30.1
     nav-frontend-alertstriper: 4.0.2
@@ -5383,7 +5378,6 @@ __metadata:
     "@k9-sak-web/types": 1.0.0
     "@navikt/ft-form-hooks": 4.2.21
     "@navikt/ft-form-validators": 2.1.14
-    enzyme: 3.11.0
     nav-frontend-core: 6.0.1
     nav-frontend-grid: 2.0.2
     nav-frontend-knapper: 3.1.3
@@ -5412,7 +5406,6 @@ __metadata:
     "@k9-sak-web/types": 1.0.0
     "@navikt/ft-plattform-komponenter": 2.3.18
     classnames: 2.5.1
-    enzyme: 3.11.0
     moment: 2.30.1
     nav-frontend-knapper: 3.1.3
     nav-frontend-knapper-style: 2.1.2
@@ -5442,7 +5435,6 @@ __metadata:
     "@fpsak-frontend/utils-test": 1.0.0
     "@navikt/ft-plattform-komponenter": 2.3.18
     classnames: 2.5.1
-    enzyme: 3.11.0
     lodash: 4.17.21
     nav-frontend-core: 6.0.1
     nav-frontend-spinner: 3.0.1

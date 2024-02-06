@@ -32,7 +32,6 @@ describe('<RestApiErrorContext>', () => {
         <TestErrorMessage />
       </RestApiErrorProvider>,
     );
-    screen.debug();
     expect(screen.getByText('Feilmeldingstest 1')).toBeInTheDocument();
     expect(screen.getByText('Feilmeldingstest 2')).toBeInTheDocument();
   });

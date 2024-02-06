@@ -1,10 +1,11 @@
-import React from 'react';
-import { Behandling, ArbeidsforholdV2 } from '@k9-sak-web/types';
+import { renderWithIntl, renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test';
 import { K9sakApiKeys, requestApi } from '@k9-sak-web/sak-app/src/data/k9sakApi';
-import { shallowWithIntl } from '../i18n';
-import ÅrskvantumIndex from './ÅrskvantumIndex';
-import AksjonspunktForm from './components/AksjonspunktForm';
+import { ArbeidsforholdV2, Behandling } from '@k9-sak-web/types';
+import { screen } from '@testing-library/react';
+import React from 'react';
+import messages from '../i18n/nb_NO.json';
 import ÅrskvantumForbrukteDager from './dto/ÅrskvantumForbrukteDager';
+import ÅrskvantumIndex from './ÅrskvantumIndex';
 
 const årskvantum: ÅrskvantumForbrukteDager = {
   totaltAntallDager: 17,
@@ -53,7 +54,7 @@ describe('<ÅrskvantumIndex>', () => {
   it('rendrer aksjonspunkt-form hvis det finnes aksjonspunkter', () => {
     requestApi.mock(K9sakApiKeys.FEATURE_TOGGLE, [{ AKSJONSPUNKT_9014: true }]);
 
-    const wrapperAksjonspunkt = shallowWithIntl(
+    renderWithIntlAndReduxForm(
       <ÅrskvantumIndex
         årskvantum={årskvantum}
         aksjonspunkterForSteg={[
@@ -77,16 +78,18 @@ describe('<ÅrskvantumIndex>', () => {
         submitCallback={() => undefined}
         arbeidsforhold={arbeidsforhold}
         arbeidsgiverOpplysningerPerId={arbeidsgivere}
+        fosterbarn={[]}
       />,
+      { messages },
     );
 
-    expect(wrapperAksjonspunkt.find(AksjonspunktForm)).toHaveLength(1);
+    expect(screen.getByTestId('aksjonspunktform')).toBeInTheDocument();
   });
 
   it('rendrer ikke aksjonspunkt-form hvis det ikke finnes aksjonspunkter', () => {
     requestApi.mock(K9sakApiKeys.FEATURE_TOGGLE, [{ AKSJONSPUNKT_9014: true }]);
 
-    const wrapperIngenAksjonspunkt = shallowWithIntl(
+    renderWithIntl(
       <ÅrskvantumIndex
         årskvantum={årskvantum}
         aksjonspunkterForSteg={[]}
@@ -98,8 +101,9 @@ describe('<ÅrskvantumIndex>', () => {
         arbeidsforhold={arbeidsforhold}
         arbeidsgiverOpplysningerPerId={arbeidsgivere}
       />,
+      { messages },
     );
 
-    expect(wrapperIngenAksjonspunkt.find(AksjonspunktForm)).toHaveLength(0);
+    expect(screen.queryByTestId('aksjonspunktform')).not.toBeInTheDocument();
   });
 });

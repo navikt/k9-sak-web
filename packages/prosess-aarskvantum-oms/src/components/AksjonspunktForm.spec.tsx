@@ -1,13 +1,14 @@
-import React from 'react';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test';
 import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
 import { UtfallEnum, Uttaksperiode, VilkårEnum } from '@k9-sak-web/types';
-import { CheckboxField, RadioOption } from '@fpsak-frontend/form/index';
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { FraværÅrsakEnum } from '@k9-sak-web/types/src/omsorgspenger/Uttaksperiode';
-import { shallowWithIntl } from '../../i18n';
-import { begrunnelseUavklartePerioder, FormContent, FormValues, transformValues } from './AksjonspunktForm9014';
-
+import { screen } from '@testing-library/react';
+import React from 'react';
+import { reduxForm } from 'redux-form';
+import messages from '../../i18n/nb_NO.json';
 import Aktivitet from '../dto/Aktivitet';
+import { FormContent, FormValues, begrunnelseUavklartePerioder, transformValues } from './AksjonspunktForm9014';
 
 describe('<AksjonspunktForm>', () => {
   const uavklartPeriode: Uttaksperiode = {
@@ -37,6 +38,8 @@ describe('<AksjonspunktForm>', () => {
   };
 
   describe('<FormContent>', () => {
+    const MockForm = reduxForm({ form: 'mock', onSubmit: vi.fn() })(({ children }) => <div>{children}</div>);
+
     it('viser kun en checkbox hvis man har minst én uavklart periode', () => {
       const aktiviteter: Aktivitet[] = [
         {
@@ -48,22 +51,27 @@ describe('<AksjonspunktForm>', () => {
           arbeidsforhold: { type: 'AT' },
         },
       ];
-      const wrapper = shallowWithIntl(
-        <FormContent
-          {...reduxFormPropsMock}
-          aktiviteter={aktiviteter}
-          isAksjonspunktOpen
-          fosterbarn={[]}
-          aksjonspunktKode={aksjonspunktCodes.VURDER_ÅRSKVANTUM_KVOTE}
-          valgValue={null}
-        />,
+      renderWithIntlAndReduxForm(
+        <MockForm>
+          <FormContent
+            {...reduxFormPropsMock}
+            aktiviteter={aktiviteter}
+            isAksjonspunktOpen
+            fosterbarn={[]}
+            aksjonspunktKode={aksjonspunktCodes.VURDER_ÅRSKVANTUM_KVOTE}
+            valgValue={null}
+          />
+        </MockForm>,
+        { messages },
       );
 
-      const checkbox = wrapper.find(CheckboxField);
-      const radios = wrapper.find(RadioOption);
-
-      expect(checkbox).toHaveLength(1);
-      expect(radios).toHaveLength(0);
+      expect(
+        screen.getByText(
+          'Det finnes overlappende perioder i Infotrygd. Annuller perioden i Infotrygd og kjør behandlingen på nytt.',
+        ),
+      ).toBeInTheDocument();
+      expect(screen.getByRole('checkbox')).toBeInTheDocument();
+      expect(screen.queryByRole('radio')).not.toBeInTheDocument();
     });
 
     it('viser radios hvis man ikke har uavklarte perioder', () => {
@@ -77,22 +85,22 @@ describe('<AksjonspunktForm>', () => {
           arbeidsforhold: { type: 'AT' },
         },
       ];
-      const wrapper = shallowWithIntl(
-        <FormContent
-          {...reduxFormPropsMock}
-          aktiviteter={aktiviteter}
-          isAksjonspunktOpen
-          fosterbarn={[]}
-          aksjonspunktKode={aksjonspunktCodes.VURDER_ÅRSKVANTUM_KVOTE}
-          valgValue={null}
-        />,
+      renderWithIntlAndReduxForm(
+        <MockForm>
+          <FormContent
+            {...reduxFormPropsMock}
+            aktiviteter={aktiviteter}
+            isAksjonspunktOpen
+            fosterbarn={[]}
+            aksjonspunktKode={aksjonspunktCodes.VURDER_ÅRSKVANTUM_KVOTE}
+            valgValue={null}
+          />
+        </MockForm>,
+        { messages },
       );
 
-      const checkbox = wrapper.find(CheckboxField);
-      const radios = wrapper.find(RadioOption);
-
-      expect(checkbox).toHaveLength(0);
-      expect(radios).toHaveLength(2);
+      expect(screen.queryByRole('checkbox')).not.toBeInTheDocument();
+      expect(screen.getAllByRole('radio').length).toBe(2);
     });
   });
 

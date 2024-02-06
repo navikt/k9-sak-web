@@ -1,13 +1,13 @@
-import React from 'react';
-import sinon from 'sinon';
-import { shallow } from 'enzyme';
-
-import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
+import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test';
 import { Aksjonspunkt } from '@k9-sak-web/types';
-
+import { screen } from '@testing-library/react';
+import React from 'react';
+import { reduxForm } from 'redux-form';
+import sinon from 'sinon';
+import messages from '../../i18n/nb_NO.json';
 import OpptjeningVilkarForm from './OpptjeningVilkarForm';
-import OpptjeningVilkarAksjonspunktPanel from './OpptjeningVilkarAksjonspunktPanel';
 
 const periode = {
   avslagKode: '1035',
@@ -22,37 +22,47 @@ const periode = {
 };
 
 describe('<OpptjeningVilkarForm>', () => {
+  const MockForm = reduxForm({ form: 'mock', onSubmit: vi.fn() })(({ children }) => <div>{children}</div>);
+
   it('skal vise OpptjeningVilkarAksjonspunktPanel når en har aksjonspunkt', () => {
-    const wrapper = shallow(
-      <OpptjeningVilkarForm
-        readOnlySubmitButton
-        readOnly
-        isAksjonspunktOpen
-        submitCallback={sinon.spy()}
-        behandlingId={1}
-        behandlingVersjon={2}
-        aksjonspunkter={
-          [
-            {
-              definisjon: {
-                kode: aksjonspunktCodes.SVANGERSKAPSVILKARET,
+    renderWithIntlAndReduxForm(
+      <MockForm>
+        <OpptjeningVilkarForm
+          readOnlySubmitButton
+          readOnly
+          isAksjonspunktOpen
+          submitCallback={sinon.spy()}
+          behandlingId={1}
+          behandlingVersjon={2}
+          aksjonspunkter={
+            [
+              {
+                definisjon: {
+                  kode: aksjonspunktCodes.SVANGERSKAPSVILKARET,
+                },
+                status: {
+                  kode: aksjonspunktStatus.OPPRETTET,
+                },
+                begrunnelse: undefined,
               },
-              status: {
-                kode: aksjonspunktStatus.OPPRETTET,
-              },
-              begrunnelse: undefined,
-            },
-          ] as Aksjonspunkt[]
-        }
-        status="test"
-        lovReferanse="Dette er en lovreferanse"
-        periodeIndex={0}
-        vilkårPerioder={[periode]}
-        opptjeninger={[]}
-      />,
+            ] as Aksjonspunkt[]
+          }
+          status="test"
+          lovReferanse="Dette er en lovreferanse"
+          periodeIndex={0}
+          vilkårPerioder={[periode]}
+          opptjeninger={[]}
+        />
+      </MockForm>,
+      { messages },
     );
 
-    const aksjonspunktPanel = wrapper.find(OpptjeningVilkarAksjonspunktPanel);
-    expect(aksjonspunktPanel).toHaveLength(1);
+    expect(screen.getByRole('heading', { name: 'Opptjening' })).toBeInTheDocument();
+    expect(
+      screen.getAllByText(
+        (_, element) =>
+          element.textContent === 'Søker har ikke oppfylt krav om 28 dagers opptjening, vilkåret er ikke oppfylt.',
+      )[0],
+    ).toBeInTheDocument();
   });
 });
