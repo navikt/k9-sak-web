@@ -58,7 +58,7 @@ const MainComponent = ({ containerData }: MainComponentProps): JSX.Element => {
 
 
       <OverstyrUttakContextProvider>
-        <OverstyrUttakForm />
+        <OverstyrUttakForm overstyringAktiv={overstyringAktiv} />
       </OverstyrUttakContextProvider>
 
       <UtsattePerioderStripe />
