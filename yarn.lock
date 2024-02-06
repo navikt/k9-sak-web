@@ -2326,17 +2326,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@formatjs/intl-datetimeformat@npm:6.12.0":
-  version: 6.12.0
-  resolution: "@formatjs/intl-datetimeformat@npm:6.12.0"
-  dependencies:
-    "@formatjs/ecma402-abstract": 1.18.0
-    "@formatjs/intl-localematcher": 0.5.2
-    tslib: ^2.4.0
-  checksum: 5ca8d9b45ed5c9e9fff4a206c83fd1fe9ae3d32dd109014e08487ca430fa908b79a1403c2d122c07e494ec470cb85cb122c3da072356dfbc95f4b5ff849d0f71
-  languageName: node
-  linkType: hard
-
 "@formatjs/intl-displaynames@npm:6.6.4":
   version: 6.6.4
   resolution: "@formatjs/intl-displaynames@npm:6.6.4"
@@ -2365,17 +2354,6 @@ __metadata:
   dependencies:
     tslib: ^2.4.0
   checksum: a741d69e9d3b71bee19726484de4a296711d96dc27f588d995b9e2079d3bc5d06370b6e84136003197d558d45f9faf507321627a78d8cd986705b78ec701c016
-  languageName: node
-  linkType: hard
-
-"@formatjs/intl-numberformat@npm:8.9.0":
-  version: 8.9.0
-  resolution: "@formatjs/intl-numberformat@npm:8.9.0"
-  dependencies:
-    "@formatjs/ecma402-abstract": 1.18.0
-    "@formatjs/intl-localematcher": 0.5.2
-    tslib: ^2.4.0
-  checksum: 4b30c8e724c0577655834ed7a010d7da7fb482c5953ef102631d1fca77bd9e1bfbb23972fdf7f125791399b71b2a1d5d43380bbf231fcf07ed77c50259cfe3d5
   languageName: node
   linkType: hard
 
@@ -5385,8 +5363,6 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@k9-sak-web/sak-app@workspace:packages/sak-app"
   dependencies:
-    "@formatjs/intl-datetimeformat": 6.12.0
-    "@formatjs/intl-numberformat": 8.9.0
     "@fpsak-frontend/assets": 1.0.0
     "@fpsak-frontend/kodeverk": 1.0.0
     "@fpsak-frontend/prop-types": 1.0.0
@@ -17543,8 +17519,6 @@ __metadata:
     "@babel/runtime": 7.23.8
     "@cfaester/enzyme-adapter-react-18": ^0.7.1
     "@commercetools/enzyme-extensions": 5.0.0
-    "@formatjs/intl-datetimeformat": 6.12.0
-    "@formatjs/intl-numberformat": 8.9.0
     "@hookform/error-message": ^2.0.1
     "@navikt/aksel-icons": 5.13.0
     "@navikt/ds-css": 5.13.0
