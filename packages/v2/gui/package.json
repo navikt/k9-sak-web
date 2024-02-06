@@ -1,0 +1,13 @@
+{
+  "name": "@k9-sak-web/gui",
+  "private": true,
+  "license": "MIT",
+  "type": "module",
+  "version": "1.0.0",
+  "exports": {
+    "./meldinger/*": "./src/meldinger/*.js"
+  },
+  "dependencies": {
+    "react": "18.2.0"
+  }
+}
