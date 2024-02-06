@@ -98,6 +98,7 @@
   "ToTrinnsForm.AvklarUttak.PeriodeAvklart": "Perioden {a} til {b} er avklart.",
   "ToTrinnsForm.AvklarUttak.PeriodeEndret": "Perioden {a} til {b} er endret.",
   "ToTrinnsForm.OverstyrUttak.PeriodeEndret": "Perioden {a} til {b} er overstyrt.",
+  "ToTrinnsForm.OverstyrUttak.OverstyringAvUttak": "Uttaksplanen har blitt overstyrt",
   "ToTrinnsForm.ManueltFastsattUttak.PeriodeEndret": "Perioden {a} til {b} er fastsatt manuelt.",
   "TotrinnsForm.Uttak.AvklarManglendeUttaksperiode": "Manglende uttaksperiode er fastsatt manuelt.",
   "ToTrinnsForm.Uttak.Dod": "Opplysninger om død er kontrollert.",

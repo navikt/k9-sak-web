@@ -128,7 +128,7 @@ const OverstyringUttakForm: React.FC<OwnProps> = ({
               {!lasterAktiviteter && (
                 <>
                   {fields.length > 0 && <OverstyrAktivitetListe fields={fields} loading={loading} />}
-                  {fields.length === 0 && <>Kunne ikke finne noen aktiviteter i den angitte perioden</>}
+                  {fields.length === 0 && <>Kunne ikke finne noen overstyrbare aktiviteter i den angitte perioden</>}
                 </>
               )}
             </div>

@@ -19,6 +19,7 @@ const totrinnskontrollaksjonspunktTextCodes = {
   [aksjonspunktCodes.VURDER_NYTT_INNTKTSFORHOLD]: 'ToTrinnsForm.Beregning.VurdertNyttInntektsforhold',
 
   [aksjonspunktCodes.OVERSTYR_SOKNADSFRISTVILKAR]: 'ToTrinnsForm.Soknadsfrist.VilkarOverstyrt',
+  [aksjonspunktCodes.OVERSTYRING_AV_UTTAK_KODE]: 'ToTrinnsForm.OverstyrUttak.OverstyringAvUttak',
 
   [aksjonspunktCodes.AVKLAR_OM_BRUKER_HAR_GYLDIG_PERIODE]: 'ToTrinnsForm.Medlemskap.VurderGyldigMedlemskap',
   [aksjonspunktCodes.AVKLAR_LOVLIG_OPPHOLD]: 'ToTrinnsForm.Medlemskap.AvklarLovligOpphold',
