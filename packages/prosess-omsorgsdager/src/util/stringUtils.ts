@@ -27,7 +27,7 @@ export const utledTilgjengeligeÅr = (fraDato: string): TilgjengeligÅrOption[] 
   const årFraDato = dayjs(fraDato).year();
   const tidligsteMuligeÅr = årFraDato > nåværendeÅr ? årFraDato : nåværendeÅr - 1;
   const år: TilgjengeligÅrOption[] = [{ value: '0', title: 'Dato for opphør', disabled: true }];
-  for (let i = tidligsteMuligeÅr; i <= dayjs().year() + 18; i += 1) {
+  for (let i = tidligsteMuligeÅr; i <= dayjs().year() + 19; i += 1) {
     år.push({ value: i.toString(), title: `31.12.${i.toString()}`, disabled: false });
   }
   return år;
