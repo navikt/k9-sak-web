@@ -11,7 +11,7 @@ describe('<AleneOmOmsorgen>', () => {
       behandlingsID: '123',
       aksjonspunktLost: false,
       lesemodus: false,
-      fraDatoFraSoknad: '22.22.02',
+      fraDatoFraVilkar: '22.22.02',
       vedtakFattetVilkarOppfylt: false,
       informasjonOmVilkar: {
         begrunnelse: 'begrunnelse',
@@ -58,7 +58,7 @@ describe('<AleneOmOmsorgen>', () => {
       behandlingsID: '123',
       aksjonspunktLost: false,
       lesemodus: false,
-      fraDatoFraSoknad: '22.22.02',
+      fraDatoFraVilkar: '22.22.02',
       vedtakFattetVilkarOppfylt: false,
       informasjonOmVilkar: {
         begrunnelse: 'begrunnelse',
@@ -94,7 +94,7 @@ describe('<AleneOmOmsorgen>', () => {
       behandlingsID: '123',
       aksjonspunktLost: false,
       lesemodus: false,
-      fraDatoFraSoknad: '22.22.02',
+      fraDatoFraVilkar: '22.22.02',
       vedtakFattetVilkarOppfylt: false,
       informasjonOmVilkar: {
         begrunnelse: 'begrunnelse',
@@ -133,7 +133,7 @@ describe('<AleneOmOmsorgen>', () => {
       behandlingsID: '123',
       aksjonspunktLost: false,
       lesemodus: true,
-      fraDatoFraSoknad: '2002.07.22',
+      fraDatoFraVilkar: '2002.07.22',
       vedtakFattetVilkarOppfylt: false,
       informasjonOmVilkar: {
         begrunnelse: 'begrunnelse',
@@ -185,7 +185,7 @@ describe('<AleneOmOmsorgen>', () => {
       behandlingsID: '123',
       aksjonspunktLost: false,
       lesemodus: true,
-      fraDatoFraSoknad: '2000.02.02',
+      fraDatoFraVilkar: '2000.02.02',
       vedtakFattetVilkarOppfylt: false,
       informasjonOmVilkar: {
         begrunnelse: 'begrunnelse',
@@ -237,7 +237,7 @@ describe('<AleneOmOmsorgen>', () => {
       behandlingsID: '123',
       aksjonspunktLost: true,
       lesemodus: true,
-      fraDatoFraSoknad: '22.22.02',
+      fraDatoFraVilkar: '22.22.02',
       vedtakFattetVilkarOppfylt: false,
       informasjonOmVilkar: {
         begrunnelse: 'begrunnelse',
@@ -269,7 +269,7 @@ describe('<AleneOmOmsorgen>', () => {
       behandlingsID: '123',
       aksjonspunktLost: false,
       lesemodus: false,
-      fraDatoFraSoknad: '22.22.02',
+      fraDatoFraVilkar: '22.22.02',
       vedtakFattetVilkarOppfylt: true,
       informasjonOmVilkar: {
         begrunnelse: 'begrunnelse',
@@ -310,7 +310,7 @@ describe('<AleneOmOmsorgen>', () => {
       behandlingsID: '123',
       aksjonspunktLost: false,
       lesemodus: false,
-      fraDatoFraSoknad: '22.22.02',
+      fraDatoFraVilkar: '22.22.02',
       vedtakFattetVilkarOppfylt: true,
       informasjonOmVilkar: {
         begrunnelse: 'begrunnelse',
@@ -348,7 +348,7 @@ describe('<AleneOmOmsorgen>', () => {
       behandlingsID: '123',
       aksjonspunktLost: false,
       lesemodus: false,
-      fraDatoFraSoknad: '22.22.02',
+      fraDatoFraVilkar: '22.22.02',
       vedtakFattetVilkarOppfylt: false,
       informasjonOmVilkar: {
         begrunnelse: 'begrunnelse',
