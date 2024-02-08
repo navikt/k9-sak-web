@@ -1,16 +1,18 @@
-import React from 'react';
-import { intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
-import { expect } from 'chai';
-import sinon from 'sinon';
-
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import behandlingResultatType from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
+import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test';
+import { intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
-import TempSaveAndPreviewKlageLink from '@fpsak-frontend/prosess-klagevurdering/src/components/felles/TempSaveAndPreviewKlageLink';
+import { screen } from '@testing-library/react';
+import { expect } from 'chai';
+import React from 'react';
+import { reduxForm } from 'redux-form';
+import sinon from 'sinon';
+import messages from '../../i18n/nb_NO.json';
 import { BehandleUnntakForm } from './BehandleUnntakForm';
-import shallowWithIntl from '../../i18n';
 
 describe('<BehandleKlageFormKaImpl>', () => {
+  const MockForm = reduxForm({ form: 'mock', onSubmit: vi.fn() })(({ children }) => <div>{children}</div>);
   const sprakkode = {
     kode: 'NO',
     navn: 'Norsk',
@@ -20,66 +22,54 @@ describe('<BehandleKlageFormKaImpl>', () => {
     behandlingResultatType: behandlingResultatType.INNVILG,
   };
 
-  it.skip('skal vise lenke til forhåndsvis brev når fritekst er fylt, og klagevurdering valgt', () => {
-    const wrapper = shallowWithIntl(
-      <BehandleUnntakForm
-        readOnly={false}
-        readOnlySubmitButton
-        aksjonspunktCode={aksjonspunktCodes.OVERSTYRING_MANUELL_VURDERING_VILKÅR}
-        formValues={formValues1}
-        previewCallback={sinon.spy()}
-        saveUnntak={sinon.spy()}
-        intl={intlMock}
-        formProps={{}}
-        sprakkode={sprakkode}
-        alleKodeverk={{}}
-        {...reduxFormPropsMock}
-      />,
+  it('skal vise valgbare skjemelementer når readonly er false', () => {
+    renderWithIntlAndReduxForm(
+      <MockForm>
+        <BehandleUnntakForm
+          readOnly={false}
+          readOnlySubmitButton
+          aksjonspunktCode={aksjonspunktCodes.OVERSTYRING_MANUELL_VURDERING_VILKÅR}
+          formValues={formValues1}
+          previewCallback={sinon.spy()}
+          saveUnntak={sinon.spy()}
+          intl={intlMock}
+          formProps={{}}
+          sprakkode={sprakkode}
+          alleKodeverk={{}}
+          {...reduxFormPropsMock}
+        />
+      </MockForm>,
+      { messages },
     );
-    expect(wrapper.find(TempSaveAndPreviewKlageLink)).to.have.length(1);
-  });
-  const formValues2 = {
-    fritekst: '123',
-  };
 
-  it.skip('skal ikke vise lenke til forhåndsvis brev når fritekst fylt, og klagevurdering ikke valgt', () => {
-    const wrapper = shallowWithIntl(
-      <BehandleUnntakForm
-        readOnly={false}
-        readOnlySubmitButton
-        formValues={formValues2}
-        aksjonspunktCode={aksjonspunktCodes.OVERSTYRING_MANUELL_VURDERING_VILKÅR}
-        previewCallback={sinon.spy()}
-        saveUnntak={sinon.spy()}
-        intl={intlMock}
-        formProps={{}}
-        sprakkode={sprakkode}
-        alleKodeverk={{}}
-        {...reduxFormPropsMock}
-      />,
-    );
-    expect(wrapper.find(TempSaveAndPreviewKlageLink)).to.have.length(0);
+    expect(screen.getByRole('textbox', { name: 'Notat' })).toBeInTheDocument();
+    expect(screen.getByRole('radio', { name: 'Innvilget eller endring' })).toBeInTheDocument();
+    expect(screen.getByRole('radio', { name: 'Avslå eller ingen endring' })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'Bekreft og fortsett' })).toBeInTheDocument();
   });
-  const formValues3 = {
-    behandlingResultatType: behandlingResultatType.AVSLÅ,
-  };
 
-  it.skip('skal ikke vise lenke til forhåndsvis brev når fritekst ikke fylt, og klagevurdering valgt', () => {
-    const wrapper = shallowWithIntl(
-      <BehandleUnntakForm
-        readOnly={false}
-        readOnlySubmitButton
-        formValues={formValues3}
-        aksjonspunktCode={aksjonspunktCodes.OVERSTYRING_MANUELL_VURDERING_VILKÅR}
-        previewCallback={sinon.spy()}
-        saveUnntak={sinon.spy()}
-        intl={intlMock}
-        formProps={{}}
-        sprakkode={sprakkode}
-        alleKodeverk={{}}
-        {...reduxFormPropsMock}
-      />,
+  it('skal ikke vise valgbare skjemelementer når readonly er false', () => {
+    renderWithIntlAndReduxForm(
+      <MockForm>
+        <BehandleUnntakForm
+          readOnly
+          readOnlySubmitButton
+          aksjonspunktCode={aksjonspunktCodes.OVERSTYRING_MANUELL_VURDERING_VILKÅR}
+          formValues={formValues1}
+          previewCallback={sinon.spy()}
+          saveUnntak={sinon.spy()}
+          intl={intlMock}
+          formProps={{}}
+          sprakkode={sprakkode}
+          alleKodeverk={{}}
+          {...reduxFormPropsMock}
+        />
+      </MockForm>,
+      { messages },
     );
-    expect(wrapper.find(TempSaveAndPreviewKlageLink)).to.have.length(0);
+
+    expect(screen.queryByRole('textbox', { name: 'Notat' })).not.toBeInTheDocument();
+    expect(screen.getByRole('radio', { name: 'Innvilget eller endring' })).toBeDisabled();
+    expect(screen.getByRole('radio', { name: 'Avslå eller ingen endring' })).toBeDisabled();
   });
 });

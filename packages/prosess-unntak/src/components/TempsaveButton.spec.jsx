@@ -1,10 +1,9 @@
-import sinon from 'sinon';
-import { expect } from 'chai';
-import { Knapp } from 'nav-frontend-knapper';
-import React from 'react';
 import behandlingResultatType from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
-
-import { shallow } from 'enzyme/build';
+import { renderWithIntl } from '@fpsak-frontend/utils-test';
+import { screen } from '@testing-library/react';
+import React from 'react';
+import sinon from 'sinon';
+import messages from '../../i18n/nb_NO.json';
 import TempsaveButton from './TempsaveButton';
 
 describe('<TempsaveButton>', () => {
@@ -13,15 +12,17 @@ describe('<TempsaveButton>', () => {
     begrunnelse: '',
   };
 
-  it.skip('Skal rendre komponent korrekt', () => {
-    const wrapper = shallow(
+  it('Skal rendre komponent korrekt', () => {
+    renderWithIntl(
       <TempsaveButton
         formValues={formValuesWithEmptyStrings}
         saveUnntak={sinon.spy()}
         aksjonspunktCode="123"
         hasForeslaVedtakAp={false}
       />,
+      { messages },
     );
-    expect(wrapper.find(Knapp)).has.length(1);
+
+    expect(screen.getByRole('button', { name: 'Lagre' })).toBeInTheDocument();
   });
 });
