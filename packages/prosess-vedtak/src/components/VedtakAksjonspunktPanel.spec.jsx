@@ -1,15 +1,15 @@
-import React from 'react';
-import { expect } from 'chai';
-
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
+import { renderWithIntl } from '@fpsak-frontend/utils-test';
+import { screen } from '@testing-library/react';
+import React from 'react';
+import { intlMock } from '../../i18n';
+import messages from '../../i18n/nb_NO.json';
 import { VedtakAksjonspunktPanelImpl } from './VedtakAksjonspunktPanel';
-import VedtakHelpTextPanel from './VedtakHelpTextPanel';
-import shallowWithIntl, { intlMock } from '../../i18n';
 
 describe('<VedtakAksjonspunktPanel>', () => {
   it('skal rendre komponent korrekt', () => {
     const aksjonspunktKoder = [];
-    const wrapper = shallowWithIntl(
+    renderWithIntl(
       <VedtakAksjonspunktPanelImpl
         intl={intlMock}
         behandlingStatusKode={behandlingStatus.BEHANDLING_UTREDES}
@@ -17,8 +17,9 @@ describe('<VedtakAksjonspunktPanel>', () => {
         aksjonspunktKoder={aksjonspunktKoder}
         isBehandlingReadOnly={false}
       />,
+      { messages },
     );
 
-    expect(wrapper.find(VedtakHelpTextPanel)).to.have.length(1);
+    expect(screen.getByRole('heading', { name: 'Vedtak' })).toBeInTheDocument();
   });
 });

@@ -1,13 +1,14 @@
-import React from 'react';
-import { expect } from 'chai';
-
-import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
-import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
-import VedtakFritekstPanel from './VedtakFritekstPanel';
+import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
+import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
+import { renderWithIntl } from '@fpsak-frontend/utils-test';
+import { screen } from '@testing-library/react';
+import { expect } from 'chai';
+import React from 'react';
+import { intlMock } from '../../i18n';
+import messages from '../../i18n/nb_NO.json';
 import { VedtakAvslagPanelImpl } from './VedtakAvslagPanel';
-import shallowWithIntl, { intlMock } from '../../i18n';
 
 const pleiepenger = fagsakYtelseType.PLEIEPENGER;
 const omsorgspenger = fagsakYtelseType.OMSORGSPENGER;
@@ -98,7 +99,7 @@ describe('<VedtakAvslagPanel>', () => {
   };
 
   it('skal rendre avslagspanel for pleiepenger', () => {
-    const wrapper = shallowWithIntl(
+    renderWithIntl(
       <VedtakAvslagPanelImpl
         intl={intlMock}
         vilkar={vilkarUtenSoknadsfrist}
@@ -109,17 +110,16 @@ describe('<VedtakAvslagPanel>', () => {
         ytelseTypeKode={pleiepenger}
         alleKodeverk={{}}
       />,
+      { messages },
     );
 
-    const textFields = wrapper.find('ForwardRef');
-    expect(textFields.first().childAt(0).text()).to.eql('Resultat');
-    expect(textFields.at(1).childAt(0).text()).to.eql('Pleiepenger er avslått');
-
-    expect(wrapper.find(VedtakFritekstPanel)).to.have.length(0);
+    expect(screen.getByText('Resultat')).toBeInTheDocument();
+    expect(screen.getByText('Pleiepenger er avslått')).toBeInTheDocument();
+    expect(screen.queryByRole('textbox')).not.toBeInTheDocument();
   });
 
   it('skal rendre avslagspanel for omsorgspenger', () => {
-    const wrapper = shallowWithIntl(
+    renderWithIntl(
       <VedtakAvslagPanelImpl
         intl={intlMock}
         vilkar={vilkarUtenSoknadsfrist}
@@ -130,17 +130,16 @@ describe('<VedtakAvslagPanel>', () => {
         ytelseTypeKode={omsorgspenger}
         alleKodeverk={{}}
       />,
+      { messages },
     );
 
-    const textFields = wrapper.find('ForwardRef');
-    expect(textFields.first().childAt(0).text()).to.eql('Resultat');
-    expect(textFields.at(1).childAt(0).text()).to.eql('Omsorgspenger er avslått');
-
-    expect(wrapper.find(VedtakFritekstPanel)).to.have.length(0);
+    expect(screen.getByText('Resultat')).toBeInTheDocument();
+    expect(screen.getByText('Omsorgspenger er avslått')).toBeInTheDocument();
+    expect(screen.queryByRole('textbox')).not.toBeInTheDocument();
   });
 
   it('skal rendre avslagspanel for utvidet rett kronisk sykt barn', () => {
-    const wrapper = shallowWithIntl(
+    renderWithIntl(
       <VedtakAvslagPanelImpl
         intl={intlMock}
         vilkar={vilkarUtenSoknadsfrist}
@@ -151,17 +150,16 @@ describe('<VedtakAvslagPanel>', () => {
         ytelseTypeKode={kroniskSyktBarn}
         alleKodeverk={{}}
       />,
+      { messages },
     );
 
-    const textFields = wrapper.find('ForwardRef');
-    expect(textFields.first().childAt(0).text()).to.eql('Resultat');
-    expect(textFields.at(1).childAt(0).text()).to.eql('Ekstra omsorgsdager er avslått');
-
-    expect(wrapper.find(VedtakFritekstPanel)).to.have.length(0);
+    expect(screen.getByText('Resultat')).toBeInTheDocument();
+    expect(screen.getByText('Ekstra omsorgsdager er avslått')).toBeInTheDocument();
+    expect(screen.queryByRole('textbox')).not.toBeInTheDocument();
   });
 
   it('skal rendre avslagspanel for midlertidig alene', () => {
-    const wrapper = shallowWithIntl(
+    renderWithIntl(
       <VedtakAvslagPanelImpl
         intl={intlMock}
         vilkar={vilkarUtenSoknadsfrist}
@@ -172,12 +170,11 @@ describe('<VedtakAvslagPanel>', () => {
         ytelseTypeKode={midlertidigAlene}
         alleKodeverk={{}}
       />,
+      { messages },
     );
 
-    const textFields = wrapper.find('ForwardRef');
-    expect(textFields.first().childAt(0).text()).to.eql('Resultat');
-    expect(textFields.at(1).childAt(0).text()).to.eql('Ekstra omsorgsdager er avslått');
-
-    expect(wrapper.find(VedtakFritekstPanel)).to.have.length(0);
+    expect(screen.getByText('Resultat')).toBeInTheDocument();
+    expect(screen.getByText('Ekstra omsorgsdager er avslått')).toBeInTheDocument();
+    expect(screen.queryByRole('textbox')).not.toBeInTheDocument();
   });
 });
