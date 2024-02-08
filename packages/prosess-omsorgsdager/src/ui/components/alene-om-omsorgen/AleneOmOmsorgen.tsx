@@ -198,26 +198,19 @@ const AleneOmOmsorgen: React.FunctionComponent<AleneOmOmsorgenProps> = ({
                   />
 
                   {erBehandlingstypeRevurdering && (
-                    <>
-                      <Select
-                        label="Til"
-                        onChange={settTilDatoFraÅr}
-                        defaultValue={
-                          informasjonTilLesemodus.tilDato ? dayjs(informasjonTilLesemodus.tilDato).year() : '0'
-                        }
-                      >
-                        {utledTilgjengeligeÅr(fraDatoFraSoknad).map(år => (
-                          <option key={år.value} value={år.value} disabled={år.disabled}>
-                            {år.title}
-                          </option>
-                        ))}
-                      </Select>
-                      {tilDatovalue !== 'dd.mm.åååå' && tilDatovalue !== 'false' && (
-                        <Label as="p" className={styles.tilDatoVisning}>
-                          {dayjs(tilDatovalue).format('DD.MM.YYYY')}
-                        </Label>
-                      )}
-                    </>
+                    <Select
+                      label="Til"
+                      onChange={settTilDatoFraÅr}
+                      defaultValue={
+                        informasjonTilLesemodus.tilDato ? dayjs(informasjonTilLesemodus.tilDato).year() : '0'
+                      }
+                    >
+                      {utledTilgjengeligeÅr(fraDatoFraSoknad).map(år => (
+                        <option key={år.value} value={år.value} disabled={år.disabled}>
+                          {år.title}
+                        </option>
+                      ))}
+                    </Select>
                   )}
                 </SkjemaGruppe>
               )}
