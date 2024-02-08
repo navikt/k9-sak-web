@@ -42,7 +42,7 @@ const AleneOmOmsorgen: React.FunctionComponent<AleneOmOmsorgenProps> = ({
   behandlingsID,
   aksjonspunktLost,
   lesemodus,
-  fraDatoFraSoknad,
+  fraDatoFraVilkar,
   informasjonTilLesemodus,
   vedtakFattetVilkarOppfylt,
   erBehandlingstypeRevurdering,
@@ -82,9 +82,9 @@ const AleneOmOmsorgen: React.FunctionComponent<AleneOmOmsorgenProps> = ({
 
   useEffect(() => {
     if (tekstTilBoolean(erSokerAleneOmOmsorgen)) {
-      setValue('fraDato', formatereDato(fraDatoFraSoknad));
+      setValue('fraDato', formatereDato(fraDatoFraVilkar));
     }
-  }, [erSokerAleneOmOmsorgen, fraDatoFraSoknad]);
+  }, [erSokerAleneOmOmsorgen, fraDatoFraVilkar]);
 
   const settTilDatoFraÅr = (e: any) => {
     setValue('tilDato', e.target.value === 'false' ? 'false' : `${e.target.value}.12.31`);
@@ -140,7 +140,7 @@ const AleneOmOmsorgen: React.FunctionComponent<AleneOmOmsorgenProps> = ({
 
       {lesemodus && !åpenForRedigering && !vedtakFattetVilkarOppfylt && (
         <AleneOmOmsorgenLesemodus
-          fraDatoFraSoknad={fraDatoFraSoknad}
+          fraDatoFraSoknad={fraDatoFraVilkar}
           informasjonTilLesemodus={informasjonTilLesemodus}
           harAksjonspunktBlivitLostTidligare={aksjonspunktLost}
           åpneForRedigereInformasjon={() => setValue('åpenForRedigering', true)}
@@ -154,7 +154,7 @@ const AleneOmOmsorgen: React.FunctionComponent<AleneOmOmsorgenProps> = ({
 
           <OpplysningerFraSoknad
             periodeTekst="Fra dato oppgitt"
-            periode={formatereDatoTilLesemodus(fraDatoFraSoknad)}
+            periode={formatereDatoTilLesemodus(fraDatoFraVilkar)}
           />
 
           <FormProvider {...methods}>
@@ -198,26 +198,19 @@ const AleneOmOmsorgen: React.FunctionComponent<AleneOmOmsorgenProps> = ({
                   />
 
                   {erBehandlingstypeRevurdering && (
-                    <>
-                      <Select
-                        label="Til"
-                        onChange={settTilDatoFraÅr}
-                        defaultValue={
-                          informasjonTilLesemodus.tilDato ? dayjs(informasjonTilLesemodus.tilDato).year() : '0'
-                        }
-                      >
-                        {utledTilgjengeligeÅr(fraDatoFraSoknad).map(år => (
-                          <option key={år.value} value={år.value} disabled={år.disabled}>
-                            {år.title}
-                          </option>
-                        ))}
-                      </Select>
-                      {tilDatovalue !== 'dd.mm.åååå' && tilDatovalue !== 'false' && (
-                        <Label as="p" className={styles.tilDatoVisning}>
-                          {dayjs(tilDatovalue).format('DD.MM.YYYY')}
-                        </Label>
-                      )}
-                    </>
+                    <Select
+                      label="Til"
+                      onChange={settTilDatoFraÅr}
+                      defaultValue={
+                        informasjonTilLesemodus.tilDato ? dayjs(informasjonTilLesemodus.tilDato).year() : '0'
+                      }
+                    >
+                      {utledTilgjengeligeÅr(fraDatoFraVilkar).map(år => (
+                        <option key={år.value} value={år.value} disabled={år.disabled}>
+                          {år.title}
+                        </option>
+                      ))}
+                    </Select>
                   )}
                 </SkjemaGruppe>
               )}
