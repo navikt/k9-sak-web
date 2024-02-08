@@ -206,6 +206,7 @@ const AleneOmOmsorgen: React.FunctionComponent<AleneOmOmsorgenProps> = ({
                       }
                     >
                       {utledTilgjengeligeÅr(fraDatoFraVilkar).map(år => (
+
                         <option key={år.value} value={år.value} disabled={år.disabled}>
                           {år.title}
                         </option>
