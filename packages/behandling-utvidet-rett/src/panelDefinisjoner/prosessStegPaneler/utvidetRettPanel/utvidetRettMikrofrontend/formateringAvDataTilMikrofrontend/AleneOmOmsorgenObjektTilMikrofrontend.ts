@@ -99,7 +99,7 @@ const AleneOmOmsorgenObjektTilMikrofrontend = ({
         behandlingsID: behandling.id.toString(),
         lesemodus,
         aksjonspunktLost,
-        fraDatoFraSoknad: soknad?.søknadsperiode.fom,
+        fraDatoFraVilkar: vilkar?.perioder[0]?.periode?.fom,
         vedtakFattetVilkarOppfylt: skalVilkarsUtfallVises,
         erBehandlingstypeRevurdering: erBehandlingRevurdering,
         informasjonOmVilkar: generereInfoForVurdertVilkar(
@@ -131,7 +131,7 @@ const AleneOmOmsorgenObjektTilMikrofrontend = ({
       props: {
         behandlingsID: behandling.id.toString(),
         aksjonspunktLost: false,
-        fraDatoFraSoknad: soknad?.søknadsperiode.fom,
+        fraDatoFraVilkar: vilkar?.perioder[0]?.periode?.fom,
         vedtakFattetVilkarOppfylt: true,
         erBehandlingstypeRevurdering: erBehandlingRevurdering,
         informasjonOmVilkar: generereInfoForVurdertVilkar(true, vilkar, '', 'Utvidet Rett'),
