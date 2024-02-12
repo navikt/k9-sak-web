@@ -8,6 +8,7 @@ import { OverstyringUttak } from '../../../../types';
 import { useOverstyrUttak } from '../../../context/OverstyrUttakContext';
 
 import styles from './begrunnelseBoks.module.css';
+import { arbeidstypeTilVisning } from '../../../../constants/Arbeidstype';
 
 interface BegrunnelseBoksProps {
   begrunnelse: string;
@@ -18,7 +19,6 @@ const BegrunnelseBoks: React.FC<BegrunnelseBoksProps> = ({ begrunnelse, overstyr
   const { utbetalingsgrader, saksbehandler } = overstyring;
   const { utledAktivitetNavn } = useOverstyrUttak();
   const { hentSaksbehandlerNavn } = useSaksbehandlerOppslag();
-
   return (
     <div className={styles.begrunnelseBoks}>
       {utbetalingsgrader.length > 0 && (
@@ -26,16 +26,19 @@ const BegrunnelseBoks: React.FC<BegrunnelseBoksProps> = ({ begrunnelse, overstyr
           <Heading level="3" size="xsmall">
             Ny utbetalingsgrad per aktivitet
           </Heading>
-
           <div className={styles.utbetalingsgrader}>
-            {utbetalingsgrader.map((utbetalingsgrad, index) => {
+            {utbetalingsgrader.map((utbetalingsgrad) => {
+              const arbeidstype = arbeidstypeTilVisning[utbetalingsgrad.arbeidsforhold.type];
               const { arbeidsforhold: af } = utbetalingsgrad;
               return (
                 <div
                   key={`${af.arbeidsforholdId || af.aktørId || af.orgnr || af.type}`}
                   className={styles.utbetalingsgrad}
                 >
-                  <div className={styles.utbetalingsgradNavn}>{utledAktivitetNavn(utbetalingsgrad.arbeidsforhold)}</div>
+                  <div className={styles.utbetalingsgradNavn}>
+                    {utledAktivitetNavn(utbetalingsgrad.arbeidsforhold)}
+                    {arbeidstype && <span>, {arbeidstype}</span>}
+                  </div>
                   <div className={styles.utbetalingsgradProsent}>{utbetalingsgrad.utbetalingsgrad} %</div>
                 </div>
               );
