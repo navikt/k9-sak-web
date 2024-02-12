@@ -3970,6 +3970,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@hookform/resolvers@npm:^3.3.4":
+  version: 3.3.4
+  resolution: "@hookform/resolvers@npm:3.3.4"
+  peerDependencies:
+    react-hook-form: ^7.0.0
+  checksum: 7761e3340d23acd092dec4023344678e62b0c0ea0ed5aa3687cd315fc339b3b965e11124d643811292e6962683357423e6fe646fffabf9b96f8322f41903924d
+  languageName: node
+  linkType: hard
+
 "@humanwhocodes/config-array@npm:^0.11.13":
   version: 0.11.14
   resolution: "@humanwhocodes/config-array@npm:0.11.14"
@@ -5415,6 +5424,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@k9-sak-web/prosess-uttak@workspace:packages/prosess-uttak"
   dependencies:
+    "@hookform/resolvers": ^3.3.4
     "@navikt/ds-css": 5.13.0
     "@navikt/ds-react": 5.13.0
     "@navikt/ft-form-hooks": 4.2.21
@@ -5456,6 +5466,7 @@ __metadata:
     react-hook-form: 7.49.3
     react-popper: 2.3.0
     vite: ^5.0.10
+    yup: 0.32.11
   languageName: unknown
   linkType: soft
 

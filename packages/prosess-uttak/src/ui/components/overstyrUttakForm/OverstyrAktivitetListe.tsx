@@ -14,26 +14,29 @@ type ownProps = {
 };
 
 const OverstyrAktivitetListe: React.FC<ownProps> = ({ fields, loading }) => {
-  const { register } = useFormContext();
+  const { register, formState: { errors } } = useFormContext();
   const { utledAktivitetNavn } = useOverstyrUttak();
-
+  
   return (
     <>
       <Label size="small">Ny utbetalingsgrad per aktivitet</Label>
       <div className={styles.overstyringSkjemaAktiviteter}>
         {fields.map((field, index) => {
           const arbeidstype = arbeidstypeTilVisning[field.arbeidsforhold?.type];
+          const harFeil = !!errors[OverstyrUttakFormFieldName.UTBETALINGSGRADER]?.[index]?.[OverstyrUttakFormFieldName.AKTIVITET_UTBETALINGSGRAD];
+  
           return (
             <div key={field.id} className={styles.overstyringSkjemaAktivitet}>
               <div>
                 {utledAktivitetNavn(field.arbeidsforhold)}
                 {arbeidstype && <span>, {arbeidstype}</span>}
               </div>
-              <div>
+              <div className={harFeil ? 'navds-error-message navds-label' : ''}>
                 <TextField
                   {...register(
                     `${OverstyrUttakFormFieldName.UTBETALINGSGRADER}.${index}.${OverstyrUttakFormFieldName.AKTIVITET_UTBETALINGSGRAD}`,
                   )}
+                  className={harFeil ? 'navds-text-field--error' : ''}
                   label="Ny utbetalingsgrad (%)"
                   hideLabel
                   size="small"
@@ -45,6 +48,9 @@ const OverstyrAktivitetListe: React.FC<ownProps> = ({ fields, loading }) => {
                   disabled={loading}
                 />
                 %
+                {harFeil && <span className='navds-error-message navds-label text-base ml-2 navds-error-message'>
+                  {errors[OverstyrUttakFormFieldName.UTBETALINGSGRADER][index][OverstyrUttakFormFieldName.AKTIVITET_UTBETALINGSGRAD]?.message}
+                </span>}
               </div>
             </div>
           )
