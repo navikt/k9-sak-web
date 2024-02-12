@@ -31,15 +31,17 @@ export const OverstyrUttakContextProvider = ({ children }) => {
   const harAksjonspunktForOverstyringAvUttak = aksjonspunktkoder.includes('6017');
 
   const hentOverstyrte = async () => {
-    setLasterOverstyringer(true);
-    const apiResult: OverstyrtUttakResponse = await httpUtils
-      .get(endpoints.behandlingUttakOverstyrt, httpErrorHandler)
-      .then((response: OverstyrtUttakResponse) => response);
-    setOverstyrte(apiResult?.overstyringer || []);
-    setArbeidsgiverOversikt(
-      apiResult?.arbeidsgiverOversikt?.arbeidsgivere ? apiResult?.arbeidsgiverOversikt?.arbeidsgivere : null,
-    );
-    setLasterOverstyringer(false);
+    if (endpoints.behandlingUttakOverstyrt) {
+      setLasterOverstyringer(true);
+      const apiResult: OverstyrtUttakResponse = await httpUtils
+        .get(endpoints.behandlingUttakOverstyrt, httpErrorHandler)
+        .then((response: OverstyrtUttakResponse) => response);
+      setOverstyrte(apiResult?.overstyringer || []);
+      setArbeidsgiverOversikt(
+        apiResult?.arbeidsgiverOversikt?.arbeidsgivere ? apiResult?.arbeidsgiverOversikt?.arbeidsgivere : null,
+      );
+      setLasterOverstyringer(false);
+    }
   };
 
   const hentAktuelleAktiviteter = async (fom: Date, tom: Date): Promise<Arbeidsforhold[]> => {
