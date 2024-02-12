@@ -1,7 +1,7 @@
 import React from 'react';
 import { useFormContext, FieldArrayWithId } from 'react-hook-form';
 
-import { Label, TextField } from '@navikt/ds-react';
+import { ErrorMessage, Label, TextField } from '@navikt/ds-react';
 import { OverstyrUttakFormFieldName, arbeidstypeTilVisning } from '../../../constants';
 
 import styles from './overstyrAktivitetListe.module.css';
@@ -48,9 +48,9 @@ const OverstyrAktivitetListe: React.FC<ownProps> = ({ fields, loading }) => {
                   disabled={loading}
                 />
                 %
-                {harFeil && <span className='navds-error-message navds-label text-base ml-2 navds-error-message'>
+                {harFeil && <ErrorMessage className='inline ml-4'>
                   {errors[OverstyrUttakFormFieldName.UTBETALINGSGRADER][index][OverstyrUttakFormFieldName.AKTIVITET_UTBETALINGSGRAD]?.message}
-                </span>}
+                </ErrorMessage>}
               </div>
             </div>
           )
