@@ -63,7 +63,7 @@ spec:
     - name: KLAGE_KABAL
       value: "true"
     - name: VARSELTEKST
-      value: "true"
+      value: "false"
     - name: DOKUMENTDATA
       value: "false"
     - name: UNNTAKSBEHANDLING
