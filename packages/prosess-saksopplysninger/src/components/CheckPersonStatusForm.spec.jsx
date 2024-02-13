@@ -1,16 +1,15 @@
-import React from 'react';
-import { expect } from 'chai';
-
-import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
-import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
-import { ProsessStegBegrunnelseTextField, ProsessStegSubmitButton } from '@k9-sak-web/prosess-felles';
-import personstatusType from '@fpsak-frontend/kodeverk/src/personstatusType';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
-
-import { AksjonspunktHelpTextTemp } from '@fpsak-frontend/shared-components';
-import { RadioOption } from '@fpsak-frontend/form';
-import { buildInitialValues, CheckPersonStatusFormImpl as UnwrappedForm } from './CheckPersonStatusForm';
-import shallowWithIntl, { intlMock } from '../../i18n';
+import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
+import personstatusType from '@fpsak-frontend/kodeverk/src/personstatusType';
+import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test';
+import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
+import { screen } from '@testing-library/react';
+import { expect } from 'chai';
+import React from 'react';
+import { reduxForm } from 'redux-form';
+import { intlMock } from '../../i18n';
+import messages from '../../i18n/nb_NO.json';
+import { CheckPersonStatusFormImpl as UnwrappedForm, buildInitialValues } from './CheckPersonStatusForm';
 
 describe('<CheckPersonStatusForm>', () => {
   const alleKodeverk = {
@@ -28,54 +27,58 @@ describe('<CheckPersonStatusForm>', () => {
     ],
   };
 
+  const MockForm = reduxForm({ form: 'mock', onSubmit: vi.fn() })(({ children }) => <div>{children}</div>);
+
   it('skal vise hjelpetekst med original personstatus og begrunnelse/submit', () => {
-    const wrapper = shallowWithIntl(
-      <UnwrappedForm
-        {...reduxFormPropsMock}
-        intl={intlMock}
-        readOnly={false}
-        readOnlySubmitButton
-        fortsettBehandling="false"
-        originalPersonstatusName="Ukjent"
-        personstatusName=""
-        personStatuser={[]}
-        gjeldeneFom="2018-10-10"
-        behandlingId={1}
-        behandlingVersjon={1}
-      />,
+    renderWithIntlAndReduxForm(
+      <MockForm>
+        <UnwrappedForm
+          {...reduxFormPropsMock}
+          intl={intlMock}
+          readOnly={false}
+          readOnlySubmitButton
+          fortsettBehandling="false"
+          originalPersonstatusName="Ukjent"
+          personstatusName=""
+          personStatuser={[]}
+          gjeldeneFom="2018-10-10"
+          behandlingId={1}
+          behandlingVersjon={1}
+        />
+      </MockForm>,
+      { messages },
     );
 
-    const helpText = wrapper.find(AksjonspunktHelpTextTemp);
-    expect(helpText).to.have.length(1);
-    expect(helpText.childAt(0).text()).is.eql(
-      'Søker har personstatus: Ukjent. Vurder om behandlingen skal henlegges eller kan fortsette med endret personstatus',
-    );
-
-    const submit = wrapper.find(ProsessStegBegrunnelseTextField);
-    expect(submit).to.have.length(1);
+    expect(
+      screen.getByText(
+        'Søker har personstatus: Ukjent. Vurder om behandlingen skal henlegges eller kan fortsette med endret personstatus',
+      ),
+    ).toBeInTheDocument();
+    expect(screen.getByRole('textbox', { name: 'Vurdering' })).toBeInTheDocument();
   });
 
   it('skal vise radioknapper for å velge om behandlingen skal fortsette eller henlegges', () => {
-    const wrapper = shallowWithIntl(
-      <UnwrappedForm
-        {...reduxFormPropsMock}
-        intl={intlMock}
-        readOnly={false}
-        readOnlySubmitButton
-        fortsettBehandling="false"
-        originalPersonstatusName="Ukjent"
-        personstatusName=""
-        personStatuser={[]}
-        gjeldeneFom="2018-10-10"
-        behandlingId={1}
-        behandlingVersjon={1}
-      />,
+    renderWithIntlAndReduxForm(
+      <MockForm>
+        <UnwrappedForm
+          {...reduxFormPropsMock}
+          intl={intlMock}
+          readOnly={false}
+          readOnlySubmitButton
+          fortsettBehandling="false"
+          originalPersonstatusName="Ukjent"
+          personstatusName=""
+          personStatuser={[]}
+          gjeldeneFom="2018-10-10"
+          behandlingId={1}
+          behandlingVersjon={1}
+        />
+      </MockForm>,
+      { messages },
     );
 
-    const radios = wrapper.find(RadioOption);
-    expect(radios).to.have.length(2);
-    expect(radios.first().prop('label').id).is.eql('CheckPersonStatusForm.HaltBehandling');
-    expect(radios.last().prop('label').id).is.eql('CheckPersonStatusForm.ContinueBehandling');
+    expect(screen.getByRole('radio', { name: 'Henlegg behandlingen' })).toBeInTheDocument();
+    expect(screen.getByRole('radio', { name: 'Fortsett behandlingen' })).toBeInTheDocument();
   });
 
   it('skal vise en radioknapp for alle personstatuser', () => {
@@ -89,28 +92,27 @@ describe('<CheckPersonStatusForm>', () => {
         navn: 'Annen',
       },
     ];
-    const wrapper = shallowWithIntl(
-      <UnwrappedForm
-        {...reduxFormPropsMock}
-        intl={intlMock}
-        readOnly={false}
-        readOnlySubmitButton
-        fortsettBehandling
-        originalPersonstatusName="Ukjent"
-        personstatusName=""
-        personStatuser={personstatuser}
-        gjeldeneFom="2018-10-10"
-        behandlingId={1}
-        behandlingVersjon={1}
-      />,
+    renderWithIntlAndReduxForm(
+      <MockForm>
+        <UnwrappedForm
+          {...reduxFormPropsMock}
+          intl={intlMock}
+          readOnly={false}
+          readOnlySubmitButton
+          fortsettBehandling
+          originalPersonstatusName="Ukjent"
+          personstatusName=""
+          personStatuser={personstatuser}
+          gjeldeneFom="2018-10-10"
+          behandlingId={1}
+          behandlingVersjon={1}
+        />
+      </MockForm>,
+      { messages },
     );
 
-    const radios = wrapper.find(RadioOption);
-    expect(radios).to.have.length(4);
-    expect(radios.at(2).prop('value')).is.eql('BOSATT');
-    expect(radios.at(2).prop('label')).is.eql('Bosatt');
-    expect(radios.at(3).prop('value')).is.eql('ANNEN');
-    expect(radios.at(3).prop('label')).is.eql('Annen');
+    expect(screen.getByRole('radio', { name: 'Bosatt' })).toBeInTheDocument();
+    expect(screen.getByRole('radio', { name: 'Annen' })).toBeInTheDocument();
   });
 
   it('skal vise readonly-form når status er readonly', () => {
@@ -118,33 +120,30 @@ describe('<CheckPersonStatusForm>', () => {
       fortsettBehandling: 'false',
       begrunnelse: 'Dette er en begrunnelse',
     };
-    const wrapper = shallowWithIntl(
-      <UnwrappedForm
-        {...reduxFormPropsMock}
-        intl={intlMock}
-        readOnly
-        readOnlySubmitButton
-        fortsettBehandling="false"
-        originalPersonstatusName="Ukjent"
-        personstatusName="Bosatt"
-        initialValues={initialValues}
-        personStatuser={[{}]}
-        gjeldeneFom="2018-10-10"
-        behandlingId={1}
-        behandlingVersjon={1}
-      />,
+    renderWithIntlAndReduxForm(
+      <MockForm>
+        <UnwrappedForm
+          {...reduxFormPropsMock}
+          intl={intlMock}
+          readOnly
+          readOnlySubmitButton
+          fortsettBehandling="false"
+          originalPersonstatusName="Ukjent"
+          personstatusName="Bosatt"
+          initialValues={initialValues}
+          personStatuser={[{}]}
+          gjeldeneFom="2018-10-10"
+          behandlingId={1}
+          behandlingVersjon={1}
+        />
+      </MockForm>,
+      { messages },
     );
 
-    const radioGroupField = wrapper.find('RadioGroupField');
-    expect(radioGroupField).to.have.length(1);
-    expect(radioGroupField.prop('readOnly')).is.true;
-
-    const info = wrapper.find(ProsessStegBegrunnelseTextField);
-    expect(info).to.have.length(1);
-    expect(info.prop('readOnly')).is.true;
-    const button = wrapper.find(ProsessStegSubmitButton);
-    expect(button).to.have.length(1);
-    expect(button.prop('isReadOnly')).is.true;
+    expect(screen.getByRole('radio', { name: 'Henlegg behandlingen' })).toBeDisabled();
+    expect(screen.getByRole('radio', { name: 'Fortsett behandlingen' })).toBeDisabled();
+    expect(screen.queryByRole('textbox')).not.toBeInTheDocument();
+    expect(screen.queryByRole('button', { name: 'Fortsett behandlingen' })).not.toBeInTheDocument();
   });
 
   it('skal sette opp initielle verdier gitt behandling og behandlingspunkt', () => {
