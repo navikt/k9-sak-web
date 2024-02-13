@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
+import { Alert, Button } from '@navikt/ds-react';
+
 import { kodeverkObjektPropType } from '@fpsak-frontend/prop-types';
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
@@ -15,7 +17,6 @@ import { finnSistePeriodeMedAvslagsårsakBeregning } from './VedtakHelper';
 import vedtakBeregningsgrunnlagPropType from '../propTypes/vedtakBeregningsgrunnlagPropType';
 import vedtakVarselPropType from '../propTypes/vedtakVarselPropType';
 import VedtakSjekkTilbakekreving from './VedtakSjekkTilbakekreving';
-import { Alert, Button } from '@navikt/ds-react';
 
 /*
  * VedtakPanels
