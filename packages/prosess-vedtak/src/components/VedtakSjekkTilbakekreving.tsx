@@ -8,9 +8,15 @@ interface Props {
   readOnly: boolean;
   redigerSjekkTilbakekreving: boolean;
   submitCallback: (aksjonspunktData: any) => void;
+  toggleSjekkTilbakekreving: () => void;
 }
 
-export const VedtakSjekkTilbakekreving: React.FC<Props> = ({ readOnly, redigerSjekkTilbakekreving = false, submitCallback }: Props) => {
+export const VedtakSjekkTilbakekreving: React.FC<Props> = ({
+  readOnly,
+  redigerSjekkTilbakekreving = false,
+  toggleSjekkTilbakekreving = () => {},
+  submitCallback,
+}: Props) => {
   const [deaktiverBekreftKnapp, setDeaktiverBekreftKnapp] = React.useState<boolean>(true);
   const [visAdvarselTekst, setVisAdvarselTekst] = React.useState<boolean>(false);
 
@@ -27,9 +33,7 @@ export const VedtakSjekkTilbakekreving: React.FC<Props> = ({ readOnly, redigerSj
         <Heading spacing size="small" level="3">
           Har åpen tilbakekrevingssak som kan bli påvirket
         </Heading>
-        <BodyLong>
-          Vurder om tilbakekrevingssaken skal behandles først.
-        </BodyLong>
+        <BodyLong>Vurder om tilbakekrevingssaken skal behandles først.</BodyLong>
         <VerticalSpacer twentyPx />
         <RadioGroup legend="Behandle tilbakekrevingssaken først?" onChange={handleChange} disabled={readOnly}>
           <Radio value="ja">Ja</Radio>
@@ -39,15 +43,17 @@ export const VedtakSjekkTilbakekreving: React.FC<Props> = ({ readOnly, redigerSj
         <Button variant="primary" onClick={handleSubmit} type="button" disabled={deaktiverBekreftKnapp}>
           Bekreft
         </Button>
-        {redigerSjekkTilbakekreving && <Button className='ml-2' variant="secondary">Avbryt</Button>}
+        {redigerSjekkTilbakekreving && (
+          <Button className="ml-2" variant="secondary" onClick={() => toggleSjekkTilbakekreving()}>
+            Avbryt
+          </Button>
+        )}
       </Alert>
       {deaktiverBekreftKnapp && visAdvarselTekst && (
         <>
           <VerticalSpacer twentyPx />
           <Alert className={styles.aksjonspunktAlert} variant="error" size="small">
-            <BodyLong>
-              Sett behandlingen på vent og behandle tilbakekrevingssaken først
-            </BodyLong>
+            <BodyLong>Sett behandlingen på vent og behandle tilbakekrevingssaken først</BodyLong>
           </Alert>
         </>
       )}
