@@ -108,7 +108,6 @@ const beregningsresultat = {
         },
       ],
       dagsats: 1142,
-      inntektGraderingsprosent: 55.13,
       fom: '2021-03-12',
       tom: '2021-03-19',
     },
