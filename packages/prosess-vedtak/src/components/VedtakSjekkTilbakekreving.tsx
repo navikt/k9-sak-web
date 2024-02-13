@@ -25,23 +25,19 @@ export const VedtakSjekkTilbakekreving: React.FC<Props> = ({ readOnly, submitCal
     <>
       <Alert className={styles.aksjonspunktAlert} variant="warning" size="medium">
         <Heading spacing size="small" level="3">
-          <FormattedMessage id="VedtakForm.SjekkTilbakekreving.Overskrift" />
+          Har åpen tilbakekrevingssak som kan bli påvirket
         </Heading>
         <BodyLong>
-          <FormattedMessage id="VedtakForm.SjekkTilbakekreving.Beskrivelse" />
+          Vurder om tilbakekrevingssaken skal behandles først.
         </BodyLong>
         <VerticalSpacer twentyPx />
         <RadioGroup legend="Behandle tilbakekrevingssaken først?" onChange={handleChange} disabled={readOnly}>
-          <Radio value="ja">
-            <FormattedMessage id="VedtakForm.SjekkTilbakekreving.Ja" />
-          </Radio>
-          <Radio value="nei">
-            <FormattedMessage id="VedtakForm.SjekkTilbakekreving.Nei" />
-          </Radio>
+          <Radio value="ja">Ja</Radio>
+          <Radio value="nei">Nei</Radio>
         </RadioGroup>
         <VerticalSpacer twentyPx />
         <Button variant="primary" onClick={handleSubmit} type="button" disabled={deaktiverBekreftKnapp}>
-          <FormattedMessage id="VedtakForm.SjekkTilbakekreving.Bekreft" />
+          Bekreft
         </Button>
       </Alert>
       {deaktiverBekreftKnapp && visAdvarselTekst && (
@@ -49,7 +45,7 @@ export const VedtakSjekkTilbakekreving: React.FC<Props> = ({ readOnly, submitCal
           <VerticalSpacer twentyPx />
           <Alert className={styles.aksjonspunktAlert} variant="error" size="small">
             <BodyLong>
-              <FormattedMessage id="VedtakForm.SjekkTilbakekreving.Advarsel" />
+              Sett behandlingen på vent og behandle tilbakekrevingssaken først
             </BodyLong>
           </Alert>
         </>
