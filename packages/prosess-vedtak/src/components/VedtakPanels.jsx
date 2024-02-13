@@ -58,6 +58,8 @@ const VedtakPanels = ({
   overlappendeYtelser,
 }) => {
   const [redigerSjekkTilbakekreving, setRedigerSjekkTilbakekreving] = useState(false);
+  const toggleSjekkTilbakekreving = () => setRedigerSjekkTilbakekreving(!redigerSjekkTilbakekreving);
+
   const bg = Array.isArray(beregningsgrunnlag) ? beregningsgrunnlag.filter(Boolean) : [];
   const bgYtelsegrunnlag = bg[0]?.ytelsesspesifiktGrunnlag;
   let bgPeriodeMedAvslagsårsak;
@@ -85,16 +87,26 @@ const VedtakPanels = ({
   );
 
   if (skalViseSjekkTilbakekreving || redigerSjekkTilbakekreving)
-    return <VedtakSjekkTilbakekreving readOnly={readOnly} redigerSjekkTilbakekreving={redigerSjekkTilbakekreving} submitCallback={submitCallback} />;
+    return (
+      <VedtakSjekkTilbakekreving
+        readOnly={readOnly}
+        redigerSjekkTilbakekreving={redigerSjekkTilbakekreving}
+        submitCallback={submitCallback}
+        toggleSjekkTilbakekreving={toggleSjekkTilbakekreving}
+      />
+    );
 
   return (
     <>
-      {skalKunneRedigereSjekkTilbakekreving && <Alert variant="info" className='mb-2'>
-        Det finnes aksjonspunkt for å sjekke tilbakekreving med status utført. Aksjonspunktet kan fortsatt løses ved å aktivere det igjen.
-        <Button variant="primary" onClick={() => setRedigerSjekkTilbakekreving(true)}>
-          Aktiver aksjonspunkt for å sjekke tilbakekreving
-        </Button>
-      </Alert>}
+      {skalKunneRedigereSjekkTilbakekreving && (
+        <Alert variant="info" className="mb-8 w-fit">
+          Det finnes aksjonspunkt for å sjekke tilbakekreving med status utført. Aksjonspunktet kan fortsatt løses ved å
+          aktivere det igjen.
+          <Button className="block mt-2" size="small" variant="primary" onClick={() => toggleSjekkTilbakekreving()}>
+            Aktiver aksjonspunkt for å sjekke tilbakekreving
+          </Button>
+        </Alert>
+      )}
 
       <VedtakForm
         submitCallback={submitCallback}
