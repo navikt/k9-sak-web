@@ -2,15 +2,15 @@ import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { Alert, BodyLong, Button, Heading, Radio, RadioGroup } from '@navikt/ds-react';
 import React from 'react';
-import { FormattedMessage } from 'react-intl';
 import styles from './VedtakSjekkTilbakekreving.module.css';
 
 interface Props {
   readOnly: boolean;
+  redigerSjekkTilbakekreving: boolean;
   submitCallback: (aksjonspunktData: any) => void;
 }
 
-export const VedtakSjekkTilbakekreving: React.FC<Props> = ({ readOnly, submitCallback }: Props) => {
+export const VedtakSjekkTilbakekreving: React.FC<Props> = ({ readOnly, redigerSjekkTilbakekreving = false, submitCallback }: Props) => {
   const [deaktiverBekreftKnapp, setDeaktiverBekreftKnapp] = React.useState<boolean>(true);
   const [visAdvarselTekst, setVisAdvarselTekst] = React.useState<boolean>(false);
 
@@ -39,6 +39,7 @@ export const VedtakSjekkTilbakekreving: React.FC<Props> = ({ readOnly, submitCal
         <Button variant="primary" onClick={handleSubmit} type="button" disabled={deaktiverBekreftKnapp}>
           Bekreft
         </Button>
+        {redigerSjekkTilbakekreving && <Button className='ml-2' variant="secondary">Avbryt</Button>}
       </Alert>
       {deaktiverBekreftKnapp && visAdvarselTekst && (
         <>

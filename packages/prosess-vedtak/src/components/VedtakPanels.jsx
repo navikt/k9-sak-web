@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
 import { kodeverkObjektPropType } from '@fpsak-frontend/prop-types';
@@ -15,6 +15,7 @@ import { finnSistePeriodeMedAvslagsårsakBeregning } from './VedtakHelper';
 import vedtakBeregningsgrunnlagPropType from '../propTypes/vedtakBeregningsgrunnlagPropType';
 import vedtakVarselPropType from '../propTypes/vedtakVarselPropType';
 import VedtakSjekkTilbakekreving from './VedtakSjekkTilbakekreving';
+import { Alert, Button } from '@navikt/ds-react';
 
 /*
  * VedtakPanels
@@ -55,6 +56,7 @@ const VedtakPanels = ({
   lagreDokumentdata,
   overlappendeYtelser,
 }) => {
+  const [redigerSjekkTilbakekreving, setRedigerSjekkTilbakekreving] = useState(false);
   const bg = Array.isArray(beregningsgrunnlag) ? beregningsgrunnlag.filter(Boolean) : [];
   const bgYtelsegrunnlag = bg[0]?.ytelsesspesifiktGrunnlag;
   let bgPeriodeMedAvslagsårsak;
@@ -73,44 +75,61 @@ const VedtakPanels = ({
       ap.status.kode === aksjonspunktStatus.OPPRETTET,
   );
 
-  if (skalViseSjekkTilbakekreving)
-    return <VedtakSjekkTilbakekreving readOnly={readOnly} submitCallback={submitCallback} />;
+  const skalKunneRedigereSjekkTilbakekreving = !!aksjonspunkter.find(
+    ap =>
+      ap.definisjon.kode === aksjonspunktCodes.SJEKK_TILBAKEKREVING &&
+      ap.erAktivt &&
+      ap.kanLoses &&
+      ap.status.kode === aksjonspunktStatus.UTFORT,
+  );
+
+  if (skalViseSjekkTilbakekreving || redigerSjekkTilbakekreving)
+    return <VedtakSjekkTilbakekreving readOnly={readOnly} redigerSjekkTilbakekreving={redigerSjekkTilbakekreving} submitCallback={submitCallback} />;
 
   return (
-    <VedtakForm
-      submitCallback={submitCallback}
-      readOnly={readOnly}
-      previewCallback={previewCallback}
-      hentFritekstbrevHtmlCallback={hentFritekstbrevHtmlCallback}
-      behandlingId={behandlingId}
-      behandlingVersjon={behandlingVersjon}
-      behandlingresultat={behandlingresultat}
-      behandlingStatus={behandlingStatus}
-      sprakkode={sprakkode}
-      behandlingPaaVent={behandlingPaaVent}
-      tilbakekrevingvalg={tilbakekrevingvalg}
-      simuleringResultat={simuleringResultat}
-      resultatstruktur={resultatstruktur}
-      behandlingArsaker={behandlingArsaker}
-      aksjonspunkter={aksjonspunkter}
-      ytelseTypeKode={ytelseTypeKode}
-      kanOverstyre={employeeHasAccess}
-      alleKodeverk={alleKodeverk}
-      personopplysninger={personopplysninger}
-      arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
-      vilkar={vilkar}
-      vedtakVarsel={vedtakVarsel}
-      tilgjengeligeVedtaksbrev={tilgjengeligeVedtaksbrev}
-      informasjonsbehovVedtaksbrev={informasjonsbehovVedtaksbrev}
-      dokumentdata={dokumentdata}
-      fritekstdokumenter={fritekstdokumenter}
-      lagreDokumentdata={lagreDokumentdata}
-      overlappendeYtelser={overlappendeYtelser}
-      resultatstrukturOriginalBehandling={resultatstrukturOriginalBehandling}
-      bgPeriodeMedAvslagsårsak={bgPeriodeMedAvslagsårsak}
-      medlemskapFom={medlemskapFom}
-      erRevurdering={!!(behandlingTypeKode === behandlingType.REVURDERING && bg.length)}
-    />
+    <>
+      {skalKunneRedigereSjekkTilbakekreving && <Alert variant="info" className='mb-2'>
+        Det finnes aksjonspunkt for å sjekke tilbakekreving med status utført. Aksjonspunktet kan fortsatt løses ved å aktivere det igjen.
+        <Button variant="primary" onClick={() => setRedigerSjekkTilbakekreving(true)}>
+          Aktiver aksjonspunkt for å sjekke tilbakekreving
+        </Button>
+      </Alert>}
+
+      <VedtakForm
+        submitCallback={submitCallback}
+        readOnly={readOnly}
+        previewCallback={previewCallback}
+        hentFritekstbrevHtmlCallback={hentFritekstbrevHtmlCallback}
+        behandlingId={behandlingId}
+        behandlingVersjon={behandlingVersjon}
+        behandlingresultat={behandlingresultat}
+        behandlingStatus={behandlingStatus}
+        sprakkode={sprakkode}
+        behandlingPaaVent={behandlingPaaVent}
+        tilbakekrevingvalg={tilbakekrevingvalg}
+        simuleringResultat={simuleringResultat}
+        resultatstruktur={resultatstruktur}
+        behandlingArsaker={behandlingArsaker}
+        aksjonspunkter={aksjonspunkter}
+        ytelseTypeKode={ytelseTypeKode}
+        kanOverstyre={employeeHasAccess}
+        alleKodeverk={alleKodeverk}
+        personopplysninger={personopplysninger}
+        arbeidsgiverOpplysningerPerId={arbeidsgiverOpplysningerPerId}
+        vilkar={vilkar}
+        vedtakVarsel={vedtakVarsel}
+        tilgjengeligeVedtaksbrev={tilgjengeligeVedtaksbrev}
+        informasjonsbehovVedtaksbrev={informasjonsbehovVedtaksbrev}
+        dokumentdata={dokumentdata}
+        fritekstdokumenter={fritekstdokumenter}
+        lagreDokumentdata={lagreDokumentdata}
+        overlappendeYtelser={overlappendeYtelser}
+        resultatstrukturOriginalBehandling={resultatstrukturOriginalBehandling}
+        bgPeriodeMedAvslagsårsak={bgPeriodeMedAvslagsårsak}
+        medlemskapFom={medlemskapFom}
+        erRevurdering={!!(behandlingTypeKode === behandlingType.REVURDERING && bg.length)}
+      />
+    </>
   );
 };
 
