@@ -1,118 +1,174 @@
-import React from 'react';
-import { shallow } from 'enzyme';
-import AlertStripe from 'nav-frontend-alertstriper';
-
 import navBrukerKjonn from '@fpsak-frontend/kodeverk/src/navBrukerKjonn';
+import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test';
 import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
-
-import TilbakekrevingTimelinePanel from './timeline/TilbakekrevingTimelinePanel';
+import { screen } from '@testing-library/react';
+import React from 'react';
+import { reduxForm } from 'redux-form';
+import messages from '../../i18n/nb_NO.json';
+import Aktsomhet from '../kodeverk/aktsomhet';
 import VilkarResultat from '../kodeverk/vilkarResultat';
-import { slaSammenOriginaleOgLagredePeriode, TilbakekrevingFormImpl } from './TilbakekrevingForm';
-import TilbakekrevingPeriodeForm, { CustomVilkarsVurdertePeriode } from './TilbakekrevingPeriodeForm';
-import { DetaljertFeilutbetalingPeriode } from '../types/detaljerteFeilutbetalingsperioderTsType';
 import DataForPeriode from '../types/dataForPeriodeTsType';
+import { DetaljertFeilutbetalingPeriode } from '../types/detaljerteFeilutbetalingsperioderTsType';
+import { slaSammenOriginaleOgLagredePeriode, TilbakekrevingFormImpl } from './TilbakekrevingForm';
+import { CustomVilkarsVurdertePeriode } from './TilbakekrevingPeriodeForm';
+
+const alleKodeverk = {
+  Aktsomhet: [
+    {
+      kode: Aktsomhet.FORSETT,
+      navn: 'Forsett',
+      kodeverk: '',
+    },
+    {
+      kode: Aktsomhet.GROVT_UAKTSOM,
+      navn: 'Grovt uaktsom',
+      kodeverk: '',
+    },
+    {
+      kode: Aktsomhet.SIMPEL_UAKTSOM,
+      navn: 'Simpel uaktsom',
+      kodeverk: '',
+    },
+  ],
+  VilkårResultat: [
+    {
+      kode: VilkarResultat.FORSTO_BURDE_FORSTAATT,
+      navn: 'Ja, mottaker forsto eller burde forstått at utbetalingen skyldtes en feil (1. ledd, 1. punkt)',
+      kodeverk: '',
+    },
+    {
+      kode: VilkarResultat.FEIL_OPPLYSNINGER,
+      navn: 'Ja, mottaker har forårsaket feilutbetalingen ved forsett eller uaktsomt gitt feilaktige opplysninger (1. ledd, 2 punkt)',
+      kodeverk: '',
+    },
+    {
+      kode: VilkarResultat.MANGELFULL_OPPLYSNING,
+      navn: 'Ja, mottaker har forårsaket feilutbetalingen ved forsett eller uaktsomt gitt mangelfulle opplysninger (1. ledd, 2 punkt)',
+      kodeverk: '',
+    },
+    {
+      kode: VilkarResultat.GOD_TRO,
+      navn: 'Nei, mottaker har mottatt beløpet i god tro (1. ledd)',
+      kodeverk: '',
+    },
+  ],
+};
 
 describe('<TilbakekrevingForm>', () => {
+  const MockForm = reduxForm({ form: 'mock', onSubmit: vi.fn() })(({ children }) => <div>{children}</div>);
+
   it('skal vise tidslinje når en har perioder', () => {
     const perioder = [
       {
         fom: '2019-01-01',
         tom: '2019-01-10',
+        begrunnelse: undefined,
       },
     ] as CustomVilkarsVurdertePeriode[];
     const perioderDetail = [
       {
         fom: '2019-01-01',
         tom: '2019-01-10',
+        redusertBeloper: [],
+        ytelser: [],
       },
     ] as DataForPeriode[];
 
-    const wrapper = shallow(
-      <TilbakekrevingFormImpl
-        {...reduxFormPropsMock}
-        vilkarsVurdertePerioder={perioder}
-        dataForDetailForm={perioderDetail}
-        behandlingFormPrefix="behandling_V1"
-        navBrukerKjonn={navBrukerKjonn.KVINNE}
-        readOnly={false}
-        readOnlySubmitButton={false}
-        reduxFormChange={() => undefined}
-        reduxFormInitialize={() => undefined}
-        antallPerioderMedAksjonspunkt={2}
-        handleSubmit={() => undefined}
-        merknaderFraBeslutter={{
-          notAccepted: false,
-        }}
-        behandlingId={1}
-        behandlingVersjon={2}
-        alleKodeverk={{}}
-        beregnBelop={() => undefined}
-      />,
+    renderWithIntlAndReduxForm(
+      <MockForm>
+        <TilbakekrevingFormImpl
+          {...reduxFormPropsMock}
+          vilkarsVurdertePerioder={perioder}
+          dataForDetailForm={perioderDetail}
+          behandlingFormPrefix="behandling_V1"
+          navBrukerKjonn={navBrukerKjonn.KVINNE}
+          readOnly={false}
+          readOnlySubmitButton={false}
+          reduxFormChange={() => undefined}
+          reduxFormInitialize={() => undefined}
+          antallPerioderMedAksjonspunkt={2}
+          handleSubmit={() => undefined}
+          merknaderFraBeslutter={{
+            notAccepted: false,
+          }}
+          behandlingId={1}
+          behandlingVersjon={2}
+          alleKodeverk={alleKodeverk}
+          beregnBelop={() => undefined}
+        />
+      </MockForm>,
+      { messages },
     );
 
-    wrapper.setState({ valgtPeriode: perioder[0] });
-
-    expect(wrapper.find(TilbakekrevingPeriodeForm)).toHaveLength(1);
-    expect(wrapper.find(TilbakekrevingTimelinePanel)).toHaveLength(1);
+    expect(screen.getByText('Åpne info om første periode')).toBeInTheDocument();
+    expect(screen.getByText('Detaljer for valgt periode')).toBeInTheDocument();
+    expect(screen.getByText('Vilkårene for tilbakekreving')).toBeInTheDocument();
   });
 
   it('skal ikke vise tidslinje når en har perioder', () => {
     const perioder = undefined;
-    const wrapper = shallow(
-      <TilbakekrevingFormImpl
-        {...reduxFormPropsMock}
-        vilkarsVurdertePerioder={perioder}
-        dataForDetailForm={perioder}
-        behandlingFormPrefix="behandling_V1"
-        navBrukerKjonn={navBrukerKjonn.KVINNE}
-        readOnly={false}
-        readOnlySubmitButton={false}
-        reduxFormChange={() => undefined}
-        reduxFormInitialize={() => undefined}
-        antallPerioderMedAksjonspunkt={2}
-        handleSubmit={() => undefined}
-        merknaderFraBeslutter={{
-          notAccepted: false,
-        }}
-        behandlingId={1}
-        behandlingVersjon={2}
-        alleKodeverk={{}}
-        beregnBelop={() => undefined}
-      />,
+    renderWithIntlAndReduxForm(
+      <MockForm>
+        <TilbakekrevingFormImpl
+          {...reduxFormPropsMock}
+          vilkarsVurdertePerioder={perioder}
+          dataForDetailForm={perioder}
+          behandlingFormPrefix="behandling_V1"
+          navBrukerKjonn={navBrukerKjonn.KVINNE}
+          readOnly={false}
+          readOnlySubmitButton={false}
+          reduxFormChange={() => undefined}
+          reduxFormInitialize={() => undefined}
+          antallPerioderMedAksjonspunkt={2}
+          handleSubmit={() => undefined}
+          merknaderFraBeslutter={{
+            notAccepted: false,
+          }}
+          behandlingId={1}
+          behandlingVersjon={2}
+          alleKodeverk={alleKodeverk}
+          beregnBelop={() => undefined}
+        />
+      </MockForm>,
+      { messages },
     );
 
-    expect(wrapper.find(TilbakekrevingPeriodeForm)).toHaveLength(0);
-    expect(wrapper.find(TilbakekrevingTimelinePanel)).toHaveLength(0);
-    expect(wrapper.find(AlertStripe)).toHaveLength(0);
+    expect(screen.queryByText('Åpne info om første periode')).not.toBeInTheDocument();
+    expect(screen.queryByText('Detaljer for valgt periode')).not.toBeInTheDocument();
+    expect(screen.queryByText('Vilkårene for tilbakekreving')).not.toBeInTheDocument();
+    expect(screen.queryByText('feil')).not.toBeInTheDocument();
   });
 
   it('skal vise feilmelding når en har dette', () => {
     const perioder = undefined;
-    const wrapper = shallow(
-      <TilbakekrevingFormImpl
-        {...reduxFormPropsMock}
-        vilkarsVurdertePerioder={perioder}
-        dataForDetailForm={perioder}
-        behandlingFormPrefix="behandling_V1"
-        navBrukerKjonn={navBrukerKjonn.KVINNE}
-        readOnly={false}
-        readOnlySubmitButton={false}
-        reduxFormChange={() => undefined}
-        reduxFormInitialize={() => undefined}
-        antallPerioderMedAksjonspunkt={2}
-        handleSubmit={() => undefined}
-        merknaderFraBeslutter={{
-          notAccepted: false,
-        }}
-        behandlingId={1}
-        behandlingVersjon={2}
-        alleKodeverk={{}}
-        beregnBelop={() => undefined}
-        error="TilbakekrevingPeriodeForm.TotalbelopetUnder4Rettsgebyr"
-      />,
+    renderWithIntlAndReduxForm(
+      <MockForm>
+        <TilbakekrevingFormImpl
+          {...reduxFormPropsMock}
+          vilkarsVurdertePerioder={perioder}
+          dataForDetailForm={perioder}
+          behandlingFormPrefix="behandling_V1"
+          navBrukerKjonn={navBrukerKjonn.KVINNE}
+          readOnly={false}
+          readOnlySubmitButton={false}
+          reduxFormChange={() => undefined}
+          reduxFormInitialize={() => undefined}
+          antallPerioderMedAksjonspunkt={2}
+          handleSubmit={() => undefined}
+          merknaderFraBeslutter={{
+            notAccepted: false,
+          }}
+          behandlingId={1}
+          behandlingVersjon={2}
+          alleKodeverk={alleKodeverk}
+          beregnBelop={() => undefined}
+          error="TilbakekrevingPeriodeForm.TotalbelopetUnder4Rettsgebyr"
+        />
+      </MockForm>,
+      { messages },
     );
 
-    expect(wrapper.find(AlertStripe)).toHaveLength(1);
+    expect(screen.getByText('feil')).toBeInTheDocument();
   });
 
   it('skal lage initial values til form der en har lagret en periode og den andre er foreldet', () => {

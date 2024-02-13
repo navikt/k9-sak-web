@@ -54,7 +54,7 @@ const TextAreaWithBadge = ({
         ))}
       </div>
     )}
-    <NavTextarea data-id={dataId} {...otherProps} />
+    <NavTextarea data-testid={dataId} {...otherProps} />
   </div>
 );
 

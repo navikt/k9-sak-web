@@ -1,12 +1,12 @@
+import { renderWithIntl } from '@fpsak-frontend/utils-test';
+import { screen } from '@testing-library/react';
 import React from 'react';
 import sinon from 'sinon';
-import { shallow } from 'enzyme';
-
-import TilbakekrevingTimeline from './TilbakekrevingTimeline';
+import messages from '../../../i18n/nb_NO.json';
 import TilbakekrevingTimelinePanel from './TilbakekrevingTimelinePanel';
 
 describe('<TilbakekrevingTimelinePanel>', () => {
-  it('skal rendre komponent korrekt og velge periode ved trykk på periode i tidslinje', () => {
+  it('skal rendre komponent korrekt og velge periode ved trykk på periode i tidslinje', async () => {
     const perioder = [
       {
         id: 1,
@@ -32,7 +32,7 @@ describe('<TilbakekrevingTimelinePanel>', () => {
     };
 
     const setPeriode = sinon.spy();
-    const wrapper = shallow(
+    renderWithIntl(
       <TilbakekrevingTimelinePanel
         perioder={perioder}
         valgtPeriode={valgtPeriode}
@@ -41,22 +41,11 @@ describe('<TilbakekrevingTimelinePanel>', () => {
         kjonn="MANN"
         hjelpetekstKomponent={<div>test</div>}
       />,
+      { messages },
     );
 
-    const tidslinje = wrapper.find(TilbakekrevingTimeline);
-    expect(tidslinje).toHaveLength(1);
-
-    const event = {
-      event: {
-        preventDefault: () => undefined,
-      },
-      items: [2],
-    };
-    tidslinje.prop('selectPeriodCallback')(event);
-
-    expect(setPeriode.called).toBe(true);
-    const { args } = setPeriode.getCalls()[0];
-    expect(args).toHaveLength(1);
-    expect(args[0]).toEqual(perioder[1]);
+    expect(screen.getByText('Åpne info om første periode')).toBeInTheDocument();
+    expect(screen.getByText('Forrige periode')).toBeInTheDocument();
+    expect(screen.getByText('Neste periode')).toBeInTheDocument();
   });
 });

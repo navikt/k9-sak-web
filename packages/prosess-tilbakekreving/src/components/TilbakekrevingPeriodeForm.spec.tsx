@@ -1,17 +1,17 @@
-import React from 'react';
-import { shallow } from 'enzyme';
-import sinon from 'sinon';
-
+import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test';
 import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
-
-import SarligGrunn from '../kodeverk/sarligGrunn';
+import { act, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+import React from 'react';
+import { reduxForm } from 'redux-form';
+import sinon from 'sinon';
+import { intlMock } from '../../i18n';
+import messages from '../../i18n/nb_NO.json';
 import Aktsomhet from '../kodeverk/aktsomhet';
-import ForeldetFormPanel from './tilbakekrevingPeriodePaneler/ForeldetFormPanel';
-import { CustomVilkarsVurdertePeriode, TilbakekrevingPeriodeFormImpl } from './TilbakekrevingPeriodeForm';
+import SarligGrunn from '../kodeverk/sarligGrunn';
 import vilkarResultat from '../kodeverk/vilkarResultat';
 import DataForPeriode from '../types/dataForPeriodeTsType';
-
-import { intlMock } from '../../i18n';
+import { CustomVilkarsVurdertePeriode, TilbakekrevingPeriodeFormImpl } from './TilbakekrevingPeriodeForm';
 
 describe('<TilbakekrevingPeriodeForm>', () => {
   const sarligGrunnTyper = [
@@ -44,42 +44,47 @@ describe('<TilbakekrevingPeriodeForm>', () => {
     },
   ];
 
+  const MockForm = reduxForm({ form: 'mock', onSubmit: vi.fn() })(({ children }) => <div>{children}</div>);
+
   it('skal vise panel for foreldet periode', () => {
     const periode = {
       erForeldet: true,
       ytelser: [],
     } as DataForPeriode;
-    const wrapper = shallow(
-      <TilbakekrevingPeriodeFormImpl
-        data={periode}
-        behandlingFormPrefix="behandling_V1"
-        skjulPeriode={() => undefined}
-        readOnly={false}
-        erBelopetIBehold
-        tilbakekrevSelvOmBeloepErUnder4Rettsgebyr
-        oppdaterPeriode={() => undefined}
-        oppdaterSplittedePerioder={() => undefined}
-        setNestePeriode={() => undefined}
-        setForrigePeriode={() => undefined}
-        antallPerioderMedAksjonspunkt={2}
-        vilkarResultatTyper={[]}
-        aktsomhetTyper={aktsomhetTyper}
-        sarligGrunnTyper={sarligGrunnTyper}
-        reduserteBelop={[]}
-        behandlingId={1}
-        behandlingVersjon={1}
-        beregnBelop={() => undefined}
-        intl={intlMock}
-        vilkarsVurdertePerioder={[]}
-        handletUaktsomhetGrad={Aktsomhet.FORSETT}
-        {...reduxFormPropsMock}
-      />,
+    renderWithIntlAndReduxForm(
+      <MockForm>
+        <TilbakekrevingPeriodeFormImpl
+          data={periode}
+          behandlingFormPrefix="behandling_V1"
+          skjulPeriode={() => undefined}
+          readOnly={false}
+          erBelopetIBehold
+          tilbakekrevSelvOmBeloepErUnder4Rettsgebyr
+          oppdaterPeriode={() => undefined}
+          oppdaterSplittedePerioder={() => undefined}
+          setNestePeriode={() => undefined}
+          setForrigePeriode={() => undefined}
+          antallPerioderMedAksjonspunkt={2}
+          vilkarResultatTyper={[]}
+          aktsomhetTyper={aktsomhetTyper}
+          sarligGrunnTyper={sarligGrunnTyper}
+          reduserteBelop={[]}
+          behandlingId={1}
+          behandlingVersjon={1}
+          beregnBelop={() => undefined}
+          intl={intlMock}
+          vilkarsVurdertePerioder={[]}
+          handletUaktsomhetGrad={Aktsomhet.FORSETT}
+          {...reduxFormPropsMock}
+        />
+      </MockForm>,
+      { messages },
     );
 
-    expect(wrapper.find(ForeldetFormPanel)).toHaveLength(1);
+    expect(screen.getByText('Vurder om perioden er foreldet')).toBeInTheDocument();
   });
 
-  it('skal teste kopiering av vilkårsvudering for periode', () => {
+  it('skal teste kopiering av vilkårsvudering for periode', async () => {
     const periode = {
       erForeldet: false,
       begrunnelse: null,
@@ -129,51 +134,40 @@ describe('<TilbakekrevingPeriodeForm>', () => {
     ] as CustomVilkarsVurdertePeriode[];
 
     const changeValue = sinon.spy();
-    const wrapper = shallow(
-      <TilbakekrevingPeriodeFormImpl
-        data={periode}
-        behandlingFormPrefix="behandling_V1"
-        skjulPeriode={() => undefined}
-        readOnly={false}
-        erBelopetIBehold
-        tilbakekrevSelvOmBeloepErUnder4Rettsgebyr
-        oppdaterPeriode={() => undefined}
-        oppdaterSplittedePerioder={() => undefined}
-        setNestePeriode={() => undefined}
-        setForrigePeriode={() => undefined}
-        antallPerioderMedAksjonspunkt={2}
-        vilkarResultatTyper={[]}
-        aktsomhetTyper={aktsomhetTyper}
-        sarligGrunnTyper={sarligGrunnTyper}
-        reduserteBelop={[]}
-        behandlingId={1}
-        behandlingVersjon={1}
-        beregnBelop={() => undefined}
-        intl={intlMock}
-        vilkarsVurdertePerioder={vilkårsPerioder}
-        handletUaktsomhetGrad={Aktsomhet.FORSETT}
-        {...reduxFormPropsMock}
-        change={changeValue}
-      />,
+    renderWithIntlAndReduxForm(
+      <MockForm>
+        <TilbakekrevingPeriodeFormImpl
+          data={periode}
+          behandlingFormPrefix="behandling_V1"
+          skjulPeriode={() => undefined}
+          readOnly={false}
+          erBelopetIBehold
+          tilbakekrevSelvOmBeloepErUnder4Rettsgebyr
+          oppdaterPeriode={() => undefined}
+          oppdaterSplittedePerioder={() => undefined}
+          setNestePeriode={() => undefined}
+          setForrigePeriode={() => undefined}
+          antallPerioderMedAksjonspunkt={2}
+          vilkarResultatTyper={[]}
+          aktsomhetTyper={aktsomhetTyper}
+          sarligGrunnTyper={sarligGrunnTyper}
+          reduserteBelop={[]}
+          behandlingId={1}
+          behandlingVersjon={1}
+          beregnBelop={() => undefined}
+          intl={intlMock}
+          vilkarsVurdertePerioder={vilkårsPerioder}
+          handletUaktsomhetGrad={Aktsomhet.FORSETT}
+          {...reduxFormPropsMock}
+          change={changeValue}
+        />{' '}
+      </MockForm>,
+      { messages },
     );
 
-    // Tester om nedtrekksmenyen for perioder som kan kopieres vises
-    const selectField = wrapper.find('[name="perioderForKopi"]');
-    expect(selectField).toHaveLength(1);
-    // @ts-ignore
-    const values = selectField.props().selectValues;
-    expect(values).toHaveLength(2);
-
-    selectField.props().onChange(
-      {
-        preventDefault: () => {},
-        target: {
-          value: '2020-03-15_2020-03-31',
-        },
-      },
-      // @ts-ignore Fiks
-      vilkårsPerioder,
-    );
+    await act(async () => {
+      await userEvent.selectOptions(screen.getByRole('combobox'), '15.03.2020 - 31.03.2020');
+    });
 
     const changeValueCalls = changeValue.getCalls();
     expect(changeValueCalls).toHaveLength(4);

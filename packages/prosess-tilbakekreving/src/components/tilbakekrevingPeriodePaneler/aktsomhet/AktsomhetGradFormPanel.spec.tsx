@@ -1,13 +1,15 @@
+import { renderWithIntlAndReduxForm } from '@fpsak-frontend/utils-test/src/test-utils';
+import { screen } from '@testing-library/react';
 import React from 'react';
-import { shallow } from 'enzyme';
-
-import SarligGrunn from '../../../kodeverk/sarligGrunn';
+import { reduxForm } from 'redux-form';
+import messages from '../../../../i18n/nb_NO.json';
 import Aktsomhet from '../../../kodeverk/aktsomhet';
+import SarligGrunn from '../../../kodeverk/sarligGrunn';
 import AktsomhetGradFormPanel from './AktsomhetGradFormPanel';
-import AktsomhetGradForsettFormPanel from './AktsomhetGradForsettFormPanel';
-import AktsomhetGradUaktsomhetFormPanel from './AktsomhetGradUaktsomhetFormPanel';
 
 describe('<AktsomhetGradFormPanel>', () => {
+  const MockForm = reduxForm({ form: 'mock', onSubmit: vi.fn() })(({ children }) => <div>{children}</div>);
+
   const sarligGrunnTyper = [
     {
       kode: SarligGrunn.GRAD_AV_UAKTSOMHET,
@@ -22,38 +24,44 @@ describe('<AktsomhetGradFormPanel>', () => {
   ];
 
   it('skal vise panel for å forsett når denne radio-knappen er valgt', () => {
-    const wrapper = shallow(
-      <AktsomhetGradFormPanel
-        harGrunnerTilReduksjon
-        readOnly={false}
-        handletUaktsomhetGrad={Aktsomhet.FORSETT}
-        erSerligGrunnAnnetValgt
-        sarligGrunnTyper={sarligGrunnTyper}
-        harMerEnnEnYtelse
-        feilutbetalingBelop={100}
-        erTotalBelopUnder4Rettsgebyr={false}
-      />,
+    renderWithIntlAndReduxForm(
+      <MockForm>
+        <AktsomhetGradFormPanel
+          harGrunnerTilReduksjon
+          readOnly={false}
+          handletUaktsomhetGrad={Aktsomhet.FORSETT}
+          erSerligGrunnAnnetValgt
+          sarligGrunnTyper={sarligGrunnTyper}
+          harMerEnnEnYtelse
+          feilutbetalingBelop={100}
+          erTotalBelopUnder4Rettsgebyr={false}
+        />
+      </MockForm>,
+      { messages },
     );
 
-    expect(wrapper.find(AktsomhetGradForsettFormPanel)).toHaveLength(1);
-    expect(wrapper.find(AktsomhetGradUaktsomhetFormPanel)).toHaveLength(0);
+    expect(screen.getByText('Andel som skal tilbakekreves')).toBeInTheDocument();
+    expect(screen.queryByText('Særlige grunner 4. ledd')).not.toBeInTheDocument();
   });
 
   it('skal vise panel for å grovt uaktsomt når denne radio-knappen er valgt', () => {
-    const wrapper = shallow(
-      <AktsomhetGradFormPanel
-        harGrunnerTilReduksjon
-        readOnly={false}
-        handletUaktsomhetGrad={Aktsomhet.GROVT_UAKTSOM}
-        erSerligGrunnAnnetValgt
-        sarligGrunnTyper={sarligGrunnTyper}
-        harMerEnnEnYtelse
-        feilutbetalingBelop={100}
-        erTotalBelopUnder4Rettsgebyr={false}
-      />,
+    renderWithIntlAndReduxForm(
+      <MockForm>
+        <AktsomhetGradFormPanel
+          harGrunnerTilReduksjon
+          readOnly={false}
+          handletUaktsomhetGrad={Aktsomhet.GROVT_UAKTSOM}
+          erSerligGrunnAnnetValgt
+          sarligGrunnTyper={sarligGrunnTyper}
+          harMerEnnEnYtelse
+          feilutbetalingBelop={100}
+          erTotalBelopUnder4Rettsgebyr={false}
+        />
+      </MockForm>,
+      { messages },
     );
 
-    expect(wrapper.find(AktsomhetGradForsettFormPanel)).toHaveLength(0);
-    expect(wrapper.find(AktsomhetGradUaktsomhetFormPanel)).toHaveLength(1);
+    expect(screen.getByText('Særlige grunner 4. ledd')).toBeInTheDocument();
+    expect(screen.queryByText('Andel som skal tilbakekreves')).not.toBeInTheDocument();
   });
 });
