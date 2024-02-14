@@ -12,13 +12,14 @@ describe('<BehandlingPickerItemContent>', () => {
         withChevronUp
         behandlingTypeKode="BT-002"
         behandlingTypeNavn="Foreldrepenger"
-        opprettetDato="2018-01-01"
+        opprettetDato={new Date('2018-01-01').toISOString()}
         behandlingsstatus="Opprettet"
         erGjeldendeVedtak={false}
       />,
       { messages },
     );
 
+    expect(screen.getAllByText('Opprettet').length).toBeGreaterThan(0);
     expect(screen.getByText('01.01.2018')).toBeInTheDocument();
   });
 
@@ -29,15 +30,17 @@ describe('<BehandlingPickerItemContent>', () => {
         withChevronUp
         behandlingTypeKode="BT-002"
         behandlingTypeNavn="Foreldrepenger"
-        opprettetDato="2018-01-01"
-        avsluttetDato="2018-05-01"
+        opprettetDato={new Date('2018-01-01').toISOString()}
+        avsluttetDato={new Date('2018-05-01').toISOString()}
         behandlingsstatus="Opprettet"
         erGjeldendeVedtak={false}
       />,
       { messages },
     );
 
+    expect(screen.getAllByText('Opprettet').length).toBeGreaterThan(0);
     expect(screen.getByText('01.01.2018')).toBeInTheDocument();
+    expect(screen.getByText('Avsluttet')).toBeInTheDocument();
     expect(screen.getByText('01.05.2018')).toBeInTheDocument();
   });
 
