@@ -76,7 +76,7 @@ describe('<DocumentListInnsyn>', () => {
     );
 
     expect(screen.getByRole('link', { name: 'Dok1' })).toBeInTheDocument();
-    expect(screen.getByRole('img', { name: 'Ut' }));
+    expect(screen.getByRole('img', { name: 'Ut' })).toBeInTheDocument();
   });
 
   it('skal inneholde document med riktig kommunikasjonsretining: Motta -> INN', () => {
@@ -94,7 +94,7 @@ describe('<DocumentListInnsyn>', () => {
       { messages },
     );
     expect(screen.getByRole('link', { name: 'Dok1' })).toBeInTheDocument();
-    expect(screen.getByRole('img', { name: 'Inn' }));
+    expect(screen.getByRole('img', { name: 'Inn' })).toBeInTheDocument();
   });
 
   it('skal ikke inneholde dato', () => {
